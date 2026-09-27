@@ -450,7 +450,7 @@ const BASE = {
   duration: 3.2, seed: 7, stars: 150, burstR0: 0, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
   burn: 2.5, burnJit: 12, fade: 0.2, lastFlare: 0.35, flash: 1,
   headSize: 1.0, headBright: 1, flicker: 0.25,
-  sparkRate: 95, sparkLife: 0.55, sparkSize: 0.35, sparkSpread: 2.5, sparkInherit: 0.2, sparkDrag: 2.2, sparkGrav: 1,
+  sparkRate: 95, sparkRateEnd: 1, sparkLife: 0.55, sparkSize: 0.35, sparkSpread: 2.5, sparkInherit: 0.2, sparkDrag: 2.2, sparkGrav: 1,
   T0: 2050, cooling: 0.42, sparkBright: 1, twinkle: 0.6,
   subDelay: 0.9, subJit: 10, subStars: 36, subSpeed: 40, subBurn: 0.9, subTail: 0, carrierTail: 30, subPattern: 'sphere',
   spin: 14, chaos: 0.8, beeSpeed: 28,
@@ -637,6 +637,7 @@ const SCHEMA = [
   ] },
   { sec: '尾缀（炭火火花）', hint: '尾缀粗细主要由「散布」和「颗粒大小」决定，长度由「火花寿命」决定。', items: [
     ['sparkRate', '火花密度', '个/秒', 0, 3000, 1],
+    ['sparkRateEnd', '末段火花密度', '×', 0, 2, 0.01],
     ['sparkLife', '火花寿命', 's', 0.05, 4, 0.01],
     ['sparkSpread', '尾缀粗细（散布）', 'm/s', 0, 15, 0.1],
     ['sparkSize', '颗粒大小', 'm', 0.05, 2, 0.01],
@@ -701,15 +702,22 @@ const SCHEMA = [
   ] }
 ];
 // =====================================================================
-//  实拍复刻：按你发来的 14 段视频逐个复刻
-//  有测量数据的（V01–V06、V11、V12、V14）初速、燃烧、消え口、下垂由自动校准得到；其余按视频目测
-//  每个复刻 = 基础花型 + 号数 + 参数覆盖 + 分段颜色；ref = 对应的实拍测量（数值对比默认用它）
+//  实拍复刻：同类视频挑一个，用 analysis/scripts/compare.py 与实拍逐帧对照、自动逼近后再加进来
+//  每个复刻 = 基础花型 + 参数覆盖 + 颜色；status 为「待你确认」时表示对照图已发出、等你看
 // =====================================================================
 const C = { red: '#ff2a1c', pink: '#ff7ab8', orange: IGNITE_ORANGE, gold: '#ffb45a', yellow: '#ffc53a', green: '#52ff5e', cyan: '#35e0c8', blue: '#3d6cff', purple: '#b44dff', silver: '#eef2ff', white: '#fff3dc' };
 // 3.1 的 V01–V14 「复刻」只是在现成花型上改了几个数、没有还原尾缀和密度，已撤下；
 // 现在按「一个视频一个效果、用对照图和数值确认后再加」的方式重做。每项：
-//   id, name, base（基础花型）, video（参考视频）, note, tags, status, P（完整参数覆盖）, m（颜色）, thumbRef（实拍缩略图）
-const REPLICAS = [];
+//   id, name, base（基础花型）, video（参考视频）, note, tags, status, p（参数覆盖）, m（颜色）, thumbRef / thumbSim（实拍 / 模拟缩略图，同一时刻、同样取景）
+const REPLICAS = [
+  { id: 'JM', name: '金芒菊', base: 'kiku', video: 'vidio/2.0/金芒菊A.mp4', status: '待你确认',
+    note: '金芒菊A：开花瞬间已有六成大小，之后慢慢张开；每颗星是一道亮的放射状笔触（尾缀约 0.1–0.2 倍半径），末段整体变淡',
+    tags: '金 尾缀 放射 2.0',
+    p: {"duration": 4.56, "stars": 395, "v0": 35, "grav": 0.391, "speedJit": 6, "burn": 2.9, "fade": 0.5, "lastFlare": 0, "headSize": 0.45, "headBright": 0.111, "sparkRate": 409, "sparkLife": 0.9, "sparkSize": 0.45, "sparkSpread": 0.4, "sparkInherit": 0.05, "sparkDrag": 2.99, "sparkGrav": 0.2, "T0": 2300, "cooling": 0.3, "sparkBright": 1.5, "burstR0": 52, "sparkRateEnd": 0.35},
+    m: {"stages": [[0, "#fff0dc"]], "ramp1": "#8a5a30", "ramp2": "#f2dcb0", "ramp3": "#fffaf2", "headInt": 1.5},
+    thumbRef: 'data:image/jpeg;base64,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',
+    thumbSim: 'data:image/jpeg;base64,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' }
+];
 
 // 星自己带颜色的复刻用中性渐变图（颜色全由 Color Over Life 给）；金色锦冠类用暖色渐变图（冷却时发红），颜色分段用浅色
 const NEUTRAL_RAMP = { ramp0: '#000000', ramp1: '#4a4a52', ramp2: '#c8c8d0', ramp3: '#ffffff' };
@@ -983,7 +991,8 @@ class Sim {
       s.flick = clamp(s.flick + rng.n() * sq * 2.2 * P.flicker, 1 - P.flicker, 1 + P.flicker * 0.4);
       if (s.vis != null && !s.ended && s.age >= s.vis) { s.ended = true; if (P.crackle > 0) this.crackleBurst(s); }
       if (s.rate > 0 && !this.noSparks && s.age >= s.ign && !s.ended) {
-        const k = rng.poisson(s.rate * h), spr = P.sparkSpread, T0 = s.kind === 5 && P.riseStyle === 'silver' ? P.T0 + 250 : P.T0, lf = s.kind === 5 && P.riseStyle === 'silver' ? 1.5 : 1;
+        const fr = s.kind === 5 || P.sparkRateEnd == null || P.sparkRateEnd === 1 ? 1 : Math.max(0, 1 + (P.sparkRateEnd - 1) * clamp((s.age - s.ign) / Math.max(0.05, (s.vis != null ? s.vis : s.burn) - s.ign), 0, 1));
+        const k = rng.poisson(s.rate * fr * h), spr = P.sparkSpread, T0 = s.kind === 5 && P.riseStyle === 'silver' ? P.T0 + 250 : P.T0, lf = s.kind === 5 && P.riseStyle === 'silver' ? 1.5 : 1;
         for (let j = 0; j < k; j++) {
           const u = rng.u(), inh = P.sparkInherit * (0.3 + 1.4 * rng.u()), px = s.x - s.vx * h * u, py = s.y - s.vy * h * u;
           const [aX, aY] = windy ? this.air(px, py, this.t) : [0, 0];
@@ -1349,7 +1358,10 @@ void main(){
   int s=pid/uM; int j=pid-s*uM; uint uid=uint(pid);
   vec4 inf=texelFetch(uInfo,ivec2(0,s),0);
   if(inf.z<=0.){ cull(); return; }
-  float tb=inf.x+(float(j)+hsh(uid,1u))/inf.z;
+  // 发射率随燃烧线性变化（末段火花密度）：累计数 N(t) = r0·t + a·t²，按编号反解出生时刻
+  float nj=float(j)+hsh(uid,1u), tb;
+  if(abs(inf.w)<1e-6) tb=inf.x+nj/inf.z;
+  else { float dsc=inf.z*inf.z+4.*inf.w*nj; if(dsc<0.){ cull(); return; } tb=inf.x+2.*nj/(inf.z+sqrt(dsc)); }
   if(tb>=inf.y||tb>uT){ cull(); return; }
   float life=uLife*exp(.45*gss(uid,2u)); float age=uT-tb;
   float ts=uBr>0 ? life*uBrAt*(.8+.4*hsh(uid,21u)) : 1e9;
@@ -1530,8 +1542,10 @@ function buildTrack(P) {
       vel[o] = a[q * 6 + 3]; vel[o + 1] = a[q * 6 + 4]; vel[o + 2] = a[q * 6 + 5];
     }
     const born = st.birth + (st.ign || 0), death = Math.min(st.birth + (st.vis != null ? st.vis : st.burn), D);
-    info[q * 4] = born; info[q * 4 + 1] = death; info[q * 4 + 2] = death > born ? st.rate : 0;
-    if (st.rate > 0 && death > born) { const c = Math.ceil((death - born) * st.rate) + 1; M = Math.max(M, c); total += c; }
+    // 末段火花密度：发射率从 rate 线性变到 rate × sparkRateEnd（按整段燃烧，不按截断后的时长）
+    const e = st.kind === 5 ? 1 : (P.sparkRateEnd == null ? 1 : P.sparkRateEnd), B = Math.max(0.05, st.birth + (st.vis != null ? st.vis : st.burn) - born), a = st.rate * (e - 1) / (2 * B);
+    info[q * 4] = born; info[q * 4 + 1] = death; info[q * 4 + 2] = death > born ? st.rate : 0; info[q * 4 + 3] = a;
+    if (st.rate > 0 && death > born) { const Bc = death - born, c = Math.ceil(Math.max(0, st.rate * Bc + a * Bc * Bc)) + 1; M = Math.max(M, c); total += c; }
   }
   gl.activeTexture(gl.TEXTURE0);
   return { pos: floatTex(Ns, nStars, pos), vel: floatTex(Ns, nStars, vel), info: floatTex(1, nStars, info), nStars, M, Ns, dt, total, P };
@@ -1678,6 +1692,9 @@ function sizeXY(m, age) { if (m.aniso) { const u = clamp(age / m.duration, 0, 1)
 function bakeView(m, sc = 1) { return [0, m.cy, m.HX * sc, m.HY * sc]; }
 function squareView(m) { const h = Math.max(m.Ww, m.Wh) / 2; return [0, m.cy, h, h]; }
 
+// 合并输出（星头、火花在同一张灰度图里）时，两路各自自动曝光会把「炭头亮度」「火花亮度」抵消掉，
+// 所以自动曝光后再乘回这两个倍数：默认 1 时画面不变，调它们才真正改变星头和尾缀的明暗比例。
+function combGain(P) { return [P.headBright == null ? 1 : P.headBright, P.sparkBright == null ? 1 : P.sparkBright]; }
 function autoExpo(t, target, pct) {
   t.bind(); const buf = new Float32Array(t.w * t.h * 4);
   gl.readPixels(0, 0, t.w, t.h, gl.RGBA, gl.FLOAT, buf);
@@ -1849,7 +1866,8 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   }
   PPMY = 0;
   const comb = P.outMode === 'combined';
-  const eH = extra.expo ? extra.expo[0] : autoExpo(fH, comb ? 0.92 : 0.9, 99.8), eT = extra.expo ? extra.expo[1] : autoExpo(fT, comb ? 0.55 : 0.85, 99.6);
+  const cg = comb ? combGain(P) : [1, 1];
+  const eH = extra.expo ? extra.expo[0] : autoExpo(fH, comb ? 0.92 : 0.9, 99.8) * cg[0], eT = extra.expo ? extra.expo[1] : autoExpo(fT, comb ? 0.55 : 0.85, 99.6) * cg[1];
   // 先建目标贴图：Target 构造时会绑定到当前活动纹理单元，放在后面会顶掉采样用的贴图
   gl.activeTexture(gl.TEXTURE0);
   const head = new Target(N, NH, gl.RGBA8), tail = comb ? null : new Target(N, NH, gl.RGBA8);
@@ -3011,7 +3029,8 @@ const TYPE_META = {
 const PK_CATS = [['all', '全部'], ['rep', '实拍复刻'], ['fav', '收藏'], ['recent', '最近使用'], ...TYPE_GROUPS.map(([g]) => [g, g])];
 const pk = { cat: 'all', q: '', fav: new Set(), recent: [] };
 function typeThumbStyle(key) {
-  const src = (typeof THUMBS !== 'undefined' && THUMBS[key]) || null;
+  const rep = key.startsWith('rep:') ? REPLICA_BY_ID[key.slice(4)] : null;
+  const src = (rep && rep.thumbSim) || (typeof THUMBS !== 'undefined' && THUMBS[key]) || null;
   if (src) return `background-image:url(${src})`;
   const d = key.startsWith('rep:') ? null : defaultsFor(key);
   const c = d ? d.M.stages[0][1] : '#e9b45f';
@@ -3664,7 +3683,7 @@ function expoOfChannel(buf, ch, target, pct) {
   const need = cnt * pct / 100; let acc = 0, b = 0; for (; b < 2048; b++) { acc += hist[b]; if (acc >= need) break; }
   return -Math.log(1 - target) / Math.pow(2, b / 40 - 20);
 }
-// opt: { times: [s…], px, half（米，画面半宽）, cy（米，画面中心高度）, shutter（秒）, probe（定曝光用的时刻）, expo（显示曝光） }
+// opt: { times: [s…], px, half（米，画面半宽）, cy（米，画面中心高度）, shutter（秒）, sub（快门内子帧数，默认每 1/480 秒一帧）, probe（定曝光用的时刻）, expo（显示曝光） }
 async function renderStills(P0, M0, opt) {
   const P = derive({ ...P0 }), M = normalizeM(M0 || {}, P.type), px = opt.px || 512, ground = familyOf(P.type) === 'ground';
   let half = opt.half, cy = opt.cy || 0, cx = 0;
@@ -3675,7 +3694,7 @@ async function renderStills(P0, M0, opt) {
     else { const fm = measure(P); box = [fm.x0, fm.x1, fm.y0, fm.y1]; }
     half = Math.max(box[1] - box[0], box[3] - box[2]) / 2 * 1.08; cx = (box[0] + box[1]) / 2; cy = (box[2] + box[3]) / 2;
   }
-  const W = opt.shutter == null ? 1 / 40 : opt.shutter, nsub = Math.max(2, Math.ceil(W / (1 / 480)));
+  const W = opt.shutter == null ? 1 / 40 : opt.shutter, nsub = opt.sub || Math.max(2, Math.ceil(W / (1 / 480)));
   state.stillBusy = true; await nextTick(); await nextTick();
   const saveHdr = hdrT, saveRg = rgT, saveMode = state.ref.mode, saveExpo = state.expo;
   canvas.width = canvas.height = px; gl.activeTexture(gl.TEXTURE0);
@@ -3699,7 +3718,7 @@ async function renderStills(P0, M0, opt) {
     // 定曝光：在 probe 时刻渲染一帧，星头、火花各自按 99.8 / 99.6 分位定曝光（与烘焙相同的口径）
     const probe = ground ? null : new Sim({ ...P }); drawAt(probe, opt.probe != null ? opt.probe : P.burn * 0.3, 999);
     const buf = new Float32Array(px * px * 4); RG.bind(); gl.readPixels(0, 0, px, px, gl.RGBA, gl.FLOAT, buf);
-    const comb = P.outMode === 'combined', eH = expoOfChannel(buf, 0, comb ? 0.92 : 0.9, 99.8), eT = expoOfChannel(buf, 1, comb ? 0.55 : 0.85, 99.6);
+    const comb = P.outMode === 'combined', cg = comb ? combGain(P) : [1, 1], eH = expoOfChannel(buf, 0, comb ? 0.92 : 0.9, 99.8) * cg[0], eT = expoOfChannel(buf, 1, comb ? 0.55 : 0.85, 99.6) * cg[1];
     const sim = ground ? null : new Sim({ ...P }), times = opt.times.slice().sort((a, b) => a - b);
     hdrT = H; rgT = RG; state.ref.mode = 0; state.expo = opt.expo || 1;
     for (let i = 0; i < times.length; i++) {

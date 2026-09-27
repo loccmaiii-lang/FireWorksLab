@@ -1,32 +1,44 @@
-import numpy as np, json
-G=9.81
-def fib(n):
-    i=np.arange(n)+.5; y=1-2*i/n; r=np.sqrt(1-y*y); th=i*np.pi*(3-5**.5)
-    return np.stack([np.cos(th)*r,y,np.sin(th)*r],1)
-D=fib(400)
-def metrics(v0,vt,T,drag_after=None):
-    c=G/vt**2; p=np.zeros((400,3)); v=D*v0; h=1/240; ts=[];rx=[];rt=[];rb=[];cy=[]
-    t=0
-    while t<T:
-        s=np.linalg.norm(v,axis=1,keepdims=True); v+= (-c*s*v+np.array([0,-G,0]))*h; p+=v*h; t+=h
-        ts.append(t); x=p[:,0]; y=p[:,1]
-        rx.append(np.percentile(np.abs(x),98)); rt.append(np.percentile(np.clip(y,0,None),98)); rb.append(np.percentile(np.clip(-y,0,None),98)); cy.append(-y.mean())
-    ts=np.array(ts)/T; rx=np.array(rx); sel=(ts>0.6)&(ts<0.9); R=np.median(rx[sel])
-    f=lambda q: ts[np.nonzero(rx>=q*R)[0][0]] if (rx>=q*R).any() else 1
-    j=np.argmin(abs(ts-0.92))
-    return dict(t50=f(.5),t80=f(.8),t90=f(.9),droop=cy[j]/R,bt=rb[j]/max(rt[j],1e-6),R_m=R)
-if __name__=='__main__':
-    print('工具默认菊 v0=150 vt=18 T=2.5:', {k:round(v,3) for k,v in metrics(150,18,2.5).items()})
-    targets={'菊（V05/V14）':dict(t50=0.175,t80=0.43,droop=0.08,bt=1.35,T=2.8),
-             '锦冠/柳（V06/V12）':dict(t50=0.12,t80=0.34,droop=0.2,bt=1.38,T=5.0)}
-    out={}
-    for name,tg in targets.items():
-        best=None
-        for vt in np.arange(8,45,1.5):
-            for v0 in np.arange(60,320,10):
-                mm=metrics(v0,vt,tg['T'])
-                e=((mm['t50']-tg['t50'])/0.03)**2+((mm['t80']-tg['t80'])/0.05)**2+((mm['droop']-tg['droop'])/0.06)**2+((mm['bt']-tg['bt'])/0.3)**2
-                if best is None or e<best[0]: best=(e,v0,vt,mm)
-        e,v0,vt,mm=best; out[name]=dict(T=tg['T'],v0=float(v0),vt=float(vt),fit_err=round(float(e),2),**{k:round(float(v),3) for k,v in mm.items()})
-        print(name, out[name])
-    json.dump(out,open('analysis/fit.json','w'),ensure_ascii=False,indent=1)
+"""坐标下降拟合：每次改一个参数、渲染、和实拍比差距，变好就保留。
+参数可以是 P 的键，或 'M.headInt'（整体亮度）。拟合时用快速渲染（少几个时刻、快门子帧 4），约 50 秒一轮评估。
+用法：python3 fit.py <视频> <起点json {P,M}> <输出前缀> [只调这些参数的 json 列表]
+输出：<前缀>_best.json / <前缀>_best.jpg（每次变好时更新）"""
+import sys, json, time, numpy as np
+sys.path.insert(0, __import__("os").path.dirname(__import__("os").path.abspath(__file__)))
+from compare import *
+video, start, prefix = sys.argv[1], sys.argv[2], sys.argv[3]
+PR = [('burstR0','add',10,0,300),('v0','mul',.15,5,600),('vt','mul',.2,4,80),('grav','mul',.25,.1,3),('stars','mul',.25,20,1200),
+      ('sparkRate','mul',.3,10,3000),('sparkLife','mul',.25,.1,4),('sparkInherit','add',.1,0,.9),('cooling','add',.1,.05,.8),
+      ('burn','mul',.08,.3,12),('fade','add',.12,0,.9),('sparkSpread','mul',.35,.05,15),('headSize','mul',.3,.1,6),('sparkSize','mul',.3,.05,2),
+      ('sparkDrag','mul',.3,0.1,8),('sparkGrav','add',.1,0,3),('M.headInt','mul',.25,.1,4),('headBright','mul',.35,.02,3),('sparkBright','mul',.3,.1,3),('sparkRateEnd','add',.15,0,2)]
+if len(sys.argv) > 4: PR = [p for p in PR if p[0] in json.load(open(sys.argv[4]))]
+j = json.load(open(start)); P, M = j['P'], j['M']
+V = video_side(video); s = SimSession()
+def get(P, M, k): return M[k[2:]] if k.startswith('M.') else P[k]
+def put(P, M, k, v):
+    P, M = dict(P), dict(M)
+    if k.startswith('M.'): M[k[2:]] = v
+    else: P[k] = v
+    P['duration'] = max(P['duration'], P['burn'] * 1.4 + 0.5); return P, M
+def ev(P, M):
+    S = s.side(P, M, V['R'], fast=True); L, parts = score(V, S); return L, S, parts
+best, S, parts = ev(P, M); print('start', round(best,4), {k: round(float(v),4) for k,v in parts.items()}, S['render_s'], flush=True)
+st = {p[0]: p[2] for p in PR}; n = 0
+for rnd in range(4):
+    imp = False
+    for k, kind, _, lo, hi in PR:
+        for sg in (1, -1):
+            c = get(P, M, k); v = c * (1 + st[k]) ** sg if kind == 'mul' else c + sg * st[k]
+            v = min(hi, max(lo, v))
+            if v == c: continue
+            P2, M2 = put(P, M, k, v)
+            L, S2, pa = ev(P2, M2); n += 1
+            if L < best:
+                P, M, best, S, parts, imp = P2, M2, L, S2, pa, True
+                print(' ', rnd, k, round(v, 3), round(L, 4), {a: round(float(b), 4) for a, b in pa.items()}, flush=True)
+                json.dump({'P': P, 'M': M, 'loss': best}, open(prefix + '_best.json', 'w'), ensure_ascii=False)
+                sheet(V, S, prefix + '_best.jpg')
+                break
+    if not imp:
+        for k in st: st[k] *= 0.5
+print('done', n, round(best, 4), flush=True)
+s.close()

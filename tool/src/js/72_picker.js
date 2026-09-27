@@ -19,7 +19,8 @@ const TYPE_META = {
 const PK_CATS = [['all', '全部'], ['rep', '实拍复刻'], ['fav', '收藏'], ['recent', '最近使用'], ...TYPE_GROUPS.map(([g]) => [g, g])];
 const pk = { cat: 'all', q: '', fav: new Set(), recent: [] };
 function typeThumbStyle(key) {
-  const src = (typeof THUMBS !== 'undefined' && THUMBS[key]) || null;
+  const rep = key.startsWith('rep:') ? REPLICA_BY_ID[key.slice(4)] : null;
+  const src = (rep && rep.thumbSim) || (typeof THUMBS !== 'undefined' && THUMBS[key]) || null;
   if (src) return `background-image:url(${src})`;
   const d = key.startsWith('rep:') ? null : defaultsFor(key);
   const c = d ? d.M.stages[0][1] : '#e9b45f';

@@ -134,7 +134,10 @@ void main(){
   int s=pid/uM; int j=pid-s*uM; uint uid=uint(pid);
   vec4 inf=texelFetch(uInfo,ivec2(0,s),0);
   if(inf.z<=0.){ cull(); return; }
-  float tb=inf.x+(float(j)+hsh(uid,1u))/inf.z;
+  // 发射率随燃烧线性变化（末段火花密度）：累计数 N(t) = r0·t + a·t²，按编号反解出生时刻
+  float nj=float(j)+hsh(uid,1u), tb;
+  if(abs(inf.w)<1e-6) tb=inf.x+nj/inf.z;
+  else { float dsc=inf.z*inf.z+4.*inf.w*nj; if(dsc<0.){ cull(); return; } tb=inf.x+2.*nj/(inf.z+sqrt(dsc)); }
   if(tb>=inf.y||tb>uT){ cull(); return; }
   float life=uLife*exp(.45*gss(uid,2u)); float age=uT-tb;
   float ts=uBr>0 ? life*uBrAt*(.8+.4*hsh(uid,21u)) : 1e9;
@@ -315,8 +318,10 @@ function buildTrack(P) {
       vel[o] = a[q * 6 + 3]; vel[o + 1] = a[q * 6 + 4]; vel[o + 2] = a[q * 6 + 5];
     }
     const born = st.birth + (st.ign || 0), death = Math.min(st.birth + (st.vis != null ? st.vis : st.burn), D);
-    info[q * 4] = born; info[q * 4 + 1] = death; info[q * 4 + 2] = death > born ? st.rate : 0;
-    if (st.rate > 0 && death > born) { const c = Math.ceil((death - born) * st.rate) + 1; M = Math.max(M, c); total += c; }
+    // 末段火花密度：发射率从 rate 线性变到 rate × sparkRateEnd（按整段燃烧，不按截断后的时长）
+    const e = st.kind === 5 ? 1 : (P.sparkRateEnd == null ? 1 : P.sparkRateEnd), B = Math.max(0.05, st.birth + (st.vis != null ? st.vis : st.burn) - born), a = st.rate * (e - 1) / (2 * B);
+    info[q * 4] = born; info[q * 4 + 1] = death; info[q * 4 + 2] = death > born ? st.rate : 0; info[q * 4 + 3] = a;
+    if (st.rate > 0 && death > born) { const Bc = death - born, c = Math.ceil(Math.max(0, st.rate * Bc + a * Bc * Bc)) + 1; M = Math.max(M, c); total += c; }
   }
   gl.activeTexture(gl.TEXTURE0);
   return { pos: floatTex(Ns, nStars, pos), vel: floatTex(Ns, nStars, vel), info: floatTex(1, nStars, info), nStars, M, Ns, dt, total, P };
@@ -463,6 +468,9 @@ function sizeXY(m, age) { if (m.aniso) { const u = clamp(age / m.duration, 0, 1)
 function bakeView(m, sc = 1) { return [0, m.cy, m.HX * sc, m.HY * sc]; }
 function squareView(m) { const h = Math.max(m.Ww, m.Wh) / 2; return [0, m.cy, h, h]; }
 
+// 合并输出（星头、火花在同一张灰度图里）时，两路各自自动曝光会把「炭头亮度」「火花亮度」抵消掉，
+// 所以自动曝光后再乘回这两个倍数：默认 1 时画面不变，调它们才真正改变星头和尾缀的明暗比例。
+function combGain(P) { return [P.headBright == null ? 1 : P.headBright, P.sparkBright == null ? 1 : P.sparkBright]; }
 function autoExpo(t, target, pct) {
   t.bind(); const buf = new Float32Array(t.w * t.h * 4);
   gl.readPixels(0, 0, t.w, t.h, gl.RGBA, gl.FLOAT, buf);

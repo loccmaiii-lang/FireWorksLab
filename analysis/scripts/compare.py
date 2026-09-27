@@ -16,6 +16,7 @@ from refkit import read_video, find_burst, measure, crop, gray, streak
 HERE = os.path.dirname(os.path.abspath(__file__))
 TOOL = 'file://' + os.path.abspath(os.path.join(HERE, '../../tool/FireworkBaker.html')) + '?fast'
 U = [0.05, 0.12, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1]
+UF = [0.1, 0.2, 0.3, 0.5, 0.7, 0.9, 1.0, 1.1]
 SHOW = [0.1, 0.3, 0.5, 0.7, 0.9]
 KEYU = [0.1, 0.2, 0.3, 0.5, 0.7, 0.9]
 FONT = None
@@ -76,15 +77,17 @@ class SimSession:
     def close(self):
         self.br.close(); self.pw.stop()
 
-    def side(self, P, M, Rpx):
-        """Rpx：实拍里花的最终像素半径；模拟按同样的像素半径渲染"""
+    def side(self, P, M, Rpx, fast=False):
+        """Rpx：实拍里花的最终像素半径；模拟按同样的像素半径渲染。
+        fast：拟合时用，少渲几个时刻、快门内子帧减到 4（星在 1/40 秒里只走零点几米，拖影差别可以忽略）"""
         ph = self.pg.evaluate(f"(()=>{{ const P={json.dumps(P)}; const fm=__fw.measure(P); const m=__fw.metricsOf(P,fm); return {{ R: m.diameter/2, burn: m.burn, cy: (fm.y0+fm.y1)/2 }}; }})()")
         Tb0, R0, cy = ph['burn'], ph['R'], min(0, ph['cy'])
         half = R0 * 1.7
         px = int(round(2 * half / R0 * Rpx / 4)) * 4
-        times = [-0.05] + [u * Tb0 for u in U]
+        times = [-0.05] + [u * Tb0 for u in (UF if fast else U)]
         t_start = time.time()
-        res = self.pg.evaluate(f"__fw.renderStills({json.dumps(P)}, {json.dumps(M)}, {{ times: {json.dumps(times)}, px: {px}, half: {half}, cy: {cy}, shutter: 1/40 }})")
+        sub = ', sub: 4' if fast else ''
+        res = self.pg.evaluate(f"__fw.renderStills({json.dumps(P)}, {json.dumps(M)}, {{ times: {json.dumps(times)}, px: {px}, half: {half}, cy: {cy}, shutter: 1/40{sub} }})")
         imgs = [(r['t'], np.array(Image.open(io.BytesIO(base64.b64decode(r['png'].split(',')[1]))).convert('RGB'))) for r in res]
         bg = gray(imgs[0][1]); frames = imgs[1:]
         center = (px / 2, px / 2 + cy * px / (2 * half))
