@@ -1,0 +1,25 @@
+{
+ "id": "QN1",
+ "name": "青柠星 第1轮",
+ "video": "vidio/2.0/青柠星.mp4",
+ "start": "analysis/replica/起点/青柠星.json",
+ "fit": {
+  "params": [
+   "v0",
+   "vt",
+   "grav",
+   "stars",
+   "burn",
+   "fade",
+   "headSize",
+   "headBright",
+   "sparkRate",
+   "sparkLife",
+   "sparkBright",
+   "sparkRateEnd",
+   "M.headInt"
+  ],
+  "rounds": 3
+ },
+ "note": "外层青柠色点状星（开花先橙色短尾，约 0.8 秒变青柠色）。金色芯（金蕊青柠星）等外层确认后作为第二层叠加。"
+}

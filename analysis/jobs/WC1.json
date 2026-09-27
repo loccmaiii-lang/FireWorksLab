@@ -1,0 +1,23 @@
+{
+ "id": "WC1",
+ "name": "万彩千轮 第1轮",
+ "video": "vidio/2.0/万彩千轮B.mp4",
+ "start": "analysis/replica/起点/万彩千轮.json",
+ "fit": {
+  "params": [
+   "v0",
+   "vt",
+   "stars",
+   "subDelay",
+   "subJit",
+   "subStars",
+   "subSpeed",
+   "subBurn",
+   "headSize",
+   "M.headInt",
+   "grav"
+  ],
+  "rounds": 3
+ },
+ "note": "先拟合子花的数量、散布、大小和时序（单色）；实拍里粉、白、绿、红子花同时出现，确认结构后拆成几层不同颜色叠加。"
+}

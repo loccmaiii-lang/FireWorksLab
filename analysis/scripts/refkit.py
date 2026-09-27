@@ -11,6 +11,14 @@ import numpy as np
 
 def read_video(path, scale=0.5, t0=0.0, t1=1e9):
     cap = cv2.VideoCapture(path)
+    if not cap.isOpened():
+        # Windows 上 OpenCV 打不开中文路径：复制到临时英文路径再读
+        import os, shutil, tempfile
+        tmp = os.path.join(tempfile.gettempdir(), 'fw_video' + os.path.splitext(path)[1])
+        shutil.copyfile(path, tmp)
+        cap = cv2.VideoCapture(tmp)
+    if not cap.isOpened():
+        raise IOError('打不开视频：' + path)
     fps = cap.get(cv2.CAP_PROP_FPS) or 30
     out, i = [], 0
     while True:
@@ -68,7 +76,10 @@ def measure(rgb, bg, center, R=None):
     cx, cy = center
     dx, dy = xs - cx, ys - cy
     rr = np.hypot(dx, dy)
-    r98 = float(np.percentile(rr, 98))
+    # 半径：分 36 个方向各取 95 分位，再取中位数。上升尾迹、烟、旁边别的花只占少数方向，不会把半径拉大
+    ang = ((np.arctan2(dy, dx) + np.pi) / (2 * np.pi) * 36).astype(int) % 36
+    sec = [np.percentile(rr[ang == a], 95) for a in range(36) if np.count_nonzero(ang == a) >= 3]
+    r98 = float(np.median(sec)) if len(sec) >= 18 else float(np.percentile(rr, 98))
     Rn = R or r98
     # 尾缀：连通块沿主轴的长度（只取大致沿径向的细长块）
     n, lab, st, cen = cv2.connectedComponentsWithStats(m.astype(np.uint8), connectivity=8)

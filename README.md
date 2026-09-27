@@ -38,7 +38,7 @@
 | `tool/src/` | 烘焙器源码（样式、页面、按模块拆分的脚本）；改完运行 `python3 tool/build.py` 生成上面的单文件 |
 | `tool/batch_bake.mjs` | 命令行批量重烘：一批参数 JSON 或配方库 → 一批 ZIP |
 | `samples/` | 样例导出：2K 贴图、渐变图、Cascade 参数表、曲线 CSV、参数 JSON |
-| `analysis/` | 实拍视频的解析数据与脚本；`scripts/compare.py` 出实拍与模拟的并排对照图和数值（没有显卡也能跑）；`fit.py` 按差距自动逼近参数、`variants.py` 一次试几组改动；`replica/` 是每个复刻的对照图、数值和参数 |
+| `analysis/` | 实拍视频的解析数据与脚本；`scripts/compare.py` 出实拍与模拟的并排对照图和数值（没有显卡也能跑）；`fit.py` 按差距自动逼近参数、`variants.py` 一次试几组改动；`replica/` 是每个复刻的对照图、数值和参数；`local/` 是在你电脑上用显卡跑任务的脚本（`jobs/` 任务 → `results/` 结果） |
 | `research/python/` | 早期的 Python 离线渲染实验，仅供参考 |
 | `vidio/` | 实拍参考视频 |
 | `PROGRESS.md` | 进度表 |

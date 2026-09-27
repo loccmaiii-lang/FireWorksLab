@@ -7,20 +7,21 @@
 模拟画面由烘焙器的 renderStills 在无头浏览器里渲染（没有显卡时走软件渲染，只是慢），
 全部火花、不降密度；渲染分辨率按实拍里花的像素半径换算，两边像素尺度一致。
 """
-import sys, os, json, base64, io, time
+import sys, os, json, base64, io, time, pathlib
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from refkit import read_video, find_burst, measure, crop, gray, streak
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TOOL = 'file://' + os.path.abspath(os.path.join(HERE, '../../tool/FireworkBaker.html')) + '?fast'
+TOOL = pathlib.Path(os.path.join(HERE, '../../tool/FireworkBaker.html')).resolve().as_uri() + '?fast'
 U = [0.05, 0.12, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1]
 UF = [0.1, 0.2, 0.3, 0.5, 0.7, 0.9, 1.0, 1.1]
 SHOW = [0.1, 0.3, 0.5, 0.7, 0.9]
 KEYU = [0.1, 0.2, 0.3, 0.5, 0.7, 0.9]
 FONT = None
-for f in ['/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc', '/usr/share/fonts/truetype/wqy/wqy-microhei.ttc']:
+for f in ['/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc', '/usr/share/fonts/truetype/wqy/wqy-microhei.ttc',
+          'C:/Windows/Fonts/msyh.ttc', 'C:/Windows/Fonts/simhei.ttf', '/System/Library/Fonts/PingFang.ttc']:
     if os.path.exists(f):
         FONT = ImageFont.truetype(f, 18); break
 
@@ -65,14 +66,38 @@ def video_side(path, scale=0.5):
     add_streak(side, b['bg']); return side
 
 
+def render_mode():
+    """FW_RENDER=gpu 用本机显卡（弹出一个浏览器窗口，别最小化也没关系）；soft 用软件渲染（云端没有显卡时）。
+    不设时：Linux 用 soft，Windows / Mac 用 gpu。"""
+    return os.environ.get('FW_RENDER') or ('soft' if sys.platform.startswith('linux') else 'gpu')
+
+
 class SimSession:
     def __init__(self):
         from playwright.sync_api import sync_playwright
         self.pw = sync_playwright().start()
-        self.br = self.pw.chromium.launch(args=["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"])
+        self.mode = render_mode()
+        if self.mode == 'soft':
+            self.br = self.pw.chromium.launch(args=["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"])
+        else:
+            # 用本机装好的 Chrome / Edge（不用另外下载浏览器），有窗口才走显卡；关掉后台节流，窗口被挡住也照常跑
+            args = ["--ignore-gpu-blocklist", "--disable-background-timer-throttling", "--disable-renderer-backgrounding", "--disable-backgrounding-occluded-windows"]
+            self.br, err = None, []
+            for ch in ('chrome', 'msedge', None):
+                try:
+                    self.br = self.pw.chromium.launch(channel=ch, headless=False, args=args) if ch else self.pw.chromium.launch(headless=False, args=args)
+                    break
+                except Exception as e:
+                    err.append(f'{ch}: {str(e).splitlines()[0]}')
+            if self.br is None:
+                raise RuntimeError('找不到可用的浏览器（Chrome / Edge / playwright 自带）：' + ' | '.join(err))
         self.pg = self.br.new_page(viewport={'width': 1200, 'height': 900})
         self.pg.goto(TOOL)
         self.pg.wait_for_function("window.__fw && window.__fw.idle()", timeout=0)
+        self.renderer = self.pg.evaluate("(document.querySelector('#gpu')||{}).title || ''")
+        self.soft = any(k in self.renderer.lower() for k in ('swiftshader', 'llvmpipe', 'software', 'basic render'))
+        if self.mode == 'gpu' and self.soft:
+            print('注意：浏览器没有用上显卡（' + self.renderer + '），会很慢。检查显卡驱动或浏览器的硬件加速设置。', flush=True)
 
     def close(self):
         self.br.close(); self.pw.stop()
@@ -136,7 +161,7 @@ def table(V, S):
 
 
 def main(video, pjson, prefix):
-    j = json.load(open(pjson))
+    j = json.load(open(pjson, encoding='utf-8'))
     P = j.get('P') or j.get('params'); M = j.get('M') or j.get('materialDefaults') or {}
     V = video_side(video)
     s = SimSession()
@@ -146,9 +171,11 @@ def main(video, pjson, prefix):
     L, parts = score(V, S)
     out = dict(video=os.path.basename(video), 实拍燃烧秒=round(V['Tb'], 2), 模拟燃烧秒=round(S['Tb'], 2), 差距=round(float(L), 4),
                分项={k: round(float(v), 4) for k, v in parts.items()}, 渲染耗时秒=S['render_s'], 表=table(V, S))
-    json.dump(out, open(prefix + '_数值.json', 'w'), ensure_ascii=False, indent=1)
+    json.dump(out, open(prefix + '_数值.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(json.dumps(out, ensure_ascii=False, indent=1))
 
 
 if __name__ == '__main__':
+    try: sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    except Exception: pass
     main(*sys.argv[1:4])
