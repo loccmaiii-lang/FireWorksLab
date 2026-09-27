@@ -46,14 +46,29 @@ function colorSection(M, D, t0, split) {
 ${keyLines(colorKeys(M, D, t0))}
   亮度倍数：星头 ${M.headInt}${split ? `，拖尾 ${M.tailInt}` : ''}（乘在颜色上，按项目曝光再调）`;
 }
+// 紧凑取景：面片中心沿「线性阻力 + 恒定加速度」曲线移动，横竖 Size By Life 分开
+function tightLines(m) {
+  const p = m.path, f = m.fill;
+  return `Initial Location：X = ${cm(p.x0)} cm，Z = ${cm(p.y0)} cm${m.t0 ? '（本段开始时面片中心相对爆点的位置）' : '（从爆点开始）'}
+Initial Velocity：X = ${cm(p.vx)} cm/s，Z = ${cm(p.vy)} cm/s（面片中心的运动，不是星的速度）
+Drag：Drag Coefficient = ${fx(p.k, 3)}
+Const Acceleration：X = ${cm(p.ax)} cm/s²，Z = ${cm(-p.ay)} cm/s²
+Size By Life（X、Y 分开；线性插值）：面片中心跟着内容走，每帧内容占满格子
+  相对时间    X 倍数
+${keyLines(m.sizeKeysX)}
+  相对时间    Y 倍数
+${keyLines(m.sizeKeysY)}
+  画面占比：平均 ${f ? Math.round(f.avg * 100) : '—'}%，最差 10% 的帧 ≥ ${f ? Math.round(f.p10 * 100) : '—'}%
+  组合里缩放这一层时，Initial Size、Location、Velocity、Const Acceleration 按同一倍数缩放，Drag 不变。`;
+}
 function masterEmitter(s, M, label) {
   const m = s.meta, b = s;
   return `【Cascade 发射器${label || ''}】
 Required：Screen Alignment = Square（面向相机）；Emitter Duration = ${fx(m.duration)} s；Emitter Loops = 1${m.t0 ? `；Emitter Delay = ${fx(m.t0)} s（接在上一段之后）` : ''}
 Spawn：Rate = 0；Burst：Count = 1，Time = 0
 Lifetime：${fx(m.duration)} s（常量）
-Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm（${m.zoom ? '开花最大时的尺寸' : '常量'}）
-${m.zoom ? `Initial Location：0（爆点就是精灵中心）
+Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm（${m.tight ? '最大尺寸，横竖分开' : m.zoom ? '开花最大时的尺寸' : '常量'}）
+${m.tight ? tightLines(m) : m.zoom ? `Initial Location：0（爆点就是精灵中心）
 Size By Life（X、Y 相同；线性插值）：面片随开花放大，每帧贴图按同一条曲线烘焙
   相对时间    倍数
 ${keyLines(m.sizeKeys)}` : `Initial Location：Z = ${cm(m.cy)} cm（精灵中心相对爆点的高度，这样爆点正好在发射器原点）`}
@@ -64,8 +79,7 @@ ${keyLines(m.keys)}
 ${colorSection(M, m.duration, m.t0 || 0, !!b.tail)}
 Light（可选）：Brightness Over Life 相对值，乘以期望的峰值亮度
 ${keyLines(m.lightKeys)}
-Initial Rotation（可选）：−15°～15° 随机，同一母版多发时增加差异
-${m.wind ? '' : ''}
+${m.tight ? 'Initial Rotation：不要加（面片中心在移动、横竖缩放不同，旋转会把下垂方向转歪）' : 'Initial Rotation（可选）：−15°～15° 随机，同一母版多发时增加差异'}
 【帧与流畅度${label || ''}】
 平均 ${fx(m.avgFps, 1)} fps，最低 ${fx(m.minFps, 1)} fps，每帧最大位移 ${fx(m.maxDisp, 1)} 像素（建议 ≤ 3）
 平均面片面积为最大尺寸的 ${Math.round(m.area * 100)}%（overdraw 按此折算）
@@ -192,6 +206,7 @@ function checkSection(b) {
   for (let s = b, i = 0; s; s = s.next, i++) {
     const c = s.meta.check, m = s.meta, L = m.L, pre = b.next ? `段 ${'AB'[i]}：` : '';
     if (!c) continue;
+    if (m.fill) lines.push(`${pre}画面占比：平均 ${Math.round(m.fill.avg * 100)}%，最差 10% 的帧 ≥ ${Math.round(m.fill.p10 * 100)}%${m.fill.avg < 0.9 ? (m.tight ? '' : '；面片取景改「紧凑」可提高到 90% 以上') : ''}`);
     lines.push(`${pre}过曝：${c.clipFrames.length ? `第 ${c.clipFrames.slice(0, 8).map(f => f + 1).join('、')}${c.clipFrames.length > 8 ? '…' : ''} 帧超过 2% 像素顶到 255，可降低星头亮度或改 Gamma 2.2` : '无'}`);
     lines.push(`${pre}边缘渗色：${c.edgeFrames.length ? `${c.edgeFrames.length} 帧内容碰到格子边缘，mip 或压缩时会串到相邻格子；加大「格子留边」或序列时长内缩小取景` : `无（留边 ${s.P.cellPad} 像素）`}`);
     if (L.chans === 4) lines.push(`${pre}通道布局：${c.chanUse.map((u, k) => 'RGBA'[k] + (u ? ' 有内容' : ' 空')).join('，')}${c.chanUse.some(u => !u) ? '；有空通道，可减少帧数或改单通道' : ''}`);

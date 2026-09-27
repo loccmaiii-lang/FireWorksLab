@@ -21,6 +21,10 @@
           <button data-layer="head" aria-pressed="true">星头</button>
           <button data-layer="tail" aria-pressed="false">拖尾</button>
         </div>
+        <div class="seg small" id="flowSeg" hidden>
+          <button data-flow="0" aria-pressed="true">整张</button>
+          <button data-flow="1" aria-pressed="false">流转动画</button>
+        </div>
         <div class="seg small" id="segSeg" hidden>
           <button data-seg="0" aria-pressed="true">段 A</button>
           <button data-seg="1" aria-pressed="false">段 B</button>
@@ -37,6 +41,7 @@
       <div class="canvas-wrap">
         <div class="canvas-box" id="box">
           <canvas id="gl" aria-label="烟花预览"></canvas>
+          <canvas id="flowCv" class="flowcv" hidden></canvas>
           <div id="qlabels"></div>
           <div class="hud" id="hud"></div>
           <div class="hud right" id="hudB"></div>
@@ -59,6 +64,7 @@
           <label class="field">花型<select id="type"></select></label>
           <label class="field">母版名称<input type="text" id="mname" value="Kiku_01"></label>
         </div>
+        <p class="note rep" id="repNote" hidden></p>
         <label class="field">产物<select id="x-form"></select></label>
         <p class="note" id="formNote"></p>
       </div>
@@ -80,7 +86,7 @@
           <label class="field">编码<select id="x-enc"><option value="1">线性灰度</option><option value="2.2">Gamma 2.2（暗部更细）</option></select></label>
           <label class="field">取帧<select id="x-frame"><option value="auto">自动（按运动快慢）</option><option value="content">按画面变化（合并近似帧）</option><option value="uniform">均匀</option></select></label>
           <label class="field">模拟内核<select id="x-engine"><option value="gpu">GPU（火花在显卡上算）</option><option value="cpu">CPU（旧版，可复现旧母版）</option></select></label>
-          <label class="field">面片大小<select id="x-zoom"><option value="on">随开花放大（Size By Life）</option><option value="off">固定大小</option></select></label>
+          <label class="field">面片取景<select id="x-zoom"><option value="tight">紧凑：每帧占满 ≥ 90%（面片跟着内容走）</option><option value="on">随开花放大（爆点在中心）</option><option value="off">固定大小</option></select></label>
         </div>
         <label class="check" id="flipBox" hidden><input type="checkbox" id="x-flip"> 星头朝下（引擎里速度对齐方向相反时勾选）</label>
         <label class="check" id="gridBox" hidden><input type="checkbox" id="x-autogrid"> 自动选格子（帧数不变，按内容长宽比挑列 × 行，少浪费像素）</label>

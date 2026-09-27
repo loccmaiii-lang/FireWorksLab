@@ -4,6 +4,9 @@ for (const [g, types] of TYPE_GROUPS) {
   for (const t of types) og.appendChild(new Option(TYPE_NAMES[t], t));
   $('#type').appendChild(og);
 }
+{ const og = document.createElement('optgroup'); og.label = '实拍复刻（你发来的视频）';
+  for (const r of REPLICAS) og.appendChild(new Option(r.name, 'rep:' + r.id));
+  $('#type').appendChild(og); }
 $('#verLabel').textContent = `通道打包序列帧 · GPU 模拟 · v${VERSION}`;
 $('#type').addEventListener('change', e => setType(e.target.value));
 $('#mname').addEventListener('input', e => state.name = e.target.value);
@@ -28,6 +31,7 @@ segBtns('#dispSeg', b => state.disp = b.dataset.disp);
 segBtns('#viewSeg', b => state.view = b.dataset.view);
 segBtns('#atlasSeg', b => state.atlasLayer = b.dataset.layer);
 segBtns('#segSeg', b => state.atlasSeg = +b.dataset.seg);
+segBtns('#flowSeg', b => { state.atlasFlow = b.dataset.flow === '1'; flowTrail.length = 0; $('#qlabels').dataset.key = ''; });
 $('#dist').addEventListener('input', e => { state.dist = +e.target.value; $('#distOut').textContent = state.dist + ' m'; });
 $('#play').addEventListener('click', () => { state.playing = !state.playing; $('#play').textContent = state.playing ? '暂停' : '播放'; });
 $('#scrub').addEventListener('input', e => { state.t = +e.target.value / 1000 * curDuration(); });
@@ -89,7 +93,7 @@ $('#btnExportCombo').addEventListener('click', exportCombo);
 })();
 buildMasterPanel();
 initIter();
-runPreviewBake();
+if (!/[?&]fast/.test(location.search)) runPreviewBake(); else state.dirty = false;
 requestAnimationFrame(loop);
 // 给命令行批量重烘（tool/batch_bake.mjs）和调试用
 window.__fw = {
@@ -115,6 +119,12 @@ window.__fw = {
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, M), null, 2))]);
     const zip = await makeZip(files); disposeBake(b);
     return new Uint8Array(await zip.arrayBuffer());
+  },
+  replicaPM,
+  // 校准用：低分辨率烘焙一遍，按实拍的算法测贴图
+  async quickMetrics(P) {
+    const b = await bake({ ...P, texW: 320, texH: 320, cols: 8, rows: 8, chans: 1, outMode: 'combined', form: 'master', zoom: 'on', frameMode: 'auto', fpsFloor: 16, shutter: 0 }, 1, null);
+    const m = bakeMetrics(b); disposeBake(b); return m;
   },
   idle: () => !state.baking && !state.dirty
 };

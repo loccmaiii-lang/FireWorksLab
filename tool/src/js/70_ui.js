@@ -7,7 +7,7 @@ const state = {
   t: 0, playing: true, speed: 1, expo: 1, disp: 'fit', dist: 800,
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
   lib: [], layers: [], comboName: '八重芯变色菊', libReady: false,
-  locks: new Set(), activeStage: 0,
+  locks: new Set(), activeStage: 0, repId: null,
   B: null,                              // A/B 对比的 B：{ P, M, bake, name }
   ref: { mode: 0, el: null, kind: '', t0: 0, alpha: 0.5, scale: 1, ox: 0, oy: 0, wipe: 0.5, aspect: 1, tex: null },
   versions: [], recipes: [], metricRef: 'V05'
@@ -55,7 +55,10 @@ function showStats(b) {
   if (m.loop) rows.push(`循环周期 <b>${m.duration.toFixed(2)} s</b> · ${m.avgFps.toFixed(1)} fps · 接缝 <span class="${cls(c.seam == null || c.seam < 1.6)}">${c.seam == null ? '—' : c.seam.toFixed(2)}</span>（≈1 无缝）`);
   else rows.push(`平均 <b>${m.avgFps.toFixed(1)}</b> fps · 最低 <span class="${cls(m.minFps >= 24)}">${m.minFps.toFixed(1)} fps</span> · 每帧最大位移 <span class="${cls(m.maxDisp <= 3)}">${m.maxDisp.toFixed(1)} px</span>`);
   rows.push(`精灵 ${m.Ww.toFixed(1)}×${m.Wh.toFixed(1)} m · 贴图 ${nTex} 张 · BC7 约 ${mb} MB`);
-  if (b.form === 'master' || b.form === 'segments') rows.push(`平均面片面积 <b>${Math.round(m.area * 100)}%</b>${m.zoom ? '（随开花放大）' : '（固定大小）'}${b.next ? ` · 分段时刻 ${m.split.toFixed(2)} s` : ''}`);
+  if (b.form === 'master' || b.form === 'segments') rows.push(`平均面片面积 <b>${Math.round(m.area * 100)}%</b>${m.tight ? '（紧凑取景）' : m.zoom ? '（随开花放大）' : '（固定大小）'}${b.next ? ` · 分段时刻 ${m.split.toFixed(2)} s` : ''}`);
+  const fl = []; for (let s = b; s; s = s.next) if (s.meta.fill) fl.push(s.meta.fill);
+  if (fl.length) { const avg = fl.reduce((a, q) => a + q.avg, 0) / fl.length, p10 = Math.min(...fl.map(q => q.p10)), mn = Math.min(...fl.map(q => q.min));
+    rows.push(`画面占比${m.unit ? '（单元序列星头固定在锚点，以 overdraw 为准）' : ''} 平均 <span class="${cls(avg >= 0.9 || m.unit)}">${Math.round(avg * 100)}%</span> · 最差 10% 的帧 ≥ <span class="${cls(p10 >= 0.85)}">${Math.round(p10 * 100)}%</span> · 最低 ${Math.round(mn * 100)}%`); }
   if (m.unit) { const f = m.fit, R = f.v0 / f.k * (1 - Math.exp(-f.k * m.duration)), ua = P.stars * m.Ww * m.Wh * m.area, ba = (2 * R + m.Wh) ** 2;
     rows.push(`轨迹拟合：初速 ${f.v0.toFixed(0)} m/s · 阻力 ${f.k.toFixed(3)} · 误差 <span class="${cls(f.err < 0.05)}">${(f.err * 100).toFixed(1)}%</span>`);
     rows.push(`overdraw：${P.stars} 个单元 ≈ 大面片的 <span class="${cls(ua < ba)}">${Math.round(ua / ba * 100)}%</span>`); }
@@ -212,7 +215,8 @@ function buildMasterPanel() {
   slider(ms, 'm-xw', '变色过渡', 's', 0.01, 0.5, 0.01, () => state.M.xw, v => state.M.xw = v, MD.xw);
   slider(ms, 'm-hi', '星头亮度', '×', 0, 4, 0.05, () => state.M.headInt, v => state.M.headInt = v, 1);
   slider(ms, 'm-ti', '拖尾亮度', '×', 0, 4, 0.05, () => state.M.tailInt, v => state.M.tailInt = v, 1);
-  $('#type').value = P.type; $('#mname').value = state.name; syncExport();
+  $('#type').value = state.repId ? 'rep:' + state.repId : P.type; $('#mname').value = state.name; syncExport();
+  $('#repNote').textContent = state.repId ? '实拍复刻：' + REPLICA_BY_ID[state.repId].note : ''; $('#repNote').hidden = !state.repId;
 }
 function refreshVisibility() {
   const P = state.P;
@@ -239,9 +243,20 @@ function jitterParams() {
   refreshPanelValues(); onParam(); flash('已随机微调未锁定的参数（±10%）');
 }
 function setType(t) {
+  if (t.startsWith('rep:')) { setReplica(t.slice(4)); return; }
+  state.repId = null;
   const keep = {}; for (const k of state.locks) keep[k] = state.P[k];
   const d = defaultsFor(t); state.P = derive({ ...d.P, ...keep, type: t }); state.M = d.M; state.activeStage = 0;
   state.name = TYPE_EN[t] + '_01'; buildMasterPanel(); onParam(); state.t = 0;
+}
+// 实拍复刻：换成对应的花型、号数、参数和颜色；数值对比默认对照这段视频
+function setReplica(id) {
+  const r = REPLICA_BY_ID[id]; if (!r) return;
+  const { P, M } = replicaPM(id); state.P = P; state.M = M; state.activeStage = 0; state.repId = id;
+  state.name = id + '_' + r.name.replace(/^V\d+b?r?f?\s*/, '').replace(/[（）·→ ]+/g, '_').replace(/_+$/, '');
+  if (r.ref && REFS[r.ref]) { state.metricRef = r.ref; const s = $('#refMetric'); if (s) s.value = r.ref; }
+  buildMasterPanel(); $('#type').value = 'rep:' + id; onParam(); state.t = 0;
+  flash(r.note);
 }
 // 切换产物时给出合适的格子
 function setForm(f) {
@@ -286,12 +301,32 @@ async function ensureLibrary() {
   }
   state.libReady = true; busy(false);
 }
-function libByType(t) { return state.lib.find(e => e.name === defaultLibName(t)) || state.lib.find(e => e.type === t); }
+function libByType(t) {
+  if (t.startsWith('rep:')) return state.lib.find(e => e.rep === t.slice(4));
+  return state.lib.find(e => e.name === defaultLibName(t)) || state.lib.find(e => e.type === t);
+}
+// 组合里用到但还没烘焙的母版（实拍复刻层）现烘
+async function ensureLibEntries(keys) {
+  const need = [...new Set(keys)].filter(k => !libByType(k));
+  for (let i = 0; i < need.length; i++) {
+    const k = need[i];
+    if (k.startsWith('rep:')) {
+      const id = k.slice(4), r = REPLICA_BY_ID[id], { P, M } = replicaPM(id);
+      const b = await bake(libP(P), 1, p => busy(true, `烘焙组合用母版：${r.name}（${i + 1}/${need.length}）`, (i + p) / need.length));
+      state.lib.push({ name: r.name, type: r.base, rep: id, P, M, bake: b });
+    } else {
+      const d = defaultsFor(k), b = await bake(libP(d.P), 1, p => busy(true, `烘焙组合用母版：${TYPE_NAMES[k]}`, (i + p) / need.length));
+      state.lib.push({ name: defaultLibName(k), type: k, P: d.P, M: d.M, bake: b });
+    }
+  }
+  busy(false);
+}
 function newLayer(entry, o = {}) {
   const M = entry.M;
   return { lib: entry.name, scale: 1, delay: 0, rate: 1, mirror: false, stages: M.stages.map(s => [...s]), xw: M.xw, ramp0: M.ramp0, ramp1: M.ramp1, ramp2: M.ramp2, ramp3: M.ramp3, headInt: M.headInt, tailInt: M.tailInt, ...o };
 }
-function applyCombo(c) {
+async function applyCombo(c) {
+  await ensureLibEntries(c.layers.map(l => l.m));
   state.layers = c.layers.map(l => { const e = libByType(l.m); const { m, ...rest } = l; if (rest.stages) rest.stages = rest.stages.map(s => [...s]); return newLayer(e, rest); });
   state.comboName = c.name; state.t = 0; buildComboPanel();
 }
@@ -303,7 +338,7 @@ function comboDuration() {
 function bakeTotal(b) { let d = 0; for (let s = b; s; s = s.next) d = Math.max(d, (s.meta.t0 || 0) + s.meta.duration); return d; }
 function buildComboPanel() {
   const pre = $('#presets'); pre.innerHTML = '';
-  for (const c of COMBOS) { const b = document.createElement('button'); b.className = 'btn'; b.textContent = c.name; b.addEventListener('click', () => applyCombo(c)); pre.appendChild(b); }
+  for (const c of [...COMBOS, ...REPLICA_COMBOS]) { const b = document.createElement('button'); b.className = 'btn' + (c.name.startsWith('V') ? ' rep' : ''); b.textContent = c.name; b.addEventListener('click', () => applyCombo(c)); pre.appendChild(b); }
   const host = $('#layers'); host.innerHTML = '';
   state.layers.forEach((L, i) => {
     const card = document.createElement('div'); card.className = 'card';

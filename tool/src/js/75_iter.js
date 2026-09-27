@@ -71,13 +71,15 @@ function buildRefSliders() {
 // ---------------- 数值测量对比 ----------------
 // 来自 analysis/measure.json（实拍视频逐帧测量，视频秒可能是慢放，只比无量纲指标）
 const REFS = {
-  V05: { name: 'V05 金芒菊（银白）', t50: 0.157, t80: 0.416, t90: 0.551, droop: -0.002, bt: 1.15, kieguchi: 0.297 },
-  V14: { name: 'V14 鸿巢四尺玉', t50: 0.192, t80: 0.446, t90: 0.569, droop: 0.158, bt: 1.58 },
-  V06: { name: 'V06 锦冠', t50: 0.12, t80: 0.419, t90: 0.571, droop: 0.229, bt: 1.38 },
-  V12: { name: 'V12 多色锦冠', t50: 0.109, t80: 0.265, t90: 0.348, droop: 0.171, bt: 1.37 },
-  V11: { name: 'V11 十寸三重芯', t50: 0.185, t80: 0.366, t90: 0.401, droop: null, bt: null },
-  V01: { name: 'V01 变色菊', t50: 0.19, t80: 0.456, t90: 0.57, droop: 0.294, bt: 2.95 },
-  V04: { name: 'V04 变色菊', t50: 0.092, t80: 0.237, t90: 0.408, droop: -0.187, bt: 0.73 }
+  V05: { name: 'V05 金芒菊（银白）', t50: 0.157, t80: 0.416, t90: 0.551, droop: -0.002, bt: 1.15, kieguchi: 0.297, burn: 6.17 },
+  V14: { name: 'V14 鸿巢四尺玉', t50: 0.192, t80: 0.446, t90: 0.569, droop: 0.158, bt: 1.58, kieguchi: 0.354, burn: 8.67 },
+  V06: { name: 'V06 锦冠', t50: 0.005, t80: 0.419, t90: 0.571, droop: 0.229, bt: 1.38, kieguchi: 0.823, burn: 6.77 },
+  V12: { name: 'V12 多色锦冠', t50: 0.109, t80: 0.265, t90: 0.348, droop: 0.171, bt: 1.37, kieguchi: 0.656, burn: 10.07 },
+  V11: { name: 'V11 十寸三重芯', t50: 0.185, t80: 0.366, t90: 0.401, droop: null, bt: null, kieguchi: 0.222, burn: 5.87 },
+  V01: { name: 'V01 变色菊·红银点灭', t50: 0.19, t80: 0.456, t90: 0.57, droop: 0.294, bt: 2.95, kieguchi: 0.228, burn: 2.63 },
+  V02: { name: 'V02 红牡丹带芯', t50: 0.0, t80: 0.109, t90: 0.283, droop: 0.435, bt: 2.54, kieguchi: 0.174, burn: 1.53 },
+  V03: { name: 'V03 绿芯变色牡丹', t50: 0.17, t80: 0.443, t90: 0.568, droop: -0.095, bt: 0.88, kieguchi: 0.409, burn: 2.93 },
+  V04: { name: 'V04 变色菊·金黄绿', t50: 0.092, t80: 0.237, t90: 0.408, droop: -0.187, bt: 0.73, kieguchi: 0.289, burn: 2.53 }
 };
 const metricCache = { gen: -1, A: null, Bid: null, B: null };
 function simMetrics(P, b) {
@@ -98,9 +100,10 @@ function renderMetrics() {
   };
   host.innerHTML = `<table class="mt"><tr><th>指标</th><th>A</th>${B ? '<th>B</th>' : ''}<th>实拍</th><th></th></tr>` +
     row('t50', 't50') + row('t80', 't80') + row('t90', 't90') + row('droop', '下坠/R') + row('bt', '下/上') +
-    `<tr><td>燃烧</td><td>${A.burn.toFixed(2)} s</td>${B ? `<td>${B.burn.toFixed(2)} s</td>` : ''}<td colspan="2">—</td></tr>` +
+    row('kieguchi', '消え口') +
+    `<tr><td>燃烧</td><td>${A.burn.toFixed(2)} s</td>${B ? `<td>${B.burn.toFixed(2)} s</td>` : ''}<td>${R.burn ? R.burn.toFixed(2) + ' s' : '—'}</td><td>${R.burn ? (Math.abs(A.burn - R.burn) <= R.burn * 0.15 ? '<span class="ok">✓</span>' : '<span class="warn">✗</span>') : ''}</td></tr>` +
     `<tr><td>花径</td><td>${A.diameter.toFixed(0)} m</td>${B ? `<td>${B.diameter.toFixed(0)} m</td>` : ''}<td colspan="2">${state.metricRef === 'V14' ? '约 800 m' : '—'}</td></tr>` +
-    `<tr><td>消え口</td><td>${A.kieguchi != null ? (A.kieguchi * 100).toFixed(0) + '%' : '—'}</td>${B ? `<td>${B.kieguchi != null ? (B.kieguchi * 100).toFixed(0) + '%' : '—'}</td>` : ''}<td colspan="2">实拍 22–35%</td></tr></table>` +
+    `</table>` +
     `<span class="note">✓ = 与实拍差距在 20%（或 0.05）以内。A 的数据来自${A.src === '贴图' ? '烘焙出的贴图（与实拍视频同一套算法）' : '物理模拟的星体位置'}。</span>`;
 }
 

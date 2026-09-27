@@ -18,7 +18,11 @@ function frameIdx(m, age) {
 }
 // 分段母版：按礼花时间找到当前该播放的那一段
 function segAt(b, age) { let s = b; while (s.next && age >= s.next.meta.t0) s = s.next; return s; }
-function layerRect(m, L, sc = 1) { const w = m.Ww * L.scale * sc, h = m.Wh * L.scale * sc, px = L.mirror ? 1 - m.px : m.px; return [-px * w, (m.py - 1) * h, (1 - px) * w, m.py * h]; }
+// 某一时刻的面片矩形（相对爆点）：中心 = centerAt，尺寸 = 最大尺寸 × Size By Life
+function layerRectAt(m, L, age) {
+  const s = sizeXY(m, age), c = centerAt(m, age), w = m.Ww * L.scale * s[0], h = m.Wh * L.scale * s[1], cx = (L.mirror ? -c[0] : c[0]) * L.scale, cy = c[1] * L.scale;
+  return [cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2];
+}
 function bindSeqTextures(pr, b) {
   gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, b.head.tex); gl.uniform1i(pr.u.uH, 0);
   gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, (b.tail || b.head).tex); gl.uniform1i(pr.u.uT, 1);
@@ -29,7 +33,7 @@ function drawLayer(b0, L, t, view, origin = [0, 0]) {
   const age0 = (t - L.delay) * L.rate, b = segAt(b0, age0), m = b.meta, age = age0 - (m.t0 || 0), f = frameIdx(m, age);
   if (f < 0) return f;
   const pr = PR.mat; gl.useProgram(pr.p);
-  const r = layerRect(m, L, sizeAt(m, age));
+  const r = layerRectAt(m, L, age);
   gl.uniform4fv(pr.u.uRect, [r[0] + origin[0], r[1] + origin[1], r[2] + origin[0], r[3] + origin[1]]); gl.uniform4fv(pr.u.uView, view);
   bindSeqTextures(pr, b);
   gl.uniform1f(pr.u.uFrame, f); gl.uniform1f(pr.u.uMirror, L.mirror ? 1 : 0);
@@ -168,14 +172,16 @@ function renderLive() {
 // 显示比例：贴图的每个像素在屏幕上被放大了几倍，是「糊」的直接原因
 function exportView(b) {
   const s = segAt(b, state.t), m = s.meta, sc = sizeAt(m, clamp(state.t - (m.t0 || 0), 0, m.duration));
-  let full = squareView(b.meta); for (let q = b.next; q; q = q.next) full = unionView(full, squareView(q.meta));
-  const texPPM = m.L.cellW / (m.Ww * (m.zoom ? Math.max(sc, 1e-3) : 1));
+  let full = null;
+  for (let q = b; q; q = q.next) for (let i = 0; i <= 12; i++) { const rr = layerRectAt(q.meta, { scale: 1, mirror: false }, i / 12 * q.meta.duration), h = Math.max(rr[2] - rr[0], rr[3] - rr[1]) / 2, v = [(rr[0] + rr[2]) / 2, (rr[1] + rr[3]) / 2, h, h]; full = full ? unionView(full, v) : v; }
+  const sxy = sizeXY(m, clamp(state.t - (m.t0 || 0), 0, m.duration));
+  const texPPM = m.L.cellW / (m.Ww * Math.max(sxy[0], 1e-3));
   let ppmScreen;
   if (state.disp === 'px') ppmScreen = texPPM;
   else if (state.disp === 'game') ppmScreen = 1080 / (2 * state.dist * Math.tan(Math.PI / 6));
   else ppmScreen = canvas.width / (2 * full[2]);
   const half = canvas.width / 2 / ppmScreen;
-  return { view: [full[0], full[1], half, half], mag: ppmScreen / texPPM, onScreen: m.Ww * (m.zoom ? sc : 1) * ppmScreen };
+  return { view: [full[0], full[1], half, half], mag: ppmScreen / texPPM, onScreen: m.Ww * sxy[0] * ppmScreen };
 }
 function exportViewAny(b, slot) {
   if (b.form === 'unit') { const m = b.meta, f = m.fit, R = f.v0 / f.k * (1 - Math.exp(-f.k * m.duration)) + m.Wh; return { view: [0, -R * 0.1, R * 1.1, R * 1.1], mag: 0 }; }
@@ -211,24 +217,72 @@ function renderExport() {
   hudText = fi < 0 ? '序列结束' : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? (s === b ? ' 段 A' : ' 段 B') : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${L.cellW}×${L.cellH}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
   hudB = sb ? `B：${B.name}` : '';
 }
+const flowTrail = [];
+function atlasSegOf(b0) { return state.atlasSeg && b0.next ? b0.next : b0; }
+function drawAtlasQuad(b, show, f, n, trail) {
+  const L = b.meta.L, pr = PR.atlas; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, show.tex);
+  gl.uniform1i(pr.u.uS, 0); gl.uniform1f(pr.u.uFrame, f); gl.uniform1f(pr.u.uN, n);
+  gl.uniform1f(pr.u.uCols, L.cols); gl.uniform1f(pr.u.uRows, L.rows); gl.uniform1f(pr.u.uChans, L.chans); gl.uniform1f(pr.u.uAspect, b.N / b.NH);
+  const tr = new Float32Array(6).fill(-1); (trail || []).slice(0, 6).forEach((v, i) => tr[i] = v); gl.uniform1fv(pr.u['uTrail[0]'], tr);
+  drawQuad();
+}
 function renderAtlas() {
   const b0 = state.bake;
   gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, canvas.width, canvas.height); gl.clearColor(0.02, 0.02, 0.03, 1); gl.clear(gl.COLOR_BUFFER_BIT);
   if (!b0) { hudText = '烘焙中…'; return; }
-  const b = state.atlasSeg && b0.next ? b0.next : b0;
-  const L = b.meta.L, show = state.atlasLayer === 'tail' && b.tail ? b.tail : b.head;
-  const pr = PR.atlas; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, show.tex);
-  gl.uniform1i(pr.u.uS, 0); gl.uniform1f(pr.u.uFrame, frameIdx(b.meta, state.t - (b.meta.t0 || 0))); gl.uniform1f(pr.u.uN, canvas.width);
-  gl.uniform1f(pr.u.uCols, L.cols); gl.uniform1f(pr.u.uRows, L.rows); gl.uniform1f(pr.u.uChans, L.chans); gl.uniform1f(pr.u.uAspect, b.N / b.NH);
-  drawQuad();
+  const b = atlasSegOf(b0);
+  const L = b.meta.L, show = state.atlasLayer === 'tail' && b.tail ? b.tail : b.head, f = frameIdx(b.meta, state.t - (b.meta.t0 || 0));
+  if (state.atlasFlow) { renderAtlasFlow(b0, b, show, f); return; }
+  drawAtlasQuad(b, show, f, canvas.width, null);
   hudText = `${b.tail ? (show === b.tail ? '拖尾' : '星头') : '合并'}贴图${b0.next ? (b === b0 ? ' 段 A' : ' 段 B') : ''} ${b.P.texW}×${b.P.texH} · ${L.cols}×${L.rows} 格 · 金框 = 当前帧 · 红色 = 过曝像素`; hudB = '';
+}
+// 贴图流转：左边放大当前格，右边整张贴图上金框走动（淡框 = 刚走过的格），下面是帧号曲线
+function renderAtlasFlow(b0, b, show, f) {
+  const S = canvas.width, L = b.meta.L, top = Math.round(S * 0.30), H = Math.round(S * 0.66);
+  if (f >= 0 && flowTrail[0] !== f) { flowTrail.unshift(f); flowTrail.length = Math.min(flowTrail.length, 7); }
+  // 当前格：保持单格像素长宽比
+  const ca = L.cellW / L.cellH, cw = Math.min(S * 0.44, H * ca), chh = cw / ca, cx = Math.round(S * 0.03 + (S * 0.44 - cw) / 2), cy = Math.round(top + (H - chh) / 2);
+  if (f >= 0) {
+    gl.viewport(cx, cy, Math.round(cw), Math.round(chh));
+    const pc = PR.cell; gl.useProgram(pc.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, show.tex); gl.uniform1i(pc.u.uS, 0);
+    gl.uniform1f(pc.u.uFrame, f); gl.uniform1f(pc.u.uCols, L.cols); gl.uniform1f(pc.u.uRows, L.rows); gl.uniform1f(pc.u.uChans, L.chans); gl.uniform2f(pc.u.uPx, 1 / cw, 1 / chh);
+    drawQuad();
+  }
+  const aw = Math.round(Math.min(S * 0.45, H)); gl.viewport(Math.round(S * 0.52), top + Math.round((H - aw) / 2), aw, aw);
+  drawAtlasQuad(b, show, f, aw, flowTrail.slice(1));
+  gl.viewport(0, 0, S, S);
+  drawFlowCurve(b, f);
+  const t = state.t - (b.meta.t0 || 0), ch = L.chans === 4 && f >= 0 ? 'RGBA'[Math.floor(f / L.per)] + ' 通道 · ' : '';
+  hudText = f < 0 ? '序列结束' : `贴图流转 · 第 ${f + 1}/${L.F} 帧 · ${ch}第 ${f % L.per + 1} 格（第 ${Math.floor((f % L.per) / L.cols) + 1} 行第 ${f % L.cols + 1} 列）· 时间 ${Math.max(0, t).toFixed(2)} s`;
+  hudB = '';
+}
+function drawFlowCurve(b, f) {
+  const cv = $('#flowCv'), r = cv.getBoundingClientRect(), dpr = devicePixelRatio || 1;
+  if (cv.width !== Math.round(r.width * dpr) || cv.height !== Math.round(r.height * dpr)) { cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr); }
+  const x = cv.getContext('2d'), W = cv.width, H = cv.height, m = b.meta, L = m.L, D = m.duration;
+  x.clearRect(0, 0, W, H);
+  const pl = 44 * dpr, pr = 12 * dpr, pt = 16 * dpr, pb = 20 * dpr, X = u => pl + u * (W - pl - pr), Y = v => H - pb - v / L.F * (H - pt - pb);
+  x.font = `${11 * dpr}px ui-monospace,monospace`; x.fillStyle = '#8a8e9b'; x.strokeStyle = '#262a37'; x.lineWidth = dpr;
+  x.strokeRect(pl, pt, W - pl - pr, H - pt - pb);
+  if (L.chans === 4) for (let c = 1; c < 4; c++) { const y = Y(c * L.per); x.setLineDash([4 * dpr, 4 * dpr]); x.beginPath(); x.moveTo(pl, y); x.lineTo(W - pr, y); x.stroke(); x.setLineDash([]); }
+  if (L.chans === 4) for (let c = 0; c < 4; c++) x.fillText('RGBA'[c], 6 * dpr, Y((c + 0.5) * L.per) + 4 * dpr);
+  x.fillText('0', pl - 14 * dpr, H - pb); x.fillText(`${D.toFixed(2)} s`, W - pr - 40 * dpr, H - 4 * dpr); x.fillText('帧号（Dynamic Parameter）', pl + 6 * dpr, pt - 4 * dpr);
+  // 每一帧的烘焙时刻
+  x.fillStyle = 'rgba(233,180,95,.35)'; for (const t of m.times) x.fillRect(X(t / D) - dpr / 2, H - pb - 5 * dpr, dpr, 5 * dpr);
+  // 帧号曲线（阶梯 = 材质取整后实际显示的帧）
+  x.strokeStyle = '#e9b45f'; x.lineWidth = 1.5 * dpr; x.beginPath();
+  const keys = m.loop ? [[0, 0], [1, L.F]] : m.keys;
+  keys.forEach(([u, v], i) => i ? x.lineTo(X(u), Y(v)) : x.moveTo(X(u), Y(v))); x.stroke();
+  const t = m.loop ? (((state.t % D) + D) % D) : clamp(state.t - (m.t0 || 0), 0, D);
+  x.strokeStyle = '#f6d9a2'; x.lineWidth = dpr; x.beginPath(); x.moveTo(X(t / D), pt); x.lineTo(X(t / D), H - pb); x.stroke();
+  if (f >= 0) { x.beginPath(); x.moveTo(pl, Y(f + 0.5)); x.lineTo(W - pr, Y(f + 0.5)); x.strokeStyle = 'rgba(246,217,162,.5)'; x.stroke(); x.fillStyle = '#f6d9a2'; x.beginPath(); x.arc(X(t / D), Y(f + 0.5), 3.5 * dpr, 0, 6.2832); x.fill(); }
 }
 function renderCombo() {
   hdrT.clear();
   const items = state.layers.map(L => [L, state.lib.find(e => e.name === L.lib)]).filter(x => x[1]);
   if (!items.length) { post(); hudText = '没有图层'; return; }
   let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
-  for (const [L, e] of items) for (let s = e.bake; s; s = s.next) { const r = layerRect(s.meta, L); x0 = Math.min(x0, r[0]); y0 = Math.min(y0, r[1]); x1 = Math.max(x1, r[2]); y1 = Math.max(y1, r[3]); }
+  for (const [L, e] of items) for (let s = e.bake; s; s = s.next) for (let i = 0; i <= 8; i++) { const r = layerRectAt(s.meta, L, i / 8 * s.meta.duration); x0 = Math.min(x0, r[0]); y0 = Math.min(y0, r[1]); x1 = Math.max(x1, r[2]); y1 = Math.max(y1, r[3]); }
   const half = Math.max(x1 - x0, y1 - y0) * 0.52, view = [(x0 + x1) / 2, (y0 + y1) / 2, half, half];
   hdrT.bind(); additive(true);
   for (const [L, e] of items) drawLayer(e.bake, L, state.t, view);
@@ -237,7 +291,9 @@ function renderCombo() {
 }
 function updateLabels() {
   const q = $('#qlabels'), b = state.bake;
-  if (state.tab !== 'combo' && state.view === 'atlas' && b && b.meta.L.chans === 4) {
+  if (state.tab !== 'combo' && state.view === 'atlas' && state.atlasFlow && b) {
+    if (q.dataset.key !== 'flow') { q.dataset.key = 'flow'; q.innerHTML = `<span class="qlabel" style="top:8px;left:3%">当前格 · 原始灰度 · 最近邻（看得到真实像素）</span><span class="qlabel" style="top:8px;left:52%">整张贴图 · 金框 = 当前帧 · 淡框 = 刚走过</span>`; }
+  } else if (state.tab !== 'combo' && state.view === 'atlas' && b && b.meta.L.chans === 4) {
     const per = b.meta.L.per, key = String(per);
     if (q.dataset.key !== key) {
       q.dataset.key = key;
@@ -270,6 +326,7 @@ function loop(now) {
   const mv = state.tab !== 'combo';
   $('#atlasSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.tail);
   $('#segSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.next);
+  $('#flowSeg').hidden = !mv || state.view !== 'atlas'; $('#flowCv').hidden = !mv || state.view !== 'atlas' || !state.atlasFlow;
   $('#dispSeg').hidden = !mv || state.view !== 'export' || !(state.bake && (state.bake.form === 'master' || state.bake.form === 'segments' || state.bake.form === 'loop'));
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
   $('#abTag').hidden = !(mv && state.B);

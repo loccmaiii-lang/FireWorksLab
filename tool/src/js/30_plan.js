@@ -51,7 +51,8 @@ function metricsOf(P, fm) {
   const find = f => { for (const q of st) if (q.r95 >= f * Rf) return q.t / burnEnd; return 1; };
   const peak = st.reduce((a, q) => q.vis > a.vis ? q : a, st[0]);
   const top = Math.max(0.03 * Rf, end.top), bot = Math.max(0.03 * Rf, -end.bot);
-  return { burn: burnEnd, diameter: 2 * Rf, t50: find(0.5), t80: find(0.8), t90: find(0.9), droop: -end.cy / Rf, bt: bot / top, peakT: peak.t };
+  const pk = st.indexOf(peak), after = th => { for (let i = pk; i < st.length; i++) if (st[i].vis < th * peakVis) return st[i].t; return st[st.length - 1].t; };
+  return { burn: burnEnd, diameter: 2 * Rf, t50: find(0.5), t80: find(0.8), t90: find(0.9), droop: -end.cy / Rf, bt: bot / top, peakT: peak.t, kieguchi: (after(0.2) - after(0.8)) / burnEnd };
 }
 // 折线化简（Douglas–Peucker 的插点版）：保留误差最大的点，直到点数用完或误差足够小
 function simplify(pts, maxN, tol = 0.25) {

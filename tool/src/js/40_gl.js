@@ -78,7 +78,7 @@ void main(){ vec3 c=textureLod(uS,v_uv,0.).rgb; vec3 b=bl(1.)*.5+bl(3.)*.32+bl(5
   }
   if(uSplit>0.&&abs(v_uv.x-uSplit)<uTx.x*1.5) c=vec3(.91,.70,.37);
   o=vec4(c,1.); }`;
-const FS_ATLAS = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform float uFrame,uN,uCols,uRows,uChans,uAspect; out vec4 o;
+const FS_ATLAS = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform float uFrame,uN,uCols,uRows,uChans,uAspect; uniform float uTrail[6]; out vec4 o;
 void main(){ float panes=uChans>1.5?2.:1.;
   vec2 q=floor(v_uv*panes); vec2 uv=fract(v_uv*panes); int ch=panes>1.5?int(q.x+(1.-q.y)*2.):0;
   vec2 sc=uAspect>=1.?vec2(1.,1./uAspect):vec2(uAspect,1.); vec2 tuv=(uv-.5)/sc+.5;
@@ -88,10 +88,22 @@ void main(){ float panes=uChans>1.5?2.:1.;
   vec3 col=vec3(v); vec2 grid=vec2(uCols,uRows); vec2 cellPx=uN/panes*sc/grid;
   vec2 g=abs(fract(tuv*grid)-.5); vec2 lw=1.2/cellPx; if(g.x>.5-lw.x||g.y>.5-lw.y) col=mix(col,vec3(.16,.17,.22),.8);
   float per=uCols*uRows; float fc=floor(uFrame/per); float k=uFrame-fc*per; vec2 cell=vec2(mod(k,uCols),uRows-1.-floor(k/uCols));
-  vec2 cc=floor(tuv*grid); if(uFrame>=0.&&float(ch)==fc&&cc==cell){ vec2 f=abs(fract(tuv*grid)-.5); vec2 lw2=3./cellPx; if(f.x>.5-lw2.x||f.y>.5-lw2.y) col=vec3(.91,.70,.37); }
+  vec2 cc=floor(tuv*grid);
+  for(int i=0;i<6;i++){ float tf=uTrail[i]; if(tf<0.) continue; float c2=floor(tf/per), k2=tf-c2*per; vec2 cl2=vec2(mod(k2,uCols),uRows-1.-floor(k2/uCols));
+    if(float(ch)==c2&&cc==cl2){ vec2 f2=abs(fract(tuv*grid)-.5); vec2 lw3=2./cellPx; col=mix(col,vec3(.91,.70,.37),.06*(1.-float(i)/6.)); if(f2.x>.5-lw3.x||f2.y>.5-lw3.y) col=mix(col,vec3(.91,.70,.37),.6*(1.-float(i)/6.)); } }
+  if(uFrame>=0.&&float(ch)==fc&&cc==cell){ col=mix(col,vec3(.91,.70,.37),.1); vec2 f=abs(fract(tuv*grid)-.5); vec2 lw2=3./cellPx; if(f.x>.5-lw2.x||f.y>.5-lw2.y) col=vec3(.91,.70,.37); }
   if(v>=.999) col=mix(col,vec3(1.,.25,.2),.6);
   o=vec4(col,1.); }`;
 
+// 流转预览：单独放大显示当前格（最近邻采样，能看清真实像素）
+const FS_CELL = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform float uFrame, uCols, uRows, uChans; uniform vec2 uPx; out vec4 o;
+void main(){ float per=uCols*uRows; float c=floor(uFrame/per); float k=uFrame-c*per;
+  vec2 st=(vec2(mod(k,uCols),uRows-1.-floor(k/uCols))+v_uv)/vec2(uCols,uRows);
+  vec2 ts=vec2(textureSize(uS,0)); vec4 x=texelFetch(uS,ivec2(min(st*ts,ts-1.)),0);
+  float v = uChans<1.5 ? x.r : dot(x,vec4(equal(vec4(c),vec4(0.,1.,2.,3.))));
+  vec3 col=vec3(v); if(v>=.999) col=vec3(1.,.3,.25);
+  vec2 e=min(v_uv,1.-v_uv)/uPx; if(min(e.x,e.y)<1.5) col=vec3(.91,.70,.37);
+  o=vec4(col,1.); }`;
 const GLSL_HASH = `uint pcg(uint v){ uint s=v*747796405u+2891336453u; uint w=((s>>((s>>28u)+4u))^s)*277803737u; return (w>>22u)^w; }
 float hsh(uint a, uint b){ return float(pcg(a ^ pcg(b + uint(uSeed)*2654435769u))) / 4294967296.0; }
 float gss(uint a, uint b){ float u1=max(hsh(a,b),1e-7), u2=hsh(a,b+101u); return sqrt(-2.*log(u1))*cos(6.2831853*u2); }
@@ -259,7 +271,7 @@ const PR = {
   pts: compile(VS_PTS, FS_PTS), pack: compile(VS_QUAD, FS_PACK), enc: compile(VS_QUAD, FS_ENC),
   spk: compile(VS_SPK, FS_PTS), emit: compile(VS_EMIT, FS_PTS), ehead: compile(VS_EHEAD, FS_PTS),
   rgmat: compile(VS_QUAD, FS_RGMAT), mat: compile(VS_RECT, FS_MAT), unit: compile(VS_UNIT, FS_UNIT),
-  post: compile(VS_QUAD, FS_POST), atlas: compile(VS_QUAD, FS_ATLAS)
+  post: compile(VS_QUAD, FS_POST), atlas: compile(VS_QUAD, FS_ATLAS), cell: compile(VS_QUAD, FS_CELL)
 };
 const quadVAO = gl.createVertexArray(); gl.bindVertexArray(quadVAO);
 const qb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, qb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0, 1, 0, 0, 1, 1, 1]), gl.STATIC_DRAW);
@@ -352,7 +364,8 @@ function emitterSources(P) {
     for (let i = 0; i < P.nozzles; i++) src.push([(i - (P.nozzles - 1) / 2) * P.spacing, P.groundH, P.jetDir]);
   } else {
     const n = Math.max(1, Math.round(P.nozzles));
-    for (let i = 0; i < n; i++) src.push([(i - (n - 1) / 2) * P.spacing, P.groundH, P.jetDir + (n > 1 ? (i / (n - 1) - 0.5) * P.jetCone * 0.5 : 0)]);
+    const spread = t === 'fountain' && P.fanAngle > 0 ? P.fanAngle : P.jetCone * 0.5;   // 喷泉可以排成扇面（地面扇形）
+    for (let i = 0; i < n; i++) src.push([(i - (n - 1) / 2) * P.spacing, P.groundH, P.jetDir + (n > 1 ? (i / (n - 1) - 0.5) * spread : 0)]);
   }
   return src;
 }
@@ -441,7 +454,11 @@ function drawPoints(buf, n, view, ppm, chan, w, xf) {
 }
 function additive(on) { if (on) { gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE); gl.blendEquation(gl.FUNC_ADD); } else gl.disable(gl.BLEND); }
 function sizeAt(m, age) { return m.zoom ? evalKeys(m.sizeKeys, clamp(age / m.duration, 0, 1)) : 1; }
-// 横竖分别缩放（单元序列）：返回 [横向倍数, 纵向倍数]
+// 紧凑取景：面片中心沿拟合曲线移动（Cascade：Initial Velocity + Drag + Const Acceleration）
+function pathXY(p, t) { const e = Math.exp(-p.k * t), f1 = (1 - e) / p.k, f2 = (t - f1) / p.k; return [p.x0 + p.vx * f1 + p.ax * f2, p.y0 + p.vy * f1 - p.ay * f2]; }
+// 某一时刻面片中心（相对爆点，米）
+function centerAt(m, age) { if (m.path) return pathXY(m.path, clamp(age, 0, m.duration)); const s = sizeXY(m, age); return [0, m.cy * s[1]]; }
+// 横竖分别缩放（单元序列、紧凑取景）：返回 [横向倍数, 纵向倍数]
 function sizeXY(m, age) { if (m.aniso) { const u = clamp(age / m.duration, 0, 1); return [evalKeys(m.sizeKeysX, u), evalKeys(m.sizeKeysY, u)]; } const s = sizeAt(m, age); return [s, s]; }
 function bakeView(m, sc = 1) { return [0, m.cy, m.HX * sc, m.HY * sc]; }
 function squareView(m) { const h = Math.max(m.Ww, m.Wh) / 2; return [0, m.cy, h, h]; }

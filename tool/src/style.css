@@ -92,6 +92,9 @@
   .card .head b{color:var(--gold2);font-size:12px;font-variant-numeric:tabular-nums}
   .x{background:none;border:0;color:var(--dim);cursor:pointer;padding:2px 6px}
   .x:hover{color:var(--warn)}
+  .flowcv{position:absolute;left:0;bottom:0;width:100%;height:28%;pointer-events:none}
+  .note.rep{color:var(--gold2)}
+  .btn.rep{border-color:#6b5328}
   .hud.right{left:auto;right:10px;text-align:right}
   .abtag{font:11px var(--mono);color:#1d1406;background:var(--gold);border-radius:4px;padding:2px 7px}
   .line2{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0}
