@@ -1,0 +1,67 @@
+升空尾缀 M：中 · 金芒菊级（参考 尾缀B）
+================================================================
+
+【贴图】
+T_RiseTrail_M_Loop.png  循环（64 帧，2.133 s）：RGBA 接力，R 第 0–15 帧、G 16–31、B 32–47、A 48–63
+T_RiseTrail_M_Fade.png  消散（32 帧，1.067 s）：RGBA 接力，每个通道 16 帧，用到 RG（其余通道空）
+两张都是 2048×1024，16 列 × 1 行，单格 128×1024（1:8），格子四周留空 2 像素；灰度线性
+导入：sRGB 关闭，压缩 BC7
+T_RiseTrail_M_Ramp.png：渐变图 256×8（sRGB），暗 → 亮 = 冷却的火花 → 高温火花 → 星头
+按 30 fps 播放（帧号每秒 +30）
+
+【材质实例】
+项目现有的 RGBA 序列帧材质，列 = 16，行 = 1，Ramp = T_RiseTrail_M_Ramp；循环、消散各一个材质实例（只换贴图）
+
+【弹道】
+真实（二次阻力）：出膛 109.7 m/s，5.42 s 到达 200 m
+Cascade 线性阻力拟合：Initial Velocity Z = 9616 cm/s；Drag = 0.234；Const Acceleration Z = −981 cm/s²（高度误差 1.9 m）
+贴图按上升速度 43.5 m/s 烘焙（约全程 35% 处的速度）；速度不同时尾迹长度靠 Size By Life 的 Y 缩放
+
+【发射器 1：上升循环】
+Required：Material = 循环材质实例；Screen Alignment = Velocity；Emitter Duration = 5.420 s；Emitter Loops = 1
+  Pivot Offset：星头在贴图里距底边 94.4% 处。默认 (−0.5, −0.5) 是面片中心；把 Y 改为 -0.056，
+  若星头跑到另一端就改为 -0.944。以编辑器里星头落在粒子位置、尾巴拖在后面为准
+Spawn：Rate = 0；Burst Count = 1，Time = 0
+Lifetime = 5.420 s
+Initial Size：X = 507 cm，Y = 4052 cm
+Initial Velocity：Z = 9616 cm/s；Drag：Drag Coefficient = 0.234；Const Acceleration：Z = −981 cm/s²
+Size By Life（Y 单独；X 保持 1）：尾迹长度跟着速度变（出膛快 → 长；到顶慢 → 短）
+  相对时间    Y 倍数
+  0.0000      0.350
+  0.1000      1.631
+  0.2000      1.713
+  0.3000      1.327
+  0.4000      1.044
+  0.5000      0.822
+  0.6000      0.638
+  0.7000      0.480
+  0.8000      0.350
+  0.9000      0.350
+  1.0000      0.350
+Dynamic Parameter：第三通道 = 帧号（锯齿，Linear；每 2.133 s 从 0 走到 64，约 2.5 个循环）
+  相对时间    帧号
+  0.0000      0.000
+  0.3935      63.990
+  0.3936      0.000
+  0.7871      63.990
+  0.7872      0.000
+  1.0000      34.597
+Color Over Life：白色常量（颜色全由 Ramp 给），Alpha = 1；亮度倍数按项目曝光调
+摆动：已烘焙在贴图里（星头在面片上端左右摆、尾迹是波浪），不需要 Orbit
+
+【发射器 2：消散（接在发射器 1 后面）】
+Required：Material = 消散材质实例；Screen Alignment = Velocity；Emitter Delay = 5.420 s；Emitter Duration = 1.067 s；Loops = 1
+  Pivot Offset：同发射器 1
+Spawn：Burst Count = 1，Time = 0；Lifetime = 1.067 s
+Initial Location：Z = 20000 cm（开花点，与发射器 1 到顶位置相同）
+Initial Velocity：Z = 1 cm/s（只用来给面片定方向，几乎不动；不要 Drag、Const Acceleration）
+Initial Size：X = 507 cm，Y = 1418 cm（= 发射器 1 最后一个 Y 倍数 0.350 × 4052 cm，两段长度一致）
+Dynamic Parameter：第三通道 = 帧号（Linear）
+  0.0000      0.000
+  1.0000      32.000
+Color Over Life：同发射器 1
+接力：发射器 1 在 5.420 s 结束时正好播到循环第 34 帧；消散贴图第 0 帧就是这一帧的画面，
+  之后停止喷火花、已有火花继续冷却熄灭，所以两段接上没有跳变。改了 Lifetime 或帧号曲线的话，消散贴图要重新烘焙。
+
+【overdraw】
+面片 5.1 × 40.5 m（1:8 细长条，只有一个粒子），格子内容占比见预览
