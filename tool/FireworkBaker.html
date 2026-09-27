@@ -26,7 +26,9 @@
   .tabs{display:flex;gap:2px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:2px}
   .tabs button,.seg button{background:none;border:0;padding:5px 14px;border-radius:6px;cursor:pointer;color:var(--dim)}
   .tabs button[aria-selected="true"],.seg button[aria-pressed="true"]{background:var(--panel2);color:var(--gold2);box-shadow:inset 0 0 0 1px var(--line2)}
-  #status{margin-left:auto;color:var(--dim);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .gpu{margin-left:auto;font-size:12px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:38ch}
+  .gpu.bad{color:var(--warn)}
+  #status{color:var(--dim);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
   #status.on{color:var(--gold)}
   main{display:grid;grid-template-columns:minmax(0,1fr) 380px;min-height:0}
   .stage{display:flex;flex-direction:column;min-width:0;min-height:0;padding:12px 16px;gap:10px}
@@ -108,11 +110,12 @@
 <body>
 <div class="app">
   <header class="top">
-    <div class="brand"><span class="mark">菊</span><b>烟花母版烘焙器</b><small>通道打包序列帧 · Dynamic Parameter 帧号 · RGBA 接力</small></div>
+    <div class="brand"><span class="mark">菊</span><b>烟花母版烘焙器</b><small>通道打包序列帧 · GPU 模拟 · v2.0</small></div>
     <nav class="tabs" role="tablist">
       <button role="tab" data-tab="master" aria-selected="true" id="tab-master">母版</button>
       <button role="tab" data-tab="combo" aria-selected="false" id="tab-combo">组合</button>
     </nav>
+    <div class="gpu" id="gpu"></div>
     <div id="status"></div>
   </header>
   <main>
@@ -169,6 +172,7 @@
           <label class="field">输出<select id="x-out"><option value="combined">星头与拖尾合并</option><option value="split">星头、拖尾分开</option></select></label>
           <label class="field">编码<select id="x-enc"><option value="1">线性灰度</option><option value="2.2">Gamma 2.2（暗部更细）</option></select></label>
           <label class="field">取帧<select id="x-frame"><option value="auto">自动（按运动快慢）</option><option value="uniform">均匀</option></select></label>
+          <label class="field">模拟内核<select id="x-engine"><option value="gpu">GPU（火花在显卡上算）</option><option value="cpu">CPU（旧版，可复现旧母版）</option></select></label>
           <label class="field">面片大小<select id="x-zoom"><option value="on">随开花放大（Size By Life）</option><option value="off">固定大小</option></select></label>
         </div>
         <div class="stats" id="stats">烘焙中…</div>
@@ -270,7 +274,7 @@ const BASE = {
   subDelay: 0.9, subJit: 10, subStars: 36, subSpeed: 40, subBurn: 0.9, subTail: 0, carrierTail: 30,
   spin: 14, chaos: 0.8, beeSpeed: 28,
   shutter: 0.6, fpsFloor: 24,
-  texW: 2048, texH: 2048, cols: 8, rows: 8, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'auto', zoom: 'on'
+  texW: 2048, texH: 2048, cols: 8, rows: 8, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'auto', zoom: 'on', engine: 'gpu'
 };
 const MAT_BASE = { colA: '#ffffff', colB: '#ffffff', chg: 9, ramp0: '#000000', ramp1: '#7a1e04', ramp2: '#ffa53a', ramp3: '#fff3dc', headInt: 1, tailInt: 1 };
 const RAMP_POS = [0, 0.3, 0.65, 1];
@@ -365,8 +369,8 @@ class Sparks {
 class Sim {
   constructor(P) {
     this.P = P; this.rng = new RNG(P.seed); this.rr = new RNG(P.seed + 9973);
-    this.t = 0; this.stars = [];
-    this.sp = new Sparks(P.type === 'kamuro' || P.type === 'yanagi' ? 450000 : 250000);
+    this.t = 0; this.stars = []; this.all = []; this.noSparks = P.engine === 'gpu';
+    this.sp = new Sparks(this.noSparks ? 1 : (P.type === 'kamuro' || P.type === 'yanagi' ? 450000 : 250000));
     this.c = G / (P.vt * P.vt);
     this.flashes = [{ t0: 0, x: 0, y: 0, I: P.flash, sig: Math.max(2, P.v0 * 0.045) }];
     const R = randRot(this.rng), dirs = fibDirs(P.stars, this.rng, R, P.dirJit);
@@ -379,7 +383,8 @@ class Sim {
     }
   }
   mk(x, y, z, vx, vy, vz, burn, kind, rate, I) {
-    const s = { x, y, z, vx, vy, vz, age: 0, burn, kind, rate, I, flick: 1, alive: true };
+    const s = { x, y, z, vx, vy, vz, age: 0, burn, kind, rate, I, flick: 1, alive: true, birth: this.t, id: this.all.length };
+    this.all.push(s);
     if (this.P.type === 'hachi') {
       const a = randUnit(this.rng); s.ax = a[0]; s.ay = a[1]; s.az = a[2];
       s.om = this.P.spin * (0.6 + 0.8 * this.rng.u()) * (this.rng.u() < 0.5 ? -1 : 1);
@@ -421,7 +426,7 @@ class Sim {
       }
       s.x += s.vx * h; s.y += s.vy * h; s.z += s.vz * h;
       s.flick = clamp(s.flick + rng.n() * sq * 2.2 * P.flicker, 1 - P.flicker, 1 + P.flicker * 0.4);
-      if (s.rate > 0) {
+      if (s.rate > 0 && !this.noSparks) {
         const k = rng.poisson(s.rate * h), spr = P.sparkSpread;
         for (let j = 0; j < k; j++) {
           const u = rng.u(), inh = P.sparkInherit * (0.3 + 1.4 * rng.u());
@@ -502,6 +507,13 @@ function measure(P) {
     }
     if (s.t < 0.25) r = Math.max(r, 3 * Math.max(2, P.v0 * 0.045));
     prof.push([s.t, v, r]);
+  }
+  if (P.engine === 'gpu') {
+    // 火花不在 CPU 上模拟：按散布和下坠的解析解估计火花超出星体的范围（偏保守）
+    const L = P.sparkLife * 1.6, k = Math.max(P.sparkDrag, 1e-3), g = G * P.sparkGrav;
+    const drop = g / k * (L - (1 - Math.exp(-k * L)) / k), spread = P.sparkSpread * L * 0.7 + 1;
+    x0 -= spread; x1 += spread; y1 += spread; y0 -= drop + spread;
+    for (const q of prof) q[2] += spread + drop;
   }
   return { x0, x1, y0, y1, prof };
 }
@@ -656,9 +668,46 @@ void main(){ float panes=uChans>1.5?2.:1.;
   vec2 cc=floor(tuv*grid); if(uFrame>=0.&&float(ch)==fc&&cc==cell){ vec2 f=abs(fract(tuv*grid)-.5); vec2 lw2=3./cellPx; if(f.x>.5-lw2.x||f.y>.5-lw2.y) col=vec3(.91,.70,.37); }
   o=vec4(col,1.); }`;
 
+// GPU 火花：每颗火花由编号推出所属星体和出生时刻，从轨迹纹理取星体当时的状态，
+// 再用线性阻力 + 重力的解析解直接算出任意时刻的位置，显存里不存任何火花状态
+const VS_SPK = `#version 300 es
+precision highp float; precision highp int; precision highp sampler2D;
+uniform sampler2D uPos, uVel, uInfo;
+uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw;
+uniform float uInh, uSpread, uLife, uK, uG, uT0, uCool, uTwk, uBright, uSize;
+uniform vec4 uView; uniform float uPPM, uMax;
+out float vI; out float vSig; out float vPS;
+uint pcg(uint v){ uint s=v*747796405u+2891336453u; uint w=((s>>((s>>28u)+4u))^s)*277803737u; return (w>>22u)^w; }
+float hsh(uint a, uint b){ return float(pcg(a ^ pcg(b + uint(uSeed)*2654435769u))) / 4294967296.0; }
+float gss(uint a, uint b){ float u1=max(hsh(a,b),1e-7), u2=hsh(a,b+101u); return sqrt(-2.*log(u1))*cos(6.2831853*u2); }
+void cull(){ gl_Position=vec4(2.,2.,2.,1.); gl_PointSize=1.; vI=0.; vSig=1.; vPS=1.; }
+void main(){
+  int id=gl_VertexID; int s=id/uM; int j=id-s*uM; uint uid=uint(id);
+  vec4 inf=texelFetch(uInfo,ivec2(0,s),0);
+  if(inf.z<=0.){ cull(); return; }
+  float tb=inf.x+(float(j)+hsh(uid,1u))/inf.z;
+  if(tb>=inf.y||tb>uT){ cull(); return; }
+  float life=uLife*exp(.45*gss(uid,2u)); float age=uT-tb;
+  if(age>=life){ cull(); return; }
+  float fi=tb/uDT; int i0=clamp(int(floor(fi)),0,uNs-2); float f=clamp(fi-float(i0),0.,1.);
+  vec3 p0=texelFetch(uPos,ivec2(i0,s),0).xyz, p1=texelFetch(uPos,ivec2(i0+1,s),0).xyz;
+  vec3 v0=texelFetch(uVel,ivec2(i0,s),0).xyz, v1=texelFetch(uVel,ivec2(i0+1,s),0).xyz;
+  float f2=f*f, f3=f2*f;
+  vec3 sp=(2.*f3-3.*f2+1.)*p0+(f3-2.*f2+f)*uDT*v0+(-2.*f3+3.*f2)*p1+(f3-f2)*uDT*v1;
+  vec3 sv=mix(v0,v1,f);
+  float inh=uInh*(.3+1.4*hsh(uid,4u));
+  vec3 vel=sv*inh+vec3(gss(uid,5u),gss(uid,7u),gss(uid,9u))*uSpread;
+  vec3 g=vec3(0.,-uG,0.); vec3 p;
+  if(uK>1e-4){ float e=exp(-uK*age); p=sp+g/uK*age+(vel-g/uK)*(1.-e)/uK; } else p=sp+vel*age+.5*g*age*age;
+  float T=(uT0+120.*gss(uid,11u))*(1.-uCool*age/life);
+  float glw=(T-900.)/1150.; if(glw<=0.){ cull(); return; } glw=glw*glw*glw;
+  float tw=1.+uTwk*(2.*hsh(uid,uint(uTw)*16u+13u)-1.);
+  float sig=max(uSize*.5*uPPM,.55); float ps=min(ceil(sig*6.)+1.,uMax);
+  gl_Position=vec4((p.xy-uView.xy)/uView.zw,0.,1.); gl_PointSize=ps; vI=glw*tw*uBright*.6; vSig=sig; vPS=ps;
+}`;
 const PR = {
   pts: compile(VS_PTS, FS_PTS), pack: compile(VS_QUAD, FS_PACK), enc: compile(VS_QUAD, FS_ENC),
-  rgmat: compile(VS_QUAD, FS_RGMAT), mat: compile(VS_RECT, FS_MAT), post: compile(VS_QUAD, FS_POST), atlas: compile(VS_QUAD, FS_ATLAS)
+  spk: compile(VS_SPK, FS_PTS), rgmat: compile(VS_QUAD, FS_RGMAT), mat: compile(VS_RECT, FS_MAT), post: compile(VS_QUAD, FS_POST), atlas: compile(VS_QUAD, FS_ATLAS)
 };
 const quadVAO = gl.createVertexArray(); gl.bindVertexArray(quadVAO);
 const qb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, qb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0, 1, 0, 0, 1, 1, 1]), gl.STATIC_DRAW);
@@ -670,6 +719,60 @@ gl.enableVertexAttribArray(1); gl.vertexAttribPointer(1, 1, gl.FLOAT, false, 16,
 gl.enableVertexAttribArray(2); gl.vertexAttribPointer(2, 1, gl.FLOAT, false, 16, 12);
 gl.bindVertexArray(null);
 const bufH = new Float32Array(4 * 30000), bufT = new Float32Array(4 * 450000);
+const emptyVAO = gl.createVertexArray();
+const MAX_TEX = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+function floatTex(w, h, data) {
+  const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, w, h, 0, gl.RGBA, gl.FLOAT, data);
+  return t;
+}
+// 星体轨迹：在 CPU 上把星体（含千轮子花）跑一遍，按固定间隔采样位置和速度，打包成浮点纹理
+function buildTrack(P) {
+  P = { ...P, engine: 'gpu' };
+  const sim = new Sim(P), D = P.duration;
+  const k = Math.max(2, Math.ceil(D / (MAX_TEX - 4) / H_STEP)), dt = k * H_STEP, Ns = Math.ceil(D / dt) + 2;
+  const snaps = [];
+  for (let i = 0; i < Ns; i++) {
+    const n = sim.all.length, a = new Float32Array(n * 6);
+    for (let q = 0; q < n; q++) { const st = sim.all[q]; a[q * 6] = st.x; a[q * 6 + 1] = st.y; a[q * 6 + 2] = st.z; a[q * 6 + 3] = st.vx; a[q * 6 + 4] = st.vy; a[q * 6 + 5] = st.vz; }
+    snaps.push(a);
+    for (let q = 0; q < k; q++) sim.step(H_STEP);
+  }
+  const nStars = Math.min(sim.all.length, MAX_TEX);
+  const pos = new Float32Array(Ns * nStars * 4), vel = new Float32Array(Ns * nStars * 4), info = new Float32Array(nStars * 4);
+  let M = 1, total = 0;
+  for (let q = 0; q < nStars; q++) {
+    const st = sim.all[q], first = snaps.findIndex(a => a.length > q * 6);
+    for (let i = 0; i < Ns; i++) {
+      const a = snaps[Math.max(i, first)], o = (q * Ns + i) * 4;
+      pos[o] = a[q * 6]; pos[o + 1] = a[q * 6 + 1]; pos[o + 2] = a[q * 6 + 2];
+      vel[o] = a[q * 6 + 3]; vel[o + 1] = a[q * 6 + 4]; vel[o + 2] = a[q * 6 + 5];
+    }
+    const death = Math.min(st.birth + st.burn, D);
+    info[q * 4] = st.birth; info[q * 4 + 1] = death; info[q * 4 + 2] = st.rate;
+    if (st.rate > 0) { const c = Math.ceil((death - st.birth) * st.rate) + 1; M = Math.max(M, c); total += c; }
+  }
+  gl.activeTexture(gl.TEXTURE0);
+  return { pos: floatTex(Ns, nStars, pos), vel: floatTex(Ns, nStars, vel), info: floatTex(1, nStars, info), nStars, M, Ns, dt, total, P };
+}
+function disposeTrack(tr) { if (tr) { gl.deleteTexture(tr.pos); gl.deleteTexture(tr.vel); gl.deleteTexture(tr.info); } }
+function drawSparksGPU(tr, t, view, ppm, chan, w, tw) {
+  const P = tr.P, pr = PR.spk; gl.useProgram(pr.p);
+  gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tr.pos); gl.uniform1i(pr.u.uPos, 2);
+  gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tr.vel); gl.uniform1i(pr.u.uVel, 3);
+  gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, tr.info); gl.uniform1i(pr.u.uInfo, 4);
+  gl.activeTexture(gl.TEXTURE0);
+  gl.uniform1f(pr.u.uT, t); gl.uniform1f(pr.u.uDT, tr.dt); gl.uniform1i(pr.u.uM, tr.M); gl.uniform1i(pr.u.uNs, tr.Ns);
+  gl.uniform1i(pr.u.uSeed, P.seed | 0); gl.uniform1i(pr.u.uTw, tw | 0);
+  gl.uniform1f(pr.u.uInh, P.sparkInherit); gl.uniform1f(pr.u.uSpread, P.sparkSpread); gl.uniform1f(pr.u.uLife, P.sparkLife);
+  gl.uniform1f(pr.u.uK, P.sparkDrag); gl.uniform1f(pr.u.uG, G * P.sparkGrav); gl.uniform1f(pr.u.uT0, P.T0); gl.uniform1f(pr.u.uCool, P.cooling);
+  gl.uniform1f(pr.u.uTwk, P.twinkle); gl.uniform1f(pr.u.uBright, P.sparkBright); gl.uniform1f(pr.u.uSize, P.sparkSize);
+  gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
+  gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w);
+  gl.bindVertexArray(emptyVAO); gl.drawArrays(gl.POINTS, 0, tr.nStars * tr.M); gl.bindVertexArray(null);
+}
 
 class Target {
   constructor(w, h, ifmt, mips = false) {
@@ -722,7 +825,7 @@ async function bake(P, scale, onProg) {
   gl.activeTexture(gl.TEXTURE0);
   const fH = new Target(N, NH, gl.RGBA16F), fT = new Target(N, NH, gl.RGBA16F), sst = new Target(ssW, ssH, gl.RGBA16F);
   fH.clear(); fT.clear();
-  const sim = new Sim(P), light = [];
+  const sim = new Sim(P), light = [], gpu = P.engine === 'gpu', track = gpu ? buildTrack(P) : null;
   for (let f = 0; f < L.F; f++) {
     const tc = pl.times[f], W = Math.max(P.shutter * pl.dur[f], 1e-4);
     const nsub = clamp(Math.ceil(W / (1 / 300)), 1, 16);
@@ -736,7 +839,8 @@ async function bake(P, scale, onProg) {
       for (let i = 0; i < nh; i++) lsum += bufH[i * 4 + 2];
       for (let i = 0; i < nt; i++) lsum += bufT[i * 4 + 2] * 0.3;
       drawPoints(bufH, nh, view, ppm, [1, 0, 0, 0], 1 / nsub);
-      drawPoints(bufT, nt, view, ppm, [0, 1, 0, 0], 1 / nsub);
+      if (gpu) drawSparksGPU(track, ts, view, ppm, [0, 1, 0, 0], 1 / nsub, f * 16 + j);
+      else drawPoints(bufT, nt, view, ppm, [0, 1, 0, 0], 1 / nsub);
     }
     light.push(lsum / nsub);
     additive(false);
@@ -764,12 +868,21 @@ async function bake(P, scale, onProg) {
   head.bind(); gl.uniform1f(pr.u.uWhich, comb ? 0 : 1); drawQuad();
   if (tail) { tail.bind(); gl.uniform1f(pr.u.uWhich, 2); drawQuad(); }
   gl.activeTexture(gl.TEXTURE0);
-  fH.dispose(); fT.dispose(); sst.dispose();
+  fH.dispose(); fT.dispose(); sst.dispose(); disposeTrack(track);
+  // 灯光曲线与暗帧：直接按烘焙出的贴图亮度统计（两种内核一致，火花也算在内）
+  const imgs = [readRGBA8(head)]; if (tail) imgs.push(readRGBA8(tail));
+  const cellMax = [];
+  for (let f = 0; f < L.F; f++) {
+    const ch = L.chans === 4 ? Math.floor(f / L.per) : 0, k = f % L.per, col = k % L.cols, row = Math.floor(k / L.cols);
+    const y0 = NH - (row + 1) * chh, x0 = col * cw; let sum = 0, mx = 0;
+    for (const im of imgs) for (let y = y0; y < y0 + chh; y += 2) { let o = (y * N + x0) * 4 + ch; for (let x = 0; x < cw; x += 2, o += 8) { const v = im[o]; if (v) { sum += Math.pow(v / 255, P.encGamma); if (v > mx) mx = v; } } }
+    light[f] = sum * sizeAt(plD, pl.times[f]) ** 2; cellMax.push(mx);
+  }
   const lmax = Math.max(1e-6, ...light);
-  let darkTail = 0; for (let f = L.F - 1; f >= 0 && light[f] / lmax < 0.02; f--) darkTail++;
+  let darkTail = 0; for (let f = L.F - 1; f >= 0 && cellMax[f] < 10; f--) darkTail++;
   const lightKeys = simplify([[0, light[0] / lmax], ...pl.times.map((t, i) => [t / P.duration, light[i] / lmax]), [1, 0]], 8, 0.02)
     .map(([u, v]) => [+u.toFixed(4), +v.toFixed(3)]);
-  return { N, NH, cw, chh, scale, head, tail, P, meta: { ...pl, duration: P.duration, expoH: eH, expoT: eT, lightKeys, darkTail } };
+  return { N, NH, cw, chh, scale, head, tail, P, meta: { ...pl, duration: P.duration, expoH: eH, expoT: eT, lightKeys, darkTail, sparkSlots: track ? track.total : 0 } };
 }
 function disposeBake(b) { if (b) { b.head.dispose(); b.tail && b.tail.dispose(); } }
 
@@ -849,7 +962,7 @@ function cascadeText(name, b, M) {
   if (m.maxDisp > 3) warn.push(`每帧最大位移 ${m.maxDisp.toFixed(1)} 像素，开花初期可能跳帧：可增加格子数或调高最低帧率`);
   if (m.darkTail > L.F * 0.05) warn.push(`末尾 ${m.darkTail} 帧接近全黑，可把序列时长缩短到约 ${m.times[L.F - m.darkTail].toFixed(2)} s`);
   return `烟花母版：${name}（${TYPE_NAMES[P.type]}）
-工具：烟花母版烘焙器 1.1
+工具：烟花母版烘焙器 2.0（模拟内核：${P.engine === 'gpu' ? 'GPU' : 'CPU'}）
 
 【贴图】
 ${texList}
@@ -919,7 +1032,7 @@ async function exportMaster() {
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, state.M))]);
     const m = b.meta, L = m.L;
     const json = {
-      name, type: state.P.type, typeName: TYPE_NAMES[state.P.type], tool: '烟花母版烘焙器 1.1',
+      name, type: state.P.type, typeName: TYPE_NAMES[state.P.type], tool: '烟花母版烘焙器 2.0', engine: state.P.engine,
       texture: { width: state.P.texW, height: state.P.texH, cols: L.cols, rows: L.rows, channels: L.chans, frames: L.F, cellPx: [L.cellW, L.cellH],
         order: L.chans === 4 ? '先填满 R 的全部格子再接 G、B、A；格子行优先，左上为第 0 帧' : '单通道，行优先，左上为第 0 帧',
         encoding: state.P.encGamma === 1 ? '线性灰度' : `gamma ${state.P.encGamma}`, output: b.tail ? 'split' : 'combined' },
@@ -949,7 +1062,7 @@ const state = {
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
   lib: [], layers: [], comboName: '八重芯变色菊', libReady: false
 };
-const live = { sim: null, gen: -1 };
+const live = { sim: null, gen: -1, track: null, tgen: -1, tw: 0 };
 let hdrT = null, rgT = null;
 
 function busy(on, text, p) {
@@ -984,7 +1097,8 @@ function showStats(b) {
     `平均 <b>${m.avgFps.toFixed(1)}</b> fps · 最低 <span class="${cls(m.minFps >= 24)}">${m.minFps.toFixed(1)} fps</span><br>` +
     `每帧最大位移 <span class="${cls(m.maxDisp <= 3)}">${m.maxDisp.toFixed(1)} px</span>（建议 ≤ 3）<br>` +
     `精灵 ${(m.Ww).toFixed(0)}×${(m.Wh).toFixed(0)} m · BC7 约 ${mb} MB<br>` +
-    `平均面片面积 <b>${Math.round(m.area * 100)}%</b>${m.zoom ? '（随开花放大）' : '（固定大小）'}` +
+    `平均面片面积 <b>${Math.round(m.area * 100)}%</b>${m.zoom ? '（随开花放大）' : '（固定大小）'}<br>` +
+    `模拟内核 ${P.engine === 'gpu' ? 'GPU · 火花 ' + m.sparkSlots.toLocaleString() + ' 颗' : 'CPU'}` +
     (m.darkTail > L.F * 0.05 ? `<br><span class="warn">末尾 ${m.darkTail} 帧接近全黑，可把序列时长缩短到约 ${m.times[L.F - m.darkTail].toFixed(2)} s</span>` : '');
 }
 const GRID_OPTS = [1, 2, 4, 8, 16];
@@ -992,7 +1106,7 @@ function syncExport() {
   const P = state.P;
   for (const id of ['x-cols', 'x-rows']) { const el = $('#' + id); if (!el.options.length) for (const n of GRID_OPTS) el.add(new Option(n, n)); }
   $('#x-size').value = `${P.texW}x${P.texH}`; $('#x-cols').value = P.cols; $('#x-rows').value = P.rows;
-  $('#x-chans').value = P.chans; $('#x-out').value = P.outMode; $('#x-enc').value = P.encGamma; $('#x-frame').value = P.frameMode; $('#x-zoom').value = P.zoom;
+  $('#x-chans').value = P.chans; $('#x-out').value = P.outMode; $('#x-enc').value = P.encGamma; $('#x-frame').value = P.frameMode; $('#x-zoom').value = P.zoom; $('#x-engine').value = P.engine;
 }
 
 function fmtV(v, step) { const d = step >= 1 ? 0 : step >= 0.1 ? 1 : 2; return (+v).toFixed(d); }
@@ -1172,6 +1286,8 @@ function renderLive() {
   if (!m) { hdrT.clear(); post(); hudText = '首次烘焙中…'; return; }
   const t = Math.min(state.t, P.duration);
   if (!live.sim || live.gen !== state.gen || t < live.sim.t - 1e-6) { live.sim = new Sim({ ...P }); live.gen = state.gen; }
+  const gpu = P.engine === 'gpu';
+  if (gpu && live.tgen !== state.gen) { disposeTrack(live.track); live.track = buildTrack(P); live.tgen = state.gen; }
   const sim = live.sim, W = Math.max(1 / 480, P.shutter * (1 / 60) * Math.max(state.speed, 0.25)), nsub = 3;
   let guard = 0; while (sim.t < t - W - 1e-9 && guard++ < 40000) sim.step(H_STEP);
   const view = squareView(m), ppm = rgT.w / (2 * view[2]);
@@ -1182,7 +1298,8 @@ function renderLive() {
     while (sim.t < ts - 1e-9) sim.step(H_STEP);
     [nh, nt] = sim.gather(bufH, bufT);
     drawPoints(bufH, nh, view, ppm, [1, 0, 0, 0], 1 / nsub);
-    drawPoints(bufT, nt, view, ppm, [0, 1, 0, 0], 1 / nsub);
+    if (gpu) drawSparksGPU(live.track, ts, view, ppm, [0, 1, 0, 0], 1 / nsub, ++live.tw);
+    else drawPoints(bufT, nt, view, ppm, [0, 1, 0, 0], 1 / nsub);
   }
   additive(false);
   hdrT.bind(); const pr = PR.rgmat; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, rgT.tex);
@@ -1190,7 +1307,7 @@ function renderLive() {
   gl.uniform1f(pr.u.uG, P.encGamma); gl.uniform1f(pr.u.uComb, P.outMode === 'combined' ? 1 : 0);
   setMatUniforms(pr, state.M, t); drawQuad();
   post();
-  hudText = `实时物理 · 星 ${sim.stars.filter(s => s.alive).length} · 火花 ${sim.sp.n} · 精灵 ${m.Ww.toFixed(0)}×${m.Wh.toFixed(0)} m`;
+  hudText = `实时物理 · ${gpu ? 'GPU' : 'CPU'} · 星 ${sim.stars.filter(s => s.alive).length} · 火花${gpu ? '槽位 ' + live.track.total.toLocaleString() : ' ' + sim.sp.n} · 精灵 ${m.Ww.toFixed(0)}×${m.Wh.toFixed(0)} m`;
 }
 function renderExport() {
   const b = state.bake; hdrT.clear();
@@ -1267,6 +1384,7 @@ $('#x-out').addEventListener('change', e => { state.P.outMode = e.target.value; 
 $('#x-enc').addEventListener('change', e => { state.P.encGamma = +e.target.value; onParam(); });
 $('#x-frame').addEventListener('change', e => { state.P.frameMode = e.target.value; onParam(); });
 $('#x-zoom').addEventListener('change', e => { state.P.zoom = e.target.value; onParam(); });
+$('#x-engine').addEventListener('change', e => { state.P.engine = e.target.value; onParam(); });
 $('#expo').addEventListener('input', e => state.expo = +e.target.value);
 $('#viewSeg').addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return; state.view = b.dataset.view;
@@ -1290,6 +1408,7 @@ $('#fileIn').addEventListener('change', async e => {
     const j = JSON.parse(await f.text()); const p = j.params || j;
     if (!TYPES[p.type]) throw new Error('不认识的花型');
     const d = defaultsFor(p.type); state.P = { ...d.P, ...p }; state.M = { ...d.M, ...(j.materialDefaults || {}) };
+    if (!p.engine) { state.P.engine = 'cpu'; flash('旧版母版：已切换到 CPU 内核以完全复现'); }
     if (j.name) state.name = j.name; buildMasterPanel(); onParam(); flash('已导入 ' + (j.name || f.name));
   } catch (err) { flash('导入失败：' + err.message, true); }
   e.target.value = '';
@@ -1317,10 +1436,18 @@ document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click
 $('#btnAddLayer').addEventListener('click', () => { if (state.lib[0]) { state.layers.push(newLayer(state.lib[0])); buildComboPanel(); } });
 $('#btnExportCombo').addEventListener('click', exportCombo);
 
+(function showGPU() {
+  let name = '';
+  try { const ext = gl.getExtension('WEBGL_debug_renderer_info'); name = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER); } catch (e) { }
+  const soft = /swiftshader|llvmpipe|software|basic render/i.test(name || '');
+  const el = $('#gpu'); el.className = 'gpu' + (soft ? ' bad' : '');
+  el.textContent = soft ? '当前是软件渲染，没有用到显卡' : ('显卡：' + (name || '未知').replace(/^ANGLE \((.*)\)$/, '$1'));
+  el.title = name;
+})();
 buildMasterPanel();
 runPreviewBake();
 requestAnimationFrame(loop);
-window.__fw = { state, bake, exportMaster, plan, measure };
+window.__fw = { state, bake, exportMaster, plan, measure, buildTrack };
 </script>
 </body>
 </html>
