@@ -110,7 +110,7 @@
 <body>
 <div class="app">
   <header class="top">
-    <div class="brand"><span class="mark">菊</span><b>烟花母版烘焙器</b><small>通道打包序列帧 · GPU 模拟 · v2.0</small></div>
+    <div class="brand"><span class="mark">菊</span><b>烟花母版烘焙器</b><small>通道打包序列帧 · GPU 模拟 · v2.1</small></div>
     <nav class="tabs" role="tablist">
       <button role="tab" data-tab="master" aria-selected="true" id="tab-master">母版</button>
       <button role="tab" data-tab="combo" aria-selected="false" id="tab-combo">组合</button>
@@ -130,6 +130,12 @@
           <button data-layer="head" aria-pressed="true">星头</button>
           <button data-layer="tail" aria-pressed="false">拖尾</button>
         </div>
+        <div class="seg small" id="dispSeg" hidden>
+          <button data-disp="fit" aria-pressed="true">适应窗口</button>
+          <button data-disp="px" aria-pressed="false">1:1 像素</button>
+          <button data-disp="game" aria-pressed="false">游戏内大小</button>
+        </div>
+        <label class="expo" id="distBox" hidden>观看距离<input type="range" id="dist" min="200" max="3000" step="50" value="800"><output id="distOut">800 m</output></label>
         <label class="expo">显示曝光<input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"></label>
       </div>
       <div class="canvas-wrap">
@@ -281,7 +287,7 @@ const RAMP_POS = [0, 0.3, 0.65, 1];
 const TYPES = {
   kiku: { p: {}, m: {} },
   botan: { p: { stars: 90, sparkRate: 0, headSize: 1.4, burn: 2.4, flicker: 0.2, lastFlare: 0.3 }, m: { colA: '#ffc766', colB: '#dfe8ff', chg: 1.35 } },
-  kamuro: { p: { duration: 5.2, stars: 110, v0: 140, vt: 16, burn: 3.8, burnJit: 10, fade: 0.55, lastFlare: 0, headBright: 0.5, headSize: 0.9, sparkRate: 230, sparkLife: 1.1, sparkSpread: 1.4, sparkInherit: 0.25, sparkDrag: 1.5, T0: 1950, cooling: 0.35, sparkSize: 0.3 }, m: { ramp1: '#8a3208', ramp2: '#ffc266', ramp3: '#fff0d2' } },
+  kamuro: { p: { duration: 5.2, stars: 110, v0: 220, vt: 24, burn: 3.8, burnJit: 10, fade: 0.55, lastFlare: 0, headBright: 0.5, headSize: 0.9, sparkRate: 230, sparkLife: 1.1, sparkSpread: 1.4, sparkInherit: 0.25, sparkDrag: 1.5, T0: 1950, cooling: 0.35, sparkSize: 0.3 }, m: { ramp1: '#8a3208', ramp2: '#ffc266', ramp3: '#fff0d2' } },
   yanagi: { p: { duration: 6.5, stars: 90, v0: 95, vt: 9, grav: 1.25, burn: 5.2, burnJit: 12, fade: 0.6, lastFlare: 0, headBright: 0.45, headSize: 0.8, sparkRate: 200, sparkLife: 1.8, sparkSpread: 0.5, sparkInherit: 0.45, sparkDrag: 0.8, T0: 1900, cooling: 0.33, sparkSize: 0.28 }, m: { ramp1: '#7e2e08', ramp2: '#ffbb5c', ramp3: '#ffedcc' } },
   senrin: { p: { duration: 2.8, stars: 18, v0: 95, vt: 20, burn: 0.9, burnJit: 6, sparkRate: 0, headBright: 1, headSize: 0.6, lastFlare: 0.2, subDelay: 0.85, subStars: 40, subSpeed: 45, subBurn: 0.95, subTail: 25, carrierTail: 40 }, m: { colA: '#ff7fb5', colB: '#ffe27a', chg: 1.4 } },
   hachi: { p: { duration: 2.6, stars: 60, v0: 110, vt: 30, burn: 1.7, burnJit: 8, fade: 0.2, lastFlare: 0, headBright: 0.8, headSize: 0.7, sparkRate: 170, sparkLife: 0.35, sparkSpread: 3, sparkInherit: 0.08, sparkDrag: 3, T0: 2450, cooling: 0.5 }, m: { colA: '#ffffff', colB: '#dfe6ff', chg: 9, ramp1: '#b0602c', ramp2: '#ffe2b8', ramp3: '#ffffff' } }
@@ -962,7 +968,7 @@ function cascadeText(name, b, M) {
   if (m.maxDisp > 3) warn.push(`每帧最大位移 ${m.maxDisp.toFixed(1)} 像素，开花初期可能跳帧：可增加格子数或调高最低帧率`);
   if (m.darkTail > L.F * 0.05) warn.push(`末尾 ${m.darkTail} 帧接近全黑，可把序列时长缩短到约 ${m.times[L.F - m.darkTail].toFixed(2)} s`);
   return `烟花母版：${name}（${TYPE_NAMES[P.type]}）
-工具：烟花母版烘焙器 2.0（模拟内核：${P.engine === 'gpu' ? 'GPU' : 'CPU'}）
+工具：烟花母版烘焙器 2.1（模拟内核：${P.engine === 'gpu' ? 'GPU' : 'CPU'}）
 
 【贴图】
 ${texList}
@@ -1032,7 +1038,7 @@ async function exportMaster() {
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, state.M))]);
     const m = b.meta, L = m.L;
     const json = {
-      name, type: state.P.type, typeName: TYPE_NAMES[state.P.type], tool: '烟花母版烘焙器 2.0', engine: state.P.engine,
+      name, type: state.P.type, typeName: TYPE_NAMES[state.P.type], tool: '烟花母版烘焙器 2.1', engine: state.P.engine,
       texture: { width: state.P.texW, height: state.P.texH, cols: L.cols, rows: L.rows, channels: L.chans, frames: L.F, cellPx: [L.cellW, L.cellH],
         order: L.chans === 4 ? '先填满 R 的全部格子再接 G、B、A；格子行优先，左上为第 0 帧' : '单通道，行优先，左上为第 0 帧',
         encoding: state.P.encGamma === 1 ? '线性灰度' : `gamma ${state.P.encGamma}`, output: b.tail ? 'split' : 'combined' },
@@ -1058,7 +1064,7 @@ async function exportMaster() {
 const state = {
   tab: 'master', view: 'live', atlasLayer: 'head',
   ...defaultsFor('kiku'), name: 'Kiku_01',
-  t: 0, playing: true, speed: 1, expo: 1,
+  t: 0, playing: true, speed: 1, expo: 1, disp: 'fit', dist: 800,
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
   lib: [], layers: [], comboName: '八重芯变色菊', libReady: false
 };
@@ -1247,7 +1253,7 @@ function exportCombo() {
 // ---------------- 渲染 ----------------
 function ensureTargets() {
   const box = $('#box').getBoundingClientRect();
-  const size = Math.max(256, Math.min(1024, Math.round(Math.min(box.width, box.height || box.width) * Math.min(2, devicePixelRatio || 1) / 4) * 4));
+  const size = Math.max(256, Math.min(2048, Math.round(Math.min(box.width, box.height || box.width) * (devicePixelRatio || 1) / 4) * 4));
   if (canvas.width !== size) { canvas.width = size; canvas.height = size; }
   if (!hdrT || hdrT.w !== size) { gl.activeTexture(gl.TEXTURE0); hdrT && hdrT.dispose(); rgT && rgT.dispose(); hdrT = new Target(size, size, gl.RGBA16F, true); rgT = new Target(size, size, gl.RGBA16F); }
 }
@@ -1309,14 +1315,28 @@ function renderLive() {
   post();
   hudText = `实时物理 · ${gpu ? 'GPU' : 'CPU'} · 星 ${sim.stars.filter(s => s.alive).length} · 火花${gpu ? '槽位 ' + live.track.total.toLocaleString() : ' ' + sim.sp.n} · 精灵 ${m.Ww.toFixed(0)}×${m.Wh.toFixed(0)} m`;
 }
+// 显示比例：贴图的每个像素在屏幕上被放大了几倍，是「糊」的直接原因
+// 适应窗口：整朵花铺满画布；1:1 像素：贴图像素对屏幕像素；游戏内：按观看距离和 60° 竖直视角、1080p 画面换算
+function exportView(b) {
+  const m = b.meta, sc = sizeAt(m, Math.min(state.t, m.duration)), full = squareView(m);
+  const texPPM = m.L.cellW / (m.Ww * (m.zoom ? Math.max(sc, 1e-3) : 1));   // 导出贴图：每米多少像素
+  let ppmScreen;                                                             // 画布：每米多少像素
+  if (state.disp === 'px') ppmScreen = texPPM;
+  else if (state.disp === 'game') ppmScreen = 1080 / (2 * state.dist * Math.tan(Math.PI / 6));  // 1080p、竖直视角 60°
+  else ppmScreen = canvas.width / (2 * full[2]);
+  const half = canvas.width / 2 / ppmScreen;
+  return { view: [full[0], full[1], half, half], mag: ppmScreen / texPPM, onScreen: m.Ww * (m.zoom ? sc : 1) * ppmScreen };
+}
 function renderExport() {
   const b = state.bake; hdrT.clear();
   if (!b) { post(); hudText = '烘焙中…'; return; }
+  const ev = exportView(b);
   hdrT.bind(); additive(true);
-  const f = drawLayer(b, { ...state.M, scale: 1, delay: 0, rate: 1, mirror: false }, state.t, squareView(b.meta));
+  const f = drawLayer(b, { ...state.M, scale: 1, delay: 0, rate: 1, mirror: false }, state.t, ev.view);
   additive(false); post();
-  const L = b.meta.L;
-  hudText = f < 0 ? '序列结束' : `导出效果 · 第 ${f + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(f / L.per)] + ' 通道 ' : ''}第 ${f % L.per + 1} 格 · 不混合` + (state.dirty ? ' · 等待重新烘焙' : '');
+  const L = b.meta.L, mag = ev.mag;
+  const magTxt = mag > 1.5 ? ` · 贴图放大 ${mag.toFixed(1)}×，会显糊` : ` · 贴图放大 ${mag.toFixed(1)}×`;
+  hudText = f < 0 ? '序列结束' : `导出效果 · 第 ${f + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(f / L.per)] + ' 通道 ' : ''}第 ${f % L.per + 1} 格 · 单格 ${L.cellW}×${L.cellH}` + magTxt + (state.disp === 'game' ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
 }
 function renderAtlas() {
   const b = state.bake;
@@ -1369,6 +1389,8 @@ function loop(now) {
   } catch (e) { console.error(e); hudText = '渲染出错：' + e.message; }
   $('#hud').textContent = hudText; updateLabels();
   $('#atlasSeg').hidden = state.tab !== 'master' || state.view !== 'atlas' || !(state.bake && state.bake.tail);
+  $('#dispSeg').hidden = state.tab !== 'master' || state.view !== 'export';
+  $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
   requestAnimationFrame(loop);
 }
 
@@ -1386,6 +1408,11 @@ $('#x-frame').addEventListener('change', e => { state.P.frameMode = e.target.val
 $('#x-zoom').addEventListener('change', e => { state.P.zoom = e.target.value; onParam(); });
 $('#x-engine').addEventListener('change', e => { state.P.engine = e.target.value; onParam(); });
 $('#expo').addEventListener('input', e => state.expo = +e.target.value);
+$('#dispSeg').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return; state.disp = b.dataset.disp;
+  for (const x of $('#dispSeg').children) x.setAttribute('aria-pressed', String(x === b));
+});
+$('#dist').addEventListener('input', e => { state.dist = +e.target.value; $('#distOut').textContent = state.dist + ' m'; });
 $('#viewSeg').addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return; state.view = b.dataset.view;
   for (const x of $('#viewSeg').children) x.setAttribute('aria-pressed', String(x === b));
