@@ -1,0 +1,5 @@
+# 临时文件
+*.zip
+__pycache__/
+.DS_Store
+Thumbs.db
