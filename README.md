@@ -13,6 +13,7 @@
 | `tool/FireworkBaker.html` | 烘焙器（单文件） |
 | `samples/Kiku_01/` | 菊的样例导出：2K 贴图、渐变图、Cascade 参数表、曲线 CSV、参数 JSON |
 | `research/python/` | 早期的 Python 离线渲染与轨迹时间图实验，仅供参考 |
+| `PROGRESS.md` | 未完成事项与进度 |
 
 ## 导出格式（与项目材质约定）
 
