@@ -24,9 +24,10 @@ def load(key):
     return m, loop, fade, ramp
 
 
-def cell(tex, f):
-    c, k = divmod(int(f), COLS)
-    return tex[:, k * CW:(k + 1) * CW, c]
+def cell(tex, f, m=None):
+    cols, cw = (m['cols'], m['cw']) if m and 'cols' in m else (COLS, CW)
+    c, k = divmod(int(f), cols)
+    return tex[:, k * cw:(k + 1) * cw, c]
 
 
 def colorize(v, ramp):
@@ -42,11 +43,11 @@ def panel(key, t, fonts=None):
     if t <= T:
         z = (v0 + 9.81 / k) * (1 - math.exp(-k * t)) / k - 9.81 / k * t
         ks = m['size_keys_y']; sy = float(np.interp(t / T, [a for a, _ in ks], [b for _, b in ks]))
-        v = cell(loop, math.floor((t % (m['loop_frames'] / m['fps'])) * m['fps']) % m['loop_frames'])
+        v = cell(loop, math.floor((t % (m['loop_frames'] / m['fps'])) * m['fps']) % m['loop_frames'], m)
     else:
         tau = t - T; f = math.floor(tau * m['fps'])
         if f >= m['fade_frames']: return img, zoom
-        z = Ha; sy = m['size_keys_y'][-1][1]; v = cell(fade, f)
+        z = Ha; sy = m['size_keys_y'][-1][1]; v = cell(fade, f, m)
     col = colorize(v, ramp)
     # 面片：星头（Pivot）在 z 处，向下拉长 H × sy
     Wp = max(2, int(round(m['W'] * ppm))); Hp = max(2, int(round(m['H'] * sy * ppm)))
