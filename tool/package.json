@@ -1,0 +1,7 @@
+{
+  "name": "firework-baker-batch",
+  "private": true,
+  "type": "module",
+  "description": "命令行批量重烘（node batch_bake.mjs …）",
+  "dependencies": { "playwright": "^1.47.0" }
+}
