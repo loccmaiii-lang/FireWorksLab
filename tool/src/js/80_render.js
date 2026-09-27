@@ -311,6 +311,7 @@ function curDuration() {
   return d;
 }
 function loop(now) {
+  if (state.stillBusy) { lastT = now; requestAnimationFrame(loop); return; }   // 定帧渲染期间让出画布
   const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
   const D = curDuration(), looping = familyOf(state.P.type) === 'ground' && state.tab !== 'combo';
   if (state.playing) { state.t += dt * state.speed; if (state.t > D + (looping ? 0 : 0.35)) state.t = looping ? state.t - D : 0; }

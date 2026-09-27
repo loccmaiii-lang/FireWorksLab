@@ -138,7 +138,9 @@ class Sim {
       const burn = carrier ? P.subDelay * (1 + P.subJit / 100 * this.rng.n()) : P.burn * (1 + P.burnJit / 100 * this.rng.n());
       let vx = d[0] * s + P.shellVx, vy = d[1] * s + P.shellVy, vz = d[2] * s;
       if (om) { vx += om * rs * (ax[1] * d[2] - ax[2] * d[1]); vy += om * rs * (ax[2] * d[0] - ax[0] * d[2]); vz += om * rs * (ax[0] * d[1] - ax[1] * d[0]); }
-      const st = this.mk(0, 0, 0, vx, vy, vz, Math.max(0.05, burn), carrier ? 1 : 0, carrier ? P.carrierTail : P.sparkRate, P.headBright * (carrier ? 0.4 : 1));
+      // 起始半径：星从半径 burstR0 的球面上出发（开花第一帧就有一定大小，游戏里常用的写法）
+      const r0 = P.burstR0 || 0;
+      const st = this.mk(d[0] * r0, d[1] * r0, d[2] * r0, vx, vy, vz, Math.max(0.05, burn), carrier ? 1 : 0, carrier ? P.carrierTail : P.sparkRate, P.headBright * (carrier ? 0.4 : 1));
       this.stars.push(st);
       if (P.ignDelay > 0 && !carrier) { st.ign = Math.max(0, P.ignDelay * (1 + P.ignJit / 100 * (2 * this.rng.u() - 1))); st.burn += st.ign; }
       // 单元序列：星熄灭后粒子继续按轨迹运动（Cascade 里粒子不会停），只是不再发光、不再发火花

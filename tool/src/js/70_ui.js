@@ -216,6 +216,7 @@ function buildMasterPanel() {
   slider(ms, 'm-hi', '星头亮度', '×', 0, 4, 0.05, () => state.M.headInt, v => state.M.headInt = v, 1);
   slider(ms, 'm-ti', '拖尾亮度', '×', 0, 4, 0.05, () => state.M.tailInt, v => state.M.tailInt = v, 1);
   $('#type').value = state.repId ? 'rep:' + state.repId : P.type; $('#mname').value = state.name; syncExport();
+  syncTypeButton();
   $('#repNote').textContent = state.repId ? '实拍复刻：' + REPLICA_BY_ID[state.repId].note : ''; $('#repNote').hidden = !state.repId;
 }
 function refreshVisibility() {

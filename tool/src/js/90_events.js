@@ -4,7 +4,7 @@ for (const [g, types] of TYPE_GROUPS) {
   for (const t of types) og.appendChild(new Option(TYPE_NAMES[t], t));
   $('#type').appendChild(og);
 }
-{ const og = document.createElement('optgroup'); og.label = '实拍复刻（你发来的视频）';
+if (REPLICAS.length) { const og = document.createElement('optgroup'); og.label = '实拍复刻';
   for (const r of REPLICAS) og.appendChild(new Option(r.name, 'rep:' + r.id));
   $('#type').appendChild(og); }
 $('#verLabel').textContent = `通道打包序列帧 · GPU 模拟 · v${VERSION}`;
@@ -91,6 +91,7 @@ $('#btnExportCombo').addEventListener('click', exportCombo);
   el.textContent = soft ? '当前是软件渲染，没有用到显卡' : ('显卡：' + (name || '未知').replace(/^ANGLE \((.*)\)$/, '$1'));
   el.title = name;
 })();
+initPicker();
 buildMasterPanel();
 initIter();
 if (!/[?&]fast/.test(location.search)) runPreviewBake(); else state.dirty = false;
@@ -120,7 +121,7 @@ window.__fw = {
     const zip = await makeZip(files); disposeBake(b);
     return new Uint8Array(await zip.arrayBuffer());
   },
-  replicaPM,
+  replicaPM, renderStills, measure, metricsOf,
   // 校准用：低分辨率烘焙一遍，按实拍的算法测贴图
   async quickMetrics(P) {
     const b = await bake({ ...P, texW: 320, texH: 320, cols: 8, rows: 8, chans: 1, outMode: 'combined', form: 'master', zoom: 'on', frameMode: 'auto', fpsFloor: 16, shutter: 0 }, 1, null);

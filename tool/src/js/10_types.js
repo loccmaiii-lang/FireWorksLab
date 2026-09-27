@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '3.1';
+const VERSION = '3.2';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -25,7 +25,7 @@ const TYPE_EN = Object.fromEntries(Object.entries(TYPE_INFO).map(([k, v]) => [k,
 const familyOf = t => (TYPE_INFO[t] || TYPE_INFO.kiku)[2];
 
 const BASE = {
-  duration: 3.2, seed: 7, stars: 150, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
+  duration: 3.2, seed: 7, stars: 150, burstR0: 0, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
   burn: 2.5, burnJit: 12, fade: 0.2, lastFlare: 0.35, flash: 1,
   headSize: 1.0, headBright: 1, flicker: 0.25,
   sparkRate: 95, sparkLife: 0.55, sparkSize: 0.35, sparkSpread: 2.5, sparkInherit: 0.2, sparkDrag: 2.2, sparkGrav: 1,
@@ -137,7 +137,10 @@ function applyShellNo(P, n) {
   P.v0 = Math.round(clamp(v0For(R0 * kR, P.vt, T), 20, 600));
   P.stars = Math.round(clamp(d.stars * r[3] / r5[3], 4, 3000));
   P.headSize = +(d.headSize * r[6] / r5[6]).toFixed(2);
-  P.sparkLife = +(d.sparkLife * Math.sqrt(kT)).toFixed(2);
+  // 尾缀长度 ≈ 星速 × 火花可见时间；星速 ∝ 半径 / 燃烧时间，所以火花寿命跟燃烧时间同比例、火花密度跟星速同比例，
+  // 这样号数变大时尾缀占花径的比例不变（旧版按 √ 缩放，号数越大尾缀相对越短）
+  P.sparkLife = +(d.sparkLife * kT).toFixed(2);
+  P.sparkRate = Math.round(d.sparkRate * kR / kT);
   P.sparkSize = +(d.sparkSize * Math.sqrt(r[6] / r5[6])).toFixed(2);
   P.duration = +(d.duration * kT).toFixed(2);
   P.riseH = Math.round(r[2]);
@@ -161,6 +164,7 @@ const SCHEMA = [
     ['duration', '序列时长', 's', 0.8, 12, 0.05],
     ['seed', '随机种子', '', 1, 999, 1],
     ['stars', '星数', '颗', 4, 3000, 1],
+    ['burstR0', '起始半径', 'm', 0, 300, 1],
     ['v0', '初速', 'm/s', 20, 600, 1],
     ['vt', '终端速度（阻力）', 'm/s', 4, 80, 0.5],
     ['grav', '重力倍率', '×', 0, 3, 0.05],
