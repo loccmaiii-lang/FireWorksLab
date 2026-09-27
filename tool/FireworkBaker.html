@@ -520,6 +520,8 @@ function applyShellNo(P, n) {
   P.sparkSize = +(d.sparkSize * Math.sqrt(r[6] / r5[6])).toFixed(2);
   P.duration = +(d.duration * kT).toFixed(2);
   P.riseH = Math.round(r[2]);
+  // 大型礼花：开花闪光按比例减弱（否则头几帧过曝）；时长长，默认分两段各拿一张贴图，保证帧率
+  if (n >= 20) { P.flash = +(d.flash * 0.6).toFixed(2); if (P.form === 'master') P.form = 'segments'; }
   return P;
 }
 
@@ -1808,7 +1810,7 @@ function fitGrid(P, box) {
   let best = null;
   for (const c of [1, 2, 4, 8, 16, 32]) {
     const r = F / c; if (!Number.isInteger(r) || ![1, 2, 4, 8, 16, 32].includes(r)) continue;
-    const a = (P.texW / c) / (P.texH / r), score = Math.max(a / ca, ca / a);
+    const a = (P.texW / c) / (P.texH / r), score = Math.abs(Math.log(a / ca)) + ((a > 1) !== (ca > 1) ? 0.01 : 0);   // 同样接近时，选与内容同方向（高或宽）的格子
     if (P.texW / c < 32 || P.texH / r < 32) continue;
     if (!best || score < best.score) best = { c, r, score };
   }
@@ -3075,12 +3077,12 @@ function buildRefSliders() {
 // 来自 analysis/measure.json（实拍视频逐帧测量，视频秒可能是慢放，只比无量纲指标）
 const REFS = {
   V05: { name: 'V05 金芒菊（银白）', t50: 0.157, t80: 0.416, t90: 0.551, droop: -0.002, bt: 1.15, kieguchi: 0.297, burn: 6.17 },
-  V14: { name: 'V14 鸿巢四尺玉', t50: 0.192, t80: 0.446, t90: 0.569, droop: 0.158, bt: 1.58, kieguchi: 0.354, burn: 8.67 },
-  V06: { name: 'V06 锦冠', t50: 0.005, t80: 0.419, t90: 0.571, droop: 0.229, bt: 1.38, kieguchi: 0.823, burn: 6.77 },
+  V14: { name: 'V14 鸿巢四尺玉', diameter: 800, t50: 0.192, t80: 0.446, t90: 0.569, droop: 0.158, bt: 1.58, kieguchi: 0.354, burn: 8.67 },
+  V06: { name: 'V06 锦冠', t50: null, t80: 0.419, t90: 0.571, droop: 0.229, bt: 1.38, kieguchi: 0.823, burn: 6.77 },
   V12: { name: 'V12 多色锦冠', t50: 0.109, t80: 0.265, t90: 0.348, droop: 0.171, bt: 1.37, kieguchi: 0.656, burn: 10.07 },
   V11: { name: 'V11 十寸三重芯', t50: 0.185, t80: 0.366, t90: 0.401, droop: null, bt: null, kieguchi: 0.222, burn: 5.87 },
   V01: { name: 'V01 变色菊·红银点灭', t50: 0.19, t80: 0.456, t90: 0.57, droop: 0.294, bt: 2.95, kieguchi: 0.228, burn: 2.63 },
-  V02: { name: 'V02 红牡丹带芯', t50: 0.0, t80: 0.109, t90: 0.283, droop: 0.435, bt: 2.54, kieguchi: 0.174, burn: 1.53 },
+  V02: { name: 'V02 红牡丹带芯', t50: null, t80: 0.109, t90: 0.283, droop: 0.435, bt: 2.54, kieguchi: 0.174, burn: 1.53 },
   V03: { name: 'V03 绿芯变色牡丹', t50: 0.17, t80: 0.443, t90: 0.568, droop: -0.095, bt: 0.88, kieguchi: 0.409, burn: 2.93 },
   V04: { name: 'V04 变色菊·金黄绿', t50: 0.092, t80: 0.237, t90: 0.408, droop: -0.187, bt: 0.73, kieguchi: 0.289, burn: 2.53 }
 };
@@ -3088,8 +3090,10 @@ const metricCache = { gen: -1, A: null, Bid: null, B: null };
 function simMetrics(P, b) {
   if (familyOf(P.type) !== 'aerial') return null;
   // 大面片母版：直接测烘焙出的贴图（与实拍同口径）；其它产物退回物理量估计
-  const im = bakeMetrics(b); if (im) { im.src = '贴图'; return im; }
-  const fm = measure({ ...P }); const r = metricsOf(P, fm); if (r) r.src = '物理'; return r;
+  // 大型礼花在贴图里星点很小，亮部掩码会漏掉外圈：贴图测出的花径明显小于物理花径时，改用物理量
+  const fm = measure({ ...P }), ph = metricsOf(P, fm); if (ph) ph.src = '物理';
+  const im = bakeMetrics(b); if (im && (!ph || im.diameter > 0.6 * ph.diameter)) { im.src = '贴图'; im.physDiameter = ph ? ph.diameter : null; return im; }
+  return ph;
 }
 function renderMetrics() {
   const host = $('#metricTable'); if (!state.bake) { host.textContent = '等待烘焙…'; return; }
@@ -3105,9 +3109,9 @@ function renderMetrics() {
     row('t50', 't50') + row('t80', 't80') + row('t90', 't90') + row('droop', '下坠/R') + row('bt', '下/上') +
     row('kieguchi', '消え口') +
     `<tr><td>燃烧</td><td>${A.burn.toFixed(2)} s</td>${B ? `<td>${B.burn.toFixed(2)} s</td>` : ''}<td>${R.burn ? R.burn.toFixed(2) + ' s' : '—'}</td><td>${R.burn ? (Math.abs(A.burn - R.burn) <= R.burn * 0.15 ? '<span class="ok">✓</span>' : '<span class="warn">✗</span>') : ''}</td></tr>` +
-    `<tr><td>花径</td><td>${A.diameter.toFixed(0)} m</td>${B ? `<td>${B.diameter.toFixed(0)} m</td>` : ''}<td colspan="2">${state.metricRef === 'V14' ? '约 800 m' : '—'}</td></tr>` +
+    `<tr><td>花径</td><td>${A.diameter.toFixed(0)} m</td>${B ? `<td>${B.diameter.toFixed(0)} m</td>` : ''}<td>${R.diameter ? '约 ' + R.diameter + ' m' : '—'}</td><td>${R.diameter ? (Math.abs(A.diameter - R.diameter) <= R.diameter * 0.2 ? '<span class="ok">✓</span>' : '<span class="warn">✗</span>') : ''}</td></tr>` +
     `</table>` +
-    `<span class="note">✓ = 与实拍差距在 20%（或 0.05）以内。A 的数据来自${A.src === '贴图' ? '烘焙出的贴图（与实拍视频同一套算法）' : '物理模拟的星体位置'}。</span>`;
+    `<span class="note">✓ 只表示这一行的指标与实拍差距在 20%（或 0.05）以内，不代表整体已经还原；「—」表示该视频这一项测量不可靠（如 V06、V02 的 t50）。A 的数据来自${A.src === '贴图' ? '烘焙出的贴图（与实拍视频同一套算法）' : '物理模拟的星体位置'}。</span>`;
 }
 
 // ---------------- 版本、缩略图、批注 ----------------
@@ -3191,7 +3195,9 @@ const perf = { acc: 0, n: 0, fps: 0 };
 function perfTick(dt) { perf.acc += dt; perf.n++; if (perf.acc > 1) { perf.fps = perf.n / perf.acc; perf.acc = 0; perf.n = 0; } }
 async function runPerf() {
   const out = $('#perfOut'); out.textContent = '测试中…（约 20 秒，期间画面会卡）';
-  await nextTick();
+  // 先实测 1.5 秒的预览帧率
+  const fps = await new Promise(res => { let n = 0; const t0 = performance.now(); const f = () => { n++; if (performance.now() - t0 < 1500) requestAnimationFrame(f); else res(n / ((performance.now() - t0) / 1000)); }; requestAnimationFrame(f); });
+  perf.fps = fps;
   const lines = [`显卡：${$('#gpu').title || $('#gpu').textContent}`, `当前预览帧率：${perf.fps.toFixed(0)} fps（${canvas.width}² 画布）`];
   const t = new Target(1024, 1024, gl.RGBA16F), view = [0, 0, 150, 150], ppm = 1024 / 300;
   try {

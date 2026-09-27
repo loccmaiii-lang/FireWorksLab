@@ -107,7 +107,7 @@ function fitGrid(P, box) {
   let best = null;
   for (const c of [1, 2, 4, 8, 16, 32]) {
     const r = F / c; if (!Number.isInteger(r) || ![1, 2, 4, 8, 16, 32].includes(r)) continue;
-    const a = (P.texW / c) / (P.texH / r), score = Math.max(a / ca, ca / a);
+    const a = (P.texW / c) / (P.texH / r), score = Math.abs(Math.log(a / ca)) + ((a > 1) !== (ca > 1) ? 0.01 : 0);   // 同样接近时，选与内容同方向（高或宽）的格子
     if (P.texW / c < 32 || P.texH / r < 32) continue;
     if (!best || score < best.score) best = { c, r, score };
   }

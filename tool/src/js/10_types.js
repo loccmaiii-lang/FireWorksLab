@@ -141,6 +141,8 @@ function applyShellNo(P, n) {
   P.sparkSize = +(d.sparkSize * Math.sqrt(r[6] / r5[6])).toFixed(2);
   P.duration = +(d.duration * kT).toFixed(2);
   P.riseH = Math.round(r[2]);
+  // 大型礼花：开花闪光按比例减弱（否则头几帧过曝）；时长长，默认分两段各拿一张贴图，保证帧率
+  if (n >= 20) { P.flash = +(d.flash * 0.6).toFixed(2); if (P.form === 'master') P.form = 'segments'; }
   return P;
 }
 
