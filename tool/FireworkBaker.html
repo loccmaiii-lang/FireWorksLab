@@ -75,6 +75,13 @@
   .actions .line{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .check{display:flex;align-items:center;gap:6px;color:var(--dim);font-size:12px}
   .note{color:var(--faint);font-size:11.5px;line-height:1.6}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .pair2{display:flex;gap:6px;align-items:center}
+  .pair2 select{flex:1;min-width:0}
+  .stats{font:12px/1.75 var(--mono);color:var(--dim);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-variant-numeric:tabular-nums}
+  .stats b{color:var(--text);font-weight:500}
+  .stats .warn{color:var(--warn)}
+  .stats .ok{color:#8fd18b}
   .lib{display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
   .lib .it{display:flex;align-items:center;gap:8px;padding:5px 8px;background:var(--bg);border:1px solid var(--line);border-radius:6px}
   .lib .it span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -101,7 +108,7 @@
 <body>
 <div class="app">
   <header class="top">
-    <div class="brand"><span class="mark">菊</span><b>烟花母版烘焙器</b><small>通道打包序列帧 · 64 帧 · R0–15 / G16–31 / B32–47 / A48–63</small></div>
+    <div class="brand"><span class="mark">菊</span><b>烟花母版烘焙器</b><small>通道打包序列帧 · Dynamic Parameter 帧号 · RGBA 接力</small></div>
     <nav class="tabs" role="tablist">
       <button role="tab" data-tab="master" aria-selected="true" id="tab-master">母版</button>
       <button role="tab" data-tab="combo" aria-selected="false" id="tab-combo">组合</button>
@@ -150,19 +157,23 @@
       <div id="params"></div>
       <details class="sec" open>
         <summary>预览材质</summary>
-        <p class="hint">不参与烘焙，对应 UE 材质里的同名参数。贴图是灰度，颜色全在材质里上。</p>
+        <p class="hint">不参与烘焙。模拟项目材质：灰度查渐变图，再乘 Color Over Life。合并输出时 Color Over Life 作用于整层；星头要单独变色，请把输出改为「分开」。</p>
         <div class="colors" id="matColors"></div>
         <div id="matSliders"></div>
       </details>
       <div class="actions">
-        <div class="line">
-          <label class="field" style="flex:1">导出分辨率
-            <select id="res"><option value="2048">2048（PC · 每帧 512²）</option><option value="1024">1024（手游 · 每帧 256²）</option><option value="512">512（低端 · 每帧 128²）</option></select>
-          </label>
+        <div class="grid2">
+          <label class="field">贴图尺寸<select id="x-size"><option value="2048x2048">2048 × 2048</option><option value="2048x1024">2048 × 1024</option><option value="1024x1024">1024 × 1024</option></select></label>
+          <label class="field">列 × 行<span class="pair2"><select id="x-cols" aria-label="列数"></select><span>×</span><select id="x-rows" aria-label="行数"></select></span></label>
+          <label class="field">通道<select id="x-chans"><option value="4">RGBA 接力（先填满 R）</option><option value="1">单通道（短序列）</option></select></label>
+          <label class="field">输出<select id="x-out"><option value="combined">星头与拖尾合并</option><option value="split">星头、拖尾分开</option></select></label>
+          <label class="field">编码<select id="x-enc"><option value="1">线性灰度</option><option value="2.2">Gamma 2.2（暗部更细）</option></select></label>
+          <label class="field">取帧<select id="x-frame"><option value="auto">自动（按运动快慢）</option><option value="uniform">均匀</option></select></label>
+          <label class="field">面片大小<select id="x-zoom"><option value="on">随开花放大（Size By Life）</option><option value="off">固定大小</option></select></label>
         </div>
-        <label class="check"><input type="checkbox" id="allRes"> 三档一起导出（2K / 1K / 512 分别独立烘焙）</label>
+        <div class="stats" id="stats">烘焙中…</div>
         <div class="line">
-          <button class="btn primary" id="btnExport">导出母版（ZIP）</button>
+          <button class="btn primary" id="btnExport">导出 2K 母版（ZIP）</button>
           <button class="btn" id="btnSave">存入组合库</button>
         </div>
         <div class="line">
@@ -170,7 +181,7 @@
           <button class="btn ghost" id="btnReset">恢复本花型默认</button>
           <input type="file" id="fileIn" accept=".json,application/json" hidden>
         </div>
-        <p class="note">双击滑杆名称可恢复默认值。调参后会自动重新烘焙；「实时模拟」是物理原始效果，「导出效果」是打包成 64 帧后、按 UE 材质播放的样子。</p>
+        <p class="note">双击滑杆名称可恢复默认值。调参后会自动重新烘焙，预览与导出的 2K 贴图一致。「实时模拟」是物理原始效果；「导出效果」按项目材质的方式播放：Dynamic Parameter 帧号取整、不做帧间混合、灰度查渐变图上色。</p>
       </div>
     </aside>
 
@@ -206,7 +217,7 @@ const $ = s => document.querySelector(s);
 const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
 const G = 9.81;
 const H_STEP = 1 / 480;                 // 物理步长
-const FRAMES = 64;
+const PREVIEW_SCALE = 1;
 const PREVIEW_LIB_N = 1024;
 const nextTick = () => new Promise(r => setTimeout(r, 0));
 function hexToLin(h) {
@@ -258,16 +269,18 @@ const BASE = {
   T0: 2050, cooling: 0.42, sparkBright: 1, twinkle: 0.6,
   subDelay: 0.9, subJit: 10, subStars: 36, subSpeed: 40, subBurn: 0.9, subTail: 0, carrierTail: 30,
   spin: 14, chaos: 0.8, beeSpeed: 28,
-  gamma: 1.6, shutter: 0.6
+  shutter: 0.6, fpsFloor: 24,
+  texW: 2048, texH: 2048, cols: 8, rows: 8, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'auto', zoom: 'on'
 };
-const MAT_BASE = { colA: '#ff3a26', colB: '#7cff6a', chg: 1.25, tailHot: '#ffcf8a', tailCool: '#b33c0c', headInt: 1, tailInt: 1 };
+const MAT_BASE = { colA: '#ffffff', colB: '#ffffff', chg: 9, ramp0: '#000000', ramp1: '#7a1e04', ramp2: '#ffa53a', ramp3: '#fff3dc', headInt: 1, tailInt: 1 };
+const RAMP_POS = [0, 0.3, 0.65, 1];
 const TYPES = {
   kiku: { p: {}, m: {} },
   botan: { p: { stars: 90, sparkRate: 0, headSize: 1.4, burn: 2.4, flicker: 0.2, lastFlare: 0.3 }, m: { colA: '#ffc766', colB: '#dfe8ff', chg: 1.35 } },
-  kamuro: { p: { duration: 5.2, stars: 110, v0: 140, vt: 16, burn: 3.8, burnJit: 10, fade: 0.55, lastFlare: 0, headBright: 0.5, headSize: 0.9, sparkRate: 230, sparkLife: 1.1, sparkSpread: 1.4, sparkInherit: 0.25, sparkDrag: 1.5, T0: 1950, cooling: 0.35, sparkSize: 0.3 }, m: { colA: '#ffcf7a', colB: '#ffcf7a', chg: 9, tailHot: '#ffd79a', tailCool: '#a8420f' } },
-  yanagi: { p: { duration: 6.5, stars: 90, v0: 95, vt: 9, grav: 1.25, burn: 5.2, burnJit: 12, fade: 0.6, lastFlare: 0, headBright: 0.45, headSize: 0.8, sparkRate: 200, sparkLife: 1.8, sparkSpread: 0.5, sparkInherit: 0.45, sparkDrag: 0.8, T0: 1900, cooling: 0.33, sparkSize: 0.28 }, m: { colA: '#ffc56e', colB: '#ffc56e', chg: 9, tailHot: '#ffcf85', tailCool: '#9c3a0c' } },
+  kamuro: { p: { duration: 5.2, stars: 110, v0: 140, vt: 16, burn: 3.8, burnJit: 10, fade: 0.55, lastFlare: 0, headBright: 0.5, headSize: 0.9, sparkRate: 230, sparkLife: 1.1, sparkSpread: 1.4, sparkInherit: 0.25, sparkDrag: 1.5, T0: 1950, cooling: 0.35, sparkSize: 0.3 }, m: { ramp1: '#8a3208', ramp2: '#ffc266', ramp3: '#fff0d2' } },
+  yanagi: { p: { duration: 6.5, stars: 90, v0: 95, vt: 9, grav: 1.25, burn: 5.2, burnJit: 12, fade: 0.6, lastFlare: 0, headBright: 0.45, headSize: 0.8, sparkRate: 200, sparkLife: 1.8, sparkSpread: 0.5, sparkInherit: 0.45, sparkDrag: 0.8, T0: 1900, cooling: 0.33, sparkSize: 0.28 }, m: { ramp1: '#7e2e08', ramp2: '#ffbb5c', ramp3: '#ffedcc' } },
   senrin: { p: { duration: 2.8, stars: 18, v0: 95, vt: 20, burn: 0.9, burnJit: 6, sparkRate: 0, headBright: 1, headSize: 0.6, lastFlare: 0.2, subDelay: 0.85, subStars: 40, subSpeed: 45, subBurn: 0.95, subTail: 25, carrierTail: 40 }, m: { colA: '#ff7fb5', colB: '#ffe27a', chg: 1.4 } },
-  hachi: { p: { duration: 2.6, stars: 60, v0: 110, vt: 30, burn: 1.7, burnJit: 8, fade: 0.2, lastFlare: 0, headBright: 0.8, headSize: 0.7, sparkRate: 170, sparkLife: 0.35, sparkSpread: 3, sparkInherit: 0.08, sparkDrag: 3, T0: 2450, cooling: 0.5 }, m: { colA: '#ffffff', colB: '#dfe6ff', chg: 9, tailHot: '#fff1d6', tailCool: '#c2703a' } }
+  hachi: { p: { duration: 2.6, stars: 60, v0: 110, vt: 30, burn: 1.7, burnJit: 8, fade: 0.2, lastFlare: 0, headBright: 0.8, headSize: 0.7, sparkRate: 170, sparkLife: 0.35, sparkSpread: 3, sparkInherit: 0.08, sparkDrag: 3, T0: 2450, cooling: 0.5 }, m: { colA: '#ffffff', colB: '#dfe6ff', chg: 9, ramp1: '#b0602c', ramp2: '#ffe2b8', ramp3: '#ffffff' } }
 };
 function defaultsFor(type) { return { P: { ...BASE, ...TYPES[type].p, type }, M: { ...MAT_BASE, ...TYPES[type].m } }; }
 
@@ -319,8 +332,8 @@ const SCHEMA = [
     ['chaos', '乱飞程度', '', 0, 3, 0.05],
     ['beeSpeed', '推进速度', 'm/s', 5, 80, 1]
   ] },
-  { sec: '取帧（导出）', hint: '非线性取帧：数值越大，开花初期分配的帧越多，快速扩张时更顺滑。1 为均匀取帧。', items: [
-    ['gamma', '非线性取帧', '', 1, 3, 0.05],
+  { sec: '取帧（导出）', hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。自动取帧把帧集中在运动快的开花初期，同时保证整段不低于最低帧率。', items: [
+    ['fpsFloor', '最低帧率', 'fps', 8, 60, 1],
     ['shutter', '运动模糊（快门）', '', 0, 1, 0.01]
   ] }
 ];
@@ -462,27 +475,111 @@ class Sim {
   }
 }
 
-// 预跑一遍，求整个序列的可见范围，用来定取景
+// 预跑一遍：求整个序列的可见范围（定取景）和星体速度随时间的变化（定取帧）
 function measure(P) {
   const s = new Sim(P), n = Math.ceil(P.duration / H_STEP);
-  let x0 = -5, x1 = 5, y0 = -5, y1 = 5;
+  let x0 = -5, x1 = 5, y0 = -5, y1 = 5; const prof = [], vs = [];
   for (let i = 0; i < n; i++) {
     s.step(H_STEP);
     if (i % 6) continue;
-    for (const st of s.stars) if (st.alive) { if (st.x < x0) x0 = st.x; if (st.x > x1) x1 = st.x; if (st.y < y0) y0 = st.y; if (st.y > y1) y1 = st.y; }
+    vs.length = 0;
+    for (const st of s.stars) if (st.alive) {
+      if (st.x < x0) x0 = st.x; if (st.x > x1) x1 = st.x; if (st.y < y0) y0 = st.y; if (st.y > y1) y1 = st.y;
+      vs.push(Math.hypot(st.vx, st.vy));
+    }
     const sp = s.sp;
     for (let j = 0; j < sp.n; j += 2) {
       if (sp.T0[j] * (1 - P.cooling * sp.age[j] / sp.life[j]) < 1050) continue;
       const x = sp.p[j * 3], y = sp.p[j * 3 + 1];
       if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
     }
+    let v = 0; if (vs.length) { vs.sort((a, b) => a - b); v = vs[Math.floor(vs.length * 0.9)]; }
+    let r = 0;
+    for (const st of s.stars) if (st.alive) r = Math.max(r, Math.hypot(st.x, st.y));
+    for (let j = 0; j < sp.n; j += 2) {
+      if (sp.T0[j] * (1 - P.cooling * sp.age[j] / sp.life[j]) < 1050) continue;
+      r = Math.max(r, Math.hypot(sp.p[j * 3], sp.p[j * 3 + 1]));
+    }
+    if (s.t < 0.25) r = Math.max(r, 3 * Math.max(2, P.v0 * 0.045));
+    prof.push([s.t, v, r]);
   }
-  const hx = Math.max(-x0, x1), hy = y1 - y0;
-  const S = Math.max(2 * hx, hy) * 1.06 + 3;
-  const top = y1 + (S - hy) / 2;
-  return { S, px: 0.5, py: top / S };
+  return { x0, x1, y0, y1, prof };
 }
-function frameTimes(P) { const t = []; for (let f = 0; f < FRAMES; f++) t.push(P.duration * Math.pow((f + 1) / FRAMES, P.gamma)); return t; }
+// 折线化简（Douglas–Peucker 的插点版）：保留误差最大的点，直到点数用完或误差足够小
+function simplify(pts, maxN, tol = 0.25) {
+  const keep = new Set([0, pts.length - 1]);
+  while (keep.size < maxN) {
+    const idx = [...keep].sort((a, b) => a - b); let best = -1, bestE = tol;
+    for (let k = 0; k < idx.length - 1; k++) {
+      const a = idx[k], b = idx[k + 1], [ua, va] = pts[a], [ub, vb] = pts[b];
+      for (let i = a + 1; i < b; i++) {
+        const [u, v] = pts[i], e = Math.abs(v - (va + (vb - va) * (u - ua) / ((ub - ua) || 1)));
+        if (e > bestE) { bestE = e; best = i; }
+      }
+    }
+    if (best < 0) break; keep.add(best);
+  }
+  return [...keep].sort((a, b) => a - b).map(i => pts[i]);
+}
+function evalKeys(keys, u) {
+  if (u <= keys[0][0]) return keys[0][1];
+  for (let i = 1; i < keys.length; i++) if (u <= keys[i][0]) { const [u0, v0] = keys[i - 1], [u1, v1] = keys[i]; return v0 + (v1 - v0) * (u - u0) / ((u1 - u0) || 1); }
+  return keys[keys.length - 1][1];
+}
+function layoutOf(P) { const per = P.cols * P.rows; return { cols: P.cols, rows: P.rows, chans: P.chans, per, F: per * P.chans, cellW: P.texW / P.cols, cellH: P.texH / P.rows }; }
+// 取景 + 取帧计划：帧号曲线（≤8 个关键帧）就是引擎里 Dynamic Parameter 第三通道要填的曲线，
+// 每一帧的烘焙时刻取「曲线值 = 帧号 + 0.5」的时刻，引擎取整后正好显示这一帧
+function plan(P, fm) {
+  const L = layoutOf(P), a = L.cellW / L.cellH, D = P.duration, STEP = 1.5, zoom = P.zoom === 'on';
+  let HX, HY, cy, sizeKeys = [[0, 1], [1, 1]];
+  if (zoom) {
+    // 以爆点为中心取景，面片按 Size By Life 曲线随开花放大
+    let R = 1; for (const q of fm.prof) if (q[0] <= D) R = Math.max(R, q[2]);
+    R = R * 1.06 + 3; HX = R * Math.max(1, a); HY = HX / a; cy = 0;
+    let run = 0; const sp = [];
+    for (const [t, , r] of fm.prof) { if (t > D) break; run = Math.max(run, Math.min(1, (r * 1.06 + 3) / R)); sp.push([t / D, run]); }
+    sp.unshift([0, sp.length ? sp[0][1] : 1]); sp.push([1, run || 1]);
+    const ks = simplify(sp, 8, 0.01).map(k => [...k]);
+    // 关键帧之间是直线：把直线抬到不低于真实半径，保证内容不被裁掉
+    const idx = ks.map(k => sp.findIndex(q => q[0] === k[0] && q[1] === k[1]));
+    for (let k = 0; k < ks.length - 1; k++) {
+      let e = 0; const [u0, v0] = ks[k], [u1, v1] = ks[k + 1];
+      for (let i = idx[k] + 1; i < idx[k + 1]; i++) { const [u, v] = sp[i]; e = Math.max(e, v - (v0 + (v1 - v0) * (u - u0) / ((u1 - u0) || 1))); }
+      ks[k].push(e); ks[k + 1].push(e);
+    }
+    sizeKeys = ks.map(k => [+k[0].toFixed(4), +Math.min(1, k[1] + Math.max(0, ...k.slice(2)) + 0.02).toFixed(3)]);
+    sizeKeys[0][0] = 0; sizeKeys[sizeKeys.length - 1][0] = 1;
+  } else {
+    const W0 = 2 * Math.max(-fm.x0, fm.x1), H0 = fm.y1 - fm.y0;
+    HX = (Math.max(W0, H0 * a) * 1.06 + 3) / 2; HY = HX / a; cy = (fm.y0 + fm.y1) / 2;
+  }
+  const Ww = 2 * HX, Wh = 2 * HY, sAt = t => evalKeys(sizeKeys, t / D);
+  const ppmAt = t => L.cellW / (Ww * sAt(t)), ppm = L.cellW / Ww;
+  const dens = (v, t) => P.frameMode === 'uniform' ? 1 : Math.max(v * ppmAt(t) / STEP, P.fpsFloor);
+  const pts = [[0, 0]]; let acc = 0, prevT = 0;
+  for (const [t, v] of fm.prof) { if (t > D) break; acc += dens(v, t) * (t - prevT); prevT = t; pts.push([t, acc]); }
+  if (prevT < D) { acc += dens(0, D) * (D - prevT); pts.push([D, acc]); }
+  const poly = pts.map(([t, c]) => [t / D, L.F * c / acc]);
+  const keys = simplify(poly, 8).map(([u, v]) => [+u.toFixed(4), +v.toFixed(2)]);
+  keys[0] = [0, 0]; keys[keys.length - 1] = [1, L.F];
+  const inv = v => {
+    for (let i = 1; i < keys.length; i++) if (keys[i][1] >= v) { const [u0, v0] = keys[i - 1], [u1, v1] = keys[i]; return D * (u0 + (u1 - u0) * (v1 > v0 ? (v - v0) / (v1 - v0) : 0)); }
+    return D;
+  };
+  const vAt = t => { const pr = fm.prof; if (!pr.length) return 0; let i = Math.min(pr.length - 1, Math.max(0, Math.round(t / (pr[pr.length - 1][0] / pr.length)))); return pr[i][1]; };
+  const times = [], dur = []; let maxDur = 0, maxDisp = 0;
+  for (let f = 0; f < L.F; f++) {
+    const t0 = inv(f), t1 = inv(f + 1), tc = inv(f + 0.5);
+    times.push(tc); dur.push(t1 - t0);
+    maxDur = Math.max(maxDur, t1 - t0); maxDisp = Math.max(maxDisp, vAt(tc) * ppmAt(tc) * (t1 - t0));
+  }
+  let area = 0; for (let i = 0; i < 200; i++) { const q = sAt((i + 0.5) / 200 * D); area += q * q / 200; }
+  return { L, HX, HY, Ww, Wh, cy, ppm, zoom, sizeKeys, area, px: 0.5, py: (cy + HY) / Wh, keys, times, dur, avgFps: L.F / D, minFps: 1 / maxDur, maxDisp };
+}
+function frameIdx(m, age) {
+  if (age < 0 || age >= m.duration) return -1;
+  return clamp(Math.floor(evalKeys(m.keys, age / m.duration)), 0, m.L.F - 1);
+}
 
 // =====================================================================
 //  WebGL
@@ -505,36 +602,40 @@ function compile(vs, fs) {
 }
 const HDR = '#version 300 es\nprecision highp float;\n';
 const VS_QUAD = HDR + `layout(location=0) in vec2 a; out vec2 v_uv; void main(){ v_uv=a; gl_Position=vec4(a*2.-1.,0.,1.); }`;
-const VS_RECT = HDR + `layout(location=0) in vec2 a; uniform vec4 uRect; uniform vec3 uView; out vec2 v_uv;
-void main(){ v_uv=a; vec2 w=mix(uRect.xy,uRect.zw,a); gl_Position=vec4((w-uView.xy)/uView.z,0.,1.); }`;
+const VS_RECT = HDR + `layout(location=0) in vec2 a; uniform vec4 uRect; uniform vec4 uView; out vec2 v_uv;
+void main(){ v_uv=a; vec2 w=mix(uRect.xy,uRect.zw,a); gl_Position=vec4((w-uView.xy)/uView.zw,0.,1.); }`;
 const VS_PTS = HDR + `layout(location=0) in vec2 aP; layout(location=1) in float aI; layout(location=2) in float aS;
-uniform vec3 uView; uniform float uPPM; uniform float uMax; out float vI; out float vSig; out float vPS;
+uniform vec4 uView; uniform float uPPM; uniform float uMax; out float vI; out float vSig; out float vPS;
 void main(){ float sig=max(aS*0.5*uPPM,0.55); float ps=min(ceil(sig*6.)+1.,uMax);
-  gl_Position=vec4((aP-uView.xy)/uView.z,0.,1.); gl_PointSize=ps; vI=aI; vSig=sig; vPS=ps; }`;
+  gl_Position=vec4((aP-uView.xy)/uView.zw,0.,1.); gl_PointSize=ps; vI=aI; vSig=sig; vPS=ps; }`;
 const FS_PTS = HDR + `in float vI; in float vSig; in float vPS; uniform vec4 uChan; uniform float uW; uniform float uPPM; out vec4 o;
 void main(){ vec2 d=(gl_PointCoord-.5)*vPS; float g=exp(-dot(d,d)/(2.*vSig*vSig))/(6.2831853*vSig*vSig);
   o=uChan*(vI*g*uPPM*uPPM*uW); }`;
 const FS_PACK = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform vec4 uM; uniform float uFade; out vec4 o;
 void main(){ o=vec4(dot(texture(uS,v_uv),uM)*uFade); }`;
-const FS_ENC = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform float uE; out vec4 o;
-void main(){ vec4 x=max(texture(uS,v_uv),0.); o=pow(1.-exp(-x*uE),vec4(1./2.2)); }`;
-const COLOR_FN = `vec3 headCol(float age){ return mix(uA,uB,smoothstep(uChg-.04,uChg+.04,age)); }
-vec3 tailCol(float t){ return mix(uCool,uHot,clamp(t*1.6,0.,1.)); }`;
-const FS_RGMAT = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform float uEH,uET,uAge,uChg,uHI,uTI,uK; uniform vec3 uA,uB,uHot,uCool; out vec4 o;
-${COLOR_FN}
-void main(){ vec2 rg=max(texture(uS,v_uv).rg,0.); float h=1.-exp(-rg.r*uEH); float t=1.-exp(-rg.g*uET);
-  o=vec4((h*headCol(uAge)*uHI+t*tailCol(t)*uTI)*uK,1.); }`;
-// 与导出的 UE Custom 节点逐行对应（UE 的 UV 原点在左上，这里是左下，所以行号用 3-row）
-const FS_MAT = HDR + `in vec2 v_uv; uniform sampler2D uH,uT; uniform float uAge,uDur,uGamma,uChg,uHI,uTI,uK,uInset,uMirror; uniform vec3 uA,uB,uHot,uCool; out vec4 o;
-${COLOR_FN}
-float cellv(sampler2D s,float f,vec2 uv){ float c=floor(f/16.); float k=f-c*16.;
-  vec2 st=(vec2(mod(k,4.),3.-floor(k/4.))+uv)*.25; vec4 m=vec4(equal(vec4(c),vec4(0.,1.,2.,3.))); return dot(texture(s,st),m); }
-void main(){ vec2 uv=v_uv; if(uMirror>.5) uv.x=1.-uv.x; uv=clamp(uv,uInset,1.-uInset);
-  float fr=64.*pow(clamp(uAge/uDur,0.,1.),1./uGamma)-1.; float fi=clamp(fr+1.,0.,1.); fr=clamp(fr,0.,63.);
-  float f0=floor(fr), f1=min(f0+1.,63.), w=fr-f0;
-  float h=mix(cellv(uH,f0,uv),cellv(uH,f1,uv),w); float t=mix(cellv(uT,f0,uv),cellv(uT,f1,uv),w);
-  h=pow(h,2.2)*fi; t=pow(t,2.2)*fi;
-  o=vec4((h*headCol(uAge)*uHI+t*tailCol(t)*uTI)*uK,1.); }`;
+// 编码：合并 = 星头与拖尾各自曝光后相加；单通道时 RGB 相同
+const FS_ENC = HDR + `in vec2 v_uv; uniform sampler2D uH,uT; uniform float uEH,uET,uG,uWhich,uSingle; out vec4 o;
+void main(){ vec4 h=max(texture(uH,v_uv),0.), t=max(texture(uT,v_uv),0.);
+  vec4 x = uWhich<.5 ? h*uEH+t*uET : (uWhich<1.5 ? h*uEH : t*uET);
+  vec4 v = pow(1.-exp(-x), vec4(1./uG));
+  o = uSingle>.5 ? vec4(v.rrr,1.) : v; }`;
+const RAMP_FN = `uniform vec3 uR0,uR1,uR2,uR3;
+vec3 ramp(float v){ v=clamp(v,0.,1.); if(v<.3) return mix(uR0,uR1,v/.3); if(v<.65) return mix(uR1,uR2,(v-.3)/.35); return mix(uR2,uR3,(v-.65)/.35); }`;
+const FS_RGMAT = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform float uEH,uET,uG,uComb,uHI,uTI,uK; uniform vec3 uTint; out vec4 o;
+${RAMP_FN}
+void main(){ vec2 rg=max(texture(uS,v_uv).rg,0.);
+  if(uComb>.5){ float v=pow(1.-exp(-(rg.r*uEH+rg.g*uET)),1./uG); o=vec4(ramp(v)*v*uTint*uHI*uK,1.); }
+  else { float h=pow(1.-exp(-rg.r*uEH),1./uG), t=pow(1.-exp(-rg.g*uET),1./uG); o=vec4((h*uTint*uHI+ramp(t)*t*uTI)*uK,1.); } }`;
+// 模拟项目材质：帧号取整、不混合；RGBA 接力 = 先填满 R 的全部格子再接 G；灰度查渐变图，乘 Color Over Life
+const FS_MAT = HDR + `in vec2 v_uv; uniform sampler2D uH,uT; uniform float uCols,uRows,uChans,uFrame,uComb,uHI,uTI,uK,uMirror; uniform vec2 uInset; uniform vec3 uTint; out vec4 o;
+${RAMP_FN}
+float cellv(sampler2D s,float f,vec2 uv){ float per=uCols*uRows; float c=floor(f/per); float k=f-c*per;
+  vec2 st=(vec2(mod(k,uCols),uRows-1.-floor(k/uCols))+uv)/vec2(uCols,uRows);
+  vec4 x=texture(s,st); if(uChans<1.5) return x.r; return dot(x,vec4(equal(vec4(c),vec4(0.,1.,2.,3.)))); }
+void main(){ if(uFrame<0.){ o=vec4(0.); return; }
+  vec2 uv=v_uv; if(uMirror>.5) uv.x=1.-uv.x; uv=clamp(uv,uInset,1.-uInset);
+  if(uComb>.5){ float v=cellv(uH,uFrame,uv); o=vec4(ramp(v)*v*uTint*uHI*uK,1.); }
+  else { float h=cellv(uH,uFrame,uv), t=cellv(uT,uFrame,uv); o=vec4((h*uTint*uHI+ramp(t)*t*uTI)*uK,1.); } }`;
 const FS_POST = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform float uX; uniform vec2 uTx; out vec4 o;
 vec3 bl(float l){ vec2 d=uTx*exp2(l); vec3 s=textureLod(uS,v_uv,l).rgb*.4;
   s+=textureLod(uS,v_uv+vec2(d.x,0.),l).rgb*.15; s+=textureLod(uS,v_uv-vec2(d.x,0.),l).rgb*.15;
@@ -542,14 +643,17 @@ vec3 bl(float l){ vec2 d=uTx*exp2(l); vec3 s=textureLod(uS,v_uv,l).rgb*.4;
 void main(){ vec3 c=textureLod(uS,v_uv,0.).rgb; vec3 b=bl(1.)*.5+bl(3.)*.32+bl(5.)*.18; c+=b*.2;
   vec3 sky=mix(vec3(.0032,.0038,.009),vec3(.0011,.0013,.0032),v_uv.y);
   c=1.-exp(-(c*uX+sky)); o=vec4(pow(c,vec3(1./2.2)),1.); }`;
-const FS_ATLAS = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform float uFrame; uniform float uN; out vec4 o;
-void main(){ vec2 q=floor(v_uv*2.); vec2 uv=fract(v_uv*2.); int ch=int(q.x+(1.-q.y)*2.);
-  float gap=6./uN; vec2 e=min(uv,1.-uv); if(min(e.x,e.y)<gap*.5){ o=vec4(.05,.055,.07,1.); return; }
-  vec4 s=texture(uS,uv); float v=ch==0?s.r:ch==1?s.g:ch==2?s.b:s.a;
-  vec3 col=vec3(v);
-  vec2 g=abs(fract(uv*4.)-.5); if(max(g.x,g.y)>.5-2./uN*4.) col=mix(col,vec3(.16,.17,.22),.8);
-  float fc=floor(uFrame/16.); float k=uFrame-fc*16.; vec2 cell=vec2(mod(k,4.),3.-floor(k/4.));
-  vec2 cc=floor(uv*4.); if(float(ch)==fc && cc==cell){ vec2 f=abs(fract(uv*4.)-.5); if(max(f.x,f.y)>.5-5./uN*4.) col=vec3(.91,.70,.37); }
+const FS_ATLAS = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform float uFrame,uN,uCols,uRows,uChans,uAspect; out vec4 o;
+void main(){ float panes=uChans>1.5?2.:1.;
+  vec2 q=floor(v_uv*panes); vec2 uv=fract(v_uv*panes); int ch=panes>1.5?int(q.x+(1.-q.y)*2.):0;
+  vec2 sc=uAspect>=1.?vec2(1.,1./uAspect):vec2(uAspect,1.); vec2 tuv=(uv-.5)/sc+.5;
+  float gap=6.*panes/uN; vec2 e=min(tuv,1.-tuv);
+  if(tuv.x<0.||tuv.y<0.||tuv.x>1.||tuv.y>1.||min(e.x,e.y)<gap*.5){ o=vec4(.05,.055,.07,1.); return; }
+  vec4 s=texture(uS,tuv); float v=ch==0?s.r:ch==1?s.g:ch==2?s.b:s.a;
+  vec3 col=vec3(v); vec2 grid=vec2(uCols,uRows); vec2 cellPx=uN/panes*sc/grid;
+  vec2 g=abs(fract(tuv*grid)-.5); vec2 lw=1.2/cellPx; if(g.x>.5-lw.x||g.y>.5-lw.y) col=mix(col,vec3(.16,.17,.22),.8);
+  float per=uCols*uRows; float fc=floor(uFrame/per); float k=uFrame-fc*per; vec2 cell=vec2(mod(k,uCols),uRows-1.-floor(k/uCols));
+  vec2 cc=floor(tuv*grid); if(uFrame>=0.&&float(ch)==fc&&cc==cell){ vec2 f=abs(fract(tuv*grid)-.5); vec2 lw2=3./cellPx; if(f.x>.5-lw2.x||f.y>.5-lw2.y) col=vec3(.91,.70,.37); }
   o=vec4(col,1.); }`;
 
 const PR = {
@@ -588,12 +692,14 @@ function drawPoints(buf, n, view, ppm, chan, w) {
   if (!n) return;
   const pr = PR.pts; gl.useProgram(pr.p); gl.bindVertexArray(ptsVAO); gl.bindBuffer(gl.ARRAY_BUFFER, pb);
   gl.bufferData(gl.ARRAY_BUFFER, buf.subarray(0, n * 4), gl.DYNAMIC_DRAW);
-  gl.uniform3fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
+  gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
   gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w);
   gl.drawArrays(gl.POINTS, 0, n);
 }
 function additive(on) { if (on) { gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE); gl.blendEquation(gl.FUNC_ADD); } else gl.disable(gl.BLEND); }
-function frameView(m, scale = 1) { return [m.S * (0.5 - m.px) * scale, m.S * (m.py - 0.5) * scale, m.S * 0.5 * scale]; }
+function sizeAt(m, age) { return m.zoom ? evalKeys(m.sizeKeys, clamp(age / m.duration, 0, 1)) : 1; }
+function bakeView(m, sc = 1) { return [0, m.cy, m.HX * sc, m.HY * sc]; }
+function squareView(m) { const h = Math.max(m.Ww, m.Wh) / 2; return [0, m.cy, h, h]; }
 
 function autoExpo(t, target, pct) {
   t.bind(); const buf = new Float32Array(t.w * t.h * 4);
@@ -605,47 +711,67 @@ function autoExpo(t, target, pct) {
   return -Math.log(1 - target) / Math.pow(2, b / 40 - 20);
 }
 
-// ---------------- 烘焙：64 帧 → 每通道 4×4 ----------------
-async function bake(P, N, onProg) {
+// ---------------- 烘焙：F 帧 → 列×行格子，RGBA 接力（先填满 R） ----------------
+async function bake(P, scale, onProg) {
   P = { ...P };
-  const fm = measure(P), S = fm.S, view = frameView(fm);
-  const cell = N / 4, ss = cell * 2, ppm = ss / S;
-  const fH = new Target(N, N, gl.RGBA16F), fT = new Target(N, N, gl.RGBA16F), sst = new Target(ss, ss, gl.RGBA16F);
+  const fm = measure(P), pl = plan(P, fm), L = pl.L;
+  const N = Math.round(P.texW * scale), NH = Math.round(P.texH * scale);
+  const cw = Math.round(L.cellW * scale), chh = Math.round(L.cellH * scale);
+  const ssW = cw * 2, ssH = chh * 2;
+  const plD = { ...pl, duration: P.duration };
+  gl.activeTexture(gl.TEXTURE0);
+  const fH = new Target(N, NH, gl.RGBA16F), fT = new Target(N, NH, gl.RGBA16F), sst = new Target(ssW, ssH, gl.RGBA16F);
   fH.clear(); fT.clear();
-  const sim = new Sim(P), tf = frameTimes(P);
-  for (let f = 0; f < FRAMES; f++) {
-    const tEnd = tf[f], prev = f ? tf[f - 1] : 0;
-    const W = Math.max(P.shutter * (tEnd - prev), 1e-4);
+  const sim = new Sim(P), light = [];
+  for (let f = 0; f < L.F; f++) {
+    const tc = pl.times[f], W = Math.max(P.shutter * pl.dur[f], 1e-4);
     const nsub = clamp(Math.ceil(W / (1 / 300)), 1, 16);
+    const sc = sizeAt(plD, tc), view = bakeView(pl, sc), ppm = ssW / (pl.Ww * sc);
     sst.clear(); sst.bind(); additive(true);
+    let lsum = 0;
     for (let j = 0; j < nsub; j++) {
-      const ts = tEnd - W + (j + 0.5) * W / nsub;
+      const ts = tc - W / 2 + (j + 0.5) * W / nsub;
       while (sim.t < ts - 1e-9) sim.step(H_STEP);
       const [nh, nt] = sim.gather(bufH, bufT);
+      for (let i = 0; i < nh; i++) lsum += bufH[i * 4 + 2];
+      for (let i = 0; i < nt; i++) lsum += bufT[i * 4 + 2] * 0.3;
       drawPoints(bufH, nh, view, ppm, [1, 0, 0, 0], 1 / nsub);
       drawPoints(bufT, nt, view, ppm, [0, 1, 0, 0], 1 / nsub);
     }
+    light.push(lsum / nsub);
     additive(false);
-    const ch = Math.floor(f / 16), k = f % 16, col = k % 4, row = Math.floor(k / 4);
-    const fade = clamp((P.duration - tEnd) / 0.3, 0, 1);
+    const ch = Math.floor(f / L.per), k = f % L.per, col = k % L.cols, row = Math.floor(k / L.cols);
+    const fade = clamp((P.duration - tc) / 0.3, 0, 1);
     gl.useProgram(PR.pack.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, sst.tex);
     gl.uniform1i(PR.pack.u.uS, 0); gl.uniform1f(PR.pack.u.uFade, fade);
     for (const [tg, m] of [[fH, [1, 0, 0, 0]], [fT, [0, 1, 0, 0]]]) {
-      tg.bind(col * cell, N - (row + 1) * cell, cell, cell);
+      tg.bind(col * cw, NH - (row + 1) * chh, cw, chh);
       gl.colorMask(ch === 0, ch === 1, ch === 2, ch === 3);
       gl.uniform4fv(PR.pack.u.uM, m); drawQuad();
     }
     gl.colorMask(true, true, true, true);
-    if (f % 4 === 3) { onProg && onProg((f + 1) / FRAMES); await nextTick(); }
+    if (f % 8 === 7) { onProg && onProg((f + 1) / L.F); await nextTick(); }
   }
-  const eH = autoExpo(fH, 0.9, 99.8), eT = autoExpo(fT, 0.85, 99.6);
-  const head = new Target(N, N, gl.RGBA8), tail = new Target(N, N, gl.RGBA8);
-  gl.useProgram(PR.enc.p); gl.activeTexture(gl.TEXTURE0); gl.uniform1i(PR.enc.u.uS, 0);
-  for (const [src, dst, e] of [[fH, head, eH], [fT, tail, eT]]) { dst.bind(); gl.bindTexture(gl.TEXTURE_2D, src.tex); gl.uniform1f(PR.enc.u.uE, e); drawQuad(); }
+  const comb = P.outMode === 'combined';
+  const eH = autoExpo(fH, comb ? 0.92 : 0.9, 99.8), eT = autoExpo(fT, comb ? 0.55 : 0.85, 99.6);
+  // 先建目标贴图：Target 构造时会绑定到当前活动纹理单元，放在后面会顶掉采样用的贴图
+  gl.activeTexture(gl.TEXTURE0);
+  const head = new Target(N, NH, gl.RGBA8), tail = comb ? null : new Target(N, NH, gl.RGBA8);
+  const pr = PR.enc; gl.useProgram(pr.p);
+  gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, fH.tex); gl.uniform1i(pr.u.uH, 0);
+  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, fT.tex); gl.uniform1i(pr.u.uT, 1);
+  gl.uniform1f(pr.u.uEH, eH); gl.uniform1f(pr.u.uET, eT); gl.uniform1f(pr.u.uG, P.encGamma); gl.uniform1f(pr.u.uSingle, L.chans === 1 ? 1 : 0);
+  head.bind(); gl.uniform1f(pr.u.uWhich, comb ? 0 : 1); drawQuad();
+  if (tail) { tail.bind(); gl.uniform1f(pr.u.uWhich, 2); drawQuad(); }
+  gl.activeTexture(gl.TEXTURE0);
   fH.dispose(); fT.dispose(); sst.dispose();
-  return { N, head, tail, P, meta: { S, px: fm.px, py: fm.py, duration: P.duration, gamma: P.gamma, expoH: eH, expoT: eT, frameTimes: tf } };
+  const lmax = Math.max(1e-6, ...light);
+  let darkTail = 0; for (let f = L.F - 1; f >= 0 && light[f] / lmax < 0.02; f--) darkTail++;
+  const lightKeys = simplify([[0, light[0] / lmax], ...pl.times.map((t, i) => [t / P.duration, light[i] / lmax]), [1, 0]], 8, 0.02)
+    .map(([u, v]) => [+u.toFixed(4), +v.toFixed(3)]);
+  return { N, NH, cw, chh, scale, head, tail, P, meta: { ...pl, duration: P.duration, expoH: eH, expoT: eT, lightKeys, darkTail } };
 }
-function disposeBake(b) { if (b) { b.head.dispose(); b.tail.dispose(); } }
+function disposeBake(b) { if (b) { b.head.dispose(); b.tail && b.tail.dispose(); } }
 
 // =====================================================================
 //  导出：PNG / ZIP
@@ -695,130 +821,121 @@ async function makeZip(files) {
 }
 function download(blob, name) { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000); }
 
-const HLSL = `// =====================================================================
-//  M_FireworkLayer · UE5 Custom 节点（一个母版 = 一个图层）
-//  Material: Surface / Additive / Unlit，勾选 Responsive AA
-//  Custom 节点 Output Type: CMOT Float 3 → Emissive Color
-//
-//  输入（名字必须一致）
-//    HeadTex, TailTex  Texture Object（T_*_Head / T_*_Tail）
-//                      贴图设置：sRGB 关闭；压缩 PC 用 BC7、手游用 ASTC 4x4；
-//                      Mip Gen: NoMipmaps（避免相邻格子互相渗色）
-//    UV        TexCoord[0]（UE 的 UV 原点在左上）
-//    Age       开花后经过的秒数（Niagara Particles.Age → Dynamic Parameter）
-//    Duration  母版 JSON 里的 duration
-//    Gamma     母版 JSON 里的 gamma（非线性取帧）
-//    Inset     0.5 / 单格像素数（2K: 0.5/512，1K: 0.5/256），防止采到相邻格
-//    ColA ColB 星头变色前 / 后（线性颜色）
-//    ChgTime   变色时刻（秒）
-//    TailHot TailCool  拖尾高温色 / 低温色
-//    HeadInt TailInt   星头 / 拖尾亮度（HDR 倍数，配合固定曝光调）
-//    Mirror    0 或 1，水平镜像，一个母版变出两种花型
-// =====================================================================
-float2 uv = UV;
-if (Mirror > 0.5) uv.x = 1.0 - uv.x;
-uv = clamp(uv, Inset, 1.0 - Inset);
-
-// 非线性时间 → 帧号：frame = 64 * (Age/Duration)^(1/Gamma) - 1
-float fr = 64.0 * pow(saturate(Age / Duration), 1.0 / Gamma) - 1.0;
-float fadeIn = saturate(fr + 1.0);
-float alive = step(Age, Duration);
-fr = clamp(fr, 0.0, 63.0);
-float f0 = floor(fr);
-float f1 = min(f0 + 1.0, 63.0);
-float w = fr - f0;
-
-// 帧 f 在第 floor(f/16) 个通道（R G B A），格子 k = f % 16，行优先 4×4，左上为 0
-float c0 = floor(f0 / 16.0); float k0 = f0 - c0 * 16.0;
-float2 st0 = (float2(fmod(k0, 4.0), floor(k0 / 4.0)) + uv) * 0.25;
-float4 m0 = float4(c0 == 0.0, c0 == 1.0, c0 == 2.0, c0 == 3.0);
-float c1 = floor(f1 / 16.0); float k1 = f1 - c1 * 16.0;
-float2 st1 = (float2(fmod(k1, 4.0), floor(k1 / 4.0)) + uv) * 0.25;
-float4 m1 = float4(c1 == 0.0, c1 == 1.0, c1 == 2.0, c1 == 3.0);
-
-float h = lerp(dot(Texture2DSample(HeadTex, HeadTexSampler, st0), m0),
-               dot(Texture2DSample(HeadTex, HeadTexSampler, st1), m1), w);
-float t = lerp(dot(Texture2DSample(TailTex, TailTexSampler, st0), m0),
-               dot(Texture2DSample(TailTex, TailTexSampler, st1), m1), w);
-
-// 解码：贴图存的是 (1 - e^(-x·expo))^(1/2.2)
-h = pow(h, 2.2) * fadeIn * alive;
-t = pow(t, 2.2) * fadeIn * alive;
-
-float3 hc = lerp(ColA, ColB, smoothstep(ChgTime - 0.04, ChgTime + 0.04, Age));
-float3 tc = lerp(TailCool, TailHot, saturate(t * 1.6));   // 亮=刚剥落的高温火花，暗=冷却中
-return h * hc * HeadInt + t * tc * TailInt;
-`;
-
-function readmeText(name, b) {
-  const m = b.meta, N = b.N;
-  return `烟花母版：${name}（${TYPE_NAMES[b.P.type]}）
+const srgb8 = c => Math.round(255 * clamp(c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055, 0, 1));
+function rampAt(M, v) {
+  const C = [M.ramp0, M.ramp1, M.ramp2, M.ramp3].map(hexToLin);
+  for (let i = 1; i < 4; i++) if (v <= RAMP_POS[i]) { const k = (v - RAMP_POS[i - 1]) / (RAMP_POS[i] - RAMP_POS[i - 1]); return C[i - 1].map((a, j) => a + (C[i][j] - a) * k); }
+  return C[3];
+}
+function rampPixels(M, w = 256, h = 8) {
+  const a = new Uint8Array(w * h * 4);
+  for (let x = 0; x < w; x++) { const c = rampAt(M, x / (w - 1)).map(srgb8); for (let y = 0; y < h; y++) { const i = (y * w + x) * 4; a[i] = c[0]; a[i + 1] = c[1]; a[i + 2] = c[2]; a[i + 3] = 255; } }
+  return a;
+}
+const smooth = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+function tintAt(c, age) { const A = hexToLin(c.colA), B = hexToLin(c.colB), k = smooth(c.chg - 0.04, c.chg + 0.04, age); return A.map((a, i) => a + (B[i] - a) * k); }
+function colorKeys(M, D) {
+  const A = hexToLin(M.colA), B = hexToLin(M.colB), f = v => v.map(x => +x.toFixed(4));
+  if (M.chg <= 0.04 || M.chg >= D - 0.04 || M.colA === M.colB) return [[0, f(A)], [1, f(A)]];
+  return [[0, f(A)], [+((M.chg - 0.04) / D).toFixed(4), f(A)], [+((M.chg + 0.04) / D).toFixed(4), f(B)], [1, f(B)]];
+}
+function cascadeText(name, b, M) {
+  const m = b.meta, P = b.P, L = m.L, split = !!b.tail, cm = v => (v * 100).toFixed(0);
+  const texList = split ? `T_${name}_Head.png（星头与开花闪光）、T_${name}_Tail.png（拖尾火花）` : `T_${name}.png（星头、闪光、拖尾合并）`;
+  const chanTxt = L.chans === 4 ? `RGBA 接力：先填满 R 的 ${L.per} 格（第 0–${L.per - 1} 帧），再接 G（${L.per}–${2 * L.per - 1}）、B（${2 * L.per}–${3 * L.per - 1}）、A（${3 * L.per}–${4 * L.per - 1}）` : '单通道（RGB 相同）';
+  const ck = colorKeys(M, m.duration);
+  const warn = [];
+  if (m.minFps < 24) warn.push(`最低帧率 ${m.minFps.toFixed(1)} fps，尾段可能发卡：可增加格子数或缩短序列时长`);
+  if (m.maxDisp > 3) warn.push(`每帧最大位移 ${m.maxDisp.toFixed(1)} 像素，开花初期可能跳帧：可增加格子数或调高最低帧率`);
+  if (m.darkTail > L.F * 0.05) warn.push(`末尾 ${m.darkTail} 帧接近全黑，可把序列时长缩短到约 ${m.times[L.F - m.darkTail].toFixed(2)} s`);
+  return `烟花母版：${name}（${TYPE_NAMES[P.type]}）
+工具：烟花母版烘焙器 1.1
 
 【贴图】
-T_${name}_Head_${N}.png  星头（含开花闪光）
-T_${name}_Tail_${N}.png  拖尾（炭火火花）
-两张都是 ${N}×${N} RGBA、线性灰度数据：
-  每个通道是 4×4 格、共 16 帧，行优先，左上为第一帧
-  R = 第 0–15 帧，G = 16–31，B = 32–47，A = 48–63
-  单帧 ${N / 4}×${N / 4} 像素
-UE 导入：sRGB 关闭；压缩 PC 用 BC7、手游 ASTC 4x4；Mip Gen 选 NoMipmaps。
-不要用 DXT5/BC3（通道间串扰，G 只有 6 位）。
+${texList}
+尺寸 ${P.texW}×${P.texH}，灰度（${P.encGamma === 1 ? '线性' : 'Gamma ' + P.encGamma}），${chanTxt}
+格子 ${L.cols} 列 × ${L.rows} 行，行优先，左上为第 0 帧；单格 ${L.cellW}×${L.cellH} 像素；共 ${L.F} 帧
+导入：sRGB 关闭，压缩 BC7；1K 版本在引擎里复制一张，把最大尺寸设为 1024 即可
+T_${name}_Ramp.png：渐变图 256×8（sRGB），灰度从暗到亮依次取：拖尾冷却色 → 拖尾高温色 → 星头高温色
 
-【时间】
-序列时长 ${m.duration.toFixed(2)} 秒，非线性取帧 gamma = ${m.gamma.toFixed(2)}
-第 f 帧（0–63）对应时刻：t = duration × ((f+1)/64)^gamma
-材质里：frame = 64 × (Age/duration)^(1/gamma) − 1
-开花初期帧更密，快速扩张时帧间混合不会出重影。
+【材质实例】
+项目现有的 RGBA 序列帧材质；列 = ${L.cols}，行 = ${L.rows}；Ramp = T_${name}_Ramp
+${split ? '星头、拖尾各一个材质实例和发射器，两个发射器除贴图和颜色外参数相同。\n' : ''}
+【Cascade 发射器】
+Required：Screen Alignment = Square（面向相机）；Emitter Duration = ${m.duration.toFixed(2)} s；Emitter Loops = 1
+Spawn：Rate = 0；Burst：Count = 1，Time = 0
+Lifetime：${m.duration.toFixed(2)} s（常量）
+Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm（开花最大时的尺寸）
+${m.zoom ? `Initial Location：0（爆点就是精灵中心）
+Size By Life（X、Y 相同；线性插值）：面片随开花放大，每帧贴图按同一条曲线烘焙
+  相对时间    倍数
+${m.sizeKeys.map(([u, v]) => `  ${u.toFixed(4)}      ${v.toFixed(3)}`).join('\n')}` : `Initial Location：Z = ${cm(m.cy)} cm（精灵中心相对爆点的高度，这样爆点正好在发射器原点）`}
+Dynamic Parameter：第三通道 = 帧号；Use Emitter Time 不勾选；曲线插值 Linear
+  相对时间    帧号
+${m.keys.map(([u, v]) => `  ${u.toFixed(4)}      ${v.toFixed(2)}`).join('\n')}
+  材质取整显示，不做帧间混合。烘焙时每一帧取的正是这条曲线上对应帧号的时刻，画面与引擎一致。
+Color Over Life（线性 RGB；Alpha 恒为 1）
+${ck.map(([u, c]) => `  ${u.toFixed(4)}      ${c.join('  ')}`).join('\n')}
+  亮度倍数：星头 ${M.headInt}${split ? `，拖尾 ${M.tailInt}` : ''}（乘在颜色上，按项目曝光再调）
+Light（可选）：Brightness Over Life 相对值，乘以期望的峰值亮度
+${m.lightKeys.map(([u, v]) => `  ${u.toFixed(4)}      ${v.toFixed(3)}`).join('\n')}
+Initial Rotation（可选）：−15°～15° 随机，同一母版多发时增加差异
 
-【尺寸】
-整张单帧对应世界尺寸 ${m.S.toFixed(1)} 米见方
-爆点在单帧 UV（左上原点）：(${m.px.toFixed(3)}, ${m.py.toFixed(3)})
-Niagara Sprite：Size = ${m.S.toFixed(1)} 米 × 缩放，Pivot in UV Space = (${m.px.toFixed(3)}, ${m.py.toFixed(3)})
-
-【材质】
-M_FireworkLayer_Custom.hlsl：一个母版一个图层，4 次采样（两张图 × 帧间混合两帧）。
-多个母版叠加组合（例如菊 + 缩放 0.5 的牡丹 = 八重芯）时，每层一个面片、各自上色。
-
-【重新烘焙】
-${name}.json 里保存了全部参数，用烘焙器「导入参数 JSON」即可继续修改。
+【帧与流畅度】
+平均 ${m.avgFps.toFixed(1)} fps，最低 ${m.minFps.toFixed(1)} fps，每帧最大位移 ${m.maxDisp.toFixed(1)} 像素（建议 ≤ 3）
+平均面片面积为最大尺寸的 ${Math.round(m.area * 100)}%（overdraw 按此折算）
+取帧：${P.frameMode === 'auto' ? `自动，开花初期帧更密，整段不低于 ${P.fpsFloor} fps` : '均匀'}
+${warn.length ? '注意：\n' + warn.map(w => '  ' + w).join('\n') + '\n' : ''}
+【说明】
+${m.zoom ? 'Size By Life 以精灵中心缩放，爆点就在中心，所以面片放大时爆点位置不变。' : 'Square 对齐的精灵用 Initial Location 的 Z 偏移对齐爆点；从很陡的仰角看时会有轻微偏差。'}
+${name}.json 保存了全部参数，用烘焙器「导入参数 JSON」即可继续修改。
 `;
+}
+function curvesCSV(b, M) {
+  const m = b.meta, rows = ['曲线,相对时间,值1,值2,值3'];
+  for (const [u, v] of m.keys) rows.push(`DynamicParameter_第三通道_帧号,${u},${v},,`);
+  for (const [u, c] of colorKeys(M, m.duration)) rows.push(`ColorOverLife_线性RGB,${u},${c[0]},${c[1]},${c[2]}`);
+  if (m.zoom) for (const [u, v] of m.sizeKeys) rows.push(`SizeByLife_XY倍数,${u},${v},,`);
+  for (const [u, v] of m.lightKeys) rows.push(`Light_BrightnessOverLife,${u},${v},,`);
+  return '﻿' + rows.join('\n') + '\n';
 }
 
 async function exportMaster() {
   const name = (state.name || 'Firework').replace(/[^\w\-]+/g, '_');
-  const list = $('#allRes').checked ? [2048, 1024, 512] : [state.res];
   busy(true, '准备导出…', 0);
+  let own = false, b = null;
   try {
+    b = state.bake && state.bake.scale === 1 && !state.dirty ? state.bake : null;
+    own = !b;
+    if (own) b = await bake(state.P, 1, p => busy(true, `烘焙 ${state.P.texW}×${state.P.texH}… ${Math.round(p * 100)}%`, p * 0.9));
+    busy(true, '编码 PNG…', 0.93);
     const files = [];
-    let lastB = null;
-    for (let i = 0; i < list.length; i++) {
-      const N = list[i];
-      let b = state.bake && state.bake.N === N && !state.dirty ? state.bake : null;
-      const own = !b;
-      if (own) b = await bake(state.P, N, p => busy(true, `烘焙 ${N}… ${Math.round(p * 100)}%`, (i + p) / list.length));
-      busy(true, `编码 PNG（${N}）…`, (i + 0.95) / list.length);
-      files.push([`T_${name}_Head_${N}.png`, await encodePNG(readRGBA8(b.head), N, N)]);
-      files.push([`T_${name}_Tail_${N}.png`, await encodePNG(readRGBA8(b.tail), N, N)]);
-      files.push([`说明_${N}.txt`, utf8(readmeText(name, b))]);
-      lastB = { N, meta: b.meta };
-      if (own) disposeBake(b);
-    }
+    if (b.tail) {
+      files.push([`T_${name}_Head.png`, await encodePNG(readRGBA8(b.head), b.N, b.NH)]);
+      files.push([`T_${name}_Tail.png`, await encodePNG(readRGBA8(b.tail), b.N, b.NH)]);
+    } else files.push([`T_${name}.png`, await encodePNG(readRGBA8(b.head), b.N, b.NH)]);
+    files.push([`T_${name}_Ramp.png`, await encodePNG(rampPixels(state.M), 256, 8)]);
+    files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b, state.M))]);
+    files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, state.M))]);
+    const m = b.meta, L = m.L;
     const json = {
-      name, type: state.P.type, typeName: TYPE_NAMES[state.P.type], tool: '烟花母版烘焙器 1.0',
-      frames: 64, layout: '每通道 4×4 格，行优先，左上为第一帧；R=0–15，G=16–31，B=32–47，A=48–63',
-      encoding: 'v = (1 − e^(−x·expo))^(1/2.2)，材质中 pow(v, 2.2) 还原；贴图 sRGB 关闭',
-      duration: lastB.meta.duration, gamma: lastB.meta.gamma,
-      frameTimeFormula: 't_f = duration × ((f+1)/64)^gamma', materialFrameFormula: 'frame = 64 × (age/duration)^(1/gamma) − 1',
-      frameTimes: lastB.meta.frameTimes.map(v => +v.toFixed(4)),
-      worldSizeMeters: +lastB.meta.S.toFixed(2), pivotUV: [lastB.meta.px, +lastB.meta.py.toFixed(4)],
-      resolutions: list, params: state.P, materialDefaults: state.M
+      name, type: state.P.type, typeName: TYPE_NAMES[state.P.type], tool: '烟花母版烘焙器 1.1',
+      texture: { width: state.P.texW, height: state.P.texH, cols: L.cols, rows: L.rows, channels: L.chans, frames: L.F, cellPx: [L.cellW, L.cellH],
+        order: L.chans === 4 ? '先填满 R 的全部格子再接 G、B、A；格子行优先，左上为第 0 帧' : '单通道，行优先，左上为第 0 帧',
+        encoding: state.P.encGamma === 1 ? '线性灰度' : `gamma ${state.P.encGamma}`, output: b.tail ? 'split' : 'combined' },
+      duration: m.duration, frameCurve: { channel: 'Dynamic Parameter 第三通道', keys: m.keys, note: '相对时间 → 帧号，线性插值，材质取整' },
+      frameTimes: m.times.map(v => +v.toFixed(4)), avgFps: +m.avgFps.toFixed(2), minFps: +m.minFps.toFixed(2), maxDispPx: +m.maxDisp.toFixed(2),
+      spriteSizeCm: [+(m.Ww * 100).toFixed(1), +(m.Wh * 100).toFixed(1)], burstOffsetZcm: +(m.cy * 100).toFixed(1), pivotUV: [m.px, +m.py.toFixed(4)],
+      sizeByLife: m.zoom ? m.sizeKeys : null, averageQuadArea: +m.area.toFixed(3), darkTailFrames: m.darkTail,
+      colorOverLife: colorKeys(state.M, m.duration), lightKeys: m.lightKeys,
+      params: state.P, materialDefaults: state.M
     };
     files.push([`${name}.json`, utf8(JSON.stringify(json, null, 2))]);
-    files.push(['M_FireworkLayer_Custom.hlsl', utf8(HLSL)]);
     busy(true, '打包 ZIP…', 1);
-    download(await makeZip(files), `${name}_${list.length > 1 ? 'AllRes' : list[0]}.zip`);
+    download(await makeZip(files), `${name}.zip`);
     flash('已导出 ' + name);
   } catch (e) { console.error(e); flash('导出失败：' + e.message, true); }
+  if (own && b) disposeBake(b);
   busy(false);
 }
 
@@ -827,7 +944,7 @@ async function exportMaster() {
 // =====================================================================
 const state = {
   tab: 'master', view: 'live', atlasLayer: 'head',
-  ...defaultsFor('kiku'), name: 'Kiku_01', res: 2048,
+  ...defaultsFor('kiku'), name: 'Kiku_01',
   t: 0, playing: true, speed: 1, expo: 1,
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
   lib: [], layers: [], comboName: '八重芯变色菊', libReady: false
@@ -850,15 +967,33 @@ async function runPreviewBake() {
   if (state.baking) { state.rebake = true; return; }
   state.baking = true; const gen = state.gen;
   try {
-    const b = await bake(state.P, state.res, p => setStatus(`烘焙 ${state.res}… ${Math.round(p * 100)}%`));
-    disposeBake(state.bake); state.bake = b;
+    const b = await bake(state.P, PREVIEW_SCALE, p => setStatus(`预览烘焙… ${Math.round(p * 100)}%`));
+    disposeBake(state.bake); state.bake = b; showStats(b);
     if (gen === state.gen) state.dirty = false;
     setStatus('');
   } catch (e) { console.error(e); flash('烘焙失败：' + e.message, true); }
   state.baking = false;
   if (state.rebake || state.dirty) { state.rebake = false; runPreviewBake(); }
 }
-function onParam() { state.gen++; state.dirty = true; scheduleBake(); }
+function onParam() { state.gen++; state.dirty = true; $('#stats').textContent = '烘焙中…'; scheduleBake(); }
+function showStats(b) {
+  const m = b.meta, L = m.L, P = b.P, cls = ok => ok ? 'ok' : 'warn';
+  const mb = (P.texW * P.texH * (b.tail ? 2 : 1) / 1048576).toFixed(1);
+  $('#stats').innerHTML =
+    `共 <b>${L.F}</b> 帧 · 单格 <b>${L.cellW}×${L.cellH}</b> · ${L.chans === 4 ? 'RGBA 接力' : '单通道'}<br>` +
+    `平均 <b>${m.avgFps.toFixed(1)}</b> fps · 最低 <span class="${cls(m.minFps >= 24)}">${m.minFps.toFixed(1)} fps</span><br>` +
+    `每帧最大位移 <span class="${cls(m.maxDisp <= 3)}">${m.maxDisp.toFixed(1)} px</span>（建议 ≤ 3）<br>` +
+    `精灵 ${(m.Ww).toFixed(0)}×${(m.Wh).toFixed(0)} m · BC7 约 ${mb} MB<br>` +
+    `平均面片面积 <b>${Math.round(m.area * 100)}%</b>${m.zoom ? '（随开花放大）' : '（固定大小）'}` +
+    (m.darkTail > L.F * 0.05 ? `<br><span class="warn">末尾 ${m.darkTail} 帧接近全黑，可把序列时长缩短到约 ${m.times[L.F - m.darkTail].toFixed(2)} s</span>` : '');
+}
+const GRID_OPTS = [1, 2, 4, 8, 16];
+function syncExport() {
+  const P = state.P;
+  for (const id of ['x-cols', 'x-rows']) { const el = $('#' + id); if (!el.options.length) for (const n of GRID_OPTS) el.add(new Option(n, n)); }
+  $('#x-size').value = `${P.texW}x${P.texH}`; $('#x-cols').value = P.cols; $('#x-rows').value = P.rows;
+  $('#x-chans').value = P.chans; $('#x-out').value = P.outMode; $('#x-enc').value = P.encGamma; $('#x-frame').value = P.frameMode; $('#x-zoom').value = P.zoom;
+}
 
 function fmtV(v, step) { const d = step >= 1 ? 0 : step >= 0.1 ? 1 : 2; return (+v).toFixed(d); }
 function slider(host, id, label, unit, min, max, step, get, set, def) {
@@ -894,14 +1029,14 @@ function buildMasterPanel() {
     host.appendChild(det);
   }
   const mc = $('#matColors'); mc.innerHTML = '';
-  colorPair(mc, '星头颜色', [['colA', '变色前'], ['colB', '变色后']], state.M);
-  colorPair(mc, '拖尾颜色', [['tailHot', '高温'], ['tailCool', '低温']], state.M);
+  colorPair(mc, '渐变图', [['ramp0', '暗'], ['ramp1', '中暗'], ['ramp2', '中亮'], ['ramp3', '亮']], state.M);
+  colorPair(mc, 'Color Over Life', [['colA', '变色前'], ['colB', '变色后']], state.M);
   const ms = $('#matSliders'); ms.innerHTML = '';
   const MD = defaultsFor(P.type).M;
   slider(ms, 'm-chg', '变色时刻', 's', 0, 9, 0.01, () => state.M.chg, v => state.M.chg = v, MD.chg);
   slider(ms, 'm-hi', '星头亮度', '×', 0, 4, 0.05, () => state.M.headInt, v => state.M.headInt = v, 1);
   slider(ms, 'm-ti', '拖尾亮度', '×', 0, 4, 0.05, () => state.M.tailInt, v => state.M.tailInt = v, 1);
-  $('#type').value = P.type; $('#mname').value = state.name;
+  $('#type').value = P.type; $('#mname').value = state.name; syncExport();
 }
 function setType(t) {
   const d = defaultsFor(t); state.P = d.P; state.M = d.M;
@@ -917,6 +1052,7 @@ const COMBOS = [
   { name: '千轮菊', layers: [{ m: 'senrin', scale: 1 }] },
   { name: '蜂·彩芯', layers: [{ m: 'hachi', scale: 1 }, { m: 'botan', scale: 0.4, colA: '#7cff6a', colB: '#ff6fae', chg: 1.0 }] }
 ];
+const libP = P => ({ ...P, texW: 1024, texH: 1024, cols: 8, rows: 8, chans: 4, outMode: 'split' });
 const defaultLibName = t => TYPE_NAMES[t].replace(/（.*）/, '') + ' · 默认';
 async function ensureLibrary() {
   if (state.libReady) return;
@@ -926,7 +1062,7 @@ async function ensureLibrary() {
     const t = types[i], nm = defaultLibName(t);
     if (state.lib.find(e => e.name === nm)) continue;
     const d = defaultsFor(t);
-    const b = await bake(d.P, PREVIEW_LIB_N, p => busy(true, `烘焙默认母版：${TYPE_NAMES[t]}（${i + 1}/${types.length}）`, (i + p) / types.length));
+    const b = await bake(libP(d.P), 1, p => busy(true, `烘焙默认母版：${TYPE_NAMES[t]}（${i + 1}/${types.length}）`, (i + p) / types.length));
     state.lib.push({ name: nm, type: t, P: d.P, M: d.M, bake: b });
   }
   state.libReady = true; busy(false);
@@ -934,7 +1070,7 @@ async function ensureLibrary() {
 function libByType(t) { return state.lib.find(e => e.name === defaultLibName(t)) || state.lib.find(e => e.type === t); }
 function newLayer(entry, o = {}) {
   const M = entry.M;
-  return { lib: entry.name, scale: 1, delay: 0, rate: 1, mirror: false, colA: M.colA, colB: M.colB, chg: M.chg, tailHot: M.tailHot, tailCool: M.tailCool, headInt: M.headInt, tailInt: M.tailInt, ...o };
+  return { lib: entry.name, scale: 1, delay: 0, rate: 1, mirror: false, colA: M.colA, colB: M.colB, chg: M.chg, ramp0: M.ramp0, ramp1: M.ramp1, ramp2: M.ramp2, ramp3: M.ramp3, headInt: M.headInt, tailInt: M.tailInt, ...o };
 }
 function applyCombo(c) {
   state.layers = c.layers.map(l => { const e = libByType(l.m); const { m, ...rest } = l; return newLayer(e, rest); });
@@ -966,7 +1102,7 @@ function buildComboPanel() {
     slider(card, `l${i}-ti`, '拖尾亮度', '×', 0, 4, 0.05, () => L.tailInt, v => L.tailInt = v, 1);
     const cc = document.createElement('div'); cc.className = 'colors'; cc.style.marginTop = '4px';
     colorPair(cc, '星头颜色', [['colA', '变色前'], ['colB', '变色后']], L);
-    colorPair(cc, '拖尾颜色', [['tailHot', '高温'], ['tailCool', '低温']], L);
+    colorPair(cc, '渐变图', [['ramp0', '暗'], ['ramp1', '中暗'], ['ramp2', '中亮'], ['ramp3', '亮']], L);
     card.appendChild(cc);
     const mir = document.createElement('label'); mir.className = 'check'; mir.style.marginTop = '6px';
     mir.innerHTML = `<input type="checkbox" id="l${i}-mir"> 水平镜像`;
@@ -987,8 +1123,8 @@ function exportCombo() {
   const layers = state.layers.map(L => {
     const e = state.lib.find(x => x.name === L.lib);
     return { master: L.lib, masterType: e ? e.type : '', scale: L.scale, delay: L.delay, timeRate: L.rate, mirror: L.mirror,
-      ColA: L.colA, ColB: L.colB, ChgTime: L.chg, TailHot: L.tailHot, TailCool: L.tailCool, HeadInt: L.headInt, TailInt: L.tailInt,
-      spriteSizeMeters: e ? +(e.bake.meta.S * L.scale).toFixed(2) : null };
+      ColA: L.colA, ColB: L.colB, ChgTime: L.chg, Ramp: [L.ramp0, L.ramp1, L.ramp2, L.ramp3], HeadInt: L.headInt, TailInt: L.tailInt,
+      spriteSizeCm: e ? [+(e.bake.meta.Ww * L.scale * 100).toFixed(1), +(e.bake.meta.Wh * L.scale * 100).toFixed(1)] : null };
   });
   const json = { name: state.comboName, note: '每层一个面片，共用同一个爆点；Age = (礼花时间 − delay) × timeRate；颜色为 sRGB 十六进制，进 UE 前转线性', layers };
   download(new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' }), `Combo_${state.comboName}.json`);
@@ -999,27 +1135,29 @@ function ensureTargets() {
   const box = $('#box').getBoundingClientRect();
   const size = Math.max(256, Math.min(1024, Math.round(Math.min(box.width, box.height || box.width) * Math.min(2, devicePixelRatio || 1) / 4) * 4));
   if (canvas.width !== size) { canvas.width = size; canvas.height = size; }
-  if (!hdrT || hdrT.w !== size) { hdrT && hdrT.dispose(); rgT && rgT.dispose(); hdrT = new Target(size, size, gl.RGBA16F, true); rgT = new Target(size, size, gl.RGBA16F); }
+  if (!hdrT || hdrT.w !== size) { gl.activeTexture(gl.TEXTURE0); hdrT && hdrT.dispose(); rgT && rgT.dispose(); hdrT = new Target(size, size, gl.RGBA16F, true); rgT = new Target(size, size, gl.RGBA16F); }
 }
-function setMatUniforms(pr, c) {
-  gl.uniform3fv(pr.u.uA, hexToLin(c.colA)); gl.uniform3fv(pr.u.uB, hexToLin(c.colB));
-  gl.uniform3fv(pr.u.uHot, hexToLin(c.tailHot)); gl.uniform3fv(pr.u.uCool, hexToLin(c.tailCool));
-  gl.uniform1f(pr.u.uChg, c.chg); gl.uniform1f(pr.u.uHI, c.headInt); gl.uniform1f(pr.u.uTI, c.tailInt); gl.uniform1f(pr.u.uK, 4.0);
+function setMatUniforms(pr, c, age) {
+  gl.uniform3fv(pr.u.uR0, hexToLin(c.ramp0)); gl.uniform3fv(pr.u.uR1, hexToLin(c.ramp1));
+  gl.uniform3fv(pr.u.uR2, hexToLin(c.ramp2)); gl.uniform3fv(pr.u.uR3, hexToLin(c.ramp3));
+  gl.uniform3fv(pr.u.uTint, tintAt(c, age));
+  gl.uniform1f(pr.u.uHI, c.headInt); gl.uniform1f(pr.u.uTI, c.tailInt); gl.uniform1f(pr.u.uK, 4.0);
 }
+function layerRect(m, L, sc = 1) { const w = m.Ww * L.scale * sc, h = m.Wh * L.scale * sc, px = L.mirror ? 1 - m.px : m.px; return [-px * w, (m.py - 1) * h, (1 - px) * w, m.py * h]; }
 function drawLayer(b, L, t, view) {
-  const m = b.meta, age = (t - L.delay) * L.rate;
-  if (age < 0 || age > m.duration) return;
-  const s = m.S * L.scale, pxm = L.mirror ? 1 - m.px : m.px;
+  const m = b.meta, age = (t - L.delay) * L.rate, f = frameIdx(m, age);
+  if (f < 0) return f;
   const pr = PR.mat; gl.useProgram(pr.p);
-  gl.uniform4f(pr.u.uRect, -pxm * s, -(1 - m.py) * s, (1 - pxm) * s, m.py * s);
-  gl.uniform3fv(pr.u.uView, view);
+  gl.uniform4fv(pr.u.uRect, layerRect(m, L, sizeAt(m, age))); gl.uniform4fv(pr.u.uView, view);
   gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, b.head.tex); gl.uniform1i(pr.u.uH, 0);
-  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, b.tail.tex); gl.uniform1i(pr.u.uT, 1);
-  gl.uniform1f(pr.u.uAge, age); gl.uniform1f(pr.u.uDur, m.duration); gl.uniform1f(pr.u.uGamma, m.gamma);
-  gl.uniform1f(pr.u.uInset, 0.5 / (b.N / 4)); gl.uniform1f(pr.u.uMirror, L.mirror ? 1 : 0);
-  setMatUniforms(pr, L);
+  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, (b.tail || b.head).tex); gl.uniform1i(pr.u.uT, 1);
+  gl.uniform1f(pr.u.uCols, m.L.cols); gl.uniform1f(pr.u.uRows, m.L.rows); gl.uniform1f(pr.u.uChans, m.L.chans);
+  gl.uniform1f(pr.u.uFrame, f); gl.uniform1f(pr.u.uComb, b.tail ? 0 : 1); gl.uniform1f(pr.u.uMirror, L.mirror ? 1 : 0);
+  gl.uniform2f(pr.u.uInset, 0.5 / b.cw, 0.5 / b.chh);
+  setMatUniforms(pr, L, age);
   gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   gl.activeTexture(gl.TEXTURE0);
+  return f;
 }
 function post() {
   gl.bindTexture(gl.TEXTURE_2D, hdrT.tex); gl.generateMipmap(gl.TEXTURE_2D);
@@ -1036,7 +1174,7 @@ function renderLive() {
   if (!live.sim || live.gen !== state.gen || t < live.sim.t - 1e-6) { live.sim = new Sim({ ...P }); live.gen = state.gen; }
   const sim = live.sim, W = Math.max(1 / 480, P.shutter * (1 / 60) * Math.max(state.speed, 0.25)), nsub = 3;
   let guard = 0; while (sim.t < t - W - 1e-9 && guard++ < 40000) sim.step(H_STEP);
-  const view = frameView(m), ppm = rgT.w / m.S;
+  const view = squareView(m), ppm = rgT.w / (2 * view[2]);
   rgT.clear(); rgT.bind(); additive(true);
   let nh = 0, nt = 0;
   for (let j = 0; j < nsub; j++) {
@@ -1048,49 +1186,54 @@ function renderLive() {
   }
   additive(false);
   hdrT.bind(); const pr = PR.rgmat; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, rgT.tex);
-  gl.uniform1i(pr.u.uS, 0); gl.uniform1f(pr.u.uEH, m.expoH); gl.uniform1f(pr.u.uET, m.expoT); gl.uniform1f(pr.u.uAge, t);
-  setMatUniforms(pr, state.M); drawQuad();
+  gl.uniform1i(pr.u.uS, 0); gl.uniform1f(pr.u.uEH, m.expoH); gl.uniform1f(pr.u.uET, m.expoT);
+  gl.uniform1f(pr.u.uG, P.encGamma); gl.uniform1f(pr.u.uComb, P.outMode === 'combined' ? 1 : 0);
+  setMatUniforms(pr, state.M, t); drawQuad();
   post();
-  hudText = `实时物理 · 星 ${sim.stars.filter(s => s.alive).length} · 火花 ${sim.sp.n} · 单帧 ${m.S.toFixed(0)} m 见方`;
+  hudText = `实时物理 · 星 ${sim.stars.filter(s => s.alive).length} · 火花 ${sim.sp.n} · 精灵 ${m.Ww.toFixed(0)}×${m.Wh.toFixed(0)} m`;
 }
-function frameAt(t, m) { return clamp(64 * Math.pow(clamp(t / m.duration, 0, 1), 1 / m.gamma) - 1, 0, 63); }
 function renderExport() {
   const b = state.bake; hdrT.clear();
   if (!b) { post(); hudText = '烘焙中…'; return; }
   hdrT.bind(); additive(true);
-  drawLayer(b, { ...state.M, scale: 1, delay: 0, rate: 1, mirror: false }, Math.min(state.t, b.meta.duration), frameView(b.meta));
+  const f = drawLayer(b, { ...state.M, scale: 1, delay: 0, rate: 1, mirror: false }, state.t, squareView(b.meta));
   additive(false); post();
-  const fr = frameAt(state.t, b.meta), f = Math.floor(fr);
-  hudText = `导出效果 ${b.N}² · 第 ${f + 1}/64 帧（${'RGBA'[Math.floor(f / 16)]} 通道 第 ${f % 16 + 1} 格）· 帧混合 ${(fr - f).toFixed(2)}` + (state.dirty ? ' · 等待重新烘焙' : '');
+  const L = b.meta.L;
+  hudText = f < 0 ? '序列结束' : `导出效果 · 第 ${f + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(f / L.per)] + ' 通道 ' : ''}第 ${f % L.per + 1} 格 · 不混合` + (state.dirty ? ' · 等待重新烘焙' : '');
 }
 function renderAtlas() {
   const b = state.bake;
   gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, canvas.width, canvas.height); gl.clearColor(0.02, 0.02, 0.03, 1); gl.clear(gl.COLOR_BUFFER_BIT);
   if (!b) { hudText = '烘焙中…'; return; }
-  const pr = PR.atlas; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0);
-  gl.bindTexture(gl.TEXTURE_2D, state.atlasLayer === 'head' ? b.head.tex : b.tail.tex);
-  gl.uniform1i(pr.u.uS, 0); gl.uniform1f(pr.u.uFrame, Math.floor(frameAt(state.t, b.meta))); gl.uniform1f(pr.u.uN, canvas.width);
+  const L = b.meta.L, show = state.atlasLayer === 'tail' && b.tail ? b.tail : b.head;
+  const pr = PR.atlas; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, show.tex);
+  gl.uniform1i(pr.u.uS, 0); gl.uniform1f(pr.u.uFrame, frameIdx(b.meta, state.t)); gl.uniform1f(pr.u.uN, canvas.width);
+  gl.uniform1f(pr.u.uCols, L.cols); gl.uniform1f(pr.u.uRows, L.rows); gl.uniform1f(pr.u.uChans, L.chans); gl.uniform1f(pr.u.uAspect, b.N / b.NH);
   drawQuad();
-  hudText = `${state.atlasLayer === 'head' ? '星头' : '拖尾'}贴图 ${b.N}×${b.N} · 金框 = 当前帧`;
+  hudText = `${b.tail ? (show === b.tail ? '拖尾' : '星头') : '合并'}贴图 ${b.P.texW}×${b.P.texH} · ${L.cols}×${L.rows} 格 · 金框 = 当前帧`;
 }
 function renderCombo() {
   hdrT.clear();
   const items = state.layers.map(L => [L, state.lib.find(e => e.name === L.lib)]).filter(x => x[1]);
   if (!items.length) { post(); hudText = '没有图层'; return; }
   let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
-  for (const [L, e] of items) { const m = e.bake.meta, s = m.S * L.scale; x0 = Math.min(x0, -m.px * s); x1 = Math.max(x1, (1 - m.px) * s); y0 = Math.min(y0, -(1 - m.py) * s); y1 = Math.max(y1, m.py * s); }
-  const half = Math.max(x1 - x0, y1 - y0) * 0.52, view = [(x0 + x1) / 2, (y0 + y1) / 2, half];
+  for (const [L, e] of items) { const r = layerRect(e.bake.meta, L); x0 = Math.min(x0, r[0]); y0 = Math.min(y0, r[1]); x1 = Math.max(x1, r[2]); y1 = Math.max(y1, r[3]); }
+  const half = Math.max(x1 - x0, y1 - y0) * 0.52, view = [(x0 + x1) / 2, (y0 + y1) / 2, half, half];
   hdrT.bind(); additive(true);
   for (const [L, e] of items) drawLayer(e.bake, L, state.t, view);
   additive(false); post();
-  hudText = `${state.comboName} · ${items.length} 层 · ${items.length} 个面片、共 ${items.length * 4} 次采样`;
+  hudText = `${state.comboName} · ${items.length} 层 · 每层星头、拖尾各一个发射器`;
 }
 function updateLabels() {
-  const q = $('#qlabels');
-  if (state.tab === 'master' && state.view === 'atlas') {
-    if (!q.childElementCount) q.innerHTML = [['R · 第 1–16 帧', '8px', '8px'], ['G · 第 17–32 帧', '8px', 'calc(50% + 8px)'], ['B · 第 33–48 帧', 'calc(50% + 8px)', '8px'], ['A · 第 49–64 帧', 'calc(50% + 8px)', 'calc(50% + 8px)']]
-      .map(([t, top, left]) => `<span class="qlabel" style="top:${top};left:${left}">${t}</span>`).join('');
-  } else q.innerHTML = '';
+  const q = $('#qlabels'), b = state.bake;
+  if (state.tab === 'master' && state.view === 'atlas' && b && b.meta.L.chans === 4) {
+    const per = b.meta.L.per, key = String(per);
+    if (q.dataset.key !== key) {
+      q.dataset.key = key;
+      q.innerHTML = [['R', 0, '8px', '8px'], ['G', 1, '8px', 'calc(50% + 8px)'], ['B', 2, 'calc(50% + 8px)', '8px'], ['A', 3, 'calc(50% + 8px)', 'calc(50% + 8px)']]
+        .map(([c, i, top, left]) => `<span class="qlabel" style="top:${top};left:${left}">${c} · 第 ${i * per + 1}–${(i + 1) * per} 帧</span>`).join('');
+    }
+  } else { q.innerHTML = ''; q.dataset.key = ''; }
 }
 
 // ---------------- 主循环 ----------------
@@ -1108,6 +1251,7 @@ function loop(now) {
     else if (state.view === 'live') renderLive(); else if (state.view === 'export') renderExport(); else renderAtlas();
   } catch (e) { console.error(e); hudText = '渲染出错：' + e.message; }
   $('#hud').textContent = hudText; updateLabels();
+  $('#atlasSeg').hidden = state.tab !== 'master' || state.view !== 'atlas' || !(state.bake && state.bake.tail);
   requestAnimationFrame(loop);
 }
 
@@ -1115,7 +1259,14 @@ function loop(now) {
 for (const t of Object.keys(TYPE_NAMES)) { const o = document.createElement('option'); o.value = t; o.textContent = TYPE_NAMES[t]; $('#type').appendChild(o); }
 $('#type').addEventListener('change', e => setType(e.target.value));
 $('#mname').addEventListener('input', e => state.name = e.target.value);
-$('#res').addEventListener('change', e => { state.res = +e.target.value; onParam(); });
+$('#x-size').addEventListener('change', e => { const [w, h] = e.target.value.split('x').map(Number); state.P.texW = w; state.P.texH = h; onParam(); });
+$('#x-cols').addEventListener('change', e => { state.P.cols = +e.target.value; onParam(); });
+$('#x-rows').addEventListener('change', e => { state.P.rows = +e.target.value; onParam(); });
+$('#x-chans').addEventListener('change', e => { state.P.chans = +e.target.value; onParam(); });
+$('#x-out').addEventListener('change', e => { state.P.outMode = e.target.value; onParam(); });
+$('#x-enc').addEventListener('change', e => { state.P.encGamma = +e.target.value; onParam(); });
+$('#x-frame').addEventListener('change', e => { state.P.frameMode = e.target.value; onParam(); });
+$('#x-zoom').addEventListener('change', e => { state.P.zoom = e.target.value; onParam(); });
 $('#expo').addEventListener('input', e => state.expo = +e.target.value);
 $('#viewSeg').addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return; state.view = b.dataset.view;
@@ -1146,7 +1297,7 @@ $('#fileIn').addEventListener('change', async e => {
 $('#btnSave').addEventListener('click', async () => {
   busy(true, '烘焙 1024 版本存入组合库…', 0);
   try {
-    const b = await bake(state.P, PREVIEW_LIB_N, p => busy(true, null, p));
+    const b = await bake(libP(state.P), 1, p => busy(true, null, p));
     const name = state.name || TYPE_EN[state.P.type];
     const old = state.lib.findIndex(e => e.name === name);
     const entry = { name, type: state.P.type, P: { ...state.P }, M: { ...state.M }, bake: b };
@@ -1169,7 +1320,7 @@ $('#btnExportCombo').addEventListener('click', exportCombo);
 buildMasterPanel();
 runPreviewBake();
 requestAnimationFrame(loop);
-window.__fw = { state, bake, exportMaster };
+window.__fw = { state, bake, exportMaster, plan, measure };
 </script>
 </body>
 </html>
