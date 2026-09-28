@@ -49,7 +49,7 @@ const BASE = {
   trCRate: 60, trCLife: 0.9, trCSpread: 1.2, trCSize: 0.18, trCBright: 0.12,
   trWRate: 0, trWLife: 0.12, trWSpread: 14, trWSize: 0.06, trWBright: 0.06,
   trHeadSize: 0.26, trHeadBright: 1.2, trHalo: 3, trHaloBright: 0.15,
-  trTwist: 0.35, trTwistN: 5, trWiggle: 0.08, trTwistLag: 0.35, trBright: 1.6, trExport4K: 1, trIgnite: 0,
+  trTwist: 0.35, trTwistN: 5, trWiggle: 0.08, trTwistLag: 0.35, trFollow: 0, trBright: 1.6, trExport4K: 1, trIgnite: 0,
   // 地面循环
   loopT: 1, nozzles: 1, fanAngle: 70, spacing: 6, shotRate: 3, shotSpeed: 70, cometBurn: 1.4, burstStars: 0,
   wheelR: 3, jetSpeed: 28, jetCone: 10, jetDir: 90, groundH: 0,
@@ -298,6 +298,7 @@ const SCHEMA = [
     ['trTwistN', '每个循环扭几圈', '圈', 1, 8, 1],
     ['trWiggle', '细碎抖动', 'm', 0, 1, 0.01],
     ['trTwistLag', '扭动滞后（星头走直线，火花离开后多久漂到波形上）', 's', 0, 1.5, 0.01],
+    ['trFollow', '快门跟拍（1 = 火星拖成短竖线，像跟拍的实拍；0 = 固定机位，火星是圆点）', '', 0, 1, 1],
     ['seed', '随机种子', '', 1, 999, 1]
   ] },
   { sec: '尾缀序列 · 星头', show: isTrail, items: [

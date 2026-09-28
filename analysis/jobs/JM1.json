@@ -1,0 +1,15 @@
+{
+ "id": "JM1",
+ "type": "export",
+ "name": "金芒菊 固定镜头版 + 帧号测试（排查引擎里抖动）",
+ "replica": "JM",
+ "exports": {
+  "JinMangJu_Fixed": {
+   "zoom": "off"
+  },
+  "JinMangJu_Tight": {
+   "zoom": "tight"
+  }
+ },
+ "note": "两套：Fixed = 面片取景「固定大小」（面片不动不缩放，引擎里不需要任何尺寸 / 位置曲线）；Tight = 原来的紧凑取景。每套都带 T_<名>_帧号测试.png 和可直接粘贴的参数。建议先把 Fixed 放进引擎；如果仍抖，把贴图换成它的帧号测试图播一遍，看帧号是否连续、圆是否不动。"
+}

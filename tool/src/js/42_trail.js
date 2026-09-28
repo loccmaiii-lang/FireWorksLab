@@ -76,7 +76,9 @@ function makeTrailRenderer(P) {
     stop: -1, stopE: -1, fadeK: 1,
     hx,
     draw(ts, view, ppm, w, tw, f) {
-      const tf = R.frameT ? R.frameT(f) : ts, anchorT = R.stop >= 0 ? R.stop : tf, anchorY = P.trV * anchorT;
+      // 快门参照：固定机位（默认）= 子帧都画在这一帧的星头坐标下，火星近乎不动、是圆点；
+      // 跟拍（trFollow）= 每个子帧跟着星头走，火星相对星头下落，拖成短竖线（尾缀3.0 实拍就是跟拍）
+      const tf = R.frameT && !P.trFollow ? R.frameT(f) : ts, anchorT = R.stop >= 0 ? (P.trFollow ? Math.min(ts, R.stopE) : R.stop) : tf, anchorY = P.trV * anchorT;
       // 星头：核心 + 光晕（周期性闪烁）
       if (R.stopE < 0 || ts <= R.stopE + 1e-6) {
         // 星头固定在面片中线上（x = 0）；快门内按星头移动距离细分，拖出连续的亮线而不是一串珠子

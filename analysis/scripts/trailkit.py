@@ -52,20 +52,21 @@ def find_head(sig, thr_frac=0.25, xr=None):
     return (float(np.median(xs[sel])), float(y0)), sig * keep[..., None]
 
 
-def straighten(sig, head, maxlen=900, half=40):
-    """从星头往下逐行找中心线（亮度加权，窗口跟随），拉直成 (maxlen, 2*half+1, 3) 的竖条"""
+def straighten(sig, head, maxlen=900, half=40, smooth=4, win=18):
+    """从星头往下逐行找中心线（亮度加权，窗口跟随），拉直成 (maxlen, 2*half+1, 3) 的竖条。
+    smooth：中心线平滑（行）；win：找中心的半窗宽（像素）。高分辨率实拍用大一些，否则逐行抖动会把火星剪成锯齿"""
     H, W, _ = sig.shape; hx, hy = head; Y = sig.sum(2)
     cx = hx; line = []
     for r in range(maxlen):
         yy = int(hy) - 3 + r
         if yy >= H: line.append(np.nan); continue
-        x0, x1 = int(max(0, cx - 18)), int(min(W, cx + 19)); row = Y[yy, x0:x1]
+        x0, x1 = int(max(0, cx - win)), int(min(W, cx + win + 1)); row = Y[yy, x0:x1]
         if row.sum() > 1e-4:
             c = x0 + (row * np.arange(len(row))).sum() / row.sum(); cx = 0.7 * cx + 0.3 * c
         line.append(cx)
     line = np.array(line); ok = ~np.isnan(line)
     line[~ok] = np.interp(np.nonzero(~ok)[0], np.nonzero(ok)[0], line[ok]) if ok.any() else hx
-    ls = cv2.GaussianBlur(line.reshape(-1, 1).astype(np.float32), (1, 0), 4).ravel()
+    ls = cv2.GaussianBlur(line.reshape(-1, 1).astype(np.float32), (1, 0), smooth).ravel()
     strip = np.zeros((maxlen, 2 * half + 1, 3), np.float32)
     for r in range(maxlen):
         yy = int(hy) - 3 + r

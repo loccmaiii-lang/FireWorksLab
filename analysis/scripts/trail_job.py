@@ -6,7 +6,9 @@
     "ramp": true,             # 按实拍拟合渐变图
     "export": true,           # 用校准结果导出（2K + 4K 母版 + 两个消散版本）
     "video": true,            # 每档预览 ×2、实拍对照、三档对比图（export 为 true 时才有）
-    "previews": true }        # false：只出实拍对照和三档对比（快）
+    "previews": true,         # false：只出实拍对照和三档对比（快）
+    "tex": "3.0A",            # 可选：质感对尾缀3.0_A（4K），造型仍对各档原实拍
+    "scale": 1 }              # 校准时的烘焙倍率（质感对 4K 实拍时用 1）
 结果分两处，省流量：
   analysis/results/<id>/（上传，几 MB）：
     尾缀_<档>_配方.json / _对照.jpg / _数值.json    校准结果（Claude 读完写回烘焙器配方）
@@ -27,10 +29,11 @@ def run(job, s, out, log=print):
         st = cfg.get('start')
         if isinstance(st, str): st = json.load(open(os.path.join(ROOT, st), encoding='utf-8'))
         t = time.time()
-        TC.main(k, cfg.get('rounds', 2), st or {}, log=log, s=s, out=out, cap=cfg.get('cap', True))
+        tex, sc = job.get('tex'), job.get('scale', 0.25)
+        TC.main(k, cfg.get('rounds', 2), st or {}, log=log, s=s, out=out, cap=cfg.get('cap', True), tex=tex, scale=sc)
         log(f'{k} 校准用时 {(time.time() - t) / 60:.1f} 分钟')
         if job.get('ramp', True):
-            TRm.main(k, log=log, s=s, out=out)
+            TRm.main(k, log=log, s=s, out=out, tex=tex, scale=sc)
     if not job.get('export', True): return
     sd = os.path.join(ROOT, 'analysis', 'local', '输出', job['id']); os.makedirs(sd, exist_ok=True)   # 大文件留在本机
     for k in sizes:

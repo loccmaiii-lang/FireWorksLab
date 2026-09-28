@@ -12,6 +12,7 @@
     "fit": {"params": [...] 或 null（全部）, "rounds": 3} 或 null（不拟合，只出对照）,
     "variants": {名字: {参数改动}}（可选：额外试几组，各出一张对照图） }
   升空尾缀任务："type": "trail"，格式见 analysis/scripts/trail_job.py
+  导出任务："type": "export"，格式见 analysis/scripts/export_job.py
 每个任务的结果：
   best.json（最终参数）、对照.jpg（实拍 vs 模拟）、数值.json（逐时刻对照表）、
   variant_<名字>.jpg / .json、log.txt、env.json（显卡、耗时）、done.json（跑完的标记）
@@ -41,10 +42,13 @@ def run_job(job, s, force=False):
         line = time.strftime('%H:%M:%S ') + str(m); print(f'[{jid}] ' + line, flush=True); logf.write(line + '\n'); logf.flush()
     t0 = time.time()
     try:
-        if job.get('type') == 'trail':
-            log(f"开始：{job.get('name', '')}（升空尾缀：校准 → 渐变图 → 导出 → 视频）")
-            import trail_job
-            trail_job.run(job, s, out, log=log)
+        if job.get('type') in ('trail', 'export'):
+            if job['type'] == 'trail':
+                log(f"开始：{job.get('name', '')}（升空尾缀：校准 → 渐变图 → 导出 → 视频）")
+                import trail_job; trail_job.run(job, s, out, log=log)
+            else:
+                log(f"开始：{job.get('name', '')}（导出素材）")
+                import export_job; export_job.run(job, s, out, log=log)
             jsave({'renderer': s.renderer, 'mode': s.mode, 'software': s.soft, 'minutes': round((time.time() - t0) / 60, 1), 'machine': platform.platform(), 'finished': time.strftime('%Y-%m-%d %H:%M')},
                   os.path.join(out, 'env.json'))
             jsave({'ok': True}, os.path.join(out, 'done.json'))
