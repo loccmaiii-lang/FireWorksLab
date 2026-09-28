@@ -30,6 +30,11 @@ UE 4.24 MMO 的写实日式烟花特效素材。在 `tool/` 的网页烘焙器�
 ## 协作方式
 
 - 用户在公司电脑上不登录 Claude，只通过 git 交换：Claude 写 `analysis/jobs/<id>.json` 并 push；用户双击 `analysis/local/跑任务.bat`，用本机显卡跑完后 push `analysis/results/<id>/`；Claude pull 后读 `对照.jpg`、`数值.json`、`best.json`。
+- 三条线并行（用户 2026-09-28 定）：
+  - **云端 Git 是主线**：Claude 写源码、任务、`交接.md`、`计划.md`。
+  - **本地线**：用户在电脑前双击 `跑任务.bat`。
+  - **WorkBuddy 线**：用户不在电脑前时远程让 WorkBuddy 跑。只跑任务、推 `analysis/results/`，可以附评审 `analysis/results/<id>/评审_WorkBuddy.md`（看对照图写的意见，供 Claude 参考，不代替用户确认）。
+  - 两条执行线在同一台电脑上，靠 `analysis/local/输出/_运行中.json` 互斥，见 `analysis/local/使用说明.md`。
 - 云端没有显卡。compare.py 在 Linux 上自动用软件渲染（慢，一次 1–2 分钟），可以用来抽查，但大批量拟合交给用户本地跑。
 - 复刻是否「像」由用户看对照图确认。没有对照图和数值，不说「做完了」。
 
