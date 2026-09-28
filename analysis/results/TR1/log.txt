@@ -1,0 +1,123 @@
+15:56:00 开始：升空尾缀 小/中/大 第四版（星头固定、火花按真实尺寸、实拍比较时单独加相机模糊）（升空尾缀：校准 → 渐变图 → 导出 → 视频）
+15:56:07 [S] 起点 2.5043 I=0.3411 w=0.0301 grain=0.0286 peaks=0.2324 col=0.2924 lev=0.0411 wave=0.1670 len=0.0088 长 22.0 m
+15:56:07   第1轮 trFRate → 1500  2.2701  长 23.6 m
+15:56:08   第1轮 trFSpread → 0.2959  2.2598  长 23.6 m
+15:56:09   第1轮 trFSize → 0.024  2.2580  长 23.6 m
+15:56:10   第1轮 trMRate → 520  2.2387  长 23.6 m
+15:56:10   第1轮 trMLife → 0.375  2.2144  长 23.6 m
+15:56:16   第1轮 trDrag → 2.24  2.1643  长 23.7 m
+15:56:16   第1轮 trHeadSize → 0.05734  2.0328  长 23.7 m
+15:56:17   第1轮 trHeadBright → 0.6509  2.0291  长 23.7 m
+15:56:18   第1轮 trHaloBright → 0.07407  1.9954  长 23.7 m
+15:56:18   第1轮 trTwist → 0.123  1.9901  长 24.1 m
+15:56:18   第1轮 trWiggle → 0.054  1.9609  长 23.7 m
+15:56:20   第1轮 shutter → 0.45  1.9439  长 23.7 m
+15:56:21   第1轮 _psf → 0.9  1.9172  长 23.7 m
+15:56:22   第2轮 trFRate → 1950  1.9036  长 23.7 m
+15:56:22   第2轮 trFSpread → 0.3846  1.8723  长 23.7 m
+15:56:23   第2轮 trFSize → 0.03  1.7964  长 23.7 m
+15:56:31   第2轮 trHeadSize → 0.04587  1.7709  长 23.7 m
+15:56:32   第2轮 trHeadBright → 0.5007  1.7696  长 23.7 m
+15:56:32   第2轮 trHaloBright → 0.05487  1.7530  长 23.7 m
+15:56:33   第2轮 trTwist → 0.09113  1.7455  长 23.7 m
+15:56:35   第2轮 shutter → 0.3  1.4650  长 23.7 m
+15:56:37   第3轮 trFRate → 2535  1.3690  长 21.8 m
+15:56:38   第3轮 trFSpread → 0.5  1.3508  长 21.8 m
+15:56:41   第3轮 trMBright → 0.02731  1.3463  长 21.8 m
+15:56:46   第3轮 trHeadSize → 0.0367  1.3234  长 21.8 m
+15:56:48   第3轮 trTwist → 0.123  1.3102  长 21.8 m
+15:56:51 [S] 结束 1.3102 I=0.0954 w=0.0437 grain=0.0288 peaks=0.0763 col=0.2708 lev=0.0083 wave=0.0845 len=0.0077
+15:56:51 S 校准用时 0.9 分钟
+15:56:57 [S] 渐变图起点 1.2948 col=0.2708
+15:57:00   第1轮 1.2669 col=0.2848 #ff875f #ffd27a #ffeabb #fff8ec
+15:57:02   第2轮 1.1463 col=0.2247 #ff7a69 #ffd27a #ffeabb #fff8ec
+15:57:04   第3轮 1.1463 col=0.2247 #ff7a69 #ffd27a #ffeabb #fff8ec
+15:57:06   第4轮 1.1152 col=0.2070 #ff7a69 #ffd27a #fff6bb #fff8ec
+15:57:08   第5轮 1.1151 col=0.2082 #ff7a6f #ffd27a #fff6bb #fff8ec
+15:57:10   第6轮 1.1151 col=0.2082 #ff7a6f #ffd27a #fff6bb #fff8ec
+15:57:10 [S] 渐变图 {'ramp0': '#ff7a6f', 'ramp1': '#ffd27a', 'ramp2': '#fff6bb', 'ramp3': '#fff8ec'}
+15:57:17 [M] 起点 0.6887 I=0.0652 w=0.0305 grain=0.0270 peaks=0.0332 col=0.0839 lev=0.0247 wave=0.0048 len=0.0191 长 45.9 m
+15:57:19   第1轮 trFSpread → 0.35  0.6542  长 46.0 m
+15:57:19   第1轮 trFSize → 0.024  0.6538  长 46.0 m
+15:57:19   第1轮 trFBright → 0.035  0.6414  长 46.0 m
+15:57:20   第1轮 trMLife → 0.75  0.6356  长 45.0 m
+15:57:22   第1轮 trMBright → 0.02367  0.6354  长 45.2 m
+15:57:26   第1轮 trHeadSize → 0.096  0.5598  长 45.2 m
+15:57:26   第1轮 trHeadBright → 0.7101  0.5590  长 45.2 m
+15:57:27   第1轮 trHaloBright → 0.06584  0.5173  长 45.2 m
+15:57:27   第1轮 trTwist → 0.35  0.4986  长 45.2 m
+15:57:28   第1轮 trWiggle → 0.108  0.4773  长 45.8 m
+15:57:29   第1轮 shutter → 0.05  0.4300  长 45.8 m
+15:57:31   第1轮 _psf → 0.9  0.4279  长 45.8 m
+15:57:32   第2轮 trFLife → 0.744  0.3958  长 42.3 m
+15:57:39   第2轮 trHeadSize → 0.0768  0.3765  长 42.3 m
+15:57:40   第2轮 trHeadBright → 0.9231  0.3761  长 42.3 m
+15:57:40   第2轮 trHaloBright → 0.04877  0.3759  长 42.3 m
+15:57:42   第2轮 trTwistLag → 0.45  0.3700  长 42.3 m
+15:57:43   第2轮 trCool → 0.6944  0.3339  长 42.3 m
+15:57:47   第3轮 trMLife → 0.9  0.3304  长 45.0 m
+15:57:47   第3轮 trMSize → 0.032  0.3301  长 45.0 m
+15:57:48   第3轮 trMBright → 0.03077  0.3236  长 45.0 m
+15:57:49   第3轮 trCSpread → 2.197  0.3090  长 44.0 m
+15:57:52   第3轮 trHeadBright → 0.7101  0.3090  长 44.0 m
+15:57:54   第3轮 trTwistLag → 0.35  0.2996  长 43.7 m
+15:57:56 [M] 结束 0.2996 I=0.0131 w=0.0171 grain=0.0039 peaks=0.0181 col=0.0695 lev=0.0060 wave=0.0021 len=0.0080
+15:57:56 M 校准用时 0.8 分钟
+15:58:02 [M] 渐变图起点 0.2837 col=0.0695
+15:58:04   第1轮 0.2833 col=0.0642 #ffaa75 #ffe9b8 #ffeccc #fff8ec
+15:58:05   第2轮 0.2698 col=0.0611 #ffaa82 #ffe9cb #ffeccc #fff8ec
+15:58:06   第3轮 0.2648 col=0.0558 #ffaa75 #ffe9cb #ffeccc #fff8ec
+15:58:06   第4轮 0.2648 col=0.0558 #ffaa75 #ffe9cb #ffeccc #fff8ec
+15:58:08   第5轮 0.2648 col=0.0558 #ffaa75 #ffe9cb #ffeccc #fff8ec
+15:58:09   第6轮 0.2604 col=0.0552 #ffaa72 #ffe9cb #ffeccc #fff8ec
+15:58:09 [M] 渐变图 {'ramp0': '#ffaa72', 'ramp1': '#ffe9cb', 'ramp2': '#ffeccc', 'ramp3': '#fff8ec'}
+15:58:16 [L] 起点 1.8837 I=0.2599 w=0.0339 grain=0.0727 peaks=0.1776 col=0.1696 lev=0.0255 wave=0.0689 len=0.0501 长 72.0 m
+15:58:18   第1轮 trFSpread → 0.3641  1.8296  长 72.0 m
+15:58:22   第1轮 trMBright → 0.0676  1.8257  长 72.0 m
+15:58:26   第1轮 trInh → 0.12  1.7750  长 73.5 m
+15:58:27   第1轮 trDrag → 1.408  1.7421  长 73.2 m
+15:58:27   第1轮 trHeadSize → 0.096  1.6402  长 73.2 m
+15:58:27   第1轮 trHeadBright → 1.077  1.6273  长 73.2 m
+15:58:28   第1轮 trHaloBright → 0.05419  1.6118  长 73.2 m
+15:58:29   第1轮 trWiggle → 0.4152  1.5886  长 73.2 m
+15:58:29   第1轮 trTwistLag → 0.45  1.5747  长 73.2 m
+15:58:30   第1轮 shutter → 0.15  1.3964  长 73.2 m
+15:58:31   第1轮 trCool → 0.8333  1.3364  长 76.8 m
+15:58:31   第1轮 _psf → 0.9  1.2539  长 76.8 m
+15:58:33   第2轮 trFLife → 0.375  1.2272  长 76.8 m
+15:58:33   第2轮 trFSpread → 0.2801  1.2257  长 76.8 m
+15:58:34   第2轮 trFBright → 0.0769  1.1929  长 75.2 m
+15:58:35   第2轮 trMLife → 0.96  1.1924  长 75.2 m
+15:58:37   第2轮 trMBright → 0.052  1.1842  长 76.8 m
+15:58:39   第2轮 trCSpread → 0.8308  1.1796  长 81.2 m
+15:58:39   第2轮 trCBright → 0.169  1.1512  长 81.2 m
+15:58:40   第2轮 trInh → 0.07  1.1233  长 82.5 m
+15:58:41   第2轮 trHeadSize → 0.0768  1.0949  长 82.5 m
+15:58:42   第2轮 trHeadBright → 0.8284  1.0941  长 82.5 m
+15:58:43   第2轮 trTwist → 0.595  1.0919  长 82.5 m
+15:58:43   第2轮 trWiggle → 0.5605  1.0801  长 82.5 m
+15:58:45   第2轮 shutter → 0.05  0.9573  长 82.5 m
+15:58:46   第2轮 trCool → 0.6944  0.9211  长 82.5 m
+15:58:46   第2轮 _psf → 0.6  0.8917  长 82.5 m
+15:58:48   第3轮 trFSpread → 0.3641  0.8663  长 82.5 m
+15:58:57   第3轮 trHeadBright → 0.6372  0.8661  长 82.5 m
+15:58:58   第3轮 trTwist → 0.8033  0.8573  长 85.3 m
+15:59:01   第3轮 _psf → 0.4  0.8562  长 85.3 m
+15:59:01 [L] 结束 0.8562 I=0.0368 w=0.0498 grain=0.0385 peaks=0.0831 col=0.1711 lev=0.0090 wave=0.0262 len=0.0029
+15:59:01 L 校准用时 0.9 分钟
+15:59:08 [L] 渐变图起点 0.8505 col=0.1711
+15:59:10   第1轮 0.8461 col=0.1718 #ff7c41 #ffc075 #fff7bb #fff8ec
+15:59:13   第2轮 0.8377 col=0.1659 #ff7c49 #ffc069 #fff7bb #fff8ec
+15:59:15   第3轮 0.8377 col=0.1659 #ff7c49 #ffc069 #fff7bb #fff8ec
+15:59:17   第4轮 0.8377 col=0.1659 #ff7c49 #ffc069 #fff7bb #fff8ec
+15:59:19   第5轮 0.8248 col=0.1569 #ff8047 #ffc069 #fff7bb #fff8ec
+15:59:21   第6轮 0.8247 col=0.1575 #ff8044 #ffc069 #fff7bb #fff8ec
+15:59:21 [L] 渐变图 {'ramp0': '#ff8044', 'ramp1': '#ffc069', 'ramp2': '#fff7bb', 'ramp3': '#fff8ec'}
+15:59:27 S 导出 6 秒：RiseTrail_S.json、RiseTrail_S_Cascade参数.txt、RiseTrail_S_曲线.csv、T_RiseTrail_S_Fade20.png、T_RiseTrail_S_Fade20_4K.png、T_RiseTrail_S_Fade30.png、T_RiseTrail_S_Fade30_4K.png、T_RiseTrail_S_Loop.png、T_RiseTrail_S_Loop_4K.png、T_RiseTrail_S_Ramp.png
+15:59:36 M 导出 9 秒：RiseTrail_M.json、RiseTrail_M_Cascade参数.txt、RiseTrail_M_曲线.csv、T_RiseTrail_M_Fade20.png、T_RiseTrail_M_Fade20_4K.png、T_RiseTrail_M_Fade30.png、T_RiseTrail_M_Fade30_4K.png、T_RiseTrail_M_Loop.png、T_RiseTrail_M_Loop_4K.png、T_RiseTrail_M_Ramp.png
+15:59:41 L 导出 6 秒：RiseTrail_L.json、RiseTrail_L_Cascade参数.txt、RiseTrail_L_曲线.csv、T_RiseTrail_L_Fade20.png、T_RiseTrail_L_Fade20_4K.png、T_RiseTrail_L_Fade30.png、T_RiseTrail_L_Fade30_4K.png、T_RiseTrail_L_Loop.png、T_RiseTrail_L_Loop_4K.png、T_RiseTrail_L_Ramp.png
+16:08:52 S 视频 ok
+16:18:59 M 视频 ok
+16:31:36 L 视频 ok
+16:31:37 完成，用时 35.6 分钟
+16:33:09 Packaging verified: fc77e18, 21 unchanged PNGs, 9 decoded videos; large files local; contact sheets and parameter files ready.
