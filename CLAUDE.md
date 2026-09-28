@@ -33,7 +33,7 @@ UE 4.24 MMO 的写实日式烟花特效素材。在 `tool/` 的网页烘焙器�
 - 三条线并行（用户 2026-09-28 定）：
   - **云端 Git 是主线**：Claude 写源码、任务、`交接.md`、`计划.md`。
   - **本地线**：用户在电脑前双击 `跑任务.bat`。
-  - **WorkBuddy 线**：用户不在电脑前时远程让 WorkBuddy 跑。只跑任务、推 `analysis/results/`，可以附评审 `analysis/results/<id>/评审_WorkBuddy.md`（看对照图写的意见，供 Claude 参考，不代替用户确认）。
+  - **WorkBuddy 线**：用户不在电脑前时远程让 WorkBuddy 跑。只跑任务、推 `analysis/results/`，可以附评审 `analysis/results/<id>/review_WorkBuddy.md`（看对照图写的意见，供 Claude 参考，不代替用户确认）。WorkBuddy 新建的文件和目录一律用英文名（用户 2026-09-28 要求）。
   - 两条执行线在同一台电脑上，**同一时间只有一个对话框跑任务**（用户保证），不加锁。
 - 视频（2026-09-28 用户定）：本地任务**默认不录视频**（尾缀任务 `"video": false`），用户在烘焙器里对比。要看时用户在 WorkBuddy 对话里要，WorkBuddy 跑完录一段 1K（1080 宽）的实拍对照：`trail_video.py <输出目录> --compare`。写任务时不要再开 `video`。
 - 云端没有显卡。compare.py 在 Linux 上自动用软件渲染（慢，一次 1–2 分钟），可以用来抽查，但大批量拟合交给用户本地跑。
