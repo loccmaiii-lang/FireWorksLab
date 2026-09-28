@@ -66,7 +66,7 @@ var FW_REVIEW = [
 "Zoom 版前期是否更清楚、面片放大是否平滑",
 "「显示 Cutout 轮廓」看面片裁剪"
 ],
-"opinion": "WorkBuddy 看过 JM2 的预览：Zoom 从第 5 帧起就占满格子，Fixed 前几十帧四周空（JM1 的问题）。这里放的是真实导出贴图，Zoom / Fixed 切换着看；通过后贴图在你本机 analysis/local/输出/JM2E/。",
+"opinion": "文件名符合新规范，两套（Zoom / Fixed）都是 2048 RGBA 四通道都有内容，内容和 JM2 相同。引擎用这一套即可，JM2 那套可以不用了。如果 JM3 通过，会再出一版用 JM3 参数的导出替换它。",
 "tags": "金芒菊 导出 JM2",
 "video": "../vidio/2.0/金芒菊A.mp4",
 "vmeta": {
@@ -91,7 +91,7 @@ var FW_REVIEW = [
 "近看火花是否更清晰（右栏「导出效果」看）",
 "整体亮度、形状有没有变"
 ],
-"opinion": "清晰度方案第一次用在金芒菊上。通过后按 JM2 的取景重新导出。",
+"opinion": "这批里最像的一个（差距 0.026）：放射状金色拖尾、大小、张开节奏都对，火花边缘清楚，清晰度方案有效。细节：实拍拖尾外端更亮更长一点，模拟 90% 时还偏亮（实拍已在淡出）。\n\n建议：你看着没问题就点「通过」，我按 JM2 的「随开花放大（Zoom）」取景出正式导出（新命名 + 迭代区预览），替换正式库里的金芒菊。",
 "tags": "金 尾缀 放射 JM3",
 "video": "../vidio/2.0/金芒菊A.mp4",
 "vmeta": {
@@ -277,7 +277,7 @@ var FW_REVIEW = [
 "颜色变化：金 → 淡黄 → 琥珀",
 "大小、张开速度、下垂"
 ],
-"opinion": "第一次校准；颜色分段是我按实拍量的，形状和时间交给自动逼近。",
+"opinion": "不收（差距 0.71，这批最差）：颜色先后不对。实拍是 金色带尾 → 50% 尾端变粉红 / 洋红 → 70% 以后变成没有尾的银白小点；模拟是 金 → 发白发绿 → 橙，而且最后还拖着尾。大小和张开节奏基本对。\n\n已直接出下一轮 QA2：颜色改成三段（金 → 粉红 → 银白点），后半段火花发射率归零（尾巴收掉），形状和时间继续自动逼近。",
 "tags": "菊 金 带尾 球形A C2",
 "video": "../vidio/球形A.mp4",
 "vmeta": {
@@ -475,7 +475,7 @@ var FW_REVIEW = [
 "红 → 银绿的时间",
 "球壳是否均匀"
 ],
-"opinion": "第一次校准；颜色分段是我按实拍量的，形状和时间交给自动逼近。",
+"opinion": "结构对（差距 0.12）：红 → 银白的先后、大小、时长都对。要改的：实拍的红偏粉 / 洋红，模拟偏橙红；实拍 70% 后的银白带一点绿；实拍星点更多更细。前面那颗小粉牡丹是计划里的第二个发射器，这个任务没做。\n\n建议：你觉得牡丹的形和节奏可以就先「通过」形状，颜色我下一版直接改色标（红 → #ff5c8a 粉红、银白 → #eefcf2），不用重跑拟合。",
 "tags": "牡丹 红 变色 球形B C1",
 "video": "../vidio/球形B.mp4",
 "vmeta": {
@@ -669,7 +669,7 @@ var FW_REVIEW = [
 "金 → 橙红的时间",
 "末段星点"
 ],
-"opinion": "第一次校准；颜色分段是我按实拍量的，形状和时间交给自动逼近。",
+"opinion": "外层节奏和变色对（差距 0.21），但有两处不像：实拍 30% 外层星带明显的放射尾、之后才变成点，模拟一直是点；模拟 10% 太密太亮（实拍开头外层很稀）。实拍中间那颗绿芯是第二层，这次没做。\n\n下一版：外层前段加短尾（火花发射率在前 40% 高、后面归零），开头亮度降一点；再加绿芯（用 QB1 的牡丹缩小改绿）做成组合。",
 "tags": "牡丹 金 变色 球形C 两层",
 "video": "../vidio/球形C.mp4",
 "vmeta": {
@@ -863,7 +863,7 @@ var FW_REVIEW = [
 "银白点持续多久、多密",
 "大小"
 ],
-"opinion": "第一次校准；颜色分段是我按实拍量的，形状和时间交给自动逼近。",
+"opinion": "三段颜色（橙 → 绿 → 银白）先后都对，大小也对（差距 0.19）。不像的：实拍星点多很多、每颗是很细的短线；模拟星点少、是较大的圆点；实拍 50% 后整体暗得快，模拟 50–70% 还很亮。\n\n下一版：星数翻倍、星点改小加短尾，后半段亮度下降加快（fade 提前）。",
 "tags": "牡丹 变色 球形D 两层",
 "video": "../vidio/球形D.mp4",
 "vmeta": {
@@ -1057,7 +1057,7 @@ var FW_REVIEW = [
 "球壳边缘是否比中间亮",
 "颜色：橙 → 青柠的时间"
 ],
-"opinion": "按 QN1 的看法改：加短尾、球壳更薄；清晰度方案第一次用在花型上。",
+"opinion": "比 QN1 好一点（0.33 → 0.28），颜色先后对，但星尾没出来、球壳边缘也没有更亮；整体偏暗偏糊——相机模糊拟合到了 0.7，是在用模糊去凑实拍的光晕。时长也短了 0.3 s。\n\n已直接出下一轮 QN3：锁住星尾（火花亮度 ×2.4、寿命 0.5 s，不参与拟合）、相机模糊上限 0.4、燃烧时长按实拍 3.3 s。",
 "tags": "青柠 牡丹 变色 QN2",
 "video": "../vidio/2.0/青柠星.mp4",
 "vmeta": {
@@ -1196,6 +1196,54 @@ var FW_REVIEW = [
 },
 "thumbRef": "data:image/jpeg;base64,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",
 "thumbSim": "data:image/jpeg;base64,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"
+},
+{
+"id": "QA2",
+"task": "QA2",
+"kind": "queued",
+"date": "2026-09-29",
+"name": "球形A：金色带尾菊（第 2 轮）",
+"note": "QA2：按 QA1 的对照改颜色三段（金 → 粉红 → 银白点），后半段收掉尾巴。",
+"look": [
+"颜色：金 → 粉红（约 50%）→ 银白小点（约 70% 以后）",
+"后半段是否没有尾",
+"星尾长度、大小、张开速度"
+],
+"opinion": "颜色分段按实拍量的，形状和时间交给自动逼近。",
+"tags": "菊 金 带尾 球形A C2 QA2",
+"video": "../vidio/球形A.mp4",
+"vmeta": {
+"v": 7,
+"t0": 0.533,
+"cx": 0.5057,
+"cy": 0.362,
+"half": 0.1722,
+"aspect": 1.7778
+}
+},
+{
+"id": "QN3",
+"task": "QN3",
+"kind": "queued",
+"date": "2026-09-29",
+"name": "青柠星（第 3 轮）",
+"note": "QN3：星尾锁住不让拟合压掉，相机模糊有上限，时长按实拍。",
+"look": [
+"30–70% 每颗星有没有短尾",
+"球壳边缘是否比中间亮",
+"清晰度（不应再发糊）"
+],
+"opinion": "按 QN2 的看法改。",
+"tags": "青柠 牡丹 变色 QN3",
+"video": "../vidio/2.0/青柠星.mp4",
+"vmeta": {
+"v": 7,
+"t0": 0.267,
+"cx": 0.6312,
+"cy": 0.5222,
+"half": 0.1517,
+"aspect": 1.7778
+}
 }
 ];
 var FW_VMETA = {"../vidio/2.0/金芒菊A.mp4": {"v": 7, "t0": 0.867, "cx": 0.707, "cy": 0.25, "half": 0.2283, "aspect": 1.7778}};

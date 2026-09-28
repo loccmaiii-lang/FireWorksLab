@@ -1,0 +1,47 @@
+{
+ "id": "QN3",
+ "name": "青柠星 第 3 轮：锁住星尾、相机模糊上限 0.4、时长 3.3 s",
+ "priority": 5,
+ "video": "vidio/2.0/青柠星.mp4",
+ "start": "analysis/jobs/起点/QN3_起点.json",
+ "fit": {
+  "params": [
+   "v0",
+   "vt",
+   "grav",
+   "stars",
+   "fade",
+   "headSize",
+   "headBright",
+   "sparkSize",
+   "sparkRateEnd",
+   "M.headInt",
+   "sparkDrag"
+  ],
+  "rounds": 3,
+  "camera": true,
+  "caps": {
+   "_psf": [
+    0,
+    0.4
+   ]
+  }
+ },
+ "note": "QN2 星尾没出来（拟合把火花压暗了）、相机模糊拟合到 0.7（拿模糊凑光晕）、时长短 0.3 s。起点：火花亮度 ×2.4、寿命 0.5 s、燃烧 3.3 s；火花亮度 / 寿命 / 发射率 / 燃烧时长不参与拟合；_psf 上限 0.4。",
+ "review": {
+  "date": "2026-09-29",
+  "name": "青柠星（第 3 轮）",
+  "tags": "青柠 牡丹 变色 QN3",
+  "replaces": [
+   "QN2",
+   "QN1"
+  ],
+  "note": "QN3：星尾锁住不让拟合压掉，相机模糊有上限，时长按实拍。",
+  "look": [
+   "30–70% 每颗星有没有短尾",
+   "球壳边缘是否比中间亮",
+   "清晰度（不应再发糊）"
+  ],
+  "opinion": "按 QN2 的看法改。"
+ }
+}

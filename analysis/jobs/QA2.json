@@ -1,0 +1,52 @@
+{
+ "id": "QA2",
+ "name": "球形A 第 2 轮：颜色 金 → 粉红 → 银白点，后半段收尾",
+ "priority": 5,
+ "video": "vidio/球形A.mp4",
+ "roi": [
+  0.36,
+  0.05,
+  0.66,
+  0.53
+ ],
+ "t_range": [
+  0.1,
+  4.1
+ ],
+ "start": "analysis/jobs/起点/QA2_起点.json",
+ "fit": {
+  "params": [
+   "v0",
+   "vt",
+   "grav",
+   "stars",
+   "burn",
+   "fade",
+   "headSize",
+   "headBright",
+   "sparkRate",
+   "sparkLife",
+   "sparkSize",
+   "sparkBright",
+   "M.headInt"
+  ],
+  "rounds": 3,
+  "camera": true
+ },
+ "note": "QA1 颜色先后不对（差距 0.71）。起点：色标改成 金（0）→ 粉红 #ff86b4（1.35 s）→ 银白 #f4f6ff（1.95 s）；火花发射率在燃烧末尾归零（后半段是没有尾的银白小点）。sparkRateEnd 不再参与拟合。",
+ "review": {
+  "date": "2026-09-29",
+  "name": "球形A：金色带尾菊（第 2 轮）",
+  "tags": "菊 金 带尾 球形A C2 QA2",
+  "replaces": [
+   "QA1"
+  ],
+  "note": "QA2：按 QA1 的对照改颜色三段（金 → 粉红 → 银白点），后半段收掉尾巴。",
+  "look": [
+   "颜色：金 → 粉红（约 50%）→ 银白小点（约 70% 以后）",
+   "后半段是否没有尾",
+   "星尾长度、大小、张开速度"
+  ],
+  "opinion": "颜色分段按实拍量的，形状和时间交给自动逼近。"
+ }
+}
