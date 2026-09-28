@@ -97,6 +97,8 @@ initIter();
 if (!/[?&]fast/.test(location.search)) runPreviewBake(); else state.dirty = false;
 requestAnimationFrame(loop);
 // 给命令行批量重烘（tool/batch_bake.mjs）和调试用
+// 参数覆盖里以 _ 开头的是脚本自己的（_ramp 渐变图、_psf 相机模糊），不进烘焙参数
+const trailOver = o => Object.fromEntries(Object.entries(o || {}).filter(([k]) => !k.startsWith('_')));
 window.__fw = {
   state, bake, bakeVariants, exportMaster, plan, measure, buildTrack, metricsOf, importParams, setType, setForm,
   // 把参数 JSON / 配方解析成 { P, M, name }（不改界面状态）
@@ -124,7 +126,7 @@ window.__fw = {
   replicaPM, renderStills, measure, metricsOf,
   // 升空尾缀完整导出（2K + 4K 母版 + 两个消散版本 + 渐变图 + 参数表），返回 ZIP 的 base64
   async trailExport(key, over, name) {
-    const d = defaultsFor(key), P = derive({ ...d.P, ...(over || {}) }), M = d.M;
+    const d = defaultsFor(key), P = derive({ ...d.P, ...trailOver(over) }), M = { ...d.M, ...((over || {})._ramp || {}) };
     const b = await bake(P, 1, null); const files = await texFiles(b, name);
     if (P.trExport4K) { const b4 = await bake(P, 2, null); files.push(...await texFiles(b4, name, '_4K')); disposeBake(b4); }
     files.push([`T_${name}_Ramp.png`, await encodePNG(rampPixels(M), 256, 8)]);
@@ -137,7 +139,7 @@ window.__fw = {
   },
   // 升空尾缀：按参数烘焙（可只烘循环、可缩放），返回贴图 PNG（base64）与关键数据
   async trailBake(key, over, scale, loopOnly) {
-    const d = defaultsFor(key), P = derive({ ...d.P, ...(over || {}), _loopOnly: !!loopOnly });
+    const d = defaultsFor(key), P = derive({ ...d.P, ...trailOver(over), _loopOnly: !!loopOnly });
     const b = await bake(P, scale || 1, null), m = b.meta;
     const b64 = async blob => { const u8 = new Uint8Array(await blob.arrayBuffer()); let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s); };
     const out = { loop: await b64(await encodePNG(readRGBA8(b.head), b.N, b.NH)), fades: [], meta: { Ww: m.Ww, Wh: m.Wh, hb: m.hb, fEnd: m.fEnd, T: m.T, Tp: m.Tp, relay: m.relay, fill: m.fill, seam: m.check.seam, trailLen: m.trailLen, sizeKeysRise: m.sizeKeysRise, fit: m.fit, N: b.N, NH: b.NH, cols: m.L.cols, per: m.L.per, bakeMs: m.bakeMs }, M: d.M, P };

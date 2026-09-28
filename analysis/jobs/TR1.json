@@ -1,0 +1,16 @@
+{
+ "id": "TR1",
+ "type": "trail",
+ "name": "升空尾缀 小/中/大 第四版（星头固定、火花按真实尺寸、实拍比较时单独加相机模糊）",
+ "sizes": {
+  "S": {"start": "analysis/replica/尾缀_S_配方.json", "rounds": 3},
+  "M": {"start": "analysis/replica/尾缀_M_配方.json", "rounds": 3},
+  "L": {"start": "analysis/replica/尾缀_L_配方.json", "rounds": 3}
+ },
+ "ramp": true,
+ "export": true,
+ "export4K": 1,
+ "video": true,
+ "previews": true,
+ "note": "云端按同样流程只跑了小档起点（不校准）验证管线：导出 91 秒、实拍对照正常。显卡上预计每档校准 5–15 分钟，导出 1–2 分钟，视频每档 5–10 分钟。"
+}

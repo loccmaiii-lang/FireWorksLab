@@ -23,6 +23,8 @@ function soundEvents(b) {
 const cm = v => (v * 100).toFixed(0);
 const fx = (v, d = 2) => (+v).toFixed(d);
 function keyLines(keys) { return keys.map(([u, v]) => `  ${fx(u, 4)}      ${Array.isArray(v) ? v.join('  ') : fx(v, 3)}`).join('\n'); }
+// Cascade 曲线：新加的关键点常是 CurveAuto（平滑、会冲过头），尺寸、位置、帧号都必须逐点改成 Linear
+const CURVE_NOTE = '所有曲线（Size By Life、Dynamic Parameter 帧号、Color Over Life、Location / Velocity 等）：每个关键点的 Interp Mode = Linear。CurveAuto 会在关键点之间冲过头：尺寸来回抖、帧号倒退一抖一抖。Size By Life 勾选 Multiply X、Multiply Y。';
 function texSection(name, b) {
   const P = b.P, L = b.meta.L, parts = [];
   if (b.form === 'trail') return `【贴图】
@@ -74,7 +76,8 @@ ${keyLines(m.sizeKeysY)}
 function masterEmitter(s, M, label) {
   const m = s.meta, b = s;
   return `【Cascade 发射器${label || ''}】
-Required：Screen Alignment = Square（面向相机）；Emitter Duration = ${fx(m.duration)} s；Emitter Loops = 1${m.t0 ? `；Emitter Delay = ${fx(m.t0)} s（接在上一段之后）` : ''}
+Required：Screen Alignment = Rectangle（面向相机，X、Y 尺寸分开生效；不要用 Square——Square 只认 X，Y 方向会按错的比例缩放，画面变形、抖动）；Emitter Duration = ${fx(m.duration)} s；Emitter Loops = 1${m.t0 ? `；Emitter Delay = ${fx(m.t0)} s（接在上一段之后）` : ''}
+${CURVE_NOTE}
 Spawn：Rate = 0；Burst：Count = 1，Time = 0
 Lifetime：${fx(m.duration)} s（常量）
 Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm（${m.tight ? '最大尺寸，横竖分开' : m.zoom ? '开花最大时的尺寸' : '常量'}）
@@ -102,6 +105,7 @@ function unitEmitter(b, M) {
   const orbitA = P.turb > 0 ? P.turbScale / (2 * Math.PI) : 0, orbitF = P.turb > 0 ? P.turb / P.turbScale : 0;
   return `【Cascade 发射器（单元序列：每颗星一个粒子）】
 Required：Screen Alignment = Velocity（面片沿速度方向拉长）；Emitter Duration = ${fx(Du)} s；Emitter Loops = 1
+${CURVE_NOTE}
   Pivot Offset：星头在贴图里距底边 ${fx(hb * 100, 1)}% 处。默认 (−0.5, −0.5) 是面片中心；把 Y 改为 ${fx(-(1 - hb), 3)}，
   若星头跑到另一端就改为 ${fx(-hb, 3)}。以编辑器里单颗粒子星头落在粒子位置为准。若星头朝向反了（尾巴在前），勾选「星头朝下」重新导出。
 Spawn：Rate = 0；Burst：Count = ${P.stars}（LOD 远处可减到一半），Time = 0
@@ -175,6 +179,7 @@ Cascade 线性阻力拟合：Initial Velocity Z = ${cm(f.v0)} cm/s；Drag = ${fx
 
 1）上升循环（T_${name}_Loop）
 Required：Screen Alignment = Velocity；Emitter Duration = ${fx(T, 3)} s；Emitter Loops = 1
+${CURVE_NOTE}
   Pivot Offset：星头在贴图里距底边 ${fx(m.hb * 100, 1)}% 处。默认 (−0.5, −0.5) 是面片中心；把 Y 改为 ${fx(-(1 - m.hb), 3)}，
   若星头跑到另一端就改为 ${fx(-m.hb, 3)}。以编辑器里星头落在粒子位置、尾巴拖在后面为准
 Spawn：Rate = 0；Burst Count = 1，Time = 0；Lifetime = ${fx(T, 3)} s
@@ -187,7 +192,7 @@ Dynamic Parameter 第三通道 = 帧号（锯齿，Linear；${F} 帧 / ${fx(m.Tp
 ${keyLines(sawKeys(m, T))}
   真循环：火花按周期性编号生成，第 ${F} 帧就是第 0 帧，不做交叉淡化。
 Color Over Life：${colorKeys(M, T, 0).length > 2 ? '见下表' : '白色常量'}；亮度倍数 ×${P.trBright}（三档：小 ×1、中 ×1.6、大 ×2.5，保留强弱差别）
-摆动：螺旋扭动已经烘在贴图里（星头左右摆、尾迹成波浪），不需要 Orbit
+摆动：螺旋扭动已经烘在贴图里（星头每帧固定在 Pivot，只有后面的尾迹成波浪摆动），不需要 Orbit
 
 2）开花后消散（二选一）
   ${fades}

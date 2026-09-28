@@ -6,6 +6,7 @@
 所有长度都除以尾迹长度（亮度累积到 97% 的位置），和拍摄距离、分辨率无关。
 """
 import numpy as np, cv2
+import cvcompat  # noqa: F401  Windows 中文路径
 
 NB = 24
 

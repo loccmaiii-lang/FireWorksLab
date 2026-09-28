@@ -3,6 +3,9 @@
 渲染用网页烘焙器本身（只烘循环、1/4 分辨率，测量前缩放到实拍的像素长度）；测量用 trailkit：
 沿长度的亮度分布、宽度、颗粒度、亮点密度、颜色、摆动，外加「尾迹长度（米）」贴近三档标准。
 输出：analysis/replica/尾缀_<档>_配方.json（参数覆盖）、_对照.jpg（实拍 4 帧 | 烘焙器 4 帧）、_数值.json
+
+火花本身按真实尺寸画小（贴图里清晰）；实拍的镜头模糊 / 压缩单独用「相机模糊」_psf（实拍像素）模拟，
+只在和实拍比较时加上，不进贴图。火花尺寸有上限，防止拟合把镜头模糊当成火花大小（那样贴图会糊）。
 """
 import os, sys, json, math, base64, io, copy, time
 import numpy as np, cv2
@@ -41,14 +44,14 @@ def colorize(v, ramp):
     return (ramp[np.clip((v * 255).astype(int), 0, 255)] * v[..., None]).astype(np.float32)
 
 
-def sim_side(res, Lref, ramp):
+def sim_side(res, Lref, ramp, psf=0.7):
     profs, strips = [], []
     for v in cells(res['loop'], res['meta'], PHASES):
         img = colorize(v, ramp)[..., ::-1]           # → BGR（与实拍同一套函数）
         pad = np.zeros((img.shape[0] + 60, img.shape[1] + 160, 3), np.float32); pad[30:30 + img.shape[0], 80:80 + img.shape[1]] = img
         h, sig = K.find_head(pad); st, line = K.straighten(sig, h, maxlen=pad.shape[0] - int(h[1]) - 1)
         L0 = K.trail_length(st); s = Lref / max(L0, 1)
-        img2 = cv2.GaussianBlur(cv2.resize(pad, None, fx=s, fy=s, interpolation=cv2.INTER_AREA), (0, 0), 0.7)
+        img2 = cv2.GaussianBlur(cv2.resize(pad, None, fx=s, fy=s, interpolation=cv2.INTER_AREA), (0, 0), psf)
         big = np.zeros((max(img2.shape[0], 1000), img2.shape[1] + 120, 3), np.float32); big[:img2.shape[0], 60:60 + img2.shape[1]] = img2
         h, sig = K.find_head(big); st, line = K.straighten(sig, h)
         profs.append(K.profile(st, line)); strips.append(st)
@@ -56,31 +59,47 @@ def sim_side(res, Lref, ramp):
     return dict(prof=avg, strips=strips)
 
 
-FIT_KEYS = [('trFRate', 'mul', .3, 50, 20000), ('trFLife', 'mul', .2, .03, 2), ('trFSpread', 'mul', .3, .02, 6), ('trFSize', 'mul', .25, .02, 1), ('trFBright', 'mul', .3, .001, .5),
-            ('trMRate', 'mul', .3, 0, 8000), ('trMLife', 'mul', .2, .05, 3), ('trMSpread', 'mul', .3, .02, 8), ('trMSize', 'mul', .25, .02, 1), ('trMBright', 'mul', .3, .001, .5),
-            ('trCRate', 'mul', .3, 0, 3000), ('trCLife', 'mul', .2, .05, 4), ('trCSpread', 'mul', .3, .02, 10), ('trCSize', 'mul', .25, .02, 1.5), ('trCBright', 'mul', .3, .001, 1),
-            ('trInh', 'add', .05, 0, .8), ('trDrag', 'mul', .25, .3, 10), ('trHeadSize', 'mul', .25, .03, 2), ('trHeadBright', 'mul', .3, .05, 4), ('trHaloBright', 'mul', .35, .01, 1),
-            ('trTwist', 'mul', .35, .005, 6), ('trWiggle', 'mul', .35, .005, 1), ('shutter', 'add', .15, .05, 1), ('trIgnite', 'add', .04, 0, .6), ('trCool', 'mul', .2, .3, 2)]
+# 火花真实尺寸的上限（米）：再大就是把镜头模糊算进了火花，贴图会糊
+SIZE_CAP = {'trFSize': (.008, .03), 'trMSize': (.01, .04), 'trCSize': (.012, .05), 'trHeadSize': (.03, .12)}
+FIT_KEYS = [('trFRate', 'mul', .3, 50, 30000), ('trFLife', 'mul', .2, .03, 2), ('trFSpread', 'mul', .3, .02, 6), ('trFSize', 'mul', .25, *SIZE_CAP['trFSize']), ('trFBright', 'mul', .3, .001, .5),
+            ('trMRate', 'mul', .3, 0, 12000), ('trMLife', 'mul', .2, .05, 3), ('trMSpread', 'mul', .3, .02, 8), ('trMSize', 'mul', .25, *SIZE_CAP['trMSize']), ('trMBright', 'mul', .3, .001, .5),
+            ('trCRate', 'mul', .3, 0, 5000), ('trCLife', 'mul', .2, .05, 4), ('trCSpread', 'mul', .3, .02, 10), ('trCSize', 'mul', .25, *SIZE_CAP['trCSize']), ('trCBright', 'mul', .3, .001, 1),
+            ('trInh', 'add', .05, 0, .8), ('trDrag', 'mul', .25, .3, 10), ('trHeadSize', 'mul', .25, *SIZE_CAP['trHeadSize']), ('trHeadBright', 'mul', .3, .05, 4), ('trHaloBright', 'mul', .35, .01, 1),
+            ('trTwist', 'mul', .35, .005, 6), ('trWiggle', 'mul', .35, .005, 1), ('trTwistLag', 'add', .1, 0, 1.2), ('shutter', 'add', .15, .05, 1), ('trIgnite', 'add', .04, 0, .6), ('trCool', 'mul', .2, .3, 2),
+            ('_psf', 'add', .3, .4, 4)]
 
 
-def main(size, rounds=2, start=None, log=print):
+def cap_sizes(over, P0):
+    """起点里超出上限的火花尺寸压回上限；亮度按面积守恒不用改（高斯点总能量与尺寸无关）"""
+    o = dict(over)
+    for k, (lo, hi) in SIZE_CAP.items(): o[k] = round(min(hi, max(lo, o.get(k, P0[k]))), 5)
+    o.setdefault('_psf', 1.2)
+    return o
+
+
+def main(size, rounds=2, start=None, log=print, s=None, out=None, cap=True):
+    """s：已打开的 SimSession（本地任务共用一个浏览器）；out：输出目录（默认 analysis/replica）"""
     ref = TF.ref_side(size); Lref = ref['L']
-    s = SimSession(); pg = s.pg
-    over = json.load(open(start, encoding='utf-8')) if start else {}
+    own = s is None
+    if own: s = SimSession()
+    pg = s.pg
+    over = (json.load(open(start, encoding='utf-8')) if isinstance(start, str) else dict(start)) if start else {}
     base = pg.evaluate(f"defaultsFor('{KEY[size]}')"); Mr = dict(base['M']); Mr.update(over.get('_ramp', {})); ramp = ramp_table(Mr)
+    P0 = dict(base['P']); P0.setdefault('trTwistLag', 0.35); P0['_psf'] = 1.2
+    if cap: over = cap_sizes(over, P0)
 
     def ev(o):
         res = pg.evaluate(f"__fw.trailBake('{KEY[size]}', {json.dumps({k: v for k, v in o.items() if not k.startswith('_')})}, 0.25, true)")
-        S = sim_side(res, Lref, ramp); L, parts = K.loss(ref['prof'], S['prof'])
+        S = sim_side(res, Lref, ramp, o.get('_psf', 1.2)); L, parts = K.loss(ref['prof'], S['prof'])
         ln = res['meta']['trailLen']; parts['len'] = float(np.log(ln / TARGET_LEN[size]) ** 2); L += 2 * parts['len']
         return L, parts, S, res
     cur = dict(over); best, parts, S, res = ev(cur)
     log(f'[{size}] 起点 {best:.4f} ' + ' '.join(f'{k}={v:.4f}' for k, v in parts.items()) + f" 长 {res['meta']['trailLen']:.1f} m")
-    P0 = base['P']; st = {k[0]: k[2] for k in FIT_KEYS}
+    st = {k[0]: k[2] for k in FIT_KEYS}
     for rnd in range(rounds):
         imp = False
         for k, kind, _, lo, hi in FIT_KEYS:
-            c = cur.get(k, P0[k])
+            c = cur.get(k, P0.get(k, 0))
             if kind == 'mul' and c == 0: continue
             for sg in (1, -1):
                 v = c * (1 + st[k]) ** sg if kind == 'mul' else c + sg * st[k]; v = min(hi, max(lo, v))
@@ -94,14 +113,13 @@ def main(size, rounds=2, start=None, log=print):
         if not imp:
             for k in st: st[k] *= 0.5
     log(f'[{size}] 结束 {best:.4f} ' + ' '.join(f'{k}={v:.4f}' for k, v in parts.items()))
-    out = os.path.join(ROOT, 'analysis', 'replica')
+    out = out or os.path.join(ROOT, 'analysis', 'replica'); os.makedirs(out, exist_ok=True)
     json.dump(cur, open(os.path.join(out, f'尾缀_{size}_配方.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     json.dump({'差距': round(best, 4), '分项': {k: round(v, 4) for k, v in parts.items()}, '尾迹长度m': res['meta']['trailLen'], '实拍': ref['prof'], '烘焙器': S['prof']},
               open(os.path.join(out, f'尾缀_{size}_数值.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=float)
     TF.sheet(ref, S, os.path.join(out, f'尾缀_{size}_对照.jpg'))
-    s.close()
-    return cur
-
+    if own: s.close()
+    return cur, best
 
 if __name__ == '__main__':
     main(sys.argv[1], int(sys.argv[2]) if len(sys.argv) > 2 else 2, sys.argv[3] if len(sys.argv) > 3 else None, log=lambda m: print(m, flush=True))

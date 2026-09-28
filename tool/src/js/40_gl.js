@@ -8,7 +8,8 @@ if (!gl || !gl.getExtension('EXT_color_buffer_float')) {
   throw new Error('no webgl2');
 }
 const PT_MAX = gl.getParameter(gl.ALIASED_POINT_SIZE_RANGE)[1];
-let PPMY = 0;          // 纵向每米像素数（0 = 与横向相同）；单元序列横竖分别缩放时由烘焙设置
+let PPMY = 0;
+let PT_SPAN = 0;       // 画点范围（几倍 σ）；0 = 默认 6σ。尾缀设 10σ，边缘平滑收到 0          // 纵向每米像素数（0 = 与横向相同）；单元序列横竖分别缩放时由烘焙设置
 
 function compile(vs, fs) {
   const mk = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o) + '\n' + s); return o; };
@@ -24,13 +25,14 @@ const VS_RECT = HDR + `layout(location=0) in vec2 a; uniform vec4 uRect; uniform
 void main(){ v_uv=a; vec2 w=mix(uRect.xy,uRect.zw,a); gl_Position=vec4((w-uView.xy)/uView.zw,0.,1.); }`;
 // uXf：把世界坐标平移旋转到某颗星的随体坐标（单元序列用）
 const VS_PTS = HDR + `layout(location=0) in vec2 aP; layout(location=1) in float aI; layout(location=2) in float aS;
-uniform vec4 uView, uXf; uniform float uPPM, uPPMY; uniform float uMax, uUseXf; out float vI; out vec2 vSig; out float vPS;
-void main(){ vec2 sig=max(aS*0.5*vec2(uPPM,uPPMY),vec2(0.55)); float ps=min(ceil(max(sig.x,sig.y)*6.)+1.,uMax);
+uniform vec4 uView, uXf; uniform float uPPM, uPPMY; uniform float uMax, uUseXf, uSpan; out float vI; out vec2 vSig; out float vPS;
+void main(){ vec2 sig=max(aS*0.5*vec2(uPPM,uPPMY),vec2(0.55)); float ps=min(ceil(max(sig.x,sig.y)*(uSpan>0.?uSpan:6.))+1.,uMax);
   vec2 q=aP; if(uUseXf>.5){ vec2 d=q-uXf.xy; q=vec2(d.x*uXf.z-d.y*uXf.w, d.x*uXf.w+d.y*uXf.z); }
   gl_Position=vec4((q-uView.xy)/uView.zw,0.,1.); gl_PointSize=ps; vI=aI; vSig=sig; vPS=ps; }`;
 // 高斯点：uPPM / uPPMY 分别是横、纵每米像素数（单元序列横竖分别缩放时不同）
 const FS_PTS = HDR + `in float vI; in vec2 vSig; in float vPS; uniform vec4 uChan; uniform float uW; uniform float uPPM, uPPMY; out vec4 o;
 void main(){ vec2 d=(gl_PointCoord-.5)*vPS/vSig; float g=exp(-.5*dot(d,d))/(6.2831853*vSig.x*vSig.y);
+  if(vPS>8.*max(vSig.x,vSig.y)+2.) g*=smoothstep(1.,.8,length(gl_PointCoord-.5)*2.);   // 大范围画点：边缘平滑收到 0，不留硬边
   o=uChan*(vI*g*uPPM*uPPMY*uW); }`;
 // 打包进格子：uPad = 格子边缘留空的像素数（防止 mip/压缩时串到相邻格子）
 const FS_PACK = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform vec4 uM; uniform float uFade, uPad; uniform vec2 uCell; out vec4 o;
@@ -112,6 +114,8 @@ float glowOf(float T){ float g=(T-900.)/1150.; return g>0.? g*g*g : 0.; }
 // 线性阻力 + 重力 + 气流 U 的解析解
 vec3 mot(vec3 p0, vec3 v0, vec3 U, vec3 g, float k, float a){ if(k>1e-4){ vec3 vi=U+g/k; return p0+vi*a+(v0-vi)*(1.-exp(-k*a))/k; } return p0+v0*a+.5*g*a*a; }
 vec3 motv(vec3 v0, vec3 U, vec3 g, float k, float a){ if(k>1e-4){ vec3 vi=U+g/k; return vi+(v0-vi)*exp(-k*a); } return v0+g*a; }
+void emitPtW(vec2 q, float I, float size, float span){ vec2 sig=max(size*.5*vec2(uPPM,uPPMY),vec2(.55)); float ps=min(ceil(max(sig.x,sig.y)*span)+1.,uMax);
+  gl_Position=vec4((q-uView.xy)/uView.zw,0.,1.); gl_PointSize=ps; vI=I; vSig=sig; vPS=ps; }
 void emitPt(vec2 q, float I, float size){ vec2 sig=max(size*.5*vec2(uPPM,uPPMY),vec2(.55)); float ps=min(ceil(max(sig.x,sig.y)*6.)+1.,uMax);
   gl_Position=vec4((q-uView.xy)/uView.zw,0.,1.); gl_PointSize=ps; vI=I; vSig=sig; vPS=ps; }`;
 
@@ -454,7 +458,7 @@ function drawPoints(buf, n, view, ppm, chan, w, xf) {
   gl.bufferData(gl.ARRAY_BUFFER, buf.subarray(0, n * 4), gl.DYNAMIC_DRAW);
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
   gl.uniform4fv(pr.u.uXf, xf || [0, 0, 1, 0]); gl.uniform1f(pr.u.uUseXf, xf ? 1 : 0);
-  gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w);
+  gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uSpan, PT_SPAN);
   gl.drawArrays(gl.POINTS, 0, n);
 }
 function additive(on) { if (on) { gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE); gl.blendEquation(gl.FUNC_ADD); } else gl.disable(gl.BLEND); }

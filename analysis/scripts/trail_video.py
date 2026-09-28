@@ -9,6 +9,8 @@
 import os, sys, json, math, glob
 import numpy as np, cv2
 from PIL import Image, ImageDraw, ImageFont
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import cvcompat  # noqa: F401  Windows 中文路径
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 FONT_P = next((f for f in ['/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc', 'C:/Windows/Fonts/msyh.ttc'] if os.path.exists(f)), None)
@@ -169,24 +171,25 @@ def strength(trs, out):
     Image.fromarray(img).save(out, quality=92)
 
 
-def main(d):
-    trs = {}
-    for k in 'SML':
-        sub = os.path.join(d, f'RiseTrail_{k}')
-        trs[k] = Trail(sub, k)
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+def ref_frames(k, RC):
+    """实拍跟踪帧（慢：逐帧找星头、拉直），存一份缓存在系统临时目录"""
+    import tempfile
+    cache = os.path.join(tempfile.gettempdir(), f'fw_reftrack_{k}.npz')
+    if os.path.exists(cache): return list(np.load(cache)['refs'])
+    refs, _ = RC.ref_track(k, int(4 * FPS), FPS); np.savez_compressed(cache, refs=np.stack(refs)); return refs
+
+
+def main(d, sizes='SML', previews=True, log=print):
+    trs = {k: Trail(os.path.join(d, f'RiseTrail_{k}'), k) for k in sizes}
     import rise_trail_compare as RC
     fref = RC.fade_ref(int(3.2 * FPS), FPS)
     for k, t in trs.items():
-        for fps in (30, 20):
-            preview(t, fps, os.path.join(d, f'升空尾缀_{k}_预览_消散{64 / fps:.1f}s.mp4'))
-        cache = os.path.join('/tmp', f'fw_reftrack_{k}.npz')
-        if os.path.exists(cache): refs = list(np.load(cache)['refs'])
-        else: refs, _ = RC.ref_track(k, int(4 * FPS), FPS)
-        compare(t, os.path.join(d, f'升空尾缀_{k}_实拍对照.mp4'), refs, fref)
-        print(k, 'ok', flush=True)
-    strength(trs, os.path.join(d, '升空尾缀_三档对比.jpg'))
-
+        if previews:
+            for fps in (30, 20):
+                preview(t, fps, os.path.join(d, f'升空尾缀_{k}_预览_消散{64 / fps:.1f}s.mp4'))
+        compare(t, os.path.join(d, f'升空尾缀_{k}_实拍对照.mp4'), ref_frames(k, RC), fref)
+        log(f'{k} 视频 ok')
+    if len(trs) == 3: strength(trs, os.path.join(d, '升空尾缀_三档对比.jpg'))
 
 if __name__ == '__main__':
     main(sys.argv[1])

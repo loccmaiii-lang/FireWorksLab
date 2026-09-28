@@ -140,6 +140,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
     const [sx, sy] = sizeXY(pl, tc), c = centerAt(pl, tc), view = [c[0], c[1], pl.HX * sx, pl.HY * sy], ppm = ssW / (pl.Ww * sx);
     PPMY = ssH / (pl.Wh * sy);
     sst.clear(); sst.bind(); additive(true);
+    R.subW = W / nsub;   // 每个子帧覆盖的时长（尾缀的星头据此再细分，拖出连续亮线）
     for (let j = 0; j < nsub; j++) {
       const ts = pl.t0 + tc - W / 2 + (j + 0.5) * W / nsub;
       R.draw(pl.loop ? ts : Math.max(0, ts), view, ppm, 1 / nsub, pl.loop ? f : f * 16 + j, f);

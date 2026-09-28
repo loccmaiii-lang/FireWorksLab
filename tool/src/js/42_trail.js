@@ -15,7 +15,7 @@ const TRAIL_POPS = [
 ];
 const VS_TRAIL = `#version 300 es
 precision highp float; precision highp int;
-uniform float uT, uStop, uFadeK, uAnchorY, uV, uTp, uRate, uLife, uInh, uSpread, uK, uG, uT0, uCool, uBright, uSize, uWhisk, uIgn;
+uniform float uT, uStop, uFadeK, uAnchorY, uV, uTp, uRate, uLife, uInh, uSpread, uK, uG, uT0, uCool, uBright, uSize, uWhisk, uIgn, uLag;
 uniform int uMp, uSeed, uPop;
 uniform vec3 uWave[6]; uniform vec2 uBot, uFadeEnd;
 uniform vec4 uView; uniform float uPPM, uPPMY, uMax;
@@ -30,17 +30,19 @@ void main(){
   float age=uT-tb; if(age<0.){ cull(); return; }
   float ageE=(uStop>=0.&&uT>uStop)?(uStop-tb)+(uT-uStop)*uFadeK:age;
   float life=uLife*clamp(exp(.3*gss(key,2u)),.55,1.35); if(ageE>=life){ cull(); return; }
+  // 星头走直线（真实弹道平滑，不左右甩）；扭动是火花离开星头后被带出的横向漂移：按出生时刻取波形，离开越久漂得越满
   vec2 h=headX(tb); vec3 dir=vec3(gss(key,5u),gss(key,7u),gss(key,9u)), vel;
-  if(uWhisk>.5){ vel=vec3(h.y,uV,0.)*uInh+normalize(dir+1e-4)*uSpread*(.5+.9*hsh(key,13u)); }
-  else vel=vec3(h.y,uV,0.)*uInh*(.6+.8*hsh(key,4u))+dir*uSpread;
-  vec3 p=mot(vec3(h.x,uV*tb,0.),vel,vec3(0.),vec3(0.,-uG,0.),uK,age);
+  if(uWhisk>.5){ vel=vec3(0.,uV,0.)*uInh+normalize(dir+1e-4)*uSpread*(.5+.9*hsh(key,13u)); }
+  else vel=vec3(0.,uV,0.)*uInh*(.6+.8*hsh(key,4u))+dir*uSpread;
+  vec3 p=mot(vec3(0.,uV*tb,0.),vel,vec3(0.),vec3(0.,-uG,0.),uK,age);
+  p.x+=h.x*(uLag>1e-4?1.-exp(-age/uLag):1.);
   float x=ageE/life, T=(uT0+90.*gss(key,11u))*(1.-uCool*x);
   float I=glowOf(T)*uBright*(.55+.9*hsh(key,15u))*pow(clamp((1.-x)/.3,0.,1.),1.5);
   if(uIgn>0.&&uWhisk<.5) I*=smoothstep(0.,uIgn*(.6+.8*hsh(key,19u)),ageE);   // 火花离开星头后才烧旺
   if(uFadeEnd.y>uFadeEnd.x) I*=1.-smoothstep(uFadeEnd.x,uFadeEnd.y,uT);   // 消散最后 30% 整体收到全黑，末帧干净
   float yy=p.y-uAnchorY; if(uBot.y>uBot.x) I*=smoothstep(uBot.x,uBot.y,yy);   // 面片底端柔和收尾，不在格子边上硬切
   if(I<=0.){ cull(); return; }
-  emitPt(vec2(p.x,yy),I,uSize*(.7+.6*hsh(key,17u)));
+  emitPtW(vec2(p.x,yy),I,uSize*(.7+.6*hsh(key,17u)),10.);
 }`;
 PR.trail = compile(VS_TRAIL, FS_PTS);
 
@@ -77,14 +79,21 @@ function makeTrailRenderer(P) {
       const tf = R.frameT ? R.frameT(f) : ts, anchorT = R.stop >= 0 ? R.stop : tf, anchorY = P.trV * anchorT;
       // 星头：核心 + 光晕（周期性闪烁）
       if (R.stopE < 0 || ts <= R.stopE + 1e-6) {
-        const fl = 1 + 0.12 * Math.sin(6.2831853 * 7 * ts / Tp) * Math.sin(6.2831853 * 3 * ts / Tp + 1.1), x = hx(ts), y = P.trV * ts - anchorY;
-        bufH[0] = x; bufH[1] = y; bufH[2] = P.trHeadBright * fl; bufH[3] = P.trHeadSize;
-        bufH[4] = x; bufH[5] = y; bufH[6] = P.trHeadBright * P.trHaloBright * fl * P.trHalo * P.trHalo; bufH[7] = P.trHeadSize * P.trHalo;
-        drawPoints(bufH, 2, view, ppm, [1, 0, 0, 0], w);
+        // 星头固定在面片中线上（x = 0）；快门内按星头移动距离细分，拖出连续的亮线而不是一串珠子
+        const sw = R.subW || 0, n = sw > 0 ? clamp(Math.ceil(P.trV * sw / (0.25 * P.trHeadSize)), 1, 48) : 1;
+        let k = 0;
+        for (let i = 0; i < n; i++) {
+          const tt = ts + (n > 1 ? ((i + 0.5) / n - 0.5) * sw : 0);
+          if (R.stopE >= 0 && tt > R.stopE + 1e-6) continue;
+          const fl = 1 + 0.12 * Math.sin(6.2831853 * 7 * tt / Tp) * Math.sin(6.2831853 * 3 * tt / Tp + 1.1), y = P.trV * tt - anchorY;
+          bufH[k++] = 0; bufH[k++] = y; bufH[k++] = P.trHeadBright * fl / n; bufH[k++] = P.trHeadSize;
+          bufH[k++] = 0; bufH[k++] = y; bufH[k++] = P.trHeadBright * P.trHaloBright * fl * P.trHalo * P.trHalo / n; bufH[k++] = P.trHeadSize * P.trHalo;
+        }
+        PT_SPAN = 10; drawPoints(bufH, k / 4, view, ppm, [1, 0, 0, 0], w); PT_SPAN = 0;
       }
       const pr = PR.trail; gl.useProgram(pr.p);
       gl.uniform1f(pr.u.uT, ts); gl.uniform1f(pr.u.uStop, R.stopE); gl.uniform1f(pr.u.uFadeK, R.fadeK); gl.uniform1f(pr.u.uAnchorY, anchorY);
-      gl.uniform1f(pr.u.uV, P.trV); gl.uniform1f(pr.u.uIgn, P.trIgnite || 0); gl.uniform1f(pr.u.uTp, Tp); gl.uniform1f(pr.u.uInh, P.trInh); gl.uniform1f(pr.u.uK, P.trDrag); gl.uniform1f(pr.u.uG, G * P.trGrav);
+      gl.uniform1f(pr.u.uV, P.trV); gl.uniform1f(pr.u.uIgn, P.trIgnite || 0); gl.uniform1f(pr.u.uLag, P.trTwistLag == null ? 0.35 : P.trTwistLag); gl.uniform1f(pr.u.uTp, Tp); gl.uniform1f(pr.u.uInh, P.trInh); gl.uniform1f(pr.u.uK, P.trDrag); gl.uniform1f(pr.u.uG, G * P.trGrav);
       gl.uniform3fv(pr.u['uWave[0]'], wv); gl.uniform1i(pr.u.uSeed, P.seed | 0); gl.uniform2fv(pr.u.uBot, R.bot); gl.uniform2fv(pr.u.uFadeEnd, R.fadeEnd);
       gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
       gl.uniform4fv(pr.u.uChan, [0, 1, 0, 0]); gl.uniform1f(pr.u.uW, w);
