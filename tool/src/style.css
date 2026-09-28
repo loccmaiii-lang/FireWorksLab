@@ -158,3 +158,20 @@
     .brand small{display:none}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  /* 素材页 */
+  .assetcv{position:absolute;inset:0;width:100%;height:100%;border-radius:6px}
+  #assetInfo p{margin:6px 0}
+  #assetVar{flex-wrap:wrap}
+  /* 更新记录 */
+  .upd{position:relative;margin-left:8px}
+  .upd i{position:absolute;top:3px;right:3px;width:7px;height:7px;border-radius:50%;background:#ff6a3d}
+  .upd-dlg .pk-head{align-items:center;gap:12px}
+  .upd-dlg .pk-head b{font-size:15px}
+  .upd-list{overflow:auto;padding:4px 18px 24px;max-width:860px}
+  .upd-it{border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:10px 0;background:var(--panel)}
+  .upd-it.new{border-color:#b98a3e}
+  .upd-it h3{margin:0 0 6px;font-size:14px}
+  .upd-it p{margin:4px 0}
+  .upd-it ul{margin:4px 0 4px 18px;padding:0}
+  .upd-it li.sub{margin-left:18px;list-style:circle}
+  .upd-it code{font:12px var(--mono);background:var(--bg);padding:0 4px;border-radius:4px}

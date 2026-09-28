@@ -1,0 +1,130 @@
+万彩千轮 PrismWheels · 单元序列 × 粒子（PW2）
+颜色按实拍 万彩千轮A/B 测得：炸开后约 1 秒是本色（青绿 / 银白 / 淡黄 / 珊瑚红），然后整颗球变金，熄灭前转橙。
+先在烘焙器里看：打开 tool/FireworkBaker.html →「素材」→ 打开文件夹，选这个目录（analysis/results/PW2）。
+
+【两套贴图】每个颜色一个发射器，其余参数相同
+A 自然色：2048×2048 RGB，4 × 4 = 16 帧，单格 512。导入 sRGB 勾选，BC7。用 RGB 序列帧材质（不走 Ramp）。变色已烘在贴图里。
+B 灰度 + Ramp：2048×2048 RGBA 接力，每通道 4 × 4、共 64 帧（R 0–15、G 16–31、B 32–47、A 48–63），单格 512。导入 sRGB 关闭，BC7。
+  用现有 RGBA 序列帧材质；列 = 4，行 = 4；Ramp = 对应的 _UnitRGBA_Ramp。Ramp 是中性白，颜色和变色靠 Color Over Life（下面）。
+Cutout：_Unit_Cutout_xx（512×512）；Required → Cutout Texture，Sub Images 1 × 1，Bounding Mode = Eight Vertices，Opacity Source Mode = Alpha，Alpha Threshold = 0.1。
+
+【看什么】
+1. 帧数：A 张开阶段每帧最多跳约 57 像素，B ≤ 17 像素。实际距离看不出跳就用 A。
+2. 大小、分布、先后、颜色是否像 万彩千轮B.mp4。
+
+【Cascade：4 个发射器（每个颜色一个），CPU 粒子】
+Required：Material = 该颜色的材质实例；Screen Alignment = Square；Use Local Space 不勾选；Emitter Duration = 1.0 s；Emitter Loops = 1
+  A 用 SubUV 播放时：Sub Images Horizontal = 4，Vertical = 4，Interpolation Method = Linear（不要选 Linear_Blend）
+  B 用 Dynamic Parameter 取帧：Sub Images 1 × 1，Interpolation Method = None
+Spawn：Rate = 0；Burst List（Emitter Duration = 1 s，Time 就是秒；共 24 颗小球）
+  _01 青绿：Burst (Count 2, Count Low -1, Time 0.00)，(Count 2, Count Low -1, Time 0.08)，(Count 2, Count Low -1, Time 0.16)，(Count 1, Count Low -1, Time 0.26)；贴图 T_EFX_FireWorks_PrismWheels_Unit_4x4_01.png（A）/ T_EFX_FireWorks_PrismWheels_UnitRGBA_4x4_01.png + T_EFX_FireWorks_PrismWheels_UnitRGBA_Ramp_01.png（B）；Cutout T_EFX_FireWorks_PrismWheels_Unit_Cutout_01.png
+  _02 银白：Burst (Count 2, Count Low -1, Time 0.03)，(Count 2, Count Low -1, Time 0.13)，(Count 2, Count Low -1, Time 0.24)；贴图 T_EFX_FireWorks_PrismWheels_Unit_4x4_02.png（A）/ T_EFX_FireWorks_PrismWheels_UnitRGBA_4x4_02.png + T_EFX_FireWorks_PrismWheels_UnitRGBA_Ramp_02.png（B）；Cutout T_EFX_FireWorks_PrismWheels_Unit_Cutout_02.png
+  _03 淡黄：Burst (Count 2, Count Low -1, Time 0.05)，(Count 2, Count Low -1, Time 0.18)，(Count 2, Count Low -1, Time 0.30)；贴图 T_EFX_FireWorks_PrismWheels_Unit_4x4_03.png（A）/ T_EFX_FireWorks_PrismWheels_UnitRGBA_4x4_03.png + T_EFX_FireWorks_PrismWheels_UnitRGBA_Ramp_03.png（B）；Cutout T_EFX_FireWorks_PrismWheels_Unit_Cutout_03.png
+  _04 珊瑚红：Burst (Count 2, Count Low -1, Time 0.10)，(Count 2, Count Low -1, Time 0.21)，(Count 1, Count Low -1, Time 0.33)；贴图 T_EFX_FireWorks_PrismWheels_Unit_4x4_04.png（A）/ T_EFX_FireWorks_PrismWheels_UnitRGBA_4x4_04.png + T_EFX_FireWorks_PrismWheels_UnitRGBA_Ramp_04.png（B）；Cutout T_EFX_FireWorks_PrismWheels_Unit_Cutout_04.png
+Lifetime：Distribution Float Uniform，Min 2.392，Max 2.808
+Initial Size：Distribution Vector Uniform，Min = 1722，Max = 2330；勾选 Lock Axes，Locked Axes = XYZ（完全张开时小球半径约 9 m）
+Sphere（Location）：Start Radius = 5000；Positive / Negative X、Y、Z 全勾；Surface Only 勾选；Velocity 勾选，Velocity Scale = 0.25
+Drag：Drag Coefficient = 2.5
+Const Acceleration：Z = -300
+Initial Rotation：Distribution Float Uniform，Min 0，Max 1
+Color Over Life：A 用 (1, 1, 1)、Alpha 1；B 见下面；亮度倍数按项目曝光再乘
+
+帧号曲线（相对寿命 → 帧号，线性，材质取整）
+A（16 帧）：Dynamic Parameter 第三通道，或 SubUV → Sub Image Index，二选一
+  0.0000    0
+  0.0142    1
+  0.0357    2
+  0.0667    3
+  0.1058    4
+  0.1525    5
+  0.2062    6
+  0.2666    7
+  0.3333    8
+  0.4062    9
+  0.4849    10
+  0.5694    11
+  0.6594    12
+  0.7549    13
+  0.8556    14
+  0.9615    15
+B（64 帧）：Dynamic Parameter 第三通道
+  0.0000    0
+  0.0065    1
+  0.0100    2
+  0.0146    3
+  0.0199    4
+  0.0260    5
+  0.0327    6
+  0.0401    7
+  0.0479    8
+  0.0563    9
+  0.0651    10
+  0.0744    11
+  0.0842    12
+  0.0943    13
+  0.1049    14
+  0.1158    15
+  0.1271    16
+  0.1388    17
+  0.1508    18
+  0.1631    19
+  0.1758    20
+  0.1888    21
+  0.2021    22
+  0.2157    23
+  0.2296    24
+  0.2438    25
+  0.2583    26
+  0.2731    27
+  0.2882    28
+  0.3035    29
+  0.3191    30
+  0.3349    31
+  0.3510    32
+  0.3674    33
+  0.3840    34
+  0.4009    35
+  0.4180    36
+  0.4353    37
+  0.4529    38
+  0.4707    39
+  0.4887    40
+  0.5070    41
+  0.5255    42
+  0.5442    43
+  0.5631    44
+  0.5823    45
+  0.6017    46
+  0.6212    47
+  0.6410    48
+  0.6610    49
+  0.6812    50
+  0.7016    51
+  0.7222    52
+  0.7430    53
+  0.7640    54
+  0.7852    55
+  0.8066    56
+  0.8281    57
+  0.8499    58
+  0.8719    59
+  0.8940    60
+  0.9163    61
+  0.9388    62
+  0.9615    63
+
+【可直接粘贴】（Distribution 选 Constant Curve，右键 Points → 粘贴）
+▸ A：Dynamic Parameter 第三参数 / SubUV Sub Image Index
+((InVal=0.000000,OutVal=0.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.014200,OutVal=1.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.035750,OutVal=2.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.066650,OutVal=3.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.105780,OutVal=4.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.152450,OutVal=5.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.206160,OutVal=6.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.266550,OutVal=7.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.333300,OutVal=8.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.406160,OutVal=9.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.484930,OutVal=10.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.569410,OutVal=11.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.659450,OutVal=12.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.754900,OutVal=13.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.855630,OutVal=14.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.961540,OutVal=15.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear))
+▸ B：Dynamic Parameter 第三参数
+((InVal=0.000000,OutVal=0.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.006530,OutVal=1.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.010030,OutVal=2.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.014560,OutVal=3.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.019920,OutVal=4.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.026010,OutVal=5.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.032740,OutVal=6.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.040060,OutVal=7.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.047920,OutVal=8.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.056280,OutVal=9.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.065130,OutVal=10.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.074430,OutVal=11.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.084160,OutVal=12.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.094310,OutVal=13.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.104860,OutVal=14.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.115790,OutVal=15.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.127090,OutVal=16.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.138750,OutVal=17.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.150760,OutVal=18.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.163100,OutVal=19.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.175780,OutVal=20.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.188780,OutVal=21.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.202080,OutVal=22.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.215700,OutVal=23.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.229620,OutVal=24.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.243820,OutVal=25.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.258320,OutVal=26.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.273100,OutVal=27.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.288150,OutVal=28.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.303470,OutVal=29.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.319060,OutVal=30.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.334920,OutVal=31.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.351030,OutVal=32.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.367390,OutVal=33.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.384000,OutVal=34.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.400860,OutVal=35.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.417970,OutVal=36.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.435310,OutVal=37.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.452890,OutVal=38.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.470700,OutVal=39.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.488740,OutVal=40.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.507010,OutVal=41.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.525500,OutVal=42.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.544210,OutVal=43.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.563140,OutVal=44.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.582290,OutVal=45.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.601650,OutVal=46.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.621230,OutVal=47.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.641010,OutVal=48.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.661000,OutVal=49.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.681200,OutVal=50.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.701600,OutVal=51.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.722200,OutVal=52.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.743000,OutVal=53.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.763990,OutVal=54.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.785180,OutVal=55.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.806570,OutVal=56.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.828140,OutVal=57.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.849910,OutVal=58.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.871870,OutVal=59.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.894010,OutVal=60.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.916330,OutVal=61.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.938850,OutVal=62.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.961540,OutVal=63.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear))
+
+B 的 Color Over Life（每个颜色一条；本色 → 约 1.0 s 变金 → 熄灭前转橙；A 不用，颜色已在贴图里）
+▸ _01 青绿：Color Over Life → Constant Curve → Points
+((InVal=0.000000,OutVal=(X=0.061800,Y=1.000000,Z=0.460500),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.355800,OutVal=(X=0.061800,Y=1.000000,Z=0.460500),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.413500,OutVal=(X=1.000000,Y=0.745400,Z=0.254200),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.634600,OutVal=(X=1.000000,Y=0.745400,Z=0.254200),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.788500,OutVal=(X=1.000000,Y=0.361300,Z=0.068500),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=1.000000,OutVal=(X=1.000000,Y=0.361300,Z=0.068500),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear))
+▸ _02 银白：Color Over Life → Constant Curve → Points
+((InVal=0.000000,OutVal=(X=1.000000,Y=0.879600,Z=0.822800),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.355800,OutVal=(X=1.000000,Y=0.879600,Z=0.822800),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.413500,OutVal=(X=1.000000,Y=0.745400,Z=0.254200),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.634600,OutVal=(X=1.000000,Y=0.745400,Z=0.254200),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.788500,OutVal=(X=1.000000,Y=0.361300,Z=0.068500),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=1.000000,OutVal=(X=1.000000,Y=0.361300,Z=0.068500),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear))
+▸ _03 淡黄：Color Over Life → Constant Curve → Points
+((InVal=0.000000,OutVal=(X=1.000000,Y=0.875600,Z=0.200200),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.355800,OutVal=(X=1.000000,Y=0.875600,Z=0.200200),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.413500,OutVal=(X=1.000000,Y=0.745400,Z=0.254200),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.634600,OutVal=(X=1.000000,Y=0.745400,Z=0.254200),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.788500,OutVal=(X=1.000000,Y=0.361300,Z=0.068500),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=1.000000,OutVal=(X=1.000000,Y=0.361300,Z=0.068500),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear))
+▸ _04 珊瑚红：Color Over Life → Constant Curve → Points
+((InVal=0.000000,OutVal=(X=1.000000,Y=0.068500,Z=0.036900),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.355800,OutVal=(X=1.000000,Y=0.068500,Z=0.036900),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.413500,OutVal=(X=1.000000,Y=0.745400,Z=0.254200),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.634600,OutVal=(X=1.000000,Y=0.745400,Z=0.254200),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.788500,OutVal=(X=1.000000,Y=0.361300,Z=0.068500),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=1.000000,OutVal=(X=1.000000,Y=0.361300,Z=0.068500),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear))

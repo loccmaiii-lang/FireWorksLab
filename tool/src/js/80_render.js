@@ -341,24 +341,26 @@ function updateLabels() {
 let lastT = performance.now();
 function curDuration() {
   if (state.tab === 'combo') return comboDuration();
+  if (state.tab === 'asset') return assetDuration();
   let d = state.P.duration; if (state.B) d = Math.max(d, state.B.P.duration);
   return d;
 }
 function loop(now) {
   if (state.stillBusy) { lastT = now; requestAnimationFrame(loop); return; }   // 定帧渲染期间让出画布
   const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
-  const D = curDuration(), looping = familyOf(state.P.type) === 'ground' && state.tab !== 'combo';
+  const D = curDuration(), looping = familyOf(state.P.type) === 'ground' && state.tab === 'master';
   if (state.playing) { state.t += dt * state.speed; if (state.t > D + (looping ? 0 : 0.35)) state.t = looping ? state.t - D : 0; }
   $('#scrub').value = Math.round(clamp(state.t / D, 0, 1) * 1000);
   $('#tlabel').textContent = `${Math.min(state.t, D).toFixed(2)} / ${D.toFixed(2)} s`;
   try {
-    ensureTargets();
+    if (state.tab === 'asset') renderAssets();
+    else { ensureTargets();
     if (state.tab === 'combo') renderCombo();
-    else if (state.view === 'live') renderLive(); else if (state.view === 'export') renderExport(); else renderAtlas();
+    else if (state.view === 'live') renderLive(); else if (state.view === 'export') renderExport(); else renderAtlas(); }
   } catch (e) { console.error(e); hudText = '渲染出错：' + e.message; }
   if (pendingThumb) { const f = pendingThumb; pendingThumb = null; try { f(thumbFromCanvas()); } catch (e) { } }
   $('#hud').textContent = hudText; $('#hudB').textContent = hudB; updateLabels();
-  const mv = state.tab !== 'combo';
+  const mv = state.tab !== 'combo' && state.tab !== 'asset';
   $('#atlasSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.tail);
   $('#segSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.next);
   $('#flowSeg').hidden = !mv || state.view !== 'atlas'; $('#flowCv').hidden = !mv || state.view !== 'atlas' || !state.atlasFlow;

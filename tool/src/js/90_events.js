@@ -75,8 +75,8 @@ document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click
   const tab = b.dataset.tab; if (tab === state.tab) return;
   document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', String(x === b)));
   state.tab = tab; state.t = 0;
-  $('#pMaster').hidden = tab !== 'master'; $('#pCombo').hidden = tab !== 'combo'; $('#pIter').hidden = tab !== 'iter';
-  $('#viewSeg').hidden = tab === 'combo';
+  $('#pMaster').hidden = tab !== 'master'; $('#pCombo').hidden = tab !== 'combo'; $('#pIter').hidden = tab !== 'iter'; $('#pAsset').hidden = tab !== 'asset';
+  $('#viewSeg').hidden = tab === 'combo' || tab === 'asset'; $('#assetCv').hidden = tab !== 'asset';
   if (tab === 'combo') { await ensureLibrary(); if (!state.layers.length) applyCombo(COMBOS[0]); else buildComboPanel(); }
   if (tab === 'iter') { renderMetrics(); abInfo(); renderVersions(); }
 }));
@@ -92,6 +92,8 @@ $('#btnExportCombo').addEventListener('click', exportCombo);
   el.title = name;
 })();
 initPicker();
+initAssets();
+initUpdates();
 buildMasterPanel();
 initIter();
 if (!/[?&]fast/.test(location.search)) runPreviewBake(); else state.dirty = false;

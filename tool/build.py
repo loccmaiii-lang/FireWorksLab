@@ -7,6 +7,14 @@ css = open(os.path.join(src, 'style.css'), encoding='utf-8').read()
 body = open(os.path.join(src, 'body.html'), encoding='utf-8').read()
 js = ''.join(open(f, encoding='utf-8').read() for f in sorted(glob.glob(os.path.join(src, 'js', '*.js'))))
 ver = re.search(r"const VERSION = '([^']+)'", js)
+# 仓库根目录的 更新记录.md（最新在上）→ UPDATES，烘焙器顶栏「更新记录」里显示
+import json
+upd = []
+up = os.path.join(here, '..', '更新记录.md')
+if os.path.exists(up):
+    for sec in re.split(r'^## ', open(up, encoding='utf-8').read(), flags=re.M)[1:21]:
+        title, _, text = sec.partition('\n'); upd.append({'title': title.strip(), 'body': text.strip()})
+js = 'const UPDATES = ' + json.dumps(upd, ensure_ascii=False) + ';\n' + js
 html = f'''<!doctype html>
 <html lang="zh-CN">
 <head>

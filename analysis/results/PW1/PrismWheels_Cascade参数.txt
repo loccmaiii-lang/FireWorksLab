@@ -1,49 +1,35 @@
-万彩千轮 PrismWheels · 单元序列 × 粒子（试验版 PW1）
-色光：用户认可的 C/D 色光 V11 D_Soft（analysis/replica/万彩千轮_色光CD/复现说明.md），点位不变，加上张开、拖影、先后熄灭。
+万彩千轮 PrismWheels · 单元序列 × 粒子（PW1）
+颜色用 C/D 包里的颜色，不变色。
+先在烘焙器里看：打开 tool/FireworkBaker.html →「素材」→ 打开文件夹，选这个目录（analysis/results/PW1）。
 
-【要对比的两套贴图】（每套 4 种颜色，一色一个发射器，其余参数完全相同）
-A 自然色：2048×2048 RGB，4 列 × 4 行 = 16 帧，单格 512；颜色就在贴图里。导入 sRGB 勾选，BC7。
-  材质：现有的 RGB 序列帧材质（不走 Ramp）。
+【两套贴图】每个颜色一个发射器，其余参数相同
+A 自然色：2048×2048 RGB，4 × 4 = 16 帧，单格 512。导入 sRGB 勾选，BC7。用 RGB 序列帧材质（不走 Ramp）。
 B 灰度 + Ramp：2048×2048 RGBA 接力，每通道 4 × 4、共 64 帧（R 0–15、G 16–31、B 32–47、A 48–63），单格 512。导入 sRGB 关闭，BC7。
-  材质：现有 RGBA 序列帧材质；列 = 4，行 = 4；Ramp = 对应颜色的 _UnitRGBA_Ramp（256×8，sRGB）。
-  编码：v = 亮度^(1/2.2)，Ramp 按「Ramp(v) × v = A 的颜色」反推，材质按 Ramp(v) × v 出色时 B 与 A 同色。
-  如果你们的 RGBA 材质不是 Ramp(v) × v（比如只输出 Ramp(v)），告诉我实际公式，我重出 Ramp。
-每种颜色的文件：
-  _01 青碧：T_EFX_FireWorks_PrismWheels_Unit_4x4_01（A）、T_EFX_FireWorks_PrismWheels_UnitRGBA_4x4_01 + T_EFX_FireWorks_PrismWheels_UnitRGBA_Ramp_01（B）、T_EFX_FireWorks_PrismWheels_Unit_Cutout_01
-  _02 玫红：T_EFX_FireWorks_PrismWheels_Unit_4x4_02（A）、T_EFX_FireWorks_PrismWheels_UnitRGBA_4x4_02 + T_EFX_FireWorks_PrismWheels_UnitRGBA_Ramp_02（B）、T_EFX_FireWorks_PrismWheels_Unit_Cutout_02
-  _03 蓝紫：T_EFX_FireWorks_PrismWheels_Unit_4x4_03（A）、T_EFX_FireWorks_PrismWheels_UnitRGBA_4x4_03 + T_EFX_FireWorks_PrismWheels_UnitRGBA_Ramp_03（B）、T_EFX_FireWorks_PrismWheels_Unit_Cutout_03
-  _04 橙金：T_EFX_FireWorks_PrismWheels_Unit_4x4_04（A）、T_EFX_FireWorks_PrismWheels_UnitRGBA_4x4_04 + T_EFX_FireWorks_PrismWheels_UnitRGBA_Ramp_04（B）、T_EFX_FireWorks_PrismWheels_Unit_Cutout_04
-Cutout：_Unit_Cutout_xx（512×512，所有帧叠加的轮廓，A、B 共用）；Required → Cutout Texture，Sub Images 1×1，Bounding Mode = Eight Vertices，Opacity Source Mode = Alpha，Alpha Threshold = 0.1。
+  用现有 RGBA 序列帧材质；列 = 4，行 = 4；Ramp = 对应的 _UnitRGBA_Ramp。
+Cutout：_Unit_Cutout_xx（512×512）；Required → Cutout Texture，Sub Images 1 × 1，Bounding Mode = Eight Vertices，Opacity Source Mode = Alpha，Alpha Threshold = 0.1。
 
 【看什么】
-1. 帧数够不够：A 的张开只有 4–5 帧（每帧位移最大约 51 像素），B 每帧 ≤ 15 像素。
-   在实际观看距离下 A 看不出跳，就用 A（省贴图、颜色自然）；看得出，就用 B。
-2. 小球大小、分布、先后是否像万彩千轮B.mp4；下面的数值都可以直接改。
-3. 预览：PrismWheels_单元对比.mp4（上 A、下 B，按 30 fps 取整播放）、PrismWheels_整朵预览.mp4 / .jpg（按下面的发射器设置摆 24 颗小球）。
+1. 帧数：A 张开阶段每帧最多跳约 51 像素，B ≤ 15 像素。实际距离看不出跳就用 A。
+2. 大小、分布、先后、颜色是否像 万彩千轮B.mp4。
 
-【Cascade：4 个发射器（每种颜色一个），CPU 粒子】
-Required
-  Material = 该颜色的材质实例；Screen Alignment = Square；Use Local Space 不勾选
-  Emitter Duration = 1.0 s，Emitter Loops = 1（小球在 1 秒内全部生成完，之后粒子自己活到寿命结束）
-  A 用 SubUV 模块播放时：Sub Images Horizontal = 4，Vertical = 4，Interpolation Method = Linear（Linear 是按序号取帧、不混合；不要选 Linear_Blend）
-  B（RGBA 材质用 Dynamic Parameter 取帧）：Sub Images 1 × 1，Interpolation Method = None
-Spawn
-  Rate = 0；Burst List（Emitter Duration = 1 s，所以 Time 就是秒；4 色错开，共 24 颗小球在 0–0.33 s 内陆续开）：
-  _01：(Count 2, Count Low -1, Time 0.00)，(Count 2, Count Low -1, Time 0.12)，(Count 2, Count Low -1, Time 0.24)
-  _02：(Count 2, Count Low -1, Time 0.03)，(Count 2, Count Low -1, Time 0.15)，(Count 2, Count Low -1, Time 0.27)
-  _03：(Count 2, Count Low -1, Time 0.06)，(Count 2, Count Low -1, Time 0.18)，(Count 2, Count Low -1, Time 0.30)
-  _04：(Count 2, Count Low -1, Time 0.09)，(Count 2, Count Low -1, Time 0.21)，(Count 2, Count Low -1, Time 0.33)
-Lifetime：Distribution Float Uniform，Min 2.0，Max 2.4（帧号按相对寿命播放，寿命长短只让整颗球快慢 ±9%）
-Initial Size：Distribution Vector Uniform，Min = 1722，Max = 2330（X、Y、Z 相同）；勾选 Lock Axes，Locked Axes = XYZ
-  （完全张开时小球半径约 9 m；贴图里星点外缘在格子半宽的 89% 处）
+【Cascade：4 个发射器（每个颜色一个），CPU 粒子】
+Required：Material = 该颜色的材质实例；Screen Alignment = Square；Use Local Space 不勾选；Emitter Duration = 1.0 s；Emitter Loops = 1
+  A 用 SubUV 播放时：Sub Images Horizontal = 4，Vertical = 4，Interpolation Method = Linear（不要选 Linear_Blend）
+  B 用 Dynamic Parameter 取帧：Sub Images 1 × 1，Interpolation Method = None
+Spawn：Rate = 0；Burst List（Emitter Duration = 1 s，Time 就是秒；共 24 颗小球）
+  _01 青碧：Burst (Count 2, Count Low -1, Time 0.00)，(Count 2, Count Low -1, Time 0.12)，(Count 2, Count Low -1, Time 0.24)；贴图 T_EFX_FireWorks_PrismWheels_Unit_4x4_01.png（A）/ T_EFX_FireWorks_PrismWheels_UnitRGBA_4x4_01.png + T_EFX_FireWorks_PrismWheels_UnitRGBA_Ramp_01.png（B）；Cutout T_EFX_FireWorks_PrismWheels_Unit_Cutout_01.png
+  _02 玫红：Burst (Count 2, Count Low -1, Time 0.03)，(Count 2, Count Low -1, Time 0.15)，(Count 2, Count Low -1, Time 0.27)；贴图 T_EFX_FireWorks_PrismWheels_Unit_4x4_02.png（A）/ T_EFX_FireWorks_PrismWheels_UnitRGBA_4x4_02.png + T_EFX_FireWorks_PrismWheels_UnitRGBA_Ramp_02.png（B）；Cutout T_EFX_FireWorks_PrismWheels_Unit_Cutout_02.png
+  _03 蓝紫：Burst (Count 2, Count Low -1, Time 0.06)，(Count 2, Count Low -1, Time 0.18)，(Count 2, Count Low -1, Time 0.30)；贴图 T_EFX_FireWorks_PrismWheels_Unit_4x4_03.png（A）/ T_EFX_FireWorks_PrismWheels_UnitRGBA_4x4_03.png + T_EFX_FireWorks_PrismWheels_UnitRGBA_Ramp_03.png（B）；Cutout T_EFX_FireWorks_PrismWheels_Unit_Cutout_03.png
+  _04 橙金：Burst (Count 2, Count Low -1, Time 0.09)，(Count 2, Count Low -1, Time 0.21)，(Count 2, Count Low -1, Time 0.33)；贴图 T_EFX_FireWorks_PrismWheels_Unit_4x4_04.png（A）/ T_EFX_FireWorks_PrismWheels_UnitRGBA_4x4_04.png + T_EFX_FireWorks_PrismWheels_UnitRGBA_Ramp_04.png（B）；Cutout T_EFX_FireWorks_PrismWheels_Unit_Cutout_04.png
+Lifetime：Distribution Float Uniform，Min 1.98，Max 2.42
+Initial Size：Distribution Vector Uniform，Min = 1722，Max = 2330；勾选 Lock Axes，Locked Axes = XYZ（完全张开时小球半径约 9 m）
 Sphere（Location）：Start Radius = 5000；Positive / Negative X、Y、Z 全勾；Surface Only 勾选；Velocity 勾选，Velocity Scale = 0.25
-  （小球出生在半径 50 m 的球面上，平视时周边密、中间疏，和实拍一样；带一点向外的速度，炸开后继续外飘一小段）
 Drag：Drag Coefficient = 2.5
-Const Acceleration：Z = -300（整颗小球慢慢下坠；下坠没有烘进贴图，所以可以随机旋转）
-Initial Rotation：Distribution Float Uniform，Min 0，Max 1（0–360°）
-Color Over Life：(1, 1, 1)，Alpha 1；亮度倍数按项目曝光调（颜色在贴图 / Ramp 里，这里只乘亮度）
+Const Acceleration：Z = -300
+Initial Rotation：Distribution Float Uniform，Min 0，Max 1
+Color Over Life：A 用 (1, 1, 1)、Alpha 1；B 见下面；亮度倍数按项目曝光再乘
 
-帧号曲线（相对寿命 → 帧号，线性，材质取整；烘焙时每帧就取这些时刻）
+帧号曲线（相对寿命 → 帧号，线性，材质取整）
 A（16 帧）：Dynamic Parameter 第三通道，或 SubUV → Sub Image Index，二选一
   0.0000    0
   0.0150    1
@@ -127,11 +113,9 @@ B（64 帧）：Dynamic Parameter 第三通道
   0.9320    62
   0.9546    63
 
-【可直接粘贴】（先把 Distribution 类型选成 Float Constant Curve，右键 Points → 粘贴）
-▸ A：Dynamic Parameter 第三参数 / SubUV Sub Image Index → Constant Curve → Points
+【可直接粘贴】（Distribution 选 Constant Curve，右键 Points → 粘贴）
+▸ A：Dynamic Parameter 第三参数 / SubUV Sub Image Index
 ((InVal=0.000000,OutVal=0.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.014960,OutVal=1.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.036340,OutVal=2.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.066980,OutVal=3.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.105790,OutVal=4.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.152080,OutVal=5.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.205350,OutVal=6.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.265240,OutVal=7.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.331450,OutVal=8.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.403710,OutVal=9.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.481830,OutVal=10.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.565630,OutVal=11.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.654930,OutVal=12.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.749600,OutVal=13.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.849510,OutVal=14.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.954550,OutVal=15.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear))
-▸ B：Dynamic Parameter 第三参数 → Constant Curve → Points
+▸ B：Dynamic Parameter 第三参数
 ((InVal=0.000000,OutVal=0.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.007350,OutVal=1.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.010820,OutVal=2.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.015320,OutVal=3.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.020640,OutVal=4.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.026670,OutVal=5.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.033350,OutVal=6.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.040610,OutVal=7.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.048400,OutVal=8.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.056700,OutVal=9.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.065470,OutVal=10.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.074700,OutVal=11.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.084350,OutVal=12.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.094420,OutVal=13.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.104880,OutVal=14.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.115720,OutVal=15.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.126930,OutVal=16.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.138490,OutVal=17.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.150400,OutVal=18.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.162650,OutVal=19.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.175220,OutVal=20.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.188110,OutVal=21.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.201310,OutVal=22.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.214810,OutVal=23.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.228610,OutVal=24.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.242700,OutVal=25.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.257080,OutVal=26.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.271740,OutVal=27.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.286670,OutVal=28.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.301870,OutVal=29.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.317330,OutVal=30.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.333050,OutVal=31.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.349030,OutVal=32.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.365260,OutVal=33.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.381740,OutVal=34.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.398460,OutVal=35.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.415420,OutVal=36.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.432620,OutVal=37.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.450060,OutVal=38.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.467720,OutVal=39.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.485620,OutVal=40.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.503730,OutVal=41.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.522070,OutVal=42.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.540630,OutVal=43.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.559410,OutVal=44.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.578400,OutVal=45.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.597610,OutVal=46.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.617020,OutVal=47.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.636640,OutVal=48.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.656470,OutVal=49.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.676500,OutVal=50.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.696730,OutVal=51.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.717160,OutVal=52.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.737790,OutVal=53.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.758620,OutVal=54.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.779630,OutVal=55.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.800840,OutVal=56.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.822240,OutVal=57.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.843830,OutVal=58.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.865610,OutVal=59.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.887570,OutVal=60.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.909710,OutVal=61.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.932040,OutVal=62.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.954550,OutVal=63.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear))
 
-【可选】母星：主爆后先有 24 颗橙色小亮点从中心飞出约 0.3 s 再开成小球。可以另加一个发射器（任意软圆点材质，Lifetime 0.3 s，
-  Sphere Start Radius 1 m + Velocity，Initial Velocity 让 0.3 s 飞到约 50 m），并把 4 个颜色发射器的 Emitter Delay 设为 0.3 s。先不加也能判断单元效果。
