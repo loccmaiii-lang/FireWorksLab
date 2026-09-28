@@ -12,18 +12,5 @@
   }
  },
  "note": "Zoom：面片中心固定在爆点、不移动，只按 Size By Life 等比放大（X、Y 同一条曲线），每帧贴图按同一条曲线烘焙，前期不浪费格子；参数表里 Size By Life 与帧号曲线都有可直接粘贴的文本。Fixed：同 JM1，这次多了 Cutout。两套都带 T_<名>_Cutout.png（512×512，所有帧叠在一起的一张轮廓，Sub Images 1×1），用法见参数表【Cutout】。",
- "priority": 3,
- "review": {
-  "date": "2026-09-29",
-  "name": "金芒菊 · 导出（随开花放大 / 固定大小）",
-  "video": "vidio/2.0/金芒菊A.mp4",
-  "tags": "金芒菊 导出 JM2",
-  "note": "JM2：用正式库的金芒菊导出两套 2K 贴图：Zoom（面片中心在爆点，只用 Size By Life 等比放大，前期不浪费格子）、Fixed（固定大小，同 JM1）。这里播放的是导出的真实贴图（缩小一半），按引擎方式：帧号取整、不混合、Size By Life、Color Over Life、渐变图。新命名 T_EFX_FireWorks_JinMangJu_Zoom_8x8_01 等。",
-  "look": [
-   "右栏「贴图」切换 Zoom / Fixed",
-   "Zoom 版前期是否更清楚、面片放大是否平滑",
-   "「显示 Cutout 轮廓」看面片裁剪"
-  ],
-  "opinion": "这一版就是要进引擎的素材；通过后贴图在你本机 analysis/local/输出/JM2/，参数表在 analysis/results/JM2/。"
- }
+ "priority": 3
 }

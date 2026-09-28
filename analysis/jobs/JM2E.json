@@ -1,0 +1,32 @@
+{
+ "id": "JM2E",
+ "type": "export",
+ "name": "金芒菊导出（新命名 + 烘焙器预览）：Zoom / Fixed",
+ "replica": "JM",
+ "exports": {
+  "JinMangJu_Zoom": {
+   "zoom": "on"
+  },
+  "JinMangJu_Fixed": {
+   "zoom": "off"
+  }
+ },
+ "note": "同 JM2（WorkBuddy 已导出一次，旧命名、没有烘焙器预览）。这次用新命名 T_EFX_FireWorks_JinMangJu_*，并生成 preview.js，迭代区里直接播放导出的真实贴图。约 0.1 分钟。",
+ "priority": 4,
+ "review": {
+  "date": "2026-09-29",
+  "name": "金芒菊 · 导出（Zoom / Fixed）",
+  "video": "vidio/2.0/金芒菊A.mp4",
+  "tags": "金芒菊 导出 JM2",
+  "note": "JM2：用正式库的金芒菊导出两套 2K 贴图：Zoom（面片中心在爆点，只用 Size By Life 等比放大，前期不浪费格子）、Fixed（固定大小，同 JM1）。这里播放的是导出的真实贴图（缩小一半），按引擎方式：帧号取整、不混合、Size By Life、Color Over Life、渐变图。新命名 T_EFX_FireWorks_JinMangJu_Zoom_8x8_01 等。",
+  "look": [
+   "右栏「贴图」切换 Zoom / Fixed",
+   "Zoom 版前期是否更清楚、面片放大是否平滑",
+   "「显示 Cutout 轮廓」看面片裁剪"
+  ],
+  "opinion": "WorkBuddy 看过 JM2 的预览：Zoom 从第 5 帧起就占满格子，Fixed 前几十帧四周空（JM1 的问题）。这里放的是真实导出贴图，Zoom / Fixed 切换着看；通过后贴图在你本机 analysis/local/输出/JM2E/。",
+  "replaces": [
+   "JM2"
+  ]
+ }
+}
