@@ -25,7 +25,7 @@ function setStatus(msg) { const s = $('#status'); s.textContent = msg; s.classNa
 
 // 上升类的序列时长跟随到顶时间
 function derive(P) {
-  if (familyOf(P.type) === 'rise') P.duration = +(riseInfo(P).ta + 1.2).toFixed(2);
+  if (familyOf(P.type) === 'rise') P.duration = P.form === 'trail' ? +(riseInfo(P).ta + 64 / 20 + 0.3).toFixed(2) : +(riseInfo(P).ta + 1.2).toFixed(2);
   if (familyOf(P.type) === 'ground') P.duration = P.loopT;
   return P;
 }
@@ -62,6 +62,8 @@ function showStats(b) {
   if (m.unit) { const f = m.fit, R = f.v0 / f.k * (1 - Math.exp(-f.k * m.duration)), ua = P.stars * m.Ww * m.Wh * m.area, ba = (2 * R + m.Wh) ** 2;
     rows.push(`轨迹拟合：初速 ${f.v0.toFixed(0)} m/s · 阻力 ${f.k.toFixed(3)} · 误差 <span class="${cls(f.err < 0.05)}">${(f.err * 100).toFixed(1)}%</span>`);
     rows.push(`overdraw：${P.stars} 个单元 ≈ 大面片的 <span class="${cls(ua < ba)}">${Math.round(ua / ba * 100)}%</span>`); }
+  if (m.trail) { rows.push(`弹道：${m.fit.v0.toFixed(0)} m/s（线性拟合）· ${m.T.toFixed(2)} s 到 ${m.fit.H.toFixed(0)} m · 上升结束播到循环第 ${m.fEnd} 帧`);
+    rows.push(`消散：30 fps ${(64 / 30).toFixed(2)} s / 20 fps ${(64 / 20).toFixed(2)} s · 接力差值 <span class="${cls(Math.max(...m.relay) < 0.5)}">${m.relay.join(' / ')}</span>（0 = 逐像素一致） · 尾迹长 ${m.trailLen.toFixed(1)} m · 引擎亮度 ×${P.trBright}`); }
   if (m.riseLoop) rows.push(`弹道：${m.ri.v0.toFixed(0)} m/s 出膛 · ${m.fit.T.toFixed(2)} s 到 ${m.fit.H.toFixed(0)} m · 拟合误差 ${(m.fit.err * 100).toFixed(1)}%`);
   rows.push(`模拟内核 ${P.engine === 'gpu' ? 'GPU · 火花 ' + (m.sparkSlots || 0).toLocaleString() + ' 颗' : 'CPU'} · 烘焙 ${(m.bakeMs / 1000).toFixed(1)} s`);
   const warn = [];
@@ -77,7 +79,7 @@ const GRID_OPTS = [1, 2, 4, 8, 16, 32];
 function formOptions(P) {
   const fam = familyOf(P.type);
   if (fam === 'ground') return [['loop', '地面循环（周期性烘焙，首尾无缝）']];
-  if (fam === 'rise') return [['unit', '星头循环 + 弹道与火花发射器参数'], ['master', '整段上升序列（大面片）']];
+  if (fam === 'rise') return [['trail', '尾缀序列（循环 + 消散，速度朝向）'], ['unit', '星头循环 + 弹道与火花发射器参数'], ['master', '整段上升序列（大面片）']];
   const o = [['master', '大面片母版'], ['segments', '分段母版（开花段 + 下垂段两张贴图）']];
   if (unitAllowed(P)) o.push(['unit', '单元序列（每颗星一个粒子，省 overdraw）']);
   return o;
@@ -86,7 +88,8 @@ const FORM_NOTES = {
   master: '整朵花烘成一张序列，一个面片播放。远景、大型礼花的主层。',
   segments: '长时花型（锦冠、柳）帧数不够时，把开花段和下垂段分成两张贴图、两个发射器，各自分配帧数。',
   unit: '贴图里只有一颗星的星头和拖尾（沿速度方向），Cascade 按拟合的轨迹发射每颗星。菊类最省 overdraw。',
-  loop: '周期内的火花按周期性编号生成，最后一帧直接接回第一帧。Cascade 里 Emitter Loops = 0 无限循环。'
+  loop: '周期内的火花按周期性编号生成，最后一帧直接接回第一帧。Cascade 里 Emitter Loops = 0 无限循环。',
+  trail: '升空尾缀：星头 + 尾迹整条烘进细长面片（速度朝向）。循环 64 帧真循环；开花后换消散序列（30 fps / 20 fps 两个版本），第 0 帧就是上升结束那一帧。'
 };
 function syncExport() {
   const P = state.P;
@@ -269,6 +272,7 @@ function setForm(f) {
   }
   if (fam === 'rise') {
     if (f === 'master') Object.assign(P, { cols: 16, rows: 2, chans: 4, texW: 2048, texH: 2048, zoom: 'off' });
+    else if (f === 'trail') Object.assign(P, { cols: 16, rows: 1, chans: 4, texW: 2048, texH: 2048, zoom: 'off' });
     else Object.assign(P, { cols: 8, rows: 2, chans: 1, texW: 1024, texH: 1024 });
   }
   syncExport(); onParam();

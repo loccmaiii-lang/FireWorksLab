@@ -1,0 +1,107 @@
+"""升空尾缀：烘焙器里的三档配方 vs 实拍（尾缀C / B / A），逐项测量并自动逼近。
+  python trail_calib.py S|M|L [轮数] [起点覆盖 json]
+渲染用网页烘焙器本身（只烘循环、1/4 分辨率，测量前缩放到实拍的像素长度）；测量用 trailkit：
+沿长度的亮度分布、宽度、颗粒度、亮点密度、颜色、摆动，外加「尾迹长度（米）」贴近三档标准。
+输出：analysis/replica/尾缀_<档>_配方.json（参数覆盖）、_对照.jpg（实拍 4 帧 | 烘焙器 4 帧）、_数值.json
+"""
+import os, sys, json, math, base64, io, copy, time
+import numpy as np, cv2
+from PIL import Image
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import trailkit as K
+import trail_fit as TF
+from compare import SimSession
+
+ROOT = TF.ROOT
+KEY = {'S': 'trailS', 'M': 'trailM', 'L': 'trailL'}
+TARGET_LEN = {'S': 20.0, 'M': 40.0, 'L': 90.0}
+PHASES = [0, 16, 32, 48]
+RAMP_POS = [0, 0.3, 0.65, 1]
+
+
+def hex_lin(h):
+    c = np.array([int(h[i:i + 2], 16) for i in (1, 3, 5)], np.float64) / 255
+    return np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
+
+
+def ramp_table(M):
+    C = [hex_lin(M[k]) for k in ('ramp0', 'ramp1', 'ramp2', 'ramp3')]; x = np.linspace(0, 1, 256)
+    return np.stack([np.interp(x, RAMP_POS, [c[ch] for c in C]) for ch in range(3)], 1)
+
+
+def cells(png_b64, meta, frames):
+    im = np.array(Image.open(io.BytesIO(base64.b64decode(png_b64))).convert('RGBA')).astype(np.float32) / 255
+    cw = meta['N'] // meta['cols']; rows = meta['per'] // meta['cols']; chh = im.shape[0] // rows; out = []
+    for f in frames:
+        c, k = divmod(f, meta['per']); col, row = k % meta['cols'], k // meta['cols']; out.append(im[row * chh:(row + 1) * chh, col * cw:(col + 1) * cw, c])
+    return out
+
+
+def colorize(v, ramp):
+    return (ramp[np.clip((v * 255).astype(int), 0, 255)] * v[..., None]).astype(np.float32)
+
+
+def sim_side(res, Lref, ramp):
+    profs, strips = [], []
+    for v in cells(res['loop'], res['meta'], PHASES):
+        img = colorize(v, ramp)[..., ::-1]           # → BGR（与实拍同一套函数）
+        pad = np.zeros((img.shape[0] + 60, img.shape[1] + 160, 3), np.float32); pad[30:30 + img.shape[0], 80:80 + img.shape[1]] = img
+        h, sig = K.find_head(pad); st, line = K.straighten(sig, h, maxlen=pad.shape[0] - int(h[1]) - 1)
+        L0 = K.trail_length(st); s = Lref / max(L0, 1)
+        img2 = cv2.GaussianBlur(cv2.resize(pad, None, fx=s, fy=s, interpolation=cv2.INTER_AREA), (0, 0), 0.7)
+        big = np.zeros((max(img2.shape[0], 1000), img2.shape[1] + 120, 3), np.float32); big[:img2.shape[0], 60:60 + img2.shape[1]] = img2
+        h, sig = K.find_head(big); st, line = K.straighten(sig, h)
+        profs.append(K.profile(st, line)); strips.append(st)
+    avg = {k: np.mean([p[k] for p in profs], 0).tolist() if isinstance(profs[0][k], list) else float(np.mean([p[k] for p in profs])) for k in profs[0]}
+    return dict(prof=avg, strips=strips)
+
+
+FIT_KEYS = [('trFRate', 'mul', .3, 50, 20000), ('trFLife', 'mul', .2, .03, 2), ('trFSpread', 'mul', .3, .02, 6), ('trFSize', 'mul', .25, .02, 1), ('trFBright', 'mul', .3, .001, .5),
+            ('trMRate', 'mul', .3, 0, 8000), ('trMLife', 'mul', .2, .05, 3), ('trMSpread', 'mul', .3, .02, 8), ('trMSize', 'mul', .25, .02, 1), ('trMBright', 'mul', .3, .001, .5),
+            ('trCRate', 'mul', .3, 0, 3000), ('trCLife', 'mul', .2, .05, 4), ('trCSpread', 'mul', .3, .02, 10), ('trCSize', 'mul', .25, .02, 1.5), ('trCBright', 'mul', .3, .001, 1),
+            ('trInh', 'add', .05, 0, .8), ('trDrag', 'mul', .25, .3, 10), ('trHeadSize', 'mul', .25, .03, 2), ('trHeadBright', 'mul', .3, .05, 4), ('trHaloBright', 'mul', .35, .01, 1),
+            ('trTwist', 'mul', .35, .005, 6), ('trWiggle', 'mul', .35, .005, 1), ('shutter', 'add', .15, .05, 1), ('trIgnite', 'add', .04, 0, .6), ('trCool', 'mul', .2, .3, 2)]
+
+
+def main(size, rounds=2, start=None, log=print):
+    ref = TF.ref_side(size); Lref = ref['L']
+    s = SimSession(); pg = s.pg
+    over = json.load(open(start, encoding='utf-8')) if start else {}
+    base = pg.evaluate(f"defaultsFor('{KEY[size]}')"); Mr = dict(base['M']); Mr.update(over.get('_ramp', {})); ramp = ramp_table(Mr)
+
+    def ev(o):
+        res = pg.evaluate(f"__fw.trailBake('{KEY[size]}', {json.dumps({k: v for k, v in o.items() if not k.startswith('_')})}, 0.25, true)")
+        S = sim_side(res, Lref, ramp); L, parts = K.loss(ref['prof'], S['prof'])
+        ln = res['meta']['trailLen']; parts['len'] = float(np.log(ln / TARGET_LEN[size]) ** 2); L += 2 * parts['len']
+        return L, parts, S, res
+    cur = dict(over); best, parts, S, res = ev(cur)
+    log(f'[{size}] 起点 {best:.4f} ' + ' '.join(f'{k}={v:.4f}' for k, v in parts.items()) + f" 长 {res['meta']['trailLen']:.1f} m")
+    P0 = base['P']; st = {k[0]: k[2] for k in FIT_KEYS}
+    for rnd in range(rounds):
+        imp = False
+        for k, kind, _, lo, hi in FIT_KEYS:
+            c = cur.get(k, P0[k])
+            if kind == 'mul' and c == 0: continue
+            for sg in (1, -1):
+                v = c * (1 + st[k]) ** sg if kind == 'mul' else c + sg * st[k]; v = min(hi, max(lo, v))
+                if abs(v - c) < 1e-9: continue
+                o = dict(cur); o[k] = round(v, 5)
+                try: L, pa, S2, r2 = ev(o)
+                except Exception as e: log(f'  {k} 出错 {e}'); continue
+                if L < best:
+                    cur, best, parts, S, res, imp = o, L, pa, S2, r2, True
+                    log(f'  第{rnd + 1}轮 {k} → {v:.4g}  {L:.4f}  长 {r2["meta"]["trailLen"]:.1f} m'); break
+        if not imp:
+            for k in st: st[k] *= 0.5
+    log(f'[{size}] 结束 {best:.4f} ' + ' '.join(f'{k}={v:.4f}' for k, v in parts.items()))
+    out = os.path.join(ROOT, 'analysis', 'replica')
+    json.dump(cur, open(os.path.join(out, f'尾缀_{size}_配方.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    json.dump({'差距': round(best, 4), '分项': {k: round(v, 4) for k, v in parts.items()}, '尾迹长度m': res['meta']['trailLen'], '实拍': ref['prof'], '烘焙器': S['prof']},
+              open(os.path.join(out, f'尾缀_{size}_数值.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=float)
+    TF.sheet(ref, S, os.path.join(out, f'尾缀_{size}_对照.jpg'))
+    s.close()
+    return cur
+
+
+if __name__ == '__main__':
+    main(sys.argv[1], int(sys.argv[2]) if len(sys.argv) > 2 else 2, sys.argv[3] if len(sys.argv) > 3 else None, log=lambda m: print(m, flush=True))

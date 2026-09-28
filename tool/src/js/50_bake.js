@@ -263,7 +263,7 @@ function imgMetrics(rows) {
   return { burn: Tb, diameter: 2 * Rf, t50: tfrac(0.5), t80: tfrac(0.8), t90: tfrac(0.9), droop: r[4] / Rf, bt: r[3] / Math.max(r[2], 1e-3), kieguchi: (t[i20] - t[i80]) / Tb, peakT: t[ip] };
 }
 function bakeMetrics(b) { if (!b) return null; const rows = []; for (let s = b; s; s = s.next) if (s.meta.imgRows) rows.push(...s.meta.imgRows); return rows.length ? imgMetrics(rows) : null; }
-function disposeBake(b) { if (b) { b.head.dispose(); b.tail && b.tail.dispose(); if (b.next) disposeBake(b.next); } }
+function disposeBake(b) { if (b) { b.head.dispose(); b.tail && b.tail.dispose(); disposeTrail(b); if (b.next) disposeBake(b.next); } }
 
 // 大面片母版（可只取 [ta, tb] 一段）
 async function bakeMaster(P, scale, onProg, opt = {}) {
@@ -447,7 +447,7 @@ async function bakeLoop(P, scale, onProg) {
 function bakeKind(P) {
   const fam = familyOf(P.type);
   if (fam === 'ground') return 'loop';
-  if (fam === 'rise') return P.form === 'master' ? 'master' : 'riseLoop';
+  if (fam === 'rise') return P.form === 'master' ? 'master' : P.form === 'trail' ? 'trail' : 'riseLoop';
   if (P.form === 'unit' && unitAllowed(P)) return 'unit';
   if (P.form === 'segments') return 'segments';
   return 'master';
@@ -458,6 +458,7 @@ async function bake(P, scale, onProg) {
   switch (bakeKind(P)) {
     case 'loop': return bakeLoop(P, scale, onProg);
     case 'riseLoop': return bakeRiseLoop(P, scale, onProg);
+    case 'trail': return bakeTrail(P, scale, onProg);
     case 'unit': return bakeUnit(P, scale, onProg);
     case 'segments': return bakeSegments(P, scale, onProg);
     default: return bakeMaster(P, scale, onProg);

@@ -25,6 +25,16 @@ const fx = (v, d = 2) => (+v).toFixed(d);
 function keyLines(keys) { return keys.map(([u, v]) => `  ${fx(u, 4)}      ${Array.isArray(v) ? v.join('  ') : fx(v, 3)}`).join('\n'); }
 function texSection(name, b) {
   const P = b.P, L = b.meta.L, parts = [];
+  if (b.form === 'trail') return `【贴图】
+T_${name}_Loop.png（上升循环）${b.fades.map(f => `、T_${name}_Fade${f.fps}.png（消散，${f.fps} fps）`).join('')}${P.trExport4K ? '；另有 _4K 母版（4096×4096，单格 256×4096）' : ''}
+尺寸 ${P.texW}×${P.texH}，灰度线性，RGBA 接力：先填满 R 的 ${L.per} 格（第 0–${L.per - 1} 帧），再接 G、B、A，共 ${L.F} 帧
+格子 ${L.cols} 列 × ${L.rows} 行，单格 ${L.cellW}×${L.cellH}（1:${Math.round(L.cellH / L.cellW)}，贴合细长的尾迹）；格子四周留空 ${P.cellPad} 像素
+导入：sRGB 关闭，压缩 BC7
+T_${name}_Ramp.png：渐变图 256×8（sRGB），暗 → 亮 = 冷却的橙红火星 → 金色火星 → 白热段与星头
+
+【材质实例】
+项目现有的 RGBA 序列帧材质；列 = ${L.cols}，行 = ${L.rows}；Ramp = T_${name}_Ramp；循环、消散各一个材质实例（只换贴图）
+`;
   for (let s = b, i = 0; s; s = s.next, i++) {
     const sx = b.next ? '_' + 'AB'[i] : '';
     parts.push(s.tail ? `T_${name}${sx}_Head.png（星头与闪光）、T_${name}${sx}_Tail.png（拖尾火花）` : `T_${name}${sx}.png（星头、闪光、拖尾合并）`);
@@ -155,6 +165,44 @@ ${keyLines(coolKeys)}
 或者开花发射器 Emitter Delay = ${fx(T)} s、Initial Location Z = ${cm(f.H)} cm。
 `;
 }
+function trailEmitter(b, M, name) {
+  const m = b.meta, P = b.P, f = m.fit, T = m.T, F = m.L.F, last = m.sizeKeysRise[m.sizeKeysRise.length - 1][1];
+  const fades = b.fades.map(x => `T_${name}_Fade${x.fps}：${F} 帧，按 ${x.fps} fps 播放 = ${fx(F / x.fps, 2)} s`).join('\n  ');
+  return `【升空尾缀：两个发射器接力】
+弹道（真实二次阻力）：${fx(riseInfo(P).v0, 1)} m/s 出膛，${fx(T, 2)} s 到达 ${fx(f.H, 0)} m
+Cascade 线性阻力拟合：Initial Velocity Z = ${cm(f.v0)} cm/s；Drag = ${fx(f.k, 3)}；Const Acceleration Z = −981 cm/s²（误差 ${fx(f.err * 100, 1)}%）
+面片 ${fx(m.Ww, 2)} × ${fx(m.Wh, 2)} m 对应上升速度 ${fx(P.trV, 1)} m/s 时的尾迹（尾迹长约 ${fx(m.trailLen, 1)} m）
+
+1）上升循环（T_${name}_Loop）
+Required：Screen Alignment = Velocity；Emitter Duration = ${fx(T, 3)} s；Emitter Loops = 1
+  Pivot Offset：星头在贴图里距底边 ${fx(m.hb * 100, 1)}% 处。默认 (−0.5, −0.5) 是面片中心；把 Y 改为 ${fx(-(1 - m.hb), 3)}，
+  若星头跑到另一端就改为 ${fx(-m.hb, 3)}。以编辑器里星头落在粒子位置、尾巴拖在后面为准
+Spawn：Rate = 0；Burst Count = 1，Time = 0；Lifetime = ${fx(T, 3)} s
+Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm
+Initial Velocity：Z = ${cm(f.v0)} cm/s；Drag Coefficient = ${fx(f.k, 3)}；Const Acceleration：Z = −981 cm/s²
+Size By Life（Y 单独，X 保持 1；尾迹长度跟着上升速度变：出膛快 → 长，到顶慢 → 短）
+  相对时间    Y 倍数
+${keyLines(m.sizeKeysRise)}
+Dynamic Parameter 第三通道 = 帧号（锯齿，Linear；${F} 帧 / ${fx(m.Tp, 3)} s，即 ${m.fps} fps）
+${keyLines(sawKeys(m, T))}
+  真循环：火花按周期性编号生成，第 ${F} 帧就是第 0 帧，不做交叉淡化。
+Color Over Life：${colorKeys(M, T, 0).length > 2 ? '见下表' : '白色常量'}；亮度倍数 ×${P.trBright}（三档：小 ×1、中 ×1.6、大 ×2.5，保留强弱差别）
+摆动：螺旋扭动已经烘在贴图里（星头左右摆、尾迹成波浪），不需要 Orbit
+
+2）开花后消散（二选一）
+  ${fades}
+Required：Screen Alignment = Velocity；Emitter Delay = ${fx(T, 3)} s；Emitter Duration = 消散时长；Loops = 1；Pivot Offset 同上
+Spawn：Burst Count = 1；Lifetime = 消散时长
+Initial Location：Z = ${cm(f.H)} cm（开花点）
+Initial Velocity：Z = 1 cm/s（只给面片定方向；不要 Drag、Const Acceleration）。斜着发射时改成与上升末段相同的方向
+Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh * last)} cm（= 上升最后的 Y 倍数 ${fx(last, 3)} × ${cm(m.Wh)} cm）
+Dynamic Parameter 第三通道 = 帧号（Linear）：0 → ${F}
+Color Over Life：同上
+接力：上升结束时循环正好播到第 ${m.fEnd} 帧；消散第 0 帧就是这一帧（逐像素差值 ${m.relay.join(' / ')}），
+  之后星头熄灭，火花不再喷出，已有的火星从下往上逐颗冷却熄灭。
+  改了开花高度、弹体终端速度或帧率，要重新导出（结束帧会变）。
+`;
+}
 function loopEmitter(b, M) {
   const m = b.meta, P = b.P;
   return `【Cascade 发射器（地面循环）】
@@ -239,6 +287,7 @@ function cascadeText(name, b, M) {
   let body = '';
   if (b.form === 'unit') body = unitEmitter(b, M);
   else if (b.form === 'riseLoop') body = riseEmitter(b, M, name);
+  else if (b.form === 'trail') body = trailEmitter(b, M, name);
   else if (b.form === 'loop') body = loopEmitter(b, M);
   else if (b.next) body = masterEmitter(b, M, ' · 段 A（开花）') + '\n' + masterEmitter(b.next, M, ' · 段 B（下垂）') +
     `\n两段各一个发射器，材质、颜色相同；段 B 的 Emitter Delay = ${fx(b.meta.split)} s，两段在该时刻无缝衔接。\n`;
@@ -259,4 +308,4 @@ ${bigShellSection(b)}
 ${b.form === 'master' || b.form === 'segments' ? (b.meta.zoom ? 'Size By Life 以精灵中心缩放，爆点就在中心，所以面片放大时爆点位置不变。' : 'Square 对齐的精灵用 Initial Location 的 Z 偏移对齐爆点；从很陡的仰角看时会有轻微偏差。') + '\n' : ''}${name}.json 保存了全部参数，用烘焙器「导入参数 JSON」即可继续修改。
 `;
 }
-const FORM_NAMES = { master: '大面片母版', segments: '分段母版（开花段 + 下垂段）', unit: '单元序列', riseLoop: '上升星头循环', loop: '地面循环' };
+const FORM_NAMES = { trail: '升空尾缀序列（循环 + 消散）', master: '大面片母版', segments: '分段母版（开花段 + 下垂段）', unit: '单元序列', riseLoop: '上升星头循环', loop: '地面循环' };

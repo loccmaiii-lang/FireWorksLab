@@ -10,6 +10,7 @@ const TYPE_INFO = {
   crossette: ['分裂（十字）', 'Crossette', 'aerial'], ochiba: ['落叶', 'Ochiba', 'aerial'], jisa: ['时差（延时点火）', 'Jisa', 'aerial'],
   ring: ['环', 'Ring', 'aerial'], saturn: ['土星', 'Saturn', 'aerial'], kata: ['型物', 'Kata', 'aerial'], water: ['水中花火', 'Water', 'aerial'],
   rise: ['上升（曲导）', 'Rise', 'rise'],
+  trailS: ['升空尾缀 · 小', 'TrailS', 'rise'], trailM: ['升空尾缀 · 中', 'TrailM', 'rise'], trailL: ['升空尾缀 · 大', 'TrailL', 'rise'],
   fountain: ['喷泉', 'Fountain', 'ground'], falls: ['瀑布', 'Falls', 'ground'], wheel: ['转轮', 'Wheel', 'ground'],
   fan: ['扇形', 'Fan', 'ground'], barrage: ['连发', 'Barrage', 'ground'], shikake: ['仕掛け（文字/图案）', 'Shikake', 'ground']
 };
@@ -17,7 +18,7 @@ const TYPE_GROUPS = [
   ['礼花', ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'palm', 'henka']],
   ['效果星', ['strobe', 'glitter', 'crackle', 'matsuba', 'crossette', 'ochiba', 'jisa']],
   ['形状', ['ring', 'saturn', 'kata', 'water']],
-  ['上升', ['rise']],
+  ['上升', ['rise', 'trailS', 'trailM', 'trailL']],
   ['地面 · 循环', ['fountain', 'falls', 'wheel', 'fan', 'barrage', 'shikake']]
 ];
 const TYPE_NAMES = Object.fromEntries(Object.entries(TYPE_INFO).map(([k, v]) => [k, v[0]]));
@@ -41,6 +42,14 @@ const BASE = {
   crackle: 0, crackleDelay: 0.3, branch: 0, branchAt: 0.45, flutter: 0, flutterHz: 0.7,
   // 上升
   riseH: 250, vtShell: 55, riseStyle: 'gold', wobble: 0, wobbleHz: 1.6, kobanaN: 4, bunpoN: 3,
+  // 升空尾缀序列（上升产物「尾缀序列」）：弹体随体坐标里的星头 + 多层火花，周期性发射（真循环），开花后消散
+  trV: 43.5, trFps: 30, trInh: 0.1, trDrag: 3, trGrav: 0.3, trCool: 1,
+  trFRate: 2600, trFLife: 0.6, trFSpread: 0.45, trFSize: 0.1, trFBright: 0.03,
+  trMRate: 600, trMLife: 0.75, trMSpread: 0.8, trMSize: 0.14, trMBright: 0.05,
+  trCRate: 60, trCLife: 0.9, trCSpread: 1.2, trCSize: 0.18, trCBright: 0.12,
+  trWRate: 0, trWLife: 0.12, trWSpread: 14, trWSize: 0.06, trWBright: 0.06,
+  trHeadSize: 0.26, trHeadBright: 1.2, trHalo: 3, trHaloBright: 0.15,
+  trTwist: 0.35, trTwistN: 5, trWiggle: 0.08, trBright: 1.6, trExport4K: 1, trIgnite: 0,
   // 地面循环
   loopT: 1, nozzles: 1, fanAngle: 70, spacing: 6, shotRate: 3, shotSpeed: 70, cometBurn: 1.4, burstStars: 0,
   wheelR: 3, jetSpeed: 28, jetCone: 10, jetDir: 90, groundH: 0,
@@ -80,6 +89,31 @@ const TYPES = {
   kata: { p: { duration: 2.7, stars: 90, pattern: 'heart', dirJit: 0.4, speedJit: 1, sparkRate: 0, headSize: 1.2, burn: 2.0, v0: 110 }, m: { stages: [[0, '#ff7ab8']] } },
   water: { p: { duration: 3.0, stars: 110, v0: 90, vt: 16, pattern: 'half', waterRefl: 0.4, burn: 2.0, sparkRate: 60, flash: 1.4 }, m: { stages: [[0, '#ffc766'], [0.9, '#52ff5e']] } },
   rise: { p: { duration: 5.2, riseH: 250, vtShell: 55, sparkRate: 600, sparkLife: 1.5, sparkSpread: 1.4, sparkInherit: 0.05, sparkDrag: 1.4, sparkSize: 0.45, sparkBright: 1.6, headSize: 1.4, headBright: 1.4, burn: 99, flicker: 0.35, T0: 2100, cooling: 0.3, zoom: 'off', form: 'unit', cols: 8, rows: 2, chans: 1, texW: 1024, texH: 1024 }, m: GROUND_RAMP },
+  // 升空尾缀三档：长度 约 20 / 40 / 90 m，粗细 1 : 1.5 : 2.5，亮度 1 : 1.6 : 2.5，火星数 1 : 2 : 4；扭动 几乎直 / 轻微波浪 / 明显螺旋
+  trailS: { p: { form: 'trail', riseH: 120, vtShell: 35, trV: 33.7, trInh: 0.12, trDrag: 2.8,
+    trGrav: 0.4, trFRate: 1950, trFLife: 0.3168, trFSpread: 0.22758, trFSize: 0.0875, trFBright: 0.04,
+    trMRate: 400, trMLife: 0.3125, trMSpread: 0.69231, trMSize: 0.1125, trMBright: 0.0355, trCRate: 260,
+    trCLife: 0.6, trCSpread: 1.56, trCSize: 0.15625, trCBright: 0.1521, trWRate: 0, trHeadSize: 0.07168,
+    trHeadBright: 0.84615, trHalo: 2.2, trHaloBright: 0.1, trTwist: 0.09113, trTwistN: 6, trWiggle: 0.04,
+    trBright: 1, zoom: 'off', cols: 16, rows: 1, chans: 4, texW: 2048,
+    texH: 2048, shutter: 0.6 },
+    m: { stages: [[0, '#ffffff']], ramp0: '#ff8755', ramp1: '#ffbe6e', ramp2: '#ffeabb', ramp3: '#fff8ec' } },
+  trailM: { p: { form: 'trail', riseH: 200, vtShell: 45, trV: 43.5, trInh: 0, trDrag: 3,
+    trGrav: 0.25, trCool: 0.83333, trIgnite: 0.04, trFRate: 3900, trFLife: 0.8928, trFSpread: 0.455,
+    trFSize: 0.19531, trFBright: 0.02692, trMRate: 1040, trMLife: 0.9, trMSpread: 0.6, trMSize: 0.15,
+    trMBright: 0.03077, trCRate: 41.42, trCLife: 0.85, trCSpread: 1.69, trCSize: 0.25, trCBright: 0.169,
+    trWRate: 0, trHeadSize: 0.128, trHeadBright: 0.92308, trHalo: 2.6, trHaloBright: 0.08888, trTwist: 0.25926,
+    trTwistN: 5, trWiggle: 0.08, trBright: 1.6, zoom: 'off', cols: 16, rows: 1,
+    chans: 4, texW: 2048, texH: 2048, shutter: 0.15 },
+    m: { stages: [[0, '#ffffff']], ramp0: '#ffaa75', ramp1: '#ffe9b8', ramp2: '#ffecb9', ramp3: '#fff8ec' } },
+  trailL: { p: { form: 'trail', riseH: 600, vtShell: 90, trV: 74.7, trInh: 0.22, trDrag: 1.76,
+    trGrav: 0.3, trFRate: 7800, trFLife: 0.45, trFSpread: 0.8, trFSize: 0.375, trFBright: 0.0455,
+    trMRate: 1230.8, trMLife: 0.8, trMSpread: 2.028, trMSize: 0.73242, trMBright: 0.08788, trCRate: 400,
+    trCLife: 1.05, trCSpread: 1.8, trCSize: 0.425, trCBright: 0.13, trWRate: 260, trWLife: 0.14,
+    trWSpread: 16, trWSize: 0.12, trWBright: 0.07, trHeadSize: 0.2816, trHeadBright: 0.8284, trHalo: 3.2,
+    trHaloBright: 0.09876, trTwist: 2.295, trTwistN: 4, trWiggle: 0.45563, trBright: 2.5, zoom: 'off',
+    cols: 16, rows: 1, chans: 4, texW: 2048, texH: 2048, shutter: 0.45 },
+    m: { stages: [[0, '#ffffff']], ramp0: '#ff7c3a', ramp1: '#ffc069', ramp2: '#fff7bb', ramp3: '#fff8ec' } },
   fountain: { p: { duration: 1, loopT: 1, nozzles: 1, fanAngle: 0, jetSpeed: 26, jetCone: 11, jetDir: 90, sparkRate: 1600, sparkLife: 1.6, sparkDrag: 1.1, sparkSize: 0.22, T0: 2150, cooling: 0.5, headSize: 0.6, zoom: 'off', form: 'loop', cols: 8, rows: 4, chans: 1, texW: 2048, texH: 1024 }, m: GROUND_RAMP },
   falls: { p: { duration: 1.2, loopT: 1.2, nozzles: 14, spacing: 3, groundH: 18, jetSpeed: 4, jetCone: 25, jetDir: -80, sparkRate: 220, sparkLife: 2.6, sparkDrag: 0.9, sparkGrav: 1.1, sparkSize: 0.22, T0: 2100, cooling: 0.35, zoom: 'off', form: 'loop', cols: 8, rows: 4, chans: 1, texW: 2048, texH: 1024 }, m: GROUND_RAMP },
   wheel: { p: { duration: 0.8, loopT: 0.8, nozzles: 4, wheelR: 2.5, groundH: 8, headSize: 0.35, headBright: 0.45, jetSpeed: 24, jetCone: 6, sparkRate: 900, sparkLife: 0.9, sparkDrag: 1.2, sparkSize: 0.22, T0: 2250, cooling: 0.5, zoom: 'off', form: 'loop', cols: 8, rows: 4, chans: 1, texW: 2048, texH: 2048 }, m: GROUND_RAMP },
@@ -154,10 +188,11 @@ const isAir = P => familyOf(P.type) === 'aerial';
 const isRise = P => familyOf(P.type) === 'rise';
 const isGround = P => familyOf(P.type) === 'ground';
 const hasComets = P => P.type === 'fan' || P.type === 'barrage';
+const isTrail = P => familyOf(P.type) === 'rise' && P.form === 'trail';
 const PATTERNS = [['sphere', '球'], ['half', '半球（贴水面）'], ['ring', '环'], ['saturn', '土星（球 + 环）'], ['heart', '心形'], ['smile', '笑脸'], ['star5', '五角星'], ['text', '文字']];
 const RISE_STYLES = [['gold', '金色曲导'], ['silver', '银竜（银色长尾）'], ['dark', '暗升（无尾）'], ['kobana', '昇り小花'], ['bunpo', '分砲（空中分叉）'], ['fue', '笛（鸣笛）'], ['spiral', '螺旋']];
 const SCHEMA = [
-  { sec: '规格', items: [
+  { sec: '规格', show: P => !isTrail(P), items: [
     { sel: 'shellNo', label: '号数', options: [[0, '手动'], ...SHELL_NO.map(r => [r[0], r[0] === 40 ? '40 号（四尺玉）' : r[0] === 10 ? '10 号（尺玉）' : r[0] + ' 号'])], hint: '按号数自动推算初速、星数、燃烧时间、星头大小（以本花型默认值约 5 号为基准）' }
   ] },
   { sec: '开花与燃烧', show: isAir, items: [
@@ -184,7 +219,7 @@ const SCHEMA = [
     ['ringFrac', '环上星的比例', '', 0.1, 0.9, 0.01, P => P.pattern === 'saturn'],
     ['waterRefl', '水面倒影', '', 0, 1, 0.01, isAir]
   ] },
-  { sec: '物理扰动', show: P => !isGround(P), hint: '风与湍流：星和火花都受影响；GPU 火花用「发射点处的气流」做衰减偏移近似。', items: [
+  { sec: '物理扰动', show: P => !isGround(P) && !isTrail(P), hint: '风与湍流：星和火花都受影响；GPU 火花用「发射点处的气流」做衰减偏移近似。', items: [
     ['wind', '风速（+ 向右）', 'm/s', -15, 15, 0.1],
     ['turb', '湍流强度', 'm/s', 0, 12, 0.1],
     ['turbScale', '湍流尺度', 'm', 5, 300, 1],
@@ -208,12 +243,12 @@ const SCHEMA = [
     ['flutter', '飘落摆动', 'm/s', 0, 10, 0.1],
     ['flutterHz', '摆动频率', 'Hz', 0.1, 3, 0.05, P => P.flutter > 0]
   ] },
-  { sec: '炭头（星头）', items: [
+  { sec: '炭头（星头）', show: P => !isTrail(P), items: [
     ['headSize', '炭头大小', 'm', 0.15, 6, 0.05],
     ['headBright', '炭头亮度', '×', 0, 3, 0.05],
     ['flicker', '闪烁强度', '', 0, 1, 0.01]
   ] },
-  { sec: '尾缀（炭火火花）', hint: '尾缀粗细主要由「散布」和「颗粒大小」决定，长度由「火花寿命」决定。', items: [
+  { sec: '尾缀（炭火火花）', show: P => !isTrail(P), hint: '尾缀粗细主要由「散布」和「颗粒大小」决定，长度由「火花寿命」决定。', items: [
     ['sparkRate', '火花密度', '个/秒', 0, 3000, 1],
     ['sparkRateEnd', '末段火花密度', '×', 0, 2, 0.01],
     ['sparkLife', '火花寿命', 's', 0.05, 4, 0.01],
@@ -243,14 +278,42 @@ const SCHEMA = [
     ['beeSpeed', '推进速度', 'm/s', 5, 80, 1]
   ] },
   { sec: '上升', show: isRise, hint: '模拟从地面到开花高度的整段上升。导出默认是「星头循环 + 弹道拟合 + 火花发射器参数」。', items: [
-    { sel: 'riseStyle', label: '曲导种类', options: RISE_STYLES },
+    { sel: 'riseStyle', label: '曲导种类', options: RISE_STYLES, show: P => !isTrail(P) },
     ['riseH', '开花高度', 'm', 50, 800, 5],
     ['vtShell', '弹体终端速度', 'm/s', 20, 120, 1],
-    ['seed', '随机种子', '', 1, 999, 1],
-    ['wobble', '摆动幅度', 'm/s', 0, 30, 0.1],
-    ['wobbleHz', '摆动频率', 'Hz', 0.2, 6, 0.05],
-    ['kobanaN', '小花数量', '朵', 1, 12, 1, P => P.riseStyle === 'kobana'],
-    ['bunpoN', '分叉数量', '支', 2, 6, 1, P => P.riseStyle === 'bunpo']
+    ['seed', '随机种子', '', 1, 999, 1, P => !isTrail(P)],
+    ['wobble', '摆动幅度', 'm/s', 0, 30, 0.1, P => !isTrail(P)],
+    ['wobbleHz', '摆动频率', 'Hz', 0.2, 6, 0.05, P => !isTrail(P)],
+    ['kobanaN', '小花数量', '朵', 1, 12, 1, P => P.riseStyle === 'kobana' && !isTrail(P)],
+    ['bunpoN', '分叉数量', '支', 2, 6, 1, P => P.riseStyle === 'bunpo' && !isTrail(P)]
+  ] },
+  { sec: '尾缀序列 · 形态', show: isTrail, hint: '弹体随体坐标：星头在面片上端，火花向后拖成尾迹。火花按周期性编号发射，第 64 帧与第 0 帧逐像素相同（真循环）。', items: [
+    ['trV', '上升速度（烘焙时）', 'm/s', 10, 150, 0.5],
+    ['trInh', '火花跟随弹体', '', 0, 0.8, 0.01],
+    ['trDrag', '火花阻力', '1/s', 0.3, 10, 0.05],
+    ['trGrav', '火花下坠', '×', 0, 2, 0.01],
+    ['trCool', '冷却快慢', '×', 0.3, 2, 0.01],
+    ['trIgnite', '火花燃旺时间', 's', 0, 0.6, 0.005],
+    ['trTwist', '螺旋扭动幅度', 'm', 0, 6, 0.01],
+    ['trTwistN', '每个循环扭几圈', '圈', 1, 8, 1],
+    ['trWiggle', '细碎抖动', 'm', 0, 1, 0.01],
+    ['seed', '随机种子', '', 1, 999, 1]
+  ] },
+  { sec: '尾缀序列 · 星头', show: isTrail, items: [
+    ['trHeadSize', '星头大小', 'm', 0.03, 2, 0.01],
+    ['trHeadBright', '星头亮度', '×', 0, 4, 0.05],
+    ['trHalo', '光晕大小（× 星头）', '×', 1, 8, 0.1],
+    ['trHaloBright', '光晕亮度', '×', 0, 1, 0.01]
+  ] },
+  { sec: '尾缀序列 · 火花（四层）', show: isTrail, hint: '白热细火花 = 星头后面连续的白亮段；金色火星 = 中段的团块；橙色大火星 = 末段一颗颗的点；星头丝火花 = 大型礼花星头周围甩出的细丝。长度 ≈ 上升速度 × 寿命，粗细看散布和颗粒大小。', items: [
+    ['trFRate', '白热细火花 · 密度', '个/秒', 0, 20000, 10], ['trFLife', '白热细火花 · 寿命', 's', 0.03, 2, 0.01], ['trFSpread', '白热细火花 · 散布', 'm/s', 0, 6, 0.01], ['trFSize', '白热细火花 · 颗粒', 'm', 0.02, 1, 0.005], ['trFBright', '白热细火花 · 亮度', '×', 0, 0.5, 0.001],
+    ['trMRate', '金色火星 · 密度', '个/秒', 0, 8000, 10], ['trMLife', '金色火星 · 寿命', 's', 0.05, 3, 0.01], ['trMSpread', '金色火星 · 散布', 'm/s', 0, 8, 0.01], ['trMSize', '金色火星 · 颗粒', 'm', 0.02, 1, 0.005], ['trMBright', '金色火星 · 亮度', '×', 0, 0.5, 0.001],
+    ['trCRate', '橙色大火星 · 密度', '个/秒', 0, 3000, 5], ['trCLife', '橙色大火星 · 寿命', 's', 0.05, 4, 0.01], ['trCSpread', '橙色大火星 · 散布', 'm/s', 0, 10, 0.01], ['trCSize', '橙色大火星 · 颗粒', 'm', 0.02, 1.5, 0.005], ['trCBright', '橙色大火星 · 亮度', '×', 0, 1, 0.001],
+    ['trWRate', '星头丝火花 · 密度（0 关）', '个/秒', 0, 3000, 5], ['trWLife', '星头丝火花 · 寿命', 's', 0.03, 0.6, 0.01], ['trWSpread', '星头丝火花 · 速度', 'm/s', 0, 40, 0.1], ['trWSize', '星头丝火花 · 颗粒', 'm', 0.02, 0.5, 0.005], ['trWBright', '星头丝火花 · 亮度', '×', 0, 0.5, 0.001]
+  ] },
+  { sec: '尾缀序列 · 引擎', show: isTrail, hint: '循环 64 帧（30 fps，2.13 s）；消散两个版本：30 fps（2.13 s）与 20 fps（3.2 s），都是 64 帧。贴图 2048×2048、16 列 × 1 行、单格 128×2048、RGBA 接力。', items: [
+    ['trBright', '引擎亮度倍数（Color Over Life）', '×', 0.2, 5, 0.05],
+    { sel: 'trExport4K', label: '导出 4K 母版', options: [[1, '同时导出 4096×4096'], [0, '只导出 2K']] }
   ] },
   { sec: '地面 · 循环', show: isGround, hint: '循环周期内的火花按周期性编号生成，首尾严格接上，不需要交叉淡化。', items: [
     ['loopT', '循环周期', 's', 0.3, 4, 0.05],
@@ -271,7 +334,7 @@ const SCHEMA = [
     ['subSpeed', '小花初速', 'm/s', 5, 80, 1, P => hasComets(P) && P.burstStars > 0],
     ['subBurn', '小花燃烧', 's', 0.2, 3, 0.05, P => hasComets(P) && P.burstStars > 0]
   ] },
-  { sec: '取帧（导出）', hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。自动取帧把帧集中在运动快的开花初期，同时保证整段不低于最低帧率。', items: [
+  { sec: '取帧（导出）', show: P => !isTrail(P), hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。自动取帧把帧集中在运动快的开花初期，同时保证整段不低于最低帧率。', items: [
     ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P)],
     ['shutter', '运动模糊（快门）', '', 0, 1, 0.01],
     ['segAt', '分段时刻（0 = 自动）', 's', 0, 12, 0.05, P => P.form === 'segments'],

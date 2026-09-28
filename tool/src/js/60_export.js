@@ -82,7 +82,8 @@ function curvesCSV(b, M) {
   const rows = ['段,曲线,相对时间,值1,值2,值3'];
   for (let s = b, i = 0; s; s = s.next, i++) {
     const m = s.meta, seg = b.next ? 'AB'[i] : '';
-    const fk = m.riseLoop ? sawKeys(m, m.fit.T) : m.keys;
+    const fk = m.riseLoop ? sawKeys(m, m.fit.T) : m.trail ? sawKeys(m, m.T) : m.keys;
+    if (m.trail) for (const [u, v] of m.sizeKeysRise) rows.push(`${seg},上升_SizeByLife_Y倍数,${u},${v},,`);
     for (const [u, v] of fk) rows.push(`${seg},DynamicParameter_第三通道_帧号,${u},${v},,`);
     for (const [u, c] of colorKeys(M, m.riseLoop ? m.fit.T : m.duration, m.t0 || 0)) rows.push(`${seg},ColorOverLife_线性RGB,${u},${c[0]},${c[1]},${c[2]}`);
     if (m.zoom) for (const [u, v] of m.sizeKeys) rows.push(`${seg},SizeByLife_XY倍数,${u},${v},,`);
@@ -99,8 +100,13 @@ function sawKeys(m, T) {
 }
 
 const safeName = () => (state.name || 'Firework').replace(/[^\w\-]+/g, '_');
-async function texFiles(b, name) {
+async function texFiles(b, name, sfx = '') {
   const files = [];
+  if (b.form === 'trail') {
+    files.push([`T_${name}_Loop${sfx}.png`, await encodePNG(readRGBA8(b.head), b.N, b.NH)]);
+    for (const f of b.fades) files.push([`T_${name}_Fade${f.fps}${sfx}.png`, await encodePNG(readRGBA8(f.head), f.N, f.NH)]);
+    return files;
+  }
   for (let s = b, i = 0; s; s = s.next, i++) {
     const sx = b.next ? '_' + 'AB'[i] : '';
     if (s.tail) {
@@ -114,6 +120,7 @@ function masterJSON(b, name, M) {
   const P = b.P, m = b.meta, L = m.L;
   const seg = s => ({
     t0: s.meta.t0 || 0, duration: s.meta.duration, frames: L.F, frameCurve: { channel: 'Dynamic Parameter 第三通道', keys: s.meta.riseLoop ? sawKeys(s.meta, s.meta.fit.T) : s.meta.keys },
+    trail: s.meta.trail ? { riseSeconds: s.meta.T, loopSeconds: s.meta.Tp, relayLoopFrame: s.meta.fEnd, riseSizeByLifeY: s.meta.sizeKeysRise, fades: (b.fades || []).map(f => ({ fps: f.fps, frames: L.F, seconds: +(L.F / f.fps).toFixed(3) })), relayDiff: s.meta.relay, trailLengthM: +s.meta.trailLen.toFixed(2), engineBrightness: P.trBright, riseFit: s.meta.fit, pivotHead: s.meta.hb, fill: s.meta.fill ? { avg: s.meta.fill.avg, p10: s.meta.fill.p10, x: s.meta.fill.x, y: s.meta.fill.y } : null, seam: s.meta.check && s.meta.check.seam } : undefined,
     frameTimes: s.meta.times.map(v => +v.toFixed(4)), avgFps: +s.meta.avgFps.toFixed(2), minFps: +s.meta.minFps.toFixed(2), maxDispPx: +s.meta.maxDisp.toFixed(2),
     spriteSizeCm: [+(s.meta.Ww * 100).toFixed(1), +(s.meta.Wh * 100).toFixed(1)], burstOffsetZcm: +(s.meta.cy * 100).toFixed(1), pivotUV: [s.meta.px, +s.meta.py.toFixed(4)],
     sizeByLife: s.meta.zoom ? s.meta.sizeKeys : null, averageQuadArea: +s.meta.area.toFixed(3), darkTailFrames: s.meta.darkTail,
@@ -141,6 +148,11 @@ async function exportMaster() {
     if (own) b = await bake(state.P, 1, p => busy(true, `烘焙 ${state.P.texW}×${state.P.texH}… ${Math.round(p * 100)}%`, p * 0.9));
     busy(true, '编码 PNG…', 0.93);
     const files = await texFiles(b, name);
+    if (b.form === 'trail' && state.P.trExport4K) {
+      busy(true, '烘焙 4K 母版…', 0.94);
+      const b4 = await bake(state.P, 2, p => busy(true, `烘焙 4K 母版… ${Math.round(p * 100)}%`, 0.94 + p * 0.04));
+      try { files.push(...await texFiles(b4, name, '_4K')); } finally { disposeBake(b4); }
+    }
     files.push([`T_${name}_Ramp.png`, await encodePNG(rampPixels(state.M), 256, 8)]);
     files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b, state.M))]);
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, state.M))]);

@@ -82,7 +82,8 @@ def trail_length(strip):
 def profile(strip, line, L=None):
     L = L or trail_length(strip)
     Y = strip.sum(2); half = (strip.shape[1] - 1) / 2; xs = np.arange(strip.shape[1]) - half
-    tot = Y[:L].sum() + 1e-9; out = dict(L=L, I=[], w=[], grain=[], peaks=[], rg=[], bg=[])
+    tot = Y[:L].sum() + 1e-9; out = dict(L=L, I=[], w=[], grain=[], peaks=[], rg=[], bg=[], lev=[])
+    p995 = np.percentile(Y[:L], 99.5) + 1e-9
     # 颗粒度：亮度图减去其沿长度方向的平滑（尺度 = 3% 长度）后的能量占比；亮点：局部极大值个数
     sm = cv2.GaussianBlur(Y, (0, 0), max(1.0, 0.03 * L))
     dil = cv2.dilate(Y, np.ones((5, 5), np.uint8))
@@ -94,6 +95,8 @@ def profile(strip, line, L=None):
         out['w'].append(float(np.sqrt((seg.sum(0) * xs ** 2).sum() / s) / L))
         out['grain'].append(float(np.abs(seg - sm[a:e]).sum() / s))
         out['peaks'].append(float(pk[a:e].sum() / max(1, e - a) * L / 100))
+        vis = seg[seg > 0.05 * p995]                                  # 看上去有多亮：可见像素的 80 分位 / 全条 99.5 分位（含相机饱和）
+        out['lev'].append(float(min(1.0, np.percentile(vis, 80) / p995)) if vis.size > 3 else 0.0)
         rgb = strip[a:e].reshape(-1, 3).sum(0) + 1e-9
         out['rg'].append(float(rgb[2] / rgb[1])); out['bg'].append(float(rgb[0] / rgb[1]))   # BGR：R/G、B/G
     c = line[:L] - cv2.GaussianBlur(line[:L].reshape(-1, 1).astype(np.float32), (1, 0), max(2, 0.25 * L)).ravel()
@@ -111,12 +114,13 @@ def render_strip(img):
 
 
 def loss(pr, ps, w=None):
-    w = w or dict(I=3, w=3, grain=2, peaks=1, col=2, wave=2)
+    w = dict(w or dict(I=3, w=3, grain=2, peaks=1, col=2, wave=2))
     f = lambda k: np.array(pr[k]); g = lambda k: np.array(ps[k])
     L = 0; parts = {}
     parts['I'] = float(np.mean((f('I') - g('I')) ** 2)); parts['w'] = float(np.mean(((f('w') - g('w')) / (np.mean(f('w')) + 1e-6)) ** 2))
     parts['grain'] = float(np.mean((f('grain') - g('grain')) ** 2)); parts['peaks'] = float(np.mean((np.log((f('peaks') + .3) / (g('peaks') + .3))) ** 2))
     parts['col'] = float(np.mean((f('rg') - g('rg')) ** 2 + (f('bg') - g('bg')) ** 2))
+    if 'lev' in pr and 'lev' in ps: parts['lev'] = float(np.mean((f('lev') - g('lev')) ** 2)); w.setdefault('lev', 4)
     parts['wave'] = float((np.log((pr['wave_big'] + 1e-3) / (ps['wave_big'] + 1e-3))) ** 2 * 0.3 + (np.log((pr['wave_small'] + 1e-3) / (ps['wave_small'] + 1e-3))) ** 2 * 0.3)
     for k, v in parts.items(): L += w.get(k, 1) * v
     return L, parts

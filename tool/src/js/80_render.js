@@ -64,6 +64,26 @@ function drawRiseLayer(b, L, t, view) {
   const e = Math.exp(-f.k * t), y = (f.v0 + G / f.k) * (1 - e) / f.k - G * t / f.k;
   return drawLayer(b, { ...L, scale: 1 }, t, view, [0, y]);
 }
+// 升空尾缀：模拟 Cascade —— 循环面片沿拟合弹道上升（速度朝向 = 竖直），帧号锯齿、Size By Life 的 Y；到顶后换消散面片
+function trailLinY(fit, t) { const e = Math.exp(-fit.k * t); return (fit.v0 + G / fit.k) * (1 - e) / fit.k - G * t / fit.k; }
+function trailStateAt(b, t) {
+  const m = b.meta, P = b.P, F = m.L.F;
+  if (t < 0) return null;
+  if (t <= m.T) return { bb: b, f: Math.floor(((t % m.Tp) / m.Tp) * F) % F, y: trailLinY(m.fit, t), sy: evalKeys(m.sizeKeysRise, t / m.T), phase: 'rise' };
+  const fd = b.fades[state.trailFade || 0]; if (!fd) return null;
+  const f = Math.floor((t - m.T) * fd.fps); if (f >= F) return null;
+  return { bb: fd, f, y: trailLinY(m.fit, m.T), sy: m.sizeKeysRise[m.sizeKeysRise.length - 1][1], phase: 'fade' };
+}
+function drawTrailLayer(b, L, t, view, yOff = 0) {
+  const s = trailStateAt(b, t); if (!s) return -1;
+  const m = b.meta, w = m.Ww, h = m.Wh * s.sy, y0 = s.y - yOff - m.hb * h;
+  const pr = PR.mat; gl.useProgram(pr.p);
+  gl.uniform4fv(pr.u.uRect, [-w / 2, y0, w / 2, y0 + h]); gl.uniform4fv(pr.u.uView, view);
+  bindSeqTextures(pr, s.bb); gl.uniform1f(pr.u.uFrame, s.f); gl.uniform1f(pr.u.uMirror, 0);
+  setMatUniforms(pr, { ...L, headInt: (L.headInt || 1) * (b.P.trBright || 1) }, t);
+  gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
+  return s.f;
+}
 let refTex = null;
 function uploadRef() {
   const R = state.ref; if (!R.el || !R.mode) return false;
@@ -110,11 +130,20 @@ function liveBox(P, slot) {
 function liveSlot(key) { return live[key] || (live[key] = { gen: -1 }); }
 function prepSlot(slot, P, gen) {
   if (slot.gen === gen && slot.P === P) return;
-  slot.sim = null; disposeTrack(slot.track); slot.track = null; disposeEmitter(slot.E); slot.E = null;
+  slot.trailR = null; slot.sim = null; disposeTrack(slot.track); slot.track = null; disposeEmitter(slot.E); slot.E = null;
   slot.gen = gen; slot.P = P; slot.box = null;
 }
 function drawLiveScene(slot, P, t, view, ppm) {
   const fam = familyOf(P.type), gpu = P.engine === 'gpu';
+  if (isTrail(P)) {
+    // 随体坐标里实时模拟：上升段连续播放，到顶后按 20 fps 版本的消散时长熄灭
+    const T = riseInfo(P).ta, F = layoutOf(P).F;
+    if (!slot.trailR) slot.trailR = makeTrailRenderer(P);
+    const R = slot.trailR, Tp = R.Tp, fEnd = Math.floor(((T % Tp) / Tp) * F + 1e-6) % F;
+    if (t <= T) { R.stop = -1; R.stopE = -1; R.fadeK = 1; R.frameT = null; R.draw(t % Tp, view, ppm, 1, 0, 0); }
+    else { trailFadeSetup(R, P, fEnd, F / 20); R.frameT = null; R.draw(R.stop + (t - T), view, ppm, 1, 0, 0); }
+    return { stars: 1, sparks: R.slots };
+  }
   if (fam === 'ground') {
     if (!slot.E) slot.E = buildEmitter(P);
     drawEmitHeads(slot.E, t, view, ppm, [1, 0, 0, 0], 1, ++live.tw);
@@ -138,6 +167,7 @@ function drawLiveScene(slot, P, t, view, ppm) {
 }
 function sceneView(P, m, slot) {
   if (familyOf(P.type) === 'ground') return squareView(m);
+  if (isTrail(P) && m.trail) { const h = m.Wh * 0.55; return [0, m.cy, h, h]; }
   const b = liveBox(P, slot), hx = Math.max(-b[0], b[1]) * 1.04 + 2, cy = (b[2] + b[3]) / 2, hy = (b[3] - b[2]) / 2 * 1.04 + 2, h = Math.max(hx, hy);
   return [0, cy, h, h];
 }
@@ -186,11 +216,13 @@ function exportView(b) {
 function exportViewAny(b, slot) {
   if (b.form === 'unit') { const m = b.meta, f = m.fit, R = f.v0 / f.k * (1 - Math.exp(-f.k * m.duration)) + m.Wh; return { view: [0, -R * 0.1, R * 1.1, R * 1.1], mag: 0 }; }
   if (b.form === 'riseLoop') return { view: sceneView(b.P, b.meta, slot), mag: 0 };
+  if (b.form === 'trail') { const m = b.meta, s = trailStateAt(b, state.t), h = m.Wh * 0.62; return { view: [0, (s ? s.y : 0) - m.Wh * 0.42, h, h], mag: 0, track: s ? s.y : 0 }; }
   return exportView(b);
 }
 function drawExportScene(b, M, t, view, slot) {
   const L = { ...M, scale: 1, delay: 0, rate: 1, mirror: false };
   if (b.form === 'unit') return drawUnitLayer(b, L, t, view);
+  if (b.form === 'trail') return drawTrailLayer(b, L, t, view);
   if (b.form === 'riseLoop') {
     // 尾迹火花在引擎里是单独的火花发射器：这里用实时物理的 GPU 火花代替
     const P = b.P; if (!slot.sim || t < slot.sim.t - 1e-6) slot.sim = new Sim({ ...P }); if (!slot.track) slot.track = buildTrack(P);
@@ -213,6 +245,8 @@ function renderExport() {
   additive(false); post(sb ? 0.5 : -1);
   const s = segAt(b, state.t), L = s.meta.L, mag = ev.mag;
   const magTxt = !mag ? '' : mag > 1.5 ? ` · 贴图放大 ${mag.toFixed(1)}×，会显糊` : ` · 贴图放大 ${mag.toFixed(1)}×`;
+  const tsx = b.form === 'trail' ? trailStateAt(b, state.t) : null;
+  if (b.form === 'trail') { hudText = !tsx ? '序列结束' : `导出效果 · 升空尾缀 · ${tsx.phase === 'rise' ? '上升循环' : '消散（' + tsx.bb.fps + ' fps）'} · 第 ${tsx.f + 1}/64 帧 · ${'RGBA'[Math.floor(tsx.f / 16)]} 通道 · 镜头跟着星头（面片沿弹道上升，Size By Life Y ${tsx.sy.toFixed(2)}）`; hudB = sb ? `B：${B.name}` : ''; return; }
   const fi = b.form === 'unit' ? frameIdx(b.meta, state.t) : frameIdx(s.meta, state.t - (s.meta.t0 || 0));
   hudText = fi < 0 ? '序列结束' : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? (s === b ? ' 段 A' : ' 段 B') : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${L.cellW}×${L.cellH}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
   hudB = sb ? `B：${B.name}` : '';

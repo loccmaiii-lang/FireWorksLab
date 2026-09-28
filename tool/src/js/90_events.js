@@ -122,6 +122,28 @@ window.__fw = {
     return new Uint8Array(await zip.arrayBuffer());
   },
   replicaPM, renderStills, measure, metricsOf,
+  // 升空尾缀完整导出（2K + 4K 母版 + 两个消散版本 + 渐变图 + 参数表），返回 ZIP 的 base64
+  async trailExport(key, over, name) {
+    const d = defaultsFor(key), P = derive({ ...d.P, ...(over || {}) }), M = d.M;
+    const b = await bake(P, 1, null); const files = await texFiles(b, name);
+    if (P.trExport4K) { const b4 = await bake(P, 2, null); files.push(...await texFiles(b4, name, '_4K')); disposeBake(b4); }
+    files.push([`T_${name}_Ramp.png`, await encodePNG(rampPixels(M), 256, 8)]);
+    files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b, M))]);
+    files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, M))]);
+    files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, M), null, 2))]);
+    const u8 = new Uint8Array(await (await makeZip(files)).arrayBuffer()); disposeBake(b);
+    let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
+    return btoa(s);
+  },
+  // 升空尾缀：按参数烘焙（可只烘循环、可缩放），返回贴图 PNG（base64）与关键数据
+  async trailBake(key, over, scale, loopOnly) {
+    const d = defaultsFor(key), P = derive({ ...d.P, ...(over || {}), _loopOnly: !!loopOnly });
+    const b = await bake(P, scale || 1, null), m = b.meta;
+    const b64 = async blob => { const u8 = new Uint8Array(await blob.arrayBuffer()); let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s); };
+    const out = { loop: await b64(await encodePNG(readRGBA8(b.head), b.N, b.NH)), fades: [], meta: { Ww: m.Ww, Wh: m.Wh, hb: m.hb, fEnd: m.fEnd, T: m.T, Tp: m.Tp, relay: m.relay, fill: m.fill, seam: m.check.seam, trailLen: m.trailLen, sizeKeysRise: m.sizeKeysRise, fit: m.fit, N: b.N, NH: b.NH, cols: m.L.cols, per: m.L.per, bakeMs: m.bakeMs }, M: d.M, P };
+    for (const f of b.fades || []) out.fades.push({ fps: f.fps, png: await b64(await encodePNG(readRGBA8(f.head), f.N, f.NH)) });
+    disposeBake(b); return out;
+  },
   // 校准用：低分辨率烘焙一遍，按实拍的算法测贴图
   async quickMetrics(P) {
     const b = await bake({ ...P, texW: 320, texH: 320, cols: 8, rows: 8, chans: 1, outMode: 'combined', form: 'master', zoom: 'on', frameMode: 'auto', fpsFloor: 16, shutter: 0 }, 1, null);

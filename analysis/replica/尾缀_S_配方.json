@@ -1,0 +1,27 @@
+{
+ "trFLife": 0.3168,
+ "trFSpread": 0.22758,
+ "trFSize": 0.0875,
+ "trMRate": 400.0,
+ "trMSpread": 0.69231,
+ "trCRate": 260.0,
+ "trCSpread": 1.56,
+ "trCSize": 0.15625,
+ "trCBright": 0.1521,
+ "trDrag": 2.8,
+ "trHeadSize": 0.07168,
+ "trHeadBright": 0.84615,
+ "trHaloBright": 0.1,
+ "trMLife": 0.3125,
+ "trMBright": 0.0355,
+ "trCLife": 0.6,
+ "trTwist": 0.09113,
+ "trFRate": 1950.0,
+ "trMSize": 0.1125,
+ "_ramp": {
+  "ramp0": "#ff8755",
+  "ramp1": "#ffbe6e",
+  "ramp2": "#ffeabb",
+  "ramp3": "#fff8ec"
+ }
+}
