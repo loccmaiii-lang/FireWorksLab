@@ -15,10 +15,12 @@ function curveAt(keys, u) {   // 线性插值（Constant Curve）
 const lin2s = x => x <= 0.0031308 ? x * 12.92 : 1.055 * Math.pow(x, 1 / 2.4) - 0.055;
 const s2lin = x => x <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
 
-async function assetImage(name) {
-  const f = asset.files.get(name); if (!f) throw new Error('文件夹里没有 ' + name);
-  return await createImageBitmap(f);
+// 贴图来源：打开的文件夹（File）或迭代区的 preview.js（data URL）
+async function assetBlob(name) {
+  const f = asset.files.get(name); if (!f) throw new Error('缺少 ' + name);
+  return typeof f === 'string' ? await (await fetch(f)).blob() : f;
 }
+async function assetImage(name) { return await createImageBitmap(await assetBlob(name)); }
 function pixelsOf(img, w = img.width, h = img.height) {
   const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d', { willReadFrequently: true });
   g.drawImage(img, 0, 0, w, h); return g.getImageData(0, 0, w, h).data;
@@ -36,7 +38,7 @@ async function assetFrames(tex) {
   // 灰度 RGBA 接力：先缩到每格 S，再按通道取值
   const W = tex.cols * S, H = tex.rows * S;
   const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
-  const bm = await createImageBitmap(asset.files.get(tex.file), { premultiplyAlpha: 'none', colorSpaceConversion: 'none', resizeWidth: W, resizeHeight: H, resizeQuality: 'high' });
+  const bm = await createImageBitmap(await assetBlob(tex.file), { premultiplyAlpha: 'none', colorSpaceConversion: 'none', resizeWidth: W, resizeHeight: H, resizeQuality: 'high' });
   const g0 = cv.getContext('2d', { willReadFrequently: true }); g0.drawImage(bm, 0, 0); const src = g0.getImageData(0, 0, W, H).data;
   let ramp = null;
   if (tex.ramp) { const ri = await assetImage(tex.ramp), rp = pixelsOf(ri, 256, 1); ramp = []; for (let i = 0; i < 256; i++) ramp.push([s2lin(rp[i * 4] / 255), s2lin(rp[i * 4 + 1] / 255), s2lin(rp[i * 4 + 2] / 255)]); }
@@ -84,6 +86,23 @@ async function assetLoadVariant() {
   } catch (err) { console.error(err); flash('素材读取失败：' + err.message, true); }
   busy(false); assetPanel();
 }
+// 迭代区条目：注入 preview.js（file:// 下 <script> 可以读相对路径），它调用 FW_ASSET_LOADED 交回清单和贴图
+const assetCache = {};
+window.FW_ASSET_LOADED = (id, data) => { assetCache[id] = data; };
+function loadAssetEntry(e) {
+  const go = async d => {
+    asset.man = d.manifest; asset.files = new Map(Object.entries(d.images)); asset.dir = e.task;
+    const vs = Object.keys(asset.man.variants || { A: '' }); if (!vs.includes(asset.variant)) asset.variant = vs[0];
+    asset.emit = asset.man.emitters.map(x => ({ def: x })); asset.on = {}; for (const x of asset.emit) asset.on[x.def.name] = true;
+    assetSpawn(); state.t = 0; await assetLoadVariant();
+  };
+  if (assetCache[e.id]) { go(assetCache[e.id]); return; }
+  busy(true, '读取 ' + e.name + '…', 0.1);
+  const sc = document.createElement('script'); sc.src = e.src + '?v=' + Date.now();
+  sc.onload = () => { busy(false); const d = assetCache[e.id]; if (d) go(d); else flash('预览数据格式不对：' + e.src, true); };
+  sc.onerror = () => { busy(false); flash('读不到 ' + e.src + '（先 git pull，再刷新烘焙器）', true); };
+  document.head.appendChild(sc);
+}
 async function assetOpen(fileList) {
   const files = new Map(); let dir = '';
   for (const f of fileList) { files.set(f.name, f); if (!dir && f.webkitRelativePath) dir = f.webkitRelativePath.split('/')[0]; }
@@ -104,7 +123,7 @@ function renderAssets() {
   if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
   const g = cv.getContext('2d');
   g.globalCompositeOperation = 'source-over'; g.fillStyle = asset.sky === 'sky' ? '#34466e' : '#020306'; g.fillRect(0, 0, W, H);
-  if (!asset.man) { g.fillStyle = '#9aa0b4'; g.font = `${14 * dpr}px sans-serif`; g.textAlign = 'center'; g.fillText('右侧「打开文件夹」，选 analysis/results/ 下带 预览.json 的任务文件夹', W / 2, H / 2); hudText = ''; return; }
+  if (!asset.man) { g.fillStyle = '#9aa0b4'; g.font = `${14 * dpr}px sans-serif`; g.textAlign = 'center'; g.fillText('在左栏「迭代区」点一个素材条目', W / 2, H / 2); hudText = ''; return; }
   if (!asset.ready) return;
   const t = state.t, pxm = Math.min(W, H) / (asset.man.view || 150); let alive = 0, area = 0; const fr = {};
   g.globalCompositeOperation = 'lighter'; g.globalAlpha = Math.min(1, asset.gain);
@@ -128,9 +147,9 @@ function renderAssets() {
 }
 function assetPanel() {
   const m = asset.man, box = $('#assetInfo');
-  if (!m) { box.innerHTML = '<p class="hint">还没打开。任务结果在仓库的 analysis/results/&lt;任务号&gt;/，有 预览.json 的都能在这里播放。</p>'; $('#assetOpts').hidden = true; return; }
+  if (!m) { box.innerHTML = '<p class="hint">在左栏「迭代区」点一个素材条目；临时看别的结果文件夹用左栏底部的「打开结果文件夹」。</p>'; $('#assetOpts').hidden = true; return; }
   $('#assetOpts').hidden = false;
-  box.innerHTML = `<p><b>${m.title || asset.dir}</b></p>${m.note ? `<p class="hint">${m.note}</p>` : ''}<p class="hint">文件夹：${asset.dir}　参数表见同目录的 *_Cascade参数.txt</p>`;
+  box.innerHTML = `<p><b>${m.title || asset.dir}</b></p>${m.note ? `<p class="hint">${m.note}</p>` : ''}<p class="hint">贴图和参数表：仓库 analysis/results/${asset.dir}/（*_Cascade参数.txt）</p>`;
   const vs = $('#assetVar'); vs.innerHTML = '';
   for (const [k, l] of Object.entries(m.variants || { A: 'A' })) {
     const b = document.createElement('button'); b.type = 'button'; b.textContent = l; b.setAttribute('aria-pressed', String(k === asset.variant));
@@ -146,7 +165,8 @@ function assetPanel() {
 }
 function initAssets() {
   $('#assetOpen').addEventListener('click', () => $('#assetDir').click());
-  $('#assetDir').addEventListener('change', e => { if (e.target.files.length) assetOpen(e.target.files); e.target.value = ''; });
+  $('#assetOpen2').addEventListener('click', () => $('#assetDir').click());
+  $('#assetDir').addEventListener('change', e => { if (e.target.files.length) { setReview(null); setTab('asset'); assetOpen(e.target.files); } e.target.value = ''; });
   $('#assetCut').addEventListener('change', e => { asset.cutout = e.target.checked; });
   $('#assetSky').addEventListener('change', e => { asset.sky = e.target.checked ? 'sky' : 'black'; });
   $('#assetGain').addEventListener('input', e => { asset.gain = +e.target.value; });

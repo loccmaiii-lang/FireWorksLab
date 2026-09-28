@@ -367,6 +367,7 @@ function loop(now) {
   $('#dispSeg').hidden = !mv || state.view !== 'export' || !(state.bake && (state.bake.form === 'master' || state.bake.form === 'segments' || state.bake.form === 'loop'));
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
   $('#abTag').hidden = !(mv && state.B);
+  refSync();
   perfTick(dt);
   requestAnimationFrame(loop);
 }

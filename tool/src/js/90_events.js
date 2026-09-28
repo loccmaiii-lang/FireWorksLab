@@ -71,15 +71,7 @@ $('#btnSave').addEventListener('click', async () => {
   } catch (err) { flash('失败：' + err.message, true); }
   busy(false);
 });
-document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', async () => {
-  const tab = b.dataset.tab; if (tab === state.tab) return;
-  document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-selected', String(x === b)));
-  state.tab = tab; state.t = 0;
-  $('#pMaster').hidden = tab !== 'master'; $('#pCombo').hidden = tab !== 'combo'; $('#pIter').hidden = tab !== 'iter'; $('#pAsset').hidden = tab !== 'asset';
-  $('#viewSeg').hidden = tab === 'combo' || tab === 'asset'; $('#assetCv').hidden = tab !== 'asset';
-  if (tab === 'combo') { await ensureLibrary(); if (!state.layers.length) applyCombo(COMBOS[0]); else buildComboPanel(); }
-  if (tab === 'iter') { renderMetrics(); abInfo(); renderVersions(); }
-}));
+// 模式切换见 79_library.js 的 setTab
 $('#btnAddLayer').addEventListener('click', () => { if (state.lib[0]) { state.layers.push(newLayer(state.lib[0])); buildComboPanel(); } });
 $('#btnExportCombo').addEventListener('click', exportCombo);
 
@@ -96,6 +88,7 @@ initAssets();
 initUpdates();
 buildMasterPanel();
 initIter();
+initLibrary();
 if (!/[?&]fast/.test(location.search)) runPreviewBake(); else state.dirty = false;
 requestAnimationFrame(loop);
 // 给命令行批量重烘（tool/batch_bake.mjs）和调试用

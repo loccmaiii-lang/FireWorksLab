@@ -7,7 +7,7 @@ const C = { red: '#ff2a1c', pink: '#ff7ab8', orange: IGNITE_ORANGE, gold: '#ffb4
 // 现在按「一个视频一个效果、用对照图和数值确认后再加」的方式重做。每项：
 //   id, name, base（基础花型）, video（参考视频）, note, tags, status, p（参数覆盖）, m（颜色）, thumbRef / thumbSim（实拍 / 模拟缩略图，同一时刻、同样取景）
 const REPLICAS = [
-  { id: 'JM', name: '金芒菊', base: 'kiku', video: 'vidio/2.0/金芒菊A.mp4', status: '待你确认',
+  { id: 'JM', name: '金芒菊', base: 'kiku', video: 'vidio/2.0/金芒菊A.mp4', status: '正式库', date: '2026-09-28', task: 'JM1',
     note: '金芒菊A：开花瞬间已有六成大小，之后慢慢张开；每颗星是一道亮的放射状笔触（尾缀约 0.1–0.2 倍半径），末段整体变淡',
     tags: '金 尾缀 放射 2.0',
     p: {"duration": 4.56, "stars": 395, "v0": 35, "grav": 0.391, "speedJit": 6, "burn": 2.9, "fade": 0.5, "lastFlare": 0, "headSize": 0.45, "headBright": 0.111, "sparkRate": 409, "sparkLife": 0.9, "sparkSize": 0.45, "sparkSpread": 0.4, "sparkInherit": 0.05, "sparkDrag": 2.99, "sparkGrav": 0.2, "T0": 2300, "cooling": 0.3, "sparkBright": 1.5, "burstR0": 52, "sparkRateEnd": 0.35},

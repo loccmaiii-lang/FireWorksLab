@@ -26,6 +26,8 @@ html = f'''<!doctype html>
 </head>
 <body>
 {body}
+<!-- 迭代区数据（git pull 后刷新即更新；缺了也能用） -->
+<script src="data/review.js"></script>
 <script>
 'use strict';
 {js}</script>

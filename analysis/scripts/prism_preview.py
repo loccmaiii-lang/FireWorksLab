@@ -160,12 +160,33 @@ def still(d, man, out_jpg):
     cv2.imwrite(out_jpg, np.hstack(snaps), [cv2.IMWRITE_JPEG_QUALITY, 88])
 
 
+def preview_js(set_id, d, man):
+    """烘焙器迭代区用：清单 + 缩小的贴图（每格 256）打成一个 js，file:// 下也能直接读"""
+    import base64, io
+    imgs = {}
+    def enc(im, fmt='PNG'):
+        b = io.BytesIO(); im.save(b, fmt, optimize=True); return f'data:image/{fmt.lower()};base64,' + base64.b64encode(b.getvalue()).decode()
+    for e in man['emitters']:
+        for v, t in e['tex'].items():
+            im = Image.open(os.path.join(d, t['file'])); W = im.width // 2
+            if im.mode == 'RGBA':   # 分通道缩小，避免按透明度预乘
+                im = Image.merge('RGBA', [c.resize((W, W), Image.BOX) for c in im.split()])
+            else:
+                im = im.convert('RGB').resize((W, W), Image.BOX)
+            imgs[t['file']] = enc(im)
+            if t.get('ramp'): imgs[t['ramp']] = enc(Image.open(os.path.join(d, t['ramp'])))
+        imgs[e['cutout']] = enc(Image.open(os.path.join(d, e['cutout'])).resize((256, 256), Image.BOX))
+    js = 'FW_ASSET_LOADED(' + json.dumps(set_id) + ', ' + json.dumps({'manifest': man, 'images': imgs}, ensure_ascii=False) + ');\n'
+    open(os.path.join(d, 'preview.js'), 'w', encoding='utf-8').write(js)
+
+
 def run(set_id, d):
     meta = json.load(open(os.path.join(d, 'PrismWheels_Unit.json'), encoding='utf-8'))
     man = manifest(set_id, meta)
     json.dump(man, open(os.path.join(d, '预览.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     open(os.path.join(d, 'PrismWheels_Cascade参数.txt'), 'w', encoding='utf-8').write(params_txt(set_id, meta, man))
     still(d, man, os.path.join(d, 'PrismWheels_整朵预览.jpg'))
+    preview_js(set_id, d, man)
 
 
 if __name__ == '__main__':

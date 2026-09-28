@@ -111,11 +111,15 @@ function fmtV(v, step) { const d = step >= 1 ? 0 : step >= 0.1 ? 1 : 2; return (
 function slider(host, id, label, unit, min, max, step, get, set, def, lockKey) {
   const row = document.createElement('div'); row.className = 'sl' + (lockKey ? '' : ' nolock');
   row.innerHTML = (lockKey ? `<button class="lk" type="button" title="锁定：切换号数、随机微调时不变" aria-label="锁定 ${label}" aria-pressed="false">●</button>` : '') +
-    `<label class="k" for="${id}" title="双击恢复默认">${label}</label><input type="range" id="${id}" min="${min}" max="${max}" step="${step}"><output></output>`;
-  const inp = row.querySelector('input'), out = row.querySelector('output');
-  const show = () => { out.textContent = fmtV(get(), step) + (unit ? ' ' + unit : ''); };
+    `<label class="k" for="${id}" title="${label}${unit ? '（' + unit + '）' : ''}；双击恢复默认">${label}${unit ? `<small>${unit}</small>` : ''}</label>` +
+    `<input type="range" id="${id}" min="${min}" max="${max}" step="${step}"><input class="num" type="number" step="${step}" aria-label="${label} 数值">`;
+  const inp = row.querySelector('input[type=range]'), num = row.querySelector('.num');
+  const show = () => { num.value = fmtV(get(), step); };
   inp.value = get(); show();
   inp.addEventListener('input', () => { set(+inp.value); show(); });
+  // 数值框：可以直接输入，允许超出滑杆范围（滑杆停在两端）
+  num.addEventListener('change', () => { const v = parseFloat(num.value); if (!isFinite(v)) { show(); return; } set(v); inp.value = v; show(); });
+  num.addEventListener('keydown', e => { if (e.key === 'Enter') num.blur(); });
   row.querySelector('.k').addEventListener('dblclick', () => { if (def == null) return; set(def); inp.value = def; show(); });
   if (lockKey) {
     const lk = row.querySelector('.lk'), upd = () => { const on = state.locks.has(lockKey); lk.setAttribute('aria-pressed', String(on)); row.classList.toggle('locked', on); };

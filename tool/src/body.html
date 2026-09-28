@@ -1,17 +1,22 @@
 <div class="app">
   <header class="top">
     <div class="brand"><span class="mark">菊</span><b>烟花母版烘焙器</b><small id="verLabel">通道打包序列帧 · GPU 模拟</small></div>
-    <nav class="tabs" role="tablist">
-      <button role="tab" data-tab="master" aria-selected="true" id="tab-master">母版</button>
-      <button role="tab" data-tab="combo" aria-selected="false" id="tab-combo">组合</button>
-      <button role="tab" data-tab="iter" aria-selected="false" id="tab-iter">迭代</button>
-      <button role="tab" data-tab="asset" aria-selected="false" id="tab-asset">素材</button>
-    </nav>
-    <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
+    <div class="crumb" id="crumb"></div>
     <div class="gpu" id="gpu"></div>
+    <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
     <div id="status"></div>
   </header>
-  <main>
+  <main id="main">
+    <aside class="side" id="side" aria-label="库">
+      <div class="side-head">
+        <input type="search" id="libSearch" placeholder="搜索：名字、任务号、特征" aria-label="搜索库">
+        <button class="ib" id="sideHide" type="button" title="收起左栏" aria-label="收起左栏">‹</button>
+      </div>
+      <div class="side-body" id="libBody"></div>
+      <div class="side-foot"><button class="btn ghost" id="assetOpen2" type="button" title="临时看某个结果文件夹">打开结果文件夹…</button></div>
+    </aside>
+    <button class="side-show" id="sideShow" type="button" hidden title="展开左栏">›</button>
+    <div class="gutter" id="gutL" title="拖动调整宽度"></div>
     <section class="stage">
       <div class="viewbar">
         <div class="seg" id="viewSeg">
@@ -41,7 +46,8 @@
         <label class="expo">显示曝光<input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"></label>
       </div>
       <div class="canvas-wrap">
-        <div class="canvas-box" id="box">
+        <div class="canvas-box ref-box" id="refBox" hidden><video id="refVid" muted playsinline preload="auto"></video><span class="tag">实拍</span></div>
+        <div class="canvas-box" id="box"><span class="tag" id="simTag" hidden>模拟</span>
           <canvas id="gl" aria-label="烟花预览"></canvas>
           <canvas id="flowCv" class="flowcv" hidden></canvas>
           <canvas id="assetCv" class="assetcv" hidden></canvas>
@@ -60,7 +66,13 @@
         </select>
       </div>
     </section>
-
+    <div class="gutter" id="gutR" title="拖动调整宽度"></div>
+    <div class="right" id="right">
+    <div class="ptabs" id="ptabs" role="tablist">
+      <button role="tab" data-tab="master" aria-selected="true">参数</button>
+      <button role="tab" data-tab="iter" aria-selected="false">工具</button>
+    </div>
+    <section class="review" id="pReview" hidden></section>
     <aside class="panel" id="pMaster">
       <div class="group">
         <div class="row2">
@@ -199,7 +211,7 @@
       <details class="sec" open>
         <summary>素材预览</summary>
         <p class="hint">按引擎的方式播放导出的贴图：帧号曲线取整、不混合；粒子按参数表摆放。</p>
-        <div class="line2"><button class="btn primary" id="assetOpen" type="button">打开文件夹…</button><input type="file" id="assetDir" webkitdirectory directory multiple hidden></div>
+        <div class="line2" hidden><button class="btn" id="assetOpen" type="button">打开文件夹…</button><input type="file" id="assetDir" webkitdirectory directory multiple hidden></div>
         <div id="assetInfo"></div>
       </details>
       <div id="assetOpts" hidden>
@@ -219,6 +231,7 @@
         </details>
       </div>
     </aside>
+    </div>
   </main>
   <div class="picker upd-dlg" id="updDlg" hidden role="dialog" aria-label="更新记录">
     <div class="pk-head"><b>更新记录</b><span class="hint">每次改动都会推到仓库，pull 后这里就是最新的</span><button class="btn ghost" id="updClose" type="button">关闭（Esc）</button></div>

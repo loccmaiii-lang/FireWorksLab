@@ -79,7 +79,7 @@ function syncTypeButton() {
 }
 function initPicker() {
   pk.fav = new Set(store.get('fav', [])); pk.recent = store.get('recent', []);
-  $('#typeBtn').addEventListener('click', pkOpen);
+  $('#typeBtn').addEventListener('click', () => { libReveal(); });
   $('#pkClose').addEventListener('click', pkClose);
   $('#pkSearch').addEventListener('input', e => { pk.q = e.target.value; if (pk.q && pk.cat !== 'all') pk.cat = 'all'; pkRender(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#picker').hidden) pkClose(); });
