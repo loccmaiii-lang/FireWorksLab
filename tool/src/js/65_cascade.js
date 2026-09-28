@@ -25,6 +25,19 @@ const fx = (v, d = 2) => (+v).toFixed(d);
 function keyLines(keys) { return keys.map(([u, v]) => `  ${fx(u, 4)}      ${Array.isArray(v) ? v.join('  ') : fx(v, 3)}`).join('\n'); }
 // Cascade 曲线：新加的关键点常是 CurveAuto（平滑、会冲过头），尺寸、位置、帧号都必须逐点改成 Linear
 const CURVE_NOTE = '所有曲线（Size By Life、Dynamic Parameter 帧号、Color Over Life、Location / Velocity 等）：每个关键点的 Interp Mode = Linear。CurveAuto 会在关键点之间冲过头：尺寸来回抖、帧号倒退一抖一抖。Size By Life 勾选 Multiply X、Multiply Y。';
+// ---- 可直接粘贴进 UE4 细节面板的文本（属性右键 → 粘贴；格式同属性右键 → 复制导出的文本）----
+const ue6 = v => (+v).toFixed(6);
+const ueVec = (x, y, z) => `(X=${ue6(x)},Y=${ue6(y)},Z=${ue6(z)})`;
+function ueFloatPts(keys) { return '(' + keys.map(([u, v]) => `(InVal=${ue6(u)},OutVal=${ue6(v)},ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear)`).join(',') + ')'; }
+function ueVecPts(keys) { return '(' + keys.map(([u, v]) => `(InVal=${ue6(u)},OutVal=${ueVec(...v)},ArriveTangent=${ueVec(0, 0, 0)},LeaveTangent=${ueVec(0, 0, 0)},InterpMode=CIM_Linear)`).join(',') + ')'; }
+// X、Y 两条关键帧时刻不同的曲线合成一条向量曲线（取并集时刻，各自线性插值）
+function mergeXY(kx, ky) { const us = [...new Set([...kx, ...ky].map(k => +k[0].toFixed(5)))].sort((a, b) => a - b); return us.map(u => [u, [evalKeys(kx, u), evalKeys(ky, u), 1]]); }
+function pasteSection(items) {
+  return `【可直接粘贴】在 Cascade 细节面板里：先把 Distribution 类型选成下面写的曲线类型，展开到 Points（或 Constant）那一行，右键 → 粘贴。
+  所有曲线点已是 Linear。粘贴不进去时，右键一条现有曲线的 Points → 复制，把文本发给 Claude 对格式。
+${items.map(([where, txt]) => `▸ ${where}\n${txt}`).join('\n')}
+`;
+}
 function texSection(name, b) {
   const P = b.P, L = b.meta.L, parts = [];
   if (b.form === 'trail') return `【贴图】
@@ -47,6 +60,9 @@ ${parts.join('\n')}
 尺寸 ${P.texW}×${P.texH}，灰度（${P.encGamma === 1 ? '线性' : 'Gamma ' + P.encGamma}），${chanTxt}
 格子 ${L.cols} 列 × ${L.rows} 行，行优先，左上为第 0 帧；单格 ${L.cellW}×${L.cellH} 像素；共 ${L.F} 帧；格子四周留空 ${P.cellPad} 像素
 导入：sRGB 关闭，压缩 BC7；1K 版本在引擎里复制一张，把最大尺寸设为 1024 即可
+T_${name}_帧号测试.png：排查用。格子、接力、取景与正式贴图完全相同，内容是帧号 + 以爆点为中心的固定大小圆和网格。
+  把材质实例的贴图临时换成它播放：帧号应连续递增不倒退，圆应不动、不胀缩、不变扁。
+  帧号乱跳 / 倒退 → 帧号曲线或材质的接力解码不对；圆胀缩、晃动 → Size By Life / 位置曲线不对；圆变扁 → 对齐方式或 Initial Size 不对
 T_${name}_Ramp.png：渐变图 256×8（sRGB），灰度从暗到亮依次取：拖尾冷却色 → 拖尾高温色 → 星头高温色
 
 【材质实例】
@@ -93,7 +109,17 @@ ${colorSection(M, m.duration, m.t0 || 0, !!b.tail)}
 Light（可选）：Brightness Over Life 相对值，乘以期望的峰值亮度
 ${keyLines(m.lightKeys)}
 ${m.tight ? 'Initial Rotation：不要加（面片中心在移动、横竖缩放不同，旋转会把下垂方向转歪）' : 'Initial Rotation（可选）：−15°～15° 随机，同一母版多发时增加差异'}
-【帧与流畅度${label || ''}】
+${pasteSection([
+  ['Initial Size → Start Size → Distribution Vector Constant → Constant', ueVec(m.Ww * 100, m.Wh * 100, 1)],
+  ...(m.tight ? [['Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points', ueVecPts(mergeXY(m.sizeKeysX, m.sizeKeysY))],
+    ['Initial Location → Start Location → Distribution Vector Constant → Constant', ueVec(m.path.x0 * 100, 0, m.path.y0 * 100)],
+    ['Initial Velocity → Start Velocity → Distribution Vector Constant → Constant', ueVec(m.path.vx * 100, 0, m.path.vy * 100)],
+    ['Const Acceleration → Acceleration', ueVec(m.path.ax * 100, 0, -m.path.ay * 100)]]
+   : m.zoom ? [['Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points', ueVecPts(m.sizeKeys.map(([u, v]) => [u, [v, v, 1]]))]]
+   : [['Initial Location → Start Location → Distribution Vector Constant → Constant', ueVec(0, 0, m.cy * 100)]]),
+  ['Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(m.keys)],
+  ['Color Over Life → Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）', ueVecPts(colorKeys(M, m.duration, m.t0 || 0).map(([u, c]) => [u, c.map(x => x * (M.headInt || 1))]))]
+])}【帧与流畅度${label || ''}】
 平均 ${fx(m.avgFps, 1)} fps，最低 ${fx(m.minFps, 1)} fps，每帧最大位移 ${fx(m.maxDisp, 1)} 像素（建议 ≤ 3）
 平均面片面积为最大尺寸的 ${Math.round(m.area * 100)}%（overdraw 按此折算）
 `;
@@ -124,7 +150,12 @@ ${P.turb > 0 ? `Orbit（湍流近似）：Offset Amount X、Y 在 ±${cm(orbitA)
   相对时间    帧号
 ${keyLines(m.keys)}
 ${colorSection(M, Du, 0, !!b.tail)}
-轨迹拟合（线性阻力 + 恒定加速度 对 真实二次阻力）：初速 ${fx(f.v0, 1)} m/s，阻力 ${fx(f.k, 3)} /s，下坠加速度 ${fx(f.a, 2)} m/s²，
+${pasteSection([
+  ['Initial Size → Start Size → Distribution Vector Constant → Constant', ueVec(m.Ww * 100, m.Wh * 100, 1)],
+  ['Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points', ueVecPts(mergeXY(m.sizeKeysX, m.sizeKeysY))],
+  ['Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(m.keys)],
+  ['Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）', ueVecPts(colorKeys(M, Du, 0).map(([u, c]) => [u, c.map(x => x * (M.headInt || 1))]))]
+])}轨迹拟合（线性阻力 + 恒定加速度 对 真实二次阻力）：初速 ${fx(f.v0, 1)} m/s，阻力 ${fx(f.k, 3)} /s，下坠加速度 ${fx(f.a, 2)} m/s²，
   位置误差约为花半径的 ${fx(f.err * 100, 1)}%。开花闪光请另挂一个短序列（母版模式导出前 0.3 s）或项目现有闪光贴图。
   贴图里的拖尾是直的（烘焙时去掉了重力弯曲），下垂由粒子轨迹体现；风、湍流也交给 Cascade（Const Acceleration、Orbit）。
 
@@ -194,6 +225,14 @@ ${keyLines(sawKeys(m, T))}
 Color Over Life：${colorKeys(M, T, 0).length > 2 ? '见下表' : '白色常量'}；亮度倍数 ×${P.trBright}（三档：小 ×1、中 ×1.6、大 ×2.5，保留强弱差别）
 摆动：螺旋扭动已经烘在贴图里（星头每帧固定在 Pivot，只有后面的尾迹成波浪摆动），不需要 Orbit
 
+${pasteSection([
+  ['Initial Size → Start Size → Distribution Vector Constant → Constant', ueVec(m.Ww * 100, m.Wh * 100, 1)],
+  ['Initial Velocity → Start Velocity → Distribution Vector Constant → Constant', ueVec(0, 0, f.v0 * 100)],
+  ['Const Acceleration → Acceleration', ueVec(0, 0, -981)],
+  ['Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points', ueVecPts(m.sizeKeysRise.map(([u, v]) => [u, [1, v, 1]]))],
+  ['Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(sawKeys(m, T))],
+  ['Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘亮度倍数 ×' + P.trBright + '）', ueVecPts(colorKeys(M, T, 0).map(([u, c]) => [u, c.map(x => x * P.trBright)]))]
+])}
 2）开花后消散（二选一）
   ${fades}
 Required：Screen Alignment = Velocity；Emitter Delay = ${fx(T, 3)} s；Emitter Duration = 消散时长；Loops = 1；Pivot Offset 同上
@@ -203,6 +242,11 @@ Initial Velocity：Z = 1 cm/s（只给面片定方向；不要 Drag、Const Acce
 Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh * last)} cm（= 上升最后的 Y 倍数 ${fx(last, 3)} × ${cm(m.Wh)} cm）
 Dynamic Parameter 第三通道 = 帧号（Linear）：0 → ${F}
 Color Over Life：同上
+${pasteSection([
+  ['Initial Location → Start Location → Distribution Vector Constant → Constant', ueVec(0, 0, f.H * 100)],
+  ['Initial Size → Start Size → Distribution Vector Constant → Constant', ueVec(m.Ww * 100, m.Wh * last * 100, 1)],
+  ['Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts([[0, 0], [1, F - 0.001]])]
+])}
 接力：上升结束时循环正好播到第 ${m.fEnd} 帧；消散第 0 帧就是这一帧（逐像素差值 ${m.relay.join(' / ')}），
   之后星头熄灭，火花不再喷出，已有的火星从下往上逐颗冷却熄灭。
   改了开花高度、弹体终端速度或帧率，要重新导出（结束帧会变）。

@@ -100,6 +100,32 @@ function sawKeys(m, T) {
 }
 
 const safeName = () => (state.name || 'Firework').replace(/[^\w\-]+/g, '_');
+// 帧号测试图：和正式贴图同样的格子、RGBA 接力、取景（面片移动 / 缩放完全相同），内容换成
+//   ① 左上角帧号（贴在格子上）；② 以爆点为中心、固定世界尺寸的圆和十字；③ 固定世界间距的网格。
+// 在引擎里把材质实例的贴图换成它播放：帧号应当连续递增不倒退；圆应当不动、不胀缩、不变扁。哪一项不对，就知道是帧号曲线 / 材质、尺寸曲线还是对齐方式的问题。
+async function debugAtlasPNG(s) {
+  const m = s.meta, L = m.L, N = s.N, NH = s.NH, cw = N / L.cols, chh = NH / L.rows;
+  const R0 = 0.4 * Math.min(m.HX, m.HY);
+  const cvs = Array.from({ length: L.chans }, () => { const c = document.createElement('canvas'); c.width = N; c.height = NH; const g = c.getContext('2d'); g.fillStyle = '#000'; g.fillRect(0, 0, N, NH); return g; });
+  for (let f = 0; f < L.F; f++) {
+    const ch = Math.floor(f / L.per), k = f % L.per, col = k % L.cols, row = Math.floor(k / L.cols);
+    const g = cvs[ch], tc = m.times[f], [sx, sy] = sizeXY(m, tc), c = centerAt(m, tc), hx = m.HX * sx, hy = m.HY * sy;
+    const X = w => col * cw + (w - (c[0] - hx)) / (2 * hx) * cw, Y = w => row * chh + (1 - (w - (c[1] - hy)) / (2 * hy)) * chh;
+    g.save(); g.beginPath(); g.rect(col * cw, row * chh, cw, chh); g.clip();
+    g.strokeStyle = 'rgba(255,255,255,.4)'; g.lineWidth = 1;
+    for (let i = -10; i <= 10; i++) { const w = i * R0 / 2; g.beginPath(); g.moveTo(X(w), row * chh); g.lineTo(X(w), (row + 1) * chh); g.moveTo(col * cw, Y(w)); g.lineTo((col + 1) * cw, Y(w)); g.stroke(); }
+    g.strokeStyle = '#fff'; g.lineWidth = Math.max(2, cw / 100);
+    g.beginPath(); g.ellipse(X(0), Y(0), Math.abs(X(R0) - X(0)), Math.abs(Y(R0) - Y(0)), 0, 0, 2 * Math.PI); g.stroke();
+    g.beginPath(); g.moveTo(X(-R0 * 0.25), Y(0)); g.lineTo(X(R0 * 0.25), Y(0)); g.moveTo(X(0), Y(-R0 * 0.25)); g.lineTo(X(0), Y(R0 * 0.25)); g.stroke();
+    g.fillStyle = '#fff'; g.font = `bold ${Math.round(Math.min(cw, chh) * 0.22)}px sans-serif`; g.textBaseline = 'top'; g.fillText(String(f), col * cw + 6, row * chh + 4);
+    g.strokeStyle = 'rgba(255,255,255,.7)'; g.lineWidth = 1; g.strokeRect(col * cw + 1.5, row * chh + 1.5, cw - 3, chh - 3);
+    g.restore();
+  }
+  const out = new Uint8Array(N * NH * 4);
+  cvs.forEach((g, ch) => { const d = g.getImageData(0, 0, N, NH).data; for (let y = 0; y < NH; y++) { const a = y * N * 4, b = (NH - 1 - y) * N * 4; for (let x = 0; x < N; x++) out[b + x * 4 + ch] = d[a + x * 4]; } });
+  for (let i = 0; i < out.length; i += 4) { if (L.chans === 1) out[i + 1] = out[i + 2] = out[i]; if (L.chans < 4) out[i + 3] = 255; }
+  return encodePNG(out, N, NH);
+}
 async function texFiles(b, name, sfx = '') {
   const files = [];
   if (b.form === 'trail') {
@@ -113,6 +139,7 @@ async function texFiles(b, name, sfx = '') {
       files.push([`T_${name}${sx}_Head.png`, await encodePNG(readRGBA8(s.head), s.N, s.NH)]);
       files.push([`T_${name}${sx}_Tail.png`, await encodePNG(readRGBA8(s.tail), s.N, s.NH)]);
     } else files.push([`T_${name}${sx}.png`, await encodePNG(readRGBA8(s.head), s.N, s.NH)]);
+    if (!sfx) files.push([`T_${name}${sx}_帧号测试.png`, await debugAtlasPNG(s)]);
   }
   return files;
 }

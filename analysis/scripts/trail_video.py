@@ -171,6 +171,24 @@ def strength(trs, out):
     Image.fromarray(img).save(out, quality=92)
 
 
+def small_sheet(d, k, out):
+    """给 Claude 看的小图（几百 KB，代替上传视频和 4K 贴图）：
+    左：实拍对照视频里 4 个时刻（上升 2 帧、消散 2 帧）；右：2K 贴图第 0 帧的原尺寸局部（星头、中段、末段各 256 行），放大 2 倍不插值"""
+    cap = cv2.VideoCapture(os.path.join(d, f'升空尾缀_{k}_实拍对照.mp4')); n = int(cap.get(7)); pick = {10, 60, n - 70, n - 20}; fr = []
+    for i in range(n):
+        ok, f = cap.read()
+        if not ok: break
+        if i in pick: fr.append(cv2.resize(f, (432, 600), interpolation=cv2.INTER_AREA))
+    t = Trail(os.path.join(d, f'RiseTrail_{k}'), k); v = t.cell(t.loop, 0); H = v.shape[0]
+    crops = []
+    for y0 in (0, H // 3, 2 * H // 3):
+        c = t.color(v[y0:y0 + 256]); c = (np.clip(c / (np.percentile(c.sum(2), 99.7) / 3 + 1e-9), 0, 1) ** (1 / 2.2) * 255).astype(np.uint8)
+        crops.append(cv2.resize(c[..., ::-1], None, fx=2, fy=2, interpolation=cv2.INTER_NEAREST)); crops.append(np.full((512, 6, 3), 90, np.uint8))
+    right = np.hstack(crops); right = cv2.resize(right, (int(right.shape[1] * 600 / 512), 600), interpolation=cv2.INTER_NEAREST)
+    img = np.hstack(fr + [np.full((600, 12, 3), 90, np.uint8), right]) if fr else right
+    cv2.imwrite(out, img, [cv2.IMWRITE_JPEG_QUALITY, 88])
+
+
 def ref_frames(k, RC):
     """实拍跟踪帧（慢：逐帧找星头、拉直），存一份缓存在系统临时目录"""
     import tempfile

@@ -4,3 +4,6 @@ __pycache__/
 .DS_Store
 Thumbs.db
 tool/node_modules/
+
+# 本地任务的大文件（贴图、视频），不上传
+analysis/local/输出/
