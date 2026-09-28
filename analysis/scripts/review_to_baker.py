@@ -19,6 +19,12 @@ RES = os.path.join(ROOT, 'analysis', 'results')
 OUT = os.path.join(ROOT, 'tool', 'data', 'review.js')
 
 REVIEW = [
+    dict(id='TP1', task='TP1', kind='asset', date='2026-09-29', name='升空尾缀 · 物理模型（第 1 版）', src='TP1', video='vidio/2.0/尾缀B.mp4', tags='尾缀 上升 物理 TP1', thumb_dt=2.8,
+         note='按你的反馈从物理重做（原理见 analysis/升空尾缀_物理.md）：曲导从出膛一直烧到开花，向后喷出火焰和大量木炭火星；火星一出来就被空气拦住，停在弹体走过的路上慢慢燃尽、随风漂。'
+              '所以尾迹是「一串停在空中的火星」，弹体越飞越慢，尾迹越短越密。引擎里拆成两层：星头白热段（火焰 + 火粉，速度朝向，长度随速度）+ 金火星簇（世界坐标，一簇 14 颗，按出生时刻落在弹道上）。',
+         look=['和实拍并排：尾迹长度随时间怎么变（出膛长 → 到顶短）', '白热段 → 金色火星 → 零星火点 的过渡', '尾迹上的细小波纹和整体随风的偏移', '右栏关掉「星头白热段」或「金火星簇」单独看每一层'],
+         opinion='远景（尾缀B）按同一套量法对过：可见长度、过曝段、宽度都在实拍附近；近景（尾缀3.0_A，另一发更大的弹）结构一致（尖头火焰 → 连续白热柱 → 散开的金色火星）。'
+                 '已知差距：星头段在远景里比实拍略粗、过曝段在后半程偏短；颜色是黑体推的，还没对实拍校色。对照图：analysis/results/TP1/尾缀物理_远景对照.jpg、尾缀物理_近景对照.jpg。'),
     # 手工条目（不是本地任务产出的，比如云端直接渲染的单元序列）；本地任务的条目写在任务 json 的 "review" 里，这里不用重复
     dict(id='PW3', task='PW3', kind='asset', date='2026-09-29', name='万彩千轮 · 单元（第 3 版）', src='PW3', video='vidio/2.0/万彩千轮B.mp4', tags='千轮 单元 粒子 PW3',
          note='按 PW2 并排对照改：每颗小球更密（两套点位叠加，约 120 颗星）、星点更亮（×1.25）；小球更大（半径 9 → 11.5 m，约为团半径的 0.26）、更多（24 → 30 颗）、在 0.45 秒内陆续开；颜色比例按实拍（青绿最多、珊瑚红最少）；取景和实拍一样按整团外框。',
@@ -130,14 +136,15 @@ def build(e):
     d = os.path.join(RES, e['task']); rec = {k: e.get(k) for k in ('id', 'task', 'kind', 'date', 'name', 'note', 'look', 'opinion', 'tags')}
     if e.get('video'): rec['video'] = '../' + e['video']
     trail = bool(e.get('size'))
-    if e.get('video'): rec['vmeta'] = video_meta(e['video'], trail=trail, roi=e.get('roi'), t_range=e.get('t_range'))
+    vmf = os.path.join(RES, e.get('src') or e['task'], 'vmeta.json')      # 结果目录自带取景（按模拟的世界坐标算好的，实拍和模拟同比例）
+    if e.get('video'): rec['vmeta'] = json.load(open(vmf, encoding='utf-8')) if os.path.exists(vmf) else video_meta(e['video'], trail=trail, roi=e.get('roi'), t_range=e.get('t_range'))
     if e['kind'] == 'queued': return rec      # 排队中：只有实拍（烘焙器里显示「要对的目标」）
     if e['kind'] == 'asset':
         rec['src'] = f"../analysis/results/{e['src']}/preview.js"
         jp = next((os.path.join(RES, e['src'], x) for x in ('PrismWheels_整朵预览.jpg', '预览.jpg') if os.path.exists(os.path.join(RES, e['src'], x))), None)
         if jp: w, h = Image.open(jp).size; rec['thumbSim'] = thumb(jp, (min(w - h, h), 0, min(w - h, h) + h, h))
         if e.get('video'):
-            tr = thumb_from_video(e['video'], rec['vmeta'], 0.9)
+            tr = thumb_from_video(e['video'], rec['vmeta'], e.get('thumb_dt', 0.9))
             if tr: rec['thumbRef'] = tr
     elif trail:
         j = json.load(open(os.path.join(d, f"尾缀_{e['size']}_配方.json"), encoding='utf-8'))

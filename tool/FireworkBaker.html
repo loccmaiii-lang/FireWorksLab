@@ -584,7 +584,7 @@
 <script src="data/review.js"></script>
 <script>
 'use strict';
-const UPDATES = [{"title": "2026-09-29 00:30 · 烘焙器 3.7：第一批 10 个任务排好队，可以并行跑", "body": "**你要做的**\n- 双击 `analysis/local/跑任务_并行.bat`：3 个进程同时跑，任务先认领再跑，不会重复。想更快可以再开窗口双击 `跑任务.bat`，一样按认领分活。\n- 跑完会自动写进迭代区并推上去。pull、刷新烘焙器就能看。\n- 迭代区现在能看的只有 **万彩千轮第 3 版（PW3）**，其余 10 条是「排队」：点开能看到要对的实拍和这一版改了什么。\n\n**我按迭代区的意见改的**\n- 万彩千轮 PW3（已出，能看）：小球更密（约 120 颗星）、更亮、更大（占团半径 0.26）、更多（30 颗）、0.45 秒内陆续开；取景和实拍一样按整团外框。并排看已经接近实拍了。\n- 升空尾缀 TR3 小 / 中 / 大（排队）：长度偏离的权重 ×4（目标 20 / 40 / 90 m）；火星尺寸下限提高，不许再缩成细粉；起点火星更少更亮、寿命按长度缩短。三档拆成三个任务，能同时跑。\n- 青柠星 QN2（排队）：加短星尾、球壳更薄（边缘更亮）。\n- PW1、PW2、TR2、QN1、WC1 已从迭代区撤下（被新版取代）。\n\n**第一批还有**\n- 金芒菊 JM3（清晰度版）：火花按真实尺寸画，实拍的镜头模糊和过曝只在对照时加，不进贴图，贴图更清晰。\n- 球形 A / B / C / D 第一次校准：A 校准「菊」、B 校准「牡丹」，C 和 D 先校准外层。颜色分段是我按实拍量的。这四段视频里有观众、地面火、别的烟花，任务里已指定只看目标那一发的区域和时间段。\n- 金芒菊导出 JM2：导出后迭代区里直接播放导出的真实 2K 贴图（Zoom / Fixed 两版可切换），不用进引擎先看。\n\n**顺带做的**\n- 贴图改成新命名 `T_EFX_FireWorks_…`（例：`T_EFX_FireWorks_JinMangJu_Zoom_8x8_01.png`）。\n- 修了单元序列预览的一个问题：RGBA 贴图里 A 通道是 0 的地方，浏览器会把 RGB 也清掉，B 版少了一些星点。"}, {"title": "2026-09-28 23:30 · 烘焙器 3.6：审阅体验打磨", "body": "**按你的 4 点改的**\n- 实拍可以关：画布上方「实拍对照」按钮（或按 **R**），关掉后模拟画布占满；开关状态会记住。实拍右上角的 × 也能关。\n- 实拍重新居中：花型按整个燃烧期的星点外框居中取景（万彩千轮这种多团的也居中、整朵都在框里），尾缀按运动的亮点居中。对不齐时间的话，把鼠标移到实拍画面上，底部有「−0.1 / − / + / +0.1 / 归零」微调，每条各记各的。\n- 左栏收起不再连画布一起消失。左右两栏都能收起：画布上方「库」「参数」按钮（或 **L** / **P**）；「专注」（**F** 或双击画布）一次收起两边，画布最大。\n- 左栏「花型」加回缩略图，按礼花 / 效果星 / 形状 / 上升 / 地面分组。右栏「更换」会跳到这里。\n\n**我自己用了一遍后顺手改的**\n- 实拍和模拟自动选并排或上下，哪种两个画面更大就用哪种。\n- 窗口窄时画布上方的按钮只留图标，不再挤成两三行；分隔条拖不到把画布挤没的程度，双击分隔条恢复默认宽度。\n- 迭代区里按 **↑ ↓** 直接切换上一条 / 下一条；再次打开烘焙器会回到上次看的那条。\n- 「更新记录」有新内容只在按钮上亮点，不再自动弹出挡住画布。\n- 正式库里的金芒菊也能并排看实拍。\n- 素材页的亮度并入顶部「显示曝光」，画面下方的信息缩成一行。"}, {"title": "2026-09-28 22:30 · 烘焙器 3.5：界面重做，所有结果都在「迭代区」", "body": "**怎么用（以后都一样）**\n- `git pull`，刷新烘焙器。左栏「迭代区」就是所有等你看的东西，带「新」的是没看过的；打开烘焙器会自动打开最新一条。\n- 点一条：中间播放（有实拍的话左实拍、右模拟，时间同步），右栏最上面是审阅卡：做了什么、看什么、我的看法。\n- 看完点「✓ 通过」或「✗ 要改」，写意见（自动保存）。全部看完，点左栏「迭代区」右边的「复制意见」，贴到对话里给我。\n- 你通过的，我下一次会搬进「正式库」。\n\n**界面**\n- 三栏：左库（迭代区 / 正式库 / 组合 / 花型）、中视口、右参数。两边分隔条可以拖宽，左栏可以收起（‹）。\n- 参数每行是「名称 | 滑杆 | 数值框」，数值框可以直接输入，不用再拖到最右边看数。\n- 右栏「参数 / 工具」两页；原来的「迭代」页改名「工具」（A/B、版本、配方、测速）。\n\n**这次迭代区里有**\n- 万彩千轮单元 PW2（实拍颜色）、PW1（C/D 颜色）\n- 升空尾缀小 / 中 / 大 TR2\n- 青柠星 QN1、万彩千轮整体模拟 WC1（旧做法，只作对比）"}, {"title": "2026-09-28 晚 · 烘焙器 3.4：结果都能在烘焙器里看了", "body": "**做了什么**\n- 新增「素材」页：打开一个结果文件夹，按引擎的方式播放贴图（帧号曲线取整、不混合、粒子按参数表摆放），可切换 A/B 两套贴图、单独开关每个颜色、显示 Cutout 轮廓。\n- 花型库「实拍复刻」里加了跑完等你确认的结果，带「待你确认 · 任务号」标签：青柠星 QN1、万彩千轮整体模拟 WC1、升空尾缀小/中/大 TR2。点开就能播放、和实拍对照（「迭代」页载入参考视频）、导出。\n- 顶栏加了「更新记录」（就是本文件），有新内容时打开烘焙器会自动弹出。\n- 万彩千轮 PW2：颜色改成按实拍测的——炸开后约 1 秒是本色（青绿、银白、淡黄、珊瑚红），然后整颗变金，熄灭前转橙；星点的发光质感沿用你认可的 C/D。\n- PW1（C/D 包里的颜色）保留，去掉了视频，同样能在「素材」页看。\n\n**在哪看**\n- 万彩千轮：「素材」→ 打开文件夹 → 选 `analysis/results/PW2`（或 `PW1`）。\n- QN1 / WC1 / TR2：花型「更换」→「实拍复刻」。\n\n**要你做什么**\n- 看 PW2 的颜色、大小、分布、先后像不像 万彩千轮B；A（16 帧）和 B（64 帧）切换着看，判断帧数够不够。\n- 看 TR2 三档尾缀。我的看法：长度都偏长（小 33 m / 中 58 m / 大 129 m，目标 20 / 40 / 90），颗粒太细太淡，实拍是过曝的白热段加大颗金色火星——需要再来一轮（TR3）。"}, {"title": "2026-09-28 晚 · PW1 万彩千轮单元序列、计划第二版", "body": "**做了什么**\n- `analysis/results/PW1/`：万彩千轮「单元序列 × 粒子」试验版，4 色 × A（16 帧自然色）/ B（64 帧灰度 + Ramp），Cutout，Cascade 参数表。\n- `计划.md` 第二版：P0 马上进引擎、P1 球形 ABCD、P2 大组合、P3 新花型；大组合拆成组件库。\n- 命名规范 `T_EFX_FireWorks_<英文名>[_<部件>]_<列>x<行>_<序号>`（你已确认）。"}, {"title": "2026-09-28 · Cutout 简化", "body": "- 导出的 Cutout 只剩一张 `T_<名>_Cutout.png`（512×512，所有帧叠在一起的轮廓），Sub Images 1×1，不用 SubUV 模块。"}];
+const UPDATES = [{"title": "2026-09-29 早 · 升空尾缀按物理重做（TP1）", "body": "**你说得对**：礼花弹的曲导（昇り竜）从出膛一直烧到开花，不停向后喷火焰和木炭火星；会自转；火星会被风吹。我查了原理、逐帧量了 尾缀A / B / C、尾缀3.0_A、十六寸永丰，结论和新做法写在 `analysis/升空尾缀_物理.md`（含新的提示词）。两点最关键：\n- 尾迹是**停在空中的火星**，不是跟着弹体走的线：火星一出来就被空气拦住，停在弹体走过的路上燃尽、顺风漂（尾缀B 实测 1.7 m/s）。\n- 弹体一直在减速（77 → 17 m/s），所以尾迹一直在变：出膛长而稀，到顶短而密。旧做法「随弹体匀速循环」从根上做不出来。\n\n**在哪看**：迭代区第一条「升空尾缀 · 物理模型（第 1 版）」——左边 尾缀B 实拍，右边按引擎方式播放两层贴图（同比例、出膛时刻对齐）。右栏可以单独关掉「星头白热段」或「金火星簇」看每一层。\n\n**引擎里怎么搭**：星头白热段（速度朝向单粒子，循环序列，长度随速度）+ 金火星簇（世界坐标，出生位置 / 初速 / 风都按弹道曲线给），参数表 `analysis/results/TP1/RiseTrail_Cascade参数.txt`。\n\n**要你做的**：看完写意见（像不像、哪里不像）。旧的 TR3 三个任务已撤回，跑第一批时不会再跑它们。"}, {"title": "2026-09-29 00:30 · 烘焙器 3.7：第一批 10 个任务排好队，可以并行跑", "body": "**你要做的**\n- 双击 `analysis/local/跑任务_并行.bat`：3 个进程同时跑，任务先认领再跑，不会重复。想更快可以再开窗口双击 `跑任务.bat`，一样按认领分活。\n- 跑完会自动写进迭代区并推上去。pull、刷新烘焙器就能看。\n- 迭代区现在能看的只有 **万彩千轮第 3 版（PW3）**，其余 10 条是「排队」：点开能看到要对的实拍和这一版改了什么。\n\n**我按迭代区的意见改的**\n- 万彩千轮 PW3（已出，能看）：小球更密（约 120 颗星）、更亮、更大（占团半径 0.26）、更多（30 颗）、0.45 秒内陆续开；取景和实拍一样按整团外框。并排看已经接近实拍了。\n- 升空尾缀 TR3 小 / 中 / 大（排队）：长度偏离的权重 ×4（目标 20 / 40 / 90 m）；火星尺寸下限提高，不许再缩成细粉；起点火星更少更亮、寿命按长度缩短。三档拆成三个任务，能同时跑。\n- 青柠星 QN2（排队）：加短星尾、球壳更薄（边缘更亮）。\n- PW1、PW2、TR2、QN1、WC1 已从迭代区撤下（被新版取代）。\n\n**第一批还有**\n- 金芒菊 JM3（清晰度版）：火花按真实尺寸画，实拍的镜头模糊和过曝只在对照时加，不进贴图，贴图更清晰。\n- 球形 A / B / C / D 第一次校准：A 校准「菊」、B 校准「牡丹」，C 和 D 先校准外层。颜色分段是我按实拍量的。这四段视频里有观众、地面火、别的烟花，任务里已指定只看目标那一发的区域和时间段。\n- 金芒菊导出 JM2：导出后迭代区里直接播放导出的真实 2K 贴图（Zoom / Fixed 两版可切换），不用进引擎先看。\n\n**顺带做的**\n- 贴图改成新命名 `T_EFX_FireWorks_…`（例：`T_EFX_FireWorks_JinMangJu_Zoom_8x8_01.png`）。\n- 修了单元序列预览的一个问题：RGBA 贴图里 A 通道是 0 的地方，浏览器会把 RGB 也清掉，B 版少了一些星点。"}, {"title": "2026-09-28 23:30 · 烘焙器 3.6：审阅体验打磨", "body": "**按你的 4 点改的**\n- 实拍可以关：画布上方「实拍对照」按钮（或按 **R**），关掉后模拟画布占满；开关状态会记住。实拍右上角的 × 也能关。\n- 实拍重新居中：花型按整个燃烧期的星点外框居中取景（万彩千轮这种多团的也居中、整朵都在框里），尾缀按运动的亮点居中。对不齐时间的话，把鼠标移到实拍画面上，底部有「−0.1 / − / + / +0.1 / 归零」微调，每条各记各的。\n- 左栏收起不再连画布一起消失。左右两栏都能收起：画布上方「库」「参数」按钮（或 **L** / **P**）；「专注」（**F** 或双击画布）一次收起两边，画布最大。\n- 左栏「花型」加回缩略图，按礼花 / 效果星 / 形状 / 上升 / 地面分组。右栏「更换」会跳到这里。\n\n**我自己用了一遍后顺手改的**\n- 实拍和模拟自动选并排或上下，哪种两个画面更大就用哪种。\n- 窗口窄时画布上方的按钮只留图标，不再挤成两三行；分隔条拖不到把画布挤没的程度，双击分隔条恢复默认宽度。\n- 迭代区里按 **↑ ↓** 直接切换上一条 / 下一条；再次打开烘焙器会回到上次看的那条。\n- 「更新记录」有新内容只在按钮上亮点，不再自动弹出挡住画布。\n- 正式库里的金芒菊也能并排看实拍。\n- 素材页的亮度并入顶部「显示曝光」，画面下方的信息缩成一行。"}, {"title": "2026-09-28 22:30 · 烘焙器 3.5：界面重做，所有结果都在「迭代区」", "body": "**怎么用（以后都一样）**\n- `git pull`，刷新烘焙器。左栏「迭代区」就是所有等你看的东西，带「新」的是没看过的；打开烘焙器会自动打开最新一条。\n- 点一条：中间播放（有实拍的话左实拍、右模拟，时间同步），右栏最上面是审阅卡：做了什么、看什么、我的看法。\n- 看完点「✓ 通过」或「✗ 要改」，写意见（自动保存）。全部看完，点左栏「迭代区」右边的「复制意见」，贴到对话里给我。\n- 你通过的，我下一次会搬进「正式库」。\n\n**界面**\n- 三栏：左库（迭代区 / 正式库 / 组合 / 花型）、中视口、右参数。两边分隔条可以拖宽，左栏可以收起（‹）。\n- 参数每行是「名称 | 滑杆 | 数值框」，数值框可以直接输入，不用再拖到最右边看数。\n- 右栏「参数 / 工具」两页；原来的「迭代」页改名「工具」（A/B、版本、配方、测速）。\n\n**这次迭代区里有**\n- 万彩千轮单元 PW2（实拍颜色）、PW1（C/D 颜色）\n- 升空尾缀小 / 中 / 大 TR2\n- 青柠星 QN1、万彩千轮整体模拟 WC1（旧做法，只作对比）"}, {"title": "2026-09-28 晚 · 烘焙器 3.4：结果都能在烘焙器里看了", "body": "**做了什么**\n- 新增「素材」页：打开一个结果文件夹，按引擎的方式播放贴图（帧号曲线取整、不混合、粒子按参数表摆放），可切换 A/B 两套贴图、单独开关每个颜色、显示 Cutout 轮廓。\n- 花型库「实拍复刻」里加了跑完等你确认的结果，带「待你确认 · 任务号」标签：青柠星 QN1、万彩千轮整体模拟 WC1、升空尾缀小/中/大 TR2。点开就能播放、和实拍对照（「迭代」页载入参考视频）、导出。\n- 顶栏加了「更新记录」（就是本文件），有新内容时打开烘焙器会自动弹出。\n- 万彩千轮 PW2：颜色改成按实拍测的——炸开后约 1 秒是本色（青绿、银白、淡黄、珊瑚红），然后整颗变金，熄灭前转橙；星点的发光质感沿用你认可的 C/D。\n- PW1（C/D 包里的颜色）保留，去掉了视频，同样能在「素材」页看。\n\n**在哪看**\n- 万彩千轮：「素材」→ 打开文件夹 → 选 `analysis/results/PW2`（或 `PW1`）。\n- QN1 / WC1 / TR2：花型「更换」→「实拍复刻」。\n\n**要你做什么**\n- 看 PW2 的颜色、大小、分布、先后像不像 万彩千轮B；A（16 帧）和 B（64 帧）切换着看，判断帧数够不够。\n- 看 TR2 三档尾缀。我的看法：长度都偏长（小 33 m / 中 58 m / 大 129 m，目标 20 / 40 / 90），颗粒太细太淡，实拍是过曝的白热段加大颗金色火星——需要再来一轮（TR3）。"}, {"title": "2026-09-28 晚 · PW1 万彩千轮单元序列、计划第二版", "body": "**做了什么**\n- `analysis/results/PW1/`：万彩千轮「单元序列 × 粒子」试验版，4 色 × A（16 帧自然色）/ B（64 帧灰度 + Ramp），Cutout，Cascade 参数表。\n- `计划.md` 第二版：P0 马上进引擎、P1 球形 ABCD、P2 大组合、P3 新花型；大组合拆成组件库。\n- 命名规范 `T_EFX_FireWorks_<英文名>[_<部件>]_<列>x<行>_<序号>`（你已确认）。"}, {"title": "2026-09-28 · Cutout 简化", "body": "- 导出的 Cutout 只剩一张 `T_<名>_Cutout.png`（512×512，所有帧叠在一起的轮廓），Sub Images 1×1，不用 SubUV 模块。"}];
 // =====================================================================
 //  工具
 // =====================================================================
@@ -4067,9 +4067,20 @@ function pixelsOf(img, w = img.width, h = img.height) {
   const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d', { willReadFrequently: true });
   g.drawImage(img, 0, 0, w, h); return g.getImageData(0, 0, w, h).data;
 }
+// 缩小链（mipmap）：远处的面片只有一两个像素宽，直接把 256 像素的帧画上去浏览器只取几个点，细亮线会整根丢掉；
+// 每帧预先逐级减半（每级 2×2 平均），画的时候取和屏幕尺寸最接近的那一级
+function mipChain(c) {
+  const out = [c]; let cur = c;
+  while (cur.width > 2 && cur.height > 2) {
+    const n = document.createElement('canvas'); n.width = Math.max(1, cur.width >> 1); n.height = Math.max(1, cur.height >> 1);
+    const g = n.getContext('2d'); g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high'; g.drawImage(cur, 0, 0, n.width, n.height); out.push(n); cur = n;
+  }
+  return out;
+}
 // 一个发射器、一套贴图 → 每帧一张小画布
 async function assetFrames(tex) {
-  const img = await assetImage(asset.files.has(tex.file) ? tex.file : tex.file + '#R'), cw = img.width / tex.cols, ch = img.height / tex.rows, S = ASSET_CELL, per = tex.cols * tex.rows, out = [];
+  const img = await assetImage(asset.files.has(tex.file) ? tex.file : tex.file + '#R'), cw = img.width / tex.cols, ch = img.height / tex.rows, per = tex.cols * tex.rows, out = [];
+  const S = Math.max(16, Math.min(ASSET_CELL, Math.round(1024 * cw / ch)));   // 细长格子（尾缀星头 1:16）按长边 1024 缩，不按宽边放大
   if (tex.mode === 'rgb') {
     for (let f = 0; f < tex.frames; f++) {
       const c = document.createElement('canvas'); c.width = c.height = S; const r = Math.floor(f / tex.cols), q = f % tex.cols;
@@ -4100,34 +4111,68 @@ async function assetFrames(tex) {
   for (let f = 0; f < tex.frames; f++) {
     const chn = Math.floor(f / perChan), cell = f % perChan, r = Math.floor(cell / tex.cols), q = cell % tex.cols, src = chanData[chn] || chanData[0];
     const u = frameU(tex.keys, f), col = tex.col ? curveAt(tex.col, u) : [1, 1, 1];
-    const c = document.createElement('canvas'); c.width = S; c.height = SH; const g = c.getContext('2d'); const id = g.createImageData(S, SH), d = id.data;
-    const lut = new Uint8ClampedArray(256 * 3), gm = tex.gamma || 1;
+    const lin = new Float32Array(256 * 3), gm = tex.gamma || 1, baker = tex.tone === 'baker';
     // tone 'baker'：和烘焙器「导出效果」一样——材质亮度 Ramp(v)·v·颜色·4，显示 1 − e^(−x) 再 gamma 2.2（导出母版用）；否则直接 sRGB（单元贴图用）
     for (let v = 0; v < 256; v++) {
       const x = Math.pow(v / 255, gm), vi = Math.round(x * 255), rc = ramp ? ramp[Math.min(255, vi)] : [1, 1, 1];
-      for (let j = 0; j < 3; j++) { const l = rc[j] * x * col[j]; lut[v * 3 + j] = Math.round((tex.tone === 'baker' ? Math.pow(1 - Math.exp(-4 * l), 1 / 2.2) : lin2s(Math.min(1, l))) * 255); }
+      for (let j = 0; j < 3; j++) lin[v * 3 + j] = rc[j] * x * col[j];
     }
+    // 先存线性亮度，再显示：缩小链在线性亮度上平均、每级各自做显示映射（像相机一样先积分再截断，细亮线缩小后仍然过曝）
+    const L = new Float32Array(S * SH * 3);
     for (let y = 0; y < SH; y++) for (let x = 0; x < S; x++) {
-      const v = src[(r * SH + y) * W + q * S + x], o = (y * S + x) * 4;
-      d[o] = lut[v * 3]; d[o + 1] = lut[v * 3 + 1]; d[o + 2] = lut[v * 3 + 2]; d[o + 3] = 255;
+      const v = src[(r * SH + y) * W + q * S + x], o = (y * S + x) * 3;
+      L[o] = lin[v * 3]; L[o + 1] = lin[v * 3 + 1]; L[o + 2] = lin[v * 3 + 2];
     }
-    g.putImageData(id, 0, 0); out.push(c);
+    const toCanvas = (A, w, h) => {
+      const cv = document.createElement('canvas'); cv.width = w; cv.height = h; const gg = cv.getContext('2d'), im = gg.createImageData(w, h), dd = im.data;
+      for (let i = 0, n = w * h; i < n; i++) for (let j = 0; j < 3; j++) { const l = A[i * 3 + j]; dd[i * 4 + j] = Math.round((baker ? Math.pow(1 - Math.exp(-4 * l), 1 / 2.2) : lin2s(Math.min(1, l))) * 255); }
+      for (let i = 0, n = w * h; i < n; i++) dd[i * 4 + 3] = 255;
+      gg.putImageData(im, 0, 0); return cv;
+    };
+    const chain = [toCanvas(L, S, SH)]; let A = L, w = S, h = SH;
+    while (w > 2 && h > 2) {
+      const w2 = w >> 1, h2 = h >> 1, B = new Float32Array(w2 * h2 * 3);
+      for (let y = 0; y < h2; y++) for (let x = 0; x < w2; x++) for (let j = 0; j < 3; j++) {
+        const a = ((2 * y) * w + 2 * x) * 3 + j, b = ((2 * y + 1) * w + 2 * x) * 3 + j;
+        B[(y * w2 + x) * 3 + j] = 0.25 * (A[a] + A[a + 3] + A[b] + A[b + 3]);
+      }
+      chain.push(toCanvas(B, w2, h2)); A = B; w = w2; h = h2;
+    }
+    out.push(chain[0]); (out.mips = out.mips || []).push(chain);
   }
   return out;
 }
 // 按发射器参数生成粒子（与参数表同一套规则；种子固定，每次一样）
+//   bursts：某时刻一次出 n 个；spawn：{rate, t0, t1} 按发射器时间连续出生（Spawn Rate）
+//   locCurve / velCurve / accCurve：按「出生时的发射器时间」取的曲线（Cascade 的 Initial Location / Initial Velocity / Acceleration）
+//   velJit：初速 × (1 ± velJit)；dragRange：Drag 在区间里随机；velLife：Velocity/Life（Absolute），粒子沿这条速度曲线积分出路径
 function assetSpawn() {
   asset.parts = [];
   for (const e of asset.emit) {
-    const rnd = mulberry(e.def.seed || 1), sp = e.def.sphere || { r: 0, vel: 0 };
-    for (const [t0, n] of e.def.bursts || [[0, 1]]) for (let i = 0; i < n; i++) {
+    const d = e.def, rnd = mulberry(d.seed || 1), sp = d.sphere || { r: 0, vel: 0 };
+    const [s0, s1] = d.size || [10, 10], [l0, l1] = d.life || [2, 2];
+    const make = (t0) => {
       let p = [0, 0, 0];
       if (sp.r > 0) {
         const g = () => Math.sqrt(-2 * Math.log(1 - rnd())) * Math.cos(2 * Math.PI * rnd());
         p = [g(), g(), g()]; const L = Math.hypot(...p) || 1, R = sp.surface ? sp.r : sp.r * Math.cbrt(rnd()); p = p.map(x => x / L * R);
       }
-      const [s0, s1] = e.def.size || [10, 10], [l0, l1] = e.def.life || [2, 2];
-      asset.parts.push({ e, t0, p, v: p.map(x => x * (sp.vel || 0)), size: s0 + (s1 - s0) * rnd(), rot: e.def.rot ? rnd() * Math.PI * 2 : 0, life: l0 + (l1 - l0) * rnd() });
+      let v = p.map(x => x * (sp.vel || 0));
+      if (d.locCurve) p = curveAt(d.locCurve, t0).map((x, i) => x + p[i]);
+      if (d.velCurve) { const j = 1 + (d.velJit || 0) * (2 * rnd() - 1); v = curveAt(d.velCurve, t0).map(x => x * j); }
+      const part = { e, t0, p, v, size: s0 + (s1 - s0) * rnd(), rot: d.rot ? rnd() * Math.PI * 2 : 0, life: l0 + (l1 - l0) * rnd() };
+      if (d.dragRange) part.k = d.dragRange[0] + (d.dragRange[1] - d.dragRange[0]) * rnd();
+      if (d.accCurve) part.acc = curveAt(d.accCurve, t0);
+      asset.parts.push(part);
+    };
+    if (d.spawn) { const { rate, t0 = 0, t1 = 1 } = d.spawn, n = Math.floor(rate * (t1 - t0)); for (let i = 0; i < n; i++) make(t0 + (i + rnd()) / rate); }
+    for (const [t0, n] of d.bursts || (d.spawn ? [] : [[0, 1]])) for (let i = 0; i < n; i++) make(t0);
+    // Velocity/Life（Absolute）：按寿命积分出路径（每 1/120 秒一个点：x, z, vx, vz）
+    e.path = null;
+    if (d.velLife) {
+      const L = l1 || l0, dt = 1 / 120, n = Math.ceil(L / dt) + 1, path = []; let x = 0, z = 0;
+      for (let i = 0; i < n; i++) { const v = curveAt(d.velLife, Math.min(1, i * dt / L)); path.push([x, z, v[0], v[2]]); x += v[0] * dt; z += v[2] * dt; }
+      e.path = path;
     }
   }
 }
@@ -4137,7 +4182,7 @@ async function assetLoadVariant() {
     let i = 0;
     for (const e of asset.emit) {
       const tex = e.def.tex[asset.variant] || e.def.tex[Object.keys(e.def.tex)[0]];
-      e.tex = tex; e.frames = await assetFrames(tex);
+      e.tex = tex; e.frames = await assetFrames(tex); e.mips = e.frames.mips || e.frames.map(mipChain);
       const cf = tex.cutout || e.def.cutout; e.cut = cf && asset.files.has(cf) ? await assetImage(cf) : null;
       busy(true, null, ++i / asset.emit.length);
     }
@@ -4184,20 +4229,29 @@ function renderAssets() {
   g.globalCompositeOperation = 'source-over'; g.fillStyle = asset.sky === 'sky' ? '#34466e' : '#020306'; g.fillRect(0, 0, W, H);
   if (!asset.man) { g.fillStyle = '#9aa0b4'; g.font = `${14 * dpr}px sans-serif`; g.textAlign = 'center'; g.fillText('在左栏「迭代区」点一个素材条目', W / 2, H / 2); hudText = ''; return; }
   if (!asset.ready) return;
-  const t = state.t, pxm = Math.min(W, H) / (asset.man.view || 150); let alive = 0, area = 0; const fr = {};
-  g.globalCompositeOperation = 'lighter'; g.globalAlpha = Math.min(1, asset.gain);
+  const t = state.t, pxm = Math.min(W, H) / (asset.man.view || 150), c0 = asset.man.center || [0, 0]; let alive = 0, area = 0; const fr = {};
+  g.globalCompositeOperation = 'lighter'; g.globalAlpha = Math.min(1, asset.gain); g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
   for (const b of asset.parts) {
     const e = b.e; if (!asset.on[e.def.name]) continue;
     const age = t - b.t0; if (age < 0 || age >= b.life) continue;
-    const k = e.def.drag || 0, s1 = k > 0 ? (1 - Math.exp(-k * age)) / k : age, acc = e.def.accel || [0, 0, 0];
-    const gz = k > 0 ? acc[2] / k * (age - s1) : 0.5 * acc[2] * age * age, gx = k > 0 ? acc[0] / k * (age - s1) : 0.5 * acc[0] * age * age;
-    const x = b.p[0] + b.v[0] * s1 + gx, z = b.p[2] + b.v[2] * s1 + gz;
+    let x, z, ang = b.rot;
+    if (e.path) {                  // Velocity/Life：沿积分好的路径走；速度朝向的面片转到速度方向（面片上端朝前）
+      const q = e.path[Math.min(e.path.length - 1, Math.floor(age * 120))]; x = b.p[0] + q[0]; z = b.p[2] + q[1];
+      if (e.def.align === 'velocity') ang = Math.atan2(q[2], q[3]);
+    } else {
+      const k = b.k != null ? b.k : (e.def.drag || 0), acc = b.acc || e.def.accel || [0, 0, 0], s1 = k > 0 ? (1 - Math.exp(-k * age)) / k : age;
+      const gz = k > 0 ? acc[2] / k * (age - s1) : 0.5 * acc[2] * age * age, gx = k > 0 ? acc[0] / k * (age - s1) : 0.5 * acc[0] * age * age;
+      x = b.p[0] + b.v[0] * s1 + gx; z = b.p[2] + b.v[2] * s1 + gz;
+    }
     const u = age / b.life, f = Math.max(0, Math.min(e.frames.length - 1, Math.floor(curveAt(e.tex.keys, u))));
     const tx = e.tex, zk = tx.sizeKeys ? (v => Array.isArray(v) ? v[0] : v)(curveAt(tx.sizeKeys, u)) : 1, off = tx.offset || [0, 0];
-    const sw = (tx.wh ? tx.wh[0] : b.size) * zk * pxm, sh = (tx.wh ? tx.wh[1] : b.size) * zk * pxm;
-    const cx = W / 2 + (x + off[0]) * pxm, cy = H / 2 - (z + off[1]) * pxm;
-    g.save(); g.translate(cx, cy); g.rotate(b.rot); g.drawImage(e.frames[f], -sw / 2, -sh / 2, sw, sh);
-    if (asset.cutout && e.cut) { g.globalCompositeOperation = 'source-over'; g.globalAlpha = 0.18; g.drawImage(e.cut, -sw / 2, -sh / 2, sw, sh); g.globalAlpha = Math.min(1, asset.gain); g.globalCompositeOperation = 'lighter'; }
+    const wk = tx.whKeys ? curveAt(tx.whKeys, u) : [1, 1], pv = tx.pivot || [0.5, 0.5];
+    const sw = (tx.wh ? tx.wh[0] : b.size) * zk * wk[0] * pxm, sh = (tx.wh ? tx.wh[1] : b.size) * zk * wk[1] * pxm;
+    const cx = W / 2 + (x - c0[0] + off[0]) * pxm, cy = H / 2 - (z - c0[1] + off[1]) * pxm;
+    if (cx < -sw - sh || cx > W + sw + sh || cy < -sw - sh || cy > H + sw + sh) continue;
+    const mc = e.mips ? e.mips[f] : [e.frames[f]], lv = Math.max(0, Math.min(mc.length - 1, Math.floor(Math.log2(Math.max(1, Math.min(mc[0].width / Math.max(1, sw), mc[0].height / Math.max(1, sh)))))));
+    g.save(); g.translate(cx, cy); g.rotate(ang); g.drawImage(mc[lv], -pv[0] * sw, -pv[1] * sh, sw, sh);
+    if (asset.cutout && e.cut) { g.globalCompositeOperation = 'source-over'; g.globalAlpha = 0.18; g.drawImage(e.cut, -pv[0] * sw, -pv[1] * sh, sw, sh); g.globalAlpha = Math.min(1, asset.gain); g.globalCompositeOperation = 'lighter'; }
     g.restore();
     alive++; area += sw * sh; fr[e.def.name] = f;
   }
@@ -4216,7 +4270,7 @@ function assetPanel() {
   }
   const el = $('#assetEmit'); el.innerHTML = '';
   for (const e of asset.emit) {
-    const n = (e.def.bursts || [[0, 1]]).reduce((s, [, c]) => s + c, 0);
+    const n = (e.def.bursts || (e.def.spawn ? [] : [[0, 1]])).reduce((s, [, c]) => s + c, 0) + (e.def.spawn ? Math.floor(e.def.spawn.rate * ((e.def.spawn.t1 || 1) - (e.def.spawn.t0 || 0))) : 0);
     const l = document.createElement('label'); l.className = 'check';
     l.innerHTML = `<input type="checkbox" ${asset.on[e.def.name] ? 'checked' : ''}> ${e.def.name}（${n} 颗，${e.tex ? e.tex.frames + ' 帧' : ''}）`;
     l.querySelector('input').addEventListener('change', ev => { asset.on[e.def.name] = ev.target.checked; }); el.appendChild(l);
