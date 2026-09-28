@@ -26,8 +26,8 @@ def main(size, log=print, s=None, out=None, tex=None, scale=0.25):
     over = json.load(open(fp, encoding='utf-8')) if os.path.exists(fp) else {}
     # 颜色对谁：有质感参考（尾缀3.0_A）时对它，否则对各档原来的实拍
     if tex:
-        import trail_ref3 as R3; ref = R3.ref_side(); stk = R3.STRAIGHT; psf = over.get('_psf3', 1.0)
-    else: ref = TF.ref_side(size); stk = None; psf = over.get('_psf', 0.7)
+        import trail_ref3 as R3; ref = R3.ref_side(); stk = R3.STRAIGHT; psf = over.get('_psf3', 1.0); sat = float(np.mean(ref['prof']['tex']['sat']))
+    else: ref = TF.ref_side(size); stk = None; psf = over.get('_psf', 0.7); sat = None
     own = s is None
     if own: s = SimSession()
     pg = s.pg
@@ -38,7 +38,9 @@ def main(size, log=print, s=None, out=None, tex=None, scale=0.25):
     C = [TC.hex_lin(M[k]) for k in ('ramp0', 'ramp1', 'ramp2', 'ramp3')]
 
     def ev(C):
-        S = TC.sim_side(res, ref['L'], table(C), psf, stk); L, parts = K.loss(ref['prof'], S['prof'], TC.W_TEX if tex else None); return L, parts, S
+        S = TC.sim_side(res, ref['L'], table(C), psf, stk, sat)
+        L, parts = K.tex_loss(ref['prof']['tex'], S['prof']['tex'], dict(dens=0, lev=2, grain=0, col=4)) if tex else K.loss(ref['prof'], S['prof'])
+        return L, parts, S
     # 约束：红色通道 = 1（暖色火花），越亮越白：G、B 从暗到亮单调不减；最亮的色标固定为暖白
     C = [np.array([1.0, c[1] / c[0], min(c[2] / c[0], 0.8 * c[1] / c[0])]) for c in C]; C[3] = TC.hex_lin('#fff8ec')
     ok = lambda C: all(C[i][1] <= C[i + 1][1] + 1e-9 and C[i][2] <= C[i + 1][2] + 1e-9 and C[i][2] <= 0.85 * C[i][1] for i in range(3))   # 火花是暖色：蓝 ≤ 0.85 × 绿

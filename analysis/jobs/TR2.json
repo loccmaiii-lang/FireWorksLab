@@ -1,0 +1,27 @@
+{
+ "id": "TR2",
+ "type": "trail",
+ "name": "升空尾缀第五版：质感对尾缀3.0_A（4K，已排除仰拍透视），造型仍对尾缀C/B/A",
+ "tex": "3.0A",
+ "scale": 1,
+ "sizes": {
+  "S": {
+   "start": "analysis/jobs/起点/TR2_起点_S.json",
+   "rounds": 4
+  },
+  "M": {
+   "start": "analysis/jobs/起点/TR2_起点_M.json",
+   "rounds": 4
+  },
+  "L": {
+   "start": "analysis/jobs/起点/TR2_起点_L.json",
+   "rounds": 4
+  }
+ },
+ "ramp": true,
+ "export": true,
+ "export4K": 1,
+ "video": true,
+ "previews": true,
+ "note": "输出是平视：造型（亮度沿长度分布、粗细、摆动、长度）只对远距离的尾缀C/B/A；尾缀3.0_A 是仰拍（下段近、被放大），只取与透视无关的质感：每「一个尾迹宽度见方」里的亮点数、看上去多亮、过曝落在哪段、颗粒、颜色，并模拟相机过曝。快门改跟拍（火星拖成短竖线）。每档校准约 10–20 分钟，视频约 30 分钟；大文件留在 analysis/local/输出/TR2/。"
+}

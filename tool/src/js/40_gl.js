@@ -114,7 +114,7 @@ float glowOf(float T){ float g=(T-900.)/1150.; return g>0.? g*g*g : 0.; }
 // 线性阻力 + 重力 + 气流 U 的解析解
 vec3 mot(vec3 p0, vec3 v0, vec3 U, vec3 g, float k, float a){ if(k>1e-4){ vec3 vi=U+g/k; return p0+vi*a+(v0-vi)*(1.-exp(-k*a))/k; } return p0+v0*a+.5*g*a*a; }
 vec3 motv(vec3 v0, vec3 U, vec3 g, float k, float a){ if(k>1e-4){ vec3 vi=U+g/k; return vi+(v0-vi)*exp(-k*a); } return v0+g*a; }
-void emitPtW(vec2 q, float I, float size, float span){ vec2 sig=max(size*.5*vec2(uPPM,uPPMY),vec2(.55)); float ps=min(ceil(max(sig.x,sig.y)*span)+1.,uMax);
+void emitPtW(vec2 q, float I, float size, float span, float sy){ vec2 sig=max(size*.5*vec2(uPPM,uPPMY),vec2(.55)); sig.y=sqrt(sig.y*sig.y+sy*sy); float ps=min(ceil(max(sig.x,sig.y)*span)+1.,uMax);
   gl_Position=vec4((q-uView.xy)/uView.zw,0.,1.); gl_PointSize=ps; vI=I; vSig=sig; vPS=ps; }
 void emitPt(vec2 q, float I, float size){ vec2 sig=max(size*.5*vec2(uPPM,uPPMY),vec2(.55)); float ps=min(ceil(max(sig.x,sig.y)*6.)+1.,uMax);
   gl_Position=vec4((q-uView.xy)/uView.zw,0.,1.); gl_PointSize=ps; vI=I; vSig=sig; vPS=ps; }`;

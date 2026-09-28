@@ -126,3 +126,47 @@ def loss(pr, ps, w=None):
     parts['wave'] = float((np.log((pr['wave_big'] + 1e-3) / (ps['wave_big'] + 1e-3))) ** 2 * 0.3 + (np.log((pr['wave_small'] + 1e-3) / (ps['wave_small'] + 1e-3))) ** 2 * 0.3)
     for k, v in parts.items(): L += w.get(k, 1) * v
     return L, parts
+
+
+# ---------------------------------------------------------------------------
+# 质感测量（与透视无关）：实拍常是仰拍，近处（尾迹下段）被放大、远处被压缩。
+# 只用在局部放大下不变的量，并且只分 3 大段（星头段 / 中段 / 末段），不做逐段形状对比：
+#   dens  亮点数 × 该段尾迹宽度 / 该段行数（每「一个宽度见方」里的亮点数；局部放大 m 时三者同比，结果不变）
+#   lev   看上去多亮（可见像素 80 分位 / 全条 99.5 分位）
+#   grain 颗粒度（减去按尾迹宽度平滑后的细节能量占比，平滑尺度跟着局部宽度走）
+#   rg、bg 颜色
+# 造型（亮度沿长度分布、宽度、摆动、长度）只从远距离的实拍取，不从仰拍取。
+NZ = 3
+
+
+def tex_profile(strip, L=None):
+    L = L or trail_length(strip)
+    Y = strip.sum(2); half = (strip.shape[1] - 1) / 2; xs = np.arange(strip.shape[1]) - half
+    p995 = np.percentile(Y[:L], 99.5) + 1e-9
+    dil = cv2.dilate(Y, np.ones((5, 5), np.uint8)); pk = (Y >= dil) & (Y > 0.08 * p995)
+    out = dict(dens=[], lev=[], grain=[], rg=[], bg=[], sat=[])
+    top = strip.max(2); tmax = np.percentile(top[:L], 99.9) + 1e-9
+    for z in range(NZ):
+        a, e = int(z * L / NZ), int((z + 1) * L / NZ); seg = Y[a:e]; s = seg.sum() + 1e-9
+        wpx = max(1.0, 2 * np.sqrt((seg.sum(0) * xs ** 2).sum() / s))
+        out['dens'].append(float(pk[a:e].sum() * wpx / max(1, e - a)))
+        vis = seg[seg > 0.05 * p995]; out['lev'].append(float(min(1.0, np.percentile(vis, 80) / p995)) if vis.size > 3 else 0.0)
+        sm = cv2.GaussianBlur(seg, (0, 0), max(1.0, 0.5 * wpx)); out['grain'].append(float(np.abs(seg - sm).sum() / s))
+        rgb = strip[a:e].reshape(-1, 3).sum(0) + 1e-9; out['rg'].append(float(rgb[2] / rgb[1])); out['bg'].append(float(rgb[0] / rgb[1]))
+        m = seg > 0.05 * p995; out['sat'].append(float((top[a:e][m] >= 0.95 * tmax).mean()) if m.any() else 0.0)   # 过曝像素占可见像素的比例
+    return out
+
+
+def sat_frac(img):
+    """整张图可见像素里过曝（任一通道 ≥ 0.95 × 最亮）的比例"""
+    Y = img.sum(2); top = img.max(2); p = np.percentile(Y, 99.5) + 1e-9; m = Y > 0.05 * p
+    return float((top[m] >= 0.95 * top.max()).mean()) if m.any() else 0.0
+
+
+def tex_loss(pr, ps, w=None):
+    w = w or dict(dens=2, lev=4, grain=2, col=2, sat=2)
+    f = lambda k: np.array(pr[k]); g = lambda k: np.array(ps[k])
+    parts = {'dens': float(np.mean(np.log((f('dens') + .05) / (g('dens') + .05)) ** 2)), 'lev': float(np.mean((f('lev') - g('lev')) ** 2)),
+             'sat': float(np.mean((np.sqrt(f('sat')) - np.sqrt(g('sat'))) ** 2)) if 'sat' in pr and 'sat' in ps else 0.0,   # 过曝落在哪一段：亮的是星头还是火星
+             'grain': float(np.mean((f('grain') - g('grain')) ** 2)), 'col': float(np.mean((f('rg') - g('rg')) ** 2 + (f('bg') - g('bg')) ** 2))}
+    return sum(w.get(k, 0) * v for k, v in parts.items()), parts

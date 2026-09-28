@@ -15,7 +15,7 @@ const TRAIL_POPS = [
 ];
 const VS_TRAIL = `#version 300 es
 precision highp float; precision highp int;
-uniform float uT, uStop, uFadeK, uAnchorY, uV, uTp, uRate, uLife, uInh, uSpread, uK, uG, uT0, uCool, uBright, uSize, uWhisk, uIgn, uLag;
+uniform float uT, uStop, uFadeK, uAnchorY, uV, uTp, uRate, uLife, uInh, uSpread, uK, uG, uT0, uCool, uBright, uSize, uWhisk, uIgn, uLag, uStreak;
 uniform int uMp, uSeed, uPop;
 uniform vec3 uWave[6]; uniform vec2 uBot, uFadeEnd;
 uniform vec4 uView; uniform float uPPM, uPPMY, uMax;
@@ -42,7 +42,7 @@ void main(){
   if(uFadeEnd.y>uFadeEnd.x) I*=1.-smoothstep(uFadeEnd.x,uFadeEnd.y,uT);   // 消散最后 30% 整体收到全黑，末帧干净
   float yy=p.y-uAnchorY; if(uBot.y>uBot.x) I*=smoothstep(uBot.x,uBot.y,yy);   // 面片底端柔和收尾，不在格子边上硬切
   if(I<=0.){ cull(); return; }
-  emitPtW(vec2(p.x,yy),I,uSize*(.7+.6*hsh(key,17u)),10.);
+  emitPtW(vec2(p.x,yy),I,uSize*(.7+.6*hsh(key,17u)),10.,uStreak*uPPMY*.2887);   // 跟拍：子帧内相对星头下落的一段，按匀速拖影（方差 = 长度²/12）
 }`;
 PR.trail = compile(VS_TRAIL, FS_PTS);
 
@@ -95,7 +95,7 @@ function makeTrailRenderer(P) {
       }
       const pr = PR.trail; gl.useProgram(pr.p);
       gl.uniform1f(pr.u.uT, ts); gl.uniform1f(pr.u.uStop, R.stopE); gl.uniform1f(pr.u.uFadeK, R.fadeK); gl.uniform1f(pr.u.uAnchorY, anchorY);
-      gl.uniform1f(pr.u.uV, P.trV); gl.uniform1f(pr.u.uIgn, P.trIgnite || 0); gl.uniform1f(pr.u.uLag, P.trTwistLag == null ? 0.35 : P.trTwistLag); gl.uniform1f(pr.u.uTp, Tp); gl.uniform1f(pr.u.uInh, P.trInh); gl.uniform1f(pr.u.uK, P.trDrag); gl.uniform1f(pr.u.uG, G * P.trGrav);
+      gl.uniform1f(pr.u.uV, P.trV); gl.uniform1f(pr.u.uIgn, P.trIgnite || 0); gl.uniform1f(pr.u.uLag, P.trTwistLag == null ? 0.35 : P.trTwistLag); gl.uniform1f(pr.u.uStreak, P.trFollow ? P.trV * (R.subW || 0) : 0); gl.uniform1f(pr.u.uTp, Tp); gl.uniform1f(pr.u.uInh, P.trInh); gl.uniform1f(pr.u.uK, P.trDrag); gl.uniform1f(pr.u.uG, G * P.trGrav);
       gl.uniform3fv(pr.u['uWave[0]'], wv); gl.uniform1i(pr.u.uSeed, P.seed | 0); gl.uniform2fv(pr.u.uBot, R.bot); gl.uniform2fv(pr.u.uFadeEnd, R.fadeEnd);
       gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
       gl.uniform4fv(pr.u.uChan, [0, 1, 0, 0]); gl.uniform1f(pr.u.uW, w);

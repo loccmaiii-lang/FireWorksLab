@@ -44,7 +44,19 @@ def colorize(v, ramp):
     return (ramp[np.clip((v * 255).astype(int), 0, 255)] * v[..., None]).astype(np.float32)
 
 
-def sim_side(res, Lref, ramp, psf=0.7, st_kw=None):
+def camera_clip(img, sat_target):
+    """模拟相机曝光：乘一个倍数后每个通道截到 1，倍数取「过曝像素比例 = 实拍」的那个（二分）"""
+    lo, hi = 0.0, 12.0; base = img / (img.max() + 1e-12)
+    for _ in range(22):
+        m = (lo + hi) / 2; x = np.minimum(base * 2 ** m, 1.0)
+        top = x.max(2); Y = x.sum(2); v = Y > 0.05 * np.percentile(Y, 99.5)
+        f = float((top[v] >= 0.999).mean()) if v.any() else 0
+        lo, hi = (m, hi) if f < sat_target else (lo, m)
+    return np.minimum(base * 2 ** ((lo + hi) / 2), 1.0)
+
+
+def sim_side(res, Lref, ramp, psf=0.7, st_kw=None, sat=None):
+    """sat：给了就按实拍的过曝比例模拟相机截断（质感对仰拍 4K 实拍时用；实拍的亮段是过曝的）"""
     st_kw = st_kw or {}
     profs, strips = [], []
     for v in cells(res['loop'], res['meta'], PHASES):
@@ -53,10 +65,12 @@ def sim_side(res, Lref, ramp, psf=0.7, st_kw=None):
         h, sig = K.find_head(pad); st, line = K.straighten(sig, h, **{**st_kw, 'maxlen': pad.shape[0] - int(h[1]) - 1})
         L0 = K.trail_length(st); s = Lref / max(L0, 1)
         img2 = cv2.GaussianBlur(cv2.resize(pad, None, fx=s, fy=s, interpolation=cv2.INTER_AREA), (0, 0), psf)
+        if sat is not None: img2 = camera_clip(img2, sat)
         big = np.zeros((max(img2.shape[0], 1000), img2.shape[1] + 120, 3), np.float32); big[:img2.shape[0], 60:60 + img2.shape[1]] = img2
         h, sig = K.find_head(big); st, line = K.straighten(sig, h, **st_kw)
-        profs.append(K.profile(st, line)); strips.append(st)
-    avg = {k: np.mean([p[k] for p in profs], 0).tolist() if isinstance(profs[0][k], list) else float(np.mean([p[k] for p in profs])) for k in profs[0]}
+        p = K.profile(st, line); p['tex'] = K.tex_profile(st, p['L']); profs.append(p); strips.append(st)
+    avg = {k: np.mean([p[k] for p in profs], 0).tolist() if isinstance(profs[0][k], list) else float(np.mean([p[k] for p in profs])) for k in profs[0] if k != 'tex'}
+    avg['tex'] = {k: np.mean([p['tex'][k] for p in profs], 0).tolist() for k in profs[0]['tex']}
     return dict(prof=avg, strips=strips)
 
 
@@ -78,10 +92,9 @@ def cap_sizes(over, P0):
     return o
 
 
-# 质感参考（tex='3.0A'）：造型（亮度沿长度分布、摆动、长度）仍对各档原来的实拍，
-# 质感（粗细、颗粒、亮点密度、颜色、看上去多亮）对尾缀3.0_A 的 4K 画面，在它的像素尺度上测
-W_SHAPE = dict(I=3, w=0, wave=2, grain=0, peaks=0, col=0, lev=0)
-W_TEX = dict(I=0, w=3, wave=0, grain=2, peaks=2, col=2, lev=4)
+# 质感参考（tex='3.0A'）：造型（亮度沿长度分布、宽度、摆动、长度）仍对各档原来的远距离实拍（输出是平视，仰拍的透视变形不能学）；
+# 质感只用与透视无关的量（trailkit.tex_profile：亮点密度、看上去多亮、颗粒、颜色）对尾缀3.0_A 的 4K 画面
+W_SHAPE = dict(I=3, w=3, wave=2, grain=0, peaks=0, col=0, lev=0)
 
 
 def main(size, rounds=2, start=None, log=print, s=None, out=None, cap=True, tex=None, scale=0.25):
@@ -90,7 +103,7 @@ def main(size, rounds=2, start=None, log=print, s=None, out=None, cap=True, tex=
     ref = TF.ref_side(size); Lref = ref['L']
     ref3 = None
     if tex:
-        import trail_ref3 as R3; ref3 = R3.ref_side(); ST3 = R3.STRAIGHT
+        import trail_ref3 as R3; ref3 = R3.ref_side(); ST3 = R3.STRAIGHT; SAT3 = float(np.mean(ref3['prof']['tex']['sat']))
     own = s is None
     if own: s = SimSession()
     pg = s.pg
@@ -105,9 +118,9 @@ def main(size, rounds=2, start=None, log=print, s=None, out=None, cap=True, tex=
         S = sim_side(res, Lref, ramp, o.get('_psf', 1.2))
         if ref3 is None: L, parts = K.loss(ref['prof'], S['prof'])
         else:
-            S['tex'] = sim_side(res, ref3['L'], ramp, o.get('_psf3', 1.0), ST3)
-            L1, p1 = K.loss(ref['prof'], S['prof'], W_SHAPE); L2, p2 = K.loss(ref3['prof'], S['tex']['prof'], W_TEX)
-            L = L1 + L2; parts = {**{k: v for k, v in p1.items() if W_SHAPE.get(k, 1)}, **{'质感_' + k: v for k, v in p2.items() if W_TEX.get(k, 1)}}
+            S['tex'] = sim_side(res, ref3['L'], ramp, o.get('_psf3', 1.0), ST3, SAT3)
+            L1, p1 = K.loss(ref['prof'], S['prof'], W_SHAPE); L2, p2 = K.tex_loss(ref3['prof']['tex'], S['tex']['prof']['tex'])
+            L = L1 + L2; parts = {**{k: v for k, v in p1.items() if W_SHAPE.get(k, 1)}, **{'质感_' + k: v for k, v in p2.items()}}
         ln = res['meta']['trailLen']; parts['len'] = float(np.log(ln / TARGET_LEN[size]) ** 2); L += 2 * parts['len']
         return L, parts, S, res
     cur = dict(over); best, parts, S, res = ev(cur)
@@ -137,7 +150,7 @@ def main(size, rounds=2, start=None, log=print, s=None, out=None, cap=True, tex=
     TF.sheet(ref, S, os.path.join(out, f'尾缀_{size}_对照.jpg'))
     if ref3 is not None:
         TF.sheet(ref3, S['tex'], os.path.join(out, f'尾缀_{size}_质感对照.jpg'))
-        json.dump({'实拍': ref3['prof'], '烘焙器': S['tex']['prof']}, open(os.path.join(out, f'尾缀_{size}_质感数值.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=float)
+        json.dump({'实拍': ref3['prof']['tex'], '烘焙器': S['tex']['prof']['tex']}, open(os.path.join(out, f'尾缀_{size}_质感数值.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=float)
     if own: s.close()
     return cur, best
 

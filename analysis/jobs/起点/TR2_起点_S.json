@@ -1,0 +1,33 @@
+{
+ "trFLife": 0.3168,
+ "trFSpread": 0.65,
+ "trFSize": 0.03,
+ "trMRate": 4160.0,
+ "trMSpread": 0.9,
+ "trCRate": 2080.0,
+ "trCSpread": 2.028,
+ "trCSize": 0.05,
+ "trCBright": 0.4563,
+ "trDrag": 2.24,
+ "trHeadSize": 0.0367,
+ "trHeadBright": 0.50068,
+ "trHaloBright": 0.05487,
+ "trMLife": 0.375,
+ "trMBright": 0.06828,
+ "trCLife": 0.78,
+ "trTwist": 0.12303,
+ "trFRate": 20280.0,
+ "trMSize": 0.04,
+ "_ramp": {
+  "ramp0": "#ff7a6f",
+  "ramp1": "#ffd27a",
+  "ramp2": "#fff6bb",
+  "ramp3": "#fff8ec"
+ },
+ "_psf": 0.9,
+ "trWiggle": 0.054,
+ "shutter": 0.35,
+ "trCool": 0.8,
+ "trFollow": 1,
+ "_psf3": 1.0
+}
