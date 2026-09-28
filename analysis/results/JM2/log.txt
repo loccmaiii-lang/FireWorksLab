@@ -1,0 +1,5 @@
+23:32:18 开始：金芒菊 随开花放大版（Size By Life）+ Cutout（导出素材）
+23:32:20 JinMangJu_Zoom 导出 2 秒：JinMangJu_Zoom.json、JinMangJu_Zoom_Cascade参数.txt、JinMangJu_Zoom_曲线.csv、T_JinMangJu_Zoom.png、T_JinMangJu_Zoom_Cutout.png、T_JinMangJu_Zoom_Ramp.png、T_JinMangJu_Zoom_帧号测试.png
+23:32:22 JinMangJu_Fixed 导出 1 秒：JinMangJu_Fixed.json、JinMangJu_Fixed_Cascade参数.txt、JinMangJu_Fixed_曲线.csv、T_JinMangJu_Fixed.png、T_JinMangJu_Fixed_Cutout.png、T_JinMangJu_Fixed_Ramp.png、T_JinMangJu_Fixed_帧号测试.png
+23:32:22 大文件（贴图）在 C:\Users\locmai\WorkBuddy\Worktrees\FireWorksLab\origin-main-cf44c471\analysis\local\输出\JM2，不上传
+23:32:22 完成，用时 0.1 分钟
