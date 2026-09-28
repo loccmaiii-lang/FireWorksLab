@@ -1,0 +1,32 @@
+00:06:02 开始：升空尾缀·大 第六版：缩短到 90 m、火星更大颗、白热段更连续（升空尾缀：校准 → 渐变图 → 导出 → 视频）
+00:06:14 [L] 起点 1.1005 I=0.0767 w=0.0680 wave=0.0419 质感_dens=0.0371 质感_lev=0.0327 质感_sat=0.0351 质感_grain=0.0957 质感_col=0.0358 len=0.0056 长 97.0 m
+00:06:45   第1轮 trFSize → 0.03  1.1004  长 97.0 m
+00:07:37   第1轮 trMBright → 0.216  1.0945  长 97.0 m
+00:08:07   第1轮 trCSize → 0.05  1.0799  长 97.0 m
+00:08:15   第1轮 trInh → 0.05  1.0158  长 94.0 m
+00:08:33   第1轮 trHeadSize → 0.06144  0.9768  长 94.0 m
+00:08:37   第1轮 trHeadBright → 2.366  0.9768  长 94.0 m
+00:08:46   第1轮 trHaloBright → 0.09877  0.9355  长 94.0 m
+00:09:12   第1轮 trTwistLag → 0.35  0.8982  长 93.2 m
+00:09:39   第1轮 _psf → 1  0.8918  长 93.2 m
+00:10:27   第2轮 trMRate → 8123  0.8842  长 93.2 m
+00:10:54   第2轮 trMSize → 0.032  0.8765  长 93.2 m
+00:11:07   第2轮 trCRate → 6490  0.8323  长 93.9 m
+00:12:04   第2轮 trHeadSize → 0.04915  0.8316  长 93.9 m
+00:12:13   第2轮 trHeadBright → 1.82  0.8316  长 93.9 m
+00:12:21   第2轮 trHaloBright → 0.07316  0.8282  长 93.9 m
+00:13:10   第2轮 trCool → 0.3858  0.8103  长 94.0 m
+00:15:48   第3轮 trHeadSize → 0.06144  0.8090  长 94.0 m
+00:20:59 [L] 结束 0.8090 I=0.0420 w=0.0623 wave=0.0092 质感_dens=0.0207 质感_lev=0.0360 质感_sat=0.0388 质感_grain=0.0627 质感_col=0.0368 len=0.0019
+00:20:59 L 校准用时 15.0 分钟
+00:21:03 [L] 渐变图起点 0.2216 col=0.0377
+00:21:19   第1轮 0.1709 col=0.0248 #ffd48f #ffead6 #fff7e0 #fff8ec
+00:21:31   第2轮 0.1676 col=0.0237 #ffd481 #ffead6 #fff7e0 #fff8ec
+00:21:42   第3轮 0.1676 col=0.0237 #ffd481 #ffead6 #fff7e0 #fff8ec
+00:22:00   第4轮 0.1457 col=0.0186 #ffdf88 #ffead6 #fff7e0 #fff8ec
+00:22:15   第5轮 0.1442 col=0.0184 #ffdf90 #ffead6 #fff7e0 #fff8ec
+00:22:30   第6轮 0.1442 col=0.0184 #ffdf90 #ffead6 #fff7e0 #fff8ec
+00:22:30 [L] 渐变图 {'ramp0': '#ffdf90', 'ramp1': '#ffead6', 'ramp2': '#fff7e0', 'ramp3': '#fff8ec'}
+00:22:57 L 导出 26 秒：RiseTrail_L.json、RiseTrail_L_Cascade参数.txt、RiseTrail_L_曲线.csv、T_EFX_FireWorks_RiseTrail_L_Fade20_16x1_01.png、T_EFX_FireWorks_RiseTrail_L_Fade20_4K_16x1_01.png、T_EFX_FireWorks_RiseTrail_L_Fade20_Cutout_01.png、T_EFX_FireWorks_RiseTrail_L_Fade30_16x1_01.png、T_EFX_FireWorks_RiseTrail_L_Fade30_4K_16x1_01.png、T_EFX_FireWorks_RiseTrail_L_Fade30_Cutout_01.png、T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01.png、T_EFX_FireWorks_RiseTrail_L_Loop_4K_16x1_01.png、T_EFX_FireWorks_RiseTrail_L_Loop_Cutout_01.png、T_EFX_FireWorks_RiseTrail_L_Ramp_01.png
+00:22:58 大文件（贴图）在 C:\Users\locmai\WorkBuddy\Worktrees\FireWorksLab\origin-main-cf44c471\analysis\local\输出\TR3L，不上传
+00:22:58 完成，用时 16.9 分钟

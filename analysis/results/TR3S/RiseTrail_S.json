@@ -1,0 +1,452 @@
+{
+  "name": "RiseTrail_S",
+  "type": "trailS",
+  "typeName": "升空尾缀 · 小",
+  "form": "trail",
+  "tool": "烟花母版烘焙器 3.7",
+  "engine": "gpu",
+  "texture": {
+    "width": 2048,
+    "height": 2048,
+    "cols": 16,
+    "rows": 1,
+    "channels": 4,
+    "frames": 64,
+    "cellPx": [
+      128,
+      2048
+    ],
+    "order": "先填满 R 的全部格子再接 G、B、A；格子行优先，左上为第 0 帧",
+    "encoding": "线性灰度",
+    "output": "combined"
+  },
+  "t0": 0,
+  "duration": 2.1333333333333333,
+  "frames": 64,
+  "frameCurve": {
+    "channel": "Dynamic Parameter 第三通道",
+    "keys": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        64
+      ]
+    ]
+  },
+  "trail": {
+    "riseSeconds": 4.199999999999922,
+    "loopSeconds": 2.1333333333333333,
+    "relayLoopFrame": 62,
+    "riseSizeByLifeY": [
+      [
+        0,
+        0.35
+      ],
+      [
+        0.1,
+        1.394
+      ],
+      [
+        0.2,
+        1.785
+      ],
+      [
+        0.3,
+        1.382
+      ],
+      [
+        0.4,
+        1.055
+      ],
+      [
+        0.5,
+        0.851
+      ],
+      [
+        0.6,
+        0.664
+      ],
+      [
+        0.7,
+        0.503
+      ],
+      [
+        0.8,
+        0.359
+      ],
+      [
+        0.9,
+        0.35
+      ],
+      [
+        1,
+        0.35
+      ]
+    ],
+    "fades": [
+      {
+        "fps": 30,
+        "frames": 64,
+        "seconds": 2.133
+      },
+      {
+        "fps": 20,
+        "frames": 64,
+        "seconds": 3.2
+      }
+    ],
+    "relayDiff": [
+      0,
+      0
+    ],
+    "trailLengthM": 21.72,
+    "engineBrightness": 1,
+    "riseFit": {
+      "v0": 74.10238425498609,
+      "k": 0.29853826189179605,
+      "a": 9.81,
+      "err": 0.009559257074344693,
+      "T": 4.199999999999922,
+      "H": 119.82170200013788
+    },
+    "pivotHead": 0.9505472040637334,
+    "fill": {
+      "avg": 0.9285659790039062,
+      "p10": 0.92236328125,
+      "x": 0.9666748046875,
+      "y": 0.9285659790039062
+    },
+    "seam": 0.836221520825773
+  },
+  "frameTimes": [
+    0,
+    0.0333,
+    0.0667,
+    0.1,
+    0.1333,
+    0.1667,
+    0.2,
+    0.2333,
+    0.2667,
+    0.3,
+    0.3333,
+    0.3667,
+    0.4,
+    0.4333,
+    0.4667,
+    0.5,
+    0.5333,
+    0.5667,
+    0.6,
+    0.6333,
+    0.6667,
+    0.7,
+    0.7333,
+    0.7667,
+    0.8,
+    0.8333,
+    0.8667,
+    0.9,
+    0.9333,
+    0.9667,
+    1,
+    1.0333,
+    1.0667,
+    1.1,
+    1.1333,
+    1.1667,
+    1.2,
+    1.2333,
+    1.2667,
+    1.3,
+    1.3333,
+    1.3667,
+    1.4,
+    1.4333,
+    1.4667,
+    1.5,
+    1.5333,
+    1.5667,
+    1.6,
+    1.6333,
+    1.6667,
+    1.7,
+    1.7333,
+    1.7667,
+    1.8,
+    1.8333,
+    1.8667,
+    1.9,
+    1.9333,
+    1.9667,
+    2,
+    2.0333,
+    2.0667,
+    2.1
+  ],
+  "avgFps": 30,
+  "minFps": 30,
+  "maxDispPx": 0,
+  "spriteSizeCm": [
+    171.3,
+    2302.5
+  ],
+  "burstOffsetZcm": -1037.4,
+  "pivotUV": [
+    0.5,
+    0.0495
+  ],
+  "sizeByLife": null,
+  "averageQuadArea": 1,
+  "darkTailFrames": 0,
+  "colorOverLife": [
+    [
+      0,
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1
+      ]
+    ]
+  ],
+  "lightKeys": [
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      1
+    ]
+  ],
+  "selfCheck": {
+    "clipFrames": [],
+    "edgeFrames": [],
+    "chanUse": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "emptyMid": [],
+    "similar": 0,
+    "seam": 0.836221520825773,
+    "maxClip": 0.00014297288280989374
+  },
+  "unitFit": {
+    "v0": 74.10238425498609,
+    "k": 0.29853826189179605,
+    "a": 9.81,
+    "err": 0.009559257074344693,
+    "T": 4.199999999999922,
+    "H": 119.82170200013788
+  },
+  "sizeByLifeXY": {
+    "x": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "y": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ]
+  },
+  "events": [
+    {
+      "t": 0,
+      "type": "launch",
+      "name": "发射",
+      "count": 1
+    },
+    {
+      "t": 4.202,
+      "type": "apex",
+      "name": "到顶",
+      "count": 1
+    }
+  ],
+  "metrics": null,
+  "params": {
+    "duration": 7.7,
+    "seed": 7,
+    "stars": 150,
+    "burstR0": 0,
+    "v0": 150,
+    "vt": 18,
+    "grav": 1,
+    "speedJit": 3,
+    "dirJit": 1.5,
+    "burn": 2.5,
+    "burnJit": 12,
+    "fade": 0.2,
+    "lastFlare": 0.35,
+    "flash": 1,
+    "headSize": 1,
+    "headBright": 1,
+    "flicker": 0.25,
+    "sparkRate": 95,
+    "sparkRateEnd": 1,
+    "sparkLife": 0.55,
+    "sparkSize": 0.35,
+    "sparkSpread": 2.5,
+    "sparkInherit": 0.2,
+    "sparkDrag": 2.2,
+    "sparkGrav": 1,
+    "T0": 2050,
+    "cooling": 0.42,
+    "sparkBright": 1,
+    "twinkle": 0.6,
+    "subDelay": 0.9,
+    "subJit": 10,
+    "subStars": 36,
+    "subSpeed": 40,
+    "subBurn": 0.9,
+    "subTail": 0,
+    "carrierTail": 30,
+    "subPattern": "sphere",
+    "spin": 14,
+    "chaos": 0.8,
+    "beeSpeed": 28,
+    "shellNo": 0,
+    "wind": 0,
+    "turb": 0,
+    "turbScale": 60,
+    "massLoss": 0,
+    "shellVx": 0,
+    "shellVy": 0,
+    "shellSpin": 0,
+    "pattern": "sphere",
+    "tilt": 0,
+    "ringFrac": 0.45,
+    "text": "祭",
+    "waterRefl": 0,
+    "ignDelay": 0,
+    "ignJit": 10,
+    "strobeHz": 0,
+    "strobeDuty": 0.35,
+    "strobeStart": 0.4,
+    "glitter": 0,
+    "glitterDelay": 0.25,
+    "crackle": 0,
+    "crackleDelay": 0.3,
+    "branch": 0,
+    "branchAt": 0.45,
+    "flutter": 0,
+    "flutterHz": 0.7,
+    "riseH": 120,
+    "vtShell": 35,
+    "riseStyle": "gold",
+    "wobble": 0,
+    "wobbleHz": 1.6,
+    "kobanaN": 4,
+    "bunpoN": 3,
+    "trV": 33.7,
+    "trFps": 30,
+    "trInh": 0.12,
+    "trDrag": 5.46875,
+    "trGrav": 0.4,
+    "trCool": 0.32151,
+    "trFRate": 15600,
+    "trFLife": 0.52812,
+    "trFSpread": 1.85647,
+    "trFSize": 0.012,
+    "trFBright": 0.046155,
+    "trMRate": 2288,
+    "trMLife": 0.52085,
+    "trMSpread": 0.31512,
+    "trMSize": 0.022,
+    "trMBright": 0.15978,
+    "trCRate": 1664,
+    "trCLife": 0.5225,
+    "trCSpread": 0.71006,
+    "trCSize": 0.04375,
+    "trCBright": 1,
+    "trWRate": 0,
+    "trWLife": 0.12,
+    "trWSpread": 14,
+    "trWSize": 0.06,
+    "trWBright": 0.06,
+    "trHeadSize": 0.11201,
+    "trHeadBright": 0.50068,
+    "trHalo": 2.2,
+    "trHaloBright": 0.13499,
+    "trTwist": 0.22422,
+    "trTwistN": 6,
+    "trWiggle": 0.24215,
+    "trTwistLag": 0.25,
+    "trFollow": 1,
+    "trBright": 1,
+    "trExport4K": 1,
+    "trIgnite": 0,
+    "loopT": 1,
+    "nozzles": 1,
+    "fanAngle": 70,
+    "spacing": 6,
+    "shotRate": 3,
+    "shotSpeed": 70,
+    "cometBurn": 1.4,
+    "burstStars": 0,
+    "wheelR": 3,
+    "jetSpeed": 28,
+    "jetCone": 10,
+    "jetDir": 90,
+    "groundH": 0,
+    "shutter": 0.05,
+    "fpsFloor": 24,
+    "texW": 2048,
+    "texH": 2048,
+    "cols": 16,
+    "rows": 1,
+    "chans": 4,
+    "outMode": "combined",
+    "encGamma": 1,
+    "frameMode": "uniform",
+    "zoom": "off",
+    "engine": "gpu",
+    "form": "trail",
+    "segAt": 0,
+    "unitElev": 0,
+    "unitFlip": 0,
+    "cellPad": 2,
+    "autoGrid": 0,
+    "type": "trailS"
+  },
+  "materialDefaults": {
+    "stages": [
+      [
+        0,
+        "#ffffff"
+      ]
+    ],
+    "xw": 0.08,
+    "ramp0": "#ffe091",
+    "ramp1": "#ffe8d6",
+    "ramp2": "#fff6e5",
+    "ramp3": "#fff8ec",
+    "headInt": 1,
+    "tailInt": 1
+  }
+}

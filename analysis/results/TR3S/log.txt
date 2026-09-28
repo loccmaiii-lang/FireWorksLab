@@ -1,0 +1,53 @@
+00:06:16 开始：升空尾缀·小 第六版：缩短到 20 m、火星更大颗、白热段更连续（升空尾缀：校准 → 渐变图 → 导出 → 视频）
+00:06:27 [S] 起点 1.6877 I=0.0510 w=0.1045 wave=0.0242 质感_dens=0.3473 质感_lev=0.0629 质感_sat=0.0460 质感_grain=0.0221 质感_col=0.0205 len=0.0062 长 21.6 m
+00:06:32   第1轮 trFRate → 1.56e+04  1.5744  长 21.6 m
+00:06:37   第1轮 trFLife → 0.5281  1.4682  长 21.6 m
+00:06:56   第1轮 trFSize → 0.01536  1.4111  长 21.6 m
+00:07:10   第1轮 trMRate → 2288  1.4074  长 21.6 m
+00:07:15   第1轮 trMLife → 0.434  1.3959  长 21.6 m
+00:07:34   第1轮 trMSize → 0.02358  1.3930  长 21.6 m
+00:08:12   第1轮 trCSpread → 0.9231  1.3696  长 21.7 m
+00:08:22   第1轮 trCSize → 0.035  1.3559  长 21.7 m
+00:08:31   第1轮 trInh → 0.17  1.3480  长 21.4 m
+00:08:36   第1轮 trDrag → 4.375  1.3392  长 21.6 m
+00:09:01   第1轮 trHaloBright → 0.1822  1.3330  长 21.6 m
+00:09:16   第1轮 trWiggle → 0.1794  1.3240  长 21.6 m
+00:09:20   第1轮 trTwistLag → 0.25  1.2991  长 21.6 m
+00:09:40   第1轮 trCool → 0.3858  1.2909  长 21.6 m
+00:09:50   第1轮 _psf → 0.4  1.2850  长 21.6 m
+00:10:34   第2轮 trFSize → 0.01229  1.2493  长 21.6 m
+00:10:49   第2轮 trMRate → 2974  1.2348  长 21.6 m
+00:10:54   第2轮 trMLife → 0.5208  1.2154  长 21.6 m
+00:11:03   第2轮 trMSpread → 0.4097  1.2059  长 21.6 m
+00:11:12   第2轮 trMSize → 0.022  1.2039  长 21.6 m
+00:11:17   第2轮 trMBright → 0.1598  1.2015  长 21.6 m
+00:11:26   第2轮 trCRate → 1664  1.2009  长 21.4 m
+00:11:50   第2轮 trCSize → 0.04375  1.2008  长 21.4 m
+00:12:04   第2轮 trInh → 0.12  1.1743  长 21.7 m
+00:12:08   第2轮 trDrag → 5.469  1.1689  长 21.7 m
+00:12:13   第2轮 trHeadSize → 0.112  1.1630  长 21.7 m
+00:12:22   第2轮 trHeadBright → 0.6509  1.1628  长 21.7 m
+00:12:30   第2轮 trHaloBright → 0.135  1.1599  长 21.7 m
+00:12:44   第2轮 trWiggle → 0.2421  1.1538  长 21.7 m
+00:12:49   第2轮 trTwistLag → 0.35  1.1347  长 21.7 m
+00:13:12   第2轮 _psf → 0.7  1.1311  长 21.7 m
+00:13:54   第3轮 trFSize → 0.012  1.1299  长 21.7 m
+00:14:30   第3轮 trMSpread → 0.3151  1.1244  长 21.7 m
+00:16:02   第3轮 trHeadBright → 0.5007  1.1243  长 21.7 m
+00:18:02   第4轮 trMRate → 2288  1.1243  长 21.7 m
+00:19:03   第4轮 trCSpread → 0.7101  1.1139  长 21.7 m
+00:20:29   第4轮 trTwistLag → 0.25  1.1115  长 21.7 m
+00:20:48   第4轮 trCool → 0.3215  1.1094  长 21.7 m
+00:21:02 [S] 结束 1.1094 I=0.0717 w=0.0572 wave=0.0256 质感_dens=0.1079 质感_lev=0.0602 质感_sat=0.0456 质感_grain=0.0140 质感_col=0.0208 len=0.0068
+00:21:02 S 校准用时 14.8 分钟
+00:21:06 [S] 渐变图起点 0.2061 col=0.0216
+00:21:19   第1轮 0.2060 col=0.0221 #ffe0a6 #ffe8cb #fff6df #fff8ec
+00:21:31   第2轮 0.2060 col=0.0221 #ffe0a6 #ffe8cb #fff6df #fff8ec
+00:21:49   第3轮 0.1906 col=0.0177 #ffe09d #ffe8d6 #fff6df #fff8ec
+00:22:04   第4轮 0.1867 col=0.0165 #ffe095 #ffe8d6 #fff6df #fff8ec
+00:22:19   第5轮 0.1867 col=0.0165 #ffe095 #ffe8d6 #fff6df #fff8ec
+00:22:44   第6轮 0.1842 col=0.0155 #ffe091 #ffe8d6 #fff6e5 #fff8ec
+00:22:44 [S] 渐变图 {'ramp0': '#ffe091', 'ramp1': '#ffe8d6', 'ramp2': '#fff6e5', 'ramp3': '#fff8ec'}
+00:23:17 S 导出 33 秒：RiseTrail_S.json、RiseTrail_S_Cascade参数.txt、RiseTrail_S_曲线.csv、T_EFX_FireWorks_RiseTrail_S_Fade20_16x1_01.png、T_EFX_FireWorks_RiseTrail_S_Fade20_4K_16x1_01.png、T_EFX_FireWorks_RiseTrail_S_Fade20_Cutout_01.png、T_EFX_FireWorks_RiseTrail_S_Fade30_16x1_01.png、T_EFX_FireWorks_RiseTrail_S_Fade30_4K_16x1_01.png、T_EFX_FireWorks_RiseTrail_S_Fade30_Cutout_01.png、T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01.png、T_EFX_FireWorks_RiseTrail_S_Loop_4K_16x1_01.png、T_EFX_FireWorks_RiseTrail_S_Loop_Cutout_01.png、T_EFX_FireWorks_RiseTrail_S_Ramp_01.png
+00:23:18 大文件（贴图）在 C:\Users\locmai\WorkBuddy\Worktrees\FireWorksLab\origin-main-cf44c471\analysis\local\输出\TR3S，不上传
+00:23:18 完成，用时 17.0 分钟

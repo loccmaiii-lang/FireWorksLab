@@ -1,0 +1,122 @@
+烟花母版：RiseTrail_S（升空尾缀 · 小）
+工具：烟花母版烘焙器 3.7（模拟内核：GPU；产物：升空尾缀序列（循环 + 消散））
+
+【贴图】
+T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01.png（上升循环）、T_EFX_FireWorks_RiseTrail_S_Fade30_16x1_01.png（消散，30 fps）、T_EFX_FireWorks_RiseTrail_S_Fade20_16x1_01.png（消散，20 fps）；另有 4K 母版（名字里带 _4K，4096×4096，单格 256×4096）
+尺寸 2048×2048，灰度线性，RGBA 接力：先填满 R 的 16 格（第 0–15 帧），再接 G、B、A，共 64 帧
+格子 16 列 × 1 行，单格 128×2048（1:16，贴合细长的尾迹）；格子四周留空 2 像素
+导入：sRGB 关闭，压缩 BC7
+T_EFX_FireWorks_RiseTrail_S_Ramp_01.png：渐变图 256×8（sRGB），暗 → 亮 = 冷却的橙红火星 → 金色火星 → 白热段与星头
+
+【材质实例】
+项目现有的 RGBA 序列帧材质；列 = 16，行 = 1；Ramp = T_EFX_FireWorks_RiseTrail_S_Ramp_01；循环、消散各一个材质实例（只换贴图）
+
+【Cutout：裁掉面片上的空白，减少 overdraw】
+上升循环：Required → Cutout Texture = T_EFX_FireWorks_RiseTrail_S_Loop_Cutout_01（512×512，所有帧叠在一起的轮廓）；
+  Sub Images Horizontal = 1，Vertical = 1；Bounding Mode = Eight Vertices；Opacity Source Mode = Alpha；Alpha Threshold = 0.1；不加 SubUV 模块。
+  面片剩下约 83%（引擎按轮廓外接八边形，会略大一点）。材质照旧用 Dynamic Parameter 第三通道取帧。
+消散 30 fps：Required → Cutout Texture = T_EFX_FireWorks_RiseTrail_S_Fade30_Cutout_01（512×512，所有帧叠在一起的轮廓）；
+  Sub Images Horizontal = 1，Vertical = 1；Bounding Mode = Eight Vertices；Opacity Source Mode = Alpha；Alpha Threshold = 0.1；不加 SubUV 模块。
+  面片剩下约 82%（引擎按轮廓外接八边形，会略大一点）。材质照旧用 Dynamic Parameter 第三通道取帧。
+消散 20 fps：Required → Cutout Texture = T_EFX_FireWorks_RiseTrail_S_Fade20_Cutout_01（512×512，所有帧叠在一起的轮廓）；
+  Sub Images Horizontal = 1，Vertical = 1；Bounding Mode = Eight Vertices；Opacity Source Mode = Alpha；Alpha Threshold = 0.1；不加 SubUV 模块。
+  面片剩下约 84%（引擎按轮廓外接八边形，会略大一点）。材质照旧用 Dynamic Parameter 第三通道取帧。
+
+【升空尾缀：两个发射器接力】
+弹道（真实二次阻力）：84.5 m/s 出膛，4.20 s 到达 120 m
+Cascade 线性阻力拟合：Initial Velocity Z = 7410 cm/s；Drag = 0.299；Const Acceleration Z = −981 cm/s²（误差 1.0%）
+面片 1.71 × 23.02 m 对应上升速度 33.7 m/s 时的尾迹（尾迹长约 21.7 m）
+
+1）上升循环（T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01）
+Required：Screen Alignment = Velocity；Emitter Duration = 4.200 s；Emitter Loops = 1
+所有曲线（Size By Life、Dynamic Parameter 帧号、Color Over Life、Location / Velocity 等）：每个关键点的 Interp Mode = Linear。CurveAuto 会在关键点之间冲过头：尺寸来回抖、帧号倒退一抖一抖。Size By Life 勾选 Multiply X、Multiply Y。
+  Pivot Offset：星头在贴图里距底边 95.1% 处。默认 (−0.5, −0.5) 是面片中心；把 Y 改为 -0.049，
+  若星头跑到另一端就改为 -0.951。以编辑器里星头落在粒子位置、尾巴拖在后面为准
+Spawn：Rate = 0；Burst Count = 1，Time = 0；Lifetime = 4.200 s
+Initial Size：X = 171 cm，Y = 2302 cm
+Initial Velocity：Z = 7410 cm/s；Drag Coefficient = 0.299；Const Acceleration：Z = −981 cm/s²
+Size By Life（Y 单独，X 保持 1；尾迹长度跟着上升速度变：出膛快 → 长，到顶慢 → 短）
+  相对时间    Y 倍数
+  0.0000      0.350
+  0.1000      1.394
+  0.2000      1.785
+  0.3000      1.382
+  0.4000      1.055
+  0.5000      0.851
+  0.6000      0.664
+  0.7000      0.503
+  0.8000      0.359
+  0.9000      0.350
+  1.0000      0.350
+Dynamic Parameter 第三通道 = 帧号（锯齿，Linear；64 帧 / 2.133 s，即 30 fps）
+  0.0000      0.000
+  0.5078      63.999
+  0.5079      0.000
+  0.9999      61.999
+  真循环：火花按周期性编号生成，第 64 帧就是第 0 帧，不做交叉淡化。
+Color Over Life：白色常量；亮度倍数 ×1（三档：小 ×1、中 ×1.6、大 ×2.5，保留强弱差别）
+摆动：螺旋扭动已经烘在贴图里（星头每帧固定在 Pivot，只有后面的尾迹成波浪摆动），不需要 Orbit
+
+【可直接粘贴】在 Cascade 细节面板里：先把 Distribution 类型选成下面写的曲线类型，展开到 Points（或 Constant）那一行，右键 → 粘贴。
+  所有曲线点已是 Linear。粘贴不进去时，右键一条现有曲线的 Points → 复制，把文本发给 Claude 对格式。
+▸ Initial Size → Start Size → Distribution Vector Constant → Constant
+(X=171.285638,Y=2302.458568,Z=1.000000)
+▸ Initial Velocity → Start Velocity → Distribution Vector Constant → Constant
+(X=0.000000,Y=0.000000,Z=7410.238425)
+▸ Const Acceleration → Acceleration
+(X=0.000000,Y=0.000000,Z=-981.000000)
+▸ Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points
+((InVal=0.000000,OutVal=(X=1.000000,Y=0.350000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.100000,OutVal=(X=1.000000,Y=1.394000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.200000,OutVal=(X=1.000000,Y=1.785000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.300000,OutVal=(X=1.000000,Y=1.382000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.400000,OutVal=(X=1.000000,Y=1.055000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.500000,OutVal=(X=1.000000,Y=0.851000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.600000,OutVal=(X=1.000000,Y=0.664000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.700000,OutVal=(X=1.000000,Y=0.503000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.800000,OutVal=(X=1.000000,Y=0.359000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.900000,OutVal=(X=1.000000,Y=0.350000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=1.000000,OutVal=(X=1.000000,Y=0.350000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear))
+▸ Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points
+((InVal=0.000000,OutVal=0.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.507840,OutVal=63.999000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.507940,OutVal=0.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.999900,OutVal=61.999000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear))
+▸ Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘亮度倍数 ×1）
+((InVal=0.000000,OutVal=(X=1.000000,Y=1.000000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=1.000000,OutVal=(X=1.000000,Y=1.000000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear))
+
+2）开花后消散（二选一）
+  T_EFX_FireWorks_RiseTrail_S_Fade30_16x1_01：64 帧，按 30 fps 播放 = 2.13 s
+  T_EFX_FireWorks_RiseTrail_S_Fade20_16x1_01：64 帧，按 20 fps 播放 = 3.20 s
+Required：Screen Alignment = Velocity；Emitter Delay = 4.200 s；Emitter Duration = 消散时长；Loops = 1；Pivot Offset 同上
+Spawn：Burst Count = 1；Lifetime = 消散时长
+Initial Location：Z = 11982 cm（开花点）
+Initial Velocity：Z = 1 cm/s（只给面片定方向；不要 Drag、Const Acceleration）。斜着发射时改成与上升末段相同的方向
+Initial Size：X = 171 cm，Y = 806 cm（= 上升最后的 Y 倍数 0.350 × 2302 cm）
+Dynamic Parameter 第三通道 = 帧号（Linear）：0 → 64
+Color Over Life：同上
+【可直接粘贴】在 Cascade 细节面板里：先把 Distribution 类型选成下面写的曲线类型，展开到 Points（或 Constant）那一行，右键 → 粘贴。
+  所有曲线点已是 Linear。粘贴不进去时，右键一条现有曲线的 Points → 复制，把文本发给 Claude 对格式。
+▸ Initial Location → Start Location → Distribution Vector Constant → Constant
+(X=0.000000,Y=0.000000,Z=11982.170200)
+▸ Initial Size → Start Size → Distribution Vector Constant → Constant
+(X=171.285638,Y=805.860499,Z=1.000000)
+▸ Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points
+((InVal=0.000000,OutVal=0.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=1.000000,OutVal=63.999000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear))
+
+接力：上升结束时循环正好播到第 62 帧；消散第 0 帧就是这一帧（逐像素差值 0 / 0），
+  之后星头熄灭，火花不再喷出，已有的火星从下往上逐颗冷却熄灭。
+  改了开花高度、弹体终端速度或帧率，要重新导出（结束帧会变）。
+
+【自检】
+  画面占比：平均 93%，最差 10% 的帧 ≥ 92%
+  过曝：无
+  边缘渗色：无（留边 2 像素）
+  通道布局：R 有内容，G 有内容，B 有内容，A 有内容
+  近似帧：0 对相邻帧几乎相同
+  循环接缝：0.84（≈1 无缝）
+
+【烟（上升尾烟）】
+挂在弹体上：Location → Emitter InitLoc；Spawn Rate 25 /s；Lifetime 3–5 s；Initial Size 150 cm，Size By Life 1 → 4；Drag 1.5；Alpha 0.25 → 0
+
+【声音节点（相对发射，秒）】
+  0.000  发射
+  4.202  到顶
+  玩家听到的时刻 = 事件时刻 + 距离 ÷ 343 m/s（800 m 约晚 2.3 s）
+
+【LOD 建议（1080p、竖直视角 60°）】
+LOD 0：0–13 m，全部层，2K 贴图
+LOD 1：13–25 m，屏幕上已小于单格像素：1K 贴图即可；粒子数/火花发射率减半；关闭 Light
+LOD 2：25 m 以外：只留本层；去掉芯（小缩放的牡丹层）和烟
+（Cascade：粒子系统的 LOD Distances 依次填 0、1300、2500，单位 cm）
+
+
+【说明】
+RiseTrail_S.json 保存了全部参数，用烘焙器「导入参数 JSON」即可继续修改。

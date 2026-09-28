@@ -1,0 +1,6 @@
+00:23:58 开始：金芒菊导出（新命名 + 烘焙器预览）：Zoom / Fixed（导出素材）
+00:23:59 JinMangJu_Zoom 导出 2 秒：JinMangJu_Zoom.json、JinMangJu_Zoom_Cascade参数.txt、JinMangJu_Zoom_曲线.csv、T_EFX_FireWorks_JinMangJu_Zoom_8x8_01.png、T_EFX_FireWorks_JinMangJu_Zoom_Cutout_01.png、T_EFX_FireWorks_JinMangJu_Zoom_FrameTest_01.png、T_EFX_FireWorks_JinMangJu_Zoom_Ramp_01.png
+00:24:01 JinMangJu_Fixed 导出 1 秒：JinMangJu_Fixed.json、JinMangJu_Fixed_Cascade参数.txt、JinMangJu_Fixed_曲线.csv、T_EFX_FireWorks_JinMangJu_Fixed_8x8_01.png、T_EFX_FireWorks_JinMangJu_Fixed_Cutout_01.png、T_EFX_FireWorks_JinMangJu_Fixed_FrameTest_01.png、T_EFX_FireWorks_JinMangJu_Fixed_Ramp_01.png
+00:24:02 烘焙器预览 preview.js：3044 KB
+00:24:02 大文件（贴图）在 C:\Users\locmai\WorkBuddy\Worktrees\FireWorksLab\origin-main-cf44c471\analysis\local\输出\JM2E，不上传
+00:24:02 完成，用时 0.1 分钟
