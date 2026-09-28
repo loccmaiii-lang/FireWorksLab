@@ -20,6 +20,8 @@ async function assetBlob(name) {
   const f = asset.files.get(name); if (!f) throw new Error('缺少 ' + name);
   return typeof f === 'string' ? await (await fetch(f)).blob() : f;
 }
+// 帧号曲线反查：第 f 帧在相对寿命的哪个时刻（取颜色用）
+function frameU(keys, f) { let lo = 0, hi = 1; for (let i = 0; i < 30; i++) { const m = (lo + hi) / 2; if (curveAt(keys, m) < f) lo = m; else hi = m; } return hi; }
 async function assetImage(name) { return await createImageBitmap(await assetBlob(name)); }
 function pixelsOf(img, w = img.width, h = img.height) {
   const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d', { willReadFrequently: true });
@@ -27,7 +29,7 @@ function pixelsOf(img, w = img.width, h = img.height) {
 }
 // 一个发射器、一套贴图 → 每帧一张小画布
 async function assetFrames(tex) {
-  const img = await assetImage(tex.file), cw = img.width / tex.cols, ch = img.height / tex.rows, S = ASSET_CELL, per = tex.cols * tex.rows, out = [];
+  const img = await assetImage(asset.files.has(tex.file) ? tex.file : tex.file + '#R'), cw = img.width / tex.cols, ch = img.height / tex.rows, S = ASSET_CELL, per = tex.cols * tex.rows, out = [];
   if (tex.mode === 'rgb') {
     for (let f = 0; f < tex.frames; f++) {
       const c = document.createElement('canvas'); c.width = c.height = S; const r = Math.floor(f / tex.cols), q = f % tex.cols;
@@ -35,21 +37,38 @@ async function assetFrames(tex) {
     }
     return out;
   }
-  // 灰度 RGBA 接力：先缩到每格 S，再按通道取值
-  const W = tex.cols * S, H = tex.rows * S;
-  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
-  const bm = await createImageBitmap(await assetBlob(tex.file), { premultiplyAlpha: 'none', colorSpaceConversion: 'none', resizeWidth: W, resizeHeight: H, resizeQuality: 'high' });
-  const g0 = cv.getContext('2d', { willReadFrequently: true }); g0.drawImage(bm, 0, 0); const src = g0.getImageData(0, 0, W, H).data;
+  // 灰度 RGBA 接力：先缩到每格 S，再按通道取值。
+  //   浏览器解 PNG 时会用 A 预乘 RGB（A = 0 的地方 RGB 被清零），所以 preview.js 里每个通道单独存一张灰度图（文件名 + '#R' 等）
+  const SH = Math.max(1, Math.round(S * ch / cw)), W = tex.cols * S, H = tex.rows * SH;
+  const chanData = [];
+  const readGray = async blob => {
+    const bm = await createImageBitmap(blob, { colorSpaceConversion: 'none', resizeWidth: W, resizeHeight: H, resizeQuality: 'high' });
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = H; const g0 = cv.getContext('2d', { willReadFrequently: true }); g0.drawImage(bm, 0, 0);
+    const d = g0.getImageData(0, 0, W, H).data, o = new Uint8Array(W * H); for (let i = 0; i < o.length; i++) o[i] = d[i * 4]; return o;
+  };
+  if (asset.files.has(tex.file + '#R')) {
+    for (const c of 'RGBA'.slice(0, tex.chans || 4)) chanData.push(asset.files.has(tex.file + '#' + c) ? await readGray(await assetBlob(tex.file + '#' + c)) : null);
+  } else {
+    const bm = await createImageBitmap(await assetBlob(tex.file), { premultiplyAlpha: 'none', colorSpaceConversion: 'none', resizeWidth: W, resizeHeight: H, resizeQuality: 'high' });
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = H; const g0 = cv.getContext('2d', { willReadFrequently: true }); g0.drawImage(bm, 0, 0);
+    const d = g0.getImageData(0, 0, W, H).data;
+    for (let c = 0; c < 4; c++) { const o = new Uint8Array(W * H); for (let i = 0; i < o.length; i++) o[i] = d[i * 4 + c]; chanData.push(o); }
+  }
   let ramp = null;
   if (tex.ramp) { const ri = await assetImage(tex.ramp), rp = pixelsOf(ri, 256, 1); ramp = []; for (let i = 0; i < 256; i++) ramp.push([s2lin(rp[i * 4] / 255), s2lin(rp[i * 4 + 1] / 255), s2lin(rp[i * 4 + 2] / 255)]); }
+  const perChan = tex.chans === 1 ? tex.frames : per;
   for (let f = 0; f < tex.frames; f++) {
-    const chn = Math.floor(f / per), cell = f % per, r = Math.floor(cell / tex.cols), q = cell % tex.cols;
-    const u = tex.keys[Math.min(f, tex.keys.length - 1)][0], col = tex.col ? curveAt(tex.col, u) : [1, 1, 1];
-    const c = document.createElement('canvas'); c.width = c.height = S; const g = c.getContext('2d'); const id = g.createImageData(S, S), d = id.data;
-    const lut = new Uint8ClampedArray(256 * 3);
-    for (let v = 0; v < 256; v++) { const x = v / 255, rc = ramp ? ramp[v] : [1, 1, 1]; for (let j = 0; j < 3; j++) lut[v * 3 + j] = Math.round(lin2s(Math.min(1, rc[j] * x * col[j])) * 255); }
-    for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {
-      const v = src[((r * S + y) * W + q * S + x) * 4 + chn], o = (y * S + x) * 4;
+    const chn = Math.floor(f / perChan), cell = f % perChan, r = Math.floor(cell / tex.cols), q = cell % tex.cols, src = chanData[chn] || chanData[0];
+    const u = frameU(tex.keys, f), col = tex.col ? curveAt(tex.col, u) : [1, 1, 1];
+    const c = document.createElement('canvas'); c.width = S; c.height = SH; const g = c.getContext('2d'); const id = g.createImageData(S, SH), d = id.data;
+    const lut = new Uint8ClampedArray(256 * 3), gm = tex.gamma || 1;
+    // tone 'baker'：和烘焙器「导出效果」一样——材质亮度 Ramp(v)·v·颜色·4，显示 1 − e^(−x) 再 gamma 2.2（导出母版用）；否则直接 sRGB（单元贴图用）
+    for (let v = 0; v < 256; v++) {
+      const x = Math.pow(v / 255, gm), vi = Math.round(x * 255), rc = ramp ? ramp[Math.min(255, vi)] : [1, 1, 1];
+      for (let j = 0; j < 3; j++) { const l = rc[j] * x * col[j]; lut[v * 3 + j] = Math.round((tex.tone === 'baker' ? Math.pow(1 - Math.exp(-4 * l), 1 / 2.2) : lin2s(Math.min(1, l))) * 255); }
+    }
+    for (let y = 0; y < SH; y++) for (let x = 0; x < S; x++) {
+      const v = src[(r * SH + y) * W + q * S + x], o = (y * S + x) * 4;
       d[o] = lut[v * 3]; d[o + 1] = lut[v * 3 + 1]; d[o + 2] = lut[v * 3 + 2]; d[o + 3] = 255;
     }
     g.putImageData(id, 0, 0); out.push(c);
@@ -79,7 +98,7 @@ async function assetLoadVariant() {
     for (const e of asset.emit) {
       const tex = e.def.tex[asset.variant] || e.def.tex[Object.keys(e.def.tex)[0]];
       e.tex = tex; e.frames = await assetFrames(tex);
-      e.cut = e.def.cutout && asset.files.has(e.def.cutout) ? await assetImage(e.def.cutout) : null;
+      const cf = tex.cutout || e.def.cutout; e.cut = cf && asset.files.has(cf) ? await assetImage(cf) : null;
       busy(true, null, ++i / asset.emit.length);
     }
     asset.ready = true;
@@ -134,12 +153,13 @@ function renderAssets() {
     const gz = k > 0 ? acc[2] / k * (age - s1) : 0.5 * acc[2] * age * age, gx = k > 0 ? acc[0] / k * (age - s1) : 0.5 * acc[0] * age * age;
     const x = b.p[0] + b.v[0] * s1 + gx, z = b.p[2] + b.v[2] * s1 + gz;
     const u = age / b.life, f = Math.max(0, Math.min(e.frames.length - 1, Math.floor(curveAt(e.tex.keys, u))));
-    let sz = b.size; if (e.def.sizeKeys) sz *= curveAt(e.def.sizeKeys, u);
-    const s = sz * pxm, cx = W / 2 + x * pxm, cy = H / 2 - z * pxm;
-    g.save(); g.translate(cx, cy); g.rotate(b.rot); g.drawImage(e.frames[f], -s / 2, -s / 2, s, s);
-    if (asset.cutout && e.cut) { g.globalCompositeOperation = 'source-over'; g.globalAlpha = 0.18; g.drawImage(e.cut, -s / 2, -s / 2, s, s); g.globalAlpha = Math.min(1, asset.gain); g.globalCompositeOperation = 'lighter'; }
+    const tx = e.tex, zk = tx.sizeKeys ? (v => Array.isArray(v) ? v[0] : v)(curveAt(tx.sizeKeys, u)) : 1, off = tx.offset || [0, 0];
+    const sw = (tx.wh ? tx.wh[0] : b.size) * zk * pxm, sh = (tx.wh ? tx.wh[1] : b.size) * zk * pxm;
+    const cx = W / 2 + (x + off[0]) * pxm, cy = H / 2 - (z + off[1]) * pxm;
+    g.save(); g.translate(cx, cy); g.rotate(b.rot); g.drawImage(e.frames[f], -sw / 2, -sh / 2, sw, sh);
+    if (asset.cutout && e.cut) { g.globalCompositeOperation = 'source-over'; g.globalAlpha = 0.18; g.drawImage(e.cut, -sw / 2, -sh / 2, sw, sh); g.globalAlpha = Math.min(1, asset.gain); g.globalCompositeOperation = 'lighter'; }
     g.restore();
-    alive++; area += s * s; fr[e.def.name] = f;
+    alive++; area += sw * sh; fr[e.def.name] = f;
   }
   g.globalCompositeOperation = 'source-over'; g.globalAlpha = 1;
   const fs = Object.values(fr); hudText = `${(asset.man.variants || {})[asset.variant] || asset.variant} · 粒子 ${alive} · 帧 ${fs.length ? Math.min(...fs) + (Math.max(...fs) !== Math.min(...fs) ? '–' + Math.max(...fs) : '') : '-'} · 面片合计 ${(area / (W * H) * 100).toFixed(0)}% 画面`;

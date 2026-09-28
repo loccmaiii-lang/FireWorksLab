@@ -41,18 +41,19 @@ ${items.map(([where, txt]) => `▸ ${where}\n${txt}`).join('\n')}
 function texSection(name, b) {
   const P = b.P, L = b.meta.L, parts = [];
   if (b.form === 'trail') return `【贴图】
-T_${name}_Loop.png（上升循环）${b.fades.map(f => `、T_${name}_Fade${f.fps}.png（消散，${f.fps} fps）`).join('')}${P.trExport4K ? '；另有 _4K 母版（4096×4096，单格 256×4096）' : ''}
+${TN(name, 'Loop', L)}.png（上升循环）${b.fades.map(f => `、${TN(name, 'Fade' + f.fps, L)}.png（消散，${f.fps} fps）`).join('')}${P.trExport4K ? '；另有 4K 母版（名字里带 _4K，4096×4096，单格 256×4096）' : ''}
 尺寸 ${P.texW}×${P.texH}，灰度线性，RGBA 接力：先填满 R 的 ${L.per} 格（第 0–${L.per - 1} 帧），再接 G、B、A，共 ${L.F} 帧
 格子 ${L.cols} 列 × ${L.rows} 行，单格 ${L.cellW}×${L.cellH}（1:${Math.round(L.cellH / L.cellW)}，贴合细长的尾迹）；格子四周留空 ${P.cellPad} 像素
 导入：sRGB 关闭，压缩 BC7
-T_${name}_Ramp.png：渐变图 256×8（sRGB），暗 → 亮 = 冷却的橙红火星 → 金色火星 → 白热段与星头
+${TN(name, 'Ramp')}.png：渐变图 256×8（sRGB），暗 → 亮 = 冷却的橙红火星 → 金色火星 → 白热段与星头
 
 【材质实例】
-项目现有的 RGBA 序列帧材质；列 = ${L.cols}，行 = ${L.rows}；Ramp = T_${name}_Ramp；循环、消散各一个材质实例（只换贴图）
+项目现有的 RGBA 序列帧材质；列 = ${L.cols}，行 = ${L.rows}；Ramp = ${TN(name, 'Ramp')}；循环、消散各一个材质实例（只换贴图）
 `;
   for (let s = b, i = 0; s; s = s.next, i++) {
     const sx = b.next ? '_' + 'AB'[i] : '';
-    parts.push(s.tail ? `T_${name}${sx}_Head.png（星头与闪光）、T_${name}${sx}_Tail.png（拖尾火花）` : `T_${name}${sx}.png（星头、闪光、拖尾合并）`);
+    const seg = b.next ? 'AB'[i] : '', SL = s.meta.L;
+    parts.push(s.tail ? `${TN(name, joinPart(seg, 'Head'), SL)}.png（星头与闪光）、${TN(name, joinPart(seg, 'Tail'), SL)}.png（拖尾火花）` : `${TN(name, seg, SL)}.png（星头、闪光、拖尾合并）`);
   }
   const chanTxt = L.chans === 4 ? `RGBA 接力：先填满 R 的 ${L.per} 格（第 0–${L.per - 1} 帧），再接 G（${L.per}–${2 * L.per - 1}）、B（${2 * L.per}–${3 * L.per - 1}）、A（${3 * L.per}–${4 * L.per - 1}）` : '单通道（RGB 相同）';
   return `【贴图】
@@ -60,13 +61,13 @@ ${parts.join('\n')}
 尺寸 ${P.texW}×${P.texH}，灰度（${P.encGamma === 1 ? '线性' : 'Gamma ' + P.encGamma}），${chanTxt}
 格子 ${L.cols} 列 × ${L.rows} 行，行优先，左上为第 0 帧；单格 ${L.cellW}×${L.cellH} 像素；共 ${L.F} 帧；格子四周留空 ${P.cellPad} 像素
 导入：sRGB 关闭，压缩 BC7；1K 版本在引擎里复制一张，把最大尺寸设为 1024 即可
-T_${name}_帧号测试.png：排查用。格子、接力、取景与正式贴图完全相同，内容是帧号 + 以爆点为中心的固定大小圆和网格。
+${TN(name, 'FrameTest')}.png（帧号测试）：排查用。格子、接力、取景与正式贴图完全相同，内容是帧号 + 以爆点为中心的固定大小圆和网格。
   把材质实例的贴图临时换成它播放：帧号应连续递增不倒退，圆应不动、不胀缩、不变扁。
   帧号乱跳 / 倒退 → 帧号曲线或材质的接力解码不对；圆胀缩、晃动 → Size By Life / 位置曲线不对；圆变扁 → 对齐方式或 Initial Size 不对
-T_${name}_Ramp.png：渐变图 256×8（sRGB），灰度从暗到亮依次取：拖尾冷却色 → 拖尾高温色 → 星头高温色
+${TN(name, 'Ramp')}.png：渐变图 256×8（sRGB），灰度从暗到亮依次取：拖尾冷却色 → 拖尾高温色 → 星头高温色
 
 【材质实例】
-项目现有的 RGBA 序列帧材质；列 = ${L.cols}，行 = ${L.rows}；Ramp = T_${name}_Ramp
+项目现有的 RGBA 序列帧材质；列 = ${L.cols}，行 = ${L.rows}；Ramp = ${TN(name, 'Ramp')}
 ${b.tail ? '星头、拖尾各一个材质实例和发射器，两个发射器除贴图和颜色外参数相同。\n' : ''}`;
 }
 function colorSection(M, D, t0, split) {
@@ -202,13 +203,13 @@ ${keyLines(coolKeys)}
 }
 function trailEmitter(b, M, name) {
   const m = b.meta, P = b.P, f = m.fit, T = m.T, F = m.L.F, last = m.sizeKeysRise[m.sizeKeysRise.length - 1][1];
-  const fades = b.fades.map(x => `T_${name}_Fade${x.fps}：${F} 帧，按 ${x.fps} fps 播放 = ${fx(F / x.fps, 2)} s`).join('\n  ');
+  const fades = b.fades.map(x => `${TN(name, 'Fade' + x.fps, b.meta.L)}：${F} 帧，按 ${x.fps} fps 播放 = ${fx(F / x.fps, 2)} s`).join('\n  ');
   return `【升空尾缀：两个发射器接力】
 弹道（真实二次阻力）：${fx(riseInfo(P).v0, 1)} m/s 出膛，${fx(T, 2)} s 到达 ${fx(f.H, 0)} m
 Cascade 线性阻力拟合：Initial Velocity Z = ${cm(f.v0)} cm/s；Drag = ${fx(f.k, 3)}；Const Acceleration Z = −981 cm/s²（误差 ${fx(f.err * 100, 1)}%）
 面片 ${fx(m.Ww, 2)} × ${fx(m.Wh, 2)} m 对应上升速度 ${fx(P.trV, 1)} m/s 时的尾迹（尾迹长约 ${fx(m.trailLen, 1)} m）
 
-1）上升循环（T_${name}_Loop）
+1）上升循环（${TN(name, 'Loop', b.meta.L)}）
 Required：Screen Alignment = Velocity；Emitter Duration = ${fx(T, 3)} s；Emitter Loops = 1
 ${CURVE_NOTE}
   Pivot Offset：星头在贴图里距底边 ${fx(m.hb * 100, 1)}% 处。默认 (−0.5, −0.5) 是面片中心；把 Y 改为 ${fx(-(1 - m.hb), 3)}，
@@ -331,14 +332,14 @@ function bigShellSection(b) {
 }
 // Cutout：裁掉面片空白（Required 的 Cutout Texture）
 function cutoutSection(name, b) {
-  const one = (label, base, cut) => cut ? `${label ? label + '：' : ''}Required → Cutout Texture = ${base}_Cutout（${cut.size}×${cut.size}，所有帧叠在一起的轮廓）；
+  const one = (label, base, cut) => cut ? `${label ? label + '：' : ''}Required → Cutout Texture = ${base}（${cut.size}×${cut.size}，所有帧叠在一起的轮廓）；
   Sub Images Horizontal = 1，Vertical = 1；Bounding Mode = Eight Vertices；Opacity Source Mode = Alpha；Alpha Threshold = 0.1；不加 SubUV 模块。
   面片剩下约 ${Math.round(cut.cover * 100)}%（引擎按轮廓外接八边形，会略大一点）。材质照旧用 Dynamic Parameter 第三通道取帧。` : '';
   const parts = [];
   if (b.form === 'trail') {
-    parts.push(one('上升循环', `T_${name}_Loop`, b.meta.cutout));
-    for (const f of b.fades || []) parts.push(one(`消散 ${f.fps} fps`, `T_${name}_Fade${f.fps}`, f.cutout));
-  } else for (let x = b, i = 0; x; x = x.next, i++) parts.push(one(b.next ? `段 ${'AB'[i]}` : '', `T_${name}${b.next ? '_' + 'AB'[i] : ''}`, x.meta.cutout));
+    parts.push(one('上升循环', TN(name, 'Loop_Cutout'), b.meta.cutout));
+    for (const f of b.fades || []) parts.push(one(`消散 ${f.fps} fps`, TN(name, `Fade${f.fps}_Cutout`), f.cutout));
+  } else for (let x = b, i = 0; x; x = x.next, i++) parts.push(one(b.next ? `段 ${'AB'[i]}` : '', TN(name, joinPart(b.next ? 'AB'[i] : '', 'Cutout')), x.meta.cutout));
   const t = parts.filter(Boolean).join('\n');
   return t ? `【Cutout：裁掉面片上的空白，减少 overdraw】\n${t}\n` : '';
 }

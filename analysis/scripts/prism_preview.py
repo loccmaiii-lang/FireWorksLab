@@ -20,6 +20,10 @@ EMIT = {
     'PW2': dict(cluster_r=50.0, vel=0.25, drag=2.5, grav=3.0, ball_r=9.0, size_jit=0.15, life_jit=0.08,
                 bursts={'01': [0.00, 0.08, 0.16, 0.26], '02': [0.03, 0.13, 0.24], '03': [0.05, 0.18, 0.30], '04': [0.10, 0.21, 0.33]},
                 counts={'01': [2, 2, 2, 1], '02': [2, 2, 2], '03': [2, 2, 2], '04': [2, 2, 1]}),
+    # PW3：实拍小球更大（小球半径 ≈ 团半径的 0.26）、更多（约 30 颗）、开得更散（约 0.45 s 内陆续开），颜色比例按实拍星点统计
+    'PW3': dict(cluster_r=44.0, vel=0.25, drag=2.5, grav=3.0, ball_r=11.5, size_jit=0.18, life_jit=0.08,
+                bursts={'01': [0.00, 0.07, 0.15, 0.24, 0.34, 0.44], '02': [0.03, 0.12, 0.22, 0.33, 0.42], '03': [0.05, 0.17, 0.29, 0.40], '04': [0.09, 0.2, 0.31, 0.43]},
+                counts={'01': [2, 2, 2, 2, 1, 1], '02': [2, 2, 2, 1, 1], '03': [2, 2, 2, 1], '04': [2, 1, 1, 1]}),
 }
 
 
@@ -54,7 +58,9 @@ def manifest(set_id, meta):
             'bursts': [[t, n] for t, n in zip(bt, cn)],
             'sphere': {'r': em['cluster_r'], 'surface': True, 'vel': em['vel']}, 'drag': em['drag'], 'accel': [0, 0, -em['grav']],
             'size': [round(size * (1 - em['size_jit']), 2), round(size * (1 + em['size_jit']), 2)], 'rot': True, 'seed': int(i)})
-    return {'title': f'万彩千轮 {set_id}', 'set': set_id, 'duration': round(L * 1.12 + 0.4, 2), 'view': 160,
+    # 取景和实拍对照一样：小球分布外框（团半径 × 1.1 含外飘 + 小球半径 × 0.8）× 1.2
+    view = 160 if set_id in ('PW1', 'PW2') else round(2 * 1.2 * (1.1 * em['cluster_r'] + 0.8 * em['ball_r']), 1)
+    return {'title': f'万彩千轮 {set_id}', 'set': set_id, 'duration': round(L * 1.12 + 0.4, 2), 'view': view,
             'variants': {'A': 'A：16 帧自然色 RGB', 'B': 'B：64 帧灰度 + Ramp'}, 'emitters': ems}
 
 
@@ -169,11 +175,10 @@ def preview_js(set_id, d, man):
     for e in man['emitters']:
         for v, t in e['tex'].items():
             im = Image.open(os.path.join(d, t['file'])); W = im.width // 2
-            if im.mode == 'RGBA':   # 分通道缩小，避免按透明度预乘
-                im = Image.merge('RGBA', [c.resize((W, W), Image.BOX) for c in im.split()])
+            if im.mode == 'RGBA':   # RGBA 接力：每个通道单独一张灰度图（浏览器解带透明度的 PNG 会把 A = 0 处的 RGB 清零）
+                for c, band in zip('RGBA', im.split()): imgs[t['file'] + '#' + c] = enc(band.resize((W, W), Image.BOX))
             else:
-                im = im.convert('RGB').resize((W, W), Image.BOX)
-            imgs[t['file']] = enc(im)
+                imgs[t['file']] = enc(im.convert('RGB').resize((W, W), Image.BOX))
             if t.get('ramp'): imgs[t['ramp']] = enc(Image.open(os.path.join(d, t['ramp'])))
         imgs[e['cutout']] = enc(Image.open(os.path.join(d, e['cutout'])).resize((256, 256), Image.BOX))
     js = 'FW_ASSET_LOADED(' + json.dumps(set_id) + ', ' + json.dumps({'manifest': man, 'images': imgs}, ensure_ascii=False) + ');\n'

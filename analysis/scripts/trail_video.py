@@ -25,9 +25,14 @@ class Trail:
         self.meta = json.load(open(os.path.join(d, f'{name}.json'), encoding='utf-8'))
         self.tr = self.meta['trail']; tex = self.meta['texture']
         self.cols, self.per, self.F = tex['cols'], tex['cols'] * tex['rows'], tex['frames']
-        rd = lambda f: np.array(Image.open(os.path.join(d, f)).convert('RGBA')).astype(np.float32) / 255
-        self.loop = rd(f'T_{name}_Loop.png'); self.fade = {30: rd(f'T_{name}_Fade30.png'), 20: rd(f'T_{name}_Fade20.png')}
-        r = np.array(Image.open(os.path.join(d, f'T_{name}_Ramp.png')).convert('RGB'))[0].astype(np.float32) / 255
+        def find(part):   # 新命名 T_EFX_FireWorks_<名>_<部件>[_<列>x<行>]_01.png；旧命名 T_<名>_<部件>.png（TR1 / TR2 本机旧导出）
+            import glob, re
+            for f in sorted(glob.glob(os.path.join(d, f'T_EFX_FireWorks_{name}_{part}_*01.png'))):
+                if re.fullmatch(rf'T_EFX_FireWorks_{re.escape(name)}_{part}(_\d+x\d+)?_01\.png', os.path.basename(f)): return f
+            return os.path.join(d, f'T_{name}_{part}.png')
+        rd = lambda f: np.array(Image.open(f).convert('RGBA')).astype(np.float32) / 255
+        self.loop = rd(find('Loop')); self.fade = {30: rd(find('Fade30')), 20: rd(find('Fade20'))}
+        r = np.array(Image.open(find('Ramp')).convert('RGB'))[0].astype(np.float32) / 255
         self.ramp = np.where(r <= 0.04045, r / 12.92, ((r + 0.055) / 1.055) ** 2.4)
         self.gain = 4.0 * self.meta['params']['trBright']
         self.W, self.H = self.meta['spriteSizeCm'][0] / 100, self.meta['spriteSizeCm'][1] / 100

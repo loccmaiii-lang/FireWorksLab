@@ -42,6 +42,13 @@ def run(job, s, out, log=print):
             p = os.path.join(d, f)
             if f.endswith(('.txt', '.json', '.csv')):
                 import shutil; shutil.copy(p, os.path.join(out, f))
-            elif f.endswith('.png') and not f.endswith('_Ramp.png'):
+            elif f.endswith('.png') and not any(k in f for k in ('_Ramp', '_Cutout', '_FrameTest')):
                 preview(p, os.path.join(out, f[:-4] + '_预览.jpg'))
+    # 烘焙器迭代区的预览（真实导出贴图缩小一半，按引擎方式播放）
+    try:
+        import export_preview
+        kb = export_preview.build(out, big, list(job['exports']), title=job.get('name'), note=job.get('note', '')) / 1024
+        log(f'烘焙器预览 preview.js：{kb:.0f} KB')
+    except Exception as e:
+        log(f'烘焙器预览没做成（不影响导出）：{e}')
     log(f'大文件（贴图）在 {big}，不上传')

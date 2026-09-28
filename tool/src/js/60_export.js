@@ -147,32 +147,40 @@ function cutoutMask(srcs, N, NH, L) {
   }
   return { U, img: out, cov: n / (U * U) };
 }
-async function cutoutFiles(srcs, N, NH, L, base, meta) {
-  const r = cutoutMask(srcs, N, NH, L);
-  if (meta) meta.cutout = { size: r.U, cover: +r.cov.toFixed(3) };
-  return [[`${base}_Cutout.png`, await encodePNG(r.img, r.U, r.U)]];
+// 贴图命名（用户 2026-09-28 确认）：T_EFX_FireWorks_<名字>[_<部件>]_<列>x<行>_<序号>；附属贴图（Ramp、Cutout、帧号测试）不写格子
+const TEX_PREFIX = 'T_EFX_FireWorks_';
+function TN(name, part, L, idx = 1) {
+  return TEX_PREFIX + name + (part ? '_' + part : '') + (L ? `_${L.cols}x${L.rows}` : '') + '_' + String(idx).padStart(2, '0');
 }
-async function texFiles(b, name, sfx = '') {
-  const files = [];
+const joinPart = (...a) => a.filter(Boolean).join('_');
+async function cutoutFiles(srcs, N, NH, L, file, meta) {
+  const r = cutoutMask(srcs, N, NH, L);
+  if (meta) meta.cutout = { size: r.U, cover: +r.cov.toFixed(3), file };
+  return [[`${file}.png`, await encodePNG(r.img, r.U, r.U)]];
+}
+async function texFiles(b, name, sfx = '', idx = 1) {
+  // sfx：'_4K' 表示 4K 母版；idx：种子变体的序号（01、02、03）
+  const files = [], k4 = sfx ? sfx.replace(/^_/, '') : '';
   if (b.form === 'trail') {
-    const lp = readRGBA8(b.head); files.push([`T_${name}_Loop${sfx}.png`, await encodePNG(lp, b.N, b.NH)]);
-    if (!sfx) files.push(...await cutoutFiles([lp], b.N, b.NH, b.meta.L, `T_${name}_Loop`, b.meta));
+    const L = b.meta.L;
+    const lp = readRGBA8(b.head); files.push([`${TN(name, joinPart('Loop', k4), L, idx)}.png`, await encodePNG(lp, b.N, b.NH)]);
+    if (!sfx) files.push(...await cutoutFiles([lp], b.N, b.NH, L, TN(name, 'Loop_Cutout', null, idx), b.meta));
     for (const f of b.fades) {
-      const fp = readRGBA8(f.head); files.push([`T_${name}_Fade${f.fps}${sfx}.png`, await encodePNG(fp, f.N, f.NH)]);
-      if (!sfx) files.push(...await cutoutFiles([fp], f.N, f.NH, b.meta.L, `T_${name}_Fade${f.fps}`, f));
+      const fp = readRGBA8(f.head); files.push([`${TN(name, joinPart('Fade' + f.fps, k4), L, idx)}.png`, await encodePNG(fp, f.N, f.NH)]);
+      if (!sfx) files.push(...await cutoutFiles([fp], f.N, f.NH, L, TN(name, `Fade${f.fps}_Cutout`, null, idx), f));
     }
     return files;
   }
   for (let s = b, i = 0; s; s = s.next, i++) {
-    const sx = b.next ? '_' + 'AB'[i] : '';
+    const seg = b.next ? 'AB'[i] : '', L = s.meta.L;
     const hd = readRGBA8(s.head), tl = s.tail ? readRGBA8(s.tail) : null;
     if (tl) {
-      files.push([`T_${name}${sx}_Head.png`, await encodePNG(hd, s.N, s.NH)]);
-      files.push([`T_${name}${sx}_Tail.png`, await encodePNG(tl, s.N, s.NH)]);
-    } else files.push([`T_${name}${sx}.png`, await encodePNG(hd, s.N, s.NH)]);
+      files.push([`${TN(name, joinPart(seg, 'Head', k4), L, idx)}.png`, await encodePNG(hd, s.N, s.NH)]);
+      files.push([`${TN(name, joinPart(seg, 'Tail', k4), L, idx)}.png`, await encodePNG(tl, s.N, s.NH)]);
+    } else files.push([`${TN(name, joinPart(seg, k4), L, idx)}.png`, await encodePNG(hd, s.N, s.NH)]);
     if (!sfx) {
-      files.push([`T_${name}${sx}_帧号测试.png`, await debugAtlasPNG(s)]);
-      files.push(...await cutoutFiles(tl ? [hd, tl] : [hd], s.N, s.NH, s.meta.L, `T_${name}${sx}`, s.meta));
+      files.push([`${TN(name, joinPart(seg, 'FrameTest'), null, idx)}.png`, await debugAtlasPNG(s)]);
+      files.push(...await cutoutFiles(tl ? [hd, tl] : [hd], s.N, s.NH, L, TN(name, joinPart(seg, 'Cutout'), null, idx), s.meta));
     }
   }
   return files;
@@ -214,7 +222,7 @@ async function exportMaster() {
       const b4 = await bake(state.P, 2, p => busy(true, `烘焙 4K 母版… ${Math.round(p * 100)}%`, 0.94 + p * 0.04));
       try { files.push(...await texFiles(b4, name, '_4K')); } finally { disposeBake(b4); }
     }
-    files.push([`T_${name}_Ramp.png`, await encodePNG(rampPixels(state.M), 256, 8)]);
+    files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(state.M), 256, 8)]);
     files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b, state.M))]);
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, state.M))]);
     files.push([`${name}_声音节点.json`, utf8(JSON.stringify({ note: '时间为相对开花（上升类为相对发射）的秒数；游戏里按「距离 ÷ 343 m/s」再延迟', events: soundEvents(b) }, null, 2))]);
@@ -236,11 +244,11 @@ async function exportVariants() {
   try {
     bs = await bakeVariants(state.P, 1, p => busy(true, `烘焙种子变体 ${Math.round(p * 100)}%`, p * 0.9));
     const files = [];
-    for (let i = 0; i < bs.length; i++) for (const [fn, blob] of await texFiles(bs[i], name)) files.push([fn.replace(`T_${name}`, `T_${name}_V${i + 1}`), blob]);
-    files.push([`T_${name}_Ramp.png`, await encodePNG(rampPixels(state.M), 256, 8)]);
-    files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, bs[0], state.M) + `\n【种子变体】\nT_${name}_V1/V2/V3 共用上面的取景、帧号曲线和尺寸，只换贴图；同屏多发时轮换使用，避免一模一样。种子：${bs.map(b => b.P.seed).join('、')}\n`)]);
+    for (let i = 0; i < bs.length; i++) files.push(...await texFiles(bs[i], name, '', i + 1));
+    files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(state.M), 256, 8)]);
+    files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, bs[0], state.M) + `\n【种子变体】\n序号 _01 / _02 / _03 三套贴图共用上面的取景、帧号曲线和尺寸，只换贴图；同屏多发时轮换使用，避免一模一样。种子：${bs.map(b => b.P.seed).join('、')}\n`)]);
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(bs[0], state.M))]);
-    files.push([`${name}.json`, utf8(JSON.stringify({ ...masterJSON(bs[0], name, state.M), variants: bs.map((b, i) => ({ texture: `T_${name}_V${i + 1}`, seed: b.P.seed })) }, null, 2))]);
+    files.push([`${name}.json`, utf8(JSON.stringify({ ...masterJSON(bs[0], name, state.M), variants: bs.map((b, i) => ({ index: String(i + 1).padStart(2, '0'), seed: b.P.seed })) }, null, 2))]);
     download(await makeZip(files), `${name}_V1-V3.zip`);
     flash('已导出三个种子变体');
   } catch (e) { console.error(e); flash('导出失败：' + e.message, true); }

@@ -56,8 +56,14 @@ def at(c, u):
     return float(np.interp(u, [a for a, _ in c], [b for _, b in c]))
 
 
-def video_side(path, scale=0.5):
-    fr, fps = read_video(path, scale)
+def video_side(path, scale=0.5, roi=None, t_range=None):
+    """roi：[x0, y0, x1, y1]（占画面的比例）只看这一块——远景视频里有观众、地面火、月亮、别的烟花时用；
+    t_range：[t0, t1] 秒，只看这一段（一段视频里有几发时，挑要对的那一发）"""
+    t0, t1 = (t_range or (0.0, 1e9))
+    fr, fps = read_video(path, scale, t0, t1)
+    if roi:
+        H, W = fr[0][1].shape[:2]; x0, y0, x1, y1 = int(roi[0] * W), int(roi[1] * H), int(roi[2] * W), int(roi[3] * H)
+        fr = [(t, np.ascontiguousarray(f[y0:y1, x0:x1])) for t, f in fr]
     b = find_burst(fr)
     Tb = b['te'] - b['t0']
     fr2 = fr[b['i0']:]
@@ -104,7 +110,11 @@ class SimSession:
 
     def side(self, P, M, Rpx, fast=False):
         """Rpx：实拍里花的最终像素半径；模拟按同样的像素半径渲染。
-        fast：拟合时用，少渲几个时刻、快门内子帧减到 4（星在 1/40 秒里只走零点几米，拖影差别可以忽略）"""
+        fast：拟合时用，少渲几个时刻、快门内子帧减到 4（星在 1/40 秒里只走零点几米，拖影差别可以忽略）
+        P 里以 _ 开头的是「相机」参数，只在和实拍比较时加，不进烘焙器、不进贴图：
+          _psf  相机模糊（实拍像素，高斯 σ）；_gain 相机曝光倍数（乘完截到 255，模拟过曝）"""
+        cam = (float(P.get('_psf', 0) or 0), float(P.get('_gain', 1) or 1))
+        P = {k: v for k, v in P.items() if not k.startswith('_')}
         ph = self.pg.evaluate(f"(()=>{{ const P={json.dumps(P)}; const fm=__fw.measure(P); const m=__fw.metricsOf(P,fm); return {{ R: m.diameter/2, burn: m.burn, cy: (fm.y0+fm.y1)/2 }}; }})()")
         Tb0, R0, cy = ph['burn'], ph['R'], min(0, ph['cy'])
         half = R0 * 1.7
@@ -113,7 +123,7 @@ class SimSession:
         t_start = time.time()
         sub = ', sub: 4' if fast else ''
         res = self.pg.evaluate(f"__fw.renderStills({json.dumps(P)}, {json.dumps(M)}, {{ times: {json.dumps(times)}, px: {px}, half: {half}, cy: {cy}, shutter: 1/40{sub} }})")
-        imgs = [(r['t'], np.array(Image.open(io.BytesIO(base64.b64decode(r['png'].split(',')[1]))).convert('RGB'))) for r in res]
+        imgs = [(r['t'], camera(np.array(Image.open(io.BytesIO(base64.b64decode(r['png'].split(',')[1]))).convert('RGB')), *cam)) for r in res]
         bg = gray(imgs[0][1]); frames = imgs[1:]
         center = (px / 2, px / 2 + cy * px / (2 * half))
         cnt = np.array([measure(f, bg, center)['n'] for t, f in frames], np.float32); ip = int(np.argmax(cnt))
@@ -122,6 +132,15 @@ class SimSession:
         rows = series(frames, bg, center, Tb, 0.0)
         side = dict(frames=frames, center=center, Tb=Tb, R=final_radius(rows), rows=rows, render_s=round(time.time() - t_start, 1), px=px)
         add_streak(side, bg); return side
+
+
+def camera(img, psf=0.0, gain=1.0):
+    """实拍相机：镜头 / 压缩模糊 + 曝光（过曝截断）。火花按真实尺寸烘焙（贴图清晰），这两样只在对照时加"""
+    if psf <= 0.05 and abs(gain - 1) < 1e-3: return img
+    import cv2
+    f = img.astype(np.float32)
+    if psf > 0.05: f = cv2.GaussianBlur(f, (0, 0), psf)
+    return np.clip(f * gain, 0, 255).astype(np.uint8)
 
 
 def score(V, S, w=None):

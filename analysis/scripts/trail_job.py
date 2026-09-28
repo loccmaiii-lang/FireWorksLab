@@ -31,7 +31,7 @@ def run(job, s, out, log=print):
         if isinstance(st, str): st = json.load(open(os.path.join(ROOT, st), encoding='utf-8'))
         t = time.time()
         tex, sc = job.get('tex'), job.get('scale', 0.25)
-        TC.main(k, cfg.get('rounds', 2), st or {}, log=log, s=s, out=out, cap=cfg.get('cap', True), tex=tex, scale=sc)
+        TC.main(k, cfg.get('rounds', 2), st or {}, log=log, s=s, out=out, cap=cfg.get('cap', True), tex=tex, scale=sc, len_w=job.get('len_w', 2.0), caps=cfg.get('caps') or job.get('caps'))
         log(f'{k} 校准用时 {(time.time() - t) / 60:.1f} 分钟')
         if job.get('ramp', True):
             TRm.main(k, log=log, s=s, out=out, tex=tex, scale=sc)

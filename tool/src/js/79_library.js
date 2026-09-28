@@ -23,6 +23,7 @@ async function setTab(tab) {
 const rvGet = () => store.get('review', {});
 function rvSet(id, patch) { const all = rvGet(); all[id] = { ...(all[id] || {}), ...patch, at: new Date().toISOString().slice(0, 16).replace('T', ' ') }; store.set('review', all); }
 function rvBadge(e) {
+  if (e.kind === 'queued') return '<span class="badge q">排队</span>';
   const r = rvGet()[e.id] || {}, seen = store.get('rvSeen', []);
   if (r.st === 'ok') return '<span class="badge ok">通过</span>';
   if (r.st === 'fix') return '<span class="badge fix">要改</span>';
@@ -69,11 +70,18 @@ function renderLib() {
   const all = rvGet();
   // 迭代区
   const rv = FW_REVIEW_LIST.filter(e => libMatch(e.id, e.task, e.name, e.tags || '', e.note || ''));
-  const undecided = FW_REVIEW_LIST.filter(e => !(all[e.id] || {}).st).length;
+  const undecided = FW_REVIEW_LIST.filter(e => e.kind !== 'queued' && !(all[e.id] || {}).st).length;
   const g1 = libGroup(host, 'rv', '迭代区', undecided ? undecided + ' 待看' : FW_REVIEW_LIST.length, undecided > 0, '<button class="mini" id="rvCopy" type="button" title="把通过 / 要改和意见复制下来，贴到对话里">复制意见</button>');
   g1.querySelector('#rvCopy').addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); rvCopy(); });
   if (!rv.length) g1.insertAdjacentHTML('beforeend', `<p class="lsub">${FW_REVIEW_LIST.length ? '没有匹配的条目' : '现在没有等你看的东西'}</p>`);
-  for (const e of rv) libItem(g1, 'rv:' + e.id, thumbHTML(e) + `<span class="tx"><b>${e.name}</b><small>${e.task} · ${e.kind === 'asset' ? '素材' : '花型'} · ${(e.date || '').slice(5)}</small></span>` + rvBadge(e), () => openReview(e));
+  let qHead = false;
+  for (const e of rv) {
+    if (e.kind === 'queued' && !qHead) { g1.insertAdjacentHTML('beforeend', '<p class="lsub">排队中：在你电脑上跑完后自动出现在上面</p>'); qHead = true; }
+    const sub = e.kind === 'queued' ? `${e.task} · 等你跑` : `${e.task} · ${e.kind === 'asset' ? '素材' : '花型'} · ${(e.date || '').slice(5)}`;
+    const q = e.kind === 'queued';
+    const it = libItem(g1, 'rv:' + e.id, (q ? '' : thumbHTML(e)) + `<span class="tx"><b>${e.name}</b>${q ? '' : `<small>${sub}</small>`}</span>` + (q ? `<span class="badge q">${e.task}</span>` : rvBadge(e)), () => openReview(e), q);
+    if (q) it.classList.add('queued');
+  }
   // 正式库
   const formal = REPLICAS.filter(r => !r.fromReview && libMatch(r.id, r.name, r.tags || '', r.note || ''));
   const passed = FW_REVIEW_LIST.filter(e => (all[e.id] || {}).st === 'ok' && libMatch(e.id, e.name));
@@ -84,7 +92,7 @@ function renderLib() {
   // 组合
   if (libMatch('组合 芯 八重芯 三重芯 叠加')) {
     const g3 = libGroup(host, 'combo', '组合', 1);
-    libItem(g3, 'combo', `<span class="tx"><b>组合编辑器</b><small>一个菊 + 几层缩小的牡丹 = 八重芯 / 三重芯</small></span>`, () => { lib.key = 'combo'; setReview(null); setTab('combo'); renderLib(); crumb('组合', '组合编辑器'); }, true);
+    libItem(g3, 'combo', `<span class="tx"><b>组合编辑器</b><small>一个菊 + 几层缩小的牡丹 = 八重芯 / 三重芯</small></span>`, () => { setQueuedView(false); lib.key = 'combo'; setReview(null); setTab('combo'); renderLib(); crumb('组合', '组合编辑器'); }, true);
   }
   // 花型（基础）
   const types = []; for (const [gname, ts] of TYPE_GROUPS) for (const t of ts) { const m = TYPE_META[t] || ['', '']; if (libMatch(TYPE_NAMES[t], TYPE_EN[t], m[0], m[1], gname)) types.push([gname, t, m]); }
@@ -108,13 +116,21 @@ function crumb(where, name, badge) { $('#crumb').innerHTML = `<span>${where}</sp
 function openReview(e) {
   lib.key = 'rv:' + e.id; store.set('lastKey', lib.key);
   const seen = store.get('rvSeen', []); if (!seen.includes(e.id)) { seen.push(e.id); store.set('rvSeen', seen); }
+  setQueuedView(e.kind === 'queued');
+  if (e.kind === 'queued') { setReview(e); renderLib(); crumb('迭代区 · 排队', e.name); return; }
   if (e.kind === 'asset') { setTab('asset'); loadAssetEntry(e); }
   else { setReplica(e.id); setTab('master'); }
   setReview(e); renderLib(); crumb('迭代区 · ' + e.task, e.name);
 }
-function openFormal(r) { lib.key = 'rep:' + r.id; setReplica(r.id); setTab('master'); setReview(null, r); renderLib(); crumb('正式库', r.name); }
-function openType(t) { lib.key = 'type:' + t; setType(t); setTab('master'); setReview(null); renderLib(); crumb('花型', TYPE_NAMES[t]); }
+function openFormal(r) { setQueuedView(false); lib.key = 'rep:' + r.id; setReplica(r.id); setTab('master'); setReview(null, r); renderLib(); crumb('正式库', r.name); }
+function openType(t) { setQueuedView(false); lib.key = 'type:' + t; setType(t); setTab('master'); setReview(null); renderLib(); crumb('花型', TYPE_NAMES[t]); }
 
+// 排队中的条目：还没有结果，只放实拍（要对的目标），右栏只留审阅卡
+function setQueuedView(on) {
+  document.querySelector('.canvas-wrap').classList.toggle('refonly', on); $('#right').classList.toggle('qmode', on);
+  ref2.on = on ? true : store.get('refOn', true);
+  $('#refTag').dataset.q = on ? '1' : '';
+}
 // ---------------- 右栏审阅卡 ----------------
 function setReview(e, formal) {
   lib.review = e || null; const box = $('#pReview');
@@ -126,10 +142,11 @@ function setReview(e, formal) {
   box.innerHTML = `<div class="rh"><span class="badge">迭代区 · ${e.task}</span><b>${e.name}</b><small>${e.date || ''}</small></div>
     <p>${e.note || ''}</p>
     ${e.look && e.look.length ? `<div class="rt">看什么</div><ul>${e.look.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
-    ${e.opinion ? `<div class="rt">Claude 的看法</div><p class="op">${e.opinion}</p>` : ''}
-    <div class="ra"><button class="btn okb" type="button" aria-pressed="${r.st === 'ok'}">✓ 通过，放进正式库</button><button class="btn fixb" type="button" aria-pressed="${r.st === 'fix'}">✗ 要改</button></div>
-    <textarea id="rvTxt" placeholder="意见：哪里不像、要改什么（写完会自动保存）">${(r.txt || '').replace(/</g, '&lt;')}</textarea>
-    <div class="saved" id="rvSaved">${r.at ? '已保存 ' + r.at + ' · 左栏「迭代区」右边「复制意见」贴给 Claude' : '意见存在这台电脑的浏览器里；写完点左栏「复制意见」贴给 Claude'}</div>`;
+    ${e.opinion ? `<div class="rt">${e.kind === 'queued' ? '这一版改了什么' : 'Claude 的看法'}</div><p class="op">${e.opinion}</p>` : ''}
+    ${e.kind === 'queued' ? '<p class="qnote">还没跑。在你电脑上双击 <b>analysis/local/跑任务_并行.bat</b>（3 个进程同时跑），跑完会自动推上来；pull 后刷新烘焙器，这一条就能看了。</p>' : ''}
+    <div class="ra"${e.kind === 'queued' ? ' hidden' : ''}><button class="btn okb" type="button" aria-pressed="${r.st === 'ok'}">✓ 通过，放进正式库</button><button class="btn fixb" type="button" aria-pressed="${r.st === 'fix'}">✗ 要改</button></div>
+    <textarea id="rvTxt"${e.kind === 'queued' ? ' hidden' : ''} placeholder="意见：哪里不像、要改什么（写完会自动保存）">${(r.txt || '').replace(/</g, '&lt;')}</textarea>
+    <div class="saved" id="rvSaved"${e.kind === 'queued' ? ' hidden' : ''}>${r.at ? '已保存 ' + r.at + ' · 左栏「迭代区」右边「复制意见」贴给 Claude' : '意见存在这台电脑的浏览器里；写完点左栏「复制意见」贴给 Claude'}</div>`;
   const setSt = st => { const cur = (rvGet()[e.id] || {}).st; rvSet(e.id, { st: cur === st ? '' : st }); setReview(e); renderLib(); };
   box.querySelector('.okb').addEventListener('click', () => setSt('ok'));
   box.querySelector('.fixb').addEventListener('click', () => setSt('fix'));
@@ -149,7 +166,7 @@ function setRefVideo(e) {
   document.querySelector('.canvas-wrap').classList.toggle('split', show);
   if (!show) { v.pause(); return; }
   if (v.dataset.src !== e.video) { v.dataset.src = e.video; v.src = e.video; v.load(); }
-  $('#refTag').textContent = '实拍 · ' + refName(e.video);
+  $('#refTag').textContent = ($('#refTag').dataset.q ? '要对的实拍 · ' : '实拍 · ') + refName(e.video);
   refRestoreOffset(e);
   requestAnimationFrame(layoutRef);
 }
@@ -244,8 +261,9 @@ function initLibrary() {
   $('#refVid').addEventListener('loadedmetadata', layoutRef);
   initPanels();
   // 打开时：有没看过的迭代区条目就先打开最新的一条；否则回到上次看的
-  const seen = store.get('rvSeen', []), fresh = FW_REVIEW_LIST.find(e => !seen.includes(e.id));
+  const seen = store.get('rvSeen', []), fresh = FW_REVIEW_LIST.find(e => e.kind !== 'queued' && !seen.includes(e.id));
   const lastKey = store.get('lastKey', ''), lastRv = FW_REVIEW_LIST.find(e => 'rv:' + e.id === lastKey);
   renderLib();
+  if (/[?&]fast/.test(location.search)) return;     // 本地任务的自动化（compare.py）不自动打开条目
   if (fresh) openReview(fresh); else if (lastRv) openReview(lastRv); else crumb('花型', TYPE_NAMES[state.P.type]);
 }

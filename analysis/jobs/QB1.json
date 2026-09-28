@@ -1,0 +1,50 @@
+{
+ "id": "QB1",
+ "name": "球形B：红牡丹 → 银绿（组件 C1 · 牡丹）",
+ "priority": 5,
+ "video": "vidio/球形B.mp4",
+ "roi": [
+  0.36,
+  0.08,
+  0.62,
+  0.52
+ ],
+ "t_range": [
+  1.85,
+  3.95
+ ],
+ "start": "analysis/jobs/起点/QB1_起点.json",
+ "fit": {
+  "params": [
+   "v0",
+   "vt",
+   "grav",
+   "stars",
+   "burn",
+   "fade",
+   "headSize",
+   "headBright",
+   "sparkRate",
+   "sparkLife",
+   "sparkSize",
+   "sparkBright",
+   "sparkRateEnd",
+   "M.headInt"
+  ],
+  "rounds": 3,
+  "camera": true
+ },
+ "note": "红色点状牡丹，中心偏粉，后段整体变银绿。用来校准组件 C1（牡丹），球形C/D、青柠星、芯都用它。视频前面那颗小粉牡丹是另一发，下一轮单独做。",
+ "review": {
+  "date": "2026-09-29",
+  "name": "球形B：红牡丹 → 银绿（组件 C1 · 牡丹）",
+  "tags": "牡丹 红 变色 球形B C1",
+  "note": "红色点状牡丹，中心偏粉，后段整体变银绿。用来校准组件 C1（牡丹），球形C/D、青柠星、芯都用它。视频前面那颗小粉牡丹是另一发，下一轮单独做。",
+  "look": [
+   "星点大小、疏密",
+   "红 → 银绿的时间",
+   "球壳是否均匀"
+  ],
+  "opinion": "第一次校准；颜色分段是我按实拍量的，形状和时间交给自动逼近。"
+ }
+}

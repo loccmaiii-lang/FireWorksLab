@@ -6,7 +6,7 @@ git pull --rebase --autostash
 echo === 2/3 本地渲染对照（会弹出一个浏览器窗口，跑完自动关闭）===
 python analysis\local\run_jobs.py %*
 echo === 3/3 上传结果 ===
-git add analysis/results
+git add analysis/results tool/data
 git commit -m "本地跑完 %date% %time%"
 git pull --rebase --autostash
 git push

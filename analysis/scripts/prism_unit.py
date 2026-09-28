@@ -44,6 +44,11 @@ SETS = {
                 change=(1.0, 0.12, 0.15), gold='#ffe08a', ember='#ffa24a',
                 colors=[dict(name='青绿', index='01', layout=0, hex='#46feb4'), dict(name='银白', index='02', layout=1, hex='#fff1ea'),
                         dict(name='淡黄', index='03', layout=2, hex='#f6e877'), dict(name='珊瑚红', index='04', layout=3, hex='#ff4a36')]),
+    # PW3（按 PW2 并排对照改）：实拍每颗小球更密（约 110 颗星）、星点更亮 → 两套点位叠在一起（第二套转 90°、缩 0.93），亮度 ×1.25
+    'PW3': dict(life=2.6, full=0.9, die0=1.4, die1=0.9, fade=0.28, t_end=2.5, merge=True, amp=1.25,
+                change=(1.0, 0.12, 0.15), gold='#ffe08a', ember='#ffa24a',
+                colors=[dict(name='青绿', index='01', layout=0, hex='#46feb4'), dict(name='银白', index='02', layout=1, hex='#fff1ea'),
+                        dict(name='淡黄', index='03', layout=2, hex='#f6e877'), dict(name='珊瑚红', index='04', layout=3, hex='#ff4a36')]),
 }
 
 LOOK = dict(b=1.44, p=0.48, w=2.0, n=2.0, h=0.045)   # V11 D_Soft
@@ -62,6 +67,17 @@ class Unit:
         A = np.c_[X, np.ones(len(X))]
         c = np.array([np.linalg.lstsq(A, P[:, 0], rcond=None)[0][3], np.linalg.lstsq(A, P[:, 1], rcond=None)[0][3]])
         off = P - c
+        if cfg.get('merge'):   # 第二套点位（换一个颜色组的布局），转 90°、缩 0.93，叠进来让小球更密
+            import copy
+            d2 = json.load(open(os.path.join(SRC, f"stars_{(col['layout'] + 2) % 4}.json"), encoding='utf-8'))
+            P2 = np.array([s['pixel'] for s in d2]); X2 = np.array([s['xyz'] for s in d2]); A2 = np.c_[X2, np.ones(len(X2))]
+            c2 = np.array([np.linalg.lstsq(A2, P2[:, 0], rcond=None)[0][3], np.linalg.lstsq(A2, P2[:, 1], rcond=None)[0][3]])
+            o2 = (P2 - c2) * 0.93; o2 = np.c_[-o2[:, 1], o2[:, 0]]
+            ref = d[0]
+            for s2 in d2:
+                s2 = copy.deepcopy(s2); s2['color'], s2['hot'] = ref['color'], ref['hot']; s2['angle'] += math.pi / 2; d.append(s2)
+            off = np.r_[off, o2]
+        for s_ in d: s_['amplitude'] *= cfg.get('amp', 1.0)
         self.kfit = min(1.0, (SS / 2 - 40) / np.linalg.norm(off, axis=1).max())
         self.off = off * self.kfit; self.stars = d
         rng = np.random.default_rng(int(col['index']) * 7919)

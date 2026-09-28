@@ -12,7 +12,10 @@ PARAMS = [('burstR0', 'add', 10, 0, 300), ('v0', 'mul', .15, 5, 600), ('vt', 'mu
           ('burn', 'mul', .08, .3, 12), ('fade', 'add', .12, 0, .9), ('sparkSpread', 'mul', .35, .05, 15), ('headSize', 'mul', .3, .1, 6), ('sparkSize', 'mul', .3, .05, 2),
           ('sparkDrag', 'mul', .3, 0.1, 8), ('sparkGrav', 'add', .1, 0, 3), ('M.headInt', 'mul', .25, .1, 4), ('headBright', 'mul', .35, .02, 3),
           ('sparkBright', 'mul', .3, .1, 3), ('sparkRateEnd', 'add', .15, 0, 2),
-          ('subDelay', 'mul', .12, .1, 5), ('subStars', 'mul', .25, 3, 200), ('subSpeed', 'mul', .2, 3, 200), ('subBurn', 'mul', .15, .1, 5), ('subJit', 'add', 10, 0, 80)]
+          ('subDelay', 'mul', .12, .1, 5), ('subStars', 'mul', .25, 3, 200), ('subSpeed', 'mul', .2, 3, 200), ('subBurn', 'mul', .15, .1, 5), ('subJit', 'add', 10, 0, 80),
+          ('_psf', 'add', .3, 0, 4), ('_gain', 'mul', .25, .3, 5)]
+# 清晰度：火花 / 星头尺寸有上限，防止拟合把实拍的镜头模糊当成火花大小（那样贴图会糊）；模糊交给 _psf
+SIZE_CAP = {'headSize': (0.1, 0.8), 'sparkSize': (0.05, 0.5)}
 
 
 def _get(P, M, k): return M[k[2:]] if k.startswith('M.') else P[k]
@@ -26,10 +29,19 @@ def _put(P, M, k, v):
     return P, M
 
 
-def run_fit(V, s, P, M, prefix, params=None, rounds=3, fast=None, log=print):
-    """V：实拍（video_side 的结果）；s：SimSession。返回 (P, M, 差距, S)"""
+def run_fit(V, s, P, M, prefix, params=None, rounds=3, fast=None, log=print, camera=False, caps=None):
+    """V：实拍（video_side 的结果）；s：SimSession。返回 (P, M, 差距, S)
+    camera：True 时加相机模糊 / 曝光（_psf / _gain）一起拟合，并给火花尺寸加上限（caps 可覆盖 SIZE_CAP）"""
     fast = (s.mode == 'soft') if fast is None else fast      # 有显卡时每次都用完整画质
+    P = dict(P); cap = {}
+    if camera:
+        P.setdefault('_psf', 1.0); P.setdefault('_gain', 1.0)
+        cap = {**SIZE_CAP, **(caps or {})}
+        for k, (lo, hi) in cap.items():
+            if k in P: P[k] = min(hi, max(lo, P[k]))
+        if params is not None: params = list(params) + [k for k in ('_psf', '_gain') if k not in params]
     PR = [p for p in PARAMS if (params is None or p[0] in params) and (p[0].startswith('M.') and p[0][2:] in M or p[0] in P)]
+    PR = [(k, kind, st, *(cap[k] if k in cap else (lo, hi))) for k, kind, st, lo, hi in PR]
 
     def ev(P, M):
         S = s.side(P, M, V['R'], fast=fast); L, parts = score(V, S); return L, S, parts

@@ -1,0 +1,50 @@
+{
+ "id": "QA1",
+ "name": "球形A：金色带尾菊（组件 C2 · 菊）",
+ "priority": 5,
+ "video": "vidio/球形A.mp4",
+ "roi": [
+  0.36,
+  0.05,
+  0.66,
+  0.53
+ ],
+ "t_range": [
+  0.1,
+  4.1
+ ],
+ "start": "analysis/jobs/起点/QA1_起点.json",
+ "fit": {
+  "params": [
+   "v0",
+   "vt",
+   "grav",
+   "stars",
+   "burn",
+   "fade",
+   "headSize",
+   "headBright",
+   "sparkRate",
+   "sparkLife",
+   "sparkSize",
+   "sparkBright",
+   "sparkRateEnd",
+   "M.headInt"
+  ],
+  "rounds": 3,
+  "camera": true
+ },
+ "note": "金色带尾的菊，中段偏淡黄绿，末段转琥珀后熄灭。用来校准组件 C2（菊），鸿巢四尺玉、永丰三重蕊外层都用它。",
+ "review": {
+  "date": "2026-09-29",
+  "name": "球形A：金色带尾菊（组件 C2 · 菊）",
+  "tags": "菊 金 带尾 球形A C2",
+  "note": "金色带尾的菊，中段偏淡黄绿，末段转琥珀后熄灭。用来校准组件 C2（菊），鸿巢四尺玉、永丰三重蕊外层都用它。",
+  "look": [
+   "星尾长度、放射感",
+   "颜色变化：金 → 淡黄 → 琥珀",
+   "大小、张开速度、下垂"
+  ],
+  "opinion": "第一次校准；颜色分段是我按实拍量的，形状和时间交给自动逼近。"
+ }
+}

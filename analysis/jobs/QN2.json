@@ -1,0 +1,44 @@
+{
+ "id": "QN2",
+ "name": "青柠星 第2轮：加星尾、球壳边缘更亮、火花按真实尺寸（相机模糊单独算）",
+ "priority": 5,
+ "video": "vidio/2.0/青柠星.mp4",
+ "start": "analysis/jobs/起点/QN2_起点.json",
+ "fit": {
+  "params": [
+   "v0",
+   "vt",
+   "grav",
+   "stars",
+   "burn",
+   "fade",
+   "headSize",
+   "headBright",
+   "sparkRate",
+   "sparkLife",
+   "sparkSize",
+   "sparkBright",
+   "sparkRateEnd",
+   "M.headInt",
+   "sparkDrag"
+  ],
+  "rounds": 3,
+  "camera": true
+ },
+ "note": "QN1 缺星尾、球壳边缘不够亮。起点：每颗星带短尾（火花发射率 195 → 520、寿命 0.22 → 0.45 s），初速离散 3 → 2（球壳更薄、边缘更亮）；对照时加相机模糊 / 过曝，火花尺寸有上限，贴图更清晰。",
+ "review": {
+  "date": "2026-09-29",
+  "name": "青柠星（第 2 轮）",
+  "tags": "青柠 牡丹 变色 QN2",
+  "replaces": [
+   "QN1"
+  ],
+  "note": "QN2：在 QN1 基础上加星尾、球壳边缘更亮；火花按真实尺寸画，实拍的镜头模糊只在对照时加。",
+  "look": [
+   "星尾有没有、长度",
+   "球壳边缘是否比中间亮",
+   "颜色：橙 → 青柠的时间"
+  ],
+  "opinion": "按 QN1 的看法改：加短尾、球壳更薄；清晰度方案第一次用在花型上。"
+ }
+}

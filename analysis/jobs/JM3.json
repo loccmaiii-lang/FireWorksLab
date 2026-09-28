@@ -1,0 +1,35 @@
+{
+ "id": "JM3",
+ "name": "金芒菊 第3轮：清晰度（火花按真实尺寸，相机模糊单独算）",
+ "priority": 5,
+ "video": "vidio/2.0/金芒菊A.mp4",
+ "start": "analysis/jobs/起点/JM3_起点.json",
+ "fit": {
+  "params": [
+   "headSize",
+   "headBright",
+   "sparkRate",
+   "sparkLife",
+   "sparkSize",
+   "sparkBright",
+   "stars",
+   "burn",
+   "fade",
+   "M.headInt"
+  ],
+  "rounds": 3,
+  "camera": true
+ },
+ "note": "JM1 的火花大小是按实拍的镜头模糊拟合的，近看偏糊。这一轮火花尺寸有上限，实拍的模糊、过曝用相机参数单独模拟，只在对照时加，不进贴图。",
+ "review": {
+  "date": "2026-09-29",
+  "name": "金芒菊（清晰度版）",
+  "tags": "金 尾缀 放射 JM3",
+  "look": [
+   "近看火花是否更清晰（右栏「导出效果」看）",
+   "整体亮度、形状有没有变"
+  ],
+  "note": "JM3：金芒菊按真实火花尺寸重新校准，贴图更清晰；形状、时间保持 JM1。",
+  "opinion": "清晰度方案第一次用在金芒菊上。通过后按 JM2 的取景重新导出。"
+ }
+}

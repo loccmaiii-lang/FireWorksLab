@@ -1,0 +1,50 @@
+{
+ "id": "QD1",
+ "name": "球形D：橙 → 绿 → 银白（最大、最久）",
+ "priority": 5,
+ "video": "vidio/球形D.mp4",
+ "roi": [
+  0.33,
+  0.1,
+  0.64,
+  0.66
+ ],
+ "t_range": [
+  4.0,
+  10.4
+ ],
+ "start": "analysis/jobs/起点/QD1_起点.json",
+ "fit": {
+  "params": [
+   "v0",
+   "vt",
+   "grav",
+   "stars",
+   "burn",
+   "fade",
+   "headSize",
+   "headBright",
+   "sparkRate",
+   "sparkLife",
+   "sparkSize",
+   "sparkBright",
+   "sparkRateEnd",
+   "M.headInt"
+  ],
+  "rounds": 3,
+  "camera": true
+ },
+ "note": "球形D：先橙色，再变绿，最后是持续很久的银白点。这一轮按单层三段变色校准；橙芯如果需要，下一轮单独叠。",
+ "review": {
+  "date": "2026-09-29",
+  "name": "球形D：橙 → 绿 → 银白（最大、最久）",
+  "tags": "牡丹 变色 球形D 两层",
+  "note": "球形D：先橙色，再变绿，最后是持续很久的银白点。这一轮按单层三段变色校准；橙芯如果需要，下一轮单独叠。",
+  "look": [
+   "三段变色的时间",
+   "银白点持续多久、多密",
+   "大小"
+  ],
+  "opinion": "第一次校准；颜色分段是我按实拍量的，形状和时间交给自动逼近。"
+ }
+}

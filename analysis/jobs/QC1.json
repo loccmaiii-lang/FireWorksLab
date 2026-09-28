@@ -1,0 +1,50 @@
+{
+ "id": "QC1",
+ "name": "球形C：外层（金 → 橙红）",
+ "priority": 5,
+ "video": "vidio/球形C.mp4",
+ "roi": [
+  0.4,
+  0.17,
+  0.64,
+  0.62
+ ],
+ "t_range": [
+  0.6,
+  5.8
+ ],
+ "start": "analysis/jobs/起点/QC1_起点.json",
+ "fit": {
+  "params": [
+   "v0",
+   "vt",
+   "grav",
+   "stars",
+   "burn",
+   "fade",
+   "headSize",
+   "headBright",
+   "sparkRate",
+   "sparkLife",
+   "sparkSize",
+   "sparkBright",
+   "sparkRateEnd",
+   "M.headInt"
+  ],
+  "rounds": 3,
+  "camera": true
+ },
+ "note": "球形C 是两层：绿芯 + 外层（金 → 橙红点）。这一轮只校准外层；绿芯下一轮用 C1 缩小叠上去。",
+ "review": {
+  "date": "2026-09-29",
+  "name": "球形C：外层（金 → 橙红）",
+  "tags": "牡丹 金 变色 球形C 两层",
+  "note": "球形C 是两层：绿芯 + 外层（金 → 橙红点）。这一轮只校准外层；绿芯下一轮用 C1 缩小叠上去。",
+  "look": [
+   "外层大小、张开速度",
+   "金 → 橙红的时间",
+   "末段星点"
+  ],
+  "opinion": "第一次校准；颜色分段是我按实拍量的，形状和时间交给自动逼近。"
+ }
+}

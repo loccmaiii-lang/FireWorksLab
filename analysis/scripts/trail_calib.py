@@ -97,7 +97,7 @@ def cap_sizes(over, P0):
 W_SHAPE = dict(I=3, w=3, wave=2, grain=0, peaks=0, col=0, lev=0)
 
 
-def main(size, rounds=2, start=None, log=print, s=None, out=None, cap=True, tex=None, scale=0.25):
+def main(size, rounds=2, start=None, log=print, s=None, out=None, cap=True, tex=None, scale=0.25, len_w=2.0, caps=None):
     """s：已打开的 SimSession（本地任务共用一个浏览器）；out：输出目录（默认 analysis/replica）；
     tex：'3.0A' 时质感对尾缀3.0_A；scale：烘焙倍率（质感对 4K 实拍时用 1）"""
     ref = TF.ref_side(size); Lref = ref['L']
@@ -110,8 +110,12 @@ def main(size, rounds=2, start=None, log=print, s=None, out=None, cap=True, tex=
     over = (json.load(open(start, encoding='utf-8')) if isinstance(start, str) else dict(start)) if start else {}
     base = pg.evaluate(f"defaultsFor('{KEY[size]}')"); Mr = dict(base['M']); Mr.update(over.get('_ramp', {})); ramp = ramp_table(Mr)
     P0 = dict(base['P']); P0.setdefault('trTwistLag', 0.35); P0['_psf'] = 1.2; P0['_psf3'] = 1.0
-    keys = [k for k in FIT_KEYS if tex or k[0] != '_psf3']
-    if cap: over = cap_sizes(over, P0)
+    # caps：任务里可以改火花尺寸的上下限（比如强制火星更大颗）；len_w：长度偏离目标的权重
+    CAP = {**SIZE_CAP, **{k: tuple(v) for k, v in (caps or {}).items()}}
+    keys = [(k, kind, st, *(CAP[k] if k in CAP else (lo, hi))) for k, kind, st, lo, hi in FIT_KEYS if tex or k != '_psf3']
+    if cap:
+        over = cap_sizes(over, P0)
+        for k, (lo, hi) in CAP.items(): over[k] = round(min(hi, max(lo, over.get(k, P0.get(k, lo)))), 5)
 
     def ev(o):
         res = pg.evaluate(f"__fw.trailBake('{KEY[size]}', {json.dumps({k: v for k, v in o.items() if not k.startswith('_')})}, {scale}, true)")
@@ -121,7 +125,7 @@ def main(size, rounds=2, start=None, log=print, s=None, out=None, cap=True, tex=
             S['tex'] = sim_side(res, ref3['L'], ramp, o.get('_psf3', 1.0), ST3, SAT3)
             L1, p1 = K.loss(ref['prof'], S['prof'], W_SHAPE); L2, p2 = K.tex_loss(ref3['prof']['tex'], S['tex']['prof']['tex'])
             L = L1 + L2; parts = {**{k: v for k, v in p1.items() if W_SHAPE.get(k, 1)}, **{'质感_' + k: v for k, v in p2.items()}}
-        ln = res['meta']['trailLen']; parts['len'] = float(np.log(ln / TARGET_LEN[size]) ** 2); L += 2 * parts['len']
+        ln = res['meta']['trailLen']; parts['len'] = float(np.log(ln / TARGET_LEN[size]) ** 2); L += len_w * parts['len']
         return L, parts, S, res
     cur = dict(over); best, parts, S, res = ev(cur)
     log(f'[{size}] 起点 {best:.4f} ' + ' '.join(f'{k}={v:.4f}' for k, v in parts.items()) + f" 长 {res['meta']['trailLen']:.1f} m")

@@ -3,6 +3,8 @@
 
 用法（在仓库根目录）：
   python analysis/local/run_jobs.py            跑所有还没结果的任务
+  python analysis/local/run_jobs.py --workers=3  3 个进程同时跑（每个进程一个浏览器，任务先认领再跑，不会重复）
+  也可以开几个窗口各跑一次 跑任务.bat：同样靠认领，不会重复
   python analysis/local/run_jobs.py QN1 WC1    只跑指定任务
   python analysis/local/run_jobs.py --force QN1  已经跑过的也重跑
   python analysis/local/run_jobs.py --check    只检查环境（打开浏览器、看有没有用上显卡）
@@ -61,11 +63,11 @@ def run_job(job, s, force=False):
         st = job['start']
         if isinstance(st, str): st = jload(os.path.join(ROOT, st))
         P, M = st['P'], st['M']
-        V = video_side(os.path.join(ROOT, job['video']))
+        V = video_side(os.path.join(ROOT, job['video']), roi=job.get('roi'), t_range=job.get('t_range'))
         log(f"实拍：燃烧 {V['Tb']:.2f}s，最终半径 {V['R']:.0f}px")
         fit = job.get('fit')
         if fit:
-            P, M, L, S = run_fit(V, s, P, M, os.path.join(out, 'fit'), fit.get('params'), fit.get('rounds', 3), log=log)
+            P, M, L, S = run_fit(V, s, P, M, os.path.join(out, 'fit'), fit.get('params'), fit.get('rounds', 3), log=log, camera=fit.get('camera', False), caps=fit.get('caps'))
         for name, d in (job.get('variants') or {}).items():
             dd = dict(d); Mo = dd.pop('M', {}); P2 = dict(P); P2.update(dd); M2 = dict(M); M2.update(Mo)
             S2 = s.side(P2, M2, V['R']); L2, _ = score(V, S2)
@@ -91,27 +93,108 @@ def run_job(job, s, force=False):
         logf.close()
 
 
-def main():
-    args = [a for a in sys.argv[1:] if not a.startswith('--')]
-    force, check = '--force' in sys.argv, '--check' in sys.argv
+# ---------------- 多开：每个任务「认领」后才跑，几个窗口 / 进程同时跑不会重复 ----------------
+# 认领文件 analysis/results/<id>/_claim.json，跑的时候每分钟刷新一次；超过 10 分钟没刷新（进程被关了）就可以被别人接手。
+CLAIM_STALE = 600
+
+
+def _claim_path(jid): return os.path.join(RES, jid, '_claim.json')
+
+
+def claim(jid):
+    os.makedirs(os.path.join(RES, jid), exist_ok=True); p = _claim_path(jid)
+    try:
+        fd = os.open(p, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError:
+        try:
+            if time.time() - os.path.getmtime(p) < CLAIM_STALE: return False
+            os.remove(p); fd = os.open(p, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        except OSError:
+            return False
+    with os.fdopen(fd, 'w', encoding='utf-8') as f: json.dump({'pid': os.getpid(), 'line': LINE, 'start': time.strftime('%H:%M:%S')}, f)
+    return True
+
+
+def release(jid):
+    try: os.remove(_claim_path(jid))
+    except OSError: pass
+
+
+def heartbeat(jid, stop):
+    import threading
+    def run():
+        while not stop.wait(60):
+            try: os.utime(_claim_path(jid), None)
+            except OSError: pass
+    threading.Thread(target=run, daemon=True).start()
+
+
+def load_jobs(args, force):
     files = sorted(f for f in os.listdir(JOBS) if f.endswith('.json')) if os.path.isdir(JOBS) else []
     jobs = [jload(os.path.join(JOBS, f)) for f in files]
     if args: jobs = [j for j in jobs if j['id'] in args]
     todo = [j for j in jobs if force or not os.path.exists(os.path.join(RES, j['id'], 'done.json'))]
-    if not check and not todo:
-        print(f'执行线：{LINE}。任务 {len(jobs)} 个，没有待跑的。', flush=True); return
+    todo.sort(key=lambda j: -j.get('priority', 0))     # 长的先跑（尾缀），短的穿插
+    return jobs, todo
+
+
+def worker(args, force, tag=''):
+    """一个浏览器，一个接一个认领、跑任务，直到没有可认领的"""
+    import threading
     from compare import SimSession
-    s = SimSession()
-    print(f'执行线：{LINE}  渲染：{s.mode}  浏览器显卡：{s.renderer or "未知"}' + ('  ← 软件渲染，会很慢' if s.soft else ''), flush=True)
+    s = None; n = 0
+    try:
+        while True:
+            _, todo = load_jobs(args, force)
+            j = next((j for j in todo if claim(j['id'])), None)
+            if j is None: break
+            if s is None:
+                s = SimSession()
+                print(f'{tag}执行线：{LINE}  渲染：{s.mode}  浏览器显卡：{s.renderer or "未知"}' + ('  ← 软件渲染，会很慢' if s.soft else ''), flush=True)
+            stop = threading.Event(); heartbeat(j['id'], stop)
+            try: run_job(j, s, force)
+            finally: stop.set(); release(j['id'])
+            n += 1
+    finally:
+        if s: s.close()
+    return n
+
+
+def refresh_review():
+    """跑完的任务自动进烘焙器的迭代区（tool/data/review.js），刷新烘焙器就能看"""
+    try:
+        import review_to_baker; review_to_baker.main()
+    except Exception as e:
+        print('写迭代区失败（不影响结果，Claude 会补上）：' + str(e).splitlines()[0], flush=True)
+
+
+def main():
+    args = [a for a in sys.argv[1:] if not a.startswith('--')]
+    force, check = '--force' in sys.argv, '--check' in sys.argv
+    nw = next((int(a.split('=')[1]) for a in sys.argv if a.startswith('--workers=')), 1)
+    if '--worker' in sys.argv:      # 子进程
+        worker(args, force, f"[进程 {os.getpid()}] "); return
+    jobs, todo = load_jobs(args, force)
     if check:
+        from compare import SimSession
+        s = SimSession(); print(f'渲染：{s.mode}  浏览器显卡：{s.renderer or "未知"}')
         t = time.time(); s.pg.evaluate("__fw.renderStills(state.P, state.M, { times: [1.0], px: 512 })")
         print(f'试渲一帧：{time.time() - t:.1f} 秒（有显卡时应在 1–2 秒内）'); s.close(); return
-    print(f'任务 {len(jobs)} 个，待跑 {len(todo)} 个：' + '、'.join(j['id'] + ' ' + j.get('name', '') for j in todo), flush=True)
-    try:
-        for j in todo: run_job(j, s, force)
-    finally:
-        s.close()
-    print('\n全部跑完。把结果传上去：\n  git add analysis/results\n  git commit -m "本地跑完"\n  git push')
+    if not todo:
+        print(f'执行线：{LINE}。任务 {len(jobs)} 个，没有待跑的。', flush=True); refresh_review(); return
+    nw = max(1, min(nw, len(todo)))
+    print(f'任务 {len(jobs)} 个，待跑 {len(todo)} 个（{nw} 个进程同时跑）：' + '、'.join(j['id'] + ' ' + j.get('name', '') for j in todo), flush=True)
+    if nw == 1:
+        worker(args, force)
+    else:
+        import subprocess
+        cmd = [sys.executable, os.path.abspath(__file__), '--worker'] + (['--force'] if force else []) + args
+        ps = []
+        for i in range(nw):
+            ps.append(subprocess.Popen(cmd, cwd=ROOT)); time.sleep(8)     # 错开启动浏览器
+        for p in ps: p.wait()
+    refresh_review()
+    print('\n全部跑完，结果已写进烘焙器的迭代区。', flush=True)
 
 
 if __name__ == '__main__':

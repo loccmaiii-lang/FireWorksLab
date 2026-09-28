@@ -111,7 +111,7 @@ window.__fw = {
   },
   async exportFiles(P, M, name) {
     const b = await bake(P, 1, null); const files = await texFiles(b, name);
-    files.push([`T_${name}_Ramp.png`, await encodePNG(rampPixels(M), 256, 8)]);
+    files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
     files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b, M))]);
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, M))]);
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, M), null, 2))]);
@@ -124,7 +124,7 @@ window.__fw = {
     const d = defaultsFor(key), P = derive({ ...d.P, ...trailOver(over) }), M = { ...d.M, ...((over || {})._ramp || {}) };
     const b = await bake(P, 1, null); const files = await texFiles(b, name);
     if (P.trExport4K) { const b4 = await bake(P, 2, null); files.push(...await texFiles(b4, name, '_4K')); disposeBake(b4); }
-    files.push([`T_${name}_Ramp.png`, await encodePNG(rampPixels(M), 256, 8)]);
+    files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
     files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b, M))]);
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, M))]);
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, M), null, 2))]);
