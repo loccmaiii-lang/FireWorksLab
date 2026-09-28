@@ -329,6 +329,25 @@ function bigShellSection(b) {
   芯：再叠 1–2 层缩小的牡丹母版（组合页「四尺玉」预设）。
   距离 1.5 km 以外只留第 1 层，1K 贴图。`;
 }
+// Cutout：裁掉面片空白（Required 的 Cutout Texture）
+function cutoutSection(name, b) {
+  const one = (label, base, cut, keys) => cut ? `${label}
+  方式一（简单，所有帧共用一个轮廓）：Required → Cutout Texture = ${base}_Cutout_Union；Sub Images Horizontal = 1，Vertical = 1；
+    Bounding Mode = Eight Vertices；Opacity Source Mode = Alpha；Alpha Threshold = 0.1。面片剩下约 ${Math.round(cut.unionCover * 100)}%（按轮廓外接八边形会略大一点）
+  方式二（逐帧轮廓，省得更多）：Cutout Texture = ${base}_Cutout；Sub Images Horizontal = ${cut.grid}，Vertical = ${cut.grid}；Bounding Mode = Eight Vertices；
+    Opacity Source Mode = Alpha；Alpha Threshold = 0.1；Required → Interpolation Method = Linear（只用来按帧挑轮廓，不做帧间混合）；
+    再加一个 SubUV 模块：Sub Image Index 用和帧号完全相同的曲线（下面可直接粘贴），Use Real Time 不勾选。平均每帧剩约 ${Math.round(cut.avgCover * 100)}%
+    材质照旧用 Dynamic Parameter 第三通道取帧；如果材质里用了 Particle SubUV 节点，只能用方式一。
+  ▸ SubUV → Sub Image Index → Distribution Float Constant Curve → Constant Curve → Points
+${ueFloatPts(keys)}` : '';
+  const parts = [];
+  if (b.form === 'trail') {
+    parts.push(one('上升循环', `T_${name}_Loop`, b.meta.cutout, sawKeys(b.meta, b.meta.T)));
+    for (const f of b.fades || []) parts.push(one(`消散 ${f.fps} fps`, `T_${name}_Fade${f.fps}`, f.cutout, [[0, 0], [1, b.meta.L.F - 0.001]]));
+  } else for (let x = b, i = 0; x; x = x.next, i++) parts.push(one(b.next ? `段 ${'AB'[i]}` : '', `T_${name}${b.next ? '_' + 'AB'[i] : ''}`, x.meta.cutout, x.meta.keys));
+  const t = parts.filter(Boolean).join('\n');
+  return t ? `【Cutout：裁掉面片上的空白，减少 overdraw】\n${t}\n` : '';
+}
 function cascadeText(name, b, M) {
   const P = b.P, head = `烟花母版：${name}（${TYPE_NAMES[P.type]}${P.shellNo ? ' · ' + P.shellNo + ' 号' : ''}）
 工具：烟花母版烘焙器 ${VERSION}（模拟内核：${P.engine === 'gpu' ? 'GPU' : 'CPU'}；产物：${FORM_NAMES[b.form] || b.form}）
@@ -343,6 +362,7 @@ function cascadeText(name, b, M) {
   else body = masterEmitter(b, M);
   return `${head}
 ${texSection(name, b)}
+${cutoutSection(name, b)}
 ${body}
 ${checkSection(b)}
 
