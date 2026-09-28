@@ -1,0 +1,5 @@
+17:08:18 开始：金芒菊 固定镜头版 + 帧号测试（排查引擎里抖动）（导出素材）
+17:08:19 JinMangJu_Fixed 导出 2 秒：JinMangJu_Fixed.json、JinMangJu_Fixed_Cascade参数.txt、JinMangJu_Fixed_曲线.csv、T_JinMangJu_Fixed.png、T_JinMangJu_Fixed_Ramp.png、T_JinMangJu_Fixed_帧号测试.png
+17:08:22 JinMangJu_Tight 导出 3 秒：JinMangJu_Tight.json、JinMangJu_Tight_Cascade参数.txt、JinMangJu_Tight_曲线.csv、T_JinMangJu_Tight.png、T_JinMangJu_Tight_Ramp.png、T_JinMangJu_Tight_帧号测试.png
+17:08:22 大文件（贴图）在 F:\FireWorksLab\analysis\local\输出\JM1，不上传
+17:08:23 完成，用时 0.1 分钟
