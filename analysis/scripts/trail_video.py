@@ -210,4 +210,6 @@ def main(d, sizes='SML', previews=True, log=print):
     if len(trs) == 3: strength(trs, os.path.join(d, '升空尾缀_三档对比.jpg'))
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    # python trail_video.py <输出目录> [SML] [--compare]   --compare：只录 1080 宽的实拍对照（不录预览）
+    a = [x for x in sys.argv[1:] if not x.startswith('--')]
+    main(a[0], a[1] if len(a) > 1 else 'SML', previews='--compare' not in sys.argv)

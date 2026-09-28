@@ -17,7 +17,7 @@
   best.json（最终参数）、对照.jpg（实拍 vs 模拟）、数值.json（逐时刻对照表）、
   variant_<名字>.jpg / .json、log.txt、env.json（显卡、耗时）、done.json（跑完的标记）
 """
-import sys, os, json, time, platform, traceback, threading
+import sys, os, json, time, platform, traceback
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, os.path.join(ROOT, 'analysis', 'scripts'))
@@ -26,45 +26,13 @@ RES = os.path.join(ROOT, 'analysis', 'results')
 try: sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 except Exception: pass
 
-# 同一台电脑上有两条执行线（本地线、WorkBuddy 线）共用一张显卡和 analysis/local/输出/。
-# 开跑前在 输出/_运行中.json 占用，跑的时候每分钟刷新一次；超过 5 分钟没刷新视为上次异常退出，可以接管。
+# 哪条线跑的（写进 env.json）：本地双击 bat 为「本地」，WorkBuddy 跑时设 FW_LINE=WorkBuddy。
+# 同一时间只有一个对话框跑任务（用户保证），不做互斥锁。
 LINE = os.environ.get('FW_LINE') or '本地'
-LOCK = os.path.join(ROOT, 'analysis', 'local', '输出', '_运行中.json')
-LOCK_STALE = 300
 
 
 def jload(p): return json.load(open(p, encoding='utf-8'))
 def jsave(o, p): json.dump(o, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-
-
-class GpuLock:
-    def __init__(self, jobs):
-        self.info = {'line': LINE, 'jobs': jobs, 'pid': os.getpid(), 'since': time.strftime('%Y-%m-%d %H:%M')}
-        self.stop = threading.Event()
-
-    def acquire(self):
-        if os.path.exists(LOCK):
-            age = time.time() - os.path.getmtime(LOCK)
-            try: other = jload(LOCK)
-            except Exception: other = {}
-            if age < LOCK_STALE:
-                print(f"显卡正被「{other.get('line', '?')}」使用（任务 {'、'.join(other.get('jobs', []))}，{other.get('since', '')} 开始）。等它跑完再来。", flush=True)
-                return False
-            print(f"发现 {age / 60:.0f} 分钟没刷新的占用标记（{other.get('line', '?')}），视为已中断，接管。", flush=True)
-        os.makedirs(os.path.dirname(LOCK), exist_ok=True)
-        jsave(self.info, LOCK)
-        def beat():
-            while not self.stop.wait(60):
-                try: os.utime(LOCK)
-                except Exception: pass
-        threading.Thread(target=beat, daemon=True).start()
-        return True
-
-    def release(self):
-        self.stop.set()
-        try:
-            if jload(LOCK).get('pid') == os.getpid(): os.remove(LOCK)
-        except Exception: pass
 
 
 def run_job(job, s, force=False):
@@ -132,22 +100,17 @@ def main():
     todo = [j for j in jobs if force or not os.path.exists(os.path.join(RES, j['id'], 'done.json'))]
     if not check and not todo:
         print(f'执行线：{LINE}。任务 {len(jobs)} 个，没有待跑的。', flush=True); return
-    lock = GpuLock(['check'] if check else [j['id'] for j in todo])
-    if not lock.acquire(): sys.exit(2)
+    from compare import SimSession
+    s = SimSession()
+    print(f'执行线：{LINE}  渲染：{s.mode}  浏览器显卡：{s.renderer or "未知"}' + ('  ← 软件渲染，会很慢' if s.soft else ''), flush=True)
+    if check:
+        t = time.time(); s.pg.evaluate("__fw.renderStills(state.P, state.M, { times: [1.0], px: 512 })")
+        print(f'试渲一帧：{time.time() - t:.1f} 秒（有显卡时应在 1–2 秒内）'); s.close(); return
+    print(f'任务 {len(jobs)} 个，待跑 {len(todo)} 个：' + '、'.join(j['id'] + ' ' + j.get('name', '') for j in todo), flush=True)
     try:
-        from compare import SimSession
-        s = SimSession()
-        print(f'执行线：{LINE}  渲染：{s.mode}  浏览器显卡：{s.renderer or "未知"}' + ('  ← 软件渲染，会很慢' if s.soft else ''), flush=True)
-        if check:
-            t = time.time(); s.pg.evaluate("__fw.renderStills(state.P, state.M, { times: [1.0], px: 512 })")
-            print(f'试渲一帧：{time.time() - t:.1f} 秒（有显卡时应在 1–2 秒内）'); s.close(); return
-        print(f'任务 {len(jobs)} 个，待跑 {len(todo)} 个：' + '、'.join(j['id'] + ' ' + j.get('name', '') for j in todo), flush=True)
-        try:
-            for j in todo: run_job(j, s, force)
-        finally:
-            s.close()
+        for j in todo: run_job(j, s, force)
     finally:
-        lock.release()
+        s.close()
     print('\n全部跑完。把结果传上去：\n  git add analysis/results\n  git commit -m "本地跑完"\n  git push')
 
 

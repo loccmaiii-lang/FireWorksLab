@@ -5,8 +5,9 @@
     "sizes": { "S": {"start": 起点 json 路径或参数覆盖 dict, "rounds": 2}, "M": {...}, "L": {...} },
     "ramp": true,             # 按实拍拟合渐变图
     "export": true,           # 用校准结果导出（2K + 4K 母版 + 两个消散版本）
-    "video": true,            # 每档预览 ×2、实拍对照、三档对比图（export 为 true 时才有）
-    "previews": true,         # false：只出实拍对照和三档对比（快）
+    "video": false,           # 默认不录视频（用户在烘焙器里对比）。true：每档预览 ×2 + 实拍对照（约 30 分钟）
+    "previews": true,         # video 为 true 时，false = 只录实拍对照
+                              # 三档对比图、小图、参数表不管 video 都会出
     "tex": "3.0A",            # 可选：质感对尾缀3.0_A（4K），造型仍对各档原实拍
     "scale": 1 }              # 校准时的烘焙倍率（质感对 4K 实拍时用 1）
 结果分两处，省流量：
@@ -44,13 +45,17 @@ def run(job, s, out, log=print):
         d = os.path.join(sd, f'RiseTrail_{k}'); os.makedirs(d, exist_ok=True)
         zipfile.ZipFile(io.BytesIO(base64.b64decode(b64))).extractall(d)
         log(f'{k} 导出 {(time.time() - t):.0f} 秒：' + '、'.join(sorted(os.listdir(d))))
-    if job.get('video', True):
+    # 视频默认不录（用户在烘焙器里对比）；要看时在 WorkBuddy 对话里要，跑完单独录 1K 实拍对照：
+    #   python analysis/scripts/trail_video.py <输出目录> --compare
+    if job.get('video', False):
         TV.main(sd, ''.join(sizes), previews=job.get('previews', True), log=log)
-        import shutil
-        for k in sizes:
-            TV.small_sheet(sd, k, os.path.join(out, f'尾缀_{k}_小图.jpg'))
-            for f in (f'RiseTrail_{k}_Cascade参数.txt', f'RiseTrail_{k}.json'):
-                shutil.copy(os.path.join(sd, f'RiseTrail_{k}', f), os.path.join(out, f))
-        p3 = os.path.join(sd, '升空尾缀_三档对比.jpg')
-        if os.path.exists(p3): shutil.copy(p3, out)
-        log(f'大文件（贴图、视频）在 {sd}，不上传')
+    elif len(sizes) == 3:
+        TV.strength({k: TV.Trail(os.path.join(sd, f'RiseTrail_{k}'), k) for k in sizes}, os.path.join(sd, '升空尾缀_三档对比.jpg'))
+    import shutil
+    for k in sizes:
+        TV.small_sheet(sd, k, os.path.join(out, f'尾缀_{k}_小图.jpg'))   # 没有视频时只有贴图局部
+        for f in (f'RiseTrail_{k}_Cascade参数.txt', f'RiseTrail_{k}.json'):
+            shutil.copy(os.path.join(sd, f'RiseTrail_{k}', f), os.path.join(out, f))
+    p3 = os.path.join(sd, '升空尾缀_三档对比.jpg')
+    if os.path.exists(p3): shutil.copy(p3, out)
+    log(f'大文件（贴图{"、视频" if job.get("video", False) else ""}）在 {sd}，不上传')
