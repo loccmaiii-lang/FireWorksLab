@@ -126,39 +126,31 @@ async function debugAtlasPNG(s) {
   for (let i = 0; i < out.length; i += 4) { if (L.chans === 1) out[i + 1] = out[i + 2] = out[i]; if (L.chans < 4) out[i + 3] = 255; }
   return encodePNG(out, N, NH);
 }
-// Cutout 遮罩：给 Cascade Required 的 Cutout Texture，引擎按它给每帧生成 8 顶点的包围多边形，裁掉面片上的空白（减少 overdraw）。
-//   逐帧版：一帧一格，G×G 格（G = ⌈√帧数⌉），格子顺序 = 帧号（行优先，左上为第 0 帧），与 RGBA 接力无关；
-//   合并版：所有帧叠在一起的一个轮廓（不用 SubUV 模块时用）。
-// 编码值 ≥ 3/255 算有内容，再向外扩 2 个遮罩像素，光晕的边不会被切掉。
-function cutoutMasks(srcs, N, NH, L) {
-  const G = Math.ceil(Math.sqrt(L.F)), S = G >= 12 ? 1024 : 512, mc = Math.floor(S / G), cw = N / L.cols, ch = NH / L.rows, thr = 3, dil = 2;
-  const cells = Array.from({ length: L.F }, () => new Uint8Array(mc * mc));
+// Cutout 遮罩：给 Cascade Required 的 Cutout Texture，引擎按它生成 8 顶点的包围多边形，裁掉面片上的空白（减少 overdraw）。
+//   一张图：把要导出的所有帧（含 RGBA 各通道、Head/Tail）叠在一起，512×512，白 = 有内容；Sub Images 1×1，不用 SubUV 模块。
+//   编码值 ≥ 3/255 算有内容，再向外扩 3 个遮罩像素，光晕的边不会被切掉。
+function cutoutMask(srcs, N, NH, L) {
+  const U = 512, cw = N / L.cols, ch = NH / L.rows, thr = 3, dil = 3, m = new Uint8Array(U * U);
   for (const rgba of srcs) for (let c = 0; c < L.chans; c++) for (let y = 0; y < NH; y++) {
-    const row = Math.floor(y / ch), my = Math.min(mc - 1, Math.floor((y - row * ch) * mc / ch)), base = (NH - 1 - y) * N;   // y：PNG 自上而下；源数据 GL 自下而上
+    const row = Math.floor(y / ch), my = Math.min(U - 1, Math.floor((y - row * ch) * U / ch)), base = (NH - 1 - y) * N;   // y：PNG 自上而下；源数据 GL 自下而上
     for (let x = 0; x < N; x++) {
       if (rgba[(base + x) * 4 + c] < thr) continue;
-      const col = Math.floor(x / cw), f = c * L.per + row * L.cols + col; if (f >= L.F) continue;
-      cells[f][my * mc + Math.min(mc - 1, Math.floor((x - col * cw) * mc / cw))] = 1;
+      const col = Math.floor(x / cw); if (c * L.per + row * L.cols + col >= L.F) continue;
+      m[my * U + Math.min(U - 1, Math.floor((x - col * cw) * U / cw))] = 1;
     }
   }
-  const grow = m => { const o = new Uint8Array(mc * mc); for (let j = 0; j < mc; j++) for (let i = 0; i < mc; i++) if (m[j * mc + i]) for (let dj = -dil; dj <= dil; dj++) for (let di = -dil; di <= dil; di++) { const a = i + di, b2 = j + dj; if (a >= 0 && a < mc && b2 >= 0 && b2 < mc) o[b2 * mc + a] = 1; } return o; };
-  const uni = new Uint8Array(mc * mc); let cov = 0;
-  const grid = new Uint8Array(S * S * 4);
-  cells.forEach((m0, f) => {
-    const m = grow(m0), gc = f % G, gr = Math.floor(f / G); let n = 0;
-    for (let j = 0; j < mc; j++) for (let i = 0; i < mc; i++) if (m[j * mc + i]) {
-      n++; uni[j * mc + i] = 1; const o = ((S - 1 - (gr * mc + j)) * S + gc * mc + i) * 4; grid[o] = grid[o + 1] = grid[o + 2] = grid[o + 3] = 255;
-    }
-    cov += n / (mc * mc) / L.F;
-  });
-  const U = 512, un = new Uint8Array(U * U * 4); let ucov = 0;
-  for (let y = 0; y < U; y++) for (let x = 0; x < U; x++) if (uni[Math.floor(y * mc / U) * mc + Math.floor(x * mc / U)]) { const o = ((U - 1 - y) * U + x) * 4; un[o] = un[o + 1] = un[o + 2] = un[o + 3] = 255; ucov++; }
-  return { G, S, U, grid, union: un, cov, ucov: ucov / (U * U) };
+  const out = new Uint8Array(U * U * 4); let n = 0;
+  for (let j = 0; j < U; j++) for (let i = 0; i < U; i++) {
+    let on = 0;
+    for (let dj = -dil; dj <= dil && !on; dj++) for (let di = -dil; di <= dil; di++) { const a = i + di, b2 = j + dj; if (a >= 0 && a < U && b2 >= 0 && b2 < U && m[b2 * U + a]) { on = 1; break; } }
+    if (on) { const o = ((U - 1 - j) * U + i) * 4; out[o] = out[o + 1] = out[o + 2] = out[o + 3] = 255; n++; }
+  }
+  return { U, img: out, cov: n / (U * U) };
 }
 async function cutoutFiles(srcs, N, NH, L, base, meta) {
-  const r = cutoutMasks(srcs, N, NH, L);
-  if (meta) meta.cutout = { grid: r.G, avgCover: +r.cov.toFixed(3), unionCover: +r.ucov.toFixed(3) };
-  return [[`${base}_Cutout.png`, await encodePNG(r.grid, r.S, r.S)], [`${base}_Cutout_Union.png`, await encodePNG(r.union, r.U, r.U)]];
+  const r = cutoutMask(srcs, N, NH, L);
+  if (meta) meta.cutout = { size: r.U, cover: +r.cov.toFixed(3) };
+  return [[`${base}_Cutout.png`, await encodePNG(r.img, r.U, r.U)]];
 }
 async function texFiles(b, name, sfx = '') {
   const files = [];
