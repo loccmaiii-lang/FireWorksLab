@@ -55,33 +55,54 @@ def thumb(path, box, size=160):
 
 
 def trail_meta(rel):
-    """尾缀：没有「开花」，取亮痕出现的范围（所有帧亮像素的外框）做正方形裁切，t0 = 亮痕第一次出现"""
+    """尾缀：只看「动的亮点」（和中位数背景的差，去掉城市灯光这类固定亮点），取它们的横向重心做中心；
+    竖向用整个画面高度（尾迹从下到上穿过画面），t0 = 亮痕第一次出现"""
     import cv2, numpy as np
-    cap = cv2.VideoCapture(os.path.join(ROOT, rel)); fps = cap.get(5) or 30; acc = None; first = None; i = 0
+    cap = cv2.VideoCapture(os.path.join(ROOT, rel)); fps = cap.get(5) or 30; frames = []
     while True:
         ok, f = cap.read()
         if not ok: break
-        g = cv2.resize(f, None, fx=0.5, fy=0.5).max(2).astype(np.float32)
-        g = np.clip(g - cv2.GaussianBlur(g, (0, 0), 15), 0, None); m = g > max(40, np.percentile(g, 99.9) * 0.4)
-        if m.sum() > 20 and first is None: first = i / fps
-        acc = m if acc is None else (acc | m); i += 1
-    H, W = acc.shape; ys, xs = np.nonzero(acc)
-    x0, x1, y0, y1 = np.percentile(xs, 1), np.percentile(xs, 99), np.percentile(ys, 1), np.percentile(ys, 99)
-    half = min(0.5, max(x1 - x0, y1 - y0) * 0.6 / H)
-    return {'t0': round(first or 0, 3), 'cx': round((x0 + x1) / 2 / W, 4), 'cy': round((y0 + y1) / 2 / H, 4), 'half': round(half, 4), 'aspect': round(W / H, 4)}
+        frames.append(cv2.resize(f, None, fx=0.5, fy=0.5).max(2).astype(np.float32))
+    bg = np.median(np.stack(frames[::max(1, len(frames) // 40)]), 0)
+    H, W = bg.shape; acc = np.zeros((H, W), np.float32); first = None
+    for i, g in enumerate(frames):
+        d = np.clip(g - bg - 25, 0, None)
+        if d.sum() > 2000 and first is None: first = i / fps
+        acc += d
+    ys, xs = np.nonzero(acc > acc.max() * 0.05); w = acc[ys, xs]
+    cx, cy = float((xs * w).sum() / w.sum()), float((ys * w).sum() / w.sum())
+    return {'t0': round(first or 0, 3), 'cx': round(cx / W, 4), 'cy': round(min(max(cy / H, 0.5), 0.5), 4), 'half': 0.5, 'aspect': round(W / H, 4)}
+
+
+META_VER = 7
+
+
+def burst_meta(rel):
+    """花型：开花时刻 = refkit.find_burst；取景中心 = 整个燃烧期亮部的加权重心（千轮这类多团的也居中），
+    半宽 = 亮部到中心距离的 97 分位 × 1.15（整朵都在框里、四周留一点空）"""
+    import numpy as np
+    from refkit import read_video, find_burst, star_mask
+    fr, fps = read_video(os.path.join(ROOT, rel), 0.5)
+    b = find_burst(fr); H, W = fr[0][1].shape[:2]
+    # 只数星点（亮部里的局部极大值，烟和被照亮的天空不算），整个燃烧期都算；取景框 = 星点横竖各 3–97 分位的外框
+    import cv2
+    px, py = [], []
+    for i in range(b['i0'], b['ie'] + 1):
+        d, m, thr = star_mask(fr[i][1], b['bg'])
+        mx = cv2.dilate(d, np.ones((5, 5), np.uint8)); ys, xs = np.nonzero((d >= mx) & (d > 2 * thr))
+        px.append(xs); py.append(ys)
+    xs, ys = np.concatenate(px).astype(np.float32), np.concatenate(py).astype(np.float32)
+    x0, x1, y0, y1 = np.percentile(xs, 3), np.percentile(xs, 97), np.percentile(ys, 3), np.percentile(ys, 97)
+    cx, cy = float(x0 + x1) / 2, float(y0 + y1) / 2; r97 = float(max(x1 - x0, y1 - y0)) / 2 * 1.2
+    return {'v': META_VER, 't0': round(b['t0'], 3), 'cx': round(cx / W, 4), 'cy': round(cy / H, 4), 'half': round(min(0.5, r97 / H), 4), 'aspect': round(W / H, 4)}
 
 
 def video_meta(rel, trail=False):
-    """开花时刻和裁切（以爆点为中心、1.35 倍最终半径），给烘焙器里的实拍对照用"""
+    """实拍对照的开花时刻和取景（中心、半宽，都按画面高度归一化），缓存在 tool/data/video_meta.json"""
     cache = os.path.join(ROOT, 'tool', 'data', 'video_meta.json')
     db = json.load(open(cache, encoding='utf-8')) if os.path.exists(cache) else {}
-    if rel not in db and trail:
-        db[rel] = trail_meta(rel); json.dump(db, open(cache, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    if rel not in db:
-        from compare import video_side
-        V = video_side(os.path.join(ROOT, rel), 0.5)
-        h, w = V['frames'][0][1].shape[:2]
-        db[rel] = {'t0': round(V['frames'][0][0], 3), 'cx': round(V['center'][0] / w, 4), 'cy': round(V['center'][1] / h, 4), 'half': round(min(0.5, 1.35 * V['R'] / h), 4), 'aspect': round(w / h, 4)}
+    if rel not in db or db[rel].get('v') != META_VER:
+        db[rel] = trail_meta(rel) if trail else burst_meta(rel); db[rel]['v'] = META_VER
         json.dump(db, open(cache, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     return db[rel]
 
@@ -111,9 +132,15 @@ def main():
             rec['thumbRef'], rec['thumbSim'] = thumb(sheet, (390, 30, 690, 330)), thumb(sheet, (390, 330, 690, 630))
             rec['vmeta'] = video_meta(e['video'])
         out.append(rec)
+    # 正式库里带参考视频的，也算好取景（烘焙器里点正式库条目同样能并排看实拍）
+    import re
+    vm = {}
+    for v in sorted(set(re.findall(r"video: '(vidio/[^']+\.mp4)'", open(os.path.join(ROOT, 'tool', 'src', 'js', '15_replica.js'), encoding='utf-8').read()))):
+        if os.path.exists(os.path.join(ROOT, v)): vm['../' + v] = video_meta(v)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     open(OUT, 'w', encoding='utf-8').write('// 由 analysis/scripts/review_to_baker.py 生成：迭代区（做完、等你看的东西）。不要手改。\n'
-                                          'var FW_REVIEW = ' + json.dumps(out, ensure_ascii=False, indent=0) + ';\n')
+                                          'var FW_REVIEW = ' + json.dumps(out, ensure_ascii=False, indent=0) + ';\n'
+                                          'var FW_VMETA = ' + json.dumps(vm, ensure_ascii=False) + ';\n')
     print('迭代区', len(out), '项 →', OUT, f'{os.path.getsize(OUT) / 1024:.0f} KB')
 
 

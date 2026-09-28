@@ -10,15 +10,14 @@
     <aside class="side" id="side" aria-label="库">
       <div class="side-head">
         <input type="search" id="libSearch" placeholder="搜索：名字、任务号、特征" aria-label="搜索库">
-        <button class="ib" id="sideHide" type="button" title="收起左栏" aria-label="收起左栏">‹</button>
       </div>
       <div class="side-body" id="libBody"></div>
       <div class="side-foot"><button class="btn ghost" id="assetOpen2" type="button" title="临时看某个结果文件夹">打开结果文件夹…</button></div>
     </aside>
-    <button class="side-show" id="sideShow" type="button" hidden title="展开左栏">›</button>
     <div class="gutter" id="gutL" title="拖动调整宽度"></div>
     <section class="stage">
       <div class="viewbar">
+        <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="1.5" y="2.5" width="4.5" height="11" rx="1.5"/></svg><span class="tl">库</span></button>
         <div class="seg" id="viewSeg">
           <button data-view="live" aria-pressed="true">实时模拟</button>
           <button data-view="export" aria-pressed="false">导出效果</button>
@@ -43,10 +42,22 @@
         </div>
         <label class="expo" id="distBox" hidden>观看距离<input type="range" id="dist" min="200" max="3000" step="50" value="800"><output id="distOut">800 m</output></label>
         <span class="abtag" id="abTag" hidden>A | B</span>
-        <label class="expo">显示曝光<input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"></label>
+        <label class="expo" title="显示曝光（只影响预览）"><span class="tl">显示曝光</span><input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"></label>
+        <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（R）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
+        <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="专注：收起两侧面板，画布最大（F，或双击画布）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">专注</span></button>
+        <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="10" y="2.5" width="4.5" height="11" rx="1.5"/></svg></button>
       </div>
       <div class="canvas-wrap">
-        <div class="canvas-box ref-box" id="refBox" hidden><video id="refVid" muted playsinline preload="auto"></video><span class="tag">实拍</span></div>
+        <div class="canvas-box ref-box" id="refBox" hidden><video id="refVid" muted playsinline preload="auto"></video>
+          <span class="tag" id="refTag">实拍</span>
+          <div class="refctl" title="实拍和模拟对不齐时，微调实拍的时间">
+            <button type="button" data-d="-0.1" aria-label="实拍提前 0.1 秒">−0.1</button><button type="button" data-d="-0.02" aria-label="实拍提前 0.02 秒">−</button>
+            <output id="refOffOut">对齐 0.00 s</output>
+            <button type="button" data-d="0.02" aria-label="实拍延后 0.02 秒">+</button><button type="button" data-d="0.1" aria-label="实拍延后 0.1 秒">+0.1</button>
+            <button type="button" data-d="0" class="rz" aria-label="对齐归零">归零</button>
+          </div>
+          <button class="refx" id="refClose" type="button" title="关闭实拍对照（R）" aria-label="关闭实拍对照">×</button>
+        </div>
         <div class="canvas-box" id="box"><span class="tag" id="simTag" hidden>模拟</span>
           <canvas id="gl" aria-label="烟花预览"></canvas>
           <canvas id="flowCv" class="flowcv" hidden></canvas>
@@ -64,6 +75,7 @@
         <select id="speed" class="btn" aria-label="播放速度">
           <option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option><option value="0.1">0.1×</option>
         </select>
+        <span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>F</kbd>专注 <kbd>R</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>↑</kbd><kbd>↓</kbd>切换条目</span>
       </div>
     </section>
     <div class="gutter" id="gutR" title="拖动调整宽度"></div>
@@ -227,7 +239,6 @@
           <summary>显示</summary>
           <label class="check"><input type="checkbox" id="assetCut"> 显示 Cutout 轮廓（面片实际要画的区域）</label>
           <label class="check"><input type="checkbox" id="assetSky"> 傍晚天空底色（对照 万彩千轮 实拍）</label>
-          <label class="expo">亮度<input type="range" id="assetGain" min="0.2" max="1" step="0.05" value="1"></label>
         </details>
       </div>
     </aside>

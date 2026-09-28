@@ -44,14 +44,14 @@ UE 4.24 MMO 的写实日式烟花特效素材。在 `tool/` 的网页烘焙器�
 - 迭代区数据：`tool/data/review.js`，由 `analysis/scripts/review_to_baker.py` 生成（改里面的 REVIEW 列表再运行）。每条写清：做了什么（note）、看什么（look）、Claude 的看法（opinion）、实拍视频。
   - 花型参数类（best.json、尾缀配方）：kind = preset，点开就在烘焙器里实时模拟；
   - 贴图类（单元序列、母版导出）：kind = asset，结果目录里要有 `preview.js`（`prism_preview.py` 生成：清单 + 缩小贴图），点开按引擎方式播放。
-  - 实拍并排：条目带 video（相对仓库根）和 vmeta（开花时刻、裁切，自动算，缓存在 `tool/data/video_meta.json`），左实拍右模拟、时间同步。
+  - 实拍并排：条目带 video（相对仓库根）和 vmeta（开花时刻、取景，自动算：花型按整个燃烧期的星点外框居中，尾缀按运动亮点的横向重心；缓存在 `tool/data/video_meta.json`，改算法就升 META_VER）。左实拍右模拟（或上下，哪种画面大用哪种），时间同步；用户可用 R 关掉只看模拟。正式库条目的视频取景在 FW_VMETA。
 - 用户在右栏审阅卡点「通过」/「要改」+ 写意见，存在他的浏览器里；左栏「复制意见」贴给 Claude。
 - 用户「通过」后：Claude 把条目搬进 `tool/src/js/15_replica.js` 的 REPLICAS（左栏「正式库」），并从 REVIEW 删掉。
 - 视频不是交付物；不要让用户去翻文件夹或看视频。
 
 ## 每次收尾必须做
 
-1. 新结果写进迭代区（`review_to_baker.py`），并在仓库根目录 `更新记录.md` 最上面加一条：做了什么、要用户看什么。烘焙器顶栏「更新记录」显示它，有新条目会自动弹出。
+1. 新结果写进迭代区（`review_to_baker.py`），并在仓库根目录 `更新记录.md` 最上面加一条：做了什么、要用户看什么。烘焙器顶栏「更新记录」显示它，有新条目时按钮上亮一个点（不自动弹出，不挡画布）。
 2. 更新 `交接.md`：当前状态、在等用户什么、下一步。
 3. 更新 `PROGRESS.md` 的复刻进度表。
 4. build、commit、push（提交说明写清楚改了什么），push 成功后再告诉用户。

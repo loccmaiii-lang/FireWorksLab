@@ -121,7 +121,7 @@ function renderAssets() {
   const cv = $('#assetCv'), box = $('#box'), dpr = Math.min(2, window.devicePixelRatio || 1);
   const W = Math.round(box.clientWidth * dpr), H = Math.round(box.clientHeight * dpr);
   if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
-  const g = cv.getContext('2d');
+  const g = cv.getContext('2d'); cv.style.filter = state.expo !== 1 ? `brightness(${state.expo})` : '';
   g.globalCompositeOperation = 'source-over'; g.fillStyle = asset.sky === 'sky' ? '#34466e' : '#020306'; g.fillRect(0, 0, W, H);
   if (!asset.man) { g.fillStyle = '#9aa0b4'; g.font = `${14 * dpr}px sans-serif`; g.textAlign = 'center'; g.fillText('在左栏「迭代区」点一个素材条目', W / 2, H / 2); hudText = ''; return; }
   if (!asset.ready) return;
@@ -142,8 +142,7 @@ function renderAssets() {
     alive++; area += s * s; fr[e.def.name] = f;
   }
   g.globalCompositeOperation = 'source-over'; g.globalAlpha = 1;
-  hudText = `${asset.man.title || ''} · ${(asset.man.variants || {})[asset.variant] || asset.variant}\n粒子 ${alive}　面片面积合计 = 画面的 ${(area / (W * H) * 100).toFixed(0)}%\n` +
-    Object.entries(fr).map(([n, f]) => `${n} 第 ${f} 帧`).join('　');
+  const fs = Object.values(fr); hudText = `${(asset.man.variants || {})[asset.variant] || asset.variant} · 粒子 ${alive} · 帧 ${fs.length ? Math.min(...fs) + (Math.max(...fs) !== Math.min(...fs) ? '–' + Math.max(...fs) : '') : '-'} · 面片合计 ${(area / (W * H) * 100).toFixed(0)}% 画面`;
 }
 function assetPanel() {
   const m = asset.man, box = $('#assetInfo');
@@ -169,6 +168,5 @@ function initAssets() {
   $('#assetDir').addEventListener('change', e => { if (e.target.files.length) { setReview(null); setTab('asset'); assetOpen(e.target.files); } e.target.value = ''; });
   $('#assetCut').addEventListener('change', e => { asset.cutout = e.target.checked; });
   $('#assetSky').addEventListener('change', e => { asset.sky = e.target.checked ? 'sky' : 'black'; });
-  $('#assetGain').addEventListener('input', e => { asset.gain = +e.target.value; });
   assetPanel();
 }

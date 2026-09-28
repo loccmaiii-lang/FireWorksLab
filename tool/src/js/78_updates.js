@@ -24,5 +24,5 @@ function initUpdates() {
   $('#updBtn').addEventListener('click', open);
   $('#updClose').addEventListener('click', () => { $('#updDlg').hidden = true; });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') $('#updDlg').hidden = true; });
-  if (latest && seen !== latest) setTimeout(open, 600);   // 有新内容时，打开烘焙器自动弹一次
+  // 有新内容只在按钮上亮一个点，不自动弹出（不挡画布）
 }
