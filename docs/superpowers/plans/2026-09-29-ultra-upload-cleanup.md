@@ -1,6 +1,6 @@
 # Ultra 分支上传与本地清理 Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** 上传独立 Ultra 分支，并按用户确认删除首次安装脚本、移除 PROGRESS 本地参数格式段落。
 
@@ -34,7 +34,7 @@
 
 - [x] 读取本地 diff，恢复仅本地新增的 PROGRESS 格式段落，快进到远端 `01f1378`。
 - [x] 删除脚本，把使用说明改为从仓库根目录执行两条原命令。
-- [ ] 更新当前交接和目录说明，构建主线 HTML，检查只删除指定文件并提交、推送 main。
+- [x] 更新当前交接和目录说明，构建主线 HTML，检查只删除指定文件并提交、推送 main。
 
 ### Task 2: 独立上传 Ultra
 
@@ -46,10 +46,10 @@
 - Consumes: 最新 main 的清理提交；用户确认的代码、配置、文档范围。
 - Produces: `origin/ultra`，原工作区保持 main 与全部本地资源。
 
-- [ ] 从已同步的 main 创建独立工作树和 `ultra` 分支，复制已选择的文件。
-- [ ] 将实际上传范围、未上传素材与打开方法写到 Ultra README。
-- [ ] 检查工作树无本机依赖、缓存或敏感配置；构建实验 HTML、打开网页并检查控制台。
-- [ ] 提交，推送 `origin/ultra`；核对远端提交及上传文件范围。
+- [x] 从已同步的 main 创建独立工作树和 `ultra` 分支，复制已选择的文件。
+- [x] 将实际上传范围、未上传素材与打开方法写到 Ultra README。
+- [x] 检查工作树无本机依赖、缓存或敏感配置；构建实验 HTML、打开网页并检查控制台。
+- [x] 提交，推送 `origin/ultra`；核对远端提交及上传文件范围。
 
 ### Task 3: 完成记录
 
@@ -60,5 +60,5 @@
 - Consumes: 远端已确认的 Ultra 提交号。
 - Produces: 明确分支链接、上传体积、本地素材保留位置，以及清理完成状态。
 
-- [ ] 主线记录 Ultra 分支已上传、入口与素材处理方式，并推送这份记录。
-- [ ] 确认原工作区 main、原实验目录完整、指定脚本不存在、PROGRESS 不再含新增参数格式段落。
+- [x] 主线记录 Ultra 分支已上传、入口与素材处理方式，并推送这份记录。
+- [x] 确认原工作区 main、原实验目录完整、指定脚本不存在、PROGRESS 不再含新增参数格式段落。
