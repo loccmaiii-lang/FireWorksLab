@@ -1,0 +1,48 @@
+{
+ "id": "QN5",
+ "name": "青柠星 第 5 轮：按核对后的原理（引菊 → 牡丹分层星）配参数",
+ "priority": 6,
+ "video": "vidio/2.0/青柠星.mp4",
+ "start": "analysis/jobs/起点/QN5_起点.json",
+ "fit": {
+  "params": [
+   "stars",
+   "headSize",
+   "headBright",
+   "sparkRate",
+   "sparkLife",
+   "sparkBright",
+   "v0",
+   "M.headInt"
+  ],
+  "rounds": 3,
+  "camera": true,
+  "caps": {
+   "_psf": [
+    0,
+    0.4
+   ],
+   "stars": [
+    260,
+    480
+   ]
+  }
+ },
+ "note": "用户 23:10 核对：分层星对、中心残火归尾缀、不要淡青绿细线、可以下任务。结构定死（sparkStop 0.5 s、颜色两段、3.1 s 集中熄灭、薄球壳），拟合只调亮度 / 大小 / 星数 / 尾巴。",
+ "review": {
+  "date": "2026-09-30",
+  "name": "青柠星（第 5 轮，按核对后的原理）",
+  "tags": "青柠 分层星 QN5 原理",
+  "replaces": [
+   "QN4",
+   "YQ1"
+  ],
+  "note": "YQ1 原理样机 + QN4 的实测速度，按你核对的结构拟合亮度、大小、星数。",
+  "look": [
+   "0–0.5 s：一根根橙色放射尾（不是一团橙色）",
+   "0.5 s 起星头变青柠、尾巴收掉",
+   "3.1 s 前后一起熄灭；外圈星更密"
+  ],
+  "opinion": "合并了 YQ1（原理）和 QN4（旧结果）。"
+ }
+}
