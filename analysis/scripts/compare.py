@@ -153,15 +153,18 @@ class SimSession:
         t_start = time.time()
         sub = ', sub: 4' if fast else ''
         acc = [np.zeros((px, px, 3), np.float32) for _ in times]
-        for P, M, sc, dl, ph in info:
+        for lay_i, (P, M, sc, dl, ph) in enumerate(info):
             loc = sorted({round(t - dl, 4) for t in times if t - dl >= 0} | {-0.05})
             # 延时点火的层（前一段不可见）：定曝光的时刻放到点火之后，否则按一片黑定曝光
             probe = f", probe: {float(P.get('ignDelay', 0) or 0) + 0.3 * ph['burn']:.3f}" if (P.get('ignDelay') or 0) > 0 else ''
             res = self.pg.evaluate(f"__fw.renderStills({json.dumps(P)}, {json.dumps(M)}, {{ times: {json.dumps(loc)}, px: {px}, half: {half / sc}, cy: {cy / sc}, shutter: 1/40{sub}{probe} }})")
             got = {round(r['t'], 4): np.array(Image.open(io.BytesIO(base64.b64decode(r['png'].split(',')[1]))).convert('RGB'), np.float32) for r in res}
+            # 天空底色只算一次（第 0 层的）：其余层先减掉自己的底色再加，否则几层底色叠成一片灰
+            base = got.get(-0.05, 0) if lay_i else 0
             for i, t in enumerate(times):
                 k = -0.05 if i == 0 else round(t - dl, 4)
-                if k in got: acc[i] += got[k]
+                if k in got: acc[i] += np.clip(got[k] - base, 0, None) if lay_i else got[k]
+                elif i and not lay_i and -0.05 in got: acc[i] += got[-0.05]      # 主层还没开时也要有底色
         imgs = [(t, camera(np.clip(a, 0, 255).astype(np.uint8), *cam)) for t, a in zip(times, acc)]
         bg = gray(imgs[0][1]); frames = imgs[1:]
         center = (px / 2, px / 2 + cy * px / (2 * half))

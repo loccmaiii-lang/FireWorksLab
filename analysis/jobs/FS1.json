@@ -15,8 +15,10 @@
    "0.v0",
    "0.vt",
    "0.grav",
+   "0.burn",
    "0.stars",
    "0.sparkLife",
+   "0.sparkBright",
    "0.sparkRate",
    "0.M.headInt",
    "1.v0",
@@ -44,6 +46,10 @@
    "_psf": [
     0,
     1.5
+   ],
+   "0.burn": [
+    6.0,
+    8.0
    ]
   }
  },

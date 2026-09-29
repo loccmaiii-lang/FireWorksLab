@@ -33,8 +33,8 @@
   "camera": true,
   "caps": {
    "stars": [
-    800,
-    2000
+    500,
+    1600
    ],
    "headSize": [
     0.3,

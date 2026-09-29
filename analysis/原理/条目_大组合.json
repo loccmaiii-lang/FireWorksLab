@@ -10,7 +10,7 @@
    "tags": "鸿巢 四尺玉 锦冠 原理 大组合 YK1",
    "p": {
     "duration": 11.5,
-    "stars": 1200,
+    "stars": 800,
     "v0": 260,
     "vt": 34,
     "burn": 7.5,
@@ -19,16 +19,17 @@
     "lastFlare": 0,
     "flash": 0.6,
     "headSize": 1.0,
-    "headBright": 0.6,
-    "sparkRate": 260,
-    "sparkLife": 2.2,
+    "headBright": 0.45,
+    "sparkRate": 450,
+    "sparkLife": 2.6,
     "sparkSpread": 1.2,
     "sparkInherit": 0.2,
     "sparkDrag": 1.3,
     "sparkSize": 0.35,
     "T0": 2150,
     "cooling": 0.33,
-    "massLoss": 0.3
+    "massLoss": 0.3,
+    "sparkBright": 1.3
    },
    "m": {
     "stages": [
@@ -38,13 +39,13 @@
      ],
      [
       1.5,
-      "#fff1d8"
+      "#fff6ea"
      ]
     ],
     "xw": 0.6,
     "ramp1": "#8a4a18",
-    "ramp2": "#ffd49a",
-    "ramp3": "#fffaf0"
+    "ramp2": "#ffe6c0",
+    "ramp3": "#ffffff"
    },
    "note": "原理解析（数值未拟合）：鸿巢四尺玉主体是锦冠菊（冠菊 + 钛粉）。0–1.5 s 过曝白 → 钛白金长尾，后半下垂成冠，+7.0–7.8 s 收尾。直径约 790 m。全文见 analysis/原理/鸿巢四尺玉.md。",
    "look": [
@@ -110,6 +111,10 @@
     [
      "analysis/原理/鸿巢四尺玉/t10.50.jpg",
      "+6.3 s 冠形"
+    ],
+    [
+     "analysis/原理/鸿巢四尺玉/云端起点对照.jpg",
+     "云端起点对照（多层组合对照，数值未拟合）：上实拍、下模拟，燃烧 10/30/50/70/90%"
     ]
    ],
    "roi": [
@@ -156,7 +161,11 @@
       "#ff3326"
      ]
     ],
-    "xw": 0.1
+    "xw": 0.1,
+    "ramp0": "#000000",
+    "ramp1": "#4a4a52",
+    "ramp2": "#c8c8d0",
+    "ramp3": "#ffffff"
    },
    "note": "原理解析（数值未拟合）：锦冠尾烧完后，约 1/4 的星头变成红色点灭（约 3.3 次/秒、亮 35%），边闪边落，视频到 +10.6 s 还没灭完。用延时点火 7.4 s，初速、阻力与 ① 相同，位置接上。全文见 analysis/原理/鸿巢四尺玉.md。",
    "look": [
@@ -241,13 +250,13 @@
     "fade": 0.05,
     "lastFlare": 0,
     "headSize": 0.9,
-    "sparkRate": 180,
+    "sparkRate": 260,
     "sparkStop": 5.0,
-    "sparkLife": 1.6,
-    "sparkSpread": 0.6,
-    "sparkInherit": 0.05,
-    "sparkDrag": 0.6,
-    "sparkSize": 0.25,
+    "sparkLife": 3.0,
+    "sparkSpread": 0.4,
+    "sparkInherit": 0.02,
+    "sparkDrag": 1.0,
+    "sparkSize": 0.2,
     "T0": 2000,
     "strobeHz": 10,
     "strobeDuty": 0.35,
@@ -273,7 +282,11 @@
      ]
     ],
     "xw": 0.15,
-    "headInt": 0.8
+    "headInt": 0.8,
+    "ramp0": "#000000",
+    "ramp1": "#4a4a52",
+    "ramp2": "#c8c8d0",
+    "ramp3": "#ffffff"
    },
    "note": "原理解析（数值未拟合）：名字就是配方——三重蕊 = 三层芯；洋红、青绿、闪 = 外层亲星的变色顺序。外层：橙红拖尾（星头暗）0–2.2 s → 洋红 → 2.9 s 青绿白 → 4.8 s 起白色点灭（约 10 次/秒），长光丝跟着星头变色，5.5–7.8 s 陆续灭。全文见 analysis/原理/永丰三重蕊.md。",
    "look": [
@@ -348,6 +361,10 @@
     [
      "analysis/原理/永丰三重蕊/t13.30.jpg",
      "+7.55 s 最后几颗"
+    ],
+    [
+     "analysis/原理/永丰三重蕊/云端起点对照.jpg",
+     "云端起点对照（多层组合对照，数值未拟合）：上实拍、下模拟，燃烧 10/30/50/70/90%"
     ]
    ],
    "t_range": [
@@ -390,7 +407,11 @@
       "#eef2ff"
      ]
     ],
-    "xw": 0.15
+    "xw": 0.15,
+    "ramp0": "#000000",
+    "ramp1": "#4a4a52",
+    "ramp2": "#c8c8d0",
+    "ramp3": "#ffffff"
    },
    "note": "原理解析（数值未拟合）：芯 1，无尾牡丹，约为外层半径 0.6。白 +0.45 s → 蓝紫 → +1.85 s 变白变淡 → 约 2.1 s 一起灭。",
    "look": [
@@ -460,7 +481,11 @@
       "#ffd35a"
      ]
     ],
-    "xw": 0.1
+    "xw": 0.1,
+    "ramp0": "#000000",
+    "ramp1": "#4a4a52",
+    "ramp2": "#c8c8d0",
+    "ramp3": "#ffffff"
    },
    "note": "原理解析（数值未拟合，最没把握的一层）：外层变青绿时，中间出现很多金黄小点，约 +2.6–4.3 s。用延时点火 2.5 s 的小牡丹表示；也可能只是外层变色的过渡色，请你看 +3.05、+3.85 s 两张。",
    "look": [
@@ -533,7 +558,8 @@
     "xw": 0.1,
     "ramp1": "#5a5a66",
     "ramp2": "#c8ccd8",
-    "ramp3": "#ffffff"
+    "ramp3": "#ffffff",
+    "ramp0": "#000000"
    },
    "note": "原理解析（数值未拟合）：芯 3，最里层，约 +3.8 s 才亮：橙色星、周围有弯曲的银色细丝，最后收成中心一小团，约 +7.6 s 灭。用延时点火 3.8 s + 短尾表示。",
    "look": [
@@ -589,16 +615,17 @@
    "tags": "片贝 四尺玉 金菊 原理 大组合 YP1",
    "p": {
     "duration": 6,
-    "stars": 400,
+    "stars": 150,
     "v0": 220,
     "vt": 40,
     "burn": 3.6,
     "burnJit": 10,
-    "headSize": 1.2,
-    "sparkRate": 200,
-    "sparkLife": 1.0,
+    "headSize": 0.9,
+    "sparkRate": 320,
+    "sparkLife": 1.6,
     "T0": 2100,
-    "flash": 1
+    "flash": 1,
+    "sparkSpread": 0.8
    },
    "m": {
     "stages": [
@@ -664,11 +691,21 @@
     [
      "analysis/原理/片贝四尺玉/t9.00.jpg",
      "+3.35 s 金菊将尽，彩色小割开始"
+    ],
+    [
+     "analysis/原理/片贝四尺玉/云端起点对照.jpg",
+     "云端起点对照（多层组合对照，数值未拟合）：上实拍、下模拟，燃烧 10/30/50/70/90%"
     ]
    ],
    "t_range": [
-    5.3,
+    5.45,
     18.2
+   ],
+   "roi": [
+    0,
+    0.02,
+    1,
+    0.66
    ]
   },
   {
@@ -692,7 +729,7 @@
     "subTail": 0,
     "carrierTail": 0,
     "headSize": 0.9,
-    "headBright": 0.8
+    "headBright": 0.3
    },
    "m": {
     "stages": [
@@ -701,7 +738,11 @@
       "#ff3cb4"
      ]
     ],
-    "xw": 0.1
+    "xw": 0.1,
+    "ramp0": "#000000",
+    "ramp1": "#4a4a52",
+    "ramp2": "#c8c8d0",
+    "ramp3": "#ffffff"
    },
    "note": "原理解析（数值未拟合）：+3.4 s 在金菊里面开的一批彩色小牡丹（小割玉延时开），洋红、蓝紫、少量绿，每朵约 1.2 s 灭。一层只能一种颜色，组合里同一层叠两次（洋红 + 蓝紫，镜像摆放）。",
    "look": [
@@ -742,8 +783,14 @@
     ]
    ],
    "t_range": [
-    5.3,
+    5.45,
     18.2
+   ],
+   "roi": [
+    0,
+    0.02,
+    1,
+    0.66
    ]
   },
   {
@@ -759,19 +806,19 @@
     "v0": 150,
     "vt": 45,
     "burn": 5,
-    "subDelay": 5.0,
+    "subDelay": 4.6,
     "subJit": 12,
     "subStars": 24,
     "subSpeed": 18,
     "subBurn": 5.0,
-    "subTail": 150,
+    "subTail": 220,
     "carrierTail": 0,
-    "sparkLife": 2.0,
-    "sparkDrag": 1.3,
+    "sparkLife": 2.4,
+    "sparkDrag": 1.1,
     "sparkSpread": 1.2,
     "sparkInherit": 0.3,
     "headSize": 0.8,
-    "headBright": 0.6,
+    "headBright": 0.4,
     "T0": 2000,
     "cooling": 0.35,
     "massLoss": 0.3
@@ -844,8 +891,14 @@
     ]
    ],
    "t_range": [
-    5.3,
+    5.45,
     18.2
+   ],
+   "roi": [
+    0,
+    0.02,
+    1,
+    0.66
    ]
   }
  ],

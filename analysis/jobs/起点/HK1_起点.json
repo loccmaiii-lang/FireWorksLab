@@ -3,7 +3,7 @@
  "P": {
   "duration": 11.5,
   "seed": 7,
-  "stars": 1200,
+  "stars": 800,
   "burstR0": 0,
   "v0": 260,
   "vt": 34,
@@ -16,12 +16,12 @@
   "lastFlare": 0,
   "flash": 0.6,
   "headSize": 1,
-  "headBright": 0.6,
+  "headBright": 0.45,
   "flicker": 0.25,
-  "sparkRate": 260,
+  "sparkRate": 450,
   "sparkRateEnd": 1,
   "sparkStop": 0,
-  "sparkLife": 2.2,
+  "sparkLife": 2.6,
   "sparkSize": 0.35,
   "sparkSpread": 1.2,
   "sparkInherit": 0.2,
@@ -29,7 +29,7 @@
   "sparkGrav": 1,
   "T0": 2150,
   "cooling": 0.33,
-  "sparkBright": 1,
+  "sparkBright": 1.3,
   "twinkle": 0.6,
   "subDelay": 0.9,
   "subJit": 10,
@@ -154,14 +154,14 @@
    ],
    [
     1.5,
-    "#fff1d8"
+    "#fff6ea"
    ]
   ],
   "xw": 0.6,
   "ramp0": "#000000",
   "ramp1": "#8a4a18",
-  "ramp2": "#ffd49a",
-  "ramp3": "#fffaf0",
+  "ramp2": "#ffe6c0",
+  "ramp3": "#ffffff",
   "headInt": 1,
   "tailInt": 1
  }
