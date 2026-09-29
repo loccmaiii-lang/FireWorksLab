@@ -51,6 +51,12 @@ class SelectionTests(unittest.TestCase):
         self.assertTrue(second.acquire())
         second.close()
 
+    def test_recovered_status_clears_previous_error(self):
+        monitor = Monitor(self.repo, self.repo / 'state')
+        monitor.status('error', error='temporary failure')
+        monitor.status('idle')
+        self.assertNotIn('error', monitor.state)
+
     def test_failed_runner_attempts_once_and_releases_claim(self):
         self.job('FAIL')
         compare = types.ModuleType('compare')

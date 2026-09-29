@@ -103,6 +103,8 @@ class Monitor:
             self.env['PYTHONPATH'] = str(Path(deps).resolve())
 
     def status(self, phase, **fields):
+        if phase != 'error':
+            self.state.pop('error', None)
         self.state.update(phase=phase, updated_at=now(), pid=os.getpid(), repo=str(self.repo), **fields)
         save_json(self.state_path, self.state)
         save_json(self.state_dir / 'status.json', self.state)
