@@ -22,6 +22,7 @@
 - `analysis/local/job_lock.py`：跨工作树 GPU 互斥锁。
 - `analysis/local/watch_jobs.py`：单轮同步、任务筛选、失败指纹、结果恢复上传和状态日志。
 - `analysis/local/install_monitor.ps1`：注册每 30 分钟的 Windows 计划任务。
+- `analysis/local/run_monitor.ps1`：隐藏启动 Python 并保存启动日志，明确设置已有依赖路径。
 - `analysis/local/run_jobs.py`：修正失败/强制运行的重复循环，支持不生成迭代区，由监控统一生成。
 - `analysis/local/test_watch_jobs.py`：任务筛选、互斥、上传和并发 Git 更新测试。
 - `analysis/local/使用说明.md`、`交接.md`：运行方式、停止方法和当前启用状态。
@@ -38,7 +39,7 @@
 
 - [x] Run `python -m unittest discover -s analysis/local -p test_watch_jobs.py -v` with local temporary Git repositories; test completed tasks, failed tasks, changed inputs, mutual exclusion, recovery and remote concurrent edits without GPU work or GitHub writes.
 - [x] Reuse the previously installed GPU dependencies in a durable local directory and link the worker output directory to `F:/FireWorksLab/analysis/local/输出`.
-- [x] Register `FireWorksLab GPU Queue` with a 30-minute repetition, interactive user token, hidden `pythonw.exe`, IgnoreNew overlap policy and no execution time limit.
+- [x] Register `FireWorksLab GPU Queue` with a 30-minute repetition, interactive user token, a hidden PowerShell launcher, IgnoreNew overlap policy and no execution time limit.
 - [x] Run the existing GPU environment check once, then perform the first real queue check; verify scheduler result, latest checked commit, pending count and next run.
 - [x] Commit implementation and handoff, synchronize with remote without overwriting other work, and publish the implementation to main before starting unattended execution.
 

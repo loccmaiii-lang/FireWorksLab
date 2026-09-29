@@ -235,7 +235,8 @@ def main():
     args = parser.parse_args()
     Path(args.state_dir).mkdir(parents=True, exist_ok=True)
     logging.basicConfig(filename=str(Path(args.state_dir) / 'monitor.log'), level=logging.INFO,
-                        format='%(asctime)s %(levelname)s %(message)s', encoding='utf-8')
+                        format='%(asctime)s %(levelname)s %(message)s', encoding='utf-8', force=True)
+    logging.info('Started queue checker pid=%s repo=%s', os.getpid(), args.repo)
     monitor = Monitor(args.repo, args.state_dir, args.workers, args.deps)
     try:
         return monitor.cycle(args.dry_run)
