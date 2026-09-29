@@ -79,13 +79,16 @@ def run_job(job, s, force=False):
         jsave({'P': P, 'M': M, 'loss': L}, os.path.join(out, 'best.json'))
         jsave({'差距': round(float(L), 4), '分项': {k: round(float(v), 4) for k, v in parts.items()}, '实拍燃烧秒': round(V['Tb'], 2), '模拟燃烧秒': round(S['Tb'], 2), '表': table(V, S)},
               os.path.join(out, '数值.json'))
-        for f in ('fit_best.json', 'fit_best.jpg'):
-            p = os.path.join(out, f)
-            if os.path.exists(p): os.remove(p)
         jsave({'line': LINE, 'renderer': s.renderer, 'mode': s.mode, 'software': s.soft, 'minutes': round((time.time() - t0) / 60, 1), 'machine': platform.platform(), 'finished': time.strftime('%Y-%m-%d %H:%M')},
               os.path.join(out, 'env.json'))
         jsave({'loss': round(float(L), 4)}, os.path.join(out, 'done.json'))
         log(f'完成：差距 {L:.4f}，用时 {(time.time() - t0) / 60:.1f} 分钟')
+        # 先写完成标记再删临时文件：删文件被外部拦住 / 超时时，结果仍算完成（fit_best.* 残留也不影响）
+        for f in ('fit_best.json', 'fit_best.jpg'):
+            try:
+                p = os.path.join(out, f)
+                if os.path.exists(p): os.remove(p)
+            except Exception: pass
     except Exception:
         log('出错：\n' + traceback.format_exc())
         jsave({'error': traceback.format_exc()}, os.path.join(out, 'error.json'))
