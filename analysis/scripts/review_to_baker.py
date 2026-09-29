@@ -105,7 +105,7 @@ def video_meta(rel, trail=False, roi=None, t_range=None):
     return db[key]
 
 
-ARCHIVE = {'TP1', 'WC1', 'PW1', 'PW2', 'TR2S', 'TR2M', 'TR2L', 'QN1'}   # PW2 → PW3；TR2、QN1 已按意见改成 TR3、QN2 排队     # 不再显示（被新做法取代 / 用户通过后已进正式库）
+ARCHIVE = {'TP1', 'WC1', 'PW1', 'PW2', 'TR2S', 'TR2M', 'TR2L', 'QN1'}   # TR2 S/M/L：用户认可 V5，已进入正式库；其余条目由新版取代
 
 
 def job_entries():
@@ -197,8 +197,10 @@ def main():
     # 正式库里带参考视频的，也算好取景（烘焙器里点正式库条目同样能并排看实拍）
     import re
     vm = {}
-    for v in sorted(set(re.findall(r"video: '(vidio/[^']+\.mp4)'", open(os.path.join(ROOT, 'tool', 'src', 'js', '15_replica.js'), encoding='utf-8').read()))):
-        if os.path.exists(os.path.join(ROOT, v)): vm['../' + v] = video_meta(v)
+    replicas = open(os.path.join(ROOT, 'tool', 'src', 'js', '15_replica.js'), encoding='utf-8').read()
+    trail_videos = set(re.findall(r"base: 'trail[SML]', video: '(vidio/[^']+\.mp4)'", replicas))
+    for v in sorted(set(re.findall(r"video: '(vidio/[^']+\.mp4)'", replicas))):
+        if os.path.exists(os.path.join(ROOT, v)): vm['../' + v] = video_meta(v, trail=v in trail_videos)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     open(OUT, 'w', encoding='utf-8').write('// 由 analysis/scripts/review_to_baker.py 生成：迭代区（做完、等你看的东西）。不要手改。\n'
                                           'var FW_REVIEW = ' + json.dumps(out, ensure_ascii=False, indent=0) + ';\n'
