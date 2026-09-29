@@ -1,0 +1,126 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "Strobe_example",
+ "source": {
+  "tool": "手写示例（2026-09-29 引擎实测可见：PC 用 GPU；手机端把 gpu 改为 false）"
+ },
+ "materials": {
+  "dot": {
+   "role": "soft_dot"
+  }
+ },
+ "system": {
+  "preview_distance_cm": 25000,
+  "preview_warmup_s": 1.5
+ },
+ "emitters": [
+  {
+   "name": "Strobe",
+   "material": "dot",
+   "gpu": true,
+   "required": {
+    "screen_alignment": "Square",
+    "duration_s": 3.0,
+    "loops": 0,
+    "delay_s": 0
+   },
+   "spawn": {
+    "rate": {
+     "curve": [
+      [
+       0,
+       0
+      ],
+      [
+       0.8,
+       0
+      ],
+      [
+       0.9,
+       1500
+      ],
+      [
+       2.6,
+       1500
+      ],
+      [
+       3.0,
+       0
+      ]
+     ]
+    }
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "uniform": [
+       0.15,
+       0.3
+      ]
+     }
+    },
+    {
+     "m": "SphereLocation",
+     "StartRadius": {
+      "curve": [
+       [
+        0,
+        0
+       ],
+       [
+        3.0,
+        9000
+       ]
+      ]
+     },
+     "SurfaceOnly": true,
+     "Velocity": false
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "uniform": [
+       [
+        300,
+        300,
+        300
+       ],
+       [
+        500,
+        500,
+        500
+       ]
+      ]
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "const": [
+       30,
+       30,
+       28
+      ]
+     },
+     "AlphaOverLife": {
+      "curve": [
+       [
+        0,
+        1
+       ],
+       [
+        0.6,
+        1
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

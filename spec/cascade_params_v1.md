@@ -1,0 +1,243 @@
+# Cascade 粒子参数交换格式 v1（`fwl.cascade/1`）
+
+**用途**：云端（烘焙器或任何 AI）按这个格式输出**一段 JSON**，本地导入器读进来，直接在引擎里搭 Cascade 粒子系统：
+- 导入贴图；
+- 建材质实例；
+- 建发射器和模块；
+- 写入数值。
+
+**范围**：
+- 只写 **UE4 Cascade 的通用参数**：模块、分布、曲线、单位。
+- **不写任何项目内容**：资产路径、目录、命名、材质实例名、材质参数名都不出现在这里。
+- 这些由本地的私有配置，按「角色」对应到具体项目。
+
+状态标记：
+- ✅ 已在引擎里实测：能写入、能读回，查找表能刷新；
+- 🟡 格式已定，引擎里的实际播放还没验证；
+- ⚪ 建议值，还没测过。
+
+---
+
+## 1. 顶层结构
+
+```jsonc
+{
+  "format": "fwl.cascade/1",
+  "name": "JinMangJu_Fixed",                 // 效果名（英文，和烘焙器导出名一致）
+  "source": { "tool": "烟花母版烘焙器 3.6", "export": "JM2/JinMangJu_Fixed" },
+  "textures": {                              // 纯粒子效果可以省略
+    "seq":    { "file": "T_JinMangJu_Fixed.png",        "class": "flipbook", "cols": 8, "rows": 8, "channels": 4, "frames": 256 },
+    "ramp":   { "file": "T_JinMangJu_Fixed_Ramp.png",   "class": "ramp" },
+    "cutout": { "file": "T_JinMangJu_Fixed_Cutout.png", "class": "cutout" }
+  },
+  "materials": {
+    "main": { "role": "flipbook_rgba", "textures": { "main": "seq", "ramp": "ramp" }, "scalars": { "rows": 8, "cols": 8 } }
+  },
+  "system": { "preview_distance_cm": 30000, "preview_warmup_s": 1.2 },
+  "emitters": [
+    {
+      "name": "Main",
+      "material": "main",
+      "gpu": false,
+      "required": { "screen_alignment": "Rectangle", "duration_s": 4.56, "loops": 1, "delay_s": 0,
+                    "cutout": "cutout", "max_draw_count": 1 },
+      "spawn": { "rate": { "const": 0 }, "bursts": [[0, 1]] },
+      "modules": [
+        { "m": "Lifetime",         "Lifetime": { "const": 4.56 } },
+        { "m": "InitialSize",      "StartSize": { "const": [22097.8, 22097.8, 1] } },
+        { "m": "InitialLocation",  "StartLocation": { "const": [0, 0, -1000.7] } },
+        { "m": "DynamicParameter", "params": { "frame": { "curve": [[0, 0], [0.0279, 7.61], [1, 255.99]] } } },
+        { "m": "ColorOverLife",    "ColorOverLife": { "curve": [[0, [1.5, 1.307, 1.074]], [1, [1.5, 1.307, 1.074]]] },
+                                   "AlphaOverLife": { "const": 1 } }
+      ]
+    }
+  ]
+}
+```
+
+## 2. 分布的写法（每个带分布的字段都用这一种写法）✅
+
+| 写法 | 含义 | 标量 | 向量 |
+| --- | --- | --- | --- |
+| `{"const": v}` | 常量 | `3.2` | `[x, y, z]` |
+| `{"uniform": [min, max]}` | 随机范围 | `[1.0, 1.4]` | `[[x,y,z], [x,y,z]]` |
+| `{"curve": [[t, v], …]}` | 曲线，所有关键点都是 Linear | `[[0, 0], [1, 256]]` | `[[0, [1,1,1]], [1, [2,2,1]]]` |
+
+- **烘不烘查找表按发射器类型决定（导入器自动处理）**：
+  - CPU 发射器默认**不烘**：引擎播放时直接按分布计算，精确，导入后不用重启就能打开（✅ 实测）；
+  - GPU 发射器（`"gpu": true`）**必须烘**：GPU 粒子的颜色、尺寸、寿命是从查找表采样出来的，不烘就全是 0，粒子在但看不见（✅ 实测）。
+    烘了之后导入即可看，不用重启（✅ 2026-09-29 实测）。
+  - 个别分布可以用 `"bake": true / false` 强制指定。
+- 导入器会按写法**自动换成对应的分布类型**（常量、随机、曲线互换），所以不用关心模板里原来是什么类型。✅
+- 曲线的时间 `t`：
+  - Over Life 类模块（Size By Life、Color Over Life、默认的 Dynamic Parameter）用**粒子的相对寿命 0–1**；
+  - 出生类模块（Initial…、Sphere 等）和 Spawn Rate 用**发射器时间（秒）**。这是 UE4 Cascade 的规则。⚪
+
+## 3. 单位（一律用 Cascade 原生单位）
+
+| 量 | 单位 |
+| --- | --- |
+| 长度、尺寸、位置 | cm |
+| 速度 | cm/s |
+| 加速度 | cm/s² |
+| 时间 | s |
+| Drag | 1/s |
+| Initial Rotation | **圈**（1 = 360°） |
+| 颜色 | 线性 RGB，可以大于 1（HDR）；Alpha 0–1 |
+
+## 4. 发射器字段
+
+| 字段 | Cascade 对应 | 状态 |
+| --- | --- | --- |
+| `name` | EmitterName | ✅ |
+| `material` | Required.Material（指向本文件 `materials` 里的某个键） | ✅ |
+| `gpu` | TypeData = GPU Sprites（true 时）。PC 小粒子优先 GPU，手机版用 CPU | ✅ |
+| `required.screen_alignment` | Rectangle / Square / Velocity / FacingCameraPosition | ✅ |
+| `required.duration_s / loops / delay_s` | EmitterDuration / EmitterLoops（0 = 无限循环）/ EmitterDelay | ✅ |
+| `required.cutout` | Cutout Texture，同时设 Sub Images 1×1、Eight Vertices、Opacity Source = Alpha、Alpha Threshold 0.1 | ✅ |
+| `required.sub_images` | `[水平, 竖直]`，只有真的用 SubUV 时才写 | ⚪ |
+| `required.max_draw_count` | bUseMaxDrawCount + MaxDrawCount | ✅ |
+| `required.local_space` | bUseLocalSpace | ⚪ |
+| `spawn.rate` | Spawn Rate（分布） | ✅ |
+| `spawn.bursts` | `[[时间秒, 数量], …]` → BurstList | ✅ |
+
+## 5. 模块表（`m` 的取值）
+
+| `m` | Cascade 模块 | 字段（分布除非另注明） | 状态 |
+| --- | --- | --- | --- |
+| `Lifetime` | Lifetime | `Lifetime` | ✅ |
+| `InitialSize` | Initial Size | `StartSize`（向量，X、Y 分开生效需要 Rectangle 对齐） | ✅ |
+| `SizeByLife` | Size By Life | `LifeMultiplier`（向量）；`MultiplyX/Y/Z`（布尔） | ✅ 写入 🟡 播放 |
+| `InitialLocation` | Initial Location | `StartLocation`（向量） | ✅ |
+| `SphereLocation` | Sphere | `StartRadius`、`VelocityScale`、`StartLocation`；`Velocity`、`SurfaceOnly`（布尔） | ✅ |
+| `InitialVelocity` | Initial Velocity | `StartVelocity`（向量）、`StartVelocityRadial` | ✅ 写入 |
+| `Drag` | Drag | `DragCoefficientRaw` | ✅ 写入 |
+| `ConstAcceleration` | Const Acceleration | `Acceleration`（**普通向量，不是分布**：直接写 `[x, y, z]`） | ✅ 写入 |
+| `Acceleration` | Acceleration | `Acceleration`（向量分布） | ⚪ |
+| `InitialRotation` | Initial Rotation | `StartRotation`（圈） | ⚪ |
+| `RotationRate` | Initial Rotation Rate | `StartRotationRate`（圈/秒） | ⚪ |
+| `InitialColor` | Initial Color | `StartColor`（向量）、`StartAlpha` | ⚪ |
+| `ColorOverLife` | Color Over Life | `ColorOverLife`（向量）、`AlphaOverLife` | ✅ |
+| `ColorScaleOverLife` | Scale Color / Life | `ColorScaleOverLife`（向量）、`AlphaScaleOverLife` | ⚪ |
+| `DynamicParameter` | Dynamic Parameter | `params`：按**角色**写，见第 6 节 | ✅ 写入 🟡 播放 |
+
+模块可以新增、删除、开关，分布类型可以互换。导入器是从空的粒子系统开始逐个建出来的，不依赖模板。✅
+
+## 6. 材质角色与动态参数角色
+
+材质只写**角色**，由本地配置对应到项目里具体的材质实例和参数名：
+
+| 角色 | 用途 | 需要的贴图和参数 |
+| --- | --- | --- |
+| `flipbook_rgba` | RGBA 接力的序列帧大面片（母版、单元序列） | `textures.main`（序列帧）、`textures.ramp`（渐变图）；`scalars.rows / cols` = **每个通道**的行数、列数 |
+| `beam_flipbook` | 单束（一行多列的细长序列），Velocity 对齐 | 同上 |
+| `soft_dot` | 纯粒子的软圆点（点灭星、火花） | 不需要贴图 |
+| `glow` | 光晕、闪光 | 不需要贴图 |
+
+序列帧的解码约定（和烘焙器一致）✅：
+- R→G→B→A 接力；每个通道内按行排，左上角是第 0 帧；
+- 帧号取整，不做帧间混合；
+- **帧号超过总帧数（行 × 列 × 4）会从头循环**，所以帧号曲线的最后一个值要写成「总帧数 − 0.01」。
+
+动态参数按角色写（第几个参数、参数叫什么，由本地配置决定）：
+
+| 角色 | 含义 | 不写时 |
+| --- | --- | --- |
+| `frame` | 帧号 | 0 |
+| `speed` | 材质自动播放速度（我们一律不用，保持 0） | 0 |
+| `dissolve` | 溶解进度 | 0 |
+| `emissive` | 在材质实例的亮度之上**额外加**的亮度 | 0 |
+
+## 7. 贴图类别
+
+| `class` | 用途 | 导入设置（由本地按项目示例贴图照抄） |
+| --- | --- | --- |
+| `flipbook` | 序列帧（灰度、RGBA 接力） | 线性（sRGB 关）、BC7、2048 |
+| `ramp` | 渐变图 256×8 | sRGB 开 |
+| `cutout` | 轮廓图 512×512 | 线性，最大 512 |
+
+`cutout` 可以写 `"generate_from": "seq"`，表示导出里没有轮廓图，由本地按烘焙器同样的算法生成：所有帧叠加，编码值 ≥ 3/255 算有内容，再向外扩 3 像素。✅
+
+## 8. 引擎里的通用规则（踩过的坑）
+
+1. **对齐方式用 Rectangle，不要用 Square**：Square 只认 X，横竖尺寸不同的面片会变形、抖动。
+2. **所有曲线关键点都用 Linear**：CurveAuto 会在关键点之间冲过头，尺寸来回抖、帧号倒退。
+3. **查找表**：Cascade 播放时读的是预先算好的查找表。脚本改完数值后，查找表不会自己更新，保存也不会。粒子被实例化一次（比如打开 Cascade）才会重算。导入器会自动做这一步，并核对误差。✅
+4. 查找表是简化过的近似：曲线关键点多、拐点密的时候（比如紧凑取景的尺寸曲线），和原曲线会有偏差。要精确就写 `"bake": false`。🟡
+5. 帧号曲线的最后一个值必须小于总帧数，见第 6 节。✅
+6. Initial Rotation 的单位是圈；面片中心在移动、或者横竖缩放不一样的效果，不要加旋转，否则下垂方向会转歪。
+7. Size By Life 是乘在 Initial Size 上的，所以 Initial Size 写**最大尺寸**，曲线写 0–1 的倍数。
+8. 用脚本从空白新建粒子系统时（UE4.24 Cascade）：✅
+   - 粒子系统的 `LODDistances`、`LODSettings` 默认是空的，要各补一项，否则打开 Cascade 取 LOD 下标越界崩溃；
+   - 脚本新建的分布如果保留查找表，同一次编辑器会话里打开 Cascade 会越界崩溃；
+     CPU 发射器全部不烘（`bCanBeBaked = False`）时，同一会话里直接打开正常（多个资产实测）；
+     GPU 发射器必须烘；实测导入后在内容浏览器刷新、直接打开也正常。
+
+## 9. 放大、缩小与快慢（换一个尺寸的同款效果时用）
+
+**空间缩放 × s**（整朵花放大 s 倍，快慢不变）：
+- Initial Size、Initial Location、Initial Velocity、Const Acceleration、Acceleration、Sphere 半径和速度：都 × s；
+- Drag、Lifetime、Duration、所有 Over Life 曲线、帧号曲线：都不变。
+
+**时间缩放 × k**（整体放慢 k 倍，大小不变）：
+- Lifetime、Duration、Delay、Burst 时间：× k；
+- 速度：÷ k；加速度：÷ k²；Drag：÷ k；Spawn Rate：÷ k；
+- 用相对寿命的曲线不变；用发射器时间（秒）的曲线，时间轴 × k。
+
+## 10. 配方（按效果类型；数值来自烘焙器导出，这里只定结构）
+
+### A. 大面片母版（整朵花一张序列帧）
+- **固定取景** ✅ 导入跑通：`InitialSize` 常量 + `InitialLocation` 常量（把爆点对齐到精灵中心的偏移）+ 帧号曲线 + 颜色。
+- **随开花放大（Zoom）** ✅ 引擎实测不抖（推荐）：`InitialSize` 写最大尺寸 + `SizeByLife` 曲线（X、Y 相同），`InitialLocation` = 0。烘焙器 3.6 的 Zoom 版就是这种。
+- ~~紧凑取景~~ ❌ **禁用**（2026-09-29 引擎实测仍然抖动，查找表误差已排除）：面片中心靠 Velocity + Drag + ConstAcceleration 移动、X/Y 分开缩放，引擎里对不齐。大面片只用固定取景或 Zoom。
+
+### B. 点灭星（纯粒子，不需要贴图）✅ GPU / CPU 都已在引擎里看到闪烁点
+- **平台约定**：PC 版小粒子能用 GPU 就用 GPU（`"gpu": true`）；手机版一律用 CPU（`"gpu": false`）。两种导入后都能直接看（✅ 实测）。
+- 数值起点：点 3–5 m、寿命 0.15–0.3 s；40–80 cm、0.05–0.1 s 在 300 m 外只有一两个像素，看不清。
+```jsonc
+{ "name": "Strobe", "material": "dot", "gpu": true,
+  "required": { "screen_alignment": "Square", "duration_s": 3.0, "loops": 1 },
+  "spawn": { "rate": { "curve": [[0, 0], [0.8, 0], [0.9, 3000], [2.6, 3000], [3.0, 0]] } },   // 发射器时间（秒）：主花开到一定程度才开始闪
+  "modules": [
+    { "m": "Lifetime", "Lifetime": { "uniform": [0.05, 0.10] } },                          // 一闪即灭
+    { "m": "SphereLocation", "StartRadius": { "curve": [[0, 0], [3.0, 9000]] },            // 半径跟着主花长大（发射器时间）
+      "SurfaceOnly": true, "Velocity": false },
+    { "m": "InitialSize", "StartSize": { "uniform": [[40, 40, 40], [80, 80, 80]] } },
+    { "m": "ColorOverLife", "ColorOverLife": { "const": [30, 30, 28] }, "AlphaOverLife": { "curve": [[0, 1], [1, 0]] } }
+  ] }
+```
+`materials.dot = { "role": "soft_dot" }`。半径曲线要和主花的开花半径一致：取烘焙器同一发的半径随时间的数据。
+
+### C. 锦冠 · 金垂柳（大面片，长时间下垂）⚪
+- 结构和 A 一样，区别在参数：
+  - 格子竖长，比如 8 列 × 16 行（取决于烘焙器自动选格）；
+  - 时长 5–8 s；
+  - 帧号曲线开头密、后段疏（下垂段变化慢）。
+- 取景用「随开花放大」：Size By Life 的 **Y 要比 X 长得多**（下垂把画面往下拉长），所以 `SizeByLife` 的 X、Y 分开写，Rectangle 对齐。
+- 近景可以再叠一个 B 类的闪烁颗粒发射器。
+- 换大小、换快慢，按第 9 节缩放。
+
+### D. 千轮单元 × 粒子（一张小花单元序列，多粒子摆位）⚪
+- `SphereLocation`：只在表面出生，勾 Velocity，`VelocityScale` 给向外的速度，配合 `Drag` 让小球飞出去后停住；
+- Spawn Rate 集中在 0–0.3 s，让小花开得有先后；
+- `InitialRotation` 随机，Size ±15%；
+- 帧号曲线按每个粒子自己的寿命走，每种颜色一个发射器。
+
+## 11. 给云端 AI 的输出约定
+
+- 要引擎参数时，**只输出一段** ` ```json ` 代码块，`format` 固定为 `fwl.cascade/1`。
+- 材质写角色，动态参数写角色。**不要写任何资产路径、目录、材质实例名、材质参数名**。
+- 数值用 Cascade 原生单位（第 3 节），曲线只给关键点，插值默认 Linear。
+- 有贴图时，`textures.*.file` 写烘焙器导出的文件名，本地会在素材包目录里找。
+- 效果名用英文。引擎里的正式名字（英文名、序号）由人决定，导入时再指定。
+
+## 12. 本地导入器做什么（概述）
+
+1. 校验 JSON，打印计划（先预览，不写入）。
+2. 导入贴图：按项目示例贴图照抄导入设置，读回核对。
+3. 按材质角色复制项目的材质实例模板，填贴图、行列等参数。
+4. 从空的粒子系统开始，逐个建发射器和模块，写入数值；需要时换分布类型。
+5. 刷新查找表，核对误差。
+6. 保存，并生成导入报告。
+
+项目相关的目录、命名、模板、参数名，只放在本机私有配置里，不进这个仓库。

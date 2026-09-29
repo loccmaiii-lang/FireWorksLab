@@ -1,0 +1,144 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "JinMangJu_Fixed",
+ "source": {
+  "tool": "烟花母版烘焙器 3.6",
+  "export": "JM2/JinMangJu_Fixed"
+ },
+ "textures": {
+  "seq": {
+   "file": "T_JinMangJu_Fixed.png",
+   "class": "flipbook",
+   "cols": 8,
+   "rows": 8,
+   "channels": 4,
+   "frames": 256
+  },
+  "ramp": {
+   "file": "T_JinMangJu_Fixed_Ramp.png",
+   "class": "ramp"
+  },
+  "cutout": {
+   "file": "T_JinMangJu_Fixed_Cutout.png",
+   "class": "cutout"
+  }
+ },
+ "materials": {
+  "main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 8,
+    "cols": 8
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 1.2
+ },
+ "emitters": [
+  {
+   "name": "Main",
+   "material": "main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 4.56,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutout",
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 4.56
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       22097.842973,
+       22097.842973,
+       1.0
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0.0,
+       0.0,
+       -1000.686214
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.0279,
+         7.61
+        ],
+        [
+         1.0,
+         255.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0.0,
+        [
+         1.5,
+         1.3071,
+         1.07355
+        ]
+       ],
+       [
+        1.0,
+        [
+         1.5,
+         1.3071,
+         1.07355
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  }
+ ]
+}
