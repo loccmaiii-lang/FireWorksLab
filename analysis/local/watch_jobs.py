@@ -239,7 +239,11 @@ def main():
     logging.info('Started queue checker pid=%s repo=%s', os.getpid(), args.repo)
     monitor = Monitor(args.repo, args.state_dir, args.workers, args.deps)
     try:
-        return monitor.cycle(args.dry_run)
+        result = monitor.cycle(args.dry_run)
+        print(json.dumps({key: monitor.state.get(key) for key in
+                          ('phase', 'last_checked', 'checked_commit', 'pending_count', 'completed_count', 'failed')},
+                         ensure_ascii=True), flush=True)
+        return result
     except BlockingIOError:
         logging.info('Another monitor check is still running; skipped')
         return 0
