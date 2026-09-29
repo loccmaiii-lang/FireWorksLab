@@ -1,0 +1,18 @@
+{
+  "V14-fine-4k": {
+    "meanAbsolute8bitError": 0.0,
+    "max8bitError": 0.0
+  },
+  "V14-fine-8k": {
+    "meanAbsolute8bitError": 0.0,
+    "max8bitError": 0.0
+  },
+  "V13-fine-4k": {
+    "meanAbsolute8bitError": 0.0,
+    "max8bitError": 0.0
+  },
+  "V13-fine-8k": {
+    "meanAbsolute8bitError": 0.0,
+    "max8bitError": 0.0
+  }
+}

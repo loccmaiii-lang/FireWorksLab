@@ -1,0 +1,259 @@
+<div class="app">
+  <header class="top">
+    <div class="brand"><span class="mark">菊</span><b>烟花高精度实验室</b><small id="verLabel">通道打包序列帧 · GPU 模拟</small></div>
+    <div class="crumb" id="crumb"></div>
+    <div class="gpu" id="gpu"></div>
+    <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
+    <div id="status"></div>
+  </header>
+  <main id="main">
+    <aside class="side" id="side" aria-label="库">
+      <div class="side-head">
+        <input type="search" id="libSearch" placeholder="搜索：名字、任务号、特征" aria-label="搜索库">
+      </div>
+      <div class="side-body" id="libBody"></div>
+      <div class="side-foot"><button class="btn ghost" id="assetOpen2" type="button" title="临时看某个结果文件夹">打开结果文件夹…</button></div>
+    </aside>
+    <div class="gutter" id="gutL" title="拖动调整宽度"></div>
+    <section class="stage">
+      <div class="viewbar">
+        <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="1.5" y="2.5" width="4.5" height="11" rx="1.5"/></svg><span class="tl">库</span></button>
+        <div class="seg" id="viewSeg">
+          <button data-view="live" aria-pressed="true">实时模拟</button>
+          <button data-view="export" aria-pressed="false">导出效果</button>
+          <button data-view="atlas" aria-pressed="false">贴图</button>
+        </div>
+        <div class="seg small" id="atlasSeg" hidden>
+          <button data-layer="head" aria-pressed="true">星头</button>
+          <button data-layer="tail" aria-pressed="false">拖尾</button>
+        </div>
+        <div class="seg small" id="flowSeg" hidden>
+          <button data-flow="0" aria-pressed="true">整张</button>
+          <button data-flow="1" aria-pressed="false">流转动画</button>
+        </div>
+        <div class="seg small" id="segSeg" hidden>
+          <button data-seg="0" aria-pressed="true">段 A</button>
+          <button data-seg="1" aria-pressed="false">段 B</button>
+        </div>
+        <div class="seg small" id="dispSeg" hidden>
+          <button data-disp="fit" aria-pressed="true">适应窗口</button>
+          <button data-disp="px" aria-pressed="false">1:1 像素</button>
+          <button data-disp="game" aria-pressed="false">游戏内大小</button>
+        </div>
+        <label class="expo" id="distBox" hidden>观看距离<input type="range" id="dist" min="200" max="3000" step="50" value="800"><output id="distOut">800 m</output></label>
+        <span class="abtag" id="abTag" hidden>A | B</span>
+        <label class="expo" title="显示曝光（只影响预览）"><span class="tl">显示曝光</span><input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"></label>
+        <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（R）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
+        <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="专注：收起两侧面板，画布最大（F，或双击画布）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">专注</span></button>
+        <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="10" y="2.5" width="4.5" height="11" rx="1.5"/></svg></button>
+      </div>
+      <div class="canvas-wrap">
+        <div class="canvas-box ref-box" id="refBox" hidden><video id="refVid" muted playsinline preload="auto"></video>
+          <span class="tag" id="refTag">实拍</span>
+          <div class="refctl" title="实拍和模拟对不齐时，微调实拍的时间">
+            <button type="button" data-d="-0.1" aria-label="实拍提前 0.1 秒">−0.1</button><button type="button" data-d="-0.02" aria-label="实拍提前 0.02 秒">−</button>
+            <output id="refOffOut">对齐 0.00 s</output>
+            <button type="button" data-d="0.02" aria-label="实拍延后 0.02 秒">+</button><button type="button" data-d="0.1" aria-label="实拍延后 0.1 秒">+0.1</button>
+            <button type="button" data-d="0" class="rz" aria-label="对齐归零">归零</button>
+          </div>
+          <button class="refx" id="refClose" type="button" title="关闭实拍对照（R）" aria-label="关闭实拍对照">×</button>
+        </div>
+        <div class="canvas-box" id="box"><span class="tag" id="simTag" hidden>模拟</span>
+          <canvas id="gl" aria-label="烟花预览"></canvas>
+          <canvas id="flowCv" class="flowcv" hidden></canvas>
+          <canvas id="assetCv" class="assetcv" hidden></canvas>
+          <div id="qlabels"></div>
+          <div class="hud" id="hud"></div>
+          <div class="hud right" id="hudB"></div>
+          <div class="busy" id="busy" hidden><div class="bar"><i id="busyBar"></i></div><span id="busyText">烘焙中</span></div>
+        </div>
+      </div>
+      <div class="timeline">
+        <button class="btn" id="play">暂停</button>
+        <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="时间">
+        <output id="tlabel">0.00 s</output>
+        <select id="speed" class="btn" aria-label="播放速度">
+          <option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option><option value="0.1">0.1×</option>
+        </select>
+        <span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>F</kbd>专注 <kbd>R</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>↑</kbd><kbd>↓</kbd>切换条目</span>
+      </div>
+    </section>
+    <div class="gutter" id="gutR" title="拖动调整宽度"></div>
+    <div class="right" id="right">
+    <div class="ptabs" id="ptabs" role="tablist">
+      <button role="tab" data-tab="master" aria-selected="true">参数</button>
+      <button role="tab" data-tab="iter" aria-selected="false">工具</button>
+    </div>
+    <section class="review" id="pReview" hidden></section>
+    <aside class="panel" id="pMaster">
+      <div class="group">
+        <div class="row2">
+          <div class="field">花型
+            <button class="typebtn" id="typeBtn" type="button" aria-haspopup="dialog"><span class="tb-img" id="typeThumb"></span><span class="tb-txt"><b id="typeName">菊</b><small id="typeCat">礼花</small></span><em>更换</em></button>
+            <select id="type" hidden aria-hidden="true" tabindex="-1"></select>
+          </div>
+          <label class="field">母版名称<input type="text" id="mname" value="Kiku_01"></label>
+        </div>
+        <p class="note rep" id="repNote" hidden></p>
+        <label class="field">产物<select id="x-form"></select></label>
+        <p class="note" id="formNote"></p>
+      </div>
+      <div id="params"></div>
+      <details class="sec" open>
+        <summary>颜色（预览材质）</summary>
+        <p class="hint">不参与烘焙。模拟项目材质：灰度查渐变图，再乘 Color Over Life。合并输出时 Color Over Life 作用于整层；星头要单独变色，请把输出改为「分开」。</p>
+        <div class="stages" id="stages"></div>
+        <div class="flames" id="flames"></div>
+        <div class="colors" id="matColors"></div>
+        <div id="matSliders"></div>
+      </details>
+      <div class="actions">
+        <div class="grid2">
+          <label class="field">贴图尺寸<select id="x-size"><option value="4096x4096">4096 × 4096 · 4K 母版</option><option value="8192x8192">8192 × 8192 · 8K 母版</option><option value="2048x2048">2048 × 2048</option><option value="2048x1024">2048 × 1024</option><option value="1024x2048">1024 × 2048</option><option value="1024x1024">1024 × 1024</option></select></label>
+          <label class="field">列 × 行<span class="pair2"><select id="x-cols" aria-label="列数"></select><span>×</span><select id="x-rows" aria-label="行数"></select></span></label>
+          <label class="field">通道<select id="x-chans"><option value="4">RGBA 接力（先填满 R）</option><option value="1">单通道（短序列）</option></select></label>
+          <label class="field">输出<select id="x-out"><option value="combined">星头与拖尾合并</option><option value="split">星头、拖尾分开</option></select></label>
+          <label class="field">编码<select id="x-enc"><option value="1">线性灰度</option><option value="2.2">Gamma 2.2（暗部更细）</option></select></label>
+          <label class="field">取帧<select id="x-frame"><option value="auto">自动（按运动快慢）</option><option value="content">按画面变化（合并近似帧）</option><option value="uniform">均匀</option></select></label>
+          <label class="field">模拟内核<select id="x-engine"><option value="gpu">GPU（火花在显卡上算）</option><option value="cpu">CPU（旧版，可复现旧母版）</option></select></label>
+          <label class="field">面片取景<select id="x-zoom"><option value="tight">紧凑：每帧占满 ≥ 90%（面片跟着内容走）</option><option value="on">随开花放大（爆点在中心）</option><option value="off">固定大小</option></select></label>
+        </div>
+        <label class="check" id="flipBox" hidden><input type="checkbox" id="x-flip"> 星头朝下（引擎里速度对齐方向相反时勾选）</label>
+        <label class="check" id="gridBox" hidden><input type="checkbox" id="x-autogrid"> 自动选格子（帧数不变，按内容长宽比挑列 × 行，少浪费像素）</label>
+        <div class="stats" id="stats">烘焙中…</div>
+        <div class="line">
+          <button class="btn primary" id="btnExport">导出 2K 母版（ZIP）</button>
+          <button class="btn" id="btnVariants">导出种子变体 V1–V3</button>
+          <button class="btn" id="btnSave">存入组合库</button>
+        </div>
+        <div class="line">
+          <button class="btn ghost" id="btnImport">导入参数 JSON</button>
+          <button class="btn ghost" id="btnReset">恢复本花型默认</button>
+          <button class="btn ghost" id="btnJitter">随机微调（未锁定参数）</button>
+          <input type="file" id="fileIn" accept=".json,application/json" hidden>
+        </div>
+        <p class="note">双击滑杆名称恢复默认值；点名称左边的锁可锁定参数（切换号数、随机微调时不变）。调参后自动重新烘焙，预览与导出的 2K 贴图一致。「实时模拟」是物理原始效果；「导出效果」按项目材质的方式播放：Dynamic Parameter 帧号取整、不做帧间混合、灰度查渐变图上色。</p>
+      </div>
+    </aside>
+
+    <aside class="panel" id="pCombo" hidden>
+      <details class="sec" open>
+        <summary>组合预设</summary>
+        <p class="hint">芯就是缩小的牡丹母版。一个菊母版加上不同缩放的牡丹层，就是八重芯、三重芯。</p>
+        <div class="presets" id="presets"></div>
+      </details>
+      <details class="sec" open>
+        <summary>图层</summary>
+        <div id="layers"></div>
+        <div class="line" style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" id="btnAddLayer">添加图层</button>
+          <button class="btn primary" id="btnExportCombo">导出组合 JSON</button>
+        </div>
+      </details>
+      <details class="sec" open>
+        <summary>母版库</summary>
+        <p class="hint">组合预览使用完整 2048 版本。在「母版」页调好后点「存入组合库」即可加入。</p>
+        <div class="lib" id="lib"></div>
+      </details>
+    </aside>
+
+    <aside class="panel" id="pIter" hidden>
+      <details class="sec" open>
+        <summary>A/B 分屏对比</summary>
+        <p class="hint">把当前参数存为 B，再去「母版」页改参数（A），画面左 A 右 B 同步播放。导出效果视图下比较的是烘焙后的贴图。</p>
+        <div class="line2">
+          <button class="btn" id="abSet">当前存为 B</button>
+          <button class="btn" id="abSwap">A ↔ B</button>
+          <button class="btn ghost" id="abClear">清除 B</button>
+        </div>
+        <div id="abInfo" class="note"></div>
+        <div id="abDiff" class="diff"></div>
+      </details>
+      <details class="sec" open>
+        <summary>实拍 / 实机截图对比</summary>
+        <p class="hint">载入本地视频或截图，与模拟同步播放并叠加。「开花时刻」填视频里开花的秒数，拖动时间轴两边一起走。</p>
+        <div class="line2">
+          <button class="btn" id="refLoad">载入视频或图片</button>
+          <input type="file" id="refFile" accept="video/*,image/*" hidden>
+          <span class="note" id="refName">未载入</span>
+        </div>
+        <div class="seg small" id="refMode">
+          <button data-rm="0" aria-pressed="true">关</button>
+          <button data-rm="1" aria-pressed="false">叠加</button>
+          <button data-rm="2" aria-pressed="false">卷帘</button>
+          <button data-rm="3" aria-pressed="false">差值</button>
+        </div>
+        <div id="refSliders"></div>
+      </details>
+      <details class="sec" open>
+        <summary>数值测量对比</summary>
+        <p class="hint">模拟与实拍测量（analysis/measure.json）的无量纲指标对比：t50/t80 = 花径到最终值 50%/80% 的时刻占燃烧的比例；下坠 = 燃尽时整体下坠 ÷ 半径；下/上 = 下半径 ÷ 上半径。</p>
+        <label class="field">参考<select id="refMetric"></select></label>
+        <div class="stats" id="metricTable">等待烘焙…</div>
+      </details>
+      <details class="sec" open>
+        <summary>版本与回滚</summary>
+        <p class="hint">每次导出自动存一个版本，也可以手动存。版本只保存在这台电脑的浏览器里，想长期保留请点「导出全部版本」。</p>
+        <div class="line2">
+          <input type="text" id="verNote" placeholder="批注（可选）" class="txt">
+          <button class="btn" id="verSave">存版本</button>
+        </div>
+        <div class="lib" id="verList"></div>
+        <div class="thumbs" id="thumbs"></div>
+        <div class="line2"><button class="btn ghost" id="verExport">导出全部版本</button><button class="btn ghost" id="verImport">导入版本</button><input type="file" id="verFile" accept=".json" hidden></div>
+      </details>
+      <details class="sec" open>
+        <summary>派生配方</summary>
+        <p class="hint">配方只记录与父配方（或花型默认值）的差异。子配方继承父配方，父配方改了子配方跟着变。</p>
+        <div class="line2">
+          <input type="text" id="recName" placeholder="配方名" class="txt">
+          <button class="btn" id="recSave">存为配方</button>
+        </div>
+        <div class="lib" id="recList"></div>
+        <div class="line2"><button class="btn ghost" id="recExport">导出配方库 JSON</button><button class="btn ghost" id="recImport">导入配方库</button><input type="file" id="recFile" accept=".json" hidden></div>
+      </details>
+      <details class="sec" open>
+        <summary>显卡测速</summary>
+        <p class="hint">逐级增加 GPU 火花数量，测实时帧率和 2K 烘焙耗时，结果可以直接发给我。</p>
+        <button class="btn" id="perfRun">开始测速</button>
+        <div class="stats" id="perfOut">未测试</div>
+      </details>
+    </aside>
+    <aside class="panel" id="pAsset" hidden>
+      <details class="sec" open>
+        <summary>素材预览</summary>
+        <p class="hint">按引擎的方式播放导出的贴图：帧号曲线取整、不混合；粒子按参数表摆放。</p>
+        <div class="line2" hidden><button class="btn" id="assetOpen" type="button">打开文件夹…</button><input type="file" id="assetDir" webkitdirectory directory multiple hidden></div>
+        <div id="assetInfo"></div>
+      </details>
+      <div id="assetOpts" hidden>
+        <details class="sec" open>
+          <summary>贴图</summary>
+          <div class="seg small" id="assetVar"></div>
+        </details>
+        <details class="sec" open>
+          <summary>发射器</summary>
+          <div id="assetEmit"></div>
+        </details>
+        <details class="sec" open>
+          <summary>显示</summary>
+          <label class="check"><input type="checkbox" id="assetCut"> 显示 Cutout 轮廓（面片实际要画的区域）</label>
+          <label class="check"><input type="checkbox" id="assetSky"> 傍晚天空底色（对照 万彩千轮 实拍）</label>
+        </details>
+      </div>
+    </aside>
+    </div>
+  </main>
+  <div class="picker upd-dlg" id="updDlg" hidden role="dialog" aria-label="更新记录">
+    <div class="pk-head"><b>更新记录</b><span class="hint">每次改动都会推到仓库，pull 后这里就是最新的</span><button class="btn ghost" id="updClose" type="button">关闭（Esc）</button></div>
+    <div class="upd-list" id="updList"></div>
+  </div>
+  <div class="picker" id="picker" hidden role="dialog" aria-label="花型库">
+    <div class="pk-head">
+      <input type="search" id="pkSearch" placeholder="搜索名字或特征，例如：尾缀长、变色、循环、水面" aria-label="搜索花型">
+      <button class="btn ghost" id="pkClose" type="button">关闭（Esc）</button>
+    </div>
+    <div class="pk-cats" id="pkCats" role="tablist"></div>
+    <div class="pk-grid" id="pkGrid"></div>
+  </div>
+</div>

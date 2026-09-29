@@ -1,0 +1,922 @@
+{
+  "packages": [
+    {
+      "id": "V14",
+      "variant": "fine-4k",
+      "file": "V14-fine-4k.zip",
+      "bytes": 34135179,
+      "textures": 6,
+      "bakeAndEncodeMs": 12098
+    },
+    {
+      "id": "V14",
+      "variant": "fine-8k",
+      "file": "V14-fine-8k.zip",
+      "bytes": 120574382,
+      "textures": 6,
+      "bakeAndEncodeMs": 30557
+    },
+    {
+      "id": "V14",
+      "variant": "fine-2k",
+      "file": "V14-fine-2k.zip",
+      "bytes": 9837206,
+      "textures": 6,
+      "bakeAndEncodeMs": 7312
+    },
+    {
+      "id": "V13",
+      "variant": "fine-4k",
+      "file": "V13-fine-4k.zip",
+      "bytes": 26566831,
+      "textures": 6,
+      "bakeAndEncodeMs": 17074
+    },
+    {
+      "id": "V13",
+      "variant": "fine-2k",
+      "file": "V13-fine-2k.zip",
+      "bytes": 7220765,
+      "textures": 6,
+      "bakeAndEncodeMs": 12933
+    },
+    {
+      "id": "V13",
+      "variant": "fine-8k",
+      "file": "V13-fine-8k.zip",
+      "bytes": 96725994,
+      "textures": 6,
+      "bakeAndEncodeMs": 34117
+    }
+  ],
+  "images": [
+    {
+      "file": "V14-fine-4k-shell-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          179
+        ],
+        [
+          0,
+          195
+        ],
+        [
+          0,
+          216
+        ]
+      ],
+      "sha256": "49382cbd84a1dbfc6b5ab9775504866deb87d2f742a9cb8592fbd904813e8640"
+    },
+    {
+      "file": "V14-fine-4k-shell-1.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          191
+        ],
+        [
+          0,
+          212
+        ],
+        [
+          0,
+          122
+        ],
+        [
+          0,
+          58
+        ]
+      ],
+      "sha256": "0adcb260b17f1fb6aa3ca988277c65c036eb289d9efc2cb8eab2ad7cdc936ee5"
+    },
+    {
+      "file": "V14-fine-4k-afterglow-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          205
+        ],
+        [
+          0,
+          183
+        ],
+        [
+          0,
+          160
+        ]
+      ],
+      "sha256": "9217925f6cedeb82a8b49a19cefb47c588aafe0026ca6167f2d205cf43cea807"
+    },
+    {
+      "file": "V14-fine-4k-afterglow-1.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          132
+        ],
+        [
+          0,
+          89
+        ],
+        [
+          0,
+          40
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "sha256": "105a55171340152a0889b9ffa1d8409fcf9c4ded9e90e3e4a070f8977e88957f"
+    },
+    {
+      "file": "V14-fine-4k-embers-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          239
+        ],
+        [
+          0,
+          241
+        ],
+        [
+          0,
+          241
+        ],
+        [
+          0,
+          241
+        ]
+      ],
+      "sha256": "33eb18710d97340619f1c8f5a880fe2e4d3b8f62c0acfe6e53df39bc61b5ac26"
+    },
+    {
+      "file": "V14-fine-4k-core-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          253
+        ],
+        [
+          0,
+          156
+        ],
+        [
+          0,
+          144
+        ],
+        [
+          0,
+          52
+        ]
+      ],
+      "sha256": "60cc859a939c061bb76b9353e3b3d02616a1f5088702776fa86e5c9b1dd0fa39"
+    },
+    {
+      "file": "V14-fine-8k-shell-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          232
+        ],
+        [
+          0,
+          234
+        ],
+        [
+          0,
+          247
+        ]
+      ],
+      "sha256": "0dd67ca837e5f198f1a5780bac2f4fa752958ce0c012bc69698dde48c2c97519"
+    },
+    {
+      "file": "V14-fine-8k-shell-1.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          240
+        ],
+        [
+          0,
+          237
+        ],
+        [
+          0,
+          188
+        ],
+        [
+          0,
+          72
+        ]
+      ],
+      "sha256": "03fc45a1172a275eb20dc40f7c96551742cdbdaf0ceea3b483b4323ff126575e"
+    },
+    {
+      "file": "V14-fine-8k-afterglow-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          206
+        ],
+        [
+          0,
+          188
+        ],
+        [
+          0,
+          165
+        ]
+      ],
+      "sha256": "ba8f25aeb84fed412abaaccb42d03ad5e5c7b54c49008cffddcb8c67835a5291"
+    },
+    {
+      "file": "V14-fine-8k-afterglow-1.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          139
+        ],
+        [
+          0,
+          103
+        ],
+        [
+          0,
+          68
+        ],
+        [
+          0,
+          7
+        ]
+      ],
+      "sha256": "a51b3dd0dab378d6abf4d4f7c378d96a0976ef092c6c62e4cbee86364b9d9f2a"
+    },
+    {
+      "file": "V14-fine-8k-embers-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          241
+        ],
+        [
+          0,
+          242
+        ],
+        [
+          0,
+          242
+        ],
+        [
+          0,
+          242
+        ]
+      ],
+      "sha256": "923ed3b33323e66bf929573039253cb84faf385647871ba5e87fa5f66d1254f5"
+    },
+    {
+      "file": "V14-fine-8k-core-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          254
+        ],
+        [
+          0,
+          181
+        ],
+        [
+          0,
+          181
+        ],
+        [
+          0,
+          77
+        ]
+      ],
+      "sha256": "60bfec1d6b29b1d27b451c698bbb34347d9132d04ce133b58c81208a83b8bf8f"
+    },
+    {
+      "file": "V14-fine-2k-shell-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          209
+        ],
+        [
+          0,
+          159
+        ],
+        [
+          0,
+          181
+        ]
+      ],
+      "sha256": "049a67d9620ac9529e0d985402c3673637e83a39bc338dd7b44fd9aadf126b8a"
+    },
+    {
+      "file": "V14-fine-2k-shell-1.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          154
+        ],
+        [
+          0,
+          147
+        ],
+        [
+          0,
+          94
+        ],
+        [
+          0,
+          39
+        ]
+      ],
+      "sha256": "2decee555497453baadff9fe3d516e2764d34c746f730ddc23946964d533c9b6"
+    },
+    {
+      "file": "V14-fine-2k-afterglow-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          254
+        ],
+        [
+          0,
+          207
+        ],
+        [
+          0,
+          166
+        ],
+        [
+          0,
+          149
+        ]
+      ],
+      "sha256": "e0c78dee540246fae80624b314b77d342822fdacb6b9c6c4079a47d85f69db41"
+    },
+    {
+      "file": "V14-fine-2k-afterglow-1.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          114
+        ],
+        [
+          0,
+          79
+        ],
+        [
+          0,
+          23
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "sha256": "0d94ac4f7a9f2f46ae4902984854e9d2f252f0076f0d7a5c3753716e84a74c69"
+    },
+    {
+      "file": "V14-fine-2k-embers-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          238
+        ],
+        [
+          0,
+          240
+        ],
+        [
+          0,
+          240
+        ],
+        [
+          0,
+          240
+        ]
+      ],
+      "sha256": "ba638726d1136be571e7834de6ba3cb23186a7cbc77fba36dcb9bd44e64fb7c0"
+    },
+    {
+      "file": "V14-fine-2k-core-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          250
+        ],
+        [
+          0,
+          102
+        ],
+        [
+          0,
+          75
+        ],
+        [
+          0,
+          21
+        ]
+      ],
+      "sha256": "ae5a1c9d3c3fc6d7f007c5fd2cd2aa5e9dd93fbfb414d12d0bde3711d97be9eb"
+    },
+    {
+      "file": "V13-fine-4k-flowers-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ],
+      "sha256": "2227d0df27e1a15b14ffc5da9ce940a5ba1e7ea848985b96a26086d472b19aec"
+    },
+    {
+      "file": "V13-fine-4k-flowers-1.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          249
+        ],
+        [
+          0,
+          141
+        ],
+        [
+          0,
+          70
+        ],
+        [
+          0,
+          35
+        ]
+      ],
+      "sha256": "435fa55e17be72637aa1fafa8510f740ebaca6c35ac4e262d7eba781bc919c12"
+    },
+    {
+      "file": "V13-fine-4k-core-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          187
+        ],
+        [
+          0,
+          189
+        ],
+        [
+          0,
+          119
+        ]
+      ],
+      "sha256": "877bc6a0f4811848d0d085dc76271902dc82444ec8b0808466b1325b4f01a67c"
+    },
+    {
+      "file": "V13-fine-4k-pink-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          106
+        ]
+      ],
+      "sha256": "bdb84c0e76f9015d44a6a81b48e7441aa1b85831c5036052fc078923eb5630e6"
+    },
+    {
+      "file": "V13-fine-4k-blue-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          125
+        ]
+      ],
+      "sha256": "eb21678e264603752c5c7add6098e3cf459b7b418d08909f7419d09d0d1285dc"
+    },
+    {
+      "file": "V13-fine-4k-green-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          124
+        ]
+      ],
+      "sha256": "f9c89040413a63497666f855d4fbb15cfed71d67670f84d7f853b2edd26224c2"
+    },
+    {
+      "file": "V13-fine-2k-flowers-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ],
+      "sha256": "ab166fcefd3de918118d6aa63d309f2c8f35ace8a81fdf74de4aa4975319bc75"
+    },
+    {
+      "file": "V13-fine-2k-flowers-1.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          241
+        ],
+        [
+          0,
+          97
+        ],
+        [
+          0,
+          52
+        ],
+        [
+          0,
+          22
+        ]
+      ],
+      "sha256": "df2a2ccb61c2a4b5914a172b10b7c9a3b2e72cf90f16824f3c97b65d40d92ec0"
+    },
+    {
+      "file": "V13-fine-2k-core-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          161
+        ],
+        [
+          0,
+          143
+        ],
+        [
+          0,
+          101
+        ]
+      ],
+      "sha256": "166197344eeb7c922587517a191a94fb1ab247ce18e2d02c905745690848ed2e"
+    },
+    {
+      "file": "V13-fine-2k-pink-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          254
+        ],
+        [
+          0,
+          95
+        ]
+      ],
+      "sha256": "b756fcfb8231a2483cec27a813d5b601f8bda1d57447846ab4f2665f53f25aca"
+    },
+    {
+      "file": "V13-fine-2k-blue-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          252
+        ],
+        [
+          0,
+          101
+        ]
+      ],
+      "sha256": "3d857d796afaca4f8039206e600d0ed6236e38dca72efe738e5f574eebc0a665"
+    },
+    {
+      "file": "V13-fine-2k-green-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          252
+        ],
+        [
+          0,
+          98
+        ]
+      ],
+      "sha256": "9a43d2731895261fe8cc70b48b4d8283e7ed403b85684e10aa242b9df5a1a4a1"
+    },
+    {
+      "file": "V13-fine-8k-flowers-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ],
+      "sha256": "f4e39175bb44d71bb9f6002d148ed339ee969184a4cb3effb5c6af191ca70dda"
+    },
+    {
+      "file": "V13-fine-8k-flowers-1.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          253
+        ],
+        [
+          0,
+          189
+        ],
+        [
+          0,
+          92
+        ],
+        [
+          0,
+          50
+        ]
+      ],
+      "sha256": "df33226d9e33f764208668ddea7b405704efbe92f553c1a901ac614c34f9c086"
+    },
+    {
+      "file": "V13-fine-8k-core-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          201
+        ],
+        [
+          0,
+          198
+        ],
+        [
+          0,
+          151
+        ]
+      ],
+      "sha256": "343c16bc70f078699f1f7d81c28b00d027c1635dbcfdd9d33ea1ec26c583d314"
+    },
+    {
+      "file": "V13-fine-8k-pink-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          167
+        ]
+      ],
+      "sha256": "6478b69cce71648ad121b8d25f8194ada6ad18ae4e1127b9887fa7ce46aa03e8"
+    },
+    {
+      "file": "V13-fine-8k-blue-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          187
+        ]
+      ],
+      "sha256": "6540f83fb60cfbba0be9ff451dbc47221898747b7187d0f0b905ee5ebfbc0085"
+    },
+    {
+      "file": "V13-fine-8k-green-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          162
+        ]
+      ],
+      "sha256": "f81dffe43a937930afb36536a9bd0d40a436671c2c3cf6af6c9c09aad8f1fdfe"
+    }
+  ],
+  "sourceIntegrity": {
+    "files": 29,
+    "changed": []
+  }
+}

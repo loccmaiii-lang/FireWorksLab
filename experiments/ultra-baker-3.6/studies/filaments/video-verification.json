@@ -1,0 +1,137 @@
+{
+  "videos": [
+    {
+      "file": "V14-comparison.mp4",
+      "width": 2160,
+      "height": 984,
+      "fps": 30.0,
+      "decodedFrames": 312,
+      "duration": 10.4,
+      "bytes": 10981928,
+      "uniqueSampledFrames": 21,
+      "sha256": "292fa1ce479585b6cb98cfab0830ee4060d41301cc08a6c3fe706f305e4bbb47"
+    },
+    {
+      "file": "V14-comparison-half-speed.mp4",
+      "width": 2160,
+      "height": 984,
+      "fps": 30.0,
+      "decodedFrames": 624,
+      "duration": 20.8,
+      "bytes": 15295999,
+      "uniqueSampledFrames": 42,
+      "sha256": "a1f7c292c2f77df304f4fcc8c6e7ad2111ffe71f02f465d33233b50b19eb580b"
+    },
+    {
+      "file": "V14-reference-breakdown.mp4",
+      "width": 720,
+      "height": 1520,
+      "fps": 30.0,
+      "decodedFrames": 445,
+      "duration": 14.833333333333334,
+      "bytes": 7951110,
+      "uniqueSampledFrames": 30,
+      "sha256": "04da7649706a9d2bb03be04369b5b5b8d371516264f56469f271296537d4ef1e"
+    },
+    {
+      "file": "V14-fine-8k-playback.mp4",
+      "width": 1024,
+      "height": 1024,
+      "fps": 30.0,
+      "decodedFrames": 312,
+      "duration": 10.4,
+      "bytes": 7085871,
+      "uniqueSampledFrames": 21,
+      "sha256": "99189b28afb17dbef0deb4d97ed47dcc5c47726d08a588829939a99be43060e6"
+    },
+    {
+      "file": "V14-before-playback.mp4",
+      "width": 720,
+      "height": 720,
+      "fps": 30.0,
+      "decodedFrames": 312,
+      "duration": 10.4,
+      "bytes": 4994451,
+      "uniqueSampledFrames": 21,
+      "sha256": "cde44cb45fe948638539e667095a0d7da2a770eed0d2678e6afa0fcb7d680f33"
+    },
+    {
+      "file": "V14-fine-4k-playback.mp4",
+      "width": 720,
+      "height": 720,
+      "fps": 30.0,
+      "decodedFrames": 312,
+      "duration": 10.4,
+      "bytes": 3738874,
+      "uniqueSampledFrames": 21,
+      "sha256": "5a9d8b6809bd7a50a138a77de63c7b852e7ef51b2bebe10e5076543261767789"
+    },
+    {
+      "file": "V13-comparison.mp4",
+      "width": 2160,
+      "height": 984,
+      "fps": 30.0,
+      "decodedFrames": 375,
+      "duration": 12.5,
+      "bytes": 17610492,
+      "uniqueSampledFrames": 25,
+      "sha256": "ad890d2229a7d849c0621ba2d33b005929d48fadc897e29f481691f92637e00e"
+    },
+    {
+      "file": "V13-comparison-half-speed.mp4",
+      "width": 2160,
+      "height": 984,
+      "fps": 30.0,
+      "decodedFrames": 750,
+      "duration": 25.0,
+      "bytes": 20175781,
+      "uniqueSampledFrames": 50,
+      "sha256": "8b5fc80e7cadc263d253a49a95ad5b07d00e859933390f645203565fad38a68f"
+    },
+    {
+      "file": "V13-reference-breakdown.mp4",
+      "width": 720,
+      "height": 1520,
+      "fps": 30.0,
+      "decodedFrames": 547,
+      "duration": 18.233333333333334,
+      "bytes": 6492036,
+      "uniqueSampledFrames": 37,
+      "sha256": "3c14635c68fbf8f513b62470db59940fd6db7382ce7d05f223ac3b40d47e274d"
+    },
+    {
+      "file": "V13-fine-8k-playback.mp4",
+      "width": 1024,
+      "height": 1024,
+      "fps": 30.0,
+      "decodedFrames": 375,
+      "duration": 12.5,
+      "bytes": 19735699,
+      "uniqueSampledFrames": 25,
+      "sha256": "acf95a4ba9046b93bdba27c3cf1b031e2f4af6a615a8930fc3accc3e402a7e25"
+    },
+    {
+      "file": "V13-before-playback.mp4",
+      "width": 720,
+      "height": 720,
+      "fps": 30.0,
+      "decodedFrames": 375,
+      "duration": 12.5,
+      "bytes": 10353260,
+      "uniqueSampledFrames": 25,
+      "sha256": "9b9bc9bae8ed0895e01cafcf6291229155cb6c9a0150b765933dbe25867bf2bc"
+    },
+    {
+      "file": "V13-fine-4k-playback.mp4",
+      "width": 720,
+      "height": 720,
+      "fps": 30.0,
+      "decodedFrames": 375,
+      "duration": 12.5,
+      "bytes": 8239307,
+      "uniqueSampledFrames": 25,
+      "sha256": "a1aedfb80973a1559ff986ce8b68298fa31536da95955b5f9733f1a7a8d932f1"
+    }
+  ],
+  "allDecoded": true
+}

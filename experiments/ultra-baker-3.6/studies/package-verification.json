@@ -1,0 +1,910 @@
+{
+  "packages": [
+    {
+      "id": "JM",
+      "variant": "original-2k",
+      "file": "JM-original-2k.zip",
+      "bytes": 4616402,
+      "textures": 1,
+      "bakeAndEncodeMs": 866
+    },
+    {
+      "id": "JM",
+      "variant": "fine-2k",
+      "file": "JM-fine-2k.zip",
+      "bytes": 4544756,
+      "textures": 1,
+      "bakeAndEncodeMs": 807
+    },
+    {
+      "id": "JM",
+      "variant": "fine-4k",
+      "file": "JM-fine-4k.zip",
+      "bytes": 14563818,
+      "textures": 1,
+      "bakeAndEncodeMs": 1916
+    },
+    {
+      "id": "JM",
+      "variant": "fine-8k",
+      "file": "JM-fine-8k.zip",
+      "bytes": 46585253,
+      "textures": 1,
+      "bakeAndEncodeMs": 6439
+    },
+    {
+      "id": "V14",
+      "variant": "fine-2k",
+      "file": "V14-fine-2k.zip",
+      "bytes": 9361809,
+      "textures": 4,
+      "bakeAndEncodeMs": 9374
+    },
+    {
+      "id": "V14",
+      "variant": "fine-4k",
+      "file": "V14-fine-4k.zip",
+      "bytes": 28520996,
+      "textures": 4,
+      "bakeAndEncodeMs": 13630
+    },
+    {
+      "id": "V14",
+      "variant": "fine-8k",
+      "file": "V14-fine-8k.zip",
+      "bytes": 88536741,
+      "textures": 4,
+      "bakeAndEncodeMs": 28812
+    },
+    {
+      "id": "V13",
+      "variant": "fine-2k",
+      "file": "V13-fine-2k.zip",
+      "bytes": 8663551,
+      "textures": 6,
+      "bakeAndEncodeMs": 27660
+    },
+    {
+      "id": "V13",
+      "variant": "fine-4k",
+      "file": "V13-fine-4k.zip",
+      "bytes": 30400251,
+      "textures": 6,
+      "bakeAndEncodeMs": 32066
+    },
+    {
+      "id": "V13",
+      "variant": "fine-8k",
+      "file": "V13-fine-8k.zip",
+      "bytes": 106581775,
+      "textures": 6,
+      "bakeAndEncodeMs": 51082
+    }
+  ],
+  "images": [
+    {
+      "file": "JM-original-2k-JM-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          244
+        ],
+        [
+          0,
+          202
+        ]
+      ],
+      "sha256": "66f19b27341ca112668c174925708bd232bf84bea36ecc0bb237bed7f56bf65d"
+    },
+    {
+      "file": "JM-fine-2k-JM-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          254
+        ],
+        [
+          0,
+          241
+        ],
+        [
+          0,
+          198
+        ]
+      ],
+      "sha256": "b2d58d733d2541b32506c7d7cb20af9635d25e2f1d282b14039b609060410a0a"
+    },
+    {
+      "file": "JM-fine-4k-JM-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          251
+        ]
+      ],
+      "sha256": "c80a292e8a74b244c0310ab7ed898098dbc22d65e58a6cec6df553fc084be71c"
+    },
+    {
+      "file": "JM-fine-8k-JM-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          254
+        ]
+      ],
+      "sha256": "9e75498f1bb4c82f234abe26fa33367ffb64bf7e30020edd642fe768b9e039c4"
+    },
+    {
+      "file": "V14-fine-2k-shell-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          245
+        ],
+        [
+          0,
+          245
+        ],
+        [
+          0,
+          240
+        ]
+      ],
+      "sha256": "89c327b1e40121609d0660933ddc598242fe3bb7deb4f3db6d856a37b6890ae7"
+    },
+    {
+      "file": "V14-fine-2k-shell-1.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          236
+        ],
+        [
+          0,
+          236
+        ],
+        [
+          0,
+          203
+        ],
+        [
+          0,
+          90
+        ]
+      ],
+      "sha256": "9755089dc763a021c5726df2bc811dd9c394a469a6ca10eb5e116ea09427e8d2"
+    },
+    {
+      "file": "V14-fine-2k-embers-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          239
+        ],
+        [
+          0,
+          240
+        ],
+        [
+          0,
+          242
+        ],
+        [
+          0,
+          241
+        ]
+      ],
+      "sha256": "6a15896d8d8d6f9e48507f5accaf164dd0291d26fbd0a96923fe76aa6bcbfed8"
+    },
+    {
+      "file": "V14-fine-2k-core-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          249
+        ],
+        [
+          0,
+          95
+        ],
+        [
+          0,
+          77
+        ],
+        [
+          0,
+          22
+        ]
+      ],
+      "sha256": "76ad2b676e3d25b54fa0efe53f3fb4aabc18363a4816875f7ad6bf8be5b49801"
+    },
+    {
+      "file": "V14-fine-4k-shell-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          252
+        ],
+        [
+          0,
+          252
+        ],
+        [
+          0,
+          253
+        ]
+      ],
+      "sha256": "8ee286451ab8e43c95607a2acdd53cb8611204ab6199dc4f7f206b255ac34528"
+    },
+    {
+      "file": "V14-fine-4k-shell-1.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          253
+        ],
+        [
+          0,
+          253
+        ],
+        [
+          0,
+          223
+        ],
+        [
+          0,
+          121
+        ]
+      ],
+      "sha256": "0c94509fe034e16722b208b6c27ee067d5b26b96920231c0e56972b4ac0b7907"
+    },
+    {
+      "file": "V14-fine-4k-embers-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          240
+        ],
+        [
+          0,
+          241
+        ],
+        [
+          0,
+          241
+        ],
+        [
+          0,
+          241
+        ]
+      ],
+      "sha256": "c16b38910a0a1b5350cdbd67691471b4f181fef275fcb803d566038fc0a1f8e6"
+    },
+    {
+      "file": "V14-fine-4k-core-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          254
+        ],
+        [
+          0,
+          159
+        ],
+        [
+          0,
+          145
+        ],
+        [
+          0,
+          50
+        ]
+      ],
+      "sha256": "4b698a996ab80110db6aecd1e113cc60277af51ec19ec75576d2c6ffb64eeefc"
+    },
+    {
+      "file": "V14-fine-8k-shell-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          254
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          254
+        ]
+      ],
+      "sha256": "41bd90d6f1dd8e3e4b8778a6d6c7e70358768b85d722a71a7740801df1e00893"
+    },
+    {
+      "file": "V14-fine-8k-shell-1.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          233
+        ],
+        [
+          0,
+          133
+        ]
+      ],
+      "sha256": "84e4152314face0161907dd790a1e546907c0856b045b020f4143cc9c93eba39"
+    },
+    {
+      "file": "V14-fine-8k-embers-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          241
+        ],
+        [
+          0,
+          241
+        ],
+        [
+          0,
+          242
+        ],
+        [
+          0,
+          242
+        ]
+      ],
+      "sha256": "142c2ec2b74129b7da51c3f898063b27a964f7cccd14ddc0d69514515092455f"
+    },
+    {
+      "file": "V14-fine-8k-core-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          191
+        ],
+        [
+          0,
+          180
+        ],
+        [
+          0,
+          91
+        ]
+      ],
+      "sha256": "a6548268f1aaea27210e6aeb973fda81a8634ba44b0148149af3d1bb62a0d7e1"
+    },
+    {
+      "file": "V13-fine-2k-flowers-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ],
+      "sha256": "baf6f7c2bf2fe1f1b959ee7c2500eb417dcad3a902ada8b28721e3180ae5c63a"
+    },
+    {
+      "file": "V13-fine-2k-flowers-1.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          246
+        ],
+        [
+          0,
+          125
+        ],
+        [
+          0,
+          88
+        ],
+        [
+          0,
+          35
+        ]
+      ],
+      "sha256": "0a561dd584debcd407998d7b414f85d1dd51193e589e6fca3fe58d79e9eb87b2"
+    },
+    {
+      "file": "V13-fine-2k-core-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          237
+        ],
+        [
+          0,
+          233
+        ],
+        [
+          0,
+          233
+        ]
+      ],
+      "sha256": "c93ba1ad3625f00eafbca291e93f1495ec8f4130c3df487ebc80f5ee9580a7e4"
+    },
+    {
+      "file": "V13-fine-2k-pink-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          253
+        ],
+        [
+          0,
+          90
+        ]
+      ],
+      "sha256": "e300afc34b22b2cfc154776af664e16d343210d1582065a50b4b542dc64fb957"
+    },
+    {
+      "file": "V13-fine-2k-blue-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          253
+        ],
+        [
+          0,
+          98
+        ]
+      ],
+      "sha256": "6154f79f71ea7f019a0d87c8184c889c26bb3755101dc0f190afccfb6a0004cc"
+    },
+    {
+      "file": "V13-fine-2k-green-0.png",
+      "width": 2048,
+      "height": 2048,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          254
+        ],
+        [
+          0,
+          107
+        ]
+      ],
+      "sha256": "f3a24c693cac9172e11b2c9c25a3640f37bbd855db796d36c8847c3822cb04e4"
+    },
+    {
+      "file": "V13-fine-4k-flowers-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ],
+      "sha256": "f7c056344e5390bccbbf706c40d417948aba44105f7ea3f3e9565b01f421eea1"
+    },
+    {
+      "file": "V13-fine-4k-flowers-1.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          254
+        ],
+        [
+          0,
+          188
+        ],
+        [
+          0,
+          142
+        ],
+        [
+          0,
+          65
+        ]
+      ],
+      "sha256": "46f1e287b0c26cb010217d2f0c47ca59ab6d8e4751aa4d3bb538979bc6ebe5eb"
+    },
+    {
+      "file": "V13-fine-4k-core-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          252
+        ],
+        [
+          0,
+          248
+        ],
+        [
+          0,
+          244
+        ]
+      ],
+      "sha256": "ee7210c947960e2bb82a721e69b232a16ae64b14f3e630276c7ff33b40f37ec5"
+    },
+    {
+      "file": "V13-fine-4k-pink-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          108
+        ]
+      ],
+      "sha256": "4baa873010d3ba6b50927c61d9ee72e5ccee2bba9aff5720811914e25358b9bd"
+    },
+    {
+      "file": "V13-fine-4k-blue-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          120
+        ]
+      ],
+      "sha256": "bfdac2e06711938e740ca8abca3055705aab3c81db8361a979b8780f06bc9b49"
+    },
+    {
+      "file": "V13-fine-4k-green-0.png",
+      "width": 4096,
+      "height": 4096,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          116
+        ]
+      ],
+      "sha256": "9d29a5f5c4b83d32ad234fb572e90e99a77a0df4254b75ef94273b72d9193cfc"
+    },
+    {
+      "file": "V13-fine-8k-flowers-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          255
+        ]
+      ],
+      "sha256": "b3ed51d4c922a71607fdfb8c8cc5f5b047f434a94044afd482a870be227801bd"
+    },
+    {
+      "file": "V13-fine-8k-flowers-1.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          253
+        ],
+        [
+          0,
+          231
+        ],
+        [
+          0,
+          200
+        ],
+        [
+          0,
+          107
+        ]
+      ],
+      "sha256": "025cbb00136330f2c6920fc4f4ac4fd57baf884882535105164bd27a91eee0c9"
+    },
+    {
+      "file": "V13-fine-8k-core-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          253
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          254
+        ]
+      ],
+      "sha256": "bdb4e3d2a0233ad0a6faee5b202e01e1fefb7d84d9f439922fb23c4f4275b2fa"
+    },
+    {
+      "file": "V13-fine-8k-pink-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          175
+        ]
+      ],
+      "sha256": "de9c0b9ab103a131d6dd00a8b60b34165a8b821b1b518b9f2c02113d2996afb6"
+    },
+    {
+      "file": "V13-fine-8k-blue-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          187
+        ]
+      ],
+      "sha256": "891599b2b8ae1690f0b370c1fa0d474bfe3e6a7cc9909a015b8868c01ca024ff"
+    },
+    {
+      "file": "V13-fine-8k-green-0.png",
+      "width": 8192,
+      "height": 8192,
+      "channels": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          255
+        ],
+        [
+          0,
+          163
+        ]
+      ],
+      "sha256": "df24c9a3bdb8627f7de8b4f275e01910b6cd5661df05e41679537da94a05c96a"
+    }
+  ],
+  "sourceIntegrity": {
+    "files": 29,
+    "changed": []
+  },
+  "playerAgreement": {
+    "meanAbsoluteError8bit": 0.0,
+    "maximumError8bit": 0.0
+  }
+}

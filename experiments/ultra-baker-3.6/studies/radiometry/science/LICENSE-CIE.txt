@@ -1,0 +1,2 @@
+CIE 2019. Colour-matching functions of CIE 1931 standard colorimetric observer. DOI 10.25039/CIE.DS.xvudnb9b. https://creativecommons.org/licenses/by-sa/4.0/
+The original CSV, metadata and derived blackbody.json LUT are shared under CC BY-SA 4.0. LUT derived by Planck integration, XYZ-to-linear-sRGB transformation and a single reference radiance normalization.

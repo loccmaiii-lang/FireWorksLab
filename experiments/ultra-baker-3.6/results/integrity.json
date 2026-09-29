@@ -1,0 +1,21 @@
+{
+  "original_files_checked": 29,
+  "original_changed": [],
+  "baseline_diff_max": 1,
+  "baseline_diff_mean": 0.0007094144821166992,
+  "baseline_changed_values": 11902,
+  "zip_entries": [
+    "T_Kiku_ULTRA_4K.png",
+    "T_Kiku_ULTRA_4K_帧号测试.png",
+    "T_Kiku_ULTRA_4K_Cutout.png",
+    "T_Kiku_ULTRA_4K_Ramp.png",
+    "Kiku_ULTRA_4K_Cascade参数.txt",
+    "Kiku_ULTRA_4K_曲线.csv",
+    "Kiku_ULTRA_4K_声音节点.json",
+    "Kiku_ULTRA_4K.json"
+  ],
+  "snapshot_size": [
+    4096,
+    4096
+  ]
+}

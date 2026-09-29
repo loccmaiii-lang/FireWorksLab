@@ -1,0 +1,17 @@
+# Generated assets remain local; this branch publishes code and configuration.
+.deps/
+node_modules/
+__pycache__/
+*.pyc
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.exr
+*.mp4
+*.mov
+*.zip
+*.rgba32f
+*.exe
+*.log

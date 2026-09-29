@@ -1,0 +1,153 @@
+{
+  "effects": [
+    {
+      "id": "V14",
+      "sourceTime": 7.4,
+      "sourceSize": [
+        720,
+        1280
+      ],
+      "layers": 3,
+      "liveVsBaked": {
+        "max": 0,
+        "mean": 0
+      },
+      "glError": 0,
+      "overflow": false
+    },
+    {
+      "id": "V13",
+      "sourceTime": 12.2,
+      "sourceSize": [
+        720,
+        1280
+      ],
+      "layers": 5,
+      "liveVsBaked": {
+        "max": 0,
+        "mean": 0
+      },
+      "glError": 0,
+      "overflow": false
+    }
+  ],
+  "productionHashes": [
+    {
+      "path": "tool\\batch_bake.mjs",
+      "match": true
+    },
+    {
+      "path": "tool\\build.py",
+      "match": true
+    },
+    {
+      "path": "tool\\FireworkBaker.html",
+      "match": true
+    },
+    {
+      "path": "tool\\package.json",
+      "match": true
+    },
+    {
+      "path": "tool\\data\\review.js",
+      "match": true
+    },
+    {
+      "path": "tool\\data\\video_meta.json",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\body.html",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\style.css",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\00_util.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\10_types.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\14_pending.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\15_replica.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\16_thumbs.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\20_sim.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\30_plan.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\40_gl.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\42_trail.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\50_bake.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\60_export.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\65_cascade.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\70_ui.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\72_picker.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\75_iter.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\77_assets.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\78_updates.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\79_library.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\80_render.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\85_stills.js",
+      "match": true
+    },
+    {
+      "path": "tool\\src\\js\\90_events.js",
+      "match": true
+    }
+  ],
+  "errors": []
+}

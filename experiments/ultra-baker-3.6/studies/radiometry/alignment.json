@@ -1,0 +1,16 @@
+{
+  "V14": {
+    "scale": 1.1100478468899522,
+    "tx": -0.05098912491017755,
+    "ty": 0.025397375825008815,
+    "anchor": 3.2,
+    "rule": "one fixed similarity transform for the entire sequence; no per-frame reframing"
+  },
+  "V13": {
+    "scale": 0.9356846473029046,
+    "tx": 0.034759140087735965,
+    "ty": 0.08650796226146681,
+    "anchor": 6.5,
+    "rule": "one fixed similarity transform for the entire sequence; no per-frame reframing"
+  }
+}

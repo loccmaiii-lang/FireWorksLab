@@ -1,0 +1,12 @@
+<!doctype html><meta charset="utf-8"><title>Actual atlas frame exporter</title><canvas id="render"></canvas><script src="../player.js"></script><script>
+window.player=new AtlasPlayer(document.querySelector('canvas'));
+window.loadVariant=async(id,version,size=720)=>{
+ const url=version==='before'?`before/${id}.json`:`${id}-study.json`;
+ let v=await(await fetch(url)).json();if(version!=='before')v=v.variants[version];
+ const base=new URL(version==='before'?'before/':'./',location.href);
+ for(const l of v.layers)for(const s of l.segments)s.file=new URL(s.file,base).href;
+ player.resize(size);await player.load(v);window.variant=v;
+ return{view:v.view,layers:v.layers.length};
+};
+window.getFrame=(t)=>{player.render(t);return player.canvas.toDataURL('image/png')};
+</script>

@@ -1,0 +1,41 @@
+{
+  "result": [
+    {
+      "id": "V14",
+      "quality": "fine-4k",
+      "layers": 4,
+      "ready": true,
+      "error": 0,
+      "time": 3.25
+    },
+    {
+      "id": "V14",
+      "quality": "fine-8k",
+      "layers": 4,
+      "ready": true,
+      "error": 0,
+      "time": 3.25
+    },
+    {
+      "id": "V13",
+      "quality": "fine-4k",
+      "layers": 5,
+      "ready": true,
+      "error": 0,
+      "time": 6.5
+    },
+    {
+      "id": "V13",
+      "quality": "fine-8k",
+      "layers": 5,
+      "ready": true,
+      "error": 0,
+      "time": 6.5
+    }
+  ],
+  "errors": [],
+  "mobileOverflow": false,
+  "layerToggle": true,
+  "zoom": true,
+  "playback": true
+}

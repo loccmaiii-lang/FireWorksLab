@@ -1,0 +1,36 @@
+{
+  "source": "V14-source-3.2.png",
+  "videoTime": 7.4,
+  "elapsed": 3.2,
+  "manualRidge": [
+    [
+      418.0,
+      31.0
+    ],
+    [
+      405.0,
+      78.0
+    ],
+    [
+      395.0,
+      122.0
+    ],
+    [
+      382.0,
+      184.0
+    ],
+    [
+      374.0,
+      236.0
+    ]
+  ],
+  "whiteEnd": [
+    405.0,
+    78.0
+  ],
+  "brightLengthPx": 48.76474136094644,
+  "visibleLengthPx": 209.84682766237137,
+  "flowerHorizontalRadiusPx": 257.5,
+  "lengthOverRadius": 0.8149391365528985,
+  "method": "One manually selected ridge, native source pixels. White-to-warm boundary and faint endpoint are visual estimates, roughly ±8 px. Occlusion prevents following this ridge to its physical end. Not a population statistic or physical burn-time measurement."
+}

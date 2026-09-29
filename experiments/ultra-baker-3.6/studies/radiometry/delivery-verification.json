@@ -1,0 +1,138 @@
+{
+  "V14": {
+    "EXRframes": 312,
+    "HALFexactRoundTrip": true,
+    "matchesFloatReadbacks": [
+      {
+        "frame": 15,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 42,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 96,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 153,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 210,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 246,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 264,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 288,
+        "maxAbsoluteError": 7.62939453125e-06,
+        "differingChannelSamples": 4,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      }
+    ],
+    "peakLinearRGB": 786.5,
+    "RGBatlases": 5,
+    "videos": [
+      {
+        "file": "V14-comparison.mp4",
+        "frames": 312,
+        "fps": 30.0
+      },
+      {
+        "file": "V14-V4-1024.mp4",
+        "frames": 312,
+        "fps": 30.0
+      }
+    ]
+  },
+  "V13": {
+    "EXRframes": 375,
+    "HALFexactRoundTrip": true,
+    "matchesFloatReadbacks": [
+      {
+        "frame": 15,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 57,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 102,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 123,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 156,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 195,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 240,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      },
+      {
+        "frame": 300,
+        "maxAbsoluteError": 0.0,
+        "differingChannelSamples": 0,
+        "limit": "one HALF ULP between independent GPU replays; EXR round-trip itself must be bit-exact"
+      }
+    ],
+    "peakLinearRGB": 2438.0,
+    "RGBatlases": 6,
+    "videos": [
+      {
+        "file": "V13-comparison.mp4",
+        "frames": 375,
+        "fps": 30.0
+      },
+      {
+        "file": "V13-V4-1024.mp4",
+        "frames": 375,
+        "fps": 30.0
+      }
+    ]
+  }
+}

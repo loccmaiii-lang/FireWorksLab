@@ -1,0 +1,41 @@
+{
+  "startup": {
+    "N": 4096,
+    "frames": 256,
+    "buffer": 1772,
+    "err": 0
+  },
+  "cancelUI": {
+    "baking": false,
+    "N": 4096,
+    "dirty": true,
+    "err": 0
+  },
+  "tail": {
+    "fades": [
+      30,
+      20
+    ],
+    "relay": [
+      0,
+      0
+    ],
+    "channels": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "err": 0
+  },
+  "content": {
+    "ss": 8,
+    "F": 64,
+    "err": 0
+  },
+  "nativeRect": [
+    512,
+    256
+  ],
+  "errors": []
+}

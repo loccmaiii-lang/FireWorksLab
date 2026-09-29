@@ -1,0 +1,109 @@
+{
+  "physics": {
+    "pathError": 0,
+    "hiddenCarrier": 0,
+    "childCount": 6,
+    "childDrag": [
+      0.027174515235457067,
+      0.027174515235457067,
+      0.027174515235457067,
+      0.027174515235457067,
+      0.027174515235457067,
+      0.027174515235457067
+    ],
+    "expectedDrag": 0.027174515235457067,
+    "childGravity": [
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55,
+      0.55
+    ],
+    "gl": 0
+  },
+  "videos": [
+    {
+      "id": "V14",
+      "kind": "comparison",
+      "width": 2160,
+      "height": 984,
+      "duration": 10.4,
+      "seeked": 3,
+      "playedTo": 3.255263,
+      "canPlay": 4
+    },
+    {
+      "id": "V14",
+      "kind": "comparison-half-speed",
+      "width": 2160,
+      "height": 984,
+      "duration": 20.8,
+      "seeked": 3,
+      "playedTo": 3.262262,
+      "canPlay": 4
+    },
+    {
+      "id": "V14",
+      "kind": "reference-breakdown",
+      "width": 720,
+      "height": 1520,
+      "duration": 14.833333,
+      "seeked": 3,
+      "playedTo": 3.263435,
+      "canPlay": 4
+    },
+    {
+      "id": "V14",
+      "kind": "fine-8k-playback",
+      "width": 1024,
+      "height": 1024,
+      "duration": 10.4,
+      "seeked": 3,
+      "playedTo": 3.264234,
+      "canPlay": 4
+    },
+    {
+      "id": "V13",
+      "kind": "comparison",
+      "width": 2160,
+      "height": 984,
+      "duration": 12.5,
+      "seeked": 3,
+      "playedTo": 3.252579,
+      "canPlay": 4
+    },
+    {
+      "id": "V13",
+      "kind": "comparison-half-speed",
+      "width": 2160,
+      "height": 984,
+      "duration": 25,
+      "seeked": 3,
+      "playedTo": 3.252297,
+      "canPlay": 4
+    },
+    {
+      "id": "V13",
+      "kind": "reference-breakdown",
+      "width": 720,
+      "height": 1520,
+      "duration": 18.233333,
+      "seeked": 3,
+      "playedTo": 3.251974,
+      "canPlay": 4
+    },
+    {
+      "id": "V13",
+      "kind": "fine-8k-playback",
+      "width": 1024,
+      "height": 1024,
+      "duration": 12.5,
+      "seeked": 3,
+      "playedTo": 3.25068,
+      "canPlay": 4
+    }
+  ],
+  "errors": [],
+  "mobileOverflow": false
+}
