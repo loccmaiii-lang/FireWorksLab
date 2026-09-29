@@ -19,18 +19,19 @@ RES = os.path.join(ROOT, 'analysis', 'results')
 OUT = os.path.join(ROOT, 'tool', 'data', 'review.js')
 
 REVIEW = [
-    dict(id='TPS', task='TPS', kind='asset', date='2026-09-29', name='升空尾缀 · 小（物理 v1，对照 尾缀C）', src='TPS', video='vidio/2.0/尾缀C.mp4', tags='尾缀 上升 物理 小 TPS', thumb_dt=3.8,
-         note='物理模型（原理见 analysis/升空尾缀_物理.md）按 尾缀C 校准：出膛 97 m/s、约 6 s 到顶、偏向右上。尾缀C 开拍时弹已经飞了 2.2 秒，所以并排时实拍前 2.2 秒是空的。',
-         look=['长度随时间的变化、白热段 → 橙色火星的过渡', '尾迹上的小波纹、随风偏移', '和中、大两档一起比：粗细、亮度、颜色'],
-         opinion='远景按同一套量法对过（可见长度、过曝段、宽度、颜色偏暖程度），数值在 analysis/results/TPS/数值.json。尾缀C 的火星更橙、更散，是三档里最「一颗颗」的。'),
-    dict(id='TPM', task='TPM', kind='asset', date='2026-09-29', name='升空尾缀 · 中（物理 v1，对照 尾缀B）', src='TPM', video='vidio/2.0/尾缀B.mp4', tags='尾缀 上升 物理 中 TPM', thumb_dt=2.8,
-         note='物理模型按 尾缀B 校准：出膛 122 m/s、4.4 s 开花。引擎里两层：星头白热段（火焰 + 火粉，速度朝向，长度随速度）+ 金火星簇（世界坐标，按出生时刻落在弹道上，随风漂、在空中不动）。',
-         look=['和实拍并排：尾迹长度随时间怎么变（出膛长 → 到顶短）', '白热段 → 金色火星 → 零星火点 的过渡', '右栏关掉「星头白热段」或「金火星簇」单独看每一层'],
-         opinion='比例改正后重新校准（之前 TP1 用的画面比例偏小 1.5 倍，已撤下）。数值在 analysis/results/TPM/数值.json，近景结构对照 尾缀物理_近景对照.jpg。'),
-    dict(id='TPL', task='TPL', kind='asset', date='2026-09-29', name='升空尾缀 · 大（物理 v1，对照 尾缀A）', src='TPL', video='vidio/2.0/尾缀A.mp4', tags='尾缀 上升 物理 大 TPL', thumb_dt=3.5,
-         note='物理模型按 尾缀A 校准：出膛 119 m/s、升得最久（约 6.4 s），弹体摆动最大（约 1 m），尾迹波浪最明显。实拍左上角那团是前一发的余烬，不是这发的。',
+    # 升空尾缀（物理 v1）：烘焙器里实时模拟（花型 physS / physM / physL，43_phystrail.js），镜头跟着星头；实拍面板按同一比例逐帧跟拍
+    dict(id='TPS', task='TPS', kind='preset', phys='S', date='2026-09-29', name='升空尾缀 · 物理 小（对照 尾缀C）', video='vidio/2.0/尾缀C.mp4', tags='尾缀 上升 物理 小 TPS',
+         note='烘焙器里实时模拟（和花型模板一样，右栏滑杆可调）。物理模型按 尾缀C 校准：出膛 97 m/s、约 6 s 开花、偏向右上。尾缀C 开拍时弹已经飞了 2.2 秒，所以实拍前 2.2 秒是空的。',
+         look=['左右两边同一比例、镜头都跟着星头：星头后面白热段有多长、多粗', '白热段 → 金色火星 → 橙色零星火点 的过渡和疏密', '尾迹上的小波纹、随风偏移'],
+         opinion='09-29 下午改成烘焙器实时模拟（之前是远景播放引擎贴图，看不清，星头还是一根会甩的长条——已去掉，星头改成跟着弹道走的泪滴形火焰）。尾缀C 的火星更橙、更散，是三档里最「一颗颗」的。'),
+    dict(id='TPM', task='TPM', kind='preset', phys='M', date='2026-09-29', name='升空尾缀 · 物理 中（对照 尾缀B）', video='vidio/2.0/尾缀B.mp4', tags='尾缀 上升 物理 中 TPM',
+         note='烘焙器里实时模拟（右栏滑杆可调）。物理模型按 尾缀B 校准：出膛 122 m/s、4.4 s 开花。尾迹是停在空中的火星：弹体越慢，尾迹越短越密。',
+         look=['和实拍并排：尾迹长度随时间怎么变（出膛长 → 到顶短）', '白热段 → 金色火星 → 零星火点 的过渡', '视野高度（右栏「物理尾缀 · 镜头」）拉近看火星颗粒'],
+         opinion='结构对：星头 → 白热段 → 金色火星一颗颗散开。还差：星头后面的连续白热段比实拍短、细（实拍是一大段过曝白柱，模拟很快散成颗粒）；后半程可见尾迹偏长（到顶前实拍约 92 m，模拟约 147 m）。实拍是暮色亮蓝天空、模拟是黑底，比颜色时注意。'),
+    dict(id='TPL', task='TPL', kind='preset', phys='L', date='2026-09-29', name='升空尾缀 · 物理 大（对照 尾缀A）', video='vidio/2.0/尾缀A.mp4', tags='尾缀 上升 物理 大 TPL',
+         note='烘焙器里实时模拟（右栏滑杆可调）。物理模型按 尾缀A 校准：出膛 119 m/s、升得最久（约 6.4 s），弹体摆动最大（约 1 m），尾迹波浪最明显。',
          look=['尾迹的大波浪、整体随风偏移', '白热段长度、下半段橙色火星的疏密', '和小、中两档一起比'],
-         opinion='数值在 analysis/results/TPL/数值.json。视频在开花前就结束了，开花时刻是按弹道估的（到顶前 0.6 s）。'),
+         opinion='大波浪和火星团块的疏密接近实拍。还差：过曝白热段偏短（模拟更早变成橙色火星）。视频在开花前就结束了，开花时刻是按弹道估的。'),
     dict(id='PW3', task='PW3', kind='asset', date='2026-09-29', name='万彩千轮 · 单元（第 3 版）', src='PW3', video='vidio/2.0/万彩千轮B.mp4', tags='千轮 单元 粒子 PW3',
          note='按 PW2 并排对照改：每颗小球更密（两套点位叠加，约 120 颗星）、星点更亮（×1.25）；小球更大（半径 9 → 11.5 m，约为团半径的 0.26）、更多（24 → 30 颗）、在 0.45 秒内陆续开；颜色比例按实拍（青绿最多、珊瑚红最少）；取景和实拍一样按整团外框。',
          look=['和实拍比：小球大小、疏密、互相叠在一起的程度', '颜色和变金的时间', '右栏「贴图」切换 A（16 帧）/ B（64 帧）'],
@@ -142,7 +143,7 @@ def build(e):
     if e.get('video'): rec['video'] = '../' + e['video']
     trail = bool(e.get('size'))
     vmf = os.path.join(RES, e.get('src') or e['task'], 'vmeta.json')      # 结果目录自带取景（按模拟的世界坐标算好的，实拍和模拟同比例）
-    if e.get('video'): rec['vmeta'] = json.load(open(vmf, encoding='utf-8')) if os.path.exists(vmf) else video_meta(e['video'], trail=trail, roi=e.get('roi'), t_range=e.get('t_range'))
+    if e.get('video') and not e.get('phys'): rec['vmeta'] = json.load(open(vmf, encoding='utf-8')) if os.path.exists(vmf) else video_meta(e['video'], trail=trail, roi=e.get('roi'), t_range=e.get('t_range'))
     if e['kind'] == 'queued': return rec      # 排队中：只有实拍（烘焙器里显示「要对的目标」）
     if e['kind'] == 'asset':
         rec['src'] = f"../analysis/results/{e['src']}/preview.js"
@@ -150,6 +151,15 @@ def build(e):
         if jp: w, h = Image.open(jp).size; rec['thumbSim'] = thumb(jp, (min(w - h, h), 0, min(w - h, h) + h, h))
         if e.get('video'):
             tr = thumb_from_video(e['video'], rec['vmeta'], e.get('thumb_dt', 0.9))
+            if tr: rec['thumbRef'] = tr
+    elif e.get('phys'):
+        import phys_to_baker as PB
+        k = e['phys']; rec['base'] = 'phys' + k; rec['p'] = {}; rec['m'] = PB.baker_m()
+        if e.get('video'): rec['vmeta'] = dict(PB.follow(k), cx=0.5, cy=0.5, half=0.5); rec['vmeta']['follow'] = PB.follow(k)
+        jp = os.path.join(RES, e['task'], '预览.jpg')
+        if os.path.exists(jp): w, h = Image.open(jp).size; rec['thumbSim'] = thumb(jp, (min(w - h, h), 0, min(w - h, h) + h, h))
+        if e.get('video'):
+            tr = thumb_from_video(e['video'], dict(t0=PB.follow(k)['t0'], cx=PB.follow(k)['launch'][0] / PB.follow(k)['aspect'], cy=PB.follow(k)['launch'][1] - 0.3, half=0.3), 3.0)
             if tr: rec['thumbRef'] = tr
     elif trail:
         j = json.load(open(os.path.join(d, f"尾缀_{e['size']}_配方.json"), encoding='utf-8'))

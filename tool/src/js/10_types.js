@@ -10,6 +10,7 @@ const TYPE_INFO = {
   crossette: ['分裂（十字）', 'Crossette', 'aerial'], ochiba: ['落叶', 'Ochiba', 'aerial'], jisa: ['时差（延时点火）', 'Jisa', 'aerial'],
   ring: ['环', 'Ring', 'aerial'], saturn: ['土星', 'Saturn', 'aerial'], kata: ['型物', 'Kata', 'aerial'], water: ['水中花火', 'Water', 'aerial'],
   rise: ['上升（曲导）', 'Rise', 'rise'],
+  physS: ['升空尾缀 · 物理 小', 'PhysTrailS', 'rise'], physM: ['升空尾缀 · 物理 中', 'PhysTrailM', 'rise'], physL: ['升空尾缀 · 物理 大', 'PhysTrailL', 'rise'],
   trailS: ['升空尾缀 · 小', 'TrailS', 'rise'], trailM: ['升空尾缀 · 中', 'TrailM', 'rise'], trailL: ['升空尾缀 · 大', 'TrailL', 'rise'],
   fountain: ['喷泉', 'Fountain', 'ground'], falls: ['瀑布', 'Falls', 'ground'], wheel: ['转轮', 'Wheel', 'ground'],
   fan: ['扇形', 'Fan', 'ground'], barrage: ['连发', 'Barrage', 'ground'], shikake: ['仕掛け（文字/图案）', 'Shikake', 'ground']
@@ -18,7 +19,7 @@ const TYPE_GROUPS = [
   ['礼花', ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'palm', 'henka']],
   ['效果星', ['strobe', 'glitter', 'crackle', 'matsuba', 'crossette', 'ochiba', 'jisa']],
   ['形状', ['ring', 'saturn', 'kata', 'water']],
-  ['上升', ['rise', 'trailS', 'trailM', 'trailL']],
+  ['上升', ['physS', 'physM', 'physL', 'rise', 'trailS', 'trailM', 'trailL']],
   ['地面 · 循环', ['fountain', 'falls', 'wheel', 'fan', 'barrage', 'shikake']]
 ];
 const TYPE_NAMES = Object.fromEntries(Object.entries(TYPE_INFO).map(([k, v]) => [k, v[0]]));
@@ -189,10 +190,12 @@ const isRise = P => familyOf(P.type) === 'rise';
 const isGround = P => familyOf(P.type) === 'ground';
 const hasComets = P => P.type === 'fan' || P.type === 'barrage';
 const isTrail = P => familyOf(P.type) === 'rise' && P.form === 'trail';
+const isPhys = P => familyOf(P.type) === 'rise' && P.form === 'phys';
+const isSeq = P => !isTrail(P) && !isPhys(P);   // 普通花型（非尾缀序列、非物理尾缀）
 const PATTERNS = [['sphere', '球'], ['half', '半球（贴水面）'], ['ring', '环'], ['saturn', '土星（球 + 环）'], ['heart', '心形'], ['smile', '笑脸'], ['star5', '五角星'], ['text', '文字']];
 const RISE_STYLES = [['gold', '金色曲导'], ['silver', '银竜（银色长尾）'], ['dark', '暗升（无尾）'], ['kobana', '昇り小花'], ['bunpo', '分砲（空中分叉）'], ['fue', '笛（鸣笛）'], ['spiral', '螺旋']];
 const SCHEMA = [
-  { sec: '规格', show: P => !isTrail(P), items: [
+  { sec: '规格', show: isSeq, items: [
     { sel: 'shellNo', label: '号数', options: [[0, '手动'], ...SHELL_NO.map(r => [r[0], r[0] === 40 ? '40 号（四尺玉）' : r[0] === 10 ? '10 号（尺玉）' : r[0] + ' 号'])], hint: '按号数自动推算初速、星数、燃烧时间、星头大小（以本花型默认值约 5 号为基准）' }
   ] },
   { sec: '开花与燃烧', show: isAir, items: [
@@ -219,7 +222,7 @@ const SCHEMA = [
     ['ringFrac', '环上星的比例', '', 0.1, 0.9, 0.01, P => P.pattern === 'saturn'],
     ['waterRefl', '水面倒影', '', 0, 1, 0.01, isAir]
   ] },
-  { sec: '物理扰动', show: P => !isGround(P) && !isTrail(P), hint: '风与湍流：星和火花都受影响；GPU 火花用「发射点处的气流」做衰减偏移近似。', items: [
+  { sec: '物理扰动', show: P => !isGround(P) && isSeq(P), hint: '风与湍流：星和火花都受影响；GPU 火花用「发射点处的气流」做衰减偏移近似。', items: [
     ['wind', '风速（+ 向右）', 'm/s', -15, 15, 0.1],
     ['turb', '湍流强度', 'm/s', 0, 12, 0.1],
     ['turbScale', '湍流尺度', 'm', 5, 300, 1],
@@ -243,12 +246,12 @@ const SCHEMA = [
     ['flutter', '飘落摆动', 'm/s', 0, 10, 0.1],
     ['flutterHz', '摆动频率', 'Hz', 0.1, 3, 0.05, P => P.flutter > 0]
   ] },
-  { sec: '炭头（星头）', show: P => !isTrail(P), items: [
+  { sec: '炭头（星头）', show: isSeq, items: [
     ['headSize', '炭头大小', 'm', 0.15, 6, 0.05],
     ['headBright', '炭头亮度', '×', 0, 3, 0.05],
     ['flicker', '闪烁强度', '', 0, 1, 0.01]
   ] },
-  { sec: '尾缀（炭火火花）', show: P => !isTrail(P), hint: '尾缀粗细主要由「散布」和「颗粒大小」决定，长度由「火花寿命」决定。', items: [
+  { sec: '尾缀（炭火火花）', show: isSeq, hint: '尾缀粗细主要由「散布」和「颗粒大小」决定，长度由「火花寿命」决定。', items: [
     ['sparkRate', '火花密度', '个/秒', 0, 3000, 1],
     ['sparkRateEnd', '末段火花密度', '×', 0, 2, 0.01],
     ['sparkStop', '火花只在前几秒（分层星外层，0 = 全程）', 's', 0, 3, 0.01],
@@ -278,7 +281,7 @@ const SCHEMA = [
     ['chaos', '乱飞程度', '', 0, 3, 0.05],
     ['beeSpeed', '推进速度', 'm/s', 5, 80, 1]
   ] },
-  { sec: '上升', show: isRise, hint: '模拟从地面到开花高度的整段上升。导出默认是「星头循环 + 弹道拟合 + 火花发射器参数」。', items: [
+  { sec: '上升', show: P => isRise(P) && !isPhys(P), hint: '模拟从地面到开花高度的整段上升。导出默认是「星头循环 + 弹道拟合 + 火花发射器参数」。', items: [
     { sel: 'riseStyle', label: '曲导种类', options: RISE_STYLES, show: P => !isTrail(P) },
     ['riseH', '开花高度', 'm', 50, 800, 5],
     ['vtShell', '弹体终端速度', 'm/s', 20, 120, 1],
@@ -318,6 +321,42 @@ const SCHEMA = [
     ['trBright', '引擎亮度倍数（Color Over Life）', '×', 0.2, 5, 0.05],
     { sel: 'trExport4K', label: '导出 4K 母版', options: [[1, '同时导出 4096×4096'], [0, '只导出 2K']] }
   ] },
+  { sec: '物理尾缀 · 镜头', show: isPhys, hint: '地面坐标实时模拟（trail_phys.py 的移植）：尾迹是停在空中的火星，镜头跟着星头走；实拍面板按同一比例跟拍。贴图导出仍用 analysis/scripts/trail_phys_bake.py。', items: [
+    ['phView', '视野高度', 'm', 20, 400, 1],
+    ['phHead', '星头在画面的位置（离顶）', '', 0.05, 0.6, 0.01],
+    ['phExpo', '曝光倍数', '×', 0.1, 8, 0.05]
+  ] },
+  { sec: '物理尾缀 · 弹道与空气', show: isPhys, items: [
+    ['phV0', '出膛速度', 'm/s', 40, 200, 0.5],
+    ['phK', '弹体空气阻力 k', '1/m', 0.0005, 0.01, 0.00005],
+    ['phT', '开花时刻（飞行时间）', 's', 1, 10, 0.05],
+    ['phWob', '弹体摆动（尾迹大波浪）', 'm', 0, 3, 0.01],
+    ['phSpinF', '弹体自转', '转/秒', 0, 20, 0.1],
+    ['phSpinA', '自转带出的横向速度（细碎小波纹）', 'm/s', 0, 8, 0.05],
+    ['phWind', '风速（+ 向右）', 'm/s', -8, 8, 0.05],
+    ['phTurb', '冻结湍流', 'm/s', 0, 1.5, 0.01],
+    ['seed', '随机种子', '', 1, 999, 1]
+  ] },
+  { sec: '物理尾缀 · 星头燃气焰', show: isPhys, hint: '泪滴形：长度 = 静止长度 + 系数 × 速度。', items: [
+    ['phFlL0', '静止长度', 'm', 0, 8, 0.05], ['phFlLv', '随速度变长', 's', 0, 0.15, 0.001],
+    ['phFlW', '半宽', 'm', 0.02, 1, 0.01], ['phFlI', '亮度', '', 0, 6, 0.05]
+  ] },
+  { sec: '物理尾缀 · 火粉（白热段）', show: isPhys, hint: '极密、极短命的细火花，连成星头后面的过曝白热段；长度 ≈ 喷出后的相对速度 × 寿命。', items: [
+    ['phARate', '密度', '颗/秒', 0, 40000, 100], ['phALife', '寿命', 's', 0.03, 1, 0.01], ['phAJet', '向后喷出速度', 'm/s', 0, 80, 0.5],
+    ['phACone', '横向散开', 'm/s', 0, 8, 0.05], ['phAKd', '阻力', '1/s', 1, 60, 0.5], ['phAT0', '温度', 'K', 1800, 3000, 10],
+    ['phAI', '亮度', '', 0, 0.05, 0.0002], ['phAR', '发光半径', 'm', 0.005, 0.1, 0.001]
+  ] },
+  { sec: '物理尾缀 · 金火星（木炭）', show: isPhys, hint: '一簇一簇喷出；寿命对数正态（寿命 ∝ 粒径²）；出喷口 T0 很热，离开燃气约 tc 秒降到空气中的燃烧温度 Tb，快烧完才降到熄灭温度。', items: [
+    ['phBRate', '密度', '颗/秒', 0, 8000, 10], ['phBPuff', '每簇颗数', '颗', 1, 8, 1], ['phBLife', '寿命中位', 's', 0.2, 5, 0.01],
+    ['phBLsig', '寿命离散（对数标准差）', '', 0, 1.5, 0.01], ['phBJet', '向后喷出速度', 'm/s', 0, 80, 0.5], ['phBCone', '横向散开', 'm/s', 0, 8, 0.05],
+    ['phBKd', '阻力', '1/s', 1, 60, 0.5], ['phBT0', '出喷口温度 T0', 'K', 1800, 3000, 10], ['phBTb', '空气中燃烧温度 Tb', 'K', 1500, 2700, 5],
+    ['phBTc', '降到 Tb 的时间 tc', 's', 0.02, 2, 0.01], ['phBTend', '熄灭温度', 'K', 900, 2000, 10], ['phBPm', '烧到最后才暗（指数）', '', 0.1, 2, 0.01],
+    ['phBI', '亮度', '', 0, 0.3, 0.0005], ['phBTw', '闪烁', '', 0, 1, 0.01], ['phBR', '发光半径', 'm', 0.01, 0.3, 0.005]
+  ] },
+  { sec: '物理尾缀 · 落火', show: isPhys, hint: '少量长寿大颗，下坠快，零星掉在尾迹下方。', items: [
+    ['phCRate', '密度', '颗/秒', 0, 200, 1], ['phCLife', '寿命', 's', 0.2, 5, 0.05], ['phCKd', '阻力', '1/s', 0.5, 20, 0.1],
+    ['phCI', '亮度', '', 0, 3, 0.01], ['phCR', '发光半径', 'm', 0.01, 0.3, 0.005]
+  ] },
   { sec: '地面 · 循环', show: isGround, hint: '循环周期内的火花按周期性编号生成，首尾严格接上，不需要交叉淡化。', items: [
     ['loopT', '循环周期', 's', 0.3, 4, 0.05],
     ['seed', '随机种子', '', 1, 999, 1],
@@ -337,7 +376,7 @@ const SCHEMA = [
     ['subSpeed', '小花初速', 'm/s', 5, 80, 1, P => hasComets(P) && P.burstStars > 0],
     ['subBurn', '小花燃烧', 's', 0.2, 3, 0.05, P => hasComets(P) && P.burstStars > 0]
   ] },
-  { sec: '取帧（导出）', show: P => !isTrail(P), hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。自动取帧把帧集中在运动快的开花初期，同时保证整段不低于最低帧率。', items: [
+  { sec: '取帧（导出）', show: isSeq, hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。自动取帧把帧集中在运动快的开花初期，同时保证整段不低于最低帧率。', items: [
     ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P)],
     ['shutter', '运动模糊（快门）', '', 0, 1, 0.01],
     ['segAt', '分段时刻（0 = 自动）', 's', 0, 12, 0.05, P => P.form === 'segments'],

@@ -25,6 +25,7 @@ function setStatus(msg) { const s = $('#status'); s.textContent = msg; s.classNa
 
 // 上升类的序列时长跟随到顶时间
 function derive(P) {
+  if (familyOf(P.type) === 'rise' && P.form === 'phys') { P.duration = +(P.phT + 3.5).toFixed(2); return P; }
   if (familyOf(P.type) === 'rise') P.duration = P.form === 'trail' ? +(riseInfo(P).ta + 64 / 20 + 0.3).toFixed(2) : +(riseInfo(P).ta + 1.2).toFixed(2);
   if (familyOf(P.type) === 'ground') P.duration = P.loopT;
   return P;
@@ -36,6 +37,12 @@ async function runPreviewBake() {
   if (state.baking) { state.rebake = true; return; }
   state.baking = true; const gen = state.gen;
   try {
+    if (isPhys(state.P)) {        // 物理尾缀：只做实时模拟，不烘焙
+      disposeBake(state.bake); state.bake = physBake(state.P); $('#stats').innerHTML = physStats(state.P);
+      if (gen === state.gen) state.dirty = false; setStatus(''); state.baking = false;
+      if (state.rebake || state.dirty) { state.rebake = false; runPreviewBake(); }
+      return;
+    }
     const b = await bake(state.P, PREVIEW_SCALE, p => setStatus(`预览烘焙… ${Math.round(p * 100)}%`));
     disposeBake(state.bake); state.bake = b; showStats(b); afterBake(b);
     // 自动选格子改了列 × 行：同步到界面（帧数不变，不触发重烘）
@@ -79,6 +86,7 @@ const GRID_OPTS = [1, 2, 4, 8, 16, 32];
 function formOptions(P) {
   const fam = familyOf(P.type);
   if (fam === 'ground') return [['loop', '地面循环（周期性烘焙，首尾无缝）']];
+  if (fam === 'rise' && P.form === 'phys') return [['phys', '实时物理模拟（贴图用 trail_phys_bake.py 导出）']];
   if (fam === 'rise') return [['trail', '尾缀序列（循环 + 消散，速度朝向）'], ['unit', '星头循环 + 弹道与火花发射器参数'], ['master', '整段上升序列（大面片）']];
   const o = [['master', '大面片母版'], ['segments', '分段母版（开花段 + 下垂段两张贴图）']];
   if (unitAllowed(P)) o.push(['unit', '单元序列（每颗星一个粒子，省 overdraw）']);

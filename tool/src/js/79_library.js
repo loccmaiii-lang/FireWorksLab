@@ -184,7 +184,7 @@ function refNudge(d) {
 }
 function layoutRef() {
   const v = $('#refVid'), box = $('#refBox'); if (box.hidden || !v.videoWidth) return;
-  const S = box.clientWidth, vm = (ref2.entry && ref2.entry.vmeta) || { cx: 0.5, cy: 0.5, half: 0.5 };
+  const S = box.clientWidth, vm = physRefMeta((ref2.entry && ref2.entry.vmeta) || { cx: 0.5, cy: 0.5, half: 0.5 }, state.P);
   const asp = v.videoWidth / v.videoHeight, half = vm.half || 0.5;
   const Hd = S / (2 * half), Wd = Hd * asp;
   Object.assign(v.style, { width: Wd + 'px', height: Hd + 'px', left: (S / 2 - vm.cx * Wd) + 'px', top: (S / 2 - vm.cy * Hd) + 'px' });
@@ -192,6 +192,7 @@ function layoutRef() {
 function refSync() {
   const box = $('#refBox'); if (box.hidden) return;
   const v = $('#refVid'); if (!v.duration || v.readyState < 2) return;
+  if (ref2.entry && ref2.entry.vmeta && ref2.entry.vmeta.follow) layoutRef();   // 物理尾缀：实拍逐帧跟着星头取景
   const vm = (ref2.entry && ref2.entry.vmeta) || { t0: 0 };
   const want = (vm.t0 || 0) + ref2.off + state.t, tgt = Math.max(0, Math.min(v.duration - 0.05, want));
   box.classList.toggle('out', want < 0 || want > v.duration);   // 实拍这一刻没有画面（比视频开头早或晚）

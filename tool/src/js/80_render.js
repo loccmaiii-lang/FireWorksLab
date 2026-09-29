@@ -130,11 +130,12 @@ function liveBox(P, slot) {
 function liveSlot(key) { return live[key] || (live[key] = { gen: -1 }); }
 function prepSlot(slot, P, gen) {
   if (slot.gen === gen && slot.P === P) return;
-  slot.trailR = null; slot.sim = null; disposeTrack(slot.track); slot.track = null; disposeEmitter(slot.E); slot.E = null;
+  slot.trailR = null; slot.phys = null; slot.sim = null; disposeTrack(slot.track); slot.track = null; disposeEmitter(slot.E); slot.E = null;
   slot.gen = gen; slot.P = P; slot.box = null;
 }
 function drawLiveScene(slot, P, t, view, ppm) {
   const fam = familyOf(P.type), gpu = P.engine === 'gpu';
+  if (isPhys(P)) return drawPhysTrail(slot, P, t, view, ppm);
   if (isTrail(P)) {
     // 随体坐标里实时模拟：上升段连续播放，到顶后按 20 fps 版本的消散时长熄灭
     const T = riseInfo(P).ta, F = layoutOf(P).F;
@@ -166,6 +167,7 @@ function drawLiveScene(slot, P, t, view, ppm) {
   return { stars: sim.stars.filter(s => s.alive).length, sparks: gpu ? slot.track.total : sim.sp.n };
 }
 function sceneView(P, m, slot) {
+  if (isPhys(P)) return physView(P, slot, Math.min(state.t, P.duration));
   if (familyOf(P.type) === 'ground') return squareView(m);
   if (isTrail(P) && m.trail) { const h = m.Wh * 0.55; return [0, m.cy, h, h]; }
   const b = liveBox(P, slot), hx = Math.max(-b[0], b[1]) * 1.04 + 2, cy = (b[2] + b[3]) / 2, hy = (b[3] - b[2]) / 2 * 1.04 + 2, h = Math.max(hx, hy);
@@ -196,7 +198,8 @@ function renderLive() {
   };
   halves(() => shade(P, m, state.M, t), sb ? () => shade(B.P, B.bake.meta, B.M, t) : null);
   post(sb ? 0.5 : -1);
-  hudText = `实时物理 · ${P.engine === 'gpu' ? 'GPU' : 'CPU'} · 星 ${info.stars} · 火花槽位 ${info.sparks.toLocaleString()}`;
+  hudText = isPhys(P) ? `升空尾缀 · 物理实时模拟 · 飞行 ${Math.min(t, P.phT).toFixed(2)} / ${P.phT} s${t > P.phT ? '（已开花，火星燃尽中）' : ''} · 画面里火星 ${info.sparks.toLocaleString()} 颗 · 视野 ${P.phView} m`
+    : `实时物理 · ${P.engine === 'gpu' ? 'GPU' : 'CPU'} · 星 ${info.stars} · 火花槽位 ${info.sparks.toLocaleString()}`;
   hudB = sb ? `B：${B.name}` : '';
 }
 // 显示比例：贴图的每个像素在屏幕上被放大了几倍，是「糊」的直接原因
@@ -356,7 +359,7 @@ function loop(now) {
     if (state.tab === 'asset') renderAssets();
     else { ensureTargets();
     if (state.tab === 'combo') renderCombo();
-    else if (state.view === 'live') renderLive(); else if (state.view === 'export') renderExport(); else renderAtlas(); }
+    else if (state.view === 'live' || (state.bake && state.bake.form === 'phys')) renderLive(); else if (state.view === 'export') renderExport(); else renderAtlas(); }
   } catch (e) { console.error(e); hudText = '渲染出错：' + e.message; }
   if (pendingThumb) { const f = pendingThumb; pendingThumb = null; try { f(thumbFromCanvas()); } catch (e) { } }
   $('#hud').textContent = hudText; $('#hudB').textContent = hudB; updateLabels();
