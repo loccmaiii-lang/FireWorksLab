@@ -104,7 +104,7 @@ def bake_puff(P, n=14, F=64, cols=4, rows=4, ss=2, log=print, seed=11, r_tex=0.0
         a = np.full(n, t); e = np.exp(-kd * a); s1 = (1 - e) / kd
         p = v0 * s1[:, None] + j * a[:, None]
         u = np.clip(a / life, 0, 1); alive = a < life
-        Tk = T0 - (T0 - g['Tend']) * u ** g['pt']
+        Tb = g.get('Tb', g['T0']); Tk = Tb + (T0 - Tb) * np.exp(-a / g.get('tc', 1e3)) - (Tb - g['Tend']) * u ** g['pt']
         tw = 1 + g['tw'] * np.sin(twf * a * 6.283 + twp) * np.sin(twf * 0.37 * a * 6.283 + 1.3 * twp)
         I = g['I'] * size ** 2 * (1 - u) ** g.get('pm', 1.0) * np.clip(a / 0.03, 0, 1) * tw * T.bb_lum(Tk) / T.bb_lum(2350.0) * alive
         return p, I, Tk
@@ -164,8 +164,10 @@ def curves(P, n=24):
     return ts, p, v
 
 
-def main(job='TP1', log=print):
-    P = T.PRESETS['B']; out = os.path.join(T.ROOT, 'analysis', 'results', job); os.makedirs(out, exist_ok=True)
+def main(job='TP1', size='M', log=print):
+    global NAME
+    P = T.PRESETS[size]; ref = T.REFS[size]; NAME = 'RiseTrail' + size; szn = T.SIZES[size]
+    out = os.path.join(T.ROOT, 'analysis', 'results', job); os.makedirs(out, exist_ok=True)
     log('烘焙星头白热段…'); H = bake_head(P, log=log)
     log('烘焙金火星簇…'); U = bake_puff(P, log=log)
     ramp = ramp_from_physics(P)
@@ -184,8 +186,8 @@ def main(job='TP1', log=print):
     kd = g['kd']; acc = np.stack([kd * wind, np.zeros_like(wind), np.full_like(wind, -T.G)], -1)
     puff_rate = g['rate'] / U['n']                                       # 每秒几簇
     head_len = np.array([H['Lv'](max(5.0, s)) for s in sp]) / H['Lv'](H['v_ref'])
-    # 亮度换算：贴图值 ≈ E_tex × 辐亮度 / ppm_tex²；两层按同一口径（相对 尾缀B 的曝光）换成 Color Over Life 的倍数
-    ppmB = T.REFB['ppm']; k_tone = 1.0
+    # 亮度换算：贴图值 ≈ E_tex × 辐亮度 / ppm_tex²；两层按同一口径（相对实拍的曝光）换成 Color Over Life 的倍数
+    ppmB = ref['ppm']; k_tone = 1.0
     colH = P['E'] * (H['ppm'] / ppmB) ** 2 / H['E'] / k_tone; colU = P['E'] * (U['ppm'] / ppmB) ** 2 / U['E'] / k_tone
     lifeU = [round(U['D'] * 0.85, 3), round(U['D'] * 1.1, 3)]
     # 金火星簇的 Color Over Life：逐帧曝光的补偿（帧 f 在相对寿命 (f+0.5)/F 处）
@@ -206,7 +208,7 @@ def main(job='TP1', log=print):
     ]
     zmax = float(pos[:, 2].max()); xs = pos[:, 0]
     view = round(zmax * 1.12, 1); center = [round(float(xs.mean()), 2), round(zmax * 0.5, 1)]
-    man = dict(title='升空尾缀 · 物理模型（TP1）', duration=round(P['T'] + U['D'] + 0.3, 2), view=view, center=center, variants={'A': '物理模型 v1'},
+    man = dict(title=f"升空尾缀 · {szn['name']}（物理 v1，对照 {szn['ref']}）", duration=round(P['T'] + U['D'] + 0.3, 2), view=view, center=center, variants={'A': '物理模型 v1'},
                emitters=man_emit, note='星头白热段（速度朝向、长度随速度）+ 金火星簇（世界坐标，按出生时刻落在弹道上，随风漂、在空中不动）。')
     # preview.js：每个通道一张灰度图（缩小到 1024）
     images = {}
@@ -214,8 +216,8 @@ def main(job='TP1', log=print):
         for ci, c in enumerate('RGBA'):
             im = Image.fromarray(atl[..., ci], 'L').resize((1024, 1024), Image.BOX); images[fn + '#' + c] = _png_b64(im)
     images[fR] = _png_b64(ramp_png(ramp).resize((256, 1)))
-    # 实拍取景：和模拟同一个世界坐标框（尾缀B：出膛点像素、0.306 m/像素），烘焙器里并排时两边比例一致、时间对齐出膛
-    ref = T.REFB; Wv, Hv = 2560, 1440; mpp = 1 / ref['ppm']
+    # 实拍取景：和模拟同一个世界坐标框（出膛点像素、0.4545 m/像素），烘焙器里并排时两边比例一致、时间对齐出膛
+    Wv, Hv = 2560, 1440; mpp = 1 / ref['ppm']
     json.dump(dict(t0=ref['t0'], cx=round((ref['launch'][0] + center[0] / mpp) / Wv, 4), cy=round((ref['launch'][1] - center[1] / mpp) / Hv, 4),
                    half=round(view / 2 / mpp / Hv, 4), aspect=round(Wv / Hv, 4)), open(os.path.join(out, 'vmeta.json'), 'w'))
     open(os.path.join(out, 'preview.js'), 'w', encoding='utf-8').write('FW_ASSET_LOADED(' + json.dumps(job) + ', ' + json.dumps({'manifest': man, 'images': images}, ensure_ascii=False, default=float) + ');\n')
@@ -234,16 +236,16 @@ def main(job='TP1', log=print):
     open(os.path.join(out, f'{NAME}_Cascade参数.txt'), 'w', encoding='utf-8').write(cascade_txt(P, meta))
     # 对照图 + 数值（远景 尾缀B、近景 尾缀3.0_A）
     rows = T.run_compare(P, os.path.join(out, '尾缀物理'))
-    preview_jpg(P, os.path.join(out, '预览.jpg'))
+    preview_jpg(P, os.path.join(out, '预览.jpg'), ref)
     json.dump(dict(差距=None, 远景=rows), open(os.path.join(out, '数值.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     json.dump(dict(job=job, ok=True), open(os.path.join(out, 'done.json'), 'w'))
     log(f'完成 → {out}（preview.js {os.path.getsize(os.path.join(out, "preview.js")) / 1e6:.1f} MB）')
     return out
 
 
-def preview_jpg(P, path, t=3.5):
-    """缩略图：左 实拍 尾缀B，右 物理模型（同一取景）"""
-    ref = T.REFB; bg8, real = T.load_ref(ref, (t,)); cam = T.side_cam(ref)
+def preview_jpg(P, path, ref, t=None):
+    """缩略图：左 实拍，右 物理模型（同一取景）"""
+    t = t or ref['times'][len(ref['times']) // 2]; bg8, real = T.load_ref(ref, (t,)); cam = T.side_cam(ref)
     sim = T.composite(bg8, T.render(P, T.emit(P), t - ref['t0'], cam), P['E'])
     x0, y0, x1, y1 = ref['crop']; H = y1 - y0; W = x1 - x0; s = min(W, H)
     cx = int(cam.ox - 20); cy = int(cam.oy - 0.55 * H)
@@ -318,4 +320,4 @@ def cascade_txt(P, m):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1] if len(sys.argv) > 1 else 'TP1')
+    main(sys.argv[1] if len(sys.argv) > 1 else 'TP1', sys.argv[2] if len(sys.argv) > 2 else 'M')

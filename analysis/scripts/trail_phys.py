@@ -26,30 +26,62 @@ sys.path.insert(0, HERE)
 G = 9.81
 
 # ---------------------------------------------------------------------------------------------
-# 参数。单位：米、秒、开尔文。出处见 升空尾缀_物理.md 第 3 节（尾缀B 实测 + 自动逼近）
+# 参数。单位：米、秒、开尔文。出处见 升空尾缀_物理.md 第 3 节（实测 + 自动逼近）
+# 画面比例：尾缀A/B/C 同一台相机，星头轨迹自由拟合比例得 0.4545 m/像素（B 均方根 1.25 像素，A 独立拟合 0.455–0.486）。
+# （09-29 第一版用的 0.306 m/像素是旧估计，偏小；所有长度、速度都已按新比例换算。）
 BASE = dict(
-    # 弹道（尾缀B：出膛 77.5 m/s，k = 0.002 /m，飞行 4.46 s 开花，高 188 m；横向 x = a·z + b·z²）
-    v0=77.5, k=0.002, T=4.46, lean=(-0.0092, -0.00073),
-    wob=0.2, wob_lam=(30.0, 45.0, 65.0),                      # 弹体摆动振幅（m）与波长（m）
+    v0=122.2, k=0.00247, T=4.44, lean=(-0.0188, -0.000465),   # 弹道（下面 SIZES 按每段视频覆盖）
+    wob=0.3, wob_lam=(45.0, 67.0, 97.0),                      # 弹体摆动振幅（m）与波长（m）
     # 弹体自转：曲导装在弹体侧面，弹一转、喷口方向跟着转 → 火星出膛时带一个旋转的横向速度 → 尾迹上细碎的螺旋小波纹
-    spin=dict(f=9.0, amp=1.8),                                  # 转速 Hz、横向速度 m/s
+    spin=dict(f=9.0, amp=2.7),                                  # 转速 Hz、横向速度 m/s
     # 空气：风（m/s，x 向）、冻结湍流（均方根 m/s、波长范围 m）、单颗随机漂移（m/s）
-    wind=-1.7, turb=0.15, turb_lam=(4.0, 45.0), jit=0.042,
+    wind=-2.5, turb=0.22, turb_lam=(6.0, 67.0), jit=0.062,
     # 火焰：长度 = l0 + lv·v（m），半宽（m），亮度
-    flame=dict(l0=1.2, lv=0.04, w=0.1, I=1.5),
+    flame=dict(l0=1.8, lv=0.04, w=0.15, I=1.5),
     # 火星种群：rate 每秒颗数；puff 每簇平均颗数；life 中位寿命 s；lsig 寿命对数标准差；jet 相对弹体向后喷出速度 m/s；
     #   cone 横向散开 m/s；kd 中位阻力 1/s（小颗更大）；T0 初温 K；Tend 熄灭温度；pt 降温曲线指数；pm 亮度随燃尽下降的指数（<1：烧到最后才暗）；
-    #   I 亮度；tw 闪烁幅度；r 发光半径 m
+    #   Tb 在空气中燃烧的温度、tc 离开燃气后降到 Tb 的时间（s）；I 亮度；tw 闪烁幅度；r 发光半径 m
     pops=[
-        dict(name='火粉', rate=12000, puff=1, life=0.22, lsig=0.35, jet=22, cone=1.2, kd=18, T0=2550, Tend=2000, pt=3.0, I=0.0074, tw=0.0, r=0.012),
-        dict(name='金火星', rate=2000, puff=2, life=1.95, lsig=0.446, jet=18, cone=1.2, kd=12, T0=2350, Tend=1350, pt=1.0, pm=0.446, I=0.0414, tw=0.35, r=0.04),
-        dict(name='落火', rate=14, puff=1, life=2.2, lsig=0.25, jet=12, cone=1.5, kd=3.5, T0=2150, Tend=1250, pt=3.0, I=0.8, tw=0.25, r=0.05),
+        dict(name='火粉', rate=12000, puff=1, life=0.22, lsig=0.35, jet=33, cone=1.8, kd=18, T0=2550, Tend=2000, pt=3.0, I=0.0074, tw=0.0, r=0.018),
+        dict(name='金火星', rate=2000, puff=2, life=1.95, lsig=0.446, jet=27, cone=1.8, kd=12, T0=2450, Tb=2000, tc=0.3, Tend=1350, pt=2.0, pm=0.446, I=0.0414, tw=0.35, r=0.06),
+        dict(name='落火', rate=14, puff=1, life=2.2, lsig=0.25, jet=18, cone=2.2, kd=3.5, T0=2150, Tend=1250, pt=3.0, I=0.8, tw=0.25, r=0.075),
     ],
-    E=38.85,                      # 远景对照的相机曝光（尾缀B）
+    E=38.85,                      # 远景对照的相机曝光
     E_close=150.0,                # 近景对照（尾缀3.0_A，另一发更大的弹，仅看结构）
     seed=7,
 )
-PRESETS = {'B': BASE}
+
+# 三档：弹道、倾斜、风、摆动按各自视频实测（星头逐帧跟踪 + 二次阻力弹道拟合，比例统一 0.4545 m/像素）
+SIZES = {
+    'S': dict(name='小', ref='尾缀C', v0=96.9, k=0.00274, T=5.9, lean=(0.0296, -0.00066), wind=-2.0, wob=0.3, seed=5),
+    'M': dict(name='中', ref='尾缀B', v0=122.2, k=0.00247, T=4.44, lean=(-0.0188, -0.000465), wind=-2.5, wob=0.3, seed=7),
+    'L': dict(name='大', ref='尾缀A', v0=119.0, k=0.00244, T=6.4, lean=(-0.024, -0.000386), wind=-2.15, wob=1.0, seed=9),
+}
+# 各档自动逼近后的亮度 / 寿命（fit_ref 的结果写回这里）
+FITTED = {}
+
+
+def recipe_path(key): return os.path.join(ROOT, 'analysis', 'replica', f'尾缀物理_{key}_配方.json')
+
+
+def preset(key, fitted=True):
+    """某一档的完整参数：有自动逼近结果（analysis/replica/尾缀物理_<档>_配方.json）就用它，否则用 BASE + SIZES"""
+    key = {'B': 'M', 'A': 'L', 'C': 'S'}.get(key, key)
+    if fitted and os.path.exists(recipe_path(key)):
+        P = json.load(open(recipe_path(key), encoding='utf-8')); P['size'] = key; return P
+    P = json.loads(json.dumps(BASE)); sz = SIZES[key]
+    for k in ('v0', 'k', 'T', 'wind', 'wob', 'seed'): P[k] = sz[k]
+    P['lean'] = tuple(sz['lean'])
+    for path, v in FITTED.get(key, {}).items():
+        o = P; ks = path.split('/')
+        for x in ks[:-1]: o = o[int(x)] if x.isdigit() else o[x]
+        o[int(ks[-1]) if ks[-1].isdigit() else ks[-1]] = v
+    P['size'] = key; return P
+
+
+class _Presets(dict):
+    def __getitem__(self, k): return preset(k)
+PRESETS = _Presets(S=1, M=1, L=1, B=1)
 
 
 # ---------------------------------------------------------------------------------------------
@@ -121,7 +153,7 @@ def emit(P, t_range=None):
         air = np.stack([P['wind'] + turb(P, p[:, 2], 0) + r.normal(0, P['jit'], N),
                         turb(P, p[:, 2], 1) + r.normal(0, P['jit'], N), np.zeros(N)], -1)
         out.append(dict(pop=np.full(N, pi), tb=tb, p0=p, v0=v0, kd=q['kd'] / size, air=air, life=life, size=size,
-                        T0=q['T0'] + r.normal(0, 60, N), Tend=np.full(N, float(q['Tend'])), pt=np.full(N, float(q['pt'])), pm=np.full(N, float(q.get('pm', 1.0))),
+                        T0=q['T0'] + r.normal(0, 60, N), Tend=np.full(N, float(q['Tend'])), Tb=np.full(N, float(q.get('Tb', q['T0']))) + r.normal(0, 40, N), tc=np.full(N, float(q.get('tc', 1e3))), pt=np.full(N, float(q['pt'])), pm=np.full(N, float(q.get('pm', 1.0))),
                         I=np.full(N, float(q['I'])), tw=np.full(N, float(q['tw'])), twf=r.uniform(7, 16, N), twp=r.uniform(0, 6.28, N)))
     return {k: np.concatenate([o[k] for o in out]) for k in out[0]}
 
@@ -135,7 +167,9 @@ def spark_state(S, t):
     v = vt + (S['v0'][idx] - vt) * e[:, None]
     u = a / S['life'][idx]
     # 木炭火星：燃烧期温度基本不变（扩散控制燃烧），快烧完才降温；发光面积 ∝ d²，d² 随时间线性变小（d² 燃烧律）
-    T = S['T0'][idx] - (S['T0'][idx] - S['Tend'][idx]) * u ** S['pt'][idx]
+    # 温度：出喷口时被燃气加热得很热（T0，白），离开燃气后 tc 秒内降到在空气里自燃的温度 Tb（金 / 橙），
+    # 快烧完时再降到 Tend 熄灭。所以白热段短、后面是一长段一颗颗的金橙火星
+    Tb = S['Tb'][idx]; T = Tb + (S['T0'][idx] - Tb) * np.exp(-a / S['tc'][idx]) - (Tb - S['Tend'][idx]) * u ** S['pt'][idx]
     ign = np.clip(a / 0.03, 0, 1)                               # 出筒 30 ms 内点燃
     tw = 1 + S['tw'][idx] * np.sin(S['twf'][idx] * a * 6.283 + S['twp'][idx]) * np.sin(S['twf'][idx] * 0.37 * a * 6.283 + 1.3 * S['twp'][idx])
     I = S['I'][idx] * S['size'][idx] ** 2 * np.clip(1 - u, 0, 1) ** S['pm'][idx] * ign * tw * bb_lum(T) / bb_lum(2350.0)
@@ -218,8 +252,14 @@ def render(P, S, t, cam, rgb=True, flame=True, sparks=True, pops=None):
 
 
 # ---------------------------------------------------------------------------------------------
-#  远景对照：尾缀B（固定机位，2560×1440，0.306 m/像素）
-REFB = dict(video='vidio/2.0/尾缀B.mp4', t0=0.742, ppm=1 / 0.306, launch=(1934.6, 1045.0), crop=(1700, 330, 2100, 1090))
+#  远景对照（固定机位，2560×1440，0.4545 m/像素）。t0 = 出膛在视频里的时刻（尾缀C 开拍时已经飞了 2.2 s，是负的）
+MPP = 0.4545
+REFS = {
+    'M': dict(video='vidio/2.0/尾缀B.mp4', t0=0.759, ppm=1 / MPP, launch=(1936.3, 1045.0), crop=(1700, 330, 2100, 1090), times=(1.5, 2.5, 3.5, 4.5, 5.1), bg='first'),
+    'L': dict(video='vidio/2.0/尾缀A.mp4', t0=0.598, ppm=1 / MPP, launch=(1668.1, 1225.0), crop=(1420, 420, 1820, 1200), times=(1.5, 2.5, 3.5, 4.5, 5.5, 6.4), bg='first'),
+    'S': dict(video='vidio/2.0/尾缀C.mp4', t0=-2.216, ppm=1 / MPP, launch=(1665.0, 1225.0), crop=(1440, 560, 1840, 1200), times=(0.3, 0.9, 1.5, 2.1, 2.6), bg='min'),
+}
+REFB = REFS['M']
 
 
 def load_ref(ref, times):
@@ -229,9 +269,15 @@ def load_ref(ref, times):
         ok, f = cap.read()
         if not ok: break
         c = f[y0:y1, x0:x1]
-        if i < 8: bgs.append(c.astype(np.float32))
+        if i < 8 or (ref.get('bg') == 'min' and i % 3 == 0): bgs.append(c.astype(np.float32))
         if i in want: out[want[i]] = c.astype(np.float32)
         i += 1
+    if ref.get('bg') == 'open':      # 开拍时尾迹已经在画面里：背景用开运算去掉细亮结构（尾迹）再模糊
+        k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (11, 11))
+        bg = np.median([cv2.morphologyEx(b, cv2.MORPH_OPEN, k) for b in bgs], 0)
+        return bg, out
+    if ref.get('bg') == 'min':       # 开拍时尾迹已在画面里：逐像素取整段的低分位（尾迹在动、会熄，低分位就是天空；最小值会偏暗）
+        return np.percentile(bgs, 25, axis=0).astype(np.float32), out
     return np.median(bgs, 0), out
 
 
@@ -245,7 +291,7 @@ def side_cam(ref, nsub=6):
     return Cam('side', x1 - x0, y1 - y0, ref['launch'][0] - x0, ref['launch'][1] - y0, ppm=ref['ppm'], shutter=1 / 40, nsub=nsub, psf=0.9)
 
 
-def metrics(bg8, fr8):
+def metrics(bg8, fr8, sc=MPP):
     """实拍和模拟同一套量法：可见长度、过曝段长度、横向宽度（m，按行亮度加权标准差的中位数）、总亮度"""
     d = np.clip(fr8.astype(np.float32) - bg8, 0, None).sum(2); d = cv2.GaussianBlur(d, (0, 0), 1.0)
     m = d > 45
@@ -258,10 +304,11 @@ def metrics(bg8, fr8):
     for y in range(top, bot + 1, 3):
         row = d[y] * (lab[y] == k); s = row.sum()
         if s > 0: c = (row * np.arange(len(row))).sum() / s; wid.append(math.sqrt(max(0, (row * (np.arange(len(row)) - c) ** 2).sum() / s)))
-    sc = 0.306
+    f = fr8.astype(np.float32); sig = np.clip(f - bg8, 0, None); tp = mm & (sig.sum(2) > 60) & (fr8.min(2) < 235)   # 没过曝的尾迹像素的颜色
+    warm = float(np.median((sig[..., 2][tp] - sig[..., 0][tp]) / (sig[tp].sum(1) + 1))) if tp.any() else 0.0
     cs = sat.sum(1); cs = cs[cs > 0]                              # 过曝芯的粗细（每行过曝像素数的中位数）
     return dict(top=int(top), len_m=round(float(bot - top) * sc, 1), sat_m=round(float((sy.max() - top) if len(sy) else 0) * sc, 1),
-                core_px=float(np.median(cs)) if len(cs) else 0.0,
+                core_px=float(np.median(cs)) if len(cs) else 0.0, warm=round(warm, 3),
                 width_m=round(float(np.median(wid)) * sc, 2) if wid else 0, flux=round(float(d[mm].sum()) / 1e4, 1))
 
 
@@ -276,8 +323,9 @@ def band_profile(bg8, fr8, top, cx_path, nb=26, bin_px=13, half=22):
     return out
 
 
-def compare_B(P, out_path, times=(1.5, 2.5, 3.5, 4.5, 5.1)):
-    ref = REFB; bg8, real = load_ref(ref, times); cam = side_cam(ref); W = cam.W
+def compare_B(P, out_path, times=None, ref=None):
+    ref = ref or REFS[P.get('size', 'M')]; times = times or ref['times']
+    bg8, real = load_ref(ref, times); cam = side_cam(ref); W = cam.W
     S = emit(P); tr, ts, rows = [], [], []
     for t in times:
         sim = composite(bg8, render(P, S, t - ref['t0'], cam), P['E'])
@@ -292,10 +340,11 @@ def compare_B(P, out_path, times=(1.5, 2.5, 3.5, 4.5, 5.1)):
     return rows
 
 
-def fit_B(P, times=(1.5, 2.5, 3.5, 4.5, 5.1), iters=60, log=print, keys=None):
+def fit_B(P, times=None, iters=60, log=print, keys=None, ref=None):
     """自动逼近（Nelder–Mead，对数尺度）：沿尾迹的亮度分布 + 过曝段长度 + 可见长度 + 宽度"""
     from scipy.optimize import minimize
-    ref = REFB; bg8, real = load_ref(ref, times); cam = side_cam(ref, nsub=4)
+    ref = ref or REFS[P.get('size', 'M')]; times = times or ref['times']
+    bg8, real = load_ref(ref, times); cam = side_cam(ref, nsub=4)
     def cxp(y):
         z = (cam.oy - y) / cam.ppm; la, lb = P['lean']; return cam.ox + (la * z + lb * z * z) * cam.ppm
     R = {t: (lambda m: (m, np.log1p(band_profile(bg8, real[t], m['top'], cxp))))(metrics(bg8, real[t])) for t in times}
@@ -306,6 +355,8 @@ def fit_B(P, times=(1.5, 2.5, 3.5, 4.5, 5.1), iters=60, log=print, keys=None):
     def apply(x):
         Q = json.loads(json.dumps(P))
         for xi, k in zip(x, keys): o, kk = get(Q, k); o[kk] = o[kk] * math.exp(xi)
+        for q in Q['pops']: q['cone'] = min(q['cone'], 4.0)          # 横向散开有上限：远景量不出近处的散开，放开会把星头撑胖
+        Q['spin']['amp'] = min(Q['spin']['amp'], 5.0)
         return Q
     def loss(x):
         Q = apply(x); S = emit(Q); L = 0
@@ -314,7 +365,7 @@ def fit_B(P, times=(1.5, 2.5, 3.5, 4.5, 5.1), iters=60, log=print, keys=None):
             m, (mr, pr) = metrics(bg8, sim), R[t]
             if m is None: return 1e3
             ps = np.log1p(band_profile(bg8, sim, mr['top'], cxp))
-            L += np.mean((ps - pr) ** 2) + 0.5 * ((m['sat_m'] - mr['sat_m']) / 20) ** 2 + ((m['len_m'] - mr['len_m']) / 40) ** 2 + ((m['width_m'] - mr['width_m']) / 0.12) ** 2 + ((m['core_px'] - mr['core_px']) / 1.0) ** 2
+            L += np.mean((ps - pr) ** 2) + 0.5 * ((m['sat_m'] - mr['sat_m']) / 30) ** 2 + ((m['len_m'] - mr['len_m']) / 60) ** 2 + ((m['width_m'] - mr['width_m']) / 0.18) ** 2 + ((m['core_px'] - mr['core_px']) / 1.0) ** 2 + ((m['warm'] - mr['warm']) / 0.05) ** 2
         return L / len(times)
     x0 = np.zeros(len(keys)); best = [loss(x0), x0]; log(f'起点 {best[0]:.4f}')
     def cb(x):
@@ -390,7 +441,7 @@ def close_preset(P):
 def run_compare(P, out_prefix):
     rows = compare_B(P, out_prefix + '_远景对照.jpg')
     compare_close2(close_preset(P), out_prefix + '_近景对照.jpg', D=80, F=7000, E=P['E_close'], scale=0.25)
-    json.dump(dict(说明='尾缀B 固定机位远景：实拍 vs 模拟，同一套量法（可见长度、过曝段长度、横向宽度 m、总亮度）', 远景=rows),
+    json.dump(dict(说明='固定机位远景：实拍 vs 模拟，同一套量法（可见长度、过曝段长度、横向宽度 m、总亮度）', 远景=rows),
               open(out_prefix + '_数值.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     return rows
 
