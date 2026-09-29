@@ -251,7 +251,7 @@ function renderExport() {
   const tsx = b.form === 'trail' ? trailStateAt(b, state.t) : null;
   if (b.form === 'trail') { hudText = !tsx ? '序列结束' : `导出效果 · 升空尾缀 · ${tsx.phase === 'rise' ? '上升循环' : '消散（' + tsx.bb.fps + ' fps）'} · 第 ${tsx.f + 1}/64 帧 · ${'RGBA'[Math.floor(tsx.f / 16)]} 通道 · 镜头跟着星头（面片沿弹道上升，Size By Life Y ${tsx.sy.toFixed(2)}）`; hudB = sb ? `B：${B.name}` : ''; return; }
   const fi = b.form === 'unit' ? frameIdx(b.meta, state.t) : frameIdx(s.meta, state.t - (s.meta.t0 || 0));
-  hudText = fi < 0 ? '序列结束' : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? (s === b ? ' 段 A' : ' 段 B') : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${L.cellW}×${L.cellH}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
+  hudText = fi < 0 ? '序列结束' : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? (s === b ? ' 段 A' : ' 段 B') : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
   hudB = sb ? `B：${B.name}` : '';
 }
 const flowTrail = [];

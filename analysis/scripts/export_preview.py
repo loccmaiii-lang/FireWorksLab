@@ -34,7 +34,7 @@ def build(out, big, names, title=None, note=''):
         variants[name] = name.split('_')[-1] if '_' in name else name
         for part, f in heads:
             if not f: continue
-            im = Image.open(os.path.join(d, f)).convert('RGBA'); S = min(1024, im.width // 2)
+            im = Image.open(os.path.join(d, f)).convert('RGBA'); S = im.width   # 原尺寸：缩小会让迭代区里看起来比真实贴图糊（2026-09-29 用户指出 JM2E 特别糊）
             for c, band in zip('RGBA', im.split()):      # 每个通道单独一张灰度图（避免浏览器按透明度预乘）
                 images[name + '/' + f + '#' + c] = _enc(band.resize((S, S * im.height // im.width), Image.BOX))
             texes.setdefault(part or '主体', {})[name] = {

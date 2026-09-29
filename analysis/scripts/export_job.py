@@ -44,7 +44,7 @@ def run(job, s, out, log=print):
                 import shutil; shutil.copy(p, os.path.join(out, f))
             elif f.endswith('.png') and not any(k in f for k in ('_Ramp', '_Cutout', '_FrameTest')):
                 preview(p, os.path.join(out, f[:-4] + '_预览.jpg'))
-    # 烘焙器迭代区的预览（真实导出贴图缩小一半，按引擎方式播放）
+    # 烘焙器迭代区的预览（真实导出贴图原尺寸，按引擎方式播放）
     try:
         import export_preview
         kb = export_preview.build(out, big, list(job['exports']), title=job.get('name'), note=job.get('note', '')) / 1024

@@ -139,20 +139,25 @@ def job_entries():
 
 
 PRINCIPLE = os.path.join(ROOT, 'analysis', '原理', '条目.json')
+ITER = os.path.join(ROOT, 'analysis', '迭代', '条目.json')
 
 
 def principle_entries():
-    """效果原理解析（analysis/原理/条目.json）：花型库模板 + 按原理设的结构，正式库形式（参数、实时、导出效果、贴图都有）"""
-    if not os.path.exists(PRINCIPLE): return [], []
-    j = json.load(open(PRINCIPLE, encoding='utf-8'))
-    out = []
-    for e in j.get('entries', []):
-        e = dict(e); e.setdefault('task', e['id']); e['kind'] = 'preset'; e['principle'] = True; out.append(e)
-    return out, j.get('combos', [])
+    """正式库形式的条目（花型库模板 + p/m 参数：右栏参数、实时 / 导出效果 / 贴图、导出都有）：
+    analysis/原理/条目.json —— 效果原理解析（审阅卡带「原理解析 · 待你核对」徽标）；
+    analysis/迭代/条目.json —— 其余迭代（比如金芒菊去糊的格子方案）"""
+    out, combos = [], []
+    for f, principle in ((PRINCIPLE, True), (ITER, False)):
+        if not os.path.exists(f): continue
+        j = json.load(open(f, encoding='utf-8'))
+        for e in j.get('entries', []):
+            e = dict(e); e.setdefault('task', e['id']); e['kind'] = 'preset'; e['explicit'] = True; e['principle'] = principle; out.append(e)
+        combos += j.get('combos', [])
+    return out, combos
 
 
 def build(e):
-    d = os.path.join(RES, e['task']); rec = {k: e.get(k) for k in ('id', 'task', 'kind', 'date', 'name', 'note', 'look', 'opinion', 'tags', 'doc')}
+    d = os.path.join(RES, e['task']); rec = {k: e.get(k) for k in ('id', 'task', 'kind', 'date', 'name', 'note', 'look', 'opinion', 'tags', 'doc', 'imagesTitle')}
     if e.get('images'): rec['images'] = [['../' + a, b] for a, b in e['images']]
     if e.get('video'): rec['video'] = '../' + e['video']
     trail = bool(e.get('size'))
@@ -166,8 +171,9 @@ def build(e):
         if e.get('video'):
             tr = thumb_from_video(e['video'], rec['vmeta'], e.get('thumb_dt', 0.9))
             if tr: rec['thumbRef'] = tr
-    elif e.get('principle'):
-        rec['base'] = e['base']; rec['p'] = e.get('p', {}); rec['m'] = e.get('m', {}); rec['principle'] = True
+    elif e.get('explicit'):
+        rec['base'] = e['base']; rec['p'] = e.get('p', {}); rec['m'] = e.get('m', {})
+        if e.get('principle'): rec['principle'] = True
         if e.get('video'):
             tr = thumb_from_video(e['video'], rec['vmeta'], e.get('thumb_dt', 0.8))
             if tr: rec['thumbRef'] = tr

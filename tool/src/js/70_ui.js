@@ -58,7 +58,7 @@ function showStats(b) {
   const m = b.meta, L = m.L, P = b.P, cls = ok => ok ? 'ok' : 'warn', c = m.check || {};
   const nTex = (b.tail ? 2 : 1) * (b.next ? 2 : 1), mb = (P.texW * P.texH * nTex / 1048576).toFixed(1);
   const rows = [];
-  rows.push(`${FORM_NAMES[b.form]} · 共 <b>${L.F}</b> 帧${b.next ? ' ×2 段' : ''} · 单格 <b>${L.cellW}×${L.cellH}</b> · ${L.chans === 4 ? 'RGBA 接力' : '单通道'}`);
+  rows.push(`${FORM_NAMES[b.form]} · 共 <b>${L.F}</b> 帧${b.next ? ' ×2 段' : ''} · 单格 <b>${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}</b>${L.cellW % 1 ? '（不是整数像素：格子边界落在像素中间，格子四周有留空，引擎里确认一次不串格）' : ''} · ${L.chans === 4 ? 'RGBA 接力' : '单通道'}`);
   if (m.loop) rows.push(`循环周期 <b>${m.duration.toFixed(2)} s</b> · ${m.avgFps.toFixed(1)} fps · 接缝 <span class="${cls(c.seam == null || c.seam < 1.6)}">${c.seam == null ? '—' : c.seam.toFixed(2)}</span>（≈1 无缝）`);
   else rows.push(`平均 <b>${m.avgFps.toFixed(1)}</b> fps · 最低 <span class="${cls(m.minFps >= 24)}">${m.minFps.toFixed(1)} fps</span> · 每帧最大位移 <span class="${cls(m.maxDisp <= 3)}">${m.maxDisp.toFixed(1)} px</span>`);
   rows.push(`精灵 ${m.Ww.toFixed(1)}×${m.Wh.toFixed(1)} m · 贴图 ${nTex} 张 · BC7 约 ${mb} MB`);
