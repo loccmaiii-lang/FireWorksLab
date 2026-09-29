@@ -1,6 +1,6 @@
 # GPU Queue Monitor Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** 每 30 分钟检查 GitHub main 的显卡任务，自动运行未完成任务并上传结果，全程不调用 AI。
 
@@ -28,18 +28,20 @@
 
 ### Task 1: Implement isolated, recoverable queue execution
 
-- [ ] Add nonblocking OS file locks in the common Git directory so manual runs and the monitor share a GPU lock.
-- [ ] Prevent a worker from retrying the same failed job in a batch; return nonzero for failed children; release claims even when browser startup fails.
-- [ ] Validate job IDs with `[A-Za-z0-9][A-Za-z0-9_-]*`, skip completed/draft/withdrawn jobs, and record a hash of task and execution inputs after failures.
-- [ ] Keep `status.json`, `state.json`, `monitor.log` and batch logs outside tracked project files. Persist job IDs before running so interrupted batches can upload their outputs next time.
-- [ ] Commit only affected result directories; fetch/rebase; regenerate review data on the latest source; push `HEAD:main`. Abort unexpected conflicts without discarding output.
+- [x] Add nonblocking OS file locks in the common Git directory so manual runs and the monitor share a GPU lock.
+- [x] Prevent a worker from retrying the same failed job in a batch; return nonzero for failed children; release claims even when browser startup fails.
+- [x] Validate job IDs with `[A-Za-z0-9][A-Za-z0-9_-]*`, skip completed/draft/withdrawn jobs, and record a hash of task and execution inputs after failures.
+- [x] Keep `status.json`, `state.json`, `monitor.log` and batch logs outside tracked project files. Persist job IDs before running so interrupted batches can upload their outputs next time.
+- [x] Commit only affected result directories; fetch/rebase; regenerate review data on the latest source; push `HEAD:main`. Abort unexpected conflicts without discarding output.
 
 ### Task 2: Verify and enable half-hour checks
 
-- [ ] Run `python -m unittest discover -s analysis/local -p test_watch_jobs.py -v` with local temporary Git repositories; test completed tasks, failed tasks, changed inputs, mutual exclusion, recovery and remote concurrent edits without GPU work or GitHub writes.
-- [ ] Reuse the previously installed GPU dependencies in a durable local directory and link the worker output directory to `F:/FireWorksLab/analysis/local/输出`.
-- [ ] Register `FireWorksLab GPU Queue` with a 30-minute repetition, interactive user token, hidden `pythonw.exe`, IgnoreNew overlap policy and no execution time limit.
-- [ ] Run the existing GPU environment check once, then perform the first real queue check; verify scheduler result, latest checked commit, pending count and next run.
-- [ ] Commit implementation and handoff, synchronize with remote without overwriting other work, and publish the implementation to main before starting unattended execution.
+- [x] Run `python -m unittest discover -s analysis/local -p test_watch_jobs.py -v` with local temporary Git repositories; test completed tasks, failed tasks, changed inputs, mutual exclusion, recovery and remote concurrent edits without GPU work or GitHub writes.
+- [x] Reuse the previously installed GPU dependencies in a durable local directory and link the worker output directory to `F:/FireWorksLab/analysis/local/输出`.
+- [x] Register `FireWorksLab GPU Queue` with a 30-minute repetition, interactive user token, hidden `pythonw.exe`, IgnoreNew overlap policy and no execution time limit.
+- [x] Run the existing GPU environment check once, then perform the first real queue check; verify scheduler result, latest checked commit, pending count and next run.
+- [x] Commit implementation and handoff, synchronize with remote without overwriting other work, and publish the implementation to main before starting unattended execution.
 
 Execution is inline in this chat: the user has already authorized implementation and activation. No separate approval or agent dispatch is needed.
+
+Validation: 10 automated checks passed. RTX 5080 GPU check rendered a frame in 0.1 seconds. Windows task has PT30M repetition, interactive logon, IgnoreNew overlap and unlimited batch runtime; first live queue inspection found 24 completed tasks and no pending work.
