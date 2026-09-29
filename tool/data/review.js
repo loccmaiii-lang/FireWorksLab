@@ -1,6 +1,922 @@
 // 由 analysis/scripts/review_to_baker.py 生成：迭代区（做完、等你看的东西）。不要手改。
 var FW_REVIEW = [
 {
+"id": "YK1",
+"task": "YK1",
+"kind": "preset",
+"date": "2026-09-30 00:40",
+"name": "鸿巢四尺玉 · ① 锦冠主层（原理样机）",
+"note": "原理解析（数值未拟合）：鸿巢四尺玉主体是锦冠菊（冠菊 + 钛粉）。0–1.5 s 过曝白 → 钛白金长尾，后半下垂成冠，+7.0–7.8 s 收尾。直径约 790 m。全文见 analysis/原理/鸿巢四尺玉.md。",
+"look": [
+"尾长、下垂的冠形对不对（截图 +4.8 到 +7.6 s）",
+"颜色：白 → 白金（不是橙金）",
+"「组合」页有「鸿巢四尺玉（原理样机）」：叠上 ② 红点灭"
+],
+"opinion": "之前计划写的「巨大菊」其实是锦冠菊：星的燃烧时间是普通菊的 2–3 倍，报道里也写的是錦冠菊。先定结构，数值等你核对后拟合（HK1）。",
+"tags": "鸿巢 四尺玉 锦冠 原理 大组合 YK1",
+"doc": [
+[
+"结构（一层星）",
+[
+"模板：锦冠；星数约 1200（可见），初速 260 m/s、终端速度 34 m/s → 直径约 790 m",
+"颜色：0–1.5 s 过曝白 → 钛白金；尾暖金、头白",
+"燃烧 7.5 s，离散小（+7.0–7.8 s 收尾），后半下垂"
+]
+],
+[
+"现实资料",
+[
+"鸿巢四尺玉：约 120 cm、464.8 kg（2014 吉尼斯），开花约 700 m，报道原文是「錦冠菊」",
+"冠菊：氧平衡为负，木炭甩到星后继续烧 → 长尾；加钛粉 = 錦冠，颜色变亮白"
+]
+],
+[
+"烘焙器",
+[
+"锦冠模板现成，不缺结构",
+"一朵约 8 s，导出按大礼花分两段贴图，取景固定 / Zoom"
+]
+],
+[
+"请你核对",
+[
+"1. 主体是锦冠菊（钛白金长尾、后段下垂）？",
+"2. 末段是红色点灭（约 1/4 的星、3 次/秒），做成粒子不进序列？",
+"3. 中心橙红光团当玉皮残骸 / 尾缀残火，不做？",
+"4. 通过后放行 HK1 / HK2"
+]
+]
+],
+"imagesTitle": null,
+"images": [
+[
+"../analysis/原理/鸿巢四尺玉/t3.00.jpg",
+"−1.2 s 升空：白金曲导"
+],
+[
+"../analysis/原理/鸿巢四尺玉/t4.60.jpg",
+"+0.4 s 过曝白球"
+],
+[
+"../analysis/原理/鸿巢四尺玉/t5.60.jpg",
+"+1.4 s 白色放射尾满开；中心橙红是残骸"
+],
+[
+"../analysis/原理/鸿巢四尺玉/t7.50.jpg",
+"+3.3 s 白金长尾"
+],
+[
+"../analysis/原理/鸿巢四尺玉/t9.00.jpg",
+"+4.8 s 下半开始下垂"
+],
+[
+"../analysis/原理/鸿巢四尺玉/t10.50.jpg",
+"+6.3 s 冠形"
+]
+],
+"video": "../vidio/鸿巢花火大会的四尺玉肉眼看到才知道有多震撼！当四尺玉缓缓升空，巨大的花火在高空炸开的瞬间，光芒从中心向四周层层扩散，一朵巨大绚烂的花，几乎铺.mp4",
+"vmeta": {
+"v": 7,
+"t0": 4.467,
+"cx": 0.5056,
+"cy": 0.2914,
+"half": 0.2803,
+"aspect": 0.5625
+},
+"base": "kamuro",
+"p": {
+"duration": 11.5,
+"stars": 1200,
+"v0": 260,
+"vt": 34,
+"burn": 7.5,
+"burnJit": 5,
+"fade": 0.1,
+"lastFlare": 0,
+"flash": 0.6,
+"headSize": 1.0,
+"headBright": 0.6,
+"sparkRate": 260,
+"sparkLife": 2.2,
+"sparkSpread": 1.2,
+"sparkInherit": 0.2,
+"sparkDrag": 1.3,
+"sparkSize": 0.35,
+"T0": 2150,
+"cooling": 0.33,
+"massLoss": 0.3
+},
+"m": {
+"stages": [
+[
+0,
+"#ffffff"
+],
+[
+1.5,
+"#fff1d8"
+]
+],
+"xw": 0.6,
+"ramp1": "#8a4a18",
+"ramp2": "#ffd49a",
+"ramp3": "#fffaf0"
+},
+"principle": true,
+"thumbRef": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCACgAKADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDyZRTwKQCngUmaAop4FAFPUUgALTwtKBUgWgYwLTwtPVakVKAIdtLtqcJTvLpDsVttIVqyY6Qx0CKpWmkVZZKYy0AVitMIqwy1GVpgQkUwipiKYRTEQkVG4+U/Q1ORUbj5W+hpgPAp6ikUc1IBSYCgVIBSKKkUUhiqtSqtCLU6LSARU9qkWOpY481YSHNK5SRXWL2p3lVejtySABkmp0spGOFRienSlcqxleV7U1ovaugsNGuL+7+ywITLtY7cc8AnH9Kgm0u5iieSSFlRCAWYYGTnGPXoaLhYwWjqFkrUkhxVWSOmS0UWWomWrbpioHFMkrMKjIqdhUbCmIhYVG4+VvoamYVFIPlb6GncCQCpFFNWpFFDAcoqVRTUFTIOaQySNatRJUUa1fgj6VLKSHwxcV0eleG7ue4xcW8scaKsj8YJQnt+GT+FanhHw2l3Al5cxJPbOSreW/zwkHglfQ16NZWUUFpHDFlmhU7NxzuQ9h7e3bihK4OVjl4/CcGntdwMvmtsW4tJ8YOUPzL9ea61tOtWmNxHGqltr5A69f8AGmTcW4Kgs9qfNj9WToR+WR+VWLZgLLaG3eWrJn1A6H8sU0rMhtsyn0xItZluLWBUdbaQAqAOTgKP0NS3+j29xAsFwoNtbwquAMlznp+Qx/wI1tBV3lgOSBk1FKp8wZxsT5yT3bt+A/wqrC5meLeKdAuNKuiZYlSOQ5UIchT1259QMVzUsVe6eINMTUNPk85RhRkFl3Mo64Uf3if6eleSa1pzWVy0bJsyNyqWyQD2J9azehrF3RzUqVVkWtSeOqEq00JlNhUTCrLioHFUSQMKikHyN9DU7CoZPuN9DTESKKlUVGoqVaQEiirEYqFKsR0DRYhXJrX0y2NzcRQhkQu2NztgD6msyAVvaAqHUrcSJG67xlJGwrD0JqGWj1DSbGfSoYzdWIjIHF3Yc/8Afa9x+FdBbusqq25CCcpJEflJ/wDZT7VVsLVUt0a1hntRj7sModfyPH5VpJABltq7m+8wXaT9R3qkmZNjJECOsq5+VvmA7ev4VWZxbE7AfKYjB7en+A/Cre08gZRgOD61VkjaVJIwANw5HofUexxRJ6BEsyXAR8LyxOAPfOB/U/hSgB8Ek7fTuaryIBMZOdzHIOOnGP5fzNWowqjOcfU00waEaAN8zE5AwuOi+49/euD8Y6VC1u72QDIpy5SMsWb1aQ/59q755EPUMw9O1ZOum9lsJYbaJ1DoV42qoHuSaUloEHZnhl3HtJFZky1u6rC0FzJFJjepwcHIrFnFSjWRRkFV3FW5RVZxVkEDVBL9xvoasNUMv3G+hoESLUi9ajWpE602BMlWI6rpViOkUXYRWvpj+XcxP8vDD765H4jvWPCa0Ld8MKhlI9v8O6jb3NqvlSxuV4IiiZR+ANbQkJ4WNz9RiuM8Gay8tgqzXKRqnDPM4yT6KvX+VddG6yJvDs6/3m4X8B3q4u6MpqzHyAHjK/TGaVQPT9KUkCMsfkGM5I6fhVdZv35jwTkE59KU0JE8oBXBO0njIqMRonJR2P8AePzVEjSP5ofpuzx1Azjj8s1YUNgEEE/zpRQ3oIJIwpHmBSfop/WsfWokjs5JZ9QuI0x/GAF/MKa13lBJjIycfdI5/LvWFra20Ns84R0QA73tpvLZfqp4/Oqewo7nj+qiNbmRYW3RhvlPt+QrHnHNal+ytNIVYlSxIJGCay5qhG7KclV3qxJVd6oggYVDN9xvoaneoJvuN/ummiSQVItMFSCmwJEqxHVdKnSkNFuI9KuQt0qhGatRNSZSOo8NX8dnqEMsqoyg8l1zj/D6817FZXUdxCk5YuSob7pULnpwen868Bgkwa7zw3r0v2SO2edQQW2sf+WYxku3qR2Hr+FSnYJR5j0Rn+0zFAf3cZ5Pqw/w/n9Kcy7HBXGTgfh/kVnWl1DGlvbJwzkArn7oz0z3Pr7mrdzcqhL5GFZh+WB/PNWZ2exYiI8x+wOG/Pg/qKk4QhOmfu/4VSFyiTxq5Ayjg/Td/wDWqvq2pxRW8kauguVXciFsFiOoHvwaNEhWdyxfSFomdU3PHy0Wfm/CvPPF3iCGaIx2cpk81cOSTkD0I7/Xr65qHxF4nW+8qWHzobmM4DK3DL1B9iD+n0rj7qdpXZnOSTkn3qG7msYW3K87ZzVGU1PK1VZDTQMgkNV3qaQ1A1USyJ6hl+43+6amaoZfuN/ummhEq9akXpUa1ItMSJEqZDUK1KtSMnQ1YRqqqalQ0FF6N6u2d01vMkqYJQ5APSstGqZXqWikzs9L8TG3mNzKxMpYkKckKApxj8cf981onxAGs0haXIRFjBByWd1YsfzI/KvP1kNSJMyuCDyDxSsPQ7TWPFHm74Yifl8xA4ODgkH+hrB1bV3v7lp2yGYLu56kAAn8SM1lXEuZpD0yxqFpKLDvYlklJqtI9I71A7U7Etg7VXdqc7VCxpkkbmomqRqiamIjaoZfuN/umpmqGX7jf7pqhEwp4pop4oEPWpBUa1IKTGSKakU1EtPBpATq1SK9VwaeDQUWA9SQt+9TP94VWDVJA+JQfTJ/SkFx8jkuxPqaYWphemlqAuKzVGxoZqjJoARjUTGnMajNBI1jUTGntUbU0Aw1FL9xvoalNRS/cb6H+VUJlgCngUgpyigQ4CnimgU8ChjQoqQU0CnCpGOFOFNpw4oAUU+M4JP+yaZQDSGBNITQ1NNAATTTS5xQW9qAI2qM1Iz+1RMaYhhqNqkNMNNCZGail+430P8AKpiKil+43+6aYi2Fp6rTgKUUAAFOApVpwpDEApwFKKcOlIBAPWpAwH8IptFAx5cH+EflTSaBS4pAMNJin4ppFADKQ4pxFIRQAwhPU/lTCE9T+VSECk2p60wIGA7VGaueXH60hiiouKxSIzTJIz5bcj7p/lV4xRVHNFH5T4z909/ai4WP/9k="
+},
+{
+"id": "YK2",
+"task": "YK2",
+"kind": "preset",
+"date": "2026-09-30 00:39",
+"name": "鸿巢四尺玉 · ② 红点灭（原理样机）",
+"note": "原理解析（数值未拟合）：锦冠尾烧完后，约 1/4 的星头变成红色点灭（约 3.3 次/秒、亮 35%），边闪边落，视频到 +10.6 s 还没灭完。用延时点火 7.4 s，初速、阻力与 ① 相同，位置接上。全文见 analysis/原理/鸿巢四尺玉.md。",
+"look": [
+"点灭的节奏（相邻两帧一亮一灭）",
+"红点数量、分布（在冠的末端）",
+"游戏里这一层做成粒子，不进序列"
+],
+"opinion": "点灭 3 Hz 烘进序列要每秒 12 帧以上，放进 ① 的贴图太吃帧；点灭粒子引擎里已经实测过（spec §10B）。这条先作预览，导出时走粒子参数表。",
+"tags": "鸿巢 四尺玉 点灭 红 原理 大组合 YK2",
+"doc": [
+[
+"结构",
+[
+"模板：点灭星 + 延时点火 7.4 s（前 7.4 s 不可见）；和 ① 同样的初速 260、终端速度 34",
+"红（锶）点灭：约 3.3 次/秒，亮占空比 35%，每颗星相位随机",
+"约 300 颗（每帧可见约 90 颗）；燃烧 3.6 s ± 15% 陆续灭"
+]
+],
+[
+"现实资料",
+[
+"点灭星：镁在暗反应 / 亮反应间循环；红点灭一个周期约 0.3 s（与视频一致）"
+]
+],
+[
+"进引擎",
+[
+"PC：GPU 粒子；手机：CPU 粒子、数量减半",
+"不进 ① 的序列贴图"
+]
+],
+[
+"请你核对",
+[
+"见 YK1 的四个问题"
+]
+]
+],
+"imagesTitle": null,
+"images": [
+[
+"../analysis/原理/鸿巢四尺玉/t11.80.jpg",
+"+7.6 s 尾将尽，出现红点"
+],
+[
+"../analysis/原理/鸿巢四尺玉/t12.30.jpg",
+"+8.1 s 红点灭为主"
+],
+[
+"../analysis/原理/鸿巢四尺玉/t12.90.jpg",
+"+8.7 s 只剩红点灭"
+],
+[
+"../analysis/原理/鸿巢四尺玉/t14.60.jpg",
+"+10.4 s 视频末尾仍在闪"
+]
+],
+"video": "../vidio/鸿巢花火大会的四尺玉肉眼看到才知道有多震撼！当四尺玉缓缓升空，巨大的花火在高空炸开的瞬间，光芒从中心向四周层层扩散，一朵巨大绚烂的花，几乎铺.mp4",
+"vmeta": {
+"v": 7,
+"t0": 4.467,
+"cx": 0.5056,
+"cy": 0.2914,
+"half": 0.2803,
+"aspect": 0.5625
+},
+"base": "strobe",
+"p": {
+"duration": 11.5,
+"stars": 300,
+"v0": 260,
+"vt": 34,
+"burn": 3.6,
+"burnJit": 15,
+"ignDelay": 7.4,
+"ignJit": 4,
+"fade": 0,
+"lastFlare": 0,
+"flash": 0,
+"headSize": 1.2,
+"sparkRate": 0,
+"strobeHz": 3.3,
+"strobeDuty": 0.35,
+"strobeStart": 0,
+"massLoss": 0.3
+},
+"m": {
+"stages": [
+[
+0,
+"#ff3326"
+]
+],
+"xw": 0.1
+},
+"principle": true,
+"thumbRef": "data:image/jpeg;base64,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"
+},
+{
+"id": "YF1",
+"task": "YF1",
+"kind": "preset",
+"date": "2026-09-30 00:38",
+"name": "永丰三重蕊 · ① 外层变色菊（原理样机）",
+"note": "原理解析（数值未拟合）：名字就是配方——三重蕊 = 三层芯；洋红、青绿、闪 = 外层亲星的变色顺序。外层：橙红拖尾（星头暗）0–2.2 s → 洋红 → 2.9 s 青绿白 → 4.8 s 起白色点灭（约 10 次/秒），长光丝跟着星头变色，5.5–7.8 s 陆续灭。全文见 analysis/原理/永丰三重蕊.md。",
+"look": [
+"四段颜色和时刻：橙红尾 → 洋红（+2.45 s 截图）→ 青绿 → 白闪",
+"长光丝：整条弹道一直亮，颜色跟星头",
+"「组合」页「永丰三重蕊（原理样机）」四层叠在一起"
+],
+"opinion": "旧组合预设「五段变色三重芯（V11）」颜色顺序和层数都不对（蓝 → 红 → 紫 → 银、两层芯）。这里按逐帧重排；外层前 2 s 星头该是暗的，现在模板只能整体压低星头亮度，见审阅卡「烘焙器还缺」。",
+"tags": "永丰 三重蕊 变色 洋红 青绿 闪 原理 大组合 YF1",
+"doc": [
+[
+"结构（外层亲星）",
+[
+"模板：菊 + 分层变色星 + 末段点灭；星数约 320",
+"颜色：橙红 0 → 洋红 2.25 s → 青绿白 2.9 s → 白 4.8 s（点灭 10 Hz）",
+"尾：0–5.0 s 一直有长光丝（火花寿命 1.6 s、几乎不减速），尾色跟着星头变"
+]
+],
+[
+"现实资料",
+[
+"三重芯 = 亲星 + 3 层芯（一共 4 层），亲星不算芯",
+"变色星：除「引き」外再变两次以上；白点灭周期约 0.1 s"
+]
+],
+[
+"烘焙器还缺",
+[
+"星头亮度按段变化（外层前 2 s 星头暗、只有橙红尾）：先用低星头亮度代替",
+"白闪 10 Hz 烘进序列要 40 帧/秒 → 游戏里做粒子"
+]
+],
+[
+"请你核对",
+[
+"1. 外层变色菊 + 三层芯（蓝 / 金黄 / 橙），外层「橙红尾 → 洋红 → 青绿 → 白闪」？",
+"2. 芯 2（金黄小点）是不是一层？",
+"3. 长光丝做进序列、白闪做成粒子？",
+"4. 升空扭转金尾用尾缀 V5 哪档（建议中）？",
+"5. 通过后放行 FS1"
+]
+]
+],
+"imagesTitle": null,
+"images": [
+[
+"../analysis/原理/永丰三重蕊/t4.00.jpg",
+"−1.75 s 升空：螺旋金尾"
+],
+[
+"../analysis/原理/永丰三重蕊/t6.20.jpg",
+"+0.45 s 外层橙红尾；芯 1 白点"
+],
+[
+"../analysis/原理/永丰三重蕊/t7.40.jpg",
+"+1.65 s 外层橙红尾 + 芯 1 蓝"
+],
+[
+"../analysis/原理/永丰三重蕊/t8.20.jpg",
+"+2.45 s 外层洋红 + 光丝"
+],
+[
+"../analysis/原理/永丰三重蕊/t8.80.jpg",
+"+3.05 s 青绿白 + 光丝"
+],
+[
+"../analysis/原理/永丰三重蕊/t10.50.jpg",
+"+4.75 s 白闪开始"
+],
+[
+"../analysis/原理/永丰三重蕊/t11.50.jpg",
+"+5.75 s 白闪陆续灭"
+],
+[
+"../analysis/原理/永丰三重蕊/t13.30.jpg",
+"+7.55 s 最后几颗"
+]
+],
+"video": "../vidio/永丰10寸三重蕊洋红青绿闪。用独有的中式浪漫庆中秋！烟花 烟花是中式浪漫天花板吧 烟花最浪漫的一瞬间 中秋节我在小红书放了一场赛博烟花 -.mp4",
+"vmeta": {
+"v": 7,
+"t0": 5.933,
+"cx": 0.493,
+"cy": 0.4573,
+"half": 0.315,
+"aspect": 0.5625
+},
+"base": "kiku",
+"p": {
+"duration": 9,
+"stars": 320,
+"v0": 140,
+"vt": 20,
+"grav": 0.5,
+"burn": 7.5,
+"burnJit": 10,
+"fade": 0.05,
+"lastFlare": 0,
+"headSize": 0.9,
+"sparkRate": 180,
+"sparkStop": 5.0,
+"sparkLife": 1.6,
+"sparkSpread": 0.6,
+"sparkInherit": 0.05,
+"sparkDrag": 0.6,
+"sparkSize": 0.25,
+"T0": 2000,
+"strobeHz": 10,
+"strobeDuty": 0.35,
+"strobeStart": 0.64
+},
+"m": {
+"stages": [
+[
+0,
+"#ff6a2a"
+],
+[
+2.2,
+"#ff3cb4"
+],
+[
+2.9,
+"#b8ffe6"
+],
+[
+4.8,
+"#f4fff4"
+]
+],
+"xw": 0.15,
+"headInt": 0.8
+},
+"principle": true,
+"thumbRef": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCACgAKADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDw2lFJS00AUUUVQgpaKKACiloxQAlGKWjFMBKKdRQA2ilNJikAUUUUAFJS0lABSUtJUsYUtJS0IApaSlqhBRS0UwClpKWgAopKWgBKWiigQUUUUAJSU6koGJRRRSASkp1NqWMKWkpRQgFpRSUtWIKKKWmAUYpRS0WEJijFKBS4p2FcbRinYoxRYLjcUlOxSEUWGJRRRUjEpKWkNABTadTalgFOHSm04UkMWiijvViFFKKBSgVQhQKXFFOVWY4UZNUkIbilxVlLbOc5xs3j3FSfZNsZbrgsD+GP8RVWCzKVJV023HA5wB9Sen6mo3gAHy9M9T6ev5fzosFmVjSU8qQM4OD0PrTaloBlIaeRTSKljEpKWipGNptO702pkAU4dKbThREYtKKSlFWhMcKUUgFPUZYDnHfAq0iSSGJiQ5HyZwTnpWpDApADIV5wOMbT6fQ9vQ8fVLO0LfPZSRyf3kJzn6r1rd0e0RUkkmV18jB+zMu89e3qn/6quEeZ2K2V2V7PR5bh1aLyym7aWZgoAYHOfbI/XFWDoudP8xJk3SggRn7wyApP5jtn9K23YXEjmONpbeRsRsvy/IDkocdsdPQ4p0EEkUqLMzR7A6ttTLphtwBz0OeldUaaS1Ibb2OevtEuYbiZFj3kbtpQgjCjBP4cmsya0xGA44IBOPT0/H+WK69XbYZCQiyuDclRklQewJycnOe1R3enxah5AM8Yb5juOI1JOWIPp1AHGKmVLsCn3OJliM0nyqNqYHt7f/q6nrWfKmxyueldJfWk4YowWKIKDkMOhGfw/wDQj+lY1xHGQREuVXuBwPqf8cfSuZqzsW11KJpppxppqGSNNFBpKljA0ynmmVEhhThTacOlKIxaUUlKK0QmPFWLTYH3SB8f7OR+oquKtWs0UX3w7H0GB/OtET1NnT4baeRWAdipBLN/CM9SwwQPeupmE/lDy5rdtsYUxxnDYJ4GerH3I9OTWBpE3mS7SjwQuDuZ3UbgOcYC55xiuk+zxCSV2S5RSqAJIQd68ZLNj5QOPpXTRWgTZahic8XI2KSqvcKpAwcnkevv3x2rSis2EuGk3b1+ducNhTg1XswyErPuDIQoBY5H/wBb/wCtXQ6fLaLEy7uCcqM5B/GnUbWxUEjnpY1iSHzQkixY2xbPv+pOOoz/ADrKvE8ovElvCJY2Mhkc/d44XH+OMmumv5VdJ/s4wE+8iHDEE9D7VhXEit+6R2D3CgMX4XdnjJI7f5NXBsmaMTWCl1ZiW6kiyCNvzpuGclsqAAcnuenFcxcy2ucDZIB0LyM+PooAFdg1y4tLiNpo4mjiKkoihpAWHX1x7VzNxK/O28z7bT/QVhWWo4bGFLjeSvQ/7OKjNTXDOZDvJJ/H+tQmsGIaabTjTahjCmU+mVEhhThTacKURi0opKK0Qh4qzazSxnEQXPqaqinhsdKtEm5BM4wZbvr/AAQALn6kDmungn+1WkBicFgGMjMhMm7rjknPTr0HfFcXamJfnmkDNjJ3fdX6/wB4+w49a07W8lNwv2ferHhecMSehY/TOF6Acn32pz5WNq6OvhuYbhw2WjghRWCldxduM8+hPQHtV231F5ZpXMjlzGVX5ejn0/H+VYkF/p8lsimR0jhyWYLkThfvMfx+UHvn2q7obyTGNpQrQiQsoZ8FORnGPVjj8K600zO7RYvpZZPNkkh3yODnY/TGfTjtmqtvcM8xBUSq0f7k3LKpOD/ePGM54oEs4MlwImFuheMBQAAQMjIPXg/WsbUp7dzEsCmJsEh3bO/nuO3bp9amUlFDSbY/VboOBbRCEm2yrgJ85OeScdfqMj2rmrt4GLM0YJH5j/gQ4/MVNPKC4SdGVlOARwyH2P8ATp6VQuZ3ZuX3kdHIw30Nckm2zTRIruQWOM47ZOajJ5pxNNNZtkjTSUppKhjCmU6m1EhhSikpaSGOopBS1YhQacKYKdmqTEyWJtrA8Z7E8496uwz/ACmOI7WkzvkPVV7n6nv+ArPBpQSM479asDYFwDEifdWVlTH92Necfj/jWzZXxD2geYx+WoJbP3CwZz/MVyYlYkliSdpUe2f8mrEd6fMLSrvVnBYdOBxj8qtNoLnQ3168lzMtxIWV5G3YPBOev1way7iYyoYJD+8Unnvkf5zVXU51NwwhYlC29TjHBAqpLM0kgc8NgDIpzb5mJS0JZrgyAbjlgNrejDtVUnJ5NBOaQms2w3ENITQTSVDYwpDRSVIwptOptSxhS0lLSQBSikoqhDqKKKYC5pwNMpQapMVh4NKGwQaZmjNVcRbvpVmaOVVCFkAKjoMccVWzUs8gkghIG0qCpA6fWoM05u7EloLmkzSZpM1FyhaSikNSxi5pKKKQBTaWkqWMKWkpaQC0UlFUAtGaSimIWikpaLgLmjNJS07gSghoD/eQ5+oqKnRgncB6U2qbEgopKM1IxaSkopALmkoopAFJS0lJjP/Z"
+},
+{
+"id": "YF2",
+"task": "YF2",
+"kind": "preset",
+"date": "2026-09-30 00:37",
+"name": "永丰三重蕊 · ② 芯 1 蓝（原理样机）",
+"note": "原理解析（数值未拟合）：芯 1，无尾牡丹，约为外层半径 0.6。白 +0.45 s → 蓝紫 → +1.85 s 变白变淡 → 约 2.1 s 一起灭。",
+"look": [
+"蓝点那一圈的大小和时间（+0.85 到 +2.05 s）"
+],
+"opinion": "这一层最清楚，+0.85 s 截图里那圈蓝点就是它。",
+"tags": "永丰 三重蕊 芯 蓝 原理 大组合 YF2",
+"doc": [
+[
+"结构",
+[
+"模板：牡丹，无尾；星数约 180",
+"白 → 蓝紫（0.35 s）→ 变白（1.85 s）→ 约 2.1 s 集中熄灭"
+]
+],
+[
+"请你核对",
+[
+"见 YF1"
+]
+]
+],
+"imagesTitle": null,
+"images": [
+[
+"../analysis/原理/永丰三重蕊/t6.60.jpg",
+"+0.85 s 芯 1 蓝"
+],
+[
+"../analysis/原理/永丰三重蕊/t7.40.jpg",
+"+1.65 s 约为外层 0.6"
+],
+[
+"../analysis/原理/永丰三重蕊/t7.80.jpg",
+"+2.05 s 变白变淡"
+]
+],
+"video": "../vidio/永丰10寸三重蕊洋红青绿闪。用独有的中式浪漫庆中秋！烟花 烟花是中式浪漫天花板吧 烟花最浪漫的一瞬间 中秋节我在小红书放了一场赛博烟花 -.mp4",
+"vmeta": {
+"v": 7,
+"t0": 5.933,
+"cx": 0.493,
+"cy": 0.4573,
+"half": 0.315,
+"aspect": 0.5625
+},
+"base": "botan",
+"p": {
+"duration": 3,
+"stars": 180,
+"v0": 90,
+"vt": 20,
+"grav": 0.7,
+"burn": 2.1,
+"burnJit": 3,
+"fade": 0.05,
+"lastFlare": 0,
+"flash": 0,
+"headSize": 0.9
+},
+"m": {
+"stages": [
+[
+0,
+"#f0f4ff"
+],
+[
+0.35,
+"#5a6cff"
+],
+[
+1.85,
+"#eef2ff"
+]
+],
+"xw": 0.15
+},
+"principle": true,
+"thumbRef": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCACgAKADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDw2lFJS00AUUUVQgpaKKACiloxQAlGKWjFMBKKdRQA2ilNJikAUUUUAFJS0lABSUtJUsYUtJS0IApaSlqhBRS0UwClpKWgAopKWgBKWiigQUUUUAJSU6koGJRRRSASkp1NqWMKWkpRQgFpRSUtWIKKKWmAUYpRS0WEJijFKBS4p2FcbRinYoxRYLjcUlOxSEUWGJRRRUjEpKWkNABTadTalgFOHSm04UkMWiijvViFFKKBSgVQhQKXFFOVWY4UZNUkIbilxVlLbOc5xs3j3FSfZNsZbrgsD+GP8RVWCzKVJV023HA5wB9Sen6mo3gAHy9M9T6ev5fzosFmVjSU8qQM4OD0PrTaloBlIaeRTSKljEpKWipGNptO702pkAU4dKbThREYtKKSlFWhMcKUUgFPUZYDnHfAq0iSSGJiQ5HyZwTnpWpDApADIV5wOMbT6fQ9vQ8fVLO0LfPZSRyf3kJzn6r1rd0e0RUkkmV18jB+zMu89e3qn/6quEeZ2K2V2V7PR5bh1aLyym7aWZgoAYHOfbI/XFWDoudP8xJk3SggRn7wyApP5jtn9K23YXEjmONpbeRsRsvy/IDkocdsdPQ4p0EEkUqLMzR7A6ttTLphtwBz0OeldUaaS1Ibb2OevtEuYbiZFj3kbtpQgjCjBP4cmsya0xGA44IBOPT0/H+WK69XbYZCQiyuDclRklQewJycnOe1R3enxah5AM8Yb5juOI1JOWIPp1AHGKmVLsCn3OJliM0nyqNqYHt7f/q6nrWfKmxyueldJfWk4YowWKIKDkMOhGfw/wDQj+lY1xHGQREuVXuBwPqf8cfSuZqzsW11KJpppxppqGSNNFBpKljA0ynmmVEhhThTacOlKIxaUUlKK0QmPFWLTYH3SB8f7OR+oquKtWs0UX3w7H0GB/OtET1NnT4baeRWAdipBLN/CM9SwwQPeupmE/lDy5rdtsYUxxnDYJ4GerH3I9OTWBpE3mS7SjwQuDuZ3UbgOcYC55xiuk+zxCSV2S5RSqAJIQd68ZLNj5QOPpXTRWgTZahic8XI2KSqvcKpAwcnkevv3x2rSis2EuGk3b1+ducNhTg1XswyErPuDIQoBY5H/wBb/wCtXQ6fLaLEy7uCcqM5B/GnUbWxUEjnpY1iSHzQkixY2xbPv+pOOoz/ADrKvE8ovElvCJY2Mhkc/d44XH+OMmumv5VdJ/s4wE+8iHDEE9D7VhXEit+6R2D3CgMX4XdnjJI7f5NXBsmaMTWCl1ZiW6kiyCNvzpuGclsqAAcnuenFcxcy2ucDZIB0LyM+PooAFdg1y4tLiNpo4mjiKkoihpAWHX1x7VzNxK/O28z7bT/QVhWWo4bGFLjeSvQ/7OKjNTXDOZDvJJ/H+tQmsGIaabTjTahjCmU+mVEhhThTacKURi0opKK0Qh4qzazSxnEQXPqaqinhsdKtEm5BM4wZbvr/AAQALn6kDmungn+1WkBicFgGMjMhMm7rjknPTr0HfFcXamJfnmkDNjJ3fdX6/wB4+w49a07W8lNwv2ferHhecMSehY/TOF6Acn32pz5WNq6OvhuYbhw2WjghRWCldxduM8+hPQHtV231F5ZpXMjlzGVX5ejn0/H+VYkF/p8lsimR0jhyWYLkThfvMfx+UHvn2q7obyTGNpQrQiQsoZ8FORnGPVjj8K600zO7RYvpZZPNkkh3yODnY/TGfTjtmqtvcM8xBUSq0f7k3LKpOD/ePGM54oEs4MlwImFuheMBQAAQMjIPXg/WsbUp7dzEsCmJsEh3bO/nuO3bp9amUlFDSbY/VboOBbRCEm2yrgJ85OeScdfqMj2rmrt4GLM0YJH5j/gQ4/MVNPKC4SdGVlOARwyH2P8ATp6VQuZ3ZuX3kdHIw30Nckm2zTRIruQWOM47ZOajJ5pxNNNZtkjTSUppKhjCmU6m1EhhSikpaSGOopBS1YhQacKYKdmqTEyWJtrA8Z7E8496uwz/ACmOI7WkzvkPVV7n6nv+ArPBpQSM479asDYFwDEifdWVlTH92Necfj/jWzZXxD2geYx+WoJbP3CwZz/MVyYlYkliSdpUe2f8mrEd6fMLSrvVnBYdOBxj8qtNoLnQ3168lzMtxIWV5G3YPBOev1way7iYyoYJD+8Unnvkf5zVXU51NwwhYlC29TjHBAqpLM0kgc8NgDIpzb5mJS0JZrgyAbjlgNrejDtVUnJ5NBOaQms2w3ENITQTSVDYwpDRSVIwptOptSxhS0lLSQBSikoqhDqKKKYC5pwNMpQapMVh4NKGwQaZmjNVcRbvpVmaOVVCFkAKjoMccVWzUs8gkghIG0qCpA6fWoM05u7EloLmkzSZpM1FyhaSikNSxi5pKKKQBTaWkqWMKWkpaQC0UlFUAtGaSimIWikpaLgLmjNJS07gSghoD/eQ5+oqKnRgncB6U2qbEgopKM1IxaSkopALmkoopAFJS0lJjP/Z"
+},
+{
+"id": "YF3",
+"task": "YF3",
+"kind": "preset",
+"date": "2026-09-30 00:36",
+"name": "永丰三重蕊 · ③ 芯 2 金黄小点（原理样机，待核对）",
+"note": "原理解析（数值未拟合，最没把握的一层）：外层变青绿时，中间出现很多金黄小点，约 +2.6–4.3 s。用延时点火 2.5 s 的小牡丹表示；也可能只是外层变色的过渡色，请你看 +3.05、+3.85 s 两张。",
+"look": [
+"+3.05 / +3.85 s 截图中间的金黄小点是不是一层"
+],
+"opinion": "如果你判断不是一层，这条删掉，FS1 改成三层。",
+"tags": "永丰 三重蕊 芯 金 原理 大组合 YF3",
+"doc": [
+[
+"结构",
+[
+"模板：牡丹 + 延时点火 2.5 s；星小（0.5 m）、约 150 颗",
+"金黄，约 1.8 s，陆续灭"
+]
+],
+[
+"请你核对",
+[
+"芯 2 是不是真的一层（YF1 第 2 问）"
+]
+]
+],
+"imagesTitle": null,
+"images": [
+[
+"../analysis/原理/永丰三重蕊/t8.80.jpg",
+"+3.05 s 中间的金黄小点"
+],
+[
+"../analysis/原理/永丰三重蕊/t9.60.jpg",
+"+3.85 s 金黄小点 + 少量橙点"
+]
+],
+"video": "../vidio/永丰10寸三重蕊洋红青绿闪。用独有的中式浪漫庆中秋！烟花 烟花是中式浪漫天花板吧 烟花最浪漫的一瞬间 中秋节我在小红书放了一场赛博烟花 -.mp4",
+"vmeta": {
+"v": 7,
+"t0": 5.933,
+"cx": 0.493,
+"cy": 0.4573,
+"half": 0.315,
+"aspect": 0.5625
+},
+"base": "botan",
+"p": {
+"duration": 5,
+"stars": 150,
+"v0": 60,
+"vt": 20,
+"grav": 0.7,
+"burn": 1.8,
+"burnJit": 10,
+"ignDelay": 2.5,
+"ignJit": 10,
+"fade": 0.1,
+"lastFlare": 0,
+"flash": 0,
+"headSize": 0.5
+},
+"m": {
+"stages": [
+[
+0,
+"#ffd35a"
+]
+],
+"xw": 0.1
+},
+"principle": true,
+"thumbRef": "data:image/jpeg;base64,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"
+},
+{
+"id": "YF4",
+"task": "YF4",
+"kind": "preset",
+"date": "2026-09-30 00:35",
+"name": "永丰三重蕊 · ④ 芯 3 橙 + 银丝（原理样机）",
+"note": "原理解析（数值未拟合）：芯 3，最里层，约 +3.8 s 才亮：橙色星、周围有弯曲的银色细丝，最后收成中心一小团，约 +7.6 s 灭。用延时点火 3.8 s + 短尾表示。",
+"look": [
+"中心橙星和银丝（+4.75、+5.75 s）"
+],
+"opinion": "外层白闪的时候中心还剩一团橙，就是这一层。",
+"tags": "永丰 三重蕊 芯 橙 银丝 原理 大组合 YF4",
+"doc": [
+[
+"结构",
+[
+"模板：牡丹 + 延时点火 3.8 s + 短银丝（火花寿命 0.8 s、散开大）；约 60 颗",
+"橙，3.8 s ± 15% 陆续灭"
+]
+],
+[
+"进引擎",
+[
+"银丝要形状 → 小面片序列；手机单帧"
+]
+],
+[
+"请你核对",
+[
+"见 YF1"
+]
+]
+],
+"imagesTitle": null,
+"images": [
+[
+"../analysis/原理/永丰三重蕊/t10.50.jpg",
+"+4.75 s 中间橙星 + 银丝"
+],
+[
+"../analysis/原理/永丰三重蕊/t11.50.jpg",
+"+5.75 s"
+],
+[
+"../analysis/原理/永丰三重蕊/t12.40.jpg",
+"+6.65 s 收成中心一团"
+]
+],
+"video": "../vidio/永丰10寸三重蕊洋红青绿闪。用独有的中式浪漫庆中秋！烟花 烟花是中式浪漫天花板吧 烟花最浪漫的一瞬间 中秋节我在小红书放了一场赛博烟花 -.mp4",
+"vmeta": {
+"v": 7,
+"t0": 5.933,
+"cx": 0.493,
+"cy": 0.4573,
+"half": 0.315,
+"aspect": 0.5625
+},
+"base": "botan",
+"p": {
+"duration": 8.5,
+"stars": 60,
+"v0": 45,
+"vt": 20,
+"grav": 0.7,
+"burn": 3.8,
+"burnJit": 15,
+"ignDelay": 3.8,
+"ignJit": 10,
+"fade": 0.1,
+"lastFlare": 0,
+"flash": 0,
+"headSize": 1.1,
+"sparkRate": 120,
+"sparkLife": 0.8,
+"sparkSpread": 2,
+"sparkDrag": 1.5
+},
+"m": {
+"stages": [
+[
+0,
+"#ff8a4a"
+]
+],
+"xw": 0.1,
+"ramp1": "#5a5a66",
+"ramp2": "#c8ccd8",
+"ramp3": "#ffffff"
+},
+"principle": true,
+"thumbRef": "data:image/jpeg;base64,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"
+},
+{
+"id": "YP1",
+"task": "YP1",
+"kind": "preset",
+"date": "2026-09-30 00:34",
+"name": "片贝四尺玉 · ① 亲星金菊（原理样机）",
+"note": "原理解析（数值未拟合）：片贝四尺玉最先开的是金菊（亲星）：星头白 0–1.2 s → 暖金，放射尾，约 3.6 s 陆续收；直径约 620 m（金色小割会开在它外面）。视频剪辑过（+1.3–1.8 s 拉远），半径只作参考。全文见 analysis/原理/片贝四尺玉.md。",
+"look": [
+"金菊的颜色和时长（+0.85、+1.85 s）",
+"之前以为的「多色芯」其实是 +3.4 s 才开的彩色小割",
+"「组合」页「片贝四尺玉（原理样机）」"
+],
+"opinion": "官方名字「昇天銀竜黄金すだれ小割浮模様」逐字都能在视频里找到：银色升空、黄金菊、小割、彩色浮模様、金色垂帘。",
+"tags": "片贝 四尺玉 金菊 原理 大组合 YP1",
+"doc": [
+[
+"结构",
+[
+"模板：菊；星数约 400；初速 220、终端速度 40 → 直径约 620 m",
+"白 → 1.2 s 暖金；燃烧 3.6 s"
+]
+],
+[
+"现实资料",
+[
+"正四尺玉：约 120 cm、420 kg，高约 800 m，开花约 800 m",
+"片贝两晚：「昇天銀竜黄金すだれ小割浮模様」「昇天銀竜黄金千輪二段咲き」"
+]
+],
+[
+"请你核对",
+[
+"1. 金菊 → 彩色小割 → 金色小割 → 金色垂帘，一个大玉里三批星，不是「多色芯」？",
+"2. 要第 1 天「黄金すだれ小割浮模様」（视频这发）还是第 2 天「黄金千輪二段咲き」？",
+"3. 金色小割 + 垂帘整层烘大面片（不走 PW3 单元做法）？",
+"4. 通过后放行 PK1"
+]
+]
+],
+"imagesTitle": null,
+"images": [
+[
+"../analysis/原理/片贝四尺玉/t4.50.jpg",
+"−1.15 s 昇天銀竜：银白升空尾"
+],
+[
+"../analysis/原理/片贝四尺玉/t6.50.jpg",
+"+0.85 s 金菊白头"
+],
+[
+"../analysis/原理/片贝四尺玉/t7.50.jpg",
+"+1.85 s 暖金（镜头已拉远）"
+],
+[
+"../analysis/原理/片贝四尺玉/t9.00.jpg",
+"+3.35 s 金菊将尽，彩色小割开始"
+]
+],
+"video": "../vidio/片贝祭片贝花火大会四尺玉烟花秀的天花板日本旅游搭子 - 日本小灵通.mp4",
+"vmeta": {
+"v": 7,
+"t0": 5.467,
+"cx": 0.4944,
+"cy": 0.4898,
+"half": 0.4547,
+"aspect": 0.5625
+},
+"base": "kiku",
+"p": {
+"duration": 6,
+"stars": 400,
+"v0": 220,
+"vt": 40,
+"burn": 3.6,
+"burnJit": 10,
+"headSize": 1.2,
+"sparkRate": 200,
+"sparkLife": 1.0,
+"T0": 2100,
+"flash": 1
+},
+"m": {
+"stages": [
+[
+0,
+"#fff6e8"
+],
+[
+1.2,
+"#ffc466"
+]
+],
+"xw": 0.4,
+"ramp1": "#8a3208",
+"ramp2": "#ffc266",
+"ramp3": "#fff0d2"
+},
+"principle": true,
+"thumbRef": "data:image/jpeg;base64,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"
+},
+{
+"id": "YP2",
+"task": "YP2",
+"kind": "preset",
+"date": "2026-09-30 00:33",
+"name": "片贝四尺玉 · ② 彩色小割 · 浮模様（原理样机）",
+"note": "原理解析（数值未拟合）：+3.4 s 在金菊里面开的一批彩色小牡丹（小割玉延时开），洋红、蓝紫、少量绿，每朵约 1.2 s 灭。一层只能一种颜色，组合里同一层叠两次（洋红 + 蓝紫，镜像摆放）。",
+"look": [
+"彩色小球出现的时刻（+3.4 s）和位置（金菊半径 0.3–0.8）",
+"小割玉飞行时本该是暗的，现在是很淡的小点"
+],
+"opinion": "这批不是芯：芯是开花时就点着的，这批要等 3.4 s，是装在大玉里的小玉。",
+"tags": "片贝 四尺玉 小割 浮模様 千轮 彩色 原理 大组合 YP2",
+"doc": [
+[
+"结构",
+[
+"模板：千轮；小割玉约 40 个，延时 3.4 s（离散 6%）",
+"每个开 30 颗无尾子星，子星 1.2 s",
+"颜色：洋红 / 蓝紫 / 绿，每色一个发射器（同一张贴图不同 Color Over Life）"
+]
+],
+[
+"烘焙器还缺",
+[
+"载体（小割玉）不发光的开关：现在是 0.4 倍亮度的小点，先压低星头亮度"
+]
+],
+[
+"请你核对",
+[
+"见 YP1"
+]
+]
+],
+"imagesTitle": null,
+"images": [
+[
+"../analysis/原理/片贝四尺玉/t9.40.jpg",
+"+3.75 s 彩色小割满开"
+],
+[
+"../analysis/原理/片贝四尺玉/t9.80.jpg",
+"+4.15 s 彩色小割 + 第一批金色小花"
+]
+],
+"video": "../vidio/片贝祭片贝花火大会四尺玉烟花秀的天花板日本旅游搭子 - 日本小灵通.mp4",
+"vmeta": {
+"v": 7,
+"t0": 5.467,
+"cx": 0.4944,
+"cy": 0.4898,
+"half": 0.4547,
+"aspect": 0.5625
+},
+"base": "senrin",
+"p": {
+"duration": 6,
+"stars": 40,
+"v0": 80,
+"vt": 45,
+"burn": 1.2,
+"subDelay": 3.4,
+"subJit": 6,
+"subStars": 30,
+"subSpeed": 30,
+"subBurn": 1.2,
+"subTail": 0,
+"carrierTail": 0,
+"headSize": 0.9,
+"headBright": 0.8
+},
+"m": {
+"stages": [
+[
+0,
+"#ff3cb4"
+]
+],
+"xw": 0.1
+},
+"principle": true,
+"thumbRef": "data:image/jpeg;base64,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"
+},
+{
+"id": "YP3",
+"task": "YP3",
+"kind": "preset",
+"date": "2026-09-30 00:32",
+"name": "片贝四尺玉 · ③ 金色小割 → すだれ垂帘（原理样机）",
+"note": "原理解析（数值未拟合）：+4.3–5.9 s 陆续开的一圈金色小花（第二批小割，飞得比金菊远），每朵的星是锦冠药，烧约 5 s、边烧边垂，连成整片金色垂帘，+10–11.5 s 陆续灭。",
+"look": [
+"金色小花一朵接一朵开（时间差）",
+"连成帘、往下垂的样子（+6.85、+8.35 s）"
+],
+"opinion": "默认整层烘成大面片：小花之间连成帘的形状是它的看点。PW3 的单元 × 粒子做法被否过，这里只作手机备选。",
+"tags": "片贝 四尺玉 小割 千轮 すだれ 锦冠 金 原理 大组合 YP3",
+"doc": [
+[
+"结构",
+[
+"模板：千轮；小割玉约 70 个，延时 5.0 s ± 12%",
+"每个开 24 颗锦冠子星：子星燃烧 5 s、火花寿命 2 s、下垂",
+"金色（木炭）不变色"
+]
+],
+[
+"进引擎",
+[
+"PC：大面片母版，10 s 分两段贴图",
+"手机：单帧 + 大面片缩放，或单元 × CPU 粒子"
+]
+],
+[
+"请你核对",
+[
+"见 YP1"
+]
+]
+],
+"imagesTitle": null,
+"images": [
+[
+"../analysis/原理/片贝四尺玉/t10.20.jpg",
+"+4.55 s 金色小花陆续开"
+],
+[
+"../analysis/原理/片贝四尺玉/t10.60.jpg",
+"+4.95 s 连成一圈"
+],
+[
+"../analysis/原理/片贝四尺玉/t11.60.jpg",
+"+5.95 s 开始下拖"
+],
+[
+"../analysis/原理/片贝四尺玉/t12.50.jpg",
+"+6.85 s 整片垂帘"
+],
+[
+"../analysis/原理/片贝四尺玉/t14.00.jpg",
+"+8.35 s 最满"
+],
+[
+"../analysis/原理/片贝四尺玉/t16.00.jpg",
+"+10.35 s 余火"
+]
+],
+"video": "../vidio/片贝祭片贝花火大会四尺玉烟花秀的天花板日本旅游搭子 - 日本小灵通.mp4",
+"vmeta": {
+"v": 7,
+"t0": 5.467,
+"cx": 0.4944,
+"cy": 0.4898,
+"half": 0.4547,
+"aspect": 0.5625
+},
+"base": "senrin",
+"p": {
+"duration": 12.5,
+"stars": 70,
+"v0": 150,
+"vt": 45,
+"burn": 5,
+"subDelay": 5.0,
+"subJit": 12,
+"subStars": 24,
+"subSpeed": 18,
+"subBurn": 5.0,
+"subTail": 150,
+"carrierTail": 0,
+"sparkLife": 2.0,
+"sparkDrag": 1.3,
+"sparkSpread": 1.2,
+"sparkInherit": 0.3,
+"headSize": 0.8,
+"headBright": 0.6,
+"T0": 2000,
+"cooling": 0.35,
+"massLoss": 0.3
+},
+"m": {
+"stages": [
+[
+0,
+"#ffcc70"
+]
+],
+"xw": 0.1,
+"ramp1": "#8a3208",
+"ramp2": "#ffc266",
+"ramp3": "#fff0d2"
+},
+"principle": true,
+"thumbRef": "data:image/jpeg;base64,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"
+},
+{
 "id": "JM4B",
 "task": "JM4B",
 "kind": "preset",
@@ -2191,7 +3107,109 @@ var FW_REVIEW = [
 },
 "thumbRef": "data:image/jpeg;base64,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",
 "thumbSim": "data:image/jpeg;base64,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"
+},
+{
+"id": "FS1",
+"task": "FS1",
+"kind": "queued",
+"date": "2026-09-30",
+"name": "永丰三重蕊（FS1：外层 + 三层芯）",
+"note": "【先不跑：等原理核对：analysis/原理/永丰三重蕊.md 的「请你核对」。你回复「原理 OK」后由云端去掉 hold 放行】四层一起对整段视频。跑完每层一条，组合页有整组。",
+"look": [
+"外层四段颜色的时刻",
+"芯 1 蓝圈的大小（约外层 0.6）",
+"末段白闪、中心橙"
+],
+"opinion": "",
+"tags": "永丰 三重蕊 芯 组合 大组合 FS1",
+"doc": null,
+"imagesTitle": null,
+"video": "../vidio/永丰10寸三重蕊洋红青绿闪。用独有的中式浪漫庆中秋！烟花 烟花是中式浪漫天花板吧 烟花最浪漫的一瞬间 中秋节我在小红书放了一场赛博烟花 -.mp4",
+"vmeta": {
+"v": 7,
+"t0": 5.933,
+"cx": 0.493,
+"cy": 0.4573,
+"half": 0.315,
+"aspect": 0.5625
+}
+},
+{
+"id": "HK1",
+"task": "HK1",
+"kind": "queued",
+"date": "2026-09-30",
+"name": "鸿巢四尺玉 · ① 锦冠主层（HK1 拟合）",
+"note": "【先不跑：等原理核对：analysis/原理/鸿巢四尺玉.md 的「请你核对」。你回复「原理 OK」后由云端去掉 hold 放行】锦冠主层按实拍拟合：初速、终端速度、重力、星数、星头、火花、亮度、相机模糊 / 曝光。结构按原理 YK1 定死（锦冠、7.5 s、钛白金）。",
+"look": [
+"尾长、下垂的冠形",
+"白 → 白金的颜色",
+"燃烧到 +7.5 s 收尾"
+],
+"opinion": "单层基准；两层叠起来的效果看 HK2。",
+"tags": "鸿巢 四尺玉 锦冠 大组合 HK1",
+"doc": null,
+"imagesTitle": null,
+"video": "../vidio/鸿巢花火大会的四尺玉肉眼看到才知道有多震撼！当四尺玉缓缓升空，巨大的花火在高空炸开的瞬间，光芒从中心向四周层层扩散，一朵巨大绚烂的花，几乎铺.mp4",
+"vmeta": {
+"v": 7,
+"t0": 4.467,
+"cx": 0.5056,
+"cy": 0.2914,
+"half": 0.2803,
+"aspect": 0.5625
+}
+},
+{
+"id": "HK2",
+"task": "HK2",
+"kind": "queued",
+"date": "2026-09-30",
+"name": "鸿巢四尺玉（HK2：锦冠 + 红点灭）",
+"note": "【先不跑：等原理核对：analysis/原理/鸿巢四尺玉.md 的「请你核对」。你回复「原理 OK」后由云端去掉 hold 放行】两层一起对整段视频（含红点灭）。跑完每层一条，组合页有整组。",
+"look": [
+"整段节奏：锦冠 7.5 s → 红点灭",
+"红点数量、亮度"
+],
+"opinion": "",
+"tags": "鸿巢 四尺玉 锦冠 点灭 组合 大组合 HK2",
+"doc": null,
+"imagesTitle": null,
+"video": "../vidio/鸿巢花火大会的四尺玉肉眼看到才知道有多震撼！当四尺玉缓缓升空，巨大的花火在高空炸开的瞬间，光芒从中心向四周层层扩散，一朵巨大绚烂的花，几乎铺.mp4",
+"vmeta": {
+"v": 7,
+"t0": 4.467,
+"cx": 0.5056,
+"cy": 0.2914,
+"half": 0.2803,
+"aspect": 0.5625
+}
+},
+{
+"id": "PK1",
+"task": "PK1",
+"kind": "queued",
+"date": "2026-09-30",
+"name": "片贝四尺玉（PK1：金菊 + 小割 + 垂帘）",
+"note": "【先不跑：等原理核对：analysis/原理/片贝四尺玉.md 的「请你核对」。你回复「原理 OK」后由云端去掉 hold 放行】三层一起对整段视频。跑完每层一条，组合页有整组。",
+"look": [
+"金菊 → +3.4 s 彩色小割 → +4.3 s 起金色小花 → 垂帘",
+"垂帘的长度和持续时间"
+],
+"opinion": "",
+"tags": "片贝 四尺玉 小割 千轮 すだれ 组合 大组合 PK1",
+"doc": null,
+"imagesTitle": null,
+"video": "../vidio/片贝祭片贝花火大会四尺玉烟花秀的天花板日本旅游搭子 - 日本小灵通.mp4",
+"vmeta": {
+"v": 7,
+"t0": 5.467,
+"cx": 0.4944,
+"cy": 0.4898,
+"half": 0.4547,
+"aspect": 0.5625
+}
 }
 ];
 var FW_VMETA = {"../vidio/2.0/尾缀A.mp4": {"t0": 0.033, "cx": 0.6406, "cy": 0.5, "half": 0.5, "aspect": 1.7778, "v": 7}, "../vidio/2.0/尾缀B.mp4": {"t0": 0.667, "cx": 0.7393, "cy": 0.5, "half": 0.5, "aspect": 1.7778, "v": 7}, "../vidio/2.0/尾缀C.mp4": {"t0": 0, "cx": 0.6498, "cy": 0.5, "half": 0.5, "aspect": 1.7778, "v": 7}, "../vidio/2.0/金芒菊A.mp4": {"v": 7, "t0": 0.867, "cx": 0.707, "cy": 0.25, "half": 0.2283, "aspect": 1.7778}};
-var FW_REVIEW_COMBOS = [{"name": "球形B（原理样机：两发）", "layers": [{"m": "rep:YB1", "scale": 0.45}, {"m": "rep:YB2", "scale": 1, "delay": 0.9}]}];
+var FW_REVIEW_COMBOS = [{"name": "球形B（原理样机：两发）", "layers": [{"m": "rep:YB1", "scale": 0.45}, {"m": "rep:YB2", "scale": 1, "delay": 0.9}]}, {"name": "鸿巢四尺玉（原理样机：锦冠 + 红点灭）", "layers": [{"m": "rep:YK1", "scale": 1}, {"m": "rep:YK2", "scale": 1}]}, {"name": "永丰三重蕊（原理样机：外层 + 三层芯）", "layers": [{"m": "rep:YF1", "scale": 1}, {"m": "rep:YF2", "scale": 1}, {"m": "rep:YF3", "scale": 1}, {"m": "rep:YF4", "scale": 1}]}, {"name": "片贝四尺玉（原理样机：金菊 + 小割 + 垂帘）", "layers": [{"m": "rep:YP1", "scale": 1}, {"m": "rep:YP2", "scale": 1}, {"m": "rep:YP2", "scale": 1, "mirror": true, "stages": [[0, "#7a6cff"]]}, {"m": "rep:YP3", "scale": 1}]}];

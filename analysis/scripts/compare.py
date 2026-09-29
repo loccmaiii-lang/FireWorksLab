@@ -114,6 +114,7 @@ class SimSession:
         P 里以 _ 开头的是「相机」参数，只在和实拍比较时加，不进烘焙器、不进贴图：
           _psf  相机模糊（实拍像素，高斯 σ）；_gain 相机曝光倍数（乘完截到 255，模拟过曝）"""
         cam = (float(P.get('_psf', 0) or 0), float(P.get('_gain', 1) or 1))
+        if P.get('layers'): return self.side_layers(P['layers'], Rpx, fast, cam)
         P = {k: v for k, v in P.items() if not k.startswith('_')}
         ph = self.pg.evaluate(f"(()=>{{ const P={json.dumps(P)}; const fm=__fw.measure(P); const m=__fw.metricsOf(P,fm); return {{ R: m.diameter/2, burn: m.burn, cy: (fm.y0+fm.y1)/2 }}; }})()")
         Tb0, R0, cy = ph['burn'], ph['R'], min(0, ph['cy'])
@@ -124,6 +125,44 @@ class SimSession:
         sub = ', sub: 4' if fast else ''
         res = self.pg.evaluate(f"__fw.renderStills({json.dumps(P)}, {json.dumps(M)}, {{ times: {json.dumps(times)}, px: {px}, half: {half}, cy: {cy}, shutter: 1/40{sub} }})")
         imgs = [(r['t'], camera(np.array(Image.open(io.BytesIO(base64.b64decode(r['png'].split(',')[1]))).convert('RGB')), *cam)) for r in res]
+        bg = gray(imgs[0][1]); frames = imgs[1:]
+        center = (px / 2, px / 2 + cy * px / (2 * half))
+        cnt = np.array([measure(f, bg, center)['n'] for t, f in frames], np.float32); ip = int(np.argmax(cnt))
+        ie = next((i for i in range(ip, len(cnt)) if cnt[i] < 0.15 * cnt[ip]), None)
+        Tb = frames[ie][0] if ie is not None else Tb0 * 1.1
+        rows = series(frames, bg, center, Tb, 0.0)
+        side = dict(frames=frames, center=center, Tb=Tb, R=final_radius(rows), rows=rows, render_s=round(time.time() - t_start, 1), px=px)
+        add_streak(side, bg); return side
+
+    def side_layers(self, layers, Rpx, fast=False, cam=(0.0, 1.0)):
+        """多层组合（大组合：外层 + 芯、亲星 + 小割…）：layers = [{name, P, M, scale=1, delay=0}]。
+        每层按自己的物理单独渲染，放到同一个取景（同一爆点、同一米 / 像素），按 delay 错开时间，
+        亮度相加（加色）后再截到 255、再加相机模糊 / 曝光。每层各自定曝光（与单层对照同口径），
+        层与层的相对亮度用各层的 M.headInt 调（拟合参数写 "1.M.headInt"）。取景的中心高度按第 0 层（主层）。"""
+        info = []
+        for L in layers:
+            P = {k: v for k, v in L['P'].items() if not k.startswith('_')}
+            ph = self.pg.evaluate(f"(()=>{{ const P={json.dumps(P)}; const fm=__fw.measure(P); const m=__fw.metricsOf(P,fm); return {{ R: m.diameter/2, burn: m.burn, cy: (fm.y0+fm.y1)/2 }}; }})()")
+            info.append((P, L.get('M') or {}, float(L.get('scale', 1) or 1), float(L.get('delay', 0) or 0), ph))
+        R0 = max(ph['R'] * sc for P, M, sc, dl, ph in info)
+        Tb0 = max(dl + ph['burn'] for P, M, sc, dl, ph in info)
+        cy = min(0, info[0][4]['cy'] * info[0][2])
+        half = R0 * 1.7
+        px = int(round(2 * half / R0 * Rpx / 4)) * 4
+        times = [-0.05] + [u * Tb0 for u in (UF if fast else U)]
+        t_start = time.time()
+        sub = ', sub: 4' if fast else ''
+        acc = [np.zeros((px, px, 3), np.float32) for _ in times]
+        for P, M, sc, dl, ph in info:
+            loc = sorted({round(t - dl, 4) for t in times if t - dl >= 0} | {-0.05})
+            # 延时点火的层（前一段不可见）：定曝光的时刻放到点火之后，否则按一片黑定曝光
+            probe = f", probe: {float(P.get('ignDelay', 0) or 0) + 0.3 * ph['burn']:.3f}" if (P.get('ignDelay') or 0) > 0 else ''
+            res = self.pg.evaluate(f"__fw.renderStills({json.dumps(P)}, {json.dumps(M)}, {{ times: {json.dumps(loc)}, px: {px}, half: {half / sc}, cy: {cy / sc}, shutter: 1/40{sub}{probe} }})")
+            got = {round(r['t'], 4): np.array(Image.open(io.BytesIO(base64.b64decode(r['png'].split(',')[1]))).convert('RGB'), np.float32) for r in res}
+            for i, t in enumerate(times):
+                k = -0.05 if i == 0 else round(t - dl, 4)
+                if k in got: acc[i] += got[k]
+        imgs = [(t, camera(np.clip(a, 0, 255).astype(np.uint8), *cam)) for t, a in zip(times, acc)]
         bg = gray(imgs[0][1]); frames = imgs[1:]
         center = (px / 2, px / 2 + cy * px / (2 * half))
         cnt = np.array([measure(f, bg, center)['n'] for t, f in frames], np.float32); ip = int(np.argmax(cnt))
@@ -145,7 +184,7 @@ def camera(img, psf=0.0, gain=1.0):
 
 def score(V, S, w=None):
     """差距：半径曲线、尾缀长度、亮部面积、星点密度、燃烧时长（越小越像）"""
-    w = w or dict(r=3, tail=2, tail75=2, n=1, heads=1, burn=2, coh=10, align=6, conc=4)
+    w = {**dict(r=3, tail=2, tail75=2, n=1, heads=1, burn=2, coh=10, align=6, conc=4), **(w or {})}     # 任务里 fit.weights 可只改几项
     cv, cs = curves(V), curves(S); L = 0; parts = {}
     for k in ['r', 'tail', 'tail75', 'coh', 'align', 'conc']:
         e = sum((at(cv[k], u) - at(cs[k], u)) ** 2 for u in KEYU) / len(KEYU); parts[k] = e; L += w[k] * e

@@ -18,33 +18,74 @@ PARAMS = [('burstR0', 'add', 10, 0, 300), ('v0', 'mul', .15, 5, 600), ('vt', 'mu
 SIZE_CAP = {'headSize': (0.1, 0.8), 'sparkSize': (0.05, 0.5)}
 
 
-def _get(P, M, k): return M[k[2:]] if k.startswith('M.') else P[k]
+def _split(k):
+    """多层组合的参数写成 "<层号>.<键>"（例 "0.v0"、"1.M.headInt"）；单层直接写键"""
+    a, _, b = k.partition('.')
+    return (int(a), b) if a.isdigit() and b else (None, k)
+
+
+def _get(P, M, k):
+    i, kk = _split(k)
+    if i is not None:
+        L = P['layers'][i]; return L['M'][kk[2:]] if kk.startswith('M.') else L['P'][kk]
+    return M[k[2:]] if k.startswith('M.') else P[k]
+
+
+def _fix_duration(P):
+    if 'burn' in P and 'duration' in P: P['duration'] = max(P['duration'], P['burn'] * 1.4 + 0.5 + (P.get('ignDelay') or 0))
 
 
 def _put(P, M, k, v):
+    i, kk = _split(k)
+    if i is not None:
+        P = dict(P); P['layers'] = [dict(L) for L in P['layers']]
+        L = P['layers'][i]; L['P'] = dict(L['P']); L['M'] = dict(L.get('M') or {})
+        if kk.startswith('M.'): L['M'][kk[2:]] = v
+        else: L['P'][kk] = v
+        _fix_duration(L['P']); return P, M
     P, M = dict(P), dict(M)
     if k.startswith('M.'): M[k[2:]] = v
     else: P[k] = v
-    if 'burn' in P and 'duration' in P: P['duration'] = max(P['duration'], P['burn'] * 1.4 + 0.5)
+    _fix_duration(P)
     return P, M
 
 
-def run_fit(V, s, P, M, prefix, params=None, rounds=3, fast=None, log=print, camera=False, caps=None):
+def _has(P, M, k):
+    i, kk = _split(k)
+    if i is not None:
+        if not P.get('layers') or i >= len(P['layers']): return False
+        L = P['layers'][i]; return kk[2:] in (L.get('M') or {}) if kk.startswith('M.') else kk in L['P']
+    return k[2:] in M if k.startswith('M.') else k in P
+
+
+def run_fit(V, s, P, M, prefix, params=None, rounds=3, fast=None, log=print, camera=False, caps=None, weights=None):
     """V：实拍（video_side 的结果）；s：SimSession。返回 (P, M, 差距, S)
     camera：True 时加相机模糊 / 曝光（_psf / _gain）一起拟合，并给火花尺寸加上限（caps 可覆盖 SIZE_CAP）"""
     fast = (s.mode == 'soft') if fast is None else fast      # 有显卡时每次都用完整画质
     P = dict(P); cap = {}
+    layered = bool(P.get('layers'))
     if camera:
         P.setdefault('_psf', 1.0); P.setdefault('_gain', 1.0)
         cap = {**SIZE_CAP, **(caps or {})}
         for k, (lo, hi) in cap.items():
-            if k in P: P[k] = min(hi, max(lo, P[k]))
+            if layered:     # 不带层号的上下限对每一层都生效；"1.stars" 这样的只管那一层
+                i, kk = _split(k)
+                for j in (range(len(P['layers'])) if i is None else [i]):
+                    if _has(P, M, f'{j}.{kk}'): P, M = _put(P, M, f'{j}.{kk}', min(hi, max(lo, _get(P, M, f'{j}.{kk}'))))
+            elif k in P: P[k] = min(hi, max(lo, P[k]))
         if params is not None: params = list(params) + [k for k in ('_psf', '_gain') if k not in params]
-    PR = [p for p in PARAMS if (params is None or p[0] in params) and (p[0].startswith('M.') and p[0][2:] in M or p[0] in P)]
-    PR = [(k, kind, st, *(cap[k] if k in cap else (lo, hi))) for k, kind, st, lo, hi in PR]
+    BY = {p[0]: p for p in PARAMS}
+    if params is None: params = [p[0] for p in PARAMS]
+    PR = []
+    for k in params:
+        i, kk = _split(k)
+        if kk not in BY or not _has(P, M, k): continue
+        _, kind, st, lo, hi = BY[kk]
+        lo, hi = cap.get(k, cap.get(kk, (lo, hi))) if (k in cap or kk in cap) else (lo, hi)
+        PR.append((k, kind, st, lo, hi))
 
     def ev(P, M):
-        S = s.side(P, M, V['R'], fast=fast); L, parts = score(V, S); return L, S, parts
+        S = s.side(P, M, V['R'], fast=fast); L, parts = score(V, S, weights); return L, S, parts
     best, S, parts = ev(P, M)
     log(f"起点 差距 {best:.4f} " + ' '.join(f'{k}={float(v):.4f}' for k, v in parts.items()) + f" 渲染 {S['render_s']}s")
     st = {p[0]: p[2] for p in PR}; n = 0

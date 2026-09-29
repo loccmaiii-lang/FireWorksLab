@@ -123,7 +123,9 @@ def job_entries():
         op = os.path.join(d, '看法.md')
         e['opinion'] = open(op, encoding='utf-8').read().strip() if os.path.exists(op) else (r.get('opinion') or ('' if not done else 'Claude 还没看这一版（你本地刚跑完就自动出现在这里）。看完有意见直接写。'))
         if not done:
-            e['kind'] = 'queued'; e['opinion'] = r.get('opinion', ''); out.append(e); continue
+            e['kind'] = 'queued'; e['opinion'] = r.get('opinion', '')
+            if j.get('hold') or j.get('ready') is False: e['note'] = '【先不跑：' + (j.get('hold') or '还没放行') + '】' + e['note']
+            out.append(e); continue
         if os.path.exists(os.path.join(d, 'error.json')): e['kind'] = 'queued'; e['note'] = '跑的时候出错了，Claude 会看日志修。' + e['note']; out.append(e); continue
         e['kind'] = 'asset' if os.path.exists(os.path.join(d, 'preview.js')) else 'preset'
         if e['kind'] == 'asset': e['src'] = j['id']
@@ -134,8 +136,22 @@ def job_entries():
             m0 = re.search(r'起点 差距 ([0-9.]+)', lg)
             e['note'] += f"　差距 {m0.group(1) + ' → ' if m0 else ''}{nv.get('差距')}。"
         except Exception: pass
+        # 多层组合（大组合）的结果：每层一条正式库形式的条目（<任务号>-<层号>），再加一个组合页预设
+        try: bj = json.load(open(os.path.join(d, 'best.json'), encoding='utf-8'))
+        except Exception: bj = {}
+        if (bj.get('P') or {}).get('layers'):
+            lays = []
+            for i, L in enumerate(bj['P']['layers']):
+                le = dict(e, id=f"{j['id']}-{i + 1}", layer=i, name=f"{r['name']} · {L.get('name') or ('第 ' + str(i + 1) + ' 层')}",
+                          note=f"组合任务 {j['id']} 的第 {i + 1} 层（组合页有整组叠起来的效果）。" + e['note'], replaces=[])
+                out.append(le); lays.append({'m': 'rep:' + le['id'], 'scale': L.get('scale', 1), 'delay': L.get('delay', 0)})
+            JOB_COMBOS.append({'name': r['name'] + f"（{j['id']}）", 'layers': lays})
+            continue
         out.append(e)
     return out
+
+
+JOB_COMBOS = []      # job_entries() 顺带收集：多层组合任务跑完后的组合页预设
 
 
 PRINCIPLE = os.path.join(ROOT, 'analysis', '原理', '条目.json')
@@ -144,10 +160,13 @@ ITER = os.path.join(ROOT, 'analysis', '迭代', '条目.json')
 
 def principle_entries():
     """正式库形式的条目（花型库模板 + p/m 参数：右栏参数、实时 / 导出效果 / 贴图、导出都有）：
-    analysis/原理/条目.json —— 效果原理解析（审阅卡带「原理解析 · 待你核对」徽标）；
+    analysis/原理/条目.json —— 效果原理解析（审阅卡带「原理解析 · 待你核对」徽标）；另有 条目_<名>.json（大组合等，
+    分文件是为了两个对话框各改各的）；
     analysis/迭代/条目.json —— 其余迭代（比如金芒菊去糊的格子方案）"""
+    import glob
     out, combos = [], []
-    for f, principle in ((PRINCIPLE, True), (ITER, False)):
+    extra = sorted(f for f in glob.glob(os.path.join(os.path.dirname(PRINCIPLE), '条目_*.json')))
+    for f, principle in [(PRINCIPLE, True)] + [(x, True) for x in extra] + [(ITER, False)]:
         if not os.path.exists(f): continue
         j = json.load(open(f, encoding='utf-8'))
         for e in j.get('entries', []):
@@ -191,6 +210,11 @@ def build(e):
         rec['base'] = e.get('base') or 'trail' + e['size']; rec['m'] = j.get('_ramp', {}); rec['p'] = {k: v for k, v in j.items() if not k.startswith('_')}
         sp = os.path.join(d, f"尾缀_{e['size']}_对照.jpg"); w, h = Image.open(sp).size; s0 = min(h, int(w * 0.36))
         rec['thumbRef'], rec['thumbSim'] = thumb(sp, (0, 0, s0, s0)), thumb(sp, (int(w * 0.52), 0, int(w * 0.52) + s0, s0))
+    elif e.get('layer') is not None:
+        j = json.load(open(os.path.join(d, 'best.json'), encoding='utf-8')); L = j['P']['layers'][e['layer']]; P = L['P']
+        rec['base'] = P.get('type', 'kiku'); rec['p'] = {k: v for k, v in P.items() if k != 'type' and not k.startswith('_')}; rec['m'] = L.get('M') or {}
+        sheet = os.path.join(d, '对照.jpg')
+        rec['thumbRef'], rec['thumbSim'] = thumb(sheet, (390, 30, 690, 330)), thumb(sheet, (390, 330, 690, 630))
     else:
         j = json.load(open(os.path.join(d, 'best.json'), encoding='utf-8')); P = j['P']
         rec['base'] = P.get('type', 'kiku'); rec['p'] = {k: v for k, v in P.items() if k != 'type' and not k.startswith('_')}; rec['m'] = j['M']
@@ -206,7 +230,7 @@ def main():
         if e['kind'] == 'asset': e['src'] = e.get('src', e['task'])
         ents.append(e)
     pe, combos = principle_entries(); ents += pe
-    auto = job_entries(); ids = {e['id'] for e in ents}
+    auto = job_entries(); ids = {e['id'] for e in ents}; combos += JOB_COMBOS
     ents += [e for e in auto if e['id'] not in ids]
     gone = set(ARCHIVE)
     for e in ents:

@@ -10,7 +10,9 @@
   python analysis/local/run_jobs.py --check    只检查环境（打开浏览器、看有没有用上显卡）
 
 任务文件格式（analysis/jobs/<id>.json，由 Claude 写）：
-  { "id", "name", "video": 仓库内相对路径, "start": {P, M} 或 起点 json 的相对路径,
+  { "id", "name", "video": 仓库内相对路径, "start": {P, M} 或 起点 json 的相对路径（多层组合：{layers: [{name, P, M, scale, delay}]}，
+    拟合参数写 "<层号>.<键>"，如 "0.v0"、"1.M.headInt"）, "ready": false + "hold": "原因"（可选：写好了但先不跑；后台监控也认 ready: false；放行时两个都去掉）,
+    "fit": {..., "weights": {"r": 1}}（可选：改差距里各项的权重，比如剪辑过的视频半径不可信）,
     "fit": {"params": [...] 或 null（全部）, "rounds": 3} 或 null（不拟合，只出对照）,
     "variants": {名字: {参数改动}}（可选：额外试几组，各出一张对照图） }
   升空尾缀任务："type": "trail"，格式见 analysis/scripts/trail_job.py
@@ -64,19 +66,20 @@ def run_job(job, s, force=False):
         log(f"开始：{job.get('name', '')}  视频 {job['video']}")
         st = job['start']
         if isinstance(st, str): st = jload(os.path.join(ROOT, st))
-        P, M = st['P'], st['M']
+        if st.get('layers'): P, M = {'layers': st['layers']}, {}      # 多层组合（大组合）：参数写 "<层号>.<键>"
+        else: P, M = st['P'], st['M']
         V = video_side(os.path.join(ROOT, job['video']), roi=job.get('roi'), t_range=job.get('t_range'))
         log(f"实拍：燃烧 {V['Tb']:.2f}s，最终半径 {V['R']:.0f}px")
         fit = job.get('fit')
         if fit:
-            P, M, L, S = run_fit(V, s, P, M, os.path.join(out, 'fit'), fit.get('params'), fit.get('rounds', 3), log=log, camera=fit.get('camera', False), caps=fit.get('caps'))
+            P, M, L, S = run_fit(V, s, P, M, os.path.join(out, 'fit'), fit.get('params'), fit.get('rounds', 3), log=log, camera=fit.get('camera', False), caps=fit.get('caps'), weights=fit.get('weights'))
         for name, d in (job.get('variants') or {}).items():
             dd = dict(d); Mo = dd.pop('M', {}); P2 = dict(P); P2.update(dd); M2 = dict(M); M2.update(Mo)
             S2 = s.side(P2, M2, V['R']); L2, _ = score(V, S2)
             sheet(V, S2, os.path.join(out, f'variant_{name}.jpg')); jsave({'P': P2, 'M': M2, 'loss': L2}, os.path.join(out, f'variant_{name}.json'))
             log(f'变体 {name}：差距 {L2:.4f}')
         # 最终结果用完整画质再出一次
-        S = s.side(P, M, V['R']); L, parts = score(V, S)
+        S = s.side(P, M, V['R']); L, parts = score(V, S, (fit or {}).get('weights'))
         sheet(V, S, os.path.join(out, '对照.jpg'), job.get('name', ''))
         jsave({'P': P, 'M': M, 'loss': L}, os.path.join(out, 'best.json'))
         jsave({'差距': round(float(L), 4), '分项': {k: round(float(v), 4) for k, v in parts.items()}, '实拍燃烧秒': round(V['Tb'], 2), '模拟燃烧秒': round(S['Tb'], 2), '表': table(V, S)},
@@ -140,7 +143,10 @@ def load_jobs(args, force):
     files = sorted(f for f in os.listdir(JOBS) if f.endswith('.json')) if os.path.isdir(JOBS) else []
     jobs = [jload(os.path.join(JOBS, f)) for f in files]
     if args: jobs = [j for j in jobs if j['id'] in args]
-    todo = [j for j in jobs if force or not os.path.exists(os.path.join(RES, j['id'], 'done.json'))]
+    # 先不跑的任务："ready": false（后台监控 watch_jobs.py 也认这个）+ "hold": "原因"。写好了等用户核对原理，放行时两个字段都去掉。
+    # 点名跑（run_jobs.py HK1）时不受限——后台监控只会点名它自己选出的（已排除 ready: false 的）任务
+    held = lambda j: bool(j.get('hold')) or j.get('ready') is False
+    todo = [j for j in jobs if (force or not os.path.exists(os.path.join(RES, j['id'], 'done.json'))) and (not held(j) or j['id'] in args)]
     todo.sort(key=lambda j: -j.get('priority', 0))     # 长的先跑（尾缀），短的穿插
     return jobs, todo
 
