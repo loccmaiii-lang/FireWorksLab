@@ -29,7 +29,7 @@ const BASE = {
   duration: 3.2, seed: 7, stars: 150, burstR0: 0, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
   burn: 2.5, burnJit: 12, fade: 0.2, lastFlare: 0.35, flash: 1,
   headSize: 1.0, headBright: 1, flicker: 0.25,
-  sparkRate: 95, sparkRateEnd: 1, sparkLife: 0.55, sparkSize: 0.35, sparkSpread: 2.5, sparkInherit: 0.2, sparkDrag: 2.2, sparkGrav: 1,
+  sparkRate: 95, sparkRateEnd: 1, sparkStop: 0, sparkLife: 0.55, sparkSize: 0.35, sparkSpread: 2.5, sparkInherit: 0.2, sparkDrag: 2.2, sparkGrav: 1,
   T0: 2050, cooling: 0.42, sparkBright: 1, twinkle: 0.6,
   subDelay: 0.9, subJit: 10, subStars: 36, subSpeed: 40, subBurn: 0.9, subTail: 0, carrierTail: 30, subPattern: 'sphere',
   spin: 14, chaos: 0.8, beeSpeed: 28,
@@ -251,6 +251,7 @@ const SCHEMA = [
   { sec: '尾缀（炭火火花）', show: P => !isTrail(P), hint: '尾缀粗细主要由「散布」和「颗粒大小」决定，长度由「火花寿命」决定。', items: [
     ['sparkRate', '火花密度', '个/秒', 0, 3000, 1],
     ['sparkRateEnd', '末段火花密度', '×', 0, 2, 0.01],
+    ['sparkStop', '火花只在前几秒（分层星外层，0 = 全程）', 's', 0, 3, 0.01],
     ['sparkLife', '火花寿命', 's', 0.05, 4, 0.01],
     ['sparkSpread', '尾缀粗细（散布）', 'm/s', 0, 15, 0.1],
     ['sparkSize', '颗粒大小', 'm', 0.05, 2, 0.01],

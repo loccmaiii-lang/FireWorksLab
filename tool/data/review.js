@@ -1243,6 +1243,128 @@ var FW_REVIEW = [
 },
 "thumbRef": "data:image/jpeg;base64,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",
 "thumbSim": "data:image/jpeg;base64,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"
+},
+{
+"id": "QA3",
+"task": "QA3",
+"kind": "queued",
+"date": "2026-09-29",
+"name": "球形A：金色带尾菊（第 3 轮，按配方分析）",
+"note": "分层星：外层金色木炭尾 1.3 s → 粉红 → 银白点（无尾），3.2 s 一起熄灭。",
+"look": [
+"前 1 s 金色放射尾",
+"约 50% 星头变粉红",
+"70% 以后是一颗颗没有尾的银白小点",
+"3.2 s 左右一起熄灭"
+],
+"opinion": "QA2 颜色顺序对了但银白段还拖尾：这一轮用分层星（火花只在外层 1.1 s）解决。",
+"tags": "菊 金 带尾 变色 球形A C2 QA3",
+"video": "../vidio/球形A.mp4",
+"vmeta": {
+"v": 7,
+"t0": 0.533,
+"cx": 0.5057,
+"cy": 0.362,
+"half": 0.1722,
+"aspect": 1.7778
+}
+},
+{
+"id": "QB2",
+"task": "QB2",
+"kind": "queued",
+"date": "2026-09-29",
+"name": "球形B：红牡丹 → 银绿（第 2 轮，按配方分析）",
+"note": "红（偏粉）→ 0.95 s 银绿白，1.55 s 一起熄灭，星更多更细。",
+"look": [
+"红色是不是偏粉 / 洋红",
+"约 1 s 变银绿白",
+"星点数量、粗细"
+],
+"opinion": "前面那颗小粉牡丹（第二个发射器）等组合时再加。",
+"tags": "牡丹 红 银 球形B C1 QB2",
+"video": "../vidio/球形B.mp4",
+"vmeta": {
+"v": 7,
+"t0": 1.867,
+"cx": 0.4865,
+"cy": 0.3426,
+"half": 0.1511,
+"aspect": 1.7778
+}
+},
+{
+"id": "QC2",
+"task": "QC2",
+"kind": "queued",
+"date": "2026-09-29",
+"name": "球形C：外层 金 → 橙红（第 2 轮，按配方分析）",
+"note": "开头 0.45 s 放射短尾，金 → 1.3 s 转橙，熄灭分散（2.1–4.5 s 陆续灭）。",
+"look": [
+"开头有没有放射短尾",
+"1.3 s 左右转橙",
+"星是不是陆续熄灭（不是一起灭）"
+],
+"opinion": "绿芯（第二层）下一步做成组合。",
+"tags": "球形C 外层 金 橙 QC2",
+"video": "../vidio/球形C.mp4",
+"vmeta": {
+"v": 7,
+"t0": 0.733,
+"cx": 0.5266,
+"cy": 0.4157,
+"half": 0.1211,
+"aspect": 1.7778
+}
+},
+{
+"id": "QD2",
+"task": "QD2",
+"kind": "queued",
+"date": "2026-09-29",
+"name": "球形D：橙 → 绿 → 银白（第 2 轮，按配方分析）",
+"note": "橙（带尾 0.75 s）→ 柠黄 → 绿 → 银白，最后 1 s 变暗后一起熄灭，星多一倍、更细。",
+"look": [
+"四段颜色的时间",
+"星点数量、粗细",
+"最后变暗再熄灭"
+],
+"opinion": "这个最大，星数是之前最大的问题。",
+"tags": "球形D 变色 QD2",
+"video": "../vidio/球形D.mp4",
+"vmeta": {
+"v": 7,
+"t0": 4.533,
+"cx": 0.4807,
+"cy": 0.4139,
+"half": 0.1767,
+"aspect": 1.7778
+}
+},
+{
+"id": "QN4",
+"task": "QN4",
+"kind": "queued",
+"date": "2026-09-29",
+"name": "青柠星（第 4 轮，按配方分析重设）",
+"note": "按实拍逐帧分析重设：外层橙色带尾（0.6 s）→ 内层青柠无尾，亮度不衰减、3.1 s 集中熄灭，薄球壳。",
+"look": [
+"开头 0–0.6 s：是不是一根根橙色放射短尾（不是一团橙色）",
+"0.6 s 变青柠、尾巴消失",
+"中后段星点亮、边缘一圈更密",
+"3.1 s 左右一起熄灭"
+],
+"opinion": "这一轮先把化学结构做对（分层星），再让拟合只调亮度、大小、星数。实拍里星后面淡淡的绿色细线是被星光照亮的烟，烘焙器还没有烟，先不做。",
+"tags": "青柠 分层星 变色 QN4",
+"video": "../vidio/2.0/青柠星.mp4",
+"vmeta": {
+"v": 7,
+"t0": 0.267,
+"cx": 0.6312,
+"cy": 0.5222,
+"half": 0.1517,
+"aspect": 1.7778
+}
 }
 ];
 var FW_VMETA = {"../vidio/2.0/金芒菊A.mp4": {"v": 7, "t0": 0.867, "cx": 0.707, "cy": 0.25, "half": 0.2283, "aspect": 1.7778}};

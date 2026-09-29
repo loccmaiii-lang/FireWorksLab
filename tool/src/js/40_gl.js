@@ -321,7 +321,8 @@ function buildTrack(P) {
       pos[o] = a[q * 6]; pos[o + 1] = a[q * 6 + 1]; pos[o + 2] = a[q * 6 + 2];
       vel[o] = a[q * 6 + 3]; vel[o + 1] = a[q * 6 + 4]; vel[o + 2] = a[q * 6 + 5];
     }
-    const born = st.birth + (st.ign || 0), death = Math.min(st.birth + (st.vis != null ? st.vis : st.burn), D);
+    // 分层星：外层（带木炭火花尾）烧 sparkStop 秒后火花停，内层只发光不出火花
+    const born = st.birth + (st.ign || 0), death = Math.min(st.birth + (st.vis != null ? st.vis : st.burn), D, P.sparkStop > 0 && st.kind !== 5 ? born + P.sparkStop : 1e9);
     // 末段火花密度：发射率从 rate 线性变到 rate × sparkRateEnd（按整段燃烧，不按截断后的时长）
     const e = st.kind === 5 ? 1 : (P.sparkRateEnd == null ? 1 : P.sparkRateEnd), B = Math.max(0.05, st.birth + (st.vis != null ? st.vis : st.burn) - born), a = st.rate * (e - 1) / (2 * B);
     info[q * 4] = born; info[q * 4 + 1] = death; info[q * 4 + 2] = death > born ? st.rate : 0; info[q * 4 + 3] = a;
