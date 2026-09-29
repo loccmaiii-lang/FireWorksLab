@@ -146,7 +146,8 @@ class Monitor:
         existing = [path for path in paths if (self.repo / path).exists()]
         if not existing: return
         self.git('add', '--', *existing)
-        staged = self.git('diff', '--cached', '--name-only').stdout.splitlines()
+        # NUL delimiters keep Git from quoting non-ASCII filenames on Windows.
+        staged = [name for name in self.git('diff', '--cached', '--name-only', '-z').stdout.split('\0') if name]
         if any(not any(name == path or name.startswith(path + '/') for path in existing) for name in staged):
             raise RuntimeError('Unexpected staged files; not committing unrelated work')
         if self.git('diff', '--cached', '--quiet', check=False).returncode:

@@ -117,6 +117,8 @@ class GitFlowTests(unittest.TestCase):
             for jid in ids:
                 save_json(self.worker / 'analysis/results' / jid / ('error.json' if self.fail else 'done.json'),
                           {'error': 'simulated'} if self.fail else {'ok': True})
+                if not self.fail:
+                    (self.worker / 'analysis/results' / jid / '对照.jpg').write_bytes(b'preview')
             return int(self.fail)
         done = sorted(path.parent.name for path in (self.worker / 'analysis/results').glob('*/done.json'))
         (self.worker / 'tool/data/review.js').write_text(json.dumps(done), encoding='utf-8')
