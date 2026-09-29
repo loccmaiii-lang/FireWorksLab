@@ -29,12 +29,14 @@ try: sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 except Exception: pass
 
 # 哪条线跑的（写进 env.json）：本地双击 bat 为「本地」，WorkBuddy 跑时设 FW_LINE=WorkBuddy。
-# 同一时间只有一个对话框跑任务（用户保证），不做互斥锁。
+# 主进程使用 Git 公共目录中的 GPU 锁；所有工作树共用，子进程由父进程持锁。
 LINE = os.environ.get('FW_LINE') or '本地'
 
 
-def jload(p): return json.load(open(p, encoding='utf-8'))
-def jsave(o, p): json.dump(o, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+def jload(p):
+    with open(p, encoding='utf-8') as f: return json.load(f)
+def jsave(o, p):
+    with open(p, 'w', encoding='utf-8') as f: json.dump(o, f, ensure_ascii=False, indent=1)
 
 
 def run_job(job, s, force=False):
@@ -42,7 +44,7 @@ def run_job(job, s, force=False):
     from fit import run_fit
     jid = job['id']; out = os.path.join(RES, jid); os.makedirs(out, exist_ok=True)
     if os.path.exists(os.path.join(out, 'done.json')) and not force:
-        print(f'[{jid}] 已经跑过，跳过（要重跑加 --force）'); return
+        print(f'[{jid}] 已经跑过，跳过（要重跑加 --force）'); return True
     logf = open(os.path.join(out, 'log.txt'), 'w', encoding='utf-8')
     def log(m):
         line = time.strftime('%H:%M:%S ') + str(m); print(f'[{jid}] ' + line, flush=True); logf.write(line + '\n'); logf.flush()
@@ -58,7 +60,7 @@ def run_job(job, s, force=False):
             jsave({'line': LINE, 'renderer': s.renderer, 'mode': s.mode, 'software': s.soft, 'minutes': round((time.time() - t0) / 60, 1), 'machine': platform.platform(), 'finished': time.strftime('%Y-%m-%d %H:%M')},
                   os.path.join(out, 'env.json'))
             jsave({'ok': True}, os.path.join(out, 'done.json'))
-            log(f'完成，用时 {(time.time() - t0) / 60:.1f} 分钟'); return
+            log(f'完成，用时 {(time.time() - t0) / 60:.1f} 分钟'); return True
         log(f"开始：{job.get('name', '')}  视频 {job['video']}")
         st = job['start']
         if isinstance(st, str): st = jload(os.path.join(ROOT, st))
@@ -89,9 +91,11 @@ def run_job(job, s, force=False):
                 p = os.path.join(out, f)
                 if os.path.exists(p): os.remove(p)
             except Exception: pass
+        return True
     except Exception:
         log('出错：\n' + traceback.format_exc())
         jsave({'error': traceback.format_exc()}, os.path.join(out, 'error.json'))
+        return False
     finally:
         logf.close()
 
@@ -145,22 +149,35 @@ def worker(args, force, tag=''):
     """一个浏览器，一个接一个认领、跑任务，直到没有可认领的"""
     import threading
     from compare import SimSession
-    s = None; n = 0
+    s = None; failures = 0; attempted = set()
+    batch_start = float(os.environ.get('FW_BATCH_START', time.time()))
+    def tried_this_batch(job):
+        if job['id'] in attempted: return True
+        # 其他进程失败或强制重跑成功后，本批不再认领同一个任务。
+        return any(os.path.isfile(p) and os.path.getmtime(p) >= batch_start
+                   for p in (os.path.join(RES, job['id'], name) for name in ('done.json', 'error.json')))
     try:
         while True:
             _, todo = load_jobs(args, force)
-            j = next((j for j in todo if claim(j['id'])), None)
+            j = next((j for j in todo if not tried_this_batch(j) and claim(j['id'])), None)
             if j is None: break
-            if s is None:
-                s = SimSession()
-                print(f'{tag}执行线：{LINE}  渲染：{s.mode}  浏览器显卡：{s.renderer or "未知"}' + ('  ← 软件渲染，会很慢' if s.soft else ''), flush=True)
+            attempted.add(j['id'])
             stop = threading.Event(); heartbeat(j['id'], stop)
-            try: run_job(j, s, force)
+            try:
+                if s is None:
+                    s = SimSession()
+                    if os.environ.get('FW_REQUIRE_GPU') == '1' and s.soft:
+                        raise RuntimeError('后台任务要求真实显卡，检测到软件渲染，已停止')
+                    print(f'{tag}执行线：{LINE}  渲染：{s.mode}  浏览器显卡：{s.renderer or "未知"}' + ('  ← 软件渲染，会很慢' if s.soft else ''), flush=True)
+                if not run_job(j, s, force): failures += 1
+            except Exception:
+                jsave({'error': traceback.format_exc()}, os.path.join(RES, j['id'], 'error.json'))
+                failures += 1
+                break
             finally: stop.set(); release(j['id'])
-            n += 1
     finally:
         if s: s.close()
-    return n
+    return int(failures > 0)
 
 
 def refresh_review():
@@ -176,19 +193,28 @@ def main():
     force, check = '--force' in sys.argv, '--check' in sys.argv
     nw = next((int(a.split('=')[1]) for a in sys.argv if a.startswith('--workers=')), 1)
     if '--worker' in sys.argv:      # 子进程
-        worker(args, force, f"[进程 {os.getpid()}] "); return
+        return worker(args, force, f"[进程 {os.getpid()}] ")
+    os.environ['FW_BATCH_START'] = str(time.time())
+    no_review = '--no-review' in sys.argv
     jobs, todo = load_jobs(args, force)
     if check:
         from compare import SimSession
-        s = SimSession(); print(f'渲染：{s.mode}  浏览器显卡：{s.renderer or "未知"}')
-        t = time.time(); s.pg.evaluate("__fw.renderStills(state.P, state.M, { times: [1.0], px: 512 })")
-        print(f'试渲一帧：{time.time() - t:.1f} 秒（有显卡时应在 1–2 秒内）'); s.close(); return
+        s = SimSession()
+        try:
+            print(f'渲染：{s.mode}  浏览器显卡：{s.renderer or "未知"}')
+            if os.environ.get('FW_REQUIRE_GPU') == '1' and s.soft: raise RuntimeError('没有检测到真实显卡')
+            t = time.time(); s.pg.evaluate("__fw.renderStills(state.P, state.M, { times: [1.0], px: 512 })")
+            print(f'试渲一帧：{time.time() - t:.1f} 秒（有显卡时应在 1–2 秒内）')
+        finally: s.close()
+        return 0
     if not todo:
-        print(f'执行线：{LINE}。任务 {len(jobs)} 个，没有待跑的。', flush=True); refresh_review(); return
+        print(f'执行线：{LINE}。任务 {len(jobs)} 个，没有待跑的。', flush=True)
+        if not no_review: refresh_review()
+        return 0
     nw = max(1, min(nw, len(todo)))
     print(f'任务 {len(jobs)} 个，待跑 {len(todo)} 个（{nw} 个进程同时跑）：' + '、'.join(j['id'] + ' ' + j.get('name', '') for j in todo), flush=True)
     if nw == 1:
-        worker(args, force)
+        result = worker(args, force)
     else:
         import subprocess
         cmd = [sys.executable, os.path.abspath(__file__), '--worker'] + (['--force'] if force else []) + args
@@ -196,9 +222,19 @@ def main():
         for i in range(nw):
             ps.append(subprocess.Popen(cmd, cwd=ROOT)); time.sleep(8)     # 错开启动浏览器
         for p in ps: p.wait()
-    refresh_review()
-    print('\n全部跑完，结果已写进烘焙器的迭代区。', flush=True)
+        result = int(any(p.returncode != 0 for p in ps))
+    if not no_review: refresh_review()
+    print('\n本批结束。' + ('有失败任务，请查看 error.json。' if result else '全部完成。'), flush=True)
+    return result
 
 
 if __name__ == '__main__':
-    main()
+    if '--worker' in sys.argv:
+        sys.exit(main())
+    from job_lock import ProcessLock, gpu_lock_path
+    try:
+        with ProcessLock(gpu_lock_path(ROOT)):
+            sys.exit(main())
+    except BlockingIOError:
+        print('另一批显卡任务正在运行，本次跳过。', flush=True)
+        sys.exit(75)
