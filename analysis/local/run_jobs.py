@@ -47,6 +47,9 @@ def run_job(job, s, force=False):
     jid = job['id']; out = os.path.join(RES, jid); os.makedirs(out, exist_ok=True)
     if os.path.exists(os.path.join(out, 'done.json')) and not force:
         print(f'[{jid}] 已经跑过，跳过（要重跑加 --force）'); return True
+    # A previous attempt may have left an error that must not accompany a successful retry.
+    previous_error = os.path.join(out, 'error.json')
+    if os.path.isfile(previous_error): os.remove(previous_error)
     logf = open(os.path.join(out, 'log.txt'), 'w', encoding='utf-8')
     def log(m):
         line = time.strftime('%H:%M:%S ') + str(m); print(f'[{jid}] ' + line, flush=True); logf.write(line + '\n'); logf.flush()
