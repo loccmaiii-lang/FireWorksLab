@@ -355,7 +355,7 @@ function comboDuration() {
 function bakeTotal(b) { let d = 0; for (let s = b; s; s = s.next) d = Math.max(d, (s.meta.t0 || 0) + s.meta.duration); return d; }
 function buildComboPanel() {
   const pre = $('#presets'); pre.innerHTML = '';
-  for (const c of [...COMBOS, ...REPLICA_COMBOS]) { const b = document.createElement('button'); b.className = 'btn' + (c.name.startsWith('V') ? ' rep' : ''); b.textContent = c.name; b.addEventListener('click', () => applyCombo(c)); pre.appendChild(b); }
+  for (const c of [...COMBOS, ...REPLICA_COMBOS, ...(typeof FW_REVIEW_COMBOS !== 'undefined' ? FW_REVIEW_COMBOS : [])]) { const b = document.createElement('button'); b.className = 'btn' + (c.name.startsWith('V') ? ' rep' : ''); b.textContent = c.name; b.addEventListener('click', () => applyCombo(c)); pre.appendChild(b); }
   const host = $('#layers'); host.innerHTML = '';
   state.layers.forEach((L, i) => {
     const card = document.createElement('div'); card.className = 'card';

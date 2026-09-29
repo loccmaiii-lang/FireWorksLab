@@ -138,8 +138,22 @@ def job_entries():
     return out
 
 
+PRINCIPLE = os.path.join(ROOT, 'analysis', '原理', '条目.json')
+
+
+def principle_entries():
+    """效果原理解析（analysis/原理/条目.json）：花型库模板 + 按原理设的结构，正式库形式（参数、实时、导出效果、贴图都有）"""
+    if not os.path.exists(PRINCIPLE): return [], []
+    j = json.load(open(PRINCIPLE, encoding='utf-8'))
+    out = []
+    for e in j.get('entries', []):
+        e = dict(e); e.setdefault('task', e['id']); e['kind'] = 'preset'; e['principle'] = True; out.append(e)
+    return out, j.get('combos', [])
+
+
 def build(e):
-    d = os.path.join(RES, e['task']); rec = {k: e.get(k) for k in ('id', 'task', 'kind', 'date', 'name', 'note', 'look', 'opinion', 'tags')}
+    d = os.path.join(RES, e['task']); rec = {k: e.get(k) for k in ('id', 'task', 'kind', 'date', 'name', 'note', 'look', 'opinion', 'tags', 'doc')}
+    if e.get('images'): rec['images'] = [['../' + a, b] for a, b in e['images']]
     if e.get('video'): rec['video'] = '../' + e['video']
     trail = bool(e.get('size'))
     vmf = os.path.join(RES, e.get('src') or e['task'], 'vmeta.json')      # 结果目录自带取景（按模拟的世界坐标算好的，实拍和模拟同比例）
@@ -151,6 +165,11 @@ def build(e):
         if jp: w, h = Image.open(jp).size; rec['thumbSim'] = thumb(jp, (min(w - h, h), 0, min(w - h, h) + h, h))
         if e.get('video'):
             tr = thumb_from_video(e['video'], rec['vmeta'], e.get('thumb_dt', 0.9))
+            if tr: rec['thumbRef'] = tr
+    elif e.get('principle'):
+        rec['base'] = e['base']; rec['p'] = e.get('p', {}); rec['m'] = e.get('m', {}); rec['principle'] = True
+        if e.get('video'):
+            tr = thumb_from_video(e['video'], rec['vmeta'], e.get('thumb_dt', 0.8))
             if tr: rec['thumbRef'] = tr
     elif e.get('phys'):
         import phys_to_baker as PB
@@ -180,6 +199,7 @@ def main():
         e = dict(e); e.setdefault('task', e['id'])
         if e['kind'] == 'asset': e['src'] = e.get('src', e['task'])
         ents.append(e)
+    pe, combos = principle_entries(); ents += pe
     auto = job_entries(); ids = {e['id'] for e in ents}
     ents += [e for e in auto if e['id'] not in ids]
     gone = set(ARCHIVE)
@@ -204,7 +224,8 @@ def main():
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     open(OUT, 'w', encoding='utf-8').write('// 由 analysis/scripts/review_to_baker.py 生成：迭代区（做完、等你看的东西）。不要手改。\n'
                                           'var FW_REVIEW = ' + json.dumps(out, ensure_ascii=False, indent=0) + ';\n'
-                                          'var FW_VMETA = ' + json.dumps(vm, ensure_ascii=False) + ';\n')
+                                          'var FW_VMETA = ' + json.dumps(vm, ensure_ascii=False) + ';\n'
+                                          'var FW_REVIEW_COMBOS = ' + json.dumps(combos, ensure_ascii=False) + ';\n')
     print('迭代区', len(out), '项（排队', sum(1 for e in out if e['kind'] == 'queued'), '）→', OUT, f'{os.path.getsize(OUT) / 1024:.0f} KB')
 
 

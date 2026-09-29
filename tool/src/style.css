@@ -244,6 +244,11 @@
   .review .btn.fixb[aria-pressed="true"]{background:#4a2a24;border-color:#c86a55;color:#f6c8bb}
   .review textarea{width:100%;min-height:58px;margin-top:6px;background:var(--bg);border:1px solid var(--line2);border-radius:6px;color:var(--text);padding:6px 8px;font:12.5px/1.5 var(--sans);resize:vertical}
   .review .saved{font-size:11px;color:var(--faint);margin-top:2px}
+  .review .rimgs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:6px 0 4px}
+  .review .rimgs figure{margin:0;background:var(--bg);border-radius:6px;overflow:hidden}
+  .review .rimgs img{display:block;width:100%;height:auto;cursor:zoom-in}
+  .review .rimgs figcaption{font-size:11px;line-height:1.4;color:var(--dim);padding:3px 6px 5px}
+  .review .badge.pr{background:#233a4a;border-color:#4f86a8;color:#bfe3f7}
   /* 参数行（像 lil-gui：名称 | 滑杆 | 数值框） */
   .sl{grid-template-columns:14px minmax(0,1fr) minmax(70px,1.15fr) 64px}
   .sl.nolock{grid-template-columns:minmax(0,1fr) minmax(70px,1.15fr) 64px}
