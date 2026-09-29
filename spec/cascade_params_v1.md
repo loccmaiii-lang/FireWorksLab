@@ -24,6 +24,7 @@
 {
   "format": "fwl.cascade/1",
   "name": "JinMangJu_Fixed",                 // 效果名（英文，和烘焙器导出名一致）
+  "platform": "pc",                          // pc / mobile：烘焙器每个素材包出两份，cascade.json（PC）和 cascade_mobile.json（手机）
   "source": { "tool": "烟花母版烘焙器 3.6", "export": "JM2/JinMangJu_Fixed" },
   "textures": {                              // 纯粒子效果可以省略
     "seq":    { "file": "T_JinMangJu_Fixed.png",        "class": "flipbook", "cols": 8, "rows": 8, "channels": 4, "frames": 256 },
@@ -97,6 +98,7 @@
 | `required.cutout` | Cutout Texture，同时设 Sub Images 1×1、Eight Vertices、Opacity Source = Alpha、Alpha Threshold 0.1 | ✅ |
 | `required.sub_images` | `[水平, 竖直]`，只有真的用 SubUV 时才写 | ⚪ |
 | `required.max_draw_count` | bUseMaxDrawCount + MaxDrawCount | ✅ |
+| `required.pivot_offset` | Pivot Offset `[x, y]`（默认 −0.5, −0.5 是面片中心）。速度朝向的尾缀用它把星头放在粒子位置 | ⚪（2026-09-30 烘焙器开始输出，导入器待支持） |
 | `required.local_space` | bUseLocalSpace | ⚪ |
 | `spawn.rate` | Spawn Rate（分布） | ✅ |
 | `spawn.bursts` | `[[时间秒, 数量], …]` → BurstList | ✅ |
@@ -197,12 +199,12 @@
 ```jsonc
 { "name": "Strobe", "material": "dot", "gpu": true,
   "required": { "screen_alignment": "Square", "duration_s": 3.0, "loops": 1 },
-  "spawn": { "rate": { "curve": [[0, 0], [0.8, 0], [0.9, 3000], [2.6, 3000], [3.0, 0]] } },   // 发射器时间（秒）：主花开到一定程度才开始闪
+  "spawn": { "rate": { "curve": [[0, 0], [0.8, 0], [0.9, 1500], [2.6, 1500], [3.0, 0]] } },   // 发射器时间（秒）：主花开到一定程度才开始闪
   "modules": [
-    { "m": "Lifetime", "Lifetime": { "uniform": [0.05, 0.10] } },                          // 一闪即灭
+    { "m": "Lifetime", "Lifetime": { "uniform": [0.15, 0.3] } },                           // 一闪即灭（和 examples/Strobe_example 一致）
     { "m": "SphereLocation", "StartRadius": { "curve": [[0, 0], [3.0, 9000]] },            // 半径跟着主花长大（发射器时间）
       "SurfaceOnly": true, "Velocity": false },
-    { "m": "InitialSize", "StartSize": { "uniform": [[40, 40, 40], [80, 80, 80]] } },
+    { "m": "InitialSize", "StartSize": { "uniform": [[300, 300, 300], [500, 500, 500]] } },   // 3–5 m：300 m 外才看得清
     { "m": "ColorOverLife", "ColorOverLife": { "const": [30, 30, 28] }, "AlphaOverLife": { "curve": [[0, 1], [1, 0]] } }
   ] }
 ```
@@ -216,6 +218,12 @@
 - 取景用「随开花放大」：Size By Life 的 **Y 要比 X 长得多**（下垂把画面往下拉长），所以 `SizeByLife` 的 X、Y 分开写，Rectangle 对齐。
 - 近景可以再叠一个 B 类的闪烁颗粒发射器。
 - 换大小、换快慢，按第 9 节缩放。
+
+### E. 升空尾缀 V5（两个速度朝向单粒子接力）🟡 烘焙器 2026-09-30 起输出
+- `RiseLoop`：Screen Alignment = Velocity，`pivot_offset` 把星头放在粒子位置；`InitialVelocity` + `Drag` + `ConstAcceleration`（−981）拟合弹道；`SizeByLife` 只改 Y（尾迹随上升速度变短）；帧号是锯齿曲线（真循环）。
+- `Fade30`：`delay_s` = 上升时长，在开花点 `InitialLocation` 出生，`InitialVelocity` = (0, 0, 1) 只定方向；帧号 0 → 总帧数 − 0.01。
+- 材质角色 `beam_flipbook`（16×1 格，RGBA 接力 64 帧）。另有 20 fps 消散贴图 `T_<名>_Fade20.png`，换贴图并把消散时长改成 64 ÷ 20 = 3.2 s。
+- 示例：[`examples/RiseTrailM.cascade.json`](examples/RiseTrailM.cascade.json)。
 
 ### D. 千轮单元 × 粒子（一张小花单元序列，多粒子摆位）⚪
 - `SphereLocation`：只在表面出生，勾 Velocity，`VelocityScale` 给向外的速度，配合 `Drag` 让小球飞出去后停住；

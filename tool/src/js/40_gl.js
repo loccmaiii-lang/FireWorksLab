@@ -30,14 +30,21 @@ void main(){ vec2 sig=max(aS*0.5*vec2(uPPM,uPPMY),vec2(0.55)); float ps=min(ceil
   vec2 q=aP; if(uUseXf>.5){ vec2 d=q-uXf.xy; q=vec2(d.x*uXf.z-d.y*uXf.w, d.x*uXf.w+d.y*uXf.z); }
   gl_Position=vec4((q-uView.xy)/uView.zw,0.,1.); gl_PointSize=ps; vI=aI; vSig=sig; vPS=ps; }`;
 // 高斯点：uPPM / uPPMY 分别是横、纵每米像素数（单元序列横竖分别缩放时不同）
-const FS_PTS = HDR + `in float vI; in vec2 vSig; in float vPS; uniform vec4 uChan; uniform float uW; uniform float uPPM, uPPMY; out vec4 o;
-void main(){ vec2 d=(gl_PointCoord-.5)*vPS/vSig; float g=exp(-.5*dot(d,d))/(6.2831853*vSig.x*vSig.y);
+const FS_PTS = HDR + `in float vI; in vec2 vSig; in float vPS; uniform vec4 uChan; uniform float uW; uniform float uPPM, uPPMY, uKernel, uCore; out vec4 o;
+// uKernel = 1：把归一化高斯在整个像素面积上积分（不是只取像素中心），小火星跨像素移动时亮度不跳；uCore：窄亮核占比（移植自 Ultra）
+vec2 erf2(vec2 x){ vec2 sg=sign(x); x=abs(x); vec2 t=1./(1.+.3275911*x); return sg*(1.-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*exp(-x*x)); }
+float coverage(vec2 p, vec2 s){ vec2 v=.5*(erf2((p+.5)/(1.41421356*s))-erf2((p-.5)/(1.41421356*s))); return max(0.,v.x*v.y); }
+void main(){ vec2 p=(gl_PointCoord-.5)*vPS; vec2 d=p/vSig; float g=exp(-.5*dot(d,d))/(6.2831853*vSig.x*vSig.y);
+  if(uKernel>.5) g=mix(coverage(p,vSig),coverage(p,max(vSig*.6,vec2(.25))),uCore);
   if(vPS>8.*max(vSig.x,vSig.y)+2.) g*=smoothstep(1.,.8,length(gl_PointCoord-.5)*2.);   // 大范围画点：边缘平滑收到 0，不留硬边
   o=uChan*(vI*g*uPPM*uPPMY*uW); }`;
 // 打包进格子：uPad = 格子边缘留空的像素数（防止 mip/压缩时串到相邻格子）
-const FS_PACK = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform vec4 uM; uniform float uFade, uPad; uniform vec2 uCell; out vec4 o;
+const FS_PACK = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform vec4 uM; uniform float uFade, uPad; uniform int uSS; uniform vec2 uCell; out vec4 o;
 void main(){ float m=1.; if(uPad>0.){ vec2 d=min(v_uv,1.-v_uv)*uCell; m=clamp((min(d.x,d.y)-uPad)/uPad,0.,1.); }
-  o=vec4(dot(texture(uS,v_uv),uM)*uFade*m); }`;
+  // 超采样缓冲是单格的 uSS 倍：每个输出像素把对应的 uSS×uSS 个样本在线性亮度里平均（2× 时和原来的双线性取样一致）
+  vec4 v; if(uSS<=2) v=texture(uS,v_uv); else { ivec2 sz=textureSize(uS,0); ivec2 base=ivec2(floor(v_uv*uCell))*uSS; v=vec4(0.);
+    for(int y=0;y<8;y++){ if(y>=uSS) break; for(int x=0;x<8;x++){ if(x>=uSS) break; v+=texelFetch(uS,clamp(base+ivec2(x,y),ivec2(0),sz-1),0); } } v/=float(uSS*uSS); }
+  o=vec4(dot(v,uM)*uFade*m); }`;
 // 编码：合并 = 星头与拖尾各自曝光后相加；单通道时 RGB 相同
 const FS_ENC = HDR + `in vec2 v_uv; uniform sampler2D uH,uT; uniform float uEH,uET,uG,uWhich,uSingle; out vec4 o;
 void main(){ vec4 h=max(texture(uH,v_uv),0.), t=max(texture(uT,v_uv),0.);
@@ -356,7 +363,7 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   setAirUniforms(pr, P);
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
   gl.uniform4fv(pr.u.uXf, opt.xf || [0, 0, 1, 0]); gl.uniform1f(pr.u.uUseXf, opt.xf ? 1 : 0);
-  gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uRefl, P.waterRefl || 0);
+  setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uRefl, P.waterRefl || 0);
   gl.bindVertexArray(emptyVAO);
   const n = tr.nStars * tr.M * (1 + br);
   if (P.waterRefl > 0 && !opt.xf) { gl.uniform1f(pr.u.uMir, 1); gl.drawArrays(gl.POINTS, 0, n); gl.uniform1f(pr.u.uMir, 2); gl.drawArrays(gl.POINTS, 0, n); }
@@ -422,7 +429,7 @@ function drawEmit(E, t, view, ppm, chan, w, tw) {
   gl.uniform1f(pr.u.uSpread, P.sparkSpread); gl.uniform1f(pr.u.uInh, P.sparkInherit); gl.uniform1f(pr.u.uT0, se.T0); gl.uniform1f(pr.u.uCool, P.cooling);
   gl.uniform1f(pr.u.uTwk, P.twinkle); gl.uniform1f(pr.u.uBright, P.sparkBright); gl.uniform1f(pr.u.uSize, P.sparkSize);
   gl.uniform1f(pr.u.uJet, P.jetSpeed); gl.uniform1f(pr.u.uCone, P.jetCone * Math.PI / 180); gl.uniform3fv(pr.u.uFV, [0, E.V || 0, 0]);
-  gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w);
+  setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w);
   gl.bindVertexArray(emptyVAO); gl.drawArrays(gl.POINTS, 0, E.nv); gl.bindVertexArray(null);
 }
 function drawEmitHeads(E, t, view, ppm, chan, w, tw) {
@@ -431,7 +438,7 @@ function drawEmitHeads(E, t, view, ppm, chan, w, tw) {
   setEmitCommon(pr, E, t, view, ppm, tw);
   gl.uniform1f(pr.u.uHead, P.headSize); gl.uniform1f(pr.u.uHI, P.headBright); gl.uniform1f(pr.u.uFlick, P.flicker);
   gl.uniform1f(pr.u.uSS, P.subSpeed); gl.uniform1f(pr.u.uSB, P.subBurn); gl.uniform1i(pr.u.uNb, Math.round(P.burstStars || 0));
-  gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w);
+  setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w);
   const n = E.mode === 2 ? E.hslots * (1 + Math.round(P.burstStars || 0)) : E.nsrc;
   gl.bindVertexArray(emptyVAO); gl.drawArrays(gl.POINTS, 0, n); gl.bindVertexArray(null);
 }
@@ -459,7 +466,7 @@ function drawPoints(buf, n, view, ppm, chan, w, xf) {
   gl.bufferData(gl.ARRAY_BUFFER, buf.subarray(0, n * 4), gl.DYNAMIC_DRAW);
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
   gl.uniform4fv(pr.u.uXf, xf || [0, 0, 1, 0]); gl.uniform1f(pr.u.uUseXf, xf ? 1 : 0);
-  gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uSpan, PT_SPAN);
+  setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uSpan, PT_SPAN);
   gl.drawArrays(gl.POINTS, 0, n);
 }
 function additive(on) { if (on) { gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE); gl.blendEquation(gl.FUNC_ADD); } else gl.disable(gl.BLEND); }

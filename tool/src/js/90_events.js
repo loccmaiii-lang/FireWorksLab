@@ -115,6 +115,7 @@ window.__fw = {
     files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b, M))]);
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, M))]);
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, M), null, 2))]);
+    files.push(...fwlFiles(name, b, M));
     const zip = await makeZip(files); disposeBake(b);
     return new Uint8Array(await zip.arrayBuffer());
   },
@@ -128,6 +129,7 @@ window.__fw = {
     files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b, M))]);
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, M))]);
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, M), null, 2))]);
+    files.push(...fwlFiles(name, b, M));
     const u8 = new Uint8Array(await (await makeZip(files)).arrayBuffer()); disposeBake(b);
     let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
     return btoa(s);

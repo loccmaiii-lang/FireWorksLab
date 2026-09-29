@@ -147,10 +147,12 @@ function cutoutMask(srcs, N, NH, L) {
   }
   return { U, img: out, cov: n / (U * U) };
 }
-// 贴图命名（用户 2026-09-28 确认）：T_EFX_FireWorks_<名字>[_<部件>]_<列>x<行>_<序号>；附属贴图（Ramp、Cutout、帧号测试）不写格子
-const TEX_PREFIX = 'T_EFX_FireWorks_';
+// 贴图命名（用户 2026-09-29 晚改：按 spec 示例）：T_<效果名>[_<部件>].png，固定不变，不带日期 / 版本 / 格子（格子写在 cascade.json 里），
+// 这样重新烘焙后引擎里右键「重新导入」就能更新。种子变体第 2、3 张加 _V2 / _V3。引擎里的正式名字由本机导入工具指定。
+// （2026-09-28 的 T_EFX_FireWorks_<名>_<部件>_<列>x<行>_<序号> 已作废；第二个参数 L 保留只为兼容旧调用）
+const TEX_PREFIX = 'T_';
 function TN(name, part, L, idx = 1) {
-  return TEX_PREFIX + name + (part ? '_' + part : '') + (L ? `_${L.cols}x${L.rows}` : '') + '_' + String(idx).padStart(2, '0');
+  return TEX_PREFIX + name + (part ? '_' + part : '') + (idx > 1 ? '_V' + idx : '');
 }
 const joinPart = (...a) => a.filter(Boolean).join('_');
 async function cutoutFiles(srcs, N, NH, L, file, meta) {
@@ -227,6 +229,7 @@ async function exportMaster() {
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, state.M))]);
     files.push([`${name}_声音节点.json`, utf8(JSON.stringify({ note: '时间为相对开花（上升类为相对发射）的秒数；游戏里按「距离 ÷ 343 m/s」再延迟', events: soundEvents(b) }, null, 2))]);
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, state.M), null, 2))]);
+    files.push(...fwlFiles(name, b, state.M));
     busy(true, '打包 ZIP…', 1);
     download(await makeZip(files), `${name}.zip`);
     recordVersion('导出 ' + name);
@@ -246,9 +249,10 @@ async function exportVariants() {
     const files = [];
     for (let i = 0; i < bs.length; i++) files.push(...await texFiles(bs[i], name, '', i + 1));
     files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(state.M), 256, 8)]);
-    files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, bs[0], state.M) + `\n【种子变体】\n序号 _01 / _02 / _03 三套贴图共用上面的取景、帧号曲线和尺寸，只换贴图；同屏多发时轮换使用，避免一模一样。种子：${bs.map(b => b.P.seed).join('、')}\n`)]);
+    files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, bs[0], state.M) + `\n【种子变体】\n第 1 张（不带后缀）/ _V2 / _V3 三套贴图共用上面的取景、帧号曲线和尺寸，只换贴图；同屏多发时轮换使用，避免一模一样。种子：${bs.map(b => b.P.seed).join('、')}\n`)]);
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(bs[0], state.M))]);
     files.push([`${name}.json`, utf8(JSON.stringify({ ...masterJSON(bs[0], name, state.M), variants: bs.map((b, i) => ({ index: String(i + 1).padStart(2, '0'), seed: b.P.seed })) }, null, 2))]);
+    files.push(...fwlFiles(name, bs[0], state.M));
     download(await makeZip(files), `${name}_V1-V3.zip`);
     flash('已导出三个种子变体');
   } catch (e) { console.error(e); flash('导出失败：' + e.message, true); }

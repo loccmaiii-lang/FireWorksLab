@@ -25,6 +25,8 @@ function setStatus(msg) { const s = $('#status'); s.textContent = msg; s.classNa
 
 // 上升类的序列时长跟随到顶时间
 function derive(P) {
+  // 紧凑取景已禁用（2026-09-29 引擎实测会抖，spec/pipeline_v1.md）：旧配方里的 tight 一律按 Zoom 处理
+  if (P.zoom === 'tight') P.zoom = 'on';
   if (familyOf(P.type) === 'rise' && P.form === 'phys') { P.duration = +(P.phT + 3.5).toFixed(2); return P; }
   if (familyOf(P.type) === 'rise') P.duration = P.form === 'trail' ? +(riseInfo(P).ta + 64 / 20 + 0.3).toFixed(2) : +(riseInfo(P).ta + 1.2).toFixed(2);
   if (familyOf(P.type) === 'ground') P.duration = P.loopT;

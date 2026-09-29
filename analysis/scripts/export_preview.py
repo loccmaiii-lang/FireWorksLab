@@ -14,7 +14,11 @@ def _enc(im, fmt='PNG'):
 
 
 def _find(d, name, part):
-    pat = re.compile(rf'T_EFX_FireWorks_{re.escape(name)}{"_" + part if part else ""}(_\d+x\d+)?_01\.png$')
+    """素材包命名（spec 示例，2026-09-29 晚起）T_<名>[_<部件>].png；也认 2026-09-28 的 T_EFX_FireWorks_<名>[_<部件>]_<列>x<行>_01.png"""
+    sfx = "_" + part if part else ""
+    new = f'T_{name}{sfx}.png'
+    if os.path.exists(os.path.join(d, new)): return new
+    pat = re.compile(rf'T_EFX_FireWorks_{re.escape(name)}{sfx}(_\d+x\d+)?_01\.png$')
     return next((f for f in sorted(os.listdir(d)) if pat.fullmatch(f)), None)
 
 

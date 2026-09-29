@@ -76,6 +76,7 @@ function makeTrailRenderer(P) {
     stop: -1, stopE: -1, fadeK: 1,
     hx,
     draw(ts, view, ppm, w, tw, f) {
+      setParticleProfile(P);
       // 快门参照：固定机位（默认）= 子帧都画在这一帧的星头坐标下，火星近乎不动、是圆点；
       // 跟拍（trFollow）= 每个子帧跟着星头走，火星相对星头下落，拖成短竖线（尾缀3.0 实拍就是跟拍）
       const tf = R.frameT && !P.trFollow ? R.frameT(f) : ts, anchorT = R.stop >= 0 ? (P.trFollow ? Math.min(ts, R.stopE) : R.stop) : tf, anchorY = P.trV * anchorT;
@@ -98,7 +99,7 @@ function makeTrailRenderer(P) {
       gl.uniform1f(pr.u.uV, P.trV); gl.uniform1f(pr.u.uIgn, P.trIgnite || 0); gl.uniform1f(pr.u.uLag, P.trTwistLag == null ? 0.35 : P.trTwistLag); gl.uniform1f(pr.u.uStreak, P.trFollow ? P.trV * (R.subW || 0) : 0); gl.uniform1f(pr.u.uTp, Tp); gl.uniform1f(pr.u.uInh, P.trInh); gl.uniform1f(pr.u.uK, P.trDrag); gl.uniform1f(pr.u.uG, G * P.trGrav);
       gl.uniform3fv(pr.u['uWave[0]'], wv); gl.uniform1i(pr.u.uSeed, P.seed | 0); gl.uniform2fv(pr.u.uBot, R.bot); gl.uniform2fv(pr.u.uFadeEnd, R.fadeEnd);
       gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
-      gl.uniform4fv(pr.u.uChan, [0, 1, 0, 0]); gl.uniform1f(pr.u.uW, w);
+      setParticleUniforms(pr, [0, 1, 0, 0]); gl.uniform4fv(pr.u.uChan, [0, 1, 0, 0]); gl.uniform1f(pr.u.uW, w);
       gl.bindVertexArray(emptyVAO);
       for (const q of pops) {
         gl.uniform1f(pr.u.uRate, q.rate); gl.uniform1i(pr.u.uMp, q.Mp); gl.uniform1i(pr.u.uPop, q.salt); gl.uniform1f(pr.u.uLife, q.life);
@@ -122,7 +123,7 @@ function trailFadeSetup(R, P, fEnd, dur) {
 }
 // 取景：低分辨率先渲几个相位（含消散末段），按与烘焙相同的曝光口径找「看得见」的范围；星头固定在面片上端
 function trailBounds(P, extraR) {
-  const R = makeTrailRenderer(P), Tp = R.Tp, N = 160, NHt = 1280;
+  const R = trailRendererFor(P), Tp = R.Tp, N = 160, NHt = 1280;
   const guess = Math.max(8, P.trV * Math.max(...R.pops.map(q => q.life)) * 1.3);
   const view = [0, -guess / 2 + guess * 0.02, guess * N / NHt / 2 * 4, guess / 2 + guess * 0.04];
   const t = new Target(N, NHt, gl.RGBA16F), buf = new Float32Array(N * NHt * 4);
@@ -174,10 +175,10 @@ function trailSizeKeys(path, V, Lm) {
 // 烘焙：循环 + 两个消散版本（30 fps / 20 fps，各 64 帧）
 async function bakeTrail(P, scale, onProg) {
   P = { ...P, form: 'trail', outMode: 'combined', frameMode: 'uniform', zoom: 'off', autoGrid: 0 };
-  const L = layoutOf(P), F = L.F, fps = P.trFps || 30, R = makeTrailRenderer(P), Tp = R.Tp;
+  const L = layoutOf(P), F = L.F, fps = P.trFps || 30, R = trailRendererFor(P), Tp = R.Tp;
   const path = risePath(P), fit = fitRise(path), T = fit.T, fEnd = Math.floor(((T % Tp) / Tp) * F + 1e-6) % F;
   // 取景：把两个消散版本的末段也算进去（火花会慢慢下坠、散开）
-  const Rf = makeTrailRenderer(P); trailFadeSetup(Rf, P, fEnd, F / 20);
+  const Rf = trailRendererFor(P); trailFadeSetup(Rf, P, fEnd, F / 20);
   const ftimes = []; for (let i = 0; i < 6; i++) ftimes.push(Rf.stop + i / 5 * F / 20);
   const box = trailBounds(P, { R: Rf, times: ftimes });
   if (P.autoGridTrail !== 0) {
@@ -194,7 +195,7 @@ async function bakeTrail(P, scale, onProg) {
   const expo = [b.meta.expoH, b.meta.expoT];
   b.fades = [];
   for (const [k, fr] of P._loopOnly ? [] : [[0, 30], [1, 20]]) {
-    const Rd = makeTrailRenderer(P), { stop } = trailFadeSetup(Rd, P, fEnd, F / fr);
+    const Rd = trailRendererFor(P), { stop } = trailFadeSetup(Rd, P, fEnd, F / fr);
     const tt = [], dd = []; for (let f = 0; f < F; f++) { tt.push(f / fr); dd.push(f === 0 ? Tp / F : 1 / fr); }
     const pf = trailPlan(P, box, tt, dd, { loop: false, t0: stop, duration: F / fr });
     Rd.frameT = f => stop + tt[f]; Rd.bot = bot;

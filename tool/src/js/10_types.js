@@ -50,13 +50,14 @@ const BASE = {
   trCRate: 60, trCLife: 0.9, trCSpread: 1.2, trCSize: 0.18, trCBright: 0.12,
   trWRate: 0, trWLife: 0.12, trWSpread: 14, trWSize: 0.06, trWBright: 0.06,
   trHeadSize: 0.26, trHeadBright: 1.2, trHalo: 3, trHaloBright: 0.15,
-  trTwist: 0.35, trTwistN: 5, trWiggle: 0.08, trTwistLag: 0.35, trFollow: 0, trBright: 1.6, trExport4K: 1, trIgnite: 0,
+  trTwist: 0.35, trTwistN: 5, trWiggle: 0.08, trTwistLag: 0.35, trFollow: 0, trBright: 1.6, trExport4K: 1, trIgnite: 0, trPhys: 0,
   // 地面循环
   loopT: 1, nozzles: 1, fanAngle: 70, spacing: 6, shotRate: 3, shotSpeed: 70, cometBurn: 1.4, burstStars: 0,
   wheelR: 3, jetSpeed: 28, jetCone: 10, jetDir: 90, groundH: 0,
   // 取帧与输出
   shutter: 0.6, fpsFloor: 24,
-  texW: 2048, texH: 2048, cols: 8, rows: 8, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'auto', zoom: 'tight', engine: 'gpu',
+  qSS: 2, qHz: 300, qMaxSub: 16, qKernel: 0, qCore: 0,   // 画质（05_quality.js）：默认 = 3.7 原做法
+  texW: 2048, texH: 2048, cols: 8, rows: 8, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'auto', zoom: 'on', engine: 'gpu',
   form: 'master', segAt: 0, unitElev: 0, unitFlip: 0, cellPad: 2, autoGrid: 1
 };
 const RAMP_POS = [0, 0.3, 0.65, 1];
@@ -301,26 +302,27 @@ const SCHEMA = [
     ['bunpoN', '分叉数量', '支', 2, 6, 1, P => P.riseStyle === 'bunpo' && !isTrail(P)]
   ] },
   { sec: '尾缀序列 · 形态', show: isTrail, hint: '弹体随体坐标：星头在面片上端，火花向后拖成尾迹。火花按周期性编号发射，第 64 帧与第 0 帧逐像素相同（真循环）。', items: [
+    ['trPhys', '粒子模型（0 = V5 原版，1 = 物理：物理尾缀的三层喷出物）', '', 0, 1, 1],
     ['trV', '上升速度（烘焙时）', 'm/s', 10, 150, 0.5],
-    ['trInh', '火花跟随弹体', '', 0, 0.8, 0.01],
-    ['trDrag', '火花阻力', '1/s', 0.3, 10, 0.05],
-    ['trGrav', '火花下坠', '×', 0, 2, 0.01],
-    ['trCool', '冷却快慢', '×', 0.3, 2, 0.01],
-    ['trIgnite', '火花燃旺时间', 's', 0, 0.6, 0.005],
-    ['trTwist', '螺旋扭动幅度', 'm', 0, 6, 0.01],
-    ['trTwistN', '每个循环扭几圈', '圈', 1, 8, 1],
-    ['trWiggle', '细碎抖动', 'm', 0, 1, 0.01],
-    ['trTwistLag', '扭动滞后（星头走直线，火花离开后多久漂到波形上）', 's', 0, 1.5, 0.01],
+    ['trInh', '火花跟随弹体', '', 0, 0.8, 0.01, P => !isPhysBody(P)],
+    ['trDrag', '火花阻力', '1/s', 0.3, 10, 0.05, P => !isPhysBody(P)],
+    ['trGrav', '火花下坠', '×', 0, 2, 0.01, P => !isPhysBody(P)],
+    ['trCool', '冷却快慢', '×', 0.3, 2, 0.01, P => !isPhysBody(P)],
+    ['trIgnite', '火花燃旺时间', 's', 0, 0.6, 0.005, P => !isPhysBody(P)],
+    ['trTwist', '螺旋扭动幅度', 'm', 0, 6, 0.01, P => !isPhysBody(P)],
+    ['trTwistN', '每个循环扭几圈', '圈', 1, 8, 1, P => !isPhysBody(P)],
+    ['trWiggle', '细碎抖动', 'm', 0, 1, 0.01, P => !isPhysBody(P)],
+    ['trTwistLag', '扭动滞后（星头走直线，火花离开后多久漂到波形上）', 's', 0, 1.5, 0.01, P => !isPhysBody(P)],
     ['trFollow', '快门跟拍（1 = 火星拖成短竖线，像跟拍的实拍；0 = 固定机位，火星是圆点）', '', 0, 1, 1],
     ['seed', '随机种子', '', 1, 999, 1]
   ] },
-  { sec: '尾缀序列 · 星头', show: isTrail, items: [
+  { sec: '尾缀序列 · 星头', show: P => isTrail(P) && !isPhysBody(P), items: [
     ['trHeadSize', '星头大小', 'm', 0.03, 2, 0.01],
     ['trHeadBright', '星头亮度', '×', 0, 4, 0.05],
     ['trHalo', '光晕大小（× 星头）', '×', 1, 8, 0.1],
     ['trHaloBright', '光晕亮度', '×', 0, 1, 0.01]
   ] },
-  { sec: '尾缀序列 · 火花（四层）', show: isTrail, hint: '白热细火花 = 星头后面连续的白亮段；金色火星 = 中段的团块；橙色大火星 = 末段一颗颗的点；星头丝火花 = 大型礼花星头周围甩出的细丝。长度 ≈ 上升速度 × 寿命，粗细看散布和颗粒大小。', items: [
+  { sec: '尾缀序列 · 火花（四层）', show: P => isTrail(P) && !isPhysBody(P), hint: '白热细火花 = 星头后面连续的白亮段；金色火星 = 中段的团块；橙色大火星 = 末段一颗颗的点；星头丝火花 = 大型礼花星头周围甩出的细丝。长度 ≈ 上升速度 × 寿命，粗细看散布和颗粒大小。', items: [
     ['trFRate', '白热细火花 · 密度', '个/秒', 0, 20000, 10], ['trFLife', '白热细火花 · 寿命', 's', 0.03, 2, 0.01], ['trFSpread', '白热细火花 · 散布', 'm/s', 0, 6, 0.01], ['trFSize', '白热细火花 · 颗粒', 'm', 0.02, 1, 0.005], ['trFBright', '白热细火花 · 亮度', '×', 0, 0.5, 0.001],
     ['trMRate', '金色火星 · 密度', '个/秒', 0, 8000, 10], ['trMLife', '金色火星 · 寿命', 's', 0.05, 3, 0.01], ['trMSpread', '金色火星 · 散布', 'm/s', 0, 8, 0.01], ['trMSize', '金色火星 · 颗粒', 'm', 0.02, 1, 0.005], ['trMBright', '金色火星 · 亮度', '×', 0, 0.5, 0.001],
     ['trCRate', '橙色大火星 · 密度', '个/秒', 0, 3000, 5], ['trCLife', '橙色大火星 · 寿命', 's', 0.05, 4, 0.01], ['trCSpread', '橙色大火星 · 散布', 'm/s', 0, 10, 0.01], ['trCSize', '橙色大火星 · 颗粒', 'm', 0.02, 1.5, 0.005], ['trCBright', '橙色大火星 · 亮度', '×', 0, 1, 0.001],
@@ -335,10 +337,10 @@ const SCHEMA = [
     ['phHead', '星头在画面的位置（离顶）', '', 0.05, 0.6, 0.01],
     ['phExpo', '曝光倍数', '×', 0.1, 8, 0.05]
   ] },
-  { sec: '物理尾缀 · 弹道与空气', show: isPhys, items: [
-    ['phV0', '出膛速度', 'm/s', 40, 200, 0.5],
-    ['phK', '弹体空气阻力 k', '1/m', 0.0005, 0.01, 0.00005],
-    ['phT', '开花时刻（飞行时间）', 's', 1, 10, 0.05],
+  { sec: '物理尾缀 · 弹道与空气', show: P => isPhys(P) || isPhysBody(P), items: [
+    ['phV0', '出膛速度', 'm/s', 40, 200, 0.5, isPhys],
+    ['phK', '弹体空气阻力 k', '1/m', 0.0005, 0.01, 0.00005, isPhys],
+    ['phT', '开花时刻（飞行时间）', 's', 1, 10, 0.05, isPhys],
     ['phWob', '弹体摆动（尾迹大波浪）', 'm', 0, 3, 0.01],
     ['phSpinF', '弹体自转', '转/秒', 0, 20, 0.1],
     ['phSpinA', '自转带出的横向速度（细碎小波纹）', 'm/s', 0, 8, 0.05],
@@ -346,23 +348,23 @@ const SCHEMA = [
     ['phTurb', '冻结湍流', 'm/s', 0, 1.5, 0.01],
     ['seed', '随机种子', '', 1, 999, 1]
   ] },
-  { sec: '物理尾缀 · 星头燃气焰', show: isPhys, hint: '泪滴形：长度 = 静止长度 + 系数 × 速度。', items: [
+  { sec: '物理尾缀 · 星头燃气焰', show: P => isPhys(P) || isPhysBody(P), hint: '泪滴形：长度 = 静止长度 + 系数 × 速度。', items: [
     ['phFlL0', '静止长度', 'm', 0, 8, 0.05], ['phFlLv', '随速度变长', 's', 0, 0.15, 0.001],
     ['phFlW', '半宽', 'm', 0.02, 1, 0.01], ['phFlI', '亮度', '', 0, 6, 0.05]
   ] },
-  { sec: '物理尾缀 · 火粉（白热段）', show: isPhys, hint: '极密、极短命的细火花，连成星头后面的过曝白热段；长度 ≈ 喷出后的相对速度 × 寿命。', items: [
+  { sec: '物理尾缀 · 火粉（白热段）', show: P => isPhys(P) || isPhysBody(P), hint: '极密、极短命的细火花，连成星头后面的过曝白热段；长度 ≈ 喷出后的相对速度 × 寿命。', items: [
     ['phARate', '密度', '颗/秒', 0, 40000, 100], ['phALife', '寿命', 's', 0.03, 1, 0.01], ['phAJet', '向后喷出速度', 'm/s', 0, 80, 0.5],
     ['phACone', '横向散开', 'm/s', 0, 8, 0.05], ['phAKd', '阻力', '1/s', 1, 60, 0.5], ['phAT0', '温度', 'K', 1800, 3000, 10],
     ['phAI', '亮度', '', 0, 0.05, 0.0002], ['phAR', '发光半径', 'm', 0.005, 0.1, 0.001]
   ] },
-  { sec: '物理尾缀 · 金火星（木炭）', show: isPhys, hint: '一簇一簇喷出；寿命对数正态（寿命 ∝ 粒径²）；出喷口 T0 很热，离开燃气约 tc 秒降到空气中的燃烧温度 Tb，快烧完才降到熄灭温度。', items: [
+  { sec: '物理尾缀 · 金火星（木炭）', show: P => isPhys(P) || isPhysBody(P), hint: '一簇一簇喷出；寿命对数正态（寿命 ∝ 粒径²）；出喷口 T0 很热，离开燃气约 tc 秒降到空气中的燃烧温度 Tb，快烧完才降到熄灭温度。', items: [
     ['phBRate', '密度', '颗/秒', 0, 8000, 10], ['phBPuff', '每簇颗数', '颗', 1, 8, 1], ['phBLife', '寿命中位', 's', 0.2, 5, 0.01],
     ['phBLsig', '寿命离散（对数标准差）', '', 0, 1.5, 0.01], ['phBJet', '向后喷出速度', 'm/s', 0, 80, 0.5], ['phBCone', '横向散开', 'm/s', 0, 8, 0.05],
     ['phBKd', '阻力', '1/s', 1, 60, 0.5], ['phBT0', '出喷口温度 T0', 'K', 1800, 3000, 10], ['phBTb', '空气中燃烧温度 Tb', 'K', 1500, 2700, 5],
     ['phBTc', '降到 Tb 的时间 tc', 's', 0.02, 2, 0.01], ['phBTend', '熄灭温度', 'K', 900, 2000, 10], ['phBPm', '烧到最后才暗（指数）', '', 0.1, 2, 0.01],
     ['phBI', '亮度', '', 0, 0.3, 0.0005], ['phBTw', '闪烁', '', 0, 1, 0.01], ['phBR', '发光半径', 'm', 0.01, 0.3, 0.005]
   ] },
-  { sec: '物理尾缀 · 落火', show: isPhys, hint: '少量长寿大颗，下坠快，零星掉在尾迹下方。', items: [
+  { sec: '物理尾缀 · 落火', show: P => isPhys(P) || isPhysBody(P), hint: '少量长寿大颗，下坠快，零星掉在尾迹下方。', items: [
     ['phCRate', '密度', '颗/秒', 0, 200, 1], ['phCLife', '寿命', 's', 0.2, 5, 0.05], ['phCKd', '阻力', '1/s', 0.5, 20, 0.1],
     ['phCI', '亮度', '', 0, 3, 0.01], ['phCR', '发光半径', 'm', 0.01, 0.3, 0.005]
   ] },
@@ -391,5 +393,12 @@ const SCHEMA = [
     ['segAt', '分段时刻（0 = 自动）', 's', 0, 12, 0.05, P => P.form === 'segments'],
     ['unitElev', '代表星仰角', '°', -60, 60, 1, P => P.form === 'unit' && isAir(P)],
     ['cellPad', '格子留边', 'px', 0, 8, 1]
+  ] },
+  { sec: '画质（烘焙采样）', show: isSeq, hint: '只影响烘焙出来的贴图有多干净，不改形状、时间和颜色。精细档：超采样 4、快门采样 960 Hz / 64、像素覆盖积分 1、亮核 0.25（移植自 Ultra 实验）。默认 2 / 300 / 16 / 0 / 0 是 3.7 原做法。', items: [
+    ['qSS', '空间超采样（每边）', '×', 1, 8, 1],
+    ['qHz', '快门采样频率', 'Hz', 120, 1920, 30],
+    ['qMaxSub', '每帧最多子样本', '次', 1, 128, 1],
+    ['qKernel', '光点像素覆盖积分（0 关 / 1 开）', '', 0, 1, 1],
+    ['qCore', '亮核占比', '', 0, 0.6, 0.01]
   ] }
 ];

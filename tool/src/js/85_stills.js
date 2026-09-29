@@ -28,7 +28,7 @@ async function renderStills(P0, M0, opt) {
   const RG = new Target(px, px, gl.RGBA16F), H = new Target(px, px, gl.RGBA16F, true);
   const gpu = P.engine === 'gpu', track = gpu && !ground ? buildTrack(P) : null, E = ground ? buildEmitter(P) : null, view = [cx, cy, half, half], ppm = px / (2 * half);
   const drawAt = (sim, t, tw) => {
-    RG.clear(); RG.bind(); additive(true);
+    setParticleProfile(P); RG.clear(); RG.bind(); additive(true);
     if (ground) { for (let j = 0; j < nsub; j++) { const ts = t - W + (j + 0.5) * W / nsub; drawEmitHeads(E, ts, view, ppm, [1, 0, 0, 0], 1 / nsub, tw * 16 + j); drawEmit(E, ts, view, ppm, [0, 1, 0, 0], 1 / nsub, tw * 16 + j); } additive(false); return; }
     for (let j = 0; j < nsub; j++) {
       const ts = Math.max(0, t - W + (j + 0.5) * W / nsub);

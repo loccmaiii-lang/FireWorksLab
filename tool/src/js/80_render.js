@@ -135,11 +135,12 @@ function prepSlot(slot, P, gen) {
 }
 function drawLiveScene(slot, P, t, view, ppm) {
   const fam = familyOf(P.type), gpu = P.engine === 'gpu';
+  setParticleProfile(P);
   if (isPhys(P)) return drawPhysTrail(slot, P, t, view, ppm);
   if (isTrail(P)) {
     // 随体坐标里实时模拟：上升段连续播放，到顶后按 20 fps 版本的消散时长熄灭
     const T = riseInfo(P).ta, F = layoutOf(P).F;
-    if (!slot.trailR) slot.trailR = makeTrailRenderer(P);
+    if (!slot.trailR) slot.trailR = trailRendererFor(P);
     const R = slot.trailR, Tp = R.Tp, fEnd = Math.floor(((T % Tp) / Tp) * F + 1e-6) % F;
     if (t <= T) { R.stop = -1; R.stopE = -1; R.fadeK = 1; R.frameT = null; R.draw(t % Tp, view, ppm, 1, 0, 0); }
     else { trailFadeSetup(R, P, fEnd, F / 20); R.frameT = null; R.draw(R.stop + (t - T), view, ppm, 1, 0, 0); }

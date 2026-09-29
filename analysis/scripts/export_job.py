@@ -3,7 +3,8 @@
   { "id": "JM1", "type": "export", "name": "...",
     "replica": "JM",                 # tool/src/js/15_replica.js 里的复刻 id（或者用 "params": 参数 JSON 路径）
     "exports": { "导出名": {参数改动}, ... } }   # 每一项导出一套（贴图、帧号测试图、渐变图、参数表、曲线、JSON）
-大文件留在本机 analysis/local/输出/<id>/<导出名>/；上传到 analysis/results/<id>/ 的只有参数表、JSON 和贴图的缩略预览。
+素材包（spec/pipeline_v1.md：一个效果一个固定目录，cascade.json + 贴图，文件名固定）留在本机 analysis/local/输出/素材包/<导出名>/，
+重新导出覆盖同一目录；上传到 analysis/results/<id>/ 的只有参数表、JSON、cascade.json 和贴图的缩略预览。
 """
 import os, sys, json, io, base64, zipfile, time
 import numpy as np
@@ -25,7 +26,7 @@ def preview(png_path, out_path, max_side=1024):
 
 
 def run(job, s, out, log=print):
-    big = os.path.join(ROOT, 'analysis', 'local', '输出', job['id'])
+    big = os.path.join(ROOT, 'analysis', 'local', '输出', '素材包')
     for name, over in job['exports'].items():
         t = time.time()
         if job.get('replica'):
@@ -36,12 +37,16 @@ def run(job, s, out, log=print):
             const u8 = await __fw.exportFiles(P, M, {json.dumps(name)}); let t = '';
             for (let i = 0; i < u8.length; i += 0x8000) t += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(t); }})()""")
         d = os.path.join(big, name); os.makedirs(d, exist_ok=True)
+        for old in os.listdir(d):   # 固定目录：重新导出前清掉上一版的文件（引擎里右键「重新导入」读的就是这里）
+            if os.path.isfile(os.path.join(d, old)): os.remove(os.path.join(d, old))
         zipfile.ZipFile(io.BytesIO(base64.b64decode(b64))).extractall(d)
         files = sorted(os.listdir(d)); log(f'{name} 导出 {time.time() - t:.0f} 秒：' + '、'.join(files))
         for f in files:
             p = os.path.join(d, f)
-            if f.endswith(('.txt', '.json', '.csv')):
+            if f.endswith(('.txt', '.json', '.csv')) and not f.startswith('cascade'):
                 import shutil; shutil.copy(p, os.path.join(out, f))
+            elif f.startswith('cascade') and f.endswith('.json'):   # 几套导出各有一个 cascade.json：上传时加上导出名
+                import shutil; shutil.copy(p, os.path.join(out, f'{name}_{f}'))
             elif f.endswith('.png') and not any(k in f for k in ('_Ramp', '_Cutout', '_FrameTest')):
                 preview(p, os.path.join(out, f[:-4] + '_预览.jpg'))
     # 烘焙器迭代区的预览（真实导出贴图原尺寸，按引擎方式播放）

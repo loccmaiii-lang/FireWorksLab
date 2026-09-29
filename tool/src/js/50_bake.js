@@ -12,6 +12,7 @@ function makeRenderer(P, kind) {
     return {
       E, slots: E.total, Tp: E.Tp,
       draw(ts, view, ppm, w, tw, f) {
+        setParticleProfile(P);
         if (rl) {
           const fi = ((f % F) + F) % F, r = new RNG(P.seed * 977 + fi);
           let I = P.headBright * (1 + P.flicker * (r.u() * 2 - 1) * 0.8);
@@ -25,6 +26,7 @@ function makeRenderer(P, kind) {
     };
   }
   const sim = new Sim(P), track = gpu ? buildTrack(P) : null, unit = kind === 'unit';
+  let lastTs = -Infinity;
   const R = {
     sim, track, slots: track ? track.total : 0,
     xfAt() {
@@ -33,7 +35,10 @@ function makeRenderer(P, kind) {
       return [s.x, s.y, Math.cos(ang), Math.sin(ang)];
     },
     draw(ts, view, ppm, w, tw) {
-      if (ts < sim.t - 1e-6) { R.reset(); }
+      setParticleProfile(P);
+      // 按「请求的时刻」判断回退：1/480 s 的物理步可能略超过请求时刻，快门子样本超过 480 Hz 时不能因此每次都从头重算（Ultra 修正）
+      if (ts < lastTs - 1e-6) { R.reset(); }
+      lastTs = ts;
       while (sim.t < ts - 1e-9) sim.step(H_STEP);
       const [nh, nt] = sim.gather(bufH, bufT), xf = unit ? R.xfAt() : null;
       let l = 0; for (let i = 0; i < nh; i++) l += bufH[i * 4 + 2]; for (let i = 0; i < nt; i++) l += bufT[i * 4 + 2] * 0.3;
@@ -45,7 +50,7 @@ function makeRenderer(P, kind) {
     reset() { R.sim = new Sim(P); }, dispose() { disposeTrack(track); }
   };
   // reset 需要替换闭包里的 sim
-  R.reset = () => { const s2 = new Sim(P); Object.assign(sim, s2); };
+  R.reset = () => { const s2 = new Sim(P); Object.assign(sim, s2); lastTs = -Infinity; };
   return R;
 }
 
@@ -129,14 +134,15 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   const L = pl.L;
   const N = Math.round(P.texW * scale), NH = Math.round(P.texH * scale);
   const cw = Math.round(L.cellW * scale), chh = Math.round(L.cellH * scale);
-  const ssW = cw * 2, ssH = chh * 2;
+  const q = qualityOf(P); setParticleProfile(P);
+  const ssW = cw * q.ss, ssH = chh * q.ss;
   gl.activeTexture(gl.TEXTURE0);
   const fH = new Target(N, NH, gl.RGBA16F), fT = new Target(N, NH, gl.RGBA16F), sst = new Target(ssW, ssH, gl.RGBA16F);
   fH.clear(); fT.clear();
   const t0 = performance.now();
   for (let f = 0; f < L.F; f++) {
     const tc = pl.times[f], W = Math.max(P.shutter * pl.dur[f], 1e-4);
-    const nsub = clamp(Math.ceil(W / (1 / 300)), 1, 16);
+    const nsub = clamp(Math.ceil(W * q.hz), 1, q.maxSub);
     const [sx, sy] = sizeXY(pl, tc), c = centerAt(pl, tc), view = [c[0], c[1], pl.HX * sx, pl.HY * sy], ppm = ssW / (pl.Ww * sx);
     PPMY = ssH / (pl.Wh * sy);
     sst.clear(); sst.bind(); additive(true);
@@ -149,7 +155,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
     const ch = Math.floor(f / L.per), k = f % L.per, col = k % L.cols, row = Math.floor(k / L.cols);
     const fade = pl.loop || extra.noFade ? 1 : clamp((pl.duration - tc) / 0.3, 0, 1);
     gl.useProgram(PR.pack.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, sst.tex);
-    gl.uniform1i(PR.pack.u.uS, 0); gl.uniform1f(PR.pack.u.uFade, fade);
+    gl.uniform1i(PR.pack.u.uS, 0); gl.uniform1i(PR.pack.u.uSS, q.ss); gl.uniform1f(PR.pack.u.uFade, fade);
     gl.uniform1f(PR.pack.u.uPad, (P.cellPad || 0) * scale); gl.uniform2f(PR.pack.u.uCell, cw, chh);
     for (const [tg, m] of [[fH, [1, 0, 0, 0]], [fT, [0, 1, 0, 0]]]) {
       tg.bind(col * cw, NH - (row + 1) * chh, cw, chh);
@@ -175,7 +181,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   gl.activeTexture(gl.TEXTURE0);
   fH.dispose(); fT.dispose(); sst.dispose();
   const bakeMs = performance.now() - t0;
-  const b = { N, NH, cw, chh, scale, head, tail, P, meta: { ...pl, expoH: eH, expoT: eT, sparkSlots: R.slots || 0, bakeMs } };
+  const b = { N, NH, cw, chh, scale, head, tail, P, meta: { ...pl, quality: q, expoH: eH, expoT: eT, sparkSlots: R.slots || 0, bakeMs } };
   analyze(b);
   return b;
 }
@@ -455,6 +461,7 @@ function bakeKind(P) {
 }
 function unitAllowed(P) { return familyOf(P.type) === 'aerial' && !['senrin', 'crossette', 'hachi'].includes(P.type) && (P.pattern === 'sphere' || P.pattern === 'half'); }
 async function bake(P, scale, onProg) {
+  if (P.zoom === 'tight') P = { ...P, zoom: 'on' };   // 紧凑取景已禁用（引擎里会抖）
   P = { ...P };
   switch (bakeKind(P)) {
     case 'loop': return bakeLoop(P, scale, onProg);

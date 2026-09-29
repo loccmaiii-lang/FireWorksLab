@@ -104,8 +104,8 @@ Size By Life（X、Y 相同；线性插值）：面片随开花放大，每帧�
 ${keyLines(m.sizeKeys)}` : `Initial Location：Z = ${cm(m.cy)} cm（精灵中心相对爆点的高度，这样爆点正好在发射器原点）`}
 Dynamic Parameter：第三通道 = 帧号；Use Emitter Time 不勾选；曲线插值 Linear
   相对时间    帧号
-${keyLines(m.keys)}
-  材质取整显示，不做帧间混合。烘焙时每一帧取的正是这条曲线上对应帧号的时刻，画面与引擎一致。
+${keyLines(fwlFrameKeys(m.keys, m.L.F))}
+  材质取整显示，不做帧间混合。最后一个值是「总帧数 − 0.01」：到总帧数会从第 0 帧重新开始。烘焙时每一帧取的正是这条曲线上对应帧号的时刻，画面与引擎一致。
 ${colorSection(M, m.duration, m.t0 || 0, !!b.tail)}
 Light（可选）：Brightness Over Life 相对值，乘以期望的峰值亮度
 ${keyLines(m.lightKeys)}
@@ -118,7 +118,7 @@ ${pasteSection([
     ['Const Acceleration → Acceleration', ueVec(m.path.ax * 100, 0, -m.path.ay * 100)]]
    : m.zoom ? [['Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points', ueVecPts(m.sizeKeys.map(([u, v]) => [u, [v, v, 1]]))]]
    : [['Initial Location → Start Location → Distribution Vector Constant → Constant', ueVec(0, 0, m.cy * 100)]]),
-  ['Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(m.keys)],
+  ['Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(fwlFrameKeys(m.keys, m.L.F))],
   ['Color Over Life → Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）', ueVecPts(colorKeys(M, m.duration, m.t0 || 0).map(([u, c]) => [u, c.map(x => x * (M.headInt || 1))]))]
 ])}【帧与流畅度${label || ''}】
 平均 ${fx(m.avgFps, 1)} fps，最低 ${fx(m.minFps, 1)} fps，每帧最大位移 ${fx(m.maxDisp, 1)} 像素（建议 ≤ 3）
@@ -154,7 +154,7 @@ ${colorSection(M, Du, 0, !!b.tail)}
 ${pasteSection([
   ['Initial Size → Start Size → Distribution Vector Constant → Constant', ueVec(m.Ww * 100, m.Wh * 100, 1)],
   ['Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points', ueVecPts(mergeXY(m.sizeKeysX, m.sizeKeysY))],
-  ['Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(m.keys)],
+  ['Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(fwlFrameKeys(m.keys, m.L.F))],
   ['Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）', ueVecPts(colorKeys(M, Du, 0).map(([u, c]) => [u, c.map(x => x * (M.headInt || 1))]))]
 ])}轨迹拟合（线性阻力 + 恒定加速度 对 真实二次阻力）：初速 ${fx(f.v0, 1)} m/s，阻力 ${fx(f.k, 3)} /s，下坠加速度 ${fx(f.a, 2)} m/s²，
   位置误差约为花半径的 ${fx(f.err * 100, 1)}%。开花闪光请另挂一个短序列（母版模式导出前 0.3 s）或项目现有闪光贴图。
@@ -304,7 +304,7 @@ function checkSection(b) {
   for (let s = b, i = 0; s; s = s.next, i++) {
     const c = s.meta.check, m = s.meta, L = m.L, pre = b.next ? `段 ${'AB'[i]}：` : '';
     if (!c) continue;
-    if (m.fill) lines.push(`${pre}画面占比：平均 ${Math.round(m.fill.avg * 100)}%，最差 10% 的帧 ≥ ${Math.round(m.fill.p10 * 100)}%${m.fill.avg < 0.9 ? (m.tight ? '' : '；面片取景改「紧凑」可提高到 90% 以上') : ''}`);
+    if (m.fill) lines.push(`${pre}画面占比：平均 ${Math.round(m.fill.avg * 100)}%，最差 10% 的帧 ≥ ${Math.round(m.fill.p10 * 100)}%${m.fill.avg < 0.9 ? '（紧凑取景已禁用：引擎里会抖；想更满可以减少留边或改随开花放大）' : ''}`);
     lines.push(`${pre}过曝：${c.clipFrames.length ? `第 ${c.clipFrames.slice(0, 8).map(f => f + 1).join('、')}${c.clipFrames.length > 8 ? '…' : ''} 帧超过 2% 像素顶到 255，可降低星头亮度或改 Gamma 2.2` : '无'}`);
     lines.push(`${pre}边缘渗色：${c.edgeFrames.length ? `${c.edgeFrames.length} 帧内容碰到格子边缘，mip 或压缩时会串到相邻格子；加大「格子留边」或序列时长内缩小取景` : `无（留边 ${s.P.cellPad} 像素）`}`);
     if (L.chans === 4) lines.push(`${pre}通道布局：${c.chanUse.map((u, k) => 'RGBA'[k] + (u ? ' 有内容' : ' 空')).join('，')}${c.chanUse.some(u => !u) ? '；有空通道，可减少帧数或改单通道' : ''}`);
