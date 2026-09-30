@@ -1,0 +1,35 @@
+{
+ "total_s": 5.2,
+ "layers": [
+  {
+   "pack": "QiuXingC_1",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 3.14,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0035,
+   "empty_frames": 29,
+   "center_jump_max_px": 2.94
+  },
+  {
+   "pack": "QiuXingC_2",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 5.2,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0001,
+   "empty_frames": 46,
+   "center_jump_max_px": 4.65
+  }
+ ]
+}

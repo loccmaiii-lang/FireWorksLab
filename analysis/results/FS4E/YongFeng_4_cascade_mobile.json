@@ -1,0 +1,246 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "YongFeng_4",
+ "platform": "mobile",
+ "source": {
+  "tool": "烟花母版烘焙器 3.7",
+  "type": "botan",
+  "form": "master",
+  "quality": {
+   "ss": 2,
+   "hz": 300,
+   "kernel": 0,
+   "core": 0
+  }
+ },
+ "textures": {
+  "seq": {
+   "file": "T_YongFeng_4.png",
+   "class": "flipbook",
+   "cols": 8,
+   "rows": 8,
+   "channels": 4,
+   "frames": 256
+  },
+  "cutout": {
+   "file": "T_YongFeng_4_Cutout.png",
+   "class": "cutout"
+  },
+  "ramp": {
+   "file": "T_YongFeng_4_Ramp.png",
+   "class": "ramp"
+  }
+ },
+ "materials": {
+  "main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 8,
+    "cols": 8
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 32015,
+  "preview_warmup_s": 1.2
+ },
+ "emitters": [
+  {
+   "name": "Main",
+   "material": "main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 6,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutout",
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 6
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       24626.7,
+       24626.7,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         0.155,
+         0.155,
+         1
+        ]
+       ],
+       [
+        0.0149,
+        [
+         0.168,
+         0.168,
+         1
+        ]
+       ],
+       [
+        0.0753,
+        [
+         0.356,
+         0.356,
+         1
+        ]
+       ],
+       [
+        0.1608,
+        [
+         0.508,
+         0.508,
+         1
+        ]
+       ],
+       [
+        0.2962,
+        [
+         0.672,
+         0.672,
+         1
+        ]
+       ],
+       [
+        0.4649,
+        [
+         0.833,
+         0.833,
+         1
+        ]
+       ],
+       [
+        0.6691,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0
+        ],
+        [
+         0.0128,
+         26.14
+        ],
+        [
+         0.0233,
+         42.95
+        ],
+        [
+         0.0524,
+         73.05
+        ],
+        [
+         0.0962,
+         97.37
+        ],
+        [
+         0.1566,
+         117.25
+        ],
+        [
+         0.2378,
+         133.86
+        ],
+        [
+         1,
+         255.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         0.6514,
+         0.1022
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         0.6514,
+         0.1022
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  }
+ ]
+}

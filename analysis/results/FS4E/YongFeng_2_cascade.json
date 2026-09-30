@@ -1,0 +1,310 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "YongFeng_2",
+ "platform": "pc",
+ "source": {
+  "tool": "烟花母版烘焙器 3.7",
+  "type": "kiku",
+  "form": "master",
+  "quality": {
+   "ss": 2,
+   "hz": 300,
+   "kernel": 0,
+   "core": 0
+  }
+ },
+ "textures": {
+  "seq": {
+   "file": "T_YongFeng_2.png",
+   "class": "flipbook",
+   "cols": 8,
+   "rows": 8,
+   "channels": 4,
+   "frames": 256
+  },
+  "cutout": {
+   "file": "T_YongFeng_2_Cutout.png",
+   "class": "cutout"
+  },
+  "ramp": {
+   "file": "T_YongFeng_2_Ramp.png",
+   "class": "ramp"
+  }
+ },
+ "materials": {
+  "main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 8,
+    "cols": 8
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 60523,
+  "preview_warmup_s": 1.2
+ },
+ "emitters": [
+  {
+   "name": "Main",
+   "material": "main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 10.02,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutout",
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 10.02
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       46556.3,
+       46556.3,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         0.106,
+         0.106,
+         1
+        ]
+       ],
+       [
+        0.0127,
+        [
+         0.125,
+         0.125,
+         1
+        ]
+       ],
+       [
+        0.085,
+        [
+         0.362,
+         0.362,
+         1
+        ]
+       ],
+       [
+        0.1624,
+        [
+         0.503,
+         0.503,
+         1
+        ]
+       ],
+       [
+        0.2759,
+        [
+         0.659,
+         0.659,
+         1
+        ]
+       ],
+       [
+        0.4231,
+        [
+         0.812,
+         0.812,
+         1
+        ]
+       ],
+       [
+        0.6938,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0
+        ],
+        [
+         0.0089,
+         21.78
+        ],
+        [
+         0.0177,
+         38.38
+        ],
+        [
+         0.0289,
+         53.74
+        ],
+        [
+         0.0414,
+         65.95
+        ],
+        [
+         0.0738,
+         85.57
+        ],
+        [
+         0.1212,
+         101.19
+        ],
+        [
+         1,
+         255.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         0.5776,
+         0.4564,
+         1
+        ]
+       ],
+       [
+        0.0749,
+        [
+         0.5776,
+         0.4564,
+         1
+        ]
+       ],
+       [
+        0.1248,
+        [
+         0.807,
+         0.3515,
+         0.7454
+        ]
+       ],
+       [
+        0.2096,
+        [
+         0.807,
+         0.3515,
+         0.7454
+        ]
+       ],
+       [
+        0.2595,
+        [
+         0.9047,
+         0.3916,
+         0.8388
+        ]
+       ],
+       [
+        0.2745,
+        [
+         0.9047,
+         0.3916,
+         0.8388
+        ]
+       ],
+       [
+        0.3244,
+        [
+         0.6867,
+         1,
+         0.9047
+        ]
+       ],
+       [
+        0.3743,
+        [
+         0.6867,
+         1,
+         0.9047
+        ]
+       ],
+       [
+        0.4242,
+        [
+         0.9047,
+         0.8879,
+         0.6867
+        ]
+       ],
+       [
+        1,
+        [
+         0.9047,
+         0.8879,
+         0.6867
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  }
+ ]
+}

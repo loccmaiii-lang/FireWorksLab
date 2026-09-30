@@ -1,0 +1,294 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "QiuXingC_2",
+ "platform": "mobile",
+ "source": {
+  "tool": "烟花母版烘焙器 3.7",
+  "type": "botan",
+  "form": "master",
+  "quality": {
+   "ss": 2,
+   "hz": 300,
+   "kernel": 0,
+   "core": 0
+  }
+ },
+ "textures": {
+  "seq": {
+   "file": "T_QiuXingC_2.png",
+   "class": "flipbook",
+   "cols": 8,
+   "rows": 8,
+   "channels": 4,
+   "frames": 256
+  },
+  "cutout": {
+   "file": "T_QiuXingC_2_Cutout.png",
+   "class": "cutout"
+  },
+  "ramp": {
+   "file": "T_QiuXingC_2_Ramp.png",
+   "class": "ramp"
+  }
+ },
+ "materials": {
+  "main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 8,
+    "cols": 8
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 71221,
+  "preview_warmup_s": 1.2
+ },
+ "emitters": [
+  {
+   "name": "Main",
+   "material": "main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 5.2,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutout",
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 5.2
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       54785,
+       54785,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         0.246,
+         0.246,
+         1
+        ]
+       ],
+       [
+        0.0317,
+        [
+         0.261,
+         0.261,
+         1
+        ]
+       ],
+       [
+        0.0821,
+        [
+         0.424,
+         0.424,
+         1
+        ]
+       ],
+       [
+        0.1542,
+        [
+         0.553,
+         0.553,
+         1
+        ]
+       ],
+       [
+        0.2336,
+        [
+         0.647,
+         0.647,
+         1
+        ]
+       ],
+       [
+        0.3321,
+        [
+         0.745,
+         0.745,
+         1
+        ]
+       ],
+       [
+        0.7023,
+        [
+         0.955,
+         0.955,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0
+        ],
+        [
+         0.01,
+         25.65
+        ],
+        [
+         0.022,
+         48.93
+        ],
+        [
+         0.0509,
+         85.22
+        ],
+        [
+         0.0893,
+         109.17
+        ],
+        [
+         0.1446,
+         127.91
+        ],
+        [
+         0.2264,
+         143.72
+        ],
+        [
+         1,
+         255.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.3071,
+         1.2342,
+         1.5
+        ]
+       ],
+       [
+        0.3317,
+        [
+         1.3071,
+         1.2342,
+         1.5
+        ]
+       ],
+       [
+        0.399,
+        [
+         1.5,
+         1.3318,
+         1.03
+        ]
+       ],
+       [
+        0.4663,
+        [
+         1.5,
+         1.3318,
+         1.03
+        ]
+       ],
+       [
+        0.5337,
+        [
+         1.5,
+         0.9667,
+         0.3813
+        ]
+       ],
+       [
+        0.6202,
+        [
+         1.5,
+         0.9667,
+         0.3813
+        ]
+       ],
+       [
+        0.6875,
+        [
+         1.5,
+         0.635,
+         0.1464
+        ]
+       ],
+       [
+        1,
+        [
+         1.5,
+         0.635,
+         0.1464
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  }
+ ]
+}
