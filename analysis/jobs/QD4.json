@@ -1,0 +1,64 @@
+{
+ "id": "QD4",
+ "name": "球形D 第 4 轮：橙芯 + 外层四段变色（尾巴层 + 星头层）+ 末段银色短尾",
+ "priority": 6,
+ "ready": false,
+ "hold": "等原理核对：analysis/原理/球形D.md 的「请你核对」。你回复「原理 OK」后由云端去掉 hold 和 ready 放行",
+ "video": "vidio/球形D.mp4",
+ "roi": [
+  0.33,
+  0.1,
+  0.64,
+  0.66
+ ],
+ "t_range": [
+  4.0,
+  10.4
+ ],
+ "start": "analysis/jobs/起点/QD4_起点.json",
+ "fit": {
+  "params": [
+   "0.sparkLife",
+   "0.sparkBright",
+   "0.M.headInt",
+   "1.headSize",
+   "1.headBright",
+   "1.sparkBright",
+   "1.M.headInt",
+   "2.v0",
+   "2.stars",
+   "2.M.headInt"
+  ],
+  "rounds": 2,
+  "camera": true,
+  "caps": {
+   "_psf": [
+    0,
+    0.4
+   ],
+   "2.stars": [
+    200,
+    600
+   ]
+  }
+ },
+ "note": "外层尾巴 / 星头共用初速和星数；芯单独拟合大小、星数、亮度。",
+ "review": {
+  "date": "2026-09-30",
+  "name": "球形D 第 4 轮：橙芯 + 外层四段变色（尾巴层 + 星头层）+ 末段银色短尾",
+  "tags": "球形D 原理 QD4",
+  "replaces": [
+   "QD3",
+   "YD1",
+   "YD2",
+   "YD3"
+  ],
+  "note": "外层尾巴 / 星头共用初速和星数；芯单独拟合大小、星数、亮度。",
+  "look": [
+   "橙色芯在绿色外层里",
+   "星头柠黄时尾巴还是金",
+   "后半段一根根银色短线"
+  ],
+  "opinion": "按核对后的原理（analysis/原理/球形D.md）分层拟合。"
+ }
+}

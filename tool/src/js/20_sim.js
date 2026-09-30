@@ -250,7 +250,7 @@ class Sim {
       s.x += s.vx * h; s.y += s.vy * h; s.z += s.vz * h;
       s.flick = clamp(s.flick + rng.n() * sq * 2.2 * P.flicker, 1 - P.flicker, 1 + P.flicker * 0.4);
       if (s.vis != null && !s.ended && s.age >= s.vis) { s.ended = true; if (P.crackle > 0) this.crackleBurst(s); }
-      if (s.rate > 0 && !this.noSparks && s.age >= s.ign && !s.ended && !(P.sparkStop > 0 && s.kind !== 5 && s.age - s.ign > P.sparkStop)) {
+      if (s.rate > 0 && !this.noSparks && s.age >= s.ign && !s.ended && !(P.sparkStop > 0 && s.kind !== 5 && s.age - s.ign > P.sparkStop) && !(P.sparkStart > 0 && s.kind !== 5 && s.age - s.ign < P.sparkStart)) {
         const fr = s.kind === 5 || P.sparkRateEnd == null || P.sparkRateEnd === 1 ? 1 : Math.max(0, 1 + (P.sparkRateEnd - 1) * clamp((s.age - s.ign) / Math.max(0.05, (s.vis != null ? s.vis : s.burn) - s.ign), 0, 1));
         const k = rng.poisson(s.rate * fr * h), spr = P.sparkSpread, T0 = s.kind === 5 && P.riseStyle === 'silver' ? P.T0 + 250 : P.T0, lf = s.kind === 5 && P.riseStyle === 'silver' ? 1.5 : 1;
         for (let j = 0; j < k; j++) {

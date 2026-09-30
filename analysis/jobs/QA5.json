@@ -1,0 +1,55 @@
+{
+ "id": "QA5",
+ "name": "球形A 第 5 轮：三层变色菊，尾巴层 + 星头层（同一模拟）",
+ "priority": 6,
+ "ready": false,
+ "hold": "等原理核对：analysis/原理/球形A.md 的「请你核对」。你回复「原理 OK」后由云端去掉 hold 和 ready 放行",
+ "video": "vidio/球形A.mp4",
+ "roi": [
+  0.36,
+  0.05,
+  0.66,
+  0.53
+ ],
+ "t_range": [
+  0.1,
+  4.1
+ ],
+ "start": "analysis/jobs/起点/QA5_起点.json",
+ "fit": {
+  "params": [
+   "0.sparkLife",
+   "0.sparkBright",
+   "0.sparkRate",
+   "0.M.headInt",
+   "1.headSize",
+   "1.headBright",
+   "1.M.headInt"
+  ],
+  "rounds": 2,
+  "camera": true,
+  "caps": {
+   "_psf": [
+    0,
+    0.4
+   ]
+  }
+ },
+ "note": "两层共用初速和星数（不分层拟合，保证星头挂在尾巴尖上），只调各层亮度、大小、尾长。",
+ "review": {
+  "date": "2026-09-30",
+  "name": "球形A 第 5 轮：三层变色菊，尾巴层 + 星头层（同一模拟）",
+  "tags": "球形A 原理 QA5",
+  "replaces": [
+   "QA4",
+   "YA1",
+   "YA2"
+  ],
+  "note": "两层共用初速和星数（不分层拟合，保证星头挂在尾巴尖上），只调各层亮度、大小、尾长。",
+  "look": [
+   "金色长尾 → 星头变粉、尾巴仍金 → 银白光点",
+   "尾巴长度、粉色明显程度"
+  ],
+  "opinion": "按核对后的原理（analysis/原理/球形A.md）分层拟合。"
+ }
+}

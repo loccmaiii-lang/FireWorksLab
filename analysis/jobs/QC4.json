@@ -1,0 +1,61 @@
+{
+ "id": "QC4",
+ "name": "球形C 第 4 轮：芯（青柠）+ 延时点火外层（银白 → 金 → 橙）",
+ "priority": 6,
+ "ready": false,
+ "hold": "等原理核对：analysis/原理/球形C.md 的「请你核对」。你回复「原理 OK」后由云端去掉 hold 和 ready 放行",
+ "video": "vidio/球形C.mp4",
+ "roi": [
+  0.4,
+  0.17,
+  0.64,
+  0.62
+ ],
+ "t_range": [
+  0.6,
+  5.8
+ ],
+ "start": "analysis/jobs/起点/QC4_起点.json",
+ "fit": {
+  "params": [
+   "0.v0",
+   "0.stars",
+   "0.M.headInt",
+   "1.v0",
+   "1.stars",
+   "1.M.headInt",
+   "1.sparkLife",
+   "1.burnJit"
+  ],
+  "rounds": 2,
+  "camera": true,
+  "caps": {
+   "_psf": [
+    0,
+    0.4
+   ],
+   "1.burnJit": [
+    15,
+    35
+   ]
+  }
+ },
+ "note": "两层各自拟合大小、星数、亮度。",
+ "review": {
+  "date": "2026-09-30",
+  "name": "球形C 第 4 轮：芯（青柠）+ 延时点火外层（银白 → 金 → 橙）",
+  "tags": "球形C 原理 QC4",
+  "replaces": [
+   "QC3",
+   "YC1",
+   "YC2"
+  ],
+  "note": "两层各自拟合大小、星数、亮度。",
+  "look": [
+   "青柠绿的芯",
+   "外层 0.4 s 后才亮",
+   "橙色光点一颗颗熄灭"
+  ],
+  "opinion": "按核对后的原理（analysis/原理/球形C.md）分层拟合。"
+ }
+}

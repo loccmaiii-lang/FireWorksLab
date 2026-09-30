@@ -2,6 +2,1800 @@
  "说明": "效果原理解析的迭代条目（review_to_baker.py 读）。每条是花型库模板 + 按原理设的结构（颜色时间线、有无尾、燃烧、离散），数值未拟合。doc 是审阅卡里的分节文字，images 是关键帧截图（相对仓库根）。combos 出现在「组合」页预设里。",
  "entries": [
   {
+   "id": "YA1",
+   "date": "2026-09-30 08:40",
+   "name": "球形A · ① 尾巴层（金色木炭尾）",
+   "base": "kiku",
+   "video": "vidio/球形A.mp4",
+   "roi": [
+    0.36,
+    0.05,
+    0.66,
+    0.53
+   ],
+   "t_range": [
+    0.1,
+    4.1
+   ],
+   "tags": "球形A 原理 菊 尾巴 YA1",
+   "p": {
+    "duration": 4.0,
+    "seed": 7,
+    "stars": 360,
+    "burstR0": 0,
+    "v0": 262.35093749999993,
+    "vt": 15.0,
+    "grav": 0.5120000000000001,
+    "speedJit": 3,
+    "dirJit": 1.5,
+    "burn": 2.4,
+    "burnJit": 3,
+    "fade": 0,
+    "lastFlare": 0,
+    "flash": 1,
+    "headSize": 0.6,
+    "headBright": 0.02,
+    "flicker": 0.25,
+    "sparkRate": 965.3618,
+    "sparkRateEnd": 1,
+    "sparkLife": 0.8,
+    "sparkSize": 0.35,
+    "sparkSpread": 2.5,
+    "sparkInherit": 0.2,
+    "sparkDrag": 2.2,
+    "sparkGrav": 1,
+    "T0": 2050,
+    "cooling": 0.42,
+    "sparkBright": 3,
+    "twinkle": 0.6,
+    "subDelay": 0.9,
+    "subJit": 10,
+    "subStars": 36,
+    "subSpeed": 40,
+    "subBurn": 0.9,
+    "subTail": 0,
+    "carrierTail": 30,
+    "subPattern": "sphere",
+    "spin": 14,
+    "chaos": 0.8,
+    "beeSpeed": 28,
+    "shellNo": 0,
+    "wind": 0,
+    "turb": 0,
+    "turbScale": 60,
+    "massLoss": 0,
+    "shellVx": 0,
+    "shellVy": 0,
+    "shellSpin": 0,
+    "pattern": "sphere",
+    "tilt": 0,
+    "ringFrac": 0.45,
+    "text": "祭",
+    "waterRefl": 0,
+    "ignDelay": 0,
+    "ignJit": 10,
+    "strobeHz": 0,
+    "strobeDuty": 0.35,
+    "strobeStart": 0.4,
+    "glitter": 0,
+    "glitterDelay": 0.25,
+    "crackle": 0,
+    "crackleDelay": 0.3,
+    "branch": 0,
+    "branchAt": 0.45,
+    "flutter": 0,
+    "flutterHz": 0.7,
+    "riseH": 250,
+    "vtShell": 55,
+    "riseStyle": "gold",
+    "wobble": 0,
+    "wobbleHz": 1.6,
+    "kobanaN": 4,
+    "bunpoN": 3,
+    "trV": 43.5,
+    "trFps": 30,
+    "trInh": 0.1,
+    "trDrag": 3,
+    "trGrav": 0.3,
+    "trCool": 1,
+    "trFRate": 2600,
+    "trFLife": 0.6,
+    "trFSpread": 0.45,
+    "trFSize": 0.1,
+    "trFBright": 0.03,
+    "trMRate": 600,
+    "trMLife": 0.75,
+    "trMSpread": 0.8,
+    "trMSize": 0.14,
+    "trMBright": 0.05,
+    "trCRate": 60,
+    "trCLife": 0.9,
+    "trCSpread": 1.2,
+    "trCSize": 0.18,
+    "trCBright": 0.12,
+    "trWRate": 0,
+    "trWLife": 0.12,
+    "trWSpread": 14,
+    "trWSize": 0.06,
+    "trWBright": 0.06,
+    "trHeadSize": 0.26,
+    "trHeadBright": 1.2,
+    "trHalo": 3,
+    "trHaloBright": 0.15,
+    "trTwist": 0.35,
+    "trTwistN": 5,
+    "trWiggle": 0.08,
+    "trTwistLag": 0.35,
+    "trFollow": 0,
+    "trBright": 1.6,
+    "trExport4K": 1,
+    "trIgnite": 0,
+    "loopT": 1,
+    "nozzles": 1,
+    "fanAngle": 70,
+    "spacing": 6,
+    "shotRate": 3,
+    "shotSpeed": 70,
+    "cometBurn": 1.4,
+    "burstStars": 0,
+    "wheelR": 3,
+    "jetSpeed": 28,
+    "jetCone": 10,
+    "jetDir": 90,
+    "groundH": 0,
+    "shutter": 0.6,
+    "fpsFloor": 24,
+    "texW": 2048,
+    "texH": 2048,
+    "cols": 8,
+    "rows": 8,
+    "chans": 4,
+    "outMode": "combined",
+    "encGamma": 1,
+    "frameMode": "auto",
+    "zoom": "on",
+    "engine": "gpu",
+    "form": "master",
+    "segAt": 0,
+    "unitElev": 0,
+    "unitFlip": 0,
+    "cellPad": 2,
+    "autoGrid": 1,
+    "sparkStop": 2.2
+   },
+   "m": {
+    "stages": [
+     [
+      0,
+      "#ff7a40"
+     ],
+     [
+      0.28,
+      "#ffc860"
+     ]
+    ],
+    "xw": 0.2,
+    "ramp0": "#000000",
+    "ramp1": "#4a4a52",
+    "ramp2": "#c8c8d0",
+    "ramp3": "#ffffff",
+    "headInt": 3.814697265625,
+    "tailInt": 1
+   },
+   "note": "原理解析（数值未拟合，取自 QA4）：只画金色火花尾（星头亮度压到几乎为 0），火花 0–2.2 s。和 YA2 同种子同参数，组合起来尾巴正好连到星头。 尾巴层的星在火花停了以后就熄灭（burn 略长于火花时间），免得看不见的星头在单独曝光时被放大成亮点。",
+   "look": [
+    "单独看：一根根金色长尾，没有星头",
+    "「组合」页「球形A（尾巴 + 星头）」和 YA2 叠起来看"
+   ],
+   "opinion": "之前 QA4 整颗变粉，是因为一个图层只有一条颜色曲线。拆成两层后，星头可以粉、尾巴保持金。",
+   "doc": [
+    [
+     "结构（两层，同一个模拟）",
+     [
+      "模板：菊。三层变色星：金色木炭尾 → 粉红 → 银白",
+      "变粉时只有星头粉、尾巴还是金色 → 拆成尾巴层（YA1）和星头层（YA2），同种子同参数，星的位置完全重合",
+      "全文：analysis/原理/球形A.md"
+     ]
+    ],
+    [
+     "时间线（开花 = 视频 0.30 s）",
+     [
+      "+0.07–0.25 橙红短尾（点火药）",
+      "+0.3–1.6 金色长尾菊",
+      "+1.8–2.3 星头粉红、尾巴仍金",
+      "约 +2.2 停止出火花，+2.4 星头转银白",
+      "+2.5–3.3 银白光点无尾，轻微飘落，+3.3 前后熄灭"
+     ]
+    ],
+    [
+     "请你核对",
+     [
+      "1. 三层变色菊、变粉时头尾异色——对吗？",
+      "2. 开头 0.2 s 橙红短尾要保留吗？",
+      "3. 引擎做法：序列 + 单帧（手游）/ 粒子 + 序列（PC），倾向哪种？",
+      "4. 通过后两层一起下拟合任务"
+     ]
+    ]
+   ],
+   "images": [
+    [
+     "analysis/原理/球形A/云端起点对照.jpg",
+     "各层叠起来 vs 实拍（未拟合）"
+    ],
+    [
+     "analysis/原理/球形A/t0.40.jpg",
+     "+0.10 橙红短尾"
+    ],
+    [
+     "analysis/原理/球形A/t0.60.jpg",
+     "+0.30 金色放射尾"
+    ],
+    [
+     "analysis/原理/球形A/t1.30.jpg",
+     "+1.00 金色长尾菊"
+    ],
+    [
+     "analysis/原理/球形A/t2.10.jpg",
+     "+1.80 星头粉、尾巴金"
+    ],
+    [
+     "analysis/原理/球形A/t2.30.jpg",
+     "+2.00 同上，尾变淡"
+    ],
+    [
+     "analysis/原理/球形A/t2.60.jpg",
+     "+2.30 星头转银白"
+    ],
+    [
+     "analysis/原理/球形A/t2.80.jpg",
+     "+2.50 银白光点无尾"
+    ],
+    [
+     "analysis/原理/球形A/t3.30.jpg",
+     "+3.00 变暗飘落"
+    ],
+    [
+     "analysis/原理/球形A/t3.70.jpg",
+     "+3.40 熄灭中"
+    ]
+   ]
+  },
+  {
+   "id": "YA2",
+   "date": "2026-09-30 08:41",
+   "name": "球形A · ② 星头层（金 → 粉 → 银白）",
+   "base": "kiku",
+   "video": "vidio/球形A.mp4",
+   "roi": [
+    0.36,
+    0.05,
+    0.66,
+    0.53
+   ],
+   "t_range": [
+    0.1,
+    4.1
+   ],
+   "tags": "球形A 原理 星头 变色 YA2",
+   "p": {
+    "duration": 4.0,
+    "seed": 7,
+    "stars": 360,
+    "burstR0": 0,
+    "v0": 262.35093749999993,
+    "vt": 15.0,
+    "grav": 0.5120000000000001,
+    "speedJit": 3,
+    "dirJit": 1.5,
+    "burn": 3.3,
+    "burnJit": 3,
+    "fade": 0,
+    "lastFlare": 0,
+    "flash": 1,
+    "headSize": 0.6,
+    "headBright": 0.4725,
+    "flicker": 0.25,
+    "sparkRate": 0,
+    "sparkRateEnd": 1,
+    "sparkLife": 0.8,
+    "sparkSize": 0.35,
+    "sparkSpread": 2.5,
+    "sparkInherit": 0.2,
+    "sparkDrag": 2.2,
+    "sparkGrav": 1,
+    "T0": 2050,
+    "cooling": 0.42,
+    "sparkBright": 3,
+    "twinkle": 0.6,
+    "subDelay": 0.9,
+    "subJit": 10,
+    "subStars": 36,
+    "subSpeed": 40,
+    "subBurn": 0.9,
+    "subTail": 0,
+    "carrierTail": 30,
+    "subPattern": "sphere",
+    "spin": 14,
+    "chaos": 0.8,
+    "beeSpeed": 28,
+    "shellNo": 0,
+    "wind": 0,
+    "turb": 0,
+    "turbScale": 60,
+    "massLoss": 0,
+    "shellVx": 0,
+    "shellVy": 0,
+    "shellSpin": 0,
+    "pattern": "sphere",
+    "tilt": 0,
+    "ringFrac": 0.45,
+    "text": "祭",
+    "waterRefl": 0,
+    "ignDelay": 0,
+    "ignJit": 10,
+    "strobeHz": 0,
+    "strobeDuty": 0.35,
+    "strobeStart": 0.4,
+    "glitter": 0,
+    "glitterDelay": 0.25,
+    "crackle": 0,
+    "crackleDelay": 0.3,
+    "branch": 0,
+    "branchAt": 0.45,
+    "flutter": 0,
+    "flutterHz": 0.7,
+    "riseH": 250,
+    "vtShell": 55,
+    "riseStyle": "gold",
+    "wobble": 0,
+    "wobbleHz": 1.6,
+    "kobanaN": 4,
+    "bunpoN": 3,
+    "trV": 43.5,
+    "trFps": 30,
+    "trInh": 0.1,
+    "trDrag": 3,
+    "trGrav": 0.3,
+    "trCool": 1,
+    "trFRate": 2600,
+    "trFLife": 0.6,
+    "trFSpread": 0.45,
+    "trFSize": 0.1,
+    "trFBright": 0.03,
+    "trMRate": 600,
+    "trMLife": 0.75,
+    "trMSpread": 0.8,
+    "trMSize": 0.14,
+    "trMBright": 0.05,
+    "trCRate": 60,
+    "trCLife": 0.9,
+    "trCSpread": 1.2,
+    "trCSize": 0.18,
+    "trCBright": 0.12,
+    "trWRate": 0,
+    "trWLife": 0.12,
+    "trWSpread": 14,
+    "trWSize": 0.06,
+    "trWBright": 0.06,
+    "trHeadSize": 0.26,
+    "trHeadBright": 1.2,
+    "trHalo": 3,
+    "trHaloBright": 0.15,
+    "trTwist": 0.35,
+    "trTwistN": 5,
+    "trWiggle": 0.08,
+    "trTwistLag": 0.35,
+    "trFollow": 0,
+    "trBright": 1.6,
+    "trExport4K": 1,
+    "trIgnite": 0,
+    "loopT": 1,
+    "nozzles": 1,
+    "fanAngle": 70,
+    "spacing": 6,
+    "shotRate": 3,
+    "shotSpeed": 70,
+    "cometBurn": 1.4,
+    "burstStars": 0,
+    "wheelR": 3,
+    "jetSpeed": 28,
+    "jetCone": 10,
+    "jetDir": 90,
+    "groundH": 0,
+    "shutter": 0.6,
+    "fpsFloor": 24,
+    "texW": 2048,
+    "texH": 2048,
+    "cols": 8,
+    "rows": 8,
+    "chans": 4,
+    "outMode": "combined",
+    "encGamma": 1,
+    "frameMode": "auto",
+    "zoom": "on",
+    "engine": "gpu",
+    "form": "master",
+    "segAt": 0,
+    "unitElev": 0,
+    "unitFlip": 0,
+    "cellPad": 2,
+    "autoGrid": 1,
+    "sparkStop": 1.6
+   },
+   "m": {
+    "stages": [
+     [
+      0,
+      "#ff7a40"
+     ],
+     [
+      0.28,
+      "#fff0c8"
+     ],
+     [
+      1.75,
+      "#ff5aa0"
+     ],
+     [
+      2.35,
+      "#ffe8b8"
+     ]
+    ],
+    "xw": 0.2,
+    "ramp0": "#000000",
+    "ramp1": "#4a4a52",
+    "ramp2": "#c8c8d0",
+    "ramp3": "#ffffff",
+    "headInt": 3.814697265625,
+    "tailInt": 1
+   },
+   "note": "原理解析（数值未拟合，取自 QA4）：只画星头（无尾），橙红 → 金白 → 粉红（+1.75）→ 银白（+2.35），约 +3.3 熄灭。",
+   "look": [
+    "颜色时间线",
+    "和 YA1 叠起来：粉红星头挂在金色尾巴尖上"
+   ],
+   "opinion": "引擎里这一层可以换成单帧光点图（手游）或后段 GPU 粒子（PC），见审阅卡。",
+   "doc": [
+    [
+     "结构（两层，同一个模拟）",
+     [
+      "模板：菊。三层变色星：金色木炭尾 → 粉红 → 银白",
+      "变粉时只有星头粉、尾巴还是金色 → 拆成尾巴层（YA1）和星头层（YA2），同种子同参数，星的位置完全重合",
+      "全文：analysis/原理/球形A.md"
+     ]
+    ],
+    [
+     "时间线（开花 = 视频 0.30 s）",
+     [
+      "+0.07–0.25 橙红短尾（点火药）",
+      "+0.3–1.6 金色长尾菊",
+      "+1.8–2.3 星头粉红、尾巴仍金",
+      "约 +2.2 停止出火花，+2.4 星头转银白",
+      "+2.5–3.3 银白光点无尾，轻微飘落，+3.3 前后熄灭"
+     ]
+    ],
+    [
+     "请你核对",
+     [
+      "1. 三层变色菊、变粉时头尾异色——对吗？",
+      "2. 开头 0.2 s 橙红短尾要保留吗？",
+      "3. 引擎做法：序列 + 单帧（手游）/ 粒子 + 序列（PC），倾向哪种？",
+      "4. 通过后两层一起下拟合任务"
+     ]
+    ]
+   ],
+   "images": [
+    [
+     "analysis/原理/球形A/云端起点对照.jpg",
+     "各层叠起来 vs 实拍（未拟合）"
+    ],
+    [
+     "analysis/原理/球形A/t0.40.jpg",
+     "+0.10 橙红短尾"
+    ],
+    [
+     "analysis/原理/球形A/t0.60.jpg",
+     "+0.30 金色放射尾"
+    ],
+    [
+     "analysis/原理/球形A/t1.30.jpg",
+     "+1.00 金色长尾菊"
+    ],
+    [
+     "analysis/原理/球形A/t2.10.jpg",
+     "+1.80 星头粉、尾巴金"
+    ],
+    [
+     "analysis/原理/球形A/t2.30.jpg",
+     "+2.00 同上，尾变淡"
+    ],
+    [
+     "analysis/原理/球形A/t2.60.jpg",
+     "+2.30 星头转银白"
+    ],
+    [
+     "analysis/原理/球形A/t2.80.jpg",
+     "+2.50 银白光点无尾"
+    ],
+    [
+     "analysis/原理/球形A/t3.30.jpg",
+     "+3.00 变暗飘落"
+    ],
+    [
+     "analysis/原理/球形A/t3.70.jpg",
+     "+3.40 熄灭中"
+    ]
+   ]
+  },
+  {
+   "id": "YC1",
+   "date": "2026-09-30 08:42",
+   "name": "球形C · ① 芯（橙红点火 → 青柠绿）",
+   "base": "botan",
+   "video": "vidio/球形C.mp4",
+   "roi": [
+    0.4,
+    0.17,
+    0.64,
+    0.62
+   ],
+   "t_range": [
+    0.6,
+    5.8
+   ],
+   "tags": "球形C 原理 芯 青柠 YC1",
+   "p": {
+    "duration": 3.0,
+    "seed": 7,
+    "stars": 160,
+    "burstR0": 0,
+    "v0": 118.1,
+    "vt": 31.103999999999996,
+    "grav": 0.5120000000000001,
+    "speedJit": 3,
+    "dirJit": 1.5,
+    "burn": 2.0,
+    "burnJit": 8,
+    "fade": 0.4,
+    "lastFlare": 0,
+    "flash": 1.5,
+    "headSize": 0.6,
+    "headBright": 0.6,
+    "flicker": 0.2,
+    "sparkRate": 300,
+    "sparkRateEnd": 1,
+    "sparkLife": 0.2,
+    "sparkSize": 0.35,
+    "sparkSpread": 2.5,
+    "sparkInherit": 0.2,
+    "sparkDrag": 2.2,
+    "sparkGrav": 1,
+    "T0": 2050,
+    "cooling": 0.42,
+    "sparkBright": 0.8875739644970413,
+    "twinkle": 0.6,
+    "subDelay": 0.9,
+    "subJit": 10,
+    "subStars": 36,
+    "subSpeed": 40,
+    "subBurn": 0.9,
+    "subTail": 0,
+    "carrierTail": 30,
+    "subPattern": "sphere",
+    "spin": 14,
+    "chaos": 0.8,
+    "beeSpeed": 28,
+    "shellNo": 0,
+    "wind": 0,
+    "turb": 0,
+    "turbScale": 60,
+    "massLoss": 0,
+    "shellVx": 0,
+    "shellVy": 0,
+    "shellSpin": 0,
+    "pattern": "sphere",
+    "tilt": 0,
+    "ringFrac": 0.45,
+    "text": "祭",
+    "waterRefl": 0,
+    "ignDelay": 0,
+    "ignJit": 10,
+    "strobeHz": 0,
+    "strobeDuty": 0.35,
+    "strobeStart": 0.4,
+    "glitter": 0,
+    "glitterDelay": 0.25,
+    "crackle": 0,
+    "crackleDelay": 0.3,
+    "branch": 0,
+    "branchAt": 0.45,
+    "flutter": 0,
+    "flutterHz": 0.7,
+    "riseH": 250,
+    "vtShell": 55,
+    "riseStyle": "gold",
+    "wobble": 0,
+    "wobbleHz": 1.6,
+    "kobanaN": 4,
+    "bunpoN": 3,
+    "trV": 43.5,
+    "trFps": 30,
+    "trInh": 0.1,
+    "trDrag": 3,
+    "trGrav": 0.3,
+    "trCool": 1,
+    "trFRate": 2600,
+    "trFLife": 0.6,
+    "trFSpread": 0.45,
+    "trFSize": 0.1,
+    "trFBright": 0.03,
+    "trMRate": 600,
+    "trMLife": 0.75,
+    "trMSpread": 0.8,
+    "trMSize": 0.14,
+    "trMBright": 0.05,
+    "trCRate": 60,
+    "trCLife": 0.9,
+    "trCSpread": 1.2,
+    "trCSize": 0.18,
+    "trCBright": 0.12,
+    "trWRate": 0,
+    "trWLife": 0.12,
+    "trWSpread": 14,
+    "trWSize": 0.06,
+    "trWBright": 0.06,
+    "trHeadSize": 0.26,
+    "trHeadBright": 1.2,
+    "trHalo": 3,
+    "trHaloBright": 0.15,
+    "trTwist": 0.35,
+    "trTwistN": 5,
+    "trWiggle": 0.08,
+    "trTwistLag": 0.35,
+    "trFollow": 0,
+    "trBright": 1.6,
+    "trExport4K": 1,
+    "trIgnite": 0,
+    "loopT": 1,
+    "nozzles": 1,
+    "fanAngle": 70,
+    "spacing": 6,
+    "shotRate": 3,
+    "shotSpeed": 70,
+    "cometBurn": 1.4,
+    "burstStars": 0,
+    "wheelR": 3,
+    "jetSpeed": 28,
+    "jetCone": 10,
+    "jetDir": 90,
+    "groundH": 0,
+    "shutter": 0.6,
+    "fpsFloor": 24,
+    "texW": 2048,
+    "texH": 2048,
+    "cols": 8,
+    "rows": 8,
+    "chans": 4,
+    "outMode": "combined",
+    "encGamma": 1,
+    "frameMode": "auto",
+    "zoom": "on",
+    "engine": "gpu",
+    "form": "master",
+    "segAt": 0,
+    "unitElev": 0,
+    "unitFlip": 0,
+    "cellPad": 2,
+    "autoGrid": 1,
+    "sparkStop": 0.25
+   },
+   "m": {
+    "stages": [
+     [
+      0,
+      "#ff5a30"
+     ],
+     [
+      0.25,
+      "#fffbe8"
+     ],
+     [
+      0.42,
+      "#b8ff50"
+     ]
+    ],
+    "xw": 0.35,
+    "ramp0": "#000000",
+    "ramp1": "#4a4a52",
+    "ramp2": "#c8c8d0",
+    "ramp3": "#ffffff",
+    "headInt": 1.5625000000000002,
+    "tailInt": 1
+   },
+   "note": "原理解析（数值未拟合）：芯，外层半径的 0.45；开头 0.25 s 橙红短尾，然后整团过亮，+0.4 起青柠绿，+1.8 开始变暗。",
+   "look": [
+    "开头的橙红短放射",
+    "青柠绿、慢慢变暗"
+   ],
+   "opinion": "之前 QC1–QC3 完全没有这一层。",
+   "doc": [
+    [
+     "结构（两层）",
+     [
+      "芯（YC1）：牡丹，最终半径约为外层 0.45；开头 0.2 s 橙红短尾 → 过亮 → 青柠绿，+2.2 前后暗掉",
+      "外层（YC2）：牡丹，开花时是暗的，+0.4 s 才点亮（延时点火）；银白短尾 → 金（+1.1）→ 橙（+1.7）→ 无尾橙色光点，+2.4 起陆续熄灭",
+      "全文：analysis/原理/球形C.md"
+     ]
+    ],
+    [
+     "请你核对",
+     [
+      "1. 青柠绿的芯 + 外层（银白 → 金 → 橙）——对吗？",
+      "2. 外层 +0.4 s 才点亮——对吗？",
+      "3. 开头橙红短放射算芯的点火（做）还是开花药（不做）？",
+      "4. 通过后两层下拟合任务"
+     ]
+    ]
+   ],
+   "images": [
+    [
+     "analysis/原理/球形C/云端起点对照.jpg",
+     "各层叠起来 vs 实拍（未拟合）"
+    ],
+    [
+     "analysis/原理/球形C/t0.83.jpg",
+     "+0.10 芯点火：橙红短放射"
+    ],
+    [
+     "analysis/原理/球形C/t0.90.jpg",
+     "+0.17 橙红放射，中心发白"
+    ],
+    [
+     "analysis/原理/球形C/t1.03.jpg",
+     "+0.30 芯全亮、发白，外层还看不到"
+    ],
+    [
+     "analysis/原理/球形C/t1.30.jpg",
+     "+0.57 外层点亮：银白短尾；芯绿"
+    ],
+    [
+     "analysis/原理/球形C/t1.70.jpg",
+     "+0.97 外层转暖；芯绿"
+    ],
+    [
+     "analysis/原理/球形C/t2.10.jpg",
+     "+1.37 外层金色短尾"
+    ],
+    [
+     "analysis/原理/球形C/t2.50.jpg",
+     "+1.77 外层橙，尾变短"
+    ],
+    [
+     "analysis/原理/球形C/t2.90.jpg",
+     "+2.17 芯没了，外层橙色光点"
+    ],
+    [
+     "analysis/原理/球形C/t3.60.jpg",
+     "+2.87 陆续熄灭"
+    ],
+    [
+     "analysis/原理/球形C/t4.60.jpg",
+     "+3.87 零星几颗"
+    ]
+   ]
+  },
+  {
+   "id": "YC2",
+   "date": "2026-09-30 08:43",
+   "name": "球形C · ② 外层（延时点火，银白 → 金 → 橙）",
+   "base": "botan",
+   "video": "vidio/球形C.mp4",
+   "roi": [
+    0.4,
+    0.17,
+    0.64,
+    0.62
+   ],
+   "t_range": [
+    0.6,
+    5.8
+   ],
+   "tags": "球形C 原理 外层 延时点火 YC2",
+   "p": {
+    "duration": 5.2,
+    "seed": 7,
+    "stars": 380,
+    "burstR0": 0,
+    "v0": 262.35093749999993,
+    "vt": 31.103999999999996,
+    "grav": 0.5120000000000001,
+    "speedJit": 3,
+    "dirJit": 1.5,
+    "burn": 3.3,
+    "burnJit": 25,
+    "fade": 0.1,
+    "lastFlare": 0,
+    "flash": 1,
+    "headSize": 0.6,
+    "headBright": 0.6,
+    "flicker": 0.2,
+    "sparkRate": 220,
+    "sparkRateEnd": 1,
+    "sparkLife": 0.3,
+    "sparkSize": 0.35,
+    "sparkSpread": 2.5,
+    "sparkInherit": 0.2,
+    "sparkDrag": 2.2,
+    "sparkGrav": 1,
+    "T0": 2050,
+    "cooling": 0.42,
+    "sparkBright": 0.8875739644970413,
+    "twinkle": 0.6,
+    "subDelay": 0.9,
+    "subJit": 10,
+    "subStars": 36,
+    "subSpeed": 40,
+    "subBurn": 0.9,
+    "subTail": 0,
+    "carrierTail": 30,
+    "subPattern": "sphere",
+    "spin": 14,
+    "chaos": 0.8,
+    "beeSpeed": 28,
+    "shellNo": 0,
+    "wind": 0,
+    "turb": 0,
+    "turbScale": 60,
+    "massLoss": 0,
+    "shellVx": 0,
+    "shellVy": 0,
+    "shellSpin": 0,
+    "pattern": "sphere",
+    "tilt": 0,
+    "ringFrac": 0.45,
+    "text": "祭",
+    "waterRefl": 0,
+    "ignDelay": 0.4,
+    "ignJit": 10,
+    "strobeHz": 0,
+    "strobeDuty": 0.35,
+    "strobeStart": 0.4,
+    "glitter": 0,
+    "glitterDelay": 0.25,
+    "crackle": 0,
+    "crackleDelay": 0.3,
+    "branch": 0,
+    "branchAt": 0.45,
+    "flutter": 0,
+    "flutterHz": 0.7,
+    "riseH": 250,
+    "vtShell": 55,
+    "riseStyle": "gold",
+    "wobble": 0,
+    "wobbleHz": 1.6,
+    "kobanaN": 4,
+    "bunpoN": 3,
+    "trV": 43.5,
+    "trFps": 30,
+    "trInh": 0.1,
+    "trDrag": 3,
+    "trGrav": 0.3,
+    "trCool": 1,
+    "trFRate": 2600,
+    "trFLife": 0.6,
+    "trFSpread": 0.45,
+    "trFSize": 0.1,
+    "trFBright": 0.03,
+    "trMRate": 600,
+    "trMLife": 0.75,
+    "trMSpread": 0.8,
+    "trMSize": 0.14,
+    "trMBright": 0.05,
+    "trCRate": 60,
+    "trCLife": 0.9,
+    "trCSpread": 1.2,
+    "trCSize": 0.18,
+    "trCBright": 0.12,
+    "trWRate": 0,
+    "trWLife": 0.12,
+    "trWSpread": 14,
+    "trWSize": 0.06,
+    "trWBright": 0.06,
+    "trHeadSize": 0.26,
+    "trHeadBright": 1.2,
+    "trHalo": 3,
+    "trHaloBright": 0.15,
+    "trTwist": 0.35,
+    "trTwistN": 5,
+    "trWiggle": 0.08,
+    "trTwistLag": 0.35,
+    "trFollow": 0,
+    "trBright": 1.6,
+    "trExport4K": 1,
+    "trIgnite": 0,
+    "loopT": 1,
+    "nozzles": 1,
+    "fanAngle": 70,
+    "spacing": 6,
+    "shotRate": 3,
+    "shotSpeed": 70,
+    "cometBurn": 1.4,
+    "burstStars": 0,
+    "wheelR": 3,
+    "jetSpeed": 28,
+    "jetCone": 10,
+    "jetDir": 90,
+    "groundH": 0,
+    "shutter": 0.6,
+    "fpsFloor": 24,
+    "texW": 2048,
+    "texH": 2048,
+    "cols": 8,
+    "rows": 8,
+    "chans": 4,
+    "outMode": "combined",
+    "encGamma": 1,
+    "frameMode": "auto",
+    "zoom": "on",
+    "engine": "gpu",
+    "form": "master",
+    "segAt": 0,
+    "unitElev": 0,
+    "unitFlip": 0,
+    "cellPad": 2,
+    "autoGrid": 1,
+    "sparkStop": 1.9
+   },
+   "m": {
+    "stages": [
+     [
+      0,
+      "#f0eaff"
+     ],
+     [
+      1.4,
+      "#ffd070"
+     ],
+     [
+      2.3,
+      "#ff9a30"
+     ]
+    ],
+    "xw": 0.35,
+    "ramp0": "#000000",
+    "ramp1": "#4a4a52",
+    "ramp2": "#c8c8d0",
+    "ramp3": "#ffffff",
+    "headInt": 1.5625000000000002,
+    "tailInt": 1
+   },
+   "note": "原理解析（数值取自 QC3）：延时 0.4 s 点火；银白短尾 → 金（+1.4）→ 橙（+2.3），火花到 +2.3 停；燃烧离散约 25%，+2.4 起陆续熄灭。",
+   "look": [
+    "开花后 0.4 s 才出现",
+    "银白 → 金 → 橙",
+    "一颗颗陆续熄灭"
+   ],
+   "opinion": "QC3 缺开头的银白段、也没有延时点火。",
+   "doc": [
+    [
+     "结构（两层）",
+     [
+      "芯（YC1）：牡丹，最终半径约为外层 0.45；开头 0.2 s 橙红短尾 → 过亮 → 青柠绿，+2.2 前后暗掉",
+      "外层（YC2）：牡丹，开花时是暗的，+0.4 s 才点亮（延时点火）；银白短尾 → 金（+1.1）→ 橙（+1.7）→ 无尾橙色光点，+2.4 起陆续熄灭",
+      "全文：analysis/原理/球形C.md"
+     ]
+    ],
+    [
+     "请你核对",
+     [
+      "1. 青柠绿的芯 + 外层（银白 → 金 → 橙）——对吗？",
+      "2. 外层 +0.4 s 才点亮——对吗？",
+      "3. 开头橙红短放射算芯的点火（做）还是开花药（不做）？",
+      "4. 通过后两层下拟合任务"
+     ]
+    ]
+   ],
+   "images": [
+    [
+     "analysis/原理/球形C/云端起点对照.jpg",
+     "各层叠起来 vs 实拍（未拟合）"
+    ],
+    [
+     "analysis/原理/球形C/t0.83.jpg",
+     "+0.10 芯点火：橙红短放射"
+    ],
+    [
+     "analysis/原理/球形C/t0.90.jpg",
+     "+0.17 橙红放射，中心发白"
+    ],
+    [
+     "analysis/原理/球形C/t1.03.jpg",
+     "+0.30 芯全亮、发白，外层还看不到"
+    ],
+    [
+     "analysis/原理/球形C/t1.30.jpg",
+     "+0.57 外层点亮：银白短尾；芯绿"
+    ],
+    [
+     "analysis/原理/球形C/t1.70.jpg",
+     "+0.97 外层转暖；芯绿"
+    ],
+    [
+     "analysis/原理/球形C/t2.10.jpg",
+     "+1.37 外层金色短尾"
+    ],
+    [
+     "analysis/原理/球形C/t2.50.jpg",
+     "+1.77 外层橙，尾变短"
+    ],
+    [
+     "analysis/原理/球形C/t2.90.jpg",
+     "+2.17 芯没了，外层橙色光点"
+    ],
+    [
+     "analysis/原理/球形C/t3.60.jpg",
+     "+2.87 陆续熄灭"
+    ],
+    [
+     "analysis/原理/球形C/t4.60.jpg",
+     "+3.87 零星几颗"
+    ]
+   ]
+  },
+  {
+   "id": "YD1",
+   "date": "2026-09-30 08:44",
+   "name": "球形D · ① 外层尾巴（金色木炭尾）",
+   "base": "botan",
+   "video": "vidio/球形D.mp4",
+   "roi": [
+    0.33,
+    0.1,
+    0.64,
+    0.66
+   ],
+   "t_range": [
+    4.0,
+    10.4
+   ],
+   "tags": "球形D 原理 尾巴 YD1",
+   "p": {
+    "duration": 6.2,
+    "seed": 7,
+    "stars": 385,
+    "burstR0": 0,
+    "v0": 172.50000000000003,
+    "vt": 21.599999999999998,
+    "grav": 1.5625,
+    "speedJit": 3,
+    "dirJit": 1.5,
+    "burn": 1.2,
+    "burnJit": 5,
+    "fade": 0.25,
+    "lastFlare": 0.3,
+    "flash": 1,
+    "headSize": 0.5,
+    "headBright": 0.02,
+    "flicker": 0.2,
+    "sparkRate": 260,
+    "sparkRateEnd": 1.2999999999999998,
+    "sparkLife": 0.3,
+    "sparkSize": 0.35,
+    "sparkSpread": 2.5,
+    "sparkInherit": 0.2,
+    "sparkDrag": 2.2,
+    "sparkGrav": 1,
+    "T0": 2050,
+    "cooling": 0.42,
+    "sparkBright": 1.3,
+    "twinkle": 0.6,
+    "subDelay": 0.9,
+    "subJit": 10,
+    "subStars": 36,
+    "subSpeed": 40,
+    "subBurn": 0.9,
+    "subTail": 0,
+    "carrierTail": 30,
+    "subPattern": "sphere",
+    "spin": 14,
+    "chaos": 0.8,
+    "beeSpeed": 28,
+    "shellNo": 0,
+    "wind": -2,
+    "turb": 0,
+    "turbScale": 60,
+    "massLoss": 0,
+    "shellVx": 0,
+    "shellVy": 0,
+    "shellSpin": 0,
+    "pattern": "sphere",
+    "tilt": 0,
+    "ringFrac": 0.45,
+    "text": "祭",
+    "waterRefl": 0,
+    "ignDelay": 0,
+    "ignJit": 10,
+    "strobeHz": 0,
+    "strobeDuty": 0.35,
+    "strobeStart": 0.4,
+    "glitter": 0,
+    "glitterDelay": 0.25,
+    "crackle": 0,
+    "crackleDelay": 0.3,
+    "branch": 0,
+    "branchAt": 0.45,
+    "flutter": 0,
+    "flutterHz": 0.7,
+    "riseH": 250,
+    "vtShell": 55,
+    "riseStyle": "gold",
+    "wobble": 0,
+    "wobbleHz": 1.6,
+    "kobanaN": 4,
+    "bunpoN": 3,
+    "trV": 43.5,
+    "trFps": 30,
+    "trInh": 0.1,
+    "trDrag": 3,
+    "trGrav": 0.3,
+    "trCool": 1,
+    "trFRate": 2600,
+    "trFLife": 0.6,
+    "trFSpread": 0.45,
+    "trFSize": 0.1,
+    "trFBright": 0.03,
+    "trMRate": 600,
+    "trMLife": 0.75,
+    "trMSpread": 0.8,
+    "trMSize": 0.14,
+    "trMBright": 0.05,
+    "trCRate": 60,
+    "trCLife": 0.9,
+    "trCSpread": 1.2,
+    "trCSize": 0.18,
+    "trCBright": 0.12,
+    "trWRate": 0,
+    "trWLife": 0.12,
+    "trWSpread": 14,
+    "trWSize": 0.06,
+    "trWBright": 0.06,
+    "trHeadSize": 0.26,
+    "trHeadBright": 1.2,
+    "trHalo": 3,
+    "trHaloBright": 0.15,
+    "trTwist": 0.35,
+    "trTwistN": 5,
+    "trWiggle": 0.08,
+    "trTwistLag": 0.35,
+    "trFollow": 0,
+    "trBright": 1.6,
+    "trExport4K": 1,
+    "trIgnite": 0,
+    "loopT": 1,
+    "nozzles": 1,
+    "fanAngle": 70,
+    "spacing": 6,
+    "shotRate": 3,
+    "shotSpeed": 70,
+    "cometBurn": 1.4,
+    "burstStars": 0,
+    "wheelR": 3,
+    "jetSpeed": 28,
+    "jetCone": 10,
+    "jetDir": 90,
+    "groundH": 0,
+    "shutter": 0.6,
+    "fpsFloor": 24,
+    "texW": 2048,
+    "texH": 2048,
+    "cols": 8,
+    "rows": 8,
+    "chans": 4,
+    "outMode": "combined",
+    "encGamma": 1,
+    "frameMode": "auto",
+    "zoom": "on",
+    "engine": "gpu",
+    "form": "master",
+    "segAt": 0,
+    "unitElev": 0,
+    "unitFlip": 0,
+    "cellPad": 2,
+    "autoGrid": 1,
+    "sparkStop": 0.9
+   },
+   "m": {
+    "stages": [
+     [
+      0,
+      "#ffb040"
+     ]
+    ],
+    "xw": 0.25,
+    "ramp0": "#000000",
+    "ramp1": "#4a4a52",
+    "ramp2": "#c8c8d0",
+    "ramp3": "#ffffff",
+    "headInt": 0.8000000000000002,
+    "tailInt": 1
+   },
+   "note": "原理解析（数值取自 QD3，星数按分析 385）：只画金色火花尾，0–1.0 s。和 YD2 同种子同参数。 尾巴层的星在火花停了以后就熄灭（burn 略长于火花时间），免得看不见的星头在单独曝光时被放大成亮点。",
+   "look": [
+    "金色放射长尾，1 s 内收掉"
+   ],
+   "opinion": "",
+   "doc": [
+    [
+     "结构（三层）",
+     [
+      "外层尾巴（YD1）：金色木炭长尾 0–1.0 s",
+      "外层星头（YD2）：和 YD1 同一个模拟；金 → 柠黄（+0.9）→ 绿（+1.3）→ 银白（+2.6）；+3.0 起银色细短尾（新参数「火花从第几秒开始」）+ 横风 → 一根根短线",
+      "芯（YD3）：橙金光点，外层半径 0.55，+1.8 前后暗掉",
+      "全文：analysis/原理/球形D.md"
+     ]
+    ],
+    [
+     "请你核对",
+     [
+      "1. 橙色的芯 + 外层四段变色——对吗？",
+      "2. +0.9 s 星头柠黄、尾巴金（头尾异色）——对吗？",
+      "3. 末段短线是银色细火花短尾（做）还是相机拖影（不做）？",
+      "4. 通过后三层下拟合任务"
+     ]
+    ]
+   ],
+   "images": [
+    [
+     "analysis/原理/球形D/云端起点对照.jpg",
+     "各层叠起来 vs 实拍（未拟合）"
+    ],
+    [
+     "analysis/原理/球形D/t4.60.jpg",
+     "+0.10 开花"
+    ],
+    [
+     "analysis/原理/球形D/t4.80.jpg",
+     "+0.30 金色放射尾，里面橙色芯"
+    ],
+    [
+     "analysis/原理/球形D/t5.20.jpg",
+     "+0.70 金色长尾菊"
+    ],
+    [
+     "analysis/原理/球形D/t5.40.jpg",
+     "+0.90 星头柠黄、尾巴金；芯橙"
+    ],
+    [
+     "analysis/原理/球形D/t5.80.jpg",
+     "+1.30 外层绿光点；芯橙金"
+    ],
+    [
+     "analysis/原理/球形D/t6.40.jpg",
+     "+1.90 芯已灭，外层绿"
+    ],
+    [
+     "analysis/原理/球形D/t7.20.jpg",
+     "+2.70 银白小光点"
+    ],
+    [
+     "analysis/原理/球形D/t8.00.jpg",
+     "+3.50 银色细短线"
+    ],
+    [
+     "analysis/原理/球形D/t9.50.jpg",
+     "+5.00 熄灭中"
+    ]
+   ]
+  },
+  {
+   "id": "YD2",
+   "date": "2026-09-30 08:45",
+   "name": "球形D · ② 外层星头（金 → 柠黄 → 绿 → 银白 + 末段短尾）",
+   "base": "botan",
+   "video": "vidio/球形D.mp4",
+   "roi": [
+    0.33,
+    0.1,
+    0.64,
+    0.66
+   ],
+   "t_range": [
+    4.0,
+    10.4
+   ],
+   "tags": "球形D 原理 星头 变色 短尾 YD2",
+   "p": {
+    "duration": 6.2,
+    "seed": 7,
+    "stars": 385,
+    "burstR0": 0,
+    "v0": 172.50000000000003,
+    "vt": 21.599999999999998,
+    "grav": 1.5625,
+    "speedJit": 3,
+    "dirJit": 1.5,
+    "burn": 5.0,
+    "burnJit": 5,
+    "fade": 0.25,
+    "lastFlare": 0.3,
+    "flash": 1,
+    "headSize": 0.5,
+    "headBright": 0.30106822770542724,
+    "flicker": 0.2,
+    "sparkRate": 300,
+    "sparkRateEnd": 1.2999999999999998,
+    "sparkLife": 0.2,
+    "sparkSize": 0.35,
+    "sparkSpread": 0.4,
+    "sparkInherit": 0.1,
+    "sparkDrag": 2.2,
+    "sparkGrav": 1,
+    "T0": 2050,
+    "cooling": 0.42,
+    "sparkBright": 0.8,
+    "twinkle": 0.6,
+    "subDelay": 0.9,
+    "subJit": 10,
+    "subStars": 36,
+    "subSpeed": 40,
+    "subBurn": 0.9,
+    "subTail": 0,
+    "carrierTail": 30,
+    "subPattern": "sphere",
+    "spin": 14,
+    "chaos": 0.8,
+    "beeSpeed": 28,
+    "shellNo": 0,
+    "wind": -2,
+    "turb": 0,
+    "turbScale": 60,
+    "massLoss": 0,
+    "shellVx": 0,
+    "shellVy": 0,
+    "shellSpin": 0,
+    "pattern": "sphere",
+    "tilt": 0,
+    "ringFrac": 0.45,
+    "text": "祭",
+    "waterRefl": 0,
+    "ignDelay": 0,
+    "ignJit": 10,
+    "strobeHz": 0,
+    "strobeDuty": 0.35,
+    "strobeStart": 0.4,
+    "glitter": 0,
+    "glitterDelay": 0.25,
+    "crackle": 0,
+    "crackleDelay": 0.3,
+    "branch": 0,
+    "branchAt": 0.45,
+    "flutter": 0,
+    "flutterHz": 0.7,
+    "riseH": 250,
+    "vtShell": 55,
+    "riseStyle": "gold",
+    "wobble": 0,
+    "wobbleHz": 1.6,
+    "kobanaN": 4,
+    "bunpoN": 3,
+    "trV": 43.5,
+    "trFps": 30,
+    "trInh": 0.1,
+    "trDrag": 3,
+    "trGrav": 0.3,
+    "trCool": 1,
+    "trFRate": 2600,
+    "trFLife": 0.6,
+    "trFSpread": 0.45,
+    "trFSize": 0.1,
+    "trFBright": 0.03,
+    "trMRate": 600,
+    "trMLife": 0.75,
+    "trMSpread": 0.8,
+    "trMSize": 0.14,
+    "trMBright": 0.05,
+    "trCRate": 60,
+    "trCLife": 0.9,
+    "trCSpread": 1.2,
+    "trCSize": 0.18,
+    "trCBright": 0.12,
+    "trWRate": 0,
+    "trWLife": 0.12,
+    "trWSpread": 14,
+    "trWSize": 0.06,
+    "trWBright": 0.06,
+    "trHeadSize": 0.26,
+    "trHeadBright": 1.2,
+    "trHalo": 3,
+    "trHaloBright": 0.15,
+    "trTwist": 0.35,
+    "trTwistN": 5,
+    "trWiggle": 0.08,
+    "trTwistLag": 0.35,
+    "trFollow": 0,
+    "trBright": 1.6,
+    "trExport4K": 1,
+    "trIgnite": 0,
+    "loopT": 1,
+    "nozzles": 1,
+    "fanAngle": 70,
+    "spacing": 6,
+    "shotRate": 3,
+    "shotSpeed": 70,
+    "cometBurn": 1.4,
+    "burstStars": 0,
+    "wheelR": 3,
+    "jetSpeed": 28,
+    "jetCone": 10,
+    "jetDir": 90,
+    "groundH": 0,
+    "shutter": 0.6,
+    "fpsFloor": 24,
+    "texW": 2048,
+    "texH": 2048,
+    "cols": 8,
+    "rows": 8,
+    "chans": 4,
+    "outMode": "combined",
+    "encGamma": 1,
+    "frameMode": "auto",
+    "zoom": "on",
+    "engine": "gpu",
+    "form": "master",
+    "segAt": 0,
+    "unitElev": 0,
+    "unitFlip": 0,
+    "cellPad": 2,
+    "autoGrid": 1,
+    "sparkStart": 3.0,
+    "sparkStop": 0
+   },
+   "m": {
+    "stages": [
+     [
+      0,
+      "#ffc040"
+     ],
+     [
+      0.9,
+      "#f1ff93"
+     ],
+     [
+      1.1,
+      "#d8ffc0"
+     ],
+     [
+      1.3,
+      "#8dff9a"
+     ],
+     [
+      2.6,
+      "#fff0d8"
+     ]
+    ],
+    "xw": 0.25,
+    "ramp0": "#000000",
+    "ramp1": "#4a4a52",
+    "ramp2": "#c8c8d0",
+    "ramp3": "#ffffff",
+    "headInt": 0.8000000000000002,
+    "tailInt": 1
+   },
+   "note": "原理解析（数值未拟合）：只画星头；金 → 柠黄 → 绿 → 银白；+3.0 s 起出银色细短尾（新参数 sparkStart）+ 横风 → 偏左下的短线；+4.3 起变暗。",
+   "look": [
+    "颜色四段",
+    "后半段是一根根短线，不是圆点"
+   ],
+   "opinion": "QD3 这段是圆点；这次用「火花从第几秒开始」做末段短尾。",
+   "doc": [
+    [
+     "结构（三层）",
+     [
+      "外层尾巴（YD1）：金色木炭长尾 0–1.0 s",
+      "外层星头（YD2）：和 YD1 同一个模拟；金 → 柠黄（+0.9）→ 绿（+1.3）→ 银白（+2.6）；+3.0 起银色细短尾（新参数「火花从第几秒开始」）+ 横风 → 一根根短线",
+      "芯（YD3）：橙金光点，外层半径 0.55，+1.8 前后暗掉",
+      "全文：analysis/原理/球形D.md"
+     ]
+    ],
+    [
+     "请你核对",
+     [
+      "1. 橙色的芯 + 外层四段变色——对吗？",
+      "2. +0.9 s 星头柠黄、尾巴金（头尾异色）——对吗？",
+      "3. 末段短线是银色细火花短尾（做）还是相机拖影（不做）？",
+      "4. 通过后三层下拟合任务"
+     ]
+    ]
+   ],
+   "images": [
+    [
+     "analysis/原理/球形D/云端起点对照.jpg",
+     "各层叠起来 vs 实拍（未拟合）"
+    ],
+    [
+     "analysis/原理/球形D/t4.60.jpg",
+     "+0.10 开花"
+    ],
+    [
+     "analysis/原理/球形D/t4.80.jpg",
+     "+0.30 金色放射尾，里面橙色芯"
+    ],
+    [
+     "analysis/原理/球形D/t5.20.jpg",
+     "+0.70 金色长尾菊"
+    ],
+    [
+     "analysis/原理/球形D/t5.40.jpg",
+     "+0.90 星头柠黄、尾巴金；芯橙"
+    ],
+    [
+     "analysis/原理/球形D/t5.80.jpg",
+     "+1.30 外层绿光点；芯橙金"
+    ],
+    [
+     "analysis/原理/球形D/t6.40.jpg",
+     "+1.90 芯已灭，外层绿"
+    ],
+    [
+     "analysis/原理/球形D/t7.20.jpg",
+     "+2.70 银白小光点"
+    ],
+    [
+     "analysis/原理/球形D/t8.00.jpg",
+     "+3.50 银色细短线"
+    ],
+    [
+     "analysis/原理/球形D/t9.50.jpg",
+     "+5.00 熄灭中"
+    ]
+   ]
+  },
+  {
+   "id": "YD3",
+   "date": "2026-09-30 08:46",
+   "name": "球形D · ③ 芯（橙金光点）",
+   "base": "botan",
+   "video": "vidio/球形D.mp4",
+   "roi": [
+    0.33,
+    0.1,
+    0.64,
+    0.66
+   ],
+   "t_range": [
+    4.0,
+    10.4
+   ],
+   "tags": "球形D 原理 芯 YD3",
+   "p": {
+    "duration": 6.2,
+    "seed": 7,
+    "stars": 250,
+    "burstR0": 0,
+    "v0": 60.4,
+    "vt": 21.599999999999998,
+    "grav": 1.5625,
+    "speedJit": 3,
+    "dirJit": 1.5,
+    "burn": 1.8,
+    "burnJit": 6,
+    "fade": 0.15,
+    "lastFlare": 0.3,
+    "flash": 1,
+    "headSize": 0.6,
+    "headBright": 0.30106822770542724,
+    "flicker": 0.2,
+    "sparkRate": 0,
+    "sparkRateEnd": 1.2999999999999998,
+    "sparkLife": 0.375,
+    "sparkSize": 0.35,
+    "sparkSpread": 2.5,
+    "sparkInherit": 0.2,
+    "sparkDrag": 2.2,
+    "sparkGrav": 1,
+    "T0": 2050,
+    "cooling": 0.42,
+    "sparkBright": 1.3,
+    "twinkle": 0.6,
+    "subDelay": 0.9,
+    "subJit": 10,
+    "subStars": 36,
+    "subSpeed": 40,
+    "subBurn": 0.9,
+    "subTail": 0,
+    "carrierTail": 30,
+    "subPattern": "sphere",
+    "spin": 14,
+    "chaos": 0.8,
+    "beeSpeed": 28,
+    "shellNo": 0,
+    "wind": 0,
+    "turb": 0,
+    "turbScale": 60,
+    "massLoss": 0,
+    "shellVx": 0,
+    "shellVy": 0,
+    "shellSpin": 0,
+    "pattern": "sphere",
+    "tilt": 0,
+    "ringFrac": 0.45,
+    "text": "祭",
+    "waterRefl": 0,
+    "ignDelay": 0,
+    "ignJit": 10,
+    "strobeHz": 0,
+    "strobeDuty": 0.35,
+    "strobeStart": 0.4,
+    "glitter": 0,
+    "glitterDelay": 0.25,
+    "crackle": 0,
+    "crackleDelay": 0.3,
+    "branch": 0,
+    "branchAt": 0.45,
+    "flutter": 0,
+    "flutterHz": 0.7,
+    "riseH": 250,
+    "vtShell": 55,
+    "riseStyle": "gold",
+    "wobble": 0,
+    "wobbleHz": 1.6,
+    "kobanaN": 4,
+    "bunpoN": 3,
+    "trV": 43.5,
+    "trFps": 30,
+    "trInh": 0.1,
+    "trDrag": 3,
+    "trGrav": 0.3,
+    "trCool": 1,
+    "trFRate": 2600,
+    "trFLife": 0.6,
+    "trFSpread": 0.45,
+    "trFSize": 0.1,
+    "trFBright": 0.03,
+    "trMRate": 600,
+    "trMLife": 0.75,
+    "trMSpread": 0.8,
+    "trMSize": 0.14,
+    "trMBright": 0.05,
+    "trCRate": 60,
+    "trCLife": 0.9,
+    "trCSpread": 1.2,
+    "trCSize": 0.18,
+    "trCBright": 0.12,
+    "trWRate": 0,
+    "trWLife": 0.12,
+    "trWSpread": 14,
+    "trWSize": 0.06,
+    "trWBright": 0.06,
+    "trHeadSize": 0.26,
+    "trHeadBright": 1.2,
+    "trHalo": 3,
+    "trHaloBright": 0.15,
+    "trTwist": 0.35,
+    "trTwistN": 5,
+    "trWiggle": 0.08,
+    "trTwistLag": 0.35,
+    "trFollow": 0,
+    "trBright": 1.6,
+    "trExport4K": 1,
+    "trIgnite": 0,
+    "loopT": 1,
+    "nozzles": 1,
+    "fanAngle": 70,
+    "spacing": 6,
+    "shotRate": 3,
+    "shotSpeed": 70,
+    "cometBurn": 1.4,
+    "burstStars": 0,
+    "wheelR": 3,
+    "jetSpeed": 28,
+    "jetCone": 10,
+    "jetDir": 90,
+    "groundH": 0,
+    "shutter": 0.6,
+    "fpsFloor": 24,
+    "texW": 2048,
+    "texH": 2048,
+    "cols": 8,
+    "rows": 8,
+    "chans": 4,
+    "outMode": "combined",
+    "encGamma": 1,
+    "frameMode": "auto",
+    "zoom": "on",
+    "engine": "gpu",
+    "form": "master",
+    "segAt": 0,
+    "unitElev": 0,
+    "unitFlip": 0,
+    "cellPad": 2,
+    "autoGrid": 1
+   },
+   "m": {
+    "stages": [
+     [
+      0,
+      "#ffa030"
+     ]
+    ],
+    "xw": 0.25,
+    "ramp0": "#000000",
+    "ramp1": "#4a4a52",
+    "ramp2": "#c8c8d0",
+    "ramp3": "#ffffff",
+    "headInt": 2.0,
+    "tailInt": 1
+   },
+   "note": "原理解析（数值未拟合）：橙金光点，无尾，外层半径的 0.55，+1.5 开始变暗、+1.8 前后没了。（阻力下半径和初速不成正比：初速取外层的 0.35 倍，半径才是 0.55 倍）",
+   "look": [
+    "橙色芯在绿色外层里面",
+    "+1.8 前后消失"
+   ],
+   "opinion": "之前 QD1–QD3 漏了这一层。",
+   "doc": [
+    [
+     "结构（三层）",
+     [
+      "外层尾巴（YD1）：金色木炭长尾 0–1.0 s",
+      "外层星头（YD2）：和 YD1 同一个模拟；金 → 柠黄（+0.9）→ 绿（+1.3）→ 银白（+2.6）；+3.0 起银色细短尾（新参数「火花从第几秒开始」）+ 横风 → 一根根短线",
+      "芯（YD3）：橙金光点，外层半径 0.55，+1.8 前后暗掉",
+      "全文：analysis/原理/球形D.md"
+     ]
+    ],
+    [
+     "请你核对",
+     [
+      "1. 橙色的芯 + 外层四段变色——对吗？",
+      "2. +0.9 s 星头柠黄、尾巴金（头尾异色）——对吗？",
+      "3. 末段短线是银色细火花短尾（做）还是相机拖影（不做）？",
+      "4. 通过后三层下拟合任务"
+     ]
+    ]
+   ],
+   "images": [
+    [
+     "analysis/原理/球形D/云端起点对照.jpg",
+     "各层叠起来 vs 实拍（未拟合）"
+    ],
+    [
+     "analysis/原理/球形D/t4.60.jpg",
+     "+0.10 开花"
+    ],
+    [
+     "analysis/原理/球形D/t4.80.jpg",
+     "+0.30 金色放射尾，里面橙色芯"
+    ],
+    [
+     "analysis/原理/球形D/t5.20.jpg",
+     "+0.70 金色长尾菊"
+    ],
+    [
+     "analysis/原理/球形D/t5.40.jpg",
+     "+0.90 星头柠黄、尾巴金；芯橙"
+    ],
+    [
+     "analysis/原理/球形D/t5.80.jpg",
+     "+1.30 外层绿光点；芯橙金"
+    ],
+    [
+     "analysis/原理/球形D/t6.40.jpg",
+     "+1.90 芯已灭，外层绿"
+    ],
+    [
+     "analysis/原理/球形D/t7.20.jpg",
+     "+2.70 银白小光点"
+    ],
+    [
+     "analysis/原理/球形D/t8.00.jpg",
+     "+3.50 银色细短线"
+    ],
+    [
+     "analysis/原理/球形D/t9.50.jpg",
+     "+5.00 熄灭中"
+    ]
+   ]
+  },
+  {
    "id": "YQ1",
    "date": "2026-09-29 22:50",
    "name": "青柠星 · 原理样机（引菊 → 牡丹 分层星）",
@@ -444,6 +2238,49 @@
      "m": "rep:YB2",
      "scale": 1,
      "delay": 0.9
+    }
+   ]
+  },
+  {
+   "name": "球形A（尾巴 + 星头）",
+   "layers": [
+    {
+     "m": "rep:YA1",
+     "scale": 1
+    },
+    {
+     "m": "rep:YA2",
+     "scale": 1
+    }
+   ]
+  },
+  {
+   "name": "球形C（芯 + 外层）",
+   "layers": [
+    {
+     "m": "rep:YC1",
+     "scale": 1
+    },
+    {
+     "m": "rep:YC2",
+     "scale": 1
+    }
+   ]
+  },
+  {
+   "name": "球形D（外层尾巴 + 外层星头 + 芯）",
+   "layers": [
+    {
+     "m": "rep:YD1",
+     "scale": 1
+    },
+    {
+     "m": "rep:YD2",
+     "scale": 1
+    },
+    {
+     "m": "rep:YD3",
+     "scale": 1
     }
    ]
   }
