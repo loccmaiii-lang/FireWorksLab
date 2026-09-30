@@ -33096,7 +33096,7 @@ var FW_EFFECTS = [
 ],
 "exports": [
 {
-"job": "JM2E",
+"job": "JM2",
 "legacy": true
 },
 {
@@ -33104,7 +33104,7 @@ var FW_EFFECTS = [
 "legacy": true
 },
 {
-"job": "JM2",
+"job": "JM2E",
 "legacy": true
 },
 {
@@ -33285,33 +33285,6 @@ var FW_EFFECTS = [
 ],
 "exports": [
 {
-"job": "TFSE",
-"entry": "TFS",
-"ver": "6a729002",
-"time": "2026-09-30 19:12",
-"packages": [
-{
-"name": "RiseTrailPhys_S",
-"replica": "TFS",
-"files": [
-"RiseTrailPhys_S.json",
-"RiseTrailPhys_S_Cascade参数.txt",
-"RiseTrailPhys_S_曲线.csv",
-"T_RiseTrailPhys_S_Fade20.png",
-"T_RiseTrailPhys_S_Fade20_Cutout.png",
-"T_RiseTrailPhys_S_Fade30.png",
-"T_RiseTrailPhys_S_Fade30_Cutout.png",
-"T_RiseTrailPhys_S_Loop.png",
-"T_RiseTrailPhys_S_Loop_Cutout.png",
-"T_RiseTrailPhys_S_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-}
-],
-"stale": false
-},
-{
 "job": "TFLE",
 "entry": "TFL",
 "ver": "5fe91d31",
@@ -33358,6 +33331,33 @@ var FW_EFFECTS = [
 "T_RiseTrailPhys_M_Loop.png",
 "T_RiseTrailPhys_M_Loop_Cutout.png",
 "T_RiseTrailPhys_M_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "TFSE",
+"entry": "TFS",
+"ver": "6a729002",
+"time": "2026-09-30 19:12",
+"packages": [
+{
+"name": "RiseTrailPhys_S",
+"replica": "TFS",
+"files": [
+"RiseTrailPhys_S.json",
+"RiseTrailPhys_S_Cascade参数.txt",
+"RiseTrailPhys_S_曲线.csv",
+"T_RiseTrailPhys_S_Fade20.png",
+"T_RiseTrailPhys_S_Fade20_Cutout.png",
+"T_RiseTrailPhys_S_Fade30.png",
+"T_RiseTrailPhys_S_Fade30_Cutout.png",
+"T_RiseTrailPhys_S_Loop.png",
+"T_RiseTrailPhys_S_Loop_Cutout.png",
+"T_RiseTrailPhys_S_Ramp.png",
 "cascade.json",
 "cascade_mobile.json"
 ]
@@ -33579,7 +33579,7 @@ var FW_EFFECTS = [
 "key": "qiuxing_c",
 "名": "球形C（青柠芯 + 延时点火外层）",
 "负责": "对话框1",
-"阶段": "待验收",
+"阶段": "制作中",
 "参考": [
 "vidio/球形C.mp4"
 ],
@@ -33587,8 +33587,8 @@ var FW_EFFECTS = [
 "工作版": "QC9",
 "进度": {
 "计算": true,
-"AI自检": true,
-"素材导出": true,
+"AI自检": false,
+"素材导出": false,
 "用户验收": false
 },
 "历史": [
@@ -33623,20 +33623,15 @@ var FW_EFFECTS = [
 "反馈": "AI：末段光点太多、偏小"
 }
 ],
-"说明": "QC9：按「开花后同一秒」逐时刻对齐实拍；实拍 / 实时模拟 / 导出效果 对照 analysis/迭代/QC9/烘焙回放.jpg（云端软件渲染，导出效果和实时模拟一致）。",
-"下一步": "等用户验收整体",
+"说明": "QC9 撤回待验收（AI 19:30 复查）：组合页以前用「分开输出」叠层，和导出的「合并输出」不一样；改成一致后，青柠芯在合并输出（灰度查 Ramp）里几乎看不见。要先把芯在合并输出里做亮。",
+"下一步": "芯在合并输出里做亮（查 Ramp / 曝光）→ 同一秒对照 → 导出回放 → 待验收",
 "缺": [
 "UE 4.24 实机导入未验证"
 ],
 "导出任务": [
 "QC9E"
 ],
-"待验收版": "QC9",
-"交付说明": {
-"解决了什么": "按开花后同一秒对齐实拍：青柠芯 + 外层 0.4 s 点亮的银白短尾 → 暖白 → 橙点陆续熄灭；芯看得见（以前被拟合调没 / 空心环）。",
-"仍有差异": "实拍末段光点有相机光晕、看起来更大更亮；前一发的残烟不做。",
-"素材在哪": "本机 analysis/local/输出/素材包/QiuXingC_1（芯）、QiuXingC_2（外层）；导出记录 analysis/results/QC9E/"
-},
+"待验收版": null,
 "ver": "bd5b58c3",
 "jobs": [
 {
@@ -34104,45 +34099,6 @@ var FW_EFFECTS = [
 ],
 "exports": [
 {
-"job": "HK6E",
-"entry": "HK6",
-"ver": "c5d2dab2",
-"time": "2026-09-30 19:12",
-"packages": [
-{
-"name": "HongChao_1",
-"replica": "HK6-1",
-"files": [
-"HongChao_1.json",
-"HongChao_1_Cascade参数.txt",
-"HongChao_1_曲线.csv",
-"T_HongChao_1.png",
-"T_HongChao_1_Cutout.png",
-"T_HongChao_1_FrameTest.png",
-"T_HongChao_1_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "HongChao_2",
-"replica": "HK6-2",
-"files": [
-"HongChao_2.json",
-"HongChao_2_Cascade参数.txt",
-"HongChao_2_曲线.csv",
-"T_HongChao_2.png",
-"T_HongChao_2_Cutout.png",
-"T_HongChao_2_FrameTest.png",
-"T_HongChao_2_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-}
-],
-"stale": false
-},
-{
 "job": "HK5E",
 "entry": "HK5",
 "ver": "b8139dd8",
@@ -34166,6 +34122,45 @@ var FW_EFFECTS = [
 {
 "name": "HongChao_2",
 "replica": "HK5-2",
+"files": [
+"HongChao_2.json",
+"HongChao_2_Cascade参数.txt",
+"HongChao_2_曲线.csv",
+"T_HongChao_2.png",
+"T_HongChao_2_Cutout.png",
+"T_HongChao_2_FrameTest.png",
+"T_HongChao_2_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "HK6E",
+"entry": "HK6",
+"ver": "c5d2dab2",
+"time": "2026-09-30 19:12",
+"packages": [
+{
+"name": "HongChao_1",
+"replica": "HK6-1",
+"files": [
+"HongChao_1.json",
+"HongChao_1_Cascade参数.txt",
+"HongChao_1_曲线.csv",
+"T_HongChao_1.png",
+"T_HongChao_1_Cutout.png",
+"T_HongChao_1_FrameTest.png",
+"T_HongChao_1_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "HongChao_2",
+"replica": "HK6-2",
 "files": [
 "HongChao_2.json",
 "HongChao_2_Cascade参数.txt",

@@ -307,7 +307,9 @@ const COMBOS = [
 ];
 const LIB_TYPES = ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'henka', 'strobe'];
 // 组合用的母版：2048（1024 时每帧只有 128 像素，组合页糊得没法看——用户 2026-09-30）；组合页默认实时模拟，贴图只在「导出效果」页用
-const libP = P => ({ ...P, texW: 2048, texH: 2048, cols: 8, rows: 8, chans: 4, outMode: 'split', form: 'master', zoom: 'on' });
+// 组合用的母版：迭代 / 正式库条目（rep:）保持条目自己的输出方式（合并输出 = 引擎里的样子：灰度查 Ramp），这样组合页「导出效果」和导出的素材一致；
+// 花型库默认母版仍用分开输出（组合里星头 / 尾巴亮度可以分开调）。window.FW_LIB_TEX：云端软件渲染自检时临时改小贴图。
+const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || 2048, texH: window.FW_LIB_TEX || 2048, cols: 8, rows: 8, chans: 4, outMode: keep && P.outMode ? P.outMode : 'split', form: 'master', zoom: 'on' });
 const defaultLibName = t => TYPE_NAMES[t].replace(/（.*）/, '') + ' · 默认';
 async function ensureLibrary() {
   if (state.libReady) return;
@@ -332,7 +334,7 @@ async function ensureLibEntries(keys) {
     const k = need[i];
     if (k.startsWith('rep:')) {
       const id = k.slice(4), r = REPLICA_BY_ID[id], { P, M } = replicaPM(id);
-      const b = await bake(libP(P), 1, p => busy(true, `烘焙组合用母版：${r.name}（${i + 1}/${need.length}）`, (i + p) / need.length));
+      const b = await bake(libP(P, true), 1, p => busy(true, `烘焙组合用母版：${r.name}（${i + 1}/${need.length}）`, (i + p) / need.length));
       state.lib.push({ name: r.name, type: r.base, rep: id, P, M, bake: b });
     } else {
       const d = defaultsFor(k), b = await bake(libP(d.P), 1, p => busy(true, `烘焙组合用母版：${TYPE_NAMES[k]}`, (i + p) / need.length));
