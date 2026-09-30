@@ -66,7 +66,7 @@ class Pack:
         if self.ramp is not None:
             idx = np.clip((v * (len(self.ramp) - 1)).astype(int), 0, len(self.ramp) - 1); base = self.ramp[idx]
         else: base = np.repeat(v[..., None], 3, -1)
-        return base * v[..., None] * self.color(u)[None, None, :]
+        return base * v[..., None] * self.color(u)[None, None, :] * 4.0     # 4.0 = 材质里的自发光倍数（和烘焙器 uK 一致）
 
 
 def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360):
@@ -82,6 +82,7 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360):
             b = np.concatenate([c[:2].ravel(), c[-2:].ravel(), c[:, :2].ravel(), c[:, -2:].ravel()]); edge.append(float(b.sum() / tot))
             sat.append(float((c >= 250 / 255).mean())); m = c > 0.08
             if not m.any(): empty += 1; continue
+            if m.sum() < 400: last = None; continue       # 亮部太少（开头 / 末尾零星几颗）不算跳变
             ys, xs = np.nonzero(m); cen = (xs.mean(), ys.mean())
             if last is not None: jumps.append(float(np.hypot(cen[0] - last[0], cen[1] - last[1])))
             last = cen
@@ -101,7 +102,7 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360):
                 lay[ya:yb, xa:xb] += col[ya - y0:yb - y0, xa - x0:xb - x0]
             acc += lay; rows[li + 1].append(lay)
         rows[0].append(acc)
-    def tone(a): return (np.clip(1 - np.exp(-a * 3.0), 0, 1) ** (1 / 2.2) * 255).astype(np.uint8)
+    def tone(a): return (np.clip(1 - np.exp(-a * 1.5), 0, 1) ** (1 / 2.2) * 255).astype(np.uint8)
     W = px * len(times); H = px * len(rows)
     sheet = Image.new('RGB', (W + 110, H + 22), (14, 15, 20)); dr = ImageDraw.Draw(sheet)
     from PIL import ImageFont
