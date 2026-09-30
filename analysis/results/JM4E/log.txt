@@ -1,0 +1,5 @@
+16:21:25 开始：JinMangJu（导出素材）
+16:21:27 JinMangJu 导出 2 秒：JinMangJu.json、JinMangJu_Cascade参数.txt、JinMangJu_曲线.csv、T_JinMangJu.png、T_JinMangJu_Cutout.png、T_JinMangJu_FrameTest.png、T_JinMangJu_Ramp.png、cascade.json、cascade_mobile.json
+16:21:28 烘焙器预览 preview.js：4546 KB
+16:21:28 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+16:21:28 完成，用时 0.1 分钟

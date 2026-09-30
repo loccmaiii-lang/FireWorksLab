@@ -1,0 +1,24 @@
+{
+ "effect": "jinmangju",
+ "entry": "JM4",
+ "ver": "6d31bdf2",
+ "time": "2026-09-30 16:21",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "JinMangJu",
+   "replica": "JM4",
+   "files": [
+    "JinMangJu.json",
+    "JinMangJu_Cascade参数.txt",
+    "JinMangJu_曲线.csv",
+    "T_JinMangJu.png",
+    "T_JinMangJu_Cutout.png",
+    "T_JinMangJu_FrameTest.png",
+    "T_JinMangJu_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}
