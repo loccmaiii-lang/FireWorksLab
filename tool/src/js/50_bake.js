@@ -469,8 +469,15 @@ async function bake(P, scale, onProg) {
     case 'trail': return bakeTrail(P, scale, onProg);
     case 'unit': return bakeUnit(P, scale, onProg);
     case 'segments': return bakeSegments(P, scale, onProg);
-    default: return bakeMaster(P, scale, onProg);
+    default: return bakeMasterLead(P, scale, onProg);
   }
+}
+// 开头空白裁掉：星头要过一段时间才亮的层（延时点火、同轨迹的第二段、千轮 / 小割的子花）不把前面的空白烘进贴图，
+// 贴图从第一次看得见的时刻开始（meta.t0），引擎里用发射器延迟（cascade.json 的 delay_s）补上。trimLead = 0 关。
+function leadOf(fm) { const q = fm.stat.find(x => x.vis > 0); return q ? Math.max(0, q.t - 0.05) : 0; }
+async function bakeMasterLead(P, scale, onProg) {
+  const fm = measure(P), lead = P.trimLead === 0 ? 0 : leadOf(fm);
+  return lead > 0.25 && lead < P.duration - 0.5 ? bakeMaster(P, scale, onProg, { fm, ta: +lead.toFixed(3) }) : bakeMaster(P, scale, onProg, { fm });
 }
 // 种子变体：三个种子共用一套取景和帧号曲线（引擎里只换贴图）
 async function bakeVariants(P, scale, onProg, n = 3) {

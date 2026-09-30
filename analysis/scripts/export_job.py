@@ -98,6 +98,7 @@ def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=pr
     """烘焙器里的「实际烘焙回放」：打开条目，按「导出效果」（烘焙出的贴图 + 材质，和引擎同播法）和「实时模拟」各截几个时刻，
     和实拍（开花后同一秒）排成一张图。这是给负责的 AI 看的自检证据（进「待我验收」前必须看过）。"""
     import numpy as np
+    vp = s.pg.viewport_size; s.pg.set_viewport_size({'width': 1920, 'height': 1200})     # 和用户桌面上看到的大小相近（小画布里细线会被缩没）
     s.pg.evaluate(f"openReview(FW_REVIEW_LIST.find(e => e.id === {json.dumps(entry)}))")
     s.pg.wait_for_function("window.__fw && window.__fw.idle() && (state.tab !== 'combo' || (state.layers.length > 0 && state.lib.length >= state.layers.length))", timeout=0)
     s.pg.wait_for_timeout(1500)
@@ -108,7 +109,7 @@ def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=pr
             s.pg.evaluate(f"state.view = {json.dumps(view)}; state.playing = false; state.t = {t}"); s.pg.wait_for_timeout(900)
             png = s.pg.locator('#gl').screenshot()
             rows['实时模拟' if view == 'live' else '导出效果'].append(Image.open(io.BytesIO(png)).convert('RGB'))
-    px = 300; lines = []
+    px = 300; lines = []; rc = None
     if ref:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         import importlib; rc = importlib.import_module('回放检查')
@@ -127,3 +128,15 @@ def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=pr
         for c, im in enumerate(ims): sheet.paste(im, (90 + c * px, 22 + r * px))
     for c, t in enumerate(times): dr.text((90 + c * px + 4, 4), f'开花后 {t:.2f} s', fill=(233, 180, 95), font=font)
     sheet.save(out, quality=88); log('烘焙回放对照：' + out)
+    # 原尺寸（不缩小）：细线、小光点缩小后会变暗变没，判断「线条 / 颗粒清不清楚」看这张
+    c0 = min(rows['实时模拟'][0].size); big = []
+    if ref: big.append(('实拍', [Image.fromarray(a) for a in rc.ref_frames(ref, times, c0)]))
+    for k in ('实时模拟', '导出效果'):
+        big.append((k, [im.crop(((im.size[0] - c0) // 2, (im.size[1] - c0) // 2, (im.size[0] - c0) // 2 + c0, (im.size[1] - c0) // 2 + c0)) for im in rows[k]]))
+    sh2 = Image.new('RGB', (90 + c0 * len(times), 22 + c0 * len(big)), (14, 15, 20)); d2 = ImageDraw.Draw(sh2)
+    for r, (nm, ims) in enumerate(big):
+        d2.text((4, 22 + r * c0 + c0 // 2), nm, fill=(220, 210, 180), font=font)
+        for c, im in enumerate(ims): sh2.paste(im, (90 + c * c0, 22 + r * c0))
+    for c, t in enumerate(times): d2.text((90 + c * c0 + 4, 4), f'开花后 {t:.2f} s', fill=(233, 180, 95), font=font)
+    o2 = os.path.splitext(out)[0] + '_原尺寸.jpg'; sh2.save(o2, quality=85); log('烘焙回放（原尺寸）：' + o2)
+    if vp: s.pg.set_viewport_size(vp)
