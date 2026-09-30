@@ -168,7 +168,9 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   PPMY = 0;
   const comb = P.outMode === 'combined';
   const cg = comb ? combGain(P) : [1, 1];
-  const eH = extra.expo ? extra.expo[0] : autoExpo(fH, comb ? 0.92 : 0.9, 99.8) * cg[0], eT = extra.expo ? extra.expo[1] : autoExpo(fT, comb ? 0.55 : 0.85, 99.6) * cg[1];
+  const byF = P.expoMode === 'frames' && !pl.loop, fq = P.expoQ == null ? 0.7 : P.expoQ;
+  const eH = extra.expo ? extra.expo[0] : (byF ? autoExpoFrames(fH, L, comb ? 0.92 : 0.9, 99.5, fq) : autoExpo(fH, comb ? 0.92 : 0.9, 99.8)) * cg[0];
+  const eT = extra.expo ? extra.expo[1] : (byF ? autoExpoFrames(fT, L, comb ? 0.55 : 0.85, 99.5, fq) : autoExpo(fT, comb ? 0.55 : 0.85, 99.6)) * cg[1];
   // 先建目标贴图：Target 构造时会绑定到当前活动纹理单元，放在后面会顶掉采样用的贴图
   gl.activeTexture(gl.TEXTURE0);
   const head = new Target(N, NH, gl.RGBA8), tail = comb ? null : new Target(N, NH, gl.RGBA8);

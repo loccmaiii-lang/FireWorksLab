@@ -493,6 +493,26 @@ function squareView(m) { const h = Math.max(m.Ww, m.Wh) / 2; return [0, m.cy, h,
 // 合并输出（星头、火花在同一张灰度图里）时，两路各自自动曝光会把「炭头亮度」「火花亮度」抵消掉，
 // 所以自动曝光后再乘回这两个倍数：默认 1 时画面不变，调它们才真正改变星头和尾缀的明暗比例。
 function combGain(P) { return [P.headBright == null ? 1 : P.headBright, P.sparkBright == null ? 1 : P.sparkBright]; }
+// 按帧定曝光（P.expoMode = 'frames'）：每一帧先取自己的亮部分位（pct），再在所有非空帧里取第 q 分位的那一帧当基准。
+// 整张一起算（旧做法）时，开花最初几帧最亮、最密的那一下定死曝光，中后段整体偏暗，合并输出查 Ramp 后更暗（芯、末段光点看不见）；
+// 按帧取中位偏上，开头最亮那一下允许过曝发白（实拍本来就是），中后段亮度保得住。
+function autoExpoFrames(t, L, target, pct, q) {
+  t.bind(); const W = t.w, buf = new Float32Array(t.w * t.h * 4);
+  gl.readPixels(0, 0, t.w, t.h, gl.RGBA, gl.FLOAT, buf);
+  const cw = t.w / L.cols, chh = t.h / L.rows, peaks = [];
+  for (let f = 0; f < L.F; f++) {
+    const ch = L.chans === 4 ? Math.floor(f / L.per) : 0, k = f % L.per, col = k % L.cols, row = Math.floor(k / L.cols);
+    const x0 = Math.round(col * cw), y0 = Math.round(t.h - (row + 1) * chh), x1 = Math.round(x0 + cw), y1 = Math.round(y0 + chh);
+    const hist = new Uint32Array(512); let cnt = 0;
+    for (let y = y0; y < y1; y += 2) for (let x = x0; x < x1; x += 2) { const v = buf[(y * W + x) * 4 + ch]; if (v > 1e-5) { hist[clamp(Math.floor((Math.log2(v) + 20) * 10), 0, 511)]++; cnt++; } }
+    if (cnt < 8) continue;
+    const need = cnt * pct / 100; let acc = 0, b = 0; for (; b < 512; b++) { acc += hist[b]; if (acc >= need) break; }
+    peaks.push(Math.pow(2, b / 10 - 20));
+  }
+  if (!peaks.length) return 1;
+  peaks.sort((a, b) => a - b);
+  return -Math.log(1 - target) / peaks[Math.min(peaks.length - 1, Math.floor(peaks.length * q))];
+}
 function autoExpo(t, target, pct) {
   t.bind(); const buf = new Float32Array(t.w * t.h * 4);
   gl.readPixels(0, 0, t.w, t.h, gl.RGBA, gl.FLOAT, buf);
