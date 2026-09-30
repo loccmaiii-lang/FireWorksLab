@@ -1,0 +1,9 @@
+{
+ "id": "JM4E",
+ "type": "export",
+ "effect": "jinmangju",
+ "entry": "JM4",
+ "name": "JinMangJu",
+ "priority": 7,
+ "note": "金芒菊正式素材包：JM4（用户通过的 JM3 参数 + Zoom 取景）。按条目导出，带 导出清单.json（版本指纹），烘焙器据此显示素材包是否和当前版本一致。包在本机 analysis/local/输出/素材包/JinMangJu/。"
+}
