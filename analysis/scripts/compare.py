@@ -162,7 +162,12 @@ class SimSession:
         info = []
         for L in layers:
             P = {k: v for k, v in L['P'].items() if not k.startswith('_')}
-            ph = self.pg.evaluate(f"(()=>{{ const P={json.dumps(P)}; const fm=__fw.measure(P); const m=__fw.metricsOf(P,fm); return {{ R: m.diameter/2, burn: m.burn, cy: (fm.y0+fm.y1)/2 }}; }})()")
+            # 取景用的几何量：星头不发光的层（光丝层、只画尾巴的层）按同参数「星头可见」量；还量不出就沿用上一层（同轨迹）
+            PM = dict(P, headBright=max(float(P.get('headBright', 1) or 0), 1.0))
+            ph = self.pg.evaluate(f"(()=>{{ const P={json.dumps(PM)}; const fm=__fw.measure(P); const m=fm && __fw.metricsOf(P,fm); return m ? {{ R: m.diameter/2, burn: m.burn, cy: (fm.y0+fm.y1)/2 }} : null; }})()")
+            if ph is None:
+                if not info: raise RuntimeError('第 0 层量不出大小（主层没有可见的星）')
+                prev = info[-1][4]; ph = dict(prev, burn=float(P.get('ignDelay') or 0) + float(P.get('burn', prev['burn'])))
             info.append((P, L.get('M') or {}, float(L.get('scale', 1) or 1), float(L.get('delay', 0) or 0), ph))
         R0 = max(ph['R'] * sc for P, M, sc, dl, ph in info)
         Tb0 = max(dl + ph['burn'] for P, M, sc, dl, ph in info)
