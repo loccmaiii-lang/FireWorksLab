@@ -77,7 +77,9 @@ def run_job(job, s, force=False):
         if fit:
             P, M, L, S = run_fit(V, s, P, M, os.path.join(out, 'fit'), fit.get('params'), fit.get('rounds', 3), log=log, camera=fit.get('camera', False), caps=fit.get('caps'), weights=fit.get('weights'))
         for name, d in (job.get('variants') or {}).items():
-            dd = dict(d); Mo = dd.pop('M', {}); P2 = dict(P); P2.update(dd); M2 = dict(M); M2.update(Mo)
+            from fit import _put        # 多层：键写 "<层号>.<键>" / "0+1.<键>" / "*.<键>"，和拟合参数同写法
+            dd = dict(d); Mo = dd.pop('M', {}); P2, M2 = P, dict(M); M2.update(Mo)
+            for k, v in dd.items(): P2, M2 = _put(P2, M2, k, v)
             S2 = s.side(P2, M2, V['R']); L2, _ = score(V, S2)
             sheet(V, S2, os.path.join(out, f'variant_{name}.jpg')); jsave({'P': P2, 'M': M2, 'loss': L2}, os.path.join(out, f'variant_{name}.json'))
             log(f'变体 {name}：差距 {L2:.4f}')

@@ -1,0 +1,82 @@
+{
+ "id": "PK3",
+ "effect": "pianbei",
+ "name": "片贝 · PK2 诊断：垂帘不够竖、彩色小割看不到（变体对照）",
+ "priority": 5,
+ "video": "vidio/片贝祭片贝花火大会四尺玉烟花秀的天花板日本旅游搭子 - 日本小灵通.mp4",
+ "roi": [
+  0,
+  0.02,
+  1,
+  0.66
+ ],
+ "t_range": [
+  5.45,
+  18.2
+ ],
+ "start": "analysis/jobs/起点/PK3_起点.json",
+ "fit": null,
+ "note": "PK2 结构对（金菊 → 彩色小割 → 金花 → 垂帘），差在：① 30% 实拍已有洋红 / 紫小点，模拟的彩色小割 3.4 s 才开；② 70–90% 实拍是一条条竖直垂下的金帘、整体比宽更高，模拟是一团圆的颗粒。这一轮不拟合，只出变体对照。",
+ "review": {
+  "date": "2026-09-30 15:52",
+  "name": "片贝 · PK2 诊断：垂帘不够竖、彩色小割看不到（变体对照）",
+  "tags": "片贝四尺玉 · 金菊 + 彩色小割 + 金色小割垂帘（PK3） PK3",
+  "replaces": [
+   "PK1",
+   "PK2"
+  ],
+  "note": "PK2 结构对（金菊 → 彩色小割 → 金花 → 垂帘），差在：① 30% 实拍已有洋红 / 紫小点，模拟的彩色小割 3.4 s 才开；② 70–90% 实拍是一条条竖直垂下的金帘、整体比宽更高，模拟是一团圆的颗粒。这一轮不拟合，只出变体对照。",
+  "look": [
+   "金菊 → 彩色小割在里面",
+   "暗子弹错时开出金色小花",
+   "连成下垂的金帘"
+  ],
+  "opinion": "",
+  "internal": true
+ },
+ "variants": {
+  "a_窄开花快下垂": {
+   "4.subSpeed": 30,
+   "4.subVt": 30,
+   "4.sparkGrav": 1.0,
+   "4.emberLife": 5.0,
+   "4.sparkLife": 3.0,
+   "1+2+3.subDelay": 2.9
+  },
+  "b_再加密": {
+   "4.subSpeed": 30,
+   "4.subVt": 30,
+   "4.sparkGrav": 1.0,
+   "4.emberLife": 5.0,
+   "4.sparkLife": 3.0,
+   "1+2+3.subDelay": 2.9,
+   "4.subStars": 70,
+   "1+2+3.subStars": 60
+  },
+  "c_慢下垂长帘": {
+   "4.subSpeed": 40,
+   "4.subVt": 22,
+   "4.subBurn": 5.5,
+   "4.emberLife": 6.0,
+   "1+2+3.subDelay": 2.9
+  },
+  "d_重下坠": {
+   "4.subSpeed": 30,
+   "4.subVt": 30,
+   "4.sparkGrav": 1.3,
+   "4.emberLife": 5.0,
+   "4.sparkLife": 3.0,
+   "1+2+3.subDelay": 2.9,
+   "4.subGrav": 1.6
+  },
+  "e_小割提前亮": {
+   "4.subSpeed": 30,
+   "4.subVt": 30,
+   "4.sparkGrav": 1.0,
+   "4.emberLife": 5.0,
+   "4.sparkLife": 3.0,
+   "1+2+3.subDelay": 2.5,
+   "1+2+3.subBurn": 1.6
+  }
+ }
+}

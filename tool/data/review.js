@@ -1588,7 +1588,7 @@ var FW_REVIEW = [
 "暗子弹错时开出金色小花",
 "连成下垂的金帘"
 ],
-"opinion": "Claude 还没看这一版（你本地刚跑完就自动出现在这里）。看完有意见直接写。",
+"opinion": "差距 0.128。结构对：金菊 → 彩色小割 → 暗子弹开金花 → 连成垂帘。\n差在：① 30% 实拍已经有洋红 / 紫色小点，模拟的彩色小割 3.4 s 才开；② 50% 金花在实拍里更大更亮、排成一圈；③ 70–90% 实拍是一条条竖直垂下的金帘、整体比宽更高，模拟是一团圆的颗粒。\n下一步：PK3 不拟合，出 5 组变体（窄开花快下垂 / 加密 / 慢下垂长帘 / 重下坠 / 小割提前），选方向后定参数。",
 "tags": "片贝四尺玉 · 金菊 + 彩色小割 + 金色小割垂帘（PK2） PK2",
 "doc": null,
 "imagesTitle": null,
@@ -1812,7 +1812,7 @@ var FW_REVIEW = [
 "暗子弹错时开出金色小花",
 "连成下垂的金帘"
 ],
-"opinion": "Claude 还没看这一版（你本地刚跑完就自动出现在这里）。看完有意见直接写。",
+"opinion": "差距 0.128。结构对：金菊 → 彩色小割 → 暗子弹开金花 → 连成垂帘。\n差在：① 30% 实拍已经有洋红 / 紫色小点，模拟的彩色小割 3.4 s 才开；② 50% 金花在实拍里更大更亮、排成一圈；③ 70–90% 实拍是一条条竖直垂下的金帘、整体比宽更高，模拟是一团圆的颗粒。\n下一步：PK3 不拟合，出 5 组变体（窄开花快下垂 / 加密 / 慢下垂长帘 / 重下坠 / 小割提前），选方向后定参数。",
 "tags": "片贝四尺玉 · 金菊 + 彩色小割 + 金色小割垂帘（PK2） PK2",
 "doc": null,
 "imagesTitle": null,
@@ -2032,7 +2032,7 @@ var FW_REVIEW = [
 "暗子弹错时开出金色小花",
 "连成下垂的金帘"
 ],
-"opinion": "Claude 还没看这一版（你本地刚跑完就自动出现在这里）。看完有意见直接写。",
+"opinion": "差距 0.128。结构对：金菊 → 彩色小割 → 暗子弹开金花 → 连成垂帘。\n差在：① 30% 实拍已经有洋红 / 紫色小点，模拟的彩色小割 3.4 s 才开；② 50% 金花在实拍里更大更亮、排成一圈；③ 70–90% 实拍是一条条竖直垂下的金帘、整体比宽更高，模拟是一团圆的颗粒。\n下一步：PK3 不拟合，出 5 组变体（窄开花快下垂 / 加密 / 慢下垂长帘 / 重下坠 / 小割提前），选方向后定参数。",
 "tags": "片贝四尺玉 · 金菊 + 彩色小割 + 金色小割垂帘（PK2） PK2",
 "doc": null,
 "imagesTitle": null,
@@ -2252,7 +2252,7 @@ var FW_REVIEW = [
 "暗子弹错时开出金色小花",
 "连成下垂的金帘"
 ],
-"opinion": "Claude 还没看这一版（你本地刚跑完就自动出现在这里）。看完有意见直接写。",
+"opinion": "差距 0.128。结构对：金菊 → 彩色小割 → 暗子弹开金花 → 连成垂帘。\n差在：① 30% 实拍已经有洋红 / 紫色小点，模拟的彩色小割 3.4 s 才开；② 50% 金花在实拍里更大更亮、排成一圈；③ 70–90% 实拍是一条条竖直垂下的金帘、整体比宽更高，模拟是一团圆的颗粒。\n下一步：PK3 不拟合，出 5 组变体（窄开花快下垂 / 加密 / 慢下垂长帘 / 重下坠 / 小割提前），选方向后定参数。",
 "tags": "片贝四尺玉 · 金菊 + 彩色小割 + 金色小割垂帘（PK2） PK2",
 "doc": null,
 "imagesTitle": null,
@@ -2472,7 +2472,7 @@ var FW_REVIEW = [
 "暗子弹错时开出金色小花",
 "连成下垂的金帘"
 ],
-"opinion": "Claude 还没看这一版（你本地刚跑完就自动出现在这里）。看完有意见直接写。",
+"opinion": "差距 0.128。结构对：金菊 → 彩色小割 → 暗子弹开金花 → 连成垂帘。\n差在：① 30% 实拍已经有洋红 / 紫色小点，模拟的彩色小割 3.4 s 才开；② 50% 金花在实拍里更大更亮、排成一圈；③ 70–90% 实拍是一条条竖直垂下的金帘、整体比宽更高，模拟是一团圆的颗粒。\n下一步：PK3 不拟合，出 5 组变体（窄开花快下垂 / 加密 / 慢下垂长帘 / 重下坠 / 小割提前），选方向后定参数。",
 "tags": "片贝四尺玉 · 金菊 + 彩色小割 + 金色小割垂帘（PK2） PK2",
 "doc": null,
 "imagesTitle": null,
@@ -2700,7 +2700,7 @@ var FW_REVIEW = [
 "暗子弹错时开出金色小花",
 "连成下垂的金帘"
 ],
-"opinion": "Claude 还没看这一版（你本地刚跑完就自动出现在这里）。看完有意见直接写。",
+"opinion": "差距 0.128。结构对：金菊 → 彩色小割 → 暗子弹开金花 → 连成垂帘。\n差在：① 30% 实拍已经有洋红 / 紫色小点，模拟的彩色小割 3.4 s 才开；② 50% 金花在实拍里更大更亮、排成一圈；③ 70–90% 实拍是一条条竖直垂下的金帘、整体比宽更高，模拟是一团圆的颗粒。\n下一步：PK3 不拟合，出 5 组变体（窄开花快下垂 / 加密 / 慢下垂长帘 / 重下坠 / 小割提前），选方向后定参数。",
 "tags": "片贝四尺玉 · 金菊 + 彩色小割 + 金色小割垂帘（PK2） PK2",
 "doc": null,
 "imagesTitle": null,
@@ -2774,7 +2774,7 @@ var FW_REVIEW = [
 "白热段 + 褐金长线",
 "红点从星头冒出、约 1/4"
 ],
-"opinion": "Claude 还没看这一版（你本地刚跑完就自动出现在这里）。看完有意见直接写。",
+"opinion": "差距 1.30（主要是「亮痕细长度」）。结构对：锦冠白热段 + 褐金余烬、伞形下垂、90% 同轨迹红点。\n差在线条：实拍 10–90% 都是一根根清楚、笔直的细长白热线（细长度 0.85–0.89），模拟是一团颗粒（0.47–0.57）；拟合为了面积把星数推到上限 960，更糊。\n下一步：HK4 不拟合，出 6 组变体（少星 + 细火花 + 白热段短 / 收窄散开 / 余烬更长更暗 / 拖线），看哪种让线条变细长，再定参数。",
 "tags": "鸿巢四尺玉 · 锦冠 + 同轨迹红点（HK3） HK3",
 "doc": null,
 "imagesTitle": null,
@@ -3002,7 +3002,7 @@ var FW_REVIEW = [
 "白热段 + 褐金长线",
 "红点从星头冒出、约 1/4"
 ],
-"opinion": "Claude 还没看这一版（你本地刚跑完就自动出现在这里）。看完有意见直接写。",
+"opinion": "差距 1.30（主要是「亮痕细长度」）。结构对：锦冠白热段 + 褐金余烬、伞形下垂、90% 同轨迹红点。\n差在线条：实拍 10–90% 都是一根根清楚、笔直的细长白热线（细长度 0.85–0.89），模拟是一团颗粒（0.47–0.57）；拟合为了面积把星数推到上限 960，更糊。\n下一步：HK4 不拟合，出 6 组变体（少星 + 细火花 + 白热段短 / 收窄散开 / 余烬更长更暗 / 拖线），看哪种让线条变细长，再定参数。",
 "tags": "鸿巢四尺玉 · 锦冠 + 同轨迹红点（HK3） HK3",
 "doc": null,
 "imagesTitle": null,
@@ -3222,7 +3222,7 @@ var FW_REVIEW = [
 "白热段 + 褐金长线",
 "红点从星头冒出、约 1/4"
 ],
-"opinion": "Claude 还没看这一版（你本地刚跑完就自动出现在这里）。看完有意见直接写。",
+"opinion": "差距 1.30（主要是「亮痕细长度」）。结构对：锦冠白热段 + 褐金余烬、伞形下垂、90% 同轨迹红点。\n差在线条：实拍 10–90% 都是一根根清楚、笔直的细长白热线（细长度 0.85–0.89），模拟是一团颗粒（0.47–0.57）；拟合为了面积把星数推到上限 960，更糊。\n下一步：HK4 不拟合，出 6 组变体（少星 + 细火花 + 白热段短 / 收窄散开 / 余烬更长更暗 / 拖线），看哪种让线条变细长，再定参数。",
 "tags": "鸿巢四尺玉 · 锦冠 + 同轨迹红点（HK3） HK3",
 "doc": null,
 "imagesTitle": null,
@@ -20013,6 +20013,62 @@ var FW_REVIEW = [
 "aspect": 0.5625
 },
 "ver": "31dfe095"
+},
+{
+"id": "HK4",
+"task": "HK4",
+"kind": "queued",
+"date": "2026-09-30 15:44",
+"name": "鸿巢 · HK3 诊断：亮痕不够细长（对照 8 组变体）",
+"note": "HK3 结构对（锦冠下垂、同轨迹红点），差在亮痕：实拍是一根根清楚的细长白热线，模拟是一团颗粒（「亮痕细长度」0.5 对实拍 0.85–0.89）。拟合把星数推到 960（越多越糊）。这一轮不拟合，只出变体对照，看哪种改法让线条变细长：少星 + 细火花 + 白热段更短；再收窄散开；余烬更长更暗。",
+"look": [
+"伞形和垂帘的外廓",
+"白热段 + 褐金长线",
+"红点从星头冒出、约 1/4"
+],
+"opinion": "",
+"tags": "鸿巢四尺玉 · 锦冠 + 同轨迹红点（HK4） HK4",
+"doc": null,
+"imagesTitle": null,
+"principle": null,
+"video": "../vidio/鸿巢花火大会的四尺玉肉眼看到才知道有多震撼！当四尺玉缓缓升空，巨大的花火在高空炸开的瞬间，光芒从中心向四周层层扩散，一朵巨大绚烂的花，几乎铺.mp4",
+"vmeta": {
+"v": 7,
+"t0": 4.433,
+"cx": 0.5056,
+"cy": 0.2914,
+"half": 0.2803,
+"aspect": 0.5625
+},
+"ver": "6cadb128"
+},
+{
+"id": "PK3",
+"task": "PK3",
+"kind": "queued",
+"date": "2026-09-30 15:52",
+"name": "片贝 · PK2 诊断：垂帘不够竖、彩色小割看不到（变体对照）",
+"note": "PK2 结构对（金菊 → 彩色小割 → 金花 → 垂帘），差在：① 30% 实拍已有洋红 / 紫小点，模拟的彩色小割 3.4 s 才开；② 70–90% 实拍是一条条竖直垂下的金帘、整体比宽更高，模拟是一团圆的颗粒。这一轮不拟合，只出变体对照。",
+"look": [
+"金菊 → 彩色小割在里面",
+"暗子弹错时开出金色小花",
+"连成下垂的金帘"
+],
+"opinion": "",
+"tags": "片贝四尺玉 · 金菊 + 彩色小割 + 金色小割垂帘（PK3） PK3",
+"doc": null,
+"imagesTitle": null,
+"principle": null,
+"video": "../vidio/片贝祭片贝花火大会四尺玉烟花秀的天花板日本旅游搭子 - 日本小灵通.mp4",
+"vmeta": {
+"v": 7,
+"t0": 6.267,
+"cx": 0.4778,
+"cy": 0.2977,
+"half": 0.2428,
+"aspect": 0.5625
+},
+"ver": "d4008ab5"
 }
 ];
 var FW_VMETA = {"../vidio/2.0/尾缀A.mp4": {"t0": 0.033, "cx": 0.6406, "cy": 0.5, "half": 0.5, "aspect": 1.7778, "v": 7}, "../vidio/2.0/尾缀B.mp4": {"t0": 0.667, "cx": 0.7393, "cy": 0.5, "half": 0.5, "aspect": 1.7778, "v": 7}, "../vidio/2.0/尾缀C.mp4": {"t0": 0, "cx": 0.6498, "cy": 0.5, "half": 0.5, "aspect": 1.7778, "v": 7}, "../vidio/2.0/金芒菊A.mp4": {"v": 7, "t0": 0.867, "cx": 0.707, "cy": 0.25, "half": 0.2283, "aspect": 1.7778}};
@@ -20107,10 +20163,6 @@ var FW_EFFECTS = [
 "legacy": true
 },
 {
-"job": "JM2",
-"legacy": true
-},
-{
 "job": "JM4E",
 "entry": "JM4",
 "ver": "6d31bdf2",
@@ -20133,6 +20185,10 @@ var FW_EFFECTS = [
 }
 ],
 "stale": false
+},
+{
+"job": "JM2",
+"legacy": true
 }
 ],
 "thumb": "data:image/jpeg;base64,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",
@@ -20713,7 +20769,7 @@ var FW_EFFECTS = [
 "工作版": "ZK",
 "方案": [],
 "进度": {
-"计算": false,
+"计算": true,
 "AI自检": false,
 "素材导出": false,
 "用户验收": false
@@ -20728,10 +20784,15 @@ var FW_EFFECTS = [
 "id": "HK2",
 "结论": "否决",
 "反馈": "还原差、拼凑"
+},
+{
+"id": "HK3",
+"结论": "被取代",
+"反馈": "AI：亮痕不够细长，像颗粒"
 }
 ],
-"说明": "返工结构（锦冠白热段 + 褐金余烬、红点 = 同一颗星的第二段）经 AI 复核可用；HK3 拟合在算（两层共用星数 / 燃烧）。",
-"下一步": "HK3 回来 → 看整体 / 局部 / 连续播放 → 修 → 导出回放 → 待验收",
+"说明": "HK3（1.30）结构对：锦冠下垂、同轨迹红点；差在亮痕——实拍是清楚的细长白热线，模拟是一团颗粒（拟合把星数推到 960）。",
+"下一步": "HK4 变体对照（少星细火花 / 收窄 / 余烬）回来 → 选方向 → 定参数 → 导出回放（带实拍行）→ 待验收",
 "ver": "9d13d9e9",
 "jobs": [
 {
@@ -20750,6 +20811,12 @@ var FW_EFFECTS = [
 "id": "HK3",
 "type": "fit",
 "state": "已回来",
+"seen": true
+},
+{
+"id": "HK4",
+"type": "fit",
+"state": "在算",
 "seen": false
 }
 ],
@@ -20834,7 +20901,7 @@ var FW_EFFECTS = [
 "工作版": "ZP",
 "方案": [],
 "进度": {
-"计算": false,
+"计算": true,
 "AI自检": false,
 "素材导出": false,
 "用户验收": false
@@ -20844,10 +20911,15 @@ var FW_EFFECTS = [
 "id": "PK1",
 "结论": "否决",
 "反馈": "小花分组规整，垂帘像拼贴"
+},
+{
+"id": "PK2",
+"结论": "被取代",
+"反馈": "AI：垂帘不够竖，彩色小割太晚"
 }
 ],
-"说明": "返工结构（金菊 → 彩色小割 → 暗子弹错时开金花 → 连成垂帘）经 AI 复核可用；PK2 拟合在算。已知要改：彩色小割偏稀、垂帘不够竖。",
-"下一步": "PK2 回来 → 看 → 修 → 导出回放 → 待验收",
+"说明": "PK2（0.128）结构对：金菊 → 彩色小割 → 金花 → 垂帘；差在 30% 彩色小割还没开、70–90% 垂帘不够竖（一团圆颗粒）。",
+"下一步": "PK3 变体对照回来 → 选方向 → 定参数 → 导出回放（带实拍行）→ 待验收",
 "ver": "d6539f85",
 "jobs": [
 {
@@ -20860,6 +20932,12 @@ var FW_EFFECTS = [
 "id": "PK2",
 "type": "fit",
 "state": "已回来",
+"seen": true
+},
+{
+"id": "PK3",
+"type": "fit",
+"state": "在算",
 "seen": false
 }
 ],
