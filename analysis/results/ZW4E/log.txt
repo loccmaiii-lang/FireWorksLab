@@ -1,8 +1,4 @@
-20:42:14 开始：PianBei（导出素材）
-20:42:17 PianBei_1 导出 4 秒：PianBei_1.json、PianBei_1_Cascade参数.txt、PianBei_1_曲线.csv、T_PianBei_1.png、T_PianBei_1_Cutout.png、T_PianBei_1_FrameTest.png、T_PianBei_1_Ramp.png、cascade.json、cascade_mobile.json
-20:42:20 PianBei_2 导出 2 秒：PianBei_2.json、PianBei_2_Cascade参数.txt、PianBei_2_曲线.csv、T_PianBei_2.png、T_PianBei_2_Cutout.png、T_PianBei_2_FrameTest.png、T_PianBei_2_Ramp.png、cascade.json、cascade_mobile.json
-20:42:22 PianBei_3 导出 2 秒：PianBei_3.json、PianBei_3_Cascade参数.txt、PianBei_3_曲线.csv、T_PianBei_3.png、T_PianBei_3_Cutout.png、T_PianBei_3_FrameTest.png、T_PianBei_3_Ramp.png、cascade.json、cascade_mobile.json
-20:42:24 PianBei_4 导出 2 秒：PianBei_4.json、PianBei_4_Cascade参数.txt、PianBei_4_曲线.csv、T_PianBei_4.png、T_PianBei_4_Cutout.png、T_PianBei_4_FrameTest.png、T_PianBei_4_Ramp.png、cascade.json、cascade_mobile.json
+20:44:34 开始：WanCaiQianLun（导出素材）
 20:44:34 出错：
 Traceback (most recent call last):
   File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 64, in run_job
@@ -28,9 +24,13 @@ Traceback (most recent call last):
     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
 playwright._impl._errors.Error: Page.evaluate: Error: 帧缓冲创建失败
     at new Target (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:2150:86)
-    at bakeFrames (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:2836:16)
-    at async bakeMaster (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:2946:15)
-    at async Object.exportFiles (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:5899:15)
-    at async eval (eval at evaluate (:311:30), <anonymous>:2:24)
-    at async <anonymous>:337:30
+    at bakeFrames (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:2800:14)
+    at bakeMaster (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:2946:21)
+    at bakeMasterLead (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:3142:112)
+    at bake (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:3134:21)
+    at Object.exportFiles (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:5899:21)
+    at eval (eval at evaluate (:311:30), <anonymous>:2:35)
+    at eval (eval at evaluate (:311:30), <anonymous>:3:141)
+    at eval (<anonymous>)
+    at UtilityScript.evaluate (<anonymous>:311:30)
 

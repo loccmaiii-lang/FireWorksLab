@@ -1,0 +1,35 @@
+{
+ "total_s": 12.0,
+ "layers": [
+  {
+   "pack": "HongChao_1",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 12.0,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0257,
+   "empty_frames": 45,
+   "center_jump_max_px": 5.14
+  },
+  {
+   "pack": "HongChao_2",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 5.96,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0,
+   "empty_frames": 10,
+   "center_jump_max_px": 0
+  }
+ ]
+}

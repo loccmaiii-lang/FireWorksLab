@@ -1,0 +1,39 @@
+{
+ "effect": "qingning",
+ "entry": "QN10",
+ "ver": "c21c1a46",
+ "time": "2026-09-30 20:44",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "QingNingXing_1",
+   "replica": "QN10-1",
+   "files": [
+    "QingNingXing_1.json",
+    "QingNingXing_1_Cascade参数.txt",
+    "QingNingXing_1_曲线.csv",
+    "T_QingNingXing_1.png",
+    "T_QingNingXing_1_Cutout.png",
+    "T_QingNingXing_1_FrameTest.png",
+    "T_QingNingXing_1_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "QingNingXing_2",
+   "replica": "QN10-2",
+   "files": [
+    "QingNingXing_2.json",
+    "QingNingXing_2_Cascade参数.txt",
+    "QingNingXing_2_曲线.csv",
+    "T_QingNingXing_2.png",
+    "T_QingNingXing_2_Cutout.png",
+    "T_QingNingXing_2_FrameTest.png",
+    "T_QingNingXing_2_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,54 @@
+{
+ "effect": "qiuxing_d",
+ "entry": "QD11",
+ "ver": "df5377fd",
+ "time": "2026-09-30 20:43",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "QiuXingD_1",
+   "replica": "QD11-1",
+   "files": [
+    "QiuXingD_1.json",
+    "QiuXingD_1_Cascade参数.txt",
+    "QiuXingD_1_曲线.csv",
+    "T_QiuXingD_1.png",
+    "T_QiuXingD_1_Cutout.png",
+    "T_QiuXingD_1_FrameTest.png",
+    "T_QiuXingD_1_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "QiuXingD_2",
+   "replica": "QD11-2",
+   "files": [
+    "QiuXingD_2.json",
+    "QiuXingD_2_Cascade参数.txt",
+    "QiuXingD_2_曲线.csv",
+    "T_QiuXingD_2.png",
+    "T_QiuXingD_2_Cutout.png",
+    "T_QiuXingD_2_FrameTest.png",
+    "T_QiuXingD_2_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "QiuXingD_3",
+   "replica": "QD11-3",
+   "files": [
+    "QiuXingD_3.json",
+    "QiuXingD_3_Cascade参数.txt",
+    "QiuXingD_3_曲线.csv",
+    "T_QiuXingD_3.png",
+    "T_QiuXingD_3_Cutout.png",
+    "T_QiuXingD_3_FrameTest.png",
+    "T_QiuXingD_3_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}
