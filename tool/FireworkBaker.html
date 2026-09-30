@@ -694,7 +694,10 @@ const BASE = {
   // 形状
   pattern: 'sphere', tilt: 0, ringFrac: 0.45, text: '祭', waterRefl: 0,
   // 星效果
-  ignDelay: 0, ignJit: 10, strobeHz: 0, strobeDuty: 0.35, strobeStart: 0.4, glitter: 0, glitterDelay: 0.25,
+  ignDelay: 0, ignJit: 10, ignSeed: 0, keepFrac: 1, afterBurn: 0, afterJit: 15, headDim: 1, headDimUntil: 0,
+  emberFrac: 0, emberLife: 3, emberBright: 0.1, emberFollow: 0, emberSize: 1, emberAll: 0, emberEnd: 0,
+  carrierHead: 0.4, subKeep: -1, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
+  strobeHz: 0, strobeDuty: 0.35, strobeStart: 0.4, glitter: 0, glitterDelay: 0.25,
   crackle: 0, crackleDelay: 0.3, branch: 0, branchAt: 0.45, flutter: 0, flutterHz: 0.7,
   // 上升
   riseH: 250, vtShell: 55, riseStyle: 'gold', wobble: 0, wobbleHz: 1.6, kobanaN: 4, bunpoN: 3,
@@ -897,8 +900,14 @@ const SCHEMA = [
     ['shellSpin', '玉体自旋', 'rad/s', 0, 80, 0.5, isAir]
   ] },
   { sec: '星效果', show: isAir, hint: '可叠加在任何花型上。松叶分叉只在 GPU 内核里有。', items: [
-    ['ignDelay', '延时点火', 's', 0, 3, 0.01],
+    ['ignDelay', '延时点火', 's', 0, 10, 0.01],
     ['ignJit', '点火离散', '%', 0, 100, 1],
+    ['ignSeed', '点火离散用独立随机（0 关；非 0 时和同种子的另一层星位一一对应）', '', 0, 999, 1, P => P.ignDelay > 0],
+    ['keepFrac', '只让一部分星发光（轨迹不变，和同种子的主层同位）', '×', 0.02, 1, 0.01],
+    ['afterBurn', '第二段：主段烧完后接着亮几秒（0 关；主段期间不发光）', 's', 0, 8, 0.05],
+    ['afterJit', '第二段时长离散', '%', 0, 60, 1, P => P.afterBurn > 0],
+    ['headDim', '前段星头亮度（1 = 不压暗）', '×', 0, 1, 0.01],
+    ['headDimUntil', '前段压暗到第几秒（分层星外层 = 引き）', 's', 0, 6, 0.05, P => P.headDim < 1],
     ['strobeHz', '点灭频率（0 关）', 'Hz', 0, 30, 0.1],
     ['strobeDuty', '点灭亮占比', '', 0.05, 0.9, 0.01, P => P.strobeHz > 0],
     ['strobeStart', '点灭开始', '×燃烧', 0, 1, 0.01, P => P.strobeHz > 0],
@@ -930,17 +939,30 @@ const SCHEMA = [
     ['T0', '初始温度', 'K', 1500, 2800, 10],
     ['cooling', '冷却速度', '', 0, 0.8, 0.01],
     ['sparkBright', '火花亮度', '×', 0, 3, 0.05],
+    ['emberFrac', '余烬长尾比例（锦冠木炭余烬 / 受光烟迹：暗而长的轨迹线，0 关）', '', 0, 0.9, 0.01],
+    ['emberLife', '余烬长尾寿命', 's', 0.3, 8, 0.05, P => P.emberFrac > 0],
+    ['emberBright', '余烬长尾亮度（× 新火花）', '×', 0.005, 1, 0.005, P => P.emberFrac > 0],
+    ['emberFollow', '随母星熄灭（受光烟迹：星灭后几秒内淡掉，0 = 按自身寿命）', 's', 0, 3, 0.05, P => P.emberFrac > 0],
+    ['emberSize', '余烬长尾粗细（× 颗粒）', '×', 0.2, 2, 0.01, P => P.emberFrac > 0],
+    ['emberEnd', '光丝整体熄灭时刻（受光烟迹：星转点灭、色光变弱后烟迹一起暗掉，0 关）', 's', 0, 10, 0.05, P => P.emberFrac > 0],
+    ['emberAll', '余烬贯穿整个燃烧期（1 = 不受「火花只在前几秒」限制：外层引き火花先停，光丝一直跟到星头）', '', 0, 1, 1, P => P.emberFrac > 0],
     ['twinkle', '火花闪烁', '', 0, 1, 0.01]
   ] },
   { sec: '千轮 / 分裂', show: P => P.type === 'senrin' || P.type === 'crossette', items: [
     { sel: 'subPattern', label: '子星排布', options: [['sphere', '小球（千轮）'], ['cross', '十字（分裂）']] },
-    ['subDelay', '子花开花时刻', 's', 0.2, 3, 0.01],
+    ['subDelay', '子花开花时刻', 's', 0.2, 8, 0.01],
     ['subJit', '开花时刻离散', '%', 0, 40, 0.5],
     ['subStars', '每朵子花星数', '颗', 2, 120, 1],
     ['subSpeed', '子花初速', 'm/s', 5, 120, 1],
-    ['subBurn', '子花燃烧时间', 's', 0.2, 3, 0.05],
+    ['subBurn', '子花燃烧时间', 's', 0.2, 8, 0.05],
     ['subTail', '子花火花密度', '个/秒', 0, 400, 1],
-    ['carrierTail', '子弹尾迹密度', '个/秒', 0, 400, 1]
+    ['carrierTail', '子弹尾迹密度', '个/秒', 0, 400, 1],
+    ['carrierHead', '子弹（小割玉）亮度（0 = 飞行时不可见）', '×', 0, 1, 0.01],
+    ['subKeep', '子花继承子弹速度（-1 = 默认 0.35）', '', -1, 1, 0.01],
+    ['subScaleJit', '每朵子花大小离散', '%', 0, 50, 1],
+    ['subVt', '子星终端速度（0 = 同主层）', 'm/s', 0, 80, 0.5],
+    ['subGrav', '子星下坠（-1 = 同主层）', '×', -1, 3, 0.05],
+    ['subFlash', '子花开花闪光（-1 = 默认）', '', -1, 1, 0.01]
   ] },
   { sec: '蜂', show: P => P.type === 'hachi', items: [
     ['spin', '旋转速度', 'rad/s', 0, 40, 0.5],
@@ -1127,13 +1149,13 @@ class Sparks {
     this.cap = cap; this.n = 0;
     this.p = new Float32Array(cap * 3); this.v = new Float32Array(cap * 3);
     this.age = new Float32Array(cap); this.life = new Float32Array(cap); this.T0 = new Float32Array(cap); this.rnd = new Float32Array(cap);
-    this.air = new Float32Array(cap * 2);
+    this.air = new Float32Array(cap * 2); this.pd = new Float32Array(cap);
   }
-  add(x, y, z, vx, vy, vz, age, life, T0, rnd, ax, ay) {
+  add(x, y, z, vx, vy, vz, age, life, T0, rnd, ax, ay, pd = 1e9) {
     if (this.n >= this.cap) return;
     const i = this.n++, k = i * 3;
     this.p[k] = x; this.p[k + 1] = y; this.p[k + 2] = z; this.v[k] = vx; this.v[k + 1] = vy; this.v[k + 2] = vz;
-    this.age[i] = age; this.life[i] = life; this.T0[i] = T0; this.rnd[i] = rnd; this.air[i * 2] = ax; this.air[i * 2 + 1] = ay;
+    this.age[i] = age; this.life[i] = life; this.T0[i] = T0; this.rnd[i] = rnd; this.air[i * 2] = ax; this.air[i * 2 + 1] = ay; this.pd[i] = pd;
   }
   kill(i) {
     const j = --this.n; if (i === j) return;
@@ -1141,7 +1163,7 @@ class Sparks {
     this.p[a] = this.p[b]; this.p[a + 1] = this.p[b + 1]; this.p[a + 2] = this.p[b + 2];
     this.v[a] = this.v[b]; this.v[a + 1] = this.v[b + 1]; this.v[a + 2] = this.v[b + 2];
     this.age[i] = this.age[j]; this.life[i] = this.life[j]; this.T0[i] = this.T0[j]; this.rnd[i] = this.rnd[j];
-    this.air[i * 2] = this.air[j * 2]; this.air[i * 2 + 1] = this.air[j * 2 + 1];
+    this.air[i * 2] = this.air[j * 2]; this.air[i * 2 + 1] = this.air[j * 2 + 1]; this.pd[i] = this.pd[j];
   }
 }
 
@@ -1205,6 +1227,13 @@ function shapePoints(kind, n, text) {
   if (kind === 'text') return textPoints(text, n);
   const o = []; for (let i = 0; i < n; i++) { const a = i / n * 6.2832; o.push([Math.cos(a), Math.sin(a)]); } return o;   // ring
 }
+// 每颗星固定的伪随机数（0–1）：不消耗模拟的随机序列，所以加了「只让一部分星发光」「第二段时长」这类开关后，
+// 同种子的两层星位仍然一一对应（红点灭 = 主层星的一部分，接在它们的位置上）
+function starHash(id, seed, k) {
+  let h = (Math.imul(id + 1, 0x9E3779B1) ^ Math.imul((seed | 0) + 7, 0x85EBCA77) ^ Math.imul(k + 3, 0xC2B2AE3D)) >>> 0;
+  h ^= h >>> 16; h = Math.imul(h, 0x7FEB352D) >>> 0; h ^= h >>> 15; h = Math.imul(h, 0x846CA68B) >>> 0; h ^= h >>> 16;
+  return (h >>> 0) / 4294967296;
+}
 // 星的方向与速度倍数：[dx, dy, dz, 速度倍数]
 function dirsFor(P, rng) {
   if (P._unit) { const e = P.unitElev * Math.PI / 180; return [[Math.cos(e), Math.sin(e), 0, 1]]; }
@@ -1254,6 +1283,8 @@ class Sim {
     const carrier = P.type === 'senrin' || P.type === 'crossette';
     // 自旋：绕随机轴，切向速度 = ω × 半径（半径按号数估计）
     const ax = randUnit(this.rng), rs = 0.015 * (P.shellNo || 5), om = P.shellSpin;
+    // 点火离散用独立随机：不打乱主序列，星位和同种子、不带延时点火的层一一对应
+    const ignRng = P.ignSeed ? new RNG(P.ignSeed) : this.rng;
     for (const d of dirs) {
       const s = P.v0 * d[3] * (1 + P.speedJit / 100 * this.rng.n());
       const burn = carrier ? P.subDelay * (1 + P.subJit / 100 * this.rng.n()) : P.burn * (1 + P.burnJit / 100 * this.rng.n());
@@ -1261,9 +1292,11 @@ class Sim {
       if (om) { vx += om * rs * (ax[1] * d[2] - ax[2] * d[1]); vy += om * rs * (ax[2] * d[0] - ax[0] * d[2]); vz += om * rs * (ax[0] * d[1] - ax[1] * d[0]); }
       // 起始半径：星从半径 burstR0 的球面上出发（开花第一帧就有一定大小，游戏里常用的写法）
       const r0 = P.burstR0 || 0;
-      const st = this.mk(d[0] * r0, d[1] * r0, d[2] * r0, vx, vy, vz, Math.max(0.05, burn), carrier ? 1 : 0, carrier ? P.carrierTail : P.sparkRate, P.headBright * (carrier ? 0.4 : 1));
+      const st = this.mk(d[0] * r0, d[1] * r0, d[2] * r0, vx, vy, vz, Math.max(0.05, burn), carrier ? 1 : 0, carrier ? P.carrierTail : P.sparkRate, P.headBright * (carrier ? (P.carrierHead != null ? P.carrierHead : 0.4) : 1));
       this.stars.push(st);
-      if (P.ignDelay > 0 && !carrier) { st.ign = Math.max(0, P.ignDelay * (1 + P.ignJit / 100 * (2 * this.rng.u() - 1))); st.burn += st.ign; }
+      if (P.ignDelay > 0 && !carrier) { st.ign = Math.max(0, P.ignDelay * (1 + P.ignJit / 100 * (2 * ignRng.u() - 1))); st.burn += st.ign; }
+      // 第二段（分层星内层）：主段 burn 期间不发光、轨迹与主层相同；主段烧完后接着亮 afterBurn 秒（红点灭余烬）
+      if (P.afterBurn > 0 && !carrier) { st.mref = st.burn; st.st1 = st.burn; st.burn += P.afterBurn * Math.max(0.2, 1 + P.afterJit / 100 * (2 * starHash(st.id, P.seed, 11) - 1)); }
       // 单元序列：星熄灭后粒子继续按轨迹运动（Cascade 里粒子不会停），只是不再发光、不再发火花
       if (P._unit) { st.vis = st.burn; st.burn = 1e9; }
     }
@@ -1280,6 +1313,7 @@ class Sim {
   }
   mk(x, y, z, vx, vy, vz, burn, kind, rate, I) {
     const s = { x, y, z, vx, vy, vz, age: 0, burn, kind, rate, I, flick: 1, alive: true, birth: this.t, id: this.all.length, ign: 0, ph: this.rng.u(), ph2: this.rng.u(), c: this.c };
+    if (this.P.keepFrac < 1 && kind !== 1 && kind !== 5 && starHash(s.id, this.P.seed, 5) >= this.P.keepFrac) { s.dark = true; s.rate = 0; }
     this.all.push(s);
     if (this.P.type === 'hachi') {
       const a = randUnit(this.rng); s.ax = a[0]; s.ay = a[1]; s.az = a[2];
@@ -1298,14 +1332,19 @@ class Sim {
       const w = [f[1] * u[2] - f[2] * u[1], f[2] * u[0] - f[0] * u[2], f[0] * u[1] - f[1] * u[0]], r0 = rng.u() * 6.2832;
       dirs = []; for (let i = 0; i < P.subStars; i++) { const a2 = r0 + i * 6.2832 / P.subStars, c = Math.cos(a2), sn = Math.sin(a2); dirs.push([u[0] * c + w[0] * sn, u[1] * c + w[1] * sn, u[2] * c + w[2] * sn]); }
     } else dirs = fibDirs(P.subStars, rng, randRot(rng), P.dirJit * 2);
-    const keep = P.subPattern === 'cross' ? 0.25 : 0.35;
+    const keep = P.subKeep >= 0 ? P.subKeep : P.subPattern === 'cross' ? 0.25 : 0.35;
+    // 每朵子花大小离散（小割玉的割药量不同）；子星自己的阻力 / 下坠（子星比主星小、减速更快）
+    const fs = P.subScaleJit > 0 ? Math.max(0.4, 1 + P.subScaleJit / 100 * rng.n()) : 1;
     for (const d of dirs) {
-      const sp = P.subSpeed * (1 + P.speedJit / 100 * rng.n());
+      const sp = P.subSpeed * fs * (1 + P.speedJit / 100 * rng.n());
       const b = P.subBurn * (1 + P.burnJit / 100 * rng.n());
-      this.stars.push(this.mk(s.x, s.y, s.z, s.vx * keep + d[0] * sp, s.vy * keep + d[1] * sp, s.vz * keep + d[2] * sp,
-        Math.max(0.05, b), 2, P.subTail, P.headBright));
+      const ch = this.mk(s.x, s.y, s.z, s.vx * keep + d[0] * sp, s.vy * keep + d[1] * sp, s.vz * keep + d[2] * sp,
+        Math.max(0.05, b), 2, P.subTail, P.headBright);
+      if (P.subVt > 0) ch.c = G / (P.subVt * P.subVt);
+      if (P.subGrav >= 0) ch.grav = P.subGrav;
+      this.stars.push(ch);
     }
-    this.flashes.push({ t0: this.t, x: s.x, y: s.y, I: P.flash * 0.3, sig: Math.max(1, P.subSpeed * 0.05) });
+    this.flashes.push({ t0: this.t, x: s.x, y: s.y, I: P.subFlash >= 0 ? P.subFlash : P.flash * 0.3, sig: Math.max(1, P.subSpeed * 0.05) });
     this.events.push([this.t, P.subPattern === 'cross' ? 'crack' : 'pop']);
   }
   kobanaBurst(s) {
@@ -1343,8 +1382,8 @@ class Sim {
       let ax = 0, ay = 0; if (windy) [ax, ay] = this.air(s.x, s.y, this.t);
       const rx = s.vx - ax, ry = s.vy - ay, rz = s.vz, v = Math.hypot(rx, ry, rz);
       // 燃烧减质量：星体半径随燃烧线性变小，阻力系数 ∝ 1/半径
-      let c = s.c; if (P.massLoss > 0 && s.kind !== 5) c /= Math.max(0.15, 1 - P.massLoss * clamp((s.age - s.ign) / Math.max(0.05, (s.vis != null ? s.vis : s.burn) - s.ign), 0, 1));
-      s.vx -= c * v * rx * h; s.vy += (-c * v * ry + (s.kind === 5 ? -G : gy)) * h; s.vz -= c * v * rz * h;
+      let c = s.c; if (P.massLoss > 0 && s.kind !== 5) c /= Math.max(0.15, 1 - P.massLoss * clamp((s.age - s.ign) / Math.max(0.05, (s.mref != null ? s.mref : s.vis != null ? s.vis : s.burn) - s.ign), 0, 1));
+      s.vx -= c * v * rx * h; s.vy += (-c * v * ry + (s.kind === 5 ? -G : s.grav != null ? -G * s.grav : gy)) * h; s.vz -= c * v * rz * h;
       if (bee) {
         const th = s.om * h, co = Math.cos(th), si = Math.sin(th);
         const ax2 = s.ax, ay2 = s.ay, az2 = s.az, vx = s.vx, vy = s.vy, vz = s.vz;
@@ -1371,14 +1410,17 @@ class Sim {
       s.x += s.vx * h; s.y += s.vy * h; s.z += s.vz * h;
       s.flick = clamp(s.flick + rng.n() * sq * 2.2 * P.flicker, 1 - P.flicker, 1 + P.flicker * 0.4);
       if (s.vis != null && !s.ended && s.age >= s.vis) { s.ended = true; if (P.crackle > 0) this.crackleBurst(s); }
-      if (s.rate > 0 && !this.noSparks && s.age >= s.ign && !s.ended && !(P.sparkStop > 0 && s.kind !== 5 && s.age - s.ign > P.sparkStop) && !(P.sparkStart > 0 && s.kind !== 5 && s.age - s.ign < P.sparkStart)) {
+      const hotOff = P.sparkStop > 0 && s.kind !== 5 && s.age - s.ign > P.sparkStop, embAll = P.emberFrac > 0 && P.emberAll;
+      if (s.rate > 0 && !this.noSparks && s.age >= s.ign && !s.ended && !(hotOff && !embAll) && !(P.sparkStart > 0 && s.kind !== 5 && s.age - s.ign < P.sparkStart)) {
         const fr = s.kind === 5 || P.sparkRateEnd == null || P.sparkRateEnd === 1 ? 1 : Math.max(0, 1 + (P.sparkRateEnd - 1) * clamp((s.age - s.ign) / Math.max(0.05, (s.vis != null ? s.vis : s.burn) - s.ign), 0, 1));
         const k = rng.poisson(s.rate * fr * h), spr = P.sparkSpread, T0 = s.kind === 5 && P.riseStyle === 'silver' ? P.T0 + 250 : P.T0, lf = s.kind === 5 && P.riseStyle === 'silver' ? 1.5 : 1;
         for (let j = 0; j < k; j++) {
           const u = rng.u(), inh = P.sparkInherit * (0.3 + 1.4 * rng.u()), px = s.x - s.vx * h * u, py = s.y - s.vy * h * u;
           const [aX, aY] = windy ? this.air(px, py, this.t) : [0, 0];
+          const lfe = P.sparkLife * lf * Math.exp(0.45 * rng.n()), rd = rng.u(), emb = P.emberFrac > 0 && s.kind !== 5 && rd < P.emberFrac;
+          if (hotOff && !emb) continue;
           sp.add(px, py, s.z - s.vz * h * u, s.vx * inh + rng.n() * spr, s.vy * inh + rng.n() * spr, s.vz * inh + rng.n() * spr,
-            u * h, P.sparkLife * lf * Math.exp(0.45 * rng.n()), T0 + 120 * rng.n(), rng.u(), aX, aY);
+            u * h, emb ? P.emberLife * Math.exp(0.2 * rng.n()) : lfe, T0 + 120 * rng.n(), rd, aX, aY, s.birth + (s.vis != null ? s.vis : s.burn));
         }
       }
       if (s.kind === 5) {
@@ -1415,9 +1457,9 @@ class Sim {
     this.t += h;
   }
   headI(s) {
-    const P = this.P, a = s.age - s.ign, end = s.vis != null ? s.vis : s.burn;
-    if (a < 0 || s.age >= end) return 0;
-    const dur = Math.max(0.05, end - s.ign), ign = Math.min(1, a / 0.05), rem = end - s.age;
+    const P = this.P, off = s.st1 != null ? s.st1 : s.ign, a = s.age - off, end = s.vis != null ? s.vis : s.burn;
+    if (s.dark || a < 0 || s.age >= end) return 0;
+    const dur = Math.max(0.05, end - off), ign = Math.min(1, a / 0.05), rem = end - s.age;
     let f = 1;
     if (P.fade > 0 && s.kind !== 1 && s.kind !== 5) f = clamp(rem / (dur * P.fade), 0, 1);
     const last = s.kind === 1 || s.kind === 5 ? 1 : 1 + P.lastFlare * Math.exp(-((rem / 0.05) ** 2));
@@ -1426,6 +1468,8 @@ class Sim {
       const ph = (a * P.strobeHz * (0.85 + 0.3 * s.ph2) + s.ph) % 1; st = ph < P.strobeDuty ? 1.6 : 0.03;
     }
     if (P.flutter > 0) st *= 0.55 + 0.45 * Math.abs(Math.cos(3.1416 * P.flutterHz * s.age + s.ph * 6.2832));
+    // 分层星外层（引き）：前段只有木炭火焰、星头暗；到 headDimUntil 秒前后 0.25 s 过渡到色光层的正常亮度
+    if (P.headDim < 1 && P.headDimUntil > 0 && s.kind !== 1 && s.kind !== 5) { const x = clamp((a - P.headDimUntil + 0.25) / 0.25, 0, 1); st *= P.headDim + (1 - P.headDim) * x * x * (3 - 2 * x); }
     if (s.kind === 5 && P.riseStyle === 'fue') st *= 0.6 + 0.4 * Math.sin(6.2832 * 9 * s.age);
     return s.I * s.flick * ign * f * last * st;
   }
@@ -1451,13 +1495,15 @@ class Sim {
     const sp = this.sp; let nt = 0;
     const gl = P.glitter, gd = P.glitterDelay;
     for (let i = 0; i < sp.n && nt < capT - 1; i++) {
-      const T = sp.T0[i] * (1 - P.cooling * sp.age[i] / sp.life[i]);
+      const emb = P.emberFrac > 0 && sp.rnd[i] < P.emberFrac;
+      const T = emb ? sp.T0[i] : sp.T0[i] * (1 - P.cooling * sp.age[i] / sp.life[i]);
       let g = (T - 900) / 1150; if (g <= 0 && gl <= 0) continue; g = g > 0 ? g * g * g : 0;
+      if (emb) { const x = sp.age[i] / sp.life[i], ss = e => e <= 0 ? 0 : e >= 1 ? 1 : e * e * (3 - 2 * e); g *= P.emberBright * Math.exp(-2 * x) * (1 - ss((x - 0.75) / 0.25)) * (P.emberFollow > 0 ? 1 - ss((this.t - sp.pd[i] + 0.15) / (P.emberFollow + 0.15)) : 1) * (P.emberEnd > 0 ? 1 - ss((this.t - P.emberEnd + 0.6) / 0.9) : 1); }
       if (gl > 0) { const tf = gd * (0.5 + sp.rnd[i]), e = (sp.age[i] - tf) / 0.03; g = g * (1 - 0.85 * gl) + gl * 6 * Math.exp(-e * e); }
       const j = i * 3, x = sp.p[j], y = sp.p[j + 1];
       if (refl > 0 && y < 0) continue;
       const I = g * (1 + P.twinkle * (rr.u() * 2 - 1)) * P.sparkBright * 0.6;
-      push(bufT, nt++, x, y, I, P.sparkSize);
+      push(bufT, nt++, x, y, I, P.sparkSize * (emb ? P.emberSize : 1));
       if (refl > 0 && nt < capT - 1) push(bufT, nt++, x + ripple(y, this.t), -y, I * refl * Math.exp(-y / 400), P.sparkSize * 1.3);
     }
     return [nh, nt];
@@ -1740,6 +1786,7 @@ precision highp float; precision highp int; precision highp sampler2D;
 uniform sampler2D uPos, uVel, uInfo;
 uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw, uBr;
 uniform float uInh, uSpread, uLife, uK, uG, uT0, uCool, uTwk, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
+uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE;
 uniform vec4 uTm[3]; uniform float uTa[3];
 uniform vec4 uView, uXf; uniform float uPPM, uPPMY, uMax, uUseXf;
 out float vI; out vec2 vSig; out float vPS;
@@ -1756,6 +1803,11 @@ void main(){
   else { float dsc=inf.z*inf.z+4.*inf.w*nj; if(dsc<0.){ cull(); return; } tb=inf.x+2.*nj/(inf.z+sqrt(dsc)); }
   if(tb>=inf.y||tb>uT){ cull(); return; }
   float life=uLife*exp(.45*gss(uid,2u)); float age=uT-tb;
+  // 余烬长尾（锦冠的木炭余烬 / 受光烟迹）：一部分火花寿命长、亮度低，沿星的轨迹留下暗长线；
+  // uEmbF > 0 时亮度跟着母星：母星烧完后 uEmbF 秒内淡掉（烟迹是被星自己照亮的）
+  bool emb=uEmb>0. && uBr==0 && hsh(uid,51u)<uEmb; if(emb) life=uEmbL*exp(.2*gss(uid,52u));
+  // emberAll：余烬（光丝）贯穿整个燃烧期，普通火花只在前 sparkStop 秒（分层星外层的引き火花先停）
+  if(!emb && uHotStop>0. && tb-inf.x>uHotStop){ cull(); return; }
   float ts=uBr>0 ? life*uBrAt*(.8+.4*hsh(uid,21u)) : 1e9;
   uint u2=uid*7u+uint(c); float life2=.16*(.6+.8*hsh(u2,23u));
   if(c==0){ if(age>=life||age>=ts){ cull(); return; } }
@@ -1772,7 +1824,8 @@ void main(){
   float T0=uT0+120.*gss(uid,11u), I, size=uSize; vec3 p;
   if(c==0){
     p=mot(sp,vel,U,g,uK,age);
-    float gl=glowOf(T0*(1.-uCool*age/life));
+    float gl=emb ? glowOf(T0)*uEmbB*exp(-2.*age/life)*(1.-smoothstep(.75,1.,age/life))*(uEmbF>0. ? 1.-smoothstep(inf.y-.15,inf.y+uEmbF,uT) : 1.)*(uEmbE>0. ? 1.-smoothstep(uEmbE-.6,uEmbE+.3,uT) : 1.) : glowOf(T0*(1.-uCool*age/life));
+    if(emb) size=uSize*uEmbS;
     if(uGlit>0.){ float tf=uGlitD*(.5+hsh(uid,17u)); float e=(age-tf)/.03; gl=gl*(1.-.85*uGlit)+uGlit*6.*exp(-e*e); }
     I=gl;
   } else {
@@ -1935,7 +1988,7 @@ function buildTrack(P) {
     }
     // 分层星：外层（带木炭火花尾）烧 sparkStop 秒后火花停，内层只发光不出火花；sparkStart：点火后过几秒才开始出火花（末段才出的短尾）
     const ig = st.birth + (st.ign || 0), s0 = P.sparkStart > 0 && st.kind !== 5 ? P.sparkStart : 0, born = ig + s0;
-    const death = Math.min(st.birth + (st.vis != null ? st.vis : st.burn), D, P.sparkStop > 0 && st.kind !== 5 ? ig + P.sparkStop : 1e9);
+    const death = Math.min(st.birth + (st.vis != null ? st.vis : st.burn), D, P.sparkStop > 0 && st.kind !== 5 && !(P.emberFrac > 0 && P.emberAll) ? ig + P.sparkStop : 1e9);
     // 末段火花密度：发射率从 rate 线性变到 rate × sparkRateEnd（按整段燃烧，不按截断后的时长）
     const e = st.kind === 5 ? 1 : (P.sparkRateEnd == null ? 1 : P.sparkRateEnd), B = Math.max(0.05, st.birth + (st.vis != null ? st.vis : st.burn) - born), a = st.rate * (e - 1) / (2 * B);
     info[q * 4] = born; info[q * 4 + 1] = death; info[q * 4 + 2] = death > born ? st.rate : 0; info[q * 4 + 3] = a;
@@ -1965,6 +2018,8 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   gl.uniform1f(pr.u.uK, P.sparkDrag); gl.uniform1f(pr.u.uG, G * P.sparkGrav); gl.uniform1f(pr.u.uT0, se.T0); gl.uniform1f(pr.u.uCool, P.cooling);
   gl.uniform1f(pr.u.uTwk, P.twinkle); gl.uniform1f(pr.u.uBright, P.sparkBright); gl.uniform1f(pr.u.uSize, P.sparkSize);
   gl.uniform1f(pr.u.uGlit, P.glitter || 0); gl.uniform1f(pr.u.uGlitD, P.glitterDelay || 0.25);
+  gl.uniform1f(pr.u.uEmb, P.emberFrac || 0); gl.uniform1f(pr.u.uEmbL, P.emberLife || 3); gl.uniform1f(pr.u.uEmbB, P.emberBright || 0.1); gl.uniform1f(pr.u.uEmbF, P.emberFollow || 0); gl.uniform1f(pr.u.uEmbS, P.emberSize || 1);
+  gl.uniform1f(pr.u.uEmbE, P.emberEnd || 0); gl.uniform1f(pr.u.uHotStop, P.emberFrac > 0 && P.emberAll && P.sparkStop > 0 ? P.sparkStop : 0);
   const br = Math.round(P.branch || 0); gl.uniform1i(pr.u.uBr, br); gl.uniform1f(pr.u.uBrAt, P.branchAt || 0.5);
   setAirUniforms(pr, P);
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
@@ -5477,8 +5532,10 @@ async function renderStills(P0, M0, opt) {
   const out = [];
   try {
     // 定曝光：在 probe 时刻渲染一帧，星头、火花各自按 99.8 / 99.6 分位定曝光（与烘焙相同的口径）
-    const probe = ground ? null : new Sim({ ...P }); drawAt(probe, opt.probe != null ? opt.probe : P.burn * 0.3, 999);
-    const buf = new Float32Array(px * px * 4); RG.bind(); gl.readPixels(0, 0, px, px, gl.RGBA, gl.FLOAT, buf);
+    // opt.probes：几个时刻合在一起定曝光（和烘焙对整张贴图所有帧定曝光的口径一致；亮度随时间变化大的层用）
+    const pts = opt.probes && opt.probes.length ? opt.probes.slice().sort((a, b) => a - b) : [opt.probe != null ? opt.probe : P.burn * 0.3];
+    const probe = ground ? null : new Sim({ ...P }), one = px * px * 4, buf = new Float32Array(one * pts.length), tmp = new Float32Array(one);
+    for (let i = 0; i < pts.length; i++) { drawAt(probe, pts[i], 999 - i); RG.bind(); gl.readPixels(0, 0, px, px, gl.RGBA, gl.FLOAT, tmp); buf.set(tmp, i * one); }
     const comb = P.outMode === 'combined', cg = comb ? combGain(P) : [1, 1], eH = expoOfChannel(buf, 0, comb ? 0.92 : 0.9, 99.8) * cg[0], eT = expoOfChannel(buf, 1, comb ? 0.55 : 0.85, 99.6) * cg[1];
     const sim = ground ? null : new Sim({ ...P }), times = opt.times.slice().sort((a, b) => a - b);
     hdrT = H; rgT = RG; state.ref.mode = 0; state.expo = opt.expo || 1;

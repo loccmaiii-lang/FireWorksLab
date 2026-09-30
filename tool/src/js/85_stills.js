@@ -43,8 +43,10 @@ async function renderStills(P0, M0, opt) {
   const out = [];
   try {
     // 定曝光：在 probe 时刻渲染一帧，星头、火花各自按 99.8 / 99.6 分位定曝光（与烘焙相同的口径）
-    const probe = ground ? null : new Sim({ ...P }); drawAt(probe, opt.probe != null ? opt.probe : P.burn * 0.3, 999);
-    const buf = new Float32Array(px * px * 4); RG.bind(); gl.readPixels(0, 0, px, px, gl.RGBA, gl.FLOAT, buf);
+    // opt.probes：几个时刻合在一起定曝光（和烘焙对整张贴图所有帧定曝光的口径一致；亮度随时间变化大的层用）
+    const pts = opt.probes && opt.probes.length ? opt.probes.slice().sort((a, b) => a - b) : [opt.probe != null ? opt.probe : P.burn * 0.3];
+    const probe = ground ? null : new Sim({ ...P }), one = px * px * 4, buf = new Float32Array(one * pts.length), tmp = new Float32Array(one);
+    for (let i = 0; i < pts.length; i++) { drawAt(probe, pts[i], 999 - i); RG.bind(); gl.readPixels(0, 0, px, px, gl.RGBA, gl.FLOAT, tmp); buf.set(tmp, i * one); }
     const comb = P.outMode === 'combined', cg = comb ? combGain(P) : [1, 1], eH = expoOfChannel(buf, 0, comb ? 0.92 : 0.9, 99.8) * cg[0], eT = expoOfChannel(buf, 1, comb ? 0.55 : 0.85, 99.6) * cg[1];
     const sim = ground ? null : new Sim({ ...P }), times = opt.times.slice().sort((a, b) => a - b);
     hdrT = H; rgT = RG; state.ref.mode = 0; state.expo = opt.expo || 1;

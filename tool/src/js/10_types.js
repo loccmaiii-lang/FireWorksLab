@@ -39,7 +39,10 @@ const BASE = {
   // 形状
   pattern: 'sphere', tilt: 0, ringFrac: 0.45, text: '祭', waterRefl: 0,
   // 星效果
-  ignDelay: 0, ignJit: 10, strobeHz: 0, strobeDuty: 0.35, strobeStart: 0.4, glitter: 0, glitterDelay: 0.25,
+  ignDelay: 0, ignJit: 10, ignSeed: 0, keepFrac: 1, afterBurn: 0, afterJit: 15, headDim: 1, headDimUntil: 0,
+  emberFrac: 0, emberLife: 3, emberBright: 0.1, emberFollow: 0, emberSize: 1, emberAll: 0, emberEnd: 0,
+  carrierHead: 0.4, subKeep: -1, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
+  strobeHz: 0, strobeDuty: 0.35, strobeStart: 0.4, glitter: 0, glitterDelay: 0.25,
   crackle: 0, crackleDelay: 0.3, branch: 0, branchAt: 0.45, flutter: 0, flutterHz: 0.7,
   // 上升
   riseH: 250, vtShell: 55, riseStyle: 'gold', wobble: 0, wobbleHz: 1.6, kobanaN: 4, bunpoN: 3,
@@ -242,8 +245,14 @@ const SCHEMA = [
     ['shellSpin', '玉体自旋', 'rad/s', 0, 80, 0.5, isAir]
   ] },
   { sec: '星效果', show: isAir, hint: '可叠加在任何花型上。松叶分叉只在 GPU 内核里有。', items: [
-    ['ignDelay', '延时点火', 's', 0, 3, 0.01],
+    ['ignDelay', '延时点火', 's', 0, 10, 0.01],
     ['ignJit', '点火离散', '%', 0, 100, 1],
+    ['ignSeed', '点火离散用独立随机（0 关；非 0 时和同种子的另一层星位一一对应）', '', 0, 999, 1, P => P.ignDelay > 0],
+    ['keepFrac', '只让一部分星发光（轨迹不变，和同种子的主层同位）', '×', 0.02, 1, 0.01],
+    ['afterBurn', '第二段：主段烧完后接着亮几秒（0 关；主段期间不发光）', 's', 0, 8, 0.05],
+    ['afterJit', '第二段时长离散', '%', 0, 60, 1, P => P.afterBurn > 0],
+    ['headDim', '前段星头亮度（1 = 不压暗）', '×', 0, 1, 0.01],
+    ['headDimUntil', '前段压暗到第几秒（分层星外层 = 引き）', 's', 0, 6, 0.05, P => P.headDim < 1],
     ['strobeHz', '点灭频率（0 关）', 'Hz', 0, 30, 0.1],
     ['strobeDuty', '点灭亮占比', '', 0.05, 0.9, 0.01, P => P.strobeHz > 0],
     ['strobeStart', '点灭开始', '×燃烧', 0, 1, 0.01, P => P.strobeHz > 0],
@@ -275,17 +284,30 @@ const SCHEMA = [
     ['T0', '初始温度', 'K', 1500, 2800, 10],
     ['cooling', '冷却速度', '', 0, 0.8, 0.01],
     ['sparkBright', '火花亮度', '×', 0, 3, 0.05],
+    ['emberFrac', '余烬长尾比例（锦冠木炭余烬 / 受光烟迹：暗而长的轨迹线，0 关）', '', 0, 0.9, 0.01],
+    ['emberLife', '余烬长尾寿命', 's', 0.3, 8, 0.05, P => P.emberFrac > 0],
+    ['emberBright', '余烬长尾亮度（× 新火花）', '×', 0.005, 1, 0.005, P => P.emberFrac > 0],
+    ['emberFollow', '随母星熄灭（受光烟迹：星灭后几秒内淡掉，0 = 按自身寿命）', 's', 0, 3, 0.05, P => P.emberFrac > 0],
+    ['emberSize', '余烬长尾粗细（× 颗粒）', '×', 0.2, 2, 0.01, P => P.emberFrac > 0],
+    ['emberEnd', '光丝整体熄灭时刻（受光烟迹：星转点灭、色光变弱后烟迹一起暗掉，0 关）', 's', 0, 10, 0.05, P => P.emberFrac > 0],
+    ['emberAll', '余烬贯穿整个燃烧期（1 = 不受「火花只在前几秒」限制：外层引き火花先停，光丝一直跟到星头）', '', 0, 1, 1, P => P.emberFrac > 0],
     ['twinkle', '火花闪烁', '', 0, 1, 0.01]
   ] },
   { sec: '千轮 / 分裂', show: P => P.type === 'senrin' || P.type === 'crossette', items: [
     { sel: 'subPattern', label: '子星排布', options: [['sphere', '小球（千轮）'], ['cross', '十字（分裂）']] },
-    ['subDelay', '子花开花时刻', 's', 0.2, 3, 0.01],
+    ['subDelay', '子花开花时刻', 's', 0.2, 8, 0.01],
     ['subJit', '开花时刻离散', '%', 0, 40, 0.5],
     ['subStars', '每朵子花星数', '颗', 2, 120, 1],
     ['subSpeed', '子花初速', 'm/s', 5, 120, 1],
-    ['subBurn', '子花燃烧时间', 's', 0.2, 3, 0.05],
+    ['subBurn', '子花燃烧时间', 's', 0.2, 8, 0.05],
     ['subTail', '子花火花密度', '个/秒', 0, 400, 1],
-    ['carrierTail', '子弹尾迹密度', '个/秒', 0, 400, 1]
+    ['carrierTail', '子弹尾迹密度', '个/秒', 0, 400, 1],
+    ['carrierHead', '子弹（小割玉）亮度（0 = 飞行时不可见）', '×', 0, 1, 0.01],
+    ['subKeep', '子花继承子弹速度（-1 = 默认 0.35）', '', -1, 1, 0.01],
+    ['subScaleJit', '每朵子花大小离散', '%', 0, 50, 1],
+    ['subVt', '子星终端速度（0 = 同主层）', 'm/s', 0, 80, 0.5],
+    ['subGrav', '子星下坠（-1 = 同主层）', '×', -1, 3, 0.05],
+    ['subFlash', '子花开花闪光（-1 = 默认）', '', -1, 1, 0.01]
   ] },
   { sec: '蜂', show: P => P.type === 'hachi', items: [
     ['spin', '旋转速度', 'rad/s', 0, 40, 0.5],
