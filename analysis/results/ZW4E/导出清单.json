@@ -1,0 +1,69 @@
+{
+ "effect": "wancai",
+ "entry": "ZW4",
+ "ver": "c05010f7",
+ "time": "2026-09-30 22:12",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "WanCaiQianLun_1",
+   "replica": "ZW4-1",
+   "files": [
+    "T_WanCaiQianLun_1.png",
+    "T_WanCaiQianLun_1_Cutout.png",
+    "T_WanCaiQianLun_1_FrameTest.png",
+    "T_WanCaiQianLun_1_Ramp.png",
+    "WanCaiQianLun_1.json",
+    "WanCaiQianLun_1_Cascade参数.txt",
+    "WanCaiQianLun_1_曲线.csv",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "WanCaiQianLun_2",
+   "replica": "ZW4-2",
+   "files": [
+    "T_WanCaiQianLun_2.png",
+    "T_WanCaiQianLun_2_Cutout.png",
+    "T_WanCaiQianLun_2_FrameTest.png",
+    "T_WanCaiQianLun_2_Ramp.png",
+    "WanCaiQianLun_2.json",
+    "WanCaiQianLun_2_Cascade参数.txt",
+    "WanCaiQianLun_2_曲线.csv",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "WanCaiQianLun_3",
+   "replica": "ZW4-3",
+   "files": [
+    "T_WanCaiQianLun_3.png",
+    "T_WanCaiQianLun_3_Cutout.png",
+    "T_WanCaiQianLun_3_FrameTest.png",
+    "T_WanCaiQianLun_3_Ramp.png",
+    "WanCaiQianLun_3.json",
+    "WanCaiQianLun_3_Cascade参数.txt",
+    "WanCaiQianLun_3_曲线.csv",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "WanCaiQianLun_4",
+   "replica": "ZW4-4",
+   "files": [
+    "T_WanCaiQianLun_4.png",
+    "T_WanCaiQianLun_4_Cutout.png",
+    "T_WanCaiQianLun_4_FrameTest.png",
+    "T_WanCaiQianLun_4_Ramp.png",
+    "WanCaiQianLun_4.json",
+    "WanCaiQianLun_4_Cascade参数.txt",
+    "WanCaiQianLun_4_曲线.csv",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}

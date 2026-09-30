@@ -1,36 +1,11 @@
-20:44:34 开始：WanCaiQianLun（导出素材）
-20:44:34 出错：
-Traceback (most recent call last):
-  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 64, in run_job
-    import export_job; export_job.run(job, s, out, log=log)
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\export_job.py", line 49, in run
-    b64 = s.pg.evaluate(f"""(async () => {{ const r = {src}; const P = r.P, M = r.M; Object.assign(P, {json.dumps(over)});
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\sync_api\_generated.py", line 9413, in evaluate
-    self._sync(
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_sync_base.py", line 115, in _sync
-    return task.result()
-           ^^^^^^^^^^^^^
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_page.py", line 474, in evaluate
-    return await self._main_frame.evaluate(expression, arg)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_frame.py", line 346, in evaluate
-    await self._channel.send(
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 76, in send
-    return await self._connection.wrap_api_call(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 632, in wrap_api_call
-    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
-playwright._impl._errors.Error: Page.evaluate: Error: 帧缓冲创建失败
-    at new Target (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:2150:86)
-    at bakeFrames (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:2800:14)
-    at bakeMaster (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:2946:21)
-    at bakeMasterLead (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:3142:112)
-    at bake (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:3134:21)
-    at Object.exportFiles (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:5899:21)
-    at eval (eval at evaluate (:311:30), <anonymous>:2:35)
-    at eval (eval at evaluate (:311:30), <anonymous>:3:141)
-    at eval (<anonymous>)
-    at UtilityScript.evaluate (<anonymous>:311:30)
-
+22:12:15 开始：WanCaiQianLun（导出素材）
+22:12:16 WanCaiQianLun_1 导出 2 秒：T_WanCaiQianLun_1.png、T_WanCaiQianLun_1_Cutout.png、T_WanCaiQianLun_1_FrameTest.png、T_WanCaiQianLun_1_Ramp.png、WanCaiQianLun_1.json、WanCaiQianLun_1_Cascade参数.txt、WanCaiQianLun_1_曲线.csv、cascade.json、cascade_mobile.json
+22:12:19 WanCaiQianLun_2 导出 2 秒：T_WanCaiQianLun_2.png、T_WanCaiQianLun_2_Cutout.png、T_WanCaiQianLun_2_FrameTest.png、T_WanCaiQianLun_2_Ramp.png、WanCaiQianLun_2.json、WanCaiQianLun_2_Cascade参数.txt、WanCaiQianLun_2_曲线.csv、cascade.json、cascade_mobile.json
+22:12:21 WanCaiQianLun_3 导出 2 秒：T_WanCaiQianLun_3.png、T_WanCaiQianLun_3_Cutout.png、T_WanCaiQianLun_3_FrameTest.png、T_WanCaiQianLun_3_Ramp.png、WanCaiQianLun_3.json、WanCaiQianLun_3_Cascade参数.txt、WanCaiQianLun_3_曲线.csv、cascade.json、cascade_mobile.json
+22:12:24 WanCaiQianLun_4 导出 3 秒：T_WanCaiQianLun_4.png、T_WanCaiQianLun_4_Cutout.png、T_WanCaiQianLun_4_FrameTest.png、T_WanCaiQianLun_4_Ramp.png、WanCaiQianLun_4.json、WanCaiQianLun_4_Cascade参数.txt、WanCaiQianLun_4_曲线.csv、cascade.json、cascade_mobile.json
+22:12:28 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZW4E\回放检查.jpg
+22:13:00 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZW4E\烘焙回放.jpg
+22:13:01 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZW4E\烘焙回放_原尺寸.jpg
+22:13:04 烘焙器预览 preview.js：1563 KB
+22:13:04 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+22:13:04 完成，用时 0.8 分钟
