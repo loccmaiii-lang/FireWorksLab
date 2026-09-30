@@ -193,7 +193,7 @@ class Sim {
     // 每朵子花大小离散（小割玉的割药量不同）；子星自己的阻力 / 下坠（子星比主星小、减速更快）
     const fs = P.subScaleJit > 0 ? Math.max(0.4, 1 + P.subScaleJit / 100 * rng.n()) : 1;
     for (const d of dirs) {
-      const sp = P.subSpeed * fs * (1 + P.speedJit / 100 * rng.n());
+      const sp = P.subSpeed * fs * (1 + (P.subSpeedJit >= 0 ? P.subSpeedJit : P.speedJit) / 100 * rng.n());   // 子星初速离散（-1 = 同主星；千轮：子弹飞得远近不一、小花本身要圆）
       const b = P.subBurn * (1 + P.burnJit / 100 * rng.n());
       const ch = this.mk(s.x, s.y, s.z, s.vx * keep + d[0] * sp, s.vy * keep + d[1] * sp, s.vz * keep + d[2] * sp,
         Math.max(0.05, b), 2, P.subTail, P.headBright);

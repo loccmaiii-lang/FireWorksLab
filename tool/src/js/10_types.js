@@ -41,7 +41,7 @@ const BASE = {
   // 星效果
   ignDelay: 0, ignJit: 10, ignSeed: 0, keepFrac: 1, afterBurn: 0, afterJit: 15, headDim: 1, headDimUntil: 0,
   emberFrac: 0, emberLife: 3, emberBright: 0.1, emberFollow: 0, emberSize: 1, emberAll: 0, emberEnd: 0,
-  carrierHead: 0.4, subKeep: -1, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
+  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
   strobeHz: 0, strobeDuty: 0.35, strobeStart: 0.4, glitter: 0, glitterDelay: 0.25,
   crackle: 0, crackleDelay: 0.3, branch: 0, branchAt: 0.45, flutter: 0, flutterHz: 0.7,
   // 上升
@@ -305,6 +305,7 @@ const SCHEMA = [
     ['carrierHead', '子弹（小割玉）亮度（0 = 飞行时不可见）', '×', 0, 1, 0.01],
     ['subKeep', '子花继承子弹速度（-1 = 默认 0.35）', '', -1, 1, 0.01],
     ['subScaleJit', '每朵子花大小离散', '%', 0, 50, 1],
+    ['subSpeedJit', '子星初速离散（-1 = 同主星的初速离散）', '%', -1, 40, 1],
     ['subVt', '子星终端速度（0 = 同主层）', 'm/s', 0, 80, 0.5],
     ['subGrav', '子星下坠（-1 = 同主层）', '×', -1, 3, 0.05],
     ['subFlash', '子花开花闪光（-1 = 默认）', '', -1, 1, 0.01]

@@ -194,6 +194,7 @@ def build(e):
     trail = bool(e.get('size'))
     vmf = os.path.join(RES, e.get('src') or e['task'], 'vmeta.json')      # 结果目录自带取景（按模拟的世界坐标算好的，实拍和模拟同比例）
     if e.get('video') and not e.get('phys'): rec['vmeta'] = json.load(open(vmf, encoding='utf-8')) if os.path.exists(vmf) else video_meta(e['video'], trail=trail, roi=e.get('roi'), t_range=e.get('t_range'))
+    if rec.get('vmeta') and e.get('burst_t') is not None: rec['vmeta'] = dict(rec['vmeta'], t0=e['burst_t'])   # 自动找的开花时刻不对时手填（例：千轮主玉闪光太弱，自动找到的是子花）
     if e.get('hidden'): rec['hidden'] = True; rec['layerOf'] = e.get('layerOf')
     if e['kind'] == 'queued': return rec      # 排队中：只有实拍（烘焙器里显示「要对的目标」）
     if e['kind'] == 'combo':
