@@ -54,7 +54,9 @@ JS_METRICS = r"""
   const sMax = pl.zoom ? Math.max(...pl.sizeKeys.map(k => k[1])) : 1;
   let R = 1; for (const q of fm.prof) R = Math.max(R, q[2]); out.flowerM = +(2 * R).toFixed(1);
   const flowerPx = frac * screenH, spritePx = flowerPx * pl.Ww * sMax / (2 * R);
-  out.screen = { frac, flowerPx: Math.round(flowerPx), spritePx: Math.round(spritePx), mag: +(spritePx / L.cellW).toFixed(2), magMobile256: +(spritePx / 256).toFixed(2) };
+  out.screen = { frac, flowerPx: Math.round(flowerPx), spritePx: Math.round(spritePx), mag: +(spritePx / L.cellW).toFixed(2), magMobile256: +(spritePx / 256).toFixed(2),
+                 mag512: +(spritePx / 512).toFixed(2), mag1024: +(spritePx / 1024).toFixed(2),
+                 suggestPC: spritePx <= 512 ? 512 : spritePx <= 1024 ? 1024 : 2048 };   // 建议的 PC 单格（能做到不放大的最小格子）；只是建议，效果可以选更大
   // 参考：按真实米数 + 竖直视角 60°（烘焙器「游戏内大小」的假设，未经 UE 验证，和用户实测不一致时以上面为准）
   out.game = dists.map(dist => { const ppmS = screenH / (2 * dist * Math.tan(Math.PI / 6)), onScreen = pl.Ww * sMax * ppmS; return { dist, spritePx: Math.round(onScreen), mag: +(onScreen / L.cellW).toFixed(2) }; });
   // 尺寸下限：σ = max(size·0.5·ppm, 0.55)（渲染像素，渲染缓冲是单格的 qSS 倍）
