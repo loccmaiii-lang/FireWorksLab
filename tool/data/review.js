@@ -39017,7 +39017,7 @@ var FW_EFFECTS = [
 "key": "trail_phys",
 "名": "升空尾缀 · 物理版 小 / 中 / 大",
 "负责": "对话框1",
-"阶段": "制作中",
+"阶段": "待验收",
 "参考": [
 "vidio/2.0/尾缀C.mp4",
 "vidio/2.0/尾缀B.mp4",
@@ -39041,8 +39041,8 @@ var FW_EFFECTS = [
 ],
 "进度": {
 "计算": true,
-"AI自检": false,
-"素材导出": false,
+"AI自检": true,
+"素材导出": true,
 "用户验收": false
 },
 "历史": [
@@ -39066,56 +39066,62 @@ var FW_EFFECTS = [
 }
 ],
 "缺": [
-"第 2 版（09-30 13:07）还没做导出回放检查、素材包"
+"UE 4.24 实机导入未验证"
 ],
-"下一步": "TFSE / TFME / TFLE 导出回来 → 看回放 → 没问题进待验收",
+"下一步": "等用户验收（小 / 中 / 大三档一起看）",
 "导出任务": [
 "TFLE",
 "TFME",
 "TFSE"
 ],
+"待验收版": "TFM",
+"交付说明": {
+"解决了什么": "你 10:19 的四点：星头换成 V5 的圆光点（没有小棍子）；面片宽度按 V5 重定，小 < 中 < 大；火星和 V5 一样细；大档最长最密、左右摆动最大。镜头、循环、消散、导出全按 V5。",
+"仍有差异": "颜色比 V5 偏暖（物理火星按实拍校的金橙）；尾迹比 V5 稍长。",
+"素材在哪": "本机 analysis/local/输出/素材包/RiseTrailPhys_S、_M、_L（上升循环 + 30 / 20 fps 消散，PC + 手机 cascade.json）；导出记录 analysis/results/TFSE、TFME、TFLE/"
+},
 "ver": "ea31fbdf",
 "jobs": [
 {
 "id": "TFLE",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "TFME",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "TFSE",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 }
 ],
 "exports": [
 {
-"job": "TFSE",
-"entry": "TFS",
-"ver": "6a729002",
-"time": "2026-09-30 19:12",
+"job": "TFLE",
+"entry": "TFL",
+"ver": "5fe91d31",
+"time": "2026-09-30 19:11",
 "packages": [
 {
-"name": "RiseTrailPhys_S",
-"replica": "TFS",
+"name": "RiseTrailPhys_L",
+"replica": "TFL",
 "files": [
-"RiseTrailPhys_S.json",
-"RiseTrailPhys_S_Cascade参数.txt",
-"RiseTrailPhys_S_曲线.csv",
-"T_RiseTrailPhys_S_Fade20.png",
-"T_RiseTrailPhys_S_Fade20_Cutout.png",
-"T_RiseTrailPhys_S_Fade30.png",
-"T_RiseTrailPhys_S_Fade30_Cutout.png",
-"T_RiseTrailPhys_S_Loop.png",
-"T_RiseTrailPhys_S_Loop_Cutout.png",
-"T_RiseTrailPhys_S_Ramp.png",
+"RiseTrailPhys_L.json",
+"RiseTrailPhys_L_Cascade参数.txt",
+"RiseTrailPhys_L_曲线.csv",
+"T_RiseTrailPhys_L_Fade20.png",
+"T_RiseTrailPhys_L_Fade20_Cutout.png",
+"T_RiseTrailPhys_L_Fade30.png",
+"T_RiseTrailPhys_L_Fade30_Cutout.png",
+"T_RiseTrailPhys_L_Loop.png",
+"T_RiseTrailPhys_L_Loop_Cutout.png",
+"T_RiseTrailPhys_L_Ramp.png",
 "cascade.json",
 "cascade_mobile.json"
 ]
@@ -39151,25 +39157,25 @@ var FW_EFFECTS = [
 "stale": false
 },
 {
-"job": "TFLE",
-"entry": "TFL",
-"ver": "5fe91d31",
-"time": "2026-09-30 19:11",
+"job": "TFSE",
+"entry": "TFS",
+"ver": "6a729002",
+"time": "2026-09-30 19:12",
 "packages": [
 {
-"name": "RiseTrailPhys_L",
-"replica": "TFL",
+"name": "RiseTrailPhys_S",
+"replica": "TFS",
 "files": [
-"RiseTrailPhys_L.json",
-"RiseTrailPhys_L_Cascade参数.txt",
-"RiseTrailPhys_L_曲线.csv",
-"T_RiseTrailPhys_L_Fade20.png",
-"T_RiseTrailPhys_L_Fade20_Cutout.png",
-"T_RiseTrailPhys_L_Fade30.png",
-"T_RiseTrailPhys_L_Fade30_Cutout.png",
-"T_RiseTrailPhys_L_Loop.png",
-"T_RiseTrailPhys_L_Loop_Cutout.png",
-"T_RiseTrailPhys_L_Ramp.png",
+"RiseTrailPhys_S.json",
+"RiseTrailPhys_S_Cascade参数.txt",
+"RiseTrailPhys_S_曲线.csv",
+"T_RiseTrailPhys_S_Fade20.png",
+"T_RiseTrailPhys_S_Fade20_Cutout.png",
+"T_RiseTrailPhys_S_Fade30.png",
+"T_RiseTrailPhys_S_Fade30_Cutout.png",
+"T_RiseTrailPhys_S_Loop.png",
+"T_RiseTrailPhys_S_Loop_Cutout.png",
+"T_RiseTrailPhys_S_Ramp.png",
 "cascade.json",
 "cascade_mobile.json"
 ]
