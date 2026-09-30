@@ -1,0 +1,13 @@
+{
+  "source": "QA17",
+  "variant": "QA18",
+  "parameter_changes": {
+    "tail.sparkLife": [
+      2.2,
+      1.65
+    ]
+  },
+  "head_texture_identical": true,
+  "head_texture_sha256": "ec32af481e5fd47d1487db4b4f622f4fe748556a221806101d25d24e9f60b21d",
+  "note": "其他参数相同；现有模型冷却按火花age/life计算，因此修改life也会改变绝对冷却时间，未证明现实药剂的冷却规律。"
+}
