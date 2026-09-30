@@ -104,6 +104,8 @@ def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=pr
     s.pg.wait_for_timeout(1500)
     T = s.pg.evaluate("state.tab === 'combo' ? comboDuration() : (state.P && state.P.duration) || 3")
     times = [round(f * T, 2) for f in fracs]; rows = {'实时模拟': [], '导出效果': []}
+    # 先播一小段再暂停：实时模拟的粒子是逐帧推进的，刚打开就跳到某一秒，第一张会是没推进完的画面
+    s.pg.evaluate("state.view = 'live'; state.t = 0; state.playing = true"); s.pg.wait_for_timeout(2500); s.pg.evaluate("state.playing = false")
     for view in ('live', 'export'):
         for t in times:
             s.pg.evaluate(f"state.view = {json.dumps(view)}; state.playing = false; state.t = {t}"); s.pg.wait_for_timeout(900)
