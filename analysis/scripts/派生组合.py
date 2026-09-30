@@ -18,6 +18,7 @@ def main():
     ap.add_argument('src'); ap.add_argument('new'); ap.add_argument('--effect', required=True); ap.add_argument('--name', required=True)
     ap.add_argument('--mods', default='{}'); ap.add_argument('--note', default=''); ap.add_argument('--replaces', default='[]')
     ap.add_argument('--look', default='[]'); ap.add_argument('--opinion', default=''); ap.add_argument('--burst-t', type=float, default=None)
+    ap.add_argument('--dup', default='', help='复制这几层追加到最后（同一模拟拆成尾巴层 + 星头层时用），例 "0"')
     a = ap.parse_args()
     from compare import SimSession
     s = SimSession()
@@ -34,6 +35,9 @@ def main():
             for x in (j.get('entries', []) + j.get('combos', []) if isinstance(j, dict) and ('entries' in j or 'combos' in j) else [j]):
                 if isinstance(x, dict) and x.get('id') == a.src:
                     info['roi'] = info.get('roi') or x.get('roi'); info['t_range'] = info.get('t_range') or x.get('t_range')
+    import copy
+    for li in [int(x) for x in a.dup.split(',') if x.strip()]:
+        L2 = copy.deepcopy(info['layers'][li]); L2['name'] = (L2.get('name') or '') + '（复制）'; info['layers'].append(L2)
     mods = json.loads(a.mods)
     for li, m in mods.items():
         L = info['layers'][int(li)]
