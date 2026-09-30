@@ -1,0 +1,8 @@
+19:41:51 开始：JinMangJu（导出素材）
+19:41:53 JinMangJu 导出 2 秒：JinMangJu.json、JinMangJu_Cascade参数.txt、JinMangJu_曲线.csv、T_JinMangJu.png、T_JinMangJu_Cutout.png、T_JinMangJu_FrameTest.png、T_JinMangJu_Ramp.png、cascade.json、cascade_mobile.json
+19:41:54 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\JM4E2\回放检查.jpg
+19:42:08 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\JM4E2\烘焙回放.jpg
+19:42:09 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\JM4E2\烘焙回放_原尺寸.jpg
+19:42:10 烘焙器预览 preview.js：4545 KB
+19:42:10 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+19:42:10 完成，用时 0.3 分钟

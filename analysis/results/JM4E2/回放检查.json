@@ -1,0 +1,20 @@
+{
+ "total_s": 4.56,
+ "layers": [
+  {
+   "pack": "JinMangJu",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 4.56,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0001,
+   "empty_frames": 7,
+   "center_jump_max_px": 2.41
+  }
+ ]
+}

@@ -1,0 +1,12 @@
+19:42:10 开始：PianBei（导出素材）
+19:42:12 PianBei_1 导出 2 秒：PianBei_1.json、PianBei_1_Cascade参数.txt、PianBei_1_曲线.csv、T_PianBei_1.png、T_PianBei_1_Cutout.png、T_PianBei_1_FrameTest.png、T_PianBei_1_Ramp.png、cascade.json、cascade_mobile.json
+19:42:14 PianBei_2 导出 2 秒：PianBei_2.json、PianBei_2_Cascade参数.txt、PianBei_2_曲线.csv、T_PianBei_2.png、T_PianBei_2_Cutout.png、T_PianBei_2_FrameTest.png、T_PianBei_2_Ramp.png、cascade.json、cascade_mobile.json
+19:42:16 PianBei_3 导出 2 秒：PianBei_3.json、PianBei_3_Cascade参数.txt、PianBei_3_曲线.csv、T_PianBei_3.png、T_PianBei_3_Cutout.png、T_PianBei_3_FrameTest.png、T_PianBei_3_Ramp.png、cascade.json、cascade_mobile.json
+19:42:17 PianBei_4 导出 2 秒：PianBei_4.json、PianBei_4_Cascade参数.txt、PianBei_4_曲线.csv、T_PianBei_4.png、T_PianBei_4_Cutout.png、T_PianBei_4_FrameTest.png、T_PianBei_4_Ramp.png、cascade.json、cascade_mobile.json
+19:43:37 PianBei_5 导出 80 秒：PianBei_5.json、PianBei_5_Cascade参数.txt、PianBei_5_曲线.csv、T_PianBei_5.png、T_PianBei_5_Cutout.png、T_PianBei_5_FrameTest.png、T_PianBei_5_Ramp.png、cascade.json、cascade_mobile.json
+19:43:39 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\PK6E\回放检查.jpg
+19:44:28 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\PK6E\烘焙回放.jpg
+19:44:29 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\PK6E\烘焙回放_原尺寸.jpg
+19:44:31 烘焙器预览 preview.js：9920 KB
+19:44:31 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+19:44:31 完成，用时 2.3 分钟

@@ -1,0 +1,11 @@
+19:43:15 开始：WanCaiQianLun（导出素材）
+19:43:17 WanCaiQianLun_1 导出 2 秒：T_WanCaiQianLun_1.png、T_WanCaiQianLun_1_Cutout.png、T_WanCaiQianLun_1_FrameTest.png、T_WanCaiQianLun_1_Ramp.png、WanCaiQianLun_1.json、WanCaiQianLun_1_Cascade参数.txt、WanCaiQianLun_1_曲线.csv、cascade.json、cascade_mobile.json
+19:43:18 WanCaiQianLun_2 导出 1 秒：T_WanCaiQianLun_2.png、T_WanCaiQianLun_2_Cutout.png、T_WanCaiQianLun_2_FrameTest.png、T_WanCaiQianLun_2_Ramp.png、WanCaiQianLun_2.json、WanCaiQianLun_2_Cascade参数.txt、WanCaiQianLun_2_曲线.csv、cascade.json、cascade_mobile.json
+19:43:20 WanCaiQianLun_3 导出 1 秒：T_WanCaiQianLun_3.png、T_WanCaiQianLun_3_Cutout.png、T_WanCaiQianLun_3_FrameTest.png、T_WanCaiQianLun_3_Ramp.png、WanCaiQianLun_3.json、WanCaiQianLun_3_Cascade参数.txt、WanCaiQianLun_3_曲线.csv、cascade.json、cascade_mobile.json
+19:43:21 WanCaiQianLun_4 导出 1 秒：T_WanCaiQianLun_4.png、T_WanCaiQianLun_4_Cutout.png、T_WanCaiQianLun_4_FrameTest.png、T_WanCaiQianLun_4_Ramp.png、WanCaiQianLun_4.json、WanCaiQianLun_4_Cascade参数.txt、WanCaiQianLun_4_曲线.csv、cascade.json、cascade_mobile.json
+19:43:23 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZW3E\回放检查.jpg
+19:43:36 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZW3E\烘焙回放.jpg
+19:43:36 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZW3E\烘焙回放_原尺寸.jpg
+19:43:38 烘焙器预览 preview.js：1478 KB
+19:43:38 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+19:43:38 完成，用时 0.4 分钟

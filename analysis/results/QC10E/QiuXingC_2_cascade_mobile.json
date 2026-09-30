@@ -1,0 +1,294 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "QiuXingC_2",
+ "platform": "mobile",
+ "source": {
+  "tool": "烟花母版烘焙器 3.7",
+  "type": "botan",
+  "form": "master",
+  "quality": {
+   "ss": 2,
+   "hz": 300,
+   "kernel": 0,
+   "core": 0
+  }
+ },
+ "textures": {
+  "seq": {
+   "file": "T_QiuXingC_2.png",
+   "class": "flipbook",
+   "cols": 8,
+   "rows": 8,
+   "channels": 4,
+   "frames": 256
+  },
+  "cutout": {
+   "file": "T_QiuXingC_2_Cutout.png",
+   "class": "cutout"
+  },
+  "ramp": {
+   "file": "T_QiuXingC_2_Ramp.png",
+   "class": "ramp"
+  }
+ },
+ "materials": {
+  "main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 8,
+    "cols": 8
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 71221,
+  "preview_warmup_s": 1.2
+ },
+ "emitters": [
+  {
+   "name": "Main",
+   "material": "main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 4.898,
+    "loops": 1,
+    "delay_s": 0.302,
+    "cutout": "cutout",
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 4.898
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       54785,
+       54785,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         0.353,
+         0.353,
+         1
+        ]
+       ],
+       [
+        0.0536,
+        [
+         0.475,
+         0.475,
+         1
+        ]
+       ],
+       [
+        0.1225,
+        [
+         0.577,
+         0.577,
+         1
+        ]
+       ],
+       [
+        0.2118,
+        [
+         0.67,
+         0.67,
+         1
+        ]
+       ],
+       [
+        0.3267,
+        [
+         0.766,
+         0.766,
+         1
+        ]
+       ],
+       [
+        0.684,
+        [
+         0.952,
+         0.952,
+         1
+        ]
+       ],
+       [
+        0.735,
+        [
+         0.959,
+         0.959,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0
+        ],
+        [
+         0.0128,
+         12.56
+        ],
+        [
+         0.0255,
+         22.92
+        ],
+        [
+         0.0409,
+         33.23
+        ],
+        [
+         0.0587,
+         43.06
+        ],
+        [
+         0.0995,
+         60.22
+        ],
+        [
+         0.148,
+         74.76
+        ],
+        [
+         1,
+         255.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.3071,
+         1.2342,
+         1.5
+        ]
+       ],
+       [
+        0.2905,
+        [
+         1.3071,
+         1.2342,
+         1.5
+        ]
+       ],
+       [
+        0.362,
+        [
+         1.5,
+         1.3318,
+         1.03
+        ]
+       ],
+       [
+        0.4334,
+        [
+         1.5,
+         1.3318,
+         1.03
+        ]
+       ],
+       [
+        0.5049,
+        [
+         1.5,
+         0.9667,
+         0.3813
+        ]
+       ],
+       [
+        0.5968,
+        [
+         1.5,
+         0.9667,
+         0.3813
+        ]
+       ],
+       [
+        0.6682,
+        [
+         1.5,
+         0.635,
+         0.1464
+        ]
+       ],
+       [
+        1,
+        [
+         1.5,
+         0.635,
+         0.1464
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  }
+ ]
+}

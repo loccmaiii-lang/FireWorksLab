@@ -1,0 +1,10 @@
+19:43:13 开始：QiuXingB（导出素材）
+19:43:15 QiuXingB_1 导出 2 秒：QiuXingB_1.json、QiuXingB_1_Cascade参数.txt、QiuXingB_1_曲线.csv、T_QiuXingB_1.png、T_QiuXingB_1_Cutout.png、T_QiuXingB_1_FrameTest.png、T_QiuXingB_1_Ramp.png、cascade.json、cascade_mobile.json
+19:43:16 QiuXingB_2 导出 2 秒：QiuXingB_2.json、QiuXingB_2_Cascade参数.txt、QiuXingB_2_曲线.csv、T_QiuXingB_2.png、T_QiuXingB_2_Cutout.png、T_QiuXingB_2_FrameTest.png、T_QiuXingB_2_Ramp.png、cascade.json、cascade_mobile.json
+19:43:17 QiuXingB_3 导出 1 秒：QiuXingB_3.json、QiuXingB_3_Cascade参数.txt、QiuXingB_3_曲线.csv、T_QiuXingB_3.png、T_QiuXingB_3_Cutout.png、T_QiuXingB_3_FrameTest.png、T_QiuXingB_3_Ramp.png、cascade.json、cascade_mobile.json
+19:43:19 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZB3E\回放检查.jpg
+19:43:31 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZB3E\烘焙回放.jpg
+19:43:32 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZB3E\烘焙回放_原尺寸.jpg
+19:43:33 烘焙器预览 preview.js：5295 KB
+19:43:33 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+19:43:33 完成，用时 0.3 分钟

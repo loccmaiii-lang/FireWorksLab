@@ -1,0 +1,9 @@
+19:42:32 开始：QiuXingC（导出素材）
+19:42:34 QiuXingC_1 导出 2 秒：QiuXingC_1.json、QiuXingC_1_Cascade参数.txt、QiuXingC_1_曲线.csv、T_QiuXingC_1.png、T_QiuXingC_1_Cutout.png、T_QiuXingC_1_FrameTest.png、T_QiuXingC_1_Ramp.png、cascade.json、cascade_mobile.json
+19:42:37 QiuXingC_2 导出 2 秒：QiuXingC_2.json、QiuXingC_2_Cascade参数.txt、QiuXingC_2_曲线.csv、T_QiuXingC_2.png、T_QiuXingC_2_Cutout.png、T_QiuXingC_2_FrameTest.png、T_QiuXingC_2_Ramp.png、cascade.json、cascade_mobile.json
+19:42:38 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QC10E\回放检查.jpg
+19:42:51 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QC10E\烘焙回放.jpg
+19:42:51 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QC10E\烘焙回放_原尺寸.jpg
+19:42:52 烘焙器预览 preview.js：5612 KB
+19:42:52 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+19:42:52 完成，用时 0.3 分钟
