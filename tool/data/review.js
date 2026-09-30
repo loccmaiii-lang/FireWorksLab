@@ -16768,7 +16768,7 @@ var FW_EFFECTS = [
 ],
 "exports": [
 {
-"job": "JM2E",
+"job": "JM1",
 "legacy": true
 },
 {
@@ -16776,7 +16776,7 @@ var FW_EFFECTS = [
 "legacy": true
 },
 {
-"job": "JM1",
+"job": "JM2E",
 "legacy": true
 }
 ],

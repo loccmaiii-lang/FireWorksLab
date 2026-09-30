@@ -3,6 +3,11 @@
   { "id": "JM1", "type": "export", "name": "...",
     "replica": "JM",                 # tool/src/js/15_replica.js 里的复刻 id（或者用 "params": 参数 JSON 路径）
     "exports": { "导出名": {参数改动}, ... } }   # 每一项导出一套（贴图、帧号测试图、渐变图、参数表、曲线、JSON）
+  2026-09-30 起推荐的写法（按条目导出，自动记版本，烘焙器据此判断素材包是否和当前版本一致）：
+  { "id": "XE1", "type": "export", "effect": "<状态清单 key>", "entry": "<条目号，可以是组合条目>", "name": "效果名（素材包目录名）" }
+    组合条目：每一层导出一套，目录名 <name>_<层号>；单条目：一套，目录名 <name>。
+    导出项里写 "_replica": "<条目号>" 可以单独指定某一项用哪个条目。
+  结果目录多一个 导出清单.json：{effect, entry, ver, time, packages:[{name, replica, files}]}
 素材包（spec/pipeline_v1.md：一个效果一个固定目录，cascade.json + 贴图，文件名固定）留在本机 analysis/local/输出/素材包/<导出名>/，
 重新导出覆盖同一目录；上传到 analysis/results/<id>/ 的只有参数表、JSON、cascade.json 和贴图的缩略预览。
 """
@@ -27,10 +32,18 @@ def preview(png_path, out_path, max_side=1024):
 
 def run(job, s, out, log=print):
     big = os.path.join(ROOT, 'analysis', 'local', '输出', '素材包')
+    ver = None
+    if job.get('entry'):     # 按条目导出：组合条目每层一套；版本指纹从烘焙器的条目数据里取
+        info = s.pg.evaluate(f"""(() => {{ const e = FW_REVIEW_LIST.find(x => x.id === {json.dumps(job['entry'])}); if (!e) return null;
+            return {{ ver: e.ver || null, layers: e.kind === 'combo' ? e.layerIds : [e.id] }}; }})()""")
+        if not info: raise RuntimeError('找不到条目 ' + job['entry'])
+        ver = info['ver']; base = job.get('name') or job['entry']
+        job['exports'] = job.get('exports') or {(base if len(info['layers']) == 1 else f'{base}_{i + 1}'): {'_replica': lid} for i, lid in enumerate(info['layers'])}
+    packages = []
     for name, over in job['exports'].items():
-        t = time.time()
-        if job.get('replica'):
-            src = f"replicaPM({json.dumps(job['replica'])})"
+        t = time.time(); over = dict(over); rep = over.pop('_replica', None) or job.get('replica')
+        if rep:
+            src = f"replicaPM({json.dumps(rep)})"
         else:
             src = f"__fw.resolve({json.dumps(json.load(open(os.path.join(ROOT, job['params']), encoding='utf-8')))}, 'x')"
         b64 = s.pg.evaluate(f"""(async () => {{ const r = {src}; const P = r.P, M = r.M; Object.assign(P, {json.dumps(over)});
@@ -49,6 +62,9 @@ def run(job, s, out, log=print):
                 import shutil; shutil.copy(p, os.path.join(out, f'{name}_{f}'))
             elif f.endswith('.png') and not any(k in f for k in ('_Ramp', '_Cutout', '_FrameTest')):
                 preview(p, os.path.join(out, f[:-4] + '_预览.jpg'))
+        packages.append(dict(name=name, replica=rep, files=files))
+    json.dump(dict(effect=job.get('effect'), entry=job.get('entry'), ver=ver, time=time.strftime('%Y-%m-%d %H:%M'), dir='analysis/local/输出/素材包/', packages=packages),
+              open(os.path.join(out, '导出清单.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     # 烘焙器迭代区的预览（真实导出贴图原尺寸，按引擎方式播放）
     try:
         import export_preview
