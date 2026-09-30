@@ -1,0 +1,9 @@
+{
+ "id": "JM4E2",
+ "type": "export",
+ "effect": "jinmangju",
+ "entry": "JM4",
+ "name": "JinMangJu",
+ "priority": 7,
+ "note": "金芒菊 JM4（JM3 参数 + Zoom）素材包重导一次，带自动贴图回放检查和烘焙器同一秒对照（JM4E 那次还没有这两样）。参数没改，贴图应和 JM4E 一样。"
+}
