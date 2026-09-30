@@ -1,0 +1,9 @@
+{
+ "id": "ZW3E2",
+ "type": "export",
+ "effect": "wancai",
+ "entry": "ZW3",
+ "name": "WanCaiQianLun",
+ "priority": 6,
+ "note": "万彩千轮 ZW3 重导：颜色段改成 5 段以内（以前 7 段，后两段「转金 / 转橙」被丢掉）。AI 自检用。"
+}
