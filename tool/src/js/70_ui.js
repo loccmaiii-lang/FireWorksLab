@@ -306,7 +306,8 @@ const COMBOS = [
   { name: '四尺玉（主层 + 两层芯）', layers: [{ m: 'kiku', scale: 4.6, rate: 0.55, stages: [[0, IGNITE_ORANGE], [0.45, '#fff0d2']] }, { m: 'botan', scale: 2.6, rate: 0.6, stages: st2('#ffc766') }, { m: 'botan', scale: 1.3, rate: 0.65, stages: st2('#eef2ff') }] }
 ];
 const LIB_TYPES = ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'henka', 'strobe'];
-const libP = P => ({ ...P, texW: 1024, texH: 1024, cols: 8, rows: 8, chans: 4, outMode: 'split', form: 'master' });
+// 组合用的母版：2048（1024 时每帧只有 128 像素，组合页糊得没法看——用户 2026-09-30）；组合页默认实时模拟，贴图只在「导出效果」页用
+const libP = P => ({ ...P, texW: 2048, texH: 2048, cols: 8, rows: 8, chans: 4, outMode: 'split', form: 'master', zoom: 'on' });
 const defaultLibName = t => TYPE_NAMES[t].replace(/（.*）/, '') + ' · 默认';
 async function ensureLibrary() {
   if (state.libReady) return;

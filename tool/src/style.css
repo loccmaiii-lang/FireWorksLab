@@ -315,3 +315,5 @@
   .canvas-wrap.refonly #box{display:none}
   .canvas-wrap.refonly.split .ref-box,.canvas-wrap.refonly .ref-box{width:min(100cqw,100cqh)}
   .right.qmode aside.panel,.right.qmode .ptabs{display:none}
+
+.rlayers{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}

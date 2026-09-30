@@ -6,15 +6,15 @@
 const lib = { q: '', key: '', review: null, open: store.get('libOpen', { rv: true, rep: true, combo: false, types: true }) };
 const ref2 = { on: store.get('refOn', true), off: 0 };
 
-async function setTab(tab) {
+async function setTab(tab, o = {}) {
   const changed = tab !== state.tab;
   state.tab = tab; if (changed) state.t = 0;
   $('#pMaster').hidden = tab !== 'master'; $('#pCombo').hidden = tab !== 'combo'; $('#pIter').hidden = tab !== 'iter'; $('#pAsset').hidden = tab !== 'asset';
-  $('#viewSeg').hidden = tab === 'combo' || tab === 'asset'; $('#assetCv').hidden = tab !== 'asset';
+  $('#viewSeg').hidden = tab === 'asset'; $('#assetCv').hidden = tab !== 'asset';
   $('#ptabs').hidden = !(tab === 'master' || tab === 'iter');
   for (const b of $('#ptabs').children) b.setAttribute('aria-selected', String(b.dataset.tab === tab));
   if (!changed) return;
-  if (tab === 'combo') { await ensureLibrary(); if (!state.layers.length) applyCombo(COMBOS[0]); else buildComboPanel(); }
+  if (tab === 'combo' && !o.lazy) { await ensureLibrary(); if (!state.layers.length) applyCombo(COMBOS[0]); else buildComboPanel(); }
   if (tab === 'iter') { renderMetrics(); abInfo(); renderVersions(); }
   if (tab === 'asset') assetPanel();
 }
@@ -69,15 +69,16 @@ function renderLib() {
   const host = $('#libBody'); host.innerHTML = '';
   const all = rvGet();
   // 迭代区
-  const rv = FW_REVIEW_LIST.filter(e => libMatch(e.id, e.task, e.name, e.tags || '', e.note || ''));
-  const undecided = FW_REVIEW_LIST.filter(e => e.kind !== 'queued' && !(all[e.id] || {}).st).length;
+  // 组合的各层（hidden）不单独列出：一个效果一条（用户 2026-09-30），层在组合条目的审阅卡里打开
+  const rv = FW_REVIEW_LIST.filter(e => !e.hidden && libMatch(e.id, e.task, e.name, e.tags || '', e.note || ''));
+  const undecided = FW_REVIEW_LIST.filter(e => !e.hidden && e.kind !== 'queued' && !(all[e.id] || {}).st).length;
   const g1 = libGroup(host, 'rv', '迭代区', undecided ? undecided + ' 待看' : FW_REVIEW_LIST.length, undecided > 0, '<button class="mini" id="rvCopy" type="button" title="把通过 / 要改和意见复制下来，贴到对话里">复制意见</button>');
   g1.querySelector('#rvCopy').addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); rvCopy(); });
   if (!rv.length) g1.insertAdjacentHTML('beforeend', `<p class="lsub">${FW_REVIEW_LIST.length ? '没有匹配的条目' : '现在没有等你看的东西'}</p>`);
   let qHead = false;
   for (const e of rv) {
     if (e.kind === 'queued' && !qHead) { g1.insertAdjacentHTML('beforeend', '<p class="lsub">排队中：在你电脑上跑完后自动出现在上面</p>'); qHead = true; }
-    const sub = e.kind === 'queued' ? `${e.task} · 等你跑` : `${e.task} · ${e.principle ? '原理' : e.kind === 'asset' ? '素材' : '花型'} · ${(e.date || '').slice(5)}`;
+    const sub = e.kind === 'queued' ? `${e.task} · 等你跑` : `${e.task} · ${e.kind === 'combo' ? '整体 · ' + (e.layerIds || []).length + ' 层' : e.principle ? '原理' : e.kind === 'asset' ? '素材' : '花型'} · ${(e.date || '').slice(5)}`;
     const q = e.kind === 'queued';
     const it = libItem(g1, 'rv:' + e.id, (q ? '' : thumbHTML(e)) + `<span class="tx"><b>${e.name}</b>${q ? '' : `<small>${sub}</small>`}</span>` + (q ? `<span class="badge q">${e.task}</span>` : rvBadge(e)), () => openReview(e), q);
     if (q) it.classList.add('queued');
@@ -118,9 +119,15 @@ function openReview(e) {
   const seen = store.get('rvSeen', []); if (!seen.includes(e.id)) { seen.push(e.id); store.set('rvSeen', seen); }
   setQueuedView(e.kind === 'queued');
   if (e.kind === 'queued') { setReview(e); renderLib(); crumb('迭代区 · 排队', e.name); return; }
+  if (e.kind === 'combo') { setReview(e); renderLib(); crumb('迭代区 · ' + e.task, e.name + ' · 整体'); openComboEntry(e); return; }
   if (e.kind === 'asset') { setTab('asset'); loadAssetEntry(e); }
   else { setReplica(e.id); setTab('master'); }
-  setReview(e); renderLib(); crumb('迭代区 · ' + e.task, e.name);
+  setReview(e); renderLib(); crumb('迭代区 · ' + e.task, e.name + (e.layerOf ? ' · 单层' : ''));
+}
+// 组合条目：整体效果（组合页实时模拟 + 实拍并排）；各层在审阅卡里单独打开
+async function openComboEntry(e) {
+  state.view = 'live'; document.querySelectorAll('#viewSeg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === 'live'));
+  await setTab('combo', { lazy: true }); await applyCombo(e.combo); setReview(e);   // lazy：只烘这个组合用到的层，不先烘整套默认母版
 }
 function openFormal(r) { setQueuedView(false); lib.key = 'rep:' + r.id; setReplica(r.id); setTab('master'); setReview(null, r); renderLib(); crumb('正式库', r.name); }
 function openType(t) { setQueuedView(false); lib.key = 'type:' + t; setType(t); setTab('master'); setReview(null); renderLib(); crumb('花型', TYPE_NAMES[t]); }
@@ -141,6 +148,8 @@ function setReview(e, formal) {
   box.hidden = false;
   box.innerHTML = `<div class="rh"><span class="badge">迭代区 · ${e.task}</span>${e.principle ? '<span class="badge pr">原理解析 · 待你核对</span>' : ''}<b>${e.name}</b><small>${e.date || ''}</small></div>
     <p>${e.note || ''}</p>
+    ${e.kind === 'combo' && e.layerIds ? `<div class="rt">这是整体效果（${e.layerIds.length} 层叠在一起）· 要单独调某一层点下面</div><div class="rlayers">${e.layerIds.map((id, i) => `<button class="btn mini" type="button" data-layer="${id}">${(e.layerNames || [])[i] || id}</button>`).join('')}</div>` : ''}
+    ${e.layerOf ? `<p class="qnote">这是「${e.layerOf}」的其中一层。<button class="btn mini" type="button" data-whole="${e.layerOf}">回到整体效果</button></p>` : ''}
     ${e.look && e.look.length ? `<div class="rt">看什么</div><ul>${e.look.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
     ${e.opinion ? `<div class="rt">${e.kind === 'queued' ? '这一版改了什么' : 'Claude 的看法'}</div><p class="op">${e.opinion}</p>` : ''}
     ${(e.doc || []).map(([t, items]) => `<div class="rt">${t}</div><ul>${items.map(x => `<li>${x}</li>`).join('')}</ul>`).join('')}
@@ -150,6 +159,8 @@ function setReview(e, formal) {
     <textarea id="rvTxt"${e.kind === 'queued' ? ' hidden' : ''} placeholder="意见：哪里不像、要改什么（写完会自动保存）">${(r.txt || '').replace(/</g, '&lt;')}</textarea>
     <div class="saved" id="rvSaved"${e.kind === 'queued' ? ' hidden' : ''}>${r.at ? '已保存 ' + r.at + ' · 左栏「迭代区」右边「复制意见」贴给 Claude' : '意见存在这台电脑的浏览器里；写完点左栏「复制意见」贴给 Claude'}</div>`;
   const setSt = st => { const cur = (rvGet()[e.id] || {}).st; rvSet(e.id, { st: cur === st ? '' : st }); setReview(e); renderLib(); };
+  box.querySelectorAll('[data-layer]').forEach(b => b.addEventListener('click', () => { const le = FW_REVIEW_LIST.find(x => x.id === b.dataset.layer); if (le) openReview(le); }));
+  box.querySelectorAll('[data-whole]').forEach(b => b.addEventListener('click', () => { const ce = FW_REVIEW_LIST.find(x => x.id === b.dataset.whole && x.kind === 'combo'); if (ce) openReview(ce); }));
   box.querySelector('.okb').addEventListener('click', () => setSt('ok'));
   box.querySelector('.fixb').addEventListener('click', () => setSt('fix'));
   let tm = 0; box.querySelector('#rvTxt').addEventListener('input', ev => { clearTimeout(tm); tm = setTimeout(() => { rvSet(e.id, { txt: ev.target.value }); $('#rvSaved').textContent = '已保存 · 左栏「迭代区」右边「复制意见」贴给 Claude'; renderLib(); }, 500); });

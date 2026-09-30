@@ -315,7 +315,37 @@ function drawFlowCurve(b, f) {
   x.strokeStyle = '#f6d9a2'; x.lineWidth = dpr; x.beginPath(); x.moveTo(X(t / D), pt); x.lineTo(X(t / D), H - pb); x.stroke();
   if (f >= 0) { x.beginPath(); x.moveTo(pl, Y(f + 0.5)); x.lineTo(W - pr, Y(f + 0.5)); x.strokeStyle = 'rgba(246,217,162,.5)'; x.stroke(); x.fillStyle = '#f6d9a2'; x.beginPath(); x.arc(X(t / D), Y(f + 0.5), 3.5 * dpr, 0, 6.2832); x.fill(); }
 }
+// 组合 · 实时模拟（2026-09-30）：每层按自己的参数实时模拟（和单个花型的「实时模拟」一样清楚），
+// 按层的缩放 / 延迟 / 时间倍率摆放，各自上色后叠加。「导出效果」页才用每层烘好的贴图（检查引擎里的叠放）。
+function renderComboLive() {
+  const items = state.layers.map(L => [L, state.lib.find(e => e.name === L.lib)]).filter(x => x[1] && x[1].bake);
+  hdrT.clear();
+  if (!items.length) { post(); hudText = '没有图层'; return; }
+  let view = null;
+  items.forEach(([L, e], i) => {
+    const slot = liveSlot('combo' + i); prepSlot(slot, e.P, 'c' + i + ':' + e.name);
+    const v = sceneView(e.P, e.bake.meta, slot), s = L.scale || 1, vs = [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
+    view = view ? unionView(view, vs) : vs;
+  });
+  hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+  let n = 0;
+  items.forEach(([L, e], i) => {
+    const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = e.P;
+    if (age < 0 || age > P.duration) return;
+    const s = L.scale || 1, vL = [view[0] / s, view[1] / s, view[2] / s, view[3] / s], ppm = rgT.w / (2 * vL[2]);
+    rgT.clear(); rgT.bind(); additive(true);
+    drawLiveScene(liveSlot('combo' + i), P, age, vL, ppm);
+    additive(false);
+    hdrT.bind(); additive(true);
+    const pr = PR.rgmat, m = e.bake.meta; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, rgT.tex); gl.uniform1i(pr.u.uS, 0);
+    gl.uniform1f(pr.u.uEH, m.expoH); gl.uniform1f(pr.u.uET, m.expoT); gl.uniform1f(pr.u.uG, e.bake.P.encGamma || 1); gl.uniform1f(pr.u.uComb, e.bake.P.outMode === 'combined' ? 1 : 0);
+    setMatUniforms(pr, L, age); drawQuad(); additive(false); n++;
+  });
+  post();
+  hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层）· 「导出效果」看引擎里的贴图叠放`; hudB = '';
+}
 function renderCombo() {
+  if (state.view === 'live') return renderComboLive();
   hdrT.clear();
   const items = state.layers.map(L => [L, state.lib.find(e => e.name === L.lib)]).filter(x => x[1]);
   if (!items.length) { post(); hudText = '没有图层'; return; }
@@ -325,7 +355,7 @@ function renderCombo() {
   hdrT.bind(); additive(true);
   for (const [L, e] of items) drawLayer(e.bake, L, state.t, view);
   additive(false); post();
-  hudText = `${state.comboName} · ${items.length} 层 · 每层星头、拖尾各一个发射器`; hudB = '';
+  hudText = `${state.comboName} · 导出效果（每层 2048 贴图叠放）· ${items.length} 层 · 每层星头、拖尾各一个发射器`; hudB = '';
 }
 function updateLabels() {
   const q = $('#qlabels'), b = state.bake;

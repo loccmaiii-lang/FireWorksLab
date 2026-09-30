@@ -60,7 +60,7 @@ $('#fileIn').addEventListener('change', async e => {
 });
 $('#btnSave').addEventListener('click', async () => {
   if (familyOf(state.P.type) !== 'aerial') { flash('组合库只收空中开花类（上升、地面类单独挂发射器）', true); return; }
-  busy(true, '烘焙 1024 版本存入组合库…', 0);
+  busy(true, '烘焙 2048 版本存入组合库…', 0);
   try {
     const b = await bake(libP(state.P), 1, p => busy(true, null, p));
     const name = state.name || TYPE_EN[state.P.type];

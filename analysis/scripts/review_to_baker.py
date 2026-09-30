@@ -140,12 +140,16 @@ def job_entries():
         try: bj = json.load(open(os.path.join(d, 'best.json'), encoding='utf-8'))
         except Exception: bj = {}
         if (bj.get('P') or {}).get('layers'):
-            lays = []
+            # 用户 2026-09-30：分层条目审起来不方便、看不出整体 → 迭代区只放一条「组合条目」（整体效果，点开进组合页实时模拟 + 实拍），
+            # 各层作为隐藏条目（组合引用它们；审阅卡里可以单独打开某一层调参数）
+            lays, lids = [], []
             for i, L in enumerate(bj['P']['layers']):
                 le = dict(e, id=f"{j['id']}-{i + 1}", layer=i, name=f"{r['name']} · {L.get('name') or ('第 ' + str(i + 1) + ' 层')}",
-                          note=f"组合任务 {j['id']} 的第 {i + 1} 层（组合页有整组叠起来的效果）。" + e['note'], replaces=[])
-                out.append(le); lays.append({'m': 'rep:' + le['id'], 'scale': L.get('scale', 1), 'delay': L.get('delay', 0)})
-            JOB_COMBOS.append({'name': r['name'] + f"（{j['id']}）", 'layers': lays})
+                          note=f"组合任务 {j['id']} 的第 {i + 1} 层（组合页有整组叠起来的效果）。" + e['note'], replaces=[], hidden=True, layerOf=j['id'])
+                out.append(le); lids.append(le['id']); lays.append({'m': 'rep:' + le['id'], 'scale': L.get('scale', 1), 'delay': L.get('delay', 0)})
+            cname = r['name'] + f"（{j['id']}）"
+            JOB_COMBOS.append({'name': cname, 'layers': lays})
+            out.append(dict(e, kind='combo', combo={'name': cname, 'layers': lays}, layerIds=lids, layerNames=[L.get('name') or f'第 {i + 1} 层' for i, L in enumerate(bj['P']['layers'])]))
             continue
         out.append(e)
     return out
@@ -171,18 +175,35 @@ def principle_entries():
         j = json.load(open(f, encoding='utf-8'))
         for e in j.get('entries', []):
             e = dict(e); e.setdefault('task', e['id']); e['kind'] = 'preset'; e['explicit'] = True; e['principle'] = principle; out.append(e)
-        combos += j.get('combos', [])
+        for c in j.get('combos', []):
+            combos.append({k: c[k] for k in ('name', 'layers')})
+            if c.get('id'):      # 组合条目：一个效果一条（用户 2026-09-30）；引用到的层在迭代区里隐藏
+                lids = [L['m'][4:] for L in c['layers'] if L['m'].startswith('rep:')]
+                ce = dict(c, kind='combo', task=c['id'], combo={'name': c['name'], 'layers': c['layers']}, layerIds=lids, principle=principle)
+                ce.setdefault('layerNames', [next((x['name'] for x in j.get('entries', []) if x['id'] == i), i) for i in lids])
+                out.append(ce)
+                for x in out:
+                    if x['id'] in lids: x['hidden'] = True; x['layerOf'] = c['id']
     return out, combos
 
 
 def build(e):
-    d = os.path.join(RES, e['task']); rec = {k: e.get(k) for k in ('id', 'task', 'kind', 'date', 'name', 'note', 'look', 'opinion', 'tags', 'doc', 'imagesTitle')}
+    d = os.path.join(RES, e['task']); rec = {k: e.get(k) for k in ('id', 'task', 'kind', 'date', 'name', 'note', 'look', 'opinion', 'tags', 'doc', 'imagesTitle', 'principle')}
     if e.get('images'): rec['images'] = [['../' + a, b] for a, b in e['images']]
     if e.get('video'): rec['video'] = '../' + e['video']
     trail = bool(e.get('size'))
     vmf = os.path.join(RES, e.get('src') or e['task'], 'vmeta.json')      # 结果目录自带取景（按模拟的世界坐标算好的，实拍和模拟同比例）
     if e.get('video') and not e.get('phys'): rec['vmeta'] = json.load(open(vmf, encoding='utf-8')) if os.path.exists(vmf) else video_meta(e['video'], trail=trail, roi=e.get('roi'), t_range=e.get('t_range'))
+    if e.get('hidden'): rec['hidden'] = True; rec['layerOf'] = e.get('layerOf')
     if e['kind'] == 'queued': return rec      # 排队中：只有实拍（烘焙器里显示「要对的目标」）
+    if e['kind'] == 'combo':
+        rec['combo'] = e['combo']; rec['layerIds'] = e.get('layerIds', []); rec['layerNames'] = e.get('layerNames', [])
+        sheet = os.path.join(d, '对照.jpg')
+        if os.path.exists(sheet): rec['thumbRef'], rec['thumbSim'] = thumb(sheet, (390, 30, 690, 330)), thumb(sheet, (390, 330, 690, 630))
+        elif e.get('video'):
+            tr = thumb_from_video(e['video'], rec['vmeta'], e.get('thumb_dt', 1.0))
+            if tr: rec['thumbRef'] = tr
+        return rec
     if e['kind'] == 'asset':
         rec['src'] = f"../analysis/results/{e['src']}/preview.js"
         jp = next((os.path.join(RES, e['src'], x) for x in ('PrismWheels_整朵预览.jpg', '预览.jpg') if os.path.exists(os.path.join(RES, e['src'], x))), None)
