@@ -1,0 +1,8 @@
+{
+ "default_cpu_identical": true,
+ "phase_keeps_star_motion": true,
+ "life_distribution_changes": true,
+ "legacy_count": 2235,
+ "current_count": 2235,
+ "phase_count": 2433
+}

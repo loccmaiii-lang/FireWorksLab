@@ -1,0 +1,108 @@
+烟花母版：QiuXingA_QA15_1（菊）
+工具：烟花母版烘焙器 3.7（模拟内核：GPU；产物：大面片母版）
+
+【贴图】
+T_QiuXingA_QA15_1.png（星头、闪光、拖尾合并）
+尺寸 2048×2048，灰度（线性），RGBA 接力：先填满 R 的 64 格（第 0–63 帧），再接 G（64–127）、B（128–191）、A（192–255）
+格子 8 列 × 8 行，行优先，左上为第 0 帧；单格 256×256 像素；共 256 帧；格子四周留空 2 像素
+导入：sRGB 关闭，压缩 BC7；1K 版本在引擎里复制一张，把最大尺寸设为 1024 即可
+T_QiuXingA_QA15_1_FrameTest.png（帧号测试）：排查用。格子、接力、取景与正式贴图完全相同，内容是帧号 + 以爆点为中心的固定大小圆和网格。
+  把材质实例的贴图临时换成它播放：帧号应连续递增不倒退，圆应不动、不胀缩、不变扁。
+  帧号乱跳 / 倒退 → 帧号曲线或材质的接力解码不对；圆胀缩、晃动 → Size By Life / 位置曲线不对；圆变扁 → 对齐方式或 Initial Size 不对
+T_QiuXingA_QA15_1_Ramp.png：渐变图 256×8（sRGB），灰度从暗到亮依次取：拖尾冷却色 → 拖尾高温色 → 星头高温色
+
+【材质实例】
+项目现有的 RGBA 序列帧材质；列 = 8，行 = 8；Ramp = T_QiuXingA_QA15_1_Ramp
+
+【Cutout：裁掉面片上的空白，减少 overdraw】
+Required → Cutout Texture = T_QiuXingA_QA15_1_Cutout（512×512，所有帧叠在一起的轮廓）；
+  Sub Images Horizontal = 1，Vertical = 1；Bounding Mode = Eight Vertices；Opacity Source Mode = Alpha；Alpha Threshold = 0.1；不加 SubUV 模块。
+  面片剩下约 41%（引擎按轮廓外接八边形，会略大一点）。材质照旧用 Dynamic Parameter 第三通道取帧。
+
+【Cascade 发射器】
+Required：Screen Alignment = Rectangle（面向相机，X、Y 尺寸分开生效；不要用 Square——Square 只认 X，Y 方向会按错的比例缩放，画面变形、抖动）；Emitter Duration = 4.00 s；Emitter Loops = 1
+所有曲线（Size By Life、Dynamic Parameter 帧号、Color Over Life、Location / Velocity 等）：每个关键点的 Interp Mode = Linear。CurveAuto 会在关键点之间冲过头：尺寸来回抖、帧号倒退一抖一抖。Size By Life 勾选 Multiply X、Multiply Y。
+Spawn：Rate = 0；Burst：Count = 1，Time = 0
+Lifetime：4.00 s（常量）
+Initial Size：X = 15114 cm，Y = 15114 cm（开花最大时的尺寸）
+Initial Location：0（爆点就是精灵中心）
+Size By Life（X、Y 相同；线性插值）：面片随开花放大，每帧贴图按同一条曲线烘焙
+  相对时间    倍数
+  0.0000      0.379
+  0.0443      0.396
+  0.1224      0.577
+  0.2411      0.738
+  0.3630      0.849
+  0.5161      0.958
+  0.6286      1.000
+  1.0000      1.000
+Dynamic Parameter：第三通道 = 帧号；Use Emitter Time 不勾选；曲线插值 Linear
+  相对时间    帧号
+  0.0000      0.000
+  0.0161      25.260
+  0.0318      44.740
+  0.0693      78.470
+  0.1161      103.450
+  0.1849      125.520
+  0.2786      144.290
+  1.0000      255.990
+  材质取整显示，不做帧间混合。最后一个值是「总帧数 − 0.01」：到总帧数会从第 0 帧重新开始。烘焙时每一帧取的正是这条曲线上对应帧号的时刻，画面与引擎一致。
+Color Over Life（线性 RGB；Alpha 恒为 1；2 段变色）
+  0.0000      1  0.1946  0.0513
+  0.1125      1  0.1946  0.0513
+  0.2125      1  0.5776  0.117
+  1.0000      1  0.5776  0.117
+  亮度倍数：星头 4（乘在颜色上，按项目曝光再调）
+Light（可选）：Brightness Over Life 相对值，乘以期望的峰值亮度
+  0.0000      0.099
+  0.0163      0.032
+  0.2247      0.844
+  0.3510      1.000
+  0.4737      0.814
+  0.5383      0.287
+  0.5964      0.024
+  1.0000      0.000
+Initial Rotation（可选）：−15°～15° 随机，同一母版多发时增加差异
+【可直接粘贴】在 Cascade 细节面板里：先把 Distribution 类型选成下面写的曲线类型，展开到 Points（或 Constant）那一行，右键 → 粘贴。
+  所有曲线点已是 Linear。粘贴不进去时，右键一条现有曲线的 Points → 复制，把文本发给 Claude 对格式。
+▸ Initial Size → Start Size → Distribution Vector Constant → Constant
+(X=15113.671599,Y=15113.671599,Z=1.000000)
+▸ Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points
+((InVal=0.000000,OutVal=(X=0.379000,Y=0.379000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.044300,OutVal=(X=0.396000,Y=0.396000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.122400,OutVal=(X=0.577000,Y=0.577000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.241100,OutVal=(X=0.738000,Y=0.738000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.363000,OutVal=(X=0.849000,Y=0.849000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.516100,OutVal=(X=0.958000,Y=0.958000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.628600,OutVal=(X=1.000000,Y=1.000000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=1.000000,OutVal=(X=1.000000,Y=1.000000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear))
+▸ Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points
+((InVal=0.000000,OutVal=0.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.016100,OutVal=25.260000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.031800,OutVal=44.740000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.069300,OutVal=78.470000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.116100,OutVal=103.450000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.184900,OutVal=125.520000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.278600,OutVal=144.290000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=1.000000,OutVal=255.990000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear))
+▸ Color Over Life → Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）
+((InVal=0.000000,OutVal=(X=4.000000,Y=0.778400,Z=0.205200),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.112500,OutVal=(X=4.000000,Y=0.778400,Z=0.205200),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.212500,OutVal=(X=4.000000,Y=2.310400,Z=0.468000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=1.000000,OutVal=(X=4.000000,Y=2.310400,Z=0.468000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear))
+【帧与流畅度】
+平均 64.0 fps，最低 38.7 fps，每帧最大位移 1.2 像素（建议 ≤ 3）
+平均面片面积为最大尺寸的 76%（overdraw 按此折算）
+
+【自检】
+  画面占比：平均 56%，最差 10% 的帧 ≥ 35%（紧凑取景已禁用：引擎里会抖；想更满可以减少留边或改随开花放大）
+  过曝：无
+  边缘渗色：无（留边 2 像素）
+  通道布局：R 有内容，G 有内容，B 有内容，A 有内容
+  近似帧：161 对相邻帧几乎相同，可把「取帧」改成「按画面变化」自动合并
+  末尾 62 帧接近全黑，可把序列时长缩短到约 2.41 s
+
+【烟（开花烟，用项目现有烟雾贴图）】
+Spawn：Burst Count = 48；Lifetime 6.40–11.40 s
+Location → Sphere：Velocity 勾选，速度约 2834 cm/s；Drag = 0.83（烟团很快停在星走过的地方）
+Initial Size 907 cm，Size By Life 1 → 3（扩散）
+Alpha Over Life：0 → 0.3（在 0.29）→ 0
+颜色：前 2.40 s 被火光照亮，乘本母版 Color Over Life 与 Light 曲线；之后转为场景夜空灰
+
+【声音节点（相对开花，秒）】
+  0.000  开花爆响
+  玩家听到的时刻 = 事件时刻 + 距离 ÷ 343 m/s（800 m 约晚 2.3 s）
+
+【LOD 建议（1080p、竖直视角 60°）】
+LOD 0：0–552 m，全部层，2K 贴图
+LOD 1：552–1,104 m，屏幕上已小于单格像素：1K 贴图即可；粒子数/火花发射率减半；关闭 Light
+LOD 2：1,104 m 以外：只留本层；去掉芯（小缩放的牡丹层）和烟
+（Cascade：粒子系统的 LOD Distances 依次填 0、55200、110400，单位 cm）
+
+
+【说明】
+Size By Life 以精灵中心缩放，爆点就在中心，所以面片放大时爆点位置不变。
+QiuXingA_QA15_1.json 保存了全部参数，用烘焙器「导入参数 JSON」即可继续修改。

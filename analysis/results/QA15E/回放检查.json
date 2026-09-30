@@ -1,0 +1,43 @@
+{
+ "total_s": 5.4,
+ "sample_times_s": [
+  0.36666666666666664,
+  1.1333333333333333,
+  1.8666666666666667,
+  2.6333333333333333,
+  3.3666666666666667
+ ],
+ "sample_span_s": 3.7666666666666666,
+ "layers": [
+  {
+   "pack": "QiuXingA_QA15_1",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 4.0,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0002,
+   "empty_frames": 63,
+   "center_jump_max_px": 2.3
+  },
+  {
+   "pack": "QiuXingA_QA15_2",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 5.4,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0,
+   "empty_frames": 164,
+   "center_jump_max_px": 1.73
+  }
+ ]
+}

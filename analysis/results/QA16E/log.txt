@@ -1,0 +1,9 @@
+23:34:10 开始：QiuXingA_QA16（导出素材）
+23:34:12 QiuXingA_QA16_1 导出 2 秒：QiuXingA_QA16_1.json、QiuXingA_QA16_1_Cascade参数.txt、QiuXingA_QA16_1_曲线.csv、T_QiuXingA_QA16_1.png、T_QiuXingA_QA16_1_Cutout.png、T_QiuXingA_QA16_1_FrameTest.png、T_QiuXingA_QA16_1_Ramp.png、cascade.json、cascade_mobile.json
+23:34:13 QiuXingA_QA16_2 导出 1 秒：QiuXingA_QA16_2.json、QiuXingA_QA16_2_Cascade参数.txt、QiuXingA_QA16_2_曲线.csv、T_QiuXingA_QA16_2.png、T_QiuXingA_QA16_2_Cutout.png、T_QiuXingA_QA16_2_FrameTest.png、T_QiuXingA_QA16_2_Ramp.png、cascade.json、cascade_mobile.json
+23:34:14 回放检查：F:\FireWorksLab\analysis\results\QA16E\回放检查.jpg
+23:34:31 烘焙回放对照：F:\FireWorksLab\analysis\results\QA16E\烘焙回放.jpg
+23:34:31 烘焙回放（原尺寸）：F:\FireWorksLab\analysis\results\QA16E\烘焙回放_原尺寸.jpg
+23:34:32 烘焙器预览 preview.js：4130 KB
+23:34:32 大文件（贴图）在 F:\FireWorksLab\analysis\local\输出\素材包，不上传
+23:34:32 完成，用时 0.4 分钟

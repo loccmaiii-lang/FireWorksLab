@@ -1,0 +1,39 @@
+{
+ "effect": "qiuxing_a",
+ "entry": "QA16",
+ "ver": "ba17efe2",
+ "time": "2026-09-30 23:34",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "QiuXingA_QA16_1",
+   "replica": "QA16-1",
+   "files": [
+    "QiuXingA_QA16_1.json",
+    "QiuXingA_QA16_1_Cascade参数.txt",
+    "QiuXingA_QA16_1_曲线.csv",
+    "T_QiuXingA_QA16_1.png",
+    "T_QiuXingA_QA16_1_Cutout.png",
+    "T_QiuXingA_QA16_1_FrameTest.png",
+    "T_QiuXingA_QA16_1_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "QiuXingA_QA16_2",
+   "replica": "QA16-2",
+   "files": [
+    "QiuXingA_QA16_2.json",
+    "QiuXingA_QA16_2_Cascade参数.txt",
+    "QiuXingA_QA16_2_曲线.csv",
+    "T_QiuXingA_QA16_2.png",
+    "T_QiuXingA_QA16_2_Cutout.png",
+    "T_QiuXingA_QA16_2_FrameTest.png",
+    "T_QiuXingA_QA16_2_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}

@@ -113,6 +113,18 @@ def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=pr
     rows = {'实时模拟': [], '导出效果': []}
     # 先播一小段再暂停：实时模拟的粒子是逐帧推进的，刚打开就跳到某一秒，第一张会是没推进完的画面
     s.pg.evaluate("state.view = 'live'; state.t = 0; state.playing = true"); s.pg.wait_for_timeout(2500); s.pg.evaluate("state.playing = false")
+    geometry = s.pg.evaluate("""(() => {
+        if (state.tab !== 'combo') return null;
+        const items = state.layers.map(L => [L, state.lib.find(e => e.name === L.lib)]).filter(x => x[1] && x[1].bake);
+        let liveView = null;
+        items.forEach(([L,e],i) => { const v = sceneView(e.P,e.bake.meta,liveSlot('combo'+i)), sc = L.scale || 1;
+            const q = v.map(x => x*sc); liveView = liveView ? unionView(liveView,q) : q; });
+        let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+        for (const [L,e] of items) for (let b=e.bake;b;b=b.next) for(let i=0;i<=8;i++) {
+            const q=layerRectAt(b.meta,L,i/8*b.meta.duration); x0=Math.min(x0,q[0]); x1=Math.max(x1,q[2]); y0=Math.min(y0,q[1]); y1=Math.max(y1,q[3]); }
+        const h=Math.max(x1-x0,y1-y0)*.52;
+        return {live:liveView,export:[(x0+x1)/2,(y0+y1)/2,h,h]};
+    })()""")
     for view in ('live', 'export'):
         for t in times:
             s.pg.evaluate(f"state.view = {json.dumps(view)}; state.playing = false; state.t = {t}"); s.pg.wait_for_timeout(900)
@@ -148,4 +160,9 @@ def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=pr
         for c, im in enumerate(ims): sh2.paste(im, (90 + c * c0, 22 + r * c0))
     for c, t in enumerate(times): d2.text((90 + c * c0 + 4, 4), f'开花后 {t:.2f} s', fill=(233, 180, 95), font=font)
     o2 = os.path.splitext(out)[0] + '_原尺寸.jpg'; sh2.save(o2, quality=85); log('烘焙回放（原尺寸）：' + o2)
+    entry_ver = s.pg.evaluate("id => (FW_REVIEW_LIST.find(e => e.id === id) || {}).ver || null", entry)
+    metadata = dict(entry=entry, ver=entry_ver, times_s=times, square_px=c0, header_px=22, label_px=90,
+                    rows=[k for k, _ in big], projection=geometry, reference=ref,
+                    note='每行整段固定取景；实时和导出各自的视野不同，比较几何时须记录整段统一换算，不能逐帧放大。')
+    json.dump(metadata, open(os.path.splitext(out)[0] + '_采样.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     if vp: s.pg.set_viewport_size(vp)
