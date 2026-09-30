@@ -1,0 +1,22 @@
+[
+  {
+    "name": "F0: delayed trail cannot overwrite JM4 grid or publish stale bake",
+    "pass": true
+  },
+  {
+    "name": "F1: failure stops; retained bake and persistent error survive all views",
+    "pass": true
+  },
+  {
+    "name": "render version: new templates are 40, existing entries and V5 are 37",
+    "pass": true
+  },
+  {
+    "name": "stored recipes: legacy import and rollback; explicit version survives diff save",
+    "pass": true
+  },
+  {
+    "name": "F1: obsolete failure does not block a newer recipe",
+    "pass": true
+  }
+]

@@ -61,3 +61,12 @@
 
 - 默认不录视频（任务里不写 `video`）。
 - 用户要看时，单独录一段 1K 的实拍对照：`trail_video.py <输出目录> --compare`。
+
+## 7. 4.0 兼容与预览检查
+
+- `node analysis/scripts/bake_state_check.mjs`：直接执行界面控制器，复现旧任务串格子、失败重试、过期失败以及旧配方/保存版本问题。失败返回非零退出码。
+- `python analysis/scripts/bake_browser_check.py --out <目录>`：真实页面启动后立即切 JM4，检查 8×8×4；注入失败，检查三个视图错误条和重试恢复。
+- `python analysis/scripts/烘焙贴图回归.py --out analysis/local/输出/贴图回归 --report <报告.json>`：与 `a707b63` 比较 JM4、V5 小/中/大的完整导出分辨率 RGBA，包括两个消散序列；全部像素相同且不是空图才通过。完整像素数组仅留本机，提交小报告。
+- `烘焙器回归.py --legacy` 有差异时返回非零。`烘焙器探针.py --html <旧版HTML>` 可测指定基线；首次切条目前等待初始烘焙完成，避免旧版 F0 污染截图。
+- 上述浏览器脚本共用 `browser_runtime.py`。Windows 默认 D3D11；Linux 默认软件渲染；`FW_RENDER=soft` 可明确选择软件。`FW_BROWSER_EXECUTABLE` 可指定已有 Chromium，不必重复下载。要求 GPU 时若实际是 SwiftShader，会报错；报告记录的设备才是实际渲染设备。
+- `review_to_baker.py` 需要 numpy、Pillow、OpenCV；缺依赖会提前退出，不能把缺条目的文件作为新库发布。

@@ -351,6 +351,9 @@
 
 .deliv{margin:4px 0 6px 16px;padding:0;font-size:12px;line-height:1.55}
 .deliv b{color:var(--acc, #e9b45f);font-weight:600}
+.bake-error { display: flex; align-items: center; gap: 12px; padding: 10px 14px; color: #ffd9d9; background: #491f29; border-bottom: 1px solid #a7505c; font-size: 12px; line-height: 1.5; }
+.bake-error[hidden] { display: none; }
+.bake-error span { flex: 1; overflow-wrap: anywhere; }
 </style>
 </head>
 <body>
@@ -403,6 +406,7 @@
         <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="专注：收起两侧面板，画布最大（F，或双击画布）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">专注</span></button>
         <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="10" y="2.5" width="4.5" height="11" rx="1.5"/></svg></button>
       </div>
+      <div id="bakeError" class="bake-error" role="alert" hidden><span id="bakeErrorText"></span><button class="btn" id="bakeRetry" type="button">重试烘焙</button></div>
       <div class="canvas-wrap">
         <div class="canvas-box ref-box" id="refBox" hidden><video id="refVid" muted playsinline preload="auto"></video>
           <span class="tag" id="refTag">实拍</span>
@@ -685,7 +689,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '3.7';
+const VERSION = '3.8';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -711,6 +715,7 @@ const TYPE_EN = Object.fromEntries(Object.entries(TYPE_INFO).map(([k, v]) => [k,
 const familyOf = t => (TYPE_INFO[t] || TYPE_INFO.kiku)[2];
 
 const BASE = {
+  renderVer: 40,
   duration: 3.2, seed: 7, stars: 150, burstR0: 0, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
   burn: 2.5, burnJit: 12, fade: 0.2, lastFlare: 0.35, flash: 1,
   headSize: 1.0, headBright: 1, flicker: 0.25,
@@ -779,7 +784,7 @@ const TYPES = {
   water: { p: { duration: 3.0, stars: 110, v0: 90, vt: 16, pattern: 'half', waterRefl: 0.4, burn: 2.0, sparkRate: 60, flash: 1.4 }, m: { stages: [[0, '#ffc766'], [0.9, '#52ff5e']] } },
   rise: { p: { duration: 5.2, riseH: 250, vtShell: 55, sparkRate: 600, sparkLife: 1.5, sparkSpread: 1.4, sparkInherit: 0.05, sparkDrag: 1.4, sparkSize: 0.45, sparkBright: 1.6, headSize: 1.4, headBright: 1.4, burn: 99, flicker: 0.35, T0: 2100, cooling: 0.3, zoom: 'off', form: 'unit', cols: 8, rows: 2, chans: 1, texW: 1024, texH: 1024 }, m: GROUND_RAMP },
   // 升空尾缀三档：用户认可的 V5 / TR2 导出快照；不按目标长度重新拟合。
-  trailS: { p: { seed: 7, riseH: 120, vtShell: 35, trV: 33.7, trFps: 30, trInh: 0.12,
+  trailS: { p: { renderVer: 37, seed: 7, riseH: 120, vtShell: 35, trV: 33.7, trFps: 30, trInh: 0.12,
     trDrag: 3.5, trGrav: 0.4, trCool: 0.46297, trFRate: 12000, trFLife: 0.65692, trFSpread: 1.85647,
     trFSize: 0.0192, trFBright: 0.03077, trMRate: 3200, trMLife: 0.54, trMSpread: 0.53255, trMSize: 0.01638,
     trMBright: 0.06828, trCRate: 2704, trCLife: 0.78, trCSpread: 1.2, trCSize: 0.02048, trCBright: 0.77115,
@@ -790,7 +795,7 @@ const TYPES = {
     encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', form: 'trail', cellPad: 2,
     autoGrid: 0 },
     m: {stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#ffe096', ramp1: '#ffe8cb', ramp2: '#fff6e4', ramp3: '#fff8ec', headInt: 1, tailInt: 1} },
-  trailM: { p: { seed: 7, riseH: 200, vtShell: 45, trV: 43.5, trFps: 30, trInh: 0,
+  trailM: { p: { renderVer: 37, seed: 7, riseH: 200, vtShell: 45, trV: 43.5, trFps: 30, trInh: 0,
     trDrag: 4.6875, trGrav: 0.25, trCool: 0.38583, trFRate: 18461.53846, trFLife: 1.07136, trFSpread: 0.99964,
     trFSize: 0.024, trFBright: 0.035, trMRate: 8320, trMLife: 1.08, trMSpread: 1.71366, trMSize: 0.0131,
     trMBright: 0.169, trCRate: 331.361, trCLife: 0.92083, trCSpread: 2.197, trCSize: 0.02048, trCBright: 0.6591,
@@ -801,7 +806,7 @@ const TYPES = {
     encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', form: 'trail', cellPad: 2,
     autoGrid: 0 },
     m: {stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#ffe5a4', ramp1: '#ffe9cb', ramp2: '#ffecd7', ramp3: '#fff8ec', headInt: 1, tailInt: 1} },
-  trailL: { p: { seed: 7, riseH: 600, vtShell: 90, trV: 74.7, trFps: 30, trInh: 0,
+  trailL: { p: { renderVer: 37, seed: 7, riseH: 600, vtShell: 90, trV: 74.7, trFps: 30, trInh: 0,
     trDrag: 1.76, trGrav: 0.3, trCool: 0.463, trFRate: 36413.29085, trFLife: 0.18085, trFSpread: 0.61542,
     trFSize: 0.024, trFBright: 0.035, trMRate: 11360.94692, trMLife: 1.152, trMSpread: 4.45552, trMSize: 0.04,
     trMBright: 0.156, trCRate: 6240, trCLife: 1.365, trCSpread: 1.08, trCSize: 0.02048, trCBright: 1,
@@ -823,6 +828,11 @@ function defaultsFor(type) {
   const t = TYPES[type] || TYPES.kiku;
   const M = { ...MAT_BASE, ...t.m }; M.stages = (t.m.stages || MAT_BASE.stages).map(s => [...s]);
   return { P: { ...BASE, ...t.p, type }, M };
+}
+// 新模板由 defaultsFor 创建；持久化配方在展开默认值前判版本，旧文件永远默认 37。
+function renderVersion(P) { return P && +P.renderVer >= 40 ? 40 : 37; }
+function storedParams(p, type = p.type) {
+  return { ...defaultsFor(type).P, ...p, type, renderVer: renderVersion(p) };
 }
 // 旧版颜色（colA → colB，chg 秒）换成分段
 function normalizeM(M, type) {
@@ -1161,10 +1171,12 @@ const REPLICAS = [
 const NEUTRAL_RAMP = { ramp0: '#000000', ramp1: '#4a4a52', ramp2: '#c8c8d0', ramp3: '#ffffff' };
 const WARM_RAMP = { ramp0: '#000000', ramp1: '#8a3208', ramp2: '#ffc266', ramp3: '#fff0d2' };
 const WARM_IDS = new Set(['V06', 'V07', 'V07b', 'V09', 'V10', 'V13']);
+// 正式库记录通过时的渲染版本；制作中 / 历史在读取时也默认 37。
+for (const r of REPLICAS) if (!r.fromReview) r.p = { ...r.p, renderVer: renderVersion(r.p) };
 const REPLICA_BY_ID = Object.fromEntries(REPLICAS.map(r => [r.id, r]));
 // 复刻 → { P, M }
 function replicaPM(id) {
-  const r = REPLICA_BY_ID[id], d = defaultsFor(r.base), P = { ...d.P };
+  const r = REPLICA_BY_ID[id], d = defaultsFor(r.base), P = { ...d.P, renderVer: renderVersion(r.p) };
   if (r.shell) applyShellNo(P, r.shell);
   Object.assign(P, r.p || {}, { type: r.base });
   if (familyOf(r.base) === 'aerial' && P.duration < P.burn * 1.15 + 0.4) P.duration = +(P.burn * 1.15 + 0.5).toFixed(2);
@@ -3918,6 +3930,7 @@ const state = {
   ...defaultsFor('kiku'), name: 'Kiku_01',
   t: 0, playing: true, speed: 1, expo: 1, disp: 'fit', dist: 800,
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
+  bakeGen: null, failedGen: -1, bakeError: null,
   lib: [], layers: [], comboName: '八重芯变色菊', libReady: false,
   locks: new Set(), activeStage: 0, repId: null,
   B: null,                              // A/B 对比的 B：{ P, M, bake, name }
@@ -3948,26 +3961,49 @@ function derive(P) {
 let bakeTimer = 0;
 function scheduleBake() { clearTimeout(bakeTimer); bakeTimer = setTimeout(runPreviewBake, 380); }
 async function runPreviewBake() {
+  clearTimeout(bakeTimer);
   if (state.baking) { state.rebake = true; return; }
-  state.baking = true; const gen = state.gen;
+  if (!state.dirty || state.failedGen === state.gen) return;
+  state.baking = true; state.rebake = false;
+  const gen = state.gen, P = structuredClone(state.P);
   try {
-    if (isPhys(state.P)) {        // 物理尾缀：只做实时模拟，不烘焙
-      disposeBake(state.bake); state.bake = physBake(state.P); $('#stats').innerHTML = physStats(state.P);
-      if (gen === state.gen) state.dirty = false; setStatus(''); state.baking = false;
-      if (state.rebake || state.dirty) { state.rebake = false; runPreviewBake(); }
-      return;
-    }
-    const b = await bake(state.P, PREVIEW_SCALE, p => setStatus(`预览烘焙… ${Math.round(p * 100)}%`));
-    disposeBake(state.bake); state.bake = b; showStats(b); afterBake(b);
+    const phys = isPhys(P);
+    const b = phys ? physBake(P) : await bake(P, PREVIEW_SCALE, p => {
+      if (gen === state.gen) setStatus(`预览烘焙… ${Math.round(p * 100)}%`);
+    });
+    // 旧任务连贴图 / 统计 / 缩略图也不能发布，且必须释放其显卡资源。
+    if (gen !== state.gen) { disposeBake(b); return; }
+    disposeBake(state.bake); state.bake = b; state.bakeGen = gen;
+    state.dirty = false; state.failedGen = -1; state.bakeError = null; syncBakeError();
+    if (phys) $('#stats').innerHTML = physStats(P);
+    else { showStats(b); afterBake(b); }
     // 自动选格子改了列 × 行：同步到界面（帧数不变，不触发重烘）
-    if (b.meta.L.cols !== state.P.cols || b.meta.L.rows !== state.P.rows) { state.P.cols = b.meta.L.cols; state.P.rows = b.meta.L.rows; syncExport(); }
-    if (gen === state.gen) state.dirty = false;
+    if (!phys && (b.meta.L.cols !== state.P.cols || b.meta.L.rows !== state.P.rows)) { state.P.cols = b.meta.L.cols; state.P.rows = b.meta.L.rows; syncExport(); }
     setStatus('');
-  } catch (e) { console.error(e); flash('烘焙失败：' + e.message, true); }
-  state.baking = false;
-  if (state.rebake || state.dirty) { state.rebake = false; runPreviewBake(); }
+  } catch (e) {
+    console.error(e);
+    if (gen === state.gen) {
+      state.dirty = true; state.failedGen = gen;
+      state.bakeError = { gen, message: e.message || String(e) };
+      $('#stats').textContent = '最新参数烘焙失败；修改参数或点击重试。';
+      setStatus(''); syncBakeError();
+    }
+  } finally {
+    state.baking = false; state.rebake = false;
+    if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
+  }
 }
-function onParam() { derive(state.P); state.gen++; state.dirty = true; $('#stats').textContent = '烘焙中…'; scheduleBake(); refreshVisibility(); }
+function syncBakeError() {
+  const e = state.bakeError; $('#bakeError').hidden = !e;
+  if (!e) return;
+  const shown = state.bake ? `当前保留的是 v${state.bakeGen == null ? '?' : state.bakeGen} 的烘焙` : '当前没有可用的烘焙';
+  $('#bakeErrorText').textContent = `${shown}。${e.gen === state.gen ? '最新参数' : '此前参数 v' + e.gen}烘焙失败：${e.message}${e.gen !== state.gen ? '；正在尝试新参数。' : ''}`;
+}
+function retryPreviewBake() {
+  if (state.baking) return;
+  state.failedGen = -1; state.dirty = true; runPreviewBake();
+}
+function onParam() { derive(state.P); state.gen++; state.dirty = true; $('#stats').textContent = '烘焙中…'; syncBakeError(); scheduleBake(); refreshVisibility(); }
 function showStats(b) {
   const m = b.meta, L = m.L, P = b.P, cls = ok => ok ? 'ok' : 'warn', c = m.check || {};
   const nTex = (b.tail ? 2 : 1) * (b.next ? 2 : 1), mb = (P.texW * P.texH * nTex / 1048576).toFixed(1);
@@ -4533,7 +4569,7 @@ function recordVersion(label, note) {
 }
 function saveVersions() { store.set('versions', state.versions.slice(-40)); }
 function rollback(v) {
-  state.P = { ...defaultsFor(v.P.type).P, ...v.P }; state.M = normalizeM(v.M, v.P.type); state.name = v.name;
+  state.P = storedParams(v.P); state.M = normalizeM(v.M, v.P.type); state.name = v.name;
   buildMasterPanel(); onParam(); flash(`已回滚到 v${v.n}`);
 }
 function renderVersions() {
@@ -4558,7 +4594,7 @@ function renderVersions() {
 // ---------------- 派生配方 ----------------
 function resolveRecipe(r, depth = 0) {
   const parent = r.parent && depth < 16 ? state.recipes.find(x => x.name === r.parent) : null;
-  const base = parent ? resolveRecipe(parent, depth + 1) : defaultsFor(r.type);
+  const base = parent ? resolveRecipe(parent, depth + 1) : { ...defaultsFor(r.type), P: storedParams({ type: r.type }) };
   const P = { ...base.P, ...r.diff.P }, M = normalizeM({ ...base.M, ...r.diff.M }, r.type);
   return { P, M };
 }
@@ -4569,6 +4605,7 @@ function saveRecipe(name) {
   const base = parent ? resolveRecipe(parent) : defaultsFor(state.P.type);
   const dP = {}, dM = {};
   for (const [k, , b] of diffParams(base.P, state.P)) dP[k] = b;
+  dP.renderVer = renderVersion(state.P); // 等于模板默认值时也必须保存。
   for (const k of Object.keys(state.M)) if (JSON.stringify(state.M[k]) !== JSON.stringify(base.M[k])) dM[k] = JSON.parse(JSON.stringify(state.M[k]));
   const r = { name, parent: parent ? parent.name : null, type: state.P.type, diff: { P: dP, M: dM } };
   const i = state.recipes.findIndex(x => x.name === name); if (i >= 0) state.recipes[i] = r; else state.recipes.push(r);
@@ -5836,6 +5873,7 @@ $('#scrub').addEventListener('input', e => { state.t = +e.target.value / 1000 * 
 $('#speed').addEventListener('change', e => state.speed = +e.target.value);
 document.addEventListener('keydown', e => { if (e.code === 'Space' && !/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); $('#play').click(); } });
 $('#btnExport').addEventListener('click', exportMaster);
+$('#bakeRetry').addEventListener('click', retryPreviewBake);
 $('#btnVariants').addEventListener('click', exportVariants);
 $('#btnReset').addEventListener('click', () => setType(state.P.type));
 $('#btnJitter').addEventListener('click', jitterParams);
@@ -5846,7 +5884,7 @@ function importParams(j, fname) {
   if (j.diff && j.type) { const { P, M } = resolveRecipe(j); state.P = P; state.M = M; state.name = j.name || fname; buildMasterPanel(); onParam(); flash('已导入配方 ' + state.name); return; }
   const p = j.params || j;
   if (!TYPES[p.type]) throw new Error('不认识的花型');
-  const d = defaultsFor(p.type); state.P = derive({ ...d.P, ...p }); state.M = normalizeM(j.materialDefaults || {}, p.type);
+  state.P = derive(storedParams(p)); state.M = normalizeM(j.materialDefaults || {}, p.type);
   // 旧版消え口离散默认 1.2%，新版默认 6%，导入时保留原值；旧版没有 engine 字段的用 CPU 内核
   if (!p.engine) { state.P.engine = 'cpu'; flash('旧版母版：已切换到 CPU 内核以完全复现'); }
   if (j.name) state.name = j.name; buildMasterPanel(); onParam(); if (p.engine) flash('已导入 ' + (j.name || fname));
@@ -5898,7 +5936,7 @@ window.__fw = {
   resolve(j, fname) {
     if (j.diff && j.type) { const r = resolveRecipe(j); return { P: r.P, M: r.M, name: j.name || fname }; }
     const p = j.params || j; if (!TYPES[p.type]) throw new Error('不认识的花型：' + p.type);
-    const d = defaultsFor(p.type); return { P: derive({ ...d.P, ...p }), M: normalizeM(j.materialDefaults || {}, p.type), name: j.name || fname };
+    return { P: derive(storedParams(p)), M: normalizeM(j.materialDefaults || {}, p.type), name: j.name || fname };
   },
   // 无界面导出：返回 ZIP 的 base64
   async exportZipB64(j, fname, over) {

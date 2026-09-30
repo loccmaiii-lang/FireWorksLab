@@ -344,3 +344,6 @@
 
 .deliv{margin:4px 0 6px 16px;padding:0;font-size:12px;line-height:1.55}
 .deliv b{color:var(--acc, #e9b45f);font-weight:600}
+.bake-error { display: flex; align-items: center; gap: 12px; padding: 10px 14px; color: #ffd9d9; background: #491f29; border-bottom: 1px solid #a7505c; font-size: 12px; line-height: 1.5; }
+.bake-error[hidden] { display: none; }
+.bake-error span { flex: 1; overflow-wrap: anywhere; }

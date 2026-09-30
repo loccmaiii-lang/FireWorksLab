@@ -126,7 +126,7 @@ function recordVersion(label, note) {
 }
 function saveVersions() { store.set('versions', state.versions.slice(-40)); }
 function rollback(v) {
-  state.P = { ...defaultsFor(v.P.type).P, ...v.P }; state.M = normalizeM(v.M, v.P.type); state.name = v.name;
+  state.P = storedParams(v.P); state.M = normalizeM(v.M, v.P.type); state.name = v.name;
   buildMasterPanel(); onParam(); flash(`已回滚到 v${v.n}`);
 }
 function renderVersions() {
@@ -151,7 +151,7 @@ function renderVersions() {
 // ---------------- 派生配方 ----------------
 function resolveRecipe(r, depth = 0) {
   const parent = r.parent && depth < 16 ? state.recipes.find(x => x.name === r.parent) : null;
-  const base = parent ? resolveRecipe(parent, depth + 1) : defaultsFor(r.type);
+  const base = parent ? resolveRecipe(parent, depth + 1) : { ...defaultsFor(r.type), P: storedParams({ type: r.type }) };
   const P = { ...base.P, ...r.diff.P }, M = normalizeM({ ...base.M, ...r.diff.M }, r.type);
   return { P, M };
 }
@@ -162,6 +162,7 @@ function saveRecipe(name) {
   const base = parent ? resolveRecipe(parent) : defaultsFor(state.P.type);
   const dP = {}, dM = {};
   for (const [k, , b] of diffParams(base.P, state.P)) dP[k] = b;
+  dP.renderVer = renderVersion(state.P); // 等于模板默认值时也必须保存。
   for (const k of Object.keys(state.M)) if (JSON.stringify(state.M[k]) !== JSON.stringify(base.M[k])) dM[k] = JSON.parse(JSON.stringify(state.M[k]));
   const r = { name, parent: parent ? parent.name : null, type: state.P.type, diff: { P: dP, M: dM } };
   const i = state.recipes.findIndex(x => x.name === name); if (i >= 0) state.recipes[i] = r; else state.recipes.push(r);

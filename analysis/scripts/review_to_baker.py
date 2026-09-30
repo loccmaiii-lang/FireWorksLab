@@ -336,7 +336,7 @@ def effects_from_status(out):
         r['jobs'] = jobs.get(k, [])
         # 导出：analysis/results/<任务>/导出清单.json（export_job.py 写）；旧导出任务没有清单 → 「旧导出，版本未知」
         ex = []
-        for jid in set([x['id'] for x in r['jobs'] if x['type'] == 'export' and x['state'] == '已回来'] + (e.get('导出任务') or [])):
+        for jid in sorted(set([x['id'] for x in r['jobs'] if x['type'] == 'export' and x['state'] == '已回来'] + (e.get('导出任务') or []))):
             mf = os.path.join(RES, jid, '导出清单.json')
             if os.path.exists(mf):
                 m = json.load(open(mf, encoding='utf-8'))
@@ -407,4 +407,7 @@ def thumb_from_video(rel, vm, dt):
 
 
 if __name__ == '__main__':
+    # 缺依赖必须在写生成文件之前失败，不能在每条目的异常处理中跳过并覆盖成残缺库。
+    import cv2, numpy
+    import cvcompat
     main()

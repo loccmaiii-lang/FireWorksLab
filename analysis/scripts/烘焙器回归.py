@@ -16,6 +16,7 @@ V5 尾缀走另一条渲染路径（42_trail.js），定帧不覆盖，用 烘�
 import argparse, base64, io, json, os, pathlib, platform, subprocess, time
 import numpy as np
 from PIL import Image
+from browser_runtime import chromium_options, verify_renderer
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 TOOL = ROOT / 'tool'
@@ -32,12 +33,13 @@ JS = r"""
 
 def render(html, ids, times, px, over):
     from playwright.sync_api import sync_playwright
-    args = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] if platform.system() == 'Linux' else ['--ignore-gpu-blocklist']
     out = {}
     with sync_playwright() as pw:
-        br = pw.chromium.launch(args=args); pg = br.new_page()
+        br = pw.chromium.launch(**chromium_options()); pg = br.new_page()
         pg.goto(html.resolve().as_uri() + '?fast', timeout=0, wait_until='domcontentloaded')
         pg.wait_for_function('window.__fw && (!window.__fw.idle || window.__fw.idle())', timeout=0)
+        renderer = verify_renderer(pg.evaluate("document.querySelector('#gpu').title"))
+        print('Renderer:', renderer, flush=True)
         for i in ids:
             r = pg.evaluate(JS, {'id': i, 'times': times, 'px': px, 'over': over})
             out[i] = None if r is None else [np.array(Image.open(io.BytesIO(base64.b64decode(x['png'].split(',')[1]))).convert('RGB')) for x in r]
@@ -78,6 +80,8 @@ def main():
     (out / '回归.json').write_text(json.dumps({'ref': a.ref, 'legacy': a.legacy, 'times': times, 'px': a.px, 'cases': rep}, ensure_ascii=False, indent=2), encoding='utf-8')
     (out / '回归.md').write_text('\n'.join(lines) + '\n', encoding='utf-8')
     print('\n'.join(lines)); print('→', out)
+    if any('error' in r or (a.legacy and r['max'] != 0) for r in rep):
+        raise SystemExit(1)
 
 
 if __name__ == '__main__':

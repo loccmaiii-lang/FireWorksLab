@@ -1,0 +1,47 @@
+{
+  "ref": "a707b63",
+  "legacy": true,
+  "times": [
+    0.4,
+    1.3,
+    2.2
+  ],
+  "px": 160,
+  "cases": [
+    {
+      "id": "type:kiku",
+      "max": 0,
+      "mean": 0.0
+    },
+    {
+      "id": "type:botan",
+      "max": 0,
+      "mean": 0.0
+    },
+    {
+      "id": "type:kamuro",
+      "max": 0,
+      "mean": 0.0
+    },
+    {
+      "id": "type:senrin",
+      "max": 0,
+      "mean": 0.0
+    },
+    {
+      "id": "type:strobe",
+      "max": 0,
+      "mean": 0.0
+    },
+    {
+      "id": "type:crossette",
+      "max": 0,
+      "mean": 0.0
+    },
+    {
+      "id": "JM4",
+      "max": 0,
+      "mean": 0.0
+    }
+  ]
+}

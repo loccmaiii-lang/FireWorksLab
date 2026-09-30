@@ -38,6 +38,7 @@ $('#scrub').addEventListener('input', e => { state.t = +e.target.value / 1000 * 
 $('#speed').addEventListener('change', e => state.speed = +e.target.value);
 document.addEventListener('keydown', e => { if (e.code === 'Space' && !/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); $('#play').click(); } });
 $('#btnExport').addEventListener('click', exportMaster);
+$('#bakeRetry').addEventListener('click', retryPreviewBake);
 $('#btnVariants').addEventListener('click', exportVariants);
 $('#btnReset').addEventListener('click', () => setType(state.P.type));
 $('#btnJitter').addEventListener('click', jitterParams);
@@ -48,7 +49,7 @@ function importParams(j, fname) {
   if (j.diff && j.type) { const { P, M } = resolveRecipe(j); state.P = P; state.M = M; state.name = j.name || fname; buildMasterPanel(); onParam(); flash('已导入配方 ' + state.name); return; }
   const p = j.params || j;
   if (!TYPES[p.type]) throw new Error('不认识的花型');
-  const d = defaultsFor(p.type); state.P = derive({ ...d.P, ...p }); state.M = normalizeM(j.materialDefaults || {}, p.type);
+  state.P = derive(storedParams(p)); state.M = normalizeM(j.materialDefaults || {}, p.type);
   // 旧版消え口离散默认 1.2%，新版默认 6%，导入时保留原值；旧版没有 engine 字段的用 CPU 内核
   if (!p.engine) { state.P.engine = 'cpu'; flash('旧版母版：已切换到 CPU 内核以完全复现'); }
   if (j.name) state.name = j.name; buildMasterPanel(); onParam(); if (p.engine) flash('已导入 ' + (j.name || fname));
@@ -100,7 +101,7 @@ window.__fw = {
   resolve(j, fname) {
     if (j.diff && j.type) { const r = resolveRecipe(j); return { P: r.P, M: r.M, name: j.name || fname }; }
     const p = j.params || j; if (!TYPES[p.type]) throw new Error('不认识的花型：' + p.type);
-    const d = defaultsFor(p.type); return { P: derive({ ...d.P, ...p }), M: normalizeM(j.materialDefaults || {}, p.type), name: j.name || fname };
+    return { P: derive(storedParams(p)), M: normalizeM(j.materialDefaults || {}, p.type), name: j.name || fname };
   },
   // 无界面导出：返回 ZIP 的 base64
   async exportZipB64(j, fname, over) {

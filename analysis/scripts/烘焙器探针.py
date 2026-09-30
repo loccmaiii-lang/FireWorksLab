@@ -24,6 +24,7 @@
 浏览器：Windows / 有显卡的机器用系统 GPU（默认）；Linux 云端自动用软件渲染（慢，--bake 一次 3–5 分钟）。
 """
 import argparse, asyncio, json, math, os, pathlib, platform, sys, time
+from browser_runtime import chromium_options, verify_renderer
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 HTML = ROOT / 'tool' / 'FireworkBaker.html'
@@ -92,6 +93,7 @@ async def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('targets', nargs='+')
     ap.add_argument('--out', default=None)
+    ap.add_argument('--html', type=pathlib.Path, default=HTML, help='用于基线检查的烘焙器 HTML')
     ap.add_argument('--fps', type=float, default=30)
     ap.add_argument('--dist', default='800,1000,1200')
     ap.add_argument('--screen', type=int, default=1080)
@@ -106,16 +108,19 @@ async def main():
     out.mkdir(parents=True, exist_ok=True)
     std = {'pcCell': a.pc_cell, 'minFps': a.min_fps, 'maxMag': a.max_mag}
     from playwright.async_api import async_playwright
-    args = ['--use-gl=swiftshader', '--enable-unsafe-swiftshader'] if platform.system() == 'Linux' else ['--ignore-gpu-blocklist']
     res = []
     async with async_playwright() as p:
-        b = await p.chromium.launch(args=args)
+        b = await p.chromium.launch(**chromium_options())
         pg = await b.new_page(viewport={'width': 1500, 'height': 950})
         errs = []; pg.on('pageerror', lambda e: errs.append(str(e)))
-        await pg.goto(HTML.resolve().as_uri(), wait_until='domcontentloaded', timeout=0)
+        await pg.goto(a.html.resolve().as_uri(), wait_until='domcontentloaded', timeout=0)
         await pg.wait_for_function('window.__fw && typeof REPLICA_BY_ID !== "undefined"', timeout=0)
+        await pg.wait_for_function('state.bake && !state.baking && !state.dirty', timeout=240000)
+        renderer = verify_renderer(await pg.evaluate("document.querySelector('#gpu').title"))
+        print('Renderer:', renderer, flush=True)
         for t in a.targets:
             m = await pg.evaluate(JS_METRICS, {'id': t, 'fps': a.fps, 'dists': [float(x) for x in a.dist.split(',')], 'screenH': a.screen, 'frac': a.frac})
+            m['renderer'] = renderer
             if a.bake and 'error' not in m:
                 t0 = time.time(); m['bake'] = await pg.evaluate(JS_BAKE, t); m['bake']['seconds'] = round(time.time() - t0)
                 if m['bake']['grid'] != m.get('grid'): m['bake']['⚠'] = '实际烘焙的格子和计划不同（自动选格子 / 分段 / 串格子）'
@@ -138,14 +143,12 @@ async def main():
 async def shots(pg, id, times, out):
     """同一画布、同一时刻：实时模拟 vs 导出效果（适应窗口）"""
     await pg.evaluate("id => { const e = (window.FW_REVIEW_LIST || []).find(x => x.id === id); if (e) openReview(e); else if (id.startsWith('type:')) openType(id.slice(5)); else setReplica(id); state.playing = false; try { refToggle(false) } catch (e) {} }", id)
-    t0 = time.time()
-    while time.time() - t0 < 1800:   # 等这个条目自己的烘焙完成（注意问题清单 F0：切换太快会串格子）
-        if await pg.evaluate("() => !!(state.bake && !state.baking && !state.dirty)") and time.time() - t0 > 15: break
-        await pg.wait_for_timeout(3000)
+    # 切换后 onParam 已同步置 dirty，等待真正完成而不是固定睡眠。
+    await pg.wait_for_function('state.bake && !state.baking && !state.dirty', timeout=240000)
     cv = pg.locator('#gl'); files = []
     for t in times:
         for v in ('live', 'export'):
-            await pg.evaluate("([t, v]) => { state.playing = false; state.t = t; state.view = v; state.disp = 'fit'; }", [t, v]); await pg.wait_for_timeout(2500)
+            await pg.evaluate("async ([t, v]) => { state.playing = false; state.t = t; state.view = v; state.disp = 'fit'; await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); }", [t, v])
             f = out / f"{id.replace(':', '_')}_{t}_{v}.png"; await pg.screenshot(path=str(f), clip=await cv.bounding_box()); files.append(f.name)
     return files
 

@@ -6,6 +6,7 @@ const state = {
   ...defaultsFor('kiku'), name: 'Kiku_01',
   t: 0, playing: true, speed: 1, expo: 1, disp: 'fit', dist: 800,
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
+  bakeGen: null, failedGen: -1, bakeError: null,
   lib: [], layers: [], comboName: '八重芯变色菊', libReady: false,
   locks: new Set(), activeStage: 0, repId: null,
   B: null,                              // A/B 对比的 B：{ P, M, bake, name }
@@ -36,26 +37,49 @@ function derive(P) {
 let bakeTimer = 0;
 function scheduleBake() { clearTimeout(bakeTimer); bakeTimer = setTimeout(runPreviewBake, 380); }
 async function runPreviewBake() {
+  clearTimeout(bakeTimer);
   if (state.baking) { state.rebake = true; return; }
-  state.baking = true; const gen = state.gen;
+  if (!state.dirty || state.failedGen === state.gen) return;
+  state.baking = true; state.rebake = false;
+  const gen = state.gen, P = structuredClone(state.P);
   try {
-    if (isPhys(state.P)) {        // 物理尾缀：只做实时模拟，不烘焙
-      disposeBake(state.bake); state.bake = physBake(state.P); $('#stats').innerHTML = physStats(state.P);
-      if (gen === state.gen) state.dirty = false; setStatus(''); state.baking = false;
-      if (state.rebake || state.dirty) { state.rebake = false; runPreviewBake(); }
-      return;
-    }
-    const b = await bake(state.P, PREVIEW_SCALE, p => setStatus(`预览烘焙… ${Math.round(p * 100)}%`));
-    disposeBake(state.bake); state.bake = b; showStats(b); afterBake(b);
+    const phys = isPhys(P);
+    const b = phys ? physBake(P) : await bake(P, PREVIEW_SCALE, p => {
+      if (gen === state.gen) setStatus(`预览烘焙… ${Math.round(p * 100)}%`);
+    });
+    // 旧任务连贴图 / 统计 / 缩略图也不能发布，且必须释放其显卡资源。
+    if (gen !== state.gen) { disposeBake(b); return; }
+    disposeBake(state.bake); state.bake = b; state.bakeGen = gen;
+    state.dirty = false; state.failedGen = -1; state.bakeError = null; syncBakeError();
+    if (phys) $('#stats').innerHTML = physStats(P);
+    else { showStats(b); afterBake(b); }
     // 自动选格子改了列 × 行：同步到界面（帧数不变，不触发重烘）
-    if (b.meta.L.cols !== state.P.cols || b.meta.L.rows !== state.P.rows) { state.P.cols = b.meta.L.cols; state.P.rows = b.meta.L.rows; syncExport(); }
-    if (gen === state.gen) state.dirty = false;
+    if (!phys && (b.meta.L.cols !== state.P.cols || b.meta.L.rows !== state.P.rows)) { state.P.cols = b.meta.L.cols; state.P.rows = b.meta.L.rows; syncExport(); }
     setStatus('');
-  } catch (e) { console.error(e); flash('烘焙失败：' + e.message, true); }
-  state.baking = false;
-  if (state.rebake || state.dirty) { state.rebake = false; runPreviewBake(); }
+  } catch (e) {
+    console.error(e);
+    if (gen === state.gen) {
+      state.dirty = true; state.failedGen = gen;
+      state.bakeError = { gen, message: e.message || String(e) };
+      $('#stats').textContent = '最新参数烘焙失败；修改参数或点击重试。';
+      setStatus(''); syncBakeError();
+    }
+  } finally {
+    state.baking = false; state.rebake = false;
+    if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
+  }
 }
-function onParam() { derive(state.P); state.gen++; state.dirty = true; $('#stats').textContent = '烘焙中…'; scheduleBake(); refreshVisibility(); }
+function syncBakeError() {
+  const e = state.bakeError; $('#bakeError').hidden = !e;
+  if (!e) return;
+  const shown = state.bake ? `当前保留的是 v${state.bakeGen == null ? '?' : state.bakeGen} 的烘焙` : '当前没有可用的烘焙';
+  $('#bakeErrorText').textContent = `${shown}。${e.gen === state.gen ? '最新参数' : '此前参数 v' + e.gen}烘焙失败：${e.message}${e.gen !== state.gen ? '；正在尝试新参数。' : ''}`;
+}
+function retryPreviewBake() {
+  if (state.baking) return;
+  state.failedGen = -1; state.dirty = true; runPreviewBake();
+}
+function onParam() { derive(state.P); state.gen++; state.dirty = true; $('#stats').textContent = '烘焙中…'; syncBakeError(); scheduleBake(); refreshVisibility(); }
 function showStats(b) {
   const m = b.meta, L = m.L, P = b.P, cls = ok => ok ? 'ok' : 'warn', c = m.check || {};
   const nTex = (b.tail ? 2 : 1) * (b.next ? 2 : 1), mb = (P.texW * P.texH * nTex / 1048576).toFixed(1);

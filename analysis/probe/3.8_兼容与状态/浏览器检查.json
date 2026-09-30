@@ -1,0 +1,31 @@
+{
+  "startup": {
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "version": "3.8",
+    "baking": true,
+    "form": "trail"
+  },
+  "F0": {
+    "recipe": "JM4",
+    "cols": 8,
+    "rows": 8,
+    "frames": 256,
+    "renderVer": 37
+  },
+  "versions": {
+    "old": 37,
+    "modern": 40,
+    "template": 40
+  },
+  "F1": {
+    "calls": 1,
+    "views": {
+      "live": "当前保留的是 v2 的烘焙。最新参数烘焙失败：检查用：显卡帧缓冲失败",
+      "export": "当前保留的是 v2 的烘焙。最新参数烘焙失败：检查用：显卡帧缓冲失败",
+      "atlas": "当前保留的是 v2 的烘焙。最新参数烘焙失败：检查用：显卡帧缓冲失败"
+    },
+    "recovered": true
+  },
+  "pageErrors": [],
+  "pass": true
+}

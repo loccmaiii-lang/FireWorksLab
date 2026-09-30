@@ -41,10 +41,12 @@ const REPLICAS = [
 const NEUTRAL_RAMP = { ramp0: '#000000', ramp1: '#4a4a52', ramp2: '#c8c8d0', ramp3: '#ffffff' };
 const WARM_RAMP = { ramp0: '#000000', ramp1: '#8a3208', ramp2: '#ffc266', ramp3: '#fff0d2' };
 const WARM_IDS = new Set(['V06', 'V07', 'V07b', 'V09', 'V10', 'V13']);
+// 正式库记录通过时的渲染版本；制作中 / 历史在读取时也默认 37。
+for (const r of REPLICAS) if (!r.fromReview) r.p = { ...r.p, renderVer: renderVersion(r.p) };
 const REPLICA_BY_ID = Object.fromEntries(REPLICAS.map(r => [r.id, r]));
 // 复刻 → { P, M }
 function replicaPM(id) {
-  const r = REPLICA_BY_ID[id], d = defaultsFor(r.base), P = { ...d.P };
+  const r = REPLICA_BY_ID[id], d = defaultsFor(r.base), P = { ...d.P, renderVer: renderVersion(r.p) };
   if (r.shell) applyShellNo(P, r.shell);
   Object.assign(P, r.p || {}, { type: r.base });
   if (familyOf(r.base) === 'aerial' && P.duration < P.burn * 1.15 + 0.4) P.duration = +(P.burn * 1.15 + 0.5).toFixed(2);
