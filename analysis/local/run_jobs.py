@@ -71,7 +71,7 @@ def run_job(job, s, force=False):
         if isinstance(st, str): st = jload(os.path.join(ROOT, st))
         if st.get('layers'): P, M = {'layers': st['layers']}, {}      # 多层组合（大组合）：参数写 "<层号>.<键>"
         else: P, M = st['P'], st['M']
-        V = video_side(os.path.join(ROOT, job['video']), roi=job.get('roi'), t_range=job.get('t_range'))
+        V = video_side(os.path.join(ROOT, job['video']), roi=job.get('roi'), t_range=job.get('t_range'), track=bool(job.get('track')))
         log(f"实拍：燃烧 {V['Tb']:.2f}s，最终半径 {V['R']:.0f}px")
         fit = job.get('fit')
         if fit:

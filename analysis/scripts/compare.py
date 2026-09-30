@@ -56,15 +56,35 @@ def at(c, u):
     return float(np.interp(u, [a for a, _ in c], [b for _, b in c]))
 
 
-def video_side(path, scale=0.5, roi=None, t_range=None):
+def track_frames(fr, b):
+    """手机跟着抬头 / 平移时（例：永丰三重蕊，花在画面里上移 300 多像素）：按每帧亮部外框的中心把画面平移回开花时的爆点，
+    不然会把镜头移动当成造型差异。只在任务写了 "track": true 时用。"""
+    from refkit import star_mask
+    cx0, cy0 = b['center']; out = []; cs = []
+    for t, f in fr:
+        d, m, _ = star_mask(f, b['bg']); ys, xs = np.nonzero(m)
+        cs.append(((xs.min() + xs.max()) / 2, (ys.min() + ys.max()) / 2) if len(xs) > 50 else None)
+    # 平滑（外框中心逐帧抖动）；开花前和没亮部的帧用最近的值
+    last = (cx0, cy0); cs2 = []
+    for i, c in enumerate(cs): last = c if (c is not None and i >= b['i0'] + 3) else last if i >= b['i0'] + 3 else (cx0, cy0); cs2.append(last)
+    k = 5; sm = [tuple(np.mean([cs2[j][q] for j in range(max(0, i - k), min(len(cs2), i + k + 1))]) for q in (0, 1)) for i in range(len(cs2))]
+    import cv2
+    for (t, f), (cx, cy) in zip(fr, sm):
+        M = np.float32([[1, 0, cx0 - cx], [0, 1, cy0 - cy]])
+        out.append((t, cv2.warpAffine(f, M, (f.shape[1], f.shape[0]), borderMode=cv2.BORDER_REPLICATE)))
+    return out
+
+
+def video_side(path, scale=0.5, roi=None, t_range=None, track=False):
     """roi：[x0, y0, x1, y1]（占画面的比例）只看这一块——远景视频里有观众、地面火、月亮、别的烟花时用；
-    t_range：[t0, t1] 秒，只看这一段（一段视频里有几发时，挑要对的那一发）"""
+    t_range：[t0, t1] 秒，只看这一段（一段视频里有几发时，挑要对的那一发）；track：镜头在动时按亮部外框中心稳住画面"""
     t0, t1 = (t_range or (0.0, 1e9))
     fr, fps = read_video(path, scale, t0, t1)
     if roi:
         H, W = fr[0][1].shape[:2]; x0, y0, x1, y1 = int(roi[0] * W), int(roi[1] * H), int(roi[2] * W), int(roi[3] * H)
         fr = [(t, np.ascontiguousarray(f[y0:y1, x0:x1])) for t, f in fr]
     b = find_burst(fr)
+    if track: fr = track_frames(fr, b)
     Tb = b['te'] - b['t0']
     fr2 = fr[b['i0']:]
     rows = series(fr2, b['bg'], b['center'], Tb, b['t0'])
