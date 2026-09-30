@@ -49,7 +49,7 @@ def main():
     d['combos'].append(dict(id=a.new, name=a.name, date=now, video=job.get('video'), roi=job.get('roi'), t_range=job.get('t_range'), tags=f'{a.name} {a.new} 整体',
                             layers=[{'m': 'rep:' + i, 'scale': L.get('scale', 1), 'delay': L.get('delay', 0)} for i, L in zip(ids, layers)],
                             layerNames=[L.get('name') or f'第 {i + 1} 层' for i, L in enumerate(layers)], note=a.note, look=json.loads(a.look), opinion=a.opinion,
-                            replaces=json.loads(a.replaces), effect=a.effect, src=a.src, mods=mods))
+                            replaces=json.loads(a.replaces), effect=a.effect, src=a.src, mods=mods, **({'burst_t': job['burst_t']} if job.get('burst_t') is not None else {})))
     json.dump(d, open(ITER, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(a.new, len(layers), '层 →', ITER)
 
