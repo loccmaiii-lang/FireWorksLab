@@ -13,7 +13,7 @@ import sys
 from job_lock import ProcessLock, gpu_lock_path
 
 JOB_ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_-]*\Z')
-GENERATED = {'tool/data/review.js', 'tool/data/video_meta.json'}
+GENERATED = {'tool/data/review.js', 'tool/data/video_meta.json', '协作/状态清单.md'}
 
 
 def now():
