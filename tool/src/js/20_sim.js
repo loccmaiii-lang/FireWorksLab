@@ -274,7 +274,14 @@ class Sim {
         for (let j = 0; j < k; j++) {
           const u = rng.u(), inh = P.sparkInherit * (0.3 + 1.4 * rng.u()), px = s.x - s.vx * h * u, py = s.y - s.vy * h * u;
           const [aX, aY] = windy ? this.air(px, py, this.t) : [0, 0];
-          const lfe = P.sparkLife * lf * Math.exp(0.45 * rng.n()), rd = rng.u(), emb = P.emberFrac > 0 && s.kind !== 5 && rd < P.emberFrac;
+          // 普通空中星：随发射阶段改变新火花的寿命；已有火花仍按各自出生时确定的寿命冷却。
+          const le = s.kind === 5 || P.sparkLifeEnd == null ? 1 : P.sparkLifeEnd;
+          const lj = s.kind === 5 || P.sparkLifeJit == null ? 0.45 : P.sparkLifeJit / 100;
+          const start = P.sparkStart > 0 && s.kind !== 5 ? P.sparkStart : 0;
+          const end = Math.min((s.vis != null ? s.vis : s.burn) - s.ign, P.sparkStop > 0 && s.kind !== 5 && !embAll ? P.sparkStop : 1e9);
+          const phase = clamp((s.age - s.ign - u * h - start) / Math.max(0.05, end - start), 0, 1);
+          const lifeScale = 1 + (le - 1) * phase;
+          const lfe = P.sparkLife * lf * lifeScale * Math.exp(lj * rng.n()), rd = rng.u(), emb = P.emberFrac > 0 && s.kind !== 5 && rd < P.emberFrac;
           if (hotOff && !emb) continue;
           sp.add(px, py, s.z - s.vz * h * u, s.vx * inh + rng.n() * spr, s.vy * inh + rng.n() * spr, s.vz * inh + rng.n() * spr,
             u * h, emb ? P.emberLife * Math.exp(0.2 * rng.n()) : lfe, T0 + 120 * rng.n(), rd, aX, aY, s.birth + (s.vis != null ? s.vis : s.burn));

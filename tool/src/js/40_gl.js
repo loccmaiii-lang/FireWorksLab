@@ -134,7 +134,7 @@ const VS_SPK = `#version 300 es
 precision highp float; precision highp int; precision highp sampler2D;
 uniform sampler2D uPos, uVel, uInfo;
 uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw, uBr;
-uniform float uInh, uSpread, uLife, uK, uG, uT0, uCool, uTwk, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
+uniform float uInh, uSpread, uLife, uLifeEnd, uLifeJit, uK, uG, uT0, uCool, uTwk, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
 uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE;
 uniform vec4 uTm[3]; uniform float uTa[3];
 uniform vec4 uView, uXf; uniform float uPPM, uPPMY, uMax, uUseXf;
@@ -151,7 +151,8 @@ void main(){
   if(abs(inf.w)<1e-6) tb=inf.x+nj/inf.z;
   else { float dsc=inf.z*inf.z+4.*inf.w*nj; if(dsc<0.){ cull(); return; } tb=inf.x+2.*nj/(inf.z+sqrt(dsc)); }
   if(tb>=inf.y||tb>uT){ cull(); return; }
-  float life=uLife*exp(.45*gss(uid,2u)); float age=uT-tb;
+  float phase=clamp((tb-inf.x)/max(.05,inf.y-inf.x),0.,1.);
+  float life=uLife*(1.+(uLifeEnd-1.)*phase)*exp(uLifeJit*gss(uid,2u)); float age=uT-tb;
   // 余烬长尾（锦冠的木炭余烬 / 受光烟迹）：一部分火花寿命长、亮度低，沿星的轨迹留下暗长线；
   // uEmbF > 0 时亮度跟着母星：母星烧完后 uEmbF 秒内淡掉（烟迹是被星自己照亮的）
   bool emb=uEmb>0. && uBr==0 && hsh(uid,51u)<uEmb; if(emb) life=uEmbL*exp(.2*gss(uid,52u));
@@ -364,6 +365,8 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   gl.uniform1f(pr.u.uT, t); gl.uniform1f(pr.u.uDT, tr.dt); gl.uniform1i(pr.u.uM, tr.M); gl.uniform1i(pr.u.uNs, tr.Ns);
   gl.uniform1i(pr.u.uSeed, P.seed | 0); gl.uniform1i(pr.u.uTw, tw | 0);
   gl.uniform1f(pr.u.uInh, P.sparkInherit); gl.uniform1f(pr.u.uSpread, P.sparkSpread); gl.uniform1f(pr.u.uLife, se.life);
+  gl.uniform1f(pr.u.uLifeEnd, familyOf(P.type) === 'rise' || P.sparkLifeEnd == null ? 1 : P.sparkLifeEnd);
+  gl.uniform1f(pr.u.uLifeJit, familyOf(P.type) === 'rise' || P.sparkLifeJit == null ? 0.45 : P.sparkLifeJit / 100);
   gl.uniform1f(pr.u.uK, P.sparkDrag); gl.uniform1f(pr.u.uG, G * P.sparkGrav); gl.uniform1f(pr.u.uT0, se.T0); gl.uniform1f(pr.u.uCool, P.cooling);
   gl.uniform1f(pr.u.uTwk, P.twinkle); gl.uniform1f(pr.u.uBright, P.sparkBright); gl.uniform1f(pr.u.uSize, P.sparkSize);
   gl.uniform1f(pr.u.uGlit, P.glitter || 0); gl.uniform1f(pr.u.uGlitD, P.glitterDelay || 0.25);

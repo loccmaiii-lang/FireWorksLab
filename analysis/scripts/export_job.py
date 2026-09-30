@@ -74,7 +74,7 @@ def run(job, s, out, log=print):
             n = len(json.load(open(os.path.join(d, 'cascade.json'), encoding='utf-8'))['emitters'])
             packs.append([rc.Pack(d, i) for i in range(n)])
         if all(len(pp) == 1 for pp in packs):
-            r = rc.check([pp[0] for pp in packs], os.path.join(out, '回放检查.jpg'), job.get('_delays') if len(packs) > 1 else None, ref=job.get('_ref'))
+            r = rc.check([pp[0] for pp in packs], os.path.join(out, '回放检查.jpg'), job.get('_delays') if len(packs) > 1 else None, ref=job.get('_ref'), times_s=job.get('check_times_s'))
         else:   # 尾缀这类一个包里几个发射器（上升循环、消散）：各自一张
             r = [rc.check([p], os.path.join(out, f'回放检查_{i + 1}_{j + 1}.jpg'), None) for i, pp in enumerate(packs) for j, p in enumerate(pp)]
         json.dump(r, open(os.path.join(out, '回放检查.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
@@ -82,7 +82,7 @@ def run(job, s, out, log=print):
     except Exception as e:
         log(f'回放检查没做成（不影响导出）：{e}')
     if job.get('entry'):
-        try: baker_strip(s, job['entry'], os.path.join(out, '烘焙回放.jpg'), job.get('_ref'), log=log)
+        try: baker_strip(s, job['entry'], os.path.join(out, '烘焙回放.jpg'), job.get('_ref'), log=log, times_s=job.get('check_times_s'))
         except Exception as e: log(f'烘焙回放对照没做成（不影响导出）：{e}')
     # 烘焙器迭代区的预览（真实导出贴图原尺寸，按引擎方式播放）
     try:
@@ -94,7 +94,7 @@ def run(job, s, out, log=print):
     log(f'大文件（贴图）在 {big}，不上传')
 
 
-def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=print):
+def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=print, times_s=None):
     """烘焙器里的「实际烘焙回放」：打开条目，按「导出效果」（烘焙出的贴图 + 材质，和引擎同播法）和「实时模拟」各截几个时刻，
     和实拍（开花后同一秒）排成一张图。这是给负责的 AI 看的自检证据（进「待我验收」前必须看过）。"""
     import numpy as np
@@ -108,7 +108,9 @@ def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=pr
             import cv2; cap = cv2.VideoCapture(ref['video']); vd = cap.get(cv2.CAP_PROP_FRAME_COUNT) / (cap.get(cv2.CAP_PROP_FPS) or 30); cap.release()
             if vd > 0: T = min(T, max(1.0, vd - ref.get('t0', 0) - 0.05))
         except Exception: pass
-    times = [round(f * T, 2) for f in fracs]; rows = {'实时模拟': [], '导出效果': []}
+    times = list(times_s) if times_s is not None else [round(f * T, 2) for f in fracs]
+    if any(t < 0 or t > T + 1e-6 for t in times): raise ValueError('烘焙对照采样超出素材或参考有效时间')
+    rows = {'实时模拟': [], '导出效果': []}
     # 先播一小段再暂停：实时模拟的粒子是逐帧推进的，刚打开就跳到某一秒，第一张会是没推进完的画面
     s.pg.evaluate("state.view = 'live'; state.t = 0; state.playing = true"); s.pg.wait_for_timeout(2500); s.pg.evaluate("state.playing = false")
     for view in ('live', 'export'):

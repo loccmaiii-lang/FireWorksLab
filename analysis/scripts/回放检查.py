@@ -33,6 +33,7 @@ class Pack:
     def __init__(self, d, ei=0):
         self.d = d; cj = os.path.join(d, 'cascade.json'); self.c = json.load(open(cj, encoding='utf-8'))
         self.e = self.c['emitters'][ei]; self.label = os.path.basename(d) + ('' if len(self.c['emitters']) == 1 else ' · ' + self.e['name'])
+        self.delay = float(self.e['required'].get('delay_s', 0))
         mat = (self.c.get('materials') or {}).get(self.e.get('material'), {}); tk = (mat.get('textures') or {}).get('main') or 'seq'
         seq = self.c['textures'][tk]; self.cols, self.rows, self.ch, self.frames = seq['cols'], seq['rows'], seq.get('channels', 1), seq['frames']
         self.tex = np.array(Image.open(os.path.join(d, seq['file'])).convert('RGBA' if self.ch == 4 else 'L'), np.float32) / 255
@@ -71,22 +72,46 @@ class Pack:
 
 def ref_frames(ref, ts, px):
     """实拍同一时刻（开花起算）：ref = {video, t0, cx, cy, half}（烘焙器条目的 vmeta），按亮部外框取正方形"""
+    import cvcompat  # Windows 中文视频路径；读取失败不能拿黑图充当参考。
     import cv2
-    cap = cv2.VideoCapture(ref['video']); fps = cap.get(cv2.CAP_PROP_FPS) or 30; out = []
-    for t in ts:
-        cap.set(cv2.CAP_PROP_POS_FRAMES, int(round((ref['t0'] + t) * fps))); ok, f = cap.read()
-        if not ok: out.append(np.zeros((px, px, 3), np.uint8)); continue
-        H, W = f.shape[:2]; h = ref.get('half', 0.3) * H * 1.15; cx, cy = ref.get('cx', 0.5) * W, ref.get('cy', 0.5) * H
-        x0, y0 = int(max(0, cx - h)), int(max(0, cy - h)); x1, y1 = int(min(W, cx + h)), int(min(H, cy + h))
-        out.append(np.array(Image.fromarray(cv2.cvtColor(f[y0:y1, x0:x1], cv2.COLOR_BGR2RGB)).resize((px, px), Image.BILINEAR)))
-    return out
+    cap = cv2.VideoCapture(ref['video']); out = []
+    try:
+        if not cap.isOpened(): raise IOError('打不开参考视频：' + ref['video'])
+        fps = cap.get(cv2.CAP_PROP_FPS)
+        if not np.isfinite(fps) or fps <= 0: raise IOError('参考视频帧率无效：' + ref['video'])
+        for t in ts:
+            frame = int(round((ref['t0'] + t) * fps))
+            cap.set(cv2.CAP_PROP_POS_FRAMES, frame); ok, f = cap.read()
+            if not ok: raise IOError(f'参考视频读帧失败：开花后 {t:.3f}s，第 {frame} 帧，{ref["video"]}')
+            H, W = f.shape[:2]; h = ref.get('half', 0.3) * H * 1.15; cx, cy = ref.get('cx', 0.5) * W, ref.get('cy', 0.5) * H
+            x0, y0 = int(max(0, cx - h)), int(max(0, cy - h)); x1, y1 = int(min(W, cx + h)), int(min(H, cy + h))
+            if x1 <= x0 or y1 <= y0: raise ValueError('参考裁切区域无效')
+            out.append(np.array(Image.fromarray(cv2.cvtColor(f[y0:y1, x0:x1], cv2.COLOR_BGR2RGB)).resize((px, px), Image.BILINEAR)))
+        return out
+    finally:
+        cap.release()
 
 
-def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=None):
+def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=None, times_s=None):
     delays = delays or [0.0] * len(packs)
+    delays = [d + p.delay for p, d in zip(packs, delays)]
     T = max(d + p.life for p, d in zip(packs, delays))
+    span = T
+    if ref:
+        import cvcompat
+        import cv2
+        cap = cv2.VideoCapture(ref['video'])
+        try:
+            if not cap.isOpened(): raise IOError('打不开参考视频：' + ref['video'])
+            fps = cap.get(cv2.CAP_PROP_FPS); count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+            if fps <= 0 or count <= 0: raise IOError('参考视频时长无效')
+            span = min(T, (count - 1) / fps - ref['t0'])
+            if span <= 0: raise ValueError('参考没有开花后的帧')
+        finally: cap.release()
+    samples = list(times_s) if times_s is not None else [fr * span for fr in times]
+    if any(t < 0 or t > span + 1e-6 for t in samples): raise ValueError('采样超出素材或参考有效时间')
     world = max(max(p.size(u).max() for u in np.linspace(0, 1, 21)) for p in packs) * 1.05     # 画面边长（cm）
-    rep = dict(total_s=round(T, 3), layers=[])
+    rep = dict(total_s=round(T, 3), sample_times_s=samples, sample_span_s=span, layers=[])
     rows = [[] for _ in range(len(packs) + 1)]
     for p in packs:   # 逐帧自动检查
         edge, sat, empty, jumps, last = [], [], 0, [], None
@@ -102,8 +127,8 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
         rep['layers'].append(dict(pack=p.label, frames=p.frames, grid=f'{p.cols}x{p.rows}x{p.ch}', cell_px=[p.cw, p.chh], life_s=round(p.life, 3),
                                   edge_max=round(max(edge), 4), edge_frames_over_2pct=int(sum(e > 0.02 for e in edge)), saturated_max=round(max(sat), 4),
                                   empty_frames=empty, center_jump_max_px=round(max(jumps), 2) if jumps else 0))
-    for ti, fr in enumerate(times):
-        t = fr * T; acc = np.zeros((px, px, 3), np.float32)
+    for t in samples:
+        acc = np.zeros((px, px, 3), np.float32)
         for li, (p, d) in enumerate(zip(packs, delays)):
             lay = np.zeros((px, px, 3), np.float32); age = t - d
             if 0 <= age <= p.life:
@@ -116,9 +141,9 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
             acc += lay; rows[li + 1].append(lay)
         rows[0].append(acc)
     def tone(a): return (np.clip(1 - np.exp(-a * 1.5), 0, 1) ** (1 / 2.2) * 255).astype(np.uint8)
-    refs = ref_frames(ref, [fr * T for fr in times], px) if ref else None
+    refs = ref_frames(ref, samples, px) if ref else None
     if refs: rows.insert(0, refs)
-    W = px * len(times); H = px * len(rows)
+    W = px * len(samples); H = px * len(rows)
     sheet = Image.new('RGB', (W + 110, H + 22), (14, 15, 20)); dr = ImageDraw.Draw(sheet)
     from PIL import ImageFont
     font = None
@@ -128,7 +153,7 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
     for r, row in enumerate(rows):
         dr.text((4, 22 + r * px + px // 2), names[r][:14] if font else ('combo' if r == 0 else f'layer {r}'), fill=(220, 210, 180), font=font)
         for c, a in enumerate(row): sheet.paste(Image.fromarray(a if a.dtype == np.uint8 else tone(a)), (110 + c * px, 22 + r * px))
-    for c, fr in enumerate(times): dr.text((110 + c * px + 4, 4), f'{int(fr * 100)}%  {fr * T:.2f}s', fill=(233, 180, 95), font=font)
+    for c, t in enumerate(samples): dr.text((110 + c * px + 4, 4), f'开花后 {t:.3f}s', fill=(233, 180, 95), font=font)
     sheet.save(out, quality=88)
     json.dump(rep, open(os.path.splitext(out)[0] + '.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     return rep

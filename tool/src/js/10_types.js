@@ -30,7 +30,7 @@ const BASE = {
   duration: 3.2, seed: 7, stars: 150, burstR0: 0, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
   burn: 2.5, burnJit: 12, fade: 0.2, lastFlare: 0.35, flash: 1,
   headSize: 1.0, headBright: 1, flicker: 0.25,
-  sparkRate: 95, sparkRateEnd: 1, sparkStop: 0, sparkStart: 0, sparkLife: 0.55, sparkSize: 0.35, sparkSpread: 2.5, sparkInherit: 0.2, sparkDrag: 2.2, sparkGrav: 1,
+  sparkRate: 95, sparkRateEnd: 1, sparkStop: 0, sparkStart: 0, sparkLife: 0.55, sparkLifeEnd: 1, sparkLifeJit: 45, sparkSize: 0.35, sparkSpread: 2.5, sparkInherit: 0.2, sparkDrag: 2.2, sparkGrav: 1,
   T0: 2050, cooling: 0.42, sparkBright: 1, twinkle: 0.6,
   subDelay: 0.9, subJit: 10, subStars: 36, subSpeed: 40, subBurn: 0.9, subTail: 0, carrierTail: 30, subPattern: 'sphere',
   spin: 14, chaos: 0.8, beeSpeed: 28,
@@ -270,12 +270,14 @@ const SCHEMA = [
     ['headBright', '炭头亮度', '×', 0, 3, 0.05],
     ['flicker', '闪烁强度', '', 0, 1, 0.01]
   ] },
-  { sec: '尾缀（炭火火花）', show: isSeq, hint: '尾缀粗细主要由「散布」和「颗粒大小」决定，长度由「火花寿命」决定。', items: [
+  { sec: '尾缀（炭火火花）', show: isSeq, hint: '可见尾长由星体运动、火花跟随、寿命和冷却共同决定。末段寿命控制后来出生的火花，不改变已有火花。', items: [
     ['sparkRate', '火花密度', '个/秒', 0, 3000, 1],
     ['sparkRateEnd', '末段火花密度', '×', 0, 2, 0.01],
     ['sparkStop', '火花只在前几秒（分层星外层，0 = 全程）', 's', 0, 3, 0.01],
     ['sparkStart', '火花从第几秒开始（分层星内层 / 末段短尾，0 = 一开始就有）', 's', 0, 6, 0.01],
     ['sparkLife', '火花寿命', 's', 0.05, 4, 0.01],
+    ['sparkLifeEnd', '末段出生火花的寿命', '×', 0.05, 2, 0.01, P => familyOf(P.type) === 'aerial'],
+    ['sparkLifeJit', '火花寿命离散', '%', 0, 80, 1, P => familyOf(P.type) === 'aerial'],
     ['sparkSpread', '尾缀粗细（散布）', 'm/s', 0, 15, 0.1],
     ['sparkSize', '颗粒大小', 'm', 0.05, 2, 0.01],
     ['sparkInherit', '跟随星体', '', 0, 1, 0.01],

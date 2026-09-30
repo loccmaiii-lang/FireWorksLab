@@ -1,0 +1,31 @@
+{
+ "src": "QA13",
+ "times": [
+  0.367,
+  1.133,
+  1.867,
+  2.633,
+  3.367
+ ],
+ "mods": {
+  "0": {
+   "v0": 94.57,
+   "grav": 0.25,
+   "sparkLife": 2.2,
+   "sparkLifeEnd": 0.18,
+   "sparkLifeJit": 12,
+   "sparkStop": 1.9,
+   "sparkInherit": 0.15,
+   "cooling": 0.35,
+   "sparkStart": 0.02
+  },
+  "1": {
+   "v0": 94.57,
+   "grav": 0.25,
+   "headDim": 0.005,
+   "headDimUntil": 1.85
+  }
+ },
+ "diagnostic_only": true,
+ "per_layer_probe_exposure_not_final_bake": true
+}

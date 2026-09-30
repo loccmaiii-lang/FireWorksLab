@@ -1,0 +1,9 @@
+22:59:20 开始：QiuXingA_QA14（导出素材）
+22:59:21 QiuXingA_QA14_1 导出 1 秒：QiuXingA_QA14_1.json、QiuXingA_QA14_1_Cascade参数.txt、QiuXingA_QA14_1_曲线.csv、T_QiuXingA_QA14_1.png、T_QiuXingA_QA14_1_Cutout.png、T_QiuXingA_QA14_1_FrameTest.png、T_QiuXingA_QA14_1_Ramp.png、cascade.json、cascade_mobile.json
+22:59:22 QiuXingA_QA14_2 导出 1 秒：QiuXingA_QA14_2.json、QiuXingA_QA14_2_Cascade参数.txt、QiuXingA_QA14_2_曲线.csv、T_QiuXingA_QA14_2.png、T_QiuXingA_QA14_2_Cutout.png、T_QiuXingA_QA14_2_FrameTest.png、T_QiuXingA_QA14_2_Ramp.png、cascade.json、cascade_mobile.json
+22:59:23 回放检查没做成（不影响导出）：参考视频读帧失败：开花后 4.860s，第 155 帧，F:\FireWorksLab\tool\../vidio/球形A.mp4
+22:59:39 烘焙回放对照：F:\FireWorksLab\analysis\results\QA14E\烘焙回放.jpg
+22:59:40 烘焙回放（原尺寸）：F:\FireWorksLab\analysis\results\QA14E\烘焙回放_原尺寸.jpg
+22:59:40 烘焙器预览 preview.js：4380 KB
+22:59:40 大文件（贴图）在 F:\FireWorksLab\analysis\local\输出\素材包，不上传
+22:59:40 完成，用时 0.3 分钟

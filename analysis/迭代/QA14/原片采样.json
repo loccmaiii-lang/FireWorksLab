@@ -1,0 +1,64 @@
+{
+  "video": "vidio/球形A.mp4",
+  "fps": 30.0,
+  "frames": 123,
+  "burst_t": 0.3,
+  "fixed_crop_xyxy": [
+    747,
+    169,
+    1197,
+    619
+  ],
+  "samples": [
+    {
+      "requested_s": 0.1,
+      "frame": 12,
+      "actual_burst_age_s": 0.10000000000000003
+    },
+    {
+      "requested_s": 0.38,
+      "frame": 20,
+      "actual_burst_age_s": 0.36666666666666664
+    },
+    {
+      "requested_s": 0.8,
+      "frame": 33,
+      "actual_burst_age_s": 0.8
+    },
+    {
+      "requested_s": 1.12,
+      "frame": 43,
+      "actual_burst_age_s": 1.1333333333333333
+    },
+    {
+      "requested_s": 1.4,
+      "frame": 51,
+      "actual_burst_age_s": 1.4
+    },
+    {
+      "requested_s": 1.65,
+      "frame": 58,
+      "actual_burst_age_s": 1.6333333333333333
+    },
+    {
+      "requested_s": 1.88,
+      "frame": 65,
+      "actual_burst_age_s": 1.8666666666666665
+    },
+    {
+      "requested_s": 2.2,
+      "frame": 75,
+      "actual_burst_age_s": 2.2
+    },
+    {
+      "requested_s": 2.62,
+      "frame": 88,
+      "actual_burst_age_s": 2.6333333333333333
+    },
+    {
+      "requested_s": 3.38,
+      "frame": 110,
+      "actual_burst_age_s": 3.3666666666666667
+    }
+  ]
+}
