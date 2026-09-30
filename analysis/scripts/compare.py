@@ -155,8 +155,13 @@ class SimSession:
         acc = [np.zeros((px, px, 3), np.float32) for _ in times]
         for lay_i, (P, M, sc, dl, ph) in enumerate(info):
             loc = sorted({round(t - dl, 4) for t in times if t - dl >= 0} | {-0.05})
-            # 延时点火的层（前一段不可见）：定曝光的时刻放到点火之后，否则按一片黑定曝光
-            probe = f", probe: {float(P.get('ignDelay', 0) or 0) + 0.3 * ph['burn']:.3f}" if (P.get('ignDelay') or 0) > 0 else ''
+            # 定曝光：在这一层发光的整段里取 8 个时刻合在一起（和烘焙对整张贴图定曝光同口径；
+            # 延时点火、主段后才亮的第二段、千轮子花都不会按一片黑定曝光）
+            st = float(P.get('ignDelay') or 0) + (float(P.get('burn', 1)) if (P.get('afterBurn') or 0) > 0 else 0)
+            if P.get('type') in ('senrin', 'crossette'): st = float(P.get('subDelay', 1))
+            dur = float(P.get('afterBurn') or 0) if (P.get('afterBurn') or 0) > 0 else float(P.get('subBurn', 1) if P.get('type') in ('senrin', 'crossette') else P.get('burn', 3))
+            en = min(float(P.get('duration', 5)), st + dur)
+            probe = ', probes: ' + json.dumps([round(st + (en - st) * (k + 0.5) / 8, 3) for k in range(8)])
             res = self.pg.evaluate(f"__fw.renderStills({json.dumps(P)}, {json.dumps(M)}, {{ times: {json.dumps(loc)}, px: {px}, half: {half / sc}, cy: {cy / sc}, shutter: 1/40{sub}{probe} }})")
             got = {round(r['t'], 4): np.array(Image.open(io.BytesIO(base64.b64decode(r['png'].split(',')[1]))).convert('RGB'), np.float32) for r in res}
             # 天空底色只算一次（第 0 层的）：其余层先减掉自己的底色再加，否则几层底色叠成一片灰
