@@ -55259,10 +55259,6 @@ var FW_EFFECTS = [
 ],
 "exports": [
 {
-"job": "JM2E",
-"legacy": true
-},
-{
 "job": "JM4E2",
 "entry": "JM4",
 "ver": "6d31bdf2",
@@ -55309,6 +55305,10 @@ var FW_EFFECTS = [
 }
 ],
 "stale": false
+},
+{
+"job": "JM2E",
+"legacy": true
 },
 {
 "job": "JM1",
@@ -55735,84 +55735,6 @@ var FW_EFFECTS = [
 ],
 "exports": [
 {
-"job": "QA8E",
-"entry": "QA8",
-"ver": "60b004e5",
-"time": "2026-09-30 19:12",
-"packages": [
-{
-"name": "QiuXingA_1",
-"replica": "QA8-1",
-"files": [
-"QiuXingA_1.json",
-"QiuXingA_1_Cascade参数.txt",
-"QiuXingA_1_曲线.csv",
-"T_QiuXingA_1.png",
-"T_QiuXingA_1_Cutout.png",
-"T_QiuXingA_1_FrameTest.png",
-"T_QiuXingA_1_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "QiuXingA_2",
-"replica": "QA8-2",
-"files": [
-"QiuXingA_2.json",
-"QiuXingA_2_Cascade参数.txt",
-"QiuXingA_2_曲线.csv",
-"T_QiuXingA_2.png",
-"T_QiuXingA_2_Cutout.png",
-"T_QiuXingA_2_FrameTest.png",
-"T_QiuXingA_2_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-}
-],
-"stale": false
-},
-{
-"job": "QA14E",
-"entry": "QA14",
-"ver": "02887a24",
-"time": "2026-09-30 22:59",
-"packages": [
-{
-"name": "QiuXingA_QA14_1",
-"replica": "QA14-1",
-"files": [
-"QiuXingA_QA14_1.json",
-"QiuXingA_QA14_1_Cascade参数.txt",
-"QiuXingA_QA14_1_曲线.csv",
-"T_QiuXingA_QA14_1.png",
-"T_QiuXingA_QA14_1_Cutout.png",
-"T_QiuXingA_QA14_1_FrameTest.png",
-"T_QiuXingA_QA14_1_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "QiuXingA_QA14_2",
-"replica": "QA14-2",
-"files": [
-"QiuXingA_QA14_2.json",
-"QiuXingA_QA14_2_Cascade参数.txt",
-"QiuXingA_QA14_2_曲线.csv",
-"T_QiuXingA_QA14_2.png",
-"T_QiuXingA_QA14_2_Cutout.png",
-"T_QiuXingA_QA14_2_FrameTest.png",
-"T_QiuXingA_QA14_2_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-}
-],
-"stale": false
-},
-{
 "job": "QA13E",
 "entry": "QA13",
 "ver": "d8feb9c8",
@@ -55891,14 +55813,14 @@ var FW_EFFECTS = [
 "stale": false
 },
 {
-"job": "QA12E",
-"entry": "QA12",
-"ver": "3ab55f43",
-"time": "2026-09-30 21:12",
+"job": "QA8E",
+"entry": "QA8",
+"ver": "60b004e5",
+"time": "2026-09-30 19:12",
 "packages": [
 {
 "name": "QiuXingA_1",
-"replica": "QA12-1",
+"replica": "QA8-1",
 "files": [
 "QiuXingA_1.json",
 "QiuXingA_1_Cascade参数.txt",
@@ -55913,7 +55835,7 @@ var FW_EFFECTS = [
 },
 {
 "name": "QiuXingA_2",
-"replica": "QA12-2",
+"replica": "QA8-2",
 "files": [
 "QiuXingA_2.json",
 "QiuXingA_2_Cascade参数.txt",
@@ -55953,6 +55875,84 @@ var FW_EFFECTS = [
 {
 "name": "QiuXingA_2",
 "replica": "QA9-2",
+"files": [
+"QiuXingA_2.json",
+"QiuXingA_2_Cascade参数.txt",
+"QiuXingA_2_曲线.csv",
+"T_QiuXingA_2.png",
+"T_QiuXingA_2_Cutout.png",
+"T_QiuXingA_2_FrameTest.png",
+"T_QiuXingA_2_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "QA14E",
+"entry": "QA14",
+"ver": "02887a24",
+"time": "2026-09-30 22:59",
+"packages": [
+{
+"name": "QiuXingA_QA14_1",
+"replica": "QA14-1",
+"files": [
+"QiuXingA_QA14_1.json",
+"QiuXingA_QA14_1_Cascade参数.txt",
+"QiuXingA_QA14_1_曲线.csv",
+"T_QiuXingA_QA14_1.png",
+"T_QiuXingA_QA14_1_Cutout.png",
+"T_QiuXingA_QA14_1_FrameTest.png",
+"T_QiuXingA_QA14_1_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "QiuXingA_QA14_2",
+"replica": "QA14-2",
+"files": [
+"QiuXingA_QA14_2.json",
+"QiuXingA_QA14_2_Cascade参数.txt",
+"QiuXingA_QA14_2_曲线.csv",
+"T_QiuXingA_QA14_2.png",
+"T_QiuXingA_QA14_2_Cutout.png",
+"T_QiuXingA_QA14_2_FrameTest.png",
+"T_QiuXingA_QA14_2_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "QA12E",
+"entry": "QA12",
+"ver": "3ab55f43",
+"time": "2026-09-30 21:12",
+"packages": [
+{
+"name": "QiuXingA_1",
+"replica": "QA12-1",
+"files": [
+"QiuXingA_1.json",
+"QiuXingA_1_Cascade参数.txt",
+"QiuXingA_1_曲线.csv",
+"T_QiuXingA_1.png",
+"T_QiuXingA_1_Cutout.png",
+"T_QiuXingA_1_FrameTest.png",
+"T_QiuXingA_1_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "QiuXingA_2",
+"replica": "QA12-2",
 "files": [
 "QiuXingA_2.json",
 "QiuXingA_2_Cascade参数.txt",
@@ -56342,45 +56342,6 @@ var FW_EFFECTS = [
 ],
 "exports": [
 {
-"job": "QC10E",
-"entry": "QC10",
-"ver": "10df4186",
-"time": "2026-09-30 19:42",
-"packages": [
-{
-"name": "QiuXingC_1",
-"replica": "QC10-1",
-"files": [
-"QiuXingC_1.json",
-"QiuXingC_1_Cascade参数.txt",
-"QiuXingC_1_曲线.csv",
-"T_QiuXingC_1.png",
-"T_QiuXingC_1_Cutout.png",
-"T_QiuXingC_1_FrameTest.png",
-"T_QiuXingC_1_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "QiuXingC_2",
-"replica": "QC10-2",
-"files": [
-"QiuXingC_2.json",
-"QiuXingC_2_Cascade参数.txt",
-"QiuXingC_2_曲线.csv",
-"T_QiuXingC_2.png",
-"T_QiuXingC_2_Cutout.png",
-"T_QiuXingC_2_FrameTest.png",
-"T_QiuXingC_2_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-}
-],
-"stale": false
-},
-{
 "job": "QC9E",
 "entry": "QC9",
 "ver": "bd5b58c3",
@@ -56404,6 +56365,45 @@ var FW_EFFECTS = [
 {
 "name": "QiuXingC_2",
 "replica": "QC9-2",
+"files": [
+"QiuXingC_2.json",
+"QiuXingC_2_Cascade参数.txt",
+"QiuXingC_2_曲线.csv",
+"T_QiuXingC_2.png",
+"T_QiuXingC_2_Cutout.png",
+"T_QiuXingC_2_FrameTest.png",
+"T_QiuXingC_2_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "QC10E",
+"entry": "QC10",
+"ver": "10df4186",
+"time": "2026-09-30 19:42",
+"packages": [
+{
+"name": "QiuXingC_1",
+"replica": "QC10-1",
+"files": [
+"QiuXingC_1.json",
+"QiuXingC_1_Cascade参数.txt",
+"QiuXingC_1_曲线.csv",
+"T_QiuXingC_1.png",
+"T_QiuXingC_1_Cutout.png",
+"T_QiuXingC_1_FrameTest.png",
+"T_QiuXingC_1_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "QiuXingC_2",
+"replica": "QC10-2",
 "files": [
 "QiuXingC_2.json",
 "QiuXingC_2_Cascade参数.txt",
@@ -56566,60 +56566,6 @@ var FW_EFFECTS = [
 ],
 "exports": [
 {
-"job": "QD11E",
-"entry": "QD11",
-"ver": "df5377fd",
-"time": "2026-09-30 20:43",
-"packages": [
-{
-"name": "QiuXingD_1",
-"replica": "QD11-1",
-"files": [
-"QiuXingD_1.json",
-"QiuXingD_1_Cascade参数.txt",
-"QiuXingD_1_曲线.csv",
-"T_QiuXingD_1.png",
-"T_QiuXingD_1_Cutout.png",
-"T_QiuXingD_1_FrameTest.png",
-"T_QiuXingD_1_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "QiuXingD_2",
-"replica": "QD11-2",
-"files": [
-"QiuXingD_2.json",
-"QiuXingD_2_Cascade参数.txt",
-"QiuXingD_2_曲线.csv",
-"T_QiuXingD_2.png",
-"T_QiuXingD_2_Cutout.png",
-"T_QiuXingD_2_FrameTest.png",
-"T_QiuXingD_2_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "QiuXingD_3",
-"replica": "QD11-3",
-"files": [
-"QiuXingD_3.json",
-"QiuXingD_3_Cascade参数.txt",
-"QiuXingD_3_曲线.csv",
-"T_QiuXingD_3.png",
-"T_QiuXingD_3_Cutout.png",
-"T_QiuXingD_3_FrameTest.png",
-"T_QiuXingD_3_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-}
-],
-"stale": false
-},
-{
 "job": "QD8E",
 "entry": "QD8",
 "ver": "f9718169",
@@ -56674,14 +56620,14 @@ var FW_EFFECTS = [
 "stale": false
 },
 {
-"job": "QD10E",
-"entry": "QD10",
-"ver": "ab324314",
-"time": "2026-09-30 20:12",
+"job": "QD11E",
+"entry": "QD11",
+"ver": "df5377fd",
+"time": "2026-09-30 20:43",
 "packages": [
 {
 "name": "QiuXingD_1",
-"replica": "QD10-1",
+"replica": "QD11-1",
 "files": [
 "QiuXingD_1.json",
 "QiuXingD_1_Cascade参数.txt",
@@ -56696,7 +56642,7 @@ var FW_EFFECTS = [
 },
 {
 "name": "QiuXingD_2",
-"replica": "QD10-2",
+"replica": "QD11-2",
 "files": [
 "QiuXingD_2.json",
 "QiuXingD_2_Cascade参数.txt",
@@ -56711,7 +56657,7 @@ var FW_EFFECTS = [
 },
 {
 "name": "QiuXingD_3",
-"replica": "QD10-3",
+"replica": "QD11-3",
 "files": [
 "QiuXingD_3.json",
 "QiuXingD_3_Cascade参数.txt",
@@ -56820,6 +56766,60 @@ var FW_EFFECTS = [
 {
 "name": "QiuXingD_3",
 "replica": "QD12-3",
+"files": [
+"QiuXingD_3.json",
+"QiuXingD_3_Cascade参数.txt",
+"QiuXingD_3_曲线.csv",
+"T_QiuXingD_3.png",
+"T_QiuXingD_3_Cutout.png",
+"T_QiuXingD_3_FrameTest.png",
+"T_QiuXingD_3_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "QD10E",
+"entry": "QD10",
+"ver": "ab324314",
+"time": "2026-09-30 20:12",
+"packages": [
+{
+"name": "QiuXingD_1",
+"replica": "QD10-1",
+"files": [
+"QiuXingD_1.json",
+"QiuXingD_1_Cascade参数.txt",
+"QiuXingD_1_曲线.csv",
+"T_QiuXingD_1.png",
+"T_QiuXingD_1_Cutout.png",
+"T_QiuXingD_1_FrameTest.png",
+"T_QiuXingD_1_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "QiuXingD_2",
+"replica": "QD10-2",
+"files": [
+"QiuXingD_2.json",
+"QiuXingD_2_Cascade参数.txt",
+"QiuXingD_2_曲线.csv",
+"T_QiuXingD_2.png",
+"T_QiuXingD_2_Cutout.png",
+"T_QiuXingD_2_FrameTest.png",
+"T_QiuXingD_2_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "QiuXingD_3",
+"replica": "QD10-3",
 "files": [
 "QiuXingD_3.json",
 "QiuXingD_3_Cascade参数.txt",
@@ -56967,45 +56967,6 @@ var FW_EFFECTS = [
 ],
 "exports": [
 {
-"job": "QN9E",
-"entry": "QN9",
-"ver": "41a563f8",
-"time": "2026-09-30 20:12",
-"packages": [
-{
-"name": "QingNingXing_1",
-"replica": "QN9-1",
-"files": [
-"QingNingXing_1.json",
-"QingNingXing_1_Cascade参数.txt",
-"QingNingXing_1_曲线.csv",
-"T_QingNingXing_1.png",
-"T_QingNingXing_1_Cutout.png",
-"T_QingNingXing_1_FrameTest.png",
-"T_QingNingXing_1_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "QingNingXing_2",
-"replica": "QN9-2",
-"files": [
-"QingNingXing_2.json",
-"QingNingXing_2_Cascade参数.txt",
-"QingNingXing_2_曲线.csv",
-"T_QingNingXing_2.png",
-"T_QingNingXing_2_Cutout.png",
-"T_QingNingXing_2_FrameTest.png",
-"T_QingNingXing_2_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-}
-],
-"stale": false
-},
-{
 "job": "QN8E",
 "entry": "QN8",
 "ver": "7c7c84dd",
@@ -57068,6 +57029,45 @@ var FW_EFFECTS = [
 {
 "name": "QingNingXing_2",
 "replica": "QN10-2",
+"files": [
+"QingNingXing_2.json",
+"QingNingXing_2_Cascade参数.txt",
+"QingNingXing_2_曲线.csv",
+"T_QingNingXing_2.png",
+"T_QingNingXing_2_Cutout.png",
+"T_QingNingXing_2_FrameTest.png",
+"T_QingNingXing_2_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "QN9E",
+"entry": "QN9",
+"ver": "41a563f8",
+"time": "2026-09-30 20:12",
+"packages": [
+{
+"name": "QingNingXing_1",
+"replica": "QN9-1",
+"files": [
+"QingNingXing_1.json",
+"QingNingXing_1_Cascade参数.txt",
+"QingNingXing_1_曲线.csv",
+"T_QingNingXing_1.png",
+"T_QingNingXing_1_Cutout.png",
+"T_QingNingXing_1_FrameTest.png",
+"T_QingNingXing_1_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "QingNingXing_2",
+"replica": "QN9-2",
 "files": [
 "QingNingXing_2.json",
 "QingNingXing_2_Cascade参数.txt",
@@ -57165,7 +57165,7 @@ var FW_EFFECTS = [
 {
 "id": "ZW4E",
 "type": "export",
-"state": "出错",
+"state": "已回来",
 "seen": false
 },
 {
@@ -57176,6 +57176,75 @@ var FW_EFFECTS = [
 }
 ],
 "exports": [
+{
+"job": "ZW4E",
+"entry": "ZW4",
+"ver": "c05010f7",
+"time": "2026-09-30 22:12",
+"packages": [
+{
+"name": "WanCaiQianLun_1",
+"replica": "ZW4-1",
+"files": [
+"T_WanCaiQianLun_1.png",
+"T_WanCaiQianLun_1_Cutout.png",
+"T_WanCaiQianLun_1_FrameTest.png",
+"T_WanCaiQianLun_1_Ramp.png",
+"WanCaiQianLun_1.json",
+"WanCaiQianLun_1_Cascade参数.txt",
+"WanCaiQianLun_1_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "WanCaiQianLun_2",
+"replica": "ZW4-2",
+"files": [
+"T_WanCaiQianLun_2.png",
+"T_WanCaiQianLun_2_Cutout.png",
+"T_WanCaiQianLun_2_FrameTest.png",
+"T_WanCaiQianLun_2_Ramp.png",
+"WanCaiQianLun_2.json",
+"WanCaiQianLun_2_Cascade参数.txt",
+"WanCaiQianLun_2_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "WanCaiQianLun_3",
+"replica": "ZW4-3",
+"files": [
+"T_WanCaiQianLun_3.png",
+"T_WanCaiQianLun_3_Cutout.png",
+"T_WanCaiQianLun_3_FrameTest.png",
+"T_WanCaiQianLun_3_Ramp.png",
+"WanCaiQianLun_3.json",
+"WanCaiQianLun_3_Cascade参数.txt",
+"WanCaiQianLun_3_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "WanCaiQianLun_4",
+"replica": "ZW4-4",
+"files": [
+"T_WanCaiQianLun_4.png",
+"T_WanCaiQianLun_4_Cutout.png",
+"T_WanCaiQianLun_4_FrameTest.png",
+"T_WanCaiQianLun_4_Ramp.png",
+"WanCaiQianLun_4.json",
+"WanCaiQianLun_4_Cascade参数.txt",
+"WanCaiQianLun_4_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
 {
 "job": "ZW3E",
 "entry": "ZW3",
@@ -57513,6 +57582,84 @@ var FW_EFFECTS = [
 ],
 "exports": [
 {
+"job": "HK7E",
+"entry": "HK7",
+"ver": "ed13c79c",
+"time": "2026-09-30 19:42",
+"packages": [
+{
+"name": "HongChao_1",
+"replica": "HK7-1",
+"files": [
+"HongChao_1.json",
+"HongChao_1_Cascade参数.txt",
+"HongChao_1_曲线.csv",
+"T_HongChao_1.png",
+"T_HongChao_1_Cutout.png",
+"T_HongChao_1_FrameTest.png",
+"T_HongChao_1_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "HongChao_2",
+"replica": "HK7-2",
+"files": [
+"HongChao_2.json",
+"HongChao_2_Cascade参数.txt",
+"HongChao_2_曲线.csv",
+"T_HongChao_2.png",
+"T_HongChao_2_Cutout.png",
+"T_HongChao_2_FrameTest.png",
+"T_HongChao_2_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "HK8E",
+"entry": "HK8",
+"ver": "118aefe8",
+"time": "2026-09-30 20:12",
+"packages": [
+{
+"name": "HongChao_1",
+"replica": "HK8-1",
+"files": [
+"HongChao_1.json",
+"HongChao_1_Cascade参数.txt",
+"HongChao_1_曲线.csv",
+"T_HongChao_1.png",
+"T_HongChao_1_Cutout.png",
+"T_HongChao_1_FrameTest.png",
+"T_HongChao_1_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "HongChao_2",
+"replica": "HK8-2",
+"files": [
+"HongChao_2.json",
+"HongChao_2_Cascade参数.txt",
+"HongChao_2_曲线.csv",
+"T_HongChao_2.png",
+"T_HongChao_2_Cutout.png",
+"T_HongChao_2_FrameTest.png",
+"T_HongChao_2_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
 "job": "HK6E",
 "entry": "HK6",
 "ver": "c5d2dab2",
@@ -57591,45 +57738,6 @@ var FW_EFFECTS = [
 "stale": false
 },
 {
-"job": "HK7E",
-"entry": "HK7",
-"ver": "ed13c79c",
-"time": "2026-09-30 19:42",
-"packages": [
-{
-"name": "HongChao_1",
-"replica": "HK7-1",
-"files": [
-"HongChao_1.json",
-"HongChao_1_Cascade参数.txt",
-"HongChao_1_曲线.csv",
-"T_HongChao_1.png",
-"T_HongChao_1_Cutout.png",
-"T_HongChao_1_FrameTest.png",
-"T_HongChao_1_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "HongChao_2",
-"replica": "HK7-2",
-"files": [
-"HongChao_2.json",
-"HongChao_2_Cascade参数.txt",
-"HongChao_2_曲线.csv",
-"T_HongChao_2.png",
-"T_HongChao_2_Cutout.png",
-"T_HongChao_2_FrameTest.png",
-"T_HongChao_2_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-}
-],
-"stale": false
-},
-{
 "job": "HK5E",
 "entry": "HK5",
 "ver": "b8139dd8",
@@ -57653,45 +57761,6 @@ var FW_EFFECTS = [
 {
 "name": "HongChao_2",
 "replica": "HK5-2",
-"files": [
-"HongChao_2.json",
-"HongChao_2_Cascade参数.txt",
-"HongChao_2_曲线.csv",
-"T_HongChao_2.png",
-"T_HongChao_2_Cutout.png",
-"T_HongChao_2_FrameTest.png",
-"T_HongChao_2_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-}
-],
-"stale": false
-},
-{
-"job": "HK8E",
-"entry": "HK8",
-"ver": "118aefe8",
-"time": "2026-09-30 20:12",
-"packages": [
-{
-"name": "HongChao_1",
-"replica": "HK8-1",
-"files": [
-"HongChao_1.json",
-"HongChao_1_Cascade参数.txt",
-"HongChao_1_曲线.csv",
-"T_HongChao_1.png",
-"T_HongChao_1_Cutout.png",
-"T_HongChao_1_FrameTest.png",
-"T_HongChao_1_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "HongChao_2",
-"replica": "HK8-2",
 "files": [
 "HongChao_2.json",
 "HongChao_2_Cascade参数.txt",
@@ -57927,174 +57996,6 @@ var FW_EFFECTS = [
 "stale": false
 },
 {
-"job": "FS8E",
-"entry": "FS8",
-"ver": "aa7a42a5",
-"time": "2026-09-30 20:42",
-"packages": [
-{
-"name": "YongFeng_1",
-"replica": "FS8-1",
-"files": [
-"T_YongFeng_1.png",
-"T_YongFeng_1_Cutout.png",
-"T_YongFeng_1_FrameTest.png",
-"T_YongFeng_1_Ramp.png",
-"YongFeng_1.json",
-"YongFeng_1_Cascade参数.txt",
-"YongFeng_1_曲线.csv",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "YongFeng_2",
-"replica": "FS8-2",
-"files": [
-"T_YongFeng_2.png",
-"T_YongFeng_2_Cutout.png",
-"T_YongFeng_2_FrameTest.png",
-"T_YongFeng_2_Ramp.png",
-"YongFeng_2.json",
-"YongFeng_2_Cascade参数.txt",
-"YongFeng_2_曲线.csv",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "YongFeng_3",
-"replica": "FS8-3",
-"files": [
-"T_YongFeng_3.png",
-"T_YongFeng_3_Cutout.png",
-"T_YongFeng_3_FrameTest.png",
-"T_YongFeng_3_Ramp.png",
-"YongFeng_3.json",
-"YongFeng_3_Cascade参数.txt",
-"YongFeng_3_曲线.csv",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "YongFeng_4",
-"replica": "FS8-4",
-"files": [
-"T_YongFeng_4.png",
-"T_YongFeng_4_Cutout.png",
-"T_YongFeng_4_FrameTest.png",
-"T_YongFeng_4_Ramp.png",
-"YongFeng_4.json",
-"YongFeng_4_Cascade参数.txt",
-"YongFeng_4_曲线.csv",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "YongFeng_5",
-"replica": "FS8-5",
-"files": [
-"T_YongFeng_5.png",
-"T_YongFeng_5_Cutout.png",
-"T_YongFeng_5_FrameTest.png",
-"T_YongFeng_5_Ramp.png",
-"YongFeng_5.json",
-"YongFeng_5_Cascade参数.txt",
-"YongFeng_5_曲线.csv",
-"cascade.json",
-"cascade_mobile.json"
-]
-}
-],
-"stale": false
-},
-{
-"job": "FS9E",
-"entry": "FS9",
-"ver": "7295ece8",
-"time": "2026-09-30 21:12",
-"packages": [
-{
-"name": "YongFeng_1",
-"replica": "FS9-1",
-"files": [
-"T_YongFeng_1.png",
-"T_YongFeng_1_Cutout.png",
-"T_YongFeng_1_FrameTest.png",
-"T_YongFeng_1_Ramp.png",
-"YongFeng_1.json",
-"YongFeng_1_Cascade参数.txt",
-"YongFeng_1_曲线.csv",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "YongFeng_2",
-"replica": "FS9-2",
-"files": [
-"T_YongFeng_2.png",
-"T_YongFeng_2_Cutout.png",
-"T_YongFeng_2_FrameTest.png",
-"T_YongFeng_2_Ramp.png",
-"YongFeng_2.json",
-"YongFeng_2_Cascade参数.txt",
-"YongFeng_2_曲线.csv",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "YongFeng_3",
-"replica": "FS9-3",
-"files": [
-"T_YongFeng_3.png",
-"T_YongFeng_3_Cutout.png",
-"T_YongFeng_3_FrameTest.png",
-"T_YongFeng_3_Ramp.png",
-"YongFeng_3.json",
-"YongFeng_3_Cascade参数.txt",
-"YongFeng_3_曲线.csv",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "YongFeng_4",
-"replica": "FS9-4",
-"files": [
-"T_YongFeng_4.png",
-"T_YongFeng_4_Cutout.png",
-"T_YongFeng_4_FrameTest.png",
-"T_YongFeng_4_Ramp.png",
-"YongFeng_4.json",
-"YongFeng_4_Cascade参数.txt",
-"YongFeng_4_曲线.csv",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "YongFeng_5",
-"replica": "FS9-5",
-"files": [
-"T_YongFeng_5.png",
-"T_YongFeng_5_Cutout.png",
-"T_YongFeng_5_FrameTest.png",
-"T_YongFeng_5_Ramp.png",
-"YongFeng_5.json",
-"YongFeng_5_Cascade参数.txt",
-"YongFeng_5_曲线.csv",
-"cascade.json",
-"cascade_mobile.json"
-]
-}
-],
-"stale": false
-},
-{
 "job": "FS4E",
 "entry": "FS4",
 "ver": "8b6cb7e5",
@@ -58163,6 +58064,90 @@ var FW_EFFECTS = [
 {
 "name": "YongFeng_5",
 "replica": "FS4-5",
+"files": [
+"T_YongFeng_5.png",
+"T_YongFeng_5_Cutout.png",
+"T_YongFeng_5_FrameTest.png",
+"T_YongFeng_5_Ramp.png",
+"YongFeng_5.json",
+"YongFeng_5_Cascade参数.txt",
+"YongFeng_5_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "FS8E",
+"entry": "FS8",
+"ver": "aa7a42a5",
+"time": "2026-09-30 20:42",
+"packages": [
+{
+"name": "YongFeng_1",
+"replica": "FS8-1",
+"files": [
+"T_YongFeng_1.png",
+"T_YongFeng_1_Cutout.png",
+"T_YongFeng_1_FrameTest.png",
+"T_YongFeng_1_Ramp.png",
+"YongFeng_1.json",
+"YongFeng_1_Cascade参数.txt",
+"YongFeng_1_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "YongFeng_2",
+"replica": "FS8-2",
+"files": [
+"T_YongFeng_2.png",
+"T_YongFeng_2_Cutout.png",
+"T_YongFeng_2_FrameTest.png",
+"T_YongFeng_2_Ramp.png",
+"YongFeng_2.json",
+"YongFeng_2_Cascade参数.txt",
+"YongFeng_2_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "YongFeng_3",
+"replica": "FS8-3",
+"files": [
+"T_YongFeng_3.png",
+"T_YongFeng_3_Cutout.png",
+"T_YongFeng_3_FrameTest.png",
+"T_YongFeng_3_Ramp.png",
+"YongFeng_3.json",
+"YongFeng_3_Cascade参数.txt",
+"YongFeng_3_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "YongFeng_4",
+"replica": "FS8-4",
+"files": [
+"T_YongFeng_4.png",
+"T_YongFeng_4_Cutout.png",
+"T_YongFeng_4_FrameTest.png",
+"T_YongFeng_4_Ramp.png",
+"YongFeng_4.json",
+"YongFeng_4_Cascade参数.txt",
+"YongFeng_4_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "YongFeng_5",
+"replica": "FS8-5",
 "files": [
 "T_YongFeng_5.png",
 "T_YongFeng_5_Cutout.png",
@@ -58345,6 +58330,90 @@ var FW_EFFECTS = [
 }
 ],
 "stale": false
+},
+{
+"job": "FS9E",
+"entry": "FS9",
+"ver": "7295ece8",
+"time": "2026-09-30 21:12",
+"packages": [
+{
+"name": "YongFeng_1",
+"replica": "FS9-1",
+"files": [
+"T_YongFeng_1.png",
+"T_YongFeng_1_Cutout.png",
+"T_YongFeng_1_FrameTest.png",
+"T_YongFeng_1_Ramp.png",
+"YongFeng_1.json",
+"YongFeng_1_Cascade参数.txt",
+"YongFeng_1_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "YongFeng_2",
+"replica": "FS9-2",
+"files": [
+"T_YongFeng_2.png",
+"T_YongFeng_2_Cutout.png",
+"T_YongFeng_2_FrameTest.png",
+"T_YongFeng_2_Ramp.png",
+"YongFeng_2.json",
+"YongFeng_2_Cascade参数.txt",
+"YongFeng_2_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "YongFeng_3",
+"replica": "FS9-3",
+"files": [
+"T_YongFeng_3.png",
+"T_YongFeng_3_Cutout.png",
+"T_YongFeng_3_FrameTest.png",
+"T_YongFeng_3_Ramp.png",
+"YongFeng_3.json",
+"YongFeng_3_Cascade参数.txt",
+"YongFeng_3_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "YongFeng_4",
+"replica": "FS9-4",
+"files": [
+"T_YongFeng_4.png",
+"T_YongFeng_4_Cutout.png",
+"T_YongFeng_4_FrameTest.png",
+"T_YongFeng_4_Ramp.png",
+"YongFeng_4.json",
+"YongFeng_4_Cascade参数.txt",
+"YongFeng_4_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "YongFeng_5",
+"replica": "FS9-5",
+"files": [
+"T_YongFeng_5.png",
+"T_YongFeng_5_Cutout.png",
+"T_YongFeng_5_FrameTest.png",
+"T_YongFeng_5_Ramp.png",
+"YongFeng_5.json",
+"YongFeng_5_Cascade参数.txt",
+"YongFeng_5_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
 }
 ],
 "thumb": "data:image/jpeg;base64,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",
@@ -58445,13 +58514,13 @@ var FW_EFFECTS = [
 {
 "id": "PK7E",
 "type": "export",
-"state": "出错",
+"state": "在算",
 "seen": false
 },
 {
 "id": "PK7E2",
 "type": "export",
-"state": "出错",
+"state": "在算",
 "seen": false
 },
 {
@@ -58631,90 +58700,6 @@ var FW_EFFECTS = [
 "stale": false
 },
 {
-"job": "PK5E",
-"entry": "PK5",
-"ver": "5b639286",
-"time": "2026-09-30 19:13",
-"packages": [
-{
-"name": "PianBei_1",
-"replica": "PK5-1",
-"files": [
-"PianBei_1.json",
-"PianBei_1_Cascade参数.txt",
-"PianBei_1_曲线.csv",
-"T_PianBei_1.png",
-"T_PianBei_1_Cutout.png",
-"T_PianBei_1_FrameTest.png",
-"T_PianBei_1_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "PianBei_2",
-"replica": "PK5-2",
-"files": [
-"PianBei_2.json",
-"PianBei_2_Cascade参数.txt",
-"PianBei_2_曲线.csv",
-"T_PianBei_2.png",
-"T_PianBei_2_Cutout.png",
-"T_PianBei_2_FrameTest.png",
-"T_PianBei_2_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "PianBei_3",
-"replica": "PK5-3",
-"files": [
-"PianBei_3.json",
-"PianBei_3_Cascade参数.txt",
-"PianBei_3_曲线.csv",
-"T_PianBei_3.png",
-"T_PianBei_3_Cutout.png",
-"T_PianBei_3_FrameTest.png",
-"T_PianBei_3_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "PianBei_4",
-"replica": "PK5-4",
-"files": [
-"PianBei_4.json",
-"PianBei_4_Cascade参数.txt",
-"PianBei_4_曲线.csv",
-"T_PianBei_4.png",
-"T_PianBei_4_Cutout.png",
-"T_PianBei_4_FrameTest.png",
-"T_PianBei_4_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-},
-{
-"name": "PianBei_5",
-"replica": "PK5-5",
-"files": [
-"PianBei_5.json",
-"PianBei_5_Cascade参数.txt",
-"PianBei_5_曲线.csv",
-"T_PianBei_5.png",
-"T_PianBei_5_Cutout.png",
-"T_PianBei_5_FrameTest.png",
-"T_PianBei_5_Ramp.png",
-"cascade.json",
-"cascade_mobile.json"
-]
-}
-],
-"stale": false
-},
-{
 "job": "PK4E",
 "entry": "PK4",
 "ver": "55d83a2d",
@@ -58783,6 +58768,90 @@ var FW_EFFECTS = [
 {
 "name": "PianBei_5",
 "replica": "PK4-5",
+"files": [
+"PianBei_5.json",
+"PianBei_5_Cascade参数.txt",
+"PianBei_5_曲线.csv",
+"T_PianBei_5.png",
+"T_PianBei_5_Cutout.png",
+"T_PianBei_5_FrameTest.png",
+"T_PianBei_5_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "PK5E",
+"entry": "PK5",
+"ver": "5b639286",
+"time": "2026-09-30 19:13",
+"packages": [
+{
+"name": "PianBei_1",
+"replica": "PK5-1",
+"files": [
+"PianBei_1.json",
+"PianBei_1_Cascade参数.txt",
+"PianBei_1_曲线.csv",
+"T_PianBei_1.png",
+"T_PianBei_1_Cutout.png",
+"T_PianBei_1_FrameTest.png",
+"T_PianBei_1_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "PianBei_2",
+"replica": "PK5-2",
+"files": [
+"PianBei_2.json",
+"PianBei_2_Cascade参数.txt",
+"PianBei_2_曲线.csv",
+"T_PianBei_2.png",
+"T_PianBei_2_Cutout.png",
+"T_PianBei_2_FrameTest.png",
+"T_PianBei_2_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "PianBei_3",
+"replica": "PK5-3",
+"files": [
+"PianBei_3.json",
+"PianBei_3_Cascade参数.txt",
+"PianBei_3_曲线.csv",
+"T_PianBei_3.png",
+"T_PianBei_3_Cutout.png",
+"T_PianBei_3_FrameTest.png",
+"T_PianBei_3_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "PianBei_4",
+"replica": "PK5-4",
+"files": [
+"PianBei_4.json",
+"PianBei_4_Cascade参数.txt",
+"PianBei_4_曲线.csv",
+"T_PianBei_4.png",
+"T_PianBei_4_Cutout.png",
+"T_PianBei_4_FrameTest.png",
+"T_PianBei_4_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+},
+{
+"name": "PianBei_5",
+"replica": "PK5-5",
 "files": [
 "PianBei_5.json",
 "PianBei_5_Cascade参数.txt",
