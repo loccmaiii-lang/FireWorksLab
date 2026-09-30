@@ -1,0 +1,9 @@
+{
+ "id": "ZB2E",
+ "type": "export",
+ "effect": "qiuxing_b",
+ "entry": "ZB2",
+ "name": "QiuXingB",
+ "priority": 6,
+ "note": "球形B 第 2 版素材包（第 1 发星点 + 光丝 + 第 2 发）+ 自动贴图回放检查 + 烘焙器同一秒对照。AI 自检用。PC 光丝序列 + 星点 GPU 粒子 / 手游单帧两种导出（T11）还没做，这里先按序列帧导出。"
+}
