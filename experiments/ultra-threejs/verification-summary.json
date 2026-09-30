@@ -1,0 +1,295 @@
+{
+  "verifiedDate": "2026-09-30",
+  "branch": "codex/ultra-threejs",
+  "three": "0.186.1",
+  "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "unitTests": 7,
+  "effects": [
+    {
+      "id": "JM",
+      "frames": [
+        {
+          "time": 0.8,
+          "litPixels": 124864,
+          "glError": 0
+        },
+        {
+          "time": 1.6,
+          "litPixels": 150603,
+          "glError": 0
+        },
+        {
+          "time": 3.6,
+          "litPixels": 51751,
+          "glError": 0
+        }
+      ]
+    },
+    {
+      "id": "V14",
+      "frames": [
+        {
+          "time": 2.5,
+          "litPixels": 156308,
+          "glError": 0
+        },
+        {
+          "time": 6,
+          "litPixels": 218944,
+          "glError": 0
+        },
+        {
+          "time": 8.8,
+          "litPixels": 52865,
+          "glError": 0
+        },
+        {
+          "time": 10.3,
+          "litPixels": 12212,
+          "glError": 0
+        }
+      ]
+    },
+    {
+      "id": "V13",
+      "frames": [
+        {
+          "time": 3.5,
+          "litPixels": 18694,
+          "glError": 0
+        },
+        {
+          "time": 5.8,
+          "litPixels": 167291,
+          "glError": 0
+        },
+        {
+          "time": 9.5,
+          "litPixels": 320785,
+          "glError": 0
+        },
+        {
+          "time": 12.3,
+          "litPixels": 74074,
+          "glError": 0
+        }
+      ]
+    },
+    {
+      "id": "TR2S",
+      "frames": [
+        {
+          "time": 2,
+          "litPixels": 23561,
+          "glError": 0
+        },
+        {
+          "time": 7,
+          "litPixels": 0,
+          "glError": 0
+        }
+      ]
+    },
+    {
+      "id": "TR2M",
+      "frames": [
+        {
+          "time": 2,
+          "litPixels": 17057,
+          "glError": 0
+        },
+        {
+          "time": 7,
+          "litPixels": 0,
+          "glError": 0
+        }
+      ]
+    },
+    {
+      "id": "TR2L",
+      "frames": [
+        {
+          "time": 2,
+          "litPixels": 27698,
+          "glError": 0
+        },
+        {
+          "time": 8,
+          "litPixels": 27578,
+          "glError": 0
+        }
+      ]
+    }
+  ],
+  "extraEffects": {
+    "fountain": {
+      "lit": 16715,
+      "gl": 0,
+      "memory": {
+        "geometries": 4,
+        "textures": 4
+      }
+    },
+    "falls": {
+      "lit": 99930,
+      "gl": 0,
+      "memory": {
+        "geometries": 4,
+        "textures": 4
+      }
+    },
+    "wheel": {
+      "lit": 15468,
+      "gl": 0,
+      "memory": {
+        "geometries": 4,
+        "textures": 4
+      }
+    },
+    "fan": {
+      "lit": 3321,
+      "gl": 0,
+      "memory": {
+        "geometries": 4,
+        "textures": 4
+      }
+    },
+    "barrage": {
+      "lit": 1812,
+      "gl": 0,
+      "memory": {
+        "geometries": 4,
+        "textures": 4
+      }
+    },
+    "shikake": {
+      "lit": 176608,
+      "gl": 0,
+      "memory": {
+        "geometries": 4,
+        "textures": 4
+      }
+    },
+    "water": {
+      "lit": 10813,
+      "gl": 0,
+      "memory": {
+        "geometries": 4,
+        "textures": 6
+      }
+    },
+    "rise": {
+      "lit": 1588,
+      "gl": 0,
+      "memory": {
+        "geometries": 3,
+        "textures": 6
+      }
+    },
+    "henka": {
+      "lit": 18271,
+      "gl": 0,
+      "memory": {
+        "geometries": 3,
+        "textures": 6
+      }
+    },
+    "matsuba": {
+      "lit": 41581,
+      "gl": 0,
+      "memory": {
+        "geometries": 3,
+        "textures": 6
+      }
+    },
+    "crossette": {
+      "lit": 41083,
+      "gl": 0,
+      "memory": {
+        "geometries": 3,
+        "textures": 6
+      }
+    }
+  },
+  "emberFrames": [
+    {
+      "t": 6,
+      "lit": 370379,
+      "gl": 0
+    },
+    {
+      "t": 8.5,
+      "lit": 425362,
+      "gl": 0
+    },
+    {
+      "t": 9,
+      "lit": 388899,
+      "gl": 0
+    },
+    {
+      "t": 9.5,
+      "lit": 357424,
+      "gl": 0
+    },
+    {
+      "t": 10.3,
+      "lit": 274248,
+      "gl": 0
+    }
+  ],
+  "bake": {
+    "channels": [
+      {
+        "sum": 30146486,
+        "max": 255
+      },
+      {
+        "sum": 36240771,
+        "max": 255
+      },
+      {
+        "sum": 21555894,
+        "max": 255
+      },
+      {
+        "sum": 3749630,
+        "max": 251
+      }
+    ],
+    "layout": {
+      "size": 2048,
+      "frames": 64,
+      "per": 16,
+      "cols": 4,
+      "rows": 4,
+      "cellW": 512,
+      "cellH": 512,
+      "chans": 4
+    },
+    "lit": 181334,
+    "gl": 0,
+    "bytes": 3453565
+  },
+  "cancel": true,
+  "ui": {
+    "still": {
+      "width": 4096,
+      "height": 4096,
+      "bytes": 5726415
+    },
+    "hdr": {
+      "max": 6,
+      "finite": true,
+      "gl": 0
+    },
+    "errors": []
+  },
+  "comparison": {
+    "glError": 0,
+    "time": 1.6,
+    "size": 1024
+  },
+  "browserErrors": [],
+  "note": "Visual review passed for migration integrity. No claim of chemical or reference-video acceptance."
+}

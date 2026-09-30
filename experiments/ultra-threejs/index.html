@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ultra · Three.js 烟花实验室</title><link rel="icon" href="data:,"><link rel="stylesheet" href="style.css"></head>
+<body>
+<header><a class="brand" href="./"><span class="brand-mark">✳</span><span>ULTRA <small>THREE.JS LAB</small></span></a>
+<div class="branch">独立实验 · r186</div><a href="../ultra-baker-3.6/tool/FireworkBaker.html?fast" target="_blank">打开原 Ultra ↗</a></header>
+<main>
+<aside>
+<div class="eyebrow">效果库</div><h1>看清每一颗光。</h1><p class="intro">相同配方，新绘制引擎。拖动时间，检查尾迹与消散。</p>
+<label class="field">选择效果<select id="preset" aria-label="选择效果"></select></label>
+<div id="layers"></div>
+<div class="section-label">预览精度</div>
+<div class="row"><label class="field">真实像素<select id="resolution"><option value="1024">1K · 流畅</option><option value="2048" selected>2K · 精细</option><option value="4096">4K · 静态检查</option></select></label>
+<label class="field">空间采样<select id="ss"><option value="1" selected>1×</option><option value="2">2×2</option><option value="4">4×4</option></select></label></div>
+<label class="field">尾迹模型<select id="model"><option value="original">原参数 · 对比引擎</option><option value="embers">独立余烬 · 逐颗消散实验</option></select></label>
+<label class="range-label">曝光 <output id="exposureValue">1.00</output><input id="exposure" type="range" min=".1" max="3" step=".01" value="1"></label>
+<label class="range-label">光晕 <output id="bloomValue">关闭</output><input id="bloom" type="range" min="0" max=".3" step=".01" value="0"></label>
+<label class="check"><input id="compare" type="checkbox">同步对比原 Ultra</label>
+<label class="check"><input id="loupe" type="checkbox">原始像素放大镜 · 4×</label>
+<div class="section-label">烘焙素材</div>
+<div class="row"><label class="field">贴图<select id="bakeSize"><option value="2048">2K</option><option value="4096">4K 母版</option></select></label>
+<label class="field">总帧数<select id="frames"><option value="64" selected>64 · 每帧更大</option><option value="128">128</option><option value="256">256 · 更连贯</option></select></label></div>
+<div class="row"><label class="field">空间采样<select id="bakeSS"><option value="1">1×</option><option value="2" selected>2×2</option><option value="4">4×4</option></select></label>
+<label class="field">快门采样<select id="samples"><option value="1">关闭 · 1 次</option><option value="4" selected>4 次</option><option value="8">8 次</option><option value="16">16 次</option></select></label></div>
+<label class="check"><input id="separate" type="checkbox">星头／拖尾分别导出</label>
+<div id="atlasInfo" class="helper"></div>
+<button id="bake" class="primary">烘焙当前效果</button><button id="cancel" hidden>取消烘焙</button>
+<progress id="progress" value="0" max="1" hidden></progress>
+<div class="actions"><button id="savePNG" disabled>下载贴图 PNG</button><button id="saveMeta" disabled>下载参数</button></div>
+<details><summary>完整参数 · 可编辑</summary><textarea id="parameters" spellcheck="false" aria-label="完整参数"></textarea><button id="apply">应用参数</button><button id="reset">恢复预设</button></details>
+<p class="footnote">独立余烬改变的是尾迹模型。光色和温度仍是视觉近似，未验证为真实化学配方。UE 导入格式仍以主线为准。</p>
+</aside>
+<section class="workspace">
+<div class="stage-top"><div><span class="live-dot"></span><strong id="effectName">金芒菊</strong><span id="modeName">实时模拟</span></div><div class="switch"><button id="liveMode" class="active">实时</button><button id="atlasMode" disabled>烘焙回放</button></div></div>
+<div id="stage" class="stage"><div class="pane" id="threePane"><canvas id="view" aria-label="Three.js 烟花预览"></canvas><span class="pane-label">THREE.JS · 高精度</span></div>
+<div class="pane" id="legacyPane" hidden><iframe id="legacy" title="原 Ultra 同步对比"></iframe><span class="pane-label">原 ULTRA · 同参数</span></div>
+<div id="loading" class="loading">正在准备效果…</div><canvas id="magnifier" width="256" height="256" hidden></canvas></div>
+<div class="playback"><button id="play" class="play" aria-label="播放或暂停">暂停</button><input id="scrub" type="range" min="0" max="1000" value="175" aria-label="时间轴">
+<output id="time">0.80 / 4.56 s</output><select id="speed" aria-label="播放速度"><option value=".25">¼ 速</option><option value=".5">½ 速</option><option value="1" selected>1×</option></select></div>
+<div class="readout"><span id="stats"></span><span id="status" role="status"></span></div>
+<div class="bottom"><p id="note">预览直接绘制粒子，贴图回放展示实际烘焙结果。关闭光晕可检查粒子边缘。</p><div class="actions"><button id="still">4K 静帧</button><button id="hdr">线性 HDR</button><button id="saveRecipe">保存配方</button></div></div>
+</section>
+</main><script type="module" src="src/main.js"></script>
+</body></html>

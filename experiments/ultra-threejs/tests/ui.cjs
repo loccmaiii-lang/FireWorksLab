@@ -1,0 +1,50 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+let chromium;try{({chromium}=require('playwright'));}catch{({chromium}=require(process.env.PLAYWRIGHT_MODULE||'C:/Users/locmai/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright'));}
+const dir=path.resolve(__dirname,'../outputs');fs.mkdirSync(dir,{recursive:true});
+(async()=>{
+ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--use-angle=d3d11']});
+ const page=await browser.newPage({viewport:{width:1550,height:1100},acceptDownloads:true}),errors=[],report={};
+ page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+ await page.goto(process.env.THREE_LAB_URL||'http://127.0.0.1:18767/experiments/ultra-threejs/');
+ await page.waitForFunction(()=>window.THREE_LAB&&!THREE_LAB.state.loading,{},{timeout:60000});
+ await page.click('#play');
+ await page.locator('#scrub').fill('350');await page.locator('#scrub').dispatchEvent('input');
+ await page.click('#bake');
+ await page.waitForFunction(()=>THREE_LAB.state.result&&!THREE_LAB.state.busy,{},{timeout:120000});
+ assert.equal(await page.locator('#savePNG').isEnabled(),true);
+ assert.equal(await page.locator('#saveMeta').isEnabled(),true);
+ assert.equal(await page.locator('#atlasMode').getAttribute('class'),'active');
+ await page.screenshot({path:path.join(dir,'JM-UI-baked.png')});
+ let event=page.waitForEvent('download');await page.click('#saveMeta');let d=await event;
+ await d.saveAs(path.join(dir,'JM-metadata.json'));
+ const metadata=JSON.parse(fs.readFileSync(path.join(dir,'JM-metadata.json')));
+ assert.equal(metadata.layout.chans,4);assert.equal(metadata.layout.frames,64);
+ event=page.waitForEvent('download');await page.click('#savePNG');d=await event;
+ await d.saveAs(path.join(dir,'JM-UI-atlas.png'));
+ event=page.waitForEvent('download',{timeout:60000});await page.click('#still');d=await event;
+ await d.saveAs(path.join(dir,'JM-4K.png'));
+ const png=fs.readFileSync(path.join(dir,'JM-4K.png'));
+ report.still={width:png.readUInt32BE(16),height:png.readUInt32BE(20),bytes:png.length};
+ assert.equal(report.still.width,4096);assert.equal(report.still.height,4096);
+ await page.waitForFunction(()=>!THREE_LAB.state.busy);
+ report.hdr=await page.evaluate(async()=>{
+   const {target,THREE}=await import('./src/renderer.js');
+   const rt=target(1024,1024,THREE.FloatType),l=THREE_LAB;
+   l.state.busy=true;
+   l.engine.render(1.6,{width:1024,ss:1,output:rt,linear:true,view:l.state.recipe.view});
+   const p=new Float32Array(1024*1024*4);l.engine.renderer.readRenderTargetPixels(rt,0,0,1024,1024,p);
+   let max=0,finite=true;for(let i=0;i<p.length;i+=4){max=Math.max(max,p[i],p[i+1],p[i+2]);if(!Number.isFinite(p[i]+p[i+1]+p[i+2]))finite=false;}
+   const gl=l.engine.renderer.getContext().getError();rt.dispose();l.state.busy=false;
+   return {max,finite,gl};
+ });
+ assert.ok(report.hdr.max>1);assert.equal(report.hdr.finite,true);assert.equal(report.hdr.gl,0);
+ await page.selectOption('#preset','V14');
+ await page.waitForFunction(()=>THREE_LAB.state.recipe.id==='V14'&&!THREE_LAB.state.loading,{},{timeout:60000});
+ await page.selectOption('#model','embers');
+ assert.equal(await page.locator('#savePNG').isEnabled(),false,'changed recipe invalidates bake');
+ await page.locator('#scrub').fill('820');await page.locator('#scrub').dispatchEvent('input');
+ await page.screenshot({path:path.join(dir,'V14-UI-embers.png')});
+ assert.deepEqual(errors,[]);report.errors=errors;fs.writeFileSync(path.join(dir,'ui-verification.json'),JSON.stringify(report,null,2));
+ console.log(JSON.stringify(report));console.log('PASS actual UI bake, atlas replay, PNG and metadata downloads, 4K image and HDR readback');
+ await browser.close();
+})().catch(e=>{console.error(e);process.exitCode=1;});
