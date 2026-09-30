@@ -103,6 +103,11 @@ def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=pr
     s.pg.wait_for_function("window.__fw && window.__fw.idle() && (state.tab !== 'combo' || (state.layers.length > 0 && state.lib.length >= state.layers.length))", timeout=0)
     s.pg.wait_for_timeout(1500)
     T = s.pg.evaluate("state.tab === 'combo' ? Math.min(comboDuration(), Math.max(...state.layers.map(L => { const e = state.lib.find(x => x.name === L.lib); return (L.delay || 0) + (e ? e.P.duration : 0); }))) : (state.P && state.P.duration) || 3")
+    if ref:     # 不超过实拍视频剩下的长度（不然后几张实拍是黑的）
+        try:
+            import cv2; cap = cv2.VideoCapture(ref['video']); vd = cap.get(cv2.CAP_PROP_FRAME_COUNT) / (cap.get(cv2.CAP_PROP_FPS) or 30); cap.release()
+            if vd > 0: T = min(T, max(1.0, vd - ref.get('t0', 0) - 0.05))
+        except Exception: pass
     times = [round(f * T, 2) for f in fracs]; rows = {'实时模拟': [], '导出效果': []}
     # 先播一小段再暂停：实时模拟的粒子是逐帧推进的，刚打开就跳到某一秒，第一张会是没推进完的画面
     s.pg.evaluate("state.view = 'live'; state.t = 0; state.playing = true"); s.pg.wait_for_timeout(2500); s.pg.evaluate("state.playing = false")
