@@ -1,0 +1,262 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "PianBei_5",
+ "platform": "pc",
+ "source": {
+  "tool": "烟花母版烘焙器 3.7",
+  "type": "senrin",
+  "form": "master",
+  "quality": {
+   "ss": 2,
+   "hz": 300,
+   "kernel": 0,
+   "core": 0
+  }
+ },
+ "textures": {
+  "seq": {
+   "file": "T_PianBei_5.png",
+   "class": "flipbook",
+   "cols": 8,
+   "rows": 8,
+   "channels": 4,
+   "frames": 256
+  },
+  "cutout": {
+   "file": "T_PianBei_5_Cutout.png",
+   "class": "cutout"
+  },
+  "ramp": {
+   "file": "T_PianBei_5_Ramp.png",
+   "class": "ramp"
+  }
+ },
+ "materials": {
+  "main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 8,
+    "cols": 8
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 170437,
+  "preview_warmup_s": 1.2
+ },
+ "emitters": [
+  {
+   "name": "Main",
+   "material": "main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 10.185,
+    "loops": 1,
+    "delay_s": 2.815,
+    "cutout": "cutout",
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 10.185
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       131105.2,
+       131105.2,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         0.506,
+         0.506,
+         1
+        ]
+       ],
+       [
+        0.2012,
+        [
+         0.673,
+         0.673,
+         1
+        ]
+       ],
+       [
+        0.6394,
+        [
+         0.959,
+         0.959,
+         1
+        ]
+       ],
+       [
+        0.6971,
+        [
+         0.979,
+         0.979,
+         1
+        ]
+       ],
+       [
+        0.783,
+        [
+         0.984,
+         0.984,
+         1
+        ]
+       ],
+       [
+        0.8664,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0
+        ],
+        [
+         1,
+         255.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.3,
+         0.969,
+         0.4569
+        ]
+       ],
+       [
+        0.0427,
+        [
+         1.3,
+         0.969,
+         0.4569
+        ]
+       ],
+       [
+        0.19,
+        [
+         1.3,
+         0.5645,
+         0.1043
+        ]
+       ],
+       [
+        0.2391,
+        [
+         1.3,
+         0.5645,
+         0.1043
+        ]
+       ],
+       [
+        0.3864,
+        [
+         1.1328,
+         0.3626,
+         0.0513
+        ]
+       ],
+       [
+        0.5336,
+        [
+         1.1328,
+         0.3626,
+         0.0513
+        ]
+       ],
+       [
+        0.6809,
+        [
+         0.8927,
+         0.2106,
+         0.0276
+        ]
+       ],
+       [
+        1,
+        [
+         0.8927,
+         0.2106,
+         0.0276
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  }
+ ]
+}
