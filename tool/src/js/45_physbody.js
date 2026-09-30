@@ -40,9 +40,11 @@ function makePhysBodyRenderer(P) {
       const tf = R.frameT && !P.trFollow ? R.frameT(f) : ts, anchorT = R.stop >= 0 ? (P.trFollow ? Math.min(ts, R.stopE) : R.stop) : tf, anchorY = V * anchorT;
       const x0 = wv(wob, anchorT);   // 星头固定在面片中线：火星的横向位置相对「这一帧的星头」
       const fadeAll = R.fadeEnd[1] > R.fadeEnd[0] ? 1 - smoothstepJS(R.fadeEnd[0], R.fadeEnd[1], ts) : 1;
-      // 星头燃气焰：沿身后一串点（泪滴：头部最亮、向后变细变暗）；快门内跟着星头走
-      if (R.stopE < 0 || ts <= R.stopE + 1e-6) {
-        const L = (P.phFlL0 || 0) + (P.phFlLv || 0) * V, n = 32, fl = 1 + 0.12 * Math.sin(6.2831853 * 7 * ts / Tp) * Math.sin(6.2831853 * 3 * ts / Tp + 1.1);
+      // 星头：燃气焰长度 = 0 时用 V5 的圆光点 + 光晕（用户 09-30 10:19：泪滴焰看起来像一根「小棍子」）；> 0 时是沿身后一串点的泪滴焰
+      const flL = (P.phFlL0 || 0) + (P.phFlLv || 0) * V;
+      if (flL <= 1e-3) drawTrailHead(R, P, ts, anchorY, view, ppm, w);
+      else if (R.stopE < 0 || ts <= R.stopE + 1e-6) {
+        const L = flL, n = 32, fl = 1 + 0.12 * Math.sin(6.2831853 * 7 * ts / Tp) * Math.sin(6.2831853 * 3 * ts / Tp + 1.1);
         let ws = 0; const ww = []; for (let i = 0; i < n; i++) { const q = (i + 0.5) / n, v = Math.exp(-3 * q) * (1 - Math.exp(-q * 18)); ww.push(v); ws += v; }
         const yh = V * ts - anchorY; let k = 0;
         for (let i = 0; i < n; i++) { const q = (i + 0.5) / n; bufH[k++] = 0; bufH[k++] = yh - q * L; bufH[k++] = ww[i] / ws * (P.phFlI || 1) * fl; bufH[k++] = 2 * (P.phFlW || 0.15) * (0.55 + 0.9 * q); }

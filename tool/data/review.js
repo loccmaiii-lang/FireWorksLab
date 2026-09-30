@@ -1,6 +1,408 @@
 // 由 analysis/scripts/review_to_baker.py 生成：迭代区（做完、等你看的东西）。不要手改。
 var FW_REVIEW = [
 {
+"id": "TFS",
+"task": "TFS",
+"kind": "preset",
+"date": "2026-09-30 13:40",
+"name": "升空尾缀 · 物理 × V5 形式 · 第 2 版 小",
+"note": "正式库 V5 小档的镜头和产物（弹体坐标、16×1 循环 + 消散、导出）+ 物理尾缀的粒子（对 尾缀C 校准的三层喷出物、降温、风、自转）。第 2 版按你 10:19 的意见返工：星头换成 V5 的圆光点 + 光晕（去掉「小棍子」燃气焰）；火星半径缩到 V5 的量级（更细、更亮）；横向漂移、散开、摆动按 V5 各档的宽度重新定，小 < 中 < 大；大档加长、加密。",
+"look": [
+"星头：圆光点 + 光晕，和 V5 一样（没有身后那根亮棍）",
+"火星颗粒：细、亮，近看不比 V5 糊",
+"三档放一起：宽度 小 < 中 < 大，大档最长最密、左右摆动最大",
+"右栏「尾缀序列 · 形态」第一项切 0 / 1，和 V5 原版对比"
+],
+"opinion": "面片大小（半宽 × 长，米）：V5 1.12 × 32.6；第 1 版 5.82 × 81.5（太宽 → 同样的格子里每像素的米数大好几倍，所以糊）；第 2 版 1.29 × 42.2。三档：半宽 1.29 < 2.43 < 6.11，宽长比 0.061 < 0.066 < 0.072。",
+"tags": "尾缀 上升 物理 V5 融合 小 TFS",
+"doc": [
+[
+"第 2 版改了什么（你 10:19 的意见）",
+[
+"「头部小棍子」：第 1 版星头是一串沿身后排开的点（泪滴形燃气焰，长约 3 m），缩小后看起来像根棍子。现在星头用 V5 的圆光点 + 光晕（大小、亮度、光晕都取 V5 这一档的值）；参数「燃气焰 · 静止长度 / 随速度变长」= 0 时就是这样，调大还能回到泪滴焰。",
+"「粒子精度不如 V5」：两个原因。① 第 1 版面片太宽：风漂 2 m/s × 火星寿命 2 s，火星横向飘出 5–8 m，面片半宽是 V5 的 3–5 倍，同样 128 像素宽的格子里每像素的米数大好几倍，所以糊。② 金火星半径 0.06 m、落火 0.075 m，是 V5 火星（0.016–0.024 m）的 3 倍。现在风漂、散开、自转横速按 V5 的宽度重新定，火星半径改成和 V5 一样的量级：火粉 0.009、金火星 0.011、落火 0.015 m（第 1 版 0.018 / 0.06 / 0.075；直径约 0.02–0.03 m，和 V5 的火星一样）（亮度总量不变，所以更细更亮）。",
+"「小档反而最宽」：不是预览镜头的问题，是第 1 版小档的物理参数（寿命离散大、自转横速大）按近景实拍校的，横向散得最开，面片宽长比 0.143 是三档里最大的。现在半宽 小 1.29 m < 中 2.43 m < 大 6.11 m，宽长比也是 小 < 中 < 大。",
+"「强中弱区分不够、大档没有拖尾强度、左右动态细」：金火星加密（小 2000 → 6000、中 → 8000、大 → 12000 颗/秒），在空气里的燃烧温度提高、末段才降温（快烧完才暗），尾迹整条都亮；弹体摆动（大波浪）小 0.15 / 中 0.35 / 大 1.0 m，大档寿命 1.6 秒、落火 22 颗/秒，面片长 169 m（V5 129 m）。",
+"物理本身没动：三层喷出物、出喷口很热 → 降到燃烧温度、对数正态寿命、阻力 + 重力、自转螺旋、真循环。"
+]
+],
+[
+"请你看",
+[
+"1. 星头还有没有棍子感",
+"2. 近看颗粒和 V5 比",
+"3. 三档强中弱够不够分开；大档的摆动 / 强度还要不要再大"
+]
+]
+],
+"imagesTitle": "和 V5 对照（云端软件渲染，单帧）",
+"principle": false,
+"images": [
+[
+"../analysis/迭代/TF第2版/全长对照.png",
+"同一比例全长：V5 小 / 新 小 / V5 中 / 新 中 / V5 大 / 新 大"
+],
+[
+"../analysis/迭代/TF第2版/星头近景.png",
+"星头近景 6 m（80 像素/米）：同上顺序，看棍子和颗粒"
+]
+],
+"base": "trailS",
+"p": {
+"phWob": 0.15,
+"phWobL": [
+45.0,
+67.0,
+97.0
+],
+"phSpinF": 9.0,
+"phSpinA": 0.96,
+"phWind": -0.18,
+"phTurb": 0.09,
+"phTurbL": [
+6.0,
+67.0
+],
+"phJit": 0.037,
+"phFlL0": 0,
+"phFlLv": 0,
+"phFlW": 0.15,
+"phFlI": 1.5,
+"phARate": 12000,
+"phAPuff": 1,
+"phALife": 0.22,
+"phALsig": 0.35,
+"phAJet": 33,
+"phACone": 1.8,
+"phAKd": 18,
+"phAT0": 2550,
+"phATb": 2550,
+"phATc": 1000.0,
+"phATend": 2000,
+"phAPt": 3.0,
+"phAPm": 1.0,
+"phAI": 0.0028,
+"phATw": 0.0,
+"phAR": 0.009,
+"phBRate": 6000,
+"phBPuff": 2,
+"phBLife": 0.8,
+"phBLsig": 0.3,
+"phBJet": 27,
+"phBCone": 1.4,
+"phBKd": 12,
+"phBT0": 2450,
+"phBTb": 2250,
+"phBTc": 0.29267,
+"phBTend": 1800,
+"phBPt": 3,
+"phBPm": 0.446,
+"phBI": 0.018517,
+"phBTw": 0.35,
+"phBR": 0.011,
+"phCRate": 8,
+"phCPuff": 1,
+"phCLife": 0.99,
+"phCLsig": 0.25,
+"phCJet": 18,
+"phCCone": 0.54,
+"phCKd": 3.5,
+"phCT0": 2150,
+"phCTb": 2150,
+"phCTc": 1000.0,
+"phCTend": 1250,
+"phCPt": 3.0,
+"phCPm": 1.0,
+"phCI": 0.8,
+"phCTw": 0.25,
+"phCR": 0.015,
+"trPhys": 1
+},
+"m": {
+"stages": [
+[
+0,
+"#ffffff"
+]
+],
+"xw": 0.08,
+"headInt": 1,
+"tailInt": 1,
+"ramp0": "#ff821f",
+"ramp1": "#ff9f3d",
+"ramp2": "#ffb35a",
+"ramp3": "#ffc171"
+}
+},
+{
+"id": "TFM",
+"task": "TFM",
+"kind": "preset",
+"date": "2026-09-30 13:40",
+"name": "升空尾缀 · 物理 × V5 形式 · 第 2 版 中",
+"note": "正式库 V5 中档的镜头和产物（弹体坐标、16×1 循环 + 消散、导出）+ 物理尾缀的粒子（对 尾缀B 校准的三层喷出物、降温、风、自转）。第 2 版按你 10:19 的意见返工：星头换成 V5 的圆光点 + 光晕（去掉「小棍子」燃气焰）；火星半径缩到 V5 的量级（更细、更亮）；横向漂移、散开、摆动按 V5 各档的宽度重新定，小 < 中 < 大；大档加长、加密。",
+"look": [
+"星头：圆光点 + 光晕，和 V5 一样（没有身后那根亮棍）",
+"火星颗粒：细、亮，近看不比 V5 糊",
+"三档放一起：宽度 小 < 中 < 大，大档最长最密、左右摆动最大",
+"右栏「尾缀序列 · 形态」第一项切 0 / 1，和 V5 原版对比"
+],
+"opinion": "面片大小（半宽 × 长，米）：V5 1.43 × 58.1；第 1 版 6.92 × 107.7（太宽 → 同样的格子里每像素的米数大好几倍，所以糊）；第 2 版 2.43 × 74.1。三档：半宽 1.29 < 2.43 < 6.11，宽长比 0.061 < 0.066 < 0.072。",
+"tags": "尾缀 上升 物理 V5 融合 中 TFM",
+"doc": [
+[
+"第 2 版改了什么（你 10:19 的意见）",
+[
+"「头部小棍子」：第 1 版星头是一串沿身后排开的点（泪滴形燃气焰，长约 3 m），缩小后看起来像根棍子。现在星头用 V5 的圆光点 + 光晕（大小、亮度、光晕都取 V5 这一档的值）；参数「燃气焰 · 静止长度 / 随速度变长」= 0 时就是这样，调大还能回到泪滴焰。",
+"「粒子精度不如 V5」：两个原因。① 第 1 版面片太宽：风漂 2 m/s × 火星寿命 2 s，火星横向飘出 5–8 m，面片半宽是 V5 的 3–5 倍，同样 128 像素宽的格子里每像素的米数大好几倍，所以糊。② 金火星半径 0.06 m、落火 0.075 m，是 V5 火星（0.016–0.024 m）的 3 倍。现在风漂、散开、自转横速按 V5 的宽度重新定，火星半径改成和 V5 一样的量级：火粉 0.009、金火星 0.011、落火 0.015 m（第 1 版 0.018 / 0.06 / 0.075；直径约 0.02–0.03 m，和 V5 的火星一样）（亮度总量不变，所以更细更亮）。",
+"「小档反而最宽」：不是预览镜头的问题，是第 1 版小档的物理参数（寿命离散大、自转横速大）按近景实拍校的，横向散得最开，面片宽长比 0.143 是三档里最大的。现在半宽 小 1.29 m < 中 2.43 m < 大 6.11 m，宽长比也是 小 < 中 < 大。",
+"「强中弱区分不够、大档没有拖尾强度、左右动态细」：金火星加密（小 2000 → 6000、中 → 8000、大 → 12000 颗/秒），在空气里的燃烧温度提高、末段才降温（快烧完才暗），尾迹整条都亮；弹体摆动（大波浪）小 0.15 / 中 0.35 / 大 1.0 m，大档寿命 1.6 秒、落火 22 颗/秒，面片长 169 m（V5 129 m）。",
+"物理本身没动：三层喷出物、出喷口很热 → 降到燃烧温度、对数正态寿命、阻力 + 重力、自转螺旋、真循环。"
+]
+],
+[
+"请你看",
+[
+"1. 星头还有没有棍子感",
+"2. 近看颗粒和 V5 比",
+"3. 三档强中弱够不够分开；大档的摆动 / 强度还要不要再大"
+]
+]
+],
+"imagesTitle": "和 V5 对照（云端软件渲染，单帧）",
+"principle": false,
+"images": [
+[
+"../analysis/迭代/TF第2版/全长对照.png",
+"同一比例全长：V5 小 / 新 小 / V5 中 / 新 中 / V5 大 / 新 大"
+],
+[
+"../analysis/迭代/TF第2版/星头近景.png",
+"星头近景 6 m（80 像素/米）：同上顺序，看棍子和颗粒"
+]
+],
+"base": "trailM",
+"p": {
+"phWob": 0.35,
+"phWobL": [
+45.0,
+67.0,
+97.0
+],
+"phSpinF": 9.0,
+"phSpinA": 1.56,
+"phWind": -0.24,
+"phTurb": 0.072,
+"phTurbL": [
+6.0,
+67.0
+],
+"phJit": 0.037,
+"phFlL0": 0,
+"phFlLv": 0,
+"phFlW": 0.15,
+"phFlI": 1.5,
+"phARate": 12000,
+"phAPuff": 1,
+"phALife": 0.22,
+"phALsig": 0.35,
+"phAJet": 33,
+"phACone": 1.8,
+"phAKd": 18,
+"phAT0": 2550,
+"phATb": 2550,
+"phATc": 1000.0,
+"phATend": 2000,
+"phAPt": 3.0,
+"phAPm": 1.0,
+"phAI": 0.0038,
+"phATw": 0.0,
+"phAR": 0.009,
+"phBRate": 8000,
+"phBPuff": 2,
+"phBLife": 1.2,
+"phBLsig": 0.3,
+"phBJet": 27,
+"phBCone": 1.3,
+"phBKd": 12,
+"phBT0": 2450,
+"phBTb": 2375.4,
+"phBTc": 0.43334,
+"phBTend": 1800,
+"phBPt": 3,
+"phBPm": 0.446,
+"phBI": 0.036333,
+"phBTw": 0.35,
+"phBR": 0.011,
+"phCRate": 14,
+"phCPuff": 1,
+"phCLife": 1.44,
+"phCLsig": 0.25,
+"phCJet": 18,
+"phCCone": 0.66,
+"phCKd": 3.5,
+"phCT0": 2150,
+"phCTb": 2150,
+"phCTc": 1000.0,
+"phCTend": 1250,
+"phCPt": 3.0,
+"phCPm": 1.0,
+"phCI": 0.8,
+"phCTw": 0.25,
+"phCR": 0.015,
+"trPhys": 1
+},
+"m": {
+"stages": [
+[
+0,
+"#ffffff"
+]
+],
+"xw": 0.08,
+"headInt": 1,
+"tailInt": 1,
+"ramp0": "#ff821f",
+"ramp1": "#ff9f3d",
+"ramp2": "#ffb35a",
+"ramp3": "#ffc171"
+}
+},
+{
+"id": "TFL",
+"task": "TFL",
+"kind": "preset",
+"date": "2026-09-30 13:40",
+"name": "升空尾缀 · 物理 × V5 形式 · 第 2 版 大",
+"note": "正式库 V5 大档的镜头和产物（弹体坐标、16×1 循环 + 消散、导出）+ 物理尾缀的粒子（对 尾缀A 校准的三层喷出物、降温、风、自转）。第 2 版按你 10:19 的意见返工：星头换成 V5 的圆光点 + 光晕（去掉「小棍子」燃气焰）；火星半径缩到 V5 的量级（更细、更亮）；横向漂移、散开、摆动按 V5 各档的宽度重新定，小 < 中 < 大；大档加长、加密。",
+"look": [
+"星头：圆光点 + 光晕，和 V5 一样（没有身后那根亮棍）",
+"火星颗粒：细、亮，近看不比 V5 糊",
+"三档放一起：宽度 小 < 中 < 大，大档最长最密、左右摆动最大",
+"右栏「尾缀序列 · 形态」第一项切 0 / 1，和 V5 原版对比"
+],
+"opinion": "面片大小（半宽 × 长，米）：V5 3.52 × 129.3；第 1 版 8.35 × 179.4（太宽 → 同样的格子里每像素的米数大好几倍，所以糊）；第 2 版 6.11 × 169.2。三档：半宽 1.29 < 2.43 < 6.11，宽长比 0.061 < 0.066 < 0.072。",
+"tags": "尾缀 上升 物理 V5 融合 大 TFL",
+"doc": [
+[
+"第 2 版改了什么（你 10:19 的意见）",
+[
+"「头部小棍子」：第 1 版星头是一串沿身后排开的点（泪滴形燃气焰，长约 3 m），缩小后看起来像根棍子。现在星头用 V5 的圆光点 + 光晕（大小、亮度、光晕都取 V5 这一档的值）；参数「燃气焰 · 静止长度 / 随速度变长」= 0 时就是这样，调大还能回到泪滴焰。",
+"「粒子精度不如 V5」：两个原因。① 第 1 版面片太宽：风漂 2 m/s × 火星寿命 2 s，火星横向飘出 5–8 m，面片半宽是 V5 的 3–5 倍，同样 128 像素宽的格子里每像素的米数大好几倍，所以糊。② 金火星半径 0.06 m、落火 0.075 m，是 V5 火星（0.016–0.024 m）的 3 倍。现在风漂、散开、自转横速按 V5 的宽度重新定，火星半径改成和 V5 一样的量级：火粉 0.009、金火星 0.011、落火 0.015 m（第 1 版 0.018 / 0.06 / 0.075；直径约 0.02–0.03 m，和 V5 的火星一样）（亮度总量不变，所以更细更亮）。",
+"「小档反而最宽」：不是预览镜头的问题，是第 1 版小档的物理参数（寿命离散大、自转横速大）按近景实拍校的，横向散得最开，面片宽长比 0.143 是三档里最大的。现在半宽 小 1.29 m < 中 2.43 m < 大 6.11 m，宽长比也是 小 < 中 < 大。",
+"「强中弱区分不够、大档没有拖尾强度、左右动态细」：金火星加密（小 2000 → 6000、中 → 8000、大 → 12000 颗/秒），在空气里的燃烧温度提高、末段才降温（快烧完才暗），尾迹整条都亮；弹体摆动（大波浪）小 0.15 / 中 0.35 / 大 1.0 m，大档寿命 1.6 秒、落火 22 颗/秒，面片长 169 m（V5 129 m）。",
+"物理本身没动：三层喷出物、出喷口很热 → 降到燃烧温度、对数正态寿命、阻力 + 重力、自转螺旋、真循环。"
+]
+],
+[
+"请你看",
+[
+"1. 星头还有没有棍子感",
+"2. 近看颗粒和 V5 比",
+"3. 三档强中弱够不够分开；大档的摆动 / 强度还要不要再大"
+]
+]
+],
+"imagesTitle": "和 V5 对照（云端软件渲染，单帧）",
+"principle": false,
+"images": [
+[
+"../analysis/迭代/TF第2版/全长对照.png",
+"同一比例全长：V5 小 / 新 小 / V5 中 / 新 中 / V5 大 / 新 大"
+],
+[
+"../analysis/迭代/TF第2版/星头近景.png",
+"星头近景 6 m（80 像素/米）：同上顺序，看棍子和颗粒"
+]
+],
+"base": "trailL",
+"p": {
+"phWob": 1.0,
+"phWobL": [
+45.0,
+67.0,
+97.0
+],
+"phSpinF": 9.0,
+"phSpinA": 2.45,
+"phWind": -0.3,
+"phTurb": 0.15,
+"phTurbL": [
+6.0,
+67.0
+],
+"phJit": 0.043,
+"phFlL0": 0,
+"phFlLv": 0,
+"phFlW": 0.15,
+"phFlI": 1.5,
+"phARate": 12000,
+"phAPuff": 1,
+"phALife": 0.22,
+"phALsig": 0.35,
+"phAJet": 33,
+"phACone": 1.8,
+"phAKd": 18,
+"phAT0": 2550,
+"phATb": 2550,
+"phATc": 1000.0,
+"phATend": 2000,
+"phAPt": 3.0,
+"phAPm": 1.0,
+"phAI": 0.0023,
+"phATw": 0.0,
+"phAR": 0.009,
+"phBRate": 12000,
+"phBPuff": 2,
+"phBLife": 1.6,
+"phBLsig": 0.3,
+"phBJet": 27,
+"phBCone": 2.3,
+"phBKd": 12,
+"phBT0": 2450,
+"phBTb": 2300,
+"phBTc": 0.4,
+"phBTend": 1800,
+"phBPt": 3,
+"phBPm": 0.3,
+"phBI": 0.048918,
+"phBTw": 0.35,
+"phBR": 0.011,
+"phCRate": 22,
+"phCPuff": 1,
+"phCLife": 1.6,
+"phCLsig": 0.25,
+"phCJet": 18,
+"phCCone": 1.0,
+"phCKd": 3.5,
+"phCT0": 2150,
+"phCTb": 2150,
+"phCTc": 1000.0,
+"phCTend": 1250,
+"phCPt": 3.0,
+"phCPm": 1.0,
+"phCI": 0.8,
+"phCTw": 0.25,
+"phCR": 0.015,
+"trPhys": 1
+},
+"m": {
+"stages": [
+[
+0,
+"#ffffff"
+]
+],
+"xw": 0.08,
+"headInt": 1,
+"tailInt": 1,
+"ramp0": "#ff821f",
+"ramp1": "#ff9f3d",
+"ramp2": "#ffb35a",
+"ramp3": "#ffc171"
+}
+},
+{
 "id": "RK1",
 "task": "RK1",
 "kind": "preset",
@@ -2000,396 +2402,6 @@ var FW_REVIEW = [
 "tailInt": 1
 },
 "thumbRef": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5Ojf/2wBDAQoKCg0MDRoPDxo3JR8lNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzf/wAARCACgAKADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDnKKWivTOUSkpaKQwpKWigBMUYpaWgBKSnYoxSHYbiinYpMUh2G4pKdQaBDcUmKdRQA3FJinGkoENopSKSgCzikNOxRViGUU6jFAxtLtpwFPWNjjAJyccetS3YaRHtp6xsxwqkk9ABXTjQLf8AsOOaJjJcXCeZExUrtZc7o/fIyQfVfep7ZxaWD2MYRnQRX9rLgbjwN65HoT/46awddW0N1S11Oas9OnvPNEKgmKJpWBOPlXrilttOmuEkddoWNQzZPYsF49eSK66EIEv/ALO+YCPtEe7qVlQqy/gWH5VHe3KppckE6ATwR20ZHcfdJH/jlZutK9kX7NI5K/sjaX09qGEhikKblH3sHHSrWraLNplvZyTH57iHzSuR8gzwPywa2EiitJIdXdiZzLM4HYkKMfjucflVuOJdT1ZJrkRvawutuqOeHcLjkemSWNJ1mrB7JHFzW0sRAeN1JAPK46jI/SoiOcfyrrpn/tGNbeY5jSRrq8nUfcU/KoX/AICFUD1I9Ky7vTYorRWgDGUyYZC2cZ5CAAfMQOWPTkCtI1r7mcqXYwyKSp5IXXO5WHJBJGOR1FNZQn1ra5m0RUmKdRimSMIopxpKBFijFKaKsQlAFOxViyt2muYkQRlmcALIwAPPfPapbsrlxV3YXTbd7i9hjjiWZ2cbYmOA/tn3rq2sIr/R5LnT0EM9iwKrnEoGeUb1KnlW79DzViW3trm9C31jFbajEP8AUNkJOOnykdeOhHP+9SG2uYVbVbCUyTISJEbBMqY5DgdW7Hsw5HNcM6nM+x1QhyooHUGvNHd1mImgkEgjxjaDgkj23DOO2SOlRy3QjmliktxHIQSiMuDC2cso9ATuH/AqZcKNO1NLiGNZLO7jJ8vIb5WGGXPqDxn1FLZzW0t/F9sT7Q3l+WjkkbivK59yBsP4GlyrdbF3JJrjNjBceYNzQPasoGMbMEE/UFajnginluHluGIe1S4OF/i7D82xWbdOU86JNxg87fExHB4x/LbVzVEdnlks4wtukMO/B4UNtP8A6FT5dieYbqDTTNpsGxkQrwxHB3SFs/lj8qmnntbe2vbm2d0RZTHaoTksWB3Mfw5+pFQXE9xe2sSw/wCosY18w56MQFB9+n86dbJBPbx20uxS7edPMy7jDEOgUf3m6/8AfIotpqFwIeC3tLG3bfcTsssqY/5aH7gJ/wBlTn2JNXVL6FbCSUEXNwjKkyEfuos4Ow/32P8AF2FZVpJFAs1/O5aY5W2jIzuPdm9vbufbNW4dIubuI6nrN0be3Y8PL8zyH2HYemfbAoa77AmEVrdatayTGNzDbpiC3h4WLJ6sT0Hck8n+WLfadNbIskhRopGIjkRvlfHUjuR745rW1TWI7ryrPT4GWzjwsVvnPmt/ef8AvE+lMutD1eV1luoy1xIcFJGAZQO5B+6o6ZOB6VcG4vXRESSexz+3HOPxNNJz71PMhSV0ZgxU4JVgQceh7iomz2wBXQjBojNJTuKQ1RJZoApxFGK0EhUHPWux03TdN1OwRbiAWcioT9pilMnI/vxnlc9cjiue0Y6eLg/2otw0JQgfZ8bt3brXUDSZbjy5YLhtRtY0BWN3VJkGOArZOCPTP4Vx15WdtjppR0GNLLpVsllqVra6npy58meN8lc91bPH04xVa5kEMK3UT3KCVsw3En3XA6qx9evzfmO9LGbWxLut7fW10cgxzwoQy+hOcN+NQtBcTDdp0sMnn8SW8TbR+KN0+oyB7VhZN6mydtiL7ZcaXcsk0bRncJB8vMT44dR6EdR0I/Cqk8SXfn3Nr5cTIA5hVjz67fYHn6H2NSySvbXCWus2s2yI4EbsVZR6BvTvVC58qGRPsu8KMkOx5PPcdPbjrWsY9jNselx59i9rIfmEokjJPTPDD/0E/hT7xntZruz80SjiLeBw2xuKVjYLfxkLJ9jfax5G9P7wz9c1FJHCdSKCdmt/NH74jnaSOcVVlcOhbv5pYITpCCMLAT5hTne/ck9+TgemKjWS50aSaN12XkiAA5BMYYcn/ewce2TUEUhfUS1qGcvNmPfjJ54z296uX1zBa3qqILa4aHLB1YyCaQ87nb+LB7DjPqKm1tLD8xdGighWTUr0xYhGIEl+6zjoMDlvp09SB1iihudblM11OsVuh+aaZtsaf4n2FQXsF/c3xbUj5Uz4ZmuDswDzk+gouXjguIltLpbooo2yNEQiHvtU/wAyPwpW1v1/IV+nQn+2JE6xaTA0Tg/NdO+HYfyUfTn3NWzpF3PiO8uXEcgLRIqsfNPqc4GM92OarPqAiV323Muotj/SpmA2fRTntxk4oiiv7nEtzqEVuGOPMuJizH6AAn8ql332KVhuq6Iul2aPcv5k0nCiEjah988n8OPesJsA9B+JrpZ/DvmL5iXzFRkyXF0hiQ/7u47j+IFYV3a/Z5dizQzcA74TuXPpnFbUpJ6XuzKcX2KhJ9h9BTalKnuTTGA9P1rYxaLJoApcUq9RWrJRu+G7bS7lil9eT285YCHy4wwJz3963bzSN9wAL1nlY/KxsNhP/AlxWfokOgyWQe7uStwFPmJIxC5ycYwpzxV+U3dwGNrfusCgYLpMwYe3y815tWTctDtprQo39xdRyhNTtUu4l77dhP4gCqGow6Zsjm095EkIyYsk7T6fMP61e1WOMxCTybFARxh5A/5HkfiKoWx0QWjC+F4LosdphwU29uv404bX/IJ7jLh9UuNPR7uKWa1yRHNJGTjHYP8A0pIJNLkMH2mGSBUH7wREuJMDrg9Ce+D9MVElxcEmGzlumj7IhI4+gp1zb3DWkdxJZpDEMp5rZUyt36nk/QVpZddCfxKt4InuW+yxssTnKITnHtmrM+nO87fZ0aKE42iZgWHHQ4980QNp4MZkiusrH822Qcv2I44HtWraStJCGcZO4jOMce9ZV6s6aTj+JrQpQm7SMjVrOKxeKO3keRHQMzlcfMR8y/gai+yz2sMV75kalmwgWQbx746j61a1KSN1kjmWQzLJ8jBgFVe4xjk++aj+wXMts01mrSWyJukIAUr6gjOSB61pCUnBc25nOKUny7FaS4lvGjW5lRVTgOy889egyT9au217aaW7G0aW5kK4WQDygDj8W4+oqBIpL2FI4bDhMkyQQszN/vHNOh8y1babGN3HVZbUsfrg03Zq34Eq+5LZm5mkkuzbXtw3LvMsak+5JYGi8uNR1KRRBJeGFR8qz3C8Hvg8AVEzm4ujJ9ntwzYHlg+Uv5ZGK0JFvra1TydMhtmZsLPHly3sM5FRs72RdipB4dvZzy9qHxn57yPP8zVHVNOfTpQkzxSE94p1kH6dK0Lmz1rUthntZ5ii4X9yFwPyFZt7YXNlt+128sBcfKHTbn6ZrSEm3q0ZyVlsUG4/hH5Uwmpjj1P5VGT7VuYst0qKGOKTFOUZNashbnSeHl0mOF5LwQSOCMpOwAA9jySfXg4rcm19craWk6GHIBisoZJCQOMBmwOntXPeGU00zt9ti86Y4EMbH5WJ9en6kCun/tqGOA2tjbDeDiQWYCoi+rOB+gP415tZLme7O2GyMa4aSSR2TRTJk4Vrl2JBz3wQPwrNurKRbpYr+a2tgT8wiTIT67R+ma3tSvr+RGeCJyjnatxKMfggHT8Cayo9MhiO3UQovpCSEuZNiIuM7mA5/A4+hqacrIqSuU5723tS0WktcAMuxp2fazj0wOg/E1BDdgQSQyRLO7YVGfc3ljvtGcZJqa8isrZF2SLcTSDcAi7VQH19/bt3PapbqSHTFt/7Om33Qw8lyvQN/dQe3c+v0rZWa0RGq6ldoXsIilxbLvuEBjD/AH0GfvYHTOCOau6dcxQLKLhCylCF2nG1ux/OsopKqJJKGCyMSGzywHB5/wA81oQy2TTyXewLbpOoW2ZxuZCD/gOfepnHmWpUJcr0KW2K5uVjklWEMcGVs4H19qqTxpGwCk7hw3sanWzlmt57hANsDKJFPUA8A/n/ADqSTUmlthDcwRyFUVY5CuGXB9e/HHPt6VorrYzbvuOhQw28dzpdzcidiUeFchhx1BXqP1pUvoJpI1vY7tZYxsWSO6IKgdsMDj86W7tLSOCCazvEEsnJjzgD3z/Dzxg/UEipQouLsprius7KNsrvtLADjDHIPHrwfUVDaev/AA5XkE2r38UphWaae2BIT7bCrnBHvn9DRbQw3Nu6R2tnHKR8rh5Yip9epX+VJZapDZ3Lqsc0ltu4KttJHuh3LReXFmk7XOnXUysX3eTPCFxnrgqcYH4VNn0Vh3XcrXVzq2mTCCS9uY2TDLsuCyjPoQcVQuriW6bfPcySN/00YmurtvFCLDm4EySKAP3QR0cZ5yGHX6/nXOaxeDUbx7gRxR5AG2NAgOOM4HGa0puTfvRsRNK2jM5g49CKYaf09RTCPSuk52XKVeKMUo68VoyUWbRY3nQTsUiLDew7DvXZXOo2OnQxxQsXSJf3MIwzNnozdl+py3sK4hfl6kfj2/Cug8PXekWkE11eW8lzdxkeTE/3D7n6VyV4c2rOinK2hqLPqhT+2b6+NuJU2wJHgsR6Lnp+HPriqY014fMkubYfbXBeOOVgfKTqZJB2P+9+RNS6dHqmu6k2qSXH2eK3BzctwkI9FHqKZsXWdQdLaSWPTojumuJOXl/2m9SccDtj2rncWmbKSsZbR2ioh+0q8szfNM2SIR3J7lj2HYYz14gt4oZY7idlcW1uARzyxPCj6nr+Bq5Lbx6jqYit0MVnEhbYv3gg/mzcfiaRPsourOzYeYhYSTiLu5/gHsAAv4mtE9CWtSC6lbUriYhPKgghHlxnnykXoPzP5moHjit7Jopg32iTy5UIHAQhs5/MVYUyRW+pSEj5mWJwB94sxYj/AMdp93DJOty8wGYbKEpgY+XKgfoaafToJorwbYLOSO83BLmDdCwGfnDcfhwR+NP0yG1u4J7S8cQ3AG62lbgE90J9D2PY00q8uhkyMWNtPtCk9Edc8fiD+dSPai50pZYVzPApEyY+8g5DD3x1+hNN/qCKkVrFNbyNvVJ4hvw5wsq98ejD07j363oreW4sYY4Ljz4AxItSR5sbY52g9fXA6/Wk0SO2vVks7gEM6kxMBlgw7D1+nfp1xUa2jw3KxTv5LgBop/4R3Uk/3T69qmTd7DSW5aTT4PsbXCwtKoIAMP3T7HvG3sQQamtptLt0X7ViWByRgx/vIz/tL0P+8pqKaOTTxLPcBmXzAt3ayv8ANuPIZSOoPUEfr1q7erpdzpcdzJKxiZtiXITMkR/uyAcMPyb0zWVrvXY0v2KGrRaOkK3Nr80MgIAhf543x0dTxj3BrmGIPK8GppxsYmNuPUdKrscnpg12U4cq3OapK4hNMNOpprUxbL+KOR0paTFWSCjPU8VYikwy5H7tTkr6+1V/anhsEDsKmSuXF2Ookvr7X5Y9OslWC0A+WCPiONB1LY64x1PetG6gtrNJNOsQsjRqPOLHDSyH7qY9M/M3oBiuT0/UJtOk8+AjeeMHoR7jvzitTw+0M0t2922FKEyyl/m8scuq+7dM+5rjqU7eiOmErlvTNOEMUt9KzM3ku0UhHAUfekP1zhfrVbRY7awuIru+BjMpYwgjpgcZ+pIH1Faek3C61dXJvGKRIA0mBhIoF+YqMep2j6ZqtYIfEHiRRn/RoSfLAGMIG4/U5rK0tbl3RnXNlNFFcRlmCvcooTsWO4Z/IH86TX43+128boFZIURgvGQOB+graik/tLxibVAht478SgAdQgx+XH61QjRtQ8RzRSMWYTyKMnsAxx+lNNrV9EGj0GvZQQXht52UedAFU4zl1fbj24BqKxzaWNxIxkR4Q0LlB8yuOUP0I3qau6tbI3i3ygVzOElwp+6xUZ/qaXVy1jrMck6tHbXEmy4jzwxU4JP4MD+NTd7eQ1bcx7WzP20Wyv5c4Ia3ccAkjIH49vf61flS8v7MnJF3abpJIyoywJ+Zh+PVfx71N4psH0+2tJETK27NA8g64zuT8MHj8aZb6pBe2qzXd2INQibInIPznqr8d/4SPoe1U7tKQk1sSWU8N/akS4HkoFG75hF6K2esTHjP8J/OuX1E/Z7m4ghEsUW/mJnzjHY44OOeajmmcO+WOHzkjjOarMSOM5Fb06XK7mM53Q0nBpppT7U2uhGDYhpDSmkpiNCkp1JVCEpB1paKAFLcj2p+75VHbOaioJqWi1I0rPU57ayu7eJgEusLJxyRnsav+GNZTSmuyyEvNAwRlHKt2/CufB4pVbH5VlKkmmi1UOn8GX1rY6lPeXkyoUiPlg/xMf8A6wP51F4fvE/4Sdbi5kRA0rOztwMkHr+dc6rYz70F8OeeoqXS1ZaqI2DqUA8Qw3zBki3KZMcn7uGx+tS+Lr+21KaC7gkYyNHiZCD8re3rx/KueLUpfMeD2oVFJp9hOpujR1LWbjUraFLjbmFBGSvBZR93Prjn86yw5Xg9KQH9aaa0jBR0RDm2OJ/hJ47VGaU9KaaohsQ0lLSYoEJSGnUhFAGjikp9IasQyilpKAEpKU0hpAIaBRSUDDNIxyaKSkAhozxQaKBiUhooNAhtJS0hpXGJRQTTSaVwFNJSE02gD//Z"
-},
-{
-"id": "TFS",
-"task": "TFS",
-"kind": "preset",
-"date": "2026-09-30 00:43",
-"name": "升空尾缀 · 物理 × V5 形式 小",
-"note": "正式库 V5 小档的镜头和产物（弹体坐标、16×1 循环 + 消散、导出）+ 物理尾缀的粒子（对 尾缀C 校准的三层喷出物、降温、风、自转）。",
-"look": [
-"实时模拟：星头 → 白热段 → 金火星一颗颗散开 → 橙色零星火点",
-"导出效果：上升循环接消散（和 V5 一样的播放方式）",
-"右栏「尾缀序列 · 形态」第一项切 0 / 1，和 V5 原版对比"
-],
-"opinion": "物理质感保留，镜头换成游戏素材视角。已知要你判断的：尾迹比 V5 长、颜色偏暖、星头形状不同（见下面）。",
-"tags": "尾缀 上升 物理 V5 融合 小 TFS",
-"doc": [
-[
-"这一版改了什么",
-[
-"镜头和产物完全按正式库 V5：弹体随体坐标，星头固定在面片上端，16×1 格、RGBA 接力 64 帧，上升循环 + 30 / 20 fps 两个消散，Size By Life 跟着上升速度变，导出贴图、参数表和 cascade.json。",
-"粒子换成物理尾缀（TPS / TPM / TPL）你认可的物理：火粉连成星头后的白热段；木炭金火星出喷口很白、约 0.3 秒降到空气中的燃烧温度（金 / 橙），快烧完才暗，寿命长短不一（对数正态）；少量落火；星头是泪滴形燃气焰。",
-"空气里的运动也按物理：火星向后喷出、被空气拦住停在原地，顺风漂、冻结湍流、弹体自转带出的细碎螺旋和弹体摆动的大波浪；这些都取整数圈 / 循环，第 64 帧和第 0 帧相同（真循环）。",
-"在 V5 的尾缀里加了开关「粒子模型」（右栏「尾缀序列 · 形态」第一项：0 = V5 原版，1 = 物理），同一个花型可以来回切换对比。"
-]
-],
-[
-"和 V5 正式版的差别（要你判断的）",
-[
-"尾迹更长：物理火星寿命中位约 2 秒（V5 是 0.5–1.1 秒），按实拍量的；想短一些就调「金火星 · 寿命中位」",
-"颜色用物理尾缀按实拍校的渐变图（金橙），比 V5 偏暖；想要 V5 的颜色可以把渐变图换回来",
-"星头是泪滴形燃气焰，不是 V5 的圆光点 + 光晕"
-]
-],
-[
-"请你看",
-[
-"1. 镜头和产物形式是不是你要的游戏素材视角（和正式库 V5 一样）",
-"2. 物理质感有没有保留住",
-"3. 通过后：要替换 V5 正式版，还是作为另一套（比如近景用物理版、远景用 V5）"
-]
-]
-],
-"imagesTitle": null,
-"principle": false,
-"base": "trailS",
-"p": {
-"phWob": 0.3,
-"phWobL": [
-45.0,
-67.0,
-97.0
-],
-"phSpinF": 9.0,
-"phSpinA": 4.5061,
-"phWind": -2.0,
-"phTurb": 0.22,
-"phTurbL": [
-6.0,
-67.0
-],
-"phJit": 0.062,
-"phFlL0": 1.8,
-"phFlLv": 0.04,
-"phFlW": 0.15,
-"phFlI": 1.5,
-"phARate": 12000,
-"phAPuff": 1,
-"phALife": 0.22,
-"phALsig": 0.35,
-"phAJet": 33,
-"phACone": 1.8,
-"phAKd": 18,
-"phAT0": 2550,
-"phATb": 2550,
-"phATc": 1000.0,
-"phATend": 2000,
-"phAPt": 3.0,
-"phAPm": 1.0,
-"phAI": 0.0047339,
-"phATw": 0.0,
-"phAR": 0.018,
-"phBRate": 2000,
-"phBPuff": 2,
-"phBLife": 2.2536,
-"phBLsig": 1.2665,
-"phBJet": 27,
-"phBCone": 2.7095,
-"phBKd": 12,
-"phBT0": 2450,
-"phBTb": 1939.4,
-"phBTc": 0.29267,
-"phBTend": 1350,
-"phBPt": 2.0,
-"phBPm": 0.446,
-"phBI": 0.018517,
-"phBTw": 0.35,
-"phBR": 0.06,
-"phCRate": 14,
-"phCPuff": 1,
-"phCLife": 2.2,
-"phCLsig": 0.25,
-"phCJet": 18,
-"phCCone": 2.2,
-"phCKd": 3.5,
-"phCT0": 2150,
-"phCTb": 2150,
-"phCTc": 1000.0,
-"phCTend": 1250,
-"phCPt": 3.0,
-"phCPm": 1.0,
-"phCI": 0.8,
-"phCTw": 0.25,
-"phCR": 0.075,
-"trPhys": 1
-},
-"m": {
-"stages": [
-[
-0,
-"#ffffff"
-]
-],
-"xw": 0.08,
-"headInt": 1,
-"tailInt": 1,
-"ramp0": "#ff821f",
-"ramp1": "#ff9f3d",
-"ramp2": "#ffb35a",
-"ramp3": "#ffc171"
-}
-},
-{
-"id": "TFM",
-"task": "TFM",
-"kind": "preset",
-"date": "2026-09-30 00:42",
-"name": "升空尾缀 · 物理 × V5 形式 中",
-"note": "正式库 V5 中档的镜头和产物（弹体坐标、16×1 循环 + 消散、导出）+ 物理尾缀的粒子（对 尾缀B 校准的三层喷出物、降温、风、自转）。",
-"look": [
-"实时模拟：星头 → 白热段 → 金火星一颗颗散开 → 橙色零星火点",
-"导出效果：上升循环接消散（和 V5 一样的播放方式）",
-"右栏「尾缀序列 · 形态」第一项切 0 / 1，和 V5 原版对比"
-],
-"opinion": "物理质感保留，镜头换成游戏素材视角。已知要你判断的：尾迹比 V5 长、颜色偏暖、星头形状不同（见下面）。",
-"tags": "尾缀 上升 物理 V5 融合 中 TFM",
-"doc": [
-[
-"这一版改了什么",
-[
-"镜头和产物完全按正式库 V5：弹体随体坐标，星头固定在面片上端，16×1 格、RGBA 接力 64 帧，上升循环 + 30 / 20 fps 两个消散，Size By Life 跟着上升速度变，导出贴图、参数表和 cascade.json。",
-"粒子换成物理尾缀（TPS / TPM / TPL）你认可的物理：火粉连成星头后的白热段；木炭金火星出喷口很白、约 0.3 秒降到空气中的燃烧温度（金 / 橙），快烧完才暗，寿命长短不一（对数正态）；少量落火；星头是泪滴形燃气焰。",
-"空气里的运动也按物理：火星向后喷出、被空气拦住停在原地，顺风漂、冻结湍流、弹体自转带出的细碎螺旋和弹体摆动的大波浪；这些都取整数圈 / 循环，第 64 帧和第 0 帧相同（真循环）。",
-"在 V5 的尾缀里加了开关「粒子模型」（右栏「尾缀序列 · 形态」第一项：0 = V5 原版，1 = 物理），同一个花型可以来回切换对比。"
-]
-],
-[
-"和 V5 正式版的差别（要你判断的）",
-[
-"尾迹更长：物理火星寿命中位约 2 秒（V5 是 0.5–1.1 秒），按实拍量的；想短一些就调「金火星 · 寿命中位」",
-"颜色用物理尾缀按实拍校的渐变图（金橙），比 V5 偏暖；想要 V5 的颜色可以把渐变图换回来",
-"星头是泪滴形燃气焰，不是 V5 的圆光点 + 光晕"
-]
-],
-[
-"请你看",
-[
-"1. 镜头和产物形式是不是你要的游戏素材视角（和正式库 V5 一样）",
-"2. 物理质感有没有保留住",
-"3. 通过后：要替换 V5 正式版，还是作为另一套（比如近景用物理版、远景用 V5）"
-]
-]
-],
-"imagesTitle": null,
-"principle": false,
-"base": "trailM",
-"p": {
-"phWob": 0.3,
-"phWobL": [
-45.0,
-67.0,
-97.0
-],
-"phSpinF": 9.0,
-"phSpinA": 2.9125,
-"phWind": -2.5,
-"phTurb": 0.22,
-"phTurbL": [
-6.0,
-67.0
-],
-"phJit": 0.062,
-"phFlL0": 1.8,
-"phFlLv": 0.04,
-"phFlW": 0.15,
-"phFlI": 1.5,
-"phARate": 12000,
-"phAPuff": 1,
-"phALife": 0.22,
-"phALsig": 0.35,
-"phAJet": 33,
-"phACone": 1.8,
-"phAKd": 18,
-"phAT0": 2550,
-"phATb": 2550,
-"phATc": 1000.0,
-"phATend": 2000,
-"phAPt": 3.0,
-"phAPm": 1.0,
-"phAI": 0.0075245,
-"phATw": 0.0,
-"phAR": 0.018,
-"phBRate": 2000,
-"phBPuff": 2,
-"phBLife": 2.1017,
-"phBLsig": 0.35661,
-"phBJet": 27,
-"phBCone": 1.61,
-"phBKd": 12,
-"phBT0": 2450,
-"phBTb": 2375.4,
-"phBTc": 0.43334,
-"phBTend": 1350,
-"phBPt": 2.0,
-"phBPm": 0.446,
-"phBI": 0.036333,
-"phBTw": 0.35,
-"phBR": 0.06,
-"phCRate": 14,
-"phCPuff": 1,
-"phCLife": 2.2,
-"phCLsig": 0.25,
-"phCJet": 18,
-"phCCone": 2.2,
-"phCKd": 3.5,
-"phCT0": 2150,
-"phCTb": 2150,
-"phCTc": 1000.0,
-"phCTend": 1250,
-"phCPt": 3.0,
-"phCPm": 1.0,
-"phCI": 0.8,
-"phCTw": 0.25,
-"phCR": 0.075,
-"trPhys": 1
-},
-"m": {
-"stages": [
-[
-0,
-"#ffffff"
-]
-],
-"xw": 0.08,
-"headInt": 1,
-"tailInt": 1,
-"ramp0": "#ff821f",
-"ramp1": "#ff9f3d",
-"ramp2": "#ffb35a",
-"ramp3": "#ffc171"
-}
-},
-{
-"id": "TFL",
-"task": "TFL",
-"kind": "preset",
-"date": "2026-09-30 00:41",
-"name": "升空尾缀 · 物理 × V5 形式 大",
-"note": "正式库 V5 大档的镜头和产物（弹体坐标、16×1 循环 + 消散、导出）+ 物理尾缀的粒子（对 尾缀A 校准的三层喷出物、降温、风、自转）。",
-"look": [
-"实时模拟：星头 → 白热段 → 金火星一颗颗散开 → 橙色零星火点",
-"导出效果：上升循环接消散（和 V5 一样的播放方式）",
-"右栏「尾缀序列 · 形态」第一项切 0 / 1，和 V5 原版对比"
-],
-"opinion": "物理质感保留，镜头换成游戏素材视角。已知要你判断的：尾迹比 V5 长、颜色偏暖、星头形状不同（见下面）。",
-"tags": "尾缀 上升 物理 V5 融合 大 TFL",
-"doc": [
-[
-"这一版改了什么",
-[
-"镜头和产物完全按正式库 V5：弹体随体坐标，星头固定在面片上端，16×1 格、RGBA 接力 64 帧，上升循环 + 30 / 20 fps 两个消散，Size By Life 跟着上升速度变，导出贴图、参数表和 cascade.json。",
-"粒子换成物理尾缀（TPS / TPM / TPL）你认可的物理：火粉连成星头后的白热段；木炭金火星出喷口很白、约 0.3 秒降到空气中的燃烧温度（金 / 橙），快烧完才暗，寿命长短不一（对数正态）；少量落火；星头是泪滴形燃气焰。",
-"空气里的运动也按物理：火星向后喷出、被空气拦住停在原地，顺风漂、冻结湍流、弹体自转带出的细碎螺旋和弹体摆动的大波浪；这些都取整数圈 / 循环，第 64 帧和第 0 帧相同（真循环）。",
-"在 V5 的尾缀里加了开关「粒子模型」（右栏「尾缀序列 · 形态」第一项：0 = V5 原版，1 = 物理），同一个花型可以来回切换对比。"
-]
-],
-[
-"和 V5 正式版的差别（要你判断的）",
-[
-"尾迹更长：物理火星寿命中位约 2 秒（V5 是 0.5–1.1 秒），按实拍量的；想短一些就调「金火星 · 寿命中位」",
-"颜色用物理尾缀按实拍校的渐变图（金橙），比 V5 偏暖；想要 V5 的颜色可以把渐变图换回来",
-"星头是泪滴形燃气焰，不是 V5 的圆光点 + 光晕"
-]
-],
-[
-"请你看",
-[
-"1. 镜头和产物形式是不是你要的游戏素材视角（和正式库 V5 一样）",
-"2. 物理质感有没有保留住",
-"3. 通过后：要替换 V5 正式版，还是作为另一套（比如近景用物理版、远景用 V5）"
-]
-]
-],
-"imagesTitle": null,
-"principle": false,
-"base": "trailL",
-"p": {
-"phWob": 1.0,
-"phWobL": [
-45.0,
-67.0,
-97.0
-],
-"phSpinF": 9.0,
-"phSpinA": 3.2599,
-"phWind": -2.15,
-"phTurb": 0.22,
-"phTurbL": [
-6.0,
-67.0
-],
-"phJit": 0.062,
-"phFlL0": 1.8,
-"phFlLv": 0.04,
-"phFlW": 0.15,
-"phFlI": 1.5,
-"phARate": 12000,
-"phAPuff": 1,
-"phALife": 0.22,
-"phALsig": 0.35,
-"phAJet": 33,
-"phACone": 1.8,
-"phAKd": 18,
-"phAT0": 2550,
-"phATb": 2550,
-"phATc": 1000.0,
-"phATend": 2000,
-"phAPt": 3.0,
-"phAPm": 1.0,
-"phAI": 0.0046449,
-"phATw": 0.0,
-"phAR": 0.018,
-"phBRate": 2000,
-"phBPuff": 2,
-"phBLife": 1.3236,
-"phBLsig": 0.9035,
-"phBJet": 27,
-"phBCone": 3.3227,
-"phBKd": 12,
-"phBT0": 2450,
-"phBTb": 1943.9,
-"phBTc": 0.24373,
-"phBTend": 1350,
-"phBPt": 2.0,
-"phBPm": 0.446,
-"phBI": 0.048918,
-"phBTw": 0.35,
-"phBR": 0.06,
-"phCRate": 14,
-"phCPuff": 1,
-"phCLife": 2.2,
-"phCLsig": 0.25,
-"phCJet": 18,
-"phCCone": 2.2,
-"phCKd": 3.5,
-"phCT0": 2150,
-"phCTb": 2150,
-"phCTc": 1000.0,
-"phCTend": 1250,
-"phCPt": 3.0,
-"phCPm": 1.0,
-"phCI": 0.8,
-"phCTw": 0.25,
-"phCR": 0.075,
-"trPhys": 1
-},
-"m": {
-"stages": [
-[
-0,
-"#ffffff"
-]
-],
-"xw": 0.08,
-"headInt": 1,
-"tailInt": 1,
-"ramp0": "#ff821f",
-"ramp1": "#ff9f3d",
-"ramp2": "#ffb35a",
-"ramp3": "#ffc171"
-}
 },
 {
 "id": "FS1-1",
@@ -6324,7 +6336,7 @@ var FW_REVIEW = [
 "0.5 s 起星头变青柠、尾巴收掉",
 "3.1 s 前后一起熄灭；外圈星更密"
 ],
-"opinion": "合并了 YQ1（原理）和 QN4（旧结果）。",
+"opinion": "差距 0.35 → 0.36（分数没降，但画面更像，请你审）。\n改对了：青柠从暗黄绿变成亮的淡黄绿，和实拍接近；整体亮度正常（QN5 被压到 0.21，这轮 0.9）。30%–90% 的外形、星数、熄灭时刻（模拟 3.4 s，实拍 3.3 s）都对得上。\n还差：① 开头 10%，实拍是一根根分开的橙色放射线，模拟还是偏成团（火花散开 0.35 仍偏大）；② 实拍星点更大、更亮（星芯过曝），模拟的星点偏小。\n这两点在烘焙器里调「火花散开」和「星头大小」就能改，不用再跑任务。你审的时候看大体对不对；对的话，我按这两点手调后放进正式库候选。",
 "tags": "青柠 分层星 QN5 原理",
 "doc": null,
 "imagesTitle": null,

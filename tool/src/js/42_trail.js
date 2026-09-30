@@ -63,6 +63,22 @@ function trailPops(P) {
       spread: P[k + 'Spread'], size: P[k + 'Size'], bright: P[k + 'Bright'] };
   }).filter(Boolean);
 }
+// V5 星头：核心 + 光晕（周期性闪烁）；物理尾缀（45_physbody.js）也用它
+function drawTrailHead(R, P, ts, anchorY, view, ppm, w) {
+  if (R.stopE >= 0 && ts > R.stopE + 1e-6) return;
+  const Tp = R.Tp;
+  // 星头固定在面片中线上（x = 0）；快门内按星头移动距离细分，拖出连续的亮线而不是一串珠子
+  const sw = R.subW || 0, n = sw > 0 ? clamp(Math.ceil(P.trV * sw / (0.25 * P.trHeadSize)), 1, 48) : 1;
+  let k = 0;
+  for (let i = 0; i < n; i++) {
+    const tt = ts + (n > 1 ? ((i + 0.5) / n - 0.5) * sw : 0);
+    if (R.stopE >= 0 && tt > R.stopE + 1e-6) continue;
+    const fl = 1 + 0.12 * Math.sin(6.2831853 * 7 * tt / Tp) * Math.sin(6.2831853 * 3 * tt / Tp + 1.1), y = P.trV * tt - anchorY;
+    bufH[k++] = 0; bufH[k++] = y; bufH[k++] = P.trHeadBright * fl / n; bufH[k++] = P.trHeadSize;
+    bufH[k++] = 0; bufH[k++] = y; bufH[k++] = P.trHeadBright * P.trHaloBright * fl * P.trHalo * P.trHalo / n; bufH[k++] = P.trHeadSize * P.trHalo;
+  }
+  PT_SPAN = 10; drawPoints(bufH, k / 4, view, ppm, [1, 0, 0, 0], w); PT_SPAN = 0;
+}
 // 渲染器：draw(ts, view, ppm, w, tw, f) —— 与烘焙流程通用的接口；星头画进 R，火花画进 G
 function makeTrailRenderer(P) {
   const Tp = trailPeriod(P), pops = trailPops(P), waves = trailWaves(P), wv = new Float32Array(18);
@@ -81,19 +97,7 @@ function makeTrailRenderer(P) {
       // 跟拍（trFollow）= 每个子帧跟着星头走，火星相对星头下落，拖成短竖线（尾缀3.0 实拍就是跟拍）
       const tf = R.frameT && !P.trFollow ? R.frameT(f) : ts, anchorT = R.stop >= 0 ? (P.trFollow ? Math.min(ts, R.stopE) : R.stop) : tf, anchorY = P.trV * anchorT;
       // 星头：核心 + 光晕（周期性闪烁）
-      if (R.stopE < 0 || ts <= R.stopE + 1e-6) {
-        // 星头固定在面片中线上（x = 0）；快门内按星头移动距离细分，拖出连续的亮线而不是一串珠子
-        const sw = R.subW || 0, n = sw > 0 ? clamp(Math.ceil(P.trV * sw / (0.25 * P.trHeadSize)), 1, 48) : 1;
-        let k = 0;
-        for (let i = 0; i < n; i++) {
-          const tt = ts + (n > 1 ? ((i + 0.5) / n - 0.5) * sw : 0);
-          if (R.stopE >= 0 && tt > R.stopE + 1e-6) continue;
-          const fl = 1 + 0.12 * Math.sin(6.2831853 * 7 * tt / Tp) * Math.sin(6.2831853 * 3 * tt / Tp + 1.1), y = P.trV * tt - anchorY;
-          bufH[k++] = 0; bufH[k++] = y; bufH[k++] = P.trHeadBright * fl / n; bufH[k++] = P.trHeadSize;
-          bufH[k++] = 0; bufH[k++] = y; bufH[k++] = P.trHeadBright * P.trHaloBright * fl * P.trHalo * P.trHalo / n; bufH[k++] = P.trHeadSize * P.trHalo;
-        }
-        PT_SPAN = 10; drawPoints(bufH, k / 4, view, ppm, [1, 0, 0, 0], w); PT_SPAN = 0;
-      }
+      drawTrailHead(R, P, ts, anchorY, view, ppm, w);
       const pr = PR.trail; gl.useProgram(pr.p);
       gl.uniform1f(pr.u.uT, ts); gl.uniform1f(pr.u.uStop, R.stopE); gl.uniform1f(pr.u.uFadeK, R.fadeK); gl.uniform1f(pr.u.uAnchorY, anchorY);
       gl.uniform1f(pr.u.uV, P.trV); gl.uniform1f(pr.u.uIgn, P.trIgnite || 0); gl.uniform1f(pr.u.uLag, P.trTwistLag == null ? 0.35 : P.trTwistLag); gl.uniform1f(pr.u.uStreak, P.trFollow ? P.trV * (R.subW || 0) : 0); gl.uniform1f(pr.u.uTp, Tp); gl.uniform1f(pr.u.uInh, P.trInh); gl.uniform1f(pr.u.uK, P.trDrag); gl.uniform1f(pr.u.uG, G * P.trGrav);
