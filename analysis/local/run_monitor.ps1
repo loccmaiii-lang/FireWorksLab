@@ -26,7 +26,7 @@ function Sync-UserRepo([string]$stage) {
             ('{0} User checkout sync skipped ({1}): tracked files have local edits.' -f (Get-Date -Format o), $stage) | Out-File -LiteralPath $monitorLaunchLog -Encoding utf8 -Append
             return
         }
-        $pullOutput = & git -C $userRepoPath pull --ff-only origin main 2>&1
+        $pullOutput = & git -C $userRepoPath pull --quiet --ff-only origin main 2>&1
         $pullResult = $LASTEXITCODE
         ('{0} User checkout sync ({1}): exit {2}; {3}' -f (Get-Date -Format o), $stage, $pullResult, (($pullOutput | Out-String).Trim())) | Out-File -LiteralPath $monitorLaunchLog -Encoding utf8 -Append
     } catch {
