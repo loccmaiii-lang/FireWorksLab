@@ -490,6 +490,8 @@
     "sparkStop": 0,
     "sparkStart": 0,
     "sparkLife": 3.4375,
+    "sparkLifeEnd": 1,
+    "sparkLifeJit": 45,
     "sparkSize": 0.6,
     "sparkSpread": 0.35,
     "sparkInherit": 0.06,

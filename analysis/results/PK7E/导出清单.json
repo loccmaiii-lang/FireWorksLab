@@ -1,0 +1,84 @@
+{
+ "effect": "pianbei",
+ "entry": "PK7",
+ "ver": "af763420",
+ "time": "2026-09-30 23:13",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "PianBei_1",
+   "replica": "PK7-1",
+   "files": [
+    "PianBei_1.json",
+    "PianBei_1_Cascade参数.txt",
+    "PianBei_1_曲线.csv",
+    "T_PianBei_1.png",
+    "T_PianBei_1_Cutout.png",
+    "T_PianBei_1_FrameTest.png",
+    "T_PianBei_1_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "PianBei_2",
+   "replica": "PK7-2",
+   "files": [
+    "PianBei_2.json",
+    "PianBei_2_Cascade参数.txt",
+    "PianBei_2_曲线.csv",
+    "T_PianBei_2.png",
+    "T_PianBei_2_Cutout.png",
+    "T_PianBei_2_FrameTest.png",
+    "T_PianBei_2_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "PianBei_3",
+   "replica": "PK7-3",
+   "files": [
+    "PianBei_3.json",
+    "PianBei_3_Cascade参数.txt",
+    "PianBei_3_曲线.csv",
+    "T_PianBei_3.png",
+    "T_PianBei_3_Cutout.png",
+    "T_PianBei_3_FrameTest.png",
+    "T_PianBei_3_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "PianBei_4",
+   "replica": "PK7-4",
+   "files": [
+    "PianBei_4.json",
+    "PianBei_4_Cascade参数.txt",
+    "PianBei_4_曲线.csv",
+    "T_PianBei_4.png",
+    "T_PianBei_4_Cutout.png",
+    "T_PianBei_4_FrameTest.png",
+    "T_PianBei_4_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "PianBei_5",
+   "replica": "PK7-5",
+   "files": [
+    "PianBei_5.json",
+    "PianBei_5_Cascade参数.txt",
+    "PianBei_5_曲线.csv",
+    "T_PianBei_5.png",
+    "T_PianBei_5_Cutout.png",
+    "T_PianBei_5_FrameTest.png",
+    "T_PianBei_5_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}
