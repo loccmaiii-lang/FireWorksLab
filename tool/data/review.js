@@ -31889,11 +31889,11 @@ var FW_EFFECTS = [
 ],
 "exports": [
 {
-"job": "JM2",
+"job": "JM2E",
 "legacy": true
 },
 {
-"job": "JM2E",
+"job": "JM1",
 "legacy": true
 },
 {
@@ -31921,7 +31921,7 @@ var FW_EFFECTS = [
 "stale": false
 },
 {
-"job": "JM1",
+"job": "JM2",
 "legacy": true
 }
 ],
@@ -32049,9 +32049,33 @@ var FW_EFFECTS = [
 "缺": [
 "第 2 版（09-30 13:07）还没做导出回放检查、素材包"
 ],
-"下一步": "导出回放检查 + 素材包，然后进待验收",
+"下一步": "TFSE / TFME / TFLE 导出回来 → 看回放 → 没问题进待验收",
+"导出任务": [
+"TFLE",
+"TFME",
+"TFSE"
+],
 "ver": "ea31fbdf",
-"jobs": [],
+"jobs": [
+{
+"id": "TFLE",
+"type": "export",
+"state": "在算",
+"seen": false
+},
+{
+"id": "TFME",
+"type": "export",
+"state": "在算",
+"seen": false
+},
+{
+"id": "TFSE",
+"type": "export",
+"state": "在算",
+"seen": false
+}
+],
 "exports": [],
 "thumb": null,
 "thumbSim": null
@@ -32212,7 +32236,7 @@ var FW_EFFECTS = [
 "key": "qiuxing_c",
 "名": "球形C（青柠芯 + 延时点火外层）",
 "负责": "对话框1",
-"阶段": "制作中",
+"阶段": "待验收",
 "参考": [
 "vidio/球形C.mp4"
 ],
@@ -32221,7 +32245,7 @@ var FW_EFFECTS = [
 "进度": {
 "计算": true,
 "AI自检": true,
-"素材导出": false,
+"素材导出": true,
 "用户验收": false
 },
 "历史": [
@@ -32257,13 +32281,19 @@ var FW_EFFECTS = [
 }
 ],
 "说明": "QC9：按「开花后同一秒」逐时刻对齐实拍；实拍 / 实时模拟 / 导出效果 对照 analysis/迭代/QC9/烘焙回放.jpg（云端软件渲染，导出效果和实时模拟一致）。",
-"下一步": "QC9E 导出回来 → 看 回放检查.json（裁切 / 空帧 / 跳变）和 烘焙回放.jpg → 没问题就改「待验收」、待验收版 = QC9",
+"下一步": "等用户验收整体",
 "缺": [
-"本机素材包（QC9E 导出任务在排队）"
+"UE 4.24 实机导入未验证"
 ],
 "导出任务": [
 "QC9E"
 ],
+"待验收版": "QC9",
+"交付说明": {
+"解决了什么": "按开花后同一秒对齐实拍：青柠芯 + 外层 0.4 s 点亮的银白短尾 → 暖白 → 橙点陆续熄灭；芯看得见（以前被拟合调没 / 空心环）。",
+"仍有差异": "实拍末段光点有相机光晕、看起来更大更亮；前一发的残烟不做。",
+"素材在哪": "本机 analysis/local/输出/素材包/QiuXingC_1（芯）、QiuXingC_2（外层）；导出记录 analysis/results/QC9E/"
+},
 "ver": "bd5b58c3",
 "jobs": [
 {
@@ -32306,7 +32336,7 @@ var FW_EFFECTS = [
 "id": "QC9E",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 }
 ],
 "exports": [

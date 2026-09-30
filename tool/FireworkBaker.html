@@ -348,6 +348,9 @@
   .effh details.hist a{color:var(--gold2)}
   .rlayers .btn.mini.cur{border-color:var(--gold);color:var(--gold2)}
   .li.dimmed{opacity:.55}
+
+.deliv{margin:4px 0 6px 16px;padding:0;font-size:12px;line-height:1.55}
+.deliv b{color:var(--acc, #e9b45f);font-weight:600}
 </style>
 </head>
 <body>
@@ -4985,6 +4988,8 @@ function effHeaderHTML(ef, cur) {
     <div class="rt">版本</div><div class="rlayers">${ver('待你验收', ef.待验收版)}${ver('工作版', ef.阶段 === '已通过' ? null : ef.工作版)}${ver('已通过', ef.已通过版)}</div>
     ${vars ? `<div class="rt">方案 / 分档</div><div class="rlayers">${vars}</div>` : ''}
     <div class="rt">准备情况</div><div class="ready" id="effReady">${readyHTML(ef, cur)}</div>
+    ${ef.交付说明 ? `<div class="rt">这版（AI 推荐的完整候选）</div><ul class="deliv"><li><b>解决了：</b>${ef.交付说明.解决了什么 || ''}</li><li><b>仍有差异：</b>${ef.交付说明.仍有差异 || '—'}</li><li><b>素材：</b>${ef.交付说明.素材在哪 || ''}</li></ul>` : ''}
+    ${(() => { const c = (ef.exports || []).find(x => !x.legacy && !x.stale); return c ? `<p class="op"><a href="../analysis/results/${c.job}/烘焙回放.jpg" target="_blank" rel="noopener">导出自检对照图（实拍 / 实时模拟 / 导出效果，开花后同一秒）</a> · <a href="../analysis/results/${c.job}/回放检查.jpg" target="_blank" rel="noopener">贴图回放检查</a></p>` : ''; })()}
     ${ef.说明 ? `<p class="op">${ef.说明}</p>` : ''}
     ${ef.缺 && ef.缺.length ? `<div class="rt">还缺</div><ul>${ef.缺.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
     ${jobs ? `<p class="qnote">任务：${jobs}</p>` : ''}

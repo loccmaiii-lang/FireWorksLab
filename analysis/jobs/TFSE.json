@@ -1,0 +1,9 @@
+{
+ "id": "TFSE",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "TFS",
+ "name": "RiseTrailPhys_S",
+ "priority": 7,
+ "note": "物理尾缀 × V5 形式 · 小档 第 2 版素材包（上升循环 + 30 / 20 fps 消散，PC + 手机 cascade.json）+ 自动贴图回放检查 + 烘焙器实时模拟 / 导出效果对照。AI 自检用。"
+}
