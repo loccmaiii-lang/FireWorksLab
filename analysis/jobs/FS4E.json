@@ -1,0 +1,9 @@
+{
+ "id": "FS4E",
+ "type": "export",
+ "effect": "yongfeng",
+ "entry": "FS4",
+ "name": "YongFeng",
+ "priority": 6,
+ "note": "永丰三重蕊 FS4 的素材包（每层一套，PC + 手机 cascade.json）+ 自动贴图回放检查（回放检查.jpg / .json）+ 烘焙器「实拍 / 实时模拟 / 导出效果」开花后同一秒对照（烘焙回放.jpg）。这一版是 AI 内部自检用的候选，不是交给用户的。"
+}
