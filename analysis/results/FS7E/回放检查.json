@@ -1,0 +1,80 @@
+{
+ "total_s": 10.02,
+ "layers": [
+  {
+   "pack": "YongFeng_1",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 10.02,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0455,
+   "empty_frames": 27,
+   "center_jump_max_px": 12.62
+  },
+  {
+   "pack": "YongFeng_2",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 10.02,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0002,
+   "empty_frames": 87,
+   "center_jump_max_px": 8.1
+  },
+  {
+   "pack": "YongFeng_3",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 4.0,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0008,
+   "empty_frames": 119,
+   "center_jump_max_px": 2.62
+  },
+  {
+   "pack": "YongFeng_4",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 3.873,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0,
+   "empty_frames": 74,
+   "center_jump_max_px": 2.64
+  },
+  {
+   "pack": "YongFeng_5",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 5.95,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0,
+   "empty_frames": 25,
+   "center_jump_max_px": 4.0
+  }
+ ]
+}

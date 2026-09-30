@@ -1,0 +1,39 @@
+{
+ "effect": "hongchao",
+ "entry": "HK8",
+ "ver": "118aefe8",
+ "time": "2026-09-30 20:12",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "HongChao_1",
+   "replica": "HK8-1",
+   "files": [
+    "HongChao_1.json",
+    "HongChao_1_Cascade参数.txt",
+    "HongChao_1_曲线.csv",
+    "T_HongChao_1.png",
+    "T_HongChao_1_Cutout.png",
+    "T_HongChao_1_FrameTest.png",
+    "T_HongChao_1_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "HongChao_2",
+   "replica": "HK8-2",
+   "files": [
+    "HongChao_2.json",
+    "HongChao_2_Cascade参数.txt",
+    "HongChao_2_曲线.csv",
+    "T_HongChao_2.png",
+    "T_HongChao_2_Cutout.png",
+    "T_HongChao_2_FrameTest.png",
+    "T_HongChao_2_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}

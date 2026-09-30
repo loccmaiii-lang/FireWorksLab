@@ -1,0 +1,36 @@
+20:12:06 开始：PianBei（导出素材）
+20:12:07 PianBei_1 导出 2 秒：PianBei_1.json、PianBei_1_Cascade参数.txt、PianBei_1_曲线.csv、T_PianBei_1.png、T_PianBei_1_Cutout.png、T_PianBei_1_FrameTest.png、T_PianBei_1_Ramp.png、cascade.json、cascade_mobile.json
+20:12:09 PianBei_2 导出 1 秒：PianBei_2.json、PianBei_2_Cascade参数.txt、PianBei_2_曲线.csv、T_PianBei_2.png、T_PianBei_2_Cutout.png、T_PianBei_2_FrameTest.png、T_PianBei_2_Ramp.png、cascade.json、cascade_mobile.json
+20:12:10 PianBei_3 导出 1 秒：PianBei_3.json、PianBei_3_Cascade参数.txt、PianBei_3_曲线.csv、T_PianBei_3.png、T_PianBei_3_Cutout.png、T_PianBei_3_FrameTest.png、T_PianBei_3_Ramp.png、cascade.json、cascade_mobile.json
+20:12:12 PianBei_4 导出 1 秒：PianBei_4.json、PianBei_4_Cascade参数.txt、PianBei_4_曲线.csv、T_PianBei_4.png、T_PianBei_4_Cutout.png、T_PianBei_4_FrameTest.png、T_PianBei_4_Ramp.png、cascade.json、cascade_mobile.json
+20:14:06 出错：
+Traceback (most recent call last):
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 64, in run_job
+    import export_job; export_job.run(job, s, out, log=log)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\export_job.py", line 49, in run
+    b64 = s.pg.evaluate(f"""(async () => {{ const r = {src}; const P = r.P, M = r.M; Object.assign(P, {json.dumps(over)});
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\sync_api\_generated.py", line 9413, in evaluate
+    self._sync(
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_page.py", line 474, in evaluate
+    return await self._main_frame.evaluate(expression, arg)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_frame.py", line 346, in evaluate
+    await self._channel.send(
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.evaluate: Error: 帧缓冲创建失败
+    at new Target (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:2150:86)
+    at bakeFrames (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:2836:16)
+    at async bakeMaster (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:2946:15)
+    at async Object.exportFiles (file:///C:/Users/locmai/.codex/worktrees/gpu-monitor/FireWorksLab/tool/FireworkBaker.html?fast:5899:15)
+    at async eval (eval at evaluate (:311:30), <anonymous>:2:24)
+    at async <anonymous>:337:30
+

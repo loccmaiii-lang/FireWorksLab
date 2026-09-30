@@ -1,0 +1,9 @@
+20:12:00 开始：HongChao（导出素材）
+20:12:05 HongChao_1 导出 5 秒：HongChao_1.json、HongChao_1_Cascade参数.txt、HongChao_1_曲线.csv、T_HongChao_1.png、T_HongChao_1_Cutout.png、T_HongChao_1_FrameTest.png、T_HongChao_1_Ramp.png、cascade.json、cascade_mobile.json
+20:12:08 HongChao_2 导出 2 秒：HongChao_2.json、HongChao_2_Cascade参数.txt、HongChao_2_曲线.csv、T_HongChao_2.png、T_HongChao_2_Cutout.png、T_HongChao_2_FrameTest.png、T_HongChao_2_Ramp.png、cascade.json、cascade_mobile.json
+20:12:09 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\HK8E\回放检查.jpg
+20:12:31 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\HK8E\烘焙回放.jpg
+20:12:31 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\HK8E\烘焙回放_原尺寸.jpg
+20:12:33 烘焙器预览 preview.js：5748 KB
+20:12:33 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+20:12:33 完成，用时 0.5 分钟

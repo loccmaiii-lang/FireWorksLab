@@ -1,0 +1,54 @@
+{
+ "effect": "qiuxing_b",
+ "entry": "ZB4",
+ "ver": "45380a06",
+ "time": "2026-09-30 20:13",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "QiuXingB_1",
+   "replica": "ZB4-1",
+   "files": [
+    "QiuXingB_1.json",
+    "QiuXingB_1_Cascade参数.txt",
+    "QiuXingB_1_曲线.csv",
+    "T_QiuXingB_1.png",
+    "T_QiuXingB_1_Cutout.png",
+    "T_QiuXingB_1_FrameTest.png",
+    "T_QiuXingB_1_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "QiuXingB_2",
+   "replica": "ZB4-2",
+   "files": [
+    "QiuXingB_2.json",
+    "QiuXingB_2_Cascade参数.txt",
+    "QiuXingB_2_曲线.csv",
+    "T_QiuXingB_2.png",
+    "T_QiuXingB_2_Cutout.png",
+    "T_QiuXingB_2_FrameTest.png",
+    "T_QiuXingB_2_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  },
+  {
+   "name": "QiuXingB_3",
+   "replica": "ZB4-3",
+   "files": [
+    "QiuXingB_3.json",
+    "QiuXingB_3_Cascade参数.txt",
+    "QiuXingB_3_曲线.csv",
+    "T_QiuXingB_3.png",
+    "T_QiuXingB_3_Cutout.png",
+    "T_QiuXingB_3_FrameTest.png",
+    "T_QiuXingB_3_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,115 @@
+烟花母版：YongFeng_2（菊）
+工具：烟花母版烘焙器 3.7（模拟内核：GPU；产物：大面片母版）
+
+【贴图】
+T_YongFeng_2.png（星头、闪光、拖尾合并）
+尺寸 2048×2048，灰度（线性），RGBA 接力：先填满 R 的 64 格（第 0–63 帧），再接 G（64–127）、B（128–191）、A（192–255）
+格子 8 列 × 8 行，行优先，左上为第 0 帧；单格 256×256 像素；共 256 帧；格子四周留空 2 像素
+导入：sRGB 关闭，压缩 BC7；1K 版本在引擎里复制一张，把最大尺寸设为 1024 即可
+T_YongFeng_2_FrameTest.png（帧号测试）：排查用。格子、接力、取景与正式贴图完全相同，内容是帧号 + 以爆点为中心的固定大小圆和网格。
+  把材质实例的贴图临时换成它播放：帧号应连续递增不倒退，圆应不动、不胀缩、不变扁。
+  帧号乱跳 / 倒退 → 帧号曲线或材质的接力解码不对；圆胀缩、晃动 → Size By Life / 位置曲线不对；圆变扁 → 对齐方式或 Initial Size 不对
+T_YongFeng_2_Ramp.png：渐变图 256×8（sRGB），灰度从暗到亮依次取：拖尾冷却色 → 拖尾高温色 → 星头高温色
+
+【材质实例】
+项目现有的 RGBA 序列帧材质；列 = 8，行 = 8；Ramp = T_YongFeng_2_Ramp
+
+【Cutout：裁掉面片上的空白，减少 overdraw】
+Required → Cutout Texture = T_YongFeng_2_Cutout（512×512，所有帧叠在一起的轮廓）；
+  Sub Images Horizontal = 1，Vertical = 1；Bounding Mode = Eight Vertices；Opacity Source Mode = Alpha；Alpha Threshold = 0.1；不加 SubUV 模块。
+  面片剩下约 54%（引擎按轮廓外接八边形，会略大一点）。材质照旧用 Dynamic Parameter 第三通道取帧。
+
+【Cascade 发射器】
+Required：Screen Alignment = Rectangle（面向相机，X、Y 尺寸分开生效；不要用 Square——Square 只认 X，Y 方向会按错的比例缩放，画面变形、抖动）；Emitter Duration = 10.02 s；Emitter Loops = 1
+所有曲线（Size By Life、Dynamic Parameter 帧号、Color Over Life、Location / Velocity 等）：每个关键点的 Interp Mode = Linear。CurveAuto 会在关键点之间冲过头：尺寸来回抖、帧号倒退一抖一抖。Size By Life 勾选 Multiply X、Multiply Y。
+Spawn：Rate = 0；Burst：Count = 1，Time = 0
+Lifetime：10.02 s（常量）
+Initial Size：X = 46604 cm，Y = 46604 cm（开花最大时的尺寸）
+Initial Location：0（爆点就是精灵中心）
+Size By Life（X、Y 相同；线性插值）：面片随开花放大，每帧贴图按同一条曲线烘焙
+  相对时间    倍数
+  0.0000      0.106
+  0.0139      0.127
+  0.0863      0.360
+  0.1624      0.496
+  0.2697      0.645
+  0.4106      0.796
+  0.7001      1.000
+  1.0000      1.000
+Dynamic Parameter：第三通道 = 帧号；Use Emitter Time 不勾选；曲线插值 Linear
+  相对时间    帧号
+  0.0000      0.000
+  0.0089      21.690
+  0.0189      40.420
+  0.0289      54.020
+  0.0414      66.410
+  0.0738      86.290
+  0.1212      101.990
+  1.0000      255.990
+  材质取整显示，不做帧间混合。最后一个值是「总帧数 − 0.01」：到总帧数会从第 0 帧重新开始。烘焙时每一帧取的正是这条曲线上对应帧号的时刻，画面与引擎一致。
+Color Over Life（线性 RGB；Alpha 恒为 1；5 段变色）
+  0.0000      1  0.1946  0.2789
+  0.1347      1  0.1946  0.2789
+  0.1846      1  0.2542  0.6308
+  0.2096      1  0.2542  0.6308
+  0.2595      0.8714  0.4342  0.8714
+  0.2745      0.8714  0.4342  0.8714
+  0.3244      0.6867  1  0.9047
+  0.3743      0.6867  1  0.9047
+  0.4242      0.9047  0.8879  0.6867
+  1.0000      0.9047  0.8879  0.6867
+  亮度倍数：星头 2.5（乘在颜色上，按项目曝光再调）
+Light（可选）：Brightness Over Life 相对值，乘以期望的峰值亮度
+  0.0000      0.000
+  0.1076      0.382
+  0.2097      0.647
+  0.4379      1.000
+  0.4608      0.873
+  0.5064      0.154
+  0.5235      0.000
+  1.0000      0.000
+Initial Rotation（可选）：−15°～15° 随机，同一母版多发时增加差异
+【可直接粘贴】在 Cascade 细节面板里：先把 Distribution 类型选成下面写的曲线类型，展开到 Points（或 Constant）那一行，右键 → 粘贴。
+  所有曲线点已是 Linear。粘贴不进去时，右键一条现有曲线的 Points → 复制，把文本发给 Claude 对格式。
+▸ Initial Size → Start Size → Distribution Vector Constant → Constant
+(X=46603.577297,Y=46603.577297,Z=1.000000)
+▸ Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points
+((InVal=0.000000,OutVal=(X=0.106000,Y=0.106000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.013900,OutVal=(X=0.127000,Y=0.127000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.086300,OutVal=(X=0.360000,Y=0.360000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.162400,OutVal=(X=0.496000,Y=0.496000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.269700,OutVal=(X=0.645000,Y=0.645000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.410600,OutVal=(X=0.796000,Y=0.796000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.700100,OutVal=(X=1.000000,Y=1.000000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=1.000000,OutVal=(X=1.000000,Y=1.000000,Z=1.000000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear))
+▸ Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points
+((InVal=0.000000,OutVal=0.000000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.008900,OutVal=21.690000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.018900,OutVal=40.420000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.028900,OutVal=54.020000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.041400,OutVal=66.410000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.073800,OutVal=86.290000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.121200,OutVal=101.990000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=1.000000,OutVal=255.990000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear))
+▸ Color Over Life → Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）
+((InVal=0.000000,OutVal=(X=2.500000,Y=0.486500,Z=0.697250),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.134700,OutVal=(X=2.500000,Y=0.486500,Z=0.697250),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.184600,OutVal=(X=2.500000,Y=0.635500,Z=1.577000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.209600,OutVal=(X=2.500000,Y=0.635500,Z=1.577000),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.259500,OutVal=(X=2.178500,Y=1.085500,Z=2.178500),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.274500,OutVal=(X=2.178500,Y=1.085500,Z=2.178500),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.324400,OutVal=(X=1.716750,Y=2.500000,Z=2.261750),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.374300,OutVal=(X=1.716750,Y=2.500000,Z=2.261750),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=0.424200,OutVal=(X=2.261750,Y=2.219750,Z=1.716750),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=1.000000,OutVal=(X=2.261750,Y=2.219750,Z=1.716750),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear))
+【帧与流畅度】
+平均 25.5 fps，最低 17.5 fps，每帧最大位移 3.0 像素（建议 ≤ 3）
+平均面片面积为最大尺寸的 66%（overdraw 按此折算）
+
+【自检】
+  画面占比：平均 67%，最差 10% 的帧 ≥ 28%（紧凑取景已禁用：引擎里会抖；想更满可以减少留边或改随开花放大）
+  过曝：第 1、2、3、4、5 帧超过 2% 像素顶到 255，可降低星头亮度或改 Gamma 2.2
+  边缘渗色：无（留边 2 像素）
+  通道布局：R 有内容，G 有内容，B 有内容，A 空；有空通道，可减少帧数或改单通道
+  近似帧：196 对相邻帧几乎相同，可把「取帧」改成「按画面变化」自动合并
+  末尾 86 帧接近全黑，可把序列时长缩短到约 5.13 s
+  最低帧率 17.5 fps，尾段可能发卡：可增加格子数或缩短序列时长
+
+【烟（开花烟，用项目现有烟雾贴图）】
+Spawn：Burst Count = 48；Lifetime 10.20–15.20 s
+Location → Sphere：Velocity 勾选，速度约 3383 cm/s；Drag = 0.32（烟团很快停在星走过的地方）
+Initial Size 2796 cm，Size By Life 1 → 3（扩散）
+Alpha Over Life：0 → 0.3（在 0.51）→ 0
+颜色：前 6.20 s 被火光照亮，乘本母版 Color Over Life 与 Light 曲线；之后转为场景夜空灰
+
+【声音节点（相对开花，秒）】
+  0.000  开花爆响
+  玩家听到的时刻 = 事件时刻 + 距离 ÷ 343 m/s（800 m 约晚 2.3 s）
+
+【LOD 建议（1080p、竖直视角 60°）】
+LOD 0：0–1,703 m，全部层，2K 贴图
+LOD 1：1,703–3,405 m，屏幕上已小于单格像素：1K 贴图即可；粒子数/火花发射率减半；关闭 Light
+LOD 2：3,405 m 以外：只留本层；去掉芯（小缩放的牡丹层）和烟
+（Cascade：粒子系统的 LOD Distances 依次填 0、170300、340500，单位 cm）
+
+
+【说明】
+Size By Life 以精灵中心缩放，爆点就在中心，所以面片放大时爆点位置不变。
+YongFeng_2.json 保存了全部参数，用烘焙器「导入参数 JSON」即可继续修改。

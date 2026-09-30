@@ -1,0 +1,50 @@
+{
+ "total_s": 3.89,
+ "layers": [
+  {
+   "pack": "QiuXingB_1",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 2.0,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.005,
+   "empty_frames": 42,
+   "center_jump_max_px": 4.21
+  },
+  {
+   "pack": "QiuXingB_2",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 2.0,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0004,
+   "empty_frames": 26,
+   "center_jump_max_px": 1.46
+  },
+  {
+   "pack": "QiuXingB_3",
+   "frames": 256,
+   "grid": "8x8x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 2.99,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0005,
+   "empty_frames": 86,
+   "center_jump_max_px": 1.09
+  }
+ ]
+}
