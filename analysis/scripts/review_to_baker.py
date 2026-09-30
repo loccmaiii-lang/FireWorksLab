@@ -257,15 +257,23 @@ def main():
     gone = set(ARCHIVE)
     for e in ents:
         if e['kind'] != 'queued': gone |= set(e.get('replaces') or [])
-    ents = [e for e in ents if e['id'] not in gone]
+    # 被取代 / 否决的版本不删：标成历史（用户 2026-09-30 14:46：失败版和被替代版归入历史，保留文件、参数、对照和反馈）
+    for e in ents:
+        if e['id'] in gone and e['kind'] != 'queued': e['superseded'] = True
+    ents = [e for e in ents if not (e['id'] in gone and (e['kind'] == 'queued' or e['id'] in ('TR2S', 'TR2M', 'TR2L')))]
     # 顺序：能看的在前（新的在前），排队的在后
     ents.sort(key=lambda e: (e['kind'] == 'queued', '' if e['kind'] == 'queued' else '~' + (e.get('date') or '')), reverse=False)
     ready = sorted([e for e in ents if e['kind'] != 'queued'], key=lambda e: e.get('date') or '', reverse=True)
     ents = ready + [e for e in ents if e['kind'] == 'queued']
     out = []
     for e in ents:
-        try: out.append(build(e))
+        try:
+            rec = build(e)
+            if e.get('superseded'): rec['superseded'] = True
+            out.append(rec)
         except Exception as ex: print('跳过', e['id'], ex)
+    fingerprint(out)
+    effects = effects_from_status(out)
     # 正式库里带参考视频的，也算好取景（烘焙器里点正式库条目同样能并排看实拍）
     import re
     vm = {}
@@ -277,8 +285,113 @@ def main():
     open(OUT, 'w', encoding='utf-8').write('// 由 analysis/scripts/review_to_baker.py 生成：迭代区（做完、等你看的东西）。不要手改。\n'
                                           'var FW_REVIEW = ' + json.dumps(out, ensure_ascii=False, indent=0) + ';\n'
                                           'var FW_VMETA = ' + json.dumps(vm, ensure_ascii=False) + ';\n'
-                                          'var FW_REVIEW_COMBOS = ' + json.dumps(combos, ensure_ascii=False) + ';\n')
+                                          'var FW_REVIEW_COMBOS = ' + json.dumps(combos, ensure_ascii=False) + ';\n'
+                                          'var FW_EFFECTS = ' + json.dumps(effects, ensure_ascii=False, indent=0) + ';\n')
+    write_status_md(effects)
     print('迭代区', len(out), '项（排队', sum(1 for e in out if e['kind'] == 'queued'), '）→', OUT, f'{os.path.getsize(OUT) / 1024:.0f} KB')
+
+
+def fingerprint(out):
+    """版本指纹：条目的参数（p / m / 组合各层）变了，指纹就变 → 审阅标记按「条目 + 指纹」记，导出按指纹判断是否过期"""
+    import hashlib
+    h = lambda o: hashlib.sha1(json.dumps(o, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:8]
+    by = {}
+    for r in out:
+        if r.get('kind') in ('preset',) or r.get('base'): r['ver'] = h([r.get('base'), r.get('p'), r.get('m')])
+        elif r.get('kind') == 'asset': r['ver'] = h([r.get('src'), r.get('date')])
+        by[r['id']] = r
+    for r in out:
+        if r.get('kind') == 'combo': r['ver'] = h([r.get('combo'), [by.get(i, {}).get('ver') for i in r.get('layerIds', [])]])
+        r.setdefault('ver', h([r.get('id'), r.get('date')]))
+
+
+STATUS = os.path.join(ROOT, '协作', '状态清单.json')
+JOB_EFFECT = [('QA', 'qiuxing_a'), ('QB', 'qiuxing_b'), ('QC', 'qiuxing_c'), ('QD', 'qiuxing_d'), ('QN', 'qingning'), ('JM', 'jinmangju'),
+              ('HK', 'hongchao'), ('FS', 'yongfeng'), ('PK', 'pianbei'), ('TR', 'trail_v5'), ('PW', 'wancai'), ('WC', 'wancai'), ('TF', 'trail_phys')]
+
+
+def job_effect(j):
+    if j.get('effect'): return j['effect']
+    return next((k for p, k in JOB_EFFECT if j['id'].startswith(p)), None)
+
+
+def effects_from_status(out):
+    """协作/状态清单.json → 烘焙器左栏「待我验收 / 制作中 / 已通过」的数据；顺带算 在算的任务、导出是否过期、效果缩略图"""
+    if not os.path.exists(STATUS): return []
+    st = json.load(open(STATUS, encoding='utf-8')); by = {r['id']: r for r in out}
+    jd = os.path.join(ROOT, 'analysis', 'jobs'); jobs = {}
+    for f in sorted(os.listdir(jd)):
+        if not f.endswith('.json'): continue
+        j = json.load(open(os.path.join(jd, f), encoding='utf-8')); k = job_effect(j)
+        if not k: continue
+        d = os.path.join(RES, j['id']); state = ('出错' if os.path.exists(os.path.join(d, 'error.json')) else '已回来') if os.path.exists(os.path.join(d, 'done.json')) or os.path.exists(os.path.join(d, 'error.json')) else ('挂起' if j.get('ready') is False else '在算')
+        seen = os.path.exists(os.path.join(d, '看法.md'))
+        jobs.setdefault(k, []).append(dict(id=j['id'], type=j.get('type', 'fit'), state=state, seen=seen))
+    res = []
+    for e in st['effects']:
+        r = dict(e); k = e['key']
+        main = (e.get('主条目') or '').replace('rep:', '')
+        me = by.get(main) or by.get(e.get('主条目'))
+        r['ver'] = me.get('ver') if me else None
+        r['jobs'] = jobs.get(k, [])
+        # 导出：analysis/results/<任务>/导出清单.json（export_job.py 写）；旧导出任务没有清单 → 「旧导出，版本未知」
+        ex = []
+        for jid in set([x['id'] for x in r['jobs'] if x['type'] == 'export' and x['state'] == '已回来'] + (e.get('导出任务') or [])):
+            mf = os.path.join(RES, jid, '导出清单.json')
+            if os.path.exists(mf):
+                m = json.load(open(mf, encoding='utf-8'))
+                ex.append(dict(job=jid, entry=m.get('entry'), ver=m.get('ver'), time=m.get('time'), packages=m.get('packages', []),
+                               stale=bool(m.get('entry') and by.get(m['entry']) and by[m['entry']].get('ver') != m.get('ver'))))
+            elif os.path.exists(os.path.join(RES, jid, 'done.json')): ex.append(dict(job=jid, legacy=True))
+        r['exports'] = ex
+        # 缩略图：参考视频里最亮的一刻（认得出是什么效果），没有就用主条目的
+        src = me or {}
+        r['thumb'] = peak_thumb(e['参考'][0], src.get('vmeta')) if e.get('参考') and src.get('vmeta') else (src.get('thumbRef') or src.get('thumbSim'))
+        r['thumbSim'] = src.get('thumbSim')
+        res.append(r)
+    return res
+
+
+def peak_thumb(rel, vm, span=5.0):
+    """在开花后 span 秒里找画面最亮的一帧（亮点最多），按取景裁成方图"""
+    import cv2, numpy as np
+    cache = os.path.join(ROOT, 'tool', 'data', 'effect_thumbs.json')
+    db = json.load(open(cache, encoding='utf-8')) if os.path.exists(cache) else {}
+    key = rel + '#' + json.dumps([round(vm.get('t0', 0), 3), vm.get('cx'), vm.get('cy'), vm.get('half')])
+    if key in db: return db[key]
+    cap = cv2.VideoCapture(os.path.join(ROOT, rel)); fps = cap.get(5) or 30; n = int(cap.get(7) or 0)
+    best, bi = -1, None
+    for k in range(26):
+        t = vm.get('t0', 0) + span * k / 25; fi = int(t * fps)
+        if n and fi >= n: break
+        cap.set(cv2.CAP_PROP_POS_FRAMES, fi); ok, f = cap.read()
+        if not ok: break
+        H, W = f.shape[:2]; cx, cy, hf = vm['cx'] * W, vm['cy'] * H, vm['half'] * H
+        c = f[max(0, int(cy - hf)):int(cy + hf), max(0, int(cx - hf)):int(cx + hf)]
+        g = cv2.cvtColor(c, cv2.COLOR_BGR2GRAY); sc = float((g > 170).sum())
+        if sc > best: best, bi = sc, (f, (int(cx - hf), int(cy - hf), int(cx + hf), int(cy + hf)))
+    if not bi: return None
+    f, box = bi
+    im = Image.fromarray(cv2.cvtColor(f, cv2.COLOR_BGR2RGB)).crop(box).resize((160, 160), Image.LANCZOS)
+    b = io.BytesIO(); im.save(b, 'JPEG', quality=74)
+    v = 'data:image/jpeg;base64,' + base64.b64encode(b.getvalue()).decode()
+    db[key] = v; json.dump(db, open(cache, 'w', encoding='utf-8'))
+    return v
+
+
+def write_status_md(effects):
+    """协作/状态清单.md：给人看的版本（由 状态清单.json + 任务 / 导出情况生成，不要手改）"""
+    L = ['# 效果状态清单（生成的，改 `协作/状态清单.json`）', '',
+         '阶段：**待验收** = AI 已自检 + 导出回放检查、等用户看整体；**制作中** = AI 在做，用户不用看；**已通过** = 用户点过通过。', '',
+         '| 效果 | 负责 | 阶段 | 主条目 | 计算 / AI自检 / 导出 / 用户验收 | 任务 | 导出 | 下一步 |', '| --- | --- | --- | --- | --- | --- | --- | --- |']
+    ok = lambda b: '✅' if b else '—'
+    for e in effects:
+        g = e.get('进度') or {}
+        jobs = '、'.join(f"{j['id']}{'（' + j['state'] + ('，未看' if j['state'] == '已回来' and not j['seen'] else '') + '）' if j['state'] != '已回来' or not j['seen'] else ''}" for j in e['jobs'][-4:]) or '—'
+        ex = '、'.join(('旧导出 ' + x['job']) if x.get('legacy') else (x['job'] + ('（已过期）' if x['stale'] else '（当前版本）')) for x in e['exports']) or '未生成'
+        L.append(f"| {e['名']} | {e.get('负责', '')} | {e.get('阶段', '')} | {e.get('主条目') or '—'} | {ok(g.get('计算'))} {ok(g.get('AI自检'))} {ok(g.get('素材导出'))} {ok(g.get('用户验收'))} | {jobs} | {ex} | {e.get('下一步', '')} |")
+    L += ['', '各效果的历史版本（否决 / 被取代）和用户反馈见 `状态清单.json` 的「历史」；烘焙器左栏「历史」页能打开。']
+    open(os.path.join(ROOT, '协作', '状态清单.md'), 'w', encoding='utf-8').write('\n'.join(L) + '\n')
 
 
 def thumb_from_video(rel, vm, dt):
