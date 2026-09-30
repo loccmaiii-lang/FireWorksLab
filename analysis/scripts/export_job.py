@@ -81,6 +81,9 @@ def run(job, s, out, log=print):
         log('回放检查：' + os.path.join(out, '回放检查.jpg'))
     except Exception as e:
         log(f'回放检查没做成（不影响导出）：{e}')
+    if job.get('entry'):
+        try: baker_strip(s, job['entry'], os.path.join(out, '烘焙回放.jpg'), job.get('_ref'), log=log)
+        except Exception as e: log(f'烘焙回放对照没做成（不影响导出）：{e}')
     # 烘焙器迭代区的预览（真实导出贴图原尺寸，按引擎方式播放）
     try:
         import export_preview
@@ -89,3 +92,38 @@ def run(job, s, out, log=print):
     except Exception as e:
         log(f'烘焙器预览没做成（不影响导出）：{e}')
     log(f'大文件（贴图）在 {big}，不上传')
+
+
+def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=print):
+    """烘焙器里的「实际烘焙回放」：打开条目，按「导出效果」（烘焙出的贴图 + 材质，和引擎同播法）和「实时模拟」各截几个时刻，
+    和实拍（开花后同一秒）排成一张图。这是给负责的 AI 看的自检证据（进「待我验收」前必须看过）。"""
+    import numpy as np
+    s.pg.evaluate(f"openReview(FW_REVIEW_LIST.find(e => e.id === {json.dumps(entry)}))")
+    s.pg.wait_for_function("window.__fw && window.__fw.idle() && (state.tab !== 'combo' || (state.layers.length > 0 && state.lib.length >= state.layers.length))", timeout=0)
+    s.pg.wait_for_timeout(1500)
+    T = s.pg.evaluate("state.tab === 'combo' ? comboDuration() : (state.P && state.P.duration) || 3")
+    times = [round(f * T, 2) for f in fracs]; rows = {'实时模拟': [], '导出效果': []}
+    for view in ('live', 'export'):
+        for t in times:
+            s.pg.evaluate(f"state.view = {json.dumps(view)}; state.playing = false; state.t = {t}"); s.pg.wait_for_timeout(900)
+            png = s.pg.locator('#gl').screenshot()
+            rows['实时模拟' if view == 'live' else '导出效果'].append(Image.open(io.BytesIO(png)).convert('RGB'))
+    px = 300; lines = []
+    if ref:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import importlib; rc = importlib.import_module('回放检查')
+        lines.append(('实拍', [Image.fromarray(a) for a in rc.ref_frames(ref, times, px)]))
+    for k in ('实时模拟', '导出效果'):
+        sq = []
+        for im in rows[k]:
+            w, h = im.size; c = min(w, h); sq.append(im.crop(((w - c) // 2, (h - c) // 2, (w - c) // 2 + c, (h - c) // 2 + c)).resize((px, px)))
+        lines.append((k, sq))
+    from PIL import ImageDraw, ImageFont
+    sheet = Image.new('RGB', (90 + px * len(times), 22 + px * len(lines)), (14, 15, 20)); dr = ImageDraw.Draw(sheet); font = None
+    for fp in ('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc', 'C:/Windows/Fonts/msyh.ttc'):
+        if os.path.exists(fp): font = ImageFont.truetype(fp, 13); break
+    for r, (nm, ims) in enumerate(lines):
+        dr.text((4, 22 + r * px + px // 2), nm, fill=(220, 210, 180), font=font)
+        for c, im in enumerate(ims): sheet.paste(im, (90 + c * px, 22 + r * px))
+    for c, t in enumerate(times): dr.text((90 + c * px + 4, 4), f'开花后 {t:.2f} s', fill=(233, 180, 95), font=font)
+    sheet.save(out, quality=88); log('烘焙回放对照：' + out)

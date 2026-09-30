@@ -3,6 +3,7 @@
 用法：
   python3 analysis/scripts/手调组合.py <来源任务> <新编号> --effect <状态清单 key> --name "..." \
       --mods '{"1": {"ignDelay": 0.55, "M.headInt": 2}}' [--note "..."] [--replaces '["QC6"]']
+来源也可以是已有的手调组合条目号（例 QC7 → QC8，各层从条目里取）。
 写进 analysis/迭代/条目.json：层条目 <新编号>-1..n + 组合条目 <新编号>（combos 里带 id → 迭代区一个效果一条）。
 """
 import argparse, copy, json, os, time
@@ -17,9 +18,20 @@ def main():
     ap.add_argument('--mods', default='{}'); ap.add_argument('--note', default=''); ap.add_argument('--replaces', default='[]')
     ap.add_argument('--look', default='[]'); ap.add_argument('--opinion', default='')
     a = ap.parse_args()
-    job = json.load(open(os.path.join(ROOT, 'analysis', 'jobs', a.src + '.json'), encoding='utf-8'))
-    best = json.load(open(os.path.join(ROOT, 'analysis', 'results', a.src, 'best.json'), encoding='utf-8'))
-    layers = copy.deepcopy(best['P']['layers']); mods = json.loads(a.mods)
+    jp = os.path.join(ROOT, 'analysis', 'jobs', a.src + '.json')
+    d0 = json.load(open(ITER, encoding='utf-8'))
+    src_combo = next((c for c in d0.get('combos', []) if c.get('id') == a.src), None)
+    if src_combo and not os.path.exists(os.path.join(ROOT, 'analysis', 'results', a.src, 'best.json')):
+        # 来源是已有的手调组合条目（例 QC7 → QC8）：各层从条目里取
+        E = {e['id']: e for e in d0['entries']}; job = {k: src_combo.get(k) for k in ('video', 'roi', 't_range', 'burst_t')}
+        layers = []
+        for L, nm in zip(src_combo['layers'], src_combo.get('layerNames') or []):
+            e = E[L['m'][4:]]; layers.append(dict(name=nm, P=dict(copy.deepcopy(e['p']), type=e['base']), M=copy.deepcopy(e.get('m') or {}), scale=L.get('scale', 1), delay=L.get('delay', 0)))
+    else:
+        job = json.load(open(jp, encoding='utf-8'))
+        best = json.load(open(os.path.join(ROOT, 'analysis', 'results', a.src, 'best.json'), encoding='utf-8'))
+        layers = copy.deepcopy(best['P']['layers'])
+    mods = json.loads(a.mods)
     for li, m in mods.items():
         L = layers[int(li)]
         for k, v in m.items():

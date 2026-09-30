@@ -1,0 +1,9 @@
+{
+ "id": "QC9E",
+ "type": "export",
+ "effect": "qiuxing_c",
+ "entry": "QC9",
+ "name": "QiuXingC",
+ "priority": 6,
+ "note": "球形C 第 9 版素材包（芯 + 外层两套，PC + 手机 cascade.json）。导出后自动做贴图回放检查（回放检查.jpg）和烘焙器「实拍 / 实时模拟 / 导出效果」同一秒对照（烘焙回放.jpg）。包在本机 analysis/local/输出/素材包/QiuXingC_1、_2。"
+}
