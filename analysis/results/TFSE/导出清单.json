@@ -1,0 +1,27 @@
+{
+ "effect": "trail_phys",
+ "entry": "TFS",
+ "ver": "6a729002",
+ "time": "2026-09-30 19:12",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "RiseTrailPhys_S",
+   "replica": "TFS",
+   "files": [
+    "RiseTrailPhys_S.json",
+    "RiseTrailPhys_S_Cascade参数.txt",
+    "RiseTrailPhys_S_曲线.csv",
+    "T_RiseTrailPhys_S_Fade20.png",
+    "T_RiseTrailPhys_S_Fade20_Cutout.png",
+    "T_RiseTrailPhys_S_Fade30.png",
+    "T_RiseTrailPhys_S_Fade30_Cutout.png",
+    "T_RiseTrailPhys_S_Loop.png",
+    "T_RiseTrailPhys_S_Loop_Cutout.png",
+    "T_RiseTrailPhys_S_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,12 @@
+19:12:11 开始：YongFeng（导出素材）
+19:12:13 YongFeng_1 导出 2 秒：T_YongFeng_1.png、T_YongFeng_1_Cutout.png、T_YongFeng_1_FrameTest.png、T_YongFeng_1_Ramp.png、YongFeng_1.json、YongFeng_1_Cascade参数.txt、YongFeng_1_曲线.csv、cascade.json、cascade_mobile.json
+19:12:16 YongFeng_2 导出 3 秒：T_YongFeng_2.png、T_YongFeng_2_Cutout.png、T_YongFeng_2_FrameTest.png、T_YongFeng_2_Ramp.png、YongFeng_2.json、YongFeng_2_Cascade参数.txt、YongFeng_2_曲线.csv、cascade.json、cascade_mobile.json
+19:12:18 YongFeng_3 导出 1 秒：T_YongFeng_3.png、T_YongFeng_3_Cutout.png、T_YongFeng_3_FrameTest.png、T_YongFeng_3_Ramp.png、YongFeng_3.json、YongFeng_3_Cascade参数.txt、YongFeng_3_曲线.csv、cascade.json、cascade_mobile.json
+19:12:19 YongFeng_4 导出 1 秒：T_YongFeng_4.png、T_YongFeng_4_Cutout.png、T_YongFeng_4_FrameTest.png、T_YongFeng_4_Ramp.png、YongFeng_4.json、YongFeng_4_Cascade参数.txt、YongFeng_4_曲线.csv、cascade.json、cascade_mobile.json
+19:12:20 YongFeng_5 导出 1 秒：T_YongFeng_5.png、T_YongFeng_5_Cutout.png、T_YongFeng_5_FrameTest.png、T_YongFeng_5_Ramp.png、YongFeng_5.json、YongFeng_5_Cascade参数.txt、YongFeng_5_曲线.csv、cascade.json、cascade_mobile.json
+19:12:22 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FS5E\回放检查.jpg
+19:12:41 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FS5E\烘焙回放.jpg
+19:12:42 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FS5E\烘焙回放_原尺寸.jpg
+19:12:44 烘焙器预览 preview.js：7391 KB
+19:12:44 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+19:12:44 完成，用时 0.5 分钟

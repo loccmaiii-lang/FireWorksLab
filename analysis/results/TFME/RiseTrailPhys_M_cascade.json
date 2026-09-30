@@ -1,0 +1,416 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "RiseTrailPhys_M",
+ "platform": "pc",
+ "source": {
+  "tool": "烟花母版烘焙器 3.7",
+  "type": "trailM",
+  "form": "trail",
+  "quality": {
+   "ss": 2,
+   "hz": 300,
+   "kernel": 0,
+   "core": 0
+  }
+ },
+ "textures": {
+  "loop": {
+   "file": "T_RiseTrailPhys_M_Loop.png",
+   "class": "flipbook",
+   "cols": 16,
+   "rows": 1,
+   "channels": 4,
+   "frames": 64
+  },
+  "cutoutLoop": {
+   "file": "T_RiseTrailPhys_M_Loop_Cutout.png",
+   "class": "cutout"
+  },
+  "ramp": {
+   "file": "T_RiseTrailPhys_M_Ramp.png",
+   "class": "ramp"
+  },
+  "fade30": {
+   "file": "T_RiseTrailPhys_M_Fade30.png",
+   "class": "flipbook",
+   "cols": 16,
+   "rows": 1,
+   "channels": 4,
+   "frames": 64
+  },
+  "cutoutFade30": {
+   "file": "T_RiseTrailPhys_M_Fade30_Cutout.png",
+   "class": "cutout"
+  }
+ },
+ "materials": {
+  "loop": {
+   "role": "beam_flipbook",
+   "textures": {
+    "main": "loop",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 1,
+    "cols": 16
+   }
+  },
+  "fade30": {
+   "role": "beam_flipbook",
+   "textures": {
+    "main": "fade30",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 1,
+    "cols": 16
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 0
+ },
+ "emitters": [
+  {
+   "name": "RiseLoop",
+   "material": "loop",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Velocity",
+    "duration_s": 5.4167,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutoutLoop",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.0655
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 5.4167
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       499.7,
+       8316.2,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "const": [
+       0,
+       0,
+       9650
+      ]
+     }
+    },
+    {
+     "m": "Drag",
+     "DragCoefficientRaw": {
+      "const": 0.2371
+     }
+    },
+    {
+     "m": "ConstAcceleration",
+     "Acceleration": [
+      0,
+      0,
+      -981
+     ]
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         0.35,
+         1
+        ]
+       ],
+       [
+        0.1,
+        [
+         1,
+         0.652,
+         1
+        ]
+       ],
+       [
+        0.2,
+        [
+         1,
+         1.16,
+         1
+        ]
+       ],
+       [
+        0.3,
+        [
+         1,
+         1.543,
+         1
+        ]
+       ],
+       [
+        0.4,
+        [
+         1,
+         1.366,
+         1
+        ]
+       ],
+       [
+        0.5,
+        [
+         1,
+         1.057,
+         1
+        ]
+       ],
+       [
+        0.6,
+        [
+         1,
+         0.837,
+         1
+        ]
+       ],
+       [
+        0.7,
+        [
+         1,
+         0.641,
+         1
+        ]
+       ],
+       [
+        0.8,
+        [
+         1,
+         0.486,
+         1
+        ]
+       ],
+       [
+        0.9,
+        [
+         1,
+         0.35,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         0.35,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0
+        ],
+        [
+         0.3937,
+         63.99
+        ],
+        [
+         0.3938,
+         0
+        ],
+        [
+         0.7876,
+         63.99
+        ],
+        [
+         0.7877,
+         0
+        ],
+        [
+         0.9999,
+         34.5
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.6,
+         1.6,
+         1.6
+        ]
+       ],
+       [
+        1,
+        [
+         1.6,
+         1.6,
+         1.6
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  },
+  {
+   "name": "Fade30",
+   "material": "fade30",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Velocity",
+    "duration_s": 2.1333,
+    "loops": 1,
+    "delay_s": 5.4167,
+    "cutout": "cutoutFade30",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.0655
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 2.1333
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       19976.8
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "const": [
+       0,
+       0,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       499.7,
+       2910.7,
+       1
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.6,
+         1.6,
+         1.6
+        ]
+       ],
+       [
+        1,
+        [
+         1.6,
+         1.6,
+         1.6
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  }
+ ],
+ "notes": [
+  "消散默认用 30 fps 版；另有 20 fps 版贴图（T_RiseTrailPhys_M_Fade20.png），换贴图并把消散发射器的时长改成 64 ÷ 20 = 3.2 s",
+  "pivot_offset 是 Required 里的 Pivot Offset（星头在贴图里的位置），spec 里还没实测过这个字段"
+ ]
+}

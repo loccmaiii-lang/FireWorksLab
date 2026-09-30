@@ -1,0 +1,8 @@
+19:11:52 开始：RiseTrailPhys_L（导出素材）
+19:11:55 RiseTrailPhys_L 导出 3 秒：RiseTrailPhys_L.json、RiseTrailPhys_L_Cascade参数.txt、RiseTrailPhys_L_曲线.csv、T_RiseTrailPhys_L_Fade20.png、T_RiseTrailPhys_L_Fade20_Cutout.png、T_RiseTrailPhys_L_Fade30.png、T_RiseTrailPhys_L_Fade30_Cutout.png、T_RiseTrailPhys_L_Loop.png、T_RiseTrailPhys_L_Loop_Cutout.png、T_RiseTrailPhys_L_Ramp.png、cascade.json、cascade_mobile.json
+19:11:56 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\TFLE\回放检查.jpg
+19:12:11 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\TFLE\烘焙回放.jpg
+19:12:11 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\TFLE\烘焙回放_原尺寸.jpg
+19:12:11 烘焙器预览 preview.js：1 KB
+19:12:11 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+19:12:11 完成，用时 0.3 分钟

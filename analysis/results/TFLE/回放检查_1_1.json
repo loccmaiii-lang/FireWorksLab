@@ -1,0 +1,20 @@
+{
+ "total_s": 9.767,
+ "layers": [
+  {
+   "pack": "RiseTrailPhys_L · RiseLoop",
+   "frames": 64,
+   "grid": "16x1x4",
+   "cell_px": [
+    128,
+    2048
+   ],
+   "life_s": 9.767,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0,
+   "empty_frames": 0,
+   "center_jump_max_px": 9.45
+  }
+ ]
+}

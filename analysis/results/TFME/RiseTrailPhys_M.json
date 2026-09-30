@@ -1,0 +1,548 @@
+{
+  "name": "RiseTrailPhys_M",
+  "type": "trailM",
+  "typeName": "升空尾缀 · 中（V5）",
+  "form": "trail",
+  "tool": "烟花母版烘焙器 3.7",
+  "engine": "gpu",
+  "texture": {
+    "width": 2048,
+    "height": 2048,
+    "cols": 16,
+    "rows": 1,
+    "channels": 4,
+    "frames": 64,
+    "cellPx": [
+      128,
+      2048
+    ],
+    "order": "先填满 R 的全部格子再接 G、B、A；格子行优先，左上为第 0 帧",
+    "encoding": "线性灰度",
+    "output": "combined"
+  },
+  "t0": 0,
+  "duration": 2.1333333333333333,
+  "frames": 64,
+  "frameCurve": {
+    "channel": "Dynamic Parameter 第三通道",
+    "keys": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        64
+      ]
+    ]
+  },
+  "trail": {
+    "riseSeconds": 5.4166666666665195,
+    "loopSeconds": 2.1333333333333333,
+    "relayLoopFrame": 34,
+    "riseSizeByLifeY": [
+      [
+        0,
+        0.35
+      ],
+      [
+        0.1,
+        0.652
+      ],
+      [
+        0.2,
+        1.16
+      ],
+      [
+        0.3,
+        1.543
+      ],
+      [
+        0.4,
+        1.366
+      ],
+      [
+        0.5,
+        1.057
+      ],
+      [
+        0.6,
+        0.837
+      ],
+      [
+        0.7,
+        0.641
+      ],
+      [
+        0.8,
+        0.486
+      ],
+      [
+        0.9,
+        0.35
+      ],
+      [
+        1,
+        0.35
+      ]
+    ],
+    "fades": [
+      {
+        "fps": 30,
+        "frames": 64,
+        "seconds": 2.133
+      },
+      {
+        "fps": 20,
+        "frames": 64,
+        "seconds": 3.2
+      }
+    ],
+    "relayDiff": [
+      0,
+      0
+    ],
+    "trailLengthM": 77.1,
+    "engineBrightness": 1.6,
+    "riseFit": {
+      "v0": 96.4999764339991,
+      "k": 0.23713737056616552,
+      "a": 9.81,
+      "err": 0.00962471393282128,
+      "T": 5.4166666666665195,
+      "H": 199.7679175308879
+    },
+    "pivotHead": 0.9344553913519431,
+    "fill": {
+      "avg": 0.49609375,
+      "p10": 0.421875,
+      "x": 0.49609375,
+      "y": 0.9078521728515625
+    },
+    "seam": 0.7032012131732015
+  },
+  "frameTimes": [
+    0,
+    0.0333,
+    0.0667,
+    0.1,
+    0.1333,
+    0.1667,
+    0.2,
+    0.2333,
+    0.2667,
+    0.3,
+    0.3333,
+    0.3667,
+    0.4,
+    0.4333,
+    0.4667,
+    0.5,
+    0.5333,
+    0.5667,
+    0.6,
+    0.6333,
+    0.6667,
+    0.7,
+    0.7333,
+    0.7667,
+    0.8,
+    0.8333,
+    0.8667,
+    0.9,
+    0.9333,
+    0.9667,
+    1,
+    1.0333,
+    1.0667,
+    1.1,
+    1.1333,
+    1.1667,
+    1.2,
+    1.2333,
+    1.2667,
+    1.3,
+    1.3333,
+    1.3667,
+    1.4,
+    1.4333,
+    1.4667,
+    1.5,
+    1.5333,
+    1.5667,
+    1.6,
+    1.6333,
+    1.6667,
+    1.7,
+    1.7333,
+    1.7667,
+    1.8,
+    1.8333,
+    1.8667,
+    1.9,
+    1.9333,
+    1.9667,
+    2,
+    2.0333,
+    2.0667,
+    2.1
+  ],
+  "avgFps": 30,
+  "minFps": 30,
+  "maxDispPx": 0,
+  "spriteSizeCm": [
+    499.7,
+    8316.2
+  ],
+  "burstOffsetZcm": -3613,
+  "pivotUV": [
+    0.5,
+    0.0655
+  ],
+  "sizeByLife": null,
+  "averageQuadArea": 1,
+  "darkTailFrames": 0,
+  "colorOverLife": [
+    [
+      0,
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1
+      ]
+    ]
+  ],
+  "lightKeys": [
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      1
+    ]
+  ],
+  "selfCheck": {
+    "clipFrames": [],
+    "edgeFrames": [],
+    "chanUse": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "emptyMid": [],
+    "similar": 0,
+    "seam": 0.7032012131732015,
+    "maxClip": 0
+  },
+  "unitFit": {
+    "v0": 96.4999764339991,
+    "k": 0.23713737056616552,
+    "a": 9.81,
+    "err": 0.00962471393282128,
+    "T": 5.4166666666665195,
+    "H": 199.7679175308879
+  },
+  "sizeByLifeXY": {
+    "x": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "y": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ]
+  },
+  "events": [
+    {
+      "t": 0,
+      "type": "launch",
+      "name": "发射",
+      "count": 1
+    },
+    {
+      "t": 5.419,
+      "type": "apex",
+      "name": "到顶",
+      "count": 1
+    }
+  ],
+  "metrics": null,
+  "params": {
+    "duration": 8.92,
+    "seed": 7,
+    "stars": 150,
+    "burstR0": 0,
+    "v0": 150,
+    "vt": 18,
+    "grav": 1,
+    "speedJit": 3,
+    "dirJit": 1.5,
+    "burn": 2.5,
+    "burnJit": 12,
+    "fade": 0.2,
+    "lastFlare": 0.35,
+    "flash": 1,
+    "headSize": 1,
+    "headBright": 1,
+    "flicker": 0.25,
+    "sparkRate": 95,
+    "sparkRateEnd": 1,
+    "sparkStop": 0,
+    "sparkStart": 0,
+    "sparkLife": 0.55,
+    "sparkSize": 0.35,
+    "sparkSpread": 2.5,
+    "sparkInherit": 0.2,
+    "sparkDrag": 2.2,
+    "sparkGrav": 1,
+    "T0": 2050,
+    "cooling": 0.42,
+    "sparkBright": 1,
+    "twinkle": 0.6,
+    "subDelay": 0.9,
+    "subJit": 10,
+    "subStars": 36,
+    "subSpeed": 40,
+    "subBurn": 0.9,
+    "subTail": 0,
+    "carrierTail": 30,
+    "subPattern": "sphere",
+    "spin": 14,
+    "chaos": 0.8,
+    "beeSpeed": 28,
+    "shellNo": 0,
+    "wind": 0,
+    "turb": 0,
+    "turbScale": 60,
+    "massLoss": 0,
+    "shellVx": 0,
+    "shellVy": 0,
+    "shellSpin": 0,
+    "pattern": "sphere",
+    "tilt": 0,
+    "ringFrac": 0.45,
+    "text": "祭",
+    "waterRefl": 0,
+    "ignDelay": 0,
+    "ignJit": 10,
+    "ignSeed": 0,
+    "keepFrac": 1,
+    "afterBurn": 0,
+    "afterJit": 15,
+    "headDim": 1,
+    "headDimUntil": 0,
+    "emberFrac": 0,
+    "emberLife": 3,
+    "emberBright": 0.1,
+    "emberFollow": 0,
+    "emberSize": 1,
+    "emberAll": 0,
+    "emberEnd": 0,
+    "carrierHead": 0.4,
+    "subKeep": -1,
+    "subSpeedJit": -1,
+    "trimLead": 1,
+    "subScaleJit": 0,
+    "subVt": 0,
+    "subGrav": -1,
+    "subFlash": -1,
+    "strobeHz": 0,
+    "strobeDuty": 0.35,
+    "strobeStart": 0.4,
+    "glitter": 0,
+    "glitterDelay": 0.25,
+    "crackle": 0,
+    "crackleDelay": 0.3,
+    "branch": 0,
+    "branchAt": 0.45,
+    "flutter": 0,
+    "flutterHz": 0.7,
+    "riseH": 200,
+    "vtShell": 45,
+    "riseStyle": "gold",
+    "wobble": 0,
+    "wobbleHz": 1.6,
+    "kobanaN": 4,
+    "bunpoN": 3,
+    "trV": 43.5,
+    "trFps": 30,
+    "trInh": 0,
+    "trDrag": 4.6875,
+    "trGrav": 0.25,
+    "trCool": 0.38583,
+    "trFRate": 18461.53846,
+    "trFLife": 1.07136,
+    "trFSpread": 0.99964,
+    "trFSize": 0.024,
+    "trFBright": 0.035,
+    "trMRate": 8320,
+    "trMLife": 1.08,
+    "trMSpread": 1.71366,
+    "trMSize": 0.0131,
+    "trMBright": 0.169,
+    "trCRate": 331.361,
+    "trCLife": 0.92083,
+    "trCSpread": 2.197,
+    "trCSize": 0.02048,
+    "trCBright": 0.6591,
+    "trWRate": 0,
+    "trWLife": 0.12,
+    "trWSpread": 14,
+    "trWSize": 0.06,
+    "trWBright": 0.06,
+    "trHeadSize": 0.12,
+    "trHeadBright": 1.2,
+    "trHalo": 2.6,
+    "trHaloBright": 0.08888,
+    "trTwist": 0.35,
+    "trTwistN": 5,
+    "trWiggle": 0.1458,
+    "trTwistLag": 0.35,
+    "trFollow": 1,
+    "trBright": 1.6,
+    "trExport4K": 1,
+    "trIgnite": 0.04,
+    "trPhys": 1,
+    "loopT": 1,
+    "nozzles": 1,
+    "fanAngle": 70,
+    "spacing": 6,
+    "shotRate": 3,
+    "shotSpeed": 70,
+    "cometBurn": 1.4,
+    "burstStars": 0,
+    "wheelR": 3,
+    "jetSpeed": 28,
+    "jetCone": 10,
+    "jetDir": 90,
+    "groundH": 0,
+    "shutter": 0.05,
+    "fpsFloor": 24,
+    "qSS": 2,
+    "qHz": 300,
+    "qMaxSub": 16,
+    "qKernel": 0,
+    "qCore": 0,
+    "texW": 2048,
+    "texH": 2048,
+    "cols": 16,
+    "rows": 1,
+    "chans": 4,
+    "outMode": "combined",
+    "encGamma": 1,
+    "frameMode": "uniform",
+    "zoom": "off",
+    "engine": "gpu",
+    "form": "trail",
+    "segAt": 0,
+    "unitElev": 0,
+    "unitFlip": 0,
+    "cellPad": 2,
+    "autoGrid": 0,
+    "type": "trailM",
+    "phWob": 0.35,
+    "phWobL": [
+      45,
+      67,
+      97
+    ],
+    "phSpinF": 9,
+    "phSpinA": 1.56,
+    "phWind": -0.24,
+    "phTurb": 0.072,
+    "phTurbL": [
+      6,
+      67
+    ],
+    "phJit": 0.037,
+    "phFlL0": 0,
+    "phFlLv": 0,
+    "phFlW": 0.15,
+    "phFlI": 1.5,
+    "phARate": 12000,
+    "phAPuff": 1,
+    "phALife": 0.22,
+    "phALsig": 0.35,
+    "phAJet": 33,
+    "phACone": 1.8,
+    "phAKd": 18,
+    "phAT0": 2550,
+    "phATb": 2550,
+    "phATc": 1000,
+    "phATend": 2000,
+    "phAPt": 3,
+    "phAPm": 1,
+    "phAI": 0.0038,
+    "phATw": 0,
+    "phAR": 0.009,
+    "phBRate": 8000,
+    "phBPuff": 2,
+    "phBLife": 1.2,
+    "phBLsig": 0.3,
+    "phBJet": 27,
+    "phBCone": 1.3,
+    "phBKd": 12,
+    "phBT0": 2450,
+    "phBTb": 2375.4,
+    "phBTc": 0.43334,
+    "phBTend": 1800,
+    "phBPt": 3,
+    "phBPm": 0.446,
+    "phBI": 0.036333,
+    "phBTw": 0.35,
+    "phBR": 0.011,
+    "phCRate": 14,
+    "phCPuff": 1,
+    "phCLife": 1.44,
+    "phCLsig": 0.25,
+    "phCJet": 18,
+    "phCCone": 0.66,
+    "phCKd": 3.5,
+    "phCT0": 2150,
+    "phCTb": 2150,
+    "phCTc": 1000,
+    "phCTend": 1250,
+    "phCPt": 3,
+    "phCPm": 1,
+    "phCI": 0.8,
+    "phCTw": 0.25,
+    "phCR": 0.015
+  },
+  "materialDefaults": {
+    "stages": [
+      [
+        0,
+        "#ffffff"
+      ]
+    ],
+    "xw": 0.08,
+    "ramp0": "#ff821f",
+    "ramp1": "#ff9f3d",
+    "ramp2": "#ffb35a",
+    "ramp3": "#ffc171",
+    "headInt": 1,
+    "tailInt": 1
+  }
+}

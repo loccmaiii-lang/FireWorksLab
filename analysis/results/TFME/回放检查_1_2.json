@@ -1,0 +1,20 @@
+{
+ "total_s": 2.133,
+ "layers": [
+  {
+   "pack": "RiseTrailPhys_M · Fade30",
+   "frames": 64,
+   "grid": "16x1x4",
+   "cell_px": [
+    128,
+    2048
+   ],
+   "life_s": 2.133,
+   "edge_max": 0.0,
+   "edge_frames_over_2pct": 0,
+   "saturated_max": 0.0,
+   "empty_frames": 9,
+   "center_jump_max_px": 21.47
+  }
+ ]
+}
