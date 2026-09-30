@@ -1,0 +1,10 @@
+{
+ "id": "QA13E",
+ "type": "export",
+ "effect": "qiuxing_a",
+ "entry": "QA13",
+ "name": "QiuXingA_QA13",
+ "priority": 6,
+ "video": false,
+ "note": "QA13：接续 QA12，只调整末段银白星点燃烧及渐暗时机。2K RGBA 四通道、Zoom、PC + 手机参数；自动回放及烘焙器同一秒对照。"
+}

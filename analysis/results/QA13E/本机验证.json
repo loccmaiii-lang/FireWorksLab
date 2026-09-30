@@ -1,0 +1,183 @@
+{
+ "entry": "QA13",
+ "ver": "d8feb9c8",
+ "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "motion_fields_equal": [
+  "seed",
+  "stars",
+  "v0",
+  "vt",
+  "grav",
+  "speedJit",
+  "dirJit",
+  "wind",
+  "turb",
+  "turbScale",
+  "massLoss",
+  "pattern",
+  "shellVx",
+  "shellVy",
+  "shellSpin"
+ ],
+ "parameter_changes": {
+  "burn": [
+   3.6,
+   3.75
+  ],
+  "fade": [
+   0.15,
+   0.1
+  ]
+ },
+ "tail_and_colors_unchanged": true,
+ "packages": [
+  {
+   "package": "QiuXingA_QA13_1",
+   "texture_px": [
+    2048,
+    2048
+   ],
+   "frames": 256,
+   "grid": "8x8x4",
+   "channel_peaks": [
+    255,
+    255,
+    255,
+    201
+   ],
+   "selfCheck": {
+    "clipFrames": [],
+    "edgeFrames": [],
+    "chanUse": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "emptyMid": [],
+    "similar": 147,
+    "seam": null,
+    "maxClip": 0.0008675176601809394
+   }
+  },
+  {
+   "package": "QiuXingA_QA13_2",
+   "texture_px": [
+    2048,
+    2048
+   ],
+   "frames": 256,
+   "grid": "8x8x4",
+   "channel_peaks": [
+    255,
+    231,
+    204,
+    158
+   ],
+   "selfCheck": {
+    "clipFrames": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "edgeFrames": [],
+    "chanUse": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "emptyMid": [],
+    "similar": 58,
+    "seam": null,
+    "maxClip": 0.19642857142857142
+   }
+  }
+ ],
+ "continuous_export_samples": [
+  {
+   "time_s": 0.083,
+   "bright_pixels": 6656
+  },
+  {
+   "time_s": 0.2,
+   "bright_pixels": 9794
+  },
+  {
+   "time_s": 0.383,
+   "bright_pixels": 14105
+  },
+  {
+   "time_s": 0.817,
+   "bright_pixels": 21445
+  },
+  {
+   "time_s": 1.133,
+   "bright_pixels": 21805
+  },
+  {
+   "time_s": 1.65,
+   "bright_pixels": 20322
+  },
+  {
+   "time_s": 1.884,
+   "bright_pixels": 15757
+  },
+  {
+   "time_s": 2.3,
+   "bright_pixels": 8399
+  },
+  {
+   "time_s": 2.634,
+   "bright_pixels": 6085
+  },
+  {
+   "time_s": 3.1,
+   "bright_pixels": 5763
+  },
+  {
+   "time_s": 3.384,
+   "bright_pixels": 4547
+  },
+  {
+   "time_s": 3.6,
+   "bright_pixels": 2043
+  },
+  {
+   "time_s": 3.8,
+   "bright_pixels": 1227
+  },
+  {
+   "time_s": 4.05,
+   "bright_pixels": 1211
+  }
+ ],
+ "limits": [
+  "UE 4.24 实机未验证",
+  "参考视频背景、烟雾和镜头曝光不作为贴图内容"
+ ],
+ "continuous_live_samples_s": [
+  0.083,
+  0.25,
+  0.383,
+  0.8,
+  1.133,
+  1.65,
+  1.883,
+  2.3,
+  2.633,
+  3.1,
+  3.383,
+  3.6,
+  3.8,
+  4.05
+ ],
+ "visual_evidence": [
+  "烘焙回放.jpg",
+  "末段烘焙回放.jpg",
+  "连续导出回放.jpg",
+  "连续实时回放.jpg",
+  "头尾局部对照.jpg"
+ ]
+}
