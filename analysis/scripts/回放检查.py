@@ -69,7 +69,20 @@ class Pack:
         return base * v[..., None] * self.color(u)[None, None, :] * 4.0     # 4.0 = 材质里的自发光倍数（和烘焙器 uK 一致）
 
 
-def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360):
+def ref_frames(ref, ts, px):
+    """实拍同一时刻（开花起算）：ref = {video, t0, cx, cy, half}（烘焙器条目的 vmeta），按亮部外框取正方形"""
+    import cv2
+    cap = cv2.VideoCapture(ref['video']); fps = cap.get(cv2.CAP_PROP_FPS) or 30; out = []
+    for t in ts:
+        cap.set(cv2.CAP_PROP_POS_FRAMES, int(round((ref['t0'] + t) * fps))); ok, f = cap.read()
+        if not ok: out.append(np.zeros((px, px, 3), np.uint8)); continue
+        H, W = f.shape[:2]; h = ref.get('half', 0.3) * H * 1.15; cx, cy = ref.get('cx', 0.5) * W, ref.get('cy', 0.5) * H
+        x0, y0 = int(max(0, cx - h)), int(max(0, cy - h)); x1, y1 = int(min(W, cx + h)), int(min(H, cy + h))
+        out.append(np.array(Image.fromarray(cv2.cvtColor(f[y0:y1, x0:x1], cv2.COLOR_BGR2RGB)).resize((px, px), Image.BILINEAR)))
+    return out
+
+
+def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=None):
     delays = delays or [0.0] * len(packs)
     T = max(d + p.life for p, d in zip(packs, delays))
     world = max(max(p.size(u).max() for u in np.linspace(0, 1, 21)) for p in packs) * 1.05     # 画面边长（cm）
@@ -103,16 +116,18 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360):
             acc += lay; rows[li + 1].append(lay)
         rows[0].append(acc)
     def tone(a): return (np.clip(1 - np.exp(-a * 1.5), 0, 1) ** (1 / 2.2) * 255).astype(np.uint8)
+    refs = ref_frames(ref, [fr * T for fr in times], px) if ref else None
+    if refs: rows.insert(0, refs)
     W = px * len(times); H = px * len(rows)
     sheet = Image.new('RGB', (W + 110, H + 22), (14, 15, 20)); dr = ImageDraw.Draw(sheet)
     from PIL import ImageFont
     font = None
     for fp in ('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc', '/usr/share/fonts/truetype/wqy/wqy-microhei.ttc', 'C:/Windows/Fonts/msyh.ttc'):
         if os.path.exists(fp): font = ImageFont.truetype(fp, 13); break
-    names = ['组合'] + [p.label for p in packs]
+    names = (['实拍'] if refs else []) + ['组合'] + [p.label for p in packs]
     for r, row in enumerate(rows):
         dr.text((4, 22 + r * px + px // 2), names[r][:14] if font else ('combo' if r == 0 else f'layer {r}'), fill=(220, 210, 180), font=font)
-        for c, a in enumerate(row): sheet.paste(Image.fromarray(tone(a)), (110 + c * px, 22 + r * px))
+        for c, a in enumerate(row): sheet.paste(Image.fromarray(a if a.dtype == np.uint8 else tone(a)), (110 + c * px, 22 + r * px))
     for c, fr in enumerate(times): dr.text((110 + c * px + 4, 4), f'{int(fr * 100)}%  {fr * T:.2f}s', fill=(233, 180, 95), font=font)
     sheet.save(out, quality=88)
     json.dump(rep, open(os.path.splitext(out)[0] + '.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
@@ -123,6 +138,8 @@ if __name__ == '__main__':
     args = sys.argv[1:]; delays = None; times = (0.1, 0.3, 0.5, 0.7, 0.9)
     if '--delay' in args: i = args.index('--delay'); delays = [float(x) for x in args[i + 1].split(',')]; del args[i:i + 2]
     if '--times' in args: i = args.index('--times'); times = tuple(float(x) for x in args[i + 1].split(',')); del args[i:i + 2]
+    ref = None
+    if '--ref' in args: i = args.index('--ref'); ref = json.loads(args[i + 1]); del args[i:i + 2]      # {"video":..., "t0":..., "cx":..., "cy":..., "half":...}
     sep = '--separate' in args
     if sep: args.remove('--separate')
     out, dirs = args[0], args[1:]
@@ -133,5 +150,5 @@ if __name__ == '__main__':
     if sep:     # 各发射器各自的时间线（例：尾缀的上升循环、消散），不叠加
         base = os.path.splitext(out)[0]; r = []
         for i, p in enumerate(packs): r.append(check([p], f'{base}_{i + 1}.jpg', None, times))
-    else: r = check(packs, out, delays, times)
+    else: r = check(packs, out, delays, times, ref=ref)
     print(json.dumps(r, ensure_ascii=False, indent=1))

@@ -35,9 +35,9 @@ def run(job, s, out, log=print):
     ver = None
     if job.get('entry'):     # 按条目导出：组合条目每层一套；版本指纹从烘焙器的条目数据里取
         info = s.pg.evaluate(f"""(() => {{ const e = FW_REVIEW_LIST.find(x => x.id === {json.dumps(job['entry'])}); if (!e) return null;
-            return {{ ver: e.ver || null, layers: e.kind === 'combo' ? e.layerIds : [e.id] }}; }})()""")
+            return {{ ver: e.ver || null, layers: e.kind === 'combo' ? e.layerIds : [e.id], delays: e.kind === 'combo' ? e.combo.layers.map(L => L.delay || 0) : [0], video: e.video || null, vmeta: e.vmeta || null }}; }})()""")
         if not info: raise RuntimeError('找不到条目 ' + job['entry'])
-        ver = info['ver']; base = job.get('name') or job['entry']
+        ver = info['ver']; base = job.get('name') or job['entry']; job['_delays'] = info.get('delays'); job['_ref'] = dict(info['vmeta'], video=os.path.join(ROOT, 'tool', info['video'])) if info.get('vmeta') and info.get('video') else None
         job['exports'] = job.get('exports') or {(base if len(info['layers']) == 1 else f'{base}_{i + 1}'): {'_replica': lid} for i, lid in enumerate(info['layers'])}
     packages = []
     for name, over in job['exports'].items():
@@ -65,6 +65,22 @@ def run(job, s, out, log=print):
         packages.append(dict(name=name, replica=rep, files=files))
     json.dump(dict(effect=job.get('effect'), entry=job.get('entry'), ver=ver, time=time.strftime('%Y-%m-%d %H:%M'), dir='analysis/local/输出/素材包/', packages=packages),
               open(os.path.join(out, '导出清单.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    # 贴图回放检查（按 cascade.json 的播法合成，自动查裁切 / 曝光 / 空帧 / 跳变 / 组合错位）：结果图和数值上传，负责的 AI 据此判断
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import importlib; rc = importlib.import_module('回放检查')
+        dirs = [os.path.join(big, n) for n in job['exports']]; packs = []
+        for d in dirs:
+            n = len(json.load(open(os.path.join(d, 'cascade.json'), encoding='utf-8'))['emitters'])
+            packs.append([rc.Pack(d, i) for i in range(n)])
+        if all(len(pp) == 1 for pp in packs):
+            r = rc.check([pp[0] for pp in packs], os.path.join(out, '回放检查.jpg'), job.get('_delays') if len(packs) > 1 else None, ref=job.get('_ref'))
+        else:   # 尾缀这类一个包里几个发射器（上升循环、消散）：各自一张
+            r = [rc.check([p], os.path.join(out, f'回放检查_{i + 1}_{j + 1}.jpg'), None) for i, pp in enumerate(packs) for j, p in enumerate(pp)]
+        json.dump(r, open(os.path.join(out, '回放检查.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        log('回放检查：' + os.path.join(out, '回放检查.jpg'))
+    except Exception as e:
+        log(f'回放检查没做成（不影响导出）：{e}')
     # 烘焙器迭代区的预览（真实导出贴图原尺寸，按引擎方式播放）
     try:
         import export_preview
