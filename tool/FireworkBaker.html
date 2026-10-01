@@ -771,6 +771,8 @@ const BASE = {
   wheelR: 3, jetSpeed: 28, jetCone: 10, jetDir: 90, groundH: 0,
   // 取帧与输出
   shutter: 0.6, fpsFloor: 24,
+  // 4.0 帧预算（31_plan40.js）：开花段 / 燃烧段 / 淡出段帧率（引擎 30 fps 下按整数 tick 持帧），淡出起点 0 = 自动；贴图张数上限 0 = 不限
+  fpsBurst: 30, burstSec: 0.5, fpsActive: 15, fpsFade: 10, fadeAt: 0, maxPages: 0, fitPages: 1,
   qSS: 2, qHz: 300, qMaxSub: 16, qKernel: 0, qCore: 0,   // 画质（05_quality.js）：默认 = 3.7 原做法
   texW: 2048, texH: 2048, cols: 8, rows: 8, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'auto', zoom: 'on', engine: 'gpu',
   form: 'master', segAt: 0, unitElev: 0, unitFlip: 0, cellPad: 2, autoGrid: 1
@@ -1137,6 +1139,12 @@ const SCHEMA = [
   ] },
   { sec: '取帧（导出）', show: isSeq, hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。自动取帧把帧集中在运动快的开花初期，同时保证整段不低于最低帧率。', items: [
     ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P) && !usesTickPlan40(P)],
+    { sel: 'fpsBurst', label: '开花段帧率（4.0）', show: usesTickPlan40, options: [[30,'30 fps'],[15,'15 fps']] },
+    ['burstSec', '开花段时长（4.0）', 's', 0, 2, 0.05, usesTickPlan40],
+    { sel: 'fpsActive', label: '燃烧段帧率（4.0）', show: usesTickPlan40, options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps']] },
+    { sel: 'fpsFade', label: '淡出段帧率（4.0）', show: usesTickPlan40, options: [[15,'15 fps'],[10,'10 fps'],[7.5,'7.5 fps']] },
+    ['fadeAt', '淡出段从第几秒开始（0 = 自动：花径到头且速度降下来）', 's', 0, 20, 0.05, usesTickPlan40],
+    ['maxPages', '贴图张数上限（0 = 不限；超了自动降帧率）', '张', 0, 12, 1, usesTickPlan40],
     ['shutter', '运动模糊（占每帧显示时间的比例）', '', 0, 1, 0.01],
     ['segAt', '分段时刻（0 = 自动）', 's', 0, 12, 0.05, P => P.form === 'segments' && !usesTickPlan40(P)],
     { sel: 'expoMode', label: '贴图曝光', show: P => renderVersion(P)<40, options: [['sheet', '整张一起定（旧）'], ['frames', '按帧定（中后段不暗，开头最亮那下允许发白）']] },
@@ -1807,7 +1815,7 @@ function planLegacy(P, fm0, ta = 0, tb = P.duration) {
   return { L, HX, HY, Ww, Wh, cy, ppm, zoom, sizeKeys, area, px: 0.5, py: (cy + HY) / Wh, keys, times, dur, avgFps: L.F / D, minFps: 1 / maxDur, maxDisp, t0: ta, duration: D };
 }
 // 新大面片：先安排引擎能显示的时刻，再按页容量分段。旧计划保留在 planLegacy。
-// 默认完整 30 Hz 姿态；12/8 是待 UE 确认的质量下限，不作为强制采样档。
+// 帧预算见下面 budget40：开花段 / 燃烧段 / 淡出段三档帧率（默认 30 / 15 / 10），整数 tick 持帧。
 function clipSizeKeys40(keys, fullDuration, start, duration) {
   const at=t=>evalKeys(keys,clamp(t/fullDuration,0,1));
   return [[0,at(start)],...keys.filter(k=>k[0]*fullDuration>start+1e-9 && k[0]*fullDuration<start+duration-1e-9)
@@ -1817,30 +1825,89 @@ function tickFrameKeys40(F) {
   // 少量正偏移抵消 Lifetime/关键点四位小数的舍入；最后一格保持到寿命结束。
   return F===1 ? [[0,.01],[1,.99]] : [[0,.01],[(F-1)/F,F-1+.01],[1,F-.01]];
 }
+// ---------------- 4.0 帧预算 ----------------
+// 引擎 30 fps、帧号取整、不混合：每帧显示整数个 tick（1/2/3/4 → 30/15/10/7.5 fps），不用 1-2-1-2 这种不均匀节奏。
+// 三段：开花段（运动最快）、燃烧段、淡出段；点灭期间按点灭频率提高帧率（防混叠）。
+// 帧率是起点，不是定值：每个效果可以在「帧预算」里改，或者设贴图张数上限让它自动降档。
+const FPS40_TIERS=[30,15,10,7.5];
+function hold40(fps){ return clamp(Math.round(30/Math.max(1,+fps||30)),1,4); }
+function fadeAt40(P,fm,burstEnd) {
+  if(+P.fadeAt>0)return Math.max(burstEnd,+P.fadeAt);
+  // 自动：花径基本到头（≥97%）且速度降到峰值的 35% 以下，认为进入淡出 / 下垂段
+  const pr=fm.prof||[];let rmax=0,vmax=0;for(const q of pr){rmax=Math.max(rmax,q[2]);vmax=Math.max(vmax,q[1]);}
+  for(const [t,v,r] of pr)if(t>burstEnd && r>=.97*rmax && v<=.35*vmax)return t;
+  return Math.max(burstEnd,.6*P.duration);
+}
+function budget40(P,fm) {
+  const burstEnd=Math.max(0,+P.burstSec||0), fadeAt=fadeAt40(P,fm,burstEnd);
+  const strobeFrom=+P.strobeHz>0 ? (+P.strobeStart||0) : Infinity;
+  // 点灭：频率要 ≤ 0.4 × 帧率，帧率不够就在点灭期间提高（最多 30 fps；再高的点灭在导出说明里报警）
+  const strobeHold=+P.strobeHz>0 ? clamp(Math.floor(30*.4/ +P.strobeHz),1,4) : 4;
+  return {burstEnd,fadeAt,strobeFrom,strobeHold,
+    holds:[hold40(P.fpsBurst==null?30:P.fpsBurst),hold40(P.fpsActive==null?15:P.fpsActive),hold40(P.fpsFade==null?10:P.fpsFade)]};
+}
+function holdAt40(B,holds,t) {
+  const h=t<B.burstEnd?holds[0]:t<B.fadeAt?holds[1]:holds[2];
+  return t>=B.strobeFrom ? Math.min(h,B.strobeHold) : h;
+}
+function tickSchedule40(B,holds,first,end) {
+  const ticks=[];for(let k=first;k<end;k+=holdAt40(B,holds,k/30))ticks.push(k-first);
+  return ticks;
+}
+// 由每帧的起始 tick 求帧号曲线（分段线性，引擎取整后正好落在每帧上；关键点 = 持帧长度变化处）
+function keysFromTicks40(ticks,N) {
+  const F=ticks.length;if(F===1)return [[0,.01],[1,.99]];
+  const hold=f=>(f+1<F?ticks[f+1]:N)-ticks[f], keys=[[0,.01]];
+  for(let f=1;f<F-1;f++)if(hold(f)!==hold(f-1))keys.push([ticks[f]/N,f+.01]);
+  keys.push([ticks[F-1]/N,F-1+.01]);keys.push([1,F-.01]);
+  return keys.filter((k,i,a)=>i===0||k[0]>a[i-1][0]+1e-9);
+}
 function plan40(P,fm,ta=0,tb=P.duration) {
   const cols=Math.max(1,Math.min(P.cols,Math.floor(P.texW/512))),rows=Math.max(1,Math.min(P.rows,Math.floor(P.texH/512)));
   const base=planLegacy({...P,cols,rows,frameMode:'uniform'},fm,0,P.duration);
   // 包络只允许放大；抬高关键点时不能引入局部缩小。
   let run=0;const envelope=base.sizeKeys.map(([u,v])=>[u,run=Math.max(run,v)]);
-  const first=Math.ceil(ta*30-1e-8),end=Math.max(first+1,Math.ceil(tb*30-1e-8));
-  const F=end-first,t0=first/30,D=F/30,L={...base.L,F};
-  const sizeKeys=clipSizeKeys40(envelope,P.duration,t0,D),times=Array.from({length:F},(_,f)=>f/30),dur=times.map(()=>1/30);
+  const first=Math.ceil(ta*30-1e-8),end=Math.max(first+1,Math.ceil(tb*30-1e-8)),N=end-first,cap=base.L.F;
+  const B=budget40(P,fm);let holds=[...B.holds],ticks=tickSchedule40(B,holds,first,end);
+  // 降档：先淡出、再燃烧、最后开花段；下限 7.5 / 10 / 15 fps
+  const floorH=[2,3,4],order=[2,1,0];
+  const coarsen=()=>{for(const i of order)if(holds[i]<floorH[i]){holds[i]++;return true;}return false;};
+  const maxPages=Math.max(0,Math.round(+P.maxPages||0));
+  if(maxPages)while(Math.ceil(ticks.length/cap)>maxPages&&coarsen())ticks=tickSchedule40(B,holds,first,end);
+  // 末页只剩一点点（< 25% 容量）时，把淡出段降一档试试，能省掉一张贴图就用；燃烧段和开花段不为省贴图降档（要降就设张数上限）
+  if(+P.fitPages!==0){
+    const pages=Math.ceil(ticks.length/cap);
+    if(pages>1 && ticks.length-cap*(pages-1)<.25*cap){
+      const h2=[...holds];let t2=ticks;
+      while(h2[2]<floorH[2] && Math.ceil(t2.length/cap)>=pages){h2[2]++;t2=tickSchedule40(B,h2,first,end);}
+      if(Math.ceil(t2.length/cap)<pages){holds=h2;ticks=t2;}
+    }
+  }
+  const F=ticks.length,t0=first/30,D=N/30,L={...base.L,F};
+  const sizeKeys=clipSizeKeys40(envelope,P.duration,t0,D);
+  const times=ticks.map(k=>k/30),dur=ticks.map((k,f)=>((f+1<F?ticks[f+1]:N)-k)/30);
   let area=0;for(let i=0;i<200;i++)area+=evalKeys(sizeKeys,(i+.5)/200)**2/200;
-  let maxDisp=0;for(const [t,v] of fm.prof)if(t>=t0 && t<t0+D)
-    maxDisp=Math.max(maxDisp,v*L.cellW/(base.Ww*evalKeys(sizeKeys,(t-t0)/D))/30);
-  return {...base,L,t0,duration:D,sizeKeys,times,dur,keys:tickFrameKeys40(F),area,
-    frameTiming:'tick-start',frameFps:30,capacityFrames:base.L.F,sequenceStart:t0,sequenceEnd:end/30,
-    fadeEnd:P.duration,avgFps:30,minFps:30,maxDisp};
+  let maxDisp=0;for(const [t,v] of fm.prof)if(t>=t0 && t<t0+D){
+    const f=Math.min(F-1,Math.max(0,ticks.findLastIndex(k=>k/30<=t-t0)));
+    maxDisp=Math.max(maxDisp,v*L.cellW/(base.Ww*evalKeys(sizeKeys,(t-t0)/D))*dur[f]);}
+  const fpsOf=h=>30/h;
+  // 燃烧段（开花到淡出前）最低帧率，给探针 / 统计用
+  let minFps=30;for(let f=0;f<F;f++){const t=t0+times[f];if(t<B.fadeAt)minFps=Math.min(minFps,1/Math.max(dur[f],1/30));}
+  return {...base,L,t0,duration:D,sizeKeys,times,dur,ticks,nTicks:N,keys:keysFromTicks40(ticks,N),area,
+    frameTiming:'tick-start',frameFps:30,capacityFrames:cap,sequenceStart:t0,sequenceEnd:end/30,
+    budget:{burstEnd:B.burstEnd,fadeAt:B.fadeAt,strobeFrom:B.strobeFrom,fps:holds.map(fpsOf),strobeFps:fpsOf(B.strobeHold),pages:Math.ceil(F/cap)},
+    fadeEnd:P.duration,avgFps:F/D,minFps,maxDisp};
 }
 function splitPlan40(pl) {
   if(pl.frameTiming!=='tick-start' || pl.pageIndex!=null)return [pl];
-  const out=[],capacity=pl.capacityFrames;
+  const out=[],capacity=pl.capacityFrames,ticks=pl.ticks||pl.times.map((_,f)=>f),N=pl.nTicks||pl.L.F;
   for(let first=0;first<pl.L.F;first+=capacity){
-    const F=Math.min(capacity,pl.L.F-first),offset=first/30,D=F/30;
+    const F=Math.min(capacity,pl.L.F-first),k0=ticks[first],k1=first+F<pl.L.F?ticks[first+F]:N;
+    const offset=k0/30,D=(k1-k0)/30,pt=ticks.slice(first,first+F).map(k=>k-k0);
     const sizeKeys=clipSizeKeys40(pl.sizeKeys,pl.duration,offset,D);
     let area=0;for(let i=0;i<200;i++)area+=evalKeys(sizeKeys,(i+.5)/200)**2/200;
-    out.push({...pl,L:{...pl.L,F},t0:pl.t0+offset,duration:D,keys:tickFrameKeys40(F),sizeKeys,area,
-      times:pl.times.slice(first,first+F).map(t=>t-offset),dur:pl.dur.slice(first,first+F),
+    out.push({...pl,L:{...pl.L,F},t0:pl.t0+offset,duration:D,ticks:pt,nTicks:k1-k0,keys:keysFromTicks40(pt,k1-k0),sizeKeys,area,
+      times:pt.map(k=>k/30),dur:pl.dur.slice(first,first+F),
       pageIndex:out.length,pageCount:Math.ceil(pl.L.F/capacity)});
   }
   return out;
@@ -4417,6 +4484,78 @@ function fwlFiles(name, b, M, mobileBake=null) {
   return [['cascade.json', utf8(JSON.stringify(pc, null, 1))], ['cascade_mobile.json', utf8(JSON.stringify(mob, null, 1))]];
 }
 // =====================================================================
+//  多层效果导出成「一个」素材包（协作/标准.md 第 1 节第 5 项，4.0-c）
+//  一个 cascade.json 里每层（每层的每一段贴图）一个发射器，共用同一个爆点：
+//    delay_s = 组合里该层的延迟 + 该段在层里的起点 ÷ 时间倍率；寿命 ÷ 时间倍率；面片尺寸 × 层缩放。
+//  帧号、Size By Life、颜色曲线都是按相对寿命写的，时间倍率不用改它们。
+//  贴图名：T_<效果名>_L<层号>[_段].png、T_<效果名>_L<层号>_Ramp.png；手机版 T_<效果名>_Mobile_L<层号>…
+// =====================================================================
+function comboLayerName(name, i) { return `${name}_L${i + 1}`; }
+function comboLayerM(L) {
+  return { stages: L.stages, xw: L.xw, ramp0: L.ramp0, ramp1: L.ramp1, ramp2: L.ramp2, ramp3: L.ramp3, headInt: L.headInt, tailInt: L.tailInt };
+}
+function fwlCombo(name, layers, mobile = false) {
+  const out = { format: FWL_FORMAT, name, platform: mobile ? 'mobile' : 'pc',
+    source: { tool: '烟花母版烘焙器 ' + VERSION, combo: true, layers: layers.map(({ L, b }) => ({ type: b.P.type, form: b.form, renderVer: renderVersion(b.P) })) },
+    textures: {}, materials: {}, emitters: [], system: { preview_distance_cm: 30000, preview_warmup_s: 1.2 }, notes: [] };
+  layers.forEach(({ L, b }, i) => {
+    const ln = comboLayerName(name, i), body = fwlMaster(ln, b, comboLayerM(L), mobile), pre = `L${i + 1}_`;
+    const rate = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1;
+    for (const [k, v] of Object.entries(body.textures)) out.textures[pre + k] = v;
+    for (const [k, v] of Object.entries(body.materials))
+      out.materials[pre + k] = { ...v, textures: Object.fromEntries(Object.entries(v.textures).map(([role, t]) => [role, pre + t])) };
+    for (const e of body.emitters) {
+      const modules = e.modules.map(m => {
+        if (m.m === 'Lifetime') return { ...m, Lifetime: { const: r4(m.Lifetime.const / rate) } };
+        if (m.m === 'InitialSize') return { ...m, StartSize: { const: m.StartSize.const.map((v, j) => j < 2 ? r1(v * sc) : v) } };
+        if (m.m === 'InitialLocation') return { ...m, StartLocation: { const: m.StartLocation.const.map((v, j) => j === 2 ? r1(v * sc) : v) } };
+        return m;
+      });
+      out.emitters.push({ ...e, name: pre + e.name, material: pre + e.material, layer: i + 1,
+        required: { ...e.required, duration_s: r4(e.required.duration_s / rate), delay_s: r4((+L.delay || 0) + e.required.delay_s / rate), cutout: pre + e.required.cutout },
+        modules, ...(L.mirror ? { notes: ['这一层在烘焙器里水平镜像；导出的贴图没有翻转，引擎里需要把面片 X 尺寸取负或换翻转贴图（未经 UE 验证）'] } : {}) });
+    }
+    out.system.preview_distance_cm = Math.max(out.system.preview_distance_cm, body.system.preview_distance_cm * sc);
+  });
+  out.notes.push('多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。');
+  return out;
+}
+// 组合导出用的层烘焙：分开输出（星头 / 拖尾两张）的层在素材包里改成合并输出，和引擎材质（灰度查 Ramp）一致
+async function comboLayerBakes(layers, onProg) {
+  const out = [], own = [];
+  for (let i = 0; i < layers.length; i++) {
+    const L = layers[i], e = state.lib.find(x => x.name === L.lib);
+    if (!e || !e.bake) throw new Error(`第 ${i + 1} 层「${L.lib}」还没有烘焙`);
+    let b = e.bake;
+    if (b.tail || b.scale !== 1) {
+      b = await bake({ ...libP(e.P, true), outMode: 'combined' }, 1, p => onProg && onProg((i + p) / layers.length));
+      own.push(b);
+    }
+    out.push({ L, b, e });
+  }
+  return { layers: out, own };
+}
+async function comboPackFiles(name, layers, onProg) {
+  const files = [], { layers: lb, own } = await comboLayerBakes(layers, p => onProg && onProg(p * 0.4));
+  const mobiles = [], ownMobile = [];
+  try {
+    for (let i = 0; i < lb.length; i++) {
+      const { L, b } = lb[i], ln = comboLayerName(name, i), M = comboLayerM(L);
+      files.push(...await texFiles(b, ln));
+      files.push([`${TN(ln, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
+      const mb = b.mobile || await bakeMobileFor(b, p => onProg && onProg(0.4 + 0.5 * (i + p) / lb.length));
+      if (!b.mobile) ownMobile.push(mb);
+      const mn = comboLayerName(name + '_Mobile', i);
+      files.push(...await texFiles(mb, mn));
+      files.push([`${TN(mn, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
+      mobiles.push({ L, b: mb });
+    }
+    files.push(['cascade.json', utf8(JSON.stringify(fwlCombo(name, lb.map(({ L, b }) => ({ L, b })), false), null, 1))]);
+    files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCombo(name + '_Mobile', mobiles, true), null, 1))]);
+    return files;
+  } finally { own.forEach(disposeBake); ownMobile.forEach(disposeBake); }
+}
+// =====================================================================
 //  状态与界面
 // =====================================================================
 const state = {
@@ -4509,6 +4648,7 @@ function showStats(b) {
   const rows = [];
   rows.push(`${FORM_NAMES[b.form]} · 共 <b>${totalFrames}</b> 帧${b.next ? ' · '+parts.length+' 段' : ''} · 单格 <b>${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}</b>${L.cellW % 1 ? '（不是整数像素：格子边界落在像素中间，格子四周有留空，引擎里确认一次不串格）' : ''} · ${L.chans === 4 ? 'RGBA 接力' : '单通道'}`);
   if (m.loop) rows.push(`循环周期 <b>${m.duration.toFixed(2)} s</b> · ${m.avgFps.toFixed(1)} fps · 接缝 <span class="${cls(c.seam == null || c.seam < 1.6)}">${c.seam == null ? '—' : c.seam.toFixed(2)}</span>（≈1 无缝）`);
+  else if (m.budget) rows.push(`帧预算 · 开花段 <b>${m.budget.fps[0]}</b> / 燃烧段 <b>${m.budget.fps[1]}</b> / 淡出段 <b>${m.budget.fps[2]}</b> fps（淡出从 ${m.budget.fadeAt.toFixed(2)} s）${isFinite(m.budget.strobeFrom)?` · 点灭期间 ${m.budget.strobeFps} fps`:''} · 燃烧段最低 <span class="${cls(m.minFps >= 12)}">${m.minFps.toFixed(1)} fps</span> · 每帧最大位移 <span class="${cls(m.maxDisp <= 6)}">${m.maxDisp.toFixed(1)} px</span>`);
   else rows.push(`平均 <b>${m.avgFps.toFixed(1)}</b> fps · 最低 <span class="${cls(m.minFps >= 24)}">${m.minFps.toFixed(1)} fps</span> · 每帧最大位移 <span class="${cls(m.maxDisp <= 3)}">${m.maxDisp.toFixed(1)} px</span>`);
   rows.push(`精灵 ${m.Ww.toFixed(1)}×${m.Wh.toFixed(1)} m · 贴图 ${nTex} 张 · BC7 约 ${mb} MB`);
   if (b.form === 'master' || b.form === 'segments') rows.push(`平均面片面积 <b>${Math.round(m.area * 100)}%</b>${m.tight ? '（紧凑取景）' : m.zoom ? '（随开花放大）' : '（固定大小）'}${b.next ? ` · 分段时刻 ${parts.slice(1).map(s=>s.meta.t0.toFixed(2)).join(' / ')} s` : ''}`);
@@ -4760,7 +4900,7 @@ const LIB_TYPES = ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'henk
 // 组合用的母版：2048（1024 时每帧只有 128 像素，组合页糊得没法看——用户 2026-09-30）；组合页默认实时模拟，贴图只在「导出效果」页用
 // 组合用的母版：迭代 / 正式库条目（rep:）保持条目自己的输出方式（合并输出 = 引擎里的样子：灰度查 Ramp），这样组合页「导出效果」和导出的素材一致；
 // 花型库默认母版仍用分开输出（组合里星头 / 尾巴亮度可以分开调）。window.FW_LIB_TEX：云端软件渲染自检时临时改小贴图。
-const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || 2048, texH: window.FW_LIB_TEX || 2048, cols: renderVersion(P)>=40?Math.min(4,P.cols):8, rows: renderVersion(P)>=40?Math.min(4,P.rows):8, chans: 4, outMode: keep && P.outMode ? P.outMode : 'split', form: 'master', zoom: 'on' });
+const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || 2048, texH: window.FW_LIB_TEX || 2048, cols: renderVersion(P)>=40?Math.min(4,P.cols):8, rows: renderVersion(P)>=40?Math.min(4,P.rows):8, chans: 4, outMode: keep && P.outMode ? P.outMode : renderVersion(P)>=40 ? 'combined' : 'split', form: 'master', zoom: 'on' });
 const defaultLibName = t => TYPE_NAMES[t].replace(/（.*）/, '') + ' · 默认';
 async function ensureLibrary() {
   if (state.libReady) return;
@@ -4848,7 +4988,8 @@ function buildComboPanel() {
     it.appendChild(add); lib.appendChild(it);
   }
 }
-function exportCombo() {
+async function exportCombo() {
+  // 4.0：多层效果导出成一个素材包（每层每段一个发射器 + 延迟），附上原来的组合说明 JSON
   const layers = state.layers.map(L => {
     const e = state.lib.find(x => x.name === L.lib);
     return { master: L.lib, masterType: e ? e.type : '', scale: L.scale, delay: L.delay, timeRate: L.rate, mirror: L.mirror,
@@ -4857,7 +4998,18 @@ function exportCombo() {
       spriteSizeCm: e ? [+(e.bake.meta.Ww * L.scale * 100).toFixed(1), +(e.bake.meta.Wh * L.scale * 100).toFixed(1)] : null };
   });
   const json = { name: state.comboName, note: '每层一个面片，共用同一个爆点；Age = (礼花时间 − delay) × timeRate；颜色为 sRGB 十六进制，colorOverLife 为线性 RGB', layers };
-  download(new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' }), `Combo_${state.comboName}.json`);
+  // 素材包名要是英文 / 数字（spec）：迭代区组合条目用条目号，否则用组合名里的英文数字部分
+  const rv = typeof lib !== 'undefined' && lib.review && lib.review.kind === 'combo' ? lib.review.id : '';
+  const name = (rv || state.comboName || 'Combo').replace(/[^\w\-]+/g, '_').replace(/^_+|_+$/g, '') || 'Combo';
+  busy(true, '组合素材包：准备各层…', 0);
+  try {
+    const files = await comboPackFiles(name, state.layers, p => busy(true, '组合素材包…', p));
+    files.push([`${name}_组合说明.json`, utf8(JSON.stringify(json, null, 2))]);
+    busy(true, '打包 ZIP…', 1);
+    download(await makeZip(files.map(([f, d]) => [`${name}/${f}`, d])), `${name}.zip`);
+    flash('已导出组合素材包 ' + name);
+  } catch (e) { console.error(e); flash('组合导出失败：' + e.message, true); }
+  finally { busy(false); }
 }
 // =====================================================================
 //  花型库：分类、搜索、缩略图、收藏、最近使用
