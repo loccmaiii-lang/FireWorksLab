@@ -1,0 +1,206 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "FWLTest_Ramp_Mobile",
+ "platform": "mobile",
+ "source": {
+  "tool": "UE实测包.py（4.0-d 引擎实测，不是效果素材）"
+ },
+ "textures": {
+  "seq": {
+   "file": "T_FWLTest_Dot.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64
+  },
+  "rampD": {
+   "file": "T_FWLTest_Ramp_Default.png",
+   "class": "ramp",
+   "import_hint": "按项目默认 Ramp 设置导入（不改）"
+  },
+  "rampC": {
+   "file": "T_FWLTest_Ramp_Clamp.png",
+   "class": "ramp",
+   "import_hint": "X/Y Tiling = Clamp，Mip Gen = NoMipmaps，Filter 保持默认"
+  }
+ },
+ "materials": {
+  "rd": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "rampD"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  },
+  "rc": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "rampC"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 20000,
+  "preview_warmup_s": 0
+ },
+ "emitters": [
+  {
+   "name": "RampDefault",
+   "material": "rd",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 4.0,
+    "loops": 0,
+    "delay_s": 0,
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 4.0
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       4000,
+       4000,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       -3000,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "const": 0.01
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  },
+  {
+   "name": "RampClamp",
+   "material": "rc",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 4.0,
+    "loops": 0,
+    "delay_s": 0,
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 4.0
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       4000,
+       4000,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       3000,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "const": 0.01
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  }
+ ],
+ "notes": [
+  "左：Ramp 按项目默认设置导入；右：同一张 Ramp 改成 Clamp + NoMipmaps。星点中心灰度到顶（v = 1）。",
+  "左边星芯出现黑圈 / 暗点 = Wrap 采到了 Ramp 另一头，Ramp 必须 Clamp；两边一样 = 默认设置没问题。远近拉一拉看 Mip 的影响。"
+ ]
+}

@@ -5,7 +5,8 @@
     "exports": { "导出名": {参数改动}, ... } }   # 每一项导出一套（贴图、帧号测试图、渐变图、参数表、曲线、JSON）
   2026-09-30 起推荐的写法（按条目导出，自动记版本，烘焙器据此判断素材包是否和当前版本一致）：
   { "id": "XE1", "type": "export", "effect": "<状态清单 key>", "entry": "<条目号，可以是组合条目>", "name": "效果名（素材包目录名）" }
-    组合条目：每一层导出一套，目录名 <name>_<层号>；单条目：一套，目录名 <name>。
+    组合条目（4.0 起默认）：导出「一个」素材包，目录名 <name>，cascade.json 里每层每段一个发射器（delay_s / 寿命 / 尺寸已按组合换算）；
+      旧写法（每层一套，目录名 <name>_<层号>）要显式写 "combo_pack": false。单条目：一套，目录名 <name>。
     导出项里写 "_replica": "<条目号>" 可以单独指定某一项用哪个条目。
   结果目录多一个 导出清单.json：{effect, entry, ver, time, packages:[{name, replica, files}]}
 素材包（spec/pipeline_v1.md：一个效果一个固定目录，cascade.json + 贴图，文件名固定）留在本机 analysis/local/输出/素材包/<导出名>/，
@@ -38,6 +39,8 @@ def run(job, s, out, log=print):
             return {{ ver: e.ver || null, layers: e.kind === 'combo' ? e.layerIds : [e.id], delays: e.kind === 'combo' ? e.combo.layers.map(L => L.delay || 0) : [0], video: e.video || null, vmeta: e.vmeta || null }}; }})()""")
         if not info: raise RuntimeError('找不到条目 ' + job['entry'])
         ver = info['ver']; base = job.get('name') or job['entry']; job['_delays'] = info.get('delays'); job['_ref'] = dict(info['vmeta'], video=os.path.join(ROOT, 'tool', info['video'])) if info.get('vmeta') and info.get('video') else None
+        if len(info['layers']) > 1 and job.get('combo_pack', True) and not job.get('exports'):
+            return run_combo_pack(job, s, out, base, ver, big, log)
         job['exports'] = job.get('exports') or {(base if len(info['layers']) == 1 else f'{base}_{i + 1}'): {'_replica': lid} for i, lid in enumerate(info['layers'])}
     packages = []
     for name, over in job['exports'].items():
@@ -78,7 +81,8 @@ def run(job, s, out, log=print):
         else:   # 尾缀这类一个包里几个发射器（上升循环、消散）：各自一张
             r = [rc.check([p], os.path.join(out, f'回放检查_{i + 1}_{j + 1}.jpg'), None) for i, pp in enumerate(packs) for j, p in enumerate(pp)]
         json.dump(r, open(os.path.join(out, '回放检查.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-        log('回放检查：' + os.path.join(out, '回放检查.jpg'))
+        rr = r if isinstance(r, list) else [r]
+        log('回放检查：' + os.path.join(out, '回放检查.jpg') + ('（✅ 通过）' if all(x['pass'] for x in rr) else '（❌ ' + '；'.join(f"{L['pack']}：{'、'.join(L['fails'])}" for x in rr for L in x['layers'] if not L['pass']) + '）'))
     except Exception as e:
         log(f'回放检查没做成（不影响导出）：{e}')
     if job.get('entry'):
@@ -91,6 +95,39 @@ def run(job, s, out, log=print):
         log(f'烘焙器预览 preview.js：{kb:.0f} KB')
     except Exception as e:
         log(f'烘焙器预览没做成（不影响导出）：{e}')
+    log(f'大文件（贴图）在 {big}，不上传')
+
+
+def run_combo_pack(job, s, out, name, ver, big, log=print):
+    """多层条目导出成一个素材包（烘焙器 comboPackFiles：和左栏「导出组合素材包」按钮同一条路），再按引擎播法把所有发射器叠起来做回放检查"""
+    t = time.time(); entry = job['entry']
+    s.pg.evaluate(f"openReview(FW_REVIEW_LIST.find(e => e.id === {json.dumps(entry)}))")
+    s.pg.wait_for_function("window.__fw && window.__fw.idle() && state.tab === 'combo' && state.layers.length > 0 && state.layers.every(L => { const e = state.lib.find(x => x.name === L.lib); return e && e.bake; })", timeout=0)
+    b64 = s.pg.evaluate(f"""(async () => {{ const files = await comboPackFiles({json.dumps(name)}, state.layers);
+        const u8 = new Uint8Array(await (await makeZip(files)).arrayBuffer()); let t = '';
+        for (let i = 0; i < u8.length; i += 0x8000) t += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(t); }})()""")
+    d = os.path.join(big, name); os.makedirs(d, exist_ok=True)
+    for old in os.listdir(d):
+        if os.path.isfile(os.path.join(d, old)): os.remove(os.path.join(d, old))
+    zipfile.ZipFile(io.BytesIO(base64.b64decode(b64))).extractall(d)
+    files = sorted(os.listdir(d)); log(f'{name} 组合素材包 {time.time() - t:.0f} 秒：' + '、'.join(files))
+    import shutil
+    for f in files:
+        p = os.path.join(d, f)
+        if f.startswith('cascade') and f.endswith('.json'): shutil.copy(p, os.path.join(out, f'{name}_{f}'))
+        elif f.endswith('.png') and not any(k in f for k in ('_Ramp', '_Cutout', '_FrameTest', '_Mobile')): preview(p, os.path.join(out, f[:-4] + '_预览.jpg'))
+    json.dump(dict(effect=job.get('effect'), entry=entry, ver=ver, time=time.strftime('%Y-%m-%d %H:%M'), dir='analysis/local/输出/素材包/', combo_pack=True,
+                   packages=[dict(name=name, replica=entry, files=files)]), open(os.path.join(out, '导出清单.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    try:
+        import importlib; rc = importlib.import_module('回放检查')
+        n = len(json.load(open(os.path.join(d, 'cascade.json'), encoding='utf-8'))['emitters'])
+        r = rc.check([rc.Pack(d, i) for i in range(n)], os.path.join(out, '回放检查.jpg'), None, ref=job.get('_ref'), times_s=job.get('check_times_s'))
+        json.dump(r, open(os.path.join(out, '回放检查.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        log('回放检查：' + ('✅ 通过' if r['pass'] else '❌ ' + '；'.join(f"{L['pack']}：{'、'.join(L['fails'])}" for L in r['layers'] if not L['pass'])))
+    except Exception as e:
+        log(f'回放检查没做成（不影响导出）：{e}')
+    try: baker_strip(s, entry, os.path.join(out, '烘焙回放.jpg'), job.get('_ref'), log=log, times_s=job.get('check_times_s'))
+    except Exception as e: log(f'烘焙回放对照没做成（不影响导出）：{e}')
     log(f'大文件（贴图）在 {big}，不上传')
 
 

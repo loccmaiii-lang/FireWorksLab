@@ -480,7 +480,7 @@ ul.std li.ok { color: #9fd59f; } ul.std li.bad { color: #ffb4a6; }
         <label class="field">产物<select id="x-form"></select></label>
         <p class="note" id="formNote"></p>
       </div>
-      <div id="exposureControls" class="group" hidden><button class="btn" id="suggestExposure" type="button">按当前画面建议曝光</button><p class="hint">排除开花闪光后估算；只有点击才更新固定曝光。</p></div>
+      <div id="exposureControls" class="group" hidden><button class="btn" id="suggestExposure" type="button">建议曝光（按最亮时刻）</button><p class="hint">在燃烧段几个时刻试渲染，按最亮的一刻定（排除开花闪光），各帧都不会大片过曝；只有点击才更新固定曝光。</p></div>
       <div id="params"></div>
       <details class="sec" open>
         <summary>颜色（预览材质）</summary>
@@ -3105,22 +3105,35 @@ function renderLive40() {
   hudText=`实时模拟 · ${state.disp==='game'&&camera?'游戏内大小 · '+state.dist+' m · ':''}${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门`;
   hudB='';
 }
+// 4.0 自动固定曝光：在燃烧段几个时刻渲染线性亮度，取最亮的那一刻，让它 99.8% 分位的像素显示到 0.96。
+// 一个配方只有一个固定曝光（不随帧变），所以按最亮时刻定，之后各帧都不会大片过曝；模板默认值（EXPOSURE40）也是这样算的。
+const AUTO_EXPO40 = { fracs: [.1, .2, .35, .5, .75], target: .96, pct: 99.8 };
+async function autoExposure40(P0) {
+  const P={...derive({...P0}),flash:0,subFlash:0}, pl=displayPlan40(P), q=qualityOf(P), w=pl.L.cellW, h=pl.L.cellH;
+  const R=makeRenderer(P,familyOf(P.type)==='ground'?'loop':'burst'), span=familyOf(P.type)==='ground'?(P.loopT||P.duration):Math.min(P.duration,pl.duration||P.duration);
+  gl.activeTexture(gl.TEXTURE0);
+  let samples=null, cell=null, best=null; const per=[];
+  try {
+    samples=new Target(w*q.ss,h*q.ss,gl.RGBA16F); cell=new Target(w,h,gl.RGBA16F); const a=new Float32Array(w*h*4);
+    for (const f of AUTO_EXPO40.fracs) {
+      renderCell40(P,pl,R,(pl.t0||0)+f*span,samples,cell); cell.bind(); gl.readPixels(0,0,w,h,gl.RGBA,gl.FLOAT,a);
+      let energy=0; for(let i=0;i<a.length;i+=4){a[i]+=a[i+1];energy+=a[i];}
+      const v=energy<1e-6?null:clamp(expoOfChannel(a,0,AUTO_EXPO40.target,AUTO_EXPO40.pct),.0001,1000);
+      per.push(v); if(v!=null && (best==null || v<best))best=v;
+      await nextTick();
+    }
+  } finally { samples && samples.dispose(); cell && cell.dispose(); R.dispose(); }
+  return { value: best, per };
+}
 async function suggestExposure40() {
   if (state.P.exposureLock) { flash('曝光已锁定'); return; }
   if (state.baking || state.stillBusy) { flash('等当前烘焙完成后再建议曝光'); return; }
-  const gen=state.gen, P={...state.P,flash:0,subFlash:0}, t=Math.max(0,state.t), pl=displayPlan40(P);
-  const q=qualityOf(P), w=pl.L.cellW, h=pl.L.cellH, R=makeRenderer(P,familyOf(P.type)==='ground'?'loop':'burst');
-  state.stillBusy=true; gl.activeTexture(gl.TEXTURE0);
-  let samples=null, cell=null;
+  const gen=state.gen; state.stillBusy=true;
   try {
-    samples=new Target(w*q.ss,h*q.ss,gl.RGBA16F); cell=new Target(w,h,gl.RGBA16F);
-    renderCell40(P,pl,R,t,samples,cell); cell.bind(); const a=new Float32Array(w*h*4);
-    gl.readPixels(0,0,w,h,gl.RGBA,gl.FLOAT,a);
-    let energy=0; for(let i=0;i<a.length;i+=4){a[i]+=a[i+1];energy+=a[i];}
-    if(energy<1e-6){flash('当前画面没有足够亮部，请移动时间轴后再建议');return;}
-    const value=clamp(expoOfChannel(a,0,.8,99.8),.0001,1000);
-    if(gen===state.gen && !state.P.exposureLock){state.P.exposure=+value.toFixed(4);refreshPanelValues();onParam();flash('已更新固定曝光（未计入开花闪光）');}
-  } finally { samples && samples.dispose();cell && cell.dispose();R.dispose();state.stillBusy=false; }
+    const r=await autoExposure40(state.P);
+    if(r.value==null){flash('画面没有足够亮部，无法建议曝光');return;}
+    if(gen===state.gen && !state.P.exposureLock){state.P.exposure=+(r.value<1?r.value.toFixed(3):r.value.toFixed(2));refreshPanelValues();onParam();flash('已按最亮时刻更新固定曝光（未计入开花闪光）');}
+  } finally { state.stillBusy=false; }
 }
 async function renderStills40(P0,M0,opt) {
   const P=derive({...P0}), M=normalizeM(M0||{},P.type), pl=opt.plan||displayPlan40(P);

@@ -1,0 +1,117 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "FWLTest_Exposure",
+ "platform": "pc",
+ "source": {
+  "tool": "UE实测包.py（4.0-d 引擎实测，不是效果素材）"
+ },
+ "textures": {
+  "seq": {
+   "file": "T_FWLTest_Exposure.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64
+  },
+  "ramp": {
+   "file": "T_FWLTest_Exposure_Ramp.png",
+   "class": "ramp"
+  }
+ },
+ "materials": {
+  "expo": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 20000,
+  "preview_warmup_s": 0
+ },
+ "emitters": [
+  {
+   "name": "Card",
+   "material": "expo",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 4.0,
+    "loops": 0,
+    "delay_s": 0,
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 4.0
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       6000,
+       6000,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "const": 0.01
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  }
+ ],
+ "notes": [
+  "一个面片，十块灰阶（0.02–1.0，线性存储，低段密）。关掉自动曝光（或固定 EV），在游戏常用的后期设置下截图。",
+  "对照 预期_曝光卡.png / 预期显示值.csv：差得多说明材质自发光倍数或色调映射和烘焙器假设（×4 + 1−exp(−1.5a)）不同，烘焙器要按实测改。"
+ ]
+}

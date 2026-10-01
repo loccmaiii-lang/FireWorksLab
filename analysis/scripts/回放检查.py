@@ -1,17 +1,29 @@
 """导出贴图的回放检查（按引擎的播法，不是实时模拟）：进「待我验收」前必须做（CLAUDE.md「进入待我验收的条件」第 3 条）。
 
 读素材包里的 cascade.json（格子、帧数、帧号曲线、Size By Life、Color Over Life）+ 序列贴图（RGBA 接力）+ Ramp，
-按 Cascade 的方式在几个时刻合成画面（多个素材包 = 组合各层，按各自的面片大小和延迟叠加），并自动检查：
-  - 裁切：内容碰到格子边（每帧格子最外 2 像素的亮度占比）
+按 Cascade 的方式在几个时刻合成画面（多个素材包 / 一个包里多个发射器 = 组合各层，按各自的面片大小和 delay_s 叠加），并自动检查：
+  - 引擎取帧：按 30 fps 逐 tick 播放（帧号 = floor(Dynamic Parameter 曲线)），显示到的帧占比、一次最多跳几帧、有没有回跳
+  - 裁切：内容碰到格子内圈（先找出打包时清零的留边，再量留边内 3 像素一圈的亮度占比；以前量的是被清零的最外圈，永远是 0）
   - 曝光：灰度到顶（≥ 250）的像素占比
-  - 空帧、帧间跳变（相邻帧亮部中心移动的像素数）
-  - 组合：各层的面片中心 / 大小（错位）
+  - 空帧（中间的空帧、末尾的空帧分开数）、帧间跳变（相邻帧亮部中心移动，按 512 像素格子换算）
+及格线（默认值见 LIMITS，是建议值不是死规定；--limits '{"jump_px512": 4}' 可以按效果放宽 / 收紧，放宽要在说明里写理由）
 用法：
-  python3 analysis/scripts/回放检查.py <输出图.jpg> <素材包目录1> [<素材包目录2> ...] [--delay 0,0.9] [--times 0.1,0.3,0.5,0.7,0.9]
-输出：<输出图.jpg>（上面一行是组合，下面每层一行）+ 同名 .json（检查数值）
+  python3 analysis/scripts/回放检查.py <输出图.jpg> <素材包目录1> [<素材包目录2> ...] [--delay 0,0.9] [--times 0.1,0.3,0.5,0.7,0.9] [--fps 30] [--limits JSON]
+输出：<输出图.jpg>（上面一行是组合，下面每层一行）+ 同名 .json（检查数值 + 每层 pass + 总 pass）；有不过的项时退出码 1
 """
 import json, os, sys
 import numpy as np
+
+LIMITS = {
+    'shown_frac': 0.90,        # 30 fps 下显示到的帧 ≥ 90%（标准第 2 节）
+    'back_jumps': 0,           # 帧号不许往回跳
+    'edge_frac': 0.02,         # 一帧里内圈亮度占全帧 > 2% 算碰边
+    'edge_frames': 0,          # 碰边的帧数上限
+    'saturated': 0.02,         # 最亮一帧里灰度到顶的像素占比上限
+    'empty_mid': 0,            # 中间空帧（有内容的帧之间夹着的全黑帧）
+    'empty_tail': 2,           # 末尾全黑帧（占帧预算，应裁掉或缩短寿命）
+    'jump_px512': 3.0,         # 相邻帧亮部中心移动（换算到 512 像素格子）
+}
 from PIL import Image, ImageDraw
 
 
@@ -44,6 +56,20 @@ class Pack:
         self.mods = {m['m']: m for m in self.e['modules']}
         self.life = float(curve(self.mods['Lifetime']['Lifetime'], 0)) if 'Lifetime' in self.mods else self.e['required']['duration_s']
         H, W = self.tex.shape[:2]; self.cw, self.chh = W // self.cols, H // self.rows
+
+    def pad(self):
+        """打包时清零的留边：所有帧都为 0 的最外圈数，最多 8（烘焙器「格子留边」上限）；再往里的空白是取景留的空，不算留边"""
+        if hasattr(self, '_pad'): return self._pad
+        acc = np.zeros((self.chh, self.cw), np.float32)
+        for f in range(self.frames): acc = np.maximum(acc, self.cell(f))
+        k = 0
+        while k < 8 and acc[k].max() == 0 and acc[-1 - k].max() == 0 and acc[:, k].max() == 0 and acc[:, -1 - k].max() == 0: k += 1
+        self._pad = k; return k
+
+    def ticks(self, fps=30):
+        """引擎按 fps 逐 tick 取帧：寿命内每个 tick 的帧号"""
+        n = max(1, int(np.floor(self.life * fps + 1e-6)))
+        return [self.frame_at(min(1.0, (i + 0.5) / fps / self.life)) for i in range(n)]
 
     def cell(self, f):
         per = self.cols * self.rows; c, k = f // per, f % per; x, y = (k % self.cols) * self.cw, (k // self.cols) * self.chh
@@ -92,7 +118,8 @@ def ref_frames(ref, ts, px):
         cap.release()
 
 
-def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=None, times_s=None):
+def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=None, times_s=None, fps=30, limits=None):
+    lim = {**LIMITS, **(limits or {})}
     delays = delays or [0.0] * len(packs)
     delays = [d + p.delay for p, d in zip(packs, delays)]
     T = max(d + p.life for p, d in zip(packs, delays))
@@ -114,19 +141,37 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
     rep = dict(total_s=round(T, 3), sample_times_s=samples, sample_span_s=span, layers=[])
     rows = [[] for _ in range(len(packs) + 1)]
     for p in packs:   # 逐帧自动检查
-        edge, sat, empty, jumps, last = [], [], 0, [], None
+        pad = p.pad(); band = 3
+        edge, sat, cm, jumps, last = [], [], [], [], None
         for f in range(p.frames):
-            c = p.cell(f); tot = c.sum() + 1e-9
-            b = np.concatenate([c[:2].ravel(), c[-2:].ravel(), c[:, :2].ravel(), c[:, -2:].ravel()]); edge.append(float(b.sum() / tot))
-            sat.append(float((c >= 250 / 255).mean())); m = c > 0.08
-            if not m.any(): empty += 1; continue
+            c = p.cell(f); tot = c.sum() + 1e-9; cm.append(float(c.max()))
+            inner = c[pad:c.shape[0] - pad, pad:c.shape[1] - pad]
+            b = np.concatenate([inner[:band].ravel(), inner[-band:].ravel(), inner[band:-band, :band].ravel(), inner[band:-band, -band:].ravel()])
+            edge.append(float(b.sum() / tot)); sat.append(float((c >= 250 / 255).mean())); m = c > 0.08
             if m.sum() < 400: last = None; continue       # 亮部太少（开头 / 末尾零星几颗）不算跳变
             ys, xs = np.nonzero(m); cen = (xs.mean(), ys.mean())
-            if last is not None: jumps.append(float(np.hypot(cen[0] - last[0], cen[1] - last[1])))
+            if last is not None: jumps.append(float(np.hypot(cen[0] - last[0], cen[1] - last[1])) * 512 / p.cw)
             last = cen
-        rep['layers'].append(dict(pack=p.label, frames=p.frames, grid=f'{p.cols}x{p.rows}x{p.ch}', cell_px=[p.cw, p.chh], life_s=round(p.life, 3),
-                                  edge_max=round(max(edge), 4), edge_frames_over_2pct=int(sum(e > 0.02 for e in edge)), saturated_max=round(max(sat), 4),
-                                  empty_frames=empty, center_jump_max_px=round(max(jumps), 2) if jumps else 0))
+        lit = [i for i, v in enumerate(cm) if v > 3 / 255]
+        empty_tail = p.frames - 1 - lit[-1] if lit else p.frames
+        empty_mid = sum(1 for i in range(lit[0], lit[-1]) if cm[i] <= 3 / 255) if lit else 0
+        tk = p.ticks(fps); steps = np.diff(tk) if len(tk) > 1 else np.array([0])
+        shown = len(set(tk)); back = int((steps < 0).sum())
+        L = dict(pack=p.label, frames=p.frames, grid=f'{p.cols}x{p.rows}x{p.ch}', cell_px=[p.cw, p.chh], life_s=round(p.life, 3), pad_px=pad,
+                 ticks=len(tk), shown=shown, shown_frac=round(shown / p.frames, 3), max_skip=int(steps.max()) if len(steps) else 0, back_jumps=back,
+                 edge_max=round(max(edge), 4), edge_frames=int(sum(e > lim['edge_frac'] for e in edge)), saturated_max=round(max(sat), 4),
+                 empty_mid=empty_mid, empty_tail=empty_tail, center_jump_max_px512=round(max(jumps), 2) if jumps else 0)
+        fails = []
+        if L['shown_frac'] < lim['shown_frac']: fails.append(f"{fps} fps 只显示 {shown}/{p.frames} 帧")
+        if back > lim['back_jumps']: fails.append(f'帧号回跳 {back} 次')
+        if L['edge_frames'] > lim['edge_frames']: fails.append(f"{L['edge_frames']} 帧碰到格子内圈")
+        if L['saturated_max'] > lim['saturated']: fails.append(f"过曝像素 {L['saturated_max'] * 100:.1f}%")
+        if empty_mid > lim['empty_mid']: fails.append(f'中间空帧 {empty_mid}')
+        if empty_tail > lim['empty_tail']: fails.append(f'末尾空帧 {empty_tail}')
+        if L['center_jump_max_px512'] > lim['jump_px512']: fails.append(f"中心跳变 {L['center_jump_max_px512']} px（512 格）")
+        L['pass'] = not fails; L['fails'] = fails
+        rep['layers'].append(L)
+    rep['limits'] = lim; rep['fps'] = fps; rep['pass'] = all(L['pass'] for L in rep['layers'])
     for t in samples:
         acc = np.zeros((px, px, 3), np.float32)
         for li, (p, d) in enumerate(zip(packs, delays)):
@@ -165,6 +210,9 @@ if __name__ == '__main__':
     if '--times' in args: i = args.index('--times'); times = tuple(float(x) for x in args[i + 1].split(',')); del args[i:i + 2]
     ref = None
     if '--ref' in args: i = args.index('--ref'); ref = json.loads(args[i + 1]); del args[i:i + 2]      # {"video":..., "t0":..., "cx":..., "cy":..., "half":...}
+    fps = 30; limits = None
+    if '--fps' in args: i = args.index('--fps'); fps = float(args[i + 1]); del args[i:i + 2]
+    if '--limits' in args: i = args.index('--limits'); limits = json.loads(args[i + 1]); del args[i:i + 2]
     sep = '--separate' in args
     if sep: args.remove('--separate')
     out, dirs = args[0], args[1:]
@@ -174,6 +222,8 @@ if __name__ == '__main__':
         packs += [Pack(d, i) for i in range(n)]
     if sep:     # 各发射器各自的时间线（例：尾缀的上升循环、消散），不叠加
         base = os.path.splitext(out)[0]; r = []
-        for i, p in enumerate(packs): r.append(check([p], f'{base}_{i + 1}.jpg', None, times))
-    else: r = check(packs, out, delays, times, ref=ref)
+        for i, p in enumerate(packs): r.append(check([p], f'{base}_{i + 1}.jpg', None, times, fps=fps, limits=limits))
+        ok = all(x['pass'] for x in r)
+    else: r = check(packs, out, delays, times, ref=ref, fps=fps, limits=limits); ok = r['pass']
     print(json.dumps(r, ensure_ascii=False, indent=1))
+    sys.exit(0 if ok else 1)
