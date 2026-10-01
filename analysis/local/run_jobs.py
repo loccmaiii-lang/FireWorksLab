@@ -55,8 +55,16 @@ def run_job(job, s, force=False):
         line = time.strftime('%H:%M:%S ') + str(m); print(f'[{jid}] ' + line, flush=True); logf.write(line + '\n'); logf.flush()
     t0 = time.time()
     try:
-        if job.get('type') in ('trail', 'export', 'ui', 'smoke'):
-            if job['type'] == 'smoke':
+        if job.get('type') in ('trail', 'export', 'ui', 'smoke', 'expo'):
+            if job['type'] == 'expo':
+                # 4.0 迁移：按 autoExposure40（燃烧段最亮一刻 99.8% 分位 → 0.96）给每层定曝光，写 曝光.json（云端软件渲染一层要二十分钟）
+                log(f"开始：{job.get('name', '')}（4.0 曝光）"); res = {}
+                for lid in job['layers']:
+                    r = s.pg.evaluate('''async (id) => { const e = FW_REVIEW_LIST.find(x => x.id === id); const d = defaultsFor(e.base, 40, true);
+                        const P = {...d.P, ...e.p, type: e.base, ...%s}; const r = await autoExposure40(P); return {value: r.value, per: r.per}; }''' % json.dumps(job.get('form40', {})), lid)
+                    res[lid] = r; log(f"{lid}：曝光 ×{r['value']:.4g}")
+                jsave(res, os.path.join(out, '曝光.json'))
+            elif job['type'] == 'smoke':
                 log(f"开始：{job.get('name', '')}（界面冒烟检查）")
                 import subprocess   # 冒烟脚本用自己的浏览器（异步接口），放在子进程里跑，不和本会话的同步浏览器混用
                 r = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '界面冒烟.py'), '--full', '--out', out, '--limit', str(job.get('limit', 600))],
