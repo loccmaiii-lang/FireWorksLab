@@ -1,0 +1,21 @@
+{
+ "v_ref": 50.0,
+ "len_m": 24.89,
+ "expo": 22.9320125579834,
+ "ramp": "T_RiseTrailV6_M_Head_Ramp.png",
+ "col": 2.0,
+ "pc": {
+  "file": "T_RiseTrailV6_M_Head.png",
+  "cols": 16,
+  "rows": 1,
+  "frames": 64,
+  "cutout": "T_RiseTrailV6_M_Head_Cutout.png"
+ },
+ "mobile": {
+  "file": "T_RiseTrailV6_M_Head_M.png",
+  "cols": 16,
+  "rows": 1,
+  "frames": 64,
+  "cutout": "T_RiseTrailV6_M_Head_Cutout.png"
+ }
+}
