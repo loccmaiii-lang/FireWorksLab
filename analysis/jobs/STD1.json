@@ -1,0 +1,7 @@
+{
+ "id": "STD1",
+ "type": "std",
+ "name": "4.0.2 标准检查（全部当前条目 + 花型库 4.0 模板）",
+ "priority": 1,
+ "note": "只检查，写 tool/data/standard.js；结果目录里放 标准检查.json / .md。"
+}

@@ -10,7 +10,7 @@
 import argparse, asyncio, json, os, pathlib, platform, sys, time
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from browser_runtime import chromium_options
+from browser_runtime import chromium_options, launch_async
 ROOT = HERE.parents[1]
 HTML = ROOT / 'tool' / 'FireworkBaker.html'
 
@@ -37,12 +37,7 @@ async def main(out, full, limit):
     from playwright.async_api import async_playwright
     out.mkdir(parents=True, exist_ok=True); rep = []; errs = []
     async with async_playwright() as p:
-        b = None
-        if platform.system() == 'Windows' or os.environ.get('FW_RENDER') == 'gpu':   # 本机：用装好的 Chrome / Edge 有窗口跑（显卡），和任务运行器一样
-            for ch in ('chrome', 'msedge'):
-                try: b = await p.chromium.launch(channel=ch, headless=False, **chromium_options()); break
-                except Exception: pass
-        if b is None: b = await p.chromium.launch(**chromium_options())
+        b = await launch_async(p)
         pg = await b.new_page(viewport={'width': 1280, 'height': 760} if not full else {'width': 1600, 'height': 960})
         if not full:   # 云端软件渲染：每秒只画 3 帧，不然实时画面把主线程占满，点一下要等几分钟
             await pg.add_init_script("window.requestAnimationFrame = cb => setTimeout(() => cb(performance.now()), 330);")

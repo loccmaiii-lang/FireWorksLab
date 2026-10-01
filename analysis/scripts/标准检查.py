@@ -21,7 +21,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 spec = importlib.util.spec_from_file_location('probe', HERE / '烘焙器探针.py')
 probe = importlib.util.module_from_spec(spec); spec.loader.exec_module(probe)
-from browser_runtime import chromium_options, verify_renderer
+from browser_runtime import chromium_options, verify_renderer, launch_async
 
 STD = {'pcCell': 512, 'minFps': 10, 'minFpsFade': 7.5, 'maxMag': 1.0}   # 帧率下限：协作/标准.md 2.3（2026-10-01 按用户实测暂定 10 / 7.5）
 LIB_TYPES = ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'palm', 'henka', 'strobe', 'glitter', 'crackle', 'matsuba', 'crossette', 'ochiba', 'jisa', 'ring', 'saturn', 'kata', 'water']
@@ -56,7 +56,7 @@ async def run(targets, write, merge=False):
     from playwright.async_api import async_playwright
     out = {}
     async with async_playwright() as p:
-        b = await p.chromium.launch(**chromium_options())
+        b = await launch_async(p)
         pg = await b.new_page(viewport={'width': 1400, 'height': 900})
         await pg.goto(probe.HTML.resolve().as_uri() + '?fast', wait_until='domcontentloaded', timeout=0)
         await pg.wait_for_function('window.__fw && typeof REPLICA_BY_ID !== "undefined"', timeout=0)

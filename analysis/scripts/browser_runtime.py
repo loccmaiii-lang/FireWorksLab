@@ -26,3 +26,12 @@ def verify_renderer(renderer):
     if expected_gpu and software:
         raise RuntimeError('Requested GPU but browser selected software: ' + renderer)
     return renderer
+
+
+async def launch_async(p):
+    """异步 playwright 启动浏览器：Windows / 显卡机器先用装好的 Chrome / Edge（有窗口才走显卡，和本机任务运行器一样），不行再用自带的"""
+    if platform.system() == 'Windows' or os.environ.get('FW_RENDER') == 'gpu':
+        for ch in ('chrome', 'msedge'):
+            try: return await p.chromium.launch(channel=ch, headless=False, **chromium_options())
+            except Exception: pass
+    return await p.chromium.launch(**chromium_options())

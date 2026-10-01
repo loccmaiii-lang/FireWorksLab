@@ -55,8 +55,16 @@ def run_job(job, s, force=False):
         line = time.strftime('%H:%M:%S ') + str(m); print(f'[{jid}] ' + line, flush=True); logf.write(line + '\n'); logf.flush()
     t0 = time.time()
     try:
-        if job.get('type') in ('trail', 'export', 'ui', 'smoke', 'expo'):
-            if job['type'] == 'expo':
+        if job.get('type') in ('trail', 'export', 'ui', 'smoke', 'expo', 'std'):
+            if job['type'] == 'std':
+                # 标准检查（协作/标准.md 第 4 节）：写 tool/data/standard.js 和报告，结果目录里放一份
+                import subprocess, shutil
+                r = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '标准检查.py')] + list(job.get('targets') or []),
+                                   capture_output=True, text=True, encoding='utf-8', errors='replace')
+                for line in (r.stdout or '').splitlines()[-60:]: log(line)
+                if r.returncode != 0: raise RuntimeError('标准检查没跑完：' + (r.stderr or '')[-3000:])
+                for fn in ('标准检查.json', '标准检查.md'): shutil.copy(os.path.join(ROOT, 'analysis', 'probe', '标准检查', fn), os.path.join(out, fn))
+            elif job['type'] == 'expo':
                 # 4.0 迁移：按 autoExposure40（燃烧段最亮一刻 99.8% 分位 → 0.96）给每层定曝光，写 曝光.json（云端软件渲染一层要二十分钟）
                 log(f"开始：{job.get('name', '')}（4.0 曝光）"); res = {}
                 for lid in job['layers']:
