@@ -6,7 +6,7 @@
   "seg": "review",
   "view": "live",
   "flow": null,
-  "t": 4.709800000000001,
+  "t": 4.741200000000001,
   "P": {
    "type": "kiku",
    "renderVer": 40,
@@ -16,12 +16,12 @@
  },
  {
   "name": "左栏_待我验收",
-  "seconds": 1.9,
+  "seconds": 1.7,
   "hud": "实时模拟 · 游戏内大小 · 1000 m · 导出单格 512×512 · 固定曝光 ×0.20 · 居中快门",
   "seg": "review",
   "view": "live",
   "flow": null,
-  "t": 1.6746,
+  "t": 1.5194999999999985,
   "P": {
    "type": "kiku",
    "renderVer": 40,
@@ -36,7 +36,7 @@
   "seg": "wip",
   "view": "live",
   "flow": null,
-  "t": 3.4634000000000014,
+  "t": 3.3204999999999996,
   "P": {
    "type": "kiku",
    "renderVer": 40,
@@ -51,7 +51,7 @@
   "seg": "passed",
   "view": "live",
   "flow": null,
-  "t": 0.2637000000000007,
+  "t": 0.14400000000000002,
   "P": {
    "type": "kiku",
    "renderVer": 40,
@@ -66,7 +66,7 @@
   "seg": "hist",
   "view": "live",
   "flow": null,
-  "t": 2.0297,
+  "t": 1.913600000000001,
   "P": {
    "type": "kiku",
    "renderVer": 40,
@@ -76,7 +76,7 @@
  },
  {
   "name": "JM4-40_实时",
-  "seconds": 5.3,
+  "seconds": 5.0,
   "hud": "实时模拟 · 游戏内大小 · 1000 m · 导出单格 512×512 · 固定曝光 ×0.20 · 居中快门",
   "seg": "hist",
   "view": "live",
@@ -136,7 +136,7 @@
  },
  {
   "name": "JM4-40_流转后段",
-  "seconds": 9.3,
+  "seconds": 10.0,
   "hud": "贴图流转 · 第 52/64 帧 · A 通道 · 第 4 格（第 1 行第 4 列）· 时间 3.00 s",
   "seg": "hist",
   "view": "atlas",
@@ -151,7 +151,7 @@
  },
  {
   "name": "菊模板_流转",
-  "seconds": 11.1,
+  "seconds": 10.8,
   "hud": "贴图流转 · 第 31/64 帧 · G 通道 · 第 15 格（第 4 行第 3 列）· 时间 1.00 s",
   "seg": "hist",
   "view": "atlas",
@@ -166,7 +166,7 @@
  },
  {
   "name": "柳模板_流转",
-  "seconds": 12.8,
+  "seconds": 11.4,
   "hud": "贴图流转 · 第 61/64 帧 · A 通道 · 第 13 格（第 4 行第 1 列）· 时间 2.00 s",
   "seg": "hist",
   "view": "atlas",
