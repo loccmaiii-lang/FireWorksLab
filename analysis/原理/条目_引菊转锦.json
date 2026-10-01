@@ -16,7 +16,7 @@
     "pattern": "sphere",
     "v0": 250,
     "vt": 20,
-    "grav": 1,
+    "grav": 0.15,
     "speedJit": 8,
     "dirJit": 1.5,
     "burstR0": 0,
@@ -52,7 +52,7 @@
     "sparkSpread": 0.3,
     "sparkInherit": 0.0,
     "sparkDrag": 6,
-    "sparkGrav": 0.2,
+    "sparkGrav": 0.05,
     "T0": 1900,
     "cooling": 0.12,
     "sparkBright": 1,
@@ -93,7 +93,7 @@
     "pattern": "sphere",
     "v0": 250,
     "vt": 20,
-    "grav": 1,
+    "grav": 0.15,
     "speedJit": 8,
     "dirJit": 1.5,
     "burstR0": 0,
@@ -112,7 +112,7 @@
     "fade": 0.2,
     "lastFlare": 0,
     "flash": 0.3,
-    "duration": 5.0,
+    "duration": 6.5,
     "burn": 3.3,
     "burnJit": 10,
     "headBright": 0,
@@ -121,25 +121,25 @@
     "ignSeed": 91,
     "sparkStart": 0,
     "sparkStop": 0,
-    "sparkRate": 250,
-    "sparkRateEnd": 0.5,
-    "sparkLife": 1.0,
+    "sparkRate": 300,
+    "sparkRateEnd": 0.6,
+    "sparkLife": 2.2,
     "sparkLifeEnd": 1,
-    "sparkLifeJit": 35,
+    "sparkLifeJit": 30,
     "sparkSize": 0.45,
-    "sparkSpread": 1.5,
-    "sparkInherit": 0.15,
-    "sparkDrag": 3,
-    "sparkGrav": 0.5,
-    "T0": 2200,
-    "cooling": 0.3,
+    "sparkSpread": 0.8,
+    "sparkInherit": 0.05,
+    "sparkDrag": 4,
+    "sparkGrav": 0.05,
+    "T0": 2250,
+    "cooling": 0.35,
     "sparkBright": 1,
-    "twinkle": 0.3,
+    "twinkle": 0.4,
     "glitter": 0,
     "glitterDelay": 0.2,
     "exposure": 1.5,
-    "branch": 2,
-    "branchAt": 0.7
+    "branch": 1,
+    "branchAt": 0.8
    },
    "m": {
     "stages": [
@@ -156,7 +156,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "金锦：同一批星，换药（1.28 s ± 0.14）后星继续往外走，身后留下金色火花（几乎不继承星速、停在原地、分叉闪烁），金色随星往外推。"
+   "note": "金锦：同一批星，换药（1.28 s ± 0.14）后星继续往外走，身后留下直的金线（火花不继承星速、阻力大、寿命 2.2 s、少量闪烁），随星往外延伸，2–3 s 后慢慢消散。重力很小（实拍的下坠是仰拍透视）。"
   }
  ],
  "combos": [
@@ -189,7 +189,7 @@
     "1.3–2.5 s 金色从橙线外端开始、随星往外扩散",
     "游戏内大小下的引擎回放"
    ],
-   "opinion": "第 2 版（HN2E2）：HN2E1 的金色只在外圈成一圈短彗星、橙线带亮头且过曝，见 analysis/results/HN2E1/看法.md。这版改用火花分叉：金色从橙线上扩散出来。",
+   "opinion": "第 3 版（HN2E3）：重力降到 0.15 / 0.05（实拍下坠是透视）；金层改成星身后留下的长直金线。第 1、2 版看法见 analysis/results/HN2E1、HN2E2/看法.md。",
    "replaces": [
     "HN1"
    ]
