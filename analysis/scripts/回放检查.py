@@ -5,7 +5,7 @@
   - 引擎取帧：按 30 fps 逐 tick 播放（帧号 = floor(Dynamic Parameter 曲线)），显示到的帧占比、一次最多跳几帧、有没有回跳
   - 裁切：内容碰到格子内圈（先找出打包时清零的留边，再量留边以内 2 像素一圈的亮度占比；以前量的是被清零的最外圈，永远是 0）
   - 曝光：灰度到顶（≥ 250）的像素占比
-  - 空帧（中间的空帧、末尾的空帧分开数）、帧间跳变（相邻帧亮部中心移动，按 512 像素格子换算）
+  - 空帧（中间的空帧、末尾的空帧分开数）、中心抖动（亮部中心偏离前后两帧按时间连线的距离，按 512 格换算；相邻帧中心移动另记 center_jump_*，只作参考——固定取景时花下垂，中心本来就会走）
 及格线（LIMITS，照抄 协作/标准.md 2.3；--limits '{"jump_px512": 4}' 可以按效果放宽 / 收紧，放宽要在说明里写理由）
 用法：
   python3 analysis/scripts/回放检查.py <输出图.jpg> <素材包目录1> [<素材包目录2> ...] [--delay 0,0.9] [--times 0.1,0.3,0.5,0.7,0.9] [--fps 30] [--limits JSON]
@@ -23,7 +23,7 @@ LIMITS = {                     # 数值照 协作/标准.md 第 2.3 节（标准
     'saturated': 0.02,         # 最亮一帧里灰度到顶的像素占比上限（2%）
     'empty_mid': 0,            # 中间空帧（有内容的帧之间夹着的全黑帧）
     'empty_tail': 0,           # 末尾全黑帧（应裁掉、缩短寿命）
-    'jump_px512': 3.0,         # 相邻帧亮部中心移动（格子像素，换算到 512 格）
+    'jump_px512': 3.0,         # 中心抖动：亮部中心偏离「前后两帧按时间连成的直线」多少（格子像素，换算到 512 格）
 }
 from PIL import Image, ImageDraw
 
@@ -158,13 +158,28 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
         empty_tail = p.frames - 1 - lit[-1] if lit else p.frames
         empty_mid = sum(1 for i in range(lit[0], lit[-1]) if cm[i] <= 3 / 255) if lit else 0
         tk = p.ticks(fps); steps = np.diff(tk) if len(tk) > 1 else np.array([0])
+        # 中心抖动（标准 2.3「不抖」）：固定取景时花自己在长大、下垂，中心本来就会走；要抓的是走得不平滑的那一下。
+        # 每帧在引擎里第一次出现的 tick 当作它的时刻；每帧中心和「前一帧、后一帧按时间连线」在这一帧时刻的位置比，差多少就是抖多少。
+        first_tick = {}
+        for i, fr in enumerate(tk): first_tick.setdefault(fr, i)
+        cpos = {c[0]: (c[1], c[2]) for c in cens}     # 已经是 512 格像素
+        jit, jitf = [], []
+        for c0, c1, c2 in zip(cens, cens[1:], cens[2:]):
+            a, b, d = c0[0], c1[0], c2[0]
+            if not (b == a + 1 and d == b + 1) or a not in first_tick or b not in first_tick or d not in first_tick: continue
+            ta, tb, td = first_tick[a], first_tick[b], first_tick[d]
+            u = (tb - ta) / max(1e-9, td - ta)
+            qx = cpos[a][0] + (cpos[d][0] - cpos[a][0]) * u; qy = cpos[a][1] + (cpos[d][1] - cpos[a][1]) * u
+            jit.append(float(np.hypot(cpos[b][0] - qx, cpos[b][1] - qy))); jitf.append(b)
         shown = len(set(tk)); back = int((steps < 0).sum())
         L = dict(pack=p.label, frames=p.frames, grid=f'{p.cols}x{p.rows}x{p.ch}', cell_px=[p.cw, p.chh], life_s=round(p.life, 3), pad_px=pad,
                  ticks=len(tk), shown=shown, shown_frac=round(shown / p.frames, 3), max_skip=int(steps.max()) if len(steps) else 0, back_jumps=back,
                  edge_max=round(max(edge), 4), edge_frames=int(sum(e > lim['edge_frac'] for e in edge)), saturated_max=round(max(sat), 4),
                  empty_mid=empty_mid, empty_tail=empty_tail, center_jump_max_px512=round(max(jumps), 2) if jumps else 0,
                  centers=cens,
-                 center_jump_top=[[jf[i], round(jumps[i], 2)] for i in np.argsort(jumps)[::-1][:5]] if jumps else [])
+                 center_jump_top=[[jf[i], round(jumps[i], 2)] for i in np.argsort(jumps)[::-1][:5]] if jumps else [],
+                 center_jitter_px512=round(max(jit), 2) if jit else 0,
+                 center_jitter_top=[[jitf[i], round(jit[i], 2)] for i in np.argsort(jit)[::-1][:5]] if jit else [])
         fails = []
         if L['shown_frac'] < lim['shown_frac']: fails.append(f"{fps} fps 只显示 {shown}/{p.frames} 帧")
         if back > lim['back_jumps']: fails.append(f'帧号回跳 {back} 次')
@@ -172,7 +187,7 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
         if L['saturated_max'] > lim['saturated']: fails.append(f"过曝像素 {L['saturated_max'] * 100:.1f}%")
         if empty_mid > lim['empty_mid']: fails.append(f'中间空帧 {empty_mid}')
         if empty_tail > lim['empty_tail']: fails.append(f'末尾空帧 {empty_tail}')
-        if L['center_jump_max_px512'] > lim['jump_px512']: fails.append(f"中心跳变 {L['center_jump_max_px512']} px（512 格）")
+        if L['center_jitter_px512'] > lim['jump_px512']: fails.append(f"中心抖动 {L['center_jitter_px512']} px（512 格）")
         L['pass'] = not fails; L['fails'] = fails
         rep['layers'].append(L)
     rep['limits'] = lim; rep['fps'] = fps; rep['pass'] = all(L['pass'] for L in rep['layers'])

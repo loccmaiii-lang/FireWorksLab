@@ -1,0 +1,9 @@
+{
+ "id": "JM4-40E4",
+ "type": "export",
+ "effect": "jinmangju",
+ "entry": "JM4-40",
+ "name": "JinMangJu40",
+ "priority": 12,
+ "note": "回放检查的「中心跳变」改成「中心抖动」（偏离前后两帧连线的距离）后重导一次核对；参数不变。"
+}

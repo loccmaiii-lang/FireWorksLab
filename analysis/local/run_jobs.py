@@ -58,10 +58,12 @@ def run_job(job, s, force=False):
         if job.get('type') in ('trail', 'export', 'ui', 'smoke'):
             if job['type'] == 'smoke':
                 log(f"开始：{job.get('name', '')}（界面冒烟检查）")
-                import asyncio, importlib, pathlib as _pl
-                sm = importlib.import_module('界面冒烟')
-                ok = asyncio.run(sm.main(_pl.Path(out), True, job.get('limit', 600)))
-                log('界面冒烟：' + ('✅ 没有报错' if ok else '❌ 有报错，见 冒烟.json'))
+                import subprocess   # 冒烟脚本用自己的浏览器（异步接口），放在子进程里跑，不和本会话的同步浏览器混用
+                r = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '界面冒烟.py'), '--full', '--out', out, '--limit', str(job.get('limit', 600))],
+                                   capture_output=True, text=True, encoding='utf-8', errors='replace')
+                for line in (r.stdout or '').splitlines()[-40:]: log(line)
+                if r.returncode not in (0, 1): raise RuntimeError('界面冒烟脚本没跑完：' + (r.stderr or '')[-2000:])
+                log('界面冒烟：' + ('✅ 没有报错' if r.returncode == 0 else '❌ 有报错，见 冒烟.json'))
             elif job['type'] == 'ui':
                 log(f"开始：{job.get('name', '')}（界面截图）")
                 import ui_shots; ui_shots.run(job, s, out, log=log)

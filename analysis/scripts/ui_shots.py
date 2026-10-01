@@ -37,7 +37,7 @@ def run(job, s, out, log=print):
             if st.get('type'): pg.evaluate(f"setType({json.dumps(st['type'])})")
             if st.get('js'): pg.evaluate(st['js'])
             if st.get('view'): pg.click(f"#viewSeg button[data-view='{st['view']}']")
-            if 'flow' in st: pg.click(f"#flowSeg button[data-flow='{1 if st['flow'] else 0}']")
+            if 'flow' in st and pg.is_visible(f"#flowSeg button[data-flow='{1 if st['flow'] else 0}']"): pg.click(f"#flowSeg button[data-flow='{1 if st['flow'] else 0}']")
             wait_idle(); pg.wait_for_timeout(st.get('sleep', 1500))
             if st.get('seq'):
                 a, b, step = st['seq']; ims = []
