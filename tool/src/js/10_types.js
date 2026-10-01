@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '3.13';
+const VERSION = '4.0';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -144,17 +144,24 @@ const TYPES = {
 };
 // 新建配方的渲染版本：空中花型用 DEFAULT_RENDER_VER（4.0 通过不退步门槛后切到 40）；地面类、尾缀 V5 仍是 37。
 // 旧配方 / 正式库 / 已通过的条目不受影响：持久化配方没写 renderVer 的一律按 37 展开（storedParams、replicaPM）。
-const DEFAULT_RENDER_VER = 37;
-// 4.0 花型库模板的固定曝光（analysis/scripts/模板曝光.py 算的，和「建议曝光」按钮同一算法：燃烧段最亮的一刻 99.8% 分位 → 0.96）。
+const DEFAULT_RENDER_VER = 40;
+// 4.0 花型库模板的固定曝光（analysis/scripts/模板曝光.py 算的；菊按定帧对照人工调到 ×3，柳、椰子按改过的参数人工看过定，和「建议曝光」按钮同一算法：燃烧段最亮的一刻 99.8% 分位 → 0.96）。
 // 只给新建的模板用；存下来的 4.0 配方按自己存的曝光（没存就是 1，和以前一样）。
-const EXPOSURE40 = {};
+const EXPOSURE40 = {"kiku": 3, "botan": 3.1, "kamuro": 4.0, "yanagi": 2, "senrin": 2.4, "hachi": 0.89, "palm": 2, "henka": 2.3, "strobe": 2.8, "glitter": 1.1, "crackle": 3.4, "matsuba": 1.4, "crossette": 1.8, "ochiba": 2.9, "jisa": 3.8, "ring": 3.3, "saturn": 2.9, "kata": 3.0, "water": 1.8};
+// 4.0 新建模板的参数改动（只给新建的模板；旧配方、3.7 不变）。看 4.0 定帧对照后补的：
+//   柳：原模板拖尾短、看不出垂柳 → 火花寿命长、冷却慢、几乎不继承星速、阻力大 → 火花停在空中慢慢下垂，形成一条条垂下的金丝（曝光 ×2 人工看过）
+//   椰子：9 颗星太稀、拖尾细 → 14 颗星、拖尾更长更密、下垂成弧（曝光 ×2 人工看过）
+const TEMPLATE40 = {
+  yanagi: { sparkLife: 3.2, cooling: 0.16, sparkInherit: 0.15, sparkDrag: 2.5, sparkGrav: 0.35 },
+  palm: { stars: 14, sparkLife: 2.6, cooling: 0.18, sparkInherit: 0.12, sparkDrag: 2.2, sparkGrav: 0.3, sparkRate: 1200 }
+};
 function defaultsFor(type, version, stored = false) {
   const t = TYPES[type] || TYPES.kiku;
   if (version == null) version = familyOf(type) === 'aerial' ? DEFAULT_RENDER_VER : 37;
   const M = { ...MAT_BASE, ...t.m }; M.stages = (t.m.stages || MAT_BASE.stages).map(s => [...s]);
   const P = { ...BASE, ...t.p, type, renderVer: t.p.renderVer == null ? version : t.p.renderVer };
   if (P.renderVer >= 40 && familyOf(type) === 'aerial' && t.p.cols == null) { P.cols = 4; P.rows = 4; }
-  if (P.renderVer >= 40 && !stored && t.p.exposure == null && EXPOSURE40[type]) P.exposure = EXPOSURE40[type];
+  if (P.renderVer >= 40 && !stored) { Object.assign(P, TEMPLATE40[type] || {}); if (t.p.exposure == null && EXPOSURE40[type]) P.exposure = EXPOSURE40[type]; }
   return { P, M };
 }
 // 模板由 defaultsFor 创建；持久化配方在展开默认值前判版本，旧文件永远默认 37。

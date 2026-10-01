@@ -140,7 +140,7 @@ async def main():
         b = await p.chromium.launch(**chromium_options())
         pg = await b.new_page(viewport={'width': 1500, 'height': 950})
         errs = []; pg.on('pageerror', lambda e: errs.append(str(e)))
-        await pg.goto(a.html.resolve().as_uri(), wait_until='domcontentloaded', timeout=0)
+        await pg.goto(a.html.resolve().as_uri() + '?fast', wait_until='domcontentloaded', timeout=0)
         await pg.wait_for_function('window.__fw && typeof REPLICA_BY_ID !== "undefined"', timeout=0)
         await pg.wait_for_function('state.bake && !state.baking && !state.dirty', timeout=240000)
         renderer = verify_renderer(await pg.evaluate("document.querySelector('#gpu').title"))

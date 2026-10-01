@@ -2,7 +2,7 @@
 
 用法：
   python3 analysis/scripts/标准检查.py                # 当前条目（状态清单里各效果的主条目 / 待验收版）+ 正式库 + 花型库模板（4.0）
-  python3 analysis/scripts/标准检查.py JM4 HK9 type40:kiku ...   # 只查这几个
+  python3 analysis/scripts/标准检查.py JM4 HK9 type40:kiku ...   # 只查这几个（结果并进上一次的完整结果）
   选项：--all（迭代区全部非历史条目）  --no-write（不写 tool/data/standard.js）
 
 查什么（都在导出口径上量，不看实时模拟）：
@@ -52,13 +52,13 @@ def features(info):
     return f
 
 
-async def run(targets, write):
+async def run(targets, write, merge=False):
     from playwright.async_api import async_playwright
     out = {}
     async with async_playwright() as p:
         b = await p.chromium.launch(**chromium_options())
         pg = await b.new_page(viewport={'width': 1400, 'height': 900})
-        await pg.goto(probe.HTML.resolve().as_uri(), wait_until='domcontentloaded', timeout=0)
+        await pg.goto(probe.HTML.resolve().as_uri() + '?fast', wait_until='domcontentloaded', timeout=0)
         await pg.wait_for_function('window.__fw && typeof REPLICA_BY_ID !== "undefined"', timeout=0)
         renderer = verify_renderer(await pg.evaluate("(()=>{const g=document.createElement('canvas').getContext('webgl2');const x=g&&g.getExtension('WEBGL_debug_renderer_info');return x?g.getParameter(x.UNMASKED_RENDERER_WEBGL):'?'})()"))
         if targets is None:
@@ -99,8 +99,10 @@ async def run(targets, write):
             out[t] = res
             print(t, '✅' if res['pass'] else '❌', '；'.join(n for n, ok, _ in res['checks'] if not ok), flush=True)
         await b.close()
-    doc = {'generated': time.strftime('%Y-%m-%d %H:%M'), 'renderer': renderer, 'std': STD, 'items': out}
     d = ROOT / 'analysis' / 'probe' / '标准检查'; d.mkdir(parents=True, exist_ok=True)
+    if merge and (d / '标准检查.json').exists():     # 只查了几个：并进上一次的完整结果
+        out = {**json.loads((d / '标准检查.json').read_text(encoding='utf-8')).get('items', {}), **out}
+    doc = {'generated': time.strftime('%Y-%m-%d %H:%M'), 'renderer': renderer, 'std': STD, 'items': out}
     (d / '标准检查.json').write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding='utf-8')
     lines = ['| 条目 | 结果 | 没过的项 |', '|---|---|---|'] + [
         f"| {k} {v.get('name', '')} | {'✅' if v.get('pass') else '❌'} | {'；'.join(f'{n}（{d2}）' if d2 else n for n, ok, d2 in v.get('checks', []) if not ok) or v.get('error', '')} |" for k, v in out.items()]
@@ -115,4 +117,4 @@ if __name__ == '__main__':
     ap.add_argument('targets', nargs='*')
     ap.add_argument('--no-write', action='store_true')
     a = ap.parse_args()
-    asyncio.run(run(a.targets or None, not a.no_write))
+    asyncio.run(run(a.targets or None, not a.no_write, merge=bool(a.targets)))

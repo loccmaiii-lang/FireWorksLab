@@ -21,7 +21,7 @@ async def main(types, times):
     async with async_playwright() as p:
         b = await p.chromium.launch(**chromium_options())
         pg = await b.new_page(viewport={'width': 1200, 'height': 800})
-        await pg.goto(HTML.resolve().as_uri(), wait_until='domcontentloaded', timeout=0)
+        await pg.goto(HTML.resolve().as_uri() + '?fast', wait_until='domcontentloaded', timeout=0)
         await pg.wait_for_function('window.__fw && typeof TYPES !== "undefined"', timeout=0)
         verify_renderer(await pg.evaluate("(()=>{const g=document.createElement('canvas').getContext('webgl2');const x=g&&g.getExtension('WEBGL_debug_renderer_info');return x?g.getParameter(x.UNMASKED_RENDERER_WEBGL):'?'})()"))
         if not types: types = await pg.evaluate("Object.keys(TYPES).filter(t => familyOf(t) === 'aerial')")

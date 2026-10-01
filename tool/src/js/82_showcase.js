@@ -2,7 +2,7 @@
 const SHOWCASE_CASES=[['kiku','菊'],['botan','牡丹'],['kamuro','锦冠'],['senrin','千轮'],['strobe','点灭'],
   ['JM4','金芒菊 JM4'],['TR2S','V5 小（兼容锁定）'],['TR2M','V5 中（兼容锁定）'],['TR2L','V5 大（兼容锁定）']];
 // 橱窗的推荐固定曝光；不写回正式库，也不随帧或参数自动归一化。
-const SHOWCASE_EXPOSURE={kiku:3,botan:3,kamuro:4,senrin:4,strobe:3,JM4:.2};
+const SHOWCASE_EXPOSURE={JM4:.2};   // 复刻条目的 4.0 曝光；花型库模板用 EXPOSURE40（10_types.js）
 const showcase={active:false,id:0,left:null,right:null,M:null,target:null,loading:null,saved:null,key:'kiku',recipe:null,layers:[],solo:-1};
 function disposeShowcaseBakes(){
   for(const l of showcase.layers)disposeBake(l.b);showcase.layers=[];showcase.recipe=null;
@@ -40,7 +40,8 @@ async function loadShowcase(key=showcase.key) {
       }
       const replica=!!REPLICA_BY_ID[key], d=replica?replicaPM(key):defaultsFor(key,37);
       const oldP={...d.P,renderVer:37}, locked=isTrail(oldP);
-      const newP={...oldP,renderVer:40,cols:4,rows:4,texW:2048,texH:2048,exposure:SHOWCASE_EXPOSURE[key]||1,haloFrac:.22,haloR:3,previewBloom:0};
+      // 右边：花型库模板 = 4.0 新建模板（含 TEMPLATE40 改动和 EXPOSURE40 曝光，和用户新建时看到的一样）；复刻条目 = 同参数换 4.0 渲染
+      const newP=replica?{...oldP,renderVer:40,cols:4,rows:4,texW:2048,texH:2048,exposure:SHOWCASE_EXPOSURE[key]||1,haloFrac:.22,haloR:3,previewBloom:0}:{...defaultsFor(key,40).P};
       busy(true,'橱窗：烘焙 3.7 原版…',0);
       left=await bake(oldP,1,p=>busy(true,'橱窗：烘焙 3.7 原版…',p*.45));
       if(id!==showcase.id || !showcase.active)return;

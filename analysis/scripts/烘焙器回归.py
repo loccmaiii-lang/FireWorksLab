@@ -25,7 +25,7 @@ CASES = {
 }
 JS = r"""
 (a) => { const { id, times, px, over } = a; let P, M;
-  if (id.startsWith('type:')) { const d = defaultsFor(id.slice(5)); P = derive({ ...d.P, ...over }); M = d.M; }
+  if (id.startsWith('type:')) { const d = over.renderVer ? defaultsFor(id.slice(5), over.renderVer) : defaultsFor(id.slice(5)); P = derive({ ...d.P, ...over }); M = d.M; }   // --legacy：按 37 展开模板（4.0 起新建模板默认 40）
   else { if (typeof REPLICA_BY_ID === 'undefined' || !REPLICA_BY_ID[id]) return null; const r = __fw.replicaPM(id); P = derive({ ...r.P, ...over }); M = r.M; }
   return __fw.renderStills(P, M, { times, px }); }
 """
