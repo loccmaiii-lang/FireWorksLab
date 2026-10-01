@@ -138,8 +138,8 @@ await check('trim encoded leading/trailing dark frames without changing world fr
   assert.equal(context.released.length,4);
 });
 
-await check('4.0 frame budget: integer tick holds, tiers by phase, strobe raised, fewer pages than full 30 fps',()=>{
-  const r=data(`(()=>{const out={};for(const type of ['kiku','kamuro','strobe']){const P=defaultsFor(type,40).P,fm=measure(P),pl=plan(P,fm);
+await check('4.0 frame budget (opt-in tiers 30/15/10): integer tick holds, tiers by phase, strobe raised, fewer pages than full 30 fps',()=>{
+  const r=data(`(()=>{const out={};for(const type of ['kiku','kamuro','strobe']){const P={...defaultsFor(type,40).P,fpsActive:15,fpsFade:10},fm=measure(P),pl=plan(P,fm);
     const holds=pl.dur.map(d=>Math.round(d*30));const full=Math.ceil(pl.duration*30);
     out[type]={F:pl.L.F,full,pages:pl.budget.pages,fullPages:Math.ceil(full/pl.capacityFrames),holds:[...new Set(holds)],
       intHolds:pl.dur.every(d=>Math.abs(d*30-Math.round(d*30))<1e-9),burst:pl.times.filter(t=>pl.t0+t<pl.budget.burstEnd).length,
@@ -158,6 +158,14 @@ await check('4.0 frame budget: maxPages coarsens tiers to fit, never below floor
   const r=data(`(()=>{const P={...defaultsFor('kamuro',40).P,duration:12,maxPages:2},pl=plan(P,measure(P));return {pages:Math.ceil(pl.L.F/pl.capacityFrames),fps:pl.budget.fps};})()`);
   assert.ok(r.fps[0]>=15&&r.fps[1]>=10&&r.fps[2]>=7.5,'floors respected: '+r.fps);
   assert.ok(r.pages<=3,'pages reduced toward the cap: '+r.pages);
+});
+
+await check('4.0 default (no-regression gate): every 30 fps tick shows a new frame, at least as many as 3.7 shows',()=>{
+  const r=data(`(()=>{const out={};for(const type of ['kiku','botan','kamuro','senrin','strobe','crossette']){
+    const P4=defaultsFor(type,40).P,p4=plan(P4,measure(P4));const P3={...defaultsFor(type,37).P,renderVer:37},p3=plan(P3,measure(P3));
+    const shown=(pl)=>{const seen=new Set();for(let i=Math.ceil(pl.t0*30-1e-8);i/30<pl.t0+pl.duration-1e-8;i++){const f=frameIdx(pl,i/30-pl.t0);if(f>=0)seen.add(f);}return seen.size;};
+    out[type]={v40:shown(p4),v37:shown(p3),hold:Math.max(...p4.dur.map(d=>Math.round(d*30)))};}return out;})()`);
+  for(const [type,x] of Object.entries(r)){assert.ok(x.v40>=x.v37,type+': 4.0 shows '+x.v40+' frames < 3.7 '+x.v37);assert.equal(x.hold,1,type+': default holds 1 tick');}
 });
 
 const output=process.argv[2];

@@ -779,7 +779,8 @@ const BASE = {
   // 取帧与输出
   shutter: 0.6, fpsFloor: 24,
   // 4.0 帧预算（31_plan40.js）：开花段 / 燃烧段 / 淡出段帧率（引擎 30 fps 下按整数 tick 持帧），淡出起点 0 = 自动；贴图张数上限 0 = 不限
-  fpsBurst: 30, burstSec: 0.5, fpsActive: 15, fpsFade: 10, fadeAt: 0, maxPages: 0, fitPages: 1,
+  // 默认全程 30 fps（用户：跑 30 帧；不退步门槛：每个 tick 都换帧，换帧数不少于 3.7）。想省贴图张数时按效果把燃烧 / 淡出段降到 15 / 10，或设张数上限。
+  fpsBurst: 30, burstSec: 0.5, fpsActive: 30, fpsFade: 30, fadeAt: 0, maxPages: 0, fitPages: 1,
   qSS: 2, qHz: 300, qMaxSub: 16, qKernel: 0, qCore: 0,   // 画质（05_quality.js）：默认 = 3.7 原做法
   texW: 2048, texH: 2048, cols: 8, rows: 8, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'auto', zoom: 'on', engine: 'gpu',
   form: 'master', segAt: 0, unitElev: 0, unitFlip: 0, cellPad: 2, autoGrid: 1
@@ -857,19 +858,26 @@ const TYPES = {
   barrage: { p: { duration: 2, loopT: 2, nozzles: 1, fanAngle: 8, shotRate: 3, shotSpeed: 90, cometBurn: 1.6, vt: 32, burstStars: 14, subSpeed: 22, subBurn: 0.9, headSize: 1.1, sparkRate: 220, sparkLife: 0.7, sparkSpread: 1.5, sparkInherit: 0.1, sparkDrag: 2, zoom: 'off', form: 'loop', cols: 8, rows: 8, chans: 1, texW: 2048, texH: 2048 }, m: { stages: [[0, '#ffffff']], ramp1: '#8a3208', ramp2: '#ffc266', ramp3: '#fff0d2' } },
   shikake: { p: { duration: 1, loopT: 1, text: '祭', pattern: 'text', stars: 260, spacing: 30, groundH: 10, headSize: 0.9, flicker: 0.5, sparkRate: 30, sparkLife: 0.9, sparkSpread: 0.6, sparkDrag: 1.5, sparkSize: 0.2, jetSpeed: 0.6, jetCone: 60, jetDir: -90, zoom: 'off', form: 'loop', cols: 4, rows: 4, chans: 1, texW: 2048, texH: 1024 }, m: { stages: [[0, '#ff7a1e']] } }
 };
-// 默认先保留 3.7；4.0 通过不退步门槛后再统一切换。开发橱窗显式传入 40。
-function defaultsFor(type, version = 37) {
+// 新建配方的渲染版本：空中花型用 DEFAULT_RENDER_VER（4.0 通过不退步门槛后切到 40）；地面类、尾缀 V5 仍是 37。
+// 旧配方 / 正式库 / 已通过的条目不受影响：持久化配方没写 renderVer 的一律按 37 展开（storedParams、replicaPM）。
+const DEFAULT_RENDER_VER = 37;
+// 4.0 花型库模板的固定曝光（analysis/scripts/模板曝光.py 算的，和「建议曝光」按钮同一算法：燃烧段最亮的一刻 99.8% 分位 → 0.96）。
+// 只给新建的模板用；存下来的 4.0 配方按自己存的曝光（没存就是 1，和以前一样）。
+const EXPOSURE40 = {};
+function defaultsFor(type, version, stored = false) {
   const t = TYPES[type] || TYPES.kiku;
+  if (version == null) version = familyOf(type) === 'aerial' ? DEFAULT_RENDER_VER : 37;
   const M = { ...MAT_BASE, ...t.m }; M.stages = (t.m.stages || MAT_BASE.stages).map(s => [...s]);
   const P = { ...BASE, ...t.p, type, renderVer: t.p.renderVer == null ? version : t.p.renderVer };
   if (P.renderVer >= 40 && familyOf(type) === 'aerial' && t.p.cols == null) { P.cols = 4; P.rows = 4; }
+  if (P.renderVer >= 40 && !stored && t.p.exposure == null && EXPOSURE40[type]) P.exposure = EXPOSURE40[type];
   return { P, M };
 }
 // 模板由 defaultsFor 创建；持久化配方在展开默认值前判版本，旧文件永远默认 37。
 function renderVersion(P) { return P && +P.renderVer >= 40 ? 40 : 37; }
 function usesTickPlan40(P) { return renderVersion(P)>=40 && familyOf(P.type)==='aerial' && ['master','segments'].includes(P.form); }
 function storedParams(p, type = p.type) {
-  return { ...defaultsFor(type, renderVersion(p)).P, ...p, type, renderVer: renderVersion(p) };
+  return { ...defaultsFor(type, renderVersion(p), true).P, ...p, type, renderVer: renderVersion(p) };
 }
 // 旧版颜色（colA → colB，chg 秒）换成分段
 function normalizeM(M, type) {
@@ -1150,7 +1158,7 @@ const SCHEMA = [
     { sel: 'fpsBurst', label: '开花段帧率（4.0）', show: usesTickPlan40, options: [[30,'30 fps'],[15,'15 fps']] },
     ['burstSec', '开花段时长（4.0）', 's', 0, 2, 0.05, usesTickPlan40],
     { sel: 'fpsActive', label: '燃烧段帧率（4.0）', show: usesTickPlan40, options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps']] },
-    { sel: 'fpsFade', label: '淡出段帧率（4.0）', show: usesTickPlan40, options: [[15,'15 fps'],[10,'10 fps'],[7.5,'7.5 fps']] },
+    { sel: 'fpsFade', label: '淡出段帧率（4.0）', show: usesTickPlan40, options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps'],[7.5,'7.5 fps']] },
     ['fadeAt', '淡出段从第几秒开始（0 = 自动：花径到头且速度降下来）', 's', 0, 20, 0.05, usesTickPlan40],
     ['maxPages', '贴图张数上限（0 = 不限；超了自动降帧率）', '张', 0, 12, 1, usesTickPlan40],
     ['shutter', '运动模糊（占每帧显示时间的比例）', '', 0, 1, 0.01],
@@ -1227,7 +1235,7 @@ for (const r of REPLICAS) if (!r.fromReview) r.p = { ...r.p, renderVer: renderVe
 const REPLICA_BY_ID = Object.fromEntries(REPLICAS.map(r => [r.id, r]));
 // 复刻 → { P, M }
 function replicaPM(id) {
-  const r = REPLICA_BY_ID[id], d = defaultsFor(r.base, renderVersion(r.p)), P = { ...d.P, renderVer: renderVersion(r.p) };
+  const r = REPLICA_BY_ID[id], d = defaultsFor(r.base, renderVersion(r.p), true), P = { ...d.P, renderVer: renderVersion(r.p) };
   if (r.shell) applyShellNo(P, r.shell);
   Object.assign(P, r.p || {}, { type: r.base });
   if (familyOf(r.base) === 'aerial' && P.duration < P.burn * 1.15 + 0.4) P.duration = +(P.burn * 1.15 + 0.5).toFixed(2);
@@ -5290,7 +5298,7 @@ function renderVersions() {
 // ---------------- 派生配方 ----------------
 function resolveRecipe(r, depth = 0) {
   const parent = r.parent && depth < 16 ? state.recipes.find(x => x.name === r.parent) : null;
-  const base = parent ? resolveRecipe(parent, depth + 1) : { ...defaultsFor(r.type), P: storedParams({ type: r.type }) };
+  const base = parent ? resolveRecipe(parent, depth + 1) : { ...defaultsFor(r.type), P: storedParams({ type: r.type, renderVer: r.diff && r.diff.P ? r.diff.P.renderVer : undefined }) };   // 存的配方按自己的版本展开（没写 = 37）
   const P = { ...base.P, ...r.diff.P }, M = normalizeM({ ...base.M, ...r.diff.M }, r.type);
   return { P, M };
 }
@@ -5298,7 +5306,7 @@ let recParent = null;
 function saveRecipe(name) {
   name = (name || '').trim() || `${TYPE_EN[state.P.type]}_${state.recipes.length + 1}`;
   const parent = recParent && state.recipes.find(x => x.name === recParent && x.name !== name);
-  const base = parent ? resolveRecipe(parent) : defaultsFor(state.P.type);
+  const base = parent ? resolveRecipe(parent) : { ...defaultsFor(state.P.type), P: storedParams({ type: state.P.type, renderVer: renderVersion(state.P) }) };   // 和 resolveRecipe 同一个基准，差异才对得上
   const dP = {}, dM = {};
   for (const [k, , b] of diffParams(base.P, state.P)) dP[k] = b;
   dP.renderVer = renderVersion(state.P); // 等于模板默认值时也必须保存。

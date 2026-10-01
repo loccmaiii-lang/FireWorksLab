@@ -3,10 +3,10 @@
 读素材包里的 cascade.json（格子、帧数、帧号曲线、Size By Life、Color Over Life）+ 序列贴图（RGBA 接力）+ Ramp，
 按 Cascade 的方式在几个时刻合成画面（多个素材包 / 一个包里多个发射器 = 组合各层，按各自的面片大小和 delay_s 叠加），并自动检查：
   - 引擎取帧：按 30 fps 逐 tick 播放（帧号 = floor(Dynamic Parameter 曲线)），显示到的帧占比、一次最多跳几帧、有没有回跳
-  - 裁切：内容碰到格子内圈（先找出打包时清零的留边，再量留边内 3 像素一圈的亮度占比；以前量的是被清零的最外圈，永远是 0）
+  - 裁切：内容碰到格子内圈（先找出打包时清零的留边，再量留边以内 2 像素一圈的亮度占比；以前量的是被清零的最外圈，永远是 0）
   - 曝光：灰度到顶（≥ 250）的像素占比
   - 空帧（中间的空帧、末尾的空帧分开数）、帧间跳变（相邻帧亮部中心移动，按 512 像素格子换算）
-及格线（默认值见 LIMITS，是建议值不是死规定；--limits '{"jump_px512": 4}' 可以按效果放宽 / 收紧，放宽要在说明里写理由）
+及格线（LIMITS，照抄 协作/标准.md 2.3；--limits '{"jump_px512": 4}' 可以按效果放宽 / 收紧，放宽要在说明里写理由）
 用法：
   python3 analysis/scripts/回放检查.py <输出图.jpg> <素材包目录1> [<素材包目录2> ...] [--delay 0,0.9] [--times 0.1,0.3,0.5,0.7,0.9] [--fps 30] [--limits JSON]
 输出：<输出图.jpg>（上面一行是组合，下面每层一行）+ 同名 .json（检查数值 + 每层 pass + 总 pass）；有不过的项时退出码 1
@@ -14,15 +14,16 @@
 import json, os, sys
 import numpy as np
 
-LIMITS = {
-    'shown_frac': 0.90,        # 30 fps 下显示到的帧 ≥ 90%（标准第 2 节）
+LIMITS = {                     # 数值照 协作/标准.md 第 2.3 节（标准由用户定；这里只照抄）
+    'shown_frac': 0.90,        # 30 fps 下显示到的帧 ≥ 90%
     'back_jumps': 0,           # 帧号不许往回跳
-    'edge_frac': 0.02,         # 一帧里内圈亮度占全帧 > 2% 算碰边
+    'edge_band': 2,            # 内圈宽度（留边以内 2 像素）
+    'edge_frac': 0.005,        # 一帧里内圈亮度占全帧 ≥ 0.5% 算碰边
     'edge_frames': 0,          # 碰边的帧数上限
-    'saturated': 0.02,         # 最亮一帧里灰度到顶的像素占比上限
+    'saturated': 0.02,         # 最亮一帧里灰度到顶的像素占比上限（2%）
     'empty_mid': 0,            # 中间空帧（有内容的帧之间夹着的全黑帧）
-    'empty_tail': 2,           # 末尾全黑帧（占帧预算，应裁掉或缩短寿命）
-    'jump_px512': 3.0,         # 相邻帧亮部中心移动（换算到 512 像素格子）
+    'empty_tail': 0,           # 末尾全黑帧（应裁掉、缩短寿命）
+    'jump_px512': 3.0,         # 相邻帧亮部中心移动（格子像素，换算到 512 格）
 }
 from PIL import Image, ImageDraw
 
@@ -141,7 +142,7 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
     rep = dict(total_s=round(T, 3), sample_times_s=samples, sample_span_s=span, layers=[])
     rows = [[] for _ in range(len(packs) + 1)]
     for p in packs:   # 逐帧自动检查
-        pad = p.pad(); band = 3
+        pad = p.pad(); band = int(lim['edge_band'])
         edge, sat, cm, jumps, last = [], [], [], [], None
         for f in range(p.frames):
             c = p.cell(f); tot = c.sum() + 1e-9; cm.append(float(c.max()))

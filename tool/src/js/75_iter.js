@@ -151,7 +151,7 @@ function renderVersions() {
 // ---------------- 派生配方 ----------------
 function resolveRecipe(r, depth = 0) {
   const parent = r.parent && depth < 16 ? state.recipes.find(x => x.name === r.parent) : null;
-  const base = parent ? resolveRecipe(parent, depth + 1) : { ...defaultsFor(r.type), P: storedParams({ type: r.type }) };
+  const base = parent ? resolveRecipe(parent, depth + 1) : { ...defaultsFor(r.type), P: storedParams({ type: r.type, renderVer: r.diff && r.diff.P ? r.diff.P.renderVer : undefined }) };   // 存的配方按自己的版本展开（没写 = 37）
   const P = { ...base.P, ...r.diff.P }, M = normalizeM({ ...base.M, ...r.diff.M }, r.type);
   return { P, M };
 }
@@ -159,7 +159,7 @@ let recParent = null;
 function saveRecipe(name) {
   name = (name || '').trim() || `${TYPE_EN[state.P.type]}_${state.recipes.length + 1}`;
   const parent = recParent && state.recipes.find(x => x.name === recParent && x.name !== name);
-  const base = parent ? resolveRecipe(parent) : defaultsFor(state.P.type);
+  const base = parent ? resolveRecipe(parent) : { ...defaultsFor(state.P.type), P: storedParams({ type: state.P.type, renderVer: renderVersion(state.P) }) };   // 和 resolveRecipe 同一个基准，差异才对得上
   const dP = {}, dM = {};
   for (const [k, , b] of diffParams(base.P, state.P)) dP[k] = b;
   dP.renderVer = renderVersion(state.P); // 等于模板默认值时也必须保存。
