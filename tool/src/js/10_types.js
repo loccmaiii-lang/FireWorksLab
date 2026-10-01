@@ -63,8 +63,10 @@ const BASE = {
   // 取帧与输出
   shutter: 0.6, fpsFloor: 24,
   // 4.0 帧预算（31_plan40.js）：开花段 / 燃烧段 / 淡出段帧率（引擎 30 fps 下按整数 tick 持帧），淡出起点 0 = 自动；贴图张数上限 0 = 不限
-  // 默认全程 30 fps（用户：跑 30 帧；不退步门槛：每个 tick 都换帧，换帧数不少于 3.7）。想省贴图张数时按效果把燃烧 / 淡出段降到 15 / 10，或设张数上限。
-  fpsBurst: 30, burstSec: 0.5, fpsActive: 30, fpsFade: 30, fadeAt: 0, maxPages: 0, fitPages: 1,
+  // 默认按运动分配、先放进 1 张（用户 2026-10-01 实测：4.56 s 的金芒菊放一张 4×4×RGBA 在游戏里就流畅）：开花段每 tick 一帧，
+  // 慢下来每帧多停几个 tick（最多 maxHold 个），放不下才自动加张。三档帧率 / 全程 30 fps 是可选的预算方式。
+  frameBudget: 'motion', pageTarget: 1, maxHold: 4,
+  fpsBurst: 30, burstSec: 0.5, fpsActive: 15, fpsFade: 10, fadeAt: 0, maxPages: 0, fitPages: 1,
   qSS: 2, qHz: 300, qMaxSub: 16, qKernel: 0, qCore: 0,   // 画质（05_quality.js）：默认 = 3.7 原做法
   texW: 2048, texH: 2048, cols: 8, rows: 8, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'auto', zoom: 'on', engine: 'gpu',
   form: 'master', segAt: 0, unitElev: 0, unitFlip: 0, cellPad: 2, autoGrid: 1
@@ -446,12 +448,15 @@ const SCHEMA = [
   ] },
   { sec: '取帧（导出）', show: isSeq, hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。自动取帧把帧集中在运动快的开花初期，同时保证整段不低于最低帧率。', items: [
     ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P) && !usesTickPlan40(P)],
-    { sel: 'fpsBurst', label: '开花段帧率（4.0）', show: usesTickPlan40, options: [[30,'30 fps'],[15,'15 fps']] },
-    ['burstSec', '开花段时长（4.0）', 's', 0, 2, 0.05, usesTickPlan40],
-    { sel: 'fpsActive', label: '燃烧段帧率（4.0）', show: usesTickPlan40, options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps']] },
-    { sel: 'fpsFade', label: '淡出段帧率（4.0）', show: usesTickPlan40, options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps'],[7.5,'7.5 fps']] },
-    ['fadeAt', '淡出段从第几秒开始（0 = 自动：花径到头且速度降下来）', 's', 0, 20, 0.05, usesTickPlan40],
-    ['maxPages', '贴图张数上限（0 = 不限；超了自动降帧率）', '张', 0, 12, 1, usesTickPlan40],
+    { sel: 'frameBudget', label: '帧预算（4.0）', show: usesTickPlan40, options: [['motion','按运动分配（默认：先放进几张，开花快的地方帧密）'],['tiers','分段帧率（开花 / 燃烧 / 淡出各定帧率）'],['full','全程 30 fps（每个 tick 一帧，最费贴图）']] },
+    ['pageTarget', '先放进几张贴图（放不下自动加）', '张', 1, 8, 1, P => usesTickPlan40(P) && (P.frameBudget || 'motion') === 'motion'],
+    { sel: 'maxHold', label: '最慢帧率（一帧最多停几个 tick）', show: P => usesTickPlan40(P) && (P.frameBudget || 'motion') === 'motion', options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick）'],[4,'7.5 fps（停 4 tick）'],[5,'6 fps（停 5 tick）']] },
+    { sel: 'fpsBurst', label: '开花段帧率（4.0）', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps']] },
+    ['burstSec', '开花段时长（这段每 tick 一帧）', 's', 0, 2, 0.05, usesTickPlan40],
+    { sel: 'fpsActive', label: '燃烧段帧率（4.0）', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps']] },
+    { sel: 'fpsFade', label: '淡出段帧率（4.0）', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps'],[7.5,'7.5 fps']] },
+    ['fadeAt', '淡出段从第几秒开始（0 = 自动：花径到头且速度降下来）', 's', 0, 20, 0.05, P => usesTickPlan40(P) && P.frameBudget === 'tiers'],
+    ['maxPages', '贴图张数上限（0 = 不限；超了自动降帧率）', '张', 0, 12, 1, P => usesTickPlan40(P) && P.frameBudget === 'tiers'],
     ['shutter', '运动模糊（占每帧显示时间的比例）', '', 0, 1, 0.01],
     ['segAt', '分段时刻（0 = 自动）', 's', 0, 12, 0.05, P => P.form === 'segments' && !usesTickPlan40(P)],
     { sel: 'expoMode', label: '贴图曝光', show: P => renderVersion(P)<40, options: [['sheet', '整张一起定（旧）'], ['frames', '按帧定（中后段不暗，开头最亮那下允许发白）']] },

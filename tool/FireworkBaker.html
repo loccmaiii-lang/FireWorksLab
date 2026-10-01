@@ -779,8 +779,10 @@ const BASE = {
   // 取帧与输出
   shutter: 0.6, fpsFloor: 24,
   // 4.0 帧预算（31_plan40.js）：开花段 / 燃烧段 / 淡出段帧率（引擎 30 fps 下按整数 tick 持帧），淡出起点 0 = 自动；贴图张数上限 0 = 不限
-  // 默认全程 30 fps（用户：跑 30 帧；不退步门槛：每个 tick 都换帧，换帧数不少于 3.7）。想省贴图张数时按效果把燃烧 / 淡出段降到 15 / 10，或设张数上限。
-  fpsBurst: 30, burstSec: 0.5, fpsActive: 30, fpsFade: 30, fadeAt: 0, maxPages: 0, fitPages: 1,
+  // 默认按运动分配、先放进 1 张（用户 2026-10-01 实测：4.56 s 的金芒菊放一张 4×4×RGBA 在游戏里就流畅）：开花段每 tick 一帧，
+  // 慢下来每帧多停几个 tick（最多 maxHold 个），放不下才自动加张。三档帧率 / 全程 30 fps 是可选的预算方式。
+  frameBudget: 'motion', pageTarget: 1, maxHold: 4,
+  fpsBurst: 30, burstSec: 0.5, fpsActive: 15, fpsFade: 10, fadeAt: 0, maxPages: 0, fitPages: 1,
   qSS: 2, qHz: 300, qMaxSub: 16, qKernel: 0, qCore: 0,   // 画质（05_quality.js）：默认 = 3.7 原做法
   texW: 2048, texH: 2048, cols: 8, rows: 8, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'auto', zoom: 'on', engine: 'gpu',
   form: 'master', segAt: 0, unitElev: 0, unitFlip: 0, cellPad: 2, autoGrid: 1
@@ -1162,12 +1164,15 @@ const SCHEMA = [
   ] },
   { sec: '取帧（导出）', show: isSeq, hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。自动取帧把帧集中在运动快的开花初期，同时保证整段不低于最低帧率。', items: [
     ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P) && !usesTickPlan40(P)],
-    { sel: 'fpsBurst', label: '开花段帧率（4.0）', show: usesTickPlan40, options: [[30,'30 fps'],[15,'15 fps']] },
-    ['burstSec', '开花段时长（4.0）', 's', 0, 2, 0.05, usesTickPlan40],
-    { sel: 'fpsActive', label: '燃烧段帧率（4.0）', show: usesTickPlan40, options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps']] },
-    { sel: 'fpsFade', label: '淡出段帧率（4.0）', show: usesTickPlan40, options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps'],[7.5,'7.5 fps']] },
-    ['fadeAt', '淡出段从第几秒开始（0 = 自动：花径到头且速度降下来）', 's', 0, 20, 0.05, usesTickPlan40],
-    ['maxPages', '贴图张数上限（0 = 不限；超了自动降帧率）', '张', 0, 12, 1, usesTickPlan40],
+    { sel: 'frameBudget', label: '帧预算（4.0）', show: usesTickPlan40, options: [['motion','按运动分配（默认：先放进几张，开花快的地方帧密）'],['tiers','分段帧率（开花 / 燃烧 / 淡出各定帧率）'],['full','全程 30 fps（每个 tick 一帧，最费贴图）']] },
+    ['pageTarget', '先放进几张贴图（放不下自动加）', '张', 1, 8, 1, P => usesTickPlan40(P) && (P.frameBudget || 'motion') === 'motion'],
+    { sel: 'maxHold', label: '最慢帧率（一帧最多停几个 tick）', show: P => usesTickPlan40(P) && (P.frameBudget || 'motion') === 'motion', options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick）'],[4,'7.5 fps（停 4 tick）'],[5,'6 fps（停 5 tick）']] },
+    { sel: 'fpsBurst', label: '开花段帧率（4.0）', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps']] },
+    ['burstSec', '开花段时长（这段每 tick 一帧）', 's', 0, 2, 0.05, usesTickPlan40],
+    { sel: 'fpsActive', label: '燃烧段帧率（4.0）', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps']] },
+    { sel: 'fpsFade', label: '淡出段帧率（4.0）', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps'],[7.5,'7.5 fps']] },
+    ['fadeAt', '淡出段从第几秒开始（0 = 自动：花径到头且速度降下来）', 's', 0, 20, 0.05, P => usesTickPlan40(P) && P.frameBudget === 'tiers'],
+    ['maxPages', '贴图张数上限（0 = 不限；超了自动降帧率）', '张', 0, 12, 1, P => usesTickPlan40(P) && P.frameBudget === 'tiers'],
     ['shutter', '运动模糊（占每帧显示时间的比例）', '', 0, 1, 0.01],
     ['segAt', '分段时刻（0 = 自动）', 's', 0, 12, 0.05, P => P.form === 'segments' && !usesTickPlan40(P)],
     { sel: 'expoMode', label: '贴图曝光', show: P => renderVersion(P)<40, options: [['sheet', '整张一起定（旧）'], ['frames', '按帧定（中后段不暗，开头最亮那下允许发白）']] },
@@ -1848,7 +1853,7 @@ function planLegacy(P, fm0, ta = 0, tb = P.duration) {
   return { L, HX, HY, Ww, Wh, cy, ppm, zoom, sizeKeys, area, px: 0.5, py: (cy + HY) / Wh, keys, times, dur, avgFps: L.F / D, minFps: 1 / maxDur, maxDisp, t0: ta, duration: D };
 }
 // 新大面片：先安排引擎能显示的时刻，再按页容量分段。旧计划保留在 planLegacy。
-// 帧预算见下面 budget40：开花段 / 燃烧段 / 淡出段三档帧率（默认 30 / 15 / 10），整数 tick 持帧。
+// 帧预算：默认按运动分配（motionSchedule40，先放进一张）；可选三档帧率（budget40）或全程 30 fps。都按整数 tick 持帧。
 function clipSizeKeys40(keys, fullDuration, start, duration) {
   const at=t=>evalKeys(keys,clamp(t/fullDuration,0,1));
   return [[0,at(start)],...keys.filter(k=>k[0]*fullDuration>start+1e-9 && k[0]*fullDuration<start+duration-1e-9)
@@ -1895,20 +1900,57 @@ function keysFromTicks40(ticks,N) {
   keys.push([ticks[F-1]/N,F-1+.01]);keys.push([1,F-.01]);
   return keys.filter((k,i,a)=>i===0||k[0]>a[i-1][0]+1e-9);
 }
+// ---------------- 4.0.2 默认：按运动分配（先放进 pageTarget 张） ----------------
+// 用户实测（2026-10-01）：4.56 s 的金芒菊放一张 4×4×RGBA（64 帧）在游戏里就很流畅。所以默认先把整段放进 1 张：
+// 帧数够（总 tick ≤ 容量）就每个 tick 一帧；不够就按运动分配——星跑得快的地方（开花）每 tick 一帧，慢下来以后每帧多停几个 tick。
+// 每帧停整数个 tick（引擎 30 fps 取整，不混合），最长 maxHold40 个 tick（默认 4 = 7.5 fps）；放不下才自动加一张。
+// 运动量 = 星的速度（世界米 / 秒，屏幕上的移动和它成正比），平滑约 0.5 s，再加峰值的 8% 作底（冷却、变暗也算变化）。
+// 节奏：每帧停的 tick 数一次最多比上一帧多 1（30 → 15 → 10 → 7.5 fps 逐级放慢，不会 30 突然跳到 7.5）。
+function motionWeights40(fm,first,end){
+  const pr=fm.prof||[];let vmax=0;for(const q of pr)vmax=Math.max(vmax,q[1]);
+  const vAt=t=>{if(!pr.length)return 1;let i=pr.findIndex(q=>q[0]>=t);if(i<0)return pr[pr.length-1][1];if(i===0)return pr[0][1];
+    const a=pr[i-1],b=pr[i],u=(t-a[0])/Math.max(1e-6,b[0]-a[0]);return a[1]+(b[1]-a[1])*u;};
+  const raw=[];for(let k=first;k<end;k++)raw.push(vAt((k+.5)/30));
+  const w=raw.map((_,i)=>{let s=0,n=0;for(let j=Math.max(0,i-8);j<=Math.min(raw.length-1,i+8);j++){s+=raw[j];n++;}return s/n;});
+  return w.map(v=>Math.max(v,.08*vmax,1e-6));
+}
+function motionSchedule40(B,w,first,end,cap,maxHold){
+  const N=end-first;
+  const sched=D=>{const ticks=[];let k=0,prev=1;
+    while(k<N){ticks.push(k);const t=(first+k)/30;
+      let hm=t<B.burstEnd?1:Math.min(maxHold,prev+1);if(t>=B.strobeFrom)hm=Math.min(hm,B.strobeHold);
+      let h=1,acc=w[k];while(h<hm&&k+h<N&&acc+w[k+h]<=D){acc+=w[k+h];h++;}
+      k+=h;prev=h;}
+    return ticks;};
+  if(N<=cap)return {ticks:sched(0)};
+  let lo=0,hi=w.reduce((a,c)=>a+c,0),best=sched(hi);
+  if(best.length>cap)return {ticks:best,over:true};
+  for(let i=0;i<40;i++){const mid=(lo+hi)/2,t=sched(mid);if(t.length<=cap){best=t;hi=mid;}else lo=mid;}
+  return {ticks:best};
+}
 function plan40(P,fm,ta=0,tb=P.duration) {
   const cols=Math.max(1,Math.min(P.cols,Math.floor(P.texW/512))),rows=Math.max(1,Math.min(P.rows,Math.floor(P.texH/512)));
   const base=planLegacy({...P,cols,rows,frameMode:'uniform'},fm,0,P.duration);
   // 包络只允许放大；抬高关键点时不能引入局部缩小。
   let run=0;const envelope=base.sizeKeys.map(([u,v])=>[u,run=Math.max(run,v)]);
   const first=Math.ceil(ta*30-1e-8),end=Math.max(first+1,Math.ceil(tb*30-1e-8)),N=end-first,cap=base.L.F;
-  const B=budget40(P,fm);let holds=[...B.holds],ticks=tickSchedule40(B,holds,first,end);
+  const B=budget40(P,fm),mode=P.frameBudget||'motion';let holds=[...B.holds],ticks;
+  let pagesUsed=0;
+  if(mode==='motion'){
+    // 先放进 pageTarget 张；每帧最多停 maxHold 个 tick 仍放不下，就一张一张往上加
+    const w=motionWeights40(fm,first,end),maxHold=clamp(Math.round(+P.maxHold||4),1,8);
+    let pages=Math.max(1,Math.round(+P.pageTarget||1)),r;
+    for(;;pages++){r=motionSchedule40(B,w,first,end,cap*pages,maxHold);if(!r.over||pages>=12)break;}
+    ticks=r.ticks;pagesUsed=pages;
+  } else if(mode==='full'){ticks=[];for(let k=first;k<end;k++)ticks.push(k-first);}
+  else ticks=tickSchedule40(B,holds,first,end);
   // 降档：先淡出、再燃烧、最后开花段；下限 7.5 / 10 / 15 fps
   const floorH=[2,3,4],order=[2,1,0];
   const coarsen=()=>{for(const i of order)if(holds[i]<floorH[i]){holds[i]++;return true;}return false;};
   const maxPages=Math.max(0,Math.round(+P.maxPages||0));
-  if(maxPages)while(Math.ceil(ticks.length/cap)>maxPages&&coarsen())ticks=tickSchedule40(B,holds,first,end);
+  if(mode==='tiers'&&maxPages)while(Math.ceil(ticks.length/cap)>maxPages&&coarsen())ticks=tickSchedule40(B,holds,first,end);
   // 末页只剩一点点（< 25% 容量）时，把淡出段降一档试试，能省掉一张贴图就用；燃烧段和开花段不为省贴图降档（要降就设张数上限）
-  if(+P.fitPages!==0){
+  if(mode==='tiers'&&+P.fitPages!==0){
     const pages=Math.ceil(ticks.length/cap);
     if(pages>1 && ticks.length-cap*(pages-1)<.25*cap){
       const h2=[...holds];let t2=ticks;
@@ -1928,7 +1970,7 @@ function plan40(P,fm,ta=0,tb=P.duration) {
   let minFps=30;for(let f=0;f<F;f++){const t=t0+times[f];if(t<B.fadeAt)minFps=Math.min(minFps,1/Math.max(dur[f],1/30));}
   return {...base,L,t0,duration:D,sizeKeys,times,dur,ticks,nTicks:N,keys:keysFromTicks40(ticks,N),area,
     frameTiming:'tick-start',frameFps:30,capacityFrames:cap,sequenceStart:t0,sequenceEnd:end/30,
-    budget:{burstEnd:B.burstEnd,fadeAt:B.fadeAt,strobeFrom:B.strobeFrom,fps:holds.map(fpsOf),strobeFps:fpsOf(B.strobeHold),pages:Math.ceil(F/cap)},
+    budget:{mode,burstEnd:B.burstEnd,fadeAt:B.fadeAt,strobeFrom:B.strobeFrom,fps:mode==='tiers'?holds.map(fpsOf):null,strobeFps:fpsOf(B.strobeHold),pages:Math.ceil(F/cap),holdMin:Math.min(...dur)*30,holdMax:Math.max(...dur)*30},
     fadeEnd:P.duration,avgFps:F/D,minFps,maxDisp};
 }
 function splitPlan40(pl) {
@@ -3550,11 +3592,14 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
       if(!opt.pl){
         const maxima=bakeParts(first).flatMap(s=>s.meta.frameMaxes||[]);
         if(maxima.length===pl.L.F){
-          const a=maxima.findIndex(v=>v>=10),z=maxima.findLastIndex(v=>v>=10);
+          // 只裁真正全黑的帧（最亮像素 ≤ 1/255）：引擎里自发光 ×4，3/255 的暗火星在夜空里仍看得见，不能当空帧裁掉
+          // （4.0 曾按 10/255 裁，金芒菊 4.56 s 被裁成 3.67 s，末尾的暗火星没了——用户 2026-10-01 指出）
+          const lit=v=>v>=2,a=maxima.findIndex(lit),z=maxima.findLastIndex(lit);
           if(a<0)throw new Error('当前配方没有达到可见亮度的帧，请调整亮度或曝光。');
           const from=P.trimLead===0?0:a,to=P.trimTail===0?pl.L.F:z+1;
           if(from>0||to<pl.L.F){
-            const trimmed=plan(P,fm,pl.t0+from/30,pl.t0+to/30);
+            const T=f=>f<pl.L.F?pl.times[f]:pl.duration;   // 帧可能停好几个 tick：按帧的实际起点换算时间
+            const trimmed=plan(P,fm,pl.t0+T(from),pl.t0+T(to));
             disposeBake(first);first=last=null;
             await bakePlan(trimmed,.75,.25);
           }

@@ -300,11 +300,14 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
       if(!opt.pl){
         const maxima=bakeParts(first).flatMap(s=>s.meta.frameMaxes||[]);
         if(maxima.length===pl.L.F){
-          const a=maxima.findIndex(v=>v>=10),z=maxima.findLastIndex(v=>v>=10);
+          // 只裁真正全黑的帧（最亮像素 ≤ 1/255）：引擎里自发光 ×4，3/255 的暗火星在夜空里仍看得见，不能当空帧裁掉
+          // （4.0 曾按 10/255 裁，金芒菊 4.56 s 被裁成 3.67 s，末尾的暗火星没了——用户 2026-10-01 指出）
+          const lit=v=>v>=2,a=maxima.findIndex(lit),z=maxima.findLastIndex(lit);
           if(a<0)throw new Error('当前配方没有达到可见亮度的帧，请调整亮度或曝光。');
           const from=P.trimLead===0?0:a,to=P.trimTail===0?pl.L.F:z+1;
           if(from>0||to<pl.L.F){
-            const trimmed=plan(P,fm,pl.t0+from/30,pl.t0+to/30);
+            const T=f=>f<pl.L.F?pl.times[f]:pl.duration;   // 帧可能停好几个 tick：按帧的实际起点换算时间
+            const trimmed=plan(P,fm,pl.t0+T(from),pl.t0+T(to));
             disposeBake(first);first=last=null;
             await bakePlan(trimmed,.75,.25);
           }

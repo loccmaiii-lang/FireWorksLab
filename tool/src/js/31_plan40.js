@@ -1,5 +1,5 @@
 // 新大面片：先安排引擎能显示的时刻，再按页容量分段。旧计划保留在 planLegacy。
-// 帧预算见下面 budget40：开花段 / 燃烧段 / 淡出段三档帧率（默认 30 / 15 / 10），整数 tick 持帧。
+// 帧预算：默认按运动分配（motionSchedule40，先放进一张）；可选三档帧率（budget40）或全程 30 fps。都按整数 tick 持帧。
 function clipSizeKeys40(keys, fullDuration, start, duration) {
   const at=t=>evalKeys(keys,clamp(t/fullDuration,0,1));
   return [[0,at(start)],...keys.filter(k=>k[0]*fullDuration>start+1e-9 && k[0]*fullDuration<start+duration-1e-9)
@@ -46,20 +46,57 @@ function keysFromTicks40(ticks,N) {
   keys.push([ticks[F-1]/N,F-1+.01]);keys.push([1,F-.01]);
   return keys.filter((k,i,a)=>i===0||k[0]>a[i-1][0]+1e-9);
 }
+// ---------------- 4.0.2 默认：按运动分配（先放进 pageTarget 张） ----------------
+// 用户实测（2026-10-01）：4.56 s 的金芒菊放一张 4×4×RGBA（64 帧）在游戏里就很流畅。所以默认先把整段放进 1 张：
+// 帧数够（总 tick ≤ 容量）就每个 tick 一帧；不够就按运动分配——星跑得快的地方（开花）每 tick 一帧，慢下来以后每帧多停几个 tick。
+// 每帧停整数个 tick（引擎 30 fps 取整，不混合），最长 maxHold40 个 tick（默认 4 = 7.5 fps）；放不下才自动加一张。
+// 运动量 = 星的速度（世界米 / 秒，屏幕上的移动和它成正比），平滑约 0.5 s，再加峰值的 8% 作底（冷却、变暗也算变化）。
+// 节奏：每帧停的 tick 数一次最多比上一帧多 1（30 → 15 → 10 → 7.5 fps 逐级放慢，不会 30 突然跳到 7.5）。
+function motionWeights40(fm,first,end){
+  const pr=fm.prof||[];let vmax=0;for(const q of pr)vmax=Math.max(vmax,q[1]);
+  const vAt=t=>{if(!pr.length)return 1;let i=pr.findIndex(q=>q[0]>=t);if(i<0)return pr[pr.length-1][1];if(i===0)return pr[0][1];
+    const a=pr[i-1],b=pr[i],u=(t-a[0])/Math.max(1e-6,b[0]-a[0]);return a[1]+(b[1]-a[1])*u;};
+  const raw=[];for(let k=first;k<end;k++)raw.push(vAt((k+.5)/30));
+  const w=raw.map((_,i)=>{let s=0,n=0;for(let j=Math.max(0,i-8);j<=Math.min(raw.length-1,i+8);j++){s+=raw[j];n++;}return s/n;});
+  return w.map(v=>Math.max(v,.08*vmax,1e-6));
+}
+function motionSchedule40(B,w,first,end,cap,maxHold){
+  const N=end-first;
+  const sched=D=>{const ticks=[];let k=0,prev=1;
+    while(k<N){ticks.push(k);const t=(first+k)/30;
+      let hm=t<B.burstEnd?1:Math.min(maxHold,prev+1);if(t>=B.strobeFrom)hm=Math.min(hm,B.strobeHold);
+      let h=1,acc=w[k];while(h<hm&&k+h<N&&acc+w[k+h]<=D){acc+=w[k+h];h++;}
+      k+=h;prev=h;}
+    return ticks;};
+  if(N<=cap)return {ticks:sched(0)};
+  let lo=0,hi=w.reduce((a,c)=>a+c,0),best=sched(hi);
+  if(best.length>cap)return {ticks:best,over:true};
+  for(let i=0;i<40;i++){const mid=(lo+hi)/2,t=sched(mid);if(t.length<=cap){best=t;hi=mid;}else lo=mid;}
+  return {ticks:best};
+}
 function plan40(P,fm,ta=0,tb=P.duration) {
   const cols=Math.max(1,Math.min(P.cols,Math.floor(P.texW/512))),rows=Math.max(1,Math.min(P.rows,Math.floor(P.texH/512)));
   const base=planLegacy({...P,cols,rows,frameMode:'uniform'},fm,0,P.duration);
   // 包络只允许放大；抬高关键点时不能引入局部缩小。
   let run=0;const envelope=base.sizeKeys.map(([u,v])=>[u,run=Math.max(run,v)]);
   const first=Math.ceil(ta*30-1e-8),end=Math.max(first+1,Math.ceil(tb*30-1e-8)),N=end-first,cap=base.L.F;
-  const B=budget40(P,fm);let holds=[...B.holds],ticks=tickSchedule40(B,holds,first,end);
+  const B=budget40(P,fm),mode=P.frameBudget||'motion';let holds=[...B.holds],ticks;
+  let pagesUsed=0;
+  if(mode==='motion'){
+    // 先放进 pageTarget 张；每帧最多停 maxHold 个 tick 仍放不下，就一张一张往上加
+    const w=motionWeights40(fm,first,end),maxHold=clamp(Math.round(+P.maxHold||4),1,8);
+    let pages=Math.max(1,Math.round(+P.pageTarget||1)),r;
+    for(;;pages++){r=motionSchedule40(B,w,first,end,cap*pages,maxHold);if(!r.over||pages>=12)break;}
+    ticks=r.ticks;pagesUsed=pages;
+  } else if(mode==='full'){ticks=[];for(let k=first;k<end;k++)ticks.push(k-first);}
+  else ticks=tickSchedule40(B,holds,first,end);
   // 降档：先淡出、再燃烧、最后开花段；下限 7.5 / 10 / 15 fps
   const floorH=[2,3,4],order=[2,1,0];
   const coarsen=()=>{for(const i of order)if(holds[i]<floorH[i]){holds[i]++;return true;}return false;};
   const maxPages=Math.max(0,Math.round(+P.maxPages||0));
-  if(maxPages)while(Math.ceil(ticks.length/cap)>maxPages&&coarsen())ticks=tickSchedule40(B,holds,first,end);
+  if(mode==='tiers'&&maxPages)while(Math.ceil(ticks.length/cap)>maxPages&&coarsen())ticks=tickSchedule40(B,holds,first,end);
   // 末页只剩一点点（< 25% 容量）时，把淡出段降一档试试，能省掉一张贴图就用；燃烧段和开花段不为省贴图降档（要降就设张数上限）
-  if(+P.fitPages!==0){
+  if(mode==='tiers'&&+P.fitPages!==0){
     const pages=Math.ceil(ticks.length/cap);
     if(pages>1 && ticks.length-cap*(pages-1)<.25*cap){
       const h2=[...holds];let t2=ticks;
@@ -79,7 +116,7 @@ function plan40(P,fm,ta=0,tb=P.duration) {
   let minFps=30;for(let f=0;f<F;f++){const t=t0+times[f];if(t<B.fadeAt)minFps=Math.min(minFps,1/Math.max(dur[f],1/30));}
   return {...base,L,t0,duration:D,sizeKeys,times,dur,ticks,nTicks:N,keys:keysFromTicks40(ticks,N),area,
     frameTiming:'tick-start',frameFps:30,capacityFrames:cap,sequenceStart:t0,sequenceEnd:end/30,
-    budget:{burstEnd:B.burstEnd,fadeAt:B.fadeAt,strobeFrom:B.strobeFrom,fps:holds.map(fpsOf),strobeFps:fpsOf(B.strobeHold),pages:Math.ceil(F/cap)},
+    budget:{mode,burstEnd:B.burstEnd,fadeAt:B.fadeAt,strobeFrom:B.strobeFrom,fps:mode==='tiers'?holds.map(fpsOf):null,strobeFps:fpsOf(B.strobeHold),pages:Math.ceil(F/cap),holdMin:Math.min(...dur)*30,holdMax:Math.max(...dur)*30},
     fadeEnd:P.duration,avgFps:F/D,minFps,maxDisp};
 }
 function splitPlan40(pl) {

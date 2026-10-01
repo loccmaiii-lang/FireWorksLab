@@ -46,7 +46,7 @@ for(const entry of cases){
   });
 }
 await check('200 frames use 4 unique pages and a partial last page',()=>{
-  const pages=data(`(()=>{const P={...defaultsFor('kiku',40).P,duration:200/30,fpsBurst:30,fpsActive:30,fpsFade:30,fitPages:0},fm=measure(P);return splitPlan40(plan(P,fm));})()`);
+  const pages=data(`(()=>{const P={...defaultsFor('kiku',40).P,duration:200/30,frameBudget:'full'},fm=measure(P);return splitPlan40(plan(P,fm));})()`);
   assert.deepEqual(pages.map(p=>p.L.F),[64,64,64,8]);
   for(let i=0;i<pages.length;i++){
     assert.ok(pages[i].L.cellW>=512);
@@ -115,20 +115,20 @@ await check('PC/mobile baker consumes partial pages once; failed page disposes p
   run(`makeRenderer=()=>({dispose(){}});disposeBake=b=>{for(let s=b;s;s=s.next)released.push(s.meta.t0);};
     bakeFrames=async(P,scale,onProg,pl,R,opt={})=>{recorded.push({F:pl.L.F,t0:pl.t0,noFade:!!opt.noFade,times:pl.times,page:pl.pageIndex,count:pl.pageCount});
       return {P,meta:pl,head:{},cw:pl.L.cellW,chh:pl.L.cellH};};`);
-  await run(`(async()=>{const P={...defaultsFor('kiku',40).P,fpsBurst:30,fpsActive:30,fpsFade:30,fitPages:0,duration:200/30,trimLead:0};const b=await bake(P,1);await bakeMobileFor(b);})()`);
+  await run(`(async()=>{const P={...defaultsFor('kiku',40).P,frameBudget:'full',duration:200/30,trimLead:0};const b=await bake(P,1);await bakeMobileFor(b);})()`);
   const calls=JSON.parse(JSON.stringify(context.recorded));
   assert.deepEqual(calls.map(c=>c.F),[64,64,64,8,64,64,64,8]);
   assert.deepEqual(calls.slice(0,4),calls.slice(4),'mobile copies time and fade, not physical capacity');
   context.recorded=[];
   run(`bakeFrames=async(P,scale,onProg,pl)=>{recorded.push(pl.t0);if(recorded.length===3)throw Error('injected page failure');return {P,meta:pl};};`);
-  await assert.rejects(run(`bake({...defaultsFor('kiku',40).P,fpsBurst:30,fpsActive:30,fpsFade:30,fitPages:0,duration:200/30,trimLead:0},1)`),/injected page failure/);
+  await assert.rejects(run(`bake({...defaultsFor('kiku',40).P,frameBudget:'full',duration:200/30,trimLead:0},1)`),/injected page failure/);
   assert.equal(context.released.length,2);
 });
 await check('trim encoded leading/trailing dark frames without changing world framing or fade',async()=>{
   context.recorded=[];context.released=[];
   run(`bakeFrames=async(P,scale,onProg,pl)=>{recorded.push(pl);
     return {P,meta:{...pl,frameMaxes:pl.times.map(t=>(pl.t0+t>=.4-1e-8&&pl.t0+t<5.2-1e-8)?100:0)},head:{}};};`);
-  const result=await run(`bake({...defaultsFor('kiku',40).P,fpsBurst:30,fpsActive:30,fpsFade:30,fitPages:0,duration:200/30},1)`);
+  const result=await run(`bake({...defaultsFor('kiku',40).P,frameBudget:'full',duration:200/30},1)`);
   assert.deepEqual(JSON.parse(JSON.stringify(result.meta.times.slice(0,2))),[0,1/30]);
   assert.ok(Math.abs(result.meta.t0-.4)<1e-8);
   assert.deepEqual(data('recorded.map(p=>p.L.F)'),[64,64,64,8,64,64,16]);
@@ -139,7 +139,7 @@ await check('trim encoded leading/trailing dark frames without changing world fr
 });
 
 await check('4.0 frame budget (opt-in tiers 30/15/10): integer tick holds, tiers by phase, strobe raised, fewer pages than full 30 fps',()=>{
-  const r=data(`(()=>{const out={};for(const type of ['kiku','kamuro','strobe']){const P={...defaultsFor(type,40).P,fpsActive:15,fpsFade:10},fm=measure(P),pl=plan(P,fm);
+  const r=data(`(()=>{const out={};for(const type of ['kiku','kamuro','strobe']){const P={...defaultsFor(type,40).P,frameBudget:'tiers',fpsActive:15,fpsFade:10},fm=measure(P),pl=plan(P,fm);
     const holds=pl.dur.map(d=>Math.round(d*30));const full=Math.ceil(pl.duration*30);
     out[type]={F:pl.L.F,full,pages:pl.budget.pages,fullPages:Math.ceil(full/pl.capacityFrames),holds:[...new Set(holds)],
       intHolds:pl.dur.every(d=>Math.abs(d*30-Math.round(d*30))<1e-9),burst:pl.times.filter(t=>pl.t0+t<pl.budget.burstEnd).length,
@@ -155,21 +155,33 @@ await check('4.0 frame budget (opt-in tiers 30/15/10): integer tick holds, tiers
   assert.ok(isFinite(r.strobe.strobeFrom)&&r.strobe.strobeHold<=1,'strobe 10 Hz forces 30 fps during strobing');
 });
 await check('4.0 frame budget: maxPages coarsens tiers to fit, never below floors',()=>{
-  const r=data(`(()=>{const P={...defaultsFor('kamuro',40).P,duration:12,maxPages:2},pl=plan(P,measure(P));return {pages:Math.ceil(pl.L.F/pl.capacityFrames),fps:pl.budget.fps};})()`);
+  const r=data(`(()=>{const P={...defaultsFor('kamuro',40).P,frameBudget:'tiers',duration:12,maxPages:2},pl=plan(P,measure(P));return {pages:Math.ceil(pl.L.F/pl.capacityFrames),fps:pl.budget.fps};})()`);
   assert.ok(r.fps[0]>=15&&r.fps[1]>=10&&r.fps[2]>=7.5,'floors respected: '+r.fps);
   assert.ok(r.pages<=3,'pages reduced toward the cap: '+r.pages);
 });
 
-await check('4.0 default (no-regression gate): every 30 fps tick shows a new frame, at least as many as 3.7 shows',()=>{
-  const r=data(`(()=>{const out={};for(const type of ['kiku','botan','kamuro','senrin','strobe','crossette']){
-    const P4=defaultsFor(type,40).P,p4=plan(P4,measure(P4));const P3={...defaultsFor(type,37).P,renderVer:37},p3=plan(P3,measure(P3));
-    const shown=(pl)=>{const seen=new Set();for(let i=Math.ceil(pl.t0*30-1e-8);i/30<pl.t0+pl.duration-1e-8;i++){const f=frameIdx(pl,i/30-pl.t0);if(f>=0)seen.add(f);}return seen.size;};
-    out[type]={v40:shown(p4),v37:shown(p3),hold:Math.max(...p4.dur.map(d=>Math.round(d*30)))};}return out;})()`);
-  for(const [type,x] of Object.entries(r)){assert.ok(x.v40>=x.v37,type+': 4.0 shows '+x.v40+' frames < 3.7 '+x.v37);assert.equal(x.hold,1,type+': default holds 1 tick');}
+await check('4.0.2 default budget (motion): fits one sheet when it can, 30 fps opening, holds step up by at most 1 tick, never beyond maxHold',()=>{
+  const r=data(`(()=>{const out={};for(const id of ['JM4-40','kiku','botan','kamuro','yanagi','senrin','crossette','palm','glitter']){
+    const P=id.includes('-')?replicaPM(id).P:defaultsFor(id,40).P,pl=plan(P,measure(P));const h=pl.dur.map(d=>Math.round(d*30));
+    let up=0;for(let i=1;i<h.length-1;i++)up=Math.max(up,h[i]-h[i-1]);
+    out[id]={pages:pl.budget.pages,F:pl.L.F,dur:pl.duration,P:P.duration,open:pl.times.filter(t=>pl.t0+t<.5).length,hmax:Math.max(...h),up,ticks:pl.nTicks,tickSum:h.reduce((a,c)=>a+c,0)};}return out;})()`);
+  for(const [id,x] of Object.entries(r)){
+    assert.equal(x.pages,1,id+': fits one sheet');
+    assert.ok(x.open>=14,id+': first 0.5 s every tick ('+x.open+')');
+    assert.ok(x.hmax<=4,id+': hold ≤ 4 ticks');
+    assert.ok(x.up<=1,id+': hold steps up by ≤ 1');
+    assert.equal(x.tickSum,x.ticks,id+': frames cover every tick');
+    assert.ok(Math.abs(x.dur-x.P)<0.04,id+': full duration kept ('+x.dur+' vs '+x.P+')');
+  }
+  assert.equal(r['JM4-40'].F,64,'JM4-40: 4.56 s in one 4×4×RGBA sheet (user: smooth in game)');
+});
+await check('strobe keeps ≥ 0.4 × strobe rate even if it needs a second sheet',()=>{
+  const r=data(`(()=>{const P=defaultsFor('strobe',40).P,pl=plan(P,measure(P));return {pages:pl.budget.pages,h:Math.max(...pl.dur.filter((d,f)=>pl.t0+pl.times[f]>=P.strobeStart).map(d=>Math.round(d*30)))};})()`);
+  assert.ok(r.h<=1,'11 Hz strobe → 30 fps during strobing'); 
 });
 
 const output=process.argv[2];
 const report={kind:'offline source/data checks; no GPU pixels or browser playback',pass:checks.every(c=>c.pass),metrics,checks};
 if(output){fs.mkdirSync(path.dirname(output),{recursive:true});fs.writeFileSync(output,JSON.stringify(report,null,2)+'\n');}
-console.log(JSON.stringify({pass:report.pass,checks:checks.length,failed:checks.filter(c=>!c.pass),shrinkMax:Math.max(...metrics.map(m=>m.shrink)),frames:metrics.slice(0,6).map(m=>[m.name,m.frames,m.budget&&m.budget.pages,m.budget&&m.budget.fps.join("/")])},null,2));
+console.log(JSON.stringify({pass:report.pass,checks:checks.length,failed:checks.filter(c=>!c.pass),shrinkMax:Math.max(...metrics.map(m=>m.shrink)),frames:metrics.slice(0,6).map(m=>[m.name,m.frames,m.budget&&m.budget.pages,m.budget&&(m.budget.fps?m.budget.fps.join("/"):m.budget.mode+" hold "+m.budget.holdMin+"-"+m.budget.holdMax)])},null,2));
 if(!report.pass)process.exitCode=1;
