@@ -232,6 +232,8 @@ def _render_G(sh, t, cam, w, h, ppm, cx, cy, ss):
 # 颜色：和引擎材质同一公式（analysis/scripts/回放检查.py）：线性 rgb = ramp_lin(v) · v · COL，显示 = (1-e^{-1.5·rgb})^{1/2.2}
 # ramp_lin：每层两个色相端点（v=0 暗端、v=1 亮端），线性空间、最亮通道 = 1；按实拍（减去天空底色后）的色度标定，见 标定颜色.py
 COL = 1.5
+G_GAIN = 0.55         # 锦层贴图编码增益（防闪点过曝：贴图里压低）
+COL_G = COL / G_GAIN  # 引擎里用 Color Over Life 补回（HDR 倍数）；低亮度区与原来一致，亮点不再顶到 255
 O_TINT = [[0.0, 1.0], [1.0, 1.0]]   # [开花后秒, 橙层 G 通道倍数]：实拍开花初期更红（G/R 约 0.35 → 0.42），导出成 Color Over Life
 RAMP = {'O': {'lo': [1.0, 0.0903, 0.0175], 'hi': [1.0, 0.3538, 0.0054]},
         'G': {'lo': [1.0, 0.3664, 0.0829], 'hi': [1.0, 0.8101, 0.1694]}}
@@ -260,5 +262,5 @@ def o_tint(t):
 
 def compose(O, Gm, expo, t=1.0):
     """两层灰度（曝光后）按引擎公式加色叠加，返回 BGR uint8（引擎回放的画面）。t：橙层色调（= 引擎 Color Over Life）。"""
-    lin = engine_rgb(tone(O, expo), 'O') * o_tint(t) + engine_rgb(tone(Gm, expo), 'G')
+    lin = engine_rgb(tone(O, expo), 'O') * o_tint(t) + engine_rgb(tone(Gm, expo * G_GAIN), 'G') * (COL_G / COL)
     return np.clip(display(lin)[..., ::-1], 0, 255).astype(np.uint8)

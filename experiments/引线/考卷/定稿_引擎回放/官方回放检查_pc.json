@@ -1,0 +1,87 @@
+{
+ "Hiki": {
+  "pass": false,
+  "退出码": 1,
+  "各发射器": [
+   {
+    "pack": "_拆层_pc_Hiki · Hiki_A",
+    "pass": false,
+    "fails": [
+     "1 帧碰到格子内圈",
+     "中心跳变 13.89 px（512 格）"
+    ],
+    "frames": 64,
+    "cell_px": [
+     512,
+     512
+    ],
+    "shown_frac": 1.0,
+    "edge_frames": 1,
+    "saturated_max": 0.0,
+    "empty_mid": 0,
+    "empty_tail": 0,
+    "center_jump_max_px512": 13.89
+   },
+   {
+    "pack": "_拆层_pc_Hiki · Hiki_B",
+    "pass": false,
+    "fails": [
+     "中心跳变 5.3 px（512 格）"
+    ],
+    "frames": 28,
+    "cell_px": [
+     512,
+     512
+    ],
+    "shown_frac": 1.0,
+    "edge_frames": 0,
+    "saturated_max": 0.0,
+    "empty_mid": 0,
+    "empty_tail": 0,
+    "center_jump_max_px512": 5.3
+   }
+  ]
+ },
+ "Nishiki": {
+  "pass": false,
+  "退出码": 1,
+  "各发射器": [
+   {
+    "pack": "_拆层_pc_Nishiki · Nishiki_A",
+    "pass": false,
+    "fails": [
+     "中心跳变 11.28 px（512 格）"
+    ],
+    "frames": 64,
+    "cell_px": [
+     512,
+     512
+    ],
+    "shown_frac": 0.984,
+    "edge_frames": 0,
+    "saturated_max": 0.0165,
+    "empty_mid": 0,
+    "empty_tail": 0,
+    "center_jump_max_px512": 11.28
+   },
+   {
+    "pack": "_拆层_pc_Nishiki · Nishiki_B",
+    "pass": false,
+    "fails": [
+     "中心跳变 15.09 px（512 格）"
+    ],
+    "frames": 58,
+    "cell_px": [
+     512,
+     512
+    ],
+    "shown_frac": 1.0,
+    "edge_frames": 0,
+    "saturated_max": 0.017,
+    "empty_mid": 0,
+    "empty_tail": 0,
+    "center_jump_max_px512": 15.09
+   }
+  ]
+ }
+}

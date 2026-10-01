@@ -1,0 +1,76 @@
+{
+ "total_s": 4.983,
+ "sample_times_s": [
+  0.49834,
+  1.4950199999999998,
+  2.4917,
+  3.4883799999999994,
+  4.48506
+ ],
+ "sample_span_s": 4.9834,
+ "layers": [
+  {
+   "pack": "_拆层_mobile_Hiki · Hiki_A",
+   "frames": 64,
+   "grid": "4x4x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 3.05,
+   "pad_px": 6,
+   "ticks": 91,
+   "shown": 64,
+   "shown_frac": 1.0,
+   "max_skip": 1,
+   "back_jumps": 0,
+   "edge_max": 0.0005,
+   "edge_frames": 0,
+   "saturated_max": 0.0,
+   "empty_mid": 0,
+   "empty_tail": 0,
+   "center_jump_max_px512": 12.71,
+   "pass": false,
+   "fails": [
+    "中心跳变 12.71 px（512 格）"
+   ]
+  },
+  {
+   "pack": "_拆层_mobile_Hiki · Hiki_B",
+   "frames": 28,
+   "grid": "4x4x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 1.867,
+   "pad_px": 8,
+   "ticks": 56,
+   "shown": 28,
+   "shown_frac": 1.0,
+   "max_skip": 1,
+   "back_jumps": 0,
+   "edge_max": 0.0,
+   "edge_frames": 0,
+   "saturated_max": 0.0,
+   "empty_mid": 0,
+   "empty_tail": 0,
+   "center_jump_max_px512": 0,
+   "pass": true,
+   "fails": []
+  }
+ ],
+ "limits": {
+  "shown_frac": 0.9,
+  "back_jumps": 0,
+  "edge_band": 2,
+  "edge_frac": 0.005,
+  "edge_frames": 0,
+  "saturated": 0.02,
+  "empty_mid": 0,
+  "empty_tail": 0,
+  "jump_px512": 3.0
+ },
+ "fps": 30,
+ "pass": false
+}

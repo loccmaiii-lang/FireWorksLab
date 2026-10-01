@@ -145,6 +145,9 @@ def measure(img, cx, cy, R, thr=None):
     dsc = P2[int(0.3 * R):int(0.9 * R)][:, S][v2[int(0.3 * R):int(0.9 * R)][:, S]]; sky = P2[int(1.3 * R):int(1.6 * R)][:, S][v2[int(1.3 * R):int(1.6 * R)][:, S]]
     skyv = np.median(sky, 0) if len(sky) > 50 else np.zeros(3)
     out['盘内底光R'] = round(float(np.percentile(dsc, 20, axis=0)[2] - skyv[2]), 1) if len(dsc) > 50 else None
+    # 星头亮点：0.85–1.05R 扇区里最亮的 0.5% 像素 ÷ 线亮度中位（橙段星头冒亮点时偏高，QA13 那种）
+    tipz = Lb[int(0.85 * R):int(1.05 * R)][:, S]; tv = valid[int(0.85 * R):int(1.05 * R)][:, S]
+    out['星头亮点'] = round(float(np.percentile(tipz[tv], 99.5) / max(out.get('线亮度中位') or 1, 1)), 3) if tv.sum() > 50 else None
     out['阈值'] = round(float(thr), 1)
     return out
 
@@ -274,6 +277,7 @@ RULES = [
     ('H11', '线够纯（饱和度）', (0.4, 1.2), lambda m: m['线饱和度'], 'abs', 0.08),
     ('H12', '线够粗够亮（亮线覆盖率，±25%）', (0.4, 1.2), lambda m: m['亮线覆盖'], 'rel', 0.25),
     ('H13', '线间暗红底光（盘内 − 天空，红通道，±10）', (0.4, 1.2), lambda m: m['盘内底光R'], 'abs', 10.0),
+    ('H14', '橙段星头不冒亮点（尖端最亮像素 ÷ 线亮度中位 ≤ 参考 + 0.15）', (0.4, 1.1), lambda m: m['星头亮点'], 'le', 0.15),
 ]
 # 记录：第三轮（18:0x）曾把中心三项改为参考指标；用户 17:24 指出参考中间确有空隙、AI 的做法是「尾巴从爆点连到星头」——
 # 查实是模型缺「尾火花可见寿命」（尾是有限长的一段）+ 星速离散，那次改类撤回（H5c、H5d 恢复为硬指标）。

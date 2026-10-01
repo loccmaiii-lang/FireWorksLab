@@ -62,15 +62,15 @@ def plan_layer(sh, layer, expo):
     thr = 0.02 / expo                          # 灰度约 2/255 以下算没有
     probe = times_from(SCHED[layer], 0.0, 12.0)
     alive = []; ext = {}
-    for t, fps in probe[::2]:
+    for t, fps in probe:
         e = extent(sh, layer, t, thr); ext[t] = e
         if e > 0: alive.append(t)
-    t0, t1 = min(alive), max(alive) + 0.2
+    t0, t1 = min(alive), max(alive) + 0.04
     frames = [(t, f) for t, f in times_from(SCHED[layer], t0 - 0.05, t1)]
     # 视野：插值 ext，取后缀最大值让它单调不减（Zoom 面片只放大），再留 8%
     kt = np.array(sorted(ext)); kv = np.array([ext[t] for t in kt])
     e = np.interp([t for t, _ in frames], kt, kv)
-    H = np.maximum.accumulate(np.maximum(e, 5.0)) * 1.08
+    H = np.maximum.accumulate(np.maximum(e * 1.12, e + 4.0))   # 留边：12%，开花初期至少 4 m（低分辨率量不准）
     return frames, H
 
 
@@ -109,18 +109,11 @@ CACHE = {}
 def export(out, P, expo_hint=None):
     os.makedirs(out, exist_ok=True); CACHE.clear()
     sh = Y.Shell(P)
-    # 曝光：两层共用一个（保持相对亮度）。按 PC 视野在燃烧段最亮的几个时刻，让 99.7 分位落在灰度 0.85
-    probe = []
+    # 曝光：和考卷同一个（考卷按实拍 +1.0 s 线亮度对齐、线亮度已与分辨率无关），保证导出的贴图就是考过的那个画面
+    import 试渲 as T
+    _, expo, _ = T.run('/tmp/_expo', P, [1.0], save=False)
+    if expo_hint is not None: expo = expo_hint
     plans = {}
-    tmp_expo = 1.0
-    for L in ('O', 'G'):
-        plans[L] = plan_layer(sh, L, tmp_expo if expo_hint is None else expo_hint)
-    vals = []
-    for L in ('O', 'G'):
-        fr, H = plans[L]
-        for i in np.linspace(0, len(fr) - 1, 8).astype(int):
-            im = layer_img(sh, L, fr[i][0], H[i], 256, sub=1); vals.append(np.percentile(im[im > 0], 99.7) if (im > 0).any() else 0)
-    expo = -math.log(1 - 0.85) / max(max(vals), 1e-9) if expo_hint is None else expo_hint
     # 用最终曝光重新定有内容的时段
     for L in ('O', 'G'): plans[L] = plan_layer(sh, L, expo)
     meta = {'name': NAME, 'expo': expo, 'layers': {}}
@@ -137,7 +130,8 @@ def export(out, P, expo_hint=None):
                 seg = fr[sidx * per:(sidx + 1) * per]; Hs = H[sidx * per:(sidx + 1) * per]
                 key0 = (L, sidx)
                 if plat == 'pc':
-                    vs = [1 - np.exp(-layer_img(sh, L, t, h, p['cell'], fps=f) * expo) for (t, f), h in zip(seg, Hs)]
+                    gain = 1.0 if L == 'O' else Y.G_GAIN
+                    vs = [1 - np.exp(-layer_img(sh, L, t, h, p['cell'], fps=f) * expo * gain) for (t, f), h in zip(seg, Hs)]
                     CACHE[key0] = vs
                 else:   # 手机：同一批帧按面积缩到 256（同一模拟、同一曝光；检查单独做）
                     vs = [cv2.resize(v.astype(np.float32), (p['cell'], p['cell']), interpolation=cv2.INTER_AREA) for v in CACHE[key0]]
@@ -173,7 +167,7 @@ def export(out, P, expo_hint=None):
                         {'m': 'InitialLocation', 'StartLocation': {'const': [0.0, 0.0, 0.0]}},
                         {'m': 'SizeByLife', 'LifeMultiplier': {'curve': keep}, 'MultiplyX': True, 'MultiplyY': True, 'MultiplyZ': False},
                         {'m': 'DynamicParameter', 'params': {'frame': {'curve': kp}}},
-                        {'m': 'ColorOverLife', 'ColorOverLife': {'curve': [[0.0, [Y.COL] * 3], [1.0, [Y.COL] * 3]]}, 'AlphaOverLife': {'const': 1}},
+                        {'m': 'ColorOverLife', 'ColorOverLife': {'curve': [[0.0, [Y.COL if L == 'O' else Y.COL_G] * 3], [1.0, [Y.COL if L == 'O' else Y.COL_G] * 3]]}, 'AlphaOverLife': {'const': 1}},
                     ]})
                 meta['layers'].setdefault(plat, []).append({'emitter': emitters[-1]['name'], 'frames': len(seg), 't0': T0, 't1': T1,
                                                             'fps': sorted({f for _, f in seg}), 'H_m': [round(float(Hs[0]), 1), round(Hmax, 1)]})

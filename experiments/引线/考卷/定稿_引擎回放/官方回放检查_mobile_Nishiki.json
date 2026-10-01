@@ -1,0 +1,78 @@
+{
+ "total_s": 6.767,
+ "sample_times_s": [
+  0.6766700000000001,
+  2.03001,
+  3.38335,
+  4.736689999999999,
+  6.0900300000000005
+ ],
+ "sample_span_s": 6.7667,
+ "layers": [
+  {
+   "pack": "_拆层_mobile_Nishiki · Nishiki_A",
+   "frames": 64,
+   "grid": "4x4x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 2.133,
+   "pad_px": 8,
+   "ticks": 63,
+   "shown": 63,
+   "shown_frac": 0.984,
+   "max_skip": 1,
+   "back_jumps": 0,
+   "edge_max": 0.0,
+   "edge_frames": 0,
+   "saturated_max": 0.0037,
+   "empty_mid": 0,
+   "empty_tail": 0,
+   "center_jump_max_px512": 4.56,
+   "pass": false,
+   "fails": [
+    "中心跳变 4.56 px（512 格）"
+   ]
+  },
+  {
+   "pack": "_拆层_mobile_Nishiki · Nishiki_B",
+   "frames": 58,
+   "grid": "4x4x4",
+   "cell_px": [
+    256,
+    256
+   ],
+   "life_s": 3.767,
+   "pad_px": 8,
+   "ticks": 113,
+   "shown": 58,
+   "shown_frac": 1.0,
+   "max_skip": 1,
+   "back_jumps": 0,
+   "edge_max": 0.0,
+   "edge_frames": 0,
+   "saturated_max": 0.0039,
+   "empty_mid": 0,
+   "empty_tail": 0,
+   "center_jump_max_px512": 6.21,
+   "pass": false,
+   "fails": [
+    "中心跳变 6.21 px（512 格）"
+   ]
+  }
+ ],
+ "limits": {
+  "shown_frac": 0.9,
+  "back_jumps": 0,
+  "edge_band": 2,
+  "edge_frac": 0.005,
+  "edge_frames": 0,
+  "saturated": 0.02,
+  "empty_mid": 0,
+  "empty_tail": 0,
+  "jump_px512": 3.0
+ },
+ "fps": 30,
+ "pass": false
+}

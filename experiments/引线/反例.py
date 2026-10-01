@@ -8,7 +8,7 @@ import sys, os, json, numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import yinxian as Y, 评分 as S
 HERE = os.path.dirname(os.path.abspath(__file__))
-try: BEST = json.load(open(os.path.join(HERE, '考卷', '搜索结果.json')))['最好']
+try: BEST = json.load(open(os.environ.get('BASEP') or os.path.join(HERE, '考卷', '候选i.json'))); BEST = BEST.get('最好', BEST)
 except FileNotFoundError: BEST = {"_ppm": 3.0, "speedJit": 8, "oTau": 0.9, "oRise": 0.1, "oIgn": 0.22, "oFade": 1.0, "gLine": 0.3, "gTau": 0.5, "sparkBright": 40, "sparkRate": 300, "sparkBack": 60, "sparkLife": 1.2, "tSwitch": 1.2, "tSwitchJit": 0.18}
 orig_line = Y._line; orig_render = Y.render
 def dashed_line(cv, sh, t, cam, e0, e1, wfun, drift):
@@ -30,10 +30,11 @@ def cloud_render(sh, t, cam, w, h, ppm, cx, cy, ss=2):
         cv.splat(x, y, (1 - a[m] / life[m]) ** 3 * br * sh.bj[s] * 1.4)
     return cv.image(0.55), G
 def clump_P(P): return {**P, 'stars': 60, 'oWidth': 2.2, 'gWidth': 2.2, 'starJit': 0.8}
+HEAD_W = 40.0   # 星头亮点强度：要明显看得见（QA13 那种），否则反例无效
 def heads_render(sh, t, cam, w, h, ppm, cx, cy, ss=2):
     O, G = orig_render(sh, t, cam, w, h, ppm, cx, cy, ss)
     cv = Y.Canvas(w, h, ppm, cx, cy, ss); k = sh.idx(np.full(sh.n, t)); p = sh.pos[k, np.arange(sh.n)].astype(np.float64)
-    x, y, br = Y.project(p, cam); cv.splat(x, y, 3.0 * br * (t < sh.tS))
+    x, y, br = Y.project(p, cam); cv.splat(x, y, HEAD_W * br * (t < sh.tS))
     return O + cv.image(1.1), G
 CASES = {'旧做法（离散火花凑线）': ('render', cloud_render, None), '断线（虚线）': ('line', dashed_line, None),
          '成团（星少线粗）': (None, None, clump_P), '点头（橙段星头亮点）': ('render', heads_render, None)}
