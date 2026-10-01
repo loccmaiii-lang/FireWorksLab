@@ -14,7 +14,7 @@ L = {t: Y.render(sh, t, 'below', W, W, ppm, W / 2, W / 2) for t in TO + TG + [1.
 Rr = {}
 def expo_for():
     O, Gm = L[1.0]; target = ref['1.0']['线亮度中位']; lo, hi = 1e-3, 100.0
-    for _ in range(24):
+    for _ in range(14):
         e = (lo * hi) ** 0.5; im = Y.compose(O, Gm, e, 1.0); R = Rr.setdefault(1.0, K.radius(im, W / 2, W / 2, W / 2 - 2))
         v = K.measure(im, W / 2, W / 2, R)['线亮度中位'] or 0
         lo, hi = (e, hi) if v < target else (lo, e)
@@ -35,6 +35,6 @@ def setp(layer, x):
 for layer, times, bands in [x for x in (('O', TO, ('内', '中', '外')), ('G', TG, ('中', '外'))) if x[0] in os.environ.get('LAYERS', 'OG')]:
     x0 = np.array(Y.RAMP[layer]['lo'][1:] + Y.RAMP[layer]['hi'][1:])
     f = lambda x: (setp(layer, x), err(layer, times, bands))[1]
-    r = minimize(f, x0, method='Nelder-Mead', options={'maxiter': 120, 'xatol': 2e-3, 'fatol': 1e-5})
+    r = minimize(f, x0, method='Nelder-Mead', options={"maxiter": 70, 'xatol': 2e-3, 'fatol': 1e-5})
     setp(layer, r.x); print(layer, '误差', round(r.fun, 5), Y.RAMP[layer], flush=True)
 json.dump(Y.RAMP, open(os.path.join(HERE, '考卷', 'Ramp标定.json'), 'w'), ensure_ascii=False, indent=1)

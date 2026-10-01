@@ -137,6 +137,14 @@ def measure(img, cx, cy, R, thr=None):
     if lm.sum() > 30:
         pc = segc[lm]; mx = pc.max(1); mn = pc.min(1); out['线饱和度'] = round(float(np.median((mx - mn) / np.maximum(mx, 1e-3))), 3)
     else: out['线饱和度'] = None
+    # 亮线覆盖率：0.3–0.9R 扇区里明显亮（减底色后 > 60）的像素占比——线太细、太暗时会偏低
+    seg2 = Lb[int(0.3 * R):int(0.9 * R)][:, S]; v2 = valid[int(0.3 * R):int(0.9 * R)][:, S]
+    out['亮线覆盖'] = round(float((seg2[v2] > 60).mean()), 4) if v2.any() else None
+    # 盘内底光：线与线之间（0.3–0.9R 扇区 20 分位）比天空（1.3–1.6R）亮多少，红通道（实拍是受光烟的暗红）
+    P2 = polar(img, cx, cy, R * 1.6, int(R * 1.6)); v2 = P2[..., 0] >= 0
+    dsc = P2[int(0.3 * R):int(0.9 * R)][:, S][v2[int(0.3 * R):int(0.9 * R)][:, S]]; sky = P2[int(1.3 * R):int(1.6 * R)][:, S][v2[int(1.3 * R):int(1.6 * R)][:, S]]
+    skyv = np.median(sky, 0) if len(sky) > 50 else np.zeros(3)
+    out['盘内底光R'] = round(float(np.percentile(dsc, 20, axis=0)[2] - skyv[2]), 1) if len(dsc) > 50 else None
     out['阈值'] = round(float(thr), 1)
     return out
 
@@ -264,6 +272,8 @@ RULES = [
     ('H9', '亮度节奏（线亮度中位 ÷ +1.0 s 的值）', (0.3, 1.4), lambda m: m['_亮度比'], 'abs', 0.2),
     ('H10', '线够亮（线亮度中位，±20%）', (0.4, 1.2), lambda m: m['线亮度中位'], 'rel', 0.2),
     ('H11', '线够纯（饱和度）', (0.4, 1.2), lambda m: m['线饱和度'], 'abs', 0.08),
+    ('H12', '线够粗够亮（亮线覆盖率，±25%）', (0.4, 1.2), lambda m: m['亮线覆盖'], 'rel', 0.25),
+    ('H13', '线间暗红底光（盘内 − 天空，红通道，±10）', (0.4, 1.2), lambda m: m['盘内底光R'], 'abs', 10.0),
 ]
 # 记录：第三轮（18:0x）曾把中心三项改为参考指标；用户 17:24 指出参考中间确有空隙、AI 的做法是「尾巴从爆点连到星头」——
 # 查实是模型缺「尾火花可见寿命」（尾是有限长的一段）+ 星速离散，那次改类撤回（H5c、H5d 恢复为硬指标）。

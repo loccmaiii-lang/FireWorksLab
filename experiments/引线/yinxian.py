@@ -22,6 +22,8 @@ DEFAULT = dict(
     # O 层（橙引线）
     oProf0=1.0, oProf1=1.0, oProfTip=1.0,   # 沿线亮度曲线（直接参数）：u = 发射点到爆点距离 / 星到爆点距离；u=0→oProf0、0.25→oProf1、0.6→1、1→oProfTip
     oSpread=0.0, oSpreadT=0.02,   # oSpread：火花出生时的横向乱速（m/s，三维；尾迹有了粗细，迎面的尾迹变成柔和的团而不是很亮的短棍）
+    oIgnDelay=0.0, oIgnDelayJit=0.2,   # oIgnDelay：引药（橙尾药）比星晚点着多少秒（先烧外层点火药，几乎不出尾）；每颗星离散 oIgnDelayJit（相对）
+    oHaze=0.0, oHazeM=6.0,   # oHaze：受光烟 / 分辨不出的细火花形成的暗红底光（线的大范围模糊 × 强度；oHazeM 模糊半径，米）
     oLife=0.0, oLifeJit=0.15, oLifeSpeedExp=0.0,   # oLifeSpeedExp：火花寿命 ∝ (30 m/s ÷ 出生时星速)^γ（星飞得快，火花在强气流里烧得快）
        # oLife：尾火花的可见寿命（秒）。>0 时尾巴只画最近 oLife 秒烧出的那一段（有限长度，不再从爆点连到星头）；每颗星离散 oLifeJit
     oTau=1.5, oGrain=0.0, oGrainT=0.004, oSpeedExp=0.0,   # oGrain：橙线沿线的颗粒（离散火花的亮度起伏，对数标准差）
@@ -69,6 +71,7 @@ class Shell:
         self.n = n
         self.bj = np.exp(P['starJit'] * rng.normal(0, 1, n))
         self.spd = np.linalg.norm(self.vel, axis=2)
+        self.dj = np.exp(P['oIgnDelayJit'] * np.random.default_rng(P['seed'] + 4242).normal(0, 1, n))
         self.lj = np.exp(P['oLifeJit'] * np.random.default_rng(P['seed'] + 31337).normal(0, 1, n))
         # 沿发射时间的颗粒起伏（每颗星一条，帧间一致；用独立随机流，不打乱其他随机数）
         rg = np.random.default_rng(P['seed'] + 7919); kk = max(1, int(round(P['oGrainT'] / dt)))
@@ -188,7 +191,7 @@ def _render_O(sh, t, cam, w, h, ppm, cx, cy, ss):
     cvO = Canvas(w, h, ppm, cx, cy, ss)
     e1 = np.minimum(t, sh.tS); e0 = np.zeros(sh.n)
     def wO(age, s):
-        post = max(0.0, t - sh.tS[s]); e = t - age
+        post = max(0.0, t - sh.tS[s]); e = t - age - P['oIgnDelay'] * sh.dj[s]
         if P['oLife'] > 0:   # 有限长的尾：年龄超过寿命的火花熄灭（末段 25% 平滑过渡）
             L = P['oLife'] * sh.lj[s]
             if P['oLifeSpeedExp']:
@@ -196,9 +199,13 @@ def _render_O(sh, t, cam, w, h, ppm, cx, cy, ss):
             cut = np.clip((L - age) / (0.25 * L), 0, 1); cut = cut * cut * (3 - 2 * cut)
         else: cut = 1.0
         ign = np.clip(e / max(P['oIgn'], 1e-4), 0, 1) ** 2 * (3 - 2 * np.clip(e / max(P['oIgn'], 1e-4), 0, 1))
-        return cut * ign * sh.bj[s] * P['oBright'] * ((1 - P['oEmber']) * np.exp(-age / P['oTau']) + P['oEmber'] * np.exp(-age / P['oEmberTau'])) * (1 - np.exp(-np.maximum(age, 0) / max(P['oRise'], 1e-4))) * np.exp(-post / P['oFade']) * (t < sh.tE[s] + 0.5)
+        # 亮火花有寿命（cut）；暗余烬不受寿命限制、按 oEmberTau 慢慢退（所以空隙里还有一点淡光）
+        return ign * sh.bj[s] * P['oBright'] * ((1 - P['oEmber']) * cut * np.exp(-age / P['oTau']) + P['oEmber'] * np.exp(-age / P['oEmberTau'])) * (1 - np.exp(-np.maximum(age, 0) / max(P['oRise'], 1e-4))) * np.exp(-post / P['oFade']) * (t < sh.tE[s] + 0.5)
     _line(cvO, sh, t, cam, e0, e1, wO, (P['oDrift'], 0.3, P['oFall'], P['oBack']))
-    return cvO.image(P['oWidth'])
+    img = cvO.image(P['oWidth'])
+    if P.get('oHaze', 0) > 0:
+        img = img + P['oHaze'] * cv2.GaussianBlur(img, (0, 0), max(P['oHazeM'] * ppm, 1.0))
+    return img
 
 
 def _render_G(sh, t, cam, w, h, ppm, cx, cy, ss):
@@ -225,8 +232,8 @@ def _render_G(sh, t, cam, w, h, ppm, cx, cy, ss):
 # 颜色：和引擎材质同一公式（analysis/scripts/回放检查.py）：线性 rgb = ramp_lin(v) · v · COL，显示 = (1-e^{-1.5·rgb})^{1/2.2}
 # ramp_lin：每层两个色相端点（v=0 暗端、v=1 亮端），线性空间、最亮通道 = 1；按实拍（减去天空底色后）的色度标定，见 标定颜色.py
 COL = 1.5
-O_TINT = [[0.0, 0.80], [0.35, 0.80], [0.75, 1.0]]   # [开花后秒, 橙层 G 通道倍数]：实拍开花初期更红（G/R 约 0.35 → 0.42），导出成 Color Over Life
-RAMP = {'O': {'lo': [1.0, 0.1244, 0.0173], 'hi': [1.0, 0.2191, 0.0121]},
+O_TINT = [[0.0, 1.0], [1.0, 1.0]]   # [开花后秒, 橙层 G 通道倍数]：实拍开花初期更红（G/R 约 0.35 → 0.42），导出成 Color Over Life
+RAMP = {'O': {'lo': [1.0, 0.0903, 0.0175], 'hi': [1.0, 0.3538, 0.0054]},
         'G': {'lo': [1.0, 0.3664, 0.0829], 'hi': [1.0, 0.8101, 0.1694]}}
 
 

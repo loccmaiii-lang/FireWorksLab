@@ -9,7 +9,7 @@ def score(P, out='/tmp/评分', save=False):
     ref = json.load(open(os.path.join(HERE, '考卷', '参考指标.json')))['时刻']
     res, expo, sh = T.run(out, P, TIMES, save=save)
     for t in res:
-        res[t]['_Rratio'] = res[t]['R'] / res['1.0']['R']; res[t]['_亮度比'] = (res[t]['线亮度中位'] or 0) / max(res['1.0']['线亮度中位'] or 1, 1e-6)
+        res[t]['_Rratio'] = res[t]['R'] / max(res['1.0']['R'], 1.0); res[t]['_亮度比'] = (res[t]['线亮度中位'] or 0) / max(res['1.0']['线亮度中位'] or 1, 1e-6)
     ok, rows, info = K.grade(res, ref)
     return ok, rows, info, res, expo
 if __name__ == '__main__':

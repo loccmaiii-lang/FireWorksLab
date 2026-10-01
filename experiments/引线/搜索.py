@@ -8,7 +8,7 @@ BASE = {"_ppm": 3.0, "speedJit": 8, "oRise": 0.1, "gTau": 0.5, "sparkLife": 1.2}
 PREV = os.environ.get('PREVF') or os.path.join(os.path.dirname(os.path.abspath(__file__)), '考卷', '搜索结果.json')
 if os.environ.get('ONLY'):   # 只搜一部分量，其余用上次的最好值
     _b = json.load(open(PREV)); BASE = {**(_b['最好'] if '最好' in _b else _b)}
-EXTRA = {'oLife': (0.3, 1.5), 'oLifeJit': (0.05, 0.4), 'oLifeSpeedExp': (0.0, 1.0), 'speedJit': (3, 20), 'oSpread': (0.0, 8.0), 'oProf0': (0.05, 1.0), 'oProf1': (0.1, 1.0), 'oProfTip': (0.2, 1.2), 'expoMul': (0.3, 3.0), 'oRise': (0.0, 0.35), 'oGrainT': (0.005, 0.08), 'oGrain': (0.0, 0.8), 'oEmber': (0.0, 0.4), 'oEmberTau': (1.0, 4.0), 'stars': (200, 320), 'oSpeedExp': (0.0, 1.0), 'oWidth': (0.45, 1.3), 'gWidth': (0.45, 1.3), 'sparkSize': (0.5, 1.3)}
+EXTRA = {'gTau': (0.2, 1.2), 'sparkDragT': (0.2, 0.8), 'sparkDelay': (0.08, 0.4), 'oHaze': (0.0, 0.05), 'oIgnDelay': (0.0, 0.2), 'oIgnDelayJit': (0.0, 0.5), 'oIgn': (0.01, 0.15), 'oLife': (0.5, 3.0), 'oLifeJit': (0.05, 0.4), 'oLifeSpeedExp': (0.0, 1.0), 'speedJit': (3, 20), 'oSpread': (0.0, 8.0), 'oProf0': (0.05, 1.0), 'oProf1': (0.1, 1.0), 'oProfTip': (0.2, 1.2), 'expoMul': (0.3, 3.0), 'oRise': (0.0, 0.5), 'oGrainT': (0.005, 0.08), 'oGrain': (0.0, 0.8), 'oEmber': (0.0, 0.4), 'oEmberTau': (1.0, 4.0), 'stars': (200, 320), 'oSpeedExp': (0.0, 1.0), 'oWidth': (0.6, 1.4), 'gWidth': (0.45, 1.3), 'sparkSize': (0.5, 1.3)}
 SPACE = {  # 名称: (下限, 上限)
     'oTau': (0.15, 1.5), 'oIgn': (0.12, 0.35), 'oFade': (0.3, 1.5), 'gLine': (0.1, 0.8),
     'sparkBright': (15, 80), 'sparkRate': (150, 600), 'tSwitch': (1.1, 1.35), 'tSwitchJit': (0.05, 0.25), 'sparkBack': (30, 90)}
