@@ -104,8 +104,11 @@ def run(job, s, out, log=print):
 def run_combo_pack(job, s, out, name, ver, big, log=print):
     """多层条目导出成一个素材包（烘焙器 comboPackFiles：和左栏「导出组合素材包」按钮同一条路），再按引擎播法把所有发射器叠起来做回放检查"""
     t = time.time(); entry = job['entry']
+    # 先清掉上一个组合，再等「这个」组合的层全部到位（2026-10-02：连着导几个组合时，等待条件被上一个组合满足，导出了错的层）
+    s.pg.evaluate("state.layers = []; state.comboName = ''")
     s.pg.evaluate(f"openReview(FW_REVIEW_LIST.find(e => e.id === {json.dumps(entry)}))")
-    s.pg.wait_for_function("window.__fw && window.__fw.idle() && state.tab === 'combo' && state.layers.length > 0 && state.layers.every(L => { const e = state.lib.find(x => x.name === L.lib); return e && e.bake; })", timeout=0)
+    want = s.pg.evaluate(f"(() => {{ const e = FW_REVIEW_LIST.find(x => x.id === {json.dumps(entry)}); return {{ name: e.combo.name, n: e.combo.layers.length }}; }})()")
+    s.pg.wait_for_function(f"window.__fw && window.__fw.idle() && state.tab === 'combo' && state.comboName === {json.dumps(want['name'])} && state.layers.length === {want['n']} && state.layers.every(L => {{ const e = state.lib.find(x => x.name === L.lib); return e && e.bake; }})", timeout=0)
     b64 = s.pg.evaluate(f"""(async () => {{ const files = await comboPackFiles({json.dumps(name)}, state.layers);
         const u8 = new Uint8Array(await (await makeZip(files)).arrayBuffer()); let t = '';
         for (let i = 0; i < u8.length; i += 0x8000) t += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(t); }})()""")

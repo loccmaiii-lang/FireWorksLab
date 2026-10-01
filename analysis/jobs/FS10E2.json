@@ -1,0 +1,9 @@
+{
+ "id": "FS10E2",
+ "type": "export",
+ "effect": "yongfeng",
+ "entry": "FS10",
+ "name": "Yongfeng40",
+ "priority": 7,
+ "note": "FS10 重导：E1 用的是旧帧预算（燃烧段最慢 7.5 fps），连着导时还可能拿到上一个组合的层（已修）。按 4.0.2（燃烧 ≥10 / 淡出 ≥7.5 fps）重导一个素材包 + 回放检查。"
+}

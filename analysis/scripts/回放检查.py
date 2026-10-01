@@ -154,9 +154,9 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
             ys, xs = np.nonzero(m); cen = (xs.mean(), ys.mean()); cens.append([f, round(cen[0] * 512 / p.cw, 1), round(cen[1] * 512 / p.chh, 1), int(m.sum())])
             if last is not None: jumps.append(float(np.hypot(cen[0] - last[0], cen[1] - last[1])) * 512 / p.cw); jf.append(f)
             last = cen
-        lit = [i for i, v in enumerate(cm) if v > 3 / 255]
+        lit = [i for i, v in enumerate(cm) if v > 1.5 / 255]      # 和烘焙器裁帧同一口径：最亮像素 ≤ 1/255 才算空帧（引擎里自发光 ×4，2–3/255 的暗火星看得见）
         empty_tail = p.frames - 1 - lit[-1] if lit else p.frames
-        empty_mid = sum(1 for i in range(lit[0], lit[-1]) if cm[i] <= 3 / 255) if lit else 0
+        empty_mid = sum(1 for i in range(lit[0], lit[-1]) if cm[i] <= 1.5 / 255) if lit else 0
         tk = p.ticks(fps); steps = np.diff(tk) if len(tk) > 1 else np.array([0])
         # 中心抖动（标准 2.3「不抖」）：固定取景时花自己在长大、下垂，中心本来就会走；要抓的是走得不平滑的那一下。
         # 每帧在引擎里第一次出现的 tick 当作它的时刻；每帧中心和「前一帧、后一帧按时间连线」在这一帧时刻的位置比，差多少就是抖多少。
@@ -167,6 +167,8 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
         for c0, c1, c2 in zip(cens, cens[1:], cens[2:]):
             a, b, d = c0[0], c1[0], c2[0]
             if not (b == a + 1 and d == b + 1) or a not in first_tick or b not in first_tick or d not in first_tick: continue
+            n0, n1, n2 = c0[3], c1[3], c2[3]
+            if max(n0, n1, n2) > 1.3 * min(n0, n1, n2): continue    # 亮部面积一下变了 30% 以上 = 内容本身在变（子花开、星熄灭），不算画面抖
             ta, tb, td = first_tick[a], first_tick[b], first_tick[d]
             u = (tb - ta) / max(1e-9, td - ta)
             qx = cpos[a][0] + (cpos[d][0] - cpos[a][0]) * u; qy = cpos[a][1] + (cpos[d][1] - cpos[a][1]) * u

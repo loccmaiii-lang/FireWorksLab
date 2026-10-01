@@ -1,0 +1,9 @@
+{
+ "id": "ZB5E2",
+ "type": "export",
+ "effect": "qiuxing_b",
+ "entry": "ZB5",
+ "name": "QiuxingB40",
+ "priority": 7,
+ "note": "ZB5 重导：E1 用的是旧帧预算（燃烧段最慢 7.5 fps），连着导时还可能拿到上一个组合的层（已修）。按 4.0.2（燃烧 ≥10 / 淡出 ≥7.5 fps）重导一个素材包 + 回放检查。"
+}
