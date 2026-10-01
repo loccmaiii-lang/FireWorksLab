@@ -1,0 +1,35 @@
+{
+ "effect": "jinmangju",
+ "entry": "JM4-40",
+ "ver": "8d176790",
+ "time": "2026-10-01 20:41",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "JinMangJu40",
+   "replica": "JM4-40",
+   "files": [
+    "JinMangJu40.json",
+    "JinMangJu40_Cascade参数.txt",
+    "JinMangJu40_Mobile.json",
+    "JinMangJu40_曲线.csv",
+    "T_JinMangJu40_A.png",
+    "T_JinMangJu40_A_Cutout.png",
+    "T_JinMangJu40_A_FrameTest.png",
+    "T_JinMangJu40_B.png",
+    "T_JinMangJu40_B_Cutout.png",
+    "T_JinMangJu40_B_FrameTest.png",
+    "T_JinMangJu40_Mobile_A.png",
+    "T_JinMangJu40_Mobile_A_Cutout.png",
+    "T_JinMangJu40_Mobile_A_FrameTest.png",
+    "T_JinMangJu40_Mobile_B.png",
+    "T_JinMangJu40_Mobile_B_Cutout.png",
+    "T_JinMangJu40_Mobile_B_FrameTest.png",
+    "T_JinMangJu40_Mobile_Ramp.png",
+    "T_JinMangJu40_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}
