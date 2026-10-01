@@ -1,0 +1,26 @@
+21:41:50 开始：4.0 界面截图（用户 21:19 反馈：流转动画、已通过的效果、遗留条目）（界面截图）
+21:52:08 出错：
+Traceback (most recent call last):
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 61, in run_job
+    import ui_shots; ui_shots.run(job, s, out, log=log)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\ui_shots.py", line 27, in run
+    pg.wait_for_function(idle, timeout=0); pg.wait_for_timeout(2500)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\sync_api\_generated.py", line 12809, in wait_for_function
+    self._sync(
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_page.py", line 1153, in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_frame.py", line 941, in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Page.wait_for_function: Target page, context or browser has been closed
+
