@@ -1,0 +1,28 @@
+22:11:49 开始：4.0 界面截图（用户 21:19 反馈：流转动画、已通过的效果、遗留条目）（界面截图）
+22:15:52 等烘焙器空闲超时（240 秒），照常截图：Page.wait_for_function: Timeout 240000ms exceeded.
+22:15:56 界面截图 1：首页（244 秒）
+22:18:37 等烘焙器空闲超时（240 秒），照常截图：Page.wait_for_function: Target page, context or browser has been closed
+22:18:37 出错：
+Traceback (most recent call last):
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 61, in run_job
+    import ui_shots; ui_shots.run(job, s, out, log=log)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\ui_shots.py", line 41, in run
+    wait_idle(); pg.wait_for_timeout(st.get('sleep', 1500))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\sync_api\_generated.py", line 12744, in wait_for_timeout
+    self._sync(
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_page.py", line 1144, in wait_for_timeout
+    await self._main_frame.wait_for_timeout(timeout)
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_frame.py", line 925, in wait_for_timeout
+    await self._channel.send("waitForTimeout", None, {"waitTimeout": timeout})
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TargetClosedError: Page.wait_for_timeout: Target page, context or browser has been closed
+
