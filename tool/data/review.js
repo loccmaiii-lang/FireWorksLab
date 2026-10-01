@@ -65549,7 +65549,7 @@ var FW_EFFECTS = [
 {
 "id": "QA19E3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -65985,6 +65985,39 @@ var FW_EFFECTS = [
 "entry": "QA19",
 "ver": "2534ca0b",
 "time": "2026-10-02 00:44",
+"packages": [
+{
+"name": "QiuxingA40",
+"replica": "QA19",
+"files": [
+"T_QiuxingA40_L1.png",
+"T_QiuxingA40_L1_Cutout.png",
+"T_QiuxingA40_L1_FrameTest.png",
+"T_QiuxingA40_L1_Ramp.png",
+"T_QiuxingA40_L2.png",
+"T_QiuxingA40_L2_Cutout.png",
+"T_QiuxingA40_L2_FrameTest.png",
+"T_QiuxingA40_L2_Ramp.png",
+"T_QiuxingA40_Mobile_L1.png",
+"T_QiuxingA40_Mobile_L1_Cutout.png",
+"T_QiuxingA40_Mobile_L1_FrameTest.png",
+"T_QiuxingA40_Mobile_L1_Ramp.png",
+"T_QiuxingA40_Mobile_L2.png",
+"T_QiuxingA40_Mobile_L2_Cutout.png",
+"T_QiuxingA40_Mobile_L2_FrameTest.png",
+"T_QiuxingA40_Mobile_L2_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "QA19E3",
+"entry": "QA19",
+"ver": "2534ca0b",
+"time": "2026-10-02 06:20",
 "packages": [
 {
 "name": "QiuxingA40",
@@ -66517,7 +66550,7 @@ var FW_EFFECTS = [
 {
 "id": "QC11E3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -66641,6 +66674,39 @@ var FW_EFFECTS = [
 "entry": "QC11",
 "ver": "02670d6d",
 "time": "2026-10-02 00:43",
+"packages": [
+{
+"name": "QiuxingC40",
+"replica": "QC11",
+"files": [
+"T_QiuxingC40_L1.png",
+"T_QiuxingC40_L1_Cutout.png",
+"T_QiuxingC40_L1_FrameTest.png",
+"T_QiuxingC40_L1_Ramp.png",
+"T_QiuxingC40_L2.png",
+"T_QiuxingC40_L2_Cutout.png",
+"T_QiuxingC40_L2_FrameTest.png",
+"T_QiuxingC40_L2_Ramp.png",
+"T_QiuxingC40_Mobile_L1.png",
+"T_QiuxingC40_Mobile_L1_Cutout.png",
+"T_QiuxingC40_Mobile_L1_FrameTest.png",
+"T_QiuxingC40_Mobile_L1_Ramp.png",
+"T_QiuxingC40_Mobile_L2.png",
+"T_QiuxingC40_Mobile_L2_Cutout.png",
+"T_QiuxingC40_Mobile_L2_FrameTest.png",
+"T_QiuxingC40_Mobile_L2_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "QC11E3",
+"entry": "QC11",
+"ver": "02670d6d",
+"time": "2026-10-02 06:19",
 "packages": [
 {
 "name": "QiuxingC40",
@@ -66833,7 +66899,7 @@ var FW_EFFECTS = [
 {
 "id": "QD13E3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -67123,6 +67189,53 @@ var FW_EFFECTS = [
 "stale": false
 },
 {
+"job": "QD13E3",
+"entry": "QD13",
+"ver": "2a8b539a",
+"time": "2026-10-02 06:20",
+"packages": [
+{
+"name": "QiuxingD40",
+"replica": "QD13",
+"files": [
+"T_QiuxingD40_L1.png",
+"T_QiuxingD40_L1_Cutout.png",
+"T_QiuxingD40_L1_FrameTest.png",
+"T_QiuxingD40_L1_Ramp.png",
+"T_QiuxingD40_L2_A.png",
+"T_QiuxingD40_L2_A_Cutout.png",
+"T_QiuxingD40_L2_A_FrameTest.png",
+"T_QiuxingD40_L2_B.png",
+"T_QiuxingD40_L2_B_Cutout.png",
+"T_QiuxingD40_L2_B_FrameTest.png",
+"T_QiuxingD40_L2_Ramp.png",
+"T_QiuxingD40_L3.png",
+"T_QiuxingD40_L3_Cutout.png",
+"T_QiuxingD40_L3_FrameTest.png",
+"T_QiuxingD40_L3_Ramp.png",
+"T_QiuxingD40_Mobile_L1.png",
+"T_QiuxingD40_Mobile_L1_Cutout.png",
+"T_QiuxingD40_Mobile_L1_FrameTest.png",
+"T_QiuxingD40_Mobile_L1_Ramp.png",
+"T_QiuxingD40_Mobile_L2_A.png",
+"T_QiuxingD40_Mobile_L2_A_Cutout.png",
+"T_QiuxingD40_Mobile_L2_A_FrameTest.png",
+"T_QiuxingD40_Mobile_L2_B.png",
+"T_QiuxingD40_Mobile_L2_B_Cutout.png",
+"T_QiuxingD40_Mobile_L2_B_FrameTest.png",
+"T_QiuxingD40_Mobile_L2_Ramp.png",
+"T_QiuxingD40_Mobile_L3.png",
+"T_QiuxingD40_Mobile_L3_Cutout.png",
+"T_QiuxingD40_Mobile_L3_FrameTest.png",
+"T_QiuxingD40_Mobile_L3_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
 "job": "QD8E",
 "entry": "QD8",
 "ver": "f9718169",
@@ -67340,7 +67453,7 @@ var FW_EFFECTS = [
 {
 "id": "QN11E3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -67464,6 +67577,39 @@ var FW_EFFECTS = [
 "entry": "QN11",
 "ver": "0981c5c4",
 "time": "2026-10-02 00:44",
+"packages": [
+{
+"name": "Qingning40",
+"replica": "QN11",
+"files": [
+"T_Qingning40_L1.png",
+"T_Qingning40_L1_Cutout.png",
+"T_Qingning40_L1_FrameTest.png",
+"T_Qingning40_L1_Ramp.png",
+"T_Qingning40_L2.png",
+"T_Qingning40_L2_Cutout.png",
+"T_Qingning40_L2_FrameTest.png",
+"T_Qingning40_L2_Ramp.png",
+"T_Qingning40_Mobile_L1.png",
+"T_Qingning40_Mobile_L1_Cutout.png",
+"T_Qingning40_Mobile_L1_FrameTest.png",
+"T_Qingning40_Mobile_L1_Ramp.png",
+"T_Qingning40_Mobile_L2.png",
+"T_Qingning40_Mobile_L2_Cutout.png",
+"T_Qingning40_Mobile_L2_FrameTest.png",
+"T_Qingning40_Mobile_L2_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "QN11E3",
+"entry": "QN11",
+"ver": "0981c5c4",
+"time": "2026-10-02 06:20",
 "packages": [
 {
 "name": "Qingning40",
@@ -67684,7 +67830,7 @@ var FW_EFFECTS = [
 {
 "id": "ZW5E3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 }
 ],
@@ -68003,6 +68149,55 @@ var FW_EFFECTS = [
 "entry": "ZW5",
 "ver": "5d83a57d",
 "time": "2026-10-02 00:45",
+"packages": [
+{
+"name": "Wancai40",
+"replica": "ZW5",
+"files": [
+"T_Wancai40_L1.png",
+"T_Wancai40_L1_Cutout.png",
+"T_Wancai40_L1_FrameTest.png",
+"T_Wancai40_L1_Ramp.png",
+"T_Wancai40_L2.png",
+"T_Wancai40_L2_Cutout.png",
+"T_Wancai40_L2_FrameTest.png",
+"T_Wancai40_L2_Ramp.png",
+"T_Wancai40_L3.png",
+"T_Wancai40_L3_Cutout.png",
+"T_Wancai40_L3_FrameTest.png",
+"T_Wancai40_L3_Ramp.png",
+"T_Wancai40_L4.png",
+"T_Wancai40_L4_Cutout.png",
+"T_Wancai40_L4_FrameTest.png",
+"T_Wancai40_L4_Ramp.png",
+"T_Wancai40_Mobile_L1.png",
+"T_Wancai40_Mobile_L1_Cutout.png",
+"T_Wancai40_Mobile_L1_FrameTest.png",
+"T_Wancai40_Mobile_L1_Ramp.png",
+"T_Wancai40_Mobile_L2.png",
+"T_Wancai40_Mobile_L2_Cutout.png",
+"T_Wancai40_Mobile_L2_FrameTest.png",
+"T_Wancai40_Mobile_L2_Ramp.png",
+"T_Wancai40_Mobile_L3.png",
+"T_Wancai40_Mobile_L3_Cutout.png",
+"T_Wancai40_Mobile_L3_FrameTest.png",
+"T_Wancai40_Mobile_L3_Ramp.png",
+"T_Wancai40_Mobile_L4.png",
+"T_Wancai40_Mobile_L4_Cutout.png",
+"T_Wancai40_Mobile_L4_FrameTest.png",
+"T_Wancai40_Mobile_L4_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "ZW5E3",
+"entry": "ZW5",
+"ver": "5d83a57d",
+"time": "2026-10-02 06:20",
 "packages": [
 {
 "name": "Wancai40",
@@ -68576,7 +68771,7 @@ var FW_EFFECTS = [
 {
 "id": "FS10E3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -68667,6 +68862,81 @@ var FW_EFFECTS = [
 "entry": "FS10",
 "ver": "d14a89e3",
 "time": "2026-10-02 00:42",
+"packages": [
+{
+"name": "Yongfeng40",
+"replica": "FS10",
+"files": [
+"T_Yongfeng40_L1_A.png",
+"T_Yongfeng40_L1_A_Cutout.png",
+"T_Yongfeng40_L1_A_FrameTest.png",
+"T_Yongfeng40_L1_B.png",
+"T_Yongfeng40_L1_B_Cutout.png",
+"T_Yongfeng40_L1_B_FrameTest.png",
+"T_Yongfeng40_L1_C.png",
+"T_Yongfeng40_L1_C_Cutout.png",
+"T_Yongfeng40_L1_C_FrameTest.png",
+"T_Yongfeng40_L1_D.png",
+"T_Yongfeng40_L1_D_Cutout.png",
+"T_Yongfeng40_L1_D_FrameTest.png",
+"T_Yongfeng40_L1_Ramp.png",
+"T_Yongfeng40_L2.png",
+"T_Yongfeng40_L2_Cutout.png",
+"T_Yongfeng40_L2_FrameTest.png",
+"T_Yongfeng40_L2_Ramp.png",
+"T_Yongfeng40_L3.png",
+"T_Yongfeng40_L3_Cutout.png",
+"T_Yongfeng40_L3_FrameTest.png",
+"T_Yongfeng40_L3_Ramp.png",
+"T_Yongfeng40_L4.png",
+"T_Yongfeng40_L4_Cutout.png",
+"T_Yongfeng40_L4_FrameTest.png",
+"T_Yongfeng40_L4_Ramp.png",
+"T_Yongfeng40_L5.png",
+"T_Yongfeng40_L5_Cutout.png",
+"T_Yongfeng40_L5_FrameTest.png",
+"T_Yongfeng40_L5_Ramp.png",
+"T_Yongfeng40_Mobile_L1_A.png",
+"T_Yongfeng40_Mobile_L1_A_Cutout.png",
+"T_Yongfeng40_Mobile_L1_A_FrameTest.png",
+"T_Yongfeng40_Mobile_L1_B.png",
+"T_Yongfeng40_Mobile_L1_B_Cutout.png",
+"T_Yongfeng40_Mobile_L1_B_FrameTest.png",
+"T_Yongfeng40_Mobile_L1_C.png",
+"T_Yongfeng40_Mobile_L1_C_Cutout.png",
+"T_Yongfeng40_Mobile_L1_C_FrameTest.png",
+"T_Yongfeng40_Mobile_L1_D.png",
+"T_Yongfeng40_Mobile_L1_D_Cutout.png",
+"T_Yongfeng40_Mobile_L1_D_FrameTest.png",
+"T_Yongfeng40_Mobile_L1_Ramp.png",
+"T_Yongfeng40_Mobile_L2.png",
+"T_Yongfeng40_Mobile_L2_Cutout.png",
+"T_Yongfeng40_Mobile_L2_FrameTest.png",
+"T_Yongfeng40_Mobile_L2_Ramp.png",
+"T_Yongfeng40_Mobile_L3.png",
+"T_Yongfeng40_Mobile_L3_Cutout.png",
+"T_Yongfeng40_Mobile_L3_FrameTest.png",
+"T_Yongfeng40_Mobile_L3_Ramp.png",
+"T_Yongfeng40_Mobile_L4.png",
+"T_Yongfeng40_Mobile_L4_Cutout.png",
+"T_Yongfeng40_Mobile_L4_FrameTest.png",
+"T_Yongfeng40_Mobile_L4_Ramp.png",
+"T_Yongfeng40_Mobile_L5.png",
+"T_Yongfeng40_Mobile_L5_Cutout.png",
+"T_Yongfeng40_Mobile_L5_FrameTest.png",
+"T_Yongfeng40_Mobile_L5_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "FS10E3",
+"entry": "FS10",
+"ver": "d14a89e3",
+"time": "2026-10-02 06:18",
 "packages": [
 {
 "name": "Yongfeng40",
@@ -69378,7 +69648,7 @@ var FW_EFFECTS = [
 {
 "id": "PK9E3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 }
 ],
@@ -69967,6 +70237,75 @@ var FW_EFFECTS = [
 "entry": "PK9",
 "ver": "41578ae9",
 "time": "2026-10-02 00:45",
+"packages": [
+{
+"name": "Pianbei40",
+"replica": "PK9",
+"files": [
+"T_Pianbei40_L1_A.png",
+"T_Pianbei40_L1_A_Cutout.png",
+"T_Pianbei40_L1_A_FrameTest.png",
+"T_Pianbei40_L1_B.png",
+"T_Pianbei40_L1_B_Cutout.png",
+"T_Pianbei40_L1_B_FrameTest.png",
+"T_Pianbei40_L1_Ramp.png",
+"T_Pianbei40_L2.png",
+"T_Pianbei40_L2_Cutout.png",
+"T_Pianbei40_L2_FrameTest.png",
+"T_Pianbei40_L2_Ramp.png",
+"T_Pianbei40_L3.png",
+"T_Pianbei40_L3_Cutout.png",
+"T_Pianbei40_L3_FrameTest.png",
+"T_Pianbei40_L3_Ramp.png",
+"T_Pianbei40_L4.png",
+"T_Pianbei40_L4_Cutout.png",
+"T_Pianbei40_L4_FrameTest.png",
+"T_Pianbei40_L4_Ramp.png",
+"T_Pianbei40_L5_A.png",
+"T_Pianbei40_L5_A_Cutout.png",
+"T_Pianbei40_L5_A_FrameTest.png",
+"T_Pianbei40_L5_B.png",
+"T_Pianbei40_L5_B_Cutout.png",
+"T_Pianbei40_L5_B_FrameTest.png",
+"T_Pianbei40_L5_Ramp.png",
+"T_Pianbei40_Mobile_L1_A.png",
+"T_Pianbei40_Mobile_L1_A_Cutout.png",
+"T_Pianbei40_Mobile_L1_A_FrameTest.png",
+"T_Pianbei40_Mobile_L1_B.png",
+"T_Pianbei40_Mobile_L1_B_Cutout.png",
+"T_Pianbei40_Mobile_L1_B_FrameTest.png",
+"T_Pianbei40_Mobile_L1_Ramp.png",
+"T_Pianbei40_Mobile_L2.png",
+"T_Pianbei40_Mobile_L2_Cutout.png",
+"T_Pianbei40_Mobile_L2_FrameTest.png",
+"T_Pianbei40_Mobile_L2_Ramp.png",
+"T_Pianbei40_Mobile_L3.png",
+"T_Pianbei40_Mobile_L3_Cutout.png",
+"T_Pianbei40_Mobile_L3_FrameTest.png",
+"T_Pianbei40_Mobile_L3_Ramp.png",
+"T_Pianbei40_Mobile_L4.png",
+"T_Pianbei40_Mobile_L4_Cutout.png",
+"T_Pianbei40_Mobile_L4_FrameTest.png",
+"T_Pianbei40_Mobile_L4_Ramp.png",
+"T_Pianbei40_Mobile_L5_A.png",
+"T_Pianbei40_Mobile_L5_A_Cutout.png",
+"T_Pianbei40_Mobile_L5_A_FrameTest.png",
+"T_Pianbei40_Mobile_L5_B.png",
+"T_Pianbei40_Mobile_L5_B_Cutout.png",
+"T_Pianbei40_Mobile_L5_B_FrameTest.png",
+"T_Pianbei40_Mobile_L5_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "PK9E3",
+"entry": "PK9",
+"ver": "41578ae9",
+"time": "2026-10-02 06:20",
 "packages": [
 {
 "name": "Pianbei40",
