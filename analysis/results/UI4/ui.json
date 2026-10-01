@@ -1,0 +1,167 @@
+[
+ {
+  "name": "1920_首页",
+  "seconds": 5.2,
+  "hud": "实时模拟 · 游戏内大小 · 1000 m · 导出单格 512×512 · 固定曝光 ×0.20 · 居中快门",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 4.723000000000004,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1920_JM4-40_引擎回放",
+  "seconds": 4.9,
+  "hud": "导出效果 · 大面片母版 · 第 27/64 帧 · G 通道 单格 512×512 · 贴图放大 0.4× · 屏幕上约 383 像素宽",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 1,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1440_鸿巢HK10_引擎回放",
+  "seconds": 8.2,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 导出效果（每层 2048 贴图叠放）· 2 层 · 每层星头、拖尾各一个发射器",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 0,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1440_鸿巢HK10_实时",
+  "seconds": 4.1,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）· 「导出效果」看引擎里的贴图叠放",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1440_新建配方",
+  "seconds": 3.4,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）· 「导出效果」看引擎里的贴图叠放",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1440_关新建",
+  "seconds": 2.0,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）· 「导出效果」看引擎里的贴图叠放",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1440_左栏下部_历史_工具",
+  "seconds": 3.1,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）· 「导出效果」看引擎里的贴图叠放",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1440_菊模板_参数",
+  "seconds": 4.2,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）· 「导出效果」看引擎里的贴图叠放",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.5,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 3.2
+  }
+ },
+ {
+  "name": "1440_贴图流转",
+  "seconds": 3.2,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 导出效果（每层 2048 贴图叠放）· 2 层 · 每层星头、拖尾各一个发射器",
+  "seg": "",
+  "view": "atlas",
+  "flow": null,
+  "t": 1,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 3.2
+  }
+ },
+ {
+  "name": "1024_宽",
+  "seconds": 4.2,
+  "hud": "导出效果 · 大面片母版 · 第 27/64 帧 · G 通道 单格 512×512 · 贴图放大 0.3× · 屏幕上约 383 像素宽",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 1,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "736_宽",
+  "seconds": 2.4,
+  "hud": "导出效果 · 大面片母版 · 第 27/64 帧 · G 通道 单格 512×512 · 贴图放大 0.2× · 屏幕上约 383 像素宽",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 1,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ }
+]
