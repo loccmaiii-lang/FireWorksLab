@@ -1,0 +1,7 @@
+06:19:52 开始：QiuxingD40（导出素材）
+06:20:07 QiuxingD40 组合素材包 15 秒：T_QiuxingD40_L1.png、T_QiuxingD40_L1_Cutout.png、T_QiuxingD40_L1_FrameTest.png、T_QiuxingD40_L1_Ramp.png、T_QiuxingD40_L2_A.png、T_QiuxingD40_L2_A_Cutout.png、T_QiuxingD40_L2_A_FrameTest.png、T_QiuxingD40_L2_B.png、T_QiuxingD40_L2_B_Cutout.png、T_QiuxingD40_L2_B_FrameTest.png、T_QiuxingD40_L2_Ramp.png、T_QiuxingD40_L3.png、T_QiuxingD40_L3_Cutout.png、T_QiuxingD40_L3_FrameTest.png、T_QiuxingD40_L3_Ramp.png、T_QiuxingD40_Mobile_L1.png、T_QiuxingD40_Mobile_L1_Cutout.png、T_QiuxingD40_Mobile_L1_FrameTest.png、T_QiuxingD40_Mobile_L1_Ramp.png、T_QiuxingD40_Mobile_L2_A.png、T_QiuxingD40_Mobile_L2_A_Cutout.png、T_QiuxingD40_Mobile_L2_A_FrameTest.png、T_QiuxingD40_Mobile_L2_B.png、T_QiuxingD40_Mobile_L2_B_Cutout.png、T_QiuxingD40_Mobile_L2_B_FrameTest.png、T_QiuxingD40_Mobile_L2_Ramp.png、T_QiuxingD40_Mobile_L3.png、T_QiuxingD40_Mobile_L3_Cutout.png、T_QiuxingD40_Mobile_L3_FrameTest.png、T_QiuxingD40_Mobile_L3_Ramp.png、cascade.json、cascade_mobile.json
+06:20:09 回放检查：✅ 通过
+06:20:39 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QD13E3\烘焙回放.jpg
+06:20:40 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QD13E3\烘焙回放_原尺寸.jpg
+06:20:40 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+06:20:40 完成，用时 0.8 分钟

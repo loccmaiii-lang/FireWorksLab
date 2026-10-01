@@ -1,0 +1,7 @@
+06:20:38 开始：Qingning40（导出素材）
+06:20:42 Qingning40 组合素材包 4 秒：T_Qingning40_L1.png、T_Qingning40_L1_Cutout.png、T_Qingning40_L1_FrameTest.png、T_Qingning40_L1_Ramp.png、T_Qingning40_L2.png、T_Qingning40_L2_Cutout.png、T_Qingning40_L2_FrameTest.png、T_Qingning40_L2_Ramp.png、T_Qingning40_Mobile_L1.png、T_Qingning40_Mobile_L1_Cutout.png、T_Qingning40_Mobile_L1_FrameTest.png、T_Qingning40_Mobile_L1_Ramp.png、T_Qingning40_Mobile_L2.png、T_Qingning40_Mobile_L2_Cutout.png、T_Qingning40_Mobile_L2_FrameTest.png、T_Qingning40_Mobile_L2_Ramp.png、cascade.json、cascade_mobile.json
+06:20:43 回放检查：✅ 通过
+06:21:02 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QN11E3\烘焙回放.jpg
+06:21:03 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QN11E3\烘焙回放_原尺寸.jpg
+06:21:03 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+06:21:03 完成，用时 0.4 分钟
