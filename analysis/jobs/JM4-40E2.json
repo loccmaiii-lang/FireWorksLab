@@ -1,0 +1,9 @@
+{
+ "id": "JM4-40E2",
+ "type": "export",
+ "effect": "jinmangju",
+ "entry": "JM4-40",
+ "name": "JinMangJu40",
+ "priority": 9,
+ "note": "JM4-40E 的回放检查第 A 张中心跳变 3.83 px（512 格，及格线 3）。参数不变重导一次，回放检查多输出每帧亮部中心和跳变最大的几帧，用来判断是画面在晃还是亮部分布变化。"
+}

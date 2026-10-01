@@ -144,14 +144,15 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
     for p in packs:   # 逐帧自动检查
         pad = p.pad(); band = int(lim['edge_band'])
         edge, sat, cm, jumps, last = [], [], [], [], None
+        jf, cens = [], []      # 诊断：跳变最大的几帧（帧号, 像素）；每帧亮部中心（512 格像素）
         for f in range(p.frames):
             c = p.cell(f); tot = c.sum() + 1e-9; cm.append(float(c.max()))
             inner = c[pad:c.shape[0] - pad, pad:c.shape[1] - pad]
             b = np.concatenate([inner[:band].ravel(), inner[-band:].ravel(), inner[band:-band, :band].ravel(), inner[band:-band, -band:].ravel()])
             edge.append(float(b.sum() / tot)); sat.append(float((c >= 250 / 255).mean())); m = c > 0.08
             if m.sum() < 400: last = None; continue       # 亮部太少（开头 / 末尾零星几颗）不算跳变
-            ys, xs = np.nonzero(m); cen = (xs.mean(), ys.mean())
-            if last is not None: jumps.append(float(np.hypot(cen[0] - last[0], cen[1] - last[1])) * 512 / p.cw)
+            ys, xs = np.nonzero(m); cen = (xs.mean(), ys.mean()); cens.append([f, round(cen[0] * 512 / p.cw, 1), round(cen[1] * 512 / p.chh, 1), int(m.sum())])
+            if last is not None: jumps.append(float(np.hypot(cen[0] - last[0], cen[1] - last[1])) * 512 / p.cw); jf.append(f)
             last = cen
         lit = [i for i, v in enumerate(cm) if v > 3 / 255]
         empty_tail = p.frames - 1 - lit[-1] if lit else p.frames
@@ -161,7 +162,9 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
         L = dict(pack=p.label, frames=p.frames, grid=f'{p.cols}x{p.rows}x{p.ch}', cell_px=[p.cw, p.chh], life_s=round(p.life, 3), pad_px=pad,
                  ticks=len(tk), shown=shown, shown_frac=round(shown / p.frames, 3), max_skip=int(steps.max()) if len(steps) else 0, back_jumps=back,
                  edge_max=round(max(edge), 4), edge_frames=int(sum(e > lim['edge_frac'] for e in edge)), saturated_max=round(max(sat), 4),
-                 empty_mid=empty_mid, empty_tail=empty_tail, center_jump_max_px512=round(max(jumps), 2) if jumps else 0)
+                 empty_mid=empty_mid, empty_tail=empty_tail, center_jump_max_px512=round(max(jumps), 2) if jumps else 0,
+                 centers=cens,
+                 center_jump_top=[[jf[i], round(jumps[i], 2)] for i in np.argsort(jumps)[::-1][:5]] if jumps else [])
         fails = []
         if L['shown_frac'] < lim['shown_frac']: fails.append(f"{fps} fps 只显示 {shown}/{p.frames} 帧")
         if back > lim['back_jumps']: fails.append(f'帧号回跳 {back} 次')
