@@ -1,0 +1,48 @@
+{
+ "effect": "qiuxing_b",
+ "entry": "ZB5",
+ "ver": "29637341",
+ "time": "2026-10-02 00:16",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "QiuxingB40",
+   "replica": "ZB5",
+   "files": [
+    "T_QiuxingB40_L1.png",
+    "T_QiuxingB40_L1_Cutout.png",
+    "T_QiuxingB40_L1_FrameTest.png",
+    "T_QiuxingB40_L1_Ramp.png",
+    "T_QiuxingB40_L2_A.png",
+    "T_QiuxingB40_L2_A_Cutout.png",
+    "T_QiuxingB40_L2_A_FrameTest.png",
+    "T_QiuxingB40_L2_B.png",
+    "T_QiuxingB40_L2_B_Cutout.png",
+    "T_QiuxingB40_L2_B_FrameTest.png",
+    "T_QiuxingB40_L2_Ramp.png",
+    "T_QiuxingB40_L3.png",
+    "T_QiuxingB40_L3_Cutout.png",
+    "T_QiuxingB40_L3_FrameTest.png",
+    "T_QiuxingB40_L3_Ramp.png",
+    "T_QiuxingB40_Mobile_L1.png",
+    "T_QiuxingB40_Mobile_L1_Cutout.png",
+    "T_QiuxingB40_Mobile_L1_FrameTest.png",
+    "T_QiuxingB40_Mobile_L1_Ramp.png",
+    "T_QiuxingB40_Mobile_L2_A.png",
+    "T_QiuxingB40_Mobile_L2_A_Cutout.png",
+    "T_QiuxingB40_Mobile_L2_A_FrameTest.png",
+    "T_QiuxingB40_Mobile_L2_B.png",
+    "T_QiuxingB40_Mobile_L2_B_Cutout.png",
+    "T_QiuxingB40_Mobile_L2_B_FrameTest.png",
+    "T_QiuxingB40_Mobile_L2_Ramp.png",
+    "T_QiuxingB40_Mobile_L3.png",
+    "T_QiuxingB40_Mobile_L3_Cutout.png",
+    "T_QiuxingB40_Mobile_L3_FrameTest.png",
+    "T_QiuxingB40_Mobile_L3_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}

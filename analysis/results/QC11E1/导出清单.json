@@ -1,0 +1,40 @@
+{
+ "effect": "qiuxing_c",
+ "entry": "QC11",
+ "ver": "02670d6d",
+ "time": "2026-10-02 00:14",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "QiuxingC40",
+   "replica": "QC11",
+   "files": [
+    "T_QiuxingC40_L1_A.png",
+    "T_QiuxingC40_L1_A_Cutout.png",
+    "T_QiuxingC40_L1_A_FrameTest.png",
+    "T_QiuxingC40_L1_B.png",
+    "T_QiuxingC40_L1_B_Cutout.png",
+    "T_QiuxingC40_L1_B_FrameTest.png",
+    "T_QiuxingC40_L1_Ramp.png",
+    "T_QiuxingC40_L2.png",
+    "T_QiuxingC40_L2_Cutout.png",
+    "T_QiuxingC40_L2_FrameTest.png",
+    "T_QiuxingC40_L2_Ramp.png",
+    "T_QiuxingC40_Mobile_L1_A.png",
+    "T_QiuxingC40_Mobile_L1_A_Cutout.png",
+    "T_QiuxingC40_Mobile_L1_A_FrameTest.png",
+    "T_QiuxingC40_Mobile_L1_B.png",
+    "T_QiuxingC40_Mobile_L1_B_Cutout.png",
+    "T_QiuxingC40_Mobile_L1_B_FrameTest.png",
+    "T_QiuxingC40_Mobile_L1_Ramp.png",
+    "T_QiuxingC40_Mobile_L2.png",
+    "T_QiuxingC40_Mobile_L2_Cutout.png",
+    "T_QiuxingC40_Mobile_L2_FrameTest.png",
+    "T_QiuxingC40_Mobile_L2_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}

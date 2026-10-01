@@ -1,0 +1,7 @@
+00:13:20 开始：Hongchao40（导出素材）
+00:13:30 Hongchao40 组合素材包 10 秒：T_Hongchao40_L1_A.png、T_Hongchao40_L1_A_Cutout.png、T_Hongchao40_L1_A_FrameTest.png、T_Hongchao40_L1_B.png、T_Hongchao40_L1_B_Cutout.png、T_Hongchao40_L1_B_FrameTest.png、T_Hongchao40_L1_Ramp.png、T_Hongchao40_L2.png、T_Hongchao40_L2_Cutout.png、T_Hongchao40_L2_FrameTest.png、T_Hongchao40_L2_Ramp.png、T_Hongchao40_Mobile_L1_A.png、T_Hongchao40_Mobile_L1_A_Cutout.png、T_Hongchao40_Mobile_L1_A_FrameTest.png、T_Hongchao40_Mobile_L1_B.png、T_Hongchao40_Mobile_L1_B_Cutout.png、T_Hongchao40_Mobile_L1_B_FrameTest.png、T_Hongchao40_Mobile_L1_Ramp.png、T_Hongchao40_Mobile_L2.png、T_Hongchao40_Mobile_L2_Cutout.png、T_Hongchao40_Mobile_L2_FrameTest.png、T_Hongchao40_Mobile_L2_Ramp.png、cascade.json、cascade_mobile.json
+00:13:32 回放检查：✅ 通过
+00:14:15 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\HK10E1\烘焙回放.jpg
+00:14:15 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\HK10E1\烘焙回放_原尺寸.jpg
+00:14:15 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+00:14:15 完成，用时 0.9 分钟

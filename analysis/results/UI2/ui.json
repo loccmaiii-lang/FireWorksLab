@@ -1,12 +1,12 @@
 [
  {
   "name": "首页",
-  "seconds": 5.4,
+  "seconds": 5.3,
   "hud": "实时模拟 · 游戏内大小 · 1000 m · 导出单格 512×512 · 固定曝光 ×0.20 · 居中快门",
   "seg": "review",
   "view": "live",
   "flow": null,
-  "t": 4.7336000000000045,
+  "t": 4.706900000000005,
   "P": {
    "type": "kiku",
    "renderVer": 40,
@@ -16,12 +16,12 @@
  },
  {
   "name": "左栏_待我验收",
-  "seconds": 1.9,
+  "seconds": 1.8,
   "hud": "实时模拟 · 游戏内大小 · 1000 m · 导出单格 512×512 · 固定曝光 ×0.20 · 居中快门",
   "seg": "review",
   "view": "live",
   "flow": null,
-  "t": 1.633300000000001,
+  "t": 1.5908999999999995,
   "P": {
    "type": "kiku",
    "renderVer": 40,
@@ -36,7 +36,7 @@
   "seg": "wip",
   "view": "live",
   "flow": null,
-  "t": 3.4832999999999967,
+  "t": 3.4581,
   "P": {
    "type": "kiku",
    "renderVer": 40,
@@ -51,7 +51,7 @@
   "seg": "passed",
   "view": "live",
   "flow": null,
-  "t": 0.3168000000000011,
+  "t": 0.228,
   "P": {
    "type": "kiku",
    "renderVer": 40,
@@ -61,12 +61,12 @@
  },
  {
   "name": "左栏_历史",
-  "seconds": 1.8,
+  "seconds": 1.7,
   "hud": "实时模拟 · 游戏内大小 · 1000 m · 导出单格 512×512 · 固定曝光 ×0.20 · 居中快门",
   "seg": "hist",
   "view": "live",
   "flow": null,
-  "t": 2.133600000000001,
+  "t": 1.9444000000000008,
   "P": {
    "type": "kiku",
    "renderVer": 40,
@@ -76,7 +76,7 @@
  },
  {
   "name": "JM4-40_实时",
-  "seconds": 5.4,
+  "seconds": 5.1,
   "hud": "实时模拟 · 游戏内大小 · 1000 m · 导出单格 512×512 · 固定曝光 ×0.20 · 居中快门",
   "seg": "hist",
   "view": "live",
@@ -136,7 +136,7 @@
  },
  {
   "name": "JM4-40_流转后段",
-  "seconds": 9.7,
+  "seconds": 9.0,
   "hud": "贴图流转 · 第 52/64 帧 · A 通道 · 第 4 格（第 1 行第 4 列）· 时间 3.00 s",
   "seg": "hist",
   "view": "atlas",
@@ -151,7 +151,7 @@
  },
  {
   "name": "菊模板_流转",
-  "seconds": 11.1,
+  "seconds": 10.9,
   "hud": "贴图流转 · 第 31/64 帧 · G 通道 · 第 15 格（第 4 行第 3 列）· 时间 1.00 s",
   "seg": "hist",
   "view": "atlas",
@@ -166,7 +166,7 @@
  },
  {
   "name": "柳模板_流转",
-  "seconds": 11.3,
+  "seconds": 12.0,
   "hud": "贴图流转 · 第 31/64 帧 · G 通道 · 第 15 格（第 4 行第 3 列）· 时间 2.00 s",
   "seg": "hist",
   "view": "atlas",
@@ -177,6 +177,51 @@
    "renderVer": 40,
    "cols": 4,
    "duration": 6.5
+  }
+ },
+ {
+  "name": "柳模板_引擎回放",
+  "seconds": 2.7,
+  "hud": "导出效果 · 大面片母版 · 第 38/64 帧 · B 通道 单格 512×512 · 贴图放大 0.3× · 屏幕上约 303 像素宽",
+  "seg": "hist",
+  "view": "export",
+  "flow": true,
+  "t": 3,
+  "P": {
+   "type": "yanagi",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 6.5
+  }
+ },
+ {
+  "name": "鸿巢_效果页",
+  "seconds": 9.9,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）· 「导出效果」看引擎里的贴图叠放",
+  "seg": "hist",
+  "view": "live",
+  "flow": true,
+  "t": 0,
+  "P": {
+   "type": "yanagi",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 6.5
+  }
+ },
+ {
+  "name": "V5_效果页",
+  "seconds": 5.3,
+  "hud": "实时物理 · GPU · 星 1 · 火花槽位 40,705",
+  "seg": "hist",
+  "view": "live",
+  "flow": true,
+  "t": 1.5,
+  "P": {
+   "type": "trailM",
+   "renderVer": 37,
+   "cols": 16,
+   "duration": 8.92
   }
  }
 ]
