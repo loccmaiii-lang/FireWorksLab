@@ -1,0 +1,9 @@
+{
+ "id": "QC11E1",
+ "type": "export",
+ "effect": "qiuxing_c",
+ "entry": "QC11",
+ "name": "QiuxingC40",
+ "priority": 7,
+ "note": "QC11（QC10 迁 4.0）组合导出一个素材包 + 回放检查 + 烘焙器同一秒对照。"
+}

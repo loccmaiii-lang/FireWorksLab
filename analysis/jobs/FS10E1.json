@@ -1,0 +1,9 @@
+{
+ "id": "FS10E1",
+ "type": "export",
+ "effect": "yongfeng",
+ "entry": "FS10",
+ "name": "Yongfeng40",
+ "priority": 7,
+ "note": "FS10（FS9 迁 4.0）组合导出一个素材包 + 回放检查 + 烘焙器同一秒对照。"
+}

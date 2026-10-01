@@ -7,7 +7,7 @@
 输出：<out>/冒烟.json（每步的报错、横幅文字、HUD）+ 每步截图；有报错时退出码 1。
 2026-10-01 加：4.0.2 的统计行读了空的 budget.fps，烘焙结果出不来，离线检查没发现——这类错误只有在页面里才看得到。
 """
-import argparse, asyncio, json, pathlib, sys, time
+import argparse, asyncio, json, os, pathlib, platform, sys, time
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from browser_runtime import chromium_options
@@ -37,7 +37,12 @@ async def main(out, full, limit):
     from playwright.async_api import async_playwright
     out.mkdir(parents=True, exist_ok=True); rep = []; errs = []
     async with async_playwright() as p:
-        b = await p.chromium.launch(**chromium_options())
+        b = None
+        if platform.system() == 'Windows' or os.environ.get('FW_RENDER') == 'gpu':   # 本机：用装好的 Chrome / Edge 有窗口跑（显卡），和任务运行器一样
+            for ch in ('chrome', 'msedge'):
+                try: b = await p.chromium.launch(channel=ch, headless=False, **chromium_options()); break
+                except Exception: pass
+        if b is None: b = await p.chromium.launch(**chromium_options())
         pg = await b.new_page(viewport={'width': 1280, 'height': 760} if not full else {'width': 1600, 'height': 960})
         if not full:   # 云端软件渲染：每秒只画 3 帧，不然实时画面把主线程占满，点一下要等几分钟
             await pg.add_init_script("window.requestAnimationFrame = cb => setTimeout(() => cb(performance.now()), 330);")

@@ -1,0 +1,9 @@
+{
+ "id": "QA19E1",
+ "type": "export",
+ "effect": "qiuxing_a",
+ "entry": "QA19",
+ "name": "QiuxingA40",
+ "priority": 7,
+ "note": "QA19（QA17 迁 4.0）组合导出一个素材包 + 回放检查 + 烘焙器同一秒对照。"
+}

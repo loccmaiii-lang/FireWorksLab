@@ -1,0 +1,9 @@
+{
+ "id": "ZB5E1",
+ "type": "export",
+ "effect": "qiuxing_b",
+ "entry": "ZB5",
+ "name": "QiuxingB40",
+ "priority": 7,
+ "note": "ZB5（ZB4 迁 4.0）组合导出一个素材包 + 回放检查 + 烘焙器同一秒对照。"
+}

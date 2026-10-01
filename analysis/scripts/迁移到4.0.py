@@ -46,8 +46,8 @@ def main(expo_path, pairs):
             if L.get('video'): e['video'] = L['video'].replace('../', '', 1)
             it['entries'].append(e); lids.append(nid)
         layers = [dict(L, m='rep:' + nid) for L, nid in zip(c['combo']['layers'], lids)]
-        name = re.sub(r'（[^）]*）$', '', c['name'])
-        ce = dict(id=new, date=today, name=f'{name} · 4.0（{old} 参数）', layers=layers, layerNames=c.get('layerNames'),
+        efn = next((ef['名'] for ef in st['effects'] if (ef.get('主条目') or '').replace('rep:', '') in (old, new)), c['name']).split('（')[0]
+        ce = dict(id=new, date=today, name=f'{efn} · 4.0（{old} 参数）', replaces=[old], layers=layers, layerNames=c.get('layerNames'),
                   note=f'{old} 原样迁到 4.0：每层效果参数不变；4.0 渲染（512 格、先放进一张、固定取景、每层自动曝光），导出一个素材包（每层一个发射器）。',
                   look=['和 3.7 版（历史里的 ' + old + '）比：各层的颜色、亮度比例、时间有没有变', '游戏内大小下连续播放：有没有抖、层和层对不对得上'],
                   opinion='待导出检查（本机显卡导出 + 回放检查 + 标准检查都过了才进「待我验收」）。', tags=(c.get('tags') or '') + ' 4.0')

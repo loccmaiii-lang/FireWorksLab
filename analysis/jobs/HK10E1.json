@@ -1,0 +1,9 @@
+{
+ "id": "HK10E1",
+ "type": "export",
+ "effect": "hongchao",
+ "entry": "HK10",
+ "name": "Hongchao40",
+ "priority": 7,
+ "note": "HK10（HK9 迁 4.0）组合导出一个素材包 + 回放检查 + 烘焙器同一秒对照。"
+}

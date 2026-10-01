@@ -70,7 +70,7 @@ def run_job(job, s, force=False):
                 r = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '界面冒烟.py'), '--full', '--out', out, '--limit', str(job.get('limit', 600))],
                                    capture_output=True, text=True, encoding='utf-8', errors='replace')
                 for line in (r.stdout or '').splitlines()[-40:]: log(line)
-                if r.returncode not in (0, 1): raise RuntimeError('界面冒烟脚本没跑完：' + (r.stderr or '')[-2000:])
+                if r.returncode not in (0, 1) or not os.path.exists(os.path.join(out, '冒烟.json')): raise RuntimeError('界面冒烟脚本没跑完：' + (r.stderr or '')[-3000:])
                 log('界面冒烟：' + ('✅ 没有报错' if r.returncode == 0 else '❌ 有报错，见 冒烟.json'))
             elif job['type'] == 'ui':
                 log(f"开始：{job.get('name', '')}（界面截图）")
