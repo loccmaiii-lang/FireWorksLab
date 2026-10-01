@@ -4,10 +4,12 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import 试渲 as T, 考卷 as K
 HERE = os.path.dirname(os.path.abspath(__file__))
 TIMES = [round(0.1 * k, 1) for k in range(3, 22)]
+if os.environ.get('TMAX'): TIMES = sorted(set([t for t in TIMES if t <= float(os.environ['TMAX']) + 1e-9] + [1.0]))
 def score(P, out='/tmp/评分', save=False):
     ref = json.load(open(os.path.join(HERE, '考卷', '参考指标.json')))['时刻']
     res, expo, sh = T.run(out, P, TIMES, save=save)
-    for t in res: res[t]['_Rratio'] = res[t]['R'] / res['1.0']['R']
+    for t in res:
+        res[t]['_Rratio'] = res[t]['R'] / res['1.0']['R']; res[t]['_亮度比'] = (res[t]['线亮度中位'] or 0) / max(res['1.0']['线亮度中位'] or 1, 1e-6)
     ok, rows, info = K.grade(res, ref)
     return ok, rows, info, res, expo
 if __name__ == '__main__':

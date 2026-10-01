@@ -16,13 +16,14 @@ def run(out, P, times, expo=None, cam='below', W=900, save=True):
     if expo is None:   # 曝光：+1.0 s 线像素亮度中位 = 参考（相机曝光的等价物；只用于考卷对照，不进素材）
         O, Gm = imgs[1.0] if 1.0 in imgs else Y.render(sh, 1.0, cam, W, W, ppm, W / 2, W / 2)
         target = ref['时刻']['1.0']['线亮度中位']; lo, hi = 1e-3, 100.0
-        for _ in range(30):
-            e = (lo * hi) ** 0.5; im = Y.compose(O, Gm, e); R = K.radius(im, W / 2, W / 2, W / 2 - 2)
+        for _ in range(14):
+            e = (lo * hi) ** 0.5; im = Y.compose(O, Gm, e, 1.0); R = K.radius(im, W / 2, W / 2, W / 2 - 2)
             v = K.measure(im, W / 2, W / 2, R)['线亮度中位'] or 0
             lo, hi = (e, hi) if v < target else (lo, e)
         expo = (lo * hi) ** 0.5
+    expo *= P.get('expoMul', 1.0)   # 曝光倍数（实拍相机的曝光不是目标，只是测量条件：允许在 0.3–3 倍里调）
     for t, (O, Gm) in imgs.items():
-        im = Y.compose(O, Gm, expo)
+        im = Y.compose(O, Gm, expo, t)
         R = K.radius(im, W / 2, W / 2, W / 2 - 2)
         m = K.measure(im, W / 2, W / 2, R); m['R'] = R; res[str(t)] = m
         if save: cv2.imwrite(os.path.join(out, f'模拟_{t:.1f}.png'), im)

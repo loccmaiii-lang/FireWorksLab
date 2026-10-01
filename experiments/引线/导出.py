@@ -74,12 +74,11 @@ def plan_layer(sh, layer, expo):
     return frames, H
 
 
-def ramp_png(path, R):
-    """256×8 sRGB：每个灰度对应的颜色（只管色相 / 白化，亮度由 v 乘上）。"""
-    row = np.stack([np.interp(np.linspace(0, 1, 256), Y.RAMP_X, R[:, c]) for c in range(3)], -1)
-    row = row / np.maximum(row.max(1, keepdims=True), 1e-6)       # 归一化到最亮通道 = 1
-    row[0] = row[1]
-    img = np.repeat((np.clip(row, 0, 1) * 255 + 0.5).astype(np.uint8)[None], 8, 0)
+def ramp_png(path, layer):
+    """256×8 sRGB Ramp：第 i 列 = ramp_lin(i/255)（线性，最亮通道 = 1）转 sRGB。"""
+    v = np.linspace(0, 1, 256); lin = Y.ramp_lin(v, layer)
+    srgb = np.where(lin <= 0.0031308, lin * 12.92, 1.055 * np.power(np.clip(lin, 0, 1), 1 / 2.4) - 0.055)
+    img = np.repeat((np.clip(srgb, 0, 1) * 255 + 0.5).astype(np.uint8)[None], 8, 0)
     Image.fromarray(img).save(path)
 
 
@@ -131,7 +130,7 @@ def export(out, P, expo_hint=None):
         for L, label in (('O', 'Hiki'), ('G', 'Nishiki')):
             fr, H = plans[L]
             rp = f'T_{NAME}_{label}_Ramp.png'
-            ramp_png(os.path.join(out, rp), Y.RAMP_O if L == 'O' else Y.RAMP_G)
+            ramp_png(os.path.join(out, rp), L)
             textures[f'ramp_{L}'] = {'file': rp, 'class': 'ramp'}
             nseg = math.ceil(len(fr) / per)
             for sidx in range(nseg):
@@ -174,7 +173,7 @@ def export(out, P, expo_hint=None):
                         {'m': 'InitialLocation', 'StartLocation': {'const': [0.0, 0.0, 0.0]}},
                         {'m': 'SizeByLife', 'LifeMultiplier': {'curve': keep}, 'MultiplyX': True, 'MultiplyY': True, 'MultiplyZ': False},
                         {'m': 'DynamicParameter', 'params': {'frame': {'curve': kp}}},
-                        {'m': 'ColorOverLife', 'ColorOverLife': {'curve': [[0.0, [1.5, 1.5, 1.5]], [1.0, [1.5, 1.5, 1.5]]]}, 'AlphaOverLife': {'const': 1}},
+                        {'m': 'ColorOverLife', 'ColorOverLife': {'curve': [[0.0, [Y.COL] * 3], [1.0, [Y.COL] * 3]]}, 'AlphaOverLife': {'const': 1}},
                     ]})
                 meta['layers'].setdefault(plat, []).append({'emitter': emitters[-1]['name'], 'frames': len(seg), 't0': T0, 't1': T1,
                                                             'fps': sorted({f for _, f in seg}), 'H_m': [round(float(Hs[0]), 1), round(Hmax, 1)]})

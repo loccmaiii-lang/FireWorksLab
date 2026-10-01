@@ -68,6 +68,7 @@ def measure(img, cx, cy, R, thr=None):
         prof.append(float(seg[v].mean()) if v.any() else float('nan'))
     pm = np.nanmax(prof) or 1
     out['径向分布'] = [round(x / pm, 3) for x in prof]
+    bgpix = np.clip(P, 0, 255)[valid & S[None, :]]; bgc = np.percentile(bgpix, 20, axis=0)
     # 连续性：0.25R–0.95R，相邻半径（间隔 2 px）角向剖面相关
     cors = []
     for r in range(int(0.25 * R), int(0.95 * R) - 2, 2):
@@ -78,6 +79,10 @@ def measure(img, cx, cy, R, thr=None):
     r6 = int(0.6 * R); a = cv2.GaussianBlur(Lb[r6 - 2:r6 + 3].mean(0)[None, :], (1, 3), 0)[0]
     peaks = [i for i in range(1, N_THETA - 1) if S[i] and a[i] >= a[i - 1] and a[i] > a[i + 1] and a[i] > thr]
     out['线数_0.6R_扇区'] = len(peaks)
+    def _cnt(fr):
+        rr = int(fr * R); aa = Lb[max(rr - 1, 0):rr + 2].mean(0); th = 0.3 * np.percentile(aa[S], 95)
+        return sum(1 for i in range(1, N_THETA - 1) if S[i] and aa[i] >= aa[i - 1] and aa[i] > aa[i + 1] and aa[i] > th)
+    out['中心线数比'] = round(_cnt(0.3) / max(_cnt(0.6), 1), 3)
     gaps = []
     for i in peaks:
         col = Lb[int(0.3 * R):int(0.9 * R), max(0, i - 1):i + 2].max(1)
@@ -97,10 +102,11 @@ def measure(img, cx, cy, R, thr=None):
         seg = np.clip(P[int(a0 * R):int(b0 * R)][:, S], 0, 255); l = Lb[int(a0 * R):int(b0 * R)][:, S]
         m = l > thr
         if m.sum() < 20: col[name] = None; continue
-        px = seg[m]; s = px.sum(1, keepdims=True) + 1e-3; ch = px / s   # BGR
+        px = np.clip(seg[m] - bgc, 0, None); s = px.sum(1, keepdims=True) + 1e-3; ch = px / s   # BGR，先减天空底色（实拍是深灰天空，模拟是黑）
         rr_, gg_ = float(ch[:, 2].mean()), float(ch[:, 1].mean())
         gold = float(((ch[:, 1] / np.maximum(ch[:, 2], 1e-3)) > 0.80).mean())   # G/R > 0.8 视为金（橙约 0.45–0.7）
-        col[name] = {'r': round(rr_, 3), 'g': round(gg_, 3), 'G/R': round(gg_ / max(rr_, 1e-3), 3), '金占比': round(gold, 3)}
+        bb_ = float(ch[:, 0].mean())
+        col[name] = {'r': round(rr_, 3), 'g': round(gg_, 3), 'G/R': round(gg_ / max(rr_, 1e-3), 3), 'B/R': round(bb_ / max(rr_, 1e-3), 3), '金占比': round(gold, 3)}
     out['颜色'] = col
     # 闪点：线像素沿径向高频能量占比
     # 内 / 中段亮度比：内段避开爆点亮核（实拍里是升空尾缀的残头 + 白色火花，属于另一件素材；交付尺度半径约 40 px），
@@ -110,12 +116,27 @@ def measure(img, cx, cy, R, thr=None):
         inn = Lb[a0:a1][:, S][valid[a0:a1][:, S]].mean(); mid = Lb[int(0.5 * R):int(0.8 * R)][:, S][valid[int(0.5 * R):int(0.8 * R)][:, S]].mean()
         out['内中比'] = round(float(inn / max(mid, 1e-6)), 3)
     else: out['内中比'] = None
+    # 单条线的亮度沿半径分布（只在 0.6R 找到的线上取样，不受线条汇聚 / 覆盖率影响），10 带，按 0.5–0.8R 归一
+    if peaks:
+        prs = []
+        for i in peaks:
+            colm = Lb[:, max(0, i - 1):i + 2].max(1)
+            row = [colm[int(bnd / 10 * R):max(int((bnd + 1) / 10 * R), int(bnd / 10 * R) + 1)].mean() for bnd in range(10)]
+            prs.append(row)
+        pr = np.median(np.array(prs), 0)   # 各线取中位数：少数迎面短棍（很亮）不把整体拉高
+        out['线剖面'] = [round(float(x), 3) for x in pr / max(pr[5:8].mean(), 1e-6)]
+    else: out['线剖面'] = None
     seg = Lb[int(0.3 * R):max(int(0.95 * R), int(0.3 * R) + 10)][:, S]
     sm = cv2.GaussianBlur(seg, (1, 9), 0, sigmaY=2.5)
     m = sm > thr
     out['闪点'] = round(float((np.abs(seg - sm)[m]).mean() / max(sm[m].mean(), 1e-3)), 3) if m.sum() > 50 else None
     seg = Lb[int(0.3 * R):int(0.95 * R)][:, S]; m = seg > thr
     out['线亮度中位'] = round(float(np.median(seg[m])), 1) if m.sum() > 50 else None
+    # 线的饱和度（减天空底色后 (max-min)/max，只看较亮的线像素：防止线变灰、变棕）
+    segc = np.clip(P[int(0.3 * R):max(int(0.95 * R), int(0.3 * R) + 10)][:, S] - bgc, 0, None); lm = seg > max(thr, np.percentile(seg[m], 50) if m.sum() > 50 else thr)
+    if lm.sum() > 30:
+        pc = segc[lm]; mx = pc.max(1); mn = pc.min(1); out['线饱和度'] = round(float(np.median((mx - mn) / np.maximum(mx, 1e-3))), 3)
+    else: out['线饱和度'] = None
     out['阈值'] = round(float(thr), 1)
     return out
 
@@ -229,14 +250,27 @@ RULES = [
     ('H2', '断点率', (0.4, 1.6), lambda m: m['断点率'], 'le', 0.05),
     ('H3', '线数（±25%）', (0.5, 1.6), lambda m: m['线数_0.6R_扇区'], 'rel', 0.25),
     ('H4', '不成团（峰宽）', (0.5, 1.6), lambda m: m['峰宽中位'], 'le', 2.0),
-    ('H5', '中心不过亮（内 / 中段亮度比，避开爆点亮核）', (0.5, 1.3), lambda m: m['内中比'], 'abs', 0.25),
+    ('H4b', '线不比实拍细（峰宽 ≥ 参考 − 1）', (0.5, 1.6), lambda m: m['峰宽中位'], 'ge', 1.0),
+    ('H5b', '单条线尖端亮度（0.8–1.0R 相对中段）', (0.5, 1.2), lambda m: float(np.mean(m['线剖面'][8:10])), 'abs', 0.15),
+    ('H5c', '中间有空隙（0.3R 与 0.6R 的线数比）', (0.5, 1.2), lambda m: m['中心线数比'], 'abs', 0.1),
+    ('H5d', '单条线内端变暗（0.1–0.3R 相对中段，各线中位）', (0.6, 1.2), lambda m: float(np.mean(m['线剖面'][1:3])), 'abs', 0.2),
     ('H6', '展开节奏 R(t)/R(1.0)', (0.3, 1.2), lambda m: m['_Rratio'], 'abs', 0.06),
     ('H7a', '橙色（各带 G/R）', (0.4, 1.1), lambda m: [m['颜色'][k]['G/R'] for k in ('内', '中', '外')], 'abs', 0.04),
     ('H7b', '转金（各带 G/R）', (1.3, 2.1), lambda m: [m['颜色'][k]['G/R'] for k in ('内', '中', '外')], 'abs', 0.06),
-    ('H8a', '橙段平滑（闪点）', (0.4, 1.1), lambda m: m['闪点'], 'abs', 0.015),
+    ('H7c', '转金面积（各带金像素占比）', (1.3, 2.1), lambda m: [m['颜色'][k]['金占比'] for k in ('内', '中', '外')], 'abs', 0.08),
+    ('H7d', '金不发白（各带 B/R）', (1.3, 2.1), lambda m: [m['颜色'][k]['B/R'] for k in ('内', '中', '外')], 'abs', 0.06),
+    ('H8a', '橙段不比实拍更碎（闪点 ≤ 参考）', (0.4, 1.1), lambda m: m['闪点'], 'le', 0.005),
     ('H8b', '锦段颗粒（闪点）', (1.3, 2.1), lambda m: m['闪点'], 'abs', 0.025),
+    ('H9', '亮度节奏（线亮度中位 ÷ +1.0 s 的值）', (0.3, 1.4), lambda m: m['_亮度比'], 'abs', 0.2),
+    ('H10', '线够亮（线亮度中位，±20%）', (0.4, 1.2), lambda m: m['线亮度中位'], 'rel', 0.2),
+    ('H11', '线够纯（饱和度）', (0.4, 1.2), lambda m: m['线饱和度'], 'abs', 0.08),
 ]
+# 记录：第三轮（18:0x）曾把中心三项改为参考指标；用户 17:24 指出参考中间确有空隙、AI 的做法是「尾巴从爆点连到星头」——
+# 查实是模型缺「尾火花可见寿命」（尾是有限长的一段）+ 星速离散，那次改类撤回（H5c、H5d 恢复为硬指标）。
+# H8a 改为单边：实拍橙线上的颗粒主要是视频压缩 / 传感器噪点，不该去凑（CLAUDE.md：相机效果不进素材）；只要求不比实拍更碎。
+# H10 / H11 新增：防止靠压低曝光、让线落在 Ramp 暗端（发棕、发灰）。曝光不再作为可调参数。
 INFO = [
+    ('I3', '内 / 中段亮度比（全部像素平均，含线条汇聚，参考）', lambda m: m['内中比']),
     ('I1', '外缘 / 中段亮度比', lambda m: _edge(m['径向分布'])),
     ('I2', '线亮度中位（曝光已按 +1.0 s 对齐）', lambda m: m['线亮度中位']),
 ]
@@ -251,6 +285,7 @@ def grade(sim, ref):
             tt = float(t)
             if not (a - 1e-9 <= tt <= b + 1e-9) or t not in ref: continue
             r = dict(ref[t]); r['_Rratio'] = ref[t]['半径_实测_1080'] / ref['1.0']['半径_实测_1080']
+            r['_亮度比'] = (ref[t]['线亮度中位'] or 0) / ref['1.0']['线亮度中位']
             try:
                 x, y = f(m), f(r)
             except (TypeError, KeyError):
