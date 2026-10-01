@@ -64,6 +64,9 @@
 
 ## 7. 4.0 兼容与预览检查
 
+- `python analysis/scripts/playback_check.py --out <报告.json>`：30 Hz 取时、五类产物距离倍率及 1/3 屏高校准。
+- `python analysis/scripts/mobile_playback_check.py --out <报告.json>`：独立手机烘焙、PC/手机时间计划、实际导出纹理引用、UI 平台切换及同 tick 的像素稳定性。
+
 - `python analysis/scripts/render_kernel_check.py --out <目录>`：在浮点缓冲检查恒定面亮度、亚像素能量、移动跨像素边界、大光点与亮度倍率。
 - `python analysis/scripts/render_paths_check.py --out <目录>`：整朵菊在 512/1024 单格下扫描四档星头尺寸；比较实际实时/烘焙/定帧采样缓冲；解码实际导出贴图量亮度倍率。PNG 是尺寸诊断，不是审美交付。
 

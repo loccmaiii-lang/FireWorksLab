@@ -4,7 +4,7 @@
 const state = {
   tab: 'master', view: 'live', atlasLayer: 'head', atlasSeg: 0,
   ...defaultsFor('kiku'), name: 'Kiku_01',
-  t: 0, playing: true, speed: 1, expo: 1, disp: 'game', dist: 1000, exportResolution: true,
+  t: 0, playing: true, speed: 1, expo: 1, disp: 'game', dist: 1000, exportResolution: true, platform: 'pc',
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
   bakeGen: null, failedGen: -1, bakeError: null,
   lib: [], layers: [], comboName: '八重芯变色菊', libReady: false,
@@ -41,15 +41,18 @@ async function runPreviewBake() {
   if (state.baking) { state.rebake = true; return; }
   if (!state.dirty || state.failedGen === state.gen) return;
   state.baking = true; state.rebake = false;
-  const gen = state.gen, P = structuredClone(state.P);
+  const gen = state.gen, P = structuredClone(state.P); let pending=null;
   try {
     const phys = isPhys(P);
-    const b = phys ? physBake(P) : await bake(P, renderVersion(P)>=40 ? 1 : PREVIEW_SCALE, p => {
+    const b = pending = phys ? physBake(P) : await bake(P, 1, p => {
       if (gen === state.gen) setStatus(`预览烘焙… ${Math.round(p * 100)}%`);
     });
+    if(!phys && state.platform==='mobile' && gen===state.gen)b.mobile=await bakeMobileFor(b,p=>{
+      if(gen===state.gen)setStatus(`手机独立烘焙… ${Math.round(p*100)}%`);
+    });
     // 旧任务连贴图 / 统计 / 缩略图也不能发布，且必须释放其显卡资源。
-    if (gen !== state.gen) { disposeBake(b); return; }
-    disposeBake(state.bake); state.bake = b; state.bakeGen = gen;
+    if (gen !== state.gen) { disposeBake(b); pending=null; return; }
+    disposeBake(state.bake); state.bake = b; state.bakeGen = gen; pending=null;
     state.dirty = false; state.failedGen = -1; state.bakeError = null; syncBakeError();
     if (phys) $('#stats').innerHTML = physStats(P);
     else { showStats(b); afterBake(b); }
@@ -57,6 +60,7 @@ async function runPreviewBake() {
     if (!phys && (b.meta.L.cols !== state.P.cols || b.meta.L.rows !== state.P.rows)) { state.P.cols = b.meta.L.cols; state.P.rows = b.meta.L.rows; syncExport(); }
     setStatus('');
   } catch (e) {
+    if(pending)disposeBake(pending);
     console.error(e);
     if (gen === state.gen) {
       state.dirty = true; state.failedGen = gen;
@@ -335,7 +339,7 @@ const LIB_TYPES = ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'henk
 // 组合用的母版：2048（1024 时每帧只有 128 像素，组合页糊得没法看——用户 2026-09-30）；组合页默认实时模拟，贴图只在「导出效果」页用
 // 组合用的母版：迭代 / 正式库条目（rep:）保持条目自己的输出方式（合并输出 = 引擎里的样子：灰度查 Ramp），这样组合页「导出效果」和导出的素材一致；
 // 花型库默认母版仍用分开输出（组合里星头 / 尾巴亮度可以分开调）。window.FW_LIB_TEX：云端软件渲染自检时临时改小贴图。
-const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || 2048, texH: window.FW_LIB_TEX || 2048, cols: 8, rows: 8, chans: 4, outMode: keep && P.outMode ? P.outMode : 'split', form: 'master', zoom: 'on' });
+const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || 2048, texH: window.FW_LIB_TEX || 2048, cols: renderVersion(P)>=40?Math.min(4,P.cols):8, rows: renderVersion(P)>=40?Math.min(4,P.rows):8, chans: 4, outMode: keep && P.outMode ? P.outMode : 'split', form: 'master', zoom: 'on' });
 const defaultLibName = t => TYPE_NAMES[t].replace(/（.*）/, '') + ' · 默认';
 async function ensureLibrary() {
   if (state.libReady) return;
@@ -377,6 +381,7 @@ async function applyCombo(c) {
   await ensureLibEntries(c.layers.map(l => l.m));
   state.layers = c.layers.map(l => { const e = libByType(l.m); const { m, ...rest } = l; if (rest.stages) rest.stages = rest.stages.map(s => [...s]); return newLayer(e, rest); });
   state.comboName = c.name; state.t = 0; buildComboPanel();
+  if(state.platform==='mobile')await ensureComboMobile();
 }
 function comboDuration() {
   let d = 0.5;

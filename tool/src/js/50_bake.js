@@ -273,7 +273,7 @@ function imgMetrics(rows) {
   return { burn: Tb, diameter: 2 * Rf, t50: tfrac(0.5), t80: tfrac(0.8), t90: tfrac(0.9), droop: r[4] / Rf, bt: r[3] / Math.max(r[2], 1e-3), kieguchi: (t[i20] - t[i80]) / Tb, peakT: t[ip] };
 }
 function bakeMetrics(b) { if (!b) return null; const rows = []; for (let s = b; s; s = s.next) if (s.meta.imgRows) rows.push(...s.meta.imgRows); return rows.length ? imgMetrics(rows) : null; }
-function disposeBake(b) { if (b) { b.head.dispose(); b.tail && b.tail.dispose(); disposeTrail(b); if (b.next) disposeBake(b.next); } }
+function disposeBake(b) { if (b) { b.head.dispose(); b.tail && b.tail.dispose(); disposeTrail(b); if (b.next) disposeBake(b.next); if(b.mobile)disposeBake(b.mobile); } }
 
 // 大面片母版（可只取 [ta, tb] 一段）
 async function bakeMaster(P, scale, onProg, opt = {}) {

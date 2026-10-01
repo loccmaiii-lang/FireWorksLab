@@ -101,8 +101,8 @@ function fwlCascade(name, b, M, mobile = false) {
   };
 }
 // 素材包里 cascade.json / cascade_mobile.json 两个文件（目录前缀由调用方加）
-function fwlFiles(name, b, M) {
+function fwlFiles(name, b, M, mobileBake=null) {
   const pc = fwlCascade(name, b, M, false); if (!pc) return [];
-  const mob = fwlCascade(name, b, M, true);
+  const mob = fwlCascade(mobileBake?name+'_Mobile':name, mobileBake||b, M, true);
   return [['cascade.json', utf8(JSON.stringify(pc, null, 1))], ['cascade_mobile.json', utf8(JSON.stringify(mob, null, 1))]];
 }

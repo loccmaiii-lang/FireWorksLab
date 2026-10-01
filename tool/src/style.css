@@ -299,10 +299,12 @@
   @media (max-width:1400px){ .keys{display:none} }
   /* 视口工具条：窄时只留图标，不换行 */
   .stage{container-type:inline-size;container-name:stage}
-  .viewbar{flex-wrap:nowrap;overflow:hidden}
+  .viewbar{flex-wrap:wrap;overflow:visible}
+  .viewbar>.seg,.viewbar>.tgl,.viewbar>.expo{flex-shrink:0;white-space:nowrap}
+  .viewbar .expo input[type=checkbox]{width:auto}
   .viewbar .expo input{width:clamp(60px,9cqw,110px)}
   @container stage (max-width:760px){ .viewbar .tl{display:none} .tgl{padding:4px 7px} .seg button{padding:4px 9px} }
-  @container stage (max-width:560px){ .viewbar .expo{display:none} }
+  @container stage (max-width:560px){ .viewbar .expo{margin-left:0} }
   /* 并排 / 上下：哪种让两个画面更大就用哪种 */
   .canvas-wrap.split.stack{flex-direction:column}
   .canvas-wrap.split.stack .canvas-box{width:min(100cqw,calc(50cqh - 4px))}

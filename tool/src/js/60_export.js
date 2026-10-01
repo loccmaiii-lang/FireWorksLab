@@ -209,6 +209,16 @@ function masterJSON(b, name, M) {
     params: P, materialDefaults: M
   };
 }
+async function platformFiles(name,b,M,onProg=null) {
+  const mobile=b.mobile||await bakeMobileFor(b,onProg);
+  try {
+    const files=await texFiles(mobile,name+'_Mobile');
+    files.push([`${TN(name+'_Mobile','Ramp')}.png`,await encodePNG(rampPixels(M),256,8)]);
+    files.push([`${name}_Mobile.json`,utf8(JSON.stringify(masterJSON(mobile,name+'_Mobile',M),null,2))]);
+    files.push(...fwlFiles(name,b,M,mobile));
+    return files;
+  }finally{if(!b.mobile)disposeBake(mobile);}
+}
 async function exportMaster() {
   const name = safeName();
   busy(true, '准备导出…', 0);
@@ -229,7 +239,7 @@ async function exportMaster() {
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, state.M))]);
     files.push([`${name}_声音节点.json`, utf8(JSON.stringify({ note: '时间为相对开花（上升类为相对发射）的秒数；游戏里按「距离 ÷ 343 m/s」再延迟', events: soundEvents(b) }, null, 2))]);
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, state.M), null, 2))]);
-    files.push(...fwlFiles(name, b, state.M));
+    files.push(...await platformFiles(name, b, state.M,p=>busy(true,'手机独立烘焙…',p)));
     busy(true, '打包 ZIP…', 1);
     download(await makeZip(files), `${name}.zip`);
     recordVersion('导出 ' + name);

@@ -189,7 +189,7 @@ function renderAssets() {
   g.globalCompositeOperation = 'source-over'; g.fillStyle = asset.sky === 'sky' ? '#34466e' : '#020306'; g.fillRect(0, 0, W, H);
   if (!asset.man) { g.fillStyle = '#9aa0b4'; g.font = `${14 * dpr}px sans-serif`; g.textAlign = 'center'; g.fillText('在左栏「迭代区」点一个素材条目', W / 2, H / 2); hudText = ''; return; }
   if (!asset.ready) return;
-  const t = state.t, pxm = Math.min(W, H) / (asset.man.view || 150), c0 = asset.man.center || [0, 0]; let alive = 0, area = 0; const fr = {};
+  const t = engineTick(state.t), fitPPM=Math.min(W,H)/(asset.man.view||150), pxm = state.disp==='game'?gamePixelsPerMeter(asset.man,asset.man.diameter||asset.man.view||150,Math.min(W,H)):fitPPM, c0 = asset.man.center || [0, 0]; let alive = 0, area = 0; const fr = {};
   g.globalCompositeOperation = 'lighter'; g.globalAlpha = Math.min(1, asset.gain); g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
   for (const b of asset.parts) {
     const e = b.e; if (!asset.on[e.def.name]) continue;

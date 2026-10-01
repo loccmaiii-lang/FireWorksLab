@@ -30,6 +30,7 @@ function bindSeqTextures(pr, b) {
   gl.uniform1f(pr.u.uComb, b.tail ? 0 : 1); gl.uniform2f(pr.u.uInset, 0.5 / b.cw, 0.5 / b.chh);
 }
 function drawLayer(b0, L, t, view, origin = [0, 0]) {
+  t=engineTick(t);
   const age0 = (t - L.delay) * L.rate, b = segAt(b0, age0), m = b.meta, age = age0 - (m.t0 || 0), f = frameIdx(m, age);
   if (f < 0) return f;
   const pr = PR.mat; gl.useProgram(pr.p);
@@ -44,6 +45,7 @@ function drawLayer(b0, L, t, view, origin = [0, 0]) {
 }
 // 单元序列：模拟 Cascade 的每颗星一个粒子
 function drawUnitLayer(b, L, t, view) {
+  t=engineTick(t);
   const m = b.meta, P = b.P, f = m.fit, pr = PR.unit; gl.useProgram(pr.p);
   const kf = new Float32Array(16); m.keys.forEach(([u, v], i) => { kf[i * 2] = u; kf[i * 2 + 1] = v; });
   gl.uniform1f(pr.u.uTime, t); gl.uniform1f(pr.u.uV0, f.v0); gl.uniform1f(pr.u.uDrag, f.k); gl.uniform1f(pr.u.uA, f.a); gl.uniform1f(pr.u.uWind, P.wind || 0);
@@ -60,6 +62,7 @@ function drawUnitLayer(b, L, t, view) {
 }
 // 上升：星头循环贴图沿拟合弹道移动
 function drawRiseLayer(b, L, t, view) {
+  t=engineTick(t);
   const m = b.meta, f = m.fit; if (t < 0 || t > f.T) return -1;
   const e = Math.exp(-f.k * t), y = (f.v0 + G / f.k) * (1 - e) / f.k - G * t / f.k;
   return drawLayer(b, { ...L, scale: 1 }, t, view, [0, y]);
@@ -67,6 +70,7 @@ function drawRiseLayer(b, L, t, view) {
 // 升空尾缀：模拟 Cascade —— 循环面片沿拟合弹道上升（速度朝向 = 竖直），帧号锯齿、Size By Life 的 Y；到顶后换消散面片
 function trailLinY(fit, t) { const e = Math.exp(-fit.k * t); return (fit.v0 + G / fit.k) * (1 - e) / fit.k - G * t / fit.k; }
 function trailStateAt(b, t) {
+  t=engineTick(t);
   const m = b.meta, P = b.P, F = m.L.F;
   if (t < 0) return null;
   if (t <= m.T) return { bb: b, f: Math.floor(((t % m.Tp) / m.Tp) * F) % F, y: trailLinY(m.fit, t), sy: evalKeys(m.sizeKeysRise, t / m.T), phase: 'rise' };
@@ -175,7 +179,11 @@ function drawLiveScene(slot, P, t, view, ppm) {
   return { stars: sim.stars.filter(s => s.alive).length, sparks: gpu ? slot.track.total : sim.sp.n };
 }
 function sceneView(P, m, slot) {
-  if (isPhys(P)) return physView(P, slot, Math.min(state.t, P.duration));
+  if (isPhys(P)) {
+    const v=physView(P,slot,Math.min(state.view==='export'?engineTick(state.t):state.t,P.duration));
+    if(state.view==='export' && state.disp==='game')v[2]=v[3]=canvas.width/(2*gamePixelsPerMeter(P,P.phView));
+    return v;
+  }
   if (familyOf(P.type) === 'ground') return squareView(m);
   if (isTrail(P) && m.trail) { const h = m.Wh * 0.55; return [0, m.cy, h, h]; }
   const b = liveBox(P, slot), hx = Math.max(-b[0], b[1]) * 1.04 + 2, cy = (b[2] + b[3]) / 2, hy = (b[3] - b[2]) / 2 * 1.04 + 2, h = Math.max(hx, hy);
@@ -192,7 +200,7 @@ function renderLive() {
   if (!m) { hdrT.clear(); post(); hudText = '首次烘焙中…'; hudB = ''; return; }
   const sa = liveSlot('A'); prepSlot(sa, P, state.gen);
   let sb = null; if (B && B.bake) { sb = liveSlot('B'); prepSlot(sb, B.P, B.id); }
-  const t = Math.min(state.t, P.duration);
+  const t = Math.min(state.view==='export'?engineTick(state.t):state.t, P.duration);
   const view = unionView(sceneView(P, m, sa), sb ? sceneView(B.P, B.bake.meta, sb) : null), ppm = rgT.w / (2 * view[2]);
   rgT.clear(); rgT.bind(); additive(true);
   let info = null, infoB = null;
@@ -220,18 +228,19 @@ function exportView(b) {
   const texPPM = m.L.cellW / (m.Ww * Math.max(sxy[0], 1e-3));
   let ppmScreen;
   if (state.disp === 'px') ppmScreen = texPPM;
-  else if (state.disp === 'game') ppmScreen = 1080 / (2 * state.dist * Math.tan(Math.PI / 6));
+  else if (state.disp === 'game') ppmScreen = gamePixelsPerMeter(b.P,gameDiameter(b,2*full[2]));
   else ppmScreen = canvas.width / (2 * full[2]);
   const half = canvas.width / 2 / ppmScreen;
-  return { view: [full[0], full[1], half, half], mag: ppmScreen / texPPM, onScreen: m.Ww * sxy[0] * ppmScreen };
+  return { view: [full[0], full[1], half, half], mag: ppmScreen / texPPM, onScreen: m.Ww * sxy[0] * ppmScreen * 1080/canvas.height };
 }
 function exportViewAny(b, slot) {
-  if (b.form === 'unit') { const m = b.meta, f = m.fit, R = f.v0 / f.k * (1 - Math.exp(-f.k * m.duration)) + m.Wh; return { view: [0, -R * 0.1, R * 1.1, R * 1.1], mag: 0 }; }
-  if (b.form === 'riseLoop') return { view: sceneView(b.P, b.meta, slot), mag: 0 };
-  if (b.form === 'trail') { const m = b.meta, s = trailStateAt(b, state.t), h = m.Wh * 0.62; return { view: [0, (s ? s.y : 0) - m.Wh * 0.42, h, h], mag: 0, track: s ? s.y : 0 }; }
+  if (b.form === 'unit') { const m = b.meta, f = m.fit, R = f.v0 / f.k * (1 - Math.exp(-f.k * m.duration)) + m.Wh; return productDisplayView(b,[0,-R*.1,R*1.1,R*1.1],m.L.cellW/m.Ww,R*2); }
+  if (b.form === 'riseLoop') { const v=sceneView(b.P,b.meta,slot);return productDisplayView(b,v,b.meta.L.cellW/b.meta.Ww,v[2]*2); }
+  if (b.form === 'trail') { const m = b.meta, s = trailStateAt(b, state.t), h = m.Wh * 0.62; return {...productDisplayView(b,[0,(s?s.y:0)-m.Wh*.42,h,h],Math.min(m.L.cellW/m.Ww,m.L.cellH/m.Wh),m.Wh),track:s?s.y:0}; }
   return exportView(b);
 }
 function drawExportScene(b, M, t, view, slot) {
+  t=engineTick(t);
   const L = { ...M, scale: 1, delay: 0, rate: 1, mirror: false };
   if (b.form === 'unit') return drawUnitLayer(b, L, t, view);
   if (b.form === 'trail') return drawTrailLayer(b, L, t, view);
@@ -246,7 +255,7 @@ function drawExportScene(b, M, t, view, slot) {
   return drawLayer(b, L, t, view);
 }
 function renderExport() {
-  const b = state.bake, B = state.B; hdrT.clear();
+  const b = previewBake(), B = state.B; hdrT.clear();
   if (!b) { post(); hudText = '烘焙中…'; return; }
   const sa = liveSlot('XA'); prepSlot(sa, b.P, state.gen);
   let sb = null; if (B && B.bake) { sb = liveSlot('XB'); prepSlot(sb, B.P, B.id); }
@@ -259,7 +268,7 @@ function renderExport() {
   const magTxt = !mag ? '' : mag > 1.5 ? ` · 贴图放大 ${mag.toFixed(1)}×，会显糊` : ` · 贴图放大 ${mag.toFixed(1)}×`;
   const tsx = b.form === 'trail' ? trailStateAt(b, state.t) : null;
   if (b.form === 'trail') { hudText = !tsx ? '序列结束' : `导出效果 · 升空尾缀 · ${tsx.phase === 'rise' ? '上升循环' : '消散（' + tsx.bb.fps + ' fps）'} · 第 ${tsx.f + 1}/64 帧 · ${'RGBA'[Math.floor(tsx.f / 16)]} 通道 · 镜头跟着星头（面片沿弹道上升，Size By Life Y ${tsx.sy.toFixed(2)}）`; hudB = sb ? `B：${B.name}` : ''; return; }
-  const fi = b.form === 'unit' ? frameIdx(b.meta, state.t) : frameIdx(s.meta, state.t - (s.meta.t0 || 0));
+  const fi = b.form === 'unit' ? frameIdx(b.meta, engineTick(state.t)) : frameIdx(s.meta, engineTick(state.t) - (s.meta.t0 || 0));
   hudText = fi < 0 ? '序列结束' : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? (s === b ? ' 段 A' : ' 段 B') : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
   hudB = sb ? `B：${B.name}` : '';
 }
@@ -273,7 +282,7 @@ function drawAtlasQuad(b, show, f, n, trail) {
   drawQuad();
 }
 function renderAtlas() {
-  const b0 = state.bake;
+  const b0 = previewBake();
   gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, canvas.width, canvas.height); gl.clearColor(0.02, 0.02, 0.03, 1); gl.clear(gl.COLOR_BUFFER_BIT);
   if (!b0) { hudText = '烘焙中…'; return; }
   const b = atlasSegOf(b0);
@@ -355,18 +364,24 @@ function renderComboLive() {
 function renderCombo() {
   if (state.view === 'live') return renderComboLive();
   hdrT.clear();
-  const items = state.layers.map(L => [L, state.lib.find(e => e.name === L.lib)]).filter(x => x[1]);
+  const items = state.layers.map(L => [L, state.lib.find(e => e.name === L.lib)]).filter(x => x[1]).map(([L,e])=>[L,{...e,bake:previewBake(e.bake)}]);
+  if(items.some(([,e])=>!e.bake)){post();hudText='手机版还未烘焙；点 PC / 手机可重试';return;}
   if (!items.length) { post(); hudText = '没有图层'; return; }
   let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
   for (const [L, e] of items) for (let s = e.bake; s; s = s.next) for (let i = 0; i <= 8; i++) { const r = layerRectAt(s.meta, L, i / 8 * s.meta.duration); x0 = Math.min(x0, r[0]); y0 = Math.min(y0, r[1]); x1 = Math.max(x1, r[2]); y1 = Math.max(y1, r[3]); }
-  const half = Math.max(x1 - x0, y1 - y0) * 0.52, view = [(x0 + x1) / 2, (y0 + y1) / 2, half, half];
+  let half = Math.max(x1 - x0, y1 - y0) * 0.52;
+  if(state.disp==='game'){
+    const diameter=Math.max(...items.map(([L,e])=>gameDiameter(e.bake,Math.max(e.bake.meta.Ww,e.bake.meta.Wh))*(L.scale||1)));
+    half=canvas.width/(2*gamePixelsPerMeter(items[0][1].P,diameter));
+  }else if(state.disp==='px')half=canvas.width/(2*Math.min(...items.map(([L,e])=>e.bake.meta.L.cellW/(e.bake.meta.Ww*(L.scale||1)))));
+  const view = [(x0 + x1) / 2, (y0 + y1) / 2, half, half];
   hdrT.bind(); additive(true);
   for (const [L, e] of items) drawLayer(e.bake, L, state.t, view);
   additive(false); post();
   hudText = `${state.comboName} · 导出效果（每层 2048 贴图叠放）· ${items.length} 层 · 每层星头、拖尾各一个发射器`; hudB = '';
 }
 function updateLabels() {
-  const q = $('#qlabels'), b = state.bake;
+  const q = $('#qlabels'), b = previewBake();
   if (state.tab !== 'combo' && state.view === 'atlas' && state.atlasFlow && b) {
     if (q.dataset.key !== 'flow') { q.dataset.key = 'flow'; q.innerHTML = `<span class="qlabel" style="top:8px;left:3%">当前格 · 原始灰度 · 最近邻（看得到真实像素）</span><span class="qlabel" style="top:8px;left:52%">整张贴图 · 金框 = 当前帧 · 淡框 = 刚走过</span>`; }
   } else if (state.tab !== 'combo' && state.view === 'atlas' && b && b.meta.L.chans === 4) {
@@ -406,8 +421,9 @@ function loop(now) {
   $('#atlasSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.tail);
   $('#segSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.next);
   $('#flowSeg').hidden = !mv || state.view !== 'atlas'; $('#flowCv').hidden = !mv || state.view !== 'atlas' || !state.atlasFlow;
-  $('#dispSeg').hidden = !mv || state.view !== 'export' || !(state.bake && (state.bake.form === 'master' || state.bake.form === 'segments' || state.bake.form === 'loop'));
+  $('#dispSeg').hidden = state.tab==='asset' ? false : state.view !== 'export';
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
+  $('#platformSeg').hidden = state.tab==='asset' || (mv && isPhys(state.P));
   $('#resolutionBox').hidden = !mv || state.view!=='live' || renderVersion(state.P)<40 || isTrail(state.P) || isPhys(state.P);
   $('#abTag').hidden = !(mv && state.B);
   refSync();

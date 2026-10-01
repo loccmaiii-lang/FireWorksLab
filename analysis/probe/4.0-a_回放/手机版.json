@@ -1,0 +1,60 @@
+{
+  "checks": {
+    "independent GPU target": true,
+    "PC actual cell 512": true,
+    "mobile actual cell 256": true,
+    "same frame count": true,
+    "same frame times": true,
+    "mobile texture assets present": true,
+    "mobile manifest references mobile textures": true,
+    "correct platform labels": true,
+    "both textures nonempty": true,
+    "viewer selects real mobile target": true,
+    "PC selection retains original target": true,
+    "UI switches to 256 px mobile cell": true,
+    "game distance control visible": true,
+    "real framebuffer stays fixed within a tick": true,
+    "WebGL reports no error": true,
+    "no page errors": true
+  },
+  "pc": {
+    "size": 2048,
+    "cell": 512,
+    "frames": 64
+  },
+  "mobile": {
+    "size": 1024,
+    "cell": 256,
+    "frames": 64
+  },
+  "files": [
+    "T_Check_Mobile.png",
+    "T_Check_Mobile_FrameTest.png",
+    "T_Check_Mobile_Cutout.png",
+    "T_Check_Mobile_Ramp.png",
+    "Check_Mobile.json",
+    "cascade.json",
+    "cascade_mobile.json"
+  ],
+  "phoneTextures": {
+    "seq": {
+      "file": "T_Check_Mobile.png",
+      "class": "flipbook",
+      "cols": 4,
+      "rows": 4,
+      "channels": 4,
+      "frames": 64
+    },
+    "cutout": {
+      "file": "T_Check_Mobile_Cutout.png",
+      "class": "cutout"
+    },
+    "ramp": {
+      "file": "T_Check_Mobile_Ramp.png",
+      "class": "ramp"
+    }
+  },
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "pageErrors": [],
+  "pass": true
+}

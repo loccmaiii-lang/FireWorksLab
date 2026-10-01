@@ -75,9 +75,10 @@ function liveRenderer40(slot,P) {
 }
 function renderLive40() {
   const P=state.P, slot=liveSlot('A40'); prepSlot(slot,P,state.gen);
-  const R=liveRenderer40(slot,P), b=state.bake;
+  const R=liveRenderer40(slot,P), b=previewBake();
   const pl=b && state.bakeGen===state.gen && ['master','segments','loop'].includes(b.form) ? segAt(b,state.t).meta : slot.plan40;
-  const q=qualityOf(P), w=state.exportResolution?pl.L.cellW:canvas.width, h=state.exportResolution?pl.L.cellH:canvas.height;
+  const q=qualityOf(P), L=state.platform==='mobile' && !b?layoutOf(mobileParams(P)):pl.L;
+  const w=state.exportResolution?L.cellW:canvas.width, h=state.exportResolution?L.cellH:canvas.height;
   if(!slot.cell40 || slot.cell40.w!==w || slot.cell40.h!==h || slot.samples40.w!==w*q.ss){
     slot.cell40 && slot.cell40.dispose(); slot.samples40 && slot.samples40.dispose(); gl.activeTexture(gl.TEXTURE0);
     slot.cell40=new Target(w,h,gl.RGBA16F); slot.samples40=new Target(w*q.ss,h*q.ss,gl.RGBA16F);
