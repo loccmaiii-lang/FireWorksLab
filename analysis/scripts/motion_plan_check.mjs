@@ -164,11 +164,12 @@ await check('4.0.2 default budget (motion): fits one sheet when it can, 30 fps o
   const r=data(`(()=>{const out={};for(const id of ['JM4-40','kiku','botan','kamuro','yanagi','senrin','crossette','palm','glitter']){
     const P=id.includes('-')?replicaPM(id).P:defaultsFor(id,40).P,pl=plan(P,measure(P));const h=pl.dur.map(d=>Math.round(d*30));
     let up=0;for(let i=1;i<h.length-1;i++)up=Math.max(up,h[i]-h[i-1]);
-    out[id]={pages:pl.budget.pages,F:pl.L.F,dur:pl.duration,P:P.duration,open:pl.times.filter(t=>pl.t0+t<.5).length,hmax:Math.max(...h),up,ticks:pl.nTicks,tickSum:h.reduce((a,c)=>a+c,0)};}return out;})()`);
+    out[id]={pages:pl.budget.pages,F:pl.L.F,dur:pl.duration,P:P.duration,open:pl.times.filter(t=>pl.t0+t<.5).length,hmax:Math.max(...h),hburn:Math.max(...h.filter((_,f)=>pl.t0+pl.times[f]<pl.budget.fadeAt)),up,ticks:pl.nTicks,tickSum:h.reduce((a,c)=>a+c,0)};}return out;})()`);
   for(const [id,x] of Object.entries(r)){
-    assert.equal(x.pages,1,id+': fits one sheet');
+    assert.equal(x.pages,id==='yanagi'?2:1,id+(id==='yanagi'?': 6.5 s willow needs 2 sheets at ≥10 fps burn':': fits one sheet'));
     assert.ok(x.open>=14,id+': first 0.5 s every tick ('+x.open+')');
-    assert.ok(x.hmax<=4,id+': hold ≤ 4 ticks');
+    assert.ok(x.hmax<=4,id+': hold ≤ 4 ticks (fade ≥ 7.5 fps)');
+    assert.ok(x.hburn<=3,id+': burn hold ≤ 3 ticks (≥ 10 fps)');
     assert.ok(x.up<=1,id+': hold steps up by ≤ 1');
     assert.equal(x.tickSum,x.ticks,id+': frames cover every tick');
     assert.ok(Math.abs(x.dur-x.P)<0.04,id+': full duration kept ('+x.dur+' vs '+x.P+')');

@@ -60,11 +60,11 @@ function motionWeights40(fm,first,end){
   const w=raw.map((_,i)=>{let s=0,n=0;for(let j=Math.max(0,i-8);j<=Math.min(raw.length-1,i+8);j++){s+=raw[j];n++;}return s/n;});
   return w.map(v=>Math.max(v,.08*vmax,1e-6));
 }
-function motionSchedule40(B,w,first,end,cap,maxHold){
+function motionSchedule40(B,w,first,end,cap,maxHold,maxHoldBurn=maxHold){
   const N=end-first;
   const sched=D=>{const ticks=[];let k=0,prev=1;
     while(k<N){ticks.push(k);const t=(first+k)/30;
-      let hm=t<B.burstEnd?1:Math.min(maxHold,prev+1);if(t>=B.strobeFrom)hm=Math.min(hm,B.strobeHold);
+      let hm=t<B.burstEnd?1:Math.min(t<B.fadeAt?maxHoldBurn:maxHold,prev+1);if(t>=B.strobeFrom)hm=Math.min(hm,B.strobeHold);
       let h=1,acc=w[k];while(h<hm&&k+h<N&&acc+w[k+h]<=D){acc+=w[k+h];h++;}
       k+=h;prev=h;}
     return ticks;};
@@ -84,9 +84,10 @@ function plan40(P,fm,ta=0,tb=P.duration) {
   let pagesUsed=0;
   if(mode==='motion'){
     // 先放进 pageTarget 张；每帧最多停 maxHold 个 tick 仍放不下，就一张一张往上加
-    const w=motionWeights40(fm,first,end),maxHold=clamp(Math.round(+P.maxHold||4),1,8);
+    // 最慢帧率（协作/标准.md 2.3，2026-10-01 按用户实测「4.56 s 放 64 帧流畅」暂定）：燃烧段 ≥ 10 fps（一帧最多停 3 tick），淡出段 ≥ 7.5 fps（4 tick）
+    const w=motionWeights40(fm,first,end),maxHold=clamp(Math.round(+P.maxHold||4),1,8),maxHoldBurn=Math.min(maxHold,clamp(Math.round(+P.maxHoldBurn||3),1,8));
     let pages=Math.max(1,Math.round(+P.pageTarget||1)),r;
-    for(;;pages++){r=motionSchedule40(B,w,first,end,cap*pages,maxHold);if(!r.over||pages>=12)break;}
+    for(;;pages++){r=motionSchedule40(B,w,first,end,cap*pages,maxHold,maxHoldBurn);if(!r.over||pages>=12)break;}
     ticks=r.ticks;pagesUsed=pages;
   } else if(mode==='full'){ticks=[];for(let k=first;k<end;k++)ticks.push(k-first);}
   else ticks=tickSchedule40(B,holds,first,end);

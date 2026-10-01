@@ -47,9 +47,12 @@ JS_METRICS = r"""
   const n = Math.floor(D * fps); let seen = new Set(), maxJump = 0, prev = null;
   for (let i = 0; i <= n && i/fps<D; i++) { const f = fAt(i / fps); seen.add(f); if (prev !== null) maxJump = Math.max(maxJump, f - prev); prev = f; }
   out.frames30 = { shown: seen.size, total: L.F, ratio: +(seen.size / L.F).toFixed(3), maxJump };
-  // 燃烧段（前 85%）每 0.5 s 窗口内换了几帧 → 最低有效帧率
-  let minFps = 1e9; for (let t0 = 0; t0 + 0.5 <= D * 0.85; t0 += 0.25) { const s = new Set(); for (let t = t0; t < t0 + 0.5; t += 1 / fps) s.add(fAt(t)); minFps = Math.min(minFps, s.size / 0.5); }
-  out.minFpsActive = +(minFps === 1e9 ? 0 : minFps).toFixed(1);
+  // 燃烧段 / 淡出段每 1.2 s 窗口内换了几帧 → 最低有效帧率（1.2 s = 36 tick，停 3 / 4 tick 的帧正好整除，不会因为窗口对齐少算一帧）
+  // 燃烧段到哪：4.0 计划给的淡出起点（花径到头且速度降下来）；没有就按前 85%
+  const fadeRel = pl.budget && isFinite(pl.budget.fadeAt) ? Math.max(0, pl.budget.fadeAt - (pl.t0 || 0)) : D * 0.85, W = 1.2;
+  const winMin = (a, b) => { let m = 1e9; for (let t0 = a; t0 + W <= b + 1e-9; t0 += 0.1) { const s = new Set(); for (let t = t0; t < t0 + W - 1e-9; t += 1 / fps) s.add(fAt(t)); m = Math.min(m, s.size / W); } return m === 1e9 ? null : +m.toFixed(1); };
+  out.minFpsActive = winMin(0, fadeRel) ?? +(L.F / D).toFixed(1);
+  out.minFpsFade = winMin(fadeRel, D);
   out.avgFps = +(L.F / D).toFixed(1);
   // 屏幕上的大小（主判据，用户 2026-10-01 实测：最佳观察距离 800–1200 m，四尺玉约占屏幕高的 1/3）
   //   花径 = 燃烧期最大半径 × 2；面片比花径大（留边、拖尾、下垂）：面片屏幕像素 = 花径屏幕像素 × 面片 / 花径
@@ -112,6 +115,7 @@ def verdict(m, std):
     v['屏幕放大 ≤ 1'] = m['screen']['mag'] <= std['maxMag']
     v['30fps 显示帧 ≥ 90%'] = m['frames30']['ratio'] >= 0.9
     v['燃烧段有效帧率 ≥ 下限'] = m['minFpsActive'] >= std['minFps']
+    if m.get('minFpsFade') is not None: v['淡出段有效帧率 ≥ 下限'] = m['minFpsFade'] >= std.get('minFpsFade', 7.5)
     v['尺寸参数有效'] = not (m['sizeDead']['head'] or m['sizeDead']['spark'])
     return v
 
@@ -128,12 +132,12 @@ async def main():
     ap.add_argument('--bake', action='store_true')
     ap.add_argument('--shots', default='')
     ap.add_argument('--pc-cell', type=int, default=512)
-    ap.add_argument('--min-fps', type=float, default=12)
+    ap.add_argument('--min-fps', type=float, default=10)
     ap.add_argument('--max-mag', type=float, default=1.0)
     a = ap.parse_args()
     out = pathlib.Path(a.out) if a.out else ROOT / 'analysis' / 'probe' / time.strftime('%Y%m%d_%H%M%S')
     out.mkdir(parents=True, exist_ok=True)
-    std = {'pcCell': a.pc_cell, 'minFps': a.min_fps, 'maxMag': a.max_mag}
+    std = {'pcCell': a.pc_cell, 'minFps': a.min_fps, 'minFpsFade': 7.5, 'maxMag': a.max_mag}
     from playwright.async_api import async_playwright
     res = []
     async with async_playwright() as p:

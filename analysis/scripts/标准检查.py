@@ -23,7 +23,7 @@ spec = importlib.util.spec_from_file_location('probe', HERE / '烘焙器探针.p
 probe = importlib.util.module_from_spec(spec); spec.loader.exec_module(probe)
 from browser_runtime import chromium_options, verify_renderer
 
-STD = {'pcCell': 512, 'minFps': 12, 'maxMag': 1.0}
+STD = {'pcCell': 512, 'minFps': 10, 'minFpsFade': 7.5, 'maxMag': 1.0}   # 帧率下限：协作/标准.md 2.3（2026-10-01 按用户实测暂定 10 / 7.5）
 LIB_TYPES = ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'palm', 'henka', 'strobe', 'glitter', 'crackle', 'matsuba', 'crossette', 'ochiba', 'jisa', 'ring', 'saturn', 'kata', 'water']
 
 JS_ENTRY = r"""
@@ -89,7 +89,7 @@ async def run(targets, write, merge=False):
                 bad = [lid for lid, ok, _ in rows if not ok]
                 m0 = rows[0][2]
                 detail = {'单格 ≥ PC 下限': f"单格 {m0['grid']['cellW']:.0f} px", '屏幕放大 ≤ 1': f"放大 {m0['screen']['mag']}",
-                          '30fps 显示帧 ≥ 90%': f"{m0['frames30']['shown']}/{m0['frames30']['total']}", '燃烧段有效帧率 ≥ 下限': f"{m0['minFpsActive']} fps",
+                          '30fps 显示帧 ≥ 90%': f"{m0['frames30']['shown']}/{m0['frames30']['total']}", '燃烧段有效帧率 ≥ 下限': f"{m0['minFpsActive']} fps", '淡出段有效帧率 ≥ 下限': f"{m0.get('minFpsFade')} fps",
                           '尺寸参数有效': ''}.get(k2, '')
                 if len(rows) > 1: detail = (f'{len(rows) - len(bad)}/{len(rows)} 层通过' + (f'；不过：{", ".join(bad)}' if bad else ''))
                 res['checks'].append([k2, not bad, detail])
