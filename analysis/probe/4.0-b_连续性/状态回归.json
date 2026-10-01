@@ -8,7 +8,7 @@
     "pass": true
   },
   {
-    "name": "render version: new templates are 40, existing entries and V5 are 37",
+    "name": "render version: default remains 37; explicit development preview is 40; formal/V5 stay 37",
     "pass": true
   },
   {
