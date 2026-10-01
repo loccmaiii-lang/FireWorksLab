@@ -27,7 +27,7 @@ function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm) {
   return [a,b];
 }
 function frameFade40(pl, t, noFade = false) {
-  return pl.loop || noFade ? 1 : clamp((pl.duration-(t-(pl.t0||0)))/.3,0,1);
+  return pl.loop || noFade ? 1 : clamp(((pl.fadeEnd==null?(pl.t0||0)+pl.duration:pl.fadeEnd)-t)/.3,0,1);
 }
 function packCell40(P, source, target, fade = 1) {
   const q=qualityOf(P), pr=PR.pack;
@@ -62,9 +62,18 @@ function shadeCell40(P,M,cell,t) {
   gl.uniform1f(pr.u.uG,P.encGamma); gl.uniform1f(pr.u.uComb,P.outMode==='combined'?1:0);
   setMatUniforms(pr,M,t); drawQuad();
 }
-function shadeView40(P,M,cell,t,view,target) {
-  const aspect=view[2]/view[3],w=Math.min(target.w,target.h*aspect),h=w/aspect;
-  gl.viewport(Math.round((target.w-w)/2),Math.round((target.h-h)/2),Math.round(w),Math.round(h));
+function shadeView40(P,M,cell,t,view,target,camera=null) {
+  if(camera){
+    // 把烘焙单格摆回固定世界镜头。单格取景扩大只改变面片范围，不能带着观看镜头后退。
+    const x0=Math.round(((view[0]-view[2]-camera[0])/(2*camera[2])+.5)*target.w);
+    const y0=Math.round(((view[1]-view[3]-camera[1])/(2*camera[3])+.5)*target.h);
+    const x1=Math.round(((view[0]+view[2]-camera[0])/(2*camera[2])+.5)*target.w);
+    const y1=Math.round(((view[1]+view[3]-camera[1])/(2*camera[3])+.5)*target.h);
+    gl.viewport(x0,y0,Math.max(1,x1-x0),Math.max(1,y1-y0));
+  }else{
+    const aspect=view[2]/view[3],w=Math.min(target.w,target.h*aspect),h=w/aspect;
+    gl.viewport(Math.round((target.w-w)/2),Math.round((target.h-h)/2),Math.round(w),Math.round(h));
+  }
   shadeCell40(P,M,cell,t);
 }
 function linearCellMetrics40(cell) {
@@ -90,9 +99,17 @@ function renderLive40() {
   }
   const t=familyOf(P.type)==='ground'?state.t:Math.min(state.t,P.duration);
   const view=frameView40(pl,t), timing=b && state.bakeGen===state.gen && ['unit','riseLoop'].includes(b.form)?b.meta:pl;
+  let camera=null;
+  if(familyOf(P.type)==='aerial' && ['master','segments'].includes(P.form)){
+    if(b && state.bakeGen===state.gen)camera=exportView(b).view;
+    else{
+      if(!slot.camera40)slot.camera40={P,meta:slot.plan40,fm:measure(P)};
+      camera=productDisplayView(slot.camera40,sceneView(P,slot.plan40,slot),L.cellW/(2*view[2]),slot.plan40.Ww).view;
+    }
+  }
   renderCell40(P,timing,R,t,slot.samples40,slot.cell40,view);
-  hdrT.clear(); hdrT.bind(); shadeView40(P,state.M,slot.cell40,t,view,hdrT); post(-1,P);
-  hudText=`实时模拟 · ${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门`;
+  hdrT.clear(); hdrT.bind(); shadeView40(P,state.M,slot.cell40,t,view,hdrT,camera); post(-1,P);
+  hudText=`实时模拟 · ${state.disp==='game'&&camera?'游戏内大小 · '+state.dist+' m · ':''}${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门`;
   hudB='';
 }
 async function suggestExposure40() {

@@ -35,7 +35,7 @@ async function loadShowcase(key=showcase.key) {
         showcase.bounds=cloudPreviewBounds(showcase.layers);
         $('#cloudLayer').replaceChildren(new Option('整体 · '+recipe.layers.length+' 层','-1'));
         recipe.layers.forEach((l,i)=>$('#cloudLayer').appendChild(new Option(l.name,String(i))));
-        $('#showcaseNote').textContent=recipe.note+' 配方结构预览；帧预算和 UE 验证未完成。';
+        $('#showcaseNote').textContent=recipe.note+' 30 fps 分段回放；配方仍待精调和 UE 验证。';
         return;
       }
       const replica=!!REPLICA_BY_ID[key], d=replica?replicaPM(key):defaultsFor(key,37);
@@ -51,7 +51,7 @@ async function loadShowcase(key=showcase.key) {
       if(id!==showcase.id || !showcase.active)return;
       showcase.left=left;showcase.right=right;showcase.M=d.M;left=right=null;
       state.t=.8;
-      $('#showcaseNote').textContent=locked?'V5 仍锁定 3.7，左右检验原样保留。新核重调在最终迁移时另交验收。':`同秒、同尺度；右侧采用新光点与推荐固定曝光 ×${newP.exposure}。帧预算尚未重做，本轮只看光点、清晰度和亮度。`;
+      $('#showcaseNote').textContent=locked?'V5 仍锁定 3.7，左右检验原样保留。新核重调在最终迁移时另交验收。':`同秒、同尺度；右侧采用新光点与推荐固定曝光 ×${newP.exposure}，按 30 fps 烘焙并自动分段。连续播放与 UE 画质仍需验证。`;
     }catch(e){console.error(e);$('#showcaseNote').textContent='橱窗烘焙失败：'+e.message;}
     finally{
       for(const l of layers)disposeBake(l.b);
@@ -126,8 +126,8 @@ function cloudPreviewBounds(layers){
   let x0=Infinity,y0=Infinity,x1=-Infinity,y1=-Infinity,diameter=0;
   for(const l of layers){
     diameter=Math.max(diameter,gameDiameter(l.b,Math.max(l.b.meta.Ww,l.b.meta.Wh)));
-    for(let i=0;i<=24;i++){
-      const r=layerRectAt(l.b.meta,{scale:1,mirror:false},i*l.b.meta.duration/24);
+    for(const part of bakeParts(l.b))for(let i=0;i<=24;i++){
+      const r=layerRectAt(part.meta,{scale:1,mirror:false},i*part.meta.duration/24);
       x0=Math.min(x0,r[0]+l.origin[0]);x1=Math.max(x1,r[2]+l.origin[0]);y0=Math.min(y0,r[1]+l.origin[1]);y1=Math.max(y1,r[3]+l.origin[1]);
     }
   }

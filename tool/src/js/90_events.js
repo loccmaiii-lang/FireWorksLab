@@ -8,7 +8,7 @@ for (const [g, types] of TYPE_GROUPS) {
 if (REPLICAS.length) { const og = document.createElement('optgroup'); og.label = '实拍复刻';
   for (const r of REPLICAS) og.appendChild(new Option(r.name, 'rep:' + r.id));
   $('#type').appendChild(og); }
-$('#verLabel').textContent = `4.0 开发版 · 阶段版本 ${VERSION}`;
+$('#verLabel').textContent = '默认 3.7 · 4.0 升级中';
 $('#type').addEventListener('change', e => setType(e.target.value));
 $('#mname').addEventListener('input', e => state.name = e.target.value);
 $('#x-form').addEventListener('change', e => setForm(e.target.value));

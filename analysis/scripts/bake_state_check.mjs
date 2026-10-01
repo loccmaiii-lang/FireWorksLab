@@ -84,8 +84,9 @@ await check('F1: failure stops; retained bake and persistent error survive all v
   assert.equal(f.run('state.dirty'), false);
   assert.equal(f.elements.get('#bakeError').hidden, true);
 });
-await check('render version: new templates are 40, existing entries and V5 are 37', async f => {
-  assert.equal(f.run("defaultsFor('kiku').P.renderVer"), 40);
+await check('render version: default remains 37; explicit development preview is 40; formal/V5 stay 37', async f => {
+  assert.equal(f.run("defaultsFor('kiku').P.renderVer"), 37);
+  assert.equal(f.run("defaultsFor('kiku',40).P.renderVer"), 40);
   for (const type of ['trailS', 'trailM', 'trailL']) assert.equal(f.run(`defaultsFor('${type}').P.renderVer`), 37);
   for (const id of ['JM4', 'TR2S', 'TR2M', 'TR2L']) assert.equal(f.run(`replicaPM('${id}').P.renderVer`), 37, id);
 });
@@ -97,7 +98,7 @@ await check('stored recipes: legacy import and rollback; explicit version surviv
   assert.equal(f.run("resolveRecipe({ type: 'kiku', diff: { P: {}, M: {} } }).P.renderVer"), 37);
   f.run("rollback({ P: { type: 'kiku' }, M: {}, name: 'old', n: 1 });");
   assert.equal(f.run('state.P.renderVer'), 37);
-  f.run("state.P = defaultsFor('kiku').P; state.M = defaultsFor('kiku').M; saveRecipe('new');");
+  f.run("state.P = defaultsFor('kiku',40).P; state.M = defaultsFor('kiku',40).M; saveRecipe('new');");
   assert.equal(f.run('state.recipes[0].diff.P.renderVer'), 40);
   assert.equal(f.run('resolveRecipe(state.recipes[0]).P.renderVer'), 40);
 });

@@ -14,7 +14,7 @@ function fwlColor(M, D, t0, gain) { return colorKeys(M, D, t0).map(([u, c]) => [
 function fwlMaster(name, b, M, mobile) {
   const textures = {}, materials = {}, emitters = [];
   for (let s = b, i = 0; s; s = s.next, i++) {
-    const seg = b.next ? 'AB'[i] : '', m = s.meta, L = m.L, key = seg ? 'seq' + seg : 'seq';
+    const seg = bakeSegmentName(b,i), m = s.meta, L = m.L, key = seg ? 'seq' + seg : 'seq';
     const tex = TN(name, seg), cut = TN(name, joinPart(seg, 'Cutout'));
     textures[key] = { file: tex + '.png', class: 'flipbook', cols: L.cols, rows: L.rows, channels: L.chans, frames: L.F };
     textures['cutout' + seg] = { file: cut + '.png', class: 'cutout' };

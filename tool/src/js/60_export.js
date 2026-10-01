@@ -81,7 +81,7 @@ function colorKeys(M, D, t0 = 0) {
 function curvesCSV(b, M) {
   const rows = ['段,曲线,相对时间,值1,值2,值3'];
   for (let s = b, i = 0; s; s = s.next, i++) {
-    const m = s.meta, seg = b.next ? 'AB'[i] : '';
+    const m = s.meta, seg = bakeSegmentName(b,i);
     const fk = m.riseLoop ? sawKeys(m, m.fit.T) : m.trail ? sawKeys(m, m.T) : m.keys;
     if (m.trail) for (const [u, v] of m.sizeKeysRise) rows.push(`${seg},上升_SizeByLife_Y倍数,${u},${v},,`);
     for (const [u, v] of fk) rows.push(`${seg},DynamicParameter_第三通道_帧号,${u},${v},,`);
@@ -174,7 +174,7 @@ async function texFiles(b, name, sfx = '', idx = 1) {
     return files;
   }
   for (let s = b, i = 0; s; s = s.next, i++) {
-    const seg = b.next ? 'AB'[i] : '', L = s.meta.L;
+    const seg = bakeSegmentName(b,i), L = s.meta.L;
     const hd = readRGBA8(s.head), tl = s.tail ? readRGBA8(s.tail) : null;
     if (tl) {
       files.push([`${TN(name, joinPart(seg, 'Head', k4), L, idx)}.png`, await encodePNG(hd, s.N, s.NH)]);
@@ -190,7 +190,8 @@ async function texFiles(b, name, sfx = '', idx = 1) {
 function masterJSON(b, name, M) {
   const P = b.P, m = b.meta, L = m.L;
   const seg = s => ({
-    t0: s.meta.t0 || 0, duration: s.meta.duration, frames: L.F, frameCurve: { channel: 'Dynamic Parameter 第三通道', keys: s.meta.riseLoop ? sawKeys(s.meta, s.meta.fit.T) : s.meta.keys },
+    ...(s.meta.frameTiming?{frameTiming:s.meta.frameTiming,frameFps:s.meta.frameFps}:{}),
+    t0: s.meta.t0 || 0, duration: s.meta.duration, frames: s.meta.L.F, frameCurve: { channel: 'Dynamic Parameter 第三通道', keys: s.meta.riseLoop ? sawKeys(s.meta, s.meta.fit.T) : s.meta.keys },
     trail: s.meta.trail ? { riseSeconds: s.meta.T, loopSeconds: s.meta.Tp, relayLoopFrame: s.meta.fEnd, riseSizeByLifeY: s.meta.sizeKeysRise, fades: (b.fades || []).map(f => ({ fps: f.fps, frames: L.F, seconds: +(L.F / f.fps).toFixed(3) })), relayDiff: s.meta.relay, trailLengthM: +s.meta.trailLen.toFixed(2), engineBrightness: P.trBright, riseFit: s.meta.fit, pivotHead: s.meta.hb, fill: s.meta.fill ? { avg: s.meta.fill.avg, p10: s.meta.fill.p10, x: s.meta.fill.x, y: s.meta.fill.y } : null, seam: s.meta.check && s.meta.check.seam } : undefined,
     frameTimes: s.meta.times.map(v => +v.toFixed(4)), avgFps: +s.meta.avgFps.toFixed(2), minFps: +s.meta.minFps.toFixed(2), maxDispPx: +s.meta.maxDisp.toFixed(2),
     spriteSizeCm: [+(s.meta.Ww * 100).toFixed(1), +(s.meta.Wh * 100).toFixed(1)], burstOffsetZcm: +(s.meta.cy * 100).toFixed(1), pivotUV: [s.meta.px, +s.meta.py.toFixed(4)],

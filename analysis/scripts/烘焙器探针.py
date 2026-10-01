@@ -40,6 +40,7 @@ JS_METRICS = r"""
   if (P.form !== 'master' && P.form !== 'segments') { out.note = '只量大面片（master / segments）；这个产物是 ' + P.form; return out; }
   const fm = __fw.measure(P), pl = __fw.plan(P, fm), L = pl.L, D = pl.duration;
   out.grid = { cols: L.cols, rows: L.rows, chans: L.chans, frames: L.F, cellW: L.cellW, cellH: L.cellH };
+  if(pl.frameTiming==='tick-start')out.grid={...out.grid,pages:splitPlan40(pl).length,pageFrames:splitPlan40(pl).map(p=>p.L.F),capacityPerPage:pl.capacityFrames};
   out.spriteM = +pl.Ww.toFixed(1);
   // 帧号曲线逐 tick 取整（和材质一样：floor，不混合）
   const fAt = t => Math.min(L.F - 1, Math.floor(evalKeys(pl.keys, Math.min(1, t / D))));
@@ -97,7 +98,8 @@ JS_BAKE = r"""
 async (id) => {
   let P, M; if (id.startsWith('type:')) { const d = defaultsFor(id.slice(5)); P = derive({ ...d.P }); M = d.M; } else { const r = __fw.replicaPM(id); P = r.P; M = r.M; }
   const b = await __fw.bake(P, 1, null); const L = b.meta.L;
-  const r = { grid: { cols: L.cols, rows: L.rows, chans: L.chans, frames: L.F, cellW: L.cellW, cellH: L.cellH }, t0: b.meta.t0 || 0, darkTail: b.meta.darkTail, edgeFrames: b.meta.check?.edgeFrames };
+  const parts=[];for(let s=b;s;s=s.next)parts.push(s);
+  const r = { grid: { cols: L.cols, rows: L.rows, chans: L.chans, frames: parts.reduce((n,s)=>n+s.meta.L.F,0), pages:parts.length,pageFrames:parts.map(s=>s.meta.L.F),cellW: L.cellW, cellH: L.cellH }, t0: b.meta.t0 || 0, darkTail: parts.at(-1).meta.darkTail, edgeFrames: parts.flatMap(s=>s.meta.check?.edgeFrames||[]) };
   disposeBake(b); return r;
 }
 """

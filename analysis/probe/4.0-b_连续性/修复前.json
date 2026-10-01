@@ -1,0 +1,703 @@
+{
+  "kind": "offline source/data checks; no GPU pixels or browser playback",
+  "pass": false,
+  "metrics": [
+    {
+      "name": "kiku",
+      "duration": 3.2,
+      "frames": 64,
+      "shown": 42,
+      "maxTimeError": 0.07504431599229244,
+      "lateScaleReset": 0.028497564589789248
+    },
+    {
+      "name": "botan",
+      "duration": 2.8,
+      "frames": 64,
+      "shown": 41,
+      "maxTimeError": 0.06523611111111105,
+      "lateScaleReset": 0.027599361672927536
+    },
+    {
+      "name": "kamuro",
+      "duration": 5.2,
+      "frames": 64,
+      "shown": 47,
+      "maxTimeError": 0.1113716085271319,
+      "lateScaleReset": 0.026130152767297132
+    },
+    {
+      "name": "yanagi",
+      "duration": 6.5,
+      "frames": 64,
+      "shown": 60,
+      "maxTimeError": 0.0695806015194087,
+      "lateScaleReset": 0.012997308988355827
+    },
+    {
+      "name": "senrin",
+      "duration": 2.8,
+      "frames": 64,
+      "shown": 44,
+      "maxTimeError": 0.07733046800382049,
+      "lateScaleReset": 0.022111500456833078
+    },
+    {
+      "name": "strobe",
+      "duration": 4.2,
+      "frames": 64,
+      "shown": 45,
+      "maxTimeError": 0.096430383480826,
+      "lateScaleReset": 0.03244992415582182
+    },
+    {
+      "name": "core1/亲星 · 金尾菊",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.004465740819047492
+    },
+    {
+      "name": "core1/芯 1",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.008982696806497326
+    },
+    {
+      "name": "core2/亲星 · 金尾菊",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.004465740819047492
+    },
+    {
+      "name": "core2/芯 1",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.008982696806497326
+    },
+    {
+      "name": "core2/芯 2",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.010681465930406198
+    },
+    {
+      "name": "core3/亲星 · 金尾菊",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.004465740819047492
+    },
+    {
+      "name": "core3/芯 1",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.008982696806497326
+    },
+    {
+      "name": "core3/芯 2",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.010681465930406198
+    },
+    {
+      "name": "core3/芯 3",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.01236485748642413
+    },
+    {
+      "name": "core4/亲星 · 金尾菊",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.004465740819047492
+    },
+    {
+      "name": "core4/芯 1",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.008982696806497326
+    },
+    {
+      "name": "core4/芯 2",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.010681465930406198
+    },
+    {
+      "name": "core4/芯 3",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.01236485748642413
+    },
+    {
+      "name": "core4/芯 4",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.0132864442489935
+    },
+    {
+      "name": "lime_core/青柠外层",
+      "duration": 3.6,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.028125,
+      "lateScaleReset": 0.005333935376937271
+    },
+    {
+      "name": "lime_core/金芯",
+      "duration": 3.6,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.028125,
+      "lateScaleReset": 0.008669900862685487
+    },
+    {
+      "name": "silver_crown/银冠",
+      "duration": 5.2,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.040625000000000355,
+      "lateScaleReset": 0.006525699747850111
+    },
+    {
+      "name": "gold_crown/金冠",
+      "duration": 5.2,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.040625000000000355,
+      "lateScaleReset": 0.006642875217030109
+    },
+    {
+      "name": "gold_willow/金柳",
+      "duration": 6.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.05078125,
+      "lateScaleReset": 0.008960973070458289
+    },
+    {
+      "name": "silver_willow/银柳",
+      "duration": 6.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.05078125,
+      "lateScaleReset": 0.008960973070458289
+    },
+    {
+      "name": "four_colors/粉星组",
+      "duration": 3.2,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.025000000000000355,
+      "lateScaleReset": 0.0033736730964586403
+    },
+    {
+      "name": "four_colors/绿星组",
+      "duration": 3.2,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.025000000000000355,
+      "lateScaleReset": 0.0043173821552384695
+    },
+    {
+      "name": "four_colors/蓝星组",
+      "duration": 3.2,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.025000000000000355,
+      "lateScaleReset": 0.0038792838467073265
+    },
+    {
+      "name": "four_colors/金星组",
+      "duration": 3.2,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.025000000000000355,
+      "lateScaleReset": 0.004537762185737759
+    },
+    {
+      "name": "crackle_core/亲星 · 金尾菊",
+      "duration": 3.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02734375,
+      "lateScaleReset": 0.004465740819047492
+    },
+    {
+      "name": "crackle_core/霹雳芯",
+      "duration": 3.4,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.026562500000000044,
+      "lateScaleReset": 0.022820083040732464
+    },
+    {
+      "name": "sea/水面半球",
+      "duration": 3,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.0234375,
+      "lateScaleReset": 0.01752612504360118
+    },
+    {
+      "name": "colored_senrin/粉小玉组",
+      "duration": 2.8,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02187500000000009,
+      "lateScaleReset": 0.005872636375621854
+    },
+    {
+      "name": "colored_senrin/绿小玉组",
+      "duration": 2.8,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02187500000000009,
+      "lateScaleReset": 0.004058569917517074
+    },
+    {
+      "name": "colored_senrin/蓝小玉组",
+      "duration": 2.8,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02187500000000009,
+      "lateScaleReset": 0.0054898155011804395
+    },
+    {
+      "name": "colored_senrin/金小玉组",
+      "duration": 2.8,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02187500000000009,
+      "lateScaleReset": 0.003768251344479445
+    },
+    {
+      "name": "hikisaki_red/金尾红先",
+      "duration": 3.8,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02968750000000009,
+      "lateScaleReset": 0.00576694154305335
+    },
+    {
+      "name": "hikisaki_blue/金尾蓝先",
+      "duration": 3.8,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02968750000000009,
+      "lateScaleReset": 0.00576694154305335
+    },
+    {
+      "name": "silver_afterglow/银尾残光",
+      "duration": 6,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.046875,
+      "lateScaleReset": 0.009805226491126695
+    },
+    {
+      "name": "starfield/满天星",
+      "duration": 5.5,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.04296875,
+      "lateScaleReset": 0.008898027555488408
+    },
+    {
+      "name": "three_breaks/第一节 · 牡丹",
+      "duration": 2.8,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02187500000000009,
+      "lateScaleReset": 0.003459466983792625
+    },
+    {
+      "name": "three_breaks/第二节 · 菊",
+      "duration": 3.2,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.025000000000000355,
+      "lateScaleReset": 0.004813485680709495
+    },
+    {
+      "name": "three_breaks/第三节 · 金冠",
+      "duration": 5.2,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.040625000000000355,
+      "lateScaleReset": 0.008805220714820594
+    },
+    {
+      "name": "compound/粉星组",
+      "duration": 3.2,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.025000000000000355,
+      "lateScaleReset": 0.0033736730964586403
+    },
+    {
+      "name": "compound/绿星组",
+      "duration": 3.2,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.025000000000000355,
+      "lateScaleReset": 0.0043173821552384695
+    },
+    {
+      "name": "compound/蓝星组",
+      "duration": 3.2,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.025000000000000355,
+      "lateScaleReset": 0.0038792838467073265
+    },
+    {
+      "name": "compound/金星组",
+      "duration": 3.2,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.025000000000000355,
+      "lateScaleReset": 0.004537762185737759
+    },
+    {
+      "name": "compound/霹雳芯",
+      "duration": 3.4,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.026562500000000044,
+      "lateScaleReset": 0.007629054727836371
+    },
+    {
+      "name": "magenta/洋红",
+      "duration": 2.8,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02187500000000009,
+      "lateScaleReset": 0.0029068657383688468
+    },
+    {
+      "name": "teal/青绿",
+      "duration": 2.8,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02187500000000009,
+      "lateScaleReset": 0.0029068657383688468
+    },
+    {
+      "name": "lemon/柠檬",
+      "duration": 2.8,
+      "frames": 64,
+      "shown": 64,
+      "maxTimeError": 0.02187500000000009,
+      "lateScaleReset": 0.0029068657383688468
+    }
+  ],
+  "checks": [
+    {
+      "name": "kiku: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "all active frames must be displayed\n\n42 !== 64\n"
+    },
+    {
+      "name": "botan: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "all active frames must be displayed\n\n41 !== 64\n"
+    },
+    {
+      "name": "kamuro: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "all active frames must be displayed\n\n47 !== 64\n"
+    },
+    {
+      "name": "yanagi: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "all active frames must be displayed\n\n60 !== 64\n"
+    },
+    {
+      "name": "senrin: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "all active frames must be displayed\n\n44 !== 64\n"
+    },
+    {
+      "name": "strobe: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "all active frames must be displayed\n\n45 !== 64\n"
+    },
+    {
+      "name": "core1/亲星 · 金尾菊: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "core1/芯 1: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "core2/亲星 · 金尾菊: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "core2/芯 1: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "core2/芯 2: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "core3/亲星 · 金尾菊: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "core3/芯 1: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "core3/芯 2: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "core3/芯 3: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "core4/亲星 · 金尾菊: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "core4/芯 1: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "core4/芯 2: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "core4/芯 3: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "core4/芯 4: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "lime_core/青柠外层: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.028125 seconds"
+    },
+    {
+      "name": "lime_core/金芯: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.028125 seconds"
+    },
+    {
+      "name": "silver_crown/银冠: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.040625 seconds"
+    },
+    {
+      "name": "gold_crown/金冠: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.040625 seconds"
+    },
+    {
+      "name": "gold_willow/金柳: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.050781 seconds"
+    },
+    {
+      "name": "silver_willow/银柳: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.050781 seconds"
+    },
+    {
+      "name": "four_colors/粉星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.025000 seconds"
+    },
+    {
+      "name": "four_colors/绿星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.025000 seconds"
+    },
+    {
+      "name": "four_colors/蓝星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.025000 seconds"
+    },
+    {
+      "name": "four_colors/金星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.025000 seconds"
+    },
+    {
+      "name": "crackle_core/亲星 · 金尾菊: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.027344 seconds"
+    },
+    {
+      "name": "crackle_core/霹雳芯: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.026563 seconds"
+    },
+    {
+      "name": "sea/水面半球: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.023438 seconds"
+    },
+    {
+      "name": "colored_senrin/粉小玉组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.021875 seconds"
+    },
+    {
+      "name": "colored_senrin/绿小玉组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.021875 seconds"
+    },
+    {
+      "name": "colored_senrin/蓝小玉组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.021875 seconds"
+    },
+    {
+      "name": "colored_senrin/金小玉组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.021875 seconds"
+    },
+    {
+      "name": "hikisaki_red/金尾红先: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.029688 seconds"
+    },
+    {
+      "name": "hikisaki_blue/金尾蓝先: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.029688 seconds"
+    },
+    {
+      "name": "silver_afterglow/银尾残光: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.046875 seconds"
+    },
+    {
+      "name": "starfield/满天星: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.042969 seconds"
+    },
+    {
+      "name": "three_breaks/第一节 · 牡丹: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.021875 seconds"
+    },
+    {
+      "name": "three_breaks/第二节 · 菊: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.025000 seconds"
+    },
+    {
+      "name": "three_breaks/第三节 · 金冠: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.040625 seconds"
+    },
+    {
+      "name": "compound/粉星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.025000 seconds"
+    },
+    {
+      "name": "compound/绿星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.025000 seconds"
+    },
+    {
+      "name": "compound/蓝星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.025000 seconds"
+    },
+    {
+      "name": "compound/金星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.025000 seconds"
+    },
+    {
+      "name": "compound/霹雳芯: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.026563 seconds"
+    },
+    {
+      "name": "magenta/洋红: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.021875 seconds"
+    },
+    {
+      "name": "teal/青绿: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.021875 seconds"
+    },
+    {
+      "name": "lemon/柠檬: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": false,
+      "error": "baked pose differs by 0.021875 seconds"
+    },
+    {
+      "name": "200 frames use 4 unique pages and a partial last page",
+      "pass": false,
+      "error": "splitPlan40 is not defined"
+    },
+    {
+      "name": "segment transforms use the same world envelope at every boundary",
+      "pass": false,
+      "error": "splitPlan40 is not defined"
+    },
+    {
+      "name": "37 physical simulation and plans equal a707b63",
+      "pass": true
+    },
+    {
+      "name": "PC/mobile baker consumes partial pages once; failed page disposes prior pages",
+      "pass": false,
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    64,\n    64,\n-   64,\n-   8,\n-   64,\n-   64,\n-   64,\n-   8\n  ]\n"
+    }
+  ]
+}

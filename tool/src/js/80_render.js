@@ -17,7 +17,7 @@ function setMatUniforms(pr, c, age) {
 function frameIdx(m, age) {
   if (m.loop) { const D = m.duration, a = ((age % D) + D) % D; return clamp(Math.floor(a / D * m.L.F), 0, m.L.F - 1); }
   if (age < 0 || age >= m.duration) return -1;
-  return clamp(Math.floor(evalKeys(m.keys, age / m.duration)), 0, m.L.F - 1);
+  return clamp(Math.floor(evalKeys(m.keys, age / m.duration)+(m.frameTiming==='tick-start'?1e-8:0)), 0, m.L.F - 1);
 }
 // 分段母版：按礼花时间找到当前该播放的那一段
 function segAt(b, age) { let s = b; while (s.next && age >= s.next.meta.t0) s = s.next; return s; }
@@ -139,7 +139,7 @@ function liveSlot(key) { return live[key] || (live[key] = { gen: -1 }); }
 function prepSlot(slot, P, gen) {
   if (slot.gen === gen && slot.P === P) return;
   slot.trailR = null; slot.phys = null; slot.sim = null; disposeTrack(slot.track); slot.track = null; disposeEmitter(slot.E); slot.E = null;
-  slot.R40 && slot.R40.dispose(); slot.R40=null; slot.plan40=null;
+  slot.R40 && slot.R40.dispose(); slot.R40=null; slot.plan40=null;slot.camera40=null;
   slot.cell40 && slot.cell40.dispose(); slot.cell40=null; slot.samples40 && slot.samples40.dispose(); slot.samples40=null;
   slot.gen = gen; slot.P = P; slot.box = null;
 }
@@ -272,11 +272,19 @@ function renderExport() {
   const tsx = b.form === 'trail' ? trailStateAt(b, state.t) : null;
   if (b.form === 'trail') { hudText = !tsx ? '序列结束' : `导出效果 · 升空尾缀 · ${tsx.phase === 'rise' ? '上升循环' : '消散（' + tsx.bb.fps + ' fps）'} · 第 ${tsx.f + 1}/64 帧 · ${'RGBA'[Math.floor(tsx.f / 16)]} 通道 · 镜头跟着星头（面片沿弹道上升，Size By Life Y ${tsx.sy.toFixed(2)}）`; hudB = sb ? `B：${B.name}` : ''; return; }
   const fi = b.form === 'unit' ? frameIdx(b.meta, engineTick(state.t)) : frameIdx(s.meta, engineTick(state.t) - (s.meta.t0 || 0));
-  hudText = fi < 0 ? '序列结束' : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? (s === b ? ' 段 A' : ' 段 B') : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
+  hudText = fi < 0 ? '序列结束' : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? ' 段 '+bakeSegmentName(b,bakeParts(b).indexOf(s)) : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
   hudB = sb ? `B：${B.name}` : '';
 }
 const flowTrail = [];
-function atlasSegOf(b0) { return state.atlasSeg && b0.next ? b0.next : b0; }
+function atlasSegOf(b0) { const parts=bakeParts(b0);return parts[clamp(state.atlasSeg,0,parts.length-1)]; }
+let atlasSegmentSource=null;
+function syncAtlasSegments(b) {
+  if(b===atlasSegmentSource)return;atlasSegmentSource=b;
+  state.atlasSeg=clamp(state.atlasSeg,0,Math.max(0,bakeParts(b).length-1));
+  const box=$('#segSeg');box.replaceChildren();
+  bakeParts(b).forEach((s,i)=>{const button=document.createElement('button');button.dataset.seg=String(i);
+    button.textContent='段 '+bakeSegmentName(b,i);button.setAttribute('aria-pressed',String(i===state.atlasSeg));box.appendChild(button);});
+}
 function drawAtlasQuad(b, show, f, n, trail) {
   const L = b.meta.L, pr = PR.atlas; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, show.tex);
   gl.uniform1i(pr.u.uS, 0); gl.uniform1f(pr.u.uFrame, f); gl.uniform1f(pr.u.uN, n);
@@ -288,11 +296,11 @@ function renderAtlas() {
   const b0 = previewBake();
   gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, canvas.width, canvas.height); gl.clearColor(0.02, 0.02, 0.03, 1); gl.clear(gl.COLOR_BUFFER_BIT);
   if (!b0) { hudText = '烘焙中…'; return; }
-  const b = atlasSegOf(b0);
+  syncAtlasSegments(b0);const b = atlasSegOf(b0);
   const L = b.meta.L, show = state.atlasLayer === 'tail' && b.tail ? b.tail : b.head, f = frameIdx(b.meta, state.t - (b.meta.t0 || 0));
   if (state.atlasFlow) { renderAtlasFlow(b0, b, show, f); return; }
   drawAtlasQuad(b, show, f, canvas.width, null);
-  hudText = `${b.tail ? (show === b.tail ? '拖尾' : '星头') : '合并'}贴图${b0.next ? (b === b0 ? ' 段 A' : ' 段 B') : ''} ${b.P.texW}×${b.P.texH} · ${L.cols}×${L.rows} 格 · 金框 = 当前帧 · 红色 = 过曝像素`; hudB = '';
+  hudText = `${b.tail ? (show === b.tail ? '拖尾' : '星头') : '合并'}贴图${b0.next ? ' 段 '+bakeSegmentName(b0,bakeParts(b0).indexOf(b)) : ''} ${b.P.texW}×${b.P.texH} · ${L.cols}×${L.rows} 格 · 金框 = 当前帧 · 红色 = 过曝像素`; hudB = '';
 }
 // 贴图流转：左边放大当前格，右边整张贴图上金框走动（淡框 = 刚走过的格），下面是帧号曲线
 function renderAtlasFlow(b0, b, show, f) {
@@ -400,17 +408,18 @@ function updateLabels() {
 // ---------------- 主循环 ----------------
 let lastT = performance.now();
 function curDuration() {
-  if(state.showcase && showcase.recipe)return Math.max(...showcase.recipe.layers.map(l=>l.delay+l.P.duration));
+  if(state.showcase && showcase.recipe)return Math.max(...showcase.layers.map(l=>l.delay+bakeTotal(l.b)));
   if(state.showcase && showcase.left)return Math.max(showcase.left.P.duration,showcase.right.P.duration);
   if (state.tab === 'combo') return comboDuration();
   if (state.tab === 'asset') return assetDuration();
-  let d = state.P.duration; if (state.B) d = Math.max(d, state.B.P.duration);
+  let d = !state.dirty && state.bake && renderVersion(state.P)>=40?bakeTotal(state.bake):state.P.duration;
+  if (state.B) d = Math.max(d, state.B.P.duration);
   return d;
 }
 function loop(now) {
   if (state.stillBusy) { lastT = now; requestAnimationFrame(loop); return; }   // 定帧渲染期间让出画布
   const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
-  const D = curDuration(), looping = familyOf(state.P.type) === 'ground' && state.tab === 'master';
+  const D = curDuration(), looping = !state.showcase && familyOf(state.P.type) === 'ground' && state.tab === 'master';
   if (state.playing) { state.t += dt * state.speed; if (state.t > D + (looping ? 0 : 0.35)) state.t = looping ? state.t - D : 0; }
   $('#scrub').value = Math.round(clamp(state.t / D, 0, 1) * 1000);
   $('#tlabel').textContent = `${Math.min(state.t, D).toFixed(2)} / ${D.toFixed(2)} s`;
@@ -427,7 +436,7 @@ function loop(now) {
   $('#atlasSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.tail);
   $('#segSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.next);
   $('#flowSeg').hidden = !mv || state.view !== 'atlas'; $('#flowCv').hidden = !mv || state.view !== 'atlas' || !state.atlasFlow;
-  $('#dispSeg').hidden = state.tab==='asset' ? false : state.view !== 'export';
+  $('#dispSeg').hidden = state.tab==='asset' ? false : state.view !== 'export' && !(state.view==='live' && renderVersion(state.P)>=40 && familyOf(state.P.type)==='aerial' && ['master','segments'].includes(state.P.form));
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
   $('#platformSeg').hidden = !state.showcase && (state.tab==='asset' || (mv && isPhys(state.P)));
   $('#resolutionBox').hidden = !mv || state.view!=='live' || renderVersion(state.P)<40 || isTrail(state.P) || isPhys(state.P);

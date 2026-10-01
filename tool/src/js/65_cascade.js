@@ -51,8 +51,8 @@ ${TN(name, 'Ramp')}.png：渐变图 256×8（sRGB），暗 → 亮 = 冷却的�
 项目现有的 RGBA 序列帧材质；列 = ${L.cols}，行 = ${L.rows}；Ramp = ${TN(name, 'Ramp')}；循环、消散各一个材质实例（只换贴图）
 `;
   for (let s = b, i = 0; s; s = s.next, i++) {
-    const sx = b.next ? '_' + 'AB'[i] : '';
-    const seg = b.next ? 'AB'[i] : '', SL = s.meta.L;
+    const sx = b.next ? '_' + bakeSegmentName(b,i) : '';
+    const seg = bakeSegmentName(b,i), SL = s.meta.L;
     parts.push(s.tail ? `${TN(name, joinPart(seg, 'Head'), SL)}.png（星头与闪光）、${TN(name, joinPart(seg, 'Tail'), SL)}.png（拖尾火花）` : `${TN(name, seg, SL)}.png（星头、闪光、拖尾合并）`);
   }
   const chanTxt = L.chans === 4 ? `RGBA 接力：先填满 R 的 ${L.per} 格（第 0–${L.per - 1} 帧），再接 G（${L.per}–${2 * L.per - 1}）、B（${2 * L.per}–${3 * L.per - 1}）、A（${3 * L.per}–${4 * L.per - 1}）` : '单通道（RGB 相同）';
@@ -302,7 +302,7 @@ LOD 2：${d(cellW / 2).toLocaleString()} m 以外：${b.tail ? '去掉拖尾层�
 function checkSection(b) {
   const lines = [];
   for (let s = b, i = 0; s; s = s.next, i++) {
-    const c = s.meta.check, m = s.meta, L = m.L, pre = b.next ? `段 ${'AB'[i]}：` : '';
+    const c = s.meta.check, m = s.meta, L = m.L, pre = b.next ? `段 ${bakeSegmentName(b,i)}：` : '';
     if (!c) continue;
     if (m.fill) lines.push(`${pre}画面占比：平均 ${Math.round(m.fill.avg * 100)}%，最差 10% 的帧 ≥ ${Math.round(m.fill.p10 * 100)}%${m.fill.avg < 0.9 ? '（紧凑取景已禁用：引擎里会抖；想更满可以减少留边或改随开花放大）' : ''}`);
     lines.push(`${pre}过曝：${c.clipFrames.length ? `第 ${c.clipFrames.slice(0, 8).map(f => f + 1).join('、')}${c.clipFrames.length > 8 ? '…' : ''} 帧超过 2% 像素顶到 255，可降低星头亮度或改 Gamma 2.2` : '无'}`);
@@ -339,7 +339,7 @@ function cutoutSection(name, b) {
   if (b.form === 'trail') {
     parts.push(one('上升循环', TN(name, 'Loop_Cutout'), b.meta.cutout));
     for (const f of b.fades || []) parts.push(one(`消散 ${f.fps} fps`, TN(name, `Fade${f.fps}_Cutout`), f.cutout));
-  } else for (let x = b, i = 0; x; x = x.next, i++) parts.push(one(b.next ? `段 ${'AB'[i]}` : '', TN(name, joinPart(b.next ? 'AB'[i] : '', 'Cutout')), x.meta.cutout));
+  } else for (let x = b, i = 0; x; x = x.next, i++) parts.push(one(b.next ? `段 ${bakeSegmentName(b,i)}` : '', TN(name, joinPart(bakeSegmentName(b,i), 'Cutout')), x.meta.cutout));
   const t = parts.filter(Boolean).join('\n');
   return t ? `【Cutout：裁掉面片上的空白，减少 overdraw】\n${t}\n` : '';
 }
@@ -352,8 +352,8 @@ function cascadeText(name, b, M) {
   else if (b.form === 'riseLoop') body = riseEmitter(b, M, name);
   else if (b.form === 'trail') body = trailEmitter(b, M, name);
   else if (b.form === 'loop') body = loopEmitter(b, M);
-  else if (b.next) body = masterEmitter(b, M, ' · 段 A（开花）') + '\n' + masterEmitter(b.next, M, ' · 段 B（下垂）') +
-    `\n两段各一个发射器，材质、颜色相同；段 B 的 Emitter Delay = ${fx(b.meta.split)} s，两段在该时刻无缝衔接。\n`;
+  else if (b.next) body = bakeParts(b).map((s,i)=>masterEmitter(s,M,' · 段 '+bakeSegmentName(b,i))).join('\n') +
+    `\n每段一个发射器，按各段 Emitter Delay 与寿命顺序衔接；全部 ${bakeParts(b).length} 段共用世界取景。\n`;
   else body = masterEmitter(b, M);
   return `${head}
 ${texSection(name, b)}

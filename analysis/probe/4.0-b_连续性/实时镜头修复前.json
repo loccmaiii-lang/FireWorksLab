@@ -1,0 +1,657 @@
+{
+  "kind": "offline source/data checks; no GPU pixels or browser playback",
+  "pass": false,
+  "metrics": [
+    {
+      "name": "kiku",
+      "duration": 3.2,
+      "frames": 96,
+      "shown": 96,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "botan",
+      "duration": 2.8,
+      "frames": 84,
+      "shown": 84,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "kamuro",
+      "duration": 5.2,
+      "frames": 156,
+      "shown": 156,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "yanagi",
+      "duration": 6.5,
+      "frames": 195,
+      "shown": 195,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "senrin",
+      "duration": 2.8,
+      "frames": 84,
+      "shown": 84,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "strobe",
+      "duration": 4.2,
+      "frames": 126,
+      "shown": 126,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core1/亲星 · 金尾菊",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core1/芯 1",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core2/亲星 · 金尾菊",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core2/芯 1",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core2/芯 2",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core3/亲星 · 金尾菊",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core3/芯 1",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core3/芯 2",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core3/芯 3",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core4/亲星 · 金尾菊",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core4/芯 1",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core4/芯 2",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core4/芯 3",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "core4/芯 4",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "lime_core/青柠外层",
+      "duration": 3.6,
+      "frames": 108,
+      "shown": 108,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "lime_core/金芯",
+      "duration": 3.6,
+      "frames": 108,
+      "shown": 108,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "silver_crown/银冠",
+      "duration": 5.2,
+      "frames": 156,
+      "shown": 156,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "gold_crown/金冠",
+      "duration": 5.2,
+      "frames": 156,
+      "shown": 156,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "gold_willow/金柳",
+      "duration": 6.5,
+      "frames": 195,
+      "shown": 195,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "silver_willow/银柳",
+      "duration": 6.5,
+      "frames": 195,
+      "shown": 195,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "four_colors/粉星组",
+      "duration": 3.2,
+      "frames": 96,
+      "shown": 96,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "four_colors/绿星组",
+      "duration": 3.2,
+      "frames": 96,
+      "shown": 96,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "four_colors/蓝星组",
+      "duration": 3.2,
+      "frames": 96,
+      "shown": 96,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "four_colors/金星组",
+      "duration": 3.2,
+      "frames": 96,
+      "shown": 96,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "crackle_core/亲星 · 金尾菊",
+      "duration": 3.5,
+      "frames": 105,
+      "shown": 105,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "crackle_core/霹雳芯",
+      "duration": 3.4,
+      "frames": 102,
+      "shown": 102,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "sea/水面半球",
+      "duration": 3,
+      "frames": 90,
+      "shown": 90,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "colored_senrin/粉小玉组",
+      "duration": 2.8,
+      "frames": 84,
+      "shown": 84,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "colored_senrin/绿小玉组",
+      "duration": 2.8,
+      "frames": 84,
+      "shown": 84,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "colored_senrin/蓝小玉组",
+      "duration": 2.8,
+      "frames": 84,
+      "shown": 84,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "colored_senrin/金小玉组",
+      "duration": 2.8,
+      "frames": 84,
+      "shown": 84,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "hikisaki_red/金尾红先",
+      "duration": 3.8,
+      "frames": 114,
+      "shown": 114,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "hikisaki_blue/金尾蓝先",
+      "duration": 3.8,
+      "frames": 114,
+      "shown": 114,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "silver_afterglow/银尾残光",
+      "duration": 6,
+      "frames": 180,
+      "shown": 180,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "starfield/满天星",
+      "duration": 5.5,
+      "frames": 165,
+      "shown": 165,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "three_breaks/第一节 · 牡丹",
+      "duration": 2.8,
+      "frames": 84,
+      "shown": 84,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "three_breaks/第二节 · 菊",
+      "duration": 3.2,
+      "frames": 96,
+      "shown": 96,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "three_breaks/第三节 · 金冠",
+      "duration": 5.2,
+      "frames": 156,
+      "shown": 156,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "compound/粉星组",
+      "duration": 3.2,
+      "frames": 96,
+      "shown": 96,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "compound/绿星组",
+      "duration": 3.2,
+      "frames": 96,
+      "shown": 96,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "compound/蓝星组",
+      "duration": 3.2,
+      "frames": 96,
+      "shown": 96,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "compound/金星组",
+      "duration": 3.2,
+      "frames": 96,
+      "shown": 96,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "compound/霹雳芯",
+      "duration": 3.4,
+      "frames": 102,
+      "shown": 102,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "magenta/洋红",
+      "duration": 2.8,
+      "frames": 84,
+      "shown": 84,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "teal/青绿",
+      "duration": 2.8,
+      "frames": 84,
+      "shown": 84,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    },
+    {
+      "name": "lemon/柠檬",
+      "duration": 2.8,
+      "frames": 84,
+      "shown": 84,
+      "maxTimeError": 0,
+      "lateScaleReset": 0
+    }
+  ],
+  "checks": [
+    {
+      "name": "kiku: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "botan: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "kamuro: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "yanagi: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "senrin: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "strobe: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core1/亲星 · 金尾菊: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core1/芯 1: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core2/亲星 · 金尾菊: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core2/芯 1: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core2/芯 2: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core3/亲星 · 金尾菊: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core3/芯 1: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core3/芯 2: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core3/芯 3: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core4/亲星 · 金尾菊: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core4/芯 1: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core4/芯 2: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core4/芯 3: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "core4/芯 4: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "lime_core/青柠外层: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "lime_core/金芯: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "silver_crown/银冠: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "gold_crown/金冠: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "gold_willow/金柳: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "silver_willow/银柳: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "four_colors/粉星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "four_colors/绿星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "four_colors/蓝星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "four_colors/金星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "crackle_core/亲星 · 金尾菊: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "crackle_core/霹雳芯: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "sea/水面半球: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "colored_senrin/粉小玉组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "colored_senrin/绿小玉组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "colored_senrin/蓝小玉组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "colored_senrin/金小玉组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "hikisaki_red/金尾红先: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "hikisaki_blue/金尾蓝先: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "silver_afterglow/银尾残光: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "starfield/满天星: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "three_breaks/第一节 · 牡丹: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "three_breaks/第二节 · 菊: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "three_breaks/第三节 · 金冠: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "compound/粉星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "compound/绿星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "compound/蓝星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "compound/金星组: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "compound/霹雳芯: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "magenta/洋红: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "teal/青绿: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "lemon/柠檬: every 30 Hz pose is available without Zoom time mismatch",
+      "pass": true
+    },
+    {
+      "name": "200 frames use 4 unique pages and a partial last page",
+      "pass": true
+    },
+    {
+      "name": "segment transforms use the same world envelope at every boundary",
+      "pass": true
+    },
+    {
+      "name": "live preview keeps its world camera fixed while bake framing grows",
+      "pass": false,
+      "error": "live shading must receive a world camera instead of filling the viewport with each cell"
+    },
+    {
+      "name": "37 physical simulation and plans equal a707b63",
+      "pass": true
+    },
+    {
+      "name": "PC/mobile baker consumes partial pages once; failed page disposes prior pages",
+      "pass": true
+    },
+    {
+      "name": "trim encoded leading/trailing dark frames without changing world framing or fade",
+      "pass": true
+    }
+  ]
+}

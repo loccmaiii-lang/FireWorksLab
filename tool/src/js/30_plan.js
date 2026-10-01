@@ -80,6 +80,10 @@ function layoutOf(P) { const per = P.cols * P.rows; return { cols: P.cols, rows:
 // 每一帧的烘焙时刻取「曲线值 = 帧号 + 0.5」的时刻，引擎取整后正好显示这一帧
 // a、b：分段烘焙时只取 [a, b] 这一段（长时母版分成开花段与下垂段）
 function plan(P, fm0, ta = 0, tb = P.duration) {
+  return usesTickPlan40(P)
+    ? plan40(P,fm0,ta,tb) : planLegacy(P,fm0,ta,tb);
+}
+function planLegacy(P, fm0, ta = 0, tb = P.duration) {
   const win = ta > 0 || tb < P.duration - 1e-9;
   const fm = win ? { ...fm0, prof: fm0.prof.filter(q => q[0] >= ta - 1e-9 && q[0] <= tb + 1e-9).map(q => [q[0] - ta, q[1], q[2]]) } : fm0;
   const L = layoutOf(P), a = L.cellW / L.cellH, D = tb - ta, STEP = 1.5, zoom = P.zoom === 'on';

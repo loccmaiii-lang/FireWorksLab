@@ -34,10 +34,10 @@ async function bakeMobileFor(b,onProg=null) {
   try {
     for(let source=b;source;source=source.next){
       const P=mobileParams({...source.P,cols:source.meta.L.cols,rows:source.meta.L.rows});
-      const pl={...source.meta,L:layoutOf(P)};pl.ppm=pl.L.cellW/pl.Ww;
+      const pl={...source.meta,L:{...layoutOf(P),F:source.meta.L.F}};pl.ppm=pl.L.cellW/pl.Ww;
       let part;
       if(['master','segments'].includes(b.form)){
-        part=await bakeMaster(P,1,onProg,{fm:source.fm||b.fm,pl,noFade:!!source.next,
+        part=await bakeMaster(P,1,onProg,{fm:source.fm||b.fm,pl,noFade:source.meta.frameTiming==='tick-start'?!!source.meta.noFade:!!source.next,
           ...(first?{expo:[first.meta.expoH,first.meta.expoT]}:{})});
       }else{
         const kind=source.form, Q=kind==='unit'?{...P,_unit:true,stars:1,speedJit:0,burnJit:0,
