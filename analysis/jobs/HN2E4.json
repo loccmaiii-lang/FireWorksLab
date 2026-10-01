@@ -1,0 +1,9 @@
+{
+ "id": "HN2E4",
+ "type": "export",
+ "effect": "hiki_nishiki",
+ "entry": "HN2",
+ "name": "HikiNishiki",
+ "priority": 8,
+ "note": "HN2 第 4 版：金线更长、亮得更久（火花寿命 2.8 s、星燃烧 3.8 s）；金层去掉开花闪光（让开头空段能裁掉）；橙层点火离散 ±30%、开花闪光 0.5（稳住开头几帧的中心）。"
+}
