@@ -50,7 +50,9 @@ JS_METRICS = r"""
   // 燃烧段 / 淡出段每 1.2 s 窗口内换了几帧 → 最低有效帧率（1.2 s = 36 tick，停 3 / 4 tick 的帧正好整除，不会因为窗口对齐少算一帧）
   // 燃烧段到哪：4.0 计划给的淡出起点（花径到头且速度降下来）；没有就按前 85%
   const fadeRel = pl.budget && isFinite(pl.budget.fadeAt) ? Math.max(0, pl.budget.fadeAt - (pl.t0 || 0)) : D * 0.85, W = 1.2;
-  const winMin = (a, b) => { let m = 1e9; for (let t0 = a; t0 + W <= b + 1e-9; t0 += 0.1) { const s = new Set(); for (let t = t0; t < t0 + W - 1e-9; t += 1 / fps) s.add(fAt(t)); m = Math.min(m, s.size / W); } return m === 1e9 ? null : +m.toFixed(1); };
+  // 段比 1.2 s 短：整段一个窗口（帧数 ÷ 段长）；短于 0.3 s 不量
+  const winMin = (a, b) => { if (b - a < 0.3) return null; const w = Math.min(W, b - a); let m = 1e9;
+    for (let t0 = a; t0 + w <= b + 1e-9; t0 += 0.1) { const s = new Set(); for (let t = t0; t < t0 + w - 1e-9; t += 1 / fps) s.add(fAt(t)); m = Math.min(m, s.size / w); } return m === 1e9 ? null : +m.toFixed(1); };
   out.minFpsActive = winMin(0, fadeRel) ?? +(L.F / D).toFixed(1);
   out.minFpsFade = winMin(fadeRel, D);
   out.avgFps = +(L.F / D).toFixed(1);
