@@ -1,0 +1,10 @@
+22:56:46 开始：4.0.2 界面冒烟（原参数、显卡）：模板 / JM4-40 / 鸿巢 / V5 / 左栏，每处 实时 / 引擎回放 / 贴图 / 流转（界面冒烟检查）
+22:56:46 出错：
+Traceback (most recent call last):
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 63, in run_job
+    ok = asyncio.run(sm.main(_pl.Path(out), True, job.get('limit', 600)))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\locmai\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 191, in run
+    raise RuntimeError(
+RuntimeError: asyncio.run() cannot be called from a running event loop
+
