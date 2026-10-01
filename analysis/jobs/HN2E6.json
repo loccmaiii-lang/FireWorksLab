@@ -1,0 +1,9 @@
+{
+ "id": "HN2E6",
+ "type": "export",
+ "effect": "hiki_nishiki",
+ "entry": "HN2",
+ "name": "HikiNishiki",
+ "priority": 8,
+ "note": "HN2（待我验收）参数不变，用当前烘焙器（4.0.2 之后）重导素材包 + 回放检查，让素材包和烘焙器版本一致。"
+}
