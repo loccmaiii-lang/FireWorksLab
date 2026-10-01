@@ -69,6 +69,17 @@ function entryById(id) { if (!id) return null; if (id.startsWith('rep:')) return
 function effMainEntry(ef) { const x = entryById(ef.阶段 === '待验收' && ef.待验收版 ? ef.待验收版 : ef.主条目); return x && !x.formal ? x : null; }
 function effIsNew(ef) { if (ef.阶段 !== '待验收' || !ef.待验收版) return false; const e = entryById(ef.待验收版); return !!e && !e.formal && !rvOf(e).st; }
 function effNewCount() { return EFFS().filter(effIsNew).length; }
+// 标准检查（协作/标准.md 第 4 节）：tool/data/standard.js，由 analysis/scripts/标准检查.py 生成
+function stdOf(id) { return id && typeof FW_STANDARD !== 'undefined' && FW_STANDARD.items ? FW_STANDARD.items[id] || null : null; }
+function stdBadge(id) {
+  const r = stdOf(id); if (!r) return '';
+  const bad = (r.checks || []).filter(c => !c[1]).map(c => c[0] + (c[2] ? '（' + c[2] + '）' : ''));
+  return `<span class="badge ${r.pass ? 'ok' : 'std'}" title="${r.pass ? '标准检查全部通过' : '没过：' + bad.join('；').replace(/"/g, '')}">${r.pass ? '标准 ✓' : '标准 ✗ ' + bad.length}</span>`;
+}
+function stdCard(id) {
+  const r = stdOf(id); if (!r) return '';
+  return `<div class="rt">标准检查 ${r.pass ? '✅ 全部通过' : '❌'}${r.note ? ' · ' + r.note : ''}（${FW_STANDARD.generated}）</div><ul class="std">${(r.checks || []).map(c => `<li class="${c[1] ? 'ok' : 'bad'}">${c[1] ? '✓' : '✗'} ${c[0]}${c[2] ? ' · ' + c[2] : ''}</li>`).join('')}</ul>`;
+}
 function effBadge(ef) {
   if (ef.阶段 === '未开始') return '<span class="badge q">未开始</span>';
   if (ef.阶段 === '待验收') { const e = entryById(ef.待验收版); const r = e && !e.formal ? rvOf(e) : {}; return r.st === 'ok' ? '<span class="badge ok">你已通过</span>' : r.st === 'fix' ? '<span class="badge fix">你要改</span>' : '<span class="badge new">新</span>'; }
@@ -166,7 +177,7 @@ function renderLib() {
     list.sort((x, y) => (x.阶段 === '未开始') - (y.阶段 === '未开始'));
     if (!list.length) box.insertAdjacentHTML('beforeend', `<p class="lsub">${{ review: '现在没有等你验收的效果。AI 自检、导出回放都过了的完整候选才会出现在这里。', wip: '没有制作中的效果', passed: '还没有通过的效果' }[lib.seg]}</p>`);
     for (const ef of list) {
-      const me = effMainEntry(ef), badge = effBadge(ef);
+      const me = effMainEntry(ef), badge = effBadge(ef) + stdBadge(ef.待验收版 || ef.主条目);
       const sub = effSubline(ef);
       const fm = (ef.主条目 || '').startsWith('rep:') ? REPLICA_BY_ID[ef.主条目.slice(4)] : null;
       const th = ef.thumb ? `<span class="th"><i style="background-image:url(${ef.thumb})"></i></span>` : fm ? thumbHTML({ ...fm, key: 'rep:' + fm.id }) : me ? thumbHTML(me) : '<span class="th"></span>';
@@ -217,7 +228,15 @@ function libReveal() {
 
 // ---------------- 打开条目 ----------------
 function crumb(where, name, badge) { $('#crumb').innerHTML = `<span>${where}</span>›<b>${name}</b>${badge || ''}`; }
+// 4.0-c：多层效果里单独调过的层，回到整体时要用调过的参数（不能再用组合缓存里的旧烘焙）
+function rememberLayerEdit() {
+  const r = lib.review;
+  if (!r || !r.layerOf || state.tab === 'combo' || !lib.sig || curSig() === lib.sig) return;
+  state.layerEdits = state.layerEdits || {};
+  state.layerEdits[r.id] = { P: structuredClone(state.P), M: structuredClone(state.M) };
+}
 function openReview(e, ef) {
+  rememberLayerEdit();
   lib.effect = ef || effectOfEntry(e); lib.formal = null;
   lib.key = ef ? 'ef:' + ef.key : 'rv:' + e.id; store.set('lastKey', lib.key);
   const where = (lib.effect ? lib.effect.阶段 + ' · ' + lib.effect.名 : '条目') + (e.superseded ? ' · 历史' : '');
@@ -225,7 +244,12 @@ function openReview(e, ef) {
   if (e.kind === 'queued') { setReview(e); renderLib(); crumb(where, e.name); return; }
   if (e.kind === 'combo') { setReview(e); renderLib(); crumb(where, e.name + ' · 整体'); openComboEntry(e); return; }
   if (e.kind === 'asset') { setTab('asset'); loadAssetEntry(e); }
-  else { setReplica(e.id); setTab('master'); }
+  else {
+    setReplica(e.id); setTab('master');
+    // 回到之前单独调过的层：接着用调过的参数（lib.sig 仍按条目原始参数记，左栏能提示「你改过参数」）
+    const ed = state.layerEdits && state.layerEdits[e.id];
+    if (ed) { lib.sig = curSig(); state.P = structuredClone(ed.P); state.M = structuredClone(ed.M); buildMasterPanel(); onParam(); setReview(e); renderLib(); crumb(where, e.name + ' · 单层（已调整）'); return; }
+  }
   lib.sig = curSig();
   setReview(e); renderLib(); crumb(where, e.name + (e.layerOf ? ' · 单层' : ''));
 }
@@ -265,6 +289,7 @@ function setReview(e, formal) {
     ${e.layerOf ? `<p class="qnote">这是「${e.layerOf}」的其中一层。<button class="btn mini" type="button" data-whole="${e.layerOf}">回到整体效果</button></p>` : ''}
     ${e.look && e.look.length ? `<div class="rt">看什么</div><ul>${e.look.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
     ${e.opinion ? `<div class="rt">${e.kind === 'queued' ? '这一版改了什么' : 'AI 的看法'}</div><p class="op">${e.opinion}</p>` : ''}
+    ${stdCard(e.id)}
     ${(e.doc || []).map(([t, items]) => `<div class="rt">${t}</div><ul>${items.map(x => `<li>${x}</li>`).join('')}</ul>`).join('')}
     ${e.images && e.images.length ? `<div class="rt">${e.imagesTitle || (e.principle ? '实拍关键帧' : '说明图')}（点图放大）</div><div class="rimgs">${e.images.map(([src, cap]) => `<figure><a href="${src}" target="_blank" rel="noopener"><img src="${src}" loading="lazy" alt="${cap}"></a><figcaption>${cap}</figcaption></figure>`).join('')}</div>` : ''}
     ${e.kind === 'queued' ? '<p class="qnote">还没跑。在你电脑上双击 <b>analysis/local/跑任务_并行.bat</b>（3 个进程同时跑），跑完会自动推上来；pull 后刷新烘焙器，这一条就能看了。</p>' : ''}

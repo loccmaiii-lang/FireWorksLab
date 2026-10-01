@@ -363,13 +363,19 @@ function libByType(t) {
 }
 // 组合里用到但还没烘焙的母版（实拍复刻层）现烘
 async function ensureLibEntries(keys) {
+  // 单独调过的层：参数变了就丢掉旧烘焙，按调过的参数重烘
+  for (const k of new Set(keys)) {
+    if (!k.startsWith('rep:')) continue;
+    const ed = state.layerEdits && state.layerEdits[k.slice(4)], e = libByType(k);
+    if (ed && e) { const sig = JSON.stringify([ed.P, ed.M]); if (e.editSig !== sig) { disposeBake(e.bake); state.lib.splice(state.lib.indexOf(e), 1); } }
+  }
   const need = [...new Set(keys)].filter(k => !libByType(k));
   for (let i = 0; i < need.length; i++) {
     const k = need[i];
     if (k.startsWith('rep:')) {
-      const id = k.slice(4), r = REPLICA_BY_ID[id], { P, M } = replicaPM(id);
+      const id = k.slice(4), r = REPLICA_BY_ID[id], ed = state.layerEdits && state.layerEdits[id], { P, M } = ed || replicaPM(id);
       const b = await bake(libP(P, true), 1, p => busy(true, `烘焙组合用母版：${r.name}（${i + 1}/${need.length}）`, (i + p) / need.length));
-      state.lib.push({ name: r.name, type: r.base, rep: id, P, M, bake: b });
+      state.lib.push({ name: r.name, type: r.base, rep: id, P, M, bake: b, editSig: ed ? JSON.stringify([ed.P, ed.M]) : undefined });
     } else {
       const d = defaultsFor(k), b = await bake(libP(d.P), 1, p => busy(true, `烘焙组合用母版：${TYPE_NAMES[k]}`, (i + p) / need.length));
       state.lib.push({ name: defaultLibName(k), type: k, P: d.P, M: d.M, bake: b });

@@ -28,6 +28,8 @@ html = f'''<!doctype html>
 {body}
 <!-- 迭代区数据（git pull 后刷新即更新；缺了也能用） -->
 <script src="data/review.js"></script>
+<!-- 标准检查结果（analysis/scripts/标准检查.py 生成；缺了也能用） -->
+<script src="data/standard.js"></script>
 <script>
 'use strict';
 {js}</script>

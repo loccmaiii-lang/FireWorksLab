@@ -360,3 +360,8 @@
   #cloudPending{width:100%;font-size:12px;color:var(--dim);max-height:180px;overflow:auto}
   #cloudPending summary{cursor:pointer}
   .side-foot{display:flex;flex-direction:column;gap:6px}
+
+/* 标准检查（4.0-d） */
+.badge.std { background: #4a2420; color: #ffb4a6; }
+ul.std { margin: 4px 0 8px; padding-left: 0; list-style: none; font-size: 12px; }
+ul.std li.ok { color: #9fd59f; } ul.std li.bad { color: #ffb4a6; }
