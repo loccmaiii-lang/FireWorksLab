@@ -229,9 +229,11 @@ def _render_G(sh, t, cam, w, h, ppm, cx, cy, ss):
     return Gl + S
 
 
-# 颜色：和引擎材质同一公式（analysis/scripts/回放检查.py）：线性 rgb = ramp_lin(v) · v · COL，显示 = (1-e^{-1.5·rgb})^{1/2.2}
+# 颜色：和引擎材质同一公式：线性 rgb = ramp_lin(v) · v · COL，显示 = (1-e^{-K·rgb})^{1/2.2}，K = 4（烘焙器「导出效果」/ 素材页的引擎约定）。
+# 2026-10-01 20:5x 从 K = 1.5（回放检查.py 的约定）换成 4，COL 同比例 × 1.5/4，画面不变；导出的 Color Over Life 跟着变成烘焙器同一约定。
 # ramp_lin：每层两个色相端点（v=0 暗端、v=1 亮端），线性空间、最亮通道 = 1；按实拍（减去天空底色后）的色度标定，见 标定颜色.py
-COL = 1.5
+DISP_K = 4.0
+COL = 1.5 * 1.5 / DISP_K
 G_GAIN = 0.55         # 锦层贴图编码增益（防闪点过曝：贴图里压低）
 COL_G = COL / G_GAIN  # 引擎里用 Color Over Life 补回（HDR 倍数）；低亮度区与原来一致，亮点不再顶到 255
 O_TINT = [[0.0, 1.0], [1.0, 1.0]]   # [开花后秒, 橙层 G 通道倍数]：实拍开花初期更红（G/R 约 0.35 → 0.42），导出成 Color Over Life
@@ -253,7 +255,7 @@ def engine_rgb(v, layer):
 
 
 def display(lin):
-    return (np.clip(1 - np.exp(-lin * 1.5), 0, 1) ** (1 / 2.2) * 255)
+    return (np.clip(1 - np.exp(-lin * DISP_K), 0, 1) ** (1 / 2.2) * 255)
 
 
 def o_tint(t):

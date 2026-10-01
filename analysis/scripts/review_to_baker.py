@@ -187,11 +187,25 @@ def principle_entries():
     return out, combos
 
 
+EXPERIMENTS = os.path.join(ROOT, 'experiments')
+
+
+def experiment_entries():
+    """实验目录里给用户看的素材条目：experiments/<实验>/烘焙器/条目.json（kind = asset，preview.js 由 fwl_preview.py 从素材包生成）。
+    字段同 REVIEW；src_path = 仓库里的 preview.js 路径；thumb = 缩略图（仓库路径），thumb_box 可选（裁切框）；trail_video = 实拍是升空尾缀（按亮痕取景）"""
+    import glob
+    out = []
+    for f in sorted(glob.glob(os.path.join(EXPERIMENTS, '*', '烘焙器', '条目.json'))):
+        for e in json.load(open(f, encoding='utf-8')).get('entries', []):
+            e = dict(e); e.setdefault('task', e['id']); e['kind'] = 'asset'; e['src'] = e['id']; out.append(e)
+    return out
+
+
 def build(e):
     d = os.path.join(RES, e['task']); rec = {k: e.get(k) for k in ('id', 'task', 'kind', 'date', 'name', 'note', 'look', 'opinion', 'tags', 'doc', 'imagesTitle', 'principle')}
     if e.get('images'): rec['images'] = [['../' + a, b] for a, b in e['images']]
     if e.get('video'): rec['video'] = '../' + e['video']
-    trail = bool(e.get('size'))
+    trail = bool(e.get('size')) or bool(e.get('trail_video'))
     vmf = os.path.join(RES, e.get('src') or e['task'], 'vmeta.json')      # 结果目录自带取景（按模拟的世界坐标算好的，实拍和模拟同比例）
     if e.get('video') and not e.get('phys'): rec['vmeta'] = json.load(open(vmf, encoding='utf-8')) if os.path.exists(vmf) else video_meta(e['video'], trail=trail, roi=e.get('roi'), t_range=e.get('t_range'))
     if rec.get('vmeta') and e.get('burst_t') is not None: rec['vmeta'] = dict(rec['vmeta'], t0=e['burst_t'])   # 自动找的开花时刻不对时手填（例：千轮主玉闪光太弱，自动找到的是子花）
@@ -206,9 +220,10 @@ def build(e):
             if tr: rec['thumbRef'] = tr
         return rec
     if e['kind'] == 'asset':
-        rec['src'] = f"../analysis/results/{e['src']}/preview.js"
-        jp = next((os.path.join(RES, e['src'], x) for x in ('PrismWheels_整朵预览.jpg', '预览.jpg') if os.path.exists(os.path.join(RES, e['src'], x))), None)
-        if jp: w, h = Image.open(jp).size; rec['thumbSim'] = thumb(jp, (min(w - h, h), 0, min(w - h, h) + h, h))
+        rec['src'] = '../' + e['src_path'] if e.get('src_path') else f"../analysis/results/{e['src']}/preview.js"
+        jp = os.path.join(ROOT, e['thumb']) if e.get('thumb') else next((os.path.join(RES, e['src'], x) for x in ('PrismWheels_整朵预览.jpg', '预览.jpg') if os.path.exists(os.path.join(RES, e['src'], x))), None)
+        if jp and e.get('thumb_box'): rec['thumbSim'] = thumb(jp, tuple(e['thumb_box']))
+        elif jp: w, h = Image.open(jp).size; rec['thumbSim'] = thumb(jp, (min(w - h, h), 0, min(w - h, h) + h, h))
         if e.get('video'):
             tr = thumb_from_video(e['video'], rec['vmeta'], e.get('thumb_dt', 0.9))
             if tr: rec['thumbRef'] = tr
@@ -252,6 +267,7 @@ def main():
         if e['kind'] == 'asset': e['src'] = e.get('src', e['task'])
         ents.append(e)
     pe, combos = principle_entries(); ents += pe
+    ents += experiment_entries()
     auto = job_entries(); ids = {e['id'] for e in ents}; combos += JOB_COMBOS
     ents += [e for e in auto if e['id'] not in ids]
     gone = set(ARCHIVE)

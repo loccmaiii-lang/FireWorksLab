@@ -51,6 +51,11 @@ def bb(T):
     c = TP.bb_rgb(T) / TP.bb_lum(T); return c / c.max()
 
 
+def engine_tone(lin, gain=1.0):
+    """烘焙器的引擎显示约定（素材页 tone 'baker'、导出效果）：1 − e^(−4·x)，gamma 2.2 → 0..1"""
+    return np.clip(1 - np.exp(-4 * gain * lin), 0, 1) ** (1 / 2.2)
+
+
 def color_curve(T0, Tb, tc_rel, Tend, pt, pm, tw, I, n=24, seed=0, boost=0.0, boost_u=0.08, peak=8.0):
     """Color Over Life（相对寿命 0–1）关键帧：颜色 = 黑体色（出喷口 T0 → tc 内降到 Tb → 快烧完降到 Tend），
     亮度 = 相对 Tb 的亮度比（开方压缩、不超过 peak 倍）× 燃尽 (1−u)^pm × 闪烁 × 白热增亮；整条曲线按寿命 30% 处的亮度 = I 归一。
@@ -75,7 +80,8 @@ def build(key, plat='pc', head_tex=None):
     """生成 fwl.cascade/1（dict）。head_tex：星头序列贴图信息（bake_head 的返回）。"""
     v0, D, T = traj(TRAJ_OVERRIDE.get(key, key)); P, pops = recipe(key); o = OPTS[key]; gq, eq = pops['金火星'], pops['落火']
     ts, zs, vs = head_path(v0, D, T)
-    gpu = plat == 'pc'; rate = o['rate'] if gpu else o['rate_m']; sz_mul = 1.0 if gpu else 1.45; I_mul = 1.0 if gpu else 1.35
+    gpu = plat == 'pc'; rate_pc = o['rate'] * o.get('rate_k', 1.0); rate = rate_pc if gpu else o['rate_m']; sz_mul = 1.0 if gpu else 1.45
+    I_mul = 1.0 if gpu else min(3.0, max(1.0, rate_pc / o['rate_m'] / sz_mul ** 2))   # 手机：数量少、点大 → 总光量和 PC 一致（亮度 ∝ 数量 × 颜色 × 面积）
     # 曲线关键帧（按发射器时间秒）：每 0.1 s 一个
     kt = np.arange(0, T + 1e-6, 0.1); kt = np.append(kt, T) if kt[-1] < T - 1e-6 else kt
     zc = np.interp(kt, ts, zs); vc = np.interp(kt, ts, vs)
@@ -245,26 +251,29 @@ def head_state(cj, t):
     return dict(p=p, v=v, size=sz, frame=f, col=float(_curve(M['ColorOverLife']['ColorOverLife'], u)[0]))
 
 
-def render_frame(sim, cj, t, W, H, mpp, origin, head_img=None, tone=None):
-    """侧面平视（x 向右、z 向上），mpp 米/像素，origin = 发射点像素。返回线性 RGB（不曝光）。
-    火星：soft_dot 当作高斯点（半径 = 面片尺寸 / 4）；星头：按帧号取贴图格子 × Ramp，按面片尺寸贴在星头（Velocity 对齐，竖直）。"""
+def render_frame(sim, cj, t, W, H, mpp, origin, head_img=None, tone=None, dots=True, head_x=None):
+    """侧面平视（x 向右、z 向上），mpp 米/像素，origin = 发射点像素。返回线性 RGB（不曝光），单位和引擎一致：像素值 = Σ 颜色 × 贴图值。
+    火星：soft_dot 当作高斯点（σ = 面片尺寸 / 4，中心值 = Color Over Life）；比一个像素小时按总光量守恒摊开（σ 至少 0.5 像素）。
+    星头：按帧号取贴图格子 × Ramp × 颜色，按面片尺寸贴在星头（Velocity 对齐，竖直）。
+    显示按烘焙器的引擎约定：1 − e^(−4·x)，再 gamma 2.2（和素材页、导出效果同一个公式）。"""
     img = np.zeros((H, W, 3), np.float32)
-    for name, frames in sim.items():
+    for name, frames in (sim.items() if dots else ()):
         fr = min(frames, key=lambda f: abs(f['t'] - t))
         if not len(fr['size']): continue
         px = origin[0] + fr['p'][:, 0] / 100 / mpp; py = origin[1] - fr['p'][:, 2] / 100 / mpp
-        sig = np.maximum(fr['size'] / 100 / mpp / 4, 0.35)
-        w = fr['col'] * (fr['size'][:, None] / 100) ** 2      # 软圆点的总光量 ∝ 面积 × 颜色
-        for lo, hi in ((0, 0.7), (0.7, 1.4), (1.4, 2.8), (2.8, 6), (6, 50)):
+        st = fr['size'] / 100 / mpp / 4; sig = np.maximum(st, 0.5)
+        w = fr['col'] * (2 * np.pi * st * st)[:, None]           # 总光量 = 中心值 × 2πσ²（像素）
+        for lo, hi in ((0, 0.75), (0.75, 1.4), (1.4, 2.8), (2.8, 6), (6, 50)):
             m = (sig >= lo) & (sig < hi)
             if not m.any(): continue
-            lay = np.zeros_like(img); TP._splat(lay, px[m], py[m], w[m]); img += cv2.GaussianBlur(lay, (0, 0), max(0.5 * (lo + hi), 0.4))
+            lay = np.zeros_like(img); TP._splat(lay, px[m], py[m], w[m]); img += cv2.GaussianBlur(lay, (0, 0), max(0.5 * (lo + hi), 0.5))
     hs = head_state(cj, t)
     if hs is not None and head_img is not None:
         cell = head_img(hs['frame'])                             # (h, w, 3) 线性 RGB（已含 Ramp × v）
         hw = max(2, int(round(hs['size'][0] / 100 / mpp))); hh = max(4, int(round(hs['size'][1] / 100 / mpp)))
         c = cv2.resize(cell, (hw, hh), interpolation=cv2.INTER_AREA) * hs['col']
-        cx = origin[0] + hs['p'][0] / 100 / mpp; cy = origin[1] - hs['p'][2] / 100 / mpp
+        hx = hs['p'][0] / 100 + (head_x(hs['p'][2] / 100) if head_x else 0.0)   # head_x：只在对照实拍时用（弹道倾斜）
+        cx = origin[0] + hx / mpp; cy = origin[1] - hs['p'][2] / 100 / mpp
         x0 = int(round(cx - hw / 2)); y0 = int(round(cy - hh / 2))
         xa, ya = max(0, x0), max(0, y0); xb, yb = min(W, x0 + hw), min(H, y0 + hh)
         if xb > xa and yb > ya: img[ya:yb, xa:xb] += c[ya - y0:yb - y0, xa - x0:xb - x0]

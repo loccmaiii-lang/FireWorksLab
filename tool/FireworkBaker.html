@@ -717,7 +717,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.0';
+const VERSION = '4.0.1';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -5399,6 +5399,8 @@ function initIter() {
 //  素材页：打开一个结果文件夹（里面有 预览.json + 贴图），按引擎的方式播放
 //  帧号曲线 → 取整、不混合；自然色 RGB 直接显示，灰度 RGBA 接力按 Ramp(v) × v × Color Over Life 上色；
 //  粒子的出生、位置、速度、阻力、重力、大小、旋转、寿命按清单里的发射器参数（与 Cascade 参数表一致）。
+//  清单 hdr: true（4.0.1）：所有粒子先按线性亮度累加（像素值 = Σ 颜色 × 贴图值，和引擎一样），最后统一做显示映射 1 − e^(−4x)；
+//  软圆点发射器（dot: true，材质 soft_dot）不需要贴图，颜色 / 大小按寿命取曲线。清单不开 hdr 的旧条目行为不变。
 // =====================================================================
 const asset = { man: null, files: null, variant: 'A', emit: [], parts: [], on: {}, cutout: false, sky: 'black', gain: 1, ready: false, dir: '' };
 const ASSET_CELL = 256;   // 预览时每帧缩到的尺寸（只影响预览清晰度，不影响贴图）
@@ -5486,15 +5488,19 @@ async function assetFrames(tex) {
       for (let i = 0, n = w * h; i < n; i++) dd[i * 4 + 3] = 255;
       gg.putImageData(im, 0, 0); return cv;
     };
-    const chain = [toCanvas(L, S, SH)]; let A = L, w = S, h = SH;
+    const hdr = !!(asset.man && asset.man.hdr), linKeep = [];      // hdr：留线性亮度的缩小链（只留宽 ≤ 64 的几级，省内存）
+    const chain = hdr ? [] : [toCanvas(L, S, SH)]; let A = L, w = S, h = SH;
+    if (hdr && w <= 64) linKeep.push({ w, h, d: A });
     while (w > 2 && h > 2) {
       const w2 = w >> 1, h2 = h >> 1, B = new Float32Array(w2 * h2 * 3);
       for (let y = 0; y < h2; y++) for (let x = 0; x < w2; x++) for (let j = 0; j < 3; j++) {
         const a = ((2 * y) * w + 2 * x) * 3 + j, b = ((2 * y + 1) * w + 2 * x) * 3 + j;
         B[(y * w2 + x) * 3 + j] = 0.25 * (A[a] + A[a + 3] + A[b] + A[b + 3]);
       }
-      chain.push(toCanvas(B, w2, h2)); A = B; w = w2; h = h2;
+      if (hdr) { if (w2 <= 64) linKeep.push({ w: w2, h: h2, d: B }); } else chain.push(toCanvas(B, w2, h2));
+      A = B; w = w2; h = h2;
     }
+    if (hdr) { out.push(null); (out.lin = out.lin || []).push(linKeep); (out.mips = out.mips || []).push([]); continue; }
     out.push(chain[0]); (out.mips = out.mips || []).push(chain);
   }
   return out;
@@ -5503,6 +5509,7 @@ async function assetFrames(tex) {
 //   bursts：某时刻一次出 n 个；spawn：{rate, t0, t1} 按发射器时间连续出生（Spawn Rate）
 //   locCurve / velCurve / accCurve：按「出生时的发射器时间」取的曲线（Cascade 的 Initial Location / Initial Velocity / Acceleration）
 //   velJit：初速 × (1 ± velJit)；dragRange：Drag 在区间里随机；velLife：Velocity/Life（Absolute），粒子沿这条速度曲线积分出路径
+//   spawn.curve：Spawn Rate 曲线（按发射器时间，[[t, 每秒个数], …]）；velAdd：[[x,y,z]下限, [x,y,z]上限] 再加一个均匀随机初速（第二个 Initial Velocity）
 function assetSpawn() {
   asset.parts = [];
   for (const e of asset.emit) {
@@ -5517,12 +5524,16 @@ function assetSpawn() {
       let v = p.map(x => x * (sp.vel || 0));
       if (d.locCurve) p = curveAt(d.locCurve, t0).map((x, i) => x + p[i]);
       if (d.velCurve) { const j = 1 + (d.velJit || 0) * (2 * rnd() - 1); v = curveAt(d.velCurve, t0).map(x => x * j); }
+      if (d.velAdd) v = v.map((x, i) => x + d.velAdd[0][i] + (d.velAdd[1][i] - d.velAdd[0][i]) * rnd());
       const part = { e, t0, p, v, size: s0 + (s1 - s0) * rnd(), rot: d.rot ? rnd() * Math.PI * 2 : 0, life: l0 + (l1 - l0) * rnd() };
       if (d.dragRange) part.k = d.dragRange[0] + (d.dragRange[1] - d.dragRange[0]) * rnd();
       if (d.accCurve) part.acc = curveAt(d.accCurve, t0);
       asset.parts.push(part);
     };
-    if (d.spawn) { const { rate, t0 = 0, t1 = 1 } = d.spawn, n = Math.floor(rate * (t1 - t0)); for (let i = 0; i < n; i++) make(t0 + (i + rnd()) / rate); }
+    if (d.spawn && d.spawn.curve) {
+      const c = d.spawn.curve, tEnd = c[c.length - 1][0], dt = 1 / 240; let acc = 0;
+      for (let t = c[0][0]; t < tEnd; t += dt) { acc += Math.max(0, curveAt(c, t)) * dt; while (acc >= 1) { make(t + rnd() * dt); acc -= 1; } }
+    } else if (d.spawn) { const { rate, t0 = 0, t1 = 1 } = d.spawn, n = Math.floor(rate * (t1 - t0)); for (let i = 0; i < n; i++) make(t0 + (i + rnd()) / rate); }
     for (const [t0, n] of d.bursts || (d.spawn ? [] : [[0, 1]])) for (let i = 0; i < n; i++) make(t0);
     // Velocity/Life（Absolute）：按寿命积分出路径（每 1/120 秒一个点：x, z, vx, vz）
     e.path = null;
@@ -5538,8 +5549,9 @@ async function assetLoadVariant() {
   try {
     let i = 0;
     for (const e of asset.emit) {
+      if (e.def.dot) { e.tex = null; e.frames = []; e.mips = []; e.lin = null; e.cut = null; busy(true, null, ++i / asset.emit.length); continue; }
       const tex = e.def.tex[asset.variant] || e.def.tex[Object.keys(e.def.tex)[0]];
-      e.tex = tex; e.frames = await assetFrames(tex); e.mips = e.frames.mips || e.frames.map(mipChain);
+      e.tex = tex; e.frames = await assetFrames(tex); e.lin = e.frames.lin || null; e.mips = e.frames.mips || e.frames.map(mipChain);
       const cf = tex.cutout || e.def.cutout; e.cut = cf && asset.files.has(cf) ? await assetImage(cf) : null;
       busy(true, null, ++i / asset.emit.length);
     }
@@ -5586,10 +5598,11 @@ function renderAssets() {
   g.globalCompositeOperation = 'source-over'; g.fillStyle = asset.sky === 'sky' ? '#34466e' : '#020306'; g.fillRect(0, 0, W, H);
   if (!asset.man) { g.fillStyle = '#9aa0b4'; g.font = `${14 * dpr}px sans-serif`; g.textAlign = 'center'; g.fillText('在左栏「迭代区」点一个素材条目', W / 2, H / 2); hudText = ''; return; }
   if (!asset.ready) return;
+  if (asset.man.hdr) { renderAssetsHDR(cv, g, W, H); return; }
   const t = engineTick(state.t), fitPPM=Math.min(W,H)/(asset.man.view||150), pxm = state.disp==='game'?gamePixelsPerMeter(asset.man,asset.man.diameter||asset.man.view||150,Math.min(W,H)):fitPPM, c0 = asset.man.center || [0, 0]; let alive = 0, area = 0; const fr = {};
   g.globalCompositeOperation = 'lighter'; g.globalAlpha = Math.min(1, asset.gain); g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
   for (const b of asset.parts) {
-    const e = b.e; if (!asset.on[e.def.name]) continue;
+    const e = b.e; if (!asset.on[e.def.name] || e.def.dot) continue;
     const age = t - b.t0; if (age < 0 || age >= b.life) continue;
     let x, z, ang = b.rot;
     if (e.path) {                  // Velocity/Life：沿积分好的路径走；速度朝向的面片转到速度方向（面片上端朝前）
@@ -5615,6 +5628,61 @@ function renderAssets() {
   g.globalCompositeOperation = 'source-over'; g.globalAlpha = 1;
   const fs = Object.values(fr); hudText = `${(asset.man.variants || {})[asset.variant] || asset.variant} · 粒子 ${alive} · 帧 ${fs.length ? Math.min(...fs) + (Math.max(...fs) !== Math.min(...fs) ? '–' + Math.max(...fs) : '') : '-'} · 面片合计 ${(area / (W * H) * 100).toFixed(0)}% 画面`;
 }
+// 粒子在年龄 age 时的位置（和非 hdr 路径同一套运动：线性阻力 + 恒定加速度的解析解；Velocity/Life 沿积分路径）
+function assetPos(b, age) {
+  const e = b.e;
+  if (e.path) { const q = e.path[Math.min(e.path.length - 1, Math.floor(age * 120))]; return [b.p[0] + q[0], b.p[2] + q[1], e.def.align === 'velocity' ? Math.atan2(q[2], q[3]) : b.rot]; }
+  const k = b.k != null ? b.k : (e.def.drag || 0), acc = b.acc || e.def.accel || [0, 0, 0], s1 = k > 0 ? (1 - Math.exp(-k * age)) / k : age;
+  const gz = k > 0 ? acc[2] / k * (age - s1) : 0.5 * acc[2] * age * age, gx = k > 0 ? acc[0] / k * (age - s1) : 0.5 * acc[0] * age * age;
+  return [b.p[0] + b.v[0] * s1 + gx, b.p[2] + b.v[2] * s1 + gz, b.rot];
+}
+// hdr：先在浮点缓冲里按线性亮度累加（引擎的加色混合），最后一次显示映射 1 − e^(−4x)、gamma 2.2，再叠到天空底色上。
+//   软圆点：高斯，σ = 面片尺寸 / 4，中心值 = 颜色；小于半个像素时按总光量守恒摊开（σ 至少 0.5 像素）。
+//   序列面片：取线性亮度缩小链里和屏幕尺寸最接近的一级，逐像素取样累加（支持旋转）。
+const assetHDR = { buf: null, w: 0, h: 0, cv: null };
+function renderAssetsHDR(cv, g, W, H) {
+  const sc = Math.min(1, Math.sqrt(1.3e6 / (W * H))), w = Math.max(1, Math.round(W * sc)), h = Math.max(1, Math.round(H * sc));
+  if (!assetHDR.buf || assetHDR.w !== w || assetHDR.h !== h) { assetHDR.buf = new Float32Array(w * h * 3); assetHDR.w = w; assetHDR.h = h; assetHDR.cv = document.createElement('canvas'); assetHDR.cv.width = w; assetHDR.cv.height = h; }
+  const buf = assetHDR.buf; buf.fill(0);
+  const t = engineTick(state.t), fitPPM = Math.min(W, H) / (asset.man.view || 150);
+  const pxm = (state.disp === 'game' ? gamePixelsPerMeter(asset.man, asset.man.diameter || asset.man.view || 150, Math.min(W, H)) : fitPPM) * sc, c0 = asset.man.center || [0, 0];
+  let alive = 0; const fr = {};
+  for (const b of asset.parts) {
+    const e = b.e; if (!asset.on[e.def.name]) continue;
+    const age = t - b.t0; if (age < 0 || age >= b.life) continue;
+    const u = age / b.life, [x, z, ang] = assetPos(b, age), cx = w / 2 + (x - c0[0]) * pxm, cy = h / 2 - (z - c0[1]) * pxm;
+    if (e.def.dot) {
+      const zk = e.def.sizeLife ? curveAt(e.def.sizeLife, u) : 1, st = b.size * zk * pxm / 4, sg = Math.max(0.5, st), col = e.def.col ? curveAt(e.def.col, u) : [1, 1, 1];
+      const amp = (st / sg) * (st / sg), R = Math.ceil(3 * sg), x0 = Math.max(0, Math.floor(cx - R)), x1 = Math.min(w - 1, Math.ceil(cx + R)), y0 = Math.max(0, Math.floor(cy - R)), y1 = Math.min(h - 1, Math.ceil(cy + R));
+      if (x0 > x1 || y0 > y1) continue;
+      const k2 = -0.5 / (sg * sg), r0 = col[0] * amp, g0 = col[1] * amp, b0 = col[2] * amp;
+      for (let yy = y0; yy <= y1; yy++) { const dy = yy + 0.5 - cy; for (let xx = x0; xx <= x1; xx++) { const dx = xx + 0.5 - cx, f = Math.exp((dx * dx + dy * dy) * k2), o = (yy * w + xx) * 3; buf[o] += r0 * f; buf[o + 1] += g0 * f; buf[o + 2] += b0 * f; } }
+      alive++; fr[e.def.name] = '·'; continue;
+    }
+    const f = Math.max(0, Math.min(e.frames.length - 1, Math.floor(curveAt(e.tex.keys, u)))), tx = e.tex;
+    const zk = tx.sizeKeys ? (v => Array.isArray(v) ? v[0] : v)(curveAt(tx.sizeKeys, u)) : 1, wk = tx.whKeys ? curveAt(tx.whKeys, u) : [1, 1], pv = tx.pivot || [0.5, 0.5], off = tx.offset || [0, 0];
+    const sw = (tx.wh ? tx.wh[0] : b.size) * zk * wk[0] * pxm, sh = (tx.wh ? tx.wh[1] : b.size) * zk * wk[1] * pxm;
+    const levels = (e.lin && e.lin[f]) || []; if (!levels.length || sw < 0.05 || sh < 0.05) continue;
+    const L = levels.reduce((best, l) => Math.abs(Math.log(l.w / Math.max(1, sw))) < Math.abs(Math.log(best.w / Math.max(1, sw))) ? l : best, levels[0]);
+    const pcx = cx + off[0] * pxm, pcy = cy - off[1] * pxm, ca = Math.cos(ang), sa = Math.sin(ang), hx = Math.abs(sw * ca) + Math.abs(sh * sa), hy = Math.abs(sw * sa) + Math.abs(sh * ca);
+    const x0 = Math.max(0, Math.floor(pcx - hx)), x1 = Math.min(w - 1, Math.ceil(pcx + hx)), y0 = Math.max(0, Math.floor(pcy - hy)), y1 = Math.min(h - 1, Math.ceil(pcy + hy));
+    // 面积守恒：面片比一个像素窄时（远处的细长星头），按覆盖比例把亮度摊到落到的像素上
+    const cov = Math.min(1, sw) * Math.min(1, sh), sx = Math.max(sw, 1), sy = Math.max(sh, 1);
+    for (let yy = y0; yy <= y1; yy++) for (let xx = x0; xx <= x1; xx++) {
+      const dx = xx + 0.5 - pcx, dy = yy + 0.5 - pcy, lx = (dx * ca + dy * sa) / sx + pv[0], ly = (-dx * sa + dy * ca) / sy + pv[1];
+      if (lx < 0 || lx >= 1 || ly < 0 || ly >= 1) continue;
+      const si = (Math.floor(ly * L.h) * L.w + Math.floor(lx * L.w)) * 3, o = (yy * w + xx) * 3;
+      buf[o] += L.d[si] * cov; buf[o + 1] += L.d[si + 1] * cov; buf[o + 2] += L.d[si + 2] * cov;
+    }
+    alive++; fr[e.def.name] = f;
+  }
+  const sky = asset.sky === 'sky' ? [0x34, 0x46, 0x6e] : [2, 3, 6], ctx = assetHDR.cv.getContext('2d'), im = ctx.createImageData(w, h), dd = im.data;
+  for (let i = 0, n = w * h; i < n; i++) for (let j = 0; j < 3; j++) { const v = buf[i * 3 + j]; dd[i * 4 + j] = Math.min(255, sky[j] + (v > 0 ? Math.round(Math.pow(1 - Math.exp(-4 * v), 1 / 2.2) * 255) : 0)); }
+  for (let i = 3; i < dd.length; i += 4) dd[i] = 255;
+  ctx.putImageData(im, 0, 0);
+  g.globalCompositeOperation = 'source-over'; g.globalAlpha = 1; g.imageSmoothingEnabled = true; g.drawImage(assetHDR.cv, 0, 0, W, H);
+  hudText = `${(asset.man.variants || {})[asset.variant] || asset.variant} · 粒子 ${alive} · 线性累加后统一曝光（引擎同款加色）· ${Object.entries(fr).map(([k, v]) => k + (v === '·' ? '' : ' 帧 ' + v)).join(' · ')}`;
+}
 function assetPanel() {
   const m = asset.man, box = $('#assetInfo');
   if (!m) { box.innerHTML = '<p class="hint">在左栏「迭代区」点一个素材条目；临时看别的结果文件夹用左栏底部的「打开结果文件夹」。</p>'; $('#assetOpts').hidden = true; return; }
@@ -5627,9 +5695,9 @@ function assetPanel() {
   }
   const el = $('#assetEmit'); el.innerHTML = '';
   for (const e of asset.emit) {
-    const n = (e.def.bursts || (e.def.spawn ? [] : [[0, 1]])).reduce((s, [, c]) => s + c, 0) + (e.def.spawn ? Math.floor(e.def.spawn.rate * ((e.def.spawn.t1 || 1) - (e.def.spawn.t0 || 0))) : 0);
+    const n = asset.parts.reduce((s, p) => s + (p.e === e ? 1 : 0), 0);
     const l = document.createElement('label'); l.className = 'check';
-    l.innerHTML = `<input type="checkbox" ${asset.on[e.def.name] ? 'checked' : ''}> ${e.def.name}（${n} 颗，${e.tex ? e.tex.frames + ' 帧' : ''}）`;
+    l.innerHTML = `<input type="checkbox" ${asset.on[e.def.name] ? 'checked' : ''}> ${e.def.name}（${n} 颗，${e.tex ? e.tex.frames + ' 帧' : e.def.dot ? '软圆点' : ''}）`;
     l.querySelector('input').addEventListener('change', ev => { asset.on[e.def.name] = ev.target.checked; }); el.appendChild(l);
   }
 }

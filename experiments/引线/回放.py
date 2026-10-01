@@ -51,7 +51,7 @@ def compose(em, t, px=480, view_m=None):
     return out
 
 
-def tone(a): return (np.clip(1 - np.exp(-a * 1.5), 0, 1) ** (1 / 2.2) * 255).astype(np.uint8)
+def tone(a): return (np.clip(1 - np.exp(-a * 4.0), 0, 1) ** (1 / 2.2) * 255).astype(np.uint8)   # 烘焙器引擎约定 ×4（yinxian.DISP_K）
 
 
 def split_and_check(pack, outdir, plat='pc'):

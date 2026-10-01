@@ -8,8 +8,9 @@ import v6, head as HD
 TP = v6.TP
 
 
-def tone(lin, E):
-    return (np.clip(1 - np.exp(-lin * E), 0, 1) ** (1 / 2.2) * 255).astype(np.uint8)
+def tone(lin, E=1.0):
+    """引擎显示约定（和烘焙器素材页 / 导出效果同一公式）：1 − e^(−4·x)，gamma 2.2；E 只给近看图用（默认 1 = 不加）"""
+    return (v6.engine_tone(lin, E) * 255).astype(np.uint8)
 
 
 def preview(key, cj, d, E=None):
@@ -18,7 +19,7 @@ def preview(key, cj, d, E=None):
     mpp = 1.05; W = 120; Hp = int((H_m + 40) / mpp); org = (W / 2, Hp - 10)
     ts = list(np.round(np.linspace(0.4, T, 6), 2)) + [round(T + 0.8, 2), round(T + 1.8, 2)]
     imgs = [v6.render_frame(sim, cj, t, W, Hp, mpp, org, head_img=get) for t in ts]
-    if E is None: E = -math.log(0.15) / max(np.percentile(np.max(imgs, 0), 99.9), 1e-9)
+    E = 1.0
     tiles = []
     for t, im in zip(ts, imgs):
         tl = tone(im, E)[..., ::-1].copy(); cv2.putText(tl, f'{t:.1f}s', (4, 18), 0, 0.5, (255, 255, 0), 1); tiles.append(tl)
@@ -30,7 +31,7 @@ def preview(key, cj, d, E=None):
         hs = v6.head_state(cj, t); zc = hs['p'][2] / 100; mppn = 0.12; Wn, Hn = 260, 520
         org_n = (Wn / 2, Hn * 0.12 + zc / mppn)
         im = v6.render_frame(sim, cj, t, Wn, Hn, mppn, org_n, head_img=get)
-        tl = tone(im, E * 0.6)[..., ::-1].copy(); cv2.putText(tl, f'{t:.1f}s', (4, 18), 0, 0.5, (255, 255, 0), 1); near.append(tl)
+        tl = tone(im)[..., ::-1].copy(); cv2.putText(tl, f'{t:.1f}s', (4, 18), 0, 0.5, (255, 255, 0), 1); near.append(tl)
     cv2.imwrite(os.path.join(d, f'近看_{key}.jpg'), np.hstack(near), [cv2.IMWRITE_JPEG_QUALITY, 90])
     return E
 
