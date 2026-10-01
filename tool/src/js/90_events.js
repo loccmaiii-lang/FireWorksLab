@@ -8,7 +8,7 @@ for (const [g, types] of TYPE_GROUPS) {
 if (REPLICAS.length) { const og = document.createElement('optgroup'); og.label = '实拍复刻';
   for (const r of REPLICAS) og.appendChild(new Option(r.name, 'rep:' + r.id));
   $('#type').appendChild(og); }
-$('#verLabel').textContent = `通道打包序列帧 · GPU 模拟 · v${VERSION}`;
+$('#verLabel').textContent = `4.0 开发版 · 阶段版本 ${VERSION}`;
 $('#type').addEventListener('change', e => setType(e.target.value));
 $('#mname').addEventListener('input', e => state.name = e.target.value);
 $('#x-form').addEventListener('change', e => setForm(e.target.value));

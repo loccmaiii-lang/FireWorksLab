@@ -1,0 +1,834 @@
+{
+  "cases": [
+    {
+      "id": "core1",
+      "duration": 3.5,
+      "layers": [
+        {
+          "name": "亲星 · 金尾菊",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.006228310779069239,
+          "darkTail": 0
+        },
+        {
+          "name": "芯 1",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.04789327190709281,
+          "darkTail": 10
+        }
+      ]
+    },
+    {
+      "id": "core2",
+      "duration": 3.5,
+      "layers": [
+        {
+          "name": "亲星 · 金尾菊",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.006228310779069239,
+          "darkTail": 0
+        },
+        {
+          "name": "芯 1",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.04789327190709281,
+          "darkTail": 10
+        },
+        {
+          "name": "芯 2",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.07690677966101694,
+          "darkTail": 11
+        }
+      ]
+    },
+    {
+      "id": "core3",
+      "duration": 3.5,
+      "layers": [
+        {
+          "name": "亲星 · 金尾菊",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.006228310779069239,
+          "darkTail": 0
+        },
+        {
+          "name": "芯 1",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.04789327190709281,
+          "darkTail": 10
+        },
+        {
+          "name": "芯 2",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.07690677966101694,
+          "darkTail": 11
+        },
+        {
+          "name": "芯 3",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.058387958242291815,
+          "darkTail": 10
+        }
+      ]
+    },
+    {
+      "id": "core4",
+      "duration": 3.5,
+      "layers": [
+        {
+          "name": "亲星 · 金尾菊",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.006228310779069239,
+          "darkTail": 0
+        },
+        {
+          "name": "芯 1",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.04789327190709281,
+          "darkTail": 10
+        },
+        {
+          "name": "芯 2",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.07690677966101694,
+          "darkTail": 11
+        },
+        {
+          "name": "芯 3",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.058387958242291815,
+          "darkTail": 10
+        },
+        {
+          "name": "芯 4",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.04327239247665395,
+          "darkTail": 10
+        }
+      ]
+    },
+    {
+      "id": "lime_core",
+      "duration": 3.6,
+      "layers": [
+        {
+          "name": "青柠外层",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.00042422314137236184,
+          "darkTail": 0
+        },
+        {
+          "name": "金芯",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.08076496200802527,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "silver_crown",
+      "duration": 5.2,
+      "layers": [
+        {
+          "name": "银冠",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.022229114971050457,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "gold_crown",
+      "duration": 5.2,
+      "layers": [
+        {
+          "name": "金冠",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.0002563116749967961,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "gold_willow",
+      "duration": 6.5,
+      "layers": [
+        {
+          "name": "金柳",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.001780767708745548,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "silver_willow",
+      "duration": 6.5,
+      "layers": [
+        {
+          "name": "银柳",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.007813244402096237,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "four_colors",
+      "duration": 3.2,
+      "layers": [
+        {
+          "name": "粉星组",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.0008245049081377079,
+          "darkTail": 1
+        },
+        {
+          "name": "绿星组",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 2
+        },
+        {
+          "name": "蓝星组",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 1
+        },
+        {
+          "name": "金星组",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 1
+        }
+      ]
+    },
+    {
+      "id": "crackle_core",
+      "duration": 3.5,
+      "layers": [
+        {
+          "name": "亲星 · 金尾菊",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.006228310779069239,
+          "darkTail": 0
+        },
+        {
+          "name": "霹雳芯",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.03965585443037975,
+          "darkTail": 6
+        }
+      ]
+    },
+    {
+      "id": "sea",
+      "duration": 3,
+      "layers": [
+        {
+          "name": "水面半球",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.058829753465241774,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "colored_senrin",
+      "duration": 2.8,
+      "layers": [
+        {
+          "name": "粉小玉组",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.0012658227848101266,
+          "darkTail": 17
+        },
+        {
+          "name": "绿小玉组",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 18
+        },
+        {
+          "name": "蓝小玉组",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 15
+        },
+        {
+          "name": "金小玉组",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 18
+        }
+      ]
+    },
+    {
+      "id": "hikisaki_red",
+      "duration": 3.8,
+      "layers": [
+        {
+          "name": "金尾红先",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.00043818009201781934,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "hikisaki_blue",
+      "duration": 3.8,
+      "layers": [
+        {
+          "name": "金尾蓝先",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.00043818009201781934,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "silver_afterglow",
+      "duration": 6,
+      "layers": [
+        {
+          "name": "银尾残光",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.036593596854183175,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "starfield",
+      "duration": 5.5,
+      "layers": [
+        {
+          "name": "满天星",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.03470051171978287,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "three_breaks",
+      "duration": 7,
+      "layers": [
+        {
+          "name": "第一节 · 牡丹",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.009994240079704843,
+          "darkTail": 0
+        },
+        {
+          "name": "第二节 · 菊",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0.9,
+          "origin": [
+            25,
+            30
+          ],
+          "nonempty": true,
+          "clip": 0.012164686308056947,
+          "darkTail": 0
+        },
+        {
+          "name": "第三节 · 金冠",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 1.8,
+          "origin": [
+            -20,
+            65
+          ],
+          "nonempty": true,
+          "clip": 0.0009041591320072332,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "compound",
+      "duration": 3.4,
+      "layers": [
+        {
+          "name": "粉星组",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.0008245049081377079,
+          "darkTail": 1
+        },
+        {
+          "name": "绿星组",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 2
+        },
+        {
+          "name": "蓝星组",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 1
+        },
+        {
+          "name": "金星组",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 1
+        },
+        {
+          "name": "霹雳芯",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.035164377861007075,
+          "darkTail": 12
+        }
+      ]
+    },
+    {
+      "id": "magenta",
+      "duration": 2.8,
+      "layers": [
+        {
+          "name": "洋红",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.009901144236008406,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "teal",
+      "duration": 2.8,
+      "layers": [
+        {
+          "name": "青绿",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.009901144236008406,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "lemon",
+      "duration": 2.8,
+      "layers": [
+        {
+          "name": "柠檬",
+          "version": 40,
+          "cell": 512,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.009901144236008406,
+          "darkTail": 0
+        }
+      ]
+    }
+  ],
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "pending": [
+    {
+      "name": "变色转冠",
+      "missing": "后段启用冠尾的分层时间线，需同一模拟拆头尾；不以整朵换色代替。"
+    },
+    {
+      "name": "交叉环",
+      "missing": "多环独立方位和倾角；现有单环不能表达交叉结构。"
+    },
+    {
+      "name": "飞游星 / 尖叫星",
+      "missing": "确定性的推进/螺旋轨迹与声音节点。"
+    },
+    {
+      "name": "蝶",
+      "missing": "动态蝶的名称与成对旋转轨迹待核实。"
+    },
+    {
+      "name": "雷 / 段雷",
+      "missing": "受光烟层与声音节点，不能只放一团白光。"
+    },
+    {
+      "name": "虎之尾",
+      "missing": "名称与目标形态待核实，不能冒用 V5。"
+    },
+    {
+      "name": "降落伞 / 吊灯",
+      "missing": "开伞后的缓降和摆动模型。"
+    },
+    {
+      "name": "打铁花",
+      "missing": "击打节奏、花棚/地面碰撞反弹及铁滴分叉。"
+    },
+    {
+      "name": "白闪蕊 / 齐闪",
+      "missing": "统一闪烁相位与防混叠；现有点灭各星不同相。"
+    },
+    {
+      "name": "速射 / 地面组合 / 大礼花节目",
+      "missing": "节目编排、地面与空中尺度统一、受光烟层。"
+    },
+    {
+      "name": "光露",
+      "missing": "名称待核实；可先看「银菊 → 残光」的明确结构。"
+    }
+  ],
+  "rapidSwitchAndSolo": true,
+  "download": true,
+  "failureRecovery": true,
+  "playback": true,
+  "restore": true,
+  "errors": [],
+  "pass": true
+}

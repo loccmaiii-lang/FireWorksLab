@@ -1,0 +1,298 @@
+{
+  "cases": [
+    {
+      "id": "core2",
+      "duration": 3.5,
+      "layers": [
+        {
+          "name": "亲星 · 金尾菊",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.006434449050300068,
+          "darkTail": 0
+        },
+        {
+          "name": "芯 1",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.045576407506702415,
+          "darkTail": 10
+        },
+        {
+          "name": "芯 2",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.0770859805167302,
+          "darkTail": 11
+        }
+      ]
+    },
+    {
+      "id": "four_colors",
+      "duration": 3.2,
+      "layers": [
+        {
+          "name": "粉星组",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.0006343165239454488,
+          "darkTail": 2
+        },
+        {
+          "name": "绿星组",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 2
+        },
+        {
+          "name": "蓝星组",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 1
+        },
+        {
+          "name": "金星组",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 3
+        }
+      ]
+    },
+    {
+      "id": "silver_willow",
+      "duration": 6.5,
+      "layers": [
+        {
+          "name": "银柳",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.003672420124862284,
+          "darkTail": 0
+        }
+      ]
+    },
+    {
+      "id": "colored_senrin",
+      "duration": 2.8,
+      "layers": [
+        {
+          "name": "粉小玉组",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 17
+        },
+        {
+          "name": "绿小玉组",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 18
+        },
+        {
+          "name": "蓝小玉组",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 15
+        },
+        {
+          "name": "金小玉组",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0,
+          "darkTail": 19
+        }
+      ]
+    },
+    {
+      "id": "three_breaks",
+      "duration": 7,
+      "layers": [
+        {
+          "name": "第一节 · 牡丹",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0,
+          "origin": [
+            0,
+            0
+          ],
+          "nonempty": true,
+          "clip": 0.010098443950460464,
+          "darkTail": 1
+        },
+        {
+          "name": "第二节 · 菊",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 0.9,
+          "origin": [
+            25,
+            30
+          ],
+          "nonempty": true,
+          "clip": 0.012163113757121823,
+          "darkTail": 0
+        },
+        {
+          "name": "第三节 · 金冠",
+          "version": 40,
+          "cell": 256,
+          "frames": 64,
+          "delay": 1.8,
+          "origin": [
+            -20,
+            65
+          ],
+          "nonempty": true,
+          "clip": 0.0004144218814753419,
+          "darkTail": 0
+        }
+      ]
+    }
+  ],
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "pending": [
+    {
+      "name": "变色转冠",
+      "missing": "后段启用冠尾的分层时间线，需同一模拟拆头尾；不以整朵换色代替。"
+    },
+    {
+      "name": "交叉环",
+      "missing": "多环独立方位和倾角；现有单环不能表达交叉结构。"
+    },
+    {
+      "name": "飞游星 / 尖叫星",
+      "missing": "确定性的推进/螺旋轨迹与声音节点。"
+    },
+    {
+      "name": "蝶",
+      "missing": "动态蝶的名称与成对旋转轨迹待核实。"
+    },
+    {
+      "name": "雷 / 段雷",
+      "missing": "受光烟层与声音节点，不能只放一团白光。"
+    },
+    {
+      "name": "虎之尾",
+      "missing": "名称与目标形态待核实，不能冒用 V5。"
+    },
+    {
+      "name": "降落伞 / 吊灯",
+      "missing": "开伞后的缓降和摆动模型。"
+    },
+    {
+      "name": "打铁花",
+      "missing": "击打节奏、花棚/地面碰撞反弹及铁滴分叉。"
+    },
+    {
+      "name": "白闪蕊 / 齐闪",
+      "missing": "统一闪烁相位与防混叠；现有点灭各星不同相。"
+    },
+    {
+      "name": "速射 / 地面组合 / 大礼花节目",
+      "missing": "节目编排、地面与空中尺度统一、受光烟层。"
+    },
+    {
+      "name": "光露",
+      "missing": "名称待核实；可先看「银菊 → 残光」的明确结构。"
+    }
+  ],
+  "rapidSwitchAndSolo": true,
+  "download": true,
+  "failureRecovery": true,
+  "playback": true,
+  "restore": true,
+  "errors": [],
+  "pass": true
+}

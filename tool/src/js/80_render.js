@@ -1,10 +1,10 @@
 // ---------------- 渲染 ----------------
 function ensureTargets() {
   const box = $('#box').getBoundingClientRect();
-  const dpr=devicePixelRatio||1, wide=!!state.showcase;
+  const dpr=devicePixelRatio||1, wide=!!state.showcase&&!state.cloudPreview;
   const size = Math.max(256, Math.min(wide?4096:2048, Math.round(Math.min(box.width, (box.height || box.width)*(wide?2:1)) * dpr / 4) * 4)), height=wide?size/2:size;
   if (canvas.width !== size || canvas.height!==height) { canvas.width = size; canvas.height = height; }
-  canvas.style.width=wide?size/dpr+'px':'';canvas.style.height=wide?height/dpr+'px':'';
+  canvas.style.width=state.showcase?size/dpr+'px':'';canvas.style.height=state.showcase?height/dpr+'px':'';
   if(wide)$('#showcasePair').style.width=size/dpr+'px';
   if (!hdrT || hdrT.w !== size || hdrT.h!==height) { gl.activeTexture(gl.TEXTURE0); hdrT && hdrT.dispose(); rgT && rgT.dispose(); hdrT = new Target(size, height, gl.RGBA16F, true); rgT = new Target(size, height, gl.RGBA16F); }
 }
@@ -400,6 +400,7 @@ function updateLabels() {
 // ---------------- 主循环 ----------------
 let lastT = performance.now();
 function curDuration() {
+  if(state.showcase && showcase.recipe)return Math.max(...showcase.recipe.layers.map(l=>l.delay+l.P.duration));
   if(state.showcase && showcase.left)return Math.max(showcase.left.P.duration,showcase.right.P.duration);
   if (state.tab === 'combo') return comboDuration();
   if (state.tab === 'asset') return assetDuration();

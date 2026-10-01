@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '3.11';
+const VERSION = '3.12';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -71,7 +71,8 @@ const MAT_BASE = { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: 
 // 焰色预设（sRGB）：按常见发色剂
 const FLAME = [
   ['锶红', '#ff2a1c'], ['钙橙', '#ff7a1e'], ['钠黄', '#ffc53a'], ['钡绿', '#52ff5e'], ['铜蓝', '#3d6cff'],
-  ['紫（锶+铜）', '#b44dff'], ['银白（镁铝）', '#eef2ff'], ['金（炭）', '#ffb45a'], ['粉', '#ff7ab8']
+  ['紫（锶+铜）', '#b44dff'], ['银白（镁铝）', '#eef2ff'], ['金（炭）', '#ffb45a'], ['粉', '#ff7ab8'],
+  ['洋红', '#ff3cc8'], ['青绿', '#30ffd8'], ['柠檬', '#e6ff3a']
 ];
 const IGNITE_ORANGE = '#ff8a2e';
 const GROUND_RAMP = { ramp1: '#8a3208', ramp2: '#ffc266', ramp3: '#fff0d2' };

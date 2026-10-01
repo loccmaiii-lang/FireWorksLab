@@ -356,3 +356,7 @@
 .bake-error { display: flex; align-items: center; gap: 12px; padding: 10px 14px; color: #ffd9d9; background: #491f29; border-bottom: 1px solid #a7505c; font-size: 12px; line-height: 1.5; }
 .bake-error[hidden] { display: none; }
 .bake-error span { flex: 1; overflow-wrap: anywhere; }
+
+  #cloudPending{width:100%;font-size:12px;color:var(--dim);max-height:180px;overflow:auto}
+  #cloudPending summary{cursor:pointer}
+  .side-foot{display:flex;flex-direction:column;gap:6px}

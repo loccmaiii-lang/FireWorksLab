@@ -1,0 +1,174 @@
+{
+  "cases": [
+    {
+      "key": "kiku",
+      "left": 37,
+      "right": 40,
+      "cells": [
+        256,
+        512
+      ],
+      "exposure": 3,
+      "duration": 3.2,
+      "frames": [
+        256,
+        64
+      ],
+      "maxClip": 0.012947615324472243,
+      "darkTail": 0,
+      "nonempty": true
+    },
+    {
+      "key": "botan",
+      "left": 37,
+      "right": 40,
+      "cells": [
+        256,
+        512
+      ],
+      "exposure": 3,
+      "duration": 2.8,
+      "frames": [
+        256,
+        64
+      ],
+      "maxClip": 0.012156917753775658,
+      "darkTail": 0,
+      "nonempty": true
+    },
+    {
+      "key": "kamuro",
+      "left": 37,
+      "right": 40,
+      "cells": [
+        256,
+        512
+      ],
+      "exposure": 4,
+      "duration": 5.2,
+      "frames": [
+        256,
+        64
+      ],
+      "maxClip": 0.031468802881405925,
+      "darkTail": 0,
+      "nonempty": true
+    },
+    {
+      "key": "senrin",
+      "left": 37,
+      "right": 40,
+      "cells": [
+        256,
+        512
+      ],
+      "exposure": 4,
+      "duration": 2.8,
+      "frames": [
+        256,
+        64
+      ],
+      "maxClip": 0.02589142706081764,
+      "darkTail": 0,
+      "nonempty": true
+    },
+    {
+      "key": "strobe",
+      "left": 37,
+      "right": 40,
+      "cells": [
+        256,
+        512
+      ],
+      "exposure": 3,
+      "duration": 4.2,
+      "frames": [
+        256,
+        64
+      ],
+      "maxClip": 0.008487906679748945,
+      "darkTail": 0,
+      "nonempty": true
+    },
+    {
+      "key": "JM4",
+      "left": 37,
+      "right": 40,
+      "cells": [
+        256,
+        512
+      ],
+      "exposure": 0.2,
+      "duration": 4.56,
+      "frames": [
+        256,
+        64
+      ],
+      "maxClip": 0.0008694621191163103,
+      "darkTail": 0,
+      "nonempty": true
+    },
+    {
+      "key": "TR2S",
+      "left": 37,
+      "right": 37,
+      "cells": [
+        128,
+        128
+      ],
+      "exposure": 1,
+      "duration": 7.7,
+      "frames": [
+        64,
+        64
+      ],
+      "maxClip": 0.00020089734145851469,
+      "darkTail": 0,
+      "paneMaxDelta": 0,
+      "nonempty": true
+    },
+    {
+      "key": "TR2M",
+      "left": 37,
+      "right": 37,
+      "cells": [
+        128,
+        128
+      ],
+      "exposure": 1,
+      "duration": 8.92,
+      "frames": [
+        64,
+        64
+      ],
+      "maxClip": 0,
+      "darkTail": 0,
+      "paneMaxDelta": 1,
+      "nonempty": true
+    },
+    {
+      "key": "TR2L",
+      "left": 37,
+      "right": 37,
+      "cells": [
+        128,
+        128
+      ],
+      "exposure": 1,
+      "duration": 13.28,
+      "frames": [
+        64,
+        64
+      ],
+      "maxClip": 0,
+      "darkTail": 0,
+      "paneMaxDelta": 0,
+      "nonempty": true
+    }
+  ],
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "continuousPlayback": true,
+  "closed": true,
+  "pageErrors": [],
+  "pass": true
+}
