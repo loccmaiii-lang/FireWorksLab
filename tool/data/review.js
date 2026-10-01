@@ -57478,6 +57478,12 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "JM4-40E2",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "JM4E",
 "type": "export",
 "state": "已回来",
@@ -57508,6 +57514,41 @@ var FW_EFFECTS = [
 "entry": "JM4-40",
 "ver": "8d176790",
 "time": "2026-10-01 19:41",
+"packages": [
+{
+"name": "JinMangJu40",
+"replica": "JM4-40",
+"files": [
+"JinMangJu40.json",
+"JinMangJu40_Cascade参数.txt",
+"JinMangJu40_Mobile.json",
+"JinMangJu40_曲线.csv",
+"T_JinMangJu40_A.png",
+"T_JinMangJu40_A_Cutout.png",
+"T_JinMangJu40_A_FrameTest.png",
+"T_JinMangJu40_B.png",
+"T_JinMangJu40_B_Cutout.png",
+"T_JinMangJu40_B_FrameTest.png",
+"T_JinMangJu40_Mobile_A.png",
+"T_JinMangJu40_Mobile_A_Cutout.png",
+"T_JinMangJu40_Mobile_A_FrameTest.png",
+"T_JinMangJu40_Mobile_B.png",
+"T_JinMangJu40_Mobile_B_Cutout.png",
+"T_JinMangJu40_Mobile_B_FrameTest.png",
+"T_JinMangJu40_Mobile_Ramp.png",
+"T_JinMangJu40_Ramp.png",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"stale": false
+},
+{
+"job": "JM4-40E2",
+"entry": "JM4-40",
+"ver": "8d176790",
+"time": "2026-10-01 20:41",
 "packages": [
 {
 "name": "JinMangJu40",
@@ -57659,8 +57700,8 @@ var FW_EFFECTS = [
 {
 "key": "trail_phys",
 "名": "升空尾缀 · 物理版 小 / 中 / 大",
-"负责": "对话框1",
-"阶段": "待验收",
+"负责": "对话框7",
+"阶段": "制作中",
 "参考": [
 "vidio/2.0/尾缀C.mp4",
 "vidio/2.0/尾缀B.mp4",
@@ -57706,12 +57747,17 @@ var FW_EFFECTS = [
 "id": "TFS@v1",
 "结论": "否决",
 "反馈": "星头小棍子；小档最宽；粒子精度不如 V5；强中弱不够"
+},
+{
+"id": "TFS/TFM/TFL@v2",
+"结论": "被取代",
+"反馈": "用户 2026-10-01 20:15：分层不够（参考有亮有暗、粒子更清晰）；消散从下往上擦除、导进引擎和烘焙器不一样、无法调整"
 }
 ],
 "缺": [
 "UE 4.24 实机导入未验证"
 ],
-"下一步": "等用户验收（小 / 中 / 大三档一起看）",
+"下一步": "V6（experiments/尾缀V6/）：星头白热段循环面片 + GPU 金火星 + GPU 落火（各自寿命错落消散），弹道按用户标定（小 3.5 s / 190 m，中 5 s / 265 m，大 8 s / 410 m），引擎等价预览对照尾缀B",
 "导出任务": [
 "TFLE",
 "TFME",
@@ -57723,7 +57769,7 @@ var FW_EFFECTS = [
 "仍有差异": "颜色比 V5 偏暖（物理火星按实拍校的金橙）；尾迹比 V5 稍长。",
 "素材在哪": "本机 analysis/local/输出/素材包/RiseTrailPhys_S、_M、_L（上升循环 + 30 / 20 fps 消散，PC + 手机 cascade.json）；导出记录 analysis/results/TFSE、TFME、TFLE/"
 },
-"说明": "V5 的镜头、循环、消散和导出 + 物理火星（三层喷出物、降温、风、自转）。小 / 中 / 大在上面「方案 / 分档」切换；和 V5 同比例对照 analysis/迭代/TF第2版/。",
+"说明": "V5 的镜头、循环、消散和导出 + 物理火星（三层喷出物、降温、风、自转）。小 / 中 / 大在上面「方案 / 分档」切换；和 V5 同比例对照 analysis/迭代/TF第2版/。 2026-10-01 20:15 用户让对话框7 接手迭代（对话框1 上次在线 09-30 20:48）。",
 "ver": "ea31fbdf",
 "jobs": [
 {
@@ -61561,14 +61607,27 @@ var FW_EFFECTS = [
 "vidio/球形A.mp4（金线）"
 ],
 "进度": {
-"计算": false,
+"计算": true,
 "AI自检": false,
-"素材导出": false,
+"素材导出": true,
 "用户验收": false
 },
-"历史": [],
-"说明": "用户 2026-10-01 14:46 选 A：4.0 期间在 experiments/引线/ 独立做「引线层」（沿星轨迹的连续线，不靠随机火花凑）+「锦火星层」，先出考卷（实拍同一秒指标 + 旧反例必须判不及格），考卷全过才交一次；验证后交 4.0 负责人合进 tool/src。通用于青柠星开头、球形A 金线、球形C/D 橙红短放射。",
-"下一步": "考卷 → 单星 → 整发 → 512 格导出回放自检",
+"历史": [
+{
+"id": "引线候选（19:5x）",
+"结论": "未达交付条件",
+"反馈": "考卷 19/21；回放检查中心跳变（内容造成）待用户定；引擎回放橙段偏暗"
+}
+],
+"说明": "用户 2026-10-01 14:46 选 A：4.0 期间在 experiments/引线/ 独立做「引线层」（沿星轨迹的连续线，不靠随机火花凑）+「锦火星层」，先出考卷（实拍同一秒指标 + 旧反例必须判不及格），考卷全过才交一次；验证后交 4.0 负责人合进 tool/src。通用于青柠星开头、球形A 金线、球形C/D 橙红短放射。 17:24 用户指出中间空隙 → 补「引药延迟点火 + 火花寿命随星速」。",
+"下一步": "等用户看 experiments/引线/看法.md 的同秒对照与引擎回放，定中心跳变的处理；再修 H7c / H9 / 橙段亮度",
+"工作版": "experiments/引线/定稿参数.json",
+"缺": [
+"H7c +2.0 s 金面积、H9 +0.3 / +1.4 s 亮度节奏",
+"回放检查：中心跳变（面片固定，内容稀疏段重心变化）——放宽还是裁稀疏段，等用户定；PC Hiki_A 1 帧碰内圈",
+"引擎回放橙段偏暗偏棕（UE 自发光倍数未验证）",
+"未进烘焙器：4.0 负责人移植轨迹线 / 换药 / 向后喷火星 / 分层增益"
+],
 "ver": null,
 "jobs": [],
 "exports": [],
