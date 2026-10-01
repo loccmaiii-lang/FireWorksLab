@@ -64,6 +64,9 @@
 
 ## 7. 4.0 兼容与预览检查
 
+- `python analysis/scripts/render_kernel_check.py --out <目录>`：在浮点缓冲检查恒定面亮度、亚像素能量、移动跨像素边界、大光点与亮度倍率。
+- `python analysis/scripts/render_paths_check.py --out <目录>`：整朵菊在 512/1024 单格下扫描四档星头尺寸；比较实际实时/烘焙/定帧采样缓冲；解码实际导出贴图量亮度倍率。PNG 是尺寸诊断，不是审美交付。
+
 - `node analysis/scripts/bake_state_check.mjs`：直接执行界面控制器，复现旧任务串格子、失败重试、过期失败以及旧配方/保存版本问题。失败返回非零退出码。
 - `python analysis/scripts/bake_browser_check.py --out <目录>`：真实页面启动后立即切 JM4，检查 8×8×4；注入失败，检查三个视图错误条和重试恢复。
 - `python analysis/scripts/烘焙贴图回归.py --out analysis/local/输出/贴图回归 --report <报告.json>`：与 `a707b63` 比较 JM4、V5 小/中/大的完整导出分辨率 RGBA，包括两个消散序列；全部像素相同且不是空图才通过。完整像素数组仅留本机，提交小报告。

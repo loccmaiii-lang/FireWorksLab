@@ -23,6 +23,8 @@ $('#x-engine').addEventListener('change', e => { state.P.engine = e.target.value
 $('#x-flip').addEventListener('change', e => { state.P.unitFlip = e.target.checked ? 1 : 0; onParam(); });
 $('#x-autogrid').addEventListener('change', e => { state.P.autoGrid = e.target.checked ? 1 : 0; onParam(); });
 $('#expo').addEventListener('input', e => state.expo = +e.target.value);
+$('#exportResolution').addEventListener('change', e => state.exportResolution = e.target.checked);
+$('#suggestExposure').addEventListener('click', suggestExposure40);
 const segBtns = (id, fn) => $(id).addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return; fn(b);
   for (const x of $(id).children) x.setAttribute('aria-pressed', String(x === b));

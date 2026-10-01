@@ -1,0 +1,151 @@
+{
+  "q": [
+    {
+      "size": 0.3,
+      "ppm": 4,
+      "N": 128,
+      "x": 0,
+      "brightness": 0.1,
+      "sum": 1.593587875366211,
+      "peak": 0.35302734375,
+      "half": 4,
+      "expected": 0.11309733552923257
+    },
+    {
+      "size": 0.6,
+      "ppm": 4,
+      "N": 128,
+      "x": 0,
+      "brightness": 0.1,
+      "sum": 1.5983933210372925,
+      "peak": 0.1485595703125,
+      "half": 4,
+      "expected": 0.45238934211693027
+    },
+    {
+      "size": 1.2,
+      "ppm": 4,
+      "N": 128,
+      "x": 0,
+      "brightness": 0.1,
+      "sum": 1.5970137119293213,
+      "peak": 0.042327880859375,
+      "half": 24,
+      "expected": 1.809557368467721
+    },
+    {
+      "size": 2.4,
+      "ppm": 4,
+      "N": 128,
+      "x": 0,
+      "brightness": 0.1,
+      "sum": 1.593895435333252,
+      "peak": 0.01093292236328125,
+      "half": 96,
+      "expected": 7.238229473870884
+    }
+  ],
+  "tiny": [
+    {
+      "size": 0.04,
+      "ppm": 4,
+      "N": 128,
+      "x": 0,
+      "brightness": 0.1,
+      "sum": 1.5827434062957764,
+      "peak": 0.3681640625,
+      "half": 4,
+      "expected": 0.002010619298297468
+    },
+    {
+      "size": 0.04,
+      "ppm": 4,
+      "N": 128,
+      "x": 0.03125,
+      "brightness": 0.1,
+      "sum": 1.585110604763031,
+      "peak": 0.441162109375,
+      "half": 4,
+      "expected": 0.002010619298297468
+    },
+    {
+      "size": 0.04,
+      "ppm": 4,
+      "N": 128,
+      "x": 0.0625,
+      "brightness": 0.1,
+      "sum": 1.5911439657211304,
+      "peak": 0.501953125,
+      "half": 2,
+      "expected": 0.002010619298297468
+    },
+    {
+      "size": 0.04,
+      "ppm": 4,
+      "N": 128,
+      "x": 0.09375,
+      "brightness": 0.1,
+      "sum": 1.5968873500823975,
+      "peak": 0.54248046875,
+      "half": 2,
+      "expected": 0.002010619298297468
+    },
+    {
+      "size": 0.04,
+      "ppm": 4,
+      "N": 128,
+      "x": 0.125,
+      "brightness": 0.1,
+      "sum": 1.599409818649292,
+      "peak": 0.556640625,
+      "half": 2,
+      "expected": 0.002010619298297468
+    }
+  ],
+  "large": {
+    "size": 12,
+    "ppm": 100,
+    "N": 1536,
+    "x": 0,
+    "brightness": 0.1,
+    "sum": 367.749324798584,
+    "peak": 0.0004420280456542969,
+    "half": 1047276,
+    "expected": 113097.33552923257
+  },
+  "bright": [
+    {
+      "size": 1.2,
+      "ppm": 4,
+      "N": 128,
+      "x": 0,
+      "brightness": 0.1,
+      "sum": 1.5970137119293213,
+      "peak": 0.042327880859375,
+      "half": 24,
+      "expected": 1.809557368467721
+    },
+    {
+      "size": 1.2,
+      "ppm": 4,
+      "N": 128,
+      "x": 0,
+      "brightness": 0.2,
+      "sum": 3.1940293312072754,
+      "peak": 0.08465576171875,
+      "half": 24,
+      "expected": 3.619114736935442
+    }
+  ],
+  "pointLimit": 1024,
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "checks": {
+    "surface energy proportional to core area": false,
+    "half-peak area strictly increases": false,
+    "peak never decreases by over 10%": false,
+    "subpixel energy changes under 2% across pixel boundary": true,
+    "oversized core is not clipped by point-size limit": false,
+    "doubling radiance doubles linear energy": true
+  },
+  "pass": false
+}

@@ -1,0 +1,301 @@
+{
+  "ref": "a707b63",
+  "legacy": true,
+  "renderers": [
+    "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  ],
+  "textures": [
+    {
+      "texture": "JM4/segment0/head",
+      "old": {
+        "part": "segment0/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 8,
+        "rows": 8,
+        "frames": 256,
+        "sha256": "19d91cbf41be5d2e0011036b52231818fa3eed39d264703ee5c6aa352e7eec0a",
+        "nonzero": 2869543,
+        "path": "old_JM4_segment0_head.npz"
+      },
+      "new": {
+        "part": "segment0/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 8,
+        "rows": 8,
+        "frames": 256,
+        "sha256": "19d91cbf41be5d2e0011036b52231818fa3eed39d264703ee5c6aa352e7eec0a",
+        "nonzero": 2869543,
+        "path": "new_JM4_segment0_head.npz"
+      },
+      "pass": true,
+      "max": 0,
+      "mean": 0.0,
+      "changed": 0
+    },
+    {
+      "texture": "TR2L/fade20/head",
+      "old": {
+        "part": "fade20/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "4165a16adfefa23ec60222572b33ecdd0d6864a4c739ed7f500b53e8da6af996",
+        "nonzero": 3499008,
+        "path": "old_TR2L_fade20_head.npz"
+      },
+      "new": {
+        "part": "fade20/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "4165a16adfefa23ec60222572b33ecdd0d6864a4c739ed7f500b53e8da6af996",
+        "nonzero": 3499008,
+        "path": "new_TR2L_fade20_head.npz"
+      },
+      "pass": true,
+      "max": 0,
+      "mean": 0.0,
+      "changed": 0
+    },
+    {
+      "texture": "TR2L/fade30/head",
+      "old": {
+        "part": "fade30/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "514bca9247c40760fd81f509c21d81ef04b10036a5d77e9b904771a1efd36da8",
+        "nonzero": 3034206,
+        "path": "old_TR2L_fade30_head.npz"
+      },
+      "new": {
+        "part": "fade30/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "514bca9247c40760fd81f509c21d81ef04b10036a5d77e9b904771a1efd36da8",
+        "nonzero": 3034206,
+        "path": "new_TR2L_fade30_head.npz"
+      },
+      "pass": true,
+      "max": 0,
+      "mean": 0.0,
+      "changed": 0
+    },
+    {
+      "texture": "TR2L/segment0/head",
+      "old": {
+        "part": "segment0/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "9ea86cd1ea491070f9ba08d0d65053c6fcd552ecb0a849c6cfde79f0a88faf43",
+        "nonzero": 4111582,
+        "path": "old_TR2L_segment0_head.npz"
+      },
+      "new": {
+        "part": "segment0/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "9ea86cd1ea491070f9ba08d0d65053c6fcd552ecb0a849c6cfde79f0a88faf43",
+        "nonzero": 4111582,
+        "path": "new_TR2L_segment0_head.npz"
+      },
+      "pass": true,
+      "max": 0,
+      "mean": 0.0,
+      "changed": 0
+    },
+    {
+      "texture": "TR2M/fade20/head",
+      "old": {
+        "part": "fade20/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "0a137dd18889a48a57031638c9a7cfbd36586e7166843579171c47bbb767a0fe",
+        "nonzero": 4039599,
+        "path": "old_TR2M_fade20_head.npz"
+      },
+      "new": {
+        "part": "fade20/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "0a137dd18889a48a57031638c9a7cfbd36586e7166843579171c47bbb767a0fe",
+        "nonzero": 4039599,
+        "path": "new_TR2M_fade20_head.npz"
+      },
+      "pass": true,
+      "max": 0,
+      "mean": 0.0,
+      "changed": 0
+    },
+    {
+      "texture": "TR2M/fade30/head",
+      "old": {
+        "part": "fade30/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "45365ac272e8eedfd9023011ad2b0e5cc1f2c4b846ad8301d57a3ece6301ec57",
+        "nonzero": 3698526,
+        "path": "old_TR2M_fade30_head.npz"
+      },
+      "new": {
+        "part": "fade30/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "45365ac272e8eedfd9023011ad2b0e5cc1f2c4b846ad8301d57a3ece6301ec57",
+        "nonzero": 3698526,
+        "path": "new_TR2M_fade30_head.npz"
+      },
+      "pass": true,
+      "max": 0,
+      "mean": 0.0,
+      "changed": 0
+    },
+    {
+      "texture": "TR2M/segment0/head",
+      "old": {
+        "part": "segment0/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "e6f84e77f8f9291f94be15c29623b00f917f34761cf20286e6f4dffc73ea91d3",
+        "nonzero": 4557005,
+        "path": "old_TR2M_segment0_head.npz"
+      },
+      "new": {
+        "part": "segment0/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "e6f84e77f8f9291f94be15c29623b00f917f34761cf20286e6f4dffc73ea91d3",
+        "nonzero": 4557005,
+        "path": "new_TR2M_segment0_head.npz"
+      },
+      "pass": true,
+      "max": 0,
+      "mean": 0.0,
+      "changed": 0
+    },
+    {
+      "texture": "TR2S/fade20/head",
+      "old": {
+        "part": "fade20/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "7ab5af4b6b15ed799d00dd7e290c56996d6980f5e883993070cb61c8d4233168",
+        "nonzero": 3565172,
+        "path": "old_TR2S_fade20_head.npz"
+      },
+      "new": {
+        "part": "fade20/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "7ab5af4b6b15ed799d00dd7e290c56996d6980f5e883993070cb61c8d4233168",
+        "nonzero": 3565172,
+        "path": "new_TR2S_fade20_head.npz"
+      },
+      "pass": true,
+      "max": 0,
+      "mean": 0.0,
+      "changed": 0
+    },
+    {
+      "texture": "TR2S/fade30/head",
+      "old": {
+        "part": "fade30/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "64d2aa17750b89f6acaebd3a67304024bc9a9ce4fda29adf76ecd31158623438",
+        "nonzero": 3116047,
+        "path": "old_TR2S_fade30_head.npz"
+      },
+      "new": {
+        "part": "fade30/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "64d2aa17750b89f6acaebd3a67304024bc9a9ce4fda29adf76ecd31158623438",
+        "nonzero": 3116047,
+        "path": "new_TR2S_fade30_head.npz"
+      },
+      "pass": true,
+      "max": 0,
+      "mean": 0.0,
+      "changed": 0
+    },
+    {
+      "texture": "TR2S/segment0/head",
+      "old": {
+        "part": "segment0/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "bfc58ce26342cd7d9eb934de8697d390b24b199e2553b8951718f64c00450a3e",
+        "nonzero": 3837471,
+        "path": "old_TR2S_segment0_head.npz"
+      },
+      "new": {
+        "part": "segment0/head",
+        "width": 2048,
+        "height": 2048,
+        "cols": 16,
+        "rows": 1,
+        "frames": 64,
+        "sha256": "bfc58ce26342cd7d9eb934de8697d390b24b199e2553b8951718f64c00450a3e",
+        "nonzero": 3837471,
+        "path": "new_TR2S_segment0_head.npz"
+      },
+      "pass": true,
+      "max": 0,
+      "mean": 0.0,
+      "changed": 0
+    }
+  ],
+  "pass": true
+}

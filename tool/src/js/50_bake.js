@@ -147,7 +147,8 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
     PPMY = ssH / (pl.Wh * sy);
     sst.clear(); sst.bind(); additive(true);
     R.subW = W / nsub;   // 每个子帧覆盖的时长（尾缀的星头据此再细分，拖出连续亮线）
-    for (let j = 0; j < nsub; j++) {
+    if (renderVersion(P)>=40) drawFrameSamples40(P,pl,R,pl.t0+tc,view,ppm,PPMY);
+    else for (let j = 0; j < nsub; j++) {
       const ts = pl.t0 + tc - W / 2 + (j + 0.5) * W / nsub;
       R.draw(pl.loop ? ts : Math.max(0, ts), view, ppm, 1 / nsub, pl.loop ? f : f * 16 + j, f);
     }
@@ -169,8 +170,8 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   const comb = P.outMode === 'combined';
   const cg = comb ? combGain(P) : [1, 1];
   const byF = P.expoMode === 'frames' && !pl.loop, fq = P.expoQ == null ? 0.7 : P.expoQ;
-  const eH = extra.expo ? extra.expo[0] : (byF ? autoExpoFrames(fH, L, comb ? 0.92 : 0.9, 99.5, fq) : autoExpo(fH, comb ? 0.92 : 0.9, 99.8)) * cg[0];
-  const eT = extra.expo ? extra.expo[1] : (byF ? autoExpoFrames(fT, L, comb ? 0.55 : 0.85, 99.5, fq) : autoExpo(fT, comb ? 0.55 : 0.85, 99.6)) * cg[1];
+  const eH = extra.expo ? extra.expo[0] : renderVersion(P)>=40 ? fixedExposure(P) : (byF ? autoExpoFrames(fH, L, comb ? 0.92 : 0.9, 99.5, fq) : autoExpo(fH, comb ? 0.92 : 0.9, 99.8)) * cg[0];
+  const eT = extra.expo ? extra.expo[1] : renderVersion(P)>=40 ? fixedExposure(P) : (byF ? autoExpoFrames(fT, L, comb ? 0.55 : 0.85, 99.5, fq) : autoExpo(fT, comb ? 0.55 : 0.85, 99.6)) * cg[1];
   // 先建目标贴图：Target 构造时会绑定到当前活动纹理单元，放在后面会顶掉采样用的贴图
   gl.activeTexture(gl.TEXTURE0);
   const head = new Target(N, NH, gl.RGBA8), tail = comb ? null : new Target(N, NH, gl.RGBA8);

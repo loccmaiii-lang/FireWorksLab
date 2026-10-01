@@ -12,6 +12,7 @@ function expoOfChannel(buf, ch, target, pct) {
 }
 // opt: { times: [s…], px, half（米，画面半宽）, cy（米，画面中心高度）, shutter（秒）, sub（快门内子帧数，默认每 1/480 秒一帧）, probe（定曝光用的时刻）, expo（显示曝光） }
 async function renderStills(P0, M0, opt) {
+  if (renderVersion(P0)>=40 && !isTrail(P0) && !isPhys(P0)) return renderStills40(P0,M0,opt);
   const P = derive({ ...P0 }), M = normalizeM(M0 || {}, P.type), px = opt.px || 512, ground = familyOf(P.type) === 'ground';
   let half = opt.half, cy = opt.cy || 0, cx = 0;
   if (half == null) {
@@ -56,7 +57,7 @@ async function renderStills(P0, M0, opt) {
       const pr = PR.rgmat; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, RG.tex); gl.uniform1i(pr.u.uS, 0);
       gl.uniform1f(pr.u.uEH, eH); gl.uniform1f(pr.u.uET, eT); gl.uniform1f(pr.u.uG, P.encGamma); gl.uniform1f(pr.u.uComb, comb ? 1 : 0);
       setMatUniforms(pr, M, times[i]); drawQuad();
-      post(-1);
+      post(-1,P);
       out.push({ t: times[i], png: canvas.toDataURL('image/png') });
       await nextTick();
     }

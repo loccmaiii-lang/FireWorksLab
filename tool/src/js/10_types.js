@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '3.8';
+const VERSION = '3.9';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -28,6 +28,7 @@ const familyOf = t => (TYPE_INFO[t] || TYPE_INFO.kiku)[2];
 
 const BASE = {
   renderVer: 40,
+  exposure: 1, exposureLock: 0, haloFrac: .22, haloR: 3, previewBloom: 0,
   duration: 3.2, seed: 7, stars: 150, burstR0: 0, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
   burn: 2.5, burnJit: 12, fade: 0.2, lastFlare: 0.35, flash: 1,
   headSize: 1.0, headBright: 1, flicker: 0.25,
@@ -136,15 +137,17 @@ const TYPES = {
   barrage: { p: { duration: 2, loopT: 2, nozzles: 1, fanAngle: 8, shotRate: 3, shotSpeed: 90, cometBurn: 1.6, vt: 32, burstStars: 14, subSpeed: 22, subBurn: 0.9, headSize: 1.1, sparkRate: 220, sparkLife: 0.7, sparkSpread: 1.5, sparkInherit: 0.1, sparkDrag: 2, zoom: 'off', form: 'loop', cols: 8, rows: 8, chans: 1, texW: 2048, texH: 2048 }, m: { stages: [[0, '#ffffff']], ramp1: '#8a3208', ramp2: '#ffc266', ramp3: '#fff0d2' } },
   shikake: { p: { duration: 1, loopT: 1, text: '祭', pattern: 'text', stars: 260, spacing: 30, groundH: 10, headSize: 0.9, flicker: 0.5, sparkRate: 30, sparkLife: 0.9, sparkSpread: 0.6, sparkDrag: 1.5, sparkSize: 0.2, jetSpeed: 0.6, jetCone: 60, jetDir: -90, zoom: 'off', form: 'loop', cols: 4, rows: 4, chans: 1, texW: 2048, texH: 1024 }, m: { stages: [[0, '#ff7a1e']] } }
 };
-function defaultsFor(type) {
+function defaultsFor(type, version = 40) {
   const t = TYPES[type] || TYPES.kiku;
   const M = { ...MAT_BASE, ...t.m }; M.stages = (t.m.stages || MAT_BASE.stages).map(s => [...s]);
-  return { P: { ...BASE, ...t.p, type }, M };
+  const P = { ...BASE, ...t.p, type, renderVer: t.p.renderVer == null ? version : t.p.renderVer };
+  if (P.renderVer >= 40 && familyOf(type) === 'aerial' && t.p.cols == null) { P.cols = 4; P.rows = 4; }
+  return { P, M };
 }
 // 新模板由 defaultsFor 创建；持久化配方在展开默认值前判版本，旧文件永远默认 37。
 function renderVersion(P) { return P && +P.renderVer >= 40 ? 40 : 37; }
 function storedParams(p, type = p.type) {
-  return { ...defaultsFor(type).P, ...p, type, renderVer: renderVersion(p) };
+  return { ...defaultsFor(type, renderVersion(p)).P, ...p, type, renderVer: renderVersion(p) };
 }
 // 旧版颜色（colA → colB，chg 秒）换成分段
 function normalizeM(M, type) {
@@ -421,19 +424,26 @@ const SCHEMA = [
   ] },
   { sec: '取帧（导出）', show: isSeq, hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。自动取帧把帧集中在运动快的开花初期，同时保证整段不低于最低帧率。', items: [
     ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P)],
-    ['shutter', '运动模糊（快门）', '', 0, 1, 0.01],
+    ['shutter', '运动模糊（占每帧显示时间的比例）', '', 0, 1, 0.01],
     ['segAt', '分段时刻（0 = 自动）', 's', 0, 12, 0.05, P => P.form === 'segments'],
-    { sel: 'expoMode', label: '贴图曝光', options: [['sheet', '整张一起定（旧）'], ['frames', '按帧定（中后段不暗，开头最亮那下允许发白）']] },
-    ['expoQ', '按帧定：取第几分位的帧当基准', '', 0.3, 0.95, 0.05, P => P.expoMode === 'frames'],
+    { sel: 'expoMode', label: '贴图曝光', show: P => renderVersion(P)<40, options: [['sheet', '整张一起定（旧）'], ['frames', '按帧定（中后段不暗，开头最亮那下允许发白）']] },
+    ['expoQ', '按帧定：取第几分位的帧当基准', '', 0.3, 0.95, 0.05, P => renderVersion(P)<40 && P.expoMode === 'frames'],
     ['trimLead', '开头空白不烘（1 = 贴图从第一次看得见开始，引擎用发射器延迟补上；0 = 从开花起烘）', '', 0, 1, 1, P => P.form === 'master'],
     ['unitElev', '代表星仰角', '°', -60, 60, 1, P => P.form === 'unit' && isAir(P)],
     ['cellPad', '格子留边', 'px', 0, 8, 1]
   ] },
-  { sec: '画质（烘焙采样）', show: isSeq, hint: '只影响烘焙出来的贴图有多干净，不改形状、时间和颜色。精细档：超采样 4、快门采样 960 Hz / 64、像素覆盖积分 1、亮核 0.25（移植自 Ultra 实验）。默认 2 / 300 / 16 / 0 / 0 是 3.7 原做法。', items: [
+  { sec: '光点与曝光（4.0）', show: P => renderVersion(P)>=40, hint: '尺寸表示亮核直径。曝光固定，不随亮度和尺寸自动改变；光晕与亮核分开调。', items: [
+    ['exposure', '固定曝光', '×', .01, 20, .01, P => !P.exposureLock],
+    { sel: 'exposureLock', label: '锁定曝光', options: [[0,'未锁定（曝光仍固定）'],[1,'已锁定']] },
+    ['haloFrac', '光晕能量占比', '', 0, .85, .01],
+    ['haloR', '光晕半径 / 亮核半径', '×', 1, 8, .1],
+    { sel: 'previewBloom', label: '额外预览光晕', options: [[0,'关闭（UE Bloom 另算）'],[1,'开启']] }
+  ] },
+  { sec: '画质（烘焙采样）', show: isSeq, hint: '空间超采样和快门子样本。4.0 光点始终使用面积覆盖积分；旧版的高斯核选项只作用于 3.7。', items: [
     ['qSS', '空间超采样（每边）', '×', 1, 8, 1],
     ['qHz', '快门采样频率', 'Hz', 120, 1920, 30],
     ['qMaxSub', '每帧最多子样本', '次', 1, 128, 1],
-    ['qKernel', '光点像素覆盖积分（0 关 / 1 开）', '', 0, 1, 1],
-    ['qCore', '亮核占比', '', 0, 0.6, 0.01]
+    ['qKernel', '光点像素覆盖积分（0 关 / 1 开）', '', 0, 1, 1, P=>renderVersion(P)<40],
+    ['qCore', '亮核占比', '', 0, 0.6, 0.01, P=>renderVersion(P)<40]
   ] }
 ];

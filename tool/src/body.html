@@ -20,7 +20,7 @@
         <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="1.5" y="2.5" width="4.5" height="11" rx="1.5"/></svg><span class="tl">库</span></button>
         <div class="seg" id="viewSeg">
           <button data-view="live" aria-pressed="true">实时模拟</button>
-          <button data-view="export" aria-pressed="false">导出效果</button>
+          <button data-view="export" aria-pressed="false">引擎回放</button>
           <button data-view="atlas" aria-pressed="false">贴图</button>
         </div>
         <div class="seg small" id="atlasSeg" hidden>
@@ -36,11 +36,12 @@
           <button data-seg="1" aria-pressed="false">段 B</button>
         </div>
         <div class="seg small" id="dispSeg" hidden>
-          <button data-disp="fit" aria-pressed="true">适应窗口</button>
+          <button data-disp="fit" aria-pressed="false">适应窗口</button>
           <button data-disp="px" aria-pressed="false">1:1 像素</button>
-          <button data-disp="game" aria-pressed="false">游戏内大小</button>
+          <button data-disp="game" aria-pressed="true">游戏内大小</button>
         </div>
-        <label class="expo" id="distBox" hidden>观看距离<input type="range" id="dist" min="200" max="3000" step="50" value="800"><output id="distOut">800 m</output></label>
+        <label class="expo" id="distBox" hidden>观看距离<input type="range" id="dist" min="800" max="1200" step="25" value="1000"><output id="distOut">1000 m</output></label>
+        <label class="expo" id="resolutionBox" hidden><input type="checkbox" id="exportResolution" checked>按导出分辨率预览</label>
         <span class="abtag" id="abTag" hidden>A | B</span>
         <label class="expo" title="显示曝光（只影响预览）"><span class="tl">显示曝光</span><input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"></label>
         <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（R）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
@@ -99,6 +100,7 @@
         <label class="field">产物<select id="x-form"></select></label>
         <p class="note" id="formNote"></p>
       </div>
+      <div id="exposureControls" class="group" hidden><button class="btn" id="suggestExposure" type="button">按当前画面建议曝光</button><p class="hint">排除开花闪光后估算；只有点击才更新固定曝光。</p></div>
       <div id="params"></div>
       <details class="sec" open>
         <summary>颜色（预览材质）</summary>

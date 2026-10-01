@@ -102,11 +102,12 @@ function uploadRef() {
   gl.activeTexture(gl.TEXTURE0);
   return true;
 }
-function post(split = -1) {
+function post(split = -1, P = state.P) {
   gl.bindTexture(gl.TEXTURE_2D, hdrT.tex); gl.generateMipmap(gl.TEXTURE_2D);
   const useRef = state.tab !== 'combo' && uploadRef();
   gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, canvas.width, canvas.height);
-  const pr = PR.post, R = state.ref; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, hdrT.tex);
+  const modern=renderVersion(P)>=40, pr = modern?PR40.post:PR.post, R = state.ref; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, hdrT.tex);
+  if(modern)gl.uniform1f(pr.u.uBloom,P.previewBloom?1:0);
   gl.uniform1i(pr.u.uS, 0); gl.uniform1f(pr.u.uX, state.expo); gl.uniform2f(pr.u.uTx, 1 / hdrT.w, 1 / hdrT.h);
   gl.activeTexture(gl.TEXTURE6); gl.bindTexture(gl.TEXTURE_2D, refTex); gl.uniform1i(pr.u.uRef, 6); gl.activeTexture(gl.TEXTURE0);
   gl.uniform1f(pr.u.uRefMode, useRef ? R.mode : 0); gl.uniform1f(pr.u.uRefA, R.alpha); gl.uniform1f(pr.u.uWipe, R.wipe);
@@ -131,12 +132,18 @@ function liveSlot(key) { return live[key] || (live[key] = { gen: -1 }); }
 function prepSlot(slot, P, gen) {
   if (slot.gen === gen && slot.P === P) return;
   slot.trailR = null; slot.phys = null; slot.sim = null; disposeTrack(slot.track); slot.track = null; disposeEmitter(slot.E); slot.E = null;
+  slot.R40 && slot.R40.dispose(); slot.R40=null; slot.plan40=null;
+  slot.cell40 && slot.cell40.dispose(); slot.cell40=null; slot.samples40 && slot.samples40.dispose(); slot.samples40=null;
   slot.gen = gen; slot.P = P; slot.box = null;
 }
 function drawLiveScene(slot, P, t, view, ppm) {
   const fam = familyOf(P.type), gpu = P.engine === 'gpu';
   setParticleProfile(P);
   if (isPhys(P)) return drawPhysTrail(slot, P, t, view, ppm);
+  if (renderVersion(P)>=40 && !isTrail(P)) {
+    const R=liveRenderer40(slot,P); drawFrameSamples40(P,slot.plan40,R,t,view,ppm);
+    return {stars:P.stars,sparks:R.slots||0};
+  }
   if (isTrail(P)) {
     // 随体坐标里实时模拟：上升段连续播放，到顶后按 20 fps 版本的消散时长熄灭
     const T = riseInfo(P).ta, F = layoutOf(P).F;
@@ -181,6 +188,7 @@ function unionView(a, b) {
 }
 function renderLive() {
   const P = state.P, m = state.bake && state.bake.meta, B = state.B;
+  if (renderVersion(P)>=40 && !isTrail(P) && !isPhys(P) && !B) return renderLive40();
   if (!m) { hdrT.clear(); post(); hudText = '首次烘焙中…'; hudB = ''; return; }
   const sa = liveSlot('A'); prepSlot(sa, P, state.gen);
   let sb = null; if (B && B.bake) { sb = liveSlot('B'); prepSlot(sb, B.P, B.id); }
@@ -194,7 +202,7 @@ function renderLive() {
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   const pr = PR.rgmat; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, rgT.tex); gl.uniform1i(pr.u.uS, 0);
   const shade = (PP, mm, MM, tt) => {
-    gl.uniform1f(pr.u.uEH, mm.expoH); gl.uniform1f(pr.u.uET, mm.expoT); gl.uniform1f(pr.u.uG, PP.encGamma); gl.uniform1f(pr.u.uComb, PP.outMode === 'combined' ? 1 : 0);
+    gl.uniform1f(pr.u.uEH, renderVersion(PP)>=40?fixedExposure(PP):mm.expoH); gl.uniform1f(pr.u.uET, renderVersion(PP)>=40?fixedExposure(PP):mm.expoT); gl.uniform1f(pr.u.uG, PP.encGamma); gl.uniform1f(pr.u.uComb, PP.outMode === 'combined' ? 1 : 0);
     setMatUniforms(pr, MM, tt); drawQuad();
   };
   halves(() => shade(P, m, state.M, t), sb ? () => shade(B.P, B.bake.meta, B.M, t) : null);
@@ -400,6 +408,7 @@ function loop(now) {
   $('#flowSeg').hidden = !mv || state.view !== 'atlas'; $('#flowCv').hidden = !mv || state.view !== 'atlas' || !state.atlasFlow;
   $('#dispSeg').hidden = !mv || state.view !== 'export' || !(state.bake && (state.bake.form === 'master' || state.bake.form === 'segments' || state.bake.form === 'loop'));
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
+  $('#resolutionBox').hidden = !mv || state.view!=='live' || renderVersion(state.P)<40 || isTrail(state.P) || isPhys(state.P);
   $('#abTag').hidden = !(mv && state.B);
   refSync();
   perfTick(dt);

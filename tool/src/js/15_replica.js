@@ -46,7 +46,7 @@ for (const r of REPLICAS) if (!r.fromReview) r.p = { ...r.p, renderVer: renderVe
 const REPLICA_BY_ID = Object.fromEntries(REPLICAS.map(r => [r.id, r]));
 // 复刻 → { P, M }
 function replicaPM(id) {
-  const r = REPLICA_BY_ID[id], d = defaultsFor(r.base), P = { ...d.P, renderVer: renderVersion(r.p) };
+  const r = REPLICA_BY_ID[id], d = defaultsFor(r.base, renderVersion(r.p)), P = { ...d.P, renderVer: renderVersion(r.p) };
   if (r.shell) applyShellNo(P, r.shell);
   Object.assign(P, r.p || {}, { type: r.base });
   if (familyOf(r.base) === 'aerial' && P.duration < P.burn * 1.15 + 0.4) P.duration = +(P.burn * 1.15 + 0.5).toFixed(2);

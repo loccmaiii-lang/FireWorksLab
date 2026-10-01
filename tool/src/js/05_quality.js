@@ -6,13 +6,16 @@ const QUALITY_PRESETS = {
   fine: { qSS: 4, qHz: 960, qMaxSub: 64, qKernel: 1, qCore: 0.25 }
 };
 function qualityOf(P) {
-  return { ss: clamp(Math.round(+P.qSS || 2), 1, 8), hz: clamp(+P.qHz || 300, 120, 1920), maxSub: clamp(Math.round(+P.qMaxSub || 16), 1, 128),
+  return { modern: +P.renderVer >= 40, haloFrac: clamp(P.haloFrac == null ? .22 : +P.haloFrac, 0, .85), haloR: clamp(+P.haloR || 3, 1, 8),
+    ss: clamp(Math.round(+P.qSS || 2), 1, 8), hz: clamp(+P.qHz || 300, 120, 1920), maxSub: clamp(Math.round(+P.qMaxSub || 16), 1, 128),
     kernel: +P.qKernel > 0.5 ? 1 : 0, core: clamp(+P.qCore || 0, 0, 0.6) };
 }
 let particleQuality = qualityOf({});
 function setParticleProfile(P) { particleQuality = qualityOf(P || {}); }
 // 星头通道用完整亮核，火花通道用 35%（火花本来就细，窄核太多会变成一串亮点）
 function setParticleUniforms(pr, chan) {
+  if (pr.u.uHaloFrac) gl.uniform1f(pr.u.uHaloFrac, particleQuality.haloFrac);
+  if (pr.u.uHaloR) gl.uniform1f(pr.u.uHaloR, particleQuality.haloR);
   if (pr.u.uKernel) gl.uniform1f(pr.u.uKernel, particleQuality.kernel);
   if (pr.u.uCore) gl.uniform1f(pr.u.uCore, chan && chan[0] > 0 ? particleQuality.core : particleQuality.core * 0.35);
 }

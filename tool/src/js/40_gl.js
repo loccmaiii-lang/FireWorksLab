@@ -357,7 +357,7 @@ function setAirUniforms(pr, P) {
 }
 // opt：xf = 随体坐标变换 [ox, oy, cos, sin]；mir = 0 无水面 / 1 只剔除水下 / 2 倒影
 function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
-  const P = tr.P, pr = PR.spk, se = sparkEff(P); gl.useProgram(pr.p);
+  const P = tr.P, modern = renderVersion(P) >= 40, pr = modern ? PR40.spk : PR.spk, se = sparkEff(P); gl.useProgram(pr.p);
   gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tr.pos); gl.uniform1i(pr.u.uPos, 2);
   gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tr.vel); gl.uniform1i(pr.u.uVel, 3);
   gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, tr.info); gl.uniform1i(pr.u.uInfo, 4);
@@ -379,8 +379,8 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uRefl, P.waterRefl || 0);
   gl.bindVertexArray(emptyVAO);
   const n = tr.nStars * tr.M * (1 + br);
-  if (P.waterRefl > 0 && !opt.xf) { gl.uniform1f(pr.u.uMir, 1); gl.drawArrays(gl.POINTS, 0, n); gl.uniform1f(pr.u.uMir, 2); gl.drawArrays(gl.POINTS, 0, n); }
-  else { gl.uniform1f(pr.u.uMir, 0); gl.drawArrays(gl.POINTS, 0, n); }
+  if (P.waterRefl > 0 && !opt.xf) { gl.uniform1f(pr.u.uMir, 1); drawParticleBatch(n, modern); gl.uniform1f(pr.u.uMir, 2); drawParticleBatch(n, modern); }
+  else { gl.uniform1f(pr.u.uMir, 0); drawParticleBatch(n, modern); }
   gl.bindVertexArray(null);
 }
 
@@ -435,7 +435,7 @@ function setEmitCommon(pr, E, t, view, ppm, tw) {
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
 }
 function drawEmit(E, t, view, ppm, chan, w, tw) {
-  const P = E.P, pr = PR.emit, se = sparkEff(P); gl.useProgram(pr.p);
+  const P = E.P, modern = renderVersion(P) >= 40, pr = modern ? PR40.emit : PR.emit, se = sparkEff(P); gl.useProgram(pr.p);
   setEmitCommon(pr, E, t, view, ppm, tw);
   gl.uniform1f(pr.u.uRate, E.rate); gl.uniform1i(pr.u.uMp, E.Mp); gl.uniform1i(pr.u.uMw, E.Mw);
   gl.uniform1f(pr.u.uLife, se.life); gl.uniform1f(pr.u.uK, P.sparkDrag); gl.uniform1f(pr.u.uG, G * P.sparkGrav);
@@ -443,17 +443,17 @@ function drawEmit(E, t, view, ppm, chan, w, tw) {
   gl.uniform1f(pr.u.uTwk, P.twinkle); gl.uniform1f(pr.u.uBright, P.sparkBright); gl.uniform1f(pr.u.uSize, P.sparkSize);
   gl.uniform1f(pr.u.uJet, P.jetSpeed); gl.uniform1f(pr.u.uCone, P.jetCone * Math.PI / 180); gl.uniform3fv(pr.u.uFV, [0, E.V || 0, 0]);
   setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w);
-  gl.bindVertexArray(emptyVAO); gl.drawArrays(gl.POINTS, 0, E.nv); gl.bindVertexArray(null);
+  gl.bindVertexArray(emptyVAO); drawParticleBatch(E.nv, modern); gl.bindVertexArray(null);
 }
 function drawEmitHeads(E, t, view, ppm, chan, w, tw) {
   const P = E.P; if (E.mode === 3) return;
-  const pr = PR.ehead; gl.useProgram(pr.p);
+  const modern = renderVersion(P) >= 40, pr = modern ? PR40.ehead : PR.ehead; gl.useProgram(pr.p);
   setEmitCommon(pr, E, t, view, ppm, tw);
   gl.uniform1f(pr.u.uHead, P.headSize); gl.uniform1f(pr.u.uHI, P.headBright); gl.uniform1f(pr.u.uFlick, P.flicker);
   gl.uniform1f(pr.u.uSS, P.subSpeed); gl.uniform1f(pr.u.uSB, P.subBurn); gl.uniform1i(pr.u.uNb, Math.round(P.burstStars || 0));
   setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w);
   const n = E.mode === 2 ? E.hslots * (1 + Math.round(P.burstStars || 0)) : E.nsrc;
-  gl.bindVertexArray(emptyVAO); gl.drawArrays(gl.POINTS, 0, n); gl.bindVertexArray(null);
+  gl.bindVertexArray(emptyVAO); drawParticleBatch(n, modern); gl.bindVertexArray(null);
 }
 
 class Target {
@@ -475,12 +475,12 @@ class Target {
 function drawQuad() { gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); }
 function drawPoints(buf, n, view, ppm, chan, w, xf) {
   if (!n) return;
-  const pr = PR.pts; gl.useProgram(pr.p); gl.bindVertexArray(ptsVAO); gl.bindBuffer(gl.ARRAY_BUFFER, pb);
+  const modern = particleQuality.modern, pr = modern ? PR40.pts : PR.pts; gl.useProgram(pr.p); gl.bindVertexArray(modern ? pts40VAO : ptsVAO); gl.bindBuffer(gl.ARRAY_BUFFER, pb);
   gl.bufferData(gl.ARRAY_BUFFER, buf.subarray(0, n * 4), gl.DYNAMIC_DRAW);
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
   gl.uniform4fv(pr.u.uXf, xf || [0, 0, 1, 0]); gl.uniform1f(pr.u.uUseXf, xf ? 1 : 0);
   setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uSpan, PT_SPAN);
-  gl.drawArrays(gl.POINTS, 0, n);
+  drawParticleBatch(n, modern);
 }
 function additive(on) { if (on) { gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE); gl.blendEquation(gl.FUNC_ADD); } else gl.disable(gl.BLEND); }
 function sizeAt(m, age) { return m.zoom ? evalKeys(m.sizeKeys, clamp(age / m.duration, 0, 1)) : 1; }

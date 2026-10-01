@@ -4,7 +4,7 @@
 const state = {
   tab: 'master', view: 'live', atlasLayer: 'head', atlasSeg: 0,
   ...defaultsFor('kiku'), name: 'Kiku_01',
-  t: 0, playing: true, speed: 1, expo: 1, disp: 'fit', dist: 800,
+  t: 0, playing: true, speed: 1, expo: 1, disp: 'game', dist: 1000, exportResolution: true,
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
   bakeGen: null, failedGen: -1, bakeError: null,
   lib: [], layers: [], comboName: '八重芯变色菊', libReady: false,
@@ -44,7 +44,7 @@ async function runPreviewBake() {
   const gen = state.gen, P = structuredClone(state.P);
   try {
     const phys = isPhys(P);
-    const b = phys ? physBake(P) : await bake(P, PREVIEW_SCALE, p => {
+    const b = phys ? physBake(P) : await bake(P, renderVersion(P)>=40 ? 1 : PREVIEW_SCALE, p => {
       if (gen === state.gen) setStatus(`预览烘焙… ${Math.round(p * 100)}%`);
     });
     // 旧任务连贴图 / 统计 / 缩略图也不能发布，且必须释放其显卡资源。
@@ -212,7 +212,7 @@ function flameChips(host, getM, onChange) {
 let panelRows = [];
 function itemVisible(it, P) { const f = Array.isArray(it) ? it[6] : it.show; return !f || f(P); }
 function buildMasterPanel() {
-  const P = state.P, D = defaultsFor(P.type).P;
+  const P = state.P, D = defaultsFor(P.type, renderVersion(P)).P;
   const host = $('#params'); host.innerHTML = ''; panelRows = [];
   for (const sec of SCHEMA) {
     const det = document.createElement('details'); det.className = 'sec'; det.open = !['物理扰动', '星效果', '规格'].includes(sec.sec) || sec.sec === '规格';
@@ -262,6 +262,8 @@ function buildMasterPanel() {
 }
 function refreshVisibility() {
   const P = state.P;
+  $('#exposureControls').hidden = renderVersion(P)<40;
+  $('#suggestExposure').disabled = !!P.exposureLock;
   for (const [row, it, sec, det] of panelRows) row.hidden = !itemVisible(it, P);
   document.querySelectorAll('#params details.sec').forEach(det => { const s = det._sec; det.hidden = !!(s.show && !s.show(P)) || ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden); });
 }
@@ -276,7 +278,7 @@ function jitterParams() {
     if (sec.show && !sec.show(P)) continue;
     for (const it of sec.items) {
       if (!Array.isArray(it) || !itemVisible(it, P)) continue;
-      const [k, , , min, max, step] = it; if (state.locks.has(k) || ['duration', 'fpsFloor', 'shutter', 'segAt', 'cellPad', 'loopT', 'riseH'].includes(k)) continue;
+      const [k, , , min, max, step] = it; if (state.locks.has(k) || ['duration', 'fpsFloor', 'shutter', 'segAt', 'cellPad', 'loopT', 'riseH', 'exposure'].includes(k)) continue;
       if (k === 'seed') { if (!state.locks.has('seed')) P.seed = 1 + Math.floor(r.u() * 998); continue; }
       if (!P[k]) continue;
       P[k] = clamp(Math.round(P[k] * (1 + 0.1 * (2 * r.u() - 1)) / step) * step, min, max);

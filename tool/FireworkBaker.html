@@ -379,7 +379,7 @@
         <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="1.5" y="2.5" width="4.5" height="11" rx="1.5"/></svg><span class="tl">库</span></button>
         <div class="seg" id="viewSeg">
           <button data-view="live" aria-pressed="true">实时模拟</button>
-          <button data-view="export" aria-pressed="false">导出效果</button>
+          <button data-view="export" aria-pressed="false">引擎回放</button>
           <button data-view="atlas" aria-pressed="false">贴图</button>
         </div>
         <div class="seg small" id="atlasSeg" hidden>
@@ -395,11 +395,12 @@
           <button data-seg="1" aria-pressed="false">段 B</button>
         </div>
         <div class="seg small" id="dispSeg" hidden>
-          <button data-disp="fit" aria-pressed="true">适应窗口</button>
+          <button data-disp="fit" aria-pressed="false">适应窗口</button>
           <button data-disp="px" aria-pressed="false">1:1 像素</button>
-          <button data-disp="game" aria-pressed="false">游戏内大小</button>
+          <button data-disp="game" aria-pressed="true">游戏内大小</button>
         </div>
-        <label class="expo" id="distBox" hidden>观看距离<input type="range" id="dist" min="200" max="3000" step="50" value="800"><output id="distOut">800 m</output></label>
+        <label class="expo" id="distBox" hidden>观看距离<input type="range" id="dist" min="800" max="1200" step="25" value="1000"><output id="distOut">1000 m</output></label>
+        <label class="expo" id="resolutionBox" hidden><input type="checkbox" id="exportResolution" checked>按导出分辨率预览</label>
         <span class="abtag" id="abTag" hidden>A | B</span>
         <label class="expo" title="显示曝光（只影响预览）"><span class="tl">显示曝光</span><input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"></label>
         <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（R）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
@@ -458,6 +459,7 @@
         <label class="field">产物<select id="x-form"></select></label>
         <p class="note" id="formNote"></p>
       </div>
+      <div id="exposureControls" class="group" hidden><button class="btn" id="suggestExposure" type="button">按当前画面建议曝光</button><p class="hint">排除开花闪光后估算；只有点击才更新固定曝光。</p></div>
       <div id="params"></div>
       <details class="sec" open>
         <summary>颜色（预览材质）</summary>
@@ -676,20 +678,23 @@ const QUALITY_PRESETS = {
   fine: { qSS: 4, qHz: 960, qMaxSub: 64, qKernel: 1, qCore: 0.25 }
 };
 function qualityOf(P) {
-  return { ss: clamp(Math.round(+P.qSS || 2), 1, 8), hz: clamp(+P.qHz || 300, 120, 1920), maxSub: clamp(Math.round(+P.qMaxSub || 16), 1, 128),
+  return { modern: +P.renderVer >= 40, haloFrac: clamp(P.haloFrac == null ? .22 : +P.haloFrac, 0, .85), haloR: clamp(+P.haloR || 3, 1, 8),
+    ss: clamp(Math.round(+P.qSS || 2), 1, 8), hz: clamp(+P.qHz || 300, 120, 1920), maxSub: clamp(Math.round(+P.qMaxSub || 16), 1, 128),
     kernel: +P.qKernel > 0.5 ? 1 : 0, core: clamp(+P.qCore || 0, 0, 0.6) };
 }
 let particleQuality = qualityOf({});
 function setParticleProfile(P) { particleQuality = qualityOf(P || {}); }
 // 星头通道用完整亮核，火花通道用 35%（火花本来就细，窄核太多会变成一串亮点）
 function setParticleUniforms(pr, chan) {
+  if (pr.u.uHaloFrac) gl.uniform1f(pr.u.uHaloFrac, particleQuality.haloFrac);
+  if (pr.u.uHaloR) gl.uniform1f(pr.u.uHaloR, particleQuality.haloR);
   if (pr.u.uKernel) gl.uniform1f(pr.u.uKernel, particleQuality.kernel);
   if (pr.u.uCore) gl.uniform1f(pr.u.uCore, chan && chan[0] > 0 ? particleQuality.core : particleQuality.core * 0.35);
 }
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '3.8';
+const VERSION = '3.9';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -716,6 +721,7 @@ const familyOf = t => (TYPE_INFO[t] || TYPE_INFO.kiku)[2];
 
 const BASE = {
   renderVer: 40,
+  exposure: 1, exposureLock: 0, haloFrac: .22, haloR: 3, previewBloom: 0,
   duration: 3.2, seed: 7, stars: 150, burstR0: 0, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
   burn: 2.5, burnJit: 12, fade: 0.2, lastFlare: 0.35, flash: 1,
   headSize: 1.0, headBright: 1, flicker: 0.25,
@@ -824,15 +830,17 @@ const TYPES = {
   barrage: { p: { duration: 2, loopT: 2, nozzles: 1, fanAngle: 8, shotRate: 3, shotSpeed: 90, cometBurn: 1.6, vt: 32, burstStars: 14, subSpeed: 22, subBurn: 0.9, headSize: 1.1, sparkRate: 220, sparkLife: 0.7, sparkSpread: 1.5, sparkInherit: 0.1, sparkDrag: 2, zoom: 'off', form: 'loop', cols: 8, rows: 8, chans: 1, texW: 2048, texH: 2048 }, m: { stages: [[0, '#ffffff']], ramp1: '#8a3208', ramp2: '#ffc266', ramp3: '#fff0d2' } },
   shikake: { p: { duration: 1, loopT: 1, text: '祭', pattern: 'text', stars: 260, spacing: 30, groundH: 10, headSize: 0.9, flicker: 0.5, sparkRate: 30, sparkLife: 0.9, sparkSpread: 0.6, sparkDrag: 1.5, sparkSize: 0.2, jetSpeed: 0.6, jetCone: 60, jetDir: -90, zoom: 'off', form: 'loop', cols: 4, rows: 4, chans: 1, texW: 2048, texH: 1024 }, m: { stages: [[0, '#ff7a1e']] } }
 };
-function defaultsFor(type) {
+function defaultsFor(type, version = 40) {
   const t = TYPES[type] || TYPES.kiku;
   const M = { ...MAT_BASE, ...t.m }; M.stages = (t.m.stages || MAT_BASE.stages).map(s => [...s]);
-  return { P: { ...BASE, ...t.p, type }, M };
+  const P = { ...BASE, ...t.p, type, renderVer: t.p.renderVer == null ? version : t.p.renderVer };
+  if (P.renderVer >= 40 && familyOf(type) === 'aerial' && t.p.cols == null) { P.cols = 4; P.rows = 4; }
+  return { P, M };
 }
 // 新模板由 defaultsFor 创建；持久化配方在展开默认值前判版本，旧文件永远默认 37。
 function renderVersion(P) { return P && +P.renderVer >= 40 ? 40 : 37; }
 function storedParams(p, type = p.type) {
-  return { ...defaultsFor(type).P, ...p, type, renderVer: renderVersion(p) };
+  return { ...defaultsFor(type, renderVersion(p)).P, ...p, type, renderVer: renderVersion(p) };
 }
 // 旧版颜色（colA → colB，chg 秒）换成分段
 function normalizeM(M, type) {
@@ -1109,20 +1117,27 @@ const SCHEMA = [
   ] },
   { sec: '取帧（导出）', show: isSeq, hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。自动取帧把帧集中在运动快的开花初期，同时保证整段不低于最低帧率。', items: [
     ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P)],
-    ['shutter', '运动模糊（快门）', '', 0, 1, 0.01],
+    ['shutter', '运动模糊（占每帧显示时间的比例）', '', 0, 1, 0.01],
     ['segAt', '分段时刻（0 = 自动）', 's', 0, 12, 0.05, P => P.form === 'segments'],
-    { sel: 'expoMode', label: '贴图曝光', options: [['sheet', '整张一起定（旧）'], ['frames', '按帧定（中后段不暗，开头最亮那下允许发白）']] },
-    ['expoQ', '按帧定：取第几分位的帧当基准', '', 0.3, 0.95, 0.05, P => P.expoMode === 'frames'],
+    { sel: 'expoMode', label: '贴图曝光', show: P => renderVersion(P)<40, options: [['sheet', '整张一起定（旧）'], ['frames', '按帧定（中后段不暗，开头最亮那下允许发白）']] },
+    ['expoQ', '按帧定：取第几分位的帧当基准', '', 0.3, 0.95, 0.05, P => renderVersion(P)<40 && P.expoMode === 'frames'],
     ['trimLead', '开头空白不烘（1 = 贴图从第一次看得见开始，引擎用发射器延迟补上；0 = 从开花起烘）', '', 0, 1, 1, P => P.form === 'master'],
     ['unitElev', '代表星仰角', '°', -60, 60, 1, P => P.form === 'unit' && isAir(P)],
     ['cellPad', '格子留边', 'px', 0, 8, 1]
   ] },
-  { sec: '画质（烘焙采样）', show: isSeq, hint: '只影响烘焙出来的贴图有多干净，不改形状、时间和颜色。精细档：超采样 4、快门采样 960 Hz / 64、像素覆盖积分 1、亮核 0.25（移植自 Ultra 实验）。默认 2 / 300 / 16 / 0 / 0 是 3.7 原做法。', items: [
+  { sec: '光点与曝光（4.0）', show: P => renderVersion(P)>=40, hint: '尺寸表示亮核直径。曝光固定，不随亮度和尺寸自动改变；光晕与亮核分开调。', items: [
+    ['exposure', '固定曝光', '×', .01, 20, .01, P => !P.exposureLock],
+    { sel: 'exposureLock', label: '锁定曝光', options: [[0,'未锁定（曝光仍固定）'],[1,'已锁定']] },
+    ['haloFrac', '光晕能量占比', '', 0, .85, .01],
+    ['haloR', '光晕半径 / 亮核半径', '×', 1, 8, .1],
+    { sel: 'previewBloom', label: '额外预览光晕', options: [[0,'关闭（UE Bloom 另算）'],[1,'开启']] }
+  ] },
+  { sec: '画质（烘焙采样）', show: isSeq, hint: '空间超采样和快门子样本。4.0 光点始终使用面积覆盖积分；旧版的高斯核选项只作用于 3.7。', items: [
     ['qSS', '空间超采样（每边）', '×', 1, 8, 1],
     ['qHz', '快门采样频率', 'Hz', 120, 1920, 30],
     ['qMaxSub', '每帧最多子样本', '次', 1, 128, 1],
-    ['qKernel', '光点像素覆盖积分（0 关 / 1 开）', '', 0, 1, 1],
-    ['qCore', '亮核占比', '', 0, 0.6, 0.01]
+    ['qKernel', '光点像素覆盖积分（0 关 / 1 开）', '', 0, 1, 1, P=>renderVersion(P)<40],
+    ['qCore', '亮核占比', '', 0, 0.6, 0.01, P=>renderVersion(P)<40]
   ] }
 ];
 // 迭代区里的花型类条目（数据在 tool/data/review.js，由 analysis/scripts/review_to_baker.py 生成；刷新烘焙器即更新）
@@ -1176,7 +1191,7 @@ for (const r of REPLICAS) if (!r.fromReview) r.p = { ...r.p, renderVer: renderVe
 const REPLICA_BY_ID = Object.fromEntries(REPLICAS.map(r => [r.id, r]));
 // 复刻 → { P, M }
 function replicaPM(id) {
-  const r = REPLICA_BY_ID[id], d = defaultsFor(r.base), P = { ...d.P, renderVer: renderVersion(r.p) };
+  const r = REPLICA_BY_ID[id], d = defaultsFor(r.base, renderVersion(r.p)), P = { ...d.P, renderVer: renderVersion(r.p) };
   if (r.shell) applyShellNo(P, r.shell);
   Object.assign(P, r.p || {}, { type: r.base });
   if (familyOf(r.base) === 'aerial' && P.duration < P.burn * 1.15 + 0.4) P.duration = +(P.burn * 1.15 + 0.5).toFixed(2);
@@ -2062,7 +2077,7 @@ function setAirUniforms(pr, P) {
 }
 // opt：xf = 随体坐标变换 [ox, oy, cos, sin]；mir = 0 无水面 / 1 只剔除水下 / 2 倒影
 function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
-  const P = tr.P, pr = PR.spk, se = sparkEff(P); gl.useProgram(pr.p);
+  const P = tr.P, modern = renderVersion(P) >= 40, pr = modern ? PR40.spk : PR.spk, se = sparkEff(P); gl.useProgram(pr.p);
   gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tr.pos); gl.uniform1i(pr.u.uPos, 2);
   gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tr.vel); gl.uniform1i(pr.u.uVel, 3);
   gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, tr.info); gl.uniform1i(pr.u.uInfo, 4);
@@ -2084,8 +2099,8 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uRefl, P.waterRefl || 0);
   gl.bindVertexArray(emptyVAO);
   const n = tr.nStars * tr.M * (1 + br);
-  if (P.waterRefl > 0 && !opt.xf) { gl.uniform1f(pr.u.uMir, 1); gl.drawArrays(gl.POINTS, 0, n); gl.uniform1f(pr.u.uMir, 2); gl.drawArrays(gl.POINTS, 0, n); }
-  else { gl.uniform1f(pr.u.uMir, 0); gl.drawArrays(gl.POINTS, 0, n); }
+  if (P.waterRefl > 0 && !opt.xf) { gl.uniform1f(pr.u.uMir, 1); drawParticleBatch(n, modern); gl.uniform1f(pr.u.uMir, 2); drawParticleBatch(n, modern); }
+  else { gl.uniform1f(pr.u.uMir, 0); drawParticleBatch(n, modern); }
   gl.bindVertexArray(null);
 }
 
@@ -2140,7 +2155,7 @@ function setEmitCommon(pr, E, t, view, ppm, tw) {
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
 }
 function drawEmit(E, t, view, ppm, chan, w, tw) {
-  const P = E.P, pr = PR.emit, se = sparkEff(P); gl.useProgram(pr.p);
+  const P = E.P, modern = renderVersion(P) >= 40, pr = modern ? PR40.emit : PR.emit, se = sparkEff(P); gl.useProgram(pr.p);
   setEmitCommon(pr, E, t, view, ppm, tw);
   gl.uniform1f(pr.u.uRate, E.rate); gl.uniform1i(pr.u.uMp, E.Mp); gl.uniform1i(pr.u.uMw, E.Mw);
   gl.uniform1f(pr.u.uLife, se.life); gl.uniform1f(pr.u.uK, P.sparkDrag); gl.uniform1f(pr.u.uG, G * P.sparkGrav);
@@ -2148,17 +2163,17 @@ function drawEmit(E, t, view, ppm, chan, w, tw) {
   gl.uniform1f(pr.u.uTwk, P.twinkle); gl.uniform1f(pr.u.uBright, P.sparkBright); gl.uniform1f(pr.u.uSize, P.sparkSize);
   gl.uniform1f(pr.u.uJet, P.jetSpeed); gl.uniform1f(pr.u.uCone, P.jetCone * Math.PI / 180); gl.uniform3fv(pr.u.uFV, [0, E.V || 0, 0]);
   setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w);
-  gl.bindVertexArray(emptyVAO); gl.drawArrays(gl.POINTS, 0, E.nv); gl.bindVertexArray(null);
+  gl.bindVertexArray(emptyVAO); drawParticleBatch(E.nv, modern); gl.bindVertexArray(null);
 }
 function drawEmitHeads(E, t, view, ppm, chan, w, tw) {
   const P = E.P; if (E.mode === 3) return;
-  const pr = PR.ehead; gl.useProgram(pr.p);
+  const modern = renderVersion(P) >= 40, pr = modern ? PR40.ehead : PR.ehead; gl.useProgram(pr.p);
   setEmitCommon(pr, E, t, view, ppm, tw);
   gl.uniform1f(pr.u.uHead, P.headSize); gl.uniform1f(pr.u.uHI, P.headBright); gl.uniform1f(pr.u.uFlick, P.flicker);
   gl.uniform1f(pr.u.uSS, P.subSpeed); gl.uniform1f(pr.u.uSB, P.subBurn); gl.uniform1i(pr.u.uNb, Math.round(P.burstStars || 0));
   setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w);
   const n = E.mode === 2 ? E.hslots * (1 + Math.round(P.burstStars || 0)) : E.nsrc;
-  gl.bindVertexArray(emptyVAO); gl.drawArrays(gl.POINTS, 0, n); gl.bindVertexArray(null);
+  gl.bindVertexArray(emptyVAO); drawParticleBatch(n, modern); gl.bindVertexArray(null);
 }
 
 class Target {
@@ -2180,12 +2195,12 @@ class Target {
 function drawQuad() { gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); }
 function drawPoints(buf, n, view, ppm, chan, w, xf) {
   if (!n) return;
-  const pr = PR.pts; gl.useProgram(pr.p); gl.bindVertexArray(ptsVAO); gl.bindBuffer(gl.ARRAY_BUFFER, pb);
+  const modern = particleQuality.modern, pr = modern ? PR40.pts : PR.pts; gl.useProgram(pr.p); gl.bindVertexArray(modern ? pts40VAO : ptsVAO); gl.bindBuffer(gl.ARRAY_BUFFER, pb);
   gl.bufferData(gl.ARRAY_BUFFER, buf.subarray(0, n * 4), gl.DYNAMIC_DRAW);
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
   gl.uniform4fv(pr.u.uXf, xf || [0, 0, 1, 0]); gl.uniform1f(pr.u.uUseXf, xf ? 1 : 0);
   setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uSpan, PT_SPAN);
-  gl.drawArrays(gl.POINTS, 0, n);
+  drawParticleBatch(n, modern);
 }
 function additive(on) { if (on) { gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE); gl.blendEquation(gl.FUNC_ADD); } else gl.disable(gl.BLEND); }
 function sizeAt(m, age) { return m.zoom ? evalKeys(m.sizeKeys, clamp(age / m.duration, 0, 1)) : 1; }
@@ -2229,6 +2244,82 @@ function autoExpo(t, target, pct) {
   if (!cnt) return 1;
   const need = cnt * pct / 100; let acc = 0, b = 0; for (; b < 2048; b++) { acc += hist[b]; if (acc >= need) break; }
   return -Math.log(1 - target) / Math.pow(2, b / 40 - 20);
+}
+// 4.0 光点核。size = 实心亮核直径（米），I = 面亮度；像素覆盖积分
+// 让亚像素亮核的总光量仍随面积变化。所有新光点用实例四边形，避开
+// 硬件 POINT_SIZE 的上下限和点精灵中心取整；3.7 的 shader / VAO 不变。
+const POINT40_VERTEX = `uniform float uHaloFrac, uHaloR; out vec2 vLocal;
+void emitCore40(vec2 q, float I, float size){
+  vec2 r=max(size*.5*vec2(uPPM,uPPMY),vec2(1e-7));
+  float reach=uHaloFrac>0.?4.*max(1.,uHaloR):1.;
+  vec2 corner=vec2(float(gl_VertexID&1),float(gl_VertexID>>1))*2.-1.;
+  vec2 p=corner*(ceil(r*reach)+vec2(1.));
+  gl_Position=vec4((q+p/vec2(uPPM,uPPMY)-uView.xy)/uView.zw,0.,1.);
+  vLocal=p; vSig=r; vI=size>0.?I:0.; vPS=0.;
+}`;
+const POINT40_FS = HDR + `in float vI; in vec2 vSig, vLocal;
+uniform vec4 uChan; uniform float uW, uHaloFrac, uHaloR; out vec4 o;
+// 圆盘与像素矩形的精确交面积。各轴除半径后成为单位圆，符号原函数
+// 在四个角作差；内部/外部像素直接返回，只有边缘需要 asin。
+float primitive(float x){ return .5*(x*sqrt(max(0.,1.-x*x))+asin(x)); }
+float quadrant(vec2 p){
+  vec2 a=min(abs(p),vec2(1.)); float edge=sqrt(max(0.,1.-a.y*a.y));
+  float cut=min(a.x,edge);
+  float area=a.y*cut+primitive(a.x)-primitive(cut);
+  return sign(p.x)*sign(p.y)*area;
+}
+float diskCoverage(vec2 p,vec2 r){
+  vec2 far=(abs(p)+.5)/r, near=max(abs(p)-.5,0.)/r;
+  if(dot(far,far)<=1.)return 1.; if(dot(near,near)>=1.)return 0.;
+  vec2 a=(p-.5)/r,b=(p+.5)/r;
+  return clamp((quadrant(b)-quadrant(vec2(a.x,b.y))-quadrant(vec2(b.x,a.y))+quadrant(a))*r.x*r.y,0.,1.);
+}
+vec2 erf40(vec2 x){vec2 sg=sign(x);x=abs(x);vec2 t=1./(1.+.3275911*x);return sg*(1.-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*exp(-x*x));}
+float gaussianCoverage(vec2 p,vec2 s){vec2 v=.5*(erf40((p+.5)/(1.41421356*s))-erf40((p-.5)/(1.41421356*s)));return max(0.,v.x*v.y);}
+void main(){
+  if(vI<=0.){o=vec4(0.);return;}
+  float core=diskCoverage(vLocal,vSig), halo=0.;
+  if(uHaloFrac>0.){
+    vec2 sigma=vSig*max(1.,uHaloR);
+    float radial=length(vLocal/sigma);
+    // 径向收尾，不留下方形边界；光晕能量相对于亮核的面积定义。
+    float window=1.-smoothstep(3.5,4.,radial);
+    halo=3.14159265*vSig.x*vSig.y*uHaloFrac/(1.-uHaloFrac)*gaussianCoverage(vLocal,sigma)*window;
+  }
+  o=uChan*(vI*(core+halo)*uW);
+}`;
+const POINT40_CPU_VS = HDR + `layout(location=0) in vec2 aP; layout(location=1) in float aI; layout(location=2) in float aS;
+uniform vec4 uView,uXf; uniform float uPPM,uPPMY,uUseXf;
+out float vI,vPS; out vec2 vSig;
+${POINT40_VERTEX}
+void main(){ vec2 q=aP; if(uUseXf>.5){vec2 d=q-uXf.xy;q=vec2(d.x*uXf.z-d.y*uXf.w,d.x*uXf.w+d.y*uXf.z);} emitCore40(q,aI,aS); }`;
+
+// 模拟公式只保留一份：GPU 顶点的粒子编号改成实例编号，再替换
+// emitPt 输出核。四边形的 gl_VertexID 在最后注入，仍是顶点编号 0–3。
+function point40GpuSource(source) {
+  const hash = GLSL_HASH.slice(0, GLSL_HASH.indexOf('void emitPtW'));
+  return source.replace(GLSL_HASH, '/*CORE40*/').replaceAll('gl_VertexID', 'gl_InstanceID')
+    .replace('/*CORE40*/', POINT40_VERTEX + hash + `
+void emitPt(vec2 q,float I,float size){emitCore40(q,I,size);}
+void emitPtW(vec2 q,float I,float size,float span,float sy){emitCore40(q,I,size);}
+`);
+}
+const PR40 = {
+  pts: compile(POINT40_CPU_VS, POINT40_FS),
+  spk: compile(point40GpuSource(VS_SPK), POINT40_FS),
+  emit: compile(point40GpuSource(VS_EMIT), POINT40_FS),
+  ehead: compile(point40GpuSource(VS_EHEAD), POINT40_FS)
+};
+PR40.post = compile(VS_QUAD,FS_POST.replace('uniform sampler2D uS, uRef;', 'uniform float uBloom; uniform sampler2D uS, uRef;').replace('c+=b*.2;', 'c+=b*.2*uBloom;'));
+const pts40VAO = gl.createVertexArray(); gl.bindVertexArray(pts40VAO);
+gl.bindBuffer(gl.ARRAY_BUFFER, pb);
+for (const [i,n,offset] of [[0,2,0],[1,1,8],[2,1,12]]) {
+  gl.enableVertexAttribArray(i); gl.vertexAttribPointer(i,n,gl.FLOAT,false,16,offset); gl.vertexAttribDivisor(i,1);
+}
+gl.bindVertexArray(null);
+function drawParticleBatch(n, modern) {
+  if (modern) gl.drawArraysInstanced(gl.TRIANGLE_STRIP,0,4,n);
+  else gl.drawArrays(gl.POINTS,0,n);
 }
 // =====================================================================
 //  升空尾缀序列（上升产物「尾缀序列」）：循环 + 消散
@@ -2682,6 +2773,136 @@ function makePhysBodyRenderer(P) {
   return R;
 }
 function smoothstepJS(a, b, x) { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); }
+// 4.0 采样与曝光：烘焙、实时、定帧共用这里的时间窗口和积分。
+// t 是绝对模拟秒数；plan.times/dur 是相对段起点的时间。
+function shutterWindow(P, pl, t) {
+  const rel = t - (pl.t0 || 0), u = clamp(rel / pl.duration, 0, 1);
+  const f = clamp(Math.floor(evalKeys(pl.keys, u)), 0, pl.L.F - 1);
+  const width = Math.max(0, +P.shutter || 0) * Math.max(pl.dur[f] || 0, 1 / 30);
+  return [t - width / 2, t + width / 2];
+}
+function fixedExposure(P) { return clamp(P.exposure == null ? 1 : +P.exposure, .0001, 1000); }
+function frameView40(pl, t) {
+  const rel = clamp(t - (pl.t0 || 0), 0, pl.duration), [sx, sy] = sizeXY(pl, rel), c = centerAt(pl, rel);
+  return [c[0], c[1], pl.HX * sx, pl.HY * sy];
+}
+function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm) {
+  const [a,b] = shutterWindow(P, pl, t), q = qualityOf(P), width = b-a;
+  const count = clamp(Math.ceil(width * q.hz), 1, q.maxSub);
+  const oldPPMY = PPMY; PPMY = ppmY; setParticleProfile(P);
+  R.subW = width / count;
+  try {
+    for (let j=0;j<count;j++) {
+      const ts = a + (j+.5)*width/count;
+      // 以物理时间定闪烁样本，不依赖调用路径或画面刷新次数。
+      const tick = Math.floor(ts*240), f = clamp(Math.floor(evalKeys(pl.keys, (t-(pl.t0||0))/pl.duration)),0,pl.L.F-1);
+      R.draw(pl.loop ? ts : Math.max(0,ts),view,ppm,1/count,tick,f);
+    }
+  } finally { PPMY = oldPPMY; }
+  return [a,b];
+}
+function frameFade40(pl, t, noFade = false) {
+  return pl.loop || noFade ? 1 : clamp((pl.duration-(t-(pl.t0||0)))/.3,0,1);
+}
+function packCell40(P, source, target, fade = 1) {
+  const q=qualityOf(P), pr=PR.pack;
+  target.clear(); target.bind(); gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,source.tex);
+  gl.uniform1i(pr.u.uS,0); gl.uniform1i(pr.u.uSS,q.ss); gl.uniform1f(pr.u.uFade,fade);
+  gl.uniform1f(pr.u.uPad,P.cellPad||0); gl.uniform2f(pr.u.uCell,target.w,target.h);
+  for(const [i,mask] of [[0,[1,0,0,0]],[1,[0,1,0,0]]]){
+    gl.colorMask(i===0,i===1,false,false); gl.uniform4fv(pr.u.uM,mask); drawQuad();
+  }
+  gl.colorMask(true,true,true,true);
+}
+function renderCell40(P, pl, R, t, samples, cell, view = frameView40(pl,t)) {
+  samples.clear(); samples.bind(); additive(true);
+  let window;
+  try { window=drawFrameSamples40(P,pl,R,t,view,samples.w/(2*view[2]),samples.h/(2*view[3])); }
+  finally { additive(false); }
+  packCell40(P,samples,cell,frameFade40(pl,t));
+  return window;
+}
+function displayPlan40(P) {
+  if (familyOf(P.type)!=='ground') return plan(P,measure(P));
+  const R=makeRenderer(P,'loop');
+  try {
+    const guess=Math.max(10,P.jetSpeed*Math.min(P.sparkLife,1.5)+P.spacing*P.nozzles/2+P.groundH+(P.shotSpeed||0)*.9);
+    const box=gpuBounds(R,[0,P.loopT*.33,P.loopT*.66],guess,[0,guess*.6]); box[2]=Math.min(0,box[2]);
+    return loopPlan(P,box,P.loopT);
+  } finally { R.dispose(); }
+}
+function shadeCell40(P,M,cell,t) {
+  const pr=PR.rgmat; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,cell.tex);
+  gl.uniform1i(pr.u.uS,0); gl.uniform1f(pr.u.uEH,fixedExposure(P)); gl.uniform1f(pr.u.uET,fixedExposure(P));
+  gl.uniform1f(pr.u.uG,P.encGamma); gl.uniform1f(pr.u.uComb,P.outMode==='combined'?1:0);
+  setMatUniforms(pr,M,t); drawQuad();
+}
+function linearCellMetrics40(cell) {
+  const a=new Float32Array(cell.w*cell.h*4); cell.bind(); gl.readPixels(0,0,cell.w,cell.h,gl.RGBA,gl.FLOAT,a);
+  let sum=0,peak=0,half=0; for(let i=0;i<a.length;i+=4){sum+=a[i];peak=Math.max(peak,a[i]);}
+  for(let i=0;i<a.length;i+=4)if(a[i]>peak*.5)half++;
+  return {headSum:sum,headPeak:peak,headHalfPixels:half};
+}
+function liveRenderer40(slot,P) {
+  if (!slot.R40) slot.R40=makeRenderer(P,familyOf(P.type)==='ground'?'loop':'burst');
+  if (!slot.plan40) slot.plan40=displayPlan40(P);
+  return slot.R40;
+}
+function renderLive40() {
+  const P=state.P, slot=liveSlot('A40'); prepSlot(slot,P,state.gen);
+  const R=liveRenderer40(slot,P), b=state.bake;
+  const pl=b && state.bakeGen===state.gen && ['master','segments','loop'].includes(b.form) ? segAt(b,state.t).meta : slot.plan40;
+  const q=qualityOf(P), w=state.exportResolution?pl.L.cellW:canvas.width, h=state.exportResolution?pl.L.cellH:canvas.height;
+  if(!slot.cell40 || slot.cell40.w!==w || slot.cell40.h!==h || slot.samples40.w!==w*q.ss){
+    slot.cell40 && slot.cell40.dispose(); slot.samples40 && slot.samples40.dispose(); gl.activeTexture(gl.TEXTURE0);
+    slot.cell40=new Target(w,h,gl.RGBA16F); slot.samples40=new Target(w*q.ss,h*q.ss,gl.RGBA16F);
+  }
+  const t=familyOf(P.type)==='ground'?state.t:Math.min(state.t,P.duration);
+  renderCell40(P,pl,R,t,slot.samples40,slot.cell40);
+  hdrT.clear(); hdrT.bind(); shadeCell40(P,state.M,slot.cell40,t); post(-1,P);
+  hudText=`实时模拟 · ${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门`;
+  hudB='';
+}
+async function suggestExposure40() {
+  if (state.P.exposureLock) { flash('曝光已锁定'); return; }
+  if (state.baking || state.stillBusy) { flash('等当前烘焙完成后再建议曝光'); return; }
+  const gen=state.gen, P={...state.P,flash:0,subFlash:0}, t=Math.max(0,state.t), pl=displayPlan40(P);
+  const q=qualityOf(P), w=pl.L.cellW, h=pl.L.cellH, R=makeRenderer(P,familyOf(P.type)==='ground'?'loop':'burst');
+  state.stillBusy=true; gl.activeTexture(gl.TEXTURE0);
+  let samples=null, cell=null;
+  try {
+    samples=new Target(w*q.ss,h*q.ss,gl.RGBA16F); cell=new Target(w,h,gl.RGBA16F);
+    renderCell40(P,pl,R,t,samples,cell); cell.bind(); const a=new Float32Array(w*h*4);
+    gl.readPixels(0,0,w,h,gl.RGBA,gl.FLOAT,a);
+    let energy=0; for(let i=0;i<a.length;i+=4){a[i]+=a[i+1];energy+=a[i];}
+    if(energy<1e-6){flash('当前画面没有足够亮部，请移动时间轴后再建议');return;}
+    const value=clamp(expoOfChannel(a,0,.8,99.8),.0001,1000);
+    if(gen===state.gen && !state.P.exposureLock){state.P.exposure=+value.toFixed(4);refreshPanelValues();onParam();flash('已更新固定曝光（未计入开花闪光）');}
+  } finally { samples && samples.dispose();cell && cell.dispose();R.dispose();state.stillBusy=false; }
+}
+async function renderStills40(P0,M0,opt) {
+  const P=derive({...P0}), M=normalizeM(M0||{},P.type), pl=opt.plan||displayPlan40(P);
+  const px=opt.px||pl.L.cellW, q=qualityOf(P), R=makeRenderer(P,familyOf(P.type)==='ground'?'loop':'burst');
+  const saved={hdr:hdrT,rg:rgT,mode:state.ref.mode,expo:state.expo,busy:state.stillBusy};
+  state.stillBusy=true; await nextTick();
+  gl.activeTexture(gl.TEXTURE0);
+  let samples=null, cell=null, H=null;
+  const out=[];
+  try {
+    samples=new Target(px*q.ss,px*q.ss,gl.RGBA16F); cell=new Target(px,px,gl.RGBA16F); H=new Target(px,px,gl.RGBA16F,true);
+    canvas.width=canvas.height=px; hdrT=H; rgT=cell; state.ref.mode=0; state.expo=opt.expo==null?1:opt.expo;
+    for(const t of opt.times.slice().sort((a,b)=>a-b)){
+      const view=opt.half==null?frameView40(pl,t):[opt.cx||0,opt.cy||0,opt.half,opt.half];
+      const window=renderCell40(P,pl,R,t,samples,cell,view), metrics=opt.metrics?linearCellMetrics40(cell):undefined;
+      H.clear(); H.bind(); shadeCell40(P,M,cell,t); post(-1,P);
+      out.push({t,png:canvas.toDataURL('image/png'),shutter:window,exposure:fixedExposure(P),linear:metrics}); await nextTick();
+    }
+  } finally {
+    samples && samples.dispose(); cell && cell.dispose(); H && H.dispose(); R.dispose();
+    hdrT=saved.hdr; rgT=saved.rg; state.ref.mode=saved.mode; state.expo=saved.expo; state.stillBusy=saved.busy;
+  }
+  return out;
+}
 // =====================================================================
 //  烘焙：F 帧 → 列×行格子，RGBA 接力（先填满 R）
 //  四种产物：大面片母版（含分段）、单元序列（每颗星一个粒子）、上升星头循环、地面循环
@@ -2831,7 +3052,8 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
     PPMY = ssH / (pl.Wh * sy);
     sst.clear(); sst.bind(); additive(true);
     R.subW = W / nsub;   // 每个子帧覆盖的时长（尾缀的星头据此再细分，拖出连续亮线）
-    for (let j = 0; j < nsub; j++) {
+    if (renderVersion(P)>=40) drawFrameSamples40(P,pl,R,pl.t0+tc,view,ppm,PPMY);
+    else for (let j = 0; j < nsub; j++) {
       const ts = pl.t0 + tc - W / 2 + (j + 0.5) * W / nsub;
       R.draw(pl.loop ? ts : Math.max(0, ts), view, ppm, 1 / nsub, pl.loop ? f : f * 16 + j, f);
     }
@@ -2853,8 +3075,8 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   const comb = P.outMode === 'combined';
   const cg = comb ? combGain(P) : [1, 1];
   const byF = P.expoMode === 'frames' && !pl.loop, fq = P.expoQ == null ? 0.7 : P.expoQ;
-  const eH = extra.expo ? extra.expo[0] : (byF ? autoExpoFrames(fH, L, comb ? 0.92 : 0.9, 99.5, fq) : autoExpo(fH, comb ? 0.92 : 0.9, 99.8)) * cg[0];
-  const eT = extra.expo ? extra.expo[1] : (byF ? autoExpoFrames(fT, L, comb ? 0.55 : 0.85, 99.5, fq) : autoExpo(fT, comb ? 0.55 : 0.85, 99.6)) * cg[1];
+  const eH = extra.expo ? extra.expo[0] : renderVersion(P)>=40 ? fixedExposure(P) : (byF ? autoExpoFrames(fH, L, comb ? 0.92 : 0.9, 99.5, fq) : autoExpo(fH, comb ? 0.92 : 0.9, 99.8)) * cg[0];
+  const eT = extra.expo ? extra.expo[1] : renderVersion(P)>=40 ? fixedExposure(P) : (byF ? autoExpoFrames(fT, L, comb ? 0.55 : 0.85, 99.5, fq) : autoExpo(fT, comb ? 0.55 : 0.85, 99.6)) * cg[1];
   // 先建目标贴图：Target 构造时会绑定到当前活动纹理单元，放在后面会顶掉采样用的贴图
   gl.activeTexture(gl.TEXTURE0);
   const head = new Target(N, NH, gl.RGBA8), tail = comb ? null : new Target(N, NH, gl.RGBA8);
@@ -3928,7 +4150,7 @@ function fwlFiles(name, b, M) {
 const state = {
   tab: 'master', view: 'live', atlasLayer: 'head', atlasSeg: 0,
   ...defaultsFor('kiku'), name: 'Kiku_01',
-  t: 0, playing: true, speed: 1, expo: 1, disp: 'fit', dist: 800,
+  t: 0, playing: true, speed: 1, expo: 1, disp: 'game', dist: 1000, exportResolution: true,
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
   bakeGen: null, failedGen: -1, bakeError: null,
   lib: [], layers: [], comboName: '八重芯变色菊', libReady: false,
@@ -3968,7 +4190,7 @@ async function runPreviewBake() {
   const gen = state.gen, P = structuredClone(state.P);
   try {
     const phys = isPhys(P);
-    const b = phys ? physBake(P) : await bake(P, PREVIEW_SCALE, p => {
+    const b = phys ? physBake(P) : await bake(P, renderVersion(P)>=40 ? 1 : PREVIEW_SCALE, p => {
       if (gen === state.gen) setStatus(`预览烘焙… ${Math.round(p * 100)}%`);
     });
     // 旧任务连贴图 / 统计 / 缩略图也不能发布，且必须释放其显卡资源。
@@ -4136,7 +4358,7 @@ function flameChips(host, getM, onChange) {
 let panelRows = [];
 function itemVisible(it, P) { const f = Array.isArray(it) ? it[6] : it.show; return !f || f(P); }
 function buildMasterPanel() {
-  const P = state.P, D = defaultsFor(P.type).P;
+  const P = state.P, D = defaultsFor(P.type, renderVersion(P)).P;
   const host = $('#params'); host.innerHTML = ''; panelRows = [];
   for (const sec of SCHEMA) {
     const det = document.createElement('details'); det.className = 'sec'; det.open = !['物理扰动', '星效果', '规格'].includes(sec.sec) || sec.sec === '规格';
@@ -4186,6 +4408,8 @@ function buildMasterPanel() {
 }
 function refreshVisibility() {
   const P = state.P;
+  $('#exposureControls').hidden = renderVersion(P)<40;
+  $('#suggestExposure').disabled = !!P.exposureLock;
   for (const [row, it, sec, det] of panelRows) row.hidden = !itemVisible(it, P);
   document.querySelectorAll('#params details.sec').forEach(det => { const s = det._sec; det.hidden = !!(s.show && !s.show(P)) || ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden); });
 }
@@ -4200,7 +4424,7 @@ function jitterParams() {
     if (sec.show && !sec.show(P)) continue;
     for (const it of sec.items) {
       if (!Array.isArray(it) || !itemVisible(it, P)) continue;
-      const [k, , , min, max, step] = it; if (state.locks.has(k) || ['duration', 'fpsFloor', 'shutter', 'segAt', 'cellPad', 'loopT', 'riseH'].includes(k)) continue;
+      const [k, , , min, max, step] = it; if (state.locks.has(k) || ['duration', 'fpsFloor', 'shutter', 'segAt', 'cellPad', 'loopT', 'riseH', 'exposure'].includes(k)) continue;
       if (k === 'seed') { if (!state.locks.has('seed')) P.seed = 1 + Math.floor(r.u() * 998); continue; }
       if (!P[k]) continue;
       P[k] = clamp(Math.round(P[k] * (1 + 0.1 * (2 * r.u() - 1)) / step) * step, min, max);
@@ -5461,11 +5685,12 @@ function uploadRef() {
   gl.activeTexture(gl.TEXTURE0);
   return true;
 }
-function post(split = -1) {
+function post(split = -1, P = state.P) {
   gl.bindTexture(gl.TEXTURE_2D, hdrT.tex); gl.generateMipmap(gl.TEXTURE_2D);
   const useRef = state.tab !== 'combo' && uploadRef();
   gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, canvas.width, canvas.height);
-  const pr = PR.post, R = state.ref; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, hdrT.tex);
+  const modern=renderVersion(P)>=40, pr = modern?PR40.post:PR.post, R = state.ref; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, hdrT.tex);
+  if(modern)gl.uniform1f(pr.u.uBloom,P.previewBloom?1:0);
   gl.uniform1i(pr.u.uS, 0); gl.uniform1f(pr.u.uX, state.expo); gl.uniform2f(pr.u.uTx, 1 / hdrT.w, 1 / hdrT.h);
   gl.activeTexture(gl.TEXTURE6); gl.bindTexture(gl.TEXTURE_2D, refTex); gl.uniform1i(pr.u.uRef, 6); gl.activeTexture(gl.TEXTURE0);
   gl.uniform1f(pr.u.uRefMode, useRef ? R.mode : 0); gl.uniform1f(pr.u.uRefA, R.alpha); gl.uniform1f(pr.u.uWipe, R.wipe);
@@ -5490,12 +5715,18 @@ function liveSlot(key) { return live[key] || (live[key] = { gen: -1 }); }
 function prepSlot(slot, P, gen) {
   if (slot.gen === gen && slot.P === P) return;
   slot.trailR = null; slot.phys = null; slot.sim = null; disposeTrack(slot.track); slot.track = null; disposeEmitter(slot.E); slot.E = null;
+  slot.R40 && slot.R40.dispose(); slot.R40=null; slot.plan40=null;
+  slot.cell40 && slot.cell40.dispose(); slot.cell40=null; slot.samples40 && slot.samples40.dispose(); slot.samples40=null;
   slot.gen = gen; slot.P = P; slot.box = null;
 }
 function drawLiveScene(slot, P, t, view, ppm) {
   const fam = familyOf(P.type), gpu = P.engine === 'gpu';
   setParticleProfile(P);
   if (isPhys(P)) return drawPhysTrail(slot, P, t, view, ppm);
+  if (renderVersion(P)>=40 && !isTrail(P)) {
+    const R=liveRenderer40(slot,P); drawFrameSamples40(P,slot.plan40,R,t,view,ppm);
+    return {stars:P.stars,sparks:R.slots||0};
+  }
   if (isTrail(P)) {
     // 随体坐标里实时模拟：上升段连续播放，到顶后按 20 fps 版本的消散时长熄灭
     const T = riseInfo(P).ta, F = layoutOf(P).F;
@@ -5540,6 +5771,7 @@ function unionView(a, b) {
 }
 function renderLive() {
   const P = state.P, m = state.bake && state.bake.meta, B = state.B;
+  if (renderVersion(P)>=40 && !isTrail(P) && !isPhys(P) && !B) return renderLive40();
   if (!m) { hdrT.clear(); post(); hudText = '首次烘焙中…'; hudB = ''; return; }
   const sa = liveSlot('A'); prepSlot(sa, P, state.gen);
   let sb = null; if (B && B.bake) { sb = liveSlot('B'); prepSlot(sb, B.P, B.id); }
@@ -5553,7 +5785,7 @@ function renderLive() {
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   const pr = PR.rgmat; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, rgT.tex); gl.uniform1i(pr.u.uS, 0);
   const shade = (PP, mm, MM, tt) => {
-    gl.uniform1f(pr.u.uEH, mm.expoH); gl.uniform1f(pr.u.uET, mm.expoT); gl.uniform1f(pr.u.uG, PP.encGamma); gl.uniform1f(pr.u.uComb, PP.outMode === 'combined' ? 1 : 0);
+    gl.uniform1f(pr.u.uEH, renderVersion(PP)>=40?fixedExposure(PP):mm.expoH); gl.uniform1f(pr.u.uET, renderVersion(PP)>=40?fixedExposure(PP):mm.expoT); gl.uniform1f(pr.u.uG, PP.encGamma); gl.uniform1f(pr.u.uComb, PP.outMode === 'combined' ? 1 : 0);
     setMatUniforms(pr, MM, tt); drawQuad();
   };
   halves(() => shade(P, m, state.M, t), sb ? () => shade(B.P, B.bake.meta, B.M, t) : null);
@@ -5759,6 +5991,7 @@ function loop(now) {
   $('#flowSeg').hidden = !mv || state.view !== 'atlas'; $('#flowCv').hidden = !mv || state.view !== 'atlas' || !state.atlasFlow;
   $('#dispSeg').hidden = !mv || state.view !== 'export' || !(state.bake && (state.bake.form === 'master' || state.bake.form === 'segments' || state.bake.form === 'loop'));
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
+  $('#resolutionBox').hidden = !mv || state.view!=='live' || renderVersion(state.P)<40 || isTrail(state.P) || isPhys(state.P);
   $('#abTag').hidden = !(mv && state.B);
   refSync();
   perfTick(dt);
@@ -5778,6 +6011,7 @@ function expoOfChannel(buf, ch, target, pct) {
 }
 // opt: { times: [s…], px, half（米，画面半宽）, cy（米，画面中心高度）, shutter（秒）, sub（快门内子帧数，默认每 1/480 秒一帧）, probe（定曝光用的时刻）, expo（显示曝光） }
 async function renderStills(P0, M0, opt) {
+  if (renderVersion(P0)>=40 && !isTrail(P0) && !isPhys(P0)) return renderStills40(P0,M0,opt);
   const P = derive({ ...P0 }), M = normalizeM(M0 || {}, P.type), px = opt.px || 512, ground = familyOf(P.type) === 'ground';
   let half = opt.half, cy = opt.cy || 0, cx = 0;
   if (half == null) {
@@ -5822,7 +6056,7 @@ async function renderStills(P0, M0, opt) {
       const pr = PR.rgmat; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, RG.tex); gl.uniform1i(pr.u.uS, 0);
       gl.uniform1f(pr.u.uEH, eH); gl.uniform1f(pr.u.uET, eT); gl.uniform1f(pr.u.uG, P.encGamma); gl.uniform1f(pr.u.uComb, comb ? 1 : 0);
       setMatUniforms(pr, M, times[i]); drawQuad();
-      post(-1);
+      post(-1,P);
       out.push({ t: times[i], png: canvas.toDataURL('image/png') });
       await nextTick();
     }
@@ -5858,6 +6092,8 @@ $('#x-engine').addEventListener('change', e => { state.P.engine = e.target.value
 $('#x-flip').addEventListener('change', e => { state.P.unitFlip = e.target.checked ? 1 : 0; onParam(); });
 $('#x-autogrid').addEventListener('change', e => { state.P.autoGrid = e.target.checked ? 1 : 0; onParam(); });
 $('#expo').addEventListener('input', e => state.expo = +e.target.value);
+$('#exportResolution').addEventListener('change', e => state.exportResolution = e.target.checked);
+$('#suggestExposure').addEventListener('click', suggestExposure40);
 const segBtns = (id, fn) => $(id).addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return; fn(b);
   for (const x of $(id).children) x.setAttribute('aria-pressed', String(x === b));
