@@ -1,0 +1,9 @@
+{
+ "id": "QC11E3",
+ "type": "export",
+ "effect": "qiuxing_c",
+ "entry": "QC11",
+ "name": "QiuxingC40",
+ "priority": 7,
+ "note": "QC11 第 3 次导出：末尾裁全黑帧改成最多 3 轮（重新分帧后最后一帧可能又落到全黑处）；回放检查的中心抖动只对 Zoom 判、中间空帧列出帧号。参数不变。"
+}

@@ -114,7 +114,7 @@ function renderLive40() {
 }
 // 4.0 自动固定曝光：在燃烧段几个时刻渲染线性亮度，取最亮的那一刻，让它 99.8% 分位的像素显示到 0.96。
 // 一个配方只有一个固定曝光（不随帧变），所以按最亮时刻定，之后各帧都不会大片过曝；模板默认值（EXPOSURE40）也是这样算的。
-const AUTO_EXPO40 = { fracs: [.1, .2, .35, .5, .75], target: .96, pct: 99.8 };
+const AUTO_EXPO40 = { fracs: [.02, .04, .07, .1, .15, .2, .3, .45, .6, .75], target: .96, pct: 99.8 };   // 开头几帧也要量（2026-10-02：只量 10% 以后，球形B 第 1 层开花那几帧过曝 3.8%）
 async function autoExposure40(P0) {
   const P={...derive({...P0}),flash:0,subFlash:0}, pl=displayPlan40(P), q=qualityOf(P), w=pl.L.cellW, h=pl.L.cellH;
   const R=makeRenderer(P,familyOf(P.type)==='ground'?'loop':'burst'), span=familyOf(P.type)==='ground'?(P.loopT||P.duration):Math.min(P.duration,pl.duration||P.duration);

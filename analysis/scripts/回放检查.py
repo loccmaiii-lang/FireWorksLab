@@ -5,7 +5,7 @@
   - 引擎取帧：按 30 fps 逐 tick 播放（帧号 = floor(Dynamic Parameter 曲线)），显示到的帧占比、一次最多跳几帧、有没有回跳
   - 裁切：内容碰到格子内圈（先找出打包时清零的留边，再量留边以内 2 像素一圈的亮度占比；以前量的是被清零的最外圈，永远是 0）
   - 曝光：灰度到顶（≥ 250）的像素占比
-  - 空帧（中间的空帧、末尾的空帧分开数）、中心抖动（亮部中心偏离前后两帧按时间连线的距离，按 512 格换算；相邻帧中心移动另记 center_jump_*，只作参考——固定取景时花下垂，中心本来就会走）
+  - 空帧（中间的空帧、末尾的空帧分开数）、中心抖动（只对 Zoom 取景判：固定取景面片不动，画面不可能整体抖；亮部中心偏离前后两帧按时间连线的距离，按 512 格换算；相邻帧中心移动另记 center_jump_*，只作参考——固定取景时花下垂，中心本来就会走）
 及格线（LIMITS，照抄 协作/标准.md 2.3；--limits '{"jump_px512": 4}' 可以按效果放宽 / 收紧，放宽要在说明里写理由）
 用法：
   python3 analysis/scripts/回放检查.py <输出图.jpg> <素材包目录1> [<素材包目录2> ...] [--delay 0,0.9] [--times 0.1,0.3,0.5,0.7,0.9] [--fps 30] [--limits JSON]
@@ -156,7 +156,9 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
             last = cen
         lit = [i for i, v in enumerate(cm) if v > 1.5 / 255]      # 和烘焙器裁帧同一口径：最亮像素 ≤ 1/255 才算空帧（引擎里自发光 ×4，2–3/255 的暗火星看得见）
         empty_tail = p.frames - 1 - lit[-1] if lit else p.frames
-        empty_mid = sum(1 for i in range(lit[0], lit[-1]) if cm[i] <= 1.5 / 255) if lit else 0
+        mid_list = [i for i in range(lit[0], lit[-1]) if cm[i] <= 1.5 / 255] if lit else []
+        empty_mid = len(mid_list)
+        zoom = 'SizeByLife' in p.mods      # 固定取景：面片位置、大小都不变，画面不可能整体抖；中心移动全是内容自己在动（子花开、下垂），抖动项不适用
         tk = p.ticks(fps); steps = np.diff(tk) if len(tk) > 1 else np.array([0])
         # 中心抖动（标准 2.3「不抖」）：固定取景时花自己在长大、下垂，中心本来就会走；要抓的是走得不平滑的那一下。
         # 每帧在引擎里第一次出现的 tick 当作它的时刻；每帧中心和「前一帧、后一帧按时间连线」在这一帧时刻的位置比，差多少就是抖多少。
@@ -180,7 +182,7 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
                  empty_mid=empty_mid, empty_tail=empty_tail, center_jump_max_px512=round(max(jumps), 2) if jumps else 0,
                  centers=cens,
                  center_jump_top=[[jf[i], round(jumps[i], 2)] for i in np.argsort(jumps)[::-1][:5]] if jumps else [],
-                 center_jitter_px512=round(max(jit), 2) if jit else 0,
+                 center_jitter_px512=round(max(jit), 2) if jit else 0, jitter_applies=zoom, empty_mid_frames=mid_list,
                  center_jitter_top=[[jitf[i], round(jit[i], 2)] for i in np.argsort(jit)[::-1][:5]] if jit else [])
         fails = []
         if L['shown_frac'] < lim['shown_frac']: fails.append(f"{fps} fps 只显示 {shown}/{p.frames} 帧")
@@ -189,7 +191,7 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
         if L['saturated_max'] > lim['saturated']: fails.append(f"过曝像素 {L['saturated_max'] * 100:.1f}%")
         if empty_mid > lim['empty_mid']: fails.append(f'中间空帧 {empty_mid}')
         if empty_tail > lim['empty_tail']: fails.append(f'末尾空帧 {empty_tail}')
-        if L['center_jitter_px512'] > lim['jump_px512']: fails.append(f"中心抖动 {L['center_jitter_px512']} px（512 格）")
+        if zoom and L['center_jitter_px512'] > lim['jump_px512']: fails.append(f"中心抖动 {L['center_jitter_px512']} px（512 格）")
         L['pass'] = not fails; L['fails'] = fails
         rep['layers'].append(L)
     rep['limits'] = lim; rep['fps'] = fps; rep['pass'] = all(L['pass'] for L in rep['layers'])

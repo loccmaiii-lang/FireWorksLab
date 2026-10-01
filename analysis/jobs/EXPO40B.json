@@ -1,0 +1,22 @@
+{
+ "id": "EXPO40B",
+ "type": "expo",
+ "name": "ZB5-1 曝光重算（开头几帧也量）",
+ "priority": 13,
+ "layers": [
+  "ZB4-1"
+ ],
+ "form40": {
+  "renderVer": 40,
+  "cols": 4,
+  "rows": 4,
+  "texW": 2048,
+  "texH": 2048,
+  "zoom": "off",
+  "frameBudget": "motion",
+  "pageTarget": 1,
+  "maxHold": 4,
+  "autoGrid": 0
+ },
+ "note": "ZB5E2 第 1 层开花那几帧过曝 3.8%：autoExposure40 原来只量 10% 以后，现在从 2% 开始量。只计算。"
+}

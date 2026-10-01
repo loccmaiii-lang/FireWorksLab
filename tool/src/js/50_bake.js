@@ -297,9 +297,11 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
       };
       await bakePlan(pl,0,opt.pl?1:.75);
       // 真实编码贴图决定可见性，头和尾合看；裁后重新打包，不能留下不播放的占位帧。
-      if(!opt.pl){
+      // 重新分帧后最后一帧可能又落到全黑处：最多裁 3 轮
+      for(let pass=0;pass<3&&!opt.pl;pass++){
         const maxima=bakeParts(first).flatMap(s=>s.meta.frameMaxes||[]);
-        if(maxima.length===pl.L.F){
+        if(maxima.length!==pl.L.F)break;
+        {
           // 只裁真正全黑的帧（最亮像素 ≤ 1/255）：引擎里自发光 ×4，3/255 的暗火星在夜空里仍看得见，不能当空帧裁掉
           // （4.0 曾按 10/255 裁，金芒菊 4.56 s 被裁成 3.67 s，末尾的暗火星没了——用户 2026-10-01 指出）
           const lit=v=>v>=2,a=maxima.findIndex(lit),z=maxima.findLastIndex(lit);
@@ -310,7 +312,8 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
             const trimmed=plan(P,fm,pl.t0+T(from),pl.t0+T(to));
             disposeBake(first);first=last=null;
             await bakePlan(trimmed,.75,.25);
-          }
+            pl=trimmed;
+          } else break;
         }
       }
       onProg&&onProg(1);
