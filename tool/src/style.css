@@ -365,3 +365,8 @@
 .badge.std { background: #4a2420; color: #ffb4a6; }
 ul.std { margin: 4px 0 8px; padding-left: 0; list-style: none; font-size: 12px; }
 ul.std li.ok { color: #9fd59f; } ul.std li.bad { color: #ffb4a6; }
+
+/* 历史：按效果折叠 */
+details.histgrp > summary { cursor: pointer; list-style: none; padding: 6px 4px; }
+details.histgrp > summary::before { content: '▸ '; opacity: .6; }
+details.histgrp[open] > summary::before { content: '▾ '; }

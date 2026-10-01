@@ -199,11 +199,15 @@ function renderLib() {
     const groups = new Map();
     for (const e of old) { const ef = effectOfEntry(e); const k = ef ? ef.名 : '内部试验 / 其他'; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(e); }
     if (!old.length) box.insertAdjacentHTML('beforeend', '<p class="lsub">没有历史版本</p>');
+    // 按效果折叠（用户 2026-10-01：过程版本太多、堆在一起）：默认收起，只显示「效果名 · N 个旧版本」；搜索时全部展开
     for (const [k, arr] of groups) {
-      box.insertAdjacentHTML('beforeend', `<p class="lsub">${k}</p>`);
+      const det = document.createElement('details'); det.className = 'histgrp'; det.open = !!lib.q || !!(lib.histOpen && lib.histOpen[k]);
+      det.innerHTML = `<summary class="lsub">${k} · ${arr.length} 个旧版本</summary>`;
+      det.addEventListener('toggle', () => { if (!lib.q) { lib.histOpen = lib.histOpen || {}; lib.histOpen[k] = det.open; } });
+      box.appendChild(det);
       for (const e of arr) {
         const h = effHistOf(e), verdict = h ? h.结论 : '被取代';
-        libItem(box, 'rv:' + e.id, thumbHTML(e) + `<span class="tx"><b>${e.name}</b><small>${e.id} · ${verdict}${h && h.反馈 ? ' · ' + h.反馈 : ''}</small></span><span class="badge">${verdict}</span>`, () => openReview(e));
+        libItem(det, 'rv:' + e.id, thumbHTML(e) + `<span class="tx"><b>${e.name}</b><small>${e.id} · ${verdict}${h && h.反馈 ? ' · ' + h.反馈 : ''}</small></span><span class="badge">${verdict}</span>`, () => openReview(e));
       }
     }
   }

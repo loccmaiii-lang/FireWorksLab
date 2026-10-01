@@ -16,6 +16,23 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 RES = os.path.join(ROOT, 'analysis', 'results')
+# 被取代的版本的结果 / 任务搬到 归档/过程/<效果>/results|jobs/（2026-10-01 用户同意）；这里两处都找，历史条目照常显示
+ARCH = os.path.join(ROOT, '归档', '过程')
+
+
+def res_dir(i):
+    p = os.path.join(RES, i)
+    if os.path.exists(p): return p
+    import glob
+    hit = glob.glob(os.path.join(ARCH, '*', 'results', i))
+    return hit[0] if hit else p
+
+
+def job_files():
+    import glob
+    fs = [os.path.join(ROOT, 'analysis', 'jobs', f) for f in os.listdir(os.path.join(ROOT, 'analysis', 'jobs')) if f.endswith('.json')]
+    fs += glob.glob(os.path.join(ARCH, '*', 'jobs', '*.json'))
+    return sorted(fs, key=os.path.basename)
 OUT = os.path.join(ROOT, 'tool', 'data', 'review.js')
 
 REVIEW = [
@@ -111,12 +128,10 @@ ARCHIVE = {'TP1', 'WC1', 'PW1', 'PW2', 'TR2S', 'TR2M', 'TR2L', 'QN1'}   # TR2 S/
 def job_entries():
     """analysis/jobs/<id>.json 里带 "review" 的任务：没跑完 → 「排队」条目；跑完 → 自动变成可看的条目"""
     out = []
-    jd = os.path.join(ROOT, 'analysis', 'jobs')
-    for f in sorted(os.listdir(jd)):
-        if not f.endswith('.json'): continue
-        j = json.load(open(os.path.join(jd, f), encoding='utf-8')); r = j.get('review')
+    for f in job_files():
+        j = json.load(open(f, encoding='utf-8')); r = j.get('review')
         if not r: continue
-        d = os.path.join(RES, j['id']); done = os.path.exists(os.path.join(d, 'done.json'))
+        d = res_dir(j['id']); done = os.path.exists(os.path.join(d, 'done.json'))
         e = dict(id=j['id'], task=j['id'], date=r.get('date', ''), name=r['name'], note=r.get('note', j.get('note', '')), look=r.get('look', []),
                  tags=r.get('tags', ''), video=r.get('video', j.get('video')), replaces=r.get('replaces', []), size=r.get('size'), base=r.get('base'),
                  roi=r.get('roi', j.get('roi')), t_range=r.get('t_range', j.get('t_range')))
@@ -202,12 +217,13 @@ def experiment_entries():
 
 
 def build(e):
-    d = os.path.join(RES, e['task']); rec = {k: e.get(k) for k in ('id', 'task', 'kind', 'date', 'name', 'note', 'look', 'opinion', 'tags', 'doc', 'imagesTitle', 'principle')}
+    d = res_dir(e['task']); rec = {k: e.get(k) for k in ('id', 'task', 'kind', 'date', 'name', 'note', 'look', 'opinion', 'tags', 'doc', 'imagesTitle', 'principle')}
     if e.get('images'): rec['images'] = [['../' + a, b] for a, b in e['images']]
     if e.get('video'): rec['video'] = '../' + e['video']
     trail = bool(e.get('size')) or bool(e.get('trail_video'))
-    vmf = os.path.join(RES, e.get('src') or e['task'], 'vmeta.json')      # 结果目录自带取景（按模拟的世界坐标算好的，实拍和模拟同比例）
+    vmf = os.path.join(res_dir(e.get('src') or e['task']), 'vmeta.json')      # 结果目录自带取景（按模拟的世界坐标算好的，实拍和模拟同比例）
     if e.get('video') and not e.get('phys'): rec['vmeta'] = json.load(open(vmf, encoding='utf-8')) if os.path.exists(vmf) else video_meta(e['video'], trail=trail, roi=e.get('roi'), t_range=e.get('t_range'))
+    if e.get('vmeta'): rec['vmeta'] = e['vmeta']      # 条目自己带取景（例：4.0 迁移版沿用旧版的实拍取景）
     if rec.get('vmeta') and e.get('burst_t') is not None: rec['vmeta'] = dict(rec['vmeta'], t0=e['burst_t'])   # 自动找的开花时刻不对时手填（例：千轮主玉闪光太弱，自动找到的是子花）
     if e.get('hidden'): rec['hidden'] = True; rec['layerOf'] = e.get('layerOf')
     if e['kind'] == 'queued': return rec      # 排队中：只有实拍（烘焙器里显示「要对的目标」）
@@ -220,8 +236,8 @@ def build(e):
             if tr: rec['thumbRef'] = tr
         return rec
     if e['kind'] == 'asset':
-        rec['src'] = '../' + e['src_path'] if e.get('src_path') else f"../analysis/results/{e['src']}/preview.js"
-        jp = os.path.join(ROOT, e['thumb']) if e.get('thumb') else next((os.path.join(RES, e['src'], x) for x in ('PrismWheels_整朵预览.jpg', '预览.jpg') if os.path.exists(os.path.join(RES, e['src'], x))), None)
+        rec['src'] = '../' + e['src_path'] if e.get('src_path') else '../' + os.path.relpath(os.path.join(res_dir(e['src']), 'preview.js'), ROOT).replace(os.sep, '/')
+        jp = os.path.join(ROOT, e['thumb']) if e.get('thumb') else next((os.path.join(res_dir(e['src']), x) for x in ('PrismWheels_整朵预览.jpg', '预览.jpg') if os.path.exists(os.path.join(res_dir(e['src']), x))), None)
         if jp and e.get('thumb_box'): rec['thumbSim'] = thumb(jp, tuple(e['thumb_box']))
         elif jp: w, h = Image.open(jp).size; rec['thumbSim'] = thumb(jp, (min(w - h, h), 0, min(w - h, h) + h, h))
         if e.get('video'):
@@ -237,7 +253,7 @@ def build(e):
         import phys_to_baker as PB
         k = e['phys']; rec['base'] = 'phys' + k; rec['p'] = {}; rec['m'] = PB.baker_m()
         if e.get('video'): rec['vmeta'] = dict(PB.follow(k), cx=0.5, cy=0.5, half=0.5); rec['vmeta']['follow'] = PB.follow(k)
-        jp = os.path.join(RES, e['task'], '预览.jpg')
+        jp = os.path.join(res_dir(e['task']), '预览.jpg')
         if os.path.exists(jp): w, h = Image.open(jp).size; rec['thumbSim'] = thumb(jp, (min(w - h, h), 0, min(w - h, h) + h, h))
         if e.get('video'):
             tr = thumb_from_video(e['video'], dict(t0=PB.follow(k)['t0'], cx=PB.follow(k)['launch'][0] / PB.follow(k)['aspect'], cy=PB.follow(k)['launch'][1] - 0.3, half=0.3), 3.0)
@@ -323,7 +339,8 @@ def fingerprint(out):
 
 STATUS = os.path.join(ROOT, '协作', '状态清单.json')
 JOB_EFFECT = [('QA', 'qiuxing_a'), ('QB', 'qiuxing_b'), ('QC', 'qiuxing_c'), ('QD', 'qiuxing_d'), ('QN', 'qingning'), ('JM', 'jinmangju'),
-              ('HK', 'hongchao'), ('FS', 'yongfeng'), ('PK', 'pianbei'), ('TR', 'trail_v5'), ('PW', 'wancai'), ('WC', 'wancai'), ('TF', 'trail_phys')]
+              ('HK', 'hongchao'), ('FS', 'yongfeng'), ('PK', 'pianbei'), ('TR', 'trail_v5'), ('PW', 'wancai'), ('WC', 'wancai'), ('TF', 'trail_phys'),
+              ('TP', 'trail_phys'), ('TV', 'trail_phys'), ('HN', 'hiki_nishiki'), ('ZB', 'qiuxing_b'), ('ZW', 'wancai'), ('ZK', 'hongchao'), ('ZF', 'yongfeng'), ('ZP', 'pianbei')]
 
 
 def job_effect(j):
@@ -335,12 +352,11 @@ def effects_from_status(out):
     """协作/状态清单.json → 烘焙器左栏「待我验收 / 制作中 / 已通过」的数据；顺带算 在算的任务、导出是否过期、效果缩略图"""
     if not os.path.exists(STATUS): return []
     st = json.load(open(STATUS, encoding='utf-8')); by = {r['id']: r for r in out}
-    jd = os.path.join(ROOT, 'analysis', 'jobs'); jobs = {}
-    for f in sorted(os.listdir(jd)):
-        if not f.endswith('.json'): continue
-        j = json.load(open(os.path.join(jd, f), encoding='utf-8')); k = job_effect(j)
+    jobs = {}
+    for f in job_files():
+        j = json.load(open(f, encoding='utf-8')); k = job_effect(j)
         if not k: continue
-        d = os.path.join(RES, j['id']); state = ('出错' if os.path.exists(os.path.join(d, 'error.json')) else '已回来') if os.path.exists(os.path.join(d, 'done.json')) or os.path.exists(os.path.join(d, 'error.json')) else ('挂起' if j.get('ready') is False else '在算')
+        d = res_dir(j['id']); state = ('出错' if os.path.exists(os.path.join(d, 'error.json')) else '已回来') if os.path.exists(os.path.join(d, 'done.json')) or os.path.exists(os.path.join(d, 'error.json')) else ('挂起' if j.get('ready') is False else '在算')
         seen = os.path.exists(os.path.join(d, '看法.md'))
         jobs.setdefault(k, []).append(dict(id=j['id'], type=j.get('type', 'fit'), state=state, seen=seen))
     res = []
@@ -353,12 +369,12 @@ def effects_from_status(out):
         # 导出：analysis/results/<任务>/导出清单.json（export_job.py 写）；旧导出任务没有清单 → 「旧导出，版本未知」
         ex = []
         for jid in sorted(set([x['id'] for x in r['jobs'] if x['type'] == 'export' and x['state'] == '已回来'] + (e.get('导出任务') or []))):
-            mf = os.path.join(RES, jid, '导出清单.json')
+            mf = os.path.join(res_dir(jid), '导出清单.json')
             if os.path.exists(mf):
                 m = json.load(open(mf, encoding='utf-8'))
                 ex.append(dict(job=jid, entry=m.get('entry'), ver=m.get('ver'), time=m.get('time'), packages=m.get('packages', []),
                                stale=bool(m.get('entry') and by.get(m['entry']) and by[m['entry']].get('ver') != m.get('ver'))))
-            elif os.path.exists(os.path.join(RES, jid, 'done.json')): ex.append(dict(job=jid, legacy=True))
+            elif os.path.exists(os.path.join(res_dir(jid), 'done.json')): ex.append(dict(job=jid, legacy=True))
         r['exports'] = ex
         # 缩略图：参考视频里最亮的一刻（认得出是什么效果），没有就用主条目的
         src = me or {}
