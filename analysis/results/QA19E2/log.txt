@@ -1,0 +1,7 @@
+00:43:18 开始：QiuxingA40（导出素材）
+00:44:38 QiuxingA40 组合素材包 80 秒：T_QiuxingA40_L1.png、T_QiuxingA40_L1_Cutout.png、T_QiuxingA40_L1_FrameTest.png、T_QiuxingA40_L1_Ramp.png、T_QiuxingA40_L2.png、T_QiuxingA40_L2_Cutout.png、T_QiuxingA40_L2_FrameTest.png、T_QiuxingA40_L2_Ramp.png、T_QiuxingA40_Mobile_L1.png、T_QiuxingA40_Mobile_L1_Cutout.png、T_QiuxingA40_Mobile_L1_FrameTest.png、T_QiuxingA40_Mobile_L1_Ramp.png、T_QiuxingA40_Mobile_L2.png、T_QiuxingA40_Mobile_L2_Cutout.png、T_QiuxingA40_Mobile_L2_FrameTest.png、T_QiuxingA40_Mobile_L2_Ramp.png、cascade.json、cascade_mobile.json
+00:44:39 回放检查：❌ QiuxingA40 · L2_Main：末尾空帧 1、中心抖动 3.87 px（512 格）
+00:44:59 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QA19E2\烘焙回放.jpg
+00:44:59 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QA19E2\烘焙回放_原尺寸.jpg
+00:44:59 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+00:44:59 完成，用时 1.7 分钟

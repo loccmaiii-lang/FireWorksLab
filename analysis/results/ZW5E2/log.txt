@@ -1,0 +1,7 @@
+00:44:59 开始：Wancai40（导出素材）
+00:45:04 Wancai40 组合素材包 4 秒：T_Wancai40_L1.png、T_Wancai40_L1_Cutout.png、T_Wancai40_L1_FrameTest.png、T_Wancai40_L1_Ramp.png、T_Wancai40_L2.png、T_Wancai40_L2_Cutout.png、T_Wancai40_L2_FrameTest.png、T_Wancai40_L2_Ramp.png、T_Wancai40_L3.png、T_Wancai40_L3_Cutout.png、T_Wancai40_L3_FrameTest.png、T_Wancai40_L3_Ramp.png、T_Wancai40_L4.png、T_Wancai40_L4_Cutout.png、T_Wancai40_L4_FrameTest.png、T_Wancai40_L4_Ramp.png、T_Wancai40_Mobile_L1.png、T_Wancai40_Mobile_L1_Cutout.png、T_Wancai40_Mobile_L1_FrameTest.png、T_Wancai40_Mobile_L1_Ramp.png、T_Wancai40_Mobile_L2.png、T_Wancai40_Mobile_L2_Cutout.png、T_Wancai40_Mobile_L2_FrameTest.png、T_Wancai40_Mobile_L2_Ramp.png、T_Wancai40_Mobile_L3.png、T_Wancai40_Mobile_L3_Cutout.png、T_Wancai40_Mobile_L3_FrameTest.png、T_Wancai40_Mobile_L3_Ramp.png、T_Wancai40_Mobile_L4.png、T_Wancai40_Mobile_L4_Cutout.png、T_Wancai40_Mobile_L4_FrameTest.png、T_Wancai40_Mobile_L4_Ramp.png、cascade.json、cascade_mobile.json
+00:45:05 回放检查：❌ Wancai40 · L1_Main：中心抖动 8.53 px（512 格）；Wancai40 · L2_Main：中心抖动 13.81 px（512 格）；Wancai40 · L3_Main：中心抖动 44.33 px（512 格）；Wancai40 · L4_Main：中心抖动 10.5 px（512 格）
+00:45:23 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZW5E2\烘焙回放.jpg
+00:45:24 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZW5E2\烘焙回放_原尺寸.jpg
+00:45:24 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+00:45:24 完成，用时 0.4 分钟

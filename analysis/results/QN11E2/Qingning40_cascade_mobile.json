@@ -1,0 +1,324 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "Qingning40_Mobile",
+ "platform": "mobile",
+ "source": {
+  "tool": "烟花母版烘焙器 4.0.2",
+  "combo": true,
+  "layers": [
+   {
+    "type": "botan",
+    "form": "master",
+    "renderVer": 40
+   },
+   {
+    "type": "botan",
+    "form": "master",
+    "renderVer": 40
+   }
+  ]
+ },
+ "textures": {
+  "L1_seq": {
+   "file": "T_Qingning40_Mobile_L1.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64
+  },
+  "L1_cutout": {
+   "file": "T_Qingning40_Mobile_L1_Cutout.png",
+   "class": "cutout"
+  },
+  "L1_ramp": {
+   "file": "T_Qingning40_Mobile_L1_Ramp.png",
+   "class": "ramp"
+  },
+  "L2_seq": {
+   "file": "T_Qingning40_Mobile_L2.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64
+  },
+  "L2_cutout": {
+   "file": "T_Qingning40_Mobile_L2_Cutout.png",
+   "class": "cutout"
+  },
+  "L2_ramp": {
+   "file": "T_Qingning40_Mobile_L2_Ramp.png",
+   "class": "ramp"
+  }
+ },
+ "materials": {
+  "L1_main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "L1_seq",
+    "ramp": "L1_ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  },
+  "L2_main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "L2_seq",
+    "ramp": "L2_ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  }
+ },
+ "emitters": [
+  {
+   "name": "L1_Main",
+   "material": "L1_main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 3.4,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "L1_cutout",
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 3.4
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       20084.1,
+       20084.1,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       -1532.2
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.3333,
+         34.01
+        ],
+        [
+         0.7647,
+         56.01
+        ],
+        [
+         0.9706,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         0.9,
+         0.1147,
+         0.0063
+        ]
+       ],
+       [
+        1,
+        [
+         0.9,
+         0.1147,
+         0.0063
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ],
+   "layer": 1
+  },
+  {
+   "name": "L2_Main",
+   "material": "L2_main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 3.6667,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "L2_cutout",
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 3.6667
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       20100.3,
+       20100.3,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       -1554.7
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.3,
+         33.01
+        ],
+        [
+         0.6455,
+         52.01
+        ],
+        [
+         0.8909,
+         61.01
+        ],
+        [
+         0.9636,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         0.9,
+         0.1751,
+         0.0266
+        ]
+       ],
+       [
+        0.0832,
+        [
+         0.9,
+         0.1751,
+         0.0266
+        ]
+       ],
+       [
+        0.1241,
+        [
+         0.7991,
+         0.9,
+         0.3163
+        ]
+       ],
+       [
+        1,
+        [
+         0.7991,
+         0.9,
+         0.3163
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ],
+   "layer": 2
+  }
+ ],
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 1.2
+ },
+ "notes": [
+  "多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。"
+ ]
+}

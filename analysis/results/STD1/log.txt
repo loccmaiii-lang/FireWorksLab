@@ -1,0 +1,38 @@
+00:45:27 JM4-40 ✅ 
+00:45:27 JM4 ❌ 单格 ≥ PC 下限；屏幕放大 ≤ 1；30fps 显示帧 ≥ 90%；尺寸参数有效
+00:45:27 TV6M ❌ 实时模拟；引擎回放 + 游戏内大小；完整参数；导出素材包（cascade.json PC + 手机）
+00:45:27 QA19 ✅ 
+00:45:27 ZB5 ❌ 屏幕放大 ≤ 1
+00:45:27 QC11 ✅ 
+00:45:27 QD13 ❌ 燃烧段有效帧率 ≥ 下限
+00:45:27 QN11 ✅ 
+00:45:27 ZW5 ✅ 
+00:45:27 HK10 ✅ 
+00:45:27 FS10 ✅ 
+00:45:27 PK9 ✅ 
+00:45:27 HN2 ✅ 
+00:45:27 TR2S ✅ 
+00:45:27 TR2M ✅ 
+00:45:27 TR2L ✅ 
+00:45:27 JM ❌ 单格 ≥ PC 下限；屏幕放大 ≤ 1；30fps 显示帧 ≥ 90%；尺寸参数有效
+00:45:27 type40:kiku ✅ 
+00:45:27 type40:botan ✅ 
+00:45:27 type40:kamuro ✅ 
+00:45:27 type40:yanagi ✅ 
+00:45:27 type40:senrin ✅ 
+00:45:27 type40:hachi ✅ 
+00:45:27 type40:palm ✅ 
+00:45:27 type40:henka ✅ 
+00:45:27 type40:strobe ✅ 
+00:45:27 type40:glitter ✅ 
+00:45:27 type40:crackle ✅ 
+00:45:27 type40:matsuba ✅ 
+00:45:27 type40:crossette ✅ 
+00:45:27 type40:ochiba ✅ 
+00:45:27 type40:jisa ✅ 
+00:45:27 type40:ring ✅ 
+00:45:27 type40:saturn ✅ 
+00:45:27 type40:kata ✅ 
+00:45:27 type40:water ✅ 
+00:45:27 → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\probe\标准检查
+00:45:27 完成，用时 0.1 分钟
