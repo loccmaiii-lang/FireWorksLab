@@ -1,0 +1,787 @@
+{
+  "name": "JinMangJu40",
+  "type": "kiku",
+  "typeName": "菊",
+  "form": "master",
+  "tool": "烟花母版烘焙器 4.0",
+  "engine": "gpu",
+  "texture": {
+    "width": 2048,
+    "height": 2048,
+    "cols": 4,
+    "rows": 4,
+    "channels": 4,
+    "frames": 64,
+    "cellPx": [
+      512,
+      512
+    ],
+    "order": "先填满 R 的全部格子再接 G、B、A；格子行优先，左上为第 0 帧",
+    "encoding": "线性灰度",
+    "output": "combined"
+  },
+  "frameTiming": "tick-start",
+  "frameFps": 30,
+  "t0": 0,
+  "duration": 2.1333333333333333,
+  "frames": 64,
+  "frameCurve": {
+    "channel": "Dynamic Parameter 第三通道",
+    "keys": [
+      [
+        0,
+        0.01
+      ],
+      [
+        0.984375,
+        63.01
+      ],
+      [
+        1,
+        63.99
+      ]
+    ]
+  },
+  "frameTimes": [
+    0,
+    0.0333,
+    0.0667,
+    0.1,
+    0.1333,
+    0.1667,
+    0.2,
+    0.2333,
+    0.2667,
+    0.3,
+    0.3333,
+    0.3667,
+    0.4,
+    0.4333,
+    0.4667,
+    0.5,
+    0.5333,
+    0.5667,
+    0.6,
+    0.6333,
+    0.6667,
+    0.7,
+    0.7333,
+    0.7667,
+    0.8,
+    0.8333,
+    0.8667,
+    0.9,
+    0.9333,
+    0.9667,
+    1,
+    1.0333,
+    1.0667,
+    1.1,
+    1.1333,
+    1.1667,
+    1.2,
+    1.2333,
+    1.2667,
+    1.3,
+    1.3333,
+    1.3667,
+    1.4,
+    1.4333,
+    1.4667,
+    1.5,
+    1.5333,
+    1.5667,
+    1.6,
+    1.6333,
+    1.6667,
+    1.7,
+    1.7333,
+    1.7667,
+    1.8,
+    1.8333,
+    1.8667,
+    1.9,
+    1.9333,
+    1.9667,
+    2,
+    2.0333,
+    2.0667,
+    2.1
+  ],
+  "avgFps": 30,
+  "minFps": 30,
+  "maxDispPx": 4.76,
+  "spriteSizeCm": [
+    24007,
+    24007
+  ],
+  "burstOffsetZcm": 0,
+  "pivotUV": [
+    0.5,
+    0.5
+  ],
+  "sizeByLife": [
+    [
+      0,
+      0.53
+    ],
+    [
+      0.21182624999999997,
+      0.66
+    ],
+    [
+      0.4931212499999999,
+      0.78
+    ],
+    [
+      0.85649625,
+      0.896
+    ],
+    [
+      1,
+      0.9270594784707915
+    ]
+  ],
+  "averageQuadArea": 0.596,
+  "darkTailFrames": 0,
+  "colorOverLife": [
+    [
+      0,
+      [
+        1,
+        0.8714,
+        0.7157
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        0.8714,
+        0.7157
+      ]
+    ]
+  ],
+  "lightKeys": [
+    [
+      0,
+      0.012
+    ],
+    [
+      0.1094,
+      0.465
+    ],
+    [
+      0.2344,
+      0.783
+    ],
+    [
+      0.3906,
+      0.967
+    ],
+    [
+      0.5625,
+      1
+    ],
+    [
+      0.7188,
+      0.956
+    ],
+    [
+      0.9844,
+      0.805
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "selfCheck": {
+    "clipFrames": [],
+    "edgeFrames": [],
+    "chanUse": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "emptyMid": [],
+    "similar": 35,
+    "seam": null,
+    "maxClip": 0.0008505812305075135
+  },
+  "segments": [
+    {
+      "frameTiming": "tick-start",
+      "frameFps": 30,
+      "t0": 0,
+      "duration": 2.1333333333333333,
+      "frames": 64,
+      "frameCurve": {
+        "channel": "Dynamic Parameter 第三通道",
+        "keys": [
+          [
+            0,
+            0.01
+          ],
+          [
+            0.984375,
+            63.01
+          ],
+          [
+            1,
+            63.99
+          ]
+        ]
+      },
+      "frameTimes": [
+        0,
+        0.0333,
+        0.0667,
+        0.1,
+        0.1333,
+        0.1667,
+        0.2,
+        0.2333,
+        0.2667,
+        0.3,
+        0.3333,
+        0.3667,
+        0.4,
+        0.4333,
+        0.4667,
+        0.5,
+        0.5333,
+        0.5667,
+        0.6,
+        0.6333,
+        0.6667,
+        0.7,
+        0.7333,
+        0.7667,
+        0.8,
+        0.8333,
+        0.8667,
+        0.9,
+        0.9333,
+        0.9667,
+        1,
+        1.0333,
+        1.0667,
+        1.1,
+        1.1333,
+        1.1667,
+        1.2,
+        1.2333,
+        1.2667,
+        1.3,
+        1.3333,
+        1.3667,
+        1.4,
+        1.4333,
+        1.4667,
+        1.5,
+        1.5333,
+        1.5667,
+        1.6,
+        1.6333,
+        1.6667,
+        1.7,
+        1.7333,
+        1.7667,
+        1.8,
+        1.8333,
+        1.8667,
+        1.9,
+        1.9333,
+        1.9667,
+        2,
+        2.0333,
+        2.0667,
+        2.1
+      ],
+      "avgFps": 30,
+      "minFps": 30,
+      "maxDispPx": 4.76,
+      "spriteSizeCm": [
+        24007,
+        24007
+      ],
+      "burstOffsetZcm": 0,
+      "pivotUV": [
+        0.5,
+        0.5
+      ],
+      "sizeByLife": [
+        [
+          0,
+          0.53
+        ],
+        [
+          0.21182624999999997,
+          0.66
+        ],
+        [
+          0.4931212499999999,
+          0.78
+        ],
+        [
+          0.85649625,
+          0.896
+        ],
+        [
+          1,
+          0.9270594784707915
+        ]
+      ],
+      "averageQuadArea": 0.596,
+      "darkTailFrames": 0,
+      "colorOverLife": [
+        [
+          0,
+          [
+            1,
+            0.8714,
+            0.7157
+          ]
+        ],
+        [
+          1,
+          [
+            1,
+            0.8714,
+            0.7157
+          ]
+        ]
+      ],
+      "lightKeys": [
+        [
+          0,
+          0.012
+        ],
+        [
+          0.1094,
+          0.465
+        ],
+        [
+          0.2344,
+          0.783
+        ],
+        [
+          0.3906,
+          0.967
+        ],
+        [
+          0.5625,
+          1
+        ],
+        [
+          0.7188,
+          0.956
+        ],
+        [
+          0.9844,
+          0.805
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "selfCheck": {
+        "clipFrames": [],
+        "edgeFrames": [],
+        "chanUse": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "emptyMid": [],
+        "similar": 35,
+        "seam": null,
+        "maxClip": 0.0008505812305075135
+      }
+    },
+    {
+      "frameTiming": "tick-start",
+      "frameFps": 30,
+      "t0": 2.1333333333333333,
+      "duration": 1.5333333333333334,
+      "frames": 46,
+      "frameCurve": {
+        "channel": "Dynamic Parameter 第三通道",
+        "keys": [
+          [
+            0,
+            0.01
+          ],
+          [
+            0.9782608695652174,
+            45.01
+          ],
+          [
+            1,
+            45.99
+          ]
+        ]
+      },
+      "frameTimes": [
+        0,
+        0.0333,
+        0.0667,
+        0.1,
+        0.1333,
+        0.1667,
+        0.2,
+        0.2333,
+        0.2667,
+        0.3,
+        0.3333,
+        0.3667,
+        0.4,
+        0.4333,
+        0.4667,
+        0.5,
+        0.5333,
+        0.5667,
+        0.6,
+        0.6333,
+        0.6667,
+        0.7,
+        0.7333,
+        0.7667,
+        0.8,
+        0.8333,
+        0.8667,
+        0.9,
+        0.9333,
+        0.9667,
+        1,
+        1.0333,
+        1.0667,
+        1.1,
+        1.1333,
+        1.1667,
+        1.2,
+        1.2333,
+        1.2667,
+        1.3,
+        1.3333,
+        1.3667,
+        1.4,
+        1.4333,
+        1.4667,
+        1.5
+      ],
+      "avgFps": 30,
+      "minFps": 30,
+      "maxDispPx": 4.76,
+      "spriteSizeCm": [
+        24007,
+        24007
+      ],
+      "burstOffsetZcm": 0,
+      "pivotUV": [
+        0.5,
+        0.5
+      ],
+      "sizeByLife": [
+        [
+          0,
+          0.9270594784707915
+        ],
+        [
+          0.46887826086956486,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "averageQuadArea": 0.967,
+      "darkTailFrames": 0,
+      "colorOverLife": [
+        [
+          0,
+          [
+            1,
+            0.8714,
+            0.7157
+          ]
+        ],
+        [
+          1,
+          [
+            1,
+            0.8714,
+            0.7157
+          ]
+        ]
+      ],
+      "lightKeys": [
+        [
+          0,
+          1
+        ],
+        [
+          0.2391,
+          0.841
+        ],
+        [
+          0.7391,
+          0.306
+        ],
+        [
+          0.9783,
+          0.138
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "selfCheck": {
+        "clipFrames": [],
+        "edgeFrames": [],
+        "chanUse": [
+          true,
+          true,
+          true,
+          false
+        ],
+        "emptyMid": [],
+        "similar": 0,
+        "seam": null,
+        "maxClip": 0.0004006209624918624
+      }
+    }
+  ],
+  "events": [
+    {
+      "t": 0,
+      "type": "burst",
+      "name": "开花爆响",
+      "count": 1
+    }
+  ],
+  "metrics": {
+    "burn": 3.6333333333333333,
+    "diameter": 183.90175483763034,
+    "t50": 0,
+    "t80": 0.33027522935779813,
+    "t90": 0.5045871559633027,
+    "droop": -0.036769550968700264,
+    "bt": 1.146341463414634,
+    "kieguchi": 0.4220183486238533,
+    "peakT": 0.9666666666666667
+  },
+  "params": {
+    "renderVer": 40,
+    "exposure": 0.2,
+    "exposureLock": 0,
+    "haloFrac": 0.22,
+    "haloR": 3,
+    "previewBloom": 0,
+    "trimTail": 1,
+    "duration": 4.56,
+    "seed": 7,
+    "stars": 316,
+    "burstR0": 52,
+    "v0": 35,
+    "vt": 18,
+    "grav": 0.391,
+    "speedJit": 6,
+    "dirJit": 1.5,
+    "burn": 2.6851851851851847,
+    "burnJit": 12,
+    "fade": 0.38,
+    "lastFlare": 0,
+    "flash": 1,
+    "headSize": 0.45,
+    "headBright": 0.06090534979423868,
+    "flicker": 0.25,
+    "sparkRate": 314.6153846153846,
+    "sparkRateEnd": 0.35,
+    "sparkStop": 0,
+    "sparkStart": 0,
+    "sparkLife": 0.9,
+    "sparkLifeEnd": 1,
+    "sparkLifeJit": 45,
+    "sparkSize": 0.45,
+    "sparkSpread": 0.4,
+    "sparkInherit": 0.05,
+    "sparkDrag": 2.99,
+    "sparkGrav": 0.2,
+    "T0": 2300,
+    "cooling": 0.3,
+    "sparkBright": 1.9500000000000002,
+    "twinkle": 0.6,
+    "subDelay": 0.9,
+    "subJit": 10,
+    "subStars": 36,
+    "subSpeed": 40,
+    "subBurn": 0.9,
+    "subTail": 0,
+    "carrierTail": 30,
+    "subPattern": "sphere",
+    "spin": 14,
+    "chaos": 0.8,
+    "beeSpeed": 28,
+    "shellNo": 0,
+    "wind": 0,
+    "turb": 0,
+    "turbScale": 60,
+    "massLoss": 0,
+    "shellVx": 0,
+    "shellVy": 0,
+    "shellSpin": 0,
+    "pattern": "sphere",
+    "tilt": 0,
+    "ringFrac": 0.45,
+    "text": "祭",
+    "waterRefl": 0,
+    "ignDelay": 0,
+    "ignJit": 10,
+    "ignSeed": 0,
+    "keepFrac": 1,
+    "afterBurn": 0,
+    "afterJit": 15,
+    "headDim": 1,
+    "headDimUntil": 0,
+    "emberFrac": 0,
+    "emberLife": 3,
+    "emberBright": 0.1,
+    "emberFollow": 0,
+    "emberSize": 1,
+    "emberAll": 0,
+    "emberEnd": 0,
+    "carrierHead": 0.4,
+    "subKeep": -1,
+    "subSpeedJit": -1,
+    "trimLead": 1,
+    "expoMode": "sheet",
+    "expoQ": 0.7,
+    "subScaleJit": 0,
+    "subVt": 0,
+    "subGrav": -1,
+    "subFlash": -1,
+    "strobeHz": 0,
+    "strobeDuty": 0.35,
+    "strobeStart": 0.4,
+    "glitter": 0,
+    "glitterDelay": 0.25,
+    "crackle": 0,
+    "crackleDelay": 0.3,
+    "branch": 0,
+    "branchAt": 0.45,
+    "flutter": 0,
+    "flutterHz": 0.7,
+    "riseH": 250,
+    "vtShell": 55,
+    "riseStyle": "gold",
+    "wobble": 0,
+    "wobbleHz": 1.6,
+    "kobanaN": 4,
+    "bunpoN": 3,
+    "trV": 43.5,
+    "trFps": 30,
+    "trInh": 0.1,
+    "trDrag": 3,
+    "trGrav": 0.3,
+    "trCool": 1,
+    "trFRate": 2600,
+    "trFLife": 0.6,
+    "trFSpread": 0.45,
+    "trFSize": 0.1,
+    "trFBright": 0.03,
+    "trMRate": 600,
+    "trMLife": 0.75,
+    "trMSpread": 0.8,
+    "trMSize": 0.14,
+    "trMBright": 0.05,
+    "trCRate": 60,
+    "trCLife": 0.9,
+    "trCSpread": 1.2,
+    "trCSize": 0.18,
+    "trCBright": 0.12,
+    "trWRate": 0,
+    "trWLife": 0.12,
+    "trWSpread": 14,
+    "trWSize": 0.06,
+    "trWBright": 0.06,
+    "trHeadSize": 0.26,
+    "trHeadBright": 1.2,
+    "trHalo": 3,
+    "trHaloBright": 0.15,
+    "trTwist": 0.35,
+    "trTwistN": 5,
+    "trWiggle": 0.08,
+    "trTwistLag": 0.35,
+    "trFollow": 0,
+    "trBright": 1.6,
+    "trExport4K": 1,
+    "trIgnite": 0,
+    "trPhys": 0,
+    "loopT": 1,
+    "nozzles": 1,
+    "fanAngle": 70,
+    "spacing": 6,
+    "shotRate": 3,
+    "shotSpeed": 70,
+    "cometBurn": 1.4,
+    "burstStars": 0,
+    "wheelR": 3,
+    "jetSpeed": 28,
+    "jetCone": 10,
+    "jetDir": 90,
+    "groundH": 0,
+    "shutter": 0.6,
+    "fpsFloor": 24,
+    "fpsBurst": 30,
+    "burstSec": 0.5,
+    "fpsActive": 30,
+    "fpsFade": 30,
+    "fadeAt": 0,
+    "maxPages": 0,
+    "fitPages": 1,
+    "qSS": 2,
+    "qHz": 300,
+    "qMaxSub": 16,
+    "qKernel": 0,
+    "qCore": 0,
+    "texW": 2048,
+    "texH": 2048,
+    "cols": 4,
+    "rows": 4,
+    "chans": 4,
+    "outMode": "combined",
+    "encGamma": 1,
+    "frameMode": "auto",
+    "zoom": "on",
+    "engine": "gpu",
+    "form": "master",
+    "segAt": 0,
+    "unitElev": 0,
+    "unitFlip": 0,
+    "cellPad": 2,
+    "autoGrid": 0,
+    "type": "kiku"
+  },
+  "materialDefaults": {
+    "stages": [
+      [
+        0,
+        "#fff0dc"
+      ]
+    ],
+    "xw": 0.08,
+    "ramp0": "#000000",
+    "ramp1": "#8a5a30",
+    "ramp2": "#f2dcb0",
+    "ramp3": "#fffaf2",
+    "headInt": 1.875,
+    "tailInt": 1
+  }
+}

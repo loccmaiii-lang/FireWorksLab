@@ -1,0 +1,358 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "JinMangJu40",
+ "platform": "pc",
+ "source": {
+  "tool": "烟花母版烘焙器 4.0",
+  "type": "kiku",
+  "form": "master",
+  "quality": {
+   "ss": 2,
+   "hz": 300,
+   "kernel": 0,
+   "core": 0
+  }
+ },
+ "textures": {
+  "seqA": {
+   "file": "T_JinMangJu40_A.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64
+  },
+  "cutoutA": {
+   "file": "T_JinMangJu40_A_Cutout.png",
+   "class": "cutout"
+  },
+  "seqB": {
+   "file": "T_JinMangJu40_B.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 46
+  },
+  "cutoutB": {
+   "file": "T_JinMangJu40_B_Cutout.png",
+   "class": "cutout"
+  },
+  "ramp": {
+   "file": "T_JinMangJu40_Ramp.png",
+   "class": "ramp"
+  }
+ },
+ "materials": {
+  "mainA": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seqA",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  },
+  "mainB": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seqB",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 31209,
+  "preview_warmup_s": 1.2
+ },
+ "emitters": [
+  {
+   "name": "MainA",
+   "material": "mainA",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 2.1333,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutoutA",
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 2.1333
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       24007,
+       24007,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         0.53,
+         0.53,
+         1
+        ]
+       ],
+       [
+        0.2118,
+        [
+         0.66,
+         0.66,
+         1
+        ]
+       ],
+       [
+        0.4931,
+        [
+         0.78,
+         0.78,
+         1
+        ]
+       ],
+       [
+        0.8565,
+        [
+         0.896,
+         0.896,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         0.9271,
+         0.9271,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.9844,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.875,
+         1.6339,
+         1.3419
+        ]
+       ],
+       [
+        1,
+        [
+         1.875,
+         1.6339,
+         1.3419
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  },
+  {
+   "name": "MainB",
+   "material": "mainB",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 1.5333,
+    "loops": 1,
+    "delay_s": 2.1333,
+    "cutout": "cutoutB",
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 1.5333
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       24007,
+       24007,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         0.9271,
+         0.9271,
+         1
+        ]
+       ],
+       [
+        0.4689,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.9783,
+         45.01
+        ],
+        [
+         1,
+         45.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.875,
+         1.6339,
+         1.3419
+        ]
+       ],
+       [
+        1,
+        [
+         1.875,
+         1.6339,
+         1.3419
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  }
+ ]
+}
