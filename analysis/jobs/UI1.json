@@ -1,0 +1,24 @@
+{
+ "id": "UI1",
+ "type": "ui",
+ "name": "4.0 界面截图（用户 21:19 反馈：流转动画、已通过的效果、遗留条目）",
+ "priority": 10,
+ "note": "只截图，不改任何东西。给云端看用户实际看到的界面。",
+ "shots": [
+  {"name": "首页", "sleep": 4000},
+  {"name": "左栏_待我验收", "js": "lib.seg='review';renderLib()"},
+  {"name": "左栏_制作中", "js": "lib.seg='wip';renderLib()"},
+  {"name": "左栏_已通过", "js": "lib.seg='passed';renderLib()"},
+  {"name": "左栏_历史", "js": "lib.seg='hist';renderLib()"},
+  {"name": "JM4-40_实时", "review": "JM4-40", "view": "live", "t": 1.0, "sleep": 3000},
+  {"name": "JM4-40_引擎回放", "view": "export", "t": 1.0},
+  {"name": "JM4-40_贴图整张", "view": "atlas", "flow": false, "t": 1.0},
+  {"name": "JM4-40_流转", "view": "atlas", "flow": true, "seq": [0, 1.6, 3], "t": 0.8},
+  {"name": "JM4-40_流转后段", "view": "atlas", "flow": true, "seq": [2.0, 3.6, 3], "t": 3.0},
+  {"name": "菊模板_流转", "type": "kiku", "view": "atlas", "flow": true, "seq": [0, 3.2, 6], "t": 1.0, "sleep": 3000},
+  {"name": "柳模板_流转", "type": "yanagi", "view": "atlas", "flow": true, "seq": [0, 6.4, 12], "t": 2.0, "sleep": 3000},
+  {"name": "柳模板_引擎回放", "view": "export", "flow": false, "t": 3.0},
+  {"name": "鸿巢_效果页", "effect": "hongchao", "view": "live", "t": 1.5, "sleep": 3000},
+  {"name": "V5_效果页", "effect": "trail_v5", "t": 1.5, "sleep": 3000}
+ ]
+}

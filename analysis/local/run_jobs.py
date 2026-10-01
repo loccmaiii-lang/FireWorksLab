@@ -55,8 +55,11 @@ def run_job(job, s, force=False):
         line = time.strftime('%H:%M:%S ') + str(m); print(f'[{jid}] ' + line, flush=True); logf.write(line + '\n'); logf.flush()
     t0 = time.time()
     try:
-        if job.get('type') in ('trail', 'export'):
-            if job['type'] == 'trail':
+        if job.get('type') in ('trail', 'export', 'ui'):
+            if job['type'] == 'ui':
+                log(f"开始：{job.get('name', '')}（界面截图）")
+                import ui_shots; ui_shots.run(job, s, out, log=log)
+            elif job['type'] == 'trail':
                 log(f"开始：{job.get('name', '')}（升空尾缀：校准 → 渐变图 → 导出 → 视频）")
                 import trail_job; trail_job.run(job, s, out, log=log)
             else:
