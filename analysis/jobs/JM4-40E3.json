@@ -1,0 +1,9 @@
+{
+ "id": "JM4-40E3",
+ "type": "export",
+ "effect": "jinmangju",
+ "entry": "JM4-40",
+ "name": "JinMangJu40",
+ "priority": 12,
+ "note": "JM4-40 改成一张 64 帧（按运动分配）+ 固定取景后重导：素材包、回放检查、烘焙器同一秒对照。"
+}

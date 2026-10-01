@@ -55,8 +55,14 @@ def run_job(job, s, force=False):
         line = time.strftime('%H:%M:%S ') + str(m); print(f'[{jid}] ' + line, flush=True); logf.write(line + '\n'); logf.flush()
     t0 = time.time()
     try:
-        if job.get('type') in ('trail', 'export', 'ui'):
-            if job['type'] == 'ui':
+        if job.get('type') in ('trail', 'export', 'ui', 'smoke'):
+            if job['type'] == 'smoke':
+                log(f"开始：{job.get('name', '')}（界面冒烟检查）")
+                import asyncio, importlib, pathlib as _pl
+                sm = importlib.import_module('界面冒烟')
+                ok = asyncio.run(sm.main(_pl.Path(out), True, job.get('limit', 600)))
+                log('界面冒烟：' + ('✅ 没有报错' if ok else '❌ 有报错，见 冒烟.json'))
+            elif job['type'] == 'ui':
                 log(f"开始：{job.get('name', '')}（界面截图）")
                 import ui_shots; ui_shots.run(job, s, out, log=log)
             elif job['type'] == 'trail':

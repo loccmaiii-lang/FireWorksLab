@@ -87,7 +87,7 @@ await check('live preview keeps its world camera fixed while bake framing grows'
   context.gl={activeTexture(){}};context.Target=class{constructor(w,h){this.w=w;this.h=h;}dispose(){}clear(){}bind(){}};
   run(`disposeTrack=()=>{};disposeEmitter=()=>{};post=()=>{};renderCell40=()=>{};makeRenderer=()=>({dispose(){}});
     shadeView40=(P,M,cell,t,view,target,camera)=>displayViews.push({time:t,framing:view,camera});
-    hdrT=new Target(1080,1080);state.P=defaultsFor('strobe',40).P;state.M=defaultsFor('strobe').M;
+    hdrT=new Target(1080,1080);state.P={...defaultsFor('strobe',40).P,zoom:'on'};state.M=defaultsFor('strobe').M;
     state.gen++;state.bake=null;state.disp='game';state.exportResolution=true;state.platform='pc';
     for(const t of [2,3,4]){state.t=t;renderLive40();}`);
   const views=JSON.parse(JSON.stringify(context.displayViews));

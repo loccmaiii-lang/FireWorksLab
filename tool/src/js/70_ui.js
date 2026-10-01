@@ -91,7 +91,7 @@ function showStats(b) {
   const rows = [];
   rows.push(`${FORM_NAMES[b.form]} · 共 <b>${totalFrames}</b> 帧${b.next ? ' · '+parts.length+' 段' : ''} · 单格 <b>${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}</b>${L.cellW % 1 ? '（不是整数像素：格子边界落在像素中间，格子四周有留空，引擎里确认一次不串格）' : ''} · ${L.chans === 4 ? 'RGBA 接力' : '单通道'}`);
   if (m.loop) rows.push(`循环周期 <b>${m.duration.toFixed(2)} s</b> · ${m.avgFps.toFixed(1)} fps · 接缝 <span class="${cls(c.seam == null || c.seam < 1.6)}">${c.seam == null ? '—' : c.seam.toFixed(2)}</span>（≈1 无缝）`);
-  else if (m.budget) rows.push(`帧预算 · 开花段 <b>${m.budget.fps[0]}</b> / 燃烧段 <b>${m.budget.fps[1]}</b> / 淡出段 <b>${m.budget.fps[2]}</b> fps（淡出从 ${m.budget.fadeAt.toFixed(2)} s）${isFinite(m.budget.strobeFrom)?` · 点灭期间 ${m.budget.strobeFps} fps`:''} · 燃烧段最低 <span class="${cls(m.minFps >= 12)}">${m.minFps.toFixed(1)} fps</span> · 每帧最大位移 <span class="${cls(m.maxDisp <= 6)}">${m.maxDisp.toFixed(1)} px</span>`);
+  else if (m.budget) rows.push((m.budget.fps ? `帧预算 · 开花段 <b>${m.budget.fps[0]}</b> / 燃烧段 <b>${m.budget.fps[1]}</b> / 淡出段 <b>${m.budget.fps[2]}</b> fps（淡出从 ${m.budget.fadeAt.toFixed(2)} s）` : `帧预算 · ${m.budget.mode === 'full' ? '全程 30 fps' : '按运动分配'} · 每帧停 <b>${m.budget.holdMin}–${m.budget.holdMax}</b> 个 tick（${(30 / m.budget.holdMin).toFixed(0)}–${(30 / m.budget.holdMax).toFixed(1)} fps）· 共 <b>${m.budget.pages}</b> 张`) + `${isFinite(m.budget.strobeFrom)?` · 点灭期间 ${m.budget.strobeFps} fps`:''} · 燃烧段最低 <span class="${cls(m.minFps >= 12)}">${m.minFps.toFixed(1)} fps</span> · 每帧最大位移 <span class="${cls(m.maxDisp <= 6)}">${m.maxDisp.toFixed(1)} px</span>`);
   else rows.push(`平均 <b>${m.avgFps.toFixed(1)}</b> fps · 最低 <span class="${cls(m.minFps >= 24)}">${m.minFps.toFixed(1)} fps</span> · 每帧最大位移 <span class="${cls(m.maxDisp <= 3)}">${m.maxDisp.toFixed(1)} px</span>`);
   rows.push(`精灵 ${m.Ww.toFixed(1)}×${m.Wh.toFixed(1)} m · 贴图 ${nTex} 张 · BC7 约 ${mb} MB`);
   if (b.form === 'master' || b.form === 'segments') rows.push(`平均面片面积 <b>${Math.round(m.area * 100)}%</b>${m.tight ? '（紧凑取景）' : m.zoom ? '（随开花放大）' : '（固定大小）'}${b.next ? ` · 分段时刻 ${parts.slice(1).map(s=>s.meta.t0.toFixed(2)).join(' / ')} s` : ''}`);
@@ -343,7 +343,7 @@ const LIB_TYPES = ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'henk
 // 组合用的母版：2048（1024 时每帧只有 128 像素，组合页糊得没法看——用户 2026-09-30）；组合页默认实时模拟，贴图只在「导出效果」页用
 // 组合用的母版：迭代 / 正式库条目（rep:）保持条目自己的输出方式（合并输出 = 引擎里的样子：灰度查 Ramp），这样组合页「导出效果」和导出的素材一致；
 // 花型库默认母版仍用分开输出（组合里星头 / 尾巴亮度可以分开调）。window.FW_LIB_TEX：云端软件渲染自检时临时改小贴图。
-const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || 2048, texH: window.FW_LIB_TEX || 2048, cols: renderVersion(P)>=40?Math.min(4,P.cols):8, rows: renderVersion(P)>=40?Math.min(4,P.rows):8, chans: 4, outMode: keep && P.outMode ? P.outMode : renderVersion(P)>=40 ? 'combined' : 'split', form: 'master', zoom: 'on' });
+const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || 2048, texH: window.FW_LIB_TEX || 2048, cols: renderVersion(P)>=40?Math.min(4,P.cols):8, rows: renderVersion(P)>=40?Math.min(4,P.rows):8, chans: 4, outMode: keep && P.outMode ? P.outMode : renderVersion(P)>=40 ? 'combined' : 'split', form: 'master', zoom: renderVersion(P)>=40 ? (P.zoom === 'on' ? 'on' : 'off') : 'on' });
 const defaultLibName = t => TYPE_NAMES[t].replace(/（.*）/, '') + ' · 默认';
 async function ensureLibrary() {
   if (state.libReady) return;

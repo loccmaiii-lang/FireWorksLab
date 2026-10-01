@@ -163,6 +163,8 @@ function defaultsFor(type, version, stored = false) {
   const M = { ...MAT_BASE, ...t.m }; M.stages = (t.m.stages || MAT_BASE.stages).map(s => [...s]);
   const P = { ...BASE, ...t.p, type, renderVer: t.p.renderVer == null ? version : t.p.renderVer };
   if (P.renderVer >= 40 && familyOf(type) === 'aerial' && t.p.cols == null) { P.cols = 4; P.rows = 4; }
+  // 4.0 新建：固定取景（用户 2026-10-01 22:28 指出 Zoom 在抖：面片连续放大，贴图一帧停几个 tick，换帧时花缩回去，一胀一缩 1–3%）
+  if (P.renderVer >= 40 && !stored && familyOf(type) === 'aerial' && t.p.zoom == null) P.zoom = 'off';
   if (P.renderVer >= 40 && !stored) { Object.assign(P, TEMPLATE40[type] || {}); if (t.p.exposure == null && EXPOSURE40[type]) P.exposure = EXPOSURE40[type]; }
   return { P, M };
 }
