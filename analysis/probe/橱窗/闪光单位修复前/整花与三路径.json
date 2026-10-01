@@ -1,0 +1,236 @@
+{
+  "scan": [
+    {
+      "px": 512,
+      "size": 0.3,
+      "t": 0.8,
+      "shutter": [
+        0.7868454417952315,
+        0.8131545582047686
+      ],
+      "exposure": 1,
+      "linear": {
+        "headSum": 17.939928650856018,
+        "headPeak": 0.11590576171875,
+        "headHalfPixels": 50
+      }
+    },
+    {
+      "px": 512,
+      "size": 0.6,
+      "t": 0.8,
+      "shutter": [
+        0.7868454417952315,
+        0.8131545582047686
+      ],
+      "exposure": 1,
+      "linear": {
+        "headSum": 71.75928646326065,
+        "headPeak": 0.322509765625,
+        "headHalfPixels": 54
+      }
+    },
+    {
+      "px": 512,
+      "size": 1.2,
+      "t": 0.8,
+      "shutter": [
+        0.7868454417952315,
+        0.8131545582047686
+      ],
+      "exposure": 1,
+      "linear": {
+        "headSum": 287.04660153388977,
+        "headPeak": 0.4755859375,
+        "headHalfPixels": 168
+      }
+    },
+    {
+      "px": 512,
+      "size": 2.4,
+      "t": 0.8,
+      "shutter": [
+        0.7868454417952315,
+        0.8131545582047686
+      ],
+      "exposure": 1,
+      "linear": {
+        "headSum": 1148.187639951706,
+        "headPeak": 0.498291015625,
+        "headHalfPixels": 1050
+      }
+    },
+    {
+      "px": 1024,
+      "size": 0.3,
+      "t": 0.8,
+      "shutter": [
+        0.7478933333333333,
+        0.8521066666666668
+      ],
+      "exposure": 1,
+      "linear": {
+        "headSum": 71.74754577875137,
+        "headPeak": 0.1796875,
+        "headHalfPixels": 6
+      }
+    },
+    {
+      "px": 1024,
+      "size": 0.6,
+      "t": 0.8,
+      "shutter": [
+        0.7478933333333333,
+        0.8521066666666668
+      ],
+      "exposure": 1,
+      "linear": {
+        "headSum": 286.9966177344322,
+        "headPeak": 0.44775390625,
+        "headHalfPixels": 8
+      }
+    },
+    {
+      "px": 1024,
+      "size": 1.2,
+      "t": 0.8,
+      "shutter": [
+        0.7478933333333333,
+        0.8521066666666668
+      ],
+      "exposure": 1,
+      "linear": {
+        "headSum": 1148.0017006397247,
+        "headPeak": 0.4599609375,
+        "headHalfPixels": 58
+      }
+    },
+    {
+      "px": 1024,
+      "size": 2.4,
+      "t": 0.8,
+      "shutter": [
+        0.7478933333333333,
+        0.8521066666666668
+      ],
+      "exposure": 1,
+      "linear": {
+        "headSum": 4592.075720012188,
+        "headPeak": 0.4599609375,
+        "headHalfPixels": 1601
+      }
+    }
+  ],
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "paths": {
+    "t": 0.44126789189189186,
+    "captures": {
+      "bake": {
+        "window": [
+          0.4027641081081081,
+          0.47977167567567564
+        ],
+        "view": [
+          0,
+          -15.831466028887746,
+          94.80942291850955,
+          94.80942291850955
+        ],
+        "ppm": 5.400307102808478,
+        "ppmY": 5.400307102808478,
+        "width": 1024,
+        "height": 1024,
+        "sumH": 1830.8743768930435,
+        "sumT": 4530.744187235832,
+        "peak": 0.17236328125,
+        "hash": 4249604586
+      },
+      "live": {
+        "window": [
+          0.4027641081081081,
+          0.47977167567567564
+        ],
+        "view": [
+          0,
+          -15.831466028887746,
+          94.80942291850955,
+          94.80942291850955
+        ],
+        "ppm": 5.400307102808478,
+        "ppmY": 5.400307102808478,
+        "width": 1024,
+        "height": 1024,
+        "sumH": 1830.8743768930435,
+        "sumT": 4530.744187235832,
+        "peak": 0.17236328125,
+        "hash": 4249604586
+      },
+      "stills": {
+        "window": [
+          0.4027641081081081,
+          0.47977167567567564
+        ],
+        "view": [
+          0,
+          -15.831466028887746,
+          94.80942291850955,
+          94.80942291850955
+        ],
+        "ppm": 5.400307102808478,
+        "ppmY": 5.400307102808478,
+        "width": 1024,
+        "height": 1024,
+        "sumH": 1830.8743768930435,
+        "sumT": 4530.744187235832,
+        "peak": 0.17236328125,
+        "hash": 4249604586
+      }
+    },
+    "brightness": [
+      {
+        "gain": 1,
+        "sum": 5878.496614991989,
+        "clipped": 0,
+        "exposure": 1
+      },
+      {
+        "gain": 2,
+        "sum": 11791.178742169344,
+        "clipped": 0,
+        "exposure": 1
+      }
+    ],
+    "lockWorks": true,
+    "excludedFlash": true,
+    "suggestedExposure": 2.3564,
+    "flashSamples": [
+      {
+        "sig": 1,
+        "radiance": 7.082523345947266
+      },
+      {
+        "sig": 8,
+        "radiance": 453.281494140625
+      }
+    ]
+  },
+  "decodedBrightnessRatio": 2.005815349471867,
+  "pageErrors": [],
+  "checks": {
+    "512: half-peak pixels strictly increase": true,
+    "512: peak never falls by over 10%": true,
+    "512: energy responds to every size": true,
+    "1024: half-peak pixels strictly increase": true,
+    "1024: peak never falls by over 10%": true,
+    "1024: energy responds to every size": true,
+    "all three routes sampled": true,
+    "same shutter and sample pixels (stronger than 10% trail length)": true,
+    "head brightness x2 gives decoded export energy x2 ±10%": true,
+    "fixed export exposure": true,
+    "locked exposure is not changed": true,
+    "exposure suggestion excludes opening and sub flashes": true,
+    "flash radiance does not accidentally multiply by area again": false,
+    "no page errors": true
+  },
+  "passed": false
+}

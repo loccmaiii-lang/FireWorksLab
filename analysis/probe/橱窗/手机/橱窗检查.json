@@ -1,0 +1,63 @@
+{
+  "cases": [
+    {
+      "key": "kiku",
+      "left": 37,
+      "right": 40,
+      "cells": [
+        256,
+        256
+      ],
+      "exposure": 3,
+      "duration": 3.2,
+      "frames": [
+        256,
+        64
+      ],
+      "maxClip": 0.013586259933350423,
+      "darkTail": 0,
+      "nonempty": true
+    },
+    {
+      "key": "senrin",
+      "left": 37,
+      "right": 40,
+      "cells": [
+        256,
+        256
+      ],
+      "exposure": 4,
+      "duration": 2.8,
+      "frames": [
+        256,
+        64
+      ],
+      "maxClip": 0.0258604297394942,
+      "darkTail": 0,
+      "nonempty": true
+    },
+    {
+      "key": "JM4",
+      "left": 37,
+      "right": 40,
+      "cells": [
+        256,
+        256
+      ],
+      "exposure": 0.2,
+      "duration": 4.56,
+      "frames": [
+        256,
+        64
+      ],
+      "maxClip": 0.0007047216349541931,
+      "darkTail": 1,
+      "nonempty": true
+    }
+  ],
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "continuousPlayback": true,
+  "closed": true,
+  "pageErrors": [],
+  "pass": true
+}

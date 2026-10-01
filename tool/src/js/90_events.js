@@ -1,4 +1,5 @@
 // ---------------- 事件 ----------------
+initShowcase();
 for (const [g, types] of TYPE_GROUPS) {
   const og = document.createElement('optgroup'); og.label = g;
   for (const t of types) og.appendChild(new Option(TYPE_NAMES[t], t));

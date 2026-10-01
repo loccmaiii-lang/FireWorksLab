@@ -1,9 +1,12 @@
 // ---------------- 渲染 ----------------
 function ensureTargets() {
   const box = $('#box').getBoundingClientRect();
-  const size = Math.max(256, Math.min(2048, Math.round(Math.min(box.width, box.height || box.width) * (devicePixelRatio || 1) / 4) * 4));
-  if (canvas.width !== size) { canvas.width = size; canvas.height = size; }
-  if (!hdrT || hdrT.w !== size) { gl.activeTexture(gl.TEXTURE0); hdrT && hdrT.dispose(); rgT && rgT.dispose(); hdrT = new Target(size, size, gl.RGBA16F, true); rgT = new Target(size, size, gl.RGBA16F); }
+  const dpr=devicePixelRatio||1, wide=!!state.showcase;
+  const size = Math.max(256, Math.min(wide?4096:2048, Math.round(Math.min(box.width, (box.height || box.width)*(wide?2:1)) * dpr / 4) * 4)), height=wide?size/2:size;
+  if (canvas.width !== size || canvas.height!==height) { canvas.width = size; canvas.height = height; }
+  canvas.style.width=wide?size/dpr+'px':'';canvas.style.height=wide?height/dpr+'px':'';
+  if(wide)$('#showcasePair').style.width=size/dpr+'px';
+  if (!hdrT || hdrT.w !== size || hdrT.h!==height) { gl.activeTexture(gl.TEXTURE0); hdrT && hdrT.dispose(); rgT && rgT.dispose(); hdrT = new Target(size, height, gl.RGBA16F, true); rgT = new Target(size, height, gl.RGBA16F); }
 }
 function setMatUniforms(pr, c, age) {
   gl.uniform3fv(pr.u.uR0, hexToLin(c.ramp0)); gl.uniform3fv(pr.u.uR1, hexToLin(c.ramp1));
@@ -106,10 +109,10 @@ function uploadRef() {
   gl.activeTexture(gl.TEXTURE0);
   return true;
 }
-function post(split = -1, P = state.P) {
+function post(split = -1, P = state.P, viewport = null) {
   gl.bindTexture(gl.TEXTURE_2D, hdrT.tex); gl.generateMipmap(gl.TEXTURE_2D);
   const useRef = state.tab !== 'combo' && uploadRef();
-  gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, canvas.width, canvas.height);
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(...(viewport||[0,0,canvas.width,canvas.height]));
   const modern=renderVersion(P)>=40, pr = modern?PR40.post:PR.post, R = state.ref; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, hdrT.tex);
   if(modern)gl.uniform1f(pr.u.uBloom,P.previewBloom?1:0);
   gl.uniform1i(pr.u.uS, 0); gl.uniform1f(pr.u.uX, state.expo); gl.uniform2f(pr.u.uTx, 1 / hdrT.w, 1 / hdrT.h);
@@ -397,6 +400,7 @@ function updateLabels() {
 // ---------------- 主循环 ----------------
 let lastT = performance.now();
 function curDuration() {
+  if(state.showcase && showcase.left)return Math.max(showcase.left.P.duration,showcase.right.P.duration);
   if (state.tab === 'combo') return comboDuration();
   if (state.tab === 'asset') return assetDuration();
   let d = state.P.duration; if (state.B) d = Math.max(d, state.B.P.duration);
@@ -412,18 +416,19 @@ function loop(now) {
   try {
     if (state.tab === 'asset') renderAssets();
     else { ensureTargets();
-    if (state.tab === 'combo') renderCombo();
+    if (state.showcase)renderShowcase();else if (state.tab === 'combo') renderCombo();
     else if (state.view === 'live' || (state.bake && state.bake.form === 'phys')) renderLive(); else if (state.view === 'export') renderExport(); else renderAtlas(); }
   } catch (e) { console.error(e); hudText = '渲染出错：' + e.message; }
   if (pendingThumb) { const f = pendingThumb; pendingThumb = null; try { f(thumbFromCanvas()); } catch (e) { } }
   $('#hud').textContent = hudText; $('#hudB').textContent = hudB; updateLabels();
   const mv = state.tab !== 'combo' && state.tab !== 'asset';
+  $('#viewSeg').hidden=!!state.showcase;
   $('#atlasSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.tail);
   $('#segSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.next);
   $('#flowSeg').hidden = !mv || state.view !== 'atlas'; $('#flowCv').hidden = !mv || state.view !== 'atlas' || !state.atlasFlow;
   $('#dispSeg').hidden = state.tab==='asset' ? false : state.view !== 'export';
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
-  $('#platformSeg').hidden = state.tab==='asset' || (mv && isPhys(state.P));
+  $('#platformSeg').hidden = !state.showcase && (state.tab==='asset' || (mv && isPhys(state.P)));
   $('#resolutionBox').hidden = !mv || state.view!=='live' || renderVersion(state.P)<40 || isTrail(state.P) || isPhys(state.P);
   $('#abTag').hidden = !(mv && state.B);
   refSync();

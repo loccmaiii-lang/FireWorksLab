@@ -337,7 +337,7 @@ class Sim {
     if (s.kind === 5 && P.riseStyle === 'fue') st *= 0.6 + 0.4 * Math.sin(6.2832 * 9 * s.age);
     return s.I * s.flick * ign * f * last * st;
   }
-  // 当前时刻所有发光点：星头 → bufH，火花 → bufT；每点 [x, y, 强度, 尺寸(2σ, 米)]
+  // 每点 [x, y, 强度, 尺寸]：3.7 是总光量 / 2σ，4.0 是面亮度 / 亮核直径（米）。
   gather(bufH, bufT) {
     const P = this.P, rr = this.rr, refl = P.waterRefl;
     let nh = 0; const capH = bufH.length >> 2, capT = bufT.length >> 2;
@@ -352,7 +352,9 @@ class Sim {
     for (const f of this.flashes) {
       const a = this.t - f.t0, cut = f.cut || 0.25; if (a < 0 || a > cut || nh >= capH - 1) continue;
       if (P._unit && f.abs == null) continue;      // 单元序列不含开花闪光（另挂）
-      const I = f.abs != null ? f.abs * Math.exp(-a / f.tau) : f.I * Math.exp(-a / 0.035) * 1.5 * 6.2832 * f.sig * f.sig;
+      let I = f.abs != null ? f.abs * Math.exp(-a / f.tau) : f.I * Math.exp(-a / 0.035) * 1.5 * 6.2832 * f.sig * f.sig;
+      // 旧闪光预乘高斯面积以表达峰值亮度；新核直接接收面亮度，必须还原单位，不能再乘一次面积。
+      if(P.renderVer>=40)I/=6.2832*f.sig*f.sig;
       push(bufH, nh++, f.x, f.y, I, f.sig * 2);
       if (refl > 0 && f.y >= 0) push(bufH, nh++, f.x, -f.y - 0.01, I * refl, f.sig * 2.6);
     }

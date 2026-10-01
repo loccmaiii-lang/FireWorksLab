@@ -12,10 +12,12 @@
         <input type="search" id="libSearch" placeholder="搜索：名字、任务号、特征" aria-label="搜索库">
       </div>
       <div class="side-body" id="libBody"></div>
-      <div class="side-foot"><button class="btn ghost" id="assetOpen2" type="button" title="临时看某个结果文件夹">打开结果文件夹…</button></div>
+      <div class="side-foot"><button class="btn" id="showcaseOpen" type="button">4.0 对照橱窗</button><button class="btn ghost" id="assetOpen2" type="button" title="临时看某个结果文件夹">打开结果文件夹…</button></div>
     </aside>
     <div class="gutter" id="gutL" title="拖动调整宽度"></div>
     <section class="stage">
+      <div id="showcaseBar" class="showcase-bar" hidden><b>3.7 / 4.0 同秒对照</b><select id="showcaseType" aria-label="对照花型"></select><button id="showcaseParams" class="btn ghost">保存对照配方</button><button id="showcaseClose" class="btn ghost">退出对照</button><p id="showcaseNote">正在准备实际导出贴图…</p></div>
+      <div id="showcasePair" class="showcase-pair" hidden><span id="showcaseLeft">3.7 原版</span><span id="showcaseRight">4.0 新核</span></div>
       <div class="viewbar">
         <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="1.5" y="2.5" width="4.5" height="11" rx="1.5"/></svg><span class="tl">库</span></button>
         <div class="seg" id="viewSeg">

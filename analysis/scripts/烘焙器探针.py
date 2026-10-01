@@ -17,8 +17,8 @@
   格子      列 × 行 × 通道、总帧数、单格像素
   帧预算    引擎按 --fps 逐 tick 取整后，实际显示的帧数 / 总帧数、最大一次跳几帧、燃烧段（前 85%）最低有效帧率
   放大      花径占屏幕高 --frac（默认 1/3，用户实测四尺玉在 800–1200 m 时）→ 面片在屏幕上多少像素、单格贴图被放大几倍（>1 = 贴图像素比屏幕像素少）；
-            另附按真实米数 + 60° 视角的估算（--dist，未经 UE 验证）
-  尺寸下限  光点 σ 最小 0.55 渲染像素（40_gl.js），换算成米：小于它的 headSize / sparkSize 在贴图里没有区别
+            --dist 用同一实测占比换算距离；另附 60° 视角估算作未验证参考
+  尺寸下限  3.7 按 σ 最小 0.55 渲染像素计算；4.0 在实际每米像素下渲染两档尺寸，检查线性能量是否响应
   标准      按 协作/标准.md 第 2 节给出 ✅ / ❌（放大、显示帧、尺寸有效）
 
 浏览器：Windows / 有显卡的机器用系统 GPU（默认）；Linux 云端自动用软件渲染（慢，--bake 一次 3–5 分钟）。
@@ -36,7 +36,7 @@ JS_METRICS = r"""
   if (id.startsWith('type:')) { const t = id.slice(5); if (!TYPES[t]) return { id, error: '没有这个花型：' + t }; const d = defaultsFor(t); P = derive({ ...d.P }); M = d.M; }
   else { if (!REPLICA_BY_ID[id]) return { id, error: '没有这个条目：' + id }; const r = __fw.replicaPM(id); P = r.P; M = r.M; name = REPLICA_BY_ID[id].name; }
   const out = { id, name, type: P.type, form: P.form, duration: P.duration, zoom: P.zoom, frameMode: P.frameMode, autoGrid: P.autoGrid,
-                qSS: P.qSS || 2, qKernel: P.qKernel || 0, headSize: P.headSize, sparkSize: P.sparkSize, emberSize: P.emberSize, texW: P.texW, texH: P.texH };
+                renderVer:P.renderVer||37, qSS: P.qSS || 2, qKernel: P.qKernel || 0, headSize: P.headSize, sparkSize: P.sparkSize, emberSize: P.emberSize, texW: P.texW, texH: P.texH };
   if (P.form !== 'master' && P.form !== 'segments') { out.note = '只量大面片（master / segments）；这个产物是 ' + P.form; return out; }
   const fm = __fw.measure(P), pl = __fw.plan(P, fm), L = pl.L, D = pl.duration;
   out.grid = { cols: L.cols, rows: L.rows, chans: L.chans, frames: L.F, cellW: L.cellW, cellH: L.cellH };
@@ -44,7 +44,7 @@ JS_METRICS = r"""
   // 帧号曲线逐 tick 取整（和材质一样：floor，不混合）
   const fAt = t => Math.min(L.F - 1, Math.floor(evalKeys(pl.keys, Math.min(1, t / D))));
   const n = Math.floor(D * fps); let seen = new Set(), maxJump = 0, prev = null;
-  for (let i = 0; i <= n; i++) { const f = fAt(i / fps); seen.add(f); if (prev !== null) maxJump = Math.max(maxJump, f - prev); prev = f; }
+  for (let i = 0; i <= n && i/fps<D; i++) { const f = fAt(i / fps); seen.add(f); if (prev !== null) maxJump = Math.max(maxJump, f - prev); prev = f; }
   out.frames30 = { shown: seen.size, total: L.F, ratio: +(seen.size / L.F).toFixed(3), maxJump };
   // 燃烧段（前 85%）每 0.5 s 窗口内换了几帧 → 最低有效帧率
   let minFps = 1e9; for (let t0 = 0; t0 + 0.5 <= D * 0.85; t0 += 0.25) { const s = new Set(); for (let t = t0; t < t0 + 0.5; t += 1 / fps) s.add(fAt(t)); minFps = Math.min(minFps, s.size / 0.5); }
@@ -54,16 +54,41 @@ JS_METRICS = r"""
   //   花径 = 燃烧期最大半径 × 2；面片比花径大（留边、拖尾、下垂）：面片屏幕像素 = 花径屏幕像素 × 面片 / 花径
   const sMax = pl.zoom ? Math.max(...pl.sizeKeys.map(k => k[1])) : 1;
   let R = 1; for (const q of fm.prof) R = Math.max(R, q[2]); out.flowerM = +(2 * R).toFixed(1);
-  const flowerPx = frac * screenH, spritePx = flowerPx * pl.Ww * sMax / (2 * R);
-  out.screen = { frac, flowerPx: Math.round(flowerPx), spritePx: Math.round(spritePx), mag: +(spritePx / L.cellW).toFixed(2), magMobile256: +(spritePx / 256).toFixed(2),
+  const diameter=typeof gameDiameter==='function'?gameDiameter({P,fm},2*R):2*R, fraction=P.screenFrac||frac;
+  out.flowerM=+diameter.toFixed(1);
+  const flowerPx = fraction * screenH, spritePx = flowerPx * pl.Ww * sMax / diameter;
+  out.screen = { frac:fraction, flowerPx: Math.round(flowerPx), spritePx: Math.round(spritePx), mag: +(spritePx / L.cellW).toFixed(2), magMobile256: +(spritePx / 256).toFixed(2),
                  mag512: +(spritePx / 512).toFixed(2), mag1024: +(spritePx / 1024).toFixed(2),
                  suggestPC: spritePx <= 512 ? 512 : spritePx <= 1024 ? 1024 : 2048 };   // 建议的 PC 单格（能做到不放大的最小格子）；只是建议，效果可以选更大
   // 参考：按真实米数 + 竖直视角 60°（烘焙器「游戏内大小」的假设，未经 UE 验证，和用户实测不一致时以上面为准）
-  out.game = dists.map(dist => { const ppmS = screenH / (2 * dist * Math.tan(Math.PI / 6)), onScreen = pl.Ww * sMax * ppmS; return { dist, spritePx: Math.round(onScreen), mag: +(onScreen / L.cellW).toFixed(2) }; });
+  out.perspectiveReference = dists.map(dist => { const ppmS = screenH / (2 * dist * Math.tan(Math.PI / 6)), onScreen = pl.Ww * sMax * ppmS; return { dist, spritePx: Math.round(onScreen), mag: +(onScreen / L.cellW).toFixed(2) }; });
+  out.game = dists.map(dist=>({dist,spritePx:Math.round(spritePx*1000/dist),mag:+(spritePx*1000/dist/L.cellW).toFixed(2)}));
   // 尺寸下限：σ = max(size·0.5·ppm, 0.55)（渲染像素，渲染缓冲是单格的 qSS 倍）
   const ss = Math.max(1, Math.round(P.qSS || 2)), ppmEnd = L.cellW * ss / (pl.Ww * sMax), ppmStart = pl.zoom ? L.cellW * ss / (pl.Ww * Math.min(...pl.sizeKeys.map(k => k[1]))) : ppmEnd;
   out.deadSize = { atFull: +(1.1 / ppmEnd).toFixed(2), atStart: +(1.1 / ppmStart).toFixed(2) };
   out.sizeDead = { head: P.headSize <= out.deadSize.atFull, spark: P.sparkSize <= out.deadSize.atFull };
+  if(P.renderVer>=40){
+    // 实测而非仅按版本赋通过：同一物理光点在导出采样分辨率下放大 10%。
+    const savedQuality=particleQuality, savedPPMY=PPMY;
+    const energy=size=>{
+      const N=Math.min(2048,Math.max(64,Math.ceil(size*ppmEnd*(1+8*(P.haloR||3)))));
+      gl.activeTexture(gl.TEXTURE0);const target=new Target(N,N,gl.RGBA16F);
+      try{
+        setParticleProfile(P);PPMY=0;target.clear();target.bind();additive(true);
+        drawPoints(new Float32Array([0,0,1,size]),1,[0,0,N/(2*ppmEnd),N/(2*ppmEnd)],ppmEnd,[1,0,0,0],1);
+        additive(false);const a=new Float32Array(N*N*4);gl.readPixels(0,0,N,N,gl.RGBA,gl.FLOAT,a);
+        let total=0;for(let i=0;i<a.length;i+=4)total+=a[i];return total;
+      }finally{target.dispose();additive(false);}
+    };
+    try{
+      out.sizeResponse={};
+      for(const [name,size] of [['head',P.headSize],['spark',P.sparkSize]]){
+        const a=energy(size),b=energy(size*1.1);out.sizeResponse[name]={size,energy:a,enlarged:b,ratio:a?b/a:0};
+        out.sizeDead[name]=!(a>0 && b/a>1.1);
+      }
+      out.deadSize={atFull:0,atStart:0,note:'无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失'};
+    }finally{particleQuality=savedQuality;PPMY=savedPPMY;}
+  }
   return out;
 }
 """
@@ -72,7 +97,7 @@ JS_BAKE = r"""
 async (id) => {
   let P, M; if (id.startsWith('type:')) { const d = defaultsFor(id.slice(5)); P = derive({ ...d.P }); M = d.M; } else { const r = __fw.replicaPM(id); P = r.P; M = r.M; }
   const b = await __fw.bake(P, 1, null); const L = b.meta.L;
-  const r = { grid: { cols: L.cols, rows: L.rows, chans: L.chans, frames: L.F, cellW: L.cellW, cellH: L.cellH }, t0: b.meta.t0 || 0, darkTail: b.meta.darkTail, edgeFrames: b.meta.edgeFrames };
+  const r = { grid: { cols: L.cols, rows: L.rows, chans: L.chans, frames: L.F, cellW: L.cellW, cellH: L.cellH }, t0: b.meta.t0 || 0, darkTail: b.meta.darkTail, edgeFrames: b.meta.check?.edgeFrames };
   disposeBake(b); return r;
 }
 """

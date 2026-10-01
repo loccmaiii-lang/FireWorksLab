@@ -184,7 +184,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   gl.activeTexture(gl.TEXTURE0);
   fH.dispose(); fT.dispose(); sst.dispose();
   const bakeMs = performance.now() - t0;
-  const b = { N, NH, cw, chh, scale, head, tail, P, meta: { ...pl, quality: q, expoH: eH, expoT: eT, sparkSlots: R.slots || 0, bakeMs } };
+  const b = { N, NH, cw, chh, scale, head, tail, P, meta: { ...pl, ...(renderVersion(P)>=40?{noFade:!!extra.noFade}:{}), quality: q, expoH: eH, expoT: eT, sparkSlots: R.slots || 0, bakeMs } };
   analyze(b);
   return b;
 }

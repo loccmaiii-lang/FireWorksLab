@@ -44,7 +44,7 @@ function renderCell40(P, pl, R, t, samples, cell, view = frameView40(pl,t)) {
   let window;
   try { window=drawFrameSamples40(P,pl,R,t,view,samples.w/(2*view[2]),samples.h/(2*view[3])); }
   finally { additive(false); }
-  packCell40(P,samples,cell,frameFade40(pl,t));
+  packCell40(P,samples,cell,frameFade40(pl,t,!!pl.noFade));
   return window;
 }
 function displayPlan40(P) {
@@ -61,6 +61,11 @@ function shadeCell40(P,M,cell,t) {
   gl.uniform1i(pr.u.uS,0); gl.uniform1f(pr.u.uEH,fixedExposure(P)); gl.uniform1f(pr.u.uET,fixedExposure(P));
   gl.uniform1f(pr.u.uG,P.encGamma); gl.uniform1f(pr.u.uComb,P.outMode==='combined'?1:0);
   setMatUniforms(pr,M,t); drawQuad();
+}
+function shadeView40(P,M,cell,t,view,target) {
+  const aspect=view[2]/view[3],w=Math.min(target.w,target.h*aspect),h=w/aspect;
+  gl.viewport(Math.round((target.w-w)/2),Math.round((target.h-h)/2),Math.round(w),Math.round(h));
+  shadeCell40(P,M,cell,t);
 }
 function linearCellMetrics40(cell) {
   const a=new Float32Array(cell.w*cell.h*4); cell.bind(); gl.readPixels(0,0,cell.w,cell.h,gl.RGBA,gl.FLOAT,a);
@@ -79,13 +84,14 @@ function renderLive40() {
   const pl=b && state.bakeGen===state.gen && ['master','segments','loop'].includes(b.form) ? segAt(b,state.t).meta : slot.plan40;
   const q=qualityOf(P), L=state.platform==='mobile' && !b?layoutOf(mobileParams(P)):pl.L;
   const w=state.exportResolution?L.cellW:canvas.width, h=state.exportResolution?L.cellH:canvas.height;
-  if(!slot.cell40 || slot.cell40.w!==w || slot.cell40.h!==h || slot.samples40.w!==w*q.ss){
+  if(!slot.cell40 || !slot.samples40 || slot.cell40.w!==w || slot.cell40.h!==h || slot.samples40.w!==w*q.ss){
     slot.cell40 && slot.cell40.dispose(); slot.samples40 && slot.samples40.dispose(); gl.activeTexture(gl.TEXTURE0);
     slot.cell40=new Target(w,h,gl.RGBA16F); slot.samples40=new Target(w*q.ss,h*q.ss,gl.RGBA16F);
   }
   const t=familyOf(P.type)==='ground'?state.t:Math.min(state.t,P.duration);
-  renderCell40(P,pl,R,t,slot.samples40,slot.cell40);
-  hdrT.clear(); hdrT.bind(); shadeCell40(P,state.M,slot.cell40,t); post(-1,P);
+  const view=frameView40(pl,t), timing=b && state.bakeGen===state.gen && ['unit','riseLoop'].includes(b.form)?b.meta:pl;
+  renderCell40(P,timing,R,t,slot.samples40,slot.cell40,view);
+  hdrT.clear(); hdrT.bind(); shadeView40(P,state.M,slot.cell40,t,view,hdrT); post(-1,P);
   hudText=`实时模拟 · ${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门`;
   hudB='';
 }
@@ -120,7 +126,7 @@ async function renderStills40(P0,M0,opt) {
     for(const t of opt.times.slice().sort((a,b)=>a-b)){
       const view=opt.half==null?frameView40(pl,t):[opt.cx||0,opt.cy||0,opt.half,opt.half];
       const window=renderCell40(P,pl,R,t,samples,cell,view), metrics=opt.metrics?linearCellMetrics40(cell):undefined;
-      H.clear(); H.bind(); shadeCell40(P,M,cell,t); post(-1,P);
+      H.clear(); H.bind(); shadeView40(P,M,cell,t,view,H); post(-1,P);
       out.push({t,png:canvas.toDataURL('image/png'),shutter:window,exposure:fixedExposure(P),linear:metrics}); await nextTick();
     }
   } finally {

@@ -50,7 +50,19 @@ PATHS = r"""async () => {
       brightness.push({gain,sum,clipped,exposure:b.meta.expoH});
     }finally{disposeBake(b);}
   }
-  return {t,captures,brightness};
+  state.P={...P,exposureLock:1};const locked=state.P.exposure;await suggestExposure40();
+  const lockWorks=state.P.exposure===locked;
+  const originalRenderer=makeRenderer;let excluded=false;
+  makeRenderer=function(Q,kind){excluded=Q.flash===0 && Q.subFlash===0;return originalRenderer(Q,kind);};
+  try{
+    state.P={...P,flash:50,subFlash:50,exposureLock:0};state.stillBusy=false;
+    await suggestExposure40();clearTimeout(bakeTimer);
+  }finally{makeRenderer=originalRenderer;state.stillBusy=true;}
+  const flashSamples=[1,8].map(sig=>{
+    const sim=new Sim({...P,renderVer:40});sim.stars=[];sim.flashes=[{t0:0,x:0,y:0,I:1,sig}];sim.t=.01;
+    const h=new Float32Array(16),tail=new Float32Array(16);sim.gather(h,tail);return {sig,radiance:h[2]};
+  });
+  return {t,captures,brightness,lockWorks,excludedFlash:excluded,suggestedExposure:state.P.exposure,flashSamples};
 }"""
 
 
@@ -81,6 +93,9 @@ def main():
             report['decodedBrightnessRatio']=ratio
             checks['head brightness x2 gives decoded export energy x2 ±10%']=1.8<ratio<2.2 and not a['clipped'] and not b['clipped']
             checks['fixed export exposure']=a['exposure']==b['exposure']==1
+            checks['locked exposure is not changed']=report['paths']['lockWorks']
+            checks['exposure suggestion excludes opening and sub flashes']=report['paths']['excludedFlash'] and report['paths']['suggestedExposure']>0
+            flash=report['paths']['flashSamples'];checks['flash radiance does not accidentally multiply by area again']=abs(flash[1]['radiance']/flash[0]['radiance']-1)<.01
             report['pageErrors']=errors;checks['no page errors']=not errors
     report.update(checks=checks,passed=all(checks.values()))
     (out/'整花与三路径.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

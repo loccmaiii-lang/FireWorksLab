@@ -45,6 +45,7 @@ void main(){
   emitPtW(vec2(p.x,yy),I,uSize*(.7+.6*hsh(key,17u)),10.,uStreak*uPPMY*.2887);   // 跟拍：子帧内相对星头下落的一段，按匀速拖影（方差 = 长度²/12）
 }`;
 PR.trail = compile(VS_TRAIL, FS_PTS);
+PR40.trail = compile(point40GpuSource(VS_TRAIL), POINT40_FS);
 
 // 循环周期（秒）= 循环帧数 / 帧率
 function trailPeriod(P) { return layoutOf(P).F / (P.trFps || 30); }
@@ -75,7 +76,7 @@ function drawTrailHead(R, P, ts, anchorY, view, ppm, w) {
     if (R.stopE >= 0 && tt > R.stopE + 1e-6) continue;
     const fl = 1 + 0.12 * Math.sin(6.2831853 * 7 * tt / Tp) * Math.sin(6.2831853 * 3 * tt / Tp + 1.1), y = P.trV * tt - anchorY;
     bufH[k++] = 0; bufH[k++] = y; bufH[k++] = P.trHeadBright * fl / n; bufH[k++] = P.trHeadSize;
-    bufH[k++] = 0; bufH[k++] = y; bufH[k++] = P.trHeadBright * P.trHaloBright * fl * P.trHalo * P.trHalo / n; bufH[k++] = P.trHeadSize * P.trHalo;
+    if(renderVersion(P)<40){bufH[k++] = 0; bufH[k++] = y; bufH[k++] = P.trHeadBright * P.trHaloBright * fl * P.trHalo * P.trHalo / n; bufH[k++] = P.trHeadSize * P.trHalo;}
   }
   PT_SPAN = 10; drawPoints(bufH, k / 4, view, ppm, [1, 0, 0, 0], w); PT_SPAN = 0;
 }
@@ -98,7 +99,7 @@ function makeTrailRenderer(P) {
       const tf = R.frameT && !P.trFollow ? R.frameT(f) : ts, anchorT = R.stop >= 0 ? (P.trFollow ? Math.min(ts, R.stopE) : R.stop) : tf, anchorY = P.trV * anchorT;
       // 星头：核心 + 光晕（周期性闪烁）
       drawTrailHead(R, P, ts, anchorY, view, ppm, w);
-      const pr = PR.trail; gl.useProgram(pr.p);
+      const modern=renderVersion(P)>=40, pr = modern?PR40.trail:PR.trail; gl.useProgram(pr.p);
       gl.uniform1f(pr.u.uT, ts); gl.uniform1f(pr.u.uStop, R.stopE); gl.uniform1f(pr.u.uFadeK, R.fadeK); gl.uniform1f(pr.u.uAnchorY, anchorY);
       gl.uniform1f(pr.u.uV, P.trV); gl.uniform1f(pr.u.uIgn, P.trIgnite || 0); gl.uniform1f(pr.u.uLag, P.trTwistLag == null ? 0.35 : P.trTwistLag); gl.uniform1f(pr.u.uStreak, P.trFollow ? P.trV * (R.subW || 0) : 0); gl.uniform1f(pr.u.uTp, Tp); gl.uniform1f(pr.u.uInh, P.trInh); gl.uniform1f(pr.u.uK, P.trDrag); gl.uniform1f(pr.u.uG, G * P.trGrav);
       gl.uniform3fv(pr.u['uWave[0]'], wv); gl.uniform1i(pr.u.uSeed, P.seed | 0); gl.uniform2fv(pr.u.uBot, R.bot); gl.uniform2fv(pr.u.uFadeEnd, R.fadeEnd);
@@ -109,7 +110,7 @@ function makeTrailRenderer(P) {
         gl.uniform1f(pr.u.uRate, q.rate); gl.uniform1i(pr.u.uMp, q.Mp); gl.uniform1i(pr.u.uPop, q.salt); gl.uniform1f(pr.u.uLife, q.life);
         gl.uniform1f(pr.u.uSpread, q.spread); gl.uniform1f(pr.u.uT0, q.T0); gl.uniform1f(pr.u.uCool, q.cool); gl.uniform1f(pr.u.uBright, q.bright);
         gl.uniform1f(pr.u.uSize, q.size); gl.uniform1f(pr.u.uWhisk, q.whisk ? 1 : 0);
-        gl.drawArrays(gl.POINTS, 0, q.Mw);
+        drawParticleBatch(q.Mw,modern);
       }
       gl.bindVertexArray(null);
     },

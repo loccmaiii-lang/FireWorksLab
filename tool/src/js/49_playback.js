@@ -54,6 +54,7 @@ async function bakeMobileFor(b,onProg=null) {
 function previewBake(b=state.bake) { return b && state.platform==='mobile' ? b.mobile||null : b; }
 function setPreviewPlatform(value) {
   state.platform=value;
+  if(state.showcase){loadShowcase();return;}
   if(state.tab==='combo') { if(value==='mobile')ensureComboMobile();return; }
   if(value==='mobile' && state.bake && !state.bake.mobile && !isPhys(state.P)){
     state.dirty=true;scheduleBake();

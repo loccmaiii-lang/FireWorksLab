@@ -1,0 +1,632 @@
+[
+  {
+    "id": "type:kiku",
+    "name": "type:kiku",
+    "type": "kiku",
+    "form": "master",
+    "duration": 3.2,
+    "zoom": "on",
+    "frameMode": "auto",
+    "autoGrid": 1,
+    "renderVer": 40,
+    "qSS": 2,
+    "qKernel": 0,
+    "headSize": 1,
+    "sparkSize": 0.35,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 4,
+      "rows": 4,
+      "chans": 4,
+      "frames": 64,
+      "cellW": 512,
+      "cellH": 512
+    },
+    "spriteM": 225.2,
+    "frames30": {
+      "shown": 42,
+      "total": 64,
+      "ratio": 0.656,
+      "maxJump": 4
+    },
+    "minFpsActive": 8,
+    "avgFps": 20,
+    "flowerM": 179.3,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 452,
+      "mag": 0.88,
+      "magMobile256": 1.77,
+      "mag512": 0.88,
+      "mag1024": 0.44,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 800,
+        "spritePx": 263,
+        "mag": 0.51
+      },
+      {
+        "dist": 1000,
+        "spritePx": 211,
+        "mag": 0.41
+      },
+      {
+        "dist": 1200,
+        "spritePx": 176,
+        "mag": 0.34
+      }
+    ],
+    "game": [
+      {
+        "dist": 800,
+        "spritePx": 565,
+        "mag": 1.1
+      },
+      {
+        "dist": 1000,
+        "spritePx": 452,
+        "mag": 0.88
+      },
+      {
+        "dist": 1200,
+        "spritePx": 377,
+        "mag": 0.74
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 1,
+        "energy": 20.7972629070282,
+        "enlarged": 25.16577172279358,
+        "ratio": 1.2100521032644682
+      },
+      "spark": {
+        "size": 0.35,
+        "energy": 2.5478789806365967,
+        "enlarged": 3.0829222202301025,
+        "ratio": 1.2099955467507422
+      }
+    },
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "bake": {
+      "grid": {
+        "cols": 4,
+        "rows": 4,
+        "chans": 4,
+        "frames": 64,
+        "cellW": 512,
+        "cellH": 512
+      },
+      "t0": 0,
+      "darkTail": 0,
+      "edgeFrames": [],
+      "seconds": 0
+    },
+    "标准": {
+      "单格 ≥ PC 下限": true,
+      "屏幕放大 ≤ 1": true,
+      "30fps 显示帧 ≥ 90%": false,
+      "燃烧段有效帧率 ≥ 下限": false,
+      "尺寸参数有效": true
+    },
+    "pageErrors": []
+  },
+  {
+    "id": "type:botan",
+    "name": "type:botan",
+    "type": "botan",
+    "form": "master",
+    "duration": 2.8,
+    "zoom": "on",
+    "frameMode": "auto",
+    "autoGrid": 1,
+    "renderVer": 40,
+    "qSS": 2,
+    "qKernel": 0,
+    "headSize": 1.4,
+    "sparkSize": 0.35,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 4,
+      "rows": 4,
+      "chans": 4,
+      "frames": 64,
+      "cellW": 512,
+      "cellH": 512
+    },
+    "spriteM": 222.9,
+    "frames30": {
+      "shown": 41,
+      "total": 64,
+      "ratio": 0.641,
+      "maxJump": 5
+    },
+    "minFpsActive": 8,
+    "avgFps": 22.9,
+    "flowerM": 179.2,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 448,
+      "mag": 0.87,
+      "magMobile256": 1.75,
+      "mag512": 0.87,
+      "mag1024": 0.44,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 800,
+        "spritePx": 261,
+        "mag": 0.51
+      },
+      {
+        "dist": 1000,
+        "spritePx": 208,
+        "mag": 0.41
+      },
+      {
+        "dist": 1200,
+        "spritePx": 174,
+        "mag": 0.34
+      }
+    ],
+    "game": [
+      {
+        "dist": 800,
+        "spritePx": 560,
+        "mag": 1.09
+      },
+      {
+        "dist": 1000,
+        "spritePx": 448,
+        "mag": 0.87
+      },
+      {
+        "dist": 1200,
+        "spritePx": 373,
+        "mag": 0.73
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 1.4,
+        "energy": 41.626770973205566,
+        "enlarged": 50.371283292770386,
+        "ratio": 1.2100694364497673
+      },
+      "spark": {
+        "size": 0.35,
+        "energy": 2.6026713848114014,
+        "enlarged": 3.1480648517608643,
+        "ratio": 1.2095514132641774
+      }
+    },
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "bake": {
+      "grid": {
+        "cols": 4,
+        "rows": 4,
+        "chans": 4,
+        "frames": 64,
+        "cellW": 512,
+        "cellH": 512
+      },
+      "t0": 0,
+      "darkTail": 0,
+      "edgeFrames": [],
+      "seconds": 0
+    },
+    "标准": {
+      "单格 ≥ PC 下限": true,
+      "屏幕放大 ≤ 1": true,
+      "30fps 显示帧 ≥ 90%": false,
+      "燃烧段有效帧率 ≥ 下限": false,
+      "尺寸参数有效": true
+    },
+    "pageErrors": []
+  },
+  {
+    "id": "type:kamuro",
+    "name": "type:kamuro",
+    "type": "kamuro",
+    "form": "master",
+    "duration": 5.2,
+    "zoom": "on",
+    "frameMode": "auto",
+    "autoGrid": 1,
+    "renderVer": 40,
+    "qSS": 2,
+    "qKernel": 0,
+    "headSize": 0.9,
+    "sparkSize": 0.3,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 4,
+      "rows": 4,
+      "chans": 4,
+      "frames": 64,
+      "cellW": 512,
+      "cellH": 512
+    },
+    "spriteM": 407.4,
+    "frames30": {
+      "shown": 47,
+      "total": 64,
+      "ratio": 0.734,
+      "maxJump": 4
+    },
+    "minFpsActive": 6,
+    "avgFps": 12.3,
+    "flowerM": 343.7,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 427,
+      "mag": 0.83,
+      "magMobile256": 1.67,
+      "mag512": 0.83,
+      "mag1024": 0.42,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 800,
+        "spritePx": 476,
+        "mag": 0.93
+      },
+      {
+        "dist": 1000,
+        "spritePx": 381,
+        "mag": 0.74
+      },
+      {
+        "dist": 1200,
+        "spritePx": 318,
+        "mag": 0.62
+      }
+    ],
+    "game": [
+      {
+        "dist": 800,
+        "spritePx": 533,
+        "mag": 1.04
+      },
+      {
+        "dist": 1000,
+        "spritePx": 427,
+        "mag": 0.83
+      },
+      {
+        "dist": 1200,
+        "spritePx": 356,
+        "mag": 0.69
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 0.9,
+        "energy": 5.149292707443237,
+        "enlarged": 6.228971004486084,
+        "ratio": 1.209675067700499
+      },
+      "spark": {
+        "size": 0.3,
+        "energy": 0.5721311569213867,
+        "enlarged": 0.691948413848877,
+        "ratio": 1.2094227092476868
+      }
+    },
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "bake": {
+      "grid": {
+        "cols": 4,
+        "rows": 4,
+        "chans": 4,
+        "frames": 64,
+        "cellW": 512,
+        "cellH": 512
+      },
+      "t0": 0,
+      "darkTail": 0,
+      "edgeFrames": [],
+      "seconds": 0
+    },
+    "标准": {
+      "单格 ≥ PC 下限": true,
+      "屏幕放大 ≤ 1": true,
+      "30fps 显示帧 ≥ 90%": false,
+      "燃烧段有效帧率 ≥ 下限": false,
+      "尺寸参数有效": true
+    },
+    "pageErrors": []
+  },
+  {
+    "id": "type:senrin",
+    "name": "type:senrin",
+    "type": "senrin",
+    "form": "master",
+    "duration": 2.8,
+    "zoom": "on",
+    "frameMode": "auto",
+    "autoGrid": 1,
+    "renderVer": 40,
+    "qSS": 2,
+    "qKernel": 0,
+    "headSize": 0.6,
+    "sparkSize": 0.35,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 4,
+      "rows": 4,
+      "chans": 4,
+      "frames": 64,
+      "cellW": 512,
+      "cellH": 512
+    },
+    "spriteM": 189.3,
+    "frames30": {
+      "shown": 44,
+      "total": 64,
+      "ratio": 0.688,
+      "maxJump": 4
+    },
+    "minFpsActive": 8,
+    "avgFps": 22.9,
+    "flowerM": 144.5,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 471,
+      "mag": 0.92,
+      "magMobile256": 1.84,
+      "mag512": 0.92,
+      "mag1024": 0.46,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 800,
+        "spritePx": 221,
+        "mag": 0.43
+      },
+      {
+        "dist": 1000,
+        "spritePx": 177,
+        "mag": 0.35
+      },
+      {
+        "dist": 1200,
+        "spritePx": 148,
+        "mag": 0.29
+      }
+    ],
+    "game": [
+      {
+        "dist": 800,
+        "spritePx": 589,
+        "mag": 1.15
+      },
+      {
+        "dist": 1000,
+        "spritePx": 471,
+        "mag": 0.92
+      },
+      {
+        "dist": 1200,
+        "spritePx": 393,
+        "mag": 0.77
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 0.6,
+        "energy": 10.59871506690979,
+        "enlarged": 12.826987743377686,
+        "ratio": 1.210239888741304
+      },
+      "spark": {
+        "size": 0.35,
+        "energy": 3.607898712158203,
+        "enlarged": 4.365611553192139,
+        "ratio": 1.210014998059821
+      }
+    },
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "bake": {
+      "grid": {
+        "cols": 4,
+        "rows": 4,
+        "chans": 4,
+        "frames": 64,
+        "cellW": 512,
+        "cellH": 512
+      },
+      "t0": 0,
+      "darkTail": 1,
+      "edgeFrames": [],
+      "seconds": 0
+    },
+    "标准": {
+      "单格 ≥ PC 下限": true,
+      "屏幕放大 ≤ 1": true,
+      "30fps 显示帧 ≥ 90%": false,
+      "燃烧段有效帧率 ≥ 下限": false,
+      "尺寸参数有效": true
+    },
+    "pageErrors": []
+  },
+  {
+    "id": "type:strobe",
+    "name": "type:strobe",
+    "type": "strobe",
+    "form": "master",
+    "duration": 4.2,
+    "zoom": "on",
+    "frameMode": "auto",
+    "autoGrid": 1,
+    "renderVer": 40,
+    "qSS": 2,
+    "qKernel": 0,
+    "headSize": 1.1,
+    "sparkSize": 0.35,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+      "cols": 4,
+      "rows": 4,
+      "chans": 4,
+      "frames": 64,
+      "cellW": 512,
+      "cellH": 512
+    },
+    "spriteM": 271.7,
+    "frames30": {
+      "shown": 45,
+      "total": 64,
+      "ratio": 0.703,
+      "maxJump": 4
+    },
+    "minFpsActive": 6,
+    "avgFps": 15.2,
+    "flowerM": 220.3,
+    "screen": {
+      "frac": 0.3333333333333333,
+      "flowerPx": 360,
+      "spritePx": 444,
+      "mag": 0.87,
+      "magMobile256": 1.73,
+      "mag512": 0.87,
+      "mag1024": 0.43,
+      "suggestPC": 512
+    },
+    "perspectiveReference": [
+      {
+        "dist": 800,
+        "spritePx": 318,
+        "mag": 0.62
+      },
+      {
+        "dist": 1000,
+        "spritePx": 254,
+        "mag": 0.5
+      },
+      {
+        "dist": 1200,
+        "spritePx": 212,
+        "mag": 0.41
+      }
+    ],
+    "game": [
+      {
+        "dist": 800,
+        "spritePx": 555,
+        "mag": 1.08
+      },
+      {
+        "dist": 1000,
+        "spritePx": 444,
+        "mag": 0.87
+      },
+      {
+        "dist": 1200,
+        "spritePx": 370,
+        "mag": 0.72
+      }
+    ],
+    "deadSize": {
+      "atFull": 0,
+      "atStart": 0,
+      "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+      "head": false,
+      "spark": false
+    },
+    "sizeResponse": {
+      "head": {
+        "size": 1.1,
+        "energy": 17.290050148963928,
+        "enlarged": 20.919673681259155,
+        "ratio": 1.20992556418425
+      },
+      "spark": {
+        "size": 0.35,
+        "energy": 1.751004695892334,
+        "enlarged": 2.1181530952453613,
+        "ratio": 1.2096787062960581
+      }
+    },
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "bake": {
+      "grid": {
+        "cols": 4,
+        "rows": 4,
+        "chans": 4,
+        "frames": 64,
+        "cellW": 512,
+        "cellH": 512
+      },
+      "t0": 0,
+      "darkTail": 1,
+      "edgeFrames": [],
+      "seconds": 0
+    },
+    "标准": {
+      "单格 ≥ PC 下限": true,
+      "屏幕放大 ≤ 1": true,
+      "30fps 显示帧 ≥ 90%": false,
+      "燃烧段有效帧率 ≥ 下限": false,
+      "尺寸参数有效": true
+    },
+    "pageErrors": []
+  }
+]
