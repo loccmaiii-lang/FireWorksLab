@@ -59,7 +59,8 @@ void emitPtW(vec2 q,float I,float size,float span,float sy){emitCore40(q,I,size)
 }
 const PR40 = {
   pts: compile(POINT40_CPU_VS, POINT40_FS),
-  spk: compile(point40GpuSource(VS_SPK), POINT40_FS),
+  // 4.0：火花编号 = 星号 × 65536 + 序号，和「所有星里最多的火花数 M」无关；改发射率、燃烧时间不再整张重排（问题清单 E1）
+  spk: compile(point40GpuSource(VS_SPK).replace('uint uid=uint(pid);', 'uint uid=uint(s)*65536u+uint(j);'), POINT40_FS),
   emit: compile(point40GpuSource(VS_EMIT), POINT40_FS),
   ehead: compile(point40GpuSource(VS_EHEAD), POINT40_FS)
 };

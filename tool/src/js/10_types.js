@@ -163,7 +163,8 @@ function normalizeM(M, type) {
     else o.stages = d.stages.map(s => [...s]);
   }
   delete o.colA; delete o.colB; delete o.chg;
-  o.stages = o.stages.slice(0, 5).map(([t, c]) => [+t, c]).sort((a, b) => a[0] - b[0]); o.stages[0][0] = 0;
+  // 先按时刻排序再截到 5 段（问题清单 E10：以前先截后排，丢的是列表里第 6 个而不是最晚的一段）
+  o.stages = o.stages.map(([t, c]) => [+t, c]).sort((a, b) => a[0] - b[0]).slice(0, 5); o.stages[0][0] = 0;
   return o;
 }
 

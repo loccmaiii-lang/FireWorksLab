@@ -339,10 +339,12 @@ function buildTrack(P) {
     // 分层星：外层（带木炭火花尾）烧 sparkStop 秒后火花停，内层只发光不出火花；sparkStart：点火后过几秒才开始出火花（末段才出的短尾）
     const ig = st.birth + (st.ign || 0), s0 = P.sparkStart > 0 && st.kind !== 5 ? P.sparkStart : 0, born = ig + s0;
     const death = Math.min(st.birth + (st.vis != null ? st.vis : st.burn), D, P.sparkStop > 0 && st.kind !== 5 && !(P.emberFrac > 0 && P.emberAll) ? ig + P.sparkStop : 1e9);
+    // 4.0：落水 / 分砲提前熄灭的星，火花也在那一刻停（问题清单 E3：以前会在原地继续喷）
+    const deathAt = renderVersion(P) >= 40 && st.tDead != null ? Math.min(death, st.tDead) : death;
     // 末段火花密度：发射率从 rate 线性变到 rate × sparkRateEnd（按整段燃烧，不按截断后的时长）
     const e = st.kind === 5 ? 1 : (P.sparkRateEnd == null ? 1 : P.sparkRateEnd), B = Math.max(0.05, st.birth + (st.vis != null ? st.vis : st.burn) - born), a = st.rate * (e - 1) / (2 * B);
-    info[q * 4] = born; info[q * 4 + 1] = death; info[q * 4 + 2] = death > born ? st.rate : 0; info[q * 4 + 3] = a;
-    if (st.rate > 0 && death > born) { const Bc = death - born, c = Math.ceil(Math.max(0, st.rate * Bc + a * Bc * Bc)) + 1; M = Math.max(M, c); total += c; }
+    info[q * 4] = born; info[q * 4 + 1] = deathAt; info[q * 4 + 2] = deathAt > born ? st.rate : 0; info[q * 4 + 3] = a;
+    if (st.rate > 0 && deathAt > born) { const Bc = deathAt - born, c = Math.ceil(Math.max(0, st.rate * Bc + a * Bc * Bc)) + 1; M = Math.max(M, c); total += c; }
   }
   gl.activeTexture(gl.TEXTURE0);
   return { pos: floatTex(Ns, nStars, pos), vel: floatTex(Ns, nStars, vel), info: floatTex(1, nStars, info), nStars, M, Ns, dt, total, P };
