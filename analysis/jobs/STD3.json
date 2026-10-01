@@ -1,0 +1,11 @@
+{
+ "id": "STD3",
+ "type": "std",
+ "name": "标准检查（ZB5 新曝光 + 组合层放大按整朵换算）",
+ "priority": 6,
+ "targets": [
+  "ZB5",
+  "QC11"
+ ],
+ "note": "只检查。排在 ZB5E3 之后（STD 读最新导出）。"
+}

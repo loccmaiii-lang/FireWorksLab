@@ -3662,7 +3662,7 @@ var FW_REVIEW = [
 "kind": "preset",
 "date": "2026-10-01 23:48",
 "name": "球形B 第 4 版 · 第 1 发 · 星点（4.0 · ZB4-1 参数）",
-"note": "ZB4-1 的效果参数原样不动，只换 4.0：单格 512、先放进一张（按运动分配）、固定取景、曝光 ×2.087（按最亮一刻自动定）。",
+"note": "ZB4-1 的效果参数原样不动，只换 4.0：单格 512、先放进一张（按运动分配）、固定取景、曝光 ×1.755（按最亮一刻自动定）。 2026-10-02：曝光按开花头几帧重算（EXPO40B），2.087→1.755，E2 开花那几帧过曝 3.8%。",
 "look": null,
 "opinion": null,
 "tags": "球形B 第 4 版 ZB4 4.0",
@@ -3859,7 +3859,7 @@ var FW_REVIEW = [
 "frameBudget": "motion",
 "pageTarget": 1,
 "maxHold": 4,
-"exposure": 2.087
+"exposure": 1.755
 },
 "m": {
 "stages": [
@@ -3881,7 +3881,7 @@ var FW_REVIEW = [
 "tailInt": 1
 },
 "thumbRef": "data:image/jpeg;base64,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",
-"ver": "8bfa8300"
+"ver": "c54ca508"
 },
 {
 "id": "ZB5-2",
@@ -6455,7 +6455,7 @@ var FW_REVIEW = [
 "和 3.7 版（历史里的 HK9）比：各层的颜色、亮度比例、时间有没有变",
 "游戏内大小下连续播放：有没有抖、层和层对不对得上"
 ],
-"opinion": "待导出检查（本机显卡导出 + 回放检查 + 标准检查都过了才进「待我验收」）。",
+"opinion": "AI：HK10E2 导出、回放检查、标准检查都过；开花后同一秒实时模拟和导出效果一致，结构和 HK9 一样。进待我验收。",
 "tags": "鸿巢四尺玉 第 9 版 HK9 整体 4.0",
 "doc": null,
 "imagesTitle": null,
@@ -6506,7 +6506,7 @@ var FW_REVIEW = [
 "和 3.7 版（历史里的 FS9）比：各层的颜色、亮度比例、时间有没有变",
 "游戏内大小下连续播放：有没有抖、层和层对不对得上"
 ],
-"opinion": "待导出检查（本机显卡导出 + 回放检查 + 标准检查都过了才进「待我验收」）。",
+"opinion": "AI：FS10E3 导出、回放检查、标准检查都过（4.0 迁移本身没问题）。效果还停在 FS9 的迭代进度，没到交付，留在制作中。",
 "tags": "永丰三重蕊 第 9 版 FS9 整体 4.0",
 "doc": null,
 "imagesTitle": null,
@@ -6578,7 +6578,7 @@ var FW_REVIEW = [
 "和 3.7 版（历史里的 PK8）比：各层的颜色、亮度比例、时间有没有变",
 "游戏内大小下连续播放：有没有抖、层和层对不对得上"
 ],
-"opinion": "待导出检查（本机显卡导出 + 回放检查 + 标准检查都过了才进「待我验收」）。",
+"opinion": "AI：PK9E3 导出、回放检查、标准检查都过（4.0 迁移本身没问题）。效果还停在 PK8 的迭代进度，没到交付，留在制作中。",
 "tags": "片贝四尺玉 第 8 版 PK8 整体 4.0",
 "doc": null,
 "imagesTitle": null,
@@ -6650,7 +6650,7 @@ var FW_REVIEW = [
 "和 3.7 版（历史里的 QN10）比：各层的颜色、亮度比例、时间有没有变",
 "游戏内大小下连续播放：有没有抖、层和层对不对得上"
 ],
-"opinion": "待导出检查（本机显卡导出 + 回放检查 + 标准检查都过了才进「待我验收」）。",
+"opinion": "AI：QN11E3 导出、回放检查、标准检查都过；开花后同一秒实时模拟和导出效果一致，结构和 QN10 一样。进待我验收。",
 "tags": "青柠星 第 10 版 QN10 整体 4.0",
 "doc": null,
 "imagesTitle": null,
@@ -6701,7 +6701,7 @@ var FW_REVIEW = [
 "和 3.7 版（历史里的 QC10）比：各层的颜色、亮度比例、时间有没有变",
 "游戏内大小下连续播放：有没有抖、层和层对不对得上"
 ],
-"opinion": "待导出检查（本机显卡导出 + 回放检查 + 标准检查都过了才进「待我验收」）。",
+"opinion": "AI：QC11E3 只差「中间空帧」一项——外层开花闪光和 0.38 s 延时点火之间本来就是黑的。其余全过。",
 "tags": "球形C 第 10 版（合并输出按帧定曝光） QC10 整体 4.0",
 "doc": null,
 "imagesTitle": null,
@@ -6797,7 +6797,7 @@ var FW_REVIEW = [
 "第 2 发 · 大红牡丹 → 银绿（QB3 拟合）"
 ],
 "thumbRef": "data:image/jpeg;base64,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",
-"ver": "29637341"
+"ver": "b7ffa862"
 },
 {
 "id": "QD13",
@@ -6810,7 +6810,7 @@ var FW_REVIEW = [
 "和 3.7 版（历史里的 QD12）比：各层的颜色、亮度比例、时间有没有变",
 "游戏内大小下连续播放：有没有抖、层和层对不对得上"
 ],
-"opinion": "待导出检查（本机显卡导出 + 回放检查 + 标准检查都过了才进「待我验收」）。",
+"opinion": "AI：QD13E3 导出、回放检查、标准检查都过（4.0 迁移本身没问题）。效果还停在 QD12 的迭代进度，没到交付，留在制作中。",
 "tags": "球形D 第 12 版 QD12 整体 4.0",
 "doc": null,
 "imagesTitle": null,
@@ -6868,7 +6868,7 @@ var FW_REVIEW = [
 "和 3.7 版（历史里的 ZW4）比：各层的颜色、亮度比例、时间有没有变",
 "游戏内大小下连续播放：有没有抖、层和层对不对得上"
 ],
-"opinion": "待导出检查（本机显卡导出 + 回放检查 + 标准检查都过了才进「待我验收」）。",
+"opinion": "AI：ZW5E3 导出、回放检查、标准检查都过（4.0 迁移本身没问题）。效果还停在 ZW4 的迭代进度，没到交付，留在制作中。",
 "tags": "万彩千轮 第 4 版 ZW4 整体 4.0",
 "doc": null,
 "imagesTitle": null,
@@ -6933,7 +6933,7 @@ var FW_REVIEW = [
 "和 3.7 版（历史里的 QA17）比：各层的颜色、亮度比例、时间有没有变",
 "游戏内大小下连续播放：有没有抖、层和层对不对得上"
 ],
-"opinion": "待导出检查（本机显卡导出 + 回放检查 + 标准检查都过了才进「待我验收」）。",
+"opinion": "AI：QA19E3 导出、回放检查、标准检查都过（4.0 迁移本身没问题）。效果还停在 QA17 的迭代进度，没到交付，留在制作中。",
 "tags": "球形A QA17 整体 4.0",
 "doc": null,
 "imagesTitle": null,
@@ -65366,7 +65366,7 @@ var FW_EFFECTS = [
 "进度": {
 "计算": true,
 "AI自检": false,
-"素材导出": false,
+"素材导出": true,
 "用户验收": false
 },
 "历史": [
@@ -65451,7 +65451,7 @@ var FW_EFFECTS = [
 }
 ],
 "说明": "QA19 = QA17 原样迁到 4.0（2026-10-01）。3.7 版的说明和交付记录在「历史」里 QA17 一条。",
-"下一步": "QA19 = QA17 原样迁到 4.0；等本机显卡导出 QA19E2（一个素材包 + 回放检查），再跑标准检查，全过才进待我验收",
+"下一步": "QA19 迁 4.0 的技术检查都过（QA19E3）；效果本身仍是 QA17 的已知问题（尾巴断点、前段尾长），按原状态暂停，等用户说继续",
 "导出任务": [
 "QA10E",
 "QA11E",
@@ -65551,7 +65551,7 @@ var FW_EFFECTS = [
 "id": "QA19E3",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "QA2",
@@ -66188,19 +66188,20 @@ var FW_EFFECTS = [
 }
 ],
 "说明": "ZB5 = ZB4 原样迁到 4.0（2026-10-01）。3.7 版的说明和交付记录在「历史」里 ZB4 一条。",
-"下一步": "ZB5 = ZB4 原样迁到 4.0；等本机显卡导出 ZB5E2（一个素材包 + 回放检查），再跑标准检查，全过才进待我验收",
+"下一步": "ZB5-1 曝光按开花头几帧重算 2.087→1.755（E2 开花几帧过曝 3.8%）；等 ZB5E3 + STD3（标准检查的组合层放大改按整朵算），全过进待我验收",
 "导出任务": [
 "ZB3E",
 "ZB4E",
 "ZB5E1",
-"ZB5E2"
+"ZB5E2",
+"ZB5E3"
 ],
 "待验收版": null,
 "缺": [
 "UE 4.24 实机导入未验证",
 "T11：PC「光丝序列 + 星点 GPU 粒子」、手游「两张单帧」两种引擎做法的导出还没做（这次是序列帧素材包）"
 ],
-"ver": "29637341",
+"ver": "b7ffa862",
 "jobs": [
 {
 "id": "QB1",
@@ -66242,6 +66243,12 @@ var FW_EFFECTS = [
 "id": "ZB5E2",
 "type": "export",
 "state": "已回来",
+"seen": false
+},
+{
+"id": "ZB5E3",
+"type": "export",
+"state": "在算",
 "seen": false
 }
 ],
@@ -66399,7 +66406,7 @@ var FW_EFFECTS = [
 ]
 }
 ],
-"stale": false
+"stale": true
 },
 {
 "job": "ZB5E2",
@@ -66440,7 +66447,7 @@ var FW_EFFECTS = [
 ]
 }
 ],
-"stale": false
+"stale": true
 }
 ],
 "thumb": "data:image/jpeg;base64,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",
@@ -66459,7 +66466,7 @@ var FW_EFFECTS = [
 "进度": {
 "计算": true,
 "AI自检": false,
-"素材导出": false,
+"素材导出": true,
 "用户验收": false
 },
 "历史": [
@@ -66510,7 +66517,7 @@ var FW_EFFECTS = [
 }
 ],
 "说明": "QC11 = QC10 原样迁到 4.0（2026-10-01）。3.7 版的说明和交付记录在「历史」里 QC10 一条。",
-"下一步": "QC11 = QC10 原样迁到 4.0；等本机显卡导出 QC11E2（一个素材包 + 回放检查），再跑标准检查，全过才进待我验收",
+"下一步": "QC11E3 只差一项：外层素材第 8–9 帧全黑（开花闪光 → 0.38 s 延时点火之间真的是暗的）。按「中间空帧 = 0」不能交；方案见 看法.md，等用户定规则",
 "缺": [
 "UE 4.24 实机导入未验证"
 ],
@@ -66552,7 +66559,7 @@ var FW_EFFECTS = [
 "id": "QC11E3",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "QC2",
@@ -66792,7 +66799,7 @@ var FW_EFFECTS = [
 "进度": {
 "计算": true,
 "AI自检": false,
-"素材导出": false,
+"素材导出": true,
 "用户验收": false
 },
 "历史": [
@@ -66848,7 +66855,7 @@ var FW_EFFECTS = [
 }
 ],
 "说明": "QD13 = QD12 原样迁到 4.0（2026-10-01）。3.7 版的说明和交付记录在「历史」里 QD12 一条。",
-"下一步": "QD13 = QD12 原样迁到 4.0；等本机显卡导出 QD13E2（一个素材包 + 回放检查），再跑标准检查，全过才进待我验收",
+"下一步": "QD13（QD12 原样迁 4.0）技术检查都过（QD13E3）；但 QD12 在 3.7 时还没调完、没交过验收，效果要接着按实拍迭代后才交。负责人待定（原 对话框1）",
 "导出任务": [
 "QD10E",
 "QD11E",
@@ -66901,7 +66908,7 @@ var FW_EFFECTS = [
 "id": "QD13E3",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "QD2",
@@ -67352,7 +67359,7 @@ var FW_EFFECTS = [
 "key": "qingning",
 "名": "青柠星",
 "负责": "对话框2（4.0 迁移）；之前：对话框1",
-"阶段": "制作中",
+"阶段": "待验收",
 "参考": [
 "vidio/2.0/青柠星.mp4"
 ],
@@ -67360,8 +67367,8 @@ var FW_EFFECTS = [
 "工作版": "QN11",
 "进度": {
 "计算": true,
-"AI自检": false,
-"素材导出": false,
+"AI自检": true,
+"素材导出": true,
 "用户验收": false
 },
 "历史": [
@@ -67412,7 +67419,7 @@ var FW_EFFECTS = [
 }
 ],
 "说明": "QN11 = QN10 原样迁到 4.0（2026-10-01）。3.7 版的说明和交付记录在「历史」里 QN10 一条。",
-"下一步": "QN11 = QN10 原样迁到 4.0；等本机显卡导出 QN11E2（一个素材包 + 回放检查），再跑标准检查，全过才进待我验收",
+"下一步": "QN11（QN10 原样迁 4.0）等你验收：导出 + 回放检查 + 标准检查全过；和历史里的 QN10 比颜色、亮度、时间应一致",
 "导出任务": [
 "QN10E",
 "QN8E",
@@ -67421,10 +67428,17 @@ var FW_EFFECTS = [
 "QN11E2",
 "QN11E3"
 ],
-"待验收版": null,
+"待验收版": "QN11",
 "缺": [
 "UE 4.24 实机导入未验证"
 ],
+"交付说明": {
+"解决了什么": "分层星：开花时一根根橙色放射线（点火药火花），0.4 s 起星头已变淡黄绿、放射线还是橙（头尾异色，拆成同一模拟的两层）→ 淡黄绿光点球 → 约 3.1 s 一起熄灭。青柠是亮的淡黄绿（以前太饱和太暗）。",
+"仍有差异": "实拍星点有相机光晕、看起来更大；中间的升空尾迹不在这里（尾缀另做）。",
+"素材在哪": "本机 analysis/local/输出/素材包/（QN11E3 的导出清单）；导出记录 analysis/results/QN11E3/",
+"4.0 改了什么": "效果参数和 QN10 一样；换成 4.0 渲染：单格 512、固定取景、每层先放进一张 64 帧（燃烧段 ≥10 fps、淡出 ≥7.5 fps，开花前 0.5 s 全 30 fps）。",
+"没经过 UE 验证": "4.0 的按运动分配帧（每帧停留时间不同）只在烘焙器引擎回放里验证过，UE 里的帧号曲线还没实机看。"
+},
 "ver": "0981c5c4",
 "jobs": [
 {
@@ -67455,7 +67469,7 @@ var FW_EFFECTS = [
 "id": "QN11E3",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "QN2",
@@ -67734,7 +67748,7 @@ var FW_EFFECTS = [
 "进度": {
 "计算": true,
 "AI自检": false,
-"素材导出": false,
+"素材导出": true,
 "用户验收": false
 },
 "历史": [
@@ -67775,7 +67789,7 @@ var FW_EFFECTS = [
 }
 ],
 "说明": "ZW5 = ZW4 原样迁到 4.0（2026-10-01）。3.7 版的说明和交付记录在「历史」里 ZW4 一条。",
-"下一步": "ZW5 = ZW4 原样迁到 4.0；等本机显卡导出 ZW5E2（一个素材包 + 回放检查），再跑标准检查，全过才进待我验收",
+"下一步": "ZW5（ZW4 原样迁 4.0）技术检查都过（ZW5E3）；但 ZW4 在 3.7 时还没调完、没交过验收，效果要接着按实拍迭代后才交。负责人待定（原 对话框1）",
 "导出任务": [
 "ZW3E",
 "ZW4E",
@@ -67832,7 +67846,7 @@ var FW_EFFECTS = [
 "id": "ZW5E3",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 }
 ],
 "exports": [
@@ -68251,7 +68265,7 @@ var FW_EFFECTS = [
 "key": "hongchao",
 "名": "鸿巢四尺玉",
 "负责": "对话框2（4.0 迁移）；之前：对话框1（09-30 14:46 起接手；之前对话框 2）",
-"阶段": "制作中",
+"阶段": "待验收",
 "参考": [
 "vidio/鸿巢花火大会的四尺玉肉眼看到才知道有多震撼！当四尺玉缓缓升空，巨大的花火在高空炸开的瞬间，光芒从中心向四周层层扩散，一朵巨大绚烂的花，几乎铺.mp4"
 ],
@@ -68260,8 +68274,8 @@ var FW_EFFECTS = [
 "方案": [],
 "进度": {
 "计算": true,
-"AI自检": false,
-"素材导出": false,
+"AI自检": true,
+"素材导出": true,
 "用户验收": false
 },
 "历史": [
@@ -68307,7 +68321,7 @@ var FW_EFFECTS = [
 }
 ],
 "说明": "HK10 = HK9 原样迁到 4.0（2026-10-01）。3.7 版的说明和交付记录在「历史」里 HK9 一条。",
-"下一步": "HK10 = HK9 原样迁到 4.0；等本机显卡导出 HK10E2（一个素材包 + 回放检查），再跑标准检查，全过才进待我验收",
+"下一步": "HK10（HK9 原样迁 4.0）等你验收：导出 + 回放检查 + 标准检查全过；和历史里的 HK9 比颜色、亮度、时间应一致",
 "导出任务": [
 "HK5E",
 "HK6E",
@@ -68317,10 +68331,17 @@ var FW_EFFECTS = [
 "HK10E1",
 "HK10E2"
 ],
-"待验收版": null,
+"待验收版": "HK10",
 "缺": [
 "UE 4.24 实机导入未验证"
 ],
+"交付说明": {
+"解决了什么": "锦冠：白色大菊 → 一根根暖金褐细长线带白头、伞形往下垂 → 约五分之一的星烧完后接着亮成红点闪（和主星同一条轨迹，不是另一颗球）。首轮「规整球形拼接」的问题没有了；按开花后同一秒对齐实拍。",
+"仍有差异": "实拍线条再长一点、有镜头光晕更亮；实拍红点之间还有很淡的褐线。中心那团橙红玉皮残骸不做。",
+"素材在哪": "本机 analysis/local/输出/素材包/（HK10E2 的导出清单）；导出记录 analysis/results/HK10E2/",
+"4.0 改了什么": "效果参数和 HK9 一样；换成 4.0 渲染：单格 512、固定取景、每层先放进一张 64 帧（燃烧段 ≥10 fps、淡出 ≥7.5 fps，开花前 0.5 s 全 30 fps）。",
+"没经过 UE 验证": "4.0 的按运动分配帧（每帧停留时间不同）只在烘焙器引擎回放里验证过，UE 里的帧号曲线还没实机看。"
+},
 "ver": "b9474595",
 "jobs": [
 {
@@ -68339,7 +68360,7 @@ var FW_EFFECTS = [
 "id": "HK10E2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "HK2",
@@ -68681,7 +68702,7 @@ var FW_EFFECTS = [
 "进度": {
 "计算": true,
 "AI自检": false,
-"素材导出": false,
+"素材导出": true,
 "用户验收": false
 },
 "历史": [
@@ -68727,7 +68748,7 @@ var FW_EFFECTS = [
 }
 ],
 "说明": "FS10 = FS9 原样迁到 4.0（2026-10-01）。3.7 版的说明和交付记录在「历史」里 FS9 一条。",
-"下一步": "FS10 = FS9 原样迁到 4.0；等本机显卡导出 FS10E2（一个素材包 + 回放检查），再跑标准检查，全过才进待我验收",
+"下一步": "FS10（FS9 原样迁 4.0）技术检查都过（FS10E3）；但 FS9 在 3.7 时还没调完、没交过验收，效果要接着按实拍迭代后才交。负责人待定（原 对话框1）",
 "导出任务": [
 "FS4E",
 "FS5E",
@@ -68773,7 +68794,7 @@ var FW_EFFECTS = [
 "id": "FS10E3",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "FS2",
@@ -69530,7 +69551,7 @@ var FW_EFFECTS = [
 "进度": {
 "计算": true,
 "AI自检": false,
-"素材导出": false,
+"素材导出": true,
 "用户验收": false
 },
 "历史": [
@@ -69566,7 +69587,7 @@ var FW_EFFECTS = [
 }
 ],
 "说明": "PK9 = PK8 原样迁到 4.0（2026-10-01）。3.7 版的说明和交付记录在「历史」里 PK8 一条。",
-"下一步": "PK9 = PK8 原样迁到 4.0；等本机显卡导出 PK9E2（一个素材包 + 回放检查），再跑标准检查，全过才进待我验收",
+"下一步": "PK9（PK8 原样迁 4.0）技术检查都过（PK9E3）；但 PK8 在 3.7 时还没调完、没交过验收，效果要接着按实拍迭代后才交。负责人待定（原 对话框1）",
 "导出任务": [
 "PK4E",
 "PK5E",
@@ -69650,7 +69671,7 @@ var FW_EFFECTS = [
 "id": "PK9E3",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 }
 ],
 "exports": [

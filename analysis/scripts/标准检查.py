@@ -78,10 +78,15 @@ async def run(targets, write, merge=False):
             res = {'id': t, 'name': info['name'], 'kind': info['kind'], 'renderVer': info.get('renderVer'), 'checks': []}
             for name, (ok, note) in features(info).items(): res['checks'].append([name, bool(ok), note])
             ids = info['layers'] if info.get('layers') else [t]
-            q = {}
+            q = {}; ms = []
             for lid in ids:
                 m = await pg.evaluate(probe.JS_METRICS, {'id': lid, 'fps': 30, 'dists': [800, 1000, 1200], 'screenH': 1080, 'frac': 1 / 3})
-                if 'grid' not in m: continue
+                if 'grid' in m: ms.append((lid, m))
+            # 多层：屏幕尺度按整朵（最大的一层）算——探针单独量一层时把每层都当成占屏幕高 1/3，小层（第二发、芯）的放大会被高估
+            fmax = max((m.get('flowerM') or 0) for _, m in ms) if ms else 0
+            for lid, m in ms:
+                if len(ms) > 1 and fmax > 0 and m.get('flowerM'):
+                    m['screen'] = dict(m['screen'], mag=round(m['screen']['mag'] * m['flowerM'] / fmax, 2), magNote=f"按整朵最大层 {fmax} m 换算")
                 v = probe.verdict(m, STD)
                 for k2, ok in v.items(): q.setdefault(k2, []).append((lid, ok, m))
                 if m.get('renderVer', 37) < 40: res['renderVer'] = 37
