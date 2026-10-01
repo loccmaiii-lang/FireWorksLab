@@ -1,0 +1,34 @@
+{
+ "effect": "hiki_nishiki",
+ "entry": "HN2",
+ "ver": "d8db6895",
+ "time": "2026-10-01 23:42",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "HikiNishiki",
+   "replica": "HN2",
+   "files": [
+    "T_HikiNishiki_L1.png",
+    "T_HikiNishiki_L1_Cutout.png",
+    "T_HikiNishiki_L1_FrameTest.png",
+    "T_HikiNishiki_L1_Ramp.png",
+    "T_HikiNishiki_L2.png",
+    "T_HikiNishiki_L2_Cutout.png",
+    "T_HikiNishiki_L2_FrameTest.png",
+    "T_HikiNishiki_L2_Ramp.png",
+    "T_HikiNishiki_Mobile_L1.png",
+    "T_HikiNishiki_Mobile_L1_Cutout.png",
+    "T_HikiNishiki_Mobile_L1_FrameTest.png",
+    "T_HikiNishiki_Mobile_L1_Ramp.png",
+    "T_HikiNishiki_Mobile_L2.png",
+    "T_HikiNishiki_Mobile_L2_Cutout.png",
+    "T_HikiNishiki_Mobile_L2_FrameTest.png",
+    "T_HikiNishiki_Mobile_L2_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}

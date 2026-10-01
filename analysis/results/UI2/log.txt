@@ -1,19 +1,19 @@
-23:11:57 开始：4.0 界面截图（用户 21:19 反馈：流转动画、已通过的效果、遗留条目）（界面截图）
-23:12:06 界面截图 1：首页（5 秒）
-23:12:07 界面截图 2：左栏_待我验收（2 秒）
-23:12:09 界面截图 3：左栏_制作中（2 秒）
-23:12:11 界面截图 4：左栏_已通过（2 秒）
-23:12:13 界面截图 5：左栏_历史（2 秒）
-23:12:19 界面截图 6：JM4-40_实时（6 秒）
-23:12:22 界面截图 7：JM4-40_引擎回放（3 秒）
-23:12:25 界面截图 8：JM4-40_贴图整张（3 秒）
-23:12:34 界面截图 9：JM4-40_流转（9 秒）
-23:12:43 界面截图 10：JM4-40_流转后段（10 秒）
-23:12:55 界面截图 11：菊模板_流转（11 秒）
-23:13:07 界面截图 12：柳模板_流转（12 秒）
-23:13:37 出错：
+23:41:59 开始：4.0 界面截图（用户 21:19 反馈：流转动画、已通过的效果、遗留条目）（界面截图）
+23:42:07 界面截图 1：首页（5 秒）
+23:42:09 界面截图 2：左栏_待我验收（2 秒）
+23:42:11 界面截图 3：左栏_制作中（2 秒）
+23:42:12 界面截图 4：左栏_已通过（2 秒）
+23:42:14 界面截图 5：左栏_历史（2 秒）
+23:42:20 界面截图 6：JM4-40_实时（5 秒）
+23:42:22 界面截图 7：JM4-40_引擎回放（3 秒）
+23:42:25 界面截图 8：JM4-40_贴图整张（3 秒）
+23:42:34 界面截图 9：JM4-40_流转（9 秒）
+23:42:44 界面截图 10：JM4-40_流转后段（10 秒）
+23:42:55 界面截图 11：菊模板_流转（11 秒）
+23:43:06 界面截图 12：柳模板_流转（11 秒）
+23:43:36 出错：
 Traceback (most recent call last):
-  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 69, in run_job
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 77, in run_job
     import ui_shots; ui_shots.run(job, s, out, log=log)
                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\ui_shots.py", line 40, in run
@@ -47,10 +47,9 @@ Call log:
       - element is not visible
     - retrying click action
       - waiting 100ms
-    55 × waiting for element to be visible, enabled and stable
+    56 × waiting for element to be visible, enabled and stable
        - element is not visible
      - retrying click action
        - waiting 500ms
-    - waiting for element to be visible, enabled and stable
 
 

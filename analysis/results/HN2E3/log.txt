@@ -1,0 +1,7 @@
+23:42:10 开始：HikiNishiki（导出素材）
+23:42:19 HikiNishiki 组合素材包 9 秒：T_HikiNishiki_L1.png、T_HikiNishiki_L1_Cutout.png、T_HikiNishiki_L1_FrameTest.png、T_HikiNishiki_L1_Ramp.png、T_HikiNishiki_L2.png、T_HikiNishiki_L2_Cutout.png、T_HikiNishiki_L2_FrameTest.png、T_HikiNishiki_L2_Ramp.png、T_HikiNishiki_Mobile_L1.png、T_HikiNishiki_Mobile_L1_Cutout.png、T_HikiNishiki_Mobile_L1_FrameTest.png、T_HikiNishiki_Mobile_L1_Ramp.png、T_HikiNishiki_Mobile_L2.png、T_HikiNishiki_Mobile_L2_Cutout.png、T_HikiNishiki_Mobile_L2_FrameTest.png、T_HikiNishiki_Mobile_L2_Ramp.png、cascade.json、cascade_mobile.json
+23:42:22 回放检查：❌ HikiNishiki · L1_Main：中心抖动 3.6 px（512 格）；HikiNishiki · L2_Main：中间空帧 19
+23:42:43 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\HN2E3\烘焙回放.jpg
+23:42:45 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\HN2E3\烘焙回放_原尺寸.jpg
+23:42:45 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+23:42:45 完成，用时 0.6 分钟
