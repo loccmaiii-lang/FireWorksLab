@@ -1,0 +1,3476 @@
+<!doctype html>
+<html lang="en" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Firework Baker Browser Preview</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:0;background:inherit}iframe{display:block;width:100%;height:100vh;margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe id="codex-visualization" sandbox="allow-scripts" referrerpolicy="no-referrer" title="Firework Baker Browser Preview" data-srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot; data-visualize-standalone&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Firework Baker Browser Preview&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 10px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+.cursor-interaction {
+  cursor: var(--cursor-interaction, pointer);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: var(--cursor-interaction, pointer);
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+.widget {
+  min-width: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  box-shadow: 0 0 0 0.5px var(--border-strong, var(--border));
+  color: var(--foreground);
+  background: var(--background);
+}
+
+#widget &gt; :not(.card, .widget, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: var(--cursor-interaction, pointer);
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover,
+.nav-link:not(:disabled):not([aria-disabled=&quot;true&quot;]):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+/* Shared preview chrome; product styles stay inside each variant. */
+.viz-dotted-background {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--foreground) 14%, transparent) 0.8px,
+    transparent 0.8px
+  );
+  background-position: center;
+  background-size: 16px 16px;
+}
+
+.viz-carousel {
+  position: relative;
+  min-width: 0;
+}
+
+.viz-carousel:has(&gt; .viz-carousel-controls) {
+  min-height: calc(60px + var(--viz-carousel-picker-height, 0px));
+  padding-bottom: 60px;
+}
+
+.viz-carousel &gt; [data-variant][hidden] {
+  display: none !important;
+}
+
+.viz-carousel &gt; [data-variant] {
+  isolation: isolate;
+}
+
+.viz-carousel-controls {
+  --viz-carousel-hover: light-dark(
+    color-mix(in srgb, var(--foreground) 5.4%, transparent),
+    color-mix(in srgb, var(--foreground) 7.8%, transparent)
+  );
+  position: absolute;
+  z-index: 2;
+  bottom: 8px;
+  left: 50%;
+  display: flex;
+  width: max-content;
+  /* Leave room for the host&#x27;s design-controls launcher at the trailing edge. */
+  max-width: calc(100% - 96px);
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans);
+  /* Match the settings dropdown chrome independently of the content font size. */
+  font-size: 13px;
+  font-weight: var(--font-weight-normal);
+  line-height: 18px;
+  transform: translateX(-50%);
+  user-select: none;
+}
+
+/* Keep authored mockup button styles out of the shared carousel chrome. */
+.viz-carousel-controls button,
+.viz-carousel-picker &gt; summary {
+  display: flex !important;
+  height: auto !important;
+  min-height: 30px;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px;
+  padding: 0 6px !important;
+  -webkit-app-region: no-drag;
+  border: 0 !important;
+  border-radius: 14px !important;
+  color: inherit !important;
+  background: transparent !important;
+  font: inherit !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.viz-carousel-controls &gt; button,
+.viz-carousel-picker &gt; summary {
+  position: relative;
+  isolation: isolate;
+}
+
+.viz-carousel-controls &gt; button {
+  --icon-size: 16px;
+  width: 30px !important;
+  padding: 0 !important;
+}
+
+.viz-carousel-picker &gt; summary {
+  padding-inline: 12px !important;
+}
+
+.viz-carousel-controls .viz-carousel-caret {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  margin: 0;
+  color: inherit;
+  transform: rotate(180deg);
+}
+
+.viz-carousel-controls &gt; button &gt; svg,
+.viz-carousel-controls .viz-carousel-caret,
+.viz-carousel-count {
+  opacity: 0.5;
+}
+
+.viz-carousel-controls &gt; button::before,
+.viz-carousel-picker &gt; summary::before {
+  position: absolute;
+  z-index: -1;
+  inset: 3px;
+  border-radius: 12px;
+  content: &quot;&quot;;
+  pointer-events: none;
+}
+
+.viz-carousel-controls &gt; button:hover::before,
+.viz-carousel-picker &gt; summary:hover::before {
+  background: var(--viz-carousel-hover);
+}
+
+.viz-carousel-controls &gt; button,
+.viz-carousel-controls [data-lucide],
+.viz-carousel-controls .lucide {
+  flex-shrink: 0;
+}
+
+.viz-carousel-picker {
+  min-width: 0;
+}
+
+.viz-carousel-picker &gt; summary {
+  min-width: 0;
+  list-style: none;
+}
+
+.viz-carousel-picker &gt; summary::-webkit-details-marker {
+  display: none;
+}
+
+.viz-carousel-count {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.viz-carousel-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viz-carousel-options {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 4px);
+  left: 0;
+  display: flex;
+  max-height: 240px;
+  flex-direction: column;
+  gap: 2px;
+  overflow: auto;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--background);
+  box-shadow: 0 4px 12px light-dark(rgb(0 0 0 / 6%), rgb(0 0 0 / 25%));
+}
+
+.viz-carousel-options &gt; button {
+  border-radius: max(0px, calc(var(--radius-lg) - 5px)) !important;
+  width: 100% !important;
+  min-height: 28px;
+  justify-content: flex-start !important;
+  padding: 4px 8px !important;
+  font-size: var(--font-size-small) !important;
+  text-align: start;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.viz-carousel-options &gt; [aria-current=&quot;true&quot;],
+.viz-carousel-options &gt; button:hover {
+  background: var(--viz-carousel-hover) !important;
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled=&quot;true&quot;] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.viz-carousel-controls :is(button, summary):focus-visible {
+  outline: 2px solid var(--ring) !important;
+  outline-offset: 2px !important;
+}
+
+@media (pointer: coarse) {
+  .viz-carousel:has(&gt; .viz-carousel-controls) {
+    min-height: calc(76px + var(--viz-carousel-picker-height, 0px));
+    padding-bottom: 76px;
+  }
+
+  .btn,
+  .nav-link,
+  .viz-carousel-controls button,
+  .viz-carousel-picker &gt; summary,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, var(--font-size-normal));
+  }
+
+  .form-control[type=&quot;file&quot;]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type=&quot;color&quot;] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;week&quot;]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: &quot;&quot;;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 44px;
+  }
+
+  .form-range::-moz-range-track {
+    height: 44px;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    margin-top: 12px;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;style&gt;html, body { margin: 0; padding: 0; }
+@media (min-width: 1181px) {
+  html, body { overflow: hidden; }
+  #fwb-baker-draft .fwb-shell { height: 100dvh; display: flex; flex-direction: column; }
+  #fwb-baker-draft .fwb-top, #fwb-baker-draft .fwb-viewbar, #fwb-baker-draft .fwb-foot { flex: 0 0 auto; }
+  #fwb-baker-draft .fwb-layout { flex: 1; min-height: 0; }
+  #fwb-baker-draft .fwb-library, #fwb-baker-draft .fwb-inspector { min-height: 0; overflow-y: auto; scrollbar-width: thin; }
+  #fwb-baker-draft .fwb-library { overflow: hidden; display: grid; grid-template-rows: minmax(0,1fr); }
+  #fwb-baker-draft .fwb-library::details-content { min-height: 0; height: 100%; }
+  #fwb-baker-draft .fwb-library-content { height: 100%; min-height: 0; }
+  #fwb-baker-draft .fwb-library-content &gt; :not([data-library-list]) { flex: 0 0 auto; }
+  #fwb-baker-draft [data-library-list] { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; }
+  #fwb-baker-draft .fwb-library-footer { margin-top: 8px; }
+  #fwb-baker-draft .fwb-work { display: flex; flex-direction: column; min-height: 0; overflow-y: auto; }
+  #fwb-baker-draft .fwb-work &gt; :not(.fwb-screens):not([data-atlas]):not([data-delivery]) { flex: 0 0 auto; }
+  #fwb-baker-draft .fwb-screens { flex: 1; min-height: 160px; }
+  #fwb-baker-draft .fwb-screen { display: flex; flex-direction: column; min-height: 0; }
+  #fwb-baker-draft .fwb-screen-caption, #fwb-baker-draft .fwb-screen-footer { flex: 0 0 auto; }
+  #fwb-baker-draft .fwb-stage { flex: 1; min-height: 0; }
+  #fwb-baker-draft .fwb-screen canvas, #fwb-baker-draft[data-focus=&quot;true&quot;] .fwb-screen canvas { height: 100%; aspect-ratio: auto; max-height: none; }
+  #fwb-baker-draft [data-atlas], #fwb-baker-draft [data-delivery] { flex: 1; min-height: 0; overflow-y: auto; }
+}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;script type=&quot;application/json&quot; id=&quot;codex-visualization-widget-state&quot;&gt;__CODEX_VISUALIZATION_WIDGET_STATE__&lt;/script&gt;
+&lt;script&gt;(() =&gt; {
+  const root = document.documentElement;
+  const mediaQuery = globalThis.matchMedia(&quot;(prefers-color-scheme: dark)&quot;);
+  const apply = Reflect.apply;
+  const isArray = Array.isArray;
+  const hasOwn = Object.hasOwn;
+  const parentWindow = globalThis.parent;
+  const stringify = JSON.stringify;
+  const parse = JSON.parse;
+  const encode = TextEncoder.prototype.encode.bind(new TextEncoder());
+  const initialStateElement = document.getElementById(
+    &quot;codex-visualization-widget-state&quot;,
+  );
+  const initialGlobals = parse(initialStateElement?.textContent ?? &quot;{}&quot;);
+  initialStateElement?.remove();
+  /** @type {Record&lt;string, unknown&gt; | null} */
+  let state = initialGlobals.widgetState ?? null;
+  const statePersistence = initialGlobals.statePersistence ?? &quot;none&quot;;
+  let nextStateRequestId = 0;
+  /** @type {Map&lt;number, { resolve: () =&gt; void; reject: (error: Error) =&gt; void; timeout: ReturnType&lt;typeof globalThis.setTimeout&gt;; serializedState: string }&gt;} */
+  const pendingStateWrites = new Map();
+  const persistenceError = () =&gt;
+    Object.assign(
+      new Error(&quot;The host could not persist the widget state update&quot;),
+      {
+        code: -32000,
+        data: { code: &quot;widget_state_persistence_failed&quot;, retryable: false },
+      },
+    );
+  /**
+   * @param {object} prototype
+   * @param {string} property
+   */
+  const getPrototypeGetter = (prototype, property) =&gt; {
+    // oxlint-disable-next-line typescript/unbound-method -- invoked through captured Reflect.apply
+    const getter = Object.getOwnPropertyDescriptor(prototype, property)?.get;
+    if (getter == null) {
+      throw new Error(`Missing ${property} getter`);
+    }
+    return getter;
+  };
+  const getMessageData = getPrototypeGetter(MessageEvent.prototype, &quot;data&quot;);
+  const getMessagePorts = getPrototypeGetter(MessageEvent.prototype, &quot;ports&quot;);
+  const getMessageSource = getPrototypeGetter(MessageEvent.prototype, &quot;source&quot;);
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const addHostMessageListener = MessagePort.prototype.addEventListener;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const postHostMessage = MessagePort.prototype.postMessage;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const startHostPort = MessagePort.prototype.start;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const stopMessagePropagation = Event.prototype.stopImmediatePropagation;
+  /** @type {MessagePort | null} */
+  let hostPort = null;
+  const postToHost = (type, payload) =&gt; {
+    if (hostPort != null) {
+      apply(postHostMessage, hostPort, [{ type, ...payload }]);
+    }
+  };
+  const openExternal = ({ href }) =&gt; {
+    if (globalThis.navigator.userActivation?.isActive === true) {
+      postToHost(&quot;open-external&quot;, { href });
+    }
+  };
+  const sendFollowUpMessage = ({ context, prompt, title }) =&gt; {
+    if (globalThis.navigator.userActivation?.isActive === true) {
+      postToHost(&quot;follow-up&quot;, { context, prompt, title });
+    }
+    return Promise.resolve();
+  };
+  /**
+   * @param {Record&lt;string, unknown&gt; | ((previous: Record&lt;string, unknown&gt; | null) =&gt; Record&lt;string, unknown&gt;)} next
+   * @returns {Promise&lt;void&gt;}
+   */
+  const setWidgetState = async (next) =&gt; {
+    const nextState = typeof next === &quot;function&quot; ? next(state) : next;
+    if (
+      nextState == null ||
+      typeof nextState !== &quot;object&quot; ||
+      isArray(nextState)
+    ) {
+      throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+    }
+    const inputState = stringify(
+      nextState,
+      (_key, /** @type {unknown} */ value) =&gt; {
+        if (
+          typeof value === &quot;undefined&quot; ||
+          typeof value === &quot;function&quot; ||
+          typeof value === &quot;symbol&quot; ||
+          (typeof value === &quot;number&quot; &amp;&amp; !Number.isFinite(value))
+        ) {
+          throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+        }
+        return value;
+      },
+    );
+    const parsedState = parse(inputState);
+    if (
+      parsedState == null ||
+      typeof parsedState !== &quot;object&quot; ||
+      isArray(parsedState)
+    ) {
+      throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+    }
+    const storedState = {
+      modelContent: null,
+      privateContent: null,
+      ...parsedState,
+    };
+    const serializedState = stringify(storedState);
+    if (encode(serializedState).length &gt; 16 * 1024) {
+      throw new TypeError(
+        &quot;Widget state must be a JSON object of at most 16 KiB&quot;,
+      );
+    }
+    if (
+      hasOwn(storedState, &quot;imageIds&quot;) &amp;&amp;
+      (!isArray(storedState.imageIds) ||
+        storedState.imageIds.some(
+          (/** @type {unknown} */ id) =&gt; typeof id !== &quot;string&quot;,
+        ))
+    ) {
+      throw new TypeError(&quot;Widget state imageIds must be an array of strings&quot;);
+    }
+    if (storedState.imageIds?.length &gt; 0) {
+      throw Object.assign(
+        new TypeError(&quot;Visualization state does not support image attachments&quot;),
+        { code: -32602, data: { code: &quot;images_unsupported&quot; } },
+      );
+    }
+    state = storedState;
+    globalThis.openai.widgetState = state;
+    globalThis.dispatchEvent(
+      new CustomEvent(&quot;openai:set_globals&quot;, {
+        detail: { globals: { widgetState: state } },
+      }),
+    );
+    if (statePersistence === &quot;none&quot;) {
+      throw persistenceError();
+    }
+    const id = ++nextStateRequestId;
+    return new Promise((resolve, reject) =&gt; {
+      const timeout = globalThis.setTimeout(() =&gt; {
+        pendingStateWrites.delete(id);
+        reject(persistenceError());
+      }, 30_000);
+      pendingStateWrites.set(id, { resolve, reject, timeout, serializedState });
+      postToHost(&quot;widget-state-write&quot;, { id, state: serializedState });
+    });
+  };
+  const syncTheme = () =&gt; {
+    const theme = mediaQuery.matches ? &quot;dark&quot; : &quot;light&quot;;
+    root.dataset.theme = theme;
+    globalThis.openai = {
+      ...globalThis.openai,
+      openExternal,
+      sendFollowUpMessage,
+      setWidgetState,
+      theme,
+      visualizationStyleVariables: {},
+      visualizationTheme: theme,
+      widgetState: state,
+      statePersistence,
+      stateModelContext: &quot;none&quot;,
+    };
+    globalThis.dispatchEvent(
+      new CustomEvent(&quot;openai:set_globals&quot;, {
+        detail: { globals: globalThis.openai },
+      }),
+    );
+  };
+  const sendHeight = () =&gt; {
+    postToHost(&quot;height&quot;, {
+      height: Math.ceil(
+        Math.max(
+          document.body.scrollHeight,
+          document.body.getBoundingClientRect().height,
+        ),
+      ),
+    });
+  };
+
+  globalThis.addEventListener(
+    &quot;message&quot;,
+    (event) =&gt; {
+      const data = apply(getMessageData, event, []);
+      const ports = apply(getMessagePorts, event, []);
+      const source = apply(getMessageSource, event, []);
+      if (
+        hostPort != null ||
+        source !== parentWindow ||
+        typeof data !== &quot;object&quot; ||
+        data?.type !== &quot;codex-visualization-initialize&quot; ||
+        !isArray(ports) ||
+        ports.length !== 1
+      ) {
+        return;
+      }
+      apply(stopMessagePropagation, event, []);
+      const nextHostPort = ports[0];
+      try {
+        apply(addHostMessageListener, nextHostPort, [
+          &quot;message&quot;,
+          (event) =&gt; {
+            const data = apply(getMessageData, event, []);
+            if (typeof data === &quot;object&quot; &amp;&amp; data?.type === &quot;measure&quot;) {
+              sendHeight();
+            } else if (
+              typeof data === &quot;object&quot; &amp;&amp;
+              data?.type === &quot;widget-state-result&quot;
+            ) {
+              /** @type {unknown} */
+              const id = data.id;
+              if (typeof id !== &quot;number&quot;) {
+                return;
+              }
+              const pending = pendingStateWrites.get(id);
+              if (pending != null) {
+                pendingStateWrites.delete(id);
+                globalThis.clearTimeout(pending.timeout);
+                if (data.ok === true) {
+                  pending.resolve();
+                } else {
+                  pending.reject(persistenceError());
+                }
+              }
+            }
+          },
+        ]);
+        apply(startHostPort, nextHostPort, []);
+      } catch {
+        return;
+      }
+      hostPort = nextHostPort;
+      for (const [id, { serializedState }] of pendingStateWrites) {
+        postToHost(&quot;widget-state-write&quot;, { id, state: serializedState });
+      }
+      sendHeight();
+    },
+    { capture: true },
+  );
+  document.currentScript?.remove();
+  mediaQuery.addEventListener(&quot;change&quot;, syncTheme);
+  globalThis.addEventListener(&quot;click&quot;, (event) =&gt; {
+    if (event.defaultPrevented) {
+      return;
+    }
+    let element = null;
+    if (event.target instanceof globalThis.Element) {
+      element = event.target;
+    } else if (event.target instanceof globalThis.Node) {
+      element = event.target.parentElement;
+    }
+    const link = element?.closest(&quot;a[href]&quot;);
+    const href = link?.getAttribute(&quot;href&quot;);
+    if (href == null) {
+      return;
+    }
+    if (href.startsWith(&quot;#&quot;)) {
+      let id;
+      try {
+        id = decodeURIComponent(href.slice(1));
+      } catch {
+        return;
+      }
+      const target = id.length === 0 ? root : document.getElementById(id);
+      if (
+        target == null ||
+        globalThis.navigator.userActivation?.isActive !== true
+      ) {
+        return;
+      }
+      event.preventDefault();
+      postToHost(&quot;scroll-to&quot;, {
+        top: target.getBoundingClientRect().top + globalThis.scrollY,
+      });
+      return;
+    }
+    event.preventDefault();
+    openExternal({ href });
+  });
+  new ResizeObserver(sendHeight).observe(document.body);
+  syncTheme();
+})();
+&lt;/script&gt;
+&lt;style&gt;
+#fwb-baker-draft {
+  color-scheme: dark;
+  --fwb-bg: #25292a;
+  --fwb-panel: #2b3032;
+  --fwb-low: #181e21;
+  --fwb-field: #181e21;
+  --fwb-hover: #213d35;
+  --fwb-line: #424b4e;
+  --fwb-text: #e0e6e8;
+  --fwb-dim: #adb8bc;
+  --fwb-accent: #00d49b;
+  --fwb-accent-fill: #00d49b;
+  --fwb-accent-hover: #36e4b0;
+  --fwb-on-accent: #07291f;
+  --fwb-warning: #e4bb7c;
+  --fwb-warning-bg: #3c352b;
+  --fwb-error: #f0a6a0;
+  --fwb-error-bg: #422f30;
+  --fwb-inspector-width: 242px;
+  --fwb-pad: 16px;
+  color: var(--fwb-text);
+  font: 14px/1.55 &quot;Segoe UI&quot;, &quot;Microsoft YaHei&quot;, system-ui, sans-serif;
+  container-type: inline-size;
+  width: 100%;
+  isolation: isolate;
+}
+#fwb-baker-draft * { box-sizing: border-box; }
+#fwb-baker-draft [hidden] { display: none !important; }
+#fwb-baker-draft h1, #fwb-baker-draft h2, #fwb-baker-draft h3, #fwb-baker-draft p { margin: 0; }
+#fwb-baker-draft h1 { font-size: 16px; font-weight: 650; letter-spacing: .01em; }
+#fwb-baker-draft h2 { font-size: 18px; font-weight: 650; }
+#fwb-baker-draft h3 { font-size: 15px; font-weight: 600; }
+#fwb-baker-draft button, #fwb-baker-draft input, #fwb-baker-draft select, #fwb-baker-draft textarea { font: inherit; color: inherit; }
+#fwb-baker-draft button, #fwb-baker-draft summary, #fwb-baker-draft label.fwb-file { touch-action: manipulation; }
+#fwb-baker-draft button { min-height: 34px; padding: 6px 10px; border: 1px solid var(--fwb-line); border-radius: 5px; background: var(--fwb-field); line-height: 1.35; }
+#fwb-baker-draft button:hover { background: var(--fwb-hover); }
+#fwb-baker-draft button:disabled { opacity: .52; cursor: default; }
+#fwb-baker-draft button.fwb-primary { background: var(--fwb-accent-fill); color: var(--fwb-on-accent); border-color: var(--fwb-accent-fill); font-weight: 600; }
+#fwb-baker-draft button.fwb-primary:hover:not(:disabled) { background: var(--fwb-accent-hover); border-color: var(--fwb-accent-hover); }
+#fwb-baker-draft button.fwb-quiet { border-color: transparent; background: transparent; color: var(--fwb-dim); }
+#fwb-baker-draft button.fwb-quiet:hover { background: var(--fwb-hover); color: var(--fwb-text); }
+#fwb-baker-draft button[aria-pressed=&quot;true&quot;]:not(.fwb-primary) { background: var(--fwb-hover); border-color: var(--fwb-accent); color: var(--fwb-accent); }
+#fwb-baker-draft input:not([type=&quot;range&quot;]):not([type=&quot;checkbox&quot;]), #fwb-baker-draft select, #fwb-baker-draft textarea { background: var(--fwb-field); border: 1px solid var(--fwb-line); border-radius: 5px; padding: 7px 8px; min-width: 0; width: 100%; }
+#fwb-baker-draft input[type=&quot;range&quot;] { accent-color: var(--fwb-accent); width: 100%; min-width: 0; margin: 0; }
+#fwb-baker-draft input[type=&quot;checkbox&quot;] { accent-color: var(--fwb-accent); width: 16px; height: 16px; flex: 0 0 auto; }
+#fwb-baker-draft textarea { resize: vertical; min-height: 72px; }
+#fwb-baker-draft small, #fwb-baker-draft .fwb-small { font-size: 12px; }
+#fwb-baker-draft .fwb-muted { color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-mono { font-family: ui-monospace, Consolas, monospace; font-variant-numeric: tabular-nums; }
+#fwb-baker-draft .fwb-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0; }
+#fwb-baker-draft .fwb-between { justify-content: space-between; }
+#fwb-baker-draft .fwb-stack { display: grid; gap: 10px; min-width: 0; }
+#fwb-baker-draft .fwb-shell { background: var(--fwb-bg); border: 1px solid var(--fwb-line); border-radius: 7px; }
+#fwb-baker-draft .fwb-top { padding: 12px var(--fwb-pad); border-bottom: 1px solid var(--fwb-line); background: var(--fwb-panel); border-radius: 7px 7px 0 0; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+#fwb-baker-draft .fwb-brand { display: flex; align-items: center; gap: 9px; flex: 1 1 280px; min-width: 0; }
+#fwb-baker-draft .fwb-brand i { color: var(--fwb-accent); }
+#fwb-baker-draft .fwb-prototype { padding: 5px var(--fwb-pad); background: var(--fwb-low); color: var(--fwb-dim); border-bottom: 1px solid var(--fwb-line); font-size: 12px; }
+#fwb-baker-draft .fwb-layout { display: grid; grid-template-columns: 224px minmax(0, 1fr) var(--fwb-inspector-width); align-items: stretch; }
+#fwb-baker-draft .fwb-library { background: var(--fwb-low); border-right: 1px solid var(--fwb-line); min-width: 0; padding: 14px 10px; border-radius: 0 0 0 7px; }
+#fwb-baker-draft .fwb-library &gt; summary { display: none; }
+#fwb-baker-draft .fwb-library label { display: block; margin: 0 4px 6px; font-size: 12px; color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-library input { margin-bottom: 14px; }
+#fwb-baker-draft .fwb-group { margin-bottom: 13px; }
+#fwb-baker-draft .fwb-group &gt; summary { font-size: 15px; font-weight: 600; padding: 6px 5px; display: flex; align-items: center; justify-content: space-between; list-style: none; }
+#fwb-baker-draft .fwb-group &gt; summary::-webkit-details-marker { display: none; }
+#fwb-baker-draft .fwb-group &gt; summary::after { content: &quot;−&quot;; color: var(--fwb-dim); font-weight: 400; }
+#fwb-baker-draft .fwb-group:not([open]) &gt; summary::after { content: &quot;+&quot;; }
+#fwb-baker-draft .fwb-lib-items { margin-left: 4px; display: grid; gap: 6px; }
+#fwb-baker-draft .fwb-entry { text-align: left; width: 100%; min-width: 0; padding: 7px; border: 2px solid transparent; border-radius: 5px; background: transparent; display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: center; gap: 10px; }
+#fwb-baker-draft .fwb-entry:hover { background: var(--fwb-panel); }
+#fwb-baker-draft .fwb-entry[aria-current=&quot;true&quot;] { background: var(--fwb-panel); border-color: var(--fwb-accent); }
+#fwb-baker-draft .fwb-thumb { width: 56px; height: 56px; background: #080a0d; border-radius: 3px; overflow: hidden; }
+#fwb-baker-draft .fwb-thumb canvas { display: block; width: 100%; height: 100%; }
+#fwb-baker-draft .fwb-entry-caption { min-width: 0; display: grid; gap: 4px; }
+#fwb-baker-draft .fwb-entry-name { font-size: 14px; overflow-wrap: anywhere; }
+#fwb-baker-draft .fwb-entry small { color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-entry[aria-current=&quot;true&quot;] .fwb-entry-name { font-weight: 600; }
+#fwb-baker-draft .fwb-empty { padding: 5px 9px; color: var(--fwb-dim); font-size: 12px; }
+#fwb-baker-draft .fwb-library-footer { margin: 18px 5px 2px; padding-top: 12px; border-top: 1px solid var(--fwb-line); font-size: 12px; color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-work { min-width: 0; padding: 15px var(--fwb-pad); }
+#fwb-baker-draft .fwb-item-head { display: flex; align-items: center; gap: 12px; justify-content: space-between; margin-bottom: 13px; flex-wrap: wrap; }
+#fwb-baker-draft .fwb-item-head small { display: block; color: var(--fwb-dim); margin-top: 3px; }
+#fwb-baker-draft .fwb-status { color: var(--fwb-accent); padding: 3px 7px; border: 1px solid var(--fwb-line); border-radius: 4px; font-size: 12px; white-space: normal; }
+#fwb-baker-draft .fwb-status[data-tone=&quot;warn&quot;] { color: var(--fwb-warning); }
+#fwb-baker-draft .fwb-status[data-tone=&quot;error&quot;] { color: var(--fwb-error); }
+#fwb-baker-draft .fwb-modebar { display: flex; gap: 4px; border-bottom: 1px solid var(--fwb-line); margin-bottom: 12px; flex-wrap: wrap; }
+#fwb-baker-draft .fwb-modebar button { border: none; background: transparent; border-radius: 0; color: var(--fwb-dim); padding: 8px 11px 10px; border-bottom: 2px solid transparent; min-width: 60px; }
+#fwb-baker-draft .fwb-modebar button[aria-pressed=&quot;true&quot;] { border-bottom-color: var(--fwb-accent); background: transparent; color: var(--fwb-text); font-weight: 600; }
+#fwb-baker-draft .fwb-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+#fwb-baker-draft .fwb-toolbar label { font-size: 12px; color: var(--fwb-dim); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+#fwb-baker-draft .fwb-toolbar select { width: auto; max-width: 100%; font-size: 12px; min-height: 32px; }
+#fwb-baker-draft .fwb-distance { flex: 1 1 155px; }
+#fwb-baker-draft .fwb-distance input { flex: 1 1 55px; max-width: 120px; }
+#fwb-baker-draft .fwb-notice { background: var(--fwb-warning-bg); color: var(--fwb-warning); border-left: 2px solid var(--fwb-warning); padding: 8px 10px; font-size: 12px; margin: 9px 0; overflow-wrap: anywhere; }
+#fwb-baker-draft .fwb-notice[data-tone=&quot;error&quot;] { color: var(--fwb-error); background: var(--fwb-error-bg); border-left-color: var(--fwb-error); }
+#fwb-baker-draft .fwb-notice button { font-size: 12px; margin-top: 6px; }
+#fwb-baker-draft .fwb-screens { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+#fwb-baker-draft .fwb-screens[data-pair=&quot;true&quot;] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#fwb-baker-draft .fwb-screen { min-width: 0; position: relative; background: #080a0d; border-radius: 5px; }
+#fwb-baker-draft .fwb-screen canvas { display: block; width: 100%; aspect-ratio: 16 / 11; border-radius: 5px; }
+#fwb-baker-draft .fwb-screen-caption { position: absolute; top: 10px; left: 11px; right: 11px; display: flex; gap: 8px; justify-content: space-between; flex-wrap: wrap; color: #c3ccc9; font-size: 12px; pointer-events: none; }
+#fwb-baker-draft .fwb-screen-footer { color: #abb5b0; font-size: 12px; padding: 6px 10px; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; border-top: 1px solid #242a2d; }
+#fwb-baker-draft .fwb-reference { padding: 10px; background: var(--fwb-panel); border: 1px solid var(--fwb-line); border-radius: 5px; margin-top: 10px; display: grid; gap: 9px; }
+#fwb-baker-draft .fwb-reference video { width: 100%; max-height: 220px; display: block; background: #080a0d; border-radius: 4px; }
+#fwb-baker-draft .fwb-reference-empty { background: var(--fwb-low); text-align: center; padding: 23px 10px; color: var(--fwb-dim); font-size: 12px; }
+#fwb-baker-draft .fwb-file { border: 1px solid var(--fwb-line); border-radius: 5px; padding: 6px 9px; background: var(--fwb-field); font-size: 12px; display: inline-flex; align-items: center; position: relative; }
+#fwb-baker-draft .fwb-file input { position: absolute; inset: 0; width: 100%; opacity: 0; }
+#fwb-baker-draft .fwb-ref-number { width: 96px !important; }
+#fwb-baker-draft .fwb-timeline { padding-top: 12px; display: grid; gap: 8px; }
+#fwb-baker-draft .fwb-scrub-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 9px; }
+#fwb-baker-draft .fwb-ticks { display: flex; justify-content: space-between; color: var(--fwb-dim); font-size: 12px; }
+#fwb-baker-draft .fwb-time { font-size: 12px; color: var(--fwb-text); white-space: nowrap; }
+#fwb-baker-draft .fwb-timebar button { font-size: 12px; padding: 5px 8px; min-height: 31px; }
+#fwb-baker-draft .fwb-timebar select { width: auto; padding: 4px 7px; font-size: 12px; }
+#fwb-baker-draft .fwb-timebar label { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-key-points { gap: 4px; margin-left: auto; }
+#fwb-baker-draft .fwb-key-points button { border-color: transparent; background: transparent; color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-track { display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: center; gap: 8px; font-size: 12px; color: var(--fwb-dim); margin-top: 5px; }
+#fwb-baker-draft .fwb-track-line { height: 13px; position: relative; background: var(--fwb-low); border-radius: 3px; }
+#fwb-baker-draft .fwb-track-fill { position: absolute; height: 100%; background: var(--fwb-hover); border-radius: 3px; }
+#fwb-baker-draft .fwb-track-head { position: absolute; height: 17px; top: -2px; width: 2px; background: var(--fwb-accent); }
+#fwb-baker-draft .fwb-inspector { min-width: 0; padding: 15px 13px; background: var(--fwb-panel); border-left: 1px solid var(--fwb-line); border-radius: 0 0 7px 0; }
+#fwb-baker-draft .fwb-section { padding-bottom: 13px; margin-bottom: 13px; border-bottom: 1px solid var(--fwb-line); display: grid; gap: 9px; min-width: 0; }
+#fwb-baker-draft .fwb-section:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+#fwb-baker-draft .fwb-section p { font-size: 12px; color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-section summary { font-size: 15px; font-weight: 600; padding: 4px 0; }
+#fwb-baker-draft .fwb-section details[open] summary { margin-bottom: 8px; }
+#fwb-baker-draft .fwb-check-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; font-size: 12px; }
+#fwb-baker-draft .fwb-check-list li { display: flex; justify-content: space-between; gap: 8px; }
+#fwb-baker-draft .fwb-check-list strong { color: var(--fwb-accent); font-weight: 500; }
+#fwb-baker-draft .fwb-check-list em { color: var(--fwb-warning); font-style: normal; }
+#fwb-baker-draft .fwb-minichecks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 8px; font-size: 12px; color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-label { display: grid; gap: 5px; font-size: 12px; color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-label input, #fwb-baker-draft .fwb-label textarea, #fwb-baker-draft .fwb-label select { color: var(--fwb-text); }
+#fwb-baker-draft .fwb-layer { padding: 7px; border: 1px solid var(--fwb-line); border-radius: 4px; display: grid; gap: 7px; font-size: 12px; background: var(--fwb-field); }
+#fwb-baker-draft .fwb-layer[data-current=&quot;true&quot;] { border-left: 2px solid var(--fwb-accent); background: var(--fwb-hover); }
+#fwb-baker-draft .fwb-layer button { font-size: 12px; padding: 4px 6px; min-height: 28px; }
+#fwb-baker-draft .fwb-layer-name { background: transparent !important; border: 0; padding: 0 !important; text-align: left; color: var(--fwb-text); flex: 1; }
+#fwb-baker-draft .fwb-layer input { width: 76px !important; padding: 4px !important; }
+#fwb-baker-draft .fwb-param { display: grid; gap: 6px; font-size: 12px; }
+#fwb-baker-draft .fwb-param label { display: flex; justify-content: space-between; gap: 8px; }
+#fwb-baker-draft .fwb-param-inputs { display: grid; grid-template-columns: minmax(0, 1fr) 75px; gap: 9px; align-items: center; }
+#fwb-baker-draft .fwb-param input[type=&quot;number&quot;] { font: 12px ui-monospace, Consolas, monospace; padding: 5px 6px; }
+#fwb-baker-draft .fwb-colors { height: 20px; display: flex; border-radius: 3px; }
+#fwb-baker-draft .fwb-colors span { flex: 1; }
+#fwb-baker-draft .fwb-inspector .fwb-actions { display: grid; gap: 7px; margin-top: 10px; }
+#fwb-baker-draft .fwb-inspector .fwb-actions button { width: 100%; }
+#fwb-baker-draft .fwb-bottom { margin-top: 11px; padding-top: 10px; border-top: 1px solid var(--fwb-line); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+#fwb-baker-draft .fwb-bottom small { color: var(--fwb-dim); flex: 1 1 220px; }
+#fwb-baker-draft .fwb-notification { color: var(--fwb-accent); font-size: 12px; min-height: 20px; margin-top: 10px; overflow-wrap: anywhere; }
+#fwb-baker-draft .fwb-atlas-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 11px; align-items: start; }
+#fwb-baker-draft .fwb-atlas-grid canvas { width: 100%; aspect-ratio: 1; display: block; background: #080a0d; border-radius: 5px; }
+#fwb-baker-draft .fwb-curve { width: 100%; height: 116px; display: block; }
+#fwb-baker-draft .fwb-atlas-label { font-size: 12px; color: var(--fwb-dim); margin: 7px 0 !important; overflow-wrap: anywhere; }
+#fwb-baker-draft .fwb-delivery { display: grid; gap: 13px; min-width: 0; }
+#fwb-baker-draft .fwb-delivery-head { padding: 14px; background: var(--fwb-panel); border: 1px solid var(--fwb-line); border-radius: 5px; }
+#fwb-baker-draft .fwb-manifest { border-collapse: collapse; width: 100%; font-size: 12px; table-layout: fixed; }
+#fwb-baker-draft .fwb-manifest th, #fwb-baker-draft .fwb-manifest td { padding: 8px 6px; text-align: left; border-bottom: 1px solid var(--fwb-line); vertical-align: top; overflow-wrap: anywhere; }
+#fwb-baker-draft .fwb-manifest th { color: var(--fwb-dim); font-weight: 500; }
+#fwb-baker-draft .fwb-manifest th:last-child, #fwb-baker-draft .fwb-manifest td:last-child { width: 94px; }
+#fwb-baker-draft .fwb-progress { width: 100%; accent-color: var(--fwb-accent); height: 6px; }
+#fwb-baker-draft .fwb-create { margin: 13px var(--fwb-pad); padding: 14px; background: var(--fwb-panel); border: 1px solid var(--fwb-line); border-radius: 5px; display: grid; gap: 10px; }
+#fwb-baker-draft .fwb-create-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+#fwb-baker-draft .fwb-copy-fallback { margin-top: 8px; }
+#fwb-baker-draft .fwb-copy-fallback textarea { min-height: 140px; font-size: 12px; }
+#fwb-baker-draft .fwb-foot { padding: 9px var(--fwb-pad); border-top: 1px solid var(--fwb-line); background: var(--fwb-low); border-radius: 0 0 7px 7px; font-size: 12px; color: var(--fwb-dim); display: flex; gap: 10px; justify-content: space-between; flex-wrap: wrap; }
+@container (max-width: 900px) {
+  #fwb-baker-draft .fwb-layout { grid-template-columns: 170px minmax(0, 1fr); }
+  #fwb-baker-draft .fwb-library { grid-row: 1 / 3; }
+  #fwb-baker-draft .fwb-inspector { grid-column: 2; border-top: 1px solid var(--fwb-line); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; align-items: start; }
+  #fwb-baker-draft .fwb-inspector &gt; .fwb-wide { grid-column: 1 / -1; }
+  #fwb-baker-draft .fwb-inspector .fwb-section { margin-bottom: 0; }
+}
+@container (max-width: 600px) {
+  #fwb-baker-draft .fwb-layout { display: block; }
+  #fwb-baker-draft .fwb-library { padding: 8px 12px; border-right: none; border-bottom: 1px solid var(--fwb-line); border-radius: 0; }
+  #fwb-baker-draft .fwb-library &gt; summary { display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 600; padding: 6px 0; }
+  #fwb-baker-draft .fwb-library &gt; summary::after { content: &quot;展开 / 收起&quot;; color: var(--fwb-dim); font-size: 12px; font-weight: 400; }
+  #fwb-baker-draft .fwb-library-content { padding-top: 10px; }
+  #fwb-baker-draft .fwb-work { padding: 13px 12px; }
+  #fwb-baker-draft .fwb-inspector { display: grid; grid-template-columns: 1fr; border-left: none; padding: 14px 12px; }
+  #fwb-baker-draft .fwb-inspector &gt; .fwb-wide { grid-column: auto; }
+  #fwb-baker-draft .fwb-top { padding: 12px; gap: 10px; }
+  #fwb-baker-draft .fwb-brand { flex-basis: 100%; }
+  #fwb-baker-draft .fwb-screens[data-pair=&quot;true&quot;] { grid-template-columns: 1fr; }
+  #fwb-baker-draft .fwb-key-points { margin-left: 0; }
+  #fwb-baker-draft .fwb-create-fields { grid-template-columns: 1fr; }
+  #fwb-baker-draft .fwb-atlas-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  #fwb-baker-draft .fwb-modebar { justify-content: space-between; }
+  #fwb-baker-draft .fwb-modebar button { flex: 1; min-width: 0; padding-inline: 6px; }
+  #fwb-baker-draft .fwb-screen-caption { position: static; padding: 8px 9px 0; }
+}
+@media (pointer: coarse) {
+  #fwb-baker-draft button, #fwb-baker-draft select, #fwb-baker-draft summary, #fwb-baker-draft .fwb-file { min-height: 44px; }
+  #fwb-baker-draft input:not([type=&quot;range&quot;]):not([type=&quot;checkbox&quot;]), #fwb-baker-draft textarea { min-height: 44px; font-size: 16px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  #fwb-baker-draft button { transition: background-color .15s, border-color .15s; }
+}
+#fwb-baker-draft { --fwb-success: #81d8b6; --fwb-inspector-width: 276px; --fwb-pad: 18px; }
+#fwb-baker-draft .fwb-shell { border-radius: 6px; }
+#fwb-baker-draft .fwb-top { background: var(--fwb-low); padding: 12px 18px; min-height: 62px; }
+#fwb-baker-draft .fwb-top &gt; button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+#fwb-baker-draft button.fwb-primary:disabled { background: var(--fwb-low); border-color: var(--fwb-line); color: var(--fwb-dim); opacity: .72; }
+#fwb-baker-draft .fwb-brand { gap: 11px; flex-basis: 240px; }
+#fwb-baker-draft .fwb-brand-mark { color: var(--fwb-accent); font-size: 27px; font-weight: 650; letter-spacing: -.03em; }
+#fwb-baker-draft .fwb-brand-copy { display: grid; gap: 2px; }
+#fwb-baker-draft .fwb-brand-copy strong { font-size: 15px; font-weight: 600; }
+#fwb-baker-draft .fwb-brand-copy small { font-size: 12px; color: var(--fwb-dim); letter-spacing: .04em; }
+#fwb-baker-draft .fwb-top-state { display: inline-flex; gap: 7px; align-items: center; font-size: 12px; color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-top-state::before { content: &quot;&quot;; width: 6px; height: 6px; border-radius: 50%; background: var(--fwb-accent); }
+#fwb-baker-draft .fwb-prototype { display: grid; gap: 5px; padding: 15px 18px; background: var(--fwb-bg); color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-prototype &gt; div { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+#fwb-baker-draft .fwb-prototype h1 { color: var(--fwb-text); font-size: 19px; font-weight: 600; }
+#fwb-baker-draft .fwb-prototype i { color: var(--fwb-accent); }
+#fwb-baker-draft .fwb-layout { grid-template-columns: 208px minmax(0,1fr) var(--fwb-inspector-width); }
+#fwb-baker-draft .fwb-library { padding: 15px 8px; }
+#fwb-baker-draft .fwb-library-heading { color: var(--fwb-text); display: flex; gap: 8px; align-items: center; margin: 0 5px 14px; font-size: 15px; font-weight: 600; }
+#fwb-baker-draft .fwb-entry { grid-template-columns: 50px minmax(0,1fr); gap: 9px; padding: 6px; }
+#fwb-baker-draft .fwb-thumb { width: 50px; height: 50px; }
+#fwb-baker-draft .fwb-work { padding: 16px var(--fwb-pad); }
+#fwb-baker-draft .fwb-item-head { display: grid; grid-template-columns: 66px minmax(0,1fr) auto; gap: 12px; align-items: center; margin-bottom: 17px; }
+#fwb-baker-draft .fwb-effect-thumb { width: 66px; height: 66px; background: #080a0d; border: 1px solid var(--fwb-line); border-top-color: var(--fwb-accent); border-radius: 4px; }
+#fwb-baker-draft .fwb-effect-thumb canvas { width: 100%; height: 100%; display: block; }
+#fwb-baker-draft .fwb-item-head h2 { font-size: 20px; }
+#fwb-baker-draft .fwb-item-head small { font-size: 12px; line-height: 1.6; }
+#fwb-baker-draft .fwb-status { font-size: 12px; padding: 5px 7px; background: var(--fwb-low); max-width: 84px; text-align: center; }
+#fwb-baker-draft .fwb-modebar { gap: 14px; margin-bottom: 15px; }
+#fwb-baker-draft .fwb-modebar button { padding: 8px 9px 10px; }
+#fwb-baker-draft .fwb-toolbar { gap: 9px; }
+#fwb-baker-draft .fwb-toolbar label { gap: 5px; }
+#fwb-baker-draft .fwb-toolbar select { padding: 6px 7px; }
+#fwb-baker-draft .fwb-notice { padding: 11px 12px; display: flex; align-items: flex-start; gap: 9px; line-height: 1.7; border: 1px solid color-mix(in srgb,var(--fwb-warning) 30%,var(--fwb-line)); border-left: 2px solid var(--fwb-warning); border-radius: 3px; }
+#fwb-baker-draft .fwb-notice[data-tone=&quot;error&quot;] { border-color: color-mix(in srgb,var(--fwb-error) 30%,var(--fwb-line)); border-left-color: var(--fwb-error); }
+#fwb-baker-draft .fwb-notice i { flex: 0 0 auto; margin-top: 2px; }
+#fwb-baker-draft .fwb-screen { border: 1px solid var(--fwb-line); overflow: hidden; border-radius: 4px; }
+#fwb-baker-draft .fwb-screen-caption { position: static; padding: 9px 11px; background: var(--fwb-low); color: var(--fwb-text); border-bottom: 1px solid var(--fwb-line); line-height: 1.5; }
+#fwb-baker-draft .fwb-screen-caption span:last-child { color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-screen canvas { aspect-ratio: 4 / 3; border-radius: 0; }
+#fwb-baker-draft .fwb-screen[data-main-screen] canvas { aspect-ratio: 1.25; }
+#fwb-baker-draft .fwb-stage { position: relative; }
+#fwb-baker-draft .fwb-canvas-tools { position: absolute; top: 11px; right: 10px; display: grid; gap: 6px; z-index: 2; }
+#fwb-baker-draft .fwb-canvas-tools button { display: grid; place-items: center; width: 32px; height: 32px; min-height: 32px; padding: 7px; background: var(--fwb-low); }
+#fwb-baker-draft .fwb-guide-overlay { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(to right, color-mix(in srgb,var(--fwb-dim) 10%,transparent) 1px,transparent 1px),linear-gradient(to bottom,color-mix(in srgb,var(--fwb-dim) 10%,transparent) 1px,transparent 1px); background-size: 48px 48px; }
+#fwb-baker-draft .fwb-screen-footer { background: #080a0d; padding: 9px 11px; }
+#fwb-baker-draft .fwb-inspector { padding: 16px 12px; background: var(--fwb-bg); }
+#fwb-baker-draft .fwb-section { background: var(--fwb-panel); border: 1px solid var(--fwb-line); border-radius: 5px; padding: 13px; gap: 11px; margin-bottom: 10px; }
+#fwb-baker-draft .fwb-section:last-child { padding: 13px; border: 1px solid var(--fwb-line); }
+#fwb-baker-draft .fwb-section h3 { display: flex; align-items: center; gap: 8px; font-size: 15px; }
+#fwb-baker-draft .fwb-section h3 i { color: var(--fwb-accent); flex: 0 0 auto; }
+#fwb-baker-draft .fwb-section h3 svg, #fwb-baker-draft .fwb-prototype &gt; div &gt; svg { color: var(--fwb-accent); flex: 0 0 auto; }
+#fwb-baker-draft .fwb-notice &gt; svg { flex: 0 0 auto; margin-top: 2px; }
+#fwb-baker-draft .fwb-section &gt; button { width: 100%; }
+#fwb-baker-draft .fwb-section p { line-height: 1.7; }
+#fwb-baker-draft .fwb-check-list { gap: 10px; }
+#fwb-baker-draft .fwb-check-list strong { color: var(--fwb-success); }
+#fwb-baker-draft .fwb-check-list li &gt; :last-child { text-align: right; }
+#fwb-baker-draft .fwb-layer { padding: 8px; gap: 7px; background: var(--fwb-field); }
+#fwb-baker-draft .fwb-layer[data-current=&quot;true&quot;] { border: 1px solid var(--fwb-accent); background: var(--fwb-field); }
+#fwb-baker-draft .fwb-layer-row { display: grid; grid-template-columns: 38px minmax(0,1fr); gap: 8px; align-items: center; }
+#fwb-baker-draft .fwb-layer-thumb { width: 38px; height: 38px; display: block; border-radius: 3px; background: #080a0d; }
+#fwb-baker-draft .fwb-layer-title { display: grid; gap: 5px; min-width: 0; }
+#fwb-baker-draft .fwb-layer-actions { display: flex; gap: 5px; }
+#fwb-baker-draft .fwb-layer-actions button { flex: 1; }
+#fwb-baker-draft .fwb-layer-name { width: 100%; font-size: 13px !important; }
+#fwb-baker-draft .fwb-layer-time { display: flex; align-items: center; gap: 5px 9px; flex-wrap: wrap; color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-timeline { padding-top: 13px; gap: 9px; }
+#fwb-baker-draft .fwb-bottom { background: var(--fwb-low); border: 1px solid var(--fwb-line); border-radius: 5px; padding: 11px; margin-top: 16px; }
+#fwb-baker-draft .fwb-track-line { height: 12px; }
+#fwb-baker-draft .fwb-track-fill { background: color-mix(in srgb,var(--fwb-accent) 22%,var(--fwb-low)); }
+#fwb-baker-draft .fwb-notification:empty { display: none; }
+#fwb-baker-draft .fwb-capture { display: grid; gap: 7px; padding-top: 10px; border-top: 1px solid var(--fwb-line); }
+#fwb-baker-draft .fwb-capture img { display: block; width: 100%; border-radius: 4px; }
+#fwb-baker-draft .fwb-capture figcaption { font-size: 12px; color: var(--fwb-dim); overflow-wrap: anywhere; }
+#fwb-baker-draft .fwb-capture figure { margin: 0; display: grid; gap: 7px; }
+#fwb-baker-draft[data-focus=&quot;true&quot;] .fwb-layout { display: block; }
+#fwb-baker-draft[data-focus=&quot;true&quot;] .fwb-library, #fwb-baker-draft[data-focus=&quot;true&quot;] .fwb-inspector { display: none; }
+#fwb-baker-draft[data-focus=&quot;true&quot;] .fwb-screen[data-main-screen] canvas { aspect-ratio: 16 / 9; }
+@container (max-width: 920px) {
+  #fwb-baker-draft .fwb-layout { grid-template-columns: 198px minmax(0,1fr); }
+  #fwb-baker-draft .fwb-inspector { grid-column: 2; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; align-items: start; }
+  #fwb-baker-draft .fwb-inspector .fwb-section { margin: 0; }
+  #fwb-baker-draft .fwb-section:nth-child(3) { grid-column: 1 / -1; }
+}
+@container (max-width: 680px) {
+  #fwb-baker-draft .fwb-layout { display: block; }
+  #fwb-baker-draft .fwb-library { border-right: 0; border-bottom: 1px solid var(--fwb-line); padding: 9px 12px; }
+  #fwb-baker-draft .fwb-library &gt; summary { display: flex; gap: 9px; justify-content: space-between; font-size: 15px; font-weight: 600; padding: 5px 0; }
+  #fwb-baker-draft .fwb-library-heading { display: none; }
+  #fwb-baker-draft .fwb-inspector { display: grid; grid-template-columns: 1fr; border-left: 0; }
+  #fwb-baker-draft .fwb-section:nth-child(3), #fwb-baker-draft .fwb-inspector &gt; .fwb-wide { grid-column: auto; }
+  #fwb-baker-draft .fwb-item-head { grid-template-columns: 58px minmax(0,1fr); gap: 10px; }
+  #fwb-baker-draft .fwb-effect-thumb { width: 58px; height: 58px; grid-row: 1 / 3; }
+  #fwb-baker-draft .fwb-status { grid-column: 2; justify-self: start; max-width: none; }
+  #fwb-baker-draft .fwb-work { padding: 14px 12px; }
+  #fwb-baker-draft .fwb-item-head h2 { font-size: 18px; }
+  #fwb-baker-draft .fwb-modebar { gap: 0; }
+  #fwb-baker-draft .fwb-modebar button { flex: 1; min-width: 0; }
+  #fwb-baker-draft .fwb-scrub-row { grid-template-columns: 1fr; }
+  #fwb-baker-draft .fwb-scrub-row output { justify-self: end; }
+  #fwb-baker-draft .fwb-top-state { display: none; }
+}
+@media (pointer: coarse) { #fwb-baker-draft .fwb-canvas-tools button { width: 44px; height: 44px; min-height: 44px; } }
+#fwb-baker-draft { --fwb-inspector-width: 264px; --fwb-pad: 12px; }
+#fwb-baker-draft .fwb-shell { border-radius: 0; border: 0; }
+#fwb-baker-draft .fwb-top { padding: 8px 14px; min-height: 48px; border-radius: 0; }
+#fwb-baker-draft .fwb-brand { flex-basis: 260px; }
+#fwb-baker-draft .fwb-brand-mark { font-size: 23px; }
+#fwb-baker-draft .fwb-brand-copy { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+#fwb-baker-draft .fwb-brand-copy small { letter-spacing: 0; }
+#fwb-baker-draft .fwb-gpu { display: inline-flex; align-items: center; gap: 6px; color: var(--fwb-dim); font-size: 12px; }
+#fwb-baker-draft .fwb-gpu svg { color: var(--fwb-accent); }
+#fwb-baker-draft .fwb-viewbar { padding: 7px 12px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; border-bottom: 1px solid var(--fwb-line); background: var(--fwb-low); }
+#fwb-baker-draft .fwb-viewbar button { min-height: 32px; padding: 5px 9px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+#fwb-baker-draft .fwb-segment { display: inline-flex; align-items: stretch; gap: 2px; padding: 2px; border: 1px solid var(--fwb-line); border-radius: 5px; background: var(--fwb-bg); max-width: 100%; }
+#fwb-baker-draft .fwb-segment button { border-color: transparent; background: transparent; color: var(--fwb-dim); padding-inline: 10px; }
+#fwb-baker-draft .fwb-segment button[aria-pressed=&quot;true&quot;] { color: var(--fwb-text); background: var(--fwb-low); border-color: var(--fwb-line); }
+#fwb-baker-draft .fwb-exposure { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; font-size: 12px; color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-exposure input { width: 86px; }
+#fwb-baker-draft .fwb-exposure output { min-width: 27px; }
+#fwb-baker-draft .fwb-updates { padding: 12px 16px; background: var(--fwb-panel); border-bottom: 1px solid var(--fwb-line); font-size: 13px; }
+#fwb-baker-draft .fwb-updates ul { margin: 9px 0 0; padding-left: 18px; color: var(--fwb-dim); }
+#fwb-baker-draft .fwb-layout { grid-template-columns: 200px minmax(0,1fr) var(--fwb-inspector-width); }
+#fwb-baker-draft .fwb-library-content { display: flex; flex-direction: column; height: 100%; }
+#fwb-baker-draft .fwb-library-footer { margin: auto 5px 0; padding-top: 14px; display: grid; gap: 9px; }
+#fwb-baker-draft .fwb-library-footer button { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+#fwb-baker-draft .fwb-work { padding: 12px var(--fwb-pad); }
+#fwb-baker-draft .fwb-item-head { grid-template-columns: 40px minmax(0,1fr) auto auto; gap: 10px; margin-bottom: 10px; }
+#fwb-baker-draft .fwb-effect-thumb { width: 40px; height: 40px; }
+#fwb-baker-draft .fwb-item-head h2 { font-size: 16px; }
+#fwb-baker-draft .fwb-item-head small { margin-top: 1px; }
+#fwb-baker-draft .fwb-item-head &gt; button { font-size: 12px; }
+#fwb-baker-draft .fwb-observe-line { display: flex; align-items: center; justify-content: space-between; gap: 7px 12px; flex-wrap: wrap; margin-bottom: 8px; }
+#fwb-baker-draft .fwb-observe-line .fwb-distance { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--fwb-dim); flex: 0 1 auto; }
+#fwb-baker-draft .fwb-observe-line .fwb-distance input { width: 108px; }
+#fwb-baker-draft .fwb-observe-line button { font-size: 12px; padding: 4px 8px; min-height: 28px; }
+#fwb-baker-draft .fwb-notice { margin: 6px 0 8px; padding: 7px 10px; }
+#fwb-baker-draft .fwb-screen[data-main-screen] canvas, #fwb-baker-draft[data-focus=&quot;true&quot;] .fwb-screen[data-main-screen] canvas { aspect-ratio: 16 / 9; max-height: 620px; }
+#fwb-baker-draft .fwb-screen-caption, #fwb-baker-draft .fwb-screen-footer { padding: 6px 10px; }
+#fwb-baker-draft .fwb-inspector { padding: 12px 10px; }
+#fwb-baker-draft .fwb-section { padding: 10px; gap: 8px; margin-bottom: 8px; }
+#fwb-baker-draft .fwb-section:last-child { padding: 10px; }
+#fwb-baker-draft .fwb-section h3 { font-size: 14px; }
+#fwb-baker-draft .fwb-section p { line-height: 1.5; }
+#fwb-baker-draft .fwb-check-list { gap: 7px; }
+#fwb-baker-draft .fwb-layer { padding: 6px; gap: 5px; }
+#fwb-baker-draft .fwb-layer-row { grid-template-columns: 32px minmax(0,1fr); }
+#fwb-baker-draft .fwb-layer-thumb { width: 32px; height: 32px; }
+#fwb-baker-draft .fwb-layer-title { gap: 3px; }
+#fwb-baker-draft .fwb-section textarea { min-height: 58px; }
+#fwb-baker-draft .fwb-section .fwb-actions { gap: 5px; margin-top: 0; }
+#fwb-baker-draft .fwb-bottom { padding: 8px 10px; margin-top: 10px; }
+#fwb-baker-draft .fwb-foot { padding: 6px 12px; border-radius: 0; }
+#fwb-baker-draft[data-library-visible=&quot;false&quot;] .fwb-library, #fwb-baker-draft[data-inspector-visible=&quot;false&quot;] .fwb-inspector { display: none; }
+#fwb-baker-draft[data-library-visible=&quot;false&quot;] .fwb-layout { grid-template-columns: minmax(0,1fr) var(--fwb-inspector-width); }
+#fwb-baker-draft[data-inspector-visible=&quot;false&quot;] .fwb-layout { grid-template-columns: 200px minmax(0,1fr); }
+#fwb-baker-draft[data-inspector-visible=&quot;false&quot;][data-library-visible=&quot;false&quot;] .fwb-layout { display: block; }
+@container (max-width: 1180px) {
+  #fwb-baker-draft .fwb-layout, #fwb-baker-draft[data-inspector-visible=&quot;false&quot;] .fwb-layout { grid-template-columns: 184px minmax(0,1fr); }
+  #fwb-baker-draft .fwb-library { grid-row: 1 / 3; }
+  #fwb-baker-draft .fwb-inspector { grid-column: 2; border-top: 1px solid var(--fwb-line); display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; align-items: start; }
+  #fwb-baker-draft[data-library-visible=&quot;false&quot;] .fwb-layout { display: block; }
+  #fwb-baker-draft .fwb-inspector .fwb-section { margin: 0; }
+  #fwb-baker-draft .fwb-inspector &gt; .fwb-wide, #fwb-baker-draft .fwb-section:nth-child(3) { grid-column: 1 / -1; }
+}
+@container (max-width: 680px) {
+  #fwb-baker-draft .fwb-layout, #fwb-baker-draft[data-inspector-visible=&quot;false&quot;] .fwb-layout { display: block; }
+  #fwb-baker-draft .fwb-library-content { height: auto; }
+  #fwb-baker-draft .fwb-library-footer { margin-top: 12px; }
+  #fwb-baker-draft .fwb-inspector { grid-template-columns: 1fr; }
+  #fwb-baker-draft .fwb-inspector &gt; .fwb-wide, #fwb-baker-draft .fwb-section:nth-child(3) { grid-column: auto; }
+  #fwb-baker-draft .fwb-item-head { grid-template-columns: 40px minmax(0,1fr) auto; }
+  #fwb-baker-draft .fwb-item-head .fwb-effect-thumb { grid-row: 1; }
+  #fwb-baker-draft .fwb-item-head .fwb-status { grid-column: auto; }
+  #fwb-baker-draft .fwb-item-head &gt; button { grid-column: 2 / 4; justify-self: start; }
+  #fwb-baker-draft .fwb-segment { flex: 1 1 auto; }
+  #fwb-baker-draft .fwb-segment button { flex: 1; }
+  #fwb-baker-draft .fwb-exposure { margin-left: 0; }
+  #fwb-baker-draft .fwb-screen[data-main-screen] canvas { aspect-ratio: 4 / 3; }
+}
+@media (pointer: coarse) { #fwb-baker-draft .fwb-viewbar button { min-height: 44px; } }
+&lt;/style&gt;
+&lt;div id=&quot;fwb-baker-draft&quot; aria-label=&quot;烟花烘焙器浏览器交互草稿&quot;&gt;
+  &lt;div class=&quot;fwb-shell&quot;&gt;
+    &lt;header class=&quot;fwb-top&quot;&gt;
+      &lt;div class=&quot;fwb-brand&quot;&gt;&lt;span class=&quot;fwb-brand-mark&quot;&gt;DF&lt;/span&gt;&lt;div class=&quot;fwb-brand-copy&quot;&gt;&lt;strong&gt;特效工作台&lt;/strong&gt;&lt;small&gt;烟花烘焙器 · 交互草稿&lt;/small&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;span class=&quot;fwb-gpu&quot;&gt;&lt;i data-lucide=&quot;cpu&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;显卡 · RTX 5080&lt;/span&gt;
+      &lt;button type=&quot;button&quot; data-action=&quot;focus&quot; data-exit-focus class=&quot;cursor-interaction&quot; hidden&gt;返回工作台&lt;/button&gt;
+      &lt;button type=&quot;button&quot; data-action=&quot;updates&quot; aria-expanded=&quot;false&quot; class=&quot;cursor-interaction&quot;&gt;更新记录&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;section data-updates class=&quot;fwb-updates&quot; hidden&gt;&lt;div class=&quot;fwb-row fwb-between&quot;&gt;&lt;h3&gt;交互草稿更新&lt;/h3&gt;&lt;button type=&quot;button&quot; data-action=&quot;updates&quot; class=&quot;fwb-quiet cursor-interaction&quot;&gt;收起&lt;/button&gt;&lt;/div&gt;&lt;ul&gt;&lt;li&gt;恢复实时模拟、引擎回放与贴图的直接切换。&lt;/li&gt;&lt;li&gt;按横向浏览器窗口调整比例，库与参数栏可收起。&lt;/li&gt;&lt;li&gt;新建配方移至效果库底部，保留DF颜色及缩略图框选。&lt;/li&gt;&lt;/ul&gt;&lt;/section&gt;
+    &lt;div class=&quot;fwb-viewbar&quot; aria-label=&quot;查看器工具条&quot;&gt;
+      &lt;button type=&quot;button&quot; data-action=&quot;toggle-library&quot; aria-pressed=&quot;true&quot; class=&quot;cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;panel-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;库&lt;/button&gt;
+      &lt;div class=&quot;fwb-segment&quot; role=&quot;group&quot; aria-label=&quot;画面来源&quot;&gt;&lt;button type=&quot;button&quot; data-view=&quot;live&quot; aria-pressed=&quot;false&quot; class=&quot;cursor-interaction&quot;&gt;实时模拟&lt;/button&gt;&lt;button type=&quot;button&quot; data-view=&quot;engine&quot; aria-pressed=&quot;true&quot; class=&quot;cursor-interaction&quot;&gt;引擎回放&lt;/button&gt;&lt;button type=&quot;button&quot; data-view=&quot;atlas&quot; aria-pressed=&quot;false&quot; class=&quot;cursor-interaction&quot;&gt;贴图&lt;/button&gt;&lt;/div&gt;
+      &lt;div class=&quot;fwb-segment&quot; role=&quot;group&quot; aria-label=&quot;观察大小&quot;&gt;&lt;button type=&quot;button&quot; data-view-scale=&quot;fit&quot; aria-pressed=&quot;false&quot; class=&quot;cursor-interaction&quot;&gt;适应窗口&lt;/button&gt;&lt;button type=&quot;button&quot; data-view-scale=&quot;pixel&quot; aria-pressed=&quot;false&quot; class=&quot;cursor-interaction&quot;&gt;1:1 像素&lt;/button&gt;&lt;button type=&quot;button&quot; data-view-scale=&quot;game&quot; aria-pressed=&quot;true&quot; class=&quot;cursor-interaction&quot;&gt;游戏内大小&lt;/button&gt;&lt;/div&gt;
+      &lt;div class=&quot;fwb-segment&quot; role=&quot;group&quot; aria-label=&quot;预览平台&quot;&gt;&lt;button type=&quot;button&quot; data-view-platform=&quot;pc&quot; aria-pressed=&quot;true&quot; class=&quot;cursor-interaction&quot;&gt;PC&lt;/button&gt;&lt;button type=&quot;button&quot; data-view-platform=&quot;mobile&quot; aria-pressed=&quot;false&quot; class=&quot;cursor-interaction&quot;&gt;手机&lt;/button&gt;&lt;/div&gt;
+      &lt;label class=&quot;fwb-exposure&quot;&gt;显示曝光&lt;input data-display-exposure aria-label=&quot;显示曝光&quot; type=&quot;range&quot; min=&quot;0.5&quot; max=&quot;2&quot; step=&quot;0.1&quot; value=&quot;1&quot;&gt;&lt;output data-exposure-value class=&quot;fwb-mono&quot;&gt;1×&lt;/output&gt;&lt;/label&gt;
+      &lt;button type=&quot;button&quot; data-action=&quot;reference&quot; aria-pressed=&quot;false&quot; class=&quot;cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;columns-2&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;实拍对照&lt;/button&gt;
+      &lt;button type=&quot;button&quot; data-action=&quot;focus&quot; aria-pressed=&quot;false&quot; data-focus-control class=&quot;cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;maximize&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;专注&lt;/button&gt;
+      &lt;button type=&quot;button&quot; data-action=&quot;toggle-inspector&quot; aria-pressed=&quot;true&quot; class=&quot;cursor-interaction&quot;&gt;参数&lt;i data-lucide=&quot;panel-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;section class=&quot;fwb-create&quot; data-create hidden aria-label=&quot;新建配方&quot;&gt;
+      &lt;div class=&quot;fwb-row fwb-between&quot;&gt;&lt;h3&gt;新建配方&lt;/h3&gt;&lt;button type=&quot;button&quot; data-action=&quot;close-new&quot; class=&quot;fwb-quiet cursor-interaction&quot;&gt;取消&lt;/button&gt;&lt;/div&gt;
+      &lt;div class=&quot;fwb-create-fields&quot;&gt;
+        &lt;label class=&quot;fwb-label&quot;&gt;起点&lt;select data-new-type&gt;&lt;option value=&quot;kiku&quot;&gt;菊 · 载入完整模板&lt;/option&gt;&lt;option value=&quot;botan&quot;&gt;牡丹 · 载入完整模板&lt;/option&gt;&lt;option value=&quot;blank&quot;&gt;空白 / 自定义&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;
+        &lt;label class=&quot;fwb-label&quot;&gt;配方名称&lt;input data-new-name type=&quot;text&quot; placeholder=&quot;填写新配方名称&quot; maxlength=&quot;48&quot;&gt;&lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;fwb-row&quot;&gt;&lt;button type=&quot;button&quot; data-action=&quot;create&quot; class=&quot;fwb-primary cursor-interaction&quot;&gt;开始制作&lt;/button&gt;&lt;/div&gt;
+    &lt;/section&gt;
+    &lt;div class=&quot;fwb-layout&quot;&gt;
+      &lt;details class=&quot;fwb-library&quot; data-library open&gt;
+        &lt;summary class=&quot;cursor-interaction&quot;&gt;效果库&lt;/summary&gt;
+        &lt;div class=&quot;fwb-library-content&quot;&gt;
+          &lt;div class=&quot;fwb-library-heading&quot;&gt;&lt;i data-lucide=&quot;layers&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;效果库&lt;/div&gt;
+          &lt;label for=&quot;fwb-lib-search&quot;&gt;查找效果&lt;/label&gt;
+          &lt;input id=&quot;fwb-lib-search&quot; data-search type=&quot;search&quot; placeholder=&quot;名字 / ID / 花型&quot;&gt;
+          &lt;nav data-library-list aria-label=&quot;效果库分组&quot;&gt;&lt;/nav&gt;
+          &lt;div class=&quot;fwb-library-footer&quot;&gt;&lt;button type=&quot;button&quot; data-action=&quot;new&quot; class=&quot;cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;plus&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;新建配方&lt;/button&gt;&lt;span&gt;旧版本保留在历史中&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/details&gt;
+      &lt;main class=&quot;fwb-work&quot;&gt;
+        &lt;div class=&quot;fwb-item-head&quot;&gt;
+          &lt;div class=&quot;fwb-effect-thumb&quot; aria-hidden=&quot;true&quot;&gt;&lt;canvas data-effect-thumb&gt;&lt;/canvas&gt;&lt;/div&gt;
+          &lt;div&gt;&lt;h2 data-name&gt;引菊 → 锦&lt;/h2&gt;&lt;small data-version&gt;HN1 · 工作草稿 · 版本示例 R2&lt;/small&gt;&lt;/div&gt;
+          &lt;span class=&quot;fwb-status&quot; data-status&gt;待我验收&lt;/span&gt;
+          &lt;button type=&quot;button&quot; data-mode=&quot;delivery&quot; class=&quot;cursor-interaction&quot;&gt;查看交付&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;fwb-observe-line&quot; data-observe-tools&gt;
+          &lt;label class=&quot;fwb-distance&quot;&gt;距离 &lt;output data-distance-label class=&quot;fwb-mono&quot;&gt;1000 m&lt;/output&gt;&lt;input data-distance type=&quot;range&quot; min=&quot;800&quot; max=&quot;1200&quot; step=&quot;25&quot; value=&quot;1000&quot; aria-label=&quot;观察距离，米&quot;&gt;&lt;/label&gt;
+          &lt;div class=&quot;fwb-row&quot;&gt;
+          &lt;button type=&quot;button&quot; data-action=&quot;compare&quot; aria-pressed=&quot;false&quot; class=&quot;fwb-quiet cursor-interaction&quot;&gt;对比上版&lt;/button&gt;
+          &lt;span class=&quot;fwb-small fwb-muted&quot; data-scope&gt;整体 · 全部层&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;fwb-notice&quot; data-notice hidden role=&quot;status&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;fwb-screens&quot; data-screens data-pair=&quot;false&quot;&gt;
+          &lt;div class=&quot;fwb-screen&quot; data-main-screen&gt;
+            &lt;div class=&quot;fwb-screen-caption&quot;&gt;&lt;span data-screen-name&gt;当前候选 · 引擎回放&lt;/span&gt;&lt;span&gt;示意画面&lt;/span&gt;&lt;/div&gt;
+            &lt;div class=&quot;fwb-stage&quot;&gt;
+              &lt;canvas data-main-canvas role=&quot;img&quot; aria-label=&quot;烟花示意画面，根据当前时刻、图层和观察条件更新&quot;&gt;&lt;/canvas&gt;
+              &lt;div class=&quot;fwb-guide-overlay&quot; data-grid-overlay hidden&gt;&lt;/div&gt;
+              &lt;div class=&quot;fwb-canvas-tools&quot; aria-label=&quot;画面工具&quot;&gt;
+                &lt;button type=&quot;button&quot; data-action=&quot;focus&quot; aria-label=&quot;展开大画面&quot; data-tooltip=&quot;展开大画面&quot; class=&quot;cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;maximize&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+                &lt;button type=&quot;button&quot; data-action=&quot;capture&quot; aria-label=&quot;记录当前帧&quot; data-tooltip=&quot;记录当前帧与观察条件&quot; class=&quot;cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;camera&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+                &lt;button type=&quot;button&quot; data-action=&quot;grid&quot; aria-label=&quot;构图网格&quot; data-tooltip=&quot;构图网格&quot; aria-pressed=&quot;false&quot; class=&quot;cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;grid-3x3&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;fwb-screen-footer&quot;&gt;&lt;span data-screen-info&gt;PC · 单格512 px&lt;/span&gt;&lt;span class=&quot;fwb-mono&quot; data-frame-info&gt;30 fps · 帧 42&lt;/span&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;fwb-screen&quot; data-comparison hidden&gt;
+            &lt;div class=&quot;fwb-screen-caption&quot;&gt;&lt;span&gt;上版 · 锁定比较&lt;/span&gt;&lt;span&gt;示例&lt;/span&gt;&lt;/div&gt;
+            &lt;canvas data-compare-canvas role=&quot;img&quot; aria-label=&quot;锁定的上版烟花示意，同一时刻和观察条件&quot;&gt;&lt;/canvas&gt;
+            &lt;div class=&quot;fwb-screen-footer&quot;&gt;&lt;span&gt;同一时间 / 平台 / 尺度&lt;/span&gt;&lt;span&gt;版本示例 R0&lt;/span&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;section data-atlas hidden aria-label=&quot;贴图和流转&quot;&gt;
+          &lt;div class=&quot;fwb-row fwb-between&quot;&gt;&lt;h3&gt;贴图流转&lt;/h3&gt;&lt;label class=&quot;fwb-label&quot;&gt;当前层&lt;select data-atlas-layer aria-label=&quot;选择贴图图层&quot;&gt;&lt;/select&gt;&lt;/label&gt;&lt;/div&gt;
+          &lt;div class=&quot;fwb-atlas-grid&quot; style=&quot;margin-top:11px&quot;&gt;
+            &lt;div&gt;&lt;canvas data-atlas-canvas role=&quot;img&quot; aria-label=&quot;整张示例贴图，框选当前帧的格子&quot;&gt;&lt;/canvas&gt;&lt;p class=&quot;fwb-atlas-label&quot; data-atlas-info&gt;&lt;/p&gt;&lt;/div&gt;
+            &lt;div&gt;&lt;canvas data-cell-canvas role=&quot;img&quot; aria-label=&quot;放大的当前格示例&quot;&gt;&lt;/canvas&gt;&lt;p class=&quot;fwb-atlas-label&quot; data-cell-info&gt;&lt;/p&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;canvas data-curve class=&quot;fwb-curve&quot; role=&quot;img&quot; aria-label=&quot;帧号随开花后时间变化的示例曲线和当前时刻&quot;&gt;&lt;/canvas&gt;
+        &lt;/section&gt;
+        &lt;section class=&quot;fwb-delivery&quot; data-delivery hidden aria-label=&quot;整包交付&quot;&gt;
+          &lt;div class=&quot;fwb-delivery-head fwb-stack&quot;&gt;
+            &lt;h3&gt;一个效果 · 一个素材包&lt;/h3&gt;
+            &lt;label class=&quot;fwb-label&quot;&gt;包名称&lt;input data-package-name type=&quot;text&quot; placeholder=&quot;Firework_01&quot; maxlength=&quot;48&quot;&gt;&lt;/label&gt;
+            &lt;span class=&quot;fwb-small fwb-muted&quot;&gt;最终UE资产名由导入工具生成&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;p data-package-error class=&quot;fwb-small&quot; role=&quot;alert&quot; hidden&gt;&lt;/p&gt;
+          &lt;table class=&quot;fwb-manifest&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;包内文件&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;平台 / 延迟&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody data-manifest&gt;&lt;/tbody&gt;&lt;/table&gt;
+          &lt;div class=&quot;fwb-row&quot;&gt;&lt;button type=&quot;button&quot; data-action=&quot;export&quot; class=&quot;fwb-primary cursor-interaction&quot;&gt;导出 PC＋手机包（模拟）&lt;/button&gt;&lt;span data-package-state class=&quot;fwb-small fwb-muted&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;/section&gt;
+        &lt;section class=&quot;fwb-reference&quot; data-reference hidden aria-label=&quot;实拍参考对照&quot;&gt;
+          &lt;div class=&quot;fwb-row fwb-between&quot;&gt;&lt;h3&gt;实拍参考&lt;/h3&gt;&lt;button type=&quot;button&quot; data-action=&quot;reference&quot; class=&quot;fwb-quiet cursor-interaction&quot;&gt;关闭&lt;/button&gt;&lt;/div&gt;
+          &lt;div class=&quot;fwb-reference-empty&quot; data-ref-empty&gt;尚未载入参考视频&lt;/div&gt;
+          &lt;video data-ref-video muted playsinline controls hidden&gt;&lt;/video&gt;
+          &lt;div class=&quot;fwb-row&quot;&gt;
+            &lt;label class=&quot;fwb-file cursor-interaction&quot;&gt;选择本地视频&lt;input data-ref-file type=&quot;file&quot; accept=&quot;video/*&quot; aria-label=&quot;选择本地参考视频&quot;&gt;&lt;/label&gt;
+            &lt;label class=&quot;fwb-small&quot;&gt;视频开花时刻 &lt;input data-ref-burst class=&quot;fwb-ref-number&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;0.01&quot; placeholder=&quot;秒&quot; aria-label=&quot;视频中的开花时刻，秒&quot;&gt;&lt;/label&gt;
+            &lt;span class=&quot;fwb-small fwb-muted&quot; data-ref-state&gt;填写开花时刻后与主时间轴同步&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/section&gt;
+        &lt;div class=&quot;fwb-timeline&quot; data-timeline&gt;
+          &lt;div class=&quot;fwb-scrub-row&quot;&gt;&lt;input data-scrub type=&quot;range&quot; min=&quot;0&quot; max=&quot;126&quot; step=&quot;1&quot; value=&quot;43&quot; aria-label=&quot;开花后的引擎tick&quot;&gt;&lt;output class=&quot;fwb-time fwb-mono&quot; data-time&gt;+1.43 / 4.20 s&lt;/output&gt;&lt;/div&gt;
+          &lt;div class=&quot;fwb-ticks&quot;&gt;&lt;span&gt;开花 0 s&lt;/span&gt;&lt;span data-mid-time&gt;2.10 s&lt;/span&gt;&lt;span data-end-time&gt;4.20 s&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;fwb-row fwb-timebar&quot;&gt;
+            &lt;button type=&quot;button&quot; data-action=&quot;play&quot; class=&quot;cursor-interaction&quot;&gt;播放一遍&lt;/button&gt;
+            &lt;button type=&quot;button&quot; data-action=&quot;prev&quot; class=&quot;cursor-interaction&quot; aria-label=&quot;前一个引擎tick&quot;&gt;−1 tick&lt;/button&gt;
+            &lt;button type=&quot;button&quot; data-action=&quot;next&quot; class=&quot;cursor-interaction&quot; aria-label=&quot;后一个引擎tick&quot;&gt;+1 tick&lt;/button&gt;
+            &lt;select data-speed aria-label=&quot;播放速度&quot;&gt;&lt;option value=&quot;1&quot;&gt;1×&lt;/option&gt;&lt;option value=&quot;0.5&quot;&gt;0.5×&lt;/option&gt;&lt;option value=&quot;0.25&quot;&gt;0.25×&lt;/option&gt;&lt;/select&gt;
+            &lt;label&gt;&lt;input data-loop type=&quot;checkbox&quot;&gt;循环&lt;/label&gt;
+            &lt;div class=&quot;fwb-row fwb-key-points&quot;&gt;&lt;button type=&quot;button&quot; data-point=&quot;0.35&quot; class=&quot;cursor-interaction&quot;&gt;开花&lt;/button&gt;&lt;button type=&quot;button&quot; data-point=&quot;1.2&quot; class=&quot;cursor-interaction&quot;&gt;展开&lt;/button&gt;&lt;button type=&quot;button&quot; data-point=&quot;2.6&quot; class=&quot;cursor-interaction&quot;&gt;衰减&lt;/button&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div data-tracks aria-label=&quot;各层有效时间&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;fwb-bottom&quot; data-bottom&gt;
+          &lt;small data-bottom-info&gt;检查结果与当前候选一致 · 示例&lt;/small&gt;
+          &lt;button type=&quot;button&quot; data-action=&quot;primary&quot; class=&quot;cursor-interaction&quot;&gt;查看交付&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;fwb-notification&quot; data-message aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;fwb-copy-fallback&quot; data-copy-fallback hidden&gt;&lt;label class=&quot;fwb-label&quot;&gt;可手动复制的意见&lt;textarea data-copy-text readonly&gt;&lt;/textarea&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;/main&gt;
+      &lt;aside class=&quot;fwb-inspector&quot; data-inspector aria-label=&quot;当前效果详情&quot;&gt;&lt;/aside&gt;
+    &lt;/div&gt;
+    &lt;footer class=&quot;fwb-foot&quot;&gt;&lt;span&gt;交互草稿 · 画面与检查为示例 · 未连接生产烘焙器&lt;/span&gt;&lt;span&gt;FIREWORKSLAB&lt;/span&gt;&lt;/footer&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+(() =&gt; {
+  const root = document.getElementById(&quot;fwb-baker-draft&quot;);
+  const q = s =&gt; root.querySelector(s);
+  const all = s =&gt; Array.from(root.querySelectorAll(s));
+  const cp = x =&gt; JSON.parse(JSON.stringify(x));
+  const esc = x =&gt; String(x).replace(/[&amp;&lt;&gt;&quot;&#x27;]/g, c =&gt; ({&quot;&amp;&quot;:&quot;&amp;amp;&quot;,&quot;&lt;&quot;:&quot;&amp;lt;&quot;,&quot;&gt;&quot;:&quot;&amp;gt;&quot;,&#x27;&quot;&#x27;:&quot;&amp;quot;&quot;,&quot;&#x27;&quot;:&quot;&amp;#39;&quot;}[c]));
+  const layer = (name, kind, delay = 0, life = 4.2) =&gt; ({ name, kind, delay, life, head: 1.2, bright: 1, count: 160 });
+  const examples = [
+    { key: &quot;jm&quot;, id: &quot;JM4-40&quot;, name: &quot;金芒菊&quot;, group: &quot;待我验收&quot;, type: &quot;kiku&quot;, params: [layer(&quot;星头与金尾&quot;, &quot;mixed&quot;)], packageName: &quot;JinMangJu_example&quot;, note: &quot;示例说明：亮核与尾线的层次调整，保留整体展开节奏。&quot;, hasBake: true },
+    { key: &quot;qn&quot;, id: &quot;QN10&quot;, name: &quot;青柠星&quot;, group: &quot;待我验收&quot;, type: &quot;lime&quot;, params: [layer(&quot;橙色放射尾&quot;, &quot;tail&quot;), layer(&quot;青柠星头&quot;, &quot;head&quot;, .4, 3.8)], packageName: &quot;QingNing_example&quot;, note: &quot;示例说明：星头与尾巴异色，共用同一组轨迹。&quot;, hasBake: true },
+    { key: &quot;hn&quot;, id: &quot;HN1&quot;, name: &quot;引菊 → 锦&quot;, group: &quot;制作中&quot;, type: &quot;kiku&quot;, params: [layer(&quot;引线&quot;, &quot;tail&quot;), layer(&quot;锦火星&quot;, &quot;head&quot;, .8, 3.4)], packageName: &quot;Hiki_example&quot;, note: &quot;失败场景示例：草稿保留，重试后回到完整回放。&quot;, hasBake: true, error: true },
+    { key: &quot;v5&quot;, id: &quot;TR2M&quot;, name: &quot;升空尾缀 · V5&quot;, group: &quot;已通过&quot;, type: &quot;trail&quot;, params: [layer(&quot;循环＋消散&quot;, &quot;mixed&quot;, 0, 5)], packageName: &quot;RiseTrail_example&quot;, note: &quot;锁定版本示例：查看和导出原版本，调整会产生编辑副本。&quot;, hasBake: true, locked: true },
+    { key: &quot;kiku&quot;, id: &quot;type:kiku&quot;, name: &quot;菊&quot;, group: &quot;花型模板&quot;, type: &quot;kiku&quot;, params: [layer(&quot;菊主层&quot;, &quot;mixed&quot;)], packageName: &quot;Kiku_example&quot;, note: &quot;完整模板示例：默认参数可以调整，烘焙后检查交付。&quot;, hasBake: false },
+    { key: &quot;old&quot;, id: &quot;JM3&quot;, name: &quot;金芒菊 · 旧版&quot;, group: &quot;历史&quot;, type: &quot;kiku&quot;, params: [layer(&quot;主层&quot;, &quot;mixed&quot;)], packageName: &quot;JinMangJu_history_example&quot;, note: &quot;历史示例：保留原版本，不用新算法覆盖旧产物。&quot;, hasBake: true, locked: true }
+  ];
+  const entries = {};
+  function makeEntry(d) {
+    const p = cp(d.params), revision = d.error ? 2 : 1;
+    return Object.assign({}, d, {
+      params: p, revision, baked: d.hasBake ? { revision: 1, params: cp(p), pc: 512, mobile: 256, frames: 120, quality: true } : null,
+      error: d.error ? &quot;当前草稿 R2 烘焙失败（场景示例），正在显示 R1 的成功产物。&quot; : &quot;&quot;,
+      selectedLayer: 0, muted: [], solo: null, time: 74 / 30, mode: &quot;review&quot;,
+      source: d.hasBake ? &quot;engine&quot; : &quot;live&quot;, platform: &quot;pc&quot;, scale: &quot;game&quot;, distance: 1000, compare: false, reference: false,
+      pc: 512, mobile: 256, comment: &quot;&quot;, reviewed: null, edited: false, invalid: false, undo: [], job: null
+    });
+  }
+  examples.forEach(d =&gt; entries[d.key] = makeEntry(d));
+  let selected = &quot;hn&quot;, playing = false, speed = 1, looping = false, animation = 0, lastClock = 0;
+  const references = new Map();
+  const captures = new Map();
+  const view = { focus: false, grid: false, library: true, inspector: true, exposure: 1 };
+  const sessionNonce = String(Date.now()) + &quot;-&quot; + String(Math.random());
+  let saveSequence = 0;
+  const design = { inspector: 264, spacing: 12, tracks: true, bakeResult: &quot;success&quot; };
+  const e = () =&gt; entries[selected];
+  const fresh = d =&gt; !!d.baked &amp;&amp; d.baked.revision === d.revision &amp;&amp; !d.error &amp;&amp; !d.invalid;
+  const passed = d =&gt; (d.group === &quot;已通过&quot; &amp;&amp; !d.edited) || (!!d.reviewed &amp;&amp; d.reviewed.result === &quot;通过&quot; &amp;&amp; d.reviewed.revision === d.revision);
+  const full = d =&gt; d.solo === null &amp;&amp; !d.muted.some(Boolean);
+  const packReady = d =&gt; fresh(d) &amp;&amp; d.baked.quality &amp;&amp; d.baked.pc &amp;&amp; d.baked.mobile &amp;&amp; d.params.length &gt; 0;
+  const duration = d =&gt; Math.max(1, ...((d.source === &quot;engine&quot; &amp;&amp; d.baked) ? d.baked.params : d.params).map(p =&gt; p.delay + p.life));
+  const tick = t =&gt; Math.floor((t + 1e-8) * 30) / 30;
+  function message(t) { q(&quot;[data-message]&quot;).textContent = t; }
+  function save() {
+    const summaries = Object.values(entries).map(d =&gt; ({
+      key: d.key, id: d.id, name: d.name, group: d.group, type: d.type, note: d.note, locked: d.locked, revision: d.revision, params: d.params, packageName: d.packageName,
+      pc: d.pc, mobile: d.mobile, baked: d.baked, edited: d.edited, error: d.error, reviewed: d.reviewed,
+      selectedLayer: d.selectedLayer, mode: d.mode, time: d.time, source: d.source, platform: d.platform,
+      scale: d.scale, distance: d.distance, comment: d.comment, solo: d.solo, muted: d.muted
+    })).slice(0, 12);
+    if (window.openai &amp;&amp; typeof window.openai.setWidgetState === &quot;function&quot;) {
+      window.openai.setWidgetState({ modelContent: { sourceDesign: &quot;浏览器工作区&quot;, selectedEffect: e().name, workingMode: e().mode, version: e().revision, prototypeOnly: true }, privateContent: { surface: &quot;baker-browser&quot;, selected, entries: summaries, design, view, sessionNonce, saveSequence: ++saveSequence } }).catch(() =&gt; {});
+    }
+  }
+  function restore(saved) {
+    if (!saved || !saved.privateContent || saved.privateContent.surface !== &quot;baker-browser&quot; || !Array.isArray(saved.privateContent.entries)) return;
+    const p = saved.privateContent;
+    p.entries.slice(0, 12).forEach(d =&gt; {
+      if (!d || typeof d.key !== &quot;string&quot; || !Array.isArray(d.params) || d.params.length &gt; 4) return;
+      const validParams = d.params.every(l =&gt; Number.isFinite(l.head) &amp;&amp; Number.isFinite(l.bright) &amp;&amp; Number.isFinite(l.count) &amp;&amp; Number.isFinite(l.delay) &amp;&amp; Number.isFinite(l.life));
+      if (!validParams) return;
+      const base = entries[d.key] || makeEntry({ key: d.key, id: &quot;DRAFT&quot;, name: &quot;新配方&quot;, group: &quot;制作中&quot;, type: &quot;kiku&quot;, params: [], hasBake: false, packageName: &quot;&quot; });
+      entries[d.key] = Object.assign(base, d, { job: null, undo: [], compare: false, reference: false, invalid: false });
+      if (![&quot;review&quot;,&quot;make&quot;,&quot;atlas&quot;,&quot;delivery&quot;].includes(entries[d.key].mode)) entries[d.key].mode = &quot;make&quot;;
+    });
+    if (entries[p.selected]) selected = p.selected;
+    if (p.design) Object.assign(design, p.design);
+    if (p.view) { view.focus = !!p.view.focus; view.grid = !!p.view.grid; view.library = p.view.library !== false; view.inspector = p.view.inspector !== false; view.exposure = Math.max(.5, Math.min(2, Number(p.view.exposure) || 1)); }
+  }
+  if (window.openai &amp;&amp; window.openai.widgetState) restore(window.openai.widgetState);
+  window.addEventListener(&quot;openai:set_globals&quot;, event =&gt; {
+    const saved = event.detail &amp;&amp; event.detail.globals &amp;&amp; event.detail.globals.widgetState;
+    if (saved &amp;&amp; saved.privateContent &amp;&amp; saved.privateContent.surface === &quot;baker-browser&quot; &amp;&amp; saved.privateContent.sessionNonce !== sessionNonce) { stop(); restore(saved); render(); }
+  });
+  function library() {
+    const query = q(&quot;[data-search]&quot;).value.trim().toLowerCase();
+    const groups = [&quot;待我验收&quot;,&quot;制作中&quot;,&quot;已通过&quot;,&quot;花型模板&quot;,&quot;历史&quot;];
+    const old = {};
+    all(&quot;[data-lib-group]&quot;).forEach(g =&gt; old[g.dataset.libGroup] = g.open);
+    q(&quot;[data-library-list]&quot;).innerHTML = groups.map(g =&gt; {
+      const items = Object.values(entries).filter(d =&gt; {
+        const actual = passed(d) &amp;&amp; fresh(d) ? &quot;已通过&quot; : d.group;
+        return actual === g &amp;&amp; (d.name + &quot; &quot; + d.id + &quot; &quot; + d.type).toLowerCase().includes(query);
+      });
+      const isOpen = old[g] !== undefined ? old[g] : g !== &quot;历史&quot;;
+      return &#x27;&lt;details class=&quot;fwb-group&quot; data-lib-group=&quot;&#x27; + g + &#x27;&quot;&#x27; + (isOpen || query ? &quot; open&quot; : &quot;&quot;) + &#x27;&gt;&lt;summary class=&quot;cursor-interaction&quot;&gt;&#x27; + g + &#x27;&lt;span class=&quot;fwb-small fwb-muted&quot;&gt;&#x27; + items.length + &#x27;&lt;/span&gt;&lt;/summary&gt;&lt;div class=&quot;fwb-lib-items&quot;&gt;&#x27; +
+        (items.length ? items.map(d =&gt; &#x27;&lt;button type=&quot;button&quot; class=&quot;fwb-entry cursor-interaction&quot; data-entry=&quot;&#x27; + d.key + &#x27;&quot; aria-current=&quot;&#x27; + (d.key === selected ? &quot;true&quot; : &quot;false&quot;) + &#x27;&quot; data-tooltip=&quot;&#x27; + esc(d.name + &#x27; · &#x27; + d.id) + &#x27;&quot;&gt;&lt;span class=&quot;fwb-thumb&quot; aria-hidden=&quot;true&quot;&gt;&lt;canvas data-thumb=&quot;&#x27; + d.key + &#x27;&quot;&gt;&lt;/canvas&gt;&lt;/span&gt;&lt;span class=&quot;fwb-entry-caption&quot;&gt;&lt;span class=&quot;fwb-entry-name&quot;&gt;&#x27; + esc(d.name) + &#x27;&lt;/span&gt;&lt;small&gt;&#x27; + esc(d.id) + &#x27; · &#x27; + (d.error ? &quot;失败场景&quot; : d.locked ? &quot;锁定示例&quot; : d.edited ? &quot;编辑副本&quot; : &quot;示例&quot;) + &#x27;&lt;/small&gt;&lt;/span&gt;&lt;/button&gt;&#x27;).join(&quot;&quot;) : &#x27;&lt;div class=&quot;fwb-empty&quot;&gt;&#x27; + (query ? &quot;没有匹配项&quot; : &quot;暂无示例&quot;) + &#x27;&lt;/div&gt;&#x27;) + &#x27;&lt;/div&gt;&lt;/details&gt;&#x27;;
+    }).join(&quot;&quot;);
+    drawThumbnails();
+  }
+  function drawThumbnails() {
+    all(&quot;[data-thumb]&quot;).forEach(canvas =&gt; {
+      if (!canvas.getClientRects().length) return;
+      const d = entries[canvas.dataset.thumb], {ctx, w, h} = ctxFor(canvas);
+      if (!d) return;
+      const params = d.baked ? d.baked.params : d.params;
+      bloom(ctx, w, h, Object.assign({}, d, { time: 1.4, scale: &quot;fit&quot;, solo: null, muted: [] }), params, false, true);
+    });
+  }
+  function drawDetailsThumbnails() {
+    const d = e(), params = d.baked ? d.baked.params : d.params;
+    const thumb = q(&quot;[data-effect-thumb]&quot;);
+    if (thumb &amp;&amp; thumb.getClientRects().length) {
+      const {ctx,w,h} = ctxFor(thumb);
+      bloom(ctx,w,h,Object.assign({},d,{time:1.4,scale:&quot;fit&quot;,solo:null,muted:[]}),params,false,true);
+    }
+    all(&quot;[data-layer-thumb]&quot;).forEach(canvas =&gt; {
+      if (!canvas.getClientRects().length) return;
+      const l = params[Number(canvas.dataset.layerThumb)] || d.params[Number(canvas.dataset.layerThumb)];
+      const {ctx,w,h} = ctxFor(canvas);
+      bloom(ctx,w,h,Object.assign({},d,{time:l ? l.delay + Math.min(1.4,l.life * .5) : 0,scale:&quot;fit&quot;,solo:null,muted:[]}),l ? [l] : [],false,true);
+    });
+  }
+  function iconize() { if (globalThis.lucide) lucide.createIcons({ attrs: { width: 16, height: 16 } }); }
+  function checkSection(d) {
+    const ready = packReady(d), f = fresh(d);
+    return &#x27;&lt;section class=&quot;fwb-section&quot;&gt;&lt;div class=&quot;fwb-row fwb-between&quot;&gt;&lt;h3&gt;&lt;i data-lucide=&quot;shield-check&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;检查与验收&lt;/h3&gt;&lt;span class=&quot;fwb-small fwb-muted&quot;&gt;示例&lt;/span&gt;&lt;/div&gt;&lt;ul class=&quot;fwb-check-list&quot;&gt;&#x27; +
+      &#x27;&lt;li&gt;&lt;span&gt;完整性&lt;/span&gt;&#x27; + (f ? &#x27;&lt;strong&gt;6 项齐全&lt;/strong&gt;&#x27; : &#x27;&lt;em&gt;&#x27; + (!d.params.length ? &#x27;缺图层&#x27; : d.baked ? &#x27;旧版齐全，当前待更新&#x27; : &#x27;待生成产物&#x27;) + &#x27;&lt;/em&gt;&#x27;) + &#x27;&lt;/li&gt;&#x27; +
+      &#x27;&lt;li&gt;&lt;span&gt;PC / 手机&lt;/span&gt;&#x27; + (f ? &#x27;&lt;strong&gt;分别已检查&lt;/strong&gt;&#x27; : &#x27;&lt;em&gt;待更新&lt;/em&gt;&#x27;) + &#x27;&lt;/li&gt;&#x27; +
+      &#x27;&lt;li&gt;&lt;span&gt;画面与包版本&lt;/span&gt;&#x27; + (f ? &#x27;&lt;strong&gt;R&#x27; + d.revision + &#x27; 一致&lt;/strong&gt;&#x27; : &#x27;&lt;em&gt;&#x27; + (d.baked ? &quot;R&quot; + d.baked.revision + &quot; 已过期&quot; : &quot;尚无产物&quot;) + &#x27;&lt;/em&gt;&#x27;) + &#x27;&lt;/li&gt;&#x27; +
+      &#x27;&lt;li&gt;&lt;span&gt;UE 实机&lt;/span&gt;&lt;em&gt;未经验证&lt;/em&gt;&lt;/li&gt;&lt;/ul&gt;&#x27; +
+      &#x27;&lt;details&gt;&lt;summary class=&quot;cursor-interaction&quot;&gt;查看配套与数值&lt;/summary&gt;&lt;div class=&quot;fwb-minichecks&quot;&gt;&lt;span&gt;✓ 实时模拟&lt;/span&gt;&lt;span&gt;✓ 引擎回放&lt;/span&gt;&lt;span&gt;✓ 贴图流转&lt;/span&gt;&lt;span&gt;✓ 完整参数&lt;/span&gt;&lt;span&gt;✓ 整包导出&lt;/span&gt;&lt;span&gt;✓ 参考入口&lt;/span&gt;&lt;/div&gt;&lt;p style=&quot;margin-top:10px&quot;&gt;PC ≥512 px，手机 ≥256 px。帧利用率、裁切、过曝与中心跳变由实际产物检查；此处为演示通过状态。&lt;/p&gt;&lt;/details&gt;&lt;/section&gt;&#x27;;
+  }
+  function layersHTML(d, editable) {
+    if (!d.params.length) return &#x27;&lt;p&gt;暂无图层。添加第一层后开始调参。&lt;/p&gt;&#x27;;
+    return d.params.map((l, i) =&gt; &#x27;&lt;div class=&quot;fwb-layer&quot; data-current=&quot;&#x27; + (i === d.selectedLayer) + &#x27;&quot;&gt;&lt;div class=&quot;fwb-layer-row&quot;&gt;&lt;canvas class=&quot;fwb-layer-thumb&quot; data-layer-thumb=&quot;&#x27; + i + &#x27;&quot; aria-hidden=&quot;true&quot;&gt;&lt;/canvas&gt;&lt;div class=&quot;fwb-layer-title&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;fwb-layer-name cursor-interaction&quot; data-layer=&quot;&#x27; + i + &#x27;&quot;&gt;&#x27; + esc(l.name) + &#x27;&lt;/button&gt;&lt;div class=&quot;fwb-layer-actions&quot;&gt;&lt;button type=&quot;button&quot; data-solo=&quot;&#x27; + i + &#x27;&quot; aria-pressed=&quot;&#x27; + (d.solo === i) + &#x27;&quot; class=&quot;cursor-interaction&quot;&gt;&#x27; + (d.solo === i ? &quot;还原&quot; : &quot;独看&quot;) + &#x27;&lt;/button&gt;&lt;button type=&quot;button&quot; data-mute=&quot;&#x27; + i + &#x27;&quot; aria-pressed=&quot;&#x27; + !!d.muted[i] + &#x27;&quot; class=&quot;cursor-interaction&quot;&gt;&#x27; + (d.muted[i] ? &quot;显示&quot; : &quot;静音&quot;) + &#x27;&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;fwb-layer-time&quot;&gt;&lt;span&gt;开始&lt;/span&gt;&#x27; +
+      (editable ? &#x27;&lt;label&gt;&lt;input type=&quot;number&quot; data-delay=&quot;&#x27; + i + &#x27;&quot; min=&quot;0&quot; max=&quot;12&quot; step=&quot;0.05&quot; value=&quot;&#x27; + l.delay + &#x27;&quot; aria-label=&quot;&#x27; + esc(l.name) + &#x27;开始时间，秒&quot;&gt; s&lt;/label&gt;&#x27; : &#x27;&lt;span class=&quot;fwb-mono&quot;&gt;&#x27; + l.delay.toFixed(2) + &#x27; s&lt;/span&gt;&#x27;) +
+      &#x27;&lt;span&gt;时长 &#x27; + l.life.toFixed(2) + &#x27; s&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&#x27;).join(&quot;&quot;);
+  }
+  function parameter(key, labelText, value, min, max, step, unit) {
+    return &#x27;&lt;div class=&quot;fwb-param&quot;&gt;&lt;label for=&quot;fwb-param-&#x27; + key + &#x27;&quot;&gt;&#x27; + labelText + &#x27;&lt;span class=&quot;fwb-muted&quot;&gt;&#x27; + unit + &#x27;&lt;/span&gt;&lt;/label&gt;&lt;div class=&quot;fwb-param-inputs&quot;&gt;&lt;input id=&quot;fwb-param-&#x27; + key + &#x27;&quot; type=&quot;range&quot; min=&quot;&#x27; + min + &#x27;&quot; max=&quot;&#x27; + max + &#x27;&quot; step=&quot;&#x27; + step + &#x27;&quot; value=&quot;&#x27; + value + &#x27;&quot; data-param=&quot;&#x27; + key + &#x27;&quot; aria-label=&quot;&#x27; + labelText + &#x27;&quot;&gt;&lt;input type=&quot;number&quot; min=&quot;&#x27; + min + &#x27;&quot; max=&quot;&#x27; + max + &#x27;&quot; step=&quot;&#x27; + step + &#x27;&quot; value=&quot;&#x27; + value + &#x27;&quot; data-number=&quot;&#x27; + key + &#x27;&quot; aria-label=&quot;&#x27; + labelText + &#x27;数值&quot;&gt;&lt;/div&gt;&lt;/div&gt;&#x27;;
+  }
+  function inspector() {
+    const d = e(), review = d.mode === &quot;review&quot;, make = d.mode === &quot;make&quot;, l = d.params[d.selectedLayer];
+    let html = &quot;&quot;;
+    if (review) {
+      html += &#x27;&lt;section class=&quot;fwb-section&quot;&gt;&lt;h3&gt;&lt;i data-lucide=&quot;corner-up-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&#x27; + (d.group === &quot;历史&quot; ? &quot;历史版本&quot; : &quot;本次变化&quot;) + &#x27;&lt;/h3&gt;&lt;p&gt;&#x27; + esc(d.note) + &#x27;&lt;/p&gt;&lt;button type=&quot;button&quot; data-action=&quot;edit&quot; class=&quot;cursor-interaction&quot;&gt;制作编辑副本&lt;/button&gt;&lt;/section&gt;&#x27;;
+      html += checkSection(d);
+      html += &#x27;&lt;section class=&quot;fwb-section&quot;&gt;&lt;h3&gt;&lt;i data-lucide=&quot;layers&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;观察图层&lt;/h3&gt;&#x27; + layersHTML(d, false) + &#x27;&lt;p&gt;独看和静音只影响观察。通过前恢复整体。&lt;/p&gt;&lt;/section&gt;&#x27;;
+      const capture = captures.get(selected);
+      html += &#x27;&lt;section class=&quot;fwb-section fwb-wide&quot;&gt;&lt;h3&gt;&lt;i data-lucide=&quot;message-square&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;我的意见&lt;/h3&gt;&lt;label class=&quot;fwb-label&quot;&gt;记录当前版本&lt;textarea data-comment placeholder=&quot;例如：+2.60 s 金尾仍退得太快&quot;&gt;&#x27; + esc(d.comment) + &#x27;&lt;/textarea&gt;&lt;/label&gt;&#x27; + (capture ? &#x27;&lt;div class=&quot;fwb-capture&quot;&gt;&lt;figure&gt;&lt;img src=&quot;&#x27; + capture.url + &#x27;&quot; alt=&quot;已记录的示例烟花画面&quot;&gt;&lt;figcaption&gt;&#x27; + esc(capture.label) + &#x27;&lt;/figcaption&gt;&lt;/figure&gt;&lt;button type=&quot;button&quot; data-action=&quot;clear-capture&quot; class=&quot;fwb-quiet cursor-interaction&quot;&gt;清除画面记录&lt;/button&gt;&lt;/div&gt;&#x27; : &#x27;&#x27;) + &#x27;&lt;div class=&quot;fwb-actions&quot;&gt;&lt;button type=&quot;button&quot; data-action=&quot;approve&quot; class=&quot;fwb-primary cursor-interaction&quot;&gt;&#x27; + (passed(d) ? &quot;当前示例版本已通过&quot; : &quot;通过当前版本&quot;) + &#x27;&lt;/button&gt;&lt;button type=&quot;button&quot; data-action=&quot;changes&quot; class=&quot;cursor-interaction&quot;&gt;需要修改 · 记录意见&lt;/button&gt;&lt;button type=&quot;button&quot; data-action=&quot;copy&quot; class=&quot;fwb-quiet cursor-interaction&quot;&gt;复制我的意见&lt;/button&gt;&lt;/div&gt;&lt;p data-approval-reason&gt;&lt;/p&gt;&lt;/section&gt;&#x27;;
+    } else if (make) {
+      html += &#x27;&lt;section class=&quot;fwb-section&quot;&gt;&lt;h3&gt;&#x27; + (d.group === &quot;制作中&quot; ? &quot;编辑草稿&quot; : &quot;配方参数&quot;) + &#x27;&lt;/h3&gt;&lt;label class=&quot;fwb-label&quot;&gt;配方名称&lt;input data-draft-name type=&quot;text&quot; value=&quot;&#x27; + esc(d.name) + &#x27;&quot; maxlength=&quot;48&quot;&gt;&lt;/label&gt;&lt;p&gt;来源：&#x27; + esc(d.id) + &#x27; · 原版本保留&lt;/p&gt;&#x27; + (d.group === &quot;制作中&quot; ? &#x27;&lt;div class=&quot;fwb-row&quot;&gt;&lt;button type=&quot;button&quot; data-action=&quot;undo&quot; class=&quot;cursor-interaction&quot;&gt;撤销调整&lt;/button&gt;&lt;button type=&quot;button&quot; data-action=&quot;save-recipe&quot; class=&quot;cursor-interaction&quot;&gt;保存草稿&lt;/button&gt;&lt;/div&gt;&#x27; : &#x27;&lt;button type=&quot;button&quot; data-action=&quot;edit&quot; class=&quot;cursor-interaction&quot;&gt;制作编辑副本&lt;/button&gt;&#x27;) + &#x27;&lt;/section&gt;&#x27;;
+      html += &#x27;&lt;section class=&quot;fwb-section&quot;&gt;&lt;div class=&quot;fwb-row fwb-between&quot;&gt;&lt;h3&gt;图层&lt;/h3&gt;&lt;button type=&quot;button&quot; data-action=&quot;add-layer&quot; class=&quot;fwb-quiet cursor-interaction&quot;&gt;＋ 添加&lt;/button&gt;&lt;/div&gt;&#x27; + layersHTML(d, true) + &#x27;&lt;p&gt;&#x27; + (d.type === &quot;lime&quot; ? &quot;两层共用同一轨迹，星数一起更新。&quot; : &quot;可见状态不改变完整导出内容。&quot;) + &#x27;&lt;/p&gt;&lt;/section&gt;&#x27;;
+      if (l) html += &#x27;&lt;section class=&quot;fwb-section&quot;&gt;&lt;h3&gt;&#x27; + esc(l.name) + &#x27;&lt;/h3&gt;&#x27; + parameter(&quot;head&quot;,&quot;亮核直径&quot;,l.head,.3,3,.1,&quot;m&quot;) + parameter(&quot;bright&quot;,&quot;亮度倍数&quot;,l.bright,.2,2.4,.1,&quot;×&quot;) + parameter(&quot;count&quot;,&quot;星数&quot;,l.count,24,240,1,&quot;颗&quot;) + &#x27;&lt;p&gt;调参更新实时模拟。引擎回放在烘焙后更新。&lt;/p&gt;&lt;div data-param-error role=&quot;alert&quot; class=&quot;fwb-small&quot; style=&quot;color:var(--fwb-error)&quot;&gt;&lt;/div&gt;&lt;/section&gt;&#x27;;
+      html += &#x27;&lt;section class=&quot;fwb-section&quot;&gt;&lt;details&gt;&lt;summary class=&quot;cursor-interaction&quot;&gt;颜色与输出&lt;/summary&gt;&lt;div class=&quot;fwb-stack&quot;&gt;&lt;div class=&quot;fwb-colors&quot; aria-label=&quot;示例颜色时间线&quot;&gt;&lt;span style=&quot;background:#ffe9c5&quot;&gt;&lt;/span&gt;&lt;span style=&quot;background:#eeb368&quot;&gt;&lt;/span&gt;&lt;span style=&quot;background:#a96132&quot;&gt;&lt;/span&gt;&lt;span style=&quot;background:#493c30&quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;label class=&quot;fwb-label&quot;&gt;PC单格&lt;select data-cell=&quot;pc&quot;&gt;&lt;option value=&quot;512&quot;&#x27; + (d.pc === 512 ? &quot; selected&quot; : &quot;&quot;) + &#x27;&gt;512 px · 下限&lt;/option&gt;&lt;option value=&quot;1024&quot;&#x27; + (d.pc === 1024 ? &quot; selected&quot; : &quot;&quot;) + &#x27;&gt;1024 px · 更细&lt;/option&gt;&lt;option value=&quot;2048&quot;&#x27; + (d.pc === 2048 ? &quot; selected&quot; : &quot;&quot;) + &#x27;&gt;2048 px · 单格&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;label class=&quot;fwb-label&quot;&gt;手机单格&lt;select data-cell=&quot;mobile&quot;&gt;&lt;option value=&quot;256&quot;&#x27; + (d.mobile === 256 ? &quot; selected&quot; : &quot;&quot;) + &#x27;&gt;256 px · 下限&lt;/option&gt;&lt;option value=&quot;512&quot;&#x27; + (d.mobile === 512 ? &quot; selected&quot; : &quot;&quot;) + &#x27;&gt;512 px&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;p&gt;清晰度提高时增加张数，不缩小格子换帧。完整配方参数将在正式版接入。&lt;/p&gt;&lt;/div&gt;&lt;/details&gt;&lt;/section&gt;&#x27;;
+      html += &#x27;&lt;section class=&quot;fwb-section fwb-wide&quot;&gt;&lt;h3&gt;回放更新&lt;/h3&gt;&lt;p data-bake-caption&gt;&lt;/p&gt;&lt;/section&gt;&#x27;;
+    } else if (d.mode === &quot;atlas&quot;) {
+      html += &#x27;&lt;section class=&quot;fwb-section&quot;&gt;&lt;h3&gt;当前贴图&lt;/h3&gt;&lt;p&gt;整张、当前格和帧号曲线跟随同一个时间轴。&lt;/p&gt;&#x27; + layersHTML(d, false) + &#x27;&lt;/section&gt;&#x27;;
+      html += &#x27;&lt;section class=&quot;fwb-section&quot;&gt;&lt;h3&gt;产物规格&lt;/h3&gt;&lt;ul class=&quot;fwb-check-list&quot;&gt;&lt;li&gt;&lt;span&gt;平台&lt;/span&gt;&lt;span&gt;&#x27; + (d.platform === &quot;pc&quot; ? &quot;PC&quot; : &quot;手机&quot;) + &#x27;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span&gt;单格&lt;/span&gt;&lt;span&gt;&#x27; + (d.baked ? d.baked[d.platform] + &quot; px&quot; : &quot;未生成&quot;) + &#x27;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span&gt;帧数&lt;/span&gt;&lt;span&gt;&#x27; + (d.baked ? d.baked.frames : &quot;—&quot;) + &#x27;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span&gt;版本&lt;/span&gt;&lt;span&gt;&#x27; + (d.baked ? &quot;R&quot; + d.baked.revision : &quot;—&quot;) + &#x27;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;30fps是引擎tick频率；素材帧数按运动预算分配。&lt;/p&gt;&lt;/section&gt;&#x27;;
+    } else {
+      html += checkSection(d);
+      html += &#x27;&lt;section class=&quot;fwb-section&quot;&gt;&lt;h3&gt;完整配方&lt;/h3&gt;&#x27; + layersHTML(d, false) + &#x27;&lt;p&gt;一个包包含全部层、各自的延迟，以及PC和手机产物。&lt;/p&gt;&lt;/section&gt;&#x27;;
+      html += &#x27;&lt;section class=&quot;fwb-section&quot;&gt;&lt;h3&gt;版本记录&lt;/h3&gt;&lt;p&gt;下载使用经过检查的完整快照。参数改动会产生下一版。&lt;/p&gt;&lt;button type=&quot;button&quot; data-action=&quot;save-recipe&quot; class=&quot;cursor-interaction&quot;&gt;保存配方草稿&lt;/button&gt;&lt;/section&gt;&#x27;;
+    }
+    q(&quot;[data-inspector]&quot;).innerHTML = html;
+    if (make &amp;&amp; d.group !== &quot;制作中&quot;) all(&#x27;[data-inspector] input, [data-inspector] select, [data-action=&quot;add-layer&quot;]&#x27;).forEach(input =&gt; input.disabled = true);
+    updateStateBars();
+    drawDetailsThumbnails(); iconize();
+  }
+  function updateStateBars() {
+    const d = e(), f = fresh(d), b = d.baked, reviewOK = packReady(d) &amp;&amp; full(d) &amp;&amp; d.source === &quot;engine&quot; &amp;&amp; d.scale === &quot;game&quot; &amp;&amp; view.exposure === 1 &amp;&amp; d.group !== &quot;历史&quot;;
+    q(&quot;[data-name]&quot;).textContent = d.name || &quot;未命名配方&quot;;
+    q(&quot;[data-version]&quot;).textContent = d.id + &quot; · &quot; + (d.edited ? &quot;本地编辑副本&quot; : d.group === &quot;历史&quot; ? &quot;历史快照&quot; : d.locked ? &quot;锁定版本&quot; : d.group === &quot;制作中&quot; ? &quot;工作草稿&quot; : d.group === &quot;花型模板&quot; ? &quot;花型模板&quot; : &quot;推荐候选&quot;) + &quot; · 版本示例 R&quot; + d.revision;
+    const status = q(&quot;[data-status]&quot;);
+    status.textContent = d.job ? &quot;正在烘焙&quot; : d.error ? &quot;烘焙失败&quot; : !b ? &quot;尚未烘焙&quot; : !f ? &quot;参数已变&quot; : passed(d) ? &quot;已通过（示例）&quot; : d.reviewed &amp;&amp; d.reviewed.result === &quot;需要修改&quot; ? &quot;需要修改（示例）&quot; : d.group === &quot;已通过&quot; &amp;&amp; !d.edited ? &quot;已通过 · 已锁定&quot; : d.group;
+    status.dataset.tone = d.error ? &quot;error&quot; : !f ? &quot;warn&quot; : &quot;&quot;;
+    let notice = &quot;&quot;, tone = &quot;warn&quot;;
+    if (d.job) notice = &#x27;正在生成版本示例 R&#x27; + d.job.revision + &#x27; · &#x27; + (d.job.progress &lt; .6 ? &quot;模拟烘焙&quot; : &quot;模拟检查&quot;) + &#x27;&lt;progress class=&quot;fwb-progress&quot; max=&quot;1&quot; value=&quot;&#x27; + d.job.progress + &#x27;&quot; aria-label=&quot;模拟烘焙进度&quot;&gt;&lt;/progress&gt;&#x27;;
+    else if (d.error) { notice = &#x27;&lt;i data-lucide=&quot;circle-alert&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span&gt;&#x27; + esc(d.error) + &#x27;&lt;/span&gt;&#x27;; tone = &quot;error&quot;; }
+    else if (!b) notice = d.params.length ? &quot;尚无烘焙产物。可调实时模拟，再烘焙并检查。&quot; : &quot;空白配方尚无图层。添加第一层后开始制作。&quot;;
+    else if (!f) notice = &quot;当前草稿 R&quot; + d.revision + &quot; · 正在保留上次成功烘焙 R&quot; + b.revision + &quot;。当前版本需重新烘焙检查。&quot;;
+    else if (d.mode === &quot;review&quot; &amp;&amp; !reviewOK) notice = d.source !== &quot;engine&quot; ? &quot;当前是实时模拟。切回引擎回放后再验收。&quot; : !full(d) ? &quot;正在独看或静音。恢复整体后再验收。&quot; : d.scale !== &quot;game&quot; ? &quot;当前是放大细看。恢复游戏内大小后再验收。&quot; : view.exposure !== 1 ? &quot;显示曝光已调整。恢复1×后再验收。&quot; : d.group === &quot;历史&quot; ? &quot;这是历史版本，可查看或制作副本。&quot; : &quot;&quot;;
+    q(&quot;[data-notice]&quot;).hidden = !notice; q(&quot;[data-notice]&quot;).innerHTML = notice; q(&quot;[data-notice]&quot;).dataset.tone = tone;
+    q(&quot;[data-scope]&quot;).textContent = d.solo !== null ? &quot;独看 &quot; + (d.params[d.solo] ? d.params[d.solo].name : &quot;&quot;) + &quot; · 仅观察&quot; : d.muted.some(Boolean) ? &quot;部分层静音 · 仅观察&quot; : &quot;整体 · 全部层&quot;;
+    const approve = q(&#x27;[data-action=&quot;approve&quot;]&#x27;);
+    if (approve) approve.disabled = !reviewOK || !!d.job || passed(d);
+    const reason = q(&quot;[data-approval-reason]&quot;);
+    if (reason) reason.textContent = passed(d) ? &quot;意见绑定当前示例版本；没有修改真实状态。&quot; : reviewOK ? &quot;检查齐全后，由你判断艺术效果。&quot; : &quot;通过前：版本一致、检查齐全、引擎回放、游戏内大小、完整组合。&quot;;
+    all(&#x27;[data-action=&quot;bake&quot;]&#x27;).forEach(btn =&gt; btn.disabled = !!d.job || d.invalid || !d.params.length);
+    const bakeCaption = q(&quot;[data-bake-caption]&quot;);
+    if (bakeCaption) bakeCaption.textContent = d.job ? &quot;可切换条目，结果仍归属于此版本。&quot; : !d.params.length ? &quot;先添加图层。&quot; : &quot;草稿保留；成功后再更新回放。&quot;;
+    const undo = q(&#x27;[data-action=&quot;undo&quot;]&#x27;); if (undo) undo.disabled = !d.undo.length;
+    q(&quot;[data-bottom-info]&quot;).textContent = d.job ? &quot;任务归属于 &quot; + d.name + &quot; / R&quot; + d.job.revision : f ? &quot;检查结果与当前版本一致 · 示例&quot; : b ? &quot;旧成功产物 R&quot; + b.revision + &quot; 保留 · 草稿 R&quot; + d.revision : &quot;保存配方不需要等待烘焙&quot;;
+    const primary = q(&#x27;[data-action=&quot;primary&quot;]&#x27;);
+    const needsBake = (d.mode === &quot;make&quot; || d.mode === &quot;review&quot;) &amp;&amp; !f;
+    primary.textContent = needsBake ? (d.job ? &quot;烘焙进行中…&quot; : d.error ? &quot;重试烘焙（模拟）&quot; : &quot;烘焙并检查（模拟）&quot;) : d.mode === &quot;atlas&quot; ? (playing ? &quot;暂停流转&quot; : &quot;播放流转&quot;) : d.mode === &quot;delivery&quot; ? &quot;返回引擎回放&quot; : &quot;查看交付&quot;;
+    primary.disabled = needsBake &amp;&amp; (!!d.job || !d.params.length || d.invalid);
+    primary.classList.toggle(&quot;fwb-primary&quot;, needsBake);
+    q(&#x27;[data-action=&quot;compare&quot;]&#x27;).disabled = !f || d.source !== &quot;engine&quot;;
+    const exp = q(&#x27;[data-action=&quot;export&quot;]&#x27;);
+    if (exp) exp.disabled = !packReady(d) || !!d.job || !validPackage(d.packageName);
+    q(&quot;[data-package-state]&quot;).textContent = packReady(d) ? &quot;版本示例 R&quot; + d.revision + &quot; · 全部层&quot; : &quot;当前版本尚不满足交付条件&quot;;
+    const captureButton = q(&#x27;[data-action=&quot;capture&quot;]&#x27;);
+    captureButton.disabled = d.source === &quot;engine&quot; &amp;&amp; !d.baked;
+    iconize();
+  }
+  function validPackage(s) { return /^[A-Za-z0-9_]+$/.test(s); }
+  function manifest() {
+    const d = e(), name = d.packageName, b = d.baked;
+    q(&quot;[data-package-name]&quot;).value = name;
+    const error = q(&quot;[data-package-error]&quot;);
+    error.hidden = validPackage(name); error.textContent = name ? &quot;包名称使用英文、数字或下划线；请修改后查看文件清单。&quot; : &quot;填写包名称后预览完整文件清单。&quot;;
+    error.style.color = &quot;var(--fwb-error)&quot;;
+    if (!validPackage(name)) { q(&quot;[data-manifest]&quot;).innerHTML = &quot;&quot;; return; }
+    const rows = [];
+    (b ? b.params : d.params).forEach((l, index) =&gt; {
+      const layerName = name + &quot;_L&quot; + (index + 1);
+      [&quot;pc&quot;,&quot;mobile&quot;].forEach(platform =&gt; {
+        const cell = b ? b[platform] : d[platform], atlasSize = platform === &quot;pc&quot; ? 2048 : 1024;
+        const cap = Math.pow(atlasSize / cell, 2) * 4, segments = Math.ceil((b ? b.frames : 120) / cap);
+        for (let s = 1; s &lt;= segments; s++) rows.push([(platform === &quot;pc&quot; ? &quot;PC/&quot; : &quot;mobile/&quot;) + &#x27;T_&#x27; + layerName + &#x27;_S&#x27; + s + &#x27;.png&#x27;, (platform === &quot;pc&quot; ? &quot;PC&quot; : &quot;手机&quot;) + &quot; · &quot; + cell + &quot; px&quot;, l.delay]);
+      });
+      rows.push([&quot;T_&quot; + layerName + &quot;_Ramp.png&quot;, &quot;共用 Ramp&quot;, l.delay], [&quot;T_&quot; + layerName + &quot;_Cutout.png&quot;, &quot;轮廓&quot;, l.delay]);
+    });
+    rows.push([&quot;cascade.json&quot;,&quot;PC&quot;,null],[&quot;cascade_mobile.json&quot;,&quot;手机&quot;,null]);
+    q(&quot;[data-manifest]&quot;).innerHTML = rows.map(r =&gt; &#x27;&lt;tr&gt;&lt;td class=&quot;fwb-mono&quot;&gt;&#x27; + esc(r[0]) + &#x27;&lt;/td&gt;&lt;td&gt;&#x27; + esc(r[1]) + (r[2] !== null ? &#x27;&lt;br&gt;&lt;span class=&quot;fwb-muted fwb-mono&quot;&gt;&#x27; + r[2].toFixed(2) + &#x27; s&lt;/span&gt;&#x27; : &quot;&quot;) + &#x27;&lt;/td&gt;&lt;/tr&gt;&#x27;).join(&quot;&quot;);
+  }
+  function render() {
+    const d = e();
+    root.dataset.focus = String(view.focus);
+    root.dataset.libraryVisible = String(view.library);
+    root.dataset.inspectorVisible = String(view.inspector);
+    q(&#x27;[data-action=&quot;toggle-library&quot;]&#x27;).setAttribute(&#x27;aria-pressed&#x27;,String(view.library));
+    q(&#x27;[data-action=&quot;toggle-inspector&quot;]&#x27;).setAttribute(&#x27;aria-pressed&#x27;,String(view.inspector));
+    q(&#x27;[data-focus-control]&#x27;).setAttribute(&#x27;aria-pressed&#x27;,String(view.focus));
+    q(&quot;[data-exit-focus]&quot;).hidden = !view.focus;
+    q(&quot;[data-grid-overlay]&quot;).hidden = !view.grid;
+    q(&#x27;[data-action=&quot;grid&quot;]&#x27;).setAttribute(&quot;aria-pressed&quot;, String(view.grid));
+    const focusButton = q(&#x27;.fwb-canvas-tools [data-action=&quot;focus&quot;]&#x27;);
+    focusButton.setAttribute(&quot;aria-label&quot;, view.focus ? &quot;退出大画面&quot; : &quot;展开大画面&quot;);
+    focusButton.dataset.tooltip = view.focus ? &quot;退出大画面&quot; : &quot;展开大画面&quot;;
+    root.style.setProperty(&quot;--fwb-inspector-width&quot;, design.inspector + &quot;px&quot;);
+    root.style.setProperty(&quot;--fwb-pad&quot;, design.spacing + &quot;px&quot;);
+    library();
+    all(&quot;[data-mode]&quot;).forEach(b =&gt; b.setAttribute(&quot;aria-pressed&quot;, String(b.dataset.mode === d.mode)));
+    all(&#x27;[data-view]&#x27;).forEach(button =&gt; button.setAttribute(&#x27;aria-pressed&#x27;,String(button.dataset.view === (d.mode === &#x27;atlas&#x27; ? &#x27;atlas&#x27; : d.mode === &#x27;delivery&#x27; ? &#x27;&#x27; : d.source))));
+    all(&#x27;[data-view-scale]&#x27;).forEach(button =&gt; { button.setAttribute(&#x27;aria-pressed&#x27;,String(button.dataset.viewScale === d.scale)); button.disabled = d.mode === &#x27;atlas&#x27; || d.mode === &#x27;delivery&#x27;; });
+    all(&#x27;[data-view-platform]&#x27;).forEach(button =&gt; button.setAttribute(&#x27;aria-pressed&#x27;,String(button.dataset.viewPlatform === d.platform)));
+    q(&#x27;[data-display-exposure]&#x27;).value = view.exposure; q(&#x27;[data-exposure-value]&#x27;).textContent = view.exposure + &#x27;×&#x27;;
+    q(&#x27;[data-display-exposure]&#x27;).disabled = d.mode === &#x27;atlas&#x27; || d.mode === &#x27;delivery&#x27;;
+    q(&quot;[data-distance]&quot;).value = d.distance;
+    q(&quot;[data-distance-label]&quot;).textContent = d.distance + &quot; m&quot;; q(&quot;.fwb-distance&quot;).hidden = d.scale !== &quot;game&quot;;
+    q(&quot;[data-screens]&quot;).hidden = d.mode === &quot;atlas&quot; || d.mode === &quot;delivery&quot;;
+    q(&quot;[data-atlas]&quot;).hidden = d.mode !== &quot;atlas&quot;; q(&quot;[data-delivery]&quot;).hidden = d.mode !== &quot;delivery&quot;;
+    q(&quot;.fwb-distance&quot;).hidden = d.scale !== &quot;game&quot; || d.mode === &quot;atlas&quot; || d.mode === &quot;delivery&quot;;
+    q(&quot;[data-observe-tools]&quot;).hidden = d.mode === &quot;atlas&quot; || d.mode === &quot;delivery&quot;;
+    q(&quot;[data-screens]&quot;).dataset.pair = String(d.compare); q(&quot;[data-comparison]&quot;).hidden = !d.compare;
+    q(&#x27;[data-action=&quot;compare&quot;]&#x27;).setAttribute(&quot;aria-pressed&quot;, String(d.compare)); q(&#x27;[data-action=&quot;reference&quot;]&#x27;).setAttribute(&quot;aria-pressed&quot;, String(d.reference));
+    q(&quot;[data-reference]&quot;).hidden = !d.reference || d.mode === &quot;delivery&quot; || d.mode === &quot;atlas&quot;;
+    q(&quot;[data-timeline]&quot;).hidden = d.mode === &quot;delivery&quot;; q(&quot;[data-tracks]&quot;).hidden = !design.tracks;
+    q(&quot;[data-atlas-layer]&quot;).innerHTML = d.params.map((l, i) =&gt; &#x27;&lt;option value=&quot;&#x27; + i + &#x27;&quot;&#x27; + (i === d.selectedLayer ? &quot; selected&quot; : &quot;&quot;) + &#x27;&gt;&#x27; + esc(l.name) + &#x27;&lt;/option&gt;&#x27;).join(&quot;&quot;);
+    const trackParams = d.source === &quot;engine&quot; &amp;&amp; d.baked ? d.baked.params : d.params;
+    q(&quot;[data-tracks]&quot;).innerHTML = trackParams.map((l, i) =&gt; &#x27;&lt;div class=&quot;fwb-track&quot;&gt;&lt;span&gt;&#x27; + esc(l.name) + &#x27;&lt;/span&gt;&lt;div class=&quot;fwb-track-line&quot;&gt;&lt;span class=&quot;fwb-track-fill&quot; style=&quot;left:&#x27; + (l.delay / duration(d) * 100) + &#x27;%;width:&#x27; + Math.min(100 - l.delay / duration(d) * 100, l.life / duration(d) * 100) + &#x27;%&quot;&gt;&lt;/span&gt;&lt;span class=&quot;fwb-track-head&quot; data-track-head&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&#x27;).join(&quot;&quot;);
+    restoreReference(); inspector(); manifest(); paintTime(); draw(); syncReference(); drawDetailsThumbnails();
+  }
+  function paintTime() {
+    const d = e(), dur = duration(d);
+    q(&quot;[data-scrub]&quot;).max = Math.round(dur * 30); q(&quot;[data-scrub]&quot;).value = Math.floor((d.time + 1e-8) * 30);
+    q(&quot;[data-time]&quot;).textContent = &quot;+&quot; + tick(d.time).toFixed(2) + &quot; / &quot; + dur.toFixed(2) + &quot; s&quot;;
+    q(&quot;[data-mid-time]&quot;).textContent = (dur / 2).toFixed(2) + &quot; s&quot;; q(&quot;[data-end-time]&quot;).textContent = dur.toFixed(2) + &quot; s&quot;;
+    all(&quot;[data-track-head]&quot;).forEach(n =&gt; n.style.left = Math.min(100, d.time / dur * 100) + &quot;%&quot;);
+    q(&#x27;[data-action=&quot;play&quot;]&#x27;).textContent = playing ? &quot;暂停&quot; : d.time &gt;= dur ? &quot;重播&quot; : &quot;播放一遍&quot;;
+    q(&quot;[data-frame-info]&quot;).textContent = d.source === &quot;engine&quot; ? &quot;30 fps · tick &quot; + Math.floor((d.time + 1e-8) * 30) : &quot;实时模拟 · 示例&quot;;
+    const primary = q(&#x27;[data-action=&quot;primary&quot;]&#x27;); if (d.mode === &quot;atlas&quot;) primary.textContent = playing ? &quot;暂停流转&quot; : &quot;播放流转&quot;;
+  }
+  function ctxFor(canvas) {
+    const r = canvas.getBoundingClientRect(), scale = Math.min(2, window.devicePixelRatio || 1);
+    const w = Math.max(1, r.width), h = Math.max(1, r.height);
+    const pw = Math.round(w * scale), ph = Math.round(h * scale);
+    if (canvas.width !== pw || canvas.height !== ph) { canvas.width = pw; canvas.height = ph; }
+    const ctx = canvas.getContext(&quot;2d&quot;); ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    return { ctx, w, h };
+  }
+  const noise = n =&gt; { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+  function bloom(ctx, w, h, d, params, older, thumbnail = false) {
+    ctx.fillStyle = &quot;#080a0d&quot;; ctx.fillRect(0, 0, w, h);
+    if (!thumbnail &amp;&amp; view.grid) {
+    ctx.strokeStyle = &quot;#171d20&quot;; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, h * .86); ctx.lineTo(w, h * .86); ctx.stroke();
+    ctx.strokeStyle = &quot;#1b2327&quot;; ctx.setLineDash([3, 7]); ctx.beginPath(); ctx.moveTo(w * .5, h * .15); ctx.lineTo(w * .5, h * .82); ctx.stroke(); ctx.setLineDash([]);
+    }
+    const centerX = w * .5, centerY = h * (thumbnail ? .48 : .43);
+    const radius = d.scale === &quot;game&quot; ? h / 6 * 1000 / d.distance : d.scale === &quot;pixel&quot; ? Math.min(w, h) * .43 : Math.min(w, h) * .39;
+    if (!params.length) { ctx.fillStyle = &quot;#adb8bc&quot;; ctx.font = (thumbnail ? &#x27;24px&#x27; : &#x27;13px&#x27;) + &#x27; &quot;Microsoft YaHei&quot;, sans-serif&#x27;; ctx.textAlign = &quot;center&quot;; ctx.fillText(thumbnail ? &quot;+&quot; : &quot;添加图层后预览&quot;, w / 2, h / 2 + (thumbnail ? 7 : 0)); return; }
+    params.forEach((l, li) =&gt; {
+      if ((d.solo !== null &amp;&amp; d.solo !== li) || d.muted[li]) return;
+      const age = tick(d.time) - l.delay;
+      if (age &lt;= 0 || age &gt; l.life) return;
+      if (d.type === &quot;trail&quot;) {
+        const progress = Math.min(1, age / (l.life * .75)), x = w * .42 + w * .11 * progress, y = h * .82 - h * .64 * progress;
+        for (let i = 0; i &lt; 95; i++) {
+          const trailAge = i / 95 * Math.min(.33, progress), tx = x - trailAge * w * .14 + (noise(i) - .5) * 10, ty = y + trailAge * h * .8;
+          ctx.fillStyle = &quot;rgba(242,174,85,&quot; + ((1 - i / 95) * .85).toFixed(3) + &quot;)&quot;; ctx.beginPath(); ctx.arc(tx, ty, .4 + noise(i + 10) * 1.1, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.shadowColor = &quot;#ffe5b0&quot;; ctx.shadowBlur = 7; ctx.fillStyle = &quot;#fff3d2&quot;; ctx.beginPath(); ctx.arc(x, y, l.head * 1.2, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0; return;
+      }
+      const progress = Math.min(1, age / 1.2), fade = Math.min(1, Math.max(0, (l.life - age) / 1.5)), fall = Math.max(0, age - 1) * h * .029;
+      const count = Math.min(240, Math.max(24, Math.round(l.count)));
+      for (let i = 0; i &lt; count; i++) {
+        const z = 1 - 2 * (i + .5) / count, spherical = Math.sqrt(1 - z * z), angle = i * 2.39996323;
+        const dist = radius * progress * spherical * (.88 + .12 * noise(i + 3));
+        const x = centerX + Math.cos(angle) * dist, y = centerY + Math.sin(angle) * dist + fall * (.65 + .4 * noise(i + 1));
+        const opacity = Math.min(1, fade * l.bright * (thumbnail ? 1 : view.exposure) * (.38 + .62 * noise(i + 6)) * (older ? .78 : 1));
+        if (l.kind !== &quot;head&quot;) {
+          const inner = Math.max(.14, 1 - .54 * Math.min(1, age / .7)), startX = centerX + Math.cos(angle) * dist * inner;
+          const startY = centerY + Math.sin(angle) * dist * inner + fall * .18;
+          ctx.lineWidth = .45 + .25 * noise(i + 4);
+          const gradient = ctx.createLinearGradient(startX, startY, x, y);
+          const tint = d.type === &quot;lime&quot; ? &quot;240,141,64&quot; : &quot;241,186,113&quot;;
+          gradient.addColorStop(0, &quot;rgba(&quot; + tint + &quot;,0)&quot;);
+          gradient.addColorStop(.65, &quot;rgba(&quot; + tint + &quot;,&quot; + (opacity * .58).toFixed(3) + &quot;)&quot;);
+          gradient.addColorStop(1, &quot;rgba(255,227,176,&quot; + opacity.toFixed(3) + &quot;)&quot;);
+          ctx.strokeStyle = gradient; ctx.beginPath(); ctx.moveTo(startX, startY); ctx.quadraticCurveTo((startX + x) / 2, (startY + y) / 2 - fall * .08, x, y); ctx.stroke();
+          for (let k = 0; k &lt; 3; k++) {
+            const p = .55 + noise(i * 5 + k) * .4, sx = startX + (x - startX) * p + (noise(i + k) - .5) * 1.2, sy = startY + (y - startY) * p;
+            ctx.fillStyle = &quot;rgba(&quot; + tint + &quot;,&quot; + (opacity * .52).toFixed(3) + &quot;)&quot;; ctx.fillRect(sx, sy, .7, .7);
+          }
+        }
+        if (l.kind !== &quot;tail&quot;) {
+          const point = Math.max(thumbnail ? .3 : .5, l.head * (thumbnail ? .42 : .9) * (older ? .86 : 1));
+          ctx.shadowColor = d.type === &quot;lime&quot; ? &quot;#dff2af&quot; : &quot;#ffd59a&quot;; ctx.shadowBlur = older ? 4 : 2;
+          ctx.fillStyle = d.type === &quot;lime&quot; ? &quot;rgba(225,247,182,&quot; + opacity.toFixed(3) + &quot;)&quot; : &quot;rgba(255,239,203,&quot; + opacity.toFixed(3) + &quot;)&quot;;
+          ctx.beginPath(); ctx.arc(x, y, point, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+          if (noise(i + 18) &gt; .79) { ctx.fillStyle = &quot;rgba(255,251,232,&quot; + opacity.toFixed(3) + &quot;)&quot;; ctx.fillRect(x - .5, y - .5, 1, 1); }
+        }
+      }
+    });
+    if (thumbnail) return;
+    ctx.fillStyle = &quot;#71817b&quot;; ctx.font = &#x27;12px &quot;Segoe UI&quot;, &quot;Microsoft YaHei&quot;, sans-serif&#x27;; ctx.textAlign = &quot;center&quot;;
+    ctx.fillText(d.scale === &quot;game&quot; ? &quot;观看条件示例 · 屏高约 1/3&quot; : &quot;局部细看 · 不改变导出尺寸&quot;, w / 2, h * .94);
+  }
+  function tiny(ctx, x, y, r, phase) {
+    for (let i = 0; i &lt; 28; i++) {
+      const angle = i * 2.399963, rad = r * (.4 + noise(i) * .6) * Math.min(1, phase * 3);
+      ctx.strokeStyle = &quot;rgba(224,232,228,&quot; + (.25 + .65 * noise(i + 3)).toFixed(2) + &quot;)&quot;;
+      ctx.lineWidth = .65; ctx.beginPath(); ctx.moveTo(x + Math.cos(angle) * rad * .55, y + Math.sin(angle) * rad * .55); ctx.lineTo(x + Math.cos(angle) * rad, y + Math.sin(angle) * rad); ctx.stroke();
+    }
+  }
+  function atlas() {
+    const d = e(), b = d.baked;
+    const a = ctxFor(q(&quot;[data-atlas-canvas]&quot;)), c = ctxFor(q(&quot;[data-cell-canvas]&quot;)), curve = ctxFor(q(&quot;[data-curve]&quot;));
+    a.ctx.fillStyle = &quot;#080a0d&quot;; a.ctx.fillRect(0, 0, a.w, a.h); c.ctx.fillStyle = &quot;#080a0d&quot;; c.ctx.fillRect(0, 0, c.w, c.h);
+    curve.ctx.clearRect(0, 0, curve.w, curve.h);
+    if (!b) { q(&quot;[data-atlas-info]&quot;).textContent = &quot;尚无贴图&quot;; q(&quot;[data-cell-info]&quot;).textContent = &quot;烘焙后显示当前格&quot;; return; }
+    const selectedLayer = b.params[d.selectedLayer];
+    if (!selectedLayer) { q(&quot;[data-atlas-info]&quot;).textContent = &quot;当前层尚未烘焙&quot;; q(&quot;[data-cell-info]&quot;).textContent = &quot;保留的旧产物不含此层&quot;; return; }
+    const active = d.time &gt;= selectedLayer.delay &amp;&amp; d.time &lt;= selectedLayer.delay + selectedLayer.life;
+    const cellPx = b[d.platform], atlasPx = d.platform === &quot;pc&quot; ? 2048 : 1024, grid = atlasPx / cellPx, cells = grid * grid, cap = cells * 4;
+    const f = Math.max(0, Math.min(b.frames - 1, Math.floor(tick(Math.max(0, d.time - selectedLayer.delay)) / selectedLayer.life * b.frames)));
+    const segment = Math.floor(f / cap), local = f % cap, channel = Math.floor(local / cells), cell = local % cells, size = a.w / grid;
+    for (let row = 0; row &lt; grid; row++) for (let col = 0; col &lt; grid; col++) {
+      const i = row * grid + col, globalFrame = segment * cap + channel * cells + i;
+      if (globalFrame &lt; b.frames) tiny(a.ctx, (col + .5) * size, (row + .5) * size, size * .36, globalFrame / b.frames);
+      a.ctx.strokeStyle = &quot;#303a36&quot;; a.ctx.lineWidth = .6; a.ctx.strokeRect(col * size, row * size, size, size);
+    }
+    if (active) {
+      a.ctx.strokeStyle = &quot;#a0e6c6&quot;; a.ctx.lineWidth = 2; a.ctx.strokeRect((cell % grid) * size + 1, Math.floor(cell / grid) * size + 1, size - 2, size - 2);
+      tiny(c.ctx, c.w / 2, c.h / 2, c.w * .4, f / b.frames);
+    } else {
+      c.ctx.fillStyle = &quot;#abb5b0&quot;; c.ctx.font = &#x27;12px &quot;Microsoft YaHei&quot;, sans-serif&#x27;; c.ctx.textAlign = &quot;center&quot;;
+      c.ctx.fillText(d.time &lt; selectedLayer.delay ? &quot;此层尚未开始&quot; : &quot;此层已结束&quot;, c.w / 2, c.h / 2);
+    }
+    q(&quot;[data-atlas-info]&quot;).textContent = &quot;第 &quot; + (segment + 1) + &quot; / &quot; + Math.ceil(b.frames / cap) + &quot; 张 · &quot; + [&quot;R&quot;,&quot;G&quot;,&quot;B&quot;,&quot;A&quot;][channel] + &quot; 通道 · &quot; + grid + &quot;×&quot; + grid + &quot; 格&quot;;
+    q(&quot;[data-cell-info]&quot;).textContent = active ? &quot;当前格 &quot; + (cell + 1) + &quot; · 帧 &quot; + f + &quot; / &quot; + (b.frames - 1) + &quot; · &quot; + cellPx + &quot; px&quot; : d.time &lt; selectedLayer.delay ? &quot;开始时间 +&quot; + selectedLayer.delay.toFixed(2) + &quot; s&quot; : &quot;结束时间 +&quot; + (selectedLayer.delay + selectedLayer.life).toFixed(2) + &quot; s&quot;;
+    const cc = curve.ctx, w = curve.w, h = curve.h, x0 = 38, x1 = w - 15, y0 = h - 30, y1 = 13;
+    const textColor = getComputedStyle(root).color, dim = getComputedStyle(root).getPropertyValue(&#x27;--fwb-dim&#x27;).trim();
+    cc.strokeStyle = dim; cc.lineWidth = .8; cc.beginPath(); cc.moveTo(x0,y1); cc.lineTo(x0,y0); cc.lineTo(x1,y0); cc.stroke();
+    const layerStartX = x0 + (x1 - x0) * selectedLayer.delay / duration(d);
+    const layerEndX = x0 + (x1 - x0) * (selectedLayer.delay + selectedLayer.life) / duration(d);
+    cc.strokeStyle = &quot;#88baaa&quot;; cc.lineWidth = 1.7; cc.beginPath(); cc.moveTo(layerStartX,y0); cc.lineTo(layerEndX,y1); cc.stroke();
+    const px = x0 + (x1 - x0) * Math.min(1, d.time / duration(d)), py = y0 - (y0 - y1) * Math.min(1, f / (b.frames - 1));
+    cc.fillStyle = textColor; if (active) { cc.beginPath(); cc.arc(px,py,3,0,Math.PI*2); cc.fill(); }
+    cc.font = &#x27;12px &quot;Segoe UI&quot;, &quot;Microsoft YaHei&quot;, sans-serif&#x27;; cc.textAlign = &quot;left&quot;; cc.fillText(&quot;帧&quot;, 2, 13); cc.fillText(String(b.frames - 1), 2, 30); cc.fillText(&quot;0&quot;, 20, y0);
+    cc.fillText(&quot;0 s&quot;, x0, h - 10); cc.textAlign = &quot;right&quot;; cc.fillText(duration(d).toFixed(2) + &quot; s&quot;, x1, h - 10);
+    cc.textAlign = &quot;center&quot;; cc.fillText(&quot;开花后时间&quot;, (x0 + x1) / 2, h - 10);
+  }
+  function draw() {
+    const d = e();
+    if (d.mode === &quot;atlas&quot;) { atlas(); return; }
+    if (d.mode === &quot;delivery&quot;) return;
+    const selectedParams = d.source === &quot;engine&quot; &amp;&amp; d.baked ? d.baked.params : d.params;
+    const a = ctxFor(q(&quot;[data-main-canvas]&quot;));
+    if (d.source === &quot;engine&quot; &amp;&amp; !d.baked) {
+      a.ctx.fillStyle = &quot;#080a0d&quot;; a.ctx.fillRect(0,0,a.w,a.h);
+      a.ctx.fillStyle = &quot;#abb5b0&quot;; a.ctx.font = &#x27;13px &quot;Microsoft YaHei&quot;, sans-serif&#x27;; a.ctx.textAlign = &quot;center&quot;; a.ctx.fillText(&quot;尚无引擎回放产物&quot;,a.w/2,a.h/2);
+    } else bloom(a.ctx, a.w, a.h, d, selectedParams, false);
+    q(&quot;[data-screen-name]&quot;).textContent = (d.source === &quot;engine&quot; &amp;&amp; d.baked &amp;&amp; !fresh(d) ? &quot;上次成功 R&quot; + d.baked.revision : d.edited ? &quot;编辑副本 R&quot; + d.revision : &quot;当前版本 R&quot; + d.revision) + &quot; · &quot; + (d.source === &quot;engine&quot; ? &quot;引擎回放&quot; : &quot;实时模拟&quot;);
+    q(&quot;[data-screen-info]&quot;).textContent = (d.platform === &quot;pc&quot; ? &quot;PC&quot; : &quot;手机&quot;) + &quot; · &quot; + (d.baked &amp;&amp; d.source === &quot;engine&quot; ? &quot;单格 &quot; + d.baked[d.platform] + &quot; px&quot; : &quot;调参预览&quot;);
+    if (d.compare) { const other = ctxFor(q(&quot;[data-compare-canvas]&quot;)); bloom(other.ctx, other.w, other.h, d, d.baked.params, true); }
+  }
+  function stop() { playing = false; cancelAnimationFrame(animation); lastClock = 0; const v = q(&quot;[data-ref-video]&quot;); if (v &amp;&amp; !v.paused) v.pause(); }
+  function play() {
+    if (playing) { stop(); paintTime(); save(); return; }
+    if (e().time &gt;= duration(e())) e().time = 0;
+    playing = true; lastClock = 0;
+    function step(now) {
+      if (!playing || !root.isConnected || document.hidden) { stop(); paintTime(); return; }
+      const elapsed = lastClock ? Math.min(.1, (now - lastClock) / 1000) : 0; lastClock = now;
+      const d = e(); d.time += elapsed * speed;
+      if (d.time &gt;= duration(d)) {
+        if (looping) d.time = 0; else { d.time = duration(d); stop(); }
+      }
+      paintTime(); draw(); syncReference();
+      if (playing) animation = requestAnimationFrame(step); else save();
+    }
+    animation = requestAnimationFrame(step); paintTime();
+  }
+  function restoreReference() {
+    const ref = references.get(selected), v = q(&quot;[data-ref-video]&quot;);
+    if (ref &amp;&amp; v.getAttribute(&quot;src&quot;) !== ref.url) v.src = ref.url;
+    if (!ref) v.removeAttribute(&quot;src&quot;);
+    v.hidden = !ref; q(&quot;[data-ref-empty]&quot;).hidden = !!ref;
+    q(&quot;[data-ref-burst]&quot;).value = ref ? ref.burst : &quot;&quot;;
+    q(&quot;[data-ref-state]&quot;).textContent = ref ? &quot;视频仅在本地使用，填写开花时刻后同步。&quot; : &quot;当前效果未载入参考视频。&quot;;
+  }
+  function syncReference() {
+    const d = e(), v = q(&quot;[data-ref-video]&quot;), burst = q(&quot;[data-ref-burst]&quot;);
+    if (!references.has(selected) || !d.reference || burst.value === &quot;&quot; || !burst.validity.valid || !Number.isFinite(v.duration)) return;
+    const target = Math.max(0, Math.min(v.duration, Number(burst.value) + tick(d.time)));
+    if (Math.abs(v.currentTime - target) &gt; .07) v.currentTime = target;
+    q(&quot;[data-ref-state]&quot;).textContent = &quot;开花后 +&quot; + tick(d.time).toFixed(2) + &quot; s · 参考 &quot; + target.toFixed(2) + &quot; s&quot;;
+  }
+  function beginEdit(d) {
+    d.undo.push({ params: cp(d.params), pc: d.pc, mobile: d.mobile, name: d.name }); if (d.undo.length &gt; 20) d.undo.shift();
+    d.edited = true; d.revision += 1; d.error = &quot;&quot;; d.compare = false;
+  }
+  function editingCopy() {
+    const original = e();
+    if (original.group === &quot;制作中&quot;) return original;
+    const key = &quot;edit-&quot; + original.key;
+    if (!entries[key]) {
+      const copy = makeEntry({
+        key, id: original.id + &quot; 副本&quot;, name: original.name + &quot; · 草稿&quot;, group: &quot;制作中&quot;,
+        type: original.type, params: cp(original.params), packageName: original.packageName + &quot;_Draft&quot;,
+        note: &quot;来源：&quot; + original.id + &quot;。原版本保留，编辑内容单独检查。&quot;,
+        hasBake: !!original.baked, locked: false
+      });
+      copy.baked = original.baked ? cp(original.baked) : null;
+      copy.revision = original.revision + 1; copy.edited = true;
+      copy.mode = &quot;make&quot;; copy.source = &quot;live&quot;; copy.time = original.time;
+      entries[key] = copy;
+    }
+    selected = key; return entries[key];
+  }
+  function bake() {
+    const d = e(); if (d.job || d.invalid || !d.params.length) return;
+    const key = selected, revision = d.revision, captured = { params: cp(d.params), pc: d.pc, mobile: d.mobile, frames: 120, revision, quality: true };
+    const job = { revision, progress: .08 }; d.job = job; render(); message(&quot;正在模拟烘焙和检查。切换条目不会改变任务归属。&quot;);
+    setTimeout(() =&gt; { if (d.job === job) { job.progress = .62; if (selected === key) updateStateBars(); } }, 450);
+    setTimeout(() =&gt; {
+      if (d.job !== job) return; d.job = null;
+      if (design.bakeResult === &quot;failure&quot;) d.error = &quot;模拟烘焙失败，草稿已保留&quot; + (d.baked ? &quot;；旧成功产物 R&quot; + d.baked.revision + &quot; 可继续查看。&quot; : &quot;。&quot;);
+      else if (d.revision === revision) { d.baked = captured; d.error = &quot;&quot;; d.source = &quot;engine&quot;; }
+      if (selected === key) {
+        render(); message(d.error ? &quot;模拟失败。可以保存草稿，或重试。&quot; : d.revision !== revision ? &quot;此任务生成的是旧草稿，未替换当前结果。请烘焙最新参数。&quot; : &quot;模拟烘焙与检查完成。回放更新为 R&quot; + revision + &quot;，未生成真实贴图。&quot;);
+      } else library();
+      save();
+    }, 1050);
+  }
+  async function copyOpinion() {
+    const d = e();
+    const text = d.name + &quot; / &quot; + d.id + &quot; / 版本示例 R&quot; + d.revision + &quot;\n&quot; +
+      (d.platform === &quot;pc&quot; ? &quot;PC&quot; : &quot;手机&quot;) + &quot; · &quot; + d.distance + &quot; m · 开花后 +&quot; + tick(d.time).toFixed(2) + &quot; s\n&quot; +
+      &quot;画面来源：&quot; + (d.source === &quot;engine&quot; ? &quot;引擎回放 / 产物 R&quot; + (d.baked ? d.baked.revision : &quot;未生成&quot;) : &quot;实时模拟 / 草稿 R&quot; + d.revision) + &quot;\n&quot; +
+      &quot;意见：&quot; + (d.comment || (d.reviewed ? d.reviewed.result : &quot;未填写&quot;)) + &quot;\n交互草稿中的示例记录，未改变真实效果状态。&quot;;
+    try {
+      if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error(&quot;clipboard&quot;);
+      await navigator.clipboard.writeText(text); message(&quot;示例意见已复制，包含条目、版本与观察时刻。&quot;);
+    } catch {
+      q(&quot;[data-copy-fallback]&quot;).hidden = false; q(&quot;[data-copy-text]&quot;).value = text; q(&quot;[data-copy-text]&quot;).focus(); q(&quot;[data-copy-text]&quot;).select(); message(&quot;自动复制不可用，意见原文已展开，可手动复制。&quot;);
+    }
+  }
+  root.addEventListener(&quot;click&quot;, event =&gt; {
+    const btn = event.target.closest(&quot;button&quot;); if (!btn || btn.disabled) return;
+    const d = e();
+    if (btn.dataset.entry) { stop(); selected = btn.dataset.entry; q(&quot;[data-copy-fallback]&quot;).hidden = true; message(&quot;&quot;); render(); save(); return; }
+    if (btn.dataset.view) { stop(); d.mode = btn.dataset.view === &#x27;atlas&#x27; ? &#x27;atlas&#x27; : btn.dataset.view === &#x27;live&#x27; ? &#x27;make&#x27; : &#x27;review&#x27;; if (btn.dataset.view !== &#x27;atlas&#x27;) d.source = btn.dataset.view; d.compare = false; render(); save(); return; }
+    if (btn.dataset.viewScale) { d.scale = btn.dataset.viewScale; render(); save(); return; }
+    if (btn.dataset.viewPlatform) { d.platform = btn.dataset.viewPlatform; render(); save(); return; }
+    if (btn.dataset.mode) {
+      stop(); const current = btn.dataset.mode === &quot;make&quot; ? editingCopy() : d;
+      current.mode = btn.dataset.mode; current.compare = false;
+      if (current.mode === &quot;review&quot;) { current.source = &quot;engine&quot;; current.scale = &quot;game&quot;; }
+      render(); save(); return;
+    }
+    if (btn.dataset.layer !== undefined) { d.selectedLayer = Number(btn.dataset.layer); render(); save(); return; }
+    if (btn.dataset.solo !== undefined) { const i = Number(btn.dataset.solo); d.solo = d.solo === i ? null : i; render(); save(); return; }
+    if (btn.dataset.mute !== undefined) { const i = Number(btn.dataset.mute); d.muted[i] = !d.muted[i]; render(); save(); return; }
+    if (btn.dataset.point) { stop(); d.time = Math.min(duration(d), Number(btn.dataset.point)); paintTime(); draw(); syncReference(); save(); return; }
+    const a = btn.dataset.action;
+    if (a === &quot;new&quot;) { q(&quot;[data-create]&quot;).hidden = false; q(&quot;[data-new-name]&quot;).focus(); }
+    else if (a === &#x27;updates&#x27;) { q(&#x27;[data-updates]&#x27;).hidden = !q(&#x27;[data-updates]&#x27;).hidden; q(&#x27;.fwb-top [data-action=&quot;updates&quot;]&#x27;).setAttribute(&#x27;aria-expanded&#x27;,String(!q(&#x27;[data-updates]&#x27;).hidden)); }
+    else if (a === &#x27;toggle-library&#x27;) { view.library = !view.library; render(); }
+    else if (a === &#x27;toggle-inspector&#x27;) { view.inspector = !view.inspector; render(); }
+    else if (a === &quot;close-new&quot;) q(&quot;[data-create]&quot;).hidden = true;
+    else if (a === &quot;create&quot;) {
+      stop(); const type = q(&quot;[data-new-type]&quot;).value, name = q(&quot;[data-new-name]&quot;).value.trim(), key = &quot;draft&quot; + Object.keys(entries).length;
+      entries[key] = makeEntry({ key, id: &quot;DRAFT&quot;, name: name || &quot;未命名配方&quot;, group: &quot;制作中&quot;, type: type === &quot;botan&quot; ? &quot;lime&quot; : &quot;kiku&quot;, params: type === &quot;blank&quot; ? [] : [layer(type === &quot;botan&quot; ? &quot;牡丹主层&quot; : &quot;菊主层&quot;, type === &quot;botan&quot; ? &quot;head&quot; : &quot;mixed&quot;)], packageName: &quot;&quot;, note: &quot;新建配方示例&quot;, hasBake: false });
+      entries[key].mode = &quot;make&quot;; entries[key].source = &quot;live&quot;;
+      selected = key; q(&quot;[data-create]&quot;).hidden = true; q(&quot;[data-new-name]&quot;).value = &quot;&quot;; q(&quot;[data-search]&quot;).value = &quot;&quot;; render(); message(type === &quot;blank&quot; ? &quot;已从空白开始，名称和图层不继承上个效果。&quot; : &quot;已明确载入完整模板。包名称在交付页填写。&quot;);
+    }
+    else if (a === &quot;play&quot;) play();
+    else if (a === &quot;focus&quot;) { view.focus = !view.focus; render(); }
+    else if (a === &quot;grid&quot;) { view.grid = !view.grid; render(); }
+    else if (a === &quot;capture&quot;) {
+      stop();
+      const screenRevision = d.source === &quot;engine&quot; &amp;&amp; d.baked ? d.baked.revision : d.revision;
+      const observation = d.solo !== null ? &quot;独看：&quot; + d.params[d.solo].name : Object.values(d.muted).some(Boolean) ? &quot;部分图层静音&quot; : &quot;整体 · 全部层&quot;;
+      const label = &quot;画面 R&quot; + screenRevision + &quot; · 草稿 R&quot; + d.revision + &quot; · +&quot; + tick(d.time).toFixed(2) + &quot; s · &quot; + (d.source === &quot;engine&quot; ? &quot;引擎回放&quot; : &quot;实时模拟&quot;) + &quot; · &quot; + (d.platform === &quot;pc&quot; ? &quot;PC&quot; : &quot;手机&quot;) + &quot; · &quot; + d.distance + &quot; m · &quot; + ({game:&quot;游戏内大小&quot;,fit:&quot;适应窗口&quot;,pixel:&quot;1:1 细看&quot;}[d.scale] || d.scale) + &quot; · &quot; + observation;
+      captures.set(selected,{url:q(&quot;[data-main-canvas]&quot;).toDataURL(&quot;image/png&quot;),label});
+      d.comment = (d.comment ? d.comment + &quot;\n&quot; : &quot;&quot;) + &quot;[画面记录] &quot; + label + &#x27; · 显示曝光 &#x27; + view.exposure + &#x27;×&#x27;;
+      d.mode = &quot;review&quot;; view.focus = false; render(); message(&quot;当前示例画面与观察时刻已记入意见。本次会话内可查看。&quot;);
+    }
+    else if (a === &quot;clear-capture&quot;) { captures.delete(selected); render(); message(&quot;已清除画面记录，意见文本保留。&quot;); }
+    else if (a === &quot;prev&quot; || a === &quot;next&quot;) { stop(); d.time = Math.max(0, Math.min(duration(d), tick(d.time) + (a === &quot;next&quot; ? 1 / 30 : -1 / 30))); paintTime(); draw(); syncReference(); }
+    else if (a === &quot;reference&quot;) { d.reference = !d.reference; render(); }
+    else if (a === &quot;compare&quot;) { d.compare = !d.compare; render(); }
+    else if (a === &quot;edit&quot;) { const copy = editingCopy(); copy.mode = &quot;make&quot;; copy.compare = false; render(); message(&quot;已打开制作中的编辑副本。原候选或已通过版本仍在原库中（示例）。&quot;); }
+    else if (a === &quot;add-layer&quot;) {
+      if (d.params.length &gt;= 4) { message(&quot;草稿演示最多四层；正式查看器按实际配方显示。&quot;); return; }
+      beginEdit(d); d.params.push(layer(&quot;图层 &quot; + (d.params.length + 1), &quot;mixed&quot;)); d.selectedLayer = d.params.length - 1; d.source = &quot;live&quot;; render();
+    }
+    else if (a === &quot;undo&quot;) {
+      const last = d.undo.pop(); if (last) { d.params = last.params; d.pc = last.pc; d.mobile = last.mobile; d.name = last.name; d.revision += 1; d.error = &quot;&quot;; d.selectedLayer = Math.min(d.selectedLayer, Math.max(0, d.params.length - 1)); d.solo = null; d.muted = []; d.invalid = false; render(); message(&quot;已撤销这组改动。需重新检查当前版本。&quot;); }
+    }
+    else if (a === &quot;save-recipe&quot;) message(&quot;示例草稿已记住。尚未写入正式库或生成真实配方文件。&quot;);
+    else if (a === &quot;bake&quot;) bake();
+    else if (a === &quot;approve&quot;) { d.reviewed = { result: &quot;通过&quot;, revision: d.revision, time: tick(d.time), platform: d.platform, distance: d.distance }; render(); message(&quot;已标记当前示例版本通过；真实验收状态未修改。&quot;); }
+    else if (a === &quot;changes&quot;) { d.reviewed = { result: &quot;需要修改&quot;, revision: d.revision, time: tick(d.time), platform: d.platform, distance: d.distance }; render(); message(&quot;已记录修改意见，绑定当前示例版本和时刻。&quot;); }
+    else if (a === &quot;copy&quot;) copyOpinion();
+    else if (a === &quot;export&quot;) message(&quot;模拟导出流程已完成，清单对应当前示例版本；没有生成或下载真实素材包。&quot;);
+    else if (a === &quot;primary&quot;) {
+      if ((d.mode === &quot;make&quot; || d.mode === &quot;review&quot;) &amp;&amp; !fresh(d)) bake();
+      else if (d.mode === &quot;atlas&quot;) play();
+      else { stop(); d.mode = d.mode === &quot;delivery&quot; ? &quot;review&quot; : &quot;delivery&quot;; d.source = &quot;engine&quot;; render(); }
+    }
+    save();
+  });
+  root.addEventListener(&quot;input&quot;, event =&gt; {
+    const input = event.target, d = e();
+    if (input.matches(&quot;[data-search]&quot;)) { library(); return; }
+    if (input.matches(&quot;[data-scrub]&quot;)) { stop(); d.time = Number(input.value) / 30; paintTime(); draw(); syncReference(); return; }
+    if (input.matches(&quot;[data-distance]&quot;)) { d.distance = Number(input.value); q(&quot;[data-distance-label]&quot;).textContent = d.distance + &quot; m&quot;; draw(); return; }
+    if (input.matches(&quot;[data-comment]&quot;)) { d.comment = input.value; save(); return; }
+    if (input.matches(&quot;[data-package-name]&quot;)) {
+      d.packageName = input.value; const pos = input.selectionStart; manifest(); input.focus(); input.setSelectionRange(pos, pos); updateStateBars(); save(); return;
+    }
+    if (input.dataset.param) {
+      const key = input.dataset.param, l = d.params[d.selectedLayer];
+      if (!input.dataset.started) { beginEdit(d); input.dataset.started = &quot;true&quot;; }
+      l[key] = Number(input.value);
+      if (key === &quot;count&quot; &amp;&amp; d.type === &quot;lime&quot;) d.params.forEach(p =&gt; p.count = l.count);
+      const number = q(&#x27;[data-number=&quot;&#x27; + key + &#x27;&quot;]&#x27;); if (number) number.value = l[key];
+      d.source = &quot;live&quot;; all(&#x27;[data-view]&#x27;).forEach(button =&gt; button.setAttribute(&#x27;aria-pressed&#x27;,String(button.dataset.view === &#x27;live&#x27;))); updateStateBars(); draw(); paintTime();
+    }
+  });
+  root.addEventListener(&quot;change&quot;, event =&gt; {
+    const input = event.target, d = e();
+    if (input.matches(&#x27;[data-display-exposure]&#x27;)) { view.exposure = Number(input.value); q(&#x27;[data-exposure-value]&#x27;).textContent = view.exposure + &#x27;×&#x27;; updateStateBars(); draw(); }
+    else if (input.matches(&quot;[data-speed]&quot;)) speed = Number(input.value);
+    else if (input.matches(&quot;[data-loop]&quot;)) looping = input.checked;
+    else if (input.matches(&quot;[data-atlas-layer]&quot;)) { d.selectedLayer = Number(input.value); render(); }
+    else if (input.matches(&quot;[data-draft-name]&quot;)) { d.name = input.value.trim() || &quot;未命名配方&quot;; d.edited = true; render(); }
+    else if (input.dataset.param) { delete input.dataset.started; save(); }
+    else if (input.dataset.number) {
+      if (!input.validity.valid || input.value === &quot;&quot;) { d.invalid = true; const error = q(&quot;[data-param-error]&quot;); if (error) error.textContent = &quot;请填写范围内的完整数值，当前输入未应用。&quot;; updateStateBars(); return; }
+      beginEdit(d); d.params[d.selectedLayer][input.dataset.number] = Number(input.value);
+      if (input.dataset.number === &quot;count&quot; &amp;&amp; d.type === &quot;lime&quot;) d.params.forEach(p =&gt; p.count = Number(input.value));
+      d.invalid = false; d.source = &quot;live&quot;; render();
+    }
+    else if (input.dataset.delay !== undefined) {
+      if (!input.validity.valid || input.value === &quot;&quot;) { d.invalid = true; message(&quot;开始时间需填写0至12秒的完整数值，当前输入未应用。&quot;); updateStateBars(); return; }
+      beginEdit(d); d.params[Number(input.dataset.delay)].delay = Number(input.value); d.invalid = false; d.source = &quot;live&quot;; render();
+    }
+    else if (input.dataset.cell) { beginEdit(d); d[input.dataset.cell] = Number(input.value); render(); }
+    else if (input.matches(&quot;[data-ref-file]&quot;) &amp;&amp; input.files &amp;&amp; input.files[0]) {
+      const previous = references.get(selected);
+      if (previous) URL.revokeObjectURL(previous.url);
+      references.set(selected, { url: URL.createObjectURL(input.files[0]), burst: &quot;&quot; });
+      restoreReference(); input.value = &quot;&quot;;
+    }
+    else if (input.matches(&quot;[data-ref-burst]&quot;)) {
+      const ref = references.get(selected); if (ref) ref.burst = input.value;
+      syncReference();
+    }
+    save();
+  });
+  root.addEventListener(&quot;keydown&quot;, event =&gt; {
+    if (event.target.matches(&quot;input,textarea,select,[contenteditable]&quot;)) return;
+    if (event.code === &quot;Space&quot; &amp;&amp; !event.target.closest(&quot;button,summary&quot;)) { event.preventDefault(); play(); }
+    if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowRight&quot;) {
+      event.preventDefault(); stop(); e().time = Math.max(0, Math.min(duration(e()), tick(e().time) + (event.key === &quot;ArrowRight&quot; ? 1 / 30 : -1 / 30))); paintTime(); draw(); syncReference(); save();
+    }
+  });
+  document.addEventListener(&quot;visibilitychange&quot;, () =&gt; { if (document.hidden) { stop(); paintTime(); } });
+  root.addEventListener(&quot;toggle&quot;, event =&gt; { if (event.target.matches(&quot;[data-lib-group], [data-library]&quot;)) drawThumbnails(); }, true);
+  q(&quot;[data-ref-video]&quot;).addEventListener(&quot;loadedmetadata&quot;, syncReference);
+  q(&quot;[data-ref-video]&quot;).addEventListener(&quot;error&quot;, () =&gt; { if (references.has(selected)) q(&quot;[data-ref-state]&quot;).textContent = &quot;当前视频无法播放，请更换本地视频。&quot;; });
+  window.addEventListener(&quot;pagehide&quot;, () =&gt; { references.forEach(ref =&gt; URL.revokeObjectURL(ref.url)); });
+  let wasNarrow;
+  const ro = new ResizeObserver(() =&gt; {
+    const narrow = root.getBoundingClientRect().width &lt;= 680;
+    if (wasNarrow === undefined || narrow !== wasNarrow) { q(&quot;[data-library]&quot;).open = !narrow; wasNarrow = narrow; }
+    draw(); drawThumbnails(); drawDetailsThumbnails();
+  });
+  ro.observe(root);
+  render();
+  if (globalThis.Tweak) {
+    const tweak = new Tweak({ container: root, onChange: () =&gt; { render(); save(); } });
+    tweak.addSlider(design, &quot;inspector&quot;, { label: &quot;右栏宽度&quot;, min: 248, max: 296, step: 4, unit: &quot;px&quot; });
+    tweak.addSlider(design, &quot;spacing&quot;, { label: &quot;工作区留白&quot;, min: 10, max: 16, step: 2, unit: &quot;px&quot; });
+    tweak.addToggle(design, &quot;tracks&quot;, { label: &quot;显示分层时间轨道&quot; });
+    tweak.addSelect(design, &quot;bakeResult&quot;, { label: &quot;烘焙场景&quot;, options: [{ label: &quot;模拟成功&quot;, value: &quot;success&quot; }, { label: &quot;模拟失败&quot;, value: &quot;failure&quot; }] });
+  }
+})();
+&lt;/script&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+  let lastPointerWasTouch = false;
+  let pinnedByTouch = false;
+
+  const getTrigger = (event) =&gt; {
+    for (const target of event.composedPath()) {
+      if (target?.nodeType === Node.ELEMENT_NODE) {
+        const trigger = target.closest(&quot;[data-tooltip]&quot;);
+        if (trigger) return trigger;
+      }
+    }
+    return null;
+  };
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    pinnedByTouch = false;
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handlePointer = (event) =&gt; {
+    lastPointerWasTouch =
+      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
+  };
+  const handleTouchClick = (event) =&gt; {
+    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
+    lastPointerWasTouch = false;
+    if (!isTouch || event.detail === 0) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (
+      trigger == null ||
+      !trigger.isConnected ||
+      getContent(trigger).length === 0 ||
+      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
+    ) {
+      if (pinnedByTouch) {
+        closeTooltip();
+      }
+      return;
+    }
+    openTooltip(trigger);
+    pinnedByTouch = activeTrigger === trigger;
+    window.setTimeout(() =&gt; {
+      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
+        closeTooltip(false);
+      }
+    }, 0);
+  };
+  const handleLeave = (event) =&gt; {
+    if (pinnedByTouch) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    lastPointerWasTouch = false;
+    const trigger = getTrigger(event);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handlers = {
+    pointerover: handlePointerOpen,
+    pointerdown: handlePointer,
+    pointercancel: handlePointer,
+    click: handleTouchClick,
+    pointerout: handleLeave,
+    focusin: handleFocusIn,
+    focusout: handleLeave,
+    keydown: handleKeyDown,
+    contextmenu: handleContextMenu,
+  };
+  const roots = new Map();
+  const handledEvents = new WeakSet();
+  const handleEvent = (event) =&gt; {
+    if (handledEvents.has(event)) return;
+    handledEvents.add(event);
+    handlers[event.type](event);
+  };
+  const discoverRoots = (node) =&gt; {
+    if (node.shadowRoot) listen(node.shadowRoot);
+    for (const element of node.querySelectorAll(&quot;*&quot;)) {
+      if (element.shadowRoot) listen(element.shadowRoot);
+    }
+  };
+  const listen = (root) =&gt; {
+    if (roots.has(root)) return;
+    for (const type of Object.keys(handlers)) root.addEventListener(type, handleEvent);
+    const observer = new window.MutationObserver((records) =&gt; {
+      for (const { addedNodes } of records) {
+        for (const node of addedNodes) {
+          if (node.nodeType === Node.ELEMENT_NODE) discoverRoots(node);
+        }
+      }
+      for (const [root, cleanup] of roots) {
+        if (root.host &amp;&amp; !root.host.isConnected) {
+          cleanup();
+          roots.delete(root);
+        }
+      }
+      if (activeTrigger &amp;&amp; !activeTrigger.isConnected) closeTooltip(false);
+    });
+    observer.observe(root, { childList: true, subtree: true });
+    roots.set(root, () =&gt; {
+      observer.disconnect();
+      for (const type of Object.keys(handlers)) root.removeEventListener(type, handleEvent);
+    });
+    discoverRoots(root);
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    lastPointerWasTouch = false;
+    for (const cleanup of roots.values()) cleanup();
+    roots.clear();
+    tooltip = null;
+  };
+
+  // Events between children of one shadow root never reach the document.
+  listen(document);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-tabs&quot;&gt;
+(() =&gt; {
+  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
+  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
+  const selectTab = (selected) =&gt; {
+    const panelId = selected.getAttribute(&quot;aria-controls&quot;);
+    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
+      const active = tab === selected;
+      tab.classList.toggle(&quot;active&quot;, active);
+      tab.setAttribute(&quot;aria-selected&quot;, String(active));
+      const id = tab.getAttribute(&quot;aria-controls&quot;);
+      const panel = id &amp;&amp; document.getElementById(id);
+      if (panel != null) {
+        panel.hidden = id !== panelId;
+        if (!panel.hidden &amp;&amp; selected.id) {
+          panel.setAttribute(&quot;aria-labelledby&quot;, selected.id);
+        }
+      }
+    }
+  };
+  const interact = (event) =&gt; {
+    const tab = event.target?.closest?.(selector);
+    if (event.defaultPrevented || tab == null || tab.matches(disabled)) {
+      return;
+    }
+    if (event.type === &quot;click&quot;) {
+      selectTab(tab);
+      return;
+    }
+    const tabs = Array.from(
+      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
+    ).filter((candidate) =&gt; !candidate.matches(disabled));
+    const current = tabs.indexOf(tab);
+    let next;
+    if (event.key === &quot;ArrowRight&quot; || event.key === &quot;ArrowDown&quot;) {
+      next = (current + 1) % tabs.length;
+    } else if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowUp&quot;) {
+      next = (current + tabs.length - 1) % tabs.length;
+    } else if (event.key === &quot;Home&quot;) {
+      next = 0;
+    } else if (event.key === &quot;End&quot;) {
+      next = tabs.length - 1;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    tabs[next].focus();
+    selectTab(tabs[next]);
+  };
+
+  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
+    const selected =
+      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
+    if (selected != null) {
+      selectTab(selected);
+    }
+  }
+  document.addEventListener(&quot;click&quot;, interact);
+  document.addEventListener(&quot;keydown&quot;, interact);
+  window.addEventListener(&quot;pagehide&quot;, () =&gt; {
+    document.removeEventListener(&quot;click&quot;, interact);
+    document.removeEventListener(&quot;keydown&quot;, interact);
+  }, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-carousel&quot;&gt;
+  (() =&gt; {
+    for (const root of document.querySelectorAll(&quot;.viz-carousel&quot;)) {
+      const panels = Array.from(
+        root.querySelectorAll(&quot;:scope &gt; [data-variant]&quot;),
+      );
+      if (panels.length === 0) {
+        continue;
+      }
+      root.setAttribute(&quot;role&quot;, &quot;group&quot;);
+      panels.forEach((panel, index) =&gt; {
+        panel.hidden = index !== 0;
+        panel.setAttribute(&quot;role&quot;, &quot;group&quot;);
+        if (!panel.hasAttribute(&quot;aria-label&quot;)) {
+          panel.setAttribute(&quot;aria-label&quot;, panel.dataset.variant);
+        }
+      });
+      root.dataset.activeVariant = panels[0].dataset.variant;
+      if (panels.length === 1) {
+        continue;
+      }
+
+      const controls = document.createElement(&quot;div&quot;);
+      controls.className = &quot;viz-carousel-controls&quot;;
+      // Portable copy of the settings dropdown&#x27;s legacy glyph; no 14px icon-package preset matches it.
+      // https://github.com/openai/openai/blob/master/codex/codex-apps/webview/src/icons/chevron.svg
+      controls.innerHTML = `
+      &lt;button type=&quot;button&quot; class=&quot;viz-carousel-previous cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;chevron-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+      &lt;details class=&quot;viz-carousel-picker&quot;&gt;
+        &lt;summary class=&quot;cursor-interaction&quot;&gt;
+          &lt;span class=&quot;viz-carousel-count tabular-nums&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;viz-carousel-name&quot;&gt;&lt;/span&gt;
+          &lt;svg class=&quot;viz-carousel-caret&quot; width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 20 21&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;
+            &lt;path d=&quot;M15.2793 7.71101C15.539 7.45131 15.961 7.45131 16.2207 7.71101C16.4804 7.97071 16.4804 8.39272 16.2207 8.65242L10.4707 14.4024C10.211 14.6621 9.78902 14.6621 9.52932 14.4024L3.77932 8.65242L3.69436 8.54792C3.52385 8.28979 3.55205 7.93828 3.77932 7.71101C4.00659 7.48374 4.3581 7.45554 4.61623 7.62605L4.72073 7.71101L10 12.9903L15.2793 7.71101Z&quot; fill=&quot;currentColor&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;0.6&quot; /&gt;
+          &lt;/svg&gt;
+        &lt;/summary&gt;
+        &lt;div class=&quot;viz-carousel-options&quot;&gt;&lt;/div&gt;
+      &lt;/details&gt;
+      &lt;button type=&quot;button&quot; class=&quot;viz-carousel-next cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;chevron-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;`;
+      const previous = controls.querySelector(&quot;.viz-carousel-previous&quot;);
+      const next = controls.querySelector(&quot;.viz-carousel-next&quot;);
+      const picker = controls.querySelector(&quot;.viz-carousel-picker&quot;);
+      const summary = picker.querySelector(&quot;summary&quot;);
+      const count = controls.querySelector(&quot;.viz-carousel-count&quot;);
+      const name = controls.querySelector(&quot;.viz-carousel-name&quot;);
+      const options = controls.querySelector(&quot;.viz-carousel-options&quot;);
+      const status = document.createElement(&quot;span&quot;);
+      status.className = &quot;sr-only&quot;;
+      status.setAttribute(&quot;role&quot;, &quot;status&quot;);
+      status.setAttribute(&quot;aria-live&quot;, &quot;polite&quot;);
+      status.setAttribute(&quot;aria-atomic&quot;, &quot;true&quot;);
+      previous.setAttribute(
+        &quot;aria-label&quot;,
+        root.dataset.previousLabel ?? &quot;Previous variant&quot;,
+      );
+      next.setAttribute(&quot;aria-label&quot;, root.dataset.nextLabel ?? &quot;Next variant&quot;);
+
+      let active = 0;
+      let mousePointerId = null;
+      let summaryPointerHandled = false;
+      summary.addEventListener(&quot;pointerdown&quot;, (event) =&gt; {
+        summaryPointerHandled =
+          event.pointerType === &quot;mouse&quot; &amp;&amp; event.button === 0 &amp;&amp; !event.ctrlKey;
+        if (!summaryPointerHandled) {
+          return;
+        }
+        event.preventDefault();
+        summary.focus({ preventScroll: true });
+        picker.open = !picker.open;
+        mousePointerId = picker.open ? event.pointerId : null;
+      });
+      summary.addEventListener(&quot;click&quot;, (event) =&gt; {
+        if (summaryPointerHandled &amp;&amp; event.detail &gt; 0) {
+          event.preventDefault();
+        }
+      });
+      const choices = panels.map((panel, index) =&gt; {
+        const choice = document.createElement(&quot;button&quot;);
+        choice.type = &quot;button&quot;;
+        choice.className = &quot;cursor-interaction&quot;;
+        choice.textContent = panel.dataset.variant;
+        choice.addEventListener(&quot;click&quot;, () =&gt; {
+          select(index);
+          summary.focus();
+        });
+        choice.addEventListener(&quot;pointerup&quot;, (event) =&gt; {
+          if (
+            picker.open &amp;&amp;
+            event.pointerType === &quot;mouse&quot; &amp;&amp;
+            event.button === 0 &amp;&amp;
+            event.pointerId === mousePointerId
+          ) {
+            choice.click();
+          }
+        });
+        options.appendChild(choice);
+        return choice;
+      });
+      const select = (index) =&gt; {
+        const changed = active !== index;
+        active = index;
+        panels.forEach((panel, position) =&gt; {
+          panel.hidden = position !== active;
+          choices[position].setAttribute(
+            &quot;aria-current&quot;,
+            String(position === active),
+          );
+        });
+        root.dataset.activeVariant = panels[active].dataset.variant;
+        count.textContent = `${active + 1} / ${panels.length}`;
+        name.textContent = panels[active].dataset.variant;
+        picker.open = false;
+        mousePointerId = null;
+        if (changed) {
+          status.textContent = `${count.textContent}: ${name.textContent}`;
+        }
+      };
+      previous.addEventListener(&quot;click&quot;, () =&gt;
+        select((active + panels.length - 1) % panels.length),
+      );
+      next.addEventListener(&quot;click&quot;, () =&gt;
+        select((active + 1) % panels.length),
+      );
+      picker.addEventListener(&quot;keydown&quot;, (event) =&gt; {
+        if (event.key === &quot;Escape&quot; &amp;&amp; picker.open) {
+          event.preventDefault();
+          picker.open = false;
+          mousePointerId = null;
+          summary.focus();
+          return;
+        }
+        if (event.altKey || event.ctrlKey || event.metaKey) {
+          return;
+        }
+        const index = choices.indexOf(document.activeElement);
+        let nextIndex;
+        if (event.key === &quot;ArrowDown&quot;) {
+          nextIndex = index &lt; 0 ? active : (index + 1) % choices.length;
+        } else if (event.key === &quot;ArrowUp&quot;) {
+          nextIndex = index &lt; 0 ? active : (index + choices.length - 1) % choices.length;
+        } else if (picker.open &amp;&amp; event.key === &quot;Home&quot;) {
+          nextIndex = 0;
+        } else if (picker.open &amp;&amp; event.key === &quot;End&quot;) {
+          nextIndex = choices.length - 1;
+        } else {
+          return;
+        }
+        event.preventDefault();
+        picker.open = true;
+        choices[nextIndex].focus();
+      });
+      picker.addEventListener(&quot;focusout&quot;, (event) =&gt; {
+        if (!picker.contains(event.relatedTarget)) {
+          picker.open = false;
+          mousePointerId = null;
+        }
+      });
+      const dismiss = (event) =&gt; {
+        if (!summary.contains(event.target)) {
+          mousePointerId = null;
+        }
+        if (!picker.contains(event.target)) {
+          picker.open = false;
+        }
+      };
+      const endPointerSelection = () =&gt; {
+        mousePointerId = null;
+      };
+      const sizePicker = () =&gt; {
+        root.style.setProperty(
+          &quot;--viz-carousel-picker-height&quot;,
+          `${picker.open ? options.offsetHeight : 0}px`,
+        );
+      };
+      picker.addEventListener(&quot;toggle&quot;, sizePicker);
+      window.addEventListener(&quot;resize&quot;, sizePicker);
+      document.addEventListener(&quot;pointerdown&quot;, dismiss);
+      document.addEventListener(&quot;pointerup&quot;, endPointerSelection);
+      document.addEventListener(&quot;pointercancel&quot;, endPointerSelection);
+      window.addEventListener(&quot;blur&quot;, endPointerSelection);
+      window.addEventListener(
+        &quot;pagehide&quot;,
+        () =&gt; {
+          document.removeEventListener(&quot;pointerdown&quot;, dismiss);
+          document.removeEventListener(&quot;pointerup&quot;, endPointerSelection);
+          document.removeEventListener(&quot;pointercancel&quot;, endPointerSelection);
+          window.removeEventListener(&quot;blur&quot;, endPointerSelection);
+          window.removeEventListener(&quot;resize&quot;, sizePicker);
+        },
+        { once: true },
+      );
+      root.append(controls, status);
+      select(0);
+    }
+  })();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+<script>(() => {
+  const frame = document.getElementById("codex-visualization");
+  if (!(frame instanceof HTMLIFrameElement)) {
+    return;
+  }
+  let viewportHeight = globalThis.innerHeight;
+  const storageKey = `codex:visualization-widget-state-v2:${JSON.stringify([
+    globalThis.location.pathname,
+    globalThis.location.search,
+  ])}`;
+  const parseState = (serializedState) => {
+    if (
+      typeof serializedState !== "string" ||
+      new TextEncoder().encode(serializedState).length > 16 * 1024
+    ) {
+      throw new TypeError(
+        "Widget state must be a JSON object of at most 16 KiB",
+      );
+    }
+    /** @type {unknown} */
+    const state = JSON.parse(serializedState);
+    if (
+      state == null ||
+      typeof state !== "object" ||
+      Array.isArray(state) ||
+      ("imageIds" in state &&
+        (!Array.isArray(state.imageIds) || state.imageIds.length > 0))
+    ) {
+      throw new TypeError("Widget state must be a JSON object");
+    }
+    const storedState = { modelContent: null, privateContent: null, ...state };
+    const canonicalState = JSON.stringify(
+      storedState,
+      (_key, /** @type {unknown} */ value) => {
+        if (typeof value === "number" && !Number.isFinite(value)) {
+          throw new TypeError("Widget state must contain finite numbers");
+        }
+        return value;
+      },
+    );
+    if (new TextEncoder().encode(canonicalState).length > 16 * 1024) {
+      throw new TypeError(
+        "Widget state must be a JSON object of at most 16 KiB",
+      );
+    }
+    return storedState;
+  };
+  let storage = null;
+  let state = null;
+  try {
+    const localStorage = globalThis.localStorage;
+    const probeKey = `${storageKey}:probe`;
+    localStorage.setItem(probeKey, "1");
+    localStorage.removeItem(probeKey);
+    storage = localStorage;
+    const savedState = storage.getItem(storageKey);
+    if (savedState != null) {
+      try {
+        state = parseState(savedState);
+      } catch {
+        // Invalid saved state does not disable future writes.
+      }
+    }
+  } catch {
+    storage = null;
+  }
+  const initialGlobals = {
+    widgetState: state,
+    statePersistence: storage == null ? "none" : "local",
+  };
+
+  const channel = new MessageChannel();
+  channel.port1.addEventListener("message", (event) => {
+    const data = event.data;
+    if (typeof data !== "object" || data == null) {
+      return;
+    }
+    if (data.type === "widget-state-write") {
+      if (!Number.isSafeInteger(data.id) || data.id <= 0) {
+        return;
+      }
+      let ok = false;
+      try {
+        if (storage != null) {
+          const state = parseState(data.state);
+          storage.setItem(storageKey, JSON.stringify(state));
+          ok = true;
+        }
+      } catch {
+        // Storage denial, quota limits, and invalid state return a failed receipt.
+      }
+      channel.port1.postMessage({
+        type: "widget-state-result",
+        id: data.id,
+        ok,
+      });
+      return;
+    }
+    if (data.type === "height") {
+      const height = data.height;
+      if (
+        typeof height === "number" &&
+        Number.isFinite(height) &&
+        height >= 0 &&
+        height <= 10_000
+      ) {
+        frame.style.height = "100vh";
+      }
+      return;
+    }
+    if (data.type === "scroll-to") {
+      const top = data.top;
+      if (
+        typeof top === "number" &&
+        Number.isFinite(top) &&
+        top >= 0 &&
+        globalThis.navigator.userActivation?.isActive === true
+      ) {
+        globalThis.scrollTo({
+          top: Math.ceil(
+            globalThis.scrollY + frame.getBoundingClientRect().top + top,
+          ),
+        });
+      }
+      return;
+    }
+    if (data.type === "open-external") {
+      const rawHref = data.href;
+      if (typeof rawHref !== "string") {
+        return;
+      }
+      let href;
+      try {
+        const url = new URL(rawHref, document.baseURI);
+        if (url.protocol !== "https:") {
+          return;
+        }
+        href = url.href;
+      } catch {
+        return;
+      }
+      if (globalThis.navigator.userActivation?.isActive === true) {
+        const anchor = document.createElement("a");
+        anchor.href = href;
+        anchor.rel = "noopener noreferrer";
+        anchor.target = "_blank";
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+      }
+      return;
+    }
+    if (data.type === "follow-up") {
+      const prompt = data.prompt;
+      if (
+        typeof prompt !== "string" ||
+        globalThis.navigator.userActivation?.isActive !== true
+      ) {
+        return;
+      }
+      const title = data.title;
+      globalThis.prompt(typeof title === "string" ? title : prompt, prompt);
+    }
+  });
+  channel.port1.start();
+  const srcdoc = frame.dataset.srcdoc;
+  if (srcdoc == null) {
+    return;
+  }
+  globalThis.addEventListener("resize", () => {
+    const height = Number.parseFloat(frame.style.height);
+    if (!Number.isFinite(height) || height <= viewportHeight) {
+      frame.style.removeProperty("height");
+    }
+    viewportHeight = globalThis.innerHeight;
+    channel.port1.postMessage({ type: "measure" });
+  });
+  frame.addEventListener(
+    "load",
+    () => {
+      frame.contentWindow?.postMessage(
+        { type: "codex-visualization-initialize" },
+        "*",
+        [channel.port2],
+      );
+    },
+    { once: true },
+  );
+  // Match the trusted bootstrap element, not the same text in an authored title.
+  frame.srcdoc = srcdoc.replace(
+    '<script type="application/json" id="codex-visualization-widget-state">__CODEX_VISUALIZATION_WIDGET_STATE__<\/script>',
+    () =>
+      '<script type="application/json" id="codex-visualization-widget-state">' +
+      JSON.stringify(initialGlobals).replaceAll("<", "\\u003c") +
+      "<\/script>",
+  );
+  delete frame.dataset.srcdoc;
+})();
+</script>
+</body>
+</html>
