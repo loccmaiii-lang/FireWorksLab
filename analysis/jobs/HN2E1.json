@@ -1,0 +1,9 @@
+{
+ "id": "HN2E1",
+ "type": "export",
+ "effect": "hiki_nishiki",
+ "entry": "HN2",
+ "name": "HikiNishiki",
+ "priority": 8,
+ "note": "引菊 → 锦 在烘焙器 4.0 里的第一版（两层同一批星：HN2-O 橙引线 + HN2-G 金锦，锦火星继承星速往外扩散）。导出一个素材包 + 回放检查 + 烘焙回放同一秒对照（实拍 / 实时 / 导出效果），AI 自检用。"
+}

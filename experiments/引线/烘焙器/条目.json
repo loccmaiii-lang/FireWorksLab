@@ -32,7 +32,8 @@
      "按 cascade.json 30 fps 播放（侧面平视）"
     ]
    ],
-   "imagesTitle": "对照图"
+   "imagesTitle": "对照图",
+   "replaces": []
   }
  ]
 }
