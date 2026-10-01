@@ -1,4 +1,4 @@
-"""One ordinary, token-free GPU queue check; scheduled every 30 minutes."""
+"""One ordinary, token-free GPU queue check; scheduled every 10 minutes."""
 import argparse
 from datetime import datetime, timezone
 import hashlib
@@ -13,7 +13,9 @@ import sys
 from job_lock import ProcessLock, gpu_lock_path
 
 JOB_ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_-]*\Z')
-GENERATED = {'tool/data/review.js', 'tool/data/video_meta.json', '协作/状态清单.md'}
+STANDARD_GENERATED = {'tool/data/standard.js', 'analysis/probe/标准检查/标准检查.json',
+                      'analysis/probe/标准检查/标准检查.md'}
+GENERATED = {'tool/data/review.js', 'tool/data/video_meta.json', '协作/状态清单.md'} | STANDARD_GENERATED
 
 
 def now():
@@ -141,7 +143,12 @@ class Monitor:
             # Use current remote data, then regenerate from both sides' result directories.
             self.git('restore', '--source=origin/main', '--worktree', '--', *sorted(conflicts))
             self.review()
-            self.git('add', '--', *sorted(GENERATED))
+            if conflicts & STANDARD_GENERATED:
+                if self.script('analysis/scripts/标准检查.py', log_name='standard.log'):
+                    self.git('rebase', '--abort', check=False)
+                    raise RuntimeError('Standard regeneration failed; local result commits retained')
+            existing = sorted(path for path in GENERATED if (self.repo / path).exists())
+            self.git('add', '--', *existing)
             result = self.git('rebase', '--continue', check=False)
 
     def commit(self, message, paths):

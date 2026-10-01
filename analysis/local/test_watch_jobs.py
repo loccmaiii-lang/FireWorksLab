@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 from job_lock import ProcessLock, gpu_lock_path
 import run_jobs
+import watch_jobs
 from watch_jobs import Monitor, select_jobs, save_json
 
 
@@ -179,6 +180,54 @@ class GitFlowTests(unittest.TestCase):
             self.assertEqual(self.monitor.cycle(), 0)
         self.assertEqual(self.executions, [])
         self.assertEqual(self.monitor.state['phase'], 'gpu_busy')
+
+
+class PublishStandardTests(unittest.TestCase):
+    def test_standard_outputs_publish_without_committing_unrelated_edits(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            repo = root / 'worker'
+            repo.mkdir()
+            def git(*args):
+                return subprocess.run(['git', *args], cwd=repo, check=True,
+                                      capture_output=True, text=True, encoding='utf-8').stdout
+            git('init', '-b', 'main')
+            git('config', 'user.name', 'Monitor regression')
+            git('config', 'user.email', 'monitor-test@example.invalid')
+            for name in watch_jobs.STANDARD_GENERATED | {'unrelated.txt'}:
+                path = repo / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('baseline', encoding='utf-8')
+            git('add', '.')
+            git('commit', '-m', 'baseline')
+            remote = root / 'remote.git'
+            git('init', '--bare', str(remote))
+            git('remote', 'add', 'origin', str(remote))
+            git('push', '-u', 'origin', 'main')
+            for name in watch_jobs.STANDARD_GENERATED:
+                (repo / name).write_text('STD result', encoding='utf-8')
+            result = repo / 'analysis/results/STD-TEST/done.json'
+            result.parent.mkdir(parents=True)
+            result.write_text('{"ok":true}', encoding='utf-8')
+            monitor = watch_jobs.Monitor(repo, root / 'state')
+            monitor.state['pending_publish'] = ['STD-TEST']
+            # Reproduce the old allowlist: results are saved, but upload is blocked.
+            old_generated = watch_jobs.GENERATED - watch_jobs.STANDARD_GENERATED
+            with patch.object(watch_jobs, 'GENERATED', old_generated):
+                with self.assertRaisesRegex(RuntimeError, 'unexpected tracked edits'):
+                    monitor.publish()
+            # Same retained files now publish without a new GPU run.
+            with patch.object(monitor, 'review'):
+                monitor.publish()
+            self.assertEqual(monitor.state['pending_publish'], [])
+            self.assertEqual(git('status', '--porcelain').strip(), '')
+            self.assertEqual(git('rev-parse', 'HEAD'), git('rev-parse', 'origin/main'))
+            # The fix must still reject an unrelated tracked change.
+            (repo / 'unrelated.txt').write_text('unrelated work', encoding='utf-8')
+            monitor.state['pending_publish'] = ['STD-TEST']
+            with self.assertRaisesRegex(RuntimeError, 'unexpected tracked edits'):
+                monitor.publish()
+            self.assertIn('unrelated.txt', git('diff', '--name-only'))
 
 
 if __name__ == '__main__': unittest.main()

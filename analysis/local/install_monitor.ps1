@@ -21,10 +21,10 @@ $monitorArguments = '-NoProfile -NonInteractive -ExecutionPolicy Bypass -WindowS
 if ($monitorUserRepoPath) { $monitorArguments += ' -UserRepo "{0}"' -f $monitorUserRepoPath }
 $monitorPowerShell = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
 $monitorAction = New-ScheduledTaskAction -Execute $monitorPowerShell -Argument $monitorArguments -WorkingDirectory $monitorRepoPath
-$monitorTrigger = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(30) -RepetitionInterval (New-TimeSpan -Minutes 30)
+$monitorTrigger = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(10) -RepetitionInterval (New-TimeSpan -Minutes 10)
 $monitorUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
 $monitorPrincipal = New-ScheduledTaskPrincipal -UserId $monitorUser -LogonType Interactive -RunLevel Limited
 $monitorSettings = New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -ExecutionTimeLimit ([TimeSpan]::Zero) -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
-Register-ScheduledTask -TaskName 'FireWorksLab GPU Queue' -Action $monitorAction -Trigger $monitorTrigger -Principal $monitorPrincipal -Settings $monitorSettings -Description '每 30 分钟检查 FireWorksLab GitHub GPU 任务，自动烘焙并上传，不调用 AI。' -Force | Out-Null
+Register-ScheduledTask -TaskName 'FireWorksLab GPU Queue' -Action $monitorAction -Trigger $monitorTrigger -Principal $monitorPrincipal -Settings $monitorSettings -Description '每 10 分钟检查 FireWorksLab GitHub GPU 任务，自动烘焙并上传，不调用 AI。' -Force | Out-Null
 Start-ScheduledTask -TaskName 'FireWorksLab GPU Queue'
 Get-ScheduledTaskInfo -TaskName 'FireWorksLab GPU Queue' | Select-Object LastRunTime,NextRunTime,LastTaskResult
