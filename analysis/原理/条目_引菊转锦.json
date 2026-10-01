@@ -35,29 +35,31 @@
     "fade": 0.2,
     "lastFlare": 0,
     "flash": 0.3,
-    "duration": 3.6,
+    "duration": 3.4,
     "burn": 1.3,
     "burnJit": 4,
-    "headBright": 0.02,
+    "headBright": 0,
     "ignDelay": 0.11,
     "ignJit": 40,
     "sparkStart": 0,
     "sparkStop": 1.17,
-    "sparkRate": 600,
+    "sparkRate": 400,
     "sparkRateEnd": 1,
-    "sparkLife": 0.9,
-    "sparkLifeEnd": 2.6,
-    "sparkLifeJit": 25,
+    "sparkLife": 1.9,
+    "sparkLifeEnd": 0.35,
+    "sparkLifeJit": 20,
     "sparkSize": 0.45,
     "sparkSpread": 0.3,
     "sparkInherit": 0.0,
     "sparkDrag": 6,
     "sparkGrav": 0.2,
-    "T0": 1950,
-    "cooling": 0.35,
+    "T0": 1900,
+    "cooling": 0.12,
     "sparkBright": 1,
     "twinkle": 0,
-    "exposure": 3
+    "exposure": 1.5,
+    "branch": 3,
+    "branchAt": 0.92
    },
    "m": {
     "stages": [
@@ -68,13 +70,13 @@
     ],
     "xw": 0.08,
     "ramp0": "#000000",
-    "ramp1": "#6e1203",
-    "ramp2": "#ff6410",
-    "ramp3": "#ffa850",
+    "ramp1": "#5a0e02",
+    "ramp2": "#ff5a0a",
+    "ramp3": "#ffd27a",
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "橙色连续引线：每颗星引药晚点着 0.11 s（中间空隙），火花不继承星速、几乎不扩散、不闪烁，铺成连续的线；火花寿命随星减速变长（开花初期烧出的靠中心的段先灭）；换药（约 1.28 s）后停止。"
+   "note": "橙色连续引线：引药晚点着 0.11 s（中间空隙），火花不继承星速、几乎不扩散、不闪烁、冷却很慢，铺成均匀的线；每颗火花到寿命末尾分叉成 3 颗向四周散开的亮火星（Ramp 亮端金色）→ 金色从橙线上扩散出来。火花寿命随发射时刻变短：外段先分叉，金色从外端开始，约 1.4–2.3 s 扩到整条线。"
   },
   {
    "id": "HN2-G",
@@ -113,29 +115,31 @@
     "duration": 5.0,
     "burn": 3.3,
     "burnJit": 10,
-    "headBright": 0.08,
+    "headBright": 0,
     "ignDelay": 1.28,
     "ignJit": 11,
     "ignSeed": 91,
     "sparkStart": 0,
     "sparkStop": 0,
-    "sparkRate": 300,
-    "sparkRateEnd": 0.6,
-    "sparkLife": 1.2,
+    "sparkRate": 250,
+    "sparkRateEnd": 0.5,
+    "sparkLife": 1.0,
     "sparkLifeEnd": 1,
     "sparkLifeJit": 35,
     "sparkSize": 0.45,
-    "sparkSpread": 2.0,
-    "sparkInherit": 0.6,
-    "sparkDrag": 2.0,
-    "sparkGrav": 0.6,
-    "T0": 2300,
-    "cooling": 0.45,
+    "sparkSpread": 1.5,
+    "sparkInherit": 0.15,
+    "sparkDrag": 3,
+    "sparkGrav": 0.5,
+    "T0": 2200,
+    "cooling": 0.3,
     "sparkBright": 1,
-    "twinkle": 0.5,
-    "glitter": 0.7,
+    "twinkle": 0.3,
+    "glitter": 0,
     "glitterDelay": 0.2,
-    "exposure": 3
+    "exposure": 1.5,
+    "branch": 2,
+    "branchAt": 0.7
    },
    "m": {
     "stages": [
@@ -152,7 +156,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "金锦：同一批星，每颗在换药时刻（1.28 s ± 0.14）才点着锦药；火花继承星速往外走、阻力停住、延迟后闪亮、慢慢下落。金色从橙线外端开始，随星往外扩散。"
+   "note": "金锦：同一批星，换药（1.28 s ± 0.14）后星继续往外走，身后留下金色火花（几乎不继承星速、停在原地、分叉闪烁），金色随星往外推。"
   }
  ],
  "combos": [
@@ -185,7 +189,7 @@
     "1.3–2.5 s 金色从橙线外端开始、随星往外扩散",
     "游戏内大小下的引擎回放"
    ],
-   "opinion": "制作中。",
+   "opinion": "第 2 版（HN2E2）：HN2E1 的金色只在外圈成一圈短彗星、橙线带亮头且过曝，见 analysis/results/HN2E1/看法.md。这版改用火花分叉：金色从橙线上扩散出来。",
    "replaces": [
     "HN1"
    ]
