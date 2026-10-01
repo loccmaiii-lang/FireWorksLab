@@ -24,7 +24,7 @@ def _find(d, name, part):
 
 def build(out, big, names, title=None, note=''):
     variants, texes, images = {}, {}, {}
-    wh_max = 0
+    wh_max = 0; dur = None
     for name in names:
         d = os.path.join(big, name)
         meta = json.load(open(os.path.join(d, f'{name}.json'), encoding='utf-8'))
@@ -48,6 +48,7 @@ def build(out, big, names, title=None, note=''):
         if ramp: images[name + '/' + ramp] = _enc(Image.open(os.path.join(d, ramp)))
         if cut: images[name + '/' + cut] = _enc(Image.open(os.path.join(d, cut)).resize((256, 256), Image.BOX))
         dur = meta['duration']
+    if not variants or dur is None: raise RuntimeError('分张（A/B…）母版不生成旧式 preview.js；在烘焙器条目里看引擎回放')
     ems = [{'name': part, 'index': str(i + 1).zfill(2), 'tex': tx, 'cutout': None, 'life': [dur, dur], 'bursts': [[0, 1]],
             'sphere': {'r': 0, 'vel': 0}, 'drag': 0, 'accel': [0, 0, 0], 'size': [1, 1], 'rot': False, 'seed': 1} for i, (part, tx) in enumerate(texes.items())]
     man = {'title': title or ' / '.join(names), 'duration': round(dur + 0.3, 2), 'view': round(wh_max * 1.08, 1), 'variants': variants, 'emitters': ems, 'note': note}
