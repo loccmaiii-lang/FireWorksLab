@@ -150,7 +150,7 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
             inner = c[pad:c.shape[0] - pad, pad:c.shape[1] - pad]
             b = np.concatenate([inner[:band].ravel(), inner[-band:].ravel(), inner[band:-band, :band].ravel(), inner[band:-band, -band:].ravel()])
             edge.append(float(b.sum() / tot)); sat.append(float((c >= 250 / 255).mean())); m = c > 0.08
-            if m.sum() < 400: last = None; continue       # 亮部太少（开头 / 末尾零星几颗）不算跳变
+            if m.sum() < 400 * (p.cw * p.chh) / 256 ** 2: last = None; continue       # 亮部太少（开头 / 末尾零星几颗，中心是噪声）不算跳变；400 像素是按 256 格定的，按格子面积换算
             ys, xs = np.nonzero(m); cen = (xs.mean(), ys.mean()); cens.append([f, round(cen[0] * 512 / p.cw, 1), round(cen[1] * 512 / p.chh, 1), int(m.sum())])
             if last is not None: jumps.append(float(np.hypot(cen[0] - last[0], cen[1] - last[1])) * 512 / p.cw); jf.append(f)
             last = cen
