@@ -1,0 +1,79 @@
+{
+ "id": "UI4",
+ "type": "ui",
+ "name": "4.0.3 界面外观截图（DF 配色、顶栏、左栏分组、新建配方、窄窗口）",
+ "priority": 12,
+ "note": "只截图，不改东西。前后对比：UI3 是改之前。",
+ "shots": [
+  {
+   "name": "1920_首页",
+   "sleep": 4000
+  },
+  {
+   "name": "1920_JM4-40_引擎回放",
+   "review": "JM4-40",
+   "view": "export",
+   "t": 1.0,
+   "sleep": 3000
+  },
+  {
+   "name": "1440_鸿巢HK10_引擎回放",
+   "viewport": [
+    1440,
+    900
+   ],
+   "review": "HK10",
+   "view": "export",
+   "t": 3.0,
+   "sleep": 4000
+  },
+  {
+   "name": "1440_鸿巢HK10_实时",
+   "view": "live",
+   "t": 3.0
+  },
+  {
+   "name": "1440_新建配方",
+   "js": "pkOpen()"
+  },
+  {
+   "name": "1440_关新建",
+   "js": "pkClose()",
+   "shot": false
+  },
+  {
+   "name": "1440_左栏下部_历史_工具",
+   "js": "lib.open.tools=true;lib.open.hist=true;renderLib();$('#libBody').scrollTop=1e5"
+  },
+  {
+   "name": "1440_菊模板_参数",
+   "type": "kiku",
+   "view": "live",
+   "t": 1.5,
+   "js": "lib.open.types=true;renderLib()"
+  },
+  {
+   "name": "1440_贴图流转",
+   "view": "atlas",
+   "flow": true,
+   "t": 1.0
+  },
+  {
+   "name": "1024_宽",
+   "viewport": [
+    1024,
+    768
+   ],
+   "review": "JM4-40",
+   "view": "export",
+   "t": 1.0
+  },
+  {
+   "name": "736_宽",
+   "viewport": [
+    736,
+    900
+   ]
+  }
+ ]
+}

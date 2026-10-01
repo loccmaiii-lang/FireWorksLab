@@ -3,7 +3,7 @@
 //  库：迭代区（tool/data/review.js，做完等你看的）/ 正式库（15_replica.js，确认过的）/ 组合 / 花型
 //  审阅：通过 / 要改 + 意见，存在这台电脑的浏览器里；「复制意见」贴给 Claude
 // =====================================================================
-const lib = { q: '', key: '', review: null, open: store.get('libOpen', { rv: true, rep: true, combo: false, types: true }) };
+const lib = { q: '', key: '', review: null, open: store.get('libOpen2', {}) };
 const ref2 = { on: store.get('refOn', true), off: 0 };
 
 async function setTab(tab, o = {}) {
@@ -150,86 +150,91 @@ function libItem(host, key, html, onClick, plain) {
   host.appendChild(d); return d;
 }
 function libGroup(host, id, title, count, hot, extra) {
-  const det = document.createElement('details'); det.className = 'lg'; det.open = lib.q ? true : lib.open[id];
-  det.innerHTML = `<summary>${title}<span class="n${hot ? ' hot' : ''}">${count}</span><span class="sp"></span>${extra || ''}</summary>`;
-  det.addEventListener('toggle', () => { if (!lib.q) { lib.open[id] = det.open; store.set('libOpen', lib.open); } });
+  const det = document.createElement('details'); det.className = 'lg lg-' + id; det.open = lib.q ? true : !!lib.open[id];
+  det.innerHTML = `<summary><span class="lt">${title}</span><span class="n${hot ? ' hot' : ''}">${count}</span><span class="sp"></span>${extra || ''}</summary>`;
+  det.addEventListener('toggle', () => { if (!lib.q) { lib.open[id] = det.open; store.set('libOpen2', lib.open); } });
   host.appendChild(det); return det;
 }
+// 左栏（2026-10-02 界面外观第 1 步，按用户的浏览器草稿）：上下分组、可折叠——待我验收 / 制作中 / 已通过 / 花型模板 / 历史 / 工具；
+// 56 px 缩略图、选中整圈青绿框；新建配方在最下面。lib.seg 仍可用（自动化脚本用 lib.seg='passed';renderLib() 打开某一组）。
+const LIB_OPEN_DEFAULT = { review: true, wip: true, passed: true, types: false, hist: false, tools: false };
 function renderLib() {
   const host = $('#libBody'); host.innerHTML = '';
-  const all = rvGet();
-  // 效果（用户 2026-09-30 14:46）：默认三个入口「待我验收 / 制作中 / 已通过」，历史另开；一个效果一个主条目
-  const segs = [['review', '待我验收'], ['wip', '制作中'], ['passed', '已通过'], ['hist', '历史']];
+  lib.open = { ...LIB_OPEN_DEFAULT, ...(lib.open || {}) };
   const effs = typeof FW_EFFECTS !== 'undefined' ? FW_EFFECTS : [];
   // 一个效果可以同时在两处：有「已通过版」就一直在「已通过」里（出了新候选也不会从已通过里消失——用户 2026-10-01 指出 JM4 出 4.0 候选后找不到了）；
   // 有「待验收版」就同时在「待我验收」里。
   const inSeg = (ef, k) => k === 'review' ? ef.阶段 === '待验收' && !!ef.待验收版
     : k === 'passed' ? (ef.阶段 === '已通过' || !!ef.已通过版)
     : !(ef.阶段 === '待验收' && ef.待验收版) && !(ef.阶段 === '已通过' || ef.已通过版);
-  const cnt = k => k === 'hist' ? FW_REVIEW_LIST.filter(e => e.superseded).length : effs.filter(ef => inSeg(ef, k)).length;
-  if (!lib.seg) lib.seg = store.get('libSeg', '') || (cnt('review') ? 'review' : 'wip');
-  const bar = document.createElement('div'); bar.className = 'segs'; bar.setAttribute('role', 'tablist');
-  bar.innerHTML = segs.map(([k, t]) => `<button type="button" role="tab" data-seg="${k}" aria-selected="${lib.seg === k}">${t}<span class="n${k === 'review' && effNewCount() ? ' hot' : ''}">${cnt(k)}</span></button>`).join('');
-  bar.querySelectorAll('button').forEach(b => b.addEventListener('click', () => { lib.seg = b.dataset.seg; store.set('libSeg', lib.seg); renderLib(); }));
-  host.appendChild(bar);
-  const box = document.createElement('div'); box.className = 'segbody'; host.appendChild(box);
-  const copy = document.createElement('p'); copy.className = 'lsub segtool';
-  copy.innerHTML = '<button class="mini" id="rvCopy" type="button" title="把通过 / 要改和意见复制下来，贴到对话里">复制我的意见</button>';
-  copy.querySelector('#rvCopy').addEventListener('click', rvCopy);
-  if (lib.seg !== 'hist') {
-    const list = effs.filter(ef => inSeg(ef, lib.seg) && libMatch(ef.名, ef.key, ef.主条目 || '', ef.说明 || ''));
+  if (lib.seg) { lib.open[lib.seg] = true; lib.seg = ''; }      // 指定的那一组展开（旧的「分栏」入口）
+  const thumbOf = ef => {
+    const me = effMainEntry(ef), fm = (ef.主条目 || '').startsWith('rep:') ? REPLICA_BY_ID[ef.主条目.slice(4)] : null;
+    return ef.thumb ? `<span class="th"><i style="background-image:url(${ef.thumb})"></i></span>` : fm ? thumbHTML({ ...fm, key: 'rep:' + fm.id }) : me ? thumbHTML(me) : '<span class="th"></span>';
+  };
+  const effRow = (g, ef) => {
+    const badge = effBadge(ef) + stdBadge(ef.待验收版 || ef.主条目);
+    const it = libItem(g, 'ef:' + ef.key, thumbOf(ef) + `<span class="tx"><b>${ef.名}</b><small>${ef.阶段 === '未开始' ? (ef.说明 || '未开始') : effSubline(ef)}</small><span class="bds">${badge}</span></span>`, () => openEffect(ef));
+    if (ef.阶段 === '未开始') it.classList.add('dimmed');
+  };
+  const EMPTY = { review: '现在没有等你验收的效果。AI 自检、导出回放、标准检查都过了的完整候选才会出现在这里。', wip: '没有制作中的效果', passed: '还没有通过的效果' };
+  for (const [k, t] of [['review', '待我验收'], ['wip', '制作中'], ['passed', '已通过']]) {
+    const list = effs.filter(ef => inSeg(ef, k) && libMatch(ef.名, ef.key, ef.主条目 || '', ef.说明 || '', ef.待验收版 || '', ef.已通过版 || ''));
     list.sort((x, y) => (x.阶段 === '未开始') - (y.阶段 === '未开始'));
-    if (!list.length) box.insertAdjacentHTML('beforeend', `<p class="lsub">${{ review: '现在没有等你验收的效果。AI 自检、导出回放都过了的完整候选才会出现在这里。', wip: '没有制作中的效果', passed: '还没有通过的效果' }[lib.seg]}</p>`);
-    for (const ef of list) {
-      const me = effMainEntry(ef), badge = effBadge(ef) + stdBadge(ef.待验收版 || ef.主条目);
-      const sub = effSubline(ef);
-      const fm = (ef.主条目 || '').startsWith('rep:') ? REPLICA_BY_ID[ef.主条目.slice(4)] : null;
-      const th = ef.thumb ? `<span class="th"><i style="background-image:url(${ef.thumb})"></i></span>` : fm ? thumbHTML({ ...fm, key: 'rep:' + fm.id }) : me ? thumbHTML(me) : '<span class="th"></span>';
-      const it = libItem(box, 'ef:' + ef.key, th + `<span class="tx"><b>${ef.名}</b><small>${ef.阶段 === '未开始' ? (ef.说明 || '未开始') : sub}</small></span>` + badge, () => openEffect(ef));
-      if (ef.阶段 === '未开始') it.classList.add('dimmed');
+    const formal = k === 'passed' ? REPLICAS.filter(r => !r.fromReview && libMatch(r.id, r.name, r.tags || '', r.note || '')) : [];
+    if (lib.q && !list.length && !formal.length) continue;
+    const g = libGroup(host, k, t, list.length, k === 'review' && effNewCount() > 0);
+    if (!list.length) g.insertAdjacentHTML('beforeend', `<p class="lsub">${EMPTY[k]}</p>`);
+    for (const ef of list) effRow(g, ef);
+    if (formal.length) {
+      const d = document.createElement('details'); d.className = 'histgrp'; d.open = !!lib.q || !!lib.open.formal;
+      d.innerHTML = `<summary class="lsub">正式库 · ${formal.length} 条（全部条目）</summary>`;
+      d.addEventListener('toggle', () => { if (!lib.q) { lib.open.formal = d.open; store.set('libOpen2', lib.open); } });
+      g.appendChild(d);
+      for (const r of formal) libItem(d, 'rep:' + r.id, thumbHTML({ ...r, key: 'rep:' + r.id }) + `<span class="tx"><b>${r.name}</b><small>${r.task || r.id} · 正式库</small></span>`, () => openFormal(r));
     }
-    if (lib.seg === 'passed') {
-      const formal = REPLICAS.filter(r => !r.fromReview && libMatch(r.id, r.name, r.tags || '', r.note || ''));
-      if (formal.length) box.insertAdjacentHTML('beforeend', '<p class="lsub">正式库（全部条目）</p>');
-      for (const r of formal) libItem(box, 'rep:' + r.id, thumbHTML({ ...r, key: 'rep:' + r.id }) + `<span class="tx"><b>${r.name}</b><small>${r.task || r.id} · 正式库</small></span>`, () => openFormal(r));
+  }
+  // 花型模板（从头调 / 新建配方的起点）
+  const types = []; for (const [gname, ts] of TYPE_GROUPS) for (const t of ts) { const m = TYPE_META[t] || ['', '']; if (libMatch(TYPE_NAMES[t], TYPE_EN[t], m[0], m[1], gname)) types.push([gname, t, m]); }
+  if (types.length || !lib.q) {
+    const g4 = libGroup(host, 'types', '花型模板', types.length);
+    let last = '', grid = null;
+    for (const [gname, t, m] of types) {
+      if (gname !== last) { g4.insertAdjacentHTML('beforeend', `<p class="lsub">${gname}</p>`); grid = document.createElement('div'); grid.className = 'tiles'; g4.appendChild(grid); last = gname; }
+      const k = 'type:' + t, d = document.createElement('button'); d.type = 'button'; d.className = 'tile' + (k === lib.key ? ' cur' : ''); d.dataset.key = k; d.title = `${TYPE_NAMES[t]}：${m[0]}`;
+      d.innerHTML = `<span class="im" style="${typeThumbStyle(t)}"></span><span class="nm">${TYPE_NAMES[t]}</span>`;
+      d.addEventListener('click', () => openType(t)); grid.appendChild(d);
     }
-  } else {
-    // 历史：各效果被否决 / 被取代的版本（保留参数、对照和你的反馈），和不属于任何效果的内部试验
-    const old = FW_REVIEW_LIST.filter(e => e.superseded && !e.hidden && libMatch(e.id, e.name, e.tags || ''));
+  }
+  // 历史：各效果被否决 / 被取代的版本（保留参数、对照和你的反馈），按效果折叠（用户 2026-10-01：过程版本太多、堆在一起）
+  const old = FW_REVIEW_LIST.filter(e => e.superseded && !e.hidden && libMatch(e.id, e.name, e.tags || ''));
+  if (old.length || !lib.q) {
+    const gh = libGroup(host, 'hist', '历史', FW_REVIEW_LIST.filter(e => e.superseded && !e.hidden).length);
     const groups = new Map();
     for (const e of old) { const ef = effectOfEntry(e); const k = ef ? ef.名 : '内部试验 / 其他'; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(e); }
-    if (!old.length) box.insertAdjacentHTML('beforeend', '<p class="lsub">没有历史版本</p>');
-    // 按效果折叠（用户 2026-10-01：过程版本太多、堆在一起）：默认收起，只显示「效果名 · N 个旧版本」；搜索时全部展开
+    if (!old.length) gh.insertAdjacentHTML('beforeend', '<p class="lsub">没有历史版本</p>');
     for (const [k, arr] of groups) {
       const det = document.createElement('details'); det.className = 'histgrp'; det.open = !!lib.q || !!(lib.histOpen && lib.histOpen[k]);
       det.innerHTML = `<summary class="lsub">${k} · ${arr.length} 个旧版本</summary>`;
       det.addEventListener('toggle', () => { if (!lib.q) { lib.histOpen = lib.histOpen || {}; lib.histOpen[k] = det.open; } });
-      box.appendChild(det);
+      gh.appendChild(det);
       for (const e of arr) {
         const h = effHistOf(e), verdict = h ? h.结论 : '被取代';
-        libItem(det, 'rv:' + e.id, thumbHTML(e) + `<span class="tx"><b>${e.name}</b><small>${e.id} · ${verdict}${h && h.反馈 ? ' · ' + h.反馈 : ''}</small></span><span class="badge">${verdict}</span>`, () => openReview(e));
+        libItem(det, 'rv:' + e.id, thumbHTML(e) + `<span class="tx"><b>${e.name}</b><small>${e.id}${h && h.反馈 ? ' · ' + h.反馈 : ''}</small><span class="bds"><span class="badge">${verdict}</span></span></span>`, () => openReview(e));
       }
     }
   }
-  box.appendChild(copy);
-  // 组合
-  if (libMatch('组合 芯 八重芯 三重芯 叠加')) {
-    const g3 = libGroup(host, 'combo', '工具 · 组合编辑器', 1);
-    libItem(g3, 'combo', `<span class="tx"><b>组合编辑器</b><small>一个菊 + 几层缩小的牡丹 = 八重芯 / 三重芯</small></span>`, () => { setQueuedView(false); lib.key = 'combo'; setReview(null); setTab('combo'); renderLib(); crumb('组合', '组合编辑器'); }, true);
-  }
-  // 花型（基础）
-  const types = []; for (const [gname, ts] of TYPE_GROUPS) for (const t of ts) { const m = TYPE_META[t] || ['', '']; if (libMatch(TYPE_NAMES[t], TYPE_EN[t], m[0], m[1], gname)) types.push([gname, t, m]); }
-  const g4 = libGroup(host, 'types', '工具 · 花型（从头调）', types.length);
-  let last = '', grid = null;
-  for (const [gname, t, m] of types) {
-    if (gname !== last) { g4.insertAdjacentHTML('beforeend', `<p class="lsub">${gname}</p>`); grid = document.createElement('div'); grid.className = 'tiles'; g4.appendChild(grid); last = gname; }
-    const k = 'type:' + t, d = document.createElement('button'); d.type = 'button'; d.className = 'tile' + (k === lib.key ? ' cur' : ''); d.dataset.key = k; d.title = `${TYPE_NAMES[t]}：${m[0]}`;
-    d.innerHTML = `<span class="im" style="${typeThumbStyle(t)}"></span><span class="nm">${TYPE_NAMES[t]}</span>`;
-    d.addEventListener('click', () => openType(t)); grid.appendChild(d);
-  }
+  // 工具：组合编辑器、云端配方预览、4.0 对照橱窗、打开结果文件夹（按钮本体留在页面里，事件照旧）
+  const tools = [
+    ['combo', '组合编辑器', '一个菊 + 几层缩小的牡丹 = 八重芯 / 三重芯', () => { setQueuedView(false); lib.key = 'combo'; setReview(null); setTab('combo'); renderLib(); crumb('工具', '组合编辑器'); }],
+    ['tool:cloud', $('#cloudRecipesOpen').textContent, '云端配好的多层配方，本机烘焙后看', () => $('#cloudRecipesOpen').click()],
+    ['tool:showcase', '4.0 对照橱窗', '3.7 / 4.0 同一秒对照（新旧渲染的唯一入口）', () => $('#showcaseOpen').click()],
+    ['tool:dir', '打开结果文件夹…', '临时看某个导出结果（贴图按引擎方式播放）', () => $('#assetOpen2').click()],
+  ].filter(([, a, b]) => libMatch(a, b, '工具 组合 芯 八重芯 三重芯 叠加'));
+  if (tools.length) { const gt = libGroup(host, 'tools', '工具', tools.length); for (const [k, a, b, fn] of tools) libItem(gt, k, `<span class="tx"><b>${a}</b><small>${b}</small></span>`, fn, true); }
 }
 function libReveal() {
-  lib.open.types = true; store.set('libOpen', lib.open); setPanels({ side: true }); renderLib();
+  lib.open.types = true; store.set('libOpen2', lib.open); setPanels({ side: true }); renderLib();
   const el = document.querySelector('#libBody .tile.cur') || document.querySelector('#libBody .tiles');
   if (el) el.scrollIntoView({ block: 'center', behavior: 'smooth' });
 }
@@ -381,16 +386,16 @@ function toggleFocus() {
 }
 function initPanels() {
   const root = document.documentElement;
-  root.style.setProperty('--sideW', store.get('sideW', 268) + 'px'); root.style.setProperty('--rightW', store.get('rightW', 390) + 'px');
+  root.style.setProperty('--sideW', store.get('sideW', 232) + 'px'); root.style.setProperty('--rightW', store.get('rightW', 340) + 'px');
   const drag = (el, fn) => el.addEventListener('pointerdown', e0 => {
     e0.preventDefault(); el.setPointerCapture(e0.pointerId); el.classList.add('drag'); document.body.classList.add('dragging');
     const mv = e => fn(e.clientX), up = () => { el.classList.remove('drag'); document.body.classList.remove('dragging'); el.removeEventListener('pointermove', mv); el.removeEventListener('pointerup', up); };
     el.addEventListener('pointermove', mv); el.addEventListener('pointerup', up);
   });
-  drag($('#gutL'), x => { const lim = window.innerWidth - (panels.right ? $('#right').offsetWidth : 0) - 420, w = Math.round(Math.max(210, Math.min(460, lim, x))); root.style.setProperty('--sideW', w + 'px'); store.set('sideW', w); });
-  drag($('#gutR'), x => { const lim = window.innerWidth - (panels.side ? $('#side').offsetWidth : 0) - 420, w = Math.round(Math.max(330, Math.min(700, lim, window.innerWidth - x))); root.style.setProperty('--rightW', w + 'px'); store.set('rightW', w); });
-  $('#gutL').addEventListener('dblclick', () => { root.style.setProperty('--sideW', '268px'); store.set('sideW', 268); });
-  $('#gutR').addEventListener('dblclick', () => { root.style.setProperty('--rightW', '390px'); store.set('rightW', 390); });
+  drag($('#gutL'), x => { const lim = window.innerWidth - (panels.right ? $('#right').offsetWidth : 0) - 420, w = Math.round(Math.max(200, Math.min(460, lim, x))); root.style.setProperty('--sideW', w + 'px'); store.set('sideW', w); });
+  drag($('#gutR'), x => { const lim = window.innerWidth - (panels.side ? $('#side').offsetWidth : 0) - 420, w = Math.round(Math.max(300, Math.min(700, lim, window.innerWidth - x))); root.style.setProperty('--rightW', w + 'px'); store.set('rightW', w); });
+  $('#gutL').addEventListener('dblclick', () => { root.style.setProperty('--sideW', '232px'); store.set('sideW', 232); });
+  $('#gutR').addEventListener('dblclick', () => { root.style.setProperty('--rightW', '340px'); store.set('rightW', 340); });
   $('#btnSide').addEventListener('click', () => setPanels({ side: !panels.side }));
   $('#btnRight').addEventListener('click', () => setPanels({ right: !panels.right }));
   $('#btnFocus').addEventListener('click', toggleFocus);
@@ -409,7 +414,7 @@ function initPanels() {
     else if (k === 'p') { e.preventDefault(); setPanels({ right: !panels.right }); }
     else if (k === 'escape' && !panels.side && !panels.right && $('#updDlg').hidden && $('#picker').hidden) toggleFocus();
     else if ((k === 'arrowdown' || k === 'arrowup') && /^(ef|rv|rep):/.test(lib.key)) {   // ↑ ↓ 在左栏条目之间切换
-      const items = [...document.querySelectorAll('#libBody .segbody .li')], i = items.findIndex(x => x.dataset.key === lib.key), j = i + (k === 'arrowdown' ? 1 : -1);
+      const items = [...document.querySelectorAll('#libBody .li')].filter(x => /^(ef|rv|rep):/.test(x.dataset.key) && x.offsetParent), i = items.findIndex(x => x.dataset.key === lib.key), j = i + (k === 'arrowdown' ? 1 : -1);
       if (items[j]) { e.preventDefault(); items[j].click(); items[j].scrollIntoView({ block: 'nearest' }); }
     }
   });
@@ -420,6 +425,9 @@ function initLibrary() {
   $('#libSearch').addEventListener('keydown', e => { if (e.key === 'Escape') { e.target.value = ''; lib.q = ''; renderLib(); e.target.blur(); } });
   for (const b of $('#ptabs').children) b.addEventListener('click', () => setTab(b.dataset.tab));
   $('#refVid').addEventListener('loadedmetadata', layoutRef);
+  $('#rvCopy').addEventListener('click', rvCopy);
+  $('#newRecipe').addEventListener('click', () => pkOpen());       // 新建配方 = 从花型库挑一个模板开始（可编辑的实时模拟）
+  const ro = new ResizeObserver(() => document.documentElement.style.setProperty('--topH', $('#main').offsetTop + 'px')); ro.observe($('#viewbar')); ro.observe(document.querySelector('header.top'));
   initPanels();
   // 打开时：有没看过的迭代区条目就先打开最新的一条；否则回到上次看的
   // 打开时：有「新」的待验收候选就先打开它；否则回到上次看的

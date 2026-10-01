@@ -8,7 +8,7 @@ for (const [g, types] of TYPE_GROUPS) {
 if (REPLICAS.length) { const og = document.createElement('optgroup'); og.label = '实拍复刻';
   for (const r of REPLICAS) og.appendChild(new Option(r.name, 'rep:' + r.id));
   $('#type').appendChild(og); }
-$('#verLabel').textContent = 'v' + VERSION + ' · 通道打包序列帧';
+$('#verLabel').textContent = '烟花烘焙器 v' + VERSION;
 document.title = '烟花母版烘焙器 · v' + VERSION;
 $('#type').addEventListener('change', e => setType(e.target.value));
 $('#mname').addEventListener('input', e => state.name = e.target.value);
@@ -24,7 +24,7 @@ $('#x-zoom').addEventListener('change', e => { state.P.zoom = e.target.value; on
 $('#x-engine').addEventListener('change', e => { state.P.engine = e.target.value; onParam(); });
 $('#x-flip').addEventListener('change', e => { state.P.unitFlip = e.target.checked ? 1 : 0; onParam(); });
 $('#x-autogrid').addEventListener('change', e => { state.P.autoGrid = e.target.checked ? 1 : 0; onParam(); });
-$('#expo').addEventListener('input', e => state.expo = +e.target.value);
+$('#expo').addEventListener('input', e => { state.expo = +e.target.value; const o = $('#expoOut'); o.textContent = (+state.expo.toFixed(2)) + '×'; o.classList.toggle('off', Math.abs(state.expo - 1) > 1e-3); });
 $('#exportResolution').addEventListener('change', e => state.exportResolution = e.target.checked);
 $('#suggestExposure').addEventListener('click', suggestExposure40);
 const segBtns = (id, fn) => $(id).addEventListener('click', e => {
@@ -86,7 +86,9 @@ $('#btnExportCombo').addEventListener('click', exportCombo);
   try { const ext = gl.getExtension('WEBGL_debug_renderer_info'); name = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER); } catch (e) { }
   const soft = /swiftshader|llvmpipe|software|basic render/i.test(name || '');
   const el = $('#gpu'); el.className = 'gpu' + (soft ? ' bad' : '');
-  el.textContent = soft ? '当前是软件渲染，没有用到显卡' : ('显卡：' + (name || '未知').replace(/^ANGLE \((.*)\)$/, '$1'));
+  // 只显示型号（ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x…) Direct3D11 …, D3D11) → GeForce RTX 5080），完整字符串在悬停提示里
+  const model = (name || '').replace(/^ANGLE \((.*)\)$/, '$1').split(',').map(x => x.trim()).find(x => /geforce|radeon|rtx|gtx|arc|iris|uhd|apple|mali|adreno/i.test(x)) || (name || '未知');
+  el.textContent = soft ? '软件渲染（没有用到显卡）' : '显卡 · ' + model.replace(/\s*\(0x[0-9a-f]+\)/i, '').replace(/\s*(Direct3D|vs_|ps_|OpenGL|Metal).*$/i, '').replace(/^NVIDIA\s+|^AMD\s+/i, '').trim();
   el.title = name;
 })();
 initPicker();

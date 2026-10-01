@@ -2,7 +2,7 @@
 
 用法：python3 analysis/scripts/界面冒烟.py [--out 目录] [--full]
   默认把每次烘焙降成小规格（1024 贴图、≤40 颗星、火花 ×0.2），云端软件渲染几分钟跑完；--full 用原参数（本机显卡用）。
-  走的路径：花型库模板（菊 / 柳 / 点灭）、待验收条目（JM4-40）、多层效果（鸿巢）、尾缀（V5）、左栏四个分栏；
+  走的路径：花型库模板（菊 / 柳 / 点灭）、待验收条目（JM4-40）、多层效果（鸿巢）、尾缀（V5）、左栏各分组、新建配方；
   每处切 实时模拟 / 引擎回放 / 贴图 / 流转动画。
 输出：<out>/冒烟.json（每步的报错、横幅文字、HUD）+ 每步截图；有报错时退出码 1。
 2026-10-01 加：4.0.2 的统计行读了空的 budget.fps，烘焙结果出不来，离线检查没发现——这类错误只有在页面里才看得到。
@@ -23,6 +23,8 @@ STEPS = [
     ('左栏_制作中', "lib.seg='wip';renderLib()", None),
     ('左栏_已通过', "lib.seg='passed';renderLib()", None),
     ('左栏_历史', "lib.seg='hist';renderLib()", None),
+    ('新建配方', "pkOpen()", None),
+    ('左栏_工具', "pkClose();lib.open.tools=true;renderLib()", None),
     ('模板_菊', "setType('kiku')", 'views'),
     ('模板_柳', "setType('yanagi')", 'views'),
     ('模板_点灭', "setType('strobe')", 'views'),

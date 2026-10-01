@@ -7,6 +7,7 @@
   {"name": "...", "js": "<表达式>"}                    执行一段 JS（例：lib.seg='passed';renderLib()），再等烘焙器空闲
   {"name": "...", "review": "<条目号>"}                打开迭代区 / 待验收条目
   {"name": "...", "type": "<花型>"}                    花型库模板（setType）
+  {"name": "...", "viewport": [1440, 900]}             换窗口大小（之后的步骤都用这个大小）
   {"name": "...", "view": "live|export|atlas", "flow": true|false, "t": 1.2}   切视图 / 流转 / 时间
   {"name": "...", "seq": [0, 1.0, 2], "view": "atlas", "flow": true}            连续帧：从 0 到 1.0 s，每 2 个 tick 截一次画布，拼成一张
 输出：analysis/results/<id>/<序号>_<name>.jpg（整页 1920×1080）、seq 拼图、ui.json（每步的 HUD 文字和状态）
@@ -32,6 +33,7 @@ def run(job, s, out, log=print):
         pg.evaluate("(() => { const fresh = EFFS().find(effIsNew); if (fresh) { lib.seg = 'review'; renderLib(); openEffect(fresh); } })()")
         for i, st in enumerate(job['shots']):
             t0 = time.time(); name = st.get('name', f'步骤{i + 1}')
+            if st.get('viewport'): w, h = st['viewport']; pg.set_viewport_size({'width': w, 'height': h}); pg.wait_for_timeout(800)
             if st.get('review'): pg.evaluate(f"openReview(FW_REVIEW_LIST.find(e => e.id === {json.dumps(st['review'])}))")
             if st.get('effect'): pg.evaluate(f"openEffect(EFFS().find(e => e.key === {json.dumps(st['effect'])}))")
             if st.get('type'): pg.evaluate(f"setType({json.dumps(st['type'])})")

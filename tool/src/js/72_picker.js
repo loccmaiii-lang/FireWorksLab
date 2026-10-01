@@ -64,7 +64,7 @@ function pkRender() {
     c.innerHTML = th + `<div class="bd"><span class="nm">${it.name}</span><span class="ds">${it.desc || ''}</span><span class="tg">${it.tags.map(t => `<span>${t}</span>`).join('')}</span></div>` +
       (it.rep ? `<span class="st">${it.rep.status || '待你确认'}</span>` : '') + `<button class="fav" type="button" aria-label="收藏" aria-pressed="${pk.fav.has(it.key)}">★</button>`;
     c.querySelector('.fav').addEventListener('click', e => { e.stopPropagation(); pk.fav.has(it.key) ? pk.fav.delete(it.key) : pk.fav.add(it.key); store.set('fav', [...pk.fav]); pkRender(); });
-    const pick = () => { pkClose(); pk.recent = [it.key, ...pk.recent.filter(k => k !== it.key)].slice(0, 12); store.set('recent', pk.recent); setType(it.key); };
+    const pick = () => { pkClose(); pk.recent = [it.key, ...pk.recent.filter(k => k !== it.key)].slice(0, 12); store.set('recent', pk.recent); if (String(it.key).startsWith('rep:')) setType(it.key); else openType(it.key); };
     c.addEventListener('click', pick); c.addEventListener('keydown', e => { if (e.key === 'Enter') pick(); });
     grid.appendChild(c);
   }

@@ -84,8 +84,8 @@ await check('F1: failure stops; retained bake and persistent error survive all v
   assert.equal(f.run('state.dirty'), false);
   assert.equal(f.elements.get('#bakeError').hidden, true);
 });
-await check('render version: default remains 37; explicit development preview is 40; formal/V5 stay 37', async f => {
-  assert.equal(f.run("defaultsFor('kiku').P.renderVer"), 37);
+await check('render version: new templates default to 40 (4.0, DEFAULT_RENDER_VER); explicit 40 is 40; formal/V5 stay 37', async f => {
+  assert.equal(f.run("defaultsFor('kiku').P.renderVer"), 40);
   assert.equal(f.run("defaultsFor('kiku',40).P.renderVer"), 40);
   for (const type of ['trailS', 'trailM', 'trailL']) assert.equal(f.run(`defaultsFor('${type}').P.renderVer`), 37);
   for (const id of ['JM4', 'TR2S', 'TR2M', 'TR2L']) assert.equal(f.run(`replicaPM('${id}').P.renderVer`), 37, id);
