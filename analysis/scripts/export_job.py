@@ -76,8 +76,11 @@ def run(job, s, out, log=print):
         for d in dirs:
             n = len(json.load(open(os.path.join(d, 'cascade.json'), encoding='utf-8'))['emitters'])
             packs.append([rc.Pack(d, i) for i in range(n)])
-        if all(len(pp) == 1 for pp in packs):
-            r = rc.check([pp[0] for pp in packs], os.path.join(out, '回放检查.jpg'), job.get('_delays') if len(packs) > 1 else None, ref=job.get('_ref'), times_s=job.get('check_times_s'))
+        trail = any(json.load(open(os.path.join(d, 'cascade.json'), encoding='utf-8')).get('source', {}).get('form') == 'trail' for d in dirs)
+        if all(len(pp) == 1 for pp in packs) or not trail:     # 4.0 分张母版：几个发射器按 delay_s 接成一条时间线，一起看
+            flat = [p for pp in packs for p in pp]
+            dl = [dd for pp, dd in zip(packs, job.get('_delays') or [0] * len(packs)) for _ in pp] if len(packs) > 1 else None
+            r = rc.check(flat, os.path.join(out, '回放检查.jpg'), dl, ref=job.get('_ref'), times_s=job.get('check_times_s'))
         else:   # 尾缀这类一个包里几个发射器（上升循环、消散）：各自一张
             r = [rc.check([p], os.path.join(out, f'回放检查_{i + 1}_{j + 1}.jpg'), None) for i, pp in enumerate(packs) for j, p in enumerate(pp)]
         json.dump(r, open(os.path.join(out, '回放检查.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
