@@ -1,0 +1,9 @@
+{
+ "id": "JM4-40E",
+ "type": "export",
+ "effect": "jinmangju",
+ "entry": "JM4-40",
+ "name": "JinMangJu40",
+ "priority": 8,
+ "note": "金芒菊 4.0 候选（JM4 参数 + 4.0 渲染，全程 30 fps，单格 512，自动分张）素材包 PC + 手机，带回放检查（4.0 起有及格线和 pass）和烘焙器同一秒对照。目录用 JinMangJu40，不覆盖正式库 JM4 的 JinMangJu。"
+}
