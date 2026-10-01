@@ -5945,8 +5945,12 @@ function renderLib() {
   // 效果（用户 2026-09-30 14:46）：默认三个入口「待我验收 / 制作中 / 已通过」，历史另开；一个效果一个主条目
   const segs = [['review', '待我验收'], ['wip', '制作中'], ['passed', '已通过'], ['hist', '历史']];
   const effs = typeof FW_EFFECTS !== 'undefined' ? FW_EFFECTS : [];
-  const segOf = ef => ({ '待验收': 'review', '已通过': 'passed' })[ef.阶段] || 'wip';
-  const cnt = k => k === 'hist' ? FW_REVIEW_LIST.filter(e => e.superseded).length : effs.filter(ef => segOf(ef) === k).length;
+  // 一个效果可以同时在两处：有「已通过版」就一直在「已通过」里（出了新候选也不会从已通过里消失——用户 2026-10-01 指出 JM4 出 4.0 候选后找不到了）；
+  // 有「待验收版」就同时在「待我验收」里。
+  const inSeg = (ef, k) => k === 'review' ? ef.阶段 === '待验收' && !!ef.待验收版
+    : k === 'passed' ? (ef.阶段 === '已通过' || !!ef.已通过版)
+    : !(ef.阶段 === '待验收' && ef.待验收版) && !(ef.阶段 === '已通过' || ef.已通过版);
+  const cnt = k => k === 'hist' ? FW_REVIEW_LIST.filter(e => e.superseded).length : effs.filter(ef => inSeg(ef, k)).length;
   if (!lib.seg) lib.seg = store.get('libSeg', '') || (cnt('review') ? 'review' : 'wip');
   const bar = document.createElement('div'); bar.className = 'segs'; bar.setAttribute('role', 'tablist');
   bar.innerHTML = segs.map(([k, t]) => `<button type="button" role="tab" data-seg="${k}" aria-selected="${lib.seg === k}">${t}<span class="n${k === 'review' && effNewCount() ? ' hot' : ''}">${cnt(k)}</span></button>`).join('');
@@ -5957,7 +5961,7 @@ function renderLib() {
   copy.innerHTML = '<button class="mini" id="rvCopy" type="button" title="把通过 / 要改和意见复制下来，贴到对话里">复制我的意见</button>';
   copy.querySelector('#rvCopy').addEventListener('click', rvCopy);
   if (lib.seg !== 'hist') {
-    const list = effs.filter(ef => segOf(ef) === lib.seg && libMatch(ef.名, ef.key, ef.主条目 || '', ef.说明 || ''));
+    const list = effs.filter(ef => inSeg(ef, lib.seg) && libMatch(ef.名, ef.key, ef.主条目 || '', ef.说明 || ''));
     list.sort((x, y) => (x.阶段 === '未开始') - (y.阶段 === '未开始'));
     if (!list.length) box.insertAdjacentHTML('beforeend', `<p class="lsub">${{ review: '现在没有等你验收的效果。AI 自检、导出回放都过了的完整候选才会出现在这里。', wip: '没有制作中的效果', passed: '还没有通过的效果' }[lib.seg]}</p>`);
     for (const ef of list) {

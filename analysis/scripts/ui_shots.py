@@ -19,12 +19,17 @@ TOOL = 'file:///' + os.path.abspath(os.path.join(HERE, '..', '..', 'tool', 'Fire
 
 
 def run(job, s, out, log=print):
-    pg = s.br.new_page(viewport={'width': 1920, 'height': 1080})
+    # 用会话自己的页面（只开一个 WebGL 上下文）；带 ?fast 打开，首页那一步再按用户打开时的逻辑手动打开「新」的效果
+    pg = s.pg; pg.set_viewport_size({'width': 1920, 'height': 1080})
     rec = []
+    idle = "window.__fw && window.__fw.idle && window.__fw.idle()"
+    def wait_idle(limit=240000):
+        try: pg.wait_for_function(idle, timeout=limit)
+        except Exception as e: log(f'等烘焙器空闲超时（{limit // 1000} 秒），照常截图：{str(e).splitlines()[0]}')
     try:
-        pg.goto(TOOL, timeout=0)
-        idle = "window.__fw && window.__fw.idle && window.__fw.idle()"
-        pg.wait_for_function(idle, timeout=0); pg.wait_for_timeout(2500)
+        pg.goto(TOOL + '?fast', timeout=0)
+        wait_idle(); pg.wait_for_timeout(2500)
+        pg.evaluate("(() => { const fresh = EFFS().find(effIsNew); if (fresh) { lib.seg = 'review'; renderLib(); openEffect(fresh); } })()")
         for i, st in enumerate(job['shots']):
             t0 = time.time(); name = st.get('name', f'步骤{i + 1}')
             if st.get('review'): pg.evaluate(f"openReview(FW_REVIEW_LIST.find(e => e.id === {json.dumps(st['review'])}))")
@@ -33,7 +38,7 @@ def run(job, s, out, log=print):
             if st.get('js'): pg.evaluate(st['js'])
             if st.get('view'): pg.click(f"#viewSeg button[data-view='{st['view']}']")
             if 'flow' in st: pg.click(f"#flowSeg button[data-flow='{1 if st['flow'] else 0}']")
-            pg.wait_for_function(idle, timeout=0); pg.wait_for_timeout(st.get('sleep', 1500))
+            wait_idle(); pg.wait_for_timeout(st.get('sleep', 1500))
             if st.get('seq'):
                 a, b, step = st['seq']; ims = []
                 k = int(round(a * 30))
@@ -53,4 +58,5 @@ def run(job, s, out, log=print):
             rec.append(dict(name=name, seconds=round(time.time() - t0, 1), **info)); log(f'界面截图 {i + 1}：{name}（{time.time() - t0:.0f} 秒）')
     finally:
         json.dump(rec, open(os.path.join(out, 'ui.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-        pg.close()
+        try: pg.set_viewport_size({'width': 1200, 'height': 900})
+        except Exception: pass
