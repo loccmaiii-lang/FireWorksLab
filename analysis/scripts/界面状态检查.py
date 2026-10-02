@@ -12,6 +12,7 @@
   A4 改完一层马上切到别的层：这一层的重烘不丢（贴图和参数一致）
   A5 切到别的效果：没保存的改动自动存成草稿，回来能选
   A6 切走再回来：带改动的状态不能被当成 AI 版基准（要么回到 AI 版，要么亮「参数已变」）
+  L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -175,6 +176,62 @@ async def a6(pg):
     return ok, json.dumps({'AI 版 burn': ai, **r}, ensure_ascii=False)
 
 
+PULSE_JS = r"""(c) => { // 和 回放检查.py zoom_pulse 同一口径：同一帧停着的几个 tick 里 Size By Life 的变化（%）
+  const cv = (d, u) => { if ('const' in d) return d.const; const k = d.curve; if (u <= k[0][0]) return k[0][1]; for (let i = 1; i < k.length; i++) if (u <= k[i][0]) { const a = (u - k[i-1][0]) / Math.max(1e-9, k[i][0] - k[i-1][0]), x = k[i-1][1], y = k[i][1]; return Array.isArray(x) ? x.map((v, j) => v + (y[j] - v) * a) : x + (y - x) * a; } return k[k.length-1][1]; };
+  let worst = 0;
+  for (const e of c.emitters) { const mods = {}; for (const m of e.modules) if (!m.preRoll) mods[m.m] = m; const sb = mods.SizeByLife, dp = mods.DynamicParameter; if (!sb || !dp) continue;
+    const life = mods.Lifetime ? cv(mods.Lifetime.Lifetime, 0) : e.required.duration_s, n = Math.max(1, Math.floor(life * 30 + 1e-6)); let i = 0;
+    const fr = [], sz = []; for (let t = 0; t < n; t++) { const u = Math.min(1, (t + .5) / 30 / life); fr.push(Math.floor(cv(dp.params.frame, u))); const v = cv(sb.LifeMultiplier, u); sz.push(Math.max(v[0], v[1])); }
+    while (i < n) { let j = i; while (j + 1 < n && fr[j + 1] === fr[i]) j++; if (j > i) { const seg = sz.slice(i, j + 1); worst = Math.max(worst, (Math.max(...seg) / Math.min(...seg) - 1) * 100); } i = j + 1; } }
+  return +worst.toFixed(3); }"""
+
+
+async def l1(p, b):
+    """HN2 闭环（用户 23:34：修完 A1–A6 用 HN2 走一遍）：改一层后立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机。
+    只在 --real（真烘焙）时跑：要真的贴图才能导出。查：版本参数在、贴图是新参数烘的、文件名按命名规则、两套 cascade.json、缩放抖动 0、取景收紧过。"""
+    if not REAL: return None, '要真烘焙（--real，本机显卡任务里跑）'
+    ctx = await b.new_context(viewport={'width': 1440, 'height': 900})
+    pg = await ctx.new_page(); errs = []
+    pg.on('pageerror', lambda e: errs.append(str(e)))
+    pg.on('dialog', lambda d: asyncio.ensure_future(d.accept('闭环检查')))
+    try:
+        for rnd in range(2):
+            await pg.goto(HTML, wait_until='load', timeout=0)
+            await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
+            if rnd == 0:
+                await open_effect(pg, 'hiki_nishiki')
+                ai = await pg.evaluate("layerEntryOf(state.layers[0]).P.burn"); want = round(ai + 0.1, 3)
+                await set_layer_param(pg, 0, 'burn', want)
+                await pg.evaluate("selectComboLayer(1); 0")              # 改完马上切层（A4 那条路）
+                await idle(pg); await pg.wait_for_timeout(1500); await idle(pg)
+                baked = await pg.evaluate("layerEntryOf(state.layers[0]).bake.srcP.burn")
+                await pg.evaluate("selectComboLayer(-1); wbSave(true).then(() => 0)"); await pg.wait_for_timeout(800)
+                sid = await pg.evaluate("wb.src.kind === 'mine' ? wb.src.id : null")
+                if not sid: return False, '保存没有成功'
+            else:
+                await pg.evaluate(f"(() => {{ window.__opening = true; Promise.resolve(openMine('ef:hiki_nishiki', '{sid}')).finally(() => window.__opening = false); return 0; }})()")
+                await idle(pg); await pg.wait_for_timeout(1500); await idle(pg)
+                got = await pg.evaluate("({ burn: layerEntryOf(state.layers[0]).P.burn, src: wb.src.kind, key: lib.key })")
+                files = await pg.evaluate("""(async () => { const fs = await comboPackFiles('HikiNishiki', state.layers); const c = fs.find(f => f[0] === 'cascade.json'), cm = fs.find(f => f[0] === 'cascade_mobile.json');
+                  const dec = x => JSON.parse(new TextDecoder().decode(x[1]));
+                  return { names: fs.map(f => f[0]), pc: c ? dec(c) : null, mob: cm ? dec(cm) : null, fitted: state.layers.map(L => { const e = layerEntryOf(L); return e && e.bake.meta.fitted ? e.bake.meta.fitted.mode : null; }) }; })()""")
+                pulse = [await pg.evaluate(PULSE_JS, files['pc']) if files['pc'] else None, await pg.evaluate(PULSE_JS, files['mob']) if files['mob'] else None]
+                names = files['names']
+                bad = []
+                if abs(got['burn'] - want) > 1e-9: bad.append(f"版本里的 burn {got['burn']}（应为 {want}）")
+                if abs(baked - want) > 1e-9: bad.append(f"切层后贴图是按 burn {baked} 烘的")
+                if got['src'] != 'mine': bad.append('刷新后没打开这个版本')
+                if not files['pc'] or not files['mob']: bad.append('缺 cascade.json / cascade_mobile.json')
+                tex = [n for n in names if n.endswith('.png')]
+                if not any(n.startswith('T_EFX_FireWorks_HikiNishiki_Hiki_') for n in tex) or not any(n.startswith('T_EFX_FireWorks_HikiNishiki_Nishiki_') for n in tex): bad.append('贴图文件名不按命名规则：' + '、'.join(tex[:6]))
+                if any(v is None or v > 0.2 for v in pulse): bad.append(f'缩放抖动 {pulse}')
+                await pg.evaluate(f"(() => {{ const all = store.get('mySaves', {{}}); all['ef:hiki_nishiki'] = (all['ef:hiki_nishiki'] || []).filter(s => s.id !== '{sid}'); store.set('mySaves', all); return 0; }})()")   # 收拾：删掉检查用的版本
+                why = '；'.join(bad) or f"版本 burn {got['burn']} ✓、切层后贴图按新参数 ✓、{len(tex)} 张贴图按命名规则 ✓、PC + 手机 cascade ✓、缩放抖动 {pulse} ✓、取景收紧 {files['fitted']}"
+                return not bad, why + ('' if not errs else ' · 页面错误：' + errs[0][:200])
+    finally:
+        await ctx.close()
+
+
 async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
@@ -184,7 +241,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:
@@ -194,6 +251,7 @@ async def main():
                     ok, why = await fn(pg); await ctx.close()
             except Exception as e: ok, why, errs = False, f'异常：{e}', []
             if errs: why += ' · 页面错误：' + errs[0][:200]
+            if ok is None: print('⏭', name, why, flush=True); continue          # 这一项只在真烘焙时跑
             res.append({'item': name, 'pass': bool(ok), 'why': why, 'sec': round(time.time() - t0, 1)})
             print(('✅' if ok else '❌'), name, why, f'（{res[-1]["sec"]} s）', flush=True)
         await b.close()

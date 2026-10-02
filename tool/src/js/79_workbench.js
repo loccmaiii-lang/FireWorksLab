@@ -53,7 +53,7 @@ function buildLayerHead(i) {
   const L = state.layers[i], host = $('#layerHead'); host.innerHTML = '';
   host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b>正在调：第 ${i + 1} 层 · ${layerName(i)}</b></div>
     <p class="hint">下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 燃烧结束 / 火花停（圆点）都可以直接拖。</p>
-    <p class="hint">多层效果里，每层的贴图尺寸（2048）、格子（最多 4×4）、合并输出由整朵统一定，所以下面不再显示这几项。</p>
+    <p class="hint">每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
     ${linkedWith(i).length ? `<p class="lh-link">联动：和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、离散等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>` : ''}`);
   const pos = document.createElement('details'); pos.className = 'sec'; pos.open = true; pos.innerHTML = '<summary>在整朵里的位置</summary>'; host.appendChild(pos);
   slider(pos, `lh${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);

@@ -774,7 +774,8 @@ canvas#gl{box-shadow:none}
 .dv-unit{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding:10px;border:1px solid var(--line2);border-radius:7px;background:var(--panel)}
 .dv-unit b{width:100%;font-size:13.5px}
 .dv-unit small{width:100%;color:var(--dim)}
-#pMaster.layermode .actions>.grid2{display:none}
+/* 4.2.6：规格框并进「输出」一节；每层也能改自己的贴图尺寸和格子 */
+.spechost .grid2{margin:4px 0 6px}
 
 /* =====================================================================
    4.2.3 自适应（用户 2026-10-03 00:25：「更小的笔记本屏幕打开会特别特别挤，预览画布窗口都很小」）

@@ -60,6 +60,7 @@ JS_METRICS = r"""
   if (P.form !== 'master' && P.form !== 'segments') { out.note = '只量大面片（master / segments）；这个产物是 ' + P.form; return out; }
   const fm = __fw.measure(P), pl = __fw.plan(P, fm), L = pl.L, D = pl.duration;
   out.grid = { cols: L.cols, rows: L.rows, chans: L.chans, frames: L.F, cellW: L.cellW, cellH: L.cellH };
+  { const mp = mobileParams({ ...P, cols: L.cols, rows: L.rows }); out.mobileCell = { cellW: mp.texW / L.cols, cellH: mp.texH / L.rows }; }   // 4.2.6 手机单格（下限 256）
   if(pl.frameTiming==='tick-start')out.grid={...out.grid,pages:splitPlan40(pl).length,pageFrames:splitPlan40(pl).map(p=>p.L.F),capacityPerPage:pl.capacityFrames};
   out.spriteM = +pl.Ww.toFixed(1);
   // 帧号曲线逐 tick 取整（和材质一样：floor，不混合）
@@ -134,6 +135,8 @@ def verdict(m, std):
     if 'grid' not in m: return {}
     g = m['grid']; v = {}
     v['单格 ≥ PC 下限'] = (g['cellW'] * g['cellH'] >= std['pcCell'] ** 2) if g.get('beam') else g['cellW'] >= std['pcCell']   # 细长格（循环层面片）按单格像素数比
+    mc = m.get('mobileCell')     # 4.2.6（贴图尺寸放开后）：手机单格下限 256（协作/标准.md 2.2）
+    if mc: v['手机单格 ≥ 下限'] = (mc['cellW'] * mc['cellH'] >= std.get('mobileCell', 256) ** 2 - 1) if g.get('beam') else min(mc['cellW'], mc['cellH']) >= std.get('mobileCell', 256)
     v['屏幕放大 ≤ 1'] = m['screen']['mag'] <= std['maxMag']
     v['30fps 显示帧 ≥ 90%'] = m['frames30']['ratio'] >= 0.9
     v['燃烧段有效帧率 ≥ 下限'] = m['minFpsActive'] >= std['minFps']
@@ -168,7 +171,7 @@ async def main():
         errs = []; pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.goto(a.html.resolve().as_uri() + '?fast', wait_until='domcontentloaded', timeout=0)
         await pg.wait_for_function('window.__fw && typeof REPLICA_BY_ID !== "undefined"', timeout=0)
-        await pg.wait_for_function('state.bake && !state.baking && !state.dirty', timeout=240000)
+        await pg.wait_for_function('!state.baking && !state.dirty', timeout=240000)     # ?fast 不做开页烘焙（state.bake 一直是空的，以前在这里白等 4 分钟超时）
         renderer = verify_renderer(await pg.evaluate("document.querySelector('#gpu').title"))
         print('Renderer:', renderer, flush=True)
         for t in a.targets:

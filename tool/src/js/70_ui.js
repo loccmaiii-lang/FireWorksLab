@@ -266,7 +266,17 @@ function syncExport() {
   fs.value = P.form;
   const k = bakeKind(P);
   $('#formNote').textContent = FORM_NOTES[k === 'riseLoop' ? 'unit' : k] + (k === 'riseLoop' ? ' 上升：贴图是弹体随体坐标里的星头与尾迹循环，弹道和尾迹火花由 Cascade 发射器完成。' : '');
-  $('#x-size').value = `${P.texW}x${P.texH}`; $('#x-cols').value = P.cols; $('#x-rows').value = P.rows;
+  // 4.2.6 贴图尺寸放开（用户 2026-10-02 19:41「不要强制 2048」）：宽、高各自选；配方里不在列表里的尺寸也照样显示
+  for (const [id, v] of [['x-texW', P.texW], ['x-texH', P.texH]]) { const el = $('#' + id), opts = [...new Set([512, 1024, 2048, 4096, +v])].sort((a, b) => a - b); const h = opts.join(); if (el.dataset.h !== h) { el.innerHTML = ''; for (const n of opts) el.add(new Option(n + (n === 4096 ? '（母版）' : ''), n)); el.dataset.h = h; } el.value = String(v); }
+  $('#x-cols').value = P.cols; $('#x-rows').value = P.rows;
+  // 列 × 行：单格要 ≥ 512（PC 下限），放不下的列数 / 行数灰掉；实际用的写在旁边（取帧计划按这个夹）
+  if (renderVersion(P) >= 40 && ['master', 'segments'].includes(P.form)) {
+    const mc = Math.max(1, Math.floor(P.texW / 512)), mr = Math.max(1, Math.floor(P.texH / 512)), oc = +P.outCell > 0;
+    for (const [id, m] of [['x-cols', mc], ['x-rows', mr]]) for (const o of $('#' + id).options) o.disabled = !oc && +o.value > m;
+    const ec = oc ? Math.max(1, Math.floor(P.texW / Math.max(512, +P.outCell))) : Math.min(P.cols, mc), er = oc ? Math.max(1, Math.floor(P.texH / Math.max(512, +P.outCell))) : Math.min(P.rows, mr);
+    let n = $('#x-gridNote'); if (!n) { n = document.createElement('small'); n.id = 'x-gridNote'; n.className = 'note'; $('#x-rows').closest('label').appendChild(n); }
+    n.textContent = ec !== P.cols || er !== P.rows ? `实际 ${ec} × ${er}（单格 ${Math.round(P.texW / ec)} px${oc ? '，按「单格」' : '，单格不小于 512'}）` : '';
+  }
   $('#x-chans').value = P.chans; $('#x-out').value = P.outMode; $('#x-enc').value = P.encGamma; $('#x-frame').value = P.frameMode; $('#x-zoom').value = P.zoom; $('#x-engine').value = P.engine;
   $('#x-flip').checked = !!P.unitFlip; $('#flipBox').hidden = !(k === 'unit' || k === 'riseLoop');
   $('#x-autogrid').checked = !!P.autoGrid; $('#gridBox').hidden = k === 'master' || k === 'segments';
@@ -345,9 +355,15 @@ function flameChips(host, getM, onChange) {
 
 // ---------------- 参数面板 ----------------
 let panelRows = [];
+function placeSpecBox() {
+  const box = $('#specBox'), host = document.querySelector('#params [data-info=specBox]'), det = host && host.closest('details');
+  const where = host && det && det.style.display !== 'none' && !det.hidden ? host : $('#specHome');
+  if (box && box.parentElement !== where) where.appendChild(box);
+}
 function itemVisible(it, P) { const f = Array.isArray(it) ? it[6] : it.show; return !f || f(P); }
 function buildMasterPanel() {
   const P = state.P, D = defaultsFor(P.type, renderVersion(P)).P;
+  const box = $('#specBox'); if (box && $('#params').contains(box)) $('#specHome').appendChild(box);   // 规格框先放回原处，别跟着旧的「输出」一节被清掉
   const host = $('#params'); host.innerHTML = ''; panelRows = [];
   for (const sec of SCHEMA) {
     const det = document.createElement('details'); det.className = 'sec'; det.open = !['物理扰动', '星效果', '规格'].includes(sec.sec) || sec.sec === '规格';
@@ -369,6 +385,8 @@ function buildMasterPanel() {
         });
         row._refresh = () => { s.value = String(state.P[it.sel]); };
         det.appendChild(row);
+      } else if (it.info === 'specBox') {   // 4.2.6：原来右栏最底下的规格框（贴图尺寸、列 × 行、通道…）并进「输出」一节（走查 B7）
+        row = document.createElement('div'); row.className = 'spechost'; row.dataset.info = 'specBox'; det.appendChild(row);
       } else if (it.info) {   // 只读的结果行（例：输出一节顶上的「多少帧、怎么装」）
         row = document.createElement('div'); row.className = 'infohost'; row.dataset.info = it.info;
         row._refresh = () => { row.innerHTML = it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : ''; };
@@ -405,6 +423,7 @@ function refreshVisibility() {
   $('#suggestExposure').disabled = !!P.exposureLock;
   for (const [row, it, sec, det] of panelRows) row.hidden = !itemVisible(it, P);
   document.querySelectorAll('#params details.sec').forEach(det => { const s = det._sec; det.hidden = !!(s.show && !s.show(P)) || ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden); });
+  placeSpecBox();
 }
 function refreshPanelValues() { for (const [row] of panelRows) row._refresh && row._refresh(); }
 function applyShellLocked(n) {
@@ -474,7 +493,8 @@ const LIB_TYPES = ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'henk
 // 组合用的母版：2048（1024 时每帧只有 128 像素，组合页糊得没法看——用户 2026-09-30）；组合页默认实时模拟，贴图只在「导出效果」页用
 // 组合用的母版：迭代 / 正式库条目（rep:）保持条目自己的输出方式（合并输出 = 引擎里的样子：灰度查 Ramp），这样组合页「导出效果」和导出的素材一致；
 // 花型库默认母版仍用分开输出（组合里星头 / 尾巴亮度可以分开调）。window.FW_LIB_TEX：云端软件渲染自检时临时改小贴图。
-const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || 2048, texH: window.FW_LIB_TEX || 2048, cols: renderVersion(P)>=40?Math.min(4,P.cols):8, rows: renderVersion(P)>=40?Math.min(4,P.rows):8, chans: 4, outMode: keep && P.outMode ? P.outMode : renderVersion(P)>=40 ? 'combined' : 'split', form: 'master', zoom: renderVersion(P)>=40 ? (P.zoom === 'on' ? 'on' : 'off') : 'on' });
+// 4.2.6：多层里每层的贴图尺寸、格子也按这一层自己的（不再强制 2048 / 最多 4×4；单格 ≥ 512 由取帧计划保证）
+const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || P.texW || 2048, texH: window.FW_LIB_TEX || P.texH || 2048, cols: renderVersion(P)>=40?P.cols:8, rows: renderVersion(P)>=40?P.rows:8, chans: 4, outMode: keep && P.outMode ? P.outMode : renderVersion(P)>=40 ? 'combined' : 'split', form: 'master', zoom: renderVersion(P)>=40 ? (P.zoom === 'on' ? 'on' : 'off') : 'on' });
 const defaultLibName = t => TYPE_NAMES[t].replace(/（.*）/, '') + ' · 默认';
 async function ensureLibrary() {
   if (state.libReady) return;

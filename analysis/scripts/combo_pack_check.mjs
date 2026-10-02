@@ -26,6 +26,14 @@ const j=run(`(()=>{
   const single=fwlMaster('X',b,M,false);
   return JSON.stringify({out,single,aPages:(()=>{let n=0;for(let s=a;s;s=s.next)n++;return n;})()});})()`);
 const {out,single,aPages}=JSON.parse(j);
+// 4.2.6（用户 2026-10-02 19:41「不要强制 2048」）：多层里每层的贴图尺寸、格子跟这一层自己的参数；单格仍 ≥ 512
+check('layer texture size follows the layer, cell stays >= 512',()=>{
+  const r=JSON.parse(run(`(()=>{const P={...defaultsFor('botan',40).P,texW:1024,texH:1024,cols:2,rows:2},Q={...defaultsFor('botan',40).P,texW:4096,texH:2048,cols:8,rows:4};
+    const a=libP(P,true),b=libP(Q,true),pa=plan(a,measure(a)),pb=plan(b,measure(b));
+    return JSON.stringify({a:[a.texW,a.texH,a.cols,a.rows],b:[b.texW,b.texH],la:[pa.L.cols,pa.L.rows,pa.L.cellW],lb:[pb.L.cols,pb.L.rows,pb.L.cellW,pb.L.cellH]});})()`));
+  assert.deepEqual(r.a,[1024,1024,2,2]);assert.deepEqual(r.b,[4096,2048]);
+  assert.deepEqual(r.la,[2,2,512]);assert.ok(r.lb[2]>=512&&r.lb[3]>=512,'cell >= 512: '+r.lb);
+});
 check('one cascade.json with an emitter per layer page',()=>{assert.equal(out.emitters.length,aPages+single.emitters.length);});
 check('texture / material / emitter keys unique and referenced',()=>{
   const names=out.emitters.map(e=>e.name);assert.equal(new Set(names).size,names.length);

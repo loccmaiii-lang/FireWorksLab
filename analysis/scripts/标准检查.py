@@ -9,7 +9,7 @@
 查什么（都在导出口径上量，不看实时模拟）：
   条目 6 样东西（标准第 1 节）：实时模拟 / 引擎回放 + 游戏内大小 / 贴图 + 流转 / 完整参数 / 导出素材包 / 实拍对照（有参考时）
     —— 按条目类型和产物判断（大面片、分段、尾缀、多层组合有；素材条目没有参数、单元 / 循环产物还没有 cascade.json）
-  画质（标准第 2 节，探针 烘焙器探针.py 的同一套算法）：单格 ≥ 下限、屏幕放大 ≤ 1、30 fps 显示帧 ≥ 90%、燃烧段帧率 ≥ 下限、尺寸参数有效
+  画质（标准第 2 节，探针 烘焙器探针.py 的同一套算法）：单格 ≥ 下限（PC 512、手机 256；贴图尺寸本身不限，4.2.6）、屏幕放大 ≤ 1、30 fps 显示帧 ≥ 90%、燃烧段帧率 ≥ 下限、尺寸参数有效
     多层组合：每一层都要过。
   版本：renderVer 37（3.7 渲染、还没迁移到 4.0）单独标出来，画质项预计不过。
 
@@ -24,7 +24,7 @@ spec = importlib.util.spec_from_file_location('probe', HERE / '烘焙器探针.p
 probe = importlib.util.module_from_spec(spec); spec.loader.exec_module(probe)
 from browser_runtime import chromium_options, verify_renderer, launch_async
 
-STD = {'pcCell': 512, 'minFps': 10, 'minFpsFade': 7.5, 'maxMag': 1.0}   # 帧率下限：协作/标准.md 2.3（2026-10-01 按用户实测暂定 10 / 7.5）
+STD = {'pcCell': 512, 'mobileCell': 256, 'minFps': 10, 'minFpsFade': 7.5, 'maxMag': 1.0}   # 帧率下限：协作/标准.md 2.3（2026-10-01 按用户实测暂定 10 / 7.5）
 LIB_TYPES = ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'palm', 'henka', 'strobe', 'glitter', 'crackle', 'matsuba', 'crossette', 'ochiba', 'jisa', 'ring', 'saturn', 'kata', 'water']
 
 JS_ENTRY = r"""
