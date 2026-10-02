@@ -17,6 +17,28 @@ run(glSource.slice(glSource.indexOf('function sizeAt'),glSource.indexOf('// 合�
 const esSrc=fs.readFileSync(path.join(root,'tool/src/js/46_emitset.js'),'utf8');
 run(esSrc.slice(0,esSrc.indexOf('// 带颜色的高斯软圆点'))); run(esSrc.slice(esSrc.indexOf('// ---- 导出：fwl.cascade/1')));
 for(const name of ['48_render40','49_playback','50_bake','60_export','65_cascade','66_fwlcascade','67_fwlcombo','70_ui'])load(name);
+// 4.2.15 光点和模拟逐时刻比「星的分布」（XD2 / HK10 红点层：只比最远半径会把光点全放在外壳上、keepFrac 不发光的星也出了光点）：
+// 模拟里亮着的星（星头亮度 > 0）和光点出生表里活着的粒子，在亮着最多的那段时间里取 4 个时刻，比 个数、离爆点距离的中位数 / 90 分位、高度中位数、总亮度（不含颜色）
+run(`function dotsVsSim(L, P) {
+  const es = dotsES(L, P, comboLayerM(L)), tab = esSpawn({ emitters: [es] }, 1)[0], s = new Sim({ ...P, engine: 'gpu' }), rows = [], n = Math.ceil(P.duration / H_STEP);
+  const med = a => { a = a.slice().sort((x, y) => x - y); return a.length ? a[Math.floor(a.length / 2)] : 0; }, q9 = a => { a = a.slice().sort((x, y) => x - y); return a.length ? a[Math.floor(a.length * 0.9)] : 0; };
+  for (let i = 0; i < n; i++) { s.step(H_STEP); if (i % 24) continue; const lit = s.stars.filter(st => st.alive && st.kind !== 5 && s.headI(st) > 0).map(st => ({ r: Math.hypot(st.x, st.y, st.z), y: st.y, I: s.headI(st) })); rows.push({ t: s.t, lit }); }   // 当时就记下（星对象会接着动）
+  const mx = Math.max(...rows.map(r => r.lit.length)), win = rows.filter(r => r.lit.length >= 0.5 * mx), pick = [0.15, 0.4, 0.65, 0.9].map(f => win[Math.min(win.length - 1, Math.floor(f * win.length))]);
+  return pick.map(({ t, lit }) => {
+    const d = []; for (const q of tab.list) { const a = t - q.t0; if (a < 0 || a >= q.life) continue; const p = [0, 0, 0]; esPos(q, es.accel, a, p); d.push({ p, u: a / q.life }); }
+    const rs = lit.map(st => st.r), rd = d.map(x => Math.hypot(...x.p));
+    return { t: +t.toFixed(2), sim: { n: lit.length, rMed: med(rs), r90: q9(rs), zMean: lit.reduce((a, st) => a + st.y, 0) / Math.max(1, lit.length), I: lit.reduce((a, st) => a + st.I, 0) },
+      dots: { n: d.length, rMed: med(rd), r90: q9(rd), zMean: d.reduce((a, x) => a + x.p[2], 0) / Math.max(1, d.length), zSd: Math.sqrt(d.reduce((a, x) => a + x.p[2] ** 2, 0) / Math.max(1, d.length) - (d.reduce((a, x) => a + x.p[2], 0) / Math.max(1, d.length)) ** 2), I: es.ak ? d.reduce((a, x) => a + esCurve(es.ak, x.u), 0) * (+P.headBright || 1) : NaN } };
+  });
+}`);
+// 半径容差 10%（主段是平方阻力，Cascade 只有线性 Drag；外扩速度按最小二乘取以后牡丹主段在 ±9% 内）
+const dotsAgree=(rows,tag,rt=0.1)=>{ for(const r of rows){ const {sim:S,dots:D}=r, at=tag+' t='+r.t+'：';
+  assert.ok(Math.abs(D.n-S.n)<=0.15*S.n+2,at+'光点个数 '+D.n+' vs 模拟亮着的星 '+S.n);
+  assert.ok(Math.abs(D.rMed-S.rMed)<=rt*S.rMed,at+'距离中位数 '+D.rMed.toFixed(1)+' vs 模拟 '+S.rMed.toFixed(1));
+  assert.ok(Math.abs(D.r90-S.r90)<=rt*S.r90,at+'距离 90 分位 '+D.r90.toFixed(1)+' vs 模拟 '+S.r90.toFixed(1));
+  // 高度：比平均值；光点的方向是另一组随机数，平均高度本身有抽样误差 σ/√n（150 颗、半径 400 m 的球 ≈ 19 m），容差 = 10% 半径 + 2.5 倍抽样误差
+  const zt=0.1*S.rMed+2.5*D.zSd/Math.sqrt(Math.max(1,D.n)); assert.ok(Math.abs(D.zMean-S.zMean)<=zt,at+'平均高度 '+D.zMean.toFixed(1)+' vs 模拟 '+S.zMean.toFixed(1)+'（容差 '+zt.toFixed(1)+'）');
+  assert.ok(Math.abs(D.I-S.I)<=0.3*S.I,at+'总亮度 '+D.I.toFixed(1)+' vs 模拟 '+S.I.toFixed(1)); } };
 const checks=[];const check=(n,f)=>{try{f();checks.push({n,pass:true});}catch(e){checks.push({n,pass:false,e:e.message});}};
 const j=run(`(()=>{
   const mk=(type,dur)=>{const P={...defaultsFor(type,40).P,duration:dur},pl=plan(P,measure(P)),pages=splitPlan40(pl);
@@ -77,12 +99,10 @@ check('platform scheme: default unchanged; PC dots layer = GPU soft_dot emitter 
   assert.ok(r.mob.emitters.filter(e=>e.layer===2).every(e=>!e.gpu&&r.mob.textures[r.mob.materials[e.material].textures.main]),'手机第 2 层是纯序列');
   assert.ok(r.mob.emitters.every(e=>!e.gpu),'手机没有 GPU 发射器');
   const sp=d[0].spawn.bursts.reduce((n,x)=>n+x[1],0); assert.equal(sp,r.P.stars,'星数 = 爆发粒子数');
-  assert.ok(Math.abs(d[0].required.delay_s-0.4)<1e-3,'层延迟');
-  // 轨迹：线性阻力拟合的半径 r(t) = v / k (1 − e^(−kt)) 和模拟里星的半径差 ≤ 15%（燃烧期中后段）
-  const m=Object.fromEntries(d[0].modules.map(x=>[x.m,x])), dg=m.Drag.DragCoefficientRaw, k=dg.const!=null?dg.const:(dg.uniform[0]+dg.uniform[1])/2, R0=m.SphereLocation.StartRadius.const;
-  const vs=m.SphereLocation.VelocityScale.uniform, v=(vs[0]+vs[1])/2*R0/100;      // VelocityScale × 半径 = 速度（cm/s）→ m/s
-  const life=m.Lifetime.Lifetime.uniform, lm=(life[0]+life[1])/2; assert.ok(Math.abs(lm-(r.P.ign+r.P.burn))<0.05*(r.P.ign+r.P.burn),'寿命 = 点火 + 燃烧');
-  for(const [t,rr] of r.fm){ if(t<r.P.ign+0.3*r.P.burn||t>r.P.ign+r.P.burn)continue; const rf=R0/100+v/k*(1-Math.exp(-k*t)); assert.ok(Math.abs(rf-rr)<=0.15*rr,'t='+t.toFixed(2)+' 半径 '+rf.toFixed(1)+' vs 模拟 '+rr.toFixed(1)); }
+  assert.ok(Math.abs(d[0].required.delay_s-0.4)<0.05,'层延迟（光点在第一次亮的那一采样出生，≤ 0.05 s）：'+d[0].required.delay_s);
+  const life=d[0].modules.find(x=>x.m==='Lifetime').Lifetime.uniform, lm=(life[0]+life[1])/2; assert.ok(Math.abs(d[0].required.delay_s-0.4+lm-(r.P.ign+r.P.burn))<0.08*(r.P.ign+r.P.burn),'出生 + 寿命 = 点火 + 燃烧');
+  // 轨迹：光点出生表 vs 模拟里亮着的星（个数、距离分布、高度、总亮度）
+  dotsAgree(JSON.parse(run(`JSON.stringify(dotsVsSim({scale:1,delay:0,rate:1,...(()=>{const M=defaultsFor('kiku').M;return {stages:M.stages,xw:M.xw,ramp2:M.ramp2,ramp3:M.ramp3,headInt:1};})()},{...defaultsFor('botan',40).P,duration:2.8}))`)),'牡丹主段');
 });
 check('platform scheme: pack naming keeps mobile cutout / ramp when the PC side has no textures',()=>{
   const src=fs.readFileSync(path.join(root,'tool/src/js/61_naming.js'),'utf8');
@@ -92,10 +112,23 @@ check('platform scheme: pack naming keeps mobile cutout / ramp when the PC side 
 check('platform scheme: dots follow the simulated head visibility (second stage dark during the main burn)',()=>{
   const r=JSON.parse(run(`(()=>{const M=defaultsFor('kiku').M, L={scale:1,delay:0,rate:1,stages:M.stages,xw:M.xw,ramp2:M.ramp2,ramp3:M.ramp3,headInt:1};
     const P={...defaultsFor('botan',40).P,duration:5,burn:2,afterBurn:1.5,burnJit:0}; const e=fwlDots(L,P,comboLayerM(L));
-    const m=Object.fromEntries(e.modules.map(x=>[x.m,x])); return JSON.stringify({life:m.Lifetime.Lifetime.uniform,col:m.ColorOverLife.ColorOverLife.curve});})()`));
-  const lm=(r.life[0]+r.life[1])/2; assert.ok(Math.abs(lm-3.5)<0.25,'寿命 = 主段 + 第二段（'+lm+'）');
-  const at=u=>{const c=r.col;for(let i=1;i<c.length;i++)if(u<=c[i][0]){const k=(u-c[i-1][0])/Math.max(1e-9,c[i][0]-c[i-1][0]);return c[i-1][1].map((x,j)=>x+(c[i][1][j]-x)*k).reduce((a,b)=>a+b,0);}return c[c.length-1][1].reduce((a,b)=>a+b,0);};
-  assert.ok(at(0.3)<0.02*at(0.8),'主段期间不亮：u=0.3 '+at(0.3).toFixed(3)+' vs u=0.8 '+at(0.8).toFixed(3));
+    const m=Object.fromEntries(e.modules.map(x=>[x.m,x]));
+    return JSON.stringify({delay:e.required.delay_s,life:m.Lifetime.Lifetime.uniform,col:m.ColorOverLife.ColorOverLife.curve,rows:dotsVsSim(L,P)});})()`));
+  assert.ok(Math.abs(r.delay-2)<0.15,'第二段在主段烧完（2 s）时才出生：delay '+r.delay);
+  const lm=(r.life[0]+r.life[1])/2; assert.ok(Math.abs(lm-1.5)<0.2,'寿命 = 第二段（'+lm+'）');
+  assert.ok(r.col[0][1].reduce((a,b)=>a+b,0)>0||r.col[1][1].reduce((a,b)=>a+b,0)>0,'出生就亮');
+  dotsAgree(r.rows,'第二段');
+});
+// 4.2.15 XD2 试导（鸿巢红点层：点灭星、keepFrac 0.2、第二段、亮起时刻有离散）：光点只出会亮的星、分布和模拟一致、亮度按平均（光点不会闪）
+check('platform scheme: dots match the HK10 red layer (keepFrac, strobe, staggered second stage) star by star statistics',()=>{
+  const rows=JSON.parse(run(`(()=>{const {P,M}=replicaPM('HK10-2'); const L={scale:1,delay:0,rate:1,stages:M.stages,xw:M.xw,ramp2:M.ramp2,ramp3:M.ramp3,headInt:M.headInt||1}; return JSON.stringify(dotsVsSim(L,P));})()`));
+  dotsAgree(rows,'鸿巢红点层');
+  // 缩放 / 时间倍率：同一份数据按层的缩放、倍率换算（距离 × 缩放、时刻 ÷ 倍率）
+  const k=JSON.parse(run(`(()=>{const {P,M}=replicaPM('HK10-2'); const L={scale:1,delay:0,rate:1,stages:M.stages,xw:M.xw,ramp2:M.ramp2,ramp3:M.ramp3,headInt:1}, L2={...L,scale:0.5,rate:2,delay:1};
+    const at=(L,t)=>{const es=dotsES(L,P,comboLayerM(L)),tab=esSpawn({emitters:[es]},1)[0],d=[];for(const q of tab.list){const a=t-q.t0;if(a<0||a>=q.life)continue;const p=[0,0,0];esPos(q,es.accel,a,p);d.push(Math.hypot(...p));}d.sort((x,y)=>x-y);return [d.length,d[d.length>>1]||0];};
+    return JSON.stringify({a:at(L,9),b:at(L2,1+9/2)});})()`));
+  assert.equal(k.a[0],k.b[0],'倍率 2 时同一时刻（÷2）个数一样');
+  assert.ok(Math.abs(k.b[1]-k.a[1]*0.5)<=0.02*k.a[1],'缩放 0.5：距离减半 '+k.a[1].toFixed(1)+' → '+k.b[1].toFixed(1));
 });
 // 4.2.13 单束进组合包（用户 10-02 20:04「有些效果我也想导出面片 + 单束 + 粒子」；走查 D21 / B9）：PC 选「单束」的层 = 每颗星一个沿速度拉长的面片（单元序列），手机仍是序列
 check('platform scheme: PC unit layer = velocity-aligned beam_flipbook emitter (one particle per star), scaled by layer delay / rate / scale; mobile stays a sequence',()=>{

@@ -250,10 +250,14 @@
 
 ### F. 多层效果里某一层 PC 出「光点」（烘焙器 4.2.12 起）⚪ 未经 UE 验证
 - 用户 2026-10-02 20:04：PC 可以「序列 + 粒子」，手机只能纯图片。烘焙器每层可选导出方案：PC = 序列 / GPU 光点 / 不出，手机 = 序列 / 不出。
-- 光点层：一个 `gpu: true` 发射器，材质角色 `soft_dot`（和 B 同一个材质），没有贴图；`spawn.bursts = [[0, 星数]]`；
-  `SphereLocation`（`SurfaceOnly`、`Velocity`，速度 = 出生位置 × `VelocityScale`）+ `Drag` + `ConstAcceleration`：烘焙器把模拟里星的轨迹（平方阻力）拟合成线性阻力；
-  `Lifetime` = 点火延迟 + 燃烧（± 消え口离散）；颜色 = 层颜色 × Ramp 亮端 × 炭头亮度，点火前和熄灭段直接压进 `ColorOverLife`（加色，等于 Alpha）。
-- 只出星头光点：尾巴、闪烁、熄灭前闪亮不在里面（有尾巴的层烘焙器会提示）。手机版这一层仍是序列。
+- 光点层：一个 `gpu: true` 发射器，材质角色 `soft_dot`（和 B 同一个材质），没有贴图。数值都按模拟里每颗星定（烘焙器 4.2.15 起）：
+  - `spawn.bursts`：模拟里会亮的星（不发光的星不出），按亮起时刻分 ≤ 5 批（第二段、延时点火的层不在开花时出生）；`delay_s` = 层延迟 + 第一批亮起时刻；
+  - `SphereLocation`（`SurfaceOnly`、`Velocity`）：`StartRadius` 是随机范围（亮起时相对整体中心的半径，均值 ± √3σ），`VelocityScale` 随机范围（速度 = 出生位置 × VelocityScale）；
+  - `InitialLocation` / `InitialVelocity`：整体中心亮起时的下坠和下坠速度（开花就亮的层接近 0）；
+  - `Drag` + `ConstAcceleration`：亮起后的平均半径、中心高度拟合成线性阻力 + 等效重力（模拟里是平方阻力）；
+  - `Lifetime` = 每颗星亮着的时长（10%–90% 分位）；颜色 = 层颜色 × Ramp 亮端 × 炭头亮度 × 光点亮度，亮度曲线（点火、渐隐、第二段、点灭的亮灭平均）直接压进 `ColorOverLife`（加色，等于 Alpha）；
+  - `InitialSize` = 炭头大小 × 光点大小（层页头可调，默认 1）± 15%。
+- 只出星头光点：尾巴、点灭的闪烁不在里面（有尾巴的层烘焙器会提示）。手机版这一层仍是序列。
 - 发射器名 `L<层号>_Dots`；`cascade_mobile.json` 里没有 GPU 发射器。
 
 ### G. 多层效果里某一层 PC 出「单束」（烘焙器 4.2.13 起）⚪ 未经 UE 验证

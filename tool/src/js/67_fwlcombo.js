@@ -45,69 +45,92 @@ function fwlUnit(name, b, M, L) {
     }
   };
 }
-// 光点层的轨迹：模拟里星是平方阻力，Cascade 只有线性 Drag。拿模拟测出的「星最远半径 r(t)」和「可见星的平均高度 y(t)」拟合
-// r(t) = R0 + v/k·(1 − e^(−kt))、y(t) = −g/k·(t − (1 − e^(−kt))/k)，燃烧期（点火以后）权重 1，之前 0.2。
-function dotFit(P, fm) {
-  fm = fm || measure(P);
-  const ign = +P.ignDelay || 0, burn = Math.max(0.05, +P.burn || 1), T = ign + burn, R0 = Math.max(0, +P.burstR0 || 0), sj = clamp((+P.speedJit || 0) / 100, 0, 0.5);
-  const pr = (fm.prof || []).filter(q => q[0] > 0 && q[0] <= T + 1e-6), st = (fm.stat || []).filter(q => q.vis > 0 && q.t >= ign && q.t <= T);
-  let best = null;
-  for (let e = -2; e <= 1.6; e += 0.01) {
-    const k = Math.pow(10, e); let sfr = 0, sff = 0;
-    for (const [t, , r] of pr) { const w = t >= ign ? 1 : 0.2, f = (1 - Math.exp(-k * t)) / k; sfr += w * f * (r - R0); sff += w * f * f; }
-    if (!(sff > 0)) continue;
-    const v = Math.max(0, sfr / sff); let err = 0;
-    for (const [t, , r] of pr) { const w = t >= ign ? 1 : 0.2; err += w * (R0 + v * (1 - Math.exp(-k * t)) / k - r) ** 2; }
-    if (!best || err < best.err) best = { k, v, err };
-  }
-  if (!best) best = { k: G / Math.max(1, +P.vt || 20), v: +P.v0 || 50 };
-  let sgz = 0, sgg = 0;
-  for (const q of st) { const f = -(q.t - (1 - Math.exp(-best.k * q.t)) / best.k) / best.k; sgz += f * q.cy; sgg += f * f; }
-  const g = sgg > 0 ? clamp(sgz / sgg, 0, 3 * G) : G * (+P.grav || 1);
-  return { k: best.k, v: best.v / (1 + sj), sj, g, R0, ign, burn, T, jit: clamp((+P.burnJit || 0) / 100, 0, 0.5) };
-}
 // 一层星 → 一个 GPU 光点发射器。用粒子发射器组的数据格式（46_emitset.js，米、秒），同一份数据给「引擎回放」画、给 cascade.json 导出（看到的就是导出的）。
 // 层的缩放 × 长度，时间倍率 ÷ 时间（速度 ×、阻力 ×、加速度 × 倍率²）；颜色 = 这一层的颜色 × 星头亮度，点火前和熄灭段用颜色压暗（加色，等于 Alpha）
-// 每颗星什么时候亮、多亮（4.2.13，XD1 试导发现：鸿巢红点层是「第二段」——主段期间不发光，只按点火 + 燃烧算会从开花就亮）：
-// 直接跑一遍模拟，记每颗星的星头亮度；寿命 = 每颗星最后亮着的时刻；亮度曲线 = 按「时刻 ÷ 这颗星的寿命」平均（延时点火、星头压暗、第二段、渐隐、熄灭前闪亮都在里面）
-function dotVis(P) {
-  const s = new Sim({ ...P, engine: 'gpu' }), n = Math.ceil(P.duration / H_STEP), rec = new Map();
-  for (let i = 0; i < n; i++) {
-    s.step(H_STEP); if (i % 12) continue;
-    for (const st of s.stars) { if (!st.alive || st.kind === 5) continue; let q = rec.get(st); if (!q) rec.set(st, q = []); q.push([s.t, s.headI(st)]); }
-  }
-  const NB = 60, lives = [], bins = new Float64Array(NB), cnt = new Float64Array(NB);
-  for (const q of rec.values()) {
-    let b = 0; for (const [t, I] of q) if (I > 0) b = t; if (!(b > 0)) continue; lives.push(b);
-    for (const [t, I] of q) { if (t > b) break; const k = Math.min(NB - 1, Math.floor(t / b * NB)); bins[k] += I; cnt[k]++; }
-  }
-  if (!lives.length) return null;
-  lives.sort((a, c) => a - c);
-  const prof = Array.from(bins, (v, k) => cnt[k] ? v / cnt[k] : 0), nz = prof.filter(v => v > 0).sort((a, c) => a - c), typ = nz.length ? nz[Math.floor(nz.length / 2)] : 1;
-  const q = f => lives[Math.min(lives.length - 1, Math.floor(f * lives.length))];
-  return { life: [q(0.1), q(0.9)], med: q(0.5), alpha: prof.map((v, k) => [+((k + 0.5) / NB).toFixed(4), clamp(v / typ, 0, 2.5)]) };
+// 4.2.15 光点直接按模拟里每颗星来定（XD2 / 鸿巢红点层：只拟合「最远半径」会把光点都放在外壳上、keepFrac 不发光的星也出了光点、亮起时刻抹开）：
+// 跑一遍模拟，每颗星记「第一次亮 a、最后亮着 b」和亮起那一刻的位置、速度——
+//   个数 = 会亮的星数；出生 = 按亮起时刻分几批（Burst 列表）；寿命 = b − a；
+//   出生位置 = 球面（半径的均值 ± √3σ 均匀 = 同方差），速度 = 位置 × VelocityScale（径向速度 ÷ 半径，同样均值 ± √3σ），整体的下坠 / 下坠速度用 Initial Location / Velocity；
+//   之后的运动：把每颗星按「亮起后的时间」对齐，平均半径和平均高度拟合成线性阻力 + 等效重力（Cascade 只有线性 Drag）；
+//   亮度 = 星头亮度 ÷ 这颗星的标称亮度，按「(t − a) / (b − a)」平均——点灭星按亮灭平均（光点不会闪），渐隐、熄灭前闪亮、星头压暗都在里面。
+// 模拟步长 × 4（每 0.025 s 记一次）：和 × 1 比，半径 / 速度 / 阻力 / 批次差 < 1%，快 4 倍（鸿巢红点层 800 颗 × 12 s：9.6 s → 2.4 s）；
+// 结果按参数缓存，光点大小 / 亮度、层的缩放 / 延迟 / 倍率改了不重跑
+const _dotVis = new Map();
+function dotVis(P, sub = 4) {
+  const key = sub + JSON.stringify(P); if (_dotVis.has(key)) return _dotVis.get(key);
+  const v = dotVisRun(P, sub); _dotVis.set(key, v); if (_dotVis.size > 8) _dotVis.delete(_dotVis.keys().next().value); return v;
 }
+function dotVisRun(P, sub) {
+  const h = H_STEP * sub, s = new Sim({ ...P, engine: 'gpu' }), n = Math.ceil(P.duration / h), rec = new Map(), EV = Math.max(1, Math.round(12 / sub)), dt = EV * h;
+  for (let i = 0; i < n; i++) {
+    s.step(h); if ((i + 1) % EV) continue;
+    for (const st of s.stars) { if (!st.alive || st.kind === 5) continue; let q = rec.get(st); if (!q) rec.set(st, q = []); q.push([s.t, s.headI(st) / (st.I || 1), st.x, st.z, st.y, st.vx, st.vz, st.vy]); }   // 模拟 y 朝上 → 发射器 z 朝上
+  }
+  const S = [];
+  for (const q of rec.values()) { let ia = -1, ib = -1; q.forEach((x, k) => { if (x[1] > 0) { if (ia < 0) ia = k; ib = k; } }); if (ia >= 0 && ib > ia) S.push(q.slice(ia, ib + 1)); }
+  if (!S.length) return null;
+  const mean = a => a.reduce((x, y) => x + y, 0) / a.length, sd = a => { const m = mean(a); return Math.sqrt(mean(a.map(x => (x - m) ** 2))); };
+  const qt = (a, f) => { const b = a.slice().sort((x, y) => x - y); return b[Math.min(b.length - 1, Math.floor(f * b.length))]; };
+  // 亮起那一刻：整体中心（位置、速度）+ 每颗星相对中心的半径、径向速度
+  const A = S.map(q => q[0]), c0 = [2, 3, 4].map(j => mean(A.map(x => x[j]))), cv = [5, 6, 7].map(j => mean(A.map(x => x[j])));
+  const rad = A.map(x => Math.max(0.01, Math.hypot(x[2] - c0[0], x[3] - c0[1], x[4] - c0[2])));
+  const wr = A.map((x, k) => ((x[5] - cv[0]) * (x[2] - c0[0]) + (x[6] - cv[1]) * (x[3] - c0[1]) + (x[7] - cv[2]) * (x[4] - c0[2])) / rad[k] / rad[k]);
+  const span = (m, d, lo = 0) => [Math.max(lo, m - 1.7320508 * d), Math.max(lo, m + 1.7320508 * d)];
+  const R = span(mean(rad), sd(rad), 0.01), W = span(mean(wr), sd(wr));
+  // 亮起后的运动：按亮起后的时间 τ 对齐，算平均半径（相对当时的中心）和中心高度；拟合 r(τ) = R̄ + R̄·W̄·s1、z(τ) = z0 + vz0·s1 − g/k·(τ − s1)，s1 = (1 − e^(−kτ))/k
+  const nT = Math.max(...S.map(q => q.length)), tr = [];
+  for (let m = 0; m < nT; m++) {
+    const xs = S.filter(q => q.length > m).map(q => q[m]); if (xs.length < Math.max(3, 0.3 * S.length)) break;
+    const c = [2, 3, 4].map(j => mean(xs.map(x => x[j]))); tr.push([m * dt, mean(xs.map(x => Math.hypot(x[2] - c[0], x[3] - c[1], x[4] - c[2]))), c[2]]);
+  }
+  // 每个阻力值 k：外扩速度 V、等效重力 g 都按最小二乘取（相对误差）。V 不直接用亮起那一刻的速度：平方阻力在高速时减速更快，线性阻力照搬初速会前段偏大（牡丹主段 +15%）
+  const Rm = (R[0] + R[1]) / 2;
+  let best = null;
+  for (let e = -2; e <= 1.6; e += 0.01) {
+    const k = Math.pow(10, e); let svr = 0, svv = 0, sfz = 0, sff = 0;
+    for (const [t, r, z] of tr) { const s1 = (1 - Math.exp(-k * t)) / k, f = -(t - s1) / k, w = 1 / Math.max(1, r * r); svr += w * s1 * (r - Rm); svv += w * s1 * s1; sfz += w * f * (z - c0[2] - cv[2] * s1); sff += w * f * f; }
+    const V = svv > 0 ? Math.max(0, svr / svv) : 0, g = sff > 0 ? clamp(sfz / sff, 0, 3 * G) : 0; let err = 0;
+    for (const [t, r, z] of tr) { const s1 = (1 - Math.exp(-k * t)) / k; err += ((Rm + V * s1 - r) ** 2 + (c0[2] + cv[2] * s1 - g * (t - s1) / k - z) ** 2) / Math.max(1, r * r); }   // 相对误差：前段半径小、别被后段压过
+    if (!best || err < best.err) best = { k, g, V, err };
+  }
+  // VelocityScale = V ÷ 半径；离散（± √3σ）按亮起那一刻的径向速度 ÷ 半径的相对离散
+  const Wm = (W[0] + W[1]) / 2, Wf = best.V / Rm, Wr = Wm > 1e-9 ? [W[0] / Wm, W[1] / Wm] : [1, 1];
+  W[0] = Math.max(0, Wf * Wr[0]); W[1] = Math.max(0, Wf * Wr[1]);
+  // 亮度曲线：按相对寿命平均（标称亮度 = 1）
+  const NB = 40, bins = new Float64Array(NB), cnt = new Float64Array(NB);
+  for (const q of S) { const a = q[0][0], b = q[q.length - 1][0]; for (const x of q) { const k = Math.min(NB - 1, Math.floor((x[0] - a) / (b - a) * NB)); bins[k] += x[1]; cnt[k]++; } }
+  const alpha = Array.from(bins, (v, k) => [+((k + 0.5) / NB).toFixed(4), cnt[k] ? clamp(v / cnt[k], 0, 3) : 0]);
+  // 出生批次：按亮起时刻分 5 份，每份在它的中位时刻爆发；相隔 < 0.05 s 的并成一批
+  const ons = A.map(x => x[0]).sort((x, y) => x - y), bursts = [];
+  for (let g = 0; g < 5; g++) { const a = Math.floor(g * ons.length / 5), b = Math.floor((g + 1) * ons.length / 5); if (b <= a) continue; const t = ons[(a + b) >> 1], last = bursts[bursts.length - 1];
+    if (last && t - last[0] < 0.05) last[1] += b - a; else bursts.push([t, b - a]); }
+  const durs = S.map(q => q[q.length - 1][0] - q[0][0]);
+  return { n: S.length, on: bursts[0][0], bursts, life: [qt(durs, 0.1), qt(durs, 0.9)], med: qt(durs, 0.5), alpha, c0, cv, R, W, k: best.k, g: best.g };
+}
+// 光点大约几颗（不跑模拟，给层页头 / 交付页显示）：星头会亮的星 = 星数 × keepFrac，炭头亮度 0 → 0；准确数在导出 / 引擎回放时按模拟算
+function dotsCount(P) { return +P.headBright > 0 ? Math.round((+P.stars || 0) * (P.keepFrac != null ? clamp(+P.keepFrac, 0, 1) : 1)) : 0; }
+// L.dotSize：光点直径 × 炭头大小（默认 1）；L.dotBright：光点亮度倍数（默认 1）——层页头「导出方案」选光点时可调（XD2：以前 × 1.7 偏大）
 function dotsES(L, P, M, fm) {
-  const f = dotFit(P, fm), v = dotVis(P), r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1;
-  const life = v ? [v.life[0] / r, v.life[1] / r] : [(f.ign + f.burn * (1 - f.jit)) / r, (f.ign + f.burn * (1 + f.jit)) / r];
-  const T = v ? v.med : f.T, ak = v ? [[0, v.alpha[0][1]], ...v.alpha, [1, 0]] : [[0, 1], [1, 0]];
-  const alpha = u => esCurve(ak, u);
-  // 序列材质的色相来自 Ramp（灰度查表）× Color Over Life；软圆点没有 Ramp，星头亮核用 Ramp 亮端（中亮、亮两格的平均，线性）乘进颜色
+  const v = dotVis(P), r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1, seed = ((+P.seed || 1) * 31 + 7) | 0;
   const rl = [M.ramp2, M.ramp3].filter(Boolean).map(hexToLin), rc = rl.length ? [0, 1, 2].map(j => rl.reduce((a, c) => a + c[j], 0) / rl.length) : [1, 1, 1];
-  const gain = (+M.headInt || 1) * (+P.headBright || 1), ck = colorKeys(M, T, 0).map(([u, c]) => [u, c.map((x, j) => x * rc[j])]);
+  const sz = Math.max(0.05, (L.dotSize > 0 ? +L.dotSize : 1) * (+P.headSize || 1) * sc), gain = (+M.headInt || 1) * (+P.headBright || 1) * (L.dotBright > 0 ? +L.dotBright : 1);
+  if (!v) return { name: 'Dots', gpu: true, delay: +L.delay || 0, duration: 0.1, bursts: [], life: [1, 1], size: [sz, sz], col: [[0, [0, 0, 0]], [1, [0, 0, 0]]], ak: [[0, 0], [1, 0]], seed, fit: { k: 0, g: 0, on: 0, n: 0 } };
+  // 序列材质的色相来自 Ramp（灰度查表）× Color Over Life；软圆点没有 Ramp，星头亮核用 Ramp 亮端（中亮、亮两格的平均，线性）乘进颜色
+  const ak = [[0, v.alpha[0][1]], ...v.alpha, [1, v.alpha[v.alpha.length - 1][1]]], ck = colorKeys(M, v.med, v.on).map(([u, c]) => [u, c.map((x, j) => x * rc[j])]);
   const us = [...new Set([0, 1, ...ck.map(k => +k[0]), ...ak.map(k => +k[0])].map(u => +clamp(u, 0, 1).toFixed(4)))].sort((a, b) => a - b);
-  const col = esThin(us.map(u => [u, esCurve(ck, u).map(c => +(c * gain * alpha(u)).toFixed(4))]), 0.01);
-  const sz = Math.max(0.05, 1.7 * (+P.headSize || 1) * sc);
-  return { name: 'Dots', gpu: true, delay: +L.delay || 0, duration: life[1] + 0.1, bursts: [[0, Math.max(1, Math.round(+P.stars || 1))]], life, size: [sz * 0.85, sz * 1.15], col,
-    sphere: { r: f.R0 * sc, v: [f.v * (1 - f.sj) * sc * r, f.v * (1 + f.sj) * sc * r] }, drag: [f.k * r, f.k * r], accel: [0, 0, -f.g * sc * r * r], seed: ((+P.seed || 1) * 31 + 7) | 0, fit: f };
+  const col = esThin(us.map(u => [u, esCurve(ck, u).map(c => +(c * gain * esCurve(ak, u)).toFixed(4))]), 0.01);
+  const t0 = v.bursts[0][0], bursts = v.bursts.map(([t, n]) => [(t - t0) / r, n]);
+  return { name: 'Dots', gpu: true, delay: (+L.delay || 0) + t0 / r, duration: bursts[bursts.length - 1][0] + v.life[1] / r + 0.1, bursts, life: [v.life[0] / r, v.life[1] / r], size: [sz * 0.85, sz * 1.15], col, ak,
+    sphere: { r: [v.R[0] * sc, v.R[1] * sc], vs: [v.W[0] * r, v.W[1] * r] }, loc: [[0, v.c0.map(x => x * sc)]], vel: [[0, v.cv.map(x => x * sc * r)]],
+    drag: [v.k * r, v.k * r], accel: [0, 0, -v.g * sc * r * r], seed, fit: { k: v.k, g: v.g, on: t0, n: v.n } };
 }
 function fwlDots(L, P, M, fm) {
-  const e = dotsES(L, P, M, fm), j = esFwlEmitter(e, false, 1), f = e.fit;
-  return { ...j, notes: [`GPU 光点：这一层的星只出星头光点（${Math.round(+P.stars || 0)} 颗，球面放射），尾巴、闪烁、熄灭前闪亮不在里面；轨迹按模拟拟合成线性阻力（阻力 ${r4(f.k)}/s、等效重力 ${r2(f.g)} m/s²）；光点直径 = 炭头 × 1.7、颜色 = 这一层的颜色 × Ramp 亮端 × 炭头亮度，是起点，未经 UE 验证`] };
+  const e = dotsES(L, P, M, fm), j = esFwlEmitter(e, false, 1), f = e.fit, n = Math.round(+P.stars || 0);
+  return { ...j, notes: [`GPU 光点：这一层会亮的星只出星头光点（${f.n} 颗${f.n < n ? `，另外 ${n - f.n} 颗模拟里不发光` : ''}，球面放射），尾巴、闪烁 / 点灭（按亮灭平均）不在里面；出生位置、速度、寿命按模拟里每颗星亮起那一刻定，${e.bursts.length > 1 ? `按亮起先后分 ${e.bursts.length} 批出生、` : ''}之后的运动拟合成线性阻力（阻力 ${r4(f.k)}/s、等效重力 ${r2(f.g)} m/s²）；${f.on > 0.1 ? `第一批在 ${r2(f.on)} s 亮起；` : ''}光点直径 = 炭头 × ${r2(L.dotSize > 0 ? +L.dotSize : 1)}、颜色 = 这一层的颜色 × Ramp 亮端 × 炭头亮度 × ${r2(L.dotBright > 0 ? +L.dotBright : 1)}，是起点，未经 UE 验证`] };
 }
 // 引擎回放画光点层：同一份数据，按层缓存出生表
 function dotsTables(e, L) {
-  const sig = JSON.stringify([L.scale, L.rate, L.delay, L.stages, L.xw, L.headInt, L.ramp2, L.ramp3, e.P]);
+  const sig = JSON.stringify([L.scale, L.rate, L.delay, L.stages, L.xw, L.headInt, L.ramp2, L.ramp3, L.dotSize, L.dotBright, e.P]);
   if (e._dots && e._dots.sig === sig) return e._dots.tab;
   const ES = { emitters: [dotsES(L, e.P, comboLayerM(L), e.bake && e.bake.fm)] }; e._dots = { sig, tab: esSpawn(ES, 1) }; return e._dots.tab;
 }
