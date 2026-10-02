@@ -66729,6 +66729,12 @@ var FW_EFFECTS = [
 "seen": true
 },
 {
+"id": "JM4-40E5",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "JM4E",
 "type": "export",
 "state": "已回来",
@@ -66934,6 +66940,37 @@ var FW_EFFECTS = [
 "fails": []
 },
 "stale": false
+},
+{
+"job": "JM4-40E5",
+"entry": "JM4-40",
+"ver": "2ac48d15·master4.2.7",
+"time": "2026-10-03 04:11",
+"packages": [
+{
+"name": "JinMangJu",
+"replica": "JM4-40",
+"files": [
+"JinMangJu.json",
+"JinMangJu_Cascade参数.txt",
+"JinMangJu_Mobile.json",
+"JinMangJu_曲线.csv",
+"T_EFX_FireWorks_GoldChrysanthemum_4x4_01.png",
+"T_EFX_FireWorks_GoldChrysanthemum_4x4_01_C.png",
+"T_EFX_FireWorks_GoldChrysanthemum_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldChrysanthemum_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
 },
 {
 "job": "JM4E",
@@ -69944,6 +69981,12 @@ var FW_EFFECTS = [
 "id": "QN11E5",
 "type": "export",
 "state": "已回来",
+"seen": true
+},
+{
+"id": "QN11E6",
+"type": "export",
+"state": "已回来",
 "seen": false
 },
 {
@@ -70187,6 +70230,39 @@ var FW_EFFECTS = [
 "entry": "QN11",
 "ver": "0981c5c4·master4.2.7",
 "time": "2026-10-03 03:13",
+"packages": [
+{
+"name": "Qingning40",
+"replica": "QN11",
+"files": [
+"T_EFX_FireWorks_LimeStar_Head_4x4_01.png",
+"T_EFX_FireWorks_LimeStar_Head_4x4_01_C.png",
+"T_EFX_FireWorks_LimeStar_Head_4x4_01_HD.png",
+"T_EFX_FireWorks_LimeStar_Head_R.png",
+"T_EFX_FireWorks_LimeStar_Tail_4x4_01.png",
+"T_EFX_FireWorks_LimeStar_Tail_4x4_01_C.png",
+"T_EFX_FireWorks_LimeStar_Tail_4x4_01_HD.png",
+"T_EFX_FireWorks_LimeStar_Tail_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：1 帧碰到格子内圈"
+]
+},
+"stale": true
+},
+{
+"job": "QN11E6",
+"entry": "QN11",
+"ver": "0981c5c4·master4.2.7",
+"time": "2026-10-03 04:12",
 "packages": [
 {
 "name": "Qingning40",
@@ -70989,7 +71065,7 @@ var FW_EFFECTS = [
 "id": "HK10E4",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "HK2",
@@ -73348,7 +73424,7 @@ var FW_EFFECTS = [
 "id": "HN2E12",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "HN2E2",
