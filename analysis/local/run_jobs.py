@@ -85,6 +85,11 @@ def run_job(job, s, force=False):
                                         capture_output=True, text=True, encoding='utf-8', errors='replace')
                     for line in (r2.stdout or '').splitlines()[-12:]: log(line)
                     log('界面状态检查：' + ('✅ 全过' if r2.returncode == 0 else '❌ 有不过的项，见 界面状态检查.json'))
+                if job.get('tijian'):    # 4.2.4：条目体检（左栏每个条目真烘焙打开一遍，记打不打得开、多久、实时模拟卡不卡）
+                    r3 = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '条目体检.py'), '--real', '--limit', str(job.get('tijian_limit', 90)), '--out', os.path.join(out, '条目体检.json')],
+                                        capture_output=True, text=True, encoding='utf-8', errors='replace')
+                    for line in (r3.stdout or '').splitlines()[-30:]: log(line)
+                    log('条目体检：' + ('✅ 都能打开' if r3.returncode == 0 else '❌ 有打不开 / 卡的，见 条目体检.json'))
             elif job['type'] == 'ui':
                 log(f"开始：{job.get('name', '')}（界面截图）")
                 import ui_shots; ui_shots.run(job, s, out, log=log)

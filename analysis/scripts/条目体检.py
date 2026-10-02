@@ -4,7 +4,8 @@
   python3 analysis/scripts/条目体检.py [--real] [--only ef:,rv:] [--limit 600] [--out 体检.json]
 默认用假烘焙（和 界面状态检查.py 同一个：按真的取景 / 取帧计划造结果，不碰显卡）——查的是数据 / 代码层面打不打得开、
 实时模拟要算多少步（CPU 预跑耗时 = 卡不卡的主要来源）；--real 真烘焙（本机显卡任务里跑），再量烘焙耗时和实时模拟帧间隔。
-每个条目：ok / 报错 / 超时，打开秒数，CPU 预跑秒数（measure），帧数、贴图张数；结果按「有问题的在前」排。
+每个条目：ok / 报错 / 超时 / 卡（--real 时实时模拟每帧间隔第 90 百分位 > 100 ms），打开秒数，CPU 预跑秒数（measure），帧数、贴图张数；结果按「有问题的在前」排。
+本机任务：{"type": "smoke", "tijian": true} 时 run_jobs.py 顺带 --real 跑一遍，结果 条目体检.json。
 """
 import argparse, asyncio, json, sys, time, pathlib
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -35,6 +36,12 @@ INFO = r"""(() => { const combo = state.tab === 'combo', bs = combo ? state.laye
     err: window.__err, bakeErr: state.bakeError && state.bakeError.message || null, openS: window.__t1 ? +((window.__t1 - window.__t0) / 1000).toFixed(2) : null }; })()"""
 
 
+LIVE = r"""new Promise(res => { state.view = 'live'; state.playing = true; state.t = Math.min(1, curDuration() * .3); const ts = []; const t0 = performance.now();
+  const f = now => { ts.push(now); if (now - t0 < 2500) requestAnimationFrame(f); else { state.playing = false; const d = ts.slice(1).map((v, i) => v - ts[i]).sort((x, y) => x - y);
+    res({ frames: d.length, medMs: d.length ? +d[Math.floor(d.length / 2)].toFixed(1) : null, p90Ms: d.length ? +d[Math.floor(d.length * .9)].toFixed(1) : null }); } };
+  requestAnimationFrame(f); })"""
+
+
 async def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--real', action='store_true'); ap.add_argument('--only', default=''); ap.add_argument('--limit', type=float, default=0); ap.add_argument('--out', default='')
     a = ap.parse_args(); pref = tuple(x for x in a.only.split(',') if x)
@@ -62,11 +69,14 @@ async def main():
                 await pg.wait_for_timeout(200)
                 if await pg.evaluate(IDLE): ok = True; break
             info = await pg.evaluate(INFO)
+            if a.real and ok:     # 真烘焙时再量实时模拟卡不卡：播放 2.5 秒，记每帧间隔（画布每秒画几次）
+                info['live'] = await pg.evaluate(LIVE)
             r = {**it, 'sec': round(time.time() - t0, 1), 'timeout': not ok, 'pageErrors': errs[n0:][:3], **info}
             fake_skip = not a.real and any('假烘焙只造' in str(x) for x in [r['err'], r['bakeErr'], *r['pageErrors']])
             r['status'] = '跳过（要真烘焙）' if fake_skip else '超时' if not ok else '报错' if (r['err'] or r['pageErrors'] or r['bakeErr']) else '缺贴图' if r['missing'] else 'ok'
             res.append(r)
-            print(('✅' if r['status'] == 'ok' else '⏭' if r['status'].startswith('跳过') else '❌'), r['key'], r['name'], r['status'], f"{r['sec']} s · 预跑 {r['measureS']} s · {r['frames']} 帧 / {r['pages']} 张",
+            if r.get('live') and r['live'].get('p90Ms') and r['live']['p90Ms'] > 100 and r['status'] == 'ok': r['status'] = '卡'
+            print(('✅' if r['status'] == 'ok' else '⏭' if r['status'].startswith('跳过') else '❌'), r['key'], r['name'], r['status'], f"{r['sec']} s · 预跑 {r['measureS']} s · {r['frames']} 帧 / {r['pages']} 张" + (f" · 实时 {r['live']['medMs']} / {r['live']['p90Ms']} ms" if r.get('live') else ''),
                   (r['err'] or r['bakeErr'] or (r['pageErrors'][0] if r['pageErrors'] else ''))[:160], flush=True)
             if not ok:     # 卡住了：换一页继续
                 await pg.close(); pg = await ctx.new_page(); errs.clear(); pg.on('pageerror', lambda e: errs.append(str(e)))
