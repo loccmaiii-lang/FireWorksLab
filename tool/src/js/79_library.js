@@ -112,7 +112,38 @@ function effSubline(ef) {
   const run = (ef.jobs || []).filter(j => j.state === '在算').map(j => j.id);
   return `${ef.阶段 === '待验收' ? '候选 ' : ef.阶段 === '已通过' ? '通过版 ' : '工作版 '}${(id || '—').replace(/^rep:/, '')}${lay}${run.length ? ' · 在算 ' + run.join('、') : ''}`;
 }
+// 4.2.3（走查 A5 / A6）：离开一个条目前，没保存的改动自动存成「草稿」；从左栏打开效果 = 回到 AI 版，
+// 先丢掉这个效果里各层没保存的改动（已在草稿里），否则带改动的状态会被当成 AI 版的基准，「参数已变」不亮、「通过」放行。
+function effEntryIds(ef) {
+  const ids = new Set();
+  for (const e of FW_REVIEW_LIST) if (effectOfEntry(e) === ef) { ids.add(e.id); (e.layerIds || []).forEach(i => ids.add(i)); }
+  for (const k of [ef.主条目, ef.待验收版, ef.已通过版]) if (k) ids.add(String(k).replace(/^rep:/, ''));
+  return ids;
+}
+function dropEffectEdits(ef) {
+  if (!ef) return;
+  for (const id of effEntryIds(ef)) {
+    if (state.layerEdits) delete state.layerEdits[id];
+    const le = state.lib.find(x => x.rep === id); if (le && le.editSig) { dropLibBake(le); state.lib.splice(state.lib.indexOf(le), 1); }
+  }
+}
+function beforeOpen(nextEf) {
+  autoDraft();
+  if (lib.effect && (!nextEf || nextEf.key !== lib.effect.key)) dropEffectEdits(lib.effect);
+}
+// 组合编辑器（4.2.3 走查 A1）：自己的身份——不继承上一个打开的效果（资产栏名字、版本归属、交付命名都是「组合编辑器」），从第一个预设开始
+async function openComboEditor(o = {}) {
+  beforeOpen(null);
+  setQueuedView(false); lib.effect = null; lib.formal = null; wb.entry = undefined; lib.key = 'combo';
+  setReview(null);
+  state.comboSel = -1; state.layerView = { solo: -1, mute: [] };
+  await setTab('combo', { lazy: true }); syncComboPanels();
+  await ensureLibrary();
+  if (o.preset !== false) await applyCombo(structuredClone(COMBOS[0]));    // 打开「我的版本」时由那个版本自己定层
+  renderLib(); crumb('工具', '组合编辑器'); wbRefresh();
+}
 function openEffect(ef) {
+  beforeOpen(ef); dropEffectEdits(ef);
   const x = entryById(ef.阶段 === '待验收' && ef.待验收版 ? ef.待验收版 : ef.主条目);
   lib.effect = ef;
   if (!x) { setQueuedView(false); lib.key = 'ef:' + ef.key; setReview(null); renderLib(); crumb(ef.阶段, ef.名); showEffectOnly(ef); return; }
@@ -123,6 +154,7 @@ async function openMine(k, id) {
   else if (k.startsWith('rv:')) { const e = FW_REVIEW_LIST.find(x => x.id === k.slice(3)); if (!e) return; await openReview(e); }
   else if (k.startsWith('rep:')) { const r = REPLICA_BY_ID[k.slice(4)]; if (!r) return; openFormal(r); }
   else if (k.startsWith('type:')) openType(k.slice(5));
+  else if (k === 'combo') await openComboEditor({ preset: false });       // 4.2.3（走查 A2）：编辑器里存的版本也能打开
   else return;
   await wbLoad(id); lib.key = 'mine:' + k + ':' + id; renderLib();
 }
@@ -287,7 +319,7 @@ function renderLib() {
   }
   // 工具：组合编辑器、云端配方预览、4.0 对照橱窗、打开结果文件夹（按钮本体留在页面里，事件照旧）
   const tools = [
-    ['combo', '组合编辑器', '一个菊 + 几层缩小的牡丹 = 八重芯 / 三重芯', () => { setQueuedView(false); lib.key = 'combo'; setReview(null); setTab('combo'); renderLib(); crumb('工具', '组合编辑器'); }],
+    ['combo', '组合编辑器', '一个菊 + 几层缩小的牡丹 = 八重芯 / 三重芯', () => openComboEditor()],
     ['tool:cloud', $('#cloudRecipesOpen').textContent, '云端配好的多层配方，本机烘焙后看', () => $('#cloudRecipesOpen').click()],
     ['tool:showcase', '4.0 对照橱窗', '3.7 / 4.0 同一秒对照（新旧渲染的唯一入口）', () => $('#showcaseOpen').click()],
     ['tool:dir', '打开结果文件夹…', '临时看某个导出结果（贴图按引擎方式播放）', () => $('#assetOpen2').click()],
@@ -310,6 +342,7 @@ function rememberLayerEdit() {
   state.layerEdits[r.id] = { P: structuredClone(state.P), M: structuredClone(state.M) };
 }
 function openReview(e, ef) {
+  const nextEf = ef || effectOfEntry(e); if (!ef) beforeOpen(nextEf);   // openEffect 已经做过
   rememberLayerEdit(); wb.entry = undefined;     // 重新打开 = 回到 AI 版（资产栏）
   lib.effect = ef || effectOfEntry(e); lib.formal = null;
   lib.key = ef ? 'ef:' + ef.key : 'rv:' + e.id; store.set('lastKey', lib.key);
@@ -334,10 +367,11 @@ async function openComboEntry(e) {
   await setTab('combo', { lazy: true }); await applyCombo(e.combo); lib.sig = curSig(); setReview(e); syncComboPanels();   // lazy：只烘这个组合用到的层，不先烘整套默认母版
 }
 function openFormal(r, ef) {
+  if (!ef) beforeOpen(effectOfEntry({ id: r.id }));
   wb.entry = undefined; lib.effect = ef || effectOfEntry({ id: r.id }); lib.formal = r;
   setQueuedView(false); lib.key = ef ? 'ef:' + ef.key : 'rep:' + r.id; setReplica(r.id); setTab('master'); lib.sig = curSig(); setReview(null, r); renderLib(); crumb(lib.effect ? lib.effect.阶段 + ' · ' + lib.effect.名 : '正式库', r.name);
 }
-function openType(t) { wb.entry = undefined; lib.effect = null; lib.formal = null; setQueuedView(false); lib.key = 'type:' + t; setType(t); setTab('master'); setReview(null); renderLib(); crumb('花型', TYPE_NAMES[t]); }
+function openType(t) { beforeOpen(null); wb.entry = undefined; lib.effect = null; lib.formal = null; setQueuedView(false); lib.key = 'type:' + t; setType(t); setTab('master'); setReview(null); renderLib(); crumb('花型', TYPE_NAMES[t]); }
 
 // 排队中的条目：还没有结果，只放实拍（要对的目标），右栏只留审阅卡
 function setQueuedView(on) {

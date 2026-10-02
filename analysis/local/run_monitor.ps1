@@ -42,7 +42,8 @@ try {
     ('Python={0}; Repo={1}; State={2}' -f $Python, $WorkerRepo, $StateDir) | Out-File -LiteralPath $monitorLaunchLog -Encoding utf8 -Append
     Sync-UserRepo 'before'
     $ErrorActionPreference = 'Continue'
-    & $Python -u -c 'import sys,watch_jobs; sys.exit(watch_jobs.main())' --once --repo $WorkerRepo --state-dir $StateDir --deps $Deps --workers $Workers 2>&1 | Out-File -LiteralPath $monitorLaunchLog -Encoding utf8 -Append
+    $userRepoArgs = @(); if ($UserRepo) { $userRepoArgs = @('--user-repo', $UserRepo) }   # 4.2.4：烘焙器保存的配方从用户工程目录挪进来推上去
+    & $Python -u -c 'import sys,watch_jobs; sys.exit(watch_jobs.main())' --once --repo $WorkerRepo --state-dir $StateDir --deps $Deps --workers $Workers @userRepoArgs 2>&1 | Out-File -LiteralPath $monitorLaunchLog -Encoding utf8 -Append
     $monitorResult = $LASTEXITCODE
     $ErrorActionPreference = 'Stop'
     ('{0} Exit {1}' -f (Get-Date -Format o), $monitorResult) | Out-File -LiteralPath $monitorLaunchLog -Encoding utf8 -Append

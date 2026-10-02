@@ -16,6 +16,9 @@ JOB_ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_-]*\Z')
 STANDARD_GENERATED = {'tool/data/standard.js', 'analysis/probe/标准检查/标准检查.json',
                       'analysis/probe/标准检查/标准检查.md'}
 GENERATED = {'tool/data/review.js', 'tool/data/video_meta.json', '协作/状态清单.md'} | STANDARD_GENERATED
+# 4.2.4：烘焙器「保存」顺便写进用户工程目录的待上传副本；这里挪进工作树的 analysis/我的配方/ 推上去，推成功再删副本
+RECIPE_PENDING = 'analysis/我的配方/_待上传'
+RECIPE_DIR = 'analysis/我的配方'
 
 
 def now():
@@ -92,8 +95,9 @@ def select_jobs(repo, attempts):
 
 
 class Monitor:
-    def __init__(self, repo, state_dir, workers=3, deps=None):
+    def __init__(self, repo, state_dir, workers=3, deps=None, user_repo=None):
         self.repo = Path(repo).resolve()
+        self.user_repo = Path(user_repo).resolve() if user_repo else None
         self.state_dir = Path(state_dir).resolve()
         self.state_dir.mkdir(parents=True, exist_ok=True)
         self.workers = workers
@@ -162,6 +166,41 @@ class Monitor:
         if self.git('diff', '--cached', '--quiet', check=False).returncode:
             self.git('commit', '-m', message)
 
+    def collect_recipes(self):
+        """用户在烘焙器里点「保存」（连了仓库文件夹时）→ <用户工程>/analysis/我的配方/_待上传/<效果>/<版本>.json；
+        这里校验格式后复制进工作树 analysis/我的配方/<效果>/，提交推送，成功后删掉用户那边的待上传副本
+        （副本和正式路径不同，用户工程快进拉取时不会撞上未跟踪文件）。"""
+        if not self.user_repo or self.user_repo == self.repo: return
+        src = self.user_repo / RECIPE_PENDING
+        if not src.is_dir(): return
+        moved = []
+        for f in sorted(src.rglob('*.json')):
+            try:
+                if not f.is_file() or f.stat().st_size > 4_000_000: continue
+                data = json.loads(f.read_text(encoding='utf-8'))
+                if data.get('format') != 'fwl.myrecipe/1' or not isinstance(data.get('snap'), dict): continue
+            except (OSError, ValueError):
+                continue
+            rel = f.relative_to(src).as_posix()
+            if '..' in rel.split('/'): continue
+            dst = self.repo / RECIPE_DIR / rel
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            dst.write_bytes(f.read_bytes())
+            moved.append((f, RECIPE_DIR + '/' + rel))
+        if not moved: return
+        self.status('uploading_recipes', recipes=[p for _, p in moved])
+        self.commit('user: 我的配方 ' + '、'.join(p.split('/', 2)[-1] for _, p in moved)[:180], [p for _, p in moved])
+        for _ in range(3):
+            self.git('fetch', 'origin')
+            self.rebase()
+            if self.git('push', 'origin', 'HEAD:main', check=False).returncode == 0:
+                for f, _ in moved:
+                    try: f.unlink()
+                    except OSError: pass
+                self.status('recipes_uploaded', recipes=[p for _, p in moved], last_recipes=now())
+                return
+        raise RuntimeError('我的配方推送失败；用户那边的副本保留，下次检查再推')
+
     def check_clean(self):
         # Ignore nontracked dependency/output directories; never stash or overwrite tracked edits.
         if self.git('status', '--porcelain', '--untracked-files=no').stdout.strip():
@@ -203,6 +242,7 @@ class Monitor:
             self.check_clean()
             self.git('fetch', 'origin')
             self.rebase()
+            if not dry_run: self.collect_recipes()
             selected, completed, paused = select_jobs(self.repo, self.state['attempts'])
             self.status('ready', checked_commit=self.git('rev-parse', 'HEAD').stdout.strip(),
                         pending=[job['id'] for job, _ in selected], completed_count=len(completed), paused=paused)
@@ -242,12 +282,13 @@ def main():
     parser.add_argument('--workers', type=int, choices=(1, 2, 3), default=3)
     parser.add_argument('--once', action='store_true', help='One check; Windows schedules the next one')
     parser.add_argument('--dry-run', action='store_true', help='Synchronize and inspect without running or publishing jobs')
+    parser.add_argument('--user-repo', help='用户自己的工程目录（烘焙器在这里打开、保存的配方在这里等上传）')
     args = parser.parse_args()
     Path(args.state_dir).mkdir(parents=True, exist_ok=True)
     logging.basicConfig(filename=str(Path(args.state_dir) / 'monitor.log'), level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(message)s', encoding='utf-8', force=True)
     logging.info('Started queue checker pid=%s repo=%s', os.getpid(), args.repo)
-    monitor = Monitor(args.repo, args.state_dir, args.workers, args.deps)
+    monitor = Monitor(args.repo, args.state_dir, args.workers, args.deps, args.user_repo)
     try:
         result = monitor.cycle(args.dry_run)
         print(json.dumps({key: monitor.state.get(key) for key in

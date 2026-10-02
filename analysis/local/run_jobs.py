@@ -80,6 +80,11 @@ def run_job(job, s, force=False):
                 for line in (r.stdout or '').splitlines()[-40:]: log(line)
                 if r.returncode not in (0, 1) or not os.path.exists(os.path.join(out, '冒烟.json')): raise RuntimeError('界面冒烟脚本没跑完：' + (r.stderr or '')[-3000:])
                 log('界面冒烟：' + ('✅ 没有报错' if r.returncode == 0 else '❌ 有报错，见 冒烟.json'))
+                if job.get('state'):     # 4.2.3：界面状态检查（走查 A1–A6）真烘焙跑一遍
+                    r2 = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '界面状态检查.py'), '--real', '--out', os.path.join(out, '界面状态检查.json')],
+                                        capture_output=True, text=True, encoding='utf-8', errors='replace')
+                    for line in (r2.stdout or '').splitlines()[-12:]: log(line)
+                    log('界面状态检查：' + ('✅ 全过' if r2.returncode == 0 else '❌ 有不过的项，见 界面状态检查.json'))
             elif job['type'] == 'ui':
                 log(f"开始：{job.get('name', '')}（界面截图）")
                 import ui_shots; ui_shots.run(job, s, out, log=log)

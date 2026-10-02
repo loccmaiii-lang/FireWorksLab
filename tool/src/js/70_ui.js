@@ -40,7 +40,7 @@ let bakeTimer = 0;
 function scheduleBake() { clearTimeout(bakeTimer); bakeTimer = setTimeout(runPreviewBake, 380); }
 async function runPreviewBake() {
   clearTimeout(bakeTimer);
-  if (state.tab === 'combo' && state.comboSel >= 0) return runLayerBake();
+  if (state.tab === 'combo' && state.comboSel >= 0) { const le = state.lib.find(x => state.layers[state.comboSel] && x.name === state.layers[state.comboSel].lib); if (le && state.dirty) { state.dirty = false; queueLayerBake(le, 0); } return; }
   if (state.baking) { state.rebake = true; return; }
   if (!state.dirty || state.failedGen === state.gen) return;
   state.baking = true; state.rebake = false;
@@ -74,47 +74,67 @@ async function runPreviewBake() {
     }
   } finally {
     state.baking = false; state.rebake = false;
-    if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
+    if (state.layerQueue && state.layerQueue.size) runLayerQueue();
+    else if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
   }
 }
 // 多层效果里调某一层（2026-10-02 用户 07:43）：state.P 就是这一层的参数（组合库条目 e.P），改了只重烘这一层；
 // 画面一直是整朵（实时模拟按 e.P 现算，引擎回放 / 贴图用新烘的 e.bake）。调过的层记进 state.layerEdits，换版本 / 保存时用。
-async function runLayerBake() {
-  const i = state.comboSel, L = state.layers[i], e = L && state.lib.find(x => x.name === L.lib);
+// 4.2.3（走查 A4）：每层自己排队重烘。以前只有「当前选中的层」能烘：改完一层马上点别的层（或拖别的层的点），
+// 这次重烘被丢掉，参数是新的、贴图是旧的，导出包和参数不一致。现在每层记一个参数版本号 pRev，改了就进队列；
+// 烘的是哪层就发布到哪层，和现在选中谁无关；烘的时候又改了，烘完不发布、按最新参数再烘一次。
+function dropLibBake(e) { if (e && e.bake && !state.lib.some(x => x !== e && x.bake === e.bake)) disposeBake(e.bake); if (e) e.bake = null; }
+function queueLayerBake(e, delay = 380) {
   if (!e) return;
-  if (state.baking) { state.rebake = true; return; }
-  if (!state.dirty || state.failedGen === state.gen) return;
-  state.baking = true; state.rebake = false;
-  const gen = state.gen; let pending = null;
-  e.rev = (e.rev || 0) + 1;            // 实时模拟马上按新参数重算
+  e.pRev = (e.pRev || 0) + 1; e.rev = (e.rev || 0) + 1;      // rev：实时模拟马上按新参数重算
+  (state.layerQueue = state.layerQueue || new Set()).add(e);
+  clearTimeout(state.layerQueueTimer); state.layerQueueTimer = setTimeout(runLayerQueue, delay);
+}
+async function runLayerQueue() {
+  clearTimeout(state.layerQueueTimer);
+  const q = state.layerQueue; if (!q || !q.size || state.baking) return;     // 正在烘的那次结束时会再叫这里
+  const e = q.values().next().value;
+  if (!state.lib.includes(e) || e.failedRev === e.pRev) { q.delete(e); return runLayerQueue(); }
+  state.baking = true;
+  const rev = e.pRev, idx = () => state.layers.findIndex(L => L.lib === e.name), isCur = () => state.tab === 'combo' && state.comboSel >= 0 && state.layers[state.comboSel] && state.layers[state.comboSel].lib === e.name;
+  let pending = null;
   try {
-    const b = pending = await bake(libP(e.P, true), 1, p => { if (gen === state.gen) setStatus(`重烘第 ${i + 1} 层… ${Math.round(p * 100)}%`); });
-    if (gen !== state.gen || state.comboSel !== i || state.tab !== 'combo') { disposeBake(b); pending = null; return; }
-    disposeBake(e.bake); e.bake = b; pending = null;
+    const b = pending = await bake(libP(e.P, true), 1, p => setStatus(`重烘第 ${idx() + 1} 层… ${Math.round(p * 100)}%`));
+    pending = null;
+    if (!state.lib.includes(e)) { disposeBake(b); q.delete(e); return; }
+    if (e.pRev !== rev) { disposeBake(b); return; }                          // 烘的时候又改了：留在队列里，按最新参数再烘
+    dropLibBake(e); e.bake = b; q.delete(e); e.failedRev = -1;
     if (e.rep) { state.layerEdits = state.layerEdits || {}; state.layerEdits[e.rep] = { P: e.P, M: e.M }; e.editSig = JSON.stringify([e.P, e.M]); }
-    state.dirty = false; state.failedGen = -1; state.bakeError = null; syncBakeError();
-    showStats(b); setStatus('');
-    await syncLinkedLayers(i);
-    if (state.platform === 'mobile') await ensureComboMobile();
+    if (isCur()) { state.failedGen = -1; state.bakeError = null; syncBakeError(); showStats(b); }
+    setStatus('');
+    const i = idx(); if (i >= 0) syncLinkedLayers(i);
+    if (state.platform === 'mobile' && !q.size) await ensureComboMobile();
     if (typeof buildLayerCard === 'function') buildLayerCard();
   } catch (err) {
     if (pending) disposeBake(pending);
     console.error(err);
-    if (gen === state.gen) { state.dirty = true; state.failedGen = gen; state.bakeError = { gen, message: err.message || String(err) }; $('#stats').textContent = '这一层的新参数烘焙失败；修改参数或点击重试。'; setStatus(''); syncBakeError(); }
+    if (e.pRev === rev) {
+      e.failedRev = rev; q.delete(e);
+      if (isCur()) { state.failedGen = state.gen; state.bakeError = { gen: state.gen, message: err.message || String(err) }; $('#stats').textContent = '这一层的新参数烘焙失败；修改参数或点击重试。'; syncBakeError(); }
+      else flash(`第 ${idx() + 1} 层烘焙失败：${err.message || err}`, true);
+      setStatus('');
+    }
   } finally {
     state.baking = false; state.rebake = false;
-    if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
+    if (q.size) runLayerQueue();
+    else if (state.dirty && state.failedGen !== state.gen && !(state.tab === 'combo' && state.comboSel >= 0)) runPreviewBake();
   }
 }
 // 同一批星（种子、星数、初速、终端速度都一样）的层：决定轨迹的参数改一处、几层一起变（用户 2026-10-02 13:09：两层共用的参数要两层一起改，以前没有联动）
 const LINK_KEYS = ['seed', 'stars', 'v0', 'vt', 'grav', 'speedJit', 'dirJit', 'burstR0', 'pattern', 'tilt', 'ringFrac', 'wind', 'turb', 'turbScale', 'tailDiffuse', 'tailDiffuseScale', 'massLoss', 'shellVx', 'shellVy', 'shellSpin', 'shellNo'];
 function computeLinks() {
   const g = new Map(); state.links = [];
-  state.layers.forEach((L, i) => { const e = state.lib.find(x => x.name === L.lib); if (!e || familyOf(e.P.type) !== 'aerial') return; const k = [e.P.seed, e.P.stars, e.P.v0, e.P.vt].join('|'); if (!g.has(k)) g.set(k, []); g.get(k).push(i); });
+  // 复制出来的层（同一个母版用了两次，4.2.3）是另一发，不按「同一批星」联动
+  state.layers.forEach((L, i) => { const e = state.lib.find(x => x.name === L.lib); if (!e || familyOf(e.P.type) !== 'aerial') return; const k = [e.P.seed, e.P.stars, e.P.v0, e.P.vt, e.fork ? e.name : ''].join('|'); if (!g.has(k)) g.set(k, []); g.get(k).push(i); });
   for (const arr of g.values()) if (arr.length > 1) state.links.push(arr);
 }
 const linkedWith = i => ((state.links || []).find(a => a.includes(i)) || []).filter(j => j !== i);
-async function syncLinkedLayers(i) {
+function syncLinkedLayers(i) {
   if (state.linkOff) return;
   const e = state.lib.find(x => x.name === state.layers[i].lib), done = [];
   for (const j of linkedWith(i)) {
@@ -122,12 +142,10 @@ async function syncLinkedLayers(i) {
     const diff = LINK_KEYS.filter(k => e.P[k] !== undefined && JSON.stringify(e.P[k]) !== JSON.stringify(e2.P[k]));
     if (!diff.length) continue;
     for (const k of diff) e2.P[k] = structuredClone(e.P[k]);
-    e2.rev = (e2.rev || 0) + 1;
-    try { const b = await bake(libP(e2.P, true), 1, p => setStatus(`联动：重烘第 ${j + 1} 层 ${Math.round(p * 100)}%`)); disposeBake(e2.bake); e2.bake = b; } catch (err) { flash('联动重烘失败：' + err.message, true); }
-    if (e2.rep) { state.layerEdits = state.layerEdits || {}; state.layerEdits[e2.rep] = { P: e2.P, M: e2.M }; e2.editSig = JSON.stringify([e2.P, e2.M]); }
+    queueLayerBake(e2, 0);
     done.push(`第 ${j + 1} 层（${diff.join('、')}）`);
   }
-  setStatus(''); if (done.length) flash('联动：同步了 ' + done.join('；'));
+  if (done.length) flash('联动：同步了 ' + done.join('；'));
 }
 function syncBakeError() {
   const e = state.bakeError; $('#bakeError').hidden = !e;
@@ -137,9 +155,17 @@ function syncBakeError() {
 }
 function retryPreviewBake() {
   if (state.baking) return;
+  if (state.tab === 'combo' && state.comboSel >= 0) { const le = state.lib.find(x => state.layers[state.comboSel] && x.name === state.layers[state.comboSel].lib); if (le) { le.failedRev = -1; state.failedGen = -1; state.bakeError = null; syncBakeError(); queueLayerBake(le, 0); } return; }
   state.failedGen = -1; state.dirty = true; runPreviewBake();
 }
-function onParam() { derive(state.P); state.gen++; state.dirty = true; $('#stats').textContent = '烘焙中…'; syncBakeError(); scheduleBake(); refreshVisibility(); }
+function onParam() {
+  derive(state.P); state.gen++; $('#stats').textContent = '烘焙中…';
+  // 组合里正在调某一层：这一层马上进自己的重烘队列（4.2.3 走查 A4：不等防抖，切层也不会丢）
+  const le = state.tab === 'combo' && state.comboSel >= 0 && state.layers[state.comboSel] ? state.lib.find(x => x.name === state.layers[state.comboSel].lib) : null;
+  if (le && le.P === state.P) { state.bakeError = null; syncBakeError(); queueLayerBake(le); }
+  else { state.dirty = true; syncBakeError(); scheduleBake(); }
+  refreshVisibility();
+}
 function showStats(b) {
   if (b.form === 'emitset') { $('#stats').innerHTML = rtStatsHTML(b); return; }
   const m = b.meta, L = m.L, P = b.P, cls = ok => ok ? 'ok' : 'warn', c = m.check || {};
@@ -429,7 +455,7 @@ async function ensureLibEntries(keys) {
   for (const k of new Set(keys)) {
     if (!k.startsWith('rep:')) continue;
     const ed = state.layerEdits && state.layerEdits[k.slice(4)], e = libByType(k);
-    if (ed && e) { const sig = JSON.stringify([ed.P, ed.M]); if (e.editSig !== sig) { disposeBake(e.bake); state.lib.splice(state.lib.indexOf(e), 1); } }
+    if (ed && e) { const sig = JSON.stringify([ed.P, ed.M]); if (e.editSig !== sig) { dropLibBake(e); state.lib.splice(state.lib.indexOf(e), 1); } }
   }
   const need = [...new Set(keys)].filter(k => !libByType(k));
   for (let i = 0; i < need.length; i++) {
@@ -449,9 +475,31 @@ function newLayer(entry, o = {}) {
   const M = entry.M;
   return { lib: entry.name, scale: 1, delay: 0, rate: 1, mirror: false, stages: M.stages.map(s => [...s]), xw: M.xw, ramp0: M.ramp0, ramp1: M.ramp1, ramp2: M.ramp2, ramp3: M.ramp3, headInt: M.headInt, tailInt: M.tailInt, ...o };
 }
+// 4.2.3（走查 A3）：同一个母版被第二层用到时复制一份（参数、颜色各自独立；贴图先共用，哪层改了哪层自己重烘）
+function libFork(e) {
+  const base = e.name.replace(/ #\d+$/, ''); let n = 2; while (state.lib.some(x => x.name === `${base} #${n}`)) n++;
+  const f = { ...e, name: `${base} #${n}`, P: structuredClone(e.P), M: structuredClone(e.M), fork: true, pRev: 0, rev: 0 };
+  delete f.rep; delete f.editSig; state.lib.push(f); return f;
+}
+function layerEntryFor(e, used) { return used.has(e) || state.layers.some(L => L.lib === e.name) ? libFork(e) : e; }
+// 4.2.3（走查 A2）：保存的版本里不是条目的层（默认母版、编辑器里调过的层）带着自己的参数，恢复时按它重烘，不再变回「默认」
+async function libOwn(src) {
+  const t = src.type || src.P.type, base = (TYPE_NAMES[t] || t).replace(/（.*）/, '') + ' · 我的'; let n = 1; while (state.lib.some(x => x.name === `${base} ${n}`)) n++;
+  const P = structuredClone(src.P), M = structuredClone(src.M || defaultsFor(t).M);
+  const b = await bake(libP(P, true), 1, p => busy(true, `烘焙你的层：${base} ${n}`, p)); busy(false);
+  const e = { name: `${base} ${n}`, type: t, P, M, bake: b, own: true }; state.lib.push(e); return e;
+}
 async function applyCombo(c) {
-  await ensureLibEntries(c.layers.map(l => l.m));
-  state.layers = c.layers.map(l => { const e = libByType(l.m); const { m, ...rest } = l; if (rest.stages) rest.stages = rest.stages.map(s => [...s]); return newLayer(e, rest); });
+  await ensureLibEntries(c.layers.filter(l => !l.src).map(l => l.m));
+  const used = new Set(), layers = [];
+  for (const l of c.layers) {
+    let e = l.src ? await libOwn(l.src) : libByType(l.m);
+    if (!l.src && used.has(e)) e = libFork(e);
+    used.add(e);
+    const { m, src, ...rest } = l; if (rest.stages) rest.stages = rest.stages.map(s => [...s]);
+    layers.push(newLayer(e, rest));
+  }
+  state.layers = layers;
   state.comboName = c.name; state.t = 0; computeLinks(); buildComboPanel();
   if(state.platform==='mobile')await ensureComboMobile();
   if (typeof buildLayerCard === 'function') buildLayerCard();
@@ -497,7 +545,7 @@ function buildComboPanel() {
   for (const e of state.lib) {
     const it = document.createElement('div'); it.className = 'it';
     it.innerHTML = `<span>${e.name}</span><small>${TYPE_NAMES[e.type]}</small>`;
-    const add = document.createElement('button'); add.className = 'x'; add.textContent = '加入'; add.addEventListener('click', () => { state.layers.push(newLayer(e)); buildComboPanel(); });
+    const add = document.createElement('button'); add.className = 'x'; add.textContent = '加入'; add.addEventListener('click', () => { state.layers.push(newLayer(layerEntryFor(e, new Set()))); computeLinks(); buildComboPanel(); if (typeof buildLayerCard === 'function') buildLayerCard(); });
     it.appendChild(add); libBox.appendChild(it);
   }
 }

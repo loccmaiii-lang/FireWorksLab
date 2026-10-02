@@ -3,7 +3,8 @@
 为什么用假烘焙：这里查的是「参数 / 版本 / 身份 / 重烘排队」这些状态对不对，不看像素。
 假烘焙按真的取景 + 取帧计划（measure + plan）造一个烘焙结果，记下每次烘的参数，不碰显卡，所以快、而且结果可以逐项断言。
 
-用法：python3 analysis/scripts/界面状态检查.py [--only A1,A4] [--out 结果.json]
+用法：python3 analysis/scripts/界面状态检查.py [--only A1,A4] [--out 结果.json] [--html 别的版本的 FireworkBaker.html] [--real]
+  --real：不用假烘焙，真的烘（本机显卡任务 type "smoke" + "state": true 时这样跑，等待时间放长）
 每项：pass / fail + 说明；有不过的项退出码 1。
   A1 组合编辑器不继承上一个效果的身份（资产栏名字、版本归属、导出名）
   A2 编辑器里存的版本刷新后能打开，非条目层的参数也恢复
@@ -23,6 +24,7 @@ FAKE = r"""(() => {
   window.__bakes = [];
   const chk = { clipFrames: [], edgeFrames: [], chanUse: [true, true, true, true], emptyMid: [], similar: 0, seam: null, maxClip: 0 };
   bake = async (P, scale, onProg) => {
+    if (!['master', 'segments'].includes(P.form)) throw new Error('假烘焙只造大面片 / 分段；「' + P.form + '」要真烘焙（--real）');
     const Pc = structuredClone(P), fm = measure(Pc), pl = plan(Pc, fm), pages = typeof splitPlan40 === 'function' ? splitPlan40(pl) : [pl];
     const parts = pages.map(meta => ({ P: Pc, form: Pc.form, N: 4, NH: 4, cw: 1, chh: 1, scale: 1, fm, head: { dispose() { } }, tail: null,
       meta: { ...meta, check: chk, lightKeys: [[0, 1], [1, 0]], darkTail: 0, frameMaxes: [], quality: qualityOf(Pc), expoH: 1, expoT: 1, bakeMs: 1, sparkSlots: 0 } }));
@@ -36,10 +38,14 @@ FAKE = r"""(() => {
   return 0;
 })()"""
 
-IDLE = "window.__fw.idle() && !state.baking && !(state.layerQueue && state.layerQueue.size)"
+IDLE = "window.__fw.idle() && !state.baking && !(state.layerQueue && state.layerQueue.size) && $('#busy').hidden && !window.__opening"
 
 
-async def idle(pg, ms=20000):
+REAL = False
+
+
+async def idle(pg, ms=None):
+    ms = ms or (240000 if REAL else 20000)
     t0 = time.time()
     while time.time() - t0 < ms / 1000:
         if await pg.evaluate(IDLE): await pg.wait_for_timeout(250); return True
@@ -55,18 +61,18 @@ async def fresh(p, b):
     await pg.add_init_script("window.requestAnimationFrame = () => 0;")
     await pg.goto(HTML, wait_until='load', timeout=0)
     await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
-    await pg.evaluate(FAKE)
+    if not REAL: await pg.evaluate(FAKE)
     return ctx, pg, errs
 
 
 async def open_effect(pg, key):
-    await pg.evaluate(f"Promise.resolve(openEffect(EFFS().find(e => e.key === {json.dumps(key)}))).then(() => 0)")
+    await pg.evaluate(f"(() => {{ window.__opening = true; Promise.resolve(openEffect(EFFS().find(e => e.key === {json.dumps(key)}))).finally(() => window.__opening = false); return 0; }})()")
     await idle(pg)
 
 
 async def open_editor(pg, preset=0):
     # 和用户点「工具 → 组合编辑器」同一个入口（左栏工具组的那一项）
-    await pg.evaluate("(() => { const it = [...document.querySelectorAll('#libBody .li')].find(x => x.dataset.key === 'combo'); if (it) it.click(); else throw new Error('左栏没有组合编辑器'); return 0; })()")
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openComboEditor()).finally(() => window.__opening = false); return 0; })()")
     await idle(pg)
     if preset is not None:
         await pg.evaluate(f"Promise.resolve(applyCombo(structuredClone(COMBOS[{preset}]))).then(() => 0)"); await idle(pg)
@@ -98,7 +104,7 @@ async def a2_same(p, b):
     for rnd in range(2):
         await pg.goto(HTML, wait_until='load', timeout=0)
         await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
-        await pg.evaluate(FAKE)
+        if not REAL: await pg.evaluate(FAKE)
         if rnd == 0:
             await open_editor(pg, 0)
             await set_layer_param(pg, 1, 'stars', 77); await idle(pg)
@@ -106,7 +112,7 @@ async def a2_same(p, b):
             sid = await pg.evaluate("wb.src.kind === 'mine' ? wb.src.id : null")
             if not sid: await ctx.close(); return False, '保存没有成功'
         else:
-            item = await pg.evaluate(f"(() => {{ const it = [...document.querySelectorAll('#libBody .li')].find(x => x.dataset.key === 'mine:combo:{sid}'); if (!it) return false; it.click(); return true; }})()")
+            item = await pg.evaluate(f"(() => {{ const it = [...document.querySelectorAll('#libBody .li')].find(x => x.dataset.key === 'mine:combo:{sid}'); if (!it) return false; window.__opening = true; Promise.resolve(openMine('combo', '{sid}')).finally(() => window.__opening = false); return true; }})()")
             if not item: await ctx.close(); return False, '刷新后左栏没有这个版本（mine:combo:…）'
             await idle(pg); await pg.wait_for_timeout(500); await idle(pg)
             r = await pg.evaluate("({ key: lib.key, tab: state.tab, n: state.layers.length, stars: state.layers.map(L => { const e = layerEntryOf(L); return e && e.P.stars; }), src: wb.src })")
@@ -170,8 +176,10 @@ async def a6(pg):
 
 
 async def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default='')
-    a = ap.parse_args(); only = set(x for x in a.only.split(',') if x)
+    global HTML, REAL
+    ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
+    a = ap.parse_args(); only = set(x for x in a.only.split(',') if x); REAL = a.real
+    if a.html: HTML = pathlib.Path(a.html).resolve().as_uri() + '?fast'
     from playwright.async_api import async_playwright
     res = []
     async with async_playwright() as p:

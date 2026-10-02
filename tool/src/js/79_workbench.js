@@ -80,7 +80,8 @@ function wbKey() {
   if (lib.effect) return 'ef:' + lib.effect.key;
   if (lib.review) return 'rv:' + lib.review.id;
   if (lib.formal) return 'rep:' + lib.formal.id;
-  return lib.key || '';
+  const k = lib.key || '', m = /^mine:(.+):[^:]+$/.exec(k);     // 从左栏「我的版本」打开的：归到原来那个键（组合编辑器 / 花型模板）
+  return m ? m[1] : k;
 }
 function wbBaseId() { return lib.review ? lib.review.id : lib.formal ? lib.formal.id : lib.key === 'combo' ? '组合编辑器' : state.P.type; }
 const wbAll = () => store.get('mySaves', {});
@@ -91,14 +92,14 @@ function wbSnap() {
   return { kind: 'single', P: structuredClone(state.P), M: structuredClone(state.M), repId: state.repId || null };
 }
 function wbSig() { try { return JSON.stringify(wbSnap()); } catch (e) { return ''; } }
-const wbIdle = () => !state.baking && !state.dirty && $('#busy').hidden && (state.tab !== 'combo' || (state.layers.length && state.layers.every(L => { const e = layerEntryOf(L); return e && e.bake; })));
+const wbIdle = () => !state.baking && !state.dirty && !(state.layerQueue && state.layerQueue.size) && $('#busy').hidden && (state.tab !== 'combo' || (state.layers.length && state.layers.every(L => { const e = layerEntryOf(L); return e && e.bake; })));
 // 打开 / 换版本后，等烘焙稳定了再记「没改过」的样子（烘焙会自动补一些派生字段，不算你的改动）
 function wbArm() {
   const n = ++wb.arm; wb.sig = '';
   const tick = () => { if (n !== wb.arm) return; if (wbIdle()) { wb.sig = wbSig(); wbSync(); } else setTimeout(tick, 400); };
   setTimeout(tick, 300);
 }
-function wbVisible() { return !state.showcase && !!(lib.review ? lib.review.kind !== 'queued' : lib.formal || /^(type:|combo$)/.test(lib.key || '')); }
+function wbVisible() { return !state.showcase && !!(lib.review ? lib.review.kind !== 'queued' : lib.formal || /^(type:|combo$)/.test(wbKey())); }
 function wbRefresh() {
   const k = wbKey();
   if (k !== wb.key || lib.review !== wb.entry) { wb.key = k; wb.entry = lib.review; wb.src = { kind: 'ai' }; wbArm(); }
@@ -123,10 +124,25 @@ function wbSync() {
 }
 setInterval(() => { if (!document.hidden && !$('#assetBar').hidden) wbSync(); }, 1000);
 
+// 4.2.3（走查 A5）：切走 / 刷新前，没保存的改动自动存成这个效果的「草稿」（每个效果一份，再切走就覆盖），资产栏「版本」里能选回来
+function autoDraft() {
+  if (!wb.key || !wb.sig || !wbVisible()) return false;
+  let sig; try { sig = wbSig(); } catch (e) { return false; }
+  if (!sig || sig === wb.sig) return false;
+  const list = wbList(); let d = list.find(x => x.draft);
+  if (!d) { d = { id: 'draft', name: '草稿（没保存就切走了）', draft: true }; list.push(d); }
+  Object.assign(d, { at: wbNow(), base: wbBaseId(), baseVer: lib.review && lib.review.ver || '', from: wb.src.kind === 'mine' ? wb.src.id : 'ai', snap: wbSnap() });
+  wbPut(list); wb.sig = sig;
+  flash('没保存的改动存成了「草稿」：回到这个效果，在资产栏「版本」里选它');
+  return true;
+}
+if (window.addEventListener) window.addEventListener('beforeunload', () => { try { autoDraft(); } catch (e) { } });
 function wbNow() { return new Date().toLocaleString('zh-CN', { hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/\//g, '-'); }
-function wbSave(asNew) {
+async function wbSave(asNew) {
+  if (repoDir.h && !repoDir.ok) await repoPerm(true);      // 连过仓库文件夹：先趁这次点击问一下「允许」（浏览器重开后第一次）
   const list = wbList(), mine = wb.src.kind === 'mine' && list.find(s => s.id === wb.src.id);
-  let it = !asNew && mine;
+  let it = !asNew && mine && !mine.draft && mine;        // 草稿不覆盖：存成正式的一个版本（起名字），草稿删掉
+  if (mine && mine.draft && !asNew) list.splice(list.indexOf(mine), 1);
   if (!it) {
     const name = prompt('给这个版本起个名字（存在这台电脑的浏览器里）', `我的 ${list.length + 1}`);
     if (name == null) return;
@@ -134,14 +150,16 @@ function wbSave(asNew) {
   }
   Object.assign(it, { at: wbNow(), base: wbBaseId(), baseVer: lib.review && lib.review.ver || '', snap: wbSnap() });
   wbPut(list); wb.src = { kind: 'mine', id: it.id }; wb.sig = wbSig(); wbSync(); renderLib();
-  flash(`已保存「${it.name}」（这台电脑的浏览器里；想长期留或发给 AI 用「⋯ → 导出配方文件」）`);
+  let path = null; try { path = await repoWrite(wb.key, it); } catch (e) { flash('存进仓库文件夹失败：' + (e.message || e), true); return; }
+  flash(path ? `已保存「${it.name}」：浏览器里一份 + 仓库 ${path.replace(/^analysis\/我的配方\/_待上传\//, 'analysis/我的配方/')}（后台脚本推上去，AI 能直接读）`
+    : `已保存「${it.name}」（这台电脑的浏览器里；资产栏 ⋯「连接仓库文件夹」后会顺便存进 git，AI 能直接读）`);
 }
 // 回到 AI 版：丢掉这个效果里调过的层，重新打开条目
 async function wbLoadAI() {
   const e = lib.review;
   if (state.layerEdits) {
     const ids = e && e.kind === 'combo' ? e.layerIds || [] : e ? [e.id] : [];
-    for (const id of ids) { delete state.layerEdits[id]; const le = state.lib.find(x => x.rep === id); if (le && le.editSig) { disposeBake(le.bake); state.lib.splice(state.lib.indexOf(le), 1); } }
+    for (const id of ids) { delete state.layerEdits[id]; const le = state.lib.find(x => x.rep === id); if (le && le.editSig) { dropLibBake(le); state.lib.splice(state.lib.indexOf(le), 1); } }
   }
   if (e) await openReview(e, lib.effect); else if (lib.formal) openFormal(lib.formal, lib.effect); else if ((lib.key || '').startsWith('type:')) openType(lib.key.slice(5));
   wb.src = { kind: 'ai' }; wbArm(); wbSync();
@@ -157,7 +175,7 @@ async function wbApply(snap) {
     state.layerEdits = state.layerEdits || {};
     for (const x of snap.layers) if (x.id && x.P) state.layerEdits[x.id] = { P: structuredClone(x.P), M: structuredClone(x.M) };
     state.comboSel = -1; syncComboPanels();
-    await applyCombo({ name: snap.name || state.comboName, layers: snap.layers.map(x => ({ m: x.id ? 'rep:' + x.id : x.type, ...structuredClone(x.L) })) });
+    await applyCombo({ name: snap.name || state.comboName, layers: snap.layers.map(x => ({ ...(x.id ? { m: 'rep:' + x.id } : x.P ? { src: { type: x.type, P: x.P, M: x.M } } : { m: x.type }), ...structuredClone(x.L) })) });
   } else {
     if (state.tab === 'combo') { flash('这个版本是单层，当前打开的是多层效果', true); return; }
     state.P = structuredClone(snap.P); state.M = structuredClone(snap.M); state.repId = snap.repId || state.repId;
@@ -216,6 +234,8 @@ function initWorkbench() {
   initStage();
   const close = () => document.querySelector('.ab-more').removeAttribute('open');
   $('#abCopyDiff').addEventListener('click', () => { close(); wbCopyDiff(); });
+  $('#abRepo').addEventListener('click', () => { close(); repoMenu(); });
+  repoInit();
   $('#abExportFile').addEventListener('click', () => { close(); wbExportFile(); });
   $('#abImportFile').addEventListener('click', () => { close(); $('#abFile').click(); });
   $('#abFile').addEventListener('change', e => { const f = e.target.files[0]; if (f) wbImportFile(f); e.target.value = ''; });
@@ -450,15 +470,10 @@ function gluedPhases(rows) {
     for (const q of phasesOf(P)) if (!q.auto && gluePartners(x.i, sp.at(q.t)).length) set.add(x.i + ':' + q.k); }
   return set;
 }
-// 重烘没选中的几层（粘在一起被带着动的层）
-async function rebakeLayers(idxs) {
-  for (const j of idxs) {
-    const e2 = state.lib.find(x => x.name === state.layers[j].lib); if (!e2) continue;
-    e2.rev = (e2.rev || 0) + 1;
-    try { const b = await bake(libP(e2.P, true), 1, p => setStatus(`接力：重烘第 ${j + 1} 层 ${Math.round(p * 100)}%`)); disposeBake(e2.bake); e2.bake = b; } catch (err) { flash('接力重烘失败：' + err.message, true); }
-    if (e2.rep) { state.layerEdits = state.layerEdits || {}; state.layerEdits[e2.rep] = { P: e2.P, M: e2.M }; e2.editSig = JSON.stringify([e2.P, e2.M]); }
-  }
-  setStatus(''); stage2.tlSig = ''; if (typeof buildLayerCard === 'function') buildLayerCard();
+// 重烘没选中的几层（粘在一起被带着动的层）：进每层的重烘队列（4.2.3 走查 A4）
+function rebakeLayers(idxs) {
+  for (const j of idxs) { const e2 = state.layers[j] && state.lib.find(x => x.name === state.layers[j].lib); if (e2) queueLayerBake(e2, 0); }
+  stage2.tlSig = ''; if (typeof buildLayerCard === 'function') buildLayerCard();
 }
 // 入点 / 出点 = 这一层自己的时间（相对开花）。第一次设入点时，把当前烘焙的「第一次看得见」记成 preFrom（入点前从这里开始放大）
 function setCut(kind) {

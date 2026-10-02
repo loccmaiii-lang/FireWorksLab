@@ -80,7 +80,7 @@ $('#btnSave').addEventListener('click', async () => {
   busy(false);
 });
 // 模式切换见 79_library.js 的 setTab
-$('#btnAddLayer').addEventListener('click', () => { if (state.lib[0]) { state.layers.push(newLayer(state.lib[0])); buildComboPanel(); } });
+$('#btnAddLayer').addEventListener('click', () => { if (state.lib[0]) { state.layers.push(newLayer(layerEntryFor(state.lib[0], new Set()))); computeLinks(); buildComboPanel(); } });
 $('#btnExportCombo').addEventListener('click', exportCombo);
 
 (function showGPU() {
@@ -163,5 +163,5 @@ window.__fw = {
     const b = await bake({ ...P, texW: 320, texH: 320, cols: 8, rows: 8, chans: 1, outMode: 'combined', form: 'master', zoom: 'on', frameMode: 'auto', fpsFloor: 16, shutter: 0 }, 1, null);
     const m = bakeMetrics(b); disposeBake(b); return m;
   },
-  idle: () => !state.baking && !state.dirty
+  idle: () => !state.baking && !state.dirty && !(state.layerQueue && state.layerQueue.size)
 };

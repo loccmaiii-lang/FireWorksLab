@@ -139,6 +139,23 @@ class GitFlowTests(unittest.TestCase):
         self.assertEqual(self.monitor.cycle(), 0)
         self.assertEqual(self.executions, ['NEW'])
 
+    def test_user_recipes_are_moved_pushed_and_local_copies_removed(self):
+        # 4.2.4：烘焙器保存时写进用户工程目录的待上传副本 → 挪进工作树推上去 → 删掉副本；格式不对的不动
+        user = Path(self.directory.name) / 'user'
+        pending = user / 'analysis/我的配方/_待上传/ef_hiki_nishiki'
+        pending.mkdir(parents=True)
+        good = pending / '我的动态_1__abc.json'
+        good.write_text(json.dumps({'format': 'fwl.myrecipe/1', 'key': 'ef:hiki_nishiki', 'name': '我的动态 1', 'snap': {'kind': 'combo'}}, ensure_ascii=False), encoding='utf-8')
+        junk = pending / '别的.json'
+        junk.write_text('{"x": 1}', encoding='utf-8')
+        self.monitor.user_repo = user.resolve()
+        self.assertEqual(self.monitor.cycle(), 0)
+        shown = self.git(self.remote, 'show', 'main:analysis/我的配方/ef_hiki_nishiki/我的动态_1__abc.json')
+        self.assertIn('fwl.myrecipe/1', shown)
+        self.assertFalse(good.exists())
+        self.assertTrue(junk.exists())
+        self.assertNotIn('别的.json', self.git(self.remote, 'ls-tree', '-r', '--name-only', 'main'))
+
     def test_failed_task_is_uploaded_and_waits_for_changed_input(self):
         self.fail = True
         self.assertEqual(self.monitor.cycle(), 1)
