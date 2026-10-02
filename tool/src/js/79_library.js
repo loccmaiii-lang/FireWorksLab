@@ -137,7 +137,6 @@ function effParts(ef, cur) {
   const hist = (ef.历史 || []).map(h => { const e = entryById(h.id.replace(/@.*$/, '')); return `<li>${e && !h.id.includes('@') ? `<a href="#" data-open="${h.id}">${h.id}</a>` : h.id} · ${h.结论}${h.反馈 ? ' —— ' + h.反馈 : ''}</li>`; }).join('');
   const c = [...(ef.exports || [])].reverse().find(x => !x.legacy && !x.stale);
   const more = `<div class="rt">版本</div><div class="rlayers">${ver('待你验收', ef.待验收版)}${ver('工作版', ef.阶段 === '已通过' ? null : ef.工作版)}${ver('已通过', ef.已通过版)}</div>
-    ${vars ? `<div class="rt">方案 / 分档</div><div class="rlayers">${vars}</div>` : ''}
     <div class="rt">准备情况</div><div class="ready" id="effReady">${readyHTML(ef, cur)}</div>
     ${ef.交付说明 ? `<div class="rt">交付说明</div><ul class="deliv">${Object.entries(ef.交付说明).map(([k, v]) => `<li><b>${k}：</b>${v}</li>`).join('')}</ul>` : ''}
     ${c ? `<p class="op"><a href="../analysis/results/${c.job}/烘焙回放.jpg" target="_blank" rel="noopener">导出自检对照图（实拍 / 实时模拟 / 导出效果，开花后同一秒）</a> · <a href="../analysis/results/${c.job}/回放检查.jpg" target="_blank" rel="noopener">贴图回放检查</a></p>` : ''}
@@ -146,7 +145,9 @@ function effParts(ef, cur) {
     ${jobs ? `<p class="qnote">任务：${jobs}</p>` : ''}
     ${hist ? `<details class="hist"><summary>历史版本（${(ef.历史 || []).length}）· 否决 / 被取代，保留参数和你的反馈</summary><ul>${hist}</ul></details>` : ''}`;
   return { head: `<span class="badge">${ef.阶段}</span><b>${ef.名}</b><small>负责：${ef.负责 || '—'}</small>`,
-    pills: `<div class="pgs">${ok(g.计算, '计算完成')}${ok(g.AI自检, 'AI 自检')}${ok(g.素材导出, '素材导出')}${ok(g.用户验收, '你已验收')}</div>`, more };
+    pills: `<div class="pgs">${ok(g.计算, '计算完成')}${ok(g.AI自检, 'AI 自检')}${ok(g.素材导出, '素材导出')}${ok(g.用户验收, '你已验收')}</div>`
+      // 分档（小 / 中 / 大）一直显示在卡片上，不再折在「版本与历史」里（用户 2026-10-02 19:25「只能看到一个，而不是三个」）
+      + (vars ? `<div class="rlayers tiersR"><span class="rt">分档</span>${vars}</div>` : ''), more };
 }
 function effHeaderHTML(ef, cur) { const x = effParts(ef, cur); return x.head ? `<div class="effh"><div class="rh">${x.head}</div>${x.pills}${x.more}</div>` : ''; }
 function readyHTML(ef, cur) {
@@ -205,10 +206,26 @@ function renderLib() {
     const me = effMainEntry(ef), fm = (ef.主条目 || '').startsWith('rep:') ? REPLICA_BY_ID[ef.主条目.slice(4)] : null;
     return ef.thumb ? `<span class="th"><i style="background-image:url(${ef.thumb})"></i></span>` : fm ? thumbHTML({ ...fm, key: 'rep:' + fm.id }) : me ? thumbHTML(me) : '<span class="th"></span>';
   };
-  const effRow = (g, ef) => {
+  const effRow = (g, ef, k) => {
     const badge = effBadge(ef) + stdBadge(ef.待验收版 || ef.主条目);
     const it = libItem(g, 'ef:' + ef.key, thumbOf(ef) + `<span class="tx"><b>${ef.名}</b><small>${ef.阶段 === '未开始' ? (ef.说明 || '未开始') : effSubline(ef)}</small><span class="bds">${badge}</span></span>`, () => openEffect(ef));
     if (ef.阶段 === '未开始') it.classList.add('dimmed');
+    tierRow(g, ef, k);
+  };
+  // 分档（小 / 中 / 大……）：每一档在左栏都有自己的缩略图，点哪档开哪档（用户 2026-10-02 19:25「只能看到一个，而不是三个」）。
+  // 「已通过」组里只列通过的那套分档（rep:），「待我验收 / 制作中」列候选那套。
+  const tierRow = (g, ef, k) => {
+    const vs = (ef.方案 || []).filter(v => (k === 'passed') === v.id.startsWith('rep:')).map(v => [v, entryById(v.id.replace(/@.*$/, ''))]).filter(([, x]) => x);
+    if (vs.length < 2) return;
+    const row = document.createElement('div'); row.className = 'tiers';
+    for (const [v, x] of vs) {
+      const id = v.id.replace(/^rep:/, ''), on = lib.effect === ef && ((lib.review && lib.review.id === id) || (!lib.review && lib.formal && lib.formal.id === id));
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'tier' + (on ? ' cur' : ''); b.title = `${ef.名} · ${v.label}（${id}）`;
+      b.innerHTML = (x.formal ? thumbHTML({ ...x.formal, key: v.id }) : thumbHTML(x)) + `<span class="tl">${v.label}</span><small>${id}</small>`;
+      b.addEventListener('click', ev => { ev.stopPropagation(); if (x.formal) openFormal(x.formal, ef); else openReview(x, ef); });
+      row.appendChild(b);
+    }
+    g.appendChild(row);
   };
   const EMPTY = { review: '现在没有等你验收的效果。AI 自检、导出回放、标准检查都过了的完整候选才会出现在这里。', wip: '没有制作中的效果', passed: '还没有通过的效果' };
   for (const [k, t] of [['review', '待我验收'], ['wip', '制作中'], ['passed', '已通过']]) {
@@ -218,7 +235,7 @@ function renderLib() {
     if (lib.q && !list.length && !formal.length) continue;
     const g = libGroup(host, k, t, list.length, k === 'review' && effNewCount() > 0);
     if (!list.length) g.insertAdjacentHTML('beforeend', `<p class="lsub">${EMPTY[k]}</p>`);
-    for (const ef of list) effRow(g, ef);
+    for (const ef of list) effRow(g, ef, k);
     if (formal.length) {
       const d = document.createElement('details'); d.className = 'histgrp'; d.open = !!lib.q || !!lib.open.formal;
       d.innerHTML = `<summary class="lsub">正式库 · ${formal.length} 条（全部条目）</summary>`;

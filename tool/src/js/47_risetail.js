@@ -64,13 +64,70 @@ function rtHeadPts(P, hx, hz, dx, dz, I, k) {
   }
   return k;
 }
+// 贴图里的火星（4.2.2，用户 19:25「渲染出的素材也要有粒子」）：勾了「进贴图」的档烘进循环层贴图——随体坐标、和白热段火粉同一套
+//   周期编号（每个循环周期正好 M 颗，编号取模定随机量 → 真循环），运动、散开、小涡和同档 GPU 发射器同一套公式；没勾的档留给 GPU 发射器。
+//   细火星寿命短、出生后不到一秒就在面片长度以内烧完，正好放进贴图：近处密密的细火星不占 GPU，引擎里粒子层只放中 / 粗 / 落火等长寿的。
+const RT_CLS = [['F', 'SparksFine', 1], ['M', 'SparksMid', 2], ['C', 'SparksCoarse', 3]];
+const rtTexOn = (P, k) => (P['rt' + k + 'Tex'] || 0) > 0 && (P['rt' + k + 'Rate'] || 0) > 0;
+function rtTexClasses(P, LI) {
+  const sJ = clamp((P.rtSizeJit == null ? 25 : P.rtSizeJit) / 100, 0, 0.9), kJ = clamp((P.rtKdJit == null ? 20 : P.rtKdJit) / 100, 0, 0.9);
+  const soft = (P.rtConeSoft || 0) > 0, us = (P.rtTurbS || 0) * Math.sqrt(1.5), gain = P.rtTexI == null ? 1 : P.rtTexI;
+  return RT_CLS.filter(([k]) => rtTexOn(P, k)).map(([k, , salt]) => {
+    const L = P['rt' + k + 'Life'], j = (P['rt' + k + 'Jit'] || 0) / 100, M = Math.max(1, Math.round(P['rt' + k + 'Rate'] * LI.Tl));
+    // 亮度随寿命 = 同档 GPU 发射器 Color Over Life 的亮度（黑体温度 + 闪烁 + 熄灭），光量 ∝ 尺寸²（远处看一颗火星的亮度）
+    const lum = rtSparkColor(P, L, P['rt' + k + 'I'], P['rt' + k + 'dT'] || 0).map(([u, c]) => [u, rtLum(c) * gain]);
+    return { k, M, rate: M / LI.Tl, L, j, S: P['rt' + k + 'Size'], sJ, kd: P['rt' + k + 'Kd'], kJ, c: (P.rtCone || 0) / (soft ? Math.SQRT2 : 1), soft, us, lum,
+      shrink: P.rtShrink == null ? 0.5 : P.rtShrink, salt: (P.seed | 0) * 31 + salt * 1009 + 7, lifeMax: L * (1 + j) };
+  });
+}
+function rtTexSparkOf(P, C, gi) {
+  const key = ((gi % C.M) + C.M) % C.M, K = key * 7919 + C.salt, uu = (a, b) => 2 * phh(K, a) - 1 + (C.soft ? 2 * phh(K, b) - 1 : 0);
+  const tb = (gi + phh(K, 1)) / C.rate;
+  return { tb, life: C.L * (1 + C.j * (2 * phh(K, 2) - 1)), size: C.S * (1 + C.sJ * (2 * phh(K, 3) - 1)), kd: C.kd * (1 + C.kJ * (2 * phh(K, 4) - 1)),
+    cx: C.c * uu(5, 6), cz: C.c * 0.5 * uu(7, 8), wx: C.us * (2 * phh(K, 9) - 1 + 2 * phh(K, 10) - 1), wz: C.us * 0.7 * (2 * phh(K, 11) - 1 + 2 * phh(K, 12) - 1),
+    ph: 6.2831853 * ((P.rtSpin || 0) * tb + (P.rtSpinPh || 0)) };
+}
+// 一颗贴图火星在年龄 a 的位置 / 速度（随体坐标，弹体以 Vref 匀速上升；和 GPU 发射器同一套线性阻力解）
+function rtTexSparkAt(P, q, a, Vref, R0, o) {
+  const e = Math.exp(-q.kd * a), s1 = (1 - e) / q.kd, fx = -(P.rtFling || 0) * Math.sin(q.ph) + q.cx, fz = -(P.rtJet || 0) + q.cz, gz = Vref + G / q.kd - q.wz;
+  o[0] = R0 * Math.cos(q.ph) + fx * s1 + q.wx * (a - s1); o[1] = fz * s1 - gz * (a - s1);
+  o[2] = fx * e + q.wx * (1 - e); o[3] = fz * e - gz * (1 - e);
+  return o;
+}
+// 画一批贴图火星。拖影和同档 GPU 发射器同一口径：看的人盯着星头 → 拖影 = 相对星头的速度 × 拖影时间（rtStreakT × 每档倍数），
+//   最长 rtStreakMax × 尺寸，光量守恒（拖长不变亮）。循环层快门（白热段连成一片用的）不作用在火星上：每个子帧都画「本帧中间时刻」的位置
+//   （fr = [帧间隔, 起点]，烘焙时给；实时模拟 / 测量时不给 = 就用 ts）。
+const rtTmp4 = [0, 0, 0, 0];
+function rtTexSparksDraw(P, CL, LI, Vref, ts, te, view, ppm, w, fr, fadeAll, bot) {
+  const R0 = (P.rtD || 0) / 2, ppy = PPMY || ppm, cap = bufT.length / 4, smax = Math.max(1, P.rtStreakMax || 6); let n = 0;
+  const tq = fr && fr[0] > 0 ? fr[1] + Math.round((ts - fr[1]) / fr[0]) * fr[0] : ts;
+  for (const C of CL) {
+    const tau = (P.rtStreakT || 0) * (P['rt' + C.k + 'Streak'] == null ? 1 : P['rt' + C.k + 'Streak']);
+    for (let gi = Math.floor(Math.min(te, tq) * C.rate); ; gi--) {
+      const q = rtTexSparkOf(P, C, gi);
+      if (q.tb > te) continue;
+      const a = tq - q.tb; if (a > C.lifeMax + 0.02) break; if (a < 0 || a >= q.life) continue;
+      const u = a / q.life, o = rtTexSparkAt(P, q, a, Vref, R0, rtTmp4);
+      let I = esCurve(C.lum, u) * q.size * q.size * LI.pulse(q.tb) * fadeAll; if (bot) I *= smoothstepJS(bot[0], bot[1], o[1]); if (I <= 0) continue;
+      const S = q.size * (u < 0.7 ? 1 : 1 + (C.shrink - 1) * (u - 0.7) / 0.3) / 2;   // 贴图点 σ = 尺寸 / 2 → 传 S / 2，和软圆点 σ = 尺寸 / 4 同宽
+      const sp = Math.hypot(o[2], o[3]), Lm = Math.min(sp * tau, smax * S * 2), lpx = Lm * Math.hypot(o[2] * ppm, o[3] * ppy) / Math.max(1e-6, sp);
+      const m = clamp(Math.ceil(lpx / 1.2), 1, 32), ux = o[2] / Math.max(1e-6, sp), uz = o[3] / Math.max(1e-6, sp);
+      for (let i = 0; i < m && n < cap; i++) {
+        const d = m > 1 ? ((i + 0.5) / m - 0.5) * Lm : 0;
+        bufT[n * 4] = o[0] + ux * d; bufT[n * 4 + 1] = o[1] + uz * d; bufT[n * 4 + 2] = I / m; bufT[n * 4 + 3] = S; n++;
+      }
+    }
+  }
+  if (n) drawPoints(bufT, n, view, ppm, [0, 1, 0, 0], w);
+  return n;
+}
 // 循环层渲染器（弹体随体坐标，速度 Vref 匀速）：bakeFrames 的接口 draw(ts, view, ppm, w, tick, f)
-//   mode 'loop'：ts 取周期内任意时刻；'fade'：stop = 停喷时刻（循环相位），ts ≥ stop 后星头灭、不再喷，已有火粉按自己的寿命熄灭
+//   mode 'loop'：ts 取周期内任意时刻；'fade'：stop = 停喷时刻（循环相位），ts ≥ stop 后星头灭、不再喷，已有火粉 / 火星按自己的寿命熄灭
 function makeRiseTailLoopRenderer(P, LI, Vref, opts = {}) {
   const rate0 = P.rtARate || 0, M = Math.max(1, Math.round(rate0 * LI.Tl)), rate = M / LI.Tl, salt = (P.seed | 0) * 7 + 11, R0 = (P.rtD || 0) / 2;
-  const lifeMax = rtPowderLifeMax(P);
+  const lifeMax = rtPowderLifeMax(P), CL = rtTexClasses(P, LI);
   const R = {
-    Tp: LI.Tl, slots: Math.ceil(rate * lifeMax) + 2, stop: opts.stop == null ? -1 : opts.stop, fadeDur: opts.fadeDur || 0, bot: opts.bot || null,
+    Tp: LI.Tl, slots: Math.ceil(rate * lifeMax) + 2, stop: opts.stop == null ? -1 : opts.stop, fadeDur: opts.fadeDur || 0, bot: opts.bot || null, subW: 0, fr: opts.fr || null,
     draw(ts, view, ppm, w) {
       setParticleProfile(P);
       const stop = R.stop, fading = stop >= 0 && ts > stop;
@@ -78,8 +135,10 @@ function makeRiseTailLoopRenderer(P, LI, Vref, opts = {}) {
       let k = 0;
       if (!fading) k = rtHeadPts(P, 0, 0, 0, -1, P.rtHeadI * LI.pulse(ts), 0);
       if (k) { drawPoints(bufH, k / 4, view, ppm, [1, 0, 0, 0], w); }
+      const te = fading ? stop : ts;
+      if (CL.length) rtTexSparksDraw(P, CL, LI, Vref, ts, te, view, ppm, w, R.fr, fadeAll, R.bot);
       if (rate0 <= 0) return;
-      const te = fading ? stop : ts, cap = bufT.length / 4; let n = 0;
+      const cap = bufT.length / 4; let n = 0;
       for (let gi = Math.floor(te * rate); ; gi--) {
         const q = rtPowderOf(P, LI, gi, M, rate, salt);
         if (q.tb > te) continue;
@@ -96,7 +155,7 @@ function makeRiseTailLoopRenderer(P, LI, Vref, opts = {}) {
   };
   return R;
 }
-// 实时模拟（地面坐标，真实弹道）：同一套火粉（同编号、同随机量），按出生时刻的弹体位置 / 速度喷出
+// 实时模拟（地面坐标，真实弹道）：同一套火粉 / 贴图火星（同编号、同随机量），按出生时刻的弹体位置 / 速度喷出
 function drawRiseTailLive(P, LI, ball, t, view, ppm) {
   setParticleProfile(P);
   const T = ball.T, R0 = (P.rtD || 0) / 2, lifeMax = rtPowderLifeMax(P);
@@ -105,9 +164,30 @@ function drawRiseTailLive(P, LI, ball, t, view, ppm) {
     const k = rtHeadPts(P, p[0], p[2], -v[0] / sp, -v[2] / sp, P.rtHeadI * LI.pulse(t), 0);
     drawPoints(bufH, k / 4, view, ppm, [1, 0, 0, 0], 1);
   }
-  const rate0 = P.rtARate || 0; if (rate0 <= 0) return 0;
-  const M = Math.max(1, Math.round(rate0 * LI.Tl)), rate = M / LI.Tl, salt = (P.seed | 0) * 7 + 11, te = Math.min(t, T), cap = bufT.length / 4;
   let n = 0;
+  const CL = rtTexClasses(P, LI);
+  if (CL.length) {
+    // 贴图火星在地面坐标：出生时刻的弹体位置 + 速度（同一套随机量），拖影 = 相对星头此刻速度 × 循环层快门
+    const te = Math.min(t, T), vh = ball.vel(Math.min(t, T)), ppy = PPMY || ppm, cap = bufT.length / 4, smax = Math.max(1, P.rtStreakMax || 6);
+    for (const C of CL) for (let gi = Math.floor(te * C.rate), tau = (P.rtStreakT || 0) * (P['rt' + C.k + 'Streak'] == null ? 1 : P['rt' + C.k + 'Streak']); gi >= 0; gi--) {
+      const q = rtTexSparkOf(P, C, gi);
+      if (q.tb > te) continue;
+      const a = t - q.tb; if (a > C.lifeMax + 0.02) break; if (a < 0 || a >= q.life) continue;
+      const p = ball.pos(q.tb), v = ball.vel(q.tb), sp = Math.hypot(v[0], v[2]) || 1, dx = v[0] / sp, dz = v[2] / sp;
+      const e = Math.exp(-q.kd * a), s1 = (1 - e) / q.kd, u = a / q.life;
+      const vx0 = v[0] - (P.rtJet || 0) * dx - (P.rtFling || 0) * Math.sin(q.ph) + q.cx, vz0 = v[2] - (P.rtJet || 0) * dz + q.cz;
+      const x = p[0] + R0 * Math.cos(q.ph) + vx0 * s1 + q.wx * (a - s1), z = p[2] + vz0 * s1 - (G / q.kd - q.wz) * (a - s1);
+      const rvx = vx0 * e + q.wx * (1 - e) - (t <= T ? vh[0] : 0), rvz = vz0 * e - (G / q.kd - q.wz) * (1 - e) - (t <= T ? vh[2] : 0);
+      const I = esCurve(C.lum, u) * q.size * q.size * LI.pulse(q.tb); if (I <= 0) continue;
+      const S = q.size * (u < 0.7 ? 1 : 1 + (C.shrink - 1) * (u - 0.7) / 0.3) / 2, rs = Math.hypot(rvx, rvz) || 1e-6, Lm = Math.min(rs * tau, smax * S * 2);
+      const m = clamp(Math.ceil(Lm * Math.hypot(rvx * ppm, rvz * ppy) / rs / 1.2), 1, 32);
+      for (let i = 0; i < m && n < cap; i++) { const d = m > 1 ? ((i + 0.5) / m - 0.5) * Lm : 0; bufT[n * 4] = x + rvx / rs * d; bufT[n * 4 + 1] = z + rvz / rs * d; bufT[n * 4 + 2] = I / m; bufT[n * 4 + 3] = S; n++; }
+    }
+    drawPoints(bufT, n, view, ppm, [0, 1, 0, 0], 1);
+  }
+  const rate0 = P.rtARate || 0; if (rate0 <= 0) return n;
+  const M = Math.max(1, Math.round(rate0 * LI.Tl)), rate = M / LI.Tl, salt = (P.seed | 0) * 7 + 11, te = Math.min(t, T), cap = bufT.length / 4;
+  let np = 0;
   for (let gi = Math.floor(te * rate); gi >= 0; gi--) {
     const q = rtPowderOf(P, LI, gi, M, rate, salt);
     if (q.tb > te) continue;
@@ -116,11 +196,11 @@ function drawRiseTailLive(P, LI, ball, t, view, ppm) {
     const e = Math.exp(-q.kd * a), s1 = (1 - e) / q.kd;
     const vx0 = v[0] - q.j * dx - q.fl * Math.sin(q.ph) + q.cx, vz0 = v[2] - q.j * dz + q.cz;
     const x = p[0] + R0 * Math.cos(q.ph) + vx0 * s1 + q.wx * (a - s1), z = p[2] + vz0 * s1 - (G / q.kd - q.wz) * (a - s1);
-    const I = rtPowderI(P, q, a, LI.pulse(q.tb)); if (I <= 0 || n >= cap) continue;
-    bufT[n * 4] = x; bufT[n * 4 + 1] = z; bufT[n * 4 + 2] = I; bufT[n * 4 + 3] = q.size; n++;
+    const I = rtPowderI(P, q, a, LI.pulse(q.tb)); if (I <= 0 || np >= cap) continue;
+    bufT[np * 4] = x; bufT[np * 4 + 1] = z; bufT[np * 4 + 2] = I; bufT[np * 4 + 3] = q.size; np++;
   }
-  drawPoints(bufT, n, view, ppm, [0, 1, 0, 0], 1);
-  return n;
+  drawPoints(bufT, np, view, ppm, [0, 1, 0, 0], 1);
+  return n + np;
 }
 // ---- 粒子层：按理论生成发射器（46_emitset.js 的数据）----
 const RT_LAM = [610e-9, 550e-9, 465e-9];
@@ -196,8 +276,8 @@ function rtBuildES(P) {
     accelJit: us > 0 ? [0, 1].map(() => [[-us * kd, -us * kd, -us * kd * 0.7], [us * kd, us * kd, us * kd * 0.7]]) : null });
   const sJ = clamp((P.rtSizeJit == null ? 25 : P.rtSizeJit) / 100, 0, 0.9), kJ = clamp((P.rtKdJit == null ? 20 : P.rtKdJit) / 100, 0, 0.9);
   const em = [];
-  for (const [k, name, salt] of [['F', 'SparksFine', 1], ['M', 'SparksMid', 2], ['C', 'SparksCoarse', 3]]) {
-    const rate = P['rt' + k + 'Rate'] || 0; if (rate <= 0) continue;
+  for (const [k, name, salt] of RT_CLS) {
+    const rate = P['rt' + k + 'Rate'] || 0; if (rate <= 0 || rtTexOn(P, k)) continue;   // 进了贴图的档不再出 GPU 发射器
     const L = P['rt' + k + 'Life'], j = (P['rt' + k + 'Jit'] || 0) / 100, S = P['rt' + k + 'Size'], kd = P['rt' + k + 'Kd'];
     const sizeLife = [[0, 1], [0.7, 1], [1, P.rtShrink == null ? 0.5 : P.rtShrink]];
     const sl = rtStretchLife(P, ball, P.rtJet, kd, L, S, sizeLife, P['rt' + k + 'Streak']);
@@ -215,6 +295,35 @@ function rtBuildES(P) {
       loc, vel: vel(P.rtJet * 0.6, P.rtFling * 0.5), velAdd: soft ? cone : [[-c * 1.5, -c * 1.5, -c], [c * 1.5, c * 1.5, c * 0.3]],
       sizeLife: [[0, 1], [0.8, 0.9], [1, 0.4]], col: rtSparkColor(P, L, P.rtEI * (P.rtDotGain == null ? 1 : P.rtDotGain), -180) });
   }
+  // ---- 引擎里加的效果（4.2.2，用户 19:25「在引擎也加上一些效果会更丰富」；都是软圆点，不新增材质）----
+  // 星头光晕：星头的强光被空气 / 烟散射成一团柔光（贴图格子窄，放不下这么大的光晕 → 引擎里单独一颗）。弹道和循环层同一套（Initial Velocity + Drag + 重力），亮度跟喷射脉动
+  if ((P.rtGlow || 0) > 0) {
+    const S = P.rtGlowSize || 4, bb = rtBB(P.rtT0 || 2450), r = rtLum(bb), keys = [];
+    for (const t of ts) { const u = t / T, f = 1 - 0.35 * smoothstepJS(0.85, 1, u); keys.push([+u.toFixed(5), bb.map(x => +(x / r * 0.25 * P.rtGlow * LI.pulse(t) * f).toFixed(4))]); }
+    em.push({ name: 'HeadGlow', gpu: false, delay: 0, duration: T, seed: seed * 13 + 6, spawn: [], bursts: [[0, 1]],
+      life: [T, T], size: [S, S], drag: [ball.k, ball.k], accel: [0, 0, -G], loc: [[0, [0, 0, 0]]], vel: [[0, [ball.vx0, 0, ball.vz0]]],
+      sizeLife: [[0, 1], [1, 0.8]], col: keys });
+  }
+  // 末段爆亮：木炭 + 硫的熔渣粒烧到最后会微爆，闪一下（线香花火「松叶」的同一个机理）。和粗火星同一套运动，Color Over Life 前面全黑、寿命末段一闪
+  if ((P.rtPopRate || 0) > 0) {
+    const L = P.rtCLife, kd = P.rtCKd, u0 = clamp(P.rtPopAt == null ? 0.85 : P.rtPopAt, 0.2, 0.95), hot = rtBB((P.rtT0 || 2450) + 300), r = rtLum(hot), I = (P.rtPopI || 0) * 0.25 / r * (P.rtDotGain == null ? 1 : P.rtDotGain);
+    const c = (k2) => hot.map(x => +(x * I * k2).toFixed(4)), gold = rtBB(P.rtTb || 2150), rg = rtLum(gold);
+    em.push({ name: 'SparkPops', gpu: true, delay: 0, duration: T, seed: seed * 13 + 7, spawn: spawn(P.rtPopRate),
+      life: [L * 0.6, L * 1.2], size: [(P.rtPopSize || 0.5) * 0.7, (P.rtPopSize || 0.5) * 1.3], drag: [kd * (1 - kJ), kd * (1 + kJ)], ...turb(kd),
+      loc, vel: vel(P.rtJet, P.rtFling), velAdd: cone, sizeLife: [[0, 0.4], [u0, 0.4], [u0 + 0.02, 1.2], [1, 0.6]],
+      col: [[0, [0, 0, 0]], [+(u0 - 0.001).toFixed(4), [0, 0, 0]], [+u0.toFixed(4), c(1)], [+(u0 + 0.03).toFixed(4), c(0.6)], [+(u0 + 0.08).toFixed(4), gold.map(x => +(x / rg * I * 0.12).toFixed(4))], [+Math.min(1, u0 + 0.15).toFixed(4), [0, 0, 0]], [1, [0, 0, 0]]] });
+  }
+  // 发射口：发射药在炮筒口一闪（大光团，零点几秒）+ 一把向上喷的火星（炮筒里带出来的燃烧颗粒）
+  if ((P.rtLaunch || 0) > 0) {
+    const b0 = rtBB(2300), r0 = rtLum(b0), gs = P.rtLaunchSize || 8, n = Math.round(P.rtLaunchN || 0), v = P.rtLaunchV || 30, ca = Math.tan((P.rtLaunchCone || 20) * Math.PI / 180) * v;
+    em.push({ name: 'LaunchGlow', gpu: false, delay: 0, duration: 0.5, seed: seed * 13 + 8, spawn: [], bursts: [[0, 1]],
+      life: [0.3, 0.3], size: [gs, gs], loc: [[0, [0, 0, 1]]], vel: [[0, [0, 0, 0]]], sizeLife: [[0, 0.6], [0.15, 1], [1, 1.4]],
+      col: [[0, b0.map(x => +(x / r0 * P.rtLaunch).toFixed(4))], [0.2, b0.map(x => +(x / r0 * P.rtLaunch * 0.45).toFixed(4))], [0.6, b0.map(x => +(x / r0 * P.rtLaunch * 0.08).toFixed(4))], [1, [0, 0, 0]]] });
+    if (n > 0) em.push({ name: 'LaunchSparks', gpu: true, delay: 0, duration: 0.5, seed: seed * 13 + 9, spawn: [], bursts: [[0, n]],
+      life: [0.35, 1.0], size: [0.12, 0.3], drag: [2.5, 4.5], accel: [0, 0, -G], loc: [[0, [0, 0, 0.5]]], vel: [[0, [0, 0, v * 0.75]]],
+      velAdd: [[[-ca, -ca, -v * 0.3], [ca, ca, v * 0.3]], [[-ca, -ca, 0], [ca, ca, 0]]], sizeLife: [[0, 1], [1, 0.5]],
+      col: rtSparkColor(P, 0.7, (P.rtLaunchI || 8) * (P.rtDotGain == null ? 1 : P.rtDotGain), 200) });
+  }
   if ((P.rtSmoke || 0) > 0) {
     const L = P.rtSmokeLife, S = P.rtSmokeSize, b = P.rtSmoke, sc = [1, 0.78, 0.55];
     const sloc = tl.map(t => { const p = ball.pos(t); return [t, [p[0], 0, p[2]]]; });
@@ -225,46 +334,98 @@ function rtBuildES(P) {
   }
   return { ball, LI, T, emitters: em };
 }
-// 面片取景（随体坐标，星头在中心）：横向 = 喷口半径 + 甩出 / 阻力 + 散开；竖向 = 出膛速度下白热段的最长距离
-function rtLoopBox(P, Vref) {
+// 面片取景的粗估（随体坐标）：横向 = 喷口半径 + 甩出 / 阻力 + 散开；竖向 = 出膛速度下白热段 / 贴图火星的最长距离。只用来定测量窗口
+function rtLoopBox(P, Vref, LI) {
   const R0 = (P.rtD || 0) / 2, kmin = P.rtAKd * 0.7, lifeMax = P.rtALife * Math.exp(1.5 * (P.rtALsig || 0));
-  const hx = R0 + P.rtFling * 1.2 / kmin + 3 * P.rtACone / kmin + P.rtHeadSize + 0.4;
-  let down = 0;
-  for (let i = 0; i <= 64; i++) { const a = lifeMax * i / 64, s1 = (1 - Math.exp(-kmin * a)) / kmin, z = (P.rtAJet * 0.75) * s1 + (Vref + G / kmin) * (a - s1); down = Math.max(down, z); }
+  let hx = R0 + P.rtFling * 1.2 / kmin + 3 * P.rtACone / kmin + P.rtHeadSize + 0.4;
+  const drop = (j, kd, L) => { let d = 0; for (let i = 0; i <= 64; i++) { const a = L * i / 64, s1 = (1 - Math.exp(-kd * a)) / kd; d = Math.max(d, j * s1 + (Vref + G / kd) * (a - s1)); } return d; };
+  let down = drop(P.rtAJet * 0.75, kmin, lifeMax);
+  for (const C of LI ? rtTexClasses(P, LI) : []) {
+    const k = C.kd * (1 - C.kJ); down = Math.max(down, drop(P.rtJet || 0, k, C.lifeMax));
+    hx = Math.max(hx, R0 + (P.rtFling || 0) / k + 2 * C.c * (C.soft ? 2 : 1) / k + 2 * C.us * (C.lifeMax) + C.S);
+  }
   const hy = Math.max(down + 1, (P.rtHeadSize + (P.rtHeadFl || 0)) * 1.5);
   return { HX: Math.max(0.8, hx), HY: hy };
 }
-function rtPlan(P, box, times, dur, extra = {}) {
+// 取景 + 格子 + 消散贴图（4.2.2，和已通过的 V5 尾缀同一做法；用户 19:25「导出至少浪费 50%」）：
+//   以前星头在面片中心，上半格是空的；横向按最坏情况估，内容只占格子中间一条。现在：
+//   · 低分辨率先渲几个循环相位 + 消散几刻，按烘焙的曝光口径（编码后 ≥ 3/255 才算看得见）找范围：横向按亮度取 99.5%，竖向从星头光晕顶到最低看得见的地方；
+//   · 星头固定在面片上端，引擎里用 Required 的 Pivot Offset 把星头放在粒子位置（spec 1 节 required.pivot_offset，V5 已在用）；
+//   · 格子按面片长宽比在 16×1 / 8×2 / 4×4 里挑（单格像素数不变 = 512²）；
+//   · 消散贴图：同样大的格子，在 1–16 列 × 1–4 行里挑放得下「火粉烧完 × 帧率上限」帧、RGBA 四个通道都用满的最小贴图（以前固定 2048²、末通道常常空着）。
+const rtLayoutCache = new Map();
+function rtLayout(P) {
+  const key = JSON.stringify(P); if (rtLayoutCache.has(key)) return rtLayoutCache.get(key);
+  const ball = rtBallistic(P), LI = rtLoopInfo(P), Vref = ball.v0, T = ball.T, Tl = LI.Tl, stop = T % Tl;
+  const CL = rtTexClasses(P, LI), Dlife = Math.max(rtPowderLifeMax(P), ...CL.map(C => C.lifeMax)) * 1.02;
+  const g = rtLoopBox(P, Vref, LI), top = (P.rtHeadSize || 0.5) * 2.5 + 1, view = [0, (top - g.HY * 1.1) / 2, g.HX * 1.2, (top + g.HY * 1.1) / 2];
+  const N = 192, NH = 1536, ppm = N / (2 * view[2]), ppmY = NH / (2 * view[3]), E = fixedExposure(P), thr = -Math.log(1 - 3 / 255) / E;
+  const t = new Target(N, NH, gl.RGBA16F), buf = new Float32Array(N * NH * 4), acc = new Float32Array(N * NH);
+  const R = makeRiseTailLoopRenderer(P, LI, Vref), Rf = makeRiseTailLoopRenderer(P, LI, Vref, { stop, fadeDur: Dlife });
+  const pass = (RR, ts) => { t.clear(); t.bind(); additive(true); PPMY = ppmY; RR.subW = 0; RR.draw(ts, view, ppm, 1); additive(false); PPMY = 0;
+    gl.readPixels(0, 0, N, NH, gl.RGBA, gl.FLOAT, buf); for (let i = 0; i < acc.length; i++) acc[i] = Math.max(acc[i], buf[i * 4] + buf[i * 4 + 1]); };
+  try { for (let i = 0; i < 8; i++) pass(R, i / 8 * Tl); for (let i = 1; i <= 5; i++) pass(Rf, stop + i / 6 * Dlife); }
+  finally { PPMY = 0; t.dispose(); }
+  const pxX = 2 * view[2] / N, pxY = 2 * view[3] / NH, X = i => view[0] - view[2] + (i + 0.5) * pxX, Y = j => view[1] - view[3] + (j + 0.5) * pxY;
+  let y0 = NH, y1 = -1; const colW = new Float64Array(N); let tot = 0;
+  for (let y = 0; y < NH; y++) for (let x = 0; x < N; x++) { const v = acc[y * N + x]; if (v > thr) { if (y < y0) y0 = y; if (y > y1) y1 = y; colW[x] += v; tot += v; } }
+  let half = 1, ybot = -g.HY, ytop = top;
+  if (y1 >= 0) {
+    const ci = Math.round((0 - (view[0] - view[2])) / pxX - 0.5); let inner = colW[ci] || 0, r = 0;
+    while (inner < 0.995 * tot && r < N) { r++; inner += (colW[ci - r] || 0) + (colW[ci + r] || 0); }
+    half = (r + 1.5) * pxX + 0.15; ybot = Y(y0) - 2 * pxY; ytop = Math.max(Y(y1) + 2 * pxY, P.rtHeadSize * 1.2);
+  }
+  const W0 = 2 * half, H0 = ytop - ybot;
+  // 格子：单格像素数不变，按面片长宽比挑最接近的（和 V5 尾缀的 autoGridTrail 同一条规则）
+  let cols = P.cols, rows = P.rows;
+  const GR = [[16, 1], [8, 2], [4, 4]];
+  if (P.rtGrid > 0 && GR[P.rtGrid - 1]) [cols, rows] = GR[P.rtGrid - 1];
+  else if (!(P.rtGrid < 0)) { let best = null; for (const [c, r] of GR) { const a = (P.texW / c) / (P.texH / r), sc = Math.abs(Math.log(a / (W0 / H0))); if (!best || sc < best.sc) best = { c, r, sc }; } cols = best.c; rows = best.r; }
+  const HX = W0 / 2 * 1.03, HY = H0 / 2 * 1.015, cy = (ybot + ytop) / 2, hb = (0 - (cy - HY)) / (2 * HY);
+  // 消散：同样大的格子，帧数 ≤ 火粉烧完 × 帧率上限（引擎每 tick 不跳帧），RGBA 用满，挑最小的贴图
+  const cellW = P.texW / cols, cellH = P.texH / rows, fpsT = P.rtFadeFps > 0 ? Math.min(30, P.rtFadeFps) : 30, Fmax = Math.max(1, Math.floor(Dlife * fpsT + 1e-6));
+  let fd = null;
+  for (let c = 1; c <= cols; c *= 2) for (let r = 1; r <= rows; r *= 2) {
+    const ch = Math.min(4, Math.max(1, Math.floor(Fmax / (c * r)))), F = c * r * ch; if (F > Fmax && !(c === 1 && r === 1)) continue;
+    const sq = -Math.abs(Math.log2(c * cellW / (r * cellH))), full = ch === 4 ? 1 : 0;
+    if (!fd || full > fd.full || (full === fd.full && (F > fd.F || (F === fd.F && sq > fd.sq)))) fd = { cols: c, rows: r, chans: ch, F, sq, full };
+  }
+  const fade = { cols: fd.cols, rows: fd.rows, chans: fd.chans, texW: fd.cols * cellW, texH: fd.rows * cellH, F: fd.F, Df: Dlife, fps: fd.F / Dlife };
+  const out = { ball, LI, Vref, T, Tl, stop, Dlife, cols, rows, HX, HY, cy, hb, Ww: 2 * HX, Wh: 2 * HY, fade, measured: y1 >= 0 };
+  rtLayoutCache.set(key, out); if (rtLayoutCache.size > 24) rtLayoutCache.delete(rtLayoutCache.keys().next().value);
+  return out;
+}
+function rtPlan(P, lay, times, dur, extra = {}) {
   const L = layoutOf(P);
-  return { L, HX: box.HX, HY: box.HY, Ww: 2 * box.HX, Wh: 2 * box.HY, cy: 0, ppm: L.cellW / (2 * box.HX), zoom: false, aniso: true,
-    sizeKeys: [[0, 1], [1, 1]], sizeKeysX: [[0, 1], [1, 1]], sizeKeysY: [[0, 1], [1, 1]], area: 1, px: 0.5, py: 0.5, keys: [[0, 0], [1, L.F]],
+  return { L, HX: lay.HX, HY: lay.HY, Ww: 2 * lay.HX, Wh: 2 * lay.HY, cy: lay.cy, ppm: L.cellW / (2 * lay.HX), zoom: false, aniso: true,
+    sizeKeys: [[0, 1], [1, 1]], sizeKeysX: [[0, 1], [1, 1]], sizeKeysY: [[0, 1], [1, 1]], area: 1, px: 0.5, py: lay.hb, keys: [[0, 0], [1, L.F]],
     times, dur, avgFps: L.F / dur.reduce((a, c) => a + c, 0), minFps: 1 / Math.max(...dur), maxDisp: 0, t0: 0, duration: dur.reduce((a, c) => a + c, 0), ...extra };
 }
 // 烘焙：循环层（真循环）+ 贴图动态消散；粒子层只是数据，引擎回放 / 实时模拟现算
 async function bakeEmitSet(P, scale, onProg) {
   P = { ...P, form: 'emitset', outMode: 'combined', frameMode: 'uniform', zoom: 'off', autoGrid: 0 };
+  const lay = rtLayout(P); P.cols = lay.cols; P.rows = lay.rows;
   const ES = rtBuildES(P), ball = ES.ball, LI = ES.LI, Vref = ball.v0, T = ball.T, L = layoutOf(P), F = L.F, Tl = LI.Tl;
-  const box = rtLoopBox(P, Vref);
   const onP = (a, b) => p => onProg && onProg(a + p * (b - a));
   const lt = [], ld = []; for (let f = 0; f < F; f++) { lt.push(f * Tl / F); ld.push(Tl / F); }
-  const pl = rtPlan(P, box, lt, ld, { loop: true, duration: Tl });
-  const bot = [-box.HY * 0.995, -box.HY * 0.82];
-  const R = makeRiseTailLoopRenderer(P, LI, Vref, { bot });
+  const pl = rtPlan(P, lay, lt, ld, { loop: true, duration: Tl });
+  // 面片下端最后 6% 柔和收掉（偶尔跑出去的火星不在格子边上切一刀）
+  const bot = [lay.cy - lay.HY + 0.004 * lay.Wh, lay.cy - lay.HY + 0.06 * lay.Wh];
+  const R = makeRiseTailLoopRenderer(P, LI, Vref, { bot, fr: [Tl / F, 0] });
   const b = await bakeFrames(P, scale, onP(0, 0.7), pl, R);
   const expo = [b.meta.expoH, b.meta.expoT];
-  // 消散：开花那一刻的循环相位停喷；时长 = 最长寿命的火粉烧完（再留一点收到全黑）
-  const stop = T % Tl, per = L.cols * L.rows, Dlife = rtPowderLifeMax(P) * 1.02;
-  // 通道数向下取整：帧率 ≤ 30（引擎每 tick 不跳帧），时长 = 火粉烧完（不再拖出末尾空帧）
-  const fpsT = P.rtFadeFps > 0 ? Math.min(30, P.rtFadeFps) : 30, chF = clamp(Math.floor(Dlife * fpsT / per), 1, 4), Ff = per * chF, Df = Math.max(Dlife, Ff / 30);
-  const Pf = { ...P, chans: chF }, ft = [], fd = []; for (let f = 0; f < Ff; f++) { ft.push(f * Df / Ff); fd.push(Df / Ff); }
-  const pf = rtPlan(Pf, box, ft, fd, { loop: false, t0: stop, duration: Df });
-  const Rf = makeRiseTailLoopRenderer(P, LI, Vref, { stop, fadeDur: Df, bot });
+  // 消散：开花那一刻的循环相位停喷；时长 = 最长寿命的火粉 / 火星烧完；格子同样大、贴图按帧数挑最小（rtLayout）
+  const stop = lay.stop, fl = lay.fade, Df = fl.Df, Ff = fl.F;
+  const Pf = { ...P, cols: fl.cols, rows: fl.rows, chans: fl.chans, texW: fl.texW, texH: fl.texH }, ft = [], fd = []; for (let f = 0; f < Ff; f++) { ft.push(f * Df / Ff); fd.push(Df / Ff); }
+  const pf = rtPlan(Pf, lay, ft, fd, { loop: false, t0: stop, duration: Df });
+  const Rf = makeRiseTailLoopRenderer(P, LI, Vref, { stop, fadeDur: Df, bot, fr: [Df / Ff, stop] });
   const bf = await bakeFrames(Pf, scale, onP(0.7, 1), pf, Rf, { expo, noFade: true });
-  bf.form = 'esFade'; bf.fps = Ff / Df; bf.meta.fadeSeconds = Df;
-  // 面片长度随弹体速度：Size By Life 的 Y（循环层寿命 = 升空时间）
+  bf.form = 'esFade'; bf.fps = Ff / Df; bf.meta.fadeSeconds = Df; bf.P = Pf;
+  // 面片长度随弹体速度：Size By Life 的 Y（循环层寿命 = 升空时间；绕星头缩放 = Pivot Offset）
   const sk = []; for (let i = 0; i <= 16; i++) { const t = i / 16 * T, v = ball.vel(t); sk.push([+(i / 16).toFixed(4), +clamp(rtWhiteLen(P, Math.hypot(v[0], v[2])) / rtWhiteLen(P, Vref), 0.02, 1.5).toFixed(4)]); }
   Object.assign(b.meta, { es: true, ball: { k: ball.k, v0: ball.v0, vz0: ball.vz0, vx0: ball.vx0, T, H: ball.H, Hwant: ball.Hwant, vb: ball.vb, ok: ball.ok, lean: P.rtLean || 0 },
-    T, Tl, nRev: LI.nRev, loopFps: LI.fps, Vref, stop, fEnd: Math.floor(stop / Tl * F) % F, sizeKeysRise: sk, fadeFrames: Ff, fadeFps: bf.fps, fadeSeconds: Df, hb: 0.5 });
+    T, Tl, nRev: LI.nRev, loopFps: LI.fps, Vref, stop, fEnd: Math.floor(stop / Tl * F) % F, sizeKeysRise: sk, fadeFrames: Ff, fadeFps: bf.fps, fadeSeconds: Df, hb: lay.hb,
+    texSparks: rtTexClasses(P, LI).map(C => C.k) });
   b.fades = [bf]; b.es = ES; b.form = 'emitset'; b.P = P;
   return b;
 }
@@ -324,10 +485,12 @@ function fwlEmitSet(name, b, M, mobile) {
     dot: { role: 'soft_dot' }
   };
   const col = fwlColor(M, m.T, 0, P.rtBright || 1), last = m.sizeKeysRise[m.sizeKeysRise.length - 1][1];
+  // 星头在面片上端：Pivot Offset（和 V5 尾缀同一写法：−0.5, −(1 − 星头离面片下端的比例)）把星头放在粒子位置，Size By Life 的 Y 绕星头缩放
+  const pivotY = r4(-(1 - (m.hb == null ? 0.5 : m.hb)));
   const vT = rtBallistic(P).vel(m.T), sp = Math.hypot(vT[0], vT[2]) || 1, pT = rtBallistic(P).pos(m.T);
   const emitters = [{
     name: 'RiseLoop', material: 'loop', gpu: false,
-    required: { screen_alignment: 'Velocity', duration_s: r4(m.T), loops: 1, delay_s: 0, cutout: 'cutoutLoop', max_draw_count: 1 },
+    required: { screen_alignment: 'Velocity', duration_s: r4(m.T), loops: 1, delay_s: 0, cutout: 'cutoutLoop', max_draw_count: 1, pivot_offset: [-0.5, pivotY] },
     spawn: { rate: { const: 0 }, bursts: [[0, 1]] },
     modules: [
       { m: 'Lifetime', Lifetime: { const: r4(m.T) } },
@@ -341,7 +504,7 @@ function fwlEmitSet(name, b, M, mobile) {
     ]
   }, {
     name: 'RiseFade', material: 'fade', gpu: false,
-    required: { screen_alignment: 'Velocity', duration_s: r4(m.fadeSeconds), loops: 1, delay_s: r4(m.T), cutout: 'cutoutFade', max_draw_count: 1 },
+    required: { screen_alignment: 'Velocity', duration_s: r4(m.fadeSeconds), loops: 1, delay_s: r4(m.T), cutout: 'cutoutFade', max_draw_count: 1, pivot_offset: [-0.5, pivotY] },
     spawn: { rate: { const: 0 }, bursts: [[0, 1]] },
     modules: [
       { m: 'Lifetime', Lifetime: { const: r4(m.fadeSeconds) } },
@@ -358,12 +521,15 @@ function fwlEmitSet(name, b, M, mobile) {
   const tab = rtTables(b, mobile), peak = esPeakAlive(tab, m.T + 4);
   return { textures, materials, emitters, system: { preview_distance_cm: Math.round(Math.max(30000, bl.H * 100 * 2)), preview_warmup_s: 0 },
     notes: [
-      `循环层 RiseLoop：速度朝向单粒子，星头在面片中心（不用 pivot_offset）；弹道 = Initial Velocity + Drag + Const Acceleration（线性阻力，和粒子层的出生曲线同一条）。帧号锯齿：${m.nRev} 圈自转 / ${r2(m.Tl)} s 一个循环。`,
+      `循环层 RiseLoop：速度朝向单粒子，星头在面片上端（Pivot Offset ${pivotY}，和 V5 尾缀同一写法；导入器若还不支持这个字段，手动在 Required 里填）；弹道 = Initial Velocity + Drag + Const Acceleration（线性阻力，和粒子层的出生曲线同一条）。帧号锯齿：${m.nRev} 圈自转 / ${r2(m.Tl)} s 一个循环。${(m.texSparks || []).length ? '贴图里有星头、白热段火粉和' + m.texSparks.map(k => ({ F: '细', M: '中', C: '粗' })[k]).join('、') + '火星（真循环）。' : ''}`,
       `消散 RiseFade：开花时刻（${r2(m.T)} s）在开花点出生，贴图里每颗火粉按自己的寿命熄灭；${Lf.F} 帧 / ${r2(m.fadeSeconds)} s。${P.rtDissolve > 0 ? 'dissolve 动态参数在后 60% 从 0 升到 ' + r2(P.rtDissolve) + '（材质里溶解怎么表现未经 UE 验证）。' : '不写 dissolve。'}`,
       `粒子层：出生位置 / 初速是按发射器时间的曲线（"bake": false 不烘查找表，避免关键点被查找表抹掉）；第二个 Initial Velocity 是随机散开。按 spec 第 2 节，出生类曲线按发射器时间取值在 GPU 发射器上还没实测（⚪）。`,
       `同时活着的粒子最多约 ${peak.peak} 颗（${mobile ? '手机' : 'PC'}，第 ${peak.at} s）。软圆点亮度口径未经 UE 验证：烘焙器按「中心值 = 颜色、σ = 尺寸 / 4」的高斯画。`,
       ...(P.rtTurb > 0 || P.rtTurbS > 0 ? ['空气乱流：Acceleration 模块（大涡 = 按发射器时间的曲线，小涡 = 两个均匀分布相加），加速度 = 阻力 × 空气速度；重力仍在 Const Acceleration。Acceleration 在 GPU 发射器上未经 UE 验证（⚪），不生效时尾迹下段会比烘焙器里硬、直。'] : []),
-      ...(P.rtStreakT > 0 ? ['线状火星：拉长的发射器 Screen Alignment = Rectangle（面片 Y 朝屏幕上方 = 竖直拖影），Initial Size 的 Y 和 X 分开、Size By Life 的 Y 按寿命拉长；Color Over Life 已除以拉长倍数（光量守恒）。GPU + Rectangle 未经 UE 验证（⚪）。'] : [])
+      ...(P.rtStreakT > 0 ? ['线状火星：拉长的发射器 Screen Alignment = Rectangle（面片 Y 朝屏幕上方 = 竖直拖影），Initial Size 的 Y 和 X 分开、Size By Life 的 Y 按寿命拉长；Color Over Life 已除以拉长倍数（光量守恒）。GPU + Rectangle 未经 UE 验证（⚪）。'] : []),
+      ...(P.rtGlow > 0 ? ['HeadGlow 星头光晕：CPU 1 颗，弹道模块和 RiseLoop 完全一样（Initial Velocity + Drag + Const Acceleration）→ 和星头重合；Color Over Life 跟喷射脉动。软圆点叠在序列面片上（加色），远处看就是星头周围的一团柔光。'] : []),
+      ...(P.rtPopRate > 0 ? [`SparkPops 末段爆亮：和粗火星同一套运动（同一条出生 / 初速曲线、阻力、乱流），Color Over Life 在寿命 ${r2(P.rtPopAt)} 之前全黑、之后闪一下再灭。`] : []),
+      ...(P.rtLaunch > 0 ? ['LaunchGlow / LaunchSparks 发射口：0 s 一次性 Burst（Spawn Rate = 0），发射药的闪光 + 向上喷的一把火星；离地 0.5–1 m 出生。'] : [])
     ] };
 }
 function rtTexFiles(b, name, sfx = '', idx = 1) {
@@ -387,14 +553,14 @@ function rtCascadeText(name, b, M) {
 【弹道】线性阻力：出膛 ${(bl.v0).toFixed(1)} m/s（竖直 ${(bl.vz0 * 100).toFixed(0)} cm/s，水平 ${(bl.vx0 * 100).toFixed(0)} cm/s）· Drag ${bl.k.toFixed(4)} · 重力 −981
   ${bl.T.toFixed(2)} s 到 ${bl.H.toFixed(1)} m（要求 ${bl.Hwant} m）· 开花时竖直速度 ${bl.vb.toFixed(1)} m/s${bl.ok ? '' : ' · ⚠ 开花时速度给得太大，没有阻力也到不了：按无阻力'}
 
-【RiseLoop】CPU · 材质角色 beam_flipbook（${m.L.cols}×${m.L.rows} 格 × ${m.L.chans} 通道 = ${m.L.F} 帧，RGBA 接力）· Screen Alignment = Velocity · Duration ${m.T.toFixed(3)} s · Burst 0 s × 1
-  Lifetime ${m.T.toFixed(3)} · Initial Size ${(m.Ww * 100).toFixed(1)} × ${(m.Wh * 100).toFixed(1)} cm（星头在面片中心）
+【RiseLoop】CPU · 材质角色 beam_flipbook（${P.texW}×${P.texH}，${m.L.cols}×${m.L.rows} 格 × ${m.L.chans} 通道 = ${m.L.F} 帧，RGBA 接力）· Screen Alignment = Velocity · Pivot Offset (−0.5, ${(-(1 - m.hb)).toFixed(4)}) · Duration ${m.T.toFixed(3)} s · Burst 0 s × 1
+  Lifetime ${m.T.toFixed(3)} · Initial Size ${(m.Ww * 100).toFixed(1)} × ${(m.Wh * 100).toFixed(1)} cm（星头在面片上端，Pivot Offset 放在粒子位置）
   Initial Velocity (${(bl.vx0 * 100).toFixed(1)}, 0, ${(bl.vz0 * 100).toFixed(1)}) · Drag ${bl.k.toFixed(4)} · Const Acceleration (0, 0, −981)
   Size By Life（只改 Y）：${m.sizeKeysRise.map(([u, v]) => u + ' → ' + v).join('，')}
   Dynamic Parameter 帧号：锯齿，每 ${m.Tl.toFixed(3)} s 一个循环（${m.nRev} 圈自转），${rtSawKeys(m).length} 个关键点
   Color Over Life × ${P.rtBright}
 
-【RiseFade】CPU · beam_flipbook（${fd.meta.L.cols}×${fd.meta.L.rows} × ${fd.meta.L.chans} = ${fd.meta.L.F} 帧）· Delay ${m.T.toFixed(3)} s · Duration ${m.fadeSeconds.toFixed(3)} s（${m.fadeFps.toFixed(1)} fps）
+【RiseFade】CPU · beam_flipbook（${fd.P ? fd.P.texW + '×' + fd.P.texH + '，' : ''}${fd.meta.L.cols}×${fd.meta.L.rows} × ${fd.meta.L.chans} = ${fd.meta.L.F} 帧，格子和循环层一样大）· Pivot Offset 同上 · Delay ${m.T.toFixed(3)} s · Duration ${m.fadeSeconds.toFixed(3)} s（${m.fadeFps.toFixed(1)} fps）
   Initial Location = 开花点 · Initial Size Y = 循环层最后的长度 · 帧号 0 → ${fd.meta.L.F - 0.01}${P.rtDissolve > 0 ? ' · dissolve 0 →（后 60%）' + P.rtDissolve : ''}
 
 【粒子层 · PC】同时活着最多约 ${pkP.peak} 颗
@@ -415,8 +581,9 @@ function rtCurvesCSV(b, M) {
 function rtJSON(b, name, M) {
   const m = b.meta, P = b.P, fd = b.fades[0], ES = b.es || rtBuildES(P);
   return { name, type: P.type, typeName: TYPE_NAMES[P.type], form: b.form, tool: '烟花母版烘焙器 ' + VERSION,
-    ballistic: m.ball, loop: { periodS: m.Tl, frames: m.L.F, revolutions: m.nRev, spriteSizeCm: [+(m.Ww * 100).toFixed(1), +(m.Wh * 100).toFixed(1)], refSpeed: m.Vref, sizeByLifeY: m.sizeKeysRise, frameKeys: rtSawKeys(m), cellPx: [m.L.cellW, m.L.cellH] },
-    fade: { frames: fd.meta.L.F, fps: +m.fadeFps.toFixed(3), seconds: +m.fadeSeconds.toFixed(3), dissolveEnd: P.rtDissolve },
+    ballistic: m.ball, loop: { periodS: m.Tl, frames: m.L.F, revolutions: m.nRev, spriteSizeCm: [+(m.Ww * 100).toFixed(1), +(m.Wh * 100).toFixed(1)], refSpeed: m.Vref, sizeByLifeY: m.sizeKeysRise, frameKeys: rtSawKeys(m),
+      texture: [P.texW, P.texH], grid: [m.L.cols, m.L.rows, m.L.chans], cellPx: [m.L.cellW, m.L.cellH], pivotHead: m.hb, pivotOffset: [-0.5, +(-(1 - m.hb)).toFixed(4)], fill: m.fill ? { x: +m.fill.x.toFixed(3), y: +m.fill.y.toFixed(3) } : null, texSparks: m.texSparks || [] },
+    fade: { frames: fd.meta.L.F, fps: +m.fadeFps.toFixed(3), seconds: +m.fadeSeconds.toFixed(3), dissolveEnd: P.rtDissolve, texture: fd.P ? [fd.P.texW, fd.P.texH] : null, grid: [fd.meta.L.cols, fd.meta.L.rows, fd.meta.L.chans], fill: fd.meta.fill ? { x: +fd.meta.fill.x.toFixed(3), y: +fd.meta.fill.y.toFixed(3) } : null },
     emitters: ES.emitters.map(e => ({ name: e.name, gpuPC: !!e.gpu, life: e.life, size: e.size, drag: e.drag, spawnKeys: e.spawn.length })),
     peakAlive: { pc: esPeakAlive(rtTables(b, false), m.T + 4), mobile: esPeakAlive(rtTables(b, true), m.T + 4) },
     colorOverLife: colorKeys(M, m.T, 0), selfCheck: m.check, params: P, materialDefaults: M };
@@ -425,10 +592,12 @@ function rtStatsHTML(b) {
   const m = b.meta, P = b.P, bl = m.ball, fd = b.fades[0], c = m.check || {}, cls = ok => ok ? 'ok' : 'warn';
   const pk = esPeakAlive(rtTables(b, false), m.T + 4), pkM = esPeakAlive(rtTables(b, true), m.T + 4);
   const rows = [];
-  rows.push(`循环层 + 粒子发射器 · 循环 <b>${m.L.F}</b> 帧（${m.L.cols}×${m.L.rows}×${m.L.chans}）· 单格 <b>${m.L.cellW}×${m.L.cellH}</b> · 消散 <b>${fd.meta.L.F}</b> 帧`);
+  const fl = q => q && q.fill ? `${Math.round(q.fill.x * 100)}% × ${Math.round(q.fill.y * 100)}%` : '—';
+  rows.push(`循环层 + 粒子发射器 · 循环 <b>${m.L.F}</b> 帧（${m.L.cols}×${m.L.rows}×${m.L.chans}，${P.texW}×${P.texH}）· 单格 <b>${m.L.cellW}×${m.L.cellH}</b> · 消散 <b>${fd.meta.L.F}</b> 帧（${fd.meta.L.cols}×${fd.meta.L.rows}×${fd.meta.L.chans}，${fd.P ? fd.P.texW + '×' + fd.P.texH : ''}）`);
+  rows.push(`格子利用（内容外框占格子 横 × 竖，平均）：循环 <b>${fl(m)}</b> · 消散 ${fl(fd.meta)}${(m.texSparks || []).length ? ' · 贴图里有' + m.texSparks.map(k => ({ F: '细', M: '中', C: '粗' })[k]).join('、') + '火星' : ''}`);
   rows.push(`弹道：出膛 <b>${bl.v0.toFixed(1)}</b> m/s · 阻力 ${bl.k.toFixed(4)} /s（线性）· ${bl.T.toFixed(2)} s 到 <b>${bl.H.toFixed(0)}</b> m · 开花时 ${bl.vb.toFixed(1)} m/s${bl.ok ? '' : ' · <span class="warn">开花时速度太大，按无阻力</span>'}`);
   rows.push(`螺旋：${P.rtSpin} 转/秒 · 出膛时波长 ${(bl.v0 / Math.max(0.01, P.rtSpin)).toFixed(0)} m → 开花前 ${(Math.max(0.5, Math.abs(bl.vb)) / Math.max(0.01, P.rtSpin)).toFixed(1)} m · 循环 ${m.Tl.toFixed(2)} s（${m.nRev} 圈）`);
-  rows.push(`面片 ${m.Ww.toFixed(1)}×${m.Wh.toFixed(1)} m（星头在中心）· 接缝 <span class="${cls(c.seam == null || c.seam < 1.6)}">${c.seam == null ? '—' : c.seam.toFixed(2)}</span>（≈1 无缝）· 消散 ${m.fadeSeconds.toFixed(2)} s（${m.fadeFps.toFixed(1)} fps）`);
+  rows.push(`面片 ${m.Ww.toFixed(1)}×${m.Wh.toFixed(1)} m（星头在上端 ${Math.round((1 - (m.hb == null ? 0.5 : m.hb)) * 100)}% 处，Pivot Offset）· 接缝 <span class="${cls(c.seam == null || c.seam < 1.6)}">${c.seam == null ? '—' : c.seam.toFixed(2)}</span>（≈1 无缝）· 消散 ${m.fadeSeconds.toFixed(2)} s（${m.fadeFps.toFixed(1)} fps）`);
   rows.push(`粒子层：${(b.es || rtBuildES(P)).emitters.map(e => e.name).join(' / ')} · 同时最多 PC <b>${pk.peak}</b> 颗（GPU）/ 手机 <b>${pkM.peak}</b> 颗（CPU）`);
   const warn = [];
   if (c.clipFrames && c.clipFrames.length) warn.push(`循环层 ${c.clipFrames.length} 帧过曝`);
@@ -468,8 +637,8 @@ function renderEmitExport(b) {
   hdrT.clear(); hdrT.bind(); additive(true);
   const s = rtLoopStateAt(b, t);
   if (s) {
-    const w = m.Ww, h = m.Wh * s.sy, pr = PR.mat; gl.useProgram(pr.p);
-    gl.uniform4fv(pr.u.uRect, [s.x - w / 2, s.z - h / 2, s.x + w / 2, s.z + h / 2]); gl.uniform4fv(pr.u.uView, view);
+    const w = m.Ww, h = m.Wh * s.sy, hb = m.hb == null ? 0.5 : m.hb, pr = PR.mat; gl.useProgram(pr.p);
+    gl.uniform4fv(pr.u.uRect, [s.x - w / 2, s.z - h * hb, s.x + w / 2, s.z + h * (1 - hb)]); gl.uniform4fv(pr.u.uView, view);   // 星头 = 粒子位置（Pivot Offset）
     bindSeqTextures(pr, s.bb); gl.uniform1f(pr.u.uFrame, s.f); gl.uniform1f(pr.u.uMirror, 0);
     setMatUniforms(pr, { ...M, headInt: (M.headInt || 1) * (P.rtBright || 1) }, t);
     gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);

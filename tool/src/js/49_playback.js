@@ -35,7 +35,8 @@ function mobileParams(P) {
 }
 async function bakeMobileFor(b,onProg=null) {
   if(b.form==='trail')return await bake(mobileParams(b.P),1,onProg);
-  if(b.form==='emitset'){const m=await bake(mobileParams(b.P),1,onProg);m.esMobile=true;return m;}
+  // 循环层 + 粒子（4.2.2）：手机贴图边长 × rtMobileTex（默认 0.5 → 单格像素数 = PC 的 1/4，512² → 256²，正好是手机下限）；格子、取景和 PC 一样
+  if(b.form==='emitset'){const f=clamp(b.P.rtMobileTex==null?0.5:+b.P.rtMobileTex,0.25,1);const m=await bake({...b.P,texW:Math.round(b.P.texW*f),texH:Math.round(b.P.texH*f)},1,onProg);m.esMobile=true;return m;}
   let first=null,last=null;
   try {
     for(let source=b;source;source=source.next){

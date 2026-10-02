@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.2.1';
+const VERSION = '4.2.2';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -72,6 +72,9 @@ const BASE = {
   rtERate: 10, rtELife: 3, rtESize: 0.8, rtEI: 4, rtEKd: 1.0,
   rtSmoke: 0.003, rtSmokeRate: 25, rtSmokeLife: 3.5, rtSmokeSize: 2.5, rtSmokeGrow: 4,
   rtBright: 1, rtDotGain: 1, rtMobile: 0.2, rtDissolve: 1, rtFadeFps: 0,
+  // 4.2.2（第 4 版）：哪几档火星烘进循环层贴图、贴图火星亮度；引擎里加的星头光晕 / 末段爆亮 / 发射口；格子（0 自动）、手机贴图边长比例。默认关 = 旧条目效果不变
+  rtFTex: 0, rtMTex: 0, rtCTex: 0, rtTexI: 1, rtGlow: 0, rtGlowSize: 4, rtPopRate: 0, rtPopI: 20, rtPopSize: 0.5, rtPopAt: 0.85,
+  rtLaunch: 0, rtLaunchSize: 8, rtLaunchN: 0, rtLaunchV: 30, rtLaunchCone: 20, rtLaunchI: 8, rtGrid: 0, rtMobileTex: 0.5,
   // 地面循环
   loopT: 1, nozzles: 1, fanAngle: 70, spacing: 6, shotRate: 3, shotSpeed: 70, cometBurn: 1.4, burstStars: 0,
   wheelR: 3, jetSpeed: 28, jetCone: 10, jetDir: 90, groundH: 0,
@@ -514,6 +517,16 @@ const SCHEMA = [
     ['rtSizeJit', '尺寸离散（远处亮度 ∝ 尺寸²）', '±%', 0, 90, 1], ['rtKdJit', '阻力离散', '±%', 0, 90, 1],
     ['rtConeSoft', '散开分布（0 均匀 = 边缘一刀切；1 两个均匀相加 = 中间密、边缘软）', '', 0, 1, 1]
   ] },
+  { sec: '尾缀 · 贴图里的火星（循环层）', show: isEmit, hint: '勾上的档烘进循环层贴图（随体坐标，和白热段火粉同一套真循环；运动、散开、小涡和同档 GPU 发射器同一套公式，拖影 = 相对星头的速度 × 快门），这一档就不再出 GPU 发射器。细火星寿命短、在面片长度以内就烧完，适合进贴图；中 / 粗火星飞得远、留给 GPU。', items: [
+    ['rtFTex', '细火星烘进贴图', '', 0, 1, 1], ['rtMTex', '中火星烘进贴图', '', 0, 1, 1], ['rtCTex', '粗火星烘进贴图', '', 0, 1, 1],
+    ['rtTexI', '贴图火星亮度（× 同档亮度）', '×', 0, 20, 0.01, P => P.rtFTex > 0 || P.rtMTex > 0 || P.rtCTex > 0]
+  ] },
+  { sec: '尾缀 · 引擎里加的效果', show: isEmit, hint: '都是软圆点（不新增材质）。星头光晕：星头强光被空气 / 烟散射成的一团柔光，贴图格子窄放不下，引擎里单独一颗跟着弹道走、亮度跟喷射脉动。末段爆亮：木炭 + 硫的熔渣粒烧到最后微爆、闪一下（线香花火「松叶」同一机理），和粗火星同一套运动。发射口：发射药在炮筒口一闪 + 一把向上喷的火星。', items: [
+    ['rtGlow', '星头光晕亮度（0 关）', '×', 0, 5, 0.01], ['rtGlowSize', '星头光晕直径', 'm', 0.5, 30, 0.1, P => P.rtGlow > 0],
+    ['rtPopRate', '末段爆亮 · 出生率（0 关）', '颗/秒', 0, 400, 1], ['rtPopI', '末段爆亮 · 亮度', '×', 0, 80, 0.1, P => P.rtPopRate > 0], ['rtPopSize', '末段爆亮 · 尺寸', 'm', 0.05, 3, 0.01, P => P.rtPopRate > 0], ['rtPopAt', '末段爆亮 · 在寿命的哪里闪', '', 0.2, 0.95, 0.01, P => P.rtPopRate > 0],
+    ['rtLaunch', '发射口闪光亮度（0 关）', '×', 0, 10, 0.01], ['rtLaunchSize', '发射口闪光直径', 'm', 1, 40, 0.1, P => P.rtLaunch > 0], ['rtLaunchN', '发射口火星颗数', '颗', 0, 1000, 1, P => P.rtLaunch > 0],
+    ['rtLaunchV', '发射口火星速度', 'm/s', 2, 80, 0.5, P => P.rtLaunch > 0 && P.rtLaunchN > 0], ['rtLaunchCone', '发射口火星张角', '°', 2, 60, 1, P => P.rtLaunch > 0 && P.rtLaunchN > 0], ['rtLaunchI', '发射口火星亮度', '×', 0, 40, 0.1, P => P.rtLaunch > 0 && P.rtLaunchN > 0]
+  ] },
   { sec: '尾缀 · 火星明暗与线状', show: isEmit, hint: '白 / 黄分开：每档火星一个温度偏移（粗粒更热更亮 → 相机里过曝发白；细粒偏金偏暗）。线状：看的人（和相机）盯着星头走，火星相对星头往下退 → 拖影长度 = 相对星头的速度 × 拖影时间（快门 / 视觉暂留）；老火星几乎停在空中，拖得最长。引擎里 Screen Alignment = Rectangle（沿屏幕竖直）、Size By Life 的 Y 按寿命拉长；光量守恒（拖得越长单位长度越暗，要更亮才过曝发白）。', items: [
     ['rtFdT', '细 · 温度偏移', 'K', -800, 800, 10], ['rtMdT', '中 · 温度偏移', 'K', -800, 800, 10], ['rtCdT', '粗 · 温度偏移', 'K', -800, 800, 10],
     ['rtStreakT', '拖影时间（0 = 全是圆点）', 's', 0, 0.2, 0.002],
@@ -543,7 +556,9 @@ const SCHEMA = [
     ['rtSmokeSize', '出生尺寸', 'm', 0.2, 20, 0.1, P => P.rtSmoke > 0],
     ['rtSmokeGrow', '变大到（× 出生尺寸）', '×', 1, 10, 0.1, P => P.rtSmoke > 0]
   ] },
-  { sec: '尾缀 · 引擎与导出', show: isEmit, hint: '循环层：一个速度朝向的序列面片（CPU，1 颗），星头在面片中心，16 × 1 格 × RGBA 64 帧真循环；开花后换「贴图动态消散」序列（每颗火粉按自己的寿命熄灭），另写 dissolve 动态参数。粒子层：PC 用 GPU、手机用 CPU 并按比例减量。', items: [
+  { sec: '尾缀 · 引擎与导出', show: isEmit, hint: '循环层：一个速度朝向的序列面片（CPU，1 颗），星头在面片上端（Pivot Offset 放在粒子位置，和 V5 尾缀一样），面片只包住看得见的部分；格子按长宽比在 16×1 / 8×2 / 4×4 里挑（单格 = 512² 像素），RGBA 64 帧真循环。开花后换「贴图动态消散」序列（每颗火粉 / 火星按自己的寿命熄灭），格子一样大、贴图按帧数挑最小、四个通道用满；另写 dissolve 动态参数。手机贴图边长 × 比例（默认一半 = 单格 256² 像素）。粒子层：PC 用 GPU、手机用 CPU 并按比例减量。', items: [
+    ['rtGrid', '格子（0 自动；1 = 16×1，2 = 8×2，3 = 4×4）', '', 0, 3, 1],
+    ['rtMobileTex', '手机贴图边长比例', '×', 0.25, 1, 0.05],
     ['rtBright', '循环层引擎亮度（Color Over Life）', '×', 0.1, 10, 0.05],
     ['rtDotGain', '粒子层亮度总倍数', '×', 0, 10, 0.01],
     ['rtMobile', '手机版粒子数比例', '×', 0.05, 1, 0.01],

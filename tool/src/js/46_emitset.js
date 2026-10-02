@@ -46,7 +46,7 @@ function esSpawn(ES, frac = 1) {
       acc += Math.max(0, esCurve(c, t)) * frac * dt;
       while (acc >= 1) { make(t + rnd() * dt); acc -= 1; }
     }
-    for (const [t0, n] of e.bursts || []) for (let i = 0; i < Math.round(n * frac); i++) make(t0);
+    for (const [t0, n] of e.bursts || []) for (let i = 0; i < Math.max(n === 1 ? 1 : 0, Math.round(n * frac)); i++) make(t0);   // 一颗的（光晕）手机上也留着
     list.sort((a, b) => a.t0 - b.t0);
     return { e, list, maxLife: list.reduce((m, q) => Math.max(m, q.life), 0) };
   });
@@ -150,8 +150,9 @@ function esFwlEmitter(e, mobile, frac) {
     { m: 'Lifetime', Lifetime: { uniform: [esR4(e.life[0]), esR4(e.life[1])] } },
     { m: 'InitialSize', StartSize: { uniform: [[esCm(e.size[0]), esCm(e.size[0] * st), esCm(e.size[0])], [esCm(e.size[1]), esCm(e.size[1] * st), esCm(e.size[1])]] } }
   ];
-  if (e.loc) mods.push({ m: 'InitialLocation', StartLocation: { curve: esThin(e.loc, 0.01).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false } });
-  if (e.vel) mods.push({ m: 'InitialVelocity', StartVelocity: { curve: esThin(e.vel, 0.05).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false } });
+  // 只有一个关键点的出生曲线写成常数（一次性 Burst 的发射器：星头光晕、发射口）
+  if (e.loc) mods.push({ m: 'InitialLocation', StartLocation: e.loc.length === 1 ? { const: e.loc[0][1].map(esCm) } : { curve: esThin(e.loc, 0.01).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false } });
+  if (e.vel) mods.push({ m: 'InitialVelocity', StartVelocity: e.vel.length === 1 ? { const: e.vel[0][1].map(esCm) } : { curve: esThin(e.vel, 0.05).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false } });
   esBoxes(e.velAdd).forEach((B, i, A) => mods.push({ m: 'InitialVelocity', StartVelocity: { uniform: [B[0].map(esCm), B[1].map(esCm)] }, note: `第 ${i + 2} 个 Initial Velocity：叠加的随机散开${A.length > 1 ? '（' + A.length + ' 个均匀分布相加 → 中间密、边缘软）' : ''}` }));
   if (e.drag) mods.push({ m: 'Drag', DragCoefficientRaw: { uniform: [esR4(e.drag[0]), esR4(e.drag[1])] } });
   if (e.accel) mods.push({ m: 'ConstAcceleration', Acceleration: e.accel.map(esCm) });
@@ -167,7 +168,8 @@ function esFwlEmitter(e, mobile, frac) {
   return {
     name: e.name, material: 'dot', gpu,
     required: { screen_alignment: !aligned ? 'Square' : e.align === 'screen' ? 'Rectangle' : 'Velocity', duration_s: esR4(e.duration), loops: 1, delay_s: esR4(e.delay || 0) },
-    spawn: { rate: { curve: esThin(e.spawn, 0.5).map(([t, r]) => [esR4(t), +(r * f).toFixed(2)]), bake: false }, bursts: (e.bursts || []).map(([t, n]) => [esR4(t), Math.round(n * f)]) },
+    spawn: { rate: e.spawn && e.spawn.length ? { curve: esThin(e.spawn, 0.5).map(([t, r]) => [esR4(t), +(r * f).toFixed(2)]), bake: false } : { const: 0 },
+      bursts: (e.bursts || []).map(([t, n]) => [esR4(t), Math.max(n === 1 ? 1 : 0, Math.round(n * f))]) },
     modules: mods
   };
 }
@@ -177,7 +179,8 @@ function esCascadeText(ES, mobile = false, frac = 1) {
   for (const e of ES.emitters) {
     const j = esFwlEmitter(e, mobile, frac);
     L.push(`【${e.name}】${j.gpu ? 'GPU Sprites' : 'CPU'} · 材质角色 soft_dot · Screen Alignment = ${j.required.screen_alignment}${j.required.screen_alignment !== 'Square' ? (j.required.screen_alignment === 'Velocity' ? '（沿速度' : '（沿屏幕竖直') + '拉长：Initial Size Y × ' + (e.stretch || 1) + (e.stretchLife ? '，Size By Life 的 Y 按寿命拉长' : '') + ' → 线状火星）' : ''} · Duration ${j.required.duration_s} s · Loops 1 · Delay ${j.required.delay_s} s`);
-    L.push(`  Spawn Rate（发射器时间 s → 颗/秒，线性）：${j.spawn.rate.curve.length} 个关键点，${j.spawn.rate.curve.slice(0, 4).map(k => k.join(' → ')).join('；')}${j.spawn.rate.curve.length > 4 ? ' …（完整见 cascade.json）' : ''}`);
+    if (j.spawn.rate.curve) L.push(`  Spawn Rate（发射器时间 s → 颗/秒，线性）：${j.spawn.rate.curve.length} 个关键点，${j.spawn.rate.curve.slice(0, 4).map(k => k.join(' → ')).join('；')}${j.spawn.rate.curve.length > 4 ? ' …（完整见 cascade.json）' : ''}`);
+    else L.push(`  Spawn Rate = 0 · Burst ${j.spawn.bursts.map(([t, n]) => t + ' s × ' + n).join('，')}`);
     for (const m of j.modules) {
       const f = Object.entries(m).filter(([k]) => !['m', 'note'].includes(k)).map(([k, v]) => {
         if (v && v.const !== undefined) return `${k} = ${JSON.stringify(v.const)}`;
