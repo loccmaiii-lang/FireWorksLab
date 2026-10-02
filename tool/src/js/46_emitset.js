@@ -161,7 +161,7 @@ function esFwlEmitter(e, mobile, frac) {
   if (e.sizeLife || sl) {
     const us = [...new Set([...(e.sizeLife || []).map(k => k[0]), ...(sl || []).map(k => k[0])])].sort((a, b) => a - b);
     mods.push({ m: 'SizeByLife', LifeMultiplier: { curve: us.map(u => { const k = e.sizeLife ? esCurve(e.sizeLife, u) : 1; return [esR4(u), [esR4(k), esR4(k * (sl ? esCurve(sl, u) : 1)), esR4(k)]]; }) }, MultiplyX: true, MultiplyY: true, MultiplyZ: true,
-      ...(sl ? { note: 'Y = 大小 × 拉长倍数（速度朝向时 Y 沿速度）：越老越慢、拖影越短' } : {}) });
+      ...(sl ? { note: `Y = 大小 × 拉长倍数（${e.align === 'screen' ? 'Rectangle：Y 朝屏幕上方' : 'Velocity：Y 沿速度'}）：拖影长短随寿命变` } : {}) });
   }
   mods.push({ m: 'ColorOverLife', ColorOverLife: { curve: e.col.map(([u, c]) => [esR4(u), c.map(esR4)]) }, AlphaOverLife: { const: 1 } });
   return {
@@ -176,7 +176,7 @@ function esCascadeText(ES, mobile = false, frac = 1) {
   const L = [];
   for (const e of ES.emitters) {
     const j = esFwlEmitter(e, mobile, frac);
-    L.push(`【${e.name}】${j.gpu ? 'GPU Sprites' : 'CPU'} · 材质角色 soft_dot · Screen Alignment = ${j.required.screen_alignment}${j.required.screen_alignment !== 'Square' ? (j.required.screen_alignment === 'Velocity' ? '（沿速度' : '（沿屏幕竖直') + '拉长：Initial Size Y × ' + (e.stretch || 1) + (e.stretchLife ? '，Size By Life 的 Y 随寿命变短' : '') + ' → 线状火星）' : ''} · Duration ${j.required.duration_s} s · Loops 1 · Delay ${j.required.delay_s} s`);
+    L.push(`【${e.name}】${j.gpu ? 'GPU Sprites' : 'CPU'} · 材质角色 soft_dot · Screen Alignment = ${j.required.screen_alignment}${j.required.screen_alignment !== 'Square' ? (j.required.screen_alignment === 'Velocity' ? '（沿速度' : '（沿屏幕竖直') + '拉长：Initial Size Y × ' + (e.stretch || 1) + (e.stretchLife ? '，Size By Life 的 Y 按寿命拉长' : '') + ' → 线状火星）' : ''} · Duration ${j.required.duration_s} s · Loops 1 · Delay ${j.required.delay_s} s`);
     L.push(`  Spawn Rate（发射器时间 s → 颗/秒，线性）：${j.spawn.rate.curve.length} 个关键点，${j.spawn.rate.curve.slice(0, 4).map(k => k.join(' → ')).join('；')}${j.spawn.rate.curve.length > 4 ? ' …（完整见 cascade.json）' : ''}`);
     for (const m of j.modules) {
       const f = Object.entries(m).filter(([k]) => !['m', 'note'].includes(k)).map(([k, v]) => {
