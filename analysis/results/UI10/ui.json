@@ -1,0 +1,92 @@
+[
+ {
+  "name": "1366x657_引菊_实时对比",
+  "seconds": 13.7,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1366x657_引菊_引擎回放",
+  "seconds": 5.1,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 1.6,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1366x657_轨道说明展开",
+  "seconds": 2.7,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1366x657_专注",
+  "seconds": 1.6,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1280x610_引菊_实时对比",
+  "seconds": 5.1,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1536x730_引菊_实时对比",
+  "seconds": 4.9,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ }
+]
