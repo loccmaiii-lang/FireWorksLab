@@ -1,0 +1,474 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "Hongchao40Dots",
+ "platform": "pc",
+ "source": {
+  "tool": "烟花母版烘焙器 4.2.12",
+  "combo": true,
+  "layers": [
+   {
+    "type": "kamuro",
+    "form": "master",
+    "renderVer": 40
+   },
+   {
+    "type": "strobe",
+    "form": "dots",
+    "renderVer": 40
+   }
+  ]
+ },
+ "textures": {
+  "L1_seqA": {
+   "file": "T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01_HD.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01_HD"
+  },
+  "L1_cutoutA": {
+   "file": "T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01_C"
+  },
+  "L1_seqB": {
+   "file": "T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD"
+  },
+  "L1_cutoutB": {
+   "file": "T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_C"
+  },
+  "L1_ramp": {
+   "file": "T_EFX_FireWorks_YonshakuKamuro_Main_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_YonshakuKamuro_Main_R"
+  }
+ },
+ "materials": {
+  "L1_mainA": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "L1_seqA",
+    "ramp": "L1_ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  },
+  "L1_mainB": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "L1_seqB",
+    "ramp": "L1_ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  },
+  "L2_dot": {
+   "role": "soft_dot"
+  }
+ },
+ "emitters": [
+  {
+   "name": "L1_MainA",
+   "material": "L1_mainA",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 4.5667,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "L1_cutoutA",
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 4.5667
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       82521.8,
+       82521.8,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       -7581.4
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.1679,
+         23.01
+        ],
+        [
+         0.2993,
+         32.01
+        ],
+        [
+         0.9781,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.9,
+         1.9,
+         1.9
+        ]
+       ],
+       [
+        1,
+        [
+         1.9,
+         1.9,
+         1.9
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ],
+   "layer": 1
+  },
+  {
+   "name": "L1_MainB",
+   "material": "L1_mainB",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 7.4333,
+    "loops": 1,
+    "delay_s": 4.5667,
+    "cutout": "L1_cutoutB",
+    "max_draw_count": 1
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 7.4333
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       82521.8,
+       82521.8,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       -7581.4
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.4439,
+         33.01
+        ],
+        [
+         0.9821,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.9,
+         1.9,
+         1.9
+        ]
+       ],
+       [
+        0.3004,
+        [
+         1.9,
+         1.9,
+         1.9
+        ]
+       ],
+       [
+        0.4081,
+        [
+         1.9,
+         1.6557,
+         1.5633
+        ]
+       ],
+       [
+        0.435,
+        [
+         1.9,
+         1.6557,
+         1.5633
+        ]
+       ],
+       [
+        0.5426,
+        [
+         1.9,
+         1.0974,
+         1.0015
+        ]
+       ],
+       [
+        1,
+        [
+         1.9,
+         1.0974,
+         1.0015
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ],
+   "layer": 1
+  },
+  {
+   "name": "L2_Dots",
+   "material": "L2_dot",
+   "gpu": true,
+   "required": {
+    "screen_alignment": "Square",
+    "duration_s": 7.838,
+    "loops": 1,
+    "delay_s": 0
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      800
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "uniform": [
+       6.862,
+       7.738
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "uniform": [
+       [
+        491.3,
+        491.3,
+        491.3
+       ],
+       [
+        664.7,
+        664.7,
+        664.7
+       ]
+      ]
+     }
+    },
+    {
+     "m": "SphereLocation",
+     "StartRadius": {
+      "const": 1
+     },
+     "VelocityScale": {
+      "uniform": [
+       15527.9255,
+       19762.8143
+      ]
+     },
+     "SurfaceOnly": true,
+     "Velocity": true,
+     "note": "球面放射：表面出生、速度 = 出生位置 × VelocityScale（1/s）"
+    },
+    {
+     "m": "Drag",
+     "DragCoefficientRaw": {
+      "uniform": [
+       0.4467,
+       0.4467
+      ]
+     }
+    },
+    {
+     "m": "ConstAcceleration",
+     "Acceleration": [
+      0,
+      0,
+      -901.3
+     ]
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         0,
+         0,
+         0
+        ]
+       ],
+       [
+        0.0068,
+        [
+         2.0361,
+         0.1395,
+         0.2151
+        ]
+       ],
+       [
+        0.75,
+        [
+         2.0509,
+         0.1405,
+         0.2167
+        ]
+       ],
+       [
+        1,
+        [
+         0,
+         0,
+         0
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ],
+   "notes": [
+    "GPU 光点：这一层的星只出星头光点（800 颗，球面放射），尾巴、闪烁、熄灭前闪亮不在里面；轨迹按模拟拟合成线性阻力（阻力 0.4467/s、等效重力 9.01 m/s²）；光点直径 = 炭头 × 1.7、颜色 = 这一层的颜色 × Ramp 亮端 × 炭头亮度，是起点，未经 UE 验证"
+   ],
+   "layer": 2
+  }
+ ],
+ "system": {
+  "preview_distance_cm": 107278,
+  "preview_warmup_s": 1.2
+ },
+ "notes": [
+  "多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。"
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "YonshakuKamuro",
+  "layers": [
+   "Main",
+   "Red"
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ }
+}
