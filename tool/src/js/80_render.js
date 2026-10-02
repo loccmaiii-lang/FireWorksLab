@@ -345,21 +345,33 @@ function drawFlowCurve(b, f) {
 }
 // 组合 · 实时模拟（2026-09-30）：每层按自己的参数实时模拟（和单个花型的「实时模拟」一样清楚），
 // 按层的缩放 / 延迟 / 时间倍率摆放，各自上色后叠加。「导出效果」页才用每层烘好的贴图（检查引擎里的叠放）。
+// 独看 / 静音（只影响观察，导出照旧是全部层）
+function layerShown(i) { const v = state.layerView || { solo: -1, mute: [] }; return v.solo >= 0 ? v.solo === i : !v.mute.includes(i); }
+function comboAtlasLayer() { const v = state.layerView || { solo: -1 }; return state.comboSel >= 0 ? state.comboSel : v.solo >= 0 ? v.solo : 0; }
+function comboAtlasBake() { const L = state.layers[comboAtlasLayer()], e = L && state.lib.find(x => x.name === L.lib); return e && e.bake ? previewBake(e.bake) : null; }
+// 多层效果的「贴图」：看选中的那一层（没选就看第 1 层），时间换成这一层自己的时间
+function renderComboAtlas() {
+  const i = comboAtlasLayer(), L = state.layers[i], e = L && state.lib.find(x => x.name === L.lib);
+  if (!e || !e.bake) { gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.clearColor(0.02, 0.02, 0.03, 1); gl.clear(gl.COLOR_BUFFER_BIT); hudText = '这一层还没烘好'; return; }
+  const sb = state.bake, st = state.t; state.bake = e.bake; state.t = (st - (L.delay || 0)) * (L.rate || 1);
+  try { renderAtlas(); } finally { state.bake = sb; state.t = st; }
+  hudText = `第 ${i + 1} 层 · ${hudText}`;
+}
 function renderComboLive() {
-  const items = state.layers.map(L => [L, state.lib.find(e => e.name === L.lib)]).filter(x => x[1] && x[1].bake);
+  const items = state.layers.map((L, i) => [L, state.lib.find(e => e.name === L.lib), i]).filter(x => x[1] && x[1].bake);
   hdrT.clear();
   if (!items.length) { post(); hudText = '没有图层'; return; }
   let view = null;
-  items.forEach(([L, e], i) => {
-    const slot = liveSlot('combo' + i); prepSlot(slot, e.P, 'c' + i + ':' + e.name);
+  items.forEach(([L, e, i]) => {
+    const slot = liveSlot('combo' + i); prepSlot(slot, e.P, 'c' + i + ':' + e.name + ':' + (e.rev || 0));
     const v = sceneView(e.P, e.bake.meta, slot), s = L.scale || 1, vs = [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
     view = view ? unionView(view, vs) : vs;
   });
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   let n = 0;
-  items.forEach(([L, e], i) => {
+  items.forEach(([L, e, i]) => {
     const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = e.P;
-    if (age < 0 || age > P.duration) return;
+    if (age < 0 || age > P.duration || !layerShown(i)) return;
     const s = L.scale || 1, vL = [view[0] / s, view[1] / s, view[2] / s, view[3] / s], ppm = rgT.w / (2 * vL[2]);
     rgT.clear(); rgT.bind(); additive(true);
     drawLiveScene(liveSlot('combo' + i), P, age, vL, ppm);
@@ -370,12 +382,13 @@ function renderComboLive() {
     setMatUniforms(pr, L, age); drawQuad(); additive(false); n++;
   });
   post();
-  hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层）· 「导出效果」看引擎里的贴图叠放`; hudB = '';
+  hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层）${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}`; hudB = '';
 }
 function renderCombo() {
   if (state.view === 'live') return renderComboLive();
+  if (state.view === 'atlas') return renderComboAtlas();
   hdrT.clear();
-  const items = state.layers.map(L => [L, state.lib.find(e => e.name === L.lib)]).filter(x => x[1]).map(([L,e])=>[L,{...e,bake:previewBake(e.bake)}]);
+  const items = state.layers.map((L, i) => [L, state.lib.find(e => e.name === L.lib), i]).filter(x => x[1]).map(([L,e,i])=>[L,{...e,bake:previewBake(e.bake)},i]);
   if(items.some(([,e])=>!e.bake)){post();hudText='手机版还未烘焙；点 PC / 手机可重试';return;}
   if (!items.length) { post(); hudText = '没有图层'; return; }
   let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
@@ -387,9 +400,9 @@ function renderCombo() {
   }else if(state.disp==='px')half=canvas.width/(2*Math.min(...items.map(([L,e])=>e.bake.meta.L.cellW/(e.bake.meta.Ww*(L.scale||1)))));
   const view = [(x0 + x1) / 2, (y0 + y1) / 2, half, half];
   hdrT.bind(); additive(true);
-  for (const [L, e] of items) drawLayer(e.bake, L, state.t, view);
+  for (const [L, e, i] of items) if (layerShown(i)) drawLayer(e.bake, L, state.t, view);
   additive(false); post();
-  hudText = `${state.comboName} · 导出效果（每层 2048 贴图叠放）· ${items.length} 层 · 每层星头、拖尾各一个发射器`; hudB = '';
+  hudText = `${state.comboName} · 引擎回放（每层贴图叠放）· ${items.length} 层${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}`; hudB = '';
 }
 function updateLabels() {
   const q = $('#qlabels'), b = previewBake();
@@ -431,10 +444,10 @@ function loop(now) {
   } catch (e) { console.error(e); hudText = '渲染出错：' + e.message; }
   if (pendingThumb) { const f = pendingThumb; pendingThumb = null; try { f(thumbFromCanvas()); } catch (e) { } }
   $('#hud').textContent = hudText; $('#hudB').textContent = hudB; updateLabels();
-  const mv = state.tab !== 'combo' && state.tab !== 'asset';
+  const ab = state.tab === 'combo' ? comboAtlasBake() : state.bake, mv = (state.tab !== 'combo' || state.view === 'atlas') && state.tab !== 'asset';
   $('#viewSeg').hidden=!!state.showcase;
-  $('#atlasSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.tail);
-  $('#segSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.next);
+  $('#atlasSeg').hidden = !mv || state.view !== 'atlas' || !(ab && ab.tail);
+  $('#segSeg').hidden = !mv || state.view !== 'atlas' || !(ab && ab.next);
   $('#flowSeg').hidden = !mv || state.view !== 'atlas'; $('#flowCv').hidden = !mv || state.view !== 'atlas' || !state.atlasFlow;
   $('#dispSeg').hidden = state.tab==='asset' ? false : state.view !== 'export' && !(state.view==='live' && renderVersion(state.P)>=40 && familyOf(state.P.type)==='aerial' && ['master','segments'].includes(state.P.form));
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';

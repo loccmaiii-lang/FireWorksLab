@@ -30,7 +30,7 @@
       <button data-disp="px" aria-pressed="false">1:1 像素</button>
       <button data-disp="game" aria-pressed="true">游戏内大小</button>
     </div>
-    <label class="expo" id="distBox" hidden><span class="tl">距离</span><input type="range" id="dist" min="800" max="1200" step="25" value="1000"><output id="distOut">1000 m</output></label>
+    <label class="expo" id="distBox" hidden><span class="tl">距离</span><input type="range" id="dist" min="0" max="1000" step="1" value="943" title="观看距离 50–1200 m（对数刻度）；标准检查按 1000 m"><output id="distOut">1000 m</output></label>
     <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
     <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
     <span class="abtag" id="abTag" hidden>A | B</span>
@@ -52,6 +52,24 @@
     <section class="stage">
       <div id="showcaseBar" class="showcase-bar" hidden><b id="showcaseTitle">3.7 / 4.0 同秒对照</b><select id="showcaseType" aria-label="对照花型"></select><select id="cloudLayer" aria-label="查看配方图层" hidden></select><button id="showcaseParams" class="btn ghost">保存对照配方</button><button id="showcaseClose" class="btn ghost">退出对照</button><p id="showcaseNote">正在准备实际导出贴图…</p><details id="cloudPending" hidden></details></div>
       <div id="showcasePair" class="showcase-pair" hidden><span id="showcaseLeft">3.7 原版</span><span id="showcaseRight">4.0 新核</span></div>
+      <div class="assetbar" id="assetBar" hidden>
+        <span class="ab-th" id="abThumb"></span>
+        <span class="ab-tx"><b id="abName"></b><small id="abSub"></small></span>
+        <label class="ab-src" title="看哪个版本：AI 交的版本，或你自己保存的版本">版本<select id="abSrc"></select></label>
+        <span class="ab-chg" id="abChg" hidden>已改动 · 未保存</span>
+        <span class="sp"></span>
+        <button class="btn primary" id="abSave" type="button" title="把现在的全部参数（所有层）存成你的版本（存在这台电脑的浏览器里）">保存</button>
+        <button class="btn" id="abSaveAs" type="button">另存为…</button>
+        <details class="ab-more"><summary class="btn" title="更多">⋯</summary><div class="ab-menu">
+          <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
+          <button type="button" id="abExportFile">导出配方文件（.json）</button>
+          <button type="button" id="abImportFile">导入配方文件…</button>
+          <button type="button" id="abRename">重命名这个版本</button>
+          <button type="button" id="abDelete">删除这个版本</button>
+          <input type="file" id="abFile" accept=".json,application/json" hidden>
+        </div></details>
+        <button class="btn" id="abExport" type="button" title="导出整个效果的素材包（每层贴图 + Ramp + Cutout + PC / 手机 cascade.json）">导出素材包</button>
+      </div>
       <div id="bakeError" class="bake-error" role="alert" hidden><span id="bakeErrorText"></span><button class="btn" id="bakeRetry" type="button">重试烘焙</button></div>
       <div class="canvas-wrap">
         <div class="canvas-box ref-box" id="refBox" hidden><video id="refVid" muted playsinline preload="auto"></video>
@@ -88,11 +106,14 @@
     <div class="right" id="right">
     <div class="ptabs" id="ptabs" role="tablist">
       <button role="tab" data-tab="master" aria-selected="true">参数</button>
+      <button role="tab" data-tab="review" aria-selected="false">审阅<i class="dot" id="rvDot" hidden></i></button>
       <button role="tab" data-tab="iter" aria-selected="false">工具</button>
     </div>
     <section class="review" id="pReview" hidden></section>
+    <section class="lcard" id="layerCard" hidden></section>
     <aside class="panel" id="pMaster">
-      <div class="group">
+      <div class="layerhead" id="layerHead" hidden></div>
+      <div class="group pm-ident">
         <div class="row2">
           <div class="field">花型
             <button class="typebtn" id="typeBtn" type="button" aria-haspopup="dialog"><span class="tb-img" id="typeThumb"></span><span class="tb-txt"><b id="typeName">菊</b><small id="typeCat">礼花</small></span><em>更换</em></button>
@@ -128,12 +149,12 @@
         <label class="check" id="flipBox" hidden><input type="checkbox" id="x-flip"> 星头朝下（引擎里速度对齐方向相反时勾选）</label>
         <label class="check" id="gridBox" hidden><input type="checkbox" id="x-autogrid"> 自动选格子（帧数不变，按内容长宽比挑列 × 行，少浪费像素）</label>
         <div class="stats" id="stats">烘焙中…</div>
-        <div class="line">
+        <div class="line pm-btns">
           <button class="btn primary" id="btnExport">导出 2K 母版（ZIP）</button>
           <button class="btn" id="btnVariants">导出种子变体 V1–V3</button>
           <button class="btn" id="btnSave">存入组合库</button>
         </div>
-        <div class="line">
+        <div class="line pm-btns">
           <button class="btn ghost" id="btnImport">导入参数 JSON</button>
           <button class="btn ghost" id="btnReset">恢复本花型默认</button>
           <button class="btn ghost" id="btnJitter">随机微调（未锁定参数）</button>
@@ -144,20 +165,20 @@
     </aside>
 
     <aside class="panel" id="pCombo" hidden>
-      <details class="sec" open>
+      <details class="sec pc-free" open>
         <summary>组合预设</summary>
         <p class="hint">芯就是缩小的牡丹母版。一个菊母版加上不同缩放的牡丹层，就是八重芯、三重芯。</p>
         <div class="presets" id="presets"></div>
       </details>
       <details class="sec" open>
-        <summary>图层</summary>
+        <summary>各层在整朵里的位置和颜色</summary>
         <div id="layers"></div>
         <div class="line" style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn" id="btnAddLayer">添加图层</button>
+          <button class="btn pc-free" id="btnAddLayer">添加图层</button>
           <button class="btn primary" id="btnExportCombo">导出组合素材包（一个包，每层一个发射器）</button>
         </div>
       </details>
-      <details class="sec" open>
+      <details class="sec pc-free" open>
         <summary>母版库</summary>
         <p class="hint">组合预览用 1024 版本。在「母版」页调好后点「存入组合库」即可加入。</p>
         <div class="lib" id="lib"></div>

@@ -11,7 +11,8 @@ const state = {
   locks: new Set(), activeStage: 0, repId: null,
   B: null,                              // A/B 对比的 B：{ P, M, bake, name }
   ref: { mode: 0, el: null, kind: '', t0: 0, alpha: 0.5, scale: 1, ox: 0, oy: 0, wipe: 0.5, aspect: 1, tex: null },
-  versions: [], recipes: [], metricRef: 'V05'
+  versions: [], recipes: [], metricRef: 'V05',
+  comboSel: -1, layerView: { solo: -1, mute: [] }   // 多层效果：正在调哪一层（-1 = 整体）；独看 / 静音只影响观察
 };
 const live = { sim: null, gen: -1, track: null, tgen: -1, tw: 0, E: null, egen: -1, simB: null, trackB: null, EB: null, genB: -1 };
 let hdrT = null, rgT = null;
@@ -38,6 +39,7 @@ let bakeTimer = 0;
 function scheduleBake() { clearTimeout(bakeTimer); bakeTimer = setTimeout(runPreviewBake, 380); }
 async function runPreviewBake() {
   clearTimeout(bakeTimer);
+  if (state.tab === 'combo' && state.comboSel >= 0) return runLayerBake();
   if (state.baking) { state.rebake = true; return; }
   if (!state.dirty || state.failedGen === state.gen) return;
   state.baking = true; state.rebake = false;
@@ -68,6 +70,34 @@ async function runPreviewBake() {
       $('#stats').textContent = '最新参数烘焙失败；修改参数或点击重试。';
       setStatus(''); syncBakeError();
     }
+  } finally {
+    state.baking = false; state.rebake = false;
+    if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
+  }
+}
+// 多层效果里调某一层（2026-10-02 用户 07:43）：state.P 就是这一层的参数（组合库条目 e.P），改了只重烘这一层；
+// 画面一直是整朵（实时模拟按 e.P 现算，引擎回放 / 贴图用新烘的 e.bake）。调过的层记进 state.layerEdits，换版本 / 保存时用。
+async function runLayerBake() {
+  const i = state.comboSel, L = state.layers[i], e = L && state.lib.find(x => x.name === L.lib);
+  if (!e) return;
+  if (state.baking) { state.rebake = true; return; }
+  if (!state.dirty || state.failedGen === state.gen) return;
+  state.baking = true; state.rebake = false;
+  const gen = state.gen; let pending = null;
+  e.rev = (e.rev || 0) + 1;            // 实时模拟马上按新参数重算
+  try {
+    const b = pending = await bake(libP(e.P, true), 1, p => { if (gen === state.gen) setStatus(`重烘第 ${i + 1} 层… ${Math.round(p * 100)}%`); });
+    if (gen !== state.gen || state.comboSel !== i || state.tab !== 'combo') { disposeBake(b); pending = null; return; }
+    disposeBake(e.bake); e.bake = b; pending = null;
+    if (e.rep) { state.layerEdits = state.layerEdits || {}; state.layerEdits[e.rep] = { P: e.P, M: e.M }; e.editSig = JSON.stringify([e.P, e.M]); }
+    state.dirty = false; state.failedGen = -1; state.bakeError = null; syncBakeError();
+    showStats(b); setStatus('');
+    if (state.platform === 'mobile') await ensureComboMobile();
+    if (typeof buildLayerCard === 'function') buildLayerCard();
+  } catch (err) {
+    if (pending) disposeBake(pending);
+    console.error(err);
+    if (gen === state.gen) { state.dirty = true; state.failedGen = gen; state.bakeError = { gen, message: err.message || String(err) }; $('#stats').textContent = '这一层的新参数烘焙失败；修改参数或点击重试。'; setStatus(''); syncBakeError(); }
   } finally {
     state.baking = false; state.rebake = false;
     if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
@@ -392,6 +422,7 @@ async function applyCombo(c) {
   state.layers = c.layers.map(l => { const e = libByType(l.m); const { m, ...rest } = l; if (rest.stages) rest.stages = rest.stages.map(s => [...s]); return newLayer(e, rest); });
   state.comboName = c.name; state.t = 0; buildComboPanel();
   if(state.platform==='mobile')await ensureComboMobile();
+  if (typeof buildLayerCard === 'function') buildLayerCard();
 }
 function comboDuration() {
   let d = 0.5;
@@ -406,12 +437,13 @@ function buildComboPanel() {
   state.layers.forEach((L, i) => {
     const card = document.createElement('div'); card.className = 'card';
     const head = document.createElement('div'); head.className = 'head';
-    head.innerHTML = `<b>图层 ${i + 1}</b>`;
+    head.innerHTML = `<b>${i + 1} · ${((typeof lib !== 'undefined' && lib.review && lib.review.layerNames) || [])[i] || '图层'}</b>`;
     const sel = document.createElement('select'); sel.setAttribute('aria-label', '母版');
     for (const e of state.lib) { const o = document.createElement('option'); o.value = e.name; o.textContent = e.name; sel.appendChild(o); }
     sel.value = L.lib; sel.addEventListener('change', () => { L.lib = sel.value; });
     const x = document.createElement('button'); x.className = 'x'; x.textContent = '删除'; x.addEventListener('click', () => { state.layers.splice(i, 1); buildComboPanel(); });
-    head.append(sel, x); card.appendChild(head);
+    const ed = document.createElement('button'); ed.className = 'btn mini lc-edit'; ed.type = 'button'; ed.textContent = '调这一层的参数 →'; ed.addEventListener('click', () => selectComboLayer(i));
+    head.append(sel, ed, x); card.appendChild(head);
     slider(card, `l${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
     slider(card, `l${i}-delay`, '延迟', 's', 0, 3, 0.01, () => L.delay, v => L.delay = v, 0);
     slider(card, `l${i}-rate`, '时间倍率', '×', 0.3, 2, 0.01, () => L.rate, v => L.rate = v, 1);
@@ -429,12 +461,12 @@ function buildComboPanel() {
     host.appendChild(card);
   });
   if (!state.layers.length) host.innerHTML = '<p class="note">还没有图层。点上面的预设，或「添加图层」。</p>';
-  const lib = $('#lib'); lib.innerHTML = '';
+  const libBox = $('#lib'); libBox.innerHTML = '';
   for (const e of state.lib) {
     const it = document.createElement('div'); it.className = 'it';
     it.innerHTML = `<span>${e.name}</span><small>${TYPE_NAMES[e.type]}</small>`;
     const add = document.createElement('button'); add.className = 'x'; add.textContent = '加入'; add.addEventListener('click', () => { state.layers.push(newLayer(e)); buildComboPanel(); });
-    it.appendChild(add); lib.appendChild(it);
+    it.appendChild(add); libBox.appendChild(it);
   }
 }
 async function exportCombo() {

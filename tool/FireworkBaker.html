@@ -525,6 +525,110 @@ details.sec>summary{color:var(--text)}
 }
 .canvas-wrap{flex:1 1 auto;min-height:0}
 @container stage (max-width:1100px){ .keys{display:none} }
+
+/* =====================================================================
+   4.0.4 工作台（用户 2026-10-02 07:43 / 07:47）：资产栏、观察图层、右栏卡片
+   ===================================================================== */
+/* 资产栏：画面上方，当前效果 + 看哪个版本 + 保存 / 导出 */
+.assetbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line2);border-radius:7px;padding:8px 10px}
+.app:has(main.showcase) #assetBar{display:none}
+.assetbar .ab-th{width:40px;height:40px;flex:none;border-radius:4px;overflow:hidden;background:#080a0d;display:flex}
+.assetbar .ab-th i,.assetbar .ab-th .th{flex:1;width:40px;height:40px;background:#080a0d center/cover no-repeat;display:flex}
+.assetbar .ab-th .th i{flex:1;background:center/cover no-repeat}
+.assetbar .ab-tx{display:flex;flex-direction:column;min-width:0;max-width:30ch}
+.assetbar .ab-tx b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.assetbar .ab-tx small{color:var(--dim);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.assetbar .ab-src{display:flex;align-items:center;gap:6px;color:var(--dim);font-size:12.5px}
+.assetbar select{background:var(--low);border:1px solid var(--line2);border-radius:6px;padding:5px 8px;color:var(--text);max-width:26ch}
+.assetbar .ab-chg{color:var(--amber);font-size:12.5px;white-space:nowrap}
+.assetbar .sp{flex:1}
+.assetbar .btn{padding:6px 12px;white-space:nowrap}
+.ab-more{position:relative}
+.ab-more>summary{list-style:none;padding:6px 10px}
+.ab-more>summary::-webkit-details-marker{display:none}
+.ab-menu{position:absolute;right:0;top:calc(100% + 4px);z-index:40;display:flex;flex-direction:column;min-width:220px;background:var(--panel);border:1px solid var(--line2);border-radius:7px;padding:4px;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.ab-menu button{background:none;border:0;text-align:left;padding:7px 10px;border-radius:5px;color:var(--text);cursor:pointer;font-size:13px}
+.ab-menu button:hover{background:var(--hover);color:var(--acc)}
+/* 右栏卡片 */
+#pReview.review{background:none;border:0;padding:0;margin:8px 10px 0}
+.rcard{background:var(--low);border:1px solid var(--line2);border-radius:7px;padding:10px 12px;margin:0 0 8px}
+.rcard .rh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rcard .rh b{font-size:14px}
+.rcard .rh small{color:var(--faint)}
+.rcard .rh2{display:flex;flex-direction:column;gap:3px;margin-top:8px}
+.rcard .rh2 .badge{align-self:flex-start}
+.rcard .rh2 b{font-size:13.5px;line-height:1.45}
+.rcard .rh2 small{color:var(--faint);font-size:11.5px}
+.rcard .rnote{margin:6px 0 2px;font-size:12.5px;line-height:1.6;color:var(--text);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
+.rcard .rnote.full{-webkit-line-clamp:unset}
+.rcard .rc-t{font-weight:600;font-size:13.5px;margin-bottom:6px}
+.rcard details>summary{cursor:pointer;color:var(--dim);font-size:12.5px;padding:4px 0}
+.rcard details>summary:hover{color:var(--text)}
+details.rfold{padding:6px 12px}
+details.rfold>summary{font-size:13px;color:var(--text);font-weight:600}
+details.stdd>summary{color:var(--text);font-size:12.5px}
+details.stdd>summary small{color:var(--faint);font-weight:400}
+.rline.dim{color:var(--faint);font-size:12px;margin:2px 0}
+.rcard .pgs{margin:6px 0 0}
+.rcard .ra{display:flex;gap:8px;margin-top:8px}
+.rcard .ra .btn{flex:1}
+.rcard textarea{width:100%;min-height:54px;margin-top:6px;background:var(--panel);border:1px solid var(--line2);border-radius:6px;color:var(--text);padding:6px 8px;font:12.5px/1.5 var(--sans);resize:vertical}
+.rcard .saved{font-size:11px;color:var(--faint);margin-top:2px}
+.rcard .btn.okb[aria-pressed="true"]{background:var(--hover);border-color:var(--acc);color:var(--acc)}
+.rcard .btn.fixb[aria-pressed="true"]{background:#422f30;border-color:#c86a55;color:#f6c8bb}
+.rcard .rt{margin:8px 0 2px;font-size:11.5px;color:var(--gold2);font-weight:600}
+.rcard ul{margin:2px 0 4px 16px;padding:0;font-size:12.5px;line-height:1.6}
+.rcard .op{color:#c9d3d6;font-size:12.5px}
+.rcard .rimgs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:6px 0 4px}
+.rcard .rimgs figure{margin:0;background:var(--panel);border-radius:6px;overflow:hidden}
+.rcard .rimgs img{display:block;width:100%;height:auto;cursor:zoom-in}
+.rcard .rimgs figcaption{font-size:11px;color:var(--dim);padding:3px 6px 5px}
+.rcard .qnote{background:var(--panel);border-radius:6px;padding:8px 10px;color:var(--dim);font-size:12.5px}
+.rcard .rlayers{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+.rcard .btn.mini,.lh-t .btn.mini,.lc-edit{font-size:12px;padding:3px 9px}
+.rcard .btn.mini.cur{border-color:var(--acc);color:var(--acc)}
+/* 观察图层 */
+.lcard{margin:0 10px 8px;background:var(--low);border:1px solid var(--line2);border-radius:7px;padding:8px}
+.lc-h{display:flex;flex-direction:column;gap:2px;padding:2px 4px 6px}
+.lc-h b{font-size:13.5px}
+.lc-h small{color:var(--faint);font-size:11.5px;line-height:1.45}
+.lrow{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:8px;align-items:center;padding:5px;margin:3px 0;border:2px solid transparent;border-radius:6px;cursor:pointer}
+.lrow:hover{background:var(--panel)}
+.lrow.cur{border-color:var(--acc);background:var(--hover)}
+.lrow.muted{opacity:.5}
+.lrow .th{width:44px;height:44px;border-radius:4px;background:#080a0d center/cover no-repeat;display:flex;overflow:hidden}
+.lrow .th i{flex:1;background:center/cover no-repeat}
+.lrow .th.whole{align-items:center;justify-content:center;color:var(--acc);font-weight:700;font-size:16px;background:var(--panel)}
+.lrow .tx{display:flex;flex-direction:column;min-width:0}
+.lrow .tx b{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lrow .tx small{color:var(--dim);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lrow .tx em{font-style:normal;color:var(--amber)}
+.lrow .lb{display:flex;gap:4px}
+.lrow .mini{background:none;border:1px solid var(--line2);border-radius:5px;color:var(--dim);font-size:11.5px;padding:3px 7px;cursor:pointer}
+.lrow .mini:hover{color:var(--text)}
+.lrow .mini.on{border-color:var(--acc);color:var(--acc);background:var(--hover)}
+/* 调某一层：参数面板顶上的说明 + 在整朵里的位置；隐藏单层才有的花型 / 导出按钮 */
+.layerhead{border:1px solid var(--acc);border-radius:7px;padding:8px 10px;margin:6px 0 8px;background:var(--hover)}
+.layerhead .lh-t{display:flex;align-items:center;gap:8px}
+.layerhead .lh-t b{font-size:13.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.layerhead .hint{color:var(--dim);font-size:11.5px;margin:6px 0 2px}
+.layerhead details.sec{border-top:1px solid var(--line2);margin-top:6px}
+#pMaster.layermode .pm-ident,#pMaster.layermode .pm-btns,#pMaster.layermode>.actions>.note{display:none}
+#pCombo.effmode .pc-free,#pCombo.effmode .card .head select,#pCombo.effmode .card .head .x{display:none}
+#pCombo .card .head .lc-edit{margin-left:auto}
+/* 右栏三页：参数（默认）/ 审阅 / 工具 */
+#right:not(.pane-review) #pReview .rfull{display:none}
+#right.qmode #pReview .rfull{display:block}
+#right.pane-review #pReview .rstrip,#right.pane-review #layerCard,#right.pane-review aside.panel{display:none!important}
+.rstrip{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:var(--low);border:1px solid var(--line2);border-radius:7px;padding:7px 8px;margin:0 0 8px}
+.rstrip b{font-size:13px;white-space:nowrap}
+.rstrip .sp{flex:1}
+.rstrip .btn.mini{font-size:12px;padding:3px 8px}
+.rstrip .btn.okb[aria-pressed="true"]{background:var(--hover);border-color:var(--acc);color:var(--acc)}
+.rstrip .btn.fixb[aria-pressed="true"]{background:#422f30;border-color:#c86a55;color:#f6c8bb}
+.ptabs button{position:relative}
+.ptabs .dot{position:absolute;top:5px;right:3px;width:7px;height:7px;border-radius:50%;background:var(--acc)}
+.layerhead .lh-t .btn{white-space:nowrap;flex:none}
 </style>
 </head>
 <body>
@@ -560,7 +664,7 @@ details.sec>summary{color:var(--text)}
       <button data-disp="px" aria-pressed="false">1:1 像素</button>
       <button data-disp="game" aria-pressed="true">游戏内大小</button>
     </div>
-    <label class="expo" id="distBox" hidden><span class="tl">距离</span><input type="range" id="dist" min="800" max="1200" step="25" value="1000"><output id="distOut">1000 m</output></label>
+    <label class="expo" id="distBox" hidden><span class="tl">距离</span><input type="range" id="dist" min="0" max="1000" step="1" value="943" title="观看距离 50–1200 m（对数刻度）；标准检查按 1000 m"><output id="distOut">1000 m</output></label>
     <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
     <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
     <span class="abtag" id="abTag" hidden>A | B</span>
@@ -582,6 +686,24 @@ details.sec>summary{color:var(--text)}
     <section class="stage">
       <div id="showcaseBar" class="showcase-bar" hidden><b id="showcaseTitle">3.7 / 4.0 同秒对照</b><select id="showcaseType" aria-label="对照花型"></select><select id="cloudLayer" aria-label="查看配方图层" hidden></select><button id="showcaseParams" class="btn ghost">保存对照配方</button><button id="showcaseClose" class="btn ghost">退出对照</button><p id="showcaseNote">正在准备实际导出贴图…</p><details id="cloudPending" hidden></details></div>
       <div id="showcasePair" class="showcase-pair" hidden><span id="showcaseLeft">3.7 原版</span><span id="showcaseRight">4.0 新核</span></div>
+      <div class="assetbar" id="assetBar" hidden>
+        <span class="ab-th" id="abThumb"></span>
+        <span class="ab-tx"><b id="abName"></b><small id="abSub"></small></span>
+        <label class="ab-src" title="看哪个版本：AI 交的版本，或你自己保存的版本">版本<select id="abSrc"></select></label>
+        <span class="ab-chg" id="abChg" hidden>已改动 · 未保存</span>
+        <span class="sp"></span>
+        <button class="btn primary" id="abSave" type="button" title="把现在的全部参数（所有层）存成你的版本（存在这台电脑的浏览器里）">保存</button>
+        <button class="btn" id="abSaveAs" type="button">另存为…</button>
+        <details class="ab-more"><summary class="btn" title="更多">⋯</summary><div class="ab-menu">
+          <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
+          <button type="button" id="abExportFile">导出配方文件（.json）</button>
+          <button type="button" id="abImportFile">导入配方文件…</button>
+          <button type="button" id="abRename">重命名这个版本</button>
+          <button type="button" id="abDelete">删除这个版本</button>
+          <input type="file" id="abFile" accept=".json,application/json" hidden>
+        </div></details>
+        <button class="btn" id="abExport" type="button" title="导出整个效果的素材包（每层贴图 + Ramp + Cutout + PC / 手机 cascade.json）">导出素材包</button>
+      </div>
       <div id="bakeError" class="bake-error" role="alert" hidden><span id="bakeErrorText"></span><button class="btn" id="bakeRetry" type="button">重试烘焙</button></div>
       <div class="canvas-wrap">
         <div class="canvas-box ref-box" id="refBox" hidden><video id="refVid" muted playsinline preload="auto"></video>
@@ -618,11 +740,14 @@ details.sec>summary{color:var(--text)}
     <div class="right" id="right">
     <div class="ptabs" id="ptabs" role="tablist">
       <button role="tab" data-tab="master" aria-selected="true">参数</button>
+      <button role="tab" data-tab="review" aria-selected="false">审阅<i class="dot" id="rvDot" hidden></i></button>
       <button role="tab" data-tab="iter" aria-selected="false">工具</button>
     </div>
     <section class="review" id="pReview" hidden></section>
+    <section class="lcard" id="layerCard" hidden></section>
     <aside class="panel" id="pMaster">
-      <div class="group">
+      <div class="layerhead" id="layerHead" hidden></div>
+      <div class="group pm-ident">
         <div class="row2">
           <div class="field">花型
             <button class="typebtn" id="typeBtn" type="button" aria-haspopup="dialog"><span class="tb-img" id="typeThumb"></span><span class="tb-txt"><b id="typeName">菊</b><small id="typeCat">礼花</small></span><em>更换</em></button>
@@ -658,12 +783,12 @@ details.sec>summary{color:var(--text)}
         <label class="check" id="flipBox" hidden><input type="checkbox" id="x-flip"> 星头朝下（引擎里速度对齐方向相反时勾选）</label>
         <label class="check" id="gridBox" hidden><input type="checkbox" id="x-autogrid"> 自动选格子（帧数不变，按内容长宽比挑列 × 行，少浪费像素）</label>
         <div class="stats" id="stats">烘焙中…</div>
-        <div class="line">
+        <div class="line pm-btns">
           <button class="btn primary" id="btnExport">导出 2K 母版（ZIP）</button>
           <button class="btn" id="btnVariants">导出种子变体 V1–V3</button>
           <button class="btn" id="btnSave">存入组合库</button>
         </div>
-        <div class="line">
+        <div class="line pm-btns">
           <button class="btn ghost" id="btnImport">导入参数 JSON</button>
           <button class="btn ghost" id="btnReset">恢复本花型默认</button>
           <button class="btn ghost" id="btnJitter">随机微调（未锁定参数）</button>
@@ -674,20 +799,20 @@ details.sec>summary{color:var(--text)}
     </aside>
 
     <aside class="panel" id="pCombo" hidden>
-      <details class="sec" open>
+      <details class="sec pc-free" open>
         <summary>组合预设</summary>
         <p class="hint">芯就是缩小的牡丹母版。一个菊母版加上不同缩放的牡丹层，就是八重芯、三重芯。</p>
         <div class="presets" id="presets"></div>
       </details>
       <details class="sec" open>
-        <summary>图层</summary>
+        <summary>各层在整朵里的位置和颜色</summary>
         <div id="layers"></div>
         <div class="line" style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn" id="btnAddLayer">添加图层</button>
+          <button class="btn pc-free" id="btnAddLayer">添加图层</button>
           <button class="btn primary" id="btnExportCombo">导出组合素材包（一个包，每层一个发射器）</button>
         </div>
       </details>
-      <details class="sec" open>
+      <details class="sec pc-free" open>
         <summary>母版库</summary>
         <p class="hint">组合预览用 1024 版本。在「母版」页调好后点「存入组合库」即可加入。</p>
         <div class="lib" id="lib"></div>
@@ -872,7 +997,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.0.3';
+const VERSION = '4.0.4';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -3376,9 +3501,13 @@ async function renderStills40(P0,M0,opt) {
 }
 // 引擎时钟与显示尺度。取帧和材质颜色在同一个 30 Hz tick 求值。
 function engineTick(t) { return Math.floor(t*30+1e-8)/30; }
+// 观看距离（用户 2026-10-02 08:04：预览从 800–1200 m 放宽到 50–1200 m）。标准检查仍按 1000 m 量；近于约 1000 m 时贴图会被放大（看得出单格分辨率够不够）。
+const DIST_MIN=50, DIST_MAX=1200;
+const distFromSlider=v=>{const d=DIST_MIN*Math.pow(DIST_MAX/DIST_MIN,v/1000);return d<200?Math.round(d/5)*5:Math.round(d/10)*10;};   // 对数刻度：近处也好调
+const sliderFromDist=d=>Math.round(1000*Math.log(d/DIST_MIN)/Math.log(DIST_MAX/DIST_MIN));
 function gamePixelsPerMeter(P,diameter,height=canvas.height,distance=state.dist) {
   const fraction=Number.isFinite(+P.screenFrac) && +P.screenFrac>0 ? +P.screenFrac : 1/3;
-  return height*fraction*1000/(Math.max(1e-3,diameter)*clamp(distance,800,1200));
+  return height*fraction*1000/(Math.max(1e-3,diameter)*clamp(distance,DIST_MIN,DIST_MAX));
 }
 const gameDiameterCache=new WeakMap();
 function gameDiameter(b,fallback) {
@@ -4824,7 +4953,8 @@ const state = {
   locks: new Set(), activeStage: 0, repId: null,
   B: null,                              // A/B 对比的 B：{ P, M, bake, name }
   ref: { mode: 0, el: null, kind: '', t0: 0, alpha: 0.5, scale: 1, ox: 0, oy: 0, wipe: 0.5, aspect: 1, tex: null },
-  versions: [], recipes: [], metricRef: 'V05'
+  versions: [], recipes: [], metricRef: 'V05',
+  comboSel: -1, layerView: { solo: -1, mute: [] }   // 多层效果：正在调哪一层（-1 = 整体）；独看 / 静音只影响观察
 };
 const live = { sim: null, gen: -1, track: null, tgen: -1, tw: 0, E: null, egen: -1, simB: null, trackB: null, EB: null, genB: -1 };
 let hdrT = null, rgT = null;
@@ -4851,6 +4981,7 @@ let bakeTimer = 0;
 function scheduleBake() { clearTimeout(bakeTimer); bakeTimer = setTimeout(runPreviewBake, 380); }
 async function runPreviewBake() {
   clearTimeout(bakeTimer);
+  if (state.tab === 'combo' && state.comboSel >= 0) return runLayerBake();
   if (state.baking) { state.rebake = true; return; }
   if (!state.dirty || state.failedGen === state.gen) return;
   state.baking = true; state.rebake = false;
@@ -4881,6 +5012,34 @@ async function runPreviewBake() {
       $('#stats').textContent = '最新参数烘焙失败；修改参数或点击重试。';
       setStatus(''); syncBakeError();
     }
+  } finally {
+    state.baking = false; state.rebake = false;
+    if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
+  }
+}
+// 多层效果里调某一层（2026-10-02 用户 07:43）：state.P 就是这一层的参数（组合库条目 e.P），改了只重烘这一层；
+// 画面一直是整朵（实时模拟按 e.P 现算，引擎回放 / 贴图用新烘的 e.bake）。调过的层记进 state.layerEdits，换版本 / 保存时用。
+async function runLayerBake() {
+  const i = state.comboSel, L = state.layers[i], e = L && state.lib.find(x => x.name === L.lib);
+  if (!e) return;
+  if (state.baking) { state.rebake = true; return; }
+  if (!state.dirty || state.failedGen === state.gen) return;
+  state.baking = true; state.rebake = false;
+  const gen = state.gen; let pending = null;
+  e.rev = (e.rev || 0) + 1;            // 实时模拟马上按新参数重算
+  try {
+    const b = pending = await bake(libP(e.P, true), 1, p => { if (gen === state.gen) setStatus(`重烘第 ${i + 1} 层… ${Math.round(p * 100)}%`); });
+    if (gen !== state.gen || state.comboSel !== i || state.tab !== 'combo') { disposeBake(b); pending = null; return; }
+    disposeBake(e.bake); e.bake = b; pending = null;
+    if (e.rep) { state.layerEdits = state.layerEdits || {}; state.layerEdits[e.rep] = { P: e.P, M: e.M }; e.editSig = JSON.stringify([e.P, e.M]); }
+    state.dirty = false; state.failedGen = -1; state.bakeError = null; syncBakeError();
+    showStats(b); setStatus('');
+    if (state.platform === 'mobile') await ensureComboMobile();
+    if (typeof buildLayerCard === 'function') buildLayerCard();
+  } catch (err) {
+    if (pending) disposeBake(pending);
+    console.error(err);
+    if (gen === state.gen) { state.dirty = true; state.failedGen = gen; state.bakeError = { gen, message: err.message || String(err) }; $('#stats').textContent = '这一层的新参数烘焙失败；修改参数或点击重试。'; setStatus(''); syncBakeError(); }
   } finally {
     state.baking = false; state.rebake = false;
     if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
@@ -5205,6 +5364,7 @@ async function applyCombo(c) {
   state.layers = c.layers.map(l => { const e = libByType(l.m); const { m, ...rest } = l; if (rest.stages) rest.stages = rest.stages.map(s => [...s]); return newLayer(e, rest); });
   state.comboName = c.name; state.t = 0; buildComboPanel();
   if(state.platform==='mobile')await ensureComboMobile();
+  if (typeof buildLayerCard === 'function') buildLayerCard();
 }
 function comboDuration() {
   let d = 0.5;
@@ -5219,12 +5379,13 @@ function buildComboPanel() {
   state.layers.forEach((L, i) => {
     const card = document.createElement('div'); card.className = 'card';
     const head = document.createElement('div'); head.className = 'head';
-    head.innerHTML = `<b>图层 ${i + 1}</b>`;
+    head.innerHTML = `<b>${i + 1} · ${((typeof lib !== 'undefined' && lib.review && lib.review.layerNames) || [])[i] || '图层'}</b>`;
     const sel = document.createElement('select'); sel.setAttribute('aria-label', '母版');
     for (const e of state.lib) { const o = document.createElement('option'); o.value = e.name; o.textContent = e.name; sel.appendChild(o); }
     sel.value = L.lib; sel.addEventListener('change', () => { L.lib = sel.value; });
     const x = document.createElement('button'); x.className = 'x'; x.textContent = '删除'; x.addEventListener('click', () => { state.layers.splice(i, 1); buildComboPanel(); });
-    head.append(sel, x); card.appendChild(head);
+    const ed = document.createElement('button'); ed.className = 'btn mini lc-edit'; ed.type = 'button'; ed.textContent = '调这一层的参数 →'; ed.addEventListener('click', () => selectComboLayer(i));
+    head.append(sel, ed, x); card.appendChild(head);
     slider(card, `l${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
     slider(card, `l${i}-delay`, '延迟', 's', 0, 3, 0.01, () => L.delay, v => L.delay = v, 0);
     slider(card, `l${i}-rate`, '时间倍率', '×', 0.3, 2, 0.01, () => L.rate, v => L.rate = v, 1);
@@ -5242,12 +5403,12 @@ function buildComboPanel() {
     host.appendChild(card);
   });
   if (!state.layers.length) host.innerHTML = '<p class="note">还没有图层。点上面的预设，或「添加图层」。</p>';
-  const lib = $('#lib'); lib.innerHTML = '';
+  const libBox = $('#lib'); libBox.innerHTML = '';
   for (const e of state.lib) {
     const it = document.createElement('div'); it.className = 'it';
     it.innerHTML = `<span>${e.name}</span><small>${TYPE_NAMES[e.type]}</small>`;
     const add = document.createElement('button'); add.className = 'x'; add.textContent = '加入'; add.addEventListener('click', () => { state.layers.push(newLayer(e)); buildComboPanel(); });
-    it.appendChild(add); lib.appendChild(it);
+    it.appendChild(add); libBox.appendChild(it);
   }
 }
 async function exportCombo() {
@@ -5949,22 +6110,31 @@ function initUpdates() {
 //  库：迭代区（tool/data/review.js，做完等你看的）/ 正式库（15_replica.js，确认过的）/ 组合 / 花型
 //  审阅：通过 / 要改 + 意见，存在这台电脑的浏览器里；「复制意见」贴给 Claude
 // =====================================================================
-const lib = { q: '', key: '', review: null, open: store.get('libOpen2', {}) };
+const lib = { q: '', key: '', review: null, pane: 'params', open: store.get('libOpen2', {}) };
 const ref2 = { on: store.get('refOn', true), off: 0 };
 
 async function setTab(tab, o = {}) {
   const changed = tab !== state.tab;
   state.tab = tab; if (changed) state.t = 0;
+  if (tab !== 'combo') state.comboSel = -1;
   $('#pMaster').hidden = tab !== 'master'; $('#pCombo').hidden = tab !== 'combo'; $('#pIter').hidden = tab !== 'iter'; $('#pAsset').hidden = tab !== 'asset';
+  syncComboPanels();
   $('#viewSeg').hidden = tab === 'asset'; $('#assetCv').hidden = tab !== 'asset';
-  $('#ptabs').hidden = !(tab === 'master' || tab === 'iter');
-  for (const b of $('#ptabs').children) b.setAttribute('aria-selected', String(b.dataset.tab === tab));
+  syncPtabs();
   if (!changed) return;
   if (tab === 'combo' && !o.lazy) { await ensureLibrary(); if (!state.layers.length) applyCombo(COMBOS[0]); else buildComboPanel(); }
   if (tab === 'iter') { renderMetrics(); abInfo(); renderVersions(); }
   if (tab === 'asset') assetPanel();
 }
 
+function syncPtabs() {
+  const tab = state.tab, rv = lib.pane === 'review';
+  $('#ptabs').hidden = tab === 'asset' || $('#right').classList.contains('qmode');
+  $('#ptabs [data-tab=iter]').hidden = tab === 'combo';
+  $('#right').classList.toggle('pane-review', rv);
+  const cur = rv ? 'review' : tab === 'iter' ? 'iter' : 'master';
+  for (const b of $('#ptabs').children) b.setAttribute('aria-selected', String(b.dataset.tab === cur));
+}
 // ---------------- 审阅记录 ----------------
 const rvGet = () => store.get('review', {});
 // 审阅标记按「条目 + 版本指纹」记（用户 2026-09-30 14:46：新版本不能继承旧版本的「要改」）
@@ -6023,8 +6193,9 @@ function stdBadge(id) {
   return `<span class="badge ${r.pass ? 'ok' : 'std'}" title="${r.pass ? '标准检查全部通过' : '没过：' + bad.join('；').replace(/"/g, '')}">${r.pass ? '标准 ✓' : '标准 ✗ ' + bad.length}</span>`;
 }
 function stdCard(id) {
-  const r = stdOf(id); if (!r) return '';
-  return `<div class="rt">标准检查 ${r.pass ? '✅ 全部通过' : '❌'}${r.note ? ' · ' + r.note : ''}（${FW_STANDARD.generated}）</div><ul class="std">${(r.checks || []).map(c => `<li class="${c[1] ? 'ok' : 'bad'}">${c[1] ? '✓' : '✗'} ${c[0]}${c[2] ? ' · ' + c[2] : ''}</li>`).join('')}</ul>`;
+  const r = stdOf(id); if (!r) return '<p class="rline dim">标准检查：这一版还没跑</p>';
+  const bad = (r.checks || []).filter(c => !c[1]).length;
+  return `<details class="stdd"${r.pass ? '' : ' open'}><summary>标准检查 ${r.pass ? '✅ 全部通过' : '❌ ' + bad + ' 项没过'}<small>${r.note ? ' · ' + r.note : ''}（${FW_STANDARD.generated}）</small></summary><ul class="std">${(r.checks || []).map(c => `<li class="${c[1] ? 'ok' : 'bad'}">${c[1] ? '✓' : '✗'} ${c[0]}${c[2] ? ' · ' + c[2] : ''}</li>`).join('')}</ul></details>`;
 }
 function effBadge(ef) {
   if (ef.阶段 === '未开始') return '<span class="badge q">未开始</span>';
@@ -6046,27 +6217,29 @@ function openEffect(ef) {
   if (!x) { setQueuedView(false); lib.key = 'ef:' + ef.key; setReview(null); renderLib(); crumb(ef.阶段, ef.名); showEffectOnly(ef); return; }
   if (x.formal) openFormal(x.formal, ef); else openReview(x, ef);
 }
-function showEffectOnly(ef) { const box = $('#pReview'); box.hidden = false; box.innerHTML = effHeaderHTML(ef, null); bindEffHeader(box, ef); }
-// 效果头：阶段、四个进度、版本（候选 / 工作 / 通过）、方案、准备情况（实时模拟 / 烘焙回放 / 贴图 / 素材包）、任务、历史
-function effHeaderHTML(ef, cur) {
-  if (!ef) return '';
+function showEffectOnly(ef) { const box = $('#pReview'); box.hidden = false; const x = effParts(ef, null); box.innerHTML = `<div class="rcard"><div class="rh">${x.head}</div>${x.pills}</div><div class="rcard">${x.more}</div>`; bindEffHeader(box, ef); lib.pane = 'params'; syncPtabs(); wbRefresh(); }
+// 右栏卡片（2026-10-02 用户 07:43：参数要齐全、不再被长说明压着）：效果头拆成 head（阶段 + 名字）、pills（四个进度）、more（版本 / 准备情况 / 交付说明 / 任务 / 历史，默认折起来）
+function effParts(ef, cur) {
+  if (!ef) return { head: '', pills: '', more: '' };
   const g = ef.进度 || {}, ok = (b, t) => `<span class="pg${b ? ' on' : ''}">${b ? '✓' : '·'} ${t}</span>`;
   const ver = (lab, id) => id ? `<button class="btn mini${cur && (cur.id === id.replace(/^rep:/, '') || 'rep:' + cur.id === id) ? ' cur' : ''}" type="button" data-open="${id}">${lab} · ${id.replace(/^rep:/, '')}</button>` : '';
   const vars = (ef.方案 || []).map(v => `<button class="btn mini${cur && cur.id === v.id.replace(/^rep:/, '') ? ' cur' : ''}" type="button" data-open="${v.id}">${v.label}</button>`).join('');
   const jobs = (ef.jobs || []).filter(j => j.state !== '已回来' || !j.seen).slice(-4).map(j => `${j.id}（${j.state === '已回来' ? 'AI 还没看' : j.state}）`).join('、');
   const hist = (ef.历史 || []).map(h => { const e = entryById(h.id.replace(/@.*$/, '')); return `<li>${e && !h.id.includes('@') ? `<a href="#" data-open="${h.id}">${h.id}</a>` : h.id} · ${h.结论}${h.反馈 ? ' —— ' + h.反馈 : ''}</li>`; }).join('');
-  return `<div class="effh"><div class="rh"><span class="badge">${ef.阶段}</span><b>${ef.名}</b><small>负责：${ef.负责 || '—'}</small></div>
-    <div class="pgs">${ok(g.计算, '计算完成')}${ok(g.AI自检, 'AI 自检')}${ok(g.素材导出, '素材导出')}${ok(g.用户验收, '你已验收')}</div>
-    <div class="rt">版本</div><div class="rlayers">${ver('待你验收', ef.待验收版)}${ver('工作版', ef.阶段 === '已通过' ? null : ef.工作版)}${ver('已通过', ef.已通过版)}</div>
+  const c = (ef.exports || []).find(x => !x.legacy && !x.stale);
+  const more = `<div class="rt">版本</div><div class="rlayers">${ver('待你验收', ef.待验收版)}${ver('工作版', ef.阶段 === '已通过' ? null : ef.工作版)}${ver('已通过', ef.已通过版)}</div>
     ${vars ? `<div class="rt">方案 / 分档</div><div class="rlayers">${vars}</div>` : ''}
     <div class="rt">准备情况</div><div class="ready" id="effReady">${readyHTML(ef, cur)}</div>
-    ${ef.交付说明 ? `<div class="rt">这版（AI 推荐的完整候选）</div><ul class="deliv"><li><b>解决了：</b>${ef.交付说明.解决了什么 || ''}</li><li><b>仍有差异：</b>${ef.交付说明.仍有差异 || '—'}</li><li><b>素材：</b>${ef.交付说明.素材在哪 || ''}</li></ul>` : ''}
-    ${(() => { const c = (ef.exports || []).find(x => !x.legacy && !x.stale); return c ? `<p class="op"><a href="../analysis/results/${c.job}/烘焙回放.jpg" target="_blank" rel="noopener">导出自检对照图（实拍 / 实时模拟 / 导出效果，开花后同一秒）</a> · <a href="../analysis/results/${c.job}/回放检查.jpg" target="_blank" rel="noopener">贴图回放检查</a></p>` : ''; })()}
+    ${ef.交付说明 ? `<div class="rt">交付说明</div><ul class="deliv">${Object.entries(ef.交付说明).map(([k, v]) => `<li><b>${k}：</b>${v}</li>`).join('')}</ul>` : ''}
+    ${c ? `<p class="op"><a href="../analysis/results/${c.job}/烘焙回放.jpg" target="_blank" rel="noopener">导出自检对照图（实拍 / 实时模拟 / 导出效果，开花后同一秒）</a> · <a href="../analysis/results/${c.job}/回放检查.jpg" target="_blank" rel="noopener">贴图回放检查</a></p>` : ''}
     ${ef.说明 ? `<p class="op">${ef.说明}</p>` : ''}
     ${ef.缺 && ef.缺.length ? `<div class="rt">还缺</div><ul>${ef.缺.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
     ${jobs ? `<p class="qnote">任务：${jobs}</p>` : ''}
-    ${hist ? `<details class="hist"><summary>历史版本（${(ef.历史 || []).length}）· 否决 / 被取代，保留参数和你的反馈</summary><ul>${hist}</ul></details>` : ''}</div>`;
+    ${hist ? `<details class="hist"><summary>历史版本（${(ef.历史 || []).length}）· 否决 / 被取代，保留参数和你的反馈</summary><ul>${hist}</ul></details>` : ''}`;
+  return { head: `<span class="badge">${ef.阶段}</span><b>${ef.名}</b><small>负责：${ef.负责 || '—'}</small>`,
+    pills: `<div class="pgs">${ok(g.计算, '计算完成')}${ok(g.AI自检, 'AI 自检')}${ok(g.素材导出, '素材导出')}${ok(g.用户验收, '你已验收')}</div>`, more };
 }
+function effHeaderHTML(ef, cur) { const x = effParts(ef, cur); return x.head ? `<div class="effh"><div class="rh">${x.head}</div>${x.pills}${x.more}</div>` : ''; }
 function readyHTML(ef, cur) {
   const row = (t, st, cls) => `<div class="rd ${cls || ''}"><span>${t}</span><b>${st}</b></div>`;
   const live = cur ? (cur.kind === 'asset' ? '无（这一条是贴图回放）' : '可以（打开就是）') : '—';
@@ -6078,7 +6251,7 @@ function readyHTML(ef, cur) {
   const dirty = lib.sig && lib.sig !== curSig() ? row('你在这里改了参数', '上面的素材包是改之前的版本', 'warn') : '';
   return row('实时模拟', live) + row('烘焙回放', cur ? baked : '—') + row('贴图 / 素材包', pack, cur1 ? 'on' : stale ? 'warn' : '') + dirty;
 }
-function curSig() { try { return JSON.stringify(state.tab === 'combo' ? state.layers : [state.P, state.M]); } catch (e) { return ''; } }
+function curSig() { try { return JSON.stringify(state.tab === 'combo' ? [state.layers, state.layers.map(L => { const e = state.lib.find(x => x.name === L.lib); return e && e.P; })] : [state.P, state.M]); } catch (e) { return ''; } }
 function bindEffHeader(box, ef) {
   box.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', ev => { ev.preventDefault(); const x = entryById(b.dataset.open.replace(/@.*$/, '')); if (!x) return; if (x.formal) openFormal(x.formal, ef); else openReview(x, ef); }));
 }
@@ -6195,7 +6368,7 @@ function rememberLayerEdit() {
   state.layerEdits[r.id] = { P: structuredClone(state.P), M: structuredClone(state.M) };
 }
 function openReview(e, ef) {
-  rememberLayerEdit();
+  rememberLayerEdit(); wb.entry = undefined;     // 重新打开 = 回到 AI 版（资产栏）
   lib.effect = ef || effectOfEntry(e); lib.formal = null;
   lib.key = ef ? 'ef:' + ef.key : 'rv:' + e.id; store.set('lastKey', lib.key);
   const where = (lib.effect ? lib.effect.阶段 + ' · ' + lib.effect.名 : '条目') + (e.superseded ? ' · 历史' : '');
@@ -6215,17 +6388,18 @@ function openReview(e, ef) {
 // 组合条目：整体效果（组合页实时模拟 + 实拍并排）；各层在审阅卡里单独打开
 async function openComboEntry(e) {
   state.view = 'live'; document.querySelectorAll('#viewSeg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === 'live'));
-  await setTab('combo', { lazy: true }); await applyCombo(e.combo); lib.sig = curSig(); setReview(e);   // lazy：只烘这个组合用到的层，不先烘整套默认母版
+  state.comboSel = -1; state.layerView = { solo: -1, mute: [] };
+  await setTab('combo', { lazy: true }); await applyCombo(e.combo); lib.sig = curSig(); setReview(e); syncComboPanels();   // lazy：只烘这个组合用到的层，不先烘整套默认母版
 }
 function openFormal(r, ef) {
-  lib.effect = ef || effectOfEntry({ id: r.id }); lib.formal = r;
+  wb.entry = undefined; lib.effect = ef || effectOfEntry({ id: r.id }); lib.formal = r;
   setQueuedView(false); lib.key = ef ? 'ef:' + ef.key : 'rep:' + r.id; setReplica(r.id); setTab('master'); lib.sig = curSig(); setReview(null, r); renderLib(); crumb(lib.effect ? lib.effect.阶段 + ' · ' + lib.effect.名 : '正式库', r.name);
 }
-function openType(t) { lib.effect = null; lib.formal = null; setQueuedView(false); lib.key = 'type:' + t; setType(t); setTab('master'); setReview(null); renderLib(); crumb('花型', TYPE_NAMES[t]); }
+function openType(t) { wb.entry = undefined; lib.effect = null; lib.formal = null; setQueuedView(false); lib.key = 'type:' + t; setType(t); setTab('master'); setReview(null); renderLib(); crumb('花型', TYPE_NAMES[t]); }
 
 // 排队中的条目：还没有结果，只放实拍（要对的目标），右栏只留审阅卡
 function setQueuedView(on) {
-  document.querySelector('.canvas-wrap').classList.toggle('refonly', on); $('#right').classList.toggle('qmode', on);
+  document.querySelector('.canvas-wrap').classList.toggle('refonly', on); $('#right').classList.toggle('qmode', on); syncPtabs();
   ref2.on = on ? true : store.get('refOn', true);
   $('#refTag').dataset.q = on ? '1' : '';
 }
@@ -6236,33 +6410,49 @@ function setReview(e, formal) {
   setRefVideo(vidEntry);
   const ef = lib.effect;
   if (!e) {
-    if (formal && ef) { box.hidden = false; box.innerHTML = effHeaderHTML(ef, { id: formal.id }); bindEffHeader(box, ef); }
+    if (formal && ef) { const x = effParts(ef, { id: formal.id }); box.hidden = false; box.innerHTML = `<div class="rstrip"><span class="badge ok">正式库</span><b>${formal.id}</b><span class="sp"></span><button class="btn mini" type="button" data-pane="review">审阅 →</button></div><div class="rcard rfull"><div class="rh">${x.head}</div>${x.pills}<p class="rnote">正式库条目：${formal.name}</p></div><details class="rcard rfold rfull"><summary>版本与历史 · 准备情况</summary>${x.more}</details>`; box.querySelectorAll('[data-pane]').forEach(b => b.addEventListener('click', () => { lib.pane = 'review'; syncPtabs(); })); bindEffHeader(box, ef); }
     else { box.hidden = true; box.innerHTML = ''; }
+    $('#rvDot').hidden = true; if (lib.pane === 'review' && box.hidden) lib.pane = 'params'; syncPtabs();
+    buildLayerCard(); wbRefresh();
     return;
   }
-  const r = rvOf(e), cand = ef && ef.阶段 === '待验收' && ef.待验收版 === e.id;
+  const r = rvOf(e), cand = ef && ef.阶段 === '待验收' && ef.待验收版 === e.id, x = effParts(ef, e), q = e.kind === 'queued';
+  const kindTxt = e.superseded ? '历史版本' : cand ? '待你验收的候选' : e.layerOf ? '其中一层' : '当前工作版（AI 在做）';
+  const moreBits = [
+    e.look && e.look.length ? `<div class="rt">看什么</div><ul>${e.look.map(x => `<li>${x}</li>`).join('')}</ul>` : '',
+    e.opinion ? `<div class="rt">${q ? '这一版改了什么' : 'AI 的看法'}</div><p class="op">${e.opinion}</p>` : '',
+    ...(e.doc || []).map(([t, items]) => `<div class="rt">${t}</div><ul>${items.map(x => `<li>${x}</li>`).join('')}</ul>`),
+    e.images && e.images.length ? `<div class="rt">${e.imagesTitle || (e.principle ? '实拍关键帧' : '说明图')}（点图放大）</div><div class="rimgs">${e.images.map(([src, cap]) => `<figure><a href="${src}" target="_blank" rel="noopener"><img src="${src}" loading="lazy" alt="${cap}"></a><figcaption>${cap}</figcaption></figure>`).join('')}</div>` : ''].join('');
+  const sr = stdOf(e.id);
+  const strip = q ? '' : `<div class="rstrip"><span class="badge${cand ? ' new' : ''}">${cand ? '待你验收' : e.superseded ? '历史' : e.layerOf ? '其中一层' : '工作版'}</span><b title="${e.name.replace(/"/g, '')}">${e.id}</b>${sr ? `<span class="badge ${sr.pass ? 'ok' : 'std'}">标准 ${sr.pass ? '✓' : '✗'}</span>` : ''}<span class="sp"></span>
+      <button class="btn mini okb" type="button" aria-pressed="${r.st === 'ok'}" title="通过（整体达到预期）">✓ 通过</button><button class="btn mini fixb" type="button" aria-pressed="${r.st === 'fix'}">✗ 要改</button><button class="btn mini" type="button" data-pane="review" title="本次变化、检查、意见、版本与历史">审阅</button></div>`;
   box.hidden = false;
-  box.innerHTML = effHeaderHTML(ef, e) + `<div class="rh"><span class="badge">${e.superseded ? '历史版本' : cand ? '待你验收的候选' : e.layerOf ? '其中一层' : '当前工作版（AI 在做，不用你审）'} · ${e.task}</span><b>${e.name}</b><small>${e.date || ''} · 版本 ${e.ver || '—'}</small></div>
-    <p>${e.note || ''}</p>
-    ${e.kind === 'combo' && e.layerIds ? `<div class="rt">这是整体效果（${e.layerIds.length} 层叠在一起）· 要单独调某一层点下面</div><div class="rlayers">${e.layerIds.map((id, i) => `<button class="btn mini" type="button" data-layer="${id}">${(e.layerNames || [])[i] || id}</button>`).join('')}</div>` : ''}
-    ${e.layerOf ? `<p class="qnote">这是「${e.layerOf}」的其中一层。<button class="btn mini" type="button" data-whole="${e.layerOf}">回到整体效果</button></p>` : ''}
-    ${e.look && e.look.length ? `<div class="rt">看什么</div><ul>${e.look.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
-    ${e.opinion ? `<div class="rt">${e.kind === 'queued' ? '这一版改了什么' : 'AI 的看法'}</div><p class="op">${e.opinion}</p>` : ''}
-    ${stdCard(e.id)}
-    ${(e.doc || []).map(([t, items]) => `<div class="rt">${t}</div><ul>${items.map(x => `<li>${x}</li>`).join('')}</ul>`).join('')}
-    ${e.images && e.images.length ? `<div class="rt">${e.imagesTitle || (e.principle ? '实拍关键帧' : '说明图')}（点图放大）</div><div class="rimgs">${e.images.map(([src, cap]) => `<figure><a href="${src}" target="_blank" rel="noopener"><img src="${src}" loading="lazy" alt="${cap}"></a><figcaption>${cap}</figcaption></figure>`).join('')}</div>` : ''}
-    ${e.kind === 'queued' ? '<p class="qnote">还没跑。在你电脑上双击 <b>analysis/local/跑任务_并行.bat</b>（3 个进程同时跑），跑完会自动推上来；pull 后刷新烘焙器，这一条就能看了。</p>' : ''}
-    <div class="ra"${e.kind === 'queued' ? ' hidden' : ''}><button class="btn okb" type="button" aria-pressed="${r.st === 'ok'}">✓ 通过（整体达到预期）</button><button class="btn fixb" type="button" aria-pressed="${r.st === 'fix'}">✗ 要改</button></div>
-    <textarea id="rvTxt"${e.kind === 'queued' ? ' hidden' : ''} placeholder="意见：哪里不像、要改什么（写完会自动保存）">${(r.txt || '').replace(/</g, '&lt;')}</textarea>
-    <div class="saved" id="rvSaved"${e.kind === 'queued' ? ' hidden' : ''}>${r.at ? '已保存 ' + r.at + ' · 左栏下面「复制我的意见」贴给 Claude' : '意见按这一版记在这台电脑的浏览器里；写完点左栏下面「复制我的意见」贴给 Claude'}</div>`;
+  box.innerHTML = strip + `<div class="rcard rfull">
+      ${x.head ? `<div class="rh">${x.head}</div>` : ''}${x.pills}
+      <div class="rh2"><span class="badge">${kindTxt} · ${e.task}</span><b>${e.name}</b><small>${e.date || ''} · 版本 ${e.ver || '—'}</small></div>
+      <p class="rnote">${e.note || ''}</p>
+      ${e.layerOf ? `<p class="qnote">这是「${e.layerOf}」的其中一层。<button class="btn mini" type="button" data-whole="${e.layerOf}">回到整体效果</button></p>` : ''}
+      ${moreBits ? `<details class="rmore"${q ? ' open' : ''}><summary>看什么 · AI 的看法${e.images && e.images.length ? ' · 图' : ''}</summary>${moreBits}</details>` : ''}
+      ${q ? '<p class="qnote">还没跑。在你电脑上双击 <b>analysis/local/跑任务_并行.bat</b>（3 个进程同时跑），跑完会自动推上来；pull 后刷新烘焙器，这一条就能看了。</p>' : ''}
+    </div>
+    <div class="rcard rfull"${q ? ' hidden' : ''}>
+      <div class="rc-t">检查与验收</div>
+      ${stdCard(e.id)}
+      <div class="ra"><button class="btn okb" type="button" aria-pressed="${r.st === 'ok'}">✓ 通过（整体达到预期）</button><button class="btn fixb" type="button" aria-pressed="${r.st === 'fix'}">✗ 要改</button></div>
+      <textarea id="rvTxt" placeholder="意见：哪里不像、要改什么（写完会自动保存）">${(r.txt || '').replace(/</g, '&lt;')}</textarea>
+      <div class="saved" id="rvSaved">${r.at ? '已保存 ' + r.at + ' · 左栏下面「复制我的意见」贴给 Claude' : '意见按这一版记在这台电脑的浏览器里；写完点左栏下面「复制我的意见」贴给 Claude'}</div>
+    </div>
+    ${x.more ? `<details class="rcard rfold rfull"><summary>版本与历史 · 准备情况 · 交付说明</summary>${x.more}</details>` : ''}`;
   bindEffHeader(box, ef);
+  box.querySelectorAll('[data-pane]').forEach(b => b.addEventListener('click', () => { lib.pane = 'review'; syncPtabs(); $('#right').scrollTop = 0; }));
+  $('#rvDot').hidden = !(cand && !r.st);
   const setSt = st => { const cur = rvOf(e).st; rvSet(rvKey(e), { st: cur === st ? '' : st }); setReview(e); renderLib(); };
-  box.querySelectorAll('[data-layer]').forEach(b => b.addEventListener('click', () => { const le = FW_REVIEW_LIST.find(x => x.id === b.dataset.layer); if (le) openReview(le); }));
   box.querySelectorAll('[data-whole]').forEach(b => b.addEventListener('click', () => { const ce = FW_REVIEW_LIST.find(x => x.id === b.dataset.whole && x.kind === 'combo'); if (ce) openReview(ce); }));
-  box.querySelector('.okb').addEventListener('click', () => setSt('ok'));
-  box.querySelector('.fixb').addEventListener('click', () => setSt('fix'));
+  box.querySelectorAll('.okb').forEach(b => b.addEventListener('click', () => setSt('ok')));
+  box.querySelectorAll('.fixb').forEach(b => b.addEventListener('click', () => setSt('fix')));
   let tm = 0; box.querySelector('#rvTxt').addEventListener('input', ev => { clearTimeout(tm); tm = setTimeout(() => { rvSet(rvKey(e), { txt: ev.target.value }); $('#rvSaved').textContent = '已保存 · 左栏下面「复制我的意见」贴给 Claude'; renderLib(); }, 500); });
-  refRestoreOffset(e);
+  refRestoreOffset(e); syncPtabs();
+  buildLayerCard(); wbRefresh();
 }
 
 // ---------------- 实拍并排 ----------------
@@ -6369,9 +6559,16 @@ function initPanels() {
 function initLibrary() {
   $('#libSearch').addEventListener('input', e => { lib.q = e.target.value; renderLib(); });
   $('#libSearch').addEventListener('keydown', e => { if (e.key === 'Escape') { e.target.value = ''; lib.q = ''; renderLib(); e.target.blur(); } });
-  for (const b of $('#ptabs').children) b.addEventListener('click', () => setTab(b.dataset.tab));
+  // 右栏三页：参数（观察图层 + 完整参数，默认）/ 审阅（本次变化、检查与验收、版本与历史）/ 工具（A/B、版本回滚…，单层才有）
+  for (const b of $('#ptabs').children) b.addEventListener('click', () => {
+    const k = b.dataset.tab;
+    if (k === 'review') { lib.pane = 'review'; syncPtabs(); return; }
+    lib.pane = 'params';
+    if (k === 'iter') setTab('iter'); else if (state.tab === 'iter') setTab('master'); else syncPtabs();
+  });
   $('#refVid').addEventListener('loadedmetadata', layoutRef);
   $('#rvCopy').addEventListener('click', rvCopy);
+  initWorkbench();
   $('#newRecipe').addEventListener('click', () => pkOpen());       // 新建配方 = 从花型库挑一个模板开始（可编辑的实时模拟）
   const ro = new ResizeObserver(() => document.documentElement.style.setProperty('--topH', $('#main').offsetTop + 'px')); ro.observe($('#viewbar')); ro.observe(document.querySelector('header.top'));
   initPanels();
@@ -6383,6 +6580,225 @@ function initLibrary() {
   renderLib();
   if (/[?&]fast/.test(location.search)) return;     // 本地任务的自动化（compare.py）不自动打开条目
   if (fresh) openEffect(fresh); else if (lastEf) openEffect(lastEf); else if (lastRv) openReview(lastRv); else crumb('花型', TYPE_NAMES[state.P.type]);
+}
+// =====================================================================
+//  工作台（2026-10-02 用户 07:43 / 07:47）：每个条目都是完整资产——
+//  · 多层效果一个查看器：右栏「观察图层」选整体或某一层，选中层下面就是这一层的完整参数，画面一直是整朵；独看 / 静音只影响观察
+//  · 画面上方资产栏：看哪个版本（AI 版 / 你保存的版本）、保存、另存为、导出 / 导入配方文件、复制改动、导出素材包
+//  你的版本存在这台电脑的浏览器里（localStorage「mySaves」），按效果分；导出配方文件可以长期保留或发给 AI。
+// =====================================================================
+
+// ---------------- 观察图层 ----------------
+function layerEntryOf(L) { return L && state.lib.find(x => x.name === L.lib); }
+function layerName(i) {
+  const L = state.layers[i], e = layerEntryOf(L), names = (lib.review && lib.review.kind === 'combo' && lib.review.layerNames) || [];
+  const le = e && e.rep ? FW_REVIEW_LIST.find(x => x.id === e.rep) : null;
+  return names[i] || (le ? le.name : L ? L.lib : '');
+}
+function buildLayerCard() {
+  const box = $('#layerCard'), on = state.tab === 'combo' && state.layers.length > 0 && !state.showcase;
+  box.hidden = !on; if (!on) { box.innerHTML = ''; return; }
+  const v = state.layerView;
+  const rows = state.layers.map((L, i) => {
+    const e = layerEntryOf(L), le = e && e.rep ? FW_REVIEW_LIST.find(x => x.id === e.rep) : null;
+    const dur = e && e.bake ? bakeTotal(e.bake) / (L.rate || 1) : 0, solo = v.solo === i, mute = v.mute.includes(i);
+    return `<div class="lrow${state.comboSel === i ? ' cur' : ''}${mute || (v.solo >= 0 && !solo) ? ' muted' : ''}" data-i="${i}" tabindex="0" role="button">
+      ${le ? thumbHTML(le) : `<span class="th" style="${e ? typeThumbStyle(e.type) : ''}"></span>`}
+      <span class="tx"><b>${i + 1} · ${layerName(i)}</b><small>开始 ${(+L.delay || 0).toFixed(2)} s · 时长 ${dur.toFixed(2)} s · 缩放 ${(+L.scale || 1).toFixed(2)}${e && e.editSig ? ' · <em>已调</em>' : ''}</small></span>
+      <span class="lb"><button type="button" class="mini${solo ? ' on' : ''}" data-solo="${i}" aria-pressed="${solo}">独看</button><button type="button" class="mini${mute ? ' on' : ''}" data-mute="${i}" aria-pressed="${mute}">静音</button></span></div>`;
+  });
+  box.innerHTML = `<div class="lc-h"><b>观察图层</b><small>点一层改它的参数（画面仍是整朵）。独看 / 静音只影响观察。</small></div>
+    <div class="lrow whole${state.comboSel < 0 ? ' cur' : ''}" data-i="-1" tabindex="0" role="button"><span class="th whole">${state.layers.length}</span><span class="tx"><b>整体</b><small>各层的位置、延迟、时间倍率、颜色</small></span></div>${rows.join('')}`;
+  box.querySelectorAll('.lrow').forEach(r => {
+    const go = ev => { if (ev.target.closest('button')) return; selectComboLayer(+r.dataset.i); };
+    r.addEventListener('click', go); r.addEventListener('keydown', ev => { if (ev.key === 'Enter') go(ev); });
+  });
+  box.querySelectorAll('[data-solo]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.solo; v.solo = v.solo === i ? -1 : i; buildLayerCard(); }));
+  box.querySelectorAll('[data-mute]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.mute; v.mute = v.mute.includes(i) ? v.mute.filter(x => x !== i) : [...v.mute, i]; buildLayerCard(); }));
+}
+function selectComboLayer(i) {
+  if (state.tab !== 'combo') return;
+  const L = state.layers[i], e = layerEntryOf(L);
+  if (i >= 0 && !e) return;
+  state.comboSel = i;
+  if (i >= 0) {
+    // 参数面板直接绑这一层：state.P = 这层的模拟参数，state.M = 这层在整朵里的颜色（组合层 L，和单层的颜色字段同名）
+    state.P = e.P; state.M = L; state.repId = e.rep || null; state.activeStage = 0;
+    state.gen++; state.dirty = false; state.failedGen = -1; state.bakeError = null; syncBakeError();
+    buildMasterPanel(); buildLayerHead(i);
+    if (e.bake) showStats(e.bake);
+  } else buildComboPanel();
+  syncComboPanels(); buildLayerCard();
+  $('#right').scrollTop = 0;
+}
+function buildLayerHead(i) {
+  const L = state.layers[i], host = $('#layerHead'); host.innerHTML = '';
+  host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b>正在调：第 ${i + 1} 层 · ${layerName(i)}</b></div>
+    <p class="hint">下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。</p>`);
+  const pos = document.createElement('details'); pos.className = 'sec'; pos.open = true; pos.innerHTML = '<summary>在整朵里的位置</summary>'; host.appendChild(pos);
+  slider(pos, `lh${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
+  slider(pos, `lh${i}-delay`, '延迟', 's', 0, 10, 0.01, () => L.delay, v => L.delay = v, 0);
+  slider(pos, `lh${i}-rate`, '时间倍率', '×', 0.3, 2, 0.01, () => L.rate, v => L.rate = v, 1);
+  const mir = document.createElement('label'); mir.className = 'check'; mir.innerHTML = '<input type="checkbox"> 水平镜像';
+  const cb = mir.querySelector('input'); cb.checked = !!L.mirror; cb.addEventListener('change', () => L.mirror = cb.checked); pos.appendChild(mir);
+  host.querySelector('#lhBack').addEventListener('click', () => selectComboLayer(-1));
+}
+function syncComboPanels() {
+  const combo = state.tab === 'combo', lay = combo && state.comboSel >= 0;
+  if (combo) { $('#pMaster').hidden = !lay; $('#pCombo').hidden = lay; }
+  $('#pMaster').classList.toggle('layermode', lay); $('#layerHead').hidden = !lay;
+  $('#pCombo').classList.toggle('effmode', combo && !!(lib.review && lib.review.kind === 'combo'));
+}
+
+// ---------------- 你的版本（保存 / 切换 / 文件） ----------------
+const wb = { key: '', entry: null, src: { kind: 'ai' }, sig: '', arm: 0 };
+function wbKey() {
+  if (lib.review && lib.review.layerOf) return 'rv:' + lib.review.id;
+  if (lib.effect) return 'ef:' + lib.effect.key;
+  if (lib.review) return 'rv:' + lib.review.id;
+  if (lib.formal) return 'rep:' + lib.formal.id;
+  return lib.key || '';
+}
+function wbBaseId() { return lib.review ? lib.review.id : lib.formal ? lib.formal.id : lib.key === 'combo' ? '组合编辑器' : state.P.type; }
+const wbAll = () => store.get('mySaves', {});
+const wbList = () => (wbAll()[wb.key] || []);
+function wbPut(list) { const all = wbAll(); all[wb.key] = list; store.set('mySaves', all); }
+function wbSnap() {
+  if (state.tab === 'combo') return { kind: 'combo', name: state.comboName, layers: state.layers.map(L => { const e = layerEntryOf(L) || {}; const { lib: _l, ...Lr } = L; return { id: e.rep || null, type: e.type || null, L: structuredClone(Lr), P: e.P ? structuredClone(e.P) : null, M: e.M ? structuredClone(e.M) : null }; }) };
+  return { kind: 'single', P: structuredClone(state.P), M: structuredClone(state.M), repId: state.repId || null };
+}
+function wbSig() { try { return JSON.stringify(wbSnap()); } catch (e) { return ''; } }
+const wbIdle = () => !state.baking && !state.dirty && $('#busy').hidden && (state.tab !== 'combo' || (state.layers.length && state.layers.every(L => { const e = layerEntryOf(L); return e && e.bake; })));
+// 打开 / 换版本后，等烘焙稳定了再记「没改过」的样子（烘焙会自动补一些派生字段，不算你的改动）
+function wbArm() {
+  const n = ++wb.arm; wb.sig = '';
+  const tick = () => { if (n !== wb.arm) return; if (wbIdle()) { wb.sig = wbSig(); wbSync(); } else setTimeout(tick, 400); };
+  setTimeout(tick, 300);
+}
+function wbVisible() { return !state.showcase && !!(lib.review ? lib.review.kind !== 'queued' : lib.formal || /^(type:|combo$)/.test(lib.key || '')); }
+function wbRefresh() {
+  const k = wbKey();
+  if (k !== wb.key || lib.review !== wb.entry) { wb.key = k; wb.entry = lib.review; wb.src = { kind: 'ai' }; wbArm(); }
+  wbSync();
+}
+function wbSync() {
+  const bar = $('#assetBar'); bar.hidden = !wbVisible(); if (bar.hidden) return;
+  const ef = lib.effect, e = lib.review, combo = state.tab === 'combo';
+  $('#abName').textContent = ef ? ef.名 : e ? e.name : lib.formal ? lib.formal.name : lib.key === 'combo' ? '组合编辑器' : TYPE_NAMES[state.P.type] || '';
+  $('#abSub').textContent = [wbBaseId(), combo ? state.layers.length + ' 层' : '单层', ef ? ef.阶段 : lib.formal ? '正式库' : e ? '条目' : '花型模板'].join(' · ');
+  const th = ef && ef.thumb ? `<i style="background-image:url(${ef.thumb})"></i>` : '';
+  const thHost = $('#abThumb'); if (thHost.dataset.k !== wb.key) { thHost.dataset.k = wb.key; thHost.innerHTML = th || (e ? thumbHTML(e).replace(/^<span class="th"/, '<span class="th in"') : `<span class="th in" style="${typeThumbStyle(state.P.type)}"></span>`); }
+  const list = wbList(), sel = $('#abSrc'), cur = wb.src.kind === 'mine' ? wb.src.id : 'ai';
+  const opts = [['ai', `AI 版 · ${wbBaseId()}`], ...list.map(s => [s.id, `我的 · ${s.name}（${s.at.slice(5)}）`])];
+  const html = opts.map(([v, t]) => `<option value="${v}">${t}</option>`).join('');
+  if (sel.dataset.h !== html) { sel.innerHTML = html; sel.dataset.h = html; }
+  sel.value = cur;
+  const changed = !!wb.sig && wbSig() !== wb.sig;
+  $('#abChg').hidden = !changed; $('#abChg').textContent = wb.sig ? '已改动 · 未保存' : '';
+  $('#abSave').classList.toggle('primary', changed); $('#abSave').title = wb.src.kind === 'mine' ? `覆盖保存「${(list.find(s => s.id === wb.src.id) || {}).name || ''}」` : '存成你的一个版本（起个名字）';
+  $('#abRename').hidden = $('#abDelete').hidden = wb.src.kind !== 'mine';
+}
+setInterval(() => { if (!document.hidden && !$('#assetBar').hidden) wbSync(); }, 1000);
+
+function wbNow() { return new Date().toLocaleString('zh-CN', { hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/\//g, '-'); }
+function wbSave(asNew) {
+  const list = wbList(), mine = wb.src.kind === 'mine' && list.find(s => s.id === wb.src.id);
+  let it = !asNew && mine;
+  if (!it) {
+    const name = prompt('给这个版本起个名字（存在这台电脑的浏览器里）', `我的 ${list.length + 1}`);
+    if (name == null) return;
+    it = { id: Date.now().toString(36), name: name.trim() || `我的 ${list.length + 1}` }; list.push(it);
+  }
+  Object.assign(it, { at: wbNow(), base: wbBaseId(), baseVer: lib.review && lib.review.ver || '', snap: wbSnap() });
+  wbPut(list); wb.src = { kind: 'mine', id: it.id }; wb.sig = wbSig(); wbSync();
+  flash(`已保存「${it.name}」（这台电脑的浏览器里；想长期留或发给 AI 用「⋯ → 导出配方文件」）`);
+}
+// 回到 AI 版：丢掉这个效果里调过的层，重新打开条目
+async function wbLoadAI() {
+  const e = lib.review;
+  if (state.layerEdits) {
+    const ids = e && e.kind === 'combo' ? e.layerIds || [] : e ? [e.id] : [];
+    for (const id of ids) { delete state.layerEdits[id]; const le = state.lib.find(x => x.rep === id); if (le && le.editSig) { disposeBake(le.bake); state.lib.splice(state.lib.indexOf(le), 1); } }
+  }
+  if (e) await openReview(e, lib.effect); else if (lib.formal) openFormal(lib.formal, lib.effect); else if ((lib.key || '').startsWith('type:')) openType(lib.key.slice(5));
+  wb.src = { kind: 'ai' }; wbArm(); wbSync();
+}
+async function wbLoad(id) {
+  if (id === 'ai') return wbLoadAI();
+  const s = wbList().find(x => x.id === id); if (!s) return;
+  await wbApply(s.snap); wb.src = { kind: 'mine', id }; wbArm(); wbSync(); flash(`正在看你的版本「${s.name}」`);
+}
+async function wbApply(snap) {
+  if (snap.kind === 'combo') {
+    if (state.tab !== 'combo') { flash('这个版本是多层效果，当前打开的是单层', true); return; }
+    state.layerEdits = state.layerEdits || {};
+    for (const x of snap.layers) if (x.id && x.P) state.layerEdits[x.id] = { P: structuredClone(x.P), M: structuredClone(x.M) };
+    state.comboSel = -1; syncComboPanels();
+    await applyCombo({ name: snap.name || state.comboName, layers: snap.layers.map(x => ({ m: x.id ? 'rep:' + x.id : x.type, ...structuredClone(x.L) })) });
+  } else {
+    if (state.tab === 'combo') { flash('这个版本是单层，当前打开的是多层效果', true); return; }
+    state.P = structuredClone(snap.P); state.M = structuredClone(snap.M); state.repId = snap.repId || state.repId;
+    buildMasterPanel(); onParam();
+  }
+}
+// 和 AI 版比，列出改动（层 / 参数：旧 → 新），发给 AI 用
+function wbDiff() {
+  const out = [], fmt = v => typeof v === 'number' ? +v.toFixed(4) : JSON.stringify(v);
+  const cmp = (a, b, pre) => { for (const k of new Set([...Object.keys(a || {}), ...Object.keys(b || {})])) { if (k === 'lib') continue; const x = (a || {})[k], y = (b || {})[k]; if (JSON.stringify(x) !== JSON.stringify(y)) out.push(`${pre}${k}：${fmt(x)} → ${fmt(y)}`); } };
+  const e = lib.review;
+  if (state.tab === 'combo' && e && e.kind === 'combo') {
+    state.layers.forEach((L, i) => {
+      const le = layerEntryOf(L), id = le && le.rep, oL = (e.combo.layers || [])[i] || {}, nm = `第 ${i + 1} 层（${layerName(i)}${id ? ' · ' + id : ''}）`;
+      const { m: _m, ...o } = oL, base = newLayer({ M: (id && REPLICA_BY_ID[id] ? replicaPM(id).M : le.M) }, structuredClone(o));
+      const { lib: _l, ...cur } = L; delete base.lib; cmp(base, cur, nm + ' 整朵 · ');
+      if (id && REPLICA_BY_ID[id]) cmp(replicaPM(id).P, le.P, nm + ' 参数 · ');
+    });
+  } else {
+    const id = state.repId, base = id && REPLICA_BY_ID[id] ? replicaPM(id) : defaultsFor(state.P.type);
+    cmp(base.P, state.P, '参数 · '); cmp(base.M, state.M, '颜色 · ');
+  }
+  return out;
+}
+async function wbCopyDiff() {
+  const d = wbDiff(), nm = $('#abName').textContent;
+  const t = d.length ? `${nm}（基于 ${wbBaseId()}，版本 ${(lib.review && lib.review.ver) || '—'}）我改过的地方：\n` + d.map(x => '- ' + x).join('\n') : '';
+  if (!t) { flash('和 AI 版比没有改动'); return; }
+  let ok = false; try { await navigator.clipboard.writeText(t); ok = true; } catch (e) { }
+  $('#updList').innerHTML = `<section class="upd-it new"><h3>我的改动${ok ? '（已复制，直接粘贴到对话里）' : '（请手动全选复制）'}</h3><pre style="white-space:pre-wrap;font:12.5px/1.6 var(--mono)">${t.replace(/</g, '&lt;')}</pre></section>`;
+  $('#updDlg').hidden = false;
+}
+function wbExportFile() {
+  const s = wb.src.kind === 'mine' ? wbList().find(x => x.id === wb.src.id) : null;
+  const doc = { format: 'fwl.recipe/1', key: wb.key, name: s ? s.name : 'AI 版', base: wbBaseId(), baseVer: lib.review && lib.review.ver || '', at: wbNow(), baker: VERSION, snap: wbSnap(), changes: wbDiff() };
+  const fn = `${(wbBaseId() + '_' + doc.name).replace(/[\\/:*?"<>| ]+/g, '_')}.json`;
+  download(new Blob([JSON.stringify(doc, null, 1)], { type: 'application/json' }), fn); flash('已导出配方文件 ' + fn);
+}
+function wbImportFile(file) {
+  const rd = new FileReader();
+  rd.onload = async () => {
+    try {
+      const doc = JSON.parse(rd.result); if (doc.format !== 'fwl.recipe/1' || !doc.snap) throw new Error('不是烘焙器导出的配方文件');
+      if ((doc.snap.kind === 'combo') !== (state.tab === 'combo')) throw new Error(doc.snap.kind === 'combo' ? '这是多层效果的配方，请先打开那个效果' : '这是单层的配方，当前打开的是多层效果');
+      const list = wbList(), it = { id: Date.now().toString(36), name: (doc.name || '导入') + '（导入）', at: wbNow(), base: doc.base, baseVer: doc.baseVer, snap: doc.snap };
+      list.push(it); wbPut(list); await wbLoad(it.id);
+    } catch (e) { flash('导入失败：' + e.message, true); }
+  };
+  rd.readAsText(file);
+}
+function initWorkbench() {
+  $('#abSrc').addEventListener('change', e => wbLoad(e.target.value));
+  $('#abSave').addEventListener('click', () => wbSave(false));
+  $('#abSaveAs').addEventListener('click', () => wbSave(true));
+  $('#abExport').addEventListener('click', () => state.tab === 'combo' ? exportCombo() : $('#btnExport').click());
+  const close = () => document.querySelector('.ab-more').removeAttribute('open');
+  $('#abCopyDiff').addEventListener('click', () => { close(); wbCopyDiff(); });
+  $('#abExportFile').addEventListener('click', () => { close(); wbExportFile(); });
+  $('#abImportFile').addEventListener('click', () => { close(); $('#abFile').click(); });
+  $('#abFile').addEventListener('change', e => { const f = e.target.files[0]; if (f) wbImportFile(f); e.target.value = ''; });
+  $('#abRename').addEventListener('click', () => { close(); const list = wbList(), s = list.find(x => x.id === wb.src.id); if (!s) return; const n = prompt('新名字', s.name); if (n == null) return; s.name = n.trim() || s.name; wbPut(list); wbSync(); });
+  $('#abDelete').addEventListener('click', () => { close(); const list = wbList(), s = list.find(x => x.id === wb.src.id); if (!s || !confirm(`删除你的版本「${s.name}」？（不影响 AI 版）`)) return; wbPut(list.filter(x => x !== s)); wbLoadAI(); });
+  $('#pReview').addEventListener('click', e => { const n = e.target.closest('.rnote'); if (n) n.classList.toggle('full'); });
+  document.addEventListener('click', e => { const m = document.querySelector('.ab-more'); if (m && m.open && !m.contains(e.target)) m.removeAttribute('open'); });
 }
 // ---------------- 渲染 ----------------
 function ensureTargets() {
@@ -6731,21 +7147,33 @@ function drawFlowCurve(b, f) {
 }
 // 组合 · 实时模拟（2026-09-30）：每层按自己的参数实时模拟（和单个花型的「实时模拟」一样清楚），
 // 按层的缩放 / 延迟 / 时间倍率摆放，各自上色后叠加。「导出效果」页才用每层烘好的贴图（检查引擎里的叠放）。
+// 独看 / 静音（只影响观察，导出照旧是全部层）
+function layerShown(i) { const v = state.layerView || { solo: -1, mute: [] }; return v.solo >= 0 ? v.solo === i : !v.mute.includes(i); }
+function comboAtlasLayer() { const v = state.layerView || { solo: -1 }; return state.comboSel >= 0 ? state.comboSel : v.solo >= 0 ? v.solo : 0; }
+function comboAtlasBake() { const L = state.layers[comboAtlasLayer()], e = L && state.lib.find(x => x.name === L.lib); return e && e.bake ? previewBake(e.bake) : null; }
+// 多层效果的「贴图」：看选中的那一层（没选就看第 1 层），时间换成这一层自己的时间
+function renderComboAtlas() {
+  const i = comboAtlasLayer(), L = state.layers[i], e = L && state.lib.find(x => x.name === L.lib);
+  if (!e || !e.bake) { gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.clearColor(0.02, 0.02, 0.03, 1); gl.clear(gl.COLOR_BUFFER_BIT); hudText = '这一层还没烘好'; return; }
+  const sb = state.bake, st = state.t; state.bake = e.bake; state.t = (st - (L.delay || 0)) * (L.rate || 1);
+  try { renderAtlas(); } finally { state.bake = sb; state.t = st; }
+  hudText = `第 ${i + 1} 层 · ${hudText}`;
+}
 function renderComboLive() {
-  const items = state.layers.map(L => [L, state.lib.find(e => e.name === L.lib)]).filter(x => x[1] && x[1].bake);
+  const items = state.layers.map((L, i) => [L, state.lib.find(e => e.name === L.lib), i]).filter(x => x[1] && x[1].bake);
   hdrT.clear();
   if (!items.length) { post(); hudText = '没有图层'; return; }
   let view = null;
-  items.forEach(([L, e], i) => {
-    const slot = liveSlot('combo' + i); prepSlot(slot, e.P, 'c' + i + ':' + e.name);
+  items.forEach(([L, e, i]) => {
+    const slot = liveSlot('combo' + i); prepSlot(slot, e.P, 'c' + i + ':' + e.name + ':' + (e.rev || 0));
     const v = sceneView(e.P, e.bake.meta, slot), s = L.scale || 1, vs = [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
     view = view ? unionView(view, vs) : vs;
   });
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   let n = 0;
-  items.forEach(([L, e], i) => {
+  items.forEach(([L, e, i]) => {
     const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = e.P;
-    if (age < 0 || age > P.duration) return;
+    if (age < 0 || age > P.duration || !layerShown(i)) return;
     const s = L.scale || 1, vL = [view[0] / s, view[1] / s, view[2] / s, view[3] / s], ppm = rgT.w / (2 * vL[2]);
     rgT.clear(); rgT.bind(); additive(true);
     drawLiveScene(liveSlot('combo' + i), P, age, vL, ppm);
@@ -6756,12 +7184,13 @@ function renderComboLive() {
     setMatUniforms(pr, L, age); drawQuad(); additive(false); n++;
   });
   post();
-  hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层）· 「导出效果」看引擎里的贴图叠放`; hudB = '';
+  hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层）${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}`; hudB = '';
 }
 function renderCombo() {
   if (state.view === 'live') return renderComboLive();
+  if (state.view === 'atlas') return renderComboAtlas();
   hdrT.clear();
-  const items = state.layers.map(L => [L, state.lib.find(e => e.name === L.lib)]).filter(x => x[1]).map(([L,e])=>[L,{...e,bake:previewBake(e.bake)}]);
+  const items = state.layers.map((L, i) => [L, state.lib.find(e => e.name === L.lib), i]).filter(x => x[1]).map(([L,e,i])=>[L,{...e,bake:previewBake(e.bake)},i]);
   if(items.some(([,e])=>!e.bake)){post();hudText='手机版还未烘焙；点 PC / 手机可重试';return;}
   if (!items.length) { post(); hudText = '没有图层'; return; }
   let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
@@ -6773,9 +7202,9 @@ function renderCombo() {
   }else if(state.disp==='px')half=canvas.width/(2*Math.min(...items.map(([L,e])=>e.bake.meta.L.cellW/(e.bake.meta.Ww*(L.scale||1)))));
   const view = [(x0 + x1) / 2, (y0 + y1) / 2, half, half];
   hdrT.bind(); additive(true);
-  for (const [L, e] of items) drawLayer(e.bake, L, state.t, view);
+  for (const [L, e, i] of items) if (layerShown(i)) drawLayer(e.bake, L, state.t, view);
   additive(false); post();
-  hudText = `${state.comboName} · 导出效果（每层 2048 贴图叠放）· ${items.length} 层 · 每层星头、拖尾各一个发射器`; hudB = '';
+  hudText = `${state.comboName} · 引擎回放（每层贴图叠放）· ${items.length} 层${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}`; hudB = '';
 }
 function updateLabels() {
   const q = $('#qlabels'), b = previewBake();
@@ -6817,10 +7246,10 @@ function loop(now) {
   } catch (e) { console.error(e); hudText = '渲染出错：' + e.message; }
   if (pendingThumb) { const f = pendingThumb; pendingThumb = null; try { f(thumbFromCanvas()); } catch (e) { } }
   $('#hud').textContent = hudText; $('#hudB').textContent = hudB; updateLabels();
-  const mv = state.tab !== 'combo' && state.tab !== 'asset';
+  const ab = state.tab === 'combo' ? comboAtlasBake() : state.bake, mv = (state.tab !== 'combo' || state.view === 'atlas') && state.tab !== 'asset';
   $('#viewSeg').hidden=!!state.showcase;
-  $('#atlasSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.tail);
-  $('#segSeg').hidden = !mv || state.view !== 'atlas' || !(state.bake && state.bake.next);
+  $('#atlasSeg').hidden = !mv || state.view !== 'atlas' || !(ab && ab.tail);
+  $('#segSeg').hidden = !mv || state.view !== 'atlas' || !(ab && ab.next);
   $('#flowSeg').hidden = !mv || state.view !== 'atlas'; $('#flowCv').hidden = !mv || state.view !== 'atlas' || !state.atlasFlow;
   $('#dispSeg').hidden = state.tab==='asset' ? false : state.view !== 'export' && !(state.view==='live' && renderVersion(state.P)>=40 && familyOf(state.P.type)==='aerial' && ['master','segments'].includes(state.P.form));
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
@@ -7089,7 +7518,9 @@ segBtns('#viewSeg', b => state.view = b.dataset.view);
 segBtns('#atlasSeg', b => state.atlasLayer = b.dataset.layer);
 segBtns('#segSeg', b => state.atlasSeg = +b.dataset.seg);
 segBtns('#flowSeg', b => { state.atlasFlow = b.dataset.flow === '1'; flowTrail.length = 0; $('#qlabels').dataset.key = ''; });
-$('#dist').addEventListener('input', e => { state.dist = +e.target.value; $('#distOut').textContent = state.dist + ' m'; });
+$('#dist').value = sliderFromDist(state.dist);
+$('#dist').addEventListener('input', e => { state.dist = distFromSlider(+e.target.value); $('#distOut').textContent = state.dist + ' m'; });
+$('#dist').addEventListener('dblclick', () => { state.dist = 1000; $('#dist').value = sliderFromDist(1000); $('#distOut').textContent = '1000 m'; });
 $('#play').addEventListener('click', () => { state.playing = !state.playing; $('#play').textContent = state.playing ? '暂停' : '播放'; });
 $('#scrub').addEventListener('input', e => { state.t = +e.target.value / 1000 * curDuration(); });
 $('#speed').addEventListener('change', e => state.speed = +e.target.value);

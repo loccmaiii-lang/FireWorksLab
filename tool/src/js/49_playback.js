@@ -1,8 +1,12 @@
 // 引擎时钟与显示尺度。取帧和材质颜色在同一个 30 Hz tick 求值。
 function engineTick(t) { return Math.floor(t*30+1e-8)/30; }
+// 观看距离（用户 2026-10-02 08:04：预览从 800–1200 m 放宽到 50–1200 m）。标准检查仍按 1000 m 量；近于约 1000 m 时贴图会被放大（看得出单格分辨率够不够）。
+const DIST_MIN=50, DIST_MAX=1200;
+const distFromSlider=v=>{const d=DIST_MIN*Math.pow(DIST_MAX/DIST_MIN,v/1000);return d<200?Math.round(d/5)*5:Math.round(d/10)*10;};   // 对数刻度：近处也好调
+const sliderFromDist=d=>Math.round(1000*Math.log(d/DIST_MIN)/Math.log(DIST_MAX/DIST_MIN));
 function gamePixelsPerMeter(P,diameter,height=canvas.height,distance=state.dist) {
   const fraction=Number.isFinite(+P.screenFrac) && +P.screenFrac>0 ? +P.screenFrac : 1/3;
-  return height*fraction*1000/(Math.max(1e-3,diameter)*clamp(distance,800,1200));
+  return height*fraction*1000/(Math.max(1e-3,diameter)*clamp(distance,DIST_MIN,DIST_MAX));
 }
 const gameDiameterCache=new WeakMap();
 function gameDiameter(b,fallback) {

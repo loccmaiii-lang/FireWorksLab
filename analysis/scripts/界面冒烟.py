@@ -30,6 +30,9 @@ STEPS = [
     ('模板_点灭', "setType('strobe')", 'views'),
     ('待验收_JM4-40', "openReview(FW_REVIEW_LIST.find(e=>e.id==='JM4-40'))", 'views'),
     ('多层_鸿巢', "openEffect(EFFS().find(e=>e.key==='hongchao'))", 'views'),
+    ('多层_鸿巢_调第1层', "selectComboLayer(0)", 'views'),
+    ('多层_鸿巢_审阅页', "lib.pane='review';syncPtabs()", None),
+    ('多层_鸿巢_回整体', "lib.pane='params';syncPtabs();selectComboLayer(-1)", None),
     ('尾缀_V5', "openEffect(EFFS().find(e=>e.key==='trail_v5'))", 'views'),
 ]
 VIEWS = [('实时', 'live', None, 1.0), ('引擎回放', 'export', None, 1.0), ('贴图', 'atlas', '0', 1.0), ('流转', 'atlas', '1', 1.5)]

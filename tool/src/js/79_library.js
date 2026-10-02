@@ -3,22 +3,31 @@
 //  库：迭代区（tool/data/review.js，做完等你看的）/ 正式库（15_replica.js，确认过的）/ 组合 / 花型
 //  审阅：通过 / 要改 + 意见，存在这台电脑的浏览器里；「复制意见」贴给 Claude
 // =====================================================================
-const lib = { q: '', key: '', review: null, open: store.get('libOpen2', {}) };
+const lib = { q: '', key: '', review: null, pane: 'params', open: store.get('libOpen2', {}) };
 const ref2 = { on: store.get('refOn', true), off: 0 };
 
 async function setTab(tab, o = {}) {
   const changed = tab !== state.tab;
   state.tab = tab; if (changed) state.t = 0;
+  if (tab !== 'combo') state.comboSel = -1;
   $('#pMaster').hidden = tab !== 'master'; $('#pCombo').hidden = tab !== 'combo'; $('#pIter').hidden = tab !== 'iter'; $('#pAsset').hidden = tab !== 'asset';
+  syncComboPanels();
   $('#viewSeg').hidden = tab === 'asset'; $('#assetCv').hidden = tab !== 'asset';
-  $('#ptabs').hidden = !(tab === 'master' || tab === 'iter');
-  for (const b of $('#ptabs').children) b.setAttribute('aria-selected', String(b.dataset.tab === tab));
+  syncPtabs();
   if (!changed) return;
   if (tab === 'combo' && !o.lazy) { await ensureLibrary(); if (!state.layers.length) applyCombo(COMBOS[0]); else buildComboPanel(); }
   if (tab === 'iter') { renderMetrics(); abInfo(); renderVersions(); }
   if (tab === 'asset') assetPanel();
 }
 
+function syncPtabs() {
+  const tab = state.tab, rv = lib.pane === 'review';
+  $('#ptabs').hidden = tab === 'asset' || $('#right').classList.contains('qmode');
+  $('#ptabs [data-tab=iter]').hidden = tab === 'combo';
+  $('#right').classList.toggle('pane-review', rv);
+  const cur = rv ? 'review' : tab === 'iter' ? 'iter' : 'master';
+  for (const b of $('#ptabs').children) b.setAttribute('aria-selected', String(b.dataset.tab === cur));
+}
 // ---------------- 审阅记录 ----------------
 const rvGet = () => store.get('review', {});
 // 审阅标记按「条目 + 版本指纹」记（用户 2026-09-30 14:46：新版本不能继承旧版本的「要改」）
@@ -77,8 +86,9 @@ function stdBadge(id) {
   return `<span class="badge ${r.pass ? 'ok' : 'std'}" title="${r.pass ? '标准检查全部通过' : '没过：' + bad.join('；').replace(/"/g, '')}">${r.pass ? '标准 ✓' : '标准 ✗ ' + bad.length}</span>`;
 }
 function stdCard(id) {
-  const r = stdOf(id); if (!r) return '';
-  return `<div class="rt">标准检查 ${r.pass ? '✅ 全部通过' : '❌'}${r.note ? ' · ' + r.note : ''}（${FW_STANDARD.generated}）</div><ul class="std">${(r.checks || []).map(c => `<li class="${c[1] ? 'ok' : 'bad'}">${c[1] ? '✓' : '✗'} ${c[0]}${c[2] ? ' · ' + c[2] : ''}</li>`).join('')}</ul>`;
+  const r = stdOf(id); if (!r) return '<p class="rline dim">标准检查：这一版还没跑</p>';
+  const bad = (r.checks || []).filter(c => !c[1]).length;
+  return `<details class="stdd"${r.pass ? '' : ' open'}><summary>标准检查 ${r.pass ? '✅ 全部通过' : '❌ ' + bad + ' 项没过'}<small>${r.note ? ' · ' + r.note : ''}（${FW_STANDARD.generated}）</small></summary><ul class="std">${(r.checks || []).map(c => `<li class="${c[1] ? 'ok' : 'bad'}">${c[1] ? '✓' : '✗'} ${c[0]}${c[2] ? ' · ' + c[2] : ''}</li>`).join('')}</ul></details>`;
 }
 function effBadge(ef) {
   if (ef.阶段 === '未开始') return '<span class="badge q">未开始</span>';
@@ -100,27 +110,29 @@ function openEffect(ef) {
   if (!x) { setQueuedView(false); lib.key = 'ef:' + ef.key; setReview(null); renderLib(); crumb(ef.阶段, ef.名); showEffectOnly(ef); return; }
   if (x.formal) openFormal(x.formal, ef); else openReview(x, ef);
 }
-function showEffectOnly(ef) { const box = $('#pReview'); box.hidden = false; box.innerHTML = effHeaderHTML(ef, null); bindEffHeader(box, ef); }
-// 效果头：阶段、四个进度、版本（候选 / 工作 / 通过）、方案、准备情况（实时模拟 / 烘焙回放 / 贴图 / 素材包）、任务、历史
-function effHeaderHTML(ef, cur) {
-  if (!ef) return '';
+function showEffectOnly(ef) { const box = $('#pReview'); box.hidden = false; const x = effParts(ef, null); box.innerHTML = `<div class="rcard"><div class="rh">${x.head}</div>${x.pills}</div><div class="rcard">${x.more}</div>`; bindEffHeader(box, ef); lib.pane = 'params'; syncPtabs(); wbRefresh(); }
+// 右栏卡片（2026-10-02 用户 07:43：参数要齐全、不再被长说明压着）：效果头拆成 head（阶段 + 名字）、pills（四个进度）、more（版本 / 准备情况 / 交付说明 / 任务 / 历史，默认折起来）
+function effParts(ef, cur) {
+  if (!ef) return { head: '', pills: '', more: '' };
   const g = ef.进度 || {}, ok = (b, t) => `<span class="pg${b ? ' on' : ''}">${b ? '✓' : '·'} ${t}</span>`;
   const ver = (lab, id) => id ? `<button class="btn mini${cur && (cur.id === id.replace(/^rep:/, '') || 'rep:' + cur.id === id) ? ' cur' : ''}" type="button" data-open="${id}">${lab} · ${id.replace(/^rep:/, '')}</button>` : '';
   const vars = (ef.方案 || []).map(v => `<button class="btn mini${cur && cur.id === v.id.replace(/^rep:/, '') ? ' cur' : ''}" type="button" data-open="${v.id}">${v.label}</button>`).join('');
   const jobs = (ef.jobs || []).filter(j => j.state !== '已回来' || !j.seen).slice(-4).map(j => `${j.id}（${j.state === '已回来' ? 'AI 还没看' : j.state}）`).join('、');
   const hist = (ef.历史 || []).map(h => { const e = entryById(h.id.replace(/@.*$/, '')); return `<li>${e && !h.id.includes('@') ? `<a href="#" data-open="${h.id}">${h.id}</a>` : h.id} · ${h.结论}${h.反馈 ? ' —— ' + h.反馈 : ''}</li>`; }).join('');
-  return `<div class="effh"><div class="rh"><span class="badge">${ef.阶段}</span><b>${ef.名}</b><small>负责：${ef.负责 || '—'}</small></div>
-    <div class="pgs">${ok(g.计算, '计算完成')}${ok(g.AI自检, 'AI 自检')}${ok(g.素材导出, '素材导出')}${ok(g.用户验收, '你已验收')}</div>
-    <div class="rt">版本</div><div class="rlayers">${ver('待你验收', ef.待验收版)}${ver('工作版', ef.阶段 === '已通过' ? null : ef.工作版)}${ver('已通过', ef.已通过版)}</div>
+  const c = (ef.exports || []).find(x => !x.legacy && !x.stale);
+  const more = `<div class="rt">版本</div><div class="rlayers">${ver('待你验收', ef.待验收版)}${ver('工作版', ef.阶段 === '已通过' ? null : ef.工作版)}${ver('已通过', ef.已通过版)}</div>
     ${vars ? `<div class="rt">方案 / 分档</div><div class="rlayers">${vars}</div>` : ''}
     <div class="rt">准备情况</div><div class="ready" id="effReady">${readyHTML(ef, cur)}</div>
-    ${ef.交付说明 ? `<div class="rt">这版（AI 推荐的完整候选）</div><ul class="deliv"><li><b>解决了：</b>${ef.交付说明.解决了什么 || ''}</li><li><b>仍有差异：</b>${ef.交付说明.仍有差异 || '—'}</li><li><b>素材：</b>${ef.交付说明.素材在哪 || ''}</li></ul>` : ''}
-    ${(() => { const c = (ef.exports || []).find(x => !x.legacy && !x.stale); return c ? `<p class="op"><a href="../analysis/results/${c.job}/烘焙回放.jpg" target="_blank" rel="noopener">导出自检对照图（实拍 / 实时模拟 / 导出效果，开花后同一秒）</a> · <a href="../analysis/results/${c.job}/回放检查.jpg" target="_blank" rel="noopener">贴图回放检查</a></p>` : ''; })()}
+    ${ef.交付说明 ? `<div class="rt">交付说明</div><ul class="deliv">${Object.entries(ef.交付说明).map(([k, v]) => `<li><b>${k}：</b>${v}</li>`).join('')}</ul>` : ''}
+    ${c ? `<p class="op"><a href="../analysis/results/${c.job}/烘焙回放.jpg" target="_blank" rel="noopener">导出自检对照图（实拍 / 实时模拟 / 导出效果，开花后同一秒）</a> · <a href="../analysis/results/${c.job}/回放检查.jpg" target="_blank" rel="noopener">贴图回放检查</a></p>` : ''}
     ${ef.说明 ? `<p class="op">${ef.说明}</p>` : ''}
     ${ef.缺 && ef.缺.length ? `<div class="rt">还缺</div><ul>${ef.缺.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
     ${jobs ? `<p class="qnote">任务：${jobs}</p>` : ''}
-    ${hist ? `<details class="hist"><summary>历史版本（${(ef.历史 || []).length}）· 否决 / 被取代，保留参数和你的反馈</summary><ul>${hist}</ul></details>` : ''}</div>`;
+    ${hist ? `<details class="hist"><summary>历史版本（${(ef.历史 || []).length}）· 否决 / 被取代，保留参数和你的反馈</summary><ul>${hist}</ul></details>` : ''}`;
+  return { head: `<span class="badge">${ef.阶段}</span><b>${ef.名}</b><small>负责：${ef.负责 || '—'}</small>`,
+    pills: `<div class="pgs">${ok(g.计算, '计算完成')}${ok(g.AI自检, 'AI 自检')}${ok(g.素材导出, '素材导出')}${ok(g.用户验收, '你已验收')}</div>`, more };
 }
+function effHeaderHTML(ef, cur) { const x = effParts(ef, cur); return x.head ? `<div class="effh"><div class="rh">${x.head}</div>${x.pills}${x.more}</div>` : ''; }
 function readyHTML(ef, cur) {
   const row = (t, st, cls) => `<div class="rd ${cls || ''}"><span>${t}</span><b>${st}</b></div>`;
   const live = cur ? (cur.kind === 'asset' ? '无（这一条是贴图回放）' : '可以（打开就是）') : '—';
@@ -132,7 +144,7 @@ function readyHTML(ef, cur) {
   const dirty = lib.sig && lib.sig !== curSig() ? row('你在这里改了参数', '上面的素材包是改之前的版本', 'warn') : '';
   return row('实时模拟', live) + row('烘焙回放', cur ? baked : '—') + row('贴图 / 素材包', pack, cur1 ? 'on' : stale ? 'warn' : '') + dirty;
 }
-function curSig() { try { return JSON.stringify(state.tab === 'combo' ? state.layers : [state.P, state.M]); } catch (e) { return ''; } }
+function curSig() { try { return JSON.stringify(state.tab === 'combo' ? [state.layers, state.layers.map(L => { const e = state.lib.find(x => x.name === L.lib); return e && e.P; })] : [state.P, state.M]); } catch (e) { return ''; } }
 function bindEffHeader(box, ef) {
   box.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', ev => { ev.preventDefault(); const x = entryById(b.dataset.open.replace(/@.*$/, '')); if (!x) return; if (x.formal) openFormal(x.formal, ef); else openReview(x, ef); }));
 }
@@ -249,7 +261,7 @@ function rememberLayerEdit() {
   state.layerEdits[r.id] = { P: structuredClone(state.P), M: structuredClone(state.M) };
 }
 function openReview(e, ef) {
-  rememberLayerEdit();
+  rememberLayerEdit(); wb.entry = undefined;     // 重新打开 = 回到 AI 版（资产栏）
   lib.effect = ef || effectOfEntry(e); lib.formal = null;
   lib.key = ef ? 'ef:' + ef.key : 'rv:' + e.id; store.set('lastKey', lib.key);
   const where = (lib.effect ? lib.effect.阶段 + ' · ' + lib.effect.名 : '条目') + (e.superseded ? ' · 历史' : '');
@@ -269,17 +281,18 @@ function openReview(e, ef) {
 // 组合条目：整体效果（组合页实时模拟 + 实拍并排）；各层在审阅卡里单独打开
 async function openComboEntry(e) {
   state.view = 'live'; document.querySelectorAll('#viewSeg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === 'live'));
-  await setTab('combo', { lazy: true }); await applyCombo(e.combo); lib.sig = curSig(); setReview(e);   // lazy：只烘这个组合用到的层，不先烘整套默认母版
+  state.comboSel = -1; state.layerView = { solo: -1, mute: [] };
+  await setTab('combo', { lazy: true }); await applyCombo(e.combo); lib.sig = curSig(); setReview(e); syncComboPanels();   // lazy：只烘这个组合用到的层，不先烘整套默认母版
 }
 function openFormal(r, ef) {
-  lib.effect = ef || effectOfEntry({ id: r.id }); lib.formal = r;
+  wb.entry = undefined; lib.effect = ef || effectOfEntry({ id: r.id }); lib.formal = r;
   setQueuedView(false); lib.key = ef ? 'ef:' + ef.key : 'rep:' + r.id; setReplica(r.id); setTab('master'); lib.sig = curSig(); setReview(null, r); renderLib(); crumb(lib.effect ? lib.effect.阶段 + ' · ' + lib.effect.名 : '正式库', r.name);
 }
-function openType(t) { lib.effect = null; lib.formal = null; setQueuedView(false); lib.key = 'type:' + t; setType(t); setTab('master'); setReview(null); renderLib(); crumb('花型', TYPE_NAMES[t]); }
+function openType(t) { wb.entry = undefined; lib.effect = null; lib.formal = null; setQueuedView(false); lib.key = 'type:' + t; setType(t); setTab('master'); setReview(null); renderLib(); crumb('花型', TYPE_NAMES[t]); }
 
 // 排队中的条目：还没有结果，只放实拍（要对的目标），右栏只留审阅卡
 function setQueuedView(on) {
-  document.querySelector('.canvas-wrap').classList.toggle('refonly', on); $('#right').classList.toggle('qmode', on);
+  document.querySelector('.canvas-wrap').classList.toggle('refonly', on); $('#right').classList.toggle('qmode', on); syncPtabs();
   ref2.on = on ? true : store.get('refOn', true);
   $('#refTag').dataset.q = on ? '1' : '';
 }
@@ -290,33 +303,49 @@ function setReview(e, formal) {
   setRefVideo(vidEntry);
   const ef = lib.effect;
   if (!e) {
-    if (formal && ef) { box.hidden = false; box.innerHTML = effHeaderHTML(ef, { id: formal.id }); bindEffHeader(box, ef); }
+    if (formal && ef) { const x = effParts(ef, { id: formal.id }); box.hidden = false; box.innerHTML = `<div class="rstrip"><span class="badge ok">正式库</span><b>${formal.id}</b><span class="sp"></span><button class="btn mini" type="button" data-pane="review">审阅 →</button></div><div class="rcard rfull"><div class="rh">${x.head}</div>${x.pills}<p class="rnote">正式库条目：${formal.name}</p></div><details class="rcard rfold rfull"><summary>版本与历史 · 准备情况</summary>${x.more}</details>`; box.querySelectorAll('[data-pane]').forEach(b => b.addEventListener('click', () => { lib.pane = 'review'; syncPtabs(); })); bindEffHeader(box, ef); }
     else { box.hidden = true; box.innerHTML = ''; }
+    $('#rvDot').hidden = true; if (lib.pane === 'review' && box.hidden) lib.pane = 'params'; syncPtabs();
+    buildLayerCard(); wbRefresh();
     return;
   }
-  const r = rvOf(e), cand = ef && ef.阶段 === '待验收' && ef.待验收版 === e.id;
+  const r = rvOf(e), cand = ef && ef.阶段 === '待验收' && ef.待验收版 === e.id, x = effParts(ef, e), q = e.kind === 'queued';
+  const kindTxt = e.superseded ? '历史版本' : cand ? '待你验收的候选' : e.layerOf ? '其中一层' : '当前工作版（AI 在做）';
+  const moreBits = [
+    e.look && e.look.length ? `<div class="rt">看什么</div><ul>${e.look.map(x => `<li>${x}</li>`).join('')}</ul>` : '',
+    e.opinion ? `<div class="rt">${q ? '这一版改了什么' : 'AI 的看法'}</div><p class="op">${e.opinion}</p>` : '',
+    ...(e.doc || []).map(([t, items]) => `<div class="rt">${t}</div><ul>${items.map(x => `<li>${x}</li>`).join('')}</ul>`),
+    e.images && e.images.length ? `<div class="rt">${e.imagesTitle || (e.principle ? '实拍关键帧' : '说明图')}（点图放大）</div><div class="rimgs">${e.images.map(([src, cap]) => `<figure><a href="${src}" target="_blank" rel="noopener"><img src="${src}" loading="lazy" alt="${cap}"></a><figcaption>${cap}</figcaption></figure>`).join('')}</div>` : ''].join('');
+  const sr = stdOf(e.id);
+  const strip = q ? '' : `<div class="rstrip"><span class="badge${cand ? ' new' : ''}">${cand ? '待你验收' : e.superseded ? '历史' : e.layerOf ? '其中一层' : '工作版'}</span><b title="${e.name.replace(/"/g, '')}">${e.id}</b>${sr ? `<span class="badge ${sr.pass ? 'ok' : 'std'}">标准 ${sr.pass ? '✓' : '✗'}</span>` : ''}<span class="sp"></span>
+      <button class="btn mini okb" type="button" aria-pressed="${r.st === 'ok'}" title="通过（整体达到预期）">✓ 通过</button><button class="btn mini fixb" type="button" aria-pressed="${r.st === 'fix'}">✗ 要改</button><button class="btn mini" type="button" data-pane="review" title="本次变化、检查、意见、版本与历史">审阅</button></div>`;
   box.hidden = false;
-  box.innerHTML = effHeaderHTML(ef, e) + `<div class="rh"><span class="badge">${e.superseded ? '历史版本' : cand ? '待你验收的候选' : e.layerOf ? '其中一层' : '当前工作版（AI 在做，不用你审）'} · ${e.task}</span><b>${e.name}</b><small>${e.date || ''} · 版本 ${e.ver || '—'}</small></div>
-    <p>${e.note || ''}</p>
-    ${e.kind === 'combo' && e.layerIds ? `<div class="rt">这是整体效果（${e.layerIds.length} 层叠在一起）· 要单独调某一层点下面</div><div class="rlayers">${e.layerIds.map((id, i) => `<button class="btn mini" type="button" data-layer="${id}">${(e.layerNames || [])[i] || id}</button>`).join('')}</div>` : ''}
-    ${e.layerOf ? `<p class="qnote">这是「${e.layerOf}」的其中一层。<button class="btn mini" type="button" data-whole="${e.layerOf}">回到整体效果</button></p>` : ''}
-    ${e.look && e.look.length ? `<div class="rt">看什么</div><ul>${e.look.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}
-    ${e.opinion ? `<div class="rt">${e.kind === 'queued' ? '这一版改了什么' : 'AI 的看法'}</div><p class="op">${e.opinion}</p>` : ''}
-    ${stdCard(e.id)}
-    ${(e.doc || []).map(([t, items]) => `<div class="rt">${t}</div><ul>${items.map(x => `<li>${x}</li>`).join('')}</ul>`).join('')}
-    ${e.images && e.images.length ? `<div class="rt">${e.imagesTitle || (e.principle ? '实拍关键帧' : '说明图')}（点图放大）</div><div class="rimgs">${e.images.map(([src, cap]) => `<figure><a href="${src}" target="_blank" rel="noopener"><img src="${src}" loading="lazy" alt="${cap}"></a><figcaption>${cap}</figcaption></figure>`).join('')}</div>` : ''}
-    ${e.kind === 'queued' ? '<p class="qnote">还没跑。在你电脑上双击 <b>analysis/local/跑任务_并行.bat</b>（3 个进程同时跑），跑完会自动推上来；pull 后刷新烘焙器，这一条就能看了。</p>' : ''}
-    <div class="ra"${e.kind === 'queued' ? ' hidden' : ''}><button class="btn okb" type="button" aria-pressed="${r.st === 'ok'}">✓ 通过（整体达到预期）</button><button class="btn fixb" type="button" aria-pressed="${r.st === 'fix'}">✗ 要改</button></div>
-    <textarea id="rvTxt"${e.kind === 'queued' ? ' hidden' : ''} placeholder="意见：哪里不像、要改什么（写完会自动保存）">${(r.txt || '').replace(/</g, '&lt;')}</textarea>
-    <div class="saved" id="rvSaved"${e.kind === 'queued' ? ' hidden' : ''}>${r.at ? '已保存 ' + r.at + ' · 左栏下面「复制我的意见」贴给 Claude' : '意见按这一版记在这台电脑的浏览器里；写完点左栏下面「复制我的意见」贴给 Claude'}</div>`;
+  box.innerHTML = strip + `<div class="rcard rfull">
+      ${x.head ? `<div class="rh">${x.head}</div>` : ''}${x.pills}
+      <div class="rh2"><span class="badge">${kindTxt} · ${e.task}</span><b>${e.name}</b><small>${e.date || ''} · 版本 ${e.ver || '—'}</small></div>
+      <p class="rnote">${e.note || ''}</p>
+      ${e.layerOf ? `<p class="qnote">这是「${e.layerOf}」的其中一层。<button class="btn mini" type="button" data-whole="${e.layerOf}">回到整体效果</button></p>` : ''}
+      ${moreBits ? `<details class="rmore"${q ? ' open' : ''}><summary>看什么 · AI 的看法${e.images && e.images.length ? ' · 图' : ''}</summary>${moreBits}</details>` : ''}
+      ${q ? '<p class="qnote">还没跑。在你电脑上双击 <b>analysis/local/跑任务_并行.bat</b>（3 个进程同时跑），跑完会自动推上来；pull 后刷新烘焙器，这一条就能看了。</p>' : ''}
+    </div>
+    <div class="rcard rfull"${q ? ' hidden' : ''}>
+      <div class="rc-t">检查与验收</div>
+      ${stdCard(e.id)}
+      <div class="ra"><button class="btn okb" type="button" aria-pressed="${r.st === 'ok'}">✓ 通过（整体达到预期）</button><button class="btn fixb" type="button" aria-pressed="${r.st === 'fix'}">✗ 要改</button></div>
+      <textarea id="rvTxt" placeholder="意见：哪里不像、要改什么（写完会自动保存）">${(r.txt || '').replace(/</g, '&lt;')}</textarea>
+      <div class="saved" id="rvSaved">${r.at ? '已保存 ' + r.at + ' · 左栏下面「复制我的意见」贴给 Claude' : '意见按这一版记在这台电脑的浏览器里；写完点左栏下面「复制我的意见」贴给 Claude'}</div>
+    </div>
+    ${x.more ? `<details class="rcard rfold rfull"><summary>版本与历史 · 准备情况 · 交付说明</summary>${x.more}</details>` : ''}`;
   bindEffHeader(box, ef);
+  box.querySelectorAll('[data-pane]').forEach(b => b.addEventListener('click', () => { lib.pane = 'review'; syncPtabs(); $('#right').scrollTop = 0; }));
+  $('#rvDot').hidden = !(cand && !r.st);
   const setSt = st => { const cur = rvOf(e).st; rvSet(rvKey(e), { st: cur === st ? '' : st }); setReview(e); renderLib(); };
-  box.querySelectorAll('[data-layer]').forEach(b => b.addEventListener('click', () => { const le = FW_REVIEW_LIST.find(x => x.id === b.dataset.layer); if (le) openReview(le); }));
   box.querySelectorAll('[data-whole]').forEach(b => b.addEventListener('click', () => { const ce = FW_REVIEW_LIST.find(x => x.id === b.dataset.whole && x.kind === 'combo'); if (ce) openReview(ce); }));
-  box.querySelector('.okb').addEventListener('click', () => setSt('ok'));
-  box.querySelector('.fixb').addEventListener('click', () => setSt('fix'));
+  box.querySelectorAll('.okb').forEach(b => b.addEventListener('click', () => setSt('ok')));
+  box.querySelectorAll('.fixb').forEach(b => b.addEventListener('click', () => setSt('fix')));
   let tm = 0; box.querySelector('#rvTxt').addEventListener('input', ev => { clearTimeout(tm); tm = setTimeout(() => { rvSet(rvKey(e), { txt: ev.target.value }); $('#rvSaved').textContent = '已保存 · 左栏下面「复制我的意见」贴给 Claude'; renderLib(); }, 500); });
-  refRestoreOffset(e);
+  refRestoreOffset(e); syncPtabs();
+  buildLayerCard(); wbRefresh();
 }
 
 // ---------------- 实拍并排 ----------------
@@ -423,9 +452,16 @@ function initPanels() {
 function initLibrary() {
   $('#libSearch').addEventListener('input', e => { lib.q = e.target.value; renderLib(); });
   $('#libSearch').addEventListener('keydown', e => { if (e.key === 'Escape') { e.target.value = ''; lib.q = ''; renderLib(); e.target.blur(); } });
-  for (const b of $('#ptabs').children) b.addEventListener('click', () => setTab(b.dataset.tab));
+  // 右栏三页：参数（观察图层 + 完整参数，默认）/ 审阅（本次变化、检查与验收、版本与历史）/ 工具（A/B、版本回滚…，单层才有）
+  for (const b of $('#ptabs').children) b.addEventListener('click', () => {
+    const k = b.dataset.tab;
+    if (k === 'review') { lib.pane = 'review'; syncPtabs(); return; }
+    lib.pane = 'params';
+    if (k === 'iter') setTab('iter'); else if (state.tab === 'iter') setTab('master'); else syncPtabs();
+  });
   $('#refVid').addEventListener('loadedmetadata', layoutRef);
   $('#rvCopy').addEventListener('click', rvCopy);
+  initWorkbench();
   $('#newRecipe').addEventListener('click', () => pkOpen());       // 新建配方 = 从花型库挑一个模板开始（可编辑的实时模拟）
   const ro = new ResizeObserver(() => document.documentElement.style.setProperty('--topH', $('#main').offsetTop + 'px')); ro.observe($('#viewbar')); ro.observe(document.querySelector('header.top'));
   initPanels();

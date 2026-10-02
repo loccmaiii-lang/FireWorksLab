@@ -1,0 +1,63 @@
+{
+ "id": "UI5",
+ "type": "ui",
+ "name": "4.0.4 截图：多层选层调参、资产栏（保存 / 版本）、右栏三页、近距离预览",
+ "priority": 12,
+ "note": "只截图，不改东西。",
+ "shots": [
+  {
+   "name": "1440_鸿巢_参数页_整体",
+   "viewport": [
+    1440,
+    900
+   ],
+   "review": "HK10",
+   "view": "live",
+   "t": 3.0,
+   "sleep": 5000
+  },
+  {
+   "name": "1440_鸿巢_调第1层",
+   "js": "selectComboLayer(0)",
+   "sleep": 3000,
+   "t": 3.0
+  },
+  {
+   "name": "1440_鸿巢_第1层贴图流转",
+   "view": "atlas",
+   "flow": true,
+   "t": 2.0
+  },
+  {
+   "name": "1440_鸿巢_引擎回放_100m",
+   "view": "export",
+   "js": "state.dist=100;$('#dist').value=sliderFromDist(100);$('#distOut').textContent='100 m'",
+   "t": 3.0
+  },
+  {
+   "name": "1440_鸿巢_审阅页",
+   "js": "state.dist=1000;$('#dist').value=sliderFromDist(1000);$('#distOut').textContent='1000 m';lib.pane='review';syncPtabs()",
+   "view": "live",
+   "t": 3.0
+  },
+  {
+   "name": "1440_JM4-40_单层参数页",
+   "js": "lib.pane='params';syncPtabs()",
+   "review": "JM4-40",
+   "view": "live",
+   "t": 1.0,
+   "sleep": 3000
+  },
+  {
+   "name": "1920_鸿巢_整体",
+   "viewport": [
+    1920,
+    1080
+   ],
+   "review": "HK10",
+   "view": "live",
+   "t": 3.0,
+   "sleep": 4000
+  }
+ ]
+}
