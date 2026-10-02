@@ -1,0 +1,51 @@
+{
+  "version": "4.1.1",
+  "basis": "Offline real functions with synthetic state; no browser / UI click / GPU measurement.",
+  "cases": [
+    {
+      "case": "approval at live despite failed standard check",
+      "reasons": []
+    },
+    {
+      "case": "approval at atlas despite failed standard check",
+      "reasons": []
+    },
+    {
+      "case": "approval at export despite failed standard check",
+      "reasons": []
+    },
+    {
+      "case": "approval with fit size / failed bake / dirty but no recorded parameter delta",
+      "reasons": []
+    },
+    {
+      "case": "non-neutral style changes rendered spark size without changing recipe snapshot",
+      "renderedSparkSize": 2,
+      "baseSparkSize": 1,
+      "snapshotUnchanged": true,
+      "approvalReasons": []
+    },
+    {
+      "case": "check rows with altered observation / style still describe static repository export",
+      "html": "<div class=\"cks\"><div class=\"ck\"><span>标准检查</span><b class=\"bad\">1 项没过</b></div><div class=\"ck\"><span>导出回放（PC / 手机）</span><b class=\"ok\">通过（oldExport）</b></div><div class=\"ck\"><span>画面与包版本</span><b class=\"ok\">一致（版本 orig）</b></div><div class=\"ck\"><span>UE 实机</span><b class=\"warn\">未经验证</b></div></div>"
+    },
+    {
+      "case": "export has no complete snapshot when content changes during await (controlled stubs)",
+      "observed": [
+        {
+          "stage": "texture",
+          "bake": "original bake"
+        },
+        {
+          "stage": "ramp",
+          "color": "color changed during PNG encoding"
+        },
+        {
+          "stage": "parameter table",
+          "color": "color changed during PNG encoding"
+        }
+      ],
+      "limits": "Only export controller and state capture verified; no actual PNG / ZIP / browser input generated."
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "recipe": "HK10-1",
+  "bakerVersion": "4.1.1",
+  "regressionPass": false,
+  "samples": [
+    {
+      "time": 1,
+      "frames": 3,
+      "shutterMs": 40,
+      "steps": 1515,
+      "sims": 3,
+      "draws": 39
+    },
+    {
+      "time": 4,
+      "frames": 3,
+      "shutterMs": 60,
+      "steps": 5850,
+      "sims": 3,
+      "draws": 48
+    },
+    {
+      "time": 8,
+      "frames": 3,
+      "shutterMs": 80,
+      "steps": 11622,
+      "sims": 3,
+      "draws": 48
+    }
+  ],
+  "clocks": [
+    {
+      "mode": "live",
+      "fps": 60,
+      "reference": true,
+      "wallSeconds": 4,
+      "timelineSeconds": 4.000000000000014,
+      "seeks": 0,
+      "backwards": 0,
+      "renders": 240
+    },
+    {
+      "mode": "live",
+      "fps": 10,
+      "reference": true,
+      "wallSeconds": 4,
+      "timelineSeconds": 2.000000000000001,
+      "seeks": 10,
+      "backwards": 10,
+      "renders": 40
+    },
+    {
+      "mode": "live",
+      "fps": 10,
+      "reference": false,
+      "wallSeconds": 4,
+      "timelineSeconds": 2.000000000000001,
+      "seeks": 0,
+      "backwards": 0,
+      "renders": 40
+    },
+    {
+      "mode": "export",
+      "fps": 60,
+      "reference": true,
+      "wallSeconds": 4,
+      "timelineSeconds": 4.000000000000014,
+      "seeks": 0,
+      "backwards": 0,
+      "renders": 240
+    },
+    {
+      "mode": "export",
+      "fps": 10,
+      "reference": true,
+      "wallSeconds": 4,
+      "timelineSeconds": 2.000000000000001,
+      "seeks": 10,
+      "backwards": 10,
+      "renders": 40
+    },
+    {
+      "mode": "export",
+      "fps": 10,
+      "reference": false,
+      "wallSeconds": 4,
+      "timelineSeconds": 2.000000000000001,
+      "seeks": 0,
+      "backwards": 0,
+      "renders": 40
+    }
+  ],
+  "findings": [
+    {
+      "name": "forward overlapping shutters avoid replaying the full 8-second simulation",
+      "pass": false,
+      "observedSteps": 11622,
+      "upperBound": 480
+    },
+    {
+      "name": "live: playback clock keeps real time at 10 fps",
+      "pass": false,
+      "timelineSeconds": 2.000000000000001,
+      "wallSeconds": 4,
+      "backwardsSeeks": 10
+    },
+    {
+      "name": "export: playback clock keeps real time at 10 fps",
+      "pass": false,
+      "timelineSeconds": 2.000000000000001,
+      "wallSeconds": 4,
+      "backwardsSeeks": 10
+    }
+  ],
+  "artifactPath": "analysis/results/HK10E2/Hongchao40_cascade.json",
+  "exportCadence": [
+    {
+      "emitter": "L1_MainA",
+      "segments": [
+        {
+          "start": 0,
+          "end": 0.767,
+          "imagesPerSecond": 30,
+          "holdsLastImage": false
+        },
+        {
+          "start": 0.767,
+          "end": 1.367,
+          "imagesPerSecond": 15,
+          "holdsLastImage": false
+        },
+        {
+          "start": 1.367,
+          "end": 4.467,
+          "imagesPerSecond": 10,
+          "holdsLastImage": false
+        },
+        {
+          "start": 4.467,
+          "end": 4.567,
+          "imagesPerSecond": 9.8,
+          "holdsLastImage": true
+        }
+      ]
+    },
+    {
+      "emitter": "L1_MainB",
+      "segments": [
+        {
+          "start": 4.567,
+          "end": 7.866,
+          "imagesPerSecond": 10,
+          "holdsLastImage": false
+        },
+        {
+          "start": 7.866,
+          "end": 11.867,
+          "imagesPerSecond": 7.5,
+          "holdsLastImage": false
+        },
+        {
+          "start": 11.867,
+          "end": 12,
+          "imagesPerSecond": 7.37,
+          "holdsLastImage": true
+        }
+      ]
+    },
+    {
+      "emitter": "L2_Main",
+      "segments": [
+        {
+          "start": 6.033,
+          "end": 6.9,
+          "imagesPerSecond": 14.99,
+          "holdsLastImage": false
+        },
+        {
+          "start": 6.9,
+          "end": 11.9,
+          "imagesPerSecond": 10,
+          "holdsLastImage": false
+        },
+        {
+          "start": 11.9,
+          "end": 12,
+          "imagesPerSecond": 9.78,
+          "holdsLastImage": true
+        }
+      ]
+    }
+  ],
+  "limits": "CPU scheduling and controller mock only; no real browser FPS, video decoder cost, GPU timing or pixels measured.",
+  "harnessAdjustment": "Clock mock adds isEmit=false for HK aerial layers; diagnostic file in repository was not changed. No new emitset branch was tested."
+}
