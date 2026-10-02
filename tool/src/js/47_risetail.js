@@ -48,7 +48,9 @@ function rtPowderOf(P, LI, gi, M, rate, salt) {
     j: P.rtAJet * (0.75 + 0.5 * phh(K, 3)), kd: P.rtAKd * (0.7 + 0.6 * phh(K, 4)),
     cx: P.rtACone * phn(K, 5), cz: P.rtACone * 0.5 * phn(K, 7),
     size: P.rtASize * (0.6 + 0.8 * phh(K, 8)), br: 0.6 + 0.8 * phh(K, 9), fl: P.rtFling * (0.8 + 0.4 * phh(K, 10)),
-    ph: 6.2831853 * ((P.rtSpin || 0) * tb + (P.rtSpinPh || 0))
+    ph: 6.2831853 * ((P.rtSpin || 0) * tb + (P.rtSpinPh || 0)),
+    // 小涡 / 弹体尾流：每颗火粉被一小团空气带着漂（大涡在火粉寿命内看不出来，循环层只放小涡 → 循环不破）
+    wx: (P.rtTurbS || 0) * phn(K, 11), wz: (P.rtTurbS || 0) * 0.7 * phn(K, 12)
   };
 }
 function rtPowderI(P, q, a, pulse) { const u = a / q.life; return P.rtAI * q.br * pulse * Math.min(1, a / 0.015) * Math.pow(Math.max(0, 1 - u), P.rtAWarm || 1); }
@@ -83,8 +85,8 @@ function makeRiseTailLoopRenderer(P, LI, Vref, opts = {}) {
         if (q.tb > te) continue;
         const a = ts - q.tb; if (a > lifeMax + 0.02) break; if (a < 0 || a >= q.life) continue;
         const e = Math.exp(-q.kd * a), s1 = (1 - e) / q.kd;
-        const x = R0 * Math.cos(q.ph) + (-q.fl * Math.sin(q.ph) + q.cx) * s1;
-        const z = (-q.j + q.cz) * s1 - (Vref + G / q.kd) * (a - s1);
+        const x = R0 * Math.cos(q.ph) + (-q.fl * Math.sin(q.ph) + q.cx) * s1 + q.wx * (a - s1);
+        const z = (-q.j + q.cz) * s1 - (Vref + G / q.kd - q.wz) * (a - s1);
         let I = rtPowderI(P, q, a, LI.pulse(q.tb)) * fadeAll; if (R.bot) I *= smoothstepJS(R.bot[0], R.bot[1], z); if (I <= 0 || n >= cap) continue;
         bufT[n * 4] = x; bufT[n * 4 + 1] = z; bufT[n * 4 + 2] = I; bufT[n * 4 + 3] = q.size; n++;
       }
@@ -113,7 +115,7 @@ function drawRiseTailLive(P, LI, ball, t, view, ppm) {
     const p = ball.pos(q.tb), v = ball.vel(q.tb), sp = Math.hypot(v[0], v[2]) || 1, dx = v[0] / sp, dz = v[2] / sp;
     const e = Math.exp(-q.kd * a), s1 = (1 - e) / q.kd;
     const vx0 = v[0] - q.j * dx - q.fl * Math.sin(q.ph) + q.cx, vz0 = v[2] - q.j * dz + q.cz;
-    const x = p[0] + R0 * Math.cos(q.ph) + vx0 * s1, z = p[2] + vz0 * s1 - G / q.kd * (a - s1);
+    const x = p[0] + R0 * Math.cos(q.ph) + vx0 * s1 + q.wx * (a - s1), z = p[2] + vz0 * s1 - (G / q.kd - q.wz) * (a - s1);
     const I = rtPowderI(P, q, a, LI.pulse(q.tb)); if (I <= 0 || n >= cap) continue;
     bufT[n * 4] = x; bufT[n * 4 + 1] = z; bufT[n * 4 + 2] = I; bufT[n * 4 + 3] = q.size; n++;
   }
@@ -141,6 +143,39 @@ function rtSparkColor(P, lifeMean, I, dT = 0) {
     return [u, c.map(x => +(x * s).toFixed(4))];
   });
 }
+// 空气乱流（大涡）：高空风的阵风 u′、涡尺度 Λ。火星寿命（≤ 几秒）远小于涡的周转时间 Λ / u′（几十秒），
+//   所以每颗火星一辈子都在「出生那团空气」里：阻力把它拉向那团空气的速度 w → 等价于恒定加速度 k·w，漂移 = w ·（年龄 − (1 − e^−k·年龄) / k）。
+//   这团空气的速度由出生地（= 弹体在发射器时间 t0 的位置）决定：同一时刻出生的火星一起漂（沿尾迹相关），隔一个 Λ 就换一股风 → 老的尾迹慢慢松、轻轻弯。
+//   值噪声：沿弹道弧长每 Λ 一个高斯节点、Catmull-Rom 插值；返回 t0 → 空气速度（m/s，x 横 / y 景深 / z 竖）
+function rtAir(P, ball) {
+  const u = P.rtTurb || 0, Lam = Math.max(2, P.rtTurbL || 30), T = ball.T, sd = (P.seed | 0) * 97 + 5;
+  if (u <= 0) return () => [0, 0, 0];
+  const n = 400, S = [0]; for (let i = 1; i <= n; i++) { const t = T * (i - 0.5) / n, v = ball.vel(t); S.push(S[i - 1] + Math.hypot(v[0], v[2]) * T / n); }
+  const sOf = t => { const x = clamp(t / T, 0, 1) * n, i = Math.min(n - 1, Math.floor(x)); return S[i] + (S[i + 1] - S[i]) * (x - i); };
+  const node = (m, ax) => phn(sd + m * 3 + ax, 31 + ax);
+  const cr = (p0, p1, p2, p3, f) => 0.5 * (2 * p1 + (-p0 + p2) * f + (2 * p0 - 5 * p1 + 4 * p2 - p3) * f * f + (-p0 + 3 * p1 - 3 * p2 + p3) * f * f * f);
+  const sc = [u, u, u * 0.7].map(x => x * 1.11);   // Catmull-Rom 插值把方差平均压到 0.81，补回来 → 均方根 = u′
+  return t => { const x = sOf(t) / Lam, m = Math.floor(x), f = x - m; return [0, 1, 2].map(ax => sc[ax] * cr(node(m - 1, ax), node(m, ax), node(m + 1, ax), node(m + 2, ax), f)); };
+}
+// 线状火星（相机 / 眼睛跟着星头走的拖影）：看升空的人（和参考视频的相机）是盯着星头的，星头在视网膜上不动，
+//   火星相对星头往下退 → 在曝光 / 视觉暂留时间 τ 里拖成一条竖线：拖影长度 = |火星速度 − 星头此刻速度| × τ。
+//   年轻火星相对星头退得慢（≈ 喷出速度），老火星几乎停在空中、相对速度 ≈ 星头速度 → 越往下拖得越长（参考图下段正是这样）。
+//   拉长倍数 = √(1 + (长度 / 尺寸)²)，按「中途出生的标称火星」随寿命算。方向 = 相对星头的运动 ≈ 弹道方向（竖直），
+//   引擎里用 Screen Alignment = Rectangle（面片 Y 朝屏幕上方）而不是 Velocity：火星自己的速度在寿命中段很小、方向乱（试过，拖影横七竖八，和参考里整齐的竖线不符）。
+//   光量守恒（拖影只是把同一份光摊长）：Color Over Life 同时除以拉长倍数，所以拖影火星要更亮才会在相机里过曝发白。
+function rtStretchLife(P, ball, jet, kd, L, S, sizeLife, tauMul) {
+  const tau = (P.rtStreakT || 0) * (tauMul == null ? 1 : tauMul), cap = Math.max(1, P.rtStreakMax || 6);
+  if (tau <= 0 || S <= 0) return null;
+  const t0 = ball.T * 0.4, v = ball.vel(t0), sp = Math.hypot(v[0], v[2]) || 1, v0 = [v[0] - jet * v[0] / sp, v[2] - jet * v[2] / sp], g = G / kd;
+  const keys = [];
+  for (let i = 0; i <= 10; i++) {
+    const u = i / 10, a = u * L, e = Math.exp(-kd * a), vh = ball.vel(Math.min(ball.T, t0 + a));
+    const rx = v0[0] * e - vh[0], rz = (v0[1] + g) * e - g - vh[2];
+    const len = Math.hypot(rx, rz) * tau, sz = S * (sizeLife ? esCurve(sizeLife, u) : 1);
+    keys.push([u, +Math.min(cap, Math.sqrt(1 + (len / Math.max(1e-3, sz)) ** 2)).toFixed(3)]);
+  }
+  return keys.some(k => k[1] > 1.05) ? keys : null;
+}
 function rtBuildES(P) {
   const ball = rtBallistic(P), LI = rtLoopInfo(P), T = ball.T, f = P.rtSpin || 0, R0 = (P.rtD || 0) / 2, th = ball.th;
   const dtL = Math.min(0.05, f > 0 ? 1 / (12 * f) : 0.05), dtS = Math.min(0.05, P.rtPulse > 0 ? 1 / (4 * (P.rtPulseHz || 6)) : 0.25);
@@ -152,22 +187,32 @@ function rtBuildES(P) {
   const vel = (jet, fling) => tl.map(t => { const v = ball.vel(t), sp = Math.hypot(v[0], v[2]) || 1, ph = phase(t);
     return [t, [v[0] - jet * v[0] / sp - fling * Math.sin(ph), fling * Math.cos(ph), v[2] - jet * v[2] / sp]]; });
   const spawn = rate => ts.map(t => [t, rate * LI.pulse(t)]);
-  const c = P.rtCone || 0, cone = [[-c, -c, -c / 2], [c, c, c / 2]], seed = P.seed | 0;
+  // 横向散开：两个均匀分布相加（两个 Initial Velocity）→ 三角分布，均方根和原来 ±c 的均匀分布一样，边缘不再是一刀切
+  const soft = (P.rtConeSoft || 0) > 0, c = (P.rtCone || 0) / (soft ? Math.SQRT2 : 1), cb = [[-c, -c, -c / 2], [c, c, c / 2]], cone = soft ? [cb, cb] : cb, seed = P.seed | 0;
+  // 乱流：大涡（按发射器时间的 Acceleration 曲线）+ 小涡 / 弹体尾流（每颗随机，也用两个相加）。加速度 = 阻力 × 空气速度
+  const air = rtAir(P, ball), airK = tl.map(t => [t, air(t)]), us = (P.rtTurbS || 0) * Math.sqrt(1.5);
+  //   重力仍走 Const Acceleration（已实测），乱流单独用 Acceleration 模块（未经 UE 验证）
+  const turb = kd => ({ accel: [0, 0, -G], accelCurve: P.rtTurb > 0 ? airK.map(([t, w]) => [t, [w[0] * kd, w[1] * kd, w[2] * kd]]) : null,
+    accelJit: us > 0 ? [0, 1].map(() => [[-us * kd, -us * kd, -us * kd * 0.7], [us * kd, us * kd, us * kd * 0.7]]) : null });
+  const sJ = clamp((P.rtSizeJit == null ? 25 : P.rtSizeJit) / 100, 0, 0.9), kJ = clamp((P.rtKdJit == null ? 20 : P.rtKdJit) / 100, 0, 0.9);
   const em = [];
   for (const [k, name, salt] of [['F', 'SparksFine', 1], ['M', 'SparksMid', 2], ['C', 'SparksCoarse', 3]]) {
     const rate = P['rt' + k + 'Rate'] || 0; if (rate <= 0) continue;
     const L = P['rt' + k + 'Life'], j = (P['rt' + k + 'Jit'] || 0) / 100, S = P['rt' + k + 'Size'], kd = P['rt' + k + 'Kd'];
+    const sizeLife = [[0, 1], [0.7, 1], [1, P.rtShrink == null ? 0.5 : P.rtShrink]];
+    const sl = rtStretchLife(P, ball, P.rtJet, kd, L, S, sizeLife, P['rt' + k + 'Streak']);
+    let col = rtSparkColor(P, L, P['rt' + k + 'I'] * (P.rtDotGain == null ? 1 : P.rtDotGain), P['rt' + k + 'dT'] || 0);
+    if (sl) col = col.map(([u, c]) => [u, c.map(x => +(x / esCurve(sl, u)).toFixed(4))]);
     em.push({ name, gpu: true, delay: 0, duration: T, seed: seed * 13 + salt, spawn: spawn(rate),
-      life: [L * (1 - j), L * (1 + j)], size: [S * 0.75, S * 1.25], drag: [kd * 0.8, kd * 1.2], accel: [0, 0, -G],
-      loc, vel: vel(P.rtJet, P.rtFling), velAdd: cone,
-      sizeLife: [[0, 1], [0.7, 1], [1, P.rtShrink == null ? 0.5 : P.rtShrink]],
-      col: rtSparkColor(P, L, P['rt' + k + 'I'] * (P.rtDotGain == null ? 1 : P.rtDotGain)) });
+      life: [L * (1 - j), L * (1 + j)], size: [S * (1 - sJ), S * (1 + sJ)], drag: [kd * (1 - kJ), kd * (1 + kJ)], ...turb(kd),
+      loc, vel: vel(P.rtJet, P.rtFling), velAdd: cone, sizeLife, col,
+      ...(sl ? { align: 'screen', stretch: 1, stretchLife: sl } : {}) });
   }
   if ((P.rtERate || 0) > 0) {
     const L = P.rtELife, kd = P.rtEKd;
     em.push({ name: 'Embers', gpu: true, delay: 0, duration: T, seed: seed * 13 + 4, spawn: spawn(P.rtERate),
-      life: [L * 0.7, L * 1.3], size: [P.rtESize * 0.8, P.rtESize * 1.2], drag: [kd * 0.7, kd * 1.3], accel: [0, 0, -G],
-      loc, vel: vel(P.rtJet * 0.6, P.rtFling * 0.5), velAdd: [[-c * 1.5, -c * 1.5, -c], [c * 1.5, c * 1.5, c * 0.3]],
+      life: [L * 0.7, L * 1.3], size: [P.rtESize * 0.8, P.rtESize * 1.2], drag: [kd * 0.7, kd * 1.3], ...turb(kd),
+      loc, vel: vel(P.rtJet * 0.6, P.rtFling * 0.5), velAdd: soft ? cone : [[-c * 1.5, -c * 1.5, -c], [c * 1.5, c * 1.5, c * 0.3]],
       sizeLife: [[0, 1], [0.8, 0.9], [1, 0.4]], col: rtSparkColor(P, L, P.rtEI * (P.rtDotGain == null ? 1 : P.rtDotGain), -180) });
   }
   if ((P.rtSmoke || 0) > 0) {
@@ -209,7 +254,8 @@ async function bakeEmitSet(P, scale, onProg) {
   const expo = [b.meta.expoH, b.meta.expoT];
   // 消散：开花那一刻的循环相位停喷；时长 = 最长寿命的火粉烧完（再留一点收到全黑）
   const stop = T % Tl, per = L.cols * L.rows, Dlife = rtPowderLifeMax(P) * 1.02;
-  const fpsT = P.rtFadeFps > 0 ? Math.min(30, P.rtFadeFps) : 30, chF = clamp(Math.ceil(Dlife * fpsT / per), 1, 4), Ff = per * chF, Df = Math.max(Dlife, Ff / 30);
+  // 通道数向下取整：帧率 ≤ 30（引擎每 tick 不跳帧），时长 = 火粉烧完（不再拖出末尾空帧）
+  const fpsT = P.rtFadeFps > 0 ? Math.min(30, P.rtFadeFps) : 30, chF = clamp(Math.floor(Dlife * fpsT / per), 1, 4), Ff = per * chF, Df = Math.max(Dlife, Ff / 30);
   const Pf = { ...P, chans: chF }, ft = [], fd = []; for (let f = 0; f < Ff; f++) { ft.push(f * Df / Ff); fd.push(Df / Ff); }
   const pf = rtPlan(Pf, box, ft, fd, { loop: false, t0: stop, duration: Df });
   const Rf = makeRiseTailLoopRenderer(P, LI, Vref, { stop, fadeDur: Df, bot });

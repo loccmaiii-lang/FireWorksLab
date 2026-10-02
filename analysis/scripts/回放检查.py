@@ -175,9 +175,11 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
             u = (tb - ta) / max(1e-9, td - ta)
             qx = cpos[a][0] + (cpos[d][0] - cpos[a][0]) * u; qy = cpos[a][1] + (cpos[d][1] - cpos[a][1]) * u
             jit.append(float(np.hypot(cpos[b][0] - qx, cpos[b][1] - qy))); jitf.append(b)
-        shown = len(set(tk)); back = int((steps < 0).sum())
+        # 真循环（帧号锯齿曲线）：从最后几帧回到开头几帧是循环接缝，不算回跳（对话框11，2026-10-02：升空尾缀循环层）
+        tka = np.asarray(tk); wrap = (steps < 0) & (tka[:-1] >= p.frames - 3) & (tka[1:] <= 2) if len(tk) > 1 else np.array([False])
+        shown = len(set(tk)); back = int(((steps < 0) & ~wrap).sum()); loop_wraps = int(wrap.sum())
         L = dict(pack=p.label, frames=p.frames, grid=f'{p.cols}x{p.rows}x{p.ch}', cell_px=[p.cw, p.chh], life_s=round(p.life, 3), pad_px=pad,
-                 ticks=len(tk), shown=shown, shown_frac=round(shown / p.frames, 3), max_skip=int(steps.max()) if len(steps) else 0, back_jumps=back,
+                 ticks=len(tk), shown=shown, shown_frac=round(shown / p.frames, 3), max_skip=int(steps.max()) if len(steps) else 0, back_jumps=back, loop_wraps=loop_wraps,
                  edge_max=round(max(edge), 4), edge_frames=int(sum(e > lim['edge_frac'] for e in edge)), saturated_max=round(max(sat), 4),
                  empty_mid=empty_mid, empty_tail=empty_tail, center_jump_max_px512=round(max(jumps), 2) if jumps else 0,
                  centers=cens,
