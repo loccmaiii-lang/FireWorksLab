@@ -256,6 +256,11 @@
 - 只出星头光点：尾巴、闪烁、熄灭前闪亮不在里面（有尾巴的层烘焙器会提示）。手机版这一层仍是序列。
 - 发射器名 `L<层号>_Dots`；`cascade_mobile.json` 里没有 GPU 发射器。
 
+### G. 多层效果里某一层 PC 出「单束」（烘焙器 4.2.13 起）⚪ 未经 UE 验证
+- 结构同 D（单元序列）：一颗代表星的序列（`beam_flipbook`，16 × 2 格，RGBA 接力），`screen_alignment: Velocity`，`pivot_offset` 把星头放在粒子位置；
+  `spawn.bursts = [[0, 星数]]`，`SphereLocation`（表面、Velocity，`VelocityScale` = 初速 ÷ 半径）+ `Drag` + `ConstAcceleration`；`SizeByLife` X / Y 分开；帧号曲线；CPU 发射器。
+- 发射器名 `L<层号>_Unit`；手机版这一层是普通序列（`cascade_mobile.json` 里没有单束）。
+
 ## 11. 给云端 AI 的输出约定
 
 - 要引擎参数时，**只输出一段** ` ```json ` 代码块，`format` 固定为 `fwl.cascade/1`。

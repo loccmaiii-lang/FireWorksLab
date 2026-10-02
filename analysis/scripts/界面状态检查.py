@@ -468,6 +468,16 @@ async def x1(pg):
     await pg.mouse.click(700, 400); await pg.keyboard.press('Control+z'); await idle(pg); await pg.wait_for_timeout(300)
     o = await pg.evaluate("state.layers[1].out || null")
     if o and o.get('pc') == 'dots': bad.append('撤销没回到序列')
+    # 4.2.13 单束
+    await pg.evaluate("selectComboLayer(1); 0"); await idle(pg)
+    u = await pg.evaluate("(() => { const opt = document.querySelector('#lhOut select[data-out=pc] option[value=unit]'); return { has: !!opt, disabled: opt ? opt.disabled : null, allowed: unitAllowed(layerEntryOf(state.layers[1]).P) }; })()")
+    info['单束选项'] = u
+    if not u['has']: bad.append('PC 方案里没有单束')
+    elif u['allowed']:
+        await pg.select_option('#lhOut select[data-out=pc]', 'unit'); await pg.wait_for_timeout(300)
+        r2 = await pg.evaluate("({ out: state.layers[1].out, note: $('#lhOutNote').textContent, draw: comboLayerDraw(state.layers[1]) })")
+        info['选了单束'] = r2
+        if r2['draw'] != 'unit' or '单束' not in r2['note']: bad.append(f'选单束后：{r2}')
     return not bad, '；'.join(bad) or json.dumps(info, ensure_ascii=False)
 
 

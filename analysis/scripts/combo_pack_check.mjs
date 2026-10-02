@@ -88,4 +88,32 @@ check('platform scheme: pack naming keeps mobile cutout / ramp when the PC side 
   const src=fs.readFileSync(path.join(root,'tool/src/js/61_naming.js'),'utf8');
   assert.ok(/pcTex/.test(src),'applyPackNaming 要知道某层 PC 没有贴图（不然手机的 Cutout / Ramp 被当成和 PC 共用丢掉）');
 });
+// 4.2.13 单束进组合包（用户 10-02 20:04「有些效果我也想导出面片 + 单束 + 粒子」；走查 D21 / B9）：PC 选「单束」的层 = 每颗星一个沿速度拉长的面片（单元序列），手机仍是序列
+check('platform scheme: PC unit layer = velocity-aligned beam_flipbook emitter (one particle per star), scaled by layer delay / rate / scale; mobile stays a sequence',()=>{
+  const r=JSON.parse(run(`(()=>{
+    if(typeof fwlUnit!=='function')return JSON.stringify({missing:true});
+    const P={...defaultsFor('botan',40).P,duration:2.8},pl=plan(P,measure(P)),pages=splitPlan40(pl),chain=pages.map(meta=>({P,meta,head:{},form:'master'}));chain.forEach((b,i)=>b.next=chain[i+1]);
+    const ub={form:'unit',P:{...P,form:'unit'},head:{},meta:{unit:true,fit:{v0:120,k:1.2,a:6},duration:3.4,keys:[[0,0.01],[1,63.99]],sizeKeysX:[[0,0.5],[1,1]],sizeKeysY:[[0,0.3],[1,1]],Ww:6,Wh:40,hb:0.92,area:0.6,L:{cols:16,rows:2,chans:4,F:64,cellW:128,cellH:1024}}};
+    const M=defaultsFor('kiku').M, base={scale:1,delay:0,rate:1,mirror:false,stages:M.stages,xw:M.xw,ramp0:M.ramp0,ramp1:M.ramp1,ramp2:M.ramp2,ramp3:M.ramp3,headInt:1,tailInt:1};
+    const L2={...base,delay:0.5,rate:2,scale:0.5,out:{pc:'unit',mobile:'seq'}};
+    const ents=comboEntries([{L:{...base},b:chain[0]},{L:L2,b:chain[0],unit:ub}],false), mob=comboEntries([{L:{...base},b:chain[0]},{L:L2,b:chain[0]}],true);
+    const pc=fwlCombo('T',ents,false), mb=fwlCombo('T_Mobile',mob,true);
+    return JSON.stringify({pc,mb,stars:P.stars,opts:OUT_PC.map(o=>o[0])});})()`));
+  assert.ok(!r.missing,'fwlUnit 还没有');
+  assert.ok(r.opts.includes('unit'),'PC 方案里有「单束」');
+  const u=r.pc.emitters.filter(e=>e.layer===2); assert.equal(u.length,1,'PC 单束层一个发射器');
+  const e=u[0], mat=r.pc.materials[e.material], m=Object.fromEntries(e.modules.map(x=>[x.m,x]));
+  assert.equal(e.required.screen_alignment,'Velocity'); assert.equal(mat.role,'beam_flipbook'); assert.ok(r.pc.textures[mat.textures.main]&&r.pc.textures[mat.textures.main].cols===16,'单束贴图 16 列');
+  assert.ok(r.pc.textures[e.required.cutout],'单束 Cut'); assert.ok(Array.isArray(e.required.pivot_offset)&&Math.abs(e.required.pivot_offset[1]-(-(1-0.92)))<1e-3,'Pivot = 星头位置');
+  assert.equal(e.spawn.bursts.reduce((n,x)=>n+x[1],0),r.stars,'每颗星一个粒子');
+  assert.ok(Math.abs(e.required.delay_s-0.5)<1e-3,'层延迟');
+  const lt=m.Lifetime.Lifetime.uniform; assert.ok(Math.abs((lt[0]+lt[1])/2-3.4/2)<0.02,'寿命 ÷ 时间倍率');
+  assert.ok(Math.abs(m.InitialSize.StartSize.const[1]-40*100*0.5)<1,'面片 × 缩放');
+  const dg=m.Drag.DragCoefficientRaw; assert.ok(Math.abs((dg.const!=null?dg.const:dg.uniform[0])-1.2*2)<1e-3,'阻力 × 时间倍率');
+  assert.ok(Math.abs(m.ConstAcceleration.Acceleration[2]-(-6*100*0.5*4))<1,'重力 × 缩放 × 倍率²');
+  const vs=m.SphereLocation.VelocityScale, R=m.SphereLocation.StartRadius.const, vv=(vs.const!=null?vs.const:(vs.uniform[0]+vs.uniform[1])/2)*R;
+  assert.ok(Math.abs(vv-120*100*0.5*2)<2,'初速 × 缩放 × 倍率: '+vv);
+  assert.ok(m.DynamicParameter&&m.DynamicParameter.params.frame,'帧号');
+  assert.ok(!r.mb.emitters.some(x=>x.required.screen_alignment==='Velocity')&&r.mb.emitters.some(x=>x.layer===2),'手机第 2 层是序列');
+});
 const pass=checks.every(c=>c.pass);console.log(JSON.stringify({pass,checks},null,1));process.exit(pass?0:1);

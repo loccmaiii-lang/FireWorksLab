@@ -56,6 +56,7 @@ function selectComboLayer(i) {
 function outNote(L, e) {
   const o = layerOut(L), P = e && e.P, w = [];
   if (o.pc === 'off' && o.mobile === 'off') return '两个平台都不出这一层（画面里照样看得到，导出时跳过）';
+  if (o.pc === 'unit' && P && !unitAllowed(P)) w.push('这种花型 / 图案不能出单束（千轮、分裂、蜂、非球形图案），导出时 PC 按序列出');
   if (o.pc === 'dots' && P) {
     if (familyOf(P.type) !== 'aerial') w.push('这种花型不是礼花，光点没法表达，PC 请用序列');
     if (+P.sparkRate > 0 || +P.emberFrac > 0) w.push('这一层有尾巴：PC 光点只出星头，尾巴没有（要尾巴就用序列，或另加一层序列只出尾巴）');
@@ -63,7 +64,7 @@ function outNote(L, e) {
     if (+P.strobeHz > 0) w.push('点灭：光点不会闪（spec 10.B 的点灭星另配）');
     if (+P.subStars > 0 && ['senrin', 'crossette'].includes(P.type)) w.push('千轮 / 分裂的子花不在光点里');
   }
-  const s = `PC：${o.pc === 'seq' ? '这一层的序列' : o.pc === 'dots' ? `GPU 光点（${Math.round(+(P && P.stars) || 0)} 颗，软圆点材质，没有贴图）` : '不出'} · 手机：${o.mobile === 'seq' ? '序列（纯图片）' : '不出'}`;
+  const s = `PC：${o.pc === 'seq' ? '这一层的序列' : o.pc === 'unit' ? `单束（每颗星一个面片，${Math.round(+(P && P.stars) || 0)} 个；贴图是一颗星的序列，引擎回放第一次要烘一会儿）` : o.pc === 'dots' ? `GPU 光点（${Math.round(+(P && P.stars) || 0)} 颗，软圆点材质，没有贴图）` : '不出'} · 手机：${o.mobile === 'seq' ? '序列（纯图片）' : '不出'}`;
   return s + (w.length ? '。注意：' + w.join('；') : '');
 }
 function buildLayerHead(i) {
@@ -81,7 +82,8 @@ function buildLayerHead(i) {
   const ex = document.createElement('details'); ex.className = 'sec'; ex.open = true; ex.id = 'lhOut';
   ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><p class="note" id="lhOutNote"></p>`;
   host.appendChild(ex);
-  const syncOut = () => { const o = layerOut(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = o.mobile; $('#lhOutNote').textContent = outNote(L, layerEntryOf(L)); };
+  const syncOut = () => { const o = layerOut(L), le = layerEntryOf(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = o.mobile; $('#lhOutNote').textContent = outNote(L, le);
+    const uo = ex.querySelector('[data-out=pc] option[value=unit]'); if (uo && le) { uo.disabled = !unitAllowed(le.P) && o.pc !== 'unit'; uo.title = unitAllowed(le.P) ? '' : '千轮、分裂、蜂、非球形图案不能出单束'; } };
   ex.querySelectorAll('[data-out]').forEach(sel => sel.addEventListener('change', () => { L.out = { ...layerOut(L), [sel.dataset.out]: sel.value }; if (L.out.pc === 'seq' && L.out.mobile === 'seq') delete L.out; syncOut(); if (stage2.deliv) renderDeliv(); wbSync(); }));
   syncOut();
   host.querySelector('#lhHelp').addEventListener('click', () => { const p = $('#lhHelpText'); p.hidden = !p.hidden; });
@@ -529,15 +531,24 @@ function unitTargets() {
   const xs = curLayerBakes().filter(x => x.b && layerPOf(x) && unitAllowed(layerPOf(x))), combo = state.tab === 'combo';
   return xs.map(x => ({ i: x.i, label: combo ? `第 ${x.i + 1} 层 · ${x.name}` : (state.name || '这个效果') }));
 }
+// 4.2.13（走查 B9：单束两条路、产物不同）：多层效果里「单束」= 把这一层的 PC 导出方案改成单束，导出整包时就在里面（手机仍是序列）；
+// 单层效果照旧出单束包，包里加了 cascade.json（PC）
+function setLayerUnit(i) {
+  const L = state.layers[i]; if (!L) return;
+  L.out = { ...layerOut(L), pc: 'unit' }; if (typeof undoNote === 'function') undoNote();
+  if (state.comboSel === i) buildLayerHead(i); if (stage2.deliv) renderDeliv(); wbSync();
+  flash(`第 ${i + 1} 层的 PC 导出方案改成单束：导出整包时 PC 这一层是每颗星一个面片，手机仍是序列（层页头「导出方案」里能改回）`);
+}
 function unitExportLayer(i) {
   const combo = state.tab === 'combo', xs = curLayerBakes(), x = combo ? xs.find(r => r.i === i) : xs[0]; if (!x) return;
+  if (combo) { setLayerUnit(i); return; }
   const nm = packNamesFor(wbKey(), lib.effect, xs.length, delivName(), !combo && x.b ? x.b.P.type : '');
   exportUnitPack(layerPOf(x), combo ? x.L : state.M, nm.base + (combo && nm.layers[x.i] ? '_' + nm.layers[x.i] : ''));
 }
 function renderUnitMenu() {
   const host = $('#abUnitMenu'), ts = unitTargets(), combo = state.tab === 'combo';
   host.innerHTML = `<p class="hint">单束 = 只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条；比大面片省 overdraw。</p>`
-    + (ts.length ? ts.map(t => `<button type="button" data-u="${t.i}">导出 ${t.label} 的单束包</button>`).join('') : '<p class="hint">当前效果没有能出单束的层（千轮、分裂、蜂和非球形排布不行）。</p>')
+    + (ts.length ? ts.map(t => `<button type="button" data-u="${t.i}">${combo ? `${t.label}：PC 改成单束（导出整包时在里面）` : `导出 ${t.label} 的单束包`}</button>`).join('') : '<p class="hint">当前效果没有能出单束的层（千轮、分裂、蜂和非球形排布不行）。</p>')
     + (!combo && ts.length && state.P.form !== 'unit' ? '<button type="button" id="abUnitView">把产物改成单束（在画面里看）</button>' : '');
   host.querySelectorAll('[data-u]').forEach(b => b.addEventListener('click', () => { $('#abUnit').open = false; unitExportLayer(+b.dataset.u); }));
   const v = host.querySelector('#abUnitView'); if (v) v.addEventListener('click', () => { $('#abUnit').open = false; setForm('unit'); refreshPanelValues(); syncExport(); flash('产物改成「单元序列」（单束）：每颗星一个粒子'); });
@@ -656,13 +667,14 @@ function renderDeliv() {
     const o = combo ? layerOut(x.L) : { pc: 'seq', mobile: 'seq' };      // 4.2.12：每层的导出方案
     if (combo) rows.push(`<tr class="grp"><td colspan="4">第 ${x.i + 1} 层 · ${x.name} · PC ${OUT_PC.find(q => q[0] === o.pc)[1]} · 手机 ${OUT_MOBILE.find(q => q[0] === o.mobile)[1]}${layerShown(x.i) ? '' : '（观察里隐藏了，导出照旧包含）'}</td></tr>`);
     if (o.pc === 'dots') rows.push(`<tr><td class="dim">（没有贴图）</td><td>PC · GPU 光点 ${Math.round(+layerPOf(x).stars || 0)} 颗 · 软圆点材质 · 只出星头</td><td>${delay.toFixed(2)} s</td><td>${((+layerPOf(x).ignDelay || 0) + (+layerPOf(x).burn || 0)).toFixed(2)} s</td></tr>`);
+    if (o.pc === 'unit' && unitAllowed(layerPOf(x))) rows.push(`<tr><td>${useNew ? fwTexName(nm.base, ly, { cols: 16, rows: 2 }, 1, 'tex', false) : TN(ln) + '（单束）'}.png</td><td>PC · 单束 · 每颗星一个面片 × ${Math.round(+layerPOf(x).stars || 0)} · 16 × 2 格（列 × 行以导出为准）</td><td>${delay.toFixed(2)} s</td><td>${(unitDuration(layerPOf(x)) / rate).toFixed(2)} s</td></tr>`);
     if (o.pc === 'off' && o.mobile === 'off') { rows.push('<tr><td colspan="4" class="dim">两个平台都不出这一层</td></tr>'); continue; }
     const pre = x.b.meta.pre;
     parts.forEach((s, k) => {
       const seg = bakeSegmentName(x.b, k), d0 = delay + ((k === 0 && pre ? pre.from : s.meta.t0) || 0) / rate, life = (s.meta.duration + (k === 0 && pre ? pre.dur : 0)) / rate, L = s.meta.L;
       for (const tt of s.tail ? ['Head', 'Tail'] : ['tex']) {
         const pc = useNew ? fwTexName(nm.base, ly, L, k + 1, tt, false) : TN(ln, joinPart(seg, tt === 'tex' ? '' : tt)), mb = useNew ? fwTexName(nm.base, ly, L, k + 1, tt, true) : TN(mn, joinPart(seg, tt === 'tex' ? '' : tt));
-        if (o.pc === 'seq') rows.push(`<tr><td>${pc}.png</td><td>PC · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧${k === 0 && pre ? ` · 入点前放大 ${pre.dur.toFixed(2)} s` : ''}</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        if (o.pc === 'seq' || (o.pc === 'unit' && !unitAllowed(layerPOf(x)))) rows.push(`<tr><td>${pc}.png</td><td>PC · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧${k === 0 && pre ? ` · 入点前放大 ${pre.dur.toFixed(2)} s` : ''}</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
         if (o.mobile === 'seq') rows.push(`<tr><td>${mb}.png</td><td>手机 · 单格 ${mobCell}</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
       }
       if (o.pc === 'seq' || o.mobile === 'seq') rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, L, k + 1, 'C') : TN(ln, joinPart(seg, 'Cutout'))}.png</td><td>Cut（PC / 手机共用，512）</td><td></td><td></td></tr>`);
@@ -697,7 +709,7 @@ function unitHTML(xs, combo) {
   if (!ok.length) return '';
   if (!combo && state.P.form === 'unit') return '<p class="hint dv-unit">现在的产物就是单束（单元序列）：上面的导出就是单束包（贴图 + 弹道与发射参数表）。</p>';
   return `<div class="dv-unit"><b>单束（每颗星一个粒子）</b><small>只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条；比大面片省 overdraw。参数表里写了初速、阻力、重力、星数和寿命。</small>
-    ${combo ? ok.map(x => `<button class="btn" type="button" data-unit="${x.i}">导出第 ${x.i + 1} 层的单束包</button>`).join('') : `<button class="btn" type="button" data-unit="0">导出单束包</button><button class="btn ghost" type="button" id="dvToUnit">把产物改成单束（在画面里看）</button>`}</div>`;
+    ${combo ? ok.filter(x => layerOut(x.L).pc !== 'unit').map(x => `<button class="btn" type="button" data-unit="${x.i}">第 ${x.i + 1} 层 PC 改成单束</button>`).join('') + '<small>（多层效果的单束跟着整包导出：层页头「导出方案」）</small>' : `<button class="btn" type="button" data-unit="0">导出单束包</button><button class="btn ghost" type="button" id="dvToUnit">把产物改成单束（在画面里看）</button>`}</div>`;
 }
 async function exportUnitPack(P0, M, name) {
   const P = { ...P0, form: 'unit', cols: 16, rows: 2, chans: 4, frameMode: 'auto', autoGrid: 1 };
@@ -708,6 +720,10 @@ async function exportUnitPack(P0, M, name) {
     const nmU = name + '_Unit', files = await texFiles(b, nmU);
     files.push([`${TN(nmU, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
     files.push([`${nmU}_Cascade参数.txt`, utf8(cascadeText(nmU, b, M))]);
+    // 4.2.13（走查 B9）：单束包也带 cascade.json（PC；手机不用每颗星一个粒子，手机请导大面片序列）
+    const u = fwlUnit(nmU, b, M, { scale: 1, rate: 1, delay: 0 });
+    files.push(['cascade.json', utf8(JSON.stringify({ format: FWL_FORMAT, name: nmU, platform: 'pc', source: { tool: '烟花母版烘焙器 ' + VERSION, type: b.P.type, form: 'unit' },
+      textures: u.textures, materials: u.materials, system: { preview_distance_cm: 30000, preview_warmup_s: 0 }, emitters: [u.emitter], notes: ['手机版不出单束（手机不用每颗星一个粒子）：手机请导这个效果的大面片序列'] }, null, 1))]);
     files.push([`${nmU}.json`, utf8(JSON.stringify(masterJSON(b, nmU, M), null, 2))]);
     busy(true, '打包 ZIP…', 1); download(await makeZip(files), `${nmU}.zip`); flash('已导出单束包 ' + nmU);
   } catch (e) { console.error(e); flash('单束导出失败：' + e.message, true); }

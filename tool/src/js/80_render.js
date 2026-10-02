@@ -399,7 +399,18 @@ function renderComboLive() {
   post();
   hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层）${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}`; hudB = '';
 }
-// 引擎回放里这一层怎么画（按当前预览平台的导出方案）：'seq' 贴图 / 'dots' 光点 / 'off' 不画
+// 引擎回放要画单束时，在后台烘一次这一层的单束序列（不和别的烘焙同时跑）
+let unitTask = null;
+function ensureLayerUnit(e) {
+  if (unitTask) return;
+  unitTask = (async () => {
+    while (state.baking) await new Promise(r => setTimeout(r, 300));
+    state.baking = true;
+    try { await layerUnitBake(e, p => setStatus(`单束烘焙… ${Math.round(p * 100)}%`)); } catch (err) { console.error(err); flash('单束烘焙失败：' + (err.message || err), true); }
+    finally { state.baking = false; setStatus(''); unitTask = null; if (state.layerQueue && state.layerQueue.size) runLayerQueue(); }
+  })();
+}
+// 引擎回放里这一层怎么画（按当前预览平台的导出方案）：'seq' 贴图 / 'unit' 单束 / 'dots' 光点 / 'off' 不画
 function comboLayerDraw(L) { const o = typeof layerOut === 'function' ? layerOut(L) : { pc: 'seq', mobile: 'seq' }; return state.platform === 'mobile' ? o.mobile : o.pc; }
 function renderCombo() {
   if (state.view === 'live') return renderComboLive();
@@ -423,6 +434,13 @@ function renderCombo() {
     const s = comboLayerDraw(L);
     if (s === 'off') { notes.push(`第 ${i + 1} 层不出`); continue; }
     if (s === 'dots') { const e0 = state.lib.find(x => x.name === L.lib) || e; esDraw(dotsTables(e0, L), engineTick(state.t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); notes.push(`第 ${i + 1} 层光点`); continue; }
+    if (s === 'unit' && unitAllowed(e.P)) {     // 4.2.13 单束：每颗星一个面片（drawUnitLayer 按 Cascade 的放射弹道画）；层的延迟 / 倍率换成这一层的年龄，缩放换成取景
+      const e0 = state.lib.find(x => x.name === L.lib) || e, ub = e0.unitBake && e0.unitBake.sig === JSON.stringify(e0.P) ? e0.unitBake.b : null;
+      if (!ub) { ensureLayerUnit(e0); notes.push(`第 ${i + 1} 层单束烘焙中`); continue; }
+      const age = (engineTick(state.t) - (+L.delay || 0)) * (+L.rate || 1), sc = +L.scale || 1;
+      if (age >= 0) drawUnitLayer(ub, L, age, view.map(v => v / sc));
+      notes.push(`第 ${i + 1} 层单束`); continue;
+    }
     drawLayer(e.bake, L, state.t, view);
   }
   additive(false); post();

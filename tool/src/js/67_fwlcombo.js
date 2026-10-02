@@ -12,11 +12,38 @@ function comboLayerM(L) {
 // ---- 4.2.12 分平台导出方案（用户 10-02 20:04：「PC 用多张 / 单张序列 + 粒子（譬如四尺玉），手游就用纯图片……导出之前在图层选择导出方案？」；走查 D21–D22）----
 // 每层 L.out = { pc, mobile }：PC 序列 / GPU 光点（只出星头，不要贴图，材质角色 soft_dot，spec 10.B）/ 不出；手机 序列 / 不出（手机不用 GPU 粒子）。
 // 不写 = 两边都是序列，输出和以前逐字一样。
-const OUT_PC = [['seq', '序列（大面片）'], ['dots', 'GPU 光点（只出星头）'], ['off', '不出']], OUT_MOBILE = [['seq', '序列'], ['off', '不出']];
-function layerOut(L) { const o = (L && L.out) || {}; return { pc: ['seq', 'dots', 'off'].includes(o.pc) ? o.pc : 'seq', mobile: ['seq', 'off'].includes(o.mobile) ? o.mobile : 'seq' }; }
-// 这个平台要出的层：[{ L, b, i（原层号）, dots }]
+// 4.2.13：PC 加「单束」（每颗星一个沿速度拉长的面片，贴图是一颗星的序列；走查 D21 / B9）
+const OUT_PC = [['seq', '序列（大面片）'], ['unit', '单束（每颗星一个面片，带尾巴）'], ['dots', 'GPU 光点（只出星头）'], ['off', '不出']], OUT_MOBILE = [['seq', '序列'], ['off', '不出']];
+function layerOut(L) { const o = (L && L.out) || {}; return { pc: ['seq', 'unit', 'dots', 'off'].includes(o.pc) ? o.pc : 'seq', mobile: ['seq', 'off'].includes(o.mobile) ? o.mobile : 'seq' }; }
+// 这个平台要出的层：[{ L, b, i（原层号）, dots, unit（PC 单束的那次烘焙，调用方给）}]
 function comboEntries(layers, mobile) {
-  const out = []; layers.forEach((x, i) => { const o = layerOut(x.L), s = mobile ? o.mobile : o.pc; if (s === 'off') return; out.push({ ...x, i, dots: !mobile && s === 'dots' }); }); return out;
+  const out = []; layers.forEach((x, i) => { const o = layerOut(x.L), s = mobile ? o.mobile : o.pc; if (s === 'off') return; out.push({ ...x, i, dots: !mobile && s === 'dots', unit: !mobile && s === 'unit' ? x.unit : undefined }); }); return out;
+}
+// 单束层（PC）：每颗星一个 Velocity 对齐的面片，贴图 = 一颗代表星的序列（星头 + 拖尾，bakeUnit），轨迹交给 Cascade（球面放射 + 线性阻力 + 恒定加速度，m.fit）。
+// 和 65_cascade.js 的单元序列参数表同一套数；层的缩放 × 长度，时间倍率 ÷ 时间。CPU 发射器（GPU Sprites 对动态参数帧号的支持没在 UE 验证过）
+function fwlUnit(name, b, M, L) {
+  const m = b.meta, P = b.P, f = m.fit, r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1, Du = m.duration, jit = clamp((+P.burnJit || 0) / 100, 0, 0.5), Lg = m.L, R = 10 * sc;
+  const xy = (() => { const us = [...new Set([...m.sizeKeysX, ...m.sizeKeysY].map(k => +k[0]))].sort((a, c) => a - c); return us.map(u => [r4(u), [r4(evalKeys(m.sizeKeysX, u)), r4(evalKeys(m.sizeKeysY, u)), 1]]); })();
+  return {
+    textures: { seq: { file: TN(name) + '.png', class: 'flipbook', cols: Lg.cols, rows: Lg.rows, channels: Lg.chans, frames: Lg.F }, cutout: { file: TN(name, 'Cutout') + '.png', class: 'cutout' }, ramp: { file: TN(name, 'Ramp') + '.png', class: 'ramp' } },
+    materials: { main: { role: 'beam_flipbook', textures: { main: 'seq', ramp: 'ramp' }, scalars: { rows: Lg.rows, cols: Lg.cols } } },
+    emitter: {
+      name: 'Unit', material: 'main', gpu: false,
+      required: { screen_alignment: 'Velocity', duration_s: r4(Du * (1 + jit) / r + 0.1), loops: 1, delay_s: r4(+L.delay || 0), cutout: 'cutout', max_draw_count: Math.max(1, Math.round(+P.stars || 1)), pivot_offset: [-0.5, r4(-(1 - m.hb))] },
+      spawn: { rate: { const: 0 }, bursts: [[0, Math.max(1, Math.round(+P.stars || 1))]] },
+      modules: [
+        { m: 'Lifetime', Lifetime: { uniform: [r4(Du * (1 - jit) / r), r4(Du * (1 + jit) / r)] } },
+        { m: 'InitialSize', StartSize: { const: [r1(m.Ww * 100 * sc), r1(m.Wh * 100 * sc), 1] } },
+        { m: 'SizeByLife', LifeMultiplier: { curve: xy }, MultiplyX: true, MultiplyY: true, MultiplyZ: false },
+        { m: 'SphereLocation', StartRadius: { const: r1(R) }, VelocityScale: { const: r4(f.v0 * 100 * sc * r / R) }, SurfaceOnly: true, Velocity: true },
+        { m: 'Drag', DragCoefficientRaw: { const: r4(f.k * r) } },
+        { m: 'ConstAcceleration', Acceleration: [0, 0, r1(-f.a * 100 * sc * r * r)] },
+        { m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(m.keys, Lg.F) } } },
+        { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, Du, 0, M.headInt || 1) }, AlphaOverLife: { const: 1 } }
+      ],
+      notes: [`单束：每颗星一个面片（${Math.round(+P.stars || 0)} 颗），贴图是一颗代表星的序列，轨迹由 Cascade 算（初速 ${r2(f.v0)} m/s、阻力 ${r4(f.k)}/s、下坠 ${r2(f.a)} m/s²）；Pivot Offset 把星头放在粒子位置（导入器待支持，未经 UE 验证）`]
+    }
+  };
 }
 // 光点层的轨迹：模拟里星是平方阻力，Cascade 只有线性 Drag。拿模拟测出的「星最远半径 r(t)」和「可见星的平均高度 y(t)」拟合
 // r(t) = R0 + v/k·(1 − e^(−kt))、y(t) = −g/k·(t − (1 − e^(−kt))/k)，燃烧期（点火以后）权重 1，之前 0.2。
@@ -66,10 +93,17 @@ function dotsTables(e, L) {
 }
 function fwlCombo(name, layers, mobile = false) {
   const out = { format: FWL_FORMAT, name, platform: mobile ? 'mobile' : 'pc',
-    source: { tool: '烟花母版烘焙器 ' + VERSION, combo: true, layers: layers.map(({ L, b, dots }) => ({ type: b.P.type, form: dots ? 'dots' : b.form, renderVer: renderVersion(b.P) })) },
+    source: { tool: '烟花母版烘焙器 ' + VERSION, combo: true, layers: layers.map(({ L, b, dots, unit }) => ({ type: b.P.type, form: dots ? 'dots' : unit ? 'unit' : b.form, renderVer: renderVersion(b.P) })) },
     textures: {}, materials: {}, emitters: [], system: { preview_distance_cm: 30000, preview_warmup_s: 1.2 }, notes: [] };
-  layers.forEach(({ L, b, i: li, dots }, k) => {
+  layers.forEach(({ L, b, i: li, dots, unit }, k) => {
     const i = li == null ? k : li, pre = `L${i + 1}_`;
+    if (unit) {     // 4.2.13：PC 单束层
+      const ln = comboLayerName(name, i), u = fwlUnit(ln, unit, comboLayerM(L), L);
+      for (const [k2, v] of Object.entries(u.textures)) out.textures[pre + k2] = v;
+      out.materials[pre + 'main'] = { ...u.materials.main, textures: { main: pre + 'seq', ramp: pre + 'ramp' } };
+      out.emitters.push({ ...u.emitter, name: pre + 'Unit', material: pre + 'main', layer: i + 1, required: { ...u.emitter.required, cutout: pre + 'cutout' } });
+      return;
+    }
     if (dots) {     // 4.2.12：PC 光点层，没有贴图
       const d = fwlDots(L, b.P, comboLayerM(L), b.fm);
       out.materials[pre + 'dot'] = { role: 'soft_dot' };
@@ -114,14 +148,27 @@ async function comboLayerBakes(layers, onProg) {
   }
   return { layers: out, own };
 }
+// 单束层的烘焙（和交付页「单束包」同一套：16 × 2 格、RGBA、按帧数自动）；缓存在库条目上，参数变了重烘
+function unitP(P0) { return { ...P0, form: 'unit', cols: 16, rows: 2, chans: 4, frameMode: 'auto', autoGrid: 1 }; }
+async function layerUnitBake(e, onProg) {
+  const sig = JSON.stringify(e.P);
+  if (e.unitBake && e.unitBake.sig === sig) return e.unitBake.b;
+  if (e.unitBake) { disposeBake(e.unitBake.b); e.unitBake = null; }
+  const b = await bake(unitP(e.P), 1, onProg); e.unitBake = { sig, b }; return b;
+}
 async function comboPackFiles(name, layers, onProg) {
   const files = [], { layers: lb, own } = await comboLayerBakes(layers, p => onProg && onProg(p * 0.4));
   const mobiles = [], ownMobile = [];
   try {
+    const units = [], mbs = [];
     for (let i = 0; i < lb.length; i++) {
-      const { L, b } = lb[i], ln = comboLayerName(name, i), M = comboLayerM(L), o = layerOut(L);   // 4.2.12：每层的导出方案
-      if (o.pc === 'seq') {
+      const { L, b, e } = lb[i], ln = comboLayerName(name, i), M = comboLayerM(L), o = layerOut(L);   // 4.2.12：每层的导出方案
+      if (o.pc === 'seq' || (o.pc === 'unit' && !unitAllowed(b.P))) {     // 单束不适用的花型（千轮、分裂、蜂、非球形图案）按序列出
         files.push(...await texFiles(b, ln));
+        files.push([`${TN(ln, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
+      } else if (o.pc === 'unit') {
+        const ub = units[i] = await layerUnitBake(e, p => onProg && onProg(0.4 + 0.1 * (i + p) / lb.length));
+        files.push(...await texFiles(ub, ln));
         files.push([`${TN(ln, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
       }
       if (o.mobile === 'seq') {
@@ -130,15 +177,15 @@ async function comboPackFiles(name, layers, onProg) {
         const mn = comboLayerName(name + '_Mobile', i);
         files.push(...await texFiles(mb, mn));
         files.push([`${TN(mn, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
-        mobiles.push({ L, b: mb, i });
+        mobiles.push({ L, b: mb, i }); mbs[i] = mb;
       }
     }
-    files.push(['cascade.json', utf8(JSON.stringify(fwlCombo(name, comboEntries(lb.map(({ L, b }) => ({ L, b })), false), false), null, 1))]);
+    files.push(['cascade.json', utf8(JSON.stringify(fwlCombo(name, comboEntries(lb.map(({ L, b }, i) => ({ L, b, unit: units[i] })), false), false), null, 1))]);
     files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCombo(name + '_Mobile', mobiles, true), null, 1))]);
     // 命名规范（61_naming.js）：多层 = 礼花英文名 + 每层英文名
     if (lb.every(({ b }) => namingApplies(b))) {
       const ef = typeof lib !== 'undefined' ? lib.effect : null, key = typeof wbKey === 'function' ? wbKey() : name, nm = packNamesFor(key, ef, lb.length, name);
-      return applyPackNaming(files, nm.base, lb.map(({ b, L }, i) => ({ ln: comboLayerName(name, i), mn: comboLayerName(name + '_Mobile', i), b, layer: nm.layers[i], pcTex: layerOut(L).pc === 'seq' })));
+      return applyPackNaming(files, nm.base, lb.map(({ b, L }, i) => ({ ln: comboLayerName(name, i), mn: comboLayerName(name + '_Mobile', i), b: units[i] || b, mb: mbs[i] || b, layer: nm.layers[i], pcTex: !units[i] && layerOut(L).pc !== 'dots' && layerOut(L).pc !== 'off' })));
     }
     return files;
   } finally { own.forEach(disposeBake); ownMobile.forEach(disposeBake); }

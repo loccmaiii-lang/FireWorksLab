@@ -1,0 +1,9 @@
+{
+ "id": "XU1",
+ "type": "export",
+ "entry": "HN2",
+ "name": "HikiNishikiUnit",
+ "priority": 6,
+ "layer_out": {"2": {"pc": "unit", "mobile": "seq"}},
+ "note": "4.2.13 单束进组合包试导：引菊 → 锦第 2 层（锦）PC 出单束、手机仍是序列。只验证素材包（PC cascade 有 L2_Unit：Velocity、beam_flipbook、16 × 2 单束贴图 + Cut；手机 L2 序列 + Cut 都在）和烘焙回放里单束的样子。不挂效果，不进待我验收、不改条目。对话框2。"
+}

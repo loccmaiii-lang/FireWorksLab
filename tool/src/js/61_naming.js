@@ -41,14 +41,21 @@ function namingSheets(b) {
 // entries：[{ ln, mn, b, layer }]：内部 PC 名、内部手机名、这一层的烘焙、层英文名
 function applyPackNaming(files, base, entries) {
   const map = new Map(), drop = new Set();
-  for (const { ln, mn, b, layer, pcTex } of entries) {     // pcTex === false（4.2.12：这一层 PC 出光点或不出）→ 手机的 Cutout / Ramp 不能当成和 PC 共用丢掉
+  // pcTex === false（4.2.12：这一层 PC 出光点 / 单束 / 不出）→ 手机的 Cutout / Ramp 不能当成和 PC 共用丢掉；mb = 手机那次烘焙（PC 是单束时格子和 PC 不一样，手机名按它自己的格子起）
+  for (const { ln, mn, b, mb, layer, pcTex } of entries) {
     for (const [seg, L, sub, n] of namingSheets(b)) {
       const ly = joinPart(layer, sub), c = fwTexName(base, ly, L, n, 'C') + '.png';
       map.set(TN(ln, seg) + '.png', fwTexName(base, ly, L, n, 'tex', false) + '.png');
+      for (const ht of ['Head', 'Tail']) map.set(TN(ln, joinPart(seg, ht)) + '.png', fwTexName(base, ly, L, n, ht, false) + '.png');
+      map.set(TN(ln, joinPart(seg, 'Cutout')) + '.png', c);
+      map.set(TN(ln, joinPart(seg, 'FrameTest')) + '.png', fwTexName(base, ly, L, n, 'FrameTest') + '.png');
+    }
+    for (const [seg, L, sub, n] of namingSheets(mb || b)) {
+      const ly = joinPart(layer, sub), c = fwTexName(base, ly, L, n, 'C') + '.png';
       map.set(TN(mn, seg) + '.png', fwTexName(base, ly, L, n, 'tex', true) + '.png');
-      for (const ht of ['Head', 'Tail']) { map.set(TN(ln, joinPart(seg, ht)) + '.png', fwTexName(base, ly, L, n, ht, false) + '.png'); map.set(TN(mn, joinPart(seg, ht)) + '.png', fwTexName(base, ly, L, n, ht, true) + '.png'); }
-      map.set(TN(ln, joinPart(seg, 'Cutout')) + '.png', c); map.set(TN(mn, joinPart(seg, 'Cutout')) + '.png', c); if (pcTex !== false) drop.add(TN(mn, joinPart(seg, 'Cutout')) + '.png');
-      map.set(TN(ln, joinPart(seg, 'FrameTest')) + '.png', fwTexName(base, ly, L, n, 'FrameTest') + '.png'); if (pcTex !== false) drop.add(TN(mn, joinPart(seg, 'FrameTest')) + '.png');
+      for (const ht of ['Head', 'Tail']) map.set(TN(mn, joinPart(seg, ht)) + '.png', fwTexName(base, ly, L, n, ht, true) + '.png');
+      map.set(TN(mn, joinPart(seg, 'Cutout')) + '.png', c); if (pcTex !== false) drop.add(TN(mn, joinPart(seg, 'Cutout')) + '.png');
+      drop.add(TN(mn, joinPart(seg, 'FrameTest')) + '.png');     // 帧号测试图只留 PC 的（_检查/，不导入）
     }
     const r = fwTexName(base, layer, null, 0, 'R') + '.png';
     map.set(TN(ln, 'Ramp') + '.png', r); map.set(TN(mn, 'Ramp') + '.png', r); if (pcTex !== false) drop.add(TN(mn, 'Ramp') + '.png');

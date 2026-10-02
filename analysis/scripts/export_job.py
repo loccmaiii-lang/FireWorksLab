@@ -114,6 +114,8 @@ def apply_layer_out(s, lo):
     """4.2.12：任务里写 "layer_out": {"2": {"pc": "dots", "mobile": "seq"}} = 导出前把第 2 层的导出方案改成 PC 光点（试导用；不改条目数据）"""
     if not lo: return
     s.pg.evaluate(f"(() => {{ const o = {json.dumps(lo)}; for (const [k, v] of Object.entries(o)) {{ const L = state.layers[+k - 1]; if (L) L.out = v; }} return 0; }})()")
+    # PC 单束的层：先把单束序列烘好（引擎回放截图要用；整包导出也会用同一份缓存）
+    s.pg.evaluate("(async () => { for (const L of state.layers) { const e = layerEntryOf(L); if (e && layerOut(L).pc === 'unit' && unitAllowed(e.P)) { while (state.baking) await new Promise(r => setTimeout(r, 300)); state.baking = true; try { await layerUnitBake(e); } finally { state.baking = false; } } } return 0; })()")
 
 
 def run_combo_pack(job, s, out, name, ver, big, log=print):
