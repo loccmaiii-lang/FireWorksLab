@@ -5,10 +5,12 @@
   - 引擎取帧：按 30 fps 逐 tick 播放（帧号 = floor(Dynamic Parameter 曲线)），显示到的帧占比、一次最多跳几帧、有没有回跳
   - 裁切：内容碰到格子内圈（先找出打包时清零的留边，再量留边以内 2 像素一圈的亮度占比；以前量的是被清零的最外圈，永远是 0）
   - 曝光：灰度到顶（≥ 250）的像素占比
+  - 缩放抖动（4.2.3）：同一帧贴图停着的几个 tick 里 Size By Life 不许变（否则换帧时花缩回去、一胀一缩）
   - 空帧（中间的空帧、末尾的空帧分开数）、中心抖动（只对 Zoom 取景判：固定取景面片不动，画面不可能整体抖；亮部中心偏离前后两帧按时间连线的距离，按 512 格换算；相邻帧中心移动另记 center_jump_*，只作参考——固定取景时花下垂，中心本来就会走）
 及格线（LIMITS，照抄 协作/标准.md 2.3；--limits '{"jump_px512": 4}' 可以按效果放宽 / 收紧，放宽要在说明里写理由）
 用法：
   python3 analysis/scripts/回放检查.py <输出图.jpg> <素材包目录1> [<素材包目录2> ...] [--delay 0,0.9] [--times 0.1,0.3,0.5,0.7,0.9] [--fps 30] [--limits JSON]
+  python3 analysis/scripts/回放检查.py --pulse <cascade.json> ...    只查缩放抖动（不需要贴图）
 输出：<输出图.jpg>（上面一行是组合，下面每层一行）+ 同名 .json（检查数值 + 每层 pass + 总 pass）；有不过的项时退出码 1
 """
 import json, os, sys
@@ -24,6 +26,7 @@ LIMITS = {                     # 数值照 协作/标准.md 第 2.3 节（标准
     'empty_mid': 0,            # 中间空帧（有内容的帧之间夹着的全黑帧）
     'empty_tail': 0,           # 末尾全黑帧（应裁掉、缩短寿命）
     'jump_px512': 3.0,         # 中心抖动：亮部中心偏离「前后两帧按时间连成的直线」多少（格子像素，换算到 512 格）
+    'zoom_pulse_pct': 0.2,     # 缩放抖动（4.2.3）：同一帧贴图停在屏幕上的几个 tick 里，面片大小最多变多少 %（标准 2.3「不抖」）
 }
 from PIL import Image, ImageDraw
 
@@ -40,6 +43,31 @@ def curve(c, u):
 
 
 def srgb_to_lin(x): return np.where(x <= 0.04045, x / 12.92, ((x + 0.055) / 1.055) ** 2.4)
+
+
+def zoom_pulse(e, fps=30):
+    """缩放抖动（4.2.3，用户 2026-10-03 00:25「除了固定镜头，或多或少都会有点抖」）：
+    引擎按 fps 逐 tick 播，帧号 = floor(Dynamic Parameter 曲线)；同一帧贴图停在屏幕上的那几个 tick 里，面片大小（Size By Life）不该变——
+    贴图不动、面片在长，换下一帧时花又缩回去，就是一胀一缩。返回 (最大变化 %, [(帧号, %), …] 最差的 5 帧)。
+    入点前放大（preRoll）是故意让第 0 帧从小放大，不算。没有 Size By Life（固定取景）= 0。"""
+    mods = {m['m']: m for m in e['modules'] if not m.get('preRoll')}
+    pre = any(m.get('preRoll') for m in e['modules'])
+    sb, dp = mods.get('SizeByLife'), mods.get('DynamicParameter')
+    if not sb or not dp: return 0.0, []
+    life = float(curve(mods['Lifetime']['Lifetime'], 0)) if 'Lifetime' in mods else float(e['required']['duration_s'])
+    n = max(1, int(np.floor(life * fps + 1e-6)))
+    us = [min(1.0, (i + 0.5) / fps / life) for i in range(n)]
+    fr = [int(np.floor(float(curve(dp['params']['frame'], u)))) for u in us]
+    sz = [float(np.max(np.asarray(curve(sb['LifeMultiplier'], u), float)[:2])) for u in us]
+    worst = []; i = 0
+    while i < n:
+        j = i
+        while j + 1 < n and fr[j + 1] == fr[i]: j += 1
+        if j > i and not (pre and fr[i] == 0):
+            seg = sz[i:j + 1]; worst.append((fr[i], round((max(seg) / max(1e-9, min(seg)) - 1) * 100, 3)))
+        i = j + 1
+    worst.sort(key=lambda q: -q[1])
+    return (worst[0][1] if worst else 0.0), worst[:5]
 
 
 class Pack:
@@ -194,6 +222,8 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
         if empty_mid > lim['empty_mid']: fails.append(f'中间空帧 {empty_mid}')
         if empty_tail > lim['empty_tail']: fails.append(f'末尾空帧 {empty_tail}')
         if zoom and L['center_jitter_px512'] > lim['jump_px512']: fails.append(f"中心抖动 {L['center_jitter_px512']} px（512 格）")
+        L['zoom_pulse_pct'], L['zoom_pulse_top'] = zoom_pulse(p.e, fps)
+        if L['zoom_pulse_pct'] > lim['zoom_pulse_pct']: fails.append(f"缩放抖动 {L['zoom_pulse_pct']}%（同一帧停着时面片在变大小）")
         L['pass'] = not fails; L['fails'] = fails
         rep['layers'].append(L)
     rep['limits'] = lim; rep['fps'] = fps; rep['pass'] = all(L['pass'] for L in rep['layers'])
@@ -231,6 +261,13 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
 
 if __name__ == '__main__':
     args = sys.argv[1:]; delays = None; times = (0.1, 0.3, 0.5, 0.7, 0.9)
+    if args and args[0] == '--pulse':      # 只查缩放抖动：python3 回放检查.py --pulse <cascade.json> ...（不用贴图）
+        bad = 0
+        for f in args[1:]:
+            for e in json.load(open(f, encoding='utf-8'))['emitters']:
+                mx, top = zoom_pulse(e); ok = mx <= LIMITS['zoom_pulse_pct']; bad += not ok
+                print(f"{'✅' if ok else '❌'} {os.path.basename(f)} · {e['name']}：缩放抖动 {mx}%  最差 {top}")
+        sys.exit(1 if bad else 0)
     if '--delay' in args: i = args.index('--delay'); delays = [float(x) for x in args[i + 1].split(',')]; del args[i:i + 2]
     if '--times' in args: i = args.index('--times'); times = tuple(float(x) for x in args[i + 1].split(',')); del args[i:i + 2]
     ref = None

@@ -5,6 +5,21 @@ function clipSizeKeys40(keys, fullDuration, start, duration) {
   return [[0,at(start)],...keys.filter(k=>k[0]*fullDuration>start+1e-9 && k[0]*fullDuration<start+duration-1e-9)
     .map(([u,v])=>[(u*fullDuration-start)/duration,v]),[1,at(start+duration)]];
 }
+// 4.2.3 Zoom 改成「逐帧阶梯」（用户 2026-10-03 00:25「除了固定镜头方案，或多或少都会有点抖」）：
+// 以前 Size By Life 是平滑曲线——贴图一帧停几个 tick，面片却一直在长，换帧时花缩回去（引擎里一胀一缩 0.5–3%，回放检查「缩放抖动」）。
+// 现在每帧一个大小 = 这一帧烘焙时用的取景大小（帧开始那一刻的包络），整段停留都不变；换帧的同一刻换大小。
+// Size By Life 每帧两个关键点（帧开始、下一帧开始前 0.00015 寿命），大小相同的相邻帧合并；贴图本身和以前完全一样。
+function stepKeys40(scales,ticks,N){
+  const F=scales.length,eps=1.5e-4,keys=[];
+  for(let f=0;f<F;f++){
+    const a=f?ticks[f]/N:0,b=f+1<F?ticks[f+1]/N:1,v=scales[f];
+    if(f&&Math.abs(v-scales[f-1])<1e-6)continue;     // 和上一帧一样大：不用新关键点
+    if(f)keys.push([Math.max(keys[keys.length-1][0],a-eps),scales[f-1]]);
+    keys.push([a,v]);
+  }
+  keys.push([1,scales[F-1]]);
+  return keys.filter((k,i,a)=>i===0||k[0]>a[i-1][0]+1e-9||k[1]!==a[i-1][1]);
+}
 function tickFrameKeys40(F) {
   // 少量正偏移抵消 Lifetime/关键点四位小数的舍入；最后一格保持到寿命结束。
   return F===1 ? [[0,.01],[1,.99]] : [[0,.01],[(F-1)/F,F-1+.01],[1,F-.01]];
@@ -126,8 +141,9 @@ function plan40(P,fm,ta=0,tb=P.duration) {
     }
   }
   const F=ticks.length,t0=first/30,D=N/30,L={...base.L,F};
-  const sizeKeys=clipSizeKeys40(envelope,P.duration,t0,D);
   const times=ticks.map(k=>k/30),dur=ticks.map((k,f)=>((f+1<F?ticks[f+1]:N)-k)/30);
+  let sizeKeys=clipSizeKeys40(envelope,P.duration,t0,D),frameScale=null;
+  if(base.zoom){frameScale=times.map(t=>evalKeys(sizeKeys,t/D));sizeKeys=stepKeys40(frameScale,ticks,N);}
   let area=0;for(let i=0;i<200;i++)area+=evalKeys(sizeKeys,(i+.5)/200)**2/200;
   let maxDisp=0;for(const [t,v] of fm.prof)if(t>=t0 && t<t0+D){
     const f=Math.min(F-1,Math.max(0,ticks.findLastIndex(k=>k/30<=t-t0)));
@@ -137,7 +153,7 @@ function plan40(P,fm,ta=0,tb=P.duration) {
   let minFps=30;for(let f=0;f<F;f++){const t=t0+times[f];if(t<B.fadeAt)minFps=Math.min(minFps,1/Math.max(dur[f],1/30));}
   // 格子「按帧数」：只有一张时直接换成放得下的最小格子（多张时在 splitPlan40 里每张各自挑）
   const fit=P.outPack==='fit',L2=fit&&F<=cap?fitLayout40(L,F):L;
-  return {...base,L:L2,fitPack:fit,t0,duration:D,sizeKeys,times,dur,ticks,nTicks:N,keys:keysFromTicks40(ticks,N),area,
+  return {...base,L:L2,fitPack:fit,t0,duration:D,sizeKeys,frameScale,times,dur,ticks,nTicks:N,keys:keysFromTicks40(ticks,N),area,
     frameTiming:'tick-start',frameFps:30,capacityFrames:cap,sequenceStart:t0,sequenceEnd:end/30,
     budget:{mode,burstEnd:B.burstEnd,fadeAt:B.fadeAt,strobeFrom:B.strobeFrom,fps:mode==='tiers'?holds.map(fpsOf):null,strobeFps:fpsOf(B.strobeHold),pages:Math.ceil(F/cap),holdMin:Math.min(...dur)*30,holdMax:Math.max(...dur)*30},
     fadeEnd:P.duration,avgFps:F/D,minFps,maxDisp};
@@ -157,9 +173,9 @@ function splitPlan40(pl) {
   for(let first=0;first<pl.L.F;first+=capacity){
     const F=Math.min(capacity,pl.L.F-first),k0=ticks[first],k1=first+F<pl.L.F?ticks[first+F]:N;
     const offset=k0/30,D=(k1-k0)/30,pt=ticks.slice(first,first+F).map(k=>k-k0);
-    const sizeKeys=clipSizeKeys40(pl.sizeKeys,pl.duration,offset,D);
+    const fs=pl.frameScale?pl.frameScale.slice(first,first+F):null,sizeKeys=fs?stepKeys40(fs,pt,k1-k0):clipSizeKeys40(pl.sizeKeys,pl.duration,offset,D);
     let area=0;for(let i=0;i<200;i++)area+=evalKeys(sizeKeys,(i+.5)/200)**2/200;
-    out.push({...pl,L:pl.fitPack?fitLayout40(pl.L,F):{...pl.L,F},t0:pl.t0+offset,duration:D,ticks:pt,nTicks:k1-k0,keys:keysFromTicks40(pt,k1-k0),sizeKeys,area,
+    out.push({...pl,L:pl.fitPack?fitLayout40(pl.L,F):{...pl.L,F},t0:pl.t0+offset,duration:D,ticks:pt,nTicks:k1-k0,keys:keysFromTicks40(pt,k1-k0),sizeKeys,frameScale:fs,area,
       times:pt.map(k=>k/30),dur:pl.dur.slice(first,first+F),
       pageIndex:out.length,pageCount:Math.ceil(pl.L.F/capacity)});
   }

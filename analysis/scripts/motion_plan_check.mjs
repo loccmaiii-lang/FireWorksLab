@@ -24,25 +24,28 @@ const checks=[];
 async function check(name,fn){try{await fn();checks.push({name,pass:true});}catch(e){checks.push({name,pass:false,error:e.message});}}
 
 const cases=data(`['kiku','botan','kamuro','yanagi','senrin','strobe'].map(type=>({name:type,P:defaultsFor(type,40).P}))
+  .concat(['kiku','yanagi'].map(type=>({name:type+' Zoom',P:{...defaultsFor(type,40).P,zoom:'on'}})))
   .concat(CLOUD_RECIPES.filter(r=>r.layers).flatMap(r=>cloudRecipe(r.id).layers.map(l=>({name:r.id+'/'+l.name,P:l.P}))))`);
 const metrics=[];
 for(const entry of cases){
   context.input=entry.P;
-  const row=data(`(()=>{const P=input,pl=plan(P,measure(P));const seen=new Set();let maxTimeError=0,shrink=0,startError=0,maxHold=0,prevF=-1;
+  const row=data(`(()=>{const P=input,pl=plan(P,measure(P));const seen=new Set();let maxTimeError=0,shrink=0,grow=0,startError=0,maxHold=0,prevF=-1;
     for(let i=Math.ceil(pl.t0*30-1e-8);i/30<pl.t0+pl.duration-1e-8;i++){
       const age=i/30-pl.t0,f=frameIdx(pl,age);if(f<0)continue;seen.add(f);
       // 4.0 帧预算：一帧可以持续多个 tick；每帧第一次出现必须正好在它的烘焙时刻，持帧期间内容只能随 Zoom 变大、不能变小
       if(f!==prevF){startError=Math.max(startError,Math.abs(age-pl.times[f]));prevF=f;}
-      const ratio=sizeAt(pl,age)/sizeAt(pl,pl.times[f]);shrink=Math.max(shrink,1-ratio);
+      const ratio=sizeAt(pl,age)/sizeAt(pl,pl.times[f]);shrink=Math.max(shrink,1-ratio);grow=Math.max(grow,ratio-1);
       maxTimeError=Math.max(maxTimeError,age-pl.times[f]);maxHold=Math.max(maxHold,pl.dur[f]);
     }
-    return {duration:pl.duration,frames:pl.L.F,shown:seen.size,maxTimeError,startError,shrink,maxHold,budget:pl.budget||null};})()`);
+    return {duration:pl.duration,frames:pl.L.F,shown:seen.size,maxTimeError,startError,shrink,grow,zoom:!!pl.zoom,maxHold,budget:pl.budget||null};})()`);
   metrics.push({name:entry.name,...row});
   await check(entry.name+': every 30 Hz pose is available without Zoom time mismatch',()=>{
     assert.equal(row.shown,row.frames,'all active frames must be displayed');
     assert.ok(row.startError<1e-7,`frame first shown ${row.startError.toFixed(6)} s away from its baked pose`);
     assert.ok(row.maxTimeError<=row.maxHold+1e-7,`held pose older than its hold: ${row.maxTimeError.toFixed(4)} s`);
     assert.ok(row.shrink<1e-7,`content shrinks during hold by ${(100*row.shrink).toFixed(3)}%`);
+    // 4.2.3：持帧期间面片也不许变大（Zoom 平滑放大 = 换帧时花缩回去，一胀一缩）；回放检查「缩放抖动」的同一口径（≤ 0.2%）
+    assert.ok(row.grow<=0.002,`quad grows during a held frame by ${(100*row.grow).toFixed(3)}% (Zoom pulse)`);
   });
 }
 await check('200 frames use 4 unique pages and a partial last page',()=>{

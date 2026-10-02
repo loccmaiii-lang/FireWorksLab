@@ -782,12 +782,144 @@ canvas#gl{box-shadow:none}
 .dv-unit b{width:100%;font-size:13.5px}
 .dv-unit small{width:100%;color:var(--dim)}
 #pMaster.layermode .actions>.grid2{display:none}
+
+/* =====================================================================
+   4.2.3 自适应（用户 2026-10-03 00:25：「更小的笔记本屏幕打开会特别特别挤，预览画布窗口都很小」）
+   顶栏 = 品牌 + 当前效果（资产栏搬进来，省一行）；工具条 = 画面框的框头（原框头的网格 / 记录当前帧并进来）；
+   框脚 = 看哪个版本 · 规格 · tick；时间轴一行（放不下自动折行）；轨道说明默认收起（「？说明」）。
+   窄（≤1180 宽）左栏、更窄（≤820 宽）右栏变成浮在画面上的抽屉；矮（≤900 高）或窄（≤1440 宽）时整体收紧。
+   ===================================================================== */
+header.top{flex-wrap:nowrap;min-width:0}
+header.top .brand{flex:none}
+header.top .assetbar{flex:1 1 auto;min-width:0;flex-wrap:nowrap;background:none;border:0;border-left:1px solid var(--line2);border-radius:0;padding:0 0 0 14px;gap:8px}
+header.top .assetbar .ab-th,header.top .assetbar .ab-th i,header.top .assetbar .ab-th .th{width:34px;height:34px}
+header.top .assetbar .ab-tx{flex:0 1 auto;min-width:56px;max-width:36ch}
+header.top .assetbar .ab-tx b{font-size:14px;line-height:1.3}
+header.top .assetbar .ab-tx small{font-size:11.5px;line-height:1.3}
+header.top .assetbar .ab-src{flex:0 1 auto;min-width:0;white-space:nowrap}
+header.top .assetbar select{max-width:22ch;min-width:0}
+header.top .assetbar .ab-chg,header.top .assetbar .ab-state{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+header.top .assetbar .btn{padding:5px 11px;flex:none}
+header.top .assetbar .ab-more{flex:none}
+header.top .assetbar .ab-more>summary{padding:5px 9px}
+header.top .gpu{flex:0 1 auto;min-width:0}
+header.top .upd,header.top #status{flex:none}
+.brand .bn{white-space:nowrap}
+/* 工具条 = 画面框头 */
+.viewframe>.viewbar{flex:none;min-height:0;padding:5px 8px;gap:6px;background:var(--low);border:0;border-bottom:1px solid var(--line)}
+.viewframe>.viewbar .vt{width:30px;height:30px}
+.viewframe>.viewbar .vt+.tgl,.viewframe>.viewbar .expo.push+.vt{margin-left:0}
+/* 框脚：标题 · 规格 …… tick */
+.vf-foot{min-height:24px;padding:3px 10px;gap:8px;white-space:nowrap;overflow:hidden}
+.vf-foot #vfTitle{color:var(--text);font-family:var(--sans);overflow:hidden;text-overflow:ellipsis;min-width:0;flex:0 1 auto}
+.vf-foot #vfSpec{overflow:hidden;text-overflow:ellipsis;min-width:0;flex:0 1000 auto}
+.vf-foot #vfTitle:not(:empty)+#vfSpec:not(:empty)::before{content:'·';margin-right:8px;color:var(--faint)}
+.vf-foot #vfTick{flex:none}
+/* 时间轴一行：按钮 → 进度条 → 时间 → 速度 / 循环 / 跳转；放不下时进度条带着后面的折到下一行 */
+.timeline{flex-wrap:wrap;row-gap:4px}
+.timeline #scrub{order:0;flex:1 1 220px;min-width:140px}
+.timeline #tlabel{order:0;min-width:64px}
+/* 轨道说明默认收起 */
+.tlbars .tlhelp{display:none}
+.tlbars.help .tlhelp{display:block}
+.tlbars:not(.help) .tlcut:not(:has(> :not(.tlhelp))){display:none}
+.timeline #speed{width:64px;min-width:0;padding:4px 4px}
+/* 快捷键提示并进「？」：平时不占一行 */
+.timeline .keys{display:none}
+.stage:has(#tlBars.help) .timeline .keys{display:block;flex-basis:100%;text-align:right;white-space:normal}
+.timeline #tlHelpBtn{background:none;border:0;color:var(--dim);padding:3px 7px;font:inherit;font-size:12.5px}
+.timeline #tlHelpBtn:hover{color:var(--acc);background:var(--hover)}
+.timeline #tlHelpBtn[aria-pressed="true"]{color:var(--acc)}
+.tlbars{padding-bottom:10px}
+.tlcut .phl{width:auto;flex:1 1 220px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* 抽屉：浮在画面上，不挤画面 */
+main{--rw:min(var(--rightW,340px),42vw)}
+main.drawer-side{--sw:0px;--gl:0px}
+main.drawer-side>#gutL{display:none}
+main.drawer-side>#side{position:absolute;left:0;top:0;bottom:0;grid-column:1 / -1;grid-row:1;width:min(var(--sideW,232px),80vw);max-height:none;z-index:30;box-shadow:8px 0 28px rgba(0,0,0,.55);border-right:1px solid var(--line2);border-bottom:0}
+main.drawer-right{--rw:0px;--gr:0px}
+main.drawer-right>#gutR{display:none}
+main.drawer-right>#right{position:absolute;right:0;top:0;bottom:0;grid-column:1 / -1;grid-row:1;width:min(var(--rightW,340px),92vw);z-index:30;box-shadow:-8px 0 28px rgba(0,0,0,.55);border-left:1px solid var(--line2);border-top:0;overflow-y:auto}
+main.drawer-side.noside>#side,main.drawer-right.noright>#right{display:none}
+/* 旧的窄窗口排法（≤1180 右栏排到画面下面、≤900 / ≤760 整页滚动、单列）不再用：一律一屏、画面最大 */
+@media (max-width:1180px){
+  main{grid-template-columns:var(--sw) var(--gl) minmax(0,1fr) var(--gr) var(--rw);grid-template-rows:minmax(0,1fr);overflow:hidden}
+  main>#side,main>#gutL,main>.stage,main>#gutR,main>#right{grid-row:1}
+  main>#gutR{display:block}
+  main.noright>#gutR,main.drawer-right>#gutR{display:none}
+  main>#right{grid-column:5;overflow-y:auto;border-top:0}
+}
+@media (max-width:900px){
+  body{overflow:hidden}
+  .app{height:100%}
+}
+@media (max-width:760px){
+  main{grid-template-columns:var(--sw) var(--gl) minmax(0,1fr) var(--gr) var(--rw);grid-template-rows:minmax(0,1fr)}
+  main>.stage{grid-column:3;grid-row:1;height:auto}
+  main>#right{grid-row:1}
+  .viewframe{flex:1 1 auto}
+  .viewframe .canvas-wrap,.viewframe .canvas-wrap.split{flex:1 1 auto;height:auto}
+  .tlb{grid-template-columns:80px minmax(0,1fr)}
+}
+/* 矮或窄：整体收紧，把高度让给画面 */
+@media (max-height:900px),(max-width:1440px){
+  header.top{padding:5px 12px;min-height:0;gap:12px}
+  header.top .assetbar{padding-left:12px}
+  header.top .assetbar .ab-th,header.top .assetbar .ab-th i,header.top .assetbar .ab-th .th{width:30px;height:30px}
+  .brand .mark{font-size:18px}
+  .upd{padding:4px 11px}
+  .stage{padding:6px 10px;gap:6px}
+  .viewframe>.viewbar{padding:4px 6px;gap:5px}
+  .viewframe>.viewbar .tgl{padding:4px 8px}
+  .viewframe>.viewbar .seg{padding:2px}
+  .viewframe>.viewbar .seg button{padding:3px 10px}
+  .viewframe>.viewbar .vt{width:28px;height:28px}
+  .viewframe .canvas-wrap{padding:4px}
+  .vf-foot{min-height:22px;padding:2px 8px;font-size:11.5px}
+  .timeline{gap:6px}
+  .timeline .btn{padding:4px 10px}
+  .timeline .btn.tk{padding:4px 8px}
+  .jumps button{padding:3px 6px}
+  .timeline .tku{display:none}
+  .tlbars{gap:13px;padding:8px 0 10px}
+  .tlcut{font-size:11.5px;row-gap:3px}
+  .tlcut .mini{padding:2px 8px;font-size:11.5px}
+}
+@media (max-width:1500px){
+  .brand>b,.brand .bn{display:none}
+  header.top .gpu{max-width:14ch}
+}
+@media (max-width:1100px){
+  header.top .assetbar .ab-src{font-size:0;gap:0}
+  header.top .assetbar .ab-src select{font-size:12.5px;max-width:16ch}
+  header.top .gpu{display:none}
+}
 </style>
 </head>
 <body>
 <div class="app">
   <header class="top">
     <div class="brand"><span class="mark">DF</span><b>特效工作台</b><small id="verLabel">烟花烘焙器</small></div>
+    <div class="assetbar" id="assetBar" hidden>
+      <span class="ab-th" id="abThumb"></span>
+      <span class="ab-tx"><b id="abName"></b><small id="abSub"></small></span>
+      <label class="ab-src" title="看哪个版本：AI 交的版本，或你自己保存的版本">版本<select id="abSrc"></select></label>
+      <span class="ab-chg" id="abChg" hidden>参数已变 · 未保存</span>
+      <span class="ab-state" id="abState"></span>
+      <span class="sp"></span>
+      <button class="btn primary" id="abSave" type="button" title="把现在的全部参数（所有层）存成你的版本（存在这台电脑的浏览器里）">保存</button>
+      <button class="btn" id="abSaveAs" type="button">另存为…</button>
+      <details class="ab-more"><summary class="btn" title="更多">⋯</summary><div class="ab-menu">
+        <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
+        <button type="button" id="abExportFile">导出配方文件（.json）</button>
+        <button type="button" id="abImportFile">导入配方文件…</button>
+        <button type="button" id="abRename">重命名这个版本</button>
+        <button type="button" id="abDelete">删除这个版本</button>
+        <input type="file" id="abFile" accept=".json,application/json" hidden>
+      </div></details>
+      <details class="ab-more ab-unit" id="abUnit"><summary class="btn" title="单束：只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条">单束</summary><div class="ab-menu" id="abUnitMenu"></div></details>
+      <button class="btn" id="abDeliv" type="button" aria-pressed="false" title="看这个效果导出的素材包里有什么：每层每段的贴图、平台、单格、延迟">查看交付</button>
+    </div>
     <div class="crumb" id="crumb" hidden aria-hidden="true"></div>
     <div class="gpu" id="gpu"></div>
     <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
@@ -806,66 +938,43 @@ canvas#gl{box-shadow:none}
     <section class="stage">
       <div id="showcaseBar" class="showcase-bar" hidden><b id="showcaseTitle">3.7 / 4.0 同秒对照</b><select id="showcaseType" aria-label="对照花型"></select><select id="cloudLayer" aria-label="查看配方图层" hidden></select><button id="showcaseParams" class="btn ghost">保存对照配方</button><button id="showcaseClose" class="btn ghost">退出对照</button><p id="showcaseNote">正在准备实际导出贴图…</p><details id="cloudPending" hidden></details></div>
       <div id="showcasePair" class="showcase-pair" hidden><span id="showcaseLeft">3.7 原版</span><span id="showcaseRight">4.0 新核</span></div>
-      <div class="assetbar" id="assetBar" hidden>
-        <span class="ab-th" id="abThumb"></span>
-        <span class="ab-tx"><b id="abName"></b><small id="abSub"></small></span>
-        <label class="ab-src" title="看哪个版本：AI 交的版本，或你自己保存的版本">版本<select id="abSrc"></select></label>
-        <span class="ab-chg" id="abChg" hidden>参数已变 · 未保存</span>
-        <span class="ab-state" id="abState"></span>
-        <span class="sp"></span>
-        <button class="btn primary" id="abSave" type="button" title="把现在的全部参数（所有层）存成你的版本（存在这台电脑的浏览器里）">保存</button>
-        <button class="btn" id="abSaveAs" type="button">另存为…</button>
-        <details class="ab-more"><summary class="btn" title="更多">⋯</summary><div class="ab-menu">
-          <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
-          <button type="button" id="abExportFile">导出配方文件（.json）</button>
-          <button type="button" id="abImportFile">导入配方文件…</button>
-          <button type="button" id="abRename">重命名这个版本</button>
-          <button type="button" id="abDelete">删除这个版本</button>
-          <input type="file" id="abFile" accept=".json,application/json" hidden>
-        </div></details>
-        <details class="ab-more ab-unit" id="abUnit"><summary class="btn" title="单束：只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条">单束</summary><div class="ab-menu" id="abUnitMenu"></div></details>
-        <button class="btn" id="abDeliv" type="button" aria-pressed="false" title="看这个效果导出的素材包里有什么：每层每段的贴图、平台、单格、延迟">查看交付</button>
-      </div>
       <div id="bakeError" class="bake-error" role="alert" hidden><span id="bakeErrorText"></span><button class="btn" id="bakeRetry" type="button">重试烘焙</button></div>
-      <div class="viewbar" id="viewbar">
-        <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="1.5" y="2.5" width="4.5" height="11" rx="1.5"/></svg><span class="tl">库</span></button>
-        <div class="seg" id="viewSeg">
-          <button data-view="live" aria-pressed="true">实时模拟</button>
-          <button data-view="export" aria-pressed="false">引擎回放</button>
-          <button data-view="atlas" aria-pressed="false">贴图</button>
-        </div>
-        <div class="seg small" id="atlasSeg" hidden>
-          <button data-layer="head" aria-pressed="true">星头</button>
-          <button data-layer="tail" aria-pressed="false">拖尾</button>
-        </div>
-        <div class="seg small" id="flowSeg" hidden>
-          <button data-flow="0" aria-pressed="true">整张</button>
-          <button data-flow="1" aria-pressed="false">流转动画</button>
-        </div>
-        <div class="seg small" id="segSeg" hidden>
-          <button data-seg="0" aria-pressed="true">段 A</button>
-          <button data-seg="1" aria-pressed="false">段 B</button>
-        </div>
-        <div class="seg small" id="dispSeg" hidden>
-          <button data-disp="fit" aria-pressed="false">适应窗口</button>
-          <button data-disp="px" aria-pressed="false">1:1 像素</button>
-          <button data-disp="game" aria-pressed="true">游戏内大小</button>
-        </div>
-        <label class="expo" id="distBox" hidden><span class="tl">距离</span><input type="range" id="dist" min="0" max="1000" step="1" value="943" title="观看距离 50–1200 m（对数刻度）；标准检查按 1000 m"><output id="distOut">1000 m</output></label>
-        <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
-        <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
-        <span class="abtag" id="abTag" hidden>A | B</span>
-        <label class="expo push" title="显示曝光（只影响预览，不改素材）"><span class="tl">显示曝光</span><input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label>
-        <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（V）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
-        <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="专注：收起两侧面板，画布最大（F，或双击画布）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">专注</span></button>
-        <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="10" y="2.5" width="4.5" height="11" rx="1.5"/></svg></button>
-      </div>
       <div class="viewframe" id="viewFrame">
-      <div class="vf-head"><span id="vfTitle"></span><span class="sp"></span>
-        <button class="vt" id="vtGrid" type="button" aria-pressed="false" title="构图网格（三分线 + 中心十字，只影响观察）"><svg viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="1"/><path d="M6 1.5v13M10 1.5v13M1.5 6h13M1.5 10h13"/></svg></button>
-        <button class="vt" id="vtNote" type="button" title="记录当前帧：把时间、视图、平台、距离、图层、版本写进意见"><svg viewBox="0 0 16 16"><rect x="1.5" y="4" width="13" height="9.5" rx="1.5"/><circle cx="8" cy="8.7" r="2.6"/><path d="M5.5 4l1-2h3l1 2"/></svg></button>
-        <button class="vt" id="vtBig" type="button" title="展开大画面（收起两侧，F 或 Esc 恢复）"><svg viewBox="0 0 16 16"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button>
-      </div>
+        <div class="viewbar" id="viewbar">
+          <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="1.5" y="2.5" width="4.5" height="11" rx="1.5"/></svg><span class="tl">库</span></button>
+          <div class="seg" id="viewSeg">
+            <button data-view="live" aria-pressed="true">实时模拟</button>
+            <button data-view="export" aria-pressed="false">引擎回放</button>
+            <button data-view="atlas" aria-pressed="false">贴图</button>
+          </div>
+          <div class="seg small" id="atlasSeg" hidden>
+            <button data-layer="head" aria-pressed="true">星头</button>
+            <button data-layer="tail" aria-pressed="false">拖尾</button>
+          </div>
+          <div class="seg small" id="flowSeg" hidden>
+            <button data-flow="0" aria-pressed="true">整张</button>
+            <button data-flow="1" aria-pressed="false">流转动画</button>
+          </div>
+          <div class="seg small" id="segSeg" hidden>
+            <button data-seg="0" aria-pressed="true">段 A</button>
+            <button data-seg="1" aria-pressed="false">段 B</button>
+          </div>
+          <div class="seg small" id="dispSeg" hidden>
+            <button data-disp="fit" aria-pressed="false">适应窗口</button>
+            <button data-disp="px" aria-pressed="false">1:1 像素</button>
+            <button data-disp="game" aria-pressed="true">游戏内大小</button>
+          </div>
+          <label class="expo" id="distBox" hidden><span class="tl">距离</span><input type="range" id="dist" min="0" max="1000" step="1" value="943" title="观看距离 50–1200 m（对数刻度）；标准检查按 1000 m"><output id="distOut">1000 m</output></label>
+          <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
+          <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
+          <span class="abtag" id="abTag" hidden>A | B</span>
+          <label class="expo push" title="显示曝光（只影响预览，不改素材）"><span class="tl">显示曝光</span><input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label>
+          <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（V）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
+          <button class="vt" id="vtGrid" type="button" aria-pressed="false" title="构图网格（三分线 + 中心十字，只影响观察）"><svg viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="1"/><path d="M6 1.5v13M10 1.5v13M1.5 6h13M1.5 10h13"/></svg></button>
+          <button class="vt" id="vtNote" type="button" title="记录当前帧：把时间、视图、平台、距离、图层、版本写进意见"><svg viewBox="0 0 16 16"><rect x="1.5" y="4" width="13" height="9.5" rx="1.5"/><circle cx="8" cy="8.7" r="2.6"/><path d="M5.5 4l1-2h3l1 2"/></svg></button>
+          <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="专注：收起两侧面板，画布最大（F，或双击画布）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">专注</span></button>
+          <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="10" y="2.5" width="4.5" height="11" rx="1.5"/></svg></button>
+        </div>
       <div class="canvas-wrap">
         <div class="canvas-box ref-box" id="refBox" hidden><video id="refVid" muted playsinline preload="auto"></video>
           <span class="tag" id="refTag">实拍</span>
@@ -888,20 +997,20 @@ canvas#gl{box-shadow:none}
           <div class="gridov" aria-hidden="true"></div>
         </div>
       </div>
-      <div class="vf-foot"><span id="vfSpec"></span><span class="sp"></span><span id="vfTick"></span></div>
+      <div class="vf-foot"><span id="vfTitle"></span><span id="vfSpec"></span><span class="sp"></span><span id="vfTick"></span></div>
       </div>
       <div class="delivview" id="delivView" hidden></div>
       <div class="timeline">
         <button class="btn" id="play">暂停</button>
         <button class="btn tk" id="replay" type="button" title="重播：回到 0 秒再播（R）">重播</button>
-        <button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1 tick</button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1 tick</button>
+        <button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1<span class="tku"> tick</span></button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1<span class="tku"> tick</span></button>
         <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="时间">
         <output id="tlabel">0.00 s</output>
         <select id="speed" class="btn" aria-label="播放速度">
           <option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option><option value="0.1">0.1×</option>
         </select>
         <label class="check tlloop" title="关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked>循环</label>
-        <span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span>
+        <span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span><button class="btn tk" id="tlHelpBtn" type="button" aria-pressed="false" title="说明：下面层轨道上的点、菱形、把手分别是什么；快捷键">？</button>
         <span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>R</kbd>重播 <kbd>F</kbd>专注 <kbd>V</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span>
       </div>
       <div class="tlbars" id="tlBars"></div>
@@ -1169,7 +1278,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.2.2';
+const VERSION = '4.2.3';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -2494,6 +2603,21 @@ function clipSizeKeys40(keys, fullDuration, start, duration) {
   return [[0,at(start)],...keys.filter(k=>k[0]*fullDuration>start+1e-9 && k[0]*fullDuration<start+duration-1e-9)
     .map(([u,v])=>[(u*fullDuration-start)/duration,v]),[1,at(start+duration)]];
 }
+// 4.2.3 Zoom 改成「逐帧阶梯」（用户 2026-10-03 00:25「除了固定镜头方案，或多或少都会有点抖」）：
+// 以前 Size By Life 是平滑曲线——贴图一帧停几个 tick，面片却一直在长，换帧时花缩回去（引擎里一胀一缩 0.5–3%，回放检查「缩放抖动」）。
+// 现在每帧一个大小 = 这一帧烘焙时用的取景大小（帧开始那一刻的包络），整段停留都不变；换帧的同一刻换大小。
+// Size By Life 每帧两个关键点（帧开始、下一帧开始前 0.00015 寿命），大小相同的相邻帧合并；贴图本身和以前完全一样。
+function stepKeys40(scales,ticks,N){
+  const F=scales.length,eps=1.5e-4,keys=[];
+  for(let f=0;f<F;f++){
+    const a=f?ticks[f]/N:0,b=f+1<F?ticks[f+1]/N:1,v=scales[f];
+    if(f&&Math.abs(v-scales[f-1])<1e-6)continue;     // 和上一帧一样大：不用新关键点
+    if(f)keys.push([Math.max(keys[keys.length-1][0],a-eps),scales[f-1]]);
+    keys.push([a,v]);
+  }
+  keys.push([1,scales[F-1]]);
+  return keys.filter((k,i,a)=>i===0||k[0]>a[i-1][0]+1e-9||k[1]!==a[i-1][1]);
+}
 function tickFrameKeys40(F) {
   // 少量正偏移抵消 Lifetime/关键点四位小数的舍入；最后一格保持到寿命结束。
   return F===1 ? [[0,.01],[1,.99]] : [[0,.01],[(F-1)/F,F-1+.01],[1,F-.01]];
@@ -2615,8 +2739,9 @@ function plan40(P,fm,ta=0,tb=P.duration) {
     }
   }
   const F=ticks.length,t0=first/30,D=N/30,L={...base.L,F};
-  const sizeKeys=clipSizeKeys40(envelope,P.duration,t0,D);
   const times=ticks.map(k=>k/30),dur=ticks.map((k,f)=>((f+1<F?ticks[f+1]:N)-k)/30);
+  let sizeKeys=clipSizeKeys40(envelope,P.duration,t0,D),frameScale=null;
+  if(base.zoom){frameScale=times.map(t=>evalKeys(sizeKeys,t/D));sizeKeys=stepKeys40(frameScale,ticks,N);}
   let area=0;for(let i=0;i<200;i++)area+=evalKeys(sizeKeys,(i+.5)/200)**2/200;
   let maxDisp=0;for(const [t,v] of fm.prof)if(t>=t0 && t<t0+D){
     const f=Math.min(F-1,Math.max(0,ticks.findLastIndex(k=>k/30<=t-t0)));
@@ -2626,7 +2751,7 @@ function plan40(P,fm,ta=0,tb=P.duration) {
   let minFps=30;for(let f=0;f<F;f++){const t=t0+times[f];if(t<B.fadeAt)minFps=Math.min(minFps,1/Math.max(dur[f],1/30));}
   // 格子「按帧数」：只有一张时直接换成放得下的最小格子（多张时在 splitPlan40 里每张各自挑）
   const fit=P.outPack==='fit',L2=fit&&F<=cap?fitLayout40(L,F):L;
-  return {...base,L:L2,fitPack:fit,t0,duration:D,sizeKeys,times,dur,ticks,nTicks:N,keys:keysFromTicks40(ticks,N),area,
+  return {...base,L:L2,fitPack:fit,t0,duration:D,sizeKeys,frameScale,times,dur,ticks,nTicks:N,keys:keysFromTicks40(ticks,N),area,
     frameTiming:'tick-start',frameFps:30,capacityFrames:cap,sequenceStart:t0,sequenceEnd:end/30,
     budget:{mode,burstEnd:B.burstEnd,fadeAt:B.fadeAt,strobeFrom:B.strobeFrom,fps:mode==='tiers'?holds.map(fpsOf):null,strobeFps:fpsOf(B.strobeHold),pages:Math.ceil(F/cap),holdMin:Math.min(...dur)*30,holdMax:Math.max(...dur)*30},
     fadeEnd:P.duration,avgFps:F/D,minFps,maxDisp};
@@ -2646,9 +2771,9 @@ function splitPlan40(pl) {
   for(let first=0;first<pl.L.F;first+=capacity){
     const F=Math.min(capacity,pl.L.F-first),k0=ticks[first],k1=first+F<pl.L.F?ticks[first+F]:N;
     const offset=k0/30,D=(k1-k0)/30,pt=ticks.slice(first,first+F).map(k=>k-k0);
-    const sizeKeys=clipSizeKeys40(pl.sizeKeys,pl.duration,offset,D);
+    const fs=pl.frameScale?pl.frameScale.slice(first,first+F):null,sizeKeys=fs?stepKeys40(fs,pt,k1-k0):clipSizeKeys40(pl.sizeKeys,pl.duration,offset,D);
     let area=0;for(let i=0;i<200;i++)area+=evalKeys(sizeKeys,(i+.5)/200)**2/200;
-    out.push({...pl,L:pl.fitPack?fitLayout40(pl.L,F):{...pl.L,F},t0:pl.t0+offset,duration:D,ticks:pt,nTicks:k1-k0,keys:keysFromTicks40(pt,k1-k0),sizeKeys,area,
+    out.push({...pl,L:pl.fitPack?fitLayout40(pl.L,F):{...pl.L,F},t0:pl.t0+offset,duration:D,ticks:pt,nTicks:k1-k0,keys:keysFromTicks40(pt,k1-k0),sizeKeys,frameScale:fs,area,
       times:pt.map(k=>k/30),dur:pl.dur.slice(first,first+F),
       pageIndex:out.length,pageCount:Math.ceil(pl.L.F/capacity)});
   }
@@ -8004,10 +8129,16 @@ function refSync() {
 
 // ---------------- 面板：左栏、右栏、专注、宽度 ----------------
 const panels = { side: store.get('sideOn', true), right: store.get('rightOn', true), before: null };
+// 4.2.3 窄屏（用户 2026-10-03 00:25「更小的笔记本屏幕打开会特别特别挤」）：窗口窄时左栏 / 右栏改成浮在画面上的抽屉，
+// 默认收起、按 L / P 或工具条按钮拉出；抽屉开关不记进「宽屏时开不开」。
+const mediaQ = q => typeof matchMedia === 'function' ? matchMedia(q) : { matches: false, addEventListener() { } };
+const DRAWER = { side: mediaQ('(max-width:1180px)'), right: mediaQ('(max-width:820px)') };
 function setPanels(o) {
   Object.assign(panels, o);
   const m = $('#main'); m.classList.toggle('noside', !panels.side); m.classList.toggle('noright', !panels.right);
-  store.set('sideOn', panels.side); store.set('rightOn', panels.right);
+  m.classList.toggle('drawer-side', DRAWER.side.matches); m.classList.toggle('drawer-right', DRAWER.right.matches);
+  if (!DRAWER.side.matches) store.set('sideOn', panels.side);
+  if (!DRAWER.right.matches) store.set('rightOn', panels.right);
   $('#btnSide').setAttribute('aria-pressed', String(panels.side)); $('#btnRight').setAttribute('aria-pressed', String(panels.right));
   $('#btnFocus').setAttribute('aria-pressed', String(!panels.side && !panels.right));
 }
@@ -8043,11 +8174,24 @@ function initPanels() {
     else if (k === 'v') { e.preventDefault(); refToggle(); }   // 实拍对照：R 让给「重播」（用户 2026-10-02 16:22），改成 V
     else if (k === 'l') { e.preventDefault(); setPanels({ side: !panels.side }); }
     else if (k === 'p') { e.preventDefault(); setPanels({ right: !panels.right }); }
+    else if (k === 'escape' && ((DRAWER.side.matches && panels.side) || (DRAWER.right.matches && panels.right))) setPanels({ side: DRAWER.side.matches ? false : panels.side, right: DRAWER.right.matches ? false : panels.right });
     else if (k === 'escape' && !panels.side && !panels.right && $('#updDlg').hidden && $('#picker').hidden) toggleFocus();
     else if ((k === 'arrowdown' || k === 'arrowup') && /^(ef|rv|rep):/.test(lib.key)) {   // ↑ ↓ 在左栏条目之间切换
       const items = [...document.querySelectorAll('#libBody .li')].filter(x => /^(ef|rv|rep):/.test(x.dataset.key) && x.offsetParent), i = items.findIndex(x => x.dataset.key === lib.key), j = i + (k === 'arrowdown' ? 1 : -1);
       if (items[j]) { e.preventDefault(); items[j].click(); items[j].scrollIntoView({ block: 'nearest' }); }
     }
+  });
+  // 进入抽屉模式先收起；回到宽屏恢复上次的开关
+  const dr = k => () => setPanels({ [k]: DRAWER[k].matches ? false : store.get(k === 'side' ? 'sideOn' : 'rightOn', true) });
+  DRAWER.side.addEventListener('change', dr('side')); DRAWER.right.addEventListener('change', dr('right'));
+  if (DRAWER.side.matches) panels.side = false;
+  if (DRAWER.right.matches) panels.right = false;
+  // 抽屉开着时：在左栏点开一个条目、或点画面，就收起左栏（右栏抽屉只在点画面时收）
+  $('#libBody').addEventListener('click', e => { if (DRAWER.side.matches && panels.side && e.target.closest('.li')) setTimeout(() => setPanels({ side: false }), 0); });
+  document.querySelector('.stage').addEventListener('pointerdown', e => {
+    if (e.target.closest('#viewbar')) return;
+    const o = {}; if (DRAWER.side.matches && panels.side) o.side = false; if (DRAWER.right.matches && panels.right) o.right = false;
+    if (Object.keys(o).length) setPanels(o);
   });
   setPanels({});
 }
@@ -8698,12 +8842,15 @@ function initStage() {
   $('#abUnit').addEventListener('toggle', () => { if ($('#abUnit').open) renderUnitMenu(); });
   $('#tickPrev').addEventListener('click', () => tickStep(-1));
   $('#tickNext').addEventListener('click', () => tickStep(1));
+  // 轨道说明默认收起（4.2.3 窄屏），时间轴一行末尾的「？」展开 / 收起，记住
+  const tlHelp = on => { $('#tlBars').classList.toggle('help', on); $('#tlHelpBtn').setAttribute('aria-pressed', String(on)); };
+  tlHelp(!!store.get('tlHelp', false));
+  $('#tlHelpBtn').addEventListener('click', () => { const on = !$('#tlBars').classList.contains('help'); tlHelp(on); store.set('tlHelp', on); });
   state.loopPlay = store.get('loopPlay', true); $('#loopChk').checked = state.loopPlay;
   $('#loopChk').addEventListener('change', e => { state.loopPlay = e.target.checked; store.set('loopPlay', state.loopPlay); });
   document.querySelectorAll('.jumps [data-jump]').forEach(b => b.addEventListener('click', () => { state.playing = false; $('#play').textContent = '播放'; state.t = jumpTimes()[b.dataset.jump]; }));
   $('#vtGrid').addEventListener('click', () => { const on = !document.querySelector('.canvas-wrap').classList.contains('grid'); document.querySelector('.canvas-wrap').classList.toggle('grid', on); $('#vtGrid').setAttribute('aria-pressed', String(on)); });
   $('#vtNote').addEventListener('click', noteFrame);
-  $('#vtBig').addEventListener('click', () => toggleFocus());
   document.addEventListener('keydown', e => {
     if (/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName) || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'ArrowLeft') { e.preventDefault(); tickStep(-1); } else if (e.key === 'ArrowRight') { e.preventDefault(); tickStep(1); }
@@ -9418,7 +9565,7 @@ for (const [g, types] of TYPE_GROUPS) {
 if (REPLICAS.length) { const og = document.createElement('optgroup'); og.label = '实拍复刻';
   for (const r of REPLICAS) og.appendChild(new Option(r.name, 'rep:' + r.id));
   $('#type').appendChild(og); }
-$('#verLabel').textContent = '烟花烘焙器 v' + VERSION;
+$('#verLabel').innerHTML = '<span class="bn">烟花烘焙器 </span>v' + VERSION;
 document.title = '烟花母版烘焙器 · v' + VERSION;
 $('#type').addEventListener('change', e => setType(e.target.value));
 $('#mname').addEventListener('input', e => state.name = e.target.value);

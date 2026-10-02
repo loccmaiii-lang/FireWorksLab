@@ -775,3 +775,115 @@ canvas#gl{box-shadow:none}
 .dv-unit b{width:100%;font-size:13.5px}
 .dv-unit small{width:100%;color:var(--dim)}
 #pMaster.layermode .actions>.grid2{display:none}
+
+/* =====================================================================
+   4.2.3 自适应（用户 2026-10-03 00:25：「更小的笔记本屏幕打开会特别特别挤，预览画布窗口都很小」）
+   顶栏 = 品牌 + 当前效果（资产栏搬进来，省一行）；工具条 = 画面框的框头（原框头的网格 / 记录当前帧并进来）；
+   框脚 = 看哪个版本 · 规格 · tick；时间轴一行（放不下自动折行）；轨道说明默认收起（「？说明」）。
+   窄（≤1180 宽）左栏、更窄（≤820 宽）右栏变成浮在画面上的抽屉；矮（≤900 高）或窄（≤1440 宽）时整体收紧。
+   ===================================================================== */
+header.top{flex-wrap:nowrap;min-width:0}
+header.top .brand{flex:none}
+header.top .assetbar{flex:1 1 auto;min-width:0;flex-wrap:nowrap;background:none;border:0;border-left:1px solid var(--line2);border-radius:0;padding:0 0 0 14px;gap:8px}
+header.top .assetbar .ab-th,header.top .assetbar .ab-th i,header.top .assetbar .ab-th .th{width:34px;height:34px}
+header.top .assetbar .ab-tx{flex:0 1 auto;min-width:56px;max-width:36ch}
+header.top .assetbar .ab-tx b{font-size:14px;line-height:1.3}
+header.top .assetbar .ab-tx small{font-size:11.5px;line-height:1.3}
+header.top .assetbar .ab-src{flex:0 1 auto;min-width:0;white-space:nowrap}
+header.top .assetbar select{max-width:22ch;min-width:0}
+header.top .assetbar .ab-chg,header.top .assetbar .ab-state{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+header.top .assetbar .btn{padding:5px 11px;flex:none}
+header.top .assetbar .ab-more{flex:none}
+header.top .assetbar .ab-more>summary{padding:5px 9px}
+header.top .gpu{flex:0 1 auto;min-width:0}
+header.top .upd,header.top #status{flex:none}
+.brand .bn{white-space:nowrap}
+/* 工具条 = 画面框头 */
+.viewframe>.viewbar{flex:none;min-height:0;padding:5px 8px;gap:6px;background:var(--low);border:0;border-bottom:1px solid var(--line)}
+.viewframe>.viewbar .vt{width:30px;height:30px}
+.viewframe>.viewbar .vt+.tgl,.viewframe>.viewbar .expo.push+.vt{margin-left:0}
+/* 框脚：标题 · 规格 …… tick */
+.vf-foot{min-height:24px;padding:3px 10px;gap:8px;white-space:nowrap;overflow:hidden}
+.vf-foot #vfTitle{color:var(--text);font-family:var(--sans);overflow:hidden;text-overflow:ellipsis;min-width:0;flex:0 1 auto}
+.vf-foot #vfSpec{overflow:hidden;text-overflow:ellipsis;min-width:0;flex:0 1000 auto}
+.vf-foot #vfTitle:not(:empty)+#vfSpec:not(:empty)::before{content:'·';margin-right:8px;color:var(--faint)}
+.vf-foot #vfTick{flex:none}
+/* 时间轴一行：按钮 → 进度条 → 时间 → 速度 / 循环 / 跳转；放不下时进度条带着后面的折到下一行 */
+.timeline{flex-wrap:wrap;row-gap:4px}
+.timeline #scrub{order:0;flex:1 1 220px;min-width:140px}
+.timeline #tlabel{order:0;min-width:64px}
+/* 轨道说明默认收起 */
+.tlbars .tlhelp{display:none}
+.tlbars.help .tlhelp{display:block}
+.tlbars:not(.help) .tlcut:not(:has(> :not(.tlhelp))){display:none}
+.timeline #speed{width:64px;min-width:0;padding:4px 4px}
+/* 快捷键提示并进「？」：平时不占一行 */
+.timeline .keys{display:none}
+.stage:has(#tlBars.help) .timeline .keys{display:block;flex-basis:100%;text-align:right;white-space:normal}
+.timeline #tlHelpBtn{background:none;border:0;color:var(--dim);padding:3px 7px;font:inherit;font-size:12.5px}
+.timeline #tlHelpBtn:hover{color:var(--acc);background:var(--hover)}
+.timeline #tlHelpBtn[aria-pressed="true"]{color:var(--acc)}
+.tlbars{padding-bottom:10px}
+.tlcut .phl{width:auto;flex:1 1 220px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* 抽屉：浮在画面上，不挤画面 */
+main{--rw:min(var(--rightW,340px),42vw)}
+main.drawer-side{--sw:0px;--gl:0px}
+main.drawer-side>#gutL{display:none}
+main.drawer-side>#side{position:absolute;left:0;top:0;bottom:0;grid-column:1 / -1;grid-row:1;width:min(var(--sideW,232px),80vw);max-height:none;z-index:30;box-shadow:8px 0 28px rgba(0,0,0,.55);border-right:1px solid var(--line2);border-bottom:0}
+main.drawer-right{--rw:0px;--gr:0px}
+main.drawer-right>#gutR{display:none}
+main.drawer-right>#right{position:absolute;right:0;top:0;bottom:0;grid-column:1 / -1;grid-row:1;width:min(var(--rightW,340px),92vw);z-index:30;box-shadow:-8px 0 28px rgba(0,0,0,.55);border-left:1px solid var(--line2);border-top:0;overflow-y:auto}
+main.drawer-side.noside>#side,main.drawer-right.noright>#right{display:none}
+/* 旧的窄窗口排法（≤1180 右栏排到画面下面、≤900 / ≤760 整页滚动、单列）不再用：一律一屏、画面最大 */
+@media (max-width:1180px){
+  main{grid-template-columns:var(--sw) var(--gl) minmax(0,1fr) var(--gr) var(--rw);grid-template-rows:minmax(0,1fr);overflow:hidden}
+  main>#side,main>#gutL,main>.stage,main>#gutR,main>#right{grid-row:1}
+  main>#gutR{display:block}
+  main.noright>#gutR,main.drawer-right>#gutR{display:none}
+  main>#right{grid-column:5;overflow-y:auto;border-top:0}
+}
+@media (max-width:900px){
+  body{overflow:hidden}
+  .app{height:100%}
+}
+@media (max-width:760px){
+  main{grid-template-columns:var(--sw) var(--gl) minmax(0,1fr) var(--gr) var(--rw);grid-template-rows:minmax(0,1fr)}
+  main>.stage{grid-column:3;grid-row:1;height:auto}
+  main>#right{grid-row:1}
+  .viewframe{flex:1 1 auto}
+  .viewframe .canvas-wrap,.viewframe .canvas-wrap.split{flex:1 1 auto;height:auto}
+  .tlb{grid-template-columns:80px minmax(0,1fr)}
+}
+/* 矮或窄：整体收紧，把高度让给画面 */
+@media (max-height:900px),(max-width:1440px){
+  header.top{padding:5px 12px;min-height:0;gap:12px}
+  header.top .assetbar{padding-left:12px}
+  header.top .assetbar .ab-th,header.top .assetbar .ab-th i,header.top .assetbar .ab-th .th{width:30px;height:30px}
+  .brand .mark{font-size:18px}
+  .upd{padding:4px 11px}
+  .stage{padding:6px 10px;gap:6px}
+  .viewframe>.viewbar{padding:4px 6px;gap:5px}
+  .viewframe>.viewbar .tgl{padding:4px 8px}
+  .viewframe>.viewbar .seg{padding:2px}
+  .viewframe>.viewbar .seg button{padding:3px 10px}
+  .viewframe>.viewbar .vt{width:28px;height:28px}
+  .viewframe .canvas-wrap{padding:4px}
+  .vf-foot{min-height:22px;padding:2px 8px;font-size:11.5px}
+  .timeline{gap:6px}
+  .timeline .btn{padding:4px 10px}
+  .timeline .btn.tk{padding:4px 8px}
+  .jumps button{padding:3px 6px}
+  .timeline .tku{display:none}
+  .tlbars{gap:13px;padding:8px 0 10px}
+  .tlcut{font-size:11.5px;row-gap:3px}
+  .tlcut .mini{padding:2px 8px;font-size:11.5px}
+}
+@media (max-width:1500px){
+  .brand>b,.brand .bn{display:none}
+  header.top .gpu{max-width:14ch}
+}
+@media (max-width:1100px){
+  header.top .assetbar .ab-src{font-size:0;gap:0}
+  header.top .assetbar .ab-src select{font-size:12.5px;max-width:16ch}
+  header.top .gpu{display:none}
+}

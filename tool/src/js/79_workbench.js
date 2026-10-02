@@ -620,12 +620,15 @@ function initStage() {
   $('#abUnit').addEventListener('toggle', () => { if ($('#abUnit').open) renderUnitMenu(); });
   $('#tickPrev').addEventListener('click', () => tickStep(-1));
   $('#tickNext').addEventListener('click', () => tickStep(1));
+  // 轨道说明默认收起（4.2.3 窄屏），时间轴一行末尾的「？」展开 / 收起，记住
+  const tlHelp = on => { $('#tlBars').classList.toggle('help', on); $('#tlHelpBtn').setAttribute('aria-pressed', String(on)); };
+  tlHelp(!!store.get('tlHelp', false));
+  $('#tlHelpBtn').addEventListener('click', () => { const on = !$('#tlBars').classList.contains('help'); tlHelp(on); store.set('tlHelp', on); });
   state.loopPlay = store.get('loopPlay', true); $('#loopChk').checked = state.loopPlay;
   $('#loopChk').addEventListener('change', e => { state.loopPlay = e.target.checked; store.set('loopPlay', state.loopPlay); });
   document.querySelectorAll('.jumps [data-jump]').forEach(b => b.addEventListener('click', () => { state.playing = false; $('#play').textContent = '播放'; state.t = jumpTimes()[b.dataset.jump]; }));
   $('#vtGrid').addEventListener('click', () => { const on = !document.querySelector('.canvas-wrap').classList.contains('grid'); document.querySelector('.canvas-wrap').classList.toggle('grid', on); $('#vtGrid').setAttribute('aria-pressed', String(on)); });
   $('#vtNote').addEventListener('click', noteFrame);
-  $('#vtBig').addEventListener('click', () => toggleFocus());
   document.addEventListener('keydown', e => {
     if (/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName) || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'ArrowLeft') { e.preventDefault(); tickStep(-1); } else if (e.key === 'ArrowRight') { e.preventDefault(); tickStep(1); }

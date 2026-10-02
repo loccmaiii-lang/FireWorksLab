@@ -453,10 +453,16 @@ function refSync() {
 
 // ---------------- 面板：左栏、右栏、专注、宽度 ----------------
 const panels = { side: store.get('sideOn', true), right: store.get('rightOn', true), before: null };
+// 4.2.3 窄屏（用户 2026-10-03 00:25「更小的笔记本屏幕打开会特别特别挤」）：窗口窄时左栏 / 右栏改成浮在画面上的抽屉，
+// 默认收起、按 L / P 或工具条按钮拉出；抽屉开关不记进「宽屏时开不开」。
+const mediaQ = q => typeof matchMedia === 'function' ? matchMedia(q) : { matches: false, addEventListener() { } };
+const DRAWER = { side: mediaQ('(max-width:1180px)'), right: mediaQ('(max-width:820px)') };
 function setPanels(o) {
   Object.assign(panels, o);
   const m = $('#main'); m.classList.toggle('noside', !panels.side); m.classList.toggle('noright', !panels.right);
-  store.set('sideOn', panels.side); store.set('rightOn', panels.right);
+  m.classList.toggle('drawer-side', DRAWER.side.matches); m.classList.toggle('drawer-right', DRAWER.right.matches);
+  if (!DRAWER.side.matches) store.set('sideOn', panels.side);
+  if (!DRAWER.right.matches) store.set('rightOn', panels.right);
   $('#btnSide').setAttribute('aria-pressed', String(panels.side)); $('#btnRight').setAttribute('aria-pressed', String(panels.right));
   $('#btnFocus').setAttribute('aria-pressed', String(!panels.side && !panels.right));
 }
@@ -492,11 +498,24 @@ function initPanels() {
     else if (k === 'v') { e.preventDefault(); refToggle(); }   // 实拍对照：R 让给「重播」（用户 2026-10-02 16:22），改成 V
     else if (k === 'l') { e.preventDefault(); setPanels({ side: !panels.side }); }
     else if (k === 'p') { e.preventDefault(); setPanels({ right: !panels.right }); }
+    else if (k === 'escape' && ((DRAWER.side.matches && panels.side) || (DRAWER.right.matches && panels.right))) setPanels({ side: DRAWER.side.matches ? false : panels.side, right: DRAWER.right.matches ? false : panels.right });
     else if (k === 'escape' && !panels.side && !panels.right && $('#updDlg').hidden && $('#picker').hidden) toggleFocus();
     else if ((k === 'arrowdown' || k === 'arrowup') && /^(ef|rv|rep):/.test(lib.key)) {   // ↑ ↓ 在左栏条目之间切换
       const items = [...document.querySelectorAll('#libBody .li')].filter(x => /^(ef|rv|rep):/.test(x.dataset.key) && x.offsetParent), i = items.findIndex(x => x.dataset.key === lib.key), j = i + (k === 'arrowdown' ? 1 : -1);
       if (items[j]) { e.preventDefault(); items[j].click(); items[j].scrollIntoView({ block: 'nearest' }); }
     }
+  });
+  // 进入抽屉模式先收起；回到宽屏恢复上次的开关
+  const dr = k => () => setPanels({ [k]: DRAWER[k].matches ? false : store.get(k === 'side' ? 'sideOn' : 'rightOn', true) });
+  DRAWER.side.addEventListener('change', dr('side')); DRAWER.right.addEventListener('change', dr('right'));
+  if (DRAWER.side.matches) panels.side = false;
+  if (DRAWER.right.matches) panels.right = false;
+  // 抽屉开着时：在左栏点开一个条目、或点画面，就收起左栏（右栏抽屉只在点画面时收）
+  $('#libBody').addEventListener('click', e => { if (DRAWER.side.matches && panels.side && e.target.closest('.li')) setTimeout(() => setPanels({ side: false }), 0); });
+  document.querySelector('.stage').addEventListener('pointerdown', e => {
+    if (e.target.closest('#viewbar')) return;
+    const o = {}; if (DRAWER.side.matches && panels.side) o.side = false; if (DRAWER.right.matches && panels.right) o.right = false;
+    if (Object.keys(o).length) setPanels(o);
   });
   setPanels({});
 }

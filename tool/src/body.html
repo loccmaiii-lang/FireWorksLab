@@ -1,6 +1,26 @@
 <div class="app">
   <header class="top">
     <div class="brand"><span class="mark">DF</span><b>特效工作台</b><small id="verLabel">烟花烘焙器</small></div>
+    <div class="assetbar" id="assetBar" hidden>
+      <span class="ab-th" id="abThumb"></span>
+      <span class="ab-tx"><b id="abName"></b><small id="abSub"></small></span>
+      <label class="ab-src" title="看哪个版本：AI 交的版本，或你自己保存的版本">版本<select id="abSrc"></select></label>
+      <span class="ab-chg" id="abChg" hidden>参数已变 · 未保存</span>
+      <span class="ab-state" id="abState"></span>
+      <span class="sp"></span>
+      <button class="btn primary" id="abSave" type="button" title="把现在的全部参数（所有层）存成你的版本（存在这台电脑的浏览器里）">保存</button>
+      <button class="btn" id="abSaveAs" type="button">另存为…</button>
+      <details class="ab-more"><summary class="btn" title="更多">⋯</summary><div class="ab-menu">
+        <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
+        <button type="button" id="abExportFile">导出配方文件（.json）</button>
+        <button type="button" id="abImportFile">导入配方文件…</button>
+        <button type="button" id="abRename">重命名这个版本</button>
+        <button type="button" id="abDelete">删除这个版本</button>
+        <input type="file" id="abFile" accept=".json,application/json" hidden>
+      </div></details>
+      <details class="ab-more ab-unit" id="abUnit"><summary class="btn" title="单束：只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条">单束</summary><div class="ab-menu" id="abUnitMenu"></div></details>
+      <button class="btn" id="abDeliv" type="button" aria-pressed="false" title="看这个效果导出的素材包里有什么：每层每段的贴图、平台、单格、延迟">查看交付</button>
+    </div>
     <div class="crumb" id="crumb" hidden aria-hidden="true"></div>
     <div class="gpu" id="gpu"></div>
     <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
@@ -19,66 +39,43 @@
     <section class="stage">
       <div id="showcaseBar" class="showcase-bar" hidden><b id="showcaseTitle">3.7 / 4.0 同秒对照</b><select id="showcaseType" aria-label="对照花型"></select><select id="cloudLayer" aria-label="查看配方图层" hidden></select><button id="showcaseParams" class="btn ghost">保存对照配方</button><button id="showcaseClose" class="btn ghost">退出对照</button><p id="showcaseNote">正在准备实际导出贴图…</p><details id="cloudPending" hidden></details></div>
       <div id="showcasePair" class="showcase-pair" hidden><span id="showcaseLeft">3.7 原版</span><span id="showcaseRight">4.0 新核</span></div>
-      <div class="assetbar" id="assetBar" hidden>
-        <span class="ab-th" id="abThumb"></span>
-        <span class="ab-tx"><b id="abName"></b><small id="abSub"></small></span>
-        <label class="ab-src" title="看哪个版本：AI 交的版本，或你自己保存的版本">版本<select id="abSrc"></select></label>
-        <span class="ab-chg" id="abChg" hidden>参数已变 · 未保存</span>
-        <span class="ab-state" id="abState"></span>
-        <span class="sp"></span>
-        <button class="btn primary" id="abSave" type="button" title="把现在的全部参数（所有层）存成你的版本（存在这台电脑的浏览器里）">保存</button>
-        <button class="btn" id="abSaveAs" type="button">另存为…</button>
-        <details class="ab-more"><summary class="btn" title="更多">⋯</summary><div class="ab-menu">
-          <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
-          <button type="button" id="abExportFile">导出配方文件（.json）</button>
-          <button type="button" id="abImportFile">导入配方文件…</button>
-          <button type="button" id="abRename">重命名这个版本</button>
-          <button type="button" id="abDelete">删除这个版本</button>
-          <input type="file" id="abFile" accept=".json,application/json" hidden>
-        </div></details>
-        <details class="ab-more ab-unit" id="abUnit"><summary class="btn" title="单束：只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条">单束</summary><div class="ab-menu" id="abUnitMenu"></div></details>
-        <button class="btn" id="abDeliv" type="button" aria-pressed="false" title="看这个效果导出的素材包里有什么：每层每段的贴图、平台、单格、延迟">查看交付</button>
-      </div>
       <div id="bakeError" class="bake-error" role="alert" hidden><span id="bakeErrorText"></span><button class="btn" id="bakeRetry" type="button">重试烘焙</button></div>
-      <div class="viewbar" id="viewbar">
-        <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="1.5" y="2.5" width="4.5" height="11" rx="1.5"/></svg><span class="tl">库</span></button>
-        <div class="seg" id="viewSeg">
-          <button data-view="live" aria-pressed="true">实时模拟</button>
-          <button data-view="export" aria-pressed="false">引擎回放</button>
-          <button data-view="atlas" aria-pressed="false">贴图</button>
-        </div>
-        <div class="seg small" id="atlasSeg" hidden>
-          <button data-layer="head" aria-pressed="true">星头</button>
-          <button data-layer="tail" aria-pressed="false">拖尾</button>
-        </div>
-        <div class="seg small" id="flowSeg" hidden>
-          <button data-flow="0" aria-pressed="true">整张</button>
-          <button data-flow="1" aria-pressed="false">流转动画</button>
-        </div>
-        <div class="seg small" id="segSeg" hidden>
-          <button data-seg="0" aria-pressed="true">段 A</button>
-          <button data-seg="1" aria-pressed="false">段 B</button>
-        </div>
-        <div class="seg small" id="dispSeg" hidden>
-          <button data-disp="fit" aria-pressed="false">适应窗口</button>
-          <button data-disp="px" aria-pressed="false">1:1 像素</button>
-          <button data-disp="game" aria-pressed="true">游戏内大小</button>
-        </div>
-        <label class="expo" id="distBox" hidden><span class="tl">距离</span><input type="range" id="dist" min="0" max="1000" step="1" value="943" title="观看距离 50–1200 m（对数刻度）；标准检查按 1000 m"><output id="distOut">1000 m</output></label>
-        <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
-        <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
-        <span class="abtag" id="abTag" hidden>A | B</span>
-        <label class="expo push" title="显示曝光（只影响预览，不改素材）"><span class="tl">显示曝光</span><input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label>
-        <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（V）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
-        <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="专注：收起两侧面板，画布最大（F，或双击画布）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">专注</span></button>
-        <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="10" y="2.5" width="4.5" height="11" rx="1.5"/></svg></button>
-      </div>
       <div class="viewframe" id="viewFrame">
-      <div class="vf-head"><span id="vfTitle"></span><span class="sp"></span>
-        <button class="vt" id="vtGrid" type="button" aria-pressed="false" title="构图网格（三分线 + 中心十字，只影响观察）"><svg viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="1"/><path d="M6 1.5v13M10 1.5v13M1.5 6h13M1.5 10h13"/></svg></button>
-        <button class="vt" id="vtNote" type="button" title="记录当前帧：把时间、视图、平台、距离、图层、版本写进意见"><svg viewBox="0 0 16 16"><rect x="1.5" y="4" width="13" height="9.5" rx="1.5"/><circle cx="8" cy="8.7" r="2.6"/><path d="M5.5 4l1-2h3l1 2"/></svg></button>
-        <button class="vt" id="vtBig" type="button" title="展开大画面（收起两侧，F 或 Esc 恢复）"><svg viewBox="0 0 16 16"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button>
-      </div>
+        <div class="viewbar" id="viewbar">
+          <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="1.5" y="2.5" width="4.5" height="11" rx="1.5"/></svg><span class="tl">库</span></button>
+          <div class="seg" id="viewSeg">
+            <button data-view="live" aria-pressed="true">实时模拟</button>
+            <button data-view="export" aria-pressed="false">引擎回放</button>
+            <button data-view="atlas" aria-pressed="false">贴图</button>
+          </div>
+          <div class="seg small" id="atlasSeg" hidden>
+            <button data-layer="head" aria-pressed="true">星头</button>
+            <button data-layer="tail" aria-pressed="false">拖尾</button>
+          </div>
+          <div class="seg small" id="flowSeg" hidden>
+            <button data-flow="0" aria-pressed="true">整张</button>
+            <button data-flow="1" aria-pressed="false">流转动画</button>
+          </div>
+          <div class="seg small" id="segSeg" hidden>
+            <button data-seg="0" aria-pressed="true">段 A</button>
+            <button data-seg="1" aria-pressed="false">段 B</button>
+          </div>
+          <div class="seg small" id="dispSeg" hidden>
+            <button data-disp="fit" aria-pressed="false">适应窗口</button>
+            <button data-disp="px" aria-pressed="false">1:1 像素</button>
+            <button data-disp="game" aria-pressed="true">游戏内大小</button>
+          </div>
+          <label class="expo" id="distBox" hidden><span class="tl">距离</span><input type="range" id="dist" min="0" max="1000" step="1" value="943" title="观看距离 50–1200 m（对数刻度）；标准检查按 1000 m"><output id="distOut">1000 m</output></label>
+          <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
+          <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
+          <span class="abtag" id="abTag" hidden>A | B</span>
+          <label class="expo push" title="显示曝光（只影响预览，不改素材）"><span class="tl">显示曝光</span><input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label>
+          <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（V）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
+          <button class="vt" id="vtGrid" type="button" aria-pressed="false" title="构图网格（三分线 + 中心十字，只影响观察）"><svg viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="1"/><path d="M6 1.5v13M10 1.5v13M1.5 6h13M1.5 10h13"/></svg></button>
+          <button class="vt" id="vtNote" type="button" title="记录当前帧：把时间、视图、平台、距离、图层、版本写进意见"><svg viewBox="0 0 16 16"><rect x="1.5" y="4" width="13" height="9.5" rx="1.5"/><circle cx="8" cy="8.7" r="2.6"/><path d="M5.5 4l1-2h3l1 2"/></svg></button>
+          <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="专注：收起两侧面板，画布最大（F，或双击画布）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">专注</span></button>
+          <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="10" y="2.5" width="4.5" height="11" rx="1.5"/></svg></button>
+        </div>
       <div class="canvas-wrap">
         <div class="canvas-box ref-box" id="refBox" hidden><video id="refVid" muted playsinline preload="auto"></video>
           <span class="tag" id="refTag">实拍</span>
@@ -101,20 +98,20 @@
           <div class="gridov" aria-hidden="true"></div>
         </div>
       </div>
-      <div class="vf-foot"><span id="vfSpec"></span><span class="sp"></span><span id="vfTick"></span></div>
+      <div class="vf-foot"><span id="vfTitle"></span><span id="vfSpec"></span><span class="sp"></span><span id="vfTick"></span></div>
       </div>
       <div class="delivview" id="delivView" hidden></div>
       <div class="timeline">
         <button class="btn" id="play">暂停</button>
         <button class="btn tk" id="replay" type="button" title="重播：回到 0 秒再播（R）">重播</button>
-        <button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1 tick</button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1 tick</button>
+        <button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1<span class="tku"> tick</span></button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1<span class="tku"> tick</span></button>
         <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="时间">
         <output id="tlabel">0.00 s</output>
         <select id="speed" class="btn" aria-label="播放速度">
           <option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option><option value="0.1">0.1×</option>
         </select>
         <label class="check tlloop" title="关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked>循环</label>
-        <span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span>
+        <span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span><button class="btn tk" id="tlHelpBtn" type="button" aria-pressed="false" title="说明：下面层轨道上的点、菱形、把手分别是什么；快捷键">？</button>
         <span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>R</kbd>重播 <kbd>F</kbd>专注 <kbd>V</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span>
       </div>
       <div class="tlbars" id="tlBars"></div>

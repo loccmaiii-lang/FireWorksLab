@@ -8,7 +8,7 @@ for (const [g, types] of TYPE_GROUPS) {
 if (REPLICAS.length) { const og = document.createElement('optgroup'); og.label = '实拍复刻';
   for (const r of REPLICAS) og.appendChild(new Option(r.name, 'rep:' + r.id));
   $('#type').appendChild(og); }
-$('#verLabel').textContent = '烟花烘焙器 v' + VERSION;
+$('#verLabel').innerHTML = '<span class="bn">烟花烘焙器 </span>v' + VERSION;
 document.title = '烟花母版烘焙器 · v' + VERSION;
 $('#type').addEventListener('change', e => setType(e.target.value));
 $('#mname').addEventListener('input', e => state.name = e.target.value);
