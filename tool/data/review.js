@@ -66707,7 +66707,7 @@ var FW_EFFECTS = [
 {
 "id": "JM4-40E1",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -66792,6 +66792,37 @@ var FW_EFFECTS = [
 "fails": [
 "MainA：中心跳变 3.83 px（512 格）"
 ]
+},
+"stale": true
+},
+{
+"job": "JM4-40E1",
+"entry": "JM4-40",
+"ver": "2ac48d15·master4.2.5",
+"time": "2026-10-03 02:53",
+"packages": [
+{
+"name": "JinMangJu",
+"replica": "JM4-40",
+"files": [
+"JinMangJu.json",
+"JinMangJu_Cascade参数.txt",
+"JinMangJu_Mobile.json",
+"JinMangJu_曲线.csv",
+"T_EFX_FireWorks_GoldChrysanthemum_4x4_01.png",
+"T_EFX_FireWorks_GoldChrysanthemum_4x4_01_C.png",
+"T_EFX_FireWorks_GoldChrysanthemum_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldChrysanthemum_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
 },
 "stale": true
 },
@@ -69906,7 +69937,7 @@ var FW_EFFECTS = [
 {
 "id": "QN11E4",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -70111,6 +70142,39 @@ var FW_EFFECTS = [
 "fails": []
 },
 "stale": false
+},
+{
+"job": "QN11E4",
+"entry": "QN11",
+"ver": "0981c5c4·master4.2.5",
+"time": "2026-10-03 02:53",
+"packages": [
+{
+"name": "Qingning40",
+"replica": "QN11",
+"files": [
+"T_EFX_FireWorks_LimeStar_Head_4x4_01.png",
+"T_EFX_FireWorks_LimeStar_Head_4x4_01_C.png",
+"T_EFX_FireWorks_LimeStar_Head_4x4_01_HD.png",
+"T_EFX_FireWorks_LimeStar_Head_R.png",
+"T_EFX_FireWorks_LimeStar_Tail_4x4_01.png",
+"T_EFX_FireWorks_LimeStar_Tail_4x4_01_C.png",
+"T_EFX_FireWorks_LimeStar_Tail_4x4_01_HD.png",
+"T_EFX_FireWorks_LimeStar_Tail_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：1 帧碰到格子内圈"
+]
+},
+"stale": true
 },
 {
 "job": "QN8E",
@@ -70879,7 +70943,7 @@ var FW_EFFECTS = [
 {
 "id": "HK10E3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -71017,6 +71081,40 @@ var FW_EFFECTS = [
 "fails": []
 },
 "stale": false
+},
+{
+"job": "HK10E3",
+"entry": "HK10",
+"ver": "b9474595·master4.2.5",
+"time": "2026-10-03 02:52",
+"packages": [
+{
+"name": "Hongchao40",
+"replica": "HK10",
+"files": [
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01_HD.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_R.png",
+"T_EFX_FireWorks_YonshakuKamuro_Red_4x4_01.png",
+"T_EFX_FireWorks_YonshakuKamuro_Red_4x4_01_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Red_4x4_01_HD.png",
+"T_EFX_FireWorks_YonshakuKamuro_Red_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
 },
 {
 "job": "HK5E",
@@ -73164,7 +73262,7 @@ var FW_EFFECTS = [
 {
 "id": "HN2E11",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -73287,6 +73385,39 @@ var FW_EFFECTS = [
 "fails": []
 },
 "stale": false
+},
+{
+"job": "HN2E11",
+"entry": "HN2",
+"ver": "1e3e2339·master4.2.5",
+"time": "2026-10-03 02:53",
+"packages": [
+{
+"name": "HikiNishiki",
+"replica": "HN2",
+"files": [
+"T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01.png",
+"T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01_C.png",
+"T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01_HD.png",
+"T_EFX_FireWorks_HikiNishiki_Hiki_R.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01_C.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01_HD.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": false,
+"fails": [
+"L2_Main：过曝像素 2.5%"
+]
+},
+"stale": true
 },
 {
 "job": "HN2E2",
