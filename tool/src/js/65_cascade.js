@@ -10,7 +10,8 @@ function soundEvents(b) {
       const n = Math.max(1, Math.round(P.shotRate * P.loopT));
       for (let k = 0; k < n; k++) { ev.push([k / n * P.loopT, 'shot']); if (P.burstStars > 0) ev.push([k / n * P.loopT + P.cometBurn, 'pop']); }
     } else ev.push([0, 'loop']);
-  } else {
+  } else if (isEmit(P)) ev.push([0, 'launch']);
+  else {
     const s = new Sim({ ...P, engine: 'gpu', _unit: false }), n = Math.ceil(P.duration / H_STEP);
     for (let i = 0; i < n; i++) s.step(H_STEP);
     ev = s.events.slice();
@@ -344,6 +345,7 @@ function cutoutSection(name, b) {
   return t ? `【Cutout：裁掉面片上的空白，减少 overdraw】\n${t}\n` : '';
 }
 function cascadeText(name, b, M) {
+  if (b.form === 'emitset') return rtCascadeText(name, b, M);
   const P = b.P, head = `烟花母版：${name}（${TYPE_NAMES[P.type]}${P.shellNo ? ' · ' + P.shellNo + ' 号' : ''}）
 工具：烟花母版烘焙器 ${VERSION}（模拟内核：${P.engine === 'gpu' ? 'GPU' : 'CPU'}；产物：${FORM_NAMES[b.form] || b.form}）
 `;
@@ -372,4 +374,4 @@ ${bigShellSection(b)}
 ${b.form === 'master' || b.form === 'segments' ? (b.meta.zoom ? 'Size By Life 以精灵中心缩放，爆点就在中心，所以面片放大时爆点位置不变。' : '面向相机的精灵用 Initial Location 的 Z 偏移对齐爆点；从很陡的仰角看时会有轻微偏差。') + '\n' : ''}${name}.json 保存了全部参数，用烘焙器「导入参数 JSON」即可继续修改。
 `;
 }
-const FORM_NAMES = { trail: '升空尾缀序列（循环 + 消散）', master: '大面片母版', segments: '分段母版（开花段 + 下垂段）', unit: '单元序列', riseLoop: '上升星头循环', loop: '地面循环' };
+const FORM_NAMES = { emitset: '循环层 + 粒子发射器', trail: '升空尾缀序列（循环 + 消散）', master: '大面片母版', segments: '分段母版（开花段 + 下垂段）', unit: '单元序列', riseLoop: '上升星头循环', loop: '地面循环' };

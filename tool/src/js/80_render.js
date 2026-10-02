@@ -198,6 +198,7 @@ function unionView(a, b) {
   const h = Math.max(x1 - x0, y1 - y0) / 2; return [(x0 + x1) / 2, (y0 + y1) / 2, h, h];
 }
 function renderLive() {
+  if (isEmit(state.P)) return renderEmitLive();
   const P = state.P, m = state.bake && state.bake.meta, B = state.B;
   if (renderVersion(P)>=40 && !isTrail(P) && !isPhys(P) && !B) return renderLive40();
   if (!m) { hdrT.clear(); post(); hudText = '首次烘焙中…'; hudB = ''; return; }
@@ -260,6 +261,7 @@ function drawExportScene(b, M, t, view, slot) {
 function renderExport() {
   const b = previewBake(), B = state.B; hdrT.clear();
   if (!b) { post(); hudText = '烘焙中…'; return; }
+  if (b.form === 'emitset') return renderEmitExport(b);
   const sa = liveSlot('XA'); prepSlot(sa, b.P, state.gen);
   let sb = null; if (B && B.bake) { sb = liveSlot('XB'); prepSlot(sb, B.P, B.id); }
   const ev = exportViewAny(b, sa), view = sb ? unionView(ev.view, exportViewAny(B.bake, sb).view) : ev.view;
@@ -425,7 +427,7 @@ function curDuration() {
   if(state.showcase && showcase.left)return Math.max(showcase.left.P.duration,showcase.right.P.duration);
   if (state.tab === 'combo') return comboDuration();
   if (state.tab === 'asset') return assetDuration();
-  let d = !state.dirty && state.bake && renderVersion(state.P)>=40?bakeTotal(state.bake):state.P.duration;
+  let d = !state.dirty && state.bake && renderVersion(state.P)>=40 && !isEmit(state.P)?bakeTotal(state.bake):state.P.duration;
   if (state.B) d = Math.max(d, state.B.P.duration);
   return d;
 }
@@ -451,10 +453,10 @@ function loop(now) {
   $('#atlasSeg').hidden = !mv || state.view !== 'atlas' || !(ab && ab.tail);
   $('#segSeg').hidden = !mv || state.view !== 'atlas' || !(ab && ab.next);
   $('#flowSeg').hidden = !mv || state.view !== 'atlas'; $('#flowCv').hidden = !mv || state.view !== 'atlas' || !state.atlasFlow;
-  $('#dispSeg').hidden = state.tab==='asset' ? false : state.view !== 'export' && !(state.view==='live' && renderVersion(state.P)>=40 && familyOf(state.P.type)==='aerial' && ['master','segments'].includes(state.P.form));
+  $('#dispSeg').hidden = state.tab==='asset' ? false : state.view !== 'export' && !(state.view==='live' && ((renderVersion(state.P)>=40 && familyOf(state.P.type)==='aerial' && ['master','segments'].includes(state.P.form)) || isEmit(state.P)));
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
   $('#platformSeg').hidden = !state.showcase && (state.tab==='asset' || (mv && isPhys(state.P)));
-  $('#resolutionBox').hidden = !mv || state.view!=='live' || renderVersion(state.P)<40 || isTrail(state.P) || isPhys(state.P);
+  $('#resolutionBox').hidden = !mv || state.view!=='live' || renderVersion(state.P)<40 || isTrail(state.P) || isPhys(state.P) || isEmit(state.P);
   $('#abTag').hidden = !(mv && state.B);
   refSync();
   try { stageTick(D); } catch (e) { console.error(e); }

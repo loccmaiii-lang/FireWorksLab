@@ -34,6 +34,7 @@ function mobileParams(P) {
 }
 async function bakeMobileFor(b,onProg=null) {
   if(b.form==='trail')return await bake(mobileParams(b.P),1,onProg);
+  if(b.form==='emitset'){const m=await bake(mobileParams(b.P),1,onProg);m.esMobile=true;return m;}
   let first=null,last=null;
   try {
     for(let source=b;source;source=source.next){

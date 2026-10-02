@@ -30,6 +30,7 @@ function derive(P) {
   // 紧凑取景已禁用（2026-09-29 引擎实测会抖，spec/pipeline_v1.md）：旧配方里的 tight 一律按 Zoom 处理
   if (P.zoom === 'tight') P.zoom = 'on';
   if (familyOf(P.type) === 'rise' && P.form === 'phys') { P.duration = +(P.phT + 3.5).toFixed(2); return P; }
+  if (familyOf(P.type) === 'rise' && P.form === 'emitset') { P.duration = rtDuration(P); return P; }
   if (familyOf(P.type) === 'rise') P.duration = P.form === 'trail' ? +(riseInfo(P).ta + 64 / 20 + 0.3).toFixed(2) : +(riseInfo(P).ta + 1.2).toFixed(2);
   if (familyOf(P.type) === 'ground') P.duration = P.loopT;
   return P;
@@ -115,6 +116,7 @@ function retryPreviewBake() {
 }
 function onParam() { derive(state.P); state.gen++; state.dirty = true; $('#stats').textContent = '烘焙中…'; syncBakeError(); scheduleBake(); refreshVisibility(); }
 function showStats(b) {
+  if (b.form === 'emitset') { $('#stats').innerHTML = rtStatsHTML(b); return; }
   const m = b.meta, L = m.L, P = b.P, cls = ok => ok ? 'ok' : 'warn', c = m.check || {};
   const parts=bakeParts(b),totalFrames=parts.reduce((n,s)=>n+s.meta.L.F,0);
   const nTex = parts.reduce((n,s)=>n+(s.tail?2:1),0), mb = (P.texW * P.texH * nTex / 1048576).toFixed(1);
@@ -149,7 +151,7 @@ function formOptions(P) {
   const fam = familyOf(P.type);
   if (fam === 'ground') return [['loop', '地面循环（周期性烘焙，首尾无缝）']];
   if (fam === 'rise' && P.form === 'phys') return [['phys', '实时物理模拟（贴图用 trail_phys_bake.py 导出）']];
-  if (fam === 'rise') return [['trail', '尾缀序列（循环 + 消散，速度朝向）'], ['unit', '星头循环 + 弹道与火花发射器参数'], ['master', '整段上升序列（大面片）']];
+  if (fam === 'rise') return [['emitset', '循环层 + 粒子发射器（星头白热段循环 + GPU 火星，4.1）'], ['trail', '尾缀序列（循环 + 消散，速度朝向）'], ['unit', '星头循环 + 弹道与火花发射器参数'], ['master', '整段上升序列（大面片）']];
   const o = [['master', '大面片母版'], ['segments', renderVersion(P)>=40?'分段母版（按实际帧数分配贴图）':'分段母版（开花段 + 下垂段两张贴图）']];
   if (unitAllowed(P)) o.push(['unit', '单元序列（每颗星一个粒子，省 overdraw）']);
   return o;
@@ -159,6 +161,7 @@ const FORM_NOTES = {
   segments: '长时花型（锦冠、柳）帧数不够时，把开花段和下垂段分成两张贴图、两个发射器，各自分配帧数。',
   unit: '贴图里只有一颗星的星头和拖尾（沿速度方向），Cascade 按拟合的轨迹发射每颗星。菊类最省 overdraw。',
   loop: '周期内的火花按周期性编号生成，最后一帧直接接回第一帧。Cascade 里 Emitter Loops = 0 无限循环。',
+  emitset: '循环层 + 粒子发射器：星头和白热段烘成一个速度朝向的循环面片（开花后换贴图动态消散），火星、落火、烟带是 Cascade 软圆点发射器（PC GPU / 手机 CPU），每颗自己的寿命、错落熄灭；出生位置和初速按弹道曲线。',
   trail: '升空尾缀：星头 + 尾迹整条烘进细长面片（速度朝向）。循环 64 帧真循环；开花后换消散序列（30 fps / 20 fps 两个版本），第 0 帧就是上升结束那一帧。'
 };
 function syncExport() {

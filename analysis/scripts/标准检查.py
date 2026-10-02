@@ -42,7 +42,7 @@ JS_ENTRY = r"""
 def features(info):
     """条目 6 样东西：按类型判断（这些能力是代码统一提供的，不按效果手做）"""
     k, form = info['kind'], info.get('form')
-    seq = form in ('master', 'segments', 'trail')
+    seq = form in ('master', 'segments', 'trail', 'emitset')
     f = {}
     f['实时模拟'] = (k != 'asset', '素材条目只有贴图播放' if k == 'asset' else '')
     f['引擎回放 + 游戏内大小'] = (k == 'combo' or seq or form in ('unit', 'loop'), '')
@@ -94,7 +94,7 @@ async def run(targets, write, merge=False):
             for k2, rows in q.items():
                 bad = [lid for lid, ok, _ in rows if not ok]
                 m0 = rows[0][2]
-                detail = {'单格 ≥ PC 下限': f"单格 {m0['grid']['cellW']:.0f} px", '屏幕放大 ≤ 1': f"放大 {m0['screen']['mag']}",
+                detail = {'单格 ≥ PC 下限': (f"细长格 {m0['grid']['cellW']:.0f}×{m0['grid']['cellH']:.0f} px（像素数 {m0['grid']['cellW'] * m0['grid']['cellH'] / 512 ** 2:.2f} × 512²）" if m0['grid'].get('beam') else f"单格 {m0['grid']['cellW']:.0f} px"), '屏幕放大 ≤ 1': f"放大 {m0['screen']['mag']}",
                           '30fps 显示帧 ≥ 90%': f"{m0['frames30']['shown']}/{m0['frames30']['total']}", '燃烧段有效帧率 ≥ 下限': f"{m0['minFpsActive']} fps", '淡出段有效帧率 ≥ 下限': f"{m0.get('minFpsFade')} fps",
                           '尺寸参数有效': ''}.get(k2, '')
                 if len(rows) > 1: detail = (f'{len(rows) - len(bad)}/{len(rows)} 层通过' + (f'；不过：{", ".join(bad)}' if bad else ''))

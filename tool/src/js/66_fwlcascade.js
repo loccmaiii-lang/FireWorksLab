@@ -91,7 +91,7 @@ function fwlTrail(name, b, M, mobile) {
 
 // 返回 null 表示这种产物还没有 cascade.json（单元序列、地面循环、上升星头循环：参数表照旧）
 function fwlCascade(name, b, M, mobile = false) {
-  const body = b.form === 'trail' ? fwlTrail(name, b, M, mobile) : (b.form === 'master' || b.form === 'segments') ? fwlMaster(name, b, M, mobile) : null;
+  const body = b.form === 'emitset' ? fwlEmitSet(name, b, M, mobile) : b.form === 'trail' ? fwlTrail(name, b, M, mobile) : (b.form === 'master' || b.form === 'segments') ? fwlMaster(name, b, M, mobile) : null;
   if (!body) return null;
   return {
     format: FWL_FORMAT, name, platform: mobile ? 'mobile' : 'pc',

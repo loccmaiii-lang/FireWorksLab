@@ -493,7 +493,7 @@ async function bakeLoop(P, scale, onProg) {
 function bakeKind(P) {
   const fam = familyOf(P.type);
   if (fam === 'ground') return 'loop';
-  if (fam === 'rise') return P.form === 'master' ? 'master' : P.form === 'trail' ? 'trail' : 'riseLoop';
+  if (fam === 'rise') return P.form === 'master' ? 'master' : P.form === 'trail' ? 'trail' : P.form === 'emitset' ? 'emitset' : 'riseLoop';
   if (P.form === 'unit' && unitAllowed(P)) return 'unit';
   if (P.form === 'segments') return 'segments';
   return 'master';
@@ -506,6 +506,7 @@ async function bake(P, scale, onProg) {
     case 'loop': return bakeLoop(P, scale, onProg);
     case 'riseLoop': return bakeRiseLoop(P, scale, onProg);
     case 'trail': return bakeTrail(P, scale, onProg);
+    case 'emitset': return bakeEmitSet(P, scale, onProg);
     case 'unit': return bakeUnit(P, scale, onProg);
     case 'segments': return bakeSegments(P, scale, onProg);
     default: return bakeMasterLead(P, scale, onProg);

@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.0.6';
+const VERSION = '4.1.0';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -11,6 +11,7 @@ const TYPE_INFO = {
   ring: ['环', 'Ring', 'aerial'], saturn: ['土星', 'Saturn', 'aerial'], kata: ['型物', 'Kata', 'aerial'], water: ['水中花火', 'Water', 'aerial'],
   rise: ['上升（曲导）', 'Rise', 'rise'],
   physS: ['升空尾缀 · 物理 小', 'PhysTrailS', 'rise'], physM: ['升空尾缀 · 物理 中', 'PhysTrailM', 'rise'], physL: ['升空尾缀 · 物理 大', 'PhysTrailL', 'rise'],
+  tailS: ['升空尾缀 · 循环层 + 粒子 小', 'RiseTailS', 'rise'], tailM: ['升空尾缀 · 循环层 + 粒子 中', 'RiseTailM', 'rise'], tailL: ['升空尾缀 · 循环层 + 粒子 大', 'RiseTailL', 'rise'],
   trailS: ['升空尾缀 · 小（V5）', 'TrailS', 'rise'], trailM: ['升空尾缀 · 中（V5）', 'TrailM', 'rise'], trailL: ['升空尾缀 · 大（V5）', 'TrailL', 'rise'],
   fountain: ['喷泉', 'Fountain', 'ground'], falls: ['瀑布', 'Falls', 'ground'], wheel: ['转轮', 'Wheel', 'ground'],
   fan: ['扇形', 'Fan', 'ground'], barrage: ['连发', 'Barrage', 'ground'], shikake: ['仕掛け（文字/图案）', 'Shikake', 'ground']
@@ -19,7 +20,7 @@ const TYPE_GROUPS = [
   ['礼花', ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'palm', 'henka']],
   ['效果星', ['strobe', 'glitter', 'crackle', 'matsuba', 'crossette', 'ochiba', 'jisa']],
   ['形状', ['ring', 'saturn', 'kata', 'water']],
-  ['上升', ['physS', 'physM', 'physL', 'rise', 'trailS', 'trailM', 'trailL']],
+  ['上升', ['tailS', 'tailM', 'tailL', 'physS', 'physM', 'physL', 'rise', 'trailS', 'trailM', 'trailL']],
   ['地面 · 循环', ['fountain', 'falls', 'wheel', 'fan', 'barrage', 'shikake']]
 ];
 const TYPE_NAMES = Object.fromEntries(Object.entries(TYPE_INFO).map(([k, v]) => [k, v[0]]));
@@ -57,6 +58,18 @@ const BASE = {
   trWRate: 0, trWLife: 0.12, trWSpread: 14, trWSize: 0.06, trWBright: 0.06,
   trHeadSize: 0.26, trHeadBright: 1.2, trHalo: 3, trHaloBright: 0.15,
   trTwist: 0.35, trTwistN: 5, trWiggle: 0.08, trTwistLag: 0.35, trFollow: 0, trBright: 1.6, trExport4K: 1, trIgnite: 0, trPhys: 0,
+  // 升空尾缀 · 循环层 + 粒子发射器（产物 form 'emitset'，47_risetail.js；原理 analysis/原理/升空尾缀.md 第 7c–7e 节）。默认值 = 中档
+  rtH: 265, rtT: 5, rtVb: 16, rtLean: 0, rtD: 0.14, rtBurstD: 190,
+  rtSpin: 2.0, rtSpinPh: 0, rtFling: 3.0, rtJet: 27, rtCone: 2.5, rtPulse: 0.2, rtPulseHz: 6,
+  rtHeadSize: 0.55, rtHeadI: 3, rtHeadFl: 0.8, rtHeadFlI: 0.6,
+  rtARate: 10000, rtALife: 0.7, rtALsig: 0.35, rtAJet: 33, rtAKd: 14, rtACone: 0.6, rtASize: 0.22, rtAI: 0.5, rtAWarm: 1.2,
+  rtFRate: 2500, rtFLife: 0.9, rtFJit: 40, rtFSize: 0.25, rtFI: 2.6, rtFKd: 5,
+  rtMRate: 900, rtMLife: 1.5, rtMJit: 35, rtMSize: 0.38, rtMI: 4.0, rtMKd: 3.6,
+  rtCRate: 180, rtCLife: 2.4, rtCJit: 30, rtCSize: 0.55, rtCI: 6.0, rtCKd: 2.4,
+  rtT0: 2450, rtTb: 2150, rtTc: 0.35, rtTend: 1450, rtTw: 0.3, rtShrink: 0.5,
+  rtERate: 10, rtELife: 3, rtESize: 0.8, rtEI: 4, rtEKd: 1.0,
+  rtSmoke: 0.003, rtSmokeRate: 25, rtSmokeLife: 3.5, rtSmokeSize: 2.5, rtSmokeGrow: 4,
+  rtBright: 1, rtDotGain: 1, rtMobile: 0.2, rtDissolve: 1, rtFadeFps: 0,
   // 地面循环
   loopT: 1, nozzles: 1, fanAngle: 70, spacing: 6, shotRate: 3, shotSpeed: 70, cometBurn: 1.4, burstStars: 0,
   wheelR: 3, jetSpeed: 28, jetCone: 10, jetDir: 90, groundH: 0,
@@ -103,6 +116,16 @@ const TYPES = {
   kata: { p: { duration: 2.7, stars: 90, pattern: 'heart', dirJit: 0.4, speedJit: 1, sparkRate: 0, headSize: 1.2, burn: 2.0, v0: 110 }, m: { stages: [[0, '#ff7ab8']] } },
   water: { p: { duration: 3.0, stars: 110, v0: 90, vt: 16, pattern: 'half', waterRefl: 0.4, burn: 2.0, sparkRate: 60, flash: 1.4 }, m: { stages: [[0, '#ffc766'], [0.9, '#52ff5e']] } },
   rise: { p: { duration: 5.2, riseH: 250, vtShell: 55, sparkRate: 600, sparkLife: 1.5, sparkSpread: 1.4, sparkInherit: 0.05, sparkDrag: 1.4, sparkSize: 0.45, sparkBright: 1.6, headSize: 1.4, headBright: 1.4, burn: 99, flicker: 0.35, T0: 2100, cooling: 0.3, zoom: 'off', form: 'unit', cols: 8, rows: 2, chans: 1, texW: 1024, texH: 1024 }, m: GROUND_RAMP },
+  // 升空尾缀 · 循环层 + 粒子（原理 7e 的三档：小 ≈ 比十寸更直、中 ≈ 十寸、大 ≈ 用户图 1）
+  tailS: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.45, rtBright: 2.2, haloFrac: 0.04, haloR: 2, seed: 7, rtH: 190, rtT: 3.5, rtVb: 24, rtD: 0.10, rtBurstD: 110, rtSpin: 1.6, rtFling: 2.0,
+    rtHeadSize: 0.45, rtHeadI: 3, rtHeadFl: 0.6, rtARate: 9000, rtALife: 0.6,
+    rtCone: 2.0, rtFRate: 2000, rtFLife: 0.7, rtFSize: 0.22, rtMRate: 700, rtMLife: 1.1, rtMSize: 0.34, rtCRate: 130, rtCLife: 1.8, rtCSize: 0.48,
+    rtERate: 6, rtELife: 2.5, rtESize: 0.7 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
+  tailM: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.45, rtBright: 2.2, haloFrac: 0.04, haloR: 2, seed: 7 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
+  tailL: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.45, rtBright: 2.2, haloFrac: 0.04, haloR: 2, seed: 7, rtH: 410, rtT: 8, rtVb: 4, rtD: 0.30, rtBurstD: 290, rtSpin: 2.6, rtFling: 5.0,
+    rtHeadSize: 0.7, rtHeadI: 3.2, rtHeadFl: 1.2, rtARate: 12000, rtALife: 0.9,
+    rtCone: 3.5, rtFRate: 3500, rtFLife: 1.2, rtFSize: 0.3, rtMRate: 1300, rtMLife: 2.2, rtMSize: 0.45, rtCRate: 260, rtCLife: 3.4, rtCSize: 0.65,
+    rtERate: 16, rtELife: 3.5, rtESize: 0.9, rtSmokeRate: 35, rtMobile: 0.12 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
   // 升空尾缀三档：用户认可的 V5 / TR2 导出快照；不按目标长度重新拟合。
   trailS: { p: { renderVer: 37, seed: 7, riseH: 120, vtShell: 35, trV: 33.7, trFps: 30, trInh: 0.12,
     trDrag: 3.5, trGrav: 0.4, trCool: 0.46297, trFRate: 12000, trFLife: 0.65692, trFSpread: 1.85647,
@@ -239,7 +262,8 @@ const isGround = P => familyOf(P.type) === 'ground';
 const hasComets = P => P.type === 'fan' || P.type === 'barrage';
 const isTrail = P => familyOf(P.type) === 'rise' && P.form === 'trail';
 const isPhys = P => familyOf(P.type) === 'rise' && P.form === 'phys';
-const isSeq = P => !isTrail(P) && !isPhys(P);   // 普通花型（非尾缀序列、非物理尾缀）
+const isEmit = P => familyOf(P.type) === 'rise' && P.form === 'emitset';   // 循环层 + 粒子发射器（47_risetail.js）
+const isSeq = P => !isTrail(P) && !isPhys(P) && !isEmit(P);   // 普通花型（非尾缀序列、非物理尾缀、非循环层 + 粒子）
 const PATTERNS = [['sphere', '球'], ['half', '半球（贴水面）'], ['ring', '环'], ['saturn', '土星（球 + 环）'], ['heart', '心形'], ['smile', '笑脸'], ['star5', '五角星'], ['text', '文字']];
 const RISE_STYLES = [['gold', '金色曲导'], ['silver', '银竜（银色长尾）'], ['dark', '暗升（无尾）'], ['kobana', '昇り小花'], ['bunpo', '分砲（空中分叉）'], ['fue', '笛（鸣笛）'], ['spiral', '螺旋']];
 const SCHEMA = [
@@ -352,7 +376,7 @@ const SCHEMA = [
     ['chaos', '乱飞程度', '', 0, 3, 0.05],
     ['beeSpeed', '推进速度', 'm/s', 5, 80, 1]
   ] },
-  { sec: '上升', show: P => isRise(P) && !isPhys(P), hint: '模拟从地面到开花高度的整段上升。导出默认是「星头循环 + 弹道拟合 + 火花发射器参数」。', items: [
+  { sec: '上升', show: P => isRise(P) && !isPhys(P) && !isEmit(P), hint: '模拟从地面到开花高度的整段上升。导出默认是「星头循环 + 弹道拟合 + 火花发射器参数」。', items: [
     { sel: 'riseStyle', label: '曲导种类', options: RISE_STYLES, show: P => !isTrail(P) },
     ['riseH', '开花高度', 'm', 50, 800, 5],
     ['vtShell', '弹体终端速度', 'm/s', 20, 120, 1],
@@ -429,6 +453,73 @@ const SCHEMA = [
     ['phCRate', '密度', '颗/秒', 0, 200, 1], ['phCLife', '寿命', 's', 0.2, 5, 0.05], ['phCKd', '阻力', '1/s', 0.5, 20, 0.1],
     ['phCI', '亮度', '', 0, 3, 0.01], ['phCR', '发光半径', 'm', 0.01, 0.3, 0.005]
   ] },
+  { sec: '尾缀 · 弹道与规格', show: isEmit, hint: '弹体按 Cascade 的线性阻力飞（和引擎里的循环层粒子同一条弹道，粒子出生位置也取这条）：给定开花高度、升空时间、开花时速度，反解出膛速度和阻力。小 / 中档在还往上冲时开花，大档接近顶点。', items: [
+    ['rtH', '开花高度', 'm', 50, 700, 1],
+    ['rtT', '升空时间', 's', 1, 12, 0.05],
+    ['rtVb', '开花时弹体速度', 'm/s', 0.5, 80, 0.5],
+    ['rtLean', '弹道倾角（+ 向右）', '°', -15, 15, 0.1],
+    ['rtD', '弹径（喷口离转轴的距离 = 半径）', 'm', 0.05, 0.8, 0.01],
+    ['rtBurstD', '开花直径（定游戏内大小的比例）', 'm', 40, 600, 1],
+    ['seed', '随机种子', '', 1, 999, 1]
+  ] },
+  { sec: '尾缀 · 自转螺旋与喷射', show: isEmit, hint: '弹体出膛就带着自转（全程转速不变）；喷口在弹体外缘跟着转圈，把火星切向甩出 → 尾迹上的螺旋：波长 = 弹体速度 ÷ 转速，能看见的圈数 = 转速 × 火星寿命，波幅 ≈ 甩出速度 ÷ 火星阻力。', items: [
+    ['rtSpin', '自转转速', '转/秒', 0, 8, 0.05],
+    ['rtSpinPh', '起始相位', '圈', 0, 1, 0.01],
+    ['rtFling', '切向甩出速度', 'm/s', 0, 15, 0.05],
+    ['rtJet', '火星向后喷出速度', 'm/s', 0, 80, 0.5],
+    ['rtCone', '火星横向散开', 'm/s', 0, 8, 0.05],
+    ['rtPulse', '喷射脉动（星头、白热段、出生率一起忽明忽暗，0 关）', '', 0, 1, 0.01],
+    ['rtPulseHz', '脉动频率（按循环周期取整）', 'Hz', 0.5, 20, 0.1, P => P.rtPulse > 0]
+  ] },
+  { sec: '尾缀 · 星头（循环层）', show: isEmit, hint: '星头 = 曲导筒口的燃烧焰：远处是一个亮点，近处是一小团向后的短焰（不是长棍子）。光晕多为空气 / 镜头散射，不烘进贴图。', items: [
+    ['rtHeadSize', '亮核直径', 'm', 0.05, 3, 0.01],
+    ['rtHeadI', '亮度', '×', 0, 10, 0.05],
+    ['rtHeadFl', '短焰长度（0 = 只有亮点）', 'm', 0, 5, 0.05],
+    ['rtHeadFlI', '短焰亮度（× 亮核）', '×', 0, 2, 0.01, P => P.rtHeadFl > 0]
+  ] },
+  { sec: '尾缀 · 白热段火粉（循环层）', show: isEmit, hint: '极密、极短命的细火粉，连成星头后面过曝的白热段（按相机观感：白热时间更长）。循环层贴图在弹体随体坐标里烘，引擎里按弹体速度缩放长度。', items: [
+    ['rtARate', '密度', '颗/秒', 0, 40000, 100],
+    ['rtALife', '白热时间（中位）', 's', 0.05, 2.5, 0.01],
+    ['rtALsig', '白热时间离散（对数标准差）', '', 0, 1.2, 0.01],
+    ['rtAJet', '向后喷出速度', 'm/s', 0, 80, 0.5],
+    ['rtAKd', '阻力', '1/s', 1, 60, 0.5],
+    ['rtACone', '横向散开', 'm/s', 0, 6, 0.05],
+    ['rtASize', '颗粒直径', 'm', 0.02, 1, 0.01],
+    ['rtAI', '亮度', '×', 0, 5, 0.01],
+    ['rtAWarm', '变暗快慢（越大越早变金、变暗）', '', 0.2, 4, 0.05]
+  ] },
+  { sec: '尾缀 · 金火星（GPU 粒子 · 三档粒径）', show: isEmit, hint: '木炭火星按粒径分三档（细 / 中 / 粗）：越粗越亮、越长寿、阻力越小（d² 定律）→ 有亮有暗、各自错落熄灭。每档在引擎里是一个 GPU 软圆点发射器（手机版 CPU），出生位置、初速按发射器时间取弹道曲线。', items: [
+    ['rtFRate', '细 · 出生率', '颗/秒', 0, 8000, 10], ['rtFLife', '细 · 寿命', 's', 0.1, 6, 0.01], ['rtFJit', '细 · 寿命离散', '%', 0, 90, 1], ['rtFSize', '细 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtFI', '细 · 亮度', '×', 0, 10, 0.01], ['rtFKd', '细 · 阻力', '1/s', 0.2, 30, 0.05],
+    ['rtMRate', '中 · 出生率', '颗/秒', 0, 4000, 5], ['rtMLife', '中 · 寿命', 's', 0.1, 6, 0.01], ['rtMJit', '中 · 寿命离散', '%', 0, 90, 1], ['rtMSize', '中 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtMI', '中 · 亮度', '×', 0, 10, 0.01], ['rtMKd', '中 · 阻力', '1/s', 0.2, 30, 0.05],
+    ['rtCRate', '粗 · 出生率', '颗/秒', 0, 2000, 1], ['rtCLife', '粗 · 寿命', 's', 0.1, 8, 0.01], ['rtCJit', '粗 · 寿命离散', '%', 0, 90, 1], ['rtCSize', '粗 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtCI', '粗 · 亮度', '×', 0, 10, 0.01], ['rtCKd', '粗 · 阻力', '1/s', 0.2, 30, 0.05]
+  ] },
+  { sec: '尾缀 · 火星颜色与熄灭', show: isEmit, hint: '颜色按黑体温度：出喷口很热（白），约 tc 秒降到空气中的燃烧温度（金），寿命最后一段降到熄灭温度（橙 → 暗）。闪烁写进 Color Over Life，每颗寿命不同所以相位错开。', items: [
+    ['rtT0', '出喷口温度', 'K', 1600, 3000, 10],
+    ['rtTb', '燃烧温度', 'K', 1500, 2800, 10],
+    ['rtTc', '降到燃烧温度的时间', 's', 0.02, 2, 0.01],
+    ['rtTend', '熄灭温度', 'K', 900, 2200, 10],
+    ['rtTw', '闪烁', '', 0, 1, 0.01],
+    ['rtShrink', '烧到最后的大小（× 出生时）', '×', 0.05, 1.5, 0.01]
+  ] },
+  { sec: '尾缀 · 落火', show: isEmit, hint: '少量长寿大颗，阻力小、下坠，零星掉在尾迹下方（0 关）。', items: [
+    ['rtERate', '出生率', '颗/秒', 0, 200, 1], ['rtELife', '寿命', 's', 0.2, 8, 0.05], ['rtESize', '粒子尺寸', 'm', 0.05, 5, 0.01], ['rtEI', '亮度', '×', 0, 10, 0.01], ['rtEKd', '阻力', '1/s', 0.1, 10, 0.05]
+  ] },
+  { sec: '尾缀 · 烟带', show: isEmit, hint: '曲导燃烧留下的淡烟，被火星照亮（夜里是散射光，用加法软圆点做成很淡的发光烟，不新增材质）。慢慢变大、变淡（0 关）。', items: [
+    ['rtSmoke', '亮度（0 关）', '×', 0, 0.5, 0.001],
+    ['rtSmokeRate', '出生率', '团/秒', 1, 200, 1, P => P.rtSmoke > 0],
+    ['rtSmokeLife', '寿命', 's', 0.5, 10, 0.05, P => P.rtSmoke > 0],
+    ['rtSmokeSize', '出生尺寸', 'm', 0.2, 20, 0.1, P => P.rtSmoke > 0],
+    ['rtSmokeGrow', '变大到（× 出生尺寸）', '×', 1, 10, 0.1, P => P.rtSmoke > 0]
+  ] },
+  { sec: '尾缀 · 引擎与导出', show: isEmit, hint: '循环层：一个速度朝向的序列面片（CPU，1 颗），星头在面片中心，16 × 1 格 × RGBA 64 帧真循环；开花后换「贴图动态消散」序列（每颗火粉按自己的寿命熄灭），另写 dissolve 动态参数。粒子层：PC 用 GPU、手机用 CPU 并按比例减量。', items: [
+    ['rtBright', '循环层引擎亮度（Color Over Life）', '×', 0.1, 10, 0.05],
+    ['rtDotGain', '粒子层亮度总倍数', '×', 0, 10, 0.01],
+    ['rtMobile', '手机版粒子数比例', '×', 0.05, 1, 0.01],
+    ['rtDissolve', '消散发射器的溶解终值（0 = 不写 dissolve）', '', 0, 1, 0.01],
+    ['rtFadeFps', '消散序列帧率（0 = 自动，≤ 30）', 'fps', 0, 30, 1],
+    ['shutter', '循环层运动模糊（占每帧显示时间的比例）', '', 0, 1, 0.01],
+    ['cellPad', '格子留边', 'px', 0, 8, 1]
+  ] },
   { sec: '地面 · 循环', show: isGround, hint: '循环周期内的火花按周期性编号生成，首尾严格接上，不需要交叉淡化。', items: [
     ['loopT', '循环周期', 's', 0.3, 4, 0.05],
     ['seed', '随机种子', '', 1, 999, 1],
@@ -475,7 +566,7 @@ const SCHEMA = [
     ['haloR', '光晕半径 / 亮核半径', '×', 1, 8, .1],
     { sel: 'previewBloom', label: '额外预览光晕', options: [[0,'关闭（UE Bloom 另算）'],[1,'开启']] }
   ] },
-  { sec: '画质（烘焙采样）', show: isSeq, hint: '空间超采样和快门子样本。4.0 光点始终使用面积覆盖积分；旧版的高斯核选项只作用于 3.7。', items: [
+  { sec: '画质（烘焙采样）', show: P => isSeq(P) || isEmit(P), hint: '空间超采样和快门子样本。4.0 光点始终使用面积覆盖积分；旧版的高斯核选项只作用于 3.7。', items: [
     ['qSS', '空间超采样（每边）', '×', 1, 8, 1],
     ['qHz', '快门采样频率', 'Hz', 120, 1920, 30],
     ['qMaxSub', '每帧最多子样本', '次', 1, 128, 1],

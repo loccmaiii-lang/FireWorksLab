@@ -1,0 +1,9 @@
+{
+ "id": "RT1LE",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT1L",
+ "name": "RiseTailL",
+ "priority": 8,
+ "note": "升空尾缀 · 循环层 + 粒子 大（第 1 版，烘焙器 4.1.0）：导出素材包（循环贴图 + 消散贴图 + cascade.json 含 GPU 软圆点发射器）+ 回放检查 + 烘焙回放对照。素材包给用户进引擎标定粒子大小 / 亮度。"
+}

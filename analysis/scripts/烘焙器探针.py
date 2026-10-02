@@ -37,6 +37,25 @@ JS_METRICS = r"""
   else { if (!REPLICA_BY_ID[id]) return { id, error: '没有这个条目：' + id }; const r = __fw.replicaPM(id); P = r.P; M = r.M; name = REPLICA_BY_ID[id].name; }
   const out = { id, name, type: P.type, form: P.form, duration: P.duration, zoom: P.zoom, frameMode: P.frameMode, autoGrid: P.autoGrid,
                 renderVer:P.renderVer||37, qSS: P.qSS || 2, qKernel: P.qKernel || 0, headSize: P.headSize, sparkSize: P.sparkSize, emberSize: P.emberSize, texW: P.texW, texH: P.texH };
+  if (P.form === 'emitset') {
+    // 循环层 + 粒子发射器（4.1）：量循环层面片（细长格：按单格像素数和 512² 比）；粒子层没有贴图，不参与
+    const ball = rtBallistic(P), LI = rtLoopInfo(P), box = rtLoopBox(P, ball.v0), L = layoutOf(P), T = ball.T, per = L.cols * L.rows;
+    out.grid = { cols: L.cols, rows: L.rows, chans: L.chans, frames: L.F, cellW: L.cellW, cellH: L.cellH, beam: true };
+    const fAt = t => Math.floor(((t % LI.Tl) / LI.Tl) * L.F) % L.F; let seen = new Set(), maxJump = 0, prev = null;
+    for (let i = 0; i / fps < T; i++) { const f = fAt(i / fps); seen.add(f); if (prev !== null && f >= prev) maxJump = Math.max(maxJump, f - prev); prev = f; }
+    out.frames30 = { shown: seen.size, total: L.F, ratio: +(seen.size / L.F).toFixed(3), maxJump };
+    const Dl = rtPowderLifeMax(P) * 1.02, fpsT = P.rtFadeFps > 0 ? Math.min(30, P.rtFadeFps) : 30, chF = Math.min(4, Math.max(1, Math.ceil(Dl * fpsT / per))), Ff = per * chF, Df = Math.max(Dl, Ff / 30);
+    out.minFpsActive = +(L.F / LI.Tl).toFixed(1); out.minFpsFade = +Math.min(30, Ff / Df).toFixed(1); out.avgFps = out.minFpsActive;
+    const diameter = P.rtBurstD || 190, fraction = P.screenFrac || frac, flowerPx = fraction * screenH, ppmS = flowerPx / diameter;
+    const pxH = 2 * box.HY * ppmS, pxW = 2 * box.HX * ppmS; out.flowerM = diameter; out.spriteM = +(2 * box.HY).toFixed(1);
+    out.screen = { frac: fraction, flowerPx: Math.round(flowerPx), spritePx: Math.round(pxH), spritePxW: Math.round(pxW), mag: +Math.max(pxH / L.cellH, pxW / L.cellW).toFixed(2), magMobile256: +Math.max(pxH / L.cellH, pxW / L.cellW).toFixed(2) };
+    out.game = dists.map(dist => ({ dist, spritePx: Math.round(pxH * 1000 / dist), mag: +(Math.max(pxH / L.cellH, pxW / L.cellW) * 1000 / dist).toFixed(2) }));
+    const ss = Math.max(1, Math.round(P.qSS || 2)), ppmT = L.cellW * ss / (2 * box.HX);
+    out.deadSize = { atFull: +(1.1 / ppmT).toFixed(2), atStart: +(1.1 / ppmT).toFixed(2) };
+    out.sizeDead = { head: P.rtHeadSize <= out.deadSize.atFull, spark: P.rtASize <= out.deadSize.atFull };
+    out.note = '循环层 + 粒子发射器：量循环层面片；粒子层是软圆点发射器（无贴图）';
+    return out;
+  }
   if (P.form !== 'master' && P.form !== 'segments') { out.note = '只量大面片（master / segments）；这个产物是 ' + P.form; return out; }
   const fm = __fw.measure(P), pl = __fw.plan(P, fm), L = pl.L, D = pl.duration;
   out.grid = { cols: L.cols, rows: L.rows, chans: L.chans, frames: L.F, cellW: L.cellW, cellH: L.cellH };
@@ -113,7 +132,7 @@ async (id) => {
 def verdict(m, std):
     if 'grid' not in m: return {}
     g = m['grid']; v = {}
-    v['单格 ≥ PC 下限'] = g['cellW'] >= std['pcCell']
+    v['单格 ≥ PC 下限'] = (g['cellW'] * g['cellH'] >= std['pcCell'] ** 2) if g.get('beam') else g['cellW'] >= std['pcCell']   # 细长格（循环层面片）按单格像素数比
     v['屏幕放大 ≤ 1'] = m['screen']['mag'] <= std['maxMag']
     v['30fps 显示帧 ≥ 90%'] = m['frames30']['ratio'] >= 0.9
     v['燃烧段有效帧率 ≥ 下限'] = m['minFpsActive'] >= std['minFps']

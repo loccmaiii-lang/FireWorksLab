@@ -79,6 +79,7 @@ function colorKeys(M, D, t0 = 0) {
   return out;
 }
 function curvesCSV(b, M) {
+  if (b.form === 'emitset') return rtCurvesCSV(b, M);
   const rows = ['段,曲线,相对时间,值1,值2,值3'];
   for (let s = b, i = 0; s; s = s.next, i++) {
     const m = s.meta, seg = bakeSegmentName(b,i);
@@ -162,6 +163,7 @@ async function cutoutFiles(srcs, N, NH, L, file, meta) {
 }
 async function texFiles(b, name, sfx = '', idx = 1) {
   // sfx：'_4K' 表示 4K 母版；idx：种子变体的序号（01、02、03）
+  if (b.form === 'emitset') return rtTexFiles(b, name, sfx, idx);
   const files = [], k4 = sfx ? sfx.replace(/^_/, '') : '';
   if (b.form === 'trail') {
     const L = b.meta.L;
@@ -188,6 +190,7 @@ async function texFiles(b, name, sfx = '', idx = 1) {
   return files;
 }
 function masterJSON(b, name, M) {
+  if (b.form === 'emitset') return rtJSON(b, name, M);
   const P = b.P, m = b.meta, L = m.L;
   const seg = s => ({
     ...(s.meta.frameTiming?{frameTiming:s.meta.frameTiming,frameFps:s.meta.frameFps}:{}),

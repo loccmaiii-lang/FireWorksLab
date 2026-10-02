@@ -74,9 +74,11 @@ def run(job, s, out, log=print):
         import importlib; rc = importlib.import_module('回放检查')
         dirs = [os.path.join(big, n) for n in job['exports']]; packs = []
         for d in dirs:
-            n = len(json.load(open(os.path.join(d, 'cascade.json'), encoding='utf-8'))['emitters'])
-            packs.append([rc.Pack(d, i) for i in range(n)])
-        trail = any(json.load(open(os.path.join(d, 'cascade.json'), encoding='utf-8')).get('source', {}).get('form') == 'trail' for d in dirs)
+            cj = json.load(open(os.path.join(d, 'cascade.json'), encoding='utf-8'))
+            # 只查带序列贴图的发射器（软圆点 soft_dot 这类纯粒子发射器没有贴图，回放检查不适用）
+            seqi = [i for i, e in enumerate(cj['emitters']) if 'main' in ((cj.get('materials') or {}).get(e.get('material'), {}).get('textures') or {}) or not cj.get('materials')]
+            packs.append([rc.Pack(d, i) for i in seqi])
+        trail = any(json.load(open(os.path.join(d, 'cascade.json'), encoding='utf-8')).get('source', {}).get('form') in ('trail', 'emitset') for d in dirs)
         if all(len(pp) == 1 for pp in packs) or not trail:     # 4.0 分张母版：几个发射器按 delay_s 接成一条时间线，一起看
             flat = [p for pp in packs for p in pp]
             dl = [dd for pp, dd in zip(packs, job.get('_delays') or [0] * len(packs)) for _ in pp] if len(packs) > 1 else None
