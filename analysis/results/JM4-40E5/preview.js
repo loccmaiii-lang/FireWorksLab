@@ -1,0 +1,1 @@
+FW_ASSET_LOADED("JM4-40E5", {"manifest": {"title": "JinMangJu", "duration": 4.87, "view": 224.3, "variants": {"JinMangJu": "JinMangJu"}, "emitters": [], "note": "4.2.7 / 4.2.8 规则重导（上一轮误写进已跑过的 JM4-40E2，后台不会再跑，改用新编号）。效果参数不变，按新规则重导 + 回放检查。对话框2（底层负责）代做。"}, "images": {}});
