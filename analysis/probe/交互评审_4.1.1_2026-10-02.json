@@ -46,6 +46,12 @@
         }
       ],
       "limits": "Only export controller and state capture verified; no actual PNG / ZIP / browser input generated."
+    },
+    {
+      "case": "passed group reuses effRow -> openEffect while effect has a new candidate",
+      "approvedVersion": "JM3",
+      "openedVersion": "JM4-40",
+      "limits": "Actual selection function with synthetic effect; call site confirmed by reading renderLib, no browser click performed."
     }
   ]
 }
