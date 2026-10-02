@@ -1,0 +1,38 @@
+16:01:52 开始：4.1.2 截图：层轨道把手可拖、尾迹外形（每个资产自己的参数）、循环层 + 粒子命名、实时模拟后段帧间隔（界面截图）
+16:02:14 界面截图 1：1440_鸿巢_层轨道把手（20 秒）
+16:02:30 界面截图 2：1440_鸿巢_拖第2层入点（16 秒）
+16:02:33 界面截图 3：1440_鸿巢_拖入点后_引擎回放（3 秒）
+16:02:37 界面截图 4：帧间隔_鸿巢_开花后1秒（4 秒）
+16:02:41 界面截图 5：帧间隔_鸿巢_开花后8秒（4 秒）
+16:02:49 界面截图 6：1440_金芒菊_尾迹外形参数（8 秒）
+16:02:59 界面截图 7：1440_金芒菊_泪滴粗细亮肩（10 秒）
+16:03:09 界面截图 8：1440_金芒菊_原样（10 秒）
+16:03:09 出错：
+Traceback (most recent call last):
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 85, in run_job
+    import ui_shots; ui_shots.run(job, s, out, log=log)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\ui_shots.py", line 58, in run
+    if st.get('js'): pg.evaluate(st['js'])
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\sync_api\_generated.py", line 9413, in evaluate
+    self._sync(
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_page.py", line 474, in evaluate
+    return await self._main_frame.evaluate(expression, arg)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_frame.py", line 346, in evaluate
+    await self._channel.send(
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of undefined (reading 'then')
+    at eval (eval at evaluate (:311:30), <anonymous>:1:49)
+    at eval (<anonymous>)
+    at UtilityScript.evaluate (<anonymous>:311:30)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+

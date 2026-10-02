@@ -1,0 +1,941 @@
+[
+ {
+  "name": "窗口",
+  "seconds": 3.1,
+  "hud": "实时模拟 · 游戏内大小 · 1000 m · 导出单格 512×512 · 固定曝光 ×0.20 · 居中快门",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 2.6165999999999983,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "缩略图_jinmangju",
+  "seconds": 6.4,
+  "hud": "实时模拟 · 导出单格 512×512 · 固定曝光 ×0.20 · 居中快门",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 2.789583333333335,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  },
+  "thumb": "ef:jinmangju",
+  "thumb_file": "02.jpg",
+  "thumb_ver": "2ac48d15"
+ },
+ {
+  "name": "缩略图_trail_v5",
+  "seconds": 6.3,
+  "hud": "实时物理 · GPU · 星 1 · 火花槽位 40,705",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.28,
+  "P": {
+   "type": "trailM",
+   "renderVer": 37,
+   "cols": 16,
+   "duration": 8.92
+  },
+  "thumb": "ef:trail_v5",
+  "thumb_file": "03.jpg",
+  "thumb_ver": ""
+ },
+ {
+  "name": "缩略图_trail_phys",
+  "seconds": 7.5,
+  "hud": "实时模拟 · 升空尾缀 · 上升 1.50 / 5.00 s · 循环层火粉 7,335 颗 + 粒子层 4,509 颗（PC）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.5,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ef:trail_phys",
+  "thumb_file": "04.jpg",
+  "thumb_ver": "96e847ad"
+ },
+ {
+  "name": "缩略图_qiuxing_a",
+  "seconds": 56.5,
+  "hud": "球形A · 4.0（QA17 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 2.2395833333333663,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ef:qiuxing_a",
+  "thumb_file": "05.jpg",
+  "thumb_ver": "2534ca0b"
+ },
+ {
+  "name": "缩略图_qiuxing_a_第1层",
+  "seconds": 1.9,
+  "hud": "球形A · 4.0（QA17 参数） · 实时模拟 · 2 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.1733333333333333,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "QA19-1",
+  "thumb_file": "06.jpg",
+  "thumb_ver": "2534ca0b"
+ },
+ {
+  "name": "缩略图_qiuxing_a_第2层",
+  "seconds": 1.5,
+  "hud": "球形A · 4.0（QA17 参数） · 实时模拟 · 2 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 2.6333333333333333,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "QA19-2",
+  "thumb_file": "07.jpg",
+  "thumb_ver": "2534ca0b"
+ },
+ {
+  "name": "缩略图_qiuxing_a_恢复整体",
+  "seconds": 1.6,
+  "hud": "球形A · 4.0（QA17 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 2.6333333333333333,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  }
+ },
+ {
+  "name": "缩略图_qiuxing_b",
+  "seconds": 7.5,
+  "hud": "球形B · 4.0（ZB4 参数） · 实时模拟 · 3 层（画面里 3 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2895833333333449,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ef:qiuxing_b",
+  "thumb_file": "09.jpg",
+  "thumb_ver": "b7ffa862"
+ },
+ {
+  "name": "缩略图_qiuxing_b_第1层",
+  "seconds": 1.6,
+  "hud": "球形B · 4.0（ZB4 参数） · 实时模拟 · 3 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 0.6000000000000001,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ZB5-1",
+  "thumb_file": "10.jpg",
+  "thumb_ver": "b7ffa862"
+ },
+ {
+  "name": "缩略图_qiuxing_b_第2层",
+  "seconds": 1.5,
+  "hud": "球形B · 4.0（ZB4 参数） · 实时模拟 · 3 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 0.8,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ZB5-2",
+  "thumb_file": "11.jpg",
+  "thumb_ver": "b7ffa862"
+ },
+ {
+  "name": "缩略图_qiuxing_b_第3层",
+  "seconds": 1.5,
+  "hud": "球形B · 4.0（ZB4 参数） · 实时模拟 · 3 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.62,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ZB5-3",
+  "thumb_file": "12.jpg",
+  "thumb_ver": "b7ffa862"
+ },
+ {
+  "name": "缩略图_qiuxing_b_恢复整体",
+  "seconds": 1.5,
+  "hud": "球形B · 4.0（ZB4 参数） · 实时模拟 · 3 层（画面里 3 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.62,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  }
+ },
+ {
+  "name": "缩略图_qiuxing_c",
+  "seconds": 7.3,
+  "hud": "球形C · 4.0（QC10 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 2.264583333333365,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ef:qiuxing_c",
+  "thumb_file": "14.jpg",
+  "thumb_ver": "02670d6d"
+ },
+ {
+  "name": "缩略图_qiuxing_c_第1层",
+  "seconds": 1.6,
+  "hud": "球形C · 4.0（QC10 参数） · 实时模拟 · 2 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.16,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "QC11-1",
+  "thumb_file": "15.jpg",
+  "thumb_ver": "02670d6d"
+ },
+ {
+  "name": "缩略图_qiuxing_c_第2层",
+  "seconds": 1.5,
+  "hud": "球形C · 4.0（QC10 参数） · 实时模拟 · 2 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 2.08,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "QC11-2",
+  "thumb_file": "16.jpg",
+  "thumb_ver": "02670d6d"
+ },
+ {
+  "name": "缩略图_qiuxing_c_恢复整体",
+  "seconds": 1.5,
+  "hud": "球形C · 4.0（QC10 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 2.08,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  }
+ },
+ {
+  "name": "缩略图_qiuxing_d",
+  "seconds": 11.3,
+  "hud": "球形D · 4.0（QD12 参数） · 实时模拟 · 3 层（画面里 3 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.1395833333333374,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ef:qiuxing_d",
+  "thumb_file": "18.jpg",
+  "thumb_ver": "2a8b539a"
+ },
+ {
+  "name": "缩略图_qiuxing_d_第1层",
+  "seconds": 1.6,
+  "hud": "球形D · 4.0（QD12 参数） · 实时模拟 · 3 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 2.013333333333333,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "QD13-1",
+  "thumb_file": "19.jpg",
+  "thumb_ver": "2a8b539a"
+ },
+ {
+  "name": "缩略图_qiuxing_d_第2层",
+  "seconds": 1.5,
+  "hud": "球形D · 4.0（QD12 参数） · 实时模拟 · 3 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 2.9600000000000004,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "QD13-2",
+  "thumb_file": "20.jpg",
+  "thumb_ver": "2a8b539a"
+ },
+ {
+  "name": "缩略图_qiuxing_d_第3层",
+  "seconds": 1.6,
+  "hud": "球形D · 4.0（QD12 参数） · 实时模拟 · 3 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.64,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "QD13-3",
+  "thumb_file": "21.jpg",
+  "thumb_ver": "2a8b539a"
+ },
+ {
+  "name": "缩略图_qiuxing_d_恢复整体",
+  "seconds": 1.5,
+  "hud": "球形D · 4.0（QD12 参数） · 实时模拟 · 3 层（画面里 3 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.64,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  }
+ },
+ {
+  "name": "缩略图_qingning",
+  "seconds": 8.8,
+  "hud": "青柠星 · 4.0（QN10 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3.039583333333321,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ef:qingning",
+  "thumb_file": "23.jpg",
+  "thumb_ver": "0981c5c4"
+ },
+ {
+  "name": "缩略图_qingning_第1层",
+  "seconds": 1.6,
+  "hud": "青柠星 · 4.0（QN10 参数） · 实时模拟 · 2 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2800000000000002,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "QN11-1",
+  "thumb_file": "24.jpg",
+  "thumb_ver": "0981c5c4"
+ },
+ {
+  "name": "缩略图_qingning_第2层",
+  "seconds": 1.6,
+  "hud": "青柠星 · 4.0（QN10 参数） · 实时模拟 · 2 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.4666666666666668,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "QN11-2",
+  "thumb_file": "25.jpg",
+  "thumb_ver": "0981c5c4"
+ },
+ {
+  "name": "缩略图_qingning_恢复整体",
+  "seconds": 1.5,
+  "hud": "青柠星 · 4.0（QN10 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.4666666666666668,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  }
+ },
+ {
+  "name": "缩略图_wancai",
+  "seconds": 7.2,
+  "hud": "万彩千轮 · 4.0（ZW4 参数） · 实时模拟 · 4 层（画面里 4 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.9020833333333753,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ef:wancai",
+  "thumb_file": "27.jpg",
+  "thumb_ver": "5d83a57d"
+ },
+ {
+  "name": "缩略图_wancai_第1层",
+  "seconds": 1.6,
+  "hud": "万彩千轮 · 4.0（ZW4 参数） · 实时模拟 · 4 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2000000000000002,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ZW5-1",
+  "thumb_file": "28.jpg",
+  "thumb_ver": "5d83a57d"
+ },
+ {
+  "name": "缩略图_wancai_第2层",
+  "seconds": 1.5,
+  "hud": "万彩千轮 · 4.0（ZW4 参数） · 实时模拟 · 4 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2000000000000002,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ZW5-2",
+  "thumb_file": "29.jpg",
+  "thumb_ver": "5d83a57d"
+ },
+ {
+  "name": "缩略图_wancai_第3层",
+  "seconds": 1.6,
+  "hud": "万彩千轮 · 4.0（ZW4 参数） · 实时模拟 · 4 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2000000000000002,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ZW5-3",
+  "thumb_file": "30.jpg",
+  "thumb_ver": "5d83a57d"
+ },
+ {
+  "name": "缩略图_wancai_第4层",
+  "seconds": 1.5,
+  "hud": "万彩千轮 · 4.0（ZW4 参数） · 实时模拟 · 4 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2000000000000002,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ZW5-4",
+  "thumb_file": "31.jpg",
+  "thumb_ver": "5d83a57d"
+ },
+ {
+  "name": "缩略图_wancai_恢复整体",
+  "seconds": 1.5,
+  "hud": "万彩千轮 · 4.0（ZW4 参数） · 实时模拟 · 4 层（画面里 4 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2000000000000002,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  }
+ },
+ {
+  "name": "缩略图_hongchao",
+  "seconds": 19.4,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 7.777083333333052,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ef:hongchao",
+  "thumb_file": "33.jpg",
+  "thumb_ver": "b9474595"
+ },
+ {
+  "name": "缩略图_hongchao_第1层",
+  "seconds": 2.1,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 4.800000000000001,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "HK10-1",
+  "thumb_file": "34.jpg",
+  "thumb_ver": "b9474595"
+ },
+ {
+  "name": "缩略图_hongchao_第2层",
+  "seconds": 1.6,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 8.42,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "HK10-2",
+  "thumb_file": "35.jpg",
+  "thumb_ver": "b9474595"
+ },
+ {
+  "name": "缩略图_hongchao_恢复整体",
+  "seconds": 1.5,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 8.42,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  }
+ },
+ {
+  "name": "缩略图_yongfeng",
+  "seconds": 23.2,
+  "hud": "永丰三重蕊 · 4.0（FS9 参数） · 实时模拟 · 5 层（画面里 3 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 7.514583333333067,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ef:yongfeng",
+  "thumb_file": "37.jpg",
+  "thumb_ver": "d14a89e3"
+ },
+ {
+  "name": "缩略图_yongfeng_第1层",
+  "seconds": 1.6,
+  "hud": "永丰三重蕊 · 4.0（FS9 参数） · 实时模拟 · 5 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3.2666666666666675,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "FS10-1",
+  "thumb_file": "38.jpg",
+  "thumb_ver": "d14a89e3"
+ },
+ {
+  "name": "缩略图_yongfeng_第2层",
+  "seconds": 1.6,
+  "hud": "永丰三重蕊 · 4.0（FS9 参数） · 实时模拟 · 5 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 2.1466666666666665,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "FS10-2",
+  "thumb_file": "39.jpg",
+  "thumb_ver": "d14a89e3"
+ },
+ {
+  "name": "缩略图_yongfeng_第3层",
+  "seconds": 1.6,
+  "hud": "永丰三重蕊 · 4.0（FS9 参数） · 实时模拟 · 5 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2000000000000002,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "FS10-3",
+  "thumb_file": "40.jpg",
+  "thumb_ver": "d14a89e3"
+ },
+ {
+  "name": "缩略图_yongfeng_第4层",
+  "seconds": 1.5,
+  "hud": "永丰三重蕊 · 4.0（FS9 参数） · 实时模拟 · 5 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3.2199999999999998,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "FS10-4",
+  "thumb_file": "41.jpg",
+  "thumb_ver": "d14a89e3"
+ },
+ {
+  "name": "缩略图_yongfeng_第5层",
+  "seconds": 1.5,
+  "hud": "永丰三重蕊 · 4.0（FS9 参数） · 实时模拟 · 5 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 5.726666666666667,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "FS10-5",
+  "thumb_file": "42.jpg",
+  "thumb_ver": "d14a89e3"
+ },
+ {
+  "name": "缩略图_yongfeng_恢复整体",
+  "seconds": 1.5,
+  "hud": "永丰三重蕊 · 4.0（FS9 参数） · 实时模拟 · 5 层（画面里 4 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 5.726666666666667,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  }
+ },
+ {
+  "name": "缩略图_pianbei",
+  "seconds": 64.9,
+  "hud": "片贝四尺玉 · 4.0（PK8 参数） · 实时模拟 · 5 层（画面里 5 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 4.789583333333222,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ef:pianbei",
+  "thumb_file": "44.jpg",
+  "thumb_ver": "41578ae9"
+ },
+ {
+  "name": "缩略图_pianbei_第1层",
+  "seconds": 1.6,
+  "hud": "片贝四尺玉 · 4.0（PK8 参数） · 实时模拟 · 5 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 5.2,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "PK9-1",
+  "thumb_file": "45.jpg",
+  "thumb_ver": "41578ae9"
+ },
+ {
+  "name": "缩略图_pianbei_第2层",
+  "seconds": 1.5,
+  "hud": "片贝四尺玉 · 4.0（PK8 参数） · 实时模拟 · 5 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3.873333333333333,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "PK9-2",
+  "thumb_file": "46.jpg",
+  "thumb_ver": "41578ae9"
+ },
+ {
+  "name": "缩略图_pianbei_第3层",
+  "seconds": 1.6,
+  "hud": "片贝四尺玉 · 4.0（PK8 参数） · 实时模拟 · 5 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3.6533333333333333,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "PK9-3",
+  "thumb_file": "47.jpg",
+  "thumb_ver": "41578ae9"
+ },
+ {
+  "name": "缩略图_pianbei_第4层",
+  "seconds": 1.6,
+  "hud": "片贝四尺玉 · 4.0（PK8 参数） · 实时模拟 · 5 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 4.273333333333333,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "PK9-4",
+  "thumb_file": "48.jpg",
+  "thumb_ver": "41578ae9"
+ },
+ {
+  "name": "缩略图_pianbei_第5层",
+  "seconds": 4.1,
+  "hud": "片贝四尺玉 · 4.0（PK8 参数） · 实时模拟 · 5 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 7.120000000000001,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "PK9-5",
+  "thumb_file": "49.jpg",
+  "thumb_ver": "41578ae9"
+ },
+ {
+  "name": "缩略图_pianbei_恢复整体",
+  "seconds": 1.8,
+  "hud": "片贝四尺玉 · 4.0（PK8 参数） · 实时模拟 · 5 层（画面里 5 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 7.120000000000001,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  }
+ },
+ {
+  "name": "缩略图_hiki_nishiki",
+  "seconds": 12.5,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.3020833333333455,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "ef:hiki_nishiki",
+  "thumb_file": "51.jpg",
+  "thumb_ver": "0c72dacf"
+ },
+ {
+  "name": "缩略图_hiki_nishiki_第1层",
+  "seconds": 1.6,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.36,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "HN2-O",
+  "thumb_file": "52.jpg",
+  "thumb_ver": "0c72dacf"
+ },
+ {
+  "name": "缩略图_hiki_nishiki_第2层",
+  "seconds": 1.6,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 1 层） · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3.68,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  },
+  "thumb": "HN2-G",
+  "thumb_file": "53.jpg",
+  "thumb_ver": "0c72dacf"
+ },
+ {
+  "name": "缩略图_hiki_nishiki_恢复整体",
+  "seconds": 1.5,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 1 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3.68,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  }
+ }
+]
