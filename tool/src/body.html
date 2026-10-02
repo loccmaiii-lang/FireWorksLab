@@ -1,44 +1,11 @@
 <div class="app">
   <header class="top">
     <div class="brand"><span class="mark">DF</span><b>特效工作台</b><small id="verLabel">烟花烘焙器</small></div>
-    <div class="crumb" id="crumb"></div>
+    <div class="crumb" id="crumb" hidden aria-hidden="true"></div>
     <div class="gpu" id="gpu"></div>
     <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
     <div id="status"></div>
   </header>
-  <div class="viewbar" id="viewbar">
-    <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="1.5" y="2.5" width="4.5" height="11" rx="1.5"/></svg><span class="tl">库</span></button>
-    <div class="seg" id="viewSeg">
-      <button data-view="live" aria-pressed="true">实时模拟</button>
-      <button data-view="export" aria-pressed="false">引擎回放</button>
-      <button data-view="atlas" aria-pressed="false">贴图</button>
-    </div>
-    <div class="seg small" id="atlasSeg" hidden>
-      <button data-layer="head" aria-pressed="true">星头</button>
-      <button data-layer="tail" aria-pressed="false">拖尾</button>
-    </div>
-    <div class="seg small" id="flowSeg" hidden>
-      <button data-flow="0" aria-pressed="true">整张</button>
-      <button data-flow="1" aria-pressed="false">流转动画</button>
-    </div>
-    <div class="seg small" id="segSeg" hidden>
-      <button data-seg="0" aria-pressed="true">段 A</button>
-      <button data-seg="1" aria-pressed="false">段 B</button>
-    </div>
-    <div class="seg small" id="dispSeg" hidden>
-      <button data-disp="fit" aria-pressed="false">适应窗口</button>
-      <button data-disp="px" aria-pressed="false">1:1 像素</button>
-      <button data-disp="game" aria-pressed="true">游戏内大小</button>
-    </div>
-    <label class="expo" id="distBox" hidden><span class="tl">距离</span><input type="range" id="dist" min="0" max="1000" step="1" value="943" title="观看距离 50–1200 m（对数刻度）；标准检查按 1000 m"><output id="distOut">1000 m</output></label>
-    <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
-    <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
-    <span class="abtag" id="abTag" hidden>A | B</span>
-    <label class="expo push" title="显示曝光（只影响预览，不改素材）"><span class="tl">显示曝光</span><input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label>
-    <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（R）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
-    <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="专注：收起两侧面板，画布最大（F，或双击画布）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">专注</span></button>
-    <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="10" y="2.5" width="4.5" height="11" rx="1.5"/></svg></button>
-  </div>
   <main id="main">
     <aside class="side" id="side" aria-label="库">
       <div class="side-head">
@@ -72,6 +39,39 @@
         <button class="btn" id="abDeliv" type="button" aria-pressed="false" title="看这个效果导出的素材包里有什么：每层每段的贴图、平台、单格、延迟">查看交付</button>
       </div>
       <div id="bakeError" class="bake-error" role="alert" hidden><span id="bakeErrorText"></span><button class="btn" id="bakeRetry" type="button">重试烘焙</button></div>
+      <div class="viewbar" id="viewbar">
+        <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="1.5" y="2.5" width="4.5" height="11" rx="1.5"/></svg><span class="tl">库</span></button>
+        <div class="seg" id="viewSeg">
+          <button data-view="live" aria-pressed="true">实时模拟</button>
+          <button data-view="export" aria-pressed="false">引擎回放</button>
+          <button data-view="atlas" aria-pressed="false">贴图</button>
+        </div>
+        <div class="seg small" id="atlasSeg" hidden>
+          <button data-layer="head" aria-pressed="true">星头</button>
+          <button data-layer="tail" aria-pressed="false">拖尾</button>
+        </div>
+        <div class="seg small" id="flowSeg" hidden>
+          <button data-flow="0" aria-pressed="true">整张</button>
+          <button data-flow="1" aria-pressed="false">流转动画</button>
+        </div>
+        <div class="seg small" id="segSeg" hidden>
+          <button data-seg="0" aria-pressed="true">段 A</button>
+          <button data-seg="1" aria-pressed="false">段 B</button>
+        </div>
+        <div class="seg small" id="dispSeg" hidden>
+          <button data-disp="fit" aria-pressed="false">适应窗口</button>
+          <button data-disp="px" aria-pressed="false">1:1 像素</button>
+          <button data-disp="game" aria-pressed="true">游戏内大小</button>
+        </div>
+        <label class="expo" id="distBox" hidden><span class="tl">距离</span><input type="range" id="dist" min="0" max="1000" step="1" value="943" title="观看距离 50–1200 m（对数刻度）；标准检查按 1000 m"><output id="distOut">1000 m</output></label>
+        <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
+        <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
+        <span class="abtag" id="abTag" hidden>A | B</span>
+        <label class="expo push" title="显示曝光（只影响预览，不改素材）"><span class="tl">显示曝光</span><input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label>
+        <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（R）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
+        <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="专注：收起两侧面板，画布最大（F，或双击画布）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">专注</span></button>
+        <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="10" y="2.5" width="4.5" height="11" rx="1.5"/></svg></button>
+      </div>
       <div class="viewframe" id="viewFrame">
       <div class="vf-head"><span id="vfTitle"></span><span class="sp"></span>
         <button class="vt" id="vtGrid" type="button" aria-pressed="false" title="构图网格（三分线 + 中心十字，只影响观察）"><svg viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="1"/><path d="M6 1.5v13M10 1.5v13M1.5 6h13M1.5 10h13"/></svg></button>

@@ -42,9 +42,9 @@
   canvas#gl{width:100%;height:100%;display:block;border-radius:6px;background:#080a0d;box-shadow:0 0 0 1px var(--line)}
   .hud{position:absolute;left:10px;bottom:8px;font:11.5px/1.5 var(--mono);color:var(--dim);pointer-events:none;text-shadow:0 1px 2px #000}
   .qlabel{position:absolute;font:11px var(--mono);color:var(--gold2);background:rgba(10,11,15,.7);padding:1px 6px;border-radius:4px;pointer-events:none}
-  .busy{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(6,7,10,.72);border-radius:6px;color:var(--gold2)}
-  .busy .bar{width:220px;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
-  .busy .bar i{display:block;height:100%;width:0;background:var(--gold)}
+  #busy.busy{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(6,7,10,.72);border-radius:6px;color:var(--gold2)}
+  #busy .bar{width:220px;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
+  #busy .bar i{display:block;height:100%;width:0;background:var(--gold)}
   .timeline{display:flex;align-items:center;gap:10px}
   .timeline input[type=range]{flex:1}
   .timeline output{font:12px var(--mono);color:var(--dim);min-width:92px;text-align:right;font-variant-numeric:tabular-nums}
@@ -375,9 +375,9 @@ details.histgrp[open] > summary::before { content: '▾ '; }
 
 /* =====================================================================
    2026-10-02 界面外观第 1 步（协作/烟花烘焙器交互设计草稿.md 评估第 1 步）：只改外观，不改逻辑
-   顶部一行（品牌 + 当前条目，右上显卡 / 更新记录）→ 全宽工具条 → 左库 / 画面 / 右栏
+   顶部一行（品牌，右上显卡 / 更新记录）→ 左库 / 画面（内含工具条）/ 右栏
    ===================================================================== */
-.app{grid-template-rows:auto auto 1fr}
+.app{grid-template-rows:auto minmax(0,1fr)}
 header.top{background:var(--low);border-bottom:1px solid var(--line);padding:8px 16px;min-height:50px;gap:16px}
 .brand{align-items:center;gap:10px}
 .brand .mark{color:var(--acc);font-size:21px;font-weight:800;letter-spacing:-.03em;font-family:var(--sans)}
@@ -412,7 +412,7 @@ header.top{background:var(--low);border-bottom:1px solid var(--line);padding:8px
 canvas#gl{background:#080a0d;box-shadow:0 0 0 1px var(--line2)}
 .ref-box{box-shadow:0 0 0 1px var(--line2)}
 .timeline output{color:var(--dim)}
-.busy{color:var(--text)}
+#busy.busy{color:var(--text)}
 .bake-error{background:#422f30;border:1px solid #8e4f4c;border-radius:6px;color:#f0c4bf}
 /* 按钮 / 输入 */
 .btn{background:var(--panel);border:1px solid var(--line2);border-radius:6px;color:var(--text)}
@@ -629,7 +629,8 @@ details.stdd>summary small{color:var(--faint);font-weight:400}
 .viewframe{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--low);border:1px solid var(--line2);border-radius:7px;overflow:hidden}
 .viewframe .canvas-wrap{flex:1 1 auto;min-height:0;padding:8px}
 .vf-head,.vf-foot{display:flex;align-items:center;gap:8px;padding:5px 10px;font-size:12.5px;color:var(--dim);min-height:32px}
-.vf-head{border-bottom:1px solid var(--line)}
+.vf-head{border-bottom:1px solid var(--line);flex:none}
+.stage>.viewbar{flex:none;min-height:36px;padding:0;background:none;border:0}
 .vf-foot{border-top:1px solid var(--line);font:12px var(--mono);min-height:28px}
 .vf-head #vfTitle{color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .vf-head .sp,.vf-foot .sp{flex:1}
@@ -683,7 +684,7 @@ canvas#gl{box-shadow:none}
 .ab-state{font-size:12.5px;white-space:nowrap;color:var(--dim)}
 .ab-state:empty{display:none}
 .ab-state.bad{color:#f0a6a0;border:1px solid #8e4f4c;border-radius:5px;padding:2px 8px;background:#422f30}
-.ab-state.busy{color:var(--amber)}
+.ab-state.is-baking{color:var(--amber)}
 .ab-chg{border:1px solid #6b5a3a;border-radius:5px;padding:2px 8px;background:#3c352b}
 #abDeliv[aria-pressed="true"]{border-color:var(--acc);color:var(--acc);background:var(--hover)}
 .lrow .lst{width:56px;background:var(--panel);border:1px solid var(--line2);border-radius:4px;color:var(--text);font:11.5px var(--mono);padding:1px 4px}

@@ -4,6 +4,7 @@
   python3 analysis/scripts/标准检查.py                # 当前条目（状态清单里各效果的主条目 / 待验收版）+ 正式库 + 花型库模板（4.0）
   python3 analysis/scripts/标准检查.py JM4 HK9 type40:kiku ...   # 只查这几个（结果并进上一次的完整结果）
   选项：--all（迭代区全部非历史条目）  --no-write（不写 tool/data/standard.js）
+  --ui-state-only：只跑离线界面状态回归（需Node；不启动浏览器、不改条目结果）
 
 查什么（都在导出口径上量，不看实时模拟）：
   条目 6 样东西（标准第 1 节）：实时模拟 / 引擎回放 + 游戏内大小 / 贴图 + 流转 / 完整参数 / 导出素材包 / 实拍对照（有参考时）
@@ -14,7 +15,7 @@
 
 输出：tool/data/standard.js（FW_STANDARD）、analysis/probe/标准检查/标准检查.json + .md
 """
-import argparse, asyncio, importlib.util, json, pathlib, sys, time
+import argparse, asyncio, importlib.util, json, pathlib, subprocess, sys, time
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 HERE = pathlib.Path(__file__).resolve().parent
@@ -121,5 +122,8 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('targets', nargs='*')
     ap.add_argument('--no-write', action='store_true')
+    ap.add_argument('--ui-state-only', action='store_true', help='只跑离线界面状态回归，不启动浏览器')
     a = ap.parse_args()
+    if a.ui_state_only:
+        raise SystemExit(subprocess.run(['node', str(HERE / 'bake_state_check.mjs')]).returncode)
     asyncio.run(run(a.targets or None, not a.no_write, merge=bool(a.targets)))

@@ -282,7 +282,7 @@ function stageTick(D) {
   $('#vfTitle').textContent = `${srcLabel() || (lib.key === 'combo' ? '组合编辑器' : '')}${srcLabel() ? ' · ' : ''}${state.tab === 'asset' ? '贴图回放' : VIEW_NAMES[state.view] || ''}${scopeLabel()}`;
   $('#vfSpec').textContent = state.tab === 'asset' ? '' : specLabel();
   buildTlBars(); syncGate();
-  const ab = $('#abState'); if (ab) { const st = state.bakeError ? ['bad', '烘焙失败 · 保留上次成功'] : state.baking || state.dirty ? ['busy', '烘焙中…'] : ['', '']; ab.className = 'ab-state ' + st[0]; ab.textContent = st[1]; }
+  const ab = $('#abState'); if (ab) { const st = state.bakeError ? ['bad', '烘焙失败 · 保留上次成功'] : state.baking || state.dirty ? ['is-baking', '烘焙中…'] : ['', '']; ab.className = 'ab-state ' + st[0]; ab.textContent = st[1]; }
   if (stage2.deliv && !$('#delivView').hidden && stage2.delivSig !== stage2.tlSig) renderDeliv();
 }
 // 通过门槛：只影响「通过」按钮（意见、要改照常）

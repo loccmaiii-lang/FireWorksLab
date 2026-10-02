@@ -117,6 +117,52 @@ await check('F1: obsolete failure does not block a newer recipe', async f => {
   assert.equal(f.run('state.bakeError'), null);
   assert.deepEqual(f.published, ['new']);
 });
+
+// Match direct ID/class layout rules without opening a browser. This catches an
+// asset status accidentally inheriting the full-canvas task overlay's class.
+function directStyles(id, className) {
+  const css = fs.readFileSync(path.join(root, 'tool/src/style.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const classes = new Set(className.split(/\s+/)), out = new Map(); let order = 0;
+  for (const rule of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    for (const selector0 of rule[1].split(',')) {
+      const selector = selector0.trim(), tokens = selector.match(/[.#][\w-]+/g) || [];
+      if (selector !== '*' && (!tokens.length || tokens.join('') !== selector)) continue;
+      if (!tokens.every(t => t[0] === '#' ? t.slice(1) === id : classes.has(t.slice(1)))) continue;
+      const specificity = tokens.reduce((n, t) => n + (t[0] === '#' ? 100 : 10), 0);
+      for (const declaration of rule[2].split(';')) {
+        const colon = declaration.indexOf(':'); if (colon < 0) continue;
+        const key = declaration.slice(0, colon).trim(), value = declaration.slice(colon + 1).trim();
+        const weight = specificity + (/!important\b/.test(value) ? 10000 : 0), previous = out.get(key);
+        if (!previous || weight >= previous.weight) out.set(key, { value: value.replace(/\s*!important\b/, ''), weight, order: order++ });
+      }
+    }
+  }
+  return Object.fromEntries([...out].map(([key, entry]) => [key, entry.value]));
+}
+await check('asset status: editing/baking/failure stay in flow; only task overlay covers the canvas', async f => {
+  f.ctx.setInterval = () => 0; // Polling is unrelated; exercise stageTick explicitly below.
+  vm.runInContext(fs.readFileSync(path.join(root, 'tool/src/js/79_workbench.js'), 'utf8'), f.ctx);
+  let now = 0; f.ctx.performance = { now: () => now += 300 };
+  f.ctx.engineTick = t => Math.floor(t * 30) / 30;
+  f.elements.set('#tlBars', { querySelector: () => null, style: {} });
+  f.run("srcLabel = () => 'AI 版 HN2'; specLabel = () => ''; buildTlBars = () => {}; syncGate = () => {};");
+  const statuses = [
+    { dirty: true, baking: false, error: false, text: '烘焙中…' },
+    { dirty: true, baking: true, error: false, text: '烘焙中…' },
+    { dirty: true, baking: false, error: true, text: '烘焙失败 · 保留上次成功' },
+    { dirty: false, baking: false, error: false, text: '' },
+  ];
+  for (const row of statuses) {
+    f.run(`state.dirty = ${row.dirty}; state.baking = ${row.baking}; state.bakeError = ${row.error ? '{}' : 'null'}; stageTick(4.2);`);
+    const badge = f.elements.get('#abState'), style = directStyles('abState', badge.className);
+    assert.equal(badge.textContent, row.text);
+    assert.ok(!['absolute', 'fixed'].includes(style.position), `${row.text || 'idle'} status covers the page (${badge.className})`);
+    assert.equal(style.inset, undefined, 'asset status must not stretch over its containing block');
+  }
+  const overlay = directStyles('busy', 'busy');
+  assert.equal(overlay.position, 'absolute', 'explicit export/library task overlay must keep its position');
+  assert.equal(overlay.inset, '0', 'task overlay remains bounded by the canvas');
+});
 console.log(JSON.stringify(result, null, 2));
 const outIndex = process.argv.indexOf('--out');
 if (outIndex >= 0) {
