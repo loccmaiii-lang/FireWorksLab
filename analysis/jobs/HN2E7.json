@@ -1,0 +1,9 @@
+{
+ "id": "HN2E7",
+ "type": "export",
+ "effect": "hiki_nishiki",
+ "entry": "HN2",
+ "name": "HikiNishiki",
+ "priority": 9,
+ "note": "HN2 橙引线换成原型的颜色模型（烘焙器 4.2.0 新能力：火花烧旺 0.35 s、每颗星亮度离散 0.35、线间底光 0.02 / 6 m；Ramp 深红 → 橙；冷却 0.3；火花尺寸 0.6），动态不变。看颜色纯度和尖部 / 中段 / 内段的颜色变化。"
+}
