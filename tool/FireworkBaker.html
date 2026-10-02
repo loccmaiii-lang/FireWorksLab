@@ -1086,7 +1086,7 @@ canvas#gl{box-shadow:none}
 <script src="data/standard.js"></script>
 <script>
 'use strict';
-const UPDATES = [{"title": "2026-10-02 · 烘焙器 4.2.0：每层同一套时刻 + 接力、输出一节、尾迹扩散、重播 R、单束", "body": "`git pull` 后刷新烘焙器。\n\n- **轨道**：每层都有点火 / 燃烧结束（上排圆点）和火花开始 / 火花停（中间菱形，空心 = 没打开，拖动就打开）。同一批星的几层在同一时刻的点有亮环、一起动（引菊：橙引线火花停 = 金锦点火）。拖燃烧结束，序列时长跟着变。点轨道切到那一层。\n- **输出一节**（右栏「输出：帧数 · 格子 · 贴图」）：顶上直接写着多少帧、几张、每张几×几、帧率；帧数可选 自动 / 最省 / 手动，格子可选 固定 / 按帧数选最小贴图，单格 512 / 1024 / 2048。轨道上的细刻度是每一帧的位置。默认还是原来的做法。\n- **尾迹扩散**（物理扰动）：老火花被空气扰流慢慢吹散，默认 0。\n- **尾迹外形**再加三项（对话框7 为引菊颜色纯度要的）：火花烧旺时间、每颗星亮度离散、线间底光，默认 0。\n- **重播**：按钮或 R。实拍对照改成 V。\n- **单束**：资产栏「单束」菜单，或调某一层时层参数顶上的按钮。\n- 左栏缩略图换成本机显卡渲染的。"}, {"title": "2026-10-02 · 升空尾缀第 2 版待你验收（RT2S / RT2M / RT2L）", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀 · 循环层 + 粒子，右上切小 / 中 / 大。\n\n- 火星数量、大小、散开按你 14:35 的参考图同尺度量出来对齐（三档对参考：`analysis/results/RT2/三档_对参考.jpg`）。\n- 参数全部在右栏；导出你自己在烘焙器里点，粒子大小 / 亮度请在引擎里按你的例子标定。\n- 已知：回放检查会把循环序列每圈「帧号回到 0」算成回跳（检查规则的问题，待改）；你 16:41 提的明暗对比、线状拖影、上升时的空气乱流在做第 3 版。"}, {"title": "2026-10-02 · 烘焙器 4.1.2：不再越播越卡、每个资产自己的尾迹外形、层轨道能拖、缩略图换渲染", "body": "`git pull` 后刷新烘焙器。\n\n- **越播越卡修好了**：实时模拟以前每帧都从 0 秒重算，越到后面越慢；现在从上一帧接着算，后段和前段一样快（画面逐位不变）。播放时钟也改成按真实时间走。\n- **尾迹外形**：不再是顶栏的全局面板。每个效果（多层时每一层）右栏都有「尾迹外形」：粗细随机、亮肩、泪滴星头，默认 0 = 原样。\n- **层轨道能拖**：每层轨道下方的白色把手是入点 / 出点，上方圆点是点火、燃烧结束、火花停等；任何一层都能直接拖，松手只重烘那一层。拖回尽头 = 自动。\n- **缩略图**：不再用实拍。本机显卡按当前配方渲染（UI8T，回来后自动换上）；之前先用对照图里的模拟图。\n- **命名**：循环层 + 粒子（升空尾缀小 / 中 / 大）也改成 `T_EFX_FireWorks_…`，三档加 `_S / _M / _L`。`cascade.json` 里每张贴图写了 UE 资产名，导入时直接用、不用再加前缀。"}, {"title": "2026-10-02 · 烘焙器 4.1.1：入点 / 出点、命名规范、全局风格、层轨道与联动、单束、流转连播", "body": "`git pull` 后刷新烘焙器。\n\n- **入点 / 出点**：时间轴下面「设为入点 / 设为出点」。帧只分给入点到出点；入点前默认用入点那一帧从小放大（也可选不显示）。引擎回放、导出都按这个。\n- **命名**：大面片素材包改成 `T_EFX_FireWorks_名称_层_4x4_01_HD.png`（手机无 `_HD`；Cut `_C`、Ramp `_R` 共用）。每个效果先起了英文名（鸿巢四尺玉 = YonshakuKamuro，层 Main / Red；引菊 → 锦 = HikiNishiki，层 Hiki / Nishiki……），交付页可以改。\n- **全局风格**：顶栏「全局风格」，尾长 / 粗细 / 散布 / 星头大小 / 亮度 / 闪烁 + 粗细随机 / 亮肩 / 泪滴。默认值时所有效果逐像素不变；默认不动已通过的效果。\n- **层轨道**：时段条上直接看到并拖每层的点火、燃烧结束、第二段、火花停（四尺玉红点何时出现、青柠星星头何时点着、引菊何时转锦都在这里）。同一批星的层改轨迹参数会自动同步。\n- **单束**：交付页可以导出某一层的单束包（每颗星一个粒子）。\n- **流转动画**：两张图会连着播。"}, {"title": "2026-10-02 · 烘焙器 4.0.6：工具条回到画面上方、修复调参黑屏", "body": "刷新正式烘焙器即可。实时模拟、引擎回放、贴图、观察大小、平台、曝光和实拍对照回到中央画面上方；顶部去掉重复的长效果路径，右上仍显示显卡和更新记录。调参时“烘焙中”提示误用了遮罩样式，已修复。离线状态回归通过；实际浏览器视觉受本机访问限制尚未验证。"}, {"title": "2026-10-02 · 烘焙器 4.0.5：交互稿剩下的部分做完", "body": "`git pull` 后刷新烘焙器。按你的浏览器交互稿：画面框（标题写明看的是哪版 / 哪层，右上 网格 · 记录当前帧 · 大画面，脚注 单格 · tick）、时间轴（±1 tick、← →、循环 / 播放一遍、开花 / 展开 / 衰减、每层时段条）、查看交付（素材包文件清单 + 导出）、检查与验收四行、通过门槛、左栏「我的版本」。和交互稿逐项对照、哪些没照搬和为什么、改进建议，写在 `协作/烟花烘焙器交互设计草稿.md` 最后一节。"}, {"title": "2026-10-02 · 烘焙器 4.0.4：每个条目都是完整资产（多层也能逐层调参）、能保存你的版本、观看距离 50–1200 m", "body": "`git pull` 后刷新烘焙器。\n\n- **多层效果**（鸿巢、青柠星、球形 A–D、永丰、片贝、万彩千轮…）：右栏「观察图层」点某一层，下面就是这一层的**完整参数**，画面一直是整朵；改了只重烘这一层。「贴图」视图看这一层的贴图和流转。独看 / 静音只影响观察。\n- **保存**：画面上方的资产栏——「版本」下拉在 AI 版和你保存的版本之间切换；「保存 / 另存为」存你的版本（这台电脑的浏览器里，按效果分）；「⋯」里可以复制你的改动（贴给我，我就知道你改了哪些参数）、导出 / 导入配方文件；「导出素材包」导出整个效果。\n- **右栏三页**：参数（默认，最上面一行有 通过 / 要改）/ 审阅（说明、检查、意见、历史）/ 工具。\n- **观看距离** 改成 50–1200 m（对数刻度，双击回 1000 m）。标准检查仍按 800–1200 m 量。"}, {"title": "2026-10-02 · 鸿巢四尺玉、青柠星的 4.0 版进待我验收；烘焙器换外观（4.0.3）", "body": "`git pull` 后刷新烘焙器。\n\n- **待我验收新增两个**（参数和你之前看过的 3.7 版一样，只换成 4.0 渲染）：鸿巢四尺玉 HK10、青柠星 QN11。导出、回放检查、标准检查全过；每层一张 64 帧、单格 512、固定取景。历史里的 HK9 / QN10 可以对照。\n- **另外 4 个迁移版**（永丰 FS10、片贝 PK9、球形D QD13、万彩千轮 ZW5）：技术检查也全过，但它们在 3.7 时本来就还没调完、没交过你，所以留在「制作中」。球形A QA19 保持暂停（QA17 的已知问题还在）。\n- **球形B ZB5**：第 1 层开花几帧过曝，曝光重算 2.087 → 1.755，本机重导中，过了就进待我验收。\n- **球形C QC11 需要你定一条规则**：外层开花闪一下、0.38 s 后星才点着，这中间本来就是黑的，导出里有 2 帧全黑，按现在「中间不许有空帧」过不了。推荐：烘焙器把这种「模拟里整段没有星在烧」的黑段并成 1 帧停住（省格子），检查按模拟判断是否真黑，不按像素，不会掩盖真错误。\n- **界面外观**（按你的浏览器草稿，第 1 步只改外观）：DF 配色；顶部一行（右上显卡型号、更新记录）；工具条全宽一行；左栏上下分组可折叠（待我验收 / 制作中 / 已通过 / 花型模板 / 历史 / 工具），56 px 缩略图、选中整圈青绿框；最下面「＋ 新建配方」和「复制我的意见」；窄窗口右栏排到画面下面。渲染、导出、参数都没动。"}, {"title": "2026-10-02 · 引菊 → 锦（尾缀3.0_A 主层）进待我验收", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 引菊 → 锦（HN2）。\n\n- **完全在烘焙器 4.0 里做的**：两层同一批星（橙引线 + 金锦），都是花型库「菊」模板的标准参数，右栏能调，能导出。\n- **按你 10-01 晚上的两条意见改了**：\n  - 金色不再往中心长：星换药后在身后留下直的金线，随星往外走一段再慢慢消散；\n  - 重力降到很小（实拍的下坠是仰拍透视），不下垂。\n- **检查**：回放检查全过，标准检查 12 项全 ✅。\n- **和实拍还差**：\n  - 实拍金线从中心附近起（仰拍透视），这里金线在外侧半段；\n  - 橙线末尾的金色小火星很细，远看几乎看不出。\n- **没经 UE 验证**：自发光倍数、BC7 串扰。素材包在本机 `analysis/local/输出/素材包/HikiNishiki`；因为烘焙器夜里升了 4.0.2，正在用当前版本参数不变重导一次（HN2E6），会覆盖同一目录。\n- **调参注意**：两层共用星的参数（种子、星数、初速、终端速度、离散、重力）要两层一起改。"}, {"title": "2026-10-02 · 本机七类素材导出与三档子模板标定预览", "body": "七类当前素材的 PC/手机版包已导出，三档标定与21个子模板参数已准备。在本轮对话可打开完整名称预览；**还没有写入BP**，新增ID暂不能播放。\n\n需要你在当前对话确认本次帧号入口约定：仓库文档要求第3通道，本机现有材质实际接第0通道，且禁止新增材质。确认后再继续实际导入与BP保存。\n\n当前素材仍有画质问题：PC回放5类通过，手机2类通过；其余有过曝、空帧或边缘警告。没有改艺术配方或验收状态，未完成UE实播测量。"}, {"title": "2026-10-02 · 4.0.2：金芒菊回到一张 4.56 s、固定取景不再抖；9 个效果迁到 4.0，旧版本进归档", "body": "`git pull` 后刷新烘焙器。\n\n- **金芒菊 JM4-40（待我验收）**：\n  - 4.56 秒放进一张 4×4×RGBA（64 帧）。\n  - 开花阶段每个 tick 一帧，之后逐级放慢到 15、10、7.5 fps。\n  - 末尾的暗火星保留，固定取景，不再一胀一缩。\n  - 本机导出、回放检查都过了。\n- **帧预算**：默认先放进一张，放不下才加张。燃烧段最慢 10 fps，淡出段最慢 7.5 fps；这是按你的实测暂定的，引擎里看过后可以再改。\n- **取景**：4.0 新建默认固定取景。Zoom 加上\"一帧停几个 tick\"会让画面一胀一缩，还能选，但旁边写明了。\n- **左栏**：\n  - 通过的效果一直留在\"已通过\"。\n  - \"历史\"按效果折叠。\n  - 待我验收里 4 个不达标的 3.7 版撤回到制作中。\n- **9 个效果迁到 4.0**（效果参数不变）：球形 A–D、青柠星、万彩千轮、鸿巢、永丰、片贝，新号 QA19、ZB5、QC11、QD13、QN11、ZW5、HK10、FS10、PK9。\n  - 鸿巢 HK10 的导出和检查已全过。\n  - 其余还在重导、修末尾一两帧空帧等小项，全过了才进\"待我验收\"。\n- **过程文件**：被取代的旧版本（147 项）搬进 `归档/过程/<效果>/`，没有删，烘焙器\"历史\"里照样能打开。"}, {"title": "2026-10-01 · 版本显示已修正为 v4.0", "body": "刷新烘焙器，页眉和浏览器标签会显示实际程序版本 v4.0。旧的「默认 3.7 · 4.0 升级中」文字已移除。新建空中花型使用 4.0，已保存的旧配方与正式库仍保留原来的兼容版本。"}, {"title": "2026-10-01 · 烘焙器 4.0 交付：新建花型默认 4.0；JM4 的 4.0 版等你验收", "body": "`git pull` 后刷新烘焙器。\n\n- **新建的空中花型都是 4.0**：单格 512（原来 256，放大后不再糊）、引擎 30 fps 下每个 tick 都换帧，帧多就自动分成几张贴图。在 30 fps 下换帧数不比 3.7 少，每个模板都有自己的固定曝光。\n- **标准检查**：左栏和审阅卡上有 ✅ / ❌ 和缺什么。19 个 4.0 模板里 18 个全过，只有「蜂」的屏幕放大是 1.03，略超 1。\n- **多层效果导出一个素材包**：每层一个发射器，延迟都写在 `cascade.json` 里，引擎里不用蓝图触发。\n- **柳、椰子在 4.0 下重调了**：柳现在是一条条垂下的金丝，椰子是 14 根下垂的弧。\n\n**待我验收**：「金芒菊 · 4.0 渲染（JM4-40）」。参数和你通过的 JM4 完全一样，只换成 4.0 渲染：火花更细更清楚，但光晕少一些，亮处偏白一点。正式库的 JM4 原样保留，你点「通过」后才替换。\n\n**在 UE 里跑一次实测包**（不急）：`spec/UE实测包/` 里有四个小测试（帧号、压缩串扰、曝光、Ramp 设置），用本机导入工具导入，看法写在 `说明.md` 里。结果告诉我，或者直接填进 `spec/UE实测.md`。\n\n还没做的：\n\n- 尾缀 V5 在 4.0 下星头没有光晕，所以 V5 继续用 3.7，没给你出候选。\n- 鸿巢、永丰、片贝等正在做的效果还是 3.7，要各自迁到 4.0 再交。\n- 所有 4.0 画面都没在 UE 里验证过。"}, {"title": "2026-10-01 · 默认恢复 3.7，4.0 继续内部验证", "body": "按最新开工要求，花型库默认画面先恢复 3.7。4.0 在开发橱窗中继续验证，全部通过不退步门槛后一次交付。当前已修正实时预览将烘焙取景当成观看镜头的问题，并接上 30 fps 取帧和多张分段。\n\n现有 22 个云端配方入口保留，暂不扩充。源码/时序检查已通过，新的 GPU 画面和浏览器实际播放耗时尚未验证；无需中途验收阶段版本，正式库未迁移。"}, {"title": "2026-10-01 · 云端新增 22 个配方可以一起预览", "body": "`git pull` 后刷新烘焙器，点左栏底部 **「云端配方预览 · 22」**。顶部下拉框可切换芯入菊、八重/三重/四重芯、金蕊青柠、金银冠和柳、四色牡丹、彩色千轮、引先、残光、多节礼花等；旁边可选整体或单层，支持连续播放、PC / 手机、游戏内大小。点「保存完整配方」可留下当前参数。原来的 3.7 / 4.0 基准对照也在同一下拉框。\n\n这是按云端总表做的**配方结构预览**，方便先看喜欢哪些结构和配色。四色牡丹当前是混色分布，多节礼花先展示开花编排；帧预算和最终素材包还在开发。打铁花、交叉环、齐闪等 11 组缺能力的项目，在上方「仍待补能力的配方」里逐项说明。\n\n标题现已明确显示 **「4.0 开发版」**，3.12 是阶段编号。正式库和旧版已通过效果未迁移。"}, {"title": "2026-10-01 · 4.0 首批光点对照橱窗（工程版本 3.11）", "body": "`git pull` 后刷新烘焙器，点左栏底部 **「4.0 对照橱窗」**。菊、牡丹、锦冠、千轮、点灭和 JM4 可左右同秒连续看；能切 PC / 手机和观察距离，F 键放大画布。V5 三档仍保留旧核，界面明确标注。\n\n新核的亮点轮廓和尾部颗粒更清楚；每个案例采用固定曝光，数值写在橱窗上方。JM4、V5 正式条目没有迁移，兼容贴图回归零差。\n\n**本次请看美术方向：右侧亮核质感、清晰度和亮度是否接近你想要的感觉。** 帧预算、少数开场过曝和特殊产物统一还在做，未经 UE 验证；不用替我查实现错误，也不是请你验收完整 4.0。"}, {"title": "2026-09-30 22:36 · 球形 A QA13 退回制作中", "body": "前段星头出现过早、尾长与参考不一致，上一轮整体自检通过结论已撤回。旧版素材保留作诊断证据；本机正在重新检查原片、头尾形成过程和核验条件。当前没有新的球形 A 候选需要用户验收。"}, {"title": "2026-09-30 22:02 · 球形 A 本机迭代版 QA13，已进「待我验收」", "body": "本机接续云端 QA12：修正末段银白点过早变暗，约 3.4 秒仍能清楚看到，随后渐暗熄灭。金尾、粉星头、运动和 Zoom 保持原版；RTX 5080 已完成两层 2K、PC + 手机素材导出，并检查同一秒对照、连续回放、局部和版本对应。\n\n刷新烘焙器，在「待我验收」打开球形 A QA13。素材在本机 `analysis/local/输出/素材包/QiuXingA_QA13_1`、`_2`；自检记录 `analysis/results/QA13E/看法.md`。UE 实机仍未验证，最终艺术效果由用户验收。\n\n\n最新的在最上面。烘焙器顶栏「更新记录」显示的就是这个文件（build 时嵌进去）。每条写：做了什么、在哪看、要你做什么。"}, {"title": "2026-09-30 15:20 · 烘焙器改成「待我验收 / 制作中 / 已通过」，流程改成 AI 自己迭代到能交付", "body": "- **左栏**：默认三个入口 **待我验收 / 制作中 / 已通过**，另有「历史」。一个效果一条（鸿巢、永丰、片贝的各层、光丝 A / B、历轮任务都收在效果详情里）。缩略图用参考里最亮的一刻，标题先写效果名。\n- **「新」只表示有新的完整候选等你验收**；你的通过 / 要改按版本记，新版本不会继承旧版本的「要改」（你截图里物理尾缀的「要改」就是这么来的）。\n- **每个效果的详情**：进度（计算 / AI 自检 / 素材导出 / 你已验收）、版本（待你验收 / 工作版 / 已通过）、方案、准备情况（实时模拟、烘焙回放、贴图素材包是「当前版本 / 已过期 / 尚未生成」；你在烘焙器里改了参数会提示素材包是改之前的）、历史版本和你当时的反馈。\n- **现在「待我验收」是空的**：按新标准，没有一个效果完成了导出和回放检查，全部在「制作中」。做完一个进一个，不用你中途看。\n- **结果回来后谁接着做**：后台脚本只计算，不判断。新增一个云端定时任务（每天 9:47 / 12:47 / 15:47 / 18:47 / 21:47），自动看回来的结果、写看法、下一轮任务；没有新结果就直接结束。可以在 claude.ai 的定时任务里暂停或删除。"}, {"title": "2026-09-30 13:32 · 球形 A 第 2 轮；C / D 的芯还在调", "body": "- **球形A（QA6）**：粉色星头能看到了，挂在金色尾巴上，结构和你核对过的原理一致。还差两处：粉色偏淡偏橙；最后一段应该是银白小光点、没有尾巴，现在还是金色带短尾。这两处在组合页里就能调。**请你审**：迭代区「球形A」整体条目。\n- **球形 C / D**：外层对了，芯还是看不见。原因是芯太稀、星点太小、太规整，看起来是一圈空心环，叠上外层就没了。已经在云端试好（芯加密、加大、实心一团，能看见了），第 3 轮 QC6 / QD6 已下发，跑完我先看。"}];
+const UPDATES = [{"title": "2026-10-02 · 升空尾缀第 3 版待你验收（RT3S / RT3M / RT3L）", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀 · 循环层 + 粒子，右上切小 / 中 / 大（第 2 版进历史）。\n\n- **白 / 黄对比**：火星三档各有温度偏移（细粒偏金偏暗、粗粒更热更亮 → 过曝发白），大小离散加大，同一档里也有亮有暗。\n- **线状火星**：中、粗火星是竖向短线——看的人 / 相机盯着星头走，火星相对星头往下退，在曝光时间里拖成线（越往下拖得越长，和你的参考一致）；细火星大多还是点。\n- **上升不再冻住**：每颗火星跟着出生那团空气漂（阵风约 1 m/s），越老漂得越远 → 尾迹下段慢慢松开、轻轻弯；散开改成中间密、边缘软。\n- 中档按你 14:35 参考图同尺度量：线状比例 0.82（参考 0.73）、长短比 2.4（2.3）、白 / 黄、边缘软硬都对上了；三档并排 `analysis/results/RT3/三档_对参考.jpg`。新参数在右栏「火星明暗与线状」「空气乱流」两节。\n- 没经过 UE 验证：乱流用的 Acceleration 模块、GPU 粒子 Rectangle 对齐拉长。导出请你自己在烘焙器里点。"}, {"title": "2026-10-02 · 烘焙器 4.2.0：每层同一套时刻 + 接力、输出一节、尾迹扩散、重播 R、单束", "body": "`git pull` 后刷新烘焙器。\n\n- **轨道**：每层都有点火 / 燃烧结束（上排圆点）和火花开始 / 火花停（中间菱形，空心 = 没打开，拖动就打开）。同一批星的几层在同一时刻的点有亮环、一起动（引菊：橙引线火花停 = 金锦点火）。拖燃烧结束，序列时长跟着变。点轨道切到那一层。\n- **输出一节**（右栏「输出：帧数 · 格子 · 贴图」）：顶上直接写着多少帧、几张、每张几×几、帧率；帧数可选 自动 / 最省 / 手动，格子可选 固定 / 按帧数选最小贴图，单格 512 / 1024 / 2048。轨道上的细刻度是每一帧的位置。默认还是原来的做法。\n- **尾迹扩散**（物理扰动）：老火花被空气扰流慢慢吹散，默认 0。\n- **尾迹外形**再加三项（对话框7 为引菊颜色纯度要的）：火花烧旺时间、每颗星亮度离散、线间底光，默认 0。\n- **重播**：按钮或 R。实拍对照改成 V。\n- **单束**：资产栏「单束」菜单，或调某一层时层参数顶上的按钮。\n- 左栏缩略图换成本机显卡渲染的。"}, {"title": "2026-10-02 · 升空尾缀第 2 版待你验收（RT2S / RT2M / RT2L）", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀 · 循环层 + 粒子，右上切小 / 中 / 大。\n\n- 火星数量、大小、散开按你 14:35 的参考图同尺度量出来对齐（三档对参考：`analysis/results/RT2/三档_对参考.jpg`）。\n- 参数全部在右栏；导出你自己在烘焙器里点，粒子大小 / 亮度请在引擎里按你的例子标定。\n- 已知：回放检查会把循环序列每圈「帧号回到 0」算成回跳（检查规则的问题，待改）；你 16:41 提的明暗对比、线状拖影、上升时的空气乱流在做第 3 版。"}, {"title": "2026-10-02 · 烘焙器 4.1.2：不再越播越卡、每个资产自己的尾迹外形、层轨道能拖、缩略图换渲染", "body": "`git pull` 后刷新烘焙器。\n\n- **越播越卡修好了**：实时模拟以前每帧都从 0 秒重算，越到后面越慢；现在从上一帧接着算，后段和前段一样快（画面逐位不变）。播放时钟也改成按真实时间走。\n- **尾迹外形**：不再是顶栏的全局面板。每个效果（多层时每一层）右栏都有「尾迹外形」：粗细随机、亮肩、泪滴星头，默认 0 = 原样。\n- **层轨道能拖**：每层轨道下方的白色把手是入点 / 出点，上方圆点是点火、燃烧结束、火花停等；任何一层都能直接拖，松手只重烘那一层。拖回尽头 = 自动。\n- **缩略图**：不再用实拍。本机显卡按当前配方渲染（UI8T，回来后自动换上）；之前先用对照图里的模拟图。\n- **命名**：循环层 + 粒子（升空尾缀小 / 中 / 大）也改成 `T_EFX_FireWorks_…`，三档加 `_S / _M / _L`。`cascade.json` 里每张贴图写了 UE 资产名，导入时直接用、不用再加前缀。"}, {"title": "2026-10-02 · 烘焙器 4.1.1：入点 / 出点、命名规范、全局风格、层轨道与联动、单束、流转连播", "body": "`git pull` 后刷新烘焙器。\n\n- **入点 / 出点**：时间轴下面「设为入点 / 设为出点」。帧只分给入点到出点；入点前默认用入点那一帧从小放大（也可选不显示）。引擎回放、导出都按这个。\n- **命名**：大面片素材包改成 `T_EFX_FireWorks_名称_层_4x4_01_HD.png`（手机无 `_HD`；Cut `_C`、Ramp `_R` 共用）。每个效果先起了英文名（鸿巢四尺玉 = YonshakuKamuro，层 Main / Red；引菊 → 锦 = HikiNishiki，层 Hiki / Nishiki……），交付页可以改。\n- **全局风格**：顶栏「全局风格」，尾长 / 粗细 / 散布 / 星头大小 / 亮度 / 闪烁 + 粗细随机 / 亮肩 / 泪滴。默认值时所有效果逐像素不变；默认不动已通过的效果。\n- **层轨道**：时段条上直接看到并拖每层的点火、燃烧结束、第二段、火花停（四尺玉红点何时出现、青柠星星头何时点着、引菊何时转锦都在这里）。同一批星的层改轨迹参数会自动同步。\n- **单束**：交付页可以导出某一层的单束包（每颗星一个粒子）。\n- **流转动画**：两张图会连着播。"}, {"title": "2026-10-02 · 烘焙器 4.0.6：工具条回到画面上方、修复调参黑屏", "body": "刷新正式烘焙器即可。实时模拟、引擎回放、贴图、观察大小、平台、曝光和实拍对照回到中央画面上方；顶部去掉重复的长效果路径，右上仍显示显卡和更新记录。调参时“烘焙中”提示误用了遮罩样式，已修复。离线状态回归通过；实际浏览器视觉受本机访问限制尚未验证。"}, {"title": "2026-10-02 · 烘焙器 4.0.5：交互稿剩下的部分做完", "body": "`git pull` 后刷新烘焙器。按你的浏览器交互稿：画面框（标题写明看的是哪版 / 哪层，右上 网格 · 记录当前帧 · 大画面，脚注 单格 · tick）、时间轴（±1 tick、← →、循环 / 播放一遍、开花 / 展开 / 衰减、每层时段条）、查看交付（素材包文件清单 + 导出）、检查与验收四行、通过门槛、左栏「我的版本」。和交互稿逐项对照、哪些没照搬和为什么、改进建议，写在 `协作/烟花烘焙器交互设计草稿.md` 最后一节。"}, {"title": "2026-10-02 · 烘焙器 4.0.4：每个条目都是完整资产（多层也能逐层调参）、能保存你的版本、观看距离 50–1200 m", "body": "`git pull` 后刷新烘焙器。\n\n- **多层效果**（鸿巢、青柠星、球形 A–D、永丰、片贝、万彩千轮…）：右栏「观察图层」点某一层，下面就是这一层的**完整参数**，画面一直是整朵；改了只重烘这一层。「贴图」视图看这一层的贴图和流转。独看 / 静音只影响观察。\n- **保存**：画面上方的资产栏——「版本」下拉在 AI 版和你保存的版本之间切换；「保存 / 另存为」存你的版本（这台电脑的浏览器里，按效果分）；「⋯」里可以复制你的改动（贴给我，我就知道你改了哪些参数）、导出 / 导入配方文件；「导出素材包」导出整个效果。\n- **右栏三页**：参数（默认，最上面一行有 通过 / 要改）/ 审阅（说明、检查、意见、历史）/ 工具。\n- **观看距离** 改成 50–1200 m（对数刻度，双击回 1000 m）。标准检查仍按 800–1200 m 量。"}, {"title": "2026-10-02 · 鸿巢四尺玉、青柠星的 4.0 版进待我验收；烘焙器换外观（4.0.3）", "body": "`git pull` 后刷新烘焙器。\n\n- **待我验收新增两个**（参数和你之前看过的 3.7 版一样，只换成 4.0 渲染）：鸿巢四尺玉 HK10、青柠星 QN11。导出、回放检查、标准检查全过；每层一张 64 帧、单格 512、固定取景。历史里的 HK9 / QN10 可以对照。\n- **另外 4 个迁移版**（永丰 FS10、片贝 PK9、球形D QD13、万彩千轮 ZW5）：技术检查也全过，但它们在 3.7 时本来就还没调完、没交过你，所以留在「制作中」。球形A QA19 保持暂停（QA17 的已知问题还在）。\n- **球形B ZB5**：第 1 层开花几帧过曝，曝光重算 2.087 → 1.755，本机重导中，过了就进待我验收。\n- **球形C QC11 需要你定一条规则**：外层开花闪一下、0.38 s 后星才点着，这中间本来就是黑的，导出里有 2 帧全黑，按现在「中间不许有空帧」过不了。推荐：烘焙器把这种「模拟里整段没有星在烧」的黑段并成 1 帧停住（省格子），检查按模拟判断是否真黑，不按像素，不会掩盖真错误。\n- **界面外观**（按你的浏览器草稿，第 1 步只改外观）：DF 配色；顶部一行（右上显卡型号、更新记录）；工具条全宽一行；左栏上下分组可折叠（待我验收 / 制作中 / 已通过 / 花型模板 / 历史 / 工具），56 px 缩略图、选中整圈青绿框；最下面「＋ 新建配方」和「复制我的意见」；窄窗口右栏排到画面下面。渲染、导出、参数都没动。"}, {"title": "2026-10-02 · 引菊 → 锦（尾缀3.0_A 主层）进待我验收", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 引菊 → 锦（HN2）。\n\n- **完全在烘焙器 4.0 里做的**：两层同一批星（橙引线 + 金锦），都是花型库「菊」模板的标准参数，右栏能调，能导出。\n- **按你 10-01 晚上的两条意见改了**：\n  - 金色不再往中心长：星换药后在身后留下直的金线，随星往外走一段再慢慢消散；\n  - 重力降到很小（实拍的下坠是仰拍透视），不下垂。\n- **检查**：回放检查全过，标准检查 12 项全 ✅。\n- **和实拍还差**：\n  - 实拍金线从中心附近起（仰拍透视），这里金线在外侧半段；\n  - 橙线末尾的金色小火星很细，远看几乎看不出。\n- **没经 UE 验证**：自发光倍数、BC7 串扰。素材包在本机 `analysis/local/输出/素材包/HikiNishiki`；因为烘焙器夜里升了 4.0.2，正在用当前版本参数不变重导一次（HN2E6），会覆盖同一目录。\n- **调参注意**：两层共用星的参数（种子、星数、初速、终端速度、离散、重力）要两层一起改。"}, {"title": "2026-10-02 · 本机七类素材导出与三档子模板标定预览", "body": "七类当前素材的 PC/手机版包已导出，三档标定与21个子模板参数已准备。在本轮对话可打开完整名称预览；**还没有写入BP**，新增ID暂不能播放。\n\n需要你在当前对话确认本次帧号入口约定：仓库文档要求第3通道，本机现有材质实际接第0通道，且禁止新增材质。确认后再继续实际导入与BP保存。\n\n当前素材仍有画质问题：PC回放5类通过，手机2类通过；其余有过曝、空帧或边缘警告。没有改艺术配方或验收状态，未完成UE实播测量。"}, {"title": "2026-10-02 · 4.0.2：金芒菊回到一张 4.56 s、固定取景不再抖；9 个效果迁到 4.0，旧版本进归档", "body": "`git pull` 后刷新烘焙器。\n\n- **金芒菊 JM4-40（待我验收）**：\n  - 4.56 秒放进一张 4×4×RGBA（64 帧）。\n  - 开花阶段每个 tick 一帧，之后逐级放慢到 15、10、7.5 fps。\n  - 末尾的暗火星保留，固定取景，不再一胀一缩。\n  - 本机导出、回放检查都过了。\n- **帧预算**：默认先放进一张，放不下才加张。燃烧段最慢 10 fps，淡出段最慢 7.5 fps；这是按你的实测暂定的，引擎里看过后可以再改。\n- **取景**：4.0 新建默认固定取景。Zoom 加上\"一帧停几个 tick\"会让画面一胀一缩，还能选，但旁边写明了。\n- **左栏**：\n  - 通过的效果一直留在\"已通过\"。\n  - \"历史\"按效果折叠。\n  - 待我验收里 4 个不达标的 3.7 版撤回到制作中。\n- **9 个效果迁到 4.0**（效果参数不变）：球形 A–D、青柠星、万彩千轮、鸿巢、永丰、片贝，新号 QA19、ZB5、QC11、QD13、QN11、ZW5、HK10、FS10、PK9。\n  - 鸿巢 HK10 的导出和检查已全过。\n  - 其余还在重导、修末尾一两帧空帧等小项，全过了才进\"待我验收\"。\n- **过程文件**：被取代的旧版本（147 项）搬进 `归档/过程/<效果>/`，没有删，烘焙器\"历史\"里照样能打开。"}, {"title": "2026-10-01 · 版本显示已修正为 v4.0", "body": "刷新烘焙器，页眉和浏览器标签会显示实际程序版本 v4.0。旧的「默认 3.7 · 4.0 升级中」文字已移除。新建空中花型使用 4.0，已保存的旧配方与正式库仍保留原来的兼容版本。"}, {"title": "2026-10-01 · 烘焙器 4.0 交付：新建花型默认 4.0；JM4 的 4.0 版等你验收", "body": "`git pull` 后刷新烘焙器。\n\n- **新建的空中花型都是 4.0**：单格 512（原来 256，放大后不再糊）、引擎 30 fps 下每个 tick 都换帧，帧多就自动分成几张贴图。在 30 fps 下换帧数不比 3.7 少，每个模板都有自己的固定曝光。\n- **标准检查**：左栏和审阅卡上有 ✅ / ❌ 和缺什么。19 个 4.0 模板里 18 个全过，只有「蜂」的屏幕放大是 1.03，略超 1。\n- **多层效果导出一个素材包**：每层一个发射器，延迟都写在 `cascade.json` 里，引擎里不用蓝图触发。\n- **柳、椰子在 4.0 下重调了**：柳现在是一条条垂下的金丝，椰子是 14 根下垂的弧。\n\n**待我验收**：「金芒菊 · 4.0 渲染（JM4-40）」。参数和你通过的 JM4 完全一样，只换成 4.0 渲染：火花更细更清楚，但光晕少一些，亮处偏白一点。正式库的 JM4 原样保留，你点「通过」后才替换。\n\n**在 UE 里跑一次实测包**（不急）：`spec/UE实测包/` 里有四个小测试（帧号、压缩串扰、曝光、Ramp 设置），用本机导入工具导入，看法写在 `说明.md` 里。结果告诉我，或者直接填进 `spec/UE实测.md`。\n\n还没做的：\n\n- 尾缀 V5 在 4.0 下星头没有光晕，所以 V5 继续用 3.7，没给你出候选。\n- 鸿巢、永丰、片贝等正在做的效果还是 3.7，要各自迁到 4.0 再交。\n- 所有 4.0 画面都没在 UE 里验证过。"}, {"title": "2026-10-01 · 默认恢复 3.7，4.0 继续内部验证", "body": "按最新开工要求，花型库默认画面先恢复 3.7。4.0 在开发橱窗中继续验证，全部通过不退步门槛后一次交付。当前已修正实时预览将烘焙取景当成观看镜头的问题，并接上 30 fps 取帧和多张分段。\n\n现有 22 个云端配方入口保留，暂不扩充。源码/时序检查已通过，新的 GPU 画面和浏览器实际播放耗时尚未验证；无需中途验收阶段版本，正式库未迁移。"}, {"title": "2026-10-01 · 云端新增 22 个配方可以一起预览", "body": "`git pull` 后刷新烘焙器，点左栏底部 **「云端配方预览 · 22」**。顶部下拉框可切换芯入菊、八重/三重/四重芯、金蕊青柠、金银冠和柳、四色牡丹、彩色千轮、引先、残光、多节礼花等；旁边可选整体或单层，支持连续播放、PC / 手机、游戏内大小。点「保存完整配方」可留下当前参数。原来的 3.7 / 4.0 基准对照也在同一下拉框。\n\n这是按云端总表做的**配方结构预览**，方便先看喜欢哪些结构和配色。四色牡丹当前是混色分布，多节礼花先展示开花编排；帧预算和最终素材包还在开发。打铁花、交叉环、齐闪等 11 组缺能力的项目，在上方「仍待补能力的配方」里逐项说明。\n\n标题现已明确显示 **「4.0 开发版」**，3.12 是阶段编号。正式库和旧版已通过效果未迁移。"}, {"title": "2026-10-01 · 4.0 首批光点对照橱窗（工程版本 3.11）", "body": "`git pull` 后刷新烘焙器，点左栏底部 **「4.0 对照橱窗」**。菊、牡丹、锦冠、千轮、点灭和 JM4 可左右同秒连续看；能切 PC / 手机和观察距离，F 键放大画布。V5 三档仍保留旧核，界面明确标注。\n\n新核的亮点轮廓和尾部颗粒更清楚；每个案例采用固定曝光，数值写在橱窗上方。JM4、V5 正式条目没有迁移，兼容贴图回归零差。\n\n**本次请看美术方向：右侧亮核质感、清晰度和亮度是否接近你想要的感觉。** 帧预算、少数开场过曝和特殊产物统一还在做，未经 UE 验证；不用替我查实现错误，也不是请你验收完整 4.0。"}, {"title": "2026-09-30 22:36 · 球形 A QA13 退回制作中", "body": "前段星头出现过早、尾长与参考不一致，上一轮整体自检通过结论已撤回。旧版素材保留作诊断证据；本机正在重新检查原片、头尾形成过程和核验条件。当前没有新的球形 A 候选需要用户验收。"}, {"title": "2026-09-30 22:02 · 球形 A 本机迭代版 QA13，已进「待我验收」", "body": "本机接续云端 QA12：修正末段银白点过早变暗，约 3.4 秒仍能清楚看到，随后渐暗熄灭。金尾、粉星头、运动和 Zoom 保持原版；RTX 5080 已完成两层 2K、PC + 手机素材导出，并检查同一秒对照、连续回放、局部和版本对应。\n\n刷新烘焙器，在「待我验收」打开球形 A QA13。素材在本机 `analysis/local/输出/素材包/QiuXingA_QA13_1`、`_2`；自检记录 `analysis/results/QA13E/看法.md`。UE 实机仍未验证，最终艺术效果由用户验收。\n\n\n最新的在最上面。烘焙器顶栏「更新记录」显示的就是这个文件（build 时嵌进去）。每条写：做了什么、在哪看、要你做什么。"}, {"title": "2026-09-30 15:20 · 烘焙器改成「待我验收 / 制作中 / 已通过」，流程改成 AI 自己迭代到能交付", "body": "- **左栏**：默认三个入口 **待我验收 / 制作中 / 已通过**，另有「历史」。一个效果一条（鸿巢、永丰、片贝的各层、光丝 A / B、历轮任务都收在效果详情里）。缩略图用参考里最亮的一刻，标题先写效果名。\n- **「新」只表示有新的完整候选等你验收**；你的通过 / 要改按版本记，新版本不会继承旧版本的「要改」（你截图里物理尾缀的「要改」就是这么来的）。\n- **每个效果的详情**：进度（计算 / AI 自检 / 素材导出 / 你已验收）、版本（待你验收 / 工作版 / 已通过）、方案、准备情况（实时模拟、烘焙回放、贴图素材包是「当前版本 / 已过期 / 尚未生成」；你在烘焙器里改了参数会提示素材包是改之前的）、历史版本和你当时的反馈。\n- **现在「待我验收」是空的**：按新标准，没有一个效果完成了导出和回放检查，全部在「制作中」。做完一个进一个，不用你中途看。\n- **结果回来后谁接着做**：后台脚本只计算，不判断。新增一个云端定时任务（每天 9:47 / 12:47 / 15:47 / 18:47 / 21:47），自动看回来的结果、写看法、下一轮任务；没有新结果就直接结束。可以在 claude.ai 的定时任务里暂停或删除。"}];
 // =====================================================================
 //  工具
 // =====================================================================
@@ -1158,7 +1158,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.2.0';
+const VERSION = '4.2.1';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -1223,6 +1223,8 @@ const BASE = {
   rtFRate: 2500, rtFLife: 0.9, rtFJit: 40, rtFSize: 0.25, rtFI: 2.6, rtFKd: 5,
   rtMRate: 900, rtMLife: 1.5, rtMJit: 35, rtMSize: 0.38, rtMI: 4.0, rtMKd: 3.6,
   rtCRate: 180, rtCLife: 2.4, rtCJit: 30, rtCSize: 0.55, rtCI: 6.0, rtCKd: 2.4,
+  rtFdT: 0, rtMdT: 0, rtCdT: 0, rtSizeJit: 25, rtKdJit: 20, rtConeSoft: 0,
+  rtStreakT: 0, rtStreakMax: 6, rtFStreak: 1, rtMStreak: 1, rtCStreak: 1, rtTurb: 0, rtTurbL: 30, rtTurbS: 0,
   rtT0: 2450, rtTb: 2150, rtTc: 0.35, rtTend: 1450, rtTw: 0.3, rtShrink: 0.5,
   rtERate: 10, rtELife: 3, rtESize: 0.8, rtEI: 4, rtEKd: 1.0,
   rtSmoke: 0.003, rtSmokeRate: 25, rtSmokeLife: 3.5, rtSmokeSize: 2.5, rtSmokeGrow: 4,
@@ -1274,15 +1276,21 @@ const TYPES = {
   water: { p: { duration: 3.0, stars: 110, v0: 90, vt: 16, pattern: 'half', waterRefl: 0.4, burn: 2.0, sparkRate: 60, flash: 1.4 }, m: { stages: [[0, '#ffc766'], [0.9, '#52ff5e']] } },
   rise: { p: { duration: 5.2, riseH: 250, vtShell: 55, sparkRate: 600, sparkLife: 1.5, sparkSpread: 1.4, sparkInherit: 0.05, sparkDrag: 1.4, sparkSize: 0.45, sparkBright: 1.6, headSize: 1.4, headBright: 1.4, burn: 99, flicker: 0.35, T0: 2100, cooling: 0.3, zoom: 'off', form: 'unit', cols: 8, rows: 2, chans: 1, texW: 1024, texH: 1024 }, m: GROUND_RAMP },
   // 升空尾缀 · 循环层 + 粒子（原理 7e 的三档：小 ≈ 比十寸更直、中 ≈ 十寸、大 ≈ 用户图 1）
-  tailS: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.45, rtBright: 2.2, haloFrac: 0.04, haloR: 2, seed: 7, rtH: 190, rtT: 3.5, rtVb: 24, rtD: 0.10, rtBurstD: 110, rtSpin: 1.6, rtFling: 2.0,
+  tailS: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.45, rtBright: 4, haloFrac: 0.04, haloR: 2, seed: 7, rtH: 190, rtT: 3.5, rtVb: 24, rtD: 0.10, rtBurstD: 110, rtSpin: 1.6, rtFling: 2.0,
     rtHeadSize: 0.45, rtHeadI: 3, rtHeadFl: 0.6, rtARate: 9000, rtALife: 0.6,
-    rtCone: 2.0, rtFRate: 2000, rtFLife: 0.7, rtFSize: 0.22, rtMRate: 700, rtMLife: 1.1, rtMSize: 0.34, rtCRate: 130, rtCLife: 1.8, rtCSize: 0.48,
-    rtERate: 6, rtELife: 2.5, rtESize: 0.7 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
-  tailM: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.45, rtBright: 2.2, haloFrac: 0.04, haloR: 2, seed: 7 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
-  tailL: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.45, rtBright: 2.2, haloFrac: 0.04, haloR: 2, seed: 7, rtH: 410, rtT: 8, rtVb: 4, rtD: 0.30, rtBurstD: 290, rtSpin: 2.6, rtFling: 5.0,
+    rtCone: 5.5, rtFRate: 2400, rtFLife: 0.7, rtFSize: 0.13, rtMRate: 850, rtMLife: 1.1, rtMSize: 0.2, rtCRate: 150, rtCLife: 1.8, rtCSize: 0.28,
+    rtERate: 3, rtELife: 2.5, rtESize: 0.7,
+    // 第 2 / 3 版（对话框11，10-02：RT2 火星数量大小 + RT3 白黄对比、线状拖影、空气乱流）
+    rtACone: 5, rtASize: 0.42, rtAI: 1.1, rtAWarm: 0.8, rtFI: 5, rtMI: 10, rtCI: 24, rtCKd: 1.8, rtT0: 2700, rtTb: 2450, rtEKd: 2.5, rtSmoke: 0, rtMobile: 0.12, rtFdT: -400, rtCdT: 500, rtSizeJit: 45, rtKdJit: 35, rtConeSoft: 1, rtStreakT: 0.02, rtFStreak: 0.3, rtTurb: 1, rtTurbL: 20, rtTurbS: 0.6 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
+  tailM: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.3, rtBright: 6, haloFrac: 0.04, haloR: 2, seed: 7,
+    // 第 2 / 3 版（对话框11，10-02：RT2 火星数量大小 + RT3 白黄对比、线状拖影、空气乱流）
+    rtCone: 7, rtACone: 6, rtASize: 0.5, rtAI: 1.1, rtAWarm: 0.8, rtFRate: 3000, rtFSize: 0.15, rtFI: 5, rtMRate: 1100, rtMSize: 0.23, rtMI: 10, rtCRate: 200, rtCSize: 0.32, rtCI: 24, rtCKd: 1.8, rtT0: 2700, rtTb: 2450, rtERate: 5, rtEKd: 2.5, rtSmoke: 0, rtMobile: 0.1, rtFdT: -400, rtCdT: 500, rtSizeJit: 45, rtKdJit: 35, rtConeSoft: 1, rtStreakT: 0.02, rtFStreak: 0.3, rtTurb: 1, rtTurbL: 20, rtTurbS: 0.6 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
+  tailL: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.3, rtBright: 6, haloFrac: 0.04, haloR: 2, seed: 7, rtH: 410, rtT: 8, rtVb: 4, rtD: 0.30, rtBurstD: 290, rtSpin: 2.6, rtFling: 5.0,
     rtHeadSize: 0.7, rtHeadI: 3.2, rtHeadFl: 1.2, rtARate: 12000, rtALife: 0.9,
-    rtCone: 3.5, rtFRate: 3500, rtFLife: 1.2, rtFSize: 0.3, rtMRate: 1300, rtMLife: 2.2, rtMSize: 0.45, rtCRate: 260, rtCLife: 3.4, rtCSize: 0.65,
-    rtERate: 16, rtELife: 3.5, rtESize: 0.9, rtSmokeRate: 35, rtMobile: 0.12 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
+    rtCone: 9.5, rtFRate: 4200, rtFLife: 1.2, rtFSize: 0.18, rtMRate: 1600, rtMLife: 2.2, rtMSize: 0.27, rtCRate: 300, rtCLife: 3.4, rtCSize: 0.38,
+    rtERate: 8, rtELife: 3.5, rtESize: 0.9, rtSmokeRate: 35, rtMobile: 0.06,
+    // 第 2 / 3 版（对话框11，10-02：RT2 火星数量大小 + RT3 白黄对比、线状拖影、空气乱流）
+    rtACone: 7, rtASize: 0.6, rtAI: 1.1, rtAWarm: 0.8, rtFI: 5, rtMI: 10, rtCI: 24, rtCKd: 1.8, rtT0: 2700, rtTb: 2450, rtEKd: 2.5, rtSmoke: 0, rtFdT: -400, rtCdT: 500, rtSizeJit: 45, rtKdJit: 35, rtConeSoft: 1, rtStreakT: 0.02, rtFStreak: 0.3, rtTurb: 1, rtTurbL: 20, rtTurbS: 0.6 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
   // 升空尾缀三档：用户认可的 V5 / TR2 导出快照；不按目标长度重新拟合。
   trailS: { p: { renderVer: 37, seed: 7, riseH: 120, vtShell: 35, trV: 33.7, trFps: 30, trInh: 0.12,
     trDrag: 3.5, trGrav: 0.4, trCool: 0.46297, trFRate: 12000, trFLife: 0.65692, trFSpread: 1.85647,
@@ -1657,9 +1665,22 @@ const SCHEMA = [
     ['rtAWarm', '变暗快慢（越大越早变金、变暗）', '', 0.2, 4, 0.05]
   ] },
   { sec: '尾缀 · 金火星（GPU 粒子 · 三档粒径）', show: isEmit, hint: '木炭火星按粒径分三档（细 / 中 / 粗）：越粗越亮、越长寿、阻力越小（d² 定律）→ 有亮有暗、各自错落熄灭。每档在引擎里是一个 GPU 软圆点发射器（手机版 CPU），出生位置、初速按发射器时间取弹道曲线。', items: [
-    ['rtFRate', '细 · 出生率', '颗/秒', 0, 8000, 10], ['rtFLife', '细 · 寿命', 's', 0.1, 6, 0.01], ['rtFJit', '细 · 寿命离散', '%', 0, 90, 1], ['rtFSize', '细 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtFI', '细 · 亮度', '×', 0, 10, 0.01], ['rtFKd', '细 · 阻力', '1/s', 0.2, 30, 0.05],
-    ['rtMRate', '中 · 出生率', '颗/秒', 0, 4000, 5], ['rtMLife', '中 · 寿命', 's', 0.1, 6, 0.01], ['rtMJit', '中 · 寿命离散', '%', 0, 90, 1], ['rtMSize', '中 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtMI', '中 · 亮度', '×', 0, 10, 0.01], ['rtMKd', '中 · 阻力', '1/s', 0.2, 30, 0.05],
-    ['rtCRate', '粗 · 出生率', '颗/秒', 0, 2000, 1], ['rtCLife', '粗 · 寿命', 's', 0.1, 8, 0.01], ['rtCJit', '粗 · 寿命离散', '%', 0, 90, 1], ['rtCSize', '粗 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtCI', '粗 · 亮度', '×', 0, 10, 0.01], ['rtCKd', '粗 · 阻力', '1/s', 0.2, 30, 0.05]
+    ['rtFRate', '细 · 出生率', '颗/秒', 0, 8000, 10], ['rtFLife', '细 · 寿命', 's', 0.1, 6, 0.01], ['rtFJit', '细 · 寿命离散', '%', 0, 90, 1], ['rtFSize', '细 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtFI', '细 · 亮度', '×', 0, 40, 0.01], ['rtFKd', '细 · 阻力', '1/s', 0.2, 30, 0.05],
+    ['rtMRate', '中 · 出生率', '颗/秒', 0, 4000, 5], ['rtMLife', '中 · 寿命', 's', 0.1, 6, 0.01], ['rtMJit', '中 · 寿命离散', '%', 0, 90, 1], ['rtMSize', '中 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtMI', '中 · 亮度', '×', 0, 40, 0.01], ['rtMKd', '中 · 阻力', '1/s', 0.2, 30, 0.05],
+    ['rtCRate', '粗 · 出生率', '颗/秒', 0, 2000, 1], ['rtCLife', '粗 · 寿命', 's', 0.1, 8, 0.01], ['rtCJit', '粗 · 寿命离散', '%', 0, 90, 1], ['rtCSize', '粗 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtCI', '粗 · 亮度', '×', 0, 40, 0.01], ['rtCKd', '粗 · 阻力', '1/s', 0.2, 30, 0.05],
+    ['rtSizeJit', '尺寸离散（远处亮度 ∝ 尺寸²）', '±%', 0, 90, 1], ['rtKdJit', '阻力离散', '±%', 0, 90, 1],
+    ['rtConeSoft', '散开分布（0 均匀 = 边缘一刀切；1 两个均匀相加 = 中间密、边缘软）', '', 0, 1, 1]
+  ] },
+  { sec: '尾缀 · 火星明暗与线状', show: isEmit, hint: '白 / 黄分开：每档火星一个温度偏移（粗粒更热更亮 → 相机里过曝发白；细粒偏金偏暗）。线状：看的人（和相机）盯着星头走，火星相对星头往下退 → 拖影长度 = 相对星头的速度 × 拖影时间（快门 / 视觉暂留）；老火星几乎停在空中，拖得最长。引擎里 Screen Alignment = Rectangle（沿屏幕竖直）、Size By Life 的 Y 按寿命拉长；光量守恒（拖得越长单位长度越暗，要更亮才过曝发白）。', items: [
+    ['rtFdT', '细 · 温度偏移', 'K', -800, 800, 10], ['rtMdT', '中 · 温度偏移', 'K', -800, 800, 10], ['rtCdT', '粗 · 温度偏移', 'K', -800, 800, 10],
+    ['rtStreakT', '拖影时间（0 = 全是圆点）', 's', 0, 0.2, 0.002],
+    ['rtStreakMax', '最长拉长倍数（× 粒子尺寸）', '×', 1, 30, 0.1, P => P.rtStreakT > 0],
+    ['rtFStreak', '细 · 拖影倍数（0 = 圆点）', '×', 0, 3, 0.05, P => P.rtStreakT > 0], ['rtMStreak', '中 · 拖影倍数', '×', 0, 3, 0.05, P => P.rtStreakT > 0], ['rtCStreak', '粗 · 拖影倍数', '×', 0, 3, 0.05, P => P.rtStreakT > 0]
+  ] },
+  { sec: '尾缀 · 空气乱流', show: isEmit, hint: '火星出生后被阻力拉向周围空气的速度：空气有阵风，火星就跟着漂，越老漂得越远 → 尾迹下段慢慢松开、轻轻弯（不是冻住的硬边）。火星寿命远小于大涡的周转时间，所以每颗火星一直跟着「出生那团空气」：大涡 = 同一时刻出生的一起漂（Acceleration 按发射器时间），小涡 / 弹体尾流 = 每颗随机。引擎里加速度 = 阻力 × 空气速度（Acceleration 模块未经 UE 验证）。', items: [
+    ['rtTurb', '大涡阵风（均方根，0 关）', 'm/s', 0, 4, 0.05],
+    ['rtTurbL', '大涡尺度', 'm', 3, 200, 1, P => P.rtTurb > 0],
+    ['rtTurbS', '小涡 / 尾流（均方根，0 关）', 'm/s', 0, 4, 0.05]
   ] },
   { sec: '尾缀 · 火星颜色与熄灭', show: isEmit, hint: '颜色按黑体温度：出喷口很热（白），约 tc 秒降到空气中的燃烧温度（金），寿命最后一段降到熄灭温度（橙 → 暗）。闪烁写进 Color Over Life，每颗寿命不同所以相位错开。', items: [
     ['rtT0', '出喷口温度', 'K', 1600, 3000, 10],
@@ -3702,7 +3723,11 @@ function smoothstepJS(a, b, x) { const t = clamp((x - a) / (b - a), 0, 1); retur
 //    { name, gpu, delay, duration, spawn: [[发射器时间 s, 每秒颗数], …], life: [lo, hi], size: [lo, hi]（软圆点直径 m）,
 //      sizeLife: [[相对寿命, 倍数], …], col: [[相对寿命, [r, g, b]], …]（线性 RGB，引擎自发光，可 > 1）,
 //      loc: [[发射器时间, [x, y, z]], …]（出生位置曲线）, vel: [[发射器时间, [vx, vy, vz]], …]（初速曲线）,
-//      velAdd: [[x, y, z], [x, y, z]]（再加一个均匀随机初速）, drag: [lo, hi]（1/s）, accel: [x, y, z], seed }
+//      velAdd: [[x, y, z], [x, y, z]]（再加一个均匀随机初速；也可以是几个盒子的数组 = 几个 Initial Velocity 相加 → 三角 / 钟形分布，边缘软）, drag: [lo, hi]（1/s）, accel: [x, y, z], seed,
+//      accelCurve: [[发射器时间, [ax, ay, az]], …]（Acceleration 按发射器时间取值：沿尾迹相关的空气乱流）, accelJit: [[…], […]]（再加一个每颗随机的加速度：小尺度乱流）,
+//      align: 'velocity' | 'screen' + stretch + stretchLife: [[相对寿命, 倍数], …]（拉长 stretch × stretchLife(u) 倍的线状火星：
+//        velocity = 沿粒子速度（Screen Alignment = Velocity）；screen = 沿屏幕竖直（Rectangle，面片 Y 朝相机上方）；
+//        导出 = Initial Size 的 Y × stretch、Size By Life 的 Y 再乘 stretchLife）}
 //  运动规则和 Cascade 一致：出生类分布按发射器时间取值；之后线性阻力 + 恒定加速度（解析解）。
 //  画法和素材页 hdr 一致：软圆点 = 高斯（σ = 尺寸 / 4，中心值 = 颜色），线性累加，引擎同款加色；
 //  烘焙器里的 HDR 值 = 4 × 引擎自发光（和序列材质 Ramp·v·颜色·4 同一口径），最后统一做显示映射。
@@ -3718,6 +3743,8 @@ function esCurve(keys, u) {
   return keys[keys.length - 1][1];
 }
 // 出生表：每个发射器一张，按出生时刻排好（确定性：同一组数据永远得到同一批粒子）
+// 盒子或盒子数组 → 盒子数组
+const esBoxes = b => !b ? [] : Array.isArray(b[0][0]) ? b : [b];
 function esSpawn(ES, frac = 1) {
   return ES.emitters.map((e, ei) => {
     const rnd = mulberry32(((e.seed || 1) * 2654435761 + ei * 97) >>> 0), list = [];
@@ -3725,8 +3752,11 @@ function esSpawn(ES, frac = 1) {
       const life = e.life[0] + (e.life[1] - e.life[0]) * rnd(), size = e.size[0] + (e.size[1] - e.size[0]) * rnd();
       const k = e.drag ? e.drag[0] + (e.drag[1] - e.drag[0]) * rnd() : 0;
       const p = e.loc ? esCurve(e.loc, t0) : [0, 0, 0], v = e.vel ? esCurve(e.vel, t0).slice() : [0, 0, 0];
-      if (e.velAdd) for (let j = 0; j < 3; j++) v[j] += e.velAdd[0][j] + (e.velAdd[1][j] - e.velAdd[0][j]) * rnd();
-      list.push({ t0: t0 + (e.delay || 0), life, size, k, p, v });
+      for (const B of esBoxes(e.velAdd)) for (let j = 0; j < 3; j++) v[j] += B[0][j] + (B[1][j] - B[0][j]) * rnd();
+      const a = (e.accel || [0, 0, 0]).slice();
+      if (e.accelCurve) { const c = esCurve(e.accelCurve, t0); for (let j = 0; j < 3; j++) a[j] += c[j]; }
+      for (const B of esBoxes(e.accelJit)) for (let j = 0; j < 3; j++) a[j] += B[0][j] + (B[1][j] - B[0][j]) * rnd();
+      list.push({ t0: t0 + (e.delay || 0), life, size, k, p, v, a });
     };
     // Spawn Rate 曲线按发射器时间积分；frac < 1 = 手机版减量（同一条曲线乘比例）
     const c = e.spawn || [], dt = 1 / 240; let acc = rnd();
@@ -3741,36 +3771,45 @@ function esSpawn(ES, frac = 1) {
 }
 // 粒子在年龄 a 时的位置（线性阻力 k + 恒定加速度 acc）
 function esPos(q, acc, a, out) {
-  const k = q.k;
+  const k = q.k; if (q.a) acc = q.a;
   if (k > 1e-6) { const s1 = (1 - Math.exp(-k * a)) / k; for (let j = 0; j < 3; j++) out[j] = q.p[j] + q.v[j] * s1 + acc[j] / k * (a - s1); }
   else for (let j = 0; j < 3; j++) out[j] = q.p[j] + q.v[j] * a + 0.5 * acc[j] * a * a;
   return out;
 }
-// 带颜色的高斯软圆点（每颗自己的颜色）：位置 2 + 光量 1 + 尺寸 1 + 颜色 3
-const VS_DOTC = HDR + `layout(location=0) in vec2 aP; layout(location=1) in float aI; layout(location=2) in float aS; layout(location=3) in vec3 aC;
-uniform vec4 uView; uniform float uPPM, uPPMY, uMax; out float vI; out vec2 vSig; out float vPS; out vec3 vC;
-void main(){ vec2 sig=max(aS*0.5*vec2(uPPM,uPPMY),vec2(0.55)); float ps=min(ceil(max(sig.x,sig.y)*6.)+1.,uMax);
-  gl_Position=vec4((aP-uView.xy)/uView.zw,0.,1.); gl_PointSize=ps; vI=aI; vSig=sig; vPS=ps; vC=aC; }`;
-const FS_DOTC = HDR + `in float vI; in vec2 vSig; in float vPS; in vec3 vC; uniform float uPPM, uPPMY, uW; out vec4 o;
+function esVel(q, acc, a, out) {
+  const k = q.k; if (q.a) acc = q.a;
+  if (k > 1e-6) { const e = Math.exp(-k * a); for (let j = 0; j < 3; j++) out[j] = (q.v[j] - acc[j] / k) * e + acc[j] / k; }
+  else for (let j = 0; j < 3; j++) out[j] = q.v[j] + acc[j] * a;
+  return out;
+}
+// 带颜色的高斯软圆点（每颗自己的颜色）：位置 2 + 光量 1 + 尺寸 1 + 颜色 3 + 朝向 2 + 拉长倍数 1
+const VS_DOTC = HDR + `layout(location=0) in vec2 aP; layout(location=1) in float aI; layout(location=2) in float aS; layout(location=3) in vec3 aC; layout(location=4) in vec2 aD; layout(location=5) in float aE;
+uniform vec4 uView; uniform float uPPM, uPPMY, uMax; out float vI; out vec2 vSig; out float vPS; out vec3 vC; out vec2 vD; out float vE;
+void main(){ vec2 sig=max(aS*0.5*vec2(uPPM,uPPMY),vec2(0.55)); float e=max(1.,aE); float ps=min(ceil(max(sig.x,sig.y)*6.*e)+1.,uMax);
+  gl_Position=vec4((aP-uView.xy)/uView.zw,0.,1.); gl_PointSize=ps; vI=aI; vSig=sig; vPS=ps; vC=aC; vD=aD; vE=e; }`;
+const FS_DOTC = HDR + `in float vI; in vec2 vSig; in float vPS; in vec3 vC; in vec2 vD; in float vE; uniform float uPPM, uPPMY, uW; out vec4 o;
 vec2 erf2(vec2 x){ vec2 sg=sign(x); x=abs(x); vec2 t=1./(1.+.3275911*x); return sg*(1.-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*exp(-x*x)); }
-void main(){ vec2 p=(gl_PointCoord-.5)*vPS; vec2 v=.5*(erf2((p+.5)/(1.41421356*vSig))-erf2((p-.5)/(1.41421356*vSig)));
-  o=vec4(vC*(vI*max(0.,v.x*v.y)*uPPM*uPPMY*uW),0.); }`;
+void main(){ vec2 p=(gl_PointCoord-.5)*vPS; float g;
+  if(vE<=1.001){ vec2 v=.5*(erf2((p+.5)/(1.41421356*vSig))-erf2((p-.5)/(1.41421356*vSig))); g=max(0.,v.x*v.y); }
+  else { vec2 d=normalize(vec2(vD.x,-vD.y)+1e-6), n=vec2(-d.y,d.x); float s=max(vSig.x,.6); float u=dot(p,d)/(s*vE), w=dot(p,n)/s;
+    g=exp(-.5*(u*u+w*w))/(6.2831853*s*s*vE); }
+  o=vec4(vC*(vI*g*uPPM*uPPMY*uW),0.); }`;
 PR.dotc = compile(VS_DOTC, FS_DOTC);
 const dotcBuf = gl.createBuffer(), dotcVAO = gl.createVertexArray();
 gl.bindVertexArray(dotcVAO); gl.bindBuffer(gl.ARRAY_BUFFER, dotcBuf);
-for (const [i, n, off] of [[0, 2, 0], [1, 1, 8], [2, 1, 12], [3, 3, 16]]) { gl.enableVertexAttribArray(i); gl.vertexAttribPointer(i, n, gl.FLOAT, false, 28, off); }
+for (const [i, n, off] of [[0, 2, 0], [1, 1, 8], [2, 1, 12], [3, 3, 16], [4, 2, 28], [5, 1, 36]]) { gl.enableVertexAttribArray(i); gl.vertexAttribPointer(i, n, gl.FLOAT, false, 40, off); }
 gl.bindVertexArray(null);
-let dotcData = new Float32Array(7 * 65536);
+const DOTC_N = 10; let dotcData = new Float32Array(DOTC_N * 65536);
 function drawDotsC(n, view, ppm, ppmY, w = 1) {
   if (!n) return;
   const pr = PR.dotc; gl.useProgram(pr.p); gl.bindVertexArray(dotcVAO); gl.bindBuffer(gl.ARRAY_BUFFER, dotcBuf);
-  gl.bufferData(gl.ARRAY_BUFFER, dotcData.subarray(0, n * 7), gl.DYNAMIC_DRAW);
+  gl.bufferData(gl.ARRAY_BUFFER, dotcData.subarray(0, n * DOTC_N), gl.DYNAMIC_DRAW);
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, ppmY); gl.uniform1f(pr.u.uMax, PT_MAX); gl.uniform1f(pr.u.uW, w);
   gl.drawArrays(gl.POINTS, 0, n); gl.bindVertexArray(null);
 }
 // 画一组发射器在时刻 t 的全部粒子（侧面正交：x 横、z 竖，y 是景深）。tables = esSpawn 的结果；on = 每个发射器开关
 function esDraw(tables, t, view, ppm, ppmY, gain = 1, on = null) {
-  let n = 0, alive = 0; const pos = [0, 0, 0];
+  let n = 0, alive = 0; const pos = [0, 0, 0], vel = [0, 0, 0];
   const flush = () => { drawDotsC(n, view, ppm, ppmY); n = 0; };
   const x0 = view[0] - view[2] * 1.1, x1 = view[0] + view[2] * 1.1, z0 = view[1] - view[3] * 1.1, z1 = view[1] + view[3] * 1.1;
   tables.forEach((T, i) => {
@@ -3785,10 +3824,13 @@ function esDraw(tables, t, view, ppm, ppmY, gain = 1, on = null) {
       const u = a / q.life, S = q.size * (e.sizeLife ? esCurve(e.sizeLife, u) : 1);
       esPos(q, acc, a, pos);
       if (pos[0] < x0 - S || pos[0] > x1 + S || pos[2] < z0 - S || pos[2] > z1 + S) continue;
-      const c = e.col ? esCurve(e.col, u) : [1, 1, 1], o = n * 7, g = 4 * gain;
-      dotcData[o] = pos[0]; dotcData[o + 1] = pos[2]; dotcData[o + 2] = 6.2831853 * (S / 4) * (S / 4); dotcData[o + 3] = S / 2;
+      const c = e.col ? esCurve(e.col, u) : [1, 1, 1], o = n * DOTC_N, g = 4 * gain, st = e.align ? Math.max(1, (e.stretch || 1) * (e.stretchLife ? esCurve(e.stretchLife, u) : 1)) : 1;
+      dotcData[o] = pos[0]; dotcData[o + 1] = pos[2]; dotcData[o + 2] = 6.2831853 * (S / 4) * (S / 4) * st; dotcData[o + 3] = S / 2;
       dotcData[o + 4] = c[0] * g; dotcData[o + 5] = c[1] * g; dotcData[o + 6] = c[2] * g;
-      n++; alive++; if (n * 7 >= dotcData.length) flush();
+      if (st > 1 && e.align === 'screen') { dotcData[o + 7] = 0; dotcData[o + 8] = 1; }
+      else if (st > 1) { esVel(q, acc, a, vel); const sp = Math.hypot(vel[0], vel[2]) || 1; dotcData[o + 7] = vel[0] / sp; dotcData[o + 8] = vel[2] / sp; } else { dotcData[o + 7] = 0; dotcData[o + 8] = 1; }
+      dotcData[o + 9] = st;
+      n++; alive++; if (n * DOTC_N >= dotcData.length) flush();
     }
   });
   flush();
@@ -3821,21 +3863,28 @@ function esThin(keys, tol) {
   out.push(keys[keys.length - 1]); return out;
 }
 function esFwlEmitter(e, mobile, frac) {
-  const gpu = mobile ? false : !!e.gpu, f = mobile ? frac : 1;
+  const gpu = mobile ? false : !!e.gpu, f = mobile ? frac : 1, st = e.align ? Math.max(1, e.stretch || 1) : 1, aligned = !!e.align && (st > 1 || !!e.stretchLife);
   const mods = [
     { m: 'Lifetime', Lifetime: { uniform: [esR4(e.life[0]), esR4(e.life[1])] } },
-    { m: 'InitialSize', StartSize: { uniform: [[esCm(e.size[0]), esCm(e.size[0]), esCm(e.size[0])], [esCm(e.size[1]), esCm(e.size[1]), esCm(e.size[1])]] } }
+    { m: 'InitialSize', StartSize: { uniform: [[esCm(e.size[0]), esCm(e.size[0] * st), esCm(e.size[0])], [esCm(e.size[1]), esCm(e.size[1] * st), esCm(e.size[1])]] } }
   ];
   if (e.loc) mods.push({ m: 'InitialLocation', StartLocation: { curve: esThin(e.loc, 0.01).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false } });
   if (e.vel) mods.push({ m: 'InitialVelocity', StartVelocity: { curve: esThin(e.vel, 0.05).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false } });
-  if (e.velAdd) mods.push({ m: 'InitialVelocity', StartVelocity: { uniform: [e.velAdd[0].map(esCm), e.velAdd[1].map(esCm)] }, note: '第二个 Initial Velocity：叠加的随机散开' });
+  esBoxes(e.velAdd).forEach((B, i, A) => mods.push({ m: 'InitialVelocity', StartVelocity: { uniform: [B[0].map(esCm), B[1].map(esCm)] }, note: `第 ${i + 2} 个 Initial Velocity：叠加的随机散开${A.length > 1 ? '（' + A.length + ' 个均匀分布相加 → 中间密、边缘软）' : ''}` }));
   if (e.drag) mods.push({ m: 'Drag', DragCoefficientRaw: { uniform: [esR4(e.drag[0]), esR4(e.drag[1])] } });
   if (e.accel) mods.push({ m: 'ConstAcceleration', Acceleration: e.accel.map(esCm) });
-  if (e.sizeLife) mods.push({ m: 'SizeByLife', LifeMultiplier: { curve: e.sizeLife.map(([u, k]) => [esR4(u), [esR4(k), esR4(k), esR4(k)]]) }, MultiplyX: true, MultiplyY: true, MultiplyZ: true });
+  if (e.accelCurve) mods.push({ m: 'Acceleration', Acceleration: { curve: esThin(e.accelCurve, 0.05).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false }, note: '空气乱流（大涡）：按发射器时间取值，同一时刻出生的火星受同一股气流 → 沿尾迹相关的松散' });
+  esBoxes(e.accelJit).forEach((B, i, A) => mods.push({ m: 'Acceleration', Acceleration: { uniform: [B[0].map(esCm), B[1].map(esCm)] }, note: `空气乱流（小涡）：每颗随机${A.length > 1 ? '（' + A.length + ' 个相加 → 边缘软）' : ''}` }));
+  const sl = aligned && e.stretchLife ? e.stretchLife : null;
+  if (e.sizeLife || sl) {
+    const us = [...new Set([...(e.sizeLife || []).map(k => k[0]), ...(sl || []).map(k => k[0])])].sort((a, b) => a - b);
+    mods.push({ m: 'SizeByLife', LifeMultiplier: { curve: us.map(u => { const k = e.sizeLife ? esCurve(e.sizeLife, u) : 1; return [esR4(u), [esR4(k), esR4(k * (sl ? esCurve(sl, u) : 1)), esR4(k)]]; }) }, MultiplyX: true, MultiplyY: true, MultiplyZ: true,
+      ...(sl ? { note: `Y = 大小 × 拉长倍数（${e.align === 'screen' ? 'Rectangle：Y 朝屏幕上方' : 'Velocity：Y 沿速度'}）：拖影长短随寿命变` } : {}) });
+  }
   mods.push({ m: 'ColorOverLife', ColorOverLife: { curve: e.col.map(([u, c]) => [esR4(u), c.map(esR4)]) }, AlphaOverLife: { const: 1 } });
   return {
     name: e.name, material: 'dot', gpu,
-    required: { screen_alignment: 'Square', duration_s: esR4(e.duration), loops: 1, delay_s: esR4(e.delay || 0) },
+    required: { screen_alignment: !aligned ? 'Square' : e.align === 'screen' ? 'Rectangle' : 'Velocity', duration_s: esR4(e.duration), loops: 1, delay_s: esR4(e.delay || 0) },
     spawn: { rate: { curve: esThin(e.spawn, 0.5).map(([t, r]) => [esR4(t), +(r * f).toFixed(2)]), bake: false }, bursts: (e.bursts || []).map(([t, n]) => [esR4(t), Math.round(n * f)]) },
     modules: mods
   };
@@ -3845,7 +3894,7 @@ function esCascadeText(ES, mobile = false, frac = 1) {
   const L = [];
   for (const e of ES.emitters) {
     const j = esFwlEmitter(e, mobile, frac);
-    L.push(`【${e.name}】${j.gpu ? 'GPU Sprites' : 'CPU'} · 材质角色 soft_dot · Screen Alignment = Square · Duration ${j.required.duration_s} s · Loops 1 · Delay ${j.required.delay_s} s`);
+    L.push(`【${e.name}】${j.gpu ? 'GPU Sprites' : 'CPU'} · 材质角色 soft_dot · Screen Alignment = ${j.required.screen_alignment}${j.required.screen_alignment !== 'Square' ? (j.required.screen_alignment === 'Velocity' ? '（沿速度' : '（沿屏幕竖直') + '拉长：Initial Size Y × ' + (e.stretch || 1) + (e.stretchLife ? '，Size By Life 的 Y 按寿命拉长' : '') + ' → 线状火星）' : ''} · Duration ${j.required.duration_s} s · Loops 1 · Delay ${j.required.delay_s} s`);
     L.push(`  Spawn Rate（发射器时间 s → 颗/秒，线性）：${j.spawn.rate.curve.length} 个关键点，${j.spawn.rate.curve.slice(0, 4).map(k => k.join(' → ')).join('；')}${j.spawn.rate.curve.length > 4 ? ' …（完整见 cascade.json）' : ''}`);
     for (const m of j.modules) {
       const f = Object.entries(m).filter(([k]) => !['m', 'note'].includes(k)).map(([k, v]) => {
@@ -3910,7 +3959,9 @@ function rtPowderOf(P, LI, gi, M, rate, salt) {
     j: P.rtAJet * (0.75 + 0.5 * phh(K, 3)), kd: P.rtAKd * (0.7 + 0.6 * phh(K, 4)),
     cx: P.rtACone * phn(K, 5), cz: P.rtACone * 0.5 * phn(K, 7),
     size: P.rtASize * (0.6 + 0.8 * phh(K, 8)), br: 0.6 + 0.8 * phh(K, 9), fl: P.rtFling * (0.8 + 0.4 * phh(K, 10)),
-    ph: 6.2831853 * ((P.rtSpin || 0) * tb + (P.rtSpinPh || 0))
+    ph: 6.2831853 * ((P.rtSpin || 0) * tb + (P.rtSpinPh || 0)),
+    // 小涡 / 弹体尾流：每颗火粉被一小团空气带着漂（大涡在火粉寿命内看不出来，循环层只放小涡 → 循环不破）
+    wx: (P.rtTurbS || 0) * phn(K, 11), wz: (P.rtTurbS || 0) * 0.7 * phn(K, 12)
   };
 }
 function rtPowderI(P, q, a, pulse) { const u = a / q.life; return P.rtAI * q.br * pulse * Math.min(1, a / 0.015) * Math.pow(Math.max(0, 1 - u), P.rtAWarm || 1); }
@@ -3945,8 +3996,8 @@ function makeRiseTailLoopRenderer(P, LI, Vref, opts = {}) {
         if (q.tb > te) continue;
         const a = ts - q.tb; if (a > lifeMax + 0.02) break; if (a < 0 || a >= q.life) continue;
         const e = Math.exp(-q.kd * a), s1 = (1 - e) / q.kd;
-        const x = R0 * Math.cos(q.ph) + (-q.fl * Math.sin(q.ph) + q.cx) * s1;
-        const z = (-q.j + q.cz) * s1 - (Vref + G / q.kd) * (a - s1);
+        const x = R0 * Math.cos(q.ph) + (-q.fl * Math.sin(q.ph) + q.cx) * s1 + q.wx * (a - s1);
+        const z = (-q.j + q.cz) * s1 - (Vref + G / q.kd - q.wz) * (a - s1);
         let I = rtPowderI(P, q, a, LI.pulse(q.tb)) * fadeAll; if (R.bot) I *= smoothstepJS(R.bot[0], R.bot[1], z); if (I <= 0 || n >= cap) continue;
         bufT[n * 4] = x; bufT[n * 4 + 1] = z; bufT[n * 4 + 2] = I; bufT[n * 4 + 3] = q.size; n++;
       }
@@ -3975,7 +4026,7 @@ function drawRiseTailLive(P, LI, ball, t, view, ppm) {
     const p = ball.pos(q.tb), v = ball.vel(q.tb), sp = Math.hypot(v[0], v[2]) || 1, dx = v[0] / sp, dz = v[2] / sp;
     const e = Math.exp(-q.kd * a), s1 = (1 - e) / q.kd;
     const vx0 = v[0] - q.j * dx - q.fl * Math.sin(q.ph) + q.cx, vz0 = v[2] - q.j * dz + q.cz;
-    const x = p[0] + R0 * Math.cos(q.ph) + vx0 * s1, z = p[2] + vz0 * s1 - G / q.kd * (a - s1);
+    const x = p[0] + R0 * Math.cos(q.ph) + vx0 * s1 + q.wx * (a - s1), z = p[2] + vz0 * s1 - (G / q.kd - q.wz) * (a - s1);
     const I = rtPowderI(P, q, a, LI.pulse(q.tb)); if (I <= 0 || n >= cap) continue;
     bufT[n * 4] = x; bufT[n * 4 + 1] = z; bufT[n * 4 + 2] = I; bufT[n * 4 + 3] = q.size; n++;
   }
@@ -4003,6 +4054,39 @@ function rtSparkColor(P, lifeMean, I, dT = 0) {
     return [u, c.map(x => +(x * s).toFixed(4))];
   });
 }
+// 空气乱流（大涡）：高空风的阵风 u′、涡尺度 Λ。火星寿命（≤ 几秒）远小于涡的周转时间 Λ / u′（几十秒），
+//   所以每颗火星一辈子都在「出生那团空气」里：阻力把它拉向那团空气的速度 w → 等价于恒定加速度 k·w，漂移 = w ·（年龄 − (1 − e^−k·年龄) / k）。
+//   这团空气的速度由出生地（= 弹体在发射器时间 t0 的位置）决定：同一时刻出生的火星一起漂（沿尾迹相关），隔一个 Λ 就换一股风 → 老的尾迹慢慢松、轻轻弯。
+//   值噪声：沿弹道弧长每 Λ 一个高斯节点、Catmull-Rom 插值；返回 t0 → 空气速度（m/s，x 横 / y 景深 / z 竖）
+function rtAir(P, ball) {
+  const u = P.rtTurb || 0, Lam = Math.max(2, P.rtTurbL || 30), T = ball.T, sd = (P.seed | 0) * 97 + 5;
+  if (u <= 0) return () => [0, 0, 0];
+  const n = 400, S = [0]; for (let i = 1; i <= n; i++) { const t = T * (i - 0.5) / n, v = ball.vel(t); S.push(S[i - 1] + Math.hypot(v[0], v[2]) * T / n); }
+  const sOf = t => { const x = clamp(t / T, 0, 1) * n, i = Math.min(n - 1, Math.floor(x)); return S[i] + (S[i + 1] - S[i]) * (x - i); };
+  const node = (m, ax) => phn(sd + m * 3 + ax, 31 + ax);
+  const cr = (p0, p1, p2, p3, f) => 0.5 * (2 * p1 + (-p0 + p2) * f + (2 * p0 - 5 * p1 + 4 * p2 - p3) * f * f + (-p0 + 3 * p1 - 3 * p2 + p3) * f * f * f);
+  const sc = [u, u, u * 0.7].map(x => x * 1.11);   // Catmull-Rom 插值把方差平均压到 0.81，补回来 → 均方根 = u′
+  return t => { const x = sOf(t) / Lam, m = Math.floor(x), f = x - m; return [0, 1, 2].map(ax => sc[ax] * cr(node(m - 1, ax), node(m, ax), node(m + 1, ax), node(m + 2, ax), f)); };
+}
+// 线状火星（相机 / 眼睛跟着星头走的拖影）：看升空的人（和参考视频的相机）是盯着星头的，星头在视网膜上不动，
+//   火星相对星头往下退 → 在曝光 / 视觉暂留时间 τ 里拖成一条竖线：拖影长度 = |火星速度 − 星头此刻速度| × τ。
+//   年轻火星相对星头退得慢（≈ 喷出速度），老火星几乎停在空中、相对速度 ≈ 星头速度 → 越往下拖得越长（参考图下段正是这样）。
+//   拉长倍数 = √(1 + (长度 / 尺寸)²)，按「中途出生的标称火星」随寿命算。方向 = 相对星头的运动 ≈ 弹道方向（竖直），
+//   引擎里用 Screen Alignment = Rectangle（面片 Y 朝屏幕上方）而不是 Velocity：火星自己的速度在寿命中段很小、方向乱（试过，拖影横七竖八，和参考里整齐的竖线不符）。
+//   光量守恒（拖影只是把同一份光摊长）：Color Over Life 同时除以拉长倍数，所以拖影火星要更亮才会在相机里过曝发白。
+function rtStretchLife(P, ball, jet, kd, L, S, sizeLife, tauMul) {
+  const tau = (P.rtStreakT || 0) * (tauMul == null ? 1 : tauMul), cap = Math.max(1, P.rtStreakMax || 6);
+  if (tau <= 0 || S <= 0) return null;
+  const t0 = ball.T * 0.4, v = ball.vel(t0), sp = Math.hypot(v[0], v[2]) || 1, v0 = [v[0] - jet * v[0] / sp, v[2] - jet * v[2] / sp], g = G / kd;
+  const keys = [];
+  for (let i = 0; i <= 10; i++) {
+    const u = i / 10, a = u * L, e = Math.exp(-kd * a), vh = ball.vel(Math.min(ball.T, t0 + a));
+    const rx = v0[0] * e - vh[0], rz = (v0[1] + g) * e - g - vh[2];
+    const len = Math.hypot(rx, rz) * tau, sz = S * (sizeLife ? esCurve(sizeLife, u) : 1);
+    keys.push([u, +Math.min(cap, Math.sqrt(1 + (len / Math.max(1e-3, sz)) ** 2)).toFixed(3)]);
+  }
+  return keys.some(k => k[1] > 1.05) ? keys : null;
+}
 function rtBuildES(P) {
   const ball = rtBallistic(P), LI = rtLoopInfo(P), T = ball.T, f = P.rtSpin || 0, R0 = (P.rtD || 0) / 2, th = ball.th;
   const dtL = Math.min(0.05, f > 0 ? 1 / (12 * f) : 0.05), dtS = Math.min(0.05, P.rtPulse > 0 ? 1 / (4 * (P.rtPulseHz || 6)) : 0.25);
@@ -4014,22 +4098,32 @@ function rtBuildES(P) {
   const vel = (jet, fling) => tl.map(t => { const v = ball.vel(t), sp = Math.hypot(v[0], v[2]) || 1, ph = phase(t);
     return [t, [v[0] - jet * v[0] / sp - fling * Math.sin(ph), fling * Math.cos(ph), v[2] - jet * v[2] / sp]]; });
   const spawn = rate => ts.map(t => [t, rate * LI.pulse(t)]);
-  const c = P.rtCone || 0, cone = [[-c, -c, -c / 2], [c, c, c / 2]], seed = P.seed | 0;
+  // 横向散开：两个均匀分布相加（两个 Initial Velocity）→ 三角分布，均方根和原来 ±c 的均匀分布一样，边缘不再是一刀切
+  const soft = (P.rtConeSoft || 0) > 0, c = (P.rtCone || 0) / (soft ? Math.SQRT2 : 1), cb = [[-c, -c, -c / 2], [c, c, c / 2]], cone = soft ? [cb, cb] : cb, seed = P.seed | 0;
+  // 乱流：大涡（按发射器时间的 Acceleration 曲线）+ 小涡 / 弹体尾流（每颗随机，也用两个相加）。加速度 = 阻力 × 空气速度
+  const air = rtAir(P, ball), airK = tl.map(t => [t, air(t)]), us = (P.rtTurbS || 0) * Math.sqrt(1.5);
+  //   重力仍走 Const Acceleration（已实测），乱流单独用 Acceleration 模块（未经 UE 验证）
+  const turb = kd => ({ accel: [0, 0, -G], accelCurve: P.rtTurb > 0 ? airK.map(([t, w]) => [t, [w[0] * kd, w[1] * kd, w[2] * kd]]) : null,
+    accelJit: us > 0 ? [0, 1].map(() => [[-us * kd, -us * kd, -us * kd * 0.7], [us * kd, us * kd, us * kd * 0.7]]) : null });
+  const sJ = clamp((P.rtSizeJit == null ? 25 : P.rtSizeJit) / 100, 0, 0.9), kJ = clamp((P.rtKdJit == null ? 20 : P.rtKdJit) / 100, 0, 0.9);
   const em = [];
   for (const [k, name, salt] of [['F', 'SparksFine', 1], ['M', 'SparksMid', 2], ['C', 'SparksCoarse', 3]]) {
     const rate = P['rt' + k + 'Rate'] || 0; if (rate <= 0) continue;
     const L = P['rt' + k + 'Life'], j = (P['rt' + k + 'Jit'] || 0) / 100, S = P['rt' + k + 'Size'], kd = P['rt' + k + 'Kd'];
+    const sizeLife = [[0, 1], [0.7, 1], [1, P.rtShrink == null ? 0.5 : P.rtShrink]];
+    const sl = rtStretchLife(P, ball, P.rtJet, kd, L, S, sizeLife, P['rt' + k + 'Streak']);
+    let col = rtSparkColor(P, L, P['rt' + k + 'I'] * (P.rtDotGain == null ? 1 : P.rtDotGain), P['rt' + k + 'dT'] || 0);
+    if (sl) col = col.map(([u, c]) => [u, c.map(x => +(x / esCurve(sl, u)).toFixed(4))]);
     em.push({ name, gpu: true, delay: 0, duration: T, seed: seed * 13 + salt, spawn: spawn(rate),
-      life: [L * (1 - j), L * (1 + j)], size: [S * 0.75, S * 1.25], drag: [kd * 0.8, kd * 1.2], accel: [0, 0, -G],
-      loc, vel: vel(P.rtJet, P.rtFling), velAdd: cone,
-      sizeLife: [[0, 1], [0.7, 1], [1, P.rtShrink == null ? 0.5 : P.rtShrink]],
-      col: rtSparkColor(P, L, P['rt' + k + 'I'] * (P.rtDotGain == null ? 1 : P.rtDotGain)) });
+      life: [L * (1 - j), L * (1 + j)], size: [S * (1 - sJ), S * (1 + sJ)], drag: [kd * (1 - kJ), kd * (1 + kJ)], ...turb(kd),
+      loc, vel: vel(P.rtJet, P.rtFling), velAdd: cone, sizeLife, col,
+      ...(sl ? { align: 'screen', stretch: 1, stretchLife: sl } : {}) });
   }
   if ((P.rtERate || 0) > 0) {
     const L = P.rtELife, kd = P.rtEKd;
     em.push({ name: 'Embers', gpu: true, delay: 0, duration: T, seed: seed * 13 + 4, spawn: spawn(P.rtERate),
-      life: [L * 0.7, L * 1.3], size: [P.rtESize * 0.8, P.rtESize * 1.2], drag: [kd * 0.7, kd * 1.3], accel: [0, 0, -G],
-      loc, vel: vel(P.rtJet * 0.6, P.rtFling * 0.5), velAdd: [[-c * 1.5, -c * 1.5, -c], [c * 1.5, c * 1.5, c * 0.3]],
+      life: [L * 0.7, L * 1.3], size: [P.rtESize * 0.8, P.rtESize * 1.2], drag: [kd * 0.7, kd * 1.3], ...turb(kd),
+      loc, vel: vel(P.rtJet * 0.6, P.rtFling * 0.5), velAdd: soft ? cone : [[-c * 1.5, -c * 1.5, -c], [c * 1.5, c * 1.5, c * 0.3]],
       sizeLife: [[0, 1], [0.8, 0.9], [1, 0.4]], col: rtSparkColor(P, L, P.rtEI * (P.rtDotGain == null ? 1 : P.rtDotGain), -180) });
   }
   if ((P.rtSmoke || 0) > 0) {
@@ -4071,7 +4165,8 @@ async function bakeEmitSet(P, scale, onProg) {
   const expo = [b.meta.expoH, b.meta.expoT];
   // 消散：开花那一刻的循环相位停喷；时长 = 最长寿命的火粉烧完（再留一点收到全黑）
   const stop = T % Tl, per = L.cols * L.rows, Dlife = rtPowderLifeMax(P) * 1.02;
-  const fpsT = P.rtFadeFps > 0 ? Math.min(30, P.rtFadeFps) : 30, chF = clamp(Math.ceil(Dlife * fpsT / per), 1, 4), Ff = per * chF, Df = Math.max(Dlife, Ff / 30);
+  // 通道数向下取整：帧率 ≤ 30（引擎每 tick 不跳帧），时长 = 火粉烧完（不再拖出末尾空帧）
+  const fpsT = P.rtFadeFps > 0 ? Math.min(30, P.rtFadeFps) : 30, chF = clamp(Math.floor(Dlife * fpsT / per), 1, 4), Ff = per * chF, Df = Math.max(Dlife, Ff / 30);
   const Pf = { ...P, chans: chF }, ft = [], fd = []; for (let f = 0; f < Ff; f++) { ft.push(f * Df / Ff); fd.push(Df / Ff); }
   const pf = rtPlan(Pf, box, ft, fd, { loop: false, t0: stop, duration: Df });
   const Rf = makeRiseTailLoopRenderer(P, LI, Vref, { stop, fadeDur: Df, bot });
@@ -4177,7 +4272,9 @@ function fwlEmitSet(name, b, M, mobile) {
       `循环层 RiseLoop：速度朝向单粒子，星头在面片中心（不用 pivot_offset）；弹道 = Initial Velocity + Drag + Const Acceleration（线性阻力，和粒子层的出生曲线同一条）。帧号锯齿：${m.nRev} 圈自转 / ${r2(m.Tl)} s 一个循环。`,
       `消散 RiseFade：开花时刻（${r2(m.T)} s）在开花点出生，贴图里每颗火粉按自己的寿命熄灭；${Lf.F} 帧 / ${r2(m.fadeSeconds)} s。${P.rtDissolve > 0 ? 'dissolve 动态参数在后 60% 从 0 升到 ' + r2(P.rtDissolve) + '（材质里溶解怎么表现未经 UE 验证）。' : '不写 dissolve。'}`,
       `粒子层：出生位置 / 初速是按发射器时间的曲线（"bake": false 不烘查找表，避免关键点被查找表抹掉）；第二个 Initial Velocity 是随机散开。按 spec 第 2 节，出生类曲线按发射器时间取值在 GPU 发射器上还没实测（⚪）。`,
-      `同时活着的粒子最多约 ${peak.peak} 颗（${mobile ? '手机' : 'PC'}，第 ${peak.at} s）。软圆点亮度口径未经 UE 验证：烘焙器按「中心值 = 颜色、σ = 尺寸 / 4」的高斯画。`
+      `同时活着的粒子最多约 ${peak.peak} 颗（${mobile ? '手机' : 'PC'}，第 ${peak.at} s）。软圆点亮度口径未经 UE 验证：烘焙器按「中心值 = 颜色、σ = 尺寸 / 4」的高斯画。`,
+      ...(P.rtTurb > 0 || P.rtTurbS > 0 ? ['空气乱流：Acceleration 模块（大涡 = 按发射器时间的曲线，小涡 = 两个均匀分布相加），加速度 = 阻力 × 空气速度；重力仍在 Const Acceleration。Acceleration 在 GPU 发射器上未经 UE 验证（⚪），不生效时尾迹下段会比烘焙器里硬、直。'] : []),
+      ...(P.rtStreakT > 0 ? ['线状火星：拉长的发射器 Screen Alignment = Rectangle（面片 Y 朝屏幕上方 = 竖直拖影），Initial Size 的 Y 和 X 分开、Size By Life 的 Y 按寿命拉长；Color Over Life 已除以拉长倍数（光量守恒）。GPU + Rectangle 未经 UE 验证（⚪）。'] : [])
     ] };
 }
 function rtTexFiles(b, name, sfx = '', idx = 1) {
@@ -4215,7 +4312,7 @@ function rtCascadeText(name, b, M) {
 ${esCascadeText(b.es || rtBuildES(P), false, 1)}
 【粒子层 · 手机】数量 × ${P.rtMobile}，全部 CPU，同时活着最多约 ${pkM.peak} 颗（曲线同 PC，Spawn Rate 乘比例）
 
-【未经 UE 验证】出生类曲线按发射器时间取值在 GPU 发射器上的表现；软圆点的亮度口径；dissolve 在材质里的表现；循环层速度朝向在接近顶点（速度很小）时的朝向。
+【未经 UE 验证】出生类曲线按发射器时间取值在 GPU 发射器上的表现；软圆点的亮度口径；dissolve 在材质里的表现；循环层速度朝向在接近顶点（速度很小）时的朝向${P.rtTurb > 0 || P.rtTurbS > 0 ? '；空气乱流的 Acceleration 模块（GPU）' : ''}${P.rtStreakT > 0 ? '；线状火星 GPU + Rectangle 对齐、Size By Life 的 Y 单独拉长' : ''}。
 `;
 }
 function rtCurvesCSV(b, M) {
