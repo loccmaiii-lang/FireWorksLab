@@ -53,7 +53,10 @@ $('#btnJitter').addEventListener('click', jitterParams);
 $('#btnImport').addEventListener('click', () => $('#fileIn').click());
 // 导入：完整参数 JSON，或只含差异的派生配方（{ parent / type, diff }）
 function importParams(j, fname) {
-  if (j.recipes) { for (const r of j.recipes) { const i = state.recipes.findIndex(x => x.name === r.name); if (i >= 0) state.recipes[i] = r; else state.recipes.push(r); } store.set('recipes', state.recipes); renderRecipes(); flash('已导入配方库'); return; }
+  // 4.2.10：配方库（旧的派生配方）→ 每个配方存成对应花型模板的一个版本（资产栏「版本」里选），不再进工具页
+  if (j.recipes) { const all = store.get('mySaves', {}), prev = state.recipes; let n = 0; state.recipes = [...j.recipes, ...(prev || [])];     // 父配方可能也在这个文件里
+    for (const r of j.recipes) { try { const { P, M } = resolveRecipe(r), k = 'type:' + r.type; (all[k] = all[k] || []).push({ id: 'r' + Date.now().toString(36) + n, name: '配方 · ' + r.name, at: wbNow(), base: r.type, snap: { kind: 'single', P, M, repId: null } }); n++; } catch (e) { } }
+    state.recipes = prev; store.set('mySaves', all); renderLib(); flash(`已把 ${n} 个配方存成花型模板的版本：打开对应花型（左栏「花型模板」），资产栏「版本」里选`); return; }
   if (j.diff && j.type) { const { P, M } = resolveRecipe(j); state.P = P; state.M = M; state.name = j.name || fname; buildMasterPanel(); onParam(); flash('已导入配方 ' + state.name); return; }
   const p = j.params || j;
   if (!TYPES[p.type]) throw new Error('不认识的花型');

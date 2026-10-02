@@ -90,17 +90,17 @@ await check('render version: new templates default to 40 (4.0, DEFAULT_RENDER_VE
   for (const type of ['trailS', 'trailM', 'trailL']) assert.equal(f.run(`defaultsFor('${type}').P.renderVer`), 37);
   for (const id of ['JM4', 'TR2S', 'TR2M', 'TR2L']) assert.equal(f.run(`replicaPM('${id}').P.renderVer`), 37, id);
 });
-await check('stored recipes: legacy import and rollback; explicit version survives diff save', async f => {
+// 4.2.10（走查 B8）：工具页的回滚 / 存为配方去掉了，旧配方只在导入时展开成花型模板的版本；展开时按配方自己的渲染版本（没写 = 37）
+await check('stored recipes: legacy import resolves with its own renderVer', async f => {
   vm.runInContext(fs.readFileSync(path.join(root, 'tool/src/js/75_iter.js'), 'utf8'), f.ctx);
-  f.run('renderRecipes = () => {}; renderVersions = () => {};');
+  f.run('state.recipes = [];');
   assert.equal(f.run("storedParams({ type: 'kiku' }).renderVer"), 37);
   assert.equal(f.run("storedParams({ type: 'kiku', renderVer: 40 }).renderVer"), 40);
   assert.equal(f.run("resolveRecipe({ type: 'kiku', diff: { P: {}, M: {} } }).P.renderVer"), 37);
-  f.run("rollback({ P: { type: 'kiku' }, M: {}, name: 'old', n: 1 });");
-  assert.equal(f.run('state.P.renderVer'), 37);
-  f.run("state.P = defaultsFor('kiku',40).P; state.M = defaultsFor('kiku',40).M; saveRecipe('new');");
-  assert.equal(f.run('state.recipes[0].diff.P.renderVer'), 40);
-  assert.equal(f.run('resolveRecipe(state.recipes[0]).P.renderVer'), 40);
+  assert.equal(f.run("resolveRecipe({ type: 'kiku', diff: { P: { renderVer: 40 }, M: {} } }).P.renderVer"), 40);
+  f.run("state.recipes = [{ name: 'p', type: 'kiku', diff: { P: { renderVer: 40, stars: 99 }, M: {} } }];");
+  assert.equal(f.run("resolveRecipe({ name: 'c', parent: 'p', type: 'kiku', diff: { P: { burn: 1.7 }, M: {} } }).P.stars"), 99);
+  assert.equal(f.run("typeof rollback"), 'undefined');
 });
 await check('F1: obsolete failure does not block a newer recipe', async f => {
   let rejectOld;

@@ -1194,26 +1194,11 @@ details.sec>p.hint:not([hidden]){border-left:2px solid var(--line2);padding-left
         <label class="field">参考<select id="refMetric"></select></label>
         <div class="stats" id="metricTable">等待烘焙…</div>
       </details>
-      <details class="sec" open>
-        <summary>版本与回滚</summary>
-        <p class="hint">每次导出自动存一个版本，也可以手动存。版本只保存在这台电脑的浏览器里，想长期保留请点「导出全部版本」。</p>
-        <div class="line2">
-          <input type="text" id="verNote" placeholder="批注（可选）" class="txt">
-          <button class="btn" id="verSave">存版本</button>
-        </div>
-        <div class="lib" id="verList"></div>
-        <div class="thumbs" id="thumbs"></div>
-        <div class="line2"><button class="btn ghost" id="verExport">导出全部版本</button><button class="btn ghost" id="verImport">导入版本</button><input type="file" id="verFile" accept=".json" hidden></div>
-      </details>
-      <details class="sec" open>
-        <summary>派生配方</summary>
-        <p class="hint">配方只记录与父配方（或花型默认值）的差异。子配方继承父配方，父配方改了子配方跟着变。</p>
-        <div class="line2">
-          <input type="text" id="recName" placeholder="配方名" class="txt">
-          <button class="btn" id="recSave">存为配方</button>
-        </div>
-        <div class="lib" id="recList"></div>
-        <div class="line2"><button class="btn ghost" id="recExport">导出配方库 JSON</button><button class="btn ghost" id="recImport">导入配方库</button><input type="file" id="recFile" accept=".json" hidden></div>
+      <details class="sec" id="legacyVer" hidden>
+        <summary>旧的版本 / 配方（4.2.9 以前）</summary>
+        <p class="hint">版本现在只在资产栏「版本」里：保存、另存为、草稿，导出时也会自动存一份。以前工具页的「版本与回滚」「派生配方」不再用（回滚会把别的效果的参数塞进当前效果）。这台电脑里还存着下面这些，可以导出留底；要用哪个，导出后在资产栏 ⋯「导入配方文件」打开。</p>
+        <div class="stats" id="legacyInfo"></div>
+        <div class="line2"><button class="btn ghost" id="legacyExport" type="button">导出成 .json</button></div>
       </details>
       <details class="sec" open>
         <summary>显卡测速</summary>
@@ -1268,7 +1253,7 @@ details.sec>p.hint:not([hidden]){border-left:2px solid var(--line2);padding-left
 <script src="data/standard.js"></script>
 <script>
 'use strict';
-const UPDATES = [{"title": "需要你决定 / 操作（AI 维护，定了就删掉那行，不超过 5 行）", "body": "- **待我验收**：升空尾缀 RT4、引菊 → 锦 HN2 可以直接看。金芒菊 JM4-40、青柠星 QN11、鸿巢 HK10 是旧参数换 4.0 渲染，素材包还是旧命名；下一轮 AI 会先按新规则重导、自己出新旧对照，再请你看效果，你现在不用拿它们和旧版比。\n- **HN2**：你调过的动态，现在不用复制粘贴了：打开引菊 → 锦，资产栏 ⋯「连接仓库文件夹」选 `F:/FireWorksLab`（只选一次），切到你调过的那个版本（没存过就重新调一下），点「保存」。后台脚本 10 分钟内推上去，对话框7 合进 HN2。\n- **两条规则等你定**：球形C 开花闪光和延时点火之间真黑的 2 帧怎么处理（推荐：并成 1 帧停住，检查按模拟判断，见下面 QC11 那条）；球形B 开花闪光过曝，要不要给闪光加通用的软压缩。\n- **旧条目打不开**：本机显卡把左栏 136 个条目挨个打开了一遍，全都打得开（最慢的是片贝，打开约 1 分钟、播放 12–20 fps）。你之前遇到的如果还在，告诉对话框2 是哪个条目、点了什么。"}, {"title": "2026-10-03 · 能撤销了；滑杆和拖动一个规矩 · 烘焙器 4.2.9（对话框2）", "body": "- **撤销 / 重做**：资产栏「保存」左边 ↶ ↷，或 Ctrl+Z / Ctrl+Shift+Z。停手 0.6 秒算一步；多层效果撤销只重烘改过的那一层。\n- **滑杆和拖动效果一样了**：在右栏用滑杆改燃烧、点火、火花停这些，序列时长会跟着变（以前只有在轨道上拖才会，滑杆加长燃烧会把星截掉）；引菊的「火花停」用滑杆改，锦的点火也会跟着动。\n- **入点跟着内容**：设过入点以后再推后点火，入点一起往后挪，前面不会多出黑帧。\n- 右栏底部「恢复本花型默认」改成 **「恢复到打开时」**：回到 AI 交的版本（或你保存的版本），不是模板默认；多层时只恢复正在调的那一层。"}, {"title": "2026-10-03 · 参数栏好找了；尾迹可以调粗细、两头收尖 · 烘焙器 4.2.8（对话框2）", "body": "`git pull` 后刷新烘焙器，右栏：\n\n- **6 大类**：运动 / 开花 · 星头 · 尾迹 · 特效 · 环境 · 输出（升空尾缀那些也一样分）。特效、环境、输出默认收起，展开过的下次还展开。\n- **名字变短**：括号里的长说明不再挤在参数名里，鼠标放到参数上，右栏底部的说明条显示完整说明、范围、打开时的值。每节的长说明收进标题旁的「？」。\n- **顶上搜索框**（名字和说明都能搜，Esc 清空）和 **「只看改过的」**（和打开时的版本比）。改过的参数名变绿，大类标题上写「N 项改过」。\n- **尾迹粗细 / 梭形**：「尾迹」→「尾迹外形」里多了 *尾迹粗细*（整体变粗变细）、*星头端收尖*、*尾端收尖*、*最粗处*。两个收尖都拉上去就是梭形；星头那颗亮点的大小还是「星头」里的「炭头大小」管。默认值不改变任何现有效果。"}, {"title": "2026-10-03 · 能自己搭效果了：「＋ 新建效果」· 烘焙器 4.2.7（对话框2）", "body": "`git pull` 后刷新烘焙器，左下角「＋ 新建效果」：\n\n1. 先选第一层：花型模板，或者「现有效果的层」（比如引菊 → 锦的橙引线层，参数复制一份，以后各改各的）；起个中文名。\n2. 右栏「观察图层」：每层有 ↑ ↓ / 改名 / 复制 / 删，底下「＋ 加一层」。点哪层就调哪层（和以前一样，画面一直是整朵）。\n3. 哪几层是同一批星（比如金锦冠四个方向的同一发、引菊和锦）：在那一层的参数页头勾「同一批星」，轨迹参数就一起变。\n4. 资产栏「保存」覆盖这个效果，「另存为」复制一个；英文名（UE 资产名）在「查看交付」里改。左栏多一组「我的效果」。\n\n另外：4.2.5 那次收紧取景在 HN2 锦层上把过曝推到了 2.5%（标准 2%），青柠星尾层末帧碰边——现在收紧时会躲开这两种情况，这两个效果已经排了重导。"}, {"title": "2026-10-03 · 贴图尺寸自己定 · 烘焙器 4.2.6（对话框2）", "body": "- 右栏「输出：帧数 · 格子 · 贴图」一节里，贴图宽、高各自选 512–4096，不再强制 2048；多层效果每层也能各自改。规则只剩下限：PC 单格 ≥ 512、手机 ≥ 256（标准检查也按这个查）。\n- 原来右栏最底下那块「贴图尺寸 / 列 × 行 / 通道 / 编码…」搬进了同一节，不用再上下找。"}, {"title": "2026-10-03 · 出图占满格子；「待我验收」按证据标就绪 · 烘焙器 4.2.5（对话框2）", "body": "`git pull` 后刷新烘焙器。\n\n- **画面占比**：烘好以后按贴图里真实的内容范围把取景收紧再烘一次（预览停手 0.7 秒后在后台做，导出一律用收紧后的）。试烘：菊 Zoom 每帧格子边长省 12%（平均占比 0.74 → 0.84），柳 Zoom 省 31%，固定取景省 5% 左右；收紧前后亮度一点没丢（没切到内容）。\n- **待我验收**：每一项现在标「就绪」或「未就绪：原因」。就绪 = 最新导出是当前版本（参数和烘焙器输出规则都没变过）、回放检查过、标准检查过。现在 5 项都是「未就绪」——因为 4.2.3 / 4.2.5 改了出图规则，旧导出算过期；AI 这就重导、重跑检查，好了自己变「就绪」。\n- **小屏幕**：距离、曝光两个滑杆挪到画面下方那条信息栏右边，工具条不再折两行；左栏抽屉右上角有「×」。"}, {"title": "2026-10-03 · 改动不会再悄悄丢了；「保存」能直接进 git · 烘焙器 4.2.4（对话框2）", "body": "`git pull` 后刷新烘焙器。走查里会做错东西的 6 处（A1–A6）修好了：\n\n- **切走不丢**：没保存就切到别的效果、或刷新页面，改动自动存成这个效果的「草稿」，资产栏「版本」里能选回来。\n- **AI 版就是 AI 版**：从左栏打开效果一定是 AI 交的那版（以前带着你没保存的改动打开，「参数已变」不亮、「通过」也能点）。\n- **改完一层马上点别的层**：这一层照样重烘（以前贴图停在旧的，导出的和参数对不上）。\n- **组合编辑器**：不再顶着上一个效果的名字和导出名；里面存的版本刷新后能打开；同一预设里两层都用默认牡丹时，改一层不会带着另一层变。\n- **保存进 git**：资产栏 ⋯「连接仓库文件夹」选一次仓库根目录，以后「保存」顺便写进 `analysis/我的配方/`，后台脚本推上去，AI 直接读（不开服务器，用浏览器自带的文件夹权限；浏览器重开后第一次保存会再问一次「允许」）。"}, {"title": "2026-10-03 · 小屏幕不挤了；Zoom 取景不再一胀一缩 · 烘焙器 4.2.3（对话框2）", "body": "`git pull` 后刷新烘焙器。\n\n- **小屏幕**：效果名和保存 / 单束 / 查看交付搬进最上面一行；工具条贴在画面框上；时间轴一行；轨道说明和快捷键收进时间轴末尾的「？」。窗口窄（≤ 1180）时左栏变成抽屉，按 L 或「库」拉出，点开条目自动收起。1366 宽笔记本上对比画面从 259 px 变成 373 px（只看模拟 421 px），1280 宽从 193 变成 330。\n- **Zoom 抖**：以前面片在一帧贴图停着的时候一直在长、换帧时缩回去（现有 Zoom 素材包一胀一缩 0.5–3%）。现在每帧一个大小，换帧那一刻才换。贴图不变，只是 cascade.json 的 Size By Life 关键点变多（每张最多约 128 个，还没在 UE 里验证）。\n- **画面占比不够**：正在量每个效果每帧占格子多少，下一步按实测收紧取景，做完再写。"}, {"title": "2026-10-02 · 定了下一轮顺序，清掉过期说明（对话框13）", "body": "- **顺序**（你 23:34 同意）：① 对话框2 先修走查 A1–A6（保存打不开、导出名错、改完切层导出旧贴图等），修完用 HN2 从头走一遍「合入你的动态 → 改层 → 保存 → 刷新 → 导出 PC + 手机」；② 「待我验收」改成程序按证据把关（没导出、检查没过、素材包过期就进不来，并写出缺什么）；③ 等你决定的事只放在本文件最上面这一节。\n- **暂停**：球形D、万彩千轮、永丰、片贝（之前写着「负责人待定」、实际没人做），工具路径修好后再排。\n- **规则改了几处**：帧号通道按你本机导入配置（实测第 0 通道）；贴图默认 2048、按效果可调；后台 10 分钟；AI 交付前要自己以使用者身份走一遍；你说「不用替我导出」只表示谁来点，内部导出和检查照做；别的对话框要做的事由 AI 写进排队，不让你转达。\n- **清理**（只搬进 `归档/`，没删）：过期的执行说明、旧 README、交接里过期的第 1–4 节和 09-30 以前的日志、没人用的 4 个旧脚本、第三版尾缀样例（65 MB）；还在被调用的旧尾缀脚本保留。4.0 开工说明等计划文件头上标了「已完成 / 未开工」。\n- 预览数据（约 300 MB 的 preview.js）没动：删掉也不会让仓库变小（Git 历史里还在），省下的只是本机硬盘。"}, {"title": "2026-10-02 · 升空尾缀第 4 版待你验收（RT4S / RT4M / RT4L）· 烘焙器 4.2.2", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀，效果行下面一排 **小 / 中 / 大**，点哪档开哪档（第 3 版进历史）。\n\n- **只看到一个**：三档以前藏在右栏「版本与历史」的折叠里。现在左栏一排三档、各自带缩略图，右栏卡片上也一直有分档按钮（V5 尾缀同样）。\n- **导出不再浪费**：星头放到面片上端（和你通过的 V5 一样用 Pivot Offset），面片只包住看得见的部分，循环层格子利用从约 64% × 48% 提到约 96% × 96%。消散序列只留到最后还看得见的那一帧，贴图挑最小、RGBA 四个通道用满（2048² 变 1024×2048）。手机贴图边长减半（单格 256²，标准下限）。\n- **素材里有粒子了**：一半细火星烘进循环层贴图（和白热段一起真循环），白柱子两边是一根根金 / 白短线；另一半细火星和中 / 粗火星仍是 GPU。\n- **引擎里加了**：星头一圈柔光（跟着喷射忽明忽暗）、尾迹下段偶尔有粗火星烧到最后闪一下、0 秒发射口一闪 + 喷一把火星。都在右栏「尾缀 · 引擎里加的效果」，填 0 就关。\n- 请你在引擎里看一眼：贴图里的火星远看会不会偏暗偏橙（灰度 + Ramp 的口径）；Pivot Offset 导入器如果不认，要手动填（参数表里写了值）。导出请你自己在烘焙器里点。"}, {"title": "2026-10-02 · 引菊 → 锦（HN2）橙线颜色换成原型的颜色模型", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 引菊 → 锦。\n\n- 你 15:11 指出的「不如原型纯、尖部颜色都一样」：用 4.2.0 新加的三项做了三轮（HN2E7–E9）。现在尖部暗红、中段亮橙，线变细，线之间有暗底。\n- 橙引线层改了：曝光 1.5 → 0.8；Ramp 亮端 #ff8c19 / #ffa011 → #ff7a14 / #ff8e12；火花粗细 0.6 → 0.45；火花密度 400 → 520；冷却 0.3；火花烧旺 0.35；每颗星亮度离散 0.35；线间底光 0.006（半径 6）。金锦层没动。\n- 还差：实拍开花中心有个白色亮点，这里没有（要的话另加短闪层）；整体比实拍亮约 10%（UE 里调自发光倍数）；实拍线的长短更参差。\n- 你在 4.1.1 浏览器里调的动态还没合进来：在烘焙器里「复制我的参数」贴给我，我合进 HN2 再导一次。"}, {"title": "2026-10-02 · 升空尾缀第 3 版待你验收（RT3S / RT3M / RT3L）", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀 · 循环层 + 粒子，右上切小 / 中 / 大（第 2 版进历史）。\n\n- **白 / 黄对比**：火星三档各有温度偏移（细粒偏金偏暗、粗粒更热更亮 → 过曝发白），大小离散加大，同一档里也有亮有暗。\n- **线状火星**：中、粗火星是竖向短线——看的人 / 相机盯着星头走，火星相对星头往下退，在曝光时间里拖成线（越往下拖得越长，和你的参考一致）；细火星大多还是点。\n- **上升不再冻住**：每颗火星跟着出生那团空气漂（阵风约 1 m/s），越老漂得越远 → 尾迹下段慢慢松开、轻轻弯；散开改成中间密、边缘软。\n- 中档按你 14:35 参考图同尺度量：线状比例 0.82（参考 0.73）、长短比 2.4（2.3）、白 / 黄、边缘软硬都对上了；三档并排 `analysis/results/RT3/三档_对参考.jpg`。新参数在右栏「火星明暗与线状」「空气乱流」两节。\n- 没经过 UE 验证：乱流用的 Acceleration 模块、GPU 粒子 Rectangle 对齐拉长。导出请你自己在烘焙器里点。"}, {"title": "2026-10-02 · 烘焙器 4.2.0：每层同一套时刻 + 接力、输出一节、尾迹扩散、重播 R、单束", "body": "`git pull` 后刷新烘焙器。\n\n- **轨道**：每层都有点火 / 燃烧结束（上排圆点）和火花开始 / 火花停（中间菱形，空心 = 没打开，拖动就打开）。同一批星的几层在同一时刻的点有亮环、一起动（引菊：橙引线火花停 = 金锦点火）。拖燃烧结束，序列时长跟着变。点轨道切到那一层。\n- **输出一节**（右栏「输出：帧数 · 格子 · 贴图」）：顶上直接写着多少帧、几张、每张几×几、帧率；帧数可选 自动 / 最省 / 手动，格子可选 固定 / 按帧数选最小贴图，单格 512 / 1024 / 2048。轨道上的细刻度是每一帧的位置。默认还是原来的做法。\n- **尾迹扩散**（物理扰动）：老火花被空气扰流慢慢吹散，默认 0。\n- **尾迹外形**再加三项（对话框7 为引菊颜色纯度要的）：火花烧旺时间、每颗星亮度离散、线间底光，默认 0。\n- **重播**：按钮或 R。实拍对照改成 V。\n- **单束**：资产栏「单束」菜单，或调某一层时层参数顶上的按钮。\n- 左栏缩略图换成本机显卡渲染的。"}, {"title": "2026-10-02 · 升空尾缀第 2 版待你验收（RT2S / RT2M / RT2L）", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀 · 循环层 + 粒子，右上切小 / 中 / 大。\n\n- 火星数量、大小、散开按你 14:35 的参考图同尺度量出来对齐（三档对参考：`analysis/results/RT2/三档_对参考.jpg`）。\n- 参数全部在右栏；导出你自己在烘焙器里点，粒子大小 / 亮度请在引擎里按你的例子标定。\n- 已知：回放检查会把循环序列每圈「帧号回到 0」算成回跳（检查规则的问题，待改）；你 16:41 提的明暗对比、线状拖影、上升时的空气乱流在做第 3 版。"}, {"title": "2026-10-02 · 烘焙器 4.1.2：不再越播越卡、每个资产自己的尾迹外形、层轨道能拖、缩略图换渲染", "body": "`git pull` 后刷新烘焙器。\n\n- **越播越卡修好了**：实时模拟以前每帧都从 0 秒重算，越到后面越慢；现在从上一帧接着算，后段和前段一样快（画面逐位不变）。播放时钟也改成按真实时间走。\n- **尾迹外形**：不再是顶栏的全局面板。每个效果（多层时每一层）右栏都有「尾迹外形」：粗细随机、亮肩、泪滴星头，默认 0 = 原样。\n- **层轨道能拖**：每层轨道下方的白色把手是入点 / 出点，上方圆点是点火、燃烧结束、火花停等；任何一层都能直接拖，松手只重烘那一层。拖回尽头 = 自动。\n- **缩略图**：不再用实拍。本机显卡按当前配方渲染（UI8T，回来后自动换上）；之前先用对照图里的模拟图。\n- **命名**：循环层 + 粒子（升空尾缀小 / 中 / 大）也改成 `T_EFX_FireWorks_…`，三档加 `_S / _M / _L`。`cascade.json` 里每张贴图写了 UE 资产名，导入时直接用、不用再加前缀。"}, {"title": "2026-10-02 · 烘焙器 4.1.1：入点 / 出点、命名规范、全局风格、层轨道与联动、单束、流转连播", "body": "`git pull` 后刷新烘焙器。\n\n- **入点 / 出点**：时间轴下面「设为入点 / 设为出点」。帧只分给入点到出点；入点前默认用入点那一帧从小放大（也可选不显示）。引擎回放、导出都按这个。\n- **命名**：大面片素材包改成 `T_EFX_FireWorks_名称_层_4x4_01_HD.png`（手机无 `_HD`；Cut `_C`、Ramp `_R` 共用）。每个效果先起了英文名（鸿巢四尺玉 = YonshakuKamuro，层 Main / Red；引菊 → 锦 = HikiNishiki，层 Hiki / Nishiki……），交付页可以改。\n- **全局风格**：顶栏「全局风格」，尾长 / 粗细 / 散布 / 星头大小 / 亮度 / 闪烁 + 粗细随机 / 亮肩 / 泪滴。默认值时所有效果逐像素不变；默认不动已通过的效果。\n- **层轨道**：时段条上直接看到并拖每层的点火、燃烧结束、第二段、火花停（四尺玉红点何时出现、青柠星星头何时点着、引菊何时转锦都在这里）。同一批星的层改轨迹参数会自动同步。\n- **单束**：交付页可以导出某一层的单束包（每颗星一个粒子）。\n- **流转动画**：两张图会连着播。"}, {"title": "2026-10-02 · 烘焙器 4.0.6：工具条回到画面上方、修复调参黑屏", "body": "刷新正式烘焙器即可。实时模拟、引擎回放、贴图、观察大小、平台、曝光和实拍对照回到中央画面上方；顶部去掉重复的长效果路径，右上仍显示显卡和更新记录。调参时“烘焙中”提示误用了遮罩样式，已修复。离线状态回归通过；实际浏览器视觉受本机访问限制尚未验证。"}, {"title": "2026-10-02 · 烘焙器 4.0.5：交互稿剩下的部分做完", "body": "`git pull` 后刷新烘焙器。按你的浏览器交互稿：画面框（标题写明看的是哪版 / 哪层，右上 网格 · 记录当前帧 · 大画面，脚注 单格 · tick）、时间轴（±1 tick、← →、循环 / 播放一遍、开花 / 展开 / 衰减、每层时段条）、查看交付（素材包文件清单 + 导出）、检查与验收四行、通过门槛、左栏「我的版本」。和交互稿逐项对照、哪些没照搬和为什么、改进建议，写在 `协作/烟花烘焙器交互设计草稿.md` 最后一节。"}, {"title": "2026-10-02 · 烘焙器 4.0.4：每个条目都是完整资产（多层也能逐层调参）、能保存你的版本、观看距离 50–1200 m", "body": "`git pull` 后刷新烘焙器。\n\n- **多层效果**（鸿巢、青柠星、球形 A–D、永丰、片贝、万彩千轮…）：右栏「观察图层」点某一层，下面就是这一层的**完整参数**，画面一直是整朵；改了只重烘这一层。「贴图」视图看这一层的贴图和流转。独看 / 静音只影响观察。\n- **保存**：画面上方的资产栏——「版本」下拉在 AI 版和你保存的版本之间切换；「保存 / 另存为」存你的版本（这台电脑的浏览器里，按效果分）；「⋯」里可以复制你的改动（贴给我，我就知道你改了哪些参数）、导出 / 导入配方文件；「导出素材包」导出整个效果。\n- **右栏三页**：参数（默认，最上面一行有 通过 / 要改）/ 审阅（说明、检查、意见、历史）/ 工具。\n- **观看距离** 改成 50–1200 m（对数刻度，双击回 1000 m）。标准检查仍按 800–1200 m 量。"}, {"title": "2026-10-02 · 鸿巢四尺玉、青柠星的 4.0 版进待我验收；烘焙器换外观（4.0.3）", "body": "`git pull` 后刷新烘焙器。\n\n- **待我验收新增两个**（参数和你之前看过的 3.7 版一样，只换成 4.0 渲染）：鸿巢四尺玉 HK10、青柠星 QN11。导出、回放检查、标准检查全过；每层一张 64 帧、单格 512、固定取景。历史里的 HK9 / QN10 可以对照。\n- **另外 4 个迁移版**（永丰 FS10、片贝 PK9、球形D QD13、万彩千轮 ZW5）：技术检查也全过，但它们在 3.7 时本来就还没调完、没交过你，所以留在「制作中」。球形A QA19 保持暂停（QA17 的已知问题还在）。\n- **球形B ZB5**：第 1 层开花几帧过曝，曝光重算 2.087 → 1.755，本机重导中，过了就进待我验收。\n- **球形C QC11 需要你定一条规则**：外层开花闪一下、0.38 s 后星才点着，这中间本来就是黑的，导出里有 2 帧全黑，按现在「中间不许有空帧」过不了。推荐：烘焙器把这种「模拟里整段没有星在烧」的黑段并成 1 帧停住（省格子），检查按模拟判断是否真黑，不按像素，不会掩盖真错误。\n- **界面外观**（按你的浏览器草稿，第 1 步只改外观）：DF 配色；顶部一行（右上显卡型号、更新记录）；工具条全宽一行；左栏上下分组可折叠（待我验收 / 制作中 / 已通过 / 花型模板 / 历史 / 工具），56 px 缩略图、选中整圈青绿框；最下面「＋ 新建配方」和「复制我的意见」；窄窗口右栏排到画面下面。渲染、导出、参数都没动。"}];
+const UPDATES = [{"title": "需要你决定 / 操作（AI 维护，定了就删掉那行，不超过 5 行）", "body": "- **待我验收**：升空尾缀 RT4、引菊 → 锦 HN2 可以直接看。金芒菊 JM4-40、青柠星 QN11、鸿巢 HK10 是旧参数换 4.0 渲染，素材包还是旧命名；下一轮 AI 会先按新规则重导、自己出新旧对照，再请你看效果，你现在不用拿它们和旧版比。\n- **HN2**：你调过的动态，现在不用复制粘贴了：打开引菊 → 锦，资产栏 ⋯「连接仓库文件夹」选 `F:/FireWorksLab`（只选一次），切到你调过的那个版本（没存过就重新调一下），点「保存」。后台脚本 10 分钟内推上去，对话框7 合进 HN2。\n- **两条规则等你定**：球形C 开花闪光和延时点火之间真黑的 2 帧怎么处理（推荐：并成 1 帧停住，检查按模拟判断，见下面 QC11 那条）；球形B 开花闪光过曝，要不要给闪光加通用的软压缩。\n- **旧条目打不开**：本机显卡把左栏 136 个条目挨个打开了一遍，全都打得开（最慢的是片贝，打开约 1 分钟、播放 12–20 fps）。你之前遇到的如果还在，告诉对话框2 是哪个条目、点了什么。"}, {"title": "2026-10-03 · 版本只剩一套 · 烘焙器 4.2.10（对话框2）", "body": "- 「版本」只在资产栏里了：AI 版、你保存的版本、草稿，以及新增的 **「导出时」**——每次导出自动存一份（每个效果只留最近 3 份），想知道「上次导出的是什么参数」直接选它。\n- 工具页的「版本与回滚」「派生配方」去掉了（回滚会把别的效果的参数塞进当前效果）。以前存的还在这台电脑里，工具页最下面能导出成 .json 留底。"}, {"title": "2026-10-03 · 能撤销了；滑杆和拖动一个规矩 · 烘焙器 4.2.9（对话框2）", "body": "- **撤销 / 重做**：资产栏「保存」左边 ↶ ↷，或 Ctrl+Z / Ctrl+Shift+Z。停手 0.6 秒算一步；多层效果撤销只重烘改过的那一层。\n- **滑杆和拖动效果一样了**：在右栏用滑杆改燃烧、点火、火花停这些，序列时长会跟着变（以前只有在轨道上拖才会，滑杆加长燃烧会把星截掉）；引菊的「火花停」用滑杆改，锦的点火也会跟着动。\n- **入点跟着内容**：设过入点以后再推后点火，入点一起往后挪，前面不会多出黑帧。\n- 右栏底部「恢复本花型默认」改成 **「恢复到打开时」**：回到 AI 交的版本（或你保存的版本），不是模板默认；多层时只恢复正在调的那一层。"}, {"title": "2026-10-03 · 参数栏好找了；尾迹可以调粗细、两头收尖 · 烘焙器 4.2.8（对话框2）", "body": "`git pull` 后刷新烘焙器，右栏：\n\n- **6 大类**：运动 / 开花 · 星头 · 尾迹 · 特效 · 环境 · 输出（升空尾缀那些也一样分）。特效、环境、输出默认收起，展开过的下次还展开。\n- **名字变短**：括号里的长说明不再挤在参数名里，鼠标放到参数上，右栏底部的说明条显示完整说明、范围、打开时的值。每节的长说明收进标题旁的「？」。\n- **顶上搜索框**（名字和说明都能搜，Esc 清空）和 **「只看改过的」**（和打开时的版本比）。改过的参数名变绿，大类标题上写「N 项改过」。\n- **尾迹粗细 / 梭形**：「尾迹」→「尾迹外形」里多了 *尾迹粗细*（整体变粗变细）、*星头端收尖*、*尾端收尖*、*最粗处*。两个收尖都拉上去就是梭形；星头那颗亮点的大小还是「星头」里的「炭头大小」管。默认值不改变任何现有效果。"}, {"title": "2026-10-03 · 能自己搭效果了：「＋ 新建效果」· 烘焙器 4.2.7（对话框2）", "body": "`git pull` 后刷新烘焙器，左下角「＋ 新建效果」：\n\n1. 先选第一层：花型模板，或者「现有效果的层」（比如引菊 → 锦的橙引线层，参数复制一份，以后各改各的）；起个中文名。\n2. 右栏「观察图层」：每层有 ↑ ↓ / 改名 / 复制 / 删，底下「＋ 加一层」。点哪层就调哪层（和以前一样，画面一直是整朵）。\n3. 哪几层是同一批星（比如金锦冠四个方向的同一发、引菊和锦）：在那一层的参数页头勾「同一批星」，轨迹参数就一起变。\n4. 资产栏「保存」覆盖这个效果，「另存为」复制一个；英文名（UE 资产名）在「查看交付」里改。左栏多一组「我的效果」。\n\n另外：4.2.5 那次收紧取景在 HN2 锦层上把过曝推到了 2.5%（标准 2%），青柠星尾层末帧碰边——现在收紧时会躲开这两种情况，这两个效果已经排了重导。"}, {"title": "2026-10-03 · 贴图尺寸自己定 · 烘焙器 4.2.6（对话框2）", "body": "- 右栏「输出：帧数 · 格子 · 贴图」一节里，贴图宽、高各自选 512–4096，不再强制 2048；多层效果每层也能各自改。规则只剩下限：PC 单格 ≥ 512、手机 ≥ 256（标准检查也按这个查）。\n- 原来右栏最底下那块「贴图尺寸 / 列 × 行 / 通道 / 编码…」搬进了同一节，不用再上下找。"}, {"title": "2026-10-03 · 出图占满格子；「待我验收」按证据标就绪 · 烘焙器 4.2.5（对话框2）", "body": "`git pull` 后刷新烘焙器。\n\n- **画面占比**：烘好以后按贴图里真实的内容范围把取景收紧再烘一次（预览停手 0.7 秒后在后台做，导出一律用收紧后的）。试烘：菊 Zoom 每帧格子边长省 12%（平均占比 0.74 → 0.84），柳 Zoom 省 31%，固定取景省 5% 左右；收紧前后亮度一点没丢（没切到内容）。\n- **待我验收**：每一项现在标「就绪」或「未就绪：原因」。就绪 = 最新导出是当前版本（参数和烘焙器输出规则都没变过）、回放检查过、标准检查过。现在 5 项都是「未就绪」——因为 4.2.3 / 4.2.5 改了出图规则，旧导出算过期；AI 这就重导、重跑检查，好了自己变「就绪」。\n- **小屏幕**：距离、曝光两个滑杆挪到画面下方那条信息栏右边，工具条不再折两行；左栏抽屉右上角有「×」。"}, {"title": "2026-10-03 · 改动不会再悄悄丢了；「保存」能直接进 git · 烘焙器 4.2.4（对话框2）", "body": "`git pull` 后刷新烘焙器。走查里会做错东西的 6 处（A1–A6）修好了：\n\n- **切走不丢**：没保存就切到别的效果、或刷新页面，改动自动存成这个效果的「草稿」，资产栏「版本」里能选回来。\n- **AI 版就是 AI 版**：从左栏打开效果一定是 AI 交的那版（以前带着你没保存的改动打开，「参数已变」不亮、「通过」也能点）。\n- **改完一层马上点别的层**：这一层照样重烘（以前贴图停在旧的，导出的和参数对不上）。\n- **组合编辑器**：不再顶着上一个效果的名字和导出名；里面存的版本刷新后能打开；同一预设里两层都用默认牡丹时，改一层不会带着另一层变。\n- **保存进 git**：资产栏 ⋯「连接仓库文件夹」选一次仓库根目录，以后「保存」顺便写进 `analysis/我的配方/`，后台脚本推上去，AI 直接读（不开服务器，用浏览器自带的文件夹权限；浏览器重开后第一次保存会再问一次「允许」）。"}, {"title": "2026-10-03 · 小屏幕不挤了；Zoom 取景不再一胀一缩 · 烘焙器 4.2.3（对话框2）", "body": "`git pull` 后刷新烘焙器。\n\n- **小屏幕**：效果名和保存 / 单束 / 查看交付搬进最上面一行；工具条贴在画面框上；时间轴一行；轨道说明和快捷键收进时间轴末尾的「？」。窗口窄（≤ 1180）时左栏变成抽屉，按 L 或「库」拉出，点开条目自动收起。1366 宽笔记本上对比画面从 259 px 变成 373 px（只看模拟 421 px），1280 宽从 193 变成 330。\n- **Zoom 抖**：以前面片在一帧贴图停着的时候一直在长、换帧时缩回去（现有 Zoom 素材包一胀一缩 0.5–3%）。现在每帧一个大小，换帧那一刻才换。贴图不变，只是 cascade.json 的 Size By Life 关键点变多（每张最多约 128 个，还没在 UE 里验证）。\n- **画面占比不够**：正在量每个效果每帧占格子多少，下一步按实测收紧取景，做完再写。"}, {"title": "2026-10-02 · 定了下一轮顺序，清掉过期说明（对话框13）", "body": "- **顺序**（你 23:34 同意）：① 对话框2 先修走查 A1–A6（保存打不开、导出名错、改完切层导出旧贴图等），修完用 HN2 从头走一遍「合入你的动态 → 改层 → 保存 → 刷新 → 导出 PC + 手机」；② 「待我验收」改成程序按证据把关（没导出、检查没过、素材包过期就进不来，并写出缺什么）；③ 等你决定的事只放在本文件最上面这一节。\n- **暂停**：球形D、万彩千轮、永丰、片贝（之前写着「负责人待定」、实际没人做），工具路径修好后再排。\n- **规则改了几处**：帧号通道按你本机导入配置（实测第 0 通道）；贴图默认 2048、按效果可调；后台 10 分钟；AI 交付前要自己以使用者身份走一遍；你说「不用替我导出」只表示谁来点，内部导出和检查照做；别的对话框要做的事由 AI 写进排队，不让你转达。\n- **清理**（只搬进 `归档/`，没删）：过期的执行说明、旧 README、交接里过期的第 1–4 节和 09-30 以前的日志、没人用的 4 个旧脚本、第三版尾缀样例（65 MB）；还在被调用的旧尾缀脚本保留。4.0 开工说明等计划文件头上标了「已完成 / 未开工」。\n- 预览数据（约 300 MB 的 preview.js）没动：删掉也不会让仓库变小（Git 历史里还在），省下的只是本机硬盘。"}, {"title": "2026-10-02 · 升空尾缀第 4 版待你验收（RT4S / RT4M / RT4L）· 烘焙器 4.2.2", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀，效果行下面一排 **小 / 中 / 大**，点哪档开哪档（第 3 版进历史）。\n\n- **只看到一个**：三档以前藏在右栏「版本与历史」的折叠里。现在左栏一排三档、各自带缩略图，右栏卡片上也一直有分档按钮（V5 尾缀同样）。\n- **导出不再浪费**：星头放到面片上端（和你通过的 V5 一样用 Pivot Offset），面片只包住看得见的部分，循环层格子利用从约 64% × 48% 提到约 96% × 96%。消散序列只留到最后还看得见的那一帧，贴图挑最小、RGBA 四个通道用满（2048² 变 1024×2048）。手机贴图边长减半（单格 256²，标准下限）。\n- **素材里有粒子了**：一半细火星烘进循环层贴图（和白热段一起真循环），白柱子两边是一根根金 / 白短线；另一半细火星和中 / 粗火星仍是 GPU。\n- **引擎里加了**：星头一圈柔光（跟着喷射忽明忽暗）、尾迹下段偶尔有粗火星烧到最后闪一下、0 秒发射口一闪 + 喷一把火星。都在右栏「尾缀 · 引擎里加的效果」，填 0 就关。\n- 请你在引擎里看一眼：贴图里的火星远看会不会偏暗偏橙（灰度 + Ramp 的口径）；Pivot Offset 导入器如果不认，要手动填（参数表里写了值）。导出请你自己在烘焙器里点。"}, {"title": "2026-10-02 · 引菊 → 锦（HN2）橙线颜色换成原型的颜色模型", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 引菊 → 锦。\n\n- 你 15:11 指出的「不如原型纯、尖部颜色都一样」：用 4.2.0 新加的三项做了三轮（HN2E7–E9）。现在尖部暗红、中段亮橙，线变细，线之间有暗底。\n- 橙引线层改了：曝光 1.5 → 0.8；Ramp 亮端 #ff8c19 / #ffa011 → #ff7a14 / #ff8e12；火花粗细 0.6 → 0.45；火花密度 400 → 520；冷却 0.3；火花烧旺 0.35；每颗星亮度离散 0.35；线间底光 0.006（半径 6）。金锦层没动。\n- 还差：实拍开花中心有个白色亮点，这里没有（要的话另加短闪层）；整体比实拍亮约 10%（UE 里调自发光倍数）；实拍线的长短更参差。\n- 你在 4.1.1 浏览器里调的动态还没合进来：在烘焙器里「复制我的参数」贴给我，我合进 HN2 再导一次。"}, {"title": "2026-10-02 · 升空尾缀第 3 版待你验收（RT3S / RT3M / RT3L）", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀 · 循环层 + 粒子，右上切小 / 中 / 大（第 2 版进历史）。\n\n- **白 / 黄对比**：火星三档各有温度偏移（细粒偏金偏暗、粗粒更热更亮 → 过曝发白），大小离散加大，同一档里也有亮有暗。\n- **线状火星**：中、粗火星是竖向短线——看的人 / 相机盯着星头走，火星相对星头往下退，在曝光时间里拖成线（越往下拖得越长，和你的参考一致）；细火星大多还是点。\n- **上升不再冻住**：每颗火星跟着出生那团空气漂（阵风约 1 m/s），越老漂得越远 → 尾迹下段慢慢松开、轻轻弯；散开改成中间密、边缘软。\n- 中档按你 14:35 参考图同尺度量：线状比例 0.82（参考 0.73）、长短比 2.4（2.3）、白 / 黄、边缘软硬都对上了；三档并排 `analysis/results/RT3/三档_对参考.jpg`。新参数在右栏「火星明暗与线状」「空气乱流」两节。\n- 没经过 UE 验证：乱流用的 Acceleration 模块、GPU 粒子 Rectangle 对齐拉长。导出请你自己在烘焙器里点。"}, {"title": "2026-10-02 · 烘焙器 4.2.0：每层同一套时刻 + 接力、输出一节、尾迹扩散、重播 R、单束", "body": "`git pull` 后刷新烘焙器。\n\n- **轨道**：每层都有点火 / 燃烧结束（上排圆点）和火花开始 / 火花停（中间菱形，空心 = 没打开，拖动就打开）。同一批星的几层在同一时刻的点有亮环、一起动（引菊：橙引线火花停 = 金锦点火）。拖燃烧结束，序列时长跟着变。点轨道切到那一层。\n- **输出一节**（右栏「输出：帧数 · 格子 · 贴图」）：顶上直接写着多少帧、几张、每张几×几、帧率；帧数可选 自动 / 最省 / 手动，格子可选 固定 / 按帧数选最小贴图，单格 512 / 1024 / 2048。轨道上的细刻度是每一帧的位置。默认还是原来的做法。\n- **尾迹扩散**（物理扰动）：老火花被空气扰流慢慢吹散，默认 0。\n- **尾迹外形**再加三项（对话框7 为引菊颜色纯度要的）：火花烧旺时间、每颗星亮度离散、线间底光，默认 0。\n- **重播**：按钮或 R。实拍对照改成 V。\n- **单束**：资产栏「单束」菜单，或调某一层时层参数顶上的按钮。\n- 左栏缩略图换成本机显卡渲染的。"}, {"title": "2026-10-02 · 升空尾缀第 2 版待你验收（RT2S / RT2M / RT2L）", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀 · 循环层 + 粒子，右上切小 / 中 / 大。\n\n- 火星数量、大小、散开按你 14:35 的参考图同尺度量出来对齐（三档对参考：`analysis/results/RT2/三档_对参考.jpg`）。\n- 参数全部在右栏；导出你自己在烘焙器里点，粒子大小 / 亮度请在引擎里按你的例子标定。\n- 已知：回放检查会把循环序列每圈「帧号回到 0」算成回跳（检查规则的问题，待改）；你 16:41 提的明暗对比、线状拖影、上升时的空气乱流在做第 3 版。"}, {"title": "2026-10-02 · 烘焙器 4.1.2：不再越播越卡、每个资产自己的尾迹外形、层轨道能拖、缩略图换渲染", "body": "`git pull` 后刷新烘焙器。\n\n- **越播越卡修好了**：实时模拟以前每帧都从 0 秒重算，越到后面越慢；现在从上一帧接着算，后段和前段一样快（画面逐位不变）。播放时钟也改成按真实时间走。\n- **尾迹外形**：不再是顶栏的全局面板。每个效果（多层时每一层）右栏都有「尾迹外形」：粗细随机、亮肩、泪滴星头，默认 0 = 原样。\n- **层轨道能拖**：每层轨道下方的白色把手是入点 / 出点，上方圆点是点火、燃烧结束、火花停等；任何一层都能直接拖，松手只重烘那一层。拖回尽头 = 自动。\n- **缩略图**：不再用实拍。本机显卡按当前配方渲染（UI8T，回来后自动换上）；之前先用对照图里的模拟图。\n- **命名**：循环层 + 粒子（升空尾缀小 / 中 / 大）也改成 `T_EFX_FireWorks_…`，三档加 `_S / _M / _L`。`cascade.json` 里每张贴图写了 UE 资产名，导入时直接用、不用再加前缀。"}, {"title": "2026-10-02 · 烘焙器 4.1.1：入点 / 出点、命名规范、全局风格、层轨道与联动、单束、流转连播", "body": "`git pull` 后刷新烘焙器。\n\n- **入点 / 出点**：时间轴下面「设为入点 / 设为出点」。帧只分给入点到出点；入点前默认用入点那一帧从小放大（也可选不显示）。引擎回放、导出都按这个。\n- **命名**：大面片素材包改成 `T_EFX_FireWorks_名称_层_4x4_01_HD.png`（手机无 `_HD`；Cut `_C`、Ramp `_R` 共用）。每个效果先起了英文名（鸿巢四尺玉 = YonshakuKamuro，层 Main / Red；引菊 → 锦 = HikiNishiki，层 Hiki / Nishiki……），交付页可以改。\n- **全局风格**：顶栏「全局风格」，尾长 / 粗细 / 散布 / 星头大小 / 亮度 / 闪烁 + 粗细随机 / 亮肩 / 泪滴。默认值时所有效果逐像素不变；默认不动已通过的效果。\n- **层轨道**：时段条上直接看到并拖每层的点火、燃烧结束、第二段、火花停（四尺玉红点何时出现、青柠星星头何时点着、引菊何时转锦都在这里）。同一批星的层改轨迹参数会自动同步。\n- **单束**：交付页可以导出某一层的单束包（每颗星一个粒子）。\n- **流转动画**：两张图会连着播。"}, {"title": "2026-10-02 · 烘焙器 4.0.6：工具条回到画面上方、修复调参黑屏", "body": "刷新正式烘焙器即可。实时模拟、引擎回放、贴图、观察大小、平台、曝光和实拍对照回到中央画面上方；顶部去掉重复的长效果路径，右上仍显示显卡和更新记录。调参时“烘焙中”提示误用了遮罩样式，已修复。离线状态回归通过；实际浏览器视觉受本机访问限制尚未验证。"}, {"title": "2026-10-02 · 烘焙器 4.0.5：交互稿剩下的部分做完", "body": "`git pull` 后刷新烘焙器。按你的浏览器交互稿：画面框（标题写明看的是哪版 / 哪层，右上 网格 · 记录当前帧 · 大画面，脚注 单格 · tick）、时间轴（±1 tick、← →、循环 / 播放一遍、开花 / 展开 / 衰减、每层时段条）、查看交付（素材包文件清单 + 导出）、检查与验收四行、通过门槛、左栏「我的版本」。和交互稿逐项对照、哪些没照搬和为什么、改进建议，写在 `协作/烟花烘焙器交互设计草稿.md` 最后一节。"}, {"title": "2026-10-02 · 烘焙器 4.0.4：每个条目都是完整资产（多层也能逐层调参）、能保存你的版本、观看距离 50–1200 m", "body": "`git pull` 后刷新烘焙器。\n\n- **多层效果**（鸿巢、青柠星、球形 A–D、永丰、片贝、万彩千轮…）：右栏「观察图层」点某一层，下面就是这一层的**完整参数**，画面一直是整朵；改了只重烘这一层。「贴图」视图看这一层的贴图和流转。独看 / 静音只影响观察。\n- **保存**：画面上方的资产栏——「版本」下拉在 AI 版和你保存的版本之间切换；「保存 / 另存为」存你的版本（这台电脑的浏览器里，按效果分）；「⋯」里可以复制你的改动（贴给我，我就知道你改了哪些参数）、导出 / 导入配方文件；「导出素材包」导出整个效果。\n- **右栏三页**：参数（默认，最上面一行有 通过 / 要改）/ 审阅（说明、检查、意见、历史）/ 工具。\n- **观看距离** 改成 50–1200 m（对数刻度，双击回 1000 m）。标准检查仍按 800–1200 m 量。"}];
 // =====================================================================
 //  工具
 // =====================================================================
@@ -1340,7 +1325,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.2.9';
+const VERSION = '4.2.10';
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 const OUTPUT_VER = { master: '4.2.7', emitset: '4.2.2', riseLoop: '4.2.2', trail: '4.0', unit: '4.0', loop: '4.0', v37: '3.7' };
@@ -6038,7 +6023,7 @@ async function exportMaster() {
     let zipName = name, out = files;
     if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); zipName = nm.base; }
     download(await makeZip(out), `${zipName}.zip`);
-    recordVersion('导出 ' + name);
+    wbAutoExport(zipName);     // 4.2.10：存进这个效果的「版本」（导出时），不再进工具页的全局版本列表
     flash('已导出 ' + name);
   } catch (e) { console.error(e); flash('导出失败：' + e.message, true); }
   if (own && b) disposeBake(b);
@@ -7434,6 +7419,7 @@ async function exportCombo() {
     busy(true, '打包 ZIP…', 1);
     const pk = files.some(([f]) => f.startsWith(FW_TEX_PREFIX)) ? packNamesFor(wbKey(), lib.effect, state.layers.length, name).base : name;
     download(await makeZip(files.map(([f, d]) => [`${pk}/${f}`, d])), `${pk}.zip`);
+    if (typeof wbAutoExport === 'function') wbAutoExport(pk);     // 4.2.10：存进这个效果的「版本」（导出时）
     flash('已导出组合素材包 ' + name);
   } catch (e) { console.error(e); flash('组合导出失败：' + e.message, true); }
   finally { busy(false); }
@@ -7660,38 +7646,7 @@ function thumbFromCanvas() {
   const c = document.createElement('canvas'); c.width = c.height = 132; const x = c.getContext('2d');
   x.drawImage(canvas, 0, 0, 132, 132); return c.toDataURL('image/jpeg', 0.72);
 }
-function recordVersion(label, note) {
-  const prev = state.versions[state.versions.length - 1];
-  const v = { n: (prev ? prev.n : 0) + 1, time: new Date().toLocaleString('zh-CN', { hour12: false }), label, note: note || '', name: state.name, P: { ...state.P }, M: cloneM(state.M), thumb: '' };
-  v.diff = prev ? [...diffParams(prev.P, v.P), ...diffM(prev.M, v.M)].map(([k, a, b]) => `${PARAM_LABEL[k] || k}：${fmtP(a)} → ${fmtP(b)}`) : ['初始版本'];
-  state.versions.push(v); if (state.versions.length > 60) state.versions.shift();
-  pendingThumb = url => { v.thumb = url; saveVersions(); renderVersions(); };
-  saveVersions(); renderVersions();
-  return v;
-}
-function saveVersions() { store.set('versions', state.versions.slice(-40)); }
-function rollback(v) {
-  state.P = storedParams(v.P); state.M = normalizeM(v.M, v.P.type); state.name = v.name;
-  buildMasterPanel(); onParam(); flash(`已回滚到 v${v.n}`);
-}
-function renderVersions() {
-  const host = $('#verList'); host.innerHTML = '';
-  for (const v of [...state.versions].reverse()) {
-    const it = document.createElement('div'); it.className = 'it';
-    it.innerHTML = `<span title="${v.diff.join('\n').replace(/"/g, '&quot;')}"><b>v${v.n}</b> ${v.label}${v.note ? ' · ' + v.note : ''}<br><small>${v.time} · ${v.diff.length === 1 && v.diff[0] === '初始版本' ? '初始版本' : '改了 ' + v.diff.length + ' 项'}</small></span>`;
-    const rb = document.createElement('button'); rb.className = 'x'; rb.textContent = '回滚'; rb.addEventListener('click', () => rollback(v));
-    const nt = document.createElement('button'); nt.className = 'x'; nt.textContent = '批注';
-    nt.addEventListener('click', () => { const s = prompt(`v${v.n} 的批注`, v.note); if (s != null) { v.note = s; saveVersions(); renderVersions(); } });
-    it.append(rb, nt); host.appendChild(it);
-  }
-  const th = $('#thumbs'); th.innerHTML = '';
-  for (const v of [...state.versions].reverse().slice(0, 18)) {
-    if (!v.thumb) continue;
-    const f = document.createElement('figure'); f.title = `v${v.n} ${v.label}${v.note ? '\n' + v.note : ''}\n点击回滚`;
-    f.innerHTML = `<img alt="v${v.n} 缩略图" src="${v.thumb}"><figcaption>v${v.n}${v.note ? ' ✎' : ''}</figcaption>`;
-    f.addEventListener('click', () => rollback(v)); th.appendChild(f);
-  }
-}
+// 4.2.10：工具页的「版本与回滚」去掉了（版本只在资产栏，走查 B8）；state.versions 只留着导出留底（renderLegacy）
 
 // ---------------- 派生配方 ----------------
 function resolveRecipe(r, depth = 0) {
@@ -7700,36 +7655,7 @@ function resolveRecipe(r, depth = 0) {
   const P = { ...base.P, ...r.diff.P }, M = normalizeM({ ...base.M, ...r.diff.M }, r.type);
   return { P, M };
 }
-let recParent = null;
-function saveRecipe(name) {
-  name = (name || '').trim() || `${TYPE_EN[state.P.type]}_${state.recipes.length + 1}`;
-  const parent = recParent && state.recipes.find(x => x.name === recParent && x.name !== name);
-  const base = parent ? resolveRecipe(parent) : { ...defaultsFor(state.P.type), P: storedParams({ type: state.P.type, renderVer: renderVersion(state.P) }) };   // 和 resolveRecipe 同一个基准，差异才对得上
-  const dP = {}, dM = {};
-  for (const [k, , b] of diffParams(base.P, state.P)) dP[k] = b;
-  dP.renderVer = renderVersion(state.P); // 等于模板默认值时也必须保存。
-  for (const k of Object.keys(state.M)) if (JSON.stringify(state.M[k]) !== JSON.stringify(base.M[k])) dM[k] = JSON.parse(JSON.stringify(state.M[k]));
-  const r = { name, parent: parent ? parent.name : null, type: state.P.type, diff: { P: dP, M: dM } };
-  const i = state.recipes.findIndex(x => x.name === name); if (i >= 0) state.recipes[i] = r; else state.recipes.push(r);
-  store.set('recipes', state.recipes); renderRecipes(); flash(`配方「${name}」只记录了 ${Object.keys(dP).length + Object.keys(dM).length} 项差异`);
-}
-function renderRecipes() {
-  const host = $('#recList'); host.innerHTML = '';
-  if (!state.recipes.length) { host.innerHTML = '<p class="note">还没有配方。</p>'; return; }
-  for (const r of state.recipes) {
-    const it = document.createElement('div'); it.className = 'it';
-    const n = Object.keys(r.diff.P).length + Object.keys(r.diff.M).length;
-    it.innerHTML = `<span title="${Object.entries(r.diff.P).map(([k, v]) => (PARAM_LABEL[k] || k) + ' = ' + fmtP(v)).join('\n')}">${recParent === r.name ? '★ ' : ''}${r.name}<br><small>${r.parent ? '派生自 ' + r.parent : TYPE_NAMES[r.type] + ' 默认值'} · ${n} 项差异</small></span>`;
-    const ld = document.createElement('button'); ld.className = 'x'; ld.textContent = '载入';
-    ld.addEventListener('click', () => { const { P, M } = resolveRecipe(r); state.P = P; state.M = M; state.name = r.name; recParent = r.name; buildMasterPanel(); onParam(); renderRecipes(); });
-    const dv = document.createElement('button'); dv.className = 'x'; dv.textContent = '派生';
-    dv.title = '以它为父配方：载入后改参数，再「存为配方」只记差异';
-    dv.addEventListener('click', () => { const { P, M } = resolveRecipe(r); state.P = P; state.M = M; recParent = r.name; state.name = r.name + '_派生'; $('#recName').value = state.name; buildMasterPanel(); onParam(); renderRecipes(); });
-    const del = document.createElement('button'); del.className = 'x'; del.textContent = '删';
-    del.addEventListener('click', () => { if (state.recipes.some(x => x.parent === r.name)) { flash('有子配方依赖它，先删子配方', true); return; } state.recipes = state.recipes.filter(x => x !== r); if (recParent === r.name) recParent = null; store.set('recipes', state.recipes); renderRecipes(); });
-    it.append(ld, dv, del); host.appendChild(it);
-  }
-}
+// 4.2.10：「存为配方 / 载入 / 派生」去掉了（新做法：资产栏保存 / 另存为、「＋ 新建效果」）；resolveRecipe 留着给导入旧配方库用
 
 // ---------------- 显卡测速 ----------------
 const perf = { acc: 0, n: 0, fps: 0 };
@@ -7775,16 +7701,16 @@ function initIter() {
   $('#refFile').addEventListener('change', e => { const f = e.target.files[0]; if (f) loadRef(f); e.target.value = ''; });
   $('#refMode').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setRefMode(+b.dataset.rm); });
   buildRefSliders();
-  $('#verSave').addEventListener('click', () => { recordVersion('手动存档', $('#verNote').value); $('#verNote').value = ''; flash('已存版本'); });
-  $('#verExport').addEventListener('click', () => download(new Blob([JSON.stringify({ tool: '烟花母版烘焙器 ' + VERSION, versions: state.versions }, null, 2)], { type: 'application/json' }), `${safeName()}_版本.json`));
-  $('#verImport').addEventListener('click', () => $('#verFile').click());
-  $('#verFile').addEventListener('change', async e => { const f = e.target.files[0]; if (!f) return; try { const j = JSON.parse(await f.text()); state.versions = (j.versions || []).concat(); saveVersions(); renderVersions(); flash('已导入版本'); } catch (err) { flash('导入失败', true); } e.target.value = ''; });
-  $('#recSave').addEventListener('click', () => saveRecipe($('#recName').value));
-  $('#recExport').addEventListener('click', () => download(new Blob([JSON.stringify({ tool: '烟花母版烘焙器 ' + VERSION, recipes: state.recipes }, null, 2)], { type: 'application/json' }), '配方库.json'));
-  $('#recImport').addEventListener('click', () => $('#recFile').click());
-  $('#recFile').addEventListener('change', async e => { const f = e.target.files[0]; if (!f) return; try { const j = JSON.parse(await f.text()); for (const r of j.recipes || []) { const i = state.recipes.findIndex(x => x.name === r.name); if (i >= 0) state.recipes[i] = r; else state.recipes.push(r); } store.set('recipes', state.recipes); renderRecipes(); flash('已导入配方'); } catch (err) { flash('导入失败', true); } e.target.value = ''; });
+  // 4.2.10 版本只留一套（走查 B8）：旧的「版本与回滚」「派生配方」不再用，只留导出留底（数据还在这台电脑的浏览器里，不删）
+  $('#legacyExport').addEventListener('click', () => download(new Blob([JSON.stringify({ tool: '烟花母版烘焙器 ' + VERSION, note: '4.2.9 以前工具页的版本与派生配方', versions: state.versions.map(v => ({ ...v, thumb: undefined })), recipes: state.recipes }, null, 2)], { type: 'application/json' }), '旧版本与配方.json'));
   $('#perfRun').addEventListener('click', runPerf);
-  renderVersions(); renderRecipes(); abInfo();
+  renderLegacy(); abInfo();
+}
+function renderLegacy() {
+  const box = $('#legacyVer'); if (!box) return;
+  const nv = (state.versions || []).length, nr = (state.recipes || []).length;
+  box.hidden = !(nv || nr);
+  $('#legacyInfo').textContent = `旧版本 ${nv} 个（以前每次导出自动存的 + 手动存的）· 旧配方 ${nr} 个`;
 }
 // =====================================================================
 //  素材页：打开一个结果文件夹（里面有 预览.json + 贴图），按引擎的方式播放
@@ -8146,7 +8072,7 @@ async function setTab(tab, o = {}) {
   syncPtabs();
   if (!changed) return;
   if (tab === 'combo' && !o.lazy) { await ensureLibrary(); if (!state.layers.length) applyCombo(COMBOS[0]); else buildComboPanel(); }
-  if (tab === 'iter') { renderMetrics(); abInfo(); renderVersions(); }
+  if (tab === 'iter') { renderMetrics(); abInfo(); renderLegacy(); }
   if (tab === 'asset') assetPanel();
 }
 
@@ -8445,7 +8371,7 @@ function renderLib() {
   // 我的效果（4.2.7，「＋ 新建效果」搭的）
   myLibGroup(host);
   // 我的版本（用户在资产栏保存的，存在这台电脑的浏览器里）
-  const mine = []; for (const [k, list] of Object.entries(store.get('mySaves', {}))) for (const sv of list || []) mine.push([k, sv]);
+  const mine = []; for (const [k, list] of Object.entries(store.get('mySaves', {}))) for (const sv of list || []) if (!sv.auto) mine.push([k, sv]);     // 导出时自动存的只在资产栏「版本」里
   const mineF = mine.filter(([k, sv]) => libMatch(sv.name, k, sv.base || ''));
   if (mineF.length) {
     const g = libGroup(host, 'mine', '我的版本', mineF.length);
@@ -9147,7 +9073,7 @@ function wbSync() {
   const th = ef && ef.thumb ? `<i style="background-image:url(${ef.thumb})"></i>` : '';
   const thHost = $('#abThumb'); if (thHost.dataset.k !== wb.key) { thHost.dataset.k = wb.key; thHost.innerHTML = th || (e ? thumbHTML(e).replace(/^<span class="th"/, '<span class="th in"') : `<span class="th in" style="${typeThumbStyle(state.P.type)}"></span>`); }
   const list = wbList(), sel = $('#abSrc'), cur = wb.src.kind === 'mine' ? wb.src.id : 'ai';
-  const opts = [['ai', lib.my ? `已保存 · ${(myRec() || {}).updated || ''}` : `AI 版 · ${wbBaseId()}`], ...list.map(s => [s.id, `我的 · ${s.name}（${s.at.slice(5)}）`])];
+  const opts = [['ai', lib.my ? `已保存 · ${(myRec() || {}).updated || ''}` : `AI 版 · ${wbBaseId()}`], ...list.map(s => [s.id, s.auto ? `导出时 · ${s.at.slice(5)}${s.label ? ' · ' + s.label : ''}` : `我的 · ${s.name}（${s.at.slice(5)}）`])];
   const html = opts.map(([v, t]) => `<option value="${v}">${t}</option>`).join('');
   if (sel.dataset.h !== html) { sel.innerHTML = html; sel.dataset.h = html; }
   sel.value = cur;
@@ -9176,7 +9102,7 @@ async function wbSave(asNew) {
   if (lib.my) return mySave(asNew);                         // 我的效果：保存 = 覆盖这个效果，另存为 = 复制成新效果（4.2.7）
   if (repoDir.h && !repoDir.ok) await repoPerm(true);      // 连过仓库文件夹：先趁这次点击问一下「允许」（浏览器重开后第一次）
   const list = wbList(), mine = wb.src.kind === 'mine' && list.find(s => s.id === wb.src.id);
-  let it = !asNew && mine && !mine.draft && mine;        // 草稿不覆盖：存成正式的一个版本（起名字），草稿删掉
+  let it = !asNew && mine && !mine.draft && !mine.auto && mine;        // 草稿、导出时自动存的不覆盖：存成正式的一个版本（起名字）；草稿删掉
   if (mine && mine.draft && !asNew) list.splice(list.indexOf(mine), 1);
   if (!it) {
     const name = prompt('给这个版本起个名字（存在这台电脑的浏览器里）', `我的 ${list.length + 1}`);
@@ -9188,6 +9114,16 @@ async function wbSave(asNew) {
   let path = null; try { path = await repoWrite(wb.key, it); } catch (e) { flash('存进仓库文件夹失败：' + (e.message || e), true); return; }
   flash(path ? `已保存「${it.name}」：浏览器里一份 + 仓库 ${path.replace(/^analysis\/我的配方\/_待上传\//, 'analysis/我的配方/')}（后台脚本推上去，AI 能直接读）`
     : `已保存「${it.name}」（这台电脑的浏览器里；资产栏 ⋯「连接仓库文件夹」后会顺便存进 git，AI 能直接读）`);
+}
+// 4.2.10 版本只留一套（走查 B8）：导出时在这个效果的「版本」里自动存一份（以前存在工具页「版本与回滚」，全局一个列表，回滚会把别的效果的参数塞进来）。
+// 每个效果只留最近 3 份；不进左栏「我的版本」；不写仓库文件夹（那是你主动保存的）。
+const WB_AUTO_MAX = 3;
+function wbAutoExport(label) {
+  try {
+    const list = wbList(), it = { id: 'x' + Date.now().toString(36), name: '导出时', auto: 'export', label: String(label || ''), at: wbNow(), base: wbBaseId(), baseVer: lib.review && lib.review.ver || '', snap: wbSnap() };
+    list.push(it); const autos = list.filter(s => s.auto); for (const s of autos.slice(0, Math.max(0, autos.length - WB_AUTO_MAX))) list.splice(list.indexOf(s), 1);
+    wbPut(list); wbSync();
+  } catch (e) { console.warn('导出时存版本失败', e); }
 }
 // 回到 AI 版：丢掉这个效果里调过的层，重新打开条目
 async function wbLoadAI() {
@@ -10489,7 +10425,10 @@ $('#btnJitter').addEventListener('click', jitterParams);
 $('#btnImport').addEventListener('click', () => $('#fileIn').click());
 // 导入：完整参数 JSON，或只含差异的派生配方（{ parent / type, diff }）
 function importParams(j, fname) {
-  if (j.recipes) { for (const r of j.recipes) { const i = state.recipes.findIndex(x => x.name === r.name); if (i >= 0) state.recipes[i] = r; else state.recipes.push(r); } store.set('recipes', state.recipes); renderRecipes(); flash('已导入配方库'); return; }
+  // 4.2.10：配方库（旧的派生配方）→ 每个配方存成对应花型模板的一个版本（资产栏「版本」里选），不再进工具页
+  if (j.recipes) { const all = store.get('mySaves', {}), prev = state.recipes; let n = 0; state.recipes = [...j.recipes, ...(prev || [])];     // 父配方可能也在这个文件里
+    for (const r of j.recipes) { try { const { P, M } = resolveRecipe(r), k = 'type:' + r.type; (all[k] = all[k] || []).push({ id: 'r' + Date.now().toString(36) + n, name: '配方 · ' + r.name, at: wbNow(), base: r.type, snap: { kind: 'single', P, M, repId: null } }); n++; } catch (e) { } }
+    state.recipes = prev; store.set('mySaves', all); renderLib(); flash(`已把 ${n} 个配方存成花型模板的版本：打开对应花型（左栏「花型模板」），资产栏「版本」里选`); return; }
   if (j.diff && j.type) { const { P, M } = resolveRecipe(j); state.P = P; state.M = M; state.name = j.name || fname; buildMasterPanel(); onParam(); flash('已导入配方 ' + state.name); return; }
   const p = j.params || j;
   if (!TYPES[p.type]) throw new Error('不认识的花型');

@@ -249,7 +249,7 @@ async function exportMaster() {
     let zipName = name, out = files;
     if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); zipName = nm.base; }
     download(await makeZip(out), `${zipName}.zip`);
-    recordVersion('导出 ' + name);
+    wbAutoExport(zipName);     // 4.2.10：存进这个效果的「版本」（导出时），不再进工具页的全局版本列表
     flash('已导出 ' + name);
   } catch (e) { console.error(e); flash('导出失败：' + e.message, true); }
   if (own && b) disposeBake(b);

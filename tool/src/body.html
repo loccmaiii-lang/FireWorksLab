@@ -237,26 +237,11 @@
         <label class="field">参考<select id="refMetric"></select></label>
         <div class="stats" id="metricTable">等待烘焙…</div>
       </details>
-      <details class="sec" open>
-        <summary>版本与回滚</summary>
-        <p class="hint">每次导出自动存一个版本，也可以手动存。版本只保存在这台电脑的浏览器里，想长期保留请点「导出全部版本」。</p>
-        <div class="line2">
-          <input type="text" id="verNote" placeholder="批注（可选）" class="txt">
-          <button class="btn" id="verSave">存版本</button>
-        </div>
-        <div class="lib" id="verList"></div>
-        <div class="thumbs" id="thumbs"></div>
-        <div class="line2"><button class="btn ghost" id="verExport">导出全部版本</button><button class="btn ghost" id="verImport">导入版本</button><input type="file" id="verFile" accept=".json" hidden></div>
-      </details>
-      <details class="sec" open>
-        <summary>派生配方</summary>
-        <p class="hint">配方只记录与父配方（或花型默认值）的差异。子配方继承父配方，父配方改了子配方跟着变。</p>
-        <div class="line2">
-          <input type="text" id="recName" placeholder="配方名" class="txt">
-          <button class="btn" id="recSave">存为配方</button>
-        </div>
-        <div class="lib" id="recList"></div>
-        <div class="line2"><button class="btn ghost" id="recExport">导出配方库 JSON</button><button class="btn ghost" id="recImport">导入配方库</button><input type="file" id="recFile" accept=".json" hidden></div>
+      <details class="sec" id="legacyVer" hidden>
+        <summary>旧的版本 / 配方（4.2.9 以前）</summary>
+        <p class="hint">版本现在只在资产栏「版本」里：保存、另存为、草稿，导出时也会自动存一份。以前工具页的「版本与回滚」「派生配方」不再用（回滚会把别的效果的参数塞进当前效果）。这台电脑里还存着下面这些，可以导出留底；要用哪个，导出后在资产栏 ⋯「导入配方文件」打开。</p>
+        <div class="stats" id="legacyInfo"></div>
+        <div class="line2"><button class="btn ghost" id="legacyExport" type="button">导出成 .json</button></div>
       </details>
       <details class="sec" open>
         <summary>显卡测速</summary>

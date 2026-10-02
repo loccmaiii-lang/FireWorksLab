@@ -19,6 +19,7 @@
      切到别的效果后撤销不会改到新效果；资产栏有撤销 / 重做按钮
   B1 滑杆和拖动同一套规则（走查 B10–B12）：滑杆改燃烧，序列时长跟着变（和拖燃烧结束一样）；滑杆改引线层的「火花停」，接力的锦层点火跟着动；
      改点火时入点跟着内容走；「恢复」回到打开时的版本（AI 版），不是花型模板默认
+  V1 版本只留一套（走查 B8）：工具页没有「版本与回滚」「派生配方」；导出时在资产栏「版本」里自动存一份（每个效果最多 3 份），能选回来、不串到别的效果
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -414,6 +415,32 @@ async def b1(pg):
     return not bad, '；'.join(bad) or json.dumps(info, ensure_ascii=False)
 
 
+async def v1(pg):
+    bad, info = [], {}
+    secs = await pg.evaluate("[...document.querySelectorAll('#pIter details.sec > summary')].map(x => x.textContent.trim())")
+    old = [x for x in secs if x in ('版本与回滚', '派生配方')]
+    if old: bad.append(f'工具页还有旧的版本系统：{old}')
+    hooks = await pg.evaluate("({ single: typeof exportMaster === 'function' && exportMaster.toString().includes('wbAutoExport'), combo: typeof exportCombo === 'function' && exportCombo.toString().includes('wbAutoExport'), fn: typeof wbAutoExport === 'function' })")
+    if not all(hooks.values()): bad.append(f'导出时没有存进资产栏版本：{hooks}')
+    if not bad:
+        await open_effect(pg, 'jinmangju'); await pg.wait_for_timeout(900); await idle(pg)
+        b0 = await pg.evaluate("state.P.burn")
+        for i in range(4):
+            await pg.evaluate(f"(() => {{ state.P.burn = +({b0} + {i + 1} * 0.1).toFixed(2); onParam(); return 0; }})()"); await idle(pg)
+            await pg.evaluate("wbAutoExport('test'); 0")
+        r = await pg.evaluate("(() => { const l = wbList(); return { auto: l.filter(s => s.auto).map(s => [s.name, s.snap.P.burn]), opts: [...$('#abSrc').options].map(o => o.textContent) }; })()")
+        info['导出时'] = r
+        if len(r['auto']) != 3: bad.append(f"导出时自动存了 {len(r['auto'])} 份（应只留最近 3 份）")
+        if r['auto'] and abs(r['auto'][-1][1] - round(b0 + 0.4, 2)) > 1e-9: bad.append(f"最近一份导出存的燃烧 {r['auto'][-1][1]}（应为 {round(b0 + 0.4, 2)}）")
+        first = await pg.evaluate("(() => { const s = wbList().filter(s => s.auto)[0]; $('#abSrc').value = s.id; $('#abSrc').dispatchEvent(new Event('change')); return s.snap.P.burn; })()"); await idle(pg)
+        cur = await pg.evaluate("state.P.burn")
+        if abs(cur - first) > 1e-9: bad.append(f'选回「导出时」那一份，燃烧 {cur}（应为 {first}）')
+        await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+        n = await pg.evaluate("wbList().filter(s => s.auto).length")
+        if n: bad.append(f'菊模板的版本里出现了金芒菊的导出存档 {n} 份')
+    return not bad, '；'.join(bad) or json.dumps(info, ensure_ascii=False)
+
+
 async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
@@ -423,7 +450,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

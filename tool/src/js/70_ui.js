@@ -726,6 +726,7 @@ async function exportCombo() {
     busy(true, '打包 ZIP…', 1);
     const pk = files.some(([f]) => f.startsWith(FW_TEX_PREFIX)) ? packNamesFor(wbKey(), lib.effect, state.layers.length, name).base : name;
     download(await makeZip(files.map(([f, d]) => [`${pk}/${f}`, d])), `${pk}.zip`);
+    if (typeof wbAutoExport === 'function') wbAutoExport(pk);     // 4.2.10：存进这个效果的「版本」（导出时）
     flash('已导出组合素材包 ' + name);
   } catch (e) { console.error(e); flash('组合导出失败：' + e.message, true); }
   finally { busy(false); }

@@ -115,38 +115,7 @@ function thumbFromCanvas() {
   const c = document.createElement('canvas'); c.width = c.height = 132; const x = c.getContext('2d');
   x.drawImage(canvas, 0, 0, 132, 132); return c.toDataURL('image/jpeg', 0.72);
 }
-function recordVersion(label, note) {
-  const prev = state.versions[state.versions.length - 1];
-  const v = { n: (prev ? prev.n : 0) + 1, time: new Date().toLocaleString('zh-CN', { hour12: false }), label, note: note || '', name: state.name, P: { ...state.P }, M: cloneM(state.M), thumb: '' };
-  v.diff = prev ? [...diffParams(prev.P, v.P), ...diffM(prev.M, v.M)].map(([k, a, b]) => `${PARAM_LABEL[k] || k}：${fmtP(a)} → ${fmtP(b)}`) : ['初始版本'];
-  state.versions.push(v); if (state.versions.length > 60) state.versions.shift();
-  pendingThumb = url => { v.thumb = url; saveVersions(); renderVersions(); };
-  saveVersions(); renderVersions();
-  return v;
-}
-function saveVersions() { store.set('versions', state.versions.slice(-40)); }
-function rollback(v) {
-  state.P = storedParams(v.P); state.M = normalizeM(v.M, v.P.type); state.name = v.name;
-  buildMasterPanel(); onParam(); flash(`已回滚到 v${v.n}`);
-}
-function renderVersions() {
-  const host = $('#verList'); host.innerHTML = '';
-  for (const v of [...state.versions].reverse()) {
-    const it = document.createElement('div'); it.className = 'it';
-    it.innerHTML = `<span title="${v.diff.join('\n').replace(/"/g, '&quot;')}"><b>v${v.n}</b> ${v.label}${v.note ? ' · ' + v.note : ''}<br><small>${v.time} · ${v.diff.length === 1 && v.diff[0] === '初始版本' ? '初始版本' : '改了 ' + v.diff.length + ' 项'}</small></span>`;
-    const rb = document.createElement('button'); rb.className = 'x'; rb.textContent = '回滚'; rb.addEventListener('click', () => rollback(v));
-    const nt = document.createElement('button'); nt.className = 'x'; nt.textContent = '批注';
-    nt.addEventListener('click', () => { const s = prompt(`v${v.n} 的批注`, v.note); if (s != null) { v.note = s; saveVersions(); renderVersions(); } });
-    it.append(rb, nt); host.appendChild(it);
-  }
-  const th = $('#thumbs'); th.innerHTML = '';
-  for (const v of [...state.versions].reverse().slice(0, 18)) {
-    if (!v.thumb) continue;
-    const f = document.createElement('figure'); f.title = `v${v.n} ${v.label}${v.note ? '\n' + v.note : ''}\n点击回滚`;
-    f.innerHTML = `<img alt="v${v.n} 缩略图" src="${v.thumb}"><figcaption>v${v.n}${v.note ? ' ✎' : ''}</figcaption>`;
-    f.addEventListener('click', () => rollback(v)); th.appendChild(f);
-  }
-}
+// 4.2.10：工具页的「版本与回滚」去掉了（版本只在资产栏，走查 B8）；state.versions 只留着导出留底（renderLegacy）
 
 // ---------------- 派生配方 ----------------
 function resolveRecipe(r, depth = 0) {
@@ -155,36 +124,7 @@ function resolveRecipe(r, depth = 0) {
   const P = { ...base.P, ...r.diff.P }, M = normalizeM({ ...base.M, ...r.diff.M }, r.type);
   return { P, M };
 }
-let recParent = null;
-function saveRecipe(name) {
-  name = (name || '').trim() || `${TYPE_EN[state.P.type]}_${state.recipes.length + 1}`;
-  const parent = recParent && state.recipes.find(x => x.name === recParent && x.name !== name);
-  const base = parent ? resolveRecipe(parent) : { ...defaultsFor(state.P.type), P: storedParams({ type: state.P.type, renderVer: renderVersion(state.P) }) };   // 和 resolveRecipe 同一个基准，差异才对得上
-  const dP = {}, dM = {};
-  for (const [k, , b] of diffParams(base.P, state.P)) dP[k] = b;
-  dP.renderVer = renderVersion(state.P); // 等于模板默认值时也必须保存。
-  for (const k of Object.keys(state.M)) if (JSON.stringify(state.M[k]) !== JSON.stringify(base.M[k])) dM[k] = JSON.parse(JSON.stringify(state.M[k]));
-  const r = { name, parent: parent ? parent.name : null, type: state.P.type, diff: { P: dP, M: dM } };
-  const i = state.recipes.findIndex(x => x.name === name); if (i >= 0) state.recipes[i] = r; else state.recipes.push(r);
-  store.set('recipes', state.recipes); renderRecipes(); flash(`配方「${name}」只记录了 ${Object.keys(dP).length + Object.keys(dM).length} 项差异`);
-}
-function renderRecipes() {
-  const host = $('#recList'); host.innerHTML = '';
-  if (!state.recipes.length) { host.innerHTML = '<p class="note">还没有配方。</p>'; return; }
-  for (const r of state.recipes) {
-    const it = document.createElement('div'); it.className = 'it';
-    const n = Object.keys(r.diff.P).length + Object.keys(r.diff.M).length;
-    it.innerHTML = `<span title="${Object.entries(r.diff.P).map(([k, v]) => (PARAM_LABEL[k] || k) + ' = ' + fmtP(v)).join('\n')}">${recParent === r.name ? '★ ' : ''}${r.name}<br><small>${r.parent ? '派生自 ' + r.parent : TYPE_NAMES[r.type] + ' 默认值'} · ${n} 项差异</small></span>`;
-    const ld = document.createElement('button'); ld.className = 'x'; ld.textContent = '载入';
-    ld.addEventListener('click', () => { const { P, M } = resolveRecipe(r); state.P = P; state.M = M; state.name = r.name; recParent = r.name; buildMasterPanel(); onParam(); renderRecipes(); });
-    const dv = document.createElement('button'); dv.className = 'x'; dv.textContent = '派生';
-    dv.title = '以它为父配方：载入后改参数，再「存为配方」只记差异';
-    dv.addEventListener('click', () => { const { P, M } = resolveRecipe(r); state.P = P; state.M = M; recParent = r.name; state.name = r.name + '_派生'; $('#recName').value = state.name; buildMasterPanel(); onParam(); renderRecipes(); });
-    const del = document.createElement('button'); del.className = 'x'; del.textContent = '删';
-    del.addEventListener('click', () => { if (state.recipes.some(x => x.parent === r.name)) { flash('有子配方依赖它，先删子配方', true); return; } state.recipes = state.recipes.filter(x => x !== r); if (recParent === r.name) recParent = null; store.set('recipes', state.recipes); renderRecipes(); });
-    it.append(ld, dv, del); host.appendChild(it);
-  }
-}
+// 4.2.10：「存为配方 / 载入 / 派生」去掉了（新做法：资产栏保存 / 另存为、「＋ 新建效果」）；resolveRecipe 留着给导入旧配方库用
 
 // ---------------- 显卡测速 ----------------
 const perf = { acc: 0, n: 0, fps: 0 };
@@ -230,14 +170,14 @@ function initIter() {
   $('#refFile').addEventListener('change', e => { const f = e.target.files[0]; if (f) loadRef(f); e.target.value = ''; });
   $('#refMode').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setRefMode(+b.dataset.rm); });
   buildRefSliders();
-  $('#verSave').addEventListener('click', () => { recordVersion('手动存档', $('#verNote').value); $('#verNote').value = ''; flash('已存版本'); });
-  $('#verExport').addEventListener('click', () => download(new Blob([JSON.stringify({ tool: '烟花母版烘焙器 ' + VERSION, versions: state.versions }, null, 2)], { type: 'application/json' }), `${safeName()}_版本.json`));
-  $('#verImport').addEventListener('click', () => $('#verFile').click());
-  $('#verFile').addEventListener('change', async e => { const f = e.target.files[0]; if (!f) return; try { const j = JSON.parse(await f.text()); state.versions = (j.versions || []).concat(); saveVersions(); renderVersions(); flash('已导入版本'); } catch (err) { flash('导入失败', true); } e.target.value = ''; });
-  $('#recSave').addEventListener('click', () => saveRecipe($('#recName').value));
-  $('#recExport').addEventListener('click', () => download(new Blob([JSON.stringify({ tool: '烟花母版烘焙器 ' + VERSION, recipes: state.recipes }, null, 2)], { type: 'application/json' }), '配方库.json'));
-  $('#recImport').addEventListener('click', () => $('#recFile').click());
-  $('#recFile').addEventListener('change', async e => { const f = e.target.files[0]; if (!f) return; try { const j = JSON.parse(await f.text()); for (const r of j.recipes || []) { const i = state.recipes.findIndex(x => x.name === r.name); if (i >= 0) state.recipes[i] = r; else state.recipes.push(r); } store.set('recipes', state.recipes); renderRecipes(); flash('已导入配方'); } catch (err) { flash('导入失败', true); } e.target.value = ''; });
+  // 4.2.10 版本只留一套（走查 B8）：旧的「版本与回滚」「派生配方」不再用，只留导出留底（数据还在这台电脑的浏览器里，不删）
+  $('#legacyExport').addEventListener('click', () => download(new Blob([JSON.stringify({ tool: '烟花母版烘焙器 ' + VERSION, note: '4.2.9 以前工具页的版本与派生配方', versions: state.versions.map(v => ({ ...v, thumb: undefined })), recipes: state.recipes }, null, 2)], { type: 'application/json' }), '旧版本与配方.json'));
   $('#perfRun').addEventListener('click', runPerf);
-  renderVersions(); renderRecipes(); abInfo();
+  renderLegacy(); abInfo();
+}
+function renderLegacy() {
+  const box = $('#legacyVer'); if (!box) return;
+  const nv = (state.versions || []).length, nr = (state.recipes || []).length;
+  box.hidden = !(nv || nr);
+  $('#legacyInfo').textContent = `旧版本 ${nv} 个（以前每次导出自动存的 + 手动存的）· 旧配方 ${nr} 个`;
 }

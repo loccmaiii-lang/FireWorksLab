@@ -16,7 +16,7 @@ async function setTab(tab, o = {}) {
   syncPtabs();
   if (!changed) return;
   if (tab === 'combo' && !o.lazy) { await ensureLibrary(); if (!state.layers.length) applyCombo(COMBOS[0]); else buildComboPanel(); }
-  if (tab === 'iter') { renderMetrics(); abInfo(); renderVersions(); }
+  if (tab === 'iter') { renderMetrics(); abInfo(); renderLegacy(); }
   if (tab === 'asset') assetPanel();
 }
 
@@ -315,7 +315,7 @@ function renderLib() {
   // 我的效果（4.2.7，「＋ 新建效果」搭的）
   myLibGroup(host);
   // 我的版本（用户在资产栏保存的，存在这台电脑的浏览器里）
-  const mine = []; for (const [k, list] of Object.entries(store.get('mySaves', {}))) for (const sv of list || []) mine.push([k, sv]);
+  const mine = []; for (const [k, list] of Object.entries(store.get('mySaves', {}))) for (const sv of list || []) if (!sv.auto) mine.push([k, sv]);     // 导出时自动存的只在资产栏「版本」里
   const mineF = mine.filter(([k, sv]) => libMatch(sv.name, k, sv.base || ''));
   if (mineF.length) {
     const g = libGroup(host, 'mine', '我的版本', mineF.length);
