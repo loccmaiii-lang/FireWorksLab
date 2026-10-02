@@ -286,7 +286,8 @@ function phasesOf(P) {
   const ign = +P.ignDelay || 0, burnEnd = ign + (+P.burn || 0), after = +P.afterBurn > 0, lifeEnd = burnEnd + (after ? +P.afterBurn : 0);
   const r2 = v => Math.round(v * 100) / 100, out = [], igOf = () => +P.ignDelay || 0;
   out.push({ k: 'ign', row: 's', t: ign, lab: '点火（延时点火）', set: t => P.ignDelay = r2(Math.max(0, t)) });
-  out.push({ k: 'burn', row: 's', t: burnEnd, lo: ign + 0.05, lab: after ? '主段结束（第二段从这里亮）' : '燃烧结束', set: t => { P.burn = r2(Math.max(0.05, t - igOf())); if (+P.sparkStop > 0 && +P.sparkStop > P.burn) P.sparkStop = 0; if (+P.sparkStart > 0 && +P.sparkStart > P.burn - 1 / 15) P.sparkStart = 0; } });
+  // 燃烧结束拖到火花停之前：火花停跟着收到燃烧结束（仍是打开的，接力关系不断）
+  out.push({ k: 'burn', row: 's', t: burnEnd, lo: ign + 0.05, lab: after ? '主段结束（第二段从这里亮）' : '燃烧结束', set: t => { P.burn = r2(Math.max(0.05, t - igOf())); if (+P.sparkStop > 0 && +P.sparkStop > P.burn) P.sparkStop = P.burn; if (+P.sparkStart > 0 && +P.sparkStart > P.burn - 1 / 15) P.sparkStart = r2(Math.max(0, P.burn - 1 / 15)); } });
   if (after) out.push({ k: 'after', row: 's', t: lifeEnd, lab: '第二段结束', set: t => P.afterBurn = r2(Math.max(0.05, t - igOf() - (+P.burn || 0))) });
   if (+P.headDim < 1 && +P.headDimUntil > 0) out.push({ k: 'dim', row: 's', t: +P.headDimUntil, lab: '星头压暗到', set: t => P.headDimUntil = r2(Math.max(0.05, t)) });
   if (+P.emberFrac > 0 && +P.emberEnd > 0) out.push({ k: 'ember', row: 's', t: +P.emberEnd, lab: '光丝整体熄灭', set: t => P.emberEnd = r2(Math.max(0.05, t)) });
@@ -379,15 +380,20 @@ function trackDrag(ev, h) {
     stage2.drag = false; h.classList.remove('on'); setStatus(''); stage2.tlSig = '';
     if (Math.abs(tl - t0) < 0.005) return;
     if (cut) { applyCut(P, sp, cut, tl, true); return; }
-    // 同一批星的另一层在同一时刻的点（接力：引线火花停 = 锦点火；四尺玉燃烧结束 = 红点亮起）一起移动
-    const partners = q.auto ? [] : gluePartners(li, sp.at(q.t)), end0 = layerEndOf(P);
-    q.set(tl); const q1 = phasesOf(P).find(z => z.k === q.k), tNow = q1 ? q1.t : tl, dd = followDuration(P, end0);   // set 可能夹住 / 改回默认：按实际落点带另一层
-    const moved = [];
-    if (q1 && !q1.auto) for (const g of partners) { const e0 = layerEndOf(g.P); g.q.set((sp.at(tNow) - g.sp.d) * g.sp.r); followDuration(g.P, e0); moved.push(g.i); }
+    // 同一批星的另一层在同一时刻的点（接力：引线火花停 = 锦点火；四尺玉燃烧结束 = 红点亮起）一起移动。
+    // 不只是拖的这个点：这一层里因为它跟着变的点（拖点火时燃烧结束、火花停都跟着走；燃烧结束收到火花停前面时火花停也收）也带着各自的接力点走
+    const glue0 = phasesOf(P).filter(z => !z.auto).map(z => ({ k: z.k, at: sp.at(z.t), partners: gluePartners(li, sp.at(z.t)) })).filter(z => z.partners.length), end0 = layerEndOf(P);
+    q.set(tl); const ph1 = phasesOf(P), q1 = ph1.find(z => z.k === q.k), tNow = q1 ? q1.t : tl, dd = followDuration(P, end0);   // set 可能夹住 / 改回默认：按实际落点
+    const moved = new Set();
+    for (const g0 of glue0) {
+      const z1 = ph1.find(z => z.k === g0.k); if (!z1 || z1.auto) continue;
+      const at1 = sp.at(z1.t); if (Math.abs(at1 - g0.at) < 1e-3) continue;
+      for (const g of g0.partners) { const e0 = layerEndOf(g.P); g.q.set((at1 - g.sp.d) * g.sp.r); followDuration(g.P, e0); moved.add(g.i); }
+    }
     tl = tNow;
     refreshPanelValues(); refreshVisibility(); onParam();
-    if (moved.length) rebakeLayers(moved);
-    flash(`${q.lab} 改到 ${tl.toFixed(2)} s${dd ? `，序列时长跟着${dd > 0 ? '加' : '减'} ${Math.abs(dd).toFixed(2)} s` : ''}${moved.length ? `；第 ${moved.map(j => j + 1).join('、')} 层同一时刻的点一起动` : ''}，正在重烘`);
+    if (moved.size) rebakeLayers([...moved]);
+    flash(`${q.lab} 改到 ${tl.toFixed(2)} s${dd ? `，序列时长跟着${dd > 0 ? '加' : '减'} ${Math.abs(dd).toFixed(2)} s` : ''}${moved.size ? `；第 ${[...moved].map(j => j + 1).join('、')} 层接力的点一起动` : ''}，正在重烘`);
   };
   h.addEventListener('pointermove', mv); h.addEventListener('pointerup', up); h.addEventListener('pointercancel', up);
 }
