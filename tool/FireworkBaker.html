@@ -9206,8 +9206,7 @@ function buildLayerHead(i) {
   ex.querySelectorAll('[data-out]').forEach(sel => sel.addEventListener('change', () => { L.out = { ...layerOut(L), [sel.dataset.out]: sel.value }; if (L.out.pc === 'seq' && L.out.mobile === 'seq') delete L.out; syncOut(); if (stage2.deliv) renderDeliv(); wbSync(); }));
   syncOut();
   host.querySelector('#lhHelp').addEventListener('click', () => { const p = $('#lhHelpText'); p.hidden = !p.hidden; });
-  const e = layerEntryOf(L);
-  if (e && unitAllowed(e.P)) { const ub = document.createElement('button'); ub.className = 'btn mini'; ub.type = 'button'; ub.textContent = '导出这一层的单束包'; ub.title = '单束：只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条'; ub.addEventListener('click', () => unitExportLayer(i)); host.querySelector('.lh-t').appendChild(ub); }
+  // 4.2.13：以前这里有「导出这一层的单束包」按钮（另出一个包）；单束现在是下面「导出方案」的一个选项，跟着整包导出（走查 B9）
   host.querySelector('#lhBack').addEventListener('click', () => selectComboLayer(-1));
   const lo = host.querySelector('#lhLinkOff'); if (lo) lo.addEventListener('change', () => { state.linkOff = lo.checked; });
   host.querySelectorAll('[data-link]').forEach(cb => cb.addEventListener('change', () => mySetLinked(i, +cb.dataset.link, cb.checked)));
