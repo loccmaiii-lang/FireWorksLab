@@ -1,0 +1,107 @@
+[
+ {
+  "name": "1440_鸿巢_参数页_整体",
+  "seconds": 10.4,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1440_鸿巢_调第1层",
+  "seconds": 5.7,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3,
+  "P": {
+   "type": "kamuro",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 12
+  }
+ },
+ {
+  "name": "1440_鸿巢_第1层贴图流转",
+  "seconds": 3.9,
+  "hud": "第 1 层 · 贴图流转 · 第 39/64 帧 · B 通道 · 第 7 格（第 2 行第 3 列）· 时间 2.00 s",
+  "seg": "",
+  "view": "atlas",
+  "flow": true,
+  "t": 2,
+  "P": {
+   "type": "kamuro",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 12
+  }
+ },
+ {
+  "name": "1440_鸿巢_引擎回放_100m",
+  "seconds": 2.6,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": true,
+  "t": 3,
+  "P": {
+   "type": "kamuro",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 12
+  }
+ },
+ {
+  "name": "1440_鸿巢_审阅页",
+  "seconds": 3.7,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": true,
+  "t": 3,
+  "P": {
+   "type": "kamuro",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 12
+  }
+ },
+ {
+  "name": "1440_JM4-40_单层参数页",
+  "seconds": 5.1,
+  "hud": "实时模拟 · 游戏内大小 · 1000 m · 导出单格 512×512 · 固定曝光 ×0.20 · 居中快门",
+  "seg": "",
+  "view": "live",
+  "flow": true,
+  "t": 1,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1920_鸿巢_整体",
+  "seconds": 7.0,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": true,
+  "t": 3,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ }
+]
