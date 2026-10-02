@@ -31,6 +31,13 @@ def preview(png_path, out_path, max_side=1024):
     cv2.imwrite(out_path, np.hstack(tiles), [cv2.IMWRITE_JPEG_QUALITY, 85])
 
 
+def is_main_tex(f, mobile_ok=False):
+    """素材包里的序列贴图（要出预览的）：新命名（2026-10-02）只有 PC 版带 _HD；旧命名排除 Ramp / Cutout / FrameTest / 手机版"""
+    if not f.endswith('.png'): return False
+    if f.startswith('T_EFX_FireWorks_'): return f.endswith('_HD.png')
+    return not any(k in f for k in ('_Ramp', '_Cutout', '_FrameTest') + (() if mobile_ok else ('_Mobile',)))
+
+
 def run(job, s, out, log=print):
     big = os.path.join(ROOT, 'analysis', 'local', '输出', '素材包')
     ver = None
@@ -50,7 +57,7 @@ def run(job, s, out, log=print):
         else:
             src = f"__fw.resolve({json.dumps(json.load(open(os.path.join(ROOT, job['params']), encoding='utf-8')))}, 'x')"
         b64 = s.pg.evaluate(f"""(async () => {{ const r = {src}; const P = r.P, M = r.M; Object.assign(P, {json.dumps(over)});
-            const u8 = await __fw.exportFiles(P, M, {json.dumps(name)}); let t = '';
+            const u8 = await __fw.exportFiles(P, M, {json.dumps(name)}, {{ entry: {json.dumps(job.get('entry'))} }}); let t = '';
             for (let i = 0; i < u8.length; i += 0x8000) t += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(t); }})()""")
         d = os.path.join(big, name); os.makedirs(d, exist_ok=True)
         for old in os.listdir(d):   # 固定目录：重新导出前清掉上一版的文件（引擎里右键「重新导入」读的就是这里）
@@ -63,7 +70,7 @@ def run(job, s, out, log=print):
                 import shutil; shutil.copy(p, os.path.join(out, f))
             elif f.startswith('cascade') and f.endswith('.json'):   # 几套导出各有一个 cascade.json：上传时加上导出名
                 import shutil; shutil.copy(p, os.path.join(out, f'{name}_{f}'))
-            elif f.endswith('.png') and not any(k in f for k in ('_Ramp', '_Cutout', '_FrameTest')):
+            elif is_main_tex(f, mobile_ok=True):
                 preview(p, os.path.join(out, f[:-4] + '_预览.jpg'))
         packages.append(dict(name=name, replica=rep, files=files))
     json.dump(dict(effect=job.get('effect'), entry=job.get('entry'), ver=ver, time=time.strftime('%Y-%m-%d %H:%M'), dir='analysis/local/输出/素材包/', packages=packages),
@@ -123,7 +130,7 @@ def run_combo_pack(job, s, out, name, ver, big, log=print):
     for f in files:
         p = os.path.join(d, f)
         if f.startswith('cascade') and f.endswith('.json'): shutil.copy(p, os.path.join(out, f'{name}_{f}'))
-        elif f.endswith('.png') and not any(k in f for k in ('_Ramp', '_Cutout', '_FrameTest', '_Mobile')): preview(p, os.path.join(out, f[:-4] + '_预览.jpg'))
+        elif is_main_tex(f): preview(p, os.path.join(out, f[:-4] + '_预览.jpg'))
     json.dump(dict(effect=job.get('effect'), entry=entry, ver=ver, time=time.strftime('%Y-%m-%d %H:%M'), dir='analysis/local/输出/素材包/', combo_pack=True,
                    packages=[dict(name=name, replica=entry, files=files)]), open(os.path.join(out, '导出清单.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     try:

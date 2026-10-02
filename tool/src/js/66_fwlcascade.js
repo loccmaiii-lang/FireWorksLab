@@ -21,18 +21,25 @@ function fwlMaster(name, b, M, mobile) {
     if (s.tail) textures[key].note = '星头与拖尾分开导出（Head / Tail）时，本格式只写星头；拖尾请改用合并输出';
     const mk = seg ? 'main' + seg : 'main';
     materials[mk] = { role: 'flipbook_rgba', textures: { main: key, ramp: 'ramp' }, scalars: { rows: L.rows, cols: L.cols } };
+    // 入点前放大（用户 2026-10-02 选 B）：发射器从「第一次看得见」出生，前 pu 段寿命停在第 0 帧、Size By Life 从小放大到 1，之后照常
+    const pre = i === 0 && m.pre && !m.zoom ? m.pre : null, life = m.duration + (pre ? pre.dur : 0), pu = pre ? pre.dur / life : 0;
+    const pivot = pre && pre.pivot;
     const mods = [
-      { m: 'Lifetime', Lifetime: { const: r4(m.duration) } },
+      { m: 'Lifetime', Lifetime: { const: r4(life) } },
       { m: 'InitialSize', StartSize: { const: [r1(m.Ww * 100), r1(m.Wh * 100), 1] } },
-      { m: 'InitialLocation', StartLocation: { const: [0, 0, m.zoom ? 0 : r1(m.cy * 100)] } }
+      { m: 'InitialLocation', StartLocation: { const: [0, 0, m.zoom || pivot ? 0 : r1(m.cy * 100)] } }
     ];
     if (m.zoom) mods.push({ m: 'SizeByLife', LifeMultiplier: { curve: m.sizeKeys.map(([u, v]) => [r4(u), [r4(v), r4(v), 1]]) }, MultiplyX: true, MultiplyY: true, MultiplyZ: false });
-    mods.push({ m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(m.keys, L.F) } } });
-    mods.push({ m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, m.duration, m.t0 || 0, M.headInt || 1) }, AlphaOverLife: { const: 1 } });
+    if (pre) mods.push({ m: 'SizeByLife', preRoll: true, LifeMultiplier: { curve: [...pre.keys.map(([u, v]) => [r4(u * pu), [r4(v), r4(v), 1]]), [1, [1, 1, 1]]] }, MultiplyX: true, MultiplyY: true, MultiplyZ: false });
+    const fk = pre ? [[0, 0], ...m.keys.map(([u, v]) => [pu + u * (1 - pu), v])] : m.keys;
+    mods.push({ m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(fk, L.F) } } });
+    mods.push({ m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, life, pre ? pre.from : m.t0 || 0, M.headInt || 1) }, AlphaOverLife: { const: 1 } });
     emitters.push({
       name: seg ? 'Main' + seg : 'Main', material: mk, gpu: false,
-      required: { screen_alignment: 'Rectangle', duration_s: r4(m.duration), loops: 1, delay_s: r4(m.t0 || 0), cutout: 'cutout' + seg, max_draw_count: 1 },
-      spawn: { rate: { const: 0 }, bursts: [[0, 1]] }, modules: mods
+      required: { screen_alignment: 'Rectangle', duration_s: r4(life), loops: 1, delay_s: r4(pre ? pre.from : m.t0 || 0), cutout: 'cutout' + seg, max_draw_count: 1,
+        ...(pivot ? { pivot_offset: [-0.5, r4(-0.5 - m.cy / m.Wh)] } : {}) },
+      spawn: { rate: { const: 0 }, bursts: [[0, 1]] }, modules: mods,
+      ...(pre ? { notes: [`入点前放大：出生后 ${r4(pre.dur)} s 停在第 0 帧、Size By Life 从 ${r4(pre.keys[0][1])} 放大到 1（${pivot ? '绕爆点：Pivot Offset，未经 UE 验证' : '绕面片中心'}），之后从入点 ${r4(m.t0)} s 照常播`] } : {})
     });
   }
   textures.ramp = { file: TN(name, 'Ramp') + '.png', class: 'ramp' };

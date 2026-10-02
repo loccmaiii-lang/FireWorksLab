@@ -96,6 +96,7 @@ $('#btnExportCombo').addEventListener('click', exportCombo);
 initPicker();
 initAssets();
 initUpdates();
+initStyle();
 buildMasterPanel();
 initIter();
 initLibrary();
@@ -119,13 +120,15 @@ window.__fw = {
     let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
     return btoa(s);
   },
-  async exportFiles(P, M, name) {
-    const b = await bake(P, 1, null); const files = await texFiles(b, name);
+  async exportFiles(P, M, name, opt = {}) {
+    const b = await bake(P, 1, null); let files = await texFiles(b, name);
     files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
     files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b, M))]);
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, M))]);
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, M), null, 2))]);
     files.push(...await platformFiles(name, b, M));
+    // 命名规范：本机导出任务传 opt.entry（条目号）→ 找到效果的英文名
+    if (namingApplies(b) && opt.naming !== false) { const ef = opt.entry ? effectOfEntry({ id: opt.entry }) : null, nm = packNamesFor(ef ? 'ef:' + ef.key : 'rv:' + (opt.entry || name), ef, 1, name); files = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); }
     const zip = await makeZip(files); disposeBake(b);
     return new Uint8Array(await zip.arrayBuffer());
   },

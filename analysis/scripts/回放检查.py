@@ -158,7 +158,7 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
         empty_tail = p.frames - 1 - lit[-1] if lit else p.frames
         mid_list = [i for i in range(lit[0], lit[-1]) if cm[i] <= 1.5 / 255] if lit else []
         empty_mid = len(mid_list)
-        zoom = 'SizeByLife' in p.mods      # 固定取景：面片位置、大小都不变，画面不可能整体抖；中心移动全是内容自己在动（子花开、下垂），抖动项不适用
+        zoom = 'SizeByLife' in p.mods and not p.mods['SizeByLife'].get('preRoll')      # 入点前放大（preRoll）只在入点前停在第 0 帧放大，入点后仍是固定取景；固定取景：面片位置、大小都不变，画面不可能整体抖；中心移动全是内容自己在动（子花开、下垂），抖动项不适用
         tk = p.ticks(fps); steps = np.diff(tk) if len(tk) > 1 else np.array([0])
         # 中心抖动（标准 2.3「不抖」）：固定取景时花自己在长大、下垂，中心本来就会走；要抓的是走得不平滑的那一下。
         # 每帧在引擎里第一次出现的 tick 当作它的时刻；每帧中心和「前一帧、后一帧按时间连线」在这一帧时刻的位置比，差多少就是抖多少。

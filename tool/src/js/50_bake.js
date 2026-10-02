@@ -285,7 +285,9 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
   const R = makeRenderer(P, 'burst');let first=null,last=null;
   try {
     let pl = opt.pl;
-    if (!pl) pl = P.zoom === 'tight' ? await tightPlan(P, fm, ta, tb, R, p => onProg && onProg(p * 0.2)) : plan(P, fm, ta, tb);
+    // 入点 / 出点（4.0）：用户选的范围优先于自动裁空白
+    const cutIn = usesTickPlan40(P) && +P.cutIn > 0 ? Math.min(+P.cutIn, P.duration - 1 / 30) : 0, cutOut = usesTickPlan40(P) && +P.cutOut > cutIn ? Math.min(+P.cutOut, P.duration) : 0;
+    if (!pl) pl = P.zoom === 'tight' ? await tightPlan(P, fm, ta, tb, R, p => onProg && onProg(p * 0.2)) : plan(P, fm, cutIn || ta, cutOut || tb);
     if(pl.frameTiming==='tick-start'){
       const bakePlan=async(active,start=0,span=1)=>{
         const pages=splitPlan40(active),bakeP={...P,cols:active.L.cols,rows:active.L.rows};
@@ -306,7 +308,7 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
           // （4.0 曾按 10/255 裁，金芒菊 4.56 s 被裁成 3.67 s，末尾的暗火星没了——用户 2026-10-01 指出）
           const lit=v=>v>=2,a=maxima.findIndex(lit),z=maxima.findLastIndex(lit);
           if(a<0)throw new Error('当前配方没有达到可见亮度的帧，请调整亮度或曝光。');
-          const from=P.trimLead===0?0:a,to=P.trimTail===0?pl.L.F:z+1;
+          const from=P.trimLead===0||cutIn?0:a,to=P.trimTail===0||cutOut?pl.L.F:z+1;
           if(from>0||to<pl.L.F){
             const T=f=>f<pl.L.F?pl.times[f]:pl.duration;   // 帧可能停好几个 tick：按帧的实际起点换算时间
             const trimmed=plan(P,fm,pl.t0+T(from),pl.t0+T(to));
@@ -317,6 +319,10 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
         }
       }
       onProg&&onProg(1);
+      if(cutIn&&+P.preRoll!==0&&!first.meta.zoom)first.meta.pre=preRollOf(P,fm,first.meta.t0);
+      first.meta.cut={in:cutIn,out:cutOut};
+      // 整段可见范围（时段条的淡色底）：没设入出点 = 这次自动裁出来的；设了 = 设入点时记下的范围
+      first.meta.vis=cutIn||cutOut?[+P.preFrom>=0?Math.min(+P.preFrom,first.meta.t0):first.meta.t0,Math.max(bakeTotal(first),+P.visTo||0)]:[first.meta.t0,bakeTotal(first)];
       return first;
     }
     const b = await bakeFrames(P, scale, p => onProg && onProg((P.zoom === 'tight' && !opt.pl ? 0.2 : 0) + p * (P.zoom === 'tight' && !opt.pl ? 0.8 : 1)), pl, R, opt);
@@ -500,6 +506,7 @@ function bakeKind(P) {
 }
 function unitAllowed(P) { return familyOf(P.type) === 'aerial' && !['senrin', 'crossette', 'hachi'].includes(P.type) && (P.pattern === 'sphere' || P.pattern === 'half'); }
 async function bake(P, scale, onProg) {
+  P = styled(P);                                      // 全局风格层（默认值时原样返回）
   if (P.zoom === 'tight') P = { ...P, zoom: 'on' };   // 紧凑取景已禁用（引擎里会抖）
   P = { ...P };
   switch (bakeKind(P)) {
@@ -514,6 +521,21 @@ async function bake(P, scale, onProg) {
 }
 // 开头空白裁掉：星头要过一段时间才亮的层（延时点火、同轨迹的第二段、千轮 / 小割的子花）不把前面的空白烘进贴图，
 // 贴图从第一次看得见的时刻开始（meta.t0），引擎里用发射器延迟（cascade.json 的 delay_s）补上。trimLead = 0 关。
+// 入点前放大（用户选 B）：引擎里从「第一次看得见」到入点这段，用入点那一帧按花径比例从小放大。
+// 比例 = 这一刻的花径 ÷ 入点时的花径；preScale0 > 0 时按它重新拉伸。
+function preRollOf(P, fm, t0) {
+  const from = +P.preFrom >= 0 && +P.preFrom < t0 - 1 / 30 ? +P.preFrom : Math.min(+P.flash > 0 ? 0 : leadOf(fm), Math.max(0, t0 - 1 / 30));
+  if (t0 - from < 1 / 30) return null;
+  // 花径用「看得见的星」离爆点距离的 95 分位（measure 的 stat.r95）：不含开花闪光和火花的保守外扩，开头才真的小
+  const st = fm.stat.map(q => [q.t, q.r95]);
+  const rAt = t => { let i = st.findIndex(q => q[0] >= t); if (i < 0) return st[st.length - 1][1]; if (i === 0) return st[0][1];
+    const [ta, ra] = st[i - 1], [tb, rb] = st[i]; return ra + (rb - ra) * (t - ta) / Math.max(1e-6, tb - ta); };
+  const rIn = Math.max(1e-3, rAt(t0)), r0 = rAt(from), s0 = +P.preScale0 > 0 ? +P.preScale0 : clamp(r0 / rIn, 0.02, 1);
+  const keys = []; for (let i = 0; i <= 8; i++) { const u = i / 8, t = from + u * (t0 - from), raw = clamp(rAt(t) / rIn, 0, 1);
+    const v = +P.preScale0 > 0 ? s0 + (1 - s0) * clamp((rAt(t) - r0) / Math.max(1e-6, rIn - r0), 0, 1) : Math.max(s0, raw); keys.push([u, +Math.min(1, v).toFixed(4)]); }
+  keys[keys.length - 1][1] = 1;
+  return { from, dur: t0 - from, keys, s0, pivot: +P.prePivot === 1 ? 1 : 0 };
+}
 function leadOf(fm) { const q = fm.stat.find(x => x.vis > 0); return q ? Math.max(0, q.t - 0.05) : 0; }
 async function bakeMasterLead(P, scale, onProg) {
   const fm = measure(P), lead = P.trimLead === 0 ? 0 : leadOf(fm);

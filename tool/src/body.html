@@ -3,6 +3,7 @@
     <div class="brand"><span class="mark">DF</span><b>特效工作台</b><small id="verLabel">烟花烘焙器</small></div>
     <div class="crumb" id="crumb" hidden aria-hidden="true"></div>
     <div class="gpu" id="gpu"></div>
+    <button class="btn ghost upd" id="styleBtn" type="button" title="全局风格：尾长、粗细、亮肩、泪滴等，叠在所有效果上（默认不改任何东西）">全局风格</button>
     <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
     <div id="status"></div>
   </header>
@@ -287,6 +288,12 @@
     </aside>
     </div>
   </main>
+  <div class="picker upd-dlg style-dlg" id="styleDlg" hidden role="dialog" aria-label="全局风格">
+    <div class="pk-head"><b>全局风格</b><span class="hint" id="styleState"></span><span class="sp"></span><button class="btn ghost" id="styleCopy" type="button">复制风格参数</button><button class="btn ghost" id="styleReset" type="button">恢复默认</button><button class="btn ghost" id="styleClose" type="button">关闭（Esc）</button></div>
+    <div class="style-body"><p class="hint">叠在每个效果自己的参数上，改了马上重烘当前效果。全部是默认值（倍数 1、其余 0）时，所有效果和原来逐像素一样。只存在这台电脑的浏览器里；本机显卡的导出任务不读它——要让 AI 的导出也用，点「复制风格参数」发给 AI。</p>
+      <label class="check"><input type="checkbox" id="styleApproved"> 也作用于已通过的效果（正式库、已通过版）</label>
+      <div id="styleBody"></div></div>
+  </div>
   <div class="picker upd-dlg" id="updDlg" hidden role="dialog" aria-label="更新记录">
     <div class="pk-head"><b>更新记录</b><span class="hint">每次改动都会推到仓库，pull 后这里就是最新的</span><button class="btn ghost" id="updClose" type="button">关闭（Esc）</button></div>
     <div class="upd-list" id="updList"></div>

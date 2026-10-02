@@ -706,6 +706,40 @@ canvas#gl{box-shadow:none}
 .timeline #tlabel{order:-1}
 .timeline .keys{margin-left:auto}
 @media (max-width:760px){ .viewframe .canvas-wrap.split{height:min(calc(50vw - 10px),70vh)} }
+/* 时段条：整段可见（淡）/ 入点前放大（斜纹）/ 贴图在播（实色）；入点出点按钮 */
+.tlb-t i.vis{background:#183a31;opacity:.55}
+.tlb-t i.pre{background:repeating-linear-gradient(135deg,#1d5a49 0 4px,#12352c 4px 8px)}
+.tlb-t i.main{background:#1d8a6a}
+.tlb.sel .tlb-n{color:var(--acc)}
+.tlcut{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12px;color:var(--dim);padding-top:2px}
+.tlcut .mini{background:var(--panel);border:1px solid var(--line2);border-radius:5px;color:var(--text);font-size:12px;padding:3px 9px;cursor:pointer}
+.tlcut .mini:hover{border-color:var(--acc);color:var(--acc)}
+.dv-names{display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap;margin:0 0 10px;font-size:12px;color:var(--dim)}
+.dv-names label{display:flex;flex-direction:column;gap:3px}
+.dv-names input{background:var(--panel);border:1px solid var(--line2);border-radius:5px;color:var(--text);padding:5px 8px;font:12.5px var(--mono);width:180px}
+.dv-names input[data-ly]{width:110px}
+.dv-names small{width:100%;color:var(--faint)}
+/* 全局风格面板 */
+.style-dlg .style-body{overflow:auto;padding:4px 18px 24px;max-width:620px}
+.style-dlg .style-body .hint{color:var(--faint);font-size:12px;margin:0 0 8px}
+.style-dlg #styleBody .sl{margin-top:6px}
+.style-dlg .pk-head .sp{flex:1}
+#styleBtn.on{border-color:var(--acc)!important;color:var(--acc)}
+/* 层轨道的阶段点 */
+.tlb-t{overflow:visible}
+.tlb-t .ph{position:absolute;top:-3px;bottom:-3px;width:3px;margin-left:-1.5px;border-radius:2px;background:#e4bb7c;z-index:2}
+.tlb-t .ph.drag{width:7px;margin-left:-3.5px;cursor:ew-resize;box-shadow:0 0 0 1px #000}
+.tlb-t .ph.drag:hover{background:#fff}
+.ph-ign{background:#36e4b0!important} .ph-burn{background:#e4bb7c!important} .ph-after{background:#f0a6a0!important}
+.ph-spark{background:#7fb6ff!important} .ph-dim{background:#c9a0ff!important} .ph-ember{background:#adb8bc!important}
+.phl{width:100%;color:var(--dim)}
+.phl i{display:inline-block;width:8px;height:8px;border-radius:2px;margin:0 3px 0 6px;vertical-align:middle}
+.layerhead .lh-link{margin:6px 0 2px;padding:6px 8px;border-radius:5px;background:var(--panel);color:var(--text);font-size:12px}
+.layerhead .lh-link .check{margin-top:4px}
+.dv-unit{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding:10px;border:1px solid var(--line2);border-radius:7px;background:var(--panel)}
+.dv-unit b{width:100%;font-size:13.5px}
+.dv-unit small{width:100%;color:var(--dim)}
+#pMaster.layermode .actions>.grid2{display:none}
 </style>
 </head>
 <body>
@@ -714,6 +748,7 @@ canvas#gl{box-shadow:none}
     <div class="brand"><span class="mark">DF</span><b>特效工作台</b><small id="verLabel">烟花烘焙器</small></div>
     <div class="crumb" id="crumb" hidden aria-hidden="true"></div>
     <div class="gpu" id="gpu"></div>
+    <button class="btn ghost upd" id="styleBtn" type="button" title="全局风格：尾长、粗细、亮肩、泪滴等，叠在所有效果上（默认不改任何东西）">全局风格</button>
     <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
     <div id="status"></div>
   </header>
@@ -998,6 +1033,12 @@ canvas#gl{box-shadow:none}
     </aside>
     </div>
   </main>
+  <div class="picker upd-dlg style-dlg" id="styleDlg" hidden role="dialog" aria-label="全局风格">
+    <div class="pk-head"><b>全局风格</b><span class="hint" id="styleState"></span><span class="sp"></span><button class="btn ghost" id="styleCopy" type="button">复制风格参数</button><button class="btn ghost" id="styleReset" type="button">恢复默认</button><button class="btn ghost" id="styleClose" type="button">关闭（Esc）</button></div>
+    <div class="style-body"><p class="hint">叠在每个效果自己的参数上，改了马上重烘当前效果。全部是默认值（倍数 1、其余 0）时，所有效果和原来逐像素一样。只存在这台电脑的浏览器里；本机显卡的导出任务不读它——要让 AI 的导出也用，点「复制风格参数」发给 AI。</p>
+      <label class="check"><input type="checkbox" id="styleApproved"> 也作用于已通过的效果（正式库、已通过版）</label>
+      <div id="styleBody"></div></div>
+  </div>
   <div class="picker upd-dlg" id="updDlg" hidden role="dialog" aria-label="更新记录">
     <div class="pk-head"><b>更新记录</b><span class="hint">每次改动都会推到仓库，pull 后这里就是最新的</span><button class="btn ghost" id="updClose" type="button">关闭（Esc）</button></div>
     <div class="upd-list" id="updList"></div>
@@ -1065,6 +1106,8 @@ function fibDirs(n, rng, R, jitDeg) {
   return out;
 }
 function randUnit(rng) { const x = rng.n(), y = rng.n(), z = rng.n(), l = Math.hypot(x, y, z) || 1; return [x / l, y / l, z / l]; }
+// 全局风格层（62_style.js）：离线检查只加载部分源码时没有 styledP，就原样返回
+function styled(P) { return typeof styledP === 'function' ? styledP(P) : P; }
 // 画质：烘焙的空间超采样、快门子样本、光点像素覆盖积分、亮核（移植自 Codex 的 Ultra 实验，origin/ultra 04fce8f）
 // 默认值 = 3.7 原来的做法（2×2 超采样、300 Hz 快门、高斯中心取样），所以正式库、V5 尾缀等已认可的东西不变；
 // 新条目按需把参数调到「精细」档（4×4、960 Hz、覆盖积分、亮核 25%）。参数跟着配方 / 导出 JSON 走。
@@ -1089,7 +1132,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.1.0';
+const VERSION = '4.1.1';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -1133,7 +1176,7 @@ const BASE = {
   // 星效果
   ignDelay: 0, ignJit: 10, ignSeed: 0, keepFrac: 1, afterBurn: 0, afterJit: 15, headDim: 1, headDimUntil: 0,
   emberFrac: 0, emberLife: 3, emberBright: 0.1, emberFollow: 0, emberSize: 1, emberAll: 0, emberEnd: 0,
-  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, expoMode: 'sheet', expoQ: 0.7, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
+  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, cutIn: 0, cutOut: 0, preRoll: 1, preFrom: -1, visTo: 0, preScale0: 0, prePivot: 0, expoMode: 'sheet', expoQ: 0.7, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
   strobeHz: 0, strobeDuty: 0.35, strobeStart: 0.4, glitter: 0, glitterDelay: 0.25,
   crackle: 0, crackleDelay: 0.3, branch: 0, branchAt: 0.45, flutter: 0, flutterHz: 0.7,
   // 上升
@@ -1626,6 +1669,15 @@ const SCHEMA = [
     ['burstStars', '末端小花星数', '颗', 0, 40, 1, hasComets],
     ['subSpeed', '小花初速', 'm/s', 5, 80, 1, P => hasComets(P) && P.burstStars > 0],
     ['subBurn', '小花燃烧', 's', 0.2, 3, 0.05, P => hasComets(P) && P.burstStars > 0]
+  ] },
+  // 入点 / 出点（用户 2026-10-02 13:26 选 B）：先整段模拟、剔掉全黑帧；你在可见范围里选入点、出点，帧预算只分给入点到出点；
+  // 入点之前在引擎里用入点那一帧从小放大（Size By Life，比例按花径自动算），或不显示；出点之后直接结束。
+  { sec: '入点与出点（导出）', show: usesTickPlan40, hint: '时间轴下面的时段条上有「设为入点 / 设为出点」：先看整段（全黑帧已剔掉），在想开始、结束的那一刻点一下。0 = 自动（第一次 / 最后一次看得见）。', items: [
+    ['cutIn', '入点（帧从这里开始分配；0 = 第一次看得见）', 's', 0, 30, 0.0333],
+    ['cutOut', '出点（0 = 最后一次看得见）', 's', 0, 30, 0.0333],
+    { sel: 'preRoll', label: '入点之前', show: P => +P.cutIn > 0, options: [[1, '用入点那一帧从小放大（Size By Life）'], [0, '不显示（发射器延迟到入点）']] },
+    ['preScale0', '开始放大时的大小（0 = 按花径自动）', '×', 0, 1, 0.01, P => +P.cutIn > 0 && +P.preRoll !== 0],
+    { sel: 'prePivot', label: '放大的中心', show: P => +P.cutIn > 0 && +P.preRoll !== 0, options: [[0, '面片中心（UE 一定支持；花小的时候会偏向面片中心）'], [1, '爆点（用 Pivot Offset，更准，未经 UE 验证）']] }
   ] },
   { sec: '取帧（导出）', show: isSeq, hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。自动取帧把帧集中在运动快的开花初期，同时保证整段不低于最低帧率。', items: [
     ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P) && !usesTickPlan40(P)],
@@ -2146,6 +2198,9 @@ class Sim {
       const I = this.headI(s); if (I <= 0) continue;
       const sz = P.headSize * (s.kind === 1 || s.kind === 6 ? 0.8 : 1);
       push(bufH, nh++, s.x, s.y, I, sz);
+      // 全局风格「泪滴星头」：沿运动反方向补几个越来越小、越来越暗的点，速度越快拉得越长（默认 0 不进来）
+      if (P._styTear > 0 && nh < capH - 5) { const v = Math.hypot(s.vx, s.vy); if (v > 0.5) { const ux = -s.vx / v, uy = -s.vy / v, len = P._styTear * (sz * 2 + v * 0.025);
+        for (let k = 1; k <= 4; k++) { const f = k / 4; push(bufH, nh++, s.x + ux * len * f, s.y + uy * len * f, I * (1 - 0.75 * f), sz * (1 - 0.7 * f)); } } }
       if (refl > 0 && s.y > 0) push(bufH, nh++, s.x + ripple(s.y, this.t), -s.y, I * refl * Math.exp(-s.y / 400), sz * 1.3);
     }
     for (const f of this.flashes) {
@@ -2593,7 +2648,7 @@ precision highp float; precision highp int; precision highp sampler2D;
 uniform sampler2D uPos, uVel, uInfo;
 uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw, uBr;
 uniform float uInh, uSpread, uLife, uLifeEnd, uLifeJit, uK, uG, uT0, uCool, uTwk, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
-uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE;
+uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uStyJit, uStyShoulder;
 uniform vec4 uTm[3]; uniform float uTa[3];
 uniform vec4 uView, uXf; uniform float uPPM, uPPMY, uMax, uUseXf;
 out float vI; out vec2 vSig; out float vPS;
@@ -2647,6 +2702,9 @@ void main(){
   I*=(1.+uTwk*(2.*hsh(u2,uint(uTw)*16u+13u)-1.))*uBright*.6;
   if(uMir>.5){ if(p.y<0.){ cull(); return; }
     if(uMir>1.5){ p.x+=.012*p.y*sin(.35*p.y+7.*uT)+.3*sin(1.7*p.y+3.*uT); I*=uRefl*exp(-p.y/400.); p.y=-p.y; size*=1.3; } }
+  // 全局风格层（62_style.js）：粗细随机 = 每颗星一个粗细倍数 × 每粒火花一点抖动；亮肩 = 新火花大而亮、老火花细而暗。默认 0 时不进分支，结果不变
+  if(uStyJit>0.){ size*=exp(uStyJit*.35*gss(uid,61u))*max(.15,1.+uStyJit*1.2*(hsh(uint(s),62u)-.5)); }
+  if(uStyShoulder!=0. && c==0){ float sh=uStyShoulder*(.8-1.6*clamp(age/life,0.,1.)); size*=max(.1,1.+sh); I*=max(.15,1.+.6*sh); }
   vec2 q=p.xy; if(uUseXf>.5){ vec2 d=q-uXf.xy; q=vec2(d.x*uXf.z-d.y*uXf.w, d.x*uXf.w+d.y*uXf.z); }
   emitPt(q,I,size);
 }`;
@@ -2832,6 +2890,7 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   gl.uniform1f(pr.u.uGlit, P.glitter || 0); gl.uniform1f(pr.u.uGlitD, P.glitterDelay || 0.25);
   gl.uniform1f(pr.u.uEmb, P.emberFrac || 0); gl.uniform1f(pr.u.uEmbL, P.emberLife || 3); gl.uniform1f(pr.u.uEmbB, P.emberBright || 0.1); gl.uniform1f(pr.u.uEmbF, P.emberFollow || 0); gl.uniform1f(pr.u.uEmbS, P.emberSize || 1);
   gl.uniform1f(pr.u.uEmbE, P.emberEnd || 0); gl.uniform1f(pr.u.uHotStop, P.emberFrac > 0 && P.emberAll && P.sparkStop > 0 ? P.sparkStop : 0);
+  if (pr.u.uStyJit) gl.uniform1f(pr.u.uStyJit, P._styJit || 0); if (pr.u.uStyShoulder) gl.uniform1f(pr.u.uStyShoulder, P._styShoulder || 0);
   const br = Math.round(P.branch || 0); gl.uniform1i(pr.u.uBr, br); gl.uniform1f(pr.u.uBrAt, P.branchAt || 0.5);
   setAirUniforms(pr, P);
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
@@ -4204,7 +4263,7 @@ function liveRenderer40(slot,P) {
   return slot.R40;
 }
 function renderLive40() {
-  const P=state.P, slot=liveSlot('A40'); prepSlot(slot,P,state.gen);
+  const P=styled(state.P), slot=liveSlot('A40'); prepSlot(slot,P,state.gen);
   const R=liveRenderer40(slot,P), b=previewBake();
   const pl=b && state.bakeGen===state.gen && ['master','segments','loop'].includes(b.form) ? segAt(b,state.t).meta : slot.plan40;
   const q=qualityOf(P), L=state.platform==='mobile' && !b?layoutOf(mobileParams(P)):pl.L;
@@ -4648,7 +4707,9 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
   const R = makeRenderer(P, 'burst');let first=null,last=null;
   try {
     let pl = opt.pl;
-    if (!pl) pl = P.zoom === 'tight' ? await tightPlan(P, fm, ta, tb, R, p => onProg && onProg(p * 0.2)) : plan(P, fm, ta, tb);
+    // 入点 / 出点（4.0）：用户选的范围优先于自动裁空白
+    const cutIn = usesTickPlan40(P) && +P.cutIn > 0 ? Math.min(+P.cutIn, P.duration - 1 / 30) : 0, cutOut = usesTickPlan40(P) && +P.cutOut > cutIn ? Math.min(+P.cutOut, P.duration) : 0;
+    if (!pl) pl = P.zoom === 'tight' ? await tightPlan(P, fm, ta, tb, R, p => onProg && onProg(p * 0.2)) : plan(P, fm, cutIn || ta, cutOut || tb);
     if(pl.frameTiming==='tick-start'){
       const bakePlan=async(active,start=0,span=1)=>{
         const pages=splitPlan40(active),bakeP={...P,cols:active.L.cols,rows:active.L.rows};
@@ -4669,7 +4730,7 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
           // （4.0 曾按 10/255 裁，金芒菊 4.56 s 被裁成 3.67 s，末尾的暗火星没了——用户 2026-10-01 指出）
           const lit=v=>v>=2,a=maxima.findIndex(lit),z=maxima.findLastIndex(lit);
           if(a<0)throw new Error('当前配方没有达到可见亮度的帧，请调整亮度或曝光。');
-          const from=P.trimLead===0?0:a,to=P.trimTail===0?pl.L.F:z+1;
+          const from=P.trimLead===0||cutIn?0:a,to=P.trimTail===0||cutOut?pl.L.F:z+1;
           if(from>0||to<pl.L.F){
             const T=f=>f<pl.L.F?pl.times[f]:pl.duration;   // 帧可能停好几个 tick：按帧的实际起点换算时间
             const trimmed=plan(P,fm,pl.t0+T(from),pl.t0+T(to));
@@ -4680,6 +4741,10 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
         }
       }
       onProg&&onProg(1);
+      if(cutIn&&+P.preRoll!==0&&!first.meta.zoom)first.meta.pre=preRollOf(P,fm,first.meta.t0);
+      first.meta.cut={in:cutIn,out:cutOut};
+      // 整段可见范围（时段条的淡色底）：没设入出点 = 这次自动裁出来的；设了 = 设入点时记下的范围
+      first.meta.vis=cutIn||cutOut?[+P.preFrom>=0?Math.min(+P.preFrom,first.meta.t0):first.meta.t0,Math.max(bakeTotal(first),+P.visTo||0)]:[first.meta.t0,bakeTotal(first)];
       return first;
     }
     const b = await bakeFrames(P, scale, p => onProg && onProg((P.zoom === 'tight' && !opt.pl ? 0.2 : 0) + p * (P.zoom === 'tight' && !opt.pl ? 0.8 : 1)), pl, R, opt);
@@ -4863,6 +4928,7 @@ function bakeKind(P) {
 }
 function unitAllowed(P) { return familyOf(P.type) === 'aerial' && !['senrin', 'crossette', 'hachi'].includes(P.type) && (P.pattern === 'sphere' || P.pattern === 'half'); }
 async function bake(P, scale, onProg) {
+  P = styled(P);                                      // 全局风格层（默认值时原样返回）
   if (P.zoom === 'tight') P = { ...P, zoom: 'on' };   // 紧凑取景已禁用（引擎里会抖）
   P = { ...P };
   switch (bakeKind(P)) {
@@ -4877,6 +4943,21 @@ async function bake(P, scale, onProg) {
 }
 // 开头空白裁掉：星头要过一段时间才亮的层（延时点火、同轨迹的第二段、千轮 / 小割的子花）不把前面的空白烘进贴图，
 // 贴图从第一次看得见的时刻开始（meta.t0），引擎里用发射器延迟（cascade.json 的 delay_s）补上。trimLead = 0 关。
+// 入点前放大（用户选 B）：引擎里从「第一次看得见」到入点这段，用入点那一帧按花径比例从小放大。
+// 比例 = 这一刻的花径 ÷ 入点时的花径；preScale0 > 0 时按它重新拉伸。
+function preRollOf(P, fm, t0) {
+  const from = +P.preFrom >= 0 && +P.preFrom < t0 - 1 / 30 ? +P.preFrom : Math.min(+P.flash > 0 ? 0 : leadOf(fm), Math.max(0, t0 - 1 / 30));
+  if (t0 - from < 1 / 30) return null;
+  // 花径用「看得见的星」离爆点距离的 95 分位（measure 的 stat.r95）：不含开花闪光和火花的保守外扩，开头才真的小
+  const st = fm.stat.map(q => [q.t, q.r95]);
+  const rAt = t => { let i = st.findIndex(q => q[0] >= t); if (i < 0) return st[st.length - 1][1]; if (i === 0) return st[0][1];
+    const [ta, ra] = st[i - 1], [tb, rb] = st[i]; return ra + (rb - ra) * (t - ta) / Math.max(1e-6, tb - ta); };
+  const rIn = Math.max(1e-3, rAt(t0)), r0 = rAt(from), s0 = +P.preScale0 > 0 ? +P.preScale0 : clamp(r0 / rIn, 0.02, 1);
+  const keys = []; for (let i = 0; i <= 8; i++) { const u = i / 8, t = from + u * (t0 - from), raw = clamp(rAt(t) / rIn, 0, 1);
+    const v = +P.preScale0 > 0 ? s0 + (1 - s0) * clamp((rAt(t) - r0) / Math.max(1e-6, rIn - r0), 0, 1) : Math.max(s0, raw); keys.push([u, +Math.min(1, v).toFixed(4)]); }
+  keys[keys.length - 1][1] = 1;
+  return { from, dur: t0 - from, keys, s0, pivot: +P.prePivot === 1 ? 1 : 0 };
+}
 function leadOf(fm) { const q = fm.stat.find(x => x.vis > 0); return q ? Math.max(0, q.t - 0.05) : 0; }
 async function bakeMasterLead(P, scale, onProg) {
   const fm = measure(P), lead = P.trimLead === 0 ? 0 : leadOf(fm);
@@ -5145,7 +5226,9 @@ async function exportMaster() {
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, state.M), null, 2))]);
     files.push(...await platformFiles(name, b, state.M,p=>busy(true,'手机独立烘焙…',p)));
     busy(true, '打包 ZIP…', 1);
-    download(await makeZip(files), `${name}.zip`);
+    let zipName = name, out = files;
+    if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); zipName = nm.base; }
+    download(await makeZip(out), `${zipName}.zip`);
     recordVersion('导出 ' + name);
     flash('已导出 ' + name);
   } catch (e) { console.error(e); flash('导出失败：' + e.message, true); }
@@ -5171,6 +5254,147 @@ async function exportVariants() {
     flash('已导出三个种子变体');
   } catch (e) { console.error(e); flash('导出失败：' + e.message, true); }
   bs.forEach(disposeBake); busy(false);
+}
+// =====================================================================
+//  素材包命名（用户 2026-10-02 13:26 / 13:35 定）：
+//    序列（PC）  T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>_HD.png
+//    序列（手机）T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>.png
+//    Cut         T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>_C.png   PC / 手机共用，最大 512
+//    溶解图      …_<序号>_D.png（需要才生成；现在的效果都不需要）
+//    Ramp        T_EFX_FireWorks_<名称>[_<层>]_R.png                    PC / 手机共用
+//  <名称> = 这朵礼花的英文名（协作/状态清单.json 的「英文名」，交付页可改）；<层> = 多层时每层的英文名（Main / Red …，「层英文名」）；
+//  <序号> = 第几张贴图（一层分两张就是 01、02）。帧号测试图只用来排查，放进 _检查/ 子目录，不导入。
+//  烘焙器内部仍按旧名生成，打包前统一换名（cascade.json 里的贴图引用一起换），升空尾缀 V5 / 单束等其它产物照旧。
+// =====================================================================
+const FW_TEX_PREFIX = 'T_EFX_FireWorks_';
+const asciiName = s => String(s == null ? '' : s).replace(/[^A-Za-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+// 名称来源：你在交付页改的（这台电脑的浏览器，按效果记）→ 状态清单的英文名 → 内部名
+function packNamesFor(key, ef, nLayers, fallback) {
+  const o = (store.get('packNames', {})[key]) || {};
+  const base = asciiName(o.base) || asciiName(ef && ef.英文名) || asciiName(fallback) || 'Firework';
+  const layers = Array.from({ length: nLayers }, (_, i) => asciiName((o.layers || [])[i]) || asciiName(((ef && ef.层英文名) || [])[i]) || (nLayers > 1 ? 'L' + (i + 1) : ''));
+  return { base, layers, custom: !!(o.base || (o.layers || []).some(Boolean)) };
+}
+function setPackNames(key, base, layers) { const all = store.get('packNames', {}); all[key] = { base, layers }; store.set('packNames', all); }
+function fwTexName(base, layer, L, sheet, kind, mobile) {
+  const stem = FW_TEX_PREFIX + base + (layer ? '_' + layer : '');
+  if (kind === 'R') return stem + '_R';
+  const g = `${L.cols}x${L.rows}`, nn = String(sheet).padStart(2, '0');
+  if (kind === 'C' || kind === 'D') return `${stem}_${g}_${nn}_${kind}`;
+  if (kind === 'FrameTest') return `_检查/${stem}_${g}_${nn}_FrameTest`;
+  return `${stem}_${g}_${nn}${kind === 'Head' || kind === 'Tail' ? '_' + kind : ''}${mobile ? '' : '_HD'}`;
+}
+// 只给大面片（master / segments）换名
+const namingApplies = b => b && (b.form === 'master' || b.form === 'segments');
+// entries：[{ ln, mn, b, layer }]：内部 PC 名、内部手机名、这一层的烘焙、层英文名
+function applyPackNaming(files, base, entries) {
+  const map = new Map(), drop = new Set();
+  for (const { ln, mn, b, layer } of entries) {
+    bakeParts(b).forEach((s, k) => {
+      const seg = bakeSegmentName(b, k), L = s.meta.L, n = k + 1, c = fwTexName(base, layer, L, n, 'C') + '.png';
+      map.set(TN(ln, seg) + '.png', fwTexName(base, layer, L, n, 'tex', false) + '.png');
+      map.set(TN(mn, seg) + '.png', fwTexName(base, layer, L, n, 'tex', true) + '.png');
+      for (const ht of ['Head', 'Tail']) { map.set(TN(ln, joinPart(seg, ht)) + '.png', fwTexName(base, layer, L, n, ht, false) + '.png'); map.set(TN(mn, joinPart(seg, ht)) + '.png', fwTexName(base, layer, L, n, ht, true) + '.png'); }
+      map.set(TN(ln, joinPart(seg, 'Cutout')) + '.png', c); map.set(TN(mn, joinPart(seg, 'Cutout')) + '.png', c); drop.add(TN(mn, joinPart(seg, 'Cutout')) + '.png');
+      map.set(TN(ln, joinPart(seg, 'FrameTest')) + '.png', fwTexName(base, layer, L, n, 'FrameTest') + '.png'); drop.add(TN(mn, joinPart(seg, 'FrameTest')) + '.png');
+    });
+    const r = fwTexName(base, layer, null, 0, 'R') + '.png';
+    map.set(TN(ln, 'Ramp') + '.png', r); map.set(TN(mn, 'Ramp') + '.png', r); drop.add(TN(mn, 'Ramp') + '.png');
+  }
+  const out = [], seen = new Set(), dec = new TextDecoder();
+  for (const [f, d] of files) {
+    if (drop.has(f)) continue;
+    if (/^cascade(_mobile)?\.json$/.test(f)) {
+      const j = JSON.parse(dec.decode(d));
+      for (const t of Object.values(j.textures || {})) if (t && t.file && map.has(t.file)) t.file = map.get(t.file);
+      j.naming = { rule: 'T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用', base };
+      out.push([f, utf8(JSON.stringify(j, null, 1))]); continue;
+    }
+    const nf = map.get(f) || f; if (seen.has(nf)) continue; seen.add(nf); out.push([nf, d]);
+  }
+  const pairs = [...map].filter(([a]) => files.some(([f]) => f === a) && !drop.has(a));
+  out.push(['命名对照.txt', utf8('烘焙器内部名 → 素材包里的名字（用户 2026-10-02 定的规范）\n' + pairs.map(([a, b]) => `${a} → ${b}`).join('\n') + '\n')]);
+  return out;
+}
+// =====================================================================
+//  全局风格层（用户 2026-10-02 13:26：「如果不会改坏就出全局，留参数接口给我，我来调」）
+//  叠在每个效果自己的参数上：倍数（尾长、尾缀粗细、散布、星头大小、火花亮度、闪烁）+ 三个外形量（粗细随机、亮肩、泪滴星头）。
+//  · 全部是默认值（倍数 1、外形 0）时返回原对象，烘焙、实时模拟、导出逐像素不变——这是「不会改坏」的保证（回归检查比对）。
+//  · 默认不作用于已通过的效果（正式库、已通过版），开关在风格面板里。
+//  · 存在这台电脑的浏览器里（localStorage「globalStyle」）；本机显卡的导出任务不读它，AI 的导出不受影响。「复制风格参数」发给 AI 可以写进项目。
+// =====================================================================
+const STYLE_DEF = [
+  ['tailLen', '尾长', '×', 0.3, 3, 0.01, 1, '火花寿命 × 这个数：尾巴整体变长 / 变短'],
+  ['tailWidth', '尾缀粗细', '×', 0.3, 3, 0.01, 1, '每粒火花的大小 × 这个数'],
+  ['tailSpread', '尾缀散布', '×', 0.3, 3, 0.01, 1, '火花离开星体时的随机速度 × 这个数：尾巴变宽、变松散'],
+  ['headSize', '星头大小', '×', 0.3, 3, 0.01, 1, '星头亮核直径 × 这个数'],
+  ['sparkBright', '火花亮度', '×', 0.3, 3, 0.01, 1, '尾缀火花亮度 × 这个数'],
+  ['twinkle', '闪烁', '×', 0, 3, 0.01, 1, '火花明暗闪动 × 这个数'],
+  ['widthJit', '粗细随机', '', 0, 1, 0.01, 0, '0 = 每颗星的尾巴一样粗；越大，星与星、火花与火花之间粗细差别越明显'],
+  ['shoulder', '亮肩（头宽尾细）', '', -1, 1, 0.01, 0, '正值：靠近星头的新火花更大更亮，尾巴末端更细更暗；负值反过来'],
+  ['tear', '泪滴星头', '', 0, 1, 0.01, 0, '0 = 圆点；越大，星头沿运动方向拉出越长的尖尾（速度越快越长）']
+];
+const STYLE_NEUTRAL = Object.fromEntries(STYLE_DEF.map(d => [d[0], d[6]]));
+const gStyle = { v: { ...STYLE_NEUTRAL }, approved: false, rev: 0, cache: new Map() };
+function loadStyle() { try { const s = store.get('globalStyle', null); if (s) { gStyle.v = { ...STYLE_NEUTRAL, ...(s.v || {}) }; gStyle.approved = !!s.approved; } } catch (e) { } }
+function saveStyle() { store.set('globalStyle', { v: gStyle.v, approved: gStyle.approved }); }
+const styleNeutral = () => STYLE_DEF.every(([k, , , , , , d]) => Math.abs((+gStyle.v[k]) - d) < 1e-9);
+// 当前打开的是不是「已通过」的东西（正式库条目、效果的已通过版）
+function styleExemptNow() {
+  if (gStyle.approved || typeof lib === 'undefined') return false;
+  if (lib.formal) return true;
+  const ef = lib.effect, e = lib.review;
+  return !!(ef && e && ef.已通过版 && ef.已通过版.replace(/^rep:/, '') === e.id);
+}
+function styledP(P) {
+  if (!P || P._styled || styleNeutral() || styleExemptNow() || familyOf(P.type) !== 'aerial') return P;
+  const key = gStyle.rev + '|' + JSON.stringify(P); let o = gStyle.cache.get(key);
+  if (o) return o;
+  const v = gStyle.v; o = { ...P, _styled: 1 };
+  o.sparkLife = P.sparkLife * v.tailLen; if (P.emberLife) o.emberLife = P.emberLife * v.tailLen;
+  o.sparkSize = P.sparkSize * v.tailWidth; o.sparkSpread = P.sparkSpread * v.tailSpread;
+  o.headSize = P.headSize * v.headSize; o.sparkBright = P.sparkBright * v.sparkBright; o.twinkle = (P.twinkle || 0) * v.twinkle;
+  o._styJit = +v.widthJit || 0; o._styShoulder = +v.shoulder || 0; o._styTear = +v.tear || 0;
+  if (gStyle.cache.size > 64) gStyle.cache.clear();
+  gStyle.cache.set(key, o); return o;
+}
+// 风格变了：单层重烘；多层每层都重烘（实时模拟按 e.rev 刷新）
+async function restyleAll() {
+  gStyle.rev++; gStyle.cache.clear(); saveStyle();
+  if (state.tab === 'combo') {
+    for (const L of state.layers) {
+      const e = state.lib.find(x => x.name === L.lib); if (!e) continue;
+      e.rev = (e.rev || 0) + 1;
+      try { const b = await bake(libP(e.P, true), 1, p => setStatus(`风格：重烘 ${L.lib} ${Math.round(p * 100)}%`)); disposeBake(e.bake); e.bake = b; } catch (err) { flash('风格重烘失败：' + err.message, true); }
+    }
+    setStatus(''); if (state.platform === 'mobile') await ensureComboMobile();
+    if (state.comboSel >= 0) { const e = state.lib.find(x => x.name === state.layers[state.comboSel].lib); if (e && e.bake) showStats(e.bake); }
+  } else onParam();
+}
+function styleText() {
+  return '全局风格（烘焙器 v' + VERSION + '）\n' + STYLE_DEF.map(([k, lab, unit]) => `- ${lab}：${+(+gStyle.v[k]).toFixed(3)}${unit}`).join('\n') + `\n- 作用于已通过的效果：${gStyle.approved ? '是' : '否'}`;
+}
+function renderStylePanel() {
+  const host = $('#styleBody'); host.innerHTML = '';
+  for (const [k, lab, unit, mn, mx, st, d, hint] of STYLE_DEF) {
+    const row = slider(host, 'sty-' + k, lab, unit, mn, mx, st, () => gStyle.v[k], v => { gStyle.v[k] = v; scheduleRestyle(); }, d);
+    if (row) row.title = hint;
+    host.insertAdjacentHTML('beforeend', `<p class="hint">${hint}</p>`);
+  }
+  $('#styleApproved').checked = gStyle.approved;
+  $('#styleState').textContent = styleNeutral() ? '全部是默认值：所有效果和原来完全一样' : styleExemptNow() ? '当前打开的是已通过的效果：没有套用（可在下面打开）' : '已套用到当前效果';
+}
+let restyleTimer = 0;
+function scheduleRestyle() { clearTimeout(restyleTimer); restyleTimer = setTimeout(() => { restyleAll(); renderStylePanel(); }, 450); }
+function initStyle() {
+  loadStyle();
+  $('#styleBtn').addEventListener('click', () => { $('#styleDlg').hidden = !$('#styleDlg').hidden; if (!$('#styleDlg').hidden) renderStylePanel(); });
+  $('#styleClose').addEventListener('click', () => { $('#styleDlg').hidden = true; });
+  $('#styleReset').addEventListener('click', () => { gStyle.v = { ...STYLE_NEUTRAL }; renderStylePanel(); restyleAll(); });
+  $('#styleApproved').addEventListener('change', e => { gStyle.approved = e.target.checked; renderStylePanel(); restyleAll(); });
+  $('#styleCopy').addEventListener('click', async () => { const t = styleText(); try { await navigator.clipboard.writeText(t); flash('已复制风格参数'); } catch (e) { flash(t); } });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#styleDlg').hidden) $('#styleDlg').hidden = true; });
+  $('#styleBtn').classList.toggle('on', !styleNeutral());
 }
 // =====================================================================
 //  Cascade 参数表（按产物类型分别生成）
@@ -5572,18 +5796,25 @@ function fwlMaster(name, b, M, mobile) {
     if (s.tail) textures[key].note = '星头与拖尾分开导出（Head / Tail）时，本格式只写星头；拖尾请改用合并输出';
     const mk = seg ? 'main' + seg : 'main';
     materials[mk] = { role: 'flipbook_rgba', textures: { main: key, ramp: 'ramp' }, scalars: { rows: L.rows, cols: L.cols } };
+    // 入点前放大（用户 2026-10-02 选 B）：发射器从「第一次看得见」出生，前 pu 段寿命停在第 0 帧、Size By Life 从小放大到 1，之后照常
+    const pre = i === 0 && m.pre && !m.zoom ? m.pre : null, life = m.duration + (pre ? pre.dur : 0), pu = pre ? pre.dur / life : 0;
+    const pivot = pre && pre.pivot;
     const mods = [
-      { m: 'Lifetime', Lifetime: { const: r4(m.duration) } },
+      { m: 'Lifetime', Lifetime: { const: r4(life) } },
       { m: 'InitialSize', StartSize: { const: [r1(m.Ww * 100), r1(m.Wh * 100), 1] } },
-      { m: 'InitialLocation', StartLocation: { const: [0, 0, m.zoom ? 0 : r1(m.cy * 100)] } }
+      { m: 'InitialLocation', StartLocation: { const: [0, 0, m.zoom || pivot ? 0 : r1(m.cy * 100)] } }
     ];
     if (m.zoom) mods.push({ m: 'SizeByLife', LifeMultiplier: { curve: m.sizeKeys.map(([u, v]) => [r4(u), [r4(v), r4(v), 1]]) }, MultiplyX: true, MultiplyY: true, MultiplyZ: false });
-    mods.push({ m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(m.keys, L.F) } } });
-    mods.push({ m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, m.duration, m.t0 || 0, M.headInt || 1) }, AlphaOverLife: { const: 1 } });
+    if (pre) mods.push({ m: 'SizeByLife', preRoll: true, LifeMultiplier: { curve: [...pre.keys.map(([u, v]) => [r4(u * pu), [r4(v), r4(v), 1]]), [1, [1, 1, 1]]] }, MultiplyX: true, MultiplyY: true, MultiplyZ: false });
+    const fk = pre ? [[0, 0], ...m.keys.map(([u, v]) => [pu + u * (1 - pu), v])] : m.keys;
+    mods.push({ m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(fk, L.F) } } });
+    mods.push({ m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, life, pre ? pre.from : m.t0 || 0, M.headInt || 1) }, AlphaOverLife: { const: 1 } });
     emitters.push({
       name: seg ? 'Main' + seg : 'Main', material: mk, gpu: false,
-      required: { screen_alignment: 'Rectangle', duration_s: r4(m.duration), loops: 1, delay_s: r4(m.t0 || 0), cutout: 'cutout' + seg, max_draw_count: 1 },
-      spawn: { rate: { const: 0 }, bursts: [[0, 1]] }, modules: mods
+      required: { screen_alignment: 'Rectangle', duration_s: r4(life), loops: 1, delay_s: r4(pre ? pre.from : m.t0 || 0), cutout: 'cutout' + seg, max_draw_count: 1,
+        ...(pivot ? { pivot_offset: [-0.5, r4(-0.5 - m.cy / m.Wh)] } : {}) },
+      spawn: { rate: { const: 0 }, bursts: [[0, 1]] }, modules: mods,
+      ...(pre ? { notes: [`入点前放大：出生后 ${r4(pre.dur)} s 停在第 0 帧、Size By Life 从 ${r4(pre.keys[0][1])} 放大到 1（${pivot ? '绕爆点：Pivot Offset，未经 UE 验证' : '绕面片中心'}），之后从入点 ${r4(m.t0)} s 照常播`] } : {})
     });
   }
   textures.ramp = { file: TN(name, 'Ramp') + '.png', class: 'ramp' };
@@ -5726,6 +5957,11 @@ async function comboPackFiles(name, layers, onProg) {
     }
     files.push(['cascade.json', utf8(JSON.stringify(fwlCombo(name, lb.map(({ L, b }) => ({ L, b })), false), null, 1))]);
     files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCombo(name + '_Mobile', mobiles, true), null, 1))]);
+    // 命名规范（61_naming.js）：多层 = 礼花英文名 + 每层英文名
+    if (lb.every(({ b }) => namingApplies(b))) {
+      const ef = typeof lib !== 'undefined' ? lib.effect : null, key = typeof wbKey === 'function' ? wbKey() : name, nm = packNamesFor(key, ef, lb.length, name);
+      return applyPackNaming(files, nm.base, lb.map(({ b }, i) => ({ ln: comboLayerName(name, i), mn: comboLayerName(name + '_Mobile', i), b, layer: nm.layers[i] })));
+    }
     return files;
   } finally { own.forEach(disposeBake); ownMobile.forEach(disposeBake); }
 }
@@ -5733,7 +5969,7 @@ async function comboPackFiles(name, layers, onProg) {
 //  状态与界面
 // =====================================================================
 const state = {
-  tab: 'master', view: 'live', atlasLayer: 'head', atlasSeg: 0,
+  tab: 'master', view: 'live', atlasLayer: 'head', atlasSeg: -1,
   ...defaultsFor('kiku'), name: 'Kiku_01',
   t: 0, playing: true, speed: 1, expo: 1, disp: 'game', dist: 1000, exportResolution: true, platform: 'pc',
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
@@ -5824,6 +6060,7 @@ async function runLayerBake() {
     if (e.rep) { state.layerEdits = state.layerEdits || {}; state.layerEdits[e.rep] = { P: e.P, M: e.M }; e.editSig = JSON.stringify([e.P, e.M]); }
     state.dirty = false; state.failedGen = -1; state.bakeError = null; syncBakeError();
     showStats(b); setStatus('');
+    await syncLinkedLayers(i);
     if (state.platform === 'mobile') await ensureComboMobile();
     if (typeof buildLayerCard === 'function') buildLayerCard();
   } catch (err) {
@@ -5834,6 +6071,29 @@ async function runLayerBake() {
     state.baking = false; state.rebake = false;
     if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
   }
+}
+// 同一批星（种子、星数、初速、终端速度都一样）的层：决定轨迹的参数改一处、几层一起变（用户 2026-10-02 13:09：两层共用的参数要两层一起改，以前没有联动）
+const LINK_KEYS = ['seed', 'stars', 'v0', 'vt', 'grav', 'speedJit', 'dirJit', 'burstR0', 'pattern', 'tilt', 'ringFrac', 'wind', 'turb', 'turbScale', 'massLoss', 'shellVx', 'shellVy', 'shellSpin', 'shellNo'];
+function computeLinks() {
+  const g = new Map(); state.links = [];
+  state.layers.forEach((L, i) => { const e = state.lib.find(x => x.name === L.lib); if (!e || familyOf(e.P.type) !== 'aerial') return; const k = [e.P.seed, e.P.stars, e.P.v0, e.P.vt].join('|'); if (!g.has(k)) g.set(k, []); g.get(k).push(i); });
+  for (const arr of g.values()) if (arr.length > 1) state.links.push(arr);
+}
+const linkedWith = i => ((state.links || []).find(a => a.includes(i)) || []).filter(j => j !== i);
+async function syncLinkedLayers(i) {
+  if (state.linkOff) return;
+  const e = state.lib.find(x => x.name === state.layers[i].lib), done = [];
+  for (const j of linkedWith(i)) {
+    const e2 = state.lib.find(x => x.name === state.layers[j].lib); if (!e2 || e2 === e) continue;
+    const diff = LINK_KEYS.filter(k => e.P[k] !== undefined && JSON.stringify(e.P[k]) !== JSON.stringify(e2.P[k]));
+    if (!diff.length) continue;
+    for (const k of diff) e2.P[k] = structuredClone(e.P[k]);
+    e2.rev = (e2.rev || 0) + 1;
+    try { const b = await bake(libP(e2.P, true), 1, p => setStatus(`联动：重烘第 ${j + 1} 层 ${Math.round(p * 100)}%`)); disposeBake(e2.bake); e2.bake = b; } catch (err) { flash('联动重烘失败：' + err.message, true); }
+    if (e2.rep) { state.layerEdits = state.layerEdits || {}; state.layerEdits[e2.rep] = { P: e2.P, M: e2.M }; e2.editSig = JSON.stringify([e2.P, e2.M]); }
+    done.push(`第 ${j + 1} 层（${diff.join('、')}）`);
+  }
+  setStatus(''); if (done.length) flash('联动：同步了 ' + done.join('；'));
 }
 function syncBakeError() {
   const e = state.bakeError; $('#bakeError').hidden = !e;
@@ -6154,7 +6414,7 @@ function newLayer(entry, o = {}) {
 async function applyCombo(c) {
   await ensureLibEntries(c.layers.map(l => l.m));
   state.layers = c.layers.map(l => { const e = libByType(l.m); const { m, ...rest } = l; if (rest.stages) rest.stages = rest.stages.map(s => [...s]); return newLayer(e, rest); });
-  state.comboName = c.name; state.t = 0; buildComboPanel();
+  state.comboName = c.name; state.t = 0; computeLinks(); buildComboPanel();
   if(state.platform==='mobile')await ensureComboMobile();
   if (typeof buildLayerCard === 'function') buildLayerCard();
 }
@@ -6221,7 +6481,8 @@ async function exportCombo() {
     const files = await comboPackFiles(name, state.layers, p => busy(true, '组合素材包…', p));
     files.push([`${name}_组合说明.json`, utf8(JSON.stringify(json, null, 2))]);
     busy(true, '打包 ZIP…', 1);
-    download(await makeZip(files.map(([f, d]) => [`${name}/${f}`, d])), `${name}.zip`);
+    const pk = files.some(([f]) => f.startsWith(FW_TEX_PREFIX)) ? packNamesFor(wbKey(), lib.effect, state.layers.length, name).base : name;
+    download(await makeZip(files.map(([f, d]) => [`${pk}/${f}`, d])), `${pk}.zip`);
     flash('已导出组合素材包 ' + name);
   } catch (e) { console.error(e); flash('组合导出失败：' + e.message, true); }
   finally { busy(false); }
@@ -7456,7 +7717,9 @@ function selectComboLayer(i) {
 function buildLayerHead(i) {
   const L = state.layers[i], host = $('#layerHead'); host.innerHTML = '';
   host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b>正在调：第 ${i + 1} 层 · ${layerName(i)}</b></div>
-    <p class="hint">下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。</p>`);
+    <p class="hint">下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，这一层的点火 / 燃烧结束 / 火花停等可以直接拖。</p>
+    <p class="hint">多层效果里，每层的贴图尺寸（2048）、格子（最多 4×4）、合并输出由整朵统一定，所以下面不再显示这几项。</p>
+    ${linkedWith(i).length ? `<p class="lh-link">联动：和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、离散等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>` : ''}`);
   const pos = document.createElement('details'); pos.className = 'sec'; pos.open = true; pos.innerHTML = '<summary>在整朵里的位置</summary>'; host.appendChild(pos);
   slider(pos, `lh${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
   slider(pos, `lh${i}-delay`, '延迟', 's', 0, 10, 0.01, () => L.delay, v => L.delay = v, 0);
@@ -7464,6 +7727,7 @@ function buildLayerHead(i) {
   const mir = document.createElement('label'); mir.className = 'check'; mir.innerHTML = '<input type="checkbox"> 水平镜像';
   const cb = mir.querySelector('input'); cb.checked = !!L.mirror; cb.addEventListener('change', () => L.mirror = cb.checked); pos.appendChild(mir);
   host.querySelector('#lhBack').addEventListener('click', () => selectComboLayer(-1));
+  const lo = host.querySelector('#lhLinkOff'); if (lo) lo.addEventListener('change', () => { state.linkOff = lo.checked; });
 }
 function syncComboPanels() {
   const combo = state.tab === 'combo', lay = combo && state.comboSel >= 0;
@@ -7665,17 +7929,83 @@ function jumpTimes() {
   const end = bakeTotal(main.b), fa = m.budget && isFinite(m.budget.fadeAt) ? m.budget.fadeAt : 0.6 * end;
   return { open: d, full: d + fa / r, fade: d + (fa + (end - fa) / 2) / r };
 }
+// 时段条：每层一条。实色 = 贴图在播（入点 → 出点），斜纹 = 入点前放大（停在第 0 帧），淡色 = 整段可见范围（剔掉全黑帧后）；
+// 下面一行是入点 / 出点按钮（单层直接用；多层要先在观察图层选一层）
+function editLayerP() { if (state.tab !== 'combo') return state.tab === 'master' && usesTickPlan40(state.P) ? state.P : null; const L = state.layers[state.comboSel], e = L && layerEntryOf(L); return e && usesTickPlan40(e.P) ? e.P : null; }
+function layerSpans(x) {
+  const m = x.b && x.b.meta; if (!m) return null;
+  const r = +x.L.rate || 1, d = +x.L.delay || 0, t0 = m.t0 || 0, end = bakeTotal(x.b), pre = m.pre;
+  const vis = m.vis || [pre ? pre.from : t0, end];
+  return { d, r, t0, end, pre, vis, at: t => d + t / r };
+}
+// 层轨道（用户 2026-10-02 13:09 a：接力关系藏在每层的参数里，找不到）：把决定「这一层什么时候亮、什么时候停」的参数画在时段条上，
+// 可编辑的那一层（单层 / 观察图层里选中的层）能直接拖。时间都是这一层自己的时间（相对开花），画的时候按组合延迟 / 时间倍率换到总时间。
+function phasesOf(P) {
+  if (!P || familyOf(P.type) !== 'aerial') return [];
+  const ign = +P.ignDelay || 0, burnEnd = ign + (+P.burn || 0), r2 = v => Math.round(v * 100) / 100, out = [];
+  out.push({ k: 'ign', t: ign, lab: '点火（延时点火）', set: t => P.ignDelay = r2(Math.max(0, t)) });
+  out.push({ k: 'burn', t: burnEnd, lab: +P.afterBurn > 0 ? '主段结束（第二段从这里亮）' : '燃烧结束', set: t => P.burn = r2(Math.max(0.05, t - (+P.ignDelay || 0))) });
+  if (+P.afterBurn > 0) out.push({ k: 'after', t: burnEnd + +P.afterBurn, lab: '第二段结束', set: t => P.afterBurn = r2(Math.max(0.05, t - (+P.ignDelay || 0) - (+P.burn || 0))) });
+  if (+P.sparkStop > 0) out.push({ k: 'spark', t: ign + +P.sparkStop, lab: '火花停（只在前几秒）', set: t => P.sparkStop = r2(Math.max(0.01, t - (+P.ignDelay || 0))) });
+  if (+P.headDim < 1 && +P.headDimUntil > 0) out.push({ k: 'dim', t: +P.headDimUntil, lab: '星头压暗到', set: t => P.headDimUntil = r2(Math.max(0.05, t)) });
+  if (+P.emberFrac > 0 && +P.emberEnd > 0) out.push({ k: 'ember', t: +P.emberEnd, lab: '光丝整体熄灭', set: t => P.emberEnd = r2(Math.max(0.05, t)) });
+  return out;
+}
+function layerPOf(x) { return state.tab === 'combo' ? x.e && x.e.P : state.P; }
 function buildTlBars() {
-  const D = curDuration(), rows = curLayerBakes();
-  const sig = D.toFixed(3) + '|' + rows.map(x => [x.name, +x.L.delay || 0, +x.L.rate || 1, x.b ? bakeTotal(x.b).toFixed(3) : '-', state.tab !== 'combo' || layerShown(x.i)].join(',')).join(';') + '|' + state.tab;
+  const D = curDuration(), rows = curLayerBakes(), P = editLayerP();
+  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(layerPOf(x)).map(q => q.t.toFixed(2)).join(':')].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-');
   if (sig === stage2.tlSig) return; stage2.tlSig = sig;
   const host = $('#tlBars');
   if (state.tab === 'asset' || state.showcase || !rows.length) { host.innerHTML = ''; return; }
+  const pct = t => clamp(t / D * 100, 0, 100), seg = (a, b, cls, title) => b > a ? `<i class="${cls}" style="left:${pct(a)}%;width:${Math.max(0.3, pct(b) - pct(a))}%"${title ? ` title="${title}"` : ''}></i>` : '';
   host.innerHTML = rows.map(x => {
-    const a = (+x.L.delay || 0) / D * 100, w = x.b ? bakeTotal(x.b) / (+x.L.rate || 1) / D * 100 : 0;
-    return `<div class="tlb${state.tab !== 'combo' || layerShown(x.i) ? '' : ' off'}"><span class="tlb-n" title="${x.name}">${state.tab === 'combo' ? x.i + 1 + ' · ' : ''}${x.name}</span><span class="tlb-t" data-i="${x.i}"><i style="left:${a}%;width:${Math.min(100 - a, w)}%"></i></span></div>`;
-  }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>';
+    const sp = layerSpans(x), on = state.tab !== 'combo' || layerShown(x.i), sel = state.tab === 'combo' && state.comboSel === x.i;
+    const bars = !sp ? '' : seg(sp.at(sp.vis[0]), sp.at(sp.vis[1]), 'vis', '整段可见范围（全黑帧已剔掉）')
+      + (sp.pre ? seg(sp.at(sp.pre.from), sp.at(sp.t0), 'pre', `入点前：第 1 帧从 ${Math.round(sp.pre.keys[0][1] * 100)}% 放大`) : '')
+      + seg(sp.at(sp.t0), sp.at(sp.end), 'main', `贴图在播：${sp.t0.toFixed(2)} – ${sp.end.toFixed(2)} s（这一层自己的时间）`);
+    const editable = (state.tab !== 'combo' && P) || sel, ph = sp ? phasesOf(layerPOf(x)).map(q => `<b class="ph ph-${q.k}${editable ? ' drag' : ''}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s${editable ? '（拖动修改）' : '（在观察图层选这一层后可拖）'}"></b>`).join('') : '';
+    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><span class="tlb-n" title="${x.name}">${state.tab === 'combo' ? x.i + 1 + ' · ' : ''}${x.name}</span><span class="tlb-t" data-i="${x.i}">${bars}${ph}</span></div>`;
+  }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>'
+    + `<div class="tlcut">${P ? `<button type="button" class="mini" data-cut="in" title="把当前时刻设成入点：帧预算从这里开始分配">设为入点</button><button type="button" class="mini" data-cut="out" title="把当前时刻设成出点">设为出点</button><button type="button" class="mini" data-cut="clear">清除</button>
+      <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动（第一次看得见）'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动（最后看得见）'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') : ''}</span>`
+      : `<span>${state.tab === 'combo' ? '入点 / 出点：先在右栏「观察图层」选一层' : ''}</span>`}</div>`;
   host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); }));
+  host.querySelectorAll('[data-cut]').forEach(b => b.addEventListener('click', () => setCut(b.dataset.cut)));
+  host.querySelectorAll('.ph.drag').forEach(h => h.addEventListener('pointerdown', ev => phaseDrag(ev, h)));
+  const ex = rows.find(x => (state.tab !== 'combo' && P) || (state.tab === 'combo' && state.comboSel === x.i)), phs = ex ? phasesOf(layerPOf(ex)) : [];
+  if (phs.length) host.querySelector('.tlcut').insertAdjacentHTML('beforeend', `<span class="phl">${phs.map(q => `<i class="ph-${q.k}"></i>${q.lab} ${q.t.toFixed(2)} s`).join(' · ')}</span>`);
+}
+// 拖层轨道上的阶段点：松手时改参数并重烘（多层只重烘这一层）
+function phaseDrag(ev, h) {
+  ev.preventDefault(); ev.stopPropagation();
+  const track = h.parentElement, x = curLayerBakes().find(r => r.i === +h.dataset.li), sp = x && layerSpans(x), P = x && layerPOf(x); if (!sp || !P) return;
+  const q = phasesOf(P).find(z => z.k === h.dataset.ph); if (!q) return;
+  const D = curDuration(), toLayer = cx => { const r = track.getBoundingClientRect(); return Math.max(0, (clamp((cx - r.left) / r.width, 0, 1) * D - sp.d) * sp.r); };
+  h.setPointerCapture(ev.pointerId); let tl = q.t;
+  const mv = e => { tl = toLayer(e.clientX); h.style.left = clamp((sp.d + tl / sp.r) / D * 100, 0, 100) + '%'; h.title = `${q.lab}：${tl.toFixed(2)} s`; setStatus(`${q.lab} → ${tl.toFixed(2)} s（松手后重烘）`); };
+  const up = () => { h.removeEventListener('pointermove', mv); h.removeEventListener('pointerup', up); setStatus(''); if (Math.abs(tl - q.t) < 0.005) return;
+    q.set(tl); stage2.tlSig = ''; refreshPanelValues(); refreshVisibility(); onParam(); flash(`${q.lab} 改到 ${tl.toFixed(2)} s，正在重烘`); };
+  h.addEventListener('pointermove', mv); h.addEventListener('pointerup', up);
+}
+// 入点 / 出点 = 这一层自己的时间（相对开花）。第一次设入点时，把当前烘焙的「第一次看得见」记成 preFrom（入点前从这里开始放大）
+function setCut(kind) {
+  const P = editLayerP(); if (!P) return;
+  const x = curLayerBakes().find(r => state.tab !== 'combo' || r.i === state.comboSel), sp = x && layerSpans(x);
+  const t = engineTick(Math.max(0, (state.t - (sp ? sp.d : 0)) * (sp ? sp.r : 1)) + 1e-6);
+  if (kind === 'clear') { P.cutIn = 0; P.cutOut = 0; P.preFrom = -1; P.visTo = 0; }
+  else if (kind === 'in') {
+    if (sp && t < sp.vis[0] - 1e-6) { flash('入点要在看得见的范围里（' + sp.vis[0].toFixed(2) + ' s 以后）', true); return; }
+    if (!(+P.cutIn > 0) && !(+P.cutOut > 0) && sp) { P.preFrom = +sp.vis[0].toFixed(4); P.visTo = +sp.vis[1].toFixed(4); }
+    if (+P.cutOut > 0 && t >= +P.cutOut - 1 / 30) { flash('入点要早于出点', true); return; }
+    P.cutIn = +t.toFixed(4);
+  } else {
+    if (t <= (+P.cutIn || (sp ? sp.vis[0] : 0)) + 1 / 30) { flash('出点要晚于入点', true); return; }
+    if (!(+P.cutIn > 0) && !(+P.cutOut > 0) && sp) { P.preFrom = +sp.vis[0].toFixed(4); P.visTo = +sp.vis[1].toFixed(4); }
+    P.cutOut = +t.toFixed(4);
+  }
+  stage2.tlSig = ''; refreshPanelValues(); refreshVisibility(); onParam();
+  flash(kind === 'clear' ? '已清除入点 / 出点（回到自动）' : `${kind === 'in' ? '入点' : '出点'}设在 ${t.toFixed(2)} s，正在重新分帧烘焙`);
 }
 // 每帧调用（80_render 的主循环）：tick 号、播放头；标题 / 脚注 / 时段条 / 通过门槛每 1/4 秒刷新
 function stageTick(D) {
@@ -7721,31 +8051,69 @@ function delivName() {
   return state.name;
 }
 function renderDeliv() {
-  const host = $('#delivView'), name = delivName(), rows = [], combo = state.tab === 'combo';
-  for (const x of curLayerBakes()) {
+  const host = $('#delivView'), name = delivName(), rows = [], combo = state.tab === 'combo', xs = curLayerBakes();
+  const nm = packNamesFor(wbKey(), lib.effect, xs.length, name), useNew = xs.every(x => !x.b || namingApplies(x.b));
+  for (const x of xs) {
     if (!x.b) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：还没烘好</td></tr>`); continue; }
-    const parts = bakeParts(x.b), delay = +x.L.delay || 0, rate = +x.L.rate || 1, ln = combo ? comboLayerName(name, x.i) : name, mn = combo ? comboLayerName(name + '_Mobile', x.i) : name + '_Mobile';
+    const parts = bakeParts(x.b), delay = +x.L.delay || 0, rate = +x.L.rate || 1, ly = combo ? nm.layers[x.i] : '';
+    const ln = combo ? comboLayerName(name, x.i) : name, mn = combo ? comboLayerName(name + '_Mobile', x.i) : name + '_Mobile';
     let mobCell = '—'; try { const mp = mobileParams({ ...x.b.P, cols: x.b.meta.L.cols, rows: x.b.meta.L.rows }); mobCell = Math.round(layoutOf(mp).cellW) + ' px'; } catch (e) { }
     if (combo) rows.push(`<tr class="grp"><td colspan="4">第 ${x.i + 1} 层 · ${x.name}${layerShown(x.i) ? '' : '（观察里隐藏了，导出照旧包含）'}</td></tr>`);
+    const pre = x.b.meta.pre;
     parts.forEach((s, k) => {
-      const seg = bakeSegmentName(x.b, k), d0 = delay + (s.meta.t0 || 0) / rate, tag = seg ? '_' + seg : '';
-      const tex = s.tail ? ['Head', 'Tail'] : [''];
-      for (const tt of tex) {
-        rows.push(`<tr><td>${TN(ln, joinPart(seg, tt))}.png</td><td>PC · 单格 ${Math.round(s.meta.L.cellW)} px · ${s.meta.L.F} 帧</td><td>${d0.toFixed(2)} s</td><td>${(s.meta.duration / rate).toFixed(2)} s</td></tr>`);
-        rows.push(`<tr><td>${TN(mn, joinPart(seg, tt))}.png</td><td>手机 · 单格 ${mobCell}</td><td>${d0.toFixed(2)} s</td><td>${(s.meta.duration / rate).toFixed(2)} s</td></tr>`);
+      const seg = bakeSegmentName(x.b, k), d0 = delay + ((k === 0 && pre ? pre.from : s.meta.t0) || 0) / rate, life = (s.meta.duration + (k === 0 && pre ? pre.dur : 0)) / rate, L = s.meta.L;
+      for (const tt of s.tail ? ['Head', 'Tail'] : ['tex']) {
+        const pc = useNew ? fwTexName(nm.base, ly, L, k + 1, tt, false) : TN(ln, joinPart(seg, tt === 'tex' ? '' : tt)), mb = useNew ? fwTexName(nm.base, ly, L, k + 1, tt, true) : TN(mn, joinPart(seg, tt === 'tex' ? '' : tt));
+        rows.push(`<tr><td>${pc}.png</td><td>PC · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧${k === 0 && pre ? ` · 入点前放大 ${pre.dur.toFixed(2)} s` : ''}</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        rows.push(`<tr><td>${mb}.png</td><td>手机 · 单格 ${mobCell}</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
       }
-      rows.push(`<tr class="dim"><td>${TN(ln, joinPart(seg, 'Cutout'))}.png · ${TN(ln, joinPart(seg, 'FrameTest'))}.png</td><td>轮廓 · 帧号检查图</td><td></td><td></td></tr>`);
+      rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, L, k + 1, 'C') : TN(ln, joinPart(seg, 'Cutout'))}.png</td><td>Cut（PC / 手机共用，512）</td><td></td><td></td></tr>`);
     });
-    rows.push(`<tr class="dim"><td>${TN(ln, 'Ramp')}.png · ${TN(mn, 'Ramp')}.png</td><td>颜色 Ramp（PC / 手机）</td><td></td><td></td></tr>`);
+    rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, null, 0, 'R') : TN(ln, 'Ramp')}.png</td><td>颜色 Ramp（PC / 手机共用）</td><td></td><td></td></tr>`);
   }
-  rows.push(`<tr class="grp"><td colspan="4">cascade.json（PC）· cascade_mobile.json（手机）：每层每段一个发射器，同一个爆点，按上面的延迟出生</td></tr>`);
-  host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>包名 <code>${name}</code> · 最终 UE 资产名由你本机的导入工具生成</small></div><span class="sp"></span>
+  rows.push(`<tr class="grp"><td colspan="4">cascade.json（PC）· cascade_mobile.json（手机）：每层每段一个发射器，同一个爆点，按上面的延迟出生 · 帧号测试图在 _检查/（不导入）· 命名对照.txt</td></tr>`);
+  const lyInputs = combo ? xs.map(x => `<label>第 ${x.i + 1} 层<input type="text" data-ly="${x.i}" value="${nm.layers[x.i]}" placeholder="L${x.i + 1}" title="${x.name}"></label>`).join('') : '';
+  host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '这种产物沿用原来的命名'}</small></div><span class="sp"></span>
     <button class="btn primary" type="button" id="dvExport">导出素材包（PC + 手机）</button><button class="btn" type="button" id="dvBack">返回画面</button></div>
+    ${useNew ? `<div class="dv-names"><label>名称（礼花英文名）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>只能用英文字母、数字和下划线；名称存在这台电脑的浏览器里，按效果记。</small></div>` : ''}
     <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table>
-    <p class="hint">按当前烘焙推算；导出时手机版按单格下限独立烘焙。独看 / 静音不影响导出。</p>`;
+    <p class="hint">按当前烘焙推算；导出时手机版按单格下限独立烘焙。独看 / 静音不影响导出。</p>
+    ${unitHTML(xs, combo)}`;
   host.querySelector('#dvExport').addEventListener('click', () => combo ? exportCombo() : $('#btnExport').click());
   host.querySelector('#dvBack').addEventListener('click', () => toggleDeliv(false));
+  host.querySelectorAll('[data-unit]').forEach(b => b.addEventListener('click', () => { const x = xs.find(r => r.i === +b.dataset.unit); if (x) exportUnitPack(layerPOf(x), combo ? x.L : state.M, nm.base + (combo && nm.layers[x.i] ? '_' + nm.layers[x.i] : '')); }));
+  const tu = host.querySelector('#dvToUnit'); if (tu) tu.addEventListener('click', () => { setForm('unit'); refreshPanelValues(); syncExport(); flash('产物改成「单元序列」（单束）：每颗星一个粒子，Cascade 里放射发射'); });
+  const sv = host.querySelector('#dvSaveNames');
+  if (sv) sv.addEventListener('click', () => {
+    const base = asciiName(host.querySelector('#dvBase').value), layers = [...host.querySelectorAll('[data-ly]')].map(i => asciiName(i.value));
+    if (!base) { flash('名称不能为空（英文字母 / 数字）', true); return; }
+    const dup = layers.filter(Boolean).find((v, i, a) => a.indexOf(v) !== i); if (dup) { flash('层名重复：' + dup, true); return; }
+    setPackNames(wbKey(), base, layers); renderDeliv(); flash('名称已保存');
+  });
+  const rs = host.querySelector('#dvResetNames'); if (rs) rs.addEventListener('click', () => { const all = store.get('packNames', {}); delete all[wbKey()]; store.set('packNames', all); renderDeliv(); });
   stage2.delivSig = stage2.tlSig;
+}
+// 单束（单元序列：一颗星一条序列，Cascade 里每颗星一个粒子按初速放射发射——用户 2026-10-02 13:09 问「单束输出没了」）
+function unitHTML(xs, combo) {
+  const ok = xs.filter(x => x.b && layerPOf(x) && unitAllowed(layerPOf(x)));
+  if (!ok.length) return '';
+  if (!combo && state.P.form === 'unit') return '<p class="hint dv-unit">现在的产物就是单束（单元序列）：上面的导出就是单束包（贴图 + 弹道与发射参数表）。</p>';
+  return `<div class="dv-unit"><b>单束（每颗星一个粒子）</b><small>只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条；比大面片省 overdraw。参数表里写了初速、阻力、重力、星数和寿命。</small>
+    ${combo ? ok.map(x => `<button class="btn" type="button" data-unit="${x.i}">导出第 ${x.i + 1} 层的单束包</button>`).join('') : `<button class="btn" type="button" data-unit="0">导出单束包</button><button class="btn ghost" type="button" id="dvToUnit">把产物改成单束（在画面里看）</button>`}</div>`;
+}
+async function exportUnitPack(P0, M, name) {
+  const P = { ...P0, form: 'unit', cols: 16, rows: 2, chans: 4, frameMode: 'auto', autoGrid: 1 };
+  busy(true, '单束：烘焙一颗星的序列…', 0);
+  let b = null;
+  try {
+    b = await bake(P, 1, p => busy(true, `单束：烘焙 ${Math.round(p * 100)}%`, p * 0.9));
+    const nmU = name + '_Unit', files = await texFiles(b, nmU);
+    files.push([`${TN(nmU, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
+    files.push([`${nmU}_Cascade参数.txt`, utf8(cascadeText(nmU, b, M))]);
+    files.push([`${nmU}.json`, utf8(JSON.stringify(masterJSON(b, nmU, M), null, 2))]);
+    busy(true, '打包 ZIP…', 1); download(await makeZip(files), `${nmU}.zip`); flash('已导出单束包 ' + nmU);
+  } catch (e) { console.error(e); flash('单束导出失败：' + e.message, true); }
+  finally { if (b) disposeBake(b); busy(false); }
 }
 function toggleDeliv(on) {
   stage2.deliv = on == null ? !stage2.deliv : on;
@@ -7802,12 +8170,20 @@ function bindSeqTextures(pr, b) {
   gl.uniform1f(pr.u.uCols, b.meta.L.cols); gl.uniform1f(pr.u.uRows, b.meta.L.rows); gl.uniform1f(pr.u.uChans, b.meta.L.chans);
   gl.uniform1f(pr.u.uComb, b.tail ? 0 : 1); gl.uniform2f(pr.u.uInset, 0.5 / b.cw, 0.5 / b.chh);
 }
+// 入点前放大（用户 2026-10-02 选 B）：第一段的 meta.pre = { from, dur, keys, pivot }；这段时间显示第 0 帧，面片按 keys 从小放大到 1
+function preScaleAt(b0, m, b, age0, age) { return b === b0 && m.pre && age < 0 && age0 >= m.pre.from ? evalKeys(m.pre.keys, clamp((age0 - m.pre.from) / m.pre.dur, 0, 1)) : 0; }
+function preRect(r, s, pivot) {
+  if (pivot) return [r[0] * s, r[1] * s, r[2] * s, r[3] * s];        // 绕爆点（面片坐标原点 = 爆点）
+  const cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2, hw = (r[2] - r[0]) / 2 * s, hh = (r[3] - r[1]) / 2 * s;
+  return [cx - hw, cy - hh, cx + hw, cy + hh];                       // 绕面片中心（Cascade Size By Life 的默认行为）
+}
 function drawLayer(b0, L, t, view, origin = [0, 0]) {
   t=engineTick(t);
-  const age0 = (t - L.delay) * L.rate, b = segAt(b0, age0), m = b.meta, age = age0 - (m.t0 || 0), f = frameIdx(m, age);
+  const age0 = (t - L.delay) * L.rate, b = segAt(b0, age0), m = b.meta, age = age0 - (m.t0 || 0), ps = preScaleAt(b0, m, b, age0, age);
+  const f = ps > 0 ? 0 : frameIdx(m, age);
   if (f < 0) return f;
   const pr = PR.mat; gl.useProgram(pr.p);
-  const r = layerRectAt(m, L, age);
+  const r = ps > 0 ? preRect(layerRectAt(m, L, 0), ps, m.pre.pivot) : layerRectAt(m, L, age);
   gl.uniform4fv(pr.u.uRect, [r[0] + origin[0], r[1] + origin[1], r[2] + origin[0], r[3] + origin[1]]); gl.uniform4fv(pr.u.uView, view);
   bindSeqTextures(pr, b);
   gl.uniform1f(pr.u.uFrame, f); gl.uniform1f(pr.u.uMirror, L.mirror ? 1 : 0);
@@ -7969,7 +8345,7 @@ function unionView(a, b) {
 }
 function renderLive() {
   if (isEmit(state.P)) return renderEmitLive();
-  const P = state.P, m = state.bake && state.bake.meta, B = state.B;
+  const P = styled(state.P), m = state.bake && state.bake.meta, B = state.B;
   if (renderVersion(P)>=40 && !isTrail(P) && !isPhys(P) && !B) return renderLive40();
   if (!m) { hdrT.clear(); post(); hudText = '首次烘焙中…'; hudB = ''; return; }
   const sa = liveSlot('A'); prepSlot(sa, P, state.gen);
@@ -8044,18 +8420,21 @@ function renderExport() {
   const tsx = b.form === 'trail' ? trailStateAt(b, state.t) : null;
   if (b.form === 'trail') { hudText = !tsx ? '序列结束' : `导出效果 · 升空尾缀 · ${tsx.phase === 'rise' ? '上升循环' : '消散（' + tsx.bb.fps + ' fps）'} · 第 ${tsx.f + 1}/64 帧 · ${'RGBA'[Math.floor(tsx.f / 16)]} 通道 · 镜头跟着星头（面片沿弹道上升，Size By Life Y ${tsx.sy.toFixed(2)}）`; hudB = sb ? `B：${B.name}` : ''; return; }
   const fi = b.form === 'unit' ? frameIdx(b.meta, engineTick(state.t)) : frameIdx(s.meta, engineTick(state.t) - (s.meta.t0 || 0));
-  hudText = fi < 0 ? '序列结束' : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? ' 段 '+bakeSegmentName(b,bakeParts(b).indexOf(s)) : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
+  const ps = b.form === 'unit' ? 0 : preScaleAt(b, s.meta, s, engineTick(state.t), engineTick(state.t) - (s.meta.t0 || 0));
+  hudText = ps > 0 ? `导出效果 · 入点前：第 1 帧放大到 ${Math.round(ps * 100)}%（${s.meta.pre.pivot ? '绕爆点' : '绕面片中心'}）· 入点 ${s.meta.t0.toFixed(2)} s` : fi < 0 ? (engineTick(state.t) < (s.meta.t0 || 0) ? '还没到入点' : '序列结束') : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? ' 段 '+bakeSegmentName(b,bakeParts(b).indexOf(s)) : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
   hudB = sb ? `B：${B.name}` : '';
 }
 const flowTrail = [];
-function atlasSegOf(b0) { const parts=bakeParts(b0);return parts[clamp(state.atlasSeg,0,parts.length-1)]; }
+// 贴图 / 流转看哪一张：默认「自动」= 跟着时间走（一层分两张时播完第一张接着播第二张——用户 2026-10-02 13:09）；点段按钮锁定某一张
+function atlasSegOf(b0) { const parts=bakeParts(b0); return state.atlasSeg<0 ? segAt(b0, state.t) : parts[clamp(state.atlasSeg,0,parts.length-1)]; }
 let atlasSegmentSource=null;
 function syncAtlasSegments(b) {
   if(b===atlasSegmentSource)return;atlasSegmentSource=b;
-  state.atlasSeg=clamp(state.atlasSeg,0,Math.max(0,bakeParts(b).length-1));
+  state.atlasSeg=state.atlasSeg<0?-1:clamp(state.atlasSeg,0,Math.max(0,bakeParts(b).length-1));
   const box=$('#segSeg');box.replaceChildren();
+  const auto=document.createElement('button');auto.dataset.seg='-1';auto.textContent='自动（跟时间）';auto.setAttribute('aria-pressed',String(state.atlasSeg<0));box.appendChild(auto);
   bakeParts(b).forEach((s,i)=>{const button=document.createElement('button');button.dataset.seg=String(i);
-    button.textContent='段 '+bakeSegmentName(b,i);button.setAttribute('aria-pressed',String(i===state.atlasSeg));box.appendChild(button);});
+    button.textContent='第 '+(i+1)+' 张';button.setAttribute('aria-pressed',String(i===state.atlasSeg));box.appendChild(button);});
 }
 function drawAtlasQuad(b, show, f, n, trail) {
   const L = b.meta.L, pr = PR.atlas; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, show.tex);
@@ -8072,7 +8451,7 @@ function renderAtlas() {
   const L = b.meta.L, show = state.atlasLayer === 'tail' && b.tail ? b.tail : b.head, f = frameIdx(b.meta, state.t - (b.meta.t0 || 0));
   if (state.atlasFlow) { renderAtlasFlow(b0, b, show, f); return; }
   drawAtlasQuad(b, show, f, canvas.width, null);
-  hudText = `${b.tail ? (show === b.tail ? '拖尾' : '星头') : '合并'}贴图${b0.next ? ' 段 '+bakeSegmentName(b0,bakeParts(b0).indexOf(b)) : ''} ${b.P.texW}×${b.P.texH} · ${L.cols}×${L.rows} 格 · 金框 = 当前帧 · 红色 = 过曝像素`; hudB = '';
+  hudText = `${b.tail ? (show === b.tail ? '拖尾' : '星头') : '合并'}贴图${b0.next ? ` 第 ${bakeParts(b0).indexOf(b)+1} / ${bakeParts(b0).length} 张` : ''} ${b.P.texW}×${b.P.texH} · ${L.cols}×${L.rows} 格 · 金框 = 当前帧 · 红色 = 过曝像素`; hudB = '';
 }
 // 贴图流转：左边放大当前格，右边整张贴图上金框走动（淡框 = 刚走过的格），下面是帧号曲线
 function renderAtlasFlow(b0, b, show, f) {
@@ -8091,7 +8470,8 @@ function renderAtlasFlow(b0, b, show, f) {
   gl.viewport(0, 0, S, S);
   drawFlowCurve(b, f);
   const t = state.t - (b.meta.t0 || 0), ch = L.chans === 4 && f >= 0 ? 'RGBA'[Math.floor(f / L.per)] + ' 通道 · ' : '';
-  hudText = f < 0 ? '序列结束' : `贴图流转 · 第 ${f + 1}/${L.F} 帧 · ${ch}第 ${f % L.per + 1} 格（第 ${Math.floor((f % L.per) / L.cols) + 1} 行第 ${f % L.cols + 1} 列）· 时间 ${Math.max(0, t).toFixed(2)} s`;
+  const pi = bakeParts(b0).indexOf(b), pn = bakeParts(b0).length, pg = pn > 1 ? `第 ${pi + 1} / ${pn} 张 · ` : '';
+  hudText = f < 0 ? (t < 0 ? pg + '还没开始' : pg + '这一张播完了') : `贴图流转 · ${pg}第 ${f + 1}/${L.F} 帧 · ${ch}第 ${f % L.per + 1} 格（第 ${Math.floor((f % L.per) / L.cols) + 1} 行第 ${f % L.cols + 1} 列）· 时间 ${Math.max(0, t).toFixed(2)} s`;
   hudB = '';
 }
 function drawFlowCurve(b, f) {
@@ -8135,14 +8515,14 @@ function renderComboLive() {
   if (!items.length) { post(); hudText = '没有图层'; return; }
   let view = null;
   items.forEach(([L, e, i]) => {
-    const slot = liveSlot('combo' + i); prepSlot(slot, e.P, 'c' + i + ':' + e.name + ':' + (e.rev || 0));
-    const v = sceneView(e.P, e.bake.meta, slot), s = L.scale || 1, vs = [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
+    const slot = liveSlot('combo' + i); prepSlot(slot, styled(e.P), 'c' + i + ':' + e.name + ':' + (e.rev || 0));
+    const v = sceneView(styled(e.P), e.bake.meta, slot), s = L.scale || 1, vs = [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
     view = view ? unionView(view, vs) : vs;
   });
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   let n = 0;
   items.forEach(([L, e, i]) => {
-    const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = e.P;
+    const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = styled(e.P);
     if (age < 0 || age > P.duration || !layerShown(i)) return;
     const s = L.scale || 1, vL = [view[0] / s, view[1] / s, view[2] / s, view[3] / s], ppm = rgT.w / (2 * vL[2]);
     rgT.clear(); rgT.bind(); additive(true);
@@ -8396,6 +8776,7 @@ function expoOfChannel(buf, ch, target, pct) {
 }
 // opt: { times: [s…], px, half（米，画面半宽）, cy（米，画面中心高度）, shutter（秒）, sub（快门内子帧数，默认每 1/480 秒一帧）, probe（定曝光用的时刻）, expo（显示曝光） }
 async function renderStills(P0, M0, opt) {
+  P0 = styled(P0);     // 全局风格层（默认值时原样返回）
   if (renderVersion(P0)>=40 && !isTrail(P0) && !isPhys(P0)) return renderStills40(P0,M0,opt);
   const P = derive({ ...P0 }), M = normalizeM(M0 || {}, P.type), px = opt.px || 512, ground = familyOf(P.type) === 'ground';
   let half = opt.half, cy = opt.cy || 0, cx = 0;
@@ -8550,6 +8931,7 @@ $('#btnExportCombo').addEventListener('click', exportCombo);
 initPicker();
 initAssets();
 initUpdates();
+initStyle();
 buildMasterPanel();
 initIter();
 initLibrary();
@@ -8573,13 +8955,15 @@ window.__fw = {
     let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
     return btoa(s);
   },
-  async exportFiles(P, M, name) {
-    const b = await bake(P, 1, null); const files = await texFiles(b, name);
+  async exportFiles(P, M, name, opt = {}) {
+    const b = await bake(P, 1, null); let files = await texFiles(b, name);
     files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
     files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b, M))]);
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, M))]);
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, M), null, 2))]);
     files.push(...await platformFiles(name, b, M));
+    // 命名规范：本机导出任务传 opt.entry（条目号）→ 找到效果的英文名
+    if (namingApplies(b) && opt.naming !== false) { const ef = opt.entry ? effectOfEntry({ id: opt.entry }) : null, nm = packNamesFor(ef ? 'ef:' + ef.key : 'rv:' + (opt.entry || name), ef, 1, name); files = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); }
     const zip = await makeZip(files); disposeBake(b);
     return new Uint8Array(await zip.arrayBuffer());
   },
