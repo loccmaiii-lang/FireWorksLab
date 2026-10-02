@@ -10,7 +10,7 @@
 
 用法：python analysis/scripts/review_to_baker.py
 """
-import base64, io, json, os, sys
+import base64, io, json, os, re, sys
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
@@ -390,6 +390,9 @@ def effects_from_status(out):
                 ex.append(dict(job=jid, entry=m.get('entry'), ver=m.get('ver'), time=m.get('time'), packages=m.get('packages', []), check=ck,
                                stale=bool(m.get('entry') and by.get(m['entry']) and by[m['entry']].get('ver') != m.get('ver'))))
             elif os.path.exists(os.path.join(res_dir(jid), 'done.json')): ex.append(dict(job=jid, legacy=True))
+        # 按导出时间排（以前按任务号字面排序：HN2E9 排在 HN2E12 后面，「待我验收」拿 E9 当最新导出 → 误判未就绪）
+        nat = lambda x: [int(t) if t.isdigit() else t for t in re.split(r'(\d+)', x.get('job') or '')]
+        ex.sort(key=lambda x: (x.get('time') or '', nat(x)))
         r['exports'] = ex
         # 缩略图：烘焙器里渲染的这个效果（打开时默认显示的版本，展开时刻）；没有就用主条目的渲染缩略图。不用实拍（用户 2026-10-02 14:46）
         src = me or {}; rt = render_thumbs().get('ef:' + e['key'])

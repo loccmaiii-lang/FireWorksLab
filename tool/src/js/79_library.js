@@ -94,7 +94,9 @@ function entryVer(e) {
 // 「待我验收」按证据把关：最新导出 = 当前版本指纹、回放检查过、标准检查（同一指纹）过；状态清单里写了「例外」（引用用户的决定）的那一项不算缺
 function effReady(ef) {
   const e = entryById(ef.待验收版 || ef.主条目); if (!e || e.formal) return { ok: false, why: ['没有候选条目'], exc: [] };
-  const cur = entryVer(e), why = [], exc = [], ex = [...(ef.exports || [])].reverse().find(x => !x.legacy && x.entry === e.id), sr = stdOf(e.id);
+  // 最新导出 = 导出时间最晚的那次（4.2.12：以前取列表最后一个，列表按任务号字面排序时 HN2E9 排在 HN2E12 后面，误判未就绪）
+  const mine = (ef.exports || []).filter(x => !x.legacy && x.entry === e.id), ex = mine.reduce((a, x) => !a || (x.time || '') >= (a.time || '') ? x : a, null);
+  const cur = entryVer(e), why = [], exc = [], sr = stdOf(e.id);
   const excOf = k => (ef.例外 || []).find(x => x.项 === k);
   const need = (k, bad) => { if (!bad) return; const x = excOf(k); if (x) exc.push(`${k}：${bad}（例外：${x.依据 || x.原因 || '用户同意'}）`); else why.push(bad); };
   need('导出', !ex ? '还没导出' : ex.ver !== cur ? (ex.ver && ex.ver.includes('·') ? '导出后参数或烘焙器输出规则改了，素材包过期' : '导出时没记录烘焙器输出版本（4.2.5 以前），要重导') : '');
