@@ -41,17 +41,17 @@ function namingSheets(b) {
 // entries：[{ ln, mn, b, layer }]：内部 PC 名、内部手机名、这一层的烘焙、层英文名
 function applyPackNaming(files, base, entries) {
   const map = new Map(), drop = new Set();
-  for (const { ln, mn, b, layer } of entries) {
+  for (const { ln, mn, b, layer, pcTex } of entries) {     // pcTex === false（4.2.12：这一层 PC 出光点或不出）→ 手机的 Cutout / Ramp 不能当成和 PC 共用丢掉
     for (const [seg, L, sub, n] of namingSheets(b)) {
       const ly = joinPart(layer, sub), c = fwTexName(base, ly, L, n, 'C') + '.png';
       map.set(TN(ln, seg) + '.png', fwTexName(base, ly, L, n, 'tex', false) + '.png');
       map.set(TN(mn, seg) + '.png', fwTexName(base, ly, L, n, 'tex', true) + '.png');
       for (const ht of ['Head', 'Tail']) { map.set(TN(ln, joinPart(seg, ht)) + '.png', fwTexName(base, ly, L, n, ht, false) + '.png'); map.set(TN(mn, joinPart(seg, ht)) + '.png', fwTexName(base, ly, L, n, ht, true) + '.png'); }
-      map.set(TN(ln, joinPart(seg, 'Cutout')) + '.png', c); map.set(TN(mn, joinPart(seg, 'Cutout')) + '.png', c); drop.add(TN(mn, joinPart(seg, 'Cutout')) + '.png');
-      map.set(TN(ln, joinPart(seg, 'FrameTest')) + '.png', fwTexName(base, ly, L, n, 'FrameTest') + '.png'); drop.add(TN(mn, joinPart(seg, 'FrameTest')) + '.png');
+      map.set(TN(ln, joinPart(seg, 'Cutout')) + '.png', c); map.set(TN(mn, joinPart(seg, 'Cutout')) + '.png', c); if (pcTex !== false) drop.add(TN(mn, joinPart(seg, 'Cutout')) + '.png');
+      map.set(TN(ln, joinPart(seg, 'FrameTest')) + '.png', fwTexName(base, ly, L, n, 'FrameTest') + '.png'); if (pcTex !== false) drop.add(TN(mn, joinPart(seg, 'FrameTest')) + '.png');
     }
     const r = fwTexName(base, layer, null, 0, 'R') + '.png';
-    map.set(TN(ln, 'Ramp') + '.png', r); map.set(TN(mn, 'Ramp') + '.png', r); drop.add(TN(mn, 'Ramp') + '.png');
+    map.set(TN(ln, 'Ramp') + '.png', r); map.set(TN(mn, 'Ramp') + '.png', r); if (pcTex !== false) drop.add(TN(mn, 'Ramp') + '.png');
   }
   const out = [], seen = new Set(), dec = new TextDecoder();
   for (const [f, d] of files) {

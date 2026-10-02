@@ -1,0 +1,9 @@
+{
+ "id": "XD1",
+ "type": "export",
+ "entry": "HK10",
+ "name": "Hongchao40Dots",
+ "priority": 6,
+ "layer_out": {"2": {"pc": "dots", "mobile": "seq"}},
+ "note": "4.2.12 分平台导出方案试导：鸿巢第 2 层（红点）PC 出 GPU 光点、手机仍是序列。只验证素材包能打出来（PC cascade 有 L2_Dots、没有 L2 贴图；手机 L2 序列 + Cut + Ramp 都在；回放检查只查序列层）和烘焙回放里光点的样子。不挂效果（没有 effect 字段、编号不和效果前缀重名），不进待我验收、不改条目。对话框2。"
+}

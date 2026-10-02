@@ -52,11 +52,24 @@ function selectComboLayer(i) {
   syncComboPanels(); buildLayerCard();
   $('#right').scrollTop = 0;
 }
+// 导出方案的说明：这个方案在这一层上会少什么
+function outNote(L, e) {
+  const o = layerOut(L), P = e && e.P, w = [];
+  if (o.pc === 'off' && o.mobile === 'off') return '两个平台都不出这一层（画面里照样看得到，导出时跳过）';
+  if (o.pc === 'dots' && P) {
+    if (familyOf(P.type) !== 'aerial') w.push('这种花型不是礼花，光点没法表达，PC 请用序列');
+    if (+P.sparkRate > 0 || +P.emberFrac > 0) w.push('这一层有尾巴：PC 光点只出星头，尾巴没有（要尾巴就用序列，或另加一层序列只出尾巴）');
+    if (P.pattern && P.pattern !== 'sphere') w.push('图案不是球：光点按球面放射，形状会不对');
+    if (+P.strobeHz > 0) w.push('点灭：光点不会闪（spec 10.B 的点灭星另配）');
+    if (+P.subStars > 0 && ['senrin', 'crossette'].includes(P.type)) w.push('千轮 / 分裂的子花不在光点里');
+  }
+  const s = `PC：${o.pc === 'seq' ? '这一层的序列' : o.pc === 'dots' ? `GPU 光点（${Math.round(+(P && P.stars) || 0)} 颗，软圆点材质，没有贴图）` : '不出'} · 手机：${o.mobile === 'seq' ? '序列（纯图片）' : '不出'}`;
+  return s + (w.length ? '。注意：' + w.join('；') : '');
+}
 function buildLayerHead(i) {
   const L = state.layers[i], host = $('#layerHead'); host.innerHTML = '';
-  host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b>正在调：第 ${i + 1} 层 · ${layerName(i)}</b></div>
-    <p class="hint">下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 燃烧结束 / 火花停（圆点）都可以直接拖。</p>
-    <p class="hint">每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
+  host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b>正在调：第 ${i + 1} 层 · ${layerName(i)}</b><span class="shelp" role="button" tabindex="0" id="lhHelp" title="这一层怎么调">？</span></div>
+    <p class="hint" id="lhHelpText" hidden>下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 燃烧结束 / 火花停（圆点）都可以直接拖。每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
     ${lib.my ? myLinkHTML(i) : linkedWith(i).length ? `<p class="lh-link">联动：和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、离散等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>` : ''}`);
   const pos = document.createElement('details'); pos.className = 'sec'; pos.open = true; pos.innerHTML = '<summary>在整朵里的位置</summary>'; host.appendChild(pos);
   slider(pos, `lh${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
@@ -64,6 +77,14 @@ function buildLayerHead(i) {
   slider(pos, `lh${i}-rate`, '时间倍率', '×', 0.3, 2, 0.01, () => L.rate, v => L.rate = v, 1);
   const mir = document.createElement('label'); mir.className = 'check'; mir.innerHTML = '<input type="checkbox"> 水平镜像';
   const cb = mir.querySelector('input'); cb.checked = !!L.mirror; cb.addEventListener('change', () => L.mirror = cb.checked); pos.appendChild(mir);
+  // 4.2.12 导出方案（用户 10-02 20:04：PC 序列 + 粒子、手机纯图片，导出前在图层上选）
+  const ex = document.createElement('details'); ex.className = 'sec'; ex.open = true; ex.id = 'lhOut';
+  ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><p class="note" id="lhOutNote"></p>`;
+  host.appendChild(ex);
+  const syncOut = () => { const o = layerOut(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = o.mobile; $('#lhOutNote').textContent = outNote(L, layerEntryOf(L)); };
+  ex.querySelectorAll('[data-out]').forEach(sel => sel.addEventListener('change', () => { L.out = { ...layerOut(L), [sel.dataset.out]: sel.value }; if (L.out.pc === 'seq' && L.out.mobile === 'seq') delete L.out; syncOut(); if (stage2.deliv) renderDeliv(); wbSync(); }));
+  syncOut();
+  host.querySelector('#lhHelp').addEventListener('click', () => { const p = $('#lhHelpText'); p.hidden = !p.hidden; });
   const e = layerEntryOf(L);
   if (e && unitAllowed(e.P)) { const ub = document.createElement('button'); ub.className = 'btn mini'; ub.type = 'button'; ub.textContent = '导出这一层的单束包'; ub.title = '单束：只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条'; ub.addEventListener('click', () => unitExportLayer(i)); host.querySelector('.lh-t').appendChild(ub); }
   host.querySelector('#lhBack').addEventListener('click', () => selectComboLayer(-1));
@@ -632,18 +653,21 @@ function renderDeliv() {
     const parts = bakeParts(x.b), delay = +x.L.delay || 0, rate = +x.L.rate || 1, ly = combo ? nm.layers[x.i] : '';
     const ln = combo ? comboLayerName(name, x.i) : name, mn = combo ? comboLayerName(name + '_Mobile', x.i) : name + '_Mobile';
     let mobCell = '—'; try { const mp = mobileParams({ ...x.b.P, cols: x.b.meta.L.cols, rows: x.b.meta.L.rows }); mobCell = Math.round(layoutOf(mp).cellW) + ' px'; } catch (e) { }
-    if (combo) rows.push(`<tr class="grp"><td colspan="4">第 ${x.i + 1} 层 · ${x.name}${layerShown(x.i) ? '' : '（观察里隐藏了，导出照旧包含）'}</td></tr>`);
+    const o = combo ? layerOut(x.L) : { pc: 'seq', mobile: 'seq' };      // 4.2.12：每层的导出方案
+    if (combo) rows.push(`<tr class="grp"><td colspan="4">第 ${x.i + 1} 层 · ${x.name} · PC ${OUT_PC.find(q => q[0] === o.pc)[1]} · 手机 ${OUT_MOBILE.find(q => q[0] === o.mobile)[1]}${layerShown(x.i) ? '' : '（观察里隐藏了，导出照旧包含）'}</td></tr>`);
+    if (o.pc === 'dots') rows.push(`<tr><td class="dim">（没有贴图）</td><td>PC · GPU 光点 ${Math.round(+layerPOf(x).stars || 0)} 颗 · 软圆点材质 · 只出星头</td><td>${delay.toFixed(2)} s</td><td>${((+layerPOf(x).ignDelay || 0) + (+layerPOf(x).burn || 0)).toFixed(2)} s</td></tr>`);
+    if (o.pc === 'off' && o.mobile === 'off') { rows.push('<tr><td colspan="4" class="dim">两个平台都不出这一层</td></tr>'); continue; }
     const pre = x.b.meta.pre;
     parts.forEach((s, k) => {
       const seg = bakeSegmentName(x.b, k), d0 = delay + ((k === 0 && pre ? pre.from : s.meta.t0) || 0) / rate, life = (s.meta.duration + (k === 0 && pre ? pre.dur : 0)) / rate, L = s.meta.L;
       for (const tt of s.tail ? ['Head', 'Tail'] : ['tex']) {
         const pc = useNew ? fwTexName(nm.base, ly, L, k + 1, tt, false) : TN(ln, joinPart(seg, tt === 'tex' ? '' : tt)), mb = useNew ? fwTexName(nm.base, ly, L, k + 1, tt, true) : TN(mn, joinPart(seg, tt === 'tex' ? '' : tt));
-        rows.push(`<tr><td>${pc}.png</td><td>PC · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧${k === 0 && pre ? ` · 入点前放大 ${pre.dur.toFixed(2)} s` : ''}</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
-        rows.push(`<tr><td>${mb}.png</td><td>手机 · 单格 ${mobCell}</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        if (o.pc === 'seq') rows.push(`<tr><td>${pc}.png</td><td>PC · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧${k === 0 && pre ? ` · 入点前放大 ${pre.dur.toFixed(2)} s` : ''}</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        if (o.mobile === 'seq') rows.push(`<tr><td>${mb}.png</td><td>手机 · 单格 ${mobCell}</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
       }
-      rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, L, k + 1, 'C') : TN(ln, joinPart(seg, 'Cutout'))}.png</td><td>Cut（PC / 手机共用，512）</td><td></td><td></td></tr>`);
+      if (o.pc === 'seq' || o.mobile === 'seq') rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, L, k + 1, 'C') : TN(ln, joinPart(seg, 'Cutout'))}.png</td><td>Cut（PC / 手机共用，512）</td><td></td><td></td></tr>`);
     });
-    rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, null, 0, 'R') : TN(ln, 'Ramp')}.png</td><td>颜色 Ramp（PC / 手机共用）</td><td></td><td></td></tr>`);
+    if (o.pc === 'seq' || o.mobile === 'seq') rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, null, 0, 'R') : TN(ln, 'Ramp')}.png</td><td>颜色 Ramp（PC / 手机共用）</td><td></td><td></td></tr>`);
   }
   rows.push(`<tr class="grp"><td colspan="4">cascade.json（PC）· cascade_mobile.json（手机）：每层每段一个发射器，同一个爆点，按上面的延迟出生 · 帧号测试图在 _检查/（不导入）· 命名对照.txt</td></tr>`);
   const lyInputs = combo ? xs.map(x => `<label>第 ${x.i + 1} 层<input type="text" data-ly="${x.i}" value="${nm.layers[x.i]}" placeholder="L${x.i + 1}" title="${x.name}"></label>`).join('') : '';

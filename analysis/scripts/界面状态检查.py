@@ -20,6 +20,7 @@
   B1 滑杆和拖动同一套规则（走查 B10–B12）：滑杆改燃烧，序列时长跟着变（和拖燃烧结束一样）；滑杆改引线层的「火花停」，接力的锦层点火跟着动；
      改点火时入点跟着内容走；「恢复」回到打开时的版本（AI 版），不是花型模板默认
   V1 版本只留一套（走查 B8）：工具页没有「版本与回滚」「派生配方」；导出时在资产栏「版本」里自动存一份（每个效果最多 3 份），能选回来、不串到别的效果
+  X1 导出方案（4.2.12）：层页头选「PC：GPU 光点 / 手机：序列」→ 层记住、参数已变、交付页那一层写光点、引擎回放那一层画光点；撤销能回到序列
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -441,6 +442,34 @@ async def v1(pg):
     return not bad, '；'.join(bad) or json.dumps(info, ensure_ascii=False)
 
 
+async def x1(pg):
+    bad, info = [], {}
+    await open_effect(pg, 'hiki_nishiki'); await pg.wait_for_timeout(900); await idle(pg)
+    await pg.evaluate("selectComboLayer(1); 0"); await idle(pg)
+    has = await pg.evaluate("!!document.querySelector('#lhOut select[data-out=pc]')")
+    if not has: return False, '层页头没有导出方案'
+    await pg.select_option('#lhOut select[data-out=pc]', 'dots'); await pg.wait_for_timeout(900)
+    r = await pg.evaluate("({ out: state.layers[1].out || null, chg: !$('#abChg').hidden, note: $('#lhOutNote').textContent, undo: !$('#abUndo').disabled })")
+    info['选了光点'] = r
+    if not r['out'] or r['out'].get('pc') != 'dots': bad.append(f"层没记住方案：{r['out']}")
+    if not r['chg']: bad.append('改了方案「参数已变」没亮')
+    if '尾巴' not in r['note']: bad.append(f"有尾巴的层选光点没提示：{r['note'][:60]}")
+    dr = await pg.evaluate("(() => { selectComboLayer(-1); const pc = state.layers.map(comboLayerDraw); state.platform = 'mobile'; const mb = state.layers.map(comboLayerDraw); state.platform = 'pc'; const t = dotsTables(layerEntryOf(state.layers[1]), state.layers[1]); return { pc, mb, n: t[0].list.length, stars: layerEntryOf(state.layers[1]).P.stars }; })()")
+    info['引擎回放'] = dr
+    if dr['pc'][1] != 'dots' or dr['mb'][1] != 'seq': bad.append(f"引擎回放第 2 层：PC {dr['pc'][1]}、手机 {dr['mb'][1]}（应为光点 / 序列）")
+    if dr['n'] != round(dr['stars']): bad.append(f"引擎回放光点数 {dr['n']}（星数 {dr['stars']}）")
+    await pg.evaluate("toggleDeliv(true); 0"); await pg.wait_for_timeout(200)
+    dv = await pg.evaluate("$('#delivView').textContent"); await pg.evaluate("toggleDeliv(false); 0")
+    if 'GPU 光点' not in dv: bad.append('交付页没写第 2 层是 GPU 光点')
+    cas = await pg.evaluate("(() => { const xs = state.layers.map(L => ({ L, b: layerEntryOf(L).bake })); const pc = fwlCombo('T', comboEntries(xs, false), false); return pc.emitters.filter(e => e.layer === 2).map(e => [e.name, e.gpu, pc.materials[e.material].role]); })()")
+    info['PC 第 2 层发射器'] = cas
+    if cas != [['L2_Dots', True, 'soft_dot']]: bad.append(f'cascade.json 第 2 层不是一个 GPU 光点发射器：{cas}')
+    await pg.mouse.click(700, 400); await pg.keyboard.press('Control+z'); await idle(pg); await pg.wait_for_timeout(300)
+    o = await pg.evaluate("state.layers[1].out || null")
+    if o and o.get('pc') == 'dots': bad.append('撤销没回到序列')
+    return not bad, '；'.join(bad) or json.dumps(info, ensure_ascii=False)
+
+
 async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
@@ -450,7 +479,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

@@ -9,12 +9,74 @@ function comboLayerName(name, i) { return `${name}_L${i + 1}`; }
 function comboLayerM(L) {
   return { stages: L.stages, xw: L.xw, ramp0: L.ramp0, ramp1: L.ramp1, ramp2: L.ramp2, ramp3: L.ramp3, headInt: L.headInt, tailInt: L.tailInt };
 }
+// ---- 4.2.12 分平台导出方案（用户 10-02 20:04：「PC 用多张 / 单张序列 + 粒子（譬如四尺玉），手游就用纯图片……导出之前在图层选择导出方案？」；走查 D21–D22）----
+// 每层 L.out = { pc, mobile }：PC 序列 / GPU 光点（只出星头，不要贴图，材质角色 soft_dot，spec 10.B）/ 不出；手机 序列 / 不出（手机不用 GPU 粒子）。
+// 不写 = 两边都是序列，输出和以前逐字一样。
+const OUT_PC = [['seq', '序列（大面片）'], ['dots', 'GPU 光点（只出星头）'], ['off', '不出']], OUT_MOBILE = [['seq', '序列'], ['off', '不出']];
+function layerOut(L) { const o = (L && L.out) || {}; return { pc: ['seq', 'dots', 'off'].includes(o.pc) ? o.pc : 'seq', mobile: ['seq', 'off'].includes(o.mobile) ? o.mobile : 'seq' }; }
+// 这个平台要出的层：[{ L, b, i（原层号）, dots }]
+function comboEntries(layers, mobile) {
+  const out = []; layers.forEach((x, i) => { const o = layerOut(x.L), s = mobile ? o.mobile : o.pc; if (s === 'off') return; out.push({ ...x, i, dots: !mobile && s === 'dots' }); }); return out;
+}
+// 光点层的轨迹：模拟里星是平方阻力，Cascade 只有线性 Drag。拿模拟测出的「星最远半径 r(t)」和「可见星的平均高度 y(t)」拟合
+// r(t) = R0 + v/k·(1 − e^(−kt))、y(t) = −g/k·(t − (1 − e^(−kt))/k)，燃烧期（点火以后）权重 1，之前 0.2。
+function dotFit(P, fm) {
+  fm = fm || measure(P);
+  const ign = +P.ignDelay || 0, burn = Math.max(0.05, +P.burn || 1), T = ign + burn, R0 = Math.max(0, +P.burstR0 || 0), sj = clamp((+P.speedJit || 0) / 100, 0, 0.5);
+  const pr = (fm.prof || []).filter(q => q[0] > 0 && q[0] <= T + 1e-6), st = (fm.stat || []).filter(q => q.vis > 0 && q.t >= ign && q.t <= T);
+  let best = null;
+  for (let e = -2; e <= 1.6; e += 0.01) {
+    const k = Math.pow(10, e); let sfr = 0, sff = 0;
+    for (const [t, , r] of pr) { const w = t >= ign ? 1 : 0.2, f = (1 - Math.exp(-k * t)) / k; sfr += w * f * (r - R0); sff += w * f * f; }
+    if (!(sff > 0)) continue;
+    const v = Math.max(0, sfr / sff); let err = 0;
+    for (const [t, , r] of pr) { const w = t >= ign ? 1 : 0.2; err += w * (R0 + v * (1 - Math.exp(-k * t)) / k - r) ** 2; }
+    if (!best || err < best.err) best = { k, v, err };
+  }
+  if (!best) best = { k: G / Math.max(1, +P.vt || 20), v: +P.v0 || 50 };
+  let sgz = 0, sgg = 0;
+  for (const q of st) { const f = -(q.t - (1 - Math.exp(-best.k * q.t)) / best.k) / best.k; sgz += f * q.cy; sgg += f * f; }
+  const g = sgg > 0 ? clamp(sgz / sgg, 0, 3 * G) : G * (+P.grav || 1);
+  return { k: best.k, v: best.v / (1 + sj), sj, g, R0, ign, burn, T, jit: clamp((+P.burnJit || 0) / 100, 0, 0.5) };
+}
+// 一层星 → 一个 GPU 光点发射器。用粒子发射器组的数据格式（46_emitset.js，米、秒），同一份数据给「引擎回放」画、给 cascade.json 导出（看到的就是导出的）。
+// 层的缩放 × 长度，时间倍率 ÷ 时间（速度 ×、阻力 ×、加速度 × 倍率²）；颜色 = 这一层的颜色 × 星头亮度，点火前和熄灭段用颜色压暗（加色，等于 Alpha）
+function dotsES(L, P, M, fm) {
+  const f = dotFit(P, fm), r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1;
+  const life = [(f.ign + f.burn * (1 - f.jit)) / r, (f.ign + f.burn * (1 + f.jit)) / r], uIgn = f.ign / f.T, fadeU = clamp((+P.fade || 0) * f.burn / f.T, 0.02, 0.9);
+  const alpha = u => u < uIgn ? 0 : Math.min(1, (u - uIgn) * f.T / 0.05, (1 - u) / fadeU);
+  // 序列材质的色相来自 Ramp（灰度查表）× Color Over Life；软圆点没有 Ramp，星头亮核用 Ramp 亮端（中亮、亮两格的平均，线性）乘进颜色
+  const rl = [M.ramp2, M.ramp3].filter(Boolean).map(hexToLin), rc = rl.length ? [0, 1, 2].map(j => rl.reduce((a, c) => a + c[j], 0) / rl.length) : [1, 1, 1];
+  const gain = (+M.headInt || 1) * (+P.headBright || 1), ck = colorKeys(M, f.T, 0).map(([u, c]) => [u, c.map((x, j) => x * rc[j])]);
+  const us = [...new Set([0, 1, ...ck.map(k => +k[0]), ...(uIgn > 0 ? [Math.max(0, uIgn - 0.001), uIgn, Math.min(1, uIgn + 0.05 / f.T)] : [0.05 / f.T]), 1 - fadeU].map(u => +clamp(u, 0, 1).toFixed(4)))].sort((a, b) => a - b);
+  const col = us.map(u => [u, esCurve(ck, u).map(c => +(c * gain * alpha(u)).toFixed(4))]);
+  const sz = Math.max(0.05, 1.7 * (+P.headSize || 1) * sc);
+  return { name: 'Dots', gpu: true, delay: +L.delay || 0, duration: life[1] + 0.1, bursts: [[0, Math.max(1, Math.round(+P.stars || 1))]], life, size: [sz * 0.85, sz * 1.15], col,
+    sphere: { r: f.R0 * sc, v: [f.v * (1 - f.sj) * sc * r, f.v * (1 + f.sj) * sc * r] }, drag: [f.k * r, f.k * r], accel: [0, 0, -f.g * sc * r * r], seed: ((+P.seed || 1) * 31 + 7) | 0, fit: f };
+}
+function fwlDots(L, P, M, fm) {
+  const e = dotsES(L, P, M, fm), j = esFwlEmitter(e, false, 1), f = e.fit;
+  return { ...j, notes: [`GPU 光点：这一层的星只出星头光点（${Math.round(+P.stars || 0)} 颗，球面放射），尾巴、闪烁、熄灭前闪亮不在里面；轨迹按模拟拟合成线性阻力（阻力 ${r4(f.k)}/s、等效重力 ${r2(f.g)} m/s²）；光点直径 = 炭头 × 1.7、颜色 = 这一层的颜色 × Ramp 亮端 × 炭头亮度，是起点，未经 UE 验证`] };
+}
+// 引擎回放画光点层：同一份数据，按层缓存出生表
+function dotsTables(e, L) {
+  const sig = JSON.stringify([L.scale, L.rate, L.delay, L.stages, L.xw, L.headInt, L.ramp2, L.ramp3, e.rev || 0, e.P && [e.P.stars, e.P.seed, e.P.v0, e.P.vt, e.P.grav, e.P.burn, e.P.ignDelay, e.P.headSize, e.P.headBright, e.P.fade]]);
+  if (e._dots && e._dots.sig === sig) return e._dots.tab;
+  const ES = { emitters: [dotsES(L, e.P, comboLayerM(L), e.bake && e.bake.fm)] }; e._dots = { sig, tab: esSpawn(ES, 1) }; return e._dots.tab;
+}
 function fwlCombo(name, layers, mobile = false) {
   const out = { format: FWL_FORMAT, name, platform: mobile ? 'mobile' : 'pc',
-    source: { tool: '烟花母版烘焙器 ' + VERSION, combo: true, layers: layers.map(({ L, b }) => ({ type: b.P.type, form: b.form, renderVer: renderVersion(b.P) })) },
+    source: { tool: '烟花母版烘焙器 ' + VERSION, combo: true, layers: layers.map(({ L, b, dots }) => ({ type: b.P.type, form: dots ? 'dots' : b.form, renderVer: renderVersion(b.P) })) },
     textures: {}, materials: {}, emitters: [], system: { preview_distance_cm: 30000, preview_warmup_s: 1.2 }, notes: [] };
-  layers.forEach(({ L, b }, i) => {
-    const ln = comboLayerName(name, i), body = fwlMaster(ln, b, comboLayerM(L), mobile), pre = `L${i + 1}_`;
+  layers.forEach(({ L, b, i: li, dots }, k) => {
+    const i = li == null ? k : li, pre = `L${i + 1}_`;
+    if (dots) {     // 4.2.12：PC 光点层，没有贴图
+      const d = fwlDots(L, b.P, comboLayerM(L), b.fm);
+      out.materials[pre + 'dot'] = { role: 'soft_dot' };
+      out.emitters.push({ ...d, name: pre + 'Dots', material: pre + 'dot', layer: i + 1 });
+      return;
+    }
+    const ln = comboLayerName(name, i), body = fwlMaster(ln, b, comboLayerM(L), mobile);
     const rate = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1;
     for (const [k, v] of Object.entries(body.textures)) out.textures[pre + k] = v;
     for (const [k, v] of Object.entries(body.materials))
@@ -57,22 +119,26 @@ async function comboPackFiles(name, layers, onProg) {
   const mobiles = [], ownMobile = [];
   try {
     for (let i = 0; i < lb.length; i++) {
-      const { L, b } = lb[i], ln = comboLayerName(name, i), M = comboLayerM(L);
-      files.push(...await texFiles(b, ln));
-      files.push([`${TN(ln, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
-      const mb = b.mobile || await bakeMobileFor(b, p => onProg && onProg(0.4 + 0.5 * (i + p) / lb.length));
-      if (!b.mobile) ownMobile.push(mb);
-      const mn = comboLayerName(name + '_Mobile', i);
-      files.push(...await texFiles(mb, mn));
-      files.push([`${TN(mn, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
-      mobiles.push({ L, b: mb });
+      const { L, b } = lb[i], ln = comboLayerName(name, i), M = comboLayerM(L), o = layerOut(L);   // 4.2.12：每层的导出方案
+      if (o.pc === 'seq') {
+        files.push(...await texFiles(b, ln));
+        files.push([`${TN(ln, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
+      }
+      if (o.mobile === 'seq') {
+        const mb = b.mobile || await bakeMobileFor(b, p => onProg && onProg(0.4 + 0.5 * (i + p) / lb.length));
+        if (!b.mobile) ownMobile.push(mb);
+        const mn = comboLayerName(name + '_Mobile', i);
+        files.push(...await texFiles(mb, mn));
+        files.push([`${TN(mn, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
+        mobiles.push({ L, b: mb, i });
+      }
     }
-    files.push(['cascade.json', utf8(JSON.stringify(fwlCombo(name, lb.map(({ L, b }) => ({ L, b })), false), null, 1))]);
+    files.push(['cascade.json', utf8(JSON.stringify(fwlCombo(name, comboEntries(lb.map(({ L, b }) => ({ L, b })), false), false), null, 1))]);
     files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCombo(name + '_Mobile', mobiles, true), null, 1))]);
     // 命名规范（61_naming.js）：多层 = 礼花英文名 + 每层英文名
     if (lb.every(({ b }) => namingApplies(b))) {
       const ef = typeof lib !== 'undefined' ? lib.effect : null, key = typeof wbKey === 'function' ? wbKey() : name, nm = packNamesFor(key, ef, lb.length, name);
-      return applyPackNaming(files, nm.base, lb.map(({ b }, i) => ({ ln: comboLayerName(name, i), mn: comboLayerName(name + '_Mobile', i), b, layer: nm.layers[i] })));
+      return applyPackNaming(files, nm.base, lb.map(({ b, L }, i) => ({ ln: comboLayerName(name, i), mn: comboLayerName(name + '_Mobile', i), b, layer: nm.layers[i], pcTex: layerOut(L).pc === 'seq' })));
     }
     return files;
   } finally { own.forEach(disposeBake); ownMobile.forEach(disposeBake); }

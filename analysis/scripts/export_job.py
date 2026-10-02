@@ -110,6 +110,12 @@ def run(job, s, out, log=print):
     log(f'大文件（贴图）在 {big}，不上传')
 
 
+def apply_layer_out(s, lo):
+    """4.2.12：任务里写 "layer_out": {"2": {"pc": "dots", "mobile": "seq"}} = 导出前把第 2 层的导出方案改成 PC 光点（试导用；不改条目数据）"""
+    if not lo: return
+    s.pg.evaluate(f"(() => {{ const o = {json.dumps(lo)}; for (const [k, v] of Object.entries(o)) {{ const L = state.layers[+k - 1]; if (L) L.out = v; }} return 0; }})()")
+
+
 def run_combo_pack(job, s, out, name, ver, big, log=print):
     """多层条目导出成一个素材包（烘焙器 comboPackFiles：和左栏「导出组合素材包」按钮同一条路），再按引擎播法把所有发射器叠起来做回放检查"""
     t = time.time(); entry = job['entry']
@@ -118,6 +124,7 @@ def run_combo_pack(job, s, out, name, ver, big, log=print):
     s.pg.evaluate(f"openReview(FW_REVIEW_LIST.find(e => e.id === {json.dumps(entry)}))")
     want = s.pg.evaluate(f"(() => {{ const e = FW_REVIEW_LIST.find(x => x.id === {json.dumps(entry)}); return {{ name: e.combo.name, n: e.combo.layers.length }}; }})()")
     s.pg.wait_for_function(f"window.__fw && window.__fw.idle() && state.tab === 'combo' && state.comboName === {json.dumps(want['name'])} && state.layers.length === {want['n']} && state.layers.every(L => {{ const e = state.lib.find(x => x.name === L.lib); return e && e.bake; }})", timeout=0)
+    apply_layer_out(s, job.get('layer_out'))
     b64 = s.pg.evaluate(f"""(async () => {{ const files = await comboPackFiles({json.dumps(name)}, state.layers);
         const u8 = new Uint8Array(await (await makeZip(files)).arrayBuffer()); let t = '';
         for (let i = 0; i < u8.length; i += 0x8000) t += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(t); }})()""")
@@ -141,12 +148,12 @@ def run_combo_pack(job, s, out, name, ver, big, log=print):
         log('回放检查：' + ('✅ 通过' if r['pass'] else '❌ ' + '；'.join(f"{L['pack']}：{'、'.join(L['fails'])}" for L in r['layers'] if not L['pass'])))
     except Exception as e:
         log(f'回放检查没做成（不影响导出）：{e}')
-    try: baker_strip(s, entry, os.path.join(out, '烘焙回放.jpg'), job.get('_ref'), log=log, times_s=job.get('check_times_s'))
+    try: baker_strip(s, entry, os.path.join(out, '烘焙回放.jpg'), job.get('_ref'), log=log, times_s=job.get('check_times_s'), layer_out=job.get('layer_out'))
     except Exception as e: log(f'烘焙回放对照没做成（不影响导出）：{e}')
     log(f'大文件（贴图）在 {big}，不上传')
 
 
-def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=print, times_s=None):
+def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=print, times_s=None, layer_out=None):
     """烘焙器里的「实际烘焙回放」：打开条目，按「导出效果」（烘焙出的贴图 + 材质，和引擎同播法）和「实时模拟」各截几个时刻，
     和实拍（开花后同一秒）排成一张图。这是给负责的 AI 看的自检证据（进「待我验收」前必须看过）。"""
     import numpy as np
@@ -154,6 +161,7 @@ def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=pr
     s.pg.evaluate(f"openReview(FW_REVIEW_LIST.find(e => e.id === {json.dumps(entry)}))")
     s.pg.wait_for_function("window.__fw && window.__fw.idle() && (state.tab !== 'combo' || (state.layers.length > 0 && state.lib.length >= state.layers.length))", timeout=0)
     s.pg.wait_for_timeout(1500)
+    apply_layer_out(s, layer_out)
     T = s.pg.evaluate("state.tab === 'combo' ? Math.min(comboDuration(), Math.max(...state.layers.map(L => { const e = state.lib.find(x => x.name === L.lib); return (L.delay || 0) + (e ? e.P.duration : 0); }))) : (state.P && state.P.duration) || 3")
     if ref:     # 不超过实拍视频剩下的长度（不然后几张实拍是黑的）
         try:

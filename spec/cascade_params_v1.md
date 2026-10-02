@@ -248,6 +248,14 @@
 - `InitialRotation` 随机，Size ±15%；
 - 帧号曲线按每个粒子自己的寿命走，每种颜色一个发射器。
 
+### F. 多层效果里某一层 PC 出「光点」（烘焙器 4.2.12 起）⚪ 未经 UE 验证
+- 用户 2026-10-02 20:04：PC 可以「序列 + 粒子」，手机只能纯图片。烘焙器每层可选导出方案：PC = 序列 / GPU 光点 / 不出，手机 = 序列 / 不出。
+- 光点层：一个 `gpu: true` 发射器，材质角色 `soft_dot`（和 B 同一个材质），没有贴图；`spawn.bursts = [[0, 星数]]`；
+  `SphereLocation`（`SurfaceOnly`、`Velocity`，速度 = 出生位置 × `VelocityScale`）+ `Drag` + `ConstAcceleration`：烘焙器把模拟里星的轨迹（平方阻力）拟合成线性阻力；
+  `Lifetime` = 点火延迟 + 燃烧（± 消え口离散）；颜色 = 层颜色 × Ramp 亮端 × 炭头亮度，点火前和熄灭段直接压进 `ColorOverLife`（加色，等于 Alpha）。
+- 只出星头光点：尾巴、闪烁、熄灭前闪亮不在里面（有尾巴的层烘焙器会提示）。手机版这一层仍是序列。
+- 发射器名 `L<层号>_Dots`；`cascade_mobile.json` 里没有 GPU 发射器。
+
 ## 11. 给云端 AI 的输出约定
 
 - 要引擎参数时，**只输出一段** ` ```json ` 代码块，`format` 固定为 `fwl.cascade/1`。

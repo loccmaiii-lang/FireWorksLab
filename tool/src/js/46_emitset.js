@@ -38,6 +38,9 @@ function esSpawn(ES, frac = 1) {
       const a = (e.accel || [0, 0, 0]).slice();
       if (e.accelCurve) { const c = esCurve(e.accelCurve, t0); for (let j = 0; j < 3; j++) a[j] += c[j]; }
       for (const B of esBoxes(e.accelJit)) for (let j = 0; j < 3; j++) a[j] += B[0][j] + (B[1][j] - B[0][j]) * rnd();
+      // 4.2.12 球面放射（Cascade 的 Sphere 模块：表面出生、勾 Velocity，速度 = 出生位置 × VelocityScale）：方向在球面上均匀，速率在 [lo, hi] 均匀
+      if (e.sphere) { const z = 2 * rnd() - 1, ph = 6.2831853 * rnd(), q = Math.sqrt(Math.max(0, 1 - z * z)), d = [q * Math.cos(ph), q * Math.sin(ph), z], R = Math.max(0.01, e.sphere.r || 0), sp = e.sphere.v[0] + (e.sphere.v[1] - e.sphere.v[0]) * rnd();
+        for (let j = 0; j < 3; j++) { p[j] += d[j] * R; v[j] += d[j] * sp; } }
       list.push({ t0: t0 + (e.delay || 0), life, size, k, p, v, a });
     };
     // Spawn Rate 曲线按发射器时间积分；frac < 1 = 手机版减量（同一条曲线乘比例）
@@ -153,6 +156,7 @@ function esFwlEmitter(e, mobile, frac) {
     { m: 'InitialSize', StartSize: { uniform: [[esCm(e.size[0]), esCm(e.size[0] * st), esCm(e.size[0])], [esCm(e.size[1]), esCm(e.size[1] * st), esCm(e.size[1])]] } }
   ];
   // 只有一个关键点的出生曲线写成常数（一次性 Burst 的发射器：星头光晕、发射口）
+  if (e.sphere) { const R = Math.max(0.01, e.sphere.r || 0); mods.push({ m: 'SphereLocation', StartRadius: { const: esCm(R) }, VelocityScale: { uniform: [esR4(e.sphere.v[0] / R), esR4(e.sphere.v[1] / R)] }, SurfaceOnly: true, Velocity: true, note: '球面放射：表面出生、速度 = 出生位置 × VelocityScale（1/s）' }); }
   if (e.loc) mods.push({ m: 'InitialLocation', StartLocation: e.loc.length === 1 ? { const: e.loc[0][1].map(esCm) } : { curve: esThin(e.loc, 0.01).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false } });
   if (e.vel) mods.push({ m: 'InitialVelocity', StartVelocity: e.vel.length === 1 ? { const: e.vel[0][1].map(esCm) } : { curve: esThin(e.vel, 0.05).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false } });
   esBoxes(e.velAdd).forEach((B, i, A) => mods.push({ m: 'InitialVelocity', StartVelocity: { uniform: [B[0].map(esCm), B[1].map(esCm)] }, note: `第 ${i + 2} 个 Initial Velocity：叠加的随机散开${A.length > 1 ? '（' + A.length + ' 个均匀分布相加 → 中间密、边缘软）' : ''}` }));

@@ -399,6 +399,8 @@ function renderComboLive() {
   post();
   hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层）${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}`; hudB = '';
 }
+// 引擎回放里这一层怎么画（按当前预览平台的导出方案）：'seq' 贴图 / 'dots' 光点 / 'off' 不画
+function comboLayerDraw(L) { const o = typeof layerOut === 'function' ? layerOut(L) : { pc: 'seq', mobile: 'seq' }; return state.platform === 'mobile' ? o.mobile : o.pc; }
 function renderCombo() {
   if (state.view === 'live') return renderComboLive();
   if (state.view === 'atlas') return renderComboAtlas();
@@ -415,9 +417,16 @@ function renderCombo() {
   }else if(state.disp==='px')half=canvas.width/(2*Math.min(...items.map(([L,e])=>e.bake.meta.L.cellW/(e.bake.meta.Ww*(L.scale||1)))));
   const view = [(x0 + x1) / 2, (y0 + y1) / 2, half, half];
   hdrT.bind(); additive(true);
-  for (const [L, e, i] of items) if (layerShown(i)) drawLayer(e.bake, L, state.t, view);
+  // 4.2.12 导出方案：这个平台不出的层不画；PC 出光点的层画光点（和 cascade.json 同一份发射器数据）
+  const mob = state.platform === 'mobile', notes = [];
+  for (const [L, e, i] of items) if (layerShown(i)) {
+    const s = comboLayerDraw(L);
+    if (s === 'off') { notes.push(`第 ${i + 1} 层不出`); continue; }
+    if (s === 'dots') { const e0 = state.lib.find(x => x.name === L.lib) || e; esDraw(dotsTables(e0, L), engineTick(state.t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); notes.push(`第 ${i + 1} 层光点`); continue; }
+    drawLayer(e.bake, L, state.t, view);
+  }
   additive(false); post();
-  hudText = `${state.comboName} · 引擎回放（每层贴图叠放）· ${items.length} 层${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}`; hudB = '';
+  hudText = `${state.comboName} · 引擎回放（每层贴图叠放）· ${items.length} 层${notes.length ? ' · ' + (mob ? '手机' : 'PC') + '：' + notes.join('、') : ''}${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}`; hudB = '';
 }
 function updateLabels() {
   const q = $('#qlabels'), b = previewBake();
