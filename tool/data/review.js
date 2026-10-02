@@ -73138,6 +73138,12 @@ var FW_EFFECTS = [
 "seen": true
 },
 {
+"id": "HN2E10",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "HN2E2",
 "type": "export",
 "state": "已回来",
@@ -73226,6 +73232,37 @@ var FW_EFFECTS = [
 ]
 },
 "stale": true
+},
+{
+"job": "HN2E10",
+"entry": "HN2",
+"ver": "1e3e2339",
+"time": "2026-10-03 01:42",
+"packages": [
+{
+"name": "HikiNishiki",
+"replica": "HN2",
+"files": [
+"T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01.png",
+"T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01_C.png",
+"T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01_HD.png",
+"T_EFX_FireWorks_HikiNishiki_Hiki_R.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01_C.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01_HD.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
 },
 {
 "job": "HN2E2",
