@@ -8,7 +8,8 @@
 // ---------------- 观察图层 ----------------
 function layerEntryOf(L) { return L && state.lib.find(x => x.name === L.lib); }
 function layerName(i) {
-  const L = state.layers[i], e = layerEntryOf(L), names = (lib.review && lib.review.kind === 'combo' && lib.review.layerNames) || [];
+  const L = state.layers[i]; if (L && L.title) return L.title;      // 我的效果：层自己的名字（4.2.7）
+  const e = layerEntryOf(L), names = (lib.review && lib.review.kind === 'combo' && lib.review.layerNames) || [];
   const le = e && e.rep ? FW_REVIEW_LIST.find(x => x.id === e.rep) : null;
   return names[i] || (le ? le.name : L ? L.lib : '');
 }
@@ -22,8 +23,9 @@ function buildLayerCard() {
     return `<div class="lrow${state.comboSel === i ? ' cur' : ''}${mute || (v.solo >= 0 && !solo) ? ' muted' : ''}" data-i="${i}" tabindex="0" role="button">
       ${le ? thumbHTML(le) : `<span class="th" style="${e ? typeThumbStyle(e.type) : ''}"></span>`}
       <span class="tx"><b>${i + 1} · ${layerName(i)}</b><small>开始 <input class="lst" type="number" min="0" max="10" step="0.01" value="${(+L.delay || 0).toFixed(2)}" data-st="${i}" aria-label="第 ${i + 1} 层开始时间"> s · 时长 ${dur.toFixed(2)} s${e && e.editSig ? ' · <em>已调</em>' : ''}</small></span>
-      <span class="lb"><button type="button" class="mini${solo ? ' on' : ''}" data-solo="${i}" aria-pressed="${solo}">独看</button><button type="button" class="mini${mute ? ' on' : ''}" data-mute="${i}" aria-pressed="${mute}">静音</button></span></div>`;
+      <span class="lb"><button type="button" class="mini${solo ? ' on' : ''}" data-solo="${i}" aria-pressed="${solo}">独看</button><button type="button" class="mini${mute ? ' on' : ''}" data-mute="${i}" aria-pressed="${mute}">静音</button></span>${lib.my ? myLayerTools(i) : ''}</div>`;
   });
+  if (lib.my) rows.push(`<button type="button" class="btn mini myadd" id="myAdd" title="加一层：花型模板，或现有效果里的某一层（参数复制一份）">＋ 加一层</button>`);
   box.innerHTML = `<div class="lc-h"><b>观察图层</b><small>点一层改它的参数（画面仍是整朵）。独看 / 静音只影响观察。</small></div>
     <div class="lrow whole${state.comboSel < 0 ? ' cur' : ''}" data-i="-1" tabindex="0" role="button"><span class="th whole">${state.layers.length}</span><span class="tx"><b>整体</b><small>各层的位置、延迟、时间倍率、颜色</small></span></div>${rows.join('')}`;
   box.querySelectorAll('.lrow').forEach(r => {
@@ -33,6 +35,7 @@ function buildLayerCard() {
   box.querySelectorAll('[data-st]').forEach(inp => inp.addEventListener('change', () => { const i = +inp.dataset.st, L = state.layers[i]; L.delay = clamp(+inp.value || 0, 0, 10); if (state.comboSel === i) buildLayerHead(i); else if (state.comboSel < 0) buildComboPanel(); buildLayerCard(); }));
   box.querySelectorAll('[data-solo]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.solo; v.solo = v.solo === i ? -1 : i; buildLayerCard(); }));
   box.querySelectorAll('[data-mute]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.mute; v.mute = v.mute.includes(i) ? v.mute.filter(x => x !== i) : [...v.mute, i]; buildLayerCard(); }));
+  if (lib.my) bindMyLayerTools(box);
 }
 function selectComboLayer(i) {
   if (state.tab !== 'combo') return;
@@ -54,7 +57,7 @@ function buildLayerHead(i) {
   host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b>正在调：第 ${i + 1} 层 · ${layerName(i)}</b></div>
     <p class="hint">下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 燃烧结束 / 火花停（圆点）都可以直接拖。</p>
     <p class="hint">每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
-    ${linkedWith(i).length ? `<p class="lh-link">联动：和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、离散等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>` : ''}`);
+    ${lib.my ? myLinkHTML(i) : linkedWith(i).length ? `<p class="lh-link">联动：和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、离散等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>` : ''}`);
   const pos = document.createElement('details'); pos.className = 'sec'; pos.open = true; pos.innerHTML = '<summary>在整朵里的位置</summary>'; host.appendChild(pos);
   slider(pos, `lh${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
   slider(pos, `lh${i}-delay`, '延迟', 's', 0, 10, 0.01, () => L.delay, v => L.delay = v, 0);
@@ -65,12 +68,13 @@ function buildLayerHead(i) {
   if (e && unitAllowed(e.P)) { const ub = document.createElement('button'); ub.className = 'btn mini'; ub.type = 'button'; ub.textContent = '导出这一层的单束包'; ub.title = '单束：只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条'; ub.addEventListener('click', () => unitExportLayer(i)); host.querySelector('.lh-t').appendChild(ub); }
   host.querySelector('#lhBack').addEventListener('click', () => selectComboLayer(-1));
   const lo = host.querySelector('#lhLinkOff'); if (lo) lo.addEventListener('change', () => { state.linkOff = lo.checked; });
+  host.querySelectorAll('[data-link]').forEach(cb => cb.addEventListener('change', () => mySetLinked(i, +cb.dataset.link, cb.checked)));
 }
 function syncComboPanels() {
   const combo = state.tab === 'combo', lay = combo && state.comboSel >= 0;
   if (combo) { $('#pMaster').hidden = !lay; $('#pCombo').hidden = lay; }
   $('#pMaster').classList.toggle('layermode', lay); $('#layerHead').hidden = !lay;
-  $('#pCombo').classList.toggle('effmode', combo && !!(lib.review && lib.review.kind === 'combo'));
+  $('#pCombo').classList.toggle('effmode', combo && (!!(lib.review && lib.review.kind === 'combo') || !!lib.my));   // 我的效果也不要旧预设（4.2.7）
 }
 
 // ---------------- 你的版本（保存 / 切换 / 文件） ----------------
@@ -83,7 +87,7 @@ function wbKey() {
   const k = lib.key || '', m = /^mine:(.+):[^:]+$/.exec(k);     // 从左栏「我的版本」打开的：归到原来那个键（组合编辑器 / 花型模板）
   return m ? m[1] : k;
 }
-function wbBaseId() { return lib.review ? lib.review.id : lib.formal ? lib.formal.id : lib.key === 'combo' ? '组合编辑器' : state.P.type; }
+function wbBaseId() { return lib.my ? lib.my.name : lib.review ? lib.review.id : lib.formal ? lib.formal.id : lib.key === 'combo' ? '组合编辑器' : state.P.type; }
 const wbAll = () => store.get('mySaves', {});
 const wbList = () => (wbAll()[wb.key] || []);
 function wbPut(list) { const all = wbAll(); all[wb.key] = list; store.set('mySaves', all); }
@@ -99,7 +103,7 @@ function wbArm() {
   const tick = () => { if (n !== wb.arm) return; if (wbIdle()) { wb.sig = wbSig(); wbSync(); } else setTimeout(tick, 400); };
   setTimeout(tick, 300);
 }
-function wbVisible() { return !state.showcase && !!(lib.review ? lib.review.kind !== 'queued' : lib.formal || /^(type:|combo$)/.test(wbKey())); }
+function wbVisible() { return !state.showcase && !!(lib.review ? lib.review.kind !== 'queued' : lib.formal || /^(type:|combo$|my:)/.test(wbKey())); }
 function wbRefresh() {
   const k = wbKey();
   if (k !== wb.key || lib.review !== wb.entry) { wb.key = k; wb.entry = lib.review; wb.src = { kind: 'ai' }; wbArm(); }
@@ -108,12 +112,14 @@ function wbRefresh() {
 function wbSync() {
   const bar = $('#assetBar'); bar.hidden = !wbVisible(); if (bar.hidden) return;
   const ef = lib.effect, e = lib.review, combo = state.tab === 'combo';
-  $('#abName').textContent = ef ? ef.名 : e ? e.name : lib.formal ? lib.formal.name : lib.key === 'combo' ? '组合编辑器' : TYPE_NAMES[state.P.type] || '';
-  $('#abSub').textContent = [wbBaseId(), combo ? state.layers.length + ' 层' : '单层', ef ? ef.阶段 : lib.formal ? '正式库' : e ? '条目' : '花型模板'].join(' · ');
+  $('#abName').textContent = lib.my ? lib.my.name : ef ? ef.名 : e ? e.name : lib.formal ? lib.formal.name : lib.key === 'combo' ? '组合编辑器' : TYPE_NAMES[state.P.type] || '';
+  $('#abSub').textContent = lib.my ? [packNamesFor(wb.key, null, state.layers.length, 'MyFx').base, state.layers.length + ' 层', '我的效果'].join(' · ')
+    : [wbBaseId(), combo ? state.layers.length + ' 层' : '单层', ef ? ef.阶段 : lib.formal ? '正式库' : e ? '条目' : '花型模板'].join(' · ');
+  $('#abMyRename').hidden = $('#abMyDelete').hidden = !lib.my;
   const th = ef && ef.thumb ? `<i style="background-image:url(${ef.thumb})"></i>` : '';
   const thHost = $('#abThumb'); if (thHost.dataset.k !== wb.key) { thHost.dataset.k = wb.key; thHost.innerHTML = th || (e ? thumbHTML(e).replace(/^<span class="th"/, '<span class="th in"') : `<span class="th in" style="${typeThumbStyle(state.P.type)}"></span>`); }
   const list = wbList(), sel = $('#abSrc'), cur = wb.src.kind === 'mine' ? wb.src.id : 'ai';
-  const opts = [['ai', `AI 版 · ${wbBaseId()}`], ...list.map(s => [s.id, `我的 · ${s.name}（${s.at.slice(5)}）`])];
+  const opts = [['ai', lib.my ? `已保存 · ${(myRec() || {}).updated || ''}` : `AI 版 · ${wbBaseId()}`], ...list.map(s => [s.id, `我的 · ${s.name}（${s.at.slice(5)}）`])];
   const html = opts.map(([v, t]) => `<option value="${v}">${t}</option>`).join('');
   if (sel.dataset.h !== html) { sel.innerHTML = html; sel.dataset.h = html; }
   sel.value = cur;
@@ -139,6 +145,7 @@ function autoDraft() {
 if (window.addEventListener) window.addEventListener('beforeunload', () => { try { autoDraft(); } catch (e) { } });
 function wbNow() { return new Date().toLocaleString('zh-CN', { hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/\//g, '-'); }
 async function wbSave(asNew) {
+  if (lib.my) return mySave(asNew);                         // 我的效果：保存 = 覆盖这个效果，另存为 = 复制成新效果（4.2.7）
   if (repoDir.h && !repoDir.ok) await repoPerm(true);      // 连过仓库文件夹：先趁这次点击问一下「允许」（浏览器重开后第一次）
   const list = wbList(), mine = wb.src.kind === 'mine' && list.find(s => s.id === wb.src.id);
   let it = !asNew && mine && !mine.draft && mine;        // 草稿不覆盖：存成正式的一个版本（起名字），草稿删掉
@@ -156,6 +163,7 @@ async function wbSave(asNew) {
 }
 // 回到 AI 版：丢掉这个效果里调过的层，重新打开条目
 async function wbLoadAI() {
+  if (lib.my) { await openMyEffect(lib.my.id, { keep: true }); wb.src = { kind: 'ai' }; wbArm(); wbSync(); return; }   // 我的效果：回到已保存的样子
   const e = lib.review;
   if (state.layerEdits) {
     const ids = e && e.kind === 'combo' ? e.layerIds || [] : e ? [e.id] : [];
@@ -235,6 +243,8 @@ function initWorkbench() {
   const close = () => document.querySelector('.ab-more').removeAttribute('open');
   $('#abCopyDiff').addEventListener('click', () => { close(); wbCopyDiff(); });
   $('#abRepo').addEventListener('click', () => { close(); repoMenu(); });
+  $('#abMyRename').addEventListener('click', () => { close(); myRename(); });
+  $('#abMyDelete').addEventListener('click', () => { close(); myRemove(); });
   repoInit();
   $('#abExportFile').addEventListener('click', () => { close(); wbExportFile(); });
   $('#abImportFile').addEventListener('click', () => { close(); $('#abFile').click(); });
@@ -540,6 +550,7 @@ async function noteFrame() {
 }
 // 查看交付：素材包里的每个文件（按当前烘焙推算；导出时手机版独立烘焙）
 function delivName() {
+  if (lib.my) return 'MyFx';
   if (state.tab === 'combo') { const rv = lib.review && lib.review.kind === 'combo' ? lib.review.id : ''; return (rv || state.comboName || 'Combo').replace(/[^\w\-]+/g, '_').replace(/^_+|_+$/g, '') || 'Combo'; }
   return state.name;
 }

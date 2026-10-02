@@ -17,8 +17,20 @@ const TYPE_META = {
   wheel: ['旋转的火轮', '循环 地面 旋转'], fan: ['扇形连射的彗星', '循环 地面 扇形 连发'],
   barrage: ['一发接一发往上打，末端开小花', '循环 地面 连发'], shikake: ['发光的文字或图案', '循环 地面 文字']
 };
-const PK_CATS = [['all', '全部'], ['rep', '实拍复刻'], ['fav', '收藏'], ['recent', '最近使用'], ...TYPE_GROUPS.map(([g]) => [g, g])];
-const pk = { cat: 'all', q: '', fav: new Set(), recent: [] };
+const PK_CATS = [['all', '全部'], ['fx', '现有效果的层'], ['rep', '实拍复刻'], ['fav', '收藏'], ['recent', '最近使用'], ...TYPE_GROUPS.map(([g]) => [g, g])];
+const pk = { cat: 'all', q: '', fav: new Set(), recent: [], mode: 'open', onPick: null };
+// 4.2.7：现有效果（待我验收 / 制作中 / 已通过）的每一层，可以拿来当新效果的层（参数复制一份）
+function pkFxItems() {
+  const out = [], seen = new Set();
+  for (const ef of EFFS()) {
+    const id = ef.待验收版 || ef.工作版 || ef.主条目; if (!id || id.startsWith('rep:')) continue;
+    const e = FW_REVIEW_LIST.find(x => x.id === id); if (!e) continue;
+    const ids = e.kind === 'combo' ? (e.layerIds || []) : [e.id];
+    ids.forEach((lid, i) => { if (seen.has(lid) || !REPLICA_BY_ID[lid]) return; seen.add(lid); const le = FW_REVIEW_LIST.find(x => x.id === lid);
+      out.push({ key: 'rv:' + lid, name: `${ef.名.replace(/（.*）/, '')}${ids.length > 1 ? ' · ' + ((e.layerNames || [])[i] || (le && le.name) || '第 ' + (i + 1) + ' 层') : ''}`, cat: 'fx', desc: `${lid} · 基于${TYPE_NAMES[REPLICA_BY_ID[lid].base] || REPLICA_BY_ID[lid].base}`, tags: [ef.阶段], fx: le || e }); });
+  }
+  return out;
+}
 function typeThumbStyle(key) {
   const rep = key.startsWith('rep:') ? REPLICA_BY_ID[key.slice(4)] : null;
   const src = (rep && rep.thumbSim) || (typeof THUMBS !== 'undefined' && THUMBS[key]) || null;
@@ -34,6 +46,7 @@ function pkItems() {
     out.push({ key: t, name: TYPE_NAMES[t], cat: g, desc: m[0], tags: m[1].split(' ').filter(Boolean) });
   }
   for (const r of REPLICAS) out.push({ key: 'rep:' + r.id, name: r.name, cat: 'rep', desc: r.note, tags: (r.tags || '').split(' ').filter(Boolean), rep: r });
+  if (pk.mode !== 'open') out.push(...pkFxItems());
   return out;
 }
 function pkFiltered() {
@@ -49,6 +62,7 @@ function pkRender() {
   const cats = $('#pkCats'); cats.innerHTML = '';
   const all = pkItems();
   for (const [k, l] of PK_CATS) {
+    if (k === 'fx' && pk.mode === 'open') continue;
     const n = k === 'all' ? all.length : k === 'rep' ? REPLICAS.length : k === 'fav' ? pk.fav.size : k === 'recent' ? pk.recent.length : all.filter(i => i.cat === k).length;
     const b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(pk.cat === k));
     b.innerHTML = `${l}<span>${n}</span>`; b.addEventListener('click', () => { pk.cat = k; pkRender(); }); cats.appendChild(b);
@@ -58,17 +72,24 @@ function pkRender() {
   if (!items.length) { grid.innerHTML = `<p class="pk-empty">${pk.cat === 'rep' ? '实拍复刻正在按「一个一个对照确认」的方式重做，完成一个加一个。' : '没有匹配的花型。'}</p>`; return; }
   for (const it of items) {
     const c = document.createElement('div'); c.className = 'pk-card' + (it.key === cur ? ' cur' : ''); c.tabIndex = 0; c.setAttribute('role', 'button');
-    const th = `<div class="th" style="${typeThumbStyle(it.key)}"></div>`;   // 只用渲染图（用户 2026-10-02 14:46：缩略图不用实拍）
+    const th = it.fx ? thumbHTML(it.fx).replace(/^<span class="th"/, '<span class="th pkfx"') : `<div class="th" style="${typeThumbStyle(it.key)}"></div>`;   // 只用渲染图（用户 2026-10-02 14:46：缩略图不用实拍）
     c.innerHTML = th + `<div class="bd"><span class="nm">${it.name}</span><span class="ds">${it.desc || ''}</span><span class="tg">${it.tags.map(t => `<span>${t}</span>`).join('')}</span></div>` +
       (it.rep ? `<span class="st">${it.rep.status || '待你确认'}</span>` : '') + `<button class="fav" type="button" aria-label="收藏" aria-pressed="${pk.fav.has(it.key)}">★</button>`;
     c.querySelector('.fav').addEventListener('click', e => { e.stopPropagation(); pk.fav.has(it.key) ? pk.fav.delete(it.key) : pk.fav.add(it.key); store.set('fav', [...pk.fav]); pkRender(); });
-    const pick = () => { pkClose(); pk.recent = [it.key, ...pk.recent.filter(k => k !== it.key)].slice(0, 12); store.set('recent', pk.recent); if (String(it.key).startsWith('rep:')) setType(it.key); else openType(it.key); };
+    const pick = () => { const fn = pk.onPick; pkClose(); pk.recent = [it.key, ...pk.recent.filter(k => k !== it.key)].slice(0, 12); store.set('recent', pk.recent);
+      if (fn) { Promise.resolve(fn(it.key)).catch(e => { console.error(e); flash('出错了：' + (e.message || e), true); }); return; }
+      if (String(it.key).startsWith('rep:')) setType(it.key); else openType(it.key); };
     c.addEventListener('click', pick); c.addEventListener('keydown', e => { if (e.key === 'Enter') pick(); });
     grid.appendChild(c);
   }
 }
-function pkOpen() { $('#picker').hidden = false; pkRender(); $('#pkSearch').focus(); }
-function pkClose() { $('#picker').hidden = true; $('#typeBtn').focus(); }
+// 4.2.7：花型库三种用法——打开模板（默认）、新建效果（选第一层）、给我的效果加一层；o.onPick(key) 接住选中的
+function pkOpen(o = {}) {
+  pk.mode = o.mode || 'open'; pk.onPick = o.onPick || null; if (pk.mode !== 'open' && pk.cat === 'all') pk.cat = 'all';
+  $('#pkTitle').textContent = o.title || '花型库 · 选一个花型模板打开';
+  $('#picker').hidden = false; pkRender(); $('#pkSearch').focus();
+}
+function pkClose() { $('#picker').hidden = true; pk.onPick = null; pk.mode = 'open'; $('#typeBtn').focus(); }
 function syncTypeButton() {
   const key = state.repId ? 'rep:' + state.repId : state.P.type, r = state.repId ? REPLICA_BY_ID[state.repId] : null;
   $('#typeName').textContent = r ? r.name : TYPE_NAMES[state.P.type];

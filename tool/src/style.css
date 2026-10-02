@@ -909,3 +909,10 @@ main.drawer-side .side-x{display:inline-flex;align-items:center}
 
 /* 4.2.5「待我验收」按证据把关：未就绪的原因 */
 .li .tx em.nr{font-style:normal;color:var(--amber);font-size:11.5px}
+
+/* 4.2.7 我的效果：层卡片里的层工具、加一层 */
+.lrow .mytools{grid-column:1 / -1;display:flex;gap:3px;flex-wrap:wrap;padding:2px 0 0 52px}
+.lrow .mytools .mini{padding:1px 7px;font-size:11.5px}
+#layerCard .myadd{margin:8px 0 2px;width:100%}
+.lh-link .check{display:inline-flex;margin:3px 10px 0 0}
+.pk-card .th.pkfx{display:flex;height:96px}

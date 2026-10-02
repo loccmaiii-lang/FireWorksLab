@@ -161,6 +161,7 @@ function dropEffectEdits(ef) {
 function beforeOpen(nextEf) {
   autoDraft();
   if (lib.effect && (!nextEf || nextEf.key !== lib.effect.key)) dropEffectEdits(lib.effect);
+  lib.my = null;            // 离开「我的效果」（openMyEffect 打开后会再设）
 }
 // 组合编辑器（4.2.3 走查 A1）：自己的身份——不继承上一个打开的效果（资产栏名字、版本归属、交付命名都是「组合编辑器」），从第一个预设开始
 async function openComboEditor(o = {}) {
@@ -186,6 +187,7 @@ async function openMine(k, id) {
   else if (k.startsWith('rep:')) { const r = REPLICA_BY_ID[k.slice(4)]; if (!r) return; openFormal(r); }
   else if (k.startsWith('type:')) openType(k.slice(5));
   else if (k === 'combo') await openComboEditor({ preset: false });       // 4.2.3（走查 A2）：编辑器里存的版本也能打开
+  else if (k.startsWith('my:')) await openMyEffect(k.slice(3));          // 4.2.7：我的效果的草稿
   else return;
   await wbLoad(id); lib.key = 'mine:' + k + ':' + id; renderLib();
 }
@@ -255,7 +257,7 @@ function libGroup(host, id, title, count, hot, extra) {
 }
 // 左栏（2026-10-02 界面外观第 1 步，按用户的浏览器草稿）：上下分组、可折叠——待我验收 / 制作中 / 已通过 / 花型模板 / 历史 / 工具；
 // 56 px 缩略图、选中整圈青绿框；新建配方在最下面。lib.seg 仍可用（自动化脚本用 lib.seg='passed';renderLib() 打开某一组）。
-const LIB_OPEN_DEFAULT = { review: true, wip: true, passed: true, mine: true, types: false, hist: false, tools: false };
+const LIB_OPEN_DEFAULT = { review: true, wip: true, passed: true, myfx: true, mine: true, types: false, hist: false, tools: false };
 function renderLib() {
   const host = $('#libBody'); host.innerHTML = '';
   lib.open = { ...LIB_OPEN_DEFAULT, ...(lib.open || {}) };
@@ -310,6 +312,8 @@ function renderLib() {
       for (const r of formal) libItem(d, 'rep:' + r.id, thumbHTML({ ...r, key: 'rep:' + r.id }) + `<span class="tx"><b>${r.name}</b><small>${r.task || r.id} · 正式库</small></span>`, () => openFormal(r));
     }
   }
+  // 我的效果（4.2.7，「＋ 新建效果」搭的）
+  myLibGroup(host);
   // 我的版本（用户在资产栏保存的，存在这台电脑的浏览器里）
   const mine = []; for (const [k, list] of Object.entries(store.get('mySaves', {}))) for (const sv of list || []) mine.push([k, sv]);
   const mineF = mine.filter(([k, sv]) => libMatch(sv.name, k, sv.base || ''));
@@ -353,7 +357,7 @@ function renderLib() {
   }
   // 工具：组合编辑器、云端配方预览、4.0 对照橱窗、打开结果文件夹（按钮本体留在页面里，事件照旧）
   const tools = [
-    ['combo', '组合编辑器', '一个菊 + 几层缩小的牡丹 = 八重芯 / 三重芯', () => openComboEditor()],
+    ['combo', '组合编辑器（旧：预设试搭）', '八重芯 / 三重芯等预设快速试搭；正式做效果用左下角「＋ 新建效果」', () => openComboEditor()],
     ['tool:cloud', $('#cloudRecipesOpen').textContent, '云端配好的多层配方，本机烘焙后看', () => $('#cloudRecipesOpen').click()],
     ['tool:showcase', '4.0 对照橱窗', '3.7 / 4.0 同一秒对照（新旧渲染的唯一入口）', () => $('#showcaseOpen').click()],
     ['tool:dir', '打开结果文件夹…', '临时看某个导出结果（贴图按引擎方式播放）', () => $('#assetOpen2').click()],
@@ -601,7 +605,7 @@ function initLibrary() {
   $('#refVid').addEventListener('loadedmetadata', layoutRef);
   $('#rvCopy').addEventListener('click', rvCopy);
   initWorkbench();
-  $('#newRecipe').addEventListener('click', () => pkOpen());       // 新建配方 = 从花型库挑一个模板开始（可编辑的实时模拟）
+  $('#newRecipe').addEventListener('click', () => myNew());       // 4.2.7 新建效果：先选第一层，再加层（以前是「新建配方」= 打开一个花型模板）
   const ro = new ResizeObserver(() => document.documentElement.style.setProperty('--topH', $('#main').offsetTop + 'px')); ro.observe($('#viewbar')); ro.observe(document.querySelector('header.top'));
   initPanels();
   // 打开时：有没看过的迭代区条目就先打开最新的一条；否则回到上次看的

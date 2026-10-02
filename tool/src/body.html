@@ -15,6 +15,8 @@
         <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
         <button type="button" id="abExportFile">导出配方文件（.json）</button>
         <button type="button" id="abImportFile">导入配方文件…</button>
+        <button type="button" id="abMyRename" hidden>重命名这个效果</button>
+        <button type="button" id="abMyDelete" hidden>删除这个效果</button>
         <button type="button" id="abRename">重命名这个版本</button>
         <button type="button" id="abDelete">删除这个版本</button>
         <input type="file" id="abFile" accept=".json,application/json" hidden>
@@ -34,7 +36,7 @@
         <button class="btn ghost side-x" id="sideClose" type="button" title="收起左栏（L 或 Esc）" aria-label="收起左栏">×</button>
       </div>
       <div class="side-body" id="libBody"></div>
-      <div class="side-foot"><button class="btn newrec" id="newRecipe" type="button" title="从花型模板开始做一个新配方">＋ 新建配方</button><button class="btn ghost" id="rvCopy" type="button" title="把通过 / 要改和意见复制下来，贴到对话里">复制我的意见</button>
+      <div class="side-foot"><button class="btn newrec" id="newRecipe" type="button" title="自己搭一个效果：先选第一层（花型模板或现有效果的层），再加层、改名、调参数">＋ 新建效果</button><button class="btn ghost" id="rvCopy" type="button" title="把通过 / 要改和意见复制下来，贴到对话里">复制我的意见</button>
         <div hidden><button class="btn" id="cloudRecipesOpen" type="button">云端配方预览</button><button class="btn" id="showcaseOpen" type="button">4.0 对照橱窗</button><button class="btn ghost" id="assetOpen2" type="button" title="临时看某个结果文件夹">打开结果文件夹…</button></div></div>
     </aside>
     <div class="gutter" id="gutL" title="拖动调整宽度"></div>
@@ -293,7 +295,7 @@
   </div>
   <div class="picker" id="picker" hidden role="dialog" aria-label="花型库">
     <div class="pk-head">
-      <b>新建配方 · 选一个花型模板开始</b>
+      <b id="pkTitle">花型库 · 选一个花型模板打开</b>
       <input type="search" id="pkSearch" placeholder="搜索名字或特征，例如：尾缀长、变色、循环、水面" aria-label="搜索花型">
       <button class="btn ghost" id="pkClose" type="button">关闭（Esc）</button>
     </div>

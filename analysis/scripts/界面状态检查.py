@@ -12,6 +12,7 @@
   A4 改完一层马上切到别的层：这一层的重烘不丢（贴图和参数一致）
   A5 切到别的效果：没保存的改动自动存成草稿，回来能选
   A6 切走再回来：带改动的状态不能被当成 AI 版基准（要么回到 AI 版，要么亮「参数已变」）
+  A7 新建效果：新建 → 加层 → 改名 → 复制 → 勾同一批星 → 保存 → 刷新 → 打开：层、名字、参数、同一批星都在
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -176,6 +177,56 @@ async def a6(pg):
     return ok, json.dumps({'AI 版 burn': ai, **r}, ensure_ascii=False)
 
 
+async def a7(p, b):
+    """新建效果（4.2.7，走查 B18）：新建 → 选第一层 → 加一层（现有效果的层）→ 改名 → 复制 → 勾同一批星 → 保存 → 刷新 → 左栏打开：
+    层数、层名、每层参数、同一批星、名字都在；改一层不带着复制出来的那层变（除非勾了同一批星）"""
+    ctx = await b.new_context(viewport={'width': 1440, 'height': 900})
+    pg = await ctx.new_page(); errs = []; answers = ['金锦冠测试']
+    pg.on('pageerror', lambda e: errs.append(str(e)))
+    pg.on('dialog', lambda d: asyncio.ensure_future(d.accept(answers[0] if d.type == 'prompt' else None)))
+    await pg.add_init_script("window.requestAnimationFrame = () => 0;")
+    try:
+        for rnd in range(2):
+            await pg.goto(HTML, wait_until='load', timeout=0)
+            await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
+            if not REAL: await pg.evaluate(FAKE)
+            if rnd == 0:
+                await pg.evaluate("(() => { window.__opening = true; $('#newRecipe').click(); const c = [...document.querySelectorAll('#pkGrid .pk-card')].find(x => x.textContent.includes('菊') && !x.textContent.includes('锦冠')); c.click(); setTimeout(() => window.__opening = false, 2500); return 0; })()")
+                await idle(pg); await pg.wait_for_timeout(800); await idle(pg)
+                r0 = await pg.evaluate("({ key: lib.key, n: state.layers.length, name: $('#abName').textContent })")
+                if not str(r0['key']).startswith('my:') or r0['n'] != 1: return False, '新建没打开我的效果：' + json.dumps(r0, ensure_ascii=False)
+                # 加一层：现有效果的层（引菊 → 锦 的第 1 层）
+                await pg.evaluate("(() => { window.__opening = true; $('#myAdd').click(); setTimeout(() => { pk.cat = 'fx'; pkRender(); const c = [...document.querySelectorAll('#pkGrid .pk-card')].find(x => x.textContent.includes('引菊')); c.click(); setTimeout(() => window.__opening = false, 2500); }, 50); return 0; })()")
+                await idle(pg); await pg.wait_for_timeout(800); await idle(pg)
+                answers[0] = '中心'
+                await pg.evaluate("myRenameLayer(0); 0")
+                await pg.evaluate("(() => { window.__opening = true; Promise.resolve(myDupLayer(0)).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+                # 改第 1 层（中心）的星数：复制出来的第 2 层不能跟着变
+                await set_layer_param(pg, 0, 'stars', 123); await idle(pg)
+                indep = await pg.evaluate("[layerEntryOf(state.layers[0]).P.stars, layerEntryOf(state.layers[1]).P.stars]")
+                # 勾「同一批星」：第 1、2 层
+                await pg.evaluate("selectComboLayer(0); mySetLinked(0, 1, true); 0"); await idle(pg)
+                await set_layer_param(pg, 0, 'v0', 77); await idle(pg)
+                linked = await pg.evaluate("[layerEntryOf(state.layers[0]).P.v0, layerEntryOf(state.layers[1]).P.v0]")
+                answers[0] = '金锦冠测试'
+                await pg.evaluate("selectComboLayer(-1); wbSave(false).then(() => 0)"); await pg.wait_for_timeout(800)
+                before = await pg.evaluate("({ id: lib.my.id, titles: state.layers.map((L, i) => layerName(i)), stars: state.layers.map(L => layerEntryOf(L).P.stars), links: myLinksLid().length, n: state.layers.length })")
+            else:
+                await pg.evaluate(f"(() => {{ window.__opening = true; const it = [...document.querySelectorAll('#libBody .li')].find(x => x.dataset.key === 'my:{before['id']}'); it.click(); setTimeout(() => window.__opening = false, 3000); return 0; }})()")
+                await idle(pg); await pg.wait_for_timeout(800); await idle(pg)
+                after = await pg.evaluate("({ key: lib.key, name: $('#abName').textContent, titles: state.layers.map((L, i) => layerName(i)), stars: state.layers.map(L => layerEntryOf(L).P.stars), links: (state.links || []).length, n: state.layers.length })")
+                bad = []
+                if indep[0] == indep[1]: bad.append(f'复制的层跟着变了 {indep}')
+                if linked[0] != 77 or linked[1] != 77: bad.append(f'同一批星没联动 {linked}')
+                if after['n'] != before['n'] or after['titles'] != before['titles']: bad.append(f"刷新后层不对 {after['titles']} ≠ {before['titles']}")
+                if after['stars'] != before['stars']: bad.append(f"刷新后参数不对 {after['stars']} ≠ {before['stars']}")
+                if after['links'] != 1: bad.append('刷新后同一批星没了')
+                if after['name'] != '金锦冠测试': bad.append('名字不对：' + after['name'])
+                return not bad, ('；'.join(bad) or f"{after['n']} 层 {after['titles']}、星数 {after['stars']}、同一批星 ✓、复制的层独立 ✓") + ('' if not errs else ' · 页面错误：' + errs[0][:200])
+    finally:
+        await ctx.close()
+
+
 PULSE_JS = r"""(c) => { // 和 回放检查.py zoom_pulse 同一口径：同一帧停着的几个 tick 里 Size By Life 的变化（%）
   const cv = (d, u) => { if ('const' in d) return d.const; const k = d.curve; if (u <= k[0][0]) return k[0][1]; for (let i = 1; i < k.length; i++) if (u <= k[i][0]) { const a = (u - k[i-1][0]) / Math.max(1e-9, k[i][0] - k[i-1][0]), x = k[i-1][1], y = k[i][1]; return Array.isArray(x) ? x.map((v, j) => v + (y[j] - v) * a) : x + (y - x) * a; } return k[k.length-1][1]; };
   let worst = 0;
@@ -241,7 +292,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

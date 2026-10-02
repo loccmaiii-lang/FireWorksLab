@@ -171,6 +171,7 @@ async function runLayerQueue() {
 // 同一批星（种子、星数、初速、终端速度都一样）的层：决定轨迹的参数改一处、几层一起变（用户 2026-10-02 13:09：两层共用的参数要两层一起改，以前没有联动）
 const LINK_KEYS = ['seed', 'stars', 'v0', 'vt', 'grav', 'speedJit', 'dirJit', 'burstR0', 'pattern', 'tilt', 'ringFrac', 'wind', 'turb', 'turbScale', 'tailDiffuse', 'tailDiffuseScale', 'massLoss', 'shellVx', 'shellVy', 'shellSpin', 'shellNo'];
 function computeLinks() {
+  if (typeof lib !== 'undefined' && lib.my) { state.links = myLinkIdx(); return; }    // 我的效果：同一批星是你勾的（4.2.7）
   const g = new Map(); state.links = [];
   // 复制出来的层（同一个母版用了两次，4.2.3）是另一发，不按「同一批星」联动
   state.layers.forEach((L, i) => { const e = state.lib.find(x => x.name === L.lib); if (!e || familyOf(e.P.type) !== 'aerial') return; const k = [e.P.seed, e.P.stars, e.P.v0, e.P.vt, e.fork ? e.name : ''].join('|'); if (!g.has(k)) g.set(k, []); g.get(k).push(i); });

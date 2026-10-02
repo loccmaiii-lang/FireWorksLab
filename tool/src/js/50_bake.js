@@ -206,7 +206,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
 function analyze(b) {
   const m = b.meta, L = m.L, P = b.P, N = b.N, NH = b.NH, cw = b.cw, chh = b.chh;
   const imgs = [readRGBA8(b.head)]; if (b.tail) imgs.push(readRGBA8(b.tail));
-  const light = [], cellMax = [], clip = [], edge = [], sig = [], rows = [], fills = [], boxes = [];
+  const light = [], cellMax = [], clip = [], edge = [], sig = [], rows = [], fills = [], boxes = [], fx = [];
   const measureImg = !m.loop && !m.unit;   // 与实拍视频同样的口径：亮部像素掩码 → 半径、下坠、像素数
   const SG = 16;   // 近似帧比较用的缩略网格
   for (let f = 0; f < L.F; f++) {
@@ -224,7 +224,7 @@ function analyze(b) {
     }
     const sxy = sizeXY(m, m.times[f]); light.push(sum * sxy[0] * sxy[1]);
     const fill=cellFill(imgs, N, x0, y0, cw, chh, ch);
-    fills.push(fill); if (renderVersion(P)>=40 && !m.loop && !m.unit) boxes.push(cellBox(imgs, N, x0, y0, cw, chh, ch)); cellMax.push(renderVersion(P)>=40&&fill?fill[2]:mx); clip.push(nz ? nc / nz : 0); edge.push(em); sig.push(sg);
+    fills.push(fill); if (renderVersion(P)>=40 && !m.loop && !m.unit) { boxes.push(cellBox(imgs, N, x0, y0, cw, chh, ch)); fx.push(cellHist(imgs, N, x0, y0, cw, chh, ch)); } cellMax.push(renderVersion(P)>=40&&fill?fill[2]:mx); clip.push(nz ? nc / nz : 0); edge.push(em); sig.push(sg);
     if (measureImg) rows.push(imgRow(imgs, f, m, N, x0, y0, cw, chh, ch));
   }
   const lmax = Math.max(1e-6, ...light);
@@ -241,7 +241,7 @@ function analyze(b) {
   let seam = null;
   if (m.loop && L.F > 2) { const mean = diffs.reduce((a, c) => a + c, 0) / diffs.length; seam = mean > 0 ? diff(sig[L.F - 1], sig[0]) / mean : 0; }
   if (measureImg) m.imgRows = rows;
-  if (boxes.length) m.boxes = boxes;     // 每帧内容（任何非零像素）在格子里的包围盒 [左, 右, 下, 上]（像素，y 向上）；取景实测收紧用
+  if (boxes.length) { m.boxes = boxes; m.fx = fx; }     // 每帧内容（任何非零像素）在格子里的包围盒 [左, 右, 下, 上]（像素，y 向上）+ 亮度分布；取景实测收紧用
   // 画面占比：每帧内容包围盒 ÷ 格子（横、竖取较小者）；只统计有内容的帧，末尾全黑的除外
   const fv = fills.filter(q => q);
   if (fv.length) { const per = fv.map(q => Math.min(q[0], q[1])); m.fill = { avg: per.reduce((a, c) => a + c, 0) / per.length, min: Math.min(...per), p10: per.slice().sort((a, c) => a - c)[Math.floor(per.length * 0.1)], x: fv.reduce((a, q) => a + q[0], 0) / fv.length, y: fv.reduce((a, q) => a + q[1], 0) / fv.length, frames: fills.map(q => q ? +Math.min(q[0], q[1]).toFixed(3) : null) }; }
@@ -253,6 +253,12 @@ function cellFill(imgs, N, x0, y0, cw, chh, ch) {
   for (const im of imgs) for (let y = 0; y < chh; y++) { let o = ((y0 + y) * N + x0) * 4 + ch; for (let x = 0; x < cw; x++, o += 4) if (im[o] > 3) { peak=Math.max(peak,im[o]);if (x < a) a = x; if (x > b2) b2 = x; if (y < c) c = y; if (y > d) d = y; } }
   if (b2 < 0) return null;
   return [(b2 - a + 1) / cw, (d - c + 1) / chh,peak];
+}
+// 单帧的编码值分布（256 档计数）+ 非零像素数 + 最亮值：取景收紧时预估「放大后过曝多少」、认出几乎是空的帧
+function cellHist(imgs, N, x0, y0, cw, chh, ch) {
+  const h = new Uint32Array(256); let nz = 0, pk = 0;
+  for (const im of imgs) for (let y = 0; y < chh; y++) { let o = ((y0 + y) * N + x0) * 4 + ch; for (let x = 0; x < cw; x++, o += 4) { const v = im[o]; if (v) { h[v]++; nz++; if (v > pk) pk = v; } } }
+  return { h, nz, pk, px: cw * chh * imgs.length };
 }
 // 单帧内容的包围盒（任何非零像素都算：引擎里自发光 ×4，1–3/255 的暗火星也看得见），格子像素坐标，y 向上；没有内容 = null
 function cellBox(imgs, N, x0, y0, cw, chh, ch) {

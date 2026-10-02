@@ -24,6 +24,24 @@ function stepKeys40(scales,ticks,N){
 //  · 固定取景：全段并集收紧（横向以爆点对称，竖向可以偏：Initial Location 的 Z 跟着改）；
 //  · Zoom：每帧大小 = 这一帧内容离爆点最远的距离（阶梯关键点照旧，每帧烘多大、引擎里就放多大）。
 // 碰到格子边（留边以内）的方向说明内容可能被切了，那个方向不收；空帧不改。能收紧 3% 以上才用，否则返回 null。
+// 收紧不能把画面推过标准（GPU 结果 2026-10-03：HN2 锦层收紧 12% 后过曝像素 1.9% → 2.5%，QN11 尾层几乎全黑的末帧被推到格子边）：
+//  · 过曝：格子里每个像素的世界面积变小，点状火星（不到一个像素）的值跟着变大；按这一帧的编码值分布预估收紧 g 倍后
+//    ≥ 250/255 的像素占比（偏保守：亮的像素按面积 × g² 算），超过 1.8% 就少收一点（这一帧本来就超的不收）；
+//  · 几乎是空的帧（最亮 < 16/255 或亮的像素不到 64 个）不按它自己收（只剩几颗暗火星时把它们推到格子边，回放检查会判碰边）。
+const FIT_SAT = 0.018;
+function fitSatAt(q, g, P) {
+  if (!q || !q.h) return 0;
+  const G = +P.encGamma || 1, xs = -Math.log(1 - Math.pow(250 / 255, G));
+  let n = 0; for (let v = 1; v < 256; v++) { const c = q.h[v]; if (!c) continue; const x = v >= 255 ? Infinity : -Math.log(1 - Math.pow(v / 255, G)); if (x * g * g >= xs) n += c; }
+  return n * g * g / q.px;
+}
+function fitGainCap(q, g, P) {   // 这一帧最多能收紧多少倍（1 = 不收）
+  if (!(g > 1)) return 1;
+  if (fitSatAt(q, 1, P) > FIT_SAT) return 1;
+  if (fitSatAt(q, g, P) <= FIT_SAT) return g;
+  let lo = 1, hi = g; for (let k = 0; k < 18; k++) { const mid = (lo + hi) / 2; if (fitSatAt(q, mid, P) <= FIT_SAT) lo = mid; else hi = mid; }
+  return lo;
+}
 function fitPlan40(P, pl, parts) {
   if (!pl || pl.loop || pl.unit || pl.tight || pl.aniso) return null;
   const pad = +P.cellPad || 0, fr = [];
@@ -31,10 +49,11 @@ function fitPlan40(P, pl, parts) {
     const m = s.meta, L = m.L; if (!m.boxes || m.boxes.length !== L.F) return null;
     const cw = s.cw || L.cellW, chh = s.chh || L.cellH, e = 2 * pad * (s.scale || 1) + 1;     // 包围盒是烘出来的像素（4K 时格子是两倍）
     m.boxes.forEach((bx, f) => {
-      const [sx, sy] = sizeXY(m, m.times[f]), c = centerAt(m, m.times[f]), hx = m.HX * sx, hy = m.HY * sy;
+      const [sx, sy] = sizeXY(m, m.times[f]), c = centerAt(m, m.times[f]), hx = m.HX * sx, hy = m.HY * sy, q = (m.fx || [])[f];
       if (!bx) { fr.push({ hx, hy, c, empty: true }); return; }
+      const faint = !!q && (q.pk < 16 || q.nz < 64);
       const du = 2 * hx / cw, dv = 2 * hy / chh;
-      fr.push({ hx, hy, c, x0: c[0] - hx + bx[0] * du, x1: c[0] - hx + (bx[1] + 1) * du, y0: c[1] - hy + bx[2] * dv, y1: c[1] - hy + (bx[3] + 1) * dv,
+      fr.push({ hx, hy, c, q, faint, x0: c[0] - hx + bx[0] * du, x1: c[0] - hx + (bx[1] + 1) * du, y0: c[1] - hy + bx[2] * dv, y1: c[1] - hy + (bx[3] + 1) * dv,
         tl: bx[0] <= e, tr: bx[1] >= cw - 1 - e, tb: bx[2] <= e, tt: bx[3] >= chh - 1 - e });
     });
   }
@@ -42,7 +61,8 @@ function fitPlan40(P, pl, parts) {
   const a = pl.L.cellW / pl.L.cellH, k = 1.02 / Math.max(.5, 1 - 4 * pad / Math.min(pl.L.cellW, pl.L.cellH));   // 内容放进去后离格子边：留边那一圈（被压暗）+ 2%
   const area = q => { let ar = 0; for (let i = 0; i < 200; i++) { const v = evalKeys(q.sizeKeys, (i + .5) / 200); ar += v * v / 200; } return ar; };
   if (pl.zoom) {
-    const hNew = fr.map(q => q.empty ? q.hx : Math.max(q.tl || q.tr || q.tb || q.tt ? q.hx : 0, Math.max(-q.x0, q.x1, -q.y0, q.y1, 1e-3) * k));
+    const hNew = fr.map(q => { if (q.empty || q.faint || q.tl || q.tr || q.tb || q.tt) return q.hx;
+      const h = Math.min(q.hx, Math.max(-q.x0, q.x1, -q.y0, q.y1, 1e-3) * k); return q.hx / fitGainCap(q.q, q.hx / h, P); });
     const old = fr.map(q => q.hx), gain = hNew.map((h, i) => old[i] / h).sort((x, y) => x - y)[Math.floor(hNew.length / 2)];
     if (!(gain >= 1.03)) return null;
     const HX = Math.max(...hNew) * Math.max(1, a), HY = HX / a, frameScale = hNew.map(h => Math.min(1, h * Math.max(1, a) / HX));
@@ -57,8 +77,10 @@ function fitPlan40(P, pl, parts) {
     X = Math.max(X, q.tl || q.tr ? W0 : Math.max(-q.x0, q.x1));
     ylo = Math.min(ylo, q.tb ? ylo0 : q.y0); yhi = Math.max(yhi, q.tt ? yhi0 : q.y1);
   }
-  const H0 = Math.max(X * k, (yhi - ylo) / 2 * k * a), HX = Math.min(pl.HX, H0), HY = HX / a, cy = (ylo + yhi) / 2;
-  const gain = pl.HX / HX; if (!(gain >= 1.03)) return null;
+  const H0 = Math.max(X * k, (yhi - ylo) / 2 * k * a);
+  let gain = pl.HX / Math.min(pl.HX, H0); for (const q of fr) if (!q.empty) gain = Math.min(gain, fitGainCap(q.q, gain, P));   // 每一帧都不能因为收紧过曝
+  const HX = pl.HX / gain, HY = HX / a, cy = (ylo + yhi) / 2;
+  if (!(gain >= 1.03)) return null;
   const out = { ...pl, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cy, ppm: pl.L.cellW / (2 * HX), py: (cy + HY) / (2 * HY), maxDisp: pl.maxDisp * gain,
     fitted: { mode: 'fixed', gain: +gain.toFixed(3), from: +pl.HX.toFixed(2), to: +HX.toFixed(2), cy: +cy.toFixed(2) } };
   return out;
