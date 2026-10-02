@@ -433,7 +433,9 @@ function loop(now) {
   if (state.stillBusy) { lastT = now; requestAnimationFrame(loop); return; }   // 定帧渲染期间让出画布
   const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
   const D = curDuration(), looping = !state.showcase && familyOf(state.P.type) === 'ground' && state.tab === 'master';
-  if (state.playing) { state.t += dt * state.speed; if (state.t > D + (looping ? 0 : 0.35)) state.t = looping ? state.t - D : 0; }
+  if (state.playing) { state.t += dt * state.speed;
+    if (!looping && state.loopPlay === false && state.t >= D) { state.t = D; state.playing = false; $('#play').textContent = '播放'; }   // 播放一遍：停在最后
+    else if (state.t > D + (looping ? 0 : 0.35)) state.t = looping ? state.t - D : 0; }
   $('#scrub').value = Math.round(clamp(state.t / D, 0, 1) * 1000);
   $('#tlabel').textContent = `${Math.min(state.t, D).toFixed(2)} / ${D.toFixed(2)} s`;
   try {
@@ -455,6 +457,7 @@ function loop(now) {
   $('#resolutionBox').hidden = !mv || state.view!=='live' || renderVersion(state.P)<40 || isTrail(state.P) || isPhys(state.P);
   $('#abTag').hidden = !(mv && state.B);
   refSync();
+  try { stageTick(D); } catch (e) { console.error(e); }
   perfTick(dt);
   requestAnimationFrame(loop);
 }

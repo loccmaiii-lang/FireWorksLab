@@ -56,7 +56,8 @@
         <span class="ab-th" id="abThumb"></span>
         <span class="ab-tx"><b id="abName"></b><small id="abSub"></small></span>
         <label class="ab-src" title="看哪个版本：AI 交的版本，或你自己保存的版本">版本<select id="abSrc"></select></label>
-        <span class="ab-chg" id="abChg" hidden>已改动 · 未保存</span>
+        <span class="ab-chg" id="abChg" hidden>参数已变 · 未保存</span>
+        <span class="ab-state" id="abState"></span>
         <span class="sp"></span>
         <button class="btn primary" id="abSave" type="button" title="把现在的全部参数（所有层）存成你的版本（存在这台电脑的浏览器里）">保存</button>
         <button class="btn" id="abSaveAs" type="button">另存为…</button>
@@ -68,9 +69,15 @@
           <button type="button" id="abDelete">删除这个版本</button>
           <input type="file" id="abFile" accept=".json,application/json" hidden>
         </div></details>
-        <button class="btn" id="abExport" type="button" title="导出整个效果的素材包（每层贴图 + Ramp + Cutout + PC / 手机 cascade.json）">导出素材包</button>
+        <button class="btn" id="abDeliv" type="button" aria-pressed="false" title="看这个效果导出的素材包里有什么：每层每段的贴图、平台、单格、延迟">查看交付</button>
       </div>
       <div id="bakeError" class="bake-error" role="alert" hidden><span id="bakeErrorText"></span><button class="btn" id="bakeRetry" type="button">重试烘焙</button></div>
+      <div class="viewframe" id="viewFrame">
+      <div class="vf-head"><span id="vfTitle"></span><span class="sp"></span>
+        <button class="vt" id="vtGrid" type="button" aria-pressed="false" title="构图网格（三分线 + 中心十字，只影响观察）"><svg viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="1"/><path d="M6 1.5v13M10 1.5v13M1.5 6h13M1.5 10h13"/></svg></button>
+        <button class="vt" id="vtNote" type="button" title="记录当前帧：把时间、视图、平台、距离、图层、版本写进意见"><svg viewBox="0 0 16 16"><rect x="1.5" y="4" width="13" height="9.5" rx="1.5"/><circle cx="8" cy="8.7" r="2.6"/><path d="M5.5 4l1-2h3l1 2"/></svg></button>
+        <button class="vt" id="vtBig" type="button" title="展开大画面（收起两侧，F 或 Esc 恢复）"><svg viewBox="0 0 16 16"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button>
+      </div>
       <div class="canvas-wrap">
         <div class="canvas-box ref-box" id="refBox" hidden><video id="refVid" muted playsinline preload="auto"></video>
           <span class="tag" id="refTag">实拍</span>
@@ -90,17 +97,25 @@
           <div class="hud" id="hud"></div>
           <div class="hud right" id="hudB"></div>
           <div class="busy" id="busy" hidden><div class="bar"><i id="busyBar"></i></div><span id="busyText">烘焙中</span></div>
+          <div class="gridov" aria-hidden="true"></div>
         </div>
       </div>
+      <div class="vf-foot"><span id="vfSpec"></span><span class="sp"></span><span id="vfTick"></span></div>
+      </div>
+      <div class="delivview" id="delivView" hidden></div>
       <div class="timeline">
         <button class="btn" id="play">暂停</button>
+        <button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1 tick</button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1 tick</button>
         <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="时间">
         <output id="tlabel">0.00 s</output>
         <select id="speed" class="btn" aria-label="播放速度">
           <option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option><option value="0.1">0.1×</option>
         </select>
-        <span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>F</kbd>专注 <kbd>R</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>↑</kbd><kbd>↓</kbd>切换条目</span>
+        <label class="check tlloop" title="关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked>循环</label>
+        <span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span>
+        <span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>F</kbd>专注 <kbd>R</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span>
       </div>
+      <div class="tlbars" id="tlBars"></div>
     </section>
     <div class="gutter" id="gutR" title="拖动调整宽度"></div>
     <div class="right" id="right">

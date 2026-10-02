@@ -372,7 +372,13 @@ def effects_from_status(out):
             mf = os.path.join(res_dir(jid), '导出清单.json')
             if os.path.exists(mf):
                 m = json.load(open(mf, encoding='utf-8'))
-                ex.append(dict(job=jid, entry=m.get('entry'), ver=m.get('ver'), time=m.get('time'), packages=m.get('packages', []),
+                ck = None; cf = os.path.join(res_dir(jid), '回放检查.json')
+                if os.path.exists(cf):      # 回放检查（贴图按引擎方式播放：空帧、裁切、过曝、抖动）——烘焙器「检查与验收」卡片用
+                    try:
+                        c = json.load(open(cf, encoding='utf-8'))
+                        ck = dict(passed=bool(c.get('pass')), fails=[f"{L.get('pack', '').split('·')[-1].strip()}：{'；'.join(L.get('fails') or [])}" for L in c.get('layers', []) if L.get('fails')])
+                    except Exception: ck = None
+                ex.append(dict(job=jid, entry=m.get('entry'), ver=m.get('ver'), time=m.get('time'), packages=m.get('packages', []), check=ck,
                                stale=bool(m.get('entry') and by.get(m['entry']) and by[m['entry']].get('ver') != m.get('ver'))))
             elif os.path.exists(os.path.join(res_dir(jid), 'done.json')): ex.append(dict(job=jid, legacy=True))
         r['exports'] = ex

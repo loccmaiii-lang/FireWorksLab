@@ -1,0 +1,83 @@
+{
+ "id": "UI6",
+ "type": "ui",
+ "name": "4.0.5 截图：画面框 / 工具 / 时间轴 / 时段条 / 查看交付 / 记录当前帧 / 选层调参",
+ "priority": 13,
+ "note": "只截图，不改东西。",
+ "shots": [
+  {
+   "name": "1440_鸿巢_整体_展开时刻",
+   "viewport": [
+    1440,
+    900
+   ],
+   "review": "HK10",
+   "view": "live",
+   "sleep": 5000,
+   "js": "document.querySelector('.jumps [data-jump=full]').click()"
+  },
+  {
+   "name": "1440_鸿巢_引擎回放_独看第2层_网格",
+   "view": "export",
+   "js": "state.layerView.solo=1;buildLayerCard();$('#vtGrid').click()",
+   "sleep": 2500
+  },
+  {
+   "name": "1440_鸿巢_调第1层",
+   "js": "state.layerView.solo=-1;buildLayerCard();$('#vtGrid').click();selectComboLayer(0)",
+   "view": "live",
+   "sleep": 3000
+  },
+  {
+   "name": "1440_鸿巢_第1层贴图流转",
+   "view": "atlas",
+   "flow": true,
+   "t": 2.0
+  },
+  {
+   "name": "1440_鸿巢_查看交付",
+   "js": "toggleDeliv(true)"
+  },
+  {
+   "name": "1440_鸿巢_审阅页_记录当前帧",
+   "js": "toggleDeliv(false);selectComboLayer(-1);noteFrame()",
+   "view": "live",
+   "t": 3.0
+  },
+  {
+   "name": "1440_鸿巢_100m",
+   "js": "lib.pane='params';syncPtabs();state.dist=100;$('#dist').value=sliderFromDist(100);$('#distOut').textContent='100 m'",
+   "view": "export",
+   "t": 3.0
+  },
+  {
+   "name": "1440_JM4-40_单层",
+   "js": "state.dist=1000;$('#dist').value=sliderFromDist(1000);$('#distOut').textContent='1000 m'",
+   "review": "JM4-40",
+   "view": "export",
+   "t": 1.5,
+   "sleep": 3000
+  },
+  {
+   "name": "1920_鸿巢",
+   "viewport": [
+    1920,
+    1080
+   ],
+   "review": "HK10",
+   "view": "live",
+   "t": 3.0,
+   "sleep": 4000
+  },
+  {
+   "name": "736_金芒菊",
+   "viewport": [
+    736,
+    900
+   ],
+   "review": "JM4-40",
+   "view": "live",
+   "t": 1.0
+  }
+ ]
+}

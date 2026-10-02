@@ -64823,6 +64823,12 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"MainA：中心跳变 3.83 px（512 格）"
+]
+},
 "stale": true
 },
 {
@@ -64858,6 +64864,12 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"MainA：中心跳变 3.83 px（512 格）"
+]
+},
 "stale": true
 },
 {
@@ -64887,6 +64899,12 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"JinMangJu40：中心跳变 6.62 px（512 格）"
+]
+},
 "stale": false
 },
 {
@@ -64916,6 +64934,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": false
 },
 {
@@ -64940,6 +64962,7 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": null,
 "stale": false
 },
 {
@@ -64964,6 +64987,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 }
 ],
@@ -65155,6 +65182,7 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": null,
 "stale": false
 },
 {
@@ -65182,6 +65210,7 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": null,
 "stale": false
 },
 {
@@ -65209,6 +65238,7 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": null,
 "stale": false
 }
 ],
@@ -65496,6 +65526,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -65535,6 +65569,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -65574,6 +65612,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -65613,6 +65655,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -65652,6 +65698,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -65691,6 +65741,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -65730,6 +65784,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -65769,6 +65827,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -65808,6 +65870,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -65841,6 +65907,13 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：末尾空帧 1",
+"L2_Main：末尾空帧 1；中心抖动 3.26 px（512 格）"
+]
+},
 "stale": false
 },
 {
@@ -65874,6 +65947,12 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L2_Main：末尾空帧 1；中心抖动 3.87 px（512 格）"
+]
+},
 "stale": false
 },
 {
@@ -65907,6 +65986,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": false
 },
 {
@@ -65946,6 +66029,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -65985,6 +66072,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 }
 ],
@@ -66167,6 +66258,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -66221,6 +66316,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -66268,6 +66367,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": true
 },
 {
@@ -66309,6 +66412,13 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：过曝像素 3.8%",
+"L3_Main：末尾空帧 1"
+]
+},
 "stale": true
 },
 {
@@ -66350,6 +66460,12 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：过曝像素 3.8%"
+]
+},
 "stale": false
 }
 ],
@@ -66539,6 +66655,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -66578,6 +66698,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": false
 },
 {
@@ -66611,6 +66735,12 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L2_Main：中间空帧 2"
+]
+},
 "stale": false
 },
 {
@@ -66644,6 +66774,12 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L2_Main：中间空帧 2"
+]
+},
 "stale": false
 },
 {
@@ -66683,6 +66819,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 }
 ],
@@ -66909,6 +67049,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -66963,6 +67107,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -67017,6 +67165,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -67050,6 +67202,12 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L2_Main：中间空帧 4"
+]
+},
 "stale": false
 },
 {
@@ -67097,6 +67255,12 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L3_Main：末尾空帧 1"
+]
+},
 "stale": false
 },
 {
@@ -67144,6 +67308,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": false
 },
 {
@@ -67198,6 +67366,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -67252,6 +67424,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 }
 ],
@@ -67455,6 +67631,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -67488,6 +67668,13 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：末尾空帧 1",
+"L2_Main：末尾空帧 1；中心抖动 3.26 px（512 格）"
+]
+},
 "stale": false
 },
 {
@@ -67521,6 +67708,12 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：中间空帧 1"
+]
+},
 "stale": false
 },
 {
@@ -67554,6 +67747,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": false
 },
 {
@@ -67593,6 +67790,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -67632,6 +67833,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 }
 ],
@@ -67820,6 +68025,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": true
 },
 {
@@ -67889,6 +68098,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -67958,6 +68171,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -68027,6 +68244,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -68060,6 +68281,12 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：末尾空帧 3"
+]
+},
 "stale": false
 },
 {
@@ -68109,6 +68336,15 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：中心抖动 8.53 px（512 格）",
+"L2_Main：中心抖动 13.81 px（512 格）",
+"L3_Main：中心抖动 44.33 px（512 格）",
+"L4_Main：中心抖动 10.5 px（512 格）"
+]
+},
 "stale": false
 },
 {
@@ -68158,6 +68394,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": false
 }
 ],
@@ -68352,6 +68592,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": false
 },
 {
@@ -68391,6 +68635,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": false
 },
 {
@@ -68430,6 +68678,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -68469,6 +68721,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -68508,6 +68764,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -68547,6 +68807,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -68586,6 +68850,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 }
 ],
@@ -68780,6 +69048,13 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：中心抖动 3.56 px（512 格）",
+"L2_Main：过曝像素 2.4%；中心抖动 6.51 px（512 格）"
+]
+},
 "stale": false
 },
 {
@@ -68855,6 +69130,14 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_MainB：中心抖动 5.79 px（512 格）",
+"L1_MainC：中心抖动 4.65 px（512 格）",
+"L4_Main：末尾空帧 1"
+]
+},
 "stale": false
 },
 {
@@ -68930,6 +69213,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": false
 },
 {
@@ -69014,6 +69301,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -69098,6 +69389,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -69182,6 +69477,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -69266,6 +69565,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -69350,6 +69653,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -69434,6 +69741,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 }
 ],
@@ -69660,6 +69971,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -69744,6 +70059,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -69828,6 +70147,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -69912,6 +70235,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -69996,6 +70323,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -70080,6 +70411,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": []
+},
 "stale": false
 },
 {
@@ -70155,6 +70490,15 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_MainB：中心抖动 5.79 px（512 格）",
+"L1_MainC：中心抖动 4.65 px（512 格）",
+"L2_Main：末尾空帧 1；中心抖动 28.7 px（512 格）",
+"L4_Main：末尾空帧 1"
+]
+},
 "stale": false
 },
 {
@@ -70224,6 +70568,14 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L2_Main：中心抖动 3.93 px（512 格）",
+"L3_Main：中心抖动 15.24 px（512 格）",
+"L4_Main：中心抖动 3.11 px（512 格）"
+]
+},
 "stale": false
 },
 {
@@ -70293,6 +70645,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": false
 }
 ],
@@ -70459,6 +70815,13 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：过曝像素 5.0%；中心跳变 6.92 px（512 格）",
+"L2_Main：中间空帧 24；中心跳变 5.63 px（512 格）"
+]
+},
 "stale": true
 },
 {
@@ -70492,6 +70855,13 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：中心抖动 3.62 px（512 格）",
+"L2_Main：中间空帧 25"
+]
+},
 "stale": true
 },
 {
@@ -70525,6 +70895,13 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：中心抖动 3.6 px（512 格）",
+"L2_Main：中间空帧 19"
+]
+},
 "stale": true
 },
 {
@@ -70558,6 +70935,13 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": false,
+"fails": [
+"L1_Main：中心抖动 3.56 px（512 格）",
+"L2_Main：过曝像素 2.4%"
+]
+},
 "stale": true
 },
 {
@@ -70591,6 +70975,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": false
 },
 {
@@ -70624,6 +71012,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": false
 }
 ],

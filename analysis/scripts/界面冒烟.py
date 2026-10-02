@@ -32,6 +32,9 @@ STEPS = [
     ('多层_鸿巢', "openEffect(EFFS().find(e=>e.key==='hongchao'))", 'views'),
     ('多层_鸿巢_调第1层', "selectComboLayer(0)", 'views'),
     ('多层_鸿巢_审阅页', "lib.pane='review';syncPtabs()", None),
+    ('多层_鸿巢_记录当前帧', "noteFrame()", None),
+    ('多层_鸿巢_查看交付', "lib.pane='params';syncPtabs();toggleDeliv(true)", None),
+    ('多层_鸿巢_返回画面', "toggleDeliv(false);document.querySelector('.jumps [data-jump=full]').click()", None),
     ('多层_鸿巢_回整体', "lib.pane='params';syncPtabs();selectComboLayer(-1)", None),
     ('尾缀_V5', "openEffect(EFFS().find(e=>e.key==='trail_v5'))", 'views'),
 ]
