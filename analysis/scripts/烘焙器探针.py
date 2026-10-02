@@ -38,17 +38,18 @@ JS_METRICS = r"""
   const out = { id, name, type: P.type, form: P.form, duration: P.duration, zoom: P.zoom, frameMode: P.frameMode, autoGrid: P.autoGrid,
                 renderVer:P.renderVer||37, qSS: P.qSS || 2, qKernel: P.qKernel || 0, headSize: P.headSize, sparkSize: P.sparkSize, emberSize: P.emberSize, texW: P.texW, texH: P.texH };
   if (P.form === 'emitset') {
-    // 循环层 + 粒子发射器（4.1）：量循环层面片（细长格：按单格像素数和 512² 比）；粒子层没有贴图，不参与
-    const ball = rtBallistic(P), LI = rtLoopInfo(P), box = rtLoopBox(P, ball.v0), L = layoutOf(P), T = ball.T, per = L.cols * L.rows;
+    // 循环层 + 粒子发射器（4.1；4.2.2 起取景 / 格子 / 消散贴图都由 rtLayout 定，和烘焙同一个函数）：量循环层面片（细长格：按单格像素数和 512² 比）；粒子层没有贴图，不参与
+    const lay = rtLayout(P), ball = lay.ball, LI = lay.LI, box = { HX: lay.HX, HY: lay.HY }, L = layoutOf({ ...P, cols: lay.cols, rows: lay.rows }), T = ball.T, per = L.cols * L.rows;
     out.grid = { cols: L.cols, rows: L.rows, chans: L.chans, frames: L.F, cellW: L.cellW, cellH: L.cellH, beam: true };
     const fAt = t => Math.floor(((t % LI.Tl) / LI.Tl) * L.F) % L.F; let seen = new Set(), maxJump = 0, prev = null;
     for (let i = 0; i / fps < T; i++) { const f = fAt(i / fps); seen.add(f); if (prev !== null && f >= prev) maxJump = Math.max(maxJump, f - prev); prev = f; }
     out.frames30 = { shown: seen.size, total: L.F, ratio: +(seen.size / L.F).toFixed(3), maxJump };
-    const Dl = rtPowderLifeMax(P) * 1.02, fpsT = P.rtFadeFps > 0 ? Math.min(30, P.rtFadeFps) : 30, chF = Math.min(4, Math.max(1, Math.ceil(Dl * fpsT / per))), Ff = per * chF, Df = Math.max(Dl, Ff / 30);
-    out.minFpsActive = +(L.F / LI.Tl).toFixed(1); out.minFpsFade = +Math.min(30, Ff / Df).toFixed(1); out.avgFps = out.minFpsActive;
+    out.fadeGrid = { cols: lay.fade.cols, rows: lay.fade.rows, chans: lay.fade.chans, frames: lay.fade.F, texW: lay.fade.texW, texH: lay.fade.texH };
+    out.minFpsActive = +(L.F / LI.Tl).toFixed(1); out.minFpsFade = +Math.min(30, lay.fade.fps).toFixed(1); out.avgFps = out.minFpsActive;
     const diameter = P.rtBurstD || 190, fraction = P.screenFrac || frac, flowerPx = fraction * screenH, ppmS = flowerPx / diameter;
     const pxH = 2 * box.HY * ppmS, pxW = 2 * box.HX * ppmS; out.flowerM = diameter; out.spriteM = +(2 * box.HY).toFixed(1);
-    out.screen = { frac: fraction, flowerPx: Math.round(flowerPx), spritePx: Math.round(pxH), spritePxW: Math.round(pxW), mag: +Math.max(pxH / L.cellH, pxW / L.cellW).toFixed(2), magMobile256: +Math.max(pxH / L.cellH, pxW / L.cellW).toFixed(2) };
+    out.screen = { frac: fraction, flowerPx: Math.round(flowerPx), spritePx: Math.round(pxH), spritePxW: Math.round(pxW), mag: +Math.max(pxH / L.cellH, pxW / L.cellW).toFixed(2), magMobile256: +(Math.max(pxH / L.cellH, pxW / L.cellW) / clamp(P.rtMobileTex == null ? 0.5 : P.rtMobileTex, 0.25, 1)).toFixed(2) };
+    out.mobileCell = { cellW: L.cellW * (P.rtMobileTex == null ? 0.5 : P.rtMobileTex), cellH: L.cellH * (P.rtMobileTex == null ? 0.5 : P.rtMobileTex) };
     out.game = dists.map(dist => ({ dist, spritePx: Math.round(pxH * 1000 / dist), mag: +(Math.max(pxH / L.cellH, pxW / L.cellW) * 1000 / dist).toFixed(2) }));
     const ss = Math.max(1, Math.round(P.qSS || 2)), ppmT = L.cellW * ss / (2 * box.HX);
     out.deadSize = { atFull: +(1.1 / ppmT).toFixed(2), atStart: +(1.1 / ppmT).toFixed(2) };

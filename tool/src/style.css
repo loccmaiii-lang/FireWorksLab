@@ -449,6 +449,17 @@ input[type=range]{accent-color:var(--acc)}
 .li .bds:empty{display:none}
 .li.plain{grid-template-columns:minmax(0,1fr);padding:7px 10px}
 .li.plain .tx b{font-size:13px}
+/* 分档（小 / 中 / 大）：效果行下面一排，每档自己的缩略图（2026-10-02 19:25） */
+.tiers{display:flex;gap:6px;margin:-1px 8px 6px 80px}
+.tier{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 3px 3px;border:2px solid transparent;border-radius:6px;background:var(--low);color:var(--dim);cursor:pointer;font:inherit}
+.tier:hover{background:var(--panel)}
+.tier.cur{border-color:var(--acc);background:var(--hover);color:var(--text)}
+.tier .th{width:100%;aspect-ratio:1;height:auto;border-radius:4px;background:#080a0d center/cover no-repeat;display:flex;overflow:hidden}
+.tier .th i{flex:1;background:center/cover no-repeat}
+.tier .tl{font-size:12.5px;font-weight:600;color:inherit}
+.tier small{font:10.5px var(--mono);color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.rlayers.tiersR{align-items:center;margin:2px 0 6px}
+.rlayers.tiersR .rt{margin:0 4px 0 0}
 details.histgrp{margin:0 4px}
 details.histgrp>summary.lsub{color:var(--dim);padding:5px 8px}
 .tiles{grid-template-columns:repeat(auto-fill,minmax(64px,1fr));padding:2px 10px 8px}
