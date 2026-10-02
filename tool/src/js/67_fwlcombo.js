@@ -67,6 +67,11 @@ async function comboPackFiles(name, layers, onProg) {
     }
     files.push(['cascade.json', utf8(JSON.stringify(fwlCombo(name, lb.map(({ L, b }) => ({ L, b })), false), null, 1))]);
     files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCombo(name + '_Mobile', mobiles, true), null, 1))]);
+    // 命名规范（61_naming.js）：多层 = 礼花英文名 + 每层英文名
+    if (lb.every(({ b }) => namingApplies(b))) {
+      const ef = typeof lib !== 'undefined' ? lib.effect : null, key = typeof wbKey === 'function' ? wbKey() : name, nm = packNamesFor(key, ef, lb.length, name);
+      return applyPackNaming(files, nm.base, lb.map(({ b }, i) => ({ ln: comboLayerName(name, i), mn: comboLayerName(name + '_Mobile', i), b, layer: nm.layers[i] })));
+    }
     return files;
   } finally { own.forEach(disposeBake); ownMobile.forEach(disposeBake); }
 }

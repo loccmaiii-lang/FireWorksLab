@@ -32,12 +32,20 @@ function bindSeqTextures(pr, b) {
   gl.uniform1f(pr.u.uCols, b.meta.L.cols); gl.uniform1f(pr.u.uRows, b.meta.L.rows); gl.uniform1f(pr.u.uChans, b.meta.L.chans);
   gl.uniform1f(pr.u.uComb, b.tail ? 0 : 1); gl.uniform2f(pr.u.uInset, 0.5 / b.cw, 0.5 / b.chh);
 }
+// 入点前放大（用户 2026-10-02 选 B）：第一段的 meta.pre = { from, dur, keys, pivot }；这段时间显示第 0 帧，面片按 keys 从小放大到 1
+function preScaleAt(b0, m, b, age0, age) { return b === b0 && m.pre && age < 0 && age0 >= m.pre.from ? evalKeys(m.pre.keys, clamp((age0 - m.pre.from) / m.pre.dur, 0, 1)) : 0; }
+function preRect(r, s, pivot) {
+  if (pivot) return [r[0] * s, r[1] * s, r[2] * s, r[3] * s];        // 绕爆点（面片坐标原点 = 爆点）
+  const cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2, hw = (r[2] - r[0]) / 2 * s, hh = (r[3] - r[1]) / 2 * s;
+  return [cx - hw, cy - hh, cx + hw, cy + hh];                       // 绕面片中心（Cascade Size By Life 的默认行为）
+}
 function drawLayer(b0, L, t, view, origin = [0, 0]) {
   t=engineTick(t);
-  const age0 = (t - L.delay) * L.rate, b = segAt(b0, age0), m = b.meta, age = age0 - (m.t0 || 0), f = frameIdx(m, age);
+  const age0 = (t - L.delay) * L.rate, b = segAt(b0, age0), m = b.meta, age = age0 - (m.t0 || 0), ps = preScaleAt(b0, m, b, age0, age);
+  const f = ps > 0 ? 0 : frameIdx(m, age);
   if (f < 0) return f;
   const pr = PR.mat; gl.useProgram(pr.p);
-  const r = layerRectAt(m, L, age);
+  const r = ps > 0 ? preRect(layerRectAt(m, L, 0), ps, m.pre.pivot) : layerRectAt(m, L, age);
   gl.uniform4fv(pr.u.uRect, [r[0] + origin[0], r[1] + origin[1], r[2] + origin[0], r[3] + origin[1]]); gl.uniform4fv(pr.u.uView, view);
   bindSeqTextures(pr, b);
   gl.uniform1f(pr.u.uFrame, f); gl.uniform1f(pr.u.uMirror, L.mirror ? 1 : 0);
@@ -198,7 +206,7 @@ function unionView(a, b) {
   const h = Math.max(x1 - x0, y1 - y0) / 2; return [(x0 + x1) / 2, (y0 + y1) / 2, h, h];
 }
 function renderLive() {
-  const P = state.P, m = state.bake && state.bake.meta, B = state.B;
+  const P = styled(state.P), m = state.bake && state.bake.meta, B = state.B;
   if (renderVersion(P)>=40 && !isTrail(P) && !isPhys(P) && !B) return renderLive40();
   if (!m) { hdrT.clear(); post(); hudText = '首次烘焙中…'; hudB = ''; return; }
   const sa = liveSlot('A'); prepSlot(sa, P, state.gen);
@@ -272,18 +280,21 @@ function renderExport() {
   const tsx = b.form === 'trail' ? trailStateAt(b, state.t) : null;
   if (b.form === 'trail') { hudText = !tsx ? '序列结束' : `导出效果 · 升空尾缀 · ${tsx.phase === 'rise' ? '上升循环' : '消散（' + tsx.bb.fps + ' fps）'} · 第 ${tsx.f + 1}/64 帧 · ${'RGBA'[Math.floor(tsx.f / 16)]} 通道 · 镜头跟着星头（面片沿弹道上升，Size By Life Y ${tsx.sy.toFixed(2)}）`; hudB = sb ? `B：${B.name}` : ''; return; }
   const fi = b.form === 'unit' ? frameIdx(b.meta, engineTick(state.t)) : frameIdx(s.meta, engineTick(state.t) - (s.meta.t0 || 0));
-  hudText = fi < 0 ? '序列结束' : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? ' 段 '+bakeSegmentName(b,bakeParts(b).indexOf(s)) : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
+  const ps = b.form === 'unit' ? 0 : preScaleAt(b, s.meta, s, engineTick(state.t), engineTick(state.t) - (s.meta.t0 || 0));
+  hudText = ps > 0 ? `导出效果 · 入点前：第 1 帧放大到 ${Math.round(ps * 100)}%（${s.meta.pre.pivot ? '绕爆点' : '绕面片中心'}）· 入点 ${s.meta.t0.toFixed(2)} s` : fi < 0 ? (engineTick(state.t) < (s.meta.t0 || 0) ? '还没到入点' : '序列结束') : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? ' 段 '+bakeSegmentName(b,bakeParts(b).indexOf(s)) : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
   hudB = sb ? `B：${B.name}` : '';
 }
 const flowTrail = [];
-function atlasSegOf(b0) { const parts=bakeParts(b0);return parts[clamp(state.atlasSeg,0,parts.length-1)]; }
+// 贴图 / 流转看哪一张：默认「自动」= 跟着时间走（一层分两张时播完第一张接着播第二张——用户 2026-10-02 13:09）；点段按钮锁定某一张
+function atlasSegOf(b0) { const parts=bakeParts(b0); return state.atlasSeg<0 ? segAt(b0, state.t) : parts[clamp(state.atlasSeg,0,parts.length-1)]; }
 let atlasSegmentSource=null;
 function syncAtlasSegments(b) {
   if(b===atlasSegmentSource)return;atlasSegmentSource=b;
-  state.atlasSeg=clamp(state.atlasSeg,0,Math.max(0,bakeParts(b).length-1));
+  state.atlasSeg=state.atlasSeg<0?-1:clamp(state.atlasSeg,0,Math.max(0,bakeParts(b).length-1));
   const box=$('#segSeg');box.replaceChildren();
+  const auto=document.createElement('button');auto.dataset.seg='-1';auto.textContent='自动（跟时间）';auto.setAttribute('aria-pressed',String(state.atlasSeg<0));box.appendChild(auto);
   bakeParts(b).forEach((s,i)=>{const button=document.createElement('button');button.dataset.seg=String(i);
-    button.textContent='段 '+bakeSegmentName(b,i);button.setAttribute('aria-pressed',String(i===state.atlasSeg));box.appendChild(button);});
+    button.textContent='第 '+(i+1)+' 张';button.setAttribute('aria-pressed',String(i===state.atlasSeg));box.appendChild(button);});
 }
 function drawAtlasQuad(b, show, f, n, trail) {
   const L = b.meta.L, pr = PR.atlas; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, show.tex);
@@ -300,7 +311,7 @@ function renderAtlas() {
   const L = b.meta.L, show = state.atlasLayer === 'tail' && b.tail ? b.tail : b.head, f = frameIdx(b.meta, state.t - (b.meta.t0 || 0));
   if (state.atlasFlow) { renderAtlasFlow(b0, b, show, f); return; }
   drawAtlasQuad(b, show, f, canvas.width, null);
-  hudText = `${b.tail ? (show === b.tail ? '拖尾' : '星头') : '合并'}贴图${b0.next ? ' 段 '+bakeSegmentName(b0,bakeParts(b0).indexOf(b)) : ''} ${b.P.texW}×${b.P.texH} · ${L.cols}×${L.rows} 格 · 金框 = 当前帧 · 红色 = 过曝像素`; hudB = '';
+  hudText = `${b.tail ? (show === b.tail ? '拖尾' : '星头') : '合并'}贴图${b0.next ? ` 第 ${bakeParts(b0).indexOf(b)+1} / ${bakeParts(b0).length} 张` : ''} ${b.P.texW}×${b.P.texH} · ${L.cols}×${L.rows} 格 · 金框 = 当前帧 · 红色 = 过曝像素`; hudB = '';
 }
 // 贴图流转：左边放大当前格，右边整张贴图上金框走动（淡框 = 刚走过的格），下面是帧号曲线
 function renderAtlasFlow(b0, b, show, f) {
@@ -319,7 +330,8 @@ function renderAtlasFlow(b0, b, show, f) {
   gl.viewport(0, 0, S, S);
   drawFlowCurve(b, f);
   const t = state.t - (b.meta.t0 || 0), ch = L.chans === 4 && f >= 0 ? 'RGBA'[Math.floor(f / L.per)] + ' 通道 · ' : '';
-  hudText = f < 0 ? '序列结束' : `贴图流转 · 第 ${f + 1}/${L.F} 帧 · ${ch}第 ${f % L.per + 1} 格（第 ${Math.floor((f % L.per) / L.cols) + 1} 行第 ${f % L.cols + 1} 列）· 时间 ${Math.max(0, t).toFixed(2)} s`;
+  const pi = bakeParts(b0).indexOf(b), pn = bakeParts(b0).length, pg = pn > 1 ? `第 ${pi + 1} / ${pn} 张 · ` : '';
+  hudText = f < 0 ? (t < 0 ? pg + '还没开始' : pg + '这一张播完了') : `贴图流转 · ${pg}第 ${f + 1}/${L.F} 帧 · ${ch}第 ${f % L.per + 1} 格（第 ${Math.floor((f % L.per) / L.cols) + 1} 行第 ${f % L.cols + 1} 列）· 时间 ${Math.max(0, t).toFixed(2)} s`;
   hudB = '';
 }
 function drawFlowCurve(b, f) {
@@ -363,14 +375,14 @@ function renderComboLive() {
   if (!items.length) { post(); hudText = '没有图层'; return; }
   let view = null;
   items.forEach(([L, e, i]) => {
-    const slot = liveSlot('combo' + i); prepSlot(slot, e.P, 'c' + i + ':' + e.name + ':' + (e.rev || 0));
-    const v = sceneView(e.P, e.bake.meta, slot), s = L.scale || 1, vs = [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
+    const slot = liveSlot('combo' + i); prepSlot(slot, styled(e.P), 'c' + i + ':' + e.name + ':' + (e.rev || 0));
+    const v = sceneView(styled(e.P), e.bake.meta, slot), s = L.scale || 1, vs = [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
     view = view ? unionView(view, vs) : vs;
   });
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   let n = 0;
   items.forEach(([L, e, i]) => {
-    const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = e.P;
+    const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = styled(e.P);
     if (age < 0 || age > P.duration || !layerShown(i)) return;
     const s = L.scale || 1, vL = [view[0] / s, view[1] / s, view[2] / s, view[3] / s], ppm = rgT.w / (2 * vL[2]);
     rgT.clear(); rgT.bind(); additive(true);

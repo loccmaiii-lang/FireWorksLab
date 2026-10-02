@@ -357,6 +357,9 @@ class Sim {
       const I = this.headI(s); if (I <= 0) continue;
       const sz = P.headSize * (s.kind === 1 || s.kind === 6 ? 0.8 : 1);
       push(bufH, nh++, s.x, s.y, I, sz);
+      // 全局风格「泪滴星头」：沿运动反方向补几个越来越小、越来越暗的点，速度越快拉得越长（默认 0 不进来）
+      if (P._styTear > 0 && nh < capH - 5) { const v = Math.hypot(s.vx, s.vy); if (v > 0.5) { const ux = -s.vx / v, uy = -s.vy / v, len = P._styTear * (sz * 2 + v * 0.025);
+        for (let k = 1; k <= 4; k++) { const f = k / 4; push(bufH, nh++, s.x + ux * len * f, s.y + uy * len * f, I * (1 - 0.75 * f), sz * (1 - 0.7 * f)); } } }
       if (refl > 0 && s.y > 0) push(bufH, nh++, s.x + ripple(s.y, this.t), -s.y, I * refl * Math.exp(-s.y / 400), sz * 1.3);
     }
     for (const f of this.flashes) {

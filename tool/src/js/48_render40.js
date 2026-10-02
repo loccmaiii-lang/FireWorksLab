@@ -88,7 +88,7 @@ function liveRenderer40(slot,P) {
   return slot.R40;
 }
 function renderLive40() {
-  const P=state.P, slot=liveSlot('A40'); prepSlot(slot,P,state.gen);
+  const P=styled(state.P), slot=liveSlot('A40'); prepSlot(slot,P,state.gen);
   const R=liveRenderer40(slot,P), b=previewBake();
   const pl=b && state.bakeGen===state.gen && ['master','segments','loop'].includes(b.form) ? segAt(b,state.t).meta : slot.plan40;
   const q=qualityOf(P), L=state.platform==='mobile' && !b?layoutOf(mobileParams(P)):pl.L;

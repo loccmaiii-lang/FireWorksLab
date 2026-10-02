@@ -43,3 +43,5 @@ function fibDirs(n, rng, R, jitDeg) {
   return out;
 }
 function randUnit(rng) { const x = rng.n(), y = rng.n(), z = rng.n(), l = Math.hypot(x, y, z) || 1; return [x / l, y / l, z / l]; }
+// 全局风格层（62_style.js）：离线检查只加载部分源码时没有 styledP，就原样返回
+function styled(P) { return typeof styledP === 'function' ? styledP(P) : P; }

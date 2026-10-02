@@ -2,7 +2,7 @@
 //  状态与界面
 // =====================================================================
 const state = {
-  tab: 'master', view: 'live', atlasLayer: 'head', atlasSeg: 0,
+  tab: 'master', view: 'live', atlasLayer: 'head', atlasSeg: -1,
   ...defaultsFor('kiku'), name: 'Kiku_01',
   t: 0, playing: true, speed: 1, expo: 1, disp: 'game', dist: 1000, exportResolution: true, platform: 'pc',
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
@@ -92,6 +92,7 @@ async function runLayerBake() {
     if (e.rep) { state.layerEdits = state.layerEdits || {}; state.layerEdits[e.rep] = { P: e.P, M: e.M }; e.editSig = JSON.stringify([e.P, e.M]); }
     state.dirty = false; state.failedGen = -1; state.bakeError = null; syncBakeError();
     showStats(b); setStatus('');
+    await syncLinkedLayers(i);
     if (state.platform === 'mobile') await ensureComboMobile();
     if (typeof buildLayerCard === 'function') buildLayerCard();
   } catch (err) {
@@ -102,6 +103,29 @@ async function runLayerBake() {
     state.baking = false; state.rebake = false;
     if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
   }
+}
+// 同一批星（种子、星数、初速、终端速度都一样）的层：决定轨迹的参数改一处、几层一起变（用户 2026-10-02 13:09：两层共用的参数要两层一起改，以前没有联动）
+const LINK_KEYS = ['seed', 'stars', 'v0', 'vt', 'grav', 'speedJit', 'dirJit', 'burstR0', 'pattern', 'tilt', 'ringFrac', 'wind', 'turb', 'turbScale', 'massLoss', 'shellVx', 'shellVy', 'shellSpin', 'shellNo'];
+function computeLinks() {
+  const g = new Map(); state.links = [];
+  state.layers.forEach((L, i) => { const e = state.lib.find(x => x.name === L.lib); if (!e || familyOf(e.P.type) !== 'aerial') return; const k = [e.P.seed, e.P.stars, e.P.v0, e.P.vt].join('|'); if (!g.has(k)) g.set(k, []); g.get(k).push(i); });
+  for (const arr of g.values()) if (arr.length > 1) state.links.push(arr);
+}
+const linkedWith = i => ((state.links || []).find(a => a.includes(i)) || []).filter(j => j !== i);
+async function syncLinkedLayers(i) {
+  if (state.linkOff) return;
+  const e = state.lib.find(x => x.name === state.layers[i].lib), done = [];
+  for (const j of linkedWith(i)) {
+    const e2 = state.lib.find(x => x.name === state.layers[j].lib); if (!e2 || e2 === e) continue;
+    const diff = LINK_KEYS.filter(k => e.P[k] !== undefined && JSON.stringify(e.P[k]) !== JSON.stringify(e2.P[k]));
+    if (!diff.length) continue;
+    for (const k of diff) e2.P[k] = structuredClone(e.P[k]);
+    e2.rev = (e2.rev || 0) + 1;
+    try { const b = await bake(libP(e2.P, true), 1, p => setStatus(`联动：重烘第 ${j + 1} 层 ${Math.round(p * 100)}%`)); disposeBake(e2.bake); e2.bake = b; } catch (err) { flash('联动重烘失败：' + err.message, true); }
+    if (e2.rep) { state.layerEdits = state.layerEdits || {}; state.layerEdits[e2.rep] = { P: e2.P, M: e2.M }; e2.editSig = JSON.stringify([e2.P, e2.M]); }
+    done.push(`第 ${j + 1} 层（${diff.join('、')}）`);
+  }
+  setStatus(''); if (done.length) flash('联动：同步了 ' + done.join('；'));
 }
 function syncBakeError() {
   const e = state.bakeError; $('#bakeError').hidden = !e;
@@ -420,7 +444,7 @@ function newLayer(entry, o = {}) {
 async function applyCombo(c) {
   await ensureLibEntries(c.layers.map(l => l.m));
   state.layers = c.layers.map(l => { const e = libByType(l.m); const { m, ...rest } = l; if (rest.stages) rest.stages = rest.stages.map(s => [...s]); return newLayer(e, rest); });
-  state.comboName = c.name; state.t = 0; buildComboPanel();
+  state.comboName = c.name; state.t = 0; computeLinks(); buildComboPanel();
   if(state.platform==='mobile')await ensureComboMobile();
   if (typeof buildLayerCard === 'function') buildLayerCard();
 }
@@ -487,7 +511,8 @@ async function exportCombo() {
     const files = await comboPackFiles(name, state.layers, p => busy(true, '组合素材包…', p));
     files.push([`${name}_组合说明.json`, utf8(JSON.stringify(json, null, 2))]);
     busy(true, '打包 ZIP…', 1);
-    download(await makeZip(files.map(([f, d]) => [`${name}/${f}`, d])), `${name}.zip`);
+    const pk = files.some(([f]) => f.startsWith(FW_TEX_PREFIX)) ? packNamesFor(wbKey(), lib.effect, state.layers.length, name).base : name;
+    download(await makeZip(files.map(([f, d]) => [`${pk}/${f}`, d])), `${pk}.zip`);
     flash('已导出组合素材包 ' + name);
   } catch (e) { console.error(e); flash('组合导出失败：' + e.message, true); }
   finally { busy(false); }
