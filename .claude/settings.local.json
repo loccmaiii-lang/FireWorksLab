@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp /root/.claude/uploads/adc0dfde-1cbb-508b-bc24-7be495b774bd/6d70b057-image.jpg 对话记录/附件_2026-10-03_烟花清单.jpg)",
+      "Bash(git add *)",
+      "Bash(git commit -qm '对话框2：记录用户 00:21（存法、节奏、渲染核、粒子贴图、烟花清单截图） *)",
+      "Bash(git push *)"
+    ]
+  }
+}
