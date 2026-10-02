@@ -39,7 +39,7 @@
    "tool/src/**",
    "analysis/scripts/回放检查.py",
    "analysis/scripts/标准检查.py",
-   "负责：无（2026-10-02 14:45 对话框11 释放：4.1.0「循环层 + 粒子发射器」已推，新增 46_emitset.js / 47_risetail.js，其它文件只加了 isEmit 分支；对话框2 的 dlg2-asset-control 可以合并）。改之前在这里认领，同一时间一方"
+   "负责：对话框2（2026-10-02 14:50 认领：合并分支 dlg2-asset-control——入点 / 出点、命名规范、全局风格层、层轨道、联动、单束、流转连播）。改之前在这里认领，同一时间一方"
   ],
   "对话框7 · 引线实验（4.0 期间不碰 tool/src）": [
    "experiments/引线/**",
