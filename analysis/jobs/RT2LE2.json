@@ -1,0 +1,9 @@
+{
+ "id": "RT2LE2",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT2L",
+ "name": "RiseTailL",
+ "priority": 8,
+ "note": "升空尾缀 · 循环层 + 粒子 大（第 2 版）重导：烘焙器 4.1.2 新命名；中 / 大档循环层贴图曝光 0.45 → 0.3、引擎亮度 4 → 6（RT2*E 回放检查过曝 2.3% / 3.1%）。"
+}
