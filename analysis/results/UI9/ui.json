@@ -1,0 +1,137 @@
+[
+ {
+  "name": "1440_引菊_两层时刻与接力",
+  "seconds": 10.5,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.2,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1440_引菊_拖橙引线火花停_锦跟着",
+  "seconds": 14.0,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.6,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 3.82
+  }
+ },
+ {
+  "name": "1440_引菊_输出一节_自动",
+  "seconds": 2.3,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.6,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 3.82
+  }
+ },
+ {
+  "name": "1440_引菊_输出一节_最省按帧数",
+  "seconds": 10.4,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.6,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 3.82
+  }
+ },
+ {
+  "name": "1440_引菊_贴图_最省按帧数",
+  "seconds": 2.2,
+  "hud": "第 1 层 · 合并贴图 2048×2048 · 4×4 格 · 金框 = 当前帧 · 红色 = 过曝像素",
+  "seg": "",
+  "view": "atlas",
+  "flow": null,
+  "t": 1.6,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 3.82
+  }
+ },
+ {
+  "name": "1440_引菊_单束菜单",
+  "seconds": 2.0,
+  "hud": "引菊 → 锦（橙色直线菊转金锦） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 1.6,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 3.82
+  }
+ },
+ {
+  "name": "1440_金芒菊_无扩散",
+  "seconds": 7.3,
+  "hud": "实时模拟 · 导出单格 512×512 · 固定曝光 ×0.20 · 居中快门",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3.6,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1440_金芒菊_尾迹扩散1.5",
+  "seconds": 9.6,
+  "hud": "实时模拟 · 导出单格 512×512 · 固定曝光 ×0.20 · 居中快门",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 3.6,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1440_升空尾缀_查看交付_命名",
+  "seconds": 8.5,
+  "hud": "实时模拟 · 升空尾缀 · 上升 0.00 / 5.00 s · 循环层火粉 0 颗 + 粒子层 0 颗（PC）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 0,
+  "P": {
+   "type": "tailM",
+   "renderVer": 40,
+   "cols": 16,
+   "duration": 9.1
+  }
+ }
+]

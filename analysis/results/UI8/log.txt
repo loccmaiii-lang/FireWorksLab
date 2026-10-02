@@ -1,18 +1,18 @@
-16:51:51 开始：4.1.2 截图：层轨道把手可拖、尾迹外形（每个资产自己的参数）、循环层 + 粒子命名、实时模拟后段帧间隔（界面截图）
-16:52:16 界面截图 1：1440_鸿巢_层轨道把手（23 秒）
-16:52:31 界面截图 2：1440_鸿巢_拖第2层入点（15 秒）
-16:52:35 界面截图 3：1440_鸿巢_拖入点后_引擎回放（3 秒）
-16:52:38 界面截图 4：帧间隔_鸿巢_开花后1秒（4 秒）
-16:52:42 界面截图 5：帧间隔_鸿巢_开花后8秒（4 秒）
-16:52:49 界面截图 6：1440_金芒菊_尾迹外形参数（7 秒）
-16:52:58 界面截图 7：1440_金芒菊_泪滴粗细亮肩（9 秒）
-16:53:07 界面截图 8：1440_金芒菊_原样（9 秒）
-16:53:07 出错：
+17:11:51 开始：4.1.2 截图：层轨道把手可拖、尾迹外形（每个资产自己的参数）、循环层 + 粒子命名、实时模拟后段帧间隔（界面截图）
+17:12:15 界面截图 1：1440_鸿巢_层轨道把手（20 秒）
+17:12:32 界面截图 2：1440_鸿巢_拖第2层入点（17 秒）
+17:12:35 界面截图 3：1440_鸿巢_拖入点后_引擎回放（3 秒）
+17:12:39 界面截图 4：帧间隔_鸿巢_开花后1秒（4 秒）
+17:12:43 界面截图 5：帧间隔_鸿巢_开花后8秒（4 秒）
+17:12:50 界面截图 6：1440_金芒菊_尾迹外形参数（7 秒）
+17:13:00 界面截图 7：1440_金芒菊_泪滴粗细亮肩（10 秒）
+17:13:10 界面截图 8：1440_金芒菊_原样（10 秒）
+17:13:10 出错：
 Traceback (most recent call last):
   File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 85, in run_job
     import ui_shots; ui_shots.run(job, s, out, log=log)
                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\ui_shots.py", line 58, in run
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\ui_shots.py", line 66, in run
     if st.get('js'): pg.evaluate(st['js'])
                      ^^^^^^^^^^^^^^^^^^^^^
   File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\sync_api\_generated.py", line 9413, in evaluate
