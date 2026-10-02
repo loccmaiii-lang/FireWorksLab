@@ -1,0 +1,31 @@
+{
+ "effect": "trail_phys",
+ "entry": "RT2M",
+ "ver": "96e847ad",
+ "time": "2026-10-02 15:32",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "RiseTailM",
+   "replica": "RT2M",
+   "files": [
+    "RiseTailM.json",
+    "RiseTailM_Cascade参数.txt",
+    "RiseTailM_Mobile.json",
+    "RiseTailM_曲线.csv",
+    "T_RiseTailM_Fade.png",
+    "T_RiseTailM_Fade_Cutout.png",
+    "T_RiseTailM_Loop.png",
+    "T_RiseTailM_Loop_Cutout.png",
+    "T_RiseTailM_Mobile_Fade.png",
+    "T_RiseTailM_Mobile_Fade_Cutout.png",
+    "T_RiseTailM_Mobile_Loop.png",
+    "T_RiseTailM_Mobile_Loop_Cutout.png",
+    "T_RiseTailM_Mobile_Ramp.png",
+    "T_RiseTailM_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}

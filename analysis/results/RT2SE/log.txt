@@ -1,0 +1,8 @@
+15:32:05 开始：RiseTailS（导出素材）
+15:32:10 RiseTailS 导出 5 秒：RiseTailS.json、RiseTailS_Cascade参数.txt、RiseTailS_Mobile.json、RiseTailS_曲线.csv、T_RiseTailS_Fade.png、T_RiseTailS_Fade_Cutout.png、T_RiseTailS_Loop.png、T_RiseTailS_Loop_Cutout.png、T_RiseTailS_Mobile_Fade.png、T_RiseTailS_Mobile_Fade_Cutout.png、T_RiseTailS_Mobile_Loop.png、T_RiseTailS_Mobile_Loop_Cutout.png、T_RiseTailS_Mobile_Ramp.png、T_RiseTailS_Ramp.png、cascade.json、cascade_mobile.json
+15:32:11 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT2SE\回放检查.jpg（❌ RiseTailS · RiseLoop：帧号回跳 1 次）
+15:32:28 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT2SE\烘焙回放.jpg
+15:32:28 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT2SE\烘焙回放_原尺寸.jpg
+15:32:29 烘焙器预览没做成（不影响导出）：'texture'
+15:32:29 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+15:32:29 完成，用时 0.4 分钟
