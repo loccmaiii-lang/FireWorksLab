@@ -246,6 +246,9 @@ def build(e):
     elif e.get('explicit'):
         rec['base'] = e['base']; rec['p'] = e.get('p', {}); rec['m'] = e.get('m', {})
         if e.get('principle'): rec['principle'] = True
+        if e.get('thumb') and os.path.exists(os.path.join(ROOT, e['thumb'])):     # 条目自带模拟缩略图（例：升空尾缀，烘焙器画面截图）
+            jp = os.path.join(ROOT, e['thumb']); w, h = Image.open(jp).size
+            rec['thumbSim'] = thumb(jp, tuple(e['thumb_box']) if e.get('thumb_box') else (min(w - h, h), 0, min(w - h, h) + h, h))
         if e.get('video'):
             tr = thumb_from_video(e['video'], rec['vmeta'], e.get('thumb_dt', 0.8))
             if tr: rec['thumbRef'] = tr

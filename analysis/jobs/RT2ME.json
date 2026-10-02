@@ -1,0 +1,9 @@
+{
+ "id": "RT2ME",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT2M",
+ "name": "RiseTailM",
+ "priority": 8,
+ "note": "升空尾缀 · 循环层 + 粒子 中（第 2 版：火星数量 / 大小 / 散开按用户 14:35 参考图对齐）：导出素材包 + 回放检查 + 烘焙回放对照，给用户进引擎标定。"
+}
