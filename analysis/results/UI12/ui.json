@@ -1,0 +1,362 @@
+[
+ {
+  "name": "QN10_打开",
+  "seconds": 12.4,
+  "hud": "青柠星 第 10 版 · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 0.017600000000000365,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "QN10_0.36s",
+  "seconds": 3.6,
+  "hud": "青柠星 第 10 版 · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 0.36,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "QN10_1.07s",
+  "seconds": 3.6,
+  "hud": "青柠星 第 10 版 · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 1.07,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "QN10_1.79s",
+  "seconds": 3.5,
+  "hud": "青柠星 第 10 版 · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 1.79,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "QN10_2.51s",
+  "seconds": 3.5,
+  "hud": "青柠星 第 10 版 · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 2.51,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "QN10_3.22s",
+  "seconds": 3.5,
+  "hud": "青柠星 第 10 版 · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 3.22,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "QN11_打开",
+  "seconds": 13.5,
+  "hud": "青柠星 · 4.0（QN10 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 0,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "QN11_0.36s",
+  "seconds": 3.5,
+  "hud": "青柠星 · 4.0（QN10 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 0.36,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "QN11_1.07s",
+  "seconds": 3.5,
+  "hud": "青柠星 · 4.0（QN10 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 1.07,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "QN11_1.79s",
+  "seconds": 3.5,
+  "hud": "青柠星 · 4.0（QN10 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 1.79,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "QN11_2.51s",
+  "seconds": 3.5,
+  "hud": "青柠星 · 4.0（QN10 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 2.51,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "QN11_3.22s",
+  "seconds": 3.5,
+  "hud": "青柠星 · 4.0（QN10 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 3.22,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "HK9_打开",
+  "seconds": 17.0,
+  "hud": "鸿巢四尺玉 第 9 版 · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 0,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "HK9_1.04s",
+  "seconds": 3.5,
+  "hud": "鸿巢四尺玉 第 9 版 · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 1.04,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "HK9_3.11s",
+  "seconds": 3.5,
+  "hud": "鸿巢四尺玉 第 9 版 · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 3.11,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "HK9_5.18s",
+  "seconds": 3.5,
+  "hud": "鸿巢四尺玉 第 9 版 · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 5.18,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "HK9_7.25s",
+  "seconds": 3.5,
+  "hud": "鸿巢四尺玉 第 9 版 · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 7.25,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "HK9_9.32s",
+  "seconds": 3.5,
+  "hud": "鸿巢四尺玉 第 9 版 · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 9.32,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "HK10_打开",
+  "seconds": 22.8,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 0,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "HK10_1.04s",
+  "seconds": 3.5,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 1.04,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "HK10_3.11s",
+  "seconds": 3.5,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 3.11,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "HK10_5.18s",
+  "seconds": 3.6,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 5.18,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "HK10_7.25s",
+  "seconds": 3.5,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 7.25,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "HK10_9.32s",
+  "seconds": 3.5,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 9.32,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ }
+]

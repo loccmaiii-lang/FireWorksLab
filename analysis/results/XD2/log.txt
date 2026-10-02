@@ -1,0 +1,8 @@
+05:21:57 开始：Hongchao40Dots（导出素材）
+05:22:21 Hongchao40Dots 组合素材包 24 秒：T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01.png、T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01_C.png、T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01_HD.png、T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02.png、T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_C.png、T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD.png、T_EFX_FireWorks_YonshakuKamuro_Main_R.png、T_EFX_FireWorks_YonshakuKamuro_Red_4x4_01.png、T_EFX_FireWorks_YonshakuKamuro_Red_4x4_01_C.png、T_EFX_FireWorks_YonshakuKamuro_Red_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+05:22:21 回放检查不查的粒子发射器（光点 / 单束）：L2_Dots
+05:22:23 回放检查：✅ 通过
+05:22:39 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\XD2\烘焙回放.jpg
+05:22:39 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\XD2\烘焙回放_原尺寸.jpg
+05:22:39 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+05:22:39 完成，用时 0.7 分钟
