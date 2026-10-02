@@ -72,8 +72,8 @@ const BASE = {
   rtERate: 10, rtELife: 3, rtESize: 0.8, rtEI: 4, rtEKd: 1.0,
   rtSmoke: 0.003, rtSmokeRate: 25, rtSmokeLife: 3.5, rtSmokeSize: 2.5, rtSmokeGrow: 4,
   rtBright: 1, rtDotGain: 1, rtMobile: 0.2, rtDissolve: 1, rtFadeFps: 0,
-  // 4.2.2（第 4 版）：哪几档火星烘进循环层贴图、贴图火星亮度；引擎里加的星头光晕 / 末段爆亮 / 发射口；格子（0 自动）、手机贴图边长比例。默认关 = 旧条目效果不变
-  rtFTex: 0, rtMTex: 0, rtCTex: 0, rtTexI: 1, rtGlow: 0, rtGlowSize: 4, rtPopRate: 0, rtPopI: 20, rtPopSize: 0.5, rtPopAt: 0.85,
+  // 4.2.2（第 4 版）：细火星烘进循环层贴图的比例和贴图亮度；引擎里加的星头光晕 / 末段爆亮 / 发射口；格子（0 自动）、手机贴图边长比例。默认关 = 旧条目效果不变
+  rtFTex: 0, rtTexI: 10, rtGlow: 0, rtGlowSize: 4, rtPopRate: 0, rtPopI: 20, rtPopSize: 0.5, rtPopAt: 0.85,
   rtLaunch: 0, rtLaunchSize: 8, rtLaunchN: 0, rtLaunchV: 30, rtLaunchCone: 20, rtLaunchI: 8, rtGrid: 0, rtMobileTex: 0.5,
   // 地面循环
   loopT: 1, nozzles: 1, fanAngle: 70, spacing: 6, shotRate: 3, shotSpeed: 70, cometBurn: 1.4, burstStars: 0,
@@ -127,16 +127,22 @@ const TYPES = {
     rtCone: 5.5, rtFRate: 2400, rtFLife: 0.7, rtFSize: 0.13, rtMRate: 850, rtMLife: 1.1, rtMSize: 0.2, rtCRate: 150, rtCLife: 1.8, rtCSize: 0.28,
     rtERate: 3, rtELife: 2.5, rtESize: 0.7,
     // 第 2 / 3 版（对话框11，10-02：RT2 火星数量大小 + RT3 白黄对比、线状拖影、空气乱流）
-    rtACone: 5, rtASize: 0.42, rtAI: 1.1, rtAWarm: 0.8, rtFI: 5, rtMI: 10, rtCI: 24, rtCKd: 1.8, rtT0: 2700, rtTb: 2450, rtEKd: 2.5, rtSmoke: 0, rtMobile: 0.12, rtFdT: -400, rtCdT: 500, rtSizeJit: 45, rtKdJit: 35, rtConeSoft: 1, rtStreakT: 0.02, rtFStreak: 0.3, rtTurb: 1, rtTurbL: 20, rtTurbS: 0.6 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
+    rtACone: 5, rtASize: 0.42, rtAI: 1.1, rtAWarm: 0.8, rtFI: 5, rtMI: 10, rtCI: 24, rtCKd: 1.8, rtT0: 2700, rtTb: 2450, rtEKd: 2.5, rtSmoke: 0, rtMobile: 0.12, rtFdT: -400, rtCdT: 500, rtSizeJit: 45, rtKdJit: 35, rtConeSoft: 1, rtStreakT: 0.02, rtFStreak: 0.3, rtTurb: 1, rtTurbL: 20, rtTurbS: 0.6,
+    // 第 4 版（对话框11，10-02 19:25：一半细火星烘进贴图、星头光晕、末段爆亮、发射口）
+    rtFTex: 0.5, rtTexI: 40, rtGlow: 0.3, rtGlowSize: 6, rtPopRate: 15, rtPopSize: 0.4, rtLaunch: 1.0, rtLaunchSize: 6, rtLaunchN: 60, rtLaunchV: 25 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
   tailM: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.3, rtBright: 6, haloFrac: 0.04, haloR: 2, seed: 7,
     // 第 2 / 3 版（对话框11，10-02：RT2 火星数量大小 + RT3 白黄对比、线状拖影、空气乱流）
-    rtCone: 7, rtACone: 6, rtASize: 0.5, rtAI: 1.1, rtAWarm: 0.8, rtFRate: 3000, rtFSize: 0.15, rtFI: 5, rtMRate: 1100, rtMSize: 0.23, rtMI: 10, rtCRate: 200, rtCSize: 0.32, rtCI: 24, rtCKd: 1.8, rtT0: 2700, rtTb: 2450, rtERate: 5, rtEKd: 2.5, rtSmoke: 0, rtMobile: 0.1, rtFdT: -400, rtCdT: 500, rtSizeJit: 45, rtKdJit: 35, rtConeSoft: 1, rtStreakT: 0.02, rtFStreak: 0.3, rtTurb: 1, rtTurbL: 20, rtTurbS: 0.6 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
+    rtCone: 7, rtACone: 6, rtASize: 0.5, rtAI: 1.1, rtAWarm: 0.8, rtFRate: 3000, rtFSize: 0.15, rtFI: 5, rtMRate: 1100, rtMSize: 0.23, rtMI: 10, rtCRate: 200, rtCSize: 0.32, rtCI: 24, rtCKd: 1.8, rtT0: 2700, rtTb: 2450, rtERate: 5, rtEKd: 2.5, rtSmoke: 0, rtMobile: 0.1, rtFdT: -400, rtCdT: 500, rtSizeJit: 45, rtKdJit: 35, rtConeSoft: 1, rtStreakT: 0.02, rtFStreak: 0.3, rtTurb: 1, rtTurbL: 20, rtTurbS: 0.6,
+    // 第 4 版（对话框11，10-02 19:25：一半细火星烘进贴图、星头光晕、末段爆亮、发射口）
+    rtFTex: 0.5, rtTexI: 40, rtGlow: 0.35, rtGlowSize: 9, rtPopRate: 30, rtPopSize: 0.5, rtLaunch: 1.2, rtLaunchSize: 8, rtLaunchN: 100, rtLaunchV: 30 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
   tailL: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.3, rtBright: 6, haloFrac: 0.04, haloR: 2, seed: 7, rtH: 410, rtT: 8, rtVb: 4, rtD: 0.30, rtBurstD: 290, rtSpin: 2.6, rtFling: 5.0,
     rtHeadSize: 0.7, rtHeadI: 3.2, rtHeadFl: 1.2, rtARate: 12000, rtALife: 0.9,
     rtCone: 9.5, rtFRate: 4200, rtFLife: 1.2, rtFSize: 0.18, rtMRate: 1600, rtMLife: 2.2, rtMSize: 0.27, rtCRate: 300, rtCLife: 3.4, rtCSize: 0.38,
     rtERate: 8, rtELife: 3.5, rtESize: 0.9, rtSmokeRate: 35, rtMobile: 0.06,
     // 第 2 / 3 版（对话框11，10-02：RT2 火星数量大小 + RT3 白黄对比、线状拖影、空气乱流）
-    rtACone: 7, rtASize: 0.6, rtAI: 1.1, rtAWarm: 0.8, rtFI: 5, rtMI: 10, rtCI: 24, rtCKd: 1.8, rtT0: 2700, rtTb: 2450, rtEKd: 2.5, rtSmoke: 0, rtFdT: -400, rtCdT: 500, rtSizeJit: 45, rtKdJit: 35, rtConeSoft: 1, rtStreakT: 0.02, rtFStreak: 0.3, rtTurb: 1, rtTurbL: 20, rtTurbS: 0.6 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
+    rtACone: 7, rtASize: 0.6, rtAI: 1.1, rtAWarm: 0.8, rtFI: 5, rtMI: 10, rtCI: 24, rtCKd: 1.8, rtT0: 2700, rtTb: 2450, rtEKd: 2.5, rtSmoke: 0, rtFdT: -400, rtCdT: 500, rtSizeJit: 45, rtKdJit: 35, rtConeSoft: 1, rtStreakT: 0.02, rtFStreak: 0.3, rtTurb: 1, rtTurbL: 20, rtTurbS: 0.6,
+    // 第 4 版（对话框11，10-02 19:25：一半细火星烘进贴图、星头光晕、末段爆亮、发射口）
+    rtFTex: 0.5, rtTexI: 40, rtGlow: 0.45, rtGlowSize: 14, rtPopRate: 50, rtPopSize: 0.6, rtLaunch: 1.5, rtLaunchSize: 12, rtLaunchN: 160, rtLaunchV: 40 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
   // 升空尾缀三档：用户认可的 V5 / TR2 导出快照；不按目标长度重新拟合。
   trailS: { p: { renderVer: 37, seed: 7, riseH: 120, vtShell: 35, trV: 33.7, trFps: 30, trInh: 0.12,
     trDrag: 3.5, trGrav: 0.4, trCool: 0.46297, trFRate: 12000, trFLife: 0.65692, trFSpread: 1.85647,
@@ -517,9 +523,9 @@ const SCHEMA = [
     ['rtSizeJit', '尺寸离散（远处亮度 ∝ 尺寸²）', '±%', 0, 90, 1], ['rtKdJit', '阻力离散', '±%', 0, 90, 1],
     ['rtConeSoft', '散开分布（0 均匀 = 边缘一刀切；1 两个均匀相加 = 中间密、边缘软）', '', 0, 1, 1]
   ] },
-  { sec: '尾缀 · 贴图里的火星（循环层）', show: isEmit, hint: '勾上的档烘进循环层贴图（随体坐标，和白热段火粉同一套真循环；运动、散开、小涡和同档 GPU 发射器同一套公式，拖影 = 相对星头的速度 × 快门），这一档就不再出 GPU 发射器。细火星寿命短、在面片长度以内就烧完，适合进贴图；中 / 粗火星飞得远、留给 GPU。', items: [
-    ['rtFTex', '细火星烘进贴图', '', 0, 1, 1], ['rtMTex', '中火星烘进贴图', '', 0, 1, 1], ['rtCTex', '粗火星烘进贴图', '', 0, 1, 1],
-    ['rtTexI', '贴图火星亮度（× 同档亮度）', '×', 0, 20, 0.01, P => P.rtFTex > 0 || P.rtMTex > 0 || P.rtCTex > 0]
+  { sec: '尾缀 · 贴图里的火星（循环层）', show: isEmit, hint: '细火星的一部分烘进循环层贴图（随体坐标，和白热段火粉同一套真循环；运动、散开、小涡、拖影和 GPU 细火星同一套公式），其余留在 GPU（细火星出生率 × (1 − 比例)）。细火星寿命短、在面片长度以内就烧完，适合进贴图；中 / 粗火星飞得远、留在 GPU。贴图亮度是灰度 + Ramp 口径（暗的是橙红、亮的是金白），和 GPU 的倍数不通用：1 = 一颗细火星是一颗白热段火粉光量的 1%。', items: [
+    ['rtFTex', '细火星烘进贴图的比例（0 = 全在 GPU）', '', 0, 1, 0.05],
+    ['rtTexI', '贴图火星亮度', '×', 0, 200, 0.1, P => P.rtFTex > 0]
   ] },
   { sec: '尾缀 · 引擎里加的效果', show: isEmit, hint: '都是软圆点（不新增材质）。星头光晕：星头强光被空气 / 烟散射成的一团柔光，贴图格子窄放不下，引擎里单独一颗跟着弹道走、亮度跟喷射脉动。末段爆亮：木炭 + 硫的熔渣粒烧到最后微爆、闪一下（线香花火「松叶」同一机理），和粗火星同一套运动。发射口：发射药在炮筒口一闪 + 一把向上喷的火星。', items: [
     ['rtGlow', '星头光晕亮度（0 关）', '×', 0, 5, 0.01], ['rtGlowSize', '星头光晕直径', 'm', 0.5, 30, 0.1, P => P.rtGlow > 0],
@@ -561,7 +567,7 @@ const SCHEMA = [
     ['rtMobileTex', '手机贴图边长比例', '×', 0.25, 1, 0.05],
     ['rtBright', '循环层引擎亮度（Color Over Life）', '×', 0.1, 10, 0.05],
     ['rtDotGain', '粒子层亮度总倍数', '×', 0, 10, 0.01],
-    ['rtMobile', '手机版粒子数比例', '×', 0.05, 1, 0.01],
+    ['rtMobile', '手机版粒子数比例（0 = 手机只有循环层 + 光晕）', '×', 0, 1, 0.01],
     ['rtDissolve', '消散发射器的溶解终值（0 = 不写 dissolve）', '', 0, 1, 0.01],
     ['rtFadeFps', '消散序列帧率（0 = 自动，≤ 30）', 'fps', 0, 30, 1],
     ['shutter', '循环层运动模糊（占每帧显示时间的比例）', '', 0, 1, 0.01],
