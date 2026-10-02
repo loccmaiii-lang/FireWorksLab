@@ -57,6 +57,9 @@ function outNote(L, e) {
   const o = layerOut(L), P = e && e.P, w = [];
   if (o.pc === 'off' && o.mobile === 'off') return '两个平台都不出这一层（画面里照样看得到，导出时跳过）';
   if (o.pc === 'unit' && P && !unitAllowed(P)) w.push('这种花型 / 图案不能出单束（千轮、分裂、蜂、非球形图案），导出时 PC 按序列出');
+  // XU1 试导（引菊 → 锦的锦层）：单束的尾巴是直的、沿速度方向；星下垂以后速度朝下，长尾巴都指向花心上方同一点（线性阻力的几何性质），后段像辐条。长尾、下垂多的层用序列
+  if (o.pc === 'unit' && P && unitAllowed(P) && (['kamuro', 'yanagi'].includes(P.type) || +P.emberFrac > 0 || (+P.sparkLife || 0) * Math.max(1, +P.sparkLifeEnd || 1) > 1.2 || (+P.burn || 0) > 4))
+    w.push('这一层尾巴长 / 烧得久（锦冠、柳、光丝这类）：单束的尾巴是沿速度的直线，下垂以后会都指向花心上方、像辐条；这种层建议用序列');
   if (o.pc === 'dots' && P) {
     if (familyOf(P.type) !== 'aerial') w.push('这种花型不是礼花，光点没法表达，PC 请用序列');
     if (+P.sparkRate > 0 || +P.emberFrac > 0) w.push('这一层有尾巴：PC 光点只出星头，尾巴没有（要尾巴就用序列，或另加一层序列只出尾巴）');
