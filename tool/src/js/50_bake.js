@@ -206,7 +206,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
 function analyze(b) {
   const m = b.meta, L = m.L, P = b.P, N = b.N, NH = b.NH, cw = b.cw, chh = b.chh;
   const imgs = [readRGBA8(b.head)]; if (b.tail) imgs.push(readRGBA8(b.tail));
-  const light = [], cellMax = [], clip = [], edge = [], sig = [], rows = [], fills = [];
+  const light = [], cellMax = [], clip = [], edge = [], sig = [], rows = [], fills = [], boxes = [];
   const measureImg = !m.loop && !m.unit;   // 与实拍视频同样的口径：亮部像素掩码 → 半径、下坠、像素数
   const SG = 16;   // 近似帧比较用的缩略网格
   for (let f = 0; f < L.F; f++) {
@@ -224,7 +224,7 @@ function analyze(b) {
     }
     const sxy = sizeXY(m, m.times[f]); light.push(sum * sxy[0] * sxy[1]);
     const fill=cellFill(imgs, N, x0, y0, cw, chh, ch);
-    fills.push(fill); cellMax.push(renderVersion(P)>=40&&fill?fill[2]:mx); clip.push(nz ? nc / nz : 0); edge.push(em); sig.push(sg);
+    fills.push(fill); if (renderVersion(P)>=40 && !m.loop && !m.unit) boxes.push(cellBox(imgs, N, x0, y0, cw, chh, ch)); cellMax.push(renderVersion(P)>=40&&fill?fill[2]:mx); clip.push(nz ? nc / nz : 0); edge.push(em); sig.push(sg);
     if (measureImg) rows.push(imgRow(imgs, f, m, N, x0, y0, cw, chh, ch));
   }
   const lmax = Math.max(1e-6, ...light);
@@ -241,6 +241,7 @@ function analyze(b) {
   let seam = null;
   if (m.loop && L.F > 2) { const mean = diffs.reduce((a, c) => a + c, 0) / diffs.length; seam = mean > 0 ? diff(sig[L.F - 1], sig[0]) / mean : 0; }
   if (measureImg) m.imgRows = rows;
+  if (boxes.length) m.boxes = boxes;     // 每帧内容（任何非零像素）在格子里的包围盒 [左, 右, 下, 上]（像素，y 向上）；取景实测收紧用
   // 画面占比：每帧内容包围盒 ÷ 格子（横、竖取较小者）；只统计有内容的帧，末尾全黑的除外
   const fv = fills.filter(q => q);
   if (fv.length) { const per = fv.map(q => Math.min(q[0], q[1])); m.fill = { avg: per.reduce((a, c) => a + c, 0) / per.length, min: Math.min(...per), p10: per.slice().sort((a, c) => a - c)[Math.floor(per.length * 0.1)], x: fv.reduce((a, q) => a + q[0], 0) / fv.length, y: fv.reduce((a, q) => a + q[1], 0) / fv.length, frames: fills.map(q => q ? +Math.min(q[0], q[1]).toFixed(3) : null) }; }
@@ -252,6 +253,12 @@ function cellFill(imgs, N, x0, y0, cw, chh, ch) {
   for (const im of imgs) for (let y = 0; y < chh; y++) { let o = ((y0 + y) * N + x0) * 4 + ch; for (let x = 0; x < cw; x++, o += 4) if (im[o] > 3) { peak=Math.max(peak,im[o]);if (x < a) a = x; if (x > b2) b2 = x; if (y < c) c = y; if (y > d) d = y; } }
   if (b2 < 0) return null;
   return [(b2 - a + 1) / cw, (d - c + 1) / chh,peak];
+}
+// 单帧内容的包围盒（任何非零像素都算：引擎里自发光 ×4，1–3/255 的暗火星也看得见），格子像素坐标，y 向上；没有内容 = null
+function cellBox(imgs, N, x0, y0, cw, chh, ch) {
+  let a = cw, b2 = -1, c = chh, d = -1;
+  for (const im of imgs) for (let y = 0; y < chh; y++) { let o = ((y0 + y) * N + x0) * 4 + ch; for (let x = 0; x < cw; x++, o += 4) if (im[o] > 0) { if (x < a) a = x; if (x > b2) b2 = x; if (y < c) c = y; if (y > d) d = y; } }
+  return b2 < 0 ? null : [a, b2, c, d];
 }
 // 单帧：取亮部像素（阈值 = max(30, 0.3 × 99.95 分位)），换算到世界坐标（米）
 function imgRow(imgs, f, m, N, x0, y0, cw, chh, ch) {
@@ -290,6 +297,21 @@ function imgMetrics(rows) {
 function bakeMetrics(b) { if (!b) return null; const rows = []; for (let s = b; s; s = s.next) if (s.meta.imgRows) rows.push(...s.meta.imgRows); return rows.length ? imgMetrics(rows) : null; }
 function disposeBake(b) { if (b) { b.head.dispose(); b.tail && b.tail.dispose(); disposeTrail(b); if (b.next) disposeBake(b.next); if(b.mobile)disposeBake(b.mobile); } }
 
+// 4.2.5 取景按实测收紧（用户 2026-10-03 00:25「贴图输出很多都不够极限，画面占比还不够」）：
+// 按烘好的贴图量每帧内容的范围（任何非零像素），能收紧 3% 以上就按收紧后的取景再烘一次（时间、帧数都不变）；收不紧返回 null。
+// 预览先按估计的取景烘（快），停手后在后台收紧（70_ui.js runRefine）；导出、标准检查一律用收紧后的（bakeFinal）。
+async function refineBake(b, onProg) {
+  if (!b || !b.meta || !b.meta.plan || b.meta.fitted || !b.srcP || b.srcP.fitFrame === 0) return null;
+  const fp = fitPlan40(b.srcP, b.meta.plan, bakeParts(b));
+  if (!fp) { b.meta.fitted = { mode: 'none' }; return null; }
+  return bakeMaster(b.srcP, b.scale || 1, onProg, { fm: b.fm, pl: fp });
+}
+async function bakeFinal(P, scale, onProg) {
+  const b = await bake(P, scale, p => onProg && onProg(p * .55));
+  let nb = null; try { nb = await refineBake(b, p => onProg && onProg(.55 + p * .45)); } catch (e) { disposeBake(b); throw e; }
+  if (nb) { disposeBake(b); return nb; }
+  onProg && onProg(1); return b;
+}
 // 大面片母版（可只取 [ta, tb] 一段）
 async function bakeMaster(P, scale, onProg, opt = {}) {
   let fm = opt.fm || measure(P);
@@ -334,6 +356,7 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
         }
       }
       onProg&&onProg(1);
+      first.meta.plan=pl;first.srcP=P;     // 取景实测收紧（refineBake）用：整段计划 + 烘的参数
       if(cutIn&&+P.preRoll!==0&&!first.meta.zoom)first.meta.pre=preRollOf(P,fm,first.meta.t0);
       first.meta.cut={in:cutIn,out:cutOut};
       // 整段可见范围（时段条的淡色底）：没设入出点 = 这次自动裁出来的；设了 = 设入点时记下的范围

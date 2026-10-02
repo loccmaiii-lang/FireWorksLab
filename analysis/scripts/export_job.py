@@ -43,7 +43,7 @@ def run(job, s, out, log=print):
     ver = None
     if job.get('entry'):     # 按条目导出：组合条目每层一套；版本指纹从烘焙器的条目数据里取
         info = s.pg.evaluate(f"""(() => {{ const e = FW_REVIEW_LIST.find(x => x.id === {json.dumps(job['entry'])}); if (!e) return null;
-            return {{ ver: e.ver || null, layers: e.kind === 'combo' ? e.layerIds : [e.id], delays: e.kind === 'combo' ? e.combo.layers.map(L => L.delay || 0) : [0], video: e.video || null, vmeta: e.vmeta || null }}; }})()""")
+            return {{ ver: (typeof entryVer === 'function' ? entryVer(e) : e.ver) || null, layers: e.kind === 'combo' ? e.layerIds : [e.id], delays: e.kind === 'combo' ? e.combo.layers.map(L => L.delay || 0) : [0], video: e.video || null, vmeta: e.vmeta || null }}; }})()""")
         if not info: raise RuntimeError('找不到条目 ' + job['entry'])
         ver = info['ver']; base = job.get('name') or job['entry']; job['_delays'] = info.get('delays'); job['_ref'] = dict(info['vmeta'], video=os.path.join(ROOT, 'tool', info['video'])) if info.get('vmeta') and info.get('video') else None
         if len(info['layers']) > 1 and job.get('combo_pack', True) and not job.get('exports'):
@@ -212,7 +212,7 @@ def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=pr
         for c, im in enumerate(ims): sh2.paste(im, (90 + c * c0, 22 + r * c0))
     for c, t in enumerate(times): d2.text((90 + c * c0 + 4, 4), f'开花后 {t:.2f} s', fill=(233, 180, 95), font=font)
     o2 = os.path.splitext(out)[0] + '_原尺寸.jpg'; sh2.save(o2, quality=85); log('烘焙回放（原尺寸）：' + o2)
-    entry_ver = s.pg.evaluate("id => (FW_REVIEW_LIST.find(e => e.id === id) || {}).ver || null", entry)
+    entry_ver = s.pg.evaluate("id => { const e = FW_REVIEW_LIST.find(e => e.id === id); return e ? ((typeof entryVer === 'function' ? entryVer(e) : e.ver) || null) : null; }", entry)   # 4.2.5：指纹带烘焙器输出版本
     metadata = dict(entry=entry, ver=entry_ver, times_s=times, square_px=c0, header_px=22, label_px=90,
                     rows=[k for k, _ in big], projection=geometry, reference=ref,
                     note='每行整段固定取景；实时和导出各自的视野不同，比较几何时须记录整段统一换算，不能逐帧放大。')

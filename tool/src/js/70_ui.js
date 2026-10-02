@@ -58,7 +58,7 @@ async function runPreviewBake() {
     disposeBake(state.bake); state.bake = b; state.bakeGen = gen; pending=null;
     state.dirty = false; state.failedGen = -1; state.bakeError = null; syncBakeError();
     if (phys) $('#stats').innerHTML = physStats(P);
-    else { showStats(b); afterBake(b); }
+    else { showStats(b); afterBake(b); scheduleRefine(); }
     // 自动选格子改了列 × 行：同步到界面（帧数不变，不触发重烘）
     // （4.2.0：「格子按帧数」「单格」是每次按帧数现算的，不写回列 × 行，否则下次容量就变小了）
     if (!phys && !b.meta.L.fit && !(+state.P.outCell > 0) && state.P.outPack !== 'fit' && (b.meta.L.cols !== state.P.cols || b.meta.L.rows !== state.P.rows)) { state.P.cols = b.meta.L.cols; state.P.rows = b.meta.L.rows; syncExport(); }
@@ -90,9 +90,50 @@ function queueLayerBake(e, delay = 380) {
   (state.layerQueue = state.layerQueue || new Set()).add(e);
   clearTimeout(state.layerQueueTimer); state.layerQueueTimer = setTimeout(runLayerQueue, delay);
 }
+// 4.2.5 取景按实测收紧：预览先按估计的取景烘（快）；停手 0.7 秒后在后台按这次贴图量出来的范围收紧再烘一次，参数没再变才换上
+let refineTimer = 0;
+function scheduleRefine(delay = 700) { clearTimeout(refineTimer); state.refineDue = true; refineTimer = setTimeout(runRefine, delay); }
+async function runRefine() {
+  clearTimeout(refineTimer); state.refineDue = false;
+  if (state.baking) { scheduleRefine(); return; }
+  const b0 = state.bake; if (state.tab === 'combo' || !b0 || state.dirty || !b0.meta || b0.meta.fitted || !b0.meta.plan) return;
+  const gen = state.gen; state.baking = true; let nb = null;
+  try {
+    nb = await refineBake(b0, p => { if (gen === state.gen) setStatus(`收紧取景… ${Math.round(p * 100)}%`); });
+    if (nb && gen === state.gen && state.bake === b0 && state.platform === 'mobile') nb.mobile = await bakeMobileFor(nb);
+    if (nb && gen === state.gen && state.bake === b0) { disposeBake(b0); state.bake = nb; nb = null; showStats(state.bake); afterBake(state.bake); }
+  } catch (err) { console.error(err); }
+  finally {
+    if (nb) disposeBake(nb);          // 参数又变了：这次收紧作废
+    state.baking = false; setStatus('');
+    if (state.layerQueue && state.layerQueue.size) runLayerQueue(); else if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
+  }
+}
+function queueLayerRefine(e) {
+  (state.layerRefine = state.layerRefine || new Set()).add(e);
+  clearTimeout(state.layerQueueTimer); state.layerQueueTimer = setTimeout(runLayerQueue, 700);
+}
 async function runLayerQueue() {
   clearTimeout(state.layerQueueTimer);
-  const q = state.layerQueue; if (!q || !q.size || state.baking) return;     // 正在烘的那次结束时会再叫这里
+  const q = state.layerQueue = state.layerQueue || new Set(), rq = state.layerRefine = state.layerRefine || new Set();
+  if (state.baking) return;                      // 正在烘的那次结束时会再叫这里
+  if (!q.size) {                                 // 没有要按新参数烘的层：后台收紧取景（4.2.5）
+    const e = rq.values().next().value; if (!e) return;
+    rq.delete(e);
+    if (!state.lib.includes(e) || !e.bake || !e.bake.meta || e.bake.meta.fitted || !e.bake.meta.plan) return runLayerQueue();
+    const b0 = e.bake, rev = e.pRev, i0 = state.layers.findIndex(L => L.lib === e.name); state.baking = true; let nb = null;
+    try {
+      nb = await refineBake(b0, p => setStatus(`收紧取景：第 ${i0 + 1} 层 ${Math.round(p * 100)}%`));
+      if (nb && state.lib.includes(e) && e.bake === b0 && e.pRev === rev) {
+        dropLibBake(e); e.bake = nb; nb = null;
+        if (state.tab === 'combo' && state.comboSel >= 0 && state.layers[state.comboSel] && state.layers[state.comboSel].lib === e.name) showStats(e.bake);
+        if (state.platform === 'mobile' && !q.size) await ensureComboMobile();
+        if (typeof buildLayerCard === 'function') buildLayerCard();
+      }
+    } catch (err) { console.error(err); }
+    finally { if (nb) disposeBake(nb); state.baking = false; setStatus(''); if (q.size || rq.size) runLayerQueue(); else if (state.dirty && state.failedGen !== state.gen && !(state.tab === 'combo' && state.comboSel >= 0)) runPreviewBake(); }
+    return;
+  }
   const e = q.values().next().value;
   if (!state.lib.includes(e) || e.failedRev === e.pRev) { q.delete(e); return runLayerQueue(); }
   state.baking = true;
@@ -108,6 +149,7 @@ async function runLayerQueue() {
     if (isCur()) { state.failedGen = -1; state.bakeError = null; syncBakeError(); showStats(b); }
     setStatus('');
     const i = idx(); if (i >= 0) syncLinkedLayers(i);
+    queueLayerRefine(e);
     if (state.platform === 'mobile' && !q.size) await ensureComboMobile();
     if (typeof buildLayerCard === 'function') buildLayerCard();
   } catch (err) {
@@ -123,6 +165,7 @@ async function runLayerQueue() {
     state.baking = false; state.rebake = false;
     if (q.size) runLayerQueue();
     else if (state.dirty && state.failedGen !== state.gen && !(state.tab === 'combo' && state.comboSel >= 0)) runPreviewBake();
+    else if (state.layerRefine && state.layerRefine.size) { clearTimeout(state.layerQueueTimer); state.layerQueueTimer = setTimeout(runLayerQueue, 700); }
   }
 }
 // 同一批星（种子、星数、初速、终端速度都一样）的层：决定轨迹的参数改一处、几层一起变（用户 2026-10-02 13:09：两层共用的参数要两层一起改，以前没有联动）
@@ -500,6 +543,7 @@ async function applyCombo(c) {
     layers.push(newLayer(e, rest));
   }
   state.layers = layers;
+  for (const e of used) if (e.bake && e.bake.meta && !e.bake.meta.fitted && e.bake.meta.plan && typeof queueLayerRefine === 'function') queueLayerRefine(e);   // 4.2.5：各层在后台收紧取景
   state.comboName = c.name; state.t = 0; computeLinks(); buildComboPanel();
   if(state.platform==='mobile')await ensureComboMobile();
   if (typeof buildLayerCard === 'function') buildLayerCard();

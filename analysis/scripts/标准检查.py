@@ -33,7 +33,7 @@ JS_ENTRY = r"""
   const r = typeof REPLICA_BY_ID !== 'undefined' ? REPLICA_BY_ID[id] : null;
   if (!e && !r) return null;
   const P = r ? __fw.replicaPM(id).P : null;
-  return { id, kind: e ? e.kind : 'preset', name: (e || r).name, video: !!(e ? e.video : (r && r.video)), layers: e && e.layerIds ? e.layerIds : null,
+  return { id, kind: e ? e.kind : 'preset', name: (e || r).name, ver: e && typeof entryVer === 'function' ? entryVer(e) : (e ? e.ver : null), video: !!(e ? e.video : (r && r.video)), layers: e && e.layerIds ? e.layerIds : null,
            form: P ? P.form : null, type: P ? P.type : null, renderVer: P ? (P.renderVer || 37) : null, superseded: !!(e && e.superseded) };
 }
 """
@@ -76,7 +76,7 @@ async def run(targets, write, merge=False):
             else:
                 info = await pg.evaluate(JS_ENTRY, t)
                 if not info: out[t] = {'id': t, 'error': '找不到条目'}; continue
-            res = {'id': t, 'name': info['name'], 'kind': info['kind'], 'renderVer': info.get('renderVer'), 'checks': []}
+            res = {'id': t, 'name': info['name'], 'kind': info['kind'], 'renderVer': info.get('renderVer'), 'ver': info.get('ver'), 'checks': []}   # ver：版本指纹（4.2.5 起带烘焙器输出版本），「待我验收」按它判结果是不是当前版本的
             for name, (ok, note) in features(info).items(): res['checks'].append([name, bool(ok), note])
             ids = info['layers'] if info.get('layers') else [t]
             q = {}; ms = []

@@ -229,8 +229,9 @@ async function exportMaster() {
   let own = false, b = null;
   try {
     b = state.bake && state.bake.scale === 1 && !state.dirty ? state.bake : null;
+    if (b) { const nb = await refineBake(b, p => busy(true, `取景收紧… ${Math.round(p * 100)}%`, p * 0.9)); if (nb) { disposeBake(b); state.bake = b = nb; showStats(nb); } }   // 4.2.5：导出用收紧后的取景
     own = !b;
-    if (own) b = await bake(state.P, 1, p => busy(true, `烘焙 ${state.P.texW}×${state.P.texH}… ${Math.round(p * 100)}%`, p * 0.9));
+    if (own) b = await bakeFinal(state.P, 1, p => busy(true, `烘焙 ${state.P.texW}×${state.P.texH}… ${Math.round(p * 100)}%`, p * 0.9));
     busy(true, '编码 PNG…', 0.93);
     const files = await texFiles(b, name);
     if (b.form === 'trail' && state.P.trExport4K) {

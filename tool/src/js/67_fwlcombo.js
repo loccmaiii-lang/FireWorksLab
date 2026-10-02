@@ -42,8 +42,10 @@ async function comboLayerBakes(layers, onProg) {
     const L = layers[i], e = state.lib.find(x => x.name === L.lib);
     if (!e || !e.bake) throw new Error(`第 ${i + 1} 层「${L.lib}」还没有烘焙`);
     let b = e.bake;
+    // 4.2.5：导出用收紧后的取景（预览可能还没来得及在后台收紧）
+    if (!b.tail && b.scale === 1 && !b.meta.fitted) { const nb = await refineBake(b, p => onProg && onProg((i + p) / layers.length)); if (nb) { dropLibBake(e); e.bake = b = nb; } }
     if (b.tail || b.scale !== 1) {
-      b = await bake({ ...libP(e.P, true), outMode: 'combined' }, 1, p => onProg && onProg((i + p) / layers.length));
+      b = await bakeFinal({ ...libP(e.P, true), outMode: 'combined' }, 1, p => onProg && onProg((i + p) / layers.length));
       own.push(b);
     }
     out.push({ L, b, e });

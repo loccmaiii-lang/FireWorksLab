@@ -20,6 +20,49 @@ function stepKeys40(scales,ticks,N){
   keys.push([1,scales[F-1]]);
   return keys.filter((k,i,a)=>i===0||k[0]>a[i-1][0]+1e-9||k[1]!==a[i-1][1]);
 }
+// 4.2.5 取景按实测收紧：parts = 按 pl 烘出来的各张；每帧内容包围盒（m.boxes，格子像素）换算回世界坐标，
+//  · 固定取景：全段并集收紧（横向以爆点对称，竖向可以偏：Initial Location 的 Z 跟着改）；
+//  · Zoom：每帧大小 = 这一帧内容离爆点最远的距离（阶梯关键点照旧，每帧烘多大、引擎里就放多大）。
+// 碰到格子边（留边以内）的方向说明内容可能被切了，那个方向不收；空帧不改。能收紧 3% 以上才用，否则返回 null。
+function fitPlan40(P, pl, parts) {
+  if (!pl || pl.loop || pl.unit || pl.tight || pl.aniso) return null;
+  const pad = +P.cellPad || 0, fr = [];
+  for (const s of parts) {
+    const m = s.meta, L = m.L; if (!m.boxes || m.boxes.length !== L.F) return null;
+    const cw = s.cw || L.cellW, chh = s.chh || L.cellH, e = 2 * pad * (s.scale || 1) + 1;     // 包围盒是烘出来的像素（4K 时格子是两倍）
+    m.boxes.forEach((bx, f) => {
+      const [sx, sy] = sizeXY(m, m.times[f]), c = centerAt(m, m.times[f]), hx = m.HX * sx, hy = m.HY * sy;
+      if (!bx) { fr.push({ hx, hy, c, empty: true }); return; }
+      const du = 2 * hx / cw, dv = 2 * hy / chh;
+      fr.push({ hx, hy, c, x0: c[0] - hx + bx[0] * du, x1: c[0] - hx + (bx[1] + 1) * du, y0: c[1] - hy + bx[2] * dv, y1: c[1] - hy + (bx[3] + 1) * dv,
+        tl: bx[0] <= e, tr: bx[1] >= cw - 1 - e, tb: bx[2] <= e, tt: bx[3] >= chh - 1 - e });
+    });
+  }
+  if (fr.length !== pl.L.F || fr.every(q => q.empty)) return null;
+  const a = pl.L.cellW / pl.L.cellH, k = 1.02 / Math.max(.5, 1 - 4 * pad / Math.min(pl.L.cellW, pl.L.cellH));   // 内容放进去后离格子边：留边那一圈（被压暗）+ 2%
+  const area = q => { let ar = 0; for (let i = 0; i < 200; i++) { const v = evalKeys(q.sizeKeys, (i + .5) / 200); ar += v * v / 200; } return ar; };
+  if (pl.zoom) {
+    const hNew = fr.map(q => q.empty ? q.hx : Math.max(q.tl || q.tr || q.tb || q.tt ? q.hx : 0, Math.max(-q.x0, q.x1, -q.y0, q.y1, 1e-3) * k));
+    const old = fr.map(q => q.hx), gain = hNew.map((h, i) => old[i] / h).sort((x, y) => x - y)[Math.floor(hNew.length / 2)];
+    if (!(gain >= 1.03)) return null;
+    const HX = Math.max(...hNew) * Math.max(1, a), HY = HX / a, frameScale = hNew.map(h => Math.min(1, h * Math.max(1, a) / HX));
+    const out = { ...pl, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cy: 0, ppm: pl.L.cellW / (2 * HX), py: .5, frameScale, sizeKeys: stepKeys40(frameScale, pl.ticks, pl.nTicks),
+      maxDisp: pl.maxDisp * Math.max(...old.map((h, i) => h / hNew[i])), fitted: { mode: 'zoom', gain: +gain.toFixed(3), from: +pl.HX.toFixed(2), to: +HX.toFixed(2) } };
+    out.area = area(out); return out;
+  }
+  let X = 0, ylo = Infinity, yhi = -Infinity;
+  for (const q of fr) {
+    const W0 = pl.HX, ylo0 = pl.cy - pl.HY, yhi0 = pl.cy + pl.HY;
+    if (q.empty) continue;
+    X = Math.max(X, q.tl || q.tr ? W0 : Math.max(-q.x0, q.x1));
+    ylo = Math.min(ylo, q.tb ? ylo0 : q.y0); yhi = Math.max(yhi, q.tt ? yhi0 : q.y1);
+  }
+  const H0 = Math.max(X * k, (yhi - ylo) / 2 * k * a), HX = Math.min(pl.HX, H0), HY = HX / a, cy = (ylo + yhi) / 2;
+  const gain = pl.HX / HX; if (!(gain >= 1.03)) return null;
+  const out = { ...pl, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cy, ppm: pl.L.cellW / (2 * HX), py: (cy + HY) / (2 * HY), maxDisp: pl.maxDisp * gain,
+    fitted: { mode: 'fixed', gain: +gain.toFixed(3), from: +pl.HX.toFixed(2), to: +HX.toFixed(2), cy: +cy.toFixed(2) } };
+  return out;
+}
 function tickFrameKeys40(F) {
   // 少量正偏移抵消 Lifetime/关键点四位小数的舍入；最后一格保持到寿命结束。
   return F===1 ? [[0,.01],[1,.99]] : [[0,.01],[(F-1)/F,F-1+.01],[1,F-.01]];

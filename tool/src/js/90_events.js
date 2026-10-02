@@ -106,7 +106,7 @@ requestAnimationFrame(loop);
 // 参数覆盖里以 _ 开头的是脚本自己的（_ramp 渐变图、_psf 相机模糊），不进烘焙参数
 const trailOver = o => Object.fromEntries(Object.entries(o || {}).filter(([k]) => !k.startsWith('_')));
 window.__fw = {
-  state, bake, bakeVariants, exportMaster, plan, measure, buildTrack, metricsOf, importParams, setType, setForm,
+  state, bake: (P, scale, onProg) => bakeFinal(P, scale, onProg), bakeRaw: (P, scale, onProg) => bake(P, scale, onProg), bakeVariants, exportMaster, plan, measure, buildTrack, metricsOf, importParams, setType, setForm,
   // 下一帧画完后取整张画布（PNG data URL）：渲染缩略图用（analysis/scripts/渲染缩略图.py → ui_shots 的 thumb 步骤）
   thumbNow() { return new Promise(res => { pendingThumb = () => { const c = document.createElement('canvas'); c.width = canvas.width; c.height = canvas.height; c.getContext('2d').drawImage(canvas, 0, 0); res(c.toDataURL('image/png')); }; }); },
   // 把参数 JSON / 配方解析成 { P, M, name }（不改界面状态）
@@ -123,7 +123,7 @@ window.__fw = {
     return btoa(s);
   },
   async exportFiles(P, M, name, opt = {}) {
-    const b = await bake(P, 1, null); let files = await texFiles(b, name);
+    const b = await bakeFinal(P, 1, null); let files = await texFiles(b, name);
     files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
     files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b, M))]);
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, M))]);
@@ -163,5 +163,5 @@ window.__fw = {
     const b = await bake({ ...P, texW: 320, texH: 320, cols: 8, rows: 8, chans: 1, outMode: 'combined', form: 'master', zoom: 'on', frameMode: 'auto', fpsFloor: 16, shutter: 0 }, 1, null);
     const m = bakeMetrics(b); disposeBake(b); return m;
   },
-  idle: () => !state.baking && !state.dirty && !(state.layerQueue && state.layerQueue.size)
+  idle: () => !state.baking && !state.dirty && !(state.layerQueue && state.layerQueue.size) && !state.refineDue && !(state.layerRefine && state.layerRefine.size)
 };

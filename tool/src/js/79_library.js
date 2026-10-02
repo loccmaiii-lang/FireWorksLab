@@ -79,9 +79,39 @@ function effMainEntry(ef) { const x = entryById(ef.阶段 === '待验收' && ef.
 function effIsNew(ef) { if (ef.阶段 !== '待验收' || !ef.待验收版) return false; const e = entryById(ef.待验收版); return !!e && !e.formal && !rvOf(e).st; }
 function effNewCount() { return EFFS().filter(effIsNew).length; }
 // 标准检查（协作/标准.md 第 4 节）：tool/data/standard.js，由 analysis/scripts/标准检查.py 生成
+// 4.2.5 版本指纹 = 条目参数指纹（review_to_baker.py 的 ver）· 每层产物种类的烘焙器输出版本（OUTPUT_VER）。
+// 导出任务（export_job.py）、标准检查（标准检查.py）记录的都是它；输出规则改了，旧导出、旧标准检查就过期。
+const _entryVer = new Map();
+function outFamily(P) { if (renderVersion(P) < 40) return 'v37'; const k = bakeKind(P); return k === 'segments' ? 'master' : k; }
+function entryVer(e) {
+  if (!e || !e.ver) return null;
+  const key = e.id + '@' + e.ver; if (_entryVer.has(key)) return _entryVer.get(key);
+  const fams = new Set();
+  for (const id of (e.kind === 'combo' ? e.layerIds || [] : [e.id])) { try { if (typeof REPLICA_BY_ID !== 'undefined' && REPLICA_BY_ID[id]) fams.add(outFamily(replicaPM(id).P)); } catch (err) { } }
+  const v = e.ver + '·' + ([...fams].sort().map(f => f + OUTPUT_VER[f]).join('+') || 'x');
+  _entryVer.set(key, v); return v;
+}
+// 「待我验收」按证据把关：最新导出 = 当前版本指纹、回放检查过、标准检查（同一指纹）过；状态清单里写了「例外」（引用用户的决定）的那一项不算缺
+function effReady(ef) {
+  const e = entryById(ef.待验收版 || ef.主条目); if (!e || e.formal) return { ok: false, why: ['没有候选条目'], exc: [] };
+  const cur = entryVer(e), why = [], exc = [], ex = [...(ef.exports || [])].reverse().find(x => !x.legacy && x.entry === e.id), sr = stdOf(e.id);
+  const excOf = k => (ef.例外 || []).find(x => x.项 === k);
+  const need = (k, bad) => { if (!bad) return; const x = excOf(k); if (x) exc.push(`${k}：${bad}（例外：${x.依据 || x.原因 || '用户同意'}）`); else why.push(bad); };
+  need('导出', !ex ? '还没导出' : ex.ver !== cur ? (ex.ver && ex.ver.includes('·') ? '导出后参数或烘焙器输出规则改了，素材包过期' : '导出时没记录烘焙器输出版本（4.2.5 以前），要重导') : '');
+  need('回放检查', ex && !ex.check ? '导出没有回放检查' : ex && ex.check && !ex.check.passed ? '回放检查没过' : '');
+  need('标准检查', !sr ? '标准检查没跑' : sr.ver !== cur ? '标准检查是旧版本的结果' : !sr.pass ? `标准检查 ${(sr.checks || []).filter(c => !c[1]).length} 项没过` : '');
+  return { ok: !why.length, why, exc, ver: cur, ex, sr };
+}
+function readyBadge(ef) {
+  if (ef.阶段 !== '待验收' || !ef.待验收版) return '';
+  const r = effReady(ef);
+  return r.ok ? `<span class="badge ok" title="${['证据齐了：最新导出 = 当前版本、回放检查过、标准检查过', ...r.exc].join('；').replace(/"/g, '')}">就绪</span>`
+    : `<span class="badge std" title="${('未就绪：' + r.why.join('；')).replace(/"/g, '')}">未就绪</span>`;
+}
 function stdOf(id) { return id && typeof FW_STANDARD !== 'undefined' && FW_STANDARD.items ? FW_STANDARD.items[id] || null : null; }
 function stdBadge(id) {
   const r = stdOf(id); if (!r) return '';
+  const e = entryById(id); if (e && !e.formal && r.ver !== entryVer(e)) return `<span class="badge" title="这条标准检查结果是旧版本（参数或烘焙器输出规则改过之前）的">标准 旧</span>`;
   const bad = (r.checks || []).filter(c => !c[1]).map(c => c[0] + (c[2] ? '（' + c[2] + '）' : ''));
   return `<span class="badge ${r.pass ? 'ok' : 'std'}" title="${r.pass ? '标准检查全部通过' : '没过：' + bad.join('；').replace(/"/g, '')}">${r.pass ? '标准 ✓' : '标准 ✗ ' + bad.length}</span>`;
 }
@@ -90,8 +120,9 @@ function checkRowsHTML(e, ef) {
   const row = (k, v, cls) => `<div class="ck"><span>${k}</span><b class="${cls || ''}">${v}</b></div>`, sr = stdOf(e.id);
   const ex = ef ? [...(ef.exports || [])].reverse().find(x => !x.legacy && x.entry === e.id) : null;
   const exs = !ex ? ['warn', '还没导出'] : ex.check ? (ex.check.passed ? ['ok', `通过（${ex.job}）`] : ['bad', `没过（${ex.job}）：${ex.check.fails.join('；')}`]) : ['', `已导出 ${ex.job}（没有回放检查）`];
-  const ver = !ex ? ['', '—'] : ex.stale ? ['warn', '导出后参数改过，素材包已过期'] : ['ok', `一致（版本 ${ex.ver || '—'}）`];
-  return `<div class="cks">${row('标准检查', sr ? (sr.pass ? '全部通过' : (sr.checks || []).filter(c => !c[1]).length + ' 项没过') : '还没跑', sr ? (sr.pass ? 'ok' : 'bad') : 'warn')}${row('导出回放（PC / 手机）', exs[1], exs[0])}${row('画面与包版本', ver[1], ver[0])}${row('UE 实机', '未经验证', 'warn')}</div>`;
+  const cur = entryVer(e), ver = !ex ? ['', '—'] : ex.ver !== cur ? ['warn', ex.ver && ex.ver.includes('·') ? '导出后参数或烘焙器输出规则改了，素材包已过期' : '导出时没记录烘焙器输出版本（4.2.5 以前），要重导'] : ['ok', `一致（版本 ${cur}）`];
+  const srOld = sr && sr.ver !== cur;
+  return `<div class="cks">${row('标准检查', sr ? (srOld ? '是旧版本的结果，要重跑' : sr.pass ? '全部通过' : (sr.checks || []).filter(c => !c[1]).length + ' 项没过') : '还没跑', sr ? (srOld ? 'warn' : sr.pass ? 'ok' : 'bad') : 'warn')}${row('导出回放（PC / 手机）', exs[1], exs[0])}${row('画面与包版本', ver[1], ver[0])}${row('UE 实机', '未经验证', 'warn')}</div>`;
 }
 function stdCard(id) {
   const r = stdOf(id); if (!r) return '<p class="rline dim">标准检查：这一版还没跑</p>';
@@ -167,7 +198,7 @@ function effParts(ef, cur) {
   const vars = (ef.方案 || []).map(v => `<button class="btn mini${cur && cur.id === v.id.replace(/^rep:/, '') ? ' cur' : ''}" type="button" data-open="${v.id}">${v.label}</button>`).join('');
   const jobs = (ef.jobs || []).filter(j => j.state !== '已回来' || !j.seen).slice(-4).map(j => `${j.id}（${j.state === '已回来' ? 'AI 还没看' : j.state}）`).join('、');
   const hist = (ef.历史 || []).map(h => { const e = entryById(h.id.replace(/@.*$/, '')); return `<li>${e && !h.id.includes('@') ? `<a href="#" data-open="${h.id}">${h.id}</a>` : h.id} · ${h.结论}${h.反馈 ? ' —— ' + h.反馈 : ''}</li>`; }).join('');
-  const c = [...(ef.exports || [])].reverse().find(x => !x.legacy && !x.stale);
+  const c = [...(ef.exports || [])].reverse().find(x => { if (x.legacy) return false; const e = entryById(x.entry); return !e || e.formal || x.ver === entryVer(e); });
   const more = `<div class="rt">版本</div><div class="rlayers">${ver('待你验收', ef.待验收版)}${ver('工作版', ef.阶段 === '已通过' ? null : ef.工作版)}${ver('已通过', ef.已通过版)}</div>
     <div class="rt">准备情况</div><div class="ready" id="effReady">${readyHTML(ef, cur)}</div>
     ${ef.交付说明 ? `<div class="rt">交付说明</div><ul class="deliv">${Object.entries(ef.交付说明).map(([k, v]) => `<li><b>${k}：</b>${v}</li>`).join('')}</ul>` : ''}
@@ -188,8 +219,9 @@ function readyHTML(ef, cur) {
   const combo = state.tab === 'combo';
   const baked = combo ? (state.layers.length && state.layers.every(L => { const e = state.lib.find(x => x.name === L.lib); return e && e.bake; }) ? '已在本机烘好 → 「导出效果」看' : '打开后在本机烘焙中…') : (state.bake && !state.dirty ? '已在本机烘好 → 「导出效果」「贴图」看' : '烘焙中…');
   const ex = (ef.exports || []);
-  const cur1 = [...ex].reverse().find(x => !x.legacy && !x.stale), stale = ex.find(x => x.stale), legacy = ex.find(x => x.legacy);
-  const pack = cur1 ? `已生成（${cur1.job} · ${cur1.time || ''}，和当前版本一致）` : stale ? `已过期：${stale.job} 导出后参数改过` : legacy ? `旧导出 ${legacy.job}（没有版本记录，不能确认是当前版本）` : '尚未生成';
+  const okV = x => { const e = entryById(x.entry); return !!e && !e.formal && x.ver === entryVer(e); };
+  const cur1 = [...ex].reverse().find(x => !x.legacy && okV(x)), stale = [...ex].reverse().find(x => !x.legacy && !okV(x)), legacy = ex.find(x => x.legacy);
+  const pack = cur1 ? `已生成（${cur1.job} · ${cur1.time || ''}，和当前版本一致）` : stale ? `已过期：${stale.job} 之后参数或烘焙器输出规则改了` : legacy ? `旧导出 ${legacy.job}（没有版本记录，不能确认是当前版本）` : '尚未生成';
   const dirty = lib.sig && lib.sig !== curSig() ? row('你在这里改了参数', '上面的素材包是改之前的版本', 'warn') : '';
   return row('实时模拟', live) + row('烘焙回放', cur ? baked : '—') + row('贴图 / 素材包', pack, cur1 ? 'on' : stale ? 'warn' : '') + dirty;
 }
@@ -239,8 +271,10 @@ function renderLib() {
     return ef.thumb ? `<span class="th"><i style="background-image:url(${ef.thumb})"></i></span>` : fm ? thumbHTML({ ...fm, key: 'rep:' + fm.id }) : me ? thumbHTML(me) : '<span class="th"></span>';
   };
   const effRow = (g, ef, k) => {
-    const badge = effBadge(ef) + stdBadge(ef.待验收版 || ef.主条目);
-    const it = libItem(g, 'ef:' + ef.key, thumbOf(ef) + `<span class="tx"><b>${ef.名}</b><small>${ef.阶段 === '未开始' ? (ef.说明 || '未开始') : effSubline(ef)}</small><span class="bds">${badge}</span></span>`, () => openEffect(ef));
+    const rd = k === 'review' ? effReady(ef) : null;
+    const badge = effBadge(ef) + (rd ? readyBadge(ef) : stdBadge(ef.待验收版 || ef.主条目));
+    const sub = ef.阶段 === '未开始' ? (ef.说明 || '未开始') : rd && !rd.ok ? `${effSubline(ef)}<br><em class="nr">未就绪：${rd.why[0]}${rd.why.length > 1 ? ` 等 ${rd.why.length} 项` : ''}</em>` : effSubline(ef);
+    const it = libItem(g, 'ef:' + ef.key, thumbOf(ef) + `<span class="tx"><b>${ef.名}</b><small>${sub}</small><span class="bds">${badge}</span></span>`, () => openEffect(ef));
     if (ef.阶段 === '未开始') it.classList.add('dimmed');
     tierRow(g, ef, k);
   };
@@ -259,7 +293,7 @@ function renderLib() {
     }
     g.appendChild(row);
   };
-  const EMPTY = { review: '现在没有等你验收的效果。AI 自检、导出回放、标准检查都过了的完整候选才会出现在这里。', wip: '没有制作中的效果', passed: '还没有通过的效果' };
+  const EMPTY = { review: '现在没有等你验收的效果。这里的每一项，程序都会核对证据（最新导出 = 当前版本、回放检查过、标准检查过），缺什么就标「未就绪」并写出原因。', wip: '没有制作中的效果', passed: '还没有通过的效果' };
   for (const [k, t] of [['review', '待我验收'], ['wip', '制作中'], ['passed', '已通过']]) {
     const list = effs.filter(ef => inSeg(ef, k) && libMatch(ef.名, ef.key, ef.主条目 || '', ef.说明 || '', ef.待验收版 || '', ef.已通过版 || ''));
     list.sort((x, y) => (x.阶段 === '未开始') - (y.阶段 === '未开始'));
@@ -517,6 +551,7 @@ function initPanels() {
   $('#gutL').addEventListener('dblclick', () => { root.style.setProperty('--sideW', '232px'); store.set('sideW', 232); });
   $('#gutR').addEventListener('dblclick', () => { root.style.setProperty('--rightW', '340px'); store.set('rightW', 340); });
   $('#btnSide').addEventListener('click', () => setPanels({ side: !panels.side }));
+  $('#sideClose').addEventListener('click', () => setPanels({ side: false }));
   $('#btnRight').addEventListener('click', () => setPanels({ right: !panels.right }));
   $('#btnFocus').addEventListener('click', toggleFocus);
   $('#btnRef').addEventListener('click', () => refToggle());
