@@ -137,7 +137,8 @@ function makeRiseTailLoopRenderer(P, LI, Vref, opts = {}) {
     draw(ts, view, ppm, w) {
       setParticleProfile(P);
       const stop = R.stop, fading = stop >= 0 && ts > stop;
-      const fadeAll = fading && R.fadeDur > 0 ? 1 - smoothstepJS(0.8 * R.fadeDur, R.fadeDur, ts - stop) : 1;
+      // 消散序列末尾轻轻收一点（4.2.2：时长已按「最后还看得见」量过，不再在最后 20% 强行压到全黑 → 不留末尾暗帧）
+      const fadeAll = fading && R.fadeDur > 0 ? 1 - smoothstepJS(0.9 * R.fadeDur, 1.15 * R.fadeDur, ts - stop) : 1;
       let k = 0;
       if (!fading) k = rtHeadPts(P, 0, 0, 0, -1, P.rtHeadI * LI.pulse(ts), 0);
       if (k) { drawPoints(bufH, k / 4, view, ppm, [1, 0, 0, 0], w); }
@@ -363,15 +364,22 @@ const rtLayoutCache = new Map();
 function rtLayout(P) {
   const key = JSON.stringify(P); if (rtLayoutCache.has(key)) return rtLayoutCache.get(key);
   const ball = rtBallistic(P), LI = rtLoopInfo(P), Vref = ball.v0, T = ball.T, Tl = LI.Tl, stop = T % Tl;
-  const CL = rtTexClasses(P, LI), Dlife = Math.max(rtPowderLifeMax(P), ...CL.map(C => C.lifeMax)) * 1.02;
+  const CL = rtTexClasses(P, LI), Dmax = Math.max(rtPowderLifeMax(P), ...CL.map(C => C.lifeMax)) * 1.02;
   const g = rtLoopBox(P, Vref, LI), top = (P.rtHeadSize || 0.5) * 2.5 + 1, view = [0, (top - g.HY * 1.1) / 2, g.HX * 1.2, (top + g.HY * 1.1) / 2];
   const N = 128, NH = 1024, ppm = N / (2 * view[2]), ppmY = NH / (2 * view[3]), E = fixedExposure(P), thr = -Math.log(1 - 3 / 255) / E;
   const t = new Target(N, NH, gl.RGBA16F), buf = new Float32Array(N * NH * 4), acc = new Float32Array(N * NH);
-  const R = makeRiseTailLoopRenderer(P, LI, Vref), Rf = makeRiseTailLoopRenderer(P, LI, Vref, { stop, fadeDur: Dlife });
+  // 消散时长：最长寿命的火粉 / 火星烧完是上限；按渲染量到「最后还看得见」的时刻为止（老火粉早就暗到看不见了，不留末尾空帧）
+  const R = makeRiseTailLoopRenderer(P, LI, Vref), Rf = makeRiseTailLoopRenderer(P, LI, Vref, { stop, fadeDur: Dmax });
   const pass = (RR, ts) => { t.clear(); t.bind(); additive(true); PPMY = ppmY; RR.subW = 0; RR.draw(ts, view, ppm, 1); additive(false); PPMY = 0;
-    gl.readPixels(0, 0, N, NH, gl.RGBA, gl.FLOAT, buf); for (let i = 0; i < acc.length; i++) acc[i] = Math.max(acc[i], buf[i * 4] + buf[i * 4 + 1]); };
-  try { for (let i = 0; i < 8; i++) pass(R, i / 8 * Tl); for (let i = 1; i <= 5; i++) pass(Rf, stop + i / 6 * Dlife); }
-  finally { PPMY = 0; t.dispose(); }
+    gl.readPixels(0, 0, N, NH, gl.RGBA, gl.FLOAT, buf); let mx = 0; for (let i = 0; i < acc.length; i++) { const v = buf[i * 4] + buf[i * 4 + 1]; if (v > acc[i]) acc[i] = v; if (v > mx) mx = v; } return mx; };
+  let tVis = Dmax;
+  try {
+    for (let i = 0; i < 8; i++) pass(R, i / 8 * Tl);
+    // 「看得见」= 编码后 ≥ 10/255（和自检的末尾暗帧同一条线）
+    const NF = 16, thr10 = -Math.log(1 - 10 / 255) / E; tVis = 0;
+    for (let i = 1; i <= NF; i++) { const tf = i / NF * Dmax; if (pass(Rf, stop + tf) > thr10) tVis = tf; }
+  } finally { PPMY = 0; t.dispose(); }
+  const Dlife = clamp(tVis + Dmax / 32, Math.min(Dmax, 0.2), Dmax);
   const pxX = 2 * view[2] / N, pxY = 2 * view[3] / NH, X = i => view[0] - view[2] + (i + 0.5) * pxX, Y = j => view[1] - view[3] + (j + 0.5) * pxY;
   let y0 = NH, y1 = -1; const colW = new Float64Array(N); let tot = 0;
   for (let y = 0; y < NH; y++) for (let x = 0; x < N; x++) { const v = acc[y * N + x]; if (v > thr) { if (y < y0) y0 = y; if (y > y1) y1 = y; colW[x] += v; tot += v; } }

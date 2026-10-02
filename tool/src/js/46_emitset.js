@@ -67,7 +67,7 @@ function esVel(q, acc, a, out) {
 // 带颜色的高斯软圆点（每颗自己的颜色）：位置 2 + 光量 1 + 尺寸 1 + 颜色 3 + 朝向 2 + 拉长倍数 1
 const VS_DOTC = HDR + `layout(location=0) in vec2 aP; layout(location=1) in float aI; layout(location=2) in float aS; layout(location=3) in vec3 aC; layout(location=4) in vec2 aD; layout(location=5) in float aE;
 uniform vec4 uView; uniform float uPPM, uPPMY, uMax; out float vI; out vec2 vSig; out float vPS; out vec3 vC; out vec2 vD; out float vE;
-void main(){ vec2 sig=max(aS*0.5*vec2(uPPM,uPPMY),vec2(0.55)); float e=max(1.,aE); float ps=min(ceil(max(sig.x,sig.y)*6.*e)+1.,uMax);
+void main(){ vec2 sig=max(aS*0.5*vec2(uPPM,uPPMY),vec2(0.55)); float e=max(1.,aE); float ps=min(ceil(max(sig.x,sig.y)*8.*e)+1.,uMax);
   gl_Position=vec4((aP-uView.xy)/uView.zw,0.,1.); gl_PointSize=ps; vI=aI; vSig=sig; vPS=ps; vC=aC; vD=aD; vE=e; }`;
 const FS_DOTC = HDR + `in float vI; in vec2 vSig; in float vPS; in vec3 vC; in vec2 vD; in float vE; uniform float uPPM, uPPMY, uW; out vec4 o;
 vec2 erf2(vec2 x){ vec2 sg=sign(x); x=abs(x); vec2 t=1./(1.+.3275911*x); return sg*(1.-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*exp(-x*x)); }
@@ -75,6 +75,8 @@ void main(){ vec2 p=(gl_PointCoord-.5)*vPS; float g;
   if(vE<=1.001){ vec2 v=.5*(erf2((p+.5)/(1.41421356*vSig))-erf2((p-.5)/(1.41421356*vSig))); g=max(0.,v.x*v.y); }
   else { vec2 d=normalize(vec2(vD.x,-vD.y)+1e-6), n=vec2(-d.y,d.x); float s=max(vSig.x,.6); float u=dot(p,d)/(s*vE), w=dot(p,n)/s;
     g=exp(-.5*(u*u+w*w))/(6.2831853*s*s*vE); }
+  // 大的软圆点（星头光晕、发射口闪光）：画点范围 ±4σ，外圈平滑收到 0（以前 ±3σ 硬切，近看是一个方块边）
+  if(vPS>6.) g*=smoothstep(1.,.7,length(gl_PointCoord-.5)*2.);
   o=vec4(vC*(vI*g*uPPM*uPPMY*uW),0.); }`;
 PR.dotc = compile(VS_DOTC, FS_DOTC);
 const dotcBuf = gl.createBuffer(), dotcVAO = gl.createVertexArray();
