@@ -144,8 +144,13 @@ def run_combo_pack(job, s, out, name, ver, big, log=print):
                    packages=[dict(name=name, replica=entry, files=files)]), open(os.path.join(out, '导出清单.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     try:
         import importlib; rc = importlib.import_module('回放检查')
-        n = len(json.load(open(os.path.join(d, 'cascade.json'), encoding='utf-8'))['emitters'])
-        r = rc.check([rc.Pack(d, i) for i in range(n)], os.path.join(out, '回放检查.jpg'), None, ref=job.get('_ref'), times_s=job.get('check_times_s'))
+        cj = json.load(open(os.path.join(d, 'cascade.json'), encoding='utf-8'))
+        # 只查「一个面片放序列」的发射器：光点（soft_dot，没有贴图）、单束（每颗星一个面片）这类粒子发射器回放检查不适用（4.2.12 / 4.2.13）
+        mats = cj.get('materials') or {}
+        seqi = [i for i, e in enumerate(cj['emitters']) if 'main' in ((mats.get(e.get('material'), {}).get('textures')) or {}) and sum(n for _, n in (e.get('spawn') or {}).get('bursts') or [[0, 1]]) == 1]
+        skipped = [e['name'] for i, e in enumerate(cj['emitters']) if i not in seqi]
+        if skipped: log('回放检查不查的粒子发射器（光点 / 单束）：' + '、'.join(skipped))
+        r = rc.check([rc.Pack(d, i) for i in seqi], os.path.join(out, '回放检查.jpg'), None, ref=job.get('_ref'), times_s=job.get('check_times_s'))
         json.dump(r, open(os.path.join(out, '回放检查.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         log('回放检查：' + ('✅ 通过' if r['pass'] else '❌ ' + '；'.join(f"{L['pack']}：{'、'.join(L['fails'])}" for L in r['layers'] if not L['pass'])))
     except Exception as e:

@@ -88,6 +88,15 @@ check('platform scheme: pack naming keeps mobile cutout / ramp when the PC side 
   const src=fs.readFileSync(path.join(root,'tool/src/js/61_naming.js'),'utf8');
   assert.ok(/pcTex/.test(src),'applyPackNaming 要知道某层 PC 没有贴图（不然手机的 Cutout / Ramp 被当成和 PC 共用丢掉）');
 });
+// 4.2.13：光点什么时候亮按模拟里每颗星的星头亮度（XD1：鸿巢红点层是「第二段」，主段期间不发光，按点火 + 燃烧算会从开花就亮）
+check('platform scheme: dots follow the simulated head visibility (second stage dark during the main burn)',()=>{
+  const r=JSON.parse(run(`(()=>{const M=defaultsFor('kiku').M, L={scale:1,delay:0,rate:1,stages:M.stages,xw:M.xw,ramp2:M.ramp2,ramp3:M.ramp3,headInt:1};
+    const P={...defaultsFor('botan',40).P,duration:5,burn:2,afterBurn:1.5,burnJit:0}; const e=fwlDots(L,P,comboLayerM(L));
+    const m=Object.fromEntries(e.modules.map(x=>[x.m,x])); return JSON.stringify({life:m.Lifetime.Lifetime.uniform,col:m.ColorOverLife.ColorOverLife.curve});})()`));
+  const lm=(r.life[0]+r.life[1])/2; assert.ok(Math.abs(lm-3.5)<0.25,'寿命 = 主段 + 第二段（'+lm+'）');
+  const at=u=>{const c=r.col;for(let i=1;i<c.length;i++)if(u<=c[i][0]){const k=(u-c[i-1][0])/Math.max(1e-9,c[i][0]-c[i-1][0]);return c[i-1][1].map((x,j)=>x+(c[i][1][j]-x)*k).reduce((a,b)=>a+b,0);}return c[c.length-1][1].reduce((a,b)=>a+b,0);};
+  assert.ok(at(0.3)<0.02*at(0.8),'主段期间不亮：u=0.3 '+at(0.3).toFixed(3)+' vs u=0.8 '+at(0.8).toFixed(3));
+});
 // 4.2.13 单束进组合包（用户 10-02 20:04「有些效果我也想导出面片 + 单束 + 粒子」；走查 D21 / B9）：PC 选「单束」的层 = 每颗星一个沿速度拉长的面片（单元序列），手机仍是序列
 check('platform scheme: PC unit layer = velocity-aligned beam_flipbook emitter (one particle per star), scaled by layer delay / rate / scale; mobile stays a sequence',()=>{
   const r=JSON.parse(run(`(()=>{

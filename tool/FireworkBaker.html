@@ -1329,7 +1329,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.2.13';
+const VERSION = '4.2.14';
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 const OUTPUT_VER = { master: '4.2.7', emitset: '4.2.2', riseLoop: '4.2.2', trail: '4.0', unit: '4.0', loop: '4.0', v37: '3.7' };
@@ -6709,15 +6709,35 @@ function dotFit(P, fm) {
 }
 // 一层星 → 一个 GPU 光点发射器。用粒子发射器组的数据格式（46_emitset.js，米、秒），同一份数据给「引擎回放」画、给 cascade.json 导出（看到的就是导出的）。
 // 层的缩放 × 长度，时间倍率 ÷ 时间（速度 ×、阻力 ×、加速度 × 倍率²）；颜色 = 这一层的颜色 × 星头亮度，点火前和熄灭段用颜色压暗（加色，等于 Alpha）
+// 每颗星什么时候亮、多亮（4.2.13，XD1 试导发现：鸿巢红点层是「第二段」——主段期间不发光，只按点火 + 燃烧算会从开花就亮）：
+// 直接跑一遍模拟，记每颗星的星头亮度；寿命 = 每颗星最后亮着的时刻；亮度曲线 = 按「时刻 ÷ 这颗星的寿命」平均（延时点火、星头压暗、第二段、渐隐、熄灭前闪亮都在里面）
+function dotVis(P) {
+  const s = new Sim({ ...P, engine: 'gpu' }), n = Math.ceil(P.duration / H_STEP), rec = new Map();
+  for (let i = 0; i < n; i++) {
+    s.step(H_STEP); if (i % 12) continue;
+    for (const st of s.stars) { if (!st.alive || st.kind === 5) continue; let q = rec.get(st); if (!q) rec.set(st, q = []); q.push([s.t, s.headI(st)]); }
+  }
+  const NB = 60, lives = [], bins = new Float64Array(NB), cnt = new Float64Array(NB);
+  for (const q of rec.values()) {
+    let b = 0; for (const [t, I] of q) if (I > 0) b = t; if (!(b > 0)) continue; lives.push(b);
+    for (const [t, I] of q) { if (t > b) break; const k = Math.min(NB - 1, Math.floor(t / b * NB)); bins[k] += I; cnt[k]++; }
+  }
+  if (!lives.length) return null;
+  lives.sort((a, c) => a - c);
+  const prof = Array.from(bins, (v, k) => cnt[k] ? v / cnt[k] : 0), nz = prof.filter(v => v > 0).sort((a, c) => a - c), typ = nz.length ? nz[Math.floor(nz.length / 2)] : 1;
+  const q = f => lives[Math.min(lives.length - 1, Math.floor(f * lives.length))];
+  return { life: [q(0.1), q(0.9)], med: q(0.5), alpha: prof.map((v, k) => [+((k + 0.5) / NB).toFixed(4), clamp(v / typ, 0, 2.5)]) };
+}
 function dotsES(L, P, M, fm) {
-  const f = dotFit(P, fm), r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1;
-  const life = [(f.ign + f.burn * (1 - f.jit)) / r, (f.ign + f.burn * (1 + f.jit)) / r], uIgn = f.ign / f.T, fadeU = clamp((+P.fade || 0) * f.burn / f.T, 0.02, 0.9);
-  const alpha = u => u < uIgn ? 0 : Math.min(1, (u - uIgn) * f.T / 0.05, (1 - u) / fadeU);
+  const f = dotFit(P, fm), v = dotVis(P), r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1;
+  const life = v ? [v.life[0] / r, v.life[1] / r] : [(f.ign + f.burn * (1 - f.jit)) / r, (f.ign + f.burn * (1 + f.jit)) / r];
+  const T = v ? v.med : f.T, ak = v ? [[0, v.alpha[0][1]], ...v.alpha, [1, 0]] : [[0, 1], [1, 0]];
+  const alpha = u => esCurve(ak, u);
   // 序列材质的色相来自 Ramp（灰度查表）× Color Over Life；软圆点没有 Ramp，星头亮核用 Ramp 亮端（中亮、亮两格的平均，线性）乘进颜色
   const rl = [M.ramp2, M.ramp3].filter(Boolean).map(hexToLin), rc = rl.length ? [0, 1, 2].map(j => rl.reduce((a, c) => a + c[j], 0) / rl.length) : [1, 1, 1];
-  const gain = (+M.headInt || 1) * (+P.headBright || 1), ck = colorKeys(M, f.T, 0).map(([u, c]) => [u, c.map((x, j) => x * rc[j])]);
-  const us = [...new Set([0, 1, ...ck.map(k => +k[0]), ...(uIgn > 0 ? [Math.max(0, uIgn - 0.001), uIgn, Math.min(1, uIgn + 0.05 / f.T)] : [0.05 / f.T]), 1 - fadeU].map(u => +clamp(u, 0, 1).toFixed(4)))].sort((a, b) => a - b);
-  const col = us.map(u => [u, esCurve(ck, u).map(c => +(c * gain * alpha(u)).toFixed(4))]);
+  const gain = (+M.headInt || 1) * (+P.headBright || 1), ck = colorKeys(M, T, 0).map(([u, c]) => [u, c.map((x, j) => x * rc[j])]);
+  const us = [...new Set([0, 1, ...ck.map(k => +k[0]), ...ak.map(k => +k[0])].map(u => +clamp(u, 0, 1).toFixed(4)))].sort((a, b) => a - b);
+  const col = esThin(us.map(u => [u, esCurve(ck, u).map(c => +(c * gain * alpha(u)).toFixed(4))]), 0.01);
   const sz = Math.max(0.05, 1.7 * (+P.headSize || 1) * sc);
   return { name: 'Dots', gpu: true, delay: +L.delay || 0, duration: life[1] + 0.1, bursts: [[0, Math.max(1, Math.round(+P.stars || 1))]], life, size: [sz * 0.85, sz * 1.15], col,
     sphere: { r: f.R0 * sc, v: [f.v * (1 - f.sj) * sc * r, f.v * (1 + f.sj) * sc * r] }, drag: [f.k * r, f.k * r], accel: [0, 0, -f.g * sc * r * r], seed: ((+P.seed || 1) * 31 + 7) | 0, fit: f };
@@ -6728,7 +6748,7 @@ function fwlDots(L, P, M, fm) {
 }
 // 引擎回放画光点层：同一份数据，按层缓存出生表
 function dotsTables(e, L) {
-  const sig = JSON.stringify([L.scale, L.rate, L.delay, L.stages, L.xw, L.headInt, L.ramp2, L.ramp3, e.rev || 0, e.P && [e.P.stars, e.P.seed, e.P.v0, e.P.vt, e.P.grav, e.P.burn, e.P.ignDelay, e.P.headSize, e.P.headBright, e.P.fade]]);
+  const sig = JSON.stringify([L.scale, L.rate, L.delay, L.stages, L.xw, L.headInt, L.ramp2, L.ramp3, e.P]);
   if (e._dots && e._dots.sig === sig) return e._dots.tab;
   const ES = { emitters: [dotsES(L, e.P, comboLayerM(L), e.bake && e.bake.fm)] }; e._dots = { sig, tab: esSpawn(ES, 1) }; return e._dots.tab;
 }
