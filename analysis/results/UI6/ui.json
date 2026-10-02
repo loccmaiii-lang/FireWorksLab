@@ -1,0 +1,152 @@
+[
+ {
+  "name": "1440_鸿巢_整体_展开时刻",
+  "seconds": 21.3,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 7.777083333333052,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1440_鸿巢_引擎回放_独看第2层_网格",
+  "seconds": 4.5,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 引擎回放（每层贴图叠放）· 2 层 · 独看 / 静音中（只影响观察）",
+  "seg": "",
+  "view": "export",
+  "flow": null,
+  "t": 7.777083333333052,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1440_鸿巢_调第1层",
+  "seconds": 6.0,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": null,
+  "t": 7.777083333333052,
+  "P": {
+   "type": "kamuro",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 12
+  }
+ },
+ {
+  "name": "1440_鸿巢_第1层贴图流转",
+  "seconds": 5.6,
+  "hud": "第 1 层 · 贴图流转 · 第 39/64 帧 · B 通道 · 第 7 格（第 2 行第 3 列）· 时间 2.00 s",
+  "seg": "",
+  "view": "atlas",
+  "flow": true,
+  "t": 2,
+  "P": {
+   "type": "kamuro",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 12
+  }
+ },
+ {
+  "name": "1440_鸿巢_查看交付",
+  "seconds": 1.6,
+  "hud": "第 1 层 · 贴图流转 · 第 39/64 帧 · B 通道 · 第 7 格（第 2 行第 3 列）· 时间 2.00 s",
+  "seg": "",
+  "view": "atlas",
+  "flow": true,
+  "t": 2,
+  "P": {
+   "type": "kamuro",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 12
+  }
+ },
+ {
+  "name": "1440_鸿巢_审阅页_记录当前帧",
+  "seconds": 3.8,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": true,
+  "t": 3,
+  "P": {
+   "type": "kamuro",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 12
+  }
+ },
+ {
+  "name": "1440_鸿巢_100m",
+  "seconds": 3.9,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 引擎回放（每层贴图叠放）· 2 层",
+  "seg": "",
+  "view": "export",
+  "flow": true,
+  "t": 3,
+  "P": {
+   "type": "kamuro",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 12
+  }
+ },
+ {
+  "name": "1440_JM4-40_单层",
+  "seconds": 4.9,
+  "hud": "导出效果 · 大面片母版 · 第 34/64 帧 · B 通道 单格 512×512 · 贴图放大 0.3× · 屏幕上约 383 像素宽",
+  "seg": "",
+  "view": "export",
+  "flow": true,
+  "t": 1.5,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "1920_鸿巢",
+  "seconds": 7.0,
+  "hud": "鸿巢四尺玉 · 4.0（HK9 参数） · 实时模拟 · 2 层（画面里 2 层）",
+  "seg": "",
+  "view": "live",
+  "flow": true,
+  "t": 3,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ },
+ {
+  "name": "736_金芒菊",
+  "seconds": 4.4,
+  "hud": "实时模拟 · 游戏内大小 · 1000 m · 导出单格 512×512 · 固定曝光 ×0.20 · 居中快门",
+  "seg": "",
+  "view": "live",
+  "flow": true,
+  "t": 1,
+  "P": {
+   "type": "kiku",
+   "renderVer": 40,
+   "cols": 4,
+   "duration": 4.56
+  }
+ }
+]
