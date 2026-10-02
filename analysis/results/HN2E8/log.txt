@@ -1,0 +1,7 @@
+18:31:51 开始：HikiNishiki（导出素材）
+18:31:58 HikiNishiki 组合素材包 7 秒：T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01.png、T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01_C.png、T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01_HD.png、T_EFX_FireWorks_HikiNishiki_Hiki_R.png、T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01.png、T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01_C.png、T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01_HD.png、T_EFX_FireWorks_HikiNishiki_Nishiki_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+18:32:01 回放检查：✅ 通过
+18:32:17 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\HN2E8\烘焙回放.jpg
+18:32:19 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\HN2E8\烘焙回放_原尺寸.jpg
+18:32:19 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+18:32:19 完成，用时 0.5 分钟
