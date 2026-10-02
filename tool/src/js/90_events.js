@@ -48,7 +48,7 @@ document.addEventListener('keydown', e => { if (e.code === 'Space' && !/INPUT|SE
 $('#btnExport').addEventListener('click', exportMaster);
 $('#bakeRetry').addEventListener('click', retryPreviewBake);
 $('#btnVariants').addEventListener('click', exportVariants);
-$('#btnReset').addEventListener('click', () => setType(state.P.type));
+$('#btnReset').addEventListener('click', () => resetToOpened());     // 4.2.9：回到打开时的版本，不是模板默认（走查 B12）
 $('#btnJitter').addEventListener('click', jitterParams);
 $('#btnImport').addEventListener('click', () => $('#fileIn').click());
 // 导入：完整参数 JSON，或只含差异的派生配方（{ parent / type, diff }）

@@ -942,3 +942,6 @@ details.sec>p.hint:not([hidden]){border-left:2px solid var(--line2);padding-left
 .phelp .ph-meta{color:var(--faint);font:11px var(--mono);margin-left:6px}
 .phelp .ph-d{display:block;color:var(--dim);margin-top:2px}
 .phelp .ph-idle{color:var(--faint)}
+/* 4.2.9 撤销 / 重做按钮（资产栏，保存左边） */
+.assetbar .ab-ur{padding:4px 9px;font-size:15px;line-height:1}
+.assetbar .ab-ur:disabled{opacity:.35;cursor:default}

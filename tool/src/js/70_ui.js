@@ -209,6 +209,7 @@ function onParam() {
   if (le && le.P === state.P) { state.bakeError = null; syncBakeError(); queueLayerBake(le); }
   else { state.dirty = true; syncBakeError(); scheduleBake(); }
   refreshVisibility();
+  if (typeof undoNote === 'function') undoNote();
 }
 function showStats(b) {
   if (b.form === 'emitset') { $('#stats').innerHTML = rtStatsHTML(b); return; }
@@ -443,7 +444,7 @@ function buildMasterPanel() {
       let row;
       if (Array.isArray(it)) {
         const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short, detail] = splitLab(lab, k);
-        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { state.P[k] = v; onParam(); }, D[k], k);
+        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { if (TIMING_KEYS.has(k)) setTimingParam(k, v); else { state.P[k] = v; onParam(); } }, D[k], k);
         const kl = row.querySelector('.k'); kl.title = lab + (unit ? `（${unit}）` : '') + '；双击恢复默认';
         row._lab = short; row._detail = detail;
       } else if (it.sel) {

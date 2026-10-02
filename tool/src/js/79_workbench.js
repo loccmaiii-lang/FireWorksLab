@@ -100,7 +100,7 @@ const wbIdle = () => !state.baking && !state.dirty && !(state.layerQueue && stat
 // 打开 / 换版本后，等烘焙稳定了再记「没改过」的样子（烘焙会自动补一些派生字段，不算你的改动）
 function wbArm() {
   const n = ++wb.arm; wb.sig = '';
-  const tick = () => { if (n !== wb.arm) return; if (wbIdle()) { wb.sig = wbSig(); wbSync(); } else setTimeout(tick, 400); };
+  const tick = () => { if (n !== wb.arm) return; if (wbIdle()) { wb.sig = wbSig(); wbSync(); if (typeof undoReset === 'function') undoReset(); } else setTimeout(tick, 400); };
   setTimeout(tick, 300);
 }
 function wbVisible() { return !state.showcase && !!(lib.review ? lib.review.kind !== 'queued' : lib.formal || /^(type:|combo$|my:)/.test(wbKey())); }
@@ -235,6 +235,7 @@ function wbImportFile(file) {
   rd.readAsText(file);
 }
 function initWorkbench() {
+  if (typeof bindUndo === 'function') bindUndo();
   $('#abSrc').addEventListener('change', e => wbLoad(e.target.value));
   $('#abSave').addEventListener('click', () => wbSave(false));
   $('#abSaveAs').addEventListener('click', () => wbSave(true));
@@ -346,12 +347,65 @@ function layerEndOf(P) {
 }
 function followDuration(P, end0) {
   const d = layerEndOf(P) - end0; if (Math.abs(d) < 1e-3) return 0;
-  const dur = clamp(+(+P.duration + d).toFixed(2), 0.8, 16), dd = dur - P.duration; P.duration = dur;
+  const dur = clamp(+(+P.duration + d).toFixed(3), 0.8, 16), dd = dur - P.duration; P.duration = dur;     // 3 位小数：滑杆连续拖时一步步累加，不能每步舍到 0.01
   if (+P.cutOut > 0) P.cutOut = +Math.min(+P.cutOut + (+P.cutOut >= P.duration - dd - 0.05 ? dd : 0), P.duration).toFixed(4);
   if (+P.visTo > 0) P.visTo = +clamp(+P.visTo + dd, 0, P.duration).toFixed(4);
   return dd;
 }
 function layerPOf(x) { return state.tab === 'combo' ? x.e && x.e.P : state.P; }
+// ---- 4.2.9 滑杆、数值框、轨道拖动同一套时间规则（走查 B10–B11） ----
+// 改「什么时候亮 / 停」的参数，不管是拖轨道上的点还是拖右栏滑杆：
+//   ① 序列时长跟着这一层最后看得见的时刻平移（以前只有拖才这样，滑杆改燃烧会把星截掉）；
+//   ② 和同一批星的另一层粘在同一时刻的点一起动（接力：引线火花停 = 锦点火）；
+//   ③ 点火推后 / 提前，入点（和入点前放大的起点）跟着平移——入出点是这一层自己的时间，内容整体挪了，入点也要挪。
+const PHASE_KEY = { ignDelay: 'ign', burn: 'burn', afterBurn: 'after', sparkStart: 'sstart', sparkStop: 'sstop', headDimUntil: 'dim', emberEnd: 'ember' };
+const TIMING_KEYS = new Set([...Object.keys(PHASE_KEY), 'sparkLife', 'sparkLifeEnd', 'emberLife']);
+function followIgn(P, d) {
+  if (+P.cutIn > 0) P.cutIn = +Math.max(0, +P.cutIn + d).toFixed(4);
+  if (P.preFrom != null && +P.preFrom >= 0) P.preFrom = +Math.max(0, +P.preFrom + d).toFixed(4);
+}
+function timingEdit(P, li, apply) {
+  if (!P || familyOf(P.type) !== 'aerial') { apply(); return { dd: 0, moved: new Set() }; }
+  const x = curLayerBakes().find(r => r.i === li), sp = x && layerSpans(x);
+  const glue0 = sp ? phasesOf(P).filter(z => !z.auto).map(z => ({ k: z.k, at: sp.at(z.t), partners: gluePartners(li, sp.at(z.t)) })).filter(z => z.partners.length) : [];
+  const end0 = layerEndOf(P), ign0 = +P.ignDelay || 0;
+  apply();
+  const di = (+P.ignDelay || 0) - ign0; if (Math.abs(di) > 1e-9) followIgn(P, di);
+  const dd = followDuration(P, end0), moved = new Set();
+  if (sp) {
+    const ph1 = phasesOf(P);
+    for (const g0 of glue0) {
+      const z1 = ph1.find(z => z.k === g0.k); if (!z1 || z1.auto) continue;
+      const at1 = sp.at(z1.t); if (Math.abs(at1 - g0.at) < 1e-3) continue;
+      for (const g of g0.partners) { const e0 = layerEndOf(g.P), i0 = +g.P.ignDelay || 0; g.q.set((at1 - g.sp.d) * g.sp.r); const d2 = (+g.P.ignDelay || 0) - i0; if (Math.abs(d2) > 1e-9) followIgn(g.P, d2); followDuration(g.P, e0); moved.add(g.i); }
+    }
+  }
+  return { dd, moved };
+}
+// 右栏滑杆 / 数值框改时间参数：换算成轨道上那个点的时刻，走和拖动完全一样的 set（燃烧结束收到火花停前面时火花停也收、火花停推过燃烧结束时燃烧结束跟着推…）
+function setTimingParam(k, v) {
+  const P = state.P, li = state.tab === 'combo' ? state.comboSel : 0, pk = PHASE_KEY[k];
+  const q = pk && phasesOf(P).find(z => z.k === pk), ign = +P.ignDelay || 0;
+  const at = { ign: v, burn: ign + v, after: ign + (+P.burn || 0) + v, sstart: ign + v, sstop: ign + v, dim: v, ember: v }[pk];
+  const before = JSON.stringify([P.duration, P.cutIn, P.cutOut, P.burn, P.sparkStart, P.sparkStop]);
+  const { moved } = timingEdit(P, li, () => { if (q && !(pk === 'sstart' && !(v > 0)) && !(pk === 'sstop' && !(v > 0))) q.set(at); else P[k] = v; });
+  if (JSON.stringify([P.duration, P.cutIn, P.cutOut, P.burn, P.sparkStart, P.sparkStop]) !== before) refreshPanelValues();
+  onParam();
+  if (moved.size) { for (const j of moved) { const e2 = state.layers[j] && state.lib.find(x => x.name === state.layers[j].lib); if (e2) queueLayerBake(e2); } stage2.tlSig = ''; }
+}
+// 「恢复」= 回到打开时的版本（AI 版 / 你保存的版本，wbArm 记下的样子），不是花型模板默认（走查 B12）；多层时只恢复正在调的这一层
+function putObj(o, v) { for (const k of Object.keys(o)) delete o[k]; Object.assign(o, structuredClone(v)); }
+function resetToOpened() {
+  let s = null; try { s = wb.sig ? JSON.parse(wb.sig) : null; } catch (e) { }
+  if (!s) { setType(state.P.type); flash('还没记下打开时的样子：恢复成花型模板默认'); return; }
+  if (s.kind !== 'combo') { if (state.tab === 'combo') return; wbApply(s); flash('已恢复到打开时的参数'); return; }
+  if (state.tab !== 'combo') return;
+  if (state.comboSel < 0) { wbApply(s); flash('已恢复到打开时（所有层）'); return; }
+  const x = s.layers[state.comboSel], e = layerEntryOf(state.layers[state.comboSel]);
+  if (!x || !e || !x.P) { flash('这一层是打开以后加的，没有「打开时」的样子', true); return; }
+  putObj(e.P, x.P); if (x.M && e.M) putObj(e.M, x.M); derive(e.P);
+  buildMasterPanel(); onParam(); flash(`已把第 ${state.comboSel + 1} 层恢复到打开时的参数`);
+}
 function buildTlBars() {
   if (stage2.drag) return;   // 拖动中不重建（否则手上的把手被换掉，拖到一半断开）
   const D = curDuration(), rows = curLayerBakes(), P = editLayerP();
@@ -412,15 +466,8 @@ function trackDrag(ev, h) {
     if (cut) { applyCut(P, sp, cut, tl, true); return; }
     // 同一批星的另一层在同一时刻的点（接力：引线火花停 = 锦点火；四尺玉燃烧结束 = 红点亮起）一起移动。
     // 不只是拖的这个点：这一层里因为它跟着变的点（拖点火时燃烧结束、火花停都跟着走；燃烧结束收到火花停前面时火花停也收）也带着各自的接力点走
-    const glue0 = phasesOf(P).filter(z => !z.auto).map(z => ({ k: z.k, at: sp.at(z.t), partners: gluePartners(li, sp.at(z.t)) })).filter(z => z.partners.length), end0 = layerEndOf(P);
-    q.set(tl); const ph1 = phasesOf(P), q1 = ph1.find(z => z.k === q.k), tNow = q1 ? q1.t : tl, dd = followDuration(P, end0);   // set 可能夹住 / 改回默认：按实际落点
-    const moved = new Set();
-    for (const g0 of glue0) {
-      const z1 = ph1.find(z => z.k === g0.k); if (!z1 || z1.auto) continue;
-      const at1 = sp.at(z1.t); if (Math.abs(at1 - g0.at) < 1e-3) continue;
-      for (const g of g0.partners) { const e0 = layerEndOf(g.P); g.q.set((at1 - g.sp.d) * g.sp.r); followDuration(g.P, e0); moved.add(g.i); }
-    }
-    tl = tNow;
+    const { dd, moved } = timingEdit(P, li, () => q.set(tl));     // 4.2.9：和右栏滑杆同一套规则（时长跟着、接力一起动、入点跟着点火）
+    const q1 = phasesOf(P).find(z => z.k === q.k); tl = q1 ? q1.t : tl;   // set 可能夹住 / 改回默认：按实际落点
     refreshPanelValues(); refreshVisibility(); onParam();
     if (moved.size) rebakeLayers([...moved]);
     flash(`${q.lab} 改到 ${tl.toFixed(2)} s${dd ? `，序列时长跟着${dd > 0 ? '加' : '减'} ${Math.abs(dd).toFixed(2)} s` : ''}${moved.size ? `；第 ${[...moved].map(j => j + 1).join('、')} 层接力的点一起动` : ''}，正在重烘`);

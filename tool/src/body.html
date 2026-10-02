@@ -8,6 +8,7 @@
       <span class="ab-chg" id="abChg" hidden>参数已变 · 未保存</span>
       <span class="ab-state" id="abState"></span>
       <span class="sp"></span>
+      <button class="btn ab-ur" id="abUndo" type="button" aria-label="撤销" title="撤销（Ctrl+Z）" disabled>↶</button><button class="btn ab-ur" id="abRedo" type="button" aria-label="重做" title="重做（Ctrl+Shift+Z）" disabled>↷</button>
       <button class="btn primary" id="abSave" type="button" title="把现在的全部参数（所有层）存成你的版本（存在这台电脑的浏览器里）">保存</button>
       <button class="btn" id="abSaveAs" type="button">另存为…</button>
       <details class="ab-more"><summary class="btn" title="更多">⋯</summary><div class="ab-menu">
@@ -173,7 +174,7 @@
         </div>
         <div class="line pm-btns">
           <button class="btn ghost" id="btnImport">导入参数 JSON</button>
-          <button class="btn ghost" id="btnReset">恢复本花型默认</button>
+          <button class="btn ghost" id="btnReset" title="回到打开时的参数（AI 版或你保存的版本）；多层时只恢复正在调的这一层">恢复到打开时</button>
           <button class="btn ghost" id="btnJitter">随机微调（未锁定参数）</button>
           <input type="file" id="fileIn" accept=".json,application/json" hidden>
         </div>
