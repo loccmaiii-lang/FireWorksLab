@@ -1,0 +1,9 @@
+{
+ "id": "HN2E10",
+ "type": "export",
+ "effect": "hiki_nishiki",
+ "entry": "HN2",
+ "name": "HikiNishiki",
+ "priority": 12,
+ "note": "形式检查（不进待我验收、效果参数没变）：4.2.3 Zoom 逐帧阶梯后，回放检查的「缩放抖动」应为 0（HN2E9 是 0.7–3.2%）；顺带记录每层画面占比 fill_med / fill_p10 / fill_union，给下一步收紧取景做基线。"
+}

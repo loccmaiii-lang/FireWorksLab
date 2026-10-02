@@ -6,6 +6,7 @@
   - 裁切：内容碰到格子内圈（先找出打包时清零的留边，再量留边以内 2 像素一圈的亮度占比；以前量的是被清零的最外圈，永远是 0）
   - 曝光：灰度到顶（≥ 250）的像素占比
   - 缩放抖动（4.2.3）：同一帧贴图停着的几个 tick 里 Size By Life 不许变（否则换帧时花缩回去、一胀一缩）
+  - 画面占比（4.2.3，只记录）：每帧可见内容（≥ 3/255）包围盒占格子的比例 fill_med / fill_p10，全段并集 fill_union
   - 空帧（中间的空帧、末尾的空帧分开数）、中心抖动（只对 Zoom 取景判：固定取景面片不动，画面不可能整体抖；亮部中心偏离前后两帧按时间连线的距离，按 512 格换算；相邻帧中心移动另记 center_jump_*，只作参考——固定取景时花下垂，中心本来就会走）
 及格线（LIMITS，照抄 协作/标准.md 2.3；--limits '{"jump_px512": 4}' 可以按效果放宽 / 收紧，放宽要在说明里写理由）
 用法：
@@ -172,12 +173,19 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
     for p in packs:   # 逐帧自动检查
         pad = p.pad(); band = int(lim['edge_band'])
         edge, sat, cm, jumps, last = [], [], [], [], None
+        fills, ubox = [], None     # 画面占比（4.2.3，只记录不判）：每帧可见内容（≥ 3/255）包围盒占格子（扣留边）的比例，取横竖较大的那个
         jf, cens = [], []      # 诊断：跳变最大的几帧（帧号, 像素）；每帧亮部中心（512 格像素）
         for f in range(p.frames):
             c = p.cell(f); tot = c.sum() + 1e-9; cm.append(float(c.max()))
             inner = c[pad:c.shape[0] - pad, pad:c.shape[1] - pad]
             b = np.concatenate([inner[:band].ravel(), inner[-band:].ravel(), inner[band:-band, :band].ravel(), inner[band:-band, -band:].ravel()])
-            edge.append(float(b.sum() / tot)); sat.append(float((c >= 250 / 255).mean())); m = c > 0.08
+            edge.append(float(b.sum() / tot)); sat.append(float((c >= 250 / 255).mean()))
+            vis = inner >= 3 / 255
+            if vis.any():
+                ys, xs = np.nonzero(vis); bx = [xs.min(), xs.max(), ys.min(), ys.max()]
+                fills.append(max((bx[1] - bx[0] + 1) / inner.shape[1], (bx[3] - bx[2] + 1) / inner.shape[0]))
+                ubox = bx if ubox is None else [min(ubox[0], bx[0]), max(ubox[1], bx[1]), min(ubox[2], bx[2]), max(ubox[3], bx[3])]
+            m = c > 0.08
             if m.sum() < 400 * (p.cw * p.chh) / 256 ** 2: last = None; continue       # 亮部太少（开头 / 末尾零星几颗，中心是噪声）不算跳变；400 像素是按 256 格定的，按格子面积换算
             ys, xs = np.nonzero(m); cen = (xs.mean(), ys.mean()); cens.append([f, round(cen[0] * 512 / p.cw, 1), round(cen[1] * 512 / p.chh, 1), int(m.sum())])
             if last is not None: jumps.append(float(np.hypot(cen[0] - last[0], cen[1] - last[1])) * 512 / p.cw); jf.append(f)
@@ -213,7 +221,10 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
                  centers=cens,
                  center_jump_top=[[jf[i], round(jumps[i], 2)] for i in np.argsort(jumps)[::-1][:5]] if jumps else [],
                  center_jitter_px512=round(max(jit), 2) if jit else 0, jitter_applies=zoom, empty_mid_frames=mid_list,
-                 center_jitter_top=[[jitf[i], round(jit[i], 2)] for i in np.argsort(jit)[::-1][:5]] if jit else [])
+                 center_jitter_top=[[jitf[i], round(jit[i], 2)] for i in np.argsort(jit)[::-1][:5]] if jit else [],
+                 fill_union=round(max((ubox[1] - ubox[0] + 1) / (p.cw - 2 * pad), (ubox[3] - ubox[2] + 1) / (p.chh - 2 * pad)), 3) if ubox else 0,
+                 fill_med=round(float(np.median(fills)), 3) if fills else 0, fill_p10=round(float(np.percentile(fills, 10)), 3) if fills else 0,
+                 fill_frames=[round(float(v), 2) for v in fills])
         fails = []
         if L['shown_frac'] < lim['shown_frac']: fails.append(f"{fps} fps 只显示 {shown}/{p.frames} 帧")
         if back > lim['back_jumps']: fails.append(f'帧号回跳 {back} 次')

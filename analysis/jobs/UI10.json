@@ -1,0 +1,85 @@
+{
+ "id": "UI10",
+ "type": "ui",
+ "name": "4.2.3 窄屏：1366 / 1280 / 1536 / 1100（抽屉）/ 1920 下的整页（真显卡渲染）",
+ "priority": 11,
+ "note": "只截图，不改东西。视口高度按笔记本浏览器扣掉地址栏后的可视区。",
+ "shots": [
+  {
+   "name": "1366x657_引菊_实时对比",
+   "viewport": [
+    1366,
+    657
+   ],
+   "js": "Promise.resolve(openEffect(EFFS().find(e=>e.key==='hiki_nishiki'))).then(()=>selectComboLayer(-1))",
+   "view": "live",
+   "t": 1.2,
+   "sleep": 6000
+  },
+  {
+   "name": "1366x657_引菊_引擎回放",
+   "view": "export",
+   "t": 1.6,
+   "sleep": 4000
+  },
+  {
+   "name": "1366x657_轨道说明展开",
+   "js": "$('#tlHelpBtn').click()",
+   "view": "live",
+   "t": 1.2,
+   "sleep": 1500
+  },
+  {
+   "name": "1366x657_专注",
+   "js": "$('#tlHelpBtn').click();toggleFocus()",
+   "sleep": 1500
+  },
+  {
+   "name": "1280x610_引菊_实时对比",
+   "viewport": [
+    1280,
+    610
+   ],
+   "js": "toggleFocus()",
+   "view": "live",
+   "t": 1.2,
+   "sleep": 3000
+  },
+  {
+   "name": "1536x730_引菊_实时对比",
+   "viewport": [
+    1536,
+    730
+   ],
+   "view": "live",
+   "t": 1.2,
+   "sleep": 3000
+  },
+  {
+   "name": "1100x650_左栏抽屉",
+   "viewport": [
+    1100,
+    650
+   ],
+   "js": "setPanels({side:true})",
+   "view": "live",
+   "t": 1.2,
+   "sleep": 2500
+  },
+  {
+   "name": "1100x650_抽屉收起",
+   "js": "setPanels({side:false})",
+   "sleep": 1500
+  },
+  {
+   "name": "1920x960_引菊_实时对比",
+   "viewport": [
+    1920,
+    960
+   ],
+   "view": "live",
+   "t": 1.2,
+   "sleep": 3000
+  }
+ ]
+}
