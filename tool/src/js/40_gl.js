@@ -135,7 +135,7 @@ precision highp float; precision highp int; precision highp sampler2D;
 uniform sampler2D uPos, uVel, uInfo;
 uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw, uBr;
 uniform float uInh, uSpread, uLife, uLifeEnd, uLifeJit, uK, uG, uT0, uCool, uTwk, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
-uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShoulder, uDif, uDifL, uRise, uStarB;
+uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShoulder, uDif, uDifL, uRise, uStarB, uWShape, uWidth, uPinH, uPinT, uBelly;
 uniform vec4 uTm[3]; uniform float uTa[3];
 uniform vec4 uView, uXf; uniform float uPPM, uPPMY, uMax, uUseXf;
 out float vI; out vec2 vSig; out float vPS;
@@ -146,6 +146,9 @@ float lh(vec2 i){ uvec2 u=uvec2(ivec2(i)+ivec2(32768)); return hsh(u.x*73856093u
 float vn(vec2 q){ vec2 i=floor(q), f=fract(q); f=f*f*(3.-2.*f); return mix(mix(lh(i),lh(i+vec2(1.,0.)),f.x),mix(lh(i+vec2(0.,1.)),lh(i+vec2(1.,1.)),f.x),f.y); }
 float vn2(vec2 q){ return vn(q)+.5*vn(q*2.03+vec2(17.3,5.1)); }
 vec2 curl2(vec2 q){ float e=.05; return vec2(vn2(q+vec2(0.,e))-vn2(q-vec2(0.,e)), -(vn2(q+vec2(e,0.))-vn2(q-vec2(e,0.))))/(2.*e)*.5; }
+// 第 s 颗星在 t 时刻的位置（和下面出生点 sp 同一个 Hermite 插值）
+vec3 starAt(int s, float t){ float fi=t/uDT; int i0=clamp(int(floor(fi)),0,uNs-2); float f=clamp(fi-float(i0),0.,1.), f2=f*f, f3=f2*f;
+  return (2.*f3-3.*f2+1.)*texelFetch(uPos,ivec2(i0,s),0).xyz+(f3-2.*f2+f)*uDT*texelFetch(uVel,ivec2(i0,s),0).xyz+(-2.*f3+3.*f2)*texelFetch(uPos,ivec2(i0+1,s),0).xyz+(f3-f2)*uDT*texelFetch(uVel,ivec2(i0+1,s),0).xyz; }
 void main(){
   int nb=1+uBr; int id=gl_VertexID; int pid=id/nb; int c=id-pid*nb;
   int s=pid/uM; int j=pid-s*uM; uint uid=uint(pid);
@@ -177,8 +180,18 @@ void main(){
   vec3 vel=sv*inh+vec3(gss(uid,5u),gss(uid,7u),gss(uid,9u))*uSpread;
   vec3 U=vec3(airAt(sp.xy,tb),0.), g=vec3(0.,-uG,0.);
   float T0=uT0+120.*gss(uid,11u), I, size=uSize; vec3 p;
+  // 尾迹粗细 / 梭形（4.2.8，用户 10-02 19:41 #4、20:04「是梭形」）：沿尾迹（a = 出生点离星头的距离 ÷ 尾迹全长，0 = 星头，1 = 尾端；
+  // 按距离不按年龄：星在减速，新火花挤在星头附近，按年龄算最粗处会贴到星头上）的宽度曲线
+  // wq(a)：最粗处 uBelly 之前从 1−uPinH 升到 1，之后降到 1−uPinT；W = 粗细 × wq。只改火花横向散开的那部分位移（散布速度 × 阻力衰减），
+  // 火花大小 × √粗细 × (0.5 + 0.5 wq)（颗粒只稍微变小，太小会暗到看不见、星头和尾迹之间断开），尾端那半段稍暗（× 0.6 + 0.4 wq），尾迹扩散也乘 W。
+  // uWShape = 0（默认值）时不进分支，结果不变。
+  float W=1., wq=1.; bool wtail=false;
   if(c==0){
     p=mot(sp,vel,U,g,uK,age);
+    if(uWShape>.5 && !emb){ float th=min(uT,inf.y), t0=min(th,max(inf.x,uT-uLife*max(1.,uLifeEnd))); vec3 ph=starAt(s,th);
+      float a=clamp(length(ph-sp)/max(1e-3,length(ph-starAt(s,t0))),0.,1.);
+      wtail=a>uBelly; wq=!wtail ? 1.-uPinH*(1.-smoothstep(0.,uBelly,a)) : 1.-uPinT*smoothstep(uBelly,1.,a); W=uWidth*wq;
+      p+=(W-1.)*(uK>1e-4 ? (1.-exp(-uK*age))/uK : age)*vec3(gss(uid,5u),gss(uid,7u),gss(uid,9u))*uSpread; }
     float gl=emb ? glowOf(T0)*uEmbB*exp(-2.*age/life)*(1.-smoothstep(.75,1.,age/life))*(uEmbF>0. ? 1.-smoothstep(inf.y-.15,inf.y+uEmbF,uT) : 1.)*(uEmbE>0. ? 1.-smoothstep(uEmbE-.6,uEmbE+.3,uT) : 1.) : glowOf(T0*(1.-uCool*age/life));
     if(emb) size=uSize*uEmbS;
     if(uGlit>0.){ float tf=uGlitD*(.5+hsh(uid,17u)); float e=(age-tf)/.03; gl=gl*(1.-.85*uGlit)+uGlit*6.*exp(-e*e); }
@@ -194,7 +207,7 @@ void main(){
   // 位移 = 扰流速度 × Tl × x/√(1+x)，x = 年龄 / Tl，Tl = 尺度 / 速度：刚出生像被吹着走（∝ 年龄），老了变成扩散（∝ √年龄）。
   // 方向 = 发射点处平滑的旋涡场（相邻火花一起飘成一缕）+ 每粒自己的随机（散开）。默认 0 不进分支，结果不变。
   if(uDif>0.){ float Tl=uDifL/max(uDif,.05), x=age/Tl, sg=uDif*Tl*x/sqrt(1.+x);
-    p.xy+=(curl2(sp.xy/uDifL)+.45*vec2(gss(uid,71u),gss(uid,73u)))*sg; }
+    p.xy+=(curl2(sp.xy/uDifL)+.45*vec2(gss(uid,71u),gss(uid,73u)))*sg*W; }
   if(I<=0.){ cull(); return; }
   I*=(1.+uTwk*(2.*hsh(u2,uint(uTw)*16u+13u)-1.))*uBright*.6;
   // 4.2.0（对话框7 需求，引菊颜色纯度）：火花烧旺时间 sparkRise——刚离开星时没烧旺，靠星头那截暗、偏红；每颗星亮度离散 starBright——按星号取一个对数正态倍数（均值 1）
@@ -205,6 +218,7 @@ void main(){
   // 尾迹外形（每个效果自己的参数 tailJit / tailShoulder）：粗细随机 = 每颗星一个粗细倍数 × 每粒火花一点抖动；亮肩 = 新火花大而亮、老火花细而暗。默认 0 时不进分支，结果不变
   if(uTailJit>0.){ size*=exp(uTailJit*.35*gss(uid,61u))*max(.15,1.+uTailJit*1.2*(hsh(uint(s),62u)-.5)); }
   if(uShoulder!=0. && c==0){ float sh=uShoulder*(.8-1.6*clamp(age/life,0.,1.)); size*=max(.1,1.+sh); I*=max(.15,1.+.6*sh); }
+  if(uWShape>.5 && c==0 && !emb){ size*=sqrt(uWidth)*(.5+.5*wq); if(wtail) I*=.6+.4*wq; }
   vec2 q=p.xy; if(uUseXf>.5){ vec2 d=q-uXf.xy; q=vec2(d.x*uXf.z-d.y*uXf.w, d.x*uXf.w+d.y*uXf.z); }
   emitPt(q,I,size);
 }`;
@@ -395,6 +409,7 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   gl.uniform1f(pr.u.uEmbE, P.emberEnd || 0); gl.uniform1f(pr.u.uHotStop, P.emberFrac > 0 && P.emberAll && P.sparkStop > 0 ? P.sparkStop : 0);
   if (pr.u.uTailJit) gl.uniform1f(pr.u.uTailJit, +P.tailJit || 0); if (pr.u.uShoulder) gl.uniform1f(pr.u.uShoulder, +P.tailShoulder || 0);
   if (pr.u.uRise) gl.uniform1f(pr.u.uRise, +P.sparkRise || 0); if (pr.u.uStarB) gl.uniform1f(pr.u.uStarB, +P.starBright || 0);
+  if (pr.u.uWShape) { const ws = tailShapeOf(P); gl.uniform1f(pr.u.uWShape, ws.on ? 1 : 0); gl.uniform1f(pr.u.uWidth, ws.w); gl.uniform1f(pr.u.uPinH, ws.h); gl.uniform1f(pr.u.uPinT, ws.t); gl.uniform1f(pr.u.uBelly, ws.m); }
   if (pr.u.uDif) { gl.uniform1f(pr.u.uDif, familyOf(P.type) === 'aerial' ? +P.tailDiffuse || 0 : 0); gl.uniform1f(pr.u.uDifL, Math.max(1, +P.tailDiffuseScale || 20)); }
   const br = Math.round(P.branch || 0); gl.uniform1i(pr.u.uBr, br); gl.uniform1f(pr.u.uBrAt, P.branchAt || 0.5);
   setAirUniforms(pr, P);

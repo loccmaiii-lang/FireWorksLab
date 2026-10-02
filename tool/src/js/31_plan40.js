@@ -42,8 +42,8 @@ function fitGainCap(q, g, P) {   // 这一帧最多能收紧多少倍（1 = 不�
   let lo = 1, hi = g; for (let k = 0; k < 18; k++) { const mid = (lo + hi) / 2; if (fitSatAt(q, mid, P) <= FIT_SAT) lo = mid; else hi = mid; }
   return lo;
 }
-function fitPlan40(P, pl, parts) {
-  if (!pl || pl.loop || pl.unit || pl.tight || pl.aniso) return null;
+// 每帧内容的世界坐标包围盒（米）+ 是否贴着格子边（贴边 = 真实范围不知道）；parts 按帧顺序接起来
+function fitFrames40(P, parts) {
   const pad = +P.cellPad || 0, fr = [];
   for (const s of parts) {
     const m = s.meta, L = m.L; if (!m.boxes || m.boxes.length !== L.F) return null;
@@ -56,6 +56,29 @@ function fitPlan40(P, pl, parts) {
       fr.push({ hx, hy, c, q, faint, x0: c[0] - hx + bx[0] * du, x1: c[0] - hx + (bx[1] + 1) * du, y0: c[1] - hy + bx[2] * dv, y1: c[1] - hy + (bx[3] + 1) * dv,
         tl: bx[0] <= e, tr: bx[1] >= cw - 1 - e, tb: bx[2] <= e, tt: bx[3] >= chh - 1 - e });
     });
+  }
+  return fr;
+}
+// 收紧后的烘焙里，哪些帧的内容进了「留边 + 2 像素」那一圈（回放检查的内圈），而收紧前这一帧没贴边：返回帧号
+// 收紧前四舍五入成 0 的暗火星，放大后每像素更亮、变成 1/255，就会冒出来（QN11E4 / E5 尾层末帧碰边 21.6%）
+// 判据和回放检查一样：离边「留边 + 2 像素」以内的亮度 ≥ 整帧 0.5%（analyze 里的 m.ring）
+const FIT_RING = 0.005;
+function fitTouches40(P, rawParts, parts) {
+  const raw = rawParts.flatMap(s => s.meta.ring || s.meta.L && Array(s.meta.L.F).fill(0)), out = []; let i = 0;
+  for (const s of parts) for (const v of (s.meta.ring || [])) { if (v >= FIT_RING && !((raw[i] || 0) >= FIT_RING)) out.push(i); i++; }
+  return out;
+}
+// extra：收紧后的那次烘焙（可选）。它看到的内容并进每帧包围盒（收紧前看不见的暗火星），贴边标记也并进来（贴边那一侧不收）
+function fitPlan40(P, pl, parts, extra) {
+  if (!pl || pl.loop || pl.unit || pl.tight || pl.aniso) return null;
+  const pad = +P.cellPad || 0, fr = fitFrames40(P, parts);
+  if (!fr) return null;
+  if (extra) {
+    const f2 = fitFrames40(P, extra); if (!f2 || f2.length !== fr.length) return null;
+    fr.forEach((q, i) => { const r = f2[i]; if (r.empty) return;
+      if (q.empty) { Object.assign(q, { empty: false, q: r.q, faint: r.faint, x0: r.x0, x1: r.x1, y0: r.y0, y1: r.y1, tl: r.tl, tr: r.tr, tb: r.tb, tt: r.tt }); return; }
+      Object.assign(q, { faint: q.faint && r.faint, x0: Math.min(q.x0, r.x0), x1: Math.max(q.x1, r.x1), y0: Math.min(q.y0, r.y0), y1: Math.max(q.y1, r.y1),
+        tl: q.tl || r.tl, tr: q.tr || r.tr, tb: q.tb || r.tb, tt: q.tt || r.tt }); });
   }
   if (fr.length !== pl.L.F || fr.every(q => q.empty)) return null;
   const a = pl.L.cellW / pl.L.cellH, k = 1.02 / Math.max(.5, 1 - 4 * pad / Math.min(pl.L.cellW, pl.L.cellH));   // 内容放进去后离格子边：留边那一圈（被压暗）+ 2%

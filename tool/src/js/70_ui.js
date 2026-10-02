@@ -362,21 +362,95 @@ function placeSpecBox() {
   if (box && box.parentElement !== where) where.appendChild(box);
 }
 function itemVisible(it, P) { const f = Array.isArray(it) ? it[6] : it.show; return !f || f(P); }
+// ---------------- 4.2.8 参数栏改版（用户 10-02 19:41 #3：参数和备注太多、没有分类逻辑、难读难找） ----------------
+// 6 大类：运动（开花、轨迹、上升）· 星头 · 尾迹（火花、尾缀外形）· 特效（星效果、落火、烟）· 环境（风、扰流）· 输出（规格、帧、格子、曝光、画质）
+// 参数名只留短名，括号里的长说明进悬停提示和底部说明条；节说明收进「？」；搜索；「只看改过的」（和打开时的版本比）。
+const PGROUPS = [['运动', '运动 / 开花'], ['星头', '星头'], ['尾迹', '尾迹'], ['特效', '特效'], ['环境', '环境'], ['输出', '输出']];
+const SEC_GROUP = { '规格': '输出', '开花与燃烧': '运动', '形状': '运动', '物理扰动': '环境', '星效果': '特效', '炭头（星头）': '星头', '尾缀（炭火火花）': '尾迹', '尾迹外形': '尾迹',
+  '千轮 / 分裂': '运动', '蜂': '运动', '上升': '运动', '地面 · 循环': '运动', '入点与出点（导出）': '输出', '输出：帧数 · 格子 · 贴图（导出）': '输出', '光点与曝光（4.0）': '输出', '画质（烘焙采样）': '输出' };
+function secGroup(name) {
+  if (SEC_GROUP[name]) return SEC_GROUP[name];
+  if (/弹道|自转|螺旋/.test(name)) return '运动';
+  if (/星头|炭头|燃气焰/.test(name)) return '星头';
+  if (/扰动|乱流/.test(name)) return '环境';
+  if (/落火|烟带|引擎里加的|星效果/.test(name)) return '特效';
+  if (/导出|镜头|引擎|规格|画质|曝光/.test(name)) return '输出';
+  if (/火花|火星|火粉|尾迹|形态/.test(name)) return '尾迹';
+  return '运动';
+}
+// 括号前是短名，括号里是说明；括号前还是太长的几个给个短名
+const SHORT_LAB = { afterBurn: '第二段续亮', rtPopAt: '爆亮时刻', expoQ: '基准帧分位' };
+function splitLab(lab, key) {
+  const s = String(lab), i = s.search(/[（(]/);
+  let short = i > 0 ? s.slice(0, i).trim() : s, detail = i > 0 ? s.slice(i + 1).replace(/[）)]\s*$/, '').trim() : '';
+  if (SHORT_LAB[key]) { detail = s; short = SHORT_LAB[key]; }
+  return [short, detail];
+}
+const pview = { q: '', changed: false, open: null };
+function pviewInit() { if (pview.open) return; pview.changed = !!store.get('pChanged', false); pview.open = store.get('pGrpOpen', { 特效: false, 环境: false, 输出: false }); }   // store 在后面的文件里定义：用到时再读
+// 「改过的」和谁比：打开时的版本（AI 版 / 你保存的版本，wbArm 记下的样子）；没有就和花型模板默认值比
+function panelBaseP() {
+  try {
+    const s = typeof wb !== 'undefined' && wb.sig ? JSON.parse(wb.sig) : null;
+    if (s && s.kind === 'single' && s.P) return s.P;
+    if (s && s.kind === 'combo' && state.comboSel >= 0 && s.layers[state.comboSel] && s.layers[state.comboSel].P) return s.layers[state.comboSel].P;
+  } catch (e) { }
+  return defaultsFor(state.P.type, renderVersion(state.P)).P;
+}
+function rowChanged(it, P, B) {
+  if (Array.isArray(it)) { const k = it[0], a = +P[k], b = +B[k]; if (!isFinite(a) && !isFinite(b)) return false; return !(Math.abs((isFinite(a) ? a : 0) - (isFinite(b) ? b : 0)) <= (+it[5] || 0) / 2 + 1e-9); }
+  if (it.sel) return String(P[it.sel]) !== String(B[it.sel]);
+  if (it.text) return String(P[it.text]) !== String(B[it.text]);
+  return false;
+}
+function rowMatches(row, it, sec, q) {
+  if (!q) return true;
+  const key = Array.isArray(it) ? it[0] : it.sel || it.text || '';
+  return [row._lab || '', row._detail || '', key, sec.sec].join(' ').toLowerCase().includes(q);
+}
+function panelHelp(row) {
+  const h = $('#pHelp'); if (!h) return;
+  if (!row) { h.innerHTML = '<span class="ph-idle">悬停或点一个参数看完整说明 · 双击参数名恢复默认</span>'; return; }
+  const it = row._it, B = panelBaseP(), k = Array.isArray(it) ? it[0] : it.sel || it.text;
+  const unit = Array.isArray(it) && it[2] ? ` <small>${it[2]}</small>` : '', rng = Array.isArray(it) ? ` · 范围 ${it[3]}–${it[4]}` : '';
+  const base = B && B[k] != null ? ` · 打开时 ${Array.isArray(it) ? fmtV(B[k], it[5]) : B[k]}` : '';
+  h.innerHTML = `<b>${row._lab}</b>${unit}<span class="ph-meta">${rng}${base}</span>${row._detail ? `<span class="ph-d">${row._detail}</span>` : ''}`;
+}
 function buildMasterPanel() {
+  pviewInit();
   const P = state.P, D = defaultsFor(P.type, renderVersion(P)).P;
   const box = $('#specBox'); if (box && $('#params').contains(box)) $('#specHome').appendChild(box);   // 规格框先放回原处，别跟着旧的「输出」一节被清掉
   const host = $('#params'); host.innerHTML = ''; panelRows = [];
+  // 顶上：搜索 + 只看改过的
+  host.insertAdjacentHTML('beforeend', `<div class="ptools"><input type="search" placeholder="搜参数：名字或说明里的字" aria-label="搜参数" value="${pview.q.replace(/"/g, '&quot;')}"><label class="pchg" title="只显示和打开时（AI 版 / 你保存的版本）不一样的参数"><input type="checkbox"${pview.changed ? ' checked' : ''}> 只看改过的</label></div>`);
+  const qi = host.querySelector('.ptools input[type=search]'), ci = host.querySelector('.ptools input[type=checkbox]');
+  qi.addEventListener('input', () => { pview.q = qi.value.trim(); refreshVisibility(); });
+  qi.addEventListener('keydown', e => { if (e.key === 'Escape' && qi.value) { qi.value = ''; pview.q = ''; refreshVisibility(); e.stopPropagation(); } });
+  ci.addEventListener('change', () => { pview.changed = ci.checked; store.set('pChanged', pview.changed); refreshVisibility(); });
+  const grp = {};
+  for (const [g, title] of PGROUPS) {
+    const d = document.createElement('details'); d.className = 'pgrp'; d.dataset.g = g; d.open = pview.open[g] !== false;
+    d.innerHTML = `<summary><span class="pg-t">${title}</span><span class="pg-n"></span></summary>`;
+    d.addEventListener('toggle', () => { if (d._auto) return; pview.open[g] = d.open; store.set('pGrpOpen', pview.open); });
+    grp[g] = d; host.appendChild(d);
+  }
   for (const sec of SCHEMA) {
     const det = document.createElement('details'); det.className = 'sec'; det.open = !['物理扰动', '星效果', '规格'].includes(sec.sec) || sec.sec === '规格';
-    det.innerHTML = `<summary>${sec.sec}</summary>` + (sec.hint ? `<p class="hint">${sec.hint}</p>` : '');
+    det.innerHTML = `<summary>${sec.sec}${sec.hint ? '<span class="shelp" role="button" tabindex="0" title="这一节的说明" aria-label="这一节的说明">？</span>' : ''}</summary>` + (sec.hint ? `<p class="hint" hidden>${sec.hint}</p>` : '');
+    if (sec.hint) { const b = det.querySelector('.shelp'), tog = e => { e.preventDefault(); e.stopPropagation(); const p = det.querySelector('p.hint'); p.hidden = !p.hidden; b.classList.toggle('on', !p.hidden); if (!det.open) det.open = true; };
+      b.addEventListener('click', tog); b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') tog(e); }); }
     for (const it of sec.items) {
       let row;
       if (Array.isArray(it)) {
-        const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label;
-        row = slider(det, 'p-' + k + '-' + panelRows.length, lab, unit, min, max, step, () => state.P[k], v => { state.P[k] = v; onParam(); }, D[k], k);
+        const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short, detail] = splitLab(lab, k);
+        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { state.P[k] = v; onParam(); }, D[k], k);
+        const kl = row.querySelector('.k'); kl.title = lab + (unit ? `（${unit}）` : '') + '；双击恢复默认';
+        row._lab = short; row._detail = detail;
       } else if (it.sel) {
+        const [short, detail] = splitLab(it.label, it.sel);
         row = document.createElement('label'); row.className = 'field';
-        row.innerHTML = `${it.label}<select></select>` + (it.hint ? `<span class="note">${it.hint}</span>` : '');
+        row.innerHTML = `<span class="fk" title="${(it.label + (it.hint ? '：' + it.hint : '')).replace(/"/g, '&quot;')}">${short}</span><select></select>`;
+        row._lab = short; row._detail = [detail, it.hint].filter(Boolean).join('；');
         const s = row.querySelector('select'); for (const [v, l] of it.options) s.add(new Option(l, v));
         s.value = String(P[it.sel]);
         s.addEventListener('change', () => {
@@ -393,16 +467,19 @@ function buildMasterPanel() {
         row._refresh = () => { row.innerHTML = it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : ''; };
         row._refresh(); det.appendChild(row);
       } else if (it.text) {
-        row = document.createElement('label'); row.className = 'field'; row.innerHTML = `${it.label}<input type="text" maxlength="6">`;
+        row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${it.label}</span><input type="text" maxlength="6">`; row._lab = it.label; row._detail = '';
         const inp = row.querySelector('input'); inp.value = P[it.text];
         inp.addEventListener('change', () => { state.P[it.text] = inp.value || '祭'; onParam(); });
         row._refresh = () => { inp.value = state.P[it.text]; };
         det.appendChild(row);
       }
+      if (row._lab != null) { row._it = it; const on = () => panelHelp(row); row.addEventListener('mouseenter', on); row.addEventListener('focusin', on); }
       panelRows.push([row, it, sec, det]);
     }
-    det._sec = sec; host.appendChild(det);
+    det._sec = sec; det._g = secGroup(sec.sec); grp[det._g].appendChild(det);
   }
+  if (!$('#pHelp')) { const h = document.createElement('div'); h.id = 'pHelp'; h.className = 'phelp'; h.setAttribute('aria-live', 'polite'); host.parentElement.insertBefore(h, host.nextSibling); }
+  if (!host._ph) { host._ph = true; host.addEventListener('mouseleave', () => panelHelp(null)); } panelHelp(null);
   refreshVisibility();
   const MD = defaultsFor(P.type).M;
   const redrawColors = () => { stageEditor($('#stages'), state.M, Math.max(1, Math.ceil(state.P.duration)), null); };
@@ -419,11 +496,25 @@ function buildMasterPanel() {
   $('#repNote').textContent = state.repId ? '实拍复刻：' + REPLICA_BY_ID[state.repId].note : ''; $('#repNote').hidden = !state.repId;
 }
 function refreshVisibility() {
-  const P = state.P;
+  pviewInit();
+  const P = state.P, q = (pview.q || '').toLowerCase(), B = panelBaseP(), nChg = {};
   $('#exposureControls').hidden = renderVersion(P)<40;
   $('#suggestExposure').disabled = !!P.exposureLock;
-  for (const [row, it, sec, det] of panelRows) row.hidden = !itemVisible(it, P);
-  document.querySelectorAll('#params details.sec').forEach(det => { const s = det._sec; det.hidden = !!(s.show && !s.show(P)) || ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden); });
+  for (const [row, it, sec, det] of panelRows) {
+    const vis = itemVisible(it, P) && !(sec.show && !sec.show(P)), chg = vis && rowChanged(it, P, B);
+    row.classList.toggle('chg', chg); if (chg) nChg[det._g] = (nChg[det._g] || 0) + 1;
+    row.hidden = !vis || !rowMatches(row, it, sec, q) || (pview.changed && !chg);
+  }
+  document.querySelectorAll('#params details.sec').forEach(det => { const s = det._sec; det.hidden = !!(s.show && !s.show(P)) || ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden);
+    if ((q || pview.changed) && !det.hidden) det.open = true; });
+  document.querySelectorAll('#params details.pgrp').forEach(g => {
+    g.hidden = ![...g.querySelectorAll(':scope > details.sec')].some(d => !d.hidden);
+    const n = nChg[g.dataset.g] || 0, b = g.querySelector('.pg-n'); b.textContent = n ? `${n} 项改过` : ''; b.hidden = !n;
+    if ((q || pview.changed) && !g.hidden && !g.open) { g._auto = true; g.open = true; setTimeout(() => g._auto = false, 0); }
+  });
+  const host = $('#params'), empty = host && host.querySelector('.pempty'), none = host && ![...host.querySelectorAll('details.pgrp')].some(g => !g.hidden);
+  if (host && none && !empty) host.insertAdjacentHTML('beforeend', `<p class="pempty hint"></p>`);
+  if (host) { const e = host.querySelector('.pempty'); if (e) { e.hidden = !none; e.textContent = pview.changed && !q ? '和打开时比，还没改过参数' : `没有找到「${pview.q}」`; } }
   placeSpecBox();
 }
 function refreshPanelValues() { for (const [row] of panelRows) row._refresh && row._refresh(); }

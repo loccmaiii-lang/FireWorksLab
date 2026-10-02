@@ -1,0 +1,9 @@
+{
+ "id": "JM4-40E5",
+ "type": "export",
+ "effect": "jinmangju",
+ "entry": "JM4-40",
+ "name": "JinMangJu",
+ "priority": 8,
+ "note": "4.2.7 / 4.2.8 规则重导（上一轮误写进已跑过的 JM4-40E2，后台不会再跑，改用新编号）。效果参数不变，按新规则重导 + 回放检查。对话框2（底层负责）代做。"
+}

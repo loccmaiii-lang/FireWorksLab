@@ -206,7 +206,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
 function analyze(b) {
   const m = b.meta, L = m.L, P = b.P, N = b.N, NH = b.NH, cw = b.cw, chh = b.chh;
   const imgs = [readRGBA8(b.head)]; if (b.tail) imgs.push(readRGBA8(b.tail));
-  const light = [], cellMax = [], clip = [], edge = [], sig = [], rows = [], fills = [], boxes = [], fx = [];
+  const light = [], cellMax = [], clip = [], edge = [], sig = [], rows = [], fills = [], boxes = [], fx = [], ring = [];
   const measureImg = !m.loop && !m.unit;   // 与实拍视频同样的口径：亮部像素掩码 → 半径、下坠、像素数
   const SG = 16;   // 近似帧比较用的缩略网格
   for (let f = 0; f < L.F; f++) {
@@ -224,7 +224,7 @@ function analyze(b) {
     }
     const sxy = sizeXY(m, m.times[f]); light.push(sum * sxy[0] * sxy[1]);
     const fill=cellFill(imgs, N, x0, y0, cw, chh, ch);
-    fills.push(fill); if (renderVersion(P)>=40 && !m.loop && !m.unit) { boxes.push(cellBox(imgs, N, x0, y0, cw, chh, ch)); fx.push(cellHist(imgs, N, x0, y0, cw, chh, ch)); } cellMax.push(renderVersion(P)>=40&&fill?fill[2]:mx); clip.push(nz ? nc / nz : 0); edge.push(em); sig.push(sg);
+    fills.push(fill); if (renderVersion(P)>=40 && !m.loop && !m.unit) { boxes.push(cellBox(imgs, N, x0, y0, cw, chh, ch)); fx.push(cellHist(imgs, N, x0, y0, cw, chh, ch)); ring.push(cellRing(imgs, N, x0, y0, cw, chh, ch, Math.round((+P.cellPad || 0) * (b.scale || 1)))); } cellMax.push(renderVersion(P)>=40&&fill?fill[2]:mx); clip.push(nz ? nc / nz : 0); edge.push(em); sig.push(sg);
     if (measureImg) rows.push(imgRow(imgs, f, m, N, x0, y0, cw, chh, ch));
   }
   const lmax = Math.max(1e-6, ...light);
@@ -241,7 +241,7 @@ function analyze(b) {
   let seam = null;
   if (m.loop && L.F > 2) { const mean = diffs.reduce((a, c) => a + c, 0) / diffs.length; seam = mean > 0 ? diff(sig[L.F - 1], sig[0]) / mean : 0; }
   if (measureImg) m.imgRows = rows;
-  if (boxes.length) { m.boxes = boxes; m.fx = fx; }     // 每帧内容（任何非零像素）在格子里的包围盒 [左, 右, 下, 上]（像素，y 向上）+ 亮度分布；取景实测收紧用
+  if (boxes.length) { m.boxes = boxes; m.fx = fx; m.ring = ring; }     // 每帧内容（任何非零像素）在格子里的包围盒 [左, 右, 下, 上]（像素，y 向上）+ 亮度分布；取景实测收紧用
   // 画面占比：每帧内容包围盒 ÷ 格子（横、竖取较小者）；只统计有内容的帧，末尾全黑的除外
   const fv = fills.filter(q => q);
   if (fv.length) { const per = fv.map(q => Math.min(q[0], q[1])); m.fill = { avg: per.reduce((a, c) => a + c, 0) / per.length, min: Math.min(...per), p10: per.slice().sort((a, c) => a - c)[Math.floor(per.length * 0.1)], x: fv.reduce((a, q) => a + q[0], 0) / fv.length, y: fv.reduce((a, q) => a + q[1], 0) / fv.length, frames: fills.map(q => q ? +Math.min(q[0], q[1]).toFixed(3) : null) }; }
@@ -259,6 +259,13 @@ function cellHist(imgs, N, x0, y0, cw, chh, ch) {
   const h = new Uint32Array(256); let nz = 0, pk = 0;
   for (const im of imgs) for (let y = 0; y < chh; y++) { let o = ((y0 + y) * N + x0) * 4 + ch; for (let x = 0; x < cw; x++, o += 4) { const v = im[o]; if (v) { h[v]++; nz++; if (v > pk) pk = v; } } }
   return { h, nz, pk, px: cw * chh * imgs.length };
+}
+// 单帧：回放检查的「内圈」（留边以内 2 像素那一圈）亮度占整帧的比例（回放检查 ≥ 0.5% 算碰边）；口径和 回放检查.py 一样
+function cellRing(imgs, N, x0, y0, cw, chh, ch, pad) {
+  let tot = 0, rg = 0; const a = pad, b = pad + 2, xr = cw - pad, yr = chh - pad;
+  for (const im of imgs) for (let y = 0; y < chh; y++) { let o = ((y0 + y) * N + x0) * 4 + ch; const iy = y >= a && y < yr, ey = y < b || y >= yr - 2;
+    for (let x = 0; x < cw; x++, o += 4) { const v = im[o]; if (v) { tot += v; if (iy && x >= a && x < xr && (ey || x < b || x >= xr - 2)) rg += v; } } }
+  return tot ? rg / tot : 0;
 }
 // 单帧内容的包围盒（任何非零像素都算：引擎里自发光 ×4，1–3/255 的暗火星也看得见），格子像素坐标，y 向上；没有内容 = null
 function cellBox(imgs, N, x0, y0, cw, chh, ch) {
@@ -310,7 +317,18 @@ async function refineBake(b, onProg) {
   if (!b || !b.meta || !b.meta.plan || b.meta.fitted || !b.srcP || b.srcP.fitFrame === 0) return null;
   const fp = fitPlan40(b.srcP, b.meta.plan, bakeParts(b));
   if (!fp) { b.meta.fitted = { mode: 'none' }; return null; }
-  return bakeMaster(b.srcP, b.scale || 1, onProg, { fm: b.fm, pl: fp });
+  let nb = await bakeMaster(b.srcP, b.scale || 1, p => onProg && onProg(p * .6), { fm: b.fm, pl: fp });
+  const near = fitTouches40(b.srcP, bakeParts(b), bakeParts(nb));
+  if (!near.length) { onProg && onProg(1); return nb; }
+  // 4.2.8：收紧后有帧碰到内圈（收紧前看不见的暗火星变亮了）→ 把收紧后看到的范围并进来，重算一次；还碰就不收紧
+  const fp2 = fitPlan40(b.srcP, b.meta.plan, bakeParts(b), bakeParts(nb)); disposeBake(nb); nb = null;
+  if (fp2) {
+    nb = await bakeMaster(b.srcP, b.scale || 1, p => onProg && onProg(.6 + p * .4), { fm: b.fm, pl: fp2 });
+    if (fitTouches40(b.srcP, bakeParts(b), bakeParts(nb)).length) { disposeBake(nb); nb = null; }
+  }
+  if (!nb) { b.meta.fitted = { mode: 'none', why: `收紧后 ${near.length} 帧碰内圈` }; return null; }
+  bakeParts(nb).forEach(s => { if (s.meta.fitted) s.meta.fitted = { ...s.meta.fitted, retry: near.length }; });
+  return nb;
 }
 async function bakeFinal(P, scale, onProg) {
   const b = await bake(P, scale, p => onProg && onProg(p * .55));

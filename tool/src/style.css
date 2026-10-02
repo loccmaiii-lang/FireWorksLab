@@ -916,3 +916,29 @@ main.drawer-side .side-x{display:inline-flex;align-items:center}
 #layerCard .myadd{margin:8px 0 2px;width:100%}
 .lh-link .check{display:inline-flex;margin:3px 10px 0 0}
 .pk-card .th.pkfx{display:flex;height:96px}
+/* ---------- 4.2.8 参数栏改版：6 大类 · 搜索 · 只看改过的 · 节说明收进「？」 · 底部说明条 ---------- */
+#params .ptools{display:flex;gap:8px;align-items:center;position:sticky;top:0;z-index:3;background:var(--panel);padding:6px 0 6px;margin-top:-4px}
+#params .ptools input[type=search]{flex:1;min-width:0;background:var(--low);border:1px solid var(--line2);border-radius:6px;padding:5px 8px;color:var(--text);font-size:12.5px}
+#params .ptools input[type=search]:focus{border-color:var(--acc);outline:none}
+#params .ptools .pchg{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--dim);white-space:nowrap;cursor:pointer}
+details.pgrp{border-top:1px solid var(--line2);margin-top:2px}
+details.pgrp>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;padding:8px 0 5px;font-weight:700;font-size:13.5px;color:var(--text);letter-spacing:.04em}
+details.pgrp>summary::-webkit-details-marker{display:none}
+details.pgrp>summary::before{content:"";width:7px;height:7px;border-right:2px solid var(--dim);border-bottom:2px solid var(--dim);transform:rotate(-45deg);transition:transform .15s;margin-right:2px}
+details.pgrp[open]>summary::before{transform:rotate(45deg)}
+details.pgrp .pg-n{font-weight:500;font-size:11px;color:var(--acc);border:1px solid currentColor;border-radius:9px;padding:0 7px;letter-spacing:0}
+details.pgrp>details.sec{border-top:0;padding:1px 0 4px 12px}
+details.pgrp>details.sec>summary{font-size:12px;font-weight:600;color:var(--dim);padding:3px 0}
+details.pgrp>details.sec>summary::before{width:5px;height:5px}
+.shelp{margin-left:auto;flex:none;width:17px;height:17px;border-radius:50%;border:1px solid var(--line2);font-size:10.5px;font-weight:500;display:inline-flex;align-items:center;justify-content:center;color:var(--faint);cursor:pointer}
+.shelp.on,.shelp:hover,.shelp:focus-visible{color:var(--text);border-color:var(--dim);outline:none}
+details.sec>p.hint:not([hidden]){border-left:2px solid var(--line2);padding-left:7px}
+.sl.chg .k{color:var(--acc)}
+.sl.chg .k::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--acc);margin-right:4px;vertical-align:middle}
+.field.chg .fk{color:var(--acc)}
+#params .pempty{color:var(--faint);font-size:12px;margin:10px 0}
+.phelp{position:sticky;bottom:0;z-index:3;margin:6px -14px 0;background:var(--panel2);border-top:1px solid var(--line2);padding:6px 14px 8px;font-size:12px;color:var(--text);min-height:36px;line-height:1.45}
+.phelp small{color:var(--faint);margin-left:2px}
+.phelp .ph-meta{color:var(--faint);font:11px var(--mono);margin-left:6px}
+.phelp .ph-d{display:block;color:var(--dim);margin-top:2px}
+.phelp .ph-idle{color:var(--faint)}

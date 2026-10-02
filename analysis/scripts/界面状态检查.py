@@ -13,6 +13,12 @@
   A5 切到别的效果：没保存的改动自动存成草稿，回来能选
   A6 切走再回来：带改动的状态不能被当成 AI 版基准（要么回到 AI 版，要么亮「参数已变」）
   A7 新建效果：新建 → 加层 → 改名 → 复制 → 勾同一批星 → 保存 → 刷新 → 打开：层、名字、参数、同一批星都在
+  P1 参数栏改版（用户 10-02 19:41 #3：参数和备注太多、没有分类、难找）：6 大类（运动 / 星头 / 尾迹 / 特效 / 环境 / 输出），每一节都归进一类；
+     参数名短（≤ 12 字），长说明进悬停提示 + 底部说明条；节说明默认收起；搜索；「只看改过的」；多层时每一层的参数也一样
+  U1 撤销 / 重做：单层改两步 → Ctrl+Z 两次一步步回去 → Ctrl+Shift+Z 重做；多层改一层 → 撤销只回这一层、只重烘这一层、贴图和参数一致；
+     切到别的效果后撤销不会改到新效果；资产栏有撤销 / 重做按钮
+  B1 滑杆和拖动同一套规则（走查 B10–B12）：滑杆改燃烧，序列时长跟着变（和拖燃烧结束一样）；滑杆改引线层的「火花停」，接力的锦层点火跟着动；
+     改点火时入点跟着内容走；「恢复」回到打开时的版本（AI 版），不是花型模板默认
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -283,6 +289,131 @@ async def l1(p, b):
         await ctx.close()
 
 
+P1_STATE = r"""(() => { const host = $('#params'), vis = el => !!el && !el.hidden && !!el.offsetParent && !el.closest('[hidden]');
+  const grps = [...host.querySelectorAll('.pgrp')], secs = [...host.querySelectorAll('details.sec')];
+  const labs = [...host.querySelectorAll('.sl')].filter(vis).map(r => { const k = r.querySelector('.k'), t = [...k.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('').trim(); return { id: r.querySelector('input[type=range]').id, t, title: k.title }; });
+  return { tools: !!host.querySelector('.ptools input[type=search]') && !!host.querySelector('.ptools input[type=checkbox]'),
+    groups: grps.map(g => g.dataset.g), orphan: secs.filter(d => !d.closest('.pgrp')).map(d => d.querySelector('summary').textContent),
+    hintsShown: [...host.querySelectorAll('details.sec > p.hint')].filter(vis).length,
+    labs, long: labs.filter(x => x.t.length > 12).map(x => x.t), help: ($('#pHelp') || {}).textContent || null }; })()"""
+P1_SEARCH = r"""(q) => { const i = $('#params .ptools input[type=search]'); i.value = q; i.dispatchEvent(new Event('input', { bubbles: true }));
+  const vis = el => !!el && !el.hidden && !!el.offsetParent && !el.closest('[hidden]');
+  return [...$('#params').querySelectorAll('.sl')].filter(vis).map(r => r.querySelector('input[type=range]').id.replace(/^p-|-\d+$/g, '')); }"""
+P1_CHANGED = r"""(on) => { const c = $('#params .ptools input[type=checkbox]'); if (c.checked !== on) c.click();
+  const vis = el => !!el && !el.hidden && !!el.offsetParent && !el.closest('[hidden]');
+  return [...$('#params').querySelectorAll('.sl')].filter(vis).map(r => r.querySelector('input[type=range]').id.replace(/^p-|-\d+$/g, '')); }"""
+
+
+async def p1(pg):
+    bad, info = [], {}
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    st = await pg.evaluate(P1_STATE)
+    G = {'运动', '星头', '尾迹', '特效', '环境', '输出'}
+    if not st['tools']: bad.append('没有搜索框 / 「只看改过的」')
+    if not st['groups'] or set(st['groups']) - G: bad.append(f"大类不对：{st['groups']}")
+    if st['orphan']: bad.append(f"没归类的节：{st['orphan'][:4]}")
+    if st['hintsShown']: bad.append(f"节说明默认展开了 {st['hintsShown']} 段")
+    if st['long']: bad.append(f"参数名太长 {len(st['long'])} 个：{st['long'][:3]}")
+    info['参数名平均字数'] = round(sum(len(x['t']) for x in st['labs']) / max(1, len(st['labs'])), 1); info['可见参数'] = len(st['labs'])
+    if not bad:
+        r = await pg.evaluate(P1_SEARCH, '粗细')
+        if 'tailWidth' not in r or 'stars' in r: bad.append(f'搜「粗细」结果不对：{r[:6]}')
+        info['搜粗细'] = r
+        r = await pg.evaluate(P1_SEARCH, '')
+        if 'stars' not in r: bad.append('清空搜索后参数没回来')
+        r = await pg.evaluate(P1_CHANGED, True)
+        if r: bad.append(f'没改过任何参数，「只看改过的」还显示 {r[:4]}')
+        await pg.evaluate("(() => { state.P.stars = state.P.stars + 10; onParam(); return 0; })()"); await idle(pg)
+        r = await pg.evaluate(P1_CHANGED, True)
+        if r != ['stars']: bad.append(f'改了星数后「只看改过的」显示 {r[:4]}（应为 stars）')
+        await pg.evaluate(P1_CHANGED, False)
+        await pg.hover('#params .sl:has(input[id^="p-tailWidth-"]) .k')
+        h = await pg.evaluate("($('#pHelp') || {}).textContent || ''")
+        if '横向散开' not in h: bad.append(f'悬停「尾迹粗细」底部说明条没出完整说明：「{h[:40]}」')
+    if not bad:     # 多层效果：选中某一层时右栏也是同一套
+        await open_effect(pg, 'hiki_nishiki')
+        await pg.evaluate("(() => { selectComboLayer(1); return 0; })()"); await idle(pg)
+        st = await pg.evaluate(P1_STATE)
+        if not st['tools'] or st['orphan'] or not st['groups']: bad.append(f"多层效果里第 2 层的参数没用新版：工具 {st['tools']}、没归类 {st['orphan'][:3]}")
+    return not bad, '；'.join(bad) or json.dumps(info, ensure_ascii=False)
+
+
+async def u1(pg):
+    bad, info = [], {}
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg); await pg.wait_for_timeout(900)
+    btn = await pg.evaluate("!!$('#abUndo') && !!$('#abRedo')")
+    if not btn: bad.append('资产栏没有撤销 / 重做按钮')
+    s0 = await pg.evaluate("({ stars: state.P.stars, burn: state.P.burn })")
+    await pg.evaluate("(() => { state.P.stars += 20; onParam(); return 0; })()"); await pg.wait_for_timeout(900); await idle(pg)
+    await pg.evaluate("(() => { state.P.burn = +(state.P.burn + 0.4).toFixed(2); onParam(); return 0; })()"); await pg.wait_for_timeout(900); await idle(pg)
+    await pg.mouse.click(700, 400)      # 焦点不在输入框里
+    await pg.keyboard.press('Control+z'); await idle(pg); await pg.wait_for_timeout(300)
+    s1 = await pg.evaluate("({ stars: state.P.stars, burn: state.P.burn, baked: window.__bakes.length ? window.__bakes[window.__bakes.length - 1].P.burn : null })")
+    await pg.keyboard.press('Control+z'); await idle(pg); await pg.wait_for_timeout(300)
+    s2 = await pg.evaluate("({ stars: state.P.stars, burn: state.P.burn })")
+    await pg.keyboard.press('Control+Shift+z'); await idle(pg); await pg.wait_for_timeout(300)
+    s3 = await pg.evaluate("({ stars: state.P.stars, burn: state.P.burn })")
+    info['单层'] = [s0, s1, s2, s3]
+    if not (s1['burn'] == s0['burn'] and s1['stars'] == s0['stars'] + 20): bad.append(f'第一次撤销没回到改燃烧时间之前：{s1}')
+    if s1['baked'] is None or abs(s1['baked'] - s0['burn']) > 1e-9: bad.append(f"撤销后没按撤回的参数重烘（最后一次烘 burn={s1['baked']}）")
+    if s2 != s0: bad.append(f'第二次撤销没回到最初：{s2}（应为 {s0}）')
+    if not (s3['stars'] == s0['stars'] + 20 and s3['burn'] == s0['burn']): bad.append(f'重做不对：{s3}')
+    # 多层：改第 2 层，撤销只动这一层
+    await open_effect(pg, 'hiki_nishiki'); await pg.wait_for_timeout(900); await idle(pg)
+    L0 = await pg.evaluate("layerEntryOf(state.layers[0]).P.stars"); L1 = await pg.evaluate("layerEntryOf(state.layers[1]).P.burn")
+    n0 = await pg.evaluate("state.layers.length")
+    await set_layer_param(pg, 1, 'burn', round(L1 + 0.27, 3)); await pg.wait_for_timeout(900); await idle(pg)
+    nb = await pg.evaluate("window.__bakes.length")
+    await pg.mouse.click(700, 400); await pg.keyboard.press('Control+z'); await idle(pg); await pg.wait_for_timeout(600); await idle(pg)
+    r = await pg.evaluate("(() => { const e0 = layerEntryOf(state.layers[0]), e1 = layerEntryOf(state.layers[1]); return { n: state.layers.length, s0: e0.P.stars, b1: e1.P.burn, baked1: e1.bake && e1.bake.P.burn, bakes: window.__bakes.slice(%d).map(x => x.P.burn) }; })()" % 0)
+    r['新烘'] = (await pg.evaluate("window.__bakes.length")) - nb
+    info['多层'] = r
+    if abs(r['b1'] - L1) > 1e-9: bad.append(f"多层撤销后第 2 层 burn={r['b1']}（应为 {L1}）")
+    if r['baked1'] is None or abs(r['baked1'] - L1) > 1e-9: bad.append(f"第 2 层贴图没按撤回的参数重烘（{r['baked1']}）")
+    if r['s0'] != L0 or r['n'] != n0: bad.append('撤销动到了别的层 / 层数')
+    if r['新烘'] > 1: bad.append(f"撤销一层重烘了 {r['新烘']} 次（应只烘这一层）")
+    # 切到别的效果：撤销不能改到新效果
+    await pg.evaluate("(() => { selectComboLayer(1); state.P.burn = +(state.P.burn + 0.2).toFixed(2); onParam(); return 0; })()"); await pg.wait_for_timeout(900); await idle(pg)
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('botan')).finally(() => window.__opening = false); return 0; })()"); await idle(pg); await pg.wait_for_timeout(900)
+    b0 = await pg.evaluate("JSON.stringify(state.P)")
+    await pg.mouse.click(700, 400); await pg.keyboard.press('Control+z'); await idle(pg); await pg.wait_for_timeout(300)
+    if await pg.evaluate("JSON.stringify(state.P)") != b0: bad.append('切到别的效果后按撤销，新效果的参数被改了')
+    return not bad, '；'.join(bad) or json.dumps(info, ensure_ascii=False)
+
+
+SLIDE = r"""([k, dv]) => { const el = document.querySelector(`#params input[type=range][id^="p-${k}-"]`); if (!el) return null;
+  const v = +(+el.value + dv).toFixed(3); el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); return v; }"""
+
+
+async def b1(pg):
+    bad, info = [], {}
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r0 = await pg.evaluate("({ d: state.P.duration, end: layerEndOf(state.P) })")
+    await pg.evaluate(SLIDE, ['burn', 1.0]); await idle(pg)
+    r1 = await pg.evaluate("({ d: state.P.duration, end: layerEndOf(state.P) })")
+    info['滑杆改燃烧'] = [r0, r1]
+    if abs((r1['d'] - r0['d']) - (r1['end'] - r0['end'])) > 0.02: bad.append(f"滑杆把燃烧 +1 s 后序列时长 {r0['d']} → {r1['d']}（拖动时会跟着加 {r1['end'] - r0['end']:.2f} s）")
+    await pg.evaluate("(() => { state.P.cutIn = 0.6; onParam(); buildMasterPanel(); return 0; })()"); await idle(pg)
+    await pg.evaluate(SLIDE, ['ignDelay', 0.3]); await idle(pg)
+    c = await pg.evaluate("state.P.cutIn"); info['点火 +0.3 后入点'] = c
+    if abs(c - 0.9) > 0.011: bad.append(f'点火推后 0.3 s，入点还在 {c}（应跟着到 0.9）')
+    await open_effect(pg, 'hiki_nishiki')
+    await pg.evaluate("selectComboLayer(0); 0"); await idle(pg)
+    g0 = await pg.evaluate("({ stop: layerEntryOf(state.layers[0]).P.sparkStop, ign1: layerEntryOf(state.layers[1]).P.ignDelay })")
+    await pg.evaluate(SLIDE, ['sparkStop', 0.2]); await idle(pg); await pg.wait_for_timeout(600); await idle(pg)
+    g1 = await pg.evaluate("(() => { const e1 = layerEntryOf(state.layers[1]); return { stop: layerEntryOf(state.layers[0]).P.sparkStop, ign1: e1.P.ignDelay, baked1: e1.bake && e1.bake.P.ignDelay }; })()")
+    info['接力'] = [g0, g1]
+    if abs((g1['ign1'] - g0['ign1']) - (g1['stop'] - g0['stop'])) > 0.011: bad.append(f"滑杆把引线火花停 +0.2，锦层点火 {g0['ign1']} → {g1['ign1']}（拖动时会一起动）")
+    elif g1['baked1'] is None or abs(g1['baked1'] - g1['ign1']) > 1e-9: bad.append('锦层点火跟着动了，但没有重烘')
+    await open_effect(pg, 'jinmangju')
+    ai = await pg.evaluate("state.P.burn"); tpl = await pg.evaluate("defaultsFor(state.P.type, renderVersion(state.P)).P.burn")
+    await pg.evaluate("(() => { state.P.burn = +(state.P.burn + 0.5).toFixed(2); onParam(); return 0; })()"); await idle(pg)
+    await pg.evaluate("$('#btnReset').click(); 0"); await idle(pg)
+    rb = await pg.evaluate("state.P.burn"); info['恢复'] = {'AI 版': ai, '模板': tpl, '恢复后': rb}
+    if abs(rb - ai) > 1e-9: bad.append(f'「恢复」后燃烧 {rb}（打开时的 AI 版是 {ai}，模板默认 {tpl}）')
+    return not bad, '；'.join(bad) or json.dumps(info, ensure_ascii=False)
+
+
 async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
@@ -292,7 +423,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

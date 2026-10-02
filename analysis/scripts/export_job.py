@@ -177,11 +177,13 @@ def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=pr
         const h=Math.max(x1-x0,y1-y0)*.52;
         return {live:liveView,export:[(x0+x1)/2,(y0+y1)/2,h,h]};
     })()""")
+    disp0 = s.pg.evaluate("state.disp"); s.pg.evaluate("state.disp = 'fit'")     # 两行都按「适应窗口」比细节（默认「游戏内大小」时导出行按 1000 m 缩得很小，实时行不缩，没法对比）
     for view in ('live', 'export'):
         for t in times:
             s.pg.evaluate(f"state.view = {json.dumps(view)}; state.playing = false; state.t = {t}"); s.pg.wait_for_timeout(900)
             png = s.pg.locator('#gl').screenshot()
             rows['实时模拟' if view == 'live' else '导出效果'].append(Image.open(io.BytesIO(png)).convert('RGB'))
+    s.pg.evaluate(f"state.disp = {json.dumps(disp0)}")
     px = 300; lines = []; rc = None
     if ref:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))

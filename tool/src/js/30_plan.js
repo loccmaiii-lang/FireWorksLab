@@ -1,4 +1,9 @@
 // 预跑一遍：求整个序列的可见范围（定取景）和星体速度随时间的变化（定取帧），顺带记录测量指标
+// 尾迹粗细 / 梭形（4.2.8）：tailWidth 粗细倍数、tailPinchHead / tailPinchTail 两头收尖、tailBellyAt 最粗处；on = 不是默认值（默认时着色器不进分支，结果逐像素不变）
+function tailShapeOf(P) {
+  const w = clamp(+P.tailWidth || 1, 0.3, 3), h = clamp(+P.tailPinchHead || 0, 0, 1), t = clamp(+P.tailPinchTail || 0, 0, 1), m = clamp(+P.tailBellyAt || 0.45, 0.05, 0.95);
+  return { w, h, t, m, on: w !== 1 || h > 0 || t > 0 };
+}
 function measure(P) {
   const s = new Sim(P), n = Math.ceil(P.duration / H_STEP);
   let x0 = -5, x1 = 5, y0 = -5, y1 = 5; const prof = [], stat = [], vs = [], ds = [];
@@ -34,7 +39,7 @@ function measure(P) {
     // 火花不在 CPU 上模拟：按散布、下坠和气流的解析解估计火花超出星体的范围（偏保守）
     const L = P.sparkLife * 1.6, k = Math.max(P.sparkDrag, 1e-3), g = G * P.sparkGrav;
     const drift = (L - (1 - Math.exp(-k * L)) / k);
-    const drop = g / k * drift, spread = P.sparkSpread * L * 0.7 + 1 + (P.branch > 0 ? 4 : 0), air = (Math.abs(P.wind) + P.turb) * drift;
+    const drop = g / k * drift, spread = P.sparkSpread * L * 0.7 * Math.max(1, tailShapeOf(P).w) + 1 + (P.branch > 0 ? 4 : 0), air = (Math.abs(P.wind) + P.turb) * drift;
     x0 -= spread + air; x1 += spread + air; y1 += spread + P.turb * drift; y0 -= drop + spread + P.turb * drift;
     for (const q of prof) q[2] += spread + drop + air;
   }
