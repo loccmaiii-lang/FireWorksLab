@@ -390,6 +390,7 @@ function renderDeliv() {
   const nm = packNamesFor(wbKey(), lib.effect, xs.length, name), useNew = xs.every(x => !x.b || namingApplies(x.b));
   for (const x of xs) {
     if (!x.b) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：还没烘好</td></tr>`); continue; }
+    if (!namingApplies(x.b)) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：这种产物（${FORM_NAMES[x.b.form] || x.b.form}）的素材包按它自己的导出规则生成，文件清单以导出的包为准</td></tr>`); continue; }
     const parts = bakeParts(x.b), delay = +x.L.delay || 0, rate = +x.L.rate || 1, ly = combo ? nm.layers[x.i] : '';
     const ln = combo ? comboLayerName(name, x.i) : name, mn = combo ? comboLayerName(name + '_Mobile', x.i) : name + '_Mobile';
     let mobCell = '—'; try { const mp = mobileParams({ ...x.b.P, cols: x.b.meta.L.cols, rows: x.b.meta.L.rows }); mobCell = Math.round(layoutOf(mp).cellW) + ' px'; } catch (e) { }

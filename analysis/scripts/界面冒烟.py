@@ -29,6 +29,8 @@ STEPS = [
     ('模板_柳', "setType('yanagi')", 'views'),
     ('模板_点灭', "setType('strobe')", 'views'),
     ('待验收_JM4-40', "openReview(FW_REVIEW_LIST.find(e=>e.id==='JM4-40'))", 'views'),
+    ('单层_设入点0.8s', "state.t=0.8;setCut('in')", 'views'),
+    ('单层_清除入出点', "setCut('clear')", 'views'),
     ('多层_鸿巢', "openEffect(EFFS().find(e=>e.key==='hongchao'))", 'views'),
     ('多层_鸿巢_调第1层', "selectComboLayer(0)", 'views'),
     ('多层_鸿巢_审阅页', "lib.pane='review';syncPtabs()", None),
@@ -37,6 +39,11 @@ STEPS = [
     ('多层_鸿巢_返回画面', "toggleDeliv(false);document.querySelector('.jumps [data-jump=full]').click()", None),
     ('多层_鸿巢_回整体', "lib.pane='params';syncPtabs();selectComboLayer(-1)", None),
     ('尾缀_V5', "openEffect(EFFS().find(e=>e.key==='trail_v5'))", 'views'),
+    ('多层_引菊_选第2层', "openEffect(EFFS().find(e=>e.key==='hiki_nishiki')).then(()=>selectComboLayer(1))", 'views'),
+    ('多层_引菊_查看交付', "toggleDeliv(true)", None),
+    ('全局风格_打开', "toggleDeliv(false);$('#styleBtn').click()", None),
+    ('全局风格_泪滴粗细', "gStyle.v.tear=0.6;gStyle.v.widthJit=0.8;scheduleRestyle()", 'views'),
+    ('全局风格_恢复默认', "$('#styleReset').click();$('#styleClose').click()", 'views'),
 ]
 VIEWS = [('实时', 'live', None, 1.0), ('引擎回放', 'export', None, 1.0), ('贴图', 'atlas', '0', 1.0), ('流转', 'atlas', '1', 1.5)]
 

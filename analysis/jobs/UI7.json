@@ -1,0 +1,90 @@
+{
+ "id": "UI7",
+ "type": "ui",
+ "name": "4.1.1 截图：层轨道 / 联动、入点出点、命名、全局风格、流转跨张",
+ "priority": 13,
+ "note": "只截图，不改东西。",
+ "shots": [
+  {
+   "name": "1440_鸿巢_层轨道",
+   "viewport": [
+    1440,
+    900
+   ],
+   "review": "HK10",
+   "view": "live",
+   "t": 7.0,
+   "sleep": 5000,
+   "js": "selectComboLayer(1)"
+  },
+  {
+   "name": "1440_引菊_选金锦层_轨道",
+   "js": "openEffect(EFFS().find(e=>e.key==='hiki_nishiki')).then(()=>selectComboLayer(1))",
+   "view": "live",
+   "t": 2.0,
+   "sleep": 6000
+  },
+  {
+   "name": "1440_引菊_查看交付_命名",
+   "js": "toggleDeliv(true)"
+  },
+  {
+   "name": "1440_金芒菊_入点0.8_引擎回放入点前",
+   "js": "toggleDeliv(false);openReview(FW_REVIEW_LIST.find(e=>e.id==='JM4-40'),EFFS().find(e=>e.key==='jinmangju'))",
+   "view": "export",
+   "sleep": 5000
+  },
+  {
+   "name": "1440_金芒菊_设入点",
+   "js": "state.t=0.8;setCut('in')",
+   "view": "export",
+   "t": 0.4,
+   "sleep": 6000
+  },
+  {
+   "name": "1440_金芒菊_入点后",
+   "view": "export",
+   "t": 1.5
+  },
+  {
+   "name": "1440_金芒菊_清除入点",
+   "js": "setCut('clear')",
+   "view": "live",
+   "t": 1.5,
+   "sleep": 5000
+  },
+  {
+   "name": "1440_全局风格面板",
+   "js": "$('#styleBtn').click()"
+  },
+  {
+   "name": "1440_菊模板_风格前",
+   "js": "$('#styleClose').click();openType('kiku')",
+   "view": "live",
+   "t": 1.2,
+   "sleep": 5000
+  },
+  {
+   "name": "1440_菊模板_风格后",
+   "js": "gStyle.v.tear=0.7;gStyle.v.widthJit=0.8;gStyle.v.shoulder=0.6;scheduleRestyle()",
+   "view": "live",
+   "t": 1.2,
+   "sleep": 6000
+  },
+  {
+   "name": "1440_菊模板_风格恢复",
+   "js": "$('#styleReset').click()",
+   "view": "live",
+   "t": 1.2,
+   "sleep": 5000
+  },
+  {
+   "name": "1440_鸿巢_贴图流转_第2张",
+   "js": "openEffect(EFFS().find(e=>e.key==='hongchao')).then(()=>selectComboLayer(0))",
+   "view": "atlas",
+   "flow": true,
+   "t": 6.0,
+   "sleep": 6000
+  }
+ ]
+}
