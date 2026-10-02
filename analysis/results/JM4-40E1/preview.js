@@ -1,0 +1,1 @@
+FW_ASSET_LOADED("JM4-40E1", {"manifest": {"title": "JinMangJu", "duration": 4.87, "view": 224.3, "variants": {"JinMangJu": "JinMangJu"}, "emitters": [], "note": "4.2.5 起「待我验收」按证据把关：版本指纹带烘焙器输出版本（大面片 4.2.5：Zoom 逐帧阶梯 + 取景按实测收紧），旧导出一律算过期。效果参数不变，只按新规则重导一次 + 回放检查（缩放抖动、占比）。对话框2（底层负责）代做，不进效果流程。"}, "images": {}});

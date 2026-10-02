@@ -1,0 +1,7 @@
+02:53:13 开始：Qingning40（导出素材）
+02:53:21 Qingning40 组合素材包 9 秒：T_EFX_FireWorks_LimeStar_Head_4x4_01.png、T_EFX_FireWorks_LimeStar_Head_4x4_01_C.png、T_EFX_FireWorks_LimeStar_Head_4x4_01_HD.png、T_EFX_FireWorks_LimeStar_Head_R.png、T_EFX_FireWorks_LimeStar_Tail_4x4_01.png、T_EFX_FireWorks_LimeStar_Tail_4x4_01_C.png、T_EFX_FireWorks_LimeStar_Tail_4x4_01_HD.png、T_EFX_FireWorks_LimeStar_Tail_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+02:53:23 回放检查：❌ Qingning40 · L1_Main：1 帧碰到格子内圈
+02:53:38 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QN11E4\烘焙回放.jpg
+02:53:39 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QN11E4\烘焙回放_原尺寸.jpg
+02:53:39 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+02:53:39 完成，用时 0.4 分钟

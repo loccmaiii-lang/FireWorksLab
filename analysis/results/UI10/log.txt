@@ -1,11 +1,11 @@
-02:22:05 开始：4.2.3 窄屏：1366 / 1280 / 1536 / 1100（抽屉）/ 1920 下的整页（真显卡渲染）（界面截图）
-02:22:21 界面截图 1：1366x657_引菊_实时对比（13 秒）
-02:22:26 界面截图 2：1366x657_引菊_引擎回放（5 秒）
-02:22:29 界面截图 3：1366x657_轨道说明展开（3 秒）
-02:22:31 界面截图 4：1366x657_专注（2 秒）
-02:22:36 界面截图 5：1280x610_引菊_实时对比（5 秒）
-02:22:41 界面截图 6：1536x730_引菊_实时对比（5 秒）
-02:23:11 出错：
+02:51:56 开始：4.2.3 窄屏：1366 / 1280 / 1536 / 1100（抽屉）/ 1920 下的整页（真显卡渲染）（界面截图）
+02:52:12 界面截图 1：1366x657_引菊_实时对比（13 秒）
+02:52:17 界面截图 2：1366x657_引菊_引擎回放（5 秒）
+02:52:20 界面截图 3：1366x657_轨道说明展开（3 秒）
+02:52:22 界面截图 4：1366x657_专注（2 秒）
+02:52:27 界面截图 5：1280x610_引菊_实时对比（5 秒）
+02:52:32 界面截图 6：1536x730_引菊_实时对比（5 秒）
+02:53:03 出错：
 Traceback (most recent call last):
   File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 95, in run_job
     import ui_shots; ui_shots.run(job, s, out, log=log)
@@ -47,7 +47,7 @@ Call log:
       - <input type="search" id="libSearch" aria-label="搜索库" placeholder="搜索：名字 / 任务号 / 花型"/> from <aside id="side" class="side" aria-label="库">…</aside> subtree intercepts pointer events
     - retrying click action
       - waiting 100ms
-    55 × waiting for element to be visible, enabled and stable
+    54 × waiting for element to be visible, enabled and stable
        - element is visible, enabled and stable
        - scrolling into view if needed
        - done scrolling
