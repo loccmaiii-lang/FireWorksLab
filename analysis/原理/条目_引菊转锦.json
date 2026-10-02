@@ -57,12 +57,12 @@
     "cooling": 0.3,
     "sparkBright": 1,
     "twinkle": 0,
-    "exposure": 1.5,
+    "exposure": 1.0,
     "branch": 3,
     "branchAt": 0.92,
     "sparkRise": 0.35,
     "starBright": 0.35,
-    "tailHaze": 0.02,
+    "tailHaze": 0.012,
     "tailHazeR": 6
    },
    "m": {
@@ -75,8 +75,8 @@
     "xw": 0.08,
     "ramp0": "#ff5423",
     "ramp1": "#ff721f",
-    "ramp2": "#ff8c19",
-    "ramp3": "#ffa011",
+    "ramp2": "#ff7a14",
+    "ramp3": "#ff8e12",
     "headInt": 1,
     "tailInt": 1
    },

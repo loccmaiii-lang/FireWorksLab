@@ -1,0 +1,9 @@
+{
+ "id": "HN2E8",
+ "type": "export",
+ "effect": "hiki_nishiki",
+ "entry": "HN2",
+ "name": "HikiNishiki",
+ "priority": 9,
+ "note": "HN2 橙引线颜色第 2 轮：HN2E7 偏亮偏黄 → 曝光 1.5 → 1.0、Ramp 亮端去黄、线间底光 0.012。"
+}
