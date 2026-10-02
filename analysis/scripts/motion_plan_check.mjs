@@ -184,6 +184,28 @@ await check('strobe keeps ≥ 0.4 × strobe rate even if it needs a second sheet
   assert.ok(r.h<=1,'11 Hz strobe → 30 fps during strobing'); 
 });
 
+// 4.2.11：收紧取景的碰边判据和 回放检查.py 一样（留边 = 所有帧都为 0 的最外圈数 ≤ 8，内圈 = 再往里两圈，≥ 0.5% 算碰边）；碰边重算留够 12 像素
+await check('fit: replay edge rule (outermost zero rings ≤ 8, next 2 rings ≥ 0.5%) and wider retry margin',()=>{
+  const r=data(`(()=>{const row=(tot,d)=>{const r=Array(13).fill(0);r[0]=tot;for(const [k,v] of Object.entries(d))r[1+ +k]=v;return r;};
+    const part=rows=>({meta:{edge12:rows,L:{F:rows.length}}});
+    // 默认留边 2、收紧后内容离边约 9 像素：大部分帧在第 9 圈只有一点点，几乎全黑的末帧几颗暗点都在第 8–9 圈 → 只有末帧判碰边
+    const fit=[row(1e5,{9:50,11:80}),row(1e5,{10:30}),row(40,{8:5,9:4})], raw=[row(1e5,{}),row(1e5,{}),row(40,{})];
+    const e=replayEdge40([part(fit)]), t=fitTouches40({},[part(raw)],[part(fit)]);
+    // 已经有内容贴在第 0 圈：留边 = 0，内圈 = 第 0–1 圈
+    const e0=replayEdge40([part([row(100,{0:1}),row(100,{1:2,5:9})])]);
+    // 两张贴图各自算留边
+    const e2=replayEdge40([part([row(100,{3:1})]),part([row(100,{11:1})])]);
+    const pl={L:{cellW:512,cellH:512,F:1},HX:10,HY:10,cy:0,maxDisp:1}, P={cellPad:2};
+    const kOf=o=>{const pad=2,ePx=Math.max(2*pad,+(o||{}).edgePx||0);return 1.02/Math.max(.5,1-2*ePx/512);};
+    return {e,t,e0,e2,k:kOf(),k12:kOf({edgePx:12}),src:fitPlan40.toString().includes('opt.edgePx')};})()`);
+  assert.deepEqual(r.t,[2],'only the near-empty last frame trips the replay edge rule: '+JSON.stringify(r.e));
+  assert.ok(r.e[0]<0.005&&r.e[2]>0.2,'band fractions '+JSON.stringify(r.e));
+  assert.deepEqual(r.e0.map(v=>+v.toFixed(3)),[0.01,0.02],'pad 0 → band rings 0–1');
+  assert.deepEqual(r.e2.map(v=>+v.toFixed(3)),[0.01,0],'pad measured per sheet (3 → band 3–4; capped at 8 → band 8–9, ring 11 is clear)');
+  assert.ok(r.src,'fitPlan40 takes opt.edgePx');
+  assert.ok((r.k12-1)*256/r.k12>=12,'edgePx 12 keeps ≥ 12 px at 512 ('+((r.k12-1)*256/r.k12).toFixed(1)+')');
+});
+
 const output=process.argv[2];
 const report={kind:'offline source/data checks; no GPU pixels or browser playback',pass:checks.every(c=>c.pass),metrics,checks};
 if(output){fs.mkdirSync(path.dirname(output),{recursive:true});fs.writeFileSync(output,JSON.stringify(report,null,2)+'\n');}

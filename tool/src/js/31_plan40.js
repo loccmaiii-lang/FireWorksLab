@@ -59,17 +59,28 @@ function fitFrames40(P, parts) {
   }
   return fr;
 }
-// 收紧后的烘焙里，哪些帧的内容进了「留边 + 2 像素」那一圈（回放检查的内圈），而收紧前这一帧没贴边：返回帧号
-// 收紧前四舍五入成 0 的暗火星，放大后每像素更亮、变成 1/255，就会冒出来（QN11E4 / E5 尾层末帧碰边 21.6%）
-// 判据和回放检查一样：离边「留边 + 2 像素」以内的亮度 ≥ 整帧 0.5%（analyze 里的 m.ring）
+// 回放检查的碰边口径（回放检查.py `pad()`）：每张贴图里所有帧都为 0 的最外圈数 k（最多 8）是「留边」，再往里两圈 [k, k+2) 是「内圈」，
+// 一帧内圈亮度 ≥ 这一帧总亮度 0.5% 算碰边。所以离格子边不到 10 像素的内容都可能被判——几乎全黑的末帧只剩几颗暗点时最容易（QN11 尾层 21.6%：
+// 默认留边 2 像素时收紧后内容离边约 9 像素，正好落在内圈）。analyze 记每帧离边 0–11 圈的亮度（m.edge12）。返回每帧的内圈占比。
 const FIT_RING = 0.005;
+function replayEdge40(parts) {
+  const out = [];
+  for (const s of parts) {
+    const rows = s.meta.edge12; if (!rows) { out.push(...Array((s.meta.L && s.meta.L.F) || 0).fill(0)); continue; }
+    let k = 0; while (k < 8 && rows.every(r => !r[1 + k])) k++;
+    for (const r of rows) out.push(r[0] ? (r[1 + k] + r[2 + k]) / r[0] : 0);
+  }
+  return out;
+}
+// 收紧后回放检查会判碰边、收紧前不会的帧号
 function fitTouches40(P, rawParts, parts) {
-  const raw = rawParts.flatMap(s => s.meta.ring || s.meta.L && Array(s.meta.L.F).fill(0)), out = []; let i = 0;
-  for (const s of parts) for (const v of (s.meta.ring || [])) { if (v >= FIT_RING && !((raw[i] || 0) >= FIT_RING)) out.push(i); i++; }
+  const raw = replayEdge40(rawParts), out = [];
+  replayEdge40(parts).forEach((v, i) => { if (v >= FIT_RING && !((raw[i] || 0) >= FIT_RING)) out.push(i); });
   return out;
 }
 // extra：收紧后的那次烘焙（可选）。它看到的内容并进每帧包围盒（收紧前看不见的暗火星），贴边标记也并进来（贴边那一侧不收）
-function fitPlan40(P, pl, parts, extra) {
+// opt.edgePx：内容离格子边至少留多少像素（默认 = 2 × 格子留边；碰边重算时 12）
+function fitPlan40(P, pl, parts, extra, opt = {}) {
   if (!pl || pl.loop || pl.unit || pl.tight || pl.aniso) return null;
   const pad = +P.cellPad || 0, fr = fitFrames40(P, parts);
   if (!fr) return null;
@@ -81,7 +92,7 @@ function fitPlan40(P, pl, parts, extra) {
         tl: q.tl || r.tl, tr: q.tr || r.tr, tb: q.tb || r.tb, tt: q.tt || r.tt }); });
   }
   if (fr.length !== pl.L.F || fr.every(q => q.empty)) return null;
-  const a = pl.L.cellW / pl.L.cellH, k = 1.02 / Math.max(.5, 1 - 4 * pad / Math.min(pl.L.cellW, pl.L.cellH));   // 内容放进去后离格子边：留边那一圈（被压暗）+ 2%
+  const a = pl.L.cellW / pl.L.cellH, ePx = Math.max(2 * pad, +opt.edgePx || 0), k = 1.02 / Math.max(.5, 1 - 2 * ePx / Math.min(pl.L.cellW, pl.L.cellH));   // 内容放进去后离格子边：留边那一圈（被压暗）+ 2%
   const area = q => { let ar = 0; for (let i = 0; i < 200; i++) { const v = evalKeys(q.sizeKeys, (i + .5) / 200); ar += v * v / 200; } return ar; };
   if (pl.zoom) {
     const hNew = fr.map(q => { if (q.empty || q.faint || q.tl || q.tr || q.tb || q.tt) return q.hx;
