@@ -1,0 +1,28 @@
+{
+ "effect": "hiki_nishiki",
+ "entry": "HN2",
+ "ver": "745a428a",
+ "time": "2026-10-02 18:11",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "HikiNishiki",
+   "replica": "HN2",
+   "files": [
+    "T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01.png",
+    "T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01_C.png",
+    "T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01_HD.png",
+    "T_EFX_FireWorks_HikiNishiki_Hiki_R.png",
+    "T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01.png",
+    "T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01_C.png",
+    "T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01_HD.png",
+    "T_EFX_FireWorks_HikiNishiki_Nishiki_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}
