@@ -1,13 +1,13 @@
-02:11:58 开始：4.2.3 窄屏：1366 / 1280 / 1536 / 1100（抽屉）/ 1920 下的整页（真显卡渲染）（界面截图）
-02:12:12 界面截图 1：1366x657_引菊_实时对比（11 秒）
-02:12:17 界面截图 2：1366x657_引菊_引擎回放（5 秒）
-02:12:20 界面截图 3：1366x657_轨道说明展开（3 秒）
-02:12:22 界面截图 4：1366x657_专注（2 秒）
-02:12:27 界面截图 5：1280x610_引菊_实时对比（5 秒）
-02:12:32 界面截图 6：1536x730_引菊_实时对比（5 秒）
-02:13:03 出错：
+02:22:05 开始：4.2.3 窄屏：1366 / 1280 / 1536 / 1100（抽屉）/ 1920 下的整页（真显卡渲染）（界面截图）
+02:22:21 界面截图 1：1366x657_引菊_实时对比（13 秒）
+02:22:26 界面截图 2：1366x657_引菊_引擎回放（5 秒）
+02:22:29 界面截图 3：1366x657_轨道说明展开（3 秒）
+02:22:31 界面截图 4：1366x657_专注（2 秒）
+02:22:36 界面截图 5：1280x610_引菊_实时对比（5 秒）
+02:22:41 界面截图 6：1536x730_引菊_实时对比（5 秒）
+02:23:11 出错：
 Traceback (most recent call last):
-  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 90, in run_job
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 95, in run_job
     import ui_shots; ui_shots.run(job, s, out, log=log)
                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\ui_shots.py", line 67, in run
