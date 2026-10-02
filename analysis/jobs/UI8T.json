@@ -1,0 +1,394 @@
+{
+ "id": "UI8T",
+ "type": "ui",
+ "name": "渲染缩略图（43 张：效果整朵 + 多层每层，按当前配方）",
+ "priority": 12,
+ "note": "只取画布做缩略图，不改东西。结果用 analysis/scripts/渲染缩略图.py --ingest 收进 tool/data/render_thumbs.json。",
+ "shots": [
+  {
+   "name": "窗口",
+   "viewport": [
+    1440,
+    900
+   ],
+   "shot": false
+  },
+  {
+   "name": "缩略图_jinmangju",
+   "thumb": "ef:jinmangju",
+   "shot": false,
+   "view": "live",
+   "t": "full",
+   "sleep": 4000,
+   "js": "Promise.resolve(openEffect(EFFS().find(e => e.key === \"jinmangju\"))).then(() => { state.disp = 'fit'; state.playing = false; state.layerView = { solo: -1, mute: [] }; })"
+  },
+  {
+   "name": "缩略图_trail_v5",
+   "thumb": "ef:trail_v5",
+   "shot": false,
+   "view": "live",
+   "t": "full",
+   "sleep": 4000,
+   "js": "Promise.resolve(openEffect(EFFS().find(e => e.key === \"trail_v5\"))).then(() => { state.disp = 'fit'; state.playing = false; state.layerView = { solo: -1, mute: [] }; })"
+  },
+  {
+   "name": "缩略图_trail_phys",
+   "thumb": "ef:trail_phys",
+   "shot": false,
+   "view": "live",
+   "t": "full",
+   "sleep": 4000,
+   "js": "Promise.resolve(openEffect(EFFS().find(e => e.key === \"trail_phys\"))).then(() => { state.disp = 'fit'; state.playing = false; state.layerView = { solo: -1, mute: [] }; })"
+  },
+  {
+   "name": "缩略图_qiuxing_a",
+   "thumb": "ef:qiuxing_a",
+   "shot": false,
+   "view": "live",
+   "t": "full",
+   "sleep": 4000,
+   "js": "Promise.resolve(openEffect(EFFS().find(e => e.key === \"qiuxing_a\"))).then(() => { state.disp = 'fit'; state.playing = false; state.layerView = { solo: -1, mute: [] }; })"
+  },
+  {
+   "name": "缩略图_qiuxing_a_第1层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 0) return; state.layerView = { solo: 0, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 0)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[0]) return null; const e = layerEntryOf(state.layers[0]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_qiuxing_a_第2层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 1) return; state.layerView = { solo: 1, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 1)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[1]) return null; const e = layerEntryOf(state.layers[1]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_qiuxing_a_恢复整体",
+   "shot": false,
+   "js": "state.layerView = { solo: -1, mute: [] }"
+  },
+  {
+   "name": "缩略图_qiuxing_b",
+   "thumb": "ef:qiuxing_b",
+   "shot": false,
+   "view": "live",
+   "t": "full",
+   "sleep": 4000,
+   "js": "Promise.resolve(openEffect(EFFS().find(e => e.key === \"qiuxing_b\"))).then(() => { state.disp = 'fit'; state.playing = false; state.layerView = { solo: -1, mute: [] }; })"
+  },
+  {
+   "name": "缩略图_qiuxing_b_第1层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 0) return; state.layerView = { solo: 0, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 0)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[0]) return null; const e = layerEntryOf(state.layers[0]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_qiuxing_b_第2层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 1) return; state.layerView = { solo: 1, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 1)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[1]) return null; const e = layerEntryOf(state.layers[1]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_qiuxing_b_第3层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 2) return; state.layerView = { solo: 2, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 2)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[2]) return null; const e = layerEntryOf(state.layers[2]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_qiuxing_b_恢复整体",
+   "shot": false,
+   "js": "state.layerView = { solo: -1, mute: [] }"
+  },
+  {
+   "name": "缩略图_qiuxing_c",
+   "thumb": "ef:qiuxing_c",
+   "shot": false,
+   "view": "live",
+   "t": "full",
+   "sleep": 4000,
+   "js": "Promise.resolve(openEffect(EFFS().find(e => e.key === \"qiuxing_c\"))).then(() => { state.disp = 'fit'; state.playing = false; state.layerView = { solo: -1, mute: [] }; })"
+  },
+  {
+   "name": "缩略图_qiuxing_c_第1层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 0) return; state.layerView = { solo: 0, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 0)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[0]) return null; const e = layerEntryOf(state.layers[0]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_qiuxing_c_第2层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 1) return; state.layerView = { solo: 1, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 1)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[1]) return null; const e = layerEntryOf(state.layers[1]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_qiuxing_c_恢复整体",
+   "shot": false,
+   "js": "state.layerView = { solo: -1, mute: [] }"
+  },
+  {
+   "name": "缩略图_qiuxing_d",
+   "thumb": "ef:qiuxing_d",
+   "shot": false,
+   "view": "live",
+   "t": "full",
+   "sleep": 4000,
+   "js": "Promise.resolve(openEffect(EFFS().find(e => e.key === \"qiuxing_d\"))).then(() => { state.disp = 'fit'; state.playing = false; state.layerView = { solo: -1, mute: [] }; })"
+  },
+  {
+   "name": "缩略图_qiuxing_d_第1层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 0) return; state.layerView = { solo: 0, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 0)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[0]) return null; const e = layerEntryOf(state.layers[0]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_qiuxing_d_第2层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 1) return; state.layerView = { solo: 1, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 1)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[1]) return null; const e = layerEntryOf(state.layers[1]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_qiuxing_d_第3层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 2) return; state.layerView = { solo: 2, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 2)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[2]) return null; const e = layerEntryOf(state.layers[2]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_qiuxing_d_恢复整体",
+   "shot": false,
+   "js": "state.layerView = { solo: -1, mute: [] }"
+  },
+  {
+   "name": "缩略图_qingning",
+   "thumb": "ef:qingning",
+   "shot": false,
+   "view": "live",
+   "t": "full",
+   "sleep": 4000,
+   "js": "Promise.resolve(openEffect(EFFS().find(e => e.key === \"qingning\"))).then(() => { state.disp = 'fit'; state.playing = false; state.layerView = { solo: -1, mute: [] }; })"
+  },
+  {
+   "name": "缩略图_qingning_第1层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 0) return; state.layerView = { solo: 0, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 0)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[0]) return null; const e = layerEntryOf(state.layers[0]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_qingning_第2层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 1) return; state.layerView = { solo: 1, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 1)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[1]) return null; const e = layerEntryOf(state.layers[1]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_qingning_恢复整体",
+   "shot": false,
+   "js": "state.layerView = { solo: -1, mute: [] }"
+  },
+  {
+   "name": "缩略图_wancai",
+   "thumb": "ef:wancai",
+   "shot": false,
+   "view": "live",
+   "t": "full",
+   "sleep": 4000,
+   "js": "Promise.resolve(openEffect(EFFS().find(e => e.key === \"wancai\"))).then(() => { state.disp = 'fit'; state.playing = false; state.layerView = { solo: -1, mute: [] }; })"
+  },
+  {
+   "name": "缩略图_wancai_第1层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 0) return; state.layerView = { solo: 0, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 0)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[0]) return null; const e = layerEntryOf(state.layers[0]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_wancai_第2层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 1) return; state.layerView = { solo: 1, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 1)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[1]) return null; const e = layerEntryOf(state.layers[1]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_wancai_第3层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 2) return; state.layerView = { solo: 2, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 2)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[2]) return null; const e = layerEntryOf(state.layers[2]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_wancai_第4层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 3) return; state.layerView = { solo: 3, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 3)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[3]) return null; const e = layerEntryOf(state.layers[3]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_wancai_恢复整体",
+   "shot": false,
+   "js": "state.layerView = { solo: -1, mute: [] }"
+  },
+  {
+   "name": "缩略图_hongchao",
+   "thumb": "ef:hongchao",
+   "shot": false,
+   "view": "live",
+   "t": "full",
+   "sleep": 4000,
+   "js": "Promise.resolve(openEffect(EFFS().find(e => e.key === \"hongchao\"))).then(() => { state.disp = 'fit'; state.playing = false; state.layerView = { solo: -1, mute: [] }; })"
+  },
+  {
+   "name": "缩略图_hongchao_第1层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 0) return; state.layerView = { solo: 0, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 0)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[0]) return null; const e = layerEntryOf(state.layers[0]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_hongchao_第2层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 1) return; state.layerView = { solo: 1, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 1)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[1]) return null; const e = layerEntryOf(state.layers[1]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_hongchao_恢复整体",
+   "shot": false,
+   "js": "state.layerView = { solo: -1, mute: [] }"
+  },
+  {
+   "name": "缩略图_yongfeng",
+   "thumb": "ef:yongfeng",
+   "shot": false,
+   "view": "live",
+   "t": "full",
+   "sleep": 4000,
+   "js": "Promise.resolve(openEffect(EFFS().find(e => e.key === \"yongfeng\"))).then(() => { state.disp = 'fit'; state.playing = false; state.layerView = { solo: -1, mute: [] }; })"
+  },
+  {
+   "name": "缩略图_yongfeng_第1层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 0) return; state.layerView = { solo: 0, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 0)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[0]) return null; const e = layerEntryOf(state.layers[0]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_yongfeng_第2层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 1) return; state.layerView = { solo: 1, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 1)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[1]) return null; const e = layerEntryOf(state.layers[1]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_yongfeng_第3层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 2) return; state.layerView = { solo: 2, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 2)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[2]) return null; const e = layerEntryOf(state.layers[2]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_yongfeng_第4层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 3) return; state.layerView = { solo: 3, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 3)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[3]) return null; const e = layerEntryOf(state.layers[3]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_yongfeng_第5层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 4) return; state.layerView = { solo: 4, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 4)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[4]) return null; const e = layerEntryOf(state.layers[4]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_yongfeng_恢复整体",
+   "shot": false,
+   "js": "state.layerView = { solo: -1, mute: [] }"
+  },
+  {
+   "name": "缩略图_pianbei",
+   "thumb": "ef:pianbei",
+   "shot": false,
+   "view": "live",
+   "t": "full",
+   "sleep": 4000,
+   "js": "Promise.resolve(openEffect(EFFS().find(e => e.key === \"pianbei\"))).then(() => { state.disp = 'fit'; state.playing = false; state.layerView = { solo: -1, mute: [] }; })"
+  },
+  {
+   "name": "缩略图_pianbei_第1层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 0) return; state.layerView = { solo: 0, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 0)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[0]) return null; const e = layerEntryOf(state.layers[0]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_pianbei_第2层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 1) return; state.layerView = { solo: 1, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 1)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[1]) return null; const e = layerEntryOf(state.layers[1]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_pianbei_第3层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 2) return; state.layerView = { solo: 2, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 2)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[2]) return null; const e = layerEntryOf(state.layers[2]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_pianbei_第4层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 3) return; state.layerView = { solo: 3, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 3)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[3]) return null; const e = layerEntryOf(state.layers[3]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_pianbei_第5层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 4) return; state.layerView = { solo: 4, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 4)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[4]) return null; const e = layerEntryOf(state.layers[4]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_pianbei_恢复整体",
+   "shot": false,
+   "js": "state.layerView = { solo: -1, mute: [] }"
+  },
+  {
+   "name": "缩略图_hiki_nishiki",
+   "thumb": "ef:hiki_nishiki",
+   "shot": false,
+   "view": "live",
+   "t": "full",
+   "sleep": 4000,
+   "js": "Promise.resolve(openEffect(EFFS().find(e => e.key === \"hiki_nishiki\"))).then(() => { state.disp = 'fit'; state.playing = false; state.layerView = { solo: -1, mute: [] }; })"
+  },
+  {
+   "name": "缩略图_hiki_nishiki_第1层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 0) return; state.layerView = { solo: 0, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 0)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[0]) return null; const e = layerEntryOf(state.layers[0]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_hiki_nishiki_第2层",
+   "shot": false,
+   "sleep": 1500,
+   "js": "(() => { if (state.tab !== 'combo' || state.layers.length <= 1) return; state.layerView = { solo: 1, mute: [] }; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === 1)); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); })()",
+   "thumb": "js:(() => { if (state.tab !== 'combo' || !state.layers[1]) return null; const e = layerEntryOf(state.layers[1]); return e && (e.rep || null); })()"
+  },
+  {
+   "name": "缩略图_hiki_nishiki_恢复整体",
+   "shot": false,
+   "js": "state.layerView = { solo: -1, mute: [] }"
+  }
+ ]
+}

@@ -308,6 +308,12 @@ def main():
             out.append(rec)
         except Exception as ex: print('跳过', e['id'], ex)
     fingerprint(out)
+    # 缩略图一律用渲染的（用户 2026-10-02 14:46）：本机显卡按当前配方在烘焙器里渲染的（tool/data/render_thumbs.json，渲染缩略图.py 收进来）优先，
+    # 没有就用对照图里的模拟那一半；实拍缩略图不再显示
+    rt = render_thumbs()
+    for r in out:
+        t = rt.get(r['id'])
+        if t: r['thumbSim'] = t['src']; r['thumbRender'] = t.get('ver') or True
     effects = effects_from_status(out)
     # 正式库里带参考视频的，也算好取景（烘焙器里点正式库条目同样能并排看实拍）
     import re
@@ -385,12 +391,22 @@ def effects_from_status(out):
                                stale=bool(m.get('entry') and by.get(m['entry']) and by[m['entry']].get('ver') != m.get('ver'))))
             elif os.path.exists(os.path.join(res_dir(jid), 'done.json')): ex.append(dict(job=jid, legacy=True))
         r['exports'] = ex
-        # 缩略图：参考视频里最亮的一刻（认得出是什么效果），没有就用主条目的
-        src = me or {}
-        r['thumb'] = peak_thumb(e['参考'][0], src.get('vmeta')) if e.get('参考') and src.get('vmeta') else (src.get('thumbRef') or src.get('thumbSim'))
+        # 缩略图：烘焙器里渲染的这个效果（打开时默认显示的版本，展开时刻）；没有就用主条目的渲染缩略图。不用实拍（用户 2026-10-02 14:46）
+        src = me or {}; rt = render_thumbs().get('ef:' + e['key'])
+        r['thumb'] = rt['src'] if rt else src.get('thumbSim')
         r['thumbSim'] = src.get('thumbSim')
         res.append(r)
     return res
+
+
+_RT = None
+def render_thumbs():
+    """tool/data/render_thumbs.json：{条目 id 或 ef:<效果>: {src: data URL, ver: 渲染时的版本指纹, at: 时间}}"""
+    global _RT
+    if _RT is None:
+        f = os.path.join(ROOT, 'tool', 'data', 'render_thumbs.json')
+        _RT = json.load(open(f, encoding='utf-8')) if os.path.exists(f) else {}
+    return _RT
 
 
 def peak_thumb(rel, vm, span=5.0):

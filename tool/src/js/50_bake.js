@@ -26,7 +26,12 @@ function makeRenderer(P, kind) {
     };
   }
   const sim = new Sim(P), track = gpu ? buildTrack(P) : null, unit = kind === 'unit';
-  let lastTs = -Infinity;
+  let lastTs = -Infinity, snap = null;
+  // 倒回到 ts 之前：有早于 ts 的快照就从快照接着算，否则从 0 重算（4.1.2：以前每次都从 0，越播越卡）
+  const rewind = ts => {
+    if (snap && snap.t < ts - 1e-9) simRestore(sim, snap); else simRestore(sim, new Sim(P));
+    snap = null; lastTs = -Infinity;   // 快照交给模拟继续用（不再复制一份）；frameStart 会在新位置再存
+  };
   const R = {
     sim, track, slots: track ? track.total : 0,
     xfAt() {
@@ -37,7 +42,7 @@ function makeRenderer(P, kind) {
     draw(ts, view, ppm, w, tw) {
       setParticleProfile(P);
       // 按「请求的时刻」判断回退：1/480 s 的物理步可能略超过请求时刻，快门子样本超过 480 Hz 时不能因此每次都从头重算（Ultra 修正）
-      if (ts < lastTs - 1e-6) { R.reset(); }
+      if (ts < lastTs - 1e-6) rewind(ts);
       lastTs = ts;
       while (sim.t < ts - 1e-9) sim.step(H_STEP);
       const [nh, nt] = sim.gather(bufH, bufT), xf = unit ? R.xfAt() : null;
@@ -47,10 +52,17 @@ function makeRenderer(P, kind) {
       else drawPoints(bufT, nt, view, ppm, [0, 1, 0, 0], w, xf);
       return l;
     },
-    reset() { R.sim = new Sim(P); }, dispose() { disposeTrack(track); }
+    // 一帧的快门窗口从 a 开始（之后的请求都 ≥ a）：先倒回（如果需要），再走到 a 之前最后一步、存快照。
+    // 下一帧窗口和这一帧重叠时，从这个快照接着算，只多算一个窗口的长度。
+    frameStart(a) {
+      if (a < lastTs - 1e-6) rewind(a);
+      let n = 0; while (sim.t + H_STEP < a - 1e-9) { sim.step(H_STEP); n++; }
+      if ((n || !snap) && sim.t < a - 1e-9) snap = sim.snapshot();
+    },
+    dispose() { disposeTrack(track); }
   };
   // reset 需要替换闭包里的 sim
-  R.reset = () => { const s2 = new Sim(P); Object.assign(sim, s2); lastTs = -Infinity; };
+  R.reset = () => { simRestore(sim, new Sim(P)); snap = null; lastTs = -Infinity; };
   return R;
 }
 
@@ -506,7 +518,6 @@ function bakeKind(P) {
 }
 function unitAllowed(P) { return familyOf(P.type) === 'aerial' && !['senrin', 'crossette', 'hachi'].includes(P.type) && (P.pattern === 'sphere' || P.pattern === 'half'); }
 async function bake(P, scale, onProg) {
-  P = styled(P);                                      // 全局风格层（默认值时原样返回）
   if (P.zoom === 'tight') P = { ...P, zoom: 'on' };   // 紧凑取景已禁用（引擎里会抖）
   P = { ...P };
   switch (bakeKind(P)) {

@@ -58,9 +58,7 @@ function pkRender() {
   if (!items.length) { grid.innerHTML = `<p class="pk-empty">${pk.cat === 'rep' ? '实拍复刻正在按「一个一个对照确认」的方式重做，完成一个加一个。' : '没有匹配的花型。'}</p>`; return; }
   for (const it of items) {
     const c = document.createElement('div'); c.className = 'pk-card' + (it.key === cur ? ' cur' : ''); c.tabIndex = 0; c.setAttribute('role', 'button');
-    const th = it.rep
-      ? `<div class="th"><i style="${it.rep.thumbRef ? `background-image:url(${it.rep.thumbRef})` : 'background:#111'}"><b>实拍</b></i><i style="${typeThumbStyle(it.key)}"><b>模拟</b></i></div>`
-      : `<div class="th" style="${typeThumbStyle(it.key)}"></div>`;
+    const th = `<div class="th" style="${typeThumbStyle(it.key)}"></div>`;   // 只用渲染图（用户 2026-10-02 14:46：缩略图不用实拍）
     c.innerHTML = th + `<div class="bd"><span class="nm">${it.name}</span><span class="ds">${it.desc || ''}</span><span class="tg">${it.tags.map(t => `<span>${t}</span>`).join('')}</span></div>` +
       (it.rep ? `<span class="st">${it.rep.status || '待你确认'}</span>` : '') + `<button class="fav" type="button" aria-label="收藏" aria-pressed="${pk.fav.has(it.key)}">★</button>`;
     c.querySelector('.fav').addEventListener('click', e => { e.stopPropagation(); pk.fav.has(it.key) ? pk.fav.delete(it.key) : pk.fav.add(it.key); store.set('fav', [...pk.fav]); pkRender(); });

@@ -16,6 +16,7 @@ function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm) {
   const count = clamp(Math.ceil(width * q.hz), 1, q.maxSub);
   const oldPPMY = PPMY; PPMY = ppmY; setParticleProfile(P);
   R.subW = width / count;
+  if (R.frameStart && !pl.loop) R.frameStart(Math.max(0, a + .5 * width / count));
   try {
     for (let j=0;j<count;j++) {
       const ts = a + (j+.5)*width/count;
@@ -88,7 +89,7 @@ function liveRenderer40(slot,P) {
   return slot.R40;
 }
 function renderLive40() {
-  const P=styled(state.P), slot=liveSlot('A40'); prepSlot(slot,P,state.gen);
+  const P=state.P, slot=liveSlot('A40'); prepSlot(slot,P,state.gen);
   const R=liveRenderer40(slot,P), b=previewBake();
   const pl=b && state.bakeGen===state.gen && ['master','segments','loop'].includes(b.form) ? segAt(b,state.t).meta : slot.plan40;
   const q=qualityOf(P), L=state.platform==='mobile' && !b?layoutOf(mobileParams(P)):pl.L;

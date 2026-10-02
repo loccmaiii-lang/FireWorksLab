@@ -96,7 +96,7 @@ $('#btnExportCombo').addEventListener('click', exportCombo);
 initPicker();
 initAssets();
 initUpdates();
-initStyle();
+
 buildMasterPanel();
 initIter();
 initLibrary();
@@ -107,6 +107,8 @@ requestAnimationFrame(loop);
 const trailOver = o => Object.fromEntries(Object.entries(o || {}).filter(([k]) => !k.startsWith('_')));
 window.__fw = {
   state, bake, bakeVariants, exportMaster, plan, measure, buildTrack, metricsOf, importParams, setType, setForm,
+  // 下一帧画完后取整张画布（PNG data URL）：渲染缩略图用（analysis/scripts/渲染缩略图.py → ui_shots 的 thumb 步骤）
+  thumbNow() { return new Promise(res => { pendingThumb = () => { const c = document.createElement('canvas'); c.width = canvas.width; c.height = canvas.height; c.getContext('2d').drawImage(canvas, 0, 0); res(c.toDataURL('image/png')); }; }); },
   // 把参数 JSON / 配方解析成 { P, M, name }（不改界面状态）
   resolve(j, fname) {
     if (j.diff && j.type) { const r = resolveRecipe(j); return { P: r.P, M: r.M, name: j.name || fname }; }
@@ -128,7 +130,7 @@ window.__fw = {
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, M), null, 2))]);
     files.push(...await platformFiles(name, b, M));
     // 命名规范：本机导出任务传 opt.entry（条目号）→ 找到效果的英文名
-    if (namingApplies(b) && opt.naming !== false) { const ef = opt.entry ? effectOfEntry({ id: opt.entry }) : null, nm = packNamesFor(ef ? 'ef:' + ef.key : 'rv:' + (opt.entry || name), ef, 1, name); files = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); }
+    if (namingApplies(b) && opt.naming !== false) { const ef = opt.entry ? effectOfEntry({ id: opt.entry }) : null, nm = packNamesFor(ef ? 'ef:' + ef.key : 'rv:' + (opt.entry || name), ef, 1, name, P.type); files = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); }
     const zip = await makeZip(files); disposeBake(b);
     return new Uint8Array(await zip.arrayBuffer());
   },

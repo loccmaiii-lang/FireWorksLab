@@ -357,8 +357,8 @@ class Sim {
       const I = this.headI(s); if (I <= 0) continue;
       const sz = P.headSize * (s.kind === 1 || s.kind === 6 ? 0.8 : 1);
       push(bufH, nh++, s.x, s.y, I, sz);
-      // 全局风格「泪滴星头」：沿运动反方向补几个越来越小、越来越暗的点，速度越快拉得越长（默认 0 不进来）
-      if (P._styTear > 0 && nh < capH - 5) { const v = Math.hypot(s.vx, s.vy); if (v > 0.5) { const ux = -s.vx / v, uy = -s.vy / v, len = P._styTear * (sz * 2 + v * 0.025);
+      // 尾迹外形「泪滴星头」（headTear）：沿运动反方向补几个越来越小、越来越暗的点，速度越快拉得越长（默认 0 不进来）
+      if (P.headTear > 0 && nh < capH - 5) { const v = Math.hypot(s.vx, s.vy); if (v > 0.5) { const ux = -s.vx / v, uy = -s.vy / v, len = P.headTear * (sz * 2 + v * 0.025);
         for (let k = 1; k <= 4; k++) { const f = k / 4; push(bufH, nh++, s.x + ux * len * f, s.y + uy * len * f, I * (1 - 0.75 * f), sz * (1 - 0.7 * f)); } } }
       if (refl > 0 && s.y > 0) push(bufH, nh++, s.x + ripple(s.y, this.t), -s.y, I * refl * Math.exp(-s.y / 400), sz * 1.3);
     }
@@ -387,6 +387,25 @@ class Sim {
     }
     return [nh, nt];
   }
+  // 快照（4.1.2）：深拷贝全部会变的状态（星、随机数、闪光、事件），P、湍流模态只读共用。
+  // 实时模拟相邻两帧的快门窗口重叠，要回到上一帧窗口起点附近：从快照接着算，结果和从 0 算逐位相同。
+  // CPU 火花引擎（几十万粒火花的数组）不做快照，照旧从头算。
+  snapshot() {
+    if (!this.noSparks) return null;
+    const memo = new Map([[this.P, this.P]]); if (this.tm) memo.set(this.tm, this.tm);
+    return simClone(this, memo);
+  }
+}
+// 把 src 的状态整个换进 sim（保持对象身份；快照之后才出现的字段删掉，不留「未来」的值）
+function simRestore(sim, src) { for (const k of Object.keys(sim)) if (!(k in src)) delete sim[k]; Object.assign(sim, src); }
+function simClone(o, memo) {
+  if (o === null || typeof o !== 'object') return o;
+  let c = memo.get(o); if (c) return c;
+  if (ArrayBuffer.isView(o)) { c = o.slice(); memo.set(o, c); return c; }
+  if (Array.isArray(o)) { c = new Array(o.length); memo.set(o, c); for (let i = 0; i < o.length; i++) c[i] = simClone(o[i], memo); return c; }
+  c = Object.create(Object.getPrototypeOf(o)); memo.set(o, c);
+  for (const k of Object.keys(o)) c[k] = simClone(o[k], memo);
+  return c;
 }
 // 水面倒影的横向抖动（波纹）
 function ripple(y, t) { return 0.012 * y * Math.sin(0.35 * y + 7 * t) + 0.3 * Math.sin(1.7 * y + 3 * t); }

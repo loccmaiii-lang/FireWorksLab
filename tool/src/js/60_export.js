@@ -246,7 +246,7 @@ async function exportMaster() {
     files.push(...await platformFiles(name, b, state.M,p=>busy(true,'手机独立烘焙…',p)));
     busy(true, '打包 ZIP…', 1);
     let zipName = name, out = files;
-    if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); zipName = nm.base; }
+    if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); zipName = nm.base; }
     download(await makeZip(out), `${zipName}.zip`);
     recordVersion('导出 ' + name);
     flash('已导出 ' + name);

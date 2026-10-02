@@ -1,0 +1,73 @@
+{
+ "id": "UI8",
+ "type": "ui",
+ "name": "4.1.2 截图：层轨道把手可拖、尾迹外形（每个资产自己的参数）、循环层 + 粒子命名、实时模拟后段帧间隔",
+ "priority": 13,
+ "note": "只截图和测帧间隔，不改东西。",
+ "shots": [
+  {
+   "name": "1440_鸿巢_层轨道把手",
+   "viewport": [
+    1440,
+    900
+   ],
+   "js": "openEffect(EFFS().find(e=>e.key==='hongchao')).then(()=>selectComboLayer(-1))",
+   "view": "live",
+   "t": 7.0,
+   "sleep": 5000
+  },
+  {
+   "name": "1440_鸿巢_拖第2层入点",
+   "js": "(()=>{stage2.tlSig='';stage2.last=0;stageTick(curDuration());const h=document.querySelector('#tlBars .tlb:nth-of-type(2) .cut-in');if(!h)return;const r=h.getBoundingClientRect(),o={bubbles:true,pointerId:1,clientX:r.left+1,clientY:r.bottom-3,button:0};h.dispatchEvent(new PointerEvent('pointerdown',o));h.dispatchEvent(new PointerEvent('pointermove',{...o,clientX:r.left+60}));h.dispatchEvent(new PointerEvent('pointerup',{...o,clientX:r.left+60}));})()",
+   "view": "live",
+   "t": 7.6,
+   "sleep": 9000
+  },
+  {
+   "name": "1440_鸿巢_拖入点后_引擎回放",
+   "view": "export",
+   "t": 7.2,
+   "sleep": 2000
+  },
+  {
+   "name": "帧间隔_鸿巢_开花后1秒",
+   "js": "selectComboLayer(-1);window.__ftRun=k=>{window[k]=[];let last=performance.now();const t0=last;const f=n=>{window[k].push(n-last);last=n;if(n-t0<2500)requestAnimationFrame(f)};requestAnimationFrame(f)};state.view='live';state.t=1.0;state.playing=true;__ftRun('__ftA')",
+   "sleep": 3500,
+   "shot": false,
+   "eval": "(k=>{const d=(window[k]||[]).slice(2).sort((a,b)=>a-b);return d.length?{frames:d.length,median_ms:+d[d.length>>1].toFixed(1),p95_ms:+d[Math.floor(d.length*.95)].toFixed(1)}:null})('__ftA')"
+  },
+  {
+   "name": "帧间隔_鸿巢_开花后8秒",
+   "js": "window.__ftRun=k=>{window[k]=[];let last=performance.now();const t0=last;const f=n=>{window[k].push(n-last);last=n;if(n-t0<2500)requestAnimationFrame(f)};requestAnimationFrame(f)};state.view='live';state.t=8.0;state.playing=true;__ftRun('__ftB')",
+   "sleep": 3500,
+   "shot": false,
+   "eval": "(k=>{const d=(window[k]||[]).slice(2).sort((a,b)=>a-b);return d.length?{frames:d.length,median_ms:+d[d.length>>1].toFixed(1),p95_ms:+d[Math.floor(d.length*.95)].toFixed(1)}:null})('__ftB')"
+  },
+  {
+   "name": "1440_金芒菊_尾迹外形参数",
+   "js": "state.playing=false;openReview(FW_REVIEW_LIST.find(e=>e.id==='JM4-40'),EFFS().find(e=>e.key==='jinmangju'));(()=>{const s=[...document.querySelectorAll('#right summary')].find(x=>x.textContent.includes('尾迹外形'));if(s){s.parentElement.open=true;s.scrollIntoView({block:'center'});}})()",
+   "view": "live",
+   "t": 1.5,
+   "sleep": 5000
+  },
+  {
+   "name": "1440_金芒菊_泪滴粗细亮肩",
+   "js": "state.P.headTear=0.7;state.P.tailJit=0.8;state.P.tailShoulder=0.6;refreshPanelValues();onParam();state.disp='fit';(()=>{const s=[...document.querySelectorAll('#right summary')].find(x=>x.textContent.includes('尾迹外形'));if(s){s.parentElement.open=true;s.scrollIntoView({block:'center'});}})()",
+   "view": "live",
+   "t": 1.5,
+   "sleep": 7000
+  },
+  {
+   "name": "1440_金芒菊_原样",
+   "js": "state.P.headTear=0;state.P.tailJit=0;state.P.tailShoulder=0;refreshPanelValues();onParam();state.disp='fit'",
+   "view": "live",
+   "t": 1.5,
+   "sleep": 7000
+  },
+  {
+   "name": "1440_升空尾缀_查看交付_命名",
+   "js": "openEffect(EFFS().find(e=>e.key==='trail_phys')).then(()=>toggleDeliv(true))",
+   "sleep": 6000
+  }
+ ]
+}

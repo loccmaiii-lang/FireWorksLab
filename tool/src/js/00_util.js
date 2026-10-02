@@ -13,8 +13,10 @@ function hexToLin(h) {
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(c => { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); });
 }
 function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+// 状态放在对象上（不放闭包里），模拟才能做快照（实时模拟倒回时从快照接着算，不从 0 重算；4.1.2）。序列和 mulberry32 逐位相同。
 class RNG {
-  constructor(seed) { this.r = mulberry32((Math.imul(seed | 0, 2654435761) ^ 0x9E3779B9) >>> 0); this.spare = null; for (let i = 0; i < 8; i++) this.r(); }
+  constructor(seed) { this.a = (Math.imul(seed | 0, 2654435761) ^ 0x9E3779B9) >>> 0; this.spare = null; for (let i = 0; i < 8; i++) this.r(); }
+  r() { const a = this.a = (this.a | 0) + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
   u() { return this.r(); }
   n() {
     if (this.spare !== null) { const s = this.spare; this.spare = null; return s; }
@@ -43,5 +45,3 @@ function fibDirs(n, rng, R, jitDeg) {
   return out;
 }
 function randUnit(rng) { const x = rng.n(), y = rng.n(), z = rng.n(), l = Math.hypot(x, y, z) || 1; return [x / l, y / l, z / l]; }
-// 全局风格层（62_style.js）：离线检查只加载部分源码时没有 styledP，就原样返回
-function styled(P) { return typeof styledP === 'function' ? styledP(P) : P; }

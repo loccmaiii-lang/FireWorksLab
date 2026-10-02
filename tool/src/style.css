@@ -712,17 +712,23 @@ canvas#gl{box-shadow:none}
 .dv-names input{background:var(--panel);border:1px solid var(--line2);border-radius:5px;color:var(--text);padding:5px 8px;font:12.5px var(--mono);width:180px}
 .dv-names input[data-ly]{width:110px}
 .dv-names small{width:100%;color:var(--faint)}
-/* 全局风格面板 */
-.style-dlg .style-body{overflow:auto;padding:4px 18px 24px;max-width:620px}
-.style-dlg .style-body .hint{color:var(--faint);font-size:12px;margin:0 0 8px}
-.style-dlg #styleBody .sl{margin-top:6px}
-.style-dlg .pk-head .sp{flex:1}
-#styleBtn.on{border-color:var(--acc)!important;color:var(--acc)}
 /* 层轨道的阶段点 */
 .tlb-t{overflow:visible}
-.tlb-t .ph{position:absolute;top:-3px;bottom:-3px;width:3px;margin-left:-1.5px;border-radius:2px;background:#e4bb7c;z-index:2}
-.tlb-t .ph.drag{width:7px;margin-left:-3.5px;cursor:ew-resize;box-shadow:0 0 0 1px #000}
-.tlb-t .ph.drag:hover{background:#fff}
+/* 4.1.2 层轨道把手：上方圆点 = 阶段（点火、燃烧结束…），下方白色方块 = 入点 / 出点；都能拖。命中区比看到的大一圈 */
+.tlbars{gap:16px;padding:10px 0 6px}
+.tlb-t{height:12px}
+.tlb-t .ph{position:absolute;top:-9px;bottom:0;width:2px;margin-left:-1px;background:#e4bb7c;z-index:2;cursor:ew-resize;touch-action:none}
+.tlb-t .ph::before{content:'';position:absolute;top:-2px;left:50%;width:11px;height:11px;margin-left:-5.5px;border-radius:50%;background:inherit;box-shadow:0 0 0 1.5px #0b0f10}
+.tlb-t .ph::after{content:'';position:absolute;top:-6px;bottom:-2px;left:-8px;right:-8px}
+.tlb-t .cut{position:absolute;top:0;bottom:-9px;width:2px;margin-left:-1px;background:#d9e2e4;z-index:3;cursor:ew-resize;touch-action:none}
+.tlb-t .cut::before{content:'';position:absolute;bottom:-2px;width:11px;height:9px;background:inherit;box-shadow:0 0 0 1.5px #0b0f10}
+.tlb-t .cut-in::before{left:0;border-radius:0 2px 3px 3px}
+.tlb-t .cut-out::before{right:0;border-radius:2px 0 3px 3px}
+.tlb-t .cut::after{content:'';position:absolute;top:-2px;bottom:-6px;left:-9px;right:-9px}
+.tlb-t .cut.set{background:#fff}
+.tlb-t .ph:hover,.tlb-t .cut:hover,.tlb-t .on{filter:brightness(1.35)}
+.tlb-t .on{z-index:4}
+.tlcut .tlhelp{color:var(--faint);font-size:11.5px;flex-basis:100%}
 .ph-ign{background:#36e4b0!important} .ph-burn{background:#e4bb7c!important} .ph-after{background:#f0a6a0!important}
 .ph-spark{background:#7fb6ff!important} .ph-dim{background:#c9a0ff!important} .ph-ember{background:#adb8bc!important}
 .phl{width:100%;color:var(--dim)}

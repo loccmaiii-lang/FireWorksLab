@@ -41,9 +41,10 @@ STEPS = [
     ('尾缀_V5', "openEffect(EFFS().find(e=>e.key==='trail_v5'))", 'views'),
     ('多层_引菊_选第2层', "openEffect(EFFS().find(e=>e.key==='hiki_nishiki')).then(()=>selectComboLayer(1))", 'views'),
     ('多层_引菊_查看交付', "toggleDeliv(true)", None),
-    ('全局风格_打开', "toggleDeliv(false);$('#styleBtn').click()", None),
-    ('全局风格_泪滴粗细', "gStyle.v.tear=0.6;gStyle.v.widthJit=0.8;scheduleRestyle()", 'views'),
-    ('全局风格_恢复默认', "$('#styleReset').click();$('#styleClose').click()", 'views'),
+    ('多层_引菊_层2_拖入点', "toggleDeliv(false);(()=>{stage2.tlSig='';stage2.last=0;stageTick(curDuration());const h=document.querySelector('#tlBars .tlb:nth-of-type(2) .cut-in');if(!h)throw new Error('第 2 层没有入点把手');const r=h.getBoundingClientRect(),o={bubbles:true,pointerId:1,clientX:r.left+1,clientY:r.bottom-3,button:0};h.dispatchEvent(new PointerEvent('pointerdown',o));h.dispatchEvent(new PointerEvent('pointermove',{...o,clientX:r.left+50}));h.dispatchEvent(new PointerEvent('pointerup',{...o,clientX:r.left+50}));if(!(state.P.cutIn>0))throw new Error('拖入点没有改到参数');})()", 'views'),
+    ('多层_引菊_层1_拖阶段点', "(()=>{stage2.tlSig='';stage2.last=0;stageTick(curDuration());const h=document.querySelector('#tlBars .tlb:nth-of-type(1) .ph-burn');if(!h)throw new Error('第 1 层没有燃烧结束点');const r=h.getBoundingClientRect(),o={bubbles:true,pointerId:1,clientX:r.left+1,clientY:r.top+2,button:0};h.dispatchEvent(new PointerEvent('pointerdown',o));h.dispatchEvent(new PointerEvent('pointermove',{...o,clientX:r.left-30}));h.dispatchEvent(new PointerEvent('pointerup',{...o,clientX:r.left-30}));if(state.comboSel!==0)throw new Error('拖第 1 层没有切到第 1 层');})()", 'views'),
+    ('尾迹外形_泪滴粗细亮肩', "state.P.headTear=0.6;state.P.tailJit=0.8;state.P.tailShoulder=0.5;refreshPanelValues();onParam()", 'views'),
+    ('尾迹外形_恢复', "state.P.headTear=0;state.P.tailJit=0;state.P.tailShoulder=0;setCut('clear')", 'views'),
 ]
 VIEWS = [('实时', 'live', None, 1.0), ('引擎回放', 'export', None, 1.0), ('贴图', 'atlas', '0', 1.0), ('流转', 'atlas', '1', 1.5)]
 

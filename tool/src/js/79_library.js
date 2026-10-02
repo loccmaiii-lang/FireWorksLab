@@ -167,9 +167,14 @@ function bindEffHeader(box, ef) {
 setInterval(() => { const el = document.getElementById('effReady'); if (el && lib.effect && !document.hidden) { const h = readyHTML(lib.effect, lib.review || (lib.formal ? { id: lib.formal.id } : null)); if (el.innerHTML !== h) el.innerHTML = h; } }, 1500);
 
 // ---------------- 左栏 ----------------
+// 缩略图一律用渲染的（用户 2026-10-02 14:46「所有效果缩略图不要用实拍，用渲染的」）：
+// 本机显卡按当前配方渲染的（review_to_baker 已换进 thumbSim）→ 对照图里模拟的那一半 → 花型模板的渲染图。实拍缩略图不显示。
 function thumbHTML(e) {
-  if (e.thumbRef || e.thumbSim) return `<span class="th">${e.thumbRef ? `<i style="background-image:url(${e.thumbRef})"></i>` : ''}${e.thumbSim ? `<i style="background-image:url(${e.thumbSim})"></i>` : ''}</span>`;
-  return `<span class="th" style="${typeThumbStyle(e.key || e.id)}"></span>`;
+  if (e.thumbSim) return `<span class="th"><i style="background-image:url(${e.thumbSim})"></i></span>`;
+  // 多层条目还没有渲染缩略图：用第一层（有渲染图的那层，或它的花型模板渲染图）
+  if (e.layerIds && typeof FW_REVIEW_LIST !== 'undefined') { const l = e.layerIds.map(id => FW_REVIEW_LIST.find(x => x.id === id)).filter(Boolean); const l0 = l.find(x => x.thumbSim) || l.find(x => x.base); if (l0) return thumbHTML(l0); }
+  const k = e.base && typeof TYPE_NAMES !== 'undefined' && TYPE_NAMES[e.base] ? e.base : (e.key || e.id);
+  return `<span class="th" style="${typeThumbStyle(k)}"></span>`;
 }
 function libMatch(...txt) { const q = lib.q.trim().toLowerCase(); return !q || txt.join(' ').toLowerCase().includes(q); }
 function libItem(host, key, html, onClick, plain) {

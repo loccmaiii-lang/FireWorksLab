@@ -207,7 +207,7 @@ function unionView(a, b) {
 }
 function renderLive() {
   if (isEmit(state.P)) return renderEmitLive();
-  const P = styled(state.P), m = state.bake && state.bake.meta, B = state.B;
+  const P = state.P, m = state.bake && state.bake.meta, B = state.B;
   if (renderVersion(P)>=40 && !isTrail(P) && !isPhys(P) && !B) return renderLive40();
   if (!m) { hdrT.clear(); post(); hudText = '首次烘焙中…'; hudB = ''; return; }
   const sa = liveSlot('A'); prepSlot(sa, P, state.gen);
@@ -377,14 +377,14 @@ function renderComboLive() {
   if (!items.length) { post(); hudText = '没有图层'; return; }
   let view = null;
   items.forEach(([L, e, i]) => {
-    const slot = liveSlot('combo' + i); prepSlot(slot, styled(e.P), 'c' + i + ':' + e.name + ':' + (e.rev || 0));
-    const v = sceneView(styled(e.P), e.bake.meta, slot), s = L.scale || 1, vs = [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
+    const slot = liveSlot('combo' + i); prepSlot(slot, e.P, 'c' + i + ':' + e.name + ':' + (e.rev || 0));
+    const v = sceneView(e.P, e.bake.meta, slot), s = L.scale || 1, vs = [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
     view = view ? unionView(view, vs) : vs;
   });
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   let n = 0;
   items.forEach(([L, e, i]) => {
-    const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = styled(e.P);
+    const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = e.P;
     if (age < 0 || age > P.duration || !layerShown(i)) return;
     const s = L.scale || 1, vL = [view[0] / s, view[1] / s, view[2] / s, view[3] / s], ppm = rgT.w / (2 * vL[2]);
     rgT.clear(); rgT.bind(); additive(true);
@@ -445,7 +445,8 @@ function curDuration() {
 }
 function loop(now) {
   if (state.stillBusy) { lastT = now; requestAnimationFrame(loop); return; }   // 定帧渲染期间让出画布
-  const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
+  // 播放时钟按真实时间走（4.1.2：以前每帧最多推进 0.05 s，掉到 10 fps 时只按半速播、实拍还会反复往回跳）；只防切走标签页回来时的一大步
+  const dt = Math.min(0.25, Math.max(0, (now - lastT) / 1000)); lastT = now;
   const D = curDuration(), looping = !state.showcase && familyOf(state.P.type) === 'ground' && state.tab === 'master';
   if (state.playing) { state.t += dt * state.speed;
     if (!looping && state.loopPlay === false && state.t >= D) { state.t = D; state.playing = false; $('#play').textContent = '播放'; }   // 播放一遍：停在最后

@@ -52,7 +52,7 @@ function selectComboLayer(i) {
 function buildLayerHead(i) {
   const L = state.layers[i], host = $('#layerHead'); host.innerHTML = '';
   host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b>正在调：第 ${i + 1} 层 · ${layerName(i)}</b></div>
-    <p class="hint">下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，这一层的点火 / 燃烧结束 / 火花停等可以直接拖。</p>
+    <p class="hint">下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 燃烧结束 / 火花停（圆点）都可以直接拖。</p>
     <p class="hint">多层效果里，每层的贴图尺寸（2048）、格子（最多 4×4）、合并输出由整朵统一定，所以下面不再显示这几项。</p>
     ${linkedWith(i).length ? `<p class="lh-link">联动：和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、离散等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>` : ''}`);
   const pos = document.createElement('details'); pos.className = 'sec'; pos.open = true; pos.innerHTML = '<summary>在整朵里的位置</summary>'; host.appendChild(pos);
@@ -288,59 +288,83 @@ function phasesOf(P) {
 }
 function layerPOf(x) { return state.tab === 'combo' ? x.e && x.e.P : state.P; }
 function buildTlBars() {
+  if (stage2.drag) return;   // 拖动中不重建（否则手上的把手被换掉，拖到一半断开）
   const D = curDuration(), rows = curLayerBakes(), P = editLayerP();
-  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(layerPOf(x)).map(q => q.t.toFixed(2)).join(':')].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-');
+  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x), lp = layerPOf(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(lp).map(q => q.t.toFixed(2)).join(':'), lp ? [lp.cutIn, lp.cutOut].join('/') : ''].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-');
   if (sig === stage2.tlSig) return; stage2.tlSig = sig;
   const host = $('#tlBars');
   if (state.tab === 'asset' || state.showcase || !rows.length) { host.innerHTML = ''; return; }
   const pct = t => clamp(t / D * 100, 0, 100), seg = (a, b, cls, title) => b > a ? `<i class="${cls}" style="left:${pct(a)}%;width:${Math.max(0.3, pct(b) - pct(a))}%"${title ? ` title="${title}"` : ''}></i>` : '';
   host.innerHTML = rows.map(x => {
-    const sp = layerSpans(x), on = state.tab !== 'combo' || layerShown(x.i), sel = state.tab === 'combo' && state.comboSel === x.i;
+    const sp = layerSpans(x), on = state.tab !== 'combo' || layerShown(x.i), sel = state.tab === 'combo' && state.comboSel === x.i, lp = layerPOf(x);
     const bars = !sp ? '' : seg(sp.at(sp.vis[0]), sp.at(sp.vis[1]), 'vis', '整段可见范围（全黑帧已剔掉）')
       + (sp.pre ? seg(sp.at(sp.pre.from), sp.at(sp.t0), 'pre', `入点前：第 1 帧从 ${Math.round(sp.pre.keys[0][1] * 100)}% 放大`) : '')
       + seg(sp.at(sp.t0), sp.at(sp.end), 'main', `贴图在播：${sp.t0.toFixed(2)} – ${sp.end.toFixed(2)} s（这一层自己的时间）`);
-    const editable = (state.tab !== 'combo' && P) || sel, ph = sp ? phasesOf(layerPOf(x)).map(q => `<b class="ph ph-${q.k}${editable ? ' drag' : ''}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s${editable ? '（拖动修改）' : '（在观察图层选这一层后可拖）'}"></b>`).join('') : '';
-    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><span class="tlb-n" title="${x.name}">${state.tab === 'combo' ? x.i + 1 + ' · ' : ''}${x.name}</span><span class="tlb-t" data-i="${x.i}">${bars}${ph}</span></div>`;
+    const cutOK = sp && lp && usesTickPlan40(lp) && !(sp.vis[1] - sp.vis[0] < 0.2);
+    const cuts = !cutOK ? '' : [['in', sp.t0, '入点', +lp.cutIn > 0], ['out', sp.end, '出点', +lp.cutOut > 0]].map(([k, t, lab, set]) => `<b class="cut cut-${k}${set ? ' set' : ''}" data-cut2="${k}" data-li="${x.i}" style="left:${pct(sp.at(t))}%" title="${lab}：${t.toFixed(2)} s${set ? '' : '（自动）'}——左右拖动修改；拖回尽头 = 自动"></b>`).join('');
+    const ph = sp ? phasesOf(lp).map(q => `<b class="ph ph-${q.k}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s（左右拖动修改）"></b>`).join('') : '';
+    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><span class="tlb-n" title="${x.name}">${state.tab === 'combo' ? x.i + 1 + ' · ' : ''}${x.name}</span><span class="tlb-t" data-i="${x.i}">${bars}${ph}${cuts}</span></div>`;
   }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>'
     + `<div class="tlcut">${P ? `<button type="button" class="mini" data-cut="in" title="把当前时刻设成入点：帧预算从这里开始分配">设为入点</button><button type="button" class="mini" data-cut="out" title="把当前时刻设成出点">设为出点</button><button type="button" class="mini" data-cut="clear">清除</button>
       <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动（第一次看得见）'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动（最后看得见）'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') : ''}</span>`
-      : `<span>${state.tab === 'combo' ? '入点 / 出点：先在右栏「观察图层」选一层' : ''}</span>`}</div>`;
-  host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); }));
+      : ''}<span class="tlhelp">轨道下方的白色把手 = 入点 / 出点，上方的圆点 = 点火、燃烧结束等时刻，都能左右拖${state.tab === 'combo' ? '（多层会自动切到那一层的参数）' : ''}；松手后只重烘那一层</span></div>`;
+  host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { if (ev.target !== t && !ev.target.matches('i')) return; const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); }));
   host.querySelectorAll('[data-cut]').forEach(b => b.addEventListener('click', () => setCut(b.dataset.cut)));
-  host.querySelectorAll('.ph.drag').forEach(h => h.addEventListener('pointerdown', ev => phaseDrag(ev, h)));
+  host.querySelectorAll('.ph, .cut').forEach(h => h.addEventListener('pointerdown', ev => trackDrag(ev, h)));
   const ex = rows.find(x => (state.tab !== 'combo' && P) || (state.tab === 'combo' && state.comboSel === x.i)), phs = ex ? phasesOf(layerPOf(ex)) : [];
   if (phs.length) host.querySelector('.tlcut').insertAdjacentHTML('beforeend', `<span class="phl">${phs.map(q => `<i class="ph-${q.k}"></i>${q.lab} ${q.t.toFixed(2)} s`).join(' · ')}</span>`);
 }
-// 拖层轨道上的阶段点：松手时改参数并重烘（多层只重烘这一层）
-function phaseDrag(ev, h) {
+// 拖层轨道（用户 2026-10-02 14:46：「每层轨道出入点我看到了，但是没法拖」）：任何一层的入点 / 出点把手、阶段点都能直接拖。
+// 多层时按下就切到那一层（右栏换成那一层的参数）；拖的时候只移动把手，松手才改参数、只重烘那一层。
+function trackDrag(ev, h) {
+  if (ev.button > 0) return;
   ev.preventDefault(); ev.stopPropagation();
-  const track = h.parentElement, x = curLayerBakes().find(r => r.i === +h.dataset.li), sp = x && layerSpans(x), P = x && layerPOf(x); if (!sp || !P) return;
-  const q = phasesOf(P).find(z => z.k === h.dataset.ph); if (!q) return;
-  const D = curDuration(), toLayer = cx => { const r = track.getBoundingClientRect(); return Math.max(0, (clamp((cx - r.left) / r.width, 0, 1) * D - sp.d) * sp.r); };
-  h.setPointerCapture(ev.pointerId); let tl = q.t;
-  const mv = e => { tl = toLayer(e.clientX); h.style.left = clamp((sp.d + tl / sp.r) / D * 100, 0, 100) + '%'; h.title = `${q.lab}：${tl.toFixed(2)} s`; setStatus(`${q.lab} → ${tl.toFixed(2)} s（松手后重烘）`); };
-  const up = () => { h.removeEventListener('pointermove', mv); h.removeEventListener('pointerup', up); setStatus(''); if (Math.abs(tl - q.t) < 0.005) return;
-    q.set(tl); stage2.tlSig = ''; refreshPanelValues(); refreshVisibility(); onParam(); flash(`${q.lab} 改到 ${tl.toFixed(2)} s，正在重烘`); };
-  h.addEventListener('pointermove', mv); h.addEventListener('pointerup', up);
+  const li = +h.dataset.li;
+  if (state.tab === 'combo' && state.comboSel !== li) selectComboLayer(li);
+  const track = h.parentElement, x = curLayerBakes().find(r => r.i === li), sp = x && layerSpans(x), P = x && layerPOf(x); if (!sp || !P) return;
+  const cut = h.dataset.cut2, q = cut ? null : phasesOf(P).find(z => z.k === h.dataset.ph); if (!cut && !q) return;
+  const lab = cut ? (cut === 'in' ? '入点' : '出点') : q.lab, t0 = cut ? (cut === 'in' ? sp.t0 : sp.end) : q.t;
+  // 入点只能在「看得见」的范围里、早于出点；出点晚于入点
+  let lo = 0, hi = Infinity;
+  if (cut === 'in') { lo = sp.vis[0]; hi = Math.min(sp.vis[1], +P.cutOut > 0 ? +P.cutOut : sp.end) - 1 / 15; }
+  if (cut === 'out') { lo = Math.max(sp.vis[0], +P.cutIn > 0 ? +P.cutIn : sp.t0) + 1 / 15; hi = sp.vis[1]; }
+  const D = curDuration(), toLayer = cx => { const r = track.getBoundingClientRect(); return clamp((clamp((cx - r.left) / r.width, 0, 1) * D - sp.d) * sp.r, lo, hi); };
+  stage2.drag = true; h.classList.add('on'); try { h.setPointerCapture(ev.pointerId); } catch (e) { }
+  let tl = t0;
+  const mv = e => { tl = toLayer(e.clientX); h.style.left = clamp((sp.d + tl / sp.r) / D * 100, 0, 100) + '%'; h.title = `${lab}：${tl.toFixed(2)} s`; state.t = sp.d + tl / sp.r; setStatus(`${lab} → ${tl.toFixed(2)} s（松手后重烘）`); };
+  const up = () => {
+    h.removeEventListener('pointermove', mv); h.removeEventListener('pointerup', up); h.removeEventListener('pointercancel', up);
+    stage2.drag = false; h.classList.remove('on'); setStatus(''); stage2.tlSig = '';
+    if (Math.abs(tl - t0) < 0.005) return;
+    if (cut) { applyCut(P, sp, cut, tl, true); return; }
+    q.set(tl); refreshPanelValues(); refreshVisibility(); onParam(); flash(`${q.lab} 改到 ${tl.toFixed(2)} s，正在重烘`);
+  };
+  h.addEventListener('pointermove', mv); h.addEventListener('pointerup', up); h.addEventListener('pointercancel', up);
 }
 // 入点 / 出点 = 这一层自己的时间（相对开花）。第一次设入点时，把当前烘焙的「第一次看得见」记成 preFrom（入点前从这里开始放大）
 function setCut(kind) {
   const P = editLayerP(); if (!P) return;
   const x = curLayerBakes().find(r => state.tab !== 'combo' || r.i === state.comboSel), sp = x && layerSpans(x);
-  const t = engineTick(Math.max(0, (state.t - (sp ? sp.d : 0)) * (sp ? sp.r : 1)) + 1e-6);
-  if (kind === 'clear') { P.cutIn = 0; P.cutOut = 0; P.preFrom = -1; P.visTo = 0; }
-  else if (kind === 'in') {
+  if (kind === 'clear') { P.cutIn = 0; P.cutOut = 0; P.preFrom = -1; P.visTo = 0; stage2.tlSig = ''; refreshPanelValues(); refreshVisibility(); onParam(); flash('已清除入点 / 出点（回到自动）'); return; }
+  applyCut(P, sp, kind, Math.max(0, (state.t - (sp ? sp.d : 0)) * (sp ? sp.r : 1)), false);
+}
+// drag = 拖把手：拖回可见范围的尽头就是「自动」
+function applyCut(P, sp, kind, tl, drag) {
+  const t = engineTick(tl + 1e-6), first = !(+P.cutIn > 0) && !(+P.cutOut > 0);
+  if (kind === 'in') {
     if (sp && t < sp.vis[0] - 1e-6) { flash('入点要在看得见的范围里（' + sp.vis[0].toFixed(2) + ' s 以后）', true); return; }
-    if (!(+P.cutIn > 0) && !(+P.cutOut > 0) && sp) { P.preFrom = +sp.vis[0].toFixed(4); P.visTo = +sp.vis[1].toFixed(4); }
     if (+P.cutOut > 0 && t >= +P.cutOut - 1 / 30) { flash('入点要早于出点', true); return; }
-    P.cutIn = +t.toFixed(4);
+    if (first && sp) { P.preFrom = +sp.vis[0].toFixed(4); P.visTo = +sp.vis[1].toFixed(4); }
+    P.cutIn = drag && sp && t <= sp.vis[0] + 1 / 60 ? 0 : +t.toFixed(4);
   } else {
     if (t <= (+P.cutIn || (sp ? sp.vis[0] : 0)) + 1 / 30) { flash('出点要晚于入点', true); return; }
-    if (!(+P.cutIn > 0) && !(+P.cutOut > 0) && sp) { P.preFrom = +sp.vis[0].toFixed(4); P.visTo = +sp.vis[1].toFixed(4); }
-    P.cutOut = +t.toFixed(4);
+    if (first && sp) { P.preFrom = +sp.vis[0].toFixed(4); P.visTo = +sp.vis[1].toFixed(4); }
+    P.cutOut = drag && sp && t >= sp.vis[1] - 1 / 60 ? 0 : +t.toFixed(4);
   }
+  if (!(+P.cutIn > 0) && !(+P.cutOut > 0)) { P.preFrom = -1; P.visTo = 0; }
   stage2.tlSig = ''; refreshPanelValues(); refreshVisibility(); onParam();
-  flash(kind === 'clear' ? '已清除入点 / 出点（回到自动）' : `${kind === 'in' ? '入点' : '出点'}设在 ${t.toFixed(2)} s，正在重新分帧烘焙`);
+  const v = kind === 'in' ? +P.cutIn : +P.cutOut;
+  flash(`${kind === 'in' ? '入点' : '出点'}${v > 0 ? `设在 ${v.toFixed(2)} s` : '回到自动'}，正在重新分帧烘焙`);
 }
 // 每帧调用（80_render 的主循环）：tick 号、播放头；标题 / 脚注 / 时段条 / 通过门槛每 1/4 秒刷新
 function stageTick(D) {
@@ -387,10 +411,22 @@ function delivName() {
 }
 function renderDeliv() {
   const host = $('#delivView'), name = delivName(), rows = [], combo = state.tab === 'combo', xs = curLayerBakes();
-  const nm = packNamesFor(wbKey(), lib.effect, xs.length, name), useNew = xs.every(x => !x.b || namingApplies(x.b));
+  const nm = packNamesFor(wbKey(), lib.effect, xs.length, name, xs.length === 1 && xs[0].b ? xs[0].b.P.type : ''), useNew = xs.every(x => !x.b || namingApplies(x.b));
   for (const x of xs) {
     if (!x.b) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：还没烘好</td></tr>`); continue; }
     if (!namingApplies(x.b)) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：这种产物（${FORM_NAMES[x.b.form] || x.b.form}）的素材包按它自己的导出规则生成，文件清单以导出的包为准</td></tr>`); continue; }
+    if (x.b.form === 'emitset') {   // 循环层 + 粒子：循环 / 消散两张序列 + 粒子发射器（没有贴图）
+      const m = x.b.meta, ly = combo ? nm.layers[x.i] : '';
+      for (const [, L, sub, n] of namingSheets(x.b)) {
+        const d0 = sub === 'Fade' ? m.T : 0, life = sub === 'Fade' ? m.fadeSeconds : m.T;
+        rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', false)}.png</td><td>PC · ${sub === 'Loop' ? '循环层' : '消散'} · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', true)}.png</td><td>手机</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        rows.push(`<tr class="dim"><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'C')}.png</td><td>Cut（PC / 手机共用，512）</td><td></td><td></td></tr>`);
+      }
+      rows.push(`<tr class="dim"><td>${fwTexName(nm.base, ly, null, 0, 'R')}.png</td><td>颜色 Ramp（PC / 手机共用）</td><td></td><td></td></tr>`);
+      rows.push(`<tr class="dim"><td colspan="4">粒子发射器（火粉、火星）没有贴图：用软圆点材质，数值在 cascade.json</td></tr>`);
+      continue;
+    }
     const parts = bakeParts(x.b), delay = +x.L.delay || 0, rate = +x.L.rate || 1, ly = combo ? nm.layers[x.i] : '';
     const ln = combo ? comboLayerName(name, x.i) : name, mn = combo ? comboLayerName(name + '_Mobile', x.i) : name + '_Mobile';
     let mobCell = '—'; try { const mp = mobileParams({ ...x.b.P, cols: x.b.meta.L.cols, rows: x.b.meta.L.rows }); mobCell = Math.round(layoutOf(mp).cellW) + ' px'; } catch (e) { }

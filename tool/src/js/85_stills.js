@@ -12,7 +12,6 @@ function expoOfChannel(buf, ch, target, pct) {
 }
 // opt: { times: [s…], px, half（米，画面半宽）, cy（米，画面中心高度）, shutter（秒）, sub（快门内子帧数，默认每 1/480 秒一帧）, probe（定曝光用的时刻）, expo（显示曝光） }
 async function renderStills(P0, M0, opt) {
-  P0 = styled(P0);     // 全局风格层（默认值时原样返回）
   if (renderVersion(P0)>=40 && !isTrail(P0) && !isPhys(P0)) return renderStills40(P0,M0,opt);
   const P = derive({ ...P0 }), M = normalizeM(M0 || {}, P.type), px = opt.px || 512, ground = familyOf(P.type) === 'ground';
   let half = opt.half, cy = opt.cy || 0, cx = 0;

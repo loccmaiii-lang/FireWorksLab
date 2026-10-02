@@ -81,7 +81,7 @@ function clockTrace(mode, fps, reference) {
     state: { tab: 'combo', view: mode, P: { type: 'kamuro' }, t: 0, playing: true, loopPlay: false,
       speed: 1, expo: 1, disp: 'game', layers: [], lib: [], layerView: { solo: -1, mute: [] } },
     clamp: (v, lo, hi) => Math.max(lo, Math.min(hi, v)),
-    familyOf: () => 'aerial', renderVersion: () => 40, isPhys: () => false,
+    familyOf: () => 'aerial', renderVersion: () => 40, isPhys: () => false, isEmit: () => false, isTrail: () => false,
     ensureTargets: () => {}, stageTick: () => {}, perfTick: () => {} });
   load(c, '79_library'); load(c, '80_render');
   c.countRender = () => { renders++; };

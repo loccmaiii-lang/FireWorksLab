@@ -719,17 +719,23 @@ canvas#gl{box-shadow:none}
 .dv-names input{background:var(--panel);border:1px solid var(--line2);border-radius:5px;color:var(--text);padding:5px 8px;font:12.5px var(--mono);width:180px}
 .dv-names input[data-ly]{width:110px}
 .dv-names small{width:100%;color:var(--faint)}
-/* 全局风格面板 */
-.style-dlg .style-body{overflow:auto;padding:4px 18px 24px;max-width:620px}
-.style-dlg .style-body .hint{color:var(--faint);font-size:12px;margin:0 0 8px}
-.style-dlg #styleBody .sl{margin-top:6px}
-.style-dlg .pk-head .sp{flex:1}
-#styleBtn.on{border-color:var(--acc)!important;color:var(--acc)}
 /* 层轨道的阶段点 */
 .tlb-t{overflow:visible}
-.tlb-t .ph{position:absolute;top:-3px;bottom:-3px;width:3px;margin-left:-1.5px;border-radius:2px;background:#e4bb7c;z-index:2}
-.tlb-t .ph.drag{width:7px;margin-left:-3.5px;cursor:ew-resize;box-shadow:0 0 0 1px #000}
-.tlb-t .ph.drag:hover{background:#fff}
+/* 4.1.2 层轨道把手：上方圆点 = 阶段（点火、燃烧结束…），下方白色方块 = 入点 / 出点；都能拖。命中区比看到的大一圈 */
+.tlbars{gap:16px;padding:10px 0 6px}
+.tlb-t{height:12px}
+.tlb-t .ph{position:absolute;top:-9px;bottom:0;width:2px;margin-left:-1px;background:#e4bb7c;z-index:2;cursor:ew-resize;touch-action:none}
+.tlb-t .ph::before{content:'';position:absolute;top:-2px;left:50%;width:11px;height:11px;margin-left:-5.5px;border-radius:50%;background:inherit;box-shadow:0 0 0 1.5px #0b0f10}
+.tlb-t .ph::after{content:'';position:absolute;top:-6px;bottom:-2px;left:-8px;right:-8px}
+.tlb-t .cut{position:absolute;top:0;bottom:-9px;width:2px;margin-left:-1px;background:#d9e2e4;z-index:3;cursor:ew-resize;touch-action:none}
+.tlb-t .cut::before{content:'';position:absolute;bottom:-2px;width:11px;height:9px;background:inherit;box-shadow:0 0 0 1.5px #0b0f10}
+.tlb-t .cut-in::before{left:0;border-radius:0 2px 3px 3px}
+.tlb-t .cut-out::before{right:0;border-radius:2px 0 3px 3px}
+.tlb-t .cut::after{content:'';position:absolute;top:-2px;bottom:-6px;left:-9px;right:-9px}
+.tlb-t .cut.set{background:#fff}
+.tlb-t .ph:hover,.tlb-t .cut:hover,.tlb-t .on{filter:brightness(1.35)}
+.tlb-t .on{z-index:4}
+.tlcut .tlhelp{color:var(--faint);font-size:11.5px;flex-basis:100%}
 .ph-ign{background:#36e4b0!important} .ph-burn{background:#e4bb7c!important} .ph-after{background:#f0a6a0!important}
 .ph-spark{background:#7fb6ff!important} .ph-dim{background:#c9a0ff!important} .ph-ember{background:#adb8bc!important}
 .phl{width:100%;color:var(--dim)}
@@ -748,7 +754,6 @@ canvas#gl{box-shadow:none}
     <div class="brand"><span class="mark">DF</span><b>特效工作台</b><small id="verLabel">烟花烘焙器</small></div>
     <div class="crumb" id="crumb" hidden aria-hidden="true"></div>
     <div class="gpu" id="gpu"></div>
-    <button class="btn ghost upd" id="styleBtn" type="button" title="全局风格：尾长、粗细、亮肩、泪滴等，叠在所有效果上（默认不改任何东西）">全局风格</button>
     <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
     <div id="status"></div>
   </header>
@@ -1033,12 +1038,6 @@ canvas#gl{box-shadow:none}
     </aside>
     </div>
   </main>
-  <div class="picker upd-dlg style-dlg" id="styleDlg" hidden role="dialog" aria-label="全局风格">
-    <div class="pk-head"><b>全局风格</b><span class="hint" id="styleState"></span><span class="sp"></span><button class="btn ghost" id="styleCopy" type="button">复制风格参数</button><button class="btn ghost" id="styleReset" type="button">恢复默认</button><button class="btn ghost" id="styleClose" type="button">关闭（Esc）</button></div>
-    <div class="style-body"><p class="hint">叠在每个效果自己的参数上，改了马上重烘当前效果。全部是默认值（倍数 1、其余 0）时，所有效果和原来逐像素一样。只存在这台电脑的浏览器里；本机显卡的导出任务不读它——要让 AI 的导出也用，点「复制风格参数」发给 AI。</p>
-      <label class="check"><input type="checkbox" id="styleApproved"> 也作用于已通过的效果（正式库、已通过版）</label>
-      <div id="styleBody"></div></div>
-  </div>
   <div class="picker upd-dlg" id="updDlg" hidden role="dialog" aria-label="更新记录">
     <div class="pk-head"><b>更新记录</b><span class="hint">每次改动都会推到仓库，pull 后这里就是最新的</span><button class="btn ghost" id="updClose" type="button">关闭（Esc）</button></div>
     <div class="upd-list" id="updList"></div>
@@ -1060,7 +1059,7 @@ canvas#gl{box-shadow:none}
 <script src="data/standard.js"></script>
 <script>
 'use strict';
-const UPDATES = [{"title": "2026-10-02 · 烘焙器 4.1.1：入点 / 出点、命名规范、全局风格、层轨道与联动、单束、流转连播", "body": "`git pull` 后刷新烘焙器。\n\n- **入点 / 出点**：时间轴下面「设为入点 / 设为出点」。帧只分给入点到出点；入点前默认用入点那一帧从小放大（也可选不显示）。引擎回放、导出都按这个。\n- **命名**：大面片素材包改成 `T_EFX_FireWorks_名称_层_4x4_01_HD.png`（手机无 `_HD`；Cut `_C`、Ramp `_R` 共用）。每个效果先起了英文名（鸿巢四尺玉 = YonshakuKamuro，层 Main / Red；引菊 → 锦 = HikiNishiki，层 Hiki / Nishiki……），交付页可以改。\n- **全局风格**：顶栏「全局风格」，尾长 / 粗细 / 散布 / 星头大小 / 亮度 / 闪烁 + 粗细随机 / 亮肩 / 泪滴。默认值时所有效果逐像素不变；默认不动已通过的效果。\n- **层轨道**：时段条上直接看到并拖每层的点火、燃烧结束、第二段、火花停（四尺玉红点何时出现、青柠星星头何时点着、引菊何时转锦都在这里）。同一批星的层改轨迹参数会自动同步。\n- **单束**：交付页可以导出某一层的单束包（每颗星一个粒子）。\n- **流转动画**：两张图会连着播。"}, {"title": "2026-10-02 · 烘焙器 4.0.6：工具条回到画面上方、修复调参黑屏", "body": "刷新正式烘焙器即可。实时模拟、引擎回放、贴图、观察大小、平台、曝光和实拍对照回到中央画面上方；顶部去掉重复的长效果路径，右上仍显示显卡和更新记录。调参时“烘焙中”提示误用了遮罩样式，已修复。离线状态回归通过；实际浏览器视觉受本机访问限制尚未验证。"}, {"title": "2026-10-02 · 烘焙器 4.0.5：交互稿剩下的部分做完", "body": "`git pull` 后刷新烘焙器。按你的浏览器交互稿：画面框（标题写明看的是哪版 / 哪层，右上 网格 · 记录当前帧 · 大画面，脚注 单格 · tick）、时间轴（±1 tick、← →、循环 / 播放一遍、开花 / 展开 / 衰减、每层时段条）、查看交付（素材包文件清单 + 导出）、检查与验收四行、通过门槛、左栏「我的版本」。和交互稿逐项对照、哪些没照搬和为什么、改进建议，写在 `协作/烟花烘焙器交互设计草稿.md` 最后一节。"}, {"title": "2026-10-02 · 烘焙器 4.0.4：每个条目都是完整资产（多层也能逐层调参）、能保存你的版本、观看距离 50–1200 m", "body": "`git pull` 后刷新烘焙器。\n\n- **多层效果**（鸿巢、青柠星、球形 A–D、永丰、片贝、万彩千轮…）：右栏「观察图层」点某一层，下面就是这一层的**完整参数**，画面一直是整朵；改了只重烘这一层。「贴图」视图看这一层的贴图和流转。独看 / 静音只影响观察。\n- **保存**：画面上方的资产栏——「版本」下拉在 AI 版和你保存的版本之间切换；「保存 / 另存为」存你的版本（这台电脑的浏览器里，按效果分）；「⋯」里可以复制你的改动（贴给我，我就知道你改了哪些参数）、导出 / 导入配方文件；「导出素材包」导出整个效果。\n- **右栏三页**：参数（默认，最上面一行有 通过 / 要改）/ 审阅（说明、检查、意见、历史）/ 工具。\n- **观看距离** 改成 50–1200 m（对数刻度，双击回 1000 m）。标准检查仍按 800–1200 m 量。"}, {"title": "2026-10-02 · 鸿巢四尺玉、青柠星的 4.0 版进待我验收；烘焙器换外观（4.0.3）", "body": "`git pull` 后刷新烘焙器。\n\n- **待我验收新增两个**（参数和你之前看过的 3.7 版一样，只换成 4.0 渲染）：鸿巢四尺玉 HK10、青柠星 QN11。导出、回放检查、标准检查全过；每层一张 64 帧、单格 512、固定取景。历史里的 HK9 / QN10 可以对照。\n- **另外 4 个迁移版**（永丰 FS10、片贝 PK9、球形D QD13、万彩千轮 ZW5）：技术检查也全过，但它们在 3.7 时本来就还没调完、没交过你，所以留在「制作中」。球形A QA19 保持暂停（QA17 的已知问题还在）。\n- **球形B ZB5**：第 1 层开花几帧过曝，曝光重算 2.087 → 1.755，本机重导中，过了就进待我验收。\n- **球形C QC11 需要你定一条规则**：外层开花闪一下、0.38 s 后星才点着，这中间本来就是黑的，导出里有 2 帧全黑，按现在「中间不许有空帧」过不了。推荐：烘焙器把这种「模拟里整段没有星在烧」的黑段并成 1 帧停住（省格子），检查按模拟判断是否真黑，不按像素，不会掩盖真错误。\n- **界面外观**（按你的浏览器草稿，第 1 步只改外观）：DF 配色；顶部一行（右上显卡型号、更新记录）；工具条全宽一行；左栏上下分组可折叠（待我验收 / 制作中 / 已通过 / 花型模板 / 历史 / 工具），56 px 缩略图、选中整圈青绿框；最下面「＋ 新建配方」和「复制我的意见」；窄窗口右栏排到画面下面。渲染、导出、参数都没动。"}, {"title": "2026-10-02 · 引菊 → 锦（尾缀3.0_A 主层）进待我验收", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 引菊 → 锦（HN2）。\n\n- **完全在烘焙器 4.0 里做的**：两层同一批星（橙引线 + 金锦），都是花型库「菊」模板的标准参数，右栏能调，能导出。\n- **按你 10-01 晚上的两条意见改了**：\n  - 金色不再往中心长：星换药后在身后留下直的金线，随星往外走一段再慢慢消散；\n  - 重力降到很小（实拍的下坠是仰拍透视），不下垂。\n- **检查**：回放检查全过，标准检查 12 项全 ✅。\n- **和实拍还差**：\n  - 实拍金线从中心附近起（仰拍透视），这里金线在外侧半段；\n  - 橙线末尾的金色小火星很细，远看几乎看不出。\n- **没经 UE 验证**：自发光倍数、BC7 串扰。素材包在本机 `analysis/local/输出/素材包/HikiNishiki`；因为烘焙器夜里升了 4.0.2，正在用当前版本参数不变重导一次（HN2E6），会覆盖同一目录。\n- **调参注意**：两层共用星的参数（种子、星数、初速、终端速度、离散、重力）要两层一起改。"}, {"title": "2026-10-02 · 本机七类素材导出与三档子模板标定预览", "body": "七类当前素材的 PC/手机版包已导出，三档标定与21个子模板参数已准备。在本轮对话可打开完整名称预览；**还没有写入BP**，新增ID暂不能播放。\n\n需要你在当前对话确认本次帧号入口约定：仓库文档要求第3通道，本机现有材质实际接第0通道，且禁止新增材质。确认后再继续实际导入与BP保存。\n\n当前素材仍有画质问题：PC回放5类通过，手机2类通过；其余有过曝、空帧或边缘警告。没有改艺术配方或验收状态，未完成UE实播测量。"}, {"title": "2026-10-02 · 4.0.2：金芒菊回到一张 4.56 s、固定取景不再抖；9 个效果迁到 4.0，旧版本进归档", "body": "`git pull` 后刷新烘焙器。\n\n- **金芒菊 JM4-40（待我验收）**：\n  - 4.56 秒放进一张 4×4×RGBA（64 帧）。\n  - 开花阶段每个 tick 一帧，之后逐级放慢到 15、10、7.5 fps。\n  - 末尾的暗火星保留，固定取景，不再一胀一缩。\n  - 本机导出、回放检查都过了。\n- **帧预算**：默认先放进一张，放不下才加张。燃烧段最慢 10 fps，淡出段最慢 7.5 fps；这是按你的实测暂定的，引擎里看过后可以再改。\n- **取景**：4.0 新建默认固定取景。Zoom 加上\"一帧停几个 tick\"会让画面一胀一缩，还能选，但旁边写明了。\n- **左栏**：\n  - 通过的效果一直留在\"已通过\"。\n  - \"历史\"按效果折叠。\n  - 待我验收里 4 个不达标的 3.7 版撤回到制作中。\n- **9 个效果迁到 4.0**（效果参数不变）：球形 A–D、青柠星、万彩千轮、鸿巢、永丰、片贝，新号 QA19、ZB5、QC11、QD13、QN11、ZW5、HK10、FS10、PK9。\n  - 鸿巢 HK10 的导出和检查已全过。\n  - 其余还在重导、修末尾一两帧空帧等小项，全过了才进\"待我验收\"。\n- **过程文件**：被取代的旧版本（147 项）搬进 `归档/过程/<效果>/`，没有删，烘焙器\"历史\"里照样能打开。"}, {"title": "2026-10-01 · 版本显示已修正为 v4.0", "body": "刷新烘焙器，页眉和浏览器标签会显示实际程序版本 v4.0。旧的「默认 3.7 · 4.0 升级中」文字已移除。新建空中花型使用 4.0，已保存的旧配方与正式库仍保留原来的兼容版本。"}, {"title": "2026-10-01 · 烘焙器 4.0 交付：新建花型默认 4.0；JM4 的 4.0 版等你验收", "body": "`git pull` 后刷新烘焙器。\n\n- **新建的空中花型都是 4.0**：单格 512（原来 256，放大后不再糊）、引擎 30 fps 下每个 tick 都换帧，帧多就自动分成几张贴图。在 30 fps 下换帧数不比 3.7 少，每个模板都有自己的固定曝光。\n- **标准检查**：左栏和审阅卡上有 ✅ / ❌ 和缺什么。19 个 4.0 模板里 18 个全过，只有「蜂」的屏幕放大是 1.03，略超 1。\n- **多层效果导出一个素材包**：每层一个发射器，延迟都写在 `cascade.json` 里，引擎里不用蓝图触发。\n- **柳、椰子在 4.0 下重调了**：柳现在是一条条垂下的金丝，椰子是 14 根下垂的弧。\n\n**待我验收**：「金芒菊 · 4.0 渲染（JM4-40）」。参数和你通过的 JM4 完全一样，只换成 4.0 渲染：火花更细更清楚，但光晕少一些，亮处偏白一点。正式库的 JM4 原样保留，你点「通过」后才替换。\n\n**在 UE 里跑一次实测包**（不急）：`spec/UE实测包/` 里有四个小测试（帧号、压缩串扰、曝光、Ramp 设置），用本机导入工具导入，看法写在 `说明.md` 里。结果告诉我，或者直接填进 `spec/UE实测.md`。\n\n还没做的：\n\n- 尾缀 V5 在 4.0 下星头没有光晕，所以 V5 继续用 3.7，没给你出候选。\n- 鸿巢、永丰、片贝等正在做的效果还是 3.7，要各自迁到 4.0 再交。\n- 所有 4.0 画面都没在 UE 里验证过。"}, {"title": "2026-10-01 · 默认恢复 3.7，4.0 继续内部验证", "body": "按最新开工要求，花型库默认画面先恢复 3.7。4.0 在开发橱窗中继续验证，全部通过不退步门槛后一次交付。当前已修正实时预览将烘焙取景当成观看镜头的问题，并接上 30 fps 取帧和多张分段。\n\n现有 22 个云端配方入口保留，暂不扩充。源码/时序检查已通过，新的 GPU 画面和浏览器实际播放耗时尚未验证；无需中途验收阶段版本，正式库未迁移。"}, {"title": "2026-10-01 · 云端新增 22 个配方可以一起预览", "body": "`git pull` 后刷新烘焙器，点左栏底部 **「云端配方预览 · 22」**。顶部下拉框可切换芯入菊、八重/三重/四重芯、金蕊青柠、金银冠和柳、四色牡丹、彩色千轮、引先、残光、多节礼花等；旁边可选整体或单层，支持连续播放、PC / 手机、游戏内大小。点「保存完整配方」可留下当前参数。原来的 3.7 / 4.0 基准对照也在同一下拉框。\n\n这是按云端总表做的**配方结构预览**，方便先看喜欢哪些结构和配色。四色牡丹当前是混色分布，多节礼花先展示开花编排；帧预算和最终素材包还在开发。打铁花、交叉环、齐闪等 11 组缺能力的项目，在上方「仍待补能力的配方」里逐项说明。\n\n标题现已明确显示 **「4.0 开发版」**，3.12 是阶段编号。正式库和旧版已通过效果未迁移。"}, {"title": "2026-10-01 · 4.0 首批光点对照橱窗（工程版本 3.11）", "body": "`git pull` 后刷新烘焙器，点左栏底部 **「4.0 对照橱窗」**。菊、牡丹、锦冠、千轮、点灭和 JM4 可左右同秒连续看；能切 PC / 手机和观察距离，F 键放大画布。V5 三档仍保留旧核，界面明确标注。\n\n新核的亮点轮廓和尾部颗粒更清楚；每个案例采用固定曝光，数值写在橱窗上方。JM4、V5 正式条目没有迁移，兼容贴图回归零差。\n\n**本次请看美术方向：右侧亮核质感、清晰度和亮度是否接近你想要的感觉。** 帧预算、少数开场过曝和特殊产物统一还在做，未经 UE 验证；不用替我查实现错误，也不是请你验收完整 4.0。"}, {"title": "2026-09-30 22:36 · 球形 A QA13 退回制作中", "body": "前段星头出现过早、尾长与参考不一致，上一轮整体自检通过结论已撤回。旧版素材保留作诊断证据；本机正在重新检查原片、头尾形成过程和核验条件。当前没有新的球形 A 候选需要用户验收。"}, {"title": "2026-09-30 22:02 · 球形 A 本机迭代版 QA13，已进「待我验收」", "body": "本机接续云端 QA12：修正末段银白点过早变暗，约 3.4 秒仍能清楚看到，随后渐暗熄灭。金尾、粉星头、运动和 Zoom 保持原版；RTX 5080 已完成两层 2K、PC + 手机素材导出，并检查同一秒对照、连续回放、局部和版本对应。\n\n刷新烘焙器，在「待我验收」打开球形 A QA13。素材在本机 `analysis/local/输出/素材包/QiuXingA_QA13_1`、`_2`；自检记录 `analysis/results/QA13E/看法.md`。UE 实机仍未验证，最终艺术效果由用户验收。\n\n\n最新的在最上面。烘焙器顶栏「更新记录」显示的就是这个文件（build 时嵌进去）。每条写：做了什么、在哪看、要你做什么。"}, {"title": "2026-09-30 15:20 · 烘焙器改成「待我验收 / 制作中 / 已通过」，流程改成 AI 自己迭代到能交付", "body": "- **左栏**：默认三个入口 **待我验收 / 制作中 / 已通过**，另有「历史」。一个效果一条（鸿巢、永丰、片贝的各层、光丝 A / B、历轮任务都收在效果详情里）。缩略图用参考里最亮的一刻，标题先写效果名。\n- **「新」只表示有新的完整候选等你验收**；你的通过 / 要改按版本记，新版本不会继承旧版本的「要改」（你截图里物理尾缀的「要改」就是这么来的）。\n- **每个效果的详情**：进度（计算 / AI 自检 / 素材导出 / 你已验收）、版本（待你验收 / 工作版 / 已通过）、方案、准备情况（实时模拟、烘焙回放、贴图素材包是「当前版本 / 已过期 / 尚未生成」；你在烘焙器里改了参数会提示素材包是改之前的）、历史版本和你当时的反馈。\n- **现在「待我验收」是空的**：按新标准，没有一个效果完成了导出和回放检查，全部在「制作中」。做完一个进一个，不用你中途看。\n- **结果回来后谁接着做**：后台脚本只计算，不判断。新增一个云端定时任务（每天 9:47 / 12:47 / 15:47 / 18:47 / 21:47），自动看回来的结果、写看法、下一轮任务；没有新结果就直接结束。可以在 claude.ai 的定时任务里暂停或删除。"}, {"title": "2026-09-30 13:32 · 球形 A 第 2 轮；C / D 的芯还在调", "body": "- **球形A（QA6）**：粉色星头能看到了，挂在金色尾巴上，结构和你核对过的原理一致。还差两处：粉色偏淡偏橙；最后一段应该是银白小光点、没有尾巴，现在还是金色带短尾。这两处在组合页里就能调。**请你审**：迭代区「球形A」整体条目。\n- **球形 C / D**：外层对了，芯还是看不见。原因是芯太稀、星点太小、太规整，看起来是一圈空心环，叠上外层就没了。已经在云端试好（芯加密、加大、实心一团，能看见了），第 3 轮 QC6 / QD6 已下发，跑完我先看。"}, {"title": "2026-09-30 13:22 · 万彩千轮原理重做", "body": "逐帧重看了两段实拍，它是**一发千轮**：大玉里装了 15 朵左右的小割玉。开花后先飞出十几个亮橙点（小割玉），0.5–1 秒里一朵一朵**陆续**开成圆的小牡丹，颜色有粉、银白淡紫、绿、红，开完几乎不再长大，挤成实心的一团。接着粉变珊瑚红、银白变金、绿变黄绿，最后整团变成橙金小点，慢慢暗掉，开花后约 3 秒没了。\n\nPW3 为什么像另一个效果：它是 30 朵小花排在一个大球面上，看起来是个**空心大圈**；没有小割玉飞出的那一段；小球太密太碎；每朵只有 16 帧，开花那一下一帧跳几十像素，所以卡。\n\n**在哪看**：迭代区最上面「万彩千轮（原理样机 · 4 色小花）」，点开就是整体（左实拍、右模拟），用的是花型库的「千轮」模板，按颜色拆成 4 层，正式库形式。**要你做**：看文档或审阅卡最后的 4 问，尤其是花簇下面那团被照亮的烟要不要做。"}, {"title": "2026-09-30 13:13 · 球形B 光丝重看", "body": "逐帧放大看了第 1 发开花后那圈光丝：是**开花药的火粉**。火粉比星飞得快，0.25 秒就烧完，沿路撒下的细火花留在空中慢慢变暗，所以看起来是星球外面挂着的一圈橙色细线：开花后 0.15 秒最密、伸到约 2 倍半径，之后线不再变长，星球长大追上来，0.9 秒前后暗掉。第 1 版做成了跟着星头一起走的短尾，所以像刺猬。\n\n**在哪看**：迭代区「球形B（两发 + 光丝）」整体条目 → 审阅卡里点「开花药火粉 · 光丝」，有实拍放大、逐帧、新旧版对照。**要你做**：核对审阅卡最后两问。"}, {"title": "2026-09-30 13:07 · 物理尾缀第 2 版（TFS / TFM / TFL），青柠星 QN6", "body": "- **物理尾缀**按你 10:19 的意见改了，还在原来三条里：\n  - 星头换成 V5 的圆光点 + 光晕，**没有小棍子了**（以前是一串沿身后排开的燃气焰，约 3 m 长）。\n  - **糊的主要原因找到了**：第 1 版火星被风吹、寿命又长，横向飘出 5–8 m，面片宽度是 V5 的 3–5 倍，同样宽的格子里每个像素要装好几倍的米数。现在宽度按 V5 重新定：小 1.3 m < 中 2.4 m < 大 6.1 m（半宽），火星半径也改成和 V5 一样细。\n  - 强中弱：火星更密、烧到快结束才暗，整条尾迹都亮；左右摆动 小 < 中 < 大，大档最长、最密、摆得最开。\n  - 审阅卡里有和 V5 同比例的全长对照、星头近景对照。\n- **青柠星 QN6**：青柠改成亮的淡黄绿，整体亮度也正常了。还差开头放射线偏成团、星点偏小，这两样在烘焙器里手调就行，先请你看大体对不对。"}];
+const UPDATES = [{"title": "2026-10-02 · 烘焙器 4.1.2：不再越播越卡、每个资产自己的尾迹外形、层轨道能拖、缩略图换渲染", "body": "`git pull` 后刷新烘焙器。\n\n- **越播越卡修好了**：实时模拟以前每帧都从 0 秒重算，越到后面越慢；现在从上一帧接着算，后段和前段一样快（画面逐位不变）。播放时钟也改成按真实时间走。\n- **尾迹外形**：不再是顶栏的全局面板。每个效果（多层时每一层）右栏都有「尾迹外形」：粗细随机、亮肩、泪滴星头，默认 0 = 原样。\n- **层轨道能拖**：每层轨道下方的白色把手是入点 / 出点，上方圆点是点火、燃烧结束、火花停等；任何一层都能直接拖，松手只重烘那一层。拖回尽头 = 自动。\n- **缩略图**：不再用实拍。本机显卡按当前配方渲染（UI8T，回来后自动换上）；之前先用对照图里的模拟图。\n- **命名**：循环层 + 粒子（升空尾缀小 / 中 / 大）也改成 `T_EFX_FireWorks_…`，三档加 `_S / _M / _L`。`cascade.json` 里每张贴图写了 UE 资产名，导入时直接用、不用再加前缀。"}, {"title": "2026-10-02 · 烘焙器 4.1.1：入点 / 出点、命名规范、全局风格、层轨道与联动、单束、流转连播", "body": "`git pull` 后刷新烘焙器。\n\n- **入点 / 出点**：时间轴下面「设为入点 / 设为出点」。帧只分给入点到出点；入点前默认用入点那一帧从小放大（也可选不显示）。引擎回放、导出都按这个。\n- **命名**：大面片素材包改成 `T_EFX_FireWorks_名称_层_4x4_01_HD.png`（手机无 `_HD`；Cut `_C`、Ramp `_R` 共用）。每个效果先起了英文名（鸿巢四尺玉 = YonshakuKamuro，层 Main / Red；引菊 → 锦 = HikiNishiki，层 Hiki / Nishiki……），交付页可以改。\n- **全局风格**：顶栏「全局风格」，尾长 / 粗细 / 散布 / 星头大小 / 亮度 / 闪烁 + 粗细随机 / 亮肩 / 泪滴。默认值时所有效果逐像素不变；默认不动已通过的效果。\n- **层轨道**：时段条上直接看到并拖每层的点火、燃烧结束、第二段、火花停（四尺玉红点何时出现、青柠星星头何时点着、引菊何时转锦都在这里）。同一批星的层改轨迹参数会自动同步。\n- **单束**：交付页可以导出某一层的单束包（每颗星一个粒子）。\n- **流转动画**：两张图会连着播。"}, {"title": "2026-10-02 · 烘焙器 4.0.6：工具条回到画面上方、修复调参黑屏", "body": "刷新正式烘焙器即可。实时模拟、引擎回放、贴图、观察大小、平台、曝光和实拍对照回到中央画面上方；顶部去掉重复的长效果路径，右上仍显示显卡和更新记录。调参时“烘焙中”提示误用了遮罩样式，已修复。离线状态回归通过；实际浏览器视觉受本机访问限制尚未验证。"}, {"title": "2026-10-02 · 烘焙器 4.0.5：交互稿剩下的部分做完", "body": "`git pull` 后刷新烘焙器。按你的浏览器交互稿：画面框（标题写明看的是哪版 / 哪层，右上 网格 · 记录当前帧 · 大画面，脚注 单格 · tick）、时间轴（±1 tick、← →、循环 / 播放一遍、开花 / 展开 / 衰减、每层时段条）、查看交付（素材包文件清单 + 导出）、检查与验收四行、通过门槛、左栏「我的版本」。和交互稿逐项对照、哪些没照搬和为什么、改进建议，写在 `协作/烟花烘焙器交互设计草稿.md` 最后一节。"}, {"title": "2026-10-02 · 烘焙器 4.0.4：每个条目都是完整资产（多层也能逐层调参）、能保存你的版本、观看距离 50–1200 m", "body": "`git pull` 后刷新烘焙器。\n\n- **多层效果**（鸿巢、青柠星、球形 A–D、永丰、片贝、万彩千轮…）：右栏「观察图层」点某一层，下面就是这一层的**完整参数**，画面一直是整朵；改了只重烘这一层。「贴图」视图看这一层的贴图和流转。独看 / 静音只影响观察。\n- **保存**：画面上方的资产栏——「版本」下拉在 AI 版和你保存的版本之间切换；「保存 / 另存为」存你的版本（这台电脑的浏览器里，按效果分）；「⋯」里可以复制你的改动（贴给我，我就知道你改了哪些参数）、导出 / 导入配方文件；「导出素材包」导出整个效果。\n- **右栏三页**：参数（默认，最上面一行有 通过 / 要改）/ 审阅（说明、检查、意见、历史）/ 工具。\n- **观看距离** 改成 50–1200 m（对数刻度，双击回 1000 m）。标准检查仍按 800–1200 m 量。"}, {"title": "2026-10-02 · 鸿巢四尺玉、青柠星的 4.0 版进待我验收；烘焙器换外观（4.0.3）", "body": "`git pull` 后刷新烘焙器。\n\n- **待我验收新增两个**（参数和你之前看过的 3.7 版一样，只换成 4.0 渲染）：鸿巢四尺玉 HK10、青柠星 QN11。导出、回放检查、标准检查全过；每层一张 64 帧、单格 512、固定取景。历史里的 HK9 / QN10 可以对照。\n- **另外 4 个迁移版**（永丰 FS10、片贝 PK9、球形D QD13、万彩千轮 ZW5）：技术检查也全过，但它们在 3.7 时本来就还没调完、没交过你，所以留在「制作中」。球形A QA19 保持暂停（QA17 的已知问题还在）。\n- **球形B ZB5**：第 1 层开花几帧过曝，曝光重算 2.087 → 1.755，本机重导中，过了就进待我验收。\n- **球形C QC11 需要你定一条规则**：外层开花闪一下、0.38 s 后星才点着，这中间本来就是黑的，导出里有 2 帧全黑，按现在「中间不许有空帧」过不了。推荐：烘焙器把这种「模拟里整段没有星在烧」的黑段并成 1 帧停住（省格子），检查按模拟判断是否真黑，不按像素，不会掩盖真错误。\n- **界面外观**（按你的浏览器草稿，第 1 步只改外观）：DF 配色；顶部一行（右上显卡型号、更新记录）；工具条全宽一行；左栏上下分组可折叠（待我验收 / 制作中 / 已通过 / 花型模板 / 历史 / 工具），56 px 缩略图、选中整圈青绿框；最下面「＋ 新建配方」和「复制我的意见」；窄窗口右栏排到画面下面。渲染、导出、参数都没动。"}, {"title": "2026-10-02 · 引菊 → 锦（尾缀3.0_A 主层）进待我验收", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 引菊 → 锦（HN2）。\n\n- **完全在烘焙器 4.0 里做的**：两层同一批星（橙引线 + 金锦），都是花型库「菊」模板的标准参数，右栏能调，能导出。\n- **按你 10-01 晚上的两条意见改了**：\n  - 金色不再往中心长：星换药后在身后留下直的金线，随星往外走一段再慢慢消散；\n  - 重力降到很小（实拍的下坠是仰拍透视），不下垂。\n- **检查**：回放检查全过，标准检查 12 项全 ✅。\n- **和实拍还差**：\n  - 实拍金线从中心附近起（仰拍透视），这里金线在外侧半段；\n  - 橙线末尾的金色小火星很细，远看几乎看不出。\n- **没经 UE 验证**：自发光倍数、BC7 串扰。素材包在本机 `analysis/local/输出/素材包/HikiNishiki`；因为烘焙器夜里升了 4.0.2，正在用当前版本参数不变重导一次（HN2E6），会覆盖同一目录。\n- **调参注意**：两层共用星的参数（种子、星数、初速、终端速度、离散、重力）要两层一起改。"}, {"title": "2026-10-02 · 本机七类素材导出与三档子模板标定预览", "body": "七类当前素材的 PC/手机版包已导出，三档标定与21个子模板参数已准备。在本轮对话可打开完整名称预览；**还没有写入BP**，新增ID暂不能播放。\n\n需要你在当前对话确认本次帧号入口约定：仓库文档要求第3通道，本机现有材质实际接第0通道，且禁止新增材质。确认后再继续实际导入与BP保存。\n\n当前素材仍有画质问题：PC回放5类通过，手机2类通过；其余有过曝、空帧或边缘警告。没有改艺术配方或验收状态，未完成UE实播测量。"}, {"title": "2026-10-02 · 4.0.2：金芒菊回到一张 4.56 s、固定取景不再抖；9 个效果迁到 4.0，旧版本进归档", "body": "`git pull` 后刷新烘焙器。\n\n- **金芒菊 JM4-40（待我验收）**：\n  - 4.56 秒放进一张 4×4×RGBA（64 帧）。\n  - 开花阶段每个 tick 一帧，之后逐级放慢到 15、10、7.5 fps。\n  - 末尾的暗火星保留，固定取景，不再一胀一缩。\n  - 本机导出、回放检查都过了。\n- **帧预算**：默认先放进一张，放不下才加张。燃烧段最慢 10 fps，淡出段最慢 7.5 fps；这是按你的实测暂定的，引擎里看过后可以再改。\n- **取景**：4.0 新建默认固定取景。Zoom 加上\"一帧停几个 tick\"会让画面一胀一缩，还能选，但旁边写明了。\n- **左栏**：\n  - 通过的效果一直留在\"已通过\"。\n  - \"历史\"按效果折叠。\n  - 待我验收里 4 个不达标的 3.7 版撤回到制作中。\n- **9 个效果迁到 4.0**（效果参数不变）：球形 A–D、青柠星、万彩千轮、鸿巢、永丰、片贝，新号 QA19、ZB5、QC11、QD13、QN11、ZW5、HK10、FS10、PK9。\n  - 鸿巢 HK10 的导出和检查已全过。\n  - 其余还在重导、修末尾一两帧空帧等小项，全过了才进\"待我验收\"。\n- **过程文件**：被取代的旧版本（147 项）搬进 `归档/过程/<效果>/`，没有删，烘焙器\"历史\"里照样能打开。"}, {"title": "2026-10-01 · 版本显示已修正为 v4.0", "body": "刷新烘焙器，页眉和浏览器标签会显示实际程序版本 v4.0。旧的「默认 3.7 · 4.0 升级中」文字已移除。新建空中花型使用 4.0，已保存的旧配方与正式库仍保留原来的兼容版本。"}, {"title": "2026-10-01 · 烘焙器 4.0 交付：新建花型默认 4.0；JM4 的 4.0 版等你验收", "body": "`git pull` 后刷新烘焙器。\n\n- **新建的空中花型都是 4.0**：单格 512（原来 256，放大后不再糊）、引擎 30 fps 下每个 tick 都换帧，帧多就自动分成几张贴图。在 30 fps 下换帧数不比 3.7 少，每个模板都有自己的固定曝光。\n- **标准检查**：左栏和审阅卡上有 ✅ / ❌ 和缺什么。19 个 4.0 模板里 18 个全过，只有「蜂」的屏幕放大是 1.03，略超 1。\n- **多层效果导出一个素材包**：每层一个发射器，延迟都写在 `cascade.json` 里，引擎里不用蓝图触发。\n- **柳、椰子在 4.0 下重调了**：柳现在是一条条垂下的金丝，椰子是 14 根下垂的弧。\n\n**待我验收**：「金芒菊 · 4.0 渲染（JM4-40）」。参数和你通过的 JM4 完全一样，只换成 4.0 渲染：火花更细更清楚，但光晕少一些，亮处偏白一点。正式库的 JM4 原样保留，你点「通过」后才替换。\n\n**在 UE 里跑一次实测包**（不急）：`spec/UE实测包/` 里有四个小测试（帧号、压缩串扰、曝光、Ramp 设置），用本机导入工具导入，看法写在 `说明.md` 里。结果告诉我，或者直接填进 `spec/UE实测.md`。\n\n还没做的：\n\n- 尾缀 V5 在 4.0 下星头没有光晕，所以 V5 继续用 3.7，没给你出候选。\n- 鸿巢、永丰、片贝等正在做的效果还是 3.7，要各自迁到 4.0 再交。\n- 所有 4.0 画面都没在 UE 里验证过。"}, {"title": "2026-10-01 · 默认恢复 3.7，4.0 继续内部验证", "body": "按最新开工要求，花型库默认画面先恢复 3.7。4.0 在开发橱窗中继续验证，全部通过不退步门槛后一次交付。当前已修正实时预览将烘焙取景当成观看镜头的问题，并接上 30 fps 取帧和多张分段。\n\n现有 22 个云端配方入口保留，暂不扩充。源码/时序检查已通过，新的 GPU 画面和浏览器实际播放耗时尚未验证；无需中途验收阶段版本，正式库未迁移。"}, {"title": "2026-10-01 · 云端新增 22 个配方可以一起预览", "body": "`git pull` 后刷新烘焙器，点左栏底部 **「云端配方预览 · 22」**。顶部下拉框可切换芯入菊、八重/三重/四重芯、金蕊青柠、金银冠和柳、四色牡丹、彩色千轮、引先、残光、多节礼花等；旁边可选整体或单层，支持连续播放、PC / 手机、游戏内大小。点「保存完整配方」可留下当前参数。原来的 3.7 / 4.0 基准对照也在同一下拉框。\n\n这是按云端总表做的**配方结构预览**，方便先看喜欢哪些结构和配色。四色牡丹当前是混色分布，多节礼花先展示开花编排；帧预算和最终素材包还在开发。打铁花、交叉环、齐闪等 11 组缺能力的项目，在上方「仍待补能力的配方」里逐项说明。\n\n标题现已明确显示 **「4.0 开发版」**，3.12 是阶段编号。正式库和旧版已通过效果未迁移。"}, {"title": "2026-10-01 · 4.0 首批光点对照橱窗（工程版本 3.11）", "body": "`git pull` 后刷新烘焙器，点左栏底部 **「4.0 对照橱窗」**。菊、牡丹、锦冠、千轮、点灭和 JM4 可左右同秒连续看；能切 PC / 手机和观察距离，F 键放大画布。V5 三档仍保留旧核，界面明确标注。\n\n新核的亮点轮廓和尾部颗粒更清楚；每个案例采用固定曝光，数值写在橱窗上方。JM4、V5 正式条目没有迁移，兼容贴图回归零差。\n\n**本次请看美术方向：右侧亮核质感、清晰度和亮度是否接近你想要的感觉。** 帧预算、少数开场过曝和特殊产物统一还在做，未经 UE 验证；不用替我查实现错误，也不是请你验收完整 4.0。"}, {"title": "2026-09-30 22:36 · 球形 A QA13 退回制作中", "body": "前段星头出现过早、尾长与参考不一致，上一轮整体自检通过结论已撤回。旧版素材保留作诊断证据；本机正在重新检查原片、头尾形成过程和核验条件。当前没有新的球形 A 候选需要用户验收。"}, {"title": "2026-09-30 22:02 · 球形 A 本机迭代版 QA13，已进「待我验收」", "body": "本机接续云端 QA12：修正末段银白点过早变暗，约 3.4 秒仍能清楚看到，随后渐暗熄灭。金尾、粉星头、运动和 Zoom 保持原版；RTX 5080 已完成两层 2K、PC + 手机素材导出，并检查同一秒对照、连续回放、局部和版本对应。\n\n刷新烘焙器，在「待我验收」打开球形 A QA13。素材在本机 `analysis/local/输出/素材包/QiuXingA_QA13_1`、`_2`；自检记录 `analysis/results/QA13E/看法.md`。UE 实机仍未验证，最终艺术效果由用户验收。\n\n\n最新的在最上面。烘焙器顶栏「更新记录」显示的就是这个文件（build 时嵌进去）。每条写：做了什么、在哪看、要你做什么。"}, {"title": "2026-09-30 15:20 · 烘焙器改成「待我验收 / 制作中 / 已通过」，流程改成 AI 自己迭代到能交付", "body": "- **左栏**：默认三个入口 **待我验收 / 制作中 / 已通过**，另有「历史」。一个效果一条（鸿巢、永丰、片贝的各层、光丝 A / B、历轮任务都收在效果详情里）。缩略图用参考里最亮的一刻，标题先写效果名。\n- **「新」只表示有新的完整候选等你验收**；你的通过 / 要改按版本记，新版本不会继承旧版本的「要改」（你截图里物理尾缀的「要改」就是这么来的）。\n- **每个效果的详情**：进度（计算 / AI 自检 / 素材导出 / 你已验收）、版本（待你验收 / 工作版 / 已通过）、方案、准备情况（实时模拟、烘焙回放、贴图素材包是「当前版本 / 已过期 / 尚未生成」；你在烘焙器里改了参数会提示素材包是改之前的）、历史版本和你当时的反馈。\n- **现在「待我验收」是空的**：按新标准，没有一个效果完成了导出和回放检查，全部在「制作中」。做完一个进一个，不用你中途看。\n- **结果回来后谁接着做**：后台脚本只计算，不判断。新增一个云端定时任务（每天 9:47 / 12:47 / 15:47 / 18:47 / 21:47），自动看回来的结果、写看法、下一轮任务；没有新结果就直接结束。可以在 claude.ai 的定时任务里暂停或删除。"}, {"title": "2026-09-30 13:32 · 球形 A 第 2 轮；C / D 的芯还在调", "body": "- **球形A（QA6）**：粉色星头能看到了，挂在金色尾巴上，结构和你核对过的原理一致。还差两处：粉色偏淡偏橙；最后一段应该是银白小光点、没有尾巴，现在还是金色带短尾。这两处在组合页里就能调。**请你审**：迭代区「球形A」整体条目。\n- **球形 C / D**：外层对了，芯还是看不见。原因是芯太稀、星点太小、太规整，看起来是一圈空心环，叠上外层就没了。已经在云端试好（芯加密、加大、实心一团，能看见了），第 3 轮 QC6 / QD6 已下发，跑完我先看。"}, {"title": "2026-09-30 13:22 · 万彩千轮原理重做", "body": "逐帧重看了两段实拍，它是**一发千轮**：大玉里装了 15 朵左右的小割玉。开花后先飞出十几个亮橙点（小割玉），0.5–1 秒里一朵一朵**陆续**开成圆的小牡丹，颜色有粉、银白淡紫、绿、红，开完几乎不再长大，挤成实心的一团。接着粉变珊瑚红、银白变金、绿变黄绿，最后整团变成橙金小点，慢慢暗掉，开花后约 3 秒没了。\n\nPW3 为什么像另一个效果：它是 30 朵小花排在一个大球面上，看起来是个**空心大圈**；没有小割玉飞出的那一段；小球太密太碎；每朵只有 16 帧，开花那一下一帧跳几十像素，所以卡。\n\n**在哪看**：迭代区最上面「万彩千轮（原理样机 · 4 色小花）」，点开就是整体（左实拍、右模拟），用的是花型库的「千轮」模板，按颜色拆成 4 层，正式库形式。**要你做**：看文档或审阅卡最后的 4 问，尤其是花簇下面那团被照亮的烟要不要做。"}, {"title": "2026-09-30 13:13 · 球形B 光丝重看", "body": "逐帧放大看了第 1 发开花后那圈光丝：是**开花药的火粉**。火粉比星飞得快，0.25 秒就烧完，沿路撒下的细火花留在空中慢慢变暗，所以看起来是星球外面挂着的一圈橙色细线：开花后 0.15 秒最密、伸到约 2 倍半径，之后线不再变长，星球长大追上来，0.9 秒前后暗掉。第 1 版做成了跟着星头一起走的短尾，所以像刺猬。\n\n**在哪看**：迭代区「球形B（两发 + 光丝）」整体条目 → 审阅卡里点「开花药火粉 · 光丝」，有实拍放大、逐帧、新旧版对照。**要你做**：核对审阅卡最后两问。"}];
 // =====================================================================
 //  工具
 // =====================================================================
@@ -1076,8 +1075,10 @@ function hexToLin(h) {
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(c => { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); });
 }
 function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+// 状态放在对象上（不放闭包里），模拟才能做快照（实时模拟倒回时从快照接着算，不从 0 重算；4.1.2）。序列和 mulberry32 逐位相同。
 class RNG {
-  constructor(seed) { this.r = mulberry32((Math.imul(seed | 0, 2654435761) ^ 0x9E3779B9) >>> 0); this.spare = null; for (let i = 0; i < 8; i++) this.r(); }
+  constructor(seed) { this.a = (Math.imul(seed | 0, 2654435761) ^ 0x9E3779B9) >>> 0; this.spare = null; for (let i = 0; i < 8; i++) this.r(); }
+  r() { const a = this.a = (this.a | 0) + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
   u() { return this.r(); }
   n() {
     if (this.spare !== null) { const s = this.spare; this.spare = null; return s; }
@@ -1106,8 +1107,6 @@ function fibDirs(n, rng, R, jitDeg) {
   return out;
 }
 function randUnit(rng) { const x = rng.n(), y = rng.n(), z = rng.n(), l = Math.hypot(x, y, z) || 1; return [x / l, y / l, z / l]; }
-// 全局风格层（62_style.js）：离线检查只加载部分源码时没有 styledP，就原样返回
-function styled(P) { return typeof styledP === 'function' ? styledP(P) : P; }
 // 画质：烘焙的空间超采样、快门子样本、光点像素覆盖积分、亮核（移植自 Codex 的 Ultra 实验，origin/ultra 04fce8f）
 // 默认值 = 3.7 原来的做法（2×2 超采样、300 Hz 快门、高斯中心取样），所以正式库、V5 尾缀等已认可的东西不变；
 // 新条目按需把参数调到「精细」档（4×4、960 Hz、覆盖积分、亮核 25%）。参数跟着配方 / 导出 JSON 走。
@@ -1132,7 +1131,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.1.1';
+const VERSION = '4.1.2';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -1176,7 +1175,7 @@ const BASE = {
   // 星效果
   ignDelay: 0, ignJit: 10, ignSeed: 0, keepFrac: 1, afterBurn: 0, afterJit: 15, headDim: 1, headDimUntil: 0,
   emberFrac: 0, emberLife: 3, emberBright: 0.1, emberFollow: 0, emberSize: 1, emberAll: 0, emberEnd: 0,
-  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, cutIn: 0, cutOut: 0, preRoll: 1, preFrom: -1, visTo: 0, preScale0: 0, prePivot: 0, expoMode: 'sheet', expoQ: 0.7, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
+  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, tailJit: 0, tailShoulder: 0, headTear: 0, cutIn: 0, cutOut: 0, preRoll: 1, preFrom: -1, visTo: 0, preScale0: 0, prePivot: 0, expoMode: 'sheet', expoQ: 0.7, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
   strobeHz: 0, strobeDuty: 0.35, strobeStart: 0.4, glitter: 0, glitterDelay: 0.25,
   crackle: 0, crackleDelay: 0.3, branch: 0, branchAt: 0.45, flutter: 0, flutterHz: 0.7,
   // 上升
@@ -1484,6 +1483,11 @@ const SCHEMA = [
     ['emberEnd', '光丝整体熄灭时刻（受光烟迹：星转点灭、色光变弱后烟迹一起暗掉，0 关）', 's', 0, 10, 0.05, P => P.emberFrac > 0],
     ['emberAll', '余烬贯穿整个燃烧期（1 = 不受「火花只在前几秒」限制：外层引き火花先停，光丝一直跟到星头）', '', 0, 1, 1, P => P.emberFrac > 0],
     ['twinkle', '火花闪烁', '', 0, 1, 0.01]
+  ] },
+  { sec: '尾迹外形', show: P => isSeq(P) && familyOf(P.type) === 'aerial', hint: '每个效果（多层时每一层）自己的外形量，0 = 原样，不影响别的效果。尾长、尾缀粗细、星头大小、亮度、闪烁就是上面的「火花寿命」「尾缀粗细（散布）」「颗粒大小」「炭头大小」「火花亮度」「火花闪烁」。', items: [
+    ['tailJit', '粗细随机（星与星、火花与火花之间的粗细差别）', '', 0, 1, 0.01],
+    ['tailShoulder', '亮肩（正：靠近星头的火花更大更亮、尾端更细更暗；负：反过来）', '', -1, 1, 0.01],
+    ['headTear', '泪滴星头（沿运动方向拉出尖尾，速度越快越长）', '', 0, 1, 0.01]
   ] },
   { sec: '千轮 / 分裂', show: P => P.type === 'senrin' || P.type === 'crossette', items: [
     { sel: 'subPattern', label: '子星排布', options: [['sphere', '小球（千轮）'], ['cross', '十字（分裂）']] },
@@ -2198,8 +2202,8 @@ class Sim {
       const I = this.headI(s); if (I <= 0) continue;
       const sz = P.headSize * (s.kind === 1 || s.kind === 6 ? 0.8 : 1);
       push(bufH, nh++, s.x, s.y, I, sz);
-      // 全局风格「泪滴星头」：沿运动反方向补几个越来越小、越来越暗的点，速度越快拉得越长（默认 0 不进来）
-      if (P._styTear > 0 && nh < capH - 5) { const v = Math.hypot(s.vx, s.vy); if (v > 0.5) { const ux = -s.vx / v, uy = -s.vy / v, len = P._styTear * (sz * 2 + v * 0.025);
+      // 尾迹外形「泪滴星头」（headTear）：沿运动反方向补几个越来越小、越来越暗的点，速度越快拉得越长（默认 0 不进来）
+      if (P.headTear > 0 && nh < capH - 5) { const v = Math.hypot(s.vx, s.vy); if (v > 0.5) { const ux = -s.vx / v, uy = -s.vy / v, len = P.headTear * (sz * 2 + v * 0.025);
         for (let k = 1; k <= 4; k++) { const f = k / 4; push(bufH, nh++, s.x + ux * len * f, s.y + uy * len * f, I * (1 - 0.75 * f), sz * (1 - 0.7 * f)); } } }
       if (refl > 0 && s.y > 0) push(bufH, nh++, s.x + ripple(s.y, this.t), -s.y, I * refl * Math.exp(-s.y / 400), sz * 1.3);
     }
@@ -2228,6 +2232,25 @@ class Sim {
     }
     return [nh, nt];
   }
+  // 快照（4.1.2）：深拷贝全部会变的状态（星、随机数、闪光、事件），P、湍流模态只读共用。
+  // 实时模拟相邻两帧的快门窗口重叠，要回到上一帧窗口起点附近：从快照接着算，结果和从 0 算逐位相同。
+  // CPU 火花引擎（几十万粒火花的数组）不做快照，照旧从头算。
+  snapshot() {
+    if (!this.noSparks) return null;
+    const memo = new Map([[this.P, this.P]]); if (this.tm) memo.set(this.tm, this.tm);
+    return simClone(this, memo);
+  }
+}
+// 把 src 的状态整个换进 sim（保持对象身份；快照之后才出现的字段删掉，不留「未来」的值）
+function simRestore(sim, src) { for (const k of Object.keys(sim)) if (!(k in src)) delete sim[k]; Object.assign(sim, src); }
+function simClone(o, memo) {
+  if (o === null || typeof o !== 'object') return o;
+  let c = memo.get(o); if (c) return c;
+  if (ArrayBuffer.isView(o)) { c = o.slice(); memo.set(o, c); return c; }
+  if (Array.isArray(o)) { c = new Array(o.length); memo.set(o, c); for (let i = 0; i < o.length; i++) c[i] = simClone(o[i], memo); return c; }
+  c = Object.create(Object.getPrototypeOf(o)); memo.set(o, c);
+  for (const k of Object.keys(o)) c[k] = simClone(o[k], memo);
+  return c;
 }
 // 水面倒影的横向抖动（波纹）
 function ripple(y, t) { return 0.012 * y * Math.sin(0.35 * y + 7 * t) + 0.3 * Math.sin(1.7 * y + 3 * t); }
@@ -2648,7 +2671,7 @@ precision highp float; precision highp int; precision highp sampler2D;
 uniform sampler2D uPos, uVel, uInfo;
 uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw, uBr;
 uniform float uInh, uSpread, uLife, uLifeEnd, uLifeJit, uK, uG, uT0, uCool, uTwk, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
-uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uStyJit, uStyShoulder;
+uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShoulder;
 uniform vec4 uTm[3]; uniform float uTa[3];
 uniform vec4 uView, uXf; uniform float uPPM, uPPMY, uMax, uUseXf;
 out float vI; out vec2 vSig; out float vPS;
@@ -2702,9 +2725,9 @@ void main(){
   I*=(1.+uTwk*(2.*hsh(u2,uint(uTw)*16u+13u)-1.))*uBright*.6;
   if(uMir>.5){ if(p.y<0.){ cull(); return; }
     if(uMir>1.5){ p.x+=.012*p.y*sin(.35*p.y+7.*uT)+.3*sin(1.7*p.y+3.*uT); I*=uRefl*exp(-p.y/400.); p.y=-p.y; size*=1.3; } }
-  // 全局风格层（62_style.js）：粗细随机 = 每颗星一个粗细倍数 × 每粒火花一点抖动；亮肩 = 新火花大而亮、老火花细而暗。默认 0 时不进分支，结果不变
-  if(uStyJit>0.){ size*=exp(uStyJit*.35*gss(uid,61u))*max(.15,1.+uStyJit*1.2*(hsh(uint(s),62u)-.5)); }
-  if(uStyShoulder!=0. && c==0){ float sh=uStyShoulder*(.8-1.6*clamp(age/life,0.,1.)); size*=max(.1,1.+sh); I*=max(.15,1.+.6*sh); }
+  // 尾迹外形（每个效果自己的参数 tailJit / tailShoulder）：粗细随机 = 每颗星一个粗细倍数 × 每粒火花一点抖动；亮肩 = 新火花大而亮、老火花细而暗。默认 0 时不进分支，结果不变
+  if(uTailJit>0.){ size*=exp(uTailJit*.35*gss(uid,61u))*max(.15,1.+uTailJit*1.2*(hsh(uint(s),62u)-.5)); }
+  if(uShoulder!=0. && c==0){ float sh=uShoulder*(.8-1.6*clamp(age/life,0.,1.)); size*=max(.1,1.+sh); I*=max(.15,1.+.6*sh); }
   vec2 q=p.xy; if(uUseXf>.5){ vec2 d=q-uXf.xy; q=vec2(d.x*uXf.z-d.y*uXf.w, d.x*uXf.w+d.y*uXf.z); }
   emitPt(q,I,size);
 }`;
@@ -2890,7 +2913,7 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   gl.uniform1f(pr.u.uGlit, P.glitter || 0); gl.uniform1f(pr.u.uGlitD, P.glitterDelay || 0.25);
   gl.uniform1f(pr.u.uEmb, P.emberFrac || 0); gl.uniform1f(pr.u.uEmbL, P.emberLife || 3); gl.uniform1f(pr.u.uEmbB, P.emberBright || 0.1); gl.uniform1f(pr.u.uEmbF, P.emberFollow || 0); gl.uniform1f(pr.u.uEmbS, P.emberSize || 1);
   gl.uniform1f(pr.u.uEmbE, P.emberEnd || 0); gl.uniform1f(pr.u.uHotStop, P.emberFrac > 0 && P.emberAll && P.sparkStop > 0 ? P.sparkStop : 0);
-  if (pr.u.uStyJit) gl.uniform1f(pr.u.uStyJit, P._styJit || 0); if (pr.u.uStyShoulder) gl.uniform1f(pr.u.uStyShoulder, P._styShoulder || 0);
+  if (pr.u.uTailJit) gl.uniform1f(pr.u.uTailJit, +P.tailJit || 0); if (pr.u.uShoulder) gl.uniform1f(pr.u.uShoulder, +P.tailShoulder || 0);
   const br = Math.round(P.branch || 0); gl.uniform1i(pr.u.uBr, br); gl.uniform1f(pr.u.uBrAt, P.branchAt || 0.5);
   setAirUniforms(pr, P);
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
@@ -4191,6 +4214,7 @@ function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm) {
   const count = clamp(Math.ceil(width * q.hz), 1, q.maxSub);
   const oldPPMY = PPMY; PPMY = ppmY; setParticleProfile(P);
   R.subW = width / count;
+  if (R.frameStart && !pl.loop) R.frameStart(Math.max(0, a + .5 * width / count));
   try {
     for (let j=0;j<count;j++) {
       const ts = a + (j+.5)*width/count;
@@ -4263,7 +4287,7 @@ function liveRenderer40(slot,P) {
   return slot.R40;
 }
 function renderLive40() {
-  const P=styled(state.P), slot=liveSlot('A40'); prepSlot(slot,P,state.gen);
+  const P=state.P, slot=liveSlot('A40'); prepSlot(slot,P,state.gen);
   const R=liveRenderer40(slot,P), b=previewBake();
   const pl=b && state.bakeGen===state.gen && ['master','segments','loop'].includes(b.form) ? segAt(b,state.t).meta : slot.plan40;
   const q=qualityOf(P), L=state.platform==='mobile' && !b?layoutOf(mobileParams(P)):pl.L;
@@ -4448,7 +4472,12 @@ function makeRenderer(P, kind) {
     };
   }
   const sim = new Sim(P), track = gpu ? buildTrack(P) : null, unit = kind === 'unit';
-  let lastTs = -Infinity;
+  let lastTs = -Infinity, snap = null;
+  // 倒回到 ts 之前：有早于 ts 的快照就从快照接着算，否则从 0 重算（4.1.2：以前每次都从 0，越播越卡）
+  const rewind = ts => {
+    if (snap && snap.t < ts - 1e-9) simRestore(sim, snap); else simRestore(sim, new Sim(P));
+    snap = null; lastTs = -Infinity;   // 快照交给模拟继续用（不再复制一份）；frameStart 会在新位置再存
+  };
   const R = {
     sim, track, slots: track ? track.total : 0,
     xfAt() {
@@ -4459,7 +4488,7 @@ function makeRenderer(P, kind) {
     draw(ts, view, ppm, w, tw) {
       setParticleProfile(P);
       // 按「请求的时刻」判断回退：1/480 s 的物理步可能略超过请求时刻，快门子样本超过 480 Hz 时不能因此每次都从头重算（Ultra 修正）
-      if (ts < lastTs - 1e-6) { R.reset(); }
+      if (ts < lastTs - 1e-6) rewind(ts);
       lastTs = ts;
       while (sim.t < ts - 1e-9) sim.step(H_STEP);
       const [nh, nt] = sim.gather(bufH, bufT), xf = unit ? R.xfAt() : null;
@@ -4469,10 +4498,17 @@ function makeRenderer(P, kind) {
       else drawPoints(bufT, nt, view, ppm, [0, 1, 0, 0], w, xf);
       return l;
     },
-    reset() { R.sim = new Sim(P); }, dispose() { disposeTrack(track); }
+    // 一帧的快门窗口从 a 开始（之后的请求都 ≥ a）：先倒回（如果需要），再走到 a 之前最后一步、存快照。
+    // 下一帧窗口和这一帧重叠时，从这个快照接着算，只多算一个窗口的长度。
+    frameStart(a) {
+      if (a < lastTs - 1e-6) rewind(a);
+      let n = 0; while (sim.t + H_STEP < a - 1e-9) { sim.step(H_STEP); n++; }
+      if ((n || !snap) && sim.t < a - 1e-9) snap = sim.snapshot();
+    },
+    dispose() { disposeTrack(track); }
   };
   // reset 需要替换闭包里的 sim
-  R.reset = () => { const s2 = new Sim(P); Object.assign(sim, s2); lastTs = -Infinity; };
+  R.reset = () => { simRestore(sim, new Sim(P)); snap = null; lastTs = -Infinity; };
   return R;
 }
 
@@ -4928,7 +4964,6 @@ function bakeKind(P) {
 }
 function unitAllowed(P) { return familyOf(P.type) === 'aerial' && !['senrin', 'crossette', 'hachi'].includes(P.type) && (P.pattern === 'sphere' || P.pattern === 'half'); }
 async function bake(P, scale, onProg) {
-  P = styled(P);                                      // 全局风格层（默认值时原样返回）
   if (P.zoom === 'tight') P = { ...P, zoom: 'on' };   // 紧凑取景已禁用（引擎里会抖）
   P = { ...P };
   switch (bakeKind(P)) {
@@ -5227,7 +5262,7 @@ async function exportMaster() {
     files.push(...await platformFiles(name, b, state.M,p=>busy(true,'手机独立烘焙…',p)));
     busy(true, '打包 ZIP…', 1);
     let zipName = name, out = files;
-    if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); zipName = nm.base; }
+    if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); zipName = nm.base; }
     download(await makeZip(out), `${zipName}.zip`);
     recordVersion('导出 ' + name);
     flash('已导出 ' + name);
@@ -5264,14 +5299,18 @@ async function exportVariants() {
 //    Ramp        T_EFX_FireWorks_<名称>[_<层>]_R.png                    PC / 手机共用
 //  <名称> = 这朵礼花的英文名（协作/状态清单.json 的「英文名」，交付页可改）；<层> = 多层时每层的英文名（Main / Red …，「层英文名」）；
 //  <序号> = 第几张贴图（一层分两张就是 01、02）。帧号测试图只用来排查，放进 _检查/ 子目录，不导入。
-//  烘焙器内部仍按旧名生成，打包前统一换名（cascade.json 里的贴图引用一起换），升空尾缀 V5 / 单束等其它产物照旧。
+//  烘焙器内部仍按旧名生成，打包前统一换名（cascade.json 里的贴图引用一起换，textures[].asset = UE 资产名）。
+//  循环层 + 粒子（emitset）：两张序列按层名 Loop / Fade（T_EFX_FireWorks_<名称>_Loop_16x1_01_HD）。升空尾缀 V5 / 单束等其它产物照旧。
 // =====================================================================
 const FW_TEX_PREFIX = 'T_EFX_FireWorks_';
 const asciiName = s => String(s == null ? '' : s).replace(/[^A-Za-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
 // 名称来源：你在交付页改的（这台电脑的浏览器，按效果记）→ 状态清单的英文名 → 内部名
-function packNamesFor(key, ef, nLayers, fallback) {
+// type：这一包的花型。升空尾缀小 / 中 / 大（tailS / M / L）是同一个效果的三档，名字后面加 _S / _M / _L，引擎里不重名
+const FW_SIZE_SFX = { tailS: 'S', tailM: 'M', tailL: 'L' };
+function packNamesFor(key, ef, nLayers, fallback, type) {
   const o = (store.get('packNames', {})[key]) || {};
-  const base = asciiName(o.base) || asciiName(ef && ef.英文名) || asciiName(fallback) || 'Firework';
+  let base = asciiName(o.base) || asciiName(ef && ef.英文名) || asciiName(fallback) || 'Firework';
+  const sz = FW_SIZE_SFX[type]; if (sz) base = base.replace(/_[SML]$/, '') + '_' + sz;
   const layers = Array.from({ length: nLayers }, (_, i) => asciiName((o.layers || [])[i]) || asciiName(((ef && ef.层英文名) || [])[i]) || (nLayers > 1 ? 'L' + (i + 1) : ''));
   return { base, layers, custom: !!(o.base || (o.layers || []).some(Boolean)) };
 }
@@ -5284,20 +5323,25 @@ function fwTexName(base, layer, L, sheet, kind, mobile) {
   if (kind === 'FrameTest') return `_检查/${stem}_${g}_${nn}_FrameTest`;
   return `${stem}_${g}_${nn}${kind === 'Head' || kind === 'Tail' ? '_' + kind : ''}${mobile ? '' : '_HD'}`;
 }
-// 只给大面片（master / segments）换名
-const namingApplies = b => b && (b.form === 'master' || b.form === 'segments');
+// 大面片（master / segments）和循环层 + 粒子（emitset，用户 2026-10-02 14:46「改一下」）换名；尾缀 V5、单束等照旧
+const namingApplies = b => b && (b.form === 'master' || b.form === 'segments' || b.form === 'emitset');
+// 一个烘焙在包里的每张序列：[内部段名, 格子, 名字里加的部分, 序号]。emitset 的循环 / 消散两张按「层」Loop / Fade 命名
+function namingSheets(b) {
+  if (b.form === 'emitset') return [['Loop', b.meta.L, 'Loop', 1], ['Fade', b.fades[0].meta.L, 'Fade', 1]];
+  return bakeParts(b).map((s, k) => [bakeSegmentName(b, k), s.meta.L, '', k + 1]);
+}
 // entries：[{ ln, mn, b, layer }]：内部 PC 名、内部手机名、这一层的烘焙、层英文名
 function applyPackNaming(files, base, entries) {
   const map = new Map(), drop = new Set();
   for (const { ln, mn, b, layer } of entries) {
-    bakeParts(b).forEach((s, k) => {
-      const seg = bakeSegmentName(b, k), L = s.meta.L, n = k + 1, c = fwTexName(base, layer, L, n, 'C') + '.png';
-      map.set(TN(ln, seg) + '.png', fwTexName(base, layer, L, n, 'tex', false) + '.png');
-      map.set(TN(mn, seg) + '.png', fwTexName(base, layer, L, n, 'tex', true) + '.png');
-      for (const ht of ['Head', 'Tail']) { map.set(TN(ln, joinPart(seg, ht)) + '.png', fwTexName(base, layer, L, n, ht, false) + '.png'); map.set(TN(mn, joinPart(seg, ht)) + '.png', fwTexName(base, layer, L, n, ht, true) + '.png'); }
+    for (const [seg, L, sub, n] of namingSheets(b)) {
+      const ly = joinPart(layer, sub), c = fwTexName(base, ly, L, n, 'C') + '.png';
+      map.set(TN(ln, seg) + '.png', fwTexName(base, ly, L, n, 'tex', false) + '.png');
+      map.set(TN(mn, seg) + '.png', fwTexName(base, ly, L, n, 'tex', true) + '.png');
+      for (const ht of ['Head', 'Tail']) { map.set(TN(ln, joinPart(seg, ht)) + '.png', fwTexName(base, ly, L, n, ht, false) + '.png'); map.set(TN(mn, joinPart(seg, ht)) + '.png', fwTexName(base, ly, L, n, ht, true) + '.png'); }
       map.set(TN(ln, joinPart(seg, 'Cutout')) + '.png', c); map.set(TN(mn, joinPart(seg, 'Cutout')) + '.png', c); drop.add(TN(mn, joinPart(seg, 'Cutout')) + '.png');
-      map.set(TN(ln, joinPart(seg, 'FrameTest')) + '.png', fwTexName(base, layer, L, n, 'FrameTest') + '.png'); drop.add(TN(mn, joinPart(seg, 'FrameTest')) + '.png');
-    });
+      map.set(TN(ln, joinPart(seg, 'FrameTest')) + '.png', fwTexName(base, ly, L, n, 'FrameTest') + '.png'); drop.add(TN(mn, joinPart(seg, 'FrameTest')) + '.png');
+    }
     const r = fwTexName(base, layer, null, 0, 'R') + '.png';
     map.set(TN(ln, 'Ramp') + '.png', r); map.set(TN(mn, 'Ramp') + '.png', r); drop.add(TN(mn, 'Ramp') + '.png');
   }
@@ -5306,8 +5350,9 @@ function applyPackNaming(files, base, entries) {
     if (drop.has(f)) continue;
     if (/^cascade(_mobile)?\.json$/.test(f)) {
       const j = JSON.parse(dec.decode(d));
-      for (const t of Object.values(j.textures || {})) if (t && t.file && map.has(t.file)) t.file = map.get(t.file);
-      j.naming = { rule: 'T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用', base };
+      for (const t of Object.values(j.textures || {})) if (t && t.file) { if (map.has(t.file)) t.file = map.get(t.file); t.asset = t.file.replace(/^.*\//, '').replace(/\.png$/i, ''); }
+      // 导入器直接用 textures[].asset 当 UE 资产名（已含 T_EFX_FireWorks_ 前缀、_HD 等后缀），不要再加前缀（spec/cascade_params_v1.md 第 1.1 节）
+      j.naming = { rule: 'T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用', base, layers: entries.map(x => x.layer || ''), asset_names: 'textures[].asset', prefix_included: true };
       out.push([f, utf8(JSON.stringify(j, null, 1))]); continue;
     }
     const nf = map.get(f) || f; if (seen.has(nf)) continue; seen.add(nf); out.push([nf, d]);
@@ -5315,86 +5360,6 @@ function applyPackNaming(files, base, entries) {
   const pairs = [...map].filter(([a]) => files.some(([f]) => f === a) && !drop.has(a));
   out.push(['命名对照.txt', utf8('烘焙器内部名 → 素材包里的名字（用户 2026-10-02 定的规范）\n' + pairs.map(([a, b]) => `${a} → ${b}`).join('\n') + '\n')]);
   return out;
-}
-// =====================================================================
-//  全局风格层（用户 2026-10-02 13:26：「如果不会改坏就出全局，留参数接口给我，我来调」）
-//  叠在每个效果自己的参数上：倍数（尾长、尾缀粗细、散布、星头大小、火花亮度、闪烁）+ 三个外形量（粗细随机、亮肩、泪滴星头）。
-//  · 全部是默认值（倍数 1、外形 0）时返回原对象，烘焙、实时模拟、导出逐像素不变——这是「不会改坏」的保证（回归检查比对）。
-//  · 默认不作用于已通过的效果（正式库、已通过版），开关在风格面板里。
-//  · 存在这台电脑的浏览器里（localStorage「globalStyle」）；本机显卡的导出任务不读它，AI 的导出不受影响。「复制风格参数」发给 AI 可以写进项目。
-// =====================================================================
-const STYLE_DEF = [
-  ['tailLen', '尾长', '×', 0.3, 3, 0.01, 1, '火花寿命 × 这个数：尾巴整体变长 / 变短'],
-  ['tailWidth', '尾缀粗细', '×', 0.3, 3, 0.01, 1, '每粒火花的大小 × 这个数'],
-  ['tailSpread', '尾缀散布', '×', 0.3, 3, 0.01, 1, '火花离开星体时的随机速度 × 这个数：尾巴变宽、变松散'],
-  ['headSize', '星头大小', '×', 0.3, 3, 0.01, 1, '星头亮核直径 × 这个数'],
-  ['sparkBright', '火花亮度', '×', 0.3, 3, 0.01, 1, '尾缀火花亮度 × 这个数'],
-  ['twinkle', '闪烁', '×', 0, 3, 0.01, 1, '火花明暗闪动 × 这个数'],
-  ['widthJit', '粗细随机', '', 0, 1, 0.01, 0, '0 = 每颗星的尾巴一样粗；越大，星与星、火花与火花之间粗细差别越明显'],
-  ['shoulder', '亮肩（头宽尾细）', '', -1, 1, 0.01, 0, '正值：靠近星头的新火花更大更亮，尾巴末端更细更暗；负值反过来'],
-  ['tear', '泪滴星头', '', 0, 1, 0.01, 0, '0 = 圆点；越大，星头沿运动方向拉出越长的尖尾（速度越快越长）']
-];
-const STYLE_NEUTRAL = Object.fromEntries(STYLE_DEF.map(d => [d[0], d[6]]));
-const gStyle = { v: { ...STYLE_NEUTRAL }, approved: false, rev: 0, cache: new Map() };
-function loadStyle() { try { const s = store.get('globalStyle', null); if (s) { gStyle.v = { ...STYLE_NEUTRAL, ...(s.v || {}) }; gStyle.approved = !!s.approved; } } catch (e) { } }
-function saveStyle() { store.set('globalStyle', { v: gStyle.v, approved: gStyle.approved }); }
-const styleNeutral = () => STYLE_DEF.every(([k, , , , , , d]) => Math.abs((+gStyle.v[k]) - d) < 1e-9);
-// 当前打开的是不是「已通过」的东西（正式库条目、效果的已通过版）
-function styleExemptNow() {
-  if (gStyle.approved || typeof lib === 'undefined') return false;
-  if (lib.formal) return true;
-  const ef = lib.effect, e = lib.review;
-  return !!(ef && e && ef.已通过版 && ef.已通过版.replace(/^rep:/, '') === e.id);
-}
-function styledP(P) {
-  if (!P || P._styled || styleNeutral() || styleExemptNow() || familyOf(P.type) !== 'aerial') return P;
-  const key = gStyle.rev + '|' + JSON.stringify(P); let o = gStyle.cache.get(key);
-  if (o) return o;
-  const v = gStyle.v; o = { ...P, _styled: 1 };
-  o.sparkLife = P.sparkLife * v.tailLen; if (P.emberLife) o.emberLife = P.emberLife * v.tailLen;
-  o.sparkSize = P.sparkSize * v.tailWidth; o.sparkSpread = P.sparkSpread * v.tailSpread;
-  o.headSize = P.headSize * v.headSize; o.sparkBright = P.sparkBright * v.sparkBright; o.twinkle = (P.twinkle || 0) * v.twinkle;
-  o._styJit = +v.widthJit || 0; o._styShoulder = +v.shoulder || 0; o._styTear = +v.tear || 0;
-  if (gStyle.cache.size > 64) gStyle.cache.clear();
-  gStyle.cache.set(key, o); return o;
-}
-// 风格变了：单层重烘；多层每层都重烘（实时模拟按 e.rev 刷新）
-async function restyleAll() {
-  gStyle.rev++; gStyle.cache.clear(); saveStyle();
-  if (state.tab === 'combo') {
-    for (const L of state.layers) {
-      const e = state.lib.find(x => x.name === L.lib); if (!e) continue;
-      e.rev = (e.rev || 0) + 1;
-      try { const b = await bake(libP(e.P, true), 1, p => setStatus(`风格：重烘 ${L.lib} ${Math.round(p * 100)}%`)); disposeBake(e.bake); e.bake = b; } catch (err) { flash('风格重烘失败：' + err.message, true); }
-    }
-    setStatus(''); if (state.platform === 'mobile') await ensureComboMobile();
-    if (state.comboSel >= 0) { const e = state.lib.find(x => x.name === state.layers[state.comboSel].lib); if (e && e.bake) showStats(e.bake); }
-  } else onParam();
-}
-function styleText() {
-  return '全局风格（烘焙器 v' + VERSION + '）\n' + STYLE_DEF.map(([k, lab, unit]) => `- ${lab}：${+(+gStyle.v[k]).toFixed(3)}${unit}`).join('\n') + `\n- 作用于已通过的效果：${gStyle.approved ? '是' : '否'}`;
-}
-function renderStylePanel() {
-  const host = $('#styleBody'); host.innerHTML = '';
-  for (const [k, lab, unit, mn, mx, st, d, hint] of STYLE_DEF) {
-    const row = slider(host, 'sty-' + k, lab, unit, mn, mx, st, () => gStyle.v[k], v => { gStyle.v[k] = v; scheduleRestyle(); }, d);
-    if (row) row.title = hint;
-    host.insertAdjacentHTML('beforeend', `<p class="hint">${hint}</p>`);
-  }
-  $('#styleApproved').checked = gStyle.approved;
-  $('#styleState').textContent = styleNeutral() ? '全部是默认值：所有效果和原来完全一样' : styleExemptNow() ? '当前打开的是已通过的效果：没有套用（可在下面打开）' : '已套用到当前效果';
-}
-let restyleTimer = 0;
-function scheduleRestyle() { clearTimeout(restyleTimer); restyleTimer = setTimeout(() => { restyleAll(); renderStylePanel(); }, 450); }
-function initStyle() {
-  loadStyle();
-  $('#styleBtn').addEventListener('click', () => { $('#styleDlg').hidden = !$('#styleDlg').hidden; if (!$('#styleDlg').hidden) renderStylePanel(); });
-  $('#styleClose').addEventListener('click', () => { $('#styleDlg').hidden = true; });
-  $('#styleReset').addEventListener('click', () => { gStyle.v = { ...STYLE_NEUTRAL }; renderStylePanel(); restyleAll(); });
-  $('#styleApproved').addEventListener('change', e => { gStyle.approved = e.target.checked; renderStylePanel(); restyleAll(); });
-  $('#styleCopy').addEventListener('click', async () => { const t = styleText(); try { await navigator.clipboard.writeText(t); flash('已复制风格参数'); } catch (e) { flash(t); } });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#styleDlg').hidden) $('#styleDlg').hidden = true; });
-  $('#styleBtn').classList.toggle('on', !styleNeutral());
 }
 // =====================================================================
 //  Cascade 参数表（按产物类型分别生成）
@@ -6547,9 +6512,7 @@ function pkRender() {
   if (!items.length) { grid.innerHTML = `<p class="pk-empty">${pk.cat === 'rep' ? '实拍复刻正在按「一个一个对照确认」的方式重做，完成一个加一个。' : '没有匹配的花型。'}</p>`; return; }
   for (const it of items) {
     const c = document.createElement('div'); c.className = 'pk-card' + (it.key === cur ? ' cur' : ''); c.tabIndex = 0; c.setAttribute('role', 'button');
-    const th = it.rep
-      ? `<div class="th"><i style="${it.rep.thumbRef ? `background-image:url(${it.rep.thumbRef})` : 'background:#111'}"><b>实拍</b></i><i style="${typeThumbStyle(it.key)}"><b>模拟</b></i></div>`
-      : `<div class="th" style="${typeThumbStyle(it.key)}"></div>`;
+    const th = `<div class="th" style="${typeThumbStyle(it.key)}"></div>`;   // 只用渲染图（用户 2026-10-02 14:46：缩略图不用实拍）
     c.innerHTML = th + `<div class="bd"><span class="nm">${it.name}</span><span class="ds">${it.desc || ''}</span><span class="tg">${it.tags.map(t => `<span>${t}</span>`).join('')}</span></div>` +
       (it.rep ? `<span class="st">${it.rep.status || '待你确认'}</span>` : '') + `<button class="fav" type="button" aria-label="收藏" aria-pressed="${pk.fav.has(it.key)}">★</button>`;
     c.querySelector('.fav').addEventListener('click', e => { e.stopPropagation(); pk.fav.has(it.key) ? pk.fav.delete(it.key) : pk.fav.add(it.key); store.set('fav', [...pk.fav]); pkRender(); });
@@ -7327,9 +7290,14 @@ function bindEffHeader(box, ef) {
 setInterval(() => { const el = document.getElementById('effReady'); if (el && lib.effect && !document.hidden) { const h = readyHTML(lib.effect, lib.review || (lib.formal ? { id: lib.formal.id } : null)); if (el.innerHTML !== h) el.innerHTML = h; } }, 1500);
 
 // ---------------- 左栏 ----------------
+// 缩略图一律用渲染的（用户 2026-10-02 14:46「所有效果缩略图不要用实拍，用渲染的」）：
+// 本机显卡按当前配方渲染的（review_to_baker 已换进 thumbSim）→ 对照图里模拟的那一半 → 花型模板的渲染图。实拍缩略图不显示。
 function thumbHTML(e) {
-  if (e.thumbRef || e.thumbSim) return `<span class="th">${e.thumbRef ? `<i style="background-image:url(${e.thumbRef})"></i>` : ''}${e.thumbSim ? `<i style="background-image:url(${e.thumbSim})"></i>` : ''}</span>`;
-  return `<span class="th" style="${typeThumbStyle(e.key || e.id)}"></span>`;
+  if (e.thumbSim) return `<span class="th"><i style="background-image:url(${e.thumbSim})"></i></span>`;
+  // 多层条目还没有渲染缩略图：用第一层（有渲染图的那层，或它的花型模板渲染图）
+  if (e.layerIds && typeof FW_REVIEW_LIST !== 'undefined') { const l = e.layerIds.map(id => FW_REVIEW_LIST.find(x => x.id === id)).filter(Boolean); const l0 = l.find(x => x.thumbSim) || l.find(x => x.base); if (l0) return thumbHTML(l0); }
+  const k = e.base && typeof TYPE_NAMES !== 'undefined' && TYPE_NAMES[e.base] ? e.base : (e.key || e.id);
+  return `<span class="th" style="${typeThumbStyle(k)}"></span>`;
 }
 function libMatch(...txt) { const q = lib.q.trim().toLowerCase(); return !q || txt.join(' ').toLowerCase().includes(q); }
 function libItem(host, key, html, onClick, plain) {
@@ -7717,7 +7685,7 @@ function selectComboLayer(i) {
 function buildLayerHead(i) {
   const L = state.layers[i], host = $('#layerHead'); host.innerHTML = '';
   host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b>正在调：第 ${i + 1} 层 · ${layerName(i)}</b></div>
-    <p class="hint">下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，这一层的点火 / 燃烧结束 / 火花停等可以直接拖。</p>
+    <p class="hint">下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 燃烧结束 / 火花停（圆点）都可以直接拖。</p>
     <p class="hint">多层效果里，每层的贴图尺寸（2048）、格子（最多 4×4）、合并输出由整朵统一定，所以下面不再显示这几项。</p>
     ${linkedWith(i).length ? `<p class="lh-link">联动：和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、离散等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>` : ''}`);
   const pos = document.createElement('details'); pos.className = 'sec'; pos.open = true; pos.innerHTML = '<summary>在整朵里的位置</summary>'; host.appendChild(pos);
@@ -7953,59 +7921,83 @@ function phasesOf(P) {
 }
 function layerPOf(x) { return state.tab === 'combo' ? x.e && x.e.P : state.P; }
 function buildTlBars() {
+  if (stage2.drag) return;   // 拖动中不重建（否则手上的把手被换掉，拖到一半断开）
   const D = curDuration(), rows = curLayerBakes(), P = editLayerP();
-  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(layerPOf(x)).map(q => q.t.toFixed(2)).join(':')].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-');
+  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x), lp = layerPOf(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(lp).map(q => q.t.toFixed(2)).join(':'), lp ? [lp.cutIn, lp.cutOut].join('/') : ''].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-');
   if (sig === stage2.tlSig) return; stage2.tlSig = sig;
   const host = $('#tlBars');
   if (state.tab === 'asset' || state.showcase || !rows.length) { host.innerHTML = ''; return; }
   const pct = t => clamp(t / D * 100, 0, 100), seg = (a, b, cls, title) => b > a ? `<i class="${cls}" style="left:${pct(a)}%;width:${Math.max(0.3, pct(b) - pct(a))}%"${title ? ` title="${title}"` : ''}></i>` : '';
   host.innerHTML = rows.map(x => {
-    const sp = layerSpans(x), on = state.tab !== 'combo' || layerShown(x.i), sel = state.tab === 'combo' && state.comboSel === x.i;
+    const sp = layerSpans(x), on = state.tab !== 'combo' || layerShown(x.i), sel = state.tab === 'combo' && state.comboSel === x.i, lp = layerPOf(x);
     const bars = !sp ? '' : seg(sp.at(sp.vis[0]), sp.at(sp.vis[1]), 'vis', '整段可见范围（全黑帧已剔掉）')
       + (sp.pre ? seg(sp.at(sp.pre.from), sp.at(sp.t0), 'pre', `入点前：第 1 帧从 ${Math.round(sp.pre.keys[0][1] * 100)}% 放大`) : '')
       + seg(sp.at(sp.t0), sp.at(sp.end), 'main', `贴图在播：${sp.t0.toFixed(2)} – ${sp.end.toFixed(2)} s（这一层自己的时间）`);
-    const editable = (state.tab !== 'combo' && P) || sel, ph = sp ? phasesOf(layerPOf(x)).map(q => `<b class="ph ph-${q.k}${editable ? ' drag' : ''}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s${editable ? '（拖动修改）' : '（在观察图层选这一层后可拖）'}"></b>`).join('') : '';
-    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><span class="tlb-n" title="${x.name}">${state.tab === 'combo' ? x.i + 1 + ' · ' : ''}${x.name}</span><span class="tlb-t" data-i="${x.i}">${bars}${ph}</span></div>`;
+    const cutOK = sp && lp && usesTickPlan40(lp) && !(sp.vis[1] - sp.vis[0] < 0.2);
+    const cuts = !cutOK ? '' : [['in', sp.t0, '入点', +lp.cutIn > 0], ['out', sp.end, '出点', +lp.cutOut > 0]].map(([k, t, lab, set]) => `<b class="cut cut-${k}${set ? ' set' : ''}" data-cut2="${k}" data-li="${x.i}" style="left:${pct(sp.at(t))}%" title="${lab}：${t.toFixed(2)} s${set ? '' : '（自动）'}——左右拖动修改；拖回尽头 = 自动"></b>`).join('');
+    const ph = sp ? phasesOf(lp).map(q => `<b class="ph ph-${q.k}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s（左右拖动修改）"></b>`).join('') : '';
+    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><span class="tlb-n" title="${x.name}">${state.tab === 'combo' ? x.i + 1 + ' · ' : ''}${x.name}</span><span class="tlb-t" data-i="${x.i}">${bars}${ph}${cuts}</span></div>`;
   }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>'
     + `<div class="tlcut">${P ? `<button type="button" class="mini" data-cut="in" title="把当前时刻设成入点：帧预算从这里开始分配">设为入点</button><button type="button" class="mini" data-cut="out" title="把当前时刻设成出点">设为出点</button><button type="button" class="mini" data-cut="clear">清除</button>
       <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动（第一次看得见）'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动（最后看得见）'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') : ''}</span>`
-      : `<span>${state.tab === 'combo' ? '入点 / 出点：先在右栏「观察图层」选一层' : ''}</span>`}</div>`;
-  host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); }));
+      : ''}<span class="tlhelp">轨道下方的白色把手 = 入点 / 出点，上方的圆点 = 点火、燃烧结束等时刻，都能左右拖${state.tab === 'combo' ? '（多层会自动切到那一层的参数）' : ''}；松手后只重烘那一层</span></div>`;
+  host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { if (ev.target !== t && !ev.target.matches('i')) return; const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); }));
   host.querySelectorAll('[data-cut]').forEach(b => b.addEventListener('click', () => setCut(b.dataset.cut)));
-  host.querySelectorAll('.ph.drag').forEach(h => h.addEventListener('pointerdown', ev => phaseDrag(ev, h)));
+  host.querySelectorAll('.ph, .cut').forEach(h => h.addEventListener('pointerdown', ev => trackDrag(ev, h)));
   const ex = rows.find(x => (state.tab !== 'combo' && P) || (state.tab === 'combo' && state.comboSel === x.i)), phs = ex ? phasesOf(layerPOf(ex)) : [];
   if (phs.length) host.querySelector('.tlcut').insertAdjacentHTML('beforeend', `<span class="phl">${phs.map(q => `<i class="ph-${q.k}"></i>${q.lab} ${q.t.toFixed(2)} s`).join(' · ')}</span>`);
 }
-// 拖层轨道上的阶段点：松手时改参数并重烘（多层只重烘这一层）
-function phaseDrag(ev, h) {
+// 拖层轨道（用户 2026-10-02 14:46：「每层轨道出入点我看到了，但是没法拖」）：任何一层的入点 / 出点把手、阶段点都能直接拖。
+// 多层时按下就切到那一层（右栏换成那一层的参数）；拖的时候只移动把手，松手才改参数、只重烘那一层。
+function trackDrag(ev, h) {
+  if (ev.button > 0) return;
   ev.preventDefault(); ev.stopPropagation();
-  const track = h.parentElement, x = curLayerBakes().find(r => r.i === +h.dataset.li), sp = x && layerSpans(x), P = x && layerPOf(x); if (!sp || !P) return;
-  const q = phasesOf(P).find(z => z.k === h.dataset.ph); if (!q) return;
-  const D = curDuration(), toLayer = cx => { const r = track.getBoundingClientRect(); return Math.max(0, (clamp((cx - r.left) / r.width, 0, 1) * D - sp.d) * sp.r); };
-  h.setPointerCapture(ev.pointerId); let tl = q.t;
-  const mv = e => { tl = toLayer(e.clientX); h.style.left = clamp((sp.d + tl / sp.r) / D * 100, 0, 100) + '%'; h.title = `${q.lab}：${tl.toFixed(2)} s`; setStatus(`${q.lab} → ${tl.toFixed(2)} s（松手后重烘）`); };
-  const up = () => { h.removeEventListener('pointermove', mv); h.removeEventListener('pointerup', up); setStatus(''); if (Math.abs(tl - q.t) < 0.005) return;
-    q.set(tl); stage2.tlSig = ''; refreshPanelValues(); refreshVisibility(); onParam(); flash(`${q.lab} 改到 ${tl.toFixed(2)} s，正在重烘`); };
-  h.addEventListener('pointermove', mv); h.addEventListener('pointerup', up);
+  const li = +h.dataset.li;
+  if (state.tab === 'combo' && state.comboSel !== li) selectComboLayer(li);
+  const track = h.parentElement, x = curLayerBakes().find(r => r.i === li), sp = x && layerSpans(x), P = x && layerPOf(x); if (!sp || !P) return;
+  const cut = h.dataset.cut2, q = cut ? null : phasesOf(P).find(z => z.k === h.dataset.ph); if (!cut && !q) return;
+  const lab = cut ? (cut === 'in' ? '入点' : '出点') : q.lab, t0 = cut ? (cut === 'in' ? sp.t0 : sp.end) : q.t;
+  // 入点只能在「看得见」的范围里、早于出点；出点晚于入点
+  let lo = 0, hi = Infinity;
+  if (cut === 'in') { lo = sp.vis[0]; hi = Math.min(sp.vis[1], +P.cutOut > 0 ? +P.cutOut : sp.end) - 1 / 15; }
+  if (cut === 'out') { lo = Math.max(sp.vis[0], +P.cutIn > 0 ? +P.cutIn : sp.t0) + 1 / 15; hi = sp.vis[1]; }
+  const D = curDuration(), toLayer = cx => { const r = track.getBoundingClientRect(); return clamp((clamp((cx - r.left) / r.width, 0, 1) * D - sp.d) * sp.r, lo, hi); };
+  stage2.drag = true; h.classList.add('on'); try { h.setPointerCapture(ev.pointerId); } catch (e) { }
+  let tl = t0;
+  const mv = e => { tl = toLayer(e.clientX); h.style.left = clamp((sp.d + tl / sp.r) / D * 100, 0, 100) + '%'; h.title = `${lab}：${tl.toFixed(2)} s`; state.t = sp.d + tl / sp.r; setStatus(`${lab} → ${tl.toFixed(2)} s（松手后重烘）`); };
+  const up = () => {
+    h.removeEventListener('pointermove', mv); h.removeEventListener('pointerup', up); h.removeEventListener('pointercancel', up);
+    stage2.drag = false; h.classList.remove('on'); setStatus(''); stage2.tlSig = '';
+    if (Math.abs(tl - t0) < 0.005) return;
+    if (cut) { applyCut(P, sp, cut, tl, true); return; }
+    q.set(tl); refreshPanelValues(); refreshVisibility(); onParam(); flash(`${q.lab} 改到 ${tl.toFixed(2)} s，正在重烘`);
+  };
+  h.addEventListener('pointermove', mv); h.addEventListener('pointerup', up); h.addEventListener('pointercancel', up);
 }
 // 入点 / 出点 = 这一层自己的时间（相对开花）。第一次设入点时，把当前烘焙的「第一次看得见」记成 preFrom（入点前从这里开始放大）
 function setCut(kind) {
   const P = editLayerP(); if (!P) return;
   const x = curLayerBakes().find(r => state.tab !== 'combo' || r.i === state.comboSel), sp = x && layerSpans(x);
-  const t = engineTick(Math.max(0, (state.t - (sp ? sp.d : 0)) * (sp ? sp.r : 1)) + 1e-6);
-  if (kind === 'clear') { P.cutIn = 0; P.cutOut = 0; P.preFrom = -1; P.visTo = 0; }
-  else if (kind === 'in') {
+  if (kind === 'clear') { P.cutIn = 0; P.cutOut = 0; P.preFrom = -1; P.visTo = 0; stage2.tlSig = ''; refreshPanelValues(); refreshVisibility(); onParam(); flash('已清除入点 / 出点（回到自动）'); return; }
+  applyCut(P, sp, kind, Math.max(0, (state.t - (sp ? sp.d : 0)) * (sp ? sp.r : 1)), false);
+}
+// drag = 拖把手：拖回可见范围的尽头就是「自动」
+function applyCut(P, sp, kind, tl, drag) {
+  const t = engineTick(tl + 1e-6), first = !(+P.cutIn > 0) && !(+P.cutOut > 0);
+  if (kind === 'in') {
     if (sp && t < sp.vis[0] - 1e-6) { flash('入点要在看得见的范围里（' + sp.vis[0].toFixed(2) + ' s 以后）', true); return; }
-    if (!(+P.cutIn > 0) && !(+P.cutOut > 0) && sp) { P.preFrom = +sp.vis[0].toFixed(4); P.visTo = +sp.vis[1].toFixed(4); }
     if (+P.cutOut > 0 && t >= +P.cutOut - 1 / 30) { flash('入点要早于出点', true); return; }
-    P.cutIn = +t.toFixed(4);
+    if (first && sp) { P.preFrom = +sp.vis[0].toFixed(4); P.visTo = +sp.vis[1].toFixed(4); }
+    P.cutIn = drag && sp && t <= sp.vis[0] + 1 / 60 ? 0 : +t.toFixed(4);
   } else {
     if (t <= (+P.cutIn || (sp ? sp.vis[0] : 0)) + 1 / 30) { flash('出点要晚于入点', true); return; }
-    if (!(+P.cutIn > 0) && !(+P.cutOut > 0) && sp) { P.preFrom = +sp.vis[0].toFixed(4); P.visTo = +sp.vis[1].toFixed(4); }
-    P.cutOut = +t.toFixed(4);
+    if (first && sp) { P.preFrom = +sp.vis[0].toFixed(4); P.visTo = +sp.vis[1].toFixed(4); }
+    P.cutOut = drag && sp && t >= sp.vis[1] - 1 / 60 ? 0 : +t.toFixed(4);
   }
+  if (!(+P.cutIn > 0) && !(+P.cutOut > 0)) { P.preFrom = -1; P.visTo = 0; }
   stage2.tlSig = ''; refreshPanelValues(); refreshVisibility(); onParam();
-  flash(kind === 'clear' ? '已清除入点 / 出点（回到自动）' : `${kind === 'in' ? '入点' : '出点'}设在 ${t.toFixed(2)} s，正在重新分帧烘焙`);
+  const v = kind === 'in' ? +P.cutIn : +P.cutOut;
+  flash(`${kind === 'in' ? '入点' : '出点'}${v > 0 ? `设在 ${v.toFixed(2)} s` : '回到自动'}，正在重新分帧烘焙`);
 }
 // 每帧调用（80_render 的主循环）：tick 号、播放头；标题 / 脚注 / 时段条 / 通过门槛每 1/4 秒刷新
 function stageTick(D) {
@@ -8052,10 +8044,22 @@ function delivName() {
 }
 function renderDeliv() {
   const host = $('#delivView'), name = delivName(), rows = [], combo = state.tab === 'combo', xs = curLayerBakes();
-  const nm = packNamesFor(wbKey(), lib.effect, xs.length, name), useNew = xs.every(x => !x.b || namingApplies(x.b));
+  const nm = packNamesFor(wbKey(), lib.effect, xs.length, name, xs.length === 1 && xs[0].b ? xs[0].b.P.type : ''), useNew = xs.every(x => !x.b || namingApplies(x.b));
   for (const x of xs) {
     if (!x.b) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：还没烘好</td></tr>`); continue; }
     if (!namingApplies(x.b)) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：这种产物（${FORM_NAMES[x.b.form] || x.b.form}）的素材包按它自己的导出规则生成，文件清单以导出的包为准</td></tr>`); continue; }
+    if (x.b.form === 'emitset') {   // 循环层 + 粒子：循环 / 消散两张序列 + 粒子发射器（没有贴图）
+      const m = x.b.meta, ly = combo ? nm.layers[x.i] : '';
+      for (const [, L, sub, n] of namingSheets(x.b)) {
+        const d0 = sub === 'Fade' ? m.T : 0, life = sub === 'Fade' ? m.fadeSeconds : m.T;
+        rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', false)}.png</td><td>PC · ${sub === 'Loop' ? '循环层' : '消散'} · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', true)}.png</td><td>手机</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        rows.push(`<tr class="dim"><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'C')}.png</td><td>Cut（PC / 手机共用，512）</td><td></td><td></td></tr>`);
+      }
+      rows.push(`<tr class="dim"><td>${fwTexName(nm.base, ly, null, 0, 'R')}.png</td><td>颜色 Ramp（PC / 手机共用）</td><td></td><td></td></tr>`);
+      rows.push(`<tr class="dim"><td colspan="4">粒子发射器（火粉、火星）没有贴图：用软圆点材质，数值在 cascade.json</td></tr>`);
+      continue;
+    }
     const parts = bakeParts(x.b), delay = +x.L.delay || 0, rate = +x.L.rate || 1, ly = combo ? nm.layers[x.i] : '';
     const ln = combo ? comboLayerName(name, x.i) : name, mn = combo ? comboLayerName(name + '_Mobile', x.i) : name + '_Mobile';
     let mobCell = '—'; try { const mp = mobileParams({ ...x.b.P, cols: x.b.meta.L.cols, rows: x.b.meta.L.rows }); mobCell = Math.round(layoutOf(mp).cellW) + ' px'; } catch (e) { }
@@ -8346,7 +8350,7 @@ function unionView(a, b) {
 }
 function renderLive() {
   if (isEmit(state.P)) return renderEmitLive();
-  const P = styled(state.P), m = state.bake && state.bake.meta, B = state.B;
+  const P = state.P, m = state.bake && state.bake.meta, B = state.B;
   if (renderVersion(P)>=40 && !isTrail(P) && !isPhys(P) && !B) return renderLive40();
   if (!m) { hdrT.clear(); post(); hudText = '首次烘焙中…'; hudB = ''; return; }
   const sa = liveSlot('A'); prepSlot(sa, P, state.gen);
@@ -8516,14 +8520,14 @@ function renderComboLive() {
   if (!items.length) { post(); hudText = '没有图层'; return; }
   let view = null;
   items.forEach(([L, e, i]) => {
-    const slot = liveSlot('combo' + i); prepSlot(slot, styled(e.P), 'c' + i + ':' + e.name + ':' + (e.rev || 0));
-    const v = sceneView(styled(e.P), e.bake.meta, slot), s = L.scale || 1, vs = [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
+    const slot = liveSlot('combo' + i); prepSlot(slot, e.P, 'c' + i + ':' + e.name + ':' + (e.rev || 0));
+    const v = sceneView(e.P, e.bake.meta, slot), s = L.scale || 1, vs = [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
     view = view ? unionView(view, vs) : vs;
   });
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   let n = 0;
   items.forEach(([L, e, i]) => {
-    const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = styled(e.P);
+    const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = e.P;
     if (age < 0 || age > P.duration || !layerShown(i)) return;
     const s = L.scale || 1, vL = [view[0] / s, view[1] / s, view[2] / s, view[3] / s], ppm = rgT.w / (2 * vL[2]);
     rgT.clear(); rgT.bind(); additive(true);
@@ -8584,7 +8588,8 @@ function curDuration() {
 }
 function loop(now) {
   if (state.stillBusy) { lastT = now; requestAnimationFrame(loop); return; }   // 定帧渲染期间让出画布
-  const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
+  // 播放时钟按真实时间走（4.1.2：以前每帧最多推进 0.05 s，掉到 10 fps 时只按半速播、实拍还会反复往回跳）；只防切走标签页回来时的一大步
+  const dt = Math.min(0.25, Math.max(0, (now - lastT) / 1000)); lastT = now;
   const D = curDuration(), looping = !state.showcase && familyOf(state.P.type) === 'ground' && state.tab === 'master';
   if (state.playing) { state.t += dt * state.speed;
     if (!looping && state.loopPlay === false && state.t >= D) { state.t = D; state.playing = false; $('#play').textContent = '播放'; }   // 播放一遍：停在最后
@@ -8777,7 +8782,6 @@ function expoOfChannel(buf, ch, target, pct) {
 }
 // opt: { times: [s…], px, half（米，画面半宽）, cy（米，画面中心高度）, shutter（秒）, sub（快门内子帧数，默认每 1/480 秒一帧）, probe（定曝光用的时刻）, expo（显示曝光） }
 async function renderStills(P0, M0, opt) {
-  P0 = styled(P0);     // 全局风格层（默认值时原样返回）
   if (renderVersion(P0)>=40 && !isTrail(P0) && !isPhys(P0)) return renderStills40(P0,M0,opt);
   const P = derive({ ...P0 }), M = normalizeM(M0 || {}, P.type), px = opt.px || 512, ground = familyOf(P.type) === 'ground';
   let half = opt.half, cy = opt.cy || 0, cx = 0;
@@ -8932,7 +8936,7 @@ $('#btnExportCombo').addEventListener('click', exportCombo);
 initPicker();
 initAssets();
 initUpdates();
-initStyle();
+
 buildMasterPanel();
 initIter();
 initLibrary();
@@ -8943,6 +8947,8 @@ requestAnimationFrame(loop);
 const trailOver = o => Object.fromEntries(Object.entries(o || {}).filter(([k]) => !k.startsWith('_')));
 window.__fw = {
   state, bake, bakeVariants, exportMaster, plan, measure, buildTrack, metricsOf, importParams, setType, setForm,
+  // 下一帧画完后取整张画布（PNG data URL）：渲染缩略图用（analysis/scripts/渲染缩略图.py → ui_shots 的 thumb 步骤）
+  thumbNow() { return new Promise(res => { pendingThumb = () => { const c = document.createElement('canvas'); c.width = canvas.width; c.height = canvas.height; c.getContext('2d').drawImage(canvas, 0, 0); res(c.toDataURL('image/png')); }; }); },
   // 把参数 JSON / 配方解析成 { P, M, name }（不改界面状态）
   resolve(j, fname) {
     if (j.diff && j.type) { const r = resolveRecipe(j); return { P: r.P, M: r.M, name: j.name || fname }; }
@@ -8964,7 +8970,7 @@ window.__fw = {
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, M), null, 2))]);
     files.push(...await platformFiles(name, b, M));
     // 命名规范：本机导出任务传 opt.entry（条目号）→ 找到效果的英文名
-    if (namingApplies(b) && opt.naming !== false) { const ef = opt.entry ? effectOfEntry({ id: opt.entry }) : null, nm = packNamesFor(ef ? 'ef:' + ef.key : 'rv:' + (opt.entry || name), ef, 1, name); files = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); }
+    if (namingApplies(b) && opt.naming !== false) { const ef = opt.entry ? effectOfEntry({ id: opt.entry }) : null, nm = packNamesFor(ef ? 'ef:' + ef.key : 'rv:' + (opt.entry || name), ef, 1, name, P.type); files = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); }
     const zip = await makeZip(files); disposeBake(b);
     return new Uint8Array(await zip.arrayBuffer());
   },
