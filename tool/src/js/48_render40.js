@@ -45,6 +45,7 @@ function renderCell40(P, pl, R, t, samples, cell, view = frameView40(pl,t)) {
   let window;
   try { window=drawFrameSamples40(P,pl,R,t,view,samples.w/(2*view[2]),samples.h/(2*view[3])); }
   finally { additive(false); }
+  hazeSamples40(P,samples,samples.w/(2*view[2]));
   packCell40(P,samples,cell,frameFade40(pl,t,!!pl.noFade));
   return window;
 }

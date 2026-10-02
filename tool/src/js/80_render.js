@@ -390,6 +390,7 @@ function renderComboLive() {
     rgT.clear(); rgT.bind(); additive(true);
     drawLiveScene(liveSlot('combo' + i), P, age, vL, ppm);
     additive(false);
+    if (renderVersion(P) >= 40) hazeSamples40(P, rgT, ppm);   // 线间底光（每层自己的）
     hdrT.bind(); additive(true);
     const pr = PR.rgmat, m = e.bake.meta; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, rgT.tex); gl.uniform1i(pr.u.uS, 0);
     gl.uniform1f(pr.u.uEH, m.expoH); gl.uniform1f(pr.u.uET, m.expoT); gl.uniform1f(pr.u.uG, e.bake.P.encGamma || 1); gl.uniform1f(pr.u.uComb, e.bake.P.outMode === 'combined' ? 1 : 0);

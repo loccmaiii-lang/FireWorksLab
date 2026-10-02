@@ -135,7 +135,7 @@ precision highp float; precision highp int; precision highp sampler2D;
 uniform sampler2D uPos, uVel, uInfo;
 uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw, uBr;
 uniform float uInh, uSpread, uLife, uLifeEnd, uLifeJit, uK, uG, uT0, uCool, uTwk, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
-uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShoulder, uDif, uDifL;
+uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShoulder, uDif, uDifL, uRise, uStarB;
 uniform vec4 uTm[3]; uniform float uTa[3];
 uniform vec4 uView, uXf; uniform float uPPM, uPPMY, uMax, uUseXf;
 out float vI; out vec2 vSig; out float vPS;
@@ -197,6 +197,9 @@ void main(){
     p.xy+=(curl2(sp.xy/uDifL)+.45*vec2(gss(uid,71u),gss(uid,73u)))*sg; }
   if(I<=0.){ cull(); return; }
   I*=(1.+uTwk*(2.*hsh(u2,uint(uTw)*16u+13u)-1.))*uBright*.6;
+  // 4.2.0（对话框7 需求，引菊颜色纯度）：火花烧旺时间 sparkRise——刚离开星时没烧旺，靠星头那截暗、偏红；每颗星亮度离散 starBright——按星号取一个对数正态倍数（均值 1）
+  if(uRise>0. && c==0 && !emb) I*=1.-exp(-age/uRise);
+  if(uStarB>0.) I*=exp(uStarB*gss(uint(s),64u)-.5*uStarB*uStarB);
   if(uMir>.5){ if(p.y<0.){ cull(); return; }
     if(uMir>1.5){ p.x+=.012*p.y*sin(.35*p.y+7.*uT)+.3*sin(1.7*p.y+3.*uT); I*=uRefl*exp(-p.y/400.); p.y=-p.y; size*=1.3; } }
   // 尾迹外形（每个效果自己的参数 tailJit / tailShoulder）：粗细随机 = 每颗星一个粗细倍数 × 每粒火花一点抖动；亮肩 = 新火花大而亮、老火花细而暗。默认 0 时不进分支，结果不变
@@ -302,8 +305,11 @@ ${CELLV}
 void main(){ if(vFrame<0.){ discard; } vec2 uv=clamp(v_uv,uInset,1.-uInset);
   if(uComb>.5){ float v=cellv(uH,vFrame,uv); o=vec4(ramp(v)*v*uTint*uHI*uK,1.); }
   else { float h=cellv(uH,vFrame,uv), t=cellv(uT,vFrame,uv); o=vec4((h*uTint*uHI+ramp(t)*t*uTI)*uK,1.); } }`;
+// 线间底光（4.2.0，tailHaze）：拖尾通道（G）做一次大半径高斯模糊，乘强度加回去（受光的烟 / 分辨不出的细火花）
+const FS_HAZE = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform vec2 uDir; uniform float uSig, uK; out vec4 o;
+void main(){ float st=max(1.,uSig/6.), acc=0., ws=0.; for(int i=-24;i<=24;i++){ float x=float(i)*st, w=exp(-.5*x*x/(uSig*uSig)); acc+=texture(uS,v_uv+uDir*x).g*w; ws+=w; } o=vec4(0.,acc/ws*uK,0.,0.); }`;
 const PR = {
-  pts: compile(VS_PTS, FS_PTS), pack: compile(VS_QUAD, FS_PACK), enc: compile(VS_QUAD, FS_ENC),
+  pts: compile(VS_PTS, FS_PTS), pack: compile(VS_QUAD, FS_PACK), enc: compile(VS_QUAD, FS_ENC), haze: compile(VS_QUAD, FS_HAZE),
   spk: compile(VS_SPK, FS_PTS), emit: compile(VS_EMIT, FS_PTS), ehead: compile(VS_EHEAD, FS_PTS),
   rgmat: compile(VS_QUAD, FS_RGMAT), mat: compile(VS_RECT, FS_MAT), unit: compile(VS_UNIT, FS_UNIT),
   post: compile(VS_QUAD, FS_POST), atlas: compile(VS_QUAD, FS_ATLAS), cell: compile(VS_QUAD, FS_CELL)
@@ -388,6 +394,7 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   gl.uniform1f(pr.u.uEmb, P.emberFrac || 0); gl.uniform1f(pr.u.uEmbL, P.emberLife || 3); gl.uniform1f(pr.u.uEmbB, P.emberBright || 0.1); gl.uniform1f(pr.u.uEmbF, P.emberFollow || 0); gl.uniform1f(pr.u.uEmbS, P.emberSize || 1);
   gl.uniform1f(pr.u.uEmbE, P.emberEnd || 0); gl.uniform1f(pr.u.uHotStop, P.emberFrac > 0 && P.emberAll && P.sparkStop > 0 ? P.sparkStop : 0);
   if (pr.u.uTailJit) gl.uniform1f(pr.u.uTailJit, +P.tailJit || 0); if (pr.u.uShoulder) gl.uniform1f(pr.u.uShoulder, +P.tailShoulder || 0);
+  if (pr.u.uRise) gl.uniform1f(pr.u.uRise, +P.sparkRise || 0); if (pr.u.uStarB) gl.uniform1f(pr.u.uStarB, +P.starBright || 0);
   if (pr.u.uDif) { gl.uniform1f(pr.u.uDif, familyOf(P.type) === 'aerial' ? +P.tailDiffuse || 0 : 0); gl.uniform1f(pr.u.uDifL, Math.max(1, +P.tailDiffuseScale || 20)); }
   const br = Math.round(P.branch || 0); gl.uniform1i(pr.u.uBr, br); gl.uniform1f(pr.u.uBrAt, P.branchAt || 0.5);
   setAirUniforms(pr, P);
@@ -498,6 +505,17 @@ function drawPoints(buf, n, view, ppm, chan, w, xf) {
   gl.uniform4fv(pr.u.uXf, xf || [0, 0, 1, 0]); gl.uniform1f(pr.u.uUseXf, xf ? 1 : 0);
   setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uSpan, PT_SPAN);
   drawParticleBatch(n, modern);
+}
+// 在超采样缓冲上加线间底光（实时、定帧、烘焙都在 drawFrameSamples40 之后调这一个函数）。ppm = 这个缓冲每米多少像素
+const hazeTmps = new Map();
+function hazeSamples40(P, src, ppm) {
+  const k = +P.tailHaze || 0; if (!(k > 0) || familyOf(P.type) !== 'aerial') return;
+  const sig = Math.max(0.5, (+P.tailHazeR || 6) * ppm / 2), key = src.w + 'x' + src.h;
+  let tmp = hazeTmps.get(key); if (!tmp) { gl.activeTexture(gl.TEXTURE0); tmp = new Target(src.w, src.h, gl.RGBA16F); if (hazeTmps.size > 6) { for (const t of hazeTmps.values()) t.dispose(); hazeTmps.clear(); } hazeTmps.set(key, tmp); }
+  const pr = PR.haze; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.uniform1i(pr.u.uS, 0); gl.uniform1f(pr.u.uSig, sig);
+  gl.disable(gl.BLEND); tmp.bind(); gl.bindTexture(gl.TEXTURE_2D, src.tex); gl.uniform2f(pr.u.uDir, 1 / src.w, 0); gl.uniform1f(pr.u.uK, 1); drawQuad();
+  src.bind(); additive(true); gl.colorMask(false, true, false, false); gl.bindTexture(gl.TEXTURE_2D, tmp.tex); gl.uniform2f(pr.u.uDir, 0, 1 / src.h); gl.uniform1f(pr.u.uK, k); drawQuad();
+  gl.colorMask(true, true, true, true); additive(false);
 }
 function additive(on) { if (on) { gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE); gl.blendEquation(gl.FUNC_ADD); } else gl.disable(gl.BLEND); }
 function sizeAt(m, age) { return m.zoom ? evalKeys(m.sizeKeys, clamp(age / m.duration, 0, 1)) : 1; }

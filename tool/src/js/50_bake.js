@@ -165,6 +165,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
       R.draw(pl.loop ? ts : Math.max(0, ts), view, ppm, 1 / nsub, pl.loop ? f : f * 16 + j, f);
     }
     additive(false);
+    if (renderVersion(P)>=40) hazeSamples40(P, sst, ppm);
     const ch = Math.floor(f / L.per), k = f % L.per, col = k % L.cols, row = Math.floor(k / L.cols);
     const fade = renderVersion(P)>=40 ? frameFade40(pl,pl.t0+tc,!!extra.noFade)
       : pl.loop || extra.noFade ? 1 : clamp((pl.duration - tc) / 0.3, 0, 1);

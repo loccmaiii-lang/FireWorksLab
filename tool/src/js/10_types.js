@@ -45,7 +45,7 @@ const BASE = {
   // 星效果
   ignDelay: 0, ignJit: 10, ignSeed: 0, keepFrac: 1, afterBurn: 0, afterJit: 15, headDim: 1, headDimUntil: 0,
   emberFrac: 0, emberLife: 3, emberBright: 0.1, emberFollow: 0, emberSize: 1, emberAll: 0, emberEnd: 0,
-  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, tailJit: 0, tailShoulder: 0, headTear: 0, tailDiffuse: 0, tailDiffuseScale: 20, frameCount: 24, outPack: 'grid', outCell: 0, cutIn: 0, cutOut: 0, preRoll: 1, preFrom: -1, visTo: 0, preScale0: 0, prePivot: 0, expoMode: 'sheet', expoQ: 0.7, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
+  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, tailJit: 0, tailShoulder: 0, headTear: 0, tailDiffuse: 0, tailDiffuseScale: 20, sparkRise: 0, starBright: 0, tailHaze: 0, tailHazeR: 6, frameCount: 24, outPack: 'grid', outCell: 0, cutIn: 0, cutOut: 0, preRoll: 1, preFrom: -1, visTo: 0, preScale0: 0, prePivot: 0, expoMode: 'sheet', expoQ: 0.7, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
   strobeHz: 0, strobeDuty: 0.35, strobeStart: 0.4, glitter: 0, glitterDelay: 0.25,
   crackle: 0, crackleDelay: 0.3, branch: 0, branchAt: 0.45, flutter: 0, flutterHz: 0.7,
   // 上升
@@ -359,7 +359,11 @@ const SCHEMA = [
   { sec: '尾迹外形', show: P => isSeq(P) && familyOf(P.type) === 'aerial', hint: '每个效果（多层时每一层）自己的外形量，0 = 原样，不影响别的效果。尾长、尾缀粗细、星头大小、亮度、闪烁就是上面的「火花寿命」「尾缀粗细（散布）」「颗粒大小」「炭头大小」「火花亮度」「火花闪烁」。', items: [
     ['tailJit', '粗细随机（星与星、火花与火花之间的粗细差别）', '', 0, 1, 0.01],
     ['tailShoulder', '亮肩（正：靠近星头的火花更大更亮、尾端更细更暗；负：反过来）', '', -1, 1, 0.01],
-    ['headTear', '泪滴星头（沿运动方向拉出尖尾，速度越快越长）', '', 0, 1, 0.01]
+    ['headTear', '泪滴星头（沿运动方向拉出尖尾，速度越快越长）', '', 0, 1, 0.01],
+    ['sparkRise', '火花烧旺时间（刚离开星时还没烧旺：靠星头那截暗、偏红，中段最亮；0 = 一出来就最亮）', 's', 0, 1, 0.01],
+    ['starBright', '每颗星亮度离散（有的线亮、有的线暗；对数标准差）', '', 0, 1, 0.01],
+    ['tailHaze', '线间底光（受光的烟 / 分辨不出的细火花，把线之间的黑填一点）', '', 0, 0.2, 0.001],
+    ['tailHazeR', '线间底光半径', 'm', 1, 30, 0.5, P => +P.tailHaze > 0]
   ] },
   { sec: '千轮 / 分裂', show: P => P.type === 'senrin' || P.type === 'crossette', items: [
     { sel: 'subPattern', label: '子星排布', options: [['sphere', '小球（千轮）'], ['cross', '十字（分裂）']] },
