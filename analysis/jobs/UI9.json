@@ -1,0 +1,67 @@
+{
+ "id": "UI9",
+ "type": "ui",
+ "name": "4.2.0 截图：每层同一套时刻 + 接力、输出一节（帧数 / 格子）、尾迹扩散、单束菜单、循环层 + 粒子交付命名",
+ "priority": 13,
+ "note": "只截图，不改东西。",
+ "shots": [
+  {
+   "name": "1440_引菊_两层时刻与接力",
+   "viewport": [
+    1440,
+    900
+   ],
+   "js": "Promise.resolve(openEffect(EFFS().find(e=>e.key==='hiki_nishiki'))).then(()=>selectComboLayer(-1))",
+   "view": "live",
+   "t": 1.2,
+   "sleep": 5000
+  },
+  {
+   "name": "1440_引菊_拖橙引线火花停_锦跟着",
+   "js": "(()=>{stage2.tlSig='';stage2.last=0;stageTick(curDuration());const h=document.querySelector('#tlBars .tlb:nth-of-type(1) .ph-sstop');if(!h)return;const r=h.getBoundingClientRect(),o={bubbles:true,pointerId:1,clientX:r.left+1,clientY:r.top+6,button:0};h.dispatchEvent(new PointerEvent('pointerdown',o));h.dispatchEvent(new PointerEvent('pointermove',{...o,clientX:r.left+40}));h.dispatchEvent(new PointerEvent('pointerup',{...o,clientX:r.left+40}));})()",
+   "view": "live",
+   "t": 1.6,
+   "sleep": 9000
+  },
+  {
+   "name": "1440_引菊_输出一节_自动",
+   "js": "selectComboLayer(0);(()=>{const s=[...document.querySelectorAll('#right summary')].find(x=>x.textContent.includes('输出：帧数'));if(s){s.parentElement.open=true;s.scrollIntoView({block:'start'});}})()",
+   "sleep": 2000
+  },
+  {
+   "name": "1440_引菊_输出一节_最省按帧数",
+   "js": "state.P.frameBudget='lean';state.P.outPack='fit';refreshPanelValues();refreshVisibility();onParam();(()=>{const s=[...document.querySelectorAll('#right summary')].find(x=>x.textContent.includes('输出：帧数'));if(s){s.parentElement.open=true;s.scrollIntoView({block:'start'});}})()",
+   "sleep": 8000
+  },
+  {
+   "name": "1440_引菊_贴图_最省按帧数",
+   "view": "atlas",
+   "sleep": 2000
+  },
+  {
+   "name": "1440_引菊_单束菜单",
+   "js": "$('#abUnit').open=true;renderUnitMenu()",
+   "view": "live",
+   "sleep": 1500
+  },
+  {
+   "name": "1440_金芒菊_无扩散",
+   "js": "$('#abUnit').open=false;openReview(FW_REVIEW_LIST.find(e=>e.id==='JM4-40'),EFFS().find(e=>e.key==='jinmangju'));state.disp='fit';(()=>{const s=[...document.querySelectorAll('#right summary')].find(x=>x.textContent.includes('物理扰动'));if(s){s.parentElement.open=true;s.scrollIntoView({block:'start'});}})()",
+   "view": "live",
+   "t": 3.6,
+   "sleep": 5000
+  },
+  {
+   "name": "1440_金芒菊_尾迹扩散1.5",
+   "js": "state.P.tailDiffuse=1.5;state.P.tailDiffuseScale=15;refreshPanelValues();refreshVisibility();onParam();state.disp='fit';(()=>{const s=[...document.querySelectorAll('#right summary')].find(x=>x.textContent.includes('物理扰动'));if(s){s.parentElement.open=true;s.scrollIntoView({block:'start'});}})()",
+   "view": "live",
+   "t": 3.6,
+   "sleep": 7000
+  },
+  {
+   "name": "1440_升空尾缀_查看交付_命名",
+   "js": "Promise.resolve(openEffect(EFFS().find(e=>e.key==='trail_phys'))).then(()=>toggleDeliv(true))",
+   "sleep": 6000
+  }
+ ]
+}

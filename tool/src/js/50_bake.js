@@ -302,8 +302,10 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
     if (!pl) pl = P.zoom === 'tight' ? await tightPlan(P, fm, ta, tb, R, p => onProg && onProg(p * 0.2)) : plan(P, fm, cutIn || ta, cutOut || tb);
     if(pl.frameTiming==='tick-start'){
       const bakePlan=async(active,start=0,span=1)=>{
-        const pages=splitPlan40(active),bakeP={...P,cols:active.L.cols,rows:active.L.rows};
+        const pages=splitPlan40(active);
         for(let i=0;i<pages.length;i++){
+          // 每张贴图按这一张自己的格子开（「按帧数」时最后一张可以更小）
+          const Lp=pages[i].L,bakeP={...P,cols:Lp.cols,rows:Lp.rows,texW:Math.round(Lp.cols*Lp.cellW),texH:Math.round(Lp.rows*Lp.cellH)};
           const part=await bakeFrames(bakeP,scale,p=>onProg&&onProg(start+span*(i+p)/pages.length),pages[i],R,opt);
           part.fm=fm;part.form=P.form==='segments'?'segments':'master';
           if(last)last.next=part;else first=part;last=part;

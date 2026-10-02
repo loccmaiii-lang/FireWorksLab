@@ -135,12 +135,17 @@ precision highp float; precision highp int; precision highp sampler2D;
 uniform sampler2D uPos, uVel, uInfo;
 uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw, uBr;
 uniform float uInh, uSpread, uLife, uLifeEnd, uLifeJit, uK, uG, uT0, uCool, uTwk, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
-uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShoulder;
+uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShoulder, uDif, uDifL;
 uniform vec4 uTm[3]; uniform float uTa[3];
 uniform vec4 uView, uXf; uniform float uPPM, uPPMY, uMax, uUseXf;
 out float vI; out vec2 vSig; out float vPS;
 ${GLSL_HASH}
 vec2 airAt(vec2 p, float t){ vec2 u=vec2(uWind,0.); for(int i=0;i<3;i++){ float c=uTa[i]*cos(dot(uTm[i].xy,p)+uTm[i].z*t+uTm[i].w); u+=vec2(c*uTm[i].y,-c*uTm[i].x); } return u; }
+// 平滑噪声 + 旋度（无散度的旋涡场，尾迹扩散用）
+float lh(vec2 i){ uvec2 u=uvec2(ivec2(i)+ivec2(32768)); return hsh(u.x*73856093u^u.y*19349663u,81u); }
+float vn(vec2 q){ vec2 i=floor(q), f=fract(q); f=f*f*(3.-2.*f); return mix(mix(lh(i),lh(i+vec2(1.,0.)),f.x),mix(lh(i+vec2(0.,1.)),lh(i+vec2(1.,1.)),f.x),f.y); }
+float vn2(vec2 q){ return vn(q)+.5*vn(q*2.03+vec2(17.3,5.1)); }
+vec2 curl2(vec2 q){ float e=.05; return vec2(vn2(q+vec2(0.,e))-vn2(q-vec2(0.,e)), -(vn2(q+vec2(e,0.))-vn2(q-vec2(e,0.))))/(2.*e)*.5; }
 void main(){
   int nb=1+uBr; int id=gl_VertexID; int pid=id/nb; int c=id-pid*nb;
   int s=pid/uM; int j=pid-s*uM; uint uid=uint(pid);
@@ -185,6 +190,11 @@ void main(){
     p=mot(pc,vc*.5+dv,U,g,uK*1.5,a2);
     I=glowOf(T0*(1.-uCool*ts/life)*1.08)*1.8*(1.-x)*(1.-x); size=uSize*.7;
   }
+  // 尾迹扩散（4.2.0，tailDiffuse / tailDiffuseScale，用户 2026-10-02 16:22）：火花被阻力停下来以后仍被空气扰流带着走，越老离原位越远。
+  // 位移 = 扰流速度 × Tl × x/√(1+x)，x = 年龄 / Tl，Tl = 尺度 / 速度：刚出生像被吹着走（∝ 年龄），老了变成扩散（∝ √年龄）。
+  // 方向 = 发射点处平滑的旋涡场（相邻火花一起飘成一缕）+ 每粒自己的随机（散开）。默认 0 不进分支，结果不变。
+  if(uDif>0.){ float Tl=uDifL/max(uDif,.05), x=age/Tl, sg=uDif*Tl*x/sqrt(1.+x);
+    p.xy+=(curl2(sp.xy/uDifL)+.45*vec2(gss(uid,71u),gss(uid,73u)))*sg; }
   if(I<=0.){ cull(); return; }
   I*=(1.+uTwk*(2.*hsh(u2,uint(uTw)*16u+13u)-1.))*uBright*.6;
   if(uMir>.5){ if(p.y<0.){ cull(); return; }
@@ -378,6 +388,7 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   gl.uniform1f(pr.u.uEmb, P.emberFrac || 0); gl.uniform1f(pr.u.uEmbL, P.emberLife || 3); gl.uniform1f(pr.u.uEmbB, P.emberBright || 0.1); gl.uniform1f(pr.u.uEmbF, P.emberFollow || 0); gl.uniform1f(pr.u.uEmbS, P.emberSize || 1);
   gl.uniform1f(pr.u.uEmbE, P.emberEnd || 0); gl.uniform1f(pr.u.uHotStop, P.emberFrac > 0 && P.emberAll && P.sparkStop > 0 ? P.sparkStop : 0);
   if (pr.u.uTailJit) gl.uniform1f(pr.u.uTailJit, +P.tailJit || 0); if (pr.u.uShoulder) gl.uniform1f(pr.u.uShoulder, +P.tailShoulder || 0);
+  if (pr.u.uDif) { gl.uniform1f(pr.u.uDif, familyOf(P.type) === 'aerial' ? +P.tailDiffuse || 0 : 0); gl.uniform1f(pr.u.uDifL, Math.max(1, +P.tailDiffuseScale || 20)); }
   const br = Math.round(P.branch || 0); gl.uniform1i(pr.u.uBr, br); gl.uniform1f(pr.u.uBrAt, P.branchAt || 0.5);
   setAirUniforms(pr, P);
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);

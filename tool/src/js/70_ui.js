@@ -60,7 +60,8 @@ async function runPreviewBake() {
     if (phys) $('#stats').innerHTML = physStats(P);
     else { showStats(b); afterBake(b); }
     // 自动选格子改了列 × 行：同步到界面（帧数不变，不触发重烘）
-    if (!phys && (b.meta.L.cols !== state.P.cols || b.meta.L.rows !== state.P.rows)) { state.P.cols = b.meta.L.cols; state.P.rows = b.meta.L.rows; syncExport(); }
+    // （4.2.0：「格子按帧数」「单格」是每次按帧数现算的，不写回列 × 行，否则下次容量就变小了）
+    if (!phys && !b.meta.L.fit && !(+state.P.outCell > 0) && state.P.outPack !== 'fit' && (b.meta.L.cols !== state.P.cols || b.meta.L.rows !== state.P.rows)) { state.P.cols = b.meta.L.cols; state.P.rows = b.meta.L.rows; syncExport(); }
     setStatus('');
   } catch (e) {
     if(pending)disposeBake(pending);
@@ -106,7 +107,7 @@ async function runLayerBake() {
   }
 }
 // 同一批星（种子、星数、初速、终端速度都一样）的层：决定轨迹的参数改一处、几层一起变（用户 2026-10-02 13:09：两层共用的参数要两层一起改，以前没有联动）
-const LINK_KEYS = ['seed', 'stars', 'v0', 'vt', 'grav', 'speedJit', 'dirJit', 'burstR0', 'pattern', 'tilt', 'ringFrac', 'wind', 'turb', 'turbScale', 'massLoss', 'shellVx', 'shellVy', 'shellSpin', 'shellNo'];
+const LINK_KEYS = ['seed', 'stars', 'v0', 'vt', 'grav', 'speedJit', 'dirJit', 'burstR0', 'pattern', 'tilt', 'ringFrac', 'wind', 'turb', 'turbScale', 'tailDiffuse', 'tailDiffuseScale', 'massLoss', 'shellVx', 'shellVy', 'shellSpin', 'shellNo'];
 function computeLinks() {
   const g = new Map(); state.links = [];
   state.layers.forEach((L, i) => { const e = state.lib.find(x => x.name === L.lib); if (!e || familyOf(e.P.type) !== 'aerial') return; const k = [e.P.seed, e.P.stars, e.P.v0, e.P.vt].join('|'); if (!g.has(k)) g.set(k, []); g.get(k).push(i); });
@@ -299,6 +300,10 @@ function buildMasterPanel() {
         });
         row._refresh = () => { s.value = String(state.P[it.sel]); };
         det.appendChild(row);
+      } else if (it.info) {   // 只读的结果行（例：输出一节顶上的「多少帧、怎么装」）
+        row = document.createElement('div'); row.className = 'infohost'; row.dataset.info = it.info;
+        row._refresh = () => { row.innerHTML = it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : ''; };
+        row._refresh(); det.appendChild(row);
       } else if (it.text) {
         row = document.createElement('label'); row.className = 'field'; row.innerHTML = `${it.label}<input type="text" maxlength="6">`;
         const inp = row.querySelector('input'); inp.value = P[it.text];

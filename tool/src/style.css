@@ -719,18 +719,43 @@ canvas#gl{box-shadow:none}
 .tlb-t{height:12px}
 .tlb-t .ph{position:absolute;top:-9px;bottom:0;width:2px;margin-left:-1px;background:#e4bb7c;z-index:2;cursor:ew-resize;touch-action:none}
 .tlb-t .ph::before{content:'';position:absolute;top:-2px;left:50%;width:11px;height:11px;margin-left:-5.5px;border-radius:50%;background:inherit;box-shadow:0 0 0 1.5px #0b0f10}
-.tlb-t .ph::after{content:'';position:absolute;top:-6px;bottom:-2px;left:-8px;right:-8px}
+.tlb-t .ph::after{content:'';position:absolute;top:-6px;height:14px;left:-8px;right:-8px}
+/* 4.2.0 命中区分开：竖线本身不接鼠标；星的点只在条上方、火花菱形只在条里、入出点把手只在条下方 */
+.tlb-t .ph,.tlb-t .cut{pointer-events:none}
+.tlb-t .ph::before,.tlb-t .ph::after,.tlb-t .cut::before,.tlb-t .cut::after{pointer-events:auto}
 .tlb-t .cut{position:absolute;top:0;bottom:-9px;width:2px;margin-left:-1px;background:#d9e2e4;z-index:3;cursor:ew-resize;touch-action:none}
 .tlb-t .cut::before{content:'';position:absolute;bottom:-2px;width:11px;height:9px;background:inherit;box-shadow:0 0 0 1.5px #0b0f10}
 .tlb-t .cut-in::before{left:0;border-radius:0 2px 3px 3px}
 .tlb-t .cut-out::before{right:0;border-radius:2px 0 3px 3px}
-.tlb-t .cut::after{content:'';position:absolute;top:-2px;bottom:-6px;left:-9px;right:-9px}
+.tlb-t .cut::after{content:'';position:absolute;top:12px;bottom:-6px;left:-9px;right:-9px}
 .tlb-t .cut.set{background:#fff}
 .tlb-t .ph:hover,.tlb-t .cut:hover,.tlb-t .on{filter:brightness(1.35)}
 .tlb-t .on{z-index:4}
 .tlcut .tlhelp{color:var(--faint);font-size:11.5px;flex-basis:100%}
-.ph-ign{background:#36e4b0!important} .ph-burn{background:#e4bb7c!important} .ph-after{background:#f0a6a0!important}
-.ph-spark{background:#7fb6ff!important} .ph-dim{background:#c9a0ff!important} .ph-ember{background:#adb8bc!important}
+.ph-ign{--c:#36e4b0} .ph-burn{--c:#e4bb7c} .ph-after{--c:#f0a6a0}
+.ph-sstart{--c:#7fb6ff} .ph-sstop{--c:#7fb6ff} .ph-dim{--c:#c9a0ff} .ph-ember{--c:#adb8bc}
+.tlb-t .ph{background:var(--c,#e4bb7c)} .phl i{background:var(--c,#e4bb7c)}
+/* 4.2.0 火花开始 / 停：中间的菱形；空心 = 默认位置（没打开） */
+.tlb-t .ph.row-f{top:0;bottom:0;width:2px;opacity:.95}
+.tlb-t .ph.row-f::before{top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:1px;transform:rotate(45deg)}
+.tlb-t .ph.row-f::after{top:0;height:auto;bottom:0;left:-6px;right:-6px}
+.tlb-t .ph.auto{background:transparent}
+.tlb-t .ph.auto::before{background:#0b0f10;box-shadow:0 0 0 1.5px var(--c,#e4bb7c)}
+/* 和同一批星另一层同一时刻的点（接力）：外面一圈亮环 */
+.tlb-t .ph.glued::before{box-shadow:0 0 0 1.5px #0b0f10,0 0 0 3px var(--c,#e4bb7c)}
+/* 帧刻度：每一帧从哪个 tick 开始；换张处长一点 */
+.tlb-t .fcs{position:absolute;inset:0;pointer-events:none}
+.tlb-t .fc{position:absolute;bottom:0;height:4px;width:1px;background:rgba(5,8,9,.7)}
+.tlb-t .fc.pg{height:100%;width:2px;background:#0b0f10}
+.tlb-n[data-i]{cursor:pointer}
+.tlb-n[data-i]:hover{color:var(--text)}
+/* 输出一节顶上的结果 */
+.infohost .osum{background:var(--low);border:1px solid var(--line2);border-radius:6px;padding:7px 9px;margin:4px 0 8px;font-size:12px;line-height:1.6;color:var(--dim)}
+.infohost .osum b{color:var(--text)}
+.infohost .osum .ow{color:#e7b45c}
+/* 资产栏「单束」菜单 */
+.ab-unit .ab-menu{min-width:260px}
+.ab-unit .ab-menu .hint{font-size:11.5px;color:var(--faint);margin:2px 8px 6px;white-space:normal}
 .phl{width:100%;color:var(--dim)}
 .phl i{display:inline-block;width:8px;height:8px;border-radius:2px;margin:0 3px 0 6px;vertical-align:middle}
 .layerhead .lh-link{margin:6px 0 2px;padding:6px 8px;border-radius:5px;background:var(--panel);color:var(--text);font-size:12px}

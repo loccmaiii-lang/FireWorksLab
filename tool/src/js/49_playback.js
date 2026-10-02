@@ -30,7 +30,8 @@ function mobileParams(P) {
   const L=layoutOf(P), requested=P.mobileCellPx||Math.max(256,Math.min(L.cellW,L.cellH)/2);
   const factor=Math.min(1,requested/Math.min(L.cellW,L.cellH));
   // 保持列、行和帧数；窄长旧尾缀不再降采样。手机至少保留 256，细节多时可指定更大值。
-  return {...P,texW:Math.min(P.texW,Math.max(1024,Math.round(P.texW*factor))),texH:Math.min(P.texH,Math.max(1024,Math.round(P.texH*factor)))};
+  // 贴图下限：每格至少 256（4×4 时 = 原来的 1024；「按帧数」的小贴图不再被抬到 1024）
+  return {...P,texW:Math.min(P.texW,Math.max(256*L.cols,Math.round(P.texW*factor))),texH:Math.min(P.texH,Math.max(256*L.rows,Math.round(P.texH*factor)))};
 }
 async function bakeMobileFor(b,onProg=null) {
   if(b.form==='trail')return await bake(mobileParams(b.P),1,onProg);

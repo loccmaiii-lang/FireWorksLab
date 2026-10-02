@@ -37,6 +37,14 @@ def thumb_from_png(data_url, size=160):
     return sq.resize((size, size), Image.LANCZOS)
 
 
+def thumb_score(data_url):
+    """亮的内容有多少：减掉画布底色后的亮度总和"""
+    import base64, numpy as np
+    a = np.asarray(Image.open(io.BytesIO(base64.b64decode(data_url.split(',', 1)[1]))).convert('RGB'), np.float32)
+    a = np.clip(a - np.median(a.reshape(-1, 3), axis=0), 0, None).max(axis=2)
+    return float((a * (a > 12)).sum())
+
+
 def run(job, s, out, log=print):
     # 用会话自己的页面（只开一个 WebGL 上下文）；带 ?fast 打开，首页那一步再按用户打开时的逻辑手动打开「新」的效果
     pg = s.pg; pg.set_viewport_size({'width': 1920, 'height': 1080})
@@ -77,7 +85,15 @@ def run(job, s, out, log=print):
                 st = dict(st, thumb=pg.evaluate(st['thumb'][3:]) or None)
             if st.get('thumb'):
                 # 渲染缩略图：取画布本身（不含界面叠层），按内容裁成方图、缩到 160，存 缩略图/<序号>.jpg；条目 id 和版本记进 ui.json
-                th = thumb_from_png(pg.evaluate("window.__fw.thumbNow()"))
+                # thumb_times：几个候选时刻（页面里算），每个都取一张，留亮的内容最多的那张（有的层在「展开」时刻还没亮）
+                if st.get('thumb_times'):
+                    best = None
+                    for tt in pg.evaluate(st['thumb_times']) or []:
+                        pg.evaluate(f"state.playing = false; state.t = {float(tt)}"); pg.wait_for_timeout(700)
+                        u = pg.evaluate("window.__fw.thumbNow()"); sc = thumb_score(u)
+                        if best is None or sc > best[0]: best = (sc, u)
+                    th = thumb_from_png(best[1]) if best else thumb_from_png(pg.evaluate("window.__fw.thumbNow()"))
+                else: th = thumb_from_png(pg.evaluate("window.__fw.thumbNow()"))
                 os.makedirs(os.path.join(out, '缩略图'), exist_ok=True)
                 tf = f'{i + 1:02d}.jpg'; th.save(os.path.join(out, '缩略图', tf), quality=82)
                 st = dict(st, thumb_file=tf, thumb_ver=pg.evaluate("(typeof lib !== 'undefined' && lib.review && lib.review.ver) || ''"))

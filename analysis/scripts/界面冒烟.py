@@ -45,6 +45,12 @@ STEPS = [
     ('多层_引菊_层1_拖阶段点', "(()=>{stage2.tlSig='';stage2.last=0;stageTick(curDuration());const h=document.querySelector('#tlBars .tlb:nth-of-type(1) .ph-burn');if(!h)throw new Error('第 1 层没有燃烧结束点');const r=h.getBoundingClientRect(),o={bubbles:true,pointerId:1,clientX:r.left+1,clientY:r.top+2,button:0};h.dispatchEvent(new PointerEvent('pointerdown',o));h.dispatchEvent(new PointerEvent('pointermove',{...o,clientX:r.left-30}));h.dispatchEvent(new PointerEvent('pointerup',{...o,clientX:r.left-30}));if(state.comboSel!==0)throw new Error('拖第 1 层没有切到第 1 层');})()", 'views'),
     ('尾迹外形_泪滴粗细亮肩', "state.P.headTear=0.6;state.P.tailJit=0.8;state.P.tailShoulder=0.5;refreshPanelValues();onParam()", 'views'),
     ('尾迹外形_恢复', "state.P.headTear=0;state.P.tailJit=0;state.P.tailShoulder=0;setCut('clear')", 'views'),
+    ('多层_引菊_层1_拖火花停_接力', "(()=>{selectComboLayer(0);stage2.tlSig='';stage2.last=0;stageTick(curDuration());const g0=layerEntryOf(state.layers[1]).P.ignDelay;const h=document.querySelector('#tlBars .tlb:nth-of-type(1) .ph-sstop');if(!h)throw new Error('第 1 层没有火花停');const r=h.getBoundingClientRect(),o={bubbles:true,pointerId:1,clientX:r.left+1,clientY:r.top+6,button:0};h.dispatchEvent(new PointerEvent('pointerdown',o));h.dispatchEvent(new PointerEvent('pointermove',{...o,clientX:r.left+25}));h.dispatchEvent(new PointerEvent('pointerup',{...o,clientX:r.left+25}));if(layerEntryOf(state.layers[1]).P.ignDelay===g0)throw new Error('接力：第 2 层点火没有跟着动');})()", 'views'),
+    ('多层_引菊_输出最省_按帧数', "state.P.frameBudget='lean';state.P.outPack='fit';refreshPanelValues();refreshVisibility();onParam()", 'views'),
+    ('多层_引菊_单束菜单', "$('#abUnit').open=true;renderUnitMenu();if(!document.querySelector('#abUnitMenu [data-u]'))throw new Error('单束菜单是空的')", None),
+    ('重播', "$('#abUnit').open=false;state.t=2;replay();if(state.t!==0||!state.playing)throw new Error('重播没有回到 0 秒');state.playing=false", None),
+    ('尾迹扩散', "state.P.tailDiffuse=1.5;state.P.tailDiffuseScale=15;refreshPanelValues();refreshVisibility();onParam()", 'views'),
+    ('尾迹扩散_恢复', "state.P.tailDiffuse=0;state.P.frameBudget='motion';state.P.outPack='grid';refreshPanelValues();refreshVisibility();onParam()", 'views'),
 ]
 VIEWS = [('实时', 'live', None, 1.0), ('引擎回放', 'export', None, 1.0), ('贴图', 'atlas', '0', 1.0), ('流转', 'atlas', '1', 1.5)]
 

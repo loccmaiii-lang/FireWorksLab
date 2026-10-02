@@ -36,6 +36,7 @@
           <button type="button" id="abDelete">删除这个版本</button>
           <input type="file" id="abFile" accept=".json,application/json" hidden>
         </div></details>
+        <details class="ab-more ab-unit" id="abUnit"><summary class="btn" title="单束：只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条">单束</summary><div class="ab-menu" id="abUnitMenu"></div></details>
         <button class="btn" id="abDeliv" type="button" aria-pressed="false" title="看这个效果导出的素材包里有什么：每层每段的贴图、平台、单格、延迟">查看交付</button>
       </div>
       <div id="bakeError" class="bake-error" role="alert" hidden><span id="bakeErrorText"></span><button class="btn" id="bakeRetry" type="button">重试烘焙</button></div>
@@ -68,7 +69,7 @@
         <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
         <span class="abtag" id="abTag" hidden>A | B</span>
         <label class="expo push" title="显示曝光（只影响预览，不改素材）"><span class="tl">显示曝光</span><input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label>
-        <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（R）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
+        <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（V）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
         <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="专注：收起两侧面板，画布最大（F，或双击画布）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">专注</span></button>
         <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="10" y="2.5" width="4.5" height="11" rx="1.5"/></svg></button>
       </div>
@@ -87,7 +88,7 @@
             <button type="button" data-d="0.02" aria-label="实拍延后 0.02 秒">+</button><button type="button" data-d="0.1" aria-label="实拍延后 0.1 秒">+0.1</button>
             <button type="button" data-d="0" class="rz" aria-label="对齐归零">归零</button>
           </div>
-          <button class="refx" id="refClose" type="button" title="关闭实拍对照（R）" aria-label="关闭实拍对照">×</button>
+          <button class="refx" id="refClose" type="button" title="关闭实拍对照（V）" aria-label="关闭实拍对照">×</button>
         </div>
         <div class="canvas-box" id="box"><span class="tag" id="simTag" hidden>模拟</span>
           <canvas id="gl" aria-label="烟花预览"></canvas>
@@ -105,6 +106,7 @@
       <div class="delivview" id="delivView" hidden></div>
       <div class="timeline">
         <button class="btn" id="play">暂停</button>
+        <button class="btn tk" id="replay" type="button" title="重播：回到 0 秒再播（R）">重播</button>
         <button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1 tick</button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1 tick</button>
         <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="时间">
         <output id="tlabel">0.00 s</output>
@@ -113,7 +115,7 @@
         </select>
         <label class="check tlloop" title="关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked>循环</label>
         <span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span>
-        <span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>F</kbd>专注 <kbd>R</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span>
+        <span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>R</kbd>重播 <kbd>F</kbd>专注 <kbd>V</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span>
       </div>
       <div class="tlbars" id="tlBars"></div>
     </section>

@@ -23,13 +23,15 @@ def make_job(jid, only):
         if only and k not in only: continue
         if not (e.get('主条目') or e.get('待验收版') or e.get('已通过版')): continue
         shots.append({'name': '缩略图_' + k, 'thumb': 'ef:' + k, 'shot': False, 'view': 'live', 't': 'full', 'sleep': 4000,
+                      'thumb_times': "(() => { const D = curDuration(), f = jumpTimes().full; return [f, .25 * D, .35 * D, .45 * D, .55 * D]; })()",
                       'js': f"Promise.resolve(openEffect(EFFS().find(e => e.key === {json.dumps(k)}))).then(() => {{ state.disp = 'fit'; state.playing = false; state.layerView = {{ solo: -1, mute: [] }}; }})"})
         # 多层：每层独看一张（观察图层卡片、历史里的层条目用），键 = 这一层的条目号
         for i in range(len(e.get('层英文名') or [])):
             # 时刻：这一层看得见的范围的 40% 处（红点层这种后出现的层，整朵的「展开」时刻还没亮）
             shots.append({'name': f'缩略图_{k}_第{i + 1}层', 'shot': False, 'sleep': 1500,
                           'js': f"(() => {{ if (state.tab !== 'combo' || state.layers.length <= {i}) return; state.layerView = {{ solo: {i}, mute: [] }}; state.playing = false; const sp = layerSpans(curLayerBakes().find(x => x.i === {i})); if (sp) state.t = sp.at(sp.vis[0] + 0.4 * (sp.vis[1] - sp.vis[0])); }})()",
-                          'thumb': f"js:(() => {{ if (state.tab !== 'combo' || !state.layers[{i}]) return null; const e = layerEntryOf(state.layers[{i}]); return e && (e.rep || null); }})()"})
+                          'thumb': f"js:(() => {{ if (state.tab !== 'combo' || !state.layers[{i}]) return null; const e = layerEntryOf(state.layers[{i}]); return e && (e.rep || null); }})()",
+                          'thumb_times': f"(() => {{ const sp = state.tab === 'combo' ? layerSpans(curLayerBakes().find(x => x.i === {i})) : null; return sp ? [.15, .3, .45, .6, .75].map(f => sp.at(sp.vis[0] + f * (sp.vis[1] - sp.vis[0]))) : []; }})()"})
         if e.get('层英文名'): shots.append({'name': f'缩略图_{k}_恢复整体', 'shot': False, 'js': "state.layerView = { solo: -1, mute: [] }"})
     n = sum(1 for x in shots if x.get('thumb'))
     job = {'id': jid, 'type': 'ui', 'name': f'渲染缩略图（{n} 张：效果整朵 + 多层每层，按当前配方）', 'priority': 12,

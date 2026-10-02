@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.1.2';
+const VERSION = '4.2.0';
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
@@ -45,7 +45,7 @@ const BASE = {
   // 星效果
   ignDelay: 0, ignJit: 10, ignSeed: 0, keepFrac: 1, afterBurn: 0, afterJit: 15, headDim: 1, headDimUntil: 0,
   emberFrac: 0, emberLife: 3, emberBright: 0.1, emberFollow: 0, emberSize: 1, emberAll: 0, emberEnd: 0,
-  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, tailJit: 0, tailShoulder: 0, headTear: 0, cutIn: 0, cutOut: 0, preRoll: 1, preFrom: -1, visTo: 0, preScale0: 0, prePivot: 0, expoMode: 'sheet', expoQ: 0.7, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
+  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, tailJit: 0, tailShoulder: 0, headTear: 0, tailDiffuse: 0, tailDiffuseScale: 20, frameCount: 24, outPack: 'grid', outCell: 0, cutIn: 0, cutOut: 0, preRoll: 1, preFrom: -1, visTo: 0, preScale0: 0, prePivot: 0, expoMode: 'sheet', expoQ: 0.7, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
   strobeHz: 0, strobeDuty: 0.35, strobeStart: 0.4, glitter: 0, glitterDelay: 0.25,
   crackle: 0, crackleDelay: 0.3, branch: 0, branchAt: 0.45, flutter: 0, flutterHz: 0.7,
   // 上升
@@ -271,7 +271,7 @@ const SCHEMA = [
     { sel: 'shellNo', label: '号数', options: [[0, '手动'], ...SHELL_NO.map(r => [r[0], r[0] === 40 ? '40 号（四尺玉）' : r[0] === 10 ? '10 号（尺玉）' : r[0] + ' 号'])], hint: '按号数自动推算初速、星数、燃烧时间、星头大小（以本花型默认值约 5 号为基准）' }
   ] },
   { sec: '开花与燃烧', show: isAir, items: [
-    ['duration', '序列时长', 's', 0.8, 12, 0.05],
+    ['duration', '序列时长', 's', 0.8, 16, 0.05],
     ['seed', '随机种子', '', 1, 999, 1],
     ['stars', '星数', '颗', 4, 3000, 1],
     ['burstR0', '起始半径', 'm', 0, 300, 1],
@@ -298,6 +298,8 @@ const SCHEMA = [
     ['wind', '风速（+ 向右）', 'm/s', -15, 15, 0.1],
     ['turb', '湍流强度', 'm/s', 0, 12, 0.1],
     ['turbScale', '湍流尺度', 'm', 5, 300, 1],
+    ['tailDiffuse', '尾迹扩散（老火花被空气扰流慢慢吹散；0 = 关）', 'm/s', 0, 4, 0.05, isAir],
+    ['tailDiffuseScale', '扰流尺度（大 = 相邻火花一起飘成一缕；小 = 各自散开）', 'm', 2, 120, 1, P => isAir(P) && +P.tailDiffuse > 0],
     ['massLoss', '燃烧减质量', '', 0, 0.9, 0.01, isAir],
     ['shellVx', '残余速度（水平）', 'm/s', -30, 30, 0.5, isAir],
     ['shellVy', '残余速度（竖直）', 'm/s', -30, 30, 0.5, isAir],
@@ -553,12 +555,17 @@ const SCHEMA = [
     ['preScale0', '开始放大时的大小（0 = 按花径自动）', '×', 0, 1, 0.01, P => +P.cutIn > 0 && +P.preRoll !== 0],
     { sel: 'prePivot', label: '放大的中心', show: P => +P.cutIn > 0 && +P.preRoll !== 0, options: [[0, '面片中心（UE 一定支持；花小的时候会偏向面片中心）'], [1, '爆点（用 Pivot Offset，更准，未经 UE 验证）']] }
   ] },
-  { sec: '取帧（导出）', show: isSeq, hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。自动取帧把帧集中在运动快的开花初期，同时保证整段不低于最低帧率。', items: [
+  // 4.2.0（用户 2026-10-02 16:22「单层输出成多少总帧数我也无法控制……能不能梳理一下」）：一节里定「多少帧 → 怎么装进贴图」，顶上一行实时显示结果
+  { sec: '输出：帧数 · 格子 · 贴图（导出）', show: isSeq, hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。顺序：入点 → 出点之间有多少 tick → 按下面的「帧数」挑出要烘的帧 → 按「格子」装进贴图（RGBA 接力，先填满 R）。改了入出点、燃烧时间，帧数和格子会自动重算；时间轴每层轨道上的小刻度就是每一帧从哪个 tick 开始。', items: [
+    { info: 'outSummary', show: usesTickPlan40 },
     ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P) && !usesTickPlan40(P)],
-    { sel: 'frameBudget', label: '帧预算（4.0）', show: usesTickPlan40, options: [['motion','按运动分配（默认：先放进几张，开花快的地方帧密）'],['tiers','分段帧率（开花 / 燃烧 / 淡出各定帧率）'],['full','全程 30 fps（每个 tick 一帧，最费贴图）']] },
+    { sel: 'frameBudget', label: '帧数', show: usesTickPlan40, options: [['motion','自动：放得下就每 tick 一帧，放不下按运动分（开花快的地方密）'],['lean','最省：只用到下面「最慢帧率」需要的帧（短的层常常十几二十帧就够）'],['count','手动：自己定总帧数（按运动分配）'],['tiers','分段帧率（开花 / 燃烧 / 淡出各定帧率）'],['full','全程 30 fps（每个 tick 一帧，最费贴图）']] },
+    ['frameCount', '总帧数（手动）', '帧', 4, 256, 1, P => usesTickPlan40(P) && P.frameBudget === 'count'],
+    { sel: 'outPack', label: '格子', show: usesTickPlan40, options: [['grid','固定：按贴图尺寸和列 × 行（帧少时空格子留着）'],['fit','按帧数选最小贴图：单格不变，格子 1×1 / 2×1 / 2×2 / 4×2 / 4×4 里挑最小的放得下的']] },
+    { sel: 'outCell', label: '单格', show: usesTickPlan40, options: [[0,'跟贴图尺寸 ÷ 列数'],[512,'512 px（PC 下限）'],[1024,'1024 px'],[2048,'2048 px']] },
     ['pageTarget', '先放进几张贴图（放不下自动加）', '张', 1, 8, 1, P => usesTickPlan40(P) && (P.frameBudget || 'motion') === 'motion'],
-    { sel: 'maxHoldBurn', label: '燃烧段最慢帧率', show: P => usesTickPlan40(P) && (P.frameBudget || 'motion') === 'motion', options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick，默认）'],[4,'7.5 fps（停 4 tick）']] },
-    { sel: 'maxHold', label: '淡出段最慢帧率', show: P => usesTickPlan40(P) && (P.frameBudget || 'motion') === 'motion', options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick）'],[4,'7.5 fps（停 4 tick）'],[5,'6 fps（停 5 tick）']] },
+    { sel: 'maxHoldBurn', label: '燃烧段最慢帧率', show: P => usesTickPlan40(P) && ['motion', 'lean', 'count'].includes(P.frameBudget || 'motion'), options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick，默认）'],[4,'7.5 fps（停 4 tick）']] },
+    { sel: 'maxHold', label: '淡出段最慢帧率', show: P => usesTickPlan40(P) && ['motion', 'lean', 'count'].includes(P.frameBudget || 'motion'), options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick）'],[4,'7.5 fps（停 4 tick）'],[5,'6 fps（停 5 tick）']] },
     { sel: 'fpsBurst', label: '开花段帧率（4.0）', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps']] },
     ['burstSec', '开花段时长（这段每 tick 一帧）', 's', 0, 2, 0.05, usesTickPlan40],
     { sel: 'fpsActive', label: '燃烧段帧率（4.0）', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps']] },

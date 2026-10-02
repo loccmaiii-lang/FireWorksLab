@@ -75,14 +75,34 @@ function motionSchedule40(B,w,first,end,cap,maxHold,maxHoldBurn=maxHold){
   return {ticks:best};
 }
 function plan40(P,fm,ta=0,tb=P.duration) {
-  const cols=Math.max(1,Math.min(P.cols,Math.floor(P.texW/512))),rows=Math.max(1,Math.min(P.rows,Math.floor(P.texH/512)));
+  // 单格（4.2.0）：outCell > 0 时按它定列 × 行（贴图尺寸不变），否则按原来的列 × 行；单格不小于 512（PC 下限）
+  const oc=+P.outCell>0?Math.max(512,+P.outCell):0;
+  const cols=Math.max(1,oc?Math.floor(P.texW/oc):Math.min(P.cols,Math.floor(P.texW/512))),rows=Math.max(1,oc?Math.floor(P.texH/oc):Math.min(P.rows,Math.floor(P.texH/512)));
   const base=planLegacy({...P,cols,rows,frameMode:'uniform'},fm,0,P.duration);
   // 包络只允许放大；抬高关键点时不能引入局部缩小。
   let run=0;const envelope=base.sizeKeys.map(([u,v])=>[u,run=Math.max(run,v)]);
   const first=Math.ceil(ta*30-1e-8),end=Math.max(first+1,Math.ceil(tb*30-1e-8)),N=end-first,cap=base.L.F;
   const B=budget40(P,fm),mode=P.frameBudget||'motion';let holds=[...B.holds],ticks;
   let pagesUsed=0;
-  if(mode==='motion'){
+  if(mode==='lean'||mode==='count'){
+    // 4.2.0 最省 / 手动帧数：按运动分配，帧数 = 最慢帧率需要的最少帧（最省）或你定的帧数（手动）；分几张按容量自动算
+    const w=motionWeights40(fm,first,end);let maxHold=clamp(Math.round(+P.maxHold||4),1,8),maxHoldBurn=Math.min(maxHold,clamp(Math.round(+P.maxHoldBurn||3),1,8));
+    if(mode==='lean')ticks=motionSchedule40(B,w,first,end,1,maxHold,maxHoldBurn).ticks;   // 容量给 1：每帧都停到允许的最长 → 最少帧
+    else{
+      const want=clamp(Math.round(+P.frameCount||24),1,N);let r=motionSchedule40(B,w,first,end,want,maxHold,maxHoldBurn);
+      // 帧数比最慢帧率需要的还少：放宽每帧停留（最多 8 tick = 3.75 fps），并记下来提醒
+      while(r.over&&maxHold<8){maxHold++;maxHoldBurn=maxHold;r=motionSchedule40(B,w,first,end,want,maxHold,maxHoldBurn);}
+      // 还放不下：不再限制每帧停多久，运动权重和平均各占一半（不让慢的尾巴一帧停好几秒）；帧率会很低，输出一节里会提醒
+      // （开花段每 tick 一帧、帧停留一次最多加 1 tick 的规矩也不要了），按「运动权重和平均各占一半」的累计量等分；帧率会很低，输出一节里会提醒
+      if(r.over){
+        const mw=w.reduce((a,c)=>a+c,0)/w.length,wb=w.map(v=>.5*v/mw+.5),tot=wb.reduce((a,c)=>a+c,0),t2=[0];let acc=0;
+        for(let k=0;k<N&&t2.length<want;k++){acc+=wb[k];if(acc>=tot*t2.length/want&&k+1<N&&k+1>t2[t2.length-1])t2.push(k+1);}
+        r={ticks:t2};
+      }
+      ticks=r.ticks;if(r.over)ticks=ticks.slice(0,want);
+    }
+    pagesUsed=Math.ceil(ticks.length/cap);
+  } else if(mode==='motion'){
     // 先放进 pageTarget 张；每帧最多停 maxHold 个 tick 仍放不下，就一张一张往上加
     // 最慢帧率（协作/标准.md 2.3，2026-10-01 按用户实测「4.56 s 放 64 帧流畅」暂定）：燃烧段 ≥ 10 fps（一帧最多停 3 tick），淡出段 ≥ 7.5 fps（4 tick）
     const w=motionWeights40(fm,first,end),maxHold=clamp(Math.round(+P.maxHold||4),1,8),maxHoldBurn=Math.min(maxHold,clamp(Math.round(+P.maxHoldBurn||3),1,8));
@@ -115,10 +135,21 @@ function plan40(P,fm,ta=0,tb=P.duration) {
   const fpsOf=h=>30/h;
   // 燃烧段（开花到淡出前）最低帧率，给探针 / 统计用
   let minFps=30;for(let f=0;f<F;f++){const t=t0+times[f];if(t<B.fadeAt)minFps=Math.min(minFps,1/Math.max(dur[f],1/30));}
-  return {...base,L,t0,duration:D,sizeKeys,times,dur,ticks,nTicks:N,keys:keysFromTicks40(ticks,N),area,
+  // 格子「按帧数」：只有一张时直接换成放得下的最小格子（多张时在 splitPlan40 里每张各自挑）
+  const fit=P.outPack==='fit',L2=fit&&F<=cap?fitLayout40(L,F):L;
+  return {...base,L:L2,fitPack:fit,t0,duration:D,sizeKeys,times,dur,ticks,nTicks:N,keys:keysFromTicks40(ticks,N),area,
     frameTiming:'tick-start',frameFps:30,capacityFrames:cap,sequenceStart:t0,sequenceEnd:end/30,
     budget:{mode,burstEnd:B.burstEnd,fadeAt:B.fadeAt,strobeFrom:B.strobeFrom,fps:mode==='tiers'?holds.map(fpsOf):null,strobeFps:fpsOf(B.strobeHold),pages:Math.ceil(F/cap),holdMin:Math.min(...dur)*30,holdMax:Math.max(...dur)*30},
     fadeEnd:P.duration,avgFps:F/D,minFps,maxDisp};
+}
+// 「按帧数选最小贴图」：单格大小不变，RGBA 接力，在 1×1 / 2×1 / 2×2 / 4×2 / 4×4 / 8×4 / 8×8 里挑第一个放得下 F 帧、又不超过原来格子的
+function fitLayout40(L,F){
+  const cells=Math.ceil(F/Math.max(1,L.chans));
+  for(const [c,r] of [[1,1],[2,1],[2,2],[4,2],[4,4],[8,4],[8,8]]){
+    if(c>L.cols||r>L.rows)continue;
+    if(c*r>=cells)return {...L,cols:c,rows:r,per:c*r,F,fit:true};
+  }
+  return {...L,F};
 }
 function splitPlan40(pl) {
   if(pl.frameTiming!=='tick-start' || pl.pageIndex!=null)return [pl];
@@ -128,7 +159,7 @@ function splitPlan40(pl) {
     const offset=k0/30,D=(k1-k0)/30,pt=ticks.slice(first,first+F).map(k=>k-k0);
     const sizeKeys=clipSizeKeys40(pl.sizeKeys,pl.duration,offset,D);
     let area=0;for(let i=0;i<200;i++)area+=evalKeys(sizeKeys,(i+.5)/200)**2/200;
-    out.push({...pl,L:{...pl.L,F},t0:pl.t0+offset,duration:D,ticks:pt,nTicks:k1-k0,keys:keysFromTicks40(pt,k1-k0),sizeKeys,area,
+    out.push({...pl,L:pl.fitPack?fitLayout40(pl.L,F):{...pl.L,F},t0:pl.t0+offset,duration:D,ticks:pt,nTicks:k1-k0,keys:keysFromTicks40(pt,k1-k0),sizeKeys,area,
       times:pt.map(k=>k/30),dur:pl.dur.slice(first,first+F),
       pageIndex:out.length,pageCount:Math.ceil(pl.L.F/capacity)});
   }

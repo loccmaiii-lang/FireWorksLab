@@ -383,7 +383,7 @@ function setReview(e, formal) {
 }
 
 // ---------------- 实拍并排 ----------------
-//   条目带实拍视频时，顶栏出现「实拍对照」开关（R）；开：左实拍右模拟，关：模拟画布占满。开关状态全局记住。
+//   条目带实拍视频时，顶栏出现「实拍对照」开关（V；R 是重播）；开：左实拍右模拟，关：模拟画布占满。开关状态全局记住。
 //   对齐：画布上的 −/+ 按钮微调实拍时间，每个条目各记各的。
 function refName(src) { try { return decodeURIComponent(src).split('/').pop().replace(/\.mp4$/i, ''); } catch (e) { return ''; } }
 function setRefVideo(e) {
@@ -401,7 +401,7 @@ function setRefVideo(e) {
 function refToggle(on) {
   if (!ref2.entry) return;
   ref2.on = on == null ? !ref2.on : on; store.set('refOn', ref2.on); setRefVideo(ref2.entry);
-  flash(ref2.on ? '实拍对照：开' : '实拍对照：关（按 R 再打开）');
+  flash(ref2.on ? '实拍对照：开' : '实拍对照：关（按 V 再打开）');
 }
 function refRestoreOffset(e) { ref2.off = (store.get('refOff', {})[e.id]) || 0; refShowOffset(); }
 function refShowOffset() { const o = ref2.off; $('#refOffOut').textContent = `对齐 ${o > 0 ? '+' : o < 0 ? '−' : ''}${Math.abs(o).toFixed(2)} s`; }
@@ -472,7 +472,7 @@ function initPanels() {
     if (/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName) || e.ctrlKey || e.metaKey || e.altKey) return;
     const k = e.key.toLowerCase();
     if (k === 'f') { e.preventDefault(); toggleFocus(); }
-    else if (k === 'r') { e.preventDefault(); refToggle(); }
+    else if (k === 'v') { e.preventDefault(); refToggle(); }   // 实拍对照：R 让给「重播」（用户 2026-10-02 16:22），改成 V
     else if (k === 'l') { e.preventDefault(); setPanels({ side: !panels.side }); }
     else if (k === 'p') { e.preventDefault(); setPanels({ right: !panels.right }); }
     else if (k === 'escape' && !panels.side && !panels.right && $('#updDlg').hidden && $('#picker').hidden) toggleFocus();

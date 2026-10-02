@@ -61,6 +61,8 @@ function buildLayerHead(i) {
   slider(pos, `lh${i}-rate`, '时间倍率', '×', 0.3, 2, 0.01, () => L.rate, v => L.rate = v, 1);
   const mir = document.createElement('label'); mir.className = 'check'; mir.innerHTML = '<input type="checkbox"> 水平镜像';
   const cb = mir.querySelector('input'); cb.checked = !!L.mirror; cb.addEventListener('change', () => L.mirror = cb.checked); pos.appendChild(mir);
+  const e = layerEntryOf(L);
+  if (e && unitAllowed(e.P)) { const ub = document.createElement('button'); ub.className = 'btn mini'; ub.type = 'button'; ub.textContent = '导出这一层的单束包'; ub.title = '单束：只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条'; ub.addEventListener('click', () => unitExportLayer(i)); host.querySelector('.lh-t').appendChild(ub); }
   host.querySelector('#lhBack').addEventListener('click', () => selectComboLayer(-1));
   const lo = host.querySelector('#lhLinkOff'); if (lo) lo.addEventListener('change', () => { state.linkOff = lo.checked; });
 }
@@ -275,25 +277,58 @@ function layerSpans(x) {
 }
 // 层轨道（用户 2026-10-02 13:09 a：接力关系藏在每层的参数里，找不到）：把决定「这一层什么时候亮、什么时候停」的参数画在时段条上，
 // 可编辑的那一层（单层 / 观察图层里选中的层）能直接拖。时间都是这一层自己的时间（相对开花），画的时候按组合延迟 / 时间倍率换到总时间。
+// 每层同一套时刻（4.2.0，用户 16:22「为什么只有橙引线才有停止拖动？这才是应有的组合修改体验」）：
+//   上排圆点 = 星：点火、燃烧结束（第二段结束、星头压暗到、光丝熄灭有才显示）；
+//   中间菱形 = 火花：火花开始、火花停——没开的也画在默认位置（空心：开始 = 点火、停 = 燃烧结束），拖动就打开，拖回默认位置就关掉。
+// auto = 默认位置（空心），不和别的层粘在一起。
 function phasesOf(P) {
   if (!P || familyOf(P.type) !== 'aerial') return [];
-  const ign = +P.ignDelay || 0, burnEnd = ign + (+P.burn || 0), r2 = v => Math.round(v * 100) / 100, out = [];
-  out.push({ k: 'ign', t: ign, lab: '点火（延时点火）', set: t => P.ignDelay = r2(Math.max(0, t)) });
-  out.push({ k: 'burn', t: burnEnd, lab: +P.afterBurn > 0 ? '主段结束（第二段从这里亮）' : '燃烧结束', set: t => P.burn = r2(Math.max(0.05, t - (+P.ignDelay || 0))) });
-  if (+P.afterBurn > 0) out.push({ k: 'after', t: burnEnd + +P.afterBurn, lab: '第二段结束', set: t => P.afterBurn = r2(Math.max(0.05, t - (+P.ignDelay || 0) - (+P.burn || 0))) });
-  if (+P.sparkStop > 0) out.push({ k: 'spark', t: ign + +P.sparkStop, lab: '火花停（只在前几秒）', set: t => P.sparkStop = r2(Math.max(0.01, t - (+P.ignDelay || 0))) });
-  if (+P.headDim < 1 && +P.headDimUntil > 0) out.push({ k: 'dim', t: +P.headDimUntil, lab: '星头压暗到', set: t => P.headDimUntil = r2(Math.max(0.05, t)) });
-  if (+P.emberFrac > 0 && +P.emberEnd > 0) out.push({ k: 'ember', t: +P.emberEnd, lab: '光丝整体熄灭', set: t => P.emberEnd = r2(Math.max(0.05, t)) });
+  const ign = +P.ignDelay || 0, burnEnd = ign + (+P.burn || 0), after = +P.afterBurn > 0, lifeEnd = burnEnd + (after ? +P.afterBurn : 0);
+  const r2 = v => Math.round(v * 100) / 100, out = [], igOf = () => +P.ignDelay || 0;
+  out.push({ k: 'ign', row: 's', t: ign, lab: '点火（延时点火）', set: t => P.ignDelay = r2(Math.max(0, t)) });
+  out.push({ k: 'burn', row: 's', t: burnEnd, lo: ign + 0.05, lab: after ? '主段结束（第二段从这里亮）' : '燃烧结束', set: t => { P.burn = r2(Math.max(0.05, t - igOf())); if (+P.sparkStop > 0 && +P.sparkStop > P.burn) P.sparkStop = 0; if (+P.sparkStart > 0 && +P.sparkStart > P.burn - 1 / 15) P.sparkStart = 0; } });
+  if (after) out.push({ k: 'after', row: 's', t: lifeEnd, lab: '第二段结束', set: t => P.afterBurn = r2(Math.max(0.05, t - igOf() - (+P.burn || 0))) });
+  if (+P.headDim < 1 && +P.headDimUntil > 0) out.push({ k: 'dim', row: 's', t: +P.headDimUntil, lab: '星头压暗到', set: t => P.headDimUntil = r2(Math.max(0.05, t)) });
+  if (+P.emberFrac > 0 && +P.emberEnd > 0) out.push({ k: 'ember', row: 's', t: +P.emberEnd, lab: '光丝整体熄灭', set: t => P.emberEnd = r2(Math.max(0.05, t)) });
+  if (+P.sparkRate > 0 || +P.emberFrac > 0) {
+    const ss = +P.sparkStart || 0, st = +P.sparkStop || 0, endNow = () => (+P.burn || 0) + (+P.afterBurn > 0 ? +P.afterBurn : 0);
+    out.push({ k: 'sstart', row: 'f', t: ign + ss, auto: !(ss > 0), lab: ss > 0 ? '火花开始' : '火花开始（= 点火，拖动打开「火花从第几秒开始」）',
+      lo: ign, hi: (st > 0 ? ign + st : lifeEnd) - 1 / 15,
+      set: t => { const v = t - igOf(); P.sparkStart = v < 1 / 30 ? 0 : r2(Math.min(v, (+P.sparkStop > 0 ? +P.sparkStop : endNow()) - 1 / 15)); } });
+    // 火花停：没打开时（空心）只能往前拖；打开以后往后拖过燃烧结束，燃烧结束跟着往后推（保持原来星头比火花多亮的那一小段）
+    out.push({ k: 'sstop', row: 'f', t: st > 0 ? ign + st : lifeEnd, auto: !(st > 0), lab: st > 0 ? '火花停' : '火花停（= 燃烧结束，拖动打开「火花只在前几秒」）',
+      lo: ign + ss + 1 / 15, hi: st > 0 ? Infinity : lifeEnd,
+      set: t => { const v = t - igOf(), was = +P.sparkStop || 0;
+        if (!(was > 0)) { P.sparkStop = v >= endNow() - 1 / 30 ? 0 : r2(Math.max((+P.sparkStart || 0) + 1 / 15, 0.05, v)); return; }
+        const gap = Math.max(0, endNow() - was); P.sparkStop = r2(Math.max((+P.sparkStart || 0) + 1 / 15, 0.05, v));
+        if (P.sparkStop + gap > endNow()) P.burn = r2(P.sparkStop + gap - (+P.afterBurn > 0 ? +P.afterBurn : 0)); } });
+  }
   return out;
+}
+// 这一层最后看得见的时刻（估算）：星头燃尽、火花 / 光丝寿命走完。拖时刻时序列时长跟着平移这么多（用户 16:22 第 4 条）
+function layerEndOf(P) {
+  const ign = +P.ignDelay || 0, head = ign + (+P.burn || 0) + (+P.afterBurn > 0 ? +P.afterBurn : 0);
+  const life = (+P.sparkLife || 0) * Math.max(1, +P.sparkLifeEnd || 1);
+  const spark = +P.sparkRate > 0 ? (+P.sparkStop > 0 ? ign + +P.sparkStop : head) + life : 0;
+  const ember = +P.emberFrac > 0 ? (+P.emberEnd > 0 ? +P.emberEnd : head + (+P.emberLife || 0)) : 0;
+  return Math.max(head, spark, ember);
+}
+function followDuration(P, end0) {
+  const d = layerEndOf(P) - end0; if (Math.abs(d) < 1e-3) return 0;
+  const dur = clamp(+(+P.duration + d).toFixed(2), 0.8, 16), dd = dur - P.duration; P.duration = dur;
+  if (+P.cutOut > 0) P.cutOut = +Math.min(+P.cutOut + (+P.cutOut >= P.duration - dd - 0.05 ? dd : 0), P.duration).toFixed(4);
+  if (+P.visTo > 0) P.visTo = +clamp(+P.visTo + dd, 0, P.duration).toFixed(4);
+  return dd;
 }
 function layerPOf(x) { return state.tab === 'combo' ? x.e && x.e.P : state.P; }
 function buildTlBars() {
   if (stage2.drag) return;   // 拖动中不重建（否则手上的把手被换掉，拖到一半断开）
   const D = curDuration(), rows = curLayerBakes(), P = editLayerP();
-  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x), lp = layerPOf(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(lp).map(q => q.t.toFixed(2)).join(':'), lp ? [lp.cutIn, lp.cutOut].join('/') : ''].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-');
+  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x), lp = layerPOf(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(lp).map(q => q.t.toFixed(2)).join(':'), lp ? [lp.cutIn, lp.cutOut].join('/') : '', x.b ? bakeParts(x.b).map(s => (s.meta.L && s.meta.L.F) + '@' + (s.meta.t0 || 0).toFixed(3)).join('+') : ''].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-');
   if (sig === stage2.tlSig) return; stage2.tlSig = sig;
   const host = $('#tlBars');
   if (state.tab === 'asset' || state.showcase || !rows.length) { host.innerHTML = ''; return; }
+  const glued = gluedPhases(rows);
   const pct = t => clamp(t / D * 100, 0, 100), seg = (a, b, cls, title) => b > a ? `<i class="${cls}" style="left:${pct(a)}%;width:${Math.max(0.3, pct(b) - pct(a))}%"${title ? ` title="${title}"` : ''}></i>` : '';
   host.innerHTML = rows.map(x => {
     const sp = layerSpans(x), on = state.tab !== 'combo' || layerShown(x.i), sel = state.tab === 'combo' && state.comboSel === x.i, lp = layerPOf(x);
@@ -302,17 +337,23 @@ function buildTlBars() {
       + seg(sp.at(sp.t0), sp.at(sp.end), 'main', `贴图在播：${sp.t0.toFixed(2)} – ${sp.end.toFixed(2)} s（这一层自己的时间）`);
     const cutOK = sp && lp && usesTickPlan40(lp) && !(sp.vis[1] - sp.vis[0] < 0.2);
     const cuts = !cutOK ? '' : [['in', sp.t0, '入点', +lp.cutIn > 0], ['out', sp.end, '出点', +lp.cutOut > 0]].map(([k, t, lab, set]) => `<b class="cut cut-${k}${set ? ' set' : ''}" data-cut2="${k}" data-li="${x.i}" style="left:${pct(sp.at(t))}%" title="${lab}：${t.toFixed(2)} s${set ? '' : '（自动）'}——左右拖动修改；拖回尽头 = 自动"></b>`).join('');
-    const ph = sp ? phasesOf(lp).map(q => `<b class="ph ph-${q.k}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s（左右拖动修改）"></b>`).join('') : '';
-    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><span class="tlb-n" title="${x.name}">${state.tab === 'combo' ? x.i + 1 + ' · ' : ''}${x.name}</span><span class="tlb-t" data-i="${x.i}">${bars}${ph}${cuts}</span></div>`;
+    const ph = sp ? phasesOf(lp).map(q => `<b class="ph ph-${q.k} row-${q.row}${q.auto ? ' auto' : ''}${glued.has(x.i + ':' + q.k) ? ' glued' : ''}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s（左右拖动修改${glued.has(x.i + ':' + q.k) ? '；和同一批星的另一层在同一时刻，一起动' : ''}）"></b>`).join('') : '';
+    // 帧刻度：每一帧从哪个 tick 开始（密 = 帧率高）；换张的地方刻度长一点
+    const comb = !sp || !x.b ? '' : bakeParts(x.b).map((s, pi) => (s.meta.times || []).map((t, f) => `<i class="fc${f === 0 && pi > 0 ? ' pg' : ''}" style="left:${pct(sp.at((s.meta.t0 || 0) + t))}%"></i>`).join('')).join('');
+    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><span class="tlb-n" data-i="${x.i}" title="${x.name}${state.tab === 'combo' ? '（点一下切到这一层）' : ''}">${state.tab === 'combo' ? x.i + 1 + ' · ' : ''}${x.name}</span><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
   }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>'
     + `<div class="tlcut">${P ? `<button type="button" class="mini" data-cut="in" title="把当前时刻设成入点：帧预算从这里开始分配">设为入点</button><button type="button" class="mini" data-cut="out" title="把当前时刻设成出点">设为出点</button><button type="button" class="mini" data-cut="clear">清除</button>
       <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动（第一次看得见）'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动（最后看得见）'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') : ''}</span>`
-      : ''}<span class="tlhelp">轨道下方的白色把手 = 入点 / 出点，上方的圆点 = 点火、燃烧结束等时刻，都能左右拖${state.tab === 'combo' ? '（多层会自动切到那一层的参数）' : ''}；松手后只重烘那一层</span></div>`;
-  host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { if (ev.target !== t && !ev.target.matches('i')) return; const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); }));
+      : ''}<span class="tlhelp">上排圆点 = 星（点火、燃烧结束…），中间菱形 = 火花（开始、停；空心 = 默认位置，拖动就打开），下方白色把手 = 入点 / 出点，都能左右拖；细刻度 = 每一帧从哪个 tick 开始。${state.tab === 'combo' ? '点轨道切到那一层；同一批星的几层在同一时刻的点连在一起动（接力）。' : ''}拖燃烧结束等，序列时长跟着变</span></div>`;
+  // 点轨道（不是把手）：跳到那个时刻；多层时顺便切到这一层（用户 16:22 第 3 条）
+  host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { if (ev.target !== t && !ev.target.matches('i, .fcs')) return; const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); if (state.tab === 'combo' && state.comboSel !== +t.dataset.i) selectComboLayer(+t.dataset.i); }));
+  host.querySelectorAll('.tlb-n[data-i]').forEach(n => n.addEventListener('click', () => { if (state.tab === 'combo') selectComboLayer(state.comboSel === +n.dataset.i ? -1 : +n.dataset.i); }));
   host.querySelectorAll('[data-cut]').forEach(b => b.addEventListener('click', () => setCut(b.dataset.cut)));
   host.querySelectorAll('.ph, .cut').forEach(h => h.addEventListener('pointerdown', ev => trackDrag(ev, h)));
   const ex = rows.find(x => (state.tab !== 'combo' && P) || (state.tab === 'combo' && state.comboSel === x.i)), phs = ex ? phasesOf(layerPOf(ex)) : [];
-  if (phs.length) host.querySelector('.tlcut').insertAdjacentHTML('beforeend', `<span class="phl">${phs.map(q => `<i class="ph-${q.k}"></i>${q.lab} ${q.t.toFixed(2)} s`).join(' · ')}</span>`);
+  const phn = phs.filter(q => !q.auto);
+  if (phn.length) host.querySelector('.tlcut').insertAdjacentHTML('beforeend', `<span class="phl">${phn.map(q => `<i class="ph-${q.k}"></i>${q.lab} ${q.t.toFixed(2)} s`).join(' · ')}</span>`);
+  document.querySelectorAll('[data-info=outSummary]').forEach(r => r._refresh && r._refresh());
 }
 // 拖层轨道（用户 2026-10-02 14:46：「每层轨道出入点我看到了，但是没法拖」）：任何一层的入点 / 出点把手、阶段点都能直接拖。
 // 多层时按下就切到那一层（右栏换成那一层的参数）；拖的时候只移动把手，松手才改参数、只重烘那一层。
@@ -328,6 +369,7 @@ function trackDrag(ev, h) {
   let lo = 0, hi = Infinity;
   if (cut === 'in') { lo = sp.vis[0]; hi = Math.min(sp.vis[1], +P.cutOut > 0 ? +P.cutOut : sp.end) - 1 / 15; }
   if (cut === 'out') { lo = Math.max(sp.vis[0], +P.cutIn > 0 ? +P.cutIn : sp.t0) + 1 / 15; hi = sp.vis[1]; }
+  if (q) { if (q.lo != null) lo = Math.max(lo, q.lo); if (q.hi != null) hi = Math.min(hi, q.hi); }
   const D = curDuration(), toLayer = cx => { const r = track.getBoundingClientRect(); return clamp((clamp((cx - r.left) / r.width, 0, 1) * D - sp.d) * sp.r, lo, hi); };
   stage2.drag = true; h.classList.add('on'); try { h.setPointerCapture(ev.pointerId); } catch (e) { }
   let tl = t0;
@@ -337,9 +379,80 @@ function trackDrag(ev, h) {
     stage2.drag = false; h.classList.remove('on'); setStatus(''); stage2.tlSig = '';
     if (Math.abs(tl - t0) < 0.005) return;
     if (cut) { applyCut(P, sp, cut, tl, true); return; }
-    q.set(tl); refreshPanelValues(); refreshVisibility(); onParam(); flash(`${q.lab} 改到 ${tl.toFixed(2)} s，正在重烘`);
+    // 同一批星的另一层在同一时刻的点（接力：引线火花停 = 锦点火；四尺玉燃烧结束 = 红点亮起）一起移动
+    const partners = q.auto ? [] : gluePartners(li, sp.at(q.t)), end0 = layerEndOf(P);
+    q.set(tl); const q1 = phasesOf(P).find(z => z.k === q.k), tNow = q1 ? q1.t : tl, dd = followDuration(P, end0);   // set 可能夹住 / 改回默认：按实际落点带另一层
+    const moved = [];
+    if (q1 && !q1.auto) for (const g of partners) { const e0 = layerEndOf(g.P); g.q.set((sp.at(tNow) - g.sp.d) * g.sp.r); followDuration(g.P, e0); moved.push(g.i); }
+    tl = tNow;
+    refreshPanelValues(); refreshVisibility(); onParam();
+    if (moved.length) rebakeLayers(moved);
+    flash(`${q.lab} 改到 ${tl.toFixed(2)} s${dd ? `，序列时长跟着${dd > 0 ? '加' : '减'} ${Math.abs(dd).toFixed(2)} s` : ''}${moved.length ? `；第 ${moved.map(j => j + 1).join('、')} 层同一时刻的点一起动` : ''}，正在重烘`);
   };
   h.addEventListener('pointermove', mv); h.addEventListener('pointerup', up); h.addEventListener('pointercancel', up);
+}
+// 「输出」一节顶上的结果（4.2.0）：入出点之间多少 tick → 烘了多少帧 → 每张怎么装、帧率多少；有问题直接写出来
+function outSummaryHTML() {
+  const x = curLayerBakes().find(r => state.tab !== 'combo' || r.i === state.comboSel), b = x && x.b, P = state.P;
+  if (!b || !b.meta || b.meta.frameTiming !== 'tick-start') return '<p class="hint">烘好以后这里显示：入点到出点之间多少 tick、烘了多少帧、怎么装进贴图、帧率多少。</p>';
+  const parts = bakeParts(b), F = parts.reduce((n, s) => n + s.meta.L.F, 0), m0 = parts[0].meta, end = bakeTotal(b), N = Math.round((end - (m0.t0 || 0)) * 30);
+  let maxF = 0, minF = 99; for (const s of parts) for (const d of s.meta.dur || []) { const f = 1 / Math.max(d, 1 / 30); maxF = Math.max(maxF, f); minF = Math.min(minF, f); }
+  const burnMin = Math.min(...parts.map(s => s.meta.minFps || 30));
+  const used = parts.reduce((n, s) => n + s.meta.L.F, 0), cap = parts.reduce((n, s) => n + s.meta.L.cols * s.meta.L.rows * s.meta.L.chans, 0);
+  const sheet = s => { const L = s.meta.L; return `${L.cols}×${L.rows}${L.chans === 4 ? '×RGBA' : ''} · ${Math.round(L.cols * L.cellW)}×${Math.round(L.rows * L.cellH)}`; };
+  const mode = { motion: '自动', lean: '最省', count: '手动', tiers: '分段帧率', full: '全程 30 fps' }[P.frameBudget || 'motion'] || '';
+  const warn = [];
+  if (burnMin < 10 - 0.05) warn.push(`燃烧段最慢 ${burnMin.toFixed(1)} fps，低于标准的 10 fps`);
+  if (minF < 7.5 - 0.05) warn.push(`最慢 ${minF.toFixed(1)} fps，低于标准的 7.5 fps`);
+  if (P.outPack !== 'fit' && used < cap * 0.5) warn.push(`贴图里一半以上的格子是空的（用了 ${used} / ${cap}）：可以把「格子」改成「按帧数选最小贴图」，或「帧数」改成「最省」`);
+  return `<div class="osum"><div><b>${F} 帧</b>（${mode}）· 入点 ${(m0.t0 || 0).toFixed(2)} → 出点 ${end.toFixed(2)} s，${N} 个 tick${m0.cut && (m0.cut.in || m0.cut.out) ? '（用了你设的入出点）' : '（自动：第一次到最后一次看得见）'}</div>
+    <div>帧率 ${maxF.toFixed(0)} fps → 最慢 ${minF.toFixed(1)} fps（燃烧段最慢 ${burnMin.toFixed(1)}）</div>
+    <div>${parts.length} 张：${parts.map(sheet).join('；')} · 单格 ${Math.round(m0.L.cellW)} px · 格子用了 ${used} / ${cap}</div>
+    ${warn.map(w => `<div class="ow">⚠ ${w}</div>`).join('')}</div>`;
+}
+// 单束（4.2.0，用户 16:22「单束输出藏得太死」）：资产栏「单束」菜单、层参数顶上的按钮、交付页，三处都能导
+function unitTargets() {
+  const xs = curLayerBakes().filter(x => x.b && layerPOf(x) && unitAllowed(layerPOf(x))), combo = state.tab === 'combo';
+  return xs.map(x => ({ i: x.i, label: combo ? `第 ${x.i + 1} 层 · ${x.name}` : (state.name || '这个效果') }));
+}
+function unitExportLayer(i) {
+  const combo = state.tab === 'combo', xs = curLayerBakes(), x = combo ? xs.find(r => r.i === i) : xs[0]; if (!x) return;
+  const nm = packNamesFor(wbKey(), lib.effect, xs.length, delivName(), !combo && x.b ? x.b.P.type : '');
+  exportUnitPack(layerPOf(x), combo ? x.L : state.M, nm.base + (combo && nm.layers[x.i] ? '_' + nm.layers[x.i] : ''));
+}
+function renderUnitMenu() {
+  const host = $('#abUnitMenu'), ts = unitTargets(), combo = state.tab === 'combo';
+  host.innerHTML = `<p class="hint">单束 = 只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条；比大面片省 overdraw。</p>`
+    + (ts.length ? ts.map(t => `<button type="button" data-u="${t.i}">导出 ${t.label} 的单束包</button>`).join('') : '<p class="hint">当前效果没有能出单束的层（千轮、分裂、蜂和非球形排布不行）。</p>')
+    + (!combo && ts.length && state.P.form !== 'unit' ? '<button type="button" id="abUnitView">把产物改成单束（在画面里看）</button>' : '');
+  host.querySelectorAll('[data-u]').forEach(b => b.addEventListener('click', () => { $('#abUnit').open = false; unitExportLayer(+b.dataset.u); }));
+  const v = host.querySelector('#abUnitView'); if (v) v.addEventListener('click', () => { $('#abUnit').open = false; setForm('unit'); refreshPanelValues(); syncExport(); flash('产物改成「单元序列」（单束）：每颗星一个粒子'); });
+}
+// 粘在一起的点：同一批星（联动）的几层里，非默认位置、总时间相差 < 0.02 s 的点
+function gluePartners(li, at) {
+  if (state.tab !== 'combo' || state.linkOff) return [];
+  const out = [];
+  for (const j of linkedWith(li)) {
+    const x2 = curLayerBakes().find(r => r.i === j), sp2 = x2 && layerSpans(x2), P2 = x2 && layerPOf(x2); if (!sp2 || !P2) continue;
+    for (const q2 of phasesOf(P2)) if (!q2.auto && Math.abs(sp2.at(q2.t) - at) < 0.02) out.push({ i: j, P: P2, sp: sp2, q: q2 });
+  }
+  return out;
+}
+function gluedPhases(rows) {
+  const set = new Set(); if (state.tab !== 'combo' || state.linkOff) return set;
+  for (const x of rows) { const sp = layerSpans(x), P = layerPOf(x); if (!sp || !P) continue;
+    for (const q of phasesOf(P)) if (!q.auto && gluePartners(x.i, sp.at(q.t)).length) set.add(x.i + ':' + q.k); }
+  return set;
+}
+// 重烘没选中的几层（粘在一起被带着动的层）
+async function rebakeLayers(idxs) {
+  for (const j of idxs) {
+    const e2 = state.lib.find(x => x.name === state.layers[j].lib); if (!e2) continue;
+    e2.rev = (e2.rev || 0) + 1;
+    try { const b = await bake(libP(e2.P, true), 1, p => setStatus(`接力：重烘第 ${j + 1} 层 ${Math.round(p * 100)}%`)); disposeBake(e2.bake); e2.bake = b; } catch (err) { flash('接力重烘失败：' + err.message, true); }
+    if (e2.rep) { state.layerEdits = state.layerEdits || {}; state.layerEdits[e2.rep] = { P: e2.P, M: e2.M }; e2.editSig = JSON.stringify([e2.P, e2.M]); }
+  }
+  setStatus(''); stage2.tlSig = ''; if (typeof buildLayerCard === 'function') buildLayerCard();
 }
 // 入点 / 出点 = 这一层自己的时间（相对开花）。第一次设入点时，把当前烘焙的「第一次看得见」记成 preFrom（入点前从这里开始放大）
 function setCut(kind) {
@@ -453,7 +566,7 @@ function renderDeliv() {
     ${unitHTML(xs, combo)}`;
   host.querySelector('#dvExport').addEventListener('click', () => combo ? exportCombo() : $('#btnExport').click());
   host.querySelector('#dvBack').addEventListener('click', () => toggleDeliv(false));
-  host.querySelectorAll('[data-unit]').forEach(b => b.addEventListener('click', () => { const x = xs.find(r => r.i === +b.dataset.unit); if (x) exportUnitPack(layerPOf(x), combo ? x.L : state.M, nm.base + (combo && nm.layers[x.i] ? '_' + nm.layers[x.i] : '')); }));
+  host.querySelectorAll('[data-unit]').forEach(b => b.addEventListener('click', () => unitExportLayer(+b.dataset.unit)));
   const tu = host.querySelector('#dvToUnit'); if (tu) tu.addEventListener('click', () => { setForm('unit'); refreshPanelValues(); syncExport(); flash('产物改成「单元序列」（单束）：每颗星一个粒子，Cascade 里放射发射'); });
   const sv = host.querySelector('#dvSaveNames');
   if (sv) sv.addEventListener('click', () => {
@@ -494,7 +607,11 @@ function toggleDeliv(on) {
   if (stage2.deliv) renderDeliv();
 }
 function tickStep(n) { state.playing = false; $('#play').textContent = '播放'; state.t = Math.max(0, Math.min(curDuration(), engineTick(state.t + 1e-6) + n / 30)); }
+// 重播（4.2.0，用户 16:22）：回到 0 秒并播放；快捷键 R
+function replay() { state.t = 0; state.playing = true; $('#play').textContent = '暂停'; }
 function initStage() {
+  $('#replay').addEventListener('click', replay);
+  $('#abUnit').addEventListener('toggle', () => { if ($('#abUnit').open) renderUnitMenu(); });
   $('#tickPrev').addEventListener('click', () => tickStep(-1));
   $('#tickNext').addEventListener('click', () => tickStep(1));
   state.loopPlay = store.get('loopPlay', true); $('#loopChk').checked = state.loopPlay;
@@ -506,5 +623,6 @@ function initStage() {
   document.addEventListener('keydown', e => {
     if (/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName) || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'ArrowLeft') { e.preventDefault(); tickStep(-1); } else if (e.key === 'ArrowRight') { e.preventDefault(); tickStep(1); }
+    else if (e.key.toLowerCase() === 'r') { e.preventDefault(); replay(); }
   });
 }
