@@ -1,0 +1,185 @@
+{
+ "id": "UI12",
+ "type": "ui",
+ "name": "新旧对照：QN10（3.7）↔ QN11（4.0）、HK9 ↔ HK10，引擎回放同一时刻（适应窗口）",
+ "priority": 7,
+ "note": "对话框2（QN11 / HK10 的 4.0 迁移负责）：参数不变只换渲染核，引擎回放按实拍同一秒并排看颜色、亮度、时间、大小是否一致。只截图，不改东西。",
+ "shots": [
+  {
+   "name": "QN10_打开",
+   "review": "QN10",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "sleep": 9000,
+   "shot": false,
+   "viewport": [
+    1440,
+    900
+   ]
+  },
+  {
+   "name": "QN10_0.36s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 0.36,
+   "sleep": 2500
+  },
+  {
+   "name": "QN10_1.07s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 1.07,
+   "sleep": 2500
+  },
+  {
+   "name": "QN10_1.79s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 1.79,
+   "sleep": 2500
+  },
+  {
+   "name": "QN10_2.51s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 2.51,
+   "sleep": 2500
+  },
+  {
+   "name": "QN10_3.22s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 3.22,
+   "sleep": 2500
+  },
+  {
+   "name": "QN11_打开",
+   "review": "QN11",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "sleep": 9000,
+   "shot": false
+  },
+  {
+   "name": "QN11_0.36s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 0.36,
+   "sleep": 2500
+  },
+  {
+   "name": "QN11_1.07s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 1.07,
+   "sleep": 2500
+  },
+  {
+   "name": "QN11_1.79s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 1.79,
+   "sleep": 2500
+  },
+  {
+   "name": "QN11_2.51s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 2.51,
+   "sleep": 2500
+  },
+  {
+   "name": "QN11_3.22s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 3.22,
+   "sleep": 2500
+  },
+  {
+   "name": "HK9_打开",
+   "review": "HK9",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "sleep": 9000,
+   "shot": false
+  },
+  {
+   "name": "HK9_1.04s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 1.04,
+   "sleep": 2500
+  },
+  {
+   "name": "HK9_3.11s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 3.11,
+   "sleep": 2500
+  },
+  {
+   "name": "HK9_5.18s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 5.18,
+   "sleep": 2500
+  },
+  {
+   "name": "HK9_7.25s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 7.25,
+   "sleep": 2500
+  },
+  {
+   "name": "HK9_9.32s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 9.32,
+   "sleep": 2500
+  },
+  {
+   "name": "HK10_打开",
+   "review": "HK10",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "sleep": 9000,
+   "shot": false
+  },
+  {
+   "name": "HK10_1.04s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 1.04,
+   "sleep": 2500
+  },
+  {
+   "name": "HK10_3.11s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 3.11,
+   "sleep": 2500
+  },
+  {
+   "name": "HK10_5.18s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 5.18,
+   "sleep": 2500
+  },
+  {
+   "name": "HK10_7.25s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 7.25,
+   "sleep": 2500
+  },
+  {
+   "name": "HK10_9.32s",
+   "js": "state.disp = 'fit'; state.playing = false",
+   "view": "export",
+   "t": 9.32,
+   "sleep": 2500
+  }
+ ]
+}
