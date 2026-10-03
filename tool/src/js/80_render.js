@@ -383,6 +383,10 @@ function renderComboLive() {
   });
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   let n = 0;
+  // 4.2.20：几层一起算显卡负担，超预算时每层都少画几个快门子样本（见 48_render40.js liveCtl）
+  let work = 0; items.forEach(([L, e, i]) => { const age = (state.t - (L.delay || 0)) * (L.rate || 1); if (age < 0 || age > e.P.duration || !layerShown(i)) return; const R = renderVersion(e.P) >= 40 && !isTrail(e.P) && !isPhys(e.P) ? liveRenderer40(liveSlot('combo' + i), e.P) : null; work += R ? trackDraws(R.track, e.P) + (e.P.stars || 0) : 0; });
+  LIVE_CAP = liveCapFor(work);
+  try {
   items.forEach(([L, e, i]) => {
     const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = e.P;
     if (age < 0 || age > P.duration || !layerShown(i)) return;
@@ -396,8 +400,9 @@ function renderComboLive() {
     gl.uniform1f(pr.u.uEH, m.expoH); gl.uniform1f(pr.u.uET, m.expoT); gl.uniform1f(pr.u.uG, e.bake.P.encGamma || 1); gl.uniform1f(pr.u.uComb, e.bake.P.outMode === 'combined' ? 1 : 0);
     setMatUniforms(pr, L, age); drawQuad(); additive(false); n++;
   });
+  } finally { LIVE_CAP = 0; }
   post();
-  hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层）${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}`; hudB = '';
+  hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层）${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}${liveCapNote()}`; hudB = '';
 }
 // 引擎回放要画单束时，在后台烘一次这一层的单束序列（不和别的烘焙同时跑）
 let unitTask = null;
@@ -472,9 +477,11 @@ function curDuration() {
   return d;
 }
 function loop(now) {
+  if (state.glLost || gl.isContextLost()) { glLostNotice(); return; }      // 4.2.20：显卡上下文丢了，停下（不再每帧报错），画面上写原因
   if (state.stillBusy) { lastT = now; requestAnimationFrame(loop); return; }   // 定帧渲染期间让出画布
   // 播放时钟按真实时间走（4.1.2：以前每帧最多推进 0.05 s，掉到 10 fps 时只按半速播、实拍还会反复往回跳）；只防切走标签页回来时的一大步
   const dt = Math.min(0.25, Math.max(0, (now - lastT) / 1000)); lastT = now;
+  if (dt > 0) { liveCtl.ema = liveCtl.ema * 0.85 + dt * 0.15; liveAdapt(now); }     // 4.2.20：实时模拟按帧时间调显卡负担
   const D = curDuration(), looping = !state.showcase && familyOf(state.P.type) === 'ground' && state.tab === 'master';
   if (state.playing) { state.t += dt * state.speed;
     if (!looping && state.loopPlay === false && state.t >= D) { state.t = D; state.playing = false; $('#play').textContent = '播放'; }   // 播放一遍：停在最后

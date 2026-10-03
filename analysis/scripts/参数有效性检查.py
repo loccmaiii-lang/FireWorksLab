@@ -95,13 +95,13 @@ def pngdiff(a, b):
 
 PLAN_KEYS = None
 
-# 静态：每个键在哪些源码文件里被读到（10_types.js 是定义，79_curves.js 只是列出「哪个参数对应哪条曲线」，都不算）
+# 静态：每个键在哪些源码文件里被读到（10_types.js 是定义，79_curves.js、71_panel43.js 只是列出键名（曲线对应、不起作用的条件），都不算）
 RENDER_FILES = {'05_quality.js', '40_gl.js', '41_particles40.js', '48_render40.js', '49_playback.js', '80_render.js', '82_showcase.js', '85_stills.js'}
 BAKE_FILES = {'50_bake.js', '60_export.js', '61_naming.js', '65_cascade.js', '66_fwlcascade.js', '67_fwlcombo.js'}
 
 
 def static_files(keys):
-    srcs = {p.name: p.read_text(encoding='utf-8') for p in sorted((ROOT / 'tool' / 'src' / 'js').glob('*.js')) if p.name not in ('10_types.js', '79_curves.js')}
+    srcs = {p.name: p.read_text(encoding='utf-8') for p in sorted((ROOT / 'tool' / 'src' / 'js').glob('*.js')) if p.name not in ('10_types.js', '79_curves.js', '71_panel43.js')}
     out = {}
     for k in keys:
         pat = re.compile(r"\.%s\b|['\"]%s['\"]" % (re.escape(k), re.escape(k)))
@@ -193,7 +193,7 @@ def summarize(res, render, ver, minutes, out):
     meta = {'version': ver, 'render': render, 'minutes': minutes, 'contexts': [r['ctx'] for r in res], 'unstable_plan': [r['ctx'] for r in res if r.get('stable') is False]}
     (out / '参数有效性.json').write_text(json.dumps({'meta': meta, 'params': rows, 'raw': res}, ensure_ascii=False, indent=1), encoding='utf-8')
     L = [f"# 参数有效性检查（烘焙器 {ver}，{'曲线 + 导出 + 画面' if render else '曲线 + 导出；没变的只是候选，要 --render 才能定'}）", '',
-         f"上下文 {len(res)} 个（空中类模板默认参数 + 每个效果的每一层），{meta['minutes']} 分钟。每个参数单独拨两个值（+20% 量程、量程另一头；秒类按时长拨；下拉换后两项），只拨右栏此刻看得见的。",
+         f"上下文 {len(res)} 个（空中类模板默认参数 + 每个效果的每一层），{meta['minutes']} 分钟。每个参数单独往两边拨（± 20% 量程；秒类按时长拨、再试时长一半；下拉换后两项），一边有反应就算有反应，只拨右栏此刻看得见的。",
          '「改到导出」只给曲线没变的参数算（帧计划要跑完整测量，慢）。', '',
          '| 结论 | 参数 | 节 | 键 | 试了 | 没反应的上下文 | 改到的曲线 | 改到导出 | 改到画面 | 源码里用到它的文件 |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |']
     for g in rows:

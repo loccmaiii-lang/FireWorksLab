@@ -44,6 +44,7 @@ LIVE = r"""new Promise(res => { state.view = 'live'; state.playing = true; state
 
 async def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--real', action='store_true'); ap.add_argument('--only', default=''); ap.add_argument('--limit', type=float, default=0); ap.add_argument('--out', default='')
+    ap.add_argument('--cap', action='store_true', help='4.2.20：再量「打开后烘焙中」和「实时模拟按显卡负担少画子样本（liveCtl）」时的帧间隔')
     a = ap.parse_args(); pref = tuple(x for x in a.only.split(',') if x)
     from playwright.async_api import async_playwright
     res = []
@@ -64,19 +65,29 @@ async def main():
             if a.limit and time.time() - T0 > a.limit * 60: print('到时间上限，停'); break
             n0 = len(errs); t0 = time.time()
             await pg.evaluate(OPEN, it['key'])
+            info0 = {}
+            if a.real and a.cap:      # 打开后马上：烘焙在后台跑时实时模拟卡不卡（用户 10-03 17:28 说的「一顿一顿」）
+                await pg.wait_for_timeout(600)
+                info0['liveBaking'] = await pg.evaluate(LIVE)
+                await pg.evaluate("liveCtl.auto = true; 0"); info0['liveBakingCap'] = await pg.evaluate(LIVE); await pg.evaluate("liveCtl.auto = false; 0")
             to = 300 if a.real else 60; ok = False
             while time.time() - t0 < to:
                 await pg.wait_for_timeout(200)
                 if await pg.evaluate(IDLE): ok = True; break
             info = await pg.evaluate(INFO)
+            info.update(info0)
             if a.real and ok:     # 真烘焙时再量实时模拟卡不卡：播放 2.5 秒，记每帧间隔（画布每秒画几次）
                 info['live'] = await pg.evaluate(LIVE)
+                if a.cap:         # 4.2.20：打开按显卡负担调子样本（检查默认关），先让它适应 1.5 秒再量
+                    await pg.evaluate("liveCtl.auto = true; liveCtl.budget = 24e6; state.view = 'live'; state.playing = true; 0"); await pg.wait_for_timeout(1500)
+                    info['liveCap'] = await pg.evaluate(LIVE); info['liveCap']['budget'] = await pg.evaluate("liveCtl.budget"); info['liveCap']['cap'] = await pg.evaluate("[liveCtl.lastCap, liveCtl.lastFull]")
+                    await pg.evaluate("liveCtl.auto = false; 0")
             r = {**it, 'sec': round(time.time() - t0, 1), 'timeout': not ok, 'pageErrors': errs[n0:][:3], **info}
             fake_skip = not a.real and any('假烘焙只造' in str(x) for x in [r['err'], r['bakeErr'], *r['pageErrors']])
             r['status'] = '跳过（要真烘焙）' if fake_skip else '超时' if not ok else '报错' if (r['err'] or r['pageErrors'] or r['bakeErr']) else '缺贴图' if r['missing'] else 'ok'
             res.append(r)
             if r.get('live') and r['live'].get('p90Ms') and r['live']['p90Ms'] > 100 and r['status'] == 'ok': r['status'] = '卡'
-            print(('✅' if r['status'] == 'ok' else '⏭' if r['status'].startswith('跳过') else '❌'), r['key'], r['name'], r['status'], f"{r['sec']} s · 预跑 {r['measureS']} s · {r['frames']} 帧 / {r['pages']} 张" + (f" · 实时 {r['live']['medMs']} / {r['live']['p90Ms']} ms" if r.get('live') else ''),
+            print(('✅' if r['status'] == 'ok' else '⏭' if r['status'].startswith('跳过') else '❌'), r['key'], r['name'], r['status'], f"{r['sec']} s · 预跑 {r['measureS']} s · {r['frames']} 帧 / {r['pages']} 张" + (f" · 实时 {r['live']['medMs']} / {r['live']['p90Ms']} ms" if r.get('live') else '') + (f" · 调子样本后 {r['liveCap']['medMs']} / {r['liveCap']['p90Ms']} ms（{r['liveCap']['cap']}）" if r.get('liveCap') else '') + (f" · 烘焙中 {r['liveBaking']['medMs']} / {r['liveBaking']['p90Ms']} → {r['liveBakingCap']['medMs']} / {r['liveBakingCap']['p90Ms']} ms" if r.get('liveBaking') else ''),
                   (r['err'] or r['bakeErr'] or (r['pageErrors'][0] if r['pageErrors'] else ''))[:160], flush=True)
             if not ok:     # 卡住了：换一页继续
                 await pg.close(); pg = await ctx.new_page(); errs.clear(); pg.on('pageerror', lambda e: errs.append(str(e)))

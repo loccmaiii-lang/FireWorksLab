@@ -1,0 +1,143 @@
+#!/usr/bin/env python3
+"""实时负担检查（对话框2，2026-10-03；用户 17:28：①打开制作中的效果烘一会儿白屏 ②四尺玉 / 金芒菊实时模拟一顿一顿）
+
+  M1 内存：打开每个效果、实时模拟走几帧以后，显存（纹理字节）≤ 400 MB、JS 堆 ≤ 600 MB、每张星轨道纹理 ≤ 64 MB；
+     待验收 / 已通过的效果星轨道时间分辨率不变（不改它们的样子）
+  M2 实时模拟按显卡负担调快门子样本：负担（每个子样本要画的火花数 × 子样本数）超出预算时少画几个子样本、HUD 写明；
+     预算按实际帧时间自动升降；烘焙中实时模拟让出显卡（子样本压到最少）；烘焙本身的子样本不受影响
+  M3 显卡上下文丢失（显存不够 / 驱动超时重置）：不再白屏不说话，画面上写原因和怎么办，渲染循环停下不刷错误
+
+  云端没有显卡：画图换成空操作，只量内存、子样本数和逻辑。真实帧率要本机任务（SMOKE / 条目体检）看。
+"""
+import argparse, asyncio, json, re, sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from browser_runtime import chromium_options
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+HTML = (ROOT / 'tool' / 'FireworkBaker.html').as_uri() + '?fast'
+FAKE = re.search(r'FAKE = r"""(.*?)"""', (ROOT / 'analysis' / 'scripts' / '界面状态检查.py').read_text(encoding='utf-8'), re.S).group(1)
+GPU = r"""(() => {
+  const g = gl, live = new Map(); window.__gpu = { cur: 0, peak: 0, maxTex: 0 };
+  const bpp = (f, type) => ({ [g.RGBA16F]: 8, [g.RGBA32F]: 16, [g.RGBA8]: 4, [g.R32F]: 4, [g.RG16F]: 4 })[f] || (type === g.FLOAT ? 16 : 4);
+  const oT = g.texImage2D.bind(g), oD = g.deleteTexture.bind(g);
+  g.texImage2D = function (...a) { const tex = g.getParameter(g.TEXTURE_BINDING_2D); if (a.length >= 8 && typeof a[3] === 'number') { const b = a[3] * a[4] * bpp(a[2], a[7]), o = live.get(tex) || 0; live.set(tex, b);
+    __gpu.cur += b - o; __gpu.peak = Math.max(__gpu.peak, __gpu.cur); __gpu.maxTex = Math.max(__gpu.maxTex, b); } return oT(...a); };
+  g.deleteTexture = function (t) { __gpu.cur -= live.get(t) || 0; live.delete(t); return oD(t); };
+  window.__draws = 0; const oB = drawParticleBatch; drawParticleBatch = (n, m) => { window.__draws += n; };      // 不真画（云端软件渲染太慢），记画了多少
+  hazeSamples40 = () => {}; packCell40 = () => {}; shadeView40 = () => {}; post = () => {};
+  return 0; })()"""
+# 不改样子：这些效果的星轨道时间步（dt）应和改之前一样
+KEEP = ['jinmangju', 'hongchao', 'hiki_nishiki', 'qingning']
+
+
+async def page(p, opts):
+    b = await p.chromium.launch(**opts)
+    ctx = await b.new_context(viewport={'width': 1200, 'height': 800}); pg = await ctx.new_page()
+    errs = []; pg.on('pageerror', lambda e: errs.append(str(e)[:160]))
+    await pg.add_init_script("window.requestAnimationFrame = () => 0;")
+    await pg.goto(HTML, wait_until='load', timeout=0); await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
+    await pg.evaluate(FAKE); await pg.evaluate(GPU)
+    return b, pg, errs
+
+
+async def open_eff(pg, k):
+    await pg.evaluate(f"(() => {{ window.__opening = true; Promise.resolve(openEffect(EFFS().find(e => e.key === {json.dumps(k)}))).finally(() => window.__opening = false); return 0; }})()")
+    for _ in range(80):
+        await pg.wait_for_timeout(250)
+        if await pg.evaluate("!window.__opening && !state.baking && !(state.layerQueue && state.layerQueue.size)"): break
+
+
+FRAMES = r"""async (n) => { state.view = 'live'; let now = 1000; lastT = now; let hp = performance.memory.usedJSHeapSize;
+  for (let i = 0; i < n; i++) { now += 1000 / 60; state.t = 0.5 + i * 0.25; loop(now); hp = Math.max(hp, performance.memory.usedJSHeapSize); await new Promise(r => setTimeout(r, 0)); }
+  const tr = Object.entries(live).filter(([k, s]) => s && s.R40 && s.R40.track).map(([k, s]) => [k, s.R40.track.nStars, s.R40.track.Ns, +s.R40.track.dt.toFixed(6)]);
+  return { heapMB: Math.round(hp / 1e6), gpuMB: Math.round(__gpu.peak / 1e6), maxTexMB: Math.round(__gpu.maxTex / 1e6), tracks: tr }; }"""
+
+
+async def m1(p, opts, effs, base):
+    bad, info = [], {}
+    for k in effs:
+        b, pg, errs = await page(p, opts)
+        try:
+            await open_eff(pg, k); r = await pg.evaluate(FRAMES, 12); info[k] = r
+            if r['gpuMB'] > 400: bad.append(f"{k} 显存 {r['gpuMB']} MB")
+            if r['heapMB'] > 600: bad.append(f"{k} JS 堆 {r['heapMB']} MB")
+            if r['maxTexMB'] > 64: bad.append(f"{k} 一张纹理 {r['maxTexMB']} MB")
+            if errs: bad.append(f'{k} 页面错误 {errs[0]}')
+            if k in base and base[k] != [x[3] for x in r['tracks']]: bad.append(f"{k} 星轨道时间步变了 {base[k]} → {[x[3] for x in r['tracks']]}（会改样子）")
+        finally: await b.close()
+    return not bad, bad, info
+
+
+async def m2(p, opts):
+    bad, info = [], {}
+    b, pg, errs = await page(p, opts)
+    try:
+        await open_eff(pg, 'hongchao')
+        # 自动化里默认不压（检查要和烘焙一致）；打开自动、把预算设小 → 子样本变少、HUD 写明；烘焙路径不受影响
+        r0 = await pg.evaluate("(() => { state.view = 'live'; state.t = 3; window.__draws = 0; let now = 2000; lastT = now; loop(now + 16); return { draws: __draws, cap: liveCtl.lastCap, full: liveCtl.lastFull, hud: $('#hud').textContent }; })()")
+        info['默认'] = r0
+        if r0['cap'] and r0['cap'] < r0['full']: bad.append(f"自动化里默认就压了子样本：{r0}")
+        r1 = await pg.evaluate("(() => { liveCtl.auto = true; liveCtl.budget = 3e6; window.__draws = 0; let now = 3000; lastT = now; loop(now + 16); return { draws: __draws, cap: liveCtl.lastCap, full: liveCtl.lastFull, hud: $('#hud').textContent }; })()")
+        info['预算 3M'] = r1
+        if not (r1['cap'] and r1['cap'] < r1['full']): bad.append(f'预算小了子样本没少：{r1}')
+        if not r0['draws'] or r1['draws'] > r0['draws'] * 0.6: bad.append(f"画的量没明显少：{r0['draws']} → {r1['draws']}")
+        if '子样本' not in r1['hud']: bad.append(f"HUD 没写明：{r1['hud']}")
+        # 帧时间慢 → 预算自动降；快 → 回升
+        r2 = await pg.evaluate("(() => { liveCtl.budget = 2e7; liveCtl.ema = 0.08; liveCtl.lastAdj = 0; liveAdapt(performance.now()); const a = liveCtl.budget; liveCtl.ema = 0.012; liveCtl.lastAdj = 0; liveAdapt(performance.now()); return [a, liveCtl.budget]; })()")
+        info['自动升降'] = r2
+        if not (r2[0] < 2e7 and r2[1] > r2[0]): bad.append(f'预算没跟帧时间升降：{r2}')
+        # 烘焙中：让出显卡
+        r3 = await pg.evaluate("(() => { liveCtl.budget = 1e9; state.baking = true; window.__draws = 0; let now = 4000; lastT = now; loop(now + 16); const o = { cap: liveCtl.lastCap, full: liveCtl.lastFull }; state.baking = false; return o; })()")
+        info['烘焙中'] = r3
+        if not (r3['cap'] and r3['cap'] <= 3): bad.append(f'烘焙中实时模拟没让出显卡：{r3}')
+        # 烘焙本身不受影响（drawFrameSamples40 在烘焙里用满子样本）
+        r4 = await pg.evaluate("""(() => { liveCtl.budget = 1e6; const e = layerEntryOf(state.layers[0]), P = e.P, pl = displayPlan40(P), R = makeRenderer(P, 'burst'); const q = qualityOf(P);
+            let n = 0; const oD = R.draw; R.draw = (...a) => { n++; }; const t = 6, [a, b] = shutterWindow(P, pl, t); drawFrameSamples40(P, pl, R, t, frameView40(pl, t), 100); R.dispose();
+            return { n, want: clamp(Math.ceil((b - a) * q.hz), 1, q.maxSub) }; })()""")
+        info['烘焙子样本'] = r4
+        if r4['n'] != r4['want']: bad.append(f'烘焙 / 定帧的子样本被压了：{r4}')
+        if errs: bad.append('页面错误 ' + errs[0])
+    finally: await b.close()
+    return not bad, bad, info
+
+
+async def m3(p, opts):
+    bad, info = [], {}
+    b, pg, errs = await page(p, opts)
+    try:
+        await open_eff(pg, 'jinmangju')
+        await pg.evaluate("(() => { const x = gl.getExtension('WEBGL_lose_context'); x.loseContext(); return 0; })()"); await pg.wait_for_timeout(300)
+        r = await pg.evaluate("(() => { let now = 5000; lastT = now; for (let i = 0; i < 5; i++) loop(now += 16); const o = $('#glLost'); return { shown: !!o && !o.hidden, txt: o ? o.textContent : '' }; })()")
+        info['丢失后'] = {'shown': r['shown'], 'txt': r['txt'][:80]}
+        if not r['shown'] or '刷新' not in r['txt']: bad.append(f'上下文丢失没有提示：{r}')
+        if len(errs) > 2: bad.append(f'丢失后刷错误：{len(errs)} 条，{errs[0]}')
+    finally: await b.close()
+    return not bad, bad, info
+
+
+async def main():
+    ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--effects', default='jinmangju,hongchao,hiki_nishiki,qingning,qiuxing_a,qiuxing_d,yongfeng,pianbei')
+    ap.add_argument('--base', default='', help='星轨道时间步的基线 json（改之前跑一遍 --dump-base 得到）'); ap.add_argument('--dump-base', default='')
+    a = ap.parse_args(); only = set(x for x in a.only.split(',') if x)
+    opts = chromium_options(); opts['args'] = list(opts.get('args', [])) + ['--enable-precise-memory-info', '--js-flags=--max-old-space-size=8192']
+    base = json.loads(pathlib.Path(a.base).read_text()) if a.base else {}
+    from playwright.async_api import async_playwright
+    res = []
+    async with async_playwright() as p:
+        if a.dump_base:
+            out = {}
+            for k in KEEP:
+                b, pg, errs = await page(p, opts)
+                try: await open_eff(pg, k); out[k] = [x[3] for x in (await pg.evaluate(FRAMES, 4))['tracks']]
+                finally: await b.close()
+            pathlib.Path(a.dump_base).write_text(json.dumps(out)); print('基线', out); return
+        for name, fn in [('M1', lambda: m1(p, opts, a.effects.split(','), base)), ('M2', lambda: m2(p, opts)), ('M3', lambda: m3(p, opts))]:
+            if only and name not in only: continue
+            try: ok, bad, info = await fn()
+            except Exception as e: ok, bad, info = False, [f'异常：{e}'[:300]], {}
+            res.append({'item': name, 'pass': ok, 'why': bad, 'info': info})
+            print(('✅' if ok else '❌'), name, '；'.join(bad), json.dumps(info, ensure_ascii=False)[:1500], flush=True)
+    sys.exit(0 if all(r['pass'] for r in res) else 1)
+
+
+asyncio.run(main())

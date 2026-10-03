@@ -11,9 +11,32 @@ function frameView40(pl, t) {
   const rel = clamp(t - (pl.t0 || 0), 0, pl.duration), [sx, sy] = sizeXY(pl, rel), c = centerAt(pl, rel);
   return [c[0], c[1], pl.HX * sx, pl.HY * sy];
 }
+// 4.2.20 实时模拟的显卡负担（用户 10-03 17:28「四尺玉 / 金芒菊实时模拟一顿一顿」）：
+// 4.0 的实时模拟按导出那一帧的快门画（每帧 6–16 个子样本，每个子样本把这一层所有火花画一遍；3.7 固定 3 个），
+// 鸿巢锦冠层一个子样本 340 万粒，一帧最多 5400 万，笔记本跟不上；烘焙在后台跑时还和它抢显卡。
+// 现在实时模拟（只有实时模拟）按预算少画几个子样本：预算按实际帧时间自动升降，烘焙中压到最少让出显卡；HUD 写明。
+// 引擎回放、导出、定帧不受影响（LIVE_CAP 只在实时模拟画的时候设）。自动化（检查脚本）默认不压，网址 ?livecap=1 / 0 强制。
+const liveCtl = { auto: null, budget: 24e6, ema: 1 / 60, lastAdj: 0, lastCap: 0, lastFull: 0 };
+let LIVE_CAP = 0;
+function liveAuto() { if (liveCtl.auto == null) { const q = typeof location !== 'undefined' ? location.search : ''; liveCtl.auto = /[?&]livecap=1/.test(q) ? true : /[?&]livecap=0/.test(q) ? false : !(typeof navigator !== 'undefined' && navigator.webdriver); } return liveCtl.auto; }
+function liveAdapt(now) {
+  if (now - liveCtl.lastAdj < 500) return; liveCtl.lastAdj = now;
+  if (liveCtl.ema > 0.045) liveCtl.budget = Math.max(5e5, liveCtl.budget * 0.6);          // 慢于 22 fps：少画
+  else if (liveCtl.ema < 0.024) liveCtl.budget = Math.min(4e8, liveCtl.budget * 1.25);    // 快于 40 fps：多画回来
+}
+function trackDraws(tr, P) { return tr ? tr.nStars * tr.M * (1 + Math.round(+P.branch || 0)) * (P.waterRefl > 0 ? 2 : 1) : 0; }
+// 这一帧实时模拟每个子样本最多画几个（work = 一个子样本要画的粒子数，几层加起来）；0 = 不压
+function liveCapFor(work) {
+  liveCtl.lastCap = 0; liveCtl.lastFull = 0;
+  if (!liveAuto()) return 0;
+  if (state.baking || (state.layerQueue && state.layerQueue.size)) return 2;      // 烘焙中：让出显卡
+  return clamp(Math.floor(liveCtl.budget / Math.max(1, work)), 2, 128);
+}
+function liveCapNote() { return liveCtl.lastCap && liveCtl.lastCap < liveCtl.lastFull ? ` · 快门子样本 ${liveCtl.lastCap}/${liveCtl.lastFull}（显卡忙${state.baking ? '：后台在烘焙' : ''}，实时模拟少画几层快门；引擎回放、导出不受影响）` : ''; }
 function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm) {
   const [a,b] = shutterWindow(P, pl, t), q = qualityOf(P), width = b-a;
-  const count = clamp(Math.ceil(width * q.hz), 1, q.maxSub);
+  const full = clamp(Math.ceil(width * q.hz), 1, q.maxSub), count = LIVE_CAP > 0 ? Math.min(full, LIVE_CAP) : full;
+  if (LIVE_CAP > 0) { liveCtl.lastFull = Math.max(liveCtl.lastFull, full); liveCtl.lastCap = Math.max(liveCtl.lastCap, count); }
   const oldPPMY = PPMY; PPMY = ppmY; setParticleProfile(P);
   R.subW = width / count;
   if (R.frameStart && !pl.loop) R.frameStart(Math.max(0, a + .5 * width / count));
@@ -109,9 +132,10 @@ function renderLive40() {
       camera=productDisplayView(slot.camera40,sceneView(P,slot.plan40,slot),L.cellW/(2*view[2]),slot.plan40.Ww).view;
     }
   }
-  renderCell40(P,timing,R,t,slot.samples40,slot.cell40,view);
+  LIVE_CAP = liveCapFor(trackDraws(R.track, P) + (P.stars || 0) * q.ss);
+  try { renderCell40(P,timing,R,t,slot.samples40,slot.cell40,view); } finally { LIVE_CAP = 0; }
   hdrT.clear(); hdrT.bind(); shadeView40(P,state.M,slot.cell40,t,view,hdrT,camera); post(-1,P);
-  hudText=`实时模拟 · ${state.disp==='game'&&camera?'游戏内大小 · '+state.dist+' m · ':''}${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门`;
+  hudText=`实时模拟 · ${state.disp==='game'&&camera?'游戏内大小 · '+state.dist+' m · ':''}${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门${liveCapNote()}`;
   hudB='';
 }
 // 4.0 自动固定曝光：在燃烧段几个时刻渲染线性亮度，取最亮的那一刻，让它 99.8% 分位的像素显示到 0.96。

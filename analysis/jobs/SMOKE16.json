@@ -1,0 +1,11 @@
+{
+ "id": "SMOKE16",
+ "type": "smoke",
+ "tijian": true,
+ "tijian_only": "ef:",
+ "tijian_cap": true,
+ "tijian_limit": 40,
+ "name": "4.2.20 实时模拟卡顿：每个效果打开后烘焙中 / 烘完 / 按负担调子样本后的帧间隔（条目体检 --cap）",
+ "priority": 11,
+ "note": "用户 10-03 17:28：四尺玉、金芒菊实时模拟一顿一顿，制作中的效果烘一会儿白屏。4.2.20 星轨道纹理限 64 MB、实时模拟按显卡负担少画快门子样本、烘焙中让出显卡。这个任务量真实帧间隔：条目体检.py --real --cap --only ef:（效果，不跑历史版本）：live = 烘完、不压；liveCap = 打开按负担调；liveBaking / liveBakingCap = 刚打开烘焙中。对照 TJ1（鸿巢 33 ms、片贝 50 ms）。不改东西。对话框2。"
+}

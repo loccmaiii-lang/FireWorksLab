@@ -3,6 +3,16 @@
 // =====================================================================
 const canvas = $('#gl');
 const gl = canvas.getContext('webgl2', { antialias: false, premultipliedAlpha: false, alpha: false });
+// 4.2.20 显卡上下文丢失（显存 / 内存不够，或一帧画太久被驱动重置）：以前画面直接白掉、什么都不说。现在停下渲染循环、在画面上写原因和怎么办。
+canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); glLostNotice(); });
+function glLostNotice() {
+  if (state.glLost) return; state.glLost = true;
+  let o = $('#glLost'); if (!o) { o = document.createElement('div'); o.id = 'glLost'; o.className = 'gl-lost'; ($('#box') || document.body).appendChild(o); }
+  let what = ''; try { const Ls = state.tab === 'combo' ? state.layers.map(L => layerEntryOf(L)).filter(Boolean).map(e => e.P) : [state.P];
+    what = `（${state.tab === 'combo' ? state.comboName || '多层效果' : TYPE_NAMES[state.P.type] || ''}：${Ls.length} 层，估计星 ${Ls.reduce((a, P) => a + trackStarEstimate(P), 0)} 颗）`; } catch (e) { }
+  o.innerHTML = `<b>显卡把这一页的画面重置了</b><span>多半是显存 / 内存不够，或者某一帧画得太久被显卡驱动重置${what}。画面已停；参数还在，可以先「保存」。</span><span><b>刷新页面</b>恢复。如果打开这个效果每次都这样，把这一行发给 AI。</span>`;
+  o.hidden = false;
+}
 if (!gl || !gl.getExtension('EXT_color_buffer_float')) {
   document.body.innerHTML = '<p style="padding:40px;color:#e7735a;font:15px system-ui">当前浏览器不支持 WebGL2 浮点渲染，请用最新版 Chrome 或 Edge 打开。</p>';
   throw new Error('no webgl2');
@@ -353,10 +363,16 @@ function floatTex(w, h, data) {
   return t;
 }
 // 星体轨迹：在 CPU 上把星体（含千轮子花）跑一遍，按固定间隔采样位置和速度，打包成浮点纹理
+// 4.2.20 星轨道纹理的预算（用户 10-03 17:28「打开制作中的效果烘一会儿白屏」）：轨道是「时刻 × 星」两张 RGBA32F，
+// 以前时间步固定 1/240 s，千轮子星几千颗的层（片贝第 5 层 7220 颗 × 13 s）一张就 361 MB，加上建的时候的中间数组 JS 堆过 1 GB → 笔记本显存 / 内存爆掉白屏。
+// 现在一张最多 TRACK_TEXELS 像素（64 MB）：星多的层时间步放粗（星的位置在两步之间按位置 + 速度三次插值，看不出来）；星不多的层（待验收的都在内）和以前一样。
+const TRACK_TEXELS = 4e6;
+function trackStarEstimate(P) { const carrier = P.type === 'senrin' || P.type === 'crossette'; if (familyOf(P.type) === 'rise') return 1 + (P.riseStyle === 'kobana' ? 11 * (+P.kobanaN || 0) : 0) + (P.riseStyle === 'bunpo' ? +P.bunpoN || 0 : 0);
+  return Math.max(1, Math.round(+P.stars || 1) * (carrier ? 1 + Math.round(+P.subStars || 0) : 1)); }
 function buildTrack(P) {
   P = { ...P, engine: 'gpu' };
   const sim = new Sim(P), D = P.duration;
-  const k = Math.max(2, Math.ceil(D / (MAX_TEX - 4) / H_STEP)), dt = k * H_STEP, Ns = Math.ceil(D / dt) + 2;
+  const k = Math.max(2, Math.ceil(D / (MAX_TEX - 4) / H_STEP), Math.ceil(D * trackStarEstimate(P) / TRACK_TEXELS / H_STEP)), dt = k * H_STEP, Ns = Math.ceil(D / dt) + 2;
   const snaps = [];
   for (let i = 0; i < Ns; i++) {
     const n = sim.all.length, a = new Float32Array(n * 6);

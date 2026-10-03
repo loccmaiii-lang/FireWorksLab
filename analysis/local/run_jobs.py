@@ -91,7 +91,8 @@ def run_job(job, s, force=False):
                     for line in (r4.stdout or '').splitlines()[-40:]: log(line)
                     log('参数有效性：' + ('✅ 跑完，见 参数有效性/参数有效性.md' if r4.returncode == 0 else '❌ 没跑完：' + (r4.stderr or '')[-1500:]))
                 if job.get('tijian'):    # 4.2.4：条目体检（左栏每个条目真烘焙打开一遍，记打不打得开、多久、实时模拟卡不卡）
-                    r3 = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '条目体检.py'), '--real', '--limit', str(job.get('tijian_limit', 90)), '--out', os.path.join(out, '条目体检.json')],
+                    r3 = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '条目体检.py'), '--real', '--limit', str(job.get('tijian_limit', 90)), '--out', os.path.join(out, '条目体检.json')]
+                                        + (['--only', job['tijian_only']] if job.get('tijian_only') else []) + (['--cap'] if job.get('tijian_cap') else []),
                                         capture_output=True, text=True, encoding='utf-8', errors='replace')
                     for line in (r3.stdout or '').splitlines()[-30:]: log(line)
                     log('条目体检：' + ('✅ 都能打开' if r3.returncode == 0 else '❌ 有打不开 / 卡的，见 条目体检.json'))
