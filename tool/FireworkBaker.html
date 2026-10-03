@@ -1385,7 +1385,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.2.28';
+const VERSION = '4.2.29';
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 const OUTPUT_VER = { master: '4.2.7', emitset: '4.2.2', riseLoop: '4.2.2', trail: '4.0', unit: '4.0', loop: '4.0', v37: '3.7' };
@@ -5538,8 +5538,10 @@ async function bakePaceWait(all = false) {
   const lim = all || bakePace.ms <= 0 ? 0 : bakePace.maxInflight - 1;
   while (bakePace.inflight.length > lim) {
     const s = bakePace.inflight[0], t0 = performance.now(); bakePace.waits++;
-    try { do await nextTick(); while (!gl.isContextLost() && gl.getSyncParameter(s, gl.SYNC_STATUS) !== gl.SIGNALED); }     // 状态只在回到页面以后才会变
-    finally { gl.deleteSync(s); const k = bakePace.inflight.indexOf(s); if (k >= 0) bakePace.inflight.splice(k, 1); }
+    // 状态只在回到页面以后才会变。4.2.29：两个烘焙同时在跑（打开时的默认母版 + 组合要的层、后台收紧取景）会等同一个 fence——
+    // 谁先等到谁把它从队里拿掉、删掉；另一边看它已经不在队里就不再问（以前拿删掉的 fence 问状态，永远不是「完成」，一直等）
+    try { do await nextTick(); while (!gl.isContextLost() && bakePace.inflight.includes(s) && gl.getSyncParameter(s, gl.SYNC_STATUS) !== gl.SIGNALED); }
+    finally { const k = bakePace.inflight.indexOf(s); if (k >= 0) { bakePace.inflight.splice(k, 1); gl.deleteSync(s); } }
     bakePace.waitMs += performance.now() - t0;
   }
   bakeHarvest();

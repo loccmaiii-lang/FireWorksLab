@@ -193,8 +193,10 @@ async function bakePaceWait(all = false) {
   const lim = all || bakePace.ms <= 0 ? 0 : bakePace.maxInflight - 1;
   while (bakePace.inflight.length > lim) {
     const s = bakePace.inflight[0], t0 = performance.now(); bakePace.waits++;
-    try { do await nextTick(); while (!gl.isContextLost() && gl.getSyncParameter(s, gl.SYNC_STATUS) !== gl.SIGNALED); }     // 状态只在回到页面以后才会变
-    finally { gl.deleteSync(s); const k = bakePace.inflight.indexOf(s); if (k >= 0) bakePace.inflight.splice(k, 1); }
+    // 状态只在回到页面以后才会变。4.2.29：两个烘焙同时在跑（打开时的默认母版 + 组合要的层、后台收紧取景）会等同一个 fence——
+    // 谁先等到谁把它从队里拿掉、删掉；另一边看它已经不在队里就不再问（以前拿删掉的 fence 问状态，永远不是「完成」，一直等）
+    try { do await nextTick(); while (!gl.isContextLost() && bakePace.inflight.includes(s) && gl.getSyncParameter(s, gl.SYNC_STATUS) !== gl.SIGNALED); }
+    finally { const k = bakePace.inflight.indexOf(s); if (k >= 0) { bakePace.inflight.splice(k, 1); gl.deleteSync(s); } }
     bakePace.waitMs += performance.now() - t0;
   }
   bakeHarvest();

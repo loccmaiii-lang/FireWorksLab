@@ -23,6 +23,9 @@
      ⑥ 4.2.28（SMOKE21：新页面里打开引菊→锦 / 鸿巢 / 青柠 300 s 超时；条目体检里升空尾缀之后每批只剩 0.2M 粒）：上一次烘焙量到的速度
         （尤其是尾缀那类不按星轨道画的、粒数估成 0 的）不能带到下一次：先把速度设成极小、关掉计时器，再烘一朵正常的菊，
         等显卡的次数 ≤ 帧数 × 2（4.2.26 会按 20 万粒一批切，每个子样本等一次）
+     ⑦ 4.2.29（SMOKE22：新页面里打开引菊→锦 / 鸿巢 / 青柠、条目体检里球形B 仍 300 s 超时；云端复现：openEffect 一直没回来）：
+        两个烘焙同时在跑（页面打开时的默认母版 + 组合要的层、后台收紧取景）时，两边会等同一个 fence，先等到的把它删掉，
+        另一边拿删掉的 fence 问状态永远不是「完成」→ 一直等。现在两个烘焙同时跑、每批都等、等显卡有 17 ms 延迟，90 s 内都要烘完
 
   云端没有显卡：画图换成空操作，只量内存、子样本数和逻辑。真实帧率要本机任务（SMOKE / 条目体检）看。
 """
@@ -296,6 +299,23 @@ M7_CARRY = r"""async () => {
 }"""
 
 
+
+# ⑦：两个烘焙同时跑、每批都等显卡、等显卡有 17 ms 延迟（两边会等到同一个 fence）
+M7_CONC = r"""async () => {
+  state.stillBusy = true; clearTimeout(bakeTimer);
+  const d = defaultsFor('kiku', 40), mk = s => derive({ ...structuredClone(d.P), type: 'kiku', texW: 512, texH: 512, stars: 20, seed: s, sparkRate: (d.P.sparkRate || 0) * 0.1, qMaxSub: 4 });
+  const oF = gl.fenceSync.bind(gl), oS = gl.getSyncParameter.bind(gl), born = new WeakMap();
+  gl.fenceSync = (...a) => { const s = oF(...a); if (s) born.set(s, performance.now()); return s; };
+  gl.getSyncParameter = (s, p) => { const v = oS(s, p); return p === gl.SYNC_STATUS && performance.now() - (born.get(s) || 0) < 17 ? gl.UNSIGNALED : v; };
+  Object.assign(bakePace, { on: true, maxSubs: 1, ms: 0 });
+  const done = [false, false]; let err = null;
+  const run = i => bake(mk(7 + i), 1, null).then(b => { done[i] = true; disposeBake(b); }, e => { err = String(e); });
+  const t0 = performance.now();
+  try { await Promise.race([Promise.all([run(0), run(1)]), new Promise(r => setTimeout(r, 90000))]); }
+  finally { gl.fenceSync = oF; gl.getSyncParameter = oS; Object.assign(bakePace, { maxSubs: 0, ms: 12 }); state.stillBusy = false; }
+  return { done, err, ms: Math.round(performance.now() - t0), inflight: bakePace.inflight.length };
+}"""
+
 async def m7(p, opts):
     bad, info = [], {}
     b, pg, errs = await page(p, opts, stub=False, fake=False)     # 真烘焙（小规格，云端软件渲染也快）
@@ -312,6 +332,8 @@ async def m7(p, opts):
         if r['pacedMs'] > 2 * r['unpacedMs'] + 1000 or r['waits'] > r['frames'] * 2: bad.append(f"等显卡每次至少 17 ms 时分批烘焙 {r['pacedMs']} ms，不分批 {r['unpacedMs']} ms（{r['frames']} 帧、等了 {r['waits']} 次）：被等待拖慢了")
         r = await pg.evaluate(M7_CARRY); info['上一次的速度'] = r
         if r['waits'] > r['frames'] * 2: bad.append(f"上一次烘焙量到的速度带到了这一次：{r['frames']} 帧等了显卡 {r['waits']} 次（每个子样本约 {r['perSubM']}M 粒）")
+        r = await pg.evaluate(M7_CONC); info['两个烘焙同时等'] = r
+        if not all(r['done']) or r['err']: bad.append(f"两个烘焙同时跑、等同一批显卡活：{r['ms']} ms 后完成情况 {r['done']}（{r['err'] or '没报错，卡在等显卡'}）")
         r = await pg.evaluate(M7_BUSY); info['显卡被占满'] = r
         if r['after'] < 0.9 * r['before']: bad.append(f"等一个 500 万粒的批用了 {r['waitMs']} ms（模拟显卡被别的活占满）以后，每批的量从 {r['before']}M 变成 {r['after']}M 粒：被「等得久」压小了")
         if errs: bad.append('页面错误 ' + errs[0])

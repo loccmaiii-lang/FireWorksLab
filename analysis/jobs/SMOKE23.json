@@ -1,0 +1,14 @@
+{
+ "id": "SMOKE23",
+ "type": "smoke",
+ "tijian": true,
+ "tijian_only": "ef:",
+ "tijian_cap": true,
+ "tijian_limit": 40,
+ "fuhe": true,
+ "fuhe_effects": "hiki_nishiki,hongchao,qingning,jinmangju",
+ "fuhe_configs": "normal",
+ "name": "4.2.29 复核：新页面里打开不再卡住（两个烘焙等同一个 fence 修了）+ 条目体检球形B 不再超时",
+ "priority": 11,
+ "note": "SMOKE22：4.2.28 新页面里打开引菊→锦、鸿巢、青柠仍 300 s，条目体检球形B 300 s。云端复现原因：两个烘焙同时在跑时等同一个 fence，一边删掉后另一边一直等。4.2.29 修（M7⑦）。看：实时显卡负担.md 的「打开」用时（SMOKE20：4.5 / 6.7 / 1.9 s）、条目体检全部不超时。不改东西。对话框15。"
+}
