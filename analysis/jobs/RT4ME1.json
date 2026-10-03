@@ -1,0 +1,9 @@
+{
+ "id": "RT4ME1",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT4M",
+ "name": "RiseTailM",
+ "priority": 9,
+ "note": "4.3.0：RT4M 内部导出（左栏「就绪」要一次导出 + 回放检查；4.3 尾缀末段爆亮颜色键去重，画面不变）。效果参数不变。对话框15（底层）代做；H4（温度偏移）留给负责人，没改。"
+}

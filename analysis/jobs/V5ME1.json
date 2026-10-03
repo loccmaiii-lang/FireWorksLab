@@ -1,0 +1,9 @@
+{
+ "id": "V5ME1",
+ "type": "export",
+ "effect": "trail_v5",
+ "entry": "V5M",
+ "name": "TrailM",
+ "priority": 9,
+ "note": "4.3.0：V5 在新渲染核上重做（V5S/M/L，参数 = TR2，曝光按 3.7 同口径定成固定值），待用户验收；你通过的 TR2 素材包不动。导出 + 回放检查。对话框15。"
+}

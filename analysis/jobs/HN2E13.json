@@ -1,0 +1,9 @@
+{
+ "id": "HN2E13",
+ "type": "export",
+ "effect": "hiki_nishiki",
+ "entry": "HN2",
+ "name": "HikiNishiki",
+ "priority": 9,
+ "note": "4.3.0 重导（所有产物 OUTPUT_VER → 4.3：只剩一个渲染核；取景按余烬寿命估、碰边放大；固定取景用 Pivot Offset 对齐爆点；星头按精确时刻画）。效果参数不变，导出 + 回放检查。对话框15（底层）代做。 锦层带余烬：取景会比 HN2E12 大一点（E7）。"
+}
