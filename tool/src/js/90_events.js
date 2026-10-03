@@ -34,7 +34,7 @@ const segBtns = (id, fn) => $(id).addEventListener('click', e => {
 });
 segBtns('#dispSeg', b => state.disp = b.dataset.disp);
 segBtns('#platformSeg', b => setPreviewPlatform(b.dataset.platform));
-segBtns('#viewSeg', b => state.view = b.dataset.view);
+segBtns('#viewSeg', b => { state.view = b.dataset.view; if (state.view !== 'live') bakeIfStale(); syncStale(); });     // 4.2.16：切到引擎回放 / 贴图时，贴图旧了就烘
 segBtns('#atlasSeg', b => state.atlasLayer = b.dataset.layer);
 segBtns('#segSeg', b => state.atlasSeg = +b.dataset.seg);
 segBtns('#flowSeg', b => { state.atlasFlow = b.dataset.flow === '1'; flowTrail.length = 0; $('#qlabels').dataset.key = ''; });
@@ -57,6 +57,7 @@ function importParams(j, fname) {
   if (j.recipes) { const all = store.get('mySaves', {}), prev = state.recipes; let n = 0; state.recipes = [...j.recipes, ...(prev || [])];     // 父配方可能也在这个文件里
     for (const r of j.recipes) { try { const { P, M } = resolveRecipe(r), k = 'type:' + r.type; (all[k] = all[k] || []).push({ id: 'r' + Date.now().toString(36) + n, name: '配方 · ' + r.name, at: wbNow(), base: r.type, snap: { kind: 'single', P, M, repId: null } }); n++; } catch (e) { } }
     state.recipes = prev; store.set('mySaves', all); renderLib(); flash(`已把 ${n} 个配方存成花型模板的版本：打开对应花型（左栏「花型模板」），资产栏「版本」里选`); return; }
+  bakeMode.demand = true;          // 4.2.16：导入 = 打开，照常烘
   if (j.diff && j.type) { const { P, M } = resolveRecipe(j); state.P = P; state.M = M; state.name = j.name || fname; buildMasterPanel(); onParam(); flash('已导入配方 ' + state.name); return; }
   const p = j.params || j;
   if (!TYPES[p.type]) throw new Error('不认识的花型');
@@ -105,6 +106,12 @@ buildMasterPanel();
 initIter();
 initLibrary();
 if (!/[?&]fast/.test(location.search)) runPreviewBake(); else state.dirty = false;
+// 4.2.16 按需烘焙：工具栏「烘焙」按钮 / 「自动」开关、画面上的「贴图是旧的」横条
+$('#bakeNow').addEventListener('click', () => bakeNow());
+$('#staleBake').addEventListener('click', () => bakeNow());
+$('#autoBakeChk').addEventListener('change', e => { setAutoBake(e.target.checked); flash(e.target.checked ? '自动烘焙：开（改参数停手后自动烘）' : '自动烘焙：关（改参数只更新实时模拟，按 B 烘焙）'); });
+$('#autoBakeChk').checked = autoBakeOn();
+setInterval(syncStale, 400); syncStale();
 requestAnimationFrame(loop);
 // 给命令行批量重烘（tool/batch_bake.mjs）和调试用
 // 参数覆盖里以 _ 开头的是脚本自己的（_ramp 渐变图、_psf 相机模糊），不进烘焙参数

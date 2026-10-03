@@ -949,3 +949,16 @@ details.sec>p.hint:not([hidden]){border-left:2px solid var(--line2);padding-left
 .lh-t .shelp{margin-left:6px}
 .lh-out{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 #lhOutNote{margin:4px 0 0;font-size:11.5px;color:var(--dim)}
+
+/* 4.2.16 按需烘焙：工具栏「烘焙」按钮 + 「自动」开关；画面上「贴图是旧的」横条 */
+.bakectl { display: inline-flex; align-items: center; gap: 6px; margin-left: 4px; }
+.bakebtn { font: inherit; font-size: 12px; padding: 3px 9px; border-radius: 6px; border: 1px solid var(--line2); background: transparent; color: var(--dim); cursor: pointer; white-space: nowrap; }
+.bakebtn.stale { color: #1a1206; background: var(--amber); border-color: var(--amber); font-weight: 600; }
+.bakebtn.run { color: var(--text); border-style: dashed; }
+.bk-auto { display: inline-flex; align-items: center; gap: 3px; font-size: 12px; color: var(--dim); cursor: pointer; white-space: nowrap; }
+.bk-auto input { margin: 0; }
+.stale-bar { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 5; display: flex; align-items: center; gap: 8px;
+  padding: 5px 8px 5px 12px; border-radius: 8px; background: var(--amber); color: #1a1206; font-size: 12px; font-weight: 600; box-shadow: 0 2px 10px rgba(0,0,0,.35); white-space: nowrap; }
+.stale-bar[hidden] { display: none; }
+.stale-bar .btn { background: #1a1206; color: var(--amber); border-color: #1a1206; }
+@media (max-width: 900px) { .bk-auto { font-size: 11px; } .bakebtn { padding: 3px 6px; } }

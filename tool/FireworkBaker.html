@@ -956,6 +956,19 @@ details.sec>p.hint:not([hidden]){border-left:2px solid var(--line2);padding-left
 .lh-t .shelp{margin-left:6px}
 .lh-out{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 #lhOutNote{margin:4px 0 0;font-size:11.5px;color:var(--dim)}
+
+/* 4.2.16 按需烘焙：工具栏「烘焙」按钮 + 「自动」开关；画面上「贴图是旧的」横条 */
+.bakectl { display: inline-flex; align-items: center; gap: 6px; margin-left: 4px; }
+.bakebtn { font: inherit; font-size: 12px; padding: 3px 9px; border-radius: 6px; border: 1px solid var(--line2); background: transparent; color: var(--dim); cursor: pointer; white-space: nowrap; }
+.bakebtn.stale { color: #1a1206; background: var(--amber); border-color: var(--amber); font-weight: 600; }
+.bakebtn.run { color: var(--text); border-style: dashed; }
+.bk-auto { display: inline-flex; align-items: center; gap: 3px; font-size: 12px; color: var(--dim); cursor: pointer; white-space: nowrap; }
+.bk-auto input { margin: 0; }
+.stale-bar { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 5; display: flex; align-items: center; gap: 8px;
+  padding: 5px 8px 5px 12px; border-radius: 8px; background: var(--amber); color: #1a1206; font-size: 12px; font-weight: 600; box-shadow: 0 2px 10px rgba(0,0,0,.35); white-space: nowrap; }
+.stale-bar[hidden] { display: none; }
+.stale-bar .btn { background: #1a1206; color: var(--amber); border-color: #1a1206; }
+@media (max-width: 900px) { .bk-auto { font-size: 11px; } .bakebtn { padding: 3px 6px; } }
 </style>
 </head>
 <body>
@@ -1014,6 +1027,7 @@ details.sec>p.hint:not([hidden]){border-left:2px solid var(--line2);padding-left
             <button data-view="export" aria-pressed="false">引擎回放</button>
             <button data-view="atlas" aria-pressed="false">贴图</button>
           </div>
+          <div class="bakectl" id="bakeCtl"><button class="bakebtn" id="bakeNow" type="button" title="按当前参数烘焙贴图（B）">贴图最新</button><label class="bk-auto" title="自动烘焙：开 = 改参数停手后自动烘；关 = 改参数只更新实时模拟，按 B、切到引擎回放 / 贴图或导出时再烘"><input type="checkbox" id="autoBakeChk">自动</label></div>
           <div class="seg small" id="atlasSeg" hidden>
             <button data-layer="head" aria-pressed="true">星头</button>
             <button data-layer="tail" aria-pressed="false">拖尾</button>
@@ -1052,6 +1066,7 @@ details.sec>p.hint:not([hidden]){border-left:2px solid var(--line2);padding-left
           <button class="refx" id="refClose" type="button" title="关闭实拍对照（V）" aria-label="关闭实拍对照">×</button>
         </div>
         <div class="canvas-box" id="box"><span class="tag" id="simTag" hidden>模拟</span>
+          <div class="stale-bar" id="staleBar" role="status" hidden><span id="staleText">贴图还是旧参数</span><button class="btn mini" id="staleBake" type="button">烘焙（B）</button></div>
           <canvas id="gl" aria-label="烟花预览"></canvas>
           <canvas id="flowCv" class="flowcv" hidden></canvas>
           <canvas id="assetCv" class="assetcv" hidden></canvas>
@@ -1257,7 +1272,7 @@ details.sec>p.hint:not([hidden]){border-left:2px solid var(--line2);padding-left
 <script src="data/standard.js"></script>
 <script>
 'use strict';
-const UPDATES = [{"title": "需要你决定 / 操作（AI 维护，定了就删掉那行，不超过 5 行）", "body": "- **待我验收**：引菊 → 锦 HN2、金芒菊 JM4-40、青柠星 QN11、鸿巢 HK10 左栏都是「就绪」（按新规则、新命名重导，回放检查 + 标准检查都过）。后三个是旧参数换 4.0 渲染，AI 还要出新旧对照，你现在不用拿它们和旧版比。升空尾缀 RT4 可以直接看（还差一次内部导出才显示就绪）。\n- **HN2**：你调过的动态，现在不用复制粘贴了：打开引菊 → 锦，资产栏 ⋯「连接仓库文件夹」选 `F:/FireWorksLab`（只选一次），切到你调过的那个版本（没存过就重新调一下），点「保存」。后台脚本 10 分钟内推上去，对话框7 合进 HN2。\n- **两条规则等你定**：球形C 开花闪光和延时点火之间真黑的 2 帧怎么处理（推荐：并成 1 帧停住，检查按模拟判断，见下面 QC11 那条）；球形B 开花闪光过曝，要不要给闪光加通用的软压缩。\n- **旧条目打不开**：本机显卡把左栏 136 个条目挨个打开了一遍，全都打得开（最慢的是片贝，打开约 1 分钟、播放 12–20 fps）。你之前遇到的如果还在，告诉对话框2 是哪个条目、点了什么。"}, {"title": "2026-10-03 · 单束也能放进整包 · 烘焙器 4.2.13（对话框2）", "body": "- 层页头「导出方案」的 PC 多了 **单束**：每颗星一个面片（带尾巴），比大面片省 overdraw；手机这一层还是序列。引擎回放切到 PC 能直接看（第一次要烘一会儿）。\n- 以前「单束」是另导一个包、而且没有 cascade.json；现在多层效果里点「单束」就是把这一层的 PC 方案改成单束，导出整包时就在里面。单层效果的单束包也带上了 cascade.json。\n- 单束、光点都还**没在 UE 里验证**（单束要导入器支持 Pivot Offset）。"}, {"title": "2026-10-03 · 每一层能选 PC / 手机怎么出 · 烘焙器 4.2.12（对话框2）", "body": "多层效果里点开某一层，参数最上面多了 **「导出方案」**：\n\n- **PC**：序列（大面片，和以前一样）/ **GPU 光点**（这一层的星只出星头光点，不要贴图，省贴图和 overdraw）/ 不出。\n- **手机**：序列 / 不出。手机不用 GPU 粒子，所以 PC 选了光点的层，手机照样是序列（纯图片）。\n- 选了以后下面一行会说会少什么（比如「这一层有尾巴：光点只出星头」）。引擎回放里切 PC / 手机能直接看到两种样子；交付页每层写着方案。\n- 适合光点的：没有尾巴的星（四尺玉的红点、芯、点灭之外的光点层）。光点的大小、亮度是起点，**还没在 UE 里验证**，第一次导进引擎时请看一眼。"}, {"title": "2026-10-03 · 青柠星碰边查清了 · 烘焙器 4.2.11（对话框2）", "body": "青柠星尾层两次重导都有 1 帧「碰到格子内圈」，这次找到原因了：回放检查要求内容离格子边 10 像素以上，收紧取景只留了约 9 像素。几乎全黑的最后一帧只剩几颗暗点，正好落在那一圈。现在烘焙器按回放检查同一套标准自查，碰到了就多留边重来；其他效果不受影响。青柠星已经重新排了导出。"}, {"title": "2026-10-03 · 版本只剩一套 · 烘焙器 4.2.10（对话框2）", "body": "- 「版本」只在资产栏里了：AI 版、你保存的版本、草稿，以及新增的 **「导出时」**——每次导出自动存一份（每个效果只留最近 3 份），想知道「上次导出的是什么参数」直接选它。\n- 工具页的「版本与回滚」「派生配方」去掉了（回滚会把别的效果的参数塞进当前效果）。以前存的还在这台电脑里，工具页最下面能导出成 .json 留底。"}, {"title": "2026-10-03 · 能撤销了；滑杆和拖动一个规矩 · 烘焙器 4.2.9（对话框2）", "body": "- **撤销 / 重做**：资产栏「保存」左边 ↶ ↷，或 Ctrl+Z / Ctrl+Shift+Z。停手 0.6 秒算一步；多层效果撤销只重烘改过的那一层。\n- **滑杆和拖动效果一样了**：在右栏用滑杆改燃烧、点火、火花停这些，序列时长会跟着变（以前只有在轨道上拖才会，滑杆加长燃烧会把星截掉）；引菊的「火花停」用滑杆改，锦的点火也会跟着动。\n- **入点跟着内容**：设过入点以后再推后点火，入点一起往后挪，前面不会多出黑帧。\n- 右栏底部「恢复本花型默认」改成 **「恢复到打开时」**：回到 AI 交的版本（或你保存的版本），不是模板默认；多层时只恢复正在调的那一层。"}, {"title": "2026-10-03 · 参数栏好找了；尾迹可以调粗细、两头收尖 · 烘焙器 4.2.8（对话框2）", "body": "`git pull` 后刷新烘焙器，右栏：\n\n- **6 大类**：运动 / 开花 · 星头 · 尾迹 · 特效 · 环境 · 输出（升空尾缀那些也一样分）。特效、环境、输出默认收起，展开过的下次还展开。\n- **名字变短**：括号里的长说明不再挤在参数名里，鼠标放到参数上，右栏底部的说明条显示完整说明、范围、打开时的值。每节的长说明收进标题旁的「？」。\n- **顶上搜索框**（名字和说明都能搜，Esc 清空）和 **「只看改过的」**（和打开时的版本比）。改过的参数名变绿，大类标题上写「N 项改过」。\n- **尾迹粗细 / 梭形**：「尾迹」→「尾迹外形」里多了 *尾迹粗细*（整体变粗变细）、*星头端收尖*、*尾端收尖*、*最粗处*。两个收尖都拉上去就是梭形；星头那颗亮点的大小还是「星头」里的「炭头大小」管。默认值不改变任何现有效果。"}, {"title": "2026-10-03 · 能自己搭效果了：「＋ 新建效果」· 烘焙器 4.2.7（对话框2）", "body": "`git pull` 后刷新烘焙器，左下角「＋ 新建效果」：\n\n1. 先选第一层：花型模板，或者「现有效果的层」（比如引菊 → 锦的橙引线层，参数复制一份，以后各改各的）；起个中文名。\n2. 右栏「观察图层」：每层有 ↑ ↓ / 改名 / 复制 / 删，底下「＋ 加一层」。点哪层就调哪层（和以前一样，画面一直是整朵）。\n3. 哪几层是同一批星（比如金锦冠四个方向的同一发、引菊和锦）：在那一层的参数页头勾「同一批星」，轨迹参数就一起变。\n4. 资产栏「保存」覆盖这个效果，「另存为」复制一个；英文名（UE 资产名）在「查看交付」里改。左栏多一组「我的效果」。\n\n另外：4.2.5 那次收紧取景在 HN2 锦层上把过曝推到了 2.5%（标准 2%），青柠星尾层末帧碰边——现在收紧时会躲开这两种情况，这两个效果已经排了重导。"}, {"title": "2026-10-03 · 贴图尺寸自己定 · 烘焙器 4.2.6（对话框2）", "body": "- 右栏「输出：帧数 · 格子 · 贴图」一节里，贴图宽、高各自选 512–4096，不再强制 2048；多层效果每层也能各自改。规则只剩下限：PC 单格 ≥ 512、手机 ≥ 256（标准检查也按这个查）。\n- 原来右栏最底下那块「贴图尺寸 / 列 × 行 / 通道 / 编码…」搬进了同一节，不用再上下找。"}, {"title": "2026-10-03 · 出图占满格子；「待我验收」按证据标就绪 · 烘焙器 4.2.5（对话框2）", "body": "`git pull` 后刷新烘焙器。\n\n- **画面占比**：烘好以后按贴图里真实的内容范围把取景收紧再烘一次（预览停手 0.7 秒后在后台做，导出一律用收紧后的）。试烘：菊 Zoom 每帧格子边长省 12%（平均占比 0.74 → 0.84），柳 Zoom 省 31%，固定取景省 5% 左右；收紧前后亮度一点没丢（没切到内容）。\n- **待我验收**：每一项现在标「就绪」或「未就绪：原因」。就绪 = 最新导出是当前版本（参数和烘焙器输出规则都没变过）、回放检查过、标准检查过。现在 5 项都是「未就绪」——因为 4.2.3 / 4.2.5 改了出图规则，旧导出算过期；AI 这就重导、重跑检查，好了自己变「就绪」。\n- **小屏幕**：距离、曝光两个滑杆挪到画面下方那条信息栏右边，工具条不再折两行；左栏抽屉右上角有「×」。"}, {"title": "2026-10-03 · 改动不会再悄悄丢了；「保存」能直接进 git · 烘焙器 4.2.4（对话框2）", "body": "`git pull` 后刷新烘焙器。走查里会做错东西的 6 处（A1–A6）修好了：\n\n- **切走不丢**：没保存就切到别的效果、或刷新页面，改动自动存成这个效果的「草稿」，资产栏「版本」里能选回来。\n- **AI 版就是 AI 版**：从左栏打开效果一定是 AI 交的那版（以前带着你没保存的改动打开，「参数已变」不亮、「通过」也能点）。\n- **改完一层马上点别的层**：这一层照样重烘（以前贴图停在旧的，导出的和参数对不上）。\n- **组合编辑器**：不再顶着上一个效果的名字和导出名；里面存的版本刷新后能打开；同一预设里两层都用默认牡丹时，改一层不会带着另一层变。\n- **保存进 git**：资产栏 ⋯「连接仓库文件夹」选一次仓库根目录，以后「保存」顺便写进 `analysis/我的配方/`，后台脚本推上去，AI 直接读（不开服务器，用浏览器自带的文件夹权限；浏览器重开后第一次保存会再问一次「允许」）。"}, {"title": "2026-10-03 · 小屏幕不挤了；Zoom 取景不再一胀一缩 · 烘焙器 4.2.3（对话框2）", "body": "`git pull` 后刷新烘焙器。\n\n- **小屏幕**：效果名和保存 / 单束 / 查看交付搬进最上面一行；工具条贴在画面框上；时间轴一行；轨道说明和快捷键收进时间轴末尾的「？」。窗口窄（≤ 1180）时左栏变成抽屉，按 L 或「库」拉出，点开条目自动收起。1366 宽笔记本上对比画面从 259 px 变成 373 px（只看模拟 421 px），1280 宽从 193 变成 330。\n- **Zoom 抖**：以前面片在一帧贴图停着的时候一直在长、换帧时缩回去（现有 Zoom 素材包一胀一缩 0.5–3%）。现在每帧一个大小，换帧那一刻才换。贴图不变，只是 cascade.json 的 Size By Life 关键点变多（每张最多约 128 个，还没在 UE 里验证）。\n- **画面占比不够**：正在量每个效果每帧占格子多少，下一步按实测收紧取景，做完再写。"}, {"title": "2026-10-02 · 定了下一轮顺序，清掉过期说明（对话框13）", "body": "- **顺序**（你 23:34 同意）：① 对话框2 先修走查 A1–A6（保存打不开、导出名错、改完切层导出旧贴图等），修完用 HN2 从头走一遍「合入你的动态 → 改层 → 保存 → 刷新 → 导出 PC + 手机」；② 「待我验收」改成程序按证据把关（没导出、检查没过、素材包过期就进不来，并写出缺什么）；③ 等你决定的事只放在本文件最上面这一节。\n- **暂停**：球形D、万彩千轮、永丰、片贝（之前写着「负责人待定」、实际没人做），工具路径修好后再排。\n- **规则改了几处**：帧号通道按你本机导入配置（实测第 0 通道）；贴图默认 2048、按效果可调；后台 10 分钟；AI 交付前要自己以使用者身份走一遍；你说「不用替我导出」只表示谁来点，内部导出和检查照做；别的对话框要做的事由 AI 写进排队，不让你转达。\n- **清理**（只搬进 `归档/`，没删）：过期的执行说明、旧 README、交接里过期的第 1–4 节和 09-30 以前的日志、没人用的 4 个旧脚本、第三版尾缀样例（65 MB）；还在被调用的旧尾缀脚本保留。4.0 开工说明等计划文件头上标了「已完成 / 未开工」。\n- 预览数据（约 300 MB 的 preview.js）没动：删掉也不会让仓库变小（Git 历史里还在），省下的只是本机硬盘。"}, {"title": "2026-10-02 · 升空尾缀第 4 版待你验收（RT4S / RT4M / RT4L）· 烘焙器 4.2.2", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀，效果行下面一排 **小 / 中 / 大**，点哪档开哪档（第 3 版进历史）。\n\n- **只看到一个**：三档以前藏在右栏「版本与历史」的折叠里。现在左栏一排三档、各自带缩略图，右栏卡片上也一直有分档按钮（V5 尾缀同样）。\n- **导出不再浪费**：星头放到面片上端（和你通过的 V5 一样用 Pivot Offset），面片只包住看得见的部分，循环层格子利用从约 64% × 48% 提到约 96% × 96%。消散序列只留到最后还看得见的那一帧，贴图挑最小、RGBA 四个通道用满（2048² 变 1024×2048）。手机贴图边长减半（单格 256²，标准下限）。\n- **素材里有粒子了**：一半细火星烘进循环层贴图（和白热段一起真循环），白柱子两边是一根根金 / 白短线；另一半细火星和中 / 粗火星仍是 GPU。\n- **引擎里加了**：星头一圈柔光（跟着喷射忽明忽暗）、尾迹下段偶尔有粗火星烧到最后闪一下、0 秒发射口一闪 + 喷一把火星。都在右栏「尾缀 · 引擎里加的效果」，填 0 就关。\n- 请你在引擎里看一眼：贴图里的火星远看会不会偏暗偏橙（灰度 + Ramp 的口径）；Pivot Offset 导入器如果不认，要手动填（参数表里写了值）。导出请你自己在烘焙器里点。"}, {"title": "2026-10-02 · 引菊 → 锦（HN2）橙线颜色换成原型的颜色模型", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 引菊 → 锦。\n\n- 你 15:11 指出的「不如原型纯、尖部颜色都一样」：用 4.2.0 新加的三项做了三轮（HN2E7–E9）。现在尖部暗红、中段亮橙，线变细，线之间有暗底。\n- 橙引线层改了：曝光 1.5 → 0.8；Ramp 亮端 #ff8c19 / #ffa011 → #ff7a14 / #ff8e12；火花粗细 0.6 → 0.45；火花密度 400 → 520；冷却 0.3；火花烧旺 0.35；每颗星亮度离散 0.35；线间底光 0.006（半径 6）。金锦层没动。\n- 还差：实拍开花中心有个白色亮点，这里没有（要的话另加短闪层）；整体比实拍亮约 10%（UE 里调自发光倍数）；实拍线的长短更参差。\n- 你在 4.1.1 浏览器里调的动态还没合进来：在烘焙器里「复制我的参数」贴给我，我合进 HN2 再导一次。"}, {"title": "2026-10-02 · 升空尾缀第 3 版待你验收（RT3S / RT3M / RT3L）", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀 · 循环层 + 粒子，右上切小 / 中 / 大（第 2 版进历史）。\n\n- **白 / 黄对比**：火星三档各有温度偏移（细粒偏金偏暗、粗粒更热更亮 → 过曝发白），大小离散加大，同一档里也有亮有暗。\n- **线状火星**：中、粗火星是竖向短线——看的人 / 相机盯着星头走，火星相对星头往下退，在曝光时间里拖成线（越往下拖得越长，和你的参考一致）；细火星大多还是点。\n- **上升不再冻住**：每颗火星跟着出生那团空气漂（阵风约 1 m/s），越老漂得越远 → 尾迹下段慢慢松开、轻轻弯；散开改成中间密、边缘软。\n- 中档按你 14:35 参考图同尺度量：线状比例 0.82（参考 0.73）、长短比 2.4（2.3）、白 / 黄、边缘软硬都对上了；三档并排 `analysis/results/RT3/三档_对参考.jpg`。新参数在右栏「火星明暗与线状」「空气乱流」两节。\n- 没经过 UE 验证：乱流用的 Acceleration 模块、GPU 粒子 Rectangle 对齐拉长。导出请你自己在烘焙器里点。"}, {"title": "2026-10-02 · 烘焙器 4.2.0：每层同一套时刻 + 接力、输出一节、尾迹扩散、重播 R、单束", "body": "`git pull` 后刷新烘焙器。\n\n- **轨道**：每层都有点火 / 燃烧结束（上排圆点）和火花开始 / 火花停（中间菱形，空心 = 没打开，拖动就打开）。同一批星的几层在同一时刻的点有亮环、一起动（引菊：橙引线火花停 = 金锦点火）。拖燃烧结束，序列时长跟着变。点轨道切到那一层。\n- **输出一节**（右栏「输出：帧数 · 格子 · 贴图」）：顶上直接写着多少帧、几张、每张几×几、帧率；帧数可选 自动 / 最省 / 手动，格子可选 固定 / 按帧数选最小贴图，单格 512 / 1024 / 2048。轨道上的细刻度是每一帧的位置。默认还是原来的做法。\n- **尾迹扩散**（物理扰动）：老火花被空气扰流慢慢吹散，默认 0。\n- **尾迹外形**再加三项（对话框7 为引菊颜色纯度要的）：火花烧旺时间、每颗星亮度离散、线间底光，默认 0。\n- **重播**：按钮或 R。实拍对照改成 V。\n- **单束**：资产栏「单束」菜单，或调某一层时层参数顶上的按钮。\n- 左栏缩略图换成本机显卡渲染的。"}, {"title": "2026-10-02 · 升空尾缀第 2 版待你验收（RT2S / RT2M / RT2L）", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀 · 循环层 + 粒子，右上切小 / 中 / 大。\n\n- 火星数量、大小、散开按你 14:35 的参考图同尺度量出来对齐（三档对参考：`analysis/results/RT2/三档_对参考.jpg`）。\n- 参数全部在右栏；导出你自己在烘焙器里点，粒子大小 / 亮度请在引擎里按你的例子标定。\n- 已知：回放检查会把循环序列每圈「帧号回到 0」算成回跳（检查规则的问题，待改）；你 16:41 提的明暗对比、线状拖影、上升时的空气乱流在做第 3 版。"}, {"title": "2026-10-02 · 烘焙器 4.1.2：不再越播越卡、每个资产自己的尾迹外形、层轨道能拖、缩略图换渲染", "body": "`git pull` 后刷新烘焙器。\n\n- **越播越卡修好了**：实时模拟以前每帧都从 0 秒重算，越到后面越慢；现在从上一帧接着算，后段和前段一样快（画面逐位不变）。播放时钟也改成按真实时间走。\n- **尾迹外形**：不再是顶栏的全局面板。每个效果（多层时每一层）右栏都有「尾迹外形」：粗细随机、亮肩、泪滴星头，默认 0 = 原样。\n- **层轨道能拖**：每层轨道下方的白色把手是入点 / 出点，上方圆点是点火、燃烧结束、火花停等；任何一层都能直接拖，松手只重烘那一层。拖回尽头 = 自动。\n- **缩略图**：不再用实拍。本机显卡按当前配方渲染（UI8T，回来后自动换上）；之前先用对照图里的模拟图。\n- **命名**：循环层 + 粒子（升空尾缀小 / 中 / 大）也改成 `T_EFX_FireWorks_…`，三档加 `_S / _M / _L`。`cascade.json` 里每张贴图写了 UE 资产名，导入时直接用、不用再加前缀。"}, {"title": "2026-10-02 · 烘焙器 4.1.1：入点 / 出点、命名规范、全局风格、层轨道与联动、单束、流转连播", "body": "`git pull` 后刷新烘焙器。\n\n- **入点 / 出点**：时间轴下面「设为入点 / 设为出点」。帧只分给入点到出点；入点前默认用入点那一帧从小放大（也可选不显示）。引擎回放、导出都按这个。\n- **命名**：大面片素材包改成 `T_EFX_FireWorks_名称_层_4x4_01_HD.png`（手机无 `_HD`；Cut `_C`、Ramp `_R` 共用）。每个效果先起了英文名（鸿巢四尺玉 = YonshakuKamuro，层 Main / Red；引菊 → 锦 = HikiNishiki，层 Hiki / Nishiki……），交付页可以改。\n- **全局风格**：顶栏「全局风格」，尾长 / 粗细 / 散布 / 星头大小 / 亮度 / 闪烁 + 粗细随机 / 亮肩 / 泪滴。默认值时所有效果逐像素不变；默认不动已通过的效果。\n- **层轨道**：时段条上直接看到并拖每层的点火、燃烧结束、第二段、火花停（四尺玉红点何时出现、青柠星星头何时点着、引菊何时转锦都在这里）。同一批星的层改轨迹参数会自动同步。\n- **单束**：交付页可以导出某一层的单束包（每颗星一个粒子）。\n- **流转动画**：两张图会连着播。"}];
+const UPDATES = [{"title": "需要你决定 / 操作（AI 维护，定了就删掉那行，不超过 5 行）", "body": "- **待我验收**：引菊 → 锦 HN2、金芒菊 JM4-40、青柠星 QN11、鸿巢 HK10 左栏都是「就绪」（按新规则、新命名重导，回放检查 + 标准检查都过）。后三个是旧参数换 4.0 渲染：新旧对照看完了，运动、时间、颜色和旧版一致，没有退化（鸿巢 4.0 在 7.25 s 更接近实拍）；4.0 画面里显得大是取景放得更满。可以直接验收。升空尾缀 RT4 可以直接看（还差一次内部导出才显示就绪）。\n- **HN2**：你调过的动态，现在不用复制粘贴了：打开引菊 → 锦，资产栏 ⋯「连接仓库文件夹」选 `F:/FireWorksLab`（只选一次），切到你调过的那个版本（没存过就重新调一下），点「保存」。后台脚本 10 分钟内推上去，对话框7 合进 HN2。\n- **两条规则等你定**：球形C 开花闪光和延时点火之间真黑的 2 帧怎么处理（推荐：并成 1 帧停住，检查按模拟判断，见下面 QC11 那条）；球形B 开花闪光过曝，要不要给闪光加通用的软压缩。\n- **鸿巢红点层要不要改成 PC 光点**：试导（XD3）和实时模拟对上了，省一张序列贴图和 overdraw；手机照样是序列。你说要，我就把 HK10 的红点层导出方案改成「PC 光点 / 手机序列」重导\n- **旧条目打不开**：本机显卡把左栏 136 个条目挨个打开了一遍，全都打得开（最慢的是片贝，打开约 1 分钟、播放 12–20 fps）。你之前遇到的如果还在，告诉对话框2 是哪个条目、点了什么。"}, {"title": "2026-10-03 · 光点改成按模拟里每颗星来出；光点大小 / 亮度可调 · 烘焙器 4.2.15（对话框2）", "body": "- 本机试导鸿巢红点层的 PC 光点（XD2）：红点比实时模拟早亮、太密、偏大偏亮。原因是红点层 800 颗星里只有 160 颗会亮，光点却出了 800 颗，而且都放在了花的外壳上。现在光点只出会亮的星，在每颗星亮起的那一刻出生，位置、速度、亮度都按模拟里的星来定；云端逐时刻对过，个数、大小、下坠、总亮度都和实时模拟一致。点灭星的光点不会闪，按亮灭的平均亮度出。\n- 层页头「导出方案」选了 GPU 光点以后，多两根滑杆：**光点大小**（× 炭头，默认 1）、**光点亮度**（默认 1）。\n- 星头不发光的层（比如引菊 → 锦的两层，只有尾巴）选光点会提示「光点什么都出不来」。\n- 本机按 4.2.15 再试导了鸿巢红点层（XD3）：烘焙回放里红点出现的时间、个数、球的大小都和实时模拟对上了。红点比实拍小、暗是红点层本身的参数，实时模拟也一样；导出时可以用「光点大小 / 亮度」调。要不要把鸿巢红点层正式改成 PC 光点，你定。光点还**没在 UE 里验证**。"}, {"title": "2026-10-03 · 单束也能放进整包 · 烘焙器 4.2.13（对话框2）", "body": "- 层页头「导出方案」的 PC 多了 **单束**：每颗星一个面片（带尾巴），比大面片省 overdraw；手机这一层还是序列。引擎回放切到 PC 能直接看（第一次要烘一会儿）。\n- 以前「单束」是另导一个包、而且没有 cascade.json；现在多层效果里点「单束」就是把这一层的 PC 方案改成单束，导出整包时就在里面。单层效果的单束包也带上了 cascade.json。\n- 单束、光点都还**没在 UE 里验证**（单束要导入器支持 Pivot Offset）。"}, {"title": "2026-10-03 · 每一层能选 PC / 手机怎么出 · 烘焙器 4.2.12（对话框2）", "body": "多层效果里点开某一层，参数最上面多了 **「导出方案」**：\n\n- **PC**：序列（大面片，和以前一样）/ **GPU 光点**（这一层的星只出星头光点，不要贴图，省贴图和 overdraw）/ 不出。\n- **手机**：序列 / 不出。手机不用 GPU 粒子，所以 PC 选了光点的层，手机照样是序列（纯图片）。\n- 选了以后下面一行会说会少什么（比如「这一层有尾巴：光点只出星头」）。引擎回放里切 PC / 手机能直接看到两种样子；交付页每层写着方案。\n- 适合光点的：没有尾巴的星（四尺玉的红点、芯、点灭之外的光点层）。光点的大小、亮度是起点，**还没在 UE 里验证**，第一次导进引擎时请看一眼。"}, {"title": "2026-10-03 · 青柠星碰边查清了 · 烘焙器 4.2.11（对话框2）", "body": "青柠星尾层两次重导都有 1 帧「碰到格子内圈」，这次找到原因了：回放检查要求内容离格子边 10 像素以上，收紧取景只留了约 9 像素。几乎全黑的最后一帧只剩几颗暗点，正好落在那一圈。现在烘焙器按回放检查同一套标准自查，碰到了就多留边重来；其他效果不受影响。青柠星已经重新排了导出。"}, {"title": "2026-10-03 · 版本只剩一套 · 烘焙器 4.2.10（对话框2）", "body": "- 「版本」只在资产栏里了：AI 版、你保存的版本、草稿，以及新增的 **「导出时」**——每次导出自动存一份（每个效果只留最近 3 份），想知道「上次导出的是什么参数」直接选它。\n- 工具页的「版本与回滚」「派生配方」去掉了（回滚会把别的效果的参数塞进当前效果）。以前存的还在这台电脑里，工具页最下面能导出成 .json 留底。"}, {"title": "2026-10-03 · 能撤销了；滑杆和拖动一个规矩 · 烘焙器 4.2.9（对话框2）", "body": "- **撤销 / 重做**：资产栏「保存」左边 ↶ ↷，或 Ctrl+Z / Ctrl+Shift+Z。停手 0.6 秒算一步；多层效果撤销只重烘改过的那一层。\n- **滑杆和拖动效果一样了**：在右栏用滑杆改燃烧、点火、火花停这些，序列时长会跟着变（以前只有在轨道上拖才会，滑杆加长燃烧会把星截掉）；引菊的「火花停」用滑杆改，锦的点火也会跟着动。\n- **入点跟着内容**：设过入点以后再推后点火，入点一起往后挪，前面不会多出黑帧。\n- 右栏底部「恢复本花型默认」改成 **「恢复到打开时」**：回到 AI 交的版本（或你保存的版本），不是模板默认；多层时只恢复正在调的那一层。"}, {"title": "2026-10-03 · 参数栏好找了；尾迹可以调粗细、两头收尖 · 烘焙器 4.2.8（对话框2）", "body": "`git pull` 后刷新烘焙器，右栏：\n\n- **6 大类**：运动 / 开花 · 星头 · 尾迹 · 特效 · 环境 · 输出（升空尾缀那些也一样分）。特效、环境、输出默认收起，展开过的下次还展开。\n- **名字变短**：括号里的长说明不再挤在参数名里，鼠标放到参数上，右栏底部的说明条显示完整说明、范围、打开时的值。每节的长说明收进标题旁的「？」。\n- **顶上搜索框**（名字和说明都能搜，Esc 清空）和 **「只看改过的」**（和打开时的版本比）。改过的参数名变绿，大类标题上写「N 项改过」。\n- **尾迹粗细 / 梭形**：「尾迹」→「尾迹外形」里多了 *尾迹粗细*（整体变粗变细）、*星头端收尖*、*尾端收尖*、*最粗处*。两个收尖都拉上去就是梭形；星头那颗亮点的大小还是「星头」里的「炭头大小」管。默认值不改变任何现有效果。"}, {"title": "2026-10-03 · 能自己搭效果了：「＋ 新建效果」· 烘焙器 4.2.7（对话框2）", "body": "`git pull` 后刷新烘焙器，左下角「＋ 新建效果」：\n\n1. 先选第一层：花型模板，或者「现有效果的层」（比如引菊 → 锦的橙引线层，参数复制一份，以后各改各的）；起个中文名。\n2. 右栏「观察图层」：每层有 ↑ ↓ / 改名 / 复制 / 删，底下「＋ 加一层」。点哪层就调哪层（和以前一样，画面一直是整朵）。\n3. 哪几层是同一批星（比如金锦冠四个方向的同一发、引菊和锦）：在那一层的参数页头勾「同一批星」，轨迹参数就一起变。\n4. 资产栏「保存」覆盖这个效果，「另存为」复制一个；英文名（UE 资产名）在「查看交付」里改。左栏多一组「我的效果」。\n\n另外：4.2.5 那次收紧取景在 HN2 锦层上把过曝推到了 2.5%（标准 2%），青柠星尾层末帧碰边——现在收紧时会躲开这两种情况，这两个效果已经排了重导。"}, {"title": "2026-10-03 · 贴图尺寸自己定 · 烘焙器 4.2.6（对话框2）", "body": "- 右栏「输出：帧数 · 格子 · 贴图」一节里，贴图宽、高各自选 512–4096，不再强制 2048；多层效果每层也能各自改。规则只剩下限：PC 单格 ≥ 512、手机 ≥ 256（标准检查也按这个查）。\n- 原来右栏最底下那块「贴图尺寸 / 列 × 行 / 通道 / 编码…」搬进了同一节，不用再上下找。"}, {"title": "2026-10-03 · 出图占满格子；「待我验收」按证据标就绪 · 烘焙器 4.2.5（对话框2）", "body": "`git pull` 后刷新烘焙器。\n\n- **画面占比**：烘好以后按贴图里真实的内容范围把取景收紧再烘一次（预览停手 0.7 秒后在后台做，导出一律用收紧后的）。试烘：菊 Zoom 每帧格子边长省 12%（平均占比 0.74 → 0.84），柳 Zoom 省 31%，固定取景省 5% 左右；收紧前后亮度一点没丢（没切到内容）。\n- **待我验收**：每一项现在标「就绪」或「未就绪：原因」。就绪 = 最新导出是当前版本（参数和烘焙器输出规则都没变过）、回放检查过、标准检查过。现在 5 项都是「未就绪」——因为 4.2.3 / 4.2.5 改了出图规则，旧导出算过期；AI 这就重导、重跑检查，好了自己变「就绪」。\n- **小屏幕**：距离、曝光两个滑杆挪到画面下方那条信息栏右边，工具条不再折两行；左栏抽屉右上角有「×」。"}, {"title": "2026-10-03 · 改动不会再悄悄丢了；「保存」能直接进 git · 烘焙器 4.2.4（对话框2）", "body": "`git pull` 后刷新烘焙器。走查里会做错东西的 6 处（A1–A6）修好了：\n\n- **切走不丢**：没保存就切到别的效果、或刷新页面，改动自动存成这个效果的「草稿」，资产栏「版本」里能选回来。\n- **AI 版就是 AI 版**：从左栏打开效果一定是 AI 交的那版（以前带着你没保存的改动打开，「参数已变」不亮、「通过」也能点）。\n- **改完一层马上点别的层**：这一层照样重烘（以前贴图停在旧的，导出的和参数对不上）。\n- **组合编辑器**：不再顶着上一个效果的名字和导出名；里面存的版本刷新后能打开；同一预设里两层都用默认牡丹时，改一层不会带着另一层变。\n- **保存进 git**：资产栏 ⋯「连接仓库文件夹」选一次仓库根目录，以后「保存」顺便写进 `analysis/我的配方/`，后台脚本推上去，AI 直接读（不开服务器，用浏览器自带的文件夹权限；浏览器重开后第一次保存会再问一次「允许」）。"}, {"title": "2026-10-03 · 小屏幕不挤了；Zoom 取景不再一胀一缩 · 烘焙器 4.2.3（对话框2）", "body": "`git pull` 后刷新烘焙器。\n\n- **小屏幕**：效果名和保存 / 单束 / 查看交付搬进最上面一行；工具条贴在画面框上；时间轴一行；轨道说明和快捷键收进时间轴末尾的「？」。窗口窄（≤ 1180）时左栏变成抽屉，按 L 或「库」拉出，点开条目自动收起。1366 宽笔记本上对比画面从 259 px 变成 373 px（只看模拟 421 px），1280 宽从 193 变成 330。\n- **Zoom 抖**：以前面片在一帧贴图停着的时候一直在长、换帧时缩回去（现有 Zoom 素材包一胀一缩 0.5–3%）。现在每帧一个大小，换帧那一刻才换。贴图不变，只是 cascade.json 的 Size By Life 关键点变多（每张最多约 128 个，还没在 UE 里验证）。\n- **画面占比不够**：正在量每个效果每帧占格子多少，下一步按实测收紧取景，做完再写。"}, {"title": "2026-10-02 · 定了下一轮顺序，清掉过期说明（对话框13）", "body": "- **顺序**（你 23:34 同意）：① 对话框2 先修走查 A1–A6（保存打不开、导出名错、改完切层导出旧贴图等），修完用 HN2 从头走一遍「合入你的动态 → 改层 → 保存 → 刷新 → 导出 PC + 手机」；② 「待我验收」改成程序按证据把关（没导出、检查没过、素材包过期就进不来，并写出缺什么）；③ 等你决定的事只放在本文件最上面这一节。\n- **暂停**：球形D、万彩千轮、永丰、片贝（之前写着「负责人待定」、实际没人做），工具路径修好后再排。\n- **规则改了几处**：帧号通道按你本机导入配置（实测第 0 通道）；贴图默认 2048、按效果可调；后台 10 分钟；AI 交付前要自己以使用者身份走一遍；你说「不用替我导出」只表示谁来点，内部导出和检查照做；别的对话框要做的事由 AI 写进排队，不让你转达。\n- **清理**（只搬进 `归档/`，没删）：过期的执行说明、旧 README、交接里过期的第 1–4 节和 09-30 以前的日志、没人用的 4 个旧脚本、第三版尾缀样例（65 MB）；还在被调用的旧尾缀脚本保留。4.0 开工说明等计划文件头上标了「已完成 / 未开工」。\n- 预览数据（约 300 MB 的 preview.js）没动：删掉也不会让仓库变小（Git 历史里还在），省下的只是本机硬盘。"}, {"title": "2026-10-02 · 升空尾缀第 4 版待你验收（RT4S / RT4M / RT4L）· 烘焙器 4.2.2", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀，效果行下面一排 **小 / 中 / 大**，点哪档开哪档（第 3 版进历史）。\n\n- **只看到一个**：三档以前藏在右栏「版本与历史」的折叠里。现在左栏一排三档、各自带缩略图，右栏卡片上也一直有分档按钮（V5 尾缀同样）。\n- **导出不再浪费**：星头放到面片上端（和你通过的 V5 一样用 Pivot Offset），面片只包住看得见的部分，循环层格子利用从约 64% × 48% 提到约 96% × 96%。消散序列只留到最后还看得见的那一帧，贴图挑最小、RGBA 四个通道用满（2048² 变 1024×2048）。手机贴图边长减半（单格 256²，标准下限）。\n- **素材里有粒子了**：一半细火星烘进循环层贴图（和白热段一起真循环），白柱子两边是一根根金 / 白短线；另一半细火星和中 / 粗火星仍是 GPU。\n- **引擎里加了**：星头一圈柔光（跟着喷射忽明忽暗）、尾迹下段偶尔有粗火星烧到最后闪一下、0 秒发射口一闪 + 喷一把火星。都在右栏「尾缀 · 引擎里加的效果」，填 0 就关。\n- 请你在引擎里看一眼：贴图里的火星远看会不会偏暗偏橙（灰度 + Ramp 的口径）；Pivot Offset 导入器如果不认，要手动填（参数表里写了值）。导出请你自己在烘焙器里点。"}, {"title": "2026-10-02 · 引菊 → 锦（HN2）橙线颜色换成原型的颜色模型", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 引菊 → 锦。\n\n- 你 15:11 指出的「不如原型纯、尖部颜色都一样」：用 4.2.0 新加的三项做了三轮（HN2E7–E9）。现在尖部暗红、中段亮橙，线变细，线之间有暗底。\n- 橙引线层改了：曝光 1.5 → 0.8；Ramp 亮端 #ff8c19 / #ffa011 → #ff7a14 / #ff8e12；火花粗细 0.6 → 0.45；火花密度 400 → 520；冷却 0.3；火花烧旺 0.35；每颗星亮度离散 0.35；线间底光 0.006（半径 6）。金锦层没动。\n- 还差：实拍开花中心有个白色亮点，这里没有（要的话另加短闪层）；整体比实拍亮约 10%（UE 里调自发光倍数）；实拍线的长短更参差。\n- 你在 4.1.1 浏览器里调的动态还没合进来：在烘焙器里「复制我的参数」贴给我，我合进 HN2 再导一次。"}, {"title": "2026-10-02 · 升空尾缀第 3 版待你验收（RT3S / RT3M / RT3L）", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀 · 循环层 + 粒子，右上切小 / 中 / 大（第 2 版进历史）。\n\n- **白 / 黄对比**：火星三档各有温度偏移（细粒偏金偏暗、粗粒更热更亮 → 过曝发白），大小离散加大，同一档里也有亮有暗。\n- **线状火星**：中、粗火星是竖向短线——看的人 / 相机盯着星头走，火星相对星头往下退，在曝光时间里拖成线（越往下拖得越长，和你的参考一致）；细火星大多还是点。\n- **上升不再冻住**：每颗火星跟着出生那团空气漂（阵风约 1 m/s），越老漂得越远 → 尾迹下段慢慢松开、轻轻弯；散开改成中间密、边缘软。\n- 中档按你 14:35 参考图同尺度量：线状比例 0.82（参考 0.73）、长短比 2.4（2.3）、白 / 黄、边缘软硬都对上了；三档并排 `analysis/results/RT3/三档_对参考.jpg`。新参数在右栏「火星明暗与线状」「空气乱流」两节。\n- 没经过 UE 验证：乱流用的 Acceleration 模块、GPU 粒子 Rectangle 对齐拉长。导出请你自己在烘焙器里点。"}, {"title": "2026-10-02 · 烘焙器 4.2.0：每层同一套时刻 + 接力、输出一节、尾迹扩散、重播 R、单束", "body": "`git pull` 后刷新烘焙器。\n\n- **轨道**：每层都有点火 / 燃烧结束（上排圆点）和火花开始 / 火花停（中间菱形，空心 = 没打开，拖动就打开）。同一批星的几层在同一时刻的点有亮环、一起动（引菊：橙引线火花停 = 金锦点火）。拖燃烧结束，序列时长跟着变。点轨道切到那一层。\n- **输出一节**（右栏「输出：帧数 · 格子 · 贴图」）：顶上直接写着多少帧、几张、每张几×几、帧率；帧数可选 自动 / 最省 / 手动，格子可选 固定 / 按帧数选最小贴图，单格 512 / 1024 / 2048。轨道上的细刻度是每一帧的位置。默认还是原来的做法。\n- **尾迹扩散**（物理扰动）：老火花被空气扰流慢慢吹散，默认 0。\n- **尾迹外形**再加三项（对话框7 为引菊颜色纯度要的）：火花烧旺时间、每颗星亮度离散、线间底光，默认 0。\n- **重播**：按钮或 R。实拍对照改成 V。\n- **单束**：资产栏「单束」菜单，或调某一层时层参数顶上的按钮。\n- 左栏缩略图换成本机显卡渲染的。"}, {"title": "2026-10-02 · 升空尾缀第 2 版待你验收（RT2S / RT2M / RT2L）", "body": "`git pull` 后刷新烘焙器，左栏「待我验收」→ 升空尾缀 · 循环层 + 粒子，右上切小 / 中 / 大。\n\n- 火星数量、大小、散开按你 14:35 的参考图同尺度量出来对齐（三档对参考：`analysis/results/RT2/三档_对参考.jpg`）。\n- 参数全部在右栏；导出你自己在烘焙器里点，粒子大小 / 亮度请在引擎里按你的例子标定。\n- 已知：回放检查会把循环序列每圈「帧号回到 0」算成回跳（检查规则的问题，待改）；你 16:41 提的明暗对比、线状拖影、上升时的空气乱流在做第 3 版。"}, {"title": "2026-10-02 · 烘焙器 4.1.2：不再越播越卡、每个资产自己的尾迹外形、层轨道能拖、缩略图换渲染", "body": "`git pull` 后刷新烘焙器。\n\n- **越播越卡修好了**：实时模拟以前每帧都从 0 秒重算，越到后面越慢；现在从上一帧接着算，后段和前段一样快（画面逐位不变）。播放时钟也改成按真实时间走。\n- **尾迹外形**：不再是顶栏的全局面板。每个效果（多层时每一层）右栏都有「尾迹外形」：粗细随机、亮肩、泪滴星头，默认 0 = 原样。\n- **层轨道能拖**：每层轨道下方的白色把手是入点 / 出点，上方圆点是点火、燃烧结束、火花停等；任何一层都能直接拖，松手只重烘那一层。拖回尽头 = 自动。\n- **缩略图**：不再用实拍。本机显卡按当前配方渲染（UI8T，回来后自动换上）；之前先用对照图里的模拟图。\n- **命名**：循环层 + 粒子（升空尾缀小 / 中 / 大）也改成 `T_EFX_FireWorks_…`，三档加 `_S / _M / _L`。`cascade.json` 里每张贴图写了 UE 资产名，导入时直接用、不用再加前缀。"}];
 // =====================================================================
 //  工具
 // =====================================================================
@@ -1329,7 +1344,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.2.15';
+const VERSION = '4.2.16';
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 const OUTPUT_VER = { master: '4.2.7', emitset: '4.2.2', riseLoop: '4.2.2', trail: '4.0', unit: '4.0', loop: '4.0', v37: '3.7' };
@@ -5328,6 +5343,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   const fH = new Target(N, NH, gl.RGBA16F), fT = new Target(N, NH, gl.RGBA16F), sst = new Target(ssW, ssH, gl.RGBA16F);
   fH.clear(); fT.clear();
   const t0 = performance.now();
+  try {     // 4.2.16：烘到一半作废（参数又变了，进度回调抛出）时，把这三张工作贴图放掉
   for (let f = 0; f < L.F; f++) {
     const tc = pl.times[f], W = Math.max(P.shutter * pl.dur[f], 1e-4);
     const nsub = clamp(Math.ceil(W * q.hz), 1, q.maxSub);
@@ -5356,6 +5372,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
     gl.colorMask(true, true, true, true);
     if (f % 8 === 7) { PPMY = 0; onProg && onProg((f + 1) / L.F); await nextTick(); }
   }
+  } catch (e) { PPMY = 0; additive(false); gl.colorMask(true, true, true, true); fH.dispose(); fT.dispose(); sst.dispose(); throw e; }
   PPMY = 0;
   const comb = P.outMode === 'combined';
   const cg = comb ? combGain(P) : [1, 1];
@@ -6820,6 +6837,7 @@ function fwlCombo(name, layers, mobile = false) {
 }
 // 组合导出用的层烘焙：分开输出（星头 / 拖尾两张）的层在素材包里改成合并输出，和引擎材质（灰度查 Ramp）一致
 async function comboLayerBakes(layers, onProg) {
+  if (typeof bakeFlush === 'function') await bakeFlush();     // 4.2.16：自动烘焙关时攒着的改动先烘完，导出不拿旧贴图
   const out = [], own = [];
   for (let i = 0; i < layers.length; i++) {
     const L = layers[i], e = state.lib.find(x => x.name === L.lib);
@@ -6914,36 +6932,118 @@ function derive(P) {
   if (familyOf(P.type) === 'ground') P.duration = P.loopT;
   return P;
 }
-// 预览烘焙（调参后自动）
+// ---- 4.2.16 按需烘焙（用户 2026-10-03 12:59「abc 一起做」，12:27 #1「每动一个参数就自动重新渲染一次，特别影响效率」）----
+// A 自动烘焙开关：关（默认）= 改参数只更新实时模拟，贴图标「旧」；按 B、切到引擎回放 / 贴图、导出时才烘。开 = 停手 0.38 s 自动烘（和以前一样）。
+// B 烘焙可中断：烘到一半参数又变了，这次在下一个进度点直接丢掉，不再等它烘完再烘一遍。
+// C 收紧取景（refineBake）只在手动烘、打开效果、导出时做；自动烘只烘预览。手动烘一次就做完，引擎回放看到的就是导出的样子。
+// 打开效果 / 换版本照常烘（换了东西必须有贴图看）。自动化（Playwright，navigator.webdriver）默认开：本机任务、检查脚本按「打开 → 等烘完」走，不受影响；网址 ?autobake=0 / 1 强制。
+const BAKE_ABORT = Object.assign(new Error('烘焙作废：参数又变了'), { abort: true });
+const isAbort = e => !!(e && e.abort);
+const bakeMode = { auto: null, demand: false };
+function autoBakeOn() {
+  if (bakeMode.auto == null) {
+    const q = typeof location !== 'undefined' ? location.search : '';
+    // 不在浏览器里（node 检查脚本）、或自动化（Playwright）：自动烘焙开，和以前的行为一样
+    bakeMode.auto = /[?&]autobake=1/.test(q) ? true : /[?&]autobake=0/.test(q) ? false
+      : typeof store === 'undefined' || typeof navigator === 'undefined' || navigator.webdriver ? true : !!store.get('autoBake', false);
+  }
+  return bakeMode.auto;
+}
+function setAutoBake(on) {
+  bakeMode.auto = !!on; if (typeof store !== 'undefined') store.set('autoBake', !!on);
+  const c = $('#autoBakeChk'); if (c) c.checked = !!on;
+  if (on) {                                   // 打开自动：攒着的改动按自动的规矩烘（不收紧）
+    if (state.tab === 'combo') { for (const e of [...(state.staleLayers || [])]) if (layerStale(e)) { state.staleLayers.delete(e); queueLayerBake(e, 0, true); } }
+    else if (state.dirty) scheduleBake();
+  }
+  syncStale();
+}
+// 现在打开的是什么：换了东西（打开别的效果 / 模板 / 切单层 ↔ 多层）一定要烘
+function bakeSubject() { return [typeof lib !== 'undefined' ? lib.key : '', state.repId || '', state.P && state.P.type, state.tab].join('|'); }
+const layerStale = e => !!(e && e.bake && (e.pRev || 0) !== (e.bakeRev || 0));
+function bakeStale() {
+  if (state.tab === 'combo') return state.layers.some(L => layerStale(layerEntryOf(L)));
+  return !!(state.bake && state.dirty && state.failedGen !== state.gen);
+}
+// 不用再点就会跑的活（排着的烘焙 / 收紧）；自动烘焙关时攒着的改动不算（那是「贴图旧了」，等你按 B）
+function bakesPending() {
+  if (state.tab === 'combo') return !!((state.layerQueue && state.layerQueue.size) || (state.layerRefine && state.layerRefine.size));
+  return !!((state.dirty && state.failedGen !== state.gen && (autoBakeOn() || bakeMode.demand || !state.bake)) || state.refineDue);
+}
+// 手动烘：B、切到引擎回放 / 贴图、「烘焙」按钮、重试。烘到最新为止（中途又改了接着烘），带收紧取景
+function bakeNow(o = {}) {
+  bakeMode.demand = true;
+  if (state.tab === 'combo') {
+    if (state.comboSel >= 0 && state.dirty) { state.dirty = false; const le = layerEntryOf(state.layers[state.comboSel]); if (le) queueLayerBake(le, 0, true); }
+    for (const L of state.layers) { const e = layerEntryOf(L); if (layerStale(e) && !(state.layerQueue && state.layerQueue.has(e))) queueLayerBake(e, 0, true); }
+    if (state.staleLayers) state.staleLayers.clear();
+    for (const L of state.layers) { const e = layerEntryOf(L); if (e && e.bake && e.bake.meta && !e.bake.meta.fitted && e.bake.meta.plan && !layerStale(e)) queueLayerRefine(e); }
+    if (!state.baking) runLayerQueue();
+  } else {
+    if (state.dirty) { clearTimeout(bakeTimer); if (!state.baking) runPreviewBake(); }
+    else if (state.bake && state.bake.meta && !state.bake.meta.fitted && state.bake.meta.plan) scheduleRefine(0);
+  }
+  bakeSettle(); syncStale();
+  if (!o.quiet && !bakeMode.demand) flash('贴图已经是最新的');
+}
+function bakeIfStale() { if (bakeStale() || bakesPending()) bakeNow({ quiet: true }); }
+// 导出前：把攒着的改动都烘完（多层导出直接拿每层的贴图）
+async function bakeFlush() {
+  if (bakeStale() || bakesPending()) bakeNow({ quiet: true });
+  for (let i = 0; i < 6000 && (state.baking || bakesPending()); i++) await new Promise(r => setTimeout(r, 50));
+}
+// 烘完、收紧都结束了：手动烘的「烘到最新为止」到此为止
+function bakeSettle() { if (!state.baking && !bakesPending()) bakeMode.demand = false; syncStale(); }
+let staleSig = '';
+function syncStale() {
+  if (typeof document === 'undefined') return;
+  const btn = $('#bakeNow'), bar = $('#staleBar'); if (!btn || !bar) return;
+  const stale = bakeStale(), busyB = state.baking || bakesPending(), auto = autoBakeOn(), view = state.view;
+  const sig = [stale, busyB, auto, view].join('|'); if (sig === staleSig) return; staleSig = sig;
+  btn.classList.toggle('stale', stale && !busyB); btn.classList.toggle('run', busyB);
+  btn.textContent = busyB ? '烘焙中…' : stale ? '烘焙 ●' : '贴图最新';
+  btn.title = (stale ? '贴图还是旧参数：' : '') + '按当前参数烘焙贴图（B）' + (auto ? '' : '；自动烘焙关着：改参数只更新实时模拟');
+  const c = $('#autoBakeChk'); if (c) c.checked = auto;
+  bar.hidden = !(stale && view !== 'live' && state.tab !== 'asset');
+  if (!bar.hidden) $('#staleText').textContent = busyB ? '贴图按新参数烘焙中…' : '贴图还是旧参数（实时模拟已是新的）';
+  $('#staleBake').hidden = busyB;
+}
+// 预览烘焙
 let bakeTimer = 0;
 function scheduleBake() { clearTimeout(bakeTimer); bakeTimer = setTimeout(runPreviewBake, 380); }
 async function runPreviewBake() {
   clearTimeout(bakeTimer);
   if (state.tab === 'combo' && state.comboSel >= 0) { const le = state.lib.find(x => state.layers[state.comboSel] && x.name === state.layers[state.comboSel].lib); if (le && state.dirty) { state.dirty = false; queueLayerBake(le, 0); } return; }
   if (state.baking) { state.rebake = true; return; }
-  if (!state.dirty || state.failedGen === state.gen) return;
-  state.baking = true; state.rebake = false;
-  const gen = state.gen, P = structuredClone(state.P); let pending=null;
+  if (!state.dirty || state.failedGen === state.gen) { bakeSettle(); return; }
+  // 4.2.16：自动烘焙关、不是手动要的、打开的还是同一个东西 → 不烘，贴图标旧（实时模拟已经按新参数在画）
+  const subj = bakeSubject(), opened = !state.bake || state.bakeSubj !== subj || !state.bake.P || state.bake.P.type !== state.P.type;
+  if (!autoBakeOn() && !bakeMode.demand && !opened) { syncStale(); return; }
+  state.baking = true; state.rebake = false; syncStale();
+  const gen = state.gen, P = structuredClone(state.P), full = bakeMode.demand || opened; let pending=null;
   try {
     const phys = isPhys(P);
     const b = pending = phys ? physBake(P) : await bake(P, 1, p => {
-      if (gen === state.gen) setStatus(`预览烘焙… ${Math.round(p * 100)}%`);
+      if (gen !== state.gen) throw BAKE_ABORT;          // 4.2.16：参数又变了，这次作废
+      setStatus(`预览烘焙… ${Math.round(p * 100)}%`);
     });
     if(!phys && state.platform==='mobile' && gen===state.gen)b.mobile=await bakeMobileFor(b,p=>{
-      if(gen===state.gen)setStatus(`手机独立烘焙… ${Math.round(p*100)}%`);
+      if(gen!==state.gen)throw BAKE_ABORT;
+      setStatus(`手机独立烘焙… ${Math.round(p*100)}%`);
     });
     // 旧任务连贴图 / 统计 / 缩略图也不能发布，且必须释放其显卡资源。
     if (gen !== state.gen) { disposeBake(b); pending=null; return; }
-    disposeBake(state.bake); state.bake = b; state.bakeGen = gen; pending=null;
+    disposeBake(state.bake); state.bake = b; state.bakeGen = gen; state.bakeSubj = subj; pending=null;
     state.dirty = false; state.failedGen = -1; state.bakeError = null; syncBakeError();
     if (phys) $('#stats').innerHTML = physStats(P);
-    else { showStats(b); afterBake(b); scheduleRefine(); }
+    else { showStats(b); afterBake(b); if (full) scheduleRefine(0); }     // 4.2.16 C：收紧取景只在手动烘 / 打开时
     // 自动选格子改了列 × 行：同步到界面（帧数不变，不触发重烘）
     // （4.2.0：「格子按帧数」「单格」是每次按帧数现算的，不写回列 × 行，否则下次容量就变小了）
     if (!phys && !b.meta.L.fit && !(+state.P.outCell > 0) && state.P.outPack !== 'fit' && (b.meta.L.cols !== state.P.cols || b.meta.L.rows !== state.P.rows)) { state.P.cols = b.meta.L.cols; state.P.rows = b.meta.L.rows; syncExport(); }
     setStatus('');
   } catch (e) {
     if(pending)disposeBake(pending);
+    if (isAbort(e)) { setStatus(''); return; }        // 作废不算失败；finally 里按最新参数接着走
     console.error(e);
     if (gen === state.gen) {
       state.dirty = true; state.failedGen = gen;
@@ -6955,6 +7055,7 @@ async function runPreviewBake() {
     state.baking = false; state.rebake = false;
     if (state.layerQueue && state.layerQueue.size) runLayerQueue();
     else if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
+    bakeSettle();
   }
 }
 // 多层效果里调某一层（2026-10-02 用户 07:43）：state.P 就是这一层的参数（组合库条目 e.P），改了只重烘这一层；
@@ -6963,9 +7064,11 @@ async function runPreviewBake() {
 // 这次重烘被丢掉，参数是新的、贴图是旧的，导出包和参数不一致。现在每层记一个参数版本号 pRev，改了就进队列；
 // 烘的是哪层就发布到哪层，和现在选中谁无关；烘的时候又改了，烘完不发布、按最新参数再烘一次。
 function dropLibBake(e) { if (e && e.bake && !state.lib.some(x => x !== e && x.bake === e.bake)) disposeBake(e.bake); if (e) e.bake = null; }
-function queueLayerBake(e, delay = 380) {
+function queueLayerBake(e, delay = 380, noBump = false) {
   if (!e) return;
-  e.pRev = (e.pRev || 0) + 1; e.rev = (e.rev || 0) + 1;      // rev：实时模拟马上按新参数重算
+  if (!noBump) { e.pRev = (e.pRev || 0) + 1; e.rev = (e.rev || 0) + 1; }      // rev：实时模拟马上按新参数重算
+  // 4.2.16：自动烘焙关、不是手动要的、这一层已经有贴图 → 先攒着（贴图标旧），按 B / 切视图 / 导出时再烘
+  if (!autoBakeOn() && !bakeMode.demand && e.bake && !(state.layerQueue && state.layerQueue.has(e) && state.baking)) { (state.staleLayers = state.staleLayers || new Set()).add(e); syncStale(); return; }
   (state.layerQueue = state.layerQueue || new Set()).add(e);
   clearTimeout(state.layerQueueTimer); state.layerQueueTimer = setTimeout(runLayerQueue, delay);
 }
@@ -6975,17 +7078,18 @@ function scheduleRefine(delay = 700) { clearTimeout(refineTimer); state.refineDu
 async function runRefine() {
   clearTimeout(refineTimer); state.refineDue = false;
   if (state.baking) { scheduleRefine(); return; }
-  const b0 = state.bake; if (state.tab === 'combo' || !b0 || state.dirty || !b0.meta || b0.meta.fitted || !b0.meta.plan) return;
+  const b0 = state.bake; if (state.tab === 'combo' || !b0 || state.dirty || !b0.meta || b0.meta.fitted || !b0.meta.plan) { bakeSettle(); return; }
   const gen = state.gen; state.baking = true; let nb = null;
   try {
-    nb = await refineBake(b0, p => { if (gen === state.gen) setStatus(`收紧取景… ${Math.round(p * 100)}%`); });
+    nb = await refineBake(b0, p => { if (gen !== state.gen) throw BAKE_ABORT; setStatus(`收紧取景… ${Math.round(p * 100)}%`); });
     if (nb && gen === state.gen && state.bake === b0 && state.platform === 'mobile') nb.mobile = await bakeMobileFor(nb);
     if (nb && gen === state.gen && state.bake === b0) { disposeBake(b0); state.bake = nb; nb = null; showStats(state.bake); afterBake(state.bake); }
-  } catch (err) { console.error(err); }
+  } catch (err) { if (!isAbort(err)) console.error(err); }
   finally {
     if (nb) disposeBake(nb);          // 参数又变了：这次收紧作废
     state.baking = false; setStatus('');
     if (state.layerQueue && state.layerQueue.size) runLayerQueue(); else if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
+    bakeSettle();
   }
 }
 function queueLayerRefine(e) {
@@ -6997,42 +7101,43 @@ async function runLayerQueue() {
   const q = state.layerQueue = state.layerQueue || new Set(), rq = state.layerRefine = state.layerRefine || new Set();
   if (state.baking) return;                      // 正在烘的那次结束时会再叫这里
   if (!q.size) {                                 // 没有要按新参数烘的层：后台收紧取景（4.2.5）
-    const e = rq.values().next().value; if (!e) return;
+    const e = rq.values().next().value; if (!e) { bakeSettle(); return; }
     rq.delete(e);
-    if (!state.lib.includes(e) || !e.bake || !e.bake.meta || e.bake.meta.fitted || !e.bake.meta.plan) return runLayerQueue();
-    const b0 = e.bake, rev = e.pRev, i0 = state.layers.findIndex(L => L.lib === e.name); state.baking = true; let nb = null;
+    if (!state.lib.includes(e) || !e.bake || !e.bake.meta || e.bake.meta.fitted || !e.bake.meta.plan || layerStale(e)) return runLayerQueue();
+    const b0 = e.bake, rev = e.pRev, i0 = state.layers.findIndex(L => L.lib === e.name); state.baking = true; let nb = null; syncStale();
     try {
-      nb = await refineBake(b0, p => setStatus(`收紧取景：第 ${i0 + 1} 层 ${Math.round(p * 100)}%`));
+      nb = await refineBake(b0, p => { if (e.pRev !== rev) throw BAKE_ABORT; setStatus(`收紧取景：第 ${i0 + 1} 层 ${Math.round(p * 100)}%`); });
       if (nb && state.lib.includes(e) && e.bake === b0 && e.pRev === rev) {
         dropLibBake(e); e.bake = nb; nb = null;
         if (state.tab === 'combo' && state.comboSel >= 0 && state.layers[state.comboSel] && state.layers[state.comboSel].lib === e.name) showStats(e.bake);
         if (state.platform === 'mobile' && !q.size) await ensureComboMobile();
         if (typeof buildLayerCard === 'function') buildLayerCard();
       }
-    } catch (err) { console.error(err); }
-    finally { if (nb) disposeBake(nb); state.baking = false; setStatus(''); if (q.size || rq.size) runLayerQueue(); else if (state.dirty && state.failedGen !== state.gen && !(state.tab === 'combo' && state.comboSel >= 0)) runPreviewBake(); }
+    } catch (err) { if (!isAbort(err)) console.error(err); }
+    finally { if (nb) disposeBake(nb); state.baking = false; setStatus(''); if (q.size || rq.size) runLayerQueue(); else if (state.dirty && state.failedGen !== state.gen && !(state.tab === 'combo' && state.comboSel >= 0)) runPreviewBake(); bakeSettle(); }
     return;
   }
   const e = q.values().next().value;
   if (!state.lib.includes(e) || e.failedRev === e.pRev) { q.delete(e); return runLayerQueue(); }
-  state.baking = true;
-  const rev = e.pRev, idx = () => state.layers.findIndex(L => L.lib === e.name), isCur = () => state.tab === 'combo' && state.comboSel >= 0 && state.layers[state.comboSel] && state.layers[state.comboSel].lib === e.name;
+  state.baking = true; syncStale();
+  const rev = e.pRev, full = bakeMode.demand || !e.bake, idx = () => state.layers.findIndex(L => L.lib === e.name), isCur = () => state.tab === 'combo' && state.comboSel >= 0 && state.layers[state.comboSel] && state.layers[state.comboSel].lib === e.name;
   let pending = null;
   try {
-    const b = pending = await bake(libP(e.P, true), 1, p => setStatus(`重烘第 ${idx() + 1} 层… ${Math.round(p * 100)}%`));
+    const b = pending = await bake(libP(e.P, true), 1, p => { if (e.pRev !== rev) throw BAKE_ABORT; setStatus(`重烘第 ${idx() + 1} 层… ${Math.round(p * 100)}%`); });
     pending = null;
     if (!state.lib.includes(e)) { disposeBake(b); q.delete(e); return; }
     if (e.pRev !== rev) { disposeBake(b); return; }                          // 烘的时候又改了：留在队列里，按最新参数再烘
-    dropLibBake(e); e.bake = b; q.delete(e); e.failedRev = -1;
+    dropLibBake(e); e.bake = b; e.bakeRev = rev; q.delete(e); e.failedRev = -1; if (state.staleLayers) state.staleLayers.delete(e);
     if (e.rep) { state.layerEdits = state.layerEdits || {}; state.layerEdits[e.rep] = { P: e.P, M: e.M }; e.editSig = JSON.stringify([e.P, e.M]); }
     if (isCur()) { state.failedGen = -1; state.bakeError = null; syncBakeError(); showStats(b); }
     setStatus('');
     const i = idx(); if (i >= 0) syncLinkedLayers(i);
-    queueLayerRefine(e);
+    if (full) queueLayerRefine(e);                    // 4.2.16 C：收紧取景只在手动烘 / 第一次烘
     if (state.platform === 'mobile' && !q.size) await ensureComboMobile();
     if (typeof buildLayerCard === 'function') buildLayerCard();
   } catch (err) {
     if (pending) disposeBake(pending);
+    if (isAbort(err)) { setStatus(''); return; }        // 作废：e 还在队列里，finally 接着按最新参数烘
     console.error(err);
     if (e.pRev === rev) {
       e.failedRev = rev; q.delete(e);
@@ -7045,6 +7150,7 @@ async function runLayerQueue() {
     if (q.size) runLayerQueue();
     else if (state.dirty && state.failedGen !== state.gen && !(state.tab === 'combo' && state.comboSel >= 0)) runPreviewBake();
     else if (state.layerRefine && state.layerRefine.size) { clearTimeout(state.layerQueueTimer); state.layerQueueTimer = setTimeout(runLayerQueue, 700); }
+    bakeSettle();
   }
 }
 // 同一批星（种子、星数、初速、终端速度都一样）的层：决定轨迹的参数改一处、几层一起变（用户 2026-10-02 13:09：两层共用的参数要两层一起改，以前没有联动）
@@ -7078,6 +7184,7 @@ function syncBakeError() {
 }
 function retryPreviewBake() {
   if (state.baking) return;
+  bakeMode.demand = true;
   if (state.tab === 'combo' && state.comboSel >= 0) { const le = state.lib.find(x => state.layers[state.comboSel] && x.name === state.layers[state.comboSel].lib); if (le) { le.failedRev = -1; state.failedGen = -1; state.bakeError = null; syncBakeError(); queueLayerBake(le, 0); } return; }
   state.failedGen = -1; state.dirty = true; runPreviewBake();
 }
@@ -7513,7 +7620,7 @@ function newLayer(entry, o = {}) {
 // 4.2.3（走查 A3）：同一个母版被第二层用到时复制一份（参数、颜色各自独立；贴图先共用，哪层改了哪层自己重烘）
 function libFork(e) {
   const base = e.name.replace(/ #\d+$/, ''); let n = 2; while (state.lib.some(x => x.name === `${base} #${n}`)) n++;
-  const f = { ...e, name: `${base} #${n}`, P: structuredClone(e.P), M: structuredClone(e.M), fork: true, pRev: 0, rev: 0 };
+  const f = { ...e, name: `${base} #${n}`, P: structuredClone(e.P), M: structuredClone(e.M), fork: true, pRev: 0, rev: 0, bakeRev: 0 };
   delete f.rep; delete f.editSig; state.lib.push(f); return f;
 }
 function layerEntryFor(e, used) { return used.has(e) || state.layers.some(L => L.lib === e.name) ? libFork(e) : e; }
@@ -9360,6 +9467,7 @@ async function wbLoad(id) {
   await wbApply(s.snap); wb.src = { kind: 'mine', id }; wbArm(); wbSync(); flash(`正在看你的版本「${s.name}」`);
 }
 async function wbApply(snap) {
+  bakeMode.demand = true;          // 4.2.16：换版本 / 恢复 = 打开，照常烘（自动烘焙关也烘）
   if (snap.kind === 'combo') {
     if (state.tab !== 'combo') { flash('这个版本是多层效果，当前打开的是单层', true); return; }
     state.layerEdits = state.layerEdits || {};
@@ -9585,8 +9693,13 @@ function resetToOpened() {
   if (state.comboSel < 0) { wbApply(s); flash('已恢复到打开时（所有层）'); return; }
   const x = s.layers[state.comboSel], e = layerEntryOf(state.layers[state.comboSel]);
   if (!x || !e || !x.P) { flash('这一层是打开以后加的，没有「打开时」的样子', true); return; }
+  // 4.2.16（10-03 复现）：按时间规则恢复——和这一层粘在同一时刻的另一层（接力：引线火花停 = 锦点火）跟着回去；之后这一层再按快照逐字放回
+  const { moved } = timingEdit(e.P, state.comboSel, () => { putObj(e.P, x.P); derive(e.P); });
   putObj(e.P, x.P); if (x.M && e.M) putObj(e.M, x.M); derive(e.P);
-  buildMasterPanel(); onParam(); flash(`已把第 ${state.comboSel + 1} 层恢复到打开时的参数`);
+  buildMasterPanel(); onParam();
+  for (const j of moved) { const e2 = layerEntryOf(state.layers[j]); if (e2) queueLayerBake(e2); }
+  if (moved.size) stage2.tlSig = '';
+  flash(`已把第 ${state.comboSel + 1} 层恢复到打开时的参数${moved.size ? `（接力的第 ${[...moved].map(j => j + 1).join('、')} 层跟着回去）` : ''}`);
 }
 function buildTlBars() {
   if (stage2.drag) return;   // 拖动中不重建（否则手上的把手被换掉，拖到一半断开）
@@ -9905,6 +10018,7 @@ function initStage() {
     if (/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName) || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'ArrowLeft') { e.preventDefault(); tickStep(-1); } else if (e.key === 'ArrowRight') { e.preventDefault(); tickStep(1); }
     else if (e.key.toLowerCase() === 'r') { e.preventDefault(); replay(); }
+    else if (e.key.toLowerCase() === 'b') { e.preventDefault(); bakeNow(); }        // 4.2.16 按需烘焙
   });
 }
 // ---------------- 渲染 ----------------
@@ -10668,7 +10782,7 @@ const segBtns = (id, fn) => $(id).addEventListener('click', e => {
 });
 segBtns('#dispSeg', b => state.disp = b.dataset.disp);
 segBtns('#platformSeg', b => setPreviewPlatform(b.dataset.platform));
-segBtns('#viewSeg', b => state.view = b.dataset.view);
+segBtns('#viewSeg', b => { state.view = b.dataset.view; if (state.view !== 'live') bakeIfStale(); syncStale(); });     // 4.2.16：切到引擎回放 / 贴图时，贴图旧了就烘
 segBtns('#atlasSeg', b => state.atlasLayer = b.dataset.layer);
 segBtns('#segSeg', b => state.atlasSeg = +b.dataset.seg);
 segBtns('#flowSeg', b => { state.atlasFlow = b.dataset.flow === '1'; flowTrail.length = 0; $('#qlabels').dataset.key = ''; });
@@ -10691,6 +10805,7 @@ function importParams(j, fname) {
   if (j.recipes) { const all = store.get('mySaves', {}), prev = state.recipes; let n = 0; state.recipes = [...j.recipes, ...(prev || [])];     // 父配方可能也在这个文件里
     for (const r of j.recipes) { try { const { P, M } = resolveRecipe(r), k = 'type:' + r.type; (all[k] = all[k] || []).push({ id: 'r' + Date.now().toString(36) + n, name: '配方 · ' + r.name, at: wbNow(), base: r.type, snap: { kind: 'single', P, M, repId: null } }); n++; } catch (e) { } }
     state.recipes = prev; store.set('mySaves', all); renderLib(); flash(`已把 ${n} 个配方存成花型模板的版本：打开对应花型（左栏「花型模板」），资产栏「版本」里选`); return; }
+  bakeMode.demand = true;          // 4.2.16：导入 = 打开，照常烘
   if (j.diff && j.type) { const { P, M } = resolveRecipe(j); state.P = P; state.M = M; state.name = j.name || fname; buildMasterPanel(); onParam(); flash('已导入配方 ' + state.name); return; }
   const p = j.params || j;
   if (!TYPES[p.type]) throw new Error('不认识的花型');
@@ -10739,6 +10854,12 @@ buildMasterPanel();
 initIter();
 initLibrary();
 if (!/[?&]fast/.test(location.search)) runPreviewBake(); else state.dirty = false;
+// 4.2.16 按需烘焙：工具栏「烘焙」按钮 / 「自动」开关、画面上的「贴图是旧的」横条
+$('#bakeNow').addEventListener('click', () => bakeNow());
+$('#staleBake').addEventListener('click', () => bakeNow());
+$('#autoBakeChk').addEventListener('change', e => { setAutoBake(e.target.checked); flash(e.target.checked ? '自动烘焙：开（改参数停手后自动烘）' : '自动烘焙：关（改参数只更新实时模拟，按 B 烘焙）'); });
+$('#autoBakeChk').checked = autoBakeOn();
+setInterval(syncStale, 400); syncStale();
 requestAnimationFrame(loop);
 // 给命令行批量重烘（tool/batch_bake.mjs）和调试用
 // 参数覆盖里以 _ 开头的是脚本自己的（_ramp 渐变图、_psf 相机模糊），不进烘焙参数

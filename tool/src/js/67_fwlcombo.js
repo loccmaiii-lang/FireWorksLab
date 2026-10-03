@@ -176,6 +176,7 @@ function fwlCombo(name, layers, mobile = false) {
 }
 // 组合导出用的层烘焙：分开输出（星头 / 拖尾两张）的层在素材包里改成合并输出，和引擎材质（灰度查 Ramp）一致
 async function comboLayerBakes(layers, onProg) {
+  if (typeof bakeFlush === 'function') await bakeFlush();     // 4.2.16：自动烘焙关时攒着的改动先烘完，导出不拿旧贴图
   const out = [], own = [];
   for (let i = 0; i < layers.length; i++) {
     const L = layers[i], e = state.lib.find(x => x.name === L.lib);

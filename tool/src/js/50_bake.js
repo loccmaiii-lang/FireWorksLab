@@ -152,6 +152,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   const fH = new Target(N, NH, gl.RGBA16F), fT = new Target(N, NH, gl.RGBA16F), sst = new Target(ssW, ssH, gl.RGBA16F);
   fH.clear(); fT.clear();
   const t0 = performance.now();
+  try {     // 4.2.16：烘到一半作废（参数又变了，进度回调抛出）时，把这三张工作贴图放掉
   for (let f = 0; f < L.F; f++) {
     const tc = pl.times[f], W = Math.max(P.shutter * pl.dur[f], 1e-4);
     const nsub = clamp(Math.ceil(W * q.hz), 1, q.maxSub);
@@ -180,6 +181,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
     gl.colorMask(true, true, true, true);
     if (f % 8 === 7) { PPMY = 0; onProg && onProg((f + 1) / L.F); await nextTick(); }
   }
+  } catch (e) { PPMY = 0; additive(false); gl.colorMask(true, true, true, true); fH.dispose(); fT.dispose(); sst.dispose(); throw e; }
   PPMY = 0;
   const comb = P.outMode === 'combined';
   const cg = comb ? combGain(P) : [1, 1];

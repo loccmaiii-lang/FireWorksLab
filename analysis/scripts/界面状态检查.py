@@ -23,6 +23,10 @@
   X1 导出方案（4.2.12）：层页头选「PC：GPU 光点 / 手机：序列」→ 层记住、参数已变、交付页那一层写光点、引擎回放那一层画光点；撤销能回到序列；
      光点大小 / 亮度（4.2.15）只在选光点时出现，改了导出跟着变，改回 1 层里不留字段
   G1 待我验收的「最新导出」按导出时间取（4.2.12：任务号字面排序时 HN2E9 排在 HN2E12 后面，误判未就绪）
+  K1 按需烘焙（4.2.16，用户 10-03 12:59「abc 一起做」）：自动烘焙关时改参数不烘、贴图标旧；切到引擎回放 / 按 B 才烘（手动烘做收紧取景）；
+     烘到一半参数又变，这次直接丢掉（不等烘完再烘一遍）；自动烘焙开时改完自动烘、不收紧；多层导出不会拿到旧贴图；开关记住
+  K2 按需烘焙 · 真烘焙（只在 --real）：真的显卡烘焙烘到一半改参数 → 这次作废、最后的贴图是最新参数、没有页面错误；自动烘焙关时按 B 烘到最新并收紧取景
+  R1 「恢复到打开时」（单层）把被接力带动的另一层也恢复（10-03 复现：恢复第 1 层后第 2 层的延时点火还停在被带动的位置）
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -505,6 +509,134 @@ async def g1(pg):
     return ok, json.dumps(r, ensure_ascii=False)
 
 
+# ---- 4.2.16 按需烘焙 ----
+K1_FAKE = r"""(() => {
+  window.__k = { done: [], aborted: 0, refine: 0 };
+  const chk = { clipFrames: [], edgeFrames: [], chanUse: [true, true, true, true], emptyMid: [], similar: 0, seam: null, maxClip: 0 };
+  bake = async (P, scale, onProg) => {
+    const Pc = structuredClone(P), fm = measure(Pc), pl = plan(Pc, fm), pages = splitPlan40(pl);
+    try { for (let i = 1; i <= 8; i++) { if (onProg) onProg(i / 8); await new Promise(r => setTimeout(r, 60)); } }
+    catch (e) { window.__k.aborted++; throw e; }
+    const parts = pages.map(meta => ({ P: Pc, form: Pc.form, N: 4, NH: 4, cw: 1, chh: 1, scale: 1, fm, head: { dispose() { } }, tail: null,
+      meta: { ...meta, check: chk, lightKeys: [[0, 1], [1, 0]], darkTail: 0, frameMaxes: [], quality: qualityOf(Pc), expoH: 1, expoT: 1, bakeMs: 1, sparkSlots: 0 } }));
+    parts.forEach((b, i) => b.next = parts[i + 1]); parts[0].meta.plan = pl; parts[0].srcP = Pc;
+    window.__k.done.push({ stars: Pc.stars, burn: Pc.burn }); return parts[0];
+  };
+  refineBake = async b => { window.__k.refine++; for (let s = b; s; s = s.next) s.meta.fitted = { mode: 'none' }; return null; };
+  return 0;
+})()"""
+SETTLE = "!state.baking && !(state.layerQueue && state.layerQueue.size) && !state.refineDue && !(state.layerRefine && state.layerRefine.size) && $('#busy').hidden && !window.__opening"
+
+
+async def settle(pg, ms=20000):
+    t0 = time.time()
+    while time.time() - t0 < ms / 1000:
+        await pg.wait_for_timeout(250)
+        if await pg.evaluate(SETTLE):
+            await pg.wait_for_timeout(900)          # 防抖 / 收紧排队（0.38 / 0.7 s）都过了还是静的才算
+            if await pg.evaluate(SETTLE): return True
+    return False
+
+
+async def k1(pg):
+    bad, info = [], {}
+    have = await pg.evaluate("typeof setAutoBake === 'function' && typeof bakeNow === 'function' && !!document.getElementById('bakeNow') && !!document.getElementById('staleBar')")
+    if not have: return False, '还没有按需烘焙（setAutoBake / bakeNow / #bakeNow / #staleBar）'
+    await pg.evaluate(K1_FAKE)
+    # 单层
+    await open_effect(pg, 'jinmangju'); await settle(pg)
+    await pg.evaluate("setAutoBake(false); 0")
+    n0 = await pg.evaluate("__k.done.length")
+    await pg.evaluate("state.P.stars = (state.P.stars || 100) + 7; onParam(); 0"); await pg.wait_for_timeout(1500)
+    r = await pg.evaluate("({ n: __k.done.length, stale: bakeStale(), btn: $('#bakeNow').textContent, bar: !$('#staleBar').hidden, want: state.P.stars })")
+    info['自动烘焙关 · 改参数'] = r
+    if r['n'] != n0: bad.append(f"自动烘焙关时改参数还是烘了（{r['n'] - n0} 次）")
+    if not r['stale']: bad.append('改了参数，贴图没标「旧」')
+    if r['bar']: bad.append('实时模拟视图不该出「贴图是旧的」横条')
+    rf0 = await pg.evaluate("__k.refine")
+    await pg.click('#viewSeg button[data-view=export]'); await settle(pg)
+    r = await pg.evaluate("({ n: __k.done.length, last: __k.done[__k.done.length - 1], stale: bakeStale(), bar: !$('#staleBar').hidden, refine: __k.refine })")
+    info['切到引擎回放'] = r
+    if r['n'] != n0 + 1 or r['last']['stars'] != info['自动烘焙关 · 改参数']['want']: bad.append(f"切到引擎回放没按新参数烘一次：{r}")
+    if r['stale'] or r['bar']: bad.append('烘完还标着旧')
+    if r['refine'] <= rf0: bad.append('手动烘（切视图）没做收紧取景')
+    await pg.evaluate("state.P.stars += 5; onParam(); 0"); await pg.wait_for_timeout(1500)
+    r = await pg.evaluate("({ n: __k.done.length, bar: !$('#staleBar').hidden, txt: $('#staleBar').textContent, want: state.P.stars })")
+    info['引擎回放里改参数'] = r
+    if r['n'] != n0 + 1: bad.append('引擎回放视图里改参数也自动烘了')
+    if not r['bar']: bad.append('引擎回放视图里贴图旧了，没有横条提示')
+    await pg.evaluate("document.activeElement && document.activeElement.blur(); 0"); await pg.keyboard.press('b'); await settle(pg)
+    r = await pg.evaluate("({ n: __k.done.length, last: __k.done[__k.done.length - 1], bar: !$('#staleBar').hidden })")
+    info['按 B'] = r
+    if r['n'] != n0 + 2 or r['last']['stars'] != info['引擎回放里改参数']['want'] or r['bar']: bad.append(f"按 B 没烘到最新：{r}")
+    # 自动烘焙开：改完自动烘、不收紧；烘到一半又改 → 丢掉这次
+    await pg.evaluate("setAutoBake(true); 0")
+    n1, rf1, ab1 = await pg.evaluate("[__k.done.length, __k.refine, __k.aborted]")
+    await pg.evaluate("state.P.stars += 3; onParam(); 0"); await pg.wait_for_timeout(650)
+    await pg.evaluate("state.P.stars += 2; onParam(); 0"); await settle(pg)
+    r = await pg.evaluate("({ n: __k.done.length, last: __k.done[__k.done.length - 1], aborted: __k.aborted, refine: __k.refine, want: state.P.stars, stale: bakeStale() })")
+    info['自动烘焙开 · 烘到一半又改'] = r
+    if r['aborted'] <= ab1: bad.append('烘到一半参数又变，旧的那次没丢掉（等它烘完了）')
+    if r['n'] != n1 + 1 or r['last']['stars'] != r['want']: bad.append(f"自动烘焙：应只完整烘一次、按最新参数（完成 {r['n'] - n1} 次）")
+    if r['refine'] != rf1: bad.append('自动烘焙也做了收紧取景（应只在手动烘 / 导出时做）')
+    if r['stale']: bad.append('自动烘完还标着旧')
+    # 多层：自动烘焙关时改一层，导出拿到的是新参数
+    await pg.evaluate("setAutoBake(false); 0")
+    await open_effect(pg, 'hiki_nishiki'); await settle(pg)
+    n2 = await pg.evaluate("__k.done.length")
+    old = await pg.evaluate("layerEntryOf(state.layers[0]).P.burn")
+    await set_layer_param(pg, 0, 'burn', round(old + 0.2, 3)); await pg.wait_for_timeout(1500)
+    r = await pg.evaluate("({ n: __k.done.length, baked: layerEntryOf(state.layers[0]).bake.P.burn, stale: bakeStale() })")
+    info['多层 · 自动烘焙关 · 改第 1 层'] = r
+    if r['n'] != n2: bad.append('多层：自动烘焙关时改一层还是烘了')
+    if not r['stale']: bad.append('多层：改了一层没标旧')
+    r = await pg.evaluate("(async () => { const x = await comboLayerBakes(state.layers); const b = x.layers[0].b.P.burn; x.own.forEach(disposeBake); return { b, want: layerEntryOf(state.layers[0]).P.burn, stale: bakeStale() }; })()")
+    info['多层导出'] = r
+    if abs(r['b'] - r['want']) > 1e-9: bad.append(f"多层导出拿到了旧贴图（{r['b']} vs 参数 {r['want']}）")
+    pref = await pg.evaluate("store.get('autoBake', null)")
+    if pref is not False: bad.append(f'开关没记住（{pref}）')
+    await pg.evaluate("setAutoBake(true); 0")
+    return not bad, json.dumps(info, ensure_ascii=False) if not bad else '；'.join(bad) + ' ｜ ' + json.dumps(info, ensure_ascii=False)
+
+
+async def k2(pg):
+    if not REAL: return None, '要真烘焙（--real，本机显卡任务里跑）'
+    bad, info = [], {}
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    t0 = time.time()
+    await pg.evaluate("Object.assign(state.P, { texW: 1024, texH: 1024 }); onParam(); 0"); await idle(pg); one = time.time() - t0
+    await pg.evaluate("(() => { window.__ab = 0; const ob = bake; bake = async (...a) => { try { return await ob(...a); } catch (e) { if (e && e.abort) window.__ab++; throw e; } }; return 0; })()")
+    await pg.evaluate("state.P.stars += 9; onParam(); 0"); await pg.wait_for_timeout(int(380 + one * 350))
+    await pg.evaluate("state.P.stars += 4; onParam(); 0"); await idle(pg)
+    r = await pg.evaluate("({ want: state.P.stars, baked: state.bake && state.bake.P.stars, aborted: window.__ab, err: state.bakeError && state.bakeError.message })")
+    info['一次烘焙秒数'] = round(one, 2); info['烘到一半改参数'] = r
+    if r['baked'] != r['want']: bad.append(f"最后的贴图不是最新参数（{r['baked']} vs {r['want']}）")
+    if r['err']: bad.append('烘焙报错：' + r['err'])
+    if one >= 0.8 and not r['aborted']: bad.append('烘焙要 %.1f 秒，烘到一半改参数没作废' % one)
+    await pg.evaluate("setAutoBake(false); state.P.stars += 2; onParam(); 0"); await pg.wait_for_timeout(1500)
+    r = await pg.evaluate("({ want: state.P.stars, baked: state.bake.P.stars, stale: bakeStale() })"); info['自动烘焙关 · 改参数'] = r
+    if r['baked'] == r['want'] or not r['stale']: bad.append('自动烘焙关时改参数还是烘了 / 没标旧')
+    await pg.evaluate("document.activeElement && document.activeElement.blur(); 0"); await pg.keyboard.press('b'); await idle(pg)
+    r = await pg.evaluate("({ want: state.P.stars, baked: state.bake.P.stars, fitted: !!(state.bake.meta && state.bake.meta.fitted), stale: bakeStale() })"); info['按 B'] = r
+    if r['baked'] != r['want'] or r['stale']: bad.append('按 B 没烘到最新')
+    if not r['fitted']: bad.append('按 B 没做收紧取景')
+    await pg.evaluate("setAutoBake(true); 0")
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
+
+
+async def r1(pg):
+    await open_effect(pg, 'hiki_nishiki'); await pg.wait_for_timeout(900); await idle(pg)
+    o = await pg.evaluate("state.layers.map(L => { const P = layerEntryOf(L).P; return [P.burn, P.sparkStop, P.ignDelay]; })")
+    await pg.evaluate("selectComboLayer(0); 0"); await idle(pg)
+    await pg.evaluate("setTimingParam('burn', 1.0); 0"); await idle(pg)
+    m = await pg.evaluate("state.layers.map(L => { const P = layerEntryOf(L).P; return [P.burn, P.sparkStop, P.ignDelay]; })")
+    await pg.evaluate("resetToOpened(); 0"); await idle(pg)
+    r = await pg.evaluate("state.layers.map(L => { const P = layerEntryOf(L).P; return [P.burn, P.sparkStop, P.ignDelay]; })")
+    moved = abs(m[1][2] - o[1][2]) > 1e-6
+    ok = moved and all(abs(a - b) < 1e-9 for x, y in zip(o, r) for a, b in zip(x, y))
+    return ok, json.dumps({'打开时': o, '改第 1 层燃烧 1.0 后': m, '恢复第 1 层后': r}, ensure_ascii=False)
+
+
 async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
@@ -514,7 +646,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

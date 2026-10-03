@@ -35,36 +35,118 @@ function derive(P) {
   if (familyOf(P.type) === 'ground') P.duration = P.loopT;
   return P;
 }
-// 预览烘焙（调参后自动）
+// ---- 4.2.16 按需烘焙（用户 2026-10-03 12:59「abc 一起做」，12:27 #1「每动一个参数就自动重新渲染一次，特别影响效率」）----
+// A 自动烘焙开关：关（默认）= 改参数只更新实时模拟，贴图标「旧」；按 B、切到引擎回放 / 贴图、导出时才烘。开 = 停手 0.38 s 自动烘（和以前一样）。
+// B 烘焙可中断：烘到一半参数又变了，这次在下一个进度点直接丢掉，不再等它烘完再烘一遍。
+// C 收紧取景（refineBake）只在手动烘、打开效果、导出时做；自动烘只烘预览。手动烘一次就做完，引擎回放看到的就是导出的样子。
+// 打开效果 / 换版本照常烘（换了东西必须有贴图看）。自动化（Playwright，navigator.webdriver）默认开：本机任务、检查脚本按「打开 → 等烘完」走，不受影响；网址 ?autobake=0 / 1 强制。
+const BAKE_ABORT = Object.assign(new Error('烘焙作废：参数又变了'), { abort: true });
+const isAbort = e => !!(e && e.abort);
+const bakeMode = { auto: null, demand: false };
+function autoBakeOn() {
+  if (bakeMode.auto == null) {
+    const q = typeof location !== 'undefined' ? location.search : '';
+    // 不在浏览器里（node 检查脚本）、或自动化（Playwright）：自动烘焙开，和以前的行为一样
+    bakeMode.auto = /[?&]autobake=1/.test(q) ? true : /[?&]autobake=0/.test(q) ? false
+      : typeof store === 'undefined' || typeof navigator === 'undefined' || navigator.webdriver ? true : !!store.get('autoBake', false);
+  }
+  return bakeMode.auto;
+}
+function setAutoBake(on) {
+  bakeMode.auto = !!on; if (typeof store !== 'undefined') store.set('autoBake', !!on);
+  const c = $('#autoBakeChk'); if (c) c.checked = !!on;
+  if (on) {                                   // 打开自动：攒着的改动按自动的规矩烘（不收紧）
+    if (state.tab === 'combo') { for (const e of [...(state.staleLayers || [])]) if (layerStale(e)) { state.staleLayers.delete(e); queueLayerBake(e, 0, true); } }
+    else if (state.dirty) scheduleBake();
+  }
+  syncStale();
+}
+// 现在打开的是什么：换了东西（打开别的效果 / 模板 / 切单层 ↔ 多层）一定要烘
+function bakeSubject() { return [typeof lib !== 'undefined' ? lib.key : '', state.repId || '', state.P && state.P.type, state.tab].join('|'); }
+const layerStale = e => !!(e && e.bake && (e.pRev || 0) !== (e.bakeRev || 0));
+function bakeStale() {
+  if (state.tab === 'combo') return state.layers.some(L => layerStale(layerEntryOf(L)));
+  return !!(state.bake && state.dirty && state.failedGen !== state.gen);
+}
+// 不用再点就会跑的活（排着的烘焙 / 收紧）；自动烘焙关时攒着的改动不算（那是「贴图旧了」，等你按 B）
+function bakesPending() {
+  if (state.tab === 'combo') return !!((state.layerQueue && state.layerQueue.size) || (state.layerRefine && state.layerRefine.size));
+  return !!((state.dirty && state.failedGen !== state.gen && (autoBakeOn() || bakeMode.demand || !state.bake)) || state.refineDue);
+}
+// 手动烘：B、切到引擎回放 / 贴图、「烘焙」按钮、重试。烘到最新为止（中途又改了接着烘），带收紧取景
+function bakeNow(o = {}) {
+  bakeMode.demand = true;
+  if (state.tab === 'combo') {
+    if (state.comboSel >= 0 && state.dirty) { state.dirty = false; const le = layerEntryOf(state.layers[state.comboSel]); if (le) queueLayerBake(le, 0, true); }
+    for (const L of state.layers) { const e = layerEntryOf(L); if (layerStale(e) && !(state.layerQueue && state.layerQueue.has(e))) queueLayerBake(e, 0, true); }
+    if (state.staleLayers) state.staleLayers.clear();
+    for (const L of state.layers) { const e = layerEntryOf(L); if (e && e.bake && e.bake.meta && !e.bake.meta.fitted && e.bake.meta.plan && !layerStale(e)) queueLayerRefine(e); }
+    if (!state.baking) runLayerQueue();
+  } else {
+    if (state.dirty) { clearTimeout(bakeTimer); if (!state.baking) runPreviewBake(); }
+    else if (state.bake && state.bake.meta && !state.bake.meta.fitted && state.bake.meta.plan) scheduleRefine(0);
+  }
+  bakeSettle(); syncStale();
+  if (!o.quiet && !bakeMode.demand) flash('贴图已经是最新的');
+}
+function bakeIfStale() { if (bakeStale() || bakesPending()) bakeNow({ quiet: true }); }
+// 导出前：把攒着的改动都烘完（多层导出直接拿每层的贴图）
+async function bakeFlush() {
+  if (bakeStale() || bakesPending()) bakeNow({ quiet: true });
+  for (let i = 0; i < 6000 && (state.baking || bakesPending()); i++) await new Promise(r => setTimeout(r, 50));
+}
+// 烘完、收紧都结束了：手动烘的「烘到最新为止」到此为止
+function bakeSettle() { if (!state.baking && !bakesPending()) bakeMode.demand = false; syncStale(); }
+let staleSig = '';
+function syncStale() {
+  if (typeof document === 'undefined') return;
+  const btn = $('#bakeNow'), bar = $('#staleBar'); if (!btn || !bar) return;
+  const stale = bakeStale(), busyB = state.baking || bakesPending(), auto = autoBakeOn(), view = state.view;
+  const sig = [stale, busyB, auto, view].join('|'); if (sig === staleSig) return; staleSig = sig;
+  btn.classList.toggle('stale', stale && !busyB); btn.classList.toggle('run', busyB);
+  btn.textContent = busyB ? '烘焙中…' : stale ? '烘焙 ●' : '贴图最新';
+  btn.title = (stale ? '贴图还是旧参数：' : '') + '按当前参数烘焙贴图（B）' + (auto ? '' : '；自动烘焙关着：改参数只更新实时模拟');
+  const c = $('#autoBakeChk'); if (c) c.checked = auto;
+  bar.hidden = !(stale && view !== 'live' && state.tab !== 'asset');
+  if (!bar.hidden) $('#staleText').textContent = busyB ? '贴图按新参数烘焙中…' : '贴图还是旧参数（实时模拟已是新的）';
+  $('#staleBake').hidden = busyB;
+}
+// 预览烘焙
 let bakeTimer = 0;
 function scheduleBake() { clearTimeout(bakeTimer); bakeTimer = setTimeout(runPreviewBake, 380); }
 async function runPreviewBake() {
   clearTimeout(bakeTimer);
   if (state.tab === 'combo' && state.comboSel >= 0) { const le = state.lib.find(x => state.layers[state.comboSel] && x.name === state.layers[state.comboSel].lib); if (le && state.dirty) { state.dirty = false; queueLayerBake(le, 0); } return; }
   if (state.baking) { state.rebake = true; return; }
-  if (!state.dirty || state.failedGen === state.gen) return;
-  state.baking = true; state.rebake = false;
-  const gen = state.gen, P = structuredClone(state.P); let pending=null;
+  if (!state.dirty || state.failedGen === state.gen) { bakeSettle(); return; }
+  // 4.2.16：自动烘焙关、不是手动要的、打开的还是同一个东西 → 不烘，贴图标旧（实时模拟已经按新参数在画）
+  const subj = bakeSubject(), opened = !state.bake || state.bakeSubj !== subj || !state.bake.P || state.bake.P.type !== state.P.type;
+  if (!autoBakeOn() && !bakeMode.demand && !opened) { syncStale(); return; }
+  state.baking = true; state.rebake = false; syncStale();
+  const gen = state.gen, P = structuredClone(state.P), full = bakeMode.demand || opened; let pending=null;
   try {
     const phys = isPhys(P);
     const b = pending = phys ? physBake(P) : await bake(P, 1, p => {
-      if (gen === state.gen) setStatus(`预览烘焙… ${Math.round(p * 100)}%`);
+      if (gen !== state.gen) throw BAKE_ABORT;          // 4.2.16：参数又变了，这次作废
+      setStatus(`预览烘焙… ${Math.round(p * 100)}%`);
     });
     if(!phys && state.platform==='mobile' && gen===state.gen)b.mobile=await bakeMobileFor(b,p=>{
-      if(gen===state.gen)setStatus(`手机独立烘焙… ${Math.round(p*100)}%`);
+      if(gen!==state.gen)throw BAKE_ABORT;
+      setStatus(`手机独立烘焙… ${Math.round(p*100)}%`);
     });
     // 旧任务连贴图 / 统计 / 缩略图也不能发布，且必须释放其显卡资源。
     if (gen !== state.gen) { disposeBake(b); pending=null; return; }
-    disposeBake(state.bake); state.bake = b; state.bakeGen = gen; pending=null;
+    disposeBake(state.bake); state.bake = b; state.bakeGen = gen; state.bakeSubj = subj; pending=null;
     state.dirty = false; state.failedGen = -1; state.bakeError = null; syncBakeError();
     if (phys) $('#stats').innerHTML = physStats(P);
-    else { showStats(b); afterBake(b); scheduleRefine(); }
+    else { showStats(b); afterBake(b); if (full) scheduleRefine(0); }     // 4.2.16 C：收紧取景只在手动烘 / 打开时
     // 自动选格子改了列 × 行：同步到界面（帧数不变，不触发重烘）
     // （4.2.0：「格子按帧数」「单格」是每次按帧数现算的，不写回列 × 行，否则下次容量就变小了）
     if (!phys && !b.meta.L.fit && !(+state.P.outCell > 0) && state.P.outPack !== 'fit' && (b.meta.L.cols !== state.P.cols || b.meta.L.rows !== state.P.rows)) { state.P.cols = b.meta.L.cols; state.P.rows = b.meta.L.rows; syncExport(); }
     setStatus('');
   } catch (e) {
     if(pending)disposeBake(pending);
+    if (isAbort(e)) { setStatus(''); return; }        // 作废不算失败；finally 里按最新参数接着走
     console.error(e);
     if (gen === state.gen) {
       state.dirty = true; state.failedGen = gen;
@@ -76,6 +158,7 @@ async function runPreviewBake() {
     state.baking = false; state.rebake = false;
     if (state.layerQueue && state.layerQueue.size) runLayerQueue();
     else if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
+    bakeSettle();
   }
 }
 // 多层效果里调某一层（2026-10-02 用户 07:43）：state.P 就是这一层的参数（组合库条目 e.P），改了只重烘这一层；
@@ -84,9 +167,11 @@ async function runPreviewBake() {
 // 这次重烘被丢掉，参数是新的、贴图是旧的，导出包和参数不一致。现在每层记一个参数版本号 pRev，改了就进队列；
 // 烘的是哪层就发布到哪层，和现在选中谁无关；烘的时候又改了，烘完不发布、按最新参数再烘一次。
 function dropLibBake(e) { if (e && e.bake && !state.lib.some(x => x !== e && x.bake === e.bake)) disposeBake(e.bake); if (e) e.bake = null; }
-function queueLayerBake(e, delay = 380) {
+function queueLayerBake(e, delay = 380, noBump = false) {
   if (!e) return;
-  e.pRev = (e.pRev || 0) + 1; e.rev = (e.rev || 0) + 1;      // rev：实时模拟马上按新参数重算
+  if (!noBump) { e.pRev = (e.pRev || 0) + 1; e.rev = (e.rev || 0) + 1; }      // rev：实时模拟马上按新参数重算
+  // 4.2.16：自动烘焙关、不是手动要的、这一层已经有贴图 → 先攒着（贴图标旧），按 B / 切视图 / 导出时再烘
+  if (!autoBakeOn() && !bakeMode.demand && e.bake && !(state.layerQueue && state.layerQueue.has(e) && state.baking)) { (state.staleLayers = state.staleLayers || new Set()).add(e); syncStale(); return; }
   (state.layerQueue = state.layerQueue || new Set()).add(e);
   clearTimeout(state.layerQueueTimer); state.layerQueueTimer = setTimeout(runLayerQueue, delay);
 }
@@ -96,17 +181,18 @@ function scheduleRefine(delay = 700) { clearTimeout(refineTimer); state.refineDu
 async function runRefine() {
   clearTimeout(refineTimer); state.refineDue = false;
   if (state.baking) { scheduleRefine(); return; }
-  const b0 = state.bake; if (state.tab === 'combo' || !b0 || state.dirty || !b0.meta || b0.meta.fitted || !b0.meta.plan) return;
+  const b0 = state.bake; if (state.tab === 'combo' || !b0 || state.dirty || !b0.meta || b0.meta.fitted || !b0.meta.plan) { bakeSettle(); return; }
   const gen = state.gen; state.baking = true; let nb = null;
   try {
-    nb = await refineBake(b0, p => { if (gen === state.gen) setStatus(`收紧取景… ${Math.round(p * 100)}%`); });
+    nb = await refineBake(b0, p => { if (gen !== state.gen) throw BAKE_ABORT; setStatus(`收紧取景… ${Math.round(p * 100)}%`); });
     if (nb && gen === state.gen && state.bake === b0 && state.platform === 'mobile') nb.mobile = await bakeMobileFor(nb);
     if (nb && gen === state.gen && state.bake === b0) { disposeBake(b0); state.bake = nb; nb = null; showStats(state.bake); afterBake(state.bake); }
-  } catch (err) { console.error(err); }
+  } catch (err) { if (!isAbort(err)) console.error(err); }
   finally {
     if (nb) disposeBake(nb);          // 参数又变了：这次收紧作废
     state.baking = false; setStatus('');
     if (state.layerQueue && state.layerQueue.size) runLayerQueue(); else if (state.dirty && state.failedGen !== state.gen) runPreviewBake();
+    bakeSettle();
   }
 }
 function queueLayerRefine(e) {
@@ -118,42 +204,43 @@ async function runLayerQueue() {
   const q = state.layerQueue = state.layerQueue || new Set(), rq = state.layerRefine = state.layerRefine || new Set();
   if (state.baking) return;                      // 正在烘的那次结束时会再叫这里
   if (!q.size) {                                 // 没有要按新参数烘的层：后台收紧取景（4.2.5）
-    const e = rq.values().next().value; if (!e) return;
+    const e = rq.values().next().value; if (!e) { bakeSettle(); return; }
     rq.delete(e);
-    if (!state.lib.includes(e) || !e.bake || !e.bake.meta || e.bake.meta.fitted || !e.bake.meta.plan) return runLayerQueue();
-    const b0 = e.bake, rev = e.pRev, i0 = state.layers.findIndex(L => L.lib === e.name); state.baking = true; let nb = null;
+    if (!state.lib.includes(e) || !e.bake || !e.bake.meta || e.bake.meta.fitted || !e.bake.meta.plan || layerStale(e)) return runLayerQueue();
+    const b0 = e.bake, rev = e.pRev, i0 = state.layers.findIndex(L => L.lib === e.name); state.baking = true; let nb = null; syncStale();
     try {
-      nb = await refineBake(b0, p => setStatus(`收紧取景：第 ${i0 + 1} 层 ${Math.round(p * 100)}%`));
+      nb = await refineBake(b0, p => { if (e.pRev !== rev) throw BAKE_ABORT; setStatus(`收紧取景：第 ${i0 + 1} 层 ${Math.round(p * 100)}%`); });
       if (nb && state.lib.includes(e) && e.bake === b0 && e.pRev === rev) {
         dropLibBake(e); e.bake = nb; nb = null;
         if (state.tab === 'combo' && state.comboSel >= 0 && state.layers[state.comboSel] && state.layers[state.comboSel].lib === e.name) showStats(e.bake);
         if (state.platform === 'mobile' && !q.size) await ensureComboMobile();
         if (typeof buildLayerCard === 'function') buildLayerCard();
       }
-    } catch (err) { console.error(err); }
-    finally { if (nb) disposeBake(nb); state.baking = false; setStatus(''); if (q.size || rq.size) runLayerQueue(); else if (state.dirty && state.failedGen !== state.gen && !(state.tab === 'combo' && state.comboSel >= 0)) runPreviewBake(); }
+    } catch (err) { if (!isAbort(err)) console.error(err); }
+    finally { if (nb) disposeBake(nb); state.baking = false; setStatus(''); if (q.size || rq.size) runLayerQueue(); else if (state.dirty && state.failedGen !== state.gen && !(state.tab === 'combo' && state.comboSel >= 0)) runPreviewBake(); bakeSettle(); }
     return;
   }
   const e = q.values().next().value;
   if (!state.lib.includes(e) || e.failedRev === e.pRev) { q.delete(e); return runLayerQueue(); }
-  state.baking = true;
-  const rev = e.pRev, idx = () => state.layers.findIndex(L => L.lib === e.name), isCur = () => state.tab === 'combo' && state.comboSel >= 0 && state.layers[state.comboSel] && state.layers[state.comboSel].lib === e.name;
+  state.baking = true; syncStale();
+  const rev = e.pRev, full = bakeMode.demand || !e.bake, idx = () => state.layers.findIndex(L => L.lib === e.name), isCur = () => state.tab === 'combo' && state.comboSel >= 0 && state.layers[state.comboSel] && state.layers[state.comboSel].lib === e.name;
   let pending = null;
   try {
-    const b = pending = await bake(libP(e.P, true), 1, p => setStatus(`重烘第 ${idx() + 1} 层… ${Math.round(p * 100)}%`));
+    const b = pending = await bake(libP(e.P, true), 1, p => { if (e.pRev !== rev) throw BAKE_ABORT; setStatus(`重烘第 ${idx() + 1} 层… ${Math.round(p * 100)}%`); });
     pending = null;
     if (!state.lib.includes(e)) { disposeBake(b); q.delete(e); return; }
     if (e.pRev !== rev) { disposeBake(b); return; }                          // 烘的时候又改了：留在队列里，按最新参数再烘
-    dropLibBake(e); e.bake = b; q.delete(e); e.failedRev = -1;
+    dropLibBake(e); e.bake = b; e.bakeRev = rev; q.delete(e); e.failedRev = -1; if (state.staleLayers) state.staleLayers.delete(e);
     if (e.rep) { state.layerEdits = state.layerEdits || {}; state.layerEdits[e.rep] = { P: e.P, M: e.M }; e.editSig = JSON.stringify([e.P, e.M]); }
     if (isCur()) { state.failedGen = -1; state.bakeError = null; syncBakeError(); showStats(b); }
     setStatus('');
     const i = idx(); if (i >= 0) syncLinkedLayers(i);
-    queueLayerRefine(e);
+    if (full) queueLayerRefine(e);                    // 4.2.16 C：收紧取景只在手动烘 / 第一次烘
     if (state.platform === 'mobile' && !q.size) await ensureComboMobile();
     if (typeof buildLayerCard === 'function') buildLayerCard();
   } catch (err) {
     if (pending) disposeBake(pending);
+    if (isAbort(err)) { setStatus(''); return; }        // 作废：e 还在队列里，finally 接着按最新参数烘
     console.error(err);
     if (e.pRev === rev) {
       e.failedRev = rev; q.delete(e);
@@ -166,6 +253,7 @@ async function runLayerQueue() {
     if (q.size) runLayerQueue();
     else if (state.dirty && state.failedGen !== state.gen && !(state.tab === 'combo' && state.comboSel >= 0)) runPreviewBake();
     else if (state.layerRefine && state.layerRefine.size) { clearTimeout(state.layerQueueTimer); state.layerQueueTimer = setTimeout(runLayerQueue, 700); }
+    bakeSettle();
   }
 }
 // 同一批星（种子、星数、初速、终端速度都一样）的层：决定轨迹的参数改一处、几层一起变（用户 2026-10-02 13:09：两层共用的参数要两层一起改，以前没有联动）
@@ -199,6 +287,7 @@ function syncBakeError() {
 }
 function retryPreviewBake() {
   if (state.baking) return;
+  bakeMode.demand = true;
   if (state.tab === 'combo' && state.comboSel >= 0) { const le = state.lib.find(x => state.layers[state.comboSel] && x.name === state.layers[state.comboSel].lib); if (le) { le.failedRev = -1; state.failedGen = -1; state.bakeError = null; syncBakeError(); queueLayerBake(le, 0); } return; }
   state.failedGen = -1; state.dirty = true; runPreviewBake();
 }
@@ -634,7 +723,7 @@ function newLayer(entry, o = {}) {
 // 4.2.3（走查 A3）：同一个母版被第二层用到时复制一份（参数、颜色各自独立；贴图先共用，哪层改了哪层自己重烘）
 function libFork(e) {
   const base = e.name.replace(/ #\d+$/, ''); let n = 2; while (state.lib.some(x => x.name === `${base} #${n}`)) n++;
-  const f = { ...e, name: `${base} #${n}`, P: structuredClone(e.P), M: structuredClone(e.M), fork: true, pRev: 0, rev: 0 };
+  const f = { ...e, name: `${base} #${n}`, P: structuredClone(e.P), M: structuredClone(e.M), fork: true, pRev: 0, rev: 0, bakeRev: 0 };
   delete f.rep; delete f.editSig; state.lib.push(f); return f;
 }
 function layerEntryFor(e, used) { return used.has(e) || state.layers.some(L => L.lib === e.name) ? libFork(e) : e; }

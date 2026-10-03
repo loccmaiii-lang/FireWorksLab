@@ -53,6 +53,7 @@
             <button data-view="export" aria-pressed="false">引擎回放</button>
             <button data-view="atlas" aria-pressed="false">贴图</button>
           </div>
+          <div class="bakectl" id="bakeCtl"><button class="bakebtn" id="bakeNow" type="button" title="按当前参数烘焙贴图（B）">贴图最新</button><label class="bk-auto" title="自动烘焙：开 = 改参数停手后自动烘；关 = 改参数只更新实时模拟，按 B、切到引擎回放 / 贴图或导出时再烘"><input type="checkbox" id="autoBakeChk">自动</label></div>
           <div class="seg small" id="atlasSeg" hidden>
             <button data-layer="head" aria-pressed="true">星头</button>
             <button data-layer="tail" aria-pressed="false">拖尾</button>
@@ -91,6 +92,7 @@
           <button class="refx" id="refClose" type="button" title="关闭实拍对照（V）" aria-label="关闭实拍对照">×</button>
         </div>
         <div class="canvas-box" id="box"><span class="tag" id="simTag" hidden>模拟</span>
+          <div class="stale-bar" id="staleBar" role="status" hidden><span id="staleText">贴图还是旧参数</span><button class="btn mini" id="staleBake" type="button">烘焙（B）</button></div>
           <canvas id="gl" aria-label="烟花预览"></canvas>
           <canvas id="flowCv" class="flowcv" hidden></canvas>
           <canvas id="assetCv" class="assetcv" hidden></canvas>

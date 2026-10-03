@@ -218,6 +218,7 @@ async function wbLoad(id) {
   await wbApply(s.snap); wb.src = { kind: 'mine', id }; wbArm(); wbSync(); flash(`正在看你的版本「${s.name}」`);
 }
 async function wbApply(snap) {
+  bakeMode.demand = true;          // 4.2.16：换版本 / 恢复 = 打开，照常烘（自动烘焙关也烘）
   if (snap.kind === 'combo') {
     if (state.tab !== 'combo') { flash('这个版本是多层效果，当前打开的是单层', true); return; }
     state.layerEdits = state.layerEdits || {};
@@ -443,8 +444,13 @@ function resetToOpened() {
   if (state.comboSel < 0) { wbApply(s); flash('已恢复到打开时（所有层）'); return; }
   const x = s.layers[state.comboSel], e = layerEntryOf(state.layers[state.comboSel]);
   if (!x || !e || !x.P) { flash('这一层是打开以后加的，没有「打开时」的样子', true); return; }
+  // 4.2.16（10-03 复现）：按时间规则恢复——和这一层粘在同一时刻的另一层（接力：引线火花停 = 锦点火）跟着回去；之后这一层再按快照逐字放回
+  const { moved } = timingEdit(e.P, state.comboSel, () => { putObj(e.P, x.P); derive(e.P); });
   putObj(e.P, x.P); if (x.M && e.M) putObj(e.M, x.M); derive(e.P);
-  buildMasterPanel(); onParam(); flash(`已把第 ${state.comboSel + 1} 层恢复到打开时的参数`);
+  buildMasterPanel(); onParam();
+  for (const j of moved) { const e2 = layerEntryOf(state.layers[j]); if (e2) queueLayerBake(e2); }
+  if (moved.size) stage2.tlSig = '';
+  flash(`已把第 ${state.comboSel + 1} 层恢复到打开时的参数${moved.size ? `（接力的第 ${[...moved].map(j => j + 1).join('、')} 层跟着回去）` : ''}`);
 }
 function buildTlBars() {
   if (stage2.drag) return;   // 拖动中不重建（否则手上的把手被换掉，拖到一半断开）
@@ -763,5 +769,6 @@ function initStage() {
     if (/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName) || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'ArrowLeft') { e.preventDefault(); tickStep(-1); } else if (e.key === 'ArrowRight') { e.preventDefault(); tickStep(1); }
     else if (e.key.toLowerCase() === 'r') { e.preventDefault(); replay(); }
+    else if (e.key.toLowerCase() === 'b') { e.preventDefault(); bakeNow(); }        // 4.2.16 按需烘焙
   });
 }
