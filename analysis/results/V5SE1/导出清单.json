@@ -1,0 +1,35 @@
+{
+ "effect": "trail_v5",
+ "entry": "V5S",
+ "ver": "f035dd61·trail4.3",
+ "time": "2026-10-04 07:43",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "TrailS",
+   "replica": "V5S",
+   "files": [
+    "T_TrailS_Fade20.png",
+    "T_TrailS_Fade20_Cutout.png",
+    "T_TrailS_Fade30.png",
+    "T_TrailS_Fade30_Cutout.png",
+    "T_TrailS_Loop.png",
+    "T_TrailS_Loop_Cutout.png",
+    "T_TrailS_Mobile_Fade20.png",
+    "T_TrailS_Mobile_Fade20_Cutout.png",
+    "T_TrailS_Mobile_Fade30.png",
+    "T_TrailS_Mobile_Fade30_Cutout.png",
+    "T_TrailS_Mobile_Loop.png",
+    "T_TrailS_Mobile_Loop_Cutout.png",
+    "T_TrailS_Mobile_Ramp.png",
+    "T_TrailS_Ramp.png",
+    "TrailS.json",
+    "TrailS_Cascade参数.txt",
+    "TrailS_Mobile.json",
+    "TrailS_曲线.csv",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}

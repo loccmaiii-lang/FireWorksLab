@@ -1,0 +1,30 @@
+{
+ "entry": "RT4M",
+ "ver": "23aaf1d6·emitset4.3",
+ "times_s": [
+  0.59,
+  1.76,
+  2.94,
+  4.12,
+  5.29
+ ],
+ "square_px": 641,
+ "header_px": 22,
+ "label_px": 90,
+ "rows": [
+  "实拍",
+  "实时模拟",
+  "导出效果"
+ ],
+ "projection": null,
+ "reference": {
+  "t0": 0.667,
+  "cx": 0.7393,
+  "cy": 0.5,
+  "half": 0.5,
+  "aspect": 1.7778,
+  "v": 7,
+  "video": "C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\tool\\../vidio/2.0/尾缀B.mp4"
+ },
+ "note": "每行整段固定取景；实时和导出各自的视野不同，比较几何时须记录整段统一换算，不能逐帧放大。"
+}

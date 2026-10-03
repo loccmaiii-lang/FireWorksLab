@@ -1,0 +1,407 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "TrailS",
+ "platform": "pc",
+ "source": {
+  "tool": "烟花母版烘焙器 4.3.0",
+  "type": "trailS",
+  "form": "trail",
+  "quality": {
+   "ss": 2,
+   "hz": 300
+  },
+  "plan_sig": "b86d1e55"
+ },
+ "textures": {
+  "loop": {
+   "file": "T_TrailS_Loop.png",
+   "class": "flipbook",
+   "cols": 16,
+   "rows": 1,
+   "channels": 4,
+   "frames": 64
+  },
+  "cutoutLoop": {
+   "file": "T_TrailS_Loop_Cutout.png",
+   "class": "cutout"
+  },
+  "ramp": {
+   "file": "T_TrailS_Ramp.png",
+   "class": "ramp"
+  },
+  "fade30": {
+   "file": "T_TrailS_Fade30.png",
+   "class": "flipbook",
+   "cols": 16,
+   "rows": 1,
+   "channels": 4,
+   "frames": 64
+  },
+  "cutoutFade30": {
+   "file": "T_TrailS_Fade30_Cutout.png",
+   "class": "cutout"
+  }
+ },
+ "materials": {
+  "loop": {
+   "role": "beam_flipbook",
+   "textures": {
+    "main": "loop",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 1,
+    "cols": 16
+   }
+  },
+  "fade30": {
+   "role": "beam_flipbook",
+   "textures": {
+    "main": "fade30",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 1,
+    "cols": 16
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 0
+ },
+ "emitters": [
+  {
+   "name": "RiseLoop",
+   "material": "loop",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Velocity",
+    "duration_s": 4.2,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutoutLoop",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.0396
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 4.2
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       253,
+       3453.3,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "const": [
+       0,
+       0,
+       7410.2
+      ]
+     }
+    },
+    {
+     "m": "Drag",
+     "DragCoefficientRaw": {
+      "const": 0.2985
+     }
+    },
+    {
+     "m": "ConstAcceleration",
+     "Acceleration": [
+      0,
+      0,
+      -981
+     ]
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         0.35,
+         1
+        ]
+       ],
+       [
+        0.1,
+        [
+         1,
+         0.92,
+         1
+        ]
+       ],
+       [
+        0.2,
+        [
+         1,
+         1.617,
+         1
+        ]
+       ],
+       [
+        0.3,
+        [
+         1,
+         1.506,
+         1
+        ]
+       ],
+       [
+        0.4,
+        [
+         1,
+         1.177,
+         1
+        ]
+       ],
+       [
+        0.5,
+        [
+         1,
+         0.941,
+         1
+        ]
+       ],
+       [
+        0.6,
+        [
+         1,
+         0.738,
+         1
+        ]
+       ],
+       [
+        0.7,
+        [
+         1,
+         0.567,
+         1
+        ]
+       ],
+       [
+        0.8,
+        [
+         1,
+         0.406,
+         1
+        ]
+       ],
+       [
+        0.9,
+        [
+         1,
+         0.35,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         0.35,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0
+        ],
+        [
+         0.5078,
+         63.99
+        ],
+        [
+         0.5079,
+         0
+        ],
+        [
+         0.9999,
+         61.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  },
+  {
+   "name": "Fade30",
+   "material": "fade30",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Velocity",
+    "duration_s": 2.1333,
+    "loops": 1,
+    "delay_s": 4.2,
+    "cutout": "cutoutFade30",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.0396
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 2.1333
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       11982.2
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "const": [
+       0,
+       0,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       253,
+       1208.6,
+       1
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ]
+  }
+ ],
+ "notes": [
+  "消散默认用 30 fps 版；另有 20 fps 版贴图（T_TrailS_Fade20.png），换贴图并把消散发射器的时长改成 64 ÷ 20 = 3.2 s",
+  "pivot_offset 是 Required 里的 Pivot Offset（星头在贴图里的位置），spec 里还没实测过这个字段"
+ ]
+}

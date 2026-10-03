@@ -1,0 +1,1 @@
+FW_ASSET_LOADED("JM4-40E6", {"manifest": {"title": "JinMangJu", "duration": 4.87, "view": 224.3, "variants": {"JinMangJu": "JinMangJu"}, "emitters": [], "note": "4.3.0 重导（所有产物 OUTPUT_VER → 4.3：只剩一个渲染核；取景按余烬寿命估、碰边放大；固定取景用 Pivot Offset 对齐爆点；星头按精确时刻画）。效果参数不变，导出 + 回放检查。对话框15（底层）代做。"}, "images": {}});
