@@ -64,6 +64,7 @@ function trailPops(P) {
   }).filter(Boolean);
 }
 // V5 星头：核心 + 光晕（周期性闪烁）；物理尾缀（45_physbody.js）也用它
+let TRAIL_RAW = false;     // trailBounds 量取景时 = true：星头不乘 trHeadExpo
 function drawTrailHead(R, P, ts, anchorY, view, ppm, w) {
   if (R.stopE >= 0 && ts > R.stopE + 1e-6) return;
   const Tp = R.Tp;
@@ -74,9 +75,10 @@ function drawTrailHead(R, P, ts, anchorY, view, ppm, w) {
     const tt = ts + (n > 1 ? ((i + 0.5) / n - 0.5) * sw : 0);
     if (R.stopE >= 0 && tt > R.stopE + 1e-6) continue;
     const fl = 1 + 0.12 * Math.sin(6.2831853 * 7 * tt / Tp) * Math.sin(6.2831853 * 3 * tt / Tp + 1.1), y = P.trV * tt - anchorY;
-    bufH[k++] = 0; bufH[k++] = y; bufH[k++] = P.trHeadBright * fl / n; bufH[k++] = P.trHeadSize;
-    // 光晕：高斯点按面亮度写，面积已经带了光晕倍数²（3.7 按总光量写时要乘 trHalo²，两者总光量相同）
-    if (P.trHalo > 0) { bufH[k++] = 0; bufH[k++] = y; bufH[k++] = P.trHeadBright * P.trHaloBright * fl / n; bufH[k++] = P.trHeadSize * P.trHalo; }
+    const hb = P.trHeadBright * (TRAIL_RAW ? 1 : +P.trHeadExpo || 1);     // 星头曝光（trHeadExpo）只在烘焙 / 实时里乘；量取景时按原始亮度（和 3.7 一样）
+    bufH[k++] = 0; bufH[k++] = y; bufH[k++] = hb * fl / n; bufH[k++] = P.trHeadSize;
+    // 光晕：3.7 光点核按总光量写，要乘光晕倍数²（和 TR2 烘焙时一样）
+    if (P.trHalo > 0) { bufH[k++] = 0; bufH[k++] = y; bufH[k++] = hb * P.trHaloBright * fl * P.trHalo * P.trHalo / n; bufH[k++] = P.trHeadSize * P.trHalo; }
   }
   PT_SPAN = 10; PT_GAUSS = 1; try { drawPoints(bufH, k / 4, view, ppm, [1, 0, 0, 0], w); } finally { PT_SPAN = 0; PT_GAUSS = 0; }
 }
@@ -133,13 +135,13 @@ function trailBounds(P, extraR) {
   const view = [0, -guess / 2 + guess * 0.02, guess * N / NHt / 2 * 4, guess / 2 + guess * 0.04];
   const t = new Target(N, NHt, gl.RGBA16F), buf = new Float32Array(N * NHt * 4);
   const acc = new Float32Array(N * NHt);
-  const pass = (RR, times) => {
+  const pass = (RR, times) => { TRAIL_RAW = true; try {
     for (const ts of times) {
       t.clear(); t.bind(); additive(true); RR.draw(ts, view, N / (2 * view[2]), 1, 0, 0); additive(false);
       PPMY = 0; gl.readPixels(0, 0, N, NHt, gl.RGBA, gl.FLOAT, buf);
       for (let i = 0; i < acc.length; i++) acc[i] = Math.max(acc[i], buf[i * 4] + buf[i * 4 + 1]);
     }
-  };
+  } finally { TRAIL_RAW = false; } };
   // 与烘焙相同的纵横像素比
   PPMY = NHt / (2 * view[3]);
   const times = []; for (let i = 0; i < 8; i++) times.push(i / 8 * Tp);
@@ -185,7 +187,9 @@ async function bakeTrail(P, scale, onProg) {
   // 取景：把两个消散版本的末段也算进去（火花会慢慢下坠、散开）
   const Rf = trailRendererFor(P); trailFadeSetup(Rf, P, fEnd, F / 20);
   const ftimes = []; for (let i = 0; i < 6; i++) ftimes.push(Rf.stop + i / 5 * F / 20);
-  const box = trailBounds(P, { R: Rf, times: ftimes });
+  // trBox：固定的取景 [左, 右, 下, 上]（米）。V5 新画法的候选（V5S/M/L）用用户通过的 TR2 当时量出来的取景，面片大小和 TR2 一样
+  // （3.7 的 trailBounds 第二个时刻起纵向按横向的每米像素画，新核的四边形光点不再有这个偏差，量出来会差几成）
+  const box = Array.isArray(P.trBox) && P.trBox.length === 4 ? P.trBox.slice() : trailBounds(P, { R: Rf, times: ftimes });
   if (P.autoGridTrail !== 0) {
     const ca = 2 * Math.max(-box[0], box[1]) / (box[3] - box[2]); let best = null;
     for (const [c, r] of [[16, 1], [8, 2], [4, 4]]) { const a = (P.texW / c) / (P.texH / r), sc = Math.abs(Math.log(a / ca)); if (!best || sc < best.sc) best = { c, r, sc }; }

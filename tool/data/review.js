@@ -6,13 +6,13 @@ var FW_REVIEW = [
 "kind": "preset",
 "date": "2026-10-04",
 "name": "升空尾缀 · 小（V5，4.3 新画法）",
-"note": "已通过的 V5（TR2S）换到 4.3 的画法：参数一个没改（颗粒、长度、扭动、跟拍快门、颜色都是 V5 的），只把 3.7 时每次烘焙自动定的曝光换成固定曝光（按 3.7 同一口径量出来），星头、光晕、火星还是高斯点、跟拍拖影照旧。造型对尾缀C。",
+"note": "已通过的 V5（TR2S）换到 4.3 的画法：参数一个没改；星头、光晕、火星仍按 3.7 的光点核画（总光量、最小 0.55 像素、跟拍拖影），取景用 TR2S 当时量的（面片大小一样），曝光固定成 3.7 在导出尺寸（1 倍）时自动定的值（火花 0.000976819，星头相对火花 ×40.4011）。造型对尾缀C。",
 "look": [
 "和左栏「已通过」里的 V5（TR2S）比：亮度、星头光晕、白热段长度、火星颗粒是不是一样",
 "引擎回放 + 游戏内大小：上升循环、开花后消散",
 "素材包：PC / 手机贴图、cascade.json"
 ],
-"opinion": "云端 1/4 尺寸对比（软件渲染）：中档贴图平均亮度 3.7 → 新画法 20.1 → 18.3（曝光已补 5%），99% 分位 124 → 118，有内容的像素 41% → 37%；星头、光晕、扭动和火星分布一致。你通过的 V5 素材包（analysis/results/TR2）不动；这一版通过了再换。",
+"opinion": "云端核对（软件渲染，0.5 倍尺寸、两边用同一组曝光）：新画法的循环和两个消散贴图和 TR2S 逐像素比，最多差 1–2 / 255、约万分之一的像素（取整），平均亮度一样。导出（1 倍）用的曝光就是 TR2S 导出时自动定的那组，所以素材包应和你通过的 TR2S 基本一样；缩小预览时亮度会和以前的预览略有不同（3.7 每次按缩小后的画面重新自动曝光，现在固定）。你通过的 TR2S 素材包（analysis/results/TR2）不动，这一版通过了再换。",
 "tags": "尾缀 上升 小 V5 4.3 V5S",
 "doc": null,
 "imagesTitle": null,
@@ -128,7 +128,7 @@ var FW_REVIEW = [
 "trWSize": 0.06,
 "trWBright": 0.06,
 "trHeadSize": 0.08961,
-"trHeadBright": 1.54209,
+"trHeadBright": 0.84614,
 "trHalo": 2.2,
 "trHaloBright": 0.13499,
 "trTwist": 0.22422,
@@ -171,8 +171,15 @@ var FW_REVIEW = [
 "cellPad": 2,
 "autoGrid": 0,
 "renderVer": 40,
-"exposure": 4.5026,
-"previewBloom": 1
+"exposure": 0.000976819,
+"previewBloom": 1,
+"trHeadExpo": 40.4011,
+"trBox": [
+-1.228049,
+1.228049,
+-32.909045,
+1.113253
+]
 },
 "m": {
 "stages": [
@@ -190,7 +197,7 @@ var FW_REVIEW = [
 "tailInt": 1
 },
 "thumbRef": "data:image/jpeg;base64,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",
-"ver": "b4af211e"
+"ver": "f035dd61"
 },
 {
 "id": "V5M",
@@ -198,13 +205,13 @@ var FW_REVIEW = [
 "kind": "preset",
 "date": "2026-10-04",
 "name": "升空尾缀 · 中（V5，4.3 新画法）",
-"note": "已通过的 V5（TR2M）换到 4.3 的画法：参数一个没改（颗粒、长度、扭动、跟拍快门、颜色都是 V5 的），只把 3.7 时每次烘焙自动定的曝光换成固定曝光（按 3.7 同一口径量出来），星头、光晕、火星还是高斯点、跟拍拖影照旧。造型对尾缀B。",
+"note": "已通过的 V5（TR2M）换到 4.3 的画法：参数一个没改；星头、光晕、火星仍按 3.7 的光点核画（总光量、最小 0.55 像素、跟拍拖影），取景用 TR2M 当时量的（面片大小一样），曝光固定成 3.7 在导出尺寸（1 倍）时自动定的值（火花 0.00167152，星头相对火花 ×32.8159）。造型对尾缀B。",
 "look": [
 "和左栏「已通过」里的 V5（TR2M）比：亮度、星头光晕、白热段长度、火星颗粒是不是一样",
 "引擎回放 + 游戏内大小：上升循环、开花后消散",
 "素材包：PC / 手机贴图、cascade.json"
 ],
-"opinion": "云端 1/4 尺寸对比（软件渲染）：中档贴图平均亮度 3.7 → 新画法 20.1 → 18.3（曝光已补 5%），99% 分位 124 → 118，有内容的像素 41% → 37%；星头、光晕、扭动和火星分布一致。你通过的 V5 素材包（analysis/results/TR2）不动；这一版通过了再换。",
+"opinion": "云端核对（软件渲染，0.5 倍尺寸、两边用同一组曝光）：新画法的循环和两个消散贴图和 TR2M 逐像素比，最多差 1–2 / 255、约万分之一的像素（取整），平均亮度一样。导出（1 倍）用的曝光就是 TR2M 导出时自动定的那组，所以素材包应和你通过的 TR2M 基本一样；缩小预览时亮度会和以前的预览略有不同（3.7 每次按缩小后的画面重新自动曝光，现在固定）。你通过的 TR2M 素材包（analysis/results/TR2）不动，这一版通过了再换。",
 "tags": "尾缀 上升 中 V5 4.3 V5M",
 "doc": null,
 "imagesTitle": null,
@@ -320,7 +327,7 @@ var FW_REVIEW = [
 "trWSize": 0.06,
 "trWBright": 0.06,
 "trHeadSize": 0.12,
-"trHeadBright": 0.95196,
+"trHeadBright": 1.2,
 "trHalo": 2.6,
 "trHaloBright": 0.08888,
 "trTwist": 0.35,
@@ -363,8 +370,15 @@ var FW_REVIEW = [
 "cellPad": 2,
 "autoGrid": 0,
 "renderVer": 40,
-"exposure": 7.4424,
-"previewBloom": 1
+"exposure": 0.00167152,
+"previewBloom": 1,
+"trHeadExpo": 32.8159,
+"trBox": [
+-1.431422,
+1.431422,
+-57.838032,
+0.546803
+]
 },
 "m": {
 "stages": [
@@ -382,7 +396,7 @@ var FW_REVIEW = [
 "tailInt": 1
 },
 "thumbRef": "data:image/jpeg;base64,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",
-"ver": "672253a9"
+"ver": "a151fa7a"
 },
 {
 "id": "V5L",
@@ -390,13 +404,13 @@ var FW_REVIEW = [
 "kind": "preset",
 "date": "2026-10-04",
 "name": "升空尾缀 · 大（V5，4.3 新画法）",
-"note": "已通过的 V5（TR2L）换到 4.3 的画法：参数一个没改（颗粒、长度、扭动、跟拍快门、颜色都是 V5 的），只把 3.7 时每次烘焙自动定的曝光换成固定曝光（按 3.7 同一口径量出来），星头、光晕、火星还是高斯点、跟拍拖影照旧。造型对尾缀A。",
+"note": "已通过的 V5（TR2L）换到 4.3 的画法：参数一个没改；星头、光晕、火星仍按 3.7 的光点核画（总光量、最小 0.55 像素、跟拍拖影），取景用 TR2L 当时量的（面片大小一样），曝光固定成 3.7 在导出尺寸（1 倍）时自动定的值（火花 0.00244725，星头相对火花 ×8.9465）。造型对尾缀A。",
 "look": [
 "和左栏「已通过」里的 V5（TR2L）比：亮度、星头光晕、白热段长度、火星颗粒是不是一样",
 "引擎回放 + 游戏内大小：上升循环、开花后消散",
 "素材包：PC / 手机贴图、cascade.json"
 ],
-"opinion": "云端 1/4 尺寸对比（软件渲染）：中档贴图平均亮度 3.7 → 新画法 20.1 → 18.3（曝光已补 5%），99% 分位 124 → 118，有内容的像素 41% → 37%；星头、光晕、扭动和火星分布一致。你通过的 V5 素材包（analysis/results/TR2）不动；这一版通过了再换。",
+"opinion": "云端核对（软件渲染，0.5 倍尺寸、两边用同一组曝光）：新画法的循环和两个消散贴图和 TR2L 逐像素比，最多差 1–2 / 255、约万分之一的像素（取整），平均亮度一样。导出（1 倍）用的曝光就是 TR2L 导出时自动定的那组，所以素材包应和你通过的 TR2L 基本一样；缩小预览时亮度会和以前的预览略有不同（3.7 每次按缩小后的画面重新自动曝光，现在固定）。你通过的 TR2L 素材包（analysis/results/TR2）不动，这一版通过了再换。",
 "tags": "尾缀 上升 大 V5 4.3 V5L",
 "doc": null,
 "imagesTitle": null,
@@ -512,7 +526,7 @@ var FW_REVIEW = [
 "trWSize": 0.12,
 "trWBright": 0.07,
 "trHeadSize": 0.0768,
-"trHeadBright": 3.61725,
+"trHeadBright": 1.82,
 "trHalo": 3.2,
 "trHaloBright": 0.13334,
 "trTwist": 1.08439,
@@ -555,8 +569,15 @@ var FW_REVIEW = [
 "cellPad": 2,
 "autoGrid": 0,
 "renderVer": 40,
-"exposure": 15.6791,
-"previewBloom": 1
+"exposure": 0.00244725,
+"previewBloom": 1,
+"trHeadExpo": 8.9465,
+"trBox": [
+-3.520996,
+3.520996,
+-129.110787,
+0.515722
+]
 },
 "m": {
 "stages": [
@@ -574,7 +595,7 @@ var FW_REVIEW = [
 "tailInt": 1
 },
 "thumbRef": "data:image/jpeg;base64,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",
-"ver": "d38e8768"
+"ver": "f76d1965"
 },
 {
 "id": "RT4S",

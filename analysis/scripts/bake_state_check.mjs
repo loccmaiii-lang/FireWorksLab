@@ -89,8 +89,9 @@ await check('F1: failure stops; retained bake and persistent error survive all v
 await check('render version: one core; old (3.7) records migrate with calibrated exposure', async f => {
   for (const type of ['kiku', 'trailS', 'trailM', 'trailL', 'fountain', 'rise']) assert.equal(f.run(`defaultsFor('${type}').P.renderVer`), 40, type);
   for (const id of ['TR2S', 'TR2M', 'TR2L']) {
-    const r = f.run(`(() => { const P = replicaPM('${id}').P; return { v: P.renderVer, mig: P._mig37, e: P.exposure }; })()`);
-    assert.equal(r.v, 40, id); assert.equal(r.mig, 1, id); assert.ok(r.e > 1.5 && r.e < 20, id + ' exposure ' + r.e);
+    // 4.3：V5 在新核上用 3.7 光点核（总光量），曝光是 3.7 在 1 倍尺寸下自动曝光的火花曝光（约 1e-3），星头另记 trHeadExpo（3.7 星头 / 火花曝光之比）
+    const r = f.run(`(() => { const P = replicaPM('${id}').P; return { v: P.renderVer, mig: P._mig37, e: P.exposure, k: P.trHeadExpo, hb: P.trHeadBright }; })()`);
+    assert.equal(r.v, 40, id); assert.equal(r.mig, 1, id); assert.ok(r.e > 5e-4 && r.e < 5e-3, id + ' exposure ' + r.e); assert.ok(r.k > 5 && r.k < 60, id + ' trHeadExpo ' + r.k); assert.ok(r.hb < 4, id + ' trHeadBright 不该被乘');
   }
   assert.equal(f.run("typeof renderVersion"), 'undefined');
 });
