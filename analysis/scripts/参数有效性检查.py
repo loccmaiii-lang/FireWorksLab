@@ -50,7 +50,10 @@ PAGE = r"""async (o) => {
         const [key, label, unit, mn, mx, st] = it; k = key; lab = typeof label === 'function' ? label(P0) : label;
         // 时间类（秒）量程常常远大于这个效果的时长（入点 / 出点 0–30 s）：按 min(量程, 时长) 拨，第二个值取时长的一半
         const v = +P0[k] || 0, step = +st || 0.01, sec = unit === 's', R = sec ? Math.min(mx - mn, T) : mx - mn, d = Math.max(step, R * 0.2), snap = x => +Math.min(mx, Math.max(mn, Math.round(x / step) * step)).toFixed(6);
-        vals = [snap(v + d <= mx + 1e-9 ? v + d : v - d), sec ? snap(Math.abs(v - T / 2) > d / 2 ? T / 2 : T / 4) : snap(v - mn < mx - v ? mx : mn)];
+        // 两边各拨一次（只往一边拨会漏：比如燃烧时间已经比序列长，再加长画面里看不出来，缩短才看得出）
+        const up = v + d <= mx + 1e-9 ? v + d : mx, dn = v - d >= mn - 1e-9 ? v - d : mn;
+        vals = [snap(up), snap(dn)];
+        if (sec) vals.push(snap(T / 2));
       } else if (it.sel) {
         if (!itemVisible(it, P0)) continue;
         k = it.sel; lab = it.label; const cur = String(P0[k]), opts = it.options.map(x => String(x[0])), i = opts.indexOf(cur);
@@ -148,6 +151,7 @@ async def main():
                 dead = [x['k'] for x in r['rows'] if not x.get('err') and not x['curve'] and not x['plan'] and (not a.render or not any(x.get('pix') or []))]
                 print(f"{name}：{r['n']} 个参数，没反应{'' if a.render else '（候选）'} {len(dead)}：{' '.join(dead)}（{time.time() - t1:.0f} s）", flush=True)
                 res.append(r)
+                (out / '_进行中.json').write_text(json.dumps(res, ensure_ascii=False), encoding='utf-8')   # 跑一半断了也留得下
         await b.close()
     summarize(res, a.render, ver, round((time.time() - t0) / 60, 1), out)
 
@@ -169,18 +173,22 @@ def summarize(res, render, ver, minutes, out):
         g['curve'] = sorted(g['curve']); fs = files.get(g['k'], []); g['files'] = fs
         where = '只在画面' if fs and set(fs) <= RENDER_FILES else '只在烘焙 / 导出' if fs and set(fs) <= BAKE_FILES else '只在画面 / 烘焙' if fs and set(fs) <= RENDER_FILES | BAKE_FILES else ''
         g['where'] = where
+        # 没开 --render 时：在别的上下文里曲线 / 帧计划有反应、这里没有 = 多半真的不起作用（显示条件该管）；
+        # 哪儿都没反应 = 多半只影响画面，要 --render 才能定
         if not fs: g['kind'] = '源码里没用到'
         elif not g['dead']: g['kind'] = '有反应'
-        elif not render and where: g['kind'] = f'没比（{where}用到，要 --render / 烘焙才看得出）'
-        else: g['kind'] = '到处都没反应' if len(g['dead']) == g['n'] else '部分没反应'
+        elif render: g['kind'] = '到处都没反应' if len(g['dead']) == g['n'] else '部分没反应'
+        elif len(g['dead']) < g['n']: g['kind'] = '部分没反应（别处曲线 / 帧计划有反应）'
+        else: g['kind'] = '曲线、帧计划都不变（多半只影响画面' + ('' if not where else f'；{where}用到') + '，要 --render）'
         rows.append(g)
-    order = {'源码里没用到': 0, '到处都没反应': 1, '部分没反应': 2, '有反应': 9}
+    order = {'源码里没用到': 0, '到处都没反应': 1, '部分没反应': 2, '部分没反应（别处曲线 / 帧计划有反应）': 2, '有反应': 9}
     order = lambda k, o=order: o.get(k, 5)
     rows.sort(key=lambda g: (order(g['kind']), g['sec'], g['k']))
     meta = {'version': ver, 'render': render, 'minutes': minutes, 'contexts': [r['ctx'] for r in res], 'unstable_plan': [r['ctx'] for r in res if r.get('stable') is False]}
     (out / '参数有效性.json').write_text(json.dumps({'meta': meta, 'params': rows, 'raw': res}, ensure_ascii=False, indent=1), encoding='utf-8')
     L = [f"# 参数有效性检查（烘焙器 {ver}，{'曲线 + 导出 + 画面' if render else '曲线 + 导出；没变的只是候选，要 --render 才能定'}）", '',
-         f"上下文 {len(res)} 个（空中类模板默认参数 + 每个效果的每一层），{meta['minutes']} 分钟。每个参数单独拨 +20% 量程（下拉换下一项），只拨右栏此刻看得见的。", '',
+         f"上下文 {len(res)} 个（空中类模板默认参数 + 每个效果的每一层），{meta['minutes']} 分钟。每个参数单独拨两个值（+20% 量程、量程另一头；秒类按时长拨；下拉换后两项），只拨右栏此刻看得见的。",
+         '「改到导出」只给曲线没变的参数算（帧计划要跑完整测量，慢）。', '',
          '| 结论 | 参数 | 节 | 键 | 试了 | 没反应的上下文 | 改到的曲线 | 改到导出 | 改到画面 | 源码里用到它的文件 |', '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |']
     for g in rows:
         if g['kind'] == '有反应': continue
