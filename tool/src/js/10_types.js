@@ -82,7 +82,7 @@ const BASE = {
   trMRate: 600, trMLife: 0.75, trMSpread: 0.8, trMSize: 0.14, trMBright: 0.05,
   trCRate: 60, trCLife: 0.9, trCSpread: 1.2, trCSize: 0.18, trCBright: 0.12,
   trWRate: 0, trWLife: 0.12, trWSpread: 14, trWSize: 0.06, trWBright: 0.06,
-  trHeadSize: 0.26, trHeadBright: 1.2, trHalo: 3, trHaloBright: 0.15,
+  trHeadSize: 0.26, trHeadBright: 1.2, trHeadExpo: 1, trHalo: 3, trHaloBright: 0.15,     // trHeadExpo：星头相对火花的曝光（4.3：3.7 的星头、火花各自曝光，迁到一个固定曝光后靠它保持原来的比例；不在面板上）
   trTwist: 0.35, trTwistN: 5, trWiggle: 0.08, trTwistLag: 0.35, trFollow: 0, trBright: 1.6, trExport4K: 1, trIgnite: 0, trPhys: 0,
   // 升空尾缀 · 循环层 + 粒子发射器（产物 form 'emitset'，47_risetail.js；原理 analysis/原理/升空尾缀.md 第 7c–7e 节）。默认值 = 中档
   rtH: 265, rtT: 5, rtVb: 16, rtLean: 0, rtD: 0.14, rtBurstD: 190,
@@ -214,7 +214,7 @@ const TYPES = {
 };
 // 4.0 花型库模板的固定曝光（analysis/scripts/模板曝光.py 算的；菊按定帧对照人工调到 ×3，柳、椰子按改过的参数人工看过定，和「建议曝光」按钮同一算法：燃烧段最亮的一刻 99.8% 分位 → 0.96）。
 // 只给新建的模板用；存下来的 4.0 配方按自己存的曝光（没存就是 1，和以前一样）。
-const EXPOSURE40 = {"kiku": 3, "botan": 3.1, "kamuro": 4.0, "yanagi": 2, "senrin": 2.4, "hachi": 0.89, "palm": 2, "henka": 2.3, "strobe": 2.8, "glitter": 1.1, "crackle": 3.4, "matsuba": 1.4, "crossette": 1.8, "ochiba": 2.9, "jisa": 3.8, "ring": 3.3, "saturn": 2.9, "kata": 3.0, "water": 1.8, "trailS": 4.5026, "trailM": 7.4424, "trailL": 15.6791, "fountain": 0.3476, "falls": 1.1293, "wheel": 0.1962, "fan": 5.2794, "barrage": 3.194, "shikake": 0.886, "rise": 0.6847};
+const EXPOSURE40 = {"kiku": 3, "botan": 3.1, "kamuro": 4.0, "yanagi": 2, "senrin": 2.4, "hachi": 0.89, "palm": 2, "henka": 2.3, "strobe": 2.8, "glitter": 1.1, "crackle": 3.4, "matsuba": 1.4, "crossette": 1.8, "ochiba": 2.9, "jisa": 3.8, "ring": 3.3, "saturn": 2.9, "kata": 3.0, "water": 1.8, "trailS": 0.000976819, "trailM": 0.00167152, "trailL": 0.00244725, "fountain": 0.3476, "falls": 1.1293, "wheel": 0.1962, "fan": 5.2794, "barrage": 3.194, "shikake": 0.886, "rise": 0.6847};
 // 4.0 新建模板的参数改动（只给新建的模板；旧配方、3.7 不变）。看 4.0 定帧对照后补的：
 //   柳：原模板拖尾短、看不出垂柳 → 火花寿命长、冷却慢、几乎不继承星速、阻力大 → 火花停在空中慢慢下垂，形成一条条垂下的金丝（曝光 ×2 人工看过）
 //   椰子：9 颗星太稀、拖尾细 → 14 颗星、拖尾更长更密、下垂成弧（曝光 ×2 人工看过）
@@ -224,9 +224,9 @@ const TEMPLATE40 = {
   // 4.3（清理清单 C1）：升空尾缀 V5、地面循环、上升以前是 3.7 画法（每次烘焙按画面自动曝光，星头和火花各自归一）。
   // 换到现在的画法后按同一口径量了一次（星头 99.8% 分位 → 0.92、火花 99.6% 分位 → 0.55），写成固定曝光（EXPOSURE40）+ 星头亮度；
   // 尾缀的火花曝光再 ×1.05（3.7 的点有 0.55 px 下限，亚像素火星多摊开一点，平均亮度高约 5%）。预览带光晕（和 3.7 的预览一样）
-  trailS: {"trHeadBright": 1.5421, "previewBloom": 1},
-  trailM: {"trHeadBright": 0.952, "previewBloom": 1},
-  trailL: {"trHeadBright": 3.6172, "previewBloom": 1},
+  trailS: {"trHeadExpo": 40.4011, "previewBloom": 1},
+  trailM: {"trHeadExpo": 32.8159, "previewBloom": 1},
+  trailL: {"trHeadExpo": 8.9465, "previewBloom": 1},
   fountain: {"headBright": 7.142, "previewBloom": 1},
   falls: {"headBright": 2.8017, "previewBloom": 1},
   wheel: {"headBright": 8.7684, "previewBloom": 1},
@@ -251,7 +251,7 @@ function usesTickPlan40(P) { return familyOf(P.type)==='aerial' && ['master','se
 // 旧存档 → 现在的画法。3.7 的贴图曝光是每次烘焙按画面自动定的（存档里的 exposure 没起作用），这里换成固定曝光：
 // 空中花型用模板的曝光（EXPOSURE40），格子按 4×4、固定取景（和 JM4 → JM4-40 同一套迁法）；升空尾缀 / 地面 / 上升用 CAL40
 // （按 3.7 自动曝光的口径在新画法下量出来的：曝光 + 星头亮度倍数）。迁过的存档带 _mig37，界面提示「亮度请看一眼」。
-const CAL40 = {"trailS": {"exposure": 4.5026, "headK": 1.8225, "previewBloom": 1}, "trailM": {"exposure": 7.4424, "headK": 0.7933, "previewBloom": 1}, "trailL": {"exposure": 15.6791, "headK": 1.9875, "previewBloom": 1}, "fountain": {"exposure": 0.3476, "headK": 7.142, "previewBloom": 1}, "falls": {"exposure": 1.1293, "headK": 2.8017, "previewBloom": 1}, "wheel": {"exposure": 0.1962, "headK": 19.4854, "previewBloom": 1}, "fan": {"exposure": 5.2794, "headK": 1.2846, "previewBloom": 1}, "barrage": {"exposure": 3.194, "headK": 1.2195, "previewBloom": 1}, "shikake": {"exposure": 0.886, "headK": 1.6659, "previewBloom": 1}, "rise": {"exposure": 0.6847, "headK": 4.9887, "previewBloom": 1}};
+const CAL40 = {"trailS": {"exposure": 0.000976819, "headK": 40.4011, "previewBloom": 1}, "trailM": {"exposure": 0.00167152, "headK": 32.8159, "previewBloom": 1}, "trailL": {"exposure": 0.00244725, "headK": 8.9465, "previewBloom": 1}, "fountain": {"exposure": 0.3476, "headK": 7.142, "previewBloom": 1}, "falls": {"exposure": 1.1293, "headK": 2.8017, "previewBloom": 1}, "wheel": {"exposure": 0.1962, "headK": 19.4854, "previewBloom": 1}, "fan": {"exposure": 5.2794, "headK": 1.2846, "previewBloom": 1}, "barrage": {"exposure": 3.194, "headK": 1.2195, "previewBloom": 1}, "shikake": {"exposure": 0.886, "headK": 1.6659, "previewBloom": 1}, "rise": {"exposure": 0.6847, "headK": 4.9887, "previewBloom": 1}};
 function migrate37(P, ...given) {      // given[0]：原始存档的版本（显式传 undefined = 没写版本 = 3.7 时代的）；不传就看 P 自己的
   const srcVer = given.length ? given[0] : P && P.renderVer;
   if (!P || +srcVer >= 40) { if (P) P.renderVer = 40; return P; }
@@ -261,7 +261,7 @@ function migrate37(P, ...given) {      // given[0]：原始存档的版本（显
     P.exposure = EXPOSURE40[P.type] || 1;
   } else if (c) {
     P.exposure = c.exposure;
-    if (c.headK && isTrail(P)) P.trHeadBright = +((+P.trHeadBright || 0) * c.headK).toFixed(5);
+    if (c.headK && isTrail(P)) P.trHeadExpo = c.headK;      // 尾缀：星头亮度参数不动，另记星头曝光（取景按原始亮度量，和 3.7 一样）
     else if (c.headK) P.headBright = +((P.headBright == null ? 1 : +P.headBright) * c.headK).toFixed(5);
     if (c.previewBloom != null && P.previewBloom == null) P.previewBloom = c.previewBloom;
   }

@@ -1,11 +1,13 @@
 // 4.0 光点核。size = 实心亮核直径（米），I = 面亮度；像素覆盖积分
 // 让亚像素亮核的总光量仍随面积变化。所有新光点用实例四边形，避开
 // 硬件 POINT_SIZE 的上下限和点精灵中心取整；3.7 的 shader / VAO 不变。
-// 4.3：uGauss = 1 时整颗点是一个高斯（σ = 亮核半径，总光量 = 面亮度 × 亮核面积），给升空尾缀 V5 用——它的星头、光晕、火星一直是高斯点
-// （以前走 3.7 光点核）；emitCore40S 再按跟拍拖影把点在竖直方向拉长（总光量不变）。其它产物 uGauss = 0，和以前逐像素一样。
+// 4.3：uGauss = 1 时整颗点按 3.7 光点核画（只给升空尾缀 V5：它的星头、光晕、火星一直是这种点，用户通过的 TR2 就是这样烘的）：
+// 总光量 = I（不随大小变），σ = 半径 × 每米像素、最小 0.55 像素，跟拍拖影把 σy 按方差加长（σy² + sy²），画到 5σ、最后 1σ 平滑收到 0。
+// 4.3.0 先做成「面亮度 × 面积」的高斯，细火花（σ < 0.55 像素）暗了 5–10 倍、大档白热芯看不出来（和 TR2 对比发现），改回 3.7 的核。
+// 其它产物 uGauss = 0，和以前逐像素一样。
 const POINT40_VERTEX = `uniform float uHaloFrac, uHaloR, uGauss; out vec2 vLocal;
 void emitCore40R(vec2 q, float I, vec2 r){
-  float reach=uGauss>.5?4.:uHaloFrac>0.?4.*max(1.,uHaloR):1.;
+  float reach=uGauss>.5?5.:uHaloFrac>0.?4.*max(1.,uHaloR):1.;
   vec2 corner=vec2(float(gl_VertexID&1),float(gl_VertexID>>1))*2.-1.;
   vec2 p=corner*(ceil(r*reach)+vec2(1.));
   gl_Position=vec4((q+p/vec2(uPPM,uPPMY)-uView.xy)/uView.zw,0.,1.);
@@ -15,13 +17,14 @@ void emitCore40(vec2 q, float I, float size){
   vec2 r=max(size*.5*vec2(uPPM,uPPMY),vec2(1e-7));
   float reach=uHaloFrac>0.?4.*max(1.,uHaloR):1.;
   vec2 corner=vec2(float(gl_VertexID&1),float(gl_VertexID>>1))*2.-1.;
-  if(uGauss>.5){ emitCore40R(q,size>0.?I:0.,r); return; }
+  if(uGauss>.5){ vec2 s=max(size*.5*vec2(uPPM,uPPMY),vec2(.55)); emitCore40R(q,I*uPPM*uPPMY/(6.2831853*s.x*s.y),s); return; }
   vec2 p=corner*(ceil(r*reach)+vec2(1.));
   gl_Position=vec4((q+p/vec2(uPPM,uPPMY)-uView.xy)/uView.zw,0.,1.);
   vLocal=p; vSig=r; vI=size>0.?I:0.; vPS=0.;
 }
 // sy：跟拍拖影的标准差（像素，匀速一段长 L 时 σ = 0.2887 L）→ 半轴加 L / 2，面亮度按拉长的比例降，总光量不变
 void emitCore40S(vec2 q, float I, float size, float sy){
+  if(uGauss>.5){ vec2 s=max(size*.5*vec2(uPPM,uPPMY),vec2(.55)); s.y=sqrt(s.y*s.y+sy*sy); emitCore40R(q,I*uPPM*uPPMY/(6.2831853*s.x*s.y),s); return; }
   vec2 r=max(size*.5*vec2(uPPM,uPPMY),vec2(1e-7)); float ry=r.y+1.7320508*max(sy,0.);
   emitCore40R(q,size>0.?I*r.y/ry:0.,vec2(r.x,ry));
 }`;
@@ -46,7 +49,10 @@ vec2 erf40(vec2 x){vec2 sg=sign(x);x=abs(x);vec2 t=1./(1.+.3275911*x);return sg*
 float gaussianCoverage(vec2 p,vec2 s){vec2 v=.5*(erf40((p+.5)/(1.41421356*s))-erf40((p-.5)/(1.41421356*s)));return max(0.,v.x*v.y);}
 void main(){
   if(vI<=0.){o=vec4(0.);return;}
-  if(uGauss>.5){ float rd=length(vLocal/vSig); o=uChan*(vI*3.14159265*vSig.x*vSig.y*gaussianCoverage(vLocal,vSig)*(1.-smoothstep(3.5,4.,rd))*uW); return; }
+  if(uGauss>.5){     // 3.7 光点核（像素中心取样）；画点范围 = 10σ 见方，范围大于 8σ + 2 像素时边缘 0.8–1 平滑收到 0（和 3.7 的 FS_PTS 一样）
+    float h=(ceil(max(vSig.x,vSig.y)*10.)+1.)*.5; if(abs(vLocal.x)>h||abs(vLocal.y)>h){o=vec4(0.);return;}
+    vec2 d=vLocal/vSig; float g=exp(-.5*dot(d,d)); if(2.*h>8.*max(vSig.x,vSig.y)+2.) g*=smoothstep(1.,.8,length(vLocal)/h);
+    o=uChan*(vI*g*uW); return; }
   float core=diskCoverage(vLocal,vSig), halo=0.;
   if(uHaloFrac>0.){
     vec2 sigma=vSig*max(1.,uHaloR);

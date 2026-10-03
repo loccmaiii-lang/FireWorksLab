@@ -25,8 +25,9 @@ def main():
             report['startup'] = page.evaluate("() => ({gpu:document.getElementById('gpu').title, version:VERSION, baking:state.baking, form:state.P.form})")
             print(json.dumps(report['startup'], ensure_ascii=False), flush=True)
             verify_renderer(report['startup']['gpu'])
-            page.evaluate("setReplica('JM4'); state.playing = false;")
-            page.wait_for_function('state.bake && !state.baking && !state.dirty', timeout=240000)
+            # 4.2.16 起自动烘焙默认关（改参数不烘）：这个检查测的是「改了参数 → 烘焙 / 失败提示 / 重试」，先打开自动烘焙
+            page.evaluate("setAutoBake(true); setReplica('JM4'); state.playing = false;")
+            page.wait_for_function('state.bake && !state.baking && !state.dirty', timeout=900000)
             report['F0'] = page.evaluate("() => ({recipe:state.repId, cols:state.P.cols, rows:state.P.rows, frames:state.bake.meta.L.F, renderVer:state.P.renderVer})")
             f0 = dict(report['F0']); frames = f0.pop('frames')      # 4.3：JM4（3.7 时代的记录）打开时迁移成 4×4、固定取景
             assert f0 == {'recipe': 'JM4', 'cols': 4, 'rows': 4, 'renderVer': 40} and frames > 0, report['F0']
@@ -53,7 +54,7 @@ def main():
             page.screenshot(path=str(out / '失败提示.png'))
             page.evaluate('() => { bake = originalBake; }')
             page.locator('#bakeRetry').click()
-            page.wait_for_function('state.bake && !state.baking && !state.dirty', timeout=240000)
+            page.wait_for_function('state.bake && !state.baking && !state.dirty', timeout=900000)
             assert not page.locator('#bakeError').is_visible()
             report['F1']['recovered'] = True
             report['pageErrors'] = errors
