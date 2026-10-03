@@ -1,7 +1,7 @@
 [
  {
   "cn": "发射器",
-  "en": "Required",
+  "en": "Emitter",
   "stage": "发射",
   "open": true,
   "what": "号数、序列时长、随机种子"
@@ -50,7 +50,7 @@
  },
  {
   "cn": "火花",
-  "en": "Spark (Child Emitter)",
+  "en": "Sparkler (Child Emitter)",
   "stage": "外观",
   "open": true,
   "what": "星喷出的火花：生成率、寿命、继承速度、阻力、重力、大小、温度、亮度"
@@ -86,28 +86,28 @@
  {
   "cn": "入点出点",
   "en": "Cut In / Out",
-  "stage": "输出",
+  "stage": "渲染输出",
   "open": false,
   "what": "序列从第几秒开始、到第几秒结束、入点之前怎么办"
  },
  {
   "cn": "帧与贴图",
   "en": "Frames & Texture",
-  "stage": "输出",
+  "stage": "渲染输出",
   "open": false,
   "what": "贴图尺寸、格子、通道、帧数和帧率、取景、分段"
  },
  {
   "cn": "曝光光晕",
   "en": "Exposure & Halo",
-  "stage": "输出",
+  "stage": "渲染输出",
   "open": false,
   "what": "固定曝光、光晕、预览光晕"
  },
  {
   "cn": "画质",
   "en": "Quality",
-  "stage": "输出",
+  "stage": "渲染输出",
   "open": false,
   "what": "超采样、快门采样、像素覆盖（烘焙用，不改样子的参数）"
  }

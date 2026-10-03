@@ -1,5 +1,15 @@
 # 烘焙器改动记录
 
+## 4.2.27 · 命名按用户在审阅页上的意见改（2026-10-04，对话框15）
+
+- 用户 10-03 23:16–23:30 在「烘焙器参数命名」第二版上点完（db `v43`）：名字规则可以；三个选择题都选推荐；约 95 个参数「可以」。要改的：
+  - 星的寿命英文叫 **Burning Lifetime**（随机：Burning Lifetime Random）；
+  - 星头模块的英文都用 **Head** 开头（Head Size、Head Brightness、Head Flicker、Head Fade Out Over Life…），火花模块都用 **Sparkler** 开头（Sparkler Lifetime、Sparkler Delay = 火花开始时刻、Sparkler Lifetime Over Life、Sparkler Lifetime Random…），火花模块叫 Sparkler (Child Emitter)；
+  - 发射器模块叫 **Emitter**；输出那一大段改叫 **渲染输出 · Render**。
+- 改在 `analysis/命名/改表_4.3.py`（重跑生成表、模块表、词汇表）；预览面板的大段标题跟着改。只影响「新面板（预览）」，默认面板、烘焙、导出都没动。
+- 选择题结果（下一步做）：爆裂加「爆裂范围 / 速度」（通用能力，默认 = 现在的样子）；余烬放烟花特性；尾缀 / 地面 250 行等清理清单。
+- **检查**：界面状态检查 N1 过。
+
 ## 4.2.26 · 分批烘焙按实测显卡速度定量、最多 2 批在路上；等多久都不改量（2026-10-04，对话框15）
 
 - SMOKE20（4.2.25，看法在 `analysis/results/SMOKE20/看法.md`）：单独打开引菊 → 锦 4.5 s（4.2.22 约 13 s、4.2.23 45 s），鸿巢 6.7 s。但条目体检里接在鸿巢后面打开引菊 → 锦、接在永丰后面打开片贝仍超时：等显卡 1851 / 2394 次、每次约 160 ms、每批掉到 0.2M 粒。
