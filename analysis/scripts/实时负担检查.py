@@ -7,6 +7,8 @@
      预算按实际帧时间自动升降；烘焙中实时模拟让出显卡（子样本压到最少）；烘焙本身的子样本不受影响
   M4 打开效果时同一份参数的整段预跑（measure）和星轨道（buildTrack）只真算一次：实时模拟的取景 / 镜头 / 范围、烘焙、收紧共用（10-03 SMOKE16：片贝、鸿巢打开时主线程一停几秒，就是这几样各算一遍）
   M5 单层实时模拟的超采样画布有上限：高分屏（画布约 2000 px）+ 4×4 超采样（球形A 的层是 qSS 4）以前一张 8000² 的 16 位浮点画布 512 MB，现在边长 ≤ 4096
+  M6 实时模拟不倒回（4.2.22）：实时模拟一帧里不做快照 / 恢复、物理步数 ≈ 只往前走的量（以前每帧倒回重走快门窗口，5 倍物理步 + 每帧深拷贝几百颗星）；
+     「回推」画出来的星头和精确倒回的那一帧差别很小（平均像素差 < 1/255、不一样的像素 < 2%）；烘焙 / 定帧不走这条路
   M3 显卡上下文丢失（显存不够 / 驱动超时重置）：不再白屏不说话，画面上写原因和怎么办，渲染循环停下不刷错误
 
   云端没有显卡：画图换成空操作，只量内存、子样本数和逻辑。真实帧率要本机任务（SMOKE / 条目体检）看。
@@ -32,13 +34,14 @@ GPU = r"""(() => {
 KEEP = ['jinmangju', 'hongchao', 'hiki_nishiki', 'qingning']
 
 
-async def page(p, opts):
+async def page(p, opts, stub=True):
     b = await p.chromium.launch(**opts)
     ctx = await b.new_context(viewport={'width': 1200, 'height': 800}); pg = await ctx.new_page()
     errs = []; pg.on('pageerror', lambda e: errs.append(str(e)[:160]))
     await pg.add_init_script("window.requestAnimationFrame = () => 0;")
     await pg.goto(HTML, wait_until='load', timeout=0); await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
-    await pg.evaluate(FAKE); await pg.evaluate(GPU)
+    await pg.evaluate(FAKE)
+    if stub: await pg.evaluate(GPU)
     return b, pg, errs
 
 
@@ -157,6 +160,46 @@ async def m5(p, opts):
     return not bad, bad, info
 
 
+async def m6(p, opts):
+    bad, info = [], {}
+    b, pg, errs = await page(p, opts)
+    try:
+        await open_eff(pg, 'hongchao')
+        r = await pg.evaluate("""async () => { window.__c = { snap: 0, restore: 0, steps: 0 };
+          const oS = Sim.prototype.snapshot; Sim.prototype.snapshot = function () { __c.snap++; return oS.call(this); };
+          const oR = simRestore; simRestore = (a, b) => { __c.restore++; return oR(a, b); };
+          const oT = Sim.prototype.step; Sim.prototype.step = function (h) { __c.steps++; return oT.call(this, h); };
+          state.view = 'live'; state.playing = true; state.speed = 1; state.t = 1; let now = 1000; lastT = now; loop(now += 16); loop(now += 16);
+          __c.snap = 0; __c.restore = 0; __c.steps = 0; for (let i = 0; i < 30; i++) { loop(now += 1000 / 60); await new Promise(r => setTimeout(r, 0)); }
+          return { snap: __c.snap, restore: __c.restore, stepsPerFrame: +(__c.steps / 30).toFixed(1), layers: state.layers.length, want: +(2 * (1000 / 60) / 1000 / H_STEP).toFixed(1) }; }""")
+        info['实时 30 帧'] = r
+        if r['snap'] or r['restore']: bad.append(f"实时模拟还在快照 / 恢复：{r}")
+        if r['stepsPerFrame'] > r['want'] * 1.5 + 2: bad.append(f"每帧物理步 {r['stepsPerFrame']}（只往前走应约 {r['want']}）")
+    finally: await b.close()
+    # 回推 vs 精确：单层菊，同一时刻画一格，比像素（真画，不打桩）
+    b, pg, errs = await page(p, opts, stub=False)
+    try:
+        await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()")
+        for _ in range(40):
+            await pg.wait_for_timeout(250)
+            if await pg.evaluate("!window.__opening && !state.baking"): break
+        r = await pg.evaluate("""async () => { window.__gb = 0; const oG = Sim.prototype.gatherBack; Sim.prototype.gatherBack = function (...a) { __gb++; return oG.apply(this, a); };
+          const P = derive({ ...structuredClone(state.P), engine: 'gpu' }), pl = displayPlan40(P), px = 192, q = qualityOf(P);
+          gl.activeTexture(gl.TEXTURE0); const samples = new Target(px * q.ss, px * q.ss, gl.RGBA16F), cell = new Target(px, px, gl.RGBA16F);
+          const read = () => { const a = new Float32Array(px * px * 4); cell.bind(); gl.readPixels(0, 0, px, px, gl.RGBA, gl.FLOAT, a); return a; };
+          const run = fwd => { const R = makeRenderer(P, 'burst'); LIVE_VIEW = fwd; const out = []; try { for (const t of [0.4, 0.4167, 0.4333, 1.2, 1.2167, 1.2333, 1.25]) { renderCell40(P, pl, R, t, samples, cell); out.push(read()); } } finally { LIVE_VIEW = false; R.dispose(); } return out; };
+          const A = run(false), B = run(true); const res = [];
+          for (let i = 0; i < A.length; i++) { const a = A[i], c = B[i]; let sum = 0, n = 0, mx = 0, peak = 0; for (let j = 0; j < a.length; j += 4) { const d = Math.abs(a[j] - c[j]); sum += d; mx = Math.max(mx, d); peak = Math.max(peak, a[j]); if (d > 0.02 * Math.max(peak, 1e-3)) n++; } res.push({ mean: +(sum / (a.length / 4)).toFixed(5), max: +mx.toFixed(4), peak: +peak.toFixed(3), diffFrac: +(n / (a.length / 4)).toFixed(4) }); }
+          samples.dispose(); cell.dispose(); return { res, gb: __gb }; }""")
+        info['回推 vs 精确（星头通道，线性值）'] = r['res']; info['回推次数'] = r['gb']
+        if not r['gb']: bad.append('回推路径没走到')
+        r = r['res']
+        for x in r:
+            if x['diffFrac'] > 0.02 or x['mean'] > 0.004 * max(x['peak'], 1e-3): bad.append(f'回推画出来的星头和精确的差太多：{x}')
+    finally: await b.close()
+    return not bad, bad, info
+
+
 async def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--effects', default='jinmangju,hongchao,hiki_nishiki,qingning,qiuxing_a,qiuxing_d,yongfeng,pianbei')
     ap.add_argument('--base', default='', help='星轨道时间步的基线 json（改之前跑一遍 --dump-base 得到）'); ap.add_argument('--dump-base', default='')
@@ -173,7 +216,7 @@ async def main():
                 try: await open_eff(pg, k); out[k] = [x[3] for x in (await pg.evaluate(FRAMES, 4))['tracks']]
                 finally: await b.close()
             pathlib.Path(a.dump_base).write_text(json.dumps(out)); print('基线', out); return
-        for name, fn in [('M1', lambda: m1(p, opts, a.effects.split(','), base)), ('M2', lambda: m2(p, opts)), ('M3', lambda: m3(p, opts)), ('M4', lambda: m4(p, opts)), ('M5', lambda: m5(p, opts))]:
+        for name, fn in [('M1', lambda: m1(p, opts, a.effects.split(','), base)), ('M2', lambda: m2(p, opts)), ('M3', lambda: m3(p, opts)), ('M4', lambda: m4(p, opts)), ('M5', lambda: m5(p, opts)), ('M6', lambda: m6(p, opts))]:
             if only and name not in only: continue
             try: ok, bad, info = await fn()
             except Exception as e: ok, bad, info = False, [f'异常：{e}'[:300]], {}

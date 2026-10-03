@@ -17,7 +17,7 @@ function frameView40(pl, t) {
 // 现在实时模拟（只有实时模拟）按预算少画几个子样本：预算按实际帧时间自动升降，烘焙中压到最少让出显卡；HUD 写明。
 // 引擎回放、导出、定帧不受影响（LIVE_CAP 只在实时模拟画的时候设）。自动化（检查脚本）默认不压，网址 ?livecap=1 / 0 强制。
 const liveCtl = { auto: null, budget: 12e6, ema: 1 / 60, lastAdj: 0, lastCap: 0, lastFull: 0 };
-let LIVE_CAP = 0;
+let LIVE_CAP = 0, LIVE_VIEW = false;     // LIVE_VIEW：正在画实时模拟（renderLive40 / renderComboLive 设），烘焙 / 定帧 / 引擎回放都不是
 function liveAuto() { if (liveCtl.auto == null) { const q = typeof location !== 'undefined' ? location.search : ''; liveCtl.auto = /[?&]livecap=1/.test(q) ? true : /[?&]livecap=0/.test(q) ? false : !(typeof navigator !== 'undefined' && navigator.webdriver); } return liveCtl.auto; }
 function liveAdapt(now) {
   if (now - liveCtl.lastAdj < 500) return; liveCtl.lastAdj = now;
@@ -39,7 +39,9 @@ function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm) {
   if (LIVE_CAP > 0) { liveCtl.lastFull = Math.max(liveCtl.lastFull, full); liveCtl.lastCap = Math.max(liveCtl.lastCap, count); }
   const oldPPMY = PPMY; PPMY = ppmY; setParticleProfile(P);
   R.subW = width / count;
-  if (R.frameStart && !pl.loop) R.frameStart(Math.max(0, a + .5 * width / count));
+  const fwd = LIVE_VIEW && R.sim && R.sim.noSparks;      // 4.2.22：实时模拟不倒回（见 50_bake.js draw）
+  R.liveFwd = !!fwd;
+  if (R.frameStart && !pl.loop && !fwd) R.frameStart(Math.max(0, a + .5 * width / count));
   try {
     for (let j=0;j<count;j++) {
       const ts = a + (j+.5)*width/count;
@@ -47,7 +49,7 @@ function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm) {
       const tick = Math.floor(ts*240), f = clamp(Math.floor(evalKeys(pl.keys, (t-(pl.t0||0))/pl.duration)),0,pl.L.F-1);
       R.draw(pl.loop ? ts : Math.max(0,ts),view,ppm,1/count,tick,f);
     }
-  } finally { PPMY = oldPPMY; }
+  } finally { PPMY = oldPPMY; R.liveFwd = false; }
   return [a,b];
 }
 function frameFade40(pl, t, noFade = false) {
@@ -134,8 +136,8 @@ function renderLive40() {
       camera=productDisplayView(slot.camera40,sceneView(P,slot.plan40,slot),L.cellW/(2*view[2]),slot.plan40.Ww).view;
     }
   }
-  LIVE_CAP = liveCapFor(trackDraws(R.track, P) + (P.stars || 0) * q.ss);
-  try { renderCell40(PL,timing,R,t,slot.samples40,slot.cell40,view); } finally { LIVE_CAP = 0; }
+  LIVE_CAP = liveCapFor(trackDraws(R.track, P) + (P.stars || 0) * q.ss); LIVE_VIEW = true;
+  try { renderCell40(PL,timing,R,t,slot.samples40,slot.cell40,view); } finally { LIVE_CAP = 0; LIVE_VIEW = false; }
   hdrT.clear(); hdrT.bind(); shadeView40(P,state.M,slot.cell40,t,view,hdrT,camera); post(-1,P);
   hudText=`实时模拟 · ${state.disp==='game'&&camera?'游戏内大小 · '+state.dist+' m · ':''}${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门${liveCapNote()}`;
   hudB='';

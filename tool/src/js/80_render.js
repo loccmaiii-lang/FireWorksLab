@@ -1,6 +1,9 @@
 // ---------------- 渲染 ----------------
+let boxRect = null, boxRectAt = -1e9;
 function ensureTargets() {
-  const box = $('#box').getBoundingClientRect();
+  // 4.2.22：画布大小每 1/4 秒量一次（getBoundingClientRect 每帧强制排版，光这一下 3 ms）；拖栏 / 改窗口时也会在下一个 1/4 秒跟上
+  const now = performance.now(); if (!boxRect || now - boxRectAt > 250) { boxRect = $('#box').getBoundingClientRect(); boxRectAt = now; }
+  const box = boxRect;
   const dpr=devicePixelRatio||1, wide=!!state.showcase&&!state.cloudPreview;
   const size = Math.max(256, Math.min(wide?4096:2048, Math.round(Math.min(box.width, (box.height || box.width)*(wide?2:1)) * dpr / 4) * 4)), height=wide?size/2:size;
   if (canvas.width !== size || canvas.height!==height) { canvas.width = size; canvas.height = height; }
@@ -385,7 +388,7 @@ function renderComboLive() {
   let n = 0;
   // 4.2.20：几层一起算显卡负担，超预算时每层都少画几个快门子样本（见 48_render40.js liveCtl）
   let work = 0; items.forEach(([L, e, i]) => { const age = (state.t - (L.delay || 0)) * (L.rate || 1); if (age < 0 || age > e.P.duration || !layerShown(i)) return; const R = renderVersion(e.P) >= 40 && !isTrail(e.P) && !isPhys(e.P) ? liveRenderer40(liveSlot('combo' + i), e.P) : null; work += R ? trackDraws(R.track, e.P) + (e.P.stars || 0) : 0; });
-  LIVE_CAP = liveCapFor(work);
+  LIVE_CAP = liveCapFor(work); LIVE_VIEW = true;
   try {
   items.forEach(([L, e, i]) => {
     const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = e.P;
@@ -400,7 +403,7 @@ function renderComboLive() {
     gl.uniform1f(pr.u.uEH, m.expoH); gl.uniform1f(pr.u.uET, m.expoT); gl.uniform1f(pr.u.uG, e.bake.P.encGamma || 1); gl.uniform1f(pr.u.uComb, e.bake.P.outMode === 'combined' ? 1 : 0);
     setMatUniforms(pr, L, age); drawQuad(); additive(false); n++;
   });
-  } finally { LIVE_CAP = 0; }
+  } finally { LIVE_CAP = 0; LIVE_VIEW = false; }
   post();
   hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层）${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}${liveCapNote()}`; hudB = '';
 }

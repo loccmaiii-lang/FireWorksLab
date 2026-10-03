@@ -678,7 +678,7 @@ canvas#gl{box-shadow:none}
 .tlb-n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tlb-t{position:relative;height:10px;background:var(--low);border-radius:3px;cursor:pointer}
 .tlb-t i{position:absolute;top:0;bottom:0;background:#1d5a49;border-radius:3px}
-.tlb-ph{position:absolute;top:-2px;bottom:-2px;left:var(--ph);width:2px;background:var(--acc);pointer-events:none}
+.tlb-ph{position:absolute;top:-2px;bottom:-2px;left:0;width:2px;background:var(--acc);pointer-events:none;will-change:transform}
 /* 查看交付 */
 .delivview{flex:1;min-height:0;overflow:auto;background:var(--low);border:1px solid var(--line2);border-radius:7px;padding:12px 14px}
 .dv-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
@@ -1385,7 +1385,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.2.21';
+const VERSION = '4.2.22';
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 const OUTPUT_VER = { master: '4.2.7', emitset: '4.2.2', riseLoop: '4.2.2', trail: '4.0', unit: '4.0', loop: '4.0', v37: '3.7' };
@@ -2554,6 +2554,23 @@ class Sim {
       if (refl > 0 && nt < capT - 1) push(bufT, nt++, x + ripple(y, this.t), -y, I * refl * Math.exp(-y / 400), P.sparkSize * 1.3);
     }
     return [nh, nt];
+  }
+  // 4.2.22 实时模拟专用：不倒回，按「现在的位置 − 速度 × 回看时长 + ½ 加速度 × 时长²」画 back 秒之前的星头（加速度 = 阻力 + 重力，不含风 / 摆动）。
+  // 以前每一帧快门窗口和上一帧重叠，都要从快照倒回去重新走一遍（一帧走 5 倍的物理步，几百颗星时每帧 20 多毫秒，还每帧深拷贝几百颗星 → 垃圾回收一顿一顿）。
+  // 只给实时模拟用；烘焙 / 定帧仍旧精确倒回，产物不变。回看最多几十毫秒，误差远小于一个像素的运动模糊。
+  gatherBack(bufH, bufT, back) {
+    if (!(back > 0)) return this.gather(bufH, bufT);
+    const P = this.P, st = this.stars, n = st.length, sv = new Float64Array(n * 4), gy = -G * P.grav, b2 = 0.5 * back * back;
+    for (let i = 0; i < n; i++) {
+      const s = st[i]; if (!s.alive) continue;
+      const k = i * 4; sv[k] = s.x; sv[k + 1] = s.y; sv[k + 2] = s.z; sv[k + 3] = s.age;
+      let c = s.c; if (P.massLoss > 0 && s.kind !== 5) c /= Math.max(0.15, 1 - P.massLoss * clamp((s.age - s.ign) / Math.max(0.05, (s.mref != null ? s.mref : s.vis != null ? s.vis : s.burn) - s.ign), 0, 1));
+      const v = Math.hypot(s.vx, s.vy, s.vz), ax = -c * v * s.vx, ay = -c * v * s.vy + (s.kind === 5 ? -G : s.grav != null ? -G * s.grav : gy), az = -c * v * s.vz;
+      s.x -= s.vx * back - ax * b2; s.y -= s.vy * back - ay * b2; s.z -= s.vz * back - az * b2; s.age -= back;
+    }
+    const t0 = this.t; this.t -= back;
+    try { return this.gather(bufH, bufT); }
+    finally { this.t = t0; for (let i = 0; i < n; i++) { const s = st[i]; if (!s.alive) continue; const k = i * 4; s.x = sv[k]; s.y = sv[k + 1]; s.z = sv[k + 2]; s.age = sv[k + 3]; } }
   }
   // 快照（4.1.2）：深拷贝全部会变的状态（星、随机数、闪光、事件），P、湍流模态只读共用。
   // 实时模拟相邻两帧的快门窗口重叠，要回到上一帧窗口起点附近：从快照接着算，结果和从 0 算逐位相同。
@@ -5060,7 +5077,7 @@ function frameView40(pl, t) {
 // 现在实时模拟（只有实时模拟）按预算少画几个子样本：预算按实际帧时间自动升降，烘焙中压到最少让出显卡；HUD 写明。
 // 引擎回放、导出、定帧不受影响（LIVE_CAP 只在实时模拟画的时候设）。自动化（检查脚本）默认不压，网址 ?livecap=1 / 0 强制。
 const liveCtl = { auto: null, budget: 12e6, ema: 1 / 60, lastAdj: 0, lastCap: 0, lastFull: 0 };
-let LIVE_CAP = 0;
+let LIVE_CAP = 0, LIVE_VIEW = false;     // LIVE_VIEW：正在画实时模拟（renderLive40 / renderComboLive 设），烘焙 / 定帧 / 引擎回放都不是
 function liveAuto() { if (liveCtl.auto == null) { const q = typeof location !== 'undefined' ? location.search : ''; liveCtl.auto = /[?&]livecap=1/.test(q) ? true : /[?&]livecap=0/.test(q) ? false : !(typeof navigator !== 'undefined' && navigator.webdriver); } return liveCtl.auto; }
 function liveAdapt(now) {
   if (now - liveCtl.lastAdj < 500) return; liveCtl.lastAdj = now;
@@ -5082,7 +5099,9 @@ function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm) {
   if (LIVE_CAP > 0) { liveCtl.lastFull = Math.max(liveCtl.lastFull, full); liveCtl.lastCap = Math.max(liveCtl.lastCap, count); }
   const oldPPMY = PPMY; PPMY = ppmY; setParticleProfile(P);
   R.subW = width / count;
-  if (R.frameStart && !pl.loop) R.frameStart(Math.max(0, a + .5 * width / count));
+  const fwd = LIVE_VIEW && R.sim && R.sim.noSparks;      // 4.2.22：实时模拟不倒回（见 50_bake.js draw）
+  R.liveFwd = !!fwd;
+  if (R.frameStart && !pl.loop && !fwd) R.frameStart(Math.max(0, a + .5 * width / count));
   try {
     for (let j=0;j<count;j++) {
       const ts = a + (j+.5)*width/count;
@@ -5090,7 +5109,7 @@ function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm) {
       const tick = Math.floor(ts*240), f = clamp(Math.floor(evalKeys(pl.keys, (t-(pl.t0||0))/pl.duration)),0,pl.L.F-1);
       R.draw(pl.loop ? ts : Math.max(0,ts),view,ppm,1/count,tick,f);
     }
-  } finally { PPMY = oldPPMY; }
+  } finally { PPMY = oldPPMY; R.liveFwd = false; }
   return [a,b];
 }
 function frameFade40(pl, t, noFade = false) {
@@ -5177,8 +5196,8 @@ function renderLive40() {
       camera=productDisplayView(slot.camera40,sceneView(P,slot.plan40,slot),L.cellW/(2*view[2]),slot.plan40.Ww).view;
     }
   }
-  LIVE_CAP = liveCapFor(trackDraws(R.track, P) + (P.stars || 0) * q.ss);
-  try { renderCell40(PL,timing,R,t,slot.samples40,slot.cell40,view); } finally { LIVE_CAP = 0; }
+  LIVE_CAP = liveCapFor(trackDraws(R.track, P) + (P.stars || 0) * q.ss); LIVE_VIEW = true;
+  try { renderCell40(PL,timing,R,t,slot.samples40,slot.cell40,view); } finally { LIVE_CAP = 0; LIVE_VIEW = false; }
   hdrT.clear(); hdrT.bind(); shadeView40(P,state.M,slot.cell40,t,view,hdrT,camera); post(-1,P);
   hudText=`实时模拟 · ${state.disp==='game'&&camera?'游戏内大小 · '+state.dist+' m · ':''}${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门${liveCapNote()}`;
   hudB='';
@@ -5361,11 +5380,17 @@ function makeRenderer(P, kind) {
     },
     draw(ts, view, ppm, w, tw) {
       setParticleProfile(P);
-      // 按「请求的时刻」判断回退：1/480 s 的物理步可能略超过请求时刻，快门子样本超过 480 Hz 时不能因此每次都从头重算（Ultra 修正）
-      if (ts < lastTs - 1e-6) rewind(ts);
-      lastTs = ts;
-      while (sim.t < ts - 1e-9) sim.step(H_STEP);
-      const [nh, nt] = sim.gather(bufH, bufT), xf = unit ? R.xfAt() : null;
+      // 4.2.22 实时模拟（R.liveFwd，只有 GPU 火花内核）：只往前走，早于现在的子样本按速度回推（Sim.gatherBack），不倒回、不快照
+      let nh, nt;
+      if (R.liveFwd && sim.noSparks && ts < sim.t - 1e-9 && sim.t - ts < 0.35) { lastTs = Math.max(lastTs, ts); [nh, nt] = sim.gatherBack(bufH, bufT, sim.t - ts); }
+      else {
+        // 按「请求的时刻」判断回退：1/480 s 的物理步可能略超过请求时刻，快门子样本超过 480 Hz 时不能因此每次都从头重算（Ultra 修正）
+        if (ts < lastTs - 1e-6) rewind(ts);
+        lastTs = ts;
+        while (sim.t < ts - 1e-9) sim.step(H_STEP);
+        [nh, nt] = sim.gather(bufH, bufT);
+      }
+      const xf = unit ? R.xfAt() : null;
       let l = 0; for (let i = 0; i < nh; i++) l += bufH[i * 4 + 2]; for (let i = 0; i < nt; i++) l += bufT[i * 4 + 2] * 0.3;
       drawPoints(bufH, nh, view, ppm, [1, 0, 0, 0], w, xf);
       if (gpu) drawSparksGPU(track, ts, view, ppm, [0, 1, 0, 0], w, tw, { xf });
@@ -10330,9 +10355,11 @@ function applyCut(P, sp, kind, tl, drag) {
 // 每帧调用（80_render 的主循环）：tick 号、播放头；标题 / 脚注 / 时段条 / 通过门槛每 1/4 秒刷新
 function stageTick(D) {
   $('#vfTick').textContent = `30 fps · tick ${Math.floor(engineTick(Math.min(state.t, D)) * 30 + 1e-6)}`;
-  const host = $('#tlBars'), tr = host.querySelector('.tlb-t');
-  if (tr) host.style.setProperty('--ph', `${tr.offsetLeft + clamp(state.t / D, 0, 1) * tr.offsetWidth}px`);
-  const now = performance.now(); if (now - stage2.last < 250) return; stage2.last = now;
+  // 4.2.22 播放头：轨道的位置每 1/4 秒量一次（offsetLeft 每帧强制排版），播放头用 transform 挪（不触发排版）
+  const now = performance.now(), host = $('#tlBars'), ph = host.querySelector('.tlb-ph');
+  if (ph && (!stage2.trBox || now - stage2.last >= 250)) { const tr = host.querySelector('.tlb-t'); stage2.trBox = tr ? [tr.offsetLeft, tr.offsetWidth] : null; }
+  if (ph && stage2.trBox) ph.style.transform = `translateX(${(stage2.trBox[0] + clamp(state.t / D, 0, 1) * stage2.trBox[1]).toFixed(1)}px)`;
+  if (now - stage2.last < 250) return; stage2.last = now;
   $('#vfTitle').textContent = `${srcLabel() || (lib.key === 'combo' ? '组合编辑器' : '')}${srcLabel() ? ' · ' : ''}${state.tab === 'asset' ? '贴图回放' : VIEW_NAMES[state.view] || ''}${scopeLabel()}`;
   $('#vfSpec').textContent = state.tab === 'asset' ? '' : specLabel();
   buildTlBars(); syncGate();
@@ -10488,8 +10515,11 @@ function initStage() {
   });
 }
 // ---------------- 渲染 ----------------
+let boxRect = null, boxRectAt = -1e9;
 function ensureTargets() {
-  const box = $('#box').getBoundingClientRect();
+  // 4.2.22：画布大小每 1/4 秒量一次（getBoundingClientRect 每帧强制排版，光这一下 3 ms）；拖栏 / 改窗口时也会在下一个 1/4 秒跟上
+  const now = performance.now(); if (!boxRect || now - boxRectAt > 250) { boxRect = $('#box').getBoundingClientRect(); boxRectAt = now; }
+  const box = boxRect;
   const dpr=devicePixelRatio||1, wide=!!state.showcase&&!state.cloudPreview;
   const size = Math.max(256, Math.min(wide?4096:2048, Math.round(Math.min(box.width, (box.height || box.width)*(wide?2:1)) * dpr / 4) * 4)), height=wide?size/2:size;
   if (canvas.width !== size || canvas.height!==height) { canvas.width = size; canvas.height = height; }
@@ -10874,7 +10904,7 @@ function renderComboLive() {
   let n = 0;
   // 4.2.20：几层一起算显卡负担，超预算时每层都少画几个快门子样本（见 48_render40.js liveCtl）
   let work = 0; items.forEach(([L, e, i]) => { const age = (state.t - (L.delay || 0)) * (L.rate || 1); if (age < 0 || age > e.P.duration || !layerShown(i)) return; const R = renderVersion(e.P) >= 40 && !isTrail(e.P) && !isPhys(e.P) ? liveRenderer40(liveSlot('combo' + i), e.P) : null; work += R ? trackDraws(R.track, e.P) + (e.P.stars || 0) : 0; });
-  LIVE_CAP = liveCapFor(work);
+  LIVE_CAP = liveCapFor(work); LIVE_VIEW = true;
   try {
   items.forEach(([L, e, i]) => {
     const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = e.P;
@@ -10889,7 +10919,7 @@ function renderComboLive() {
     gl.uniform1f(pr.u.uEH, m.expoH); gl.uniform1f(pr.u.uET, m.expoT); gl.uniform1f(pr.u.uG, e.bake.P.encGamma || 1); gl.uniform1f(pr.u.uComb, e.bake.P.outMode === 'combined' ? 1 : 0);
     setMatUniforms(pr, L, age); drawQuad(); additive(false); n++;
   });
-  } finally { LIVE_CAP = 0; }
+  } finally { LIVE_CAP = 0; LIVE_VIEW = false; }
   post();
   hudText = `${state.comboName} · 实时模拟 · ${items.length} 层（画面里 ${n} 层）${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}${liveCapNote()}`; hudB = '';
 }

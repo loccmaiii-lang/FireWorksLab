@@ -1,0 +1,11 @@
+{
+ "id": "SMOKE18",
+ "type": "smoke",
+ "tijian": true,
+ "tijian_only": "ef:",
+ "tijian_cap": true,
+ "tijian_limit": 40,
+ "name": "4.2.22 复核：实时模拟不再每帧倒回重算——和 SMOKE16 / 17 同样的量法",
+ "priority": 11,
+ "note": "用户 18:59 笔记本上 4.2.20 还一顿一顿；云端量到是 CPU：每帧倒回重走快门窗口（5 倍物理步）+ 每帧深拷贝几百颗星 → 垃圾回收停顿。4.2.22 实时模拟只往前走、回推星头。条目体检.py --real --cap --only ef:，对照 analysis/results/SMOKE16/看法.md 的表（鸿巢 实时 18/36、永丰 35/160、片贝 53/551）。不改东西。对话框2。"
+}

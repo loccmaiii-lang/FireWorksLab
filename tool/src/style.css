@@ -671,7 +671,7 @@ canvas#gl{box-shadow:none}
 .tlb-n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tlb-t{position:relative;height:10px;background:var(--low);border-radius:3px;cursor:pointer}
 .tlb-t i{position:absolute;top:0;bottom:0;background:#1d5a49;border-radius:3px}
-.tlb-ph{position:absolute;top:-2px;bottom:-2px;left:var(--ph);width:2px;background:var(--acc);pointer-events:none}
+.tlb-ph{position:absolute;top:-2px;bottom:-2px;left:0;width:2px;background:var(--acc);pointer-events:none;will-change:transform}
 /* 查看交付 */
 .delivview{flex:1;min-height:0;overflow:auto;background:var(--low);border:1px solid var(--line2);border-radius:7px;padding:12px 14px}
 .dv-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}

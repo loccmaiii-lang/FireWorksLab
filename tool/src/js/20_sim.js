@@ -392,6 +392,23 @@ class Sim {
     }
     return [nh, nt];
   }
+  // 4.2.22 实时模拟专用：不倒回，按「现在的位置 − 速度 × 回看时长 + ½ 加速度 × 时长²」画 back 秒之前的星头（加速度 = 阻力 + 重力，不含风 / 摆动）。
+  // 以前每一帧快门窗口和上一帧重叠，都要从快照倒回去重新走一遍（一帧走 5 倍的物理步，几百颗星时每帧 20 多毫秒，还每帧深拷贝几百颗星 → 垃圾回收一顿一顿）。
+  // 只给实时模拟用；烘焙 / 定帧仍旧精确倒回，产物不变。回看最多几十毫秒，误差远小于一个像素的运动模糊。
+  gatherBack(bufH, bufT, back) {
+    if (!(back > 0)) return this.gather(bufH, bufT);
+    const P = this.P, st = this.stars, n = st.length, sv = new Float64Array(n * 4), gy = -G * P.grav, b2 = 0.5 * back * back;
+    for (let i = 0; i < n; i++) {
+      const s = st[i]; if (!s.alive) continue;
+      const k = i * 4; sv[k] = s.x; sv[k + 1] = s.y; sv[k + 2] = s.z; sv[k + 3] = s.age;
+      let c = s.c; if (P.massLoss > 0 && s.kind !== 5) c /= Math.max(0.15, 1 - P.massLoss * clamp((s.age - s.ign) / Math.max(0.05, (s.mref != null ? s.mref : s.vis != null ? s.vis : s.burn) - s.ign), 0, 1));
+      const v = Math.hypot(s.vx, s.vy, s.vz), ax = -c * v * s.vx, ay = -c * v * s.vy + (s.kind === 5 ? -G : s.grav != null ? -G * s.grav : gy), az = -c * v * s.vz;
+      s.x -= s.vx * back - ax * b2; s.y -= s.vy * back - ay * b2; s.z -= s.vz * back - az * b2; s.age -= back;
+    }
+    const t0 = this.t; this.t -= back;
+    try { return this.gather(bufH, bufT); }
+    finally { this.t = t0; for (let i = 0; i < n; i++) { const s = st[i]; if (!s.alive) continue; const k = i * 4; s.x = sv[k]; s.y = sv[k + 1]; s.z = sv[k + 2]; s.age = sv[k + 3]; } }
+  }
   // 快照（4.1.2）：深拷贝全部会变的状态（星、随机数、闪光、事件），P、湍流模态只读共用。
   // 实时模拟相邻两帧的快门窗口重叠，要回到上一帧窗口起点附近：从快照接着算，结果和从 0 算逐位相同。
   // CPU 火花引擎（几十万粒火花的数组）不做快照，照旧从头算。

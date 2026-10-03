@@ -616,9 +616,11 @@ function applyCut(P, sp, kind, tl, drag) {
 // 每帧调用（80_render 的主循环）：tick 号、播放头；标题 / 脚注 / 时段条 / 通过门槛每 1/4 秒刷新
 function stageTick(D) {
   $('#vfTick').textContent = `30 fps · tick ${Math.floor(engineTick(Math.min(state.t, D)) * 30 + 1e-6)}`;
-  const host = $('#tlBars'), tr = host.querySelector('.tlb-t');
-  if (tr) host.style.setProperty('--ph', `${tr.offsetLeft + clamp(state.t / D, 0, 1) * tr.offsetWidth}px`);
-  const now = performance.now(); if (now - stage2.last < 250) return; stage2.last = now;
+  // 4.2.22 播放头：轨道的位置每 1/4 秒量一次（offsetLeft 每帧强制排版），播放头用 transform 挪（不触发排版）
+  const now = performance.now(), host = $('#tlBars'), ph = host.querySelector('.tlb-ph');
+  if (ph && (!stage2.trBox || now - stage2.last >= 250)) { const tr = host.querySelector('.tlb-t'); stage2.trBox = tr ? [tr.offsetLeft, tr.offsetWidth] : null; }
+  if (ph && stage2.trBox) ph.style.transform = `translateX(${(stage2.trBox[0] + clamp(state.t / D, 0, 1) * stage2.trBox[1]).toFixed(1)}px)`;
+  if (now - stage2.last < 250) return; stage2.last = now;
   $('#vfTitle').textContent = `${srcLabel() || (lib.key === 'combo' ? '组合编辑器' : '')}${srcLabel() ? ' · ' : ''}${state.tab === 'asset' ? '贴图回放' : VIEW_NAMES[state.view] || ''}${scopeLabel()}`;
   $('#vfSpec').textContent = state.tab === 'asset' ? '' : specLabel();
   buildTlBars(); syncGate();

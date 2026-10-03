@@ -41,11 +41,17 @@ function makeRenderer(P, kind) {
     },
     draw(ts, view, ppm, w, tw) {
       setParticleProfile(P);
-      // 按「请求的时刻」判断回退：1/480 s 的物理步可能略超过请求时刻，快门子样本超过 480 Hz 时不能因此每次都从头重算（Ultra 修正）
-      if (ts < lastTs - 1e-6) rewind(ts);
-      lastTs = ts;
-      while (sim.t < ts - 1e-9) sim.step(H_STEP);
-      const [nh, nt] = sim.gather(bufH, bufT), xf = unit ? R.xfAt() : null;
+      // 4.2.22 实时模拟（R.liveFwd，只有 GPU 火花内核）：只往前走，早于现在的子样本按速度回推（Sim.gatherBack），不倒回、不快照
+      let nh, nt;
+      if (R.liveFwd && sim.noSparks && ts < sim.t - 1e-9 && sim.t - ts < 0.35) { lastTs = Math.max(lastTs, ts); [nh, nt] = sim.gatherBack(bufH, bufT, sim.t - ts); }
+      else {
+        // 按「请求的时刻」判断回退：1/480 s 的物理步可能略超过请求时刻，快门子样本超过 480 Hz 时不能因此每次都从头重算（Ultra 修正）
+        if (ts < lastTs - 1e-6) rewind(ts);
+        lastTs = ts;
+        while (sim.t < ts - 1e-9) sim.step(H_STEP);
+        [nh, nt] = sim.gather(bufH, bufT);
+      }
+      const xf = unit ? R.xfAt() : null;
       let l = 0; for (let i = 0; i < nh; i++) l += bufH[i * 4 + 2]; for (let i = 0; i < nt; i++) l += bufT[i * 4 + 2] * 0.3;
       drawPoints(bufH, nh, view, ppm, [1, 0, 0, 0], w, xf);
       if (gpu) drawSparksGPU(track, ts, view, ppm, [0, 1, 0, 0], w, tw, { xf });
