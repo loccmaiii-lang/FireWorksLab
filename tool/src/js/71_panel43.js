@@ -27,7 +27,7 @@ function randBaseOf(key, keys) { const b = RAND_OF[key] || (/Jit$/.test(key) ? k
 const isCarrierType = P => P.type === 'senrin' || P.type === 'crossette';
 const SPARK_KEYS = ['sparkRateEnd', 'sparkStop', 'sparkStart', 'sparkRamp', 'sparkRampJit', 'sparkLife', 'sparkLifeEnd', 'sparkLifeJit', 'sparkSpread', 'sparkSize', 'sparkInherit', 'sparkDrag', 'sparkGrav',
   'T0', 'cooling', 'sparkBright', 'twinkle', 'emberFrac', 'tailJit', 'tailShoulder', 'tailWidth', 'tailPinchHead', 'tailPinchTail', 'tailBellyAt', 'sparkRise', 'starBright', 'tailHaze', 'tailHazeR', 'branch', 'branchAt', 'tailDiffuse', 'tailDiffuseScale'];
-// 不起作用的条件（空中类）：[键, 条件, 原因]。依据：analysis/probe/参数有效性/（拨了曲线 / 帧计划都不变）+ 代码（20_sim.js、40_gl.js）
+// 不起作用的条件（空中类）：[键, 条件, 原因]。依据：analysis/probe/参数有效性/（云端：拨了曲线 / 帧计划都不变）+ analysis/results/SMOKE15/参数有效性/（本机：再加 4 个时刻的定帧画面也不变）+ 代码（20_sim.js、40_gl.js）
 const INERT = [
   [['ignJit', 'ignSeed'], P => !(+P.ignDelay > 0) && !isCarrierType(P), '「延时点火」是 0 时不起作用（随机的是延时点火的长短）'],
   [['headDim'], P => +P.headDim < 1 && !(+P.headDimUntil > 0), '「压暗结束时刻」是 0 时不起作用：先设压暗到第几秒'],
@@ -36,6 +36,7 @@ const INERT = [
   [['sparkRate'], P => isCarrierType(P), '千轮 / 分裂：子弹的火花看「子弹火花生成率」，子星的火花看「子星火花生成率」；这一项不起作用'],
   [SPARK_KEYS, P => !isCarrierType(P) && !(+P.sparkRate > 0), '「火花生成速率」是 0（这一层没有火花）时不起作用'],
   [SPARK_KEYS, P => isCarrierType(P) && !(+P.carrierTail > 0) && !(+P.subTail > 0), '子弹、子星的火花生成率都是 0（这一层没有火花）时不起作用'],
+  [['emberAll'], P => !(+P.sparkStop > 0), '「火花停止时刻」是 0 时不起作用（火花本来就全程都有，余烬也一样）'],
   [['fade', 'lastFlare', 'flicker', 'headSize', 'headTear', 'headDim', 'headDimUntil', 'strobeHz', 'strobeDuty', 'strobeStart', 'carrierHead'], P => !(+P.headBright > 0), '「星头亮度」是 0（星头不发光，只有尾迹 / 火花）时不起作用'],
 ];
 function inertWhy(key, P) {
