@@ -1,0 +1,806 @@
+[
+ {
+  "key": "ef:qiuxing_b",
+  "name": "球形B（两发 + 开花药火粉光丝）",
+  "sec": 300.1,
+  "timeout": true,
+  "pageErrors": [],
+  "tab": "combo",
+  "layers": 3,
+  "frames": 159,
+  "pages": 3,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 2.99,
+  "err": null,
+  "bakeErr": null,
+  "openS": 3.05,
+  "bakeMs": [
+   42,
+   382,
+   56
+  ],
+  "pace": {
+   "waits": 12,
+   "waitS": 0.9,
+   "budgetM": 0.4,
+   "rateM": 0.04
+  },
+  "liveBaking": {
+   "frames": 78,
+   "medMs": 18,
+   "p90Ms": 54
+  },
+  "liveBakingCap": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "status": "超时"
+ },
+ {
+  "key": "ef:jinmangju",
+  "name": "金芒菊",
+  "sec": 12.5,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "master",
+  "layers": 1,
+  "frames": 64,
+  "pages": 1,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 4.56,
+  "err": null,
+  "bakeErr": null,
+  "openS": 0.03,
+  "bakeMs": [
+   386
+  ],
+  "pace": {
+   "waits": 38,
+   "waitS": 0.6,
+   "budgetM": 23,
+   "rateM": 1.92
+  },
+  "liveBaking": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "liveBakingCap": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "live": {
+   "frames": 142,
+   "medMs": 17.6,
+   "p90Ms": 18.1
+  },
+  "liveCap": {
+   "frames": 141,
+   "medMs": 18,
+   "p90Ms": 18.1,
+   "budget": 143051147.4609375,
+   "cap": [
+    16,
+    16
+   ]
+  },
+  "status": "ok"
+ },
+ {
+  "key": "ef:trail_phys",
+  "name": "升空尾缀 · 循环层 + 粒子 小 / 中 / 大",
+  "sec": 12.6,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "master",
+  "layers": 1,
+  "frames": 64,
+  "pages": 1,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 9.1,
+  "err": null,
+  "bakeErr": null,
+  "openS": 0.03,
+  "bakeMs": [
+   1153
+  ],
+  "pace": {
+   "waits": 2,
+   "waitS": 0,
+   "budgetM": 0.2,
+   "rateM": 0.01
+  },
+  "liveBaking": {
+   "frames": 84,
+   "medMs": 18,
+   "p90Ms": 70.6
+  },
+  "liveBakingCap": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "live": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "liveCap": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1,
+   "budget": 143051147.4609375,
+   "cap": [
+    16,
+    16
+   ]
+  },
+  "status": "ok"
+ },
+ {
+  "key": "ef:qingning",
+  "name": "青柠星",
+  "sec": 12.6,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "combo",
+  "layers": 2,
+  "frames": 128,
+  "pages": 2,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 5.12,
+  "err": null,
+  "bakeErr": null,
+  "openS": 1.64,
+  "bakeMs": [
+   263,
+   93
+  ],
+  "pace": {
+   "waits": 55,
+   "waitS": 0.6,
+   "budgetM": 18.6,
+   "rateM": 1.55
+  },
+  "liveBaking": {
+   "frames": 134,
+   "medMs": 18,
+   "p90Ms": 18.1
+  },
+  "liveBakingCap": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "live": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "liveCap": {
+   "frames": 140,
+   "medMs": 17.9,
+   "p90Ms": 18.1,
+   "budget": 143051147.4609375,
+   "cap": [
+    16,
+    16
+   ]
+  },
+  "status": "ok"
+ },
+ {
+  "key": "ef:hongchao",
+  "name": "鸿巢四尺玉",
+  "sec": 13.3,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "combo",
+  "layers": 2,
+  "frames": 192,
+  "pages": 3,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 12,
+  "err": null,
+  "bakeErr": null,
+  "openS": 6.18,
+  "bakeMs": [
+   1447,
+   1846,
+   275
+  ],
+  "pace": {
+   "waits": 241,
+   "waitS": 3,
+   "budgetM": 0.2,
+   "rateM": 0.01
+  },
+  "liveBaking": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "liveBakingCap": {
+   "frames": 105,
+   "medMs": 18,
+   "p90Ms": 18.1
+  },
+  "live": {
+   "frames": 95,
+   "medMs": 18.1,
+   "p90Ms": 35.9
+  },
+  "liveCap": {
+   "frames": 104,
+   "medMs": 18,
+   "p90Ms": 35.7,
+   "budget": 58593750,
+   "cap": [
+    16,
+    16
+   ]
+  },
+  "status": "ok"
+ },
+ {
+  "key": "ef:hiki_nishiki",
+  "name": "引菊 → 锦（橙色直线菊转金锦，尾缀3.0_A 主层）",
+  "sec": 21.0,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "combo",
+  "layers": 2,
+  "frames": 117,
+  "pages": 2,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 7.5,
+  "err": null,
+  "bakeErr": null,
+  "openS": 14.41,
+  "bakeMs": [
+   3280,
+   4010
+  ],
+  "pace": {
+   "waits": 127,
+   "waitS": 12.5,
+   "budgetM": 25.2,
+   "rateM": 2.1
+  },
+  "liveBaking": {
+   "frames": 84,
+   "medMs": 34.8,
+   "p90Ms": 52.5
+  },
+  "liveBakingCap": {
+   "frames": 85,
+   "medMs": 18.2,
+   "p90Ms": 52.9
+  },
+  "live": {
+   "frames": 138,
+   "medMs": 18,
+   "p90Ms": 18.1
+  },
+  "liveCap": {
+   "frames": 140,
+   "medMs": 18,
+   "p90Ms": 18.1,
+   "budget": 143051147.4609375,
+   "cap": [
+    16,
+    16
+   ]
+  },
+  "status": "ok"
+ },
+ {
+  "key": "ef:qiuxing_a",
+  "name": "球形A（三层变色菊）",
+  "sec": 55.7,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "combo",
+  "layers": 2,
+  "frames": 128,
+  "pages": 2,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 4.81,
+  "err": null,
+  "bakeErr": null,
+  "openS": 49.02,
+  "bakeMs": [
+   23421,
+   86
+  ],
+  "pace": {
+   "waits": 873,
+   "waitS": 47.4,
+   "budgetM": 0.4,
+   "rateM": 0.04
+  },
+  "liveBaking": {
+   "frames": 134,
+   "medMs": 18,
+   "p90Ms": 18.1
+  },
+  "liveBakingCap": {
+   "frames": 123,
+   "medMs": 18,
+   "p90Ms": 35.4
+  },
+  "live": {
+   "frames": 73,
+   "medMs": 18.1,
+   "p90Ms": 70.4
+  },
+  "liveCap": {
+   "frames": 132,
+   "medMs": 18,
+   "p90Ms": 18.1,
+   "budget": 143051147.4609375,
+   "cap": [
+    2,
+    16
+   ]
+  },
+  "status": "ok"
+ },
+ {
+  "key": "ef:qiuxing_c",
+  "name": "球形C（青柠芯 + 延时点火外层）",
+  "sec": 12.5,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "combo",
+  "layers": 2,
+  "frames": 128,
+  "pages": 2,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 5.2,
+  "err": null,
+  "bakeErr": null,
+  "openS": 1.12,
+  "bakeMs": [
+   113,
+   116
+  ],
+  "pace": {
+   "waits": 15,
+   "waitS": 0.1,
+   "budgetM": 14.1,
+   "rateM": 1.18
+  },
+  "liveBaking": {
+   "frames": 135,
+   "medMs": 18,
+   "p90Ms": 18.1
+  },
+  "liveBakingCap": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "live": {
+   "frames": 141,
+   "medMs": 18,
+   "p90Ms": 18.1
+  },
+  "liveCap": {
+   "frames": 140,
+   "medMs": 17.9,
+   "p90Ms": 18.1,
+   "budget": 143051147.4609375,
+   "cap": [
+    16,
+    16
+   ]
+  },
+  "status": "ok"
+ },
+ {
+  "key": "ef:qiuxing_d",
+  "name": "球形D（橙芯 + 四段变色外层）",
+  "sec": 12.5,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "combo",
+  "layers": 3,
+  "frames": 237,
+  "pages": 4,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 7.5,
+  "err": null,
+  "bakeErr": null,
+  "openS": 4.21,
+  "bakeMs": [
+   134,
+   237,
+   216,
+   148
+  ],
+  "pace": {
+   "waits": 137,
+   "waitS": 1,
+   "budgetM": 25.3,
+   "rateM": 2.11
+  },
+  "liveBaking": {
+   "frames": 120,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "liveBakingCap": {
+   "frames": 127,
+   "medMs": 18,
+   "p90Ms": 18.1
+  },
+  "live": {
+   "frames": 139,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "liveCap": {
+   "frames": 139,
+   "medMs": 17.9,
+   "p90Ms": 18.1,
+   "budget": 143051147.4609375,
+   "cap": [
+    16,
+    16
+   ]
+  },
+  "status": "ok"
+ },
+ {
+  "key": "ef:wancai",
+  "name": "万彩千轮",
+  "sec": 12.5,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "combo",
+  "layers": 4,
+  "frames": 253,
+  "pages": 4,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 3,
+  "err": null,
+  "bakeErr": null,
+  "openS": 1.17,
+  "bakeMs": [
+   68,
+   68,
+   79,
+   65
+  ],
+  "pace": {
+   "waits": 8,
+   "waitS": 0.1,
+   "budgetM": 0.4,
+   "rateM": 0.03
+  },
+  "liveBaking": {
+   "frames": 136,
+   "medMs": 17.8,
+   "p90Ms": 18.1
+  },
+  "liveBakingCap": {
+   "frames": 140,
+   "medMs": 18,
+   "p90Ms": 18.1
+  },
+  "live": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "liveCap": {
+   "frames": 141,
+   "medMs": 18,
+   "p90Ms": 18.1,
+   "budget": 114440917.96875,
+   "cap": [
+    6,
+    6
+   ]
+  },
+  "status": "ok"
+ },
+ {
+  "key": "ef:yongfeng",
+  "name": "永丰三重蕊",
+  "sec": 17.0,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "combo",
+  "layers": 5,
+  "frames": 501,
+  "pages": 8,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 10.02,
+  "err": null,
+  "bakeErr": null,
+  "openS": 10.15,
+  "bakeMs": [
+   129,
+   122,
+   118,
+   89,
+   1442,
+   73,
+   65,
+   64
+  ],
+  "pace": {
+   "waits": 371,
+   "waitS": 4,
+   "budgetM": 13.1,
+   "rateM": 1.1
+  },
+  "liveBaking": {
+   "frames": 132,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "liveBakingCap": {
+   "frames": 142,
+   "medMs": 17.6,
+   "p90Ms": 18
+  },
+  "live": {
+   "frames": 118,
+   "medMs": 18,
+   "p90Ms": 35.7
+  },
+  "liveCap": {
+   "frames": 138,
+   "medMs": 18,
+   "p90Ms": 18.2,
+   "budget": 143051147.4609375,
+   "cap": [
+    16,
+    16
+   ]
+  },
+  "status": "ok"
+ },
+ {
+  "key": "ef:pianbei",
+  "name": "片贝四尺玉",
+  "sec": 193.3,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "combo",
+  "layers": 5,
+  "frames": 448,
+  "pages": 7,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 13,
+  "err": null,
+  "bakeErr": null,
+  "openS": 185.55,
+  "bakeMs": [
+   620,
+   538,
+   206,
+   121,
+   180,
+   37383,
+   37929
+  ],
+  "pace": {
+   "waits": 2002,
+   "waitS": 173.4,
+   "budgetM": 8,
+   "rateM": null
+  },
+  "liveBaking": {
+   "frames": 114,
+   "medMs": 18,
+   "p90Ms": 35.3
+  },
+  "liveBakingCap": {
+   "frames": 114,
+   "medMs": 18,
+   "p90Ms": 18.5
+  },
+  "live": {
+   "frames": 48,
+   "medMs": 36.2,
+   "p90Ms": 89.8
+  },
+  "liveCap": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1,
+   "budget": 54931640.625,
+   "cap": [
+    2,
+    16
+   ]
+  },
+  "status": "ok"
+ },
+ {
+  "key": "ef:qixi",
+  "name": "七夕缘梦",
+  "sec": 227.4,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "combo",
+  "layers": 5,
+  "frames": 448,
+  "pages": 7,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 13,
+  "err": null,
+  "bakeErr": null,
+  "openS": 0.02,
+  "bakeMs": [
+   620,
+   538,
+   295,
+   121,
+   180,
+   97023,
+   126509
+  ],
+  "pace": {
+   "waits": 747,
+   "waitS": 217,
+   "budgetM": 25.2,
+   "rateM": 2.1
+  },
+  "liveBaking": {
+   "frames": 39,
+   "medMs": 53.8,
+   "p90Ms": 89.7
+  },
+  "liveBakingCap": {
+   "frames": 116,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "live": {
+   "frames": 41,
+   "medMs": 53.6,
+   "p90Ms": 88.8
+  },
+  "liveCap": {
+   "frames": 132,
+   "medMs": 18,
+   "p90Ms": 18.1,
+   "budget": 54931640.625,
+   "cap": [
+    4,
+    16
+   ]
+  },
+  "status": "ok"
+ },
+ {
+  "key": "ef:v3_new",
+  "name": "3.0 新花型等（十六寸、四色牡丹霹雳蕊、鬼怒川、千轮A、纪北町、地面扇形）",
+  "sec": 12.5,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "combo",
+  "layers": 5,
+  "frames": 448,
+  "pages": 7,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 13,
+  "err": null,
+  "bakeErr": null,
+  "openS": 0.02,
+  "bakeMs": [
+   620,
+   538,
+   295,
+   121,
+   180,
+   97023,
+   126509
+  ],
+  "pace": {
+   "waits": 0,
+   "waitS": 0,
+   "budgetM": 25.2,
+   "rateM": 2.1
+  },
+  "liveBaking": {
+   "frames": 41,
+   "medMs": 53.7,
+   "p90Ms": 88.5
+  },
+  "liveBakingCap": {
+   "frames": 120,
+   "medMs": 17.7,
+   "p90Ms": 18.1
+  },
+  "live": {
+   "frames": 42,
+   "medMs": 53.5,
+   "p90Ms": 89.4
+  },
+  "liveCap": {
+   "frames": 134,
+   "medMs": 17.7,
+   "p90Ms": 18.1,
+   "budget": 54931640.625,
+   "cap": [
+    4,
+    16
+   ]
+  },
+  "status": "ok"
+ },
+ {
+  "key": "ef:trail_v5",
+  "name": "升空尾缀 小 / 中 / 大（V5）",
+  "sec": 12.5,
+  "timeout": false,
+  "pageErrors": [],
+  "tab": "master",
+  "layers": 1,
+  "frames": 64,
+  "pages": 1,
+  "missing": 0,
+  "measureS": 0,
+  "duration": 8.92,
+  "err": null,
+  "bakeErr": null,
+  "openS": 0.03,
+  "bakeMs": [
+   202
+  ],
+  "pace": {
+   "waits": 0,
+   "waitS": 0,
+   "budgetM": 8,
+   "rateM": null
+  },
+  "liveBaking": {
+   "frames": 141,
+   "medMs": 18,
+   "p90Ms": 18.1
+  },
+  "liveBakingCap": {
+   "frames": 141,
+   "medMs": 17.8,
+   "p90Ms": 18.1
+  },
+  "live": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1
+  },
+  "liveCap": {
+   "frames": 141,
+   "medMs": 17.7,
+   "p90Ms": 18.1,
+   "budget": 143051147.4609375,
+   "cap": [
+    4,
+    16
+   ]
+  },
+  "status": "ok"
+ }
+]
