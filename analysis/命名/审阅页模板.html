@@ -1,0 +1,266 @@
+<title>烘焙器参数命名</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<style>
+/* 布局：上面一条固定的筛选栏（产品 / 模块 / 标签 / 状态 / 搜索 + 进度），下面是逐条审阅的列表；每条两行：名字一行可直接改，下一行是悬停第一行的预览，细节点开看 */
+:root {
+  --bg: #f3f5f4; --panel: #ffffff; --panel2: #eaefed; --line: #d3dcd8; --text: #18211e; --dim: #56635e; --faint: #87938e;
+  --acc: #007a5a; --accSoft: #d6efe6; --ok: #1f7a3d; --okSoft: #dcefe1; --chg: #9a5b00; --chgSoft: #f6e8cc; --cmt: #2f5f9e; --cmtSoft: #dde7f5;
+  --t-gen: #4b6b62; --t-own: #8a4fa0; --t-fw: #b0571f; --t-out: #4d5f86;
+  --sans: "Noto Sans SC", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1d2223; --panel: #252b2c; --panel2: #2d3536; --line: #3a4446; --text: #e2e8e6; --dim: #a9b5b2; --faint: #7c8a87;
+  --acc: #2fd3a0; --accSoft: #17392f; --ok: #6fd28d; --okSoft: #1d3a26; --chg: #f0b45a; --chgSoft: #3d3016; --cmt: #8fb4ec; --cmtSoft: #1f2c40;
+  --t-gen: #93b5aa; --t-own: #cf9be0; --t-fw: #f0a173; --t-out: #a4b4dc; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #1d2223; --panel: #252b2c; --panel2: #2d3536; --line: #3a4446; --text: #e2e8e6; --dim: #a9b5b2; --faint: #7c8a87;
+  --acc: #2fd3a0; --accSoft: #17392f; --ok: #6fd28d; --okSoft: #1d3a26; --chg: #f0b45a; --chgSoft: #3d3016; --cmt: #8fb4ec; --cmtSoft: #1f2c40;
+  --t-gen: #93b5aa; --t-own: #cf9be0; --t-fw: #f0a173; --t-out: #a4b4dc; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.55; margin: 0; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 18px 60px; }
+h1 { font-size: 21px; font-weight: 700; margin: 0; text-wrap: balance; letter-spacing: .01em; }
+.lede { color: var(--dim); margin: 6px 0 0; max-width: 72ch; }
+.how { margin-top: 12px; border: 1px solid var(--line); background: var(--panel); border-radius: 8px; }
+.how summary { cursor: pointer; padding: 9px 12px; font-weight: 500; }
+.how .body { padding: 0 14px 12px; color: var(--dim); display: grid; gap: 6px; }
+.how .body p { margin: 0; max-width: 80ch; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px 8px; border-bottom: 1px solid var(--line); margin-top: 12px; display: grid; gap: 8px; }
+.row1, .row2 { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.fam { display: flex; flex-wrap: wrap; gap: 4px; }
+.fam button, .chip, .btn { font: inherit; font-size: 13px; border: 1px solid var(--line); background: var(--panel); color: var(--text); border-radius: 6px; padding: 4px 9px; cursor: pointer; }
+.fam button[aria-pressed="true"] { background: var(--acc); color: var(--panel); border-color: var(--acc); font-weight: 500; }
+.chip[aria-pressed="false"] { opacity: .45; }
+select, input[type=search] { font: inherit; font-size: 13px; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; min-width: 0; }
+input[type=search] { flex: 1 1 200px; }
+.prog { margin-left: auto; color: var(--dim); font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.prog b { color: var(--text); font-weight: 500; }
+.meter { height: 4px; background: var(--panel2); border-radius: 2px; overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--acc); width: 0; transition: width .3s; }
+.save { font-size: 12px; color: var(--faint); }
+.list { display: grid; gap: 0; margin-top: 6px; }
+.grp { font-size: 12px; letter-spacing: .06em; color: var(--faint); padding: 14px 4px 4px; border-bottom: 1px solid var(--line); }
+.grp b { color: var(--dim); font-weight: 500; letter-spacing: 0; font-size: 13px; }
+.it { border-bottom: 1px solid var(--line); padding: 8px 4px 9px 12px; position: relative; display: grid; gap: 4px; }
+.it::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 2px; background: transparent; }
+.it.ok::before { background: var(--ok); } .it.chg::before { background: var(--chg); } .it.cmt::before { background: var(--cmt); }
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.old { color: var(--faint); font-size: 13px; text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--faint) 55%, transparent); max-width: 22ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.arrow { color: var(--faint); }
+.cn { font: inherit; font-weight: 700; font-size: 15px; color: var(--text); background: transparent; border: 1px solid transparent; border-radius: 5px; padding: 1px 6px; width: 13ch; }
+.en { font-family: var(--mono); font-size: 12.5px; color: var(--dim); background: transparent; border: 1px solid transparent; border-radius: 5px; padding: 2px 6px; width: 30ch; max-width: 100%; }
+.cn:hover, .en:hover, .cn:focus, .en:focus { border-color: var(--line); background: var(--panel); outline: none; }
+.cn:focus-visible, .en:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 2px solid var(--acc); outline-offset: 1px; }
+.edited { background: var(--chgSoft) !important; }
+.mod { font-size: 12px; color: var(--dim); background: var(--panel2); border-radius: 4px; padding: 1px 7px; white-space: nowrap; }
+.tag { font-size: 11.5px; border-radius: 4px; padding: 1px 6px; border: 1px solid currentColor; white-space: nowrap; }
+.tag.gen { color: var(--t-gen); } .tag.own { color: var(--t-own); } .tag.fw { color: var(--t-fw); } .tag.out { color: var(--t-out); }
+.nia { font-family: var(--mono); font-size: 10.5px; color: var(--acc); border: 1px solid var(--acc); border-radius: 3px; padding: 0 4px; }
+.acts { margin-left: auto; display: flex; gap: 6px; }
+.acts button { font: inherit; font-size: 12.5px; border-radius: 5px; padding: 2px 9px; border: 1px solid var(--line); background: var(--panel); color: var(--dim); cursor: pointer; white-space: nowrap; }
+.acts .okb[aria-pressed="true"] { background: var(--ok); border-color: var(--ok); color: var(--panel); }
+.acts .cmb[aria-pressed="true"] { background: var(--cmtSoft); border-color: var(--cmt); color: var(--cmt); }
+.hover1 { color: var(--dim); font-size: 13px; padding-left: 2px; }
+.hover1 .e { font-family: var(--mono); font-size: 12px; color: var(--text); }
+.hover1 .c { color: var(--text); font-weight: 500; }
+details.more > summary { cursor: pointer; color: var(--faint); font-size: 12.5px; width: max-content; list-style: none; }
+details.more > summary::before { content: "▸ "; } details.more[open] > summary::before { content: "▾ "; }
+.kv { display: grid; grid-template-columns: 5.5em minmax(0, 1fr); gap: 3px 10px; font-size: 13px; padding: 6px 0 2px 2px; max-width: 110ch; }
+.kv dt { color: var(--faint); } .kv dd { margin: 0; color: var(--dim); min-width: 0; overflow-wrap: anywhere; }
+.kv code { font-family: var(--mono); font-size: 12px; }
+textarea { font: inherit; font-size: 13px; width: 100%; max-width: 80ch; min-height: 54px; background: var(--panel); color: var(--text); border: 1px solid var(--cmt); border-radius: 6px; padding: 6px 8px; }
+.empty { color: var(--faint); padding: 30px 4px; text-align: center; }
+.foot { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; color: var(--dim); font-size: 13px; }
+.foot textarea { border-color: var(--line); min-height: 120px; max-width: 100%; }
+@media (max-width: 640px) {
+  .bar { position: static; }
+  .cn { width: 100%; } .en { width: 100%; } .acts { margin-left: 0; } .prog { margin-left: 0; } .old { max-width: 100%; }
+  .kv { grid-template-columns: 1fr; } .kv dt { margin-top: 4px; }
+}
+@media (prefers-reduced-motion: reduce) { .meter i { transition: none; } }
+</style>
+
+<div class="wrap">
+  <h1>烘焙器参数命名</h1>
+  <p class="lede">烟花烘焙器全部 360 个参数的新名字：按 Niagara 的说法起中文名和英文名，每个都写了说明。名字合适就点「可以」；不合适就直接在名字上改；有想法点「意见」写一句。你的每个改动都会自动保存，AI 能直接读到。</p>
+
+  <details class="how">
+    <summary>怎么看这张表</summary>
+    <div class="body">
+      <p><b>每一条两行：</b>第一行是 旧名 → 新中文名、英文名、所在模块、标签；第二行就是以后在烘焙器里悬停参数时，说明条的第一行（英文 · 中文 — 一句话说明）。点「更多」看调大 / 调小会怎样、随机怎么取、UE 里对应什么、要注意什么。</p>
+      <p><b>随机类</b>（以前叫「离散 / 抖动」）统一叫「××随机」，说明里写清楚是 ± 多少、正态还是均匀、作用在每颗星还是每粒火花。<b>模块</b>按 Niagara 发射器里模块的顺序排，对不上的放进最近的模块。</p>
+      <div class="legend"><span><span class="tag gen">通用</span> Niagara / Cascade 里有对应</span><span><span class="tag own">烘焙器专有</span> 物理 / 渲染算出来，UE 里没有直接对应</span><span><span class="tag fw">烟花特性</span> 烟花特有的行为</span><span><span class="tag out">烘焙输出</span> 帧数、格子、贴图、曝光、导出</span><span><span class="nia">Niagara</span> 英文名是 Niagara 里真有的参数</span></div>
+      <p>内部字段名（括号里的英文小字）不变，存过的版本都不受影响。这张表定下来以后，烘焙器 4.3 再按它改参数面板。</p>
+    </div>
+  </details>
+
+  <div class="bar" role="region" aria-label="筛选">
+    <div class="row1">
+      <div class="fam" id="fam" role="group" aria-label="产品"></div>
+      <span class="prog" id="prog"></span>
+    </div>
+    <div class="row2">
+      <select id="mod" aria-label="模块"><option value="">全部模块</option></select>
+      <span id="tags" role="group" aria-label="标签"></span>
+      <select id="st" aria-label="状态">
+        <option value="">全部</option><option value="todo">还没看的</option><option value="ok">可以的</option><option value="chg">改了名字的</option><option value="cmt">有意见的</option>
+      </select>
+      <input type="search" id="q" placeholder="搜：旧名、新名、英文、字段名、说明里的字" aria-label="搜索">
+    </div>
+    <div class="meter" aria-hidden="true"><i id="meterBar"></i></div>
+    <div class="save" id="save" role="status">正在连接保存…</div>
+  </div>
+
+  <div class="list" id="list"></div>
+  <div class="foot">
+    <button class="btn" id="copy" type="button">复制我的意见（文字）</button>
+    <span id="copyMsg"></span>
+  </div>
+  <textarea id="copyBox" hidden readonly aria-label="我的意见（文字）"></textarea>
+</div>
+
+<script id="rows" type="application/json">__ROWS__</script>
+<script>
+(() => {
+  const ROWS = JSON.parse(document.getElementById('rows').textContent);
+  const FAMS = ['空中礼花', '上升 / 尾缀序列', '物理尾缀', '尾缀（循环层 + 粒子）', '地面', '烘焙输出'];
+  const TAGS = [['通用', 'gen'], ['烘焙器专有', 'own'], ['烟花特性', 'fw'], ['烘焙输出', 'out']];
+  const LS = 'fwl-naming-review-v1';
+  const S = {};                                  // id → { ok, cn, en, comment }
+  let db = null, view = { fam: '空中礼花', mod: '', tags: new Set(TAGS.map(t => t[0])), st: '', q: '' };
+  try { Object.assign(S, JSON.parse(localStorage.getItem(LS) || '{}')); } catch (e) { }
+  try { const v = JSON.parse(localStorage.getItem(LS + ':view') || 'null'); if (v && FAMS.concat('全部').includes(v.fam)) view.fam = v.fam; } catch (e) { }
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const tagCls = t => (TAGS.find(x => x[0] === t) || [, 'gen'])[1];
+  const stOf = r => { const s = S[r.id] || {}; const chg = (s.cn != null && s.cn !== r.cn) || (s.en != null && s.en !== r.en); return { ok: !!s.ok, chg, cmt: !!(s.comment && s.comment.trim()), seen: !!s.ok || chg || !!(s.comment && s.comment.trim()) }; };
+
+  // ---- 列表（只建一次，筛选时切 hidden）----
+  const list = $('#list'), els = new Map();
+  let lastGrp = '';
+  for (const r of ROWS) {
+    const g = r.family + ' · ' + r.module_cn + '（' + r.module_en + '）';
+    if (g !== lastGrp) { const h = document.createElement('div'); h.className = 'grp'; h.dataset.grp = g; h.innerHTML = `${esc(r.family)} · <b>${esc(r.module_cn)}</b> ${esc(r.module_en)}`; list.appendChild(h); lastGrp = g; }
+    const d = document.createElement('div'); d.className = 'it'; d.dataset.id = r.id; d.dataset.grp = g;
+    const vals = [['调大 / 调小', r.updown], ['随机', r.random], ['UE 里', r.ue], ['注意', r.note], ['单位', [r.unit || '—', '范围 ' + (r.range || '—'), '默认 ' + (r.default === '' || r.default == null ? '—' : r.default)].join(' · ')], ['在哪', `${r.sec} · 字段 <code>${esc(r.key)}</code>`]].filter(x => x[1]);
+    d.innerHTML = `<div class="top">
+        <span class="old" title="${esc(r.old)}">${esc(r.old.replace(/[（(].*$/, '') || r.old)}</span><span class="arrow" aria-hidden="true">→</span>
+        <input class="cn" aria-label="${esc(r.old)} 的新中文名" value="${esc(r.cn)}">
+        <input class="en" aria-label="${esc(r.old)} 的英文名" value="${esc(r.en)}">
+        ${r.en_niagara ? '<span class="nia" title="Niagara 里真有的参数名">Niagara</span>' : ''}
+        <span class="tag ${tagCls(r.tag)}">${esc(r.tag)}</span>
+        <span class="acts"><button type="button" class="okb" aria-pressed="false">✓ 可以</button><button type="button" class="cmb" aria-pressed="false">意见</button></span>
+      </div>
+      <div class="hover1"><span class="e"></span> · <span class="c"></span> — ${esc(r.desc)}</div>
+      <details class="more"><summary>更多</summary><dl class="kv">${vals.map(([k, v]) => `<dt>${k}</dt><dd>${k === '在哪' ? v : esc(v)}</dd>`).join('')}</dl></details>
+      <textarea class="cm" placeholder="对这个参数的名字或说明有什么想法（会自动保存）" aria-label="${esc(r.old)} 的意见" hidden></textarea>`;
+    list.appendChild(d); els.set(r.id, d);
+    const cn = d.querySelector('.cn'), en = d.querySelector('.en'), okb = d.querySelector('.okb'), cmb = d.querySelector('.cmb'), cm = d.querySelector('.cm');
+    cn.addEventListener('input', () => { edit(r, { cn: cn.value.trim() === r.cn ? null : cn.value.trim() }, true); });
+    en.addEventListener('input', () => { edit(r, { en: en.value.trim() === r.en ? null : en.value.trim() }, true); });
+    okb.addEventListener('click', () => edit(r, { ok: !(S[r.id] && S[r.id].ok) }));
+    cmb.addEventListener('click', () => { cm.hidden = !cm.hidden; if (!cm.hidden) cm.focus(); paint(r); });
+    cm.addEventListener('input', () => edit(r, { comment: cm.value }, true));
+    paint(r);
+  }
+  function paint(r, skipFocused) {
+    const d = els.get(r.id), s = S[r.id] || {}, st = stOf(r);
+    const cn = d.querySelector('.cn'), en = d.querySelector('.en'), cm = d.querySelector('.cm');
+    if (!(skipFocused && document.activeElement === cn)) cn.value = s.cn != null ? s.cn : r.cn;
+    if (!(skipFocused && document.activeElement === en)) en.value = s.en != null ? s.en : r.en;
+    if (!(skipFocused && document.activeElement === cm)) cm.value = s.comment || '';
+    if (st.cmt) cm.hidden = false;
+    cn.classList.toggle('edited', s.cn != null && s.cn !== r.cn); en.classList.toggle('edited', s.en != null && s.en !== r.en);
+    d.querySelector('.hover1 .e').textContent = en.value; d.querySelector('.hover1 .c').textContent = cn.value;
+    d.querySelector('.okb').setAttribute('aria-pressed', String(st.ok)); d.querySelector('.cmb').setAttribute('aria-pressed', String(!cm.hidden || st.cmt));
+    d.classList.toggle('ok', st.ok && !st.chg && !st.cmt); d.classList.toggle('chg', st.chg); d.classList.toggle('cmt', st.cmt && !st.chg);
+  }
+
+  // ---- 保存：先放浏览器里，有 db 就写进去（每条一个文档，停手 0.7 秒写一次，同一条不并发）----
+  const timers = {}, writing = {}, again = {};
+  function edit(r, patch, typing) {
+    const s = { ...(S[r.id] || {}) };
+    for (const [k, v] of Object.entries(patch)) { if (v == null || v === '' || v === false) delete s[k]; else s[k] = v; }
+    S[r.id] = s; try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { }
+    paint(r, true); progress();
+    clearTimeout(timers[r.id]); timers[r.id] = setTimeout(() => { delete timers[r.id]; push(r); }, typing ? 700 : 0);
+  }
+  async function push(r) {
+    if (!db) return;
+    if (writing[r.id]) { again[r.id] = true; return; }
+    writing[r.id] = true; setSave('保存中…');
+    try {
+      const s = S[r.id] || {};
+      await db.collection('review').doc(r.id).set({ key: r.key, old: r.old, ok: !!s.ok, cn: s.cn || null, en: s.en || null, comment: s.comment || null });
+      setSave('已保存，AI 能直接读到');
+    } catch (e) { setSave(e && e.code === 'invalid_argument' ? '你在这个页面上只能看、不能存（意见可以用最下面的「复制我的意见」发给 AI）' : '这次没存上：' + ((e && e.message) || e) + '（改动还在这个浏览器里）'); }
+    finally { writing[r.id] = false; if (again[r.id]) { again[r.id] = false; push(r); } }
+  }
+  const setSave = t => { $('#save').textContent = t; };
+
+  // ---- 筛选 ----
+  const fam = $('#fam');
+  for (const f of ['全部', ...FAMS]) { const b = document.createElement('button'); b.type = 'button'; b.textContent = f + (f === '全部' ? '' : ` ${ROWS.filter(r => r.family === f).length}`); b.dataset.f = f; b.addEventListener('click', () => { view.fam = f; view.mod = ''; try { localStorage.setItem(LS + ':view', JSON.stringify({ fam: f })); } catch (e) { } sync(); }); fam.appendChild(b); }
+  const tags = $('#tags');
+  for (const [t, c] of TAGS) { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.innerHTML = `<span class="tag ${c}" style="border:0;padding:0">${t}</span>`; b.setAttribute('aria-pressed', 'true'); b.addEventListener('click', () => { if (view.tags.has(t)) view.tags.delete(t); else view.tags.add(t); b.setAttribute('aria-pressed', String(view.tags.has(t))); apply(); }); tags.appendChild(b); }
+  $('#mod').addEventListener('change', e => { view.mod = e.target.value; apply(); });
+  $('#st').addEventListener('change', e => { view.st = e.target.value; apply(); });
+  $('#q').addEventListener('input', e => { view.q = e.target.value.trim().toLowerCase(); apply(); });
+  function sync() {
+    for (const b of fam.children) b.setAttribute('aria-pressed', String(b.dataset.f === view.fam));
+    const mods = [...new Set(ROWS.filter(r => view.fam === '全部' || r.family === view.fam).map(r => r.module_cn + '（' + r.module_en + '）'))];
+    $('#mod').innerHTML = '<option value="">全部模块</option>' + mods.map(m => `<option>${esc(m)}</option>`).join('');
+    $('#mod').value = view.mod; apply();
+  }
+  function apply() {
+    const shownGrp = new Set(); let n = 0;
+    for (const r of ROWS) {
+      const st = stOf(r), s = S[r.id] || {};
+      const hay = [r.old, r.cn, r.en, r.key, r.desc, r.note, r.module_cn, r.module_en, s.cn, s.en].join(' ').toLowerCase();
+      const vis = (view.fam === '全部' || r.family === view.fam) && (!view.mod || view.mod === r.module_cn + '（' + r.module_en + '）') && view.tags.has(r.tag)
+        && (!view.st || (view.st === 'todo' ? !st.seen : view.st === 'ok' ? st.ok : view.st === 'chg' ? st.chg : st.cmt)) && (!view.q || hay.includes(view.q));
+      els.get(r.id).hidden = !vis; if (vis) { shownGrp.add(els.get(r.id).dataset.grp); n++; }
+    }
+    for (const h of list.querySelectorAll('.grp')) h.hidden = !shownGrp.has(h.dataset.grp);
+    let em = list.querySelector('.empty'); if (!n) { if (!em) { em = document.createElement('div'); em.className = 'empty'; em.textContent = '没有符合筛选的参数'; list.appendChild(em); } em.hidden = false; } else if (em) em.hidden = true;
+    progress();
+  }
+  function progress() {
+    const all = ROWS.map(stOf), seen = all.filter(x => x.seen).length;
+    $('#prog').innerHTML = `已看 <b>${seen}</b> / ${ROWS.length} · 改名 <b>${all.filter(x => x.chg).length}</b> · 意见 <b>${all.filter(x => x.cmt).length}</b>`;
+    $('#meterBar').style.width = (seen / ROWS.length * 100).toFixed(1) + '%';
+  }
+
+  // ---- 复制意见（没有 db 时的退路）----
+  $('#copy').addEventListener('click', async () => {
+    const lines = ROWS.filter(r => stOf(r).seen).map(r => { const s = S[r.id] || {}, st = stOf(r); return `${r.id} | ${r.old.replace(/[（(].*$/, '')} → ${r.cn}` + (st.chg ? ` ⇒ 改成 ${s.cn || r.cn} / ${s.en || r.en}` : st.ok ? ' ✓' : '') + (st.cmt ? ` ｜ 意见：${s.comment.trim()}` : ''); });
+    const text = lines.length ? `参数命名审阅（${lines.length} 条）\n` + lines.join('\n') : '还没有改动';
+    const box = $('#copyBox'); box.value = text;
+    try { await navigator.clipboard.writeText(text); $('#copyMsg').textContent = '已复制，贴给 AI 就行'; box.hidden = true; }
+    catch (e) { box.hidden = false; box.focus(); box.select(); $('#copyMsg').textContent = '复制不了：下面的文字已选中，按 Ctrl+C 复制'; }
+  });
+
+  sync();
+  // ---- db：有就读回之前存的、以后改的都存进去 ----
+  (async () => {
+    const cl = window.claude; const ns = cl && cl.use ? await cl.use('db').catch(() => null) : null;
+    if (!ns) { setSave('这个页面现在存不到云端：改动只留在这个浏览器里，看完用最下面的「复制我的意见」发给 AI'); return; }
+    db = ns; setSave('已连接：改动自动保存，AI 能直接读到');
+    let first = true;
+    db.collection('review').onSnapshot(snap => {
+      for (const doc of snap.docs) { const v = doc.data() || {}; const r = ROWS.find(x => x.id === doc.id); if (!r) continue;
+        const s = {}; if (v.ok) s.ok = true; if (v.cn) s.cn = v.cn; if (v.en) s.en = v.en; if (v.comment) s.comment = v.comment;
+        if (writing[r.id] || timers[r.id]) continue;          // 这条正在改 / 正在存：以本地为准
+        S[r.id] = s; paint(r, true); }
+      if (first) { first = false;      // 浏览器里有、云端没有的（离线时改的）补存上去
+        for (const r of ROWS) if (S[r.id] && Object.keys(S[r.id]).length && !snap.docs.some(d => d.id === r.id)) push(r); }
+      try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) { }
+      apply();
+    }, e => setSave('和云端断开了（' + (e && e.code) + '）：改动还在这个浏览器里，刷新页面会重新连接'));
+  })();
+})();
+</script>
