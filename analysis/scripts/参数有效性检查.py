@@ -70,7 +70,7 @@ PAGE = r"""async (o) => {
           for (const c of diffCurves(b.c, await curves(P))) if (!r.curve.includes(c)) r.curve.push(c);
           // 一个值有反应就够了；按便宜到贵：曲线 → 帧计划（要跑一遍完整测量）→ 画面（要渲染）
           if (r.curve.length) break;
-          r.plan = r.plan || (stable ? planSig(P) !== b.p : false);
+          r.plan = r.plan || (stable && (!o.planKeys || o.planKeys.includes(k)) ? planSig(P) !== b.p : false);   // 帧计划只给取景 / 帧计划代码里读到的参数算（星多时一次测量要几十秒）
           if (r.plan) break;
           if (render) { const s = await still(P); const px = s.map((x, j) => x === b.s[j] ? 0 : 1); r.pix = r.pix ? r.pix.map((x, j) => x || px[j]) : px; if (px.some(Boolean)) { r.png = s; break; } }
         }
@@ -92,6 +92,8 @@ def pngdiff(a, b):
     ib = np.asarray(Image.open(io.BytesIO(base64.b64decode(b.split(',', 1)[1]))).convert('L'), dtype=np.float32)
     d = np.abs(ia - ib); return float(d.mean()), float(d.max())
 
+
+PLAN_KEYS = None
 
 # 静态：每个键在哪些源码文件里被读到（10_types.js 是定义，79_curves.js 只是列出「哪个参数对应哪条曲线」，都不算）
 RENDER_FILES = {'05_quality.js', '40_gl.js', '41_particles40.js', '48_render40.js', '49_playback.js', '80_render.js', '82_showcase.js', '85_stills.js'}
@@ -122,6 +124,9 @@ async def main():
         await pg.goto(html, wait_until='load', timeout=0); await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
         await pg.evaluate(FAKE)
         ver = await pg.evaluate('VERSION')
+        global PLAN_KEYS
+        allk = await pg.evaluate("[...new Set(SCHEMA.flatMap(s => s.items.map(it => Array.isArray(it) ? it[0] : it.sel).filter(Boolean)))]")
+        PLAN_KEYS = [k for k, fs in static_files(allk).items() if set(fs) & {'30_plan.js', '31_plan40.js', '50_bake.js'}]
         # 上下文：空中类模板（默认参数）+ 每个效果的每一层（只要空中类）
         types = await pg.evaluate("Object.keys(TYPE_NAMES).filter(t => familyOf(t) === 'aerial')")
         effs = await pg.evaluate("EFFS().map(e => e.key)")
@@ -142,7 +147,7 @@ async def main():
                     fam = await pg.evaluate("(i) => { const L = i == null ? null : state.layers[i], e = L && layerEntryOf(L), P = e ? e.P : state.P; window.__cvP = structuredClone(P); window.__cvM = structuredClone(L || state.M); return familyOf(P.type) + '/' + P.form; }", li)
                     if not fam.startswith('aerial/') or fam.endswith('/phys'): print('⏭', name, fam, flush=True); continue
                 t1 = time.time()
-                try: r = await pg.evaluate(PAGE, {'ctx': name, 'render': a.render})
+                try: r = await pg.evaluate(PAGE, {'ctx': name, 'render': a.render, 'planKeys': PLAN_KEYS})
                 except Exception as e: print('❌', name, str(e)[:300], flush=True); res.append({'ctx': name, 'err': str(e)[:500]}); continue
                 if a.render:
                     for row in r['rows']:
@@ -205,9 +210,14 @@ def summarize(res, render, ver, minutes, out):
 def merge(dirs, out):
     """把分开跑的几份（--out 不同目录）并成一份"""
     res, mins, ver, render = [], 0, '', False
+    seen = {}
     for d in dirs:
-        j = json.loads((pathlib.Path(d) / '参数有效性.json').read_text(encoding='utf-8'))
-        res += j['raw']; mins += j['meta']['minutes']; ver = j['meta']['version']; render = j['meta']['render']
+        f = pathlib.Path(d) / '参数有效性.json'
+        if f.exists():
+            j = json.loads(f.read_text(encoding='utf-8')); raw = j['raw']; mins += j['meta']['minutes']; ver = j['meta']['version']; render = j['meta']['render']
+        else: raw = json.loads((pathlib.Path(d) / '_进行中.json').read_text(encoding='utf-8'))     # 跑一半断了的
+        for r in raw: seen[r['ctx']] = r                     # 同一个上下文后跑的为准
+    res = list(seen.values())
     out = pathlib.Path(out); out.mkdir(parents=True, exist_ok=True); summarize(res, render, ver, round(mins, 1), out)
 
 

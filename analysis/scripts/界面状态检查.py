@@ -29,6 +29,9 @@
   R1 「恢复到打开时」（单层）把被接力带动的另一层也恢复（10-03 复现：恢复第 1 层后第 2 层的延时点火还停在被带动的位置）
   C1 曲线视图（4.2.18，只读）：单层 / 多层选中层，时间轴下面有 亮度 / 亮着的星 / 火花生成 / 火花寿命 / 星速度 / 颜色 六条；
      改「火花起势」火花生成曲线的上升变慢、旧曲线留作对照；改「渐隐」亮度曲线末段变；悬停参数高亮对应曲线；开关、悬停都不触发烘焙；多层没选层时给提示
+  N1 4.3 新参数面板（预览开关）：默认关 = 原样；打开后按模块排、名字来自参数命名表、英文名开关、看得见的参数一个不少、
+     「××随机」收在本体参数的「随机」下（点开才出、记住）、不起作用的参数变灰写原因（菊：点火时刻随机；牡丹：火花寿命）、
+     搜索认新名 / 旧名 / 英文名、说明条第一行「English · 中文 — 说明」；关掉回到原样
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -718,6 +721,62 @@ async def c1(pg):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
 
 
+async def n1(pg):
+    bad, info = [], {}
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    vis = "(() => panelRows.filter(([r]) => !r.hidden && !r.closest('[hidden]')).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.text || it.info).sort())()"
+    lab = "(k) => { const x = panelRows.find(([r, it]) => (Array.isArray(it) ? it[0] : it.sel) === k); return x ? x[0]._lab : null; }"
+    off = await pg.evaluate("({ groups: [...document.querySelectorAll('#params details.pgrp')].map(d => d.dataset.g), burn: (%s)('burn'), mods: document.querySelectorAll('#params details.mod').length })" % lab)
+    v0 = await pg.evaluate(vis)
+    if off['mods'] or off['burn'] != '燃烧时间': bad.append(f'默认（预览关）面板变了：{off}')
+    await pg.evaluate("document.querySelector('#params [data-v43]').click(); 0"); await pg.wait_for_timeout(300)
+    on = await pg.evaluate("({ groups: [...document.querySelectorAll('#params details.pgrp')].map(d => d.dataset.g), mods: [...document.querySelectorAll('#params details.mod')].map(d => d._mod), burn: (%s)('burn'), v0: (%s)('v0'), stored: store.get('panel43', false) })" % (lab, lab))
+    info['打开'] = on
+    if on['groups'][:3] != ['发射', '生成', '更新'] or '寿命' not in on['mods'] or '尾迹' not in on['mods']: bad.append(f"没按模块排：{on['groups']} {on['mods']}")
+    want = await pg.evaluate("[pnameOf('开花与燃烧', 'burn').cn, pnameOf('开花与燃烧', 'v0').cn, pnameOf('开花与燃烧', 'burn').en]")
+    if on['burn'] != want[0] or on['v0'] != want[1]: bad.append(f"名字不是命名表里的：{on['burn']} / {on['v0']}（表：{want[:2]}）")
+    if not on['stored']: bad.append('预览开关没记住')
+    # 一个不少：预览前看得见的，预览后要么看得见、要么是收起来的随机行
+    v1 = await pg.evaluate(vis); folded = await pg.evaluate("panelRows.filter(([r]) => r._randOf).map(([r, it]) => it[0])")
+    lost = sorted(set(v0) - set(v1) - set(folded)); info['收起的随机'] = folded
+    if lost: bad.append(f'新面板里找不到：{lost}')
+    if 'burnJit' not in folded or 'speedJit' not in folded: bad.append(f'寿命随机 / 初速随机没收到本体下面：{folded}')
+    # 随机：点开 / 收起
+    r = await pg.evaluate("(() => { const b = panelRows.find(([r, it]) => it[0] === 'burn')[0], j = panelRows.find(([r, it]) => it[0] === 'burnJit')[0]; const h0 = j.hidden; b.querySelector('.rndb').click(); const h1 = j.hidden, next = b.nextElementSibling === j; return { h0, h1, next, txt: b.querySelector('.rndb').textContent, stored: !!store.get('pRandOpen', {}).burn }; })()")
+    info['随机'] = r
+    if not r['h0'] or r['h1'] or not r['next'] or not r['stored']: bad.append(f'寿命随机折叠不对：{r}')
+    # 不起作用：菊没有延时点火 → 点火时刻随机变灰写原因
+    r = await pg.evaluate("(() => { const b = panelRows.find(([r, it]) => it[0] === 'ignDelay')[0]; if (b.querySelector('.rndb') && !pview.ropen.ignDelay) b.querySelector('.rndb').click(); const j = panelRows.find(([r, it]) => it[0] === 'ignJit')[0]; panelHelp(j); return { inert: j.classList.contains('inert'), why: j._inert, help: $('#pHelp').textContent }; })()")
+    info['菊 点火时刻随机'] = {k: r[k] for k in ('inert', 'why')}
+    if not r['inert'] or '延时点火' not in (r['why'] or '') or '现在不起作用' not in r['help']: bad.append(f'菊的点火时刻随机没标不起作用：{r}')
+    if 'Ignition' not in r['help'] or '·' not in r['help']: bad.append('说明条第一行不是「English · 中文」')
+    # 说明条：寿命
+    h = await pg.evaluate("(() => { panelHelp(panelRows.find(([r, it]) => it[0] === 'burn')[0]); return $('#pHelp').textContent; })()")
+    if not h.startswith(want[2] + ' · ' + want[0]): bad.append(f'说明条第一行：{h[:40]}')
+    for w in ('调大', 'UE'):
+        if w not in h: bad.append(f'说明条没有「{w}」')
+    # 搜索：英文名 / 旧名
+    for q, k in (('Lifetime', 'burn'), ('燃烧时间', 'burn'), ('Spawn Count', 'stars')):
+        r = await pg.evaluate("(q) => { const i = $('#params .ptools input[type=search]'); i.value = q; i.dispatchEvent(new Event('input')); return panelRows.filter(([r]) => !r.hidden).map(([r, it]) => it[0]); }", q)
+        if k not in r: bad.append(f'搜「{q}」找不到 {k}（{r[:6]}）')
+    await pg.evaluate("(() => { const i = $('#params .ptools input[type=search]'); i.value = ''; i.dispatchEvent(new Event('input')); return 0; })()")
+    # 英文名开关
+    await pg.evaluate("document.querySelector('#params [data-en]').click(); 0"); await pg.wait_for_timeout(200)
+    en = await pg.evaluate("(%s)('burn')" % lab)
+    if en != want[2]: bad.append(f'英文名开关：寿命显示「{en}」')
+    await pg.evaluate("document.querySelector('#params [data-en]').click(); 0")
+    # 牡丹：没有火花 → 火花寿命变灰
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('botan')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate("(() => { const x = panelRows.find(([r, it]) => it[0] === 'sparkLife'); return x ? { inert: x[0].classList.contains('inert'), why: x[0]._inert, rate: state.P.sparkRate } : null; })()")
+    info['牡丹 火花寿命'] = r
+    if not r or not r['inert']: bad.append(f'牡丹（火花 0）的火花寿命没标不起作用：{r}')
+    # 关掉 → 原样
+    await pg.evaluate("document.querySelector('#params [data-v43]').click(); 0"); await pg.wait_for_timeout(300)
+    back = await pg.evaluate("({ mods: document.querySelectorAll('#params details.mod').length, groups: [...document.querySelectorAll('#params details.pgrp')].map(d => d.dataset.g) })")
+    if back['mods'] or back['groups'] != off['groups']: bad.append(f'关掉预览没回到原样：{back}')
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
+
+
 async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
@@ -727,7 +786,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

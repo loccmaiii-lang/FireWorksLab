@@ -981,3 +981,20 @@ details.sec>p.hint:not([hidden]){border-left:2px solid var(--line2);padding-left
 .cvl.hot .cvt{box-shadow:0 0 0 1px var(--amber)}
 @media (max-width:760px){ .cvl{grid-template-columns:80px minmax(0,1fr)} }
 .cvl .cvramp{display:inline-block;width:26px;height:8px;margin-left:6px;border-radius:2px;vertical-align:middle;box-shadow:0 0 0 1px var(--line2)}
+/* 4.3 新参数面板（预览）：模块、英文副标题、随机折叠、不起作用变灰 */
+.ptools .p43t{color:var(--amber)}
+details.sec.mod>summary .men{margin-left:8px;font:500 10.5px var(--mono);color:var(--faint);letter-spacing:.02em}
+details.sec.mod>p.hint .hsec{display:block;margin-top:4px}
+.sl .rndb{grid-column:1 / -1;justify-self:start;margin:0 0 2px 18px;background:none;border:1px dashed var(--line2);border-radius:5px;color:var(--faint);font-size:11px;padding:0 6px;cursor:pointer;white-space:nowrap}
+.sl .rndb.set{color:var(--dim);border-style:solid}
+.sl .rndb.on{color:var(--amber);border-color:var(--amber)}
+.sl.rnd-row{padding-left:14px;border-left:2px solid var(--line2);margin-left:4px}
+.sl.inert .k,.field.inert .fk{color:var(--faint);text-decoration:line-through dotted var(--faint)}
+.sl.inert input[type=range]{opacity:.45}
+.phelp .ph-inert{display:block;color:var(--amber);margin-top:2px}
+.phelp .ph-x{display:block;color:var(--faint);font-size:11.5px;margin-top:2px}
+.phelp{max-height:40vh;overflow:auto}
+#params .ptools{flex-wrap:wrap}
+#params .ptools input[type=search]{flex:1 1 100%}
+.pgrp.p43 .sl{grid-template-columns:14px 118px 1fr 62px}
+.pgrp.p43 .sl.nolock{grid-template-columns:118px 1fr 62px}

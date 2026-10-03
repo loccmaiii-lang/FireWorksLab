@@ -15,6 +15,14 @@ if os.path.exists(up):
     for sec in re.split(r'^## ', open(up, encoding='utf-8').read(), flags=re.M)[1:21]:
         title, _, text = sec.partition('\n'); upd.append({'title': title.strip(), 'body': text.strip()})
 js = 'const UPDATES = ' + json.dumps(upd, ensure_ascii=False) + ';\n' + js
+# 4.3：参数命名全表（analysis/命名/参数名称表.json，唯一来源）→ PNAMES，参数面板按它显示新名字 / 说明 / 模块
+pn = []
+nf = os.path.join(here, '..', 'analysis', '命名', '参数名称表.json')
+if os.path.exists(nf):
+    for r in json.load(open(nf, encoding='utf-8')):
+        pn.append({k: r.get(f, '') for k, f in (('sec', 'sec'), ('key', 'key'), ('old', 'old'), ('cn', 'cn'), ('en', 'en'), ('mcn', 'module_cn'), ('men', 'module_en'),
+                                                ('desc', 'desc'), ('ud', 'updown'), ('rnd', 'random'), ('ue', 'ue'), ('tag', 'tag'), ('note', 'note'))})
+js = 'const PNAMES = ' + json.dumps(pn, ensure_ascii=False, separators=(',', ':')) + ';\n' + js
 html = f'''<!doctype html>
 <html lang="zh-CN">
 <head>

@@ -477,7 +477,8 @@ function splitLab(lab, key) {
   return [short, detail];
 }
 const pview = { q: '', changed: false, open: null };
-function pviewInit() { if (pview.open) return; pview.changed = !!store.get('pChanged', false); pview.open = store.get('pGrpOpen', { 特效: false, 环境: false, 输出: false }); }   // store 在后面的文件里定义：用到时再读
+function pviewInit() { if (pview.open) return; pview.changed = !!store.get('pChanged', false); pview.open = store.get('pGrpOpen', { 特效: false, 环境: false, 输出: false });   // store 在后面的文件里定义：用到时再读
+  pview.v43 = !!store.get('panel43', false); pview.en = !!store.get('pEN', false); pview.mopen = store.get('pModOpen', {}); pview.ropen = store.get('pRandOpen', {}); }   // 4.3 新面板（预览）、英文名、模块 / 随机展开
 // 「改过的」和谁比：打开时的版本（AI 版 / 你保存的版本，wbArm 记下的样子）；没有就和花型模板默认值比
 function panelBaseP() {
   try {
@@ -495,17 +496,27 @@ function rowChanged(it, P, B) {
 }
 function rowMatches(row, it, sec, q) {
   if (!q) return true;
-  const key = Array.isArray(it) ? it[0] : it.sel || it.text || '';
-  return [row._lab || '', row._detail || '', key, sec.sec].join(' ').toLowerCase().includes(q);
+  const key = Array.isArray(it) ? it[0] : it.sel || it.text || '', nm = row._nm;
+  return [row._lab || '', row._detail || '', key, sec.sec, row._old || '', nm ? [nm.cn, nm.en, nm.old, nm.mcn, nm.men].join(' ') : ''].join(' ').toLowerCase().includes(q);   // 4.3：旧名 / 新名 / 英文名都认
 }
 function panelHelp(row) {
   const h = $('#pHelp'); if (!h) return;
   if (!row) { h.innerHTML = '<span class="ph-idle">悬停或点一个参数看完整说明 · 双击参数名恢复默认</span>'; if (typeof curvesHot === 'function') curvesHot(null); return; }
   const it = row._it, B = panelBaseP(), k = Array.isArray(it) ? it[0] : it.sel || it.text;
   const cvn = typeof curvesHot === 'function' ? curvesHot(k) : '';     // 4.2.18：高亮时间轴下方对应的曲线
+  if (row._nm) {      // 4.3：第一行「English · 中文 — 说明」，下面调大 / 调小、随机怎么取、UE 里对应、注意、现在不起作用的原因
+    const nm = row._nm, unit = Array.isArray(it) && it[2] ? ` <small>${it[2]}</small>` : '', rng = Array.isArray(it) ? `范围 ${it[3]}–${it[4]}` : '';
+    const base = B && B[k] != null ? ` · 打开时 ${Array.isArray(it) ? fmtV(B[k], it[5]) : B[k]}` : '', iw = row._inert;
+    h.innerHTML = `<b>${nm.en}</b> · <b>${nm.cn}</b>${unit} — ${nm.desc}<span class="ph-meta">${rng}${base} · 旧名「${row._old || nm.old}」 · ${nm.tag}</span>`
+      + (iw ? `<span class="ph-inert">现在不起作用：${iw}</span>` : '')
+      + (nm.ud ? `<span class="ph-d">${nm.ud}</span>` : '') + (nm.rnd ? `<span class="ph-x">随机：${nm.rnd}</span>` : '')
+      + (nm.ue ? `<span class="ph-x">UE：${nm.ue}</span>` : '') + (nm.note ? `<span class="ph-x">注意：${nm.note}</span>` : '')
+      + (cvn ? `<span class="ph-cv">看时间轴下方 ${cvn} 曲线</span>` : '');
+    return;
+  }
   const unit = Array.isArray(it) && it[2] ? ` <small>${it[2]}</small>` : '', rng = Array.isArray(it) ? ` · 范围 ${it[3]}–${it[4]}` : '';
   const base = B && B[k] != null ? ` · 打开时 ${Array.isArray(it) ? fmtV(B[k], it[5]) : B[k]}` : '';
-  h.innerHTML = `<b>${row._lab}</b>${unit}<span class="ph-meta">${rng}${base}</span>${row._detail ? `<span class="ph-d">${row._detail}</span>` : ''}${cvn ? `<span class="ph-cv">看时间轴下方 ${cvn} 曲线</span>` : ''}`;
+  h.innerHTML = `<b>${row._lab}</b>${unit}<span class="ph-meta">${rng}${base}</span>${row._inert ? `<span class="ph-inert">现在不起作用：${row._inert}</span>` : ''}${row._detail ? `<span class="ph-d">${row._detail}</span>` : ''}${cvn ? `<span class="ph-cv">看时间轴下方 ${cvn} 曲线</span>` : ''}`;
 }
 function buildMasterPanel() {
   pviewInit();
@@ -513,18 +524,24 @@ function buildMasterPanel() {
   const box = $('#specBox'); if (box && $('#params').contains(box)) $('#specHome').appendChild(box);   // 规格框先放回原处，别跟着旧的「输出」一节被清掉
   const host = $('#params'); host.innerHTML = ''; panelRows = [];
   // 顶上：搜索 + 只看改过的
-  host.insertAdjacentHTML('beforeend', `<div class="ptools"><input type="search" placeholder="搜参数：名字或说明里的字" aria-label="搜参数" value="${pview.q.replace(/"/g, '&quot;')}"><label class="pchg" title="只显示和打开时（AI 版 / 你保存的版本）不一样的参数"><input type="checkbox"${pview.changed ? ' checked' : ''}> 只看改过的</label></div>`);
-  const qi = host.querySelector('.ptools input[type=search]'), ci = host.querySelector('.ptools input[type=checkbox]');
+  const v43 = p43On() && typeof PNAMES !== 'undefined' && PNAMES.length;    // 4.3 新面板（预览）：按模块排、新名字、随机折叠
+  host.insertAdjacentHTML('beforeend', `<div class="ptools"><input type="search" placeholder="${v43 ? '搜参数：新名 / 旧名 / 英文名 / 说明里的字' : '搜参数：名字或说明里的字'}" aria-label="搜参数" value="${pview.q.replace(/"/g, '&quot;')}"><label class="pchg" title="只显示和打开时（AI 版 / 你保存的版本）不一样的参数"><input type="checkbox"${pview.changed ? ' checked' : ''}> 只看改过的</label>`
+    + `<label class="pchg p43t" title="4.3 新参数面板（预览）：按 Niagara 模块排、新名字（参数命名表审完以后定稿）、每个参数完整说明、随机收在本体参数下面、不起作用的参数变灰写原因"><input type="checkbox" data-v43${v43 ? ' checked' : ''}> 新面板（预览）</label>`
+    + (v43 ? `<label class="pchg" title="参数名显示 Niagara 风格英文名（说明条第一行总有英文）"><input type="checkbox" data-en${pview.en ? ' checked' : ''}> 英文名</label>` : '') + `</div>`);
+  const qi = host.querySelector('.ptools input[type=search]'), ci = host.querySelector('.ptools .pchg:first-of-type input');
   qi.addEventListener('input', () => { pview.q = qi.value.trim(); refreshVisibility(); });
   qi.addEventListener('keydown', e => { if (e.key === 'Escape' && qi.value) { qi.value = ''; pview.q = ''; refreshVisibility(); e.stopPropagation(); } });
   ci.addEventListener('change', () => { pview.changed = ci.checked; store.set('pChanged', pview.changed); refreshVisibility(); });
+  host.querySelector('[data-v43]').addEventListener('change', e => { pview.v43 = e.target.checked; store.set('panel43', pview.v43); buildMasterPanel(); });
+  const enb = host.querySelector('[data-en]'); if (enb) enb.addEventListener('change', e => { pview.en = e.target.checked; store.set('pEN', pview.en); buildMasterPanel(); });
   const grp = {};
-  for (const [g, title] of PGROUPS) {
-    const d = document.createElement('details'); d.className = 'pgrp'; d.dataset.g = g; d.open = pview.open[g] !== false;
+  for (const [g, title] of v43 ? P43_GROUPS : PGROUPS) {
+    const d = document.createElement('details'); d.className = 'pgrp' + (v43 ? ' p43' : ''); d.dataset.g = g; d.open = (v43 ? pview.mopen['@' + g] : pview.open[g]) !== false;
     d.innerHTML = `<summary><span class="pg-t">${title}</span><span class="pg-n"></span></summary>`;
-    d.addEventListener('toggle', () => { if (d._auto) return; pview.open[g] = d.open; store.set('pGrpOpen', pview.open); });
+    d.addEventListener('toggle', () => { if (d._auto) return; if (v43) { pview.mopen['@' + g] = d.open; store.set('pModOpen', pview.mopen); } else { pview.open[g] = d.open; store.set('pGrpOpen', pview.open); } });
     grp[g] = d; host.appendChild(d);
   }
+  const place = v43 ? p43Skeleton(host, grp) : null;
   for (const sec of SCHEMA) {
     const det = document.createElement('details'); det.className = 'sec'; det.open = !['物理扰动', '星效果', '规格'].includes(sec.sec) || sec.sec === '规格';
     det.innerHTML = `<summary>${sec.sec}${sec.hint ? '<span class="shelp" role="button" tabindex="0" title="这一节的说明" aria-label="这一节的说明">？</span>' : ''}</summary>` + (sec.hint ? `<p class="hint" hidden>${sec.hint}</p>` : '');
@@ -532,16 +549,18 @@ function buildMasterPanel() {
       b.addEventListener('click', tog); b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') tog(e); }); }
     for (const it of sec.items) {
       let row;
+      const ikey = Array.isArray(it) ? it[0] : it.sel || it.text || '', nm = v43 && ikey ? pnameOf(sec.sec, ikey, Array.isArray(it) ? (typeof it[1] === 'function' ? it[1](P) : it[1]) : it.label) : null, det0 = det;
+      { const det = v43 ? place(sec, it, ikey) : det0;          // 4.3：这一行放进它的模块
       if (Array.isArray(it)) {
-        const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short, detail] = splitLab(lab, k);
+        const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab, k), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
         row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { if (TIMING_KEYS.has(k)) setTimingParam(k, v); else { state.P[k] = v; onParam(); } }, D[k], k);
-        const kl = row.querySelector('.k'); kl.title = lab + (unit ? `（${unit}）` : '') + '；双击恢复默认';
-        row._lab = short; row._detail = detail;
+        const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}（旧名：${lab}）` : lab) + (unit ? `（${unit}）` : '') + '；双击恢复默认';
+        row._lab = short; row._detail = detail; row._old = lab; row._nm = nm;
       } else if (it.sel) {
-        const [short, detail] = splitLab(it.label, it.sel);
+        const [short0, detail0] = splitLab(it.label, it.sel), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
         row = document.createElement('label'); row.className = 'field';
-        row.innerHTML = `<span class="fk" title="${(it.label + (it.hint ? '：' + it.hint : '')).replace(/"/g, '&quot;')}">${short}</span><select></select>`;
-        row._lab = short; row._detail = [detail, it.hint].filter(Boolean).join('；');
+        row.innerHTML = `<span class="fk" title="${((nm ? `${nm.en} · ${nm.cn}（旧名：${it.label}）` : it.label) + (it.hint ? '：' + it.hint : '')).replace(/"/g, '&quot;')}">${short}</span><select></select>`;
+        row._lab = short; row._detail = [detail, it.hint].filter(Boolean).join('；'); row._old = it.label; row._nm = nm;
         const s = row.querySelector('select'); for (const [v, l] of it.options) s.add(new Option(l, v));
         s.value = String(P[it.sel]);
         s.addEventListener('change', () => {
@@ -558,7 +577,7 @@ function buildMasterPanel() {
         row._refresh = () => { row.innerHTML = it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : ''; };
         row._refresh(); det.appendChild(row);
       } else if (it.text) {
-        row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${it.label}</span><input type="text" maxlength="6">`; row._lab = it.label; row._detail = '';
+        row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${nm ? p43Label(nm, it.label) : it.label}</span><input type="text" maxlength="6">`; row._lab = nm ? p43Label(nm, it.label) : it.label; row._detail = nm ? nm.desc : ''; row._old = it.label; row._nm = nm;
         const inp = row.querySelector('input'); inp.value = P[it.text];
         inp.addEventListener('change', () => { state.P[it.text] = inp.value || '祭'; onParam(); });
         row._refresh = () => { inp.value = state.P[it.text]; };
@@ -566,9 +585,11 @@ function buildMasterPanel() {
       }
       if (row._lab != null) { row._it = it; const on = () => panelHelp(row); row.addEventListener('mouseenter', on); row.addEventListener('focusin', on); }
       panelRows.push([row, it, sec, det]);
+      }
     }
-    det._sec = sec; det._g = secGroup(sec.sec); grp[det._g].appendChild(det);
+    if (!v43) { det._sec = sec; det._g = secGroup(sec.sec); grp[det._g].appendChild(det); }
   }
+  if (v43) p43RandLinks();
   if (!$('#pHelp')) { const h = document.createElement('div'); h.id = 'pHelp'; h.className = 'phelp'; h.setAttribute('aria-live', 'polite'); host.parentElement.insertBefore(h, host.nextSibling); }
   if (!host._ph) { host._ph = true; host.addEventListener('mouseleave', () => panelHelp(null)); } panelHelp(null);
   refreshVisibility();
@@ -594,8 +615,13 @@ function refreshVisibility() {
   for (const [row, it, sec, det] of panelRows) {
     const vis = itemVisible(it, P) && !(sec.show && !sec.show(P)), chg = vis && rowChanged(it, P, B);
     row.classList.toggle('chg', chg); if (chg) nChg[det._g] = (nChg[det._g] || 0) + 1;
-    row.hidden = !vis || !rowMatches(row, it, sec, q) || (pview.changed && !chg);
+    // 4.3：不起作用的参数变灰、写原因（不藏：藏了反而找不到）；随机行收在本体参数的「随机」下面
+    const key = Array.isArray(it) ? it[0] : it.sel || '', iw = vis && key ? inertWhy(key, P) : '';
+    row._inert = iw; row.classList.toggle('inert', !!iw); if (iw) row.title = '现在不起作用：' + iw; else row.removeAttribute('title');
+    const folded = row._randOf && !pview.ropen[row._randOf] && !q && !(pview.changed && chg);
+    row.hidden = !vis || folded || !rowMatches(row, it, sec, q) || (pview.changed && !chg);
   }
+  if (typeof p43RandSync === 'function') p43RandSync(P);
   document.querySelectorAll('#params details.sec').forEach(det => { const s = det._sec; det.hidden = !!(s.show && !s.show(P)) || ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden);
     if ((q || pview.changed) && !det.hidden) det.open = true; });
   document.querySelectorAll('#params details.pgrp').forEach(g => {
