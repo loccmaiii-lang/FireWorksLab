@@ -13,7 +13,7 @@ function comboLayerM(L) {
 // 每层 L.out = { pc, mobile }：PC 序列 / GPU 光点（只出星头，不要贴图，材质角色 soft_dot，spec 10.B）/ 不出；手机 序列 / 不出（手机不用 GPU 粒子）。
 // 不写 = 两边都是序列，输出和以前逐字一样。
 // 4.2.13：PC 加「单束」（每颗星一个沿速度拉长的面片，贴图是一颗星的序列；走查 D21 / B9）
-const OUT_PC = [['seq', '序列（大面片）'], ['unit', '单束（每颗星一个面片，带尾巴）'], ['dots', 'GPU 光点（只出星头）'], ['off', '不出']], OUT_MOBILE = [['seq', '序列'], ['off', '不出']];
+const OUT_PC = [['seq', '序列（大面片）'], ['unit', '单束（每颗星一个面片，带尾迹）'], ['dots', 'GPU 光点（只出星头）'], ['off', '不出']], OUT_MOBILE = [['seq', '序列'], ['off', '不出']];
 function layerOut(L) { const o = (L && L.out) || {}; return { pc: ['seq', 'unit', 'dots', 'off'].includes(o.pc) ? o.pc : 'seq', mobile: ['seq', 'off'].includes(o.mobile) ? o.mobile : 'seq' }; }
 // 这个平台要出的层：[{ L, b, i（原层号）, dots, unit（PC 单束的那次烘焙，调用方给）}]
 function comboEntries(layers, mobile) {
@@ -126,7 +126,7 @@ function dotsES(L, P, M, fm) {
 }
 function fwlDots(L, P, M, fm) {
   const e = dotsES(L, P, M, fm), j = esFwlEmitter(e, false, 1), f = e.fit, n = Math.round(+P.stars || 0);
-  return { ...j, notes: [`GPU 光点：这一层会亮的星只出星头光点（${f.n} 颗${f.n < n ? `，另外 ${n - f.n} 颗模拟里不发光` : ''}，球面放射），尾巴、闪烁 / 点灭（按亮灭平均）不在里面；出生位置、速度、寿命按模拟里每颗星亮起那一刻定，${e.bursts.length > 1 ? `按亮起先后分 ${e.bursts.length} 批出生、` : ''}之后的运动拟合成线性阻力（阻力 ${r4(f.k)}/s、等效重力 ${r2(f.g)} m/s²）；${f.on > 0.1 ? `第一批在 ${r2(f.on)} s 亮起；` : ''}光点直径 = 炭头 × ${r2(L.dotSize > 0 ? +L.dotSize : 1)}、颜色 = 这一层的颜色 × Ramp 亮端 × 炭头亮度 × ${r2(L.dotBright > 0 ? +L.dotBright : 1)}，是起点，未经 UE 验证`] };
+  return { ...j, notes: [`GPU 光点：这一层会亮的星只出星头光点（${f.n} 颗${f.n < n ? `，另外 ${n - f.n} 颗模拟里不发光` : ''}，球面放射），尾迹、闪烁 / 点灭（按亮灭平均）不在里面；出生位置、速度、寿命按模拟里每颗星亮起那一刻定，${e.bursts.length > 1 ? `按亮起先后分 ${e.bursts.length} 批出生、` : ''}之后的运动拟合成线性阻力（阻力 ${r4(f.k)}/s、等效重力 ${r2(f.g)} m/s²）；${f.on > 0.1 ? `第一批在 ${r2(f.on)} s 亮起；` : ''}光点直径 = 星头 × ${r2(L.dotSize > 0 ? +L.dotSize : 1)}、颜色 = 这一层的颜色 × Ramp 亮端 × 星头亮度 × ${r2(L.dotBright > 0 ? +L.dotBright : 1)}，是起点，未经 UE 验证`] };
 }
 // 引擎回放画光点层：同一份数据，按层缓存出生表
 function dotsTables(e, L) {
@@ -136,7 +136,7 @@ function dotsTables(e, L) {
 }
 function fwlCombo(name, layers, mobile = false) {
   const out = { format: FWL_FORMAT, name, platform: mobile ? 'mobile' : 'pc',
-    source: { tool: '烟花母版烘焙器 ' + VERSION, combo: true, layers: layers.map(({ L, b, dots, unit }) => ({ type: b.P.type, form: dots ? 'dots' : unit ? 'unit' : b.form, renderVer: renderVersion(b.P) })) },
+    source: { tool: '烟花母版烘焙器 ' + VERSION, combo: true, layers: layers.map(({ L, b, dots, unit }) => ({ type: b.P.type, form: dots ? 'dots' : unit ? 'unit' : b.form, renderVer: 40 })) },
     textures: {}, materials: {}, emitters: [], system: { preview_distance_cm: 30000, preview_warmup_s: 1.2 }, notes: [] };
   layers.forEach(({ L, b, i: li, dots, unit }, k) => {
     const i = li == null ? k : li, pre = `L${i + 1}_`;

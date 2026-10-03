@@ -19,7 +19,8 @@ if (!gl || !gl.getExtension('EXT_color_buffer_float')) {
 }
 const PT_MAX = gl.getParameter(gl.ALIASED_POINT_SIZE_RANGE)[1];
 let PPMY = 0;
-let PT_SPAN = 0;       // 画点范围（几倍 σ）；0 = 默认 6σ。尾缀设 10σ，边缘平滑收到 0          // 纵向每米像素数（0 = 与横向相同）；单元序列横竖分别缩放时由烘焙设置
+let PT_GAUSS = 0;     // 4.3：1 = 这一批点画成高斯（升空尾缀 V5 的星头 / 光晕，见 41_particles40.js uGauss）
+let PT_SPAN = 0;   // 4.3：旧光点核的画点范围，现在的光点核不用（保留变量免得别处赋值报错）       // 画点范围（几倍 σ）；0 = 默认 6σ。尾缀设 10σ，边缘平滑收到 0          // 纵向每米像素数（0 = 与横向相同）；单元序列横竖分别缩放时由烘焙设置
 
 function compile(vs, fs) {
   const mk = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o) + '\n' + s); return o; };
@@ -33,21 +34,6 @@ const HDR = '#version 300 es\nprecision highp float;\n';
 const VS_QUAD = HDR + `layout(location=0) in vec2 a; out vec2 v_uv; void main(){ v_uv=a; gl_Position=vec4(a*2.-1.,0.,1.); }`;
 const VS_RECT = HDR + `layout(location=0) in vec2 a; uniform vec4 uRect; uniform vec4 uView; out vec2 v_uv;
 void main(){ v_uv=a; vec2 w=mix(uRect.xy,uRect.zw,a); gl_Position=vec4((w-uView.xy)/uView.zw,0.,1.); }`;
-// uXf：把世界坐标平移旋转到某颗星的随体坐标（单元序列用）
-const VS_PTS = HDR + `layout(location=0) in vec2 aP; layout(location=1) in float aI; layout(location=2) in float aS;
-uniform vec4 uView, uXf; uniform float uPPM, uPPMY; uniform float uMax, uUseXf, uSpan; out float vI; out vec2 vSig; out float vPS;
-void main(){ vec2 sig=max(aS*0.5*vec2(uPPM,uPPMY),vec2(0.55)); float ps=min(ceil(max(sig.x,sig.y)*(uSpan>0.?uSpan:6.))+1.,uMax);
-  vec2 q=aP; if(uUseXf>.5){ vec2 d=q-uXf.xy; q=vec2(d.x*uXf.z-d.y*uXf.w, d.x*uXf.w+d.y*uXf.z); }
-  gl_Position=vec4((q-uView.xy)/uView.zw,0.,1.); gl_PointSize=ps; vI=aI; vSig=sig; vPS=ps; }`;
-// 高斯点：uPPM / uPPMY 分别是横、纵每米像素数（单元序列横竖分别缩放时不同）
-const FS_PTS = HDR + `in float vI; in vec2 vSig; in float vPS; uniform vec4 uChan; uniform float uW; uniform float uPPM, uPPMY, uKernel, uCore; out vec4 o;
-// uKernel = 1：把归一化高斯在整个像素面积上积分（不是只取像素中心），小火星跨像素移动时亮度不跳；uCore：窄亮核占比（移植自 Ultra）
-vec2 erf2(vec2 x){ vec2 sg=sign(x); x=abs(x); vec2 t=1./(1.+.3275911*x); return sg*(1.-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*exp(-x*x)); }
-float coverage(vec2 p, vec2 s){ vec2 v=.5*(erf2((p+.5)/(1.41421356*s))-erf2((p-.5)/(1.41421356*s))); return max(0.,v.x*v.y); }
-void main(){ vec2 p=(gl_PointCoord-.5)*vPS; vec2 d=p/vSig; float g=exp(-.5*dot(d,d))/(6.2831853*vSig.x*vSig.y);
-  if(uKernel>.5) g=mix(coverage(p,vSig),coverage(p,max(vSig*.6,vec2(.25))),uCore);
-  if(vPS>8.*max(vSig.x,vSig.y)+2.) g*=smoothstep(1.,.8,length(gl_PointCoord-.5)*2.);   // 大范围画点：边缘平滑收到 0，不留硬边
-  o=uChan*(vI*g*uPPM*uPPMY*uW); }`;
 // 打包进格子：uPad = 格子边缘留空的像素数（防止 mip/压缩时串到相邻格子）
 const FS_PACK = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform vec4 uM; uniform float uFade, uPad; uniform int uSS; uniform vec2 uCell; out vec4 o;
 void main(){ float m=1.; if(uPad>0.){ vec2 d=min(v_uv,1.-v_uv)*uCell; m=clamp((min(d.x,d.y)-uPad)/uPad,0.,1.); }
@@ -338,20 +324,14 @@ void main(){ if(vFrame<0.){ discard; } vec2 uv=clamp(v_uv,uInset,1.-uInset);
 const FS_HAZE = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform vec2 uDir; uniform float uSig, uK; out vec4 o;
 void main(){ float st=max(1.,uSig/6.), acc=0., ws=0.; for(int i=-24;i<=24;i++){ float x=float(i)*st, w=exp(-.5*x*x/(uSig*uSig)); acc+=texture(uS,v_uv+uDir*x).g*w; ws+=w; } o=vec4(0.,acc/ws*uK,0.,0.); }`;
 const PR = {
-  pts: compile(VS_PTS, FS_PTS), pack: compile(VS_QUAD, FS_PACK), enc: compile(VS_QUAD, FS_ENC), haze: compile(VS_QUAD, FS_HAZE),
-  spk: compile(VS_SPK, FS_PTS), emit: compile(VS_EMIT, FS_PTS), ehead: compile(VS_EHEAD, FS_PTS),
+  pack: compile(VS_QUAD, FS_PACK), enc: compile(VS_QUAD, FS_ENC), haze: compile(VS_QUAD, FS_HAZE),
   rgmat: compile(VS_QUAD, FS_RGMAT), mat: compile(VS_RECT, FS_MAT), unit: compile(VS_UNIT, FS_UNIT),
-  post: compile(VS_QUAD, FS_POST), atlas: compile(VS_QUAD, FS_ATLAS), cell: compile(VS_QUAD, FS_CELL)
+  atlas: compile(VS_QUAD, FS_ATLAS), cell: compile(VS_QUAD, FS_CELL)
 };
 const quadVAO = gl.createVertexArray(); gl.bindVertexArray(quadVAO);
 const qb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, qb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0, 1, 0, 0, 1, 1, 1]), gl.STATIC_DRAW);
 gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
-const ptsVAO = gl.createVertexArray(); gl.bindVertexArray(ptsVAO);
-const pb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, pb);
-gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 16, 0);
-gl.enableVertexAttribArray(1); gl.vertexAttribPointer(1, 1, gl.FLOAT, false, 16, 8);
-gl.enableVertexAttribArray(2); gl.vertexAttribPointer(2, 1, gl.FLOAT, false, 16, 12);
-gl.bindVertexArray(null);
+const pb = gl.createBuffer();      // CPU 光点（星头、闪光）的顶点缓冲，pts40VAO 用（41_particles40.js）
 const bufH = new Float32Array(4 * 30000), bufT = new Float32Array(4 * 450000);
 const emptyVAO = gl.createVertexArray();
 const MAX_TEX = gl.getParameter(gl.MAX_TEXTURE_SIZE);
@@ -408,7 +388,7 @@ function buildTrackRun(P) {
     const ig = st.birth + (st.ign || 0), s0 = P.sparkStart > 0 && st.kind !== 5 ? P.sparkStart : 0, born = ig + s0;
     const death = Math.min(st.birth + (st.vis != null ? st.vis : st.burn), D, P.sparkStop > 0 && st.kind !== 5 && !(P.emberFrac > 0 && P.emberAll) ? ig + P.sparkStop : 1e9);
     // 4.0：落水 / 分砲提前熄灭的星，火花也在那一刻停（问题清单 E3：以前会在原地继续喷）
-    const deathAt = renderVersion(P) >= 40 && st.tDead != null ? Math.min(death, st.tDead) : death;
+    const deathAt = st.tDead != null ? Math.min(death, st.tDead) : death;
     // 末段火花密度：发射率从 rate 线性变到 rate × sparkRateEnd（按整段燃烧，不按截断后的时长）
     const e = st.kind === 5 ? 1 : (P.sparkRateEnd == null ? 1 : P.sparkRateEnd), B = Math.max(0.05, st.birth + (st.vis != null ? st.vis : st.burn) - born), a = st.rate * (e - 1) / (2 * B);
     info[q * 4] = born; info[q * 4 + 1] = deathAt; info[q * 4 + 2] = deathAt > born ? st.rate : 0; info[q * 4 + 3] = a;
@@ -433,7 +413,7 @@ function setAirUniforms(pr, P) {
 }
 // opt：xf = 随体坐标变换 [ox, oy, cos, sin]；mir = 0 无水面 / 1 只剔除水下 / 2 倒影
 function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
-  const P = tr.P, modern = renderVersion(P) >= 40, pr = modern ? PR40.spk : PR.spk, se = sparkEff(P); gl.useProgram(pr.p);
+  const P = tr.P, modern = true, pr = PR40.spk, se = sparkEff(P); gl.useProgram(pr.p);
   gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tr.pos); gl.uniform1i(pr.u.uPos, 2);
   gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tr.vel); gl.uniform1i(pr.u.uVel, 3);
   gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, tr.info); gl.uniform1i(pr.u.uInfo, 4);
@@ -516,7 +496,7 @@ function setEmitCommon(pr, E, t, view, ppm, tw) {
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
 }
 function drawEmit(E, t, view, ppm, chan, w, tw) {
-  const P = E.P, modern = renderVersion(P) >= 40, pr = modern ? PR40.emit : PR.emit, se = sparkEff(P); gl.useProgram(pr.p);
+  const P = E.P, modern = true, pr = PR40.emit, se = sparkEff(P); gl.useProgram(pr.p);
   setEmitCommon(pr, E, t, view, ppm, tw);
   gl.uniform1f(pr.u.uRate, E.rate); gl.uniform1i(pr.u.uMp, E.Mp); gl.uniform1i(pr.u.uMw, E.Mw);
   gl.uniform1f(pr.u.uLife, se.life); gl.uniform1f(pr.u.uK, P.sparkDrag); gl.uniform1f(pr.u.uG, G * P.sparkGrav);
@@ -528,7 +508,7 @@ function drawEmit(E, t, view, ppm, chan, w, tw) {
 }
 function drawEmitHeads(E, t, view, ppm, chan, w, tw) {
   const P = E.P; if (E.mode === 3) return;
-  const modern = renderVersion(P) >= 40, pr = modern ? PR40.ehead : PR.ehead; gl.useProgram(pr.p);
+  const modern = true, pr = PR40.ehead; gl.useProgram(pr.p);
   setEmitCommon(pr, E, t, view, ppm, tw);
   gl.uniform1f(pr.u.uHead, P.headSize); gl.uniform1f(pr.u.uHI, P.headBright); gl.uniform1f(pr.u.uFlick, P.flicker);
   gl.uniform1f(pr.u.uSS, P.subSpeed); gl.uniform1f(pr.u.uSB, P.subBurn); gl.uniform1i(pr.u.uNb, Math.round(P.burstStars || 0));
@@ -556,11 +536,11 @@ class Target {
 function drawQuad() { gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); }
 function drawPoints(buf, n, view, ppm, chan, w, xf) {
   if (!n) return;
-  const modern = particleQuality.modern, pr = modern ? PR40.pts : PR.pts; gl.useProgram(pr.p); gl.bindVertexArray(modern ? pts40VAO : ptsVAO); gl.bindBuffer(gl.ARRAY_BUFFER, pb);
+  const modern = true, pr = PR40.pts; gl.useProgram(pr.p); gl.bindVertexArray(pts40VAO); gl.bindBuffer(gl.ARRAY_BUFFER, pb);
   gl.bufferData(gl.ARRAY_BUFFER, buf.subarray(0, n * 4), gl.DYNAMIC_DRAW);
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
   gl.uniform4fv(pr.u.uXf, xf || [0, 0, 1, 0]); gl.uniform1f(pr.u.uUseXf, xf ? 1 : 0);
-  setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uSpan, PT_SPAN);
+  setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uSpan, PT_SPAN); gl.uniform1f(pr.u.uGauss, PT_GAUSS);
   drawParticleBatch(n, modern);
 }
 // 在超采样缓冲上加线间底光（实时、定帧、烘焙都在 drawFrameSamples40 之后调这一个函数）。ppm = 这个缓冲每米多少像素
@@ -585,35 +565,5 @@ function sizeXY(m, age) { if (m.aniso) { const u = clamp(age / m.duration, 0, 1)
 function bakeView(m, sc = 1) { return [0, m.cy, m.HX * sc, m.HY * sc]; }
 function squareView(m) { const h = Math.max(m.Ww, m.Wh) / 2; return [0, m.cy, h, h]; }
 
-// 合并输出（星头、火花在同一张灰度图里）时，两路各自自动曝光会把「炭头亮度」「火花亮度」抵消掉，
-// 所以自动曝光后再乘回这两个倍数：默认 1 时画面不变，调它们才真正改变星头和尾缀的明暗比例。
+// 合并输出时星头 / 火花两路的亮度倍数（只给尾缀 / 物理的定帧用：85_stills.js 按画面自动曝光后再乘回）
 function combGain(P) { return [P.headBright == null ? 1 : P.headBright, P.sparkBright == null ? 1 : P.sparkBright]; }
-// 按帧定曝光（P.expoMode = 'frames'）：每一帧先取自己的亮部分位（pct），再在所有非空帧里取第 q 分位的那一帧当基准。
-// 整张一起算（旧做法）时，开花最初几帧最亮、最密的那一下定死曝光，中后段整体偏暗，合并输出查 Ramp 后更暗（芯、末段光点看不见）；
-// 按帧取中位偏上，开头最亮那一下允许过曝发白（实拍本来就是），中后段亮度保得住。
-function autoExpoFrames(t, L, target, pct, q) {
-  t.bind(); const W = t.w, buf = new Float32Array(t.w * t.h * 4);
-  gl.readPixels(0, 0, t.w, t.h, gl.RGBA, gl.FLOAT, buf);
-  const cw = t.w / L.cols, chh = t.h / L.rows, peaks = [];
-  for (let f = 0; f < L.F; f++) {
-    const ch = L.chans === 4 ? Math.floor(f / L.per) : 0, k = f % L.per, col = k % L.cols, row = Math.floor(k / L.cols);
-    const x0 = Math.round(col * cw), y0 = Math.round(t.h - (row + 1) * chh), x1 = Math.round(x0 + cw), y1 = Math.round(y0 + chh);
-    const hist = new Uint32Array(512); let cnt = 0;
-    for (let y = y0; y < y1; y += 2) for (let x = x0; x < x1; x += 2) { const v = buf[(y * W + x) * 4 + ch]; if (v > 1e-5) { hist[clamp(Math.floor((Math.log2(v) + 20) * 10), 0, 511)]++; cnt++; } }
-    if (cnt < 8) continue;
-    const need = cnt * pct / 100; let acc = 0, b = 0; for (; b < 512; b++) { acc += hist[b]; if (acc >= need) break; }
-    peaks.push(Math.pow(2, b / 10 - 20));
-  }
-  if (!peaks.length) return 1;
-  peaks.sort((a, b) => a - b);
-  return -Math.log(1 - target) / peaks[Math.min(peaks.length - 1, Math.floor(peaks.length * q))];
-}
-function autoExpo(t, target, pct) {
-  t.bind(); const buf = new Float32Array(t.w * t.h * 4);
-  gl.readPixels(0, 0, t.w, t.h, gl.RGBA, gl.FLOAT, buf);
-  const hist = new Uint32Array(2048); let cnt = 0;
-  for (let i = 0; i < buf.length; i++) { const v = buf[i]; if (v > 1e-5) { hist[clamp(Math.floor((Math.log2(v) + 20) * 40), 0, 2047)]++; cnt++; } }
-  if (!cnt) return 1;
-  const need = cnt * pct / 100; let acc = 0, b = 0; for (; b < 2048; b++) { acc += hist[b]; if (acc >= need) break; }
-  return -Math.log(1 - target) / Math.pow(2, b / 40 - 20);
-}

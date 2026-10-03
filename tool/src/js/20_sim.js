@@ -131,7 +131,7 @@ function riseInfo(P) {
 
 class Sim {
   constructor(P) {
-    this.P = P; this.fam = familyOf(P.type); this.rng = new RNG(P.seed); this.rr = new RNG(P.seed + 9973); this.v40 = renderVersion(P) >= 40;
+    this.P = P; this.fam = familyOf(P.type); this.rng = new RNG(P.seed); this.rr = new RNG(P.seed + 9973);
     this.t = 0; this.stars = []; this.all = []; this.noSparks = P.engine === 'gpu';
     const big = P.type === 'kamuro' || P.type === 'yanagi' || P.type === 'palm';
     this.sp = new Sparks(this.noSparks ? 1 : (big ? 450000 : 250000));
@@ -149,7 +149,7 @@ class Sim {
     // 点火离散用独立随机：不打乱主序列，星位和同种子、不带延时点火的层一一对应
     const ignRng = P.ignSeed ? new RNG(P.ignSeed) : this.rng;
     for (let di = 0; di < dirs.length; di++) {
-      const d = dirs[di], sr = this.v40 ? starRng(this.all.length, P.seed, 21) : this.rng;
+      const d = dirs[di], sr = starRng(this.all.length, P.seed, 21);
       const s = P.v0 * d[3] * (1 + P.speedJit / 100 * sr.n());
       const burn = carrier ? P.subDelay * (1 + P.subJit / 100 * sr.n()) : P.burn * (1 + P.burnJit / 100 * sr.n());
       let vx = d[0] * s + P.shellVx, vy = d[1] * s + P.shellVy, vz = d[2] * s;
@@ -158,7 +158,7 @@ class Sim {
       const r0 = P.burstR0 || 0;
       const st = this.mk(d[0] * r0, d[1] * r0, d[2] * r0, vx, vy, vz, Math.max(0.05, burn), carrier ? 1 : 0, carrier ? P.carrierTail : P.sparkRate, P.headBright * (carrier ? (P.carrierHead != null ? P.carrierHead : 0.4) : 1));
       this.stars.push(st);
-      if (P.ignDelay > 0 && !carrier) { st.ign = Math.max(0, P.ignDelay * (1 + P.ignJit / 100 * (2 * (this.v40 && !P.ignSeed ? starHash(st.id, P.seed, 13) : ignRng.u()) - 1))); st.burn += st.ign; }
+      if (P.ignDelay > 0 && !carrier) { st.ign = Math.max(0, P.ignDelay * (1 + P.ignJit / 100 * (2 * (!P.ignSeed ? starHash(st.id, P.seed, 13) : ignRng.u()) - 1))); st.burn += st.ign; }
       // 第二段（分层星内层）：主段 burn 期间不发光、轨迹与主层相同；主段烧完后接着亮 afterBurn 秒（红点灭余烬）
       if (P.afterBurn > 0 && !carrier) { st.mref = st.burn; st.st1 = st.burn; st.burn += P.afterBurn * Math.max(0.2, 1 + P.afterJit / 100 * (2 * starHash(st.id, P.seed, 11) - 1)); }
       // 单元序列：星熄灭后粒子继续按轨迹运动（Cascade 里粒子不会停），只是不再发光、不再发火花
@@ -176,9 +176,9 @@ class Sim {
     this.flashes.push({ t0: 0, x: 0, y: 0, I: 0.4, sig: 3 });
   }
   mk(x, y, z, vx, vy, vz, burn, kind, rate, I) {
-    const id = this.all.length, rr = this.v40 ? starRng(id, this.P.seed, 3) : this.rng;
+    const id = this.all.length, rr = starRng(id, this.P.seed, 3);
     const s = { x, y, z, vx, vy, vz, age: 0, burn, kind, rate, I, flick: 1, alive: true, birth: this.t, id, ign: 0, ph: rr.u(), ph2: rr.u(), c: this.c };
-    if (this.v40) s.rng = rr;
+    s.rng = rr;
     if (this.P.keepFrac < 1 && kind !== 1 && kind !== 5 && starHash(s.id, this.P.seed, 5) >= this.P.keepFrac) { s.dark = true; s.rate = 0; }
     this.all.push(s);
     if (this.P.type === 'hachi') {
@@ -188,7 +188,7 @@ class Sim {
     return s;
   }
   subBurst(s) {
-    const P = this.P, rng = this.v40 ? starRng(s.id, P.seed, 31) : this.rng;
+    const P = this.P, rng = starRng(s.id, P.seed, 31);
     let dirs;
     if (P.subPattern === 'cross') {
       // 十字：在垂直于速度的平面里取四个方向
@@ -225,9 +225,10 @@ class Sim {
     this.flashes.push({ t0: this.t, x: s.x, y: s.y, I: 0.15, sig: 1.2 }); this.events.push([this.t, 'pop']);
   }
   crackleBurst(s) {
-    const P = this.P, rng = this.v40 ? starRng(s.id, P.seed, 41) : this.rng;
+    const P = this.P, rng = starRng(s.id, P.seed, 41);
     for (let i = 0; i < P.crackle; i++) {
-      const dt = P.crackleDelay * (0.3 + 1.4 * rng.u()), d = randUnit(rng), r = 0.5 + 3 * rng.u();
+      // 4.3 爆裂范围 / 速度（用户 10-03 选「加」）：小闪离星最远 crackleR 米（最近 = 1/7），每晚 1 秒往外多飞 crackleV 米；默认 3.5 / 0 = 以前的 0.5–3.5 m、不动（逐位不变）
+      const dt = P.crackleDelay * (0.3 + 1.4 * rng.u()), d = randUnit(rng), r = (0.5 + 3 * rng.u()) * (P.crackleR == null ? 1 : P.crackleR / 3.5) + (+P.crackleV || 0) * dt;
       this.flashes.push({ t0: this.t + dt, x: s.x + s.vx * dt * 0.3 + d[0] * r, y: s.y + s.vy * dt * 0.3 + d[1] * r, abs: 2.2 * (0.6 + 0.8 * rng.u()), sig: 0.35 + 0.3 * rng.u(), tau: 0.012, cut: 0.07 });
     }
     this.events.push([this.t + P.crackleDelay, 'crackle']);
@@ -250,11 +251,11 @@ class Sim {
       const rx = s.vx - ax, ry = s.vy - ay, rz = s.vz, v = Math.hypot(rx, ry, rz);
       // 燃烧减质量：星体半径随燃烧线性变小，阻力系数 ∝ 1/半径
       let c = s.c; if (P.massLoss > 0 && s.kind !== 5) c /= Math.max(0.15, 1 - P.massLoss * clamp((s.age - s.ign) / Math.max(0.05, (s.mref != null ? s.mref : s.vis != null ? s.vis : s.burn) - s.ign), 0, 1));
-      if (this.v40) {
-        // 4.0：二次阻力半隐式（相对风速度按 1/(1 + c·v·h) 衰减），不会因为终端速度很小而反号发散成 NaN（问题清单 E4）
+      {
+        // 二次阻力半隐式（相对风速度按 1/(1 + c·v·h) 衰减），不会因为终端速度很小而反号发散成 NaN（问题清单 E4）
         const k = 1 / (1 + c * v * h);
         s.vx = ax + rx * k; s.vy = ay + ry * k + (s.kind === 5 ? -G : s.grav != null ? -G * s.grav : gy) * h; s.vz = rz * k;
-      } else { s.vx -= c * v * rx * h; s.vy += (-c * v * ry + (s.kind === 5 ? -G : s.grav != null ? -G * s.grav : gy)) * h; s.vz -= c * v * rz * h; }
+      }
       if (bee) {
         const th = s.om * h, co = Math.cos(th), si = Math.sin(th);
         const ax2 = s.ax, ay2 = s.ay, az2 = s.az, vx = s.vx, vy = s.vy, vz = s.vz;
@@ -372,7 +373,7 @@ class Sim {
       if (P._unit && f.abs == null) continue;      // 单元序列不含开花闪光（另挂）
       let I = f.abs != null ? f.abs * Math.exp(-a / f.tau) : f.I * Math.exp(-a / 0.035) * 1.5 * 6.2832 * f.sig * f.sig;
       // 旧闪光预乘高斯面积以表达峰值亮度；新核直接接收面亮度，必须还原单位，不能再乘一次面积。
-      if(P.renderVer>=40)I/=6.2832*f.sig*f.sig;
+      I/=6.2832*f.sig*f.sig;
       push(bufH, nh++, f.x, f.y, I, f.sig * 2);
       if (refl > 0 && f.y >= 0) push(bufH, nh++, f.x, -f.y - 0.01, I * refl, f.sig * 2.6);
     }

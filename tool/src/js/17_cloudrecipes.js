@@ -20,9 +20,9 @@ const CLOUD_RECIPES=[
   {id:'lime_core',name:'金蕊青柠星',note:'外层橙色短尾转青柠，金色芯；这是云端结构起点，尚未按参考精调。',layers:()=>[
     {...cloudLayer('青柠外层','kiku',{stars:150,burn:3.1,duration:3.6,sparkStop:.6,headDim:.22,headDimUntil:.6,seed:72},'#e6ff3a'),m:{stages:[[0,'#ff9a47'],[.6,'#e6ff3a']],xw:.12}},
     cloudLayer('金芯','kiku',{stars:70,v0:45,vt:18,burn:2.8,duration:3.6,sparkLife:.3,flash:0,seed:73},'#ffd179')]},
-  {id:'silver_crown',name:'银冠',note:'冷白长尾与余烬下垂成冠。',layers:()=>[cloudLayer('银冠','kamuro',{T0:2800,cooling:.28,sparkLife:1.3,emberFrac:.4,emberLife:3,emberBright:.22,exposure:4},'#e8ecff',true)]},
-  {id:'gold_crown',name:'金冠',note:'锦冠的金色配方，保留长尾和下垂。',layers:()=>[cloudLayer('金冠','kamuro',{exposure:4,emberFrac:.35,emberLife:3,emberBright:.2},'#ffcb83')]},
-  {id:'gold_willow',name:'金柳',note:'金色长尾展开后缓慢下垂。',layers:()=>[cloudLayer('金柳','yanagi',{v0:150,vt:17,massLoss:.2,sparkLife:1.6,exposure:3},'#ffd797')]},
+  {id:'silver_crown',name:'银冠',note:'冷白长火花与余烬下垂成冠。',layers:()=>[cloudLayer('银冠','kamuro',{T0:2800,cooling:.28,sparkLife:1.3,emberFrac:.4,emberLife:3,emberBright:.22,exposure:4},'#e8ecff',true)]},
+  {id:'gold_crown',name:'金冠',note:'锦冠的金色配方，保留长火花和下垂。',layers:()=>[cloudLayer('金冠','kamuro',{exposure:4,emberFrac:.35,emberLife:3,emberBright:.2},'#ffcb83')]},
+  {id:'gold_willow',name:'金柳',note:'金色长火花展开后缓慢下垂。',layers:()=>[cloudLayer('金柳','yanagi',{v0:150,vt:17,massLoss:.2,sparkLife:1.6,exposure:3},'#ffd797')]},
   {id:'silver_willow',name:'银柳',note:'柳形轨迹与冷白细尾，展开后缓慢下垂。',layers:()=>[cloudLayer('银柳','yanagi',{v0:150,vt:17,massLoss:.2,sparkLife:1.6,T0:2800,cooling:.25,exposure:.7},'#eef2ff',true)]},
   {id:'four_colors',name:'四色牡丹 · 混合',note:'同一爆点四组独立色星，每色一层。当前是混合分布；实拍的扇区分色尚未实现。',layers:()=>cloudFourColors()},
   {id:'crackle_core',name:'霹雳芯',note:'金色亲星包围中心爆裂星；这里只预览光效，不包含声音。',layers:()=>[
@@ -55,7 +55,7 @@ const CLOUD_RECIPES=[
 function cloudRecipe(id){
   const r=CLOUD_RECIPES.find(r=>r.id===id);if(!r||!r.layers)throw new Error(r?r.missing:'未知配方');
   return {id:r.id,name:r.name,note:r.note,source:'协作/花型配方总表.md',layers:r.layers().map(l=>{
-    const d=defaultsFor(l.type,40),P=derive({...d.P,renderVer:40,exposure:3,cols:4,rows:4,texW:2048,texH:2048,form:'master',outMode:'split',autoGrid:0,frameMode:'uniform',...l.p});
+    const d=defaultsFor(l.type),P=derive({...d.P,renderVer:40,exposure:3,cols:4,rows:4,texW:2048,texH:2048,form:'master',outMode:'split',autoGrid:0,frameMode:'uniform',...l.p});
     const M=normalizeM({...d.M,...l.m},l.type);
     return {name:l.name,P,M,delay:l.delay||0,origin:[...l.origin]};
   })};

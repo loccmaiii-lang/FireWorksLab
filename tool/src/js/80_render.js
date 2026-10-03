@@ -123,8 +123,8 @@ function post(split = -1, P = state.P, viewport = null) {
   gl.bindTexture(gl.TEXTURE_2D, hdrT.tex); gl.generateMipmap(gl.TEXTURE_2D);
   const useRef = state.tab !== 'combo' && uploadRef();
   gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(...(viewport||[0,0,canvas.width,canvas.height]));
-  const modern=renderVersion(P)>=40, pr = modern?PR40.post:PR.post, R = state.ref; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, hdrT.tex);
-  if(modern)gl.uniform1f(pr.u.uBloom,P.previewBloom?1:0);
+  const pr = PR40.post, R = state.ref; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, hdrT.tex);
+  gl.uniform1f(pr.u.uBloom,P.previewBloom?1:0);
   gl.uniform1i(pr.u.uS, 0); gl.uniform1f(pr.u.uX, state.expo); gl.uniform2f(pr.u.uTx, 1 / hdrT.w, 1 / hdrT.h);
   gl.activeTexture(gl.TEXTURE6); gl.bindTexture(gl.TEXTURE_2D, refTex); gl.uniform1i(pr.u.uRef, 6); gl.activeTexture(gl.TEXTURE0);
   gl.uniform1f(pr.u.uRefMode, useRef ? R.mode : 0); gl.uniform1f(pr.u.uRefA, R.alpha); gl.uniform1f(pr.u.uWipe, R.wipe);
@@ -132,15 +132,7 @@ function post(split = -1, P = state.P, viewport = null) {
   drawQuad();
 }
 let hudText = '', hudB = '';
-// A/B：左半画 A，右半画 B（剪裁）
-function halves(fnA, fnB) {
-  if (!fnB) { fnA(); return; }
-  gl.enable(gl.SCISSOR_TEST);
-  gl.scissor(0, 0, hdrT.w >> 1, hdrT.h); fnA();
-  gl.scissor(hdrT.w >> 1, 0, hdrT.w - (hdrT.w >> 1), hdrT.h); fnB();
-  gl.disable(gl.SCISSOR_TEST);
-}
-// 实时物理：aerial/rise 用 CPU 星体 + GPU 火花；地面类用循环发射器
+// 实时模拟：尾缀 / 物理尾缀走自己的渲染器，其余（空中、上升、地面）走 renderLive40 同一套
 function liveBox(P, slot) {
   if (slot.boxGen === slot.gen && slot.box) return slot.box;
   const fm = measure({ ...P }); slot.box = [fm.x0, fm.x1, fm.y0, fm.y1]; slot.boxGen = slot.gen; return slot.box;
@@ -154,13 +146,8 @@ function prepSlot(slot, P, gen) {
   slot.gen = gen; slot.P = P; slot.box = null;
 }
 function drawLiveScene(slot, P, t, view, ppm) {
-  const fam = familyOf(P.type), gpu = P.engine === 'gpu';
   setParticleProfile(P);
   if (isPhys(P)) return drawPhysTrail(slot, P, t, view, ppm);
-  if (renderVersion(P)>=40 && !isTrail(P)) {
-    const R=liveRenderer40(slot,P); drawFrameSamples40(P,slot.plan40,R,t,view,ppm);
-    return {stars:P.stars,sparks:R.slots||0};
-  }
   if (isTrail(P)) {
     // 随体坐标里实时模拟：上升段连续播放，到顶后按 20 fps 版本的消散时长熄灭
     const T = riseInfo(P).ta, F = layoutOf(P).F;
@@ -170,26 +157,8 @@ function drawLiveScene(slot, P, t, view, ppm) {
     else { trailFadeSetup(R, P, fEnd, F / 20); R.frameT = null; R.draw(R.stop + (t - T), view, ppm, 1, 0, 0); }
     return { stars: 1, sparks: R.slots };
   }
-  if (fam === 'ground') {
-    if (!slot.E) slot.E = buildEmitter(P);
-    drawEmitHeads(slot.E, t, view, ppm, [1, 0, 0, 0], 1, ++live.tw);
-    drawEmit(slot.E, t, view, ppm, [0, 1, 0, 0], 1, ++live.tw);
-    return { stars: 0, sparks: slot.E.total };
-  }
-  if (!slot.sim || t < slot.sim.t - 1e-6) slot.sim = new Sim({ ...P });
-  if (gpu && !slot.track) slot.track = buildTrack(P);
-  const sim = slot.sim, W = Math.max(1 / 480, P.shutter * (1 / 60) * Math.max(state.speed, 0.25)), nsub = 3;
-  let guard = 0; while (sim.t < t - W - 1e-9 && guard++ < 40000) sim.step(H_STEP);
-  let nh = 0, nt = 0;
-  for (let j = 0; j < nsub; j++) {
-    const ts = Math.max(0, t - W + (j + 0.5) * W / nsub);
-    while (sim.t < ts - 1e-9) sim.step(H_STEP);
-    [nh, nt] = sim.gather(bufH, bufT);
-    drawPoints(bufH, nh, view, ppm, [1, 0, 0, 0], 1 / nsub);
-    if (gpu) drawSparksGPU(slot.track, ts, view, ppm, [0, 1, 0, 0], 1 / nsub, ++live.tw);
-    else drawPoints(bufT, nt, view, ppm, [0, 1, 0, 0], 1 / nsub);
-  }
-  return { stars: sim.stars.filter(s => s.alive).length, sparks: gpu ? slot.track.total : sim.sp.n };
+  const R = liveRenderer40(slot, P); drawFrameSamples40(P, slot.plan40, R, t, view, ppm);
+  return { stars: P.stars, sparks: R.slots || 0 };
 }
 function sceneView(P, m, slot) {
   if (isPhys(P)) {
@@ -210,7 +179,7 @@ function unionView(a, b) {
 function renderLive() {
   if (isEmit(state.P)) return renderEmitLive();
   const P = state.P, m = state.bake && state.bake.meta;
-  if (renderVersion(P)>=40 && !isTrail(P) && !isPhys(P)) return renderLive40();
+  if (!isTrail(P) && !isPhys(P)) return renderLive40();
   if (!m) { hdrT.clear(); post(); hudText = '首次烘焙中…'; hudB = ''; return; }
   const sa = liveSlot('A'); prepSlot(sa, P, state.gen);
   const t = Math.min(state.view==='export'?engineTick(state.t):state.t, P.duration);
@@ -220,10 +189,10 @@ function renderLive() {
   additive(false);
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   const pr = PR.rgmat; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, rgT.tex); gl.uniform1i(pr.u.uS, 0);
-  gl.uniform1f(pr.u.uEH, renderVersion(P)>=40?fixedExposure(P):m.expoH); gl.uniform1f(pr.u.uET, renderVersion(P)>=40?fixedExposure(P):m.expoT); gl.uniform1f(pr.u.uG, P.encGamma); gl.uniform1f(pr.u.uComb, P.outMode === 'combined' ? 1 : 0);
+  gl.uniform1f(pr.u.uEH, fixedExposure(P)); gl.uniform1f(pr.u.uET, fixedExposure(P)); gl.uniform1f(pr.u.uG, P.encGamma); gl.uniform1f(pr.u.uComb, P.outMode === 'combined' ? 1 : 0);
   setMatUniforms(pr, state.M, t); drawQuad();
   post(-1);
-  hudText = isPhys(P) ? `升空尾缀 · 物理实时模拟 · 飞行 ${Math.min(t, P.phT).toFixed(2)} / ${P.phT} s${t > P.phT ? '（已开花，火星燃尽中）' : ''} · 画面里火星 ${info.sparks.toLocaleString()} 颗 · 视野 ${P.phView} m`
+  hudText = isPhys(P) ? `升空尾缀 · 物理实时模拟 · 飞行 ${Math.min(t, P.phT).toFixed(2)} / ${P.phT} s${t > P.phT ? '（已开花，火花燃尽中）' : ''} · 画面里火花 ${info.sparks.toLocaleString()} 颗 · 视野 ${P.phView} m`
     : `实时物理 · ${P.engine === 'gpu' ? 'GPU' : 'CPU'} · 星 ${info.stars} · 火花槽位 ${info.sparks.toLocaleString()}`;
   hudB = '';
 }
@@ -308,7 +277,7 @@ function renderAtlas() {
   const L = b.meta.L, show = state.atlasLayer === 'tail' && b.tail ? b.tail : b.head, f = frameIdx(b.meta, state.t - (b.meta.t0 || 0));
   if (state.atlasFlow) { renderAtlasFlow(b0, b, show, f); return; }
   drawAtlasQuad(b, show, f, canvas.width, null);
-  hudText = `${b.tail ? (show === b.tail ? '拖尾' : '星头') : '合并'}贴图${b0.next ? ` 第 ${bakeParts(b0).indexOf(b)+1} / ${bakeParts(b0).length} 张` : ''} ${b.P.texW}×${b.P.texH} · ${L.cols}×${L.rows} 格 · 金框 = 当前帧 · 红色 = 过曝像素`; hudB = '';
+  hudText = `${b.tail ? (show === b.tail ? '尾迹' : '星头') : '合并'}贴图${b0.next ? ` 第 ${bakeParts(b0).indexOf(b)+1} / ${bakeParts(b0).length} 张` : ''} ${b.P.texW}×${b.P.texH} · ${L.cols}×${L.rows} 格 · 金框 = 当前帧 · 红色 = 过曝像素`; hudB = '';
 }
 // 贴图流转：左边放大当前格，右边整张贴图上金框走动（淡框 = 刚走过的格），下面是帧号曲线
 function renderAtlasFlow(b0, b, show, f) {
@@ -379,7 +348,7 @@ function renderComboLive() {
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   let n = 0;
   // 4.2.20：几层一起算显卡负担，超预算时每层都少画几个快门子样本（见 48_render40.js liveCtl）
-  let work = 0; items.forEach(([L, e, i]) => { const age = (state.t - (L.delay || 0)) * (L.rate || 1); if (age < 0 || age > e.P.duration || !layerShown(i)) return; const R = renderVersion(e.P) >= 40 && !isTrail(e.P) && !isPhys(e.P) ? liveRenderer40(liveSlot('combo' + i), e.P) : null; work += R ? trackDraws(R.track, e.P) + (e.P.stars || 0) : 0; });
+  let work = 0; items.forEach(([L, e, i]) => { const age = (state.t - (L.delay || 0)) * (L.rate || 1); if (age < 0 || age > e.P.duration || !layerShown(i)) return; const R = !isTrail(e.P) && !isPhys(e.P) ? liveRenderer40(liveSlot('combo' + i), e.P) : null; work += R ? trackDraws(R.track, e.P) + (e.P.stars || 0) : 0; });
   LIVE_CAP = liveCapFor(work); LIVE_VIEW = true;
   try {
   items.forEach(([L, e, i]) => {
@@ -389,7 +358,7 @@ function renderComboLive() {
     rgT.clear(); rgT.bind(); additive(true);
     drawLiveScene(liveSlot('combo' + i), P, age, vL, ppm);
     additive(false);
-    if (renderVersion(P) >= 40) hazeSamples40(P, rgT, ppm);   // 线间底光（每层自己的）
+    hazeSamples40(P, rgT, ppm);   // 线间底光（每层自己的）
     hdrT.bind(); additive(true);
     const pr = PR.rgmat, m = e.bake.meta; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, rgT.tex); gl.uniform1i(pr.u.uS, 0);
     gl.uniform1f(pr.u.uEH, m.expoH); gl.uniform1f(pr.u.uET, m.expoT); gl.uniform1f(pr.u.uG, e.bake.P.encGamma || 1); gl.uniform1f(pr.u.uComb, e.bake.P.outMode === 'combined' ? 1 : 0);
@@ -466,7 +435,8 @@ function curDuration() {
   if(state.showcase && showcase.recipe)return Math.max(...showcase.layers.map(l=>l.delay+bakeTotal(l.b)));
   if (state.tab === 'combo') return comboDuration();
   if (state.tab === 'asset') return assetDuration();
-  let d = !state.dirty && state.bake && renderVersion(state.P)>=40 && !isEmit(state.P)?bakeTotal(state.bake):state.P.duration;
+  // 时间轴：空中花型按烘焙结果的总时长（入点出点、裁首尾）；尾缀 / 地面 / 上升的烘焙结果只有一个循环周期，按参数时长（4.3 去 3.7 时保留这个区别）
+  let d = !state.dirty && state.bake && familyOf(state.P.type) === 'aerial' && !isEmit(state.P)?bakeTotal(state.bake):state.P.duration;
   return d;
 }
 function loop(now) {
@@ -494,10 +464,10 @@ function loop(now) {
   $('#atlasSeg').hidden = !mv || state.view !== 'atlas' || !(ab && ab.tail);
   $('#segSeg').hidden = !mv || state.view !== 'atlas' || !(ab && ab.next);
   $('#flowSeg').hidden = !mv || state.view !== 'atlas'; $('#flowCv').hidden = !mv || state.view !== 'atlas' || !state.atlasFlow;
-  $('#dispSeg').hidden = state.tab==='asset' ? false : state.view !== 'export' && !(state.view==='live' && ((renderVersion(state.P)>=40 && familyOf(state.P.type)==='aerial' && ['master','segments'].includes(state.P.form)) || isEmit(state.P)));
+  $('#dispSeg').hidden = state.tab==='asset' ? false : state.view !== 'export' && !(state.view==='live' && ((familyOf(state.P.type)==='aerial' && ['master','segments'].includes(state.P.form)) || isEmit(state.P)));
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
   $('#platformSeg').hidden = !state.showcase && (state.tab==='asset' || (mv && isPhys(state.P)));
-  $('#resolutionBox').hidden = !mv || state.view!=='live' || renderVersion(state.P)<40 || isTrail(state.P) || isPhys(state.P) || isEmit(state.P);
+  $('#resolutionBox').hidden = !mv || state.view!=='live' || isTrail(state.P) || isPhys(state.P) || isEmit(state.P);
   refSync();
   try { stageTick(D); } catch (e) { console.error(e); }
   perfTick(dt);

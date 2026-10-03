@@ -17,7 +17,7 @@ JS = r"""
 async (a) => { const d = defaultsFor(a.type); const P = { ...d.P };
   if (familyOf(P.type) !== 'aerial') return { skip: true };
   const r = await renderStills(P, d.M, { times: a.fracs.map(f => f * P.duration), px: a.px });
-  return { renderVer: renderVersion(P), exposure: P.exposure, duration: P.duration, pngs: r.map(x => x.png) }; }
+  return { renderVer: 40, exposure: P.exposure, duration: P.duration, pngs: r.map(x => x.png) }; }
 """
 
 

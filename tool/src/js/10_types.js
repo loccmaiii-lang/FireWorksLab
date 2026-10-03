@@ -4,9 +4,11 @@
 const VERSION = '4.2.29';
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
-const OUTPUT_VER = { master: '4.2.7', emitset: '4.2.2', riseLoop: '4.2.2', trail: '4.0', unit: '4.0', loop: '4.0', v37: '3.7' };
+// 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
+const OUTPUT_VER = { master: '4.2.7', emitset: '4.2.2', riseLoop: '4.3', trail: '4.3', unit: '4.0', loop: '4.3' };
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
+  blank: ['空白发射器', 'Blank', 'aerial'],
   kiku: ['菊', 'Kiku', 'aerial'], botan: ['牡丹（芯）', 'Botan', 'aerial'], kamuro: ['锦冠', 'Kamuro', 'aerial'], yanagi: ['柳', 'Yanagi', 'aerial'],
   senrin: ['千轮', 'Senrin', 'aerial'], hachi: ['蜂', 'Hachi', 'aerial'], palm: ['椰子', 'Palm', 'aerial'], henka: ['变色菊（5 段）', 'Henka', 'aerial'],
   strobe: ['点灭星', 'Strobe', 'aerial'], glitter: ['辉星', 'Glitter', 'aerial'], crackle: ['爆裂星', 'Crackle', 'aerial'], matsuba: ['松叶', 'Matsuba', 'aerial'],
@@ -20,6 +22,7 @@ const TYPE_INFO = {
   fan: ['扇形', 'Fan', 'ground'], barrage: ['连发', 'Barrage', 'ground'], shikake: ['仕掛け（文字/图案）', 'Shikake', 'ground']
 };
 const TYPE_GROUPS = [
+  ['从零搭', ['blank']],     // 4.3（需求重梳 2026-10-03 第 6 条）：空白发射器，只有星，其余模块按需「+ 添加模块」
   ['礼花', ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'palm', 'henka']],
   ['效果星', ['strobe', 'glitter', 'crackle', 'matsuba', 'crossette', 'ochiba', 'jisa']],
   ['形状', ['ring', 'saturn', 'kata', 'water']],
@@ -30,11 +33,30 @@ const FAMILY_LABEL = { aerial: '礼花', rise: '升空尾缀', ground: '地面 �
 const TYPE_NAMES = Object.fromEntries(Object.entries(TYPE_INFO).map(([k, v]) => [k, v[0]]));
 const TYPE_EN = Object.fromEntries(Object.entries(TYPE_INFO).map(([k, v]) => [k, v[1]]));
 const familyOf = t => (TYPE_INFO[t] || TYPE_INFO.kiku)[2];
+// 空白发射器能加的模块：add = 加上时填的值（按菊的模板，加了马上看得到），off = 去掉时恢复成不起作用的值
+const BLANK_MODS = {
+  '火花': { add: { sparkRate: 95 }, off: { sparkRate: 0, emberFrac: 0 }, what: '星烧的时候喷出的火花（子发射器）：生成率、寿命、继承速度、阻力、大小、亮度' },
+  '尾迹外形': { needs: '火花', add: {}, off: { tailJit: 0, tailShoulder: 0, tailWidth: 1, tailPinchHead: 0, tailPinchTail: 0, tailBellyAt: 0.45, headTear: 0, tailDiffuse: 0, sparkRise: 0, starBright: 0, tailHaze: 0 }, what: '火花连成的尾迹：粗细、收尖、亮肩、线间底光、扩散' },
+  '烟花特性': { add: {}, off: { strobeHz: 0, glitter: 0, crackle: 0, branch: 0, flutter: 0, emberFrac: 0 }, what: '点灭、辉星、爆裂、松叶分叉、飘落、余烬（加了以后各项默认 0，拨哪项开哪项）' },
+};
+const isBlank = P => !!P && P.type === 'blank';
+const blankHas = (P, mod) => !isBlank(P) || !BLANK_MODS[mod] || (P.mods || []).includes(mod);
+function blankAddModule(P, mod) {
+  const d = BLANK_MODS[mod]; if (!isBlank(P) || !d || (P.mods || []).includes(mod)) return false;
+  if (d.needs && !(P.mods || []).includes(d.needs)) blankAddModule(P, d.needs);
+  P.mods = [...(P.mods || []), mod]; Object.assign(P, d.add); return true;
+}
+function blankRemoveModule(P, mod) {
+  const d = BLANK_MODS[mod]; if (!isBlank(P) || !d || !(P.mods || []).includes(mod)) return false;
+  for (const [m, x] of Object.entries(BLANK_MODS)) if (x.needs === mod) blankRemoveModule(P, m);
+  P.mods = (P.mods || []).filter(m => m !== mod); Object.assign(P, d.off); return true;
+}
 
 const BASE = {
   renderVer: 40,
   exposure: 1, exposureLock: 0, haloFrac: .22, haloR: 3, previewBloom: 0,
   trimTail: 1,
+  mods: [],     // 空白发射器加了哪些模块（别的花型不用）
   duration: 3.2, seed: 7, stars: 150, burstR0: 0, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
   burn: 2.5, burnJit: 12, fade: 0.2, lastFlare: 0.35, flash: 1,
   headSize: 1.0, headBright: 1, flicker: 0.25,
@@ -49,9 +71,9 @@ const BASE = {
   // 星效果
   ignDelay: 0, ignJit: 10, ignSeed: 0, keepFrac: 1, afterBurn: 0, afterJit: 15, headDim: 1, headDimUntil: 0,
   emberFrac: 0, emberLife: 3, emberBright: 0.1, emberFollow: 0, emberSize: 1, emberAll: 0, emberEnd: 0,
-  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, tailJit: 0, tailShoulder: 0, tailWidth: 1, tailPinchHead: 0, tailPinchTail: 0, tailBellyAt: 0.45, headTear: 0, tailDiffuse: 0, tailDiffuseScale: 20, sparkRise: 0, starBright: 0, tailHaze: 0, tailHazeR: 6, frameCount: 24, outPack: 'grid', outCell: 0, cutIn: 0, cutOut: 0, preRoll: 1, preFrom: -1, visTo: 0, preScale0: 0, prePivot: 0, expoMode: 'sheet', expoQ: 0.7, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
+  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, tailJit: 0, tailShoulder: 0, tailWidth: 1, tailPinchHead: 0, tailPinchTail: 0, tailBellyAt: 0.45, headTear: 0, tailDiffuse: 0, tailDiffuseScale: 20, sparkRise: 0, starBright: 0, tailHaze: 0, tailHazeR: 6, frameCount: 24, outPack: 'grid', outCell: 0, cutIn: 0, cutOut: 0, preRoll: 1, preFrom: -1, visTo: 0, preScale0: 0, prePivot: 0, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
   strobeHz: 0, strobeDuty: 0.35, strobeStart: 0.4, glitter: 0, glitterDelay: 0.25,
-  crackle: 0, crackleDelay: 0.3, branch: 0, branchAt: 0.45, flutter: 0, flutterHz: 0.7,
+  crackle: 0, crackleDelay: 0.3, crackleR: 3.5, crackleV: 0, branch: 0, branchAt: 0.45, flutter: 0, flutterHz: 0.7,
   // 上升
   riseH: 250, vtShell: 55, riseStyle: 'gold', wobble: 0, wobbleHz: 1.6, kobanaN: 4, bunpoN: 3,
   // 升空尾缀序列（上升产物「尾缀序列」）：弹体随体坐标里的星头 + 多层火花，周期性发射（真循环），开花后消散
@@ -89,9 +111,9 @@ const BASE = {
   // 慢下来每帧多停几个 tick（最多 maxHold 个），放不下才自动加张。三档帧率 / 全程 30 fps 是可选的预算方式。
   frameBudget: 'motion', pageTarget: 1, maxHold: 4, maxHoldBurn: 3,
   fpsBurst: 30, burstSec: 0.5, fpsActive: 15, fpsFade: 10, fadeAt: 0, maxPages: 0, fitPages: 1,
-  qSS: 2, qHz: 300, qMaxSub: 16, qKernel: 0, qCore: 0,   // 画质（05_quality.js）：默认 = 3.7 原做法
+  qSS: 2, qHz: 300, qMaxSub: 16,   // 画质（05_quality.js）
   texW: 2048, texH: 2048, cols: 8, rows: 8, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'auto', zoom: 'on', engine: 'gpu',
-  form: 'master', segAt: 0, unitElev: 0, unitFlip: 0, cellPad: 2, autoGrid: 1
+  form: 'master', unitElev: 0, unitFlip: 0, cellPad: 2, autoGrid: 1
 };
 const RAMP_POS = [0, 0.3, 0.65, 1];
 // 颜色：stages = [[时刻 s, 颜色], …]，最多 5 段；xw = 变色过渡时长
@@ -105,6 +127,8 @@ const FLAME = [
 const IGNITE_ORANGE = '#ff8a2e';
 const GROUND_RAMP = { ramp1: '#8a3208', ramp2: '#ffc266', ramp3: '#fff0d2' };
 const TYPES = {
+  // 空白发射器：只有星（发射器、生成、寿命、形状、初速、阻力重力、星头）；火花、尾迹外形、烟花特性没加之前不起作用（火花生成率 0、特性全 0）
+  blank: { p: { stars: 60, sparkRate: 0, emberFrac: 0, lastFlare: 0, flash: 0.6, burnJit: 8, mods: [] }, m: { stages: [[0, '#ffd797']] } },
   kiku: { p: {}, m: {} },
   botan: { p: { duration: 2.8, stars: 90, sparkRate: 0, headSize: 1.4, burn: 2.4, flicker: 0.2, lastFlare: 0.3 }, m: { stages: [[0, '#ffc766'], [1.35, '#dfe8ff']] } },
   kamuro: { p: { duration: 5.2, stars: 110, v0: 220, vt: 24, burn: 3.8, burnJit: 7, fade: 0.55, lastFlare: 0, headBright: 0.5, headSize: 0.9, sparkRate: 230, sparkLife: 1.1, sparkSpread: 1.4, sparkInherit: 0.25, sparkDrag: 1.5, T0: 1950, cooling: 0.35, sparkSize: 0.3, massLoss: 0.3 }, m: { ramp1: '#8a3208', ramp2: '#ffc266', ramp3: '#fff0d2' } },
@@ -148,7 +172,7 @@ const TYPES = {
     // 第 4 版（对话框11，10-02 19:25：一半细火星烘进贴图、星头光晕、末段爆亮、发射口）
     rtFTex: 0.5, rtTexI: 40, rtGlow: 0.45, rtGlowSize: 14, rtPopRate: 50, rtPopSize: 0.6, rtLaunch: 1.5, rtLaunchSize: 12, rtLaunchN: 160, rtLaunchV: 40 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
   // 升空尾缀三档：用户认可的 V5 / TR2 导出快照；不按目标长度重新拟合。
-  trailS: { p: { renderVer: 37, seed: 7, riseH: 120, vtShell: 35, trV: 33.7, trFps: 30, trInh: 0.12,
+  trailS: { p: { seed: 7, riseH: 120, vtShell: 35, trV: 33.7, trFps: 30, trInh: 0.12,
     trDrag: 3.5, trGrav: 0.4, trCool: 0.46297, trFRate: 12000, trFLife: 0.65692, trFSpread: 1.85647,
     trFSize: 0.0192, trFBright: 0.03077, trMRate: 3200, trMLife: 0.54, trMSpread: 0.53255, trMSize: 0.01638,
     trMBright: 0.06828, trCRate: 2704, trCLife: 0.78, trCSpread: 1.2, trCSize: 0.02048, trCBright: 0.77115,
@@ -159,7 +183,7 @@ const TYPES = {
     encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', form: 'trail', cellPad: 2,
     autoGrid: 0 },
     m: {stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#ffe096', ramp1: '#ffe8cb', ramp2: '#fff6e4', ramp3: '#fff8ec', headInt: 1, tailInt: 1} },
-  trailM: { p: { renderVer: 37, seed: 7, riseH: 200, vtShell: 45, trV: 43.5, trFps: 30, trInh: 0,
+  trailM: { p: { seed: 7, riseH: 200, vtShell: 45, trV: 43.5, trFps: 30, trInh: 0,
     trDrag: 4.6875, trGrav: 0.25, trCool: 0.38583, trFRate: 18461.53846, trFLife: 1.07136, trFSpread: 0.99964,
     trFSize: 0.024, trFBright: 0.035, trMRate: 8320, trMLife: 1.08, trMSpread: 1.71366, trMSize: 0.0131,
     trMBright: 0.169, trCRate: 331.361, trCLife: 0.92083, trCSpread: 2.197, trCSize: 0.02048, trCBright: 0.6591,
@@ -170,7 +194,7 @@ const TYPES = {
     encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', form: 'trail', cellPad: 2,
     autoGrid: 0 },
     m: {stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#ffe5a4', ramp1: '#ffe9cb', ramp2: '#ffecd7', ramp3: '#fff8ec', headInt: 1, tailInt: 1} },
-  trailL: { p: { renderVer: 37, seed: 7, riseH: 600, vtShell: 90, trV: 74.7, trFps: 30, trInh: 0,
+  trailL: { p: { seed: 7, riseH: 600, vtShell: 90, trV: 74.7, trFps: 30, trInh: 0,
     trDrag: 1.76, trGrav: 0.3, trCool: 0.463, trFRate: 36413.29085, trFLife: 0.18085, trFSpread: 0.61542,
     trFSize: 0.024, trFBright: 0.035, trMRate: 11360.94692, trMLife: 1.152, trMSpread: 4.45552, trMSize: 0.04,
     trMBright: 0.156, trCRate: 6240, trCLife: 1.365, trCSpread: 1.08, trCSize: 0.02048, trCBright: 1,
@@ -188,35 +212,63 @@ const TYPES = {
   barrage: { p: { duration: 2, loopT: 2, nozzles: 1, fanAngle: 8, shotRate: 3, shotSpeed: 90, cometBurn: 1.6, vt: 32, burstStars: 14, subSpeed: 22, subBurn: 0.9, headSize: 1.1, sparkRate: 220, sparkLife: 0.7, sparkSpread: 1.5, sparkInherit: 0.1, sparkDrag: 2, zoom: 'off', form: 'loop', cols: 8, rows: 8, chans: 1, texW: 2048, texH: 2048 }, m: { stages: [[0, '#ffffff']], ramp1: '#8a3208', ramp2: '#ffc266', ramp3: '#fff0d2' } },
   shikake: { p: { duration: 1, loopT: 1, text: '祭', pattern: 'text', stars: 260, spacing: 30, groundH: 10, headSize: 0.9, flicker: 0.5, sparkRate: 30, sparkLife: 0.9, sparkSpread: 0.6, sparkDrag: 1.5, sparkSize: 0.2, jetSpeed: 0.6, jetCone: 60, jetDir: -90, zoom: 'off', form: 'loop', cols: 4, rows: 4, chans: 1, texW: 2048, texH: 1024 }, m: { stages: [[0, '#ff7a1e']] } }
 };
-// 新建配方的渲染版本：空中花型用 DEFAULT_RENDER_VER（4.0 通过不退步门槛后切到 40）；地面类、尾缀 V5 仍是 37。
-// 旧配方 / 正式库 / 已通过的条目不受影响：持久化配方没写 renderVer 的一律按 37 展开（storedParams、replicaPM）。
-const DEFAULT_RENDER_VER = 40;
 // 4.0 花型库模板的固定曝光（analysis/scripts/模板曝光.py 算的；菊按定帧对照人工调到 ×3，柳、椰子按改过的参数人工看过定，和「建议曝光」按钮同一算法：燃烧段最亮的一刻 99.8% 分位 → 0.96）。
 // 只给新建的模板用；存下来的 4.0 配方按自己存的曝光（没存就是 1，和以前一样）。
-const EXPOSURE40 = {"kiku": 3, "botan": 3.1, "kamuro": 4.0, "yanagi": 2, "senrin": 2.4, "hachi": 0.89, "palm": 2, "henka": 2.3, "strobe": 2.8, "glitter": 1.1, "crackle": 3.4, "matsuba": 1.4, "crossette": 1.8, "ochiba": 2.9, "jisa": 3.8, "ring": 3.3, "saturn": 2.9, "kata": 3.0, "water": 1.8};
+const EXPOSURE40 = {"kiku": 3, "botan": 3.1, "kamuro": 4.0, "yanagi": 2, "senrin": 2.4, "hachi": 0.89, "palm": 2, "henka": 2.3, "strobe": 2.8, "glitter": 1.1, "crackle": 3.4, "matsuba": 1.4, "crossette": 1.8, "ochiba": 2.9, "jisa": 3.8, "ring": 3.3, "saturn": 2.9, "kata": 3.0, "water": 1.8, "trailS": 4.5026, "trailM": 7.4424, "trailL": 15.6791, "fountain": 0.3476, "falls": 1.1293, "wheel": 0.1962, "fan": 5.2794, "barrage": 3.194, "shikake": 0.886, "rise": 0.6847};
 // 4.0 新建模板的参数改动（只给新建的模板；旧配方、3.7 不变）。看 4.0 定帧对照后补的：
 //   柳：原模板拖尾短、看不出垂柳 → 火花寿命长、冷却慢、几乎不继承星速、阻力大 → 火花停在空中慢慢下垂，形成一条条垂下的金丝（曝光 ×2 人工看过）
 //   椰子：9 颗星太稀、拖尾细 → 14 颗星、拖尾更长更密、下垂成弧（曝光 ×2 人工看过）
 const TEMPLATE40 = {
   yanagi: { sparkLife: 3.2, cooling: 0.16, sparkInherit: 0.15, sparkDrag: 2.5, sparkGrav: 0.35 },
-  palm: { stars: 14, sparkLife: 2.6, cooling: 0.18, sparkInherit: 0.12, sparkDrag: 2.2, sparkGrav: 0.3, sparkRate: 1200 }
+  palm: { stars: 14, sparkLife: 2.6, cooling: 0.18, sparkInherit: 0.12, sparkDrag: 2.2, sparkGrav: 0.3, sparkRate: 1200 },
+  // 4.3（清理清单 C1）：升空尾缀 V5、地面循环、上升以前是 3.7 画法（每次烘焙按画面自动曝光，星头和火花各自归一）。
+  // 换到现在的画法后按同一口径量了一次（星头 99.8% 分位 → 0.92、火花 99.6% 分位 → 0.55），写成固定曝光（EXPOSURE40）+ 星头亮度；
+  // 尾缀的火花曝光再 ×1.05（3.7 的点有 0.55 px 下限，亚像素火星多摊开一点，平均亮度高约 5%）。预览带光晕（和 3.7 的预览一样）
+  trailS: {"trHeadBright": 1.5421, "previewBloom": 1},
+  trailM: {"trHeadBright": 0.952, "previewBloom": 1},
+  trailL: {"trHeadBright": 3.6172, "previewBloom": 1},
+  fountain: {"headBright": 7.142, "previewBloom": 1},
+  falls: {"headBright": 2.8017, "previewBloom": 1},
+  wheel: {"headBright": 8.7684, "previewBloom": 1},
+  fan: {"headBright": 1.2846, "previewBloom": 1},
+  barrage: {"headBright": 1.2195, "previewBloom": 1},
+  shikake: {"headBright": 1.6659, "previewBloom": 1},
+  rise: {"headBright": 6.9842, "previewBloom": 1},
 };
-function defaultsFor(type, version, stored = false) {
+// 4.3：只有一套画法（以前叫「4.0 渲染核」；3.7 的画法去掉了，清理清单 C1）。renderVer 只当存档里的标记：
+// 没写或 < 40 的旧存档（3.7 时代的配方、浏览器里的旧版本、旧 JSON、正式库 V5 的原始记录）读进来时按 migrate37 迁移。
+function defaultsFor(type, _unused, stored = false) {
   const t = TYPES[type] || TYPES.kiku;
-  if (version == null) version = familyOf(type) === 'aerial' ? DEFAULT_RENDER_VER : 37;
   const M = { ...MAT_BASE, ...t.m }; M.stages = (t.m.stages || MAT_BASE.stages).map(s => [...s]);
-  const P = { ...BASE, ...t.p, type, renderVer: t.p.renderVer == null ? version : t.p.renderVer };
-  if (P.renderVer >= 40 && familyOf(type) === 'aerial' && t.p.cols == null) { P.cols = 4; P.rows = 4; }
-  // 4.0 新建：固定取景（用户 2026-10-01 22:28 指出 Zoom 在抖：面片连续放大，贴图一帧停几个 tick，换帧时花缩回去，一胀一缩 1–3%）
-  if (P.renderVer >= 40 && !stored && familyOf(type) === 'aerial' && t.p.zoom == null) P.zoom = 'off';
-  if (P.renderVer >= 40 && !stored) { Object.assign(P, TEMPLATE40[type] || {}); if (t.p.exposure == null && EXPOSURE40[type]) P.exposure = EXPOSURE40[type]; }
+  const P = { ...BASE, ...t.p, type, renderVer: 40 };
+  if (familyOf(type) === 'aerial' && t.p.cols == null) { P.cols = 4; P.rows = 4; }
+  // 新建：固定取景（用户 2026-10-01 22:28 指出 Zoom 在抖：面片连续放大，贴图一帧停几个 tick，换帧时花缩回去，一胀一缩 1–3%）
+  if (!stored && familyOf(type) === 'aerial' && t.p.zoom == null) P.zoom = 'off';
+  if (!stored) { Object.assign(P, TEMPLATE40[type] || {}); if (t.p.exposure == null && EXPOSURE40[type]) P.exposure = EXPOSURE40[type]; }
   return { P, M };
 }
-// 模板由 defaultsFor 创建；持久化配方在展开默认值前判版本，旧文件永远默认 37。
-function renderVersion(P) { return P && +P.renderVer >= 40 ? 40 : 37; }
-function usesTickPlan40(P) { return renderVersion(P)>=40 && familyOf(P.type)==='aerial' && ['master','segments'].includes(P.form); }
+function usesTickPlan40(P) { return familyOf(P.type)==='aerial' && ['master','segments'].includes(P.form); }
+// 旧存档 → 现在的画法。3.7 的贴图曝光是每次烘焙按画面自动定的（存档里的 exposure 没起作用），这里换成固定曝光：
+// 空中花型用模板的曝光（EXPOSURE40），格子按 4×4、固定取景（和 JM4 → JM4-40 同一套迁法）；升空尾缀 / 地面 / 上升用 CAL40
+// （按 3.7 自动曝光的口径在新画法下量出来的：曝光 + 星头亮度倍数）。迁过的存档带 _mig37，界面提示「亮度请看一眼」。
+const CAL40 = {"trailS": {"exposure": 4.5026, "headK": 1.8225, "previewBloom": 1}, "trailM": {"exposure": 7.4424, "headK": 0.7933, "previewBloom": 1}, "trailL": {"exposure": 15.6791, "headK": 1.9875, "previewBloom": 1}, "fountain": {"exposure": 0.3476, "headK": 7.142, "previewBloom": 1}, "falls": {"exposure": 1.1293, "headK": 2.8017, "previewBloom": 1}, "wheel": {"exposure": 0.1962, "headK": 19.4854, "previewBloom": 1}, "fan": {"exposure": 5.2794, "headK": 1.2846, "previewBloom": 1}, "barrage": {"exposure": 3.194, "headK": 1.2195, "previewBloom": 1}, "shikake": {"exposure": 0.886, "headK": 1.6659, "previewBloom": 1}, "rise": {"exposure": 0.6847, "headK": 4.9887, "previewBloom": 1}};
+function migrate37(P, ...given) {      // given[0]：原始存档的版本（显式传 undefined = 没写版本 = 3.7 时代的）；不传就看 P 自己的
+  const srcVer = given.length ? given[0] : P && P.renderVer;
+  if (!P || +srcVer >= 40) { if (P) P.renderVer = 40; return P; }
+  const fam = familyOf(P.type), c = CAL40[P.type];
+  if (fam === 'aerial') {
+    if (['master', 'segments'].includes(P.form || 'master')) { if ((+P.cols || 8) * (+P.rows || 8) > 16) { P.cols = 4; P.rows = 4; } P.autoGrid = 0; if (P.zoom !== 'off') P.zoom = 'off'; }
+    P.exposure = EXPOSURE40[P.type] || 1;
+  } else if (c) {
+    P.exposure = c.exposure;
+    if (c.headK && isTrail(P)) P.trHeadBright = +((+P.trHeadBright || 0) * c.headK).toFixed(5);
+    else if (c.headK) P.headBright = +((P.headBright == null ? 1 : +P.headBright) * c.headK).toFixed(5);
+    if (c.previewBloom != null && P.previewBloom == null) P.previewBloom = c.previewBloom;
+  }
+  P.renderVer = 40; P._mig37 = 1; return P;
+}
 function storedParams(p, type = p.type) {
-  return { ...defaultsFor(type, renderVersion(p), true).P, ...p, type, renderVer: renderVersion(p) };
+  return migrate37({ ...defaultsFor(type, null, true).P, ...p, type }, p.renderVer);
 }
 // 旧版颜色（colA → colB，chg 秒）换成分段
 function normalizeM(M, type) {
@@ -286,10 +338,10 @@ const isPhys = P => familyOf(P.type) === 'rise' && P.form === 'phys';
 const isEmit = P => familyOf(P.type) === 'rise' && P.form === 'emitset';   // 循环层 + 粒子发射器（47_risetail.js）
 const isSeq = P => !isTrail(P) && !isPhys(P) && !isEmit(P);   // 普通花型（非尾缀序列、非物理尾缀、非循环层 + 粒子）
 const PATTERNS = [['sphere', '球'], ['half', '半球（贴水面）'], ['ring', '环'], ['saturn', '土星（球 + 环）'], ['heart', '心形'], ['smile', '笑脸'], ['star5', '五角星'], ['text', '文字']];
-const RISE_STYLES = [['gold', '金色曲导'], ['silver', '银竜（银色长尾）'], ['dark', '暗升（无尾）'], ['kobana', '昇り小花'], ['bunpo', '分砲（空中分叉）'], ['fue', '笛（鸣笛）'], ['spiral', '螺旋']];
+const RISE_STYLES = [['gold', '金色曲导'], ['silver', '银竜（银色长火花）'], ['dark', '暗升（无尾）'], ['kobana', '昇り小花'], ['bunpo', '分砲（空中分叉）'], ['fue', '笛（鸣笛）'], ['spiral', '螺旋']];
 const SCHEMA = [
   { sec: '规格', show: isSeq, items: [
-    { sel: 'shellNo', label: '号数', options: [[0, '手动'], ...SHELL_NO.map(r => [r[0], r[0] === 40 ? '40 号（四尺玉）' : r[0] === 10 ? '10 号（尺玉）' : r[0] + ' 号'])], hint: '按号数自动推算初速、星数、燃烧时间、星头大小（以本花型默认值约 5 号为基准）' }
+    { sel: 'shellNo', label: '号数', show: P => !isGround(P), options: [[0, '手动'], ...SHELL_NO.map(r => [r[0], r[0] === 40 ? '40 号（四尺玉）' : r[0] === 10 ? '10 号（尺玉）' : r[0] + ' 号'])], hint: '按号数自动推算初速、星数、寿命、星头大小（以本花型默认值约 5 号为基准）' }
   ] },
   { sec: '开花与燃烧', show: isAir, items: [
     ['duration', '序列时长', 's', 0.8, 16, 0.05],
@@ -334,7 +386,7 @@ const SCHEMA = [
     ['afterBurn', '第二段：主段烧完后接着亮几秒（0 关；主段期间不发光）', 's', 0, 8, 0.05],
     ['afterJit', '第二段时长离散', '%', 0, 60, 1, P => P.afterBurn > 0],
     ['headDim', '前段星头亮度（1 = 不压暗）', '×', 0, 1, 0.01],
-    ['headDimUntil', '前段压暗到第几秒（分层星外层 = 引き）', 's', 0, 6, 0.05, P => P.headDim < 1],
+    ['headDimUntil', '前段压暗到第几秒（分层星外层 = 引き）', 's', 0, 6, 0.05],
     ['strobeHz', '点灭频率（0 关）', 'Hz', 0, 30, 0.1],
     ['strobeDuty', '点灭亮占比', '', 0.05, 0.9, 0.01, P => P.strobeHz > 0],
     ['strobeStart', '点灭开始', '×燃烧', 0, 1, 0.01, P => P.strobeHz > 0],
@@ -342,6 +394,8 @@ const SCHEMA = [
     ['glitterDelay', '辉星闪光延迟', 's', 0.05, 1.5, 0.01, P => P.glitter > 0],
     ['crackle', '爆裂（每颗星）', '粒', 0, 40, 1],
     ['crackleDelay', '爆裂延迟', 's', 0.05, 1, 0.01, P => P.crackle > 0],
+    ['crackleR', '爆裂范围', 'm', 0.5, 20, 0.1, P => P.crackle > 0],
+    ['crackleV', '爆裂速度', 'm/s', 0, 30, 0.5, P => P.crackle > 0],
     ['branch', '松叶分叉（每粒火花）', '支', 0, 4, 1],
     ['branchAt', '分叉时刻', '×寿命', 0.1, 0.9, 0.01, P => P.branch > 0],
     ['flutter', '飘落摆动', 'm/s', 0, 10, 0.1],
@@ -354,12 +408,12 @@ const SCHEMA = [
   ] },
   { sec: '尾缀（炭火火花）', show: isSeq, hint: '可见尾长由星体运动、火花跟随、寿命和冷却共同决定。末段寿命控制后来出生的火花，不改变已有火花。', items: [
     ['sparkRate', '火花密度', '个/秒', 0, 3000, 1],
-    ['sparkRateEnd', '末段火花密度', '×', 0, 2, 0.01],
-    ['sparkStop', '火花只在前几秒（分层星外层，0 = 全程）', 's', 0, 3, 0.01],
-    ['sparkStart', '火花从第几秒开始（分层星内层 / 末段短尾，0 = 一开始就有）', 's', 0, 6, 0.01],
+    ['sparkRateEnd', '末段火花密度', '×', 0, 2, 0.01, isAir],
+    ['sparkStop', '火花只在前几秒（分层星外层，0 = 全程）', 's', 0, 3, 0.01, isAir],
+    ['sparkStart', '火花从第几秒开始（分层星内层 / 末段短尾，0 = 一开始就有）', 's', 0, 6, 0.01, isAir],
     // 4.2.17 火花起势（用户 10-03 12:59；12:27 #3 锦段「参考是先零星出现再形成一条线」）：开始出火花后，密度从零星到满要多久；每颗星快慢随机
-    ['sparkRamp', '火花起势（开始出火花后用几秒从零星到满密度：先零零星星、再连成线；0 = 一开始就满密度）', 's', 0, 2, 0.01],
-    ['sparkRampJit', '火花起势随机（每颗星起势快慢不同，± 百分比，均匀分布）', '%', 0, 100, 1, P => +P.sparkRamp > 0],
+    ['sparkRamp', '火花起势（开始出火花后用几秒从零星到满密度：先零零星星、再连成线；0 = 一开始就满密度）', 's', 0, 2, 0.01, isAir],
+    ['sparkRampJit', '火花起势随机（每颗星起势快慢不同，± 百分比，均匀分布）', '%', 0, 100, 1, P => isAir(P) && +P.sparkRamp > 0],
     ['sparkLife', '火花寿命', 's', 0.05, 4, 0.01],
     ['sparkLifeEnd', '末段出生火花的寿命', '×', 0.05, 2, 0.01, P => familyOf(P.type) === 'aerial'],
     ['sparkLifeJit', '火花寿命离散', '%', 0, 80, 1, P => familyOf(P.type) === 'aerial'],
@@ -371,16 +425,16 @@ const SCHEMA = [
     ['T0', '初始温度', 'K', 1500, 2800, 10],
     ['cooling', '冷却速度', '', 0, 0.8, 0.01],
     ['sparkBright', '火花亮度', '×', 0, 3, 0.05],
-    ['emberFrac', '余烬长尾比例（锦冠木炭余烬 / 受光烟迹：暗而长的轨迹线，0 关）', '', 0, 0.9, 0.01],
-    ['emberLife', '余烬长尾寿命', 's', 0.3, 8, 0.05, P => P.emberFrac > 0],
-    ['emberBright', '余烬长尾亮度（× 新火花）', '×', 0.005, 1, 0.005, P => P.emberFrac > 0],
-    ['emberFollow', '随母星熄灭（受光烟迹：星灭后几秒内淡掉，0 = 按自身寿命）', 's', 0, 3, 0.05, P => P.emberFrac > 0],
-    ['emberSize', '余烬长尾粗细（× 颗粒）', '×', 0.2, 2, 0.01, P => P.emberFrac > 0],
-    ['emberEnd', '光丝整体熄灭时刻（受光烟迹：星转点灭、色光变弱后烟迹一起暗掉，0 关）', 's', 0, 10, 0.05, P => P.emberFrac > 0],
-    ['emberAll', '余烬贯穿整个燃烧期（1 = 不受「火花只在前几秒」限制：外层引き火花先停，光丝一直跟到星头）', '', 0, 1, 1, P => P.emberFrac > 0],
+    ['emberFrac', '余烬长尾比例（锦冠木炭余烬 / 受光烟迹：暗而长的轨迹线，0 关）', '', 0, 0.9, 0.01, isAir],
+    ['emberLife', '余烬长尾寿命', 's', 0.3, 8, 0.05, P => isAir(P) && P.emberFrac > 0],
+    ['emberBright', '余烬长尾亮度（× 新火花）', '×', 0.005, 1, 0.005, P => isAir(P) && P.emberFrac > 0],
+    ['emberFollow', '随母星熄灭（受光烟迹：星灭后几秒内淡掉，0 = 按自身寿命）', 's', 0, 3, 0.05, P => isAir(P) && P.emberFrac > 0],
+    ['emberSize', '余烬长尾粗细（× 颗粒）', '×', 0.2, 2, 0.01, P => isAir(P) && P.emberFrac > 0],
+    ['emberEnd', '光丝整体熄灭时刻（受光烟迹：星转点灭、色光变弱后烟迹一起暗掉，0 关）', 's', 0, 10, 0.05, P => isAir(P) && P.emberFrac > 0],
+    ['emberAll', '余烬贯穿整个燃烧期（1 = 不受「火花只在前几秒」限制：外层引き火花先停，光丝一直跟到星头）', '', 0, 1, 1, P => isAir(P) && P.emberFrac > 0],
     ['twinkle', '火花闪烁', '', 0, 1, 0.01]
   ] },
-  { sec: '尾迹外形', show: P => isSeq(P) && familyOf(P.type) === 'aerial', hint: '每个效果（多层时每一层）自己的外形量，0 = 原样，不影响别的效果。尾长、尾缀粗细、星头大小、亮度、闪烁就是上面的「火花寿命」「尾缀粗细（散布）」「颗粒大小」「炭头大小」「火花亮度」「火花闪烁」。', items: [
+  { sec: '尾迹外形', show: P => isSeq(P) && familyOf(P.type) === 'aerial', hint: '每个效果（多层时每一层）自己的外形量，0 = 原样，不影响别的效果。尾长、尾缀粗细、星头大小、亮度、闪烁就是上面的「火花寿命」「尾缀粗细（散布）」「颗粒大小」「星头大小」「火花亮度」「火花闪烁」。', items: [
     ['tailJit', '粗细随机（星与星、火花与火花之间的粗细差别）', '', 0, 1, 0.01],
     ['tailShoulder', '亮肩（正：靠近星头的火花更大更亮、尾端更细更暗；负：反过来）', '', -1, 1, 0.01],
     ['tailWidth', '尾迹粗细（火花横向散开和颗粒大小的倍数；1 = 原样）', '×', 0.3, 3, 0.01],
@@ -447,7 +501,7 @@ const SCHEMA = [
     ['trHalo', '光晕大小（× 星头）', '×', 1, 8, 0.1],
     ['trHaloBright', '光晕亮度', '×', 0, 1, 0.01]
   ] },
-  { sec: '尾缀序列 · 火花（四层）', show: P => isTrail(P) && !isPhysBody(P), hint: '白热细火花 = 星头后面连续的白亮段；金色火星 = 中段的团块；橙色大火星 = 末段一颗颗的点；星头丝火花 = 大型礼花星头周围甩出的细丝。长度 ≈ 上升速度 × 寿命，粗细看散布和颗粒大小。', items: [
+  { sec: '尾缀序列 · 火花（四层）', show: P => isTrail(P) && !isPhysBody(P), hint: '白热细火花 = 星头后面连续的白亮段；金色火花 = 中段的团块；橙色大火花 = 末段一颗颗的点；星头丝火花 = 大型礼花星头周围甩出的细丝。长度 ≈ 上升速度 × 寿命，粗细看散布和颗粒大小。', items: [
     ['trFRate', '白热细火花 · 密度', '个/秒', 0, 20000, 10], ['trFLife', '白热细火花 · 寿命', 's', 0.03, 2, 0.01], ['trFSpread', '白热细火花 · 散布', 'm/s', 0, 6, 0.01], ['trFSize', '白热细火花 · 颗粒', 'm', 0.02, 1, 0.005], ['trFBright', '白热细火花 · 亮度', '×', 0, 0.5, 0.001],
     ['trMRate', '金色火星 · 密度', '个/秒', 0, 8000, 10], ['trMLife', '金色火星 · 寿命', 's', 0.05, 3, 0.01], ['trMSpread', '金色火星 · 散布', 'm/s', 0, 8, 0.01], ['trMSize', '金色火星 · 颗粒', 'm', 0.02, 1, 0.005], ['trMBright', '金色火星 · 亮度', '×', 0, 0.5, 0.001],
     ['trCRate', '橙色大火星 · 密度', '个/秒', 0, 3000, 5], ['trCLife', '橙色大火星 · 寿命', 's', 0.05, 4, 0.01], ['trCSpread', '橙色大火星 · 散布', 'm/s', 0, 10, 0.01], ['trCSize', '橙色大火星 · 颗粒', 'm', 0.02, 1.5, 0.005], ['trCBright', '橙色大火星 · 亮度', '×', 0, 1, 0.001],
@@ -457,7 +511,7 @@ const SCHEMA = [
     ['trBright', '引擎亮度倍数（Color Over Life）', '×', 0.2, 5, 0.05],
     { sel: 'trExport4K', label: '导出 4K 母版', options: [[1, '同时导出 4096×4096'], [0, '只导出 2K']] }
   ] },
-  { sec: '物理尾缀 · 镜头', show: isPhys, hint: '地面坐标实时模拟（trail_phys.py 的移植）：尾迹是停在空中的火星，镜头跟着星头走；实拍面板按同一比例跟拍。贴图导出仍用 analysis/scripts/trail_phys_bake.py。', items: [
+  { sec: '物理尾缀 · 镜头', show: isPhys, hint: '地面坐标实时模拟（trail_phys.py 的移植）：尾迹是停在空中的火花，镜头跟着星头走；实拍面板按同一比例跟拍。贴图导出仍用 analysis/scripts/trail_phys_bake.py。', items: [
     ['phView', '视野高度', 'm', 20, 400, 1],
     ['phHead', '星头在画面的位置（离顶）', '', 0.05, 0.6, 0.01],
     ['phExpo', '曝光倍数', '×', 0.1, 8, 0.05]
@@ -502,7 +556,7 @@ const SCHEMA = [
     ['rtBurstD', '开花直径（定游戏内大小的比例）', 'm', 40, 600, 1],
     ['seed', '随机种子', '', 1, 999, 1]
   ] },
-  { sec: '尾缀 · 自转螺旋与喷射', show: isEmit, hint: '弹体出膛就带着自转（全程转速不变）；喷口在弹体外缘跟着转圈，把火星切向甩出 → 尾迹上的螺旋：波长 = 弹体速度 ÷ 转速，能看见的圈数 = 转速 × 火星寿命，波幅 ≈ 甩出速度 ÷ 火星阻力。', items: [
+  { sec: '尾缀 · 自转螺旋与喷射', show: isEmit, hint: '弹体出膛就带着自转（全程转速不变）；喷口在弹体外缘跟着转圈，把火花切向甩出 → 尾迹上的螺旋：波长 = 弹体速度 ÷ 转速，能看见的圈数 = 转速 × 火花寿命，波幅 ≈ 甩出速度 ÷ 火花阻力。', items: [
     ['rtSpin', '自转转速', '转/秒', 0, 8, 0.05],
     ['rtSpinPh', '起始相位', '圈', 0, 1, 0.01],
     ['rtFling', '切向甩出速度', 'm/s', 0, 15, 0.05],
@@ -517,7 +571,7 @@ const SCHEMA = [
     ['rtHeadFl', '短焰长度（0 = 只有亮点）', 'm', 0, 5, 0.05],
     ['rtHeadFlI', '短焰亮度（× 亮核）', '×', 0, 2, 0.01, P => P.rtHeadFl > 0]
   ] },
-  { sec: '尾缀 · 白热段火粉（循环层）', show: isEmit, hint: '极密、极短命的细火粉，连成星头后面过曝的白热段（按相机观感：白热时间更长）。循环层贴图在弹体随体坐标里烘，引擎里按弹体速度缩放长度。', items: [
+  { sec: '尾缀 · 白热段火粉（循环层）', show: isEmit, hint: '极密、极短命的细火花，连成星头后面过曝的白热段（按相机观感：白热时间更长）。循环层贴图在弹体随体坐标里烘，引擎里按弹体速度缩放长度。', items: [
     ['rtARate', '密度', '颗/秒', 0, 40000, 100],
     ['rtALife', '白热时间（中位）', 's', 0.05, 2.5, 0.01],
     ['rtALsig', '白热时间离散（对数标准差）', '', 0, 1.2, 0.01],
@@ -528,30 +582,30 @@ const SCHEMA = [
     ['rtAI', '亮度', '×', 0, 5, 0.01],
     ['rtAWarm', '变暗快慢（越大越早变金、变暗）', '', 0.2, 4, 0.05]
   ] },
-  { sec: '尾缀 · 金火星（GPU 粒子 · 三档粒径）', show: isEmit, hint: '木炭火星按粒径分三档（细 / 中 / 粗）：越粗越亮、越长寿、阻力越小（d² 定律）→ 有亮有暗、各自错落熄灭。每档在引擎里是一个 GPU 软圆点发射器（手机版 CPU），出生位置、初速按发射器时间取弹道曲线。', items: [
+  { sec: '尾缀 · 金火星（GPU 粒子 · 三档粒径）', show: isEmit, hint: '木炭火花按粒径分三档（细 / 中 / 粗）：越粗越亮、越长寿、阻力越小（d² 定律）→ 有亮有暗、各自错落熄灭。每档在引擎里是一个 GPU 软圆点发射器（手机版 CPU），出生位置、初速按发射器时间取弹道曲线。', items: [
     ['rtFRate', '细 · 出生率', '颗/秒', 0, 8000, 10], ['rtFLife', '细 · 寿命', 's', 0.1, 6, 0.01], ['rtFJit', '细 · 寿命离散', '%', 0, 90, 1], ['rtFSize', '细 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtFI', '细 · 亮度', '×', 0, 40, 0.01], ['rtFKd', '细 · 阻力', '1/s', 0.2, 30, 0.05],
     ['rtMRate', '中 · 出生率', '颗/秒', 0, 4000, 5], ['rtMLife', '中 · 寿命', 's', 0.1, 6, 0.01], ['rtMJit', '中 · 寿命离散', '%', 0, 90, 1], ['rtMSize', '中 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtMI', '中 · 亮度', '×', 0, 40, 0.01], ['rtMKd', '中 · 阻力', '1/s', 0.2, 30, 0.05],
     ['rtCRate', '粗 · 出生率', '颗/秒', 0, 2000, 1], ['rtCLife', '粗 · 寿命', 's', 0.1, 8, 0.01], ['rtCJit', '粗 · 寿命离散', '%', 0, 90, 1], ['rtCSize', '粗 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtCI', '粗 · 亮度', '×', 0, 40, 0.01], ['rtCKd', '粗 · 阻力', '1/s', 0.2, 30, 0.05],
     ['rtSizeJit', '尺寸离散（远处亮度 ∝ 尺寸²）', '±%', 0, 90, 1], ['rtKdJit', '阻力离散', '±%', 0, 90, 1],
     ['rtConeSoft', '散开分布（0 均匀 = 边缘一刀切；1 两个均匀相加 = 中间密、边缘软）', '', 0, 1, 1]
   ] },
-  { sec: '尾缀 · 贴图里的火星（循环层）', show: isEmit, hint: '细火星的一部分烘进循环层贴图（随体坐标，和白热段火粉同一套真循环；运动、散开、小涡、拖影和 GPU 细火星同一套公式），其余留在 GPU（细火星出生率 × (1 − 比例)）。细火星寿命短、在面片长度以内就烧完，适合进贴图；中 / 粗火星飞得远、留在 GPU。贴图亮度是灰度 + Ramp 口径（暗的是橙红、亮的是金白），和 GPU 的倍数不通用：1 = 一颗细火星是一颗白热段火粉光量的 1%。', items: [
+  { sec: '尾缀 · 贴图里的火星（循环层）', show: isEmit, hint: '细火花的一部分烘进循环层贴图（随体坐标，和白热段火花同一套真循环；运动、散开、小涡、拖影和 GPU 细火花同一套公式），其余留在 GPU（细火花出生率 × (1 − 比例)）。细火花寿命短、在面片长度以内就烧完，适合进贴图；中 / 粗火花飞得远、留在 GPU。贴图亮度是灰度 + Ramp 口径（暗的是橙红、亮的是金白），和 GPU 的倍数不通用：1 = 一颗细火花是一颗白热段火花光量的 1%。', items: [
     ['rtFTex', '细火星烘进贴图的比例（0 = 全在 GPU）', '', 0, 1, 0.05],
     ['rtTexI', '贴图火星亮度', '×', 0, 200, 0.1, P => P.rtFTex > 0]
   ] },
-  { sec: '尾缀 · 引擎里加的效果', show: isEmit, hint: '都是软圆点（不新增材质）。星头光晕：星头强光被空气 / 烟散射成的一团柔光，贴图格子窄放不下，引擎里单独一颗跟着弹道走、亮度跟喷射脉动。末段爆亮：木炭 + 硫的熔渣粒烧到最后微爆、闪一下（线香花火「松叶」同一机理），和粗火星同一套运动。发射口：发射药在炮筒口一闪 + 一把向上喷的火星。', items: [
+  { sec: '尾缀 · 引擎里加的效果', show: isEmit, hint: '都是软圆点（不新增材质）。星头光晕：星头强光被空气 / 烟散射成的一团柔光，贴图格子窄放不下，引擎里单独一颗跟着弹道走、亮度跟喷射脉动。末段爆亮：木炭 + 硫的熔渣粒烧到最后微爆、闪一下（线香花火「松叶」同一机理），和粗火花同一套运动。发射口：发射药在炮筒口一闪 + 一把向上喷的火花。', items: [
     ['rtGlow', '星头光晕亮度（0 关）', '×', 0, 5, 0.01], ['rtGlowSize', '星头光晕直径', 'm', 0.5, 30, 0.1, P => P.rtGlow > 0],
     ['rtPopRate', '末段爆亮 · 出生率（0 关）', '颗/秒', 0, 400, 1], ['rtPopI', '末段爆亮 · 亮度', '×', 0, 80, 0.1, P => P.rtPopRate > 0], ['rtPopSize', '末段爆亮 · 尺寸', 'm', 0.05, 3, 0.01, P => P.rtPopRate > 0], ['rtPopAt', '末段爆亮 · 在寿命的哪里闪', '', 0.2, 0.95, 0.01, P => P.rtPopRate > 0],
     ['rtLaunch', '发射口闪光亮度（0 关）', '×', 0, 10, 0.01], ['rtLaunchSize', '发射口闪光直径', 'm', 1, 40, 0.1, P => P.rtLaunch > 0], ['rtLaunchN', '发射口火星颗数', '颗', 0, 1000, 1, P => P.rtLaunch > 0],
     ['rtLaunchV', '发射口火星速度', 'm/s', 2, 80, 0.5, P => P.rtLaunch > 0 && P.rtLaunchN > 0], ['rtLaunchCone', '发射口火星张角', '°', 2, 60, 1, P => P.rtLaunch > 0 && P.rtLaunchN > 0], ['rtLaunchI', '发射口火星亮度', '×', 0, 40, 0.1, P => P.rtLaunch > 0 && P.rtLaunchN > 0]
   ] },
-  { sec: '尾缀 · 火星明暗与线状', show: isEmit, hint: '白 / 黄分开：每档火星一个温度偏移（粗粒更热更亮 → 相机里过曝发白；细粒偏金偏暗）。线状：看的人（和相机）盯着星头走，火星相对星头往下退 → 拖影长度 = 相对星头的速度 × 拖影时间（快门 / 视觉暂留）；老火星几乎停在空中，拖得最长。引擎里 Screen Alignment = Rectangle（沿屏幕竖直）、Size By Life 的 Y 按寿命拉长；光量守恒（拖得越长单位长度越暗，要更亮才过曝发白）。', items: [
+  { sec: '尾缀 · 火星明暗与线状', show: isEmit, hint: '白 / 黄分开：每档火花一个温度偏移（粗粒更热更亮 → 相机里过曝发白；细粒偏金偏暗）。线状：看的人（和相机）盯着星头走，火花相对星头往下退 → 拖影长度 = 相对星头的速度 × 拖影时间（快门 / 视觉暂留）；老火花几乎停在空中，拖得最长。引擎里 Screen Alignment = Rectangle（沿屏幕竖直）、Size By Life 的 Y 按寿命拉长；光量守恒（拖得越长单位长度越暗，要更亮才过曝发白）。', items: [
     ['rtFdT', '细 · 温度偏移', 'K', -800, 800, 10], ['rtMdT', '中 · 温度偏移', 'K', -800, 800, 10], ['rtCdT', '粗 · 温度偏移', 'K', -800, 800, 10],
     ['rtStreakT', '拖影时间（0 = 全是圆点）', 's', 0, 0.2, 0.002],
     ['rtStreakMax', '最长拉长倍数（× 粒子尺寸）', '×', 1, 30, 0.1, P => P.rtStreakT > 0],
     ['rtFStreak', '细 · 拖影倍数（0 = 圆点）', '×', 0, 3, 0.05, P => P.rtStreakT > 0], ['rtMStreak', '中 · 拖影倍数', '×', 0, 3, 0.05, P => P.rtStreakT > 0], ['rtCStreak', '粗 · 拖影倍数', '×', 0, 3, 0.05, P => P.rtStreakT > 0]
   ] },
-  { sec: '尾缀 · 空气乱流', show: isEmit, hint: '火星出生后被阻力拉向周围空气的速度：空气有阵风，火星就跟着漂，越老漂得越远 → 尾迹下段慢慢松开、轻轻弯（不是冻住的硬边）。火星寿命远小于大涡的周转时间，所以每颗火星一直跟着「出生那团空气」：大涡 = 同一时刻出生的一起漂（Acceleration 按发射器时间），小涡 / 弹体尾流 = 每颗随机。引擎里加速度 = 阻力 × 空气速度（Acceleration 模块未经 UE 验证）。', items: [
+  { sec: '尾缀 · 空气乱流', show: isEmit, hint: '火花出生后被阻力拉向周围空气的速度：空气有阵风，火花就跟着漂，越老漂得越远 → 尾迹下段慢慢松开、轻轻弯（不是冻住的硬边）。火花寿命远小于大涡的周转时间，所以每颗火花一直跟着「出生那团空气」：大涡 = 同一时刻出生的一起漂（Acceleration 按发射器时间），小涡 / 弹体尾流 = 每颗随机。引擎里加速度 = 阻力 × 空气速度（Acceleration 模块未经 UE 验证）。', items: [
     ['rtTurb', '大涡阵风（均方根，0 关）', 'm/s', 0, 4, 0.05],
     ['rtTurbL', '大涡尺度', 'm', 3, 200, 1, P => P.rtTurb > 0],
     ['rtTurbS', '小涡 / 尾流（均方根，0 关）', 'm/s', 0, 4, 0.05]
@@ -567,14 +621,14 @@ const SCHEMA = [
   { sec: '尾缀 · 落火', show: isEmit, hint: '少量长寿大颗，阻力小、下坠，零星掉在尾迹下方（0 关）。', items: [
     ['rtERate', '出生率', '颗/秒', 0, 200, 1], ['rtELife', '寿命', 's', 0.2, 8, 0.05], ['rtESize', '粒子尺寸', 'm', 0.05, 5, 0.01], ['rtEI', '亮度', '×', 0, 10, 0.01], ['rtEKd', '阻力', '1/s', 0.1, 10, 0.05]
   ] },
-  { sec: '尾缀 · 烟带', show: isEmit, hint: '曲导燃烧留下的淡烟，被火星照亮（夜里是散射光，用加法软圆点做成很淡的发光烟，不新增材质）。慢慢变大、变淡（0 关）。', items: [
+  { sec: '尾缀 · 烟带', show: isEmit, hint: '曲导燃烧留下的淡烟，被火花照亮（夜里是散射光，用加法软圆点做成很淡的发光烟，不新增材质）。慢慢变大、变淡（0 关）。', items: [
     ['rtSmoke', '亮度（0 关）', '×', 0, 0.5, 0.001],
     ['rtSmokeRate', '出生率', '团/秒', 1, 200, 1, P => P.rtSmoke > 0],
     ['rtSmokeLife', '寿命', 's', 0.5, 10, 0.05, P => P.rtSmoke > 0],
     ['rtSmokeSize', '出生尺寸', 'm', 0.2, 20, 0.1, P => P.rtSmoke > 0],
     ['rtSmokeGrow', '变大到（× 出生尺寸）', '×', 1, 10, 0.1, P => P.rtSmoke > 0]
   ] },
-  { sec: '尾缀 · 引擎与导出', show: isEmit, hint: '循环层：一个速度朝向的序列面片（CPU，1 颗），星头在面片上端（Pivot Offset 放在粒子位置，和 V5 尾缀一样），面片只包住看得见的部分；格子按长宽比在 16×1 / 8×2 / 4×4 里挑（单格 = 512² 像素），RGBA 64 帧真循环。开花后换「贴图动态消散」序列（每颗火粉 / 火星按自己的寿命熄灭），格子一样大、贴图按帧数挑最小、四个通道用满；另写 dissolve 动态参数。手机贴图边长 × 比例（默认一半 = 单格 256² 像素）。粒子层：PC 用 GPU、手机用 CPU 并按比例减量。', items: [
+  { sec: '尾缀 · 引擎与导出', show: isEmit, hint: '循环层：一个速度朝向的序列面片（CPU，1 颗），星头在面片上端（Pivot Offset 放在粒子位置，和 V5 尾缀一样），面片只包住看得见的部分；格子按长宽比在 16×1 / 8×2 / 4×4 里挑（单格 = 512² 像素），RGBA 64 帧真循环。开花后换「贴图动态消散」序列（每颗火花 / 火花按自己的寿命熄灭），格子一样大、贴图按帧数挑最小、四个通道用满；另写 dissolve 动态参数。手机贴图边长 × 比例（默认一半 = 单格 256² 像素）。粒子层：PC 用 GPU、手机用 CPU 并按比例减量。', items: [
     ['rtGrid', '格子（0 自动；1 = 16×1，2 = 8×2，3 = 4×4）', '', 0, 3, 1],
     ['rtMobileTex', '手机贴图边长比例', '×', 0.25, 1, 0.05],
     ['rtBright', '循环层引擎亮度（Color Over Life）', '×', 0.1, 10, 0.05],
@@ -589,7 +643,7 @@ const SCHEMA = [
     ['loopT', '循环周期', 's', 0.3, 4, 0.05],
     ['seed', '随机种子', '', 1, 999, 1],
     ['nozzles', P => P.type === 'shikake' ? '（无）' : '喷口数', '个', 1, 24, 1, P => P.type !== 'shikake'],
-    ['spacing', P => P.type === 'shikake' ? '图案宽度' : '喷口间距', 'm', 0.5, 80, 0.5, P => ['falls', 'fan', 'shikake', 'fountain'].includes(P.type)],
+    ['spacing', P => P.type === 'shikake' ? '图案宽度' : '喷口间距', 'm', 0.5, 80, 0.5, P => ['falls', 'fan', 'shikake', 'fountain', 'barrage'].includes(P.type)],
     ['groundH', '离地高度', 'm', 0, 60, 0.5, P => ['falls', 'wheel', 'shikake'].includes(P.type)],
     ['wheelR', '转轮半径', 'm', 0.5, 10, 0.1, P => P.type === 'wheel'],
     ['jetSpeed', '喷射速度', 'm/s', 0, 80, 0.5, P => !hasComets(P)],
@@ -614,7 +668,7 @@ const SCHEMA = [
     { sel: 'prePivot', label: '放大的中心', show: P => +P.cutIn > 0 && +P.preRoll !== 0, options: [[0, '面片中心（UE 一定支持；花小的时候会偏向面片中心）'], [1, '爆点（用 Pivot Offset，更准，未经 UE 验证）']] }
   ] },
   // 4.2.0（用户 2026-10-02 16:22「单层输出成多少总帧数我也无法控制……能不能梳理一下」）：一节里定「多少帧 → 怎么装进贴图」，顶上一行实时显示结果
-  { sec: '输出：帧数 · 格子 · 贴图（导出）', show: isSeq, hint: '帧号由 Dynamic Parameter 第三通道给出、不做帧间混合。顺序：入点 → 出点之间有多少 tick → 按下面的「帧数」挑出要烘的帧 → 按「格子」装进贴图（RGBA 接力，先填满 R）。改了入出点、燃烧时间，帧数和格子会自动重算；时间轴每层轨道上的小刻度就是每一帧从哪个 tick 开始。', items: [
+  { sec: '输出：帧数 · 格子 · 贴图（导出）', show: isSeq, hint: '帧号由 Dynamic Parameter 的帧号通道给出（通道按本机导入配置，实测第 0 通道）、不做帧间混合。顺序：入点 → 出点之间有多少 tick → 按下面的「帧数」挑出要烘的帧 → 按「格子」装进贴图（RGBA 接力，先填满 R）。改了入出点、寿命，帧数和格子会自动重算；时间轴每层轨道上的小刻度就是每一帧从哪个 tick 开始。', items: [
     { info: 'outSummary', show: usesTickPlan40 },
     { info: 'specBox' },
     ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P) && !usesTickPlan40(P)],
@@ -625,32 +679,27 @@ const SCHEMA = [
     ['pageTarget', '先放进几张贴图（放不下自动加）', '张', 1, 8, 1, P => usesTickPlan40(P) && (P.frameBudget || 'motion') === 'motion'],
     { sel: 'maxHoldBurn', label: '燃烧段最慢帧率', show: P => usesTickPlan40(P) && ['motion', 'lean', 'count'].includes(P.frameBudget || 'motion'), options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick，默认）'],[4,'7.5 fps（停 4 tick）']] },
     { sel: 'maxHold', label: '淡出段最慢帧率', show: P => usesTickPlan40(P) && ['motion', 'lean', 'count'].includes(P.frameBudget || 'motion'), options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick）'],[4,'7.5 fps（停 4 tick）'],[5,'6 fps（停 5 tick）']] },
-    { sel: 'fpsBurst', label: '开花段帧率（4.0）', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps']] },
+    { sel: 'fpsBurst', label: '开花段帧率', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps']] },
     ['burstSec', '开花段时长（这段每 tick 一帧）', 's', 0, 2, 0.05, usesTickPlan40],
-    { sel: 'fpsActive', label: '燃烧段帧率（4.0）', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps']] },
-    { sel: 'fpsFade', label: '淡出段帧率（4.0）', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps'],[7.5,'7.5 fps']] },
-    ['fadeAt', '淡出段从第几秒开始（0 = 自动：花径到头且速度降下来）', 's', 0, 20, 0.05, P => usesTickPlan40(P) && P.frameBudget === 'tiers'],
+    { sel: 'fpsActive', label: '燃烧段帧率', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps']] },
+    { sel: 'fpsFade', label: '淡出段帧率', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps'],[7.5,'7.5 fps']] },
+    ['fadeAt', '淡出段从第几秒开始（0 = 自动：花径到头且速度降下来）', 's', 0, 20, 0.05, P => usesTickPlan40(P) && P.frameBudget !== 'full'],
     ['maxPages', '贴图张数上限（0 = 不限；超了自动降帧率）', '张', 0, 12, 1, P => usesTickPlan40(P) && P.frameBudget === 'tiers'],
     ['shutter', '运动模糊（占每帧显示时间的比例）', '', 0, 1, 0.01],
-    ['segAt', '分段时刻（0 = 自动）', 's', 0, 12, 0.05, P => P.form === 'segments' && !usesTickPlan40(P)],
-    { sel: 'expoMode', label: '贴图曝光', show: P => renderVersion(P)<40, options: [['sheet', '整张一起定（旧）'], ['frames', '按帧定（中后段不暗，开头最亮那下允许发白）']] },
-    ['expoQ', '按帧定：取第几分位的帧当基准', '', 0.3, 0.95, 0.05, P => renderVersion(P)<40 && P.expoMode === 'frames'],
-    ['trimLead', '开头空白不烘（1 = 贴图从第一次看得见开始，引擎用发射器延迟补上；0 = 从开花起烘）', '', 0, 1, 1, P => P.form === 'master'],
+    ['trimLead', '开头空白不烘（1 = 贴图从第一次看得见开始，引擎用发射器延迟补上；0 = 从开花起烘）', '', 0, 1, 1, P => P.form === 'master' || usesTickPlan40(P)],
     ['unitElev', '代表星仰角', '°', -60, 60, 1, P => P.form === 'unit' && isAir(P)],
     ['cellPad', '格子留边', 'px', 0, 8, 1]
   ] },
-  { sec: '光点与曝光（4.0）', show: P => renderVersion(P)>=40, hint: '尺寸表示亮核直径。曝光固定，不随亮度和尺寸自动改变；光晕与亮核分开调。', items: [
+  { sec: '光点与曝光（4.0）', show: () => true, hint: '尺寸表示亮核直径。曝光固定，不随亮度和尺寸自动改变；光晕与亮核分开调。', items: [
     ['exposure', '固定曝光', '×', .01, 20, .01, P => !P.exposureLock],
     { sel: 'exposureLock', label: '锁定曝光', options: [[0,'未锁定（曝光仍固定）'],[1,'已锁定']] },
     ['haloFrac', '光晕能量占比', '', 0, .85, .01],
     ['haloR', '光晕半径 / 亮核半径', '×', 1, 8, .1],
     { sel: 'previewBloom', label: '额外预览光晕', options: [[0,'关闭（UE Bloom 另算）'],[1,'开启']] }
   ] },
-  { sec: '画质（烘焙采样）', show: P => isSeq(P) || isEmit(P), hint: '空间超采样和快门子样本。4.0 光点始终使用面积覆盖积分；旧版的高斯核选项只作用于 3.7。', items: [
+  { sec: '画质（烘焙采样）', show: P => isSeq(P) || isEmit(P), hint: '空间超采样和快门子样本。光点按像素覆盖积分画（亚像素的点总光量也对）。', items: [
     ['qSS', '空间超采样（每边）', '×', 1, 8, 1],
     ['qHz', '快门采样频率', 'Hz', 120, 1920, 30],
-    ['qMaxSub', '每帧最多子样本', '次', 1, 128, 1],
-    ['qKernel', '光点像素覆盖积分（0 关 / 1 开）', '', 0, 1, 1, P=>renderVersion(P)<40],
-    ['qCore', '亮核占比', '', 0, 0.6, 0.01, P=>renderVersion(P)<40]
+    ['qMaxSub', '每帧最多子样本', '次', 1, 128, 1]
   ] }
 ];

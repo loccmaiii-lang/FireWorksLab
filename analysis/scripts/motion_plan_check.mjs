@@ -99,18 +99,7 @@ await check('live preview keeps its world camera fixed while bake framing grows'
   assert.deepEqual(views[1].camera,views[2].camera);
   assert.notEqual(views[0].framing[2],views[2].framing[2],'test must exercise growing bake framing');
 });
-await check('37 physical simulation and plans equal a707b63',()=>{
-  const old=vm.createContext({console,setTimeout,window:{}});
-  for(const file of ['00_util','05_quality','10_types','20_sim','30_plan']){
-    vm.runInContext(execFileSync('git',['show',`a707b63:tool/src/js/${file}.js`],{cwd:root,encoding:'utf8'}),old);
-  }
-  for(const id of ['kiku','botan','kamuro','senrin','strobe','JM4','TR2S','TR2M','TR2L']){
-    const P=data(`REPLICA_BY_ID['${id}']?replicaPM('${id}').P:defaultsFor('${id}',37).P`);context.legacyP=P;old.legacyP=P;
-    const code='JSON.stringify((()=>{const fm=measure(legacyP);return {fm,pl:plan(legacyP,fm)};})())';
-    const a=run(code),b=vm.runInContext(code,old);
-    assert.equal(createHash('sha256').update(a).digest('hex'),createHash('sha256').update(b).digest('hex'),id);
-  }
-});
+// 4.3：3.7 的画法去掉了（清理清单 C1），「37 的模拟和帧计划等于 a707b63」这一项随之去掉
 
 // Actual baker orchestration with a recorder replacing only GPU work.
 await check('PC/mobile baker consumes partial pages once; failed page disposes prior pages',async()=>{

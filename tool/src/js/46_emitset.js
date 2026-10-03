@@ -165,7 +165,7 @@ function esFwlEmitter(e, mobile, frac) {
   esBoxes(e.velAdd).forEach((B, i, A) => mods.push({ m: 'InitialVelocity', StartVelocity: { uniform: [B[0].map(esCm), B[1].map(esCm)] }, note: `第 ${i + 2} 个 Initial Velocity：叠加的随机散开${A.length > 1 ? '（' + A.length + ' 个均匀分布相加 → 中间密、边缘软）' : ''}` }));
   if (e.drag) mods.push({ m: 'Drag', DragCoefficientRaw: { uniform: [esR4(e.drag[0]), esR4(e.drag[1])] } });
   if (e.accel) mods.push({ m: 'ConstAcceleration', Acceleration: e.accel.map(esCm) });
-  if (e.accelCurve) mods.push({ m: 'Acceleration', Acceleration: { curve: esThin(e.accelCurve, 0.05).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false }, note: '空气乱流（大涡）：按发射器时间取值，同一时刻出生的火星受同一股气流 → 沿尾迹相关的松散' });
+  if (e.accelCurve) mods.push({ m: 'Acceleration', Acceleration: { curve: esThin(e.accelCurve, 0.05).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false }, note: '空气乱流（大涡）：按发射器时间取值，同一时刻出生的火花受同一股气流 → 沿尾迹相关的松散' });
   esBoxes(e.accelJit).forEach((B, i, A) => mods.push({ m: 'Acceleration', Acceleration: { uniform: [B[0].map(esCm), B[1].map(esCm)] }, note: `空气乱流（小涡）：每颗随机${A.length > 1 ? '（' + A.length + ' 个相加 → 边缘软）' : ''}` }));
   const sl = aligned && e.stretchLife ? e.stretchLife : null;
   if (e.sizeLife || sl) {
@@ -187,7 +187,7 @@ function esCascadeText(ES, mobile = false, frac = 1) {
   const L = [];
   for (const e of ES.emitters) {
     const j = esFwlEmitter(e, mobile, frac);
-    L.push(`【${e.name}】${j.gpu ? 'GPU Sprites' : 'CPU'} · 材质角色 soft_dot · Screen Alignment = ${j.required.screen_alignment}${j.required.screen_alignment !== 'Square' ? (j.required.screen_alignment === 'Velocity' ? '（沿速度' : '（沿屏幕竖直') + '拉长：Initial Size Y × ' + (e.stretch || 1) + (e.stretchLife ? '，Size By Life 的 Y 按寿命拉长' : '') + ' → 线状火星）' : ''} · Duration ${j.required.duration_s} s · Loops 1 · Delay ${j.required.delay_s} s`);
+    L.push(`【${e.name}】${j.gpu ? 'GPU Sprites' : 'CPU'} · 材质角色 soft_dot · Screen Alignment = ${j.required.screen_alignment}${j.required.screen_alignment !== 'Square' ? (j.required.screen_alignment === 'Velocity' ? '（沿速度' : '（沿屏幕竖直') + '拉长：Initial Size Y × ' + (e.stretch || 1) + (e.stretchLife ? '，Size By Life 的 Y 按寿命拉长' : '') + ' → 线状火花）' : ''} · Duration ${j.required.duration_s} s · Loops 1 · Delay ${j.required.delay_s} s`);
     if (j.spawn.rate.curve) L.push(`  Spawn Rate（发射器时间 s → 颗/秒，线性）：${j.spawn.rate.curve.length} 个关键点，${j.spawn.rate.curve.slice(0, 4).map(k => k.join(' → ')).join('；')}${j.spawn.rate.curve.length > 4 ? ' …（完整见 cascade.json）' : ''}`);
     else L.push(`  Spawn Rate = 0 · Burst ${j.spawn.bursts.map(([t, n]) => t + ' s × ' + n).join('，')}`);
     for (const m of j.modules) {

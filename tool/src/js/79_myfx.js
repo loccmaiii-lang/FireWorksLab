@@ -138,7 +138,7 @@ function myLinkHTML(i) {
   const others = state.layers.map((L, j) => [L, j]).filter(([L, j]) => j !== i && (e => e && familyOf(e.P.type) === 'aerial')(layerEntryOf(L)));
   if (!others.length) return '';
   const linked = new Set(linkedWith(i));
-  return `<div class="lh-link">同一批星（勾上 = 种子、星数、初速、终端速度、重力、离散这些决定轨迹的参数和这一层一起变；勾的时候按这一层的值）：${others.map(([L, j]) => `<label class="check"><input type="checkbox" data-link="${j}"${linked.has(j) ? ' checked' : ''}> 第 ${j + 1} 层 · ${layerName(j)}</label>`).join('')}</div>`;
+  return `<div class="lh-link">同一批星（勾上 = 种子、星数、初速、终端速度、重力、随机这些决定轨迹的参数和这一层一起变；勾的时候按这一层的值）：${others.map(([L, j]) => `<label class="check"><input type="checkbox" data-link="${j}"${linked.has(j) ? ' checked' : ''}> 第 ${j + 1} 层 · ${layerName(j)}</label>`).join('')}</div>`;
 }
 // 层卡片（观察图层）里每层一排小按钮；底下「＋ 加一层」
 function myLayerTools(i) {

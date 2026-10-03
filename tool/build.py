@@ -21,8 +21,11 @@ nf = os.path.join(here, '..', 'analysis', '命名', '参数名称表.json')
 if os.path.exists(nf):
     for r in json.load(open(nf, encoding='utf-8')):
         pn.append({k: r.get(f, '') for k, f in (('sec', 'sec'), ('key', 'key'), ('old', 'old'), ('cn', 'cn'), ('en', 'en'), ('mcn', 'module_cn'), ('men', 'module_en'),
-                                                ('desc', 'desc'), ('ud', 'updown'), ('rnd', 'random'), ('ue', 'ue'), ('tag', 'tag'), ('note', 'note'))})
+                                                ('desc', 'desc'), ('ud', 'updown'), ('rnd', 'random'), ('ue', 'ue'), ('tag', 'tag'), ('note', 'note'), ('tier', 'tier'), ('id', 'id'), ('unit', 'unit'))})
 js = 'const PNAMES = ' + json.dumps(pn, ensure_ascii=False, separators=(',', ':')) + ';\n' + js
+# 4.3：模块表（模块的中英文、默认展开、放什么）→ PMODULES，面板模块的说明和默认展开按它
+mf = os.path.join(here, '..', 'analysis', '命名', '模块表.json')
+js = 'const PMODULES = ' + (json.dumps(json.load(open(mf, encoding='utf-8')), ensure_ascii=False, separators=(',', ':')) if os.path.exists(mf) else '[]') + ';\n' + js
 html = f'''<!doctype html>
 <html lang="zh-CN">
 <head>

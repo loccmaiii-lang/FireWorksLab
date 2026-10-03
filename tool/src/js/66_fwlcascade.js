@@ -102,7 +102,7 @@ function fwlCascade(name, b, M, mobile = false) {
   if (!body) return null;
   return {
     format: FWL_FORMAT, name, platform: mobile ? 'mobile' : 'pc',
-    source: { tool: '烟花母版烘焙器 ' + VERSION, type: b.P.type, form: b.form, quality: b.meta.quality ? { ss: b.meta.quality.ss, hz: b.meta.quality.hz, kernel: b.meta.quality.kernel, core: b.meta.quality.core } : undefined },
+    source: { tool: '烟花母版烘焙器 ' + VERSION, type: b.P.type, form: b.form, quality: b.meta.quality ? { ss: b.meta.quality.ss, hz: b.meta.quality.hz } : undefined },
     textures: body.textures, materials: body.materials, system: body.system, emitters: body.emitters,
     notes: body.notes
   };

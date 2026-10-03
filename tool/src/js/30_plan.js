@@ -93,7 +93,7 @@ function evalKeys(keys, u) {
   return keys[keys.length - 1][1];
 }
 function layoutOf(P) { const per = P.cols * P.rows; return { cols: P.cols, rows: P.rows, chans: P.chans, per, F: per * P.chans, cellW: P.texW / P.cols, cellH: P.texH / P.rows }; }
-// 取景 + 取帧计划：帧号曲线（≤8 个关键帧）就是引擎里 Dynamic Parameter 第三通道要填的曲线，
+// 取景 + 取帧计划：帧号曲线（≤8 个关键帧）就是引擎里 Dynamic Parameter 帧号通道要填的曲线，
 // 每一帧的烘焙时刻取「曲线值 = 帧号 + 0.5」的时刻，引擎取整后正好显示这一帧
 // a、b：分段烘焙时只取 [a, b] 这一段（长时母版分成开花段与下垂段）
 function plan(P, fm0, ta = 0, tb = P.duration) {

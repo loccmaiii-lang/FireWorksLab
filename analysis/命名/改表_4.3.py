@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """参数名称表 4.3 修订（对话框15，2026-10-03；依据 analysis/命名/需求重梳_2026-10-03.md + 用户在「烘焙器参数命名」页的审阅意见）
 
-这一版只改「空中礼花」106 行和「烘焙输出」48 行（用户日常看到的）。尾缀 / 物理尾缀 / 地面 250 行等清理清单 A6
-（上升 / 尾缀合成一个入口）定了再按同一规则改——很多行可能整组去掉，先不白改。
+第一版只改「空中礼花」106 行和「烘焙输出」48 行。4.3（对话框15，2026-10-04，用户「直接出 4.3」）：
+  · 清理清单 A6 定了（升空尾缀一个入口，RT4 的循环层 + 粒子、物理尾缀、地面的参数节都还在）→ 其余 206 行也按词汇表改词、模块名改词，
+    tier 先一律 core（不藏东西；以后按用户意见再分「更多」）；
+  · 去掉 3.7 画法的参数行（segAt / expoMode / expoQ / qKernel / qCore，清理清单 C1）；
+  · 加「爆裂范围 / 爆裂速度」两行（用户 10-03 审阅页选择题选「加」）；
+  · 说明里不再出现「旧名 / 原名 / 旧显示名」（4.3 只剩新名字）。
 
 做了什么：
   1. 模块：按 Cascade 发射器从上到下（模块表.json）；每行加 tier：core = 打开就看得到，more = 模块里「更多」点开才有；
@@ -112,7 +116,8 @@ OVR = {
     'strobeHz': ('烟花特性', M, 'Strobe Frequency', '点灭频率'), 'strobeDuty': ('烟花特性', M, 'Strobe Duty', '点灭亮占比'),
     'strobeStart': ('烟花特性', M, 'Strobe Start', '点灭开始'), 'glitter': ('烟花特性', M, 'Glitter', '辉星强度'),
     'glitterDelay': ('烟花特性', M, 'Glitter Delay', '辉星延迟'), 'crackle': ('烟花特性', M, 'Crackle Count', '爆裂数量'),
-    'crackleDelay': ('烟花特性', M, 'Crackle Delay', '爆裂延迟'), 'branch': ('烟花特性', M, 'Branch Count', '松叶分叉数'),
+    'crackleDelay': ('烟花特性', M, 'Crackle Delay', '爆裂延迟'),
+    'crackleR': ('烟花特性', M, 'Crackle Radius', '爆裂范围'), 'crackleV': ('烟花特性', M, 'Crackle Velocity', '爆裂速度'), 'branch': ('烟花特性', M, 'Branch Count', '松叶分叉数'),
     'branchAt': ('烟花特性', M, 'Branch Time', '分叉时刻'), 'flutter': ('烟花特性', M, 'Flutter', '飘落摆动'),
     'flutterHz': ('烟花特性', M, 'Flutter Frequency', '摆动频率'),
     'emberFrac': ('烟花特性', M, 'Ember Fraction', '余烬比例'), 'emberLife': ('烟花特性', M, 'Ember Lifetime', '余烬寿命'),
@@ -158,7 +163,15 @@ OVR = {
     # 输出：画质
     'shutter': ('画质', M, 'Motion Blur Amount', '运动模糊'), 'qSS': ('画质', M, 'Spatial Supersampling', '空间超采样'),
     'qHz': ('画质', M, 'Temporal Sample Rate', '快门采样率'), 'qMaxSub': ('画质', M, 'Max Temporal Samples', '子样本上限'),
-    'qKernel': ('画质', M, 'Pixel Coverage Integration', '像素覆盖积分'), 'qCore': ('画质', M, 'Core Fraction', '亮核占比'),
+}
+DROP = {'segAt', 'expoMode', 'expoQ', 'qKernel', 'qCore'}     # 4.3：3.7 画法的参数（清理清单 C1）
+# 说明里提到旧名字的几条：改成正面描述（4.3 只剩新名字）
+NOTE_FIX = {
+    '035-ignSeed': '点火延迟 > 0 才显示；点火延迟随机 = 0 时不起作用；设 0 也不会打乱星位（每颗星的点火随机按自己的编号算）。',
+    '061-subKeep': '任何负数都按默认：小球（千轮）0.35、十字（分裂）0.25。',
+    '121-trTwist': '主波（× 1）、半频波（× 0.45）、高频波（× 0.12）叠加，最大偏移约 1.5 倍幅度。只是画面平面里的左右波浪，不是三维螺旋。',
+    '188-phBPm': '温度下降（熄灭温度）会另外再压暗末段。数值越小越是烧到最后才暗。',
+    '289-rtDotGain': '不作用在星头光晕、发射口闪光、烟带和贴图火花上。',
 }
 
 # 同一个键有两行时按 id 区分（形状里的 pattern：空中「开花图案」和仕掛け「灯芯图案」）
@@ -172,6 +185,8 @@ SUBS = [
     ('子星初速离散', '子星初速随机'), ('开花时刻离散', '开花时刻随机'), ('离散', '随机'),
     ('余烬长尾', '余烬'), ('光丝', '余烬'), ('长尾', '余烬'),
     ('（小割玉）', ''), ('（千轮 / 分裂飞行中的小割玉）', '（千轮 / 分裂里还在飞的子弹）'), ('（小割玉：', '（'), ('小割玉', '子弹'), ('小割', '子花'), ('小花', '子花'),
+    ('炸开的小星颗数（0 = 不炸）', '开出的子星颗数（0 = 不开花）'), ('小星只有亮点、不带火花尾', '子星只有星头、不带火花'), ('末端小星炸开的速度', '末端子星开花的速度'),
+    ('末端炸开的子花', '末端开出的子花'), ('那一刻炸开', '那一刻开花'),
     ('割药炸开时', '开花时割药'), ('从一点炸开', '从一点开花'), ('从子弹炸开时', '子弹开花时'), ('多久炸开', '多久爆裂'),
     ('引き（分层星外层）：', '分层星外层：'), ('外层的引き尾巴先停', '外层的尾迹先停'), ('引き', '外层'),
     ('「尾缀（炭火火花）」节', '「火花」模块'), ('尾缀循环层', '升空尾缀循环层'),
@@ -189,7 +204,9 @@ DOT = re.compile(r'(?<!GPU )(?<!「)(?<!PC )光点(?!」|导出|与曝光|方案
 # 用户问过的几处：直接写清楚（覆盖 desc / note 的开头）
 TEXT = {
     'sparkGrav': {'note': '和「阻力重力」模块的「重力倍率」不重复：星和火花是两个发射器（像 Cascade 里母发射器、子发射器各有自己的 Const Acceleration）——星的重力管星飞出的弧线，火花的重力管火花离开星以后往下垂多少。下垂幅度还取决于「火花阻力」。'},
-    'crackle': {'note': '现在没有单独的爆裂速度 / 范围参数：每个小闪离星 0.5–3.5 m（固定范围）、直径约 0.7–1.3 m、0.07 秒内灭，亮度 × 0.6–1.4 随机，在「爆裂延迟」的 0.3–1.7 倍时刻随机出现。子弹不爆，千轮 / 分裂的子星会爆；落水的星不爆；有第二段时在第二段结束才爆。'},
+    'crackle': {'note': '每个小闪直径约 0.7–1.3 m、0.07 秒内灭，亮度 × 0.6–1.4 随机，在「爆裂延迟」的 0.3–1.7 倍时刻随机出现；离星多远看「爆裂范围」，往外飞多快看「爆裂速度」。子弹不爆，千轮 / 分裂的子星会爆；落水的星不爆；有第二段时在第二段结束才爆。'},
+    'crackleR': {'desc': '爆裂小闪离星最远多少米（最近是它的 1/7）；默认 3.5 m = 以前固定的 0.5–3.5 m。', 'updown': '调大：噼啪点散得更开、像一团云；调小：贴着星炸成一小簇', 'note': '爆裂数量 > 0 才显示。'},
+    'crackleV': {'desc': '爆裂小闪往外飞的速度：越晚炸的离星越远（米/秒）；默认 0 = 以前那样不动。', 'updown': '调大：一串噼啪往外胀开；0：每个小闪就在出现的地方', 'note': '爆裂数量 > 0 才显示；和「爆裂范围」叠加。'},
     'twinkle': {'note': '一帧的快门时间内会采好几次再平均，贴图里的闪烁比数值看起来小，快门越长越平。星头的闪烁是「星头」模块的「星头闪烁」（Head Flicker）。'},
     'flicker': {'note': '只管星头。火花的闪烁是「火花」模块的「火花闪烁」（Sparkler Flicker）。'},
     'v0': {'desc': '开花时割药把星抛出去的速度（米/秒）；之后受平方阻力很快减速。'},
@@ -208,10 +225,40 @@ TEXT = {
 
 def main():
     d = json.loads(TAB.read_text(encoding='utf-8'))
+    d = [r for r in d if r['key'] not in DROP]
+    # 爆裂范围 / 速度：照爆裂延迟那一行抄一份（只第一次加）
+    if not any(r['key'] == 'crackleR' for r in d):
+        i = next(k for k, r in enumerate(d) if r['key'] == 'crackleDelay'); base = d[i]
+        for j, (key, old, unit, rng, dft) in enumerate([('crackleR', '爆裂范围', 'm', '0.5–20', '3.5'), ('crackleV', '爆裂速度', 'm/s', '0–30', '0')]):
+            d.insert(i + 1 + j, dict(base, key=key, old=old, unit=unit, range=rng, default=dft, id=base['id'].split('-')[0] + '-' + key, check='20_sim.js crackleBurst：r = (0.5 + 3u) × crackleR / 3.5 + crackleV × dt'))
+    # 升空尾缀的档位（4.3 清理清单 A6：小中大合成一个入口，档位是一个选择框）
+    if not any(r['key'] == '_trailTier' for r in d):
+        i = next(k for k, r in enumerate(d) if r['sec'] == '尾缀序列 · 形态'); base = d[i]
+        d.insert(i, dict(base, key='_trailTier', old='档位', module_cn='发射器', module_en='Emitter', en='Trail Size', cn='尾缀档位', unit='', range='小 / 中 / 大', default='中',
+                         desc='升空尾缀的小、中、大三档（对照尾缀 C / B / A）：开花高度、弹速、火花密度不同。', updown='选大：弹道更高、火花更密更亮；选小：反过来',
+                         random='', ue='UE 里没有对应：换档 = 换成那一档的整套参数，导出的是那一档的贴图和 cascade.json', note='换档会换掉这一档的全部参数（改过的不保留）。',
+                         id=base['id'].split('-')[0] + '-_trailTier', check='70_ui.js：_trailTier → openType(trailS / trailM / trailL)', tier='core'))
+    for r in d:
+        if r['id'] in NOTE_FIX: r['note'] = NOTE_FIX[r['id']]
     mods = {m[0]: m for m in MODULES}
     n = 0
     for r in d:
-        if r.get('family') not in ('空中礼花', '烘焙输出'): continue
+        if r.get('family') not in ('空中礼花', '烘焙输出'):
+            # 4.3：尾缀 / 物理尾缀 / 地面：词汇统一（名字、模块名、说明），tier 先都 core
+            for f in ('cn', 'module_cn', 'desc', 'updown', 'note', 'random', 'ue'):
+                t = r.get(f) or ''
+                for a, b in SUBS: t = re.sub(r'(?<!升空)尾缀循环层', b, t) if a == '尾缀循环层' else t.replace(a, b)
+                if f not in ('ue', 'module_cn'): t = DOT.sub('颗粒', t)
+                r[f] = t
+            # 4.3：尾缀那几族原来的「外观 / 尾迹 / 受力」模块并到和空中礼花同名的模块（一个东西一个词：尾迹只指火花连成的线）
+            mm = r.get('module_cn')
+            if mm == '尾迹': mm = '火花'
+            elif mm == '受力': mm = '阻力重力'
+            elif mm == '外观': mm = '星头' if '星头' in r['sec'] else '火花' if '火星' in r['sec'] or '火花' in r['sec'] else '曝光光晕'
+            if mm != r.get('module_cn'): r['module_cn'], r['module_en'] = mm, mods[mm][1]
+            r.setdefault('tier', C)
+            if not r.get('tier'): r['tier'] = C
+            continue
         o = OVR_ID.get(r['id']) or OVR.get(r['key'])
         if o is None: raise SystemExit('没覆盖到：' + r['key'])
         mod, tier, en, cn = o
@@ -224,6 +271,7 @@ def main():
             r[f] = t
         tx = TEXT.get(r['key'], {})
         if 'desc' in tx: r['desc'] = tx['desc']
+        if 'updown' in tx: r['updown'] = tx['updown']
         if 'note' in tx: r['note'] = tx['note']
         if 'note_pre' in tx and tx['note_pre'] not in r['note']: r['note'] = (tx['note_pre'] + ' ' + r['note']).strip()
         n += 1

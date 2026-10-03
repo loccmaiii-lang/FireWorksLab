@@ -81,7 +81,7 @@ function effNewCount() { return EFFS().filter(effIsNew).length; }
 // 4.2.5 版本指纹 = 条目参数指纹（review_to_baker.py 的 ver）· 每层产物种类的烘焙器输出版本（OUTPUT_VER）。
 // 导出任务（export_job.py）、标准检查（标准检查.py）记录的都是它；输出规则改了，旧导出、旧标准检查就过期。
 const _entryVer = new Map();
-function outFamily(P) { if (renderVersion(P) < 40) return 'v37'; const k = bakeKind(P); return k === 'segments' ? 'master' : k; }
+function outFamily(P) { const k = bakeKind(P); return k === 'segments' ? 'master' : k; }
 function entryVer(e) {
   if (!e || !e.ver) return null;
   const key = e.id + '@' + e.ver; if (_entryVer.has(key)) return _entryVer.get(key);

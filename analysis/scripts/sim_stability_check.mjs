@@ -23,10 +23,6 @@ check('4.0: turning on delayed ignition does not reshuffle speed / burn',()=>{
   let same=0;for(let i=0;i<a.length;i++)if(Math.abs(a[i].v-b[i].v)<1e-9&&Math.abs((b[i].burn-b[i].ign)-a[i].burn)<1e-9)same++;
   assert.equal(same,a.length);
 });
-check('3.7 still reshuffles (unchanged legacy behaviour, for the record)',()=>{
-  const a=stars({stars:150},37),b=stars({stars:151},37);let same=0;for(let i=0;i<150;i++)if(Math.abs(a[i].burn-b[i].burn)<1e-12)same++;
-  assert.ok(same<150);
-});
 check('4.0: tiny sub-star terminal velocity stays finite (semi-implicit drag)',()=>{
   const r=run(`(()=>{const P=({...defaultsFor('senrin',40).P,subVt:0.5,subSpeed:45}),s=new Sim(P);for(let i=0;i<Math.round(3/H_STEP);i++)s.step(H_STEP);
     return s.all.every(q=>Number.isFinite(q.x)&&Number.isFinite(q.vx));})()`);

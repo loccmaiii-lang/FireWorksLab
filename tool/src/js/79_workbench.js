@@ -59,11 +59,11 @@ function outNote(L, e) {
   if (o.pc === 'unit' && P && !unitAllowed(P)) w.push('这种花型 / 图案不能出单束（千轮、分裂、蜂、非球形图案），导出时 PC 按序列出');
   // XU1 试导（引菊 → 锦的锦层）：单束的尾巴是直的、沿速度方向；星下垂以后速度朝下，长尾巴都指向花心上方同一点（线性阻力的几何性质），后段像辐条。长尾、下垂多的层用序列
   if (o.pc === 'unit' && P && unitAllowed(P) && (['kamuro', 'yanagi'].includes(P.type) || +P.emberFrac > 0 || (+P.sparkLife || 0) * Math.max(1, +P.sparkLifeEnd || 1) > 1.2 || (+P.burn || 0) > 4))
-    w.push('这一层尾巴长 / 烧得久（锦冠、柳、光丝这类）：单束的尾巴是沿速度的直线，下垂以后会都指向花心上方、像辐条；这种层建议用序列');
+    w.push('这一层尾迹长 / 烧得久（锦冠、柳、余烬这类）：单束的尾迹是沿速度的直线，下垂以后会都指向花心上方、像辐条；这种层建议用序列');
   if (o.pc === 'dots' && P) {
     if (familyOf(P.type) !== 'aerial') w.push('这种花型不是礼花，光点没法表达，PC 请用序列');
-    if (!(+P.headBright > 0)) w.push('这一层星头不发光（炭头亮度 0，只有尾巴 / 火花）：光点什么都出不来，PC 请用序列');
-    if (+P.sparkRate > 0 || +P.emberFrac > 0) w.push('这一层有尾巴：PC 光点只出星头，尾巴没有（要尾巴就用序列，或另加一层序列只出尾巴）');
+    if (!(+P.headBright > 0)) w.push('这一层星头不发光（星头亮度 0，只有尾迹 / 火花）：光点什么都出不来，PC 请用序列');
+    if (+P.sparkRate > 0 || +P.emberFrac > 0) w.push('这一层有尾迹：PC 光点只出星头，尾迹没有（要尾迹就用序列，或另加一层序列只出尾迹）');
     if (P.pattern && P.pattern !== 'sphere') w.push('图案不是球：光点按球面放射，形状会不对');
     if (+P.strobeHz > 0) w.push('点灭：光点不会闪（spec 10.B 的点灭星另配）');
     if (+P.subStars > 0 && ['senrin', 'crossette'].includes(P.type)) w.push('千轮 / 分裂的子花不在光点里');
@@ -74,8 +74,8 @@ function outNote(L, e) {
 function buildLayerHead(i) {
   const L = state.layers[i], host = $('#layerHead'); host.innerHTML = '';
   host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b>正在调：第 ${i + 1} 层 · ${layerName(i)}</b><span class="shelp" role="button" tabindex="0" id="lhHelp" title="这一层怎么调">？</span></div>
-    <p class="hint" id="lhHelpText" hidden>下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 燃烧结束 / 火花停（圆点）都可以直接拖。每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
-    ${lib.my ? myLinkHTML(i) : linkedWith(i).length ? `<p class="lh-link">联动：和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、离散等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>` : ''}`);
+    <p class="hint" id="lhHelpText" hidden>下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 寿命结束 / 火花停止（圆点）都可以直接拖。每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
+    ${lib.my ? myLinkHTML(i) : linkedWith(i).length ? `<p class="lh-link">联动：和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、随机等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>` : ''}`);
   const pos = document.createElement('details'); pos.className = 'sec'; pos.open = true; pos.innerHTML = '<summary>在整朵里的位置</summary>'; host.appendChild(pos);
   slider(pos, `lh${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
   slider(pos, `lh${i}-delay`, '延迟', 's', 0, 10, 0.01, () => L.delay, v => L.delay = v, 0);
@@ -88,7 +88,7 @@ function buildLayerHead(i) {
   host.appendChild(ex);
   // 4.2.15 光点的大小 / 亮度（XD2：默认偏大偏亮）：只在 PC 选「光点」时出现；1 = 不写进层（没动过的层和以前逐字一样）
   const dh = ex.querySelector('#lhDots'), dset = k => v => { if (Math.abs(v - 1) < 1e-9) delete L[k]; else L[k] = v; };
-  slider(dh, `lh${i}-dotSize`, '光点大小', '× 炭头', 0.2, 4, 0.05, () => L.dotSize > 0 ? +L.dotSize : 1, dset('dotSize'), 1);
+  slider(dh, `lh${i}-dotSize`, '光点大小', '× 星头', 0.2, 4, 0.05, () => L.dotSize > 0 ? +L.dotSize : 1, dset('dotSize'), 1);
   slider(dh, `lh${i}-dotBright`, '光点亮度', '×', 0.1, 4, 0.05, () => L.dotBright > 0 ? +L.dotBright : 1, dset('dotBright'), 1);
   const syncOut = () => { const o = layerOut(L), le = layerEntryOf(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = o.mobile; $('#lhOutNote').textContent = outNote(L, le); dh.hidden = o.pc !== 'dots';
     const uo = ex.querySelector('[data-out=pc] option[value=unit]'); if (uo && le) { uo.disabled = !unitAllowed(le.P) && o.pc !== 'unit'; uo.title = unitAllowed(le.P) ? '' : '千轮、分裂、蜂、非球形图案不能出单束'; } };
@@ -227,7 +227,7 @@ async function wbApply(snap) {
     await applyCombo({ name: snap.name || state.comboName, layers: snap.layers.map(x => ({ ...(x.id ? { m: 'rep:' + x.id } : x.P ? { src: { type: x.type, P: x.P, M: x.M } } : { m: x.type }), ...structuredClone(x.L) })) });
   } else {
     if (state.tab === 'combo') { flash('这个版本是单层，当前打开的是多层效果', true); return; }
-    state.P = structuredClone(snap.P); state.M = structuredClone(snap.M); state.repId = snap.repId || state.repId;
+    state.P = migrate37(structuredClone(snap.P)); state.M = structuredClone(snap.M); state.repId = snap.repId || state.repId;
     buildMasterPanel(); onParam();
   }
 }
@@ -357,19 +357,19 @@ function phasesOf(P) {
   if (!P || familyOf(P.type) !== 'aerial') return [];
   const ign = +P.ignDelay || 0, burnEnd = ign + (+P.burn || 0), after = +P.afterBurn > 0, lifeEnd = burnEnd + (after ? +P.afterBurn : 0);
   const r2 = v => Math.round(v * 100) / 100, out = [], igOf = () => +P.ignDelay || 0;
-  out.push({ k: 'ign', row: 's', t: ign, lab: '点火（延时点火）', set: t => P.ignDelay = r2(Math.max(0, t)) });
+  out.push({ k: 'ign', row: 's', t: ign, lab: '点火延迟', set: t => P.ignDelay = r2(Math.max(0, t)) });
   // 燃烧结束拖到火花停之前：火花停跟着收到燃烧结束（仍是打开的，接力关系不断）
-  out.push({ k: 'burn', row: 's', t: burnEnd, lo: ign + 0.05, lab: after ? '主段结束（第二段从这里亮）' : '燃烧结束', set: t => { P.burn = r2(Math.max(0.05, t - igOf())); if (+P.sparkStop > 0 && +P.sparkStop > P.burn) P.sparkStop = P.burn; if (+P.sparkStart > 0 && +P.sparkStart > P.burn - 1 / 15) P.sparkStart = r2(Math.max(0, P.burn - 1 / 15)); } });
+  out.push({ k: 'burn', row: 's', t: burnEnd, lo: ign + 0.05, lab: after ? '主段结束（第二段从这里亮）' : '寿命结束', set: t => { P.burn = r2(Math.max(0.05, t - igOf())); if (+P.sparkStop > 0 && +P.sparkStop > P.burn) P.sparkStop = P.burn; if (+P.sparkStart > 0 && +P.sparkStart > P.burn - 1 / 15) P.sparkStart = r2(Math.max(0, P.burn - 1 / 15)); } });
   if (after) out.push({ k: 'after', row: 's', t: lifeEnd, lab: '第二段结束', set: t => P.afterBurn = r2(Math.max(0.05, t - igOf() - (+P.burn || 0))) });
-  if (+P.headDim < 1 && +P.headDimUntil > 0) out.push({ k: 'dim', row: 's', t: +P.headDimUntil, lab: '星头压暗到', set: t => P.headDimUntil = r2(Math.max(0.05, t)) });
-  if (+P.emberFrac > 0 && +P.emberEnd > 0) out.push({ k: 'ember', row: 's', t: +P.emberEnd, lab: '光丝整体熄灭', set: t => P.emberEnd = r2(Math.max(0.05, t)) });
+  if (+P.headDim < 1 && +P.headDimUntil > 0) out.push({ k: 'dim', row: 's', t: +P.headDimUntil, lab: '前段结束', set: t => P.headDimUntil = r2(Math.max(0.05, t)) });
+  if (+P.emberFrac > 0 && +P.emberEnd > 0) out.push({ k: 'ember', row: 's', t: +P.emberEnd, lab: '余烬熄灭时刻', set: t => P.emberEnd = r2(Math.max(0.05, t)) });
   if (+P.sparkRate > 0 || +P.emberFrac > 0) {
     const ss = +P.sparkStart || 0, st = +P.sparkStop || 0, endNow = () => (+P.burn || 0) + (+P.afterBurn > 0 ? +P.afterBurn : 0);
-    out.push({ k: 'sstart', row: 'f', t: ign + ss, auto: !(ss > 0), lab: ss > 0 ? '火花开始' : '火花开始（= 点火，拖动打开「火花从第几秒开始」）',
+    out.push({ k: 'sstart', row: 'f', t: ign + ss, auto: !(ss > 0), lab: ss > 0 ? '火花开始时刻' : '火花开始时刻（= 点火，拖动就打开）',
       lo: ign, hi: (st > 0 ? ign + st : lifeEnd) - 1 / 15,
       set: t => { const v = t - igOf(); P.sparkStart = v < 1 / 30 ? 0 : r2(Math.min(v, (+P.sparkStop > 0 ? +P.sparkStop : endNow()) - 1 / 15)); } });
     // 火花停：没打开时（空心）只能往前拖；打开以后往后拖过燃烧结束，燃烧结束跟着往后推（保持原来星头比火花多亮的那一小段）
-    out.push({ k: 'sstop', row: 'f', t: st > 0 ? ign + st : lifeEnd, auto: !(st > 0), lab: st > 0 ? '火花停' : '火花停（= 燃烧结束，拖动打开「火花只在前几秒」）',
+    out.push({ k: 'sstop', row: 'f', t: st > 0 ? ign + st : lifeEnd, auto: !(st > 0), lab: st > 0 ? '火花停止时刻' : '火花停止时刻（= 寿命结束，拖动就打开）',
       lo: ign + ss + 1 / 15, hi: st > 0 ? Infinity : lifeEnd,
       set: t => { const v = t - igOf(), was = +P.sparkStop || 0;
         if (!(was > 0)) { P.sparkStop = v >= endNow() - 1 / 30 ? 0 : r2(Math.max((+P.sparkStart || 0) + 1 / 15, 0.05, v)); return; }
@@ -475,7 +475,7 @@ function buildTlBars() {
   }).join('') + '<div class="tlcv" id="tlCurves"></div><span class="tlb-ph" aria-hidden="true"></span>'
     + `<div class="tlcut">${P ? `<button type="button" class="mini" data-cut="in" title="把当前时刻设成入点：帧预算从这里开始分配">设为入点</button><button type="button" class="mini" data-cut="out" title="把当前时刻设成出点">设为出点</button><button type="button" class="mini" data-cut="clear">清除</button>
       <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动（第一次看得见）'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动（最后看得见）'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') : ''}</span>`
-      : ''}<span class="tlhelp">上排圆点 = 星（点火、燃烧结束…），中间菱形 = 火花（开始、停；空心 = 默认位置，拖动就打开），下方白色把手 = 入点 / 出点，都能左右拖；细刻度 = 每一帧从哪个 tick 开始。${state.tab === 'combo' ? '点轨道切到那一层；同一批星的几层在同一时刻的点连在一起动（接力）。' : ''}拖燃烧结束等，序列时长跟着变</span></div>`;
+      : ''}<span class="tlhelp">上排圆点 = 星（点火、寿命结束…），中间菱形 = 火花（开始、停；空心 = 默认位置，拖动就打开），下方白色把手 = 入点 / 出点，都能左右拖；细刻度 = 每一帧从哪个 tick 开始。${state.tab === 'combo' ? '点轨道切到那一层；同一批星的几层在同一时刻的点连在一起动（接力）。' : ''}拖寿命结束等，序列时长跟着变</span></div>`;
   // 点轨道（不是把手）：跳到那个时刻；多层时顺便切到这一层（用户 16:22 第 3 条）
   host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { if (ev.target !== t && !ev.target.matches('i, .fcs')) return; const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); if (state.tab === 'combo' && state.comboSel !== +t.dataset.i) selectComboLayer(+t.dataset.i); }));
   host.querySelectorAll('.tlb-n[data-i]').forEach(n => n.addEventListener('click', () => { if (state.tab === 'combo') selectComboLayer(state.comboSel === +n.dataset.i ? -1 : +n.dataset.i); }));
@@ -674,7 +674,7 @@ function renderDeliv() {
         rows.push(`<tr class="dim"><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'C')}.png</td><td>Cut（PC / 手机共用，512）</td><td></td><td></td></tr>`);
       }
       rows.push(`<tr class="dim"><td>${fwTexName(nm.base, ly, null, 0, 'R')}.png</td><td>颜色 Ramp（PC / 手机共用）</td><td></td><td></td></tr>`);
-      rows.push(`<tr class="dim"><td colspan="4">粒子发射器（火粉、火星）没有贴图：用软圆点材质，数值在 cascade.json</td></tr>`);
+      rows.push(`<tr class="dim"><td colspan="4">粒子发射器（火花、落火）没有贴图：用软圆点材质，数值在 cascade.json</td></tr>`);
       continue;
     }
     const parts = bakeParts(x.b), delay = +x.L.delay || 0, rate = +x.L.rate || 1, ly = combo ? nm.layers[x.i] : '';

@@ -1,7 +1,8 @@
 """Compare full RGBA bake output with a saved HTML revision (including V5 fades).
 
-Default cases: JM4 and V5 small/medium/large, full export resolution. Every
-texture, channel and frame is compared; nonzero differences fail the command.
+Default cases (4.3, one render core): JM4-40, HK10-1, HN2-O, RT4M at full export
+resolution. Every texture, channel and frame is compared; nonzero differences fail
+the command. (Before 4.3 this compared the 3.7 legacy path: JM4 + V5 TR2S/M/L.)
 Set FW_BROWSER_EXECUTABLE only to select an already installed Chromium.
 """
 import argparse
@@ -21,7 +22,7 @@ from browser_runtime import chromium_options, verify_renderer
 ROOT = Path(__file__).resolve().parents[2]
 JS_BAKE = r"""async ({id, legacy}) => {
   state.stillBusy = true; clearTimeout(bakeTimer);
-  const {P} = replicaPM(id); if (legacy) P.renderVer = 37;
+  const {P} = replicaPM(id);
   const b = await bake(P, 1, null), textures = [];
   const capture = (s, part) => {
     for (const key of ['head', 'tail']) {
@@ -76,8 +77,8 @@ def render(browser, html, ids, legacy, out, label):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--ref', default='a707b63')
-    ap.add_argument('--ids', default='JM4,TR2S,TR2M,TR2L')
+    ap.add_argument('--ref', default='HEAD', help='git revision of the baseline FireworkBaker.html')
+    ap.add_argument('--ids', default='JM4-40,HK10-1,HN2-O,RT4M')
     ap.add_argument('--out', required=True, help='Use an ignored local folder for full texture arrays')
     ap.add_argument('--report', required=True, help='Small JSON report suitable for committing')
     args = ap.parse_args()
@@ -90,7 +91,7 @@ def main():
         with sync_playwright() as pw:
             with pw.chromium.launch(**chromium_options()) as browser:
                 old, old_gpu = render(browser, ref, args.ids.split(','), False, out, 'old')
-                new, new_gpu = render(browser, ROOT / 'tool/FireworkBaker.html', args.ids.split(','), True, out, 'new')
+                new, new_gpu = render(browser, ROOT / 'tool/FireworkBaker.html', args.ids.split(','), False, out, 'new')
         rows = []
         for key in sorted(old.keys() | new.keys()):
             a, b = old.get(key), new.get(key)
@@ -103,7 +104,7 @@ def main():
                 row.update(max=int(delta.max()), mean=float(delta.mean()), changed=int(np.count_nonzero(delta)))
                 row['pass'] = row['max'] == 0 and a['nonzero'] > 0
             rows.append(row)
-        report = {'ref': args.ref, 'legacy': True, 'renderers': [old_gpu, new_gpu], 'textures': rows,
+        report = {'ref': args.ref, 'renderers': [old_gpu, new_gpu], 'textures': rows,
                   'pass': bool(rows) and all(r['pass'] for r in rows)}
         dest = Path(args.report); dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

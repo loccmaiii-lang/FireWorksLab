@@ -339,16 +339,16 @@ function formOptions(P) {
     const ALL = { trail: '尾缀序列（V5：循环 + 消散，速度朝向）', emitset: '循环层 + 粒子发射器（RT4 用的形式）', phys: '实时物理模拟（旧，贴图用 trail_phys_bake.py 导出）', unit: '星头循环 + 弹道与火花发射器参数（旧）', master: '整段大面片（旧）' };
     const o = [['trail', ALL.trail]]; if (P.form && P.form !== 'trail' && ALL[P.form]) o.push([P.form, ALL[P.form]]); return o;
   }
-  const o = [['master', '大面片母版'], ['segments', renderVersion(P)>=40?'分段母版（按实际帧数分配贴图）':'分段母版（开花段 + 下垂段两张贴图）']];
+  const o = [['master', '大面片母版'], ['segments', '分段母版（按实际帧数分配贴图）']];
   if (unitAllowed(P)) o.push(['unit', '单元序列（每颗星一个粒子，省 overdraw）']);
   return o;
 }
 const FORM_NOTES = {
   master: '整朵花烘成一张序列，一个面片播放。远景、大型礼花的主层。',
   segments: '长时花型（锦冠、柳）帧数不够时，把开花段和下垂段分成两张贴图、两个发射器，各自分配帧数。',
-  unit: '贴图里只有一颗星的星头和拖尾（沿速度方向），Cascade 按拟合的轨迹发射每颗星。菊类最省 overdraw。',
+  unit: '贴图里只有一颗星的星头和尾迹（沿速度方向），Cascade 按拟合的轨迹发射每颗星。菊类最省 overdraw。',
   loop: '周期内的火花按周期性编号生成，最后一帧直接接回第一帧。Cascade 里 Emitter Loops = 0 无限循环。',
-  emitset: '循环层 + 粒子发射器：星头和白热段烘成一个速度朝向的循环面片（开花后换贴图动态消散），火星、落火、烟带是 Cascade 软圆点发射器（PC GPU / 手机 CPU），每颗自己的寿命、错落熄灭；出生位置和初速按弹道曲线。',
+  emitset: '循环层 + 粒子发射器：星头和白热段烘成一个速度朝向的循环面片（开花后换贴图动态消散），火花、落火、烟带是 Cascade 软圆点发射器（PC GPU / 手机 CPU），每颗自己的寿命、错落熄灭；出生位置和初速按弹道曲线。',
   trail: '升空尾缀：星头 + 尾迹整条烘进细长面片（速度朝向）。循环 64 帧真循环；开花后换消散序列（30 fps / 20 fps 两个版本），第 0 帧就是上升结束那一帧。'
 };
 function syncExport() {
@@ -363,7 +363,7 @@ function syncExport() {
   for (const [id, v] of [['x-texW', P.texW], ['x-texH', P.texH]]) { const el = $('#' + id), opts = [...new Set([512, 1024, 2048, 4096, +v])].sort((a, b) => a - b); const h = opts.join(); if (el.dataset.h !== h) { el.innerHTML = ''; for (const n of opts) el.add(new Option(n + (n === 4096 ? '（母版）' : ''), n)); el.dataset.h = h; } el.value = String(v); }
   $('#x-cols').value = P.cols; $('#x-rows').value = P.rows;
   // 列 × 行：单格要 ≥ 512（PC 下限），放不下的列数 / 行数灰掉；实际用的写在旁边（取帧计划按这个夹）
-  if (renderVersion(P) >= 40 && ['master', 'segments'].includes(P.form)) {
+  if (['master', 'segments'].includes(P.form)) {
     const mc = Math.max(1, Math.floor(P.texW / 512)), mr = Math.max(1, Math.floor(P.texH / 512)), oc = +P.outCell > 0;
     for (const [id, m] of [['x-cols', mc], ['x-rows', mr]]) for (const o of $('#' + id).options) o.disabled = !oc && +o.value > m;
     const ec = oc ? Math.max(1, Math.floor(P.texW / Math.max(512, +P.outCell))) : Math.min(P.cols, mc), er = oc ? Math.max(1, Math.floor(P.texH / Math.max(512, +P.outCell))) : Math.min(P.rows, mr);
@@ -454,33 +454,16 @@ function placeSpecBox() {
   if (box && box.parentElement !== where) where.appendChild(box);
 }
 function itemVisible(it, P) { const f = Array.isArray(it) ? it[6] : it.show; return !f || f(P); }
-// ---------------- 4.2.8 参数栏改版（用户 10-02 19:41 #3：参数和备注太多、没有分类逻辑、难读难找） ----------------
-// 6 大类：运动（开花、轨迹、上升）· 星头 · 尾迹（火花、尾缀外形）· 特效（星效果、落火、烟）· 环境（风、扰流）· 输出（规格、帧、格子、曝光、画质）
-// 参数名只留短名，括号里的长说明进悬停提示和底部说明条；节说明收进「？」；搜索；「只看改过的」（和打开时的版本比）。
-const PGROUPS = [['运动', '运动 / 开花'], ['星头', '星头'], ['尾迹', '尾迹'], ['特效', '特效'], ['环境', '环境'], ['输出', '输出']];
-const SEC_GROUP = { '规格': '输出', '开花与燃烧': '运动', '形状': '运动', '物理扰动': '环境', '星效果': '特效', '炭头（星头）': '星头', '尾缀（炭火火花）': '尾迹', '尾迹外形': '尾迹',
-  '千轮 / 分裂': '运动', '蜂': '运动', '上升': '运动', '地面 · 循环': '运动', '入点与出点（导出）': '输出', '输出：帧数 · 格子 · 贴图（导出）': '输出', '光点与曝光（4.0）': '输出', '画质（烘焙采样）': '输出' };
-function secGroup(name) {
-  if (SEC_GROUP[name]) return SEC_GROUP[name];
-  if (/弹道|自转|螺旋/.test(name)) return '运动';
-  if (/星头|炭头|燃气焰/.test(name)) return '星头';
-  if (/扰动|乱流/.test(name)) return '环境';
-  if (/落火|烟带|引擎里加的|星效果/.test(name)) return '特效';
-  if (/导出|镜头|引擎|规格|画质|曝光/.test(name)) return '输出';
-  if (/火花|火星|火粉|尾迹|形态/.test(name)) return '尾迹';
-  return '运动';
-}
-// 括号前是短名，括号里是说明；括号前还是太长的几个给个短名
-const SHORT_LAB = { afterBurn: '第二段续亮', rtPopAt: '爆亮时刻', expoQ: '基准帧分位' };
-function splitLab(lab, key) {
+// ---------------- 参数栏（4.3 定稿：只有一种面板，按 Cascade 发射器的模块排，名字全用新名，analysis/命名/参数名称表.json）----------------
+// 大段：发射 / 运动 / 外观 / 层 / 渲染输出（71_panel43.js P43_GROUPS）；模块里先放「第一眼」参数，其余收在「更多」；随机收在本体参数的「随机」下；
+// 搜索只认新名字、英文名和说明；「只看改过的」和打开时的版本比。
+function splitLab(lab) {
   const s = String(lab), i = s.search(/[（(]/);
-  let short = i > 0 ? s.slice(0, i).trim() : s, detail = i > 0 ? s.slice(i + 1).replace(/[）)]\s*$/, '').trim() : '';
-  if (SHORT_LAB[key]) { detail = s; short = SHORT_LAB[key]; }
-  return [short, detail];
+  return [i > 0 ? s.slice(0, i).trim() : s, i > 0 ? s.slice(i + 1).replace(/[）)]\s*$/, '').trim() : ''];
 }
-const pview = { q: '', changed: false, open: null };
-function pviewInit() { if (pview.open) return; pview.changed = !!store.get('pChanged', false); pview.open = store.get('pGrpOpen', { 特效: false, 环境: false, 输出: false });   // store 在后面的文件里定义：用到时再读
-  pview.v43 = !!store.get('panel43', false); pview.en = !!store.get('pEN', false); pview.mopen = store.get('pModOpen', {}); pview.ropen = store.get('pRandOpen', {}); }   // 4.3 新面板（预览）、英文名、模块 / 随机展开
+const pview = { q: '', changed: false, ready: false };
+function pviewInit() { if (pview.ready) return; pview.ready = true; pview.changed = !!store.get('pChanged', false);   // store 在后面的文件里定义：用到时再读
+  pview.en = !!store.get('pEN', false); pview.mopen = store.get('pModOpen', {}); pview.ropen = store.get('pRandOpen', {}); pview.more = store.get('pMoreOpen', {}); }   // 英文名、模块 / 随机 / 更多展开
 // 「改过的」和谁比：打开时的版本（AI 版 / 你保存的版本，wbArm 记下的样子）；没有就和花型模板默认值比
 function panelBaseP() {
   try {
@@ -488,7 +471,7 @@ function panelBaseP() {
     if (s && s.kind === 'single' && s.P) return s.P;
     if (s && s.kind === 'combo' && state.comboSel >= 0 && s.layers[state.comboSel] && s.layers[state.comboSel].P) return s.layers[state.comboSel].P;
   } catch (e) { }
-  return defaultsFor(state.P.type, renderVersion(state.P)).P;
+  return defaultsFor(state.P.type).P;
 }
 function rowChanged(it, P, B) {
   if (Array.isArray(it)) { const k = it[0], a = +P[k], b = +B[k]; if (!isFinite(a) && !isFinite(b)) return false; return !(Math.abs((isFinite(a) ? a : 0) - (isFinite(b) ? b : 0)) <= (+it[5] || 0) / 2 + 1e-9); }
@@ -498,8 +481,8 @@ function rowChanged(it, P, B) {
 }
 function rowMatches(row, it, sec, q) {
   if (!q) return true;
-  const key = Array.isArray(it) ? it[0] : it.sel || it.text || '', nm = row._nm;
-  return [row._lab || '', row._detail || '', key, sec.sec, row._old || '', nm ? [nm.cn, nm.en, nm.old, nm.mcn, nm.men].join(' ') : ''].join(' ').toLowerCase().includes(q);   // 4.3：旧名 / 新名 / 英文名都认
+  const nm = row._nm;      // 4.3：只认新名字、英文名、模块名和说明（旧名字不再出现）
+  return [row._lab || '', nm ? [nm.cn, nm.en, nm.mcn, nm.men, nm.desc].join(' ') : row._detail || ''].join(' ').toLowerCase().includes(q);
 }
 function panelHelp(row) {
   const h = $('#pHelp'); if (!h) return;
@@ -509,7 +492,7 @@ function panelHelp(row) {
   if (row._nm) {      // 4.3：第一行「English · 中文 — 说明」，下面调大 / 调小、随机怎么取、UE 里对应、注意、现在不起作用的原因
     const nm = row._nm, unit = Array.isArray(it) && it[2] ? ` <small>${it[2]}</small>` : '', rng = Array.isArray(it) ? `范围 ${it[3]}–${it[4]}` : '';
     const base = B && B[k] != null ? ` · 打开时 ${Array.isArray(it) ? fmtV(B[k], it[5]) : B[k]}` : '', iw = row._inert;
-    h.innerHTML = `<b>${nm.en}</b> · <b>${nm.cn}</b>${unit} — ${nm.desc}<span class="ph-meta">${rng}${base} · 旧名「${row._old || nm.old}」 · ${nm.tag}</span>`
+    h.innerHTML = `<b>${nm.en}</b> · <b>${nm.cn}</b>${unit} — ${nm.desc}<span class="ph-meta">${rng}${base} · ${nm.mcn || nm.tag}${nm.tier === 'more' ? ' · 更多' : ''}</span>`
       + (iw ? `<span class="ph-inert">现在不起作用：${iw}</span>` : '')
       + (nm.ud ? `<span class="ph-d">${nm.ud}</span>` : '') + (nm.rnd ? `<span class="ph-x">随机：${nm.rnd}</span>` : '')
       + (nm.ue ? `<span class="ph-x">UE：${nm.ue}</span>` : '') + (nm.note ? `<span class="ph-x">注意：${nm.note}</span>` : '')
@@ -522,47 +505,40 @@ function panelHelp(row) {
 }
 function buildMasterPanel() {
   pviewInit();
-  const P = state.P, D = defaultsFor(P.type, renderVersion(P)).P;
-  const box = $('#specBox'); if (box && $('#params').contains(box)) $('#specHome').appendChild(box);   // 规格框先放回原处，别跟着旧的「输出」一节被清掉
+  const P = state.P, D = defaultsFor(P.type).P;
+  const box = $('#specBox'); if (box && $('#params').contains(box)) $('#specHome').appendChild(box);   // 规格框先放回原处，别跟着旧的面板一起被清掉
   const host = $('#params'); host.innerHTML = ''; panelRows = [];
-  // 顶上：搜索 + 只看改过的
-  const v43 = p43On() && typeof PNAMES !== 'undefined' && PNAMES.length;    // 4.3 新面板（预览）：按模块排、新名字、随机折叠
-  host.insertAdjacentHTML('beforeend', `<div class="ptools"><input type="search" placeholder="${v43 ? '搜参数：新名 / 旧名 / 英文名 / 说明里的字' : '搜参数：名字或说明里的字'}" aria-label="搜参数" value="${pview.q.replace(/"/g, '&quot;')}"><label class="pchg" title="只显示和打开时（AI 版 / 你保存的版本）不一样的参数"><input type="checkbox"${pview.changed ? ' checked' : ''}> 只看改过的</label>`
-    + `<label class="pchg p43t" title="4.3 新参数面板（预览）：按 Niagara 模块排、新名字（参数命名表审完以后定稿）、每个参数完整说明、随机收在本体参数下面、不起作用的参数变灰写原因"><input type="checkbox" data-v43${v43 ? ' checked' : ''}> 新面板（预览）</label>`
-    + (v43 ? `<label class="pchg" title="参数名显示 Niagara 风格英文名（说明条第一行总有英文）"><input type="checkbox" data-en${pview.en ? ' checked' : ''}> 英文名</label>` : '') + `</div>`);
+  // 顶上：搜索 + 只看改过的 + 英文名
+  host.insertAdjacentHTML('beforeend', `<div class="ptools"><input type="search" placeholder="搜参数：名字 / 英文名 / 说明里的字" aria-label="搜参数" value="${pview.q.replace(/"/g, '&quot;')}"><label class="pchg" title="只显示和打开时（AI 版 / 你保存的版本）不一样的参数"><input type="checkbox"${pview.changed ? ' checked' : ''}> 只看改过的</label>`
+    + `<label class="pchg" title="参数名显示英文名（Cascade / Niagara 的叫法；说明条第一行总有英文）"><input type="checkbox" data-en${pview.en ? ' checked' : ''}> 英文名</label></div>`);
   const qi = host.querySelector('.ptools input[type=search]'), ci = host.querySelector('.ptools .pchg:first-of-type input');
   qi.addEventListener('input', () => { pview.q = qi.value.trim(); refreshVisibility(); });
   qi.addEventListener('keydown', e => { if (e.key === 'Escape' && qi.value) { qi.value = ''; pview.q = ''; refreshVisibility(); e.stopPropagation(); } });
   ci.addEventListener('change', () => { pview.changed = ci.checked; store.set('pChanged', pview.changed); refreshVisibility(); });
-  host.querySelector('[data-v43]').addEventListener('change', e => { pview.v43 = e.target.checked; store.set('panel43', pview.v43); buildMasterPanel(); });
-  const enb = host.querySelector('[data-en]'); if (enb) enb.addEventListener('change', e => { pview.en = e.target.checked; store.set('pEN', pview.en); buildMasterPanel(); });
+  host.querySelector('[data-en]').addEventListener('change', e => { pview.en = e.target.checked; store.set('pEN', pview.en); buildMasterPanel(); });
   const grp = {};
-  for (const [g, title] of v43 ? P43_GROUPS : PGROUPS) {
-    const d = document.createElement('details'); d.className = 'pgrp' + (v43 ? ' p43' : ''); d.dataset.g = g; d.open = (v43 ? pview.mopen['@' + g] : pview.open[g]) !== false;
+  for (const [g, title] of P43_GROUPS) {
+    const d = document.createElement('details'); d.className = 'pgrp p43'; d.dataset.g = g; d._auto = true; d.open = pview.mopen['@' + g] !== false; setTimeout(() => d._auto = false, 0);
     d.innerHTML = `<summary><span class="pg-t">${title}</span><span class="pg-n"></span></summary>`;
-    d.addEventListener('toggle', () => { if (d._auto) return; if (v43) { pview.mopen['@' + g] = d.open; store.set('pModOpen', pview.mopen); } else { pview.open[g] = d.open; store.set('pGrpOpen', pview.open); } });
+    d.addEventListener('toggle', () => { if (d._auto) return; pview.mopen['@' + g] = d.open; store.set('pModOpen', pview.mopen); });
     grp[g] = d; host.appendChild(d);
   }
-  const place = v43 ? p43Skeleton(host, grp) : null;
+  const place = p43Skeleton(host, grp, P);
   for (const sec of SCHEMA) {
-    const det = document.createElement('details'); det.className = 'sec'; det.open = !['物理扰动', '星效果', '规格'].includes(sec.sec) || sec.sec === '规格';
-    det.innerHTML = `<summary>${sec.sec}${sec.hint ? '<span class="shelp" role="button" tabindex="0" title="这一节的说明" aria-label="这一节的说明">？</span>' : ''}</summary>` + (sec.hint ? `<p class="hint" hidden>${sec.hint}</p>` : '');
-    if (sec.hint) { const b = det.querySelector('.shelp'), tog = e => { e.preventDefault(); e.stopPropagation(); const p = det.querySelector('p.hint'); p.hidden = !p.hidden; b.classList.toggle('on', !p.hidden); if (!det.open) det.open = true; };
-      b.addEventListener('click', tog); b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') tog(e); }); }
     for (const it of sec.items) {
       let row;
-      const ikey = Array.isArray(it) ? it[0] : it.sel || it.text || '', nm = v43 && ikey ? pnameOf(sec.sec, ikey, Array.isArray(it) ? (typeof it[1] === 'function' ? it[1](P) : it[1]) : it.label) : null, det0 = det;
-      { const det = v43 ? place(sec, it, ikey) : det0;          // 4.3：这一行放进它的模块
+      const ikey = Array.isArray(it) ? it[0] : it.sel || it.text || (it.info ? 'info:' + it.info : ''), nm = ikey ? pnameOf(sec.sec, ikey, Array.isArray(it) ? (typeof it[1] === 'function' ? it[1](P) : it[1]) : it.label) : null;
+      const det = place(sec, it, ikey, nm);          // 这一行放进它的模块（「第一眼」直接放，其余进模块里的「更多」）
       if (Array.isArray(it)) {
-        const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab, k), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
+        const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
         row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { if (TIMING_KEYS.has(k)) setTimingParam(k, v); else { state.P[k] = v; onParam(); } }, D[k], k);
-        const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}（旧名：${lab}）` : lab) + (unit ? `（${unit}）` : '') + '；双击恢复默认';
-        row._lab = short; row._detail = detail; row._old = lab; row._nm = nm;
+        const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}` : short) + (unit ? `（${unit}）` : '') + '；双击恢复默认';
+        row._lab = short; row._detail = detail; row._nm = nm;
       } else if (it.sel) {
-        const [short0, detail0] = splitLab(it.label, it.sel), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
+        const [short0, detail0] = splitLab(it.label), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
         row = document.createElement('label'); row.className = 'field';
-        row.innerHTML = `<span class="fk" title="${((nm ? `${nm.en} · ${nm.cn}（旧名：${it.label}）` : it.label) + (it.hint ? '：' + it.hint : '')).replace(/"/g, '&quot;')}">${short}</span><select></select>`;
-        row._lab = short; row._detail = [detail, it.hint].filter(Boolean).join('；'); row._old = it.label; row._nm = nm;
+        row.innerHTML = `<span class="fk" title="${(nm ? `${nm.en} · ${nm.cn}` : short).replace(/"/g, '&quot;')}">${short}</span><select></select>`;
+        row._lab = short; row._detail = detail; row._nm = nm;
         const s = row.querySelector('select'); for (const [v, l] of it.options) s.add(new Option(l, v));
         s.value = String(it.sel === '_trailTier' ? P.type : P[it.sel]);
         s.addEventListener('change', () => {
@@ -573,26 +549,26 @@ function buildMasterPanel() {
         });
         row._refresh = () => { s.value = String(it.sel === '_trailTier' ? state.P.type : state.P[it.sel]); };
         det.appendChild(row);
-      } else if (it.info === 'specBox') {   // 4.2.6：原来右栏最底下的规格框（贴图尺寸、列 × 行、通道…）并进「输出」一节（走查 B7）
+      } else if (it.info === 'specBox') {   // 4.2.6：规格框（贴图尺寸、列 × 行、通道…）放进「帧与贴图」
         row = document.createElement('div'); row.className = 'spechost'; row.dataset.info = 'specBox'; det.appendChild(row);
-      } else if (it.info) {   // 只读的结果行（例：输出一节顶上的「多少帧、怎么装」）
+      } else if (it.info) {   // 只读的结果行（例：「帧与贴图」顶上的「多少帧、怎么装」）
         row = document.createElement('div'); row.className = 'infohost'; row.dataset.info = it.info;
         row._refresh = () => { row.innerHTML = it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : ''; };
         row._refresh(); det.appendChild(row);
       } else if (it.text) {
-        row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${nm ? p43Label(nm, it.label) : it.label}</span><input type="text" maxlength="6">`; row._lab = nm ? p43Label(nm, it.label) : it.label; row._detail = nm ? nm.desc : ''; row._old = it.label; row._nm = nm;
+        row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${nm ? p43Label(nm, it.label) : it.label}</span><input type="text" maxlength="6">`; row._lab = nm ? p43Label(nm, it.label) : it.label; row._detail = nm ? nm.desc : ''; row._nm = nm;
         const inp = row.querySelector('input'); inp.value = P[it.text];
         inp.addEventListener('change', () => { state.P[it.text] = inp.value || '祭'; onParam(); });
         row._refresh = () => { inp.value = state.P[it.text]; };
         det.appendChild(row);
       }
       if (row._lab != null) { row._it = it; const on = () => panelHelp(row); row.addEventListener('mouseenter', on); row.addEventListener('focusin', on); }
-      panelRows.push([row, it, sec, det]);
-      }
+      panelRows.push([row, it, sec, det._mod ? det : det.closest('details.sec')]);
     }
-    if (!v43) { det._sec = sec; det._g = secGroup(sec.sec); grp[det._g].appendChild(det); }
   }
-  if (v43) p43RandLinks();
+  // 「更多」放在模块最后（模块里第一眼的行可能在第一行「更多」之后才排到）
+  host.querySelectorAll('details.mod > details.more').forEach(m => m.parentElement.appendChild(m));
+  p43RandLinks(); p43BlankControls(grp, P);
   if (!$('#pHelp')) { const h = document.createElement('div'); h.id = 'pHelp'; h.className = 'phelp'; h.setAttribute('aria-live', 'polite'); host.parentElement.insertBefore(h, host.nextSibling); }
   if (!host._ph) { host._ph = true; host.addEventListener('mouseleave', () => panelHelp(null)); } panelHelp(null);
   refreshVisibility();
@@ -605,15 +581,15 @@ function buildMasterPanel() {
   const ms = $('#matSliders'); ms.innerHTML = '';
   slider(ms, 'm-xw', '变色过渡', 's', 0.01, 0.5, 0.01, () => state.M.xw, v => state.M.xw = v, MD.xw);
   slider(ms, 'm-hi', '星头亮度', '×', 0, 4, 0.05, () => state.M.headInt, v => state.M.headInt = v, 1);
-  slider(ms, 'm-ti', '拖尾亮度', '×', 0, 4, 0.05, () => state.M.tailInt, v => state.M.tailInt = v, 1);
+  slider(ms, 'm-ti', '尾迹亮度', '×', 0, 4, 0.05, () => state.M.tailInt, v => state.M.tailInt = v, 1);
   $('#type').value = state.repId ? 'rep:' + state.repId : P.type; $('#mname').value = state.name; syncExport();
   syncTypeButton();
 }
 function refreshVisibility() {
   pviewInit();
   const P = state.P, q = (pview.q || '').toLowerCase(), B = panelBaseP(), nChg = {};
-  $('#exposureControls').hidden = renderVersion(P)<40;
   $('#suggestExposure').disabled = !!P.exposureLock;
+  $('#exposureControls').hidden = isTrail(P) || isPhys(P) || isEmit(P);     // 「建议曝光」只会算空中花型和地面循环
   for (const [row, it, sec, det] of panelRows) {
     const vis = itemVisible(it, P) && !(sec.show && !sec.show(P)), chg = vis && rowChanged(it, P, B);
     row.classList.toggle('chg', chg); if (chg) nChg[det._g] = (nChg[det._g] || 0) + 1;
@@ -623,13 +599,21 @@ function refreshVisibility() {
     const folded = row._randOf && !pview.ropen[row._randOf] && !q && !(pview.changed && chg);
     row.hidden = !vis || folded || !rowMatches(row, it, sec, q) || (pview.changed && !chg);
   }
-  if (typeof p43RandSync === 'function') p43RandSync(P);
-  document.querySelectorAll('#params details.sec').forEach(det => { const s = det._sec; det.hidden = !!(s.show && !s.show(P)) || ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden);
-    if ((q || pview.changed) && !det.hidden) det.open = true; });
+  p43RandSync(P); p43BlankSync(P);
+  // 「更多」：数一下里面看得见的；搜索 / 只看改过的时自动展开（先算它，再算模块是不是空的）。
+  // 自动展开的记一下（_autoOpen），搜索清空 / 关掉「只看改过的」时收回到用户自己的开合状态
+  const auto = !!(q || pview.changed);
+  const autoOpen = (d, on, mine) => { if (on) { if (!d.open) { d._autoOpen = true; d._auto = true; d.open = true; setTimeout(() => d._auto = false, 0); } }
+    else if (d._autoOpen) { d._autoOpen = false; d._auto = true; d.open = mine; setTimeout(() => d._auto = false, 0); } };
+  document.querySelectorAll('#params details.more').forEach(m => { const n = [...m.children].filter(c => c.tagName !== 'SUMMARY' && !c.hidden).length;
+    m.hidden = !n; m.querySelector('summary .mn').textContent = `更多 ${n} 项`; autoOpen(m, auto && n, !!pview.more[m.parentElement && m.parentElement._mod]); });
+  document.querySelectorAll('#params details.sec').forEach(det => { det.hidden = !blankHas(P, det._mod) || ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden);
+    const pm = det._mod && typeof PMODULE !== 'undefined' ? PMODULE[det._mod] : null, mine = det._mod && pview.mopen[det._mod] != null ? pview.mopen[det._mod] : pm ? pm.open : true;
+    autoOpen(det, auto && !det.hidden, mine); });
   document.querySelectorAll('#params details.pgrp').forEach(g => {
     g.hidden = ![...g.querySelectorAll(':scope > details.sec')].some(d => !d.hidden);
     const n = nChg[g.dataset.g] || 0, b = g.querySelector('.pg-n'); b.textContent = n ? `${n} 项改过` : ''; b.hidden = !n;
-    if ((q || pview.changed) && !g.hidden && !g.open) { g._auto = true; g.open = true; setTimeout(() => g._auto = false, 0); }
+    autoOpen(g, auto && !g.hidden, pview.mopen['@' + g.dataset.g] !== false);
   });
   const host = $('#params'), empty = host && host.querySelector('.pempty'), none = host && ![...host.querySelectorAll('details.pgrp')].some(g => !g.hidden);
   if (host && none && !empty) host.insertAdjacentHTML('beforeend', `<p class="pempty hint"></p>`);
@@ -691,7 +675,7 @@ function setForm(f) {
 // 组合用的母版：迭代 / 正式库条目（rep:）保持条目自己的输出方式（合并输出 = 引擎里的样子：灰度查 Ramp），这样组合页「导出效果」和导出的素材一致；
 // 花型库默认母版仍用分开输出（组合里星头 / 尾巴亮度可以分开调）。window.FW_LIB_TEX：云端软件渲染自检时临时改小贴图。
 // 4.2.6：多层里每层的贴图尺寸、格子也按这一层自己的（不再强制 2048 / 最多 4×4；单格 ≥ 512 由取帧计划保证）
-const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || P.texW || 2048, texH: window.FW_LIB_TEX || P.texH || 2048, cols: renderVersion(P)>=40?P.cols:8, rows: renderVersion(P)>=40?P.rows:8, chans: 4, outMode: keep && P.outMode ? P.outMode : renderVersion(P)>=40 ? 'combined' : 'split', form: 'master', zoom: renderVersion(P)>=40 ? (P.zoom === 'on' ? 'on' : 'off') : 'on' });
+const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || P.texW || 2048, texH: window.FW_LIB_TEX || P.texH || 2048, cols: P.cols, rows: P.rows, chans: 4, outMode: keep && P.outMode ? P.outMode : 'combined', form: 'master', zoom: P.zoom === 'on' ? 'on' : 'off' });
 const defaultLibName = t => TYPE_NAMES[t].replace(/（.*）/, '') + ' · 默认';
 function libByType(t) {
   if (t.startsWith('rep:')) return state.lib.find(e => e.rep === t.slice(4));
@@ -709,7 +693,7 @@ async function ensureLibEntries(keys) {
   for (let i = 0; i < need.length; i++) {
     const k = need[i];
     if (k.startsWith('rep:')) {
-      const id = k.slice(4), r = REPLICA_BY_ID[id], ed = state.layerEdits && state.layerEdits[id], { P, M } = ed || replicaPM(id);
+      const id = k.slice(4), r = REPLICA_BY_ID[id], ed = state.layerEdits && state.layerEdits[id], { P, M } = ed ? { P: migrate37(ed.P), M: ed.M } : replicaPM(id);
       const b = await bake(libP(P, true), 1, p => busy(true, `烘焙组合用母版：${r.name}（${i + 1}/${need.length}）`, (i + p) / need.length));
       state.lib.push({ name: r.name, type: r.base, rep: id, P, M, bake: b, editSig: ed ? JSON.stringify([ed.P, ed.M]) : undefined });
     } else {
@@ -733,7 +717,7 @@ function layerEntryFor(e, used) { return used.has(e) || state.layers.some(L => L
 // 4.2.3（走查 A2）：保存的版本里不是条目的层（默认母版、编辑器里调过的层）带着自己的参数，恢复时按它重烘，不再变回「默认」
 async function libOwn(src) {
   const t = src.type || src.P.type, base = (TYPE_NAMES[t] || t).replace(/（.*）/, '') + ' · 我的'; let n = 1; while (state.lib.some(x => x.name === `${base} ${n}`)) n++;
-  const P = structuredClone(src.P), M = structuredClone(src.M || defaultsFor(t).M);
+  const P = migrate37(structuredClone(src.P)), M = structuredClone(src.M || defaultsFor(t).M);
   const b = await bake(libP(P, true), 1, p => busy(true, `烘焙你的层：${base} ${n}`, p)); busy(false);
   const e = { name: `${base} ${n}`, type: t, P, M, bake: b, own: true }; state.lib.push(e); return e;
 }
@@ -775,7 +759,7 @@ function buildComboPanel() {
     slider(card, `l${i}-delay`, '延迟', 's', 0, 3, 0.01, () => L.delay, v => L.delay = v, 0);
     slider(card, `l${i}-rate`, '时间倍率', '×', 0.3, 2, 0.01, () => L.rate, v => L.rate = v, 1);
     slider(card, `l${i}-hi`, '星头亮度', '×', 0, 4, 0.05, () => L.headInt, v => L.headInt = v, 1);
-    slider(card, `l${i}-ti`, '拖尾亮度', '×', 0, 4, 0.05, () => L.tailInt, v => L.tailInt = v, 1);
+    slider(card, `l${i}-ti`, '尾迹亮度', '×', 0, 4, 0.05, () => L.tailInt, v => L.tailInt = v, 1);
     const sg = document.createElement('div'); sg.className = 'stages'; card.appendChild(sg);
     stageEditor(sg, L, 9, null, 'l' + i);
     const cc = document.createElement('div'); cc.className = 'colors'; cc.style.marginTop = '4px';

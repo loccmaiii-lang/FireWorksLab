@@ -55,8 +55,9 @@ await check('F0: delayed trail cannot overwrite JM4 grid or publish stale bake',
   const pending = f.run('runPreviewBake()');
   f.run("setReplica('JM4'); runPreviewBake();");
   finishOld(); await pending; await sleep(20);
-  assert.deepEqual(JSON.parse(f.run('JSON.stringify([state.P.cols, state.P.rows, state.P.chans])')), [8, 8, 4]);
-  assert.equal(f.run('state.bake.meta.L.F'), 256);
+  // 4.3：JM4（3.7 时代的记录）打开时迁移成 4×4 × 4 通道（和 JM4-40 同一套迁法）；关键是没被先前那次尾缀烘焙的 16×1 盖掉
+  assert.deepEqual(JSON.parse(f.run('JSON.stringify([state.P.cols, state.P.rows, state.P.chans])')), [4, 4, 4]);
+  assert.equal(f.run('state.bake.meta.L.F'), 64);
   assert.deepEqual(f.published, ['JM4']);
   assert.ok(f.disposed.includes('old-trail'), 'stale GPU resources must be released');
   assert.equal(calls.length, 2);
@@ -84,20 +85,26 @@ await check('F1: failure stops; retained bake and persistent error survive all v
   assert.equal(f.run('state.dirty'), false);
   assert.equal(f.elements.get('#bakeError').hidden, true);
 });
-await check('render version: new templates default to 40 (4.0, DEFAULT_RENDER_VER); explicit 40 is 40; formal/V5 stay 37', async f => {
-  assert.equal(f.run("defaultsFor('kiku').P.renderVer"), 40);
-  assert.equal(f.run("defaultsFor('kiku',40).P.renderVer"), 40);
-  for (const type of ['trailS', 'trailM', 'trailL']) assert.equal(f.run(`defaultsFor('${type}').P.renderVer`), 37);
-  for (const id of ['JM4', 'TR2S', 'TR2M', 'TR2L']) assert.equal(f.run(`replicaPM('${id}').P.renderVer`), 37, id);
+// 4.3（清理清单 C1）：只有一套画法；3.7 时代的存档（V5 正式库的原始记录、没写 renderVer 的旧配方）读进来时迁移，曝光不再是没标定的 1
+await check('render version: one core; old (3.7) records migrate with calibrated exposure', async f => {
+  for (const type of ['kiku', 'trailS', 'trailM', 'trailL', 'fountain', 'rise']) assert.equal(f.run(`defaultsFor('${type}').P.renderVer`), 40, type);
+  for (const id of ['TR2S', 'TR2M', 'TR2L']) {
+    const r = f.run(`(() => { const P = replicaPM('${id}').P; return { v: P.renderVer, mig: P._mig37, e: P.exposure }; })()`);
+    assert.equal(r.v, 40, id); assert.equal(r.mig, 1, id); assert.ok(r.e > 1.5 && r.e < 20, id + ' exposure ' + r.e);
+  }
+  assert.equal(f.run("typeof renderVersion"), 'undefined');
 });
 // 4.2.10（走查 B8）：工具页的回滚 / 存为配方去掉了，旧配方只在导入时展开成花型模板的版本；展开时按配方自己的渲染版本（没写 = 37）
 await check('stored recipes: legacy import resolves with its own renderVer', async f => {
   vm.runInContext(fs.readFileSync(path.join(root, 'tool/src/js/75_iter.js'), 'utf8'), f.ctx);
   f.run('state.recipes = [];');
-  assert.equal(f.run("storedParams({ type: 'kiku' }).renderVer"), 37);
-  assert.equal(f.run("storedParams({ type: 'kiku', renderVer: 40 }).renderVer"), 40);
-  assert.equal(f.run("resolveRecipe({ type: 'kiku', diff: { P: {}, M: {} } }).P.renderVer"), 37);
-  assert.equal(f.run("resolveRecipe({ type: 'kiku', diff: { P: { renderVer: 40 }, M: {} } }).P.renderVer"), 40);
+  assert.equal(f.run("storedParams({ type: 'kiku' }).renderVer"), 40);
+  assert.equal(f.run("storedParams({ type: 'kiku' })._mig37"), 1);          // 没写版本 = 3.7 时代的：迁移、曝光换成模板的
+  assert.equal(f.run("storedParams({ type: 'kiku' }).exposure"), f.run('EXPOSURE40.kiku'));
+  assert.equal(f.run("storedParams({ type: 'kiku', renderVer: 40, exposure: 0.7 }).exposure"), 0.7);     // 新存档原样
+  assert.equal(f.run("storedParams({ type: 'kiku', renderVer: 40 })._mig37"), undefined);
+  assert.equal(f.run("resolveRecipe({ type: 'kiku', diff: { P: {}, M: {} } }).P._mig37"), 1);
+  assert.equal(f.run("resolveRecipe({ type: 'kiku', diff: { P: { renderVer: 40 }, M: {} } }).P._mig37"), undefined);
   f.run("state.recipes = [{ name: 'p', type: 'kiku', diff: { P: { renderVer: 40, stars: 99 }, M: {} } }];");
   assert.equal(f.run("resolveRecipe({ name: 'c', parent: 'p', type: 'kiku', diff: { P: { burn: 1.7 }, M: {} } }).P.stars"), 99);
   assert.equal(f.run("typeof rollback"), 'undefined');

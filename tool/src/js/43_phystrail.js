@@ -130,7 +130,7 @@ function physBake(P) {
 }
 function physStats(P) {
   const pt = new PhysTrail(P);
-  return `升空尾缀 · 物理（实时模拟）· 出膛 <b>${P.phV0}</b> m/s · 开花 <b>${P.phT}</b> s · 火星 <b>${pt.total.toLocaleString()}</b> 颗<br>` +
+  return `升空尾缀 · 物理（实时模拟）· 出膛 <b>${P.phV0}</b> m/s · 开花 <b>${P.phT}</b> s · 火花 <b>${pt.total.toLocaleString()}</b> 颗<br>` +
     `镜头跟着星头，视野 ${P.phView} m；实拍面板按同一比例跟拍。贴图导出：<code>analysis/scripts/trail_phys_bake.py</code>`;
 }
 // 实拍面板跟拍：星头在视频里的位置（按视频高度归一化）→ 和模拟画面同一比例、同一取景

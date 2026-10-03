@@ -250,7 +250,7 @@ Initial Velocity：Z = {bl['v0l'] * 100:.0f} cm/s；Drag：Drag Coefficient = {f
 Size By Life（Y 单独；X 保持 1）：尾迹长度跟着速度变（出膛快 → 长；到顶慢 → 短）
   相对时间    Y 倍数
 {lines(sk)}
-Dynamic Parameter：第三通道 = 帧号（锯齿，Linear；每 {fx(TLOOP, 3)} s 从 0 走到 {LOOP_F}，约 {fx(n_loops, 1)} 个循环）
+Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号（锯齿，Linear；每 {fx(TLOOP, 3)} s 从 0 走到 {LOOP_F}，约 {fx(n_loops, 1)} 个循环）
   相对时间    帧号
 {lines(saw)}
 Color Over Life：白色常量（颜色全由 Ramp 给），Alpha = 1；亮度倍数按项目曝光调
@@ -263,7 +263,7 @@ Spawn：Burst Count = 1，Time = 0；Lifetime = {fx(FADE_F / FPS, 3)} s
 Initial Location：Z = {C['H_apex'] * 100:.0f} cm（开花点，与发射器 1 到顶位置相同）
 Initial Velocity：Z = 1 cm/s（只用来给面片定方向，几乎不动；不要 Drag、Const Acceleration）
 Initial Size：X = {W * 100:.0f} cm，Y = {H * last * 100:.0f} cm（= 发射器 1 最后一个 Y 倍数 {fx(last, 3)} × {H * 100:.0f} cm，两段长度一致）
-Dynamic Parameter：第三通道 = 帧号（Linear）
+Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号（Linear）
   0.0000      0.000
   1.0000      {FADE_F:.3f}
 Color Over Life：同发射器 1

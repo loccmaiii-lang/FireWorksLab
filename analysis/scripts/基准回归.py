@@ -14,7 +14,8 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from browser_runtime import launch_async
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-TEMPLATES = ['kiku', 'botan', 'kamuro', 'senrin', 'strobe']
+TEMPLATES = ['kiku', 'botan', 'kamuro', 'senrin', 'strobe', 'crackle']
+FR = {'crackle': [0.12, 0.53, 0.6]}    # 4.3：爆裂星的小闪在熄灭后 0.1–0.6 s（约 0.5–0.68 T），默认时刻抓不到
 FAKE = re.search(r'FAKE = r"""(.*?)"""', (ROOT / 'analysis' / 'scripts' / '界面状态检查.py').read_text(encoding='utf-8'), re.S).group(1)
 RUN = r"""async (a) => {
   let P, M;
@@ -47,7 +48,7 @@ async def render(html, cases, px, fr):
                     await pg.wait_for_timeout(250)
                     if await pg.evaluate("!window.__opening && !state.baking"): break
                 out[name] = await pg.evaluate(RUN, {'px': px, 'fr': fr})
-            else: out[name] = await pg.evaluate(RUN, {'type': name, 'px': px, 'fr': fr})
+            else: out[name] = await pg.evaluate(RUN, {'type': name, 'px': px, 'fr': FR.get(name, fr)})
             print(' ', pathlib.Path(html).name, name, out[name]['ver'], flush=True)
             await pg.context.close()
         await b.close()
