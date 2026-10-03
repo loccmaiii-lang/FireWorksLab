@@ -16,7 +16,7 @@ function frameView40(pl, t) {
 // 鸿巢锦冠层一个子样本 340 万粒，一帧最多 5400 万，笔记本跟不上；烘焙在后台跑时还和它抢显卡。
 // 现在实时模拟（只有实时模拟）按预算少画几个子样本：预算按实际帧时间自动升降，烘焙中压到最少让出显卡；HUD 写明。
 // 引擎回放、导出、定帧不受影响（LIVE_CAP 只在实时模拟画的时候设）。自动化（检查脚本）默认不压，网址 ?livecap=1 / 0 强制。
-const liveCtl = { auto: null, budget: 24e6, ema: 1 / 60, lastAdj: 0, lastCap: 0, lastFull: 0 };
+const liveCtl = { auto: null, budget: 12e6, ema: 1 / 60, lastAdj: 0, lastCap: 0, lastFull: 0 };
 let LIVE_CAP = 0;
 function liveAuto() { if (liveCtl.auto == null) { const q = typeof location !== 'undefined' ? location.search : ''; liveCtl.auto = /[?&]livecap=1/.test(q) ? true : /[?&]livecap=0/.test(q) ? false : !(typeof navigator !== 'undefined' && navigator.webdriver); } return liveCtl.auto; }
 function liveAdapt(now) {
