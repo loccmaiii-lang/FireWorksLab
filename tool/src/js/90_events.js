@@ -5,9 +5,6 @@ for (const [g, types] of TYPE_GROUPS) {
   for (const t of types) og.appendChild(new Option(TYPE_NAMES[t], t));
   $('#type').appendChild(og);
 }
-if (REPLICAS.length) { const og = document.createElement('optgroup'); og.label = '实拍复刻';
-  for (const r of REPLICAS) og.appendChild(new Option(r.name, 'rep:' + r.id));
-  $('#type').appendChild(og); }
 $('#verLabel').innerHTML = '<span class="bn">烟花烘焙器 </span>v' + VERSION;
 document.title = '烟花母版烘焙器 · v' + VERSION;
 $('#type').addEventListener('change', e => setType(e.target.value));
@@ -71,21 +68,7 @@ $('#fileIn').addEventListener('change', async e => {
   try { importParams(JSON.parse(await f.text()), f.name); } catch (err) { flash('导入失败：' + err.message, true); }
   e.target.value = '';
 });
-$('#btnSave').addEventListener('click', async () => {
-  if (familyOf(state.P.type) !== 'aerial') { flash('组合库只收空中开花类（上升、地面类单独挂发射器）', true); return; }
-  busy(true, '烘焙 2048 版本存入组合库…', 0);
-  try {
-    const b = await bake(libP(state.P), 1, p => busy(true, null, p));
-    const name = state.name || TYPE_EN[state.P.type];
-    const old = state.lib.findIndex(e => e.name === name);
-    const entry = { name, type: state.P.type, P: { ...state.P }, M: cloneM(state.M), bake: b };
-    if (old >= 0) { disposeBake(state.lib[old].bake); state.lib[old] = entry; } else state.lib.push(entry);
-    flash(`已存入组合库：${name}`); if (state.libReady) buildComboPanel();
-  } catch (err) { flash('失败：' + err.message, true); }
-  busy(false);
-});
-// 模式切换见 79_library.js 的 setTab
-$('#btnAddLayer').addEventListener('click', () => { if (state.lib[0]) { state.layers.push(newLayer(layerEntryFor(state.lib[0], new Set()))); computeLinks(); buildComboPanel(); } });
+// 4.3：「存入组合库」「添加图层」随组合编辑器去掉（清理清单 C2）；加层用「我的效果」的「＋ 加一层」
 $('#btnExportCombo').addEventListener('click', exportCombo);
 
 (function showGPU() {

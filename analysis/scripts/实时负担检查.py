@@ -342,7 +342,7 @@ async def m7(p, opts):
 
 
 async def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--effects', default='jinmangju,hongchao,hiki_nishiki,qingning,qiuxing_a,qiuxing_d,yongfeng,pianbei')
+    ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--effects', default='jinmangju,hongchao,hiki_nishiki,qingning,qiuxing_a,qiuxing_b,qiuxing_d,wancai')
     ap.add_argument('--base', default='', help='星轨道时间步的基线 json（改之前跑一遍 --dump-base 得到）'); ap.add_argument('--dump-base', default='')
     a = ap.parse_args(); only = set(x for x in a.only.split(',') if x)
     opts = chromium_options(); opts['args'] = list(opts.get('args', [])) + ['--enable-precise-memory-info', '--js-flags=--max-old-space-size=8192']

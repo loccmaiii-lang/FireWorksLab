@@ -89,9 +89,6 @@
   .stats .warn{color:var(--warn)}
   .stats .ok{color:#8fd18b}
   .lib{display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
-  .lib .it{display:flex;align-items:center;gap:8px;padding:5px 8px;background:var(--low);border:1px solid var(--line);border-radius:6px}
-  .lib .it span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .lib .it small{color:var(--faint)}
   .presets{display:flex;flex-wrap:wrap;gap:6px}
   .card{border:1px solid var(--line2);border-radius:8px;padding:8px 10px;margin:8px 0;background:var(--panel2)}
   .card .head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
@@ -103,7 +100,6 @@
   .note.rep{color:var(--gold2)}
   .btn.rep{border-color:var(--acc)}
   .hud.right{left:auto;right:10px;text-align:right}
-  .abtag{font:11px var(--mono);color:var(--accInk);background:var(--gold);border-radius:4px;padding:2px 7px}
   .line2{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0}
   .txt{flex:1;min-width:0;background:var(--low);border:1px solid var(--line2);border-radius:6px;padding:5px 8px;color:var(--text)}
   .stages{display:flex;flex-direction:column;gap:5px;margin-bottom:6px}
@@ -119,7 +115,6 @@
   .thumbs figure.cur{border-color:var(--gold)}
   .thumbs img{display:block;width:100%;aspect-ratio:1;object-fit:cover}
   .thumbs figcaption{position:absolute;left:4px;bottom:2px;font:10.5px var(--mono);color:var(--gold2);text-shadow:0 1px 2px #000}
-  .lib .it .x+.x{margin-left:-4px}
   table.mt{width:100%;border-collapse:collapse;font:12px var(--mono)}
   table.mt td,table.mt th{padding:2px 4px;text-align:right;border-bottom:1px solid var(--line)}
   table.mt th:first-child,table.mt td:first-child{text-align:left}
@@ -369,9 +364,6 @@ ul.std { margin: 4px 0 8px; padding-left: 0; list-style: none; font-size: 12px; 
 ul.std li.ok { color: #9fd59f; } ul.std li.bad { color: #ffb4a6; }
 
 /* 历史：按效果折叠 */
-details.histgrp > summary { cursor: pointer; list-style: none; padding: 6px 4px; }
-details.histgrp > summary::before { content: '▸ '; opacity: .6; }
-details.histgrp[open] > summary::before { content: '▾ '; }
 
 /* =====================================================================
    2026-10-02 界面外观第 1 步（协作/烟花烘焙器交互设计草稿.md 评估第 1 步）：只改外观，不改逻辑
@@ -403,7 +395,6 @@ header.top{background:var(--low);border-bottom:1px solid var(--line);padding:8px
 .tgl{background:none;border:1px solid var(--line2);border-radius:6px;padding:6px 11px;color:var(--text);font-size:13px}
 .tgl:hover{border-color:var(--hov)}
 .tgl[aria-pressed="true"]{background:var(--hover);border-color:var(--acc);color:var(--acc)}
-.abtag{background:var(--acc);color:var(--accInk)}
 @container vb (max-width:1240px){ .viewbar .tl{display:none} .tgl{padding:6px 8px} }
 @container vb (max-width:900px){ .viewbar .expo.push{margin-left:0} .seg button,.seg.small button{padding:5px 9px} }
 .app:has(main.showcase) #btnRight,.app:has(main.showcase) #btnRef{display:none}
@@ -460,8 +451,6 @@ input[type=range]{accent-color:var(--acc)}
 .tier small{font:10.5px var(--mono);color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .rlayers.tiersR{align-items:center;margin:2px 0 6px}
 .rlayers.tiersR .rt{margin:0 4px 0 0}
-details.histgrp{margin:0 4px}
-details.histgrp>summary.lsub{color:var(--dim);padding:5px 8px}
 .tiles{grid-template-columns:repeat(auto-fill,minmax(64px,1fr));padding:2px 10px 8px}
 .tile{border-width:2px;border-radius:6px}
 .tile.cur{border-color:var(--acc);background:var(--hover);color:var(--text)}

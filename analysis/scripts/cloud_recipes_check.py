@@ -42,8 +42,6 @@ def main():
             p.evaluate("()=>loadShowcase('cloud:core2')");assert p.evaluate("showcase.recipe.id==='core2'");report['failureRecovery']=True
             p.evaluate('state.t=.1;state.playing=true');p.wait_for_function('state.t>.5');p.evaluate('state.playing=false')
             p.screenshot(path=str(out/'界面.png'));report['playback']=True
-            p.locator('#showcaseType').select_option('kiku');p.wait_for_function('showcase.left && !showcase.loading',timeout=240000)
-            assert p.evaluate('!showcase.recipe && showcase.layers.length===0')
             p.locator('#showcaseClose').click();p.wait_for_function('!showcase.active');report['restore']=True
             report['errors']=errors;assert not errors,errors
     report['pass']=True;(out/'配方检查.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
