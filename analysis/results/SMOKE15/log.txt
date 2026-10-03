@@ -1,0 +1,78 @@
+17:11:49 开始：参数有效性检查（画面）：逐个拨右栏参数，曲线 / 帧计划 / 定帧画面都不变的才算「拖了没反应」（界面冒烟检查）
+17:14:04 左栏_待我验收：1 s 
+17:14:04 左栏_制作中：1 s 
+17:14:04 左栏_已通过：1 s 
+17:14:04 左栏_历史：1 s 
+17:14:04 新建配方：1 s 
+17:14:04 左栏_工具：1 s 
+17:14:04 模板_菊：5 s 
+17:14:04 模板_柳：6 s 
+17:14:04 模板_点灭：6 s 
+17:14:04 待验收_JM4-40：5 s 
+17:14:04 单层_设入点0.8s：5 s 
+17:14:04 单层_清除入出点：5 s 
+17:14:04 多层_鸿巢：17 s 
+17:14:04 多层_鸿巢_调第1层：5 s 
+17:14:04 多层_鸿巢_审阅页：1 s 
+17:14:04 多层_鸿巢_记录当前帧：1 s 
+17:14:04 多层_鸿巢_查看交付：1 s 
+17:14:04 多层_鸿巢_返回画面：1 s 
+17:14:04 多层_鸿巢_回整体：1 s 
+17:14:04 尾缀_V5：5 s 
+17:14:04 多层_引菊_选第2层：9 s 
+17:14:04 多层_引菊_查看交付：1 s 
+17:14:04 多层_引菊_层2_拖入点：6 s 
+17:14:04 多层_引菊_层1_拖阶段点：6 s 
+17:14:04 尾迹外形_泪滴粗细亮肩：5 s 
+17:14:04 尾迹外形_恢复：5 s 
+17:14:04 多层_引菊_层1_拖火花停_接力：7 s 
+17:14:04 多层_引菊_输出最省_按帧数：5 s 
+17:14:04 多层_引菊_单束菜单：1 s 
+17:14:04 重播：1 s 
+17:14:04 尾迹扩散：7 s 
+17:14:04 烧旺_亮度离散_底光：5 s 
+17:14:04 尾迹扩散_恢复：7 s 
+17:14:04 ✅ 没有报错
+17:14:04 界面冒烟：✅ 没有报错
+17:39:08 效果 qiuxing_a 第 2 层：86 个参数，没反应 28：flash turbScale tailDiffuse ignJit glitter sparkRateEnd sparkStop sparkStart sparkRamp sparkLifeEnd sparkLifeJit sparkSize sparkInherit T0 cooling sparkBright emberFrac twinkle tailJit tailShoulder tailPinchHead tailPinchTail sparkRise starBright tailHaze trimLead cellPad exposureLock（11 s）
+17:39:08 效果 qiuxing_b 第 1 层：85 个参数，没反应 32：flash turbScale tailDiffuse ignJit headDim glitter sparkRateEnd sparkStop sparkStart sparkRamp sparkLifeEnd sparkLifeJit sparkSize sparkInherit T0 cooling sparkBright emberFrac twinkle tailJit tailShoulder tailPinchHead tailPinchTail sparkRise starBright tailHaze pageTarget maxHoldBurn maxHold trimLead cellPad exposureLock（5 s）
+17:39:08 效果 qiuxing_b 第 2 层：85 个参数，没反应 11：flash turbScale ignJit headDim sparkStop pageTarget maxHoldBurn maxHold trimLead cellPad exposureLock（3 s）
+17:39:08 效果 qiuxing_b 第 3 层：85 个参数，没反应 31：flash turbScale tailDiffuse ignJit headDim glitter sparkRateEnd sparkStop sparkStart sparkRamp sparkLifeEnd sparkLifeJit sparkSize sparkInherit T0 cooling sparkBright emberFrac twinkle tailJit tailShoulder tailPinchHead tailPinchTail sparkRise starBright tailHaze maxHoldBurn maxHold trimLead cellPad exposureLock（6 s）
+17:39:08 效果 qiuxing_c 第 1 层：85 个参数，没反应 9：flash turbScale ignJit headDim tailPinchHead maxHoldBurn trimLead cellPad exposureLock（7 s）
+17:39:08 效果 qiuxing_c 第 2 层：86 个参数，没反应 5：flash turbScale headDim trimLead exposureLock（7 s）
+17:39:08 效果 qiuxing_d 第 1 层：85 个参数，没反应 7：lastFlare flash ignJit headDim trimLead cellPad exposureLock（7 s）
+17:39:08 效果 qiuxing_d 第 2 层：85 个参数，没反应 8：flash ignJit headDim pageTarget maxHoldBurn maxHold trimLead exposureLock（23 s）
+17:39:08 效果 qiuxing_d 第 3 层：85 个参数，没反应 7：flash turbScale ignJit headDim trimLead cellPad exposureLock（9 s）
+17:39:08 效果 qingning 第 1 层：85 个参数，没反应 8：lastFlare flash turbScale ignJit headDim trimLead cellPad exposureLock（10 s）
+17:39:08 效果 qingning 第 2 层：85 个参数，没反应 28：flash turbScale tailDiffuse ignJit headDim glitter sparkRateEnd sparkStop sparkStart sparkRamp sparkLifeEnd sparkLifeJit sparkSize sparkInherit T0 cooling sparkBright emberFrac twinkle tailJit tailShoulder tailPinchHead tailPinchTail sparkRise starBright tailHaze trimLead exposureLock（12 s）
+17:39:08 效果 wancai 第 1 层：100 个参数，没反应 36：burn flash turbScale tailDiffuse ignDelay ignJit afterBurn headDim glitter sparkRate sparkRateEnd sparkStop sparkStart sparkRamp sparkLifeEnd sparkLifeJit sparkSize sparkInherit T0 cooling sparkBright emberFrac twinkle tailJit tailShoulder tailPinchHead tailPinchTail sparkRise starBright tailHaze subKeep subGrav maxHoldBurn maxHold trimLead exposureLock（8 s）
+17:39:08 效果 wancai 第 2 层：100 个参数，没反应 36：burn flash turbScale tailDiffuse ignDelay ignJit afterBurn headDim glitter sparkRate sparkRateEnd sparkStop sparkStart sparkRamp sparkLifeEnd sparkLifeJit sparkSize sparkInherit T0 cooling sparkBright emberFrac twinkle tailJit tailShoulder tailPinchHead tailPinchTail sparkRise starBright tailHaze subKeep subGrav maxHoldBurn maxHold trimLead exposureLock（8 s）
+17:39:08 效果 wancai 第 3 层：100 个参数，没反应 37：burn flash turbScale tailDiffuse ignDelay ignJit afterBurn headDim glitter sparkRate sparkRateEnd sparkStop sparkStart sparkRamp sparkLifeEnd sparkLifeJit sparkSize sparkInherit T0 cooling sparkBright emberFrac twinkle tailJit tailShoulder tailPinchHead tailPinchTail sparkRise starBright tailHaze subKeep subGrav maxHoldBurn maxHold trimLead cellPad exposureLock（8 s）
+17:39:08 效果 wancai 第 4 层：100 个参数，没反应 37：burn flash turbScale tailDiffuse ignDelay ignJit afterBurn headDim glitter sparkRate sparkRateEnd sparkStop sparkStart sparkRamp sparkLifeEnd sparkLifeJit sparkSize sparkInherit T0 cooling sparkBright emberFrac twinkle tailJit tailShoulder tailPinchHead tailPinchTail sparkRise starBright tailHaze subKeep subGrav maxHoldBurn maxHold trimLead cellPad exposureLock（7 s）
+17:39:08 效果 hongchao 第 1 层：91 个参数，没反应 8：flash turbScale ignJit headDim emberAll pageTarget trimLead exposureLock（50 s）
+17:39:08 效果 hongchao 第 2 层：88 个参数，没反应 30：flash turbScale tailDiffuse ignJit headDim glitter sparkRateEnd sparkStop sparkStart sparkRamp sparkLifeEnd sparkLifeJit sparkSize sparkInherit T0 cooling sparkBright emberFrac twinkle tailJit tailShoulder tailPinchHead tailPinchTail sparkRise starBright tailHaze pageTarget trimLead cellPad exposureLock（61 s）
+17:39:08 效果 yongfeng 第 1 层：88 个参数，没反应 8：flash turbScale ignJit pageTarget maxHoldBurn maxHold trimLead exposureLock（20 s）
+17:39:08 效果 yongfeng 第 2 层：91 个参数，没反应 20：fade lastFlare flash turbScale ignJit headDim headSize flicker sparkLifeJit cooling emberFollow emberAll tailPinchHead tailPinchTail headTear sparkRise pageTarget trimLead cellPad exposureLock（25 s）
+17:39:08 效果 yongfeng 第 3 层：86 个参数，没反应 28：flash turbScale tailDiffuse headDim glitter sparkRateEnd sparkStop sparkStart sparkRamp sparkLifeEnd sparkLifeJit sparkSize sparkInherit T0 cooling sparkBright emberFrac twinkle tailJit tailShoulder tailPinchHead tailPinchTail sparkRise starBright tailHaze trimLead cellPad exposureLock（7 s）
+17:39:08 效果 yongfeng 第 4 层：86 个参数，没反应 28：flash turbScale tailDiffuse headDim glitter sparkRateEnd sparkStop sparkStart sparkRamp sparkLifeEnd sparkLifeJit sparkSize sparkInherit T0 cooling sparkBright emberFrac twinkle tailJit tailShoulder tailPinchHead tailPinchTail sparkRise starBright tailHaze pageTarget trimLead exposureLock（6 s）
+17:39:08 效果 yongfeng 第 5 层：87 个参数，没反应 7：flash turbScale headDim pageTarget trimLead cellPad exposureLock（3 s）
+17:39:08 效果 pianbei 第 1 层：91 个参数，没反应 9：lastFlare flash turbScale ignJit headDim emberAll pageTarget trimLead exposureLock（5 s）
+17:39:08 效果 pianbei 第 2 层：100 个参数，没反应 14：burn flash turbScale ignDelay ignJit afterBurn headDim sparkRate subKeep subGrav pageTarget maxHoldBurn trimLead exposureLock（9 s）
+17:39:08 效果 pianbei 第 3 层：100 个参数，没反应 13：burn flash turbScale ignDelay ignJit afterBurn headDim sparkRate subKeep subGrav pageTarget trimLead exposureLock（9 s）
+17:39:08 效果 pianbei 第 4 层：100 个参数，没反应 14：burn flash turbScale ignDelay ignJit afterBurn headDim sparkRate subKeep subGrav pageTarget maxHoldBurn trimLead exposureLock（9 s）
+17:39:08 效果 pianbei 第 5 层：106 个参数，没反应 13：burn lastFlare flash turbScale ignDelay ignJit afterBurn headDim sparkRate emberAll pageTarget trimLead exposureLock（331 s）
+17:39:08 效果 qixi 第 1 层：91 个参数，没反应 9：lastFlare flash turbScale ignJit headDim emberAll pageTarget trimLead exposureLock（5 s）
+17:39:08 效果 qixi 第 2 层：100 个参数，没反应 14：burn flash turbScale ignDelay ignJit afterBurn headDim sparkRate subKeep subGrav pageTarget maxHoldBurn trimLead exposureLock（9 s）
+17:39:08 效果 qixi 第 3 层：100 个参数，没反应 13：burn flash turbScale ignDelay ignJit afterBurn headDim sparkRate subKeep subGrav pageTarget trimLead exposureLock（9 s）
+17:39:08 效果 qixi 第 4 层：100 个参数，没反应 14：burn flash turbScale ignDelay ignJit afterBurn headDim sparkRate subKeep subGrav pageTarget maxHoldBurn trimLead exposureLock（10 s）
+17:39:08 效果 qixi 第 5 层：106 个参数，没反应 13：burn lastFlare flash turbScale ignDelay ignJit afterBurn headDim sparkRate emberAll pageTarget trimLead exposureLock（328 s）
+17:39:08 效果 v3_new 第 1 层：91 个参数，没反应 9：lastFlare flash turbScale ignJit headDim emberAll pageTarget trimLead exposureLock（5 s）
+17:39:08 效果 v3_new 第 2 层：100 个参数，没反应 14：burn flash turbScale ignDelay ignJit afterBurn headDim sparkRate subKeep subGrav pageTarget maxHoldBurn trimLead exposureLock（9 s）
+17:39:08 效果 v3_new 第 3 层：100 个参数，没反应 13：burn flash turbScale ignDelay ignJit afterBurn headDim sparkRate subKeep subGrav pageTarget trimLead exposureLock（9 s）
+17:39:08 效果 v3_new 第 4 层：100 个参数，没反应 14：burn flash turbScale ignDelay ignJit afterBurn headDim sparkRate subKeep subGrav pageTarget maxHoldBurn trimLead exposureLock（9 s）
+17:39:08 效果 v3_new 第 5 层：106 个参数，没反应 13：burn lastFlare flash turbScale ignDelay ignJit afterBurn headDim sparkRate emberAll pageTarget trimLead exposureLock（330 s）
+17:39:08 效果 hiki_nishiki 第 1 层：88 个参数，没反应 13：fade lastFlare flash turbScale headDim headSize flicker emberFrac headTear maxHoldBurn trimLead cellPad exposureLock（5 s）
+17:39:08 效果 hiki_nishiki 第 2 层：87 个参数，没反应 13：fade lastFlare flash turbScale headDim headSize flicker emberFrac headTear pageTarget trimLead cellPad exposureLock（11 s）
+17:39:08 写好： C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\SMOKE15\参数有效性\参数有效性.md
+17:39:08 参数有效性：✅ 跑完，见 参数有效性/参数有效性.md
+17:39:08 完成，用时 27.3 分钟
