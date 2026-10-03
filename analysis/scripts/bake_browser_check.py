@@ -26,6 +26,7 @@ def main():
             print(json.dumps(report['startup'], ensure_ascii=False), flush=True)
             verify_renderer(report['startup']['gpu'])
             # 4.2.16 起自动烘焙默认关（改参数不烘）：这个检查测的是「改了参数 → 烘焙 / 失败提示 / 重试」，先打开自动烘焙
+            # 4.3：JM4 迁到新画法后（4 × 4、单格 512、每帧最多 16 个快门子样本）云端软件渲染烘一次要 15 分钟以上，这个检查放本机（显卡）跑
             page.evaluate("setAutoBake(true); setReplica('JM4'); state.playing = false;")
             page.wait_for_function('state.bake && !state.baking && !state.dirty', timeout=900000)
             report['F0'] = page.evaluate("() => ({recipe:state.repId, cols:state.P.cols, rows:state.P.rows, frames:state.bake.meta.L.F, renderVer:state.P.renderVer})")
