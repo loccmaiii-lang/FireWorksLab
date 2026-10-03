@@ -6336,7 +6336,8 @@ var FW_EFFECTS = [
 "下一步": "4.0 渲染版 JM4-40 等你验收（参数不变，只换 4.0 渲染）；通过后替换正式库。正式库 JM1 → JM4 的替换也一起确认",
 "说明": "用户 09-29 23:10 通过 JM3（艺术效果）；JM4 只是换成 Zoom 取景，不改效果。 2026-10-01：4.0 交付时由对话框2 做了 JM4-40（同参数、4.0 渲染、全程 30 fps、单格 512），放进待我验收。",
 "导出任务": [
-"JM4-40E5"
+"JM4-40E5",
+"JM4-40E6"
 ],
 "英文名": "GoldChrysanthemum",
 "ver": "2ac48d15",
@@ -6376,6 +6377,12 @@ var FW_EFFECTS = [
 "type": "export",
 "state": "已回来",
 "seen": true
+},
+{
+"id": "JM4-40E6",
+"type": "export",
+"state": "在算",
+"seen": false
 }
 ],
 "exports": [
@@ -6642,7 +6649,10 @@ var FW_EFFECTS = [
 "用户验收": false
 },
 "导出任务": [
-"TR2"
+"TR2",
+"V5ME1",
+"V5SE1",
+"V5LE1"
 ],
 "缺": [
 "UE 4.24 实机导入未验证"
@@ -6656,6 +6666,24 @@ var FW_EFFECTS = [
 "id": "TR2",
 "type": "trail",
 "state": "已回来",
+"seen": false
+},
+{
+"id": "V5LE1",
+"type": "export",
+"state": "在算",
+"seen": false
+},
+{
+"id": "V5ME1",
+"type": "export",
+"state": "在算",
+"seen": false
+},
+{
+"id": "V5SE1",
+"type": "export",
+"state": "在算",
 "seen": false
 }
 ],
@@ -6706,12 +6734,21 @@ var FW_EFFECTS = [
 "粒子大小 / 亮度等用户在引擎里按例子标定"
 ],
 "下一步": "等用户验收 RT4（左栏「升空尾缀」下面一排小 / 中 / 大；导出由用户自己在烘焙器里点） 2026-10-03（对话框2，4.2.5）：「待我验收」改成按证据把关（版本指纹带烘焙器输出版本）——RT4M 要一次内部导出（export 任务，导出清单记 entryVer）+ 回放检查；标准检查对话框2 已排 STD5 重跑。没有就一直显示「未就绪：还没导出」。 ｜ 4.3（对话框15 留给负责人）：渲染基础问题 H4——「温度偏移」rtFdT 让贴图火花亮度反着变（47_risetail.js:81-82 ref 用了 Tb+dT 的亮度，Tb 2450 / dT −400 时 ×7.5，越冷越亮）。修法：ref = 0.25（和 GPU rtSparkColor 同口径），同时把 RT4 的 rtTexI 从 40 调到约 300 保持现在的亮度。改了 RT4 画面，要你决定是否出 RT5 再验收；4.3 没动。另外 4.3 所有产物 OUTPUT_VER → 4.3，RT4M 要用 4.3 重新内部导出。",
-"导出任务": [],
+"导出任务": [
+"RT4ME1"
+],
 "待验收版": "RT4M",
 "说明": "烘焙器 4.1.0 新产物 emitset：循环层（星头 + 白热段，贴图动态消散 + dissolve）+ GPU 金火星三档粒径 + 落火；大中小按理论推导（原理 7c–7e），实现 7f，第 2 版数量大小 7g，第 3 版白黄 / 线状 / 乱流 7h（烘焙器 4.2.1）；第 4 版 7i（烘焙器 4.2.2）：左栏分档、贴图按规范去浪费（星头在上端 + Pivot Offset、格子按长宽比、消散最小贴图、手机半边长）、一半细火星进贴图、引擎加星头光晕 / 末段爆亮 / 发射口。",
 "英文名": "RiseTrailPhys",
 "ver": "23aaf1d6",
-"jobs": [],
+"jobs": [
+{
+"id": "RT4ME1",
+"type": "export",
+"state": "在算",
+"seen": false
+}
+],
 "exports": [],
 "thumb": "data:image/jpeg;base64,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",
 "thumbSim": "data:image/jpeg;base64,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"
@@ -7486,7 +7523,8 @@ var FW_EFFECTS = [
 "下一步": "QN11（QN10 原样迁 4.0）等你验收：QN11E7 导出 + 回放检查 + STD6 标准检查全过，左栏「就绪」。新旧对照 UI12 已看（analysis/results/UI12/看法.md）：运动、时间、颜色和 QN10 一致，没有退化；4.0 画面里显得大是取景放得更满，不是花变大。",
 "导出任务": [
 "QN11E3",
-"QN11E7"
+"QN11E7",
+"QN11E8"
 ],
 "待验收版": "QN11",
 "缺": [
@@ -7547,6 +7585,12 @@ var FW_EFFECTS = [
 "type": "export",
 "state": "已回来",
 "seen": true
+},
+{
+"id": "QN11E8",
+"type": "export",
+"state": "在算",
+"seen": false
 }
 ],
 "exports": [
@@ -8025,7 +8069,8 @@ var FW_EFFECTS = [
 "下一步": "4.3（对话框15 代做，用户 10-04「要，pc光点可以改」）：HK10 的红点层 PC 改成 GPU 光点（analysis/迭代/条目.json 组合 HK10 第 2 层 out.pc = dots；手机仍是序列），所有产物 4.3 要重导 → 排 HK10E5（4.3 导出 + 回放检查）和标准检查；回来看引擎回放 PC / 手机两种红点是否对得上，就绪后等用户验收。之前：HK10E4 + STD6 全过；XD3（4.2.15）光点试导和实时模拟一致。",
 "导出任务": [
 "HK10E2",
-"HK10E4"
+"HK10E4",
+"HK10E5"
 ],
 "待验收版": "HK10",
 "缺": [
@@ -8068,6 +8113,12 @@ var FW_EFFECTS = [
 "type": "export",
 "state": "已回来",
 "seen": true
+},
+{
+"id": "HK10E5",
+"type": "export",
+"state": "在算",
+"seen": false
 }
 ],
 "exports": [
@@ -8256,7 +8307,8 @@ var FW_EFFECTS = [
 "导出任务": [
 "HN2E5",
 "HN2E9",
-"HN2E12"
+"HN2E12",
+"HN2E13"
 ],
 "待验收版": "HN2",
 "交付说明": {
@@ -8294,6 +8346,12 @@ var FW_EFFECTS = [
 "type": "export",
 "state": "已回来",
 "seen": true
+},
+{
+"id": "HN2E13",
+"type": "export",
+"state": "在算",
+"seen": false
 },
 {
 "id": "HN2E2",
