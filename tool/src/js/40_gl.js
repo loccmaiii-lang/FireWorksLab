@@ -136,6 +136,9 @@ uniform sampler2D uPos, uVel, uInfo;
 uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw, uBr;
 uniform float uInh, uSpread, uLife, uLifeEnd, uLifeJit, uK, uG, uT0, uCool, uTwk, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
 uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShoulder, uDif, uDifL, uRise, uStarB, uWShape, uWidth, uPinH, uPinT, uBelly;
+uniform float uRamp, uRampJ;     // 4.2.17 火花起势：开始出火花后几秒到满密度、每颗星 ± 随机
+// 和 20_sim.js starHash(id, seed, k) 同一个整数哈希（CPU / GPU 内核每颗星的起势时长一样）
+float starHashG(uint id, uint k){ uint h=((id+1u)*0x9E3779B1u)^((uint(uSeed)+7u)*0x85EBCA77u)^((k+3u)*0xC2B2AE3Du); h^=h>>16u; h*=0x7FEB352Du; h^=h>>15u; h*=0x846CA68Bu; h^=h>>16u; return float(h)/4294967296.; }
 uniform vec4 uTm[3]; uniform float uTa[3];
 uniform vec4 uView, uXf; uniform float uPPM, uPPMY, uMax, uUseXf;
 out float vI; out vec2 vSig; out float vPS;
@@ -159,6 +162,8 @@ void main(){
   if(abs(inf.w)<1e-6) tb=inf.x+nj/inf.z;
   else { float dsc=inf.z*inf.z+4.*inf.w*nj; if(dsc<0.){ cull(); return; } tb=inf.x+2.*nj/(inf.z+sqrt(dsc)); }
   if(tb>=inf.y||tb>uT){ cull(); return; }
+  // 4.2.17 火花起势：按出生时刻的密度比例抽稀（smoothstep，开头很稀、慢慢连成线）；分叉火花和母火花同一个编号，一起留或一起去
+  if(uRamp>0.){ float Tr=max(.01,uRamp*(1.+uRampJ*(2.*starHashG(uint(s),17u)-1.))), xr=clamp((tb-inf.x)/Tr,0.,1.); if(hsh(uid,64u)>=xr*xr*(3.-2.*xr)){ cull(); return; } }
   float phase=clamp((tb-inf.x)/max(.05,inf.y-inf.x),0.,1.);
   float life=uLife*(1.+(uLifeEnd-1.)*phase)*exp(uLifeJit*gss(uid,2u)); float age=uT-tb;
   // 余烬长尾（锦冠的木炭余烬 / 受光烟迹）：一部分火花寿命长、亮度低，沿星的轨迹留下暗长线；
@@ -407,6 +412,7 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   gl.uniform1f(pr.u.uGlit, P.glitter || 0); gl.uniform1f(pr.u.uGlitD, P.glitterDelay || 0.25);
   gl.uniform1f(pr.u.uEmb, P.emberFrac || 0); gl.uniform1f(pr.u.uEmbL, P.emberLife || 3); gl.uniform1f(pr.u.uEmbB, P.emberBright || 0.1); gl.uniform1f(pr.u.uEmbF, P.emberFollow || 0); gl.uniform1f(pr.u.uEmbS, P.emberSize || 1);
   gl.uniform1f(pr.u.uEmbE, P.emberEnd || 0); gl.uniform1f(pr.u.uHotStop, P.emberFrac > 0 && P.emberAll && P.sparkStop > 0 ? P.sparkStop : 0);
+  if (pr.u.uRamp) { gl.uniform1f(pr.u.uRamp, +P.sparkRamp > 0 ? +P.sparkRamp : 0); gl.uniform1f(pr.u.uRampJ, clamp((+P.sparkRampJit || 0) / 100, 0, 1)); }     // 4.2.17
   if (pr.u.uTailJit) gl.uniform1f(pr.u.uTailJit, +P.tailJit || 0); if (pr.u.uShoulder) gl.uniform1f(pr.u.uShoulder, +P.tailShoulder || 0);
   if (pr.u.uRise) gl.uniform1f(pr.u.uRise, +P.sparkRise || 0); if (pr.u.uStarB) gl.uniform1f(pr.u.uStarB, +P.starBright || 0);
   if (pr.u.uWShape) { const ws = tailShapeOf(P); gl.uniform1f(pr.u.uWShape, ws.on ? 1 : 0); gl.uniform1f(pr.u.uWidth, ws.w); gl.uniform1f(pr.u.uPinH, ws.h); gl.uniform1f(pr.u.uPinT, ws.t); gl.uniform1f(pr.u.uBelly, ws.m); }

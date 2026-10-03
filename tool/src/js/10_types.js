@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.2.16';
+const VERSION = '4.2.17';
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 const OUTPUT_VER = { master: '4.2.7', emitset: '4.2.2', riseLoop: '4.2.2', trail: '4.0', unit: '4.0', loop: '4.0', v37: '3.7' };
@@ -37,7 +37,7 @@ const BASE = {
   duration: 3.2, seed: 7, stars: 150, burstR0: 0, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
   burn: 2.5, burnJit: 12, fade: 0.2, lastFlare: 0.35, flash: 1,
   headSize: 1.0, headBright: 1, flicker: 0.25,
-  sparkRate: 95, sparkRateEnd: 1, sparkStop: 0, sparkStart: 0, sparkLife: 0.55, sparkLifeEnd: 1, sparkLifeJit: 45, sparkSize: 0.35, sparkSpread: 2.5, sparkInherit: 0.2, sparkDrag: 2.2, sparkGrav: 1,
+  sparkRate: 95, sparkRateEnd: 1, sparkStop: 0, sparkStart: 0, sparkRamp: 0, sparkRampJit: 30, sparkLife: 0.55, sparkLifeEnd: 1, sparkLifeJit: 45, sparkSize: 0.35, sparkSpread: 2.5, sparkInherit: 0.2, sparkDrag: 2.2, sparkGrav: 1,
   T0: 2050, cooling: 0.42, sparkBright: 1, twinkle: 0.6,
   subDelay: 0.9, subJit: 10, subStars: 36, subSpeed: 40, subBurn: 0.9, subTail: 0, carrierTail: 30, subPattern: 'sphere',
   spin: 14, chaos: 0.8, beeSpeed: 28,
@@ -356,6 +356,9 @@ const SCHEMA = [
     ['sparkRateEnd', '末段火花密度', '×', 0, 2, 0.01],
     ['sparkStop', '火花只在前几秒（分层星外层，0 = 全程）', 's', 0, 3, 0.01],
     ['sparkStart', '火花从第几秒开始（分层星内层 / 末段短尾，0 = 一开始就有）', 's', 0, 6, 0.01],
+    // 4.2.17 火花起势（用户 10-03 12:59；12:27 #3 锦段「参考是先零星出现再形成一条线」）：开始出火花后，密度从零星到满要多久；每颗星快慢随机
+    ['sparkRamp', '火花起势（开始出火花后用几秒从零星到满密度：先零零星星、再连成线；0 = 一开始就满密度）', 's', 0, 2, 0.01],
+    ['sparkRampJit', '火花起势随机（每颗星起势快慢不同，± 百分比，均匀分布）', '%', 0, 100, 1, P => +P.sparkRamp > 0],
     ['sparkLife', '火花寿命', 's', 0.05, 4, 0.01],
     ['sparkLifeEnd', '末段出生火花的寿命', '×', 0.05, 2, 0.01, P => familyOf(P.type) === 'aerial'],
     ['sparkLifeJit', '火花寿命离散', '%', 0, 80, 1, P => familyOf(P.type) === 'aerial'],

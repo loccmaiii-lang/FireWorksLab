@@ -93,6 +93,10 @@ function starHash(id, seed, k) {
 }
 // 4.0：每颗星自己的随机序列（由星号 + 种子决定）。改星数、打开延时点火、改燃烧时间，都不会把别的星重新洗牌（问题清单 E2）
 function starRng(id, seed, k) { return new RNG((starHash(id, seed, k) * 4294967296) | 0); }
+// 4.2.17 火花起势：开始出火花后 τ 秒时的密度比例（0 → 1，smoothstep：开头很稀、慢慢连成线）；每颗星的起势时长随机 ± sparkRampJit%（均匀）
+// GPU 内核（40_gl.js VS_SPK）用同一条曲线、同一个每颗星的随机数（starHash(id, seed, 17)）
+function sparkRampT(P, id) { const j = clamp((+P.sparkRampJit || 0) / 100, 0, 1); return Math.max(0.01, +P.sparkRamp * (1 + j * (2 * starHash(id, P.seed, 17) - 1))); }
+function sparkRampAt(P, id, tau) { if (!(+P.sparkRamp > 0)) return 1; const x = clamp(tau / sparkRampT(P, id), 0, 1); return x * x * (3 - 2 * x); }
 // 星的方向与速度倍数：[dx, dy, dz, 速度倍数]
 function dirsFor(P, rng) {
   if (P._unit) { const e = P.unitElev * Math.PI / 180; return [[Math.cos(e), Math.sin(e), 0, 1]]; }
@@ -279,7 +283,8 @@ class Sim {
       if (s.vis != null && !s.ended && s.age >= s.vis) { s.ended = true; if (P.crackle > 0) this.crackleBurst(s); }
       const hotOff = P.sparkStop > 0 && s.kind !== 5 && s.age - s.ign > P.sparkStop, embAll = P.emberFrac > 0 && P.emberAll;
       if (s.rate > 0 && !this.noSparks && s.age >= s.ign && !s.ended && !(hotOff && !embAll) && !(P.sparkStart > 0 && s.kind !== 5 && s.age - s.ign < P.sparkStart)) {
-        const fr = s.kind === 5 || P.sparkRateEnd == null || P.sparkRateEnd === 1 ? 1 : Math.max(0, 1 + (P.sparkRateEnd - 1) * clamp((s.age - s.ign) / Math.max(0.05, (s.vis != null ? s.vis : s.burn) - s.ign), 0, 1));
+        const fr = (s.kind === 5 || P.sparkRateEnd == null || P.sparkRateEnd === 1 ? 1 : Math.max(0, 1 + (P.sparkRateEnd - 1) * clamp((s.age - s.ign) / Math.max(0.05, (s.vis != null ? s.vis : s.burn) - s.ign), 0, 1)))
+          * (+P.sparkRamp > 0 && s.kind !== 5 ? sparkRampAt(P, s.id, s.age - s.ign - (P.sparkStart > 0 ? P.sparkStart : 0)) : 1);     // 4.2.17 火花起势
         const k = rng.poisson(s.rate * fr * h), spr = P.sparkSpread, T0 = s.kind === 5 && P.riseStyle === 'silver' ? P.T0 + 250 : P.T0, lf = s.kind === 5 && P.riseStyle === 'silver' ? 1.5 : 1;
         for (let j = 0; j < k; j++) {
           const u = rng.u(), inh = P.sparkInherit * (0.3 + 1.4 * rng.u()), px = s.x - s.vx * h * u, py = s.y - s.vy * h * u;
