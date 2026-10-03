@@ -732,7 +732,8 @@ async def n1(pg):
     await pg.evaluate("document.querySelector('#params [data-v43]').click(); 0"); await pg.wait_for_timeout(300)
     on = await pg.evaluate("({ groups: [...document.querySelectorAll('#params details.pgrp')].map(d => d.dataset.g), mods: [...document.querySelectorAll('#params details.mod')].map(d => d._mod), burn: (%s)('burn'), v0: (%s)('v0'), stored: store.get('panel43', false) })" % (lab, lab))
     info['打开'] = on
-    if on['groups'][:3] != ['发射', '生成', '更新'] or '寿命' not in on['mods'] or '尾迹' not in on['mods']: bad.append(f"没按模块排：{on['groups']} {on['mods']}")
+    # 4.2.24：模块按 Cascade 发射器从上到下（analysis/命名/模块表.json）：发射 → 运动 → 外观 → …；火花模块原来叫「尾迹」
+    if on['groups'][:3] != ['发射', '运动', '外观'] or '寿命' not in on['mods'] or '火花' not in on['mods'] or '阻力重力' not in on['mods']: bad.append(f"没按模块排：{on['groups']} {on['mods']}")
     want = await pg.evaluate("[pnameOf('开花与燃烧', 'burn').cn, pnameOf('开花与燃烧', 'v0').cn, pnameOf('开花与燃烧', 'burn').en]")
     if on['burn'] != want[0] or on['v0'] != want[1]: bad.append(f"名字不是命名表里的：{on['burn']} / {on['v0']}（表：{want[:2]}）")
     if not on['stored']: bad.append('预览开关没记住')
@@ -748,7 +749,7 @@ async def n1(pg):
     # 不起作用：菊没有延时点火 → 点火时刻随机变灰写原因
     r = await pg.evaluate("(() => { const b = panelRows.find(([r, it]) => it[0] === 'ignDelay')[0]; if (b.querySelector('.rndb') && !pview.ropen.ignDelay) b.querySelector('.rndb').click(); const j = panelRows.find(([r, it]) => it[0] === 'ignJit')[0]; panelHelp(j); return { inert: j.classList.contains('inert'), why: j._inert, help: $('#pHelp').textContent }; })()")
     info['菊 点火时刻随机'] = {k: r[k] for k in ('inert', 'why')}
-    if not r['inert'] or '延时点火' not in (r['why'] or '') or '现在不起作用' not in r['help']: bad.append(f'菊的点火时刻随机没标不起作用：{r}')
+    if not r['inert'] or '点火延迟' not in (r['why'] or '') or '现在不起作用' not in r['help']: bad.append(f'菊的点火延迟随机没标不起作用：{r}')
     if 'Ignition' not in r['help'] or '·' not in r['help']: bad.append('说明条第一行不是「English · 中文」')
     # 说明条：寿命
     h = await pg.evaluate("(() => { panelHelp(panelRows.find(([r, it]) => it[0] === 'burn')[0]); return $('#pHelp').textContent; })()")

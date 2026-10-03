@@ -4,20 +4,20 @@
 //    说明条第一行「English · 中文 — 一句话说明」，下面「调大 / 调小」「随机怎么取」「UE 里对应」「注意」。
 //  - 按 Niagara 发射器的模块顺序排：发射器 → 生成 / 寿命 / 形状 / 初速 → 受力 / 外观 / 烟花特性 / 子花 → 尾迹 → 尾缀各层 → 烘焙输出。
 //  - 随机折叠（用户审阅意见「每个参数的随机都折叠一下，我需要就点开填」）：「××随机」收在本体参数行的「随机」按钮下，点开才显示。
-//  - 不起作用的参数（参数有效性检查实测 + 渲染基础问题清单 H13）：不藏起来，变灰并写原因（例：延时点火是 0 时「点火时刻随机」不起作用）。
+//  - 不起作用的参数（参数有效性检查实测 + 渲染基础问题清单 H13）：不藏起来，变灰并写原因（例：点火延迟是 0 时「点火延迟随机」不起作用）。
 //  - 搜索认旧名 / 新名 / 英文名 / 字段名。
 // =====================================================================
 const PNAME = (() => { const m = new Map(); for (const r of (typeof PNAMES !== 'undefined' ? PNAMES : [])) { const k = r.sec + '|' + r.key; if (!m.has(k)) m.set(k, []); m.get(k).push(r); } return m; })();
 // 同一节里同一个键可能有两行（例：形状里「开花图案」和地面的「灯芯图案」都是 pattern）：按旧名对上
 function pnameOf(sec, key, label) { const a = PNAME.get(sec + '|' + key); if (!a) return null; if (a.length > 1 && label != null) { const L = String(label); return a.find(r => r.old === L || L.startsWith(r.old) || r.old.startsWith(L.split('（')[0])) || a[0]; } return a[0]; }
-// 阶段（Niagara 发射器栈的几段）→ 模块（按 Niagara 里模块的顺序）
+// 阶段 → 模块（4.2.24：按 Cascade 发射器从上到下，analysis/命名/模块表.json；空中礼花 / 烘焙输出已按新模块，
+// 尾缀 / 地面那几族的旧模块名（受力、外观、尾迹、各层、烘焙输出）先留着，等清理清单定了再改）
 const P43_GROUPS = [
-  ['发射', 'Emitter · 发射器', ['发射器']],
-  ['生成', 'Particle Spawn · 粒子生成', ['生成', '寿命', '形状', '初速', '上升', '弹道', '自转与喷射', '地面']],
-  ['更新', 'Particle Update · 粒子更新', ['受力', '外观', '烟花特性', '子花', '蜂']],
-  ['尾迹', 'Trail · 尾迹（火花子发射器）', ['尾迹', '尾迹外形']],
+  ['发射', 'Emitter · 发射', ['发射器', '生成', '寿命', '形状', '初速', '上升', '弹道', '自转与喷射', '地面']],
+  ['运动', 'Motion · 运动', ['阻力重力', '受力']],
+  ['外观', 'Appearance · 外观', ['星头', '外观', '火花', '尾迹', '尾迹外形', '烟花特性', '子花', '蜂']],
   ['层', 'Layers · 尾缀各层', ['白热火粉', '金火花', '橙色火花', '丝状火花', '星头燃气焰', '落火', '烟带']],
-  ['输出', 'Bake Output · 烘焙输出', ['镜头', '引擎附加', '烘焙输出']],
+  ['输出', 'Output · 输出', ['入点出点', '帧与贴图', '曝光光晕', '画质', '镜头', '引擎附加', '烘焙输出']],
 ];
 const P43_MODULE_GROUP = (() => { const m = {}; for (const [g, , mods] of P43_GROUPS) for (const x of mods) m[x] = g; return m; })();
 // 「××随机」挂在哪个本体参数下面（没列的按「键名去掉 Jit」找；找不到就照常单独一行）
@@ -29,13 +29,13 @@ const SPARK_KEYS = ['sparkRateEnd', 'sparkStop', 'sparkStart', 'sparkRamp', 'spa
   'T0', 'cooling', 'sparkBright', 'twinkle', 'emberFrac', 'tailJit', 'tailShoulder', 'tailWidth', 'tailPinchHead', 'tailPinchTail', 'tailBellyAt', 'sparkRise', 'starBright', 'tailHaze', 'tailHazeR', 'branch', 'branchAt', 'tailDiffuse', 'tailDiffuseScale'];
 // 不起作用的条件（空中类）：[键, 条件, 原因]。依据：analysis/probe/参数有效性/（云端：拨了曲线 / 帧计划都不变）+ analysis/results/SMOKE15/参数有效性/（本机：再加 4 个时刻的定帧画面也不变）+ 代码（20_sim.js、40_gl.js）
 const INERT = [
-  [['ignJit', 'ignSeed'], P => !(+P.ignDelay > 0) && !isCarrierType(P), '「延时点火」是 0 时不起作用（随机的是延时点火的长短）'],
-  [['headDim'], P => +P.headDim < 1 && !(+P.headDimUntil > 0), '「压暗结束时刻」是 0 时不起作用：先设压暗到第几秒'],
+  [['ignJit', 'ignSeed'], P => !(+P.ignDelay > 0) && !isCarrierType(P), '「点火延迟」是 0 时不起作用（随机的是点火延迟的长短）'],
+  [['headDim'], P => +P.headDim < 1 && !(+P.headDimUntil > 0), '「前段结束」是 0 时不起作用：先设前段到第几秒结束'],
   [['turbScale'], P => !(+P.turb > 0), '「湍流强度」是 0 时不起作用'],
-  [['burn', 'ignDelay', 'ignJit', 'ignSeed', 'afterBurn', 'afterJit'], P => isCarrierType(P), '千轮 / 分裂的星是子弹：子弹飞多久看「子花开花时刻」，子星寿命看「子星寿命」；这一项对它们不起作用'],
-  [['sparkRate'], P => isCarrierType(P), '千轮 / 分裂：子弹的火花看「子弹火花生成率」，子星的火花看「子星火花生成率」；这一项不起作用'],
-  [SPARK_KEYS, P => !isCarrierType(P) && !(+P.sparkRate > 0), '「火花生成速率」是 0（这一层没有火花）时不起作用'],
-  [SPARK_KEYS, P => isCarrierType(P) && !(+P.carrierTail > 0) && !(+P.subTail > 0), '子弹、子星的火花生成率都是 0（这一层没有火花）时不起作用'],
+  [['burn', 'ignDelay', 'ignJit', 'ignSeed', 'afterBurn', 'afterJit'], P => isCarrierType(P), '千轮 / 分裂的星是子弹：子弹飞多久看「子花开花时刻」，子星看「子星寿命」；这一项对它们不起作用'],
+  [['sparkRate'], P => isCarrierType(P), '千轮 / 分裂：子弹的火花看「子弹火花率」，子星的火花看「子星火花率」；这一项不起作用'],
+  [SPARK_KEYS, P => !isCarrierType(P) && !(+P.sparkRate > 0), '「火花生成率」是 0（这一层没有火花）时不起作用'],
+  [SPARK_KEYS, P => isCarrierType(P) && !(+P.carrierTail > 0) && !(+P.subTail > 0), '「子弹火花率」「子星火花率」都是 0（这一层没有火花）时不起作用'],
   [['emberAll'], P => !(+P.sparkStop > 0), '「火花停止时刻」是 0 时不起作用（火花本来就全程都有，余烬也一样）'],
   [['fade', 'lastFlare', 'flicker', 'headSize', 'headTear', 'headDim', 'headDimUntil', 'strobeHz', 'strobeDuty', 'strobeStart', 'carrierHead'], P => !(+P.headBright > 0), '「星头亮度」是 0（星头不发光，只有尾迹 / 火花）时不起作用'],
 ];

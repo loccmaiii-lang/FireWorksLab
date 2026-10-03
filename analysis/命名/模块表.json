@@ -1,0 +1,114 @@
+[
+ {
+  "cn": "发射器",
+  "en": "Required",
+  "stage": "发射",
+  "open": true,
+  "what": "号数、序列时长、随机种子"
+ },
+ {
+  "cn": "生成",
+  "en": "Spawn",
+  "stage": "发射",
+  "open": true,
+  "what": "星数（一次爆发）、点火延迟、只让一部分星发光"
+ },
+ {
+  "cn": "寿命",
+  "en": "Lifetime",
+  "stage": "发射",
+  "open": true,
+  "what": "星的寿命、第二段"
+ },
+ {
+  "cn": "形状",
+  "en": "Initial Location",
+  "stage": "发射",
+  "open": true,
+  "what": "开花图案、起始半径、倾斜、环上比例、文字、水面倒影"
+ },
+ {
+  "cn": "初速",
+  "en": "Initial Velocity",
+  "stage": "发射",
+  "open": true,
+  "what": "初速、方向随机、玉体的速度和自旋"
+ },
+ {
+  "cn": "阻力重力",
+  "en": "Drag & Gravity",
+  "stage": "运动",
+  "open": true,
+  "what": "终端速度（阻力）、重力、燃烧减质量、风、湍流"
+ },
+ {
+  "cn": "星头",
+  "en": "Head",
+  "stage": "外观",
+  "open": true,
+  "what": "星头大小、亮度、渐隐、开花闪光、熄灭前闪亮、闪烁、前段压暗、泪滴"
+ },
+ {
+  "cn": "火花",
+  "en": "Spark (Child Emitter)",
+  "stage": "外观",
+  "open": true,
+  "what": "星喷出的火花：生成率、寿命、继承速度、阻力、重力、大小、温度、亮度"
+ },
+ {
+  "cn": "尾迹外形",
+  "en": "Trail Shape",
+  "stage": "外观",
+  "open": false,
+  "what": "火花连成的尾迹：粗细、收尖、亮肩、线间底光、扩散"
+ },
+ {
+  "cn": "烟花特性",
+  "en": "Firework FX",
+  "stage": "外观",
+  "open": false,
+  "what": "点灭、辉星、爆裂、松叶分叉、飘落、余烬（默认关，开了才展开）"
+ },
+ {
+  "cn": "子花",
+  "en": "Sub Burst",
+  "stage": "外观",
+  "open": true,
+  "what": "千轮 / 分裂：子弹飞多久、子花多少星、多大、子星寿命和火花"
+ },
+ {
+  "cn": "蜂",
+  "en": "Bee Motion",
+  "stage": "外观",
+  "open": true,
+  "what": "蜂：旋转、乱飞、推进（只在蜂）"
+ },
+ {
+  "cn": "入点出点",
+  "en": "Cut In / Out",
+  "stage": "输出",
+  "open": false,
+  "what": "序列从第几秒开始、到第几秒结束、入点之前怎么办"
+ },
+ {
+  "cn": "帧与贴图",
+  "en": "Frames & Texture",
+  "stage": "输出",
+  "open": false,
+  "what": "贴图尺寸、格子、通道、帧数和帧率、取景、分段"
+ },
+ {
+  "cn": "曝光光晕",
+  "en": "Exposure & Halo",
+  "stage": "输出",
+  "open": false,
+  "what": "固定曝光、光晕、预览光晕"
+ },
+ {
+  "cn": "画质",
+  "en": "Quality",
+  "stage": "输出",
+  "open": false,
+  "what": "超采样、快门采样、像素覆盖（烘焙用，不改样子的参数）"
+ }
+]

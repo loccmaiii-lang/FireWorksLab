@@ -1,0 +1,71 @@
+{
+ "vocab": [
+  {
+   "use": "星 / 星头",
+   "not": "炭头、光点（画面里的点）",
+   "en": "Star / Head",
+   "what": "开花抛出去的每一颗叫「星」，星正在燃烧的那个亮点叫「星头」"
+  },
+  {
+   "use": "火花",
+   "not": "火星、火粉、尾巴",
+   "en": "Spark",
+   "what": "星烧的时候不断喷出、留在身后的小颗粒；一串火花连起来就是尾迹"
+  },
+  {
+   "use": "尾迹",
+   "not": "尾巴、尾缀（「升空尾缀」这个品类名除外）",
+   "en": "Trail",
+   "what": "火花在星身后连成的那条线的样子"
+  },
+  {
+   "use": "余烬",
+   "not": "光丝、长尾",
+   "en": "Ember",
+   "what": "另一批更暗、留得更久的火花（锦冠的木炭暗线、被照亮的烟迹）。不是烟雾粒子"
+  },
+  {
+   "use": "子花 / 子星 / 子弹",
+   "not": "小割、小花、小割玉",
+   "en": "Sub Burst / Sub Star / Carrier",
+   "what": "千轮 / 分裂：主花抛出「子弹」，子弹飞一段开成「子花」，子花里的每颗叫「子星」"
+  },
+  {
+   "use": "寿命",
+   "not": "燃烧时间",
+   "en": "Lifetime",
+   "what": "从点着到熄灭的秒数"
+  },
+  {
+   "use": "随机",
+   "not": "离散、抖动、Jit",
+   "en": "Random",
+   "what": "每颗（或每粒）各自偏多少；都折叠在本体参数的「随机」按钮下"
+  },
+  {
+   "use": "开花",
+   "not": "爆开、炸开",
+   "en": "Burst",
+   "what": "割药把星抛出去的那一下"
+  },
+  {
+   "use": "点火",
+   "not": "延时、引き",
+   "en": "Ignition",
+   "what": "星什么时候开始烧（可以比开花晚）"
+  },
+  {
+   "use": "光点（只指导出方案）",
+   "not": "—",
+   "en": "GPU Dots",
+   "what": "「PC 用 GPU 光点代替序列」这个导出方案的名字；画面里的点一律叫星头 / 火花"
+  }
+ ],
+ "rules": [
+  "英文：Cascade 有的用 Cascade 的叫法（Spawn Burst、Initial Lifetime、Initial Velocity、Drag、Inherit Parent Velocity、Flare）；Cascade 没有、Niagara 有的用 Niagara（Curl Noise 的 Noise Strength、Gravity Scale）；都没有的（烟花特有）自己起，说明里写「烟花特有」。",
+  "你的规则：不随时间变的用 Initial 开头（Initial Size、Initial Brightness）；随寿命变的用 … Over Life（Fade Out Over Life、Cooling Over Life）。",
+  "随机一律「… Random」，中文「××随机」，都折叠在本体参数旁的「随机」里。",
+  "同一个东西在星头和火花里用同一个英文词（例：星头闪烁、火花闪烁都叫 Flicker），靠模块名区分；中文名带「星头 / 火花」前缀。",
+  "中文 ≤ 6 字，只用词汇表里的词。说明三句：现实里是什么 / 调大调小画面怎样 / UE 里对应什么。"
+ ]
+}
