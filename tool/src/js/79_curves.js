@@ -7,22 +7,22 @@
 //   实线 = 现在的参数，虚线 = 打开时（AI 版 / 你保存的版本）；色带 = 10%–90% 的星（每颗星不一样的量）。
 const CURVE_LANES = [
   { k: 'light', lab: '星头亮度', en: 'Head Brightness', unit: '', c: '#f2d58a',
-    tip: '燃烧中的星，星头有多亮（实线 = 平均，色带 = 10%–90% 的星；一直是 0 = 这一层星头不发光，只有尾巴 / 火花）。渐隐、熄灭前闪亮、星头压暗、闪烁、频闪都改这条',
+    tip: '燃烧中的星，星头有多亮（实线 = 平均，色带 = 10%–90% 的星；一直是 0 = 这一层星头不发光，只有尾迹 / 火花）。渐隐、熄灭前闪亮、前段亮度、闪烁、频闪都改这条',
     keys: ['headBright', 'fade', 'lastFlare', 'headDim', 'headDimUntil', 'strobeHz', 'strobeDuty', 'strobeStart', 'flicker', 'flutter', 'flutterHz', 'carrierHead'] },
   { k: 'lit', lab: '燃烧中的星', en: 'Burning Stars', unit: '颗', c: '#9fd3c7',
-    tip: '这一刻有多少颗星在燃烧（点着了、还没熄灭；星头亮不亮看上一条）。星数、燃烧时间、燃烧随机、延时点火、点火随机、只让一部分星发光、第二段都改这条',
+    tip: '这一刻有多少颗星在燃烧（点着了、还没熄灭；星头亮不亮看上一条）。星数、寿命、寿命随机、点火延迟、点火延迟随机、发光星比例、第二段都改这条',
     keys: ['stars', 'burn', 'burnJit', 'ignDelay', 'ignJit', 'keepFrac', 'afterBurn', 'afterJit', 'subDelay', 'subJit', 'subStars', 'subBurn', 'crossN', 'bunpoN', 'kobanaN'] },
   { k: 'spark', lab: '火花生成', en: 'Spark Spawn Rate', unit: '粒/秒', c: '#ffad5a',
-    tip: '这一刻所有星加起来每秒新生多少粒火花（尾巴的密度）。火花数量、开始、停、起势、末段密度、余烬都改这条',
+    tip: '这一刻所有星加起来每秒新生多少粒火花（尾迹的密度）。火花数量、开始、停、起势、末段密度、余烬都改这条',
     keys: ['sparkRate', 'sparkStart', 'sparkStop', 'sparkRamp', 'sparkRampJit', 'sparkRateEnd', 'emberFrac', 'emberAll', 'carrierTail', 'subTail', 'ignDelay', 'ignJit'] },
   { k: 'life', lab: '新火花寿命', en: 'Spark Lifetime', unit: 's', c: '#d9a3ff',
-    tip: '这一刻新生的火花能活多久（= 尾巴有多长；实线 = 中位数，色带 = 10%–90% 的火花）。火花寿命、末段寿命、寿命随机改这条',
+    tip: '这一刻新生的火花能活多久（= 尾迹有多长；实线 = 中位数，色带 = 10%–90% 的火花）。火花寿命、末段寿命、寿命随机改这条',
     keys: ['sparkLife', 'sparkLifeEnd', 'sparkLifeJit'] },
   { k: 'speed', lab: '星速度', en: 'Star Speed', unit: 'm/s', c: '#7fb7ff',
     tip: '燃烧中的星飞多快（实线 = 中位数，色带 = 10%–90% 的星）。初速、初速随机、终端速度（阻力）、重力、燃烧减质量、风改这条',
     keys: ['v0', 'speedJit', 'vt', 'grav', 'massLoss', 'wind', 'shellVx', 'shellVy', 'shellSpin', 'subSpeed', 'subSpeedJit', 'subVt', 'subGrav', 'beeSpeed'] },
   { k: 'color', lab: '颜色', en: 'Color Over Life', unit: '', c: '#ffffff',
-    tip: '条带 = 这一层的颜色随时间（= 导出的 Color Over Life，乘在星头上）；名字旁的小色块 = Ramp（火花 / 尾巴按亮度从暗到亮的颜色，不随时间）。在「颜色」一节改',
+    tip: '条带 = 这一层的颜色随时间（= 导出的 Color Over Life，乘在星头上）；名字旁的小色块 = Ramp（火花 / 尾迹按亮度从暗到亮的颜色，不随时间）。在「颜色」一节改',
     keys: [] },
 ];
 const CURVE_KEY_LANES = (() => { const m = {}; for (const L of CURVE_LANES) for (const k of L.keys) (m[k] = m[k] || []).push(L.k); return m; })();
@@ -57,7 +57,7 @@ function curveSparkAt(P, s, t, D) {
   const ig = s.birth + (s.ign || 0), s0 = P.sparkStart > 0 && s.kind !== 5 ? P.sparkStart : 0, born = ig + s0, end = s.birth + (s.vis != null ? s.vis : s.burn);
   const embAll = P.emberFrac > 0 && P.emberAll;
   let death = Math.min(end, D, P.sparkStop > 0 && s.kind !== 5 && !embAll ? ig + P.sparkStop : 1e9);
-  if (renderVersion(P) >= 40 && s.tDead != null) death = Math.min(death, s.tDead);
+  if (s.tDead != null) death = Math.min(death, s.tDead);
   if (t < born || t >= death) return null;
   const e = s.kind === 5 ? 1 : (P.sparkRateEnd == null ? 1 : P.sparkRateEnd), tau = t - born;
   let r = s.rate * (1 + (e - 1) * tau / Math.max(0.05, end - born));

@@ -225,7 +225,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
     const ppmY = ssH / (pl.Wh * sy); PPMY = ppmY;
     sst.clear(); sst.bind(); additive(true);
     R.subW = W / nsub;   // 每个子帧覆盖的时长（尾缀的星头据此再细分，拖出连续亮线）
-    if (renderVersion(P)>=40) {
+    {
       // 4.2.23 分批交给显卡（见上面 bakePace）：等显卡时把全局状态还给页面（PPMY = 0、不叠加），回来再接上
       const n = frameSampleCount40(P, pl, pl.t0 + tc), work = Math.max(1, trackDraws(R.track, P) + (P.stars || 0) * q.ss);
       for (let j0 = 0; j0 < n;) {
@@ -235,15 +235,10 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
         if (drawn > 0) bakePace.perSub = drawn / k;
       }
     }
-    else for (let j = 0; j < nsub; j++) {
-      const ts = pl.t0 + tc - W / 2 + (j + 0.5) * W / nsub;
-      R.draw(pl.loop ? ts : Math.max(0, ts), view, ppm, 1 / nsub, pl.loop ? f : f * 16 + j, f);
-    }
     additive(false);
-    if (renderVersion(P)>=40) hazeSamples40(P, sst, ppm);
+    hazeSamples40(P, sst, ppm);
     const ch = Math.floor(f / L.per), k = f % L.per, col = k % L.cols, row = Math.floor(k / L.cols);
-    const fade = renderVersion(P)>=40 ? frameFade40(pl,pl.t0+tc,!!extra.noFade)
-      : pl.loop || extra.noFade ? 1 : clamp((pl.duration - tc) / 0.3, 0, 1);
+    const fade = frameFade40(pl,pl.t0+tc,!!extra.noFade);
     gl.useProgram(PR.pack.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, sst.tex);
     gl.uniform1i(PR.pack.u.uS, 0); gl.uniform1i(PR.pack.u.uSS, q.ss); gl.uniform1f(PR.pack.u.uFade, fade);
     gl.uniform1f(PR.pack.u.uPad, (P.cellPad || 0) * scale); gl.uniform2f(PR.pack.u.uCell, cw, chh);
@@ -258,10 +253,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   } catch (e) { PPMY = 0; additive(false); gl.colorMask(true, true, true, true); fH.dispose(); fT.dispose(); sst.dispose(); throw e; }
   PPMY = 0;
   const comb = P.outMode === 'combined';
-  const cg = comb ? combGain(P) : [1, 1];
-  const byF = P.expoMode === 'frames' && !pl.loop, fq = P.expoQ == null ? 0.7 : P.expoQ;
-  const eH = extra.expo ? extra.expo[0] : renderVersion(P)>=40 ? fixedExposure(P) : (byF ? autoExpoFrames(fH, L, comb ? 0.92 : 0.9, 99.5, fq) : autoExpo(fH, comb ? 0.92 : 0.9, 99.8)) * cg[0];
-  const eT = extra.expo ? extra.expo[1] : renderVersion(P)>=40 ? fixedExposure(P) : (byF ? autoExpoFrames(fT, L, comb ? 0.55 : 0.85, 99.5, fq) : autoExpo(fT, comb ? 0.55 : 0.85, 99.6)) * cg[1];
+  const eH = extra.expo ? extra.expo[0] : fixedExposure(P), eT = extra.expo ? extra.expo[1] : fixedExposure(P);
   // 先建目标贴图：Target 构造时会绑定到当前活动纹理单元，放在后面会顶掉采样用的贴图
   gl.activeTexture(gl.TEXTURE0);
   const head = new Target(N, NH, gl.RGBA8), tail = comb ? null : new Target(N, NH, gl.RGBA8);
@@ -274,7 +266,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   gl.activeTexture(gl.TEXTURE0);
   fH.dispose(); fT.dispose(); sst.dispose();
   const bakeMs = performance.now() - t0;
-  const b = { N, NH, cw, chh, scale, head, tail, P, meta: { ...pl, ...(renderVersion(P)>=40?{noFade:!!extra.noFade}:{}), quality: q, expoH: eH, expoT: eT, sparkSlots: R.slots || 0, bakeMs } };
+  const b = { N, NH, cw, chh, scale, head, tail, P, meta: { ...pl, noFade: !!extra.noFade, quality: q, expoH: eH, expoT: eT, sparkSlots: R.slots || 0, bakeMs } };
   await analyze(b);
   return b;
 }
@@ -304,7 +296,7 @@ async function analyze(b) {
     }
     const sxy = sizeXY(m, m.times[f]); light.push(sum * sxy[0] * sxy[1]);
     const fill=cellFill(imgs, N, x0, y0, cw, chh, ch);
-    fills.push(fill); if (renderVersion(P)>=40 && !m.loop && !m.unit) { boxes.push(cellBox(imgs, N, x0, y0, cw, chh, ch)); fx.push(cellHist(imgs, N, x0, y0, cw, chh, ch)); edge12.push(cellEdge12(imgs, N, x0, y0, cw, chh, ch)); } cellMax.push(renderVersion(P)>=40&&fill?fill[2]:mx); clip.push(nz ? nc / nz : 0); edge.push(em); sig.push(sg);
+    fills.push(fill); if (!m.loop && !m.unit) { boxes.push(cellBox(imgs, N, x0, y0, cw, chh, ch)); fx.push(cellHist(imgs, N, x0, y0, cw, chh, ch)); edge12.push(cellEdge12(imgs, N, x0, y0, cw, chh, ch)); } cellMax.push(fill?fill[2]:mx); clip.push(nz ? nc / nz : 0); edge.push(em); sig.push(sg);
     if (measureImg) rows.push(imgRow(imgs, f, m, N, x0, y0, cw, chh, ch));
   }
   const lmax = Math.max(1e-6, ...light);
@@ -325,7 +317,7 @@ async function analyze(b) {
   // 画面占比：每帧内容包围盒 ÷ 格子（横、竖取较小者）；只统计有内容的帧，末尾全黑的除外
   const fv = fills.filter(q => q);
   if (fv.length) { const per = fv.map(q => Math.min(q[0], q[1])); m.fill = { avg: per.reduce((a, c) => a + c, 0) / per.length, min: Math.min(...per), p10: per.slice().sort((a, c) => a - c)[Math.floor(per.length * 0.1)], x: fv.reduce((a, q) => a + q[0], 0) / fv.length, y: fv.reduce((a, q) => a + q[1], 0) / fv.length, frames: fills.map(q => q ? +Math.min(q[0], q[1]).toFixed(3) : null) }; }
-  Object.assign(m, { lightKeys, darkTail, ...(renderVersion(P)>=40?{frameMaxes:cellMax}:{}), check: { clipFrames, edgeFrames, chanUse, emptyMid, similar, seam, maxClip: Math.max(...clip) }, frameDiffs: diffs });
+  Object.assign(m, { lightKeys, darkTail, frameMaxes: cellMax, check: { clipFrames, edgeFrames, chanUse, emptyMid, similar, seam, maxClip: Math.max(...clip) }, frameDiffs: diffs });
 }
 // 单帧内容占格子的比例（阈值 3/255，扣掉留边）
 function cellFill(imgs, N, x0, y0, cw, chh, ch) {
@@ -427,7 +419,7 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
     let pl = opt.pl;
     // 入点 / 出点（4.0）：用户选的范围优先于自动裁空白
     const cutIn = usesTickPlan40(P) && +P.cutIn > 0 ? Math.min(+P.cutIn, P.duration - 1 / 30) : 0, cutOut = usesTickPlan40(P) && +P.cutOut > cutIn ? Math.min(+P.cutOut, P.duration) : 0;
-    if (!pl) pl = P.zoom === 'tight' ? await tightPlan(P, fm, ta, tb, R, p => onProg && onProg(p * 0.2)) : plan(P, fm, cutIn || ta, cutOut || tb);
+    if (!pl) pl = plan(P, fm, cutIn || ta, cutOut || tb);
     if(pl.frameTiming==='tick-start'){
       const bakePlan=async(active,start=0,span=1)=>{
         const pages=splitPlan40(active);
@@ -468,52 +460,9 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
       first.meta.vis=cutIn||cutOut?[+P.preFrom>=0?Math.min(+P.preFrom,first.meta.t0):first.meta.t0,Math.max(bakeTotal(first),+P.visTo||0)]:[first.meta.t0,bakeTotal(first)];
       return first;
     }
-    const b = await bakeFrames(P, scale, p => onProg && onProg((P.zoom === 'tight' && !opt.pl ? 0.2 : 0) + p * (P.zoom === 'tight' && !opt.pl ? 0.8 : 1)), pl, R, opt);
+    const b = await bakeFrames(P, scale, p => onProg && onProg(p), pl, R, opt);
     b.fm = fm; b.form = 'master'; return b;
   } catch(e){if(first)disposeBake(first);throw e;} finally { R.dispose(); }
-}
-// 线性阻力 + 恒定加速度 + 初始偏移，对一组 (t, 值) 做最小二乘：值 ≈ c0 + v·f1(t) + a·f2(t)
-function fitPath1(ts, ys, k, fix0) {
-  const f1 = ts.map(t => (1 - Math.exp(-k * t)) / k), f2 = ts.map((t, i) => (t - f1[i]) / k);
-  const cols = fix0 ? [f1, f2] : [ts.map(() => 1), f1, f2], n = cols.length;
-  const A = cols.map(ci => cols.map(cj => ci.reduce((s, v, i) => s + v * cj[i], 0))), rhs = cols.map(ci => ci.reduce((s, v, i) => s + v * ys[i], 0));
-  for (let i = 0; i < n; i++) A[i][i] += 1e-9;
-  // 高斯消元
-  for (let i = 0; i < n; i++) { let p = i; for (let r = i + 1; r < n; r++) if (Math.abs(A[r][i]) > Math.abs(A[p][i])) p = r; [A[i], A[p]] = [A[p], A[i]]; [rhs[i], rhs[p]] = [rhs[p], rhs[i]];
-    for (let r = i + 1; r < n; r++) { const q = A[r][i] / A[i][i]; for (let c = i; c < n; c++) A[r][c] -= q * A[i][c]; rhs[r] -= q * rhs[i]; } }
-  const x = new Array(n); for (let i = n - 1; i >= 0; i--) { let s = rhs[i]; for (let c = i + 1; c < n; c++) s -= A[i][c] * x[c]; x[i] = s / A[i][i]; }
-  const [c0, v, a] = fix0 ? [0, x[0], x[1]] : x;
-  let e = 0; ts.forEach((t, i) => { e += (c0 + v * f1[i] + a * f2[i] - ys[i]) ** 2; });
-  return { c0, v, a, e };
-}
-// 紧凑取景：逐帧量内容的包围盒，面片中心跟着内容走、横竖分别缩放，让每帧内容占满 90% 以上
-async function tightPlan(P, fm, ta, tb, R, onProg) {
-  const pl = plan({ ...P, zoom: 'on' }, fm, ta, tb), F = pl.L.F, K = Math.min(F, 40), S = [];
-  const guess = Math.max(10, pl.HX * 0.6);
-  for (let i = 0; i < K; i++) {
-    const f = Math.min(F - 1, Math.round((i + 0.5) / K * F - 0.5)), t = pl.times[f], W = Math.max(P.shutter * pl.dur[f], 1e-4);
-    const bx = gpuBounds(R, [ta + Math.max(0, t - W / 2), ta + t, ta + t + W / 2], guess, [0, 0]);
-    S.push([t, bx]);
-    if (i % 6 === 5) { onProg && onProg(i / K); await nextTick(); }
-  }
-  R.reset();
-  const ts = S.map(s => s[0]), cx = S.map(s => (s[1][0] + s[1][1]) / 2), cy = S.map(s => (s[1][2] + s[1][3]) / 2), fix0 = ta === 0;
-  let best = null;
-  for (let i = 0; i <= 120; i++) { const k = 0.02 * Math.pow(10, i / 50); const fy = fitPath1(ts, cy, k, fix0), fxx = fitPath1(ts, cx, k, fix0), e = fy.e + fxx.e; if (!best || e < best.e) best = { k, fy, fx: fxx, e }; }
-  const path = { k: best.k, x0: best.fx.c0, vx: best.fx.v, ax: best.fx.a, y0: best.fy.c0, vy: best.fy.v, ay: -best.fy.a };
-  const hx = S.map(([t, bx]) => { const c = pathXY(path, t); return Math.max(c[0] - bx[0], bx[1] - c[0], 0.3); });
-  const hy = S.map(([t, bx]) => { const c = pathXY(path, t); return Math.max(c[1] - bx[2], bx[3] - c[1], 0.3); });
-  const HX = Math.max(...hx) * 1.01, HY = Math.max(...hy) * 1.01, D = tb - ta;
-  const env = arr => {
-    const sp = [[0, arr[0]], ...ts.map((t, i) => [t / D, arr[i]]), [1, arr[arr.length - 1]]];
-    let ks = null;
-    for (let n = 8; n <= 16; n++) { ks = envelopeKeys(sp, n); const fill = Math.min(...sp.slice(1, -1).map(([u, v]) => v / evalKeys(ks, u))); if (fill >= 0.94) break; }
-    return ks;
-  };
-  const kx = env(hx.map(v => v / HX)), ky = env(hy.map(v => v / HY));
-  const out = { ...pl, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cy: 0, zoom: false, aniso: true, tight: true, sizeKeysX: kx, sizeKeysY: ky, path, px: 0.5, py: 0.5, ppm: pl.L.cellW / (2 * HX) };
-  let ar = 0; for (let i = 0; i < 200; i++) { const q = sizeXY(out, (i + 0.5) / 200 * D); ar += q[0] * q[1] / 200; } out.area = ar;
-  return out;
 }
 // 第一遍：均匀取 48 帧低分辨率烘焙，得到每秒画面变化量
 async function changeProfile(P, fm) {
@@ -525,21 +474,8 @@ async function changeProfile(P, fm) {
     d.forEach((x, i) => out.push([(i + 1.5) * dt, x / dt])); disposeBake(b); return out;
   } finally { R.dispose(); }
 }
-// 分段：开花段 + 下垂段，各占一张贴图
-function autoSplit(P, fm) {
-  if (P.segAt > 0) return clamp(P.segAt, 0.2, P.duration - 0.2);
-  // 在整段的帧号曲线上找「用掉一半帧数」的时刻：两段各拿满一张贴图，帧率大致翻倍
-  const pl = plan(P, fm), half = pl.L.F / 2, k = pl.keys;
-  for (let i = 1; i < k.length; i++) if (k[i][1] >= half) { const [u0, v0] = k[i - 1], [u1, v1] = k[i]; return clamp((u0 + (u1 - u0) * (half - v0) / ((v1 - v0) || 1)) * P.duration, P.duration * 0.15, P.duration * 0.7); }
-  return P.duration * 0.4;
-}
-async function bakeSegments(P, scale, onProg) {
-  if(renderVersion(P)>=40)return bakeMasterLead(P,scale,onProg);
-  const fm = measure(P), ts = autoSplit(P, fm);
-  const a = await bakeMaster(P, scale, p => onProg && onProg(p * 0.5), { fm, ta: 0, tb: ts, noFade: true });
-  const b = await bakeMaster(P, scale, p => onProg && onProg(0.5 + p * 0.5), { fm, ta: ts, tb: P.duration, expo: [a.meta.expoH, a.meta.expoT] });
-  a.next = b; a.form = 'segments'; a.meta.split = ts; return a;
-}
+// 分段母版：按实际帧数分配贴图（帧计划自动分页，3.7 的「开花段 + 下垂段两张」去掉了）
+async function bakeSegments(P, scale, onProg) { return bakeMasterLead(P, scale, onProg); }
 // 包络关键帧：≤ maxN 个线性关键帧，且整条折线不低于采样值（保证内容不被裁掉）
 function envelopeKeys(sp, maxN = 8) {
   const ks = simplify(sp, maxN, 0.01).map(k => [...k]);
@@ -680,19 +616,15 @@ function preRollOf(P, fm, t0) {
 }
 function leadOf(fm) { const q = fm.stat.find(x => x.vis > 0); return q ? Math.max(0, q.t - 0.05) : 0; }
 async function bakeMasterLead(P, scale, onProg) {
-  const fm = measure(P), lead = P.trimLead === 0 ? 0 : leadOf(fm);
-  // 新核不能仅凭星头未亮就删掉闪光和可见尾火；头尾首尾裁剪需在真实编码贴图上判断。
-  if(renderVersion(P)>=40)return bakeMaster(P,scale,onProg,{fm});
-  return lead > 0.25 && lead < P.duration - 0.5 ? bakeMaster(P, scale, onProg, { fm, ta: +lead.toFixed(3) }) : bakeMaster(P, scale, onProg, { fm });
+  // 首尾裁剪在真实编码贴图上判断（bakeMaster 里按 frameMaxes 裁全黑帧），不凭星头未亮就删掉闪光和可见尾火
+  return bakeMaster(P, scale, onProg, { fm: measure(P) });
 }
 // 种子变体：三个种子共用一套取景和帧号曲线（引擎里只换贴图）
 async function bakeVariants(P, scale, onProg, n = 3) {
   const Ps = []; for (let i = 0; i < n; i++) Ps.push({ ...P, seed: P.seed + i * 101 });
   const fms = Ps.map(measure), fm = { ...fms[0], prof: fms[0].prof.map((q, i) => [q[0], Math.max(...fms.map(f => (f.prof[i] || q)[1])), Math.max(...fms.map(f => (f.prof[i] || q)[2]))]) };
   for (const f of fms) { fm.x0 = Math.min(fm.x0, f.x0); fm.x1 = Math.max(fm.x1, f.x1); fm.y0 = Math.min(fm.y0, f.y0); fm.y1 = Math.max(fm.y1, f.y1); }
-  let pl = plan(P, fm); const out = [];
-  if (P.zoom === 'tight') { const R0 = makeRenderer(Ps[0], 'burst'); try { pl = await tightPlan(Ps[0], fm, 0, P.duration, R0); } finally { R0.dispose(); }
-    pl = { ...pl, HX: pl.HX * 1.06, HY: pl.HY * 1.06, Ww: pl.Ww * 1.06, Wh: pl.Wh * 1.06 }; }   // 其它种子形状略有不同：放宽 6%
+  const pl = plan(P, fm), out = [];
   for (let i = 0; i < n; i++) {
     const b = await bakeMaster(Ps[i], scale, p => onProg && onProg((i + p) / n), { fm, pl, expo: out[0] ? [out[0].meta.expoH, out[0].meta.expoT] : null });
     out.push(b);

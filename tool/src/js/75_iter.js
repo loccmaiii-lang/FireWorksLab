@@ -19,8 +19,9 @@ function thumbFromCanvas() {
 // ---------------- 派生配方 ----------------
 function resolveRecipe(r, depth = 0) {
   const parent = r.parent && depth < 16 ? state.recipes.find(x => x.name === r.parent) : null;
-  const base = parent ? resolveRecipe(parent, depth + 1) : { ...defaultsFor(r.type), P: storedParams({ type: r.type, renderVer: r.diff && r.diff.P ? r.diff.P.renderVer : undefined }) };   // 存的配方按自己的版本展开（没写 = 37）
-  const P = { ...base.P, ...r.diff.P }, M = normalizeM({ ...base.M, ...r.diff.M }, r.type);
+  const srcVer = r.diff && r.diff.P ? r.diff.P.renderVer : undefined;      // 存的配方按自己的版本：没写或 < 40 是 3.7 时代的，展开后迁移（migrate37）
+  const base = parent ? resolveRecipe(parent, depth + 1) : { ...defaultsFor(r.type), P: storedParams({ type: r.type, renderVer: 40 }) };
+  const P = migrate37({ ...base.P, ...r.diff.P }, parent ? 40 : srcVer), M = normalizeM({ ...base.M, ...r.diff.M }, r.type);
   return { P, M };
 }
 // 4.2.10：「存为配方 / 载入 / 派生」去掉了（新做法：资产栏保存 / 另存为、「＋ 新建效果」）；resolveRecipe 留着给导入旧配方库用

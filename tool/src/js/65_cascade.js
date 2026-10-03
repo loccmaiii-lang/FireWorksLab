@@ -46,7 +46,7 @@ ${TN(name, 'Loop', L)}.png（上升循环）${b.fades.map(f => `、${TN(name, 'F
 尺寸 ${P.texW}×${P.texH}，灰度线性，RGBA 接力：先填满 R 的 ${L.per} 格（第 0–${L.per - 1} 帧），再接 G、B、A，共 ${L.F} 帧
 格子 ${L.cols} 列 × ${L.rows} 行，单格 ${L.cellW}×${L.cellH}（1:${Math.round(L.cellH / L.cellW)}，贴合细长的尾迹）；格子四周留空 ${P.cellPad} 像素
 导入：sRGB 关闭，压缩 BC7
-${TN(name, 'Ramp')}.png：渐变图 256×8（sRGB），暗 → 亮 = 冷却的橙红火星 → 金色火星 → 白热段与星头
+${TN(name, 'Ramp')}.png：渐变图 256×8（sRGB），暗 → 亮 = 冷却的橙红火花 → 金色火花 → 白热段与星头
 
 【材质实例】
 项目现有的 RGBA 序列帧材质；列 = ${L.cols}，行 = ${L.rows}；Ramp = ${TN(name, 'Ramp')}；循环、消散各一个材质实例（只换贴图）
@@ -103,7 +103,7 @@ ${m.tight ? tightLines(m) : m.zoom ? `Initial Location：0（爆点就是精灵�
 Size By Life（X、Y 相同；线性插值）：面片随开花放大，每帧贴图按同一条曲线烘焙
   相对时间    倍数
 ${keyLines(m.sizeKeys)}` : `Initial Location：Z = ${cm(m.cy)} cm（精灵中心相对爆点的高度，这样爆点正好在发射器原点）`}
-Dynamic Parameter：第三通道 = 帧号；Use Emitter Time 不勾选；曲线插值 Linear
+Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号；Use Emitter Time 不勾选；曲线插值 Linear
   相对时间    帧号
 ${keyLines(fwlFrameKeys(m.keys, m.L.F))}
   材质取整显示，不做帧间混合。最后一个值是「总帧数 − 0.01」：到总帧数会从第 0 帧重新开始。烘焙时每一帧取的正是这条曲线上对应帧号的时刻，画面与引擎一致。
@@ -135,7 +135,7 @@ function unitEmitter(b, M) {
 Required：Screen Alignment = Velocity（面片沿速度方向拉长）；Emitter Duration = ${fx(Du)} s；Emitter Loops = 1
 ${CURVE_NOTE}
   Pivot Offset：星头在贴图里距底边 ${fx(hb * 100, 1)}% 处。默认 (−0.5, −0.5) 是面片中心；把 Y 改为 ${fx(-(1 - hb), 3)}，
-  若星头跑到另一端就改为 ${fx(-hb, 3)}。以编辑器里单颗粒子星头落在粒子位置为准。若星头朝向反了（尾巴在前），勾选「星头朝下」重新导出。
+  若星头跑到另一端就改为 ${fx(-hb, 3)}。以编辑器里单颗粒子星头落在粒子位置为准。若星头朝向反了（尾迹在前），勾选「星头朝下」重新导出。
 Spawn：Rate = 0；Burst：Count = ${P.stars}（LOD 远处可减到一半），Time = 0
 Lifetime：Min ${fx(Du * (1 - jit))} s，Max ${fx(Du * (1 + jit))} s（燃烧 ${fx(P.burn)} s + 尾迹消散）
 Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm（最大尺寸）
@@ -148,7 +148,7 @@ Location → Sphere：Start Radius = 10 cm；Surface Only 勾选；Velocity 勾�
   （等价写法：Velocity Cone，Angle = 1（全方向），Velocity = ${cm(f.v0)} cm/s）
 Drag：Drag Coefficient = ${fx(f.k, 3)}
 Const Acceleration：Z = ${cm(-f.a)} cm/s²${P.wind ? `；X = ${cm(f.k * P.wind)} cm/s²（风：线性阻力下风速 × 阻力系数）` : ''}
-${P.turb > 0 ? `Orbit（湍流近似）：Offset Amount X、Y 在 ±${cm(orbitA)} cm 内随机；Rotation Rate X、Y 在 ±${fx(orbitF, 2)} 圈/秒内随机\n` : ''}Dynamic Parameter：第三通道 = 帧号；曲线插值 Linear
+${P.turb > 0 ? `Orbit（湍流近似）：Offset Amount X、Y 在 ±${cm(orbitA)} cm 内随机；Rotation Rate X、Y 在 ±${fx(orbitF, 2)} 圈/秒内随机\n` : ''}Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号；曲线插值 Linear
   相对时间    帧号
 ${keyLines(m.keys)}
 ${colorSection(M, Du, 0, !!b.tail)}
@@ -183,7 +183,7 @@ Spawn：Burst Count = 1；Lifetime = ${fx(T)} s
 Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm
 Initial Velocity：Z = ${cm(f.v0)} cm/s；Drag = ${fx(f.k, 3)}；Const Acceleration Z = −981
 ${orbit}
-Dynamic Parameter 第三通道（${m.L.F} 帧循环，周期 ${fx(m.duration, 3)} s；锯齿曲线，Linear）
+Dynamic Parameter 帧号通道（${m.L.F} 帧循环，周期 ${fx(m.duration, 3)} s；锯齿曲线，Linear）
 ${keyLines(sawKeys(m, T))}
 ${colorSection(M, T, 0, !!b.tail)}
 
@@ -214,14 +214,14 @@ Cascade 线性阻力拟合：Initial Velocity Z = ${cm(f.v0)} cm/s；Drag = ${fx
 Required：Screen Alignment = Velocity；Emitter Duration = ${fx(T, 3)} s；Emitter Loops = 1
 ${CURVE_NOTE}
   Pivot Offset：星头在贴图里距底边 ${fx(m.hb * 100, 1)}% 处。默认 (−0.5, −0.5) 是面片中心；把 Y 改为 ${fx(-(1 - m.hb), 3)}，
-  若星头跑到另一端就改为 ${fx(-m.hb, 3)}。以编辑器里星头落在粒子位置、尾巴拖在后面为准
+  若星头跑到另一端就改为 ${fx(-m.hb, 3)}。以编辑器里星头落在粒子位置、尾迹拖在后面为准
 Spawn：Rate = 0；Burst Count = 1，Time = 0；Lifetime = ${fx(T, 3)} s
 Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm
 Initial Velocity：Z = ${cm(f.v0)} cm/s；Drag Coefficient = ${fx(f.k, 3)}；Const Acceleration：Z = −981 cm/s²
 Size By Life（Y 单独，X 保持 1；尾迹长度跟着上升速度变：出膛快 → 长，到顶慢 → 短）
   相对时间    Y 倍数
 ${keyLines(m.sizeKeysRise)}
-Dynamic Parameter 第三通道 = 帧号（锯齿，Linear；${F} 帧 / ${fx(m.Tp, 3)} s，即 ${m.fps} fps）
+Dynamic Parameter 帧号通道 = 帧号（锯齿，Linear；${F} 帧 / ${fx(m.Tp, 3)} s，即 ${m.fps} fps）
 ${keyLines(sawKeys(m, T))}
   真循环：火花按周期性编号生成，第 ${F} 帧就是第 0 帧，不做交叉淡化。
 Color Over Life：${colorKeys(M, T, 0).length > 2 ? '见下表' : '白色常量'}；亮度倍数 ×${P.trBright}（三档：小 ×1、中 ×1.6、大 ×2.5，保留强弱差别）
@@ -242,7 +242,7 @@ Spawn：Burst Count = 1；Lifetime = 消散时长
 Initial Location：Z = ${cm(f.H)} cm（开花点）
 Initial Velocity：Z = 1 cm/s（只给面片定方向；不要 Drag、Const Acceleration）。斜着发射时改成与上升末段相同的方向
 Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh * last)} cm（= 上升最后的 Y 倍数 ${fx(last, 3)} × ${cm(m.Wh)} cm）
-Dynamic Parameter 第三通道 = 帧号（Linear）：0 → ${F}
+Dynamic Parameter 帧号通道 = 帧号（Linear）：0 → ${F}
 Color Over Life：同上
 ${pasteSection([
   ['Initial Location → Start Location → Distribution Vector Constant → Constant', ueVec(0, 0, f.H * 100)],
@@ -250,7 +250,7 @@ ${pasteSection([
   ['Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts([[0, 0], [1, F - 0.001]])]
 ])}
 接力：上升结束时循环正好播到第 ${m.fEnd} 帧；消散第 0 帧就是这一帧（逐像素差值 ${m.relay.join(' / ')}），
-  之后星头熄灭，火花不再喷出，已有的火星从下往上逐颗冷却熄灭。
+  之后星头熄灭，火花不再喷出，已有的火花从下往上逐颗冷却熄灭。
   改了开花高度、弹体终端速度或帧率，要重新导出（结束帧会变）。
 `;
 }
@@ -262,7 +262,7 @@ Spawn：Rate = 0；Burst：Count = 1，Time = 0（每个循环一发，上一发
 Lifetime：${fx(m.duration, 3)} s（常量，必须等于循环周期）
 Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm
 Initial Location：Z = ${cm(m.cy)} cm（精灵中心离地高度；发射器放在地面喷口处）
-Dynamic Parameter：第三通道 = 帧号；Linear
+Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号；Linear
 ${keyLines(m.keys)}
   ${m.L.F} 帧均匀分布，第 ${m.L.F} 帧就是下一循环的第 0 帧，所以首尾无缝。
 ${colorSection(M, m.duration, 0, !!b.tail)}
@@ -335,7 +335,7 @@ function bigShellSection(b) {
 function cutoutSection(name, b) {
   const one = (label, base, cut) => cut ? `${label ? label + '：' : ''}Required → Cutout Texture = ${base}（${cut.size}×${cut.size}，所有帧叠在一起的轮廓）；
   Sub Images Horizontal = 1，Vertical = 1；Bounding Mode = Eight Vertices；Opacity Source Mode = Alpha；Alpha Threshold = 0.1；不加 SubUV 模块。
-  面片剩下约 ${Math.round(cut.cover * 100)}%（引擎按轮廓外接八边形，会略大一点）。材质照旧用 Dynamic Parameter 第三通道取帧。` : '';
+  面片剩下约 ${Math.round(cut.cover * 100)}%（引擎按轮廓外接八边形，会略大一点）。材质照旧用 Dynamic Parameter 帧号通道取帧。` : '';
   const parts = [];
   if (b.form === 'trail') {
     parts.push(one('上升循环', TN(name, 'Loop_Cutout'), b.meta.cutout));

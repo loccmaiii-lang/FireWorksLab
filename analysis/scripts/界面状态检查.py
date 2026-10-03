@@ -323,52 +323,60 @@ async def l1(p, b):
         await ctx.close()
 
 
-P1_STATE = r"""(() => { const host = $('#params'), vis = el => !!el && !el.hidden && !!el.offsetParent && !el.closest('[hidden]');
-  const grps = [...host.querySelectorAll('.pgrp')], secs = [...host.querySelectorAll('details.sec')];
-  const labs = [...host.querySelectorAll('.sl')].filter(vis).map(r => { const k = r.querySelector('.k'), t = [...k.childNodes].filter(n => n.nodeType === 3).map(n => n.textContent).join('').trim(); return { id: r.querySelector('input[type=range]').id, t, title: k.title }; });
-  return { tools: !!host.querySelector('.ptools input[type=search]') && !!host.querySelector('.ptools input[type=checkbox]'),
+# 4.3：只有一个面板（没有新旧开关）。「看得见」= 没被藏、所在的模块 / 「更多」都是打开的（关着的 <details> 里的行 offsetParent 也不是 null，不能用它判断）
+P1_SHOWN = r"""const shown = el => { if (!el || el.hidden || el.closest('[hidden]')) return false; for (let d = el.parentElement && el.parentElement.closest('details'); d; d = d.parentElement && d.parentElement.closest('details')) if (!d.open) return false; return true; };"""
+P1_STATE = r"""(() => { const host = $('#params'); """ + P1_SHOWN + r"""
+  const grps = [...host.querySelectorAll('details.pgrp')].filter(g => !g.hidden), secs = [...host.querySelectorAll('details.sec')];
+  const rows = panelRows.filter(([r]) => r._lab != null && shown(r)), labs = rows.map(([r, it]) => ({ k: Array.isArray(it) ? it[0] : it.sel || it.text, t: r._lab }));
+  const more = [...host.querySelectorAll('details.mod')].filter(d => !d.hidden && d._more && !d._more.hidden).map(d => ({ m: d._mod, open: d._more.open, txt: d._more.querySelector('summary').textContent, n: [...d._more.children].filter(c => c.tagName !== 'SUMMARY' && !c.hidden).length }));
+  return { tools: !!host.querySelector('.ptools input[type=search]') && !!host.querySelector('.ptools input[type=checkbox]'), toggle: !!host.querySelector('[data-v43]'),
     groups: grps.map(g => g.dataset.g), orphan: secs.filter(d => !d.closest('.pgrp')).map(d => d.querySelector('summary').textContent),
-    hintsShown: [...host.querySelectorAll('details.sec > p.hint')].filter(vis).length,
-    labs, long: labs.filter(x => x.t.length > 12).map(x => x.t), help: ($('#pHelp') || {}).textContent || null }; })()"""
-P1_SEARCH = r"""(q) => { const i = $('#params .ptools input[type=search]'); i.value = q; i.dispatchEvent(new Event('input', { bubbles: true }));
-  const vis = el => !!el && !el.hidden && !!el.offsetParent && !el.closest('[hidden]');
-  return [...$('#params').querySelectorAll('.sl')].filter(vis).map(r => r.querySelector('input[type=range]').id.replace(/^p-|-\d+$/g, '')); }"""
-P1_CHANGED = r"""(on) => { const c = $('#params .ptools input[type=checkbox]'); if (c.checked !== on) c.click();
-  const vis = el => !!el && !el.hidden && !!el.offsetParent && !el.closest('[hidden]');
-  return [...$('#params').querySelectorAll('.sl')].filter(vis).map(r => r.querySelector('input[type=range]').id.replace(/^p-|-\d+$/g, '')); }"""
+    hintsShown: [...host.querySelectorAll('details.sec > p.hint')].filter(p => shown(p)).length, more,
+    labs, long: labs.filter(x => x.t.length > 12).map(x => x.t), noName: panelRows.filter(([r, it]) => r._lab != null && !r._nm).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.text) }; })()"""
+P1_SEARCH = r"""(q) => { const i = $('#params .ptools input[type=search]'); i.value = q; i.dispatchEvent(new Event('input', { bubbles: true })); """ + P1_SHOWN + r"""
+  return panelRows.filter(([r, it]) => Array.isArray(it) && shown(r)).map(([r, it]) => it[0]); }"""
+P1_CHANGED = r"""(on) => { const c = $('#params .ptools input[type=checkbox]'); if (c.checked !== on) c.click(); """ + P1_SHOWN + r"""
+  return panelRows.filter(([r, it]) => Array.isArray(it) && shown(r)).map(([r, it]) => it[0]); }"""
 
 
 async def p1(pg):
     bad, info = [], {}
     await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
     st = await pg.evaluate(P1_STATE)
-    G = {'运动', '星头', '尾迹', '特效', '环境', '输出'}
     if not st['tools']: bad.append('没有搜索框 / 「只看改过的」')
-    if not st['groups'] or set(st['groups']) - G: bad.append(f"大类不对：{st['groups']}")
+    if st['toggle']: bad.append('还有新旧面板开关（4.3 只有一个面板）')
+    if st['groups'][:3] != ['发射', '运动', '外观'] or st['groups'][-1:] != ['输出'] or '层' in st['groups']: bad.append(f"大类不对：{st['groups']}")
     if st['orphan']: bad.append(f"没归类的节：{st['orphan'][:4]}")
-    if st['hintsShown']: bad.append(f"节说明默认展开了 {st['hintsShown']} 段")
+    if st['hintsShown']: bad.append(f"模块说明默认展开了 {st['hintsShown']} 段")
     if st['long']: bad.append(f"参数名太长 {len(st['long'])} 个：{st['long'][:3]}")
-    info['参数名平均字数'] = round(sum(len(x['t']) for x in st['labs']) / max(1, len(st['labs'])), 1); info['可见参数'] = len(st['labs'])
+    if st['noName']: bad.append(f"参数没有命名表里的名字：{st['noName'][:5]}")
+    # 第一眼 ≤ 30 项（需求重梳 2026-10-03 第 3 条）；其余在模块里的「更多 N 项」，默认收起
+    info['第一眼参数'] = len(st['labs']); info['参数名平均字数'] = round(sum(len(x['t']) for x in st['labs']) / max(1, len(st['labs'])), 1)
+    if len(st['labs']) > 30: bad.append(f"打开菊第一眼就有 {len(st['labs'])} 项（要 ≤ 30）")
+    sp = next((m for m in st['more'] if m['m'] == '火花'), None); info['火花 更多'] = sp
+    if not sp or sp['open'] or not sp['n'] or sp['txt'] != f"更多 {sp['n']} 项": bad.append(f'火花模块的「更多」不对：{sp}')
+    if any(x['k'] == 'sparkRateEnd' for x in st['labs']): bad.append('「末段生成率」（更多）第一眼就看得到')
     if not bad:
         r = await pg.evaluate(P1_SEARCH, '粗细')
         if 'tailWidth' not in r or 'stars' in r: bad.append(f'搜「粗细」结果不对：{r[:6]}')
         info['搜粗细'] = r
+        r = await pg.evaluate(P1_SEARCH, '末段生成')
+        if 'sparkRateEnd' not in r: bad.append(f'搜「末段生成」没把「更多」里的末段生成率翻出来：{r[:6]}')
         r = await pg.evaluate(P1_SEARCH, '')
-        if 'stars' not in r: bad.append('清空搜索后参数没回来')
+        if 'stars' not in r or 'sparkRateEnd' in r: bad.append(f'清空搜索后没回到原样：{r[:8]}')
         r = await pg.evaluate(P1_CHANGED, True)
         if r: bad.append(f'没改过任何参数，「只看改过的」还显示 {r[:4]}')
-        await pg.evaluate("(() => { state.P.stars = state.P.stars + 10; onParam(); return 0; })()"); await idle(pg)
+        await pg.evaluate("(() => { state.P.sparkRateEnd = (+state.P.sparkRateEnd || 0) + 0.2; onParam(); return 0; })()"); await idle(pg)
         r = await pg.evaluate(P1_CHANGED, True)
-        if r != ['stars']: bad.append(f'改了星数后「只看改过的」显示 {r[:4]}（应为 stars）')
+        if r != ['sparkRateEnd']: bad.append(f'改了末段生成率后「只看改过的」显示 {r[:4]}（应为 sparkRateEnd，在「更多」里也要翻出来）')
         await pg.evaluate(P1_CHANGED, False)
-        await pg.hover('#params .sl:has(input[id^="p-tailWidth-"]) .k')
-        h = await pg.evaluate("($('#pHelp') || {}).textContent || ''")
-        if '横向散开' not in h: bad.append(f'悬停「尾迹粗细」底部说明条没出完整说明：「{h[:40]}」')
+        h = await pg.evaluate("(() => { panelHelp(panelRows.find(([r, it]) => it[0] === 'tailWidth')[0]); return $('#pHelp').textContent; })()")
+        if '横向散开' not in h: bad.append(f'「尾迹粗细」底部说明条没出完整说明：「{h[:40]}」')
     if not bad:     # 多层效果：选中某一层时右栏也是同一套
         await open_effect(pg, 'hiki_nishiki')
         await pg.evaluate("(() => { selectComboLayer(1); return 0; })()"); await idle(pg)
         st = await pg.evaluate(P1_STATE)
-        if not st['tools'] or st['orphan'] or not st['groups']: bad.append(f"多层效果里第 2 层的参数没用新版：工具 {st['tools']}、没归类 {st['orphan'][:3]}")
+        if not st['tools'] or st['orphan'] or not st['groups'] or st['noName']: bad.append(f"多层效果里第 2 层的面板不对：工具 {st['tools']}、没归类 {st['orphan'][:3]}、没名字 {st['noName'][:3]}")
     return not bad, '；'.join(bad) or json.dumps(info, ensure_ascii=False)
 
 
@@ -440,7 +448,7 @@ async def b1(pg):
     if abs((g1['ign1'] - g0['ign1']) - (g1['stop'] - g0['stop'])) > 0.011: bad.append(f"滑杆把引线火花停 +0.2，锦层点火 {g0['ign1']} → {g1['ign1']}（拖动时会一起动）")
     elif g1['baked1'] is None or abs(g1['baked1'] - g1['ign1']) > 1e-9: bad.append('锦层点火跟着动了，但没有重烘')
     await open_effect(pg, 'jinmangju'); await pg.wait_for_timeout(900); await idle(pg)     # 打开后等烘焙稳定、记下「打开时」的样子（wbArm）
-    ai = await pg.evaluate("state.P.burn"); tpl = await pg.evaluate("defaultsFor(state.P.type, renderVersion(state.P)).P.burn")
+    ai = await pg.evaluate("state.P.burn"); tpl = await pg.evaluate("defaultsFor(state.P.type).P.burn")
     await pg.evaluate("(() => { state.P.burn = +(state.P.burn + 0.5).toFixed(2); onParam(); return 0; })()"); await idle(pg)
     await pg.evaluate("$('#btnReset').click(); 0"); await idle(pg)
     rb = await pg.evaluate("state.P.burn"); info['恢复'] = {'AI 版': ai, '模板': tpl, '恢复后': rb}
@@ -488,7 +496,7 @@ async def x1(pg):
     info['选了光点'] = r
     if not r['out'] or r['out'].get('pc') != 'dots': bad.append(f"层没记住方案：{r['out']}")
     if not r['chg']: bad.append('改了方案「参数已变」没亮')
-    if '尾巴' not in r['note']: bad.append(f"有尾巴的层选光点没提示：{r['note'][:60]}")
+    if '尾迹' not in r['note']: bad.append(f"有尾迹的层选光点没提示：{r['note'][:60]}")
     # 4.2.15 光点大小 / 亮度：只在选光点时出现；改了导出的发射器跟着变，回到 1 层里不留字段
     SZ = "(() => { const xs = state.layers.map(L => ({ L, b: layerEntryOf(L).bake })); const pc = fwlCombo('T', comboEntries(xs, false), false), e = pc.emitters.find(e => e.layer === 2); return e ? e.modules.find(m => m.m === 'InitialSize').StartSize.uniform : null; })()"
     s0 = await pg.evaluate(SZ)
@@ -738,44 +746,47 @@ async def c1(pg):
 
 
 async def n1(pg):
+    """4.3 面板：模块顺序、命名表的名字、随机折叠、不起作用变灰、说明条、搜索（新名 / 英文名；旧名不再认）、英文名开关、烟花特性开了才展开"""
     bad, info = [], {}
     await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
-    vis = "(() => panelRows.filter(([r]) => !r.hidden && !r.closest('[hidden]')).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.text || it.info).sort())()"
     lab = "(k) => { const x = panelRows.find(([r, it]) => (Array.isArray(it) ? it[0] : it.sel) === k); return x ? x[0]._lab : null; }"
-    off = await pg.evaluate("({ groups: [...document.querySelectorAll('#params details.pgrp')].map(d => d.dataset.g), burn: (%s)('burn'), mods: document.querySelectorAll('#params details.mod').length })" % lab)
-    v0 = await pg.evaluate(vis)
-    if off['mods'] or off['burn'] != '燃烧时间': bad.append(f'默认（预览关）面板变了：{off}')
-    await pg.evaluate("document.querySelector('#params [data-v43]').click(); 0"); await pg.wait_for_timeout(300)
-    on = await pg.evaluate("({ groups: [...document.querySelectorAll('#params details.pgrp')].map(d => d.dataset.g), mods: [...document.querySelectorAll('#params details.mod')].map(d => d._mod), burn: (%s)('burn'), v0: (%s)('v0'), stored: store.get('panel43', false) })" % (lab, lab))
+    on = await pg.evaluate("({ groups: [...document.querySelectorAll('#params details.pgrp')].filter(d => !d.hidden).map(d => d.dataset.g), mods: [...document.querySelectorAll('#params details.mod')].filter(d => !d.hidden).map(d => d._mod), burn: (%s)('burn'), v0: (%s)('v0'), fx: (document.querySelector('#params details.mod[data-x]') || [...document.querySelectorAll('#params details.mod')].find(d => d._mod === '烟花特性') || {}).open })" % (lab, lab))
     info['打开'] = on
-    # 4.2.24：模块按 Cascade 发射器从上到下（analysis/命名/模块表.json）：发射 → 运动 → 外观 → …；火花模块原来叫「尾迹」
+    # 模块按 Cascade 发射器从上到下（analysis/命名/模块表.json）：发射 → 运动 → 外观 → 输出
     if on['groups'][:3] != ['发射', '运动', '外观'] or '寿命' not in on['mods'] or '火花' not in on['mods'] or '阻力重力' not in on['mods']: bad.append(f"没按模块排：{on['groups']} {on['mods']}")
+    for old in ('受力', '外观', '尾迹'):
+        if old in on['mods']: bad.append(f'还有旧模块「{old}」')
     want = await pg.evaluate("[pnameOf('开花与燃烧', 'burn').cn, pnameOf('开花与燃烧', 'v0').cn, pnameOf('开花与燃烧', 'burn').en]")
     if on['burn'] != want[0] or on['v0'] != want[1]: bad.append(f"名字不是命名表里的：{on['burn']} / {on['v0']}（表：{want[:2]}）")
-    if not on['stored']: bad.append('预览开关没记住')
-    # 一个不少：预览前看得见的，预览后要么看得见、要么是收起来的随机行
-    v1 = await pg.evaluate(vis); folded = await pg.evaluate("panelRows.filter(([r]) => r._randOf).map(([r, it]) => it[0])")
-    lost = sorted(set(v0) - set(v1) - set(folded)); info['收起的随机'] = folded
-    if lost: bad.append(f'新面板里找不到：{lost}')
+    if on['fx']: bad.append('菊没开任何烟花特性，「烟花特性」模块却默认展开')
+    folded = await pg.evaluate("panelRows.filter(([r]) => r._randOf).map(([r, it]) => it[0])"); info['收起的随机'] = folded
     if 'burnJit' not in folded or 'speedJit' not in folded: bad.append(f'寿命随机 / 初速随机没收到本体下面：{folded}')
     # 随机：点开 / 收起
     r = await pg.evaluate("(() => { const b = panelRows.find(([r, it]) => it[0] === 'burn')[0], j = panelRows.find(([r, it]) => it[0] === 'burnJit')[0]; const h0 = j.hidden; b.querySelector('.rndb').click(); const h1 = j.hidden, next = b.nextElementSibling === j; return { h0, h1, next, txt: b.querySelector('.rndb').textContent, stored: !!store.get('pRandOpen', {}).burn }; })()")
     info['随机'] = r
     if not r['h0'] or r['h1'] or not r['next'] or not r['stored']: bad.append(f'寿命随机折叠不对：{r}')
-    # 不起作用：菊没有延时点火 → 点火时刻随机变灰写原因
+    # 不起作用：菊没有点火延迟 → 点火延迟随机变灰写原因
     r = await pg.evaluate("(() => { const b = panelRows.find(([r, it]) => it[0] === 'ignDelay')[0]; if (b.querySelector('.rndb') && !pview.ropen.ignDelay) b.querySelector('.rndb').click(); const j = panelRows.find(([r, it]) => it[0] === 'ignJit')[0]; panelHelp(j); return { inert: j.classList.contains('inert'), why: j._inert, help: $('#pHelp').textContent }; })()")
-    info['菊 点火时刻随机'] = {k: r[k] for k in ('inert', 'why')}
+    info['菊 点火延迟随机'] = {k: r[k] for k in ('inert', 'why')}
     if not r['inert'] or '点火延迟' not in (r['why'] or '') or '现在不起作用' not in r['help']: bad.append(f'菊的点火延迟随机没标不起作用：{r}')
     if 'Ignition' not in r['help'] or '·' not in r['help']: bad.append('说明条第一行不是「English · 中文」')
+    # 4.3 新加的不起作用：前段亮度 = 1 时「前段结束」变灰
+    r = await pg.evaluate("(() => { const x = panelRows.find(([r, it]) => it[0] === 'headDimUntil'); return x ? { inert: x[0].classList.contains('inert'), why: x[0]._inert, dim: state.P.headDim } : null; })()")
+    info['菊 前段结束'] = r
+    if not r or not r['inert'] or '前段亮度' not in (r['why'] or ''): bad.append(f'前段亮度 = 1 时「前段结束」没标不起作用：{r}')
     # 说明条：寿命
     h = await pg.evaluate("(() => { panelHelp(panelRows.find(([r, it]) => it[0] === 'burn')[0]); return $('#pHelp').textContent; })()")
     if not h.startswith(want[2] + ' · ' + want[0]): bad.append(f'说明条第一行：{h[:40]}')
     for w in ('调大', 'UE'):
         if w not in h: bad.append(f'说明条没有「{w}」')
-    # 搜索：英文名 / 旧名（stars 的英文名 10-03 19:31 按用户审阅改成 Spawn Burst，Cascade 的叫法）
-    for q, k in (('Lifetime', 'burn'), ('燃烧时间', 'burn'), ('Spawn Burst', 'stars')):
-        r = await pg.evaluate("(q) => { const i = $('#params .ptools input[type=search]'); i.value = q; i.dispatchEvent(new Event('input')); return panelRows.filter(([r]) => !r.hidden).map(([r, it]) => it[0]); }", q)
+    if '旧名' in h: bad.append('说明条还写「旧名」')
+    # 搜索：英文名、新名字找得到；旧名字（燃烧时间）不再认
+    SR = "(q) => { const i = $('#params .ptools input[type=search]'); i.value = q; i.dispatchEvent(new Event('input')); return panelRows.filter(([r]) => !r.hidden).map(([r, it]) => it[0]); }"
+    for q, k in (('Lifetime', 'burn'), ('寿命', 'burn'), ('Spawn Burst', 'stars')):
+        r = await pg.evaluate(SR, q)
         if k not in r: bad.append(f'搜「{q}」找不到 {k}（{r[:6]}）')
+    r = await pg.evaluate(SR, '燃烧时间')
+    if 'burn' in r: bad.append('搜旧名「燃烧时间」还能找到寿命（4.3 不认旧名）')
     await pg.evaluate("(() => { const i = $('#params .ptools input[type=search]'); i.value = ''; i.dispatchEvent(new Event('input')); return 0; })()")
     # 英文名开关
     await pg.evaluate("document.querySelector('#params [data-en]').click(); 0"); await pg.wait_for_timeout(200)
@@ -787,11 +798,52 @@ async def n1(pg):
     r = await pg.evaluate("(() => { const x = panelRows.find(([r, it]) => it[0] === 'sparkLife'); return x ? { inert: x[0].classList.contains('inert'), why: x[0]._inert, rate: state.P.sparkRate } : null; })()")
     info['牡丹 火花寿命'] = r
     if not r or not r['inert']: bad.append(f'牡丹（火花 0）的火花寿命没标不起作用：{r}')
-    # 关掉 → 原样
-    await pg.evaluate("document.querySelector('#params [data-v43]').click(); 0"); await pg.wait_for_timeout(300)
-    back = await pg.evaluate("({ mods: document.querySelectorAll('#params details.mod').length, groups: [...document.querySelectorAll('#params details.pgrp')].map(d => d.dataset.g) })")
-    if back['mods'] or back['groups'] != off['groups']: bad.append(f'关掉预览没回到原样：{back}')
+    # 爆裂星：烟花特性一打开就展开，爆裂范围 / 速度在里面
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('crackle')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate("(() => { const d = [...document.querySelectorAll('#params details.mod')].find(d => d._mod === '烟花特性'); const has = k => { const x = panelRows.find(([r, it]) => it[0] === k); return !!x && !x[0].hidden && d.contains(x[0]); }; return { open: !!d && d.open, R: has('crackleR'), V: has('crackleV') }; })()")
+    info['爆裂星 烟花特性'] = r
+    if not r['open'] or not r['R'] or not r['V']: bad.append(f'爆裂星的烟花特性没自动展开 / 没有爆裂范围、爆裂速度：{r}')
+    # 升空尾缀：一个入口，档位在「发射器」里
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('trailM')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate("(() => { const x = panelRows.find(([r, it]) => it.sel === '_trailTier'); return x ? { mod: x[0].closest('details.mod') && x[0].closest('details.mod')._mod, lab: x[0]._lab, hidden: x[0].hidden, mods: [...document.querySelectorAll('#params details.mod')].filter(d => !d.hidden).map(d => d._mod) } : null; })()")
+    info['尾缀档位'] = r
+    if not r or r['mod'] != '发射器' or r['hidden'] or not r['lab']: bad.append(f'升空尾缀的档位不在「发射器」里：{r}')
+    elif any(m in r['mods'] for m in ('受力', '外观', '尾迹')): bad.append(f"升空尾缀还有旧模块：{r['mods']}")
+    # 空白发射器（需求重梳 2026-10-03 第 6 条）：只有星；「+ 火花」加上火花模块（生成率按菊的模板）、「去掉」回到 0
+    MODS = "(() => ({ mods: [...document.querySelectorAll('#params details.mod')].filter(d => !d.hidden).map(d => d._mod), add: [...document.querySelectorAll('#params [data-addmod]')].map(b => b.dataset.addmod), rate: state.P.sparkRate, pm: state.P.mods }))()"
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('blank')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r0 = await pg.evaluate(MODS)
+    await pg.evaluate("document.querySelector('#params [data-addmod=\"火花\"]').click(); 0"); await idle(pg)
+    r1 = await pg.evaluate(MODS)
+    await pg.evaluate("[...document.querySelectorAll('#params details.mod')].find(d => d._mod === '火花').querySelector('.modrm').click(); 0"); await idle(pg)
+    r2 = await pg.evaluate(MODS)
+    info['空白发射器'] = {'打开': r0, '加火花': r1, '去掉': r2}
+    if any(m in r0['mods'] for m in ('火花', '尾迹外形', '烟花特性')) or r0['rate'] != 0 or sorted(r0['add']) != sorted(['火花', '尾迹外形', '烟花特性']) or '星头' not in r0['mods']: bad.append(f'空白发射器打开时不对：{r0}')
+    if '火花' not in r1['mods'] or not r1['rate'] or '火花' in r1['add']: bad.append(f'加「火花」不对：{r1}')
+    if '火花' in r2['mods'] or r2['rate'] != 0 or '火花' not in r2['add']: bad.append(f'去掉「火花」不对：{r2}')
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
+
+
+# N2（4.3 清理清单 B1 / B2）：每个花型的每个参数都在命名表里有名字；命名表的名字、说明和模块说明里不再出现词汇表「不用」的词
+OLD_WORDS = ['炭头', '火星', '火粉', '光丝', '长尾', '小割', '离散', '燃烧时间', '炸开', '尾巴', '旧名']
+N2_SCAN = r"""(OLD) => { const miss = {}, hits = [];
+  for (const t of Object.keys(TYPES)) { const P = defaultsFor(t).P;
+    for (const sec of SCHEMA) { if (sec.show && !sec.show(P)) continue;
+      for (const it of sec.items) { const k = Array.isArray(it) ? it[0] : it.sel || it.text; if (!k) continue;
+        if (!pnameOf(sec.sec, k, Array.isArray(it) ? (typeof it[1] === 'function' ? it[1](P) : it[1]) : it.label)) (miss[t] = miss[t] || new Set()).add(k); } } }
+  for (const r of PNAMES) for (const f of ['cn', 'desc', 'updown', 'note', 'random', 'mcn']) { const v = r[f] || ''; for (const w of OLD) if (v.includes(w)) hits.push(`${r.key}.${f}：${w}`); }
+  for (const m of (typeof PMODULES !== 'undefined' ? PMODULES : [])) for (const w of OLD) if ((m.what || '').includes(w) || m.cn.includes(w)) hits.push(`模块 ${m.cn}：${w}`);
+  for (const sec of SCHEMA) for (const w of OLD) if ((sec.hint || '').includes(w)) hits.push(`节说明 ${sec.sec}：${w}`);
+  const out = {}; for (const t in miss) out[t] = [...miss[t]];
+  return { miss: out, hits, types: Object.keys(TYPES).length, rows: PNAMES.length }; }"""
+
+
+async def n2(pg):
+    r = await pg.evaluate(N2_SCAN, OLD_WORDS)
+    bad = []
+    if r['miss']: bad.append('没有命名表名字的参数：' + '；'.join(f'{t} {v[:4]}' for t, v in list(r['miss'].items())[:4]))
+    if r['hits']: bad.append(f"还有旧词 {len(r['hits'])} 处：{r['hits'][:5]}")
+    return not bad, '；'.join(bad) or f"{r['types']} 个花型的参数都有名字（命名表 {r['rows']} 行）、没有旧词"
 
 
 async def main():
@@ -803,7 +855,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

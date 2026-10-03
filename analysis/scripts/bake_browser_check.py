@@ -28,14 +28,15 @@ def main():
             page.evaluate("setReplica('JM4'); state.playing = false;")
             page.wait_for_function('state.bake && !state.baking && !state.dirty', timeout=240000)
             report['F0'] = page.evaluate("() => ({recipe:state.repId, cols:state.P.cols, rows:state.P.rows, frames:state.bake.meta.L.F, renderVer:state.P.renderVer})")
-            assert report['F0'] == {'recipe': 'JM4', 'cols': 8, 'rows': 8, 'frames': 256, 'renderVer': 37}, report['F0']
+            f0 = dict(report['F0']); frames = f0.pop('frames')      # 4.3：JM4（3.7 时代的记录）打开时迁移成 4×4、固定取景
+            assert f0 == {'recipe': 'JM4', 'cols': 4, 'rows': 4, 'renderVer': 40} and frames > 0, report['F0']
             print('F0 passed', flush=True)
             report['versions'] = page.evaluate("""() => {
               const old = __fw.resolve({params:{type:'kiku',engine:'gpu'}}).P.renderVer;
               const modern = __fw.resolve({params:{type:'kiku',engine:'gpu',renderVer:40}}).P.renderVer;
               return {old, modern, template:defaultsFor('kiku').P.renderVer};
             }""")
-            assert report['versions'] == {'old': 37, 'modern': 40, 'template': 40}
+            assert report['versions'] == {'old': 40, 'modern': 40, 'template': 40}      # 4.3：旧的也迁移成现在的画法
             page.evaluate("""() => {
               window.originalBake = bake; window.failedCalls = 0;
               bake = async () => { failedCalls++; await new Promise(r=>setTimeout(r, 10)); throw new Error('检查用：显卡帧缓冲失败'); };

@@ -1,17 +1,32 @@
 // 4.0 光点核。size = 实心亮核直径（米），I = 面亮度；像素覆盖积分
 // 让亚像素亮核的总光量仍随面积变化。所有新光点用实例四边形，避开
 // 硬件 POINT_SIZE 的上下限和点精灵中心取整；3.7 的 shader / VAO 不变。
-const POINT40_VERTEX = `uniform float uHaloFrac, uHaloR; out vec2 vLocal;
+// 4.3：uGauss = 1 时整颗点是一个高斯（σ = 亮核半径，总光量 = 面亮度 × 亮核面积），给升空尾缀 V5 用——它的星头、光晕、火星一直是高斯点
+// （以前走 3.7 光点核）；emitCore40S 再按跟拍拖影把点在竖直方向拉长（总光量不变）。其它产物 uGauss = 0，和以前逐像素一样。
+const POINT40_VERTEX = `uniform float uHaloFrac, uHaloR, uGauss; out vec2 vLocal;
+void emitCore40R(vec2 q, float I, vec2 r){
+  float reach=uGauss>.5?4.:uHaloFrac>0.?4.*max(1.,uHaloR):1.;
+  vec2 corner=vec2(float(gl_VertexID&1),float(gl_VertexID>>1))*2.-1.;
+  vec2 p=corner*(ceil(r*reach)+vec2(1.));
+  gl_Position=vec4((q+p/vec2(uPPM,uPPMY)-uView.xy)/uView.zw,0.,1.);
+  vLocal=p; vSig=r; vI=I; vPS=0.;
+}
 void emitCore40(vec2 q, float I, float size){
   vec2 r=max(size*.5*vec2(uPPM,uPPMY),vec2(1e-7));
   float reach=uHaloFrac>0.?4.*max(1.,uHaloR):1.;
   vec2 corner=vec2(float(gl_VertexID&1),float(gl_VertexID>>1))*2.-1.;
+  if(uGauss>.5){ emitCore40R(q,size>0.?I:0.,r); return; }
   vec2 p=corner*(ceil(r*reach)+vec2(1.));
   gl_Position=vec4((q+p/vec2(uPPM,uPPMY)-uView.xy)/uView.zw,0.,1.);
   vLocal=p; vSig=r; vI=size>0.?I:0.; vPS=0.;
+}
+// sy：跟拍拖影的标准差（像素，匀速一段长 L 时 σ = 0.2887 L）→ 半轴加 L / 2，面亮度按拉长的比例降，总光量不变
+void emitCore40S(vec2 q, float I, float size, float sy){
+  vec2 r=max(size*.5*vec2(uPPM,uPPMY),vec2(1e-7)); float ry=r.y+1.7320508*max(sy,0.);
+  emitCore40R(q,size>0.?I*r.y/ry:0.,vec2(r.x,ry));
 }`;
 const POINT40_FS = HDR + `in float vI; in vec2 vSig, vLocal;
-uniform vec4 uChan; uniform float uW, uHaloFrac, uHaloR; out vec4 o;
+uniform vec4 uChan; uniform float uW, uHaloFrac, uHaloR, uGauss; out vec4 o;
 // 圆盘与像素矩形的精确交面积。各轴除半径后成为单位圆，符号原函数
 // 在四个角作差；内部/外部像素直接返回，只有边缘需要 asin。
 float primitive(float x){ return .5*(x*sqrt(max(0.,1.-x*x))+asin(x)); }
@@ -31,6 +46,7 @@ vec2 erf40(vec2 x){vec2 sg=sign(x);x=abs(x);vec2 t=1./(1.+.3275911*x);return sg*
 float gaussianCoverage(vec2 p,vec2 s){vec2 v=.5*(erf40((p+.5)/(1.41421356*s))-erf40((p-.5)/(1.41421356*s)));return max(0.,v.x*v.y);}
 void main(){
   if(vI<=0.){o=vec4(0.);return;}
+  if(uGauss>.5){ float rd=length(vLocal/vSig); o=uChan*(vI*3.14159265*vSig.x*vSig.y*gaussianCoverage(vLocal,vSig)*(1.-smoothstep(3.5,4.,rd))*uW); return; }
   float core=diskCoverage(vLocal,vSig), halo=0.;
   if(uHaloFrac>0.){
     vec2 sigma=vSig*max(1.,uHaloR);
@@ -49,12 +65,12 @@ void main(){ vec2 q=aP; if(uUseXf>.5){vec2 d=q-uXf.xy;q=vec2(d.x*uXf.z-d.y*uXf.w
 
 // 模拟公式只保留一份：GPU 顶点的粒子编号改成实例编号，再替换
 // emitPt 输出核。四边形的 gl_VertexID 在最后注入，仍是顶点编号 0–3。
-function point40GpuSource(source) {
+function point40GpuSource(source, streak = false) {
   const hash = GLSL_HASH.slice(0, GLSL_HASH.indexOf('void emitPtW'));
   return source.replace(GLSL_HASH, '/*CORE40*/').replaceAll('gl_VertexID', 'gl_InstanceID')
     .replace('/*CORE40*/', POINT40_VERTEX + hash + `
 void emitPt(vec2 q,float I,float size){emitCore40(q,I,size);}
-void emitPtW(vec2 q,float I,float size,float span,float sy){emitCore40(q,I,size);}
+void emitPtW(vec2 q,float I,float size,float span,float sy){${streak ? 'emitCore40S(q,I,size,sy);' : 'emitCore40(q,I,size);'}}
 `);
 }
 const PR40 = {

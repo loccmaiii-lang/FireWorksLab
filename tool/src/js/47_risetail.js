@@ -537,15 +537,15 @@ function fwlEmitSet(name, b, M, mobile) {
   const tab = rtTables(b, mobile), peak = esPeakAlive(tab, m.T + 4);
   return { textures, materials, emitters, system: { preview_distance_cm: Math.round(Math.max(30000, bl.H * 100 * 2)), preview_warmup_s: 0 },
     notes: [
-      `循环层 RiseLoop：速度朝向单粒子，星头在面片上端（Pivot Offset ${pivotY}，和 V5 尾缀同一写法；导入器若还不支持这个字段，手动在 Required 里填）；弹道 = Initial Velocity + Drag + Const Acceleration（线性阻力，和粒子层的出生曲线同一条）。帧号锯齿：${m.nRev} 圈自转 / ${r2(m.Tl)} s 一个循环。${(m.texSparks || []).length ? '贴图里有星头、白热段火粉和 ' + Math.round(rtTexFrac(P, 'F') * 100) + '% 的细火星（真循环；其余细火星在 SparksFine）。' : ''}`,
-      `消散 RiseFade：开花时刻（${r2(m.T)} s）在开花点出生，贴图里每颗火粉按自己的寿命熄灭；${Lf.F} 帧 / ${r2(m.fadeSeconds)} s。${P.rtDissolve > 0 ? 'dissolve 动态参数在后 60% 从 0 升到 ' + r2(P.rtDissolve) + '（材质里溶解怎么表现未经 UE 验证）。' : '不写 dissolve。'}`,
+      `循环层 RiseLoop：速度朝向单粒子，星头在面片上端（Pivot Offset ${pivotY}，和 V5 尾缀同一写法；导入器若还不支持这个字段，手动在 Required 里填）；弹道 = Initial Velocity + Drag + Const Acceleration（线性阻力，和粒子层的出生曲线同一条）。帧号锯齿：${m.nRev} 圈自转 / ${r2(m.Tl)} s 一个循环。${(m.texSparks || []).length ? '贴图里有星头、白热段火花和 ' + Math.round(rtTexFrac(P, 'F') * 100) + '% 的细火花（真循环；其余细火花在 SparksFine）。' : ''}`,
+      `消散 RiseFade：开花时刻（${r2(m.T)} s）在开花点出生，贴图里每颗火花按自己的寿命熄灭；${Lf.F} 帧 / ${r2(m.fadeSeconds)} s。${P.rtDissolve > 0 ? 'dissolve 动态参数在后 60% 从 0 升到 ' + r2(P.rtDissolve) + '（材质里溶解怎么表现未经 UE 验证）。' : '不写 dissolve。'}`,
       `粒子层：出生位置 / 初速是按发射器时间的曲线（"bake": false 不烘查找表，避免关键点被查找表抹掉）；第二个 Initial Velocity 是随机散开。按 spec 第 2 节，出生类曲线按发射器时间取值在 GPU 发射器上还没实测（⚪）。`,
       `同时活着的粒子最多约 ${peak.peak} 颗（${mobile ? '手机' : 'PC'}，第 ${peak.at} s）。软圆点亮度口径未经 UE 验证：烘焙器按「中心值 = 颜色、σ = 尺寸 / 4」的高斯画。`,
       ...(P.rtTurb > 0 || P.rtTurbS > 0 ? ['空气乱流：Acceleration 模块（大涡 = 按发射器时间的曲线，小涡 = 两个均匀分布相加），加速度 = 阻力 × 空气速度；重力仍在 Const Acceleration。Acceleration 在 GPU 发射器上未经 UE 验证（⚪），不生效时尾迹下段会比烘焙器里硬、直。'] : []),
-      ...(P.rtStreakT > 0 ? ['线状火星：拉长的发射器 Screen Alignment = Rectangle（面片 Y 朝屏幕上方 = 竖直拖影），Initial Size 的 Y 和 X 分开、Size By Life 的 Y 按寿命拉长；Color Over Life 已除以拉长倍数（光量守恒）。GPU + Rectangle 未经 UE 验证（⚪）。'] : []),
+      ...(P.rtStreakT > 0 ? ['线状火花：拉长的发射器 Screen Alignment = Rectangle（面片 Y 朝屏幕上方 = 竖直拖影），Initial Size 的 Y 和 X 分开、Size By Life 的 Y 按寿命拉长；Color Over Life 已除以拉长倍数（光量守恒）。GPU + Rectangle 未经 UE 验证（⚪）。'] : []),
       ...(P.rtGlow > 0 ? ['HeadGlow 星头光晕：CPU 1 颗，弹道模块和 RiseLoop 完全一样（Initial Velocity + Drag + Const Acceleration）→ 和星头重合；Color Over Life 跟喷射脉动。软圆点叠在序列面片上（加色），远处看就是星头周围的一团柔光。'] : []),
-      ...(P.rtPopRate > 0 ? [`SparkPops 末段爆亮：和粗火星同一套运动（同一条出生 / 初速曲线、阻力、乱流），Color Over Life 在寿命 ${r2(P.rtPopAt)} 之前全黑、之后闪一下再灭。`] : []),
-      ...(P.rtLaunch > 0 ? ['LaunchGlow / LaunchSparks 发射口：0 s 一次性 Burst（Spawn Rate = 0），发射药的闪光 + 向上喷的一把火星；离地 0.5–1 m 出生。'] : [])
+      ...(P.rtPopRate > 0 ? [`SparkPops 末段爆亮：和粗火花同一套运动（同一条出生 / 初速曲线、阻力、乱流），Color Over Life 在寿命 ${r2(P.rtPopAt)} 之前全黑、之后闪一下再灭。`] : []),
+      ...(P.rtLaunch > 0 ? ['LaunchGlow / LaunchSparks 发射口：0 s 一次性 Burst（Spawn Rate = 0），发射药的闪光 + 向上喷的一把火花；离地 0.5–1 m 出生。'] : [])
     ] };
 }
 function rtTexFiles(b, name, sfx = '', idx = 1) {
@@ -583,7 +583,7 @@ function rtCascadeText(name, b, M) {
 ${esCascadeText(b.es || rtBuildES(P), false, 1)}
 【粒子层 · 手机】数量 × ${P.rtMobile}，全部 CPU，同时活着最多约 ${pkM.peak} 颗（曲线同 PC，Spawn Rate 乘比例）
 
-【未经 UE 验证】出生类曲线按发射器时间取值在 GPU 发射器上的表现；软圆点的亮度口径；dissolve 在材质里的表现；循环层速度朝向在接近顶点（速度很小）时的朝向${P.rtTurb > 0 || P.rtTurbS > 0 ? '；空气乱流的 Acceleration 模块（GPU）' : ''}${P.rtStreakT > 0 ? '；线状火星 GPU + Rectangle 对齐、Size By Life 的 Y 单独拉长' : ''}。
+【未经 UE 验证】出生类曲线按发射器时间取值在 GPU 发射器上的表现；软圆点的亮度口径；dissolve 在材质里的表现；循环层速度朝向在接近顶点（速度很小）时的朝向${P.rtTurb > 0 || P.rtTurbS > 0 ? '；空气乱流的 Acceleration 模块（GPU）' : ''}${P.rtStreakT > 0 ? '；线状火花 GPU + Rectangle 对齐、Size By Life 的 Y 单独拉长' : ''}。
 `;
 }
 function rtCurvesCSV(b, M) {
@@ -610,7 +610,7 @@ function rtStatsHTML(b) {
   const rows = [];
   const fl = q => q && q.fill ? `${Math.round(q.fill.x * 100)}% × ${Math.round(q.fill.y * 100)}%` : '—';
   rows.push(`循环层 + 粒子发射器 · 循环 <b>${m.L.F}</b> 帧（${m.L.cols}×${m.L.rows}×${m.L.chans}，${P.texW}×${P.texH}）· 单格 <b>${m.L.cellW}×${m.L.cellH}</b> · 消散 <b>${fd.meta.L.F}</b> 帧（${fd.meta.L.cols}×${fd.meta.L.rows}×${fd.meta.L.chans}，${fd.P ? fd.P.texW + '×' + fd.P.texH : ''}）`);
-  rows.push(`格子利用（内容外框占格子 横 × 竖，平均）：循环 <b>${fl(m)}</b> · 消散 ${fl(fd.meta)}${(m.texSparks || []).length ? ' · 贴图里有 ' + Math.round(rtTexFrac(P, 'F') * 100) + '% 的细火星' : ''}`);
+  rows.push(`格子利用（内容外框占格子 横 × 竖，平均）：循环 <b>${fl(m)}</b> · 消散 ${fl(fd.meta)}${(m.texSparks || []).length ? ' · 贴图里有 ' + Math.round(rtTexFrac(P, 'F') * 100) + '% 的细火花' : ''}`);
   rows.push(`弹道：出膛 <b>${bl.v0.toFixed(1)}</b> m/s · 阻力 ${bl.k.toFixed(4)} /s（线性）· ${bl.T.toFixed(2)} s 到 <b>${bl.H.toFixed(0)}</b> m · 开花时 ${bl.vb.toFixed(1)} m/s${bl.ok ? '' : ' · <span class="warn">开花时速度太大，按无阻力</span>'}`);
   rows.push(`螺旋：${P.rtSpin} 转/秒 · 出膛时波长 ${(bl.v0 / Math.max(0.01, P.rtSpin)).toFixed(0)} m → 开花前 ${(Math.max(0.5, Math.abs(bl.vb)) / Math.max(0.01, P.rtSpin)).toFixed(1)} m · 循环 ${m.Tl.toFixed(2)} s（${m.nRev} 圈）`);
   rows.push(`面片 ${m.Ww.toFixed(1)}×${m.Wh.toFixed(1)} m（星头在上端 ${Math.round((1 - (m.hb == null ? 0.5 : m.hb)) * 100)}% 处，Pivot Offset）· 接缝 <span class="${cls(c.seam == null || c.seam < 1.6)}">${c.seam == null ? '—' : c.seam.toFixed(2)}</span>（≈1 无缝）· 消散 ${m.fadeSeconds.toFixed(2)} s（${m.fadeFps.toFixed(1)} fps）`);
@@ -645,7 +645,7 @@ function renderEmitLive() {
   additive(true); const nd = esDraw(rtLiveTables(P, mobile), t, view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); additive(false);
   post();
   const dist = state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m（开花直径 ${P.rtBurstD} m 占屏高 1/3）` : '';
-  hudText = `实时模拟 · 升空尾缀 · ${t <= ball.T ? '上升 ' + t.toFixed(2) + ' / ' + ball.T.toFixed(2) + ' s' : '已开花，火星各自燃尽中'} · 循环层火粉 ${np.toLocaleString()} 颗 + 粒子层 ${nd.toLocaleString()} 颗（${mobile ? '手机减量' : 'PC'}）${dist}`;
+  hudText = `实时模拟 · 升空尾缀 · ${t <= ball.T ? '上升 ' + t.toFixed(2) + ' / ' + ball.T.toFixed(2) + ' s' : '已开花，火花各自燃尽中'} · 循环层火花 ${np.toLocaleString()} 颗 + 粒子层 ${nd.toLocaleString()} 颗（${mobile ? '手机减量' : 'PC'}）${dist}`;
   hudB = '';
 }
 function renderEmitExport(b) {

@@ -11,7 +11,7 @@
     —— 按条目类型和产物判断（大面片、分段、尾缀、多层组合有；素材条目没有参数、单元 / 循环产物还没有 cascade.json）
   画质（标准第 2 节，探针 烘焙器探针.py 的同一套算法）：单格 ≥ 下限（PC 512、手机 256；贴图尺寸本身不限，4.2.6）、屏幕放大 ≤ 1、30 fps 显示帧 ≥ 90%、燃烧段帧率 ≥ 下限、尺寸参数有效
     多层组合：每一层都要过。
-  版本：renderVer 37（3.7 渲染、还没迁移到 4.0）单独标出来，画质项预计不过。
+  版本：4.3 起只有一套画法；3.7 时代的记录（V5 正式库原始参数等）按迁移后的参数量。
 
 输出：tool/data/standard.js（FW_STANDARD）、analysis/probe/标准检查/标准检查.json + .md
 """
@@ -34,7 +34,7 @@ JS_ENTRY = r"""
   if (!e && !r) return null;
   const P = r ? __fw.replicaPM(id).P : null;
   return { id, kind: e ? e.kind : 'preset', name: (e || r).name, ver: e && typeof entryVer === 'function' ? entryVer(e) : (e ? e.ver : null), video: !!(e ? e.video : (r && r.video)), layers: e && e.layerIds ? e.layerIds : null,
-           form: P ? P.form : null, type: P ? P.type : null, renderVer: P ? (P.renderVer || 37) : null, superseded: !!(e && e.superseded) };
+           form: P ? P.form : null, type: P ? P.type : null, renderVer: P ? 40 : null, superseded: !!(e && e.superseded) };
 }
 """
 
@@ -72,7 +72,7 @@ async def run(targets, write, merge=False):
         for t in targets:
             t0 = time.time()
             if t.startswith('type'):
-                info = {'id': t, 'kind': 'preset', 'name': t, 'form': 'master', 'renderVer': 40 if t.startswith('type40:') else 37}
+                info = {'id': t, 'kind': 'preset', 'name': t, 'form': 'master', 'renderVer': 40}
             else:
                 info = await pg.evaluate(JS_ENTRY, t)
                 if not info: out[t] = {'id': t, 'error': '找不到条目'}; continue
@@ -90,7 +90,6 @@ async def run(targets, write, merge=False):
                     m['screen'] = dict(m['screen'], mag=round(m['screen']['mag'] * m['flowerM'] / fmax, 2), magNote=f"按整朵最大层 {fmax} m 换算")
                 v = probe.verdict(m, STD)
                 for k2, ok in v.items(): q.setdefault(k2, []).append((lid, ok, m))
-                if m.get('renderVer', 37) < 40: res['renderVer'] = 37
             for k2, rows in q.items():
                 bad = [lid for lid, ok, _ in rows if not ok]
                 m0 = rows[0][2]
@@ -99,7 +98,6 @@ async def run(targets, write, merge=False):
                           '尺寸参数有效': ''}.get(k2, '')
                 if len(rows) > 1: detail = (f'{len(rows) - len(bad)}/{len(rows)} 层通过' + (f'；不过：{", ".join(bad)}' if bad else ''))
                 res['checks'].append([k2, not bad, detail])
-            if res.get('renderVer') == 37: res['note'] = '3.7 渲染（还没迁移到 4.0），画质项预计不过'
             res['pass'] = all(ok for _, ok, _ in res['checks'])
             res['seconds'] = round(time.time() - t0, 1)
             out[t] = res

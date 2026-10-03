@@ -33,13 +33,13 @@ const REPLICAS = [
 // 星自己带颜色的条目用中性渐变图（颜色全由 Color Over Life 给），条目自己的 m 再覆盖
 const NEUTRAL_RAMP = { ramp0: '#000000', ramp1: '#4a4a52', ramp2: '#c8c8d0', ramp3: '#ffffff' };
 // 正式库记录通过时的渲染版本；制作中 / 历史在读取时也默认 37。
-for (const r of REPLICAS) if (!r.fromReview) r.p = { ...r.p, renderVer: renderVersion(r.p) };
+// 4.3：正式库的 p 原样留着（通过时的记录，V5 是 3.7 画法下通过的），打开时由 migrate37 换成现在的画法
 const REPLICA_BY_ID = Object.fromEntries(REPLICAS.map(r => [r.id, r]));
 // 复刻 → { P, M }
 function replicaPM(id) {
-  const r = REPLICA_BY_ID[id], d = defaultsFor(r.base, renderVersion(r.p), true), P = { ...d.P, renderVer: renderVersion(r.p) };
+  const r = REPLICA_BY_ID[id], d = defaultsFor(r.base, null, true), P = { ...d.P };
   if (r.shell) applyShellNo(P, r.shell);
-  Object.assign(P, r.p || {}, { type: r.base });
+  Object.assign(P, r.p || {}, { type: r.base }); migrate37(P, (r.p || {}).renderVer);
   if (familyOf(r.base) === 'aerial' && P.duration < P.burn * 1.15 + 0.4) P.duration = +(P.burn * 1.15 + 0.5).toFixed(2);
   const M = normalizeM({ ...d.M, ...NEUTRAL_RAMP, ...r.m }, r.base);
   return { P: derive(P), M };

@@ -113,9 +113,9 @@ Initial Rotation：Distribution Float Uniform，Min 0，Max 1
 Color Over Life：A 用 (1, 1, 1)、Alpha 1；B 见下面；亮度倍数按项目曝光再乘
 
 帧号曲线（相对寿命 → 帧号，线性，材质取整）
-A（16 帧）：Dynamic Parameter 第三通道，或 SubUV → Sub Image Index，二选一
+A（16 帧）：Dynamic Parameter 帧号通道，或 SubUV → Sub Image Index，二选一
 {cl(kA)}
-B（64 帧）：Dynamic Parameter 第三通道
+B（64 帧）：Dynamic Parameter 帧号通道
 {cl(kB)}
 
 【可直接粘贴】（Distribution 选 Constant Curve，右键 Points → 粘贴）

@@ -81,7 +81,7 @@ function clockTrace(mode, fps, reference) {
     state: { tab: 'combo', view: mode, P: { type: 'kamuro' }, t: 0, playing: true, loopPlay: false,
       speed: 1, expo: 1, disp: 'game', layers: [], lib: [], layerView: { solo: -1, mute: [] } },
     clamp: (v, lo, hi) => Math.max(lo, Math.min(hi, v)),
-    familyOf: () => 'aerial', renderVersion: () => 40, isPhys: () => false, isEmit: () => false, isTrail: () => false,
+    familyOf: () => 'aerial', isPhys: () => false, isEmit: () => false, isTrail: () => false,
     ensureTargets: () => {}, stageTick: () => {}, perfTick: () => {},
     gl: { isContextLost: () => false }, liveCtl: { ema: 1 / 60 }, liveAdapt: () => {} });   // 4.2.20 起 loop 查显卡上下文、按帧时间调实时负担（48_render40 不在这个沙盒里）
   load(c, '79_library'); load(c, '80_render');
