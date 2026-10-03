@@ -22,7 +22,6 @@ STEPS = [
     ('左栏_待我验收', "lib.seg='review';renderLib()", None),
     ('左栏_制作中', "lib.seg='wip';renderLib()", None),
     ('左栏_已通过', "lib.seg='passed';renderLib()", None),
-    ('左栏_历史', "lib.seg='hist';renderLib()", None),
     ('新建配方', "pkOpen()", None),
     ('左栏_工具', "pkClose();lib.open.tools=true;renderLib()", None),
     ('模板_菊', "setType('kiku')", 'views'),

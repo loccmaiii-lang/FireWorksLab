@@ -16,44 +16,19 @@ from PIL import Image
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 RES = os.path.join(ROOT, 'analysis', 'results')
-# 被取代的版本的结果 / 任务搬到 归档/过程/<效果>/results|jobs/（2026-10-01 用户同意）；这里两处都找，历史条目照常显示
-ARCH = os.path.join(ROOT, '归档', '过程')
+# 4.3（清理清单 A2 / A3，用户 2026-10-04）：左栏只放每个效果的当前版本；历史版本的结果 / 任务在 归档/，这里不再去找
 
 
 def res_dir(i):
-    p = os.path.join(RES, i)
-    if os.path.exists(p): return p
-    import glob
-    hit = glob.glob(os.path.join(ARCH, '*', 'results', i))
-    return hit[0] if hit else p
+    return os.path.join(RES, i)
 
 
 def job_files():
-    import glob
     fs = [os.path.join(ROOT, 'analysis', 'jobs', f) for f in os.listdir(os.path.join(ROOT, 'analysis', 'jobs')) if f.endswith('.json')]
-    fs += glob.glob(os.path.join(ARCH, '*', 'jobs', '*.json'))
     return sorted(fs, key=os.path.basename)
 OUT = os.path.join(ROOT, 'tool', 'data', 'review.js')
 
-REVIEW = [
-    # 升空尾缀（物理 v1）：烘焙器里实时模拟（花型 physS / physM / physL，43_phystrail.js），镜头跟着星头；实拍面板按同一比例逐帧跟拍
-    dict(id='TPS', task='TPS', kind='preset', phys='S', date='2026-09-29', name='升空尾缀 · 物理 小（对照 尾缀C）', video='vidio/2.0/尾缀C.mp4', tags='尾缀 上升 物理 小 TPS',
-         note='烘焙器里实时模拟（和花型模板一样，右栏滑杆可调）。物理模型按 尾缀C 校准：出膛 97 m/s、约 6 s 开花、偏向右上。尾缀C 开拍时弹已经飞了 2.2 秒，所以实拍前 2.2 秒是空的。',
-         look=['左右两边同一比例、镜头都跟着星头：星头后面白热段有多长、多粗', '白热段 → 金色火星 → 橙色零星火点 的过渡和疏密', '尾迹上的小波纹、随风偏移'],
-         opinion='09-29 下午改成烘焙器实时模拟（之前是远景播放引擎贴图，看不清，星头还是一根会甩的长条——已去掉，星头改成跟着弹道走的泪滴形火焰）。尾缀C 的火星更橙、更散，是三档里最「一颗颗」的。'),
-    dict(id='TPM', task='TPM', kind='preset', phys='M', date='2026-09-29', name='升空尾缀 · 物理 中（对照 尾缀B）', video='vidio/2.0/尾缀B.mp4', tags='尾缀 上升 物理 中 TPM',
-         note='烘焙器里实时模拟（右栏滑杆可调）。物理模型按 尾缀B 校准：出膛 122 m/s、4.4 s 开花。尾迹是停在空中的火星：弹体越慢，尾迹越短越密。',
-         look=['和实拍并排：尾迹长度随时间怎么变（出膛长 → 到顶短）', '白热段 → 金色火星 → 零星火点 的过渡', '视野高度（右栏「物理尾缀 · 镜头」）拉近看火星颗粒'],
-         opinion='结构对：星头 → 白热段 → 金色火星一颗颗散开。还差：星头后面的连续白热段比实拍短、细（实拍是一大段过曝白柱，模拟很快散成颗粒）；后半程可见尾迹偏长（到顶前实拍约 92 m，模拟约 147 m）。实拍是暮色亮蓝天空、模拟是黑底，比颜色时注意。'),
-    dict(id='TPL', task='TPL', kind='preset', phys='L', date='2026-09-29', name='升空尾缀 · 物理 大（对照 尾缀A）', video='vidio/2.0/尾缀A.mp4', tags='尾缀 上升 物理 大 TPL',
-         note='烘焙器里实时模拟（右栏滑杆可调）。物理模型按 尾缀A 校准：出膛 119 m/s、升得最久（约 6.4 s），弹体摆动最大（约 1 m），尾迹波浪最明显。',
-         look=['尾迹的大波浪、整体随风偏移', '白热段长度、下半段橙色火星的疏密', '和小、中两档一起比'],
-         opinion='大波浪和火星团块的疏密接近实拍。还差：过曝白热段偏短（模拟更早变成橙色火星）。视频在开花前就结束了，开花时刻是按弹道估的。'),
-    dict(id='PW3', task='PW3', kind='asset', date='2026-09-29', name='万彩千轮 · 单元（第 3 版）', src='PW3', video='vidio/2.0/万彩千轮B.mp4', tags='千轮 单元 粒子 PW3',
-         note='按 PW2 并排对照改：每颗小球更密（两套点位叠加，约 120 颗星）、星点更亮（×1.25）；小球更大（半径 9 → 11.5 m，约为团半径的 0.26）、更多（24 → 30 颗）、在 0.45 秒内陆续开；颜色比例按实拍（青绿最多、珊瑚红最少）；取景和实拍一样按整团外框。',
-         look=['和实拍比：小球大小、疏密、互相叠在一起的程度', '颜色和变金的时间', '右栏「贴图」切换 A（16 帧）/ B（64 帧）'],
-         opinion='这是我按 PW2 的并排对照自己改的一版。小球数量和大小是按实拍估的，如果还是偏稀，下一版再加到 36 颗。'),
-]
+REVIEW = []      # 4.3：物理尾缀 TPS/TPM/TPL、万彩千轮单元 PW3 都是历史版本（归档），不再出条目
 
 
 def thumb(path, box, size=160):
@@ -122,7 +97,17 @@ def video_meta(rel, trail=False, roi=None, t_range=None):
     return db[key]
 
 
-ARCHIVE = {'TP1', 'WC1', 'PW1', 'PW2', 'TR2S', 'TR2M', 'TR2L', 'QN1'}   # TR2 S/M/L：用户认可 V5，已进入正式库；其余条目由新版取代
+FIXTURES = {'JM4'}   # 回归基准（协作/标准.md 第 5 节「正式库的金芒菊 JM4」；bake_state_check / 烘焙贴图回归 等要用）：留着但不进任何栏
+
+
+def current_ids():
+    """状态清单里每个效果的当前版本：主条目 / 工作版 / 待验收版 / 方案（4.3 起左栏只放这些；V5 TR2S/M/L 在正式库 15_replica.js，不在这里）"""
+    st = json.load(open(STATUS, encoding='utf-8')); ids = set()
+    for ef in st['effects']:
+        for k in ('主条目', '工作版', '待验收版'):
+            if ef.get(k): ids.add(ef[k].replace('rep:', ''))
+        for v in ef.get('方案') or []: ids.add(v['id'].replace('rep:', ''))
+    return ids
 
 
 def job_entries():
@@ -289,13 +274,12 @@ def main():
     ents += experiment_entries()
     auto = job_entries(); ids = {e['id'] for e in ents}; combos += JOB_COMBOS
     ents += [e for e in auto if e['id'] not in ids]
-    gone = set(ARCHIVE)
+    # 4.3（清理清单 A2，用户 2026-10-04）：只留状态清单里的当前版本和它们的层；历史版本不再出条目（「历史」栏去掉，记录在 归档/状态清单_历史_至2026-10-04.json）
+    cur = current_ids() | FIXTURES
+    lay = {i for e in ents if e['id'] in cur for i in (e.get('layerIds') or [])}
+    ents = [e for e in ents if e['id'] in cur or e['id'] in lay or e['kind'] == 'queued']
     for e in ents:
-        if e['kind'] != 'queued': gone |= set(e.get('replaces') or [])
-    # 被取代 / 否决的版本不删：标成历史（用户 2026-09-30 14:46：失败版和被替代版归入历史，保留文件、参数、对照和反馈）
-    for e in ents:
-        if e['id'] in gone and e['kind'] != 'queued': e['superseded'] = True
-    ents = [e for e in ents if not (e['id'] in gone and (e['kind'] == 'queued' or e['id'] in ('TR2S', 'TR2M', 'TR2L')))]
+        if e['id'] in FIXTURES: e['hidden'] = True
     # 顺序：能看的在前（新的在前），排队的在后
     ents.sort(key=lambda e: (e['kind'] == 'queued', '' if e['kind'] == 'queued' else '~' + (e.get('date') or '')), reverse=False)
     ready = sorted([e for e in ents if e['kind'] != 'queued'], key=lambda e: e.get('date') or '', reverse=True)
@@ -304,7 +288,6 @@ def main():
     for e in ents:
         try:
             rec = build(e)
-            if e.get('superseded'): rec['superseded'] = True
             out.append(rec)
         except Exception as ex: print('跳过', e['id'], ex)
     fingerprint(out)
@@ -326,7 +309,7 @@ def main():
     open(OUT, 'w', encoding='utf-8').write('// 由 analysis/scripts/review_to_baker.py 生成：迭代区（做完、等你看的东西）。不要手改。\n'
                                           'var FW_REVIEW = ' + json.dumps(out, ensure_ascii=False, indent=0) + ';\n'
                                           'var FW_VMETA = ' + json.dumps(vm, ensure_ascii=False) + ';\n'
-                                          'var FW_REVIEW_COMBOS = ' + json.dumps(combos, ensure_ascii=False) + ';\n'
+                                          'var FW_REVIEW_COMBOS = [];\n'      # 4.3：组合编辑器的预设去掉了（清理清单 C2）
                                           'var FW_EFFECTS = ' + json.dumps(effects, ensure_ascii=False, indent=0) + ';\n')
     write_status_md(effects)
     print('迭代区', len(out), '项（排队', sum(1 for e in out if e['kind'] == 'queued'), '）→', OUT, f'{os.path.getsize(OUT) / 1024:.0f} KB')
@@ -348,8 +331,7 @@ def fingerprint(out):
 
 STATUS = os.path.join(ROOT, '协作', '状态清单.json')
 JOB_EFFECT = [('QA', 'qiuxing_a'), ('QB', 'qiuxing_b'), ('QC', 'qiuxing_c'), ('QD', 'qiuxing_d'), ('QN', 'qingning'), ('JM', 'jinmangju'),
-              ('HK', 'hongchao'), ('FS', 'yongfeng'), ('PK', 'pianbei'), ('TR', 'trail_v5'), ('PW', 'wancai'), ('WC', 'wancai'), ('TF', 'trail_phys'),
-              ('TP', 'trail_phys'), ('TV', 'trail_phys'), ('HN', 'hiki_nishiki'), ('ZB', 'qiuxing_b'), ('ZW', 'wancai'), ('ZK', 'hongchao'), ('ZF', 'yongfeng'), ('ZP', 'pianbei')]
+              ('HK', 'hongchao'), ('TR', 'trail_v5'), ('RT', 'trail_phys'), ('HN', 'hiki_nishiki'), ('ZB', 'qiuxing_b'), ('ZW', 'wancai')]
 
 
 def job_effect(j):
@@ -450,7 +432,7 @@ def write_status_md(effects):
         jobs = '、'.join(f"{j['id']}{'（' + j['state'] + ('，未看' if j['state'] == '已回来' and not j['seen'] else '') + '）' if j['state'] != '已回来' or not j['seen'] else ''}" for j in e['jobs'][-4:]) or '—'
         ex = '、'.join(('旧导出 ' + x['job']) if x.get('legacy') else (x['job'] + ('（已过期）' if x['stale'] else '（当前版本）')) for x in e['exports']) or '未生成'
         L.append(f"| {e['名']} | {e.get('负责', '')} | {e.get('阶段', '')} | {e.get('主条目') or '—'} | {ok(g.get('计算'))} {ok(g.get('AI自检'))} {ok(g.get('素材导出'))} {ok(g.get('用户验收'))} | {jobs} | {ex} | {e.get('下一步', '')} |")
-    L += ['', '各效果的历史版本（否决 / 被取代）和用户反馈见 `状态清单.json` 的「历史」；烘焙器左栏「历史」页能打开。']
+    L += ['', '各效果 2026-10-04 以前的历史版本（否决 / 被取代）和用户反馈在 `归档/状态清单_历史_至2026-10-04.json`；烘焙器左栏只放当前版本。']
     open(os.path.join(ROOT, '协作', '状态清单.md'), 'w', encoding='utf-8').write('\n'.join(L) + '\n')
 
 

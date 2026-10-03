@@ -15,7 +15,7 @@ const TYPE_INFO = {
   rise: ['上升（曲导）', 'Rise', 'rise'],
   physS: ['升空尾缀 · 物理 小', 'PhysTrailS', 'rise'], physM: ['升空尾缀 · 物理 中', 'PhysTrailM', 'rise'], physL: ['升空尾缀 · 物理 大', 'PhysTrailL', 'rise'],
   tailS: ['升空尾缀 · 循环层 + 粒子 小', 'RiseTailS', 'rise'], tailM: ['升空尾缀 · 循环层 + 粒子 中', 'RiseTailM', 'rise'], tailL: ['升空尾缀 · 循环层 + 粒子 大', 'RiseTailL', 'rise'],
-  trailS: ['升空尾缀 · 小（V5）', 'TrailS', 'rise'], trailM: ['升空尾缀 · 中（V5）', 'TrailM', 'rise'], trailL: ['升空尾缀 · 大（V5）', 'TrailL', 'rise'],
+  trailS: ['升空尾缀 · 小（V5）', 'TrailS', 'rise'], trailM: ['升空尾缀（V5）', 'TrailM', 'rise'], trailL: ['升空尾缀 · 大（V5）', 'TrailL', 'rise'],
   fountain: ['喷泉', 'Fountain', 'ground'], falls: ['瀑布', 'Falls', 'ground'], wheel: ['转轮', 'Wheel', 'ground'],
   fan: ['扇形', 'Fan', 'ground'], barrage: ['连发', 'Barrage', 'ground'], shikake: ['仕掛け（文字/图案）', 'Shikake', 'ground']
 };
@@ -23,9 +23,10 @@ const TYPE_GROUPS = [
   ['礼花', ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'palm', 'henka']],
   ['效果星', ['strobe', 'glitter', 'crackle', 'matsuba', 'crossette', 'ochiba', 'jisa']],
   ['形状', ['ring', 'saturn', 'kata', 'water']],
-  ['上升', ['tailS', 'tailM', 'tailL', 'physS', 'physM', 'physL', 'rise', 'trailS', 'trailM', 'trailL']],
+  ['升空尾缀', ['trailM']],      // 4.3（清理清单 A6）：上升 / 尾缀的 10 个模板合成一个入口（V5 形式），小 / 中 / 大在「尾缀序列 · 形态」里切；其余形式的定义留着（RT4 等条目要用）
   ['地面 · 循环', ['fountain', 'falls', 'wheel', 'fan', 'barrage', 'shikake']]
 ];
+const FAMILY_LABEL = { aerial: '礼花', rise: '升空尾缀', ground: '地面 · 循环' };
 const TYPE_NAMES = Object.fromEntries(Object.entries(TYPE_INFO).map(([k, v]) => [k, v[0]]));
 const TYPE_EN = Object.fromEntries(Object.entries(TYPE_INFO).map(([k, v]) => [k, v[1]]));
 const familyOf = t => (TYPE_INFO[t] || TYPE_INFO.kiku)[2];
@@ -425,6 +426,7 @@ const SCHEMA = [
     ['bunpoN', '分叉数量', '支', 2, 6, 1, P => P.riseStyle === 'bunpo' && !isTrail(P)]
   ] },
   { sec: '尾缀序列 · 形态', show: isTrail, hint: '弹体随体坐标：星头在面片上端，火花向后拖成尾迹。火花按周期性编号发射，第 64 帧与第 0 帧逐像素相同（真循环）。', items: [
+    { sel: '_trailTier', label: '档位', options: [['trailS', '小（对照尾缀C）'], ['trailM', '中（对照尾缀B）'], ['trailL', '大（对照尾缀A）']], show: P => !state.repId, hint: '三档的默认参数不同（开花高度、弹速、火花密度）；切换 = 换成那一档的模板参数' },
     ['trPhys', '粒子模型（0 = V5 原版，1 = 物理：物理尾缀的三层喷出物）', '', 0, 1, 1],
     ['trV', '上升速度（烘焙时）', 'm/s', 10, 150, 0.5],
     ['trInh', '火花跟随弹体', '', 0, 0.8, 0.01, P => !isPhysBody(P)],

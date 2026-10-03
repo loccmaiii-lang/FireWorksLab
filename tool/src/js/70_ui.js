@@ -7,14 +7,13 @@ const state = {
   t: 0, playing: true, speed: 1, expo: 1, disp: 'game', dist: 1000, exportResolution: true, platform: 'pc',
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
   bakeGen: null, failedGen: -1, bakeError: null,
-  lib: [], layers: [], comboName: '八重芯变色菊', libReady: false,
+  lib: [], layers: [], comboName: '多层效果',
   locks: new Set(), activeStage: 0, repId: null,
-  B: null,                              // A/B 对比的 B：{ P, M, bake, name }
   ref: { mode: 0, el: null, kind: '', t0: 0, alpha: 0.5, scale: 1, ox: 0, oy: 0, wipe: 0.5, aspect: 1, tex: null },
-  versions: [], recipes: [], metricRef: 'V05',
+  versions: [], recipes: [],
   comboSel: -1, layerView: { solo: -1, mute: [] }   // 多层效果：正在调哪一层（-1 = 整体）；独看 / 静音只影响观察
 };
-const live = { sim: null, gen: -1, track: null, tgen: -1, tw: 0, E: null, egen: -1, simB: null, trackB: null, EB: null, genB: -1 };
+const live = { sim: null, gen: -1, track: null, tgen: -1, tw: 0, E: null, egen: -1 };
 let hdrT = null, rgT = null;
 
 function busy(on, text, p) {
@@ -335,8 +334,11 @@ const GRID_OPTS = [1, 2, 4, 8, 16, 32];
 function formOptions(P) {
   const fam = familyOf(P.type);
   if (fam === 'ground') return [['loop', '地面循环（周期性烘焙，首尾无缝）']];
-  if (fam === 'rise' && P.form === 'phys') return [['phys', '实时物理模拟（贴图用 trail_phys_bake.py 导出）']];
-  if (fam === 'rise') return [['emitset', '循环层 + 粒子发射器（星头白热段循环 + GPU 火星，4.1）'], ['trail', '尾缀序列（循环 + 消散，速度朝向）'], ['unit', '星头循环 + 弹道与火花发射器参数'], ['master', '整段上升序列（大面片）']];
+  // 4.3（清理清单 A6）：升空尾缀只留 V5 形式（尾缀序列）。打开的条目本身是别的形式（RT4 循环层 + 粒子、旧的物理 / 单元）时，保留它自己那一种，免得改坏
+  if (fam === 'rise') {
+    const ALL = { trail: '尾缀序列（V5：循环 + 消散，速度朝向）', emitset: '循环层 + 粒子发射器（RT4 用的形式）', phys: '实时物理模拟（旧，贴图用 trail_phys_bake.py 导出）', unit: '星头循环 + 弹道与火花发射器参数（旧）', master: '整段大面片（旧）' };
+    const o = [['trail', ALL.trail]]; if (P.form && P.form !== 'trail' && ALL[P.form]) o.push([P.form, ALL[P.form]]); return o;
+  }
   const o = [['master', '大面片母版'], ['segments', renderVersion(P)>=40?'分段母版（按实际帧数分配贴图）':'分段母版（开花段 + 下垂段两张贴图）']];
   if (unitAllowed(P)) o.push(['unit', '单元序列（每颗星一个粒子，省 overdraw）']);
   return o;
@@ -562,13 +564,14 @@ function buildMasterPanel() {
         row.innerHTML = `<span class="fk" title="${((nm ? `${nm.en} · ${nm.cn}（旧名：${it.label}）` : it.label) + (it.hint ? '：' + it.hint : '')).replace(/"/g, '&quot;')}">${short}</span><select></select>`;
         row._lab = short; row._detail = [detail, it.hint].filter(Boolean).join('；'); row._old = it.label; row._nm = nm;
         const s = row.querySelector('select'); for (const [v, l] of it.options) s.add(new Option(l, v));
-        s.value = String(P[it.sel]);
+        s.value = String(it.sel === '_trailTier' ? P.type : P[it.sel]);
         s.addEventListener('change', () => {
+          if (it.sel === '_trailTier') { openType(s.value); return; }     // 4.3：升空尾缀一个入口，档位切换 = 打开那一档的模板
           const v = typeof D[it.sel] === 'number' ? +s.value : s.value;
           if (it.sel === 'shellNo') { applyShellLocked(v); buildMasterPanel(); onParam(); return; }
           state.P[it.sel] = v; onParam();
         });
-        row._refresh = () => { s.value = String(state.P[it.sel]); };
+        row._refresh = () => { s.value = String(it.sel === '_trailTier' ? state.P.type : state.P[it.sel]); };
         det.appendChild(row);
       } else if (it.info === 'specBox') {   // 4.2.6：原来右栏最底下的规格框（贴图尺寸、列 × 行、通道…）并进「输出」一节（走查 B7）
         row = document.createElement('div'); row.className = 'spechost'; row.dataset.info = 'specBox'; det.appendChild(row);
@@ -605,7 +608,6 @@ function buildMasterPanel() {
   slider(ms, 'm-ti', '拖尾亮度', '×', 0, 4, 0.05, () => state.M.tailInt, v => state.M.tailInt = v, 1);
   $('#type').value = state.repId ? 'rep:' + state.repId : P.type; $('#mname').value = state.name; syncExport();
   syncTypeButton();
-  $('#repNote').textContent = state.repId ? '实拍复刻：' + REPLICA_BY_ID[state.repId].note : ''; $('#repNote').hidden = !state.repId;
 }
 function refreshVisibility() {
   pviewInit();
@@ -665,7 +667,6 @@ function setReplica(id) {
   const r = REPLICA_BY_ID[id]; if (!r) return;
   const { P, M } = replicaPM(id); state.P = P; state.M = M; state.activeStage = 0; state.repId = id;
   state.name = id + '_' + r.name.replace(/^V\d+b?r?f?\s*/, '').replace(/[（）·→ ]+/g, '_').replace(/_+$/, '');
-  if (r.ref && REFS[r.ref]) { state.metricRef = r.ref; const s = $('#refMetric'); if (s) s.value = r.ref; }
   buildMasterPanel(); $('#type').value = 'rep:' + id; onParam(); state.t = 0;
   flash(r.note);
 }
@@ -686,37 +687,12 @@ function setForm(f) {
 }
 
 // ---------------- 组合 ----------------
-const st2 = (a, b, t) => b && t < 9 ? [[0, a], [t, b]] : [[0, a]];
-const COMBOS = [
-  { name: '八重芯变色菊', layers: [{ m: 'kiku', scale: 1, stages: st2('#ff3a26', '#7cff6a', 1.25) }, { m: 'botan', scale: 0.5, stages: st2('#ffc766', '#dfe8ff', 1.35) }] },
-  { name: '三重芯变色菊', layers: [{ m: 'kiku', scale: 1, stages: st2('#6f9dff', '#ff6fae', 1.25) }, { m: 'botan', scale: 0.62, stages: st2('#ffd36e') }, { m: 'botan', scale: 0.33, stages: st2('#ff3a2a', '#ffffff', 1.2) }] },
-  { name: '五段变色三重芯（V11）', layers: [{ m: 'henka', scale: 1 }, { m: 'botan', scale: 0.55, stages: [[0, IGNITE_ORANGE], [0.4, '#eef2ff']] }, { m: 'botan', scale: 0.3, stages: st2('#ff2a1c', '#3d6cff', 1.0) }] },
-  { name: '锦冠菊·银芯', layers: [{ m: 'kamuro', scale: 1 }, { m: 'botan', scale: 0.42, stages: st2('#e8eeff') }] },
-  { name: '柳·红芯', layers: [{ m: 'yanagi', scale: 1 }, { m: 'botan', scale: 0.38, stages: st2('#ff3a26') }] },
-  { name: '千轮菊', layers: [{ m: 'senrin', scale: 1 }] },
-  { name: '蜂·彩芯', layers: [{ m: 'hachi', scale: 1 }, { m: 'botan', scale: 0.4, stages: st2('#7cff6a', '#ff6fae', 1.0) }] },
-  { name: '点灭菊·红芯（V14 末期）', layers: [{ m: 'kiku', scale: 1, stages: [[0, IGNITE_ORANGE], [0.35, '#fff3dc']] }, { m: 'strobe', scale: 0.8, delay: 0.9, stages: st2('#ff2a1c') }] },
-  { name: '四尺玉（主层 + 两层芯）', layers: [{ m: 'kiku', scale: 4.6, rate: 0.55, stages: [[0, IGNITE_ORANGE], [0.45, '#fff0d2']] }, { m: 'botan', scale: 2.6, rate: 0.6, stages: st2('#ffc766') }, { m: 'botan', scale: 1.3, rate: 0.65, stages: st2('#eef2ff') }] }
-];
-const LIB_TYPES = ['kiku', 'botan', 'kamuro', 'yanagi', 'senrin', 'hachi', 'henka', 'strobe'];
 // 组合用的母版：2048（1024 时每帧只有 128 像素，组合页糊得没法看——用户 2026-09-30）；组合页默认实时模拟，贴图只在「导出效果」页用
 // 组合用的母版：迭代 / 正式库条目（rep:）保持条目自己的输出方式（合并输出 = 引擎里的样子：灰度查 Ramp），这样组合页「导出效果」和导出的素材一致；
 // 花型库默认母版仍用分开输出（组合里星头 / 尾巴亮度可以分开调）。window.FW_LIB_TEX：云端软件渲染自检时临时改小贴图。
 // 4.2.6：多层里每层的贴图尺寸、格子也按这一层自己的（不再强制 2048 / 最多 4×4；单格 ≥ 512 由取帧计划保证）
 const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || P.texW || 2048, texH: window.FW_LIB_TEX || P.texH || 2048, cols: renderVersion(P)>=40?P.cols:8, rows: renderVersion(P)>=40?P.rows:8, chans: 4, outMode: keep && P.outMode ? P.outMode : renderVersion(P)>=40 ? 'combined' : 'split', form: 'master', zoom: renderVersion(P)>=40 ? (P.zoom === 'on' ? 'on' : 'off') : 'on' });
 const defaultLibName = t => TYPE_NAMES[t].replace(/（.*）/, '') + ' · 默认';
-async function ensureLibrary() {
-  if (state.libReady) return;
-  busy(true, '首次进入：烘焙默认母版…', 0);
-  for (let i = 0; i < LIB_TYPES.length; i++) {
-    const t = LIB_TYPES[i], nm = defaultLibName(t);
-    if (state.lib.find(e => e.name === nm)) continue;
-    const d = defaultsFor(t);
-    const b = await bake(libP(d.P), 1, p => busy(true, `烘焙默认母版：${TYPE_NAMES[t]}（${i + 1}/${LIB_TYPES.length}）`, (i + p) / LIB_TYPES.length));
-    state.lib.push({ name: nm, type: t, P: d.P, M: d.M, bake: b });
-  }
-  state.libReady = true; busy(false);
-}
 function libByType(t) {
   if (t.startsWith('rep:')) return state.lib.find(e => e.rep === t.slice(4));
   return state.lib.find(e => e.name === defaultLibName(t)) || state.lib.find(e => e.type === t);
@@ -784,8 +760,6 @@ function comboDuration() {
 }
 function bakeTotal(b) { let d = 0; for (let s = b; s; s = s.next) d = Math.max(d, (s.meta.t0 || 0) + s.meta.duration); return d; }
 function buildComboPanel() {
-  const pre = $('#presets'); pre.innerHTML = '';
-  for (const c of [...COMBOS, ...REPLICA_COMBOS, ...(typeof FW_REVIEW_COMBOS !== 'undefined' ? FW_REVIEW_COMBOS : [])]) { const b = document.createElement('button'); b.className = 'btn' + (c.name.startsWith('V') ? ' rep' : ''); b.textContent = c.name; b.addEventListener('click', () => applyCombo(c)); pre.appendChild(b); }
   const host = $('#layers'); host.innerHTML = '';
   state.layers.forEach((L, i) => {
     const card = document.createElement('div'); card.className = 'card';
@@ -813,14 +787,7 @@ function buildComboPanel() {
     card.appendChild(mir);
     host.appendChild(card);
   });
-  if (!state.layers.length) host.innerHTML = '<p class="note">还没有图层。点上面的预设，或「添加图层」。</p>';
-  const libBox = $('#lib'); libBox.innerHTML = '';
-  for (const e of state.lib) {
-    const it = document.createElement('div'); it.className = 'it';
-    it.innerHTML = `<span>${e.name}</span><small>${TYPE_NAMES[e.type]}</small>`;
-    const add = document.createElement('button'); add.className = 'x'; add.textContent = '加入'; add.addEventListener('click', () => { state.layers.push(newLayer(layerEntryFor(e, new Set()))); computeLinks(); buildComboPanel(); if (typeof buildLayerCard === 'function') buildLayerCard(); });
-    it.appendChild(add); libBox.appendChild(it);
-  }
+  if (!state.layers.length) host.innerHTML = '<p class="note">还没有图层。</p>';
 }
 async function exportCombo() {
   // 4.0：多层效果导出成一个素材包（每层每段一个发射器 + 延迟），附上原来的组合说明 JSON

@@ -19,6 +19,19 @@ function mySrc(key) {
   const d = defaultsFor(key); return { type: key, P: derive(structuredClone(d.P)), M: structuredClone(d.M), title: TYPE_NAMES[key].replace(/（.*）/, '') };
 }
 const myRec = () => lib.my ? myAll()[lib.my.id] || lib.my : null;
+// 4.3（清理清单 C2）：组合编辑器去掉了。以前在编辑器里存的版本（mySaves['combo']）一次性搬成「我的效果」，参数和层都在
+function myMigrateComboSaves() {
+  const all = store.get('mySaves', {}), list = all.combo; if (!list || !list.length) return;
+  let n = 0;
+  for (const sv of list) {
+    const sn = sv && sv.snap; if (!sn || sn.kind !== 'combo' || !(sn.layers || []).length) continue;
+    const id = 'fx' + Date.now().toString(36) + (n++);
+    myPut({ id, name: '组合编辑器 · ' + (sv.name || id), created: sv.at || wbNow(), updated: sv.at || wbNow(), links: [],
+      snap: { kind: 'combo', name: sv.name || sn.name, layers: sn.layers.map(x => ({ ...x, id: null, L: { ...(x.L || {}), lid: (x.L && x.L.lid) || myLid() } })) } });
+  }
+  delete all.combo; store.set('mySaves', all);
+  if (n) setTimeout(() => flash(`组合编辑器去掉了：你在里面存的 ${n} 个版本搬到了左栏「我的效果」`), 1500);
+}
 // 新建：先在花型库里选第一层（模板或现有效果的层），再起名字
 function myNew() { pkOpen({ mode: 'newEffect', title: '新建效果 · 先选第一层（之后可以再加层）', onPick: myCreate }); }
 async function myCreate(key) {

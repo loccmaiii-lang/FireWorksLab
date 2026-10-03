@@ -4,11 +4,10 @@ function ensureTargets() {
   // 4.2.22：画布大小每 1/4 秒量一次（getBoundingClientRect 每帧强制排版，光这一下 3 ms）；拖栏 / 改窗口时也会在下一个 1/4 秒跟上
   const now = performance.now(); if (!boxRect || now - boxRectAt > 250) { boxRect = $('#box').getBoundingClientRect(); boxRectAt = now; }
   const box = boxRect;
-  const dpr=devicePixelRatio||1, wide=!!state.showcase&&!state.cloudPreview;
-  const size = Math.max(256, Math.min(wide?4096:2048, Math.round(Math.min(box.width, (box.height || box.width)*(wide?2:1)) * dpr / 4) * 4)), height=wide?size/2:size;
+  const dpr=devicePixelRatio||1;
+  const size = Math.max(256, Math.min(2048, Math.round(Math.min(box.width, box.height || box.width) * dpr / 4) * 4)), height=size;
   if (canvas.width !== size || canvas.height!==height) { canvas.width = size; canvas.height = height; }
   canvas.style.width=state.showcase?size/dpr+'px':'';canvas.style.height=state.showcase?height/dpr+'px':'';
-  if(wide)$('#showcasePair').style.width=size/dpr+'px';
   if (!hdrT || hdrT.w !== size || hdrT.h!==height) { gl.activeTexture(gl.TEXTURE0); hdrT && hdrT.dispose(); rgT && rgT.dispose(); hdrT = new Target(size, height, gl.RGBA16F, true); rgT = new Target(size, height, gl.RGBA16F); }
 }
 function setMatUniforms(pr, c, age) {
@@ -210,29 +209,23 @@ function unionView(a, b) {
 }
 function renderLive() {
   if (isEmit(state.P)) return renderEmitLive();
-  const P = state.P, m = state.bake && state.bake.meta, B = state.B;
-  if (renderVersion(P)>=40 && !isTrail(P) && !isPhys(P) && !B) return renderLive40();
+  const P = state.P, m = state.bake && state.bake.meta;
+  if (renderVersion(P)>=40 && !isTrail(P) && !isPhys(P)) return renderLive40();
   if (!m) { hdrT.clear(); post(); hudText = '首次烘焙中…'; hudB = ''; return; }
   const sa = liveSlot('A'); prepSlot(sa, P, state.gen);
-  let sb = null; if (B && B.bake) { sb = liveSlot('B'); prepSlot(sb, B.P, B.id); }
   const t = Math.min(state.view==='export'?engineTick(state.t):state.t, P.duration);
-  const view = unionView(sceneView(P, m, sa), sb ? sceneView(B.P, B.bake.meta, sb) : null), ppm = rgT.w / (2 * view[2]);
+  const view = sceneView(P, m, sa), ppm = rgT.w / (2 * view[2]);
   rgT.clear(); rgT.bind(); additive(true);
-  let info = null, infoB = null;
-  halves(() => { info = drawLiveScene(sa, P, familyOf(P.type) === 'ground' ? state.t : t, view, ppm); },
-    sb ? () => { infoB = drawLiveScene(sb, B.P, familyOf(B.P.type) === 'ground' ? state.t : Math.min(state.t, B.P.duration), view, ppm); } : null);
+  const info = drawLiveScene(sa, P, familyOf(P.type) === 'ground' ? state.t : t, view, ppm);
   additive(false);
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   const pr = PR.rgmat; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, rgT.tex); gl.uniform1i(pr.u.uS, 0);
-  const shade = (PP, mm, MM, tt) => {
-    gl.uniform1f(pr.u.uEH, renderVersion(PP)>=40?fixedExposure(PP):mm.expoH); gl.uniform1f(pr.u.uET, renderVersion(PP)>=40?fixedExposure(PP):mm.expoT); gl.uniform1f(pr.u.uG, PP.encGamma); gl.uniform1f(pr.u.uComb, PP.outMode === 'combined' ? 1 : 0);
-    setMatUniforms(pr, MM, tt); drawQuad();
-  };
-  halves(() => shade(P, m, state.M, t), sb ? () => shade(B.P, B.bake.meta, B.M, t) : null);
-  post(sb ? 0.5 : -1);
+  gl.uniform1f(pr.u.uEH, renderVersion(P)>=40?fixedExposure(P):m.expoH); gl.uniform1f(pr.u.uET, renderVersion(P)>=40?fixedExposure(P):m.expoT); gl.uniform1f(pr.u.uG, P.encGamma); gl.uniform1f(pr.u.uComb, P.outMode === 'combined' ? 1 : 0);
+  setMatUniforms(pr, state.M, t); drawQuad();
+  post(-1);
   hudText = isPhys(P) ? `升空尾缀 · 物理实时模拟 · 飞行 ${Math.min(t, P.phT).toFixed(2)} / ${P.phT} s${t > P.phT ? '（已开花，火星燃尽中）' : ''} · 画面里火星 ${info.sparks.toLocaleString()} 颗 · 视野 ${P.phView} m`
     : `实时物理 · ${P.engine === 'gpu' ? 'GPU' : 'CPU'} · 星 ${info.stars} · 火花槽位 ${info.sparks.toLocaleString()}`;
-  hudB = sb ? `B：${B.name}` : '';
+  hudB = '';
 }
 // 显示比例：贴图的每个像素在屏幕上被放大了几倍，是「糊」的直接原因
 function exportView(b) {
@@ -270,16 +263,15 @@ function drawExportScene(b, M, t, view, slot) {
   return drawLayer(b, L, t, view);
 }
 function renderExport() {
-  const b = previewBake(), B = state.B; hdrT.clear();
+  const b = previewBake(); hdrT.clear();
   if (!b) { post(); hudText = '烘焙中…'; return; }
   if (b.form === 'emitset') return renderEmitExport(b);
   const sa = liveSlot('XA'); prepSlot(sa, b.P, state.gen);
-  let sb = null; if (B && B.bake) { sb = liveSlot('XB'); prepSlot(sb, B.P, B.id); }
-  const ev = exportViewAny(b, sa), view = sb ? unionView(ev.view, exportViewAny(B.bake, sb).view) : ev.view;
+  const ev = exportViewAny(b, sa), view = ev.view;
   hdrT.bind(); additive(true);
   let f = -1;
-  halves(() => { f = drawExportScene(b, state.M, state.t, view, sa); }, sb ? () => drawExportScene(B.bake, B.M, state.t, view, sb) : null);
-  additive(false); post(sb ? 0.5 : -1);
+  f = drawExportScene(b, state.M, state.t, view, sa);
+  additive(false); post(-1);
   const s = segAt(b, state.t), L = s.meta.L, mag = ev.mag;
   const magTxt = !mag ? '' : mag > 1.5 ? ` · 贴图放大 ${mag.toFixed(1)}×，会显糊` : ` · 贴图放大 ${mag.toFixed(1)}×`;
   const tsx = b.form === 'trail' ? trailStateAt(b, state.t) : null;
@@ -287,7 +279,7 @@ function renderExport() {
   const fi = b.form === 'unit' ? frameIdx(b.meta, engineTick(state.t)) : frameIdx(s.meta, engineTick(state.t) - (s.meta.t0 || 0));
   const ps = b.form === 'unit' ? 0 : preScaleAt(b, s.meta, s, engineTick(state.t), engineTick(state.t) - (s.meta.t0 || 0));
   hudText = ps > 0 ? `导出效果 · 入点前：第 1 帧放大到 ${Math.round(ps * 100)}%（${s.meta.pre.pivot ? '绕爆点' : '绕面片中心'}）· 入点 ${s.meta.t0.toFixed(2)} s` : fi < 0 ? (engineTick(state.t) < (s.meta.t0 || 0) ? '还没到入点' : '序列结束') : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? ' 段 '+bakeSegmentName(b,bakeParts(b).indexOf(s)) : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
-  hudB = sb ? `B：${B.name}` : '';
+  hudB = '';
 }
 const flowTrail = [];
 // 贴图 / 流转看哪一张：默认「自动」= 跟着时间走（一层分两张时播完第一张接着播第二张——用户 2026-10-02 13:09）；点段按钮锁定某一张
@@ -472,11 +464,9 @@ function updateLabels() {
 let lastT = performance.now();
 function curDuration() {
   if(state.showcase && showcase.recipe)return Math.max(...showcase.layers.map(l=>l.delay+bakeTotal(l.b)));
-  if(state.showcase && showcase.left)return Math.max(showcase.left.P.duration,showcase.right.P.duration);
   if (state.tab === 'combo') return comboDuration();
   if (state.tab === 'asset') return assetDuration();
   let d = !state.dirty && state.bake && renderVersion(state.P)>=40 && !isEmit(state.P)?bakeTotal(state.bake):state.P.duration;
-  if (state.B) d = Math.max(d, state.B.P.duration);
   return d;
 }
 function loop(now) {
@@ -508,7 +498,6 @@ function loop(now) {
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
   $('#platformSeg').hidden = !state.showcase && (state.tab==='asset' || (mv && isPhys(state.P)));
   $('#resolutionBox').hidden = !mv || state.view!=='live' || renderVersion(state.P)<40 || isTrail(state.P) || isPhys(state.P) || isEmit(state.P);
-  $('#abTag').hidden = !(mv && state.B);
   refSync();
   try { stageTick(D); } catch (e) { console.error(e); }
   perfTick(dt);

@@ -15,8 +15,7 @@ async function setTab(tab, o = {}) {
   $('#viewSeg').hidden = tab === 'asset'; $('#assetCv').hidden = tab !== 'asset';
   syncPtabs();
   if (!changed) return;
-  if (tab === 'combo' && !o.lazy) { await ensureLibrary(); if (!state.layers.length) applyCombo(COMBOS[0]); else buildComboPanel(); }
-  if (tab === 'iter') { renderMetrics(); abInfo(); renderLegacy(); }
+  if (tab === 'iter') renderLegacy();
   if (tab === 'asset') assetPanel();
 }
 
@@ -165,17 +164,6 @@ function beforeOpen(nextEf) {
   if (lib.effect && (!nextEf || nextEf.key !== lib.effect.key)) dropEffectEdits(lib.effect);
   lib.my = null;            // 离开「我的效果」（openMyEffect 打开后会再设）
 }
-// 组合编辑器（4.2.3 走查 A1）：自己的身份——不继承上一个打开的效果（资产栏名字、版本归属、交付命名都是「组合编辑器」），从第一个预设开始
-async function openComboEditor(o = {}) {
-  beforeOpen(null);
-  setQueuedView(false); lib.effect = null; lib.formal = null; wb.entry = undefined; lib.key = 'combo';
-  setReview(null);
-  state.comboSel = -1; state.layerView = { solo: -1, mute: [] };
-  await setTab('combo', { lazy: true }); syncComboPanels();
-  await ensureLibrary();
-  if (o.preset !== false) await applyCombo(structuredClone(COMBOS[0]));    // 打开「我的版本」时由那个版本自己定层
-  renderLib(); crumb('工具', '组合编辑器'); wbRefresh();
-}
 function openEffect(ef) {
   beforeOpen(ef); dropEffectEdits(ef);
   const x = entryById(ef.阶段 === '待验收' && ef.待验收版 ? ef.待验收版 : ef.主条目);
@@ -188,7 +176,6 @@ async function openMine(k, id) {
   else if (k.startsWith('rv:')) { const e = FW_REVIEW_LIST.find(x => x.id === k.slice(3)); if (!e) return; await openReview(e); }
   else if (k.startsWith('rep:')) { const r = REPLICA_BY_ID[k.slice(4)]; if (!r) return; openFormal(r); }
   else if (k.startsWith('type:')) openType(k.slice(5));
-  else if (k === 'combo') await openComboEditor({ preset: false });       // 4.2.3（走查 A2）：编辑器里存的版本也能打开
   else if (k.startsWith('my:')) await openMyEffect(k.slice(3));          // 4.2.7：我的效果的草稿
   else return;
   await wbLoad(id); lib.key = 'mine:' + k + ':' + id; renderLib();
@@ -257,9 +244,9 @@ function libGroup(host, id, title, count, hot, extra) {
   det.addEventListener('toggle', () => { if (!lib.q) { lib.open[id] = det.open; store.set('libOpen2', lib.open); } });
   host.appendChild(det); return det;
 }
-// 左栏（2026-10-02 界面外观第 1 步，按用户的浏览器草稿）：上下分组、可折叠——待我验收 / 制作中 / 已通过 / 花型模板 / 历史 / 工具；
+// 左栏（2026-10-02 界面外观第 1 步，按用户的浏览器草稿）：上下分组、可折叠——待我验收 / 制作中 / 已通过 / 花型模板 / 工具（4.3 去掉「历史」：只放当前版本）；
 // 56 px 缩略图、选中整圈青绿框；新建配方在最下面。lib.seg 仍可用（自动化脚本用 lib.seg='passed';renderLib() 打开某一组）。
-const LIB_OPEN_DEFAULT = { review: true, wip: true, passed: true, myfx: true, mine: true, types: false, hist: false, tools: false };
+const LIB_OPEN_DEFAULT = { review: true, wip: true, passed: true, myfx: true, mine: true, types: false, tools: false };
 function renderLib() {
   const host = $('#libBody'); host.innerHTML = '';
   lib.open = { ...LIB_OPEN_DEFAULT, ...(lib.open || {}) };
@@ -301,18 +288,10 @@ function renderLib() {
   for (const [k, t] of [['review', '待我验收'], ['wip', '制作中'], ['passed', '已通过']]) {
     const list = effs.filter(ef => inSeg(ef, k) && libMatch(ef.名, ef.key, ef.主条目 || '', ef.说明 || '', ef.待验收版 || '', ef.已通过版 || ''));
     list.sort((x, y) => (x.阶段 === '未开始') - (y.阶段 === '未开始'));
-    const formal = k === 'passed' ? REPLICAS.filter(r => !r.fromReview && libMatch(r.id, r.name, r.tags || '', r.note || '')) : [];
-    if (lib.q && !list.length && !formal.length) continue;
+    if (lib.q && !list.length) continue;
     const g = libGroup(host, k, t, list.length, k === 'review' && effNewCount() > 0);
     if (!list.length) g.insertAdjacentHTML('beforeend', `<p class="lsub">${EMPTY[k]}</p>`);
     for (const ef of list) effRow(g, ef, k);
-    if (formal.length) {
-      const d = document.createElement('details'); d.className = 'histgrp'; d.open = !!lib.q || !!lib.open.formal;
-      d.innerHTML = `<summary class="lsub">正式库 · ${formal.length} 条（全部条目）</summary>`;
-      d.addEventListener('toggle', () => { if (!lib.q) { lib.open.formal = d.open; store.set('libOpen2', lib.open); } });
-      g.appendChild(d);
-      for (const r of formal) libItem(d, 'rep:' + r.id, thumbHTML({ ...r, key: 'rep:' + r.id }) + `<span class="tx"><b>${r.name}</b><small>${r.task || r.id} · 正式库</small></span>`, () => openFormal(r));
-    }
   }
   // 我的效果（4.2.7，「＋ 新建效果」搭的）
   myLibGroup(host);
@@ -339,31 +318,11 @@ function renderLib() {
       d.addEventListener('click', () => openType(t)); grid.appendChild(d);
     }
   }
-  // 历史：各效果被否决 / 被取代的版本（保留参数、对照和你的反馈），按效果折叠（用户 2026-10-01：过程版本太多、堆在一起）
-  const old = FW_REVIEW_LIST.filter(e => e.superseded && !e.hidden && libMatch(e.id, e.name, e.tags || ''));
-  if (old.length || !lib.q) {
-    const gh = libGroup(host, 'hist', '历史', FW_REVIEW_LIST.filter(e => e.superseded && !e.hidden).length);
-    const groups = new Map();
-    for (const e of old) { const ef = effectOfEntry(e); const k = ef ? ef.名 : '内部试验 / 其他'; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(e); }
-    if (!old.length) gh.insertAdjacentHTML('beforeend', '<p class="lsub">没有历史版本</p>');
-    for (const [k, arr] of groups) {
-      const det = document.createElement('details'); det.className = 'histgrp'; det.open = !!lib.q || !!(lib.histOpen && lib.histOpen[k]);
-      det.innerHTML = `<summary class="lsub">${k} · ${arr.length} 个旧版本</summary>`;
-      det.addEventListener('toggle', () => { if (!lib.q) { lib.histOpen = lib.histOpen || {}; lib.histOpen[k] = det.open; } });
-      gh.appendChild(det);
-      for (const e of arr) {
-        const h = effHistOf(e), verdict = h ? h.结论 : '被取代';
-        libItem(det, 'rv:' + e.id, thumbHTML(e) + `<span class="tx"><b>${e.name}</b><small>${e.id}${h && h.反馈 ? ' · ' + h.反馈 : ''}</small><span class="bds"><span class="badge">${verdict}</span></span></span>`, () => openReview(e));
-      }
-    }
-  }
-  // 工具：组合编辑器、云端配方预览、4.0 对照橱窗、打开结果文件夹（按钮本体留在页面里，事件照旧）
+  // 工具：云端配方预览、打开结果文件夹（4.3 去掉组合编辑器、4.0 对照橱窗：清理清单 C2 / C3）
   const tools = [
-    ['combo', '组合编辑器（旧：预设试搭）', '八重芯 / 三重芯等预设快速试搭；正式做效果用左下角「＋ 新建效果」', () => openComboEditor()],
     ['tool:cloud', $('#cloudRecipesOpen').textContent, '云端配好的多层配方，本机烘焙后看', () => $('#cloudRecipesOpen').click()],
-    ['tool:showcase', '4.0 对照橱窗', '3.7 / 4.0 同一秒对照（新旧渲染的唯一入口）', () => $('#showcaseOpen').click()],
     ['tool:dir', '打开结果文件夹…', '临时看某个导出结果（贴图按引擎方式播放）', () => $('#assetOpen2').click()],
-  ].filter(([, a, b]) => libMatch(a, b, '工具 组合 芯 八重芯 三重芯 叠加'));
+  ].filter(([, a, b]) => libMatch(a, b, '工具'));
   if (tools.length) { const gt = libGroup(host, 'tools', '工具', tools.length); for (const [k, a, b, fn] of tools) libItem(gt, k, `<span class="tx"><b>${a}</b><small>${b}</small></span>`, fn, true); }
 }
 function libReveal() {
@@ -610,7 +569,7 @@ function initLibrary() {
   $('#newRecipe').addEventListener('click', () => myNew());       // 4.2.7 新建效果：先选第一层，再加层（以前是「新建配方」= 打开一个花型模板）
   const ro = new ResizeObserver(() => document.documentElement.style.setProperty('--topH', $('#main').offsetTop + 'px')); ro.observe($('#viewbar')); ro.observe(document.querySelector('header.top'));
   initPanels();
-  // 打开时：有没看过的迭代区条目就先打开最新的一条；否则回到上次看的
+  myMigrateComboSaves();
   // 打开时：有「新」的待验收候选就先打开它；否则回到上次看的
   const fresh = EFFS().find(effIsNew), lastKey = store.get('lastKey', '');
   const lastEf = EFFS().find(ef => 'ef:' + ef.key === lastKey), lastRv = FW_REVIEW_LIST.find(e => 'rv:' + e.id === lastKey);

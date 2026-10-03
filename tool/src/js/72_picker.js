@@ -17,7 +17,7 @@ const TYPE_META = {
   wheel: ['旋转的火轮', '循环 地面 旋转'], fan: ['扇形连射的彗星', '循环 地面 扇形 连发'],
   barrage: ['一发接一发往上打，末端开小花', '循环 地面 连发'], shikake: ['发光的文字或图案', '循环 地面 文字']
 };
-const PK_CATS = [['all', '全部'], ['fx', '现有效果的层'], ['rep', '实拍复刻'], ['fav', '收藏'], ['recent', '最近使用'], ...TYPE_GROUPS.map(([g]) => [g, g])];
+const PK_CATS = [['all', '全部'], ['fx', '现有效果的层'], ['fav', '收藏'], ['recent', '最近使用'], ...TYPE_GROUPS.map(([g]) => [g, g])];
 const pk = { cat: 'all', q: '', fav: new Set(), recent: [], mode: 'open', onPick: null };
 // 4.2.7：现有效果（待我验收 / 制作中 / 已通过）的每一层，可以拿来当新效果的层（参数复制一份）
 function pkFxItems() {
@@ -45,14 +45,12 @@ function pkItems() {
     const m = TYPE_META[t] || ['', ''];
     out.push({ key: t, name: TYPE_NAMES[t], cat: g, desc: m[0], tags: m[1].split(' ').filter(Boolean) });
   }
-  for (const r of REPLICAS) out.push({ key: 'rep:' + r.id, name: r.name, cat: 'rep', desc: r.note, tags: (r.tags || '').split(' ').filter(Boolean), rep: r });
   if (pk.mode !== 'open') out.push(...pkFxItems());
   return out;
 }
 function pkFiltered() {
   const q = pk.q.trim().toLowerCase(); let items = pkItems();
-  if (pk.cat === 'rep') items = items.filter(i => i.cat === 'rep');
-  else if (pk.cat === 'fav') items = items.filter(i => pk.fav.has(i.key));
+  if (pk.cat === 'fav') items = items.filter(i => pk.fav.has(i.key));
   else if (pk.cat === 'recent') items = pk.recent.map(k => items.find(i => i.key === k)).filter(Boolean);
   else if (pk.cat !== 'all') items = items.filter(i => i.cat === pk.cat);
   if (q) items = items.filter(i => (i.name + ' ' + i.desc + ' ' + i.tags.join(' ') + ' ' + (TYPE_EN[i.key] || '')).toLowerCase().includes(q));
@@ -63,13 +61,13 @@ function pkRender() {
   const all = pkItems();
   for (const [k, l] of PK_CATS) {
     if (k === 'fx' && pk.mode === 'open') continue;
-    const n = k === 'all' ? all.length : k === 'rep' ? REPLICAS.length : k === 'fav' ? pk.fav.size : k === 'recent' ? pk.recent.length : all.filter(i => i.cat === k).length;
+    const n = k === 'all' ? all.length : k === 'fav' ? pk.fav.size : k === 'recent' ? pk.recent.length : all.filter(i => i.cat === k).length;
     const b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(pk.cat === k));
     b.innerHTML = `${l}<span>${n}</span>`; b.addEventListener('click', () => { pk.cat = k; pkRender(); }); cats.appendChild(b);
   }
   const grid = $('#pkGrid'); grid.innerHTML = '';
   const items = pkFiltered(), cur = state.repId ? 'rep:' + state.repId : state.P.type;
-  if (!items.length) { grid.innerHTML = `<p class="pk-empty">${pk.cat === 'rep' ? '实拍复刻正在按「一个一个对照确认」的方式重做，完成一个加一个。' : '没有匹配的花型。'}</p>`; return; }
+  if (!items.length) { grid.innerHTML = `<p class="pk-empty">没有匹配的花型。</p>`; return; }
   for (const it of items) {
     const c = document.createElement('div'); c.className = 'pk-card' + (it.key === cur ? ' cur' : ''); c.tabIndex = 0; c.setAttribute('role', 'button');
     const th = it.fx ? thumbHTML(it.fx).replace(/^<span class="th"/, '<span class="th pkfx"') : `<div class="th" style="${typeThumbStyle(it.key)}"></div>`;   // 只用渲染图（用户 2026-10-02 14:46：缩略图不用实拍）
@@ -93,7 +91,7 @@ function pkClose() { $('#picker').hidden = true; pk.onPick = null; pk.mode = 'op
 function syncTypeButton() {
   const key = state.repId ? 'rep:' + state.repId : state.P.type, r = state.repId ? REPLICA_BY_ID[state.repId] : null;
   $('#typeName').textContent = r ? r.name : TYPE_NAMES[state.P.type];
-  $('#typeCat').textContent = r ? '实拍复刻 · 基于' + TYPE_NAMES[r.base] : (TYPE_GROUPS.find(([, ts]) => ts.includes(state.P.type)) || ['礼花'])[0] + ' · ' + (TYPE_META[state.P.type] || [''])[0];
+  $('#typeCat').textContent = r ? (r.fromReview ? '条目' : '已通过') + ' · 基于' + TYPE_NAMES[r.base] : (TYPE_GROUPS.find(([, ts]) => ts.includes(state.P.type)) || [FAMILY_LABEL[familyOf(state.P.type)]])[0] + ' · ' + (TYPE_META[state.P.type] || [''])[0];
   $('#typeThumb').setAttribute('style', typeThumbStyle(key));
 }
 function initPicker() {
