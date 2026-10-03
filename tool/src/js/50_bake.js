@@ -153,8 +153,13 @@ function loopPlan(P, box, Tp) {
 // 现在一次只交「约 bakePace.ms 毫秒」的显卡活：按实测速度换算成这一帧的快门子样本数（至少 1 个），交完插一个 fence，
 // 不阻塞页面地等显卡真做完再交下一批，中间页面照常画实时模拟。画进贴图的东西和顺序都不变 → 结果逐字节一样（实时负担检查 M7）。
 // 子样本还嫌大（笔记本上鸿巢 1 个子样本 340 万粒）就是这一档的下限，要更细得拆火花批次，以后再说。
-const bakePace = { on: true, ms: 12, rate: 0, pending: 0, maxSubs: 0, waits: 0 };   // rate：每毫秒做完多少粒（fence 实测，含页面自己的画面，偏保守）；maxSubs / ms 可被检查改小
-function bakePaceDue(next) { return bakePace.on && bakePace.pending > 0 && (!bakePace.rate || bakePace.pending + next > bakePace.rate * bakePace.ms); }
+// 4.2.25（SMOKE19：4.2.23 打开引菊→锦要 45 s、条目体检里超时）：等显卡的那一下有固定延迟（浏览器不是立刻告诉页面 fence 做完了，
+// 大约要到下一帧 / 下一个计时器），以前把这段延迟当成显卡时间算速度，每批越算越小，掉到「一帧一个子样本」。
+// 现在不估速度，改成每批的量（budget，粒数）按结果加减：一帧多一点就等到了 = 显卡跟得上，下一批 × 1.6；要等两帧半以上 = 显卡排满了，× 0.6。
+// 量会记住（下次烘焙接着用），最多 4 亿粒；晚得多就按比例一次减到位；每批至少 1 个子样本。
+const bakePace = { on: true, budget: 8e6, pending: 0, maxSubs: 0, ms: 12, waits: 0, waitMs: 0 };   // ms ≤ 0：检查用，每批之后都等
+function bakePaceDue(next) { return bakePace.on && bakePace.pending > 0 && (bakePace.ms <= 0 || bakePace.pending + next > bakePace.budget); }
+function bakeFrameMs() { const e = typeof liveCtl !== 'undefined' ? liveCtl.ema : 0; return clamp((e > 0.004 && e < 0.2 ? e : 1 / 60) * 1000, 8, 50); }
 async function bakePaceWait(learn = true) {
   const done = bakePace.pending; bakePace.pending = 0;
   if (!bakePace.on || gl.isContextLost()) return;
@@ -163,14 +168,16 @@ async function bakePaceWait(learn = true) {
   const t0 = performance.now();
   try { do await nextTick(); while (!gl.isContextLost() && gl.getSyncParameter(s, gl.SYNC_STATUS) !== gl.SIGNALED); }     // 状态只在回到页面以后才会变
   finally { gl.deleteSync(s); }
-  const ms = performance.now() - t0;
-  if (learn && done > 0 && ms > 0.5) { const r = done / ms; bakePace.rate = bakePace.rate ? bakePace.rate * 0.7 + r * 0.3 : r; }
+  const ms = performance.now() - t0, fp = bakeFrameMs(); bakePace.waitMs += ms;
+  if (learn && done > 0) {
+    if (ms < 1.25 * fp) bakePace.budget = Math.min(bakePace.budget * 1.6, 4e8);
+    else if (ms > 2.5 * fp) bakePace.budget = Math.max(bakePace.budget * clamp(1.25 * fp / ms, 0.1, 0.6), 2e5);   // 晚得越多减得越多（上一个效果学到的量对这个太大时，一两批就降下来）
+  }
 }
 function bakeSliceSubs(work, left) {
   if (!bakePace.on) return left;
   if (bakePace.maxSubs > 0) return clamp(bakePace.maxSubs, 1, left);
-  if (!bakePace.rate) return 1;                       // 还没量过速度：先交 1 个子样本
-  return clamp(Math.floor(bakePace.rate * bakePace.ms / Math.max(1, work)), 1, left);
+  return clamp(Math.floor((bakePace.budget - bakePace.pending) / Math.max(1, work)), 1, left);
 }
 // 核心：按计划逐帧渲染、打包、编码、统计
 async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {

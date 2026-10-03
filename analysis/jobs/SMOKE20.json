@@ -1,0 +1,14 @@
+{
+ "id": "SMOKE20",
+ "type": "smoke",
+ "tijian": true,
+ "tijian_only": "ef:",
+ "tijian_cap": true,
+ "tijian_limit": 40,
+ "fuhe": true,
+ "fuhe_effects": "hiki_nishiki,hongchao,jinmangju,qingning",
+ "fuhe_configs": "normal",
+ "name": "4.2.25 复核：分批烘焙不再被等显卡的延迟拖慢（引菊→锦打开时间、条目体检不超时）+ 烘焙中实时模拟仍顺",
+ "priority": 11,
+ "note": "SMOKE19：4.2.23 打开引菊→锦 44–45 s、条目体检超时（每批掉到 1 个子样本）。4.2.25 每批的量按等的结果加减。看：条目体检每个效果的「烘焙 ms · 等显卡次数 / 秒 · 每批 M 粒」和烘焙中两段帧数（对照 SMOKE18 / 19），实时显卡负担.md 的「打开」用时（引菊 SMOKE19 44 s，4.2.22 约 13 s）。不改东西。对话框15。"
+}

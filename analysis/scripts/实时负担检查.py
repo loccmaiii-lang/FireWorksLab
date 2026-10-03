@@ -15,6 +15,8 @@
         以前每 8 帧才让出一次 → 一个任务里交了 8 帧 × 全部子样本
      ② 分批烘出来的贴图和不分批（bakePace.on = false）逐字节相同
      ③ 烘完的自检（analyze：每帧扫一遍整张贴图）不再一口气占住页面：2048² 一页里最长的一个任务 < 200 ms（以前 1–3 s）
+     ④ 4.2.25（SMOKE19：4.2.23 打开引菊→锦 45 s / 超时）：等显卡的那一下有固定延迟时（这里模拟每个 fence 至少 17 ms 才报完成，
+        像浏览器按帧刷新状态），分批烘焙不能被拖成「一帧一个子样本」：总时长 ≤ 不分批的 2 倍 + 1 s
 
   云端没有显卡：画图换成空操作，只量内存、子样本数和逻辑。真实帧率要本机任务（SMOKE / 条目体检）看。
 """
@@ -242,6 +244,20 @@ M7_ANALYZE = r"""async () => {
 }"""
 
 
+M7_LAT = r"""async () => {
+  state.stillBusy = true; clearTimeout(bakeTimer);
+  const d = defaultsFor('kiku', 40), P = derive({ ...structuredClone(d.P), type: 'kiku', texW: 512, texH: 512, stars: 8, sparkRate: (d.P.sparkRate || 0) * 0.02, qMaxSub: 16, qHz: 960, qSS: 1 });   // 显卡活很少：这时等待的固定延迟才是大头（像本机快显卡）
+  const oF = gl.fenceSync.bind(gl), oS = gl.getSyncParameter.bind(gl), born = new WeakMap();
+  gl.fenceSync = (...a) => { const s = oF(...a); if (s) born.set(s, performance.now()); return s; };
+  gl.getSyncParameter = (s, p) => { const v = oS(s, p); return p === gl.SYNC_STATUS && performance.now() - (born.get(s) || 0) < 17 ? gl.UNSIGNALED : v; };
+  const time = async on => { if (typeof bakePace !== 'undefined') Object.assign(bakePace, { on, maxSubs: 0, ms: 12 }); const t0 = performance.now(); const b = await bake(P, 1, null); const ms = performance.now() - t0; let F = 0; for (let s = b; s; s = s.next) F += s.meta.L.F; disposeBake(b); return [ms, F]; };
+  let a, b2, w0 = typeof bakePace !== 'undefined' ? bakePace.waits : 0;
+  try { a = await time(false); b2 = await time(true); }
+  finally { gl.fenceSync = oF; gl.getSyncParameter = oS; if (typeof bakePace !== 'undefined') bakePace.on = true; state.stillBusy = false; }
+  return { unpacedMs: Math.round(a[0]), pacedMs: Math.round(b2[0]), frames: a[1], waits: typeof bakePace !== 'undefined' ? bakePace.waits - w0 : 0 };
+}"""
+
+
 async def m7(p, opts):
     bad, info = [], {}
     b, pg, errs = await page(p, opts, stub=False, fake=False)     # 真烘焙（小规格，云端软件渲染也快）
@@ -254,6 +270,8 @@ async def m7(p, opts):
         r = await pg.evaluate(M7_ANALYZE); info['自检'] = r
         if r['longest'] >= 200: bad.append(f"烘完的自检一口气占住页面 {r['longest']} ms（{r['F']} 帧、格子 {r['cell']}，共 {r['totalMs']} ms）")
         if not r['fill']: bad.append('自检没跑完（没有 fill）')
+        r = await pg.evaluate(M7_LAT); info['等显卡有延迟'] = r
+        if r['pacedMs'] > 2 * r['unpacedMs'] + 1000 or r['waits'] > r['frames'] * 2: bad.append(f"等显卡每次至少 17 ms 时分批烘焙 {r['pacedMs']} ms，不分批 {r['unpacedMs']} ms（{r['frames']} 帧、等了 {r['waits']} 次）：被等待拖慢了")
         if errs: bad.append('页面错误 ' + errs[0])
     finally: await b.close()
     return not bad, bad, info
