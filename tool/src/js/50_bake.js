@@ -153,31 +153,51 @@ function loopPlan(P, box, Tp) {
 // 现在一次只交「约 bakePace.ms 毫秒」的显卡活：按实测速度换算成这一帧的快门子样本数（至少 1 个），交完插一个 fence，
 // 不阻塞页面地等显卡真做完再交下一批，中间页面照常画实时模拟。画进贴图的东西和顺序都不变 → 结果逐字节一样（实时负担检查 M7）。
 // 子样本还嫌大（笔记本上鸿巢 1 个子样本 340 万粒）就是这一档的下限，要更细得拆火花批次，以后再说。
-// 4.2.25（SMOKE19：4.2.23 打开引菊→锦要 45 s、条目体检里超时）：等显卡的那一下有固定延迟（浏览器不是立刻告诉页面 fence 做完了，
-// 大约要到下一帧 / 下一个计时器），以前把这段延迟当成显卡时间算速度，每批越算越小，掉到「一帧一个子样本」。
-// 现在不估速度，改成每批的量（budget，粒数）按结果加减：一帧多一点就等到了 = 显卡跟得上，下一批 × 1.6；要等两帧半以上 = 显卡排满了，× 0.6。
-// 量会记住（下次烘焙接着用），最多 4 亿粒；晚得多就按比例一次减到位；每批至少 1 个子样本。
-const bakePace = { on: true, budget: 8e6, pending: 0, maxSubs: 0, ms: 12, waits: 0, waitMs: 0 };   // ms ≤ 0：检查用，每批之后都等
-function bakePaceDue(next) { return bakePace.on && bakePace.pending > 0 && (bakePace.ms <= 0 || bakePace.pending + next > bakePace.budget); }
-function bakeFrameMs() { const e = typeof liveCtl !== 'undefined' ? liveCtl.ema : 0; return clamp((e > 0.004 && e < 0.2 ? e : 1 / 60) * 1000, 8, 50); }
-async function bakePaceWait(learn = true) {
-  const done = bakePace.pending; bakePace.pending = 0;
-  if (!bakePace.on || gl.isContextLost()) return;
-  const s = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0); if (!s) return;
-  gl.flush(); bakePace.waits++;
-  const t0 = performance.now();
-  try { do await nextTick(); while (!gl.isContextLost() && gl.getSyncParameter(s, gl.SYNC_STATUS) !== gl.SIGNALED); }     // 状态只在回到页面以后才会变
-  finally { gl.deleteSync(s); }
-  const ms = performance.now() - t0, fp = bakeFrameMs(); bakePace.waitMs += ms;
-  if (learn && done > 0) {
-    if (ms < 1.25 * fp) bakePace.budget = Math.min(bakePace.budget * 1.6, 4e8);
-    else if (ms > 2.5 * fp) bakePace.budget = Math.max(bakePace.budget * clamp(1.25 * fp / ms, 0.1, 0.6), 2e5);   // 晚得越多减得越多（上一个效果学到的量对这个太大时，一两批就降下来）
+// 4.2.25（SMOKE19）：等显卡的那一下有固定延迟，不能拿等的时间估速度（4.2.23 因此掉到「一帧一个子样本」）。
+// 4.2.26（SMOKE20：鸿巢之后打开引菊→锦、永丰之后打开片贝，等显卡 1851 / 2394 次、每次约 160 ms、超时）：4.2.25 改成按等的结果加减，
+// 可是「等得久」多半是显卡在忙别的（实时模拟、上一个效果的收紧），不是这批太大——量被压到最小，又掉回一帧一个子样本。
+// 现在：每批的量 = 实测显卡速度（显卡计时器，结果晚几帧到也没关系，不等它）× bakePace.ms 毫秒；没有计时器就固定 800 万粒。
+// 最多 2 批在路上：第 3 批之前才等最早那批做完。等多久都不改量，只决定什么时候交下一批。画什么、按什么顺序都没变。
+const bakePace = { on: true, ms: 12, rate: 0, budget: 8e6, pending: 0, inflight: [], maxInflight: 2, maxSubs: 0, qs: [], ext: undefined, waits: 0, waitMs: 0 };   // ms ≤ 0：检查用，每批之后都等
+function bakeSliceBudget() { return bakePace.rate > 0 ? clamp(bakePace.rate * Math.max(1, bakePace.ms), 2e5, 4e8) : bakePace.budget; }
+function bakeTimerExt() { if (bakePace.ext === undefined) bakePace.ext = gl.getExtension('EXT_disjoint_timer_query_webgl2') || null; return bakePace.ext; }
+// 读回已经出结果的显卡计时（不等），更新速度（粒 / 显卡毫秒）
+function bakeHarvest() {
+  const ext = bakePace.ext; if (!ext || !bakePace.qs.length || gl.isContextLost()) return;
+  const disjoint = gl.getParameter(ext.GPU_DISJOINT_EXT);
+  while (bakePace.qs.length) {
+    const x = bakePace.qs[0]; if (!gl.getQueryParameter(x.q, gl.QUERY_RESULT_AVAILABLE)) break;
+    const ns = gl.getQueryParameter(x.q, gl.QUERY_RESULT); gl.deleteQuery(x.q); bakePace.qs.shift();
+    if (!disjoint && ns > 2e4 && x.n > 0) { const r = x.n / (ns / 1e6); bakePace.rate = bakePace.rate ? bakePace.rate * 0.7 + r * 0.3 : r; }
   }
+}
+// 画一批（n = 粒数），能计时就计时；攒够一批的量就插一个 fence
+function bakeSliceDraw(fn, n) {
+  const ext = bakePace.on ? bakeTimerExt() : null; let q = null;
+  if (ext && bakePace.qs.length < 8) { q = gl.createQuery(); gl.beginQuery(ext.TIME_ELAPSED_EXT, q); }
+  try { fn(); } finally { if (q) { gl.endQuery(ext.TIME_ELAPSED_EXT); bakePace.qs.push({ q, n }); } }
+  if (!bakePace.on) return;
+  bakePace.pending += n;
+  if (bakePace.ms <= 0 || bakePace.pending >= bakeSliceBudget()) bakeFence();
+}
+function bakeFence() { const n = bakePace.pending; bakePace.pending = 0; if (!n || gl.isContextLost()) return; const s = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0); if (s) { gl.flush(); bakePace.inflight.push(s); } }
+function bakeMustWait() { return bakePace.on && bakePace.inflight.length >= (bakePace.ms <= 0 ? 1 : bakePace.maxInflight); }
+// 等到在路上的批少于上限（all：把攒着的也交了、全部等完，读回贴图之前用）；不阻塞页面
+async function bakePaceWait(all = false) {
+  if (all) bakeFence();
+  const lim = all || bakePace.ms <= 0 ? 0 : bakePace.maxInflight - 1;
+  while (bakePace.inflight.length > lim) {
+    const s = bakePace.inflight[0], t0 = performance.now(); bakePace.waits++;
+    try { do await nextTick(); while (!gl.isContextLost() && gl.getSyncParameter(s, gl.SYNC_STATUS) !== gl.SIGNALED); }     // 状态只在回到页面以后才会变
+    finally { gl.deleteSync(s); const k = bakePace.inflight.indexOf(s); if (k >= 0) bakePace.inflight.splice(k, 1); }
+    bakePace.waitMs += performance.now() - t0;
+  }
+  bakeHarvest();
 }
 function bakeSliceSubs(work, left) {
   if (!bakePace.on) return left;
   if (bakePace.maxSubs > 0) return clamp(bakePace.maxSubs, 1, left);
-  return clamp(Math.floor((bakePace.budget - bakePace.pending) / Math.max(1, work)), 1, left);
+  return clamp(Math.floor((bakeSliceBudget() - bakePace.pending) / Math.max(1, work)), 1, left);
 }
 // 核心：按计划逐帧渲染、打包、编码、统计
 async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
@@ -202,9 +222,9 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
       // 4.2.23 分批交给显卡（见上面 bakePace）：等显卡时把全局状态还给页面（PPMY = 0、不叠加），回来再接上
       const n = frameSampleCount40(P, pl, pl.t0 + tc), work = Math.max(1, trackDraws(R.track, P) + (P.stars || 0) * q.ss);
       for (let j0 = 0; j0 < n;) {
-        const k = bakeSliceSubs(work, n - j0);
-        if (bakePaceDue(work * k)) { additive(false); PPMY = 0; await bakePaceWait(); PPMY = ppmY; sst.bind(); gl.colorMask(true, true, true, true); additive(true); }
-        drawFrameSamples40(P, pl, R, pl.t0 + tc, view, ppm, ppmY, [j0, j0 + k]); bakePace.pending += work * k; j0 += k;
+        const k = bakeSliceSubs(work, n - j0), a0 = j0;
+        if (bakeMustWait()) { additive(false); PPMY = 0; await bakePaceWait(); PPMY = ppmY; sst.bind(); gl.colorMask(true, true, true, true); additive(true); }
+        bakeSliceDraw(() => drawFrameSamples40(P, pl, R, pl.t0 + tc, view, ppm, ppmY, [a0, a0 + k]), work * k); j0 += k;
       }
     }
     else for (let j = 0; j < nsub; j++) {
@@ -254,7 +274,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
 // 4.2.23：先等显卡把编码做完再读回（读回不再卡住页面等显卡）；逐帧扫贴图时每用掉约 8 ms 让页面画一帧（以前 2048² 一页一口气 1–3 s）。算的东西不变
 async function analyze(b) {
   const m = b.meta, L = m.L, P = b.P, N = b.N, NH = b.NH, cw = b.cw, chh = b.chh;
-  await bakePaceWait(false);
+  await bakePaceWait(true);
   const imgs = [readRGBA8(b.head)]; if (b.tail) imgs.push(readRGBA8(b.tail));
   let tY = performance.now();
   const light = [], cellMax = [], clip = [], edge = [], sig = [], rows = [], fills = [], boxes = [], fx = [], edge12 = [];

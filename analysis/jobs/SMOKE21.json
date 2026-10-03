@@ -1,0 +1,14 @@
+{
+ "id": "SMOKE21",
+ "type": "smoke",
+ "tijian": true,
+ "tijian_only": "ef:",
+ "tijian_cap": true,
+ "tijian_limit": 40,
+ "fuhe": true,
+ "fuhe_effects": "hiki_nishiki,hongchao,jinmangju,qingning",
+ "fuhe_configs": "normal",
+ "name": "4.2.26 复核：显卡被别的活占着时分批烘焙不掉速（条目体检里引菊→锦、片贝不超时，球形 A / B 等显卡时间降下来）+ 烘焙中实时模拟仍顺",
+ "priority": 11,
+ "note": "SMOKE20：4.2.25 单独打开引菊→锦 4.5 s，但条目体检里接在鸿巢后面打开（上一个效果的实时模拟占着显卡）每批掉到 0.2M 粒、超时。4.2.26 每批的量按显卡计时器的速度定、最多 2 批在路上、等多久都不改量。看：条目体检里引菊→锦、片贝、球形 A / B 的「等显卡 次 / 秒 · 每批 M 粒（显卡 M 粒/ms）」，对照 SMOKE20（1851 次 / 298 s、2394 次 / 298 s、802 次 / 38 s、489 次 / 51 s）；打开用时对照 SMOKE20（引菊 4.5 s、鸿巢 6.7 s）。不改东西。对话框15。"
+}

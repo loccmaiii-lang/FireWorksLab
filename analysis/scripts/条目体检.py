@@ -36,7 +36,7 @@ INFO = r"""(() => { const combo = state.tab === 'combo', bs = combo ? state.laye
     missing: bs.filter(b => !b).length, measureS: +(mt / 1000).toFixed(2), duration: +Math.max(...Ps.map(P => +P.duration || 0)).toFixed(2),
     err: window.__err, bakeErr: state.bakeError && state.bakeError.message || null, openS: window.__t1 ? +((window.__t1 - window.__t0) / 1000).toFixed(2) : null,
     bakeMs: parts.map(s => Math.round(s.meta.bakeMs || 0)),          // 4.2.25：每页烘焙用时（含收紧后的那次）
-    pace: window.__pace0 ? { waits: bakePace.waits - __pace0.w, waitS: +((bakePace.waitMs - __pace0.ms) / 1000).toFixed(1), budgetM: +(bakePace.budget / 1e6).toFixed(1) } : null }; })()"""
+    pace: window.__pace0 ? { waits: bakePace.waits - __pace0.w, waitS: +((bakePace.waitMs - __pace0.ms) / 1000).toFixed(1), budgetM: +((typeof bakeSliceBudget === 'function' ? bakeSliceBudget() : bakePace.budget) / 1e6).toFixed(1), rateM: bakePace.rate ? +(bakePace.rate / 1e6).toFixed(2) : null } : null }; })()"""
 
 
 LIVE = r"""new Promise(res => { state.view = 'live'; state.playing = true; state.t = Math.min(1, curDuration() * .3); const ts = []; const t0 = performance.now();
@@ -90,7 +90,7 @@ async def main():
             r['status'] = '跳过（要真烘焙）' if fake_skip else '超时' if not ok else '报错' if (r['err'] or r['pageErrors'] or r['bakeErr']) else '缺贴图' if r['missing'] else 'ok'
             res.append(r)
             if r.get('live') and r['live'].get('p90Ms') and r['live']['p90Ms'] > 100 and r['status'] == 'ok': r['status'] = '卡'
-            print(('✅' if r['status'] == 'ok' else '⏭' if r['status'].startswith('跳过') else '❌'), r['key'], r['name'], r['status'], f"{r['sec']} s · 预跑 {r['measureS']} s · {r['frames']} 帧 / {r['pages']} 张" + (f" · 烘焙 {r['bakeMs']} ms · 等显卡 {r['pace']['waits']} 次 {r['pace']['waitS']} s · 每批 {r['pace']['budgetM']}M 粒" if r.get('pace') else '') + (f" · 实时 {r['live']['medMs']} / {r['live']['p90Ms']} ms" if r.get('live') else '') + (f" · 调子样本后 {r['liveCap']['medMs']} / {r['liveCap']['p90Ms']} ms（{r['liveCap']['cap']}）" if r.get('liveCap') else '') + (f" · 烘焙中 {r['liveBaking']['medMs']} / {r['liveBaking']['p90Ms']} → {r['liveBakingCap']['medMs']} / {r['liveBakingCap']['p90Ms']} ms" if r.get('liveBaking') else ''),
+            print(('✅' if r['status'] == 'ok' else '⏭' if r['status'].startswith('跳过') else '❌'), r['key'], r['name'], r['status'], f"{r['sec']} s · 预跑 {r['measureS']} s · {r['frames']} 帧 / {r['pages']} 张" + (f" · 烘焙 {r['bakeMs']} ms · 等显卡 {r['pace']['waits']} 次 {r['pace']['waitS']} s · 每批 {r['pace']['budgetM']}M 粒" + (f"（显卡 {r['pace'].get('rateM')}M 粒/ms）" if r['pace'].get('rateM') else '') if r.get('pace') else '') + (f" · 实时 {r['live']['medMs']} / {r['live']['p90Ms']} ms" if r.get('live') else '') + (f" · 调子样本后 {r['liveCap']['medMs']} / {r['liveCap']['p90Ms']} ms（{r['liveCap']['cap']}）" if r.get('liveCap') else '') + (f" · 烘焙中 {r['liveBaking']['medMs']} / {r['liveBaking']['p90Ms']} → {r['liveBakingCap']['medMs']} / {r['liveBakingCap']['p90Ms']} ms" if r.get('liveBaking') else ''),
                   (r['err'] or r['bakeErr'] or (r['pageErrors'][0] if r['pageErrors'] else ''))[:160], flush=True)
             if not ok:     # 卡住了：换一页继续
                 await pg.close(); pg = await ctx.new_page(); errs.clear(); pg.on('pageerror', lambda e: errs.append(str(e)))

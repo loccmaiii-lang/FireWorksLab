@@ -17,6 +17,9 @@
      ③ 烘完的自检（analyze：每帧扫一遍整张贴图）不再一口气占住页面：2048² 一页里最长的一个任务 < 200 ms（以前 1–3 s）
      ④ 4.2.25（SMOKE19：4.2.23 打开引菊→锦 45 s / 超时）：等显卡的那一下有固定延迟时（这里模拟每个 fence 至少 17 ms 才报完成，
         像浏览器按帧刷新状态），分批烘焙不能被拖成「一帧一个子样本」：总时长 ≤ 不分批的 2 倍 + 1 s
+     ⑤ 4.2.26（SMOKE20：鸿巢之后打开引菊→锦、永丰之后打开片贝，等显卡 1851 / 2394 次、每次约 160 ms，超时）：显卡被别的活占满、
+        每次都要等很久时，每批的量不能被「等得久」压小（等得久多半是别的活，不是这批太大）：交一批 500 万粒、模拟要等 150 ms，
+        之后每批的量不变（4.2.25 会按晚的比例压到 70 万，再往下到 20 万粒，引菊→锦一次烘焙要等上千次）
 
   云端没有显卡：画图换成空操作，只量内存、子样本数和逻辑。真实帧率要本机任务（SMOKE / 条目体检）看。
 """
@@ -249,12 +252,31 @@ M7_LAT = r"""async () => {
   const d = defaultsFor('kiku', 40), P = derive({ ...structuredClone(d.P), type: 'kiku', texW: 512, texH: 512, stars: 8, sparkRate: (d.P.sparkRate || 0) * 0.02, qMaxSub: 16, qHz: 960, qSS: 1 });   // 显卡活很少：这时等待的固定延迟才是大头（像本机快显卡）
   const oF = gl.fenceSync.bind(gl), oS = gl.getSyncParameter.bind(gl), born = new WeakMap();
   gl.fenceSync = (...a) => { const s = oF(...a); if (s) born.set(s, performance.now()); return s; };
-  gl.getSyncParameter = (s, p) => { const v = oS(s, p); return p === gl.SYNC_STATUS && performance.now() - (born.get(s) || 0) < 17 ? gl.UNSIGNALED : v; };
+  const LAT = window.__lat || 17;
+  gl.getSyncParameter = (s, p) => { const v = oS(s, p); return p === gl.SYNC_STATUS && performance.now() - (born.get(s) || 0) < LAT ? gl.UNSIGNALED : v; };
   const time = async on => { if (typeof bakePace !== 'undefined') Object.assign(bakePace, { on, maxSubs: 0, ms: 12 }); const t0 = performance.now(); const b = await bake(P, 1, null); const ms = performance.now() - t0; let F = 0; for (let s = b; s; s = s.next) F += s.meta.L.F; disposeBake(b); return [ms, F]; };
   let a, b2, w0 = typeof bakePace !== 'undefined' ? bakePace.waits : 0;
   try { a = await time(false); b2 = await time(true); }
   finally { gl.fenceSync = oF; gl.getSyncParameter = oS; if (typeof bakePace !== 'undefined') bakePace.on = true; state.stillBusy = false; }
-  return { unpacedMs: Math.round(a[0]), pacedMs: Math.round(b2[0]), frames: a[1], waits: typeof bakePace !== 'undefined' ? bakePace.waits - w0 : 0 };
+  const slice = typeof bakeSliceBudget === 'function' ? bakeSliceBudget() : typeof bakePace !== 'undefined' ? bakePace.budget : 0;
+  return { unpacedMs: Math.round(a[0]), pacedMs: Math.round(b2[0]), frames: a[1], waits: typeof bakePace !== 'undefined' ? bakePace.waits - w0 : 0, sliceM: +(slice / 1e6).toFixed(2) };
+}"""
+
+
+# ⑤：直接查规则——交了一批 500 万粒、等它要 150 ms（显卡被别的活占着），之后每批的量不能变小
+M7_BUSY = r"""async () => {
+  const oF = gl.fenceSync.bind(gl), oS = gl.getSyncParameter.bind(gl), born = new WeakMap();
+  gl.fenceSync = (...a) => { const s = oF(...a); if (s) born.set(s, performance.now()); return s; };
+  gl.getSyncParameter = (s, p) => { const v = oS(s, p); return p === gl.SYNC_STATUS && performance.now() - (born.get(s) || 0) < 150 ? gl.UNSIGNALED : v; };
+  const slice = () => typeof bakeSliceBudget === 'function' ? bakeSliceBudget() : bakePace.budget;
+  try {
+    Object.assign(bakePace, { on: true, ms: 12, budget: 5e6, rate: 0, pending: 0 });
+    const before = slice();
+    if (typeof bakeFence === 'function') { bakePace.pending = 5e6; bakeFence(); while (bakeMustWait && !bakeMustWait()) { bakePace.pending = 5e6; bakeFence(); } }
+    else bakePace.pending = 5e6;
+    const t0 = performance.now(); await bakePaceWait(); const waitMs = Math.round(performance.now() - t0);
+    return { before: +(before / 1e6).toFixed(2), after: +(slice() / 1e6).toFixed(2), waitMs };
+  } finally { gl.fenceSync = oF; gl.getSyncParameter = oS; Object.assign(bakePace, { budget: 8e6, pending: 0 }); }
 }"""
 
 
@@ -272,6 +294,8 @@ async def m7(p, opts):
         if not r['fill']: bad.append('自检没跑完（没有 fill）')
         r = await pg.evaluate(M7_LAT); info['等显卡有延迟'] = r
         if r['pacedMs'] > 2 * r['unpacedMs'] + 1000 or r['waits'] > r['frames'] * 2: bad.append(f"等显卡每次至少 17 ms 时分批烘焙 {r['pacedMs']} ms，不分批 {r['unpacedMs']} ms（{r['frames']} 帧、等了 {r['waits']} 次）：被等待拖慢了")
+        r = await pg.evaluate(M7_BUSY); info['显卡被占满'] = r
+        if r['after'] < 0.9 * r['before']: bad.append(f"等一个 500 万粒的批用了 {r['waitMs']} ms（模拟显卡被别的活占满）以后，每批的量从 {r['before']}M 变成 {r['after']}M 粒：被「等得久」压小了")
         if errs: bad.append('页面错误 ' + errs[0])
     finally: await b.close()
     return not bad, bad, info
