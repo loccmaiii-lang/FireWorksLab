@@ -73,8 +73,8 @@
 
 ## 7. 用户看结果
 
-- 用户只需 `git pull`、刷新 `tool/FireworkBaker.html`，看左栏「待我验收」；另有「制作中／已通过／历史」。
-- 条目数据由 `python3 analysis/scripts/review_to_baker.py` 生成；被取代版本进历史，不删。
+- 用户只需 `git pull`、刷新 `tool/FireworkBaker.html`，看左栏「待我验收」；另有「制作中／已通过」（4.3 起左栏只放当前版本，没有「历史」栏）。
+- 条目数据由 `python3 analysis/scripts/review_to_baker.py` 生成；被取代版本搬进 `归档/`（状态清单的历史、结果、任务一起搬），不删。
 - 审阅标记按「条目 + 版本指纹」存用户浏览器；用户用「复制我的意见」贴给 AI。
 - 视频不是交付物，默认不录，任务里不开 `video`。
 

@@ -1,0 +1,9 @@
+{
+ "id": "V5SE1",
+ "type": "export",
+ "effect": "trail_v5",
+ "entry": "V5S",
+ "name": "TrailS",
+ "priority": 9,
+ "note": "同 V5ME1（小档）。"
+}

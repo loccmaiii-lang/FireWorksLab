@@ -1,0 +1,15 @@
+{
+ "id": "SMOKE24",
+ "type": "smoke",
+ "state": true,
+ "tijian": true,
+ "tijian_only": "ef:",
+ "tijian_cap": true,
+ "tijian_limit": 40,
+ "fuhe": true,
+ "fuhe_effects": "hiki_nishiki,hongchao,qingning,jinmangju,trail_v5",
+ "fuhe_configs": "normal",
+ "name": "4.3.0 复核：界面状态（真烘焙）+ 条目体检 + 新页面打开",
+ "priority": 11,
+ "note": "4.3.0（一个渲染核、新面板、清理、渲染基础问题收尾）本机复核：界面状态检查 --real（K2 / L1 真烘焙）、左栏挨个打开不报错不超时（待验收的候选现在默认在引擎回放里打开，会多一次烘焙）、新页面打开组合效果不卡。不改东西。对话框15。"
+}
