@@ -112,6 +112,7 @@ $('#staleBake').addEventListener('click', () => bakeNow());
 $('#autoBakeChk').addEventListener('change', e => { setAutoBake(e.target.checked); flash(e.target.checked ? '自动烘焙：开（改参数停手后自动烘）' : '自动烘焙：关（改参数只更新实时模拟，按 B 烘焙）'); });
 $('#autoBakeChk').checked = autoBakeOn();
 setInterval(syncStale, 400); syncStale();
+setInterval(() => { try { curvesTick(); } catch (e) { console.error(e); } }, 250);     // 4.2.18 曲线视图：不靠绘制循环（暂停 / 后台标签页也会更新）
 requestAnimationFrame(loop);
 // 给命令行批量重烘（tool/batch_bake.mjs）和调试用
 // 参数覆盖里以 _ 开头的是脚本自己的（_ramp 渐变图、_psf 相机模糊），不进烘焙参数

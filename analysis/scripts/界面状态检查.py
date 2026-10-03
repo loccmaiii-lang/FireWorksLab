@@ -27,6 +27,8 @@
      烘到一半参数又变，这次直接丢掉（不等烘完再烘一遍）；自动烘焙开时改完自动烘、不收紧；多层导出不会拿到旧贴图；开关记住
   K2 按需烘焙 · 真烘焙（只在 --real）：真的显卡烘焙烘到一半改参数 → 这次作废、最后的贴图是最新参数、没有页面错误；自动烘焙关时按 B 烘到最新并收紧取景
   R1 「恢复到打开时」（单层）把被接力带动的另一层也恢复（10-03 复现：恢复第 1 层后第 2 层的延时点火还停在被带动的位置）
+  C1 曲线视图（4.2.18，只读）：单层 / 多层选中层，时间轴下面有 亮度 / 亮着的星 / 火花生成 / 火花寿命 / 星速度 / 颜色 六条；
+     改「火花起势」火花生成曲线的上升变慢、旧曲线留作对照；改「渐隐」亮度曲线末段变；悬停参数高亮对应曲线；开关、悬停都不触发烘焙；多层没选层时给提示
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -54,6 +56,14 @@ FAKE = r"""(() => {
   return 0;
 })()"""
 
+# 真烘焙（--real）时只记录每次烘焙用的参数（U1 等要看「最后一次烘的是什么」），不替换烘焙本身
+REC = r"""(() => {
+  window.__bakes = [];
+  const ob = bake;
+  bake = async (P, scale, onProg) => { const Pc = structuredClone(P); const b = await ob(P, scale, onProg); window.__bakes.push({ P: Pc, at: performance.now() }); return b; };
+  return 0;
+})()"""
+
 IDLE = "window.__fw.idle() && !state.baking && !(state.layerQueue && state.layerQueue.size) && $('#busy').hidden && !window.__opening"
 
 
@@ -77,7 +87,7 @@ async def fresh(p, b):
     await pg.add_init_script("window.requestAnimationFrame = () => 0;")
     await pg.goto(HTML, wait_until='load', timeout=0)
     await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
-    if not REAL: await pg.evaluate(FAKE)
+    await pg.evaluate(REC if REAL else FAKE)
     return ctx, pg, errs
 
 
@@ -605,14 +615,17 @@ async def k2(pg):
     await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
     t0 = time.time()
     await pg.evaluate("Object.assign(state.P, { texW: 1024, texH: 1024 }); onParam(); 0"); await idle(pg); one = time.time() - t0
-    await pg.evaluate("(() => { window.__ab = 0; const ob = bake; bake = async (...a) => { try { return await ob(...a); } catch (e) { if (e && e.abort) window.__ab++; throw e; } }; return 0; })()")
-    await pg.evaluate("state.P.stars += 9; onParam(); 0"); await pg.wait_for_timeout(int(380 + one * 350))
-    await pg.evaluate("state.P.stars += 4; onParam(); 0"); await idle(pg)
-    r = await pg.evaluate("({ want: state.P.stars, baked: state.bake && state.bake.P.stars, aborted: window.__ab, err: state.bakeError && state.bakeError.message })")
-    info['一次烘焙秒数'] = round(one, 2); info['烘到一半改参数'] = r
+    # 烘到一半改参数：在第一次进度回调（0 < p < 1）里改，保证真的「烘到一半」（本机显卡烘得快，按时间估会改在烘完之后）
+    await pg.evaluate("""(() => { window.__ab = 0; window.__hit = 0; const ob = bake;
+      bake = async (P, s, onProg) => { try { return await ob(P, s, p => { if (!window.__hit && p > 0 && p < 1) { window.__hit = 1; state.P.stars += 4; onParam(); } return onProg && onProg(p); }); }
+        catch (e) { if (e && e.abort) window.__ab++; throw e; } }; return 0; })()""")
+    await pg.evaluate("state.P.stars += 9; onParam(); 0"); await idle(pg)
+    r = await pg.evaluate("({ want: state.P.stars, baked: state.bake && state.bake.P.stars, aborted: window.__ab, hit: window.__hit, err: state.bakeError && state.bakeError.message })")
+    info['一次烘焙秒数（含 0.38 s 防抖）'] = round(one, 2); info['烘到一半改参数'] = r
     if r['baked'] != r['want']: bad.append(f"最后的贴图不是最新参数（{r['baked']} vs {r['want']}）")
     if r['err']: bad.append('烘焙报错：' + r['err'])
-    if one >= 0.8 and not r['aborted']: bad.append('烘焙要 %.1f 秒，烘到一半改参数没作废' % one)
+    if not r['hit']: bad.append('烘焙没有中间进度（没法在烘到一半时改参数）')
+    elif not r['aborted']: bad.append('烘到一半改参数，这次烘焙没作废')
     await pg.evaluate("setAutoBake(false); state.P.stars += 2; onParam(); 0"); await pg.wait_for_timeout(1500)
     r = await pg.evaluate("({ want: state.P.stars, baked: state.bake.P.stars, stale: bakeStale() })"); info['自动烘焙关 · 改参数'] = r
     if r['baked'] == r['want'] or not r['stale']: bad.append('自动烘焙关时改参数还是烘了 / 没标旧')
@@ -637,6 +650,74 @@ async def r1(pg):
     return ok, json.dumps({'打开时': o, '改第 1 层燃烧 1.0 后': m, '恢复第 1 层后': r}, ensure_ascii=False)
 
 
+async def wait_curves(pg, ms=15000):
+    t0 = time.time()
+    while time.time() - t0 < ms / 1000:
+        # 检查里关了绘制循环（requestAnimationFrame = 0），时间轴由 stageTick 建：这里手动走一拍
+        if await pg.evaluate("typeof curveInfo === 'function' && (stage2.last = 0, stageTick(curDuration()), curvesTick(), curveInfo().ready)"): return True
+        await pg.wait_for_timeout(150)
+    return False
+
+
+def rise_time(a, dt):
+    """火花生成曲线：从第一次 > 0 到第一次 ≥ 一半最大值用了多久（秒）"""
+    m = max(a) if a else 0
+    if m <= 0: return None
+    i0 = next(i for i, v in enumerate(a) if v > 0); i1 = next(i for i, v in enumerate(a) if v >= m / 2)
+    return (i1 - i0) * dt
+
+
+async def c1(pg):
+    bad, info = [], {}
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    await pg.evaluate("curvesShow(true); 0")
+    if not await wait_curves(pg): return False, '单层（菊）曲线没出来：' + json.dumps(await pg.evaluate("typeof curveInfo === 'function' ? curveInfo() : null"), ensure_ascii=False)
+    r = await pg.evaluate("curveInfo()"); info['菊'] = {k: r[k] for k in ('lanes', 'ms', 'max')}
+    if r['lanes'] != ['light', 'lit', 'spark', 'life', 'speed', 'color']: bad.append(f"曲线条目 {r['lanes']}")
+    dom = await pg.evaluate("[...document.querySelectorAll('#tlCurves .cvl')].map(l => [l.dataset.k, l.querySelector('canvas') ? l.querySelector('canvas').width : 0])")
+    if len(dom) != 6 or any(w <= 0 for _, w in dom): bad.append(f'曲线画布 {dom}')
+    if r['ms'] > 400: bad.append(f"算一次曲线 {r['ms']} ms（太慢）")
+    # 渐隐：末段亮度变
+    d0 = await pg.evaluate("curveData()"); f0 = await pg.evaluate("state.P.fade")
+    await pg.evaluate("state.P.fade = %s; onParam(); 0" % (0 if f0 > 0.2 else 0.6)); await pg.wait_for_timeout(500); await wait_curves(pg)
+    d1 = await pg.evaluate("curveData()")
+    n = len(d0['light']); tail = range(int(n * 0.45), int(n * 0.75))
+    diff = max(abs(d0['light'][i] - d1['light'][i]) for i in tail) if n else 0
+    info['渐隐 末段亮度差'] = round(diff, 3)
+    if diff < 0.05: bad.append('改渐隐，亮度曲线末段没变')
+    if not d1.get('base'): bad.append('改了参数，没有留「打开时」的曲线作对照')
+    # 开关、悬停不烘焙
+    nb = await pg.evaluate("window.__bakes.length")
+    await pg.evaluate("curvesShow(false); stage2.last = 0; stageTick(curDuration()); 0"); await pg.wait_for_timeout(300)
+    off = await pg.evaluate("document.querySelectorAll('#tlCurves .cvl').length")
+    await pg.evaluate("curvesShow(true); 0"); await wait_curves(pg)
+    await pg.evaluate("panelHelp(panelRows.find(r => Array.isArray(r[1]) && r[1][0] === 'sparkRate')[0]); 0"); await pg.wait_for_timeout(200)
+    hot = await pg.evaluate("[...document.querySelectorAll('#tlCurves .cvl.hot')].map(l => l.dataset.k)")
+    help_ = await pg.evaluate("$('#pHelp').textContent")
+    await pg.evaluate("panelHelp(null); 0")
+    info['悬停火花数量'] = hot
+    if off: bad.append('关掉曲线后还在')
+    if hot != ['spark']: bad.append(f'悬停「火花数量」高亮的是 {hot}（应为 spark）')
+    if '火花生成' not in help_: bad.append('悬停说明里没指到「火花生成」曲线')
+    if await pg.evaluate("window.__bakes.length") != nb: bad.append('开关曲线 / 悬停触发了烘焙')
+    # 多层：没选层 → 提示；选金锦层，改火花起势 → 上升变慢
+    await open_effect(pg, 'hiki_nishiki'); await pg.wait_for_timeout(600); await idle(pg)
+    await pg.evaluate("selectComboLayer(-1); stage2.last = 0; stageTick(curDuration()); curvesTick(); 0"); await pg.wait_for_timeout(600)
+    hint = await pg.evaluate("$('#tlCurves') ? $('#tlCurves').textContent : ''")
+    if '选' not in hint: bad.append(f'多层没选层时没有提示（{hint[:40]}）')
+    li = await pg.evaluate("state.layers.findIndex(L => { const P = layerEntryOf(L).P; return +P.ignDelay > 0.5 && +P.sparkRate > 0; })")
+    if li < 0: return False, '找不到金锦层'
+    await pg.evaluate(f"selectComboLayer({li}); 0"); await idle(pg); await wait_curves(pg)
+    a = await pg.evaluate("curveData()"); r0 = rise_time(a['spark'], a['dt'])
+    await pg.evaluate("state.P.sparkRamp = 0.4; state.P.sparkRampJit = 0; onParam(); 0"); await pg.wait_for_timeout(500); await wait_curves(pg)
+    b_ = await pg.evaluate("curveData()"); r1 = rise_time(b_['spark'], b_['dt'])
+    x0 = await pg.evaluate("curveInfo().x0"); want = await pg.evaluate(f"+state.layers[{li}].delay / curDuration()")
+    info['金锦层'] = {'起势 0 上升': r0, '起势 0.4 上升': r1, 'x0': x0, '层延迟比例': want}
+    if r0 is None or r1 is None or r1 - r0 < 0.12: bad.append(f'火花起势 0.4 s，火花生成曲线上升没变慢（{r0} → {r1}）')
+    if x0 is None or abs(x0 - want) > 1e-3: bad.append(f'曲线没按层延迟放到总时间上（{x0} vs {want}）')
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
+
+
 async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
@@ -646,7 +727,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

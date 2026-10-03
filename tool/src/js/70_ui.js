@@ -500,11 +500,12 @@ function rowMatches(row, it, sec, q) {
 }
 function panelHelp(row) {
   const h = $('#pHelp'); if (!h) return;
-  if (!row) { h.innerHTML = '<span class="ph-idle">悬停或点一个参数看完整说明 · 双击参数名恢复默认</span>'; return; }
+  if (!row) { h.innerHTML = '<span class="ph-idle">悬停或点一个参数看完整说明 · 双击参数名恢复默认</span>'; if (typeof curvesHot === 'function') curvesHot(null); return; }
   const it = row._it, B = panelBaseP(), k = Array.isArray(it) ? it[0] : it.sel || it.text;
+  const cvn = typeof curvesHot === 'function' ? curvesHot(k) : '';     // 4.2.18：高亮时间轴下方对应的曲线
   const unit = Array.isArray(it) && it[2] ? ` <small>${it[2]}</small>` : '', rng = Array.isArray(it) ? ` · 范围 ${it[3]}–${it[4]}` : '';
   const base = B && B[k] != null ? ` · 打开时 ${Array.isArray(it) ? fmtV(B[k], it[5]) : B[k]}` : '';
-  h.innerHTML = `<b>${row._lab}</b>${unit}<span class="ph-meta">${rng}${base}</span>${row._detail ? `<span class="ph-d">${row._detail}</span>` : ''}`;
+  h.innerHTML = `<b>${row._lab}</b>${unit}<span class="ph-meta">${rng}${base}</span>${row._detail ? `<span class="ph-d">${row._detail}</span>` : ''}${cvn ? `<span class="ph-cv">看时间轴下方 ${cvn} 曲线</span>` : ''}`;
 }
 function buildMasterPanel() {
   pviewInit();

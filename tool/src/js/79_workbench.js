@@ -472,7 +472,7 @@ function buildTlBars() {
     // 帧刻度：每一帧从哪个 tick 开始（密 = 帧率高）；换张的地方刻度长一点
     const comb = !sp || !x.b ? '' : bakeParts(x.b).map((s, pi) => (s.meta.times || []).map((t, f) => `<i class="fc${f === 0 && pi > 0 ? ' pg' : ''}" style="left:${pct(sp.at((s.meta.t0 || 0) + t))}%"></i>`).join('')).join('');
     return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><span class="tlb-n" data-i="${x.i}" title="${x.name}${state.tab === 'combo' ? '（点一下切到这一层）' : ''}">${state.tab === 'combo' ? x.i + 1 + ' · ' : ''}${x.name}</span><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
-  }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>'
+  }).join('') + '<div class="tlcv" id="tlCurves"></div><span class="tlb-ph" aria-hidden="true"></span>'
     + `<div class="tlcut">${P ? `<button type="button" class="mini" data-cut="in" title="把当前时刻设成入点：帧预算从这里开始分配">设为入点</button><button type="button" class="mini" data-cut="out" title="把当前时刻设成出点">设为出点</button><button type="button" class="mini" data-cut="clear">清除</button>
       <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动（第一次看得见）'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动（最后看得见）'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') : ''}</span>`
       : ''}<span class="tlhelp">上排圆点 = 星（点火、燃烧结束…），中间菱形 = 火花（开始、停；空心 = 默认位置，拖动就打开），下方白色把手 = 入点 / 出点，都能左右拖；细刻度 = 每一帧从哪个 tick 开始。${state.tab === 'combo' ? '点轨道切到那一层；同一批星的几层在同一时刻的点连在一起动（接力）。' : ''}拖燃烧结束等，序列时长跟着变</span></div>`;
@@ -485,6 +485,7 @@ function buildTlBars() {
   const phn = phs.filter(q => !q.auto);
   if (phn.length) host.querySelector('.tlcut').insertAdjacentHTML('beforeend', `<span class="phl">${phn.map(q => `<i class="ph-${q.k}"></i>${q.lab} ${q.t.toFixed(2)} s`).join(' · ')}</span>`);
   document.querySelectorAll('[data-info=outSummary]').forEach(r => r._refresh && r._refresh());
+  curveSt.drawSig = ''; curvesMount();          // 4.2.18 曲线视图跟着时间轴重建
 }
 // 拖层轨道（用户 2026-10-02 14:46：「每层轨道出入点我看到了，但是没法拖」）：任何一层的入点 / 出点把手、阶段点都能直接拖。
 // 多层时按下就切到那一层（右栏换成那一层的参数）；拖的时候只移动把手，松手才改参数、只重烘那一层。
