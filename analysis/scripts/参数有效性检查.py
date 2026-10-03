@@ -68,10 +68,11 @@ PAGE = r"""async (o) => {
           if (k === 'shellNo') applyShellNo(P, nv); else P[k] = nv;
           derive(P);
           for (const c of diffCurves(b.c, await curves(P))) if (!r.curve.includes(c)) r.curve.push(c);
-          if (r.curve.length && !render) break;          // 曲线变了就够了（帧计划要跑一遍完整测量，慢，只给曲线没变的参数算）
+          // 一个值有反应就够了；按便宜到贵：曲线 → 帧计划（要跑一遍完整测量）→ 画面（要渲染）
+          if (r.curve.length) break;
           r.plan = r.plan || (stable ? planSig(P) !== b.p : false);
-          if (render) { const s = await still(P); const px = s.map((x, j) => x === b.s[j] ? 0 : 1); r.pix = r.pix ? r.pix.map((x, j) => x || px[j]) : px; if (px.some(Boolean)) r.png = s; }
-          if (r.curve.length || r.plan || (r.pix && r.pix.some(Boolean))) break;   // 一个值有反应就够了
+          if (r.plan) break;
+          if (render) { const s = await still(P); const px = s.map((x, j) => x === b.s[j] ? 0 : 1); r.pix = r.pix ? r.pix.map((x, j) => x || px[j]) : px; if (px.some(Boolean)) { r.png = s; break; } }
         }
       } catch (e) { r.err = String(e && e.message || e); }
       out.push(r);
