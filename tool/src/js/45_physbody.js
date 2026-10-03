@@ -47,7 +47,7 @@ function makePhysBodyRenderer(P) {
         const L = flL, n = 32, fl = 1 + 0.12 * Math.sin(6.2831853 * 7 * ts / Tp) * Math.sin(6.2831853 * 3 * ts / Tp + 1.1);
         let ws = 0; const ww = []; for (let i = 0; i < n; i++) { const q = (i + 0.5) / n, v = Math.exp(-3 * q) * (1 - Math.exp(-q * 18)); ww.push(v); ws += v; }
         const yh = V * ts - anchorY; let k = 0;
-        for (let i = 0; i < n; i++) { const q = (i + 0.5) / n; bufH[k++] = 0; bufH[k++] = yh - q * L; bufH[k++] = ww[i] / ws * (P.phFlI || 1) * fl; bufH[k++] = 2 * (P.phFlW || 0.15) * (0.55 + 0.9 * q); }
+        for (let i = 0; i < n; i++) { const q = (i + 0.5) / n; bufH[k++] = 0; bufH[k++] = yh - q * L; bufH[k++] = ww[i] / ws * (P.phFlI == null ? 1 : +P.phFlI) * fl; bufH[k++] = 2 * (P.phFlW || 0.15) * (0.55 + 0.9 * q); }
         PT_SPAN = 10; drawPoints(bufH, k / 4, view, ppm, [1, 0, 0, 0], w); PT_SPAN = 0;
       }
       // 火星

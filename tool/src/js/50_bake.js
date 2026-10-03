@@ -49,7 +49,9 @@ function makeRenderer(P, kind) {
         if (ts < lastTs - 1e-6) rewind(ts);
         lastTs = ts;
         while (sim.t < ts - 1e-9) sim.step(H_STEP);
-        [nh, nt] = sim.gather(bufH, bufT);
+        // 4.3（渲染基础问题 E8）：物理步是 1/480 s，走到的 sim.t 可能比子样本时刻晚最多 2 ms；GPU 火花按精确的 ts 算，星头以前按 sim.t 画，
+        // 150 m/s 时和尾迹错开约 0.3 m。现在星头按速度回推到 ts（和实时模拟同一个 gatherBack）。单元序列的随体坐标按 sim.t 的星算，照旧。
+        [nh, nt] = sim.noSparks && !unit && sim.t - ts > 1e-9 ? sim.gatherBack(bufH, bufT, sim.t - ts) : sim.gather(bufH, bufT);
       }
       const xf = unit ? R.xfAt() : null;
       let l = 0; for (let i = 0; i < nh; i++) l += bufH[i * 4 + 2]; for (let i = 0; i < nt; i++) l += bufT[i * 4 + 2] * 0.3;
@@ -136,7 +138,8 @@ function fitGrid(P, box) {
   }
   return best ? { ...P, cols: best.c, rows: best.r } : P;
 }
-function unitDuration(P) { return +(P.burn + (P.ignDelay || 0) + P.sparkLife * 1.6 + 0.1).toFixed(3); }
+// 4.3（H2）：加上第二段（afterBurn，按随机的上限），以前第二段长的层导出单束会被截掉
+function unitDuration(P) { return +(P.burn + (P.ignDelay || 0) + (+P.afterBurn > 0 ? +P.afterBurn * (1 + (+P.afterJit || 0) / 100) : 0) + P.sparkLife * 1.6 + 0.1).toFixed(3); }
 function loopPlan(P, box, Tp) {
   const L = layoutOf(P), a = L.cellW / L.cellH;
   const W0 = 2 * Math.max(-box[0], box[1]), H0 = box[3] - box[2];
@@ -266,7 +269,8 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   gl.activeTexture(gl.TEXTURE0);
   fH.dispose(); fT.dispose(); sst.dispose();
   const bakeMs = performance.now() - t0;
-  const b = { N, NH, cw, chh, scale, head, tail, P, meta: { ...pl, noFade: !!extra.noFade, quality: q, expoH: eH, expoT: eT, sparkSlots: R.slots || 0, bakeMs } };
+  const sm = R.sim, drop = { heads: (sm && sm.dropH) || 0, sparks: (sm && sm.sp && sm.sp.dropped) || 0, stars: (R.track && R.track.dropStars) || 0 };
+  const b = { N, NH, cw, chh, scale, head, tail, P, meta: { ...pl, noFade: !!extra.noFade, quality: q, expoH: eH, expoT: eT, sparkSlots: R.slots || 0, bakeMs, ...(drop.heads || drop.sparks || drop.stars ? { drop } : {}) } };
   await analyze(b);
   return b;
 }
@@ -309,7 +313,10 @@ async function analyze(b) {
   const chanUse = []; if (L.chans === 4) for (let c = 0; c < 4; c++) chanUse.push(cellMax.slice(c * L.per, (c + 1) * L.per).some(v => v > 0));
   const emptyMid = cellMax.map((v, i) => v === 0 && i < L.F - darkTail ? i : -1).filter(i => i >= 0 && i > 0);
   const clipFrames = clip.map((c, i) => c > 0.02 ? i : -1).filter(i => i >= 0);
-  const edgeFrames = edge.map((e, i) => e > 8 ? i : -1).filter(i => i >= 0);
+  // 4.3（G2）：碰边按回放检查的口径（留边以内两圈的亮度占这一帧的 ≥ 0.5%，edge12）；以前看格子最外 1 像素，留边遮罩把它压成 0，永远报「没碰边」
+  let edgeFrames;
+  if (edge12.length === L.F) { let k = 0; while (k < 8 && edge12.every(r => !r[1 + k])) k++; edgeFrames = edge12.map((r, i) => r[0] && (r[1 + k] + r[2 + k]) / r[0] >= FIT_RING ? i : -1).filter(i => i >= 0); }
+  else edgeFrames = edge.map((e, i) => e > 8 ? i : -1).filter(i => i >= 0);
   let seam = null;
   if (m.loop && L.F > 2) { const mean = diffs.reduce((a, c) => a + c, 0) / diffs.length; seam = mean > 0 ? diff(sig[L.F - 1], sig[0]) / mean : 0; }
   if (measureImg) m.imgRows = rows;
@@ -389,7 +396,17 @@ function disposeBake(b) { if (b) { b.head.dispose(); b.tail && b.tail.dispose();
 async function refineBake(b, onProg) {
   if (!b || !b.meta || !b.meta.plan || b.meta.fitted || !b.srcP || b.srcP.fitFrame === 0) return null;
   const fp = fitPlan40(b.srcP, b.meta.plan, bakeParts(b));
-  if (!fp) { b.meta.fitted = { mode: 'none' }; return null; }
+  if (!fp) {
+    // 收不紧：看是不是烘出来就碰边了，碰了就放大取景重烘（growPlan40，最多两次）
+    let gp = growPlan40(b.srcP, b.meta.plan, bakeParts(b)), nb = null;
+    while (gp) {
+      const next = await bakeMaster(b.srcP, b.scale || 1, p => onProg && onProg(p), { fm: b.fm, pl: gp });
+      if (nb) disposeBake(nb); nb = next;
+      gp = growPlan40(b.srcP, gp, bakeParts(nb));
+    }
+    if (nb) { bakeParts(nb).forEach(s => { s.meta.fitted = s.meta.fitted || { mode: 'grow' }; }); onProg && onProg(1); return nb; }
+    b.meta.fitted = { mode: 'none' }; return null;
+  }
   let nb = await bakeMaster(b.srcP, b.scale || 1, p => onProg && onProg(p * .6), { fm: b.fm, pl: fp });
   const near = fitTouches40(b.srcP, bakeParts(b), bakeParts(nb));
   if (!near.length) { onProg && onProg(1); return nb; }
@@ -412,7 +429,6 @@ async function bakeFinal(P, scale, onProg) {
 // 大面片母版（可只取 [ta, tb] 一段）
 async function bakeMaster(P, scale, onProg, opt = {}) {
   let fm = opt.fm || measure(P);
-  if (P.frameMode === 'content' && !opt.fm) fm = { ...fm, chg: await changeProfile(P, fm) };
   const ta = opt.ta || 0, tb = opt.tb == null ? P.duration : opt.tb;
   const R = makeRenderer(P, 'burst');let first=null,last=null;
   try {
@@ -465,15 +481,6 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
   } catch(e){if(first)disposeBake(first);throw e;} finally { R.dispose(); }
 }
 // 第一遍：均匀取 48 帧低分辨率烘焙，得到每秒画面变化量
-async function changeProfile(P, fm) {
-  const Pq = { ...P, frameMode: 'uniform', texW: 512, texH: 512, cols: 8, rows: 6, chans: 1, outMode: 'combined', cellPad: 0 };
-  const pl = plan(Pq, fm), R = makeRenderer(Pq, 'burst');
-  try {
-    const b = await bakeFrames(Pq, 1, null, pl, R);
-    const d = b.meta.frameDiffs, dt = P.duration / pl.L.F, out = [[0, (d[0] || 0) / dt]];
-    d.forEach((x, i) => out.push([(i + 1.5) * dt, x / dt])); disposeBake(b); return out;
-  } finally { R.dispose(); }
-}
 // 分段母版：按实际帧数分配贴图（帧计划自动分页，3.7 的「开花段 + 下垂段两张」去掉了）
 async function bakeSegments(P, scale, onProg) { return bakeMasterLead(P, scale, onProg); }
 // 包络关键帧：≤ maxN 个线性关键帧，且整条折线不低于采样值（保证内容不被裁掉）

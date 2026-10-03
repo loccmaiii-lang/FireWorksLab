@@ -118,6 +118,17 @@ class Pack:
         sb = self.mods.get('SizeByLife'); m = np.array(curve(sb['LifeMultiplier'], u), float)[:2] if sb else np.ones(2)
         return s0 * m       # 面片宽高（cm）
 
+    def offset(self, u):
+        """面片中心相对爆点（发射器原点）的偏移（cm，x 右、y 上）：InitialLocation 的 X / Z + Pivot Offset（4.3 固定取景用 Pivot 对齐爆点）。
+        只算面向相机的面片（Rectangle）；速度对齐的尾缀面片沿弹道走，这里不模拟运动，照旧摆在中心"""
+        if self.e['required'].get('screen_alignment', 'Rectangle') != 'Rectangle': return 0.0, 0.0
+        loc = self.mods.get('InitialLocation'); x, z = 0.0, 0.0
+        if loc: c = np.asarray(curve(loc['StartLocation'], 0), float); x, z = float(c[0]), float(c[2])
+        pv = self.e['required'].get('pivot_offset')
+        if pv:
+            w, h = self.size(u); x += (0.5 + float(pv[0])) * w; z += (-0.5 - float(pv[1])) * h
+        return x, z
+
     def rgb(self, v, u):
         """材质：ramp(v) · v · Color Over Life（和烘焙器「导出效果」同一公式，不含曝光倍数）"""
         if self.ramp is not None:
@@ -167,7 +178,7 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
         finally: cap.release()
     samples = list(times_s) if times_s is not None else [fr * span for fr in times]
     if any(t < 0 or t > span + 1e-6 for t in samples): raise ValueError('采样超出素材或参考有效时间')
-    world = max(max(p.size(u).max() for u in np.linspace(0, 1, 21)) for p in packs) * 1.05     # 画面边长（cm）
+    world = max(max(p.size(u).max() + 2 * max(map(abs, p.offset(u))) for u in np.linspace(0, 1, 21)) for p in packs) * 1.05     # 画面边长（cm）；4.3：算上各层的偏移
     rep = dict(total_s=round(T, 3), sample_times_s=samples, sample_span_s=span, layers=[])
     rows = [[] for _ in range(len(packs) + 1)]
     for p in packs:   # 逐帧自动检查
@@ -246,12 +257,12 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
                 u = age / p.life; v = p.cell(p.frame_at(u)); w, h = p.size(u) / world * px
                 w, h = max(2, int(round(w))), max(2, int(round(h)))
                 im = np.array(Image.fromarray((v * 255).astype(np.uint8)).resize((w, h), Image.BILINEAR), np.float32) / 255
-                col = p.rgb(im, u); x0, y0 = (px - w) // 2, (px - h) // 2
+                ox, oz = p.offset(u); col = p.rgb(im, u); x0, y0 = (px - w) // 2 + int(round(ox / world * px)), (px - h) // 2 - int(round(oz / world * px))     # 4.3（G1②）：按 InitialLocation / Pivot 摆层
                 xa, ya, xb, yb = max(0, x0), max(0, y0), min(px, x0 + w), min(px, y0 + h)
                 lay[ya:yb, xa:xb] += col[ya - y0:yb - y0, xa - x0:xb - x0]
             acc += lay; rows[li + 1].append(lay)
         rows[0].append(acc)
-    def tone(a): return (np.clip(1 - np.exp(-a * 1.5), 0, 1) ** (1 / 2.2) * 255).astype(np.uint8)
+    def tone(a): return (np.clip(1 - np.exp(-a), 0, 1) ** (1 / 2.2) * 255).astype(np.uint8)     # 4.3（A6②）：rgb() 已经乘了自发光 ×4，和烘焙器引擎回放一样只做 1 − e^(−x)；以前多乘 1.5
     refs = ref_frames(ref, samples, px) if ref else None
     if refs: rows.insert(0, refs)
     W = px * len(samples); H = px * len(rows)

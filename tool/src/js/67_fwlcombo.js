@@ -22,7 +22,8 @@ function comboEntries(layers, mobile) {
 // 单束层（PC）：每颗星一个 Velocity 对齐的面片，贴图 = 一颗代表星的序列（星头 + 拖尾，bakeUnit），轨迹交给 Cascade（球面放射 + 线性阻力 + 恒定加速度，m.fit）。
 // 和 65_cascade.js 的单元序列参数表同一套数；层的缩放 × 长度，时间倍率 ÷ 时间。CPU 发射器（GPU Sprites 对动态参数帧号的支持没在 UE 验证过）
 function fwlUnit(name, b, M, L) {
-  const m = b.meta, P = b.P, f = m.fit, r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1, Du = m.duration, jit = clamp((+P.burnJit || 0) / 100, 0, 0.5), Lg = m.L, R = 10 * sc;
+  // 4.3（H10）：模拟里寿命、初速的随机是正态（σ = 寿命随机 / 初速随机 %），Cascade 只有均匀分布 → 取同方差的均匀范围 ±√3σ；风按线性阻力折成 X 加速度（k × 风速）。湍流没有（单束近似）
+  const m = b.meta, P = b.P, f = m.fit, r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1, Du = m.duration, jit = clamp(Math.sqrt(3) * (+P.burnJit || 0) / 100, 0, 0.7), vj = clamp(Math.sqrt(3) * (+P.speedJit || 0) / 100, 0, 0.7), Lg = m.L, R = 10 * sc;
   const xy = (() => { const us = [...new Set([...m.sizeKeysX, ...m.sizeKeysY].map(k => +k[0]))].sort((a, c) => a - c); return us.map(u => [r4(u), [r4(evalKeys(m.sizeKeysX, u)), r4(evalKeys(m.sizeKeysY, u)), 1]]); })();
   return {
     textures: { seq: { file: TN(name) + '.png', class: 'flipbook', cols: Lg.cols, rows: Lg.rows, channels: Lg.chans, frames: Lg.F }, cutout: { file: TN(name, 'Cutout') + '.png', class: 'cutout' }, ramp: { file: TN(name, 'Ramp') + '.png', class: 'ramp' } },
@@ -35,9 +36,9 @@ function fwlUnit(name, b, M, L) {
         { m: 'Lifetime', Lifetime: { uniform: [r4(Du * (1 - jit) / r), r4(Du * (1 + jit) / r)] } },
         { m: 'InitialSize', StartSize: { const: [r1(m.Ww * 100 * sc), r1(m.Wh * 100 * sc), 1] } },
         { m: 'SizeByLife', LifeMultiplier: { curve: xy }, MultiplyX: true, MultiplyY: true, MultiplyZ: false },
-        { m: 'SphereLocation', StartRadius: { const: r1(R) }, VelocityScale: { const: r4(f.v0 * 100 * sc * r / R) }, SurfaceOnly: true, Velocity: true },
+        { m: 'SphereLocation', StartRadius: { const: r1(R) }, VelocityScale: vj > 0 ? { uniform: [r4(f.v0 * 100 * sc * r / R * (1 - vj)), r4(f.v0 * 100 * sc * r / R * (1 + vj))] } : { const: r4(f.v0 * 100 * sc * r / R) }, SurfaceOnly: true, Velocity: true },
         { m: 'Drag', DragCoefficientRaw: { const: r4(f.k * r) } },
-        { m: 'ConstAcceleration', Acceleration: [0, 0, r1(-f.a * 100 * sc * r * r)] },
+        { m: 'ConstAcceleration', Acceleration: [r1((+P.wind || 0) * f.k * 100 * sc * r * r), 0, r1(-f.a * 100 * sc * r * r)] },
         { m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(m.keys, Lg.F) } } },
         { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, Du, 0, M.headInt || 1) }, AlphaOverLife: { const: 1 } }
       ],
@@ -136,7 +137,7 @@ function dotsTables(e, L) {
 }
 function fwlCombo(name, layers, mobile = false) {
   const out = { format: FWL_FORMAT, name, platform: mobile ? 'mobile' : 'pc',
-    source: { tool: '烟花母版烘焙器 ' + VERSION, combo: true, layers: layers.map(({ L, b, dots, unit }) => ({ type: b.P.type, form: dots ? 'dots' : unit ? 'unit' : b.form, renderVer: 40 })) },
+    source: { tool: '烟花母版烘焙器 ' + VERSION, combo: true, layers: layers.map(({ L, b, dots, unit }) => ({ type: b.P.type, form: dots ? 'dots' : unit ? 'unit' : b.form, renderVer: 40 })) },     // plan_sig 在下面所有发射器都放好以后写
     textures: {}, materials: {}, emitters: [], system: { preview_distance_cm: 30000, preview_warmup_s: 1.2 }, notes: [] };
   layers.forEach(({ L, b, i: li, dots, unit }, k) => {
     const i = li == null ? k : li, pre = `L${i + 1}_`;
@@ -172,6 +173,7 @@ function fwlCombo(name, layers, mobile = false) {
     out.system.preview_distance_cm = Math.max(out.system.preview_distance_cm, body.system.preview_distance_cm * sc);
   });
   out.notes.push('多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。');
+  out.source.plan_sig = fwlPlanSig(out.emitters);
   return out;
 }
 // 组合导出用的层烘焙：分开输出（星头 / 拖尾两张）的层在素材包里改成合并输出，和引擎材质（灰度查 Ramp）一致

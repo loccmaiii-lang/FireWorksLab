@@ -582,6 +582,10 @@ async def k1(pg):
     await pg.evaluate(K1_FAKE)
     # 单层
     await open_effect(pg, 'jinmangju'); await settle(pg)
+    # 4.3（渲染基础问题 F3）：待验收的候选打开时在引擎回放；下面先切回实时模拟再测
+    v = await pg.evaluate("state.view"); info['打开候选时的视图'] = v
+    if v != 'export': bad.append(f'待验收候选打开时不在引擎回放（{v}）')
+    await pg.click('#viewSeg button[data-view=live]'); await settle(pg)
     await pg.evaluate("setAutoBake(false); 0")
     n0 = await pg.evaluate("__k.done.length")
     await pg.evaluate("state.P.stars = (state.P.stars || 100) + 7; onParam(); 0"); await pg.wait_for_timeout(1500)

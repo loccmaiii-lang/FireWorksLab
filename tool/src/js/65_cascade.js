@@ -102,7 +102,7 @@ Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm（${m.tight ? '最大尺�
 ${m.tight ? tightLines(m) : m.zoom ? `Initial Location：0（爆点就是精灵中心）
 Size By Life（X、Y 相同；线性插值）：面片随开花放大，每帧贴图按同一条曲线烘焙
   相对时间    倍数
-${keyLines(m.sizeKeys)}` : `Initial Location：Z = ${cm(m.cy)} cm（精灵中心相对爆点的高度，这样爆点正好在发射器原点）`}
+${keyLines(m.sizeKeys)}` : Math.abs(+m.cy || 0) > 1e-4 ? `Initial Location：0；Required → Pivot Offset = (−0.5, ${fx(-0.5 - m.cy / m.Wh, 4)})（爆点在贴图里的位置：面片中心比爆点高 ${cm(m.cy)} cm；面片总是面向相机，用 Pivot 对齐仰视时也不错位；未经 UE 验证）` : `Initial Location：0（爆点就是精灵中心）`}
 Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号；Use Emitter Time 不勾选；曲线插值 Linear
   相对时间    帧号
 ${keyLines(fwlFrameKeys(m.keys, m.L.F))}
@@ -118,8 +118,8 @@ ${pasteSection([
     ['Initial Velocity → Start Velocity → Distribution Vector Constant → Constant', ueVec(m.path.vx * 100, 0, m.path.vy * 100)],
     ['Const Acceleration → Acceleration', ueVec(m.path.ax * 100, 0, -m.path.ay * 100)]]
    : m.zoom ? [['Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points', ueVecPts(m.sizeKeys.map(([u, v]) => [u, [v, v, 1]]))]]
-   : [['Initial Location → Start Location → Distribution Vector Constant → Constant', ueVec(0, 0, m.cy * 100)]]),
-  ['Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(fwlFrameKeys(m.keys, m.L.F))],
+   : Math.abs(+m.cy || 0) > 1e-4 ? [['Required → Pivot Offset', `(X=${ue6(-0.5)},Y=${ue6(-0.5 - m.cy / m.Wh)})`]] : []),
+  ['Dynamic Parameter → 帧号参数（按导入配置，实测第 0 个）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(fwlFrameKeys(m.keys, m.L.F))],
   ['Color Over Life → Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）', ueVecPts(colorKeys(M, m.duration, m.t0 || 0).map(([u, c]) => [u, c.map(x => x * (M.headInt || 1))]))]
 ])}【帧与流畅度${label || ''}】
 平均 ${fx(m.avgFps, 1)} fps，最低 ${fx(m.minFps, 1)} fps，每帧最大位移 ${fx(m.maxDisp, 1)} 像素（建议 ≤ 3）
@@ -150,12 +150,12 @@ Drag：Drag Coefficient = ${fx(f.k, 3)}
 Const Acceleration：Z = ${cm(-f.a)} cm/s²${P.wind ? `；X = ${cm(f.k * P.wind)} cm/s²（风：线性阻力下风速 × 阻力系数）` : ''}
 ${P.turb > 0 ? `Orbit（湍流近似）：Offset Amount X、Y 在 ±${cm(orbitA)} cm 内随机；Rotation Rate X、Y 在 ±${fx(orbitF, 2)} 圈/秒内随机\n` : ''}Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号；曲线插值 Linear
   相对时间    帧号
-${keyLines(m.keys)}
+${keyLines(fwlFrameKeys(m.keys, m.L.F))}
 ${colorSection(M, Du, 0, !!b.tail)}
 ${pasteSection([
   ['Initial Size → Start Size → Distribution Vector Constant → Constant', ueVec(m.Ww * 100, m.Wh * 100, 1)],
   ['Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points', ueVecPts(mergeXY(m.sizeKeysX, m.sizeKeysY))],
-  ['Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(fwlFrameKeys(m.keys, m.L.F))],
+  ['Dynamic Parameter → 帧号参数（按导入配置，实测第 0 个）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(fwlFrameKeys(m.keys, m.L.F))],
   ['Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）', ueVecPts(colorKeys(M, Du, 0).map(([u, c]) => [u, c.map(x => x * (M.headInt || 1))]))]
 ])}轨迹拟合（线性阻力 + 恒定加速度 对 真实二次阻力）：初速 ${fx(f.v0, 1)} m/s，阻力 ${fx(f.k, 3)} /s，下坠加速度 ${fx(f.a, 2)} m/s²，
   位置误差约为花半径的 ${fx(f.err * 100, 1)}%。开花闪光请另挂一个短序列（母版模式导出前 0.3 s）或项目现有闪光贴图。
@@ -232,7 +232,7 @@ ${pasteSection([
   ['Initial Velocity → Start Velocity → Distribution Vector Constant → Constant', ueVec(0, 0, f.v0 * 100)],
   ['Const Acceleration → Acceleration', ueVec(0, 0, -981)],
   ['Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points', ueVecPts(m.sizeKeysRise.map(([u, v]) => [u, [1, v, 1]]))],
-  ['Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(sawKeys(m, T))],
+  ['Dynamic Parameter → 帧号参数（按导入配置，实测第 0 个）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(sawKeys(m, T))],
   ['Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘亮度倍数 ×' + P.trBright + '）', ueVecPts(colorKeys(M, T, 0).map(([u, c]) => [u, c.map(x => x * P.trBright)]))]
 ])}
 2）开花后消散（二选一）
@@ -242,12 +242,12 @@ Spawn：Burst Count = 1；Lifetime = 消散时长
 Initial Location：Z = ${cm(f.H)} cm（开花点）
 Initial Velocity：Z = 1 cm/s（只给面片定方向；不要 Drag、Const Acceleration）。斜着发射时改成与上升末段相同的方向
 Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh * last)} cm（= 上升最后的 Y 倍数 ${fx(last, 3)} × ${cm(m.Wh)} cm）
-Dynamic Parameter 帧号通道 = 帧号（Linear）：0 → ${F}
+Dynamic Parameter 帧号通道 = 帧号（Linear）：0 → ${F - 0.01}（总帧数 − 0.01，到总帧数会从第 0 帧重来）
 Color Over Life：同上
 ${pasteSection([
   ['Initial Location → Start Location → Distribution Vector Constant → Constant', ueVec(0, 0, f.H * 100)],
   ['Initial Size → Start Size → Distribution Vector Constant → Constant', ueVec(m.Ww * 100, m.Wh * last * 100, 1)],
-  ['Dynamic Parameter → 第三个参数（帧号）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts([[0, 0], [1, F - 0.001]])]
+  ['Dynamic Parameter → 帧号参数（按导入配置，实测第 0 个）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts([[0, 0], [1, F - 0.01]])]
 ])}
 接力：上升结束时循环正好播到第 ${m.fEnd} 帧；消散第 0 帧就是这一帧（逐像素差值 ${m.relay.join(' / ')}），
   之后星头熄灭，火花不再喷出，已有的火花从下往上逐颗冷却熄灭。
@@ -263,7 +263,7 @@ Lifetime：${fx(m.duration, 3)} s（常量，必须等于循环周期）
 Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm
 Initial Location：Z = ${cm(m.cy)} cm（精灵中心离地高度；发射器放在地面喷口处）
 Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号；Linear
-${keyLines(m.keys)}
+${keyLines(fwlFrameKeys(m.keys, m.L.F))}
   ${m.L.F} 帧均匀分布，第 ${m.L.F} 帧就是下一循环的第 0 帧，所以首尾无缝。
 ${colorSection(M, m.duration, 0, !!b.tail)}
 Light（可选）：常量亮度，按项目曝光设
@@ -306,15 +306,17 @@ function checkSection(b) {
     const c = s.meta.check, m = s.meta, L = m.L, pre = b.next ? `段 ${bakeSegmentName(b,i)}：` : '';
     if (!c) continue;
     if (m.fill) lines.push(`${pre}画面占比：平均 ${Math.round(m.fill.avg * 100)}%，最差 10% 的帧 ≥ ${Math.round(m.fill.p10 * 100)}%${m.fill.avg < 0.9 ? '（紧凑取景已禁用：引擎里会抖；想更满可以减少留边或改随开花放大）' : ''}`);
-    lines.push(`${pre}过曝：${c.clipFrames.length ? `第 ${c.clipFrames.slice(0, 8).map(f => f + 1).join('、')}${c.clipFrames.length > 8 ? '…' : ''} 帧超过 2% 像素顶到 255，可降低星头亮度或改 Gamma 2.2` : '无'}`);
+    lines.push(`${pre}过曝：${c.clipFrames.length ? `第 ${c.clipFrames.slice(0, 8).map(f => f + 1).join('、')}${c.clipFrames.length > 8 ? '…' : ''} 帧超过 2% 像素顶到 255，可降低星头亮度或曝光（Gamma 2.2 编码 UE 材质里不还原，未经 UE 验证前别用）` : '无'}`);
     lines.push(`${pre}边缘渗色：${c.edgeFrames.length ? `${c.edgeFrames.length} 帧内容碰到格子边缘，mip 或压缩时会串到相邻格子；加大「格子留边」或序列时长内缩小取景` : `无（留边 ${s.P.cellPad} 像素）`}`);
     if (L.chans === 4) lines.push(`${pre}通道布局：${c.chanUse.map((u, k) => 'RGBA'[k] + (u ? ' 有内容' : ' 空')).join('，')}${c.chanUse.some(u => !u) ? '；有空通道，可减少帧数或改单通道' : ''}`);
     if (c.emptyMid.length) lines.push(`${pre}中间有 ${c.emptyMid.length} 帧全黑（如延时点火的暗段），属正常，可考虑缩短`);
-    lines.push(`${pre}近似帧：${c.similar} 对相邻帧几乎相同${c.similar > L.F * 0.15 ? `，可把「取帧」改成「按画面变化」自动合并` : ''}`);
+    lines.push(`${pre}近似帧：${c.similar} 对相邻帧几乎相同`);
     if (m.darkTail > L.F * 0.05) lines.push(`${pre}末尾 ${m.darkTail} 帧接近全黑，可把序列时长缩短到约 ${fx(m.times[L.F - m.darkTail])} s`);
     if (m.minFps < 24 && !m.loop) lines.push(`${pre}最低帧率 ${fx(m.minFps, 1)} fps，尾段可能发卡：可增加格子数或缩短序列时长`);
     if (m.maxDisp > 3) lines.push(`${pre}每帧最大位移 ${fx(m.maxDisp, 1)} 像素，开花初期可能跳帧：可增加格子数或调高最低帧率`);
     if (c.seam != null) lines.push(`${pre}循环接缝：${fx(c.seam, 2)}（≈1 无缝）`);
+    if (m.drop) lines.push(`${pre}超出上限没画：星 ${m.drop.stars} 颗、星头缓冲 ${m.drop.heads ? '满' : '没满'}、CPU 火花池 ${m.drop.sparks ? '满' : '没满'}（贴图里缺了这部分）`);
+    if (i === 0 && m.budget && m.budget.strobeAlias) lines.push(`点灭混叠：最快的星约 ${m.budget.strobeAlias} Hz，序列最高 30 fps 追不上（会看成慢闪）；建议降低点灭频率，或这一层改成粒子`);
   }
   return `【自检】\n${lines.map(l => '  ' + l).join('\n')}`;
 }

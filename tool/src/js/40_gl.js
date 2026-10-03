@@ -395,7 +395,7 @@ function buildTrackRun(P) {
     if (st.rate > 0 && deathAt > born) { const Bc = deathAt - born, c = Math.ceil(Math.max(0, st.rate * Bc + a * Bc * Bc)) + 1; M = Math.max(M, c); total += c; }
   }
   gl.activeTexture(gl.TEXTURE0);
-  return { pos: floatTex(Ns, nStars, pos), vel: floatTex(Ns, nStars, vel), info: floatTex(1, nStars, info), nStars, M, Ns, dt, total, P };
+  return { pos: floatTex(Ns, nStars, pos), vel: floatTex(Ns, nStars, vel), info: floatTex(1, nStars, info), nStars, M, Ns, dt, total, P, dropStars: Math.max(0, sim.all.length - nStars) };     // dropStars：超过显卡贴图边长没上传的星（E9）
 }
 function deleteTrackTex(tr) { gl.deleteTexture(tr.pos); gl.deleteTexture(tr.vel); gl.deleteTexture(tr.info); }
 function disposeTrack(tr) {

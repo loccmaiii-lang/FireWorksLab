@@ -1,11 +1,11 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.2.29';
+const VERSION = '4.3.0';
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
-const OUTPUT_VER = { master: '4.2.7', emitset: '4.2.2', riseLoop: '4.3', trail: '4.3', unit: '4.0', loop: '4.3' };
+const OUTPUT_VER = { master: '4.3', emitset: '4.3', riseLoop: '4.3', trail: '4.3', unit: '4.3', loop: '4.3' };     // 4.3：所有产物都要用 4.3 重新导出（只剩一个渲染核；固定取景用 Pivot 对齐爆点；碰边放大；单束补第二段、随机、风；尾缀末段爆亮颜色键）
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   blank: ['空白发射器', 'Blank', 'aerial'],
@@ -268,7 +268,9 @@ function migrate37(P, ...given) {      // given[0]：原始存档的版本（显
   P.renderVer = 40; P._mig37 = 1; return P;
 }
 function storedParams(p, type = p.type) {
-  return migrate37({ ...defaultsFor(type, null, true).P, ...p, type }, p.renderVer);
+  const P = migrate37({ ...defaultsFor(type, null, true).P, ...p, type }, p.renderVer);
+  if (P.frameMode === 'content') P.frameMode = 'auto';     // 4.3：「按画面变化」去掉了（从来没生效过，和「自动」一样）
+  return P;
 }
 // 旧版颜色（colA → colB，chg 秒）换成分段
 function normalizeM(M, type) {

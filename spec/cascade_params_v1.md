@@ -175,6 +175,8 @@
 | `ramp` | 渐变图 256×8 | sRGB 开 |
 | `cutout` | 轮廓图 512×512 | 线性，最大 512 |
 
+建议（渲染基础问题 D5，⚪ 待 UE 实测包 4 确认后再改上表）：`ramp` 用 X/Y Tiling = Clamp、Mip Gen = NoMipmaps（默认 Wrap + mip 时 v = 1 的白热色会和最暗色混，星芯发暗）；`flipbook` 用 NoMipmaps（或 TextureGroup 不流送），mip 会把相邻格子串进来。实测前导入设置仍按项目示例贴图照抄。
+
 `cutout` 可以写 `"generate_from": "seq"`，表示导出里没有轮廓图，由本地按烘焙器同样的算法生成：所有帧叠加，编码值 ≥ 3/255 算有内容，再向外扩 3 像素。✅
 
 ## 8. 引擎里的通用规则（踩过的坑）

@@ -96,7 +96,7 @@ function curvesCSV(b, M) {
 // 上升星头循环：帧号锯齿曲线（每个周期两个关键帧，周期末尾直接跳回 0）
 function sawKeys(m, T) {
   const F = m.L.F, Tp = m.duration, n = Math.ceil(T / Tp), keys = [];
-  for (let i = 0; i < n; i++) { const a = i * Tp / T, b = Math.min(1, (i + 1) * Tp / T); keys.push([+a.toFixed(5), 0]); keys.push([+Math.max(a, b - 1e-4).toFixed(5), +(F * Math.min(1, (b - a) * T / Tp) - 0.001).toFixed(3)]); }
+  for (let i = 0; i < n; i++) { const a = i * Tp / T, b = Math.min(1, (i + 1) * Tp / T); keys.push([+a.toFixed(5), 0]); keys.push([+Math.max(a, b - 1e-4).toFixed(5), +(F * Math.min(1, (b - a) * T / Tp) - 0.01).toFixed(3)]); }     // 4.3（D9③）：和 cascade.json 一样写「帧数 − 0.01」
   return keys;
 }
 
