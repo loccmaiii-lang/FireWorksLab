@@ -5,6 +5,8 @@
      待验收 / 已通过的效果星轨道时间分辨率不变（不改它们的样子）
   M2 实时模拟按显卡负担调快门子样本：负担（每个子样本要画的火花数 × 子样本数）超出预算时少画几个子样本、HUD 写明；
      预算按实际帧时间自动升降；烘焙中实时模拟让出显卡（子样本压到最少）；烘焙本身的子样本不受影响
+  M4 打开效果时同一份参数的整段预跑（measure）和星轨道（buildTrack）只真算一次：实时模拟的取景 / 镜头 / 范围、烘焙、收紧共用（10-03 SMOKE16：片贝、鸿巢打开时主线程一停几秒，就是这几样各算一遍）
+  M5 单层实时模拟的超采样画布有上限：高分屏（画布约 2000 px）+ 4×4 超采样（球形A 的层是 qSS 4）以前一张 8000² 的 16 位浮点画布 512 MB，现在边长 ≤ 4096
   M3 显卡上下文丢失（显存不够 / 驱动超时重置）：不再白屏不说话，画面上写原因和怎么办，渲染循环停下不刷错误
 
   云端没有显卡：画图换成空操作，只量内存、子样本数和逻辑。真实帧率要本机任务（SMOKE / 条目体检）看。
@@ -115,6 +117,46 @@ async def m3(p, opts):
     return not bad, bad, info
 
 
+async def m4(p, opts):
+    bad, info = [], {}
+    b, pg, errs = await page(p, opts)
+    try:
+        await pg.evaluate("""(() => { window.__mt = { measure: [], track: [] };
+          const om = measure; measure = P => { const t = performance.now(), r = om(P); __mt.measure.push([P.stars, Math.round(performance.now() - t)]); return r; };
+          const ob = buildTrack; buildTrack = P => { const t = performance.now(), r = ob(P); __mt.track.push([P.stars, Math.round(performance.now() - t)]); return r; };
+          return 0; })()""")
+        await open_eff(pg, 'hongchao'); await pg.evaluate(FRAMES, 3)
+        r = await pg.evaluate("__mt")
+        slow = lambda a: [x for x in a if x[1] > 60]       # 真算的（缓存命中是几毫秒）
+        info = {'measure 调用 / 真算': [len(r['measure']), len(slow(r['measure']))], 'buildTrack 调用 / 真算': [len(r['track']), len(slow(r['track']))],
+                'measure 总 ms': sum(x[1] for x in r['measure']), 'buildTrack 总 ms': sum(x[1] for x in r['track'])}
+        if len(slow(r['measure'])) > 2: bad.append(f"两层的整段预跑真算了 {len(slow(r['measure']))} 次（应 ≤ 2）")
+        if len(slow(r['track'])) > 2: bad.append(f"两层的星轨道真算了 {len(slow(r['track']))} 次（应 ≤ 2）")
+        if errs: bad.append('页面错误 ' + errs[0])
+    finally: await b.close()
+    return not bad, bad, info
+
+
+async def m5(p, opts):
+    bad, info = [], {}
+    b = await p.chromium.launch(**opts)
+    try:
+        ctx = await b.new_context(viewport={'width': 1700, 'height': 1250}, device_scale_factor=2); pg = await ctx.new_page()
+        await pg.add_init_script("window.requestAnimationFrame = () => 0;")
+        await pg.goto(HTML, wait_until='load', timeout=0); await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
+        await pg.evaluate(FAKE); await pg.evaluate(GPU)
+        await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()")
+        for _ in range(40):
+            await pg.wait_for_timeout(250)
+            if await pg.evaluate("!window.__opening && !state.baking"): break
+        r = await pg.evaluate("(() => { state.P.qSS = 4; state.exportResolution = false; state.view = 'live'; let now = 1000; lastT = now; loop(now += 16); loop(now += 16); const s = live.A40; return { canvas: canvas.width, ss: s && s.samples40 ? [s.samples40.w, s.samples40.h] : null, maxTexMB: Math.round(__gpu.maxTex / 1e6), gpuMB: Math.round(__gpu.peak / 1e6) }; })()")
+        info = r
+        if not r['ss']: bad.append('没有画单层实时模拟')
+        elif max(r['ss']) > 4096: bad.append(f"超采样画布 {r['ss']}（画布 {r['canvas']}，4×4）")
+    finally: await b.close()
+    return not bad, bad, info
+
+
 async def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--effects', default='jinmangju,hongchao,hiki_nishiki,qingning,qiuxing_a,qiuxing_d,yongfeng,pianbei')
     ap.add_argument('--base', default='', help='星轨道时间步的基线 json（改之前跑一遍 --dump-base 得到）'); ap.add_argument('--dump-base', default='')
@@ -131,7 +173,7 @@ async def main():
                 try: await open_eff(pg, k); out[k] = [x[3] for x in (await pg.evaluate(FRAMES, 4))['tracks']]
                 finally: await b.close()
             pathlib.Path(a.dump_base).write_text(json.dumps(out)); print('基线', out); return
-        for name, fn in [('M1', lambda: m1(p, opts, a.effects.split(','), base)), ('M2', lambda: m2(p, opts)), ('M3', lambda: m3(p, opts))]:
+        for name, fn in [('M1', lambda: m1(p, opts, a.effects.split(','), base)), ('M2', lambda: m2(p, opts)), ('M3', lambda: m3(p, opts)), ('M4', lambda: m4(p, opts)), ('M5', lambda: m5(p, opts))]:
             if only and name not in only: continue
             try: ok, bad, info = await fn()
             except Exception as e: ok, bad, info = False, [f'异常：{e}'[:300]], {}

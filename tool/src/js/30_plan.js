@@ -4,7 +4,19 @@ function tailShapeOf(P) {
   const w = clamp(+P.tailWidth || 1, 0.3, 3), h = clamp(+P.tailPinchHead || 0, 0, 1), t = clamp(+P.tailPinchTail || 0, 0, 1), m = clamp(+P.tailBellyAt || 0.45, 0.05, 0.95);
   return { w, h, t, m, on: w !== 1 || h > 0 || t > 0 };
 }
+// 4.2.21 同一份参数的预跑只算一次（用户 10-03 17:28「一顿一顿」，SMOKE16：打开鸿巢 / 片贝时主线程停几秒）：
+// 实时模拟的取景、镜头、范围，烘焙，收紧以前各自从头跑一遍整段模拟（片贝千轮层一次 3.5 s）。结果只和参数有关，按参数内容缓存最近 12 份，
+// 每次给一份拷贝（调用方改了也不会污染缓存）。
+const MEASURE_CACHE = new Map();
 function measure(P) {
+  let key = null; try { key = JSON.stringify(P); } catch (e) { }
+  const c = key && MEASURE_CACHE.get(key);
+  if (c) { MEASURE_CACHE.delete(key); MEASURE_CACHE.set(key, c); return structuredClone(c); }
+  const r = measureRun(P);
+  if (key) { MEASURE_CACHE.set(key, structuredClone(r)); while (MEASURE_CACHE.size > 12) MEASURE_CACHE.delete(MEASURE_CACHE.keys().next().value); }
+  return r;
+}
+function measureRun(P) {
   const s = new Sim(P), n = Math.ceil(P.duration / H_STEP);
   let x0 = -5, x1 = 5, y0 = -5, y1 = 5; const prof = [], stat = [], vs = [], ds = [];
   const ext = (x, y) => { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; };

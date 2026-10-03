@@ -118,9 +118,11 @@ function renderLive40() {
   const pl=b && state.bakeGen===state.gen && ['master','segments','loop'].includes(b.form) ? segAt(b,state.t).meta : slot.plan40;
   const q=qualityOf(P), L=state.platform==='mobile' && !b?layoutOf(mobileParams(P)):pl.L;
   const w=state.exportResolution?L.cellW:canvas.width, h=state.exportResolution?L.cellH:canvas.height;
-  if(!slot.cell40 || !slot.samples40 || slot.cell40.w!==w || slot.cell40.h!==h || slot.samples40.w!==w*q.ss){
+  // 4.2.21 超采样画布边长 ≤ 4096（「画布分辨率」+ 高分屏 + 4×4 超采样以前一张 6000–8000 px 的浮点画布，几百 MB，笔记本会白屏）；导出单格分辨率时不受影响
+  const ssL=Math.max(1,Math.min(q.ss,Math.floor(4096/Math.max(w,h)))), PL=ssL===q.ss?P:{...P,qSS:ssL};
+  if(!slot.cell40 || !slot.samples40 || slot.cell40.w!==w || slot.cell40.h!==h || slot.samples40.w!==w*ssL){
     slot.cell40 && slot.cell40.dispose(); slot.samples40 && slot.samples40.dispose(); gl.activeTexture(gl.TEXTURE0);
-    slot.cell40=new Target(w,h,gl.RGBA16F); slot.samples40=new Target(w*q.ss,h*q.ss,gl.RGBA16F);
+    slot.cell40=new Target(w,h,gl.RGBA16F); slot.samples40=new Target(w*ssL,h*ssL,gl.RGBA16F);
   }
   const t=familyOf(P.type)==='ground'?state.t:Math.min(state.t,P.duration);
   const view=frameView40(pl,t), timing=b && state.bakeGen===state.gen && ['unit','riseLoop'].includes(b.form)?b.meta:pl;
@@ -133,7 +135,7 @@ function renderLive40() {
     }
   }
   LIVE_CAP = liveCapFor(trackDraws(R.track, P) + (P.stars || 0) * q.ss);
-  try { renderCell40(P,timing,R,t,slot.samples40,slot.cell40,view); } finally { LIVE_CAP = 0; }
+  try { renderCell40(PL,timing,R,t,slot.samples40,slot.cell40,view); } finally { LIVE_CAP = 0; }
   hdrT.clear(); hdrT.bind(); shadeView40(P,state.M,slot.cell40,t,view,hdrT,camera); post(-1,P);
   hudText=`实时模拟 · ${state.disp==='game'&&camera?'游戏内大小 · '+state.dist+' m · ':''}${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门${liveCapNote()}`;
   hudB='';

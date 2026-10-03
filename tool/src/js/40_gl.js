@@ -369,7 +369,21 @@ function floatTex(w, h, data) {
 const TRACK_TEXELS = 4e6;
 function trackStarEstimate(P) { const carrier = P.type === 'senrin' || P.type === 'crossette'; if (familyOf(P.type) === 'rise') return 1 + (P.riseStyle === 'kobana' ? 11 * (+P.kobanaN || 0) : 0) + (P.riseStyle === 'bunpo' ? +P.bunpoN || 0 : 0);
   return Math.max(1, Math.round(+P.stars || 1) * (carrier ? 1 + Math.round(+P.subStars || 0) : 1)); }
+// 4.2.21 同一份参数的星轨道共用（实时模拟、烘焙、收紧以前各建一份）：按参数内容记，引用计数；没人用了留最近 1 份备用（切回来不用重算）
+const TRACK_CACHE = new Map();
 function buildTrack(P) {
+  let key = null; try { key = JSON.stringify({ ...P, engine: 'gpu' }) + '|' + MAX_TEX; } catch (e) { }
+  const c = key && TRACK_CACHE.get(key);
+  if (c && !gl.isContextLost()) { c.refs++; return c.tr; }
+  const tr = buildTrackRun(P);
+  if (key) { tr.cacheKey = key; TRACK_CACHE.set(key, { tr, refs: 1, idle: 0 }); trackGC(); }
+  return tr;
+}
+function trackGC(keep = 1) {
+  const idle = [...TRACK_CACHE.entries()].filter(([, c]) => c.refs <= 0).sort((a, b) => a[1].idle - b[1].idle);
+  while (idle.length > keep) { const [k, c] = idle.shift(); TRACK_CACHE.delete(k); deleteTrackTex(c.tr); }
+}
+function buildTrackRun(P) {
   P = { ...P, engine: 'gpu' };
   const sim = new Sim(P), D = P.duration;
   const k = Math.max(2, Math.ceil(D / (MAX_TEX - 4) / H_STEP), Math.ceil(D * trackStarEstimate(P) / TRACK_TEXELS / H_STEP)), dt = k * H_STEP, Ns = Math.ceil(D / dt) + 2;
@@ -403,7 +417,13 @@ function buildTrack(P) {
   gl.activeTexture(gl.TEXTURE0);
   return { pos: floatTex(Ns, nStars, pos), vel: floatTex(Ns, nStars, vel), info: floatTex(1, nStars, info), nStars, M, Ns, dt, total, P };
 }
-function disposeTrack(tr) { if (tr) { gl.deleteTexture(tr.pos); gl.deleteTexture(tr.vel); gl.deleteTexture(tr.info); } }
+function deleteTrackTex(tr) { gl.deleteTexture(tr.pos); gl.deleteTexture(tr.vel); gl.deleteTexture(tr.info); }
+function disposeTrack(tr) {
+  if (!tr) return;
+  const c = tr.cacheKey && TRACK_CACHE.get(tr.cacheKey);
+  if (c && c.tr === tr) { c.refs = Math.max(0, c.refs - 1); if (!c.refs) c.idle = performance.now(); trackGC(); return; }
+  deleteTrackTex(tr);
+}
 // 火花的有效参数：银竜的尾迹更白、更长
 function sparkEff(P) { const silver = familyOf(P.type) === 'rise' && P.riseStyle === 'silver'; return { T0: P.T0 + (silver ? 250 : 0), life: P.sparkLife * (silver ? 1.5 : 1) }; }
 function setAirUniforms(pr, P) {

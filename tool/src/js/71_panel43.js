@@ -98,7 +98,7 @@ function p43RandLinks() {
 function p43RandSync(P) {
   for (const [row] of panelRows) {
     if (!row._rndb) continue;
-    const open = !!pview.ropen[row._it[0]], vals = row._rands.map(([r, it]) => { const v = +P[it[0]]; return isFinite(v) && v !== 0 ? `±${+it[5] >= 1 ? Math.round(v) : fmtV(v, it[5])}${it[2] === '%' ? '%' : it[2] ? ' ' + it[2] : ''}` : ''; }).filter(Boolean);
+    const open = !!pview.ropen[row._it[0]], vals = row._rands.map(([r, it]) => { const v = +P[it[0]]; return isFinite(v) && v !== 0 ? `±${+(+v).toFixed(2)}${it[2] === '%' ? '%' : it[2] ? ' ' + it[2] : ''}` : ''; }).filter(Boolean);
     row._rndb.textContent = (open ? '随机 ▾' : '随机 ▸') + (vals.length ? ' ' + vals.join(' ') : '');
     row._rndb.classList.toggle('on', open); row._rndb.classList.toggle('set', !!vals.length);
     row._rndb.title = row._rands.map(([r]) => r._lab).join('、') + (open ? '（点一下收起）' : '（点一下展开）');

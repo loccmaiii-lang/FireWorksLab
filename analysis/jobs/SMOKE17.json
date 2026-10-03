@@ -1,0 +1,11 @@
+{
+ "id": "SMOKE17",
+ "type": "smoke",
+ "tijian": true,
+ "tijian_only": "ef:",
+ "tijian_cap": true,
+ "tijian_limit": 40,
+ "name": "4.2.21 复核：打开效果时的停顿（整段预跑只算一次、星轨道共用）——和 SMOKE16 同样的量法",
+ "priority": 11,
+ "note": "SMOKE16 看到片贝 / 鸿巢 / 球形A 打开、烘焙、收紧时主线程停几秒（同一份参数的整段预跑各算一遍、千轮层星轨道几秒）。4.2.21：预跑按参数缓存、星轨道实时模拟和烘焙共用、单层实时模拟超采样画布边长 ≤ 4096。条目体检.py --real --cap --only ef:，对照 analysis/results/SMOKE16/看法.md 的表。不改东西。对话框2。"
+}
