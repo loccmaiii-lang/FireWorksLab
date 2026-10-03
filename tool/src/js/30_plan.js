@@ -19,12 +19,15 @@ function measure(P) {
 function measureRun(P) {
   const s = new Sim(P), n = Math.ceil(P.duration / H_STEP);
   let x0 = -5, x1 = 5, y0 = -5, y1 = 5; const prof = [], stat = [], vs = [], ds = [];
+  // 4.3（渲染基础问题 H9）：点灭从哪一刻开始 = 每颗星「点火（或第二段）+ 点灭开始 × 燃烧」里最早的那颗（和 Sim.headI 同一个口径），帧计划按它提高帧率
+  let strobeOn = Infinity; const strobing = +P.strobeHz > 0;
   const ext = (x, y) => { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; };
   for (let i = 0; i < n; i++) {
     s.step(H_STEP);
     if (i % 6) continue;
     vs.length = 0; ds.length = 0; let sy = 0, vis = 0; const ys = [];
     for (const st of s.stars) if (st.alive) {
+      if (strobing && !st.dark && st.kind !== 1 && st.kind !== 5) { const off = st.st1 != null ? st.st1 : st.ign, end = st.vis != null ? st.vis : st.burn, on = (st.birth || 0) + off + P.strobeStart * Math.max(0.05, end - off); if (on < strobeOn) strobeOn = on; }
       ext(st.x, st.y); vs.push(Math.hypot(st.vx, st.vy));
       if (s.headI(st) > 0) { const d = Math.hypot(st.x, st.y); ds.push(d); sy += st.y; vis++; ys.push(st.y); }
     }
@@ -49,14 +52,23 @@ function measureRun(P) {
   }
   if (P.engine === 'gpu') {
     // 火花不在 CPU 上模拟：按散布、下坠和气流的解析解估计火花超出星体的范围（偏保守）
+    // 4.3（渲染基础问题 E7 / H11）：余烬比火花活得久（锦冠木炭余烬 3 s 左右），下坠和随风漂移按余烬的寿命算；
+    // 余烬在母星烧完后 emberFollow 秒内、或 emberEnd 时刻淡掉，就按那个截。横向散开被阻力很快刹住，仍按火花寿命算。没有余烬时和以前完全一样。
     const L = P.sparkLife * 1.6, k = Math.max(P.sparkDrag, 1e-3), g = G * P.sparkGrav;
-    const drift = (L - (1 - Math.exp(-k * L)) / k);
+    let Le = L;
+    if (+P.emberFrac > 0 && !(+P.branch > 0)) {
+      let e = (+P.emberLife || 3) * Math.exp(0.3) * 0.85;
+      if (+P.emberFollow > 0) e = Math.min(e, (+P.burn || 0) * (1 + 2 * (+P.burnJit || 0) / 100) + (+P.afterBurn || 0) + +P.emberFollow + 0.15);
+      if (+P.emberEnd > 0) e = Math.min(e, +P.emberEnd + 0.3);
+      Le = Math.max(L, e);
+    }
+    const drift = (Le - (1 - Math.exp(-k * Le)) / k);
     const drop = g / k * drift, spread = P.sparkSpread * L * 0.7 * Math.max(1, tailShapeOf(P).w) + 1 + (P.branch > 0 ? 4 : 0), air = (Math.abs(P.wind) + P.turb) * drift;
     x0 -= spread + air; x1 += spread + air; y1 += spread + P.turb * drift; y0 -= drop + spread + P.turb * drift;
     for (const q of prof) q[2] += spread + drop + air;
   }
   if (P.waterRefl > 0) { y0 = Math.min(y0, -y1 * 1.05 - 2); for (const q of prof) q[2] *= 1.05; }
-  return { x0, x1, y0, y1, prof, stat, events: s.events };
+  return { x0, x1, y0, y1, prof, stat, events: s.events, strobeOn: strobing && isFinite(strobeOn) ? +strobeOn.toFixed(4) : null };
 }
 // 与实拍可比的无量纲指标：t50 / t80 = 花径到最终值 50% / 80% 的时刻占燃烧的比例，下坠/半径，下/上半径之比
 function metricsOf(P, fm) {
@@ -128,15 +140,8 @@ function planLegacy(P, fm0, ta = 0, tb = P.duration) {
   }
   const Ww = 2 * HX, Wh = 2 * HY, sAt = t => evalKeys(sizeKeys, t / D);
   const ppmAt = t => L.cellW / (Ww * sAt(t)), ppm = L.cellW / Ww;
-  // 按画面变化取帧：第一遍低分辨率烘焙得到每秒画面变化量，变化小的时段少给帧（等于把近似帧合并）
-  let chgAt = null, C = 0;
-  if (P.frameMode === 'content' && fm0.chg && fm0.chg.length > 2) {
-    const ch = fm0.chg.map(([t, r]) => [t - ta, r]);
-    chgAt = t => { let i = 0; while (i < ch.length - 1 && ch[i + 1][0] < t) i++; return ch[i][1]; };
-    let sv = 0, sc = 0; for (const [t, v] of fm.prof) { if (t > D) break; sv += v * ppmAt(t) / STEP; sc += chgAt(t); }
-    C = sc > 0 ? sv / sc : 0;
-  }
-  const dens = (v, t) => P.frameMode === 'uniform' ? 1 : chgAt ? Math.max(0.35 * v * ppmAt(t) / STEP + chgAt(t) * C, P.fpsFloor) : Math.max(v * ppmAt(t) / STEP, P.fpsFloor);
+  // 4.3（渲染基础问题 B5）：「按画面变化」取帧去掉了（所有调用都传了预跑结果，它从来没生效过；旧配方里的 content 当「自动」）
+  const dens = (v, t) => P.frameMode === 'uniform' ? 1 : Math.max(v * ppmAt(t) / STEP, P.fpsFloor);
   const pts = [[0, 0]]; let acc = 0, prevT = 0;
   for (const [t, v] of fm.prof) { if (t > D) break; acc += dens(v, t) * (t - prevT); prevT = t; pts.push([t, acc]); }
   if (prevT < D) { acc += dens(0, D) * (D - prevT); pts.push([D, acc]); }

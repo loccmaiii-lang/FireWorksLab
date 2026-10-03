@@ -326,7 +326,8 @@ function showStats(b) {
   if (c.edgeFrames && c.edgeFrames.length) warn.push(`${c.edgeFrames.length} 帧碰到格子边缘`);
   if (c.chanUse && c.chanUse.some(u => !u)) warn.push('有空通道');
   if (m.darkTail > L.F * 0.05) warn.push(`末尾 ${m.darkTail} 帧全黑，可缩短到 ${m.times[L.F - m.darkTail].toFixed(2)} s`);
-  if (c.similar > L.F * 0.15 && !m.loop) warn.push(`${c.similar} 对近似帧（可改「按画面变化」取帧）`);
+  if (m.drop) warn.push(`有东西超出上限没画：${[m.drop.stars ? `${m.drop.stars} 颗星（显卡贴图边长）` : '', m.drop.heads ? '星头缓冲满了（星头 / 闪光太多）' : '', m.drop.sparks ? 'CPU 火花池满了' : ''].filter(Boolean).join('、')}；减少星数 / 子星数，或换 GPU 内核`);
+  const bud = m.plan && m.plan.budget || m.budget; if (bud && bud.strobeAlias) warn.push(`点灭最快约 ${bud.strobeAlias} Hz，30 fps 的序列会混叠（看起来变成慢闪）；要这么快的点灭建议做成粒子层或降低「点灭频率」`);
   rows.push(warn.length ? `<span class="warn">自检：${warn.join('；')}</span>` : '<span class="ok">自检：过曝、边缘、通道布局都正常</span>');
   $('#stats').innerHTML = rows.join('<br>');
 }
@@ -484,6 +485,15 @@ function rowMatches(row, it, sec, q) {
   const nm = row._nm;      // 4.3：只认新名字、英文名、模块名和说明（旧名字不再出现）
   return [row._lab || '', nm ? [nm.cn, nm.en, nm.mcn, nm.men, nm.desc].join(' ') : row._detail || ''].join(' ').toLowerCase().includes(q);
 }
+// 4.3（渲染基础问题 F7）：大小类参数说明里换算成导出贴图上的像素（按现在烘好的取景：面片宽 ÷ 单格像素）
+const SIZE_KEYS = { headSize: 1, sparkSize: 1, emberSize: 'sparkSize', subScale: 0 };
+function sizePxNote(k) {
+  if (!(k in SIZE_KEYS)) return '';
+  const b = state.bake, m = b && b.meta, P = state.P; if (!m || !m.L || !(m.Ww > 0) || !(m.L.cellW > 0)) return '';
+  const mpp = m.Ww / m.L.cellW, v = SIZE_KEYS[k] === 'sparkSize' ? (+P.sparkSize || 0) * (+P.emberSize || 1) : +P[k];
+  if (!(v > 0) || SIZE_KEYS[k] === 0) return '';
+  return `<span class="ph-x">导出贴图上 1 像素 ≈ ${mpp < 0.1 ? mpp.toFixed(3) : mpp.toFixed(2)} m（面片 ${m.Ww.toFixed(0)} m ÷ 单格 ${Math.round(m.L.cellW)} 像素）：现在约 ${(v / mpp).toFixed(1)} 像素${v / mpp < 1 ? '（不到 1 像素：再调小主要是变暗）' : ''}</span>`;
+}
 function panelHelp(row) {
   const h = $('#pHelp'); if (!h) return;
   if (!row) { h.innerHTML = '<span class="ph-idle">悬停或点一个参数看完整说明 · 双击参数名恢复默认</span>'; if (typeof curvesHot === 'function') curvesHot(null); return; }
@@ -496,7 +506,7 @@ function panelHelp(row) {
       + (iw ? `<span class="ph-inert">现在不起作用：${iw}</span>` : '')
       + (nm.ud ? `<span class="ph-d">${nm.ud}</span>` : '') + (nm.rnd ? `<span class="ph-x">随机：${nm.rnd}</span>` : '')
       + (nm.ue ? `<span class="ph-x">UE：${nm.ue}</span>` : '') + (nm.note ? `<span class="ph-x">注意：${nm.note}</span>` : '')
-      + (cvn ? `<span class="ph-cv">看时间轴下方 ${cvn} 曲线</span>` : '');
+      + (cvn ? `<span class="ph-cv">看时间轴下方 ${cvn} 曲线</span>` : '') + sizePxNote(k);
     return;
   }
   const unit = Array.isArray(it) && it[2] ? ` <small>${it[2]}</small>` : '', rng = Array.isArray(it) ? ` · 范围 ${it[3]}–${it[4]}` : '';

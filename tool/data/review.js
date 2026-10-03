@@ -5274,10 +5274,11 @@ var FW_REVIEW = [
 "kind": "combo",
 "date": "2026-10-01 23:48",
 "name": "鸿巢四尺玉 · 4.0（HK9 参数）",
-"note": "HK9 原样迁到 4.0：每层效果参数不变；4.0 渲染（512 格、先放进一张、固定取景、每层自动曝光），导出一个素材包（每层一个发射器）。",
+"note": "HK9 原样迁到 4.0：每层效果参数不变；4.0 渲染（512 格、先放进一张、固定取景、每层自动曝光），导出一个素材包（每层一个发射器）。 4.3（用户 2026-10-04「要，pc光点可以改」）：PC 上红点层改成 GPU 光点（每颗会亮的星一个软圆点，没有贴图，省 overdraw；XD3 试导时烘焙回放和实时模拟一致）；手机仍是序列。",
 "look": [
 "和 3.7 版（历史里的 HK9）比：各层的颜色、亮度比例、时间有没有变",
-"游戏内大小下连续播放：有没有抖、层和层对不对得上"
+"游戏内大小下连续播放：有没有抖、层和层对不对得上",
+"PC 红点层是 GPU 光点（软圆点）：个数、大小、亮起时刻和序列版对得上吗（引擎回放切 PC / 手机对比）"
 ],
 "opinion": "AI：HK10E2 导出、回放检查、标准检查都过；开花后同一秒实时模拟和导出效果一致，结构和 HK9 一样。进待我验收。",
 "tags": "鸿巢四尺玉 第 9 版 HK9 整体 4.0",
@@ -5304,7 +5305,11 @@ var FW_REVIEW = [
 {
 "m": "rep:HK10-2",
 "scale": 1,
-"delay": 0
+"delay": 0,
+"out": {
+"pc": "dots",
+"mobile": "seq"
+}
 }
 ]
 },
@@ -5317,7 +5322,7 @@ var FW_REVIEW = [
 "返工 ② 红点灭（主层同轨迹第二段）"
 ],
 "thumbRef": "data:image/jpeg;base64,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",
-"ver": "b9474595"
+"ver": "dd5beed2"
 },
 {
 "id": "QN11",
@@ -6700,7 +6705,7 @@ var FW_EFFECTS = [
 "贴图里的火星远看的亮度（灰度 + Ramp 口径，贴图被缩小时偏暗偏橙）请在引擎里看一眼",
 "粒子大小 / 亮度等用户在引擎里按例子标定"
 ],
-"下一步": "等用户验收 RT4（左栏「升空尾缀」下面一排小 / 中 / 大；导出由用户自己在烘焙器里点） 2026-10-03（对话框2，4.2.5）：「待我验收」改成按证据把关（版本指纹带烘焙器输出版本）——RT4M 要一次内部导出（export 任务，导出清单记 entryVer）+ 回放检查；标准检查对话框2 已排 STD5 重跑。没有就一直显示「未就绪：还没导出」。",
+"下一步": "等用户验收 RT4（左栏「升空尾缀」下面一排小 / 中 / 大；导出由用户自己在烘焙器里点） 2026-10-03（对话框2，4.2.5）：「待我验收」改成按证据把关（版本指纹带烘焙器输出版本）——RT4M 要一次内部导出（export 任务，导出清单记 entryVer）+ 回放检查；标准检查对话框2 已排 STD5 重跑。没有就一直显示「未就绪：还没导出」。 ｜ 4.3（对话框15 留给负责人）：渲染基础问题 H4——「温度偏移」rtFdT 让贴图火花亮度反着变（47_risetail.js:81-82 ref 用了 Tb+dT 的亮度，Tb 2450 / dT −400 时 ×7.5，越冷越亮）。修法：ref = 0.25（和 GPU rtSparkColor 同口径），同时把 RT4 的 rtTexI 从 40 调到约 300 保持现在的亮度。改了 RT4 画面，要你决定是否出 RT5 再验收；4.3 没动。另外 4.3 所有产物 OUTPUT_VER → 4.3，RT4M 要用 4.3 重新内部导出。",
 "导出任务": [],
 "待验收版": "RT4M",
 "说明": "烘焙器 4.1.0 新产物 emitset：循环层（星头 + 白热段，贴图动态消散 + dissolve）+ GPU 金火星三档粒径 + 落火；大中小按理论推导（原理 7c–7e），实现 7f，第 2 版数量大小 7g，第 3 版白黄 / 线状 / 乱流 7h（烘焙器 4.2.1）；第 4 版 7i（烘焙器 4.2.2）：左栏分档、贴图按规范去浪费（星头在上端 + Pivot Offset、格子按长宽比、消散最小贴图、手机半边长）、一半细火星进贴图、引擎加星头光晕 / 末段爆亮 / 发射口。",
@@ -8017,7 +8022,7 @@ var FW_EFFECTS = [
 "用户验收": false
 },
 "说明": "HK10 = HK9 原样迁到 4.0（2026-10-01）。3.7 版的说明和交付记录在「历史」里 HK9 一条。",
-"下一步": "HK10（HK9 原样迁 4.0）等你验收：HK10E4 导出 + 回放检查 + STD6 全过，左栏「就绪」。新旧对照 UI12 已看：和 HK9 一致，7.25 s 时 HK9 底边早冒红点、HK10 没有（更接近实拍）。红点层 PC 出 GPU 光点：XD3（4.2.15）烘焙回放和实时模拟一致（个数、大小、时间），可以用；要不要正式换成光点由用户定，条目不改。",
+"下一步": "4.3（对话框15 代做，用户 10-04「要，pc光点可以改」）：HK10 的红点层 PC 改成 GPU 光点（analysis/迭代/条目.json 组合 HK10 第 2 层 out.pc = dots；手机仍是序列），所有产物 4.3 要重导 → 排 HK10E5（4.3 导出 + 回放检查）和标准检查；回来看引擎回放 PC / 手机两种红点是否对得上，就绪后等用户验收。之前：HK10E4 + STD6 全过；XD3（4.2.15）光点试导和实时模拟一致。",
 "导出任务": [
 "HK10E2",
 "HK10E4"
@@ -8038,7 +8043,7 @@ var FW_EFFECTS = [
 "Main",
 "Red"
 ],
-"ver": "b9474595",
+"ver": "dd5beed2",
 "jobs": [
 {
 "id": "HK10E1",
@@ -8107,7 +8112,7 @@ var FW_EFFECTS = [
 "passed": true,
 "fails": []
 },
-"stale": false
+"stale": true
 },
 {
 "job": "HK10E2",
@@ -8150,7 +8155,7 @@ var FW_EFFECTS = [
 "passed": true,
 "fails": []
 },
-"stale": false
+"stale": true
 },
 {
 "job": "HK10E3",

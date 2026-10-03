@@ -18,12 +18,15 @@ function fwlMaster(name, b, M, mobile) {
     const tex = TN(name, seg), cut = TN(name, joinPart(seg, 'Cutout'));
     textures[key] = { file: tex + '.png', class: 'flipbook', cols: L.cols, rows: L.rows, channels: L.chans, frames: L.F };
     textures['cutout' + seg] = { file: cut + '.png', class: 'cutout' };
-    if (s.tail) textures[key].note = '星头与拖尾分开导出（Head / Tail）时，本格式只写星头；拖尾请改用合并输出';
+    // 4.3（D9①）：分开输出时贴图文件是 …_Head / …_Tail；cascade.json 引用 Head（星头层），火花层另起一个发射器引用 Tail（两个发射器除贴图和颜色外相同）
+    if (s.tail) { textures[key].file = TN(name, joinPart(seg, 'Head')) + '.png'; textures[key + 'Tail'] = { ...textures[key], file: TN(name, joinPart(seg, 'Tail')) + '.png' }; }
     const mk = seg ? 'main' + seg : 'main';
     materials[mk] = { role: 'flipbook_rgba', textures: { main: key, ramp: 'ramp' }, scalars: { rows: L.rows, cols: L.cols } };
     // 入点前放大（用户 2026-10-02 选 B）：发射器从「第一次看得见」出生，前 pu 段寿命停在第 0 帧、Size By Life 从小放大到 1，之后照常
     const pre = i === 0 && m.pre && !m.zoom ? m.pre : null, life = m.duration + (pre ? pre.dur : 0), pu = pre ? pre.dur / life : 0;
-    const pivot = pre && pre.pivot;
+    // 4.3（渲染基础问题 D8）：固定取景的爆点对齐改用 Pivot Offset（爆点在贴图里的位置），不再把面片往上挪 cy：
+    // 面片总是面向相机，挪 InitialLocation Z 在仰视时爆点会偏 cy(1 − cosθ)，多层 cy 不同就错位。入点前放大选「绕面片中心」时照旧（绕中心放大要中心在粒子上）。
+    const pivot = pre ? pre.pivot : !m.zoom && Math.abs(+m.cy || 0) > 1e-4;
     const mods = [
       { m: 'Lifetime', Lifetime: { const: r4(life) } },
       { m: 'InitialSize', StartSize: { const: [r1(m.Ww * 100), r1(m.Wh * 100), 1] } },
@@ -34,13 +37,19 @@ function fwlMaster(name, b, M, mobile) {
     const fk = pre ? [[0, 0], ...m.keys.map(([u, v]) => [pu + u * (1 - pu), v])] : m.keys;
     mods.push({ m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(fk, L.F) } } });
     mods.push({ m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, life, pre ? pre.from : m.t0 || 0, M.headInt || 1) }, AlphaOverLife: { const: 1 } });
+    if (s.tail) materials[mk + 'Tail'] = { role: 'flipbook_rgba', textures: { main: key + 'Tail', ramp: 'ramp' }, scalars: { rows: L.rows, cols: L.cols } };
     emitters.push({
       name: seg ? 'Main' + seg : 'Main', material: mk, gpu: false,
       required: { screen_alignment: 'Rectangle', duration_s: r4(life), loops: 1, delay_s: r4(pre ? pre.from : m.t0 || 0), cutout: 'cutout' + seg, max_draw_count: 1,
         ...(pivot ? { pivot_offset: [-0.5, r4(-0.5 - m.cy / m.Wh)] } : {}) },
       spawn: { rate: { const: 0 }, bursts: [[0, 1]] }, modules: mods,
-      ...(pre ? { notes: [`入点前放大：出生后 ${r4(pre.dur)} s 停在第 0 帧、Size By Life 从 ${r4(pre.keys[0][1])} 放大到 1（${pivot ? '绕爆点：Pivot Offset，未经 UE 验证' : '绕面片中心'}），之后从入点 ${r4(m.t0)} s 照常播`] } : {})
+      ...(pre ? { notes: [`入点前放大：出生后 ${r4(pre.dur)} s 停在第 0 帧、Size By Life 从 ${r4(pre.keys[0][1])} 放大到 1（${pivot ? '绕爆点：Pivot Offset，未经 UE 验证' : '绕面片中心'}），之后从入点 ${r4(m.t0)} s 照常播`] }
+        : pivot ? { notes: ['固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 ' + r1(m.cy) + ' m），仰视时也对得上；未经 UE 验证'] } : {})
     });
+    if (s.tail) { const e0 = emitters[emitters.length - 1];
+      emitters.push({ ...e0, name: e0.name + 'Tail', material: mk + 'Tail',
+        modules: e0.modules.map(q => q.m === 'ColorOverLife' ? { ...q, ColorOverLife: { curve: fwlColor(M, life, pre ? pre.from : m.t0 || 0, M.tailInt || 1) } } : q),
+        notes: [...(e0.notes || []), '星头、火花分开输出：这是火花层（…_Tail 贴图），除贴图和颜色外和星头层相同'] }); }
   }
   textures.ramp = { file: TN(name, 'Ramp') + '.png', class: 'ramp' };
   return { textures, materials, emitters, system: { preview_distance_cm: Math.round(Math.max(30000, b.meta.Ww * 100 * 1.3)), preview_warmup_s: 1.2 } };
@@ -87,7 +96,7 @@ function fwlTrail(name, b, M, mobile) {
         { m: 'InitialVelocity', StartVelocity: { const: [0, 0, 1] } },
         { m: 'InitialSize', StartSize: { const: [r1(m.Ww * 100), r1(m.Wh * last * 100), 1] } },
         { m: 'DynamicParameter', params: { frame: { curve: [[0, 0], [1, r2(F - 0.01)]] } } },
-        { m: 'ColorOverLife', ColorOverLife: { curve: col }, AlphaOverLife: { const: 1 } }
+        { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, Df, T, P.trBright) }, AlphaOverLife: { const: 1 } }     // 4.3（D9②）：消散段的颜色按开花以后 [T, T + Df] 取（以前用了上升段的）
       ]
     });
   }
@@ -96,13 +105,21 @@ function fwlTrail(name, b, M, mobile) {
       'pivot_offset 是 Required 里的 Pivot Offset（星头在贴图里的位置），spec 里还没实测过这个字段'] };
 }
 
+// 4.3（渲染基础问题 D7）：「帧计划指纹」= 各发射器里决定「哪一刻播哪一帧、面片多大」的数（Lifetime、帧号曲线、Size By Life、Duration、Delay）的哈希。
+// 只重新导入贴图之前比一下：指纹变了，说明这些数也变了，只换贴图会错帧，要按新的 cascade.json 改粒子（或用本地的合入对比）
+function fwlPlanSig(emitters) {
+  const pick = e => [e.name, e.required && [e.required.duration_s, e.required.delay_s], (e.modules || []).filter(m => ['Lifetime', 'DynamicParameter', 'SizeByLife'].includes(m.m))];
+  const s = JSON.stringify((emitters || []).map(pick)); let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+  return h.toString(16).padStart(8, '0');
+}
 // 返回 null 表示这种产物还没有 cascade.json（单元序列、地面循环、上升星头循环：参数表照旧）
 function fwlCascade(name, b, M, mobile = false) {
   const body = b.form === 'emitset' ? fwlEmitSet(name, b, M, mobile) : b.form === 'trail' ? fwlTrail(name, b, M, mobile) : (b.form === 'master' || b.form === 'segments') ? fwlMaster(name, b, M, mobile) : null;
   if (!body) return null;
   return {
     format: FWL_FORMAT, name, platform: mobile ? 'mobile' : 'pc',
-    source: { tool: '烟花母版烘焙器 ' + VERSION, type: b.P.type, form: b.form, quality: b.meta.quality ? { ss: b.meta.quality.ss, hz: b.meta.quality.hz } : undefined },
+    source: { tool: '烟花母版烘焙器 ' + VERSION, type: b.P.type, form: b.form, quality: b.meta.quality ? { ss: b.meta.quality.ss, hz: b.meta.quality.hz } : undefined, plan_sig: fwlPlanSig(body.emitters) },
     textures: body.textures, materials: body.materials, system: body.system, emitters: body.emitters,
     notes: body.notes
   };

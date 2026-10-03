@@ -340,6 +340,12 @@ function rememberLayerEdit() {
   state.layerEdits = state.layerEdits || {};
   state.layerEdits[r.id] = { P: structuredClone(state.P), M: structuredClone(state.M) };
 }
+// 4.3（渲染基础问题 F3）：待验收的候选默认在「引擎回放」里看（验收只看引擎回放：导出的贴图按 cascade.json 播放；实时模拟最锐，会看走眼）
+function isCandidate(e) { const ef = lib.effect; return !!(e && ef && ef.阶段 === '待验收' && ef.待验收版 === e.id); }
+function setViewSeg(v) {
+  state.view = v; document.querySelectorAll('#viewSeg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === v));
+  if (v !== 'live' && typeof bakeIfStale === 'function') bakeIfStale(); if (typeof syncStale === 'function') syncStale();
+}
 function openReview(e, ef) {
   const nextEf = ef || effectOfEntry(e); if (!ef) beforeOpen(nextEf);   // openEffect 已经做过
   rememberLayerEdit(); wb.entry = undefined;     // 重新打开 = 回到 AI 版（资产栏）
@@ -358,10 +364,11 @@ function openReview(e, ef) {
   }
   lib.sig = curSig();
   setReview(e); renderLib(); crumb(where, e.name + (e.layerOf ? ' · 单层' : ''));
+  if (e.kind !== 'asset' && isCandidate(e) && state.view === 'live') setViewSeg('export');
 }
 // 组合条目：整体效果（组合页实时模拟 + 实拍并排）；各层在审阅卡里单独打开
 async function openComboEntry(e) {
-  state.view = 'live'; document.querySelectorAll('#viewSeg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === 'live'));
+  const v = isCandidate(e) ? 'export' : 'live'; state.view = v; document.querySelectorAll('#viewSeg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === v));
   state.comboSel = -1; state.layerView = { solo: -1, mute: [] };
   await setTab('combo', { lazy: true }); await applyCombo(e.combo); lib.sig = curSig(); setReview(e); syncComboPanels();   // lazy：只烘这个组合用到的层，不先烘整套默认母版
 }
@@ -453,12 +460,14 @@ function refToggle(on) {
   ref2.on = on == null ? !ref2.on : on; store.set('refOn', ref2.on); setRefVideo(ref2.entry);
   flash(ref2.on ? '实拍对照：开' : '实拍对照：关（按 V 再打开）');
 }
-function refRestoreOffset(e) { ref2.off = (store.get('refOff', {})[e.id]) || 0; refShowOffset(); }
+// 手动对齐偏移按「条目 + 实拍起点」记（F5：条目的 vmeta.t0 重新生成以后，旧偏移不再叠加上去）
+const refOffKey = e => e.id + '@' + ((e.vmeta && e.vmeta.t0) || 0);
+function refRestoreOffset(e) { const o = store.get('refOff', {}); ref2.off = (o[refOffKey(e)] != null ? o[refOffKey(e)] : 0) || 0; refShowOffset(); }
 function refShowOffset() { const o = ref2.off; $('#refOffOut').textContent = `对齐 ${o > 0 ? '+' : o < 0 ? '−' : ''}${Math.abs(o).toFixed(2)} s`; }
 function refNudge(d) {
   if (!ref2.entry) return;
   ref2.off = d === 0 ? 0 : Math.round((ref2.off + d) * 100) / 100;
-  const o = store.get('refOff', {}); o[ref2.entry.id] = ref2.off; store.set('refOff', o); refShowOffset();
+  const o = store.get('refOff', {}); o[refOffKey(ref2.entry)] = ref2.off; store.set('refOff', o); refShowOffset();
 }
 function layoutRef() {
   const v = $('#refVid'), box = $('#refBox'); if (box.hidden || !v.videoWidth) return;
@@ -475,9 +484,11 @@ function refSync() {
   const want = (vm.t0 || 0) + ref2.off + state.t, tgt = Math.max(0, Math.min(v.duration - 0.05, want));
   box.classList.toggle('out', want < 0 || want > v.duration);   // 实拍这一刻没有画面（比视频开头早或晚）
   if (state.playing) {
-    if (v.playbackRate !== state.speed) v.playbackRate = Math.max(0.0625, state.speed);
+    // 4.3（渲染基础问题 F5）：差 0.03–0.15 s 时用播放速度 ±5% 慢慢追（不硬跳）；超过 0.15 s 才跳
+    const d = tgt - v.currentTime, rate = Math.max(0.0625, state.speed) * (Math.abs(d) > 0.03 ? (d > 0 ? 1.05 : 0.95) : 1);
+    if (Math.abs(v.playbackRate - rate) > 1e-3) v.playbackRate = rate;
     if (v.paused) v.play().catch(() => { });
-    if (Math.abs(v.currentTime - tgt) > 0.15 && !v.seeking) v.currentTime = tgt;
+    if (Math.abs(d) > 0.15 && !v.seeking) v.currentTime = tgt;
   } else {
     if (!v.paused) v.pause();
     if (Math.abs(v.currentTime - tgt) > 0.03 && !v.seeking) v.currentTime = tgt;

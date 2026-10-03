@@ -119,6 +119,18 @@ function fitPlan40(P, pl, parts, extra, opt = {}) {
     fitted: { mode: 'fixed', gain: +gain.toFixed(3), from: +pl.HX.toFixed(2), to: +HX.toFixed(2), cy: +cy.toFixed(2) } };
   return out;
 }
+// 4.3（渲染基础问题 E7 后半）：烘出来就碰边（回放检查的「内圈」有亮度、又不是几乎全黑的帧）时，取景放大 8% 再烘一次（最多两次）。
+// 以前收紧时碰边的那一侧只是「不收」，从不放大，碰边的效果只能靠人改取景。
+const GROW40 = 1.08;
+function growPlan40(P, pl, parts) {
+  if (!pl || pl.loop || pl.unit || pl.tight || pl.aniso || (pl.grown || 0) >= 2) return null;
+  const ring = replayEdge40(parts), fr = fitFrames40(P, parts) || [];
+  const hit = ring.map((v, i) => v >= FIT_RING && !(fr[i] && (fr[i].empty || fr[i].faint)) ? i : -1).filter(i => i >= 0);
+  if (!hit.length) return null;
+  const HX = pl.HX * GROW40, HY = pl.HY * GROW40, cy = pl.zoom ? 0 : pl.cy;
+  return { ...pl, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cy, ppm: pl.L.cellW / (2 * HX), py: pl.zoom ? .5 : (cy + HY) / (2 * HY), maxDisp: pl.maxDisp / GROW40, grown: (pl.grown || 0) + 1,
+    fitted: { mode: 'grow', gain: +(1 / GROW40).toFixed(3), from: +pl.HX.toFixed(2), to: +HX.toFixed(2), frames: hit.length } };
+}
 function tickFrameKeys40(F) {
   // 少量正偏移抵消 Lifetime/关键点四位小数的舍入；最后一格保持到寿命结束。
   return F===1 ? [[0,.01],[1,.99]] : [[0,.01],[(F-1)/F,F-1+.01],[1,F-.01]];
@@ -138,10 +150,12 @@ function fadeAt40(P,fm,burstEnd) {
 }
 function budget40(P,fm) {
   const burstEnd=Math.max(0,+P.burstSec||0), fadeAt=fadeAt40(P,fm,burstEnd);
-  const strobeFrom=+P.strobeHz>0 ? (+P.strobeStart||0) : Infinity;
-  // 点灭：频率要 ≤ 0.4 × 帧率，帧率不够就在点灭期间提高（最多 30 fps；再高的点灭在导出说明里报警）
-  const strobeHold=+P.strobeHz>0 ? clamp(Math.floor(30*.4/ +P.strobeHz),1,4) : 4;
-  return {burstEnd,fadeAt,strobeFrom,strobeHold,
+  // 4.3（H9）：点灭开始时刻按模拟算（× 燃烧、从点火 / 第二段算起，fm.strobeOn）；以前把「点灭开始」（燃烧的比例）当成秒
+  const strobeFrom=+P.strobeHz>0 ? (fm && fm.strobeOn!=null ? fm.strobeOn : (+P.strobeStart||0)) : Infinity;
+  // 点灭：频率要 ≤ 0.4 × 帧率，帧率不够就在点灭期间提高（最多 30 fps）。4.3（E5）：每颗星的频率有 ±15% 的随机（20_sim.js），按最快的 ×1.15 算；
+  // 30 fps 也追不上（1.15 × 频率 > 0.45 × 30 = 13.5 Hz，接近 15 Hz 的混叠线）时 strobeAlias 报警（输出一节的自检、导出说明）
+  const fz=+P.strobeHz>0 ? 1.15*P.strobeHz : 0, strobeHold=fz>0 ? clamp(Math.floor(30*.4/fz),1,4) : 4;
+  return {burstEnd,fadeAt,strobeFrom,strobeHold,strobeAlias:fz>13.5?+fz.toFixed(1):0,
     holds:[hold40(P.fpsBurst==null?30:P.fpsBurst),hold40(P.fpsActive==null?15:P.fpsActive),hold40(P.fpsFade==null?10:P.fpsFade)]};
 }
 function holdAt40(B,holds,t) {
@@ -254,7 +268,7 @@ function plan40(P,fm,ta=0,tb=P.duration) {
   const fit=P.outPack==='fit',L2=fit&&F<=cap?fitLayout40(L,F):L;
   return {...base,L:L2,fitPack:fit,t0,duration:D,sizeKeys,frameScale,times,dur,ticks,nTicks:N,keys:keysFromTicks40(ticks,N),area,
     frameTiming:'tick-start',frameFps:30,capacityFrames:cap,sequenceStart:t0,sequenceEnd:end/30,
-    budget:{mode,burstEnd:B.burstEnd,fadeAt:B.fadeAt,strobeFrom:B.strobeFrom,fps:mode==='tiers'?holds.map(fpsOf):null,strobeFps:fpsOf(B.strobeHold),pages:Math.ceil(F/cap),holdMin:Math.min(...dur)*30,holdMax:Math.max(...dur)*30},
+    budget:{mode,burstEnd:B.burstEnd,fadeAt:B.fadeAt,strobeFrom:B.strobeFrom,strobeAlias:B.strobeAlias,fps:mode==='tiers'?holds.map(fpsOf):null,strobeFps:fpsOf(B.strobeHold),pages:Math.ceil(F/cap),holdMin:Math.min(...dur)*30,holdMax:Math.max(...dur)*30},
     fadeEnd:P.duration,avgFps:F/D,minFps,maxDisp};
 }
 // 「按帧数选最小贴图」：单格大小不变，RGBA 接力，在 1×1 / 2×1 / 2×2 / 4×2 / 4×4 / 8×4 / 8×8 里挑第一个放得下 F 帧、又不超过原来格子的

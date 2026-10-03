@@ -43,6 +43,9 @@ const INERT = [
   [['emberFrac', 'emberLife', 'emberBright', 'emberFollow', 'emberSize', 'emberEnd', 'emberAll'], P => +P.branch > 0, '「松叶分叉数」> 0 时不出余烬（分叉的火花占了余烬那一路）'],
   [['tailWidth', 'tailPinchHead', 'tailPinchTail', 'tailBellyAt', 'tailShoulder', 'tailJit', 'tailHaze', 'tailHazeR', 'sparkRise', 'starBright', 'tailDiffuse', 'tailDiffuseScale', 'branch', 'branchAt'], P => P.engine === 'cpu', '「模拟内核」是 CPU 时不起作用（尾迹外形只在 GPU 内核里算）'],
   [['chaos'], P => !(+P.spin > 0), '「旋转速度」是 0 时不起作用'],
+  // 地面：只有 1 个喷口时，喷口之间的间距、彗星扇面没有意义（喷泉的扇面角度是喷射张角，照样起作用）
+  [['fanAngle'], P => typeof hasComets === 'function' && hasComets(P) && Math.round(+P.nozzles || 1) <= 1, '「喷口数」是 1 时不起作用（扇面角度是几个喷口之间张开的角度）'],
+  [['spacing'], P => familyOf(P.type) === 'ground' && P.type !== 'shikake' && Math.round(+P.nozzles || 1) <= 1, '「喷口数」是 1 时不起作用'],
   [['fade', 'lastFlare', 'flicker', 'headSize', 'headTear', 'headDim', 'headDimUntil', 'strobeHz', 'strobeDuty', 'strobeStart', 'carrierHead'], P => !(+P.headBright > 0), '「星头亮度」是 0（星头不发光，只有尾迹 / 火花）时不起作用'],
 ];
 function inertWhy(key, P) {

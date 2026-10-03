@@ -9,7 +9,7 @@ class Sparks {
     this.air = new Float32Array(cap * 2); this.pd = new Float32Array(cap);
   }
   add(x, y, z, vx, vy, vz, age, life, T0, rnd, ax, ay, pd = 1e9) {
-    if (this.n >= this.cap) return;
+    if (this.n >= this.cap) { this.dropped = (this.dropped || 0) + 1; return; }     // 4.3（E9）：池满了丢的数记下来（自检报警）
     const i = this.n++, k = i * 3;
     this.p[k] = x; this.p[k + 1] = y; this.p[k + 2] = z; this.v[k] = vx; this.v[k + 1] = vy; this.v[k + 2] = vz;
     this.age[i] = age; this.life[i] = life; this.T0[i] = T0; this.rnd[i] = rnd; this.air[i * 2] = ax; this.air[i * 2 + 1] = ay; this.pd[i] = pd;
@@ -281,7 +281,7 @@ class Sim {
       }
       s.x += s.vx * h; s.y += s.vy * h; s.z += s.vz * h;
       s.flick = clamp(s.flick + rng.n() * sq * 2.2 * P.flicker, 1 - P.flicker, 1 + P.flicker * 0.4);
-      if (s.vis != null && !s.ended && s.age >= s.vis) { s.ended = true; if (P.crackle > 0) this.crackleBurst(s); }
+      if (s.vis != null && !s.ended && s.age >= s.vis) { s.ended = true; if (P.crackle > 0 && !s.dark) this.crackleBurst(s); }     // 4.3（H8）：被「发光星比例」藏起来的星不爆
       const hotOff = P.sparkStop > 0 && s.kind !== 5 && s.age - s.ign > P.sparkStop, embAll = P.emberFrac > 0 && P.emberAll;
       if (s.rate > 0 && !this.noSparks && s.age >= s.ign && !s.ended && !(hotOff && !embAll) && !(P.sparkStart > 0 && s.kind !== 5 && s.age - s.ign < P.sparkStart)) {
         const fr = (s.kind === 5 || P.sparkRateEnd == null || P.sparkRateEnd === 1 ? 1 : Math.max(0, 1 + (P.sparkRateEnd - 1) * clamp((s.age - s.ign) / Math.max(0.05, (s.vis != null ? s.vis : s.burn) - s.ign), 0, 1)))
@@ -322,7 +322,7 @@ class Sim {
         if (s.kind === 1) this.subBurst(s);
         else if (s.kind === 6) this.smallFlower(s);
         else if (s.kind === 5 && !s.child) { this.flashes.push({ t0: this.t, x: s.x, y: s.y, I: 0.6, sig: 3 }); this.events.push([this.t, 'apex']); }
-        else if (P.crackle > 0 && (s.kind === 0 || s.kind === 2)) this.crackleBurst(s);
+        else if (P.crackle > 0 && (s.kind === 0 || s.kind === 2) && !s.dark) this.crackleBurst(s);
       }
     }
     if (dead > 64 && dead > st.length / 2) this.stars = st.filter(s => s.alive);
@@ -359,8 +359,9 @@ class Sim {
     let nh = 0; const capH = bufH.length >> 2, capT = bufT.length >> 2;
     const push = (buf, n, x, y, I, sz) => { const k = n * 4; buf[k] = x; buf[k + 1] = y; buf[k + 2] = I; buf[k + 3] = sz; };
     for (const s of this.stars) {
-      if (!s.alive || nh >= capH - 1) continue;
+      if (!s.alive) continue;
       const I = this.headI(s); if (I <= 0) continue;
+      if (nh >= capH - 1) { this.dropH = (this.dropH || 0) + 1; continue; }     // 4.3（E9）：星头缓冲满了没画的星（自检报警）
       const sz = P.headSize * (s.kind === 1 || s.kind === 6 ? 0.8 : 1);
       push(bufH, nh++, s.x, s.y, I, sz);
       // 尾迹外形「泪滴星头」（headTear）：沿运动反方向补几个越来越小、越来越暗的点，速度越快拉得越长（默认 0 不进来）

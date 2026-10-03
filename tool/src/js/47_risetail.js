@@ -318,7 +318,9 @@ function rtBuildES(P) {
     em.push({ name: 'SparkPops', gpu: true, delay: 0, duration: T, seed: seed * 13 + 7, spawn: spawn(P.rtPopRate),
       life: [L * 0.6, L * 1.2], size: [(P.rtPopSize || 0.5) * 0.7, (P.rtPopSize || 0.5) * 1.3], drag: [kd * (1 - kJ), kd * (1 + kJ)], ...turb(kd),
       loc, vel: vel(P.rtJet, P.rtFling), velAdd: cone, sizeLife: [[0, 0.4], [u0, 0.4], [u0 + 0.02, 1.2], [1, 0.6]],
-      col: [[0, [0, 0, 0]], [+(u0 - 0.001).toFixed(4), [0, 0, 0]], [+u0.toFixed(4), c(1)], [+(u0 + 0.03).toFixed(4), c(0.6)], [+(u0 + 0.08).toFixed(4), gold.map(x => +(x / rg * I * 0.12).toFixed(4))], [+Math.min(1, u0 + 0.15).toFixed(4), [0, 0, 0]], [1, [0, 0, 0]]] });
+      // 4.3（H3）：闪光后面三个键按剩下的寿命等比缩（d ≤ 0.15），不越过 1、不重复（以前 0.85 时两个 u = 1，> 0.92 时越界乱序）
+      col: (() => { const d = Math.min(0.15, 1 - u0), k = [[0, [0, 0, 0]], [+(u0 - 0.001).toFixed(4), [0, 0, 0]], [+u0.toFixed(4), c(1)], [+(u0 + d * 0.2).toFixed(4), c(0.6)], [+(u0 + d * 0.8 / 1.5).toFixed(4), gold.map(x => +(x / rg * I * 0.12).toFixed(4))], [+Math.min(1, u0 + d).toFixed(4), [0, 0, 0]], [1, [0, 0, 0]]];
+        return k.filter((q, i) => i === 0 || q[0] > k[i - 1][0]); })() });
   }
   // 发射口：发射药在炮筒口一闪（大光团，零点几秒）+ 一把向上喷的火星（炮筒里带出来的燃烧颗粒）
   if ((P.rtLaunch || 0) > 0) {
@@ -446,7 +448,7 @@ async function bakeEmitSet(P, scale, onProg) {
 // 粒子出生表（按平台缓存在烘焙结果上）
 function rtTables(b, mobile) {
   const k = mobile ? '_tabM' : '_tabP';
-  if (!b[k]) b[k] = esSpawn(b.es || rtBuildES(b.P), mobile ? (b.P.rtMobile == null ? 0.3 : b.P.rtMobile) : 1);
+  if (!b[k]) b[k] = esSpawn(b.es || rtBuildES(b.P), mobile ? (b.P.rtMobile == null ? BASE.rtMobile : b.P.rtMobile) : 1);
   return b[k];
 }
 // 引擎回放里循环层在时刻 t 的状态：上升 = 循环贴图沿弹道、帧号锯齿、面片长按速度缩放；开花后 = 消散贴图停在开花点
@@ -531,7 +533,7 @@ function fwlEmitSet(name, b, M, mobile) {
     ]
   }];
   const ES = b.es || rtBuildES(P);
-  const fracM = P.rtMobile == null ? 0.3 : P.rtMobile;
+  const fracM = P.rtMobile == null ? BASE.rtMobile : P.rtMobile;
   // 手机比例 0：不写粒子发射器（一颗的 Burst，例如星头光晕，照留）
   for (const e of ES.emitters) { if (mobile && !(fracM > 0) && !(e.bursts || []).some(([, n]) => n === 1)) continue; emitters.push(esFwlEmitter(e, mobile, fracM)); }
   const tab = rtTables(b, mobile), peak = esPeakAlive(tab, m.T + 4);
@@ -626,7 +628,7 @@ function rtStatsHTML(b) {
 const rtLive = { gen: -1, P: null, ES: null, tab: null, tabM: null };
 function rtLiveTables(P, mobile) {
   if (rtLive.gen !== state.gen || rtLive.P !== P) { rtLive.gen = state.gen; rtLive.P = P; rtLive.ES = rtBuildES(P); rtLive.tab = null; rtLive.tabM = null; }
-  if (mobile) return rtLive.tabM || (rtLive.tabM = esSpawn(rtLive.ES, P.rtMobile == null ? 0.3 : P.rtMobile));
+  if (mobile) return rtLive.tabM || (rtLive.tabM = esSpawn(rtLive.ES, P.rtMobile == null ? BASE.rtMobile : P.rtMobile));
   return rtLive.tab || (rtLive.tab = esSpawn(rtLive.ES, 1));
 }
 function rtShadeLoop(P, M, t) {
