@@ -1,0 +1,1058 @@
+[
+ {
+  "config": "normal",
+  "effect": "hiki_nishiki",
+  "openS": 300.1,
+  "play": {
+   "frames": 141,
+   "medMs": 17.6,
+   "p90Ms": 18.1,
+   "maxMs": 18.6,
+   "budgetM": 57.2,
+   "subLast": [
+    0,
+    0
+   ]
+  },
+  "rows": [
+   {
+    "t": 0.07,
+    "cap": 0,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.44,
+    "cpuMs": 0.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.07,
+    "cap": 8,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.56,
+    "cpuMs": 0.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.07,
+    "cap": 4,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.56,
+    "cpuMs": 0.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.07,
+    "cap": 2,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.56,
+    "cpuMs": 0.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.07,
+    "cap": 1,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.54,
+    "cpuMs": 0.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.07,
+    "cap": 0,
+    "noP": true,
+    "gpuMs": 0.01,
+    "wallMs": 0.84,
+    "cpuMs": 0.04,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.2,
+    "cap": 0,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.58,
+    "cpuMs": 0.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.2,
+    "cap": 8,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.58,
+    "cpuMs": 0.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.2,
+    "cap": 4,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.58,
+    "cpuMs": 0.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.2,
+    "cap": 2,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.54,
+    "cpuMs": 0.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.2,
+    "cap": 1,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.56,
+    "cpuMs": 0.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.2,
+    "cap": 0,
+    "noP": true,
+    "gpuMs": 0.01,
+    "wallMs": 0.6,
+    "cpuMs": 0.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.35,
+    "cap": 0,
+    "noP": false,
+    "gpuMs": 0.02,
+    "wallMs": 0.52,
+    "cpuMs": 0.04,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.35,
+    "cap": 8,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.58,
+    "cpuMs": 0.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.35,
+    "cap": 4,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.36,
+    "cpuMs": 0.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.35,
+    "cap": 2,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.34,
+    "cpuMs": 0,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.35,
+    "cap": 1,
+    "noP": false,
+    "gpuMs": 0.01,
+    "wallMs": 0.58,
+    "cpuMs": 0,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.35,
+    "cap": 0,
+    "noP": true,
+    "gpuMs": 0.01,
+    "wallMs": 0.68,
+    "cpuMs": 0,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   }
+  ],
+  "timer": true,
+  "canvas": [
+   412,
+   412
+  ],
+  "samples": [
+   1024,
+   1024
+  ],
+  "dpr": 1.0000000298023224,
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "errors": []
+ },
+ {
+  "config": "normal",
+  "effect": "hongchao",
+  "openS": 300.2,
+  "play": {
+   "frames": 140,
+   "medMs": 17.9,
+   "p90Ms": 18.1,
+   "maxMs": 18.5,
+   "budgetM": 71.5,
+   "subLast": [
+    2,
+    16
+   ]
+  },
+  "rows": [
+   {
+    "t": 1.8,
+    "cap": 0,
+    "noP": false,
+    "gpuMs": 27.19,
+    "wallMs": 27.54,
+    "cpuMs": 1.06,
+    "partsM": 54.303,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 1.8,
+    "cap": 8,
+    "noP": false,
+    "gpuMs": 13.49,
+    "wallMs": 13.9,
+    "cpuMs": 0.82,
+    "partsM": 27.154,
+    "sub": [
+     8,
+     16
+    ]
+   },
+   {
+    "t": 1.8,
+    "cap": 4,
+    "noP": false,
+    "gpuMs": 6.55,
+    "wallMs": 7.14,
+    "cpuMs": 0.44,
+    "partsM": 13.578,
+    "sub": [
+     4,
+     16
+    ]
+   },
+   {
+    "t": 1.8,
+    "cap": 2,
+    "noP": false,
+    "gpuMs": 3.19,
+    "wallMs": 3.64,
+    "cpuMs": 0.26,
+    "partsM": 6.789,
+    "sub": [
+     2,
+     16
+    ]
+   },
+   {
+    "t": 1.8,
+    "cap": 1,
+    "noP": false,
+    "gpuMs": 1.61,
+    "wallMs": 2.14,
+    "cpuMs": 0.36,
+    "partsM": 3.394,
+    "sub": [
+     1,
+     16
+    ]
+   },
+   {
+    "t": 1.8,
+    "cap": 0,
+    "noP": true,
+    "gpuMs": 0.64,
+    "wallMs": 1.08,
+    "cpuMs": 1.02,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 4.8,
+    "cap": 0,
+    "noP": false,
+    "gpuMs": 26.66,
+    "wallMs": 28.06,
+    "cpuMs": 2.58,
+    "partsM": 54.307,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 4.8,
+    "cap": 8,
+    "noP": false,
+    "gpuMs": 13.18,
+    "wallMs": 13.74,
+    "cpuMs": 1.06,
+    "partsM": 27.155,
+    "sub": [
+     8,
+     16
+    ]
+   },
+   {
+    "t": 4.8,
+    "cap": 4,
+    "noP": false,
+    "gpuMs": 6.73,
+    "wallMs": 7,
+    "cpuMs": 0.38,
+    "partsM": 13.578,
+    "sub": [
+     4,
+     16
+    ]
+   },
+   {
+    "t": 4.8,
+    "cap": 2,
+    "noP": false,
+    "gpuMs": 3.2,
+    "wallMs": 3.66,
+    "cpuMs": 0.4,
+    "partsM": 6.789,
+    "sub": [
+     2,
+     16
+    ]
+   },
+   {
+    "t": 4.8,
+    "cap": 1,
+    "noP": false,
+    "gpuMs": 1.62,
+    "wallMs": 2.06,
+    "cpuMs": 0.28,
+    "partsM": 3.394,
+    "sub": [
+     1,
+     16
+    ]
+   },
+   {
+    "t": 4.8,
+    "cap": 0,
+    "noP": true,
+    "gpuMs": 1.61,
+    "wallMs": 2.92,
+    "cpuMs": 2.82,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 8.4,
+    "cap": 0,
+    "noP": false,
+    "gpuMs": 26.25,
+    "wallMs": 27.84,
+    "cpuMs": 1.8,
+    "partsM": 54.3,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 8.4,
+    "cap": 8,
+    "noP": false,
+    "gpuMs": 13.3,
+    "wallMs": 14.1,
+    "cpuMs": 0.5,
+    "partsM": 27.15,
+    "sub": [
+     8,
+     16
+    ]
+   },
+   {
+    "t": 8.4,
+    "cap": 4,
+    "noP": false,
+    "gpuMs": 6.51,
+    "wallMs": 6.86,
+    "cpuMs": 0.26,
+    "partsM": 13.575,
+    "sub": [
+     4,
+     16
+    ]
+   },
+   {
+    "t": 8.4,
+    "cap": 2,
+    "noP": false,
+    "gpuMs": 3.19,
+    "wallMs": 3.48,
+    "cpuMs": 0.14,
+    "partsM": 6.788,
+    "sub": [
+     2,
+     16
+    ]
+   },
+   {
+    "t": 8.4,
+    "cap": 1,
+    "noP": false,
+    "gpuMs": 1.61,
+    "wallMs": 1.82,
+    "cpuMs": 0.1,
+    "partsM": 3.394,
+    "sub": [
+     1,
+     16
+    ]
+   },
+   {
+    "t": 8.4,
+    "cap": 0,
+    "noP": true,
+    "gpuMs": 0.43,
+    "wallMs": 0.86,
+    "cpuMs": 0.82,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   }
+  ],
+  "timer": true,
+  "canvas": [
+   412,
+   412
+  ],
+  "samples": [
+   1024,
+   1024
+  ],
+  "dpr": 1.0000000298023224,
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "errors": []
+ },
+ {
+  "config": "normal",
+  "effect": "jinmangju",
+  "openS": 1.6,
+  "play": {
+   "frames": 141,
+   "medMs": 17.9,
+   "p90Ms": 18.1,
+   "maxMs": 18.4,
+   "budgetM": 57.2,
+   "subLast": [
+    6,
+    6
+   ]
+  },
+  "rows": [
+   {
+    "t": 0.68,
+    "cap": 0,
+    "noP": false,
+    "gpuMs": 2.85,
+    "wallMs": 3.36,
+    "cpuMs": 0.16,
+    "partsM": 1.692,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.68,
+    "cap": 8,
+    "noP": false,
+    "gpuMs": 3.01,
+    "wallMs": 3.28,
+    "cpuMs": 0.2,
+    "partsM": 1.692,
+    "sub": [
+     7,
+     7
+    ]
+   },
+   {
+    "t": 0.68,
+    "cap": 4,
+    "noP": false,
+    "gpuMs": 1.65,
+    "wallMs": 1.9,
+    "cpuMs": 0.14,
+    "partsM": 0.967,
+    "sub": [
+     4,
+     7
+    ]
+   },
+   {
+    "t": 0.68,
+    "cap": 2,
+    "noP": false,
+    "gpuMs": 0.83,
+    "wallMs": 1.02,
+    "cpuMs": 0.1,
+    "partsM": 0.483,
+    "sub": [
+     2,
+     7
+    ]
+   },
+   {
+    "t": 0.68,
+    "cap": 1,
+    "noP": false,
+    "gpuMs": 0.43,
+    "wallMs": 0.66,
+    "cpuMs": 0.12,
+    "partsM": 0.242,
+    "sub": [
+     1,
+     7
+    ]
+   },
+   {
+    "t": 0.68,
+    "cap": 0,
+    "noP": true,
+    "gpuMs": 0.16,
+    "wallMs": 0.48,
+    "cpuMs": 0.38,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 1.83,
+    "cap": 0,
+    "noP": false,
+    "gpuMs": 6.22,
+    "wallMs": 6.6,
+    "cpuMs": 0.3,
+    "partsM": 3.143,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 1.83,
+    "cap": 8,
+    "noP": false,
+    "gpuMs": 3.84,
+    "wallMs": 4.28,
+    "cpuMs": 0.2,
+    "partsM": 1.934,
+    "sub": [
+     8,
+     13
+    ]
+   },
+   {
+    "t": 1.83,
+    "cap": 4,
+    "noP": false,
+    "gpuMs": 1.86,
+    "wallMs": 2.08,
+    "cpuMs": 0.12,
+    "partsM": 0.967,
+    "sub": [
+     4,
+     13
+    ]
+   },
+   {
+    "t": 1.83,
+    "cap": 2,
+    "noP": false,
+    "gpuMs": 0.94,
+    "wallMs": 1.16,
+    "cpuMs": 0.12,
+    "partsM": 0.483,
+    "sub": [
+     2,
+     13
+    ]
+   },
+   {
+    "t": 1.83,
+    "cap": 1,
+    "noP": false,
+    "gpuMs": 0.48,
+    "wallMs": 0.68,
+    "cpuMs": 0.06,
+    "partsM": 0.242,
+    "sub": [
+     1,
+     13
+    ]
+   },
+   {
+    "t": 1.83,
+    "cap": 0,
+    "noP": true,
+    "gpuMs": 0.15,
+    "wallMs": 0.48,
+    "cpuMs": 0.42,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 3.2,
+    "cap": 0,
+    "noP": false,
+    "gpuMs": 3.01,
+    "wallMs": 3.46,
+    "cpuMs": 0.2,
+    "partsM": 3.863,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 3.2,
+    "cap": 8,
+    "noP": false,
+    "gpuMs": 1.71,
+    "wallMs": 2.1,
+    "cpuMs": 0.14,
+    "partsM": 1.932,
+    "sub": [
+     8,
+     16
+    ]
+   },
+   {
+    "t": 3.2,
+    "cap": 4,
+    "noP": false,
+    "gpuMs": 0.76,
+    "wallMs": 1.16,
+    "cpuMs": 0.1,
+    "partsM": 0.966,
+    "sub": [
+     4,
+     16
+    ]
+   },
+   {
+    "t": 3.2,
+    "cap": 2,
+    "noP": false,
+    "gpuMs": 0.4,
+    "wallMs": 0.74,
+    "cpuMs": 0.06,
+    "partsM": 0.483,
+    "sub": [
+     2,
+     16
+    ]
+   },
+   {
+    "t": 3.2,
+    "cap": 1,
+    "noP": false,
+    "gpuMs": 0.22,
+    "wallMs": 2.66,
+    "cpuMs": 0.06,
+    "partsM": 0.241,
+    "sub": [
+     1,
+     16
+    ]
+   },
+   {
+    "t": 3.2,
+    "cap": 0,
+    "noP": true,
+    "gpuMs": 0.02,
+    "wallMs": 0.28,
+    "cpuMs": 0.2,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   }
+  ],
+  "timer": true,
+  "canvas": [
+   412,
+   412
+  ],
+  "samples": [
+   1024,
+   1024
+  ],
+  "dpr": 1.0000000298023224,
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "errors": []
+ },
+ {
+  "config": "normal",
+  "effect": "qingning",
+  "openS": 300.0,
+  "play": {
+   "frames": 141,
+   "medMs": 17.8,
+   "p90Ms": 18.1,
+   "maxMs": 18.5,
+   "budgetM": 71.5,
+   "subLast": [
+    2,
+    12
+   ]
+  },
+  "rows": [
+   {
+    "t": 0.55,
+    "cap": 0,
+    "noP": false,
+    "gpuMs": 1.08,
+    "wallMs": 1.98,
+    "cpuMs": 0.62,
+    "partsM": 1.147,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 0.55,
+    "cap": 8,
+    "noP": false,
+    "gpuMs": 1.08,
+    "wallMs": 1.54,
+    "cpuMs": 0.52,
+    "partsM": 1.147,
+    "sub": [
+     7,
+     7
+    ]
+   },
+   {
+    "t": 0.55,
+    "cap": 4,
+    "noP": false,
+    "gpuMs": 0.65,
+    "wallMs": 1.04,
+    "cpuMs": 0.68,
+    "partsM": 0.655,
+    "sub": [
+     4,
+     7
+    ]
+   },
+   {
+    "t": 0.55,
+    "cap": 2,
+    "noP": false,
+    "gpuMs": 0.35,
+    "wallMs": 0.56,
+    "cpuMs": 0.18,
+    "partsM": 0.328,
+    "sub": [
+     2,
+     7
+    ]
+   },
+   {
+    "t": 0.55,
+    "cap": 1,
+    "noP": false,
+    "gpuMs": 0.19,
+    "wallMs": 0.4,
+    "cpuMs": 0.22,
+    "partsM": 0.164,
+    "sub": [
+     1,
+     7
+    ]
+   },
+   {
+    "t": 0.55,
+    "cap": 0,
+    "noP": true,
+    "gpuMs": 0.22,
+    "wallMs": 0.48,
+    "cpuMs": 0.42,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 1.47,
+    "cap": 0,
+    "noP": false,
+    "gpuMs": 1.05,
+    "wallMs": 2,
+    "cpuMs": 0.92,
+    "partsM": 2.132,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 1.47,
+    "cap": 8,
+    "noP": false,
+    "gpuMs": 0.66,
+    "wallMs": 0.92,
+    "cpuMs": 0.46,
+    "partsM": 1.31,
+    "sub": [
+     8,
+     16
+    ]
+   },
+   {
+    "t": 1.47,
+    "cap": 4,
+    "noP": false,
+    "gpuMs": 0.34,
+    "wallMs": 0.64,
+    "cpuMs": 0.28,
+    "partsM": 0.655,
+    "sub": [
+     4,
+     16
+    ]
+   },
+   {
+    "t": 1.47,
+    "cap": 2,
+    "noP": false,
+    "gpuMs": 0.19,
+    "wallMs": 0.36,
+    "cpuMs": 0.12,
+    "partsM": 0.328,
+    "sub": [
+     2,
+     16
+    ]
+   },
+   {
+    "t": 1.47,
+    "cap": 1,
+    "noP": false,
+    "gpuMs": 0.11,
+    "wallMs": 0.28,
+    "cpuMs": 0.1,
+    "partsM": 0.164,
+    "sub": [
+     1,
+     16
+    ]
+   },
+   {
+    "t": 1.47,
+    "cap": 0,
+    "noP": true,
+    "gpuMs": 0.58,
+    "wallMs": 2.5,
+    "cpuMs": 2.46,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 2.57,
+    "cap": 0,
+    "noP": false,
+    "gpuMs": 1.46,
+    "wallMs": 1.96,
+    "cpuMs": 0.72,
+    "partsM": 2.621,
+    "sub": [
+     0,
+     0
+    ]
+   },
+   {
+    "t": 2.57,
+    "cap": 8,
+    "noP": false,
+    "gpuMs": 0.66,
+    "wallMs": 1.72,
+    "cpuMs": 0.7,
+    "partsM": 1.31,
+    "sub": [
+     8,
+     16
+    ]
+   },
+   {
+    "t": 2.57,
+    "cap": 4,
+    "noP": false,
+    "gpuMs": 0.34,
+    "wallMs": 1.06,
+    "cpuMs": 0.24,
+    "partsM": 0.655,
+    "sub": [
+     4,
+     16
+    ]
+   },
+   {
+    "t": 2.57,
+    "cap": 2,
+    "noP": false,
+    "gpuMs": 0.19,
+    "wallMs": 0.54,
+    "cpuMs": 0.3,
+    "partsM": 0.328,
+    "sub": [
+     2,
+     16
+    ]
+   },
+   {
+    "t": 2.57,
+    "cap": 1,
+    "noP": false,
+    "gpuMs": 0.11,
+    "wallMs": 0.3,
+    "cpuMs": 0.08,
+    "partsM": 0.164,
+    "sub": [
+     1,
+     16
+    ]
+   },
+   {
+    "t": 2.57,
+    "cap": 0,
+    "noP": true,
+    "gpuMs": 0.71,
+    "wallMs": 0.94,
+    "cpuMs": 0.82,
+    "partsM": 0,
+    "sub": [
+     0,
+     0
+    ]
+   }
+  ],
+  "timer": true,
+  "canvas": [
+   412,
+   412
+  ],
+  "samples": [
+   1024,
+   1024
+  ],
+  "dpr": 1.0000000298023224,
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "errors": []
+ }
+]
