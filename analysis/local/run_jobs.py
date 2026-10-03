@@ -85,6 +85,11 @@ def run_job(job, s, force=False):
                                         capture_output=True, text=True, encoding='utf-8', errors='replace')
                     for line in (r2.stdout or '').splitlines()[-12:]: log(line)
                     log('界面状态检查：' + ('✅ 全过' if r2.returncode == 0 else '❌ 有不过的项，见 界面状态检查.json'))
+                if job.get('youxiao'):   # 4.2.18：参数有效性检查（逐个拨右栏参数，看曲线 / 导出 / 画面变没变；画面要显卡）
+                    r4 = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '参数有效性检查.py'), '--render', '--out', os.path.join(out, '参数有效性')]
+                                        + (['--only', job['youxiao_only']] if job.get('youxiao_only') else []), capture_output=True, text=True, encoding='utf-8', errors='replace')
+                    for line in (r4.stdout or '').splitlines()[-40:]: log(line)
+                    log('参数有效性：' + ('✅ 跑完，见 参数有效性/参数有效性.md' if r4.returncode == 0 else '❌ 没跑完：' + (r4.stderr or '')[-1500:]))
                 if job.get('tijian'):    # 4.2.4：条目体检（左栏每个条目真烘焙打开一遍，记打不打得开、多久、实时模拟卡不卡）
                     r3 = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '条目体检.py'), '--real', '--limit', str(job.get('tijian_limit', 90)), '--out', os.path.join(out, '条目体检.json')],
                                         capture_output=True, text=True, encoding='utf-8', errors='replace')
