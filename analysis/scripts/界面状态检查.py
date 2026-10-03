@@ -755,8 +755,8 @@ async def n1(pg):
     if not h.startswith(want[2] + ' · ' + want[0]): bad.append(f'说明条第一行：{h[:40]}')
     for w in ('调大', 'UE'):
         if w not in h: bad.append(f'说明条没有「{w}」')
-    # 搜索：英文名 / 旧名
-    for q, k in (('Lifetime', 'burn'), ('燃烧时间', 'burn'), ('Spawn Count', 'stars')):
+    # 搜索：英文名 / 旧名（stars 的英文名 10-03 19:31 按用户审阅改成 Spawn Burst，Cascade 的叫法）
+    for q, k in (('Lifetime', 'burn'), ('燃烧时间', 'burn'), ('Spawn Burst', 'stars')):
         r = await pg.evaluate("(q) => { const i = $('#params .ptools input[type=search]'); i.value = q; i.dispatchEvent(new Event('input')); return panelRows.filter(([r]) => !r.hidden).map(([r, it]) => it[0]); }", q)
         if k not in r: bad.append(f'搜「{q}」找不到 {k}（{r[:6]}）')
     await pg.evaluate("(() => { const i = $('#params .ptools input[type=search]'); i.value = ''; i.dispatchEvent(new Event('input')); return 0; })()")

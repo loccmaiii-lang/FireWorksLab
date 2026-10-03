@@ -96,6 +96,16 @@ def run_job(job, s, force=False):
                                         capture_output=True, text=True, encoding='utf-8', errors='replace')
                     for line in (r3.stdout or '').splitlines()[-30:]: log(line)
                     log('条目体检：' + ('✅ 都能打开' if r3.returncode == 0 else '❌ 有打不开 / 卡的，见 条目体检.json'))
+                if job.get('fuhe'):      # 4.2.22 后（对话框15）：实时模拟一帧的显卡毫秒，按画布（正常 / 专注 F）和快门子样本数拆开
+                    try:
+                        r5 = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '实时显卡负担.py'), '--out', out]
+                                            + (['--effects', job['fuhe_effects']] if job.get('fuhe_effects') else []) + (['--configs', job['fuhe_configs']] if job.get('fuhe_configs') else []),
+                                            capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=int(job.get('fuhe_timeout', 1800)))
+                        for line in (r5.stdout or '').splitlines()[-30:]: log(line)
+                        log('实时显卡负担：' + ('✅ 量完，见 实时显卡负担.md' if r5.returncode == 0 else '❌ 没跑完：' + (r5.stderr or '')[-1500:]))
+                    except subprocess.TimeoutExpired as e:      # 不能让一个慢脚本把显卡队列卡住
+                        for line in (e.stdout or b'').decode('utf-8', 'replace').splitlines()[-30:] if isinstance(e.stdout, bytes) else (e.stdout or '').splitlines()[-30:]: log(line)
+                        log(f"实时显卡负担：❌ 超过 {job.get('fuhe_timeout', 1800)} 秒，停了")
             elif job['type'] == 'ui':
                 log(f"开始：{job.get('name', '')}（界面截图）")
                 import ui_shots; ui_shots.run(job, s, out, log=log)

@@ -33,17 +33,21 @@ function liveCapFor(work) {
   return clamp(Math.floor(liveCtl.budget / Math.max(1, work)), 2, 128);
 }
 function liveCapNote() { return liveCtl.lastCap && liveCtl.lastCap < liveCtl.lastFull ? ` · 快门子样本 ${liveCtl.lastCap}/${liveCtl.lastFull}（显卡忙${state.baking ? '：后台在烘焙' : ''}，实时模拟少画几层快门；引擎回放、导出不受影响）` : ''; }
-function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm) {
+// 这一帧（不压时）有几个快门子样本：烘焙分批用（4.2.23）
+function frameSampleCount40(P, pl, t) { const [a, b] = shutterWindow(P, pl, t), q = qualityOf(P); return clamp(Math.ceil((b - a) * q.hz), 1, q.maxSub); }
+// range = [j0, j1)：只画这一帧第 j0 到 j1 − 1 个子样本（4.2.23 烘焙分批交给显卡）；不给 = 整帧。分几次画和一次画完，画的东西、顺序都一样
+function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm, range = null) {
   const [a,b] = shutterWindow(P, pl, t), q = qualityOf(P), width = b-a;
   const full = clamp(Math.ceil(width * q.hz), 1, q.maxSub), count = LIVE_CAP > 0 ? Math.min(full, LIVE_CAP) : full;
   if (LIVE_CAP > 0) { liveCtl.lastFull = Math.max(liveCtl.lastFull, full); liveCtl.lastCap = Math.max(liveCtl.lastCap, count); }
+  const j0 = range ? Math.max(0, range[0]) : 0, j1 = range ? Math.min(count, range[1]) : count;
   const oldPPMY = PPMY; PPMY = ppmY; setParticleProfile(P);
   R.subW = width / count;
   const fwd = LIVE_VIEW && R.sim && R.sim.noSparks;      // 4.2.22：实时模拟不倒回（见 50_bake.js draw）
   R.liveFwd = !!fwd;
-  if (R.frameStart && !pl.loop && !fwd) R.frameStart(Math.max(0, a + .5 * width / count));
+  if (R.frameStart && !pl.loop && !fwd && j0 === 0) R.frameStart(Math.max(0, a + .5 * width / count));
   try {
-    for (let j=0;j<count;j++) {
+    for (let j=j0;j<j1;j++) {
       const ts = a + (j+.5)*width/count;
       // 以物理时间定闪烁样本，不依赖调用路径或画面刷新次数。
       const tick = Math.floor(ts*240), f = clamp(Math.floor(evalKeys(pl.keys, (t-(pl.t0||0))/pl.duration)),0,pl.L.F-1);

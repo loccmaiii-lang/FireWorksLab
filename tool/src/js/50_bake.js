@@ -147,6 +147,31 @@ function loopPlan(P, box, Tp) {
     keys: [[0, 0], [1, L.F]], times, dur, avgFps: L.F / Tp, minFps: L.F / Tp, maxDisp: 0, t0: 0, duration: Tp, loop: true };
 }
 
+// 4.2.23 烘焙不挡实时模拟（对话框15；用户 10-03 18:59「笔记本上放大还是会一顿一顿」，SMOKE18：本机打开鸿巢后头 5 秒约 3 秒没画面）：
+// 以前烘焙每 8 帧才让页面喘一口气（4.0 一页 64 帧时；小贴图一页只有 4 帧就一次都不让），一次往显卡里塞上亿粒
+// （鸿巢锦冠层一帧 16 个子样本 × 340 万粒），显卡排着几秒的活，实时模拟那一帧只能排在后面。
+// 现在一次只交「约 bakePace.ms 毫秒」的显卡活：按实测速度换算成这一帧的快门子样本数（至少 1 个），交完插一个 fence，
+// 不阻塞页面地等显卡真做完再交下一批，中间页面照常画实时模拟。画进贴图的东西和顺序都不变 → 结果逐字节一样（实时负担检查 M7）。
+// 子样本还嫌大（笔记本上鸿巢 1 个子样本 340 万粒）就是这一档的下限，要更细得拆火花批次，以后再说。
+const bakePace = { on: true, ms: 12, rate: 0, pending: 0, maxSubs: 0, waits: 0 };   // rate：每毫秒做完多少粒（fence 实测，含页面自己的画面，偏保守）；maxSubs / ms 可被检查改小
+function bakePaceDue(next) { return bakePace.on && bakePace.pending > 0 && (!bakePace.rate || bakePace.pending + next > bakePace.rate * bakePace.ms); }
+async function bakePaceWait(learn = true) {
+  const done = bakePace.pending; bakePace.pending = 0;
+  if (!bakePace.on || gl.isContextLost()) return;
+  const s = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0); if (!s) return;
+  gl.flush(); bakePace.waits++;
+  const t0 = performance.now();
+  try { do await nextTick(); while (!gl.isContextLost() && gl.getSyncParameter(s, gl.SYNC_STATUS) !== gl.SIGNALED); }     // 状态只在回到页面以后才会变
+  finally { gl.deleteSync(s); }
+  const ms = performance.now() - t0;
+  if (learn && done > 0 && ms > 0.5) { const r = done / ms; bakePace.rate = bakePace.rate ? bakePace.rate * 0.7 + r * 0.3 : r; }
+}
+function bakeSliceSubs(work, left) {
+  if (!bakePace.on) return left;
+  if (bakePace.maxSubs > 0) return clamp(bakePace.maxSubs, 1, left);
+  if (!bakePace.rate) return 1;                       // 还没量过速度：先交 1 个子样本
+  return clamp(Math.floor(bakePace.rate * bakePace.ms / Math.max(1, work)), 1, left);
+}
 // 核心：按计划逐帧渲染、打包、编码、统计
 async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   const L = pl.L;
@@ -163,10 +188,18 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
     const tc = pl.times[f], W = Math.max(P.shutter * pl.dur[f], 1e-4);
     const nsub = clamp(Math.ceil(W * q.hz), 1, q.maxSub);
     const [sx, sy] = sizeXY(pl, tc), c = centerAt(pl, tc), view = [c[0], c[1], pl.HX * sx, pl.HY * sy], ppm = ssW / (pl.Ww * sx);
-    PPMY = ssH / (pl.Wh * sy);
+    const ppmY = ssH / (pl.Wh * sy); PPMY = ppmY;
     sst.clear(); sst.bind(); additive(true);
     R.subW = W / nsub;   // 每个子帧覆盖的时长（尾缀的星头据此再细分，拖出连续亮线）
-    if (renderVersion(P)>=40) drawFrameSamples40(P,pl,R,pl.t0+tc,view,ppm,PPMY);
+    if (renderVersion(P)>=40) {
+      // 4.2.23 分批交给显卡（见上面 bakePace）：等显卡时把全局状态还给页面（PPMY = 0、不叠加），回来再接上
+      const n = frameSampleCount40(P, pl, pl.t0 + tc), work = Math.max(1, trackDraws(R.track, P) + (P.stars || 0) * q.ss);
+      for (let j0 = 0; j0 < n;) {
+        const k = bakeSliceSubs(work, n - j0);
+        if (bakePaceDue(work * k)) { additive(false); PPMY = 0; await bakePaceWait(); PPMY = ppmY; sst.bind(); gl.colorMask(true, true, true, true); additive(true); }
+        drawFrameSamples40(P, pl, R, pl.t0 + tc, view, ppm, ppmY, [j0, j0 + k]); bakePace.pending += work * k; j0 += k;
+      }
+    }
     else for (let j = 0; j < nsub; j++) {
       const ts = pl.t0 + tc - W / 2 + (j + 0.5) * W / nsub;
       R.draw(pl.loop ? ts : Math.max(0, ts), view, ppm, 1 / nsub, pl.loop ? f : f * 16 + j, f);
@@ -207,17 +240,21 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   fH.dispose(); fT.dispose(); sst.dispose();
   const bakeMs = performance.now() - t0;
   const b = { N, NH, cw, chh, scale, head, tail, P, meta: { ...pl, ...(renderVersion(P)>=40?{noFade:!!extra.noFade}:{}), quality: q, expoH: eH, expoT: eT, sparkSlots: R.slots || 0, bakeMs } };
-  analyze(b);
+  await analyze(b);
   return b;
 }
 // 灯光曲线、暗帧、自检（过曝、边缘渗色、通道布局、近似帧、循环接缝）
-function analyze(b) {
+// 4.2.23：先等显卡把编码做完再读回（读回不再卡住页面等显卡）；逐帧扫贴图时每用掉约 8 ms 让页面画一帧（以前 2048² 一页一口气 1–3 s）。算的东西不变
+async function analyze(b) {
   const m = b.meta, L = m.L, P = b.P, N = b.N, NH = b.NH, cw = b.cw, chh = b.chh;
+  await bakePaceWait(false);
   const imgs = [readRGBA8(b.head)]; if (b.tail) imgs.push(readRGBA8(b.tail));
+  let tY = performance.now();
   const light = [], cellMax = [], clip = [], edge = [], sig = [], rows = [], fills = [], boxes = [], fx = [], edge12 = [];
   const measureImg = !m.loop && !m.unit;   // 与实拍视频同样的口径：亮部像素掩码 → 半径、下坠、像素数
   const SG = 16;   // 近似帧比较用的缩略网格
   for (let f = 0; f < L.F; f++) {
+    if (performance.now() - tY > 8) { await nextTick(); tY = performance.now(); }
     const ch = L.chans === 4 ? Math.floor(f / L.per) : 0, k = f % L.per, col = k % L.cols, row = Math.floor(k / L.cols);
     const y0 = NH - (row + 1) * chh, x0 = col * cw; let sum = 0, mx = 0, nz = 0, nc = 0, em = 0;
     const sg = new Float32Array(SG * SG);

@@ -10,6 +10,11 @@
   M6 实时模拟不倒回（4.2.22）：实时模拟一帧里不做快照 / 恢复、物理步数 ≈ 只往前走的量（以前每帧倒回重走快门窗口，5 倍物理步 + 每帧深拷贝几百颗星）；
      「回推」画出来的星头和精确倒回的那一帧差别很小（平均像素差 < 1/255、不一样的像素 < 2%）；烘焙 / 定帧不走这条路
   M3 显卡上下文丢失（显存不够 / 驱动超时重置）：不再白屏不说话，画面上写原因和怎么办，渲染循环停下不刷错误
+  M7 烘焙不挡实时模拟（4.2.23，对话框15；SMOKE18：打开鸿巢后头 5 秒约 3 秒没画面、引菊→锦约 2 秒）：
+     ① 烘焙一次只交一小批显卡活（每批的快门子样本数按实测速度定，检查里强制每批 1 个），批与批之间回到页面、并等显卡做完（fence）；
+        以前每 8 帧才让出一次 → 一个任务里交了 8 帧 × 全部子样本
+     ② 分批烘出来的贴图和不分批（bakePace.on = false）逐字节相同
+     ③ 烘完的自检（analyze：每帧扫一遍整张贴图）不再一口气占住页面：2048² 一页里最长的一个任务 < 200 ms（以前 1–3 s）
 
   云端没有显卡：画图换成空操作，只量内存、子样本数和逻辑。真实帧率要本机任务（SMOKE / 条目体检）看。
 """
@@ -34,13 +39,13 @@ GPU = r"""(() => {
 KEEP = ['jinmangju', 'hongchao', 'hiki_nishiki', 'qingning']
 
 
-async def page(p, opts, stub=True):
+async def page(p, opts, stub=True, fake=True):
     b = await p.chromium.launch(**opts)
     ctx = await b.new_context(viewport={'width': 1200, 'height': 800}); pg = await ctx.new_page()
     errs = []; pg.on('pageerror', lambda e: errs.append(str(e)[:160]))
     await pg.add_init_script("window.requestAnimationFrame = () => 0;")
     await pg.goto(HTML, wait_until='load', timeout=0); await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
-    await pg.evaluate(FAKE)
+    if fake: await pg.evaluate(FAKE)
     if stub: await pg.evaluate(GPU)
     return b, pg, errs
 
@@ -200,6 +205,60 @@ async def m6(p, opts):
     return not bad, bad, info
 
 
+M7_BAKE = r"""async () => {
+  state.stillBusy = true; clearTimeout(bakeTimer);
+  const d = defaultsFor('kiku', 40), P = derive({ ...structuredClone(d.P), type: 'kiku', texW: 512, texH: 512, stars: 30, sparkRate: (d.P.sparkRate || 0) * 0.2, qMaxSub: 4 });
+  const hasPace = typeof bakePace !== 'undefined';
+  const hash = b => { let h = 0, n = 0; for (let s = b; s; s = s.next) for (const k of ['head', 'tail']) if (s[k]) { const a = readRGBA8(s[k]); for (let i = 0; i < a.length; i++) h = (h * 31 + a[i]) >>> 0; n += a.length; } return [h, n]; };
+  // ① 分批：检查里强制每批 1 个子样本、每批之后都等显卡（ms = 0）；数「有烘焙绘制的任务」有几个
+  let task = 0, run = true; const mc = new MessageChannel(); mc.port1.onmessage = () => { task++; if (run) mc.port2.postMessage(0); }; mc.port2.postMessage(0);
+  const tasks = new Set(); let draws = 0, fences = 0;
+  const oD = drawParticleBatch; drawParticleBatch = (n, m) => { tasks.add(task); draws++; return oD(n, m); };
+  const oF = gl.fenceSync.bind(gl); gl.fenceSync = (...a) => { fences++; return oF(...a); };
+  if (hasPace) Object.assign(bakePace, { on: true, maxSubs: 1, ms: 0 });
+  let b1, b0, F = 0;
+  try { b1 = await bake(P, 1, null); for (let s = b1; s; s = s.next) F += s.meta.L.F; }
+  finally { run = false; drawParticleBatch = oD; gl.fenceSync = oF; }
+  const h1 = hash(b1); disposeBake(b1);
+  // ② 不分批再烘一次，逐字节比
+  if (hasPace) Object.assign(bakePace, { on: false, maxSubs: 0, ms: 12 });
+  try { b0 = await bake(P, 1, null); } finally { if (hasPace) bakePace.on = true; }
+  const h0 = hash(b0); disposeBake(b0); state.stillBusy = false;
+  return { hasPace, frames: F, drawTasks: tasks.size, draws, fences, same: h0[0] === h1[0] && h0[1] === h1[1], h0, h1 };
+}"""
+M7_ANALYZE = r"""async () => {
+  const d = defaultsFor('kiku', 40), P = derive({ ...structuredClone(d.P), type: 'kiku', texW: 2048, texH: 2048 }), pl = displayPlan40(P), L = pl.L, N = P.texW, NH = P.texH;
+  const mk = () => { gl.activeTexture(gl.TEXTURE0); const t = new Target(N, NH, gl.RGBA8); const a = new Uint8Array(N * NH * 4); let s = 12345;
+    for (let i = 0; i < a.length; i++) { s = (s * 1103515245 + 12345) >>> 0; a[i] = (s >>> 24) < 64 ? (s >>> 16) & 255 : 0; }
+    gl.bindTexture(gl.TEXTURE_2D, t.tex); gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, N, NH, gl.RGBA, gl.UNSIGNED_BYTE, a); return t; };
+  const head = mk(), tail = P.outMode === 'combined' ? null : mk();
+  const b = { N, NH, cw: L.cellW, chh: L.cellH, scale: 1, head, tail, P, meta: { ...pl } };
+  await new Promise(r => setTimeout(r, 100));
+  const lt = []; const ob = new PerformanceObserver(l => l.getEntries().forEach(e => lt.push([e.startTime, e.duration]))); ob.observe({ type: 'longtask' });
+  const t0 = performance.now(); await analyze(b); const total = performance.now() - t0;
+  await new Promise(r => setTimeout(r, 300)); ob.disconnect(); head.dispose(); tail && tail.dispose();
+  const mine = lt.filter(x => x[0] >= t0 - 1);
+  return { F: L.F, cell: [L.cellW, L.cellH], totalMs: Math.round(total), longest: Math.round(Math.max(0, ...mine.map(x => x[1]))), longTasks: mine.length, fill: !!b.meta.fill };
+}"""
+
+
+async def m7(p, opts):
+    bad, info = [], {}
+    b, pg, errs = await page(p, opts, stub=False, fake=False)     # 真烘焙（小规格，云端软件渲染也快）
+    try:
+        r = await pg.evaluate(M7_BAKE); info['分批'] = r
+        if not r['hasPace']: bad.append('没有 bakePace（烘焙不分批）')
+        if r['drawTasks'] < r['frames']: bad.append(f"{r['frames']} 帧的烘焙只在 {r['drawTasks']} 个任务里交显卡活（应每批一个任务，至少每帧一个）")
+        if r['fences'] < r['frames']: bad.append(f"批与批之间没等显卡做完：fence {r['fences']} 个 < {r['frames']} 帧")
+        if not r['same']: bad.append(f"分批烘出来的贴图和不分批的不一样：{r['h1']} ≠ {r['h0']}")
+        r = await pg.evaluate(M7_ANALYZE); info['自检'] = r
+        if r['longest'] >= 200: bad.append(f"烘完的自检一口气占住页面 {r['longest']} ms（{r['F']} 帧、格子 {r['cell']}，共 {r['totalMs']} ms）")
+        if not r['fill']: bad.append('自检没跑完（没有 fill）')
+        if errs: bad.append('页面错误 ' + errs[0])
+    finally: await b.close()
+    return not bad, bad, info
+
+
 async def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--effects', default='jinmangju,hongchao,hiki_nishiki,qingning,qiuxing_a,qiuxing_d,yongfeng,pianbei')
     ap.add_argument('--base', default='', help='星轨道时间步的基线 json（改之前跑一遍 --dump-base 得到）'); ap.add_argument('--dump-base', default='')
@@ -216,7 +275,7 @@ async def main():
                 try: await open_eff(pg, k); out[k] = [x[3] for x in (await pg.evaluate(FRAMES, 4))['tracks']]
                 finally: await b.close()
             pathlib.Path(a.dump_base).write_text(json.dumps(out)); print('基线', out); return
-        for name, fn in [('M1', lambda: m1(p, opts, a.effects.split(','), base)), ('M2', lambda: m2(p, opts)), ('M3', lambda: m3(p, opts)), ('M4', lambda: m4(p, opts)), ('M5', lambda: m5(p, opts)), ('M6', lambda: m6(p, opts))]:
+        for name, fn in [('M1', lambda: m1(p, opts, a.effects.split(','), base)), ('M2', lambda: m2(p, opts)), ('M3', lambda: m3(p, opts)), ('M4', lambda: m4(p, opts)), ('M5', lambda: m5(p, opts)), ('M6', lambda: m6(p, opts)), ('M7', lambda: m7(p, opts))]:
             if only and name not in only: continue
             try: ok, bad, info = await fn()
             except Exception as e: ok, bad, info = False, [f'异常：{e}'[:300]], {}
