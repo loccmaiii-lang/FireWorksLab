@@ -20,6 +20,9 @@
      ⑤ 4.2.26（SMOKE20：鸿巢之后打开引菊→锦、永丰之后打开片贝，等显卡 1851 / 2394 次、每次约 160 ms，超时）：显卡被别的活占满、
         每次都要等很久时，每批的量不能被「等得久」压小（等得久多半是别的活，不是这批太大）：交一批 500 万粒、模拟要等 150 ms，
         之后每批的量不变（4.2.25 会按晚的比例压到 70 万，再往下到 20 万粒，引菊→锦一次烘焙要等上千次）
+     ⑥ 4.2.28（SMOKE21：新页面里打开引菊→锦 / 鸿巢 / 青柠 300 s 超时；条目体检里升空尾缀之后每批只剩 0.2M 粒）：上一次烘焙量到的速度
+        （尤其是尾缀那类不按星轨道画的、粒数估成 0 的）不能带到下一次：先把速度设成极小、关掉计时器，再烘一朵正常的菊，
+        等显卡的次数 ≤ 帧数 × 2（4.2.26 会按 20 万粒一批切，每个子样本等一次）
 
   云端没有显卡：画图换成空操作，只量内存、子样本数和逻辑。真实帧率要本机任务（SMOKE / 条目体检）看。
 """
@@ -280,6 +283,19 @@ M7_BUSY = r"""async () => {
 }"""
 
 
+M7_CARRY = r"""async () => {
+  state.stillBusy = true; clearTimeout(bakeTimer);
+  const d = defaultsFor('kiku', 40), P = derive({ ...structuredClone(d.P), type: 'kiku', texW: 512, texH: 512, qMaxSub: 16, qHz: 960, qSS: 1 });
+  const ext0 = bakePace.ext; bakePace.ext = null;                 // 没有计时器：速度只能来自上一次
+  Object.assign(bakePace, { on: true, ms: 12, rate: 1e3, budget: 8e6, pending: 0, maxSubs: 0 });   // 上一次（尾缀）量到的「速度」极小
+  const w0 = bakePace.waits; let F = 0, perSub = 0;
+  try { const R = makeRenderer(P, 'burst'); perSub = trackDraws(R.track, P) + P.stars * qualityOf(P).ss; R.dispose();
+        const b = await bake(P, 1, null); for (let s = b; s; s = s.next) F += s.meta.L.F; disposeBake(b); }
+  finally { bakePace.ext = ext0; state.stillBusy = false; }
+  return { frames: F, waits: bakePace.waits - w0, perSubM: +(perSub / 1e6).toFixed(3) };
+}"""
+
+
 async def m7(p, opts):
     bad, info = [], {}
     b, pg, errs = await page(p, opts, stub=False, fake=False)     # 真烘焙（小规格，云端软件渲染也快）
@@ -294,6 +310,8 @@ async def m7(p, opts):
         if not r['fill']: bad.append('自检没跑完（没有 fill）')
         r = await pg.evaluate(M7_LAT); info['等显卡有延迟'] = r
         if r['pacedMs'] > 2 * r['unpacedMs'] + 1000 or r['waits'] > r['frames'] * 2: bad.append(f"等显卡每次至少 17 ms 时分批烘焙 {r['pacedMs']} ms，不分批 {r['unpacedMs']} ms（{r['frames']} 帧、等了 {r['waits']} 次）：被等待拖慢了")
+        r = await pg.evaluate(M7_CARRY); info['上一次的速度'] = r
+        if r['waits'] > r['frames'] * 2: bad.append(f"上一次烘焙量到的速度带到了这一次：{r['frames']} 帧等了显卡 {r['waits']} 次（每个子样本约 {r['perSubM']}M 粒）")
         r = await pg.evaluate(M7_BUSY); info['显卡被占满'] = r
         if r['after'] < 0.9 * r['before']: bad.append(f"等一个 500 万粒的批用了 {r['waitMs']} ms（模拟显卡被别的活占满）以后，每批的量从 {r['before']}M 变成 {r['after']}M 粒：被「等得久」压小了")
         if errs: bad.append('页面错误 ' + errs[0])

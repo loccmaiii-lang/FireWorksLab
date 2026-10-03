@@ -158,7 +158,11 @@ function loopPlan(P, box, Tp) {
 // 可是「等得久」多半是显卡在忙别的（实时模拟、上一个效果的收紧），不是这批太大——量被压到最小，又掉回一帧一个子样本。
 // 现在：每批的量 = 实测显卡速度（显卡计时器，结果晚几帧到也没关系，不等它）× bakePace.ms 毫秒；没有计时器就固定 800 万粒。
 // 最多 2 批在路上：第 3 批之前才等最早那批做完。等多久都不改量，只决定什么时候交下一批。画什么、按什么顺序都没变。
-const bakePace = { on: true, ms: 12, rate: 0, budget: 8e6, pending: 0, inflight: [], maxInflight: 2, maxSubs: 0, qs: [], ext: undefined, waits: 0, waitMs: 0 };   // ms ≤ 0：检查用，每批之后都等
+// 4.2.28（SMOKE21：新页面里打开引菊→锦 / 鸿巢 / 青柠 300 s 超时）：速度以前按「估计的粒数」算、而且一直带到下一次烘焙——
+// 尾缀那类不按星轨道画的层粒数估成 0，算出来的速度极小，后面的烘焙就按 20 万粒一批切，每个子样本等一帧。
+// 现在按真画了多少粒（PARTICLES_DRAWN）算；每页烘焙从 800 万粒重新开始量；每个子样本多少粒也按上一批实测。
+const bakePace = { on: true, ms: 12, rate: 0, budget: 8e6, pending: 0, inflight: [], maxInflight: 2, maxSubs: 0, qs: [], ext: undefined, waits: 0, waitMs: 0, perSub: 0 };
+function bakePaceReset() { bakePace.rate = 0; bakePace.perSub = 0; for (const x of bakePace.qs) gl.deleteQuery(x.q); bakePace.qs = []; }   // 每页烘焙重新量（别的效果、别的层的速度不算数）   // ms ≤ 0：检查用，每批之后都等
 function bakeSliceBudget() { return bakePace.rate > 0 ? clamp(bakePace.rate * Math.max(1, bakePace.ms), 2e5, 4e8) : bakePace.budget; }
 function bakeTimerExt() { if (bakePace.ext === undefined) bakePace.ext = gl.getExtension('EXT_disjoint_timer_query_webgl2') || null; return bakePace.ext; }
 // 读回已经出结果的显卡计时（不等），更新速度（粒 / 显卡毫秒）
@@ -171,14 +175,15 @@ function bakeHarvest() {
     if (!disjoint && ns > 2e4 && x.n > 0) { const r = x.n / (ns / 1e6); bakePace.rate = bakePace.rate ? bakePace.rate * 0.7 + r * 0.3 : r; }
   }
 }
-// 画一批（n = 粒数），能计时就计时；攒够一批的量就插一个 fence
-function bakeSliceDraw(fn, n) {
-  const ext = bakePace.on ? bakeTimerExt() : null; let q = null;
+// 画一批，能计时就计时；按真画了多少粒记账（nEst 只在什么都没画到时兜底）；攒够一批的量就插一个 fence。返回真画的粒数
+function bakeSliceDraw(fn, nEst) {
+  const ext = bakePace.on ? bakeTimerExt() : null; let q = null, n = 0; const c0 = PARTICLES_DRAWN;
   if (ext && bakePace.qs.length < 8) { q = gl.createQuery(); gl.beginQuery(ext.TIME_ELAPSED_EXT, q); }
-  try { fn(); } finally { if (q) { gl.endQuery(ext.TIME_ELAPSED_EXT); bakePace.qs.push({ q, n }); } }
-  if (!bakePace.on) return;
+  try { fn(); } finally { n = PARTICLES_DRAWN - c0 || nEst; if (q) { gl.endQuery(ext.TIME_ELAPSED_EXT); bakePace.qs.push({ q, n }); } }
+  if (!bakePace.on) return n;
   bakePace.pending += n;
   if (bakePace.ms <= 0 || bakePace.pending >= bakeSliceBudget()) bakeFence();
+  return n;
 }
 function bakeFence() { const n = bakePace.pending; bakePace.pending = 0; if (!n || gl.isContextLost()) return; const s = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0); if (s) { gl.flush(); bakePace.inflight.push(s); } }
 function bakeMustWait() { return bakePace.on && bakePace.inflight.length >= (bakePace.ms <= 0 ? 1 : bakePace.maxInflight); }
@@ -197,7 +202,7 @@ async function bakePaceWait(all = false) {
 function bakeSliceSubs(work, left) {
   if (!bakePace.on) return left;
   if (bakePace.maxSubs > 0) return clamp(bakePace.maxSubs, 1, left);
-  return clamp(Math.floor((bakeSliceBudget() - bakePace.pending) / Math.max(1, work)), 1, left);
+  return clamp(Math.floor((bakeSliceBudget() - bakePace.pending) / Math.max(1, bakePace.perSub || work)), 1, left);
 }
 // 核心：按计划逐帧渲染、打包、编码、统计
 async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
@@ -209,7 +214,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   gl.activeTexture(gl.TEXTURE0);
   const fH = new Target(N, NH, gl.RGBA16F), fT = new Target(N, NH, gl.RGBA16F), sst = new Target(ssW, ssH, gl.RGBA16F);
   fH.clear(); fT.clear();
-  const t0 = performance.now();
+  const t0 = performance.now(); bakePaceReset();
   try {     // 4.2.16：烘到一半作废（参数又变了，进度回调抛出）时，把这三张工作贴图放掉
   for (let f = 0; f < L.F; f++) {
     const tc = pl.times[f], W = Math.max(P.shutter * pl.dur[f], 1e-4);
@@ -224,7 +229,8 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
       for (let j0 = 0; j0 < n;) {
         const k = bakeSliceSubs(work, n - j0), a0 = j0;
         if (bakeMustWait()) { additive(false); PPMY = 0; await bakePaceWait(); PPMY = ppmY; sst.bind(); gl.colorMask(true, true, true, true); additive(true); }
-        bakeSliceDraw(() => drawFrameSamples40(P, pl, R, pl.t0 + tc, view, ppm, ppmY, [a0, a0 + k]), work * k); j0 += k;
+        const drawn = bakeSliceDraw(() => drawFrameSamples40(P, pl, R, pl.t0 + tc, view, ppm, ppmY, [a0, a0 + k]), work * k); j0 += k;
+        if (drawn > 0) bakePace.perSub = drawn / k;
       }
     }
     else for (let j = 0; j < nsub; j++) {

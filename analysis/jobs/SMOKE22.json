@@ -1,0 +1,14 @@
+{
+ "id": "SMOKE22",
+ "type": "smoke",
+ "tijian": true,
+ "tijian_only": "ef:",
+ "tijian_cap": true,
+ "tijian_limit": 40,
+ "fuhe": true,
+ "fuhe_effects": "hiki_nishiki,hongchao,qingning,jinmangju",
+ "fuhe_configs": "normal",
+ "name": "4.2.28 复核：新页面里打开不再卡住（引菊→锦 / 鸿巢 / 青柠）+ 条目体检里待验收的照样顺",
+ "priority": 11,
+ "note": "SMOKE21：4.2.26 新页面里打开引菊→锦、鸿巢、青柠都卡到 300 s（速度按估计粒数算、带到下一次烘焙，尾缀之后每批只剩 0.2M 粒）。4.2.28 按真画的粒数、每页重新量。看：实时显卡负担.md 的「打开」用时（SMOKE20：4.5 / 6.7 / 1.9 s），条目体检的「等显卡 次 / 秒 · 每批 M 粒」和烘焙中两段帧数。不改东西。对话框15。"
+}

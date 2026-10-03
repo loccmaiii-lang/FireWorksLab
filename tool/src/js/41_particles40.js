@@ -71,7 +71,9 @@ for (const [i,n,offset] of [[0,2,0],[1,1,8],[2,1,12]]) {
   gl.enableVertexAttribArray(i); gl.vertexAttribPointer(i,n,gl.FLOAT,false,16,offset); gl.vertexAttribDivisor(i,1);
 }
 gl.bindVertexArray(null);
+let PARTICLES_DRAWN = 0;      // 4.2.28：真画了多少粒（烘焙分批按它量速度，不再按估计的粒数）
 function drawParticleBatch(n, modern) {
+  PARTICLES_DRAWN += n;
   if (modern) gl.drawArraysInstanced(gl.TRIANGLE_STRIP,0,4,n);
   else gl.drawArrays(gl.POINTS,0,n);
 }
