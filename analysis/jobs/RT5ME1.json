@@ -1,0 +1,9 @@
+{
+ "id": "RT5ME1",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT5M",
+ "name": "RiseTailM",
+ "priority": 8,
+ "note": "RT5M 第一次导出（烘焙器 4.4.5：物理弹道 + Velocity Over Life、循环层长度跟尾迹 + 消散单独烘、GPU 兼容、细 / 中火花进贴图 GPU ≤ 800、H4 口径）。导出 + 回放检查；云端量过循环层过曝 0.6%。对话框15（trail_phys 负责）。用户 21:17 给了显卡空窗。"
+}

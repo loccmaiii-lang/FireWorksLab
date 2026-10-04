@@ -1,0 +1,14 @@
+{
+ "id": "STD10",
+ "type": "std",
+ "name": "标准检查：RT5S / RT5M / RT5L（烘焙器 4.4.5）",
+ "targets": [
+  "RT5S",
+  "RT5M",
+  "RT5L"
+ ],
+ "priority": 7,
+ "ready": false,
+ "hold": "等 RT5SE1 / RT5ME1 / RT5LE1 导出回来（标准检查要查同一指纹的新导出）",
+ "note": "放行时去掉 ready / hold。"
+}

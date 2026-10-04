@@ -155,13 +155,14 @@ JSON里的局部配置：
 | `InitialVelocity` | Initial Velocity | `StartVelocity`（向量）、`StartVelocityRadial` | ✅ 写入 |
 | `Drag` | Drag | `DragCoefficientRaw` | ✅ 写入 |
 | `ConstAcceleration` | Const Acceleration | `Acceleration`（**普通向量，不是分布**：直接写 `[x, y, z]`） | ✅ 写入 |
-| `Acceleration` | Acceleration | `Acceleration`（向量分布） | ⚪ |
+| `Acceleration` | Acceleration | `Acceleration`（向量分布） | ❌ GPU Sprites 不支持（2026-10-04 UE 4.24 实测标红）；CPU ⚪ |
 | `InitialRotation` | Initial Rotation | `StartRotation`（圈） | ⚪ |
 | `RotationRate` | Initial Rotation Rate | `StartRotationRate`（圈/秒） | ⚪ |
 | `InitialColor` | Initial Color | `StartColor`（向量）、`StartAlpha` | ⚪ |
 | `ColorOverLife` | Color Over Life | `ColorOverLife`（向量）、`AlphaOverLife` | ✅ |
 | `ColorScaleOverLife` | Scale Color / Life | `ColorScaleOverLife`（向量）、`AlphaScaleOverLife` | ⚪ |
 | `DynamicParameter` | Dynamic Parameter | `params`：按**角色**写，见第 6 节 | ✅ 写入 🟡 播放 |
+| `VelocityOverLife` | Velocity/Life | `VelOverLife`（向量分布，按相对寿命，cm/s）；`Absolute`（布尔，true = 速度直接取曲线值，不累加） | ⚪ 导入器待支持（烘焙器 4.4.5 起，升空尾缀物理弹道的 RiseLoop / HeadGlow 用；Cascade 的 Drag 只有线性） |
 
 模块可以新增、删除、开关，分布类型可以互换。导入器是从空的粒子系统开始逐个建出来的，不依赖模板。✅
 
@@ -285,6 +286,13 @@ JSON里的局部配置：
 - `Fade30`：`delay_s` = 上升时长，在开花点 `InitialLocation` 出生，`InitialVelocity` = (0, 0, 1) 只定方向；帧号 0 → 总帧数 − 0.01。
 - 材质角色 `beam_flipbook`（16×1 格，RGBA 接力 64 帧）。另有 20 fps 消散贴图 `T_<名>_Fade20.png`，换贴图并把消散时长改成 64 ÷ 20 = 3.2 s。
 - 示例：[`examples/RiseTrailM.cascade.json`](examples/RiseTrailM.cascade.json)。
+
+### E2. 升空尾缀 · 循环层 + 粒子（RT，烘焙器 4.1 起；RT5 的选项 4.4.5）⚪
+- `RiseLoop`（CPU 1 颗，Velocity 对齐，Pivot Offset 星头在上端）+ `RiseFade`（开花点出生）+ 软圆点粒子发射器（GPU：火花 / 末段爆亮 / 落火；CPU：星头光晕 / 发射口闪光）。
+- 弹道两种：线性（`InitialVelocity` + `Drag` + `ConstAcceleration`）；物理（平方阻力，`InitialVelocity` + `VelocityOverLife` Absolute，**不写** Drag / Const Acceleration）。粒子发射器的出生位置 / 初速是按发射器时间的曲线，两种都一样。
+- 循环层长度两种：全程不变（4.4，出场淡入）；跟真实尾迹（`SizeByLife` 只改 Y、`"bake": false`，起步从短长出来、减速变短；`RiseFade` 用自己的 Initial Size / Pivot Offset，真实大小）。
+- **GPU 发射器不写 `Acceleration`**（2026-10-04 UE 4.24 实测 GPU Sprites 标红）；每个发射器最多 2 个 `InitialVelocity`。烘焙器选项「GPU 兼容」= UE 4.24 实测时照这条导出。
+- 一条尾缀 PC 上 GPU 粒子同时活着 ≤ 800（用户 2026-10-04）：细 / 中火花烘进循环层贴图，GPU 只留粗火花等少量。
 
 ### D. 千轮单元 × 粒子（一张小花单元序列，多粒子摆位）⚪
 - `SphereLocation`：只在表面出生，勾 Velocity，`VelocityScale` 给向外的速度，配合 `Drag` 让小球飞出去后停住；

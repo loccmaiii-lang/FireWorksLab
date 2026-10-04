@@ -7,6 +7,7 @@
 //      loc: [[发射器时间, [x, y, z]], …]（出生位置曲线）, vel: [[发射器时间, [vx, vy, vz]], …]（初速曲线）,
 //      velAdd: [[x, y, z], [x, y, z]]（再加一个均匀随机初速；也可以是几个盒子的数组 = 几个 Initial Velocity 相加 → 三角 / 钟形分布，边缘软）, drag: [lo, hi]（1/s）, accel: [x, y, z], seed,
 //      accelCurve: [[发射器时间, [ax, ay, az]], …]（Acceleration 按发射器时间取值：沿尾迹相关的空气乱流）, accelJit: [[…], […]]（再加一个每颗随机的加速度：小尺度乱流）,
+//      velLife: [[相对寿命, [vx, vy, vz]], …]（4.4.5 Velocity Over Life · Absolute：速度直接按寿命取曲线，不再算阻力 / 加速度；物理弹道的单颗星头光晕用）,
 //      align: 'velocity' | 'screen' + stretch + stretchLife: [[相对寿命, 倍数], …]（拉长 stretch × stretchLife(u) 倍的线状火星：
 //        velocity = 沿粒子速度（Screen Alignment = Velocity）；screen = 沿屏幕竖直（Rectangle，面片 Y 朝相机上方）；
 //        导出 = Initial Size 的 Y × stretch、Size By Life 的 Y 再乘 stretchLife）}
@@ -43,7 +44,12 @@ function esSpawn(ES, frac = 1) {
       if (e.sphere) { const z = 2 * rnd() - 1, ph = 6.2831853 * rnd(), q = Math.sqrt(Math.max(0, 1 - z * z)), d = [q * Math.cos(ph), q * Math.sin(ph), z], rr = e.sphere.r, R = Math.max(0.01, Array.isArray(rr) ? rr[0] + (rr[1] - rr[0]) * rnd() : rr || 0);
         const sp = e.sphere.vs ? R * (e.sphere.vs[0] + (e.sphere.vs[1] - e.sphere.vs[0]) * rnd()) : e.sphere.v[0] + (e.sphere.v[1] - e.sphere.v[0]) * rnd();
         for (let j = 0; j < 3; j++) { p[j] += d[j] * R; v[j] += d[j] * sp; } }
-      list.push({ t0: t0 + (e.delay || 0), life, size, k, p, v, a });
+      const q = { t0: t0 + (e.delay || 0), life, size, k, p, v, a };
+      // 4.4.5 Velocity Over Life（Absolute）：位置 = 出生位置 + 速度曲线按寿命积分（梯形，256 段），和引擎里逐帧积分同一回事
+      if (e.velLife) { const N = 256, path = new Float64Array(3 * (N + 1)); let pv = esCurve(e.velLife, 0); for (let j = 0; j < 3; j++) path[j] = p[j];
+        for (let i = 1; i <= N; i++) { const cv = esCurve(e.velLife, i / N); for (let j = 0; j < 3; j++) path[3 * i + j] = path[3 * (i - 1) + j] + (pv[j] + cv[j]) / 2 * life / N; pv = cv; }
+        q.path = path; q.vl = e.velLife; }
+      list.push(q);
     };
     // Spawn Rate 曲线按发射器时间积分；frac < 1 = 手机版减量（同一条曲线乘比例）
     const c = e.spawn || [], dt = 1 / 240; let acc = rnd();
@@ -58,12 +64,14 @@ function esSpawn(ES, frac = 1) {
 }
 // 粒子在年龄 a 时的位置（线性阻力 k + 恒定加速度 acc）
 function esPos(q, acc, a, out) {
+  if (q.path) { const N = q.path.length / 3 - 1, x = clamp(a / q.life, 0, 1) * N, i = Math.min(N - 1, Math.floor(x)), f = x - i; for (let j = 0; j < 3; j++) out[j] = q.path[3 * i + j] + (q.path[3 * (i + 1) + j] - q.path[3 * i + j]) * f; return out; }
   const k = q.k; if (q.a) acc = q.a;
   if (k > 1e-6) { const s1 = (1 - Math.exp(-k * a)) / k; for (let j = 0; j < 3; j++) out[j] = q.p[j] + q.v[j] * s1 + acc[j] / k * (a - s1); }
   else for (let j = 0; j < 3; j++) out[j] = q.p[j] + q.v[j] * a + 0.5 * acc[j] * a * a;
   return out;
 }
 function esVel(q, acc, a, out) {
+  if (q.vl) { const c = esCurve(q.vl, clamp(a / q.life, 0, 1)); for (let j = 0; j < 3; j++) out[j] = c[j]; return out; }
   const k = q.k; if (q.a) acc = q.a;
   if (k > 1e-6) { const e = Math.exp(-k * a); for (let j = 0; j < 3; j++) out[j] = (q.v[j] - acc[j] / k) * e + acc[j] / k; }
   else for (let j = 0; j < 3; j++) out[j] = q.v[j] + acc[j] * a;
@@ -163,6 +171,7 @@ function esFwlEmitter(e, mobile, frac) {
   if (e.loc) mods.push({ m: 'InitialLocation', StartLocation: e.loc.length === 1 ? { const: e.loc[0][1].map(esCm) } : { curve: esThin(e.loc, 0.01).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false } });
   if (e.vel) mods.push({ m: 'InitialVelocity', StartVelocity: e.vel.length === 1 ? { const: e.vel[0][1].map(esCm) } : { curve: esThin(e.vel, 0.05).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false } });
   esBoxes(e.velAdd).forEach((B, i, A) => mods.push({ m: 'InitialVelocity', StartVelocity: { uniform: [B[0].map(esCm), B[1].map(esCm)] }, note: `第 ${i + 2} 个 Initial Velocity：叠加的随机散开${A.length > 1 ? '（' + A.length + ' 个均匀分布相加 → 中间密、边缘软）' : ''}` }));
+  if (e.velLife) mods.push({ m: 'VelocityOverLife', VelOverLife: { curve: e.velLife.map(([u, v]) => [esR4(u), v.map(esCm)]) }, Absolute: true, note: '速度按寿命直接取曲线（Absolute），物理弹道（平方阻力）；Cascade 的 Drag 只有线性，所以不写 Drag / Const Acceleration' });
   if (e.drag) mods.push({ m: 'Drag', DragCoefficientRaw: { uniform: [esR4(e.drag[0]), esR4(e.drag[1])] } });
   if (e.accel) mods.push({ m: 'ConstAcceleration', Acceleration: e.accel.map(esCm) });
   if (e.accelCurve) mods.push({ m: 'Acceleration', Acceleration: { curve: esThin(e.accelCurve, 0.05).map(([t, v]) => [esR4(t), v.map(esCm)]), bake: false }, note: '空气乱流（大涡）：按发射器时间取值，同一时刻出生的火花受同一股气流 → 沿尾迹相关的松散' });

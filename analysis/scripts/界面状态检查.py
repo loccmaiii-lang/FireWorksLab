@@ -1084,6 +1084,63 @@ async def t1(pg):
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
+R5_JS = r"""async () => {
+  // 4.4.5 RT5（用户 10-04 14:58 / 17:27 / 17:41 UE 反馈）：物理弹道、循环层长度跟尾迹、GPU 兼容、中火花进贴图、贴图亮度口径、GPU 粒子上限。缺省 = 旧做法
+  const out = {}, bad = [];
+  await openType('tailL'); await new Promise(r => setTimeout(r, 300));
+  const P0 = derive(structuredClone(state.P));
+  out.defaults = ['rtBall', 'rtLoopSize', 'rtGpuSafe', 'rtMTex', 'rtTexCal', 'rtGpuMax'].map(k => +P0[k]);
+  if (out.defaults.some(v => v !== 0)) bad.push('缺省不是旧做法：' + out.defaults);
+  const ES0 = rtBuildES(P0); if (!ES0.emitters.some(e => e.gpu && e.accelCurve)) bad.push('缺省（旧做法）GPU 火花应该还有乱流 Acceleration');
+  // 物理弹道
+  const Q = { ...P0, rtBall: 1 }, b = rtBallistic(Q), sp = t => { const v = b.vel(t); return Math.hypot(v[0], v[2]); };
+  out.phys = { v0: +b.v0.toFixed(1), T: +b.T.toFixed(2), H: +b.H.toFixed(1), want: Q.rtH, s1: +sp(1).toFixed(1), vb: +b.vb.toFixed(2) };
+  if (!b.quad || Math.abs(b.H - Q.rtH) > 0.01 * Q.rtH || Math.abs(b.vb - Q.rtVb) > 0.05) bad.push('物理弹道没到设定的开花高度 / 速度：' + JSON.stringify(out.phys));
+  if (!(sp(1) < 0.8 * b.v0)) bad.push('物理弹道第 1 秒减速不够（平方阻力应该前段减速猛）：' + JSON.stringify(out.phys));
+  const lin = rtBallistic(P0); out.lin = { v0: +lin.v0.toFixed(1), s1: +Math.hypot(...[0, 2].map(i => lin.vel(1)[i])).toFixed(1) };
+  if (Math.abs(rtDuration(Q) - (b.T + (rtDuration(P0) - P0.rtT))) > 0.02) bad.push('物理弹道的总时长没按算出来的升空时间');
+  // 星头光晕按 Velocity Over Life 走，和弹道重合
+  const ESq = rtBuildES(Q), hg = ESq.emitters.find(e => e.name === 'HeadGlow');
+  if (hg) { const tab = esSpawn({ emitters: [hg] })[0], q = tab.list[0], pos = [0, 0, 0]; esPos(q, [0, 0, 0], b.T * 0.6, pos); const want = b.pos(b.T * 0.6);
+    out.glow = [+pos[2].toFixed(1), +want[2].toFixed(1)]; if (Math.abs(pos[2] - want[2]) > 0.01 * Math.max(10, want[2])) bad.push('星头光晕没跟着物理弹道：' + out.glow);
+    const j = esFwlEmitter(hg, false, 1).modules.map(m => m.m); if (!j.includes('VelocityOverLife') || j.includes('Drag')) bad.push('星头光晕导出模块不对：' + j); }
+  // GPU 兼容 + 上限 + 中火花进贴图
+  const Z = { ...Q, rtGpuSafe: 1, rtFTex: 1, rtMTex: 1, rtGpuMax: 800 }, ESz = rtBuildES(Z);
+  out.gpu = ESz.gpuEst; out.emit = ESz.emitters.map(e => e.name);
+  for (const e of ESz.emitters) { if (!e.gpu) continue; const m = esFwlEmitter(e, false, 1).modules; const nv = m.filter(x => x.m === 'InitialVelocity').length;
+    if (m.some(x => x.m === 'Acceleration')) bad.push(e.name + ' GPU 还写了 Acceleration'); if (nv > 2) bad.push(e.name + ' 有 ' + nv + ' 个 Initial Velocity'); }
+  if (ESz.emitters.some(e => e.name === 'SparksFine' || e.name === 'SparksMid')) bad.push('细 / 中火花全进贴图了，还有 GPU 发射器：' + out.emit);
+  if (!(ESz.gpuEst.est <= 800)) bad.push('GPU 粒子估算超上限：' + JSON.stringify(ESz.gpuEst));
+  const LI = rtLoopInfo(Z), CL = rtTexClasses(Z, LI); out.tex = CL.map(C => C.k);
+  if (out.tex.join() !== 'F,M') bad.push('贴图火花档不对：' + out.tex);
+  // H4 口径：新口径燃烧温度处 = 0.01 × 亮度，温度偏移只改曲线形状（几个百分点），不再整体 ×7.5；旧口径照旧
+  const cal = (dT, c) => { const C = rtTexClasses({ ...Z, rtTexCal: c, rtTexI: 100, rtFdT: dT }, LI).find(c => c.k === 'F'); return Math.max(...C.lum.filter(([u]) => u > 0.3 && u < 0.7).map(k => k[1])); };
+  out.cal = [+cal(0, 1).toFixed(3), +cal(-400, 1).toFixed(3), +cal(-400, 0).toFixed(3)];
+  if (out.cal[1] / out.cal[0] > 1.25 || out.cal[0] / out.cal[1] > 1.25 || out.cal[0] > 2) bad.push('新口径下温度偏移还在改贴图火花亮度：' + out.cal);
+  if (!(out.cal[2] > 5 * out.cal[1])) bad.push('旧口径（缺省）变了：' + out.cal);
+  // 循环层长度：起步很短、不伸到发射点以下，长满后不低于最短
+  const sk = rtLoopSizeKeys({ ...Q, rtLoopMin: 0.15 }, b, b.v0, 300, 290); out.sk = [sk[0][1], Math.max(...sk.map(k => k[1])), sk[sk.length - 1][1]];
+  if (!(sk[0][1] < 0.05) || !(out.sk[1] <= 1) || !(sk[sk.length - 1][1] >= 0.149)) bad.push('循环层长度曲线不对：' + out.sk);
+  for (const [u, v] of sk) { const z = Math.hypot(...[0, 2].map(i => b.pos(u * b.T)[i] - b.pos(0)[i])); if (v * 290 > z + 3 * (+Q.rtHeadSize || 0.5) + 0.5) { bad.push(`循环层第 ${(u * b.T).toFixed(2)} s 伸到发射点以下：${(v * 290).toFixed(0)} m > ${z.toFixed(0)} m`); break; } }
+  // 面板：选物理后升空时间藏起来、终端速度和结果行出来
+  const row = panelRows.find(([r, it]) => it.sel === 'rtBall'); if (!row) bad.push('面板没有「弹道」选项'); else {
+    out.where = row[0]._x.e + '›' + row[0]._x.m; if (out.where !== '星头›弹道') bad.push('「弹道」不在星头 › 弹道：' + out.where);
+    const s = row[0].querySelector('select'); s.value = '1'; s.dispatchEvent(new Event('change')); await new Promise(r => setTimeout(r, 200));
+    const vis = k => { const x = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === k); return x ? itemVisible(x[1], state.P) : null; };
+    out.panel = { rtT: vis('rtT'), rtVt: vis('rtVt'), info: ((document.querySelector('#params [data-info=ballInfo]') || {}).textContent || '').slice(0, 40), dur: state.P.duration };
+    if (out.panel.rtT !== false || out.panel.rtVt !== true || !/物理弹道/.test(out.panel.info)) bad.push('选物理弹道后面板不对：' + JSON.stringify(out.panel));
+    s.value = '0'; s.dispatchEvent(new Event('change')); }
+  selectEmitTab('星');
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def r5(pg):
+    """4.4.5 RT5：升空尾缀的物理弹道、循环层长度、GPU 兼容、中火花进贴图、贴图亮度口径（H4）、GPU 粒子上限都在，缺省 = 旧做法"""
+    r = await pg.evaluate(R5_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
+
+
 async def x2(pg):
     """4.4.2（用户 10-04 21:17）：单层效果（牡丹模板）也有「导出方案」：输出 › 导出方案里 PC 能选 GPU 光点 / 单束 / 不出，手机能选不出；选光点后 cascade.json 是一个 GPU 光点发射器、引擎回放画光点、说明写有尾迹没了"""
     bad, info = [], {}
@@ -1164,7 +1221,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('T1', t1, False), ('X2', x2, False), ('N3', n3, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('T1', t1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:
