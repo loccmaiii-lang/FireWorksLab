@@ -1,0 +1,7403 @@
+{
+  "commit": "f9bfb6689c8ca0762c007500c17d3e194b09fbb3",
+  "html_sha256": "cb29f215d98c0e5113e7f5622b570570842539bff1ab690887fa09fddb39ca9d",
+  "shots": {
+    "phase_s0.4_p0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.771479606628418,
+        "peak": 2.75,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 0.8147358739747997,
+        "sigmaY": 0.8147160104301095
+      },
+      "encoded": {
+        "sum": 991,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 1.5691598876953123,
+        "sum": 24.7751844986915,
+        "flatFraction": 0.1
+      },
+      "file": "phase_s0.4_p0.png"
+    },
+    "phase_s0.4_p0.25": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.7725327014923096,
+        "peak": 1.77734375,
+        "cx": 32.23051187535427,
+        "cy": 32.23051187535427,
+        "sigmaX": 0.8764031216892129,
+        "sigmaY": 0.8764031216892125
+      },
+      "encoded": {
+        "sum": 1278,
+        "peak": 254,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.1150955078125,
+        "sum": 59.9456232061266,
+        "flatFraction": 0.013888888888888888
+      },
+      "file": "phase_s0.4_p0.25.png"
+    },
+    "phase_s0.4_p0.5": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.771188735961914,
+        "peak": 0.77734375,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 0.9095062662790376,
+        "sigmaY": 0.9095062662790376
+      },
+      "encoded": {
+        "sum": 1416,
+        "peak": 232,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 1.925360986328125,
+        "sum": 83.50793749532673,
+        "flatFraction": 0.18181818181818182
+      },
+      "file": "phase_s0.4_p0.5.png"
+    },
+    "phase_s0.65_p0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.960510015487671,
+        "peak": 3.044921875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 1.379048153772528,
+        "sigmaY": 1.379048153772528
+      },
+      "encoded": {
+        "sum": 2975,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.262455078125,
+        "sum": 150.46126506814701,
+        "flatFraction": 0.029411764705882353
+      },
+      "file": "phase_s0.65_p0.png"
+    },
+    "phase_s0.65_p0.25": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959371864795685,
+        "peak": 2.970703125,
+        "cx": 32.27689581910664,
+        "cy": 32.27688356227818,
+        "sigmaX": 1.3656569798165261,
+        "sigmaY": 1.3656594649108096
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2662109286411,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "phase_s0.65_p0.25.png"
+    },
+    "phase_s0.65_p0.5": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959074258804321,
+        "peak": 1.9873046875,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 1.354484878576545,
+        "sigmaY": 1.354484878576545
+      },
+      "encoded": {
+        "sum": 2524,
+        "peak": 254,
+        "clipped": 4
+      },
+      "hdr": {
+        "peak": 2.322279638671875,
+        "sum": 107.15975411248198,
+        "flatFraction": 0.18181818181818182
+      },
+      "file": "phase_s0.65_p0.5.png"
+    },
+    "phase_s1.4_p0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 1.4,
+        "I": 3,
+        "phase": 0,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 46.21367907524109,
+        "peak": 3.046875,
+        "cx": 31.999999871023807,
+        "cy": 32.00000002579524,
+        "sigmaX": 2.893593723207871,
+        "sigmaY": 2.893564734556981
+      },
+      "encoded": {
+        "sum": 11915,
+        "peak": 255,
+        "clipped": 9
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 615.1144856136195,
+        "flatFraction": 0.2828282828282828
+      },
+      "file": "phase_s1.4_p0.png"
+    },
+    "phase_s1.4_p0.25": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 46.20564752817154,
+        "peak": 3.044921875,
+        "cx": 32.257483446617314,
+        "cy": 32.257361892513586,
+        "sigmaX": 2.8902622517886267,
+        "sigmaY": 2.8902318465045864
+      },
+      "encoded": {
+        "sum": 11552,
+        "peak": 255,
+        "clipped": 11
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 554.8860630535102,
+        "flatFraction": 0.3268156424581006
+      },
+      "file": "phase_s1.4_p0.25.png"
+    },
+    "phase_s1.4_p0.5": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 46.208786964416504,
+        "peak": 3.044921875,
+        "cx": 32.50000003611716,
+        "cy": 32.49999996130305,
+        "sigmaX": 2.8853667708966126,
+        "sigmaY": 2.88536672261539
+      },
+      "encoded": {
+        "sum": 11088,
+        "peak": 255,
+        "clipped": 12
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 510.17827328124315,
+        "flatFraction": 0.41025641025641024
+      },
+      "file": "phase_s1.4_p0.5.png"
+    },
+    "route_i0.3_live_p0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 0.3,
+        "phase": 0,
+        "route": "live"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 0.9960005283355713,
+        "peak": 0.304443359375,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 1.379070046926099,
+        "sigmaY": 1.379070046926099
+      },
+      "encoded": {
+        "sum": 624,
+        "peak": 156,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 0.6064287551879883,
+        "sum": 11.98060775208457,
+        "flatFraction": 0.06666666666666667
+      },
+      "file": "route_i0.3_live_p0.png"
+    },
+    "route_i0.3_live_p0.5": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 0.3,
+        "phase": 0.5,
+        "route": "live"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 0.9959135055541992,
+        "peak": 0.19873046875,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 1.354469288968091,
+        "sigmaY": 1.354469288968091
+      },
+      "encoded": {
+        "sum": 604,
+        "peak": 117,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 0.3546686347961426,
+        "sum": 13.347275378227078,
+        "flatFraction": 0.18181818181818182
+      },
+      "file": "route_i0.3_live_p0.5.png"
+    },
+    "route_i0.3_export_p0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 0.3,
+        "phase": 0,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 0.9960005283355713,
+        "peak": 0.304443359375,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 1.379070046926099,
+        "sigmaY": 1.379070046926099
+      },
+      "encoded": {
+        "sum": 624,
+        "peak": 156,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 0.5550177719116212,
+        "sum": 9.804340293311999,
+        "flatFraction": 0.06666666666666667
+      },
+      "file": "route_i0.3_export_p0.png"
+    },
+    "route_i0.3_export_p0.5": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 0.3,
+        "phase": 0.5,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 0.9959135055541992,
+        "peak": 0.19873046875,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 1.354469288968091,
+        "sigmaY": 1.354469288968091
+      },
+      "encoded": {
+        "sum": 604,
+        "peak": 117,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 0.35198974380493164,
+        "sum": 11.70366250734322,
+        "flatFraction": 0.2
+      },
+      "file": "route_i0.3_export_p0.5.png"
+    },
+    "route_i1_live_p0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 1,
+        "phase": 0,
+        "route": "live"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.3205478191375732,
+        "peak": 1.0146484375,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 1.3790275787434654,
+        "sigmaY": 1.3790275787434654
+      },
+      "encoded": {
+        "sum": 1540,
+        "peak": 244,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 2.01659072265625,
+        "sum": 95.72635011682408,
+        "flatFraction": 0.03571428571428571
+      },
+      "file": "route_i1_live_p0.png"
+    },
+    "route_i1_live_p0.5": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 1,
+        "phase": 0.5,
+        "route": "live"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.3204591274261475,
+        "peak": 0.66259765625,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 1.354416708683278,
+        "sigmaY": 1.354416708683278
+      },
+      "encoded": {
+        "sum": 1388,
+        "peak": 222,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 1.7619329101562498,
+        "sum": 106.88914951772556,
+        "flatFraction": 0.16666666666666666
+      },
+      "file": "route_i1_live_p0.5.png"
+    },
+    "route_i1_export_p0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 1,
+        "phase": 0,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.3205478191375732,
+        "peak": 1.0146484375,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 1.3790275787434654,
+        "sigmaY": 1.3790275787434654
+      },
+      "encoded": {
+        "sum": 1540,
+        "peak": 244,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 1.8182474853515622,
+        "sum": 68.70603399543742,
+        "flatFraction": 0.047619047619047616
+      },
+      "file": "route_i1_export_p0.png"
+    },
+    "route_i1_export_p0.5": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 1,
+        "phase": 0.5,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.3204591274261475,
+        "peak": 0.66259765625,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 1.354416708683278,
+        "sigmaY": 1.354416708683278
+      },
+      "encoded": {
+        "sum": 1388,
+        "peak": 222,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 1.7563996337890624,
+        "sum": 71.80618194556207,
+        "flatFraction": 0.2
+      },
+      "file": "route_i1_export_p0.5.png"
+    },
+    "route_i3_live_p0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0,
+        "route": "live"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.960510015487671,
+        "peak": 3.044921875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 1.379048153772528,
+        "sigmaY": 1.379048153772528
+      },
+      "encoded": {
+        "sum": 2975,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.3399404296874997,
+        "sum": 242.73908363023327,
+        "flatFraction": 0.25
+      },
+      "file": "route_i3_live_p0.png"
+    },
+    "route_i3_live_p0.5": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "live"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959074258804321,
+        "peak": 1.9873046875,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 1.354484878576545,
+        "sigmaY": 1.354484878576545
+      },
+      "encoded": {
+        "sum": 2524,
+        "peak": 254,
+        "clipped": 4
+      },
+      "hdr": {
+        "peak": 2.331101220703125,
+        "sum": 226.94961522465005,
+        "flatFraction": 0.3939393939393939
+      },
+      "file": "route_i3_live_p0.5.png"
+    },
+    "route_i3_export_p0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.960510015487671,
+        "peak": 3.044921875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 1.379048153772528,
+        "sigmaY": 1.379048153772528
+      },
+      "encoded": {
+        "sum": 2975,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.262455078125,
+        "sum": 150.46126506814701,
+        "flatFraction": 0.029411764705882353
+      },
+      "file": "route_i3_export_p0.png"
+    },
+    "route_i3_export_p0.5": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959074258804321,
+        "peak": 1.9873046875,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 1.354484878576545,
+        "sigmaY": 1.354484878576545
+      },
+      "encoded": {
+        "sum": 2524,
+        "peak": 254,
+        "clipped": 4
+      },
+      "hdr": {
+        "peak": 2.322279638671875,
+        "sum": 107.15975411248198,
+        "flatFraction": 0.18181818181818182
+      },
+      "file": "route_i3_export_p0.5.png"
+    },
+    "res512_s0.4_p0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0,
+        "route": "export",
+        "display": 256
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.771479606628418,
+        "peak": 2.75,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 0.8147358739747997,
+        "sigmaY": 0.8147160104301095
+      },
+      "encoded": {
+        "sum": 991,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 1.5691598876953123,
+        "sum": 24.7751844986915,
+        "flatFraction": 0.1
+      },
+      "file": "res512_s0.4_p0.png"
+    },
+    "res512_s0.4_p0.5": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "display": 256
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.771188735961914,
+        "peak": 0.77734375,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 0.9095062662790376,
+        "sigmaY": 0.9095062662790376
+      },
+      "encoded": {
+        "sum": 1416,
+        "peak": 232,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 1.925360986328125,
+        "sum": 83.50793749532673,
+        "flatFraction": 0.18181818181818182
+      },
+      "file": "res512_s0.4_p0.5.png"
+    },
+    "res512_s0.65_p0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0,
+        "route": "export",
+        "display": 256
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.960510015487671,
+        "peak": 3.044921875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 1.379048153772528,
+        "sigmaY": 1.379048153772528
+      },
+      "encoded": {
+        "sum": 2975,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.262455078125,
+        "sum": 150.46126506814701,
+        "flatFraction": 0.029411764705882353
+      },
+      "file": "res512_s0.65_p0.png"
+    },
+    "res512_s0.65_p0.5": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "display": 256
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959074258804321,
+        "peak": 1.9873046875,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 1.354484878576545,
+        "sigmaY": 1.354484878576545
+      },
+      "encoded": {
+        "sum": 2524,
+        "peak": 254,
+        "clipped": 4
+      },
+      "hdr": {
+        "peak": 2.322279638671875,
+        "sum": 107.15975411248198,
+        "flatFraction": 0.18181818181818182
+      },
+      "file": "res512_s0.65_p0.5.png"
+    },
+    "res1024_s0.4_p0": {
+      "input": {
+        "ppm": 5.588938508631374,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0,
+        "route": "export",
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 15.089176416397095,
+        "peak": 3.044921875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 1.6807986339613377,
+        "sigmaY": 1.6807986339613377
+      },
+      "encoded": {
+        "sum": 4267,
+        "peak": 255,
+        "clipped": 5
+      },
+      "hdr": {
+        "peak": 2.2708614257812503,
+        "sum": 55.37636082177143,
+        "flatFraction": 0.1111111111111111
+      },
+      "file": "res1024_s0.4_p0.png"
+    },
+    "res1024_s0.4_p0.5": {
+      "input": {
+        "ppm": 5.588938508631374,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 15.085944175720215,
+        "peak": 2.75,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 1.6530415084976098,
+        "sigmaY": 1.6530219283318324
+      },
+      "encoded": {
+        "sum": 3912,
+        "peak": 255,
+        "clipped": 4
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 37.35861808652857,
+        "flatFraction": 0.125
+      },
+      "file": "res1024_s0.4_p0.5.png"
+    },
+    "res1024_s0.65_p0": {
+      "input": {
+        "ppm": 5.588938508631374,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0,
+        "route": "export",
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84853434562683,
+        "peak": 3.046875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 2.685505919316748,
+        "sigmaY": 2.6854694166561903
+      },
+      "encoded": {
+        "sum": 10263,
+        "peak": 255,
+        "clipped": 9
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 123.4878046209333,
+        "flatFraction": 0.19047619047619047
+      },
+      "file": "res1024_s0.65_p0.png"
+    },
+    "res1024_s0.65_p0.5": {
+      "input": {
+        "ppm": 5.588938508631374,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84884440898895,
+        "peak": 3.044921875,
+        "cx": 32.5,
+        "cy": 32.500000055343435,
+        "sigmaX": 2.687423044621863,
+        "sigmaY": 2.687423218275113
+      },
+      "encoded": {
+        "sum": 9932,
+        "peak": 255,
+        "clipped": 12
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 116.97406469993543,
+        "flatFraction": 0.375
+      },
+      "file": "res1024_s0.65_p0.5.png"
+    },
+    "color_s0.4_current": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.7725327014923096,
+        "peak": 1.77734375,
+        "cx": 32.23051187535427,
+        "cy": 32.23051187535427,
+        "sigmaX": 0.8764031216892129,
+        "sigmaY": 0.8764031216892125
+      },
+      "encoded": {
+        "sum": 1278,
+        "peak": 254,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.1150955078125,
+        "sum": 59.9456232061266,
+        "flatFraction": 0.013888888888888888
+      },
+      "file": "color_s0.4_current.png"
+    },
+    "color_s0.4_lower_halo": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "halo": 0.08
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.198713719844818,
+        "peak": 1.74609375,
+        "cx": 32.2270336529545,
+        "cy": 32.2270336529545,
+        "sigmaX": 0.6247465965375985,
+        "sigmaY": 0.6247465965375987
+      },
+      "encoded": {
+        "sum": 909,
+        "peak": 254,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.0960025878906254,
+        "sum": 52.74510016527178,
+        "flatFraction": 0.015151515151515152
+      },
+      "file": "color_s0.4_lower_halo.png"
+    },
+    "color_s0.4_pure_color": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "separate": true
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.7725327014923096,
+        "peak": 1.77734375,
+        "cx": 32.23051187535427,
+        "cy": 32.23051187535427,
+        "sigmaX": 0.8764031216892129,
+        "sigmaY": 0.8764031216892125
+      },
+      "encoded": {
+        "sum": 1278,
+        "peak": 254,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.40053671875,
+        "sum": 202.22355449275963,
+        "flatFraction": 0.003246753246753247
+      },
+      "file": "color_s0.4_pure_color.png"
+    },
+    "color_s0.4_lower_encode": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "exposure": 0.775,
+        "gain": 2
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.7725327014923096,
+        "peak": 1.77734375,
+        "cx": 32.23051187535427,
+        "cy": 32.23051187535427,
+        "sigmaX": 0.8764031216892129,
+        "sigmaY": 0.8764031216892125
+      },
+      "encoded": {
+        "sum": 526,
+        "peak": 191,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 1.9369292419433595,
+        "sum": 24.352428630340146,
+        "flatFraction": 0.02702702702702703
+      },
+      "file": "color_s0.4_lower_encode.png"
+    },
+    "color_s0.65_current": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export"
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959371864795685,
+        "peak": 2.970703125,
+        "cx": 32.27689581910664,
+        "cy": 32.27688356227818,
+        "sigmaX": 1.3656569798165261,
+        "sigmaY": 1.3656594649108096
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2662109286411,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "color_s0.65_current.png"
+    },
+    "color_s0.65_lower_halo": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "halo": 0.08
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 8.4462730884552,
+        "peak": 2.939453125,
+        "cx": 32.28171574502819,
+        "cy": 32.28174465015858,
+        "sigmaX": 0.9282284754287903,
+        "sigmaY": 0.9282041319506509
+      },
+      "encoded": {
+        "sum": 1805,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.331101220703125,
+        "sum": 119.28224477936052,
+        "flatFraction": 0.09345794392523364
+      },
+      "file": "color_s0.65_lower_halo.png"
+    },
+    "color_s0.65_pure_color": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "separate": true
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959371864795685,
+        "peak": 2.970703125,
+        "cx": 32.27689581910664,
+        "cy": 32.27688356227818,
+        "sigmaX": 1.3656569798165261,
+        "sigmaY": 1.3656594649108096
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.5167626953125,
+        "sum": 449.5391015897704,
+        "flatFraction": 0.019280205655526992
+      },
+      "file": "color_s0.65_pure_color.png"
+    },
+    "color_s0.65_lower_encode": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "exposure": 0.775,
+        "gain": 2
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959371864795685,
+        "peak": 2.970703125,
+        "cx": 32.27689581910664,
+        "cy": 32.27688356227818,
+        "sigmaX": 1.3656569798165261,
+        "sigmaY": 1.3656594649108096
+      },
+      "encoded": {
+        "sum": 1209,
+        "peak": 229,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 3.4015669921874996,
+        "sum": 100.86772539575072,
+        "flatFraction": 0.014084507042253521
+      },
+      "file": "color_s0.65_lower_encode.png"
+    },
+    "candidate_baseline512_p0": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.960510015487671,
+        "peak": 3.044921875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 1.379048153772528,
+        "sigmaY": 1.379048153772528
+      },
+      "encoded": {
+        "sum": 2975,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.262455078125,
+        "sum": 150.46126506814701,
+        "flatFraction": 0.029411764705882353
+      },
+      "file": "candidate_baseline512_p0.png"
+    },
+    "candidate_baseline1024_p0": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84853434562683,
+        "peak": 3.046875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 2.685505919316748,
+        "sigmaY": 2.6854694166561903
+      },
+      "encoded": {
+        "sum": 10263,
+        "peak": 255,
+        "clipped": 9
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 123.4878046209333,
+        "flatFraction": 0.19047619047619047
+      },
+      "file": "candidate_baseline1024_p0.png"
+    },
+    "candidate_range1024_p0": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "gain": 3.9301342914393684
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84853434562683,
+        "peak": 3.046875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 2.685505919316748,
+        "sigmaY": 2.6854694166561903
+      },
+      "encoded": {
+        "sum": 2812,
+        "peak": 180,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.423211767578124,
+        "sum": 123.49000755524665,
+        "flatFraction": 0.2727272727272727
+      },
+      "file": "candidate_range1024_p0.png",
+      "matched_hdr_sum_target": 123.4878046209333
+    },
+    "candidate_profile1024_p0": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.85323405265808,
+        "peak": 5.48046875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 2.685248190519833,
+        "sigmaY": 2.685248190519833
+      },
+      "encoded": {
+        "sum": 2794,
+        "peak": 226,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 6.3159029296875,
+        "sum": 123.50808627119027,
+        "flatFraction": 0.09090909090909091
+      },
+      "file": "candidate_profile1024_p0.png",
+      "matched_hdr_sum_target": 123.4878046209333
+    },
+    "candidate_baseline512_p0.25": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959371864795685,
+        "peak": 2.970703125,
+        "cx": 32.27689581910664,
+        "cy": 32.27688356227818,
+        "sigmaX": 1.3656569798165261,
+        "sigmaY": 1.3656594649108096
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2662109286411,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "candidate_baseline512_p0.25.png"
+    },
+    "candidate_baseline1024_p0.25": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.8434157371521,
+        "peak": 3.044921875,
+        "cx": 32.260297581914024,
+        "cy": 32.26026017662358,
+        "sigmaX": 2.6842271795809602,
+        "sigmaY": 2.684193159473194
+      },
+      "encoded": {
+        "sum": 9899,
+        "peak": 255,
+        "clipped": 8
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 114.97298438900667,
+        "flatFraction": 0.36619718309859156
+      },
+      "file": "candidate_baseline1024_p0.25.png"
+    },
+    "candidate_range1024_p0.25": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "gain": 3.9301342914393684
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.8434157371521,
+        "peak": 3.044921875,
+        "cx": 32.260297581914024,
+        "cy": 32.26026017662358,
+        "sigmaX": 2.6842271795809602,
+        "sigmaY": 2.684193159473194
+      },
+      "encoded": {
+        "sum": 2789,
+        "peak": 180,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.455818579101562,
+        "sum": 125.70294567215443,
+        "flatFraction": 0.19607843137254902
+      },
+      "file": "candidate_range1024_p0.25.png"
+    },
+    "candidate_profile1024_p0.25": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.843873500823975,
+        "peak": 5.12109375,
+        "cx": 32.24999820784582,
+        "cy": 32.24999756757705,
+        "sigmaX": 2.6854879351136014,
+        "sigmaY": 2.685486872815684
+      },
+      "encoded": {
+        "sum": 2774,
+        "peak": 222,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 6.76150048828125,
+        "sum": 122.54385914471142,
+        "flatFraction": 0.024390243902439025
+      },
+      "file": "candidate_profile1024_p0.25.png"
+    },
+    "candidate_baseline512_p0.5": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959074258804321,
+        "peak": 1.9873046875,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 1.354484878576545,
+        "sigmaY": 1.354484878576545
+      },
+      "encoded": {
+        "sum": 2524,
+        "peak": 254,
+        "clipped": 4
+      },
+      "hdr": {
+        "peak": 2.322279638671875,
+        "sum": 107.15975411248198,
+        "flatFraction": 0.18181818181818182
+      },
+      "file": "candidate_baseline512_p0.5.png"
+    },
+    "candidate_baseline1024_p0.5": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84884440898895,
+        "peak": 3.044921875,
+        "cx": 32.5,
+        "cy": 32.500000055343435,
+        "sigmaX": 2.687423044621863,
+        "sigmaY": 2.687423218275113
+      },
+      "encoded": {
+        "sum": 9932,
+        "peak": 255,
+        "clipped": 12
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 116.97406469993543,
+        "flatFraction": 0.375
+      },
+      "file": "candidate_baseline1024_p0.5.png"
+    },
+    "candidate_range1024_p0.5": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "gain": 3.9301342914393684
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84884440898895,
+        "peak": 3.044921875,
+        "cx": 32.5,
+        "cy": 32.500000055343435,
+        "sigmaX": 2.687423044621863,
+        "sigmaY": 2.687423218275113
+      },
+      "encoded": {
+        "sum": 2804,
+        "peak": 180,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.455818579101562,
+        "sum": 126.5187927215577,
+        "flatFraction": 0.07692307692307693
+      },
+      "file": "candidate_range1024_p0.5.png"
+    },
+    "candidate_profile1024_p0.5": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.8492716550827,
+        "peak": 4.1796875,
+        "cx": 32.5,
+        "cy": 32.50000005534284,
+        "sigmaX": 2.685293842560957,
+        "sigmaY": 2.6852940163500345
+      },
+      "encoded": {
+        "sum": 2768,
+        "peak": 207,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 6.476739453125,
+        "sum": 121.4564742674825,
+        "flatFraction": 0.09090909090909091
+      },
+      "file": "candidate_profile1024_p0.5.png"
+    },
+    "sweep_base512_0.0": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": -0.0,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.960510015487671,
+        "peak": 3.044921875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 1.379048153772528,
+        "sigmaY": 1.379048153772528
+      },
+      "encoded": {
+        "sum": 2975,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.262455078125,
+        "sum": 150.46126506814701,
+        "flatFraction": 0.029411764705882353
+      },
+      "file": "sweep_base512_0.0.png"
+    },
+    "sweep_base1024_0.0": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": -0.0,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84853434562683,
+        "peak": 3.046875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 2.685505919316748,
+        "sigmaY": 2.6854694166561903
+      },
+      "encoded": {
+        "sum": 10263,
+        "peak": 255,
+        "clipped": 9
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 123.4878046209333,
+        "flatFraction": 0.19047619047619047
+      },
+      "file": "sweep_base1024_0.0.png"
+    },
+    "sweep_range1024_0.0": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": -0.0,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "gain": 3.9301342914393684
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84853434562683,
+        "peak": 3.046875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 2.685505919316748,
+        "sigmaY": 2.6854694166561903
+      },
+      "encoded": {
+        "sum": 2812,
+        "peak": 180,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.423211767578124,
+        "sum": 123.49000755524665,
+        "flatFraction": 0.2727272727272727
+      },
+      "file": "sweep_range1024_0.0.png"
+    },
+    "sweep_profile1024_0.0": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": -0.0,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.85323405265808,
+        "peak": 5.48046875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 2.685248190519833,
+        "sigmaY": 2.685248190519833
+      },
+      "encoded": {
+        "sum": 2794,
+        "peak": 226,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 6.3159029296875,
+        "sum": 123.50808627119027,
+        "flatFraction": 0.09090909090909091
+      },
+      "file": "sweep_profile1024_0.0.png"
+    },
+    "sweep_base512_0.125": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.125,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.960624933242798,
+        "peak": 3.044921875,
+        "cx": 32.14088118478174,
+        "cy": 32.14078314248956,
+        "sigmaX": 1.3753922534737821,
+        "sigmaY": 1.375366650620764
+      },
+      "encoded": {
+        "sum": 2969,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.308746435546875,
+        "sum": 149.67839743711832,
+        "flatFraction": 0.051094890510948905
+      },
+      "file": "sweep_base512_0.125.png"
+    },
+    "sweep_base1024_0.125": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.125,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84174311161041,
+        "peak": 3.044921875,
+        "cx": 32.13133813769037,
+        "cy": 32.13137173115777,
+        "sigmaX": 2.685157852282245,
+        "sigmaY": 2.6851497039127556
+      },
+      "encoded": {
+        "sum": 10159,
+        "peak": 255,
+        "clipped": 9
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 121.53831677758683,
+        "flatFraction": 0.2597402597402597
+      },
+      "file": "sweep_base1024_0.125.png"
+    },
+    "sweep_range1024_0.125": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.125,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "gain": 3.9301342914393684
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84174311161041,
+        "peak": 3.044921875,
+        "cx": 32.13133813769037,
+        "cy": 32.13137173115777,
+        "sigmaX": 2.685157852282245,
+        "sigmaY": 2.6851497039127556
+      },
+      "encoded": {
+        "sum": 2794,
+        "peak": 180,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.448464379882813,
+        "sum": 123.77612248482721,
+        "flatFraction": 0.25
+      },
+      "file": "sweep_range1024_0.125.png"
+    },
+    "sweep_profile1024_0.125": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.125,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84879267215729,
+        "peak": 5.38671875,
+        "cx": 32.12495541370181,
+        "cy": 32.12495530451057,
+        "sigmaX": 2.6853487261270983,
+        "sigmaY": 2.685348501997731
+      },
+      "encoded": {
+        "sum": 2784,
+        "peak": 225,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 6.61710380859375,
+        "sum": 123.15478796122052,
+        "flatFraction": 0.024390243902439025
+      },
+      "file": "sweep_profile1024_0.125.png"
+    },
+    "sweep_base512_0.25": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959371864795685,
+        "peak": 2.970703125,
+        "cx": 32.27689581910664,
+        "cy": 32.27688356227818,
+        "sigmaX": 1.3656569798165261,
+        "sigmaY": 1.3656594649108096
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2662109286411,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "sweep_base512_0.25.png"
+    },
+    "sweep_base1024_0.25": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.8434157371521,
+        "peak": 3.044921875,
+        "cx": 32.260297581914024,
+        "cy": 32.26026017662358,
+        "sigmaX": 2.6842271795809602,
+        "sigmaY": 2.684193159473194
+      },
+      "encoded": {
+        "sum": 9899,
+        "peak": 255,
+        "clipped": 8
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 114.97298438900667,
+        "flatFraction": 0.36619718309859156
+      },
+      "file": "sweep_base1024_0.25.png"
+    },
+    "sweep_range1024_0.25": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "gain": 3.9301342914393684
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.8434157371521,
+        "peak": 3.044921875,
+        "cx": 32.260297581914024,
+        "cy": 32.26026017662358,
+        "sigmaX": 2.6842271795809602,
+        "sigmaY": 2.684193159473194
+      },
+      "encoded": {
+        "sum": 2789,
+        "peak": 180,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.455818579101562,
+        "sum": 125.70294567215443,
+        "flatFraction": 0.19607843137254902
+      },
+      "file": "sweep_range1024_0.25.png"
+    },
+    "sweep_profile1024_0.25": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.843873500823975,
+        "peak": 5.12109375,
+        "cx": 32.24999820784582,
+        "cy": 32.24999756757705,
+        "sigmaX": 2.6854879351136014,
+        "sigmaY": 2.685486872815684
+      },
+      "encoded": {
+        "sum": 2774,
+        "peak": 222,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 6.76150048828125,
+        "sum": 122.54385914471142,
+        "flatFraction": 0.024390243902439025
+      },
+      "file": "sweep_profile1024_0.25.png"
+    },
+    "sweep_base512_0.375": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.375,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.960887253284454,
+        "peak": 2.658203125,
+        "cx": 32.401244747681396,
+        "cy": 32.40115896293494,
+        "sigmaX": 1.354488305191827,
+        "sigmaY": 1.3544684762896864
+      },
+      "encoded": {
+        "sum": 2568,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.336228076171875,
+        "sum": 109.12807366353283,
+        "flatFraction": 0.17777777777777778
+      },
+      "file": "sweep_base512_0.375.png"
+    },
+    "sweep_base1024_0.375": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.375,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84219312667847,
+        "peak": 3.044921875,
+        "cx": 32.38148400903188,
+        "cy": 32.38141633515403,
+        "sigmaX": 2.68623017469241,
+        "sigmaY": 2.6862176323997695
+      },
+      "encoded": {
+        "sum": 9859,
+        "peak": 255,
+        "clipped": 12
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 115.07272738119303,
+        "flatFraction": 0.38461538461538464
+      },
+      "file": "sweep_base1024_0.375.png"
+    },
+    "sweep_range1024_0.375": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.375,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "gain": 3.9301342914393684
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84219312667847,
+        "peak": 3.044921875,
+        "cx": 32.38148400903188,
+        "cy": 32.38141633515403,
+        "sigmaX": 2.68623017469241,
+        "sigmaY": 2.6862176323997695
+      },
+      "encoded": {
+        "sum": 2802,
+        "peak": 180,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.455818579101562,
+        "sum": 126.81715998307473,
+        "flatFraction": 0.11764705882352941
+      },
+      "file": "sweep_range1024_0.375.png"
+    },
+    "sweep_profile1024_0.375": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.375,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84606885910034,
+        "peak": 4.703125,
+        "cx": 32.37498703078409,
+        "cy": 32.374990590961005,
+        "sigmaX": 2.685414578460693,
+        "sigmaY": 2.6854157390598266
+      },
+      "encoded": {
+        "sum": 2776,
+        "peak": 216,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 6.733603613281249,
+        "sum": 121.90591309710726,
+        "flatFraction": 0.024390243902439025
+      },
+      "file": "sweep_profile1024_0.375.png"
+    },
+    "sweep_base512_0.5": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959074258804321,
+        "peak": 1.9873046875,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 1.354484878576545,
+        "sigmaY": 1.354484878576545
+      },
+      "encoded": {
+        "sum": 2524,
+        "peak": 254,
+        "clipped": 4
+      },
+      "hdr": {
+        "peak": 2.322279638671875,
+        "sum": 107.15975411248198,
+        "flatFraction": 0.18181818181818182
+      },
+      "file": "sweep_base512_0.5.png"
+    },
+    "sweep_base1024_0.5": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84884440898895,
+        "peak": 3.044921875,
+        "cx": 32.5,
+        "cy": 32.500000055343435,
+        "sigmaX": 2.687423044621863,
+        "sigmaY": 2.687423218275113
+      },
+      "encoded": {
+        "sum": 9932,
+        "peak": 255,
+        "clipped": 12
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 116.97406469993543,
+        "flatFraction": 0.375
+      },
+      "file": "sweep_base1024_0.5.png"
+    },
+    "sweep_range1024_0.5": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "gain": 3.9301342914393684
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84884440898895,
+        "peak": 3.044921875,
+        "cx": 32.5,
+        "cy": 32.500000055343435,
+        "sigmaX": 2.687423044621863,
+        "sigmaY": 2.687423218275113
+      },
+      "encoded": {
+        "sum": 2804,
+        "peak": 180,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.455818579101562,
+        "sum": 126.5187927215577,
+        "flatFraction": 0.07692307692307693
+      },
+      "file": "sweep_range1024_0.5.png"
+    },
+    "sweep_profile1024_0.5": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.8492716550827,
+        "peak": 4.1796875,
+        "cx": 32.5,
+        "cy": 32.50000005534284,
+        "sigmaX": 2.685293842560957,
+        "sigmaY": 2.6852940163500345
+      },
+      "encoded": {
+        "sum": 2768,
+        "peak": 207,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 6.476739453125,
+        "sum": 121.4564742674825,
+        "flatFraction": 0.09090909090909091
+      },
+      "file": "sweep_profile1024_0.5.png"
+    },
+    "sweep_base512_0.625": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.625,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.960887253284454,
+        "peak": 2.658203125,
+        "cx": 32.598755252318604,
+        "cy": 32.59884103706506,
+        "sigmaX": 1.3544883051918268,
+        "sigmaY": 1.354468476289686
+      },
+      "encoded": {
+        "sum": 2568,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.336228076171875,
+        "sum": 109.12807366353252,
+        "flatFraction": 0.17777777777777778
+      },
+      "file": "sweep_base512_0.625.png"
+    },
+    "sweep_base1024_0.625": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.625,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84215611219406,
+        "peak": 3.044921875,
+        "cx": 32.6185130020683,
+        "cy": 32.6185820822674,
+        "sigmaX": 2.6862236113817075,
+        "sigmaY": 2.6862154746966187
+      },
+      "encoded": {
+        "sum": 9859,
+        "peak": 255,
+        "clipped": 12
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 115.07272738119329,
+        "flatFraction": 0.38461538461538464
+      },
+      "file": "sweep_base1024_0.625.png"
+    },
+    "sweep_range1024_0.625": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.625,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "gain": 3.9301342914393684
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84215611219406,
+        "peak": 3.044921875,
+        "cx": 32.6185130020683,
+        "cy": 32.6185820822674,
+        "sigmaX": 2.6862236113817075,
+        "sigmaY": 2.6862154746966187
+      },
+      "encoded": {
+        "sum": 2802,
+        "peak": 180,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.455818579101562,
+        "sum": 126.81715998307476,
+        "flatFraction": 0.11764705882352941
+      },
+      "file": "sweep_range1024_0.625.png"
+    },
+    "sweep_profile1024_0.625": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.625,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84581822156906,
+        "peak": 4.703125,
+        "cx": 32.624992658397815,
+        "cy": 32.62500658805159,
+        "sigmaX": 2.685410657777366,
+        "sigmaY": 2.6854208917049283
+      },
+      "encoded": {
+        "sum": 2776,
+        "peak": 216,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 6.733603613281249,
+        "sum": 121.90591309710723,
+        "flatFraction": 0.024390243902439025
+      },
+      "file": "sweep_profile1024_0.625.png"
+    },
+    "sweep_base512_0.75": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.75,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959127724170685,
+        "peak": 2.970703125,
+        "cx": 32.72309739299785,
+        "cy": 32.72308513586893,
+        "sigmaX": 1.3656730305940616,
+        "sigmaY": 1.3656615700904717
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.26621092864127,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "sweep_base512_0.75.png"
+    },
+    "sweep_base1024_0.75": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.75,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84341382980347,
+        "peak": 3.044921875,
+        "cx": 32.73970149607406,
+        "cy": 32.7397387876724,
+        "sigmaX": 2.6842255945279248,
+        "sigmaY": 2.6841938272486154
+      },
+      "encoded": {
+        "sum": 9899,
+        "peak": 255,
+        "clipped": 8
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 114.97298438900698,
+        "flatFraction": 0.36619718309859156
+      },
+      "file": "sweep_base1024_0.75.png"
+    },
+    "sweep_range1024_0.75": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.75,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "gain": 3.9301342914393684
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84341382980347,
+        "peak": 3.044921875,
+        "cx": 32.73970149607406,
+        "cy": 32.7397387876724,
+        "sigmaX": 2.6842255945279248,
+        "sigmaY": 2.6841938272486154
+      },
+      "encoded": {
+        "sum": 2789,
+        "peak": 180,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.455818579101562,
+        "sum": 125.7029456721543,
+        "flatFraction": 0.19607843137254902
+      },
+      "file": "sweep_range1024_0.75.png"
+    },
+    "sweep_profile1024_0.75": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.75,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84387159347534,
+        "peak": 5.12109375,
+        "cx": 32.7500008706459,
+        "cy": 32.75000139722211,
+        "sigmaX": 2.685486354418356,
+        "sigmaY": 2.685487544280626
+      },
+      "encoded": {
+        "sum": 2774,
+        "peak": 222,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 6.76150048828125,
+        "sum": 122.54385914471145,
+        "flatFraction": 0.024390243902439025
+      },
+      "file": "sweep_profile1024_0.75.png"
+    },
+    "sweep_base512_0.875": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.875,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.960624933242798,
+        "peak": 3.044921875,
+        "cx": 32.85911881521826,
+        "cy": 32.85921685751044,
+        "sigmaX": 1.3753922534737835,
+        "sigmaY": 1.3753666506207645
+      },
+      "encoded": {
+        "sum": 2969,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.308746435546875,
+        "sum": 149.67839743711724,
+        "flatFraction": 0.051094890510948905
+      },
+      "file": "sweep_base512_0.875.png"
+    },
+    "sweep_base1024_0.875": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.875,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84168350696564,
+        "peak": 3.044921875,
+        "cx": 32.868660267028,
+        "cy": 32.86862660170055,
+        "sigmaX": 2.6851527025953237,
+        "sigmaY": 2.685144856541869
+      },
+      "encoded": {
+        "sum": 10159,
+        "peak": 255,
+        "clipped": 9
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 121.5383167775867,
+        "flatFraction": 0.2597402597402597
+      },
+      "file": "sweep_base1024_0.875.png"
+    },
+    "sweep_range1024_0.875": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.875,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "gain": 3.9301342914393684
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84168350696564,
+        "peak": 3.044921875,
+        "cx": 32.868660267028,
+        "cy": 32.86862660170055,
+        "sigmaX": 2.6851527025953237,
+        "sigmaY": 2.685144856541869
+      },
+      "encoded": {
+        "sum": 2794,
+        "peak": 180,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.448464379882813,
+        "sum": 123.7761224848271,
+        "flatFraction": 0.25
+      },
+      "file": "sweep_range1024_0.875.png"
+    },
+    "sweep_profile1024_0.875": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.875,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84873306751251,
+        "peak": 5.38671875,
+        "cx": 32.87504300084588,
+        "cy": 32.87504303824019,
+        "sigmaX": 2.685343581782443,
+        "sigmaY": 2.6853436601118648
+      },
+      "encoded": {
+        "sum": 2784,
+        "peak": 225,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 6.61710380859375,
+        "sum": 123.15478796122046,
+        "flatFraction": 0.024390243902439025
+      },
+      "file": "sweep_profile1024_0.875.png"
+    },
+    "sweep_base512_1.0": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 1,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.960510015487671,
+        "peak": 3.044921875,
+        "cx": 33,
+        "cy": 33,
+        "sigmaX": 1.379048153772528,
+        "sigmaY": 1.379048153772528
+      },
+      "encoded": {
+        "sum": 2975,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.262455078125,
+        "sum": 150.46126506814701,
+        "flatFraction": 0.029411764705882353
+      },
+      "file": "sweep_base512_1.0.png"
+    },
+    "sweep_base1024_1.0": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 1,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84853434562683,
+        "peak": 3.046875,
+        "cx": 33,
+        "cy": 33,
+        "sigmaX": 2.685505919316748,
+        "sigmaY": 2.6854694166561903
+      },
+      "encoded": {
+        "sum": 10263,
+        "peak": 255,
+        "clipped": 9
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 123.4878046209333,
+        "flatFraction": 0.19047619047619047
+      },
+      "file": "sweep_base1024_1.0.png"
+    },
+    "sweep_range1024_1.0": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 1,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "gain": 3.9301342914393684
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.84853434562683,
+        "peak": 3.046875,
+        "cx": 33,
+        "cy": 33,
+        "sigmaX": 2.685505919316748,
+        "sigmaY": 2.6854694166561903
+      },
+      "encoded": {
+        "sum": 2812,
+        "peak": 180,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.423211767578124,
+        "sum": 123.49000755524665,
+        "flatFraction": 0.2727272727272727
+      },
+      "file": "sweep_range1024_1.0.png"
+    },
+    "sweep_profile1024_1.0": {
+      "input": {
+        "size": 0.65,
+        "I": 3,
+        "phase": 1,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 39.85323405265808,
+        "peak": 5.48046875,
+        "cx": 33,
+        "cy": 33,
+        "sigmaX": 2.685248190519833,
+        "sigmaY": 2.685248190519833
+      },
+      "encoded": {
+        "sum": 2794,
+        "peak": 226,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 6.3159029296875,
+        "sum": 123.50808627119027,
+        "flatFraction": 0.09090909090909091
+      },
+      "file": "sweep_profile1024_1.0.png"
+    },
+    "robust_s0.4_base512_0.0": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": -0.0,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.771479606628418,
+        "peak": 2.75,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 0.8147358739747997,
+        "sigmaY": 0.8147160104301095
+      },
+      "encoded": {
+        "sum": 991,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 1.5691598876953123,
+        "sum": 24.7751844986915,
+        "flatFraction": 0.1
+      },
+      "file": "robust_s0.4_base512_0.0.png"
+    },
+    "robust_s0.4_profile1024_0.0": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": -0.0,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 15.088932275772095,
+        "peak": 4.703125,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 1.6674676539102185,
+        "sigmaY": 1.6674676539102185
+      },
+      "encoded": {
+        "sum": 1088,
+        "peak": 216,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.008789428710938,
+        "sum": 31.615492527389513,
+        "flatFraction": 0.16666666666666666
+      },
+      "file": "robust_s0.4_profile1024_0.0.png"
+    },
+    "robust_s0.4_profile2048_0.0": {
+      "input": {
+        "ppm": 11.177877017262748,
+        "display": 64,
+        "size": 0.4,
+        "I": 3,
+        "phase": -0.0,
+        "route": "export",
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 60.36857634782791,
+        "peak": 5.6640625,
+        "cx": 32.00000001579753,
+        "cy": 31.99999951323865,
+        "sigmaX": 3.298458592874376,
+        "sigmaY": 3.2984573825112786
+      },
+      "encoded": {
+        "sum": 4176,
+        "peak": 228,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.921129296875,
+        "sum": 55.80433299264893,
+        "flatFraction": 0.07692307692307693
+      },
+      "file": "robust_s0.4_profile2048_0.0.png"
+    },
+    "robust_s0.4_base512_0.125": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.125,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.771794080734253,
+        "peak": 2.357421875,
+        "cx": 32.11140855361339,
+        "cy": 32.111343825629895,
+        "sigmaX": 0.840889078879841,
+        "sigmaY": 0.8408591637772763
+      },
+      "encoded": {
+        "sum": 1125,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 1.9404407226562501,
+        "sum": 40.877895516896125,
+        "flatFraction": 0.01818181818181818
+      },
+      "file": "robust_s0.4_base512_0.125.png"
+    },
+    "robust_s0.4_profile1024_0.125": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.125,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 15.088604092597961,
+        "peak": 4.53125,
+        "cx": 32.12460048848728,
+        "cy": 32.124600709704566,
+        "sigmaX": 1.667679238141916,
+        "sigmaY": 1.6676794869132214
+      },
+      "encoded": {
+        "sum": 1085,
+        "peak": 213,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.472387548828125,
+        "sum": 32.484570981347595,
+        "flatFraction": 0.05263157894736842
+      },
+      "file": "robust_s0.4_profile1024_0.125.png"
+    },
+    "robust_s0.4_profile2048_0.125": {
+      "input": {
+        "ppm": 11.177877017262748,
+        "display": 64,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.125,
+        "route": "export",
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 60.35634744167328,
+        "peak": 5.59765625,
+        "cx": 32.12504672991668,
+        "cy": 32.125055009498915,
+        "sigmaX": 3.298710652820685,
+        "sigmaY": 3.2987132859786907
+      },
+      "encoded": {
+        "sum": 4179,
+        "peak": 228,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.921129296875,
+        "sum": 56.21784220410575,
+        "flatFraction": 0.06666666666666667
+      },
+      "file": "robust_s0.4_profile2048_0.125.png"
+    },
+    "robust_s0.4_base512_0.25": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.7725327014923096,
+        "peak": 1.77734375,
+        "cx": 32.23051187535427,
+        "cy": 32.23051187535427,
+        "sigmaX": 0.8764031216892129,
+        "sigmaY": 0.8764031216892125
+      },
+      "encoded": {
+        "sum": 1278,
+        "peak": 254,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.1150955078125,
+        "sum": 59.9456232061266,
+        "flatFraction": 0.013888888888888888
+      },
+      "file": "robust_s0.4_base512_0.25.png"
+    },
+    "robust_s0.4_profile1024_0.25": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 15.091702222824097,
+        "peak": 4.046875,
+        "cx": 32.24945622919296,
+        "cy": 32.24945622919296,
+        "sigmaX": 1.6680116778232625,
+        "sigmaY": 1.6680116778232623
+      },
+      "encoded": {
+        "sum": 1091,
+        "peak": 204,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.653258325195313,
+        "sum": 34.114194266188115,
+        "flatFraction": 0.05263157894736842
+      },
+      "file": "robust_s0.4_profile1024_0.25.png"
+    },
+    "robust_s0.4_profile2048_0.25": {
+      "input": {
+        "ppm": 11.177877017262748,
+        "display": 64,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 60.35785800218582,
+        "peak": 5.40625,
+        "cx": 32.249960024908084,
+        "cy": 32.24996179454549,
+        "sigmaX": 3.2987013184214207,
+        "sigmaY": 3.2987030619527933
+      },
+      "encoded": {
+        "sum": 4182,
+        "peak": 226,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.778323046875001,
+        "sum": 56.65516569410553,
+        "flatFraction": 0.06666666666666667
+      },
+      "file": "robust_s0.4_profile2048_0.25.png"
+    },
+    "robust_s0.4_base512_0.375": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.375,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.7717965841293335,
+        "peak": 1.2412109375,
+        "cx": 32.362548622203526,
+        "cy": 32.36228971044139,
+        "sigmaX": 0.9009267041731781,
+        "sigmaY": 0.9008871647993326
+      },
+      "encoded": {
+        "sum": 1387,
+        "peak": 250,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 2.141577880859375,
+        "sum": 76.77358451151818,
+        "flatFraction": 0.012048192771084338
+      },
+      "file": "robust_s0.4_base512_0.375.png"
+    },
+    "robust_s0.4_profile1024_0.375": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.375,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 15.08990865945816,
+        "peak": 3.349609375,
+        "cx": 32.37468072661717,
+        "cy": 32.37468072661717,
+        "sigmaX": 1.6685789900215287,
+        "sigmaY": 1.668578990021529
+      },
+      "encoded": {
+        "sum": 1099,
+        "peak": 188,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.503562231445312,
+        "sum": 36.4295545789003,
+        "flatFraction": 0.0625
+      },
+      "file": "robust_s0.4_profile1024_0.375.png"
+    },
+    "robust_s0.4_profile2048_0.375": {
+      "input": {
+        "ppm": 11.177877017262748,
+        "display": 64,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.375,
+        "route": "export",
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 60.35297167301178,
+        "peak": 5.1015625,
+        "cx": 32.37494322801332,
+        "cy": 32.3749440299452,
+        "sigmaX": 3.2987997370727324,
+        "sigmaY": 3.298800790161994
+      },
+      "encoded": {
+        "sum": 4178,
+        "peak": 222,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.4927810546875,
+        "sum": 57.13696284717309,
+        "flatFraction": 0.06666666666666667
+      },
+      "file": "robust_s0.4_profile2048_0.375.png"
+    },
+    "robust_s0.4_base512_0.5": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.771188735961914,
+        "peak": 0.77734375,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 0.9095062662790376,
+        "sigmaY": 0.9095062662790376
+      },
+      "encoded": {
+        "sum": 1416,
+        "peak": 232,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 1.925360986328125,
+        "sum": 83.50793749532673,
+        "flatFraction": 0.18181818181818182
+      },
+      "file": "robust_s0.4_base512_0.5.png"
+    },
+    "robust_s0.4_profile1024_0.5": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 15.092535972595215,
+        "peak": 2.572265625,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 1.6686251111775958,
+        "sigmaY": 1.6686251111775958
+      },
+      "encoded": {
+        "sum": 1092,
+        "peak": 164,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 3.953684906005859,
+        "sum": 37.79908297033303,
+        "flatFraction": 0.25
+      },
+      "file": "robust_s0.4_profile1024_0.5.png"
+    },
+    "robust_s0.4_profile2048_0.5": {
+      "input": {
+        "ppm": 11.177877017262748,
+        "display": 64,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 60.371134757995605,
+        "peak": 4.70703125,
+        "cx": 32.500000363327764,
+        "cy": 32.500000363327764,
+        "sigmaX": 3.2983568091609863,
+        "sigmaY": 3.2983568091609854
+      },
+      "encoded": {
+        "sum": 4172,
+        "peak": 216,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.077057910156249,
+        "sum": 57.12263804049476,
+        "flatFraction": 0.25
+      },
+      "file": "robust_s0.4_profile2048_0.5.png"
+    },
+    "robust_s0.4_base512_0.625": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.625,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.7717965841293335,
+        "peak": 1.2412109375,
+        "cx": 32.637451377796474,
+        "cy": 32.63771028955861,
+        "sigmaX": 0.9009267041731782,
+        "sigmaY": 0.9008871647993326
+      },
+      "encoded": {
+        "sum": 1387,
+        "peak": 250,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 2.141577880859375,
+        "sum": 76.77358451151824,
+        "flatFraction": 0.012048192771084338
+      },
+      "file": "robust_s0.4_base512_0.625.png"
+    },
+    "robust_s0.4_profile1024_0.625": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.625,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 15.08990865945816,
+        "peak": 3.349609375,
+        "cx": 32.62531927338283,
+        "cy": 32.62531927338283,
+        "sigmaX": 1.668578990021528,
+        "sigmaY": 1.6685789900215284
+      },
+      "encoded": {
+        "sum": 1099,
+        "peak": 188,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.503562231445312,
+        "sum": 36.42955457890028,
+        "flatFraction": 0.0625
+      },
+      "file": "robust_s0.4_profile1024_0.625.png"
+    },
+    "robust_s0.4_profile2048_0.625": {
+      "input": {
+        "ppm": 11.177877017262748,
+        "display": 64,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.625,
+        "route": "export",
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 60.35345911979675,
+        "peak": 5.1015625,
+        "cx": 32.6250433785346,
+        "cy": 32.62504360963133,
+        "sigmaX": 3.2987910213382983,
+        "sigmaY": 3.2987912227433043
+      },
+      "encoded": {
+        "sum": 4178,
+        "peak": 222,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.4927810546875,
+        "sum": 57.13696284717309,
+        "flatFraction": 0.06666666666666667
+      },
+      "file": "robust_s0.4_profile2048_0.625.png"
+    },
+    "robust_s0.4_base512_0.75": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.75,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.7725327014923096,
+        "peak": 1.77734375,
+        "cx": 32.76948812464573,
+        "cy": 32.76948812464573,
+        "sigmaX": 0.8764031216892126,
+        "sigmaY": 0.8764031216892125
+      },
+      "encoded": {
+        "sum": 1278,
+        "peak": 254,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.1150955078125,
+        "sum": 59.9456232061266,
+        "flatFraction": 0.013888888888888888
+      },
+      "file": "robust_s0.4_base512_0.75.png"
+    },
+    "robust_s0.4_profile1024_0.75": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.75,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 15.091702222824097,
+        "peak": 4.046875,
+        "cx": 32.75054377080704,
+        "cy": 32.75054377080704,
+        "sigmaX": 1.6680116778232632,
+        "sigmaY": 1.6680116778232628
+      },
+      "encoded": {
+        "sum": 1091,
+        "peak": 204,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.653258325195313,
+        "sum": 34.114194266188086,
+        "flatFraction": 0.05263157894736842
+      },
+      "file": "robust_s0.4_profile1024_0.75.png"
+    },
+    "robust_s0.4_profile2048_0.75": {
+      "input": {
+        "ppm": 11.177877017262748,
+        "display": 64,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.75,
+        "route": "export",
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 60.35834437608719,
+        "peak": 5.40625,
+        "cx": 32.75002985473741,
+        "cy": 32.750055893478034,
+        "sigmaX": 3.298687184547975,
+        "sigmaY": 3.2986957867634112
+      },
+      "encoded": {
+        "sum": 4182,
+        "peak": 226,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.778323046875001,
+        "sum": 56.65516569410549,
+        "flatFraction": 0.06666666666666667
+      },
+      "file": "robust_s0.4_profile2048_0.75.png"
+    },
+    "robust_s0.4_base512_0.875": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.875,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.771794080734253,
+        "peak": 2.357421875,
+        "cx": 32.88859139897842,
+        "cy": 32.88865612696192,
+        "sigmaX": 0.8408891007881005,
+        "sigmaY": 0.8408591856899645
+      },
+      "encoded": {
+        "sum": 1125,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 1.9404407226562501,
+        "sum": 40.87789551689613,
+        "flatFraction": 0.01818181818181818
+      },
+      "file": "robust_s0.4_base512_0.875.png"
+    },
+    "robust_s0.4_profile1024_0.875": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.875,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 15.088603854179382,
+        "peak": 4.53125,
+        "cx": 32.875399430537705,
+        "cy": 32.875399430537705,
+        "sigmaX": 1.6676791269038087,
+        "sigmaY": 1.6676791269038087
+      },
+      "encoded": {
+        "sum": 1085,
+        "peak": 213,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.472387548828125,
+        "sum": 32.484570981347474,
+        "flatFraction": 0.05263157894736842
+      },
+      "file": "robust_s0.4_profile1024_0.875.png"
+    },
+    "robust_s0.4_profile2048_0.875": {
+      "input": {
+        "ppm": 11.177877017262748,
+        "display": 64,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.875,
+        "route": "export",
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 60.356226086616516,
+        "peak": 5.59765625,
+        "cx": 32.8749502495751,
+        "cy": 32.874950893456116,
+        "sigmaX": 3.298713559381357,
+        "sigmaY": 3.298714184333222
+      },
+      "encoded": {
+        "sum": 4179,
+        "peak": 228,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.921129296875,
+        "sum": 56.2178422041057,
+        "flatFraction": 0.06666666666666667
+      },
+      "file": "robust_s0.4_profile2048_0.875.png"
+    },
+    "robust_s0.4_base512_1.0": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 1,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.771479606628418,
+        "peak": 2.75,
+        "cx": 33,
+        "cy": 33,
+        "sigmaX": 0.8147358739747997,
+        "sigmaY": 0.8147160104301095
+      },
+      "encoded": {
+        "sum": 991,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 1.5691598876953123,
+        "sum": 24.7751844986915,
+        "flatFraction": 0.1
+      },
+      "file": "robust_s0.4_base512_1.0.png"
+    },
+    "robust_s0.4_profile1024_1.0": {
+      "input": {
+        "size": 0.4,
+        "I": 3,
+        "phase": 1,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 15.088932275772095,
+        "peak": 4.703125,
+        "cx": 33,
+        "cy": 33,
+        "sigmaX": 1.6674676539102185,
+        "sigmaY": 1.6674676539102185
+      },
+      "encoded": {
+        "sum": 1088,
+        "peak": 216,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 4.008789428710938,
+        "sum": 31.615492527389513,
+        "flatFraction": 0.16666666666666666
+      },
+      "file": "robust_s0.4_profile1024_1.0.png"
+    },
+    "robust_s0.4_profile2048_1.0": {
+      "input": {
+        "ppm": 11.177877017262748,
+        "display": 64,
+        "size": 0.4,
+        "I": 3,
+        "phase": 1,
+        "route": "export",
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 60.36857879161835,
+        "peak": 5.6640625,
+        "cx": 33,
+        "cy": 33.00000011255739,
+        "sigmaX": 3.298458689548792,
+        "sigmaY": 3.2984592038069978
+      },
+      "encoded": {
+        "sum": 4176,
+        "peak": 228,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.921129296875,
+        "sum": 55.80433299264893,
+        "flatFraction": 0.07692307692307693
+      },
+      "file": "robust_s0.4_profile2048_1.0.png"
+    },
+    "robust_s1.4_base512_0.0": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": -0.0,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 46.21367907524109,
+        "peak": 3.046875,
+        "cx": 31.999999871023807,
+        "cy": 32.00000002579524,
+        "sigmaX": 2.893593723207871,
+        "sigmaY": 2.893564734556981
+      },
+      "encoded": {
+        "sum": 11915,
+        "peak": 255,
+        "clipped": 9
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 615.1144856136195,
+        "flatFraction": 0.2828282828282828
+      },
+      "file": "robust_s1.4_base512_0.0.png"
+    },
+    "robust_s1.4_profile1024_0.0": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": -0.0,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 184.36593633890152,
+        "peak": 5.91796875,
+        "cx": 31.99422157976703,
+        "cy": 31.99421540741274,
+        "sigmaX": 5.609666594385242,
+        "sigmaY": 5.609664673724806
+      },
+      "encoded": {
+        "sum": 12667,
+        "peak": 231,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.8432376953125,
+        "sum": 667.5811512504764,
+        "flatFraction": 0.06666666666666667
+      },
+      "file": "robust_s1.4_profile1024_0.0.png"
+    },
+    "robust_s1.4_base512_0.125": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.125,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 46.209354519844055,
+        "peak": 3.044921875,
+        "cx": 32.12939439124609,
+        "cy": 32.1293607743244,
+        "sigmaX": 2.892799305691108,
+        "sigmaY": 2.892773558231352
+      },
+      "encoded": {
+        "sum": 11767,
+        "peak": 255,
+        "clipped": 11
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 592.3180981633996,
+        "flatFraction": 0.31648936170212766
+      },
+      "file": "robust_s1.4_base512_0.125.png"
+    },
+    "robust_s1.4_profile1024_0.125": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.125,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 184.36508685350418,
+        "peak": 5.890625,
+        "cx": 32.11773983709723,
+        "cy": 32.11774260581113,
+        "sigmaX": 5.60921831827058,
+        "sigmaY": 5.609216947304607
+      },
+      "encoded": {
+        "sum": 12652,
+        "peak": 231,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.921129296875,
+        "sum": 668.3017064905496,
+        "flatFraction": 0.04419889502762431
+      },
+      "file": "robust_s1.4_profile1024_0.125.png"
+    },
+    "robust_s1.4_base512_0.25": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 46.20564752817154,
+        "peak": 3.044921875,
+        "cx": 32.257483446617314,
+        "cy": 32.257361892513586,
+        "sigmaX": 2.8902622517886267,
+        "sigmaY": 2.8902318465045864
+      },
+      "encoded": {
+        "sum": 11552,
+        "peak": 255,
+        "clipped": 11
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 554.8860630535102,
+        "flatFraction": 0.3268156424581006
+      },
+      "file": "robust_s1.4_base512_0.25.png"
+    },
+    "robust_s1.4_profile1024_0.25": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 184.3548840880394,
+        "peak": 5.82421875,
+        "cx": 32.2412834456844,
+        "cy": 32.24128697369445,
+        "sigmaX": 5.60879018330934,
+        "sigmaY": 5.608791782021266
+      },
+      "encoded": {
+        "sum": 12660,
+        "peak": 230,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.921129296875,
+        "sum": 668.3325884703963,
+        "flatFraction": 0.05084745762711865
+      },
+      "file": "robust_s1.4_profile1024_0.25.png"
+    },
+    "robust_s1.4_base512_0.375": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.375,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 46.21040451526642,
+        "peak": 3.044921875,
+        "cx": 32.382445631024105,
+        "cy": 32.382389496606585,
+        "sigmaX": 2.8867040868699902,
+        "sigmaY": 2.886666225662599
+      },
+      "encoded": {
+        "sum": 11277,
+        "peak": 255,
+        "clipped": 12
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 519.3627524388526,
+        "flatFraction": 0.37116564417177916
+      },
+      "file": "robust_s1.4_base512_0.375.png"
+    },
+    "robust_s1.4_profile1024_0.375": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.375,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 184.35905921459198,
+        "peak": 5.7109375,
+        "cx": 32.36480607063977,
+        "cy": 32.36480843983627,
+        "sigmaX": 5.608054288539239,
+        "sigmaY": 5.608056702406933
+      },
+      "encoded": {
+        "sum": 12647,
+        "peak": 229,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.921129296875,
+        "sum": 668.597960035882,
+        "flatFraction": 0.0446927374301676
+      },
+      "file": "robust_s1.4_profile1024_0.375.png"
+    },
+    "robust_s1.4_base512_0.5": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 46.208786964416504,
+        "peak": 3.044921875,
+        "cx": 32.50000003611716,
+        "cy": 32.49999996130305,
+        "sigmaX": 2.8853667708966126,
+        "sigmaY": 2.88536672261539
+      },
+      "encoded": {
+        "sum": 11088,
+        "peak": 255,
+        "clipped": 12
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 510.17827328124315,
+        "flatFraction": 0.41025641025641024
+      },
+      "file": "robust_s1.4_base512_0.5.png"
+    },
+    "robust_s1.4_profile1024_0.5": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 184.35176801681519,
+        "peak": 5.5546875,
+        "cx": 32.48839635275812,
+        "cy": 32.48839207846549,
+        "sigmaX": 5.607298816301171,
+        "sigmaY": 5.6072984190526345
+      },
+      "encoded": {
+        "sum": 12640,
+        "peak": 227,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.850556640624999,
+        "sum": 667.736333728047,
+        "flatFraction": 0.06666666666666667
+      },
+      "file": "robust_s1.4_profile1024_0.5.png"
+    },
+    "robust_s1.4_base512_0.625": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.625,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 46.21042364835739,
+        "peak": 3.044921875,
+        "cx": 32.617556037742375,
+        "cy": 32.61760860440378,
+        "sigmaX": 2.8867050030237476,
+        "sigmaY": 2.8866673086182812
+      },
+      "encoded": {
+        "sum": 11277,
+        "peak": 255,
+        "clipped": 12
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 519.3627524388515,
+        "flatFraction": 0.37116564417177916
+      },
+      "file": "robust_s1.4_base512_0.625.png"
+    },
+    "robust_s1.4_profile1024_0.625": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.625,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 184.35127675533295,
+        "peak": 5.7109375,
+        "cx": 32.61198300583278,
+        "cy": 32.61198149269036,
+        "sigmaX": 5.606498211849555,
+        "sigmaY": 5.606496727338921
+      },
+      "encoded": {
+        "sum": 12647,
+        "peak": 229,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.921129296875,
+        "sum": 668.5979600358795,
+        "flatFraction": 0.0446927374301676
+      },
+      "file": "robust_s1.4_profile1024_0.625.png"
+    },
+    "robust_s1.4_base512_0.75": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.75,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 46.205647468566895,
+        "peak": 3.044921875,
+        "cx": 32.74251658014025,
+        "cy": 32.74263810715442,
+        "sigmaX": 2.89026215763747,
+        "sigmaY": 2.8902318483539844
+      },
+      "encoded": {
+        "sum": 11552,
+        "peak": 255,
+        "clipped": 11
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 554.8860630535083,
+        "flatFraction": 0.3268156424581006
+      },
+      "file": "robust_s1.4_base512_0.75.png"
+    },
+    "robust_s1.4_profile1024_0.75": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.75,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 184.33918619155884,
+        "peak": 5.82421875,
+        "cx": 32.735487998178975,
+        "cy": 32.735485204502055,
+        "sigmaX": 5.605667944944666,
+        "sigmaY": 5.605666046687488
+      },
+      "encoded": {
+        "sum": 12660,
+        "peak": 230,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.921129296875,
+        "sum": 668.332588470396,
+        "flatFraction": 0.05084745762711865
+      },
+      "file": "robust_s1.4_profile1024_0.75.png"
+    },
+    "robust_s1.4_base512_0.875": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.875,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 46.20934343338013,
+        "peak": 3.044921875,
+        "cx": 32.87060724423863,
+        "cy": 32.87063907855013,
+        "sigmaX": 2.8927979001737874,
+        "sigmaY": 2.8927760213898126
+      },
+      "encoded": {
+        "sum": 11767,
+        "peak": 255,
+        "clipped": 11
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 592.3180981634031,
+        "flatFraction": 0.31648936170212766
+      },
+      "file": "robust_s1.4_base512_0.875.png"
+    },
+    "robust_s1.4_profile1024_0.875": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 0.875,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 184.34149020910263,
+        "peak": 5.890625,
+        "cx": 32.8590022940389,
+        "cy": 32.859003871929296,
+        "sigmaX": 5.604535489237089,
+        "sigmaY": 5.604537089392521
+      },
+      "encoded": {
+        "sum": 12652,
+        "peak": 231,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.921129296875,
+        "sum": 668.3017064905493,
+        "flatFraction": 0.04419889502762431
+      },
+      "file": "robust_s1.4_profile1024_0.875.png"
+    },
+    "robust_s1.4_base512_1.0": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 1,
+        "route": "export",
+        "ppm": 2.794469254315687
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 46.21367907524109,
+        "peak": 3.046875,
+        "cx": 32.9999998710238,
+        "cy": 33.00000002579524,
+        "sigmaX": 2.893593723207871,
+        "sigmaY": 2.893564734556981
+      },
+      "encoded": {
+        "sum": 11915,
+        "peak": 255,
+        "clipped": 9
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 615.1144856136195,
+        "flatFraction": 0.2828282828282828
+      },
+      "file": "robust_s1.4_base512_1.0.png"
+    },
+    "robust_s1.4_profile1024_1.0": {
+      "input": {
+        "size": 1.4,
+        "I": 3,
+        "phase": 1,
+        "route": "export",
+        "ppm": 5.588938508631374,
+        "display": 128,
+        "exposure": 0.4,
+        "profile": "gaussian",
+        "gain": 4.265641134155011
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 184.3345075249672,
+        "peak": 5.91796875,
+        "cx": 32.98248153777532,
+        "cy": 32.98247570194651,
+        "sigmaX": 5.603416260363861,
+        "sigmaY": 5.603415093536452
+      },
+      "encoded": {
+        "sum": 12667,
+        "peak": 231,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 7.8432376953125,
+        "sum": 667.5811512504764,
+        "flatFraction": 0.06666666666666667
+      },
+      "file": "robust_s1.4_profile1024_1.0.png"
+    },
+    "native_current_p0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0,
+        "route": "export",
+        "display": 64
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.960510015487671,
+        "peak": 3.044921875,
+        "cx": 32,
+        "cy": 32,
+        "sigmaX": 1.379048153772528,
+        "sigmaY": 1.379048153772528
+      },
+      "encoded": {
+        "sum": 2975,
+        "peak": 255,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 12.03217349638939,
+        "flatFraction": 0.1111111111111111
+      },
+      "file": "native_current_p0.png"
+    },
+    "native_linear_tint_p0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0,
+        "route": "export",
+        "display": 64,
+        "separate": true,
+        "exposure": 0.1,
+        "gain": 8,
+        "halo": 0.04
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 8.094290971755981,
+        "peak": 3.005859375,
+        "cx": 31.99999973490362,
+        "cy": 31.99999973490362,
+        "sigmaX": 0.7879127835928864,
+        "sigmaY": 0.7879127835928864
+      },
+      "encoded": {
+        "sum": 182,
+        "peak": 66,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 5.220423046875,
+        "sum": 14.399380249023437,
+        "flatFraction": 0.2
+      },
+      "file": "native_linear_tint_p0.png"
+    },
+    "native_current_p0.25": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "display": 64
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959371864795685,
+        "peak": 2.970703125,
+        "cx": 32.27689581910664,
+        "cy": 32.27688356227818,
+        "sigmaX": 1.3656569798165261,
+        "sigmaY": 1.3656594649108096
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3417877929687503,
+        "sum": 10.951978218603134,
+        "flatFraction": 0.5
+      },
+      "file": "native_current_p0.25.png"
+    },
+    "native_linear_tint_p0.25": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "display": 64,
+        "separate": true,
+        "exposure": 0.1,
+        "gain": 8,
+        "halo": 0.04
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 8.095631301403046,
+        "peak": 2.931640625,
+        "cx": 32.28316179344968,
+        "cy": 32.28318441126192,
+        "sigmaX": 0.7583142538155897,
+        "sigmaY": 0.7582859229504285
+      },
+      "encoded": {
+        "sum": 180,
+        "peak": 65,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 5.1423619140625005,
+        "sum": 14.240320385742187,
+        "flatFraction": 0.16666666666666666
+      },
+      "file": "native_linear_tint_p0.25.png"
+    },
+    "native_current_p0.5": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "display": 64
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959074258804321,
+        "peak": 1.9873046875,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 1.354484878576545,
+        "sigmaY": 1.354484878576545
+      },
+      "encoded": {
+        "sum": 2524,
+        "peak": 254,
+        "clipped": 4
+      },
+      "hdr": {
+        "peak": 2.322279638671875,
+        "sum": 9.521427215719232,
+        "flatFraction": 1
+      },
+      "file": "native_current_p0.5.png"
+    },
+    "native_linear_tint_p0.5": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.5,
+        "route": "export",
+        "display": 64,
+        "separate": true,
+        "exposure": 0.1,
+        "gain": 8,
+        "halo": 0.04
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 8.09380292892456,
+        "peak": 1.94921875,
+        "cx": 32.5,
+        "cy": 32.5,
+        "sigmaX": 0.733500363440435,
+        "sigmaY": 0.733500363440435
+      },
+      "encoded": {
+        "sum": 180,
+        "peak": 45,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 3.56041796875,
+        "sum": 14.241671875,
+        "flatFraction": 1
+      },
+      "file": "native_linear_tint_p0.5.png"
+    },
+    "motion_v0_h0.033_s0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 0,
+        "hold": 0.03333333333333333,
+        "shutter": 0
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959371864795685,
+        "peak": 2.970703125,
+        "cx": 32.27689581910664,
+        "cy": 32.27688356227818,
+        "sigmaX": 1.3656569798165261,
+        "sigmaY": 1.3656594649108096
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2662109286411,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "motion_v0_h0.033_s0.png"
+    },
+    "motion_v0_h0.033_s0.2": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 0,
+        "hold": 0.03333333333333333,
+        "shutter": 0.2
+      },
+      "glError": 0,
+      "window": [
+        0.49666666666666665,
+        0.5033333333333333
+      ],
+      "linear": {
+        "sum": 9.95937043428421,
+        "peak": 2.970703125,
+        "cx": 32.27689566138074,
+        "cy": 32.276883404550524,
+        "sigmaX": 1.3656544691586863,
+        "sigmaY": 1.3656569542564787
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2662109286411,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "motion_v0_h0.033_s0.2.png"
+    },
+    "motion_v0_h0.033_s0.6": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 0,
+        "hold": 0.03333333333333333,
+        "shutter": 0.6
+      },
+      "glError": 0,
+      "window": [
+        0.49,
+        0.51
+      ],
+      "linear": {
+        "sum": 9.963282942771912,
+        "peak": 2.97265625,
+        "cx": 32.276873444381195,
+        "cy": 32.276873444381195,
+        "sigmaX": 1.3653888072486904,
+        "sigmaY": 1.3653888072486904
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2662109286411,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "motion_v0_h0.033_s0.6.png"
+    },
+    "motion_v0_h0.100_s0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 0,
+        "hold": 0.1,
+        "shutter": 0
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959371864795685,
+        "peak": 2.970703125,
+        "cx": 32.27689581910664,
+        "cy": 32.27688356227818,
+        "sigmaX": 1.3656569798165261,
+        "sigmaY": 1.3656594649108096
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2662109286411,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "motion_v0_h0.100_s0.png"
+    },
+    "motion_v0_h0.100_s0.2": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 0,
+        "hold": 0.1,
+        "shutter": 0.2
+      },
+      "glError": 0,
+      "window": [
+        0.49,
+        0.51
+      ],
+      "linear": {
+        "sum": 9.963282942771912,
+        "peak": 2.97265625,
+        "cx": 32.276873444381195,
+        "cy": 32.276873444381195,
+        "sigmaX": 1.3653888072486904,
+        "sigmaY": 1.3653888072486904
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2662109286411,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "motion_v0_h0.100_s0.2.png"
+    },
+    "motion_v0_h0.100_s0.6": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 0,
+        "hold": 0.1,
+        "shutter": 0.6
+      },
+      "glError": 0,
+      "window": [
+        0.47,
+        0.53
+      ],
+      "linear": {
+        "sum": 9.958906531333923,
+        "peak": 2.970703125,
+        "cx": 32.27696533392686,
+        "cy": 32.27695307652569,
+        "sigmaX": 1.3655071165202004,
+        "sigmaY": 1.365509602627342
+      },
+      "encoded": {
+        "sum": 2843,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2743732793198,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "motion_v0_h0.100_s0.6.png"
+    },
+    "motion_v20_h0.033_s0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 20,
+        "hold": 0.03333333333333333,
+        "shutter": 0
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959371864795685,
+        "peak": 2.970703125,
+        "cx": 32.27689581910664,
+        "cy": 32.27688356227818,
+        "sigmaX": 1.3656569798165261,
+        "sigmaY": 1.3656594649108096
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2662109286411,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "motion_v20_h0.033_s0.png"
+    },
+    "motion_v20_h0.033_s0.2": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 20,
+        "hold": 0.03333333333333333,
+        "shutter": 0.2
+      },
+      "glError": 0,
+      "window": [
+        0.49666666666666665,
+        0.5033333333333333
+      ],
+      "linear": {
+        "sum": 9.961740016937256,
+        "peak": 2.951171875,
+        "cx": 32.27374504117339,
+        "cy": 32.27692325071658,
+        "sigmaX": 1.368593894793379,
+        "sigmaY": 1.3654775791716602
+      },
+      "encoded": {
+        "sum": 2862,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 134.63161186170407,
+        "flatFraction": 0.08064516129032258
+      },
+      "file": "motion_v20_h0.033_s0.2.png"
+    },
+    "motion_v20_h0.033_s0.6": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 20,
+        "hold": 0.03333333333333333,
+        "shutter": 0.6
+      },
+      "glError": 0,
+      "window": [
+        0.49,
+        0.51
+      ],
+      "linear": {
+        "sum": 9.96372663974762,
+        "peak": 2.701171875,
+        "cx": 32.24716653914488,
+        "cy": 32.27690714761732,
+        "sigmaX": 1.4021442878089292,
+        "sigmaY": 1.3653621306897945
+      },
+      "encoded": {
+        "sum": 3010,
+        "peak": 255,
+        "clipped": 2
+      },
+      "hdr": {
+        "peak": 2.32968671875,
+        "sum": 152.23265375611612,
+        "flatFraction": 0.09701492537313433
+      },
+      "file": "motion_v20_h0.033_s0.6.png"
+    },
+    "motion_v20_h0.100_s0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 20,
+        "hold": 0.1,
+        "shutter": 0
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959371864795685,
+        "peak": 2.970703125,
+        "cx": 32.27689581910664,
+        "cy": 32.27688356227818,
+        "sigmaX": 1.3656569798165261,
+        "sigmaY": 1.3656594649108096
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2662109286411,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "motion_v20_h0.100_s0.png"
+    },
+    "motion_v20_h0.100_s0.2": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 20,
+        "hold": 0.1,
+        "shutter": 0.2
+      },
+      "glError": 0,
+      "window": [
+        0.49,
+        0.51
+      ],
+      "linear": {
+        "sum": 9.96372663974762,
+        "peak": 2.701171875,
+        "cx": 32.24716653914488,
+        "cy": 32.27690714761732,
+        "sigmaX": 1.4021442878089292,
+        "sigmaY": 1.3653621306897945
+      },
+      "encoded": {
+        "sum": 3010,
+        "peak": 255,
+        "clipped": 2
+      },
+      "hdr": {
+        "peak": 2.32968671875,
+        "sum": 152.23265375611612,
+        "flatFraction": 0.09701492537313433
+      },
+      "file": "motion_v20_h0.100_s0.2.png"
+    },
+    "motion_v20_h0.100_s0.6": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 20,
+        "hold": 0.1,
+        "shutter": 0.6
+      },
+      "glError": 0,
+      "window": [
+        0.47,
+        0.53
+      ],
+      "linear": {
+        "sum": 9.961384236812592,
+        "peak": 1.5029296875,
+        "cx": 32.24754617513869,
+        "cy": 32.27699928367686,
+        "sigmaX": 1.6729716775132595,
+        "sigmaY": 1.3653960455736778
+      },
+      "encoded": {
+        "sum": 3665,
+        "peak": 253,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 2.2568953613281253,
+        "sum": 218.50459808400745,
+        "flatFraction": 0.07253886010362694
+      },
+      "file": "motion_v20_h0.100_s0.6.png"
+    },
+    "motion_v100_h0.033_s0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 100,
+        "hold": 0.03333333333333333,
+        "shutter": 0
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959371864795685,
+        "peak": 2.970703125,
+        "cx": 32.27689581910664,
+        "cy": 32.27688356227818,
+        "sigmaX": 1.3656569798165261,
+        "sigmaY": 1.3656594649108096
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2662109286411,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "motion_v100_h0.033_s0.png"
+    },
+    "motion_v100_h0.033_s0.2": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 100,
+        "hold": 0.03333333333333333,
+        "shutter": 0.2
+      },
+      "glError": 0,
+      "window": [
+        0.49666666666666665,
+        0.5033333333333333
+      ],
+      "linear": {
+        "sum": 9.96054494380951,
+        "peak": 2.421875,
+        "cx": 32.2235000429118,
+        "cy": 32.27696935987408,
+        "sigmaX": 1.4418135740288403,
+        "sigmaY": 1.3655609397189548
+      },
+      "encoded": {
+        "sum": 3131,
+        "peak": 255,
+        "clipped": 2
+      },
+      "hdr": {
+        "peak": 2.3259919921875,
+        "sum": 166.581478607009,
+        "flatFraction": 0.0979020979020979
+      },
+      "file": "motion_v100_h0.033_s0.2.png"
+    },
+    "motion_v100_h0.033_s0.6": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 100,
+        "hold": 0.03333333333333333,
+        "shutter": 0.6
+      },
+      "glError": 0,
+      "window": [
+        0.49,
+        0.51
+      ],
+      "linear": {
+        "sum": 9.960728108882904,
+        "peak": 0.927734375,
+        "cx": 32.24328972716574,
+        "cy": 32.27689423642298,
+        "sigmaX": 2.100328521075394,
+        "sigmaY": 1.3654855578172493
+      },
+      "encoded": {
+        "sum": 4243,
+        "peak": 241,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 1.986413623046875,
+        "sum": 260.24454441314015,
+        "flatFraction": 0.05426356589147287
+      },
+      "file": "motion_v100_h0.033_s0.6.png"
+    },
+    "motion_v100_h0.100_s0": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 100,
+        "hold": 0.1,
+        "shutter": 0
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 9.959371864795685,
+        "peak": 2.970703125,
+        "cx": 32.27689581910664,
+        "cy": 32.27688356227818,
+        "sigmaX": 1.3656569798165261,
+        "sigmaY": 1.3656594649108096
+      },
+      "encoded": {
+        "sum": 2841,
+        "peak": 255,
+        "clipped": 3
+      },
+      "hdr": {
+        "peak": 2.3311188476562497,
+        "sum": 132.2662109286411,
+        "flatFraction": 0.08264462809917356
+      },
+      "file": "motion_v100_h0.100_s0.png"
+    },
+    "motion_v100_h0.100_s0.2": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 100,
+        "hold": 0.1,
+        "shutter": 0.2
+      },
+      "glError": 0,
+      "window": [
+        0.49,
+        0.51
+      ],
+      "linear": {
+        "sum": 9.960728108882904,
+        "peak": 0.927734375,
+        "cx": 32.24328972716574,
+        "cy": 32.27689423642298,
+        "sigmaX": 2.100328521075394,
+        "sigmaY": 1.3654855578172493
+      },
+      "encoded": {
+        "sum": 4243,
+        "peak": 241,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 1.986413623046875,
+        "sum": 260.24454441314015,
+        "flatFraction": 0.05426356589147287
+      },
+      "file": "motion_v100_h0.100_s0.2.png"
+    },
+    "motion_v100_h0.100_s0.6": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "speed": 100,
+        "hold": 0.1,
+        "shutter": 0.6
+      },
+      "glError": 0,
+      "window": [
+        0.47,
+        0.53
+      ],
+      "linear": {
+        "sum": 9.959791123867035,
+        "peak": 0.3154296875,
+        "cx": 32.242755084518976,
+        "cy": 32.27692010620358,
+        "sigmaX": 5.01890080552563,
+        "sigmaY": 1.3654795885123976
+      },
+      "encoded": {
+        "sum": 5889,
+        "peak": 159,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 0.7597971267700195,
+        "sum": 204.28041813262215,
+        "flatFraction": 0.08
+      },
+      "file": "motion_v100_h0.100_s0.6.png"
+    },
+    "energy_i1": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 1,
+        "phase": 0.25,
+        "route": "export",
+        "halo": 0
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 2.590789794921875,
+        "peak": 0.97509765625,
+        "cx": 32.28456328405677,
+        "cy": 32.284586842570235,
+        "sigmaX": 0.537125388696384,
+        "sigmaY": 0.5370909758484741
+      },
+      "encoded": {
+        "sum": 961,
+        "peak": 243,
+        "clipped": 0
+      },
+      "hdr": {
+        "peak": 1.966923095703125,
+        "sum": 62.78578059815165,
+        "flatFraction": 0.0136986301369863
+      },
+      "file": "energy_i1.png"
+    },
+    "energy_i2": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.65,
+        "I": 2,
+        "phase": 0.25,
+        "route": "export",
+        "halo": 0
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 5.18157958984375,
+        "peak": 1.9501953125,
+        "cx": 32.28456328405677,
+        "cy": 32.284586842570235,
+        "sigmaX": 0.537125388696384,
+        "sigmaY": 0.5370909758484741
+      },
+      "encoded": {
+        "sum": 1227,
+        "peak": 254,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.2796830078125,
+        "sum": 96.7766312675476,
+        "flatFraction": 0.056818181818181816
+      },
+      "file": "energy_i2.png"
+    },
+    "supersample1": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ss": 1
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.772428274154663,
+        "peak": 1.77734375,
+        "cx": 32.23057499438623,
+        "cy": 32.23057499438623,
+        "sigmaX": 0.8759882441714423,
+        "sigmaY": 0.8759882441714423
+      },
+      "encoded": {
+        "sum": 1278,
+        "peak": 254,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.1150955078125,
+        "sum": 59.9456232061266,
+        "flatFraction": 0.013888888888888888
+      },
+      "file": "supersample1.png"
+    },
+    "supersample2": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ss": 2
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.7725327014923096,
+        "peak": 1.77734375,
+        "cx": 32.23051187535427,
+        "cy": 32.23051187535427,
+        "sigmaX": 0.8764031216892129,
+        "sigmaY": 0.8764031216892125
+      },
+      "encoded": {
+        "sum": 1278,
+        "peak": 254,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.1150955078125,
+        "sum": 59.9456232061266,
+        "flatFraction": 0.013888888888888888
+      },
+      "file": "supersample2.png"
+    },
+    "supersample4": {
+      "input": {
+        "ppm": 2.794469254315687,
+        "size": 0.4,
+        "I": 3,
+        "phase": 0.25,
+        "route": "export",
+        "ss": 4
+      },
+      "glError": 0,
+      "window": [
+        0.5,
+        0.5
+      ],
+      "linear": {
+        "sum": 3.770483434200287,
+        "peak": 1.7763671875,
+        "cx": 32.230492592938326,
+        "cy": 32.230492592938326,
+        "sigmaX": 0.8766095344892214,
+        "sigmaY": 0.8766095344892214
+      },
+      "encoded": {
+        "sum": 1278,
+        "peak": 254,
+        "clipped": 1
+      },
+      "hdr": {
+        "peak": 2.1150955078125,
+        "sum": 59.9456232061266,
+        "flatFraction": 0.013888888888888888
+      },
+      "file": "supersample4.png"
+    }
+  },
+  "environment": {
+    "version": "4.3.7",
+    "output": {
+      "master": "4.3.3",
+      "emitset": "4.3",
+      "riseLoop": "4.3",
+      "trail": "4.3",
+      "unit": "4.3",
+      "loop": "4.3"
+    },
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "P": {
+      "renderVer": 40,
+      "exposure": 3.1,
+      "exposureLock": 0,
+      "haloFrac": 0.22,
+      "haloR": 3,
+      "previewBloom": 0,
+      "trimTail": 1,
+      "mods": [],
+      "duration": 2.8,
+      "seed": 7,
+      "stars": 90,
+      "burstR0": 0,
+      "v0": 150,
+      "vt": 18,
+      "grav": 1,
+      "speedJit": 3,
+      "dirJit": 1.5,
+      "burn": 2.4,
+      "burnJit": 12,
+      "fade": 0.2,
+      "lastFlare": 0.3,
+      "flash": 1,
+      "flashSize": 1,
+      "headSize": 1.4,
+      "headBright": 1,
+      "flicker": 0.2,
+      "sparkRate": 0,
+      "sparkRateEnd": 1,
+      "sparkStop": 0,
+      "sparkStart": 0,
+      "sparkRamp": 0,
+      "sparkRampJit": 30,
+      "sparkLife": 0.55,
+      "sparkLifeEnd": 1,
+      "sparkLifeJit": 45,
+      "sparkSize": 0.35,
+      "sparkSpread": 2.5,
+      "sparkInherit": 0.2,
+      "sparkDrag": 2.2,
+      "sparkGrav": 1,
+      "T0": 2050,
+      "cooling": 0.42,
+      "sparkBright": 1,
+      "twinkle": 0.6,
+      "subDelay": 0.9,
+      "subJit": 10,
+      "subStars": 36,
+      "subSpeed": 40,
+      "subBurn": 0.9,
+      "subTail": 0,
+      "carrierTail": 30,
+      "subPattern": "sphere",
+      "spin": 14,
+      "chaos": 0.8,
+      "beeSpeed": 28,
+      "shellNo": 0,
+      "wind": 0,
+      "turb": 0,
+      "turbScale": 60,
+      "massLoss": 0,
+      "shellVx": 0,
+      "shellVy": 0,
+      "shellSpin": 0,
+      "pattern": "sphere",
+      "tilt": 0,
+      "ringFrac": 0.45,
+      "text": "祭",
+      "waterRefl": 0,
+      "ignDelay": 0,
+      "ignJit": 10,
+      "ignSeed": 0,
+      "keepFrac": 1,
+      "afterBurn": 0,
+      "afterJit": 15,
+      "headDim": 1,
+      "headDimUntil": 0,
+      "emberFrac": 0,
+      "emberLife": 3,
+      "emberBright": 0.1,
+      "emberFollow": 0,
+      "emberSize": 1,
+      "emberAll": 0,
+      "emberEnd": 0,
+      "carrierHead": 0.4,
+      "subKeep": -1,
+      "subSpeedJit": -1,
+      "trimLead": 1,
+      "tailJit": 0,
+      "tailShoulder": 0,
+      "tailWidth": 1,
+      "tailPinchHead": 0,
+      "tailPinchTail": 0,
+      "tailBellyAt": 0.45,
+      "headTear": 0,
+      "tailDiffuse": 0,
+      "tailDiffuseScale": 20,
+      "sparkRise": 0,
+      "starBright": 0,
+      "tailHaze": 0,
+      "tailHazeR": 6,
+      "frameCount": 24,
+      "outPack": "grid",
+      "outCell": 0,
+      "cutIn": 0,
+      "cutOut": 0,
+      "preRoll": 1,
+      "preFrom": -1,
+      "visTo": 0,
+      "preScale0": 0,
+      "prePivot": 0,
+      "subScaleJit": 0,
+      "subVt": 0,
+      "subGrav": -1,
+      "subFlash": -1,
+      "strobeHz": 0,
+      "strobeDuty": 0.35,
+      "strobeStart": 0.4,
+      "glitter": 0,
+      "glitterDelay": 0.25,
+      "crackle": 0,
+      "crackleDelay": 0.3,
+      "crackleR": 3.5,
+      "crackleV": 0,
+      "branch": 0,
+      "branchAt": 0.45,
+      "flutter": 0,
+      "flutterHz": 0.7,
+      "riseH": 250,
+      "vtShell": 55,
+      "riseStyle": "gold",
+      "wobble": 0,
+      "wobbleHz": 1.6,
+      "kobanaN": 4,
+      "bunpoN": 3,
+      "trV": 43.5,
+      "trFps": 30,
+      "trInh": 0.1,
+      "trDrag": 3,
+      "trGrav": 0.3,
+      "trCool": 1,
+      "trFRate": 2600,
+      "trFLife": 0.6,
+      "trFSpread": 0.45,
+      "trFSize": 0.1,
+      "trFBright": 0.03,
+      "trMRate": 600,
+      "trMLife": 0.75,
+      "trMSpread": 0.8,
+      "trMSize": 0.14,
+      "trMBright": 0.05,
+      "trCRate": 60,
+      "trCLife": 0.9,
+      "trCSpread": 1.2,
+      "trCSize": 0.18,
+      "trCBright": 0.12,
+      "trWRate": 0,
+      "trWLife": 0.12,
+      "trWSpread": 14,
+      "trWSize": 0.06,
+      "trWBright": 0.06,
+      "trHeadSize": 0.26,
+      "trHeadBright": 1.2,
+      "trHeadExpo": 1,
+      "trHalo": 3,
+      "trHaloBright": 0.15,
+      "trTwist": 0.35,
+      "trTwistN": 5,
+      "trWiggle": 0.08,
+      "trTwistLag": 0.35,
+      "trFollow": 0,
+      "trBright": 1.6,
+      "trExport4K": 1,
+      "trIgnite": 0,
+      "trPhys": 0,
+      "rtH": 265,
+      "rtT": 5,
+      "rtVb": 16,
+      "rtLean": 0,
+      "rtD": 0.14,
+      "rtBurstD": 190,
+      "rtSpin": 2,
+      "rtSpinPh": 0,
+      "rtFling": 3,
+      "rtJet": 27,
+      "rtCone": 2.5,
+      "rtPulse": 0.2,
+      "rtPulseHz": 6,
+      "rtHeadSize": 0.55,
+      "rtHeadI": 3,
+      "rtHeadFl": 0.8,
+      "rtHeadFlI": 0.6,
+      "rtARate": 10000,
+      "rtALife": 0.7,
+      "rtALsig": 0.35,
+      "rtAJet": 33,
+      "rtAKd": 14,
+      "rtACone": 0.6,
+      "rtASize": 0.22,
+      "rtAI": 0.5,
+      "rtAWarm": 1.2,
+      "rtFRate": 2500,
+      "rtFLife": 0.9,
+      "rtFJit": 40,
+      "rtFSize": 0.25,
+      "rtFI": 2.6,
+      "rtFKd": 5,
+      "rtMRate": 900,
+      "rtMLife": 1.5,
+      "rtMJit": 35,
+      "rtMSize": 0.38,
+      "rtMI": 4,
+      "rtMKd": 3.6,
+      "rtCRate": 180,
+      "rtCLife": 2.4,
+      "rtCJit": 30,
+      "rtCSize": 0.55,
+      "rtCI": 6,
+      "rtCKd": 2.4,
+      "rtFdT": 0,
+      "rtMdT": 0,
+      "rtCdT": 0,
+      "rtSizeJit": 25,
+      "rtKdJit": 20,
+      "rtConeSoft": 0,
+      "rtStreakT": 0,
+      "rtStreakMax": 6,
+      "rtFStreak": 1,
+      "rtMStreak": 1,
+      "rtCStreak": 1,
+      "rtTurb": 0,
+      "rtTurbL": 30,
+      "rtTurbS": 0,
+      "rtT0": 2450,
+      "rtTb": 2150,
+      "rtTc": 0.35,
+      "rtTend": 1450,
+      "rtTw": 0.3,
+      "rtShrink": 0.5,
+      "rtERate": 10,
+      "rtELife": 3,
+      "rtESize": 0.8,
+      "rtEI": 4,
+      "rtEKd": 1,
+      "rtSmoke": 0.003,
+      "rtSmokeRate": 25,
+      "rtSmokeLife": 3.5,
+      "rtSmokeSize": 2.5,
+      "rtSmokeGrow": 4,
+      "rtBright": 1,
+      "rtDotGain": 1,
+      "rtMobile": 0.2,
+      "rtDissolve": 1,
+      "rtFadeFps": 0,
+      "rtFTex": 0,
+      "rtTexI": 10,
+      "rtGlow": 0,
+      "rtGlowSize": 4,
+      "rtPopRate": 0,
+      "rtPopI": 20,
+      "rtPopSize": 0.5,
+      "rtPopAt": 0.85,
+      "rtLaunch": 0,
+      "rtLaunchSize": 8,
+      "rtLaunchN": 0,
+      "rtLaunchV": 30,
+      "rtLaunchCone": 20,
+      "rtLaunchI": 8,
+      "rtGrid": 0,
+      "rtMobileTex": 0.5,
+      "loopT": 1,
+      "nozzles": 1,
+      "fanAngle": 70,
+      "spacing": 6,
+      "shotRate": 3,
+      "shotSpeed": 70,
+      "cometBurn": 1.4,
+      "burstStars": 0,
+      "wheelR": 3,
+      "jetSpeed": 28,
+      "jetCone": 10,
+      "jetDir": 90,
+      "groundH": 0,
+      "shutter": 0.6,
+      "fpsFloor": 24,
+      "frameBudget": "motion",
+      "pageTarget": 1,
+      "maxHold": 4,
+      "maxHoldBurn": 3,
+      "fpsBurst": 30,
+      "burstSec": 0.5,
+      "fpsActive": 15,
+      "fpsFade": 10,
+      "fadeAt": 0,
+      "maxPages": 0,
+      "fitPages": 1,
+      "qSS": 2,
+      "qHz": 300,
+      "qMaxSub": 16,
+      "texW": 2048,
+      "texH": 2048,
+      "cols": 4,
+      "rows": 4,
+      "chans": 4,
+      "outMode": "combined",
+      "encGamma": 1,
+      "frameMode": "auto",
+      "zoom": "off",
+      "engine": "gpu",
+      "form": "master",
+      "unitElev": 0,
+      "unitFlip": 0,
+      "cellPad": 2,
+      "autoGrid": 1,
+      "type": "botan"
+    },
+    "M": {
+      "stages": [
+        [
+          0,
+          "#ffc766"
+        ],
+        [
+          1.35,
+          "#dfe8ff"
+        ]
+      ],
+      "xw": 0.08,
+      "ramp0": "#000000",
+      "ramp1": "#7a1e04",
+      "ramp2": "#ffa53a",
+      "ramp3": "#fff3dc",
+      "headInt": 1,
+      "tailInt": 1
+    },
+    "plan": {
+      "Ww": 183.21904927359066,
+      "Wh": 183.21904927359066,
+      "HX": 91.60952463679533,
+      "HY": 91.60952463679533,
+      "cell": 512,
+      "t0": -0.0,
+      "duration": 2.8
+    },
+    "ppm": 2.794469254315687
+  },
+  "fixed_candidate_gains": {
+    "range1024": 3.9301342914393684,
+    "profile1024": 4.265641134155011
+  },
+  "real_template": [
+    {
+      "size": 0.4,
+      "px": 512,
+      "P": {
+        "renderVer": 40,
+        "exposure": 3.1,
+        "exposureLock": 0,
+        "haloFrac": 0.22,
+        "haloR": 3,
+        "previewBloom": 0,
+        "trimTail": 1,
+        "mods": [],
+        "duration": 2.8,
+        "seed": 7,
+        "stars": 90,
+        "burstR0": 0,
+        "v0": 150,
+        "vt": 18,
+        "grav": 1,
+        "speedJit": 3,
+        "dirJit": 1.5,
+        "burn": 2.4,
+        "burnJit": 12,
+        "fade": 0.2,
+        "lastFlare": 0.3,
+        "flash": 1,
+        "flashSize": 1,
+        "headSize": 0.4,
+        "headBright": 3,
+        "flicker": 0.2,
+        "sparkRate": 0,
+        "sparkRateEnd": 1,
+        "sparkStop": 0,
+        "sparkStart": 0,
+        "sparkRamp": 0,
+        "sparkRampJit": 30,
+        "sparkLife": 0.55,
+        "sparkLifeEnd": 1,
+        "sparkLifeJit": 45,
+        "sparkSize": 0.35,
+        "sparkSpread": 2.5,
+        "sparkInherit": 0.2,
+        "sparkDrag": 2.2,
+        "sparkGrav": 1,
+        "T0": 2050,
+        "cooling": 0.42,
+        "sparkBright": 1,
+        "twinkle": 0.6,
+        "subDelay": 0.9,
+        "subJit": 10,
+        "subStars": 36,
+        "subSpeed": 40,
+        "subBurn": 0.9,
+        "subTail": 0,
+        "carrierTail": 30,
+        "subPattern": "sphere",
+        "spin": 14,
+        "chaos": 0.8,
+        "beeSpeed": 28,
+        "shellNo": 0,
+        "wind": 0,
+        "turb": 0,
+        "turbScale": 60,
+        "massLoss": 0,
+        "shellVx": 0,
+        "shellVy": 0,
+        "shellSpin": 0,
+        "pattern": "sphere",
+        "tilt": 0,
+        "ringFrac": 0.45,
+        "text": "祭",
+        "waterRefl": 0,
+        "ignDelay": 0,
+        "ignJit": 10,
+        "ignSeed": 0,
+        "keepFrac": 1,
+        "afterBurn": 0,
+        "afterJit": 15,
+        "headDim": 1,
+        "headDimUntil": 0,
+        "emberFrac": 0,
+        "emberLife": 3,
+        "emberBright": 0.1,
+        "emberFollow": 0,
+        "emberSize": 1,
+        "emberAll": 0,
+        "emberEnd": 0,
+        "carrierHead": 0.4,
+        "subKeep": -1,
+        "subSpeedJit": -1,
+        "trimLead": 1,
+        "tailJit": 0,
+        "tailShoulder": 0,
+        "tailWidth": 1,
+        "tailPinchHead": 0,
+        "tailPinchTail": 0,
+        "tailBellyAt": 0.45,
+        "headTear": 0,
+        "tailDiffuse": 0,
+        "tailDiffuseScale": 20,
+        "sparkRise": 0,
+        "starBright": 0,
+        "tailHaze": 0,
+        "tailHazeR": 6,
+        "frameCount": 24,
+        "outPack": "grid",
+        "outCell": 0,
+        "cutIn": 0,
+        "cutOut": 0,
+        "preRoll": 1,
+        "preFrom": -1,
+        "visTo": 0,
+        "preScale0": 0,
+        "prePivot": 0,
+        "subScaleJit": 0,
+        "subVt": 0,
+        "subGrav": -1,
+        "subFlash": -1,
+        "strobeHz": 0,
+        "strobeDuty": 0.35,
+        "strobeStart": 0.4,
+        "glitter": 0,
+        "glitterDelay": 0.25,
+        "crackle": 0,
+        "crackleDelay": 0.3,
+        "crackleR": 3.5,
+        "crackleV": 0,
+        "branch": 0,
+        "branchAt": 0.45,
+        "flutter": 0,
+        "flutterHz": 0.7,
+        "riseH": 250,
+        "vtShell": 55,
+        "riseStyle": "gold",
+        "wobble": 0,
+        "wobbleHz": 1.6,
+        "kobanaN": 4,
+        "bunpoN": 3,
+        "trV": 43.5,
+        "trFps": 30,
+        "trInh": 0.1,
+        "trDrag": 3,
+        "trGrav": 0.3,
+        "trCool": 1,
+        "trFRate": 2600,
+        "trFLife": 0.6,
+        "trFSpread": 0.45,
+        "trFSize": 0.1,
+        "trFBright": 0.03,
+        "trMRate": 600,
+        "trMLife": 0.75,
+        "trMSpread": 0.8,
+        "trMSize": 0.14,
+        "trMBright": 0.05,
+        "trCRate": 60,
+        "trCLife": 0.9,
+        "trCSpread": 1.2,
+        "trCSize": 0.18,
+        "trCBright": 0.12,
+        "trWRate": 0,
+        "trWLife": 0.12,
+        "trWSpread": 14,
+        "trWSize": 0.06,
+        "trWBright": 0.06,
+        "trHeadSize": 0.26,
+        "trHeadBright": 1.2,
+        "trHeadExpo": 1,
+        "trHalo": 3,
+        "trHaloBright": 0.15,
+        "trTwist": 0.35,
+        "trTwistN": 5,
+        "trWiggle": 0.08,
+        "trTwistLag": 0.35,
+        "trFollow": 0,
+        "trBright": 1.6,
+        "trExport4K": 1,
+        "trIgnite": 0,
+        "trPhys": 0,
+        "rtH": 265,
+        "rtT": 5,
+        "rtVb": 16,
+        "rtLean": 0,
+        "rtD": 0.14,
+        "rtBurstD": 190,
+        "rtSpin": 2,
+        "rtSpinPh": 0,
+        "rtFling": 3,
+        "rtJet": 27,
+        "rtCone": 2.5,
+        "rtPulse": 0.2,
+        "rtPulseHz": 6,
+        "rtHeadSize": 0.55,
+        "rtHeadI": 3,
+        "rtHeadFl": 0.8,
+        "rtHeadFlI": 0.6,
+        "rtARate": 10000,
+        "rtALife": 0.7,
+        "rtALsig": 0.35,
+        "rtAJet": 33,
+        "rtAKd": 14,
+        "rtACone": 0.6,
+        "rtASize": 0.22,
+        "rtAI": 0.5,
+        "rtAWarm": 1.2,
+        "rtFRate": 2500,
+        "rtFLife": 0.9,
+        "rtFJit": 40,
+        "rtFSize": 0.25,
+        "rtFI": 2.6,
+        "rtFKd": 5,
+        "rtMRate": 900,
+        "rtMLife": 1.5,
+        "rtMJit": 35,
+        "rtMSize": 0.38,
+        "rtMI": 4,
+        "rtMKd": 3.6,
+        "rtCRate": 180,
+        "rtCLife": 2.4,
+        "rtCJit": 30,
+        "rtCSize": 0.55,
+        "rtCI": 6,
+        "rtCKd": 2.4,
+        "rtFdT": 0,
+        "rtMdT": 0,
+        "rtCdT": 0,
+        "rtSizeJit": 25,
+        "rtKdJit": 20,
+        "rtConeSoft": 0,
+        "rtStreakT": 0,
+        "rtStreakMax": 6,
+        "rtFStreak": 1,
+        "rtMStreak": 1,
+        "rtCStreak": 1,
+        "rtTurb": 0,
+        "rtTurbL": 30,
+        "rtTurbS": 0,
+        "rtT0": 2450,
+        "rtTb": 2150,
+        "rtTc": 0.35,
+        "rtTend": 1450,
+        "rtTw": 0.3,
+        "rtShrink": 0.5,
+        "rtERate": 10,
+        "rtELife": 3,
+        "rtESize": 0.8,
+        "rtEI": 4,
+        "rtEKd": 1,
+        "rtSmoke": 0.003,
+        "rtSmokeRate": 25,
+        "rtSmokeLife": 3.5,
+        "rtSmokeSize": 2.5,
+        "rtSmokeGrow": 4,
+        "rtBright": 1,
+        "rtDotGain": 1,
+        "rtMobile": 0.2,
+        "rtDissolve": 1,
+        "rtFadeFps": 0,
+        "rtFTex": 0,
+        "rtTexI": 10,
+        "rtGlow": 0,
+        "rtGlowSize": 4,
+        "rtPopRate": 0,
+        "rtPopI": 20,
+        "rtPopSize": 0.5,
+        "rtPopAt": 0.85,
+        "rtLaunch": 0,
+        "rtLaunchSize": 8,
+        "rtLaunchN": 0,
+        "rtLaunchV": 30,
+        "rtLaunchCone": 20,
+        "rtLaunchI": 8,
+        "rtGrid": 0,
+        "rtMobileTex": 0.5,
+        "loopT": 1,
+        "nozzles": 1,
+        "fanAngle": 70,
+        "spacing": 6,
+        "shotRate": 3,
+        "shotSpeed": 70,
+        "cometBurn": 1.4,
+        "burstStars": 0,
+        "wheelR": 3,
+        "jetSpeed": 28,
+        "jetCone": 10,
+        "jetDir": 90,
+        "groundH": 0,
+        "shutter": 0.6,
+        "fpsFloor": 24,
+        "frameBudget": "motion",
+        "pageTarget": 1,
+        "maxHold": 4,
+        "maxHoldBurn": 3,
+        "fpsBurst": 30,
+        "burstSec": 0.5,
+        "fpsActive": 15,
+        "fpsFade": 10,
+        "fadeAt": 0,
+        "maxPages": 0,
+        "fitPages": 1,
+        "qSS": 2,
+        "qHz": 300,
+        "qMaxSub": 16,
+        "texW": 2048,
+        "texH": 2048,
+        "cols": 4,
+        "rows": 4,
+        "chans": 4,
+        "outMode": "combined",
+        "encGamma": 1,
+        "frameMode": "auto",
+        "zoom": "off",
+        "engine": "gpu",
+        "form": "master",
+        "unitElev": 0,
+        "unitFlip": 0,
+        "cellPad": 2,
+        "autoGrid": 1,
+        "type": "botan"
+      },
+      "M": {
+        "stages": [
+          [
+            0,
+            "#ffc766"
+          ],
+          [
+            1.35,
+            "#dfe8ff"
+          ]
+        ],
+        "xw": 0.08,
+        "ramp0": "#000000",
+        "ramp1": "#7a1e04",
+        "ramp2": "#ffa53a",
+        "ramp3": "#fff3dc",
+        "headInt": 1,
+        "tailInt": 1
+      },
+      "plan": {
+        "Ww": 183.21904927359066,
+        "HX": 91.60952463679533
+      },
+      "t": 0.8,
+      "shutter": [
+        0.79,
+        0.81
+      ],
+      "exposure": 3.1,
+      "linear": {
+        "headSum": 313.56950956583023,
+        "headPeak": 2.091796875,
+        "headHalfPixels": 80
+      },
+      "file": "botan_s0.4_512.png"
+    },
+    {
+      "size": 0.4,
+      "px": 1024,
+      "P": {
+        "renderVer": 40,
+        "exposure": 3.1,
+        "exposureLock": 0,
+        "haloFrac": 0.22,
+        "haloR": 3,
+        "previewBloom": 0,
+        "trimTail": 1,
+        "mods": [],
+        "duration": 2.8,
+        "seed": 7,
+        "stars": 90,
+        "burstR0": 0,
+        "v0": 150,
+        "vt": 18,
+        "grav": 1,
+        "speedJit": 3,
+        "dirJit": 1.5,
+        "burn": 2.4,
+        "burnJit": 12,
+        "fade": 0.2,
+        "lastFlare": 0.3,
+        "flash": 1,
+        "flashSize": 1,
+        "headSize": 0.4,
+        "headBright": 3,
+        "flicker": 0.2,
+        "sparkRate": 0,
+        "sparkRateEnd": 1,
+        "sparkStop": 0,
+        "sparkStart": 0,
+        "sparkRamp": 0,
+        "sparkRampJit": 30,
+        "sparkLife": 0.55,
+        "sparkLifeEnd": 1,
+        "sparkLifeJit": 45,
+        "sparkSize": 0.35,
+        "sparkSpread": 2.5,
+        "sparkInherit": 0.2,
+        "sparkDrag": 2.2,
+        "sparkGrav": 1,
+        "T0": 2050,
+        "cooling": 0.42,
+        "sparkBright": 1,
+        "twinkle": 0.6,
+        "subDelay": 0.9,
+        "subJit": 10,
+        "subStars": 36,
+        "subSpeed": 40,
+        "subBurn": 0.9,
+        "subTail": 0,
+        "carrierTail": 30,
+        "subPattern": "sphere",
+        "spin": 14,
+        "chaos": 0.8,
+        "beeSpeed": 28,
+        "shellNo": 0,
+        "wind": 0,
+        "turb": 0,
+        "turbScale": 60,
+        "massLoss": 0,
+        "shellVx": 0,
+        "shellVy": 0,
+        "shellSpin": 0,
+        "pattern": "sphere",
+        "tilt": 0,
+        "ringFrac": 0.45,
+        "text": "祭",
+        "waterRefl": 0,
+        "ignDelay": 0,
+        "ignJit": 10,
+        "ignSeed": 0,
+        "keepFrac": 1,
+        "afterBurn": 0,
+        "afterJit": 15,
+        "headDim": 1,
+        "headDimUntil": 0,
+        "emberFrac": 0,
+        "emberLife": 3,
+        "emberBright": 0.1,
+        "emberFollow": 0,
+        "emberSize": 1,
+        "emberAll": 0,
+        "emberEnd": 0,
+        "carrierHead": 0.4,
+        "subKeep": -1,
+        "subSpeedJit": -1,
+        "trimLead": 1,
+        "tailJit": 0,
+        "tailShoulder": 0,
+        "tailWidth": 1,
+        "tailPinchHead": 0,
+        "tailPinchTail": 0,
+        "tailBellyAt": 0.45,
+        "headTear": 0,
+        "tailDiffuse": 0,
+        "tailDiffuseScale": 20,
+        "sparkRise": 0,
+        "starBright": 0,
+        "tailHaze": 0,
+        "tailHazeR": 6,
+        "frameCount": 24,
+        "outPack": "grid",
+        "outCell": 0,
+        "cutIn": 0,
+        "cutOut": 0,
+        "preRoll": 1,
+        "preFrom": -1,
+        "visTo": 0,
+        "preScale0": 0,
+        "prePivot": 0,
+        "subScaleJit": 0,
+        "subVt": 0,
+        "subGrav": -1,
+        "subFlash": -1,
+        "strobeHz": 0,
+        "strobeDuty": 0.35,
+        "strobeStart": 0.4,
+        "glitter": 0,
+        "glitterDelay": 0.25,
+        "crackle": 0,
+        "crackleDelay": 0.3,
+        "crackleR": 3.5,
+        "crackleV": 0,
+        "branch": 0,
+        "branchAt": 0.45,
+        "flutter": 0,
+        "flutterHz": 0.7,
+        "riseH": 250,
+        "vtShell": 55,
+        "riseStyle": "gold",
+        "wobble": 0,
+        "wobbleHz": 1.6,
+        "kobanaN": 4,
+        "bunpoN": 3,
+        "trV": 43.5,
+        "trFps": 30,
+        "trInh": 0.1,
+        "trDrag": 3,
+        "trGrav": 0.3,
+        "trCool": 1,
+        "trFRate": 2600,
+        "trFLife": 0.6,
+        "trFSpread": 0.45,
+        "trFSize": 0.1,
+        "trFBright": 0.03,
+        "trMRate": 600,
+        "trMLife": 0.75,
+        "trMSpread": 0.8,
+        "trMSize": 0.14,
+        "trMBright": 0.05,
+        "trCRate": 60,
+        "trCLife": 0.9,
+        "trCSpread": 1.2,
+        "trCSize": 0.18,
+        "trCBright": 0.12,
+        "trWRate": 0,
+        "trWLife": 0.12,
+        "trWSpread": 14,
+        "trWSize": 0.06,
+        "trWBright": 0.06,
+        "trHeadSize": 0.26,
+        "trHeadBright": 1.2,
+        "trHeadExpo": 1,
+        "trHalo": 3,
+        "trHaloBright": 0.15,
+        "trTwist": 0.35,
+        "trTwistN": 5,
+        "trWiggle": 0.08,
+        "trTwistLag": 0.35,
+        "trFollow": 0,
+        "trBright": 1.6,
+        "trExport4K": 1,
+        "trIgnite": 0,
+        "trPhys": 0,
+        "rtH": 265,
+        "rtT": 5,
+        "rtVb": 16,
+        "rtLean": 0,
+        "rtD": 0.14,
+        "rtBurstD": 190,
+        "rtSpin": 2,
+        "rtSpinPh": 0,
+        "rtFling": 3,
+        "rtJet": 27,
+        "rtCone": 2.5,
+        "rtPulse": 0.2,
+        "rtPulseHz": 6,
+        "rtHeadSize": 0.55,
+        "rtHeadI": 3,
+        "rtHeadFl": 0.8,
+        "rtHeadFlI": 0.6,
+        "rtARate": 10000,
+        "rtALife": 0.7,
+        "rtALsig": 0.35,
+        "rtAJet": 33,
+        "rtAKd": 14,
+        "rtACone": 0.6,
+        "rtASize": 0.22,
+        "rtAI": 0.5,
+        "rtAWarm": 1.2,
+        "rtFRate": 2500,
+        "rtFLife": 0.9,
+        "rtFJit": 40,
+        "rtFSize": 0.25,
+        "rtFI": 2.6,
+        "rtFKd": 5,
+        "rtMRate": 900,
+        "rtMLife": 1.5,
+        "rtMJit": 35,
+        "rtMSize": 0.38,
+        "rtMI": 4,
+        "rtMKd": 3.6,
+        "rtCRate": 180,
+        "rtCLife": 2.4,
+        "rtCJit": 30,
+        "rtCSize": 0.55,
+        "rtCI": 6,
+        "rtCKd": 2.4,
+        "rtFdT": 0,
+        "rtMdT": 0,
+        "rtCdT": 0,
+        "rtSizeJit": 25,
+        "rtKdJit": 20,
+        "rtConeSoft": 0,
+        "rtStreakT": 0,
+        "rtStreakMax": 6,
+        "rtFStreak": 1,
+        "rtMStreak": 1,
+        "rtCStreak": 1,
+        "rtTurb": 0,
+        "rtTurbL": 30,
+        "rtTurbS": 0,
+        "rtT0": 2450,
+        "rtTb": 2150,
+        "rtTc": 0.35,
+        "rtTend": 1450,
+        "rtTw": 0.3,
+        "rtShrink": 0.5,
+        "rtERate": 10,
+        "rtELife": 3,
+        "rtESize": 0.8,
+        "rtEI": 4,
+        "rtEKd": 1,
+        "rtSmoke": 0.003,
+        "rtSmokeRate": 25,
+        "rtSmokeLife": 3.5,
+        "rtSmokeSize": 2.5,
+        "rtSmokeGrow": 4,
+        "rtBright": 1,
+        "rtDotGain": 1,
+        "rtMobile": 0.2,
+        "rtDissolve": 1,
+        "rtFadeFps": 0,
+        "rtFTex": 0,
+        "rtTexI": 10,
+        "rtGlow": 0,
+        "rtGlowSize": 4,
+        "rtPopRate": 0,
+        "rtPopI": 20,
+        "rtPopSize": 0.5,
+        "rtPopAt": 0.85,
+        "rtLaunch": 0,
+        "rtLaunchSize": 8,
+        "rtLaunchN": 0,
+        "rtLaunchV": 30,
+        "rtLaunchCone": 20,
+        "rtLaunchI": 8,
+        "rtGrid": 0,
+        "rtMobileTex": 0.5,
+        "loopT": 1,
+        "nozzles": 1,
+        "fanAngle": 70,
+        "spacing": 6,
+        "shotRate": 3,
+        "shotSpeed": 70,
+        "cometBurn": 1.4,
+        "burstStars": 0,
+        "wheelR": 3,
+        "jetSpeed": 28,
+        "jetCone": 10,
+        "jetDir": 90,
+        "groundH": 0,
+        "shutter": 0.6,
+        "fpsFloor": 24,
+        "frameBudget": "motion",
+        "pageTarget": 1,
+        "maxHold": 4,
+        "maxHoldBurn": 3,
+        "fpsBurst": 30,
+        "burstSec": 0.5,
+        "fpsActive": 15,
+        "fpsFade": 10,
+        "fadeAt": 0,
+        "maxPages": 0,
+        "fitPages": 1,
+        "qSS": 2,
+        "qHz": 300,
+        "qMaxSub": 16,
+        "texW": 2048,
+        "texH": 2048,
+        "cols": 4,
+        "rows": 4,
+        "chans": 4,
+        "outMode": "combined",
+        "encGamma": 1,
+        "frameMode": "auto",
+        "zoom": "off",
+        "engine": "gpu",
+        "form": "master",
+        "unitElev": 0,
+        "unitFlip": 0,
+        "cellPad": 2,
+        "autoGrid": 1,
+        "type": "botan"
+      },
+      "M": {
+        "stages": [
+          [
+            0,
+            "#ffc766"
+          ],
+          [
+            1.35,
+            "#dfe8ff"
+          ]
+        ],
+        "xw": 0.08,
+        "ramp0": "#000000",
+        "ramp1": "#7a1e04",
+        "ramp2": "#ffa53a",
+        "ramp3": "#fff3dc",
+        "headInt": 1,
+        "tailInt": 1
+      },
+      "plan": {
+        "Ww": 183.21904927359066,
+        "HX": 91.60952463679533
+      },
+      "t": 0.8,
+      "shutter": [
+        0.79,
+        0.81
+      ],
+      "exposure": 3.1,
+      "linear": {
+        "headSum": 1254.3390951752663,
+        "headPeak": 3.00390625,
+        "headHalfPixels": 193
+      },
+      "file": "botan_s0.4_1024.png"
+    },
+    {
+      "size": 0.65,
+      "px": 512,
+      "P": {
+        "renderVer": 40,
+        "exposure": 3.1,
+        "exposureLock": 0,
+        "haloFrac": 0.22,
+        "haloR": 3,
+        "previewBloom": 0,
+        "trimTail": 1,
+        "mods": [],
+        "duration": 2.8,
+        "seed": 7,
+        "stars": 90,
+        "burstR0": 0,
+        "v0": 150,
+        "vt": 18,
+        "grav": 1,
+        "speedJit": 3,
+        "dirJit": 1.5,
+        "burn": 2.4,
+        "burnJit": 12,
+        "fade": 0.2,
+        "lastFlare": 0.3,
+        "flash": 1,
+        "flashSize": 1,
+        "headSize": 0.65,
+        "headBright": 3,
+        "flicker": 0.2,
+        "sparkRate": 0,
+        "sparkRateEnd": 1,
+        "sparkStop": 0,
+        "sparkStart": 0,
+        "sparkRamp": 0,
+        "sparkRampJit": 30,
+        "sparkLife": 0.55,
+        "sparkLifeEnd": 1,
+        "sparkLifeJit": 45,
+        "sparkSize": 0.35,
+        "sparkSpread": 2.5,
+        "sparkInherit": 0.2,
+        "sparkDrag": 2.2,
+        "sparkGrav": 1,
+        "T0": 2050,
+        "cooling": 0.42,
+        "sparkBright": 1,
+        "twinkle": 0.6,
+        "subDelay": 0.9,
+        "subJit": 10,
+        "subStars": 36,
+        "subSpeed": 40,
+        "subBurn": 0.9,
+        "subTail": 0,
+        "carrierTail": 30,
+        "subPattern": "sphere",
+        "spin": 14,
+        "chaos": 0.8,
+        "beeSpeed": 28,
+        "shellNo": 0,
+        "wind": 0,
+        "turb": 0,
+        "turbScale": 60,
+        "massLoss": 0,
+        "shellVx": 0,
+        "shellVy": 0,
+        "shellSpin": 0,
+        "pattern": "sphere",
+        "tilt": 0,
+        "ringFrac": 0.45,
+        "text": "祭",
+        "waterRefl": 0,
+        "ignDelay": 0,
+        "ignJit": 10,
+        "ignSeed": 0,
+        "keepFrac": 1,
+        "afterBurn": 0,
+        "afterJit": 15,
+        "headDim": 1,
+        "headDimUntil": 0,
+        "emberFrac": 0,
+        "emberLife": 3,
+        "emberBright": 0.1,
+        "emberFollow": 0,
+        "emberSize": 1,
+        "emberAll": 0,
+        "emberEnd": 0,
+        "carrierHead": 0.4,
+        "subKeep": -1,
+        "subSpeedJit": -1,
+        "trimLead": 1,
+        "tailJit": 0,
+        "tailShoulder": 0,
+        "tailWidth": 1,
+        "tailPinchHead": 0,
+        "tailPinchTail": 0,
+        "tailBellyAt": 0.45,
+        "headTear": 0,
+        "tailDiffuse": 0,
+        "tailDiffuseScale": 20,
+        "sparkRise": 0,
+        "starBright": 0,
+        "tailHaze": 0,
+        "tailHazeR": 6,
+        "frameCount": 24,
+        "outPack": "grid",
+        "outCell": 0,
+        "cutIn": 0,
+        "cutOut": 0,
+        "preRoll": 1,
+        "preFrom": -1,
+        "visTo": 0,
+        "preScale0": 0,
+        "prePivot": 0,
+        "subScaleJit": 0,
+        "subVt": 0,
+        "subGrav": -1,
+        "subFlash": -1,
+        "strobeHz": 0,
+        "strobeDuty": 0.35,
+        "strobeStart": 0.4,
+        "glitter": 0,
+        "glitterDelay": 0.25,
+        "crackle": 0,
+        "crackleDelay": 0.3,
+        "crackleR": 3.5,
+        "crackleV": 0,
+        "branch": 0,
+        "branchAt": 0.45,
+        "flutter": 0,
+        "flutterHz": 0.7,
+        "riseH": 250,
+        "vtShell": 55,
+        "riseStyle": "gold",
+        "wobble": 0,
+        "wobbleHz": 1.6,
+        "kobanaN": 4,
+        "bunpoN": 3,
+        "trV": 43.5,
+        "trFps": 30,
+        "trInh": 0.1,
+        "trDrag": 3,
+        "trGrav": 0.3,
+        "trCool": 1,
+        "trFRate": 2600,
+        "trFLife": 0.6,
+        "trFSpread": 0.45,
+        "trFSize": 0.1,
+        "trFBright": 0.03,
+        "trMRate": 600,
+        "trMLife": 0.75,
+        "trMSpread": 0.8,
+        "trMSize": 0.14,
+        "trMBright": 0.05,
+        "trCRate": 60,
+        "trCLife": 0.9,
+        "trCSpread": 1.2,
+        "trCSize": 0.18,
+        "trCBright": 0.12,
+        "trWRate": 0,
+        "trWLife": 0.12,
+        "trWSpread": 14,
+        "trWSize": 0.06,
+        "trWBright": 0.06,
+        "trHeadSize": 0.26,
+        "trHeadBright": 1.2,
+        "trHeadExpo": 1,
+        "trHalo": 3,
+        "trHaloBright": 0.15,
+        "trTwist": 0.35,
+        "trTwistN": 5,
+        "trWiggle": 0.08,
+        "trTwistLag": 0.35,
+        "trFollow": 0,
+        "trBright": 1.6,
+        "trExport4K": 1,
+        "trIgnite": 0,
+        "trPhys": 0,
+        "rtH": 265,
+        "rtT": 5,
+        "rtVb": 16,
+        "rtLean": 0,
+        "rtD": 0.14,
+        "rtBurstD": 190,
+        "rtSpin": 2,
+        "rtSpinPh": 0,
+        "rtFling": 3,
+        "rtJet": 27,
+        "rtCone": 2.5,
+        "rtPulse": 0.2,
+        "rtPulseHz": 6,
+        "rtHeadSize": 0.55,
+        "rtHeadI": 3,
+        "rtHeadFl": 0.8,
+        "rtHeadFlI": 0.6,
+        "rtARate": 10000,
+        "rtALife": 0.7,
+        "rtALsig": 0.35,
+        "rtAJet": 33,
+        "rtAKd": 14,
+        "rtACone": 0.6,
+        "rtASize": 0.22,
+        "rtAI": 0.5,
+        "rtAWarm": 1.2,
+        "rtFRate": 2500,
+        "rtFLife": 0.9,
+        "rtFJit": 40,
+        "rtFSize": 0.25,
+        "rtFI": 2.6,
+        "rtFKd": 5,
+        "rtMRate": 900,
+        "rtMLife": 1.5,
+        "rtMJit": 35,
+        "rtMSize": 0.38,
+        "rtMI": 4,
+        "rtMKd": 3.6,
+        "rtCRate": 180,
+        "rtCLife": 2.4,
+        "rtCJit": 30,
+        "rtCSize": 0.55,
+        "rtCI": 6,
+        "rtCKd": 2.4,
+        "rtFdT": 0,
+        "rtMdT": 0,
+        "rtCdT": 0,
+        "rtSizeJit": 25,
+        "rtKdJit": 20,
+        "rtConeSoft": 0,
+        "rtStreakT": 0,
+        "rtStreakMax": 6,
+        "rtFStreak": 1,
+        "rtMStreak": 1,
+        "rtCStreak": 1,
+        "rtTurb": 0,
+        "rtTurbL": 30,
+        "rtTurbS": 0,
+        "rtT0": 2450,
+        "rtTb": 2150,
+        "rtTc": 0.35,
+        "rtTend": 1450,
+        "rtTw": 0.3,
+        "rtShrink": 0.5,
+        "rtERate": 10,
+        "rtELife": 3,
+        "rtESize": 0.8,
+        "rtEI": 4,
+        "rtEKd": 1,
+        "rtSmoke": 0.003,
+        "rtSmokeRate": 25,
+        "rtSmokeLife": 3.5,
+        "rtSmokeSize": 2.5,
+        "rtSmokeGrow": 4,
+        "rtBright": 1,
+        "rtDotGain": 1,
+        "rtMobile": 0.2,
+        "rtDissolve": 1,
+        "rtFadeFps": 0,
+        "rtFTex": 0,
+        "rtTexI": 10,
+        "rtGlow": 0,
+        "rtGlowSize": 4,
+        "rtPopRate": 0,
+        "rtPopI": 20,
+        "rtPopSize": 0.5,
+        "rtPopAt": 0.85,
+        "rtLaunch": 0,
+        "rtLaunchSize": 8,
+        "rtLaunchN": 0,
+        "rtLaunchV": 30,
+        "rtLaunchCone": 20,
+        "rtLaunchI": 8,
+        "rtGrid": 0,
+        "rtMobileTex": 0.5,
+        "loopT": 1,
+        "nozzles": 1,
+        "fanAngle": 70,
+        "spacing": 6,
+        "shotRate": 3,
+        "shotSpeed": 70,
+        "cometBurn": 1.4,
+        "burstStars": 0,
+        "wheelR": 3,
+        "jetSpeed": 28,
+        "jetCone": 10,
+        "jetDir": 90,
+        "groundH": 0,
+        "shutter": 0.6,
+        "fpsFloor": 24,
+        "frameBudget": "motion",
+        "pageTarget": 1,
+        "maxHold": 4,
+        "maxHoldBurn": 3,
+        "fpsBurst": 30,
+        "burstSec": 0.5,
+        "fpsActive": 15,
+        "fpsFade": 10,
+        "fadeAt": 0,
+        "maxPages": 0,
+        "fitPages": 1,
+        "qSS": 2,
+        "qHz": 300,
+        "qMaxSub": 16,
+        "texW": 2048,
+        "texH": 2048,
+        "cols": 4,
+        "rows": 4,
+        "chans": 4,
+        "outMode": "combined",
+        "encGamma": 1,
+        "frameMode": "auto",
+        "zoom": "off",
+        "engine": "gpu",
+        "form": "master",
+        "unitElev": 0,
+        "unitFlip": 0,
+        "cellPad": 2,
+        "autoGrid": 1,
+        "type": "botan"
+      },
+      "M": {
+        "stages": [
+          [
+            0,
+            "#ffc766"
+          ],
+          [
+            1.35,
+            "#dfe8ff"
+          ]
+        ],
+        "xw": 0.08,
+        "ramp0": "#000000",
+        "ramp1": "#7a1e04",
+        "ramp2": "#ffa53a",
+        "ramp3": "#fff3dc",
+        "headInt": 1,
+        "tailInt": 1
+      },
+      "plan": {
+        "Ww": 183.21904927359066,
+        "HX": 91.60952463679533
+      },
+      "t": 0.8,
+      "shutter": [
+        0.79,
+        0.81
+      ],
+      "exposure": 3.1,
+      "linear": {
+        "headSum": 828.0403587222099,
+        "headPeak": 3.04296875,
+        "headHalfPixels": 166
+      },
+      "file": "botan_s0.65_512.png"
+    },
+    {
+      "size": 0.65,
+      "px": 1024,
+      "P": {
+        "renderVer": 40,
+        "exposure": 3.1,
+        "exposureLock": 0,
+        "haloFrac": 0.22,
+        "haloR": 3,
+        "previewBloom": 0,
+        "trimTail": 1,
+        "mods": [],
+        "duration": 2.8,
+        "seed": 7,
+        "stars": 90,
+        "burstR0": 0,
+        "v0": 150,
+        "vt": 18,
+        "grav": 1,
+        "speedJit": 3,
+        "dirJit": 1.5,
+        "burn": 2.4,
+        "burnJit": 12,
+        "fade": 0.2,
+        "lastFlare": 0.3,
+        "flash": 1,
+        "flashSize": 1,
+        "headSize": 0.65,
+        "headBright": 3,
+        "flicker": 0.2,
+        "sparkRate": 0,
+        "sparkRateEnd": 1,
+        "sparkStop": 0,
+        "sparkStart": 0,
+        "sparkRamp": 0,
+        "sparkRampJit": 30,
+        "sparkLife": 0.55,
+        "sparkLifeEnd": 1,
+        "sparkLifeJit": 45,
+        "sparkSize": 0.35,
+        "sparkSpread": 2.5,
+        "sparkInherit": 0.2,
+        "sparkDrag": 2.2,
+        "sparkGrav": 1,
+        "T0": 2050,
+        "cooling": 0.42,
+        "sparkBright": 1,
+        "twinkle": 0.6,
+        "subDelay": 0.9,
+        "subJit": 10,
+        "subStars": 36,
+        "subSpeed": 40,
+        "subBurn": 0.9,
+        "subTail": 0,
+        "carrierTail": 30,
+        "subPattern": "sphere",
+        "spin": 14,
+        "chaos": 0.8,
+        "beeSpeed": 28,
+        "shellNo": 0,
+        "wind": 0,
+        "turb": 0,
+        "turbScale": 60,
+        "massLoss": 0,
+        "shellVx": 0,
+        "shellVy": 0,
+        "shellSpin": 0,
+        "pattern": "sphere",
+        "tilt": 0,
+        "ringFrac": 0.45,
+        "text": "祭",
+        "waterRefl": 0,
+        "ignDelay": 0,
+        "ignJit": 10,
+        "ignSeed": 0,
+        "keepFrac": 1,
+        "afterBurn": 0,
+        "afterJit": 15,
+        "headDim": 1,
+        "headDimUntil": 0,
+        "emberFrac": 0,
+        "emberLife": 3,
+        "emberBright": 0.1,
+        "emberFollow": 0,
+        "emberSize": 1,
+        "emberAll": 0,
+        "emberEnd": 0,
+        "carrierHead": 0.4,
+        "subKeep": -1,
+        "subSpeedJit": -1,
+        "trimLead": 1,
+        "tailJit": 0,
+        "tailShoulder": 0,
+        "tailWidth": 1,
+        "tailPinchHead": 0,
+        "tailPinchTail": 0,
+        "tailBellyAt": 0.45,
+        "headTear": 0,
+        "tailDiffuse": 0,
+        "tailDiffuseScale": 20,
+        "sparkRise": 0,
+        "starBright": 0,
+        "tailHaze": 0,
+        "tailHazeR": 6,
+        "frameCount": 24,
+        "outPack": "grid",
+        "outCell": 0,
+        "cutIn": 0,
+        "cutOut": 0,
+        "preRoll": 1,
+        "preFrom": -1,
+        "visTo": 0,
+        "preScale0": 0,
+        "prePivot": 0,
+        "subScaleJit": 0,
+        "subVt": 0,
+        "subGrav": -1,
+        "subFlash": -1,
+        "strobeHz": 0,
+        "strobeDuty": 0.35,
+        "strobeStart": 0.4,
+        "glitter": 0,
+        "glitterDelay": 0.25,
+        "crackle": 0,
+        "crackleDelay": 0.3,
+        "crackleR": 3.5,
+        "crackleV": 0,
+        "branch": 0,
+        "branchAt": 0.45,
+        "flutter": 0,
+        "flutterHz": 0.7,
+        "riseH": 250,
+        "vtShell": 55,
+        "riseStyle": "gold",
+        "wobble": 0,
+        "wobbleHz": 1.6,
+        "kobanaN": 4,
+        "bunpoN": 3,
+        "trV": 43.5,
+        "trFps": 30,
+        "trInh": 0.1,
+        "trDrag": 3,
+        "trGrav": 0.3,
+        "trCool": 1,
+        "trFRate": 2600,
+        "trFLife": 0.6,
+        "trFSpread": 0.45,
+        "trFSize": 0.1,
+        "trFBright": 0.03,
+        "trMRate": 600,
+        "trMLife": 0.75,
+        "trMSpread": 0.8,
+        "trMSize": 0.14,
+        "trMBright": 0.05,
+        "trCRate": 60,
+        "trCLife": 0.9,
+        "trCSpread": 1.2,
+        "trCSize": 0.18,
+        "trCBright": 0.12,
+        "trWRate": 0,
+        "trWLife": 0.12,
+        "trWSpread": 14,
+        "trWSize": 0.06,
+        "trWBright": 0.06,
+        "trHeadSize": 0.26,
+        "trHeadBright": 1.2,
+        "trHeadExpo": 1,
+        "trHalo": 3,
+        "trHaloBright": 0.15,
+        "trTwist": 0.35,
+        "trTwistN": 5,
+        "trWiggle": 0.08,
+        "trTwistLag": 0.35,
+        "trFollow": 0,
+        "trBright": 1.6,
+        "trExport4K": 1,
+        "trIgnite": 0,
+        "trPhys": 0,
+        "rtH": 265,
+        "rtT": 5,
+        "rtVb": 16,
+        "rtLean": 0,
+        "rtD": 0.14,
+        "rtBurstD": 190,
+        "rtSpin": 2,
+        "rtSpinPh": 0,
+        "rtFling": 3,
+        "rtJet": 27,
+        "rtCone": 2.5,
+        "rtPulse": 0.2,
+        "rtPulseHz": 6,
+        "rtHeadSize": 0.55,
+        "rtHeadI": 3,
+        "rtHeadFl": 0.8,
+        "rtHeadFlI": 0.6,
+        "rtARate": 10000,
+        "rtALife": 0.7,
+        "rtALsig": 0.35,
+        "rtAJet": 33,
+        "rtAKd": 14,
+        "rtACone": 0.6,
+        "rtASize": 0.22,
+        "rtAI": 0.5,
+        "rtAWarm": 1.2,
+        "rtFRate": 2500,
+        "rtFLife": 0.9,
+        "rtFJit": 40,
+        "rtFSize": 0.25,
+        "rtFI": 2.6,
+        "rtFKd": 5,
+        "rtMRate": 900,
+        "rtMLife": 1.5,
+        "rtMJit": 35,
+        "rtMSize": 0.38,
+        "rtMI": 4,
+        "rtMKd": 3.6,
+        "rtCRate": 180,
+        "rtCLife": 2.4,
+        "rtCJit": 30,
+        "rtCSize": 0.55,
+        "rtCI": 6,
+        "rtCKd": 2.4,
+        "rtFdT": 0,
+        "rtMdT": 0,
+        "rtCdT": 0,
+        "rtSizeJit": 25,
+        "rtKdJit": 20,
+        "rtConeSoft": 0,
+        "rtStreakT": 0,
+        "rtStreakMax": 6,
+        "rtFStreak": 1,
+        "rtMStreak": 1,
+        "rtCStreak": 1,
+        "rtTurb": 0,
+        "rtTurbL": 30,
+        "rtTurbS": 0,
+        "rtT0": 2450,
+        "rtTb": 2150,
+        "rtTc": 0.35,
+        "rtTend": 1450,
+        "rtTw": 0.3,
+        "rtShrink": 0.5,
+        "rtERate": 10,
+        "rtELife": 3,
+        "rtESize": 0.8,
+        "rtEI": 4,
+        "rtEKd": 1,
+        "rtSmoke": 0.003,
+        "rtSmokeRate": 25,
+        "rtSmokeLife": 3.5,
+        "rtSmokeSize": 2.5,
+        "rtSmokeGrow": 4,
+        "rtBright": 1,
+        "rtDotGain": 1,
+        "rtMobile": 0.2,
+        "rtDissolve": 1,
+        "rtFadeFps": 0,
+        "rtFTex": 0,
+        "rtTexI": 10,
+        "rtGlow": 0,
+        "rtGlowSize": 4,
+        "rtPopRate": 0,
+        "rtPopI": 20,
+        "rtPopSize": 0.5,
+        "rtPopAt": 0.85,
+        "rtLaunch": 0,
+        "rtLaunchSize": 8,
+        "rtLaunchN": 0,
+        "rtLaunchV": 30,
+        "rtLaunchCone": 20,
+        "rtLaunchI": 8,
+        "rtGrid": 0,
+        "rtMobileTex": 0.5,
+        "loopT": 1,
+        "nozzles": 1,
+        "fanAngle": 70,
+        "spacing": 6,
+        "shotRate": 3,
+        "shotSpeed": 70,
+        "cometBurn": 1.4,
+        "burstStars": 0,
+        "wheelR": 3,
+        "jetSpeed": 28,
+        "jetCone": 10,
+        "jetDir": 90,
+        "groundH": 0,
+        "shutter": 0.6,
+        "fpsFloor": 24,
+        "frameBudget": "motion",
+        "pageTarget": 1,
+        "maxHold": 4,
+        "maxHoldBurn": 3,
+        "fpsBurst": 30,
+        "burstSec": 0.5,
+        "fpsActive": 15,
+        "fpsFade": 10,
+        "fadeAt": 0,
+        "maxPages": 0,
+        "fitPages": 1,
+        "qSS": 2,
+        "qHz": 300,
+        "qMaxSub": 16,
+        "texW": 2048,
+        "texH": 2048,
+        "cols": 4,
+        "rows": 4,
+        "chans": 4,
+        "outMode": "combined",
+        "encGamma": 1,
+        "frameMode": "auto",
+        "zoom": "off",
+        "engine": "gpu",
+        "form": "master",
+        "unitElev": 0,
+        "unitFlip": 0,
+        "cellPad": 2,
+        "autoGrid": 1,
+        "type": "botan"
+      },
+      "M": {
+        "stages": [
+          [
+            0,
+            "#ffc766"
+          ],
+          [
+            1.35,
+            "#dfe8ff"
+          ]
+        ],
+        "xw": 0.08,
+        "ramp0": "#000000",
+        "ramp1": "#7a1e04",
+        "ramp2": "#ffa53a",
+        "ramp3": "#fff3dc",
+        "headInt": 1,
+        "tailInt": 1
+      },
+      "plan": {
+        "Ww": 183.21904927359066,
+        "HX": 91.60952463679533
+      },
+      "t": 0.8,
+      "shutter": [
+        0.79,
+        0.81
+      ],
+      "exposure": 3.1,
+      "linear": {
+        "headSum": 3312.245981156826,
+        "headPeak": 3.271484375,
+        "headHalfPixels": 697
+      },
+      "file": "botan_s0.65_1024.png"
+    }
+  ],
+  "pageErrors": [],
+  "checks": {
+    "no_page_errors": true,
+    "no_WebGL_errors": true,
+    "radiance_x2_linear_energy_x2": true,
+    "phase_energy_within_2pct": true,
+    "diameter_energy_matches_area_within_2pct": true
+  },
+  "candidate_checks": {
+    "matched_HDR_sum_within_1pct": true,
+    "profile_linear_energy_within_1pct": true
+  },
+  "phase_summaries": {
+    "sweep_base512_": {
+      "count": 9,
+      "linear_range_percent": 0.01820444785347597,
+      "HDR_range_percent": 40.4083709544657,
+      "encoded_peak_max": 255
+    },
+    "sweep_base1024_": {
+      "count": 9,
+      "linear_range_percent": 0.01797339216869087,
+      "HDR_range_percent": 7.405931295231127,
+      "encoded_peak_max": 255
+    },
+    "sweep_range1024_": {
+      "count": 9,
+      "linear_range_percent": 0.01797339216869087,
+      "HDR_range_percent": 2.6942685434200975,
+      "encoded_peak_max": 180
+    },
+    "sweep_profile1024_": {
+      "count": 9,
+      "linear_range_percent": 0.023497865062571677,
+      "HDR_range_percent": 1.689174674368954,
+      "encoded_peak_max": 226
+    },
+    "robust_s0.4_base512_": {
+      "count": 9,
+      "linear_range_percent": 0.035637715969483175,
+      "HDR_range_percent": 237.0628279266182,
+      "encoded_peak_max": 255
+    },
+    "robust_s0.4_profile1024_": {
+      "count": 9,
+      "linear_range_percent": 0.02606018723689818,
+      "HDR_range_percent": 19.55873512831241,
+      "encoded_peak_max": 216
+    },
+    "robust_s1.4_base512_": {
+      "count": 9,
+      "linear_range_percent": 0.01738230522505546,
+      "HDR_range_percent": 20.568538063660103,
+      "encoded_peak_max": 255
+    },
+    "robust_s1.4_profile1024_": {
+      "count": 9,
+      "linear_range_percent": 0.017049880869457468,
+      "HDR_range_percent": 0.1523123868163445,
+      "encoded_peak_max": 231
+    },
+    "robust_s0.4_profile2048_": {
+      "count": 9,
+      "linear_range_percent": 0.030094764980637123,
+      "HDR_range_percent": 2.388040109178813,
+      "encoded_peak_max": 228
+    }
+  }
+}
