@@ -486,7 +486,10 @@ function splitLab(lab) {
 }
 const pview = { q: '', changed: false, ready: false };
 function pviewInit() { if (pview.ready) return; pview.ready = true; pview.changed = !!store.get('pChanged', false);   // store 在后面的文件里定义：用到时再读
-  pview.en = !!store.get('pEN', false); pview.mopen = store.get('pModOpen', {}); pview.ropen = store.get('pRandOpen', {}); pview.more = store.get('pMoreOpen', {}); }   // 英文名、模块 / 随机 / 更多展开
+  pview.en = !!store.get('pEN', false); pview.mopen = store.get('pModOpen', {});
+  // 4.3.5：4.3.4 打开时只展开「运动」一组，期间点过的分组开关多半是在找参数；一次性清掉分组（@ 开头）的开关记录，回到默认全展开。模块自己的开关不动
+  if (store.get('pGrpReset', 0) < 435) { for (const k of Object.keys(pview.mopen)) if (k.startsWith('@')) delete pview.mopen[k]; store.set('pModOpen', pview.mopen); store.set('pGrpReset', 435); }
+  pview.ropen = store.get('pRandOpen', {}); pview.more = store.get('pMoreOpen', {}); }   // 英文名、模块 / 随机 / 更多展开
 // 「改过的」和谁比：打开时的版本（AI 版 / 你保存的版本，wbArm 记下的样子）；没有就和花型模板默认值比
 function panelBaseP() {
   try {
@@ -550,7 +553,7 @@ function buildMasterPanel() {
   host.querySelector('[data-en]').addEventListener('change', e => { pview.en = e.target.checked; store.set('pEN', pview.en); buildMasterPanel(); });
   const grp = {};
   for (const [g, title] of P43_GROUPS) {
-    const d = document.createElement('details'); d.className = 'pgrp p43'; d.dataset.g = g; d._auto = true; d.open = pview.mopen['@' + g] == null ? g === '运动' : pview.mopen['@' + g]; setTimeout(() => d._auto = false, 0);
+    const d = document.createElement('details'); d.className = 'pgrp p43'; d.dataset.g = g; d._auto = true; d.open = pview.mopen['@' + g] !== false;     // 4.3.4 后（用户 13:26「参数栏好像丢了一部分」）：分组默认展开（4.3.4 只展开「运动」，菊打开只剩 2 个参数、尾缀一个都没有）；用户收起过的照记 setTimeout(() => d._auto = false, 0);
     d.innerHTML = `<summary><span class="pg-t">${title}</span><span class="pg-n"></span></summary>`;
     d.addEventListener('toggle', () => { if (d._auto) return; pview.mopen['@' + g] = d.open; store.set('pModOpen', pview.mopen); });
     grp[g] = d; host.appendChild(d);
@@ -646,7 +649,7 @@ function refreshVisibility() {
   document.querySelectorAll('#params details.pgrp').forEach(g => {
     g.hidden = ![...g.querySelectorAll(':scope > details.sec')].some(d => !d.hidden);
     const n = nChg[g.dataset.g] || 0, b = g.querySelector('.pg-n'); b.textContent = n ? `${n} 项改过` : ''; b.hidden = !n;
-    autoOpen(g, auto && !g.hidden, pview.mopen['@' + g.dataset.g] == null ? g.dataset.g === '运动' : pview.mopen['@' + g.dataset.g]);
+    autoOpen(g, auto && !g.hidden, pview.mopen['@' + g.dataset.g] !== false);
   });
   const host = $('#params'), empty = host && host.querySelector('.pempty'), none = host && ![...host.querySelectorAll('details.pgrp')].some(g => !g.hidden);
   if (host && none && !empty) host.insertAdjacentHTML('beforeend', `<p class="pempty hint"></p>`);

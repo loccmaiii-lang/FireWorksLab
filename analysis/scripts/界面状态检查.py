@@ -31,6 +31,7 @@
      改「火花起势」火花生成曲线的上升变慢、旧曲线留作对照；改「渐隐」亮度曲线末段变；悬停参数高亮对应曲线；开关、悬停都不触发烘焙；多层没选层时给提示
   S1 4.3.2 收尾：子花那几个「负数 = 默认」的参数是「用默认」勾选（H16）；只剩 GPU 模拟内核、存档 / 旧母版的 CPU 换成 GPU（H12）；物理尾缀过顶后按下落段算、开花晚于到顶有提示（E11③ / H15②）
   S2 4.3.3 新建效果：打开就在第 1 层的参数上；加的层是这个效果自己的一份，改了不动原条目；保存再打开还在；不写「AI 版」
+  S3 4.3.4 后：打开菊 / 空白发射器 / 升空尾缀，第一眼的参数、尾缀各层的火花模块、空白发射器的「+ 火花」看得见（分组不能默认全收起）
   N1 4.3 新参数面板（预览开关）：默认关 = 原样；打开后按模块排、名字来自参数命名表、英文名开关、看得见的参数一个不少、
      「××随机」收在本体参数的「随机」下（点开才出、记住）、不起作用的参数变灰写原因（菊：点火时刻随机；牡丹：火花寿命）、
      搜索认新名 / 旧名 / 英文名、说明条第一行「English · 中文 — 说明」；关掉回到原样
@@ -934,6 +935,32 @@ async def s2(p, b):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
 
 
+S3_JS = r"""async () => {
+  // 4.3.4 后（用户 10-04 13:26「参数栏好像丢了一部分，尾缀火星什么都不见了」）：打开一个花型，第一眼的参数要看得见
+  const out = {}, bad = [];
+  // 收起的 <details> 里的东西 offsetParent 不一定是 null（新版 Chrome 用 content-visibility 藏），按祖先 details 是否展开判断
+  const shown = el => { if (!el || !el.offsetParent) return false; for (let a = el.parentElement, c = el; a; c = a, a = a.parentElement) { if (a.hidden) return false; if (a.tagName === 'DETAILS' && !a.open && c.tagName !== 'SUMMARY') return false; } return true; };
+  const vis = () => [...document.querySelectorAll('#params .sl')].filter(shown).length;
+  const modVis = m => [...document.querySelectorAll('#params details.mod')].some(d => d._mod === m && shown(d.querySelector('summary')));
+  for (const [t, need, mods] of [['kiku', 15, ['星头', '火花', '初速']], ['blank', 8, ['星头', '初速']], ['trailM', 10, ['白热火花', '金火花', '橙色火花', '丝状火花']]]) {
+    await openType(t); await new Promise(r => setTimeout(r, 400));
+    const n = vis(), m = Object.fromEntries(mods.map(x => [x, modVis(x)]));
+    out[t] = { sliders: n, mods: m, groups: [...document.querySelectorAll('#params details.pgrp')].filter(g => !g.hidden).map(g => g.dataset.g + (g.open ? '▾' : '▸')) };
+    if (n < need) bad.push(`${t} 打开后看得见的参数只有 ${n} 个（应 ≥ ${need}）`);
+    for (const [k, v] of Object.entries(m)) if (!v) bad.push(`${t} 的「${k}」模块看不见`);
+    if (t === 'blank') { const b = document.querySelector('#blankAdd [data-addmod="火花"]'); out.blankAdd = shown(b); if (!out.blankAdd) bad.push('空白发射器的「+ 火花」看不见'); }
+  }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def s3(pg):
+    """4.3.4 后：打开菊 / 空白发射器 / 升空尾缀，第一眼的参数、模块（尾缀各层的火花）、空白发射器的「+ 火花」都看得见（分组不能默认全收起）"""
+    await pg.evaluate("store.set('pModOpen', {}); 0")     # 没有存过展开状态的新用户
+    r = await pg.evaluate(S3_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
+
+
 async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
@@ -943,7 +970,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:
