@@ -717,8 +717,8 @@ async def c1(pg):
     info['渐隐 末段亮度差'] = round(diff, 3)
     if diff < 0.05: bad.append('改渐隐，亮度曲线末段没变')
     if not d1.get('base'): bad.append('改了参数，没有留「打开时」的曲线作对照')
-    # 开关、悬停不烘焙
-    nb = await pg.evaluate("window.__bakes.length")
+    # 开关、悬停不烘焙（先等上面改渐隐引起的烘焙烘完：--real 时烘焙烘完才记一次，不等会把它算到开关 / 悬停头上）
+    await idle(pg); nb = await pg.evaluate("window.__bakes.length")
     await pg.evaluate("curvesShow(false); stage2.last = 0; stageTick(curDuration()); 0"); await pg.wait_for_timeout(300)
     off = await pg.evaluate("document.querySelectorAll('#tlCurves .cvl').length")
     await pg.evaluate("curvesShow(true); 0"); await wait_curves(pg)
@@ -730,6 +730,7 @@ async def c1(pg):
     if off: bad.append('关掉曲线后还在')
     if hot != ['spark']: bad.append(f'悬停「火花数量」高亮的是 {hot}（应为 spark）')
     if '火花生成' not in help_: bad.append('悬停说明里没指到「火花生成」曲线')
+    await pg.wait_for_timeout(800); await idle(pg)
     if await pg.evaluate("window.__bakes.length") != nb: bad.append('开关曲线 / 悬停触发了烘焙')
     # 多层：没选层 → 提示；选金锦层，改火花起势 → 上升变慢
     await open_effect(pg, 'hiki_nishiki'); await pg.wait_for_timeout(600); await idle(pg)

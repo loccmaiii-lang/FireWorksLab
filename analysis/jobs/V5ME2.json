@@ -1,0 +1,9 @@
+{
+ "id": "V5ME2",
+ "type": "export",
+ "effect": "trail_v5",
+ "entry": "V5M",
+ "name": "TrailM",
+ "priority": 9,
+ "note": "4.3.1：V5E1 的烘焙回放对照图里「导出效果」一行每帧报「渲染出错：sb is not defined」（画面照常，贴图 / cascade.json 不受影响）；4.3.1 修了，重出一次干净的对照图和回放检查给验收用。参数、指纹和 V5E1 相同。对话框15。"
+}

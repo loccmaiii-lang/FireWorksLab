@@ -55,7 +55,7 @@ STEPS = [
 VIEWS = [('实时', 'live', None, 1.0), ('引擎回放', 'export', None, 1.0), ('贴图', 'atlas', '0', 1.0), ('流转', 'atlas', '1', 1.5)]
 
 
-async def main(out, full, limit):
+async def main(out, full, limit, only=None):
     from playwright.async_api import async_playwright
     out.mkdir(parents=True, exist_ok=True); rep = []; errs = []
     async with async_playwright() as p:
@@ -84,7 +84,7 @@ async def main(out, full, limit):
             hud = await pg.evaluate("(document.querySelector('#hud')||{}).textContent || ''")
             rep.append({'step': name, 'errors': errs[:], 'hud': hud}); errs.clear()
 
-        for name, js, views in STEPS:
+        for name, js, views in [st for st in STEPS if not only or any(st[0].startswith(o) for o in only)]:
             t0 = time.time()
             try:
                 await pg.evaluate(js); await pg.wait_for_timeout(500)
@@ -113,5 +113,6 @@ async def main(out, full, limit):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('--out', default=str(ROOT / 'analysis' / 'probe' / '界面冒烟'))
     ap.add_argument('--full', action='store_true'); ap.add_argument('--limit', type=int, default=900)
+    ap.add_argument('--only', nargs='*', help='只跑名字以这些开头的步骤（云端快速复查用）')
     a = ap.parse_args()
-    sys.exit(0 if asyncio.run(main(pathlib.Path(a.out), a.full, a.limit)) else 1)
+    sys.exit(0 if asyncio.run(main(pathlib.Path(a.out), a.full, a.limit, a.only)) else 1)
