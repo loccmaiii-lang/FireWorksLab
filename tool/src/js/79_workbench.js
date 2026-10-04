@@ -26,7 +26,7 @@ function buildLayerCard() {
       <span class="lb"><button type="button" class="mini${solo ? ' on' : ''}" data-solo="${i}" aria-pressed="${solo}">独看</button><button type="button" class="mini${mute ? ' on' : ''}" data-mute="${i}" aria-pressed="${mute}">静音</button></span>${lib.my ? myLayerTools(i) : ''}</div>`;
   });
   if (lib.my) rows.push(`<button type="button" class="btn mini myadd" id="myAdd" title="加一层：花型模板，或现有效果里的某一层（参数复制一份）">＋ 加一层</button>`);
-  box.innerHTML = `<div class="lc-h"><b>观察图层</b><small>点一层改它的参数（画面仍是整朵）。独看 / 静音只影响观察。</small></div>
+  box.innerHTML = `<div class="lc-h"><b>观察图层</b><small>点一层改它的参数（画面仍是整朵）。独看 / 静音只影响观察。${lib.my ? '每层是这个效果自己的一份参数（从模板 / 原效果复制来的），改了不影响原来的效果。' : ''}</small></div>
     <div class="lrow whole${state.comboSel < 0 ? ' cur' : ''}" data-i="-1" tabindex="0" role="button"><span class="th whole">${state.layers.length}</span><span class="tx"><b>整体</b><small>各层的位置、延迟、时间倍率、颜色</small></span></div>${rows.join('')}`;
   box.querySelectorAll('.lrow').forEach(r => {
     const go = ev => { if (ev.target.closest('button,input')) return; selectComboLayer(+r.dataset.i); };
@@ -313,7 +313,7 @@ function curLayerBakes() {
 function srcLabel() {
   if (!wbVisible()) return '';
   const s = wb.src.kind === 'mine' && wbList().find(x => x.id === wb.src.id);
-  return (s ? `我的「${s.name}」` : `AI 版 ${wbBaseId()}`) + (wb.changed ? ' · 参数已变' : '');
+  return (s ? `我的「${s.name}」` : lib.my ? `我的效果「${lib.my.name}」` : `AI 版 ${wbBaseId()}`) + (wb.changed ? ' · 参数已变' : '');     // 4.3.3：自己搭的效果不写「AI 版」
 }
 function scopeLabel() {
   if (state.tab !== 'combo') return '';

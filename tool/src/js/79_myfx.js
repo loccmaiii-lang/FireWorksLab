@@ -51,6 +51,9 @@ async function openMyEffect(id, o = {}) {
   await setTab('combo', { lazy: true }); syncComboPanels();
   await myApplySnap(rec.snap);
   renderLib(); crumb('我的效果', rec.name); wbRefresh();
+  // 4.3.3（用户 10-04 11:56「新建效果选了层，但都没有参数可以调整，只是组合」）：以前打开停在「整体」（只有各层的位置 / 延迟 / 颜色），
+  // 要点层名才出这一层的模拟参数，看起来像不能改。打开就选第 1 层，参数面板直接是这一层自己的那份参数（改了只改这个效果）
+  if (state.layers.length && layerEntryOf(state.layers[0])) selectComboLayer(0);
 }
 // 按快照搭层：每层一份自己的参数（libOwn 烘焙），层上带名字、稳定编号
 async function myApplySnap(snap) {

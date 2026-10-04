@@ -1,11 +1,11 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.3.2';
+const VERSION = '4.3.3';
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
-const OUTPUT_VER = { master: '4.3', emitset: '4.3', riseLoop: '4.3', trail: '4.3', unit: '4.3', loop: '4.3' };     // 4.3：所有产物都要用 4.3 重新导出（只剩一个渲染核；固定取景用 Pivot 对齐爆点；碰边放大；单束补第二段、随机、风；尾缀末段爆亮颜色键）
+const OUTPUT_VER = { master: '4.3.3', emitset: '4.3', riseLoop: '4.3', trail: '4.3', unit: '4.3', loop: '4.3' };     // 4.3.3：大面片开花闪光改成柔光（开头几帧变了）→ master 4.3.3；4.3：所有产物都要用 4.3 重新导出（只剩一个渲染核；固定取景用 Pivot 对齐爆点；碰边放大；单束补第二段、随机、风；尾缀末段爆亮颜色键）
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   blank: ['空白发射器', 'Blank', 'aerial'],
@@ -58,7 +58,7 @@ const BASE = {
   trimTail: 1,
   mods: [],     // 空白发射器加了哪些模块（别的花型不用）
   duration: 3.2, seed: 7, stars: 150, burstR0: 0, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
-  burn: 2.5, burnJit: 12, fade: 0.2, lastFlare: 0.35, flash: 1,
+  burn: 2.5, burnJit: 12, fade: 0.2, lastFlare: 0.35, flash: 1, flashSize: 1,
   headSize: 1.0, headBright: 1, flicker: 0.25,
   sparkRate: 95, sparkRateEnd: 1, sparkStop: 0, sparkStart: 0, sparkRamp: 0, sparkRampJit: 30, sparkLife: 0.55, sparkLifeEnd: 1, sparkLifeJit: 45, sparkSize: 0.35, sparkSpread: 2.5, sparkInherit: 0.2, sparkDrag: 2.2, sparkGrav: 1,
   T0: 2050, cooling: 0.42, sparkBright: 1, twinkle: 0.6,
@@ -360,7 +360,8 @@ const SCHEMA = [
     ['burnJit', '消え口离散', '%', 0, 30, 0.1],
     ['fade', '渐隐比例', '', 0, 0.9, 0.01],
     ['lastFlare', '熄灭前闪亮', '', 0, 1.5, 0.05],
-    ['flash', '开花闪光', '', 0, 3, 0.05]
+    ['flash', '开花闪光', '', 0, 3, 0.05],
+    ['flashSize', '开花闪光大小', '×', 0.3, 3, 0.05]
   ] },
   { sec: '形状', show: P => isAir(P) || P.type === 'shikake', items: [
     { sel: 'pattern', label: '星的排布', options: PATTERNS, show: isAir },

@@ -1,0 +1,194 @@
+{
+ "ok": true,
+ "bad": [],
+ "cases": [
+  {
+   "name": "菊模板",
+   "r": {
+    "flash": 1,
+    "out": [
+     {
+      "t": 0.004,
+      "flashMax": 1.31641,
+      "sceneMax": 3.67578,
+      "midFrac": 0.584,
+      "border": 0,
+      "borderTex": 0.002,
+      "x2": 2.004,
+      "cell": [
+       512,
+       512
+      ]
+     },
+     {
+      "t": 0.02,
+      "flashMax": 0.84668,
+      "sceneMax": 2.78516,
+      "midFrac": 0.58,
+      "border": 0,
+      "borderTex": 0.001,
+      "x2": 1.999,
+      "cell": [
+       512,
+       512
+      ]
+     },
+     {
+      "t": 0.05,
+      "flashMax": 0.36523,
+      "sceneMax": 2.40625,
+      "midFrac": 0.581,
+      "border": 0,
+      "borderTex": 0,
+      "x2": 2,
+      "cell": [
+       512,
+       512
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "name": "牡丹模板",
+   "r": {
+    "flash": 1,
+    "out": [
+     {
+      "t": 0.004,
+      "flashMax": 1.31641,
+      "sceneMax": 3.7207,
+      "midFrac": 0.589,
+      "border": 1e-05,
+      "borderTex": 0.002,
+      "x2": 2.004,
+      "cell": [
+       512,
+       512
+      ]
+     },
+     {
+      "t": 0.02,
+      "flashMax": 0.85547,
+      "sceneMax": 3.03906,
+      "midFrac": 0.581,
+      "border": 1e-05,
+      "borderTex": 0.001,
+      "x2": 2,
+      "cell": [
+       512,
+       512
+      ]
+     },
+     {
+      "t": 0.05,
+      "flashMax": 0.36572,
+      "sceneMax": 2.52344,
+      "midFrac": 0.582,
+      "border": 0,
+      "borderTex": 0,
+      "x2": 2,
+      "cell": [
+       512,
+       512
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "name": "锦冠模板",
+   "r": {
+    "flash": 1,
+    "out": [
+     {
+      "t": 0.004,
+      "flashMax": 1.2915,
+      "sceneMax": 1.74121,
+      "midFrac": 0.575,
+      "border": 0,
+      "borderTex": 0,
+      "x2": 2.001,
+      "cell": [
+       512,
+       512
+      ]
+     },
+     {
+      "t": 0.02,
+      "flashMax": 0.85303,
+      "sceneMax": 1.24023,
+      "midFrac": 0.579,
+      "border": 0,
+      "borderTex": 0,
+      "x2": 2,
+      "cell": [
+       512,
+       512
+      ]
+     },
+     {
+      "t": 0.05,
+      "flashMax": 0.36426,
+      "sceneMax": 0.88184,
+      "midFrac": 0.579,
+      "border": 0,
+      "borderTex": 0,
+      "x2": 2,
+      "cell": [
+       512,
+       512
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "name": "引菊 → 锦 · 引菊层",
+   "r": {
+    "flash": 0.5,
+    "out": [
+     {
+      "t": 0.004,
+      "flashMax": 0.65771,
+      "sceneMax": 0.65771,
+      "midFrac": 0.579,
+      "border": 0.00014,
+      "borderTex": 0.019,
+      "x2": 2,
+      "cell": [
+       512,
+       512
+      ]
+     },
+     {
+      "t": 0.02,
+      "flashMax": 0.4292,
+      "sceneMax": 0.4292,
+      "midFrac": 0.58,
+      "border": 0.00014,
+      "borderTex": 0.012,
+      "x2": 2,
+      "cell": [
+       512,
+       512
+      ]
+     },
+     {
+      "t": 0.05,
+      "flashMax": 0.18225,
+      "sceneMax": 0.18225,
+      "midFrac": 0.579,
+      "border": 0.00013,
+      "borderTex": 0.005,
+      "x2": 2,
+      "cell": [
+       512,
+       512
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}

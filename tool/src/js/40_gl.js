@@ -543,6 +543,12 @@ function drawPoints(buf, n, view, ppm, chan, w, xf) {
   setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uSpan, PT_SPAN); gl.uniform1f(pr.u.uGauss, PT_GAUSS);
   drawParticleBatch(n, modern);
 }
+// 4.3.3：Sim.gather 的星头缓冲里 [0, g) 是星头 / 爆裂小闪（实心亮核 + 光晕），[g, n) 是开花闪光（高斯柔光，见 20_sim.js gather）
+function drawHeads(buf, n, g, view, ppm, chan, w, xf) {
+  g = g == null ? n : Math.max(0, Math.min(g, n));
+  if (g > 0) drawPoints(buf, g, view, ppm, chan, w, xf);
+  if (n > g) { const old = PT_GAUSS; PT_GAUSS = 1; try { drawPoints(buf.subarray(g * 4), n - g, view, ppm, chan, w, xf); } finally { PT_GAUSS = old; } }
+}
 // 在超采样缓冲上加线间底光（实时、定帧、烘焙都在 drawFrameSamples40 之后调这一个函数）。ppm = 这个缓冲每米多少像素
 const hazeTmps = new Map();
 function hazeSamples40(P, src, ppm) {
