@@ -1,0 +1,8 @@
+21:22:36 开始：RiseTailL（导出素材）
+21:22:46 RiseTailL 导出 10 秒：RiseTailL.json、RiseTailL_Cascade参数.txt、RiseTailL_Mobile.json、RiseTailL_曲线.csv、T_EFX_FireWorks_RiseTrailPhys_L_Fade_8x1_01.png、T_EFX_FireWorks_RiseTrailPhys_L_Fade_8x1_01_C.png、T_EFX_FireWorks_RiseTrailPhys_L_Fade_8x1_01_HD.png、T_EFX_FireWorks_RiseTrailPhys_L_Loop_16x1_01.png、T_EFX_FireWorks_RiseTrailPhys_L_Loop_16x1_01_C.png、T_EFX_FireWorks_RiseTrailPhys_L_Loop_16x1_01_HD.png、T_EFX_FireWorks_RiseTrailPhys_L_R.png、cascade.json、cascade_mobile.json、命名对照.txt
+21:22:47 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT4LE1\回放检查.jpg（❌ RiseTailL · RiseLoop：过曝像素 3.7%；RiseTailL · RiseFade：过曝像素 3.6%）
+21:23:06 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT4LE1\烘焙回放.jpg
+21:23:07 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT4LE1\烘焙回放_原尺寸.jpg
+21:23:07 烘焙器预览没做成（不影响导出）：'texture'
+21:23:07 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+21:23:07 完成，用时 0.5 分钟

@@ -1,0 +1,1 @@
+FW_ASSET_LOADED("JM4-40E7", {"manifest": {"title": "JinMangJu", "duration": 4.87, "view": 224.3, "variants": {"JinMangJu": "JinMangJu"}, "emitters": [], "note": "4.4.1 重导（4.3.3 开花闪光改柔光后一直「导出过期」；用户 10-04 21:17「显卡现在有空」）。效果参数不变，导出 + 回放检查。对话框15（底层）代做。"}, "images": {}});

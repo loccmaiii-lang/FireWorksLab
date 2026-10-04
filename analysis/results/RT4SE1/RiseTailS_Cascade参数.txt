@@ -1,0 +1,134 @@
+烟花效果：RiseTailS（升空尾缀 · 循环层 + 粒子 小）
+工具：烟花母版烘焙器 4.4.1（产物：循环层 + 粒子发射器）
+完整数值在 cascade.json（PC）/ cascade_mobile.json（手机）；下面按 Cascade 里的发射器、模块顺序列出，单位 cm、cm/s、秒。
+
+【弹道】线性阻力：出膛 91.4 m/s（竖直 9136 cm/s，水平 0 cm/s）· Drag 0.1738 · 重力 −981
+  3.50 s 到 190.0 m（要求 190 m）· 开花时竖直速度 24.0 m/s
+
+【RiseLoop】CPU · 材质角色 beam_flipbook（2048×2048，16×1 格 × 4 通道 = 64 帧，RGBA 接力）· Screen Alignment = Velocity · Pivot Offset (−0.5, -0.0176) · Duration 3.500 s · Burst 0 s × 1
+  Lifetime 3.500 · Initial Size 397.1 × 9918.5 cm（星头在面片上端，Pivot Offset 放在粒子位置）
+  Initial Velocity (0.0, 0, 9135.9) · Drag 0.1738 · Const Acceleration (0, 0, −981)
+  面片长度不随速度变（不写 Size By Life；4.4 起，和消散同样大）· 出场淡入：Color Over Life 前 0.60 s 从 0 升到 1（尾迹还没攒出来）
+  Dynamic Parameter 帧号：锯齿，每 2.500 s 一个循环（4 圈自转），4 个关键点
+  Color Over Life × 4
+
+【RiseFade】CPU · beam_flipbook（1024×2048，8×1 × 4 = 32 帧，格子和循环层一样大）· Pivot Offset 同上 · Delay 3.500 s · Duration 1.147 s（27.9 fps）
+  Initial Location = 开花点 · Initial Size = 和循环层一样大 · 帧号 0 → 31.99 · dissolve 0 →（后 60%）1
+
+【粒子层 · PC】同时活着最多约 2109 颗
+【SparksFine】GPU Sprites · 材质角色 soft_dot · Screen Alignment = Rectangle（沿屏幕竖直拉长：Initial Size Y × 1，Size By Life 的 Y 按寿命拉长 → 线状火花） · Duration 3.5 s · Loops 1 · Delay 0 s
+  Spawn Rate（发射器时间 s → 颗/秒，线性）：85 个关键点，0 → 1285.67；0.0417 → 1087.18；0.0833 → 1125.85；0.125 → 1240.04 …（完整见 cascade.json）
+  Lifetime：Lifetime = 随机 0.42 ~ 0.98
+  InitialSize：StartSize = 随机 [7.2,7.2,7.2] ~ [18.9,18.9,18.9]
+  InitialLocation：StartLocation = 曲线 71 点（[0,[5,0,0]]，[0.05,[4.4,2.4,453.6]] …），不烘查找表
+  InitialVelocity：StartVelocity = 曲线 71 点（[0,[0,200,6435.9]]，[0.05,[-96.4,175.3,6308]] …），不烘查找表
+  InitialVelocity：StartVelocity = 随机 [-388.9,-388.9,-194.5] ~ [388.9,388.9,194.5]（第 2 个 Initial Velocity：叠加的随机散开（2 个均匀分布相加 → 中间密、边缘软））
+  InitialVelocity：StartVelocity = 随机 [-388.9,-388.9,-194.5] ~ [388.9,388.9,194.5]（第 3 个 Initial Velocity：叠加的随机散开（2 个均匀分布相加 → 中间密、边缘软））
+  Drag：DragCoefficientRaw = 随机 3.25 ~ 6.75
+  ConstAcceleration：Acceleration = [0,0,-981]
+  Acceleration：Acceleration = 曲线 60 点（[0,[-418.8,-527.8,-235.5]]，[0.05,[-345.4,-573.2,-195.6]] …），不烘查找表（空气乱流（大涡）：按发射器时间取值，同一时刻出生的火花受同一股气流 → 沿尾迹相关的松散）
+  Acceleration：Acceleration = 随机 [-367.4,-367.4,-257.2] ~ [367.4,367.4,257.2]（空气乱流（小涡）：每颗随机（2 个相加 → 边缘软））
+  Acceleration：Acceleration = 随机 [-367.4,-367.4,-257.2] ~ [367.4,367.4,257.2]（空气乱流（小涡）：每颗随机（2 个相加 → 边缘软））
+  SizeByLife：LifeMultiplier = 曲线 11 点（[0,[1,1.598,1]]，[0.1,[1,1.93,1]] …）；MultiplyX = true；MultiplyY = true；MultiplyZ = true（Y = 大小 × 拉长倍数（Rectangle：Y 朝屏幕上方）：拖影长短随寿命变）
+  ColorOverLife：ColorOverLife = 曲线 10 点（[0,[5.2093,2.5508,0.672]]，[0.25,[1.9995,0.9314,0.2236]] …）；AlphaOverLife = 1
+
+【SparksMid】GPU Sprites · 材质角色 soft_dot · Screen Alignment = Rectangle（沿屏幕竖直拉长：Initial Size Y × 1，Size By Life 的 Y 按寿命拉长 → 线状火花） · Duration 3.5 s · Loops 1 · Delay 0 s
+  Spawn Rate（发射器时间 s → 颗/秒，线性）：85 个关键点，0 → 910.69；0.0417 → 770.08；0.0833 → 797.48；0.125 → 878.36 …（完整见 cascade.json）
+  Lifetime：Lifetime = 随机 0.715 ~ 1.485
+  InitialSize：StartSize = 随机 [11,11,11] ~ [29,29,29]
+  InitialLocation：StartLocation = 曲线 71 点（[0,[5,0,0]]，[0.05,[4.4,2.4,453.6]] …），不烘查找表
+  InitialVelocity：StartVelocity = 曲线 71 点（[0,[0,200,6435.9]]，[0.05,[-96.4,175.3,6308]] …），不烘查找表
+  InitialVelocity：StartVelocity = 随机 [-388.9,-388.9,-194.5] ~ [388.9,388.9,194.5]（第 2 个 Initial Velocity：叠加的随机散开（2 个均匀分布相加 → 中间密、边缘软））
+  InitialVelocity：StartVelocity = 随机 [-388.9,-388.9,-194.5] ~ [388.9,388.9,194.5]（第 3 个 Initial Velocity：叠加的随机散开（2 个均匀分布相加 → 中间密、边缘软））
+  Drag：DragCoefficientRaw = 随机 2.34 ~ 4.86
+  ConstAcceleration：Acceleration = [0,0,-981]
+  Acceleration：Acceleration = 曲线 55 点（[0,[-301.6,-380,-169.6]]，[0.05,[-248.7,-412.7,-140.9]] …），不烘查找表（空气乱流（大涡）：按发射器时间取值，同一时刻出生的火花受同一股气流 → 沿尾迹相关的松散）
+  Acceleration：Acceleration = 随机 [-264.5,-264.5,-185.2] ~ [264.5,264.5,185.2]（空气乱流（小涡）：每颗随机（2 个相加 → 边缘软））
+  Acceleration：Acceleration = 随机 [-264.5,-264.5,-185.2] ~ [264.5,264.5,185.2]（空气乱流（小涡）：每颗随机（2 个相加 → 边缘软））
+  SizeByLife：LifeMultiplier = 曲线 11 点（[0,[1,2.879,1]]，[0.1,[1,3.765,1]] …）；MultiplyX = true；MultiplyY = true；MultiplyZ = true（Y = 大小 × 拉长倍数（Rectangle：Y 朝屏幕上方）：拖影长短随寿命变）
+  ColorOverLife：ColorOverLife = 曲线 12 点（[0,[3.5357,2.0433,0.7324]]，[0.1591,[1.791,0.9984,0.3347]] …）；AlphaOverLife = 1
+
+【SparksCoarse】GPU Sprites · 材质角色 soft_dot · Screen Alignment = Rectangle（沿屏幕竖直拉长：Initial Size Y × 1，Size By Life 的 Y 按寿命拉长 → 线状火花） · Duration 3.5 s · Loops 1 · Delay 0 s
+  Spawn Rate（发射器时间 s → 颗/秒，线性）：83 个关键点，0 → 160.71；0.0417 → 135.9；0.0833 → 140.73；0.125 → 155.01 …（完整见 cascade.json）
+  Lifetime：Lifetime = 随机 1.26 ~ 2.34
+  InitialSize：StartSize = 随机 [15.4,15.4,15.4] ~ [40.6,40.6,40.6]
+  InitialLocation：StartLocation = 曲线 71 点（[0,[5,0,0]]，[0.05,[4.4,2.4,453.6]] …），不烘查找表
+  InitialVelocity：StartVelocity = 曲线 71 点（[0,[0,200,6435.9]]，[0.05,[-96.4,175.3,6308]] …），不烘查找表
+  InitialVelocity：StartVelocity = 随机 [-388.9,-388.9,-194.5] ~ [388.9,388.9,194.5]（第 2 个 Initial Velocity：叠加的随机散开（2 个均匀分布相加 → 中间密、边缘软））
+  InitialVelocity：StartVelocity = 随机 [-388.9,-388.9,-194.5] ~ [388.9,388.9,194.5]（第 3 个 Initial Velocity：叠加的随机散开（2 个均匀分布相加 → 中间密、边缘软））
+  Drag：DragCoefficientRaw = 随机 1.17 ~ 2.43
+  ConstAcceleration：Acceleration = [0,0,-981]
+  Acceleration：Acceleration = 曲线 44 点（[0,[-150.8,-190,-84.8]]，[0.05,[-124.3,-206.4,-70.4]] …），不烘查找表（空气乱流（大涡）：按发射器时间取值，同一时刻出生的火花受同一股气流 → 沿尾迹相关的松散）
+  Acceleration：Acceleration = 随机 [-132.3,-132.3,-92.6] ~ [132.3,132.3,92.6]（空气乱流（小涡）：每颗随机（2 个相加 → 边缘软））
+  Acceleration：Acceleration = 随机 [-132.3,-132.3,-92.6] ~ [132.3,132.3,92.6]（空气乱流（小涡）：每颗随机（2 个相加 → 边缘软））
+  SizeByLife：LifeMultiplier = 曲线 11 点（[0,[1,2.172,1]]，[0.1,[1,2.621,1]] …）；MultiplyX = true；MultiplyY = true；MultiplyZ = true（Y = 大小 × 拉长倍数（Rectangle：Y 朝屏幕上方）：拖影长短随寿命变）
+  ColorOverLife：ColorOverLife = 曲线 12 点（[0,[7.5951,5.0926,2.4069]]，[0.0972,[5.0055,3.272,1.4749]] …）；AlphaOverLife = 1
+
+【Embers】GPU Sprites · 材质角色 soft_dot · Screen Alignment = Square · Duration 3.5 s · Loops 1 · Delay 0 s
+  Spawn Rate（发射器时间 s → 颗/秒，线性）：43 个关键点，0 → 3.21；0.125 → 3.1；0.1667 → 3.49；0.2083 → 2.53 …（完整见 cascade.json）
+  Lifetime：Lifetime = 随机 1.75 ~ 3.25
+  InitialSize：StartSize = 随机 [56,56,56] ~ [84,84,84]
+  InitialLocation：StartLocation = 曲线 71 点（[0,[5,0,0]]，[0.05,[4.4,2.4,453.6]] …），不烘查找表
+  InitialVelocity：StartVelocity = 曲线 71 点（[0,[0,100,7515.9]]，[0.05,[-48.2,87.6,7388]] …），不烘查找表
+  InitialVelocity：StartVelocity = 随机 [-388.9,-388.9,-194.5] ~ [388.9,388.9,194.5]（第 2 个 Initial Velocity：叠加的随机散开（2 个均匀分布相加 → 中间密、边缘软））
+  InitialVelocity：StartVelocity = 随机 [-388.9,-388.9,-194.5] ~ [388.9,388.9,194.5]（第 3 个 Initial Velocity：叠加的随机散开（2 个均匀分布相加 → 中间密、边缘软））
+  Drag：DragCoefficientRaw = 随机 1.75 ~ 3.25
+  ConstAcceleration：Acceleration = [0,0,-981]
+  Acceleration：Acceleration = 曲线 50 点（[0,[-209.4,-263.9,-117.8]]，[0.05,[-172.7,-286.6,-97.8]] …），不烘查找表（空气乱流（大涡）：按发射器时间取值，同一时刻出生的火花受同一股气流 → 沿尾迹相关的松散）
+  Acceleration：Acceleration = 随机 [-183.7,-183.7,-128.6] ~ [183.7,183.7,128.6]（空气乱流（小涡）：每颗随机（2 个相加 → 边缘软））
+  Acceleration：Acceleration = 随机 [-183.7,-183.7,-128.6] ~ [183.7,183.7,128.6]（空气乱流（小涡）：每颗随机（2 个相加 → 边缘软））
+  SizeByLife：LifeMultiplier = 曲线 3 点（[0,[1,1,1]]，[0.8,[0.9,0.9,0.9]] …）；MultiplyX = true；MultiplyY = true；MultiplyZ = true
+  ColorOverLife：ColorOverLife = 曲线 12 点（[0,[4.948,2.6714,0.8437]]，[0.07,[3.383,1.7523,0.5124]] …）；AlphaOverLife = 1
+
+【HeadGlow】CPU · 材质角色 soft_dot · Screen Alignment = Square · Duration 3.5 s · Loops 1 · Delay 0 s
+  Spawn Rate = 0 · Burst 0 s × 1
+  Lifetime：Lifetime = 随机 3.5 ~ 3.5
+  InitialSize：StartSize = 随机 [600,600,600] ~ [600,600,600]
+  InitialLocation：StartLocation = [0,0,0]
+  InitialVelocity：StartVelocity = [0,0,9135.9]
+  Drag：DragCoefficientRaw = 随机 0.1738 ~ 0.1738
+  ConstAcceleration：Acceleration = [0,0,-981]
+  SizeByLife：LifeMultiplier = 曲线 2 点（[0,[1,1,1]]，[1,[0.8,0.8,0.8]]）；MultiplyX = true；MultiplyY = true；MultiplyZ = true
+  ColorOverLife：ColorOverLife = 曲线 86 点（[0,[0.1254,0.0725,0.026]]，[0.0119,[0.106,0.0613,0.022]] …）；AlphaOverLife = 1
+
+【SparkPops】GPU Sprites · 材质角色 soft_dot · Screen Alignment = Square · Duration 3.5 s · Loops 1 · Delay 0 s
+  Spawn Rate（发射器时间 s → 颗/秒，线性）：70 个关键点，0 → 16.07；0.0417 → 13.59；0.125 → 15.5；0.1667 → 17.44 …（完整见 cascade.json）
+  Lifetime：Lifetime = 随机 1.08 ~ 2.16
+  InitialSize：StartSize = 随机 [28,28,28] ~ [52,52,52]
+  InitialLocation：StartLocation = 曲线 71 点（[0,[5,0,0]]，[0.05,[4.4,2.4,453.6]] …），不烘查找表
+  InitialVelocity：StartVelocity = 曲线 71 点（[0,[0,200,6435.9]]，[0.05,[-96.4,175.3,6308]] …），不烘查找表
+  InitialVelocity：StartVelocity = 随机 [-388.9,-388.9,-194.5] ~ [388.9,388.9,194.5]（第 2 个 Initial Velocity：叠加的随机散开（2 个均匀分布相加 → 中间密、边缘软））
+  InitialVelocity：StartVelocity = 随机 [-388.9,-388.9,-194.5] ~ [388.9,388.9,194.5]（第 3 个 Initial Velocity：叠加的随机散开（2 个均匀分布相加 → 中间密、边缘软））
+  Drag：DragCoefficientRaw = 随机 1.17 ~ 2.43
+  ConstAcceleration：Acceleration = [0,0,-981]
+  Acceleration：Acceleration = 曲线 44 点（[0,[-150.8,-190,-84.8]]，[0.05,[-124.3,-206.4,-70.4]] …），不烘查找表（空气乱流（大涡）：按发射器时间取值，同一时刻出生的火花受同一股气流 → 沿尾迹相关的松散）
+  Acceleration：Acceleration = 随机 [-132.3,-132.3,-92.6] ~ [132.3,132.3,92.6]（空气乱流（小涡）：每颗随机（2 个相加 → 边缘软））
+  Acceleration：Acceleration = 随机 [-132.3,-132.3,-92.6] ~ [132.3,132.3,92.6]（空气乱流（小涡）：每颗随机（2 个相加 → 边缘软））
+  SizeByLife：LifeMultiplier = 曲线 4 点（[0,[0.4,0.4,0.4]]，[0.85,[0.4,0.4,0.4]] …）；MultiplyX = true；MultiplyY = true；MultiplyZ = true
+  ColorOverLife：ColorOverLife = 曲线 6 点（[0,[0,0,0]]，[0.849,[0,0,0]] …）；AlphaOverLife = 1
+
+【LaunchGlow】CPU · 材质角色 soft_dot · Screen Alignment = Square · Duration 0.5 s · Loops 1 · Delay 0 s
+  Spawn Rate = 0 · Burst 0 s × 1
+  Lifetime：Lifetime = 随机 0.3 ~ 0.3
+  InitialSize：StartSize = 随机 [600,600,600] ~ [600,600,600]
+  InitialLocation：StartLocation = [0,0,100]
+  InitialVelocity：StartVelocity = [0,0,0]
+  SizeByLife：LifeMultiplier = 曲线 3 点（[0,[0.6,0.6,0.6]]，[0.15,[1,1,1]] …）；MultiplyX = true；MultiplyY = true；MultiplyZ = true
+  ColorOverLife：ColorOverLife = 曲线 4 点（[0,[1.7479,0.8559,0.2255]]，[0.2,[0.7865,0.3851,0.1015]] …）；AlphaOverLife = 1
+
+【LaunchSparks】GPU Sprites · 材质角色 soft_dot · Screen Alignment = Square · Duration 0.5 s · Loops 1 · Delay 0 s
+  Spawn Rate = 0 · Burst 0 s × 60
+  Lifetime：Lifetime = 随机 0.35 ~ 1
+  InitialSize：StartSize = 随机 [12,12,12] ~ [30,30,30]
+  InitialLocation：StartLocation = [0,0,50]
+  InitialVelocity：StartVelocity = [0,0,1875]
+  InitialVelocity：StartVelocity = 随机 [-909.9,-909.9,-750] ~ [909.9,909.9,750]（第 2 个 Initial Velocity：叠加的随机散开（2 个均匀分布相加 → 中间密、边缘软））
+  InitialVelocity：StartVelocity = 随机 [-909.9,-909.9,0] ~ [909.9,909.9,0]（第 3 个 Initial Velocity：叠加的随机散开（2 个均匀分布相加 → 中间密、边缘软））
+  Drag：DragCoefficientRaw = 随机 2.5 ~ 4.5
+  ConstAcceleration：Acceleration = [0,0,-981]
+  SizeByLife：LifeMultiplier = 曲线 2 点（[0,[1,1,1]]，[1,[0.5,0.5,0.5]]）；MultiplyX = true；MultiplyY = true；MultiplyZ = true
+  ColorOverLife：ColorOverLife = 曲线 10 点（[0,[6.8092,4.202,1.7017]]，[0.25,[4.3497,2.602,0.9945]] …）；AlphaOverLife = 1
+
+【粒子层 · 手机】数量 × 0.12，全部 CPU，同时活着最多约 262 颗（曲线同 PC，Spawn Rate 乘比例）
+
+【未经 UE 验证】出生类曲线按发射器时间取值在 GPU 发射器上的表现；软圆点的亮度口径；dissolve 在材质里的表现；循环层速度朝向在接近顶点（速度很小）时的朝向；空气乱流的 Acceleration 模块（GPU）；线状火花 GPU + Rectangle 对齐、Size By Life 的 Y 单独拉长。

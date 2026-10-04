@@ -1,0 +1,8 @@
+21:22:06 开始：JinMangJu（导出素材）
+21:22:10 JinMangJu 导出 4 秒：JinMangJu.json、JinMangJu_Cascade参数.txt、JinMangJu_Mobile.json、JinMangJu_曲线.csv、T_EFX_FireWorks_GoldChrysanthemum_4x4_01.png、T_EFX_FireWorks_GoldChrysanthemum_4x4_01_C.png、T_EFX_FireWorks_GoldChrysanthemum_4x4_01_HD.png、T_EFX_FireWorks_GoldChrysanthemum_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+21:22:11 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\JM4-40E7\回放检查.jpg（✅ 通过）
+21:22:28 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\JM4-40E7\烘焙回放.jpg
+21:22:29 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\JM4-40E7\烘焙回放_原尺寸.jpg
+21:22:29 烘焙器预览 preview.js：0 KB
+21:22:29 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+21:22:29 完成，用时 0.4 分钟
