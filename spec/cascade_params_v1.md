@@ -115,10 +115,33 @@
 | `required.cutout` | Cutout Texture，同时设 Sub Images 1×1、Eight Vertices、Opacity Source = Alpha、Alpha Threshold 0.1 | ✅ |
 | `required.sub_images` | `[水平, 竖直]`，只有真的用 SubUV 时才写 | ⚪ |
 | `required.max_draw_count` | bUseMaxDrawCount + MaxDrawCount | ✅ |
-| `required.pivot_offset` | Pivot Offset `[x, y]`（默认 −0.5, −0.5 是面片中心，**引擎内部口径**）。速度朝向的尾缀用它把星头放在粒子位置。**注意**：编辑器里的「Pivot Offset」模块（`ParticleModulePivotOffset.PivotOffset`）字段口径不同，文档写「默认 (0.5, 0.5) = 面片中心、UV 空间」，导入时要换算，不能原样写：大概率是 `(−x, −y)`（星头在上端时 ≈ (0.5, 0.015)），也可能是 `(x + 1, y + 1)`（≈ (0.5, 0.985)），两者竖直方向相反，等 UE 实测定（2026-10-04 用户测 RT4L） | ⚪（2026-09-30 烘焙器开始输出；导入器 10-04 起写 Pivot Offset 模块，换算口径未实测） |
+| `required.pivot_offset` | 素材包写**引擎内部偏移**`[x,y]`，中心是`[-0.5,-0.5]`；Cascade的独立`ParticleModulePivotOffset.PivotOffset`模块以`(0,0)`为中心，导入须转换为`(X=x+0.5,Y=y+0.5)`。例如`[-0.5,-0.0154]`对应面板`(0,0.4846)`。模块必须挂接到LOD.Modules。详见下方「Pivot格式与换算」 | ✅ 本机定义/默认属性确认；⚪ 当前烟花实播对齐未验 |
 | `required.local_space` | bUseLocalSpace | ⚪ |
 | `spawn.rate` | Spawn Rate（分布） | ✅ |
 | `spawn.bursts` | `[[时间秒, 数量], …]` → BurstList | ✅ |
+
+### Pivot格式与换算（2026-10-04，对话框5同步给Claude）
+
+用户明确：Cascade默认`(0,0)`是中心。本机默认模块属性读取也为`X=0,Y=0`；实际模块编译将两个字段各减`0.5`，CPU/GPU着色器都以`UV + 内部Pivot`计算顶点偏移。因此确定的转换是**加0.5**，不采用取反或加1的猜测。原JSON保持引擎内部口径，在导入边界换算。
+
+JSON里的局部配置：
+
+```json
+"required": {
+  "pivot_offset": [-0.5, -0.0154]
+}
+```
+
+创建独立`ParticleModulePivotOffset`模块，原生写入：
+
+```json
+{
+  "LODValidity": 1,
+  "PivotOffset": "(X=0.000000,Y=0.484600)"
+}
+```
+
+随后追加到该发射器LOD的`Modules`。通用计算：`moduleX=internalX+0.5`、`moduleY=internalY+0.5`；中心包`[-0.5,-0.5]`应得到面板`(0,0)`。该包循环层与消散层同值，均用`X=0,Y=0.4846`。旧导入器缺节点，v2.6/v2.7能创建但未换算，私有工作台v2.8已修正。历史保留的手调发射器不会随网页升级自动改写；补节点应只新增/校正Pivot，保护其它手调参数。定义依据和验证边界见`spec/UE实测.md`。
 
 ## 5. 模块表（`m` 的取值）
 
