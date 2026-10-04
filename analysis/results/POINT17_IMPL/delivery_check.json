@@ -1,0 +1,241 @@
+{
+ "checks": [
+  {
+   "name": "UI select and save/reload retain profile, highlight target and material intensity",
+   "passed": true
+  },
+  {
+   "name": "fixture standard checks",
+   "passed": true,
+   "metrics": {
+    "id": "POINT17_TEST",
+    "name": null,
+    "type": "botan",
+    "form": "master",
+    "duration": 2.8,
+    "zoom": "off",
+    "frameMode": "auto",
+    "autoGrid": 0,
+    "renderVer": 40,
+    "qSS": 2,
+    "headSize": 0.65,
+    "sparkSize": 0.35,
+    "emberSize": 1,
+    "texW": 2048,
+    "texH": 2048,
+    "grid": {
+     "cols": 2,
+     "rows": 2,
+     "chans": 4,
+     "frames": 48,
+     "cellW": 1024,
+     "cellH": 1024,
+     "pages": 3,
+     "pageFrames": [
+      16,
+      16,
+      16
+     ],
+     "capacityPerPage": 16
+    },
+    "mobileCell": {
+     "cellW": 512,
+     "cellH": 512
+    },
+    "spriteM": 183.2,
+    "frames30": {
+     "shown": 48,
+     "total": 48,
+     "ratio": 1,
+     "maxJump": 1
+    },
+    "minFpsActive": 11.7,
+    "minFpsFade": 11.9,
+    "avgFps": 17.1,
+    "flowerM": 179.9,
+    "screen": {
+     "frac": 0.3333333333333333,
+     "flowerPx": 360,
+     "spritePx": 367,
+     "mag": 0.36,
+     "magMobile256": 1.43,
+     "mag512": 0.72,
+     "mag1024": 0.36,
+     "suggestPC": 512
+    },
+    "perspectiveReference": [
+     {
+      "dist": 800,
+      "spritePx": 214,
+      "mag": 0.21
+     },
+     {
+      "dist": 1000,
+      "spritePx": 171,
+      "mag": 0.17
+     },
+     {
+      "dist": 1200,
+      "spritePx": 143,
+      "mag": 0.14
+     }
+    ],
+    "game": [
+     {
+      "dist": 800,
+      "spritePx": 458,
+      "mag": 0.45
+     },
+     {
+      "dist": 1000,
+      "spritePx": 367,
+      "mag": 0.36
+     },
+     {
+      "dist": 1200,
+      "spritePx": 306,
+      "mag": 0.3
+     }
+    ],
+    "deadSize": {
+     "atFull": 0,
+     "atStart": 0,
+     "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+    },
+    "sizeDead": {
+     "head": false,
+     "spark": false
+    },
+    "sizeResponse": {
+     "head": {
+      "size": 0.65,
+      "energy": 53.12418681383133,
+      "enlarged": 64.28309094905853,
+      "ratio": 1.2100531754835613
+     },
+     "spark": {
+      "size": 0.35,
+      "energy": 15.400781035423279,
+      "enlarged": 18.637877464294434,
+      "ratio": 1.2101904066699942
+     }
+    }
+   },
+   "verdict": {
+    "单格 ≥ PC 下限": true,
+    "手机单格 ≥ 下限": true,
+    "屏幕放大 ≤ 1": true,
+    "30fps 显示帧 ≥ 90%": true,
+    "燃烧段有效帧率 ≥ 下限": true,
+    "淡出段有效帧率 ≥ 下限": true,
+    "尺寸参数有效": true
+   },
+   "features": {
+    "实时模拟": [
+     true,
+     ""
+    ],
+    "引擎回放 + 游戏内大小": [
+     true,
+     ""
+    ],
+    "贴图 + 流转动画": [
+     true,
+     ""
+    ],
+    "完整参数": [
+     true,
+     ""
+    ],
+    "导出素材包（cascade.json PC + 手机）": [
+     true,
+     ""
+    ],
+    "实拍对照": [
+     true,
+     "无参考（不适用）"
+    ]
+   }
+  },
+  {
+   "name": "highlight target affects suggested exposure predictably",
+   "passed": true,
+   "data": {
+    "a": {
+     "value": 1.2848116884373577,
+     "per": [
+      1.2848116884373577,
+      1.6094379124340998,
+      1.6375703916018365,
+      1.5279072013283652,
+      1.4505066631246428,
+      1.3301204747806135,
+      1.7249528441466802,
+      1.4255878268460342,
+      1.6661946178435147,
+      2.1236660573546056
+     ]
+    },
+    "b": {
+     "value": 0.6424058442186792,
+     "per": [
+      0.6424058442186792,
+      0.8047189562170503,
+      0.8187851958009187,
+      0.7639536006641828,
+      0.7252533315623216,
+      0.6650602373903071,
+      0.8624764220733405,
+      0.7127939134230173,
+      0.8330973089217578,
+      1.0618330286773032
+     ]
+    },
+    "ratio": 0.5000000000000002,
+    "expected": 0.5
+   }
+  },
+  {
+   "name": "GPU-only sparks use gradient profile",
+   "passed": true,
+   "data": {
+    "changed": true,
+    "gradientProgram": true
+   }
+  },
+  {
+   "name": "PC and mobile Cascade manifests exported",
+   "passed": true
+  },
+  {
+   "name": "no browser errors",
+   "passed": true,
+   "errors": []
+  }
+ ],
+ "passed": true,
+ "files": [
+  "T_EFX_FireWorks_PointProfile_Botan_2x2_01_HD.png",
+  "_检查/T_EFX_FireWorks_PointProfile_Botan_2x2_01_FrameTest.png",
+  "T_EFX_FireWorks_PointProfile_Botan_2x2_01_C.png",
+  "T_EFX_FireWorks_PointProfile_Botan_2x2_02_HD.png",
+  "_检查/T_EFX_FireWorks_PointProfile_Botan_2x2_02_FrameTest.png",
+  "T_EFX_FireWorks_PointProfile_Botan_2x2_02_C.png",
+  "T_EFX_FireWorks_PointProfile_Botan_2x2_03_HD.png",
+  "_检查/T_EFX_FireWorks_PointProfile_Botan_2x2_03_FrameTest.png",
+  "T_EFX_FireWorks_PointProfile_Botan_2x2_03_C.png",
+  "T_EFX_FireWorks_PointProfile_Botan_R.png",
+  "PointProfile_Botan_Cascade参数.txt",
+  "PointProfile_Botan_曲线.csv",
+  "PointProfile_Botan.json",
+  "T_EFX_FireWorks_PointProfile_Botan_2x2_01.png",
+  "T_EFX_FireWorks_PointProfile_Botan_2x2_02.png",
+  "T_EFX_FireWorks_PointProfile_Botan_2x2_03.png",
+  "PointProfile_Botan_Mobile.json",
+  "cascade.json",
+  "cascade_mobile.json",
+  "命名对照.txt"
+ ],
+ "zip_sha256": "2fd116feb93442ff300b4dc0cc4ed225817183d266c0a9363e1c39655491747c",
+ "pack": "F:\\FireWorksLab\\analysis\\local\\POINT17_IMPL\\export"
+}

@@ -1,0 +1,144 @@
+{
+ "id": "HN2-G",
+ "version": "4.3.8",
+ "frames": [
+  {
+   "t": 0.8999999999999999,
+   "sha256": "c04a3c9ce085a1175b827f25d9c697f7f24a2929bdea7f9e287961d47014e2aa",
+   "file": "after_HN2-G_0.png"
+  },
+  {
+   "t": 2.625,
+   "sha256": "f997d64da856521f49519e250caf931064256d275209c52519c4c1a324fa3f01",
+   "file": "after_HN2-G_1.png"
+  },
+  {
+   "t": 5.25,
+   "sha256": "1e3ac2b0b0296ffaea057c4b5589b53415d6ff05ed5412fa0bcc2ed71a64fdcc",
+   "file": "after_HN2-G_2.png"
+  }
+ ],
+ "metrics": {
+  "id": "HN2-G",
+  "name": "引菊 → 锦 · 金锦层",
+  "type": "kiku",
+  "form": "master",
+  "duration": 7.5,
+  "zoom": "on",
+  "frameMode": "auto",
+  "autoGrid": 1,
+  "renderVer": 40,
+  "qSS": 2,
+  "headSize": 0.6,
+  "sparkSize": 0.45,
+  "emberSize": 1,
+  "texW": 2048,
+  "texH": 2048,
+  "grid": {
+   "cols": 4,
+   "rows": 4,
+   "chans": 4,
+   "frames": 102,
+   "cellW": 512,
+   "cellH": 512,
+   "pages": 2,
+   "pageFrames": [
+    64,
+    38
+   ],
+   "capacityPerPage": 64
+  },
+  "mobileCell": {
+   "cellW": 256,
+   "cellH": 256
+  },
+  "spriteM": 354.8,
+  "frames30": {
+   "shown": 102,
+   "total": 102,
+   "ratio": 1,
+   "maxJump": 1
+  },
+  "minFpsActive": 10,
+  "minFpsFade": 10,
+  "avgFps": 13.6,
+  "flowerM": 329,
+  "screen": {
+   "frac": 0.3333333333333333,
+   "flowerPx": 360,
+   "spritePx": 388,
+   "mag": 0.76,
+   "magMobile256": 1.52,
+   "mag512": 0.76,
+   "mag1024": 0.38,
+   "suggestPC": 512
+  },
+  "perspectiveReference": [
+   {
+    "dist": 800,
+    "spritePx": 415,
+    "mag": 0.81
+   },
+   {
+    "dist": 1000,
+    "spritePx": 332,
+    "mag": 0.65
+   },
+   {
+    "dist": 1200,
+    "spritePx": 277,
+    "mag": 0.54
+   }
+  ],
+  "game": [
+   {
+    "dist": 800,
+    "spritePx": 485,
+    "mag": 0.95
+   },
+   {
+    "dist": 1000,
+    "spritePx": 388,
+    "mag": 0.76
+   },
+   {
+    "dist": 1200,
+    "spritePx": 323,
+    "mag": 0.63
+   }
+  ],
+  "deadSize": {
+   "atFull": 0,
+   "atStart": 0,
+   "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+  },
+  "sizeDead": {
+   "head": false,
+   "spark": false
+  },
+  "sizeResponse": {
+   "head": {
+    "size": 0.6,
+    "energy": 3.017899990081787,
+    "enlarged": 3.6528806686401367,
+    "ratio": 1.210404811506408
+   },
+   "spark": {
+    "size": 0.45,
+    "energy": 1.6976006031036377,
+    "enlarged": 2.0544328689575195,
+    "ratio": 1.2101980084134651
+   }
+  }
+ },
+ "standard": {
+  "单格 ≥ PC 下限": true,
+  "手机单格 ≥ 下限": true,
+  "屏幕放大 ≤ 1": true,
+  "30fps 显示帧 ≥ 90%": true,
+  "燃烧段有效帧率 ≥ 下限": true,
+  "淡出段有效帧率 ≥ 下限": true,
+  "尺寸参数有效": true
+ },
+ "source_sha256": "5f04294ae1721e7309c79380d44348cfd06c80b1eca2f8d8cc38780a635b7c1d"
+}

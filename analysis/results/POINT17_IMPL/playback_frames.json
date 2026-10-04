@@ -1,0 +1,285 @@
+{
+ "profile": 1,
+ "rows": [
+  {
+   "platform": "pc",
+   "t": 0,
+   "file": "playback_pc_000.png"
+  },
+  {
+   "platform": "pc",
+   "t": 0.1,
+   "file": "playback_pc_003.png"
+  },
+  {
+   "platform": "pc",
+   "t": 0.2,
+   "file": "playback_pc_006.png"
+  },
+  {
+   "platform": "pc",
+   "t": 0.3,
+   "file": "playback_pc_009.png"
+  },
+  {
+   "platform": "pc",
+   "t": 0.4,
+   "file": "playback_pc_012.png"
+  },
+  {
+   "platform": "pc",
+   "t": 0.5,
+   "file": "playback_pc_015.png"
+  },
+  {
+   "platform": "pc",
+   "t": 0.6,
+   "file": "playback_pc_018.png"
+  },
+  {
+   "platform": "pc",
+   "t": 0.7,
+   "file": "playback_pc_021.png"
+  },
+  {
+   "platform": "pc",
+   "t": 0.8,
+   "file": "playback_pc_024.png"
+  },
+  {
+   "platform": "pc",
+   "t": 0.9,
+   "file": "playback_pc_027.png"
+  },
+  {
+   "platform": "pc",
+   "t": 1,
+   "file": "playback_pc_030.png"
+  },
+  {
+   "platform": "pc",
+   "t": 1.1,
+   "file": "playback_pc_033.png"
+  },
+  {
+   "platform": "pc",
+   "t": 1.2,
+   "file": "playback_pc_036.png"
+  },
+  {
+   "platform": "pc",
+   "t": 1.3,
+   "file": "playback_pc_039.png"
+  },
+  {
+   "platform": "pc",
+   "t": 1.4,
+   "file": "playback_pc_042.png"
+  },
+  {
+   "platform": "pc",
+   "t": 1.5,
+   "file": "playback_pc_045.png"
+  },
+  {
+   "platform": "pc",
+   "t": 1.6,
+   "file": "playback_pc_048.png"
+  },
+  {
+   "platform": "pc",
+   "t": 1.7,
+   "file": "playback_pc_051.png"
+  },
+  {
+   "platform": "pc",
+   "t": 1.8,
+   "file": "playback_pc_054.png"
+  },
+  {
+   "platform": "pc",
+   "t": 1.9,
+   "file": "playback_pc_057.png"
+  },
+  {
+   "platform": "pc",
+   "t": 2,
+   "file": "playback_pc_060.png"
+  },
+  {
+   "platform": "pc",
+   "t": 2.1,
+   "file": "playback_pc_063.png"
+  },
+  {
+   "platform": "pc",
+   "t": 2.2,
+   "file": "playback_pc_066.png"
+  },
+  {
+   "platform": "pc",
+   "t": 2.3,
+   "file": "playback_pc_069.png"
+  },
+  {
+   "platform": "pc",
+   "t": 2.4,
+   "file": "playback_pc_072.png"
+  },
+  {
+   "platform": "pc",
+   "t": 2.5,
+   "file": "playback_pc_075.png"
+  },
+  {
+   "platform": "pc",
+   "t": 2.6,
+   "file": "playback_pc_078.png"
+  },
+  {
+   "platform": "pc",
+   "t": 2.7,
+   "file": "playback_pc_081.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 0,
+   "file": "playback_mobile_000.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 0.1,
+   "file": "playback_mobile_003.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 0.2,
+   "file": "playback_mobile_006.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 0.3,
+   "file": "playback_mobile_009.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 0.4,
+   "file": "playback_mobile_012.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 0.5,
+   "file": "playback_mobile_015.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 0.6,
+   "file": "playback_mobile_018.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 0.7,
+   "file": "playback_mobile_021.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 0.8,
+   "file": "playback_mobile_024.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 0.9,
+   "file": "playback_mobile_027.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 1,
+   "file": "playback_mobile_030.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 1.1,
+   "file": "playback_mobile_033.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 1.2,
+   "file": "playback_mobile_036.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 1.3,
+   "file": "playback_mobile_039.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 1.4,
+   "file": "playback_mobile_042.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 1.5,
+   "file": "playback_mobile_045.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 1.6,
+   "file": "playback_mobile_048.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 1.7,
+   "file": "playback_mobile_051.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 1.8,
+   "file": "playback_mobile_054.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 1.9,
+   "file": "playback_mobile_057.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 2,
+   "file": "playback_mobile_060.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 2.1,
+   "file": "playback_mobile_063.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 2.2,
+   "file": "playback_mobile_066.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 2.3,
+   "file": "playback_mobile_069.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 2.4,
+   "file": "playback_mobile_072.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 2.5,
+   "file": "playback_mobile_075.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 2.6,
+   "file": "playback_mobile_078.png"
+  },
+  {
+   "platform": "mobile",
+   "t": 2.7,
+   "file": "playback_mobile_081.png"
+  }
+ ]
+}

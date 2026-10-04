@@ -87,8 +87,8 @@ function entryVer(e) {
   if (!e || !e.ver) return null;
   const key = e.id + '@' + e.ver; if (_entryVer.has(key)) return _entryVer.get(key);
   const fams = new Set();
-  for (const id of (e.kind === 'combo' ? e.layerIds || [] : [e.id])) { try { if (typeof REPLICA_BY_ID !== 'undefined' && REPLICA_BY_ID[id]) fams.add(outFamily(replicaPM(id).P)); } catch (err) { } }
-  const v = e.ver + '·' + ([...fams].sort().map(f => f + OUTPUT_VER[f]).join('+') || 'x');
+  for (const id of (e.kind === 'combo' ? e.layerIds || [] : [e.id])) { try { if (typeof REPLICA_BY_ID !== 'undefined' && REPLICA_BY_ID[id]) { const P=replicaPM(id).P, f=outFamily(P); fams.add(f + (+P.coreProfile===1 ? '4.3.8-core1' : OUTPUT_VER[f])); } } catch (err) { } }
+  const v = e.ver + '·' + ([...fams].sort().join('+') || 'x');
   _entryVer.set(key, v); return v;
 }
 // 「待我验收」按证据把关：最新导出 = 当前版本指纹、回放检查过、标准检查（同一指纹）过；状态清单里写了「例外」（引用用户的决定）的那一项不算缺

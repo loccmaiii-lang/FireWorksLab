@@ -1,0 +1,143 @@
+{
+ "id": "HN2-O",
+ "version": "4.3.7",
+ "frames": [
+  {
+   "t": 0.408,
+   "sha256": "addab76d1e3ab2cdf07145434c3f2dd8c6858964382c8bf5d58a145b2fa81e52",
+   "file": "before_HN2-O_0.png"
+  },
+  {
+   "t": 1.19,
+   "sha256": "145870161649f4e14a3dc500129ae37de0e2aab44b5baf8fbae1d5cddf065947",
+   "file": "before_HN2-O_1.png"
+  },
+  {
+   "t": 2.38,
+   "sha256": "c02cda38d7c1caf439190f1cefec396a1e911f2eba2520ea0c98217fc90c4631",
+   "file": "before_HN2-O_2.png"
+  }
+ ],
+ "metrics": {
+  "id": "HN2-O",
+  "name": "引菊 → 锦 · 橙引线层",
+  "type": "kiku",
+  "form": "master",
+  "duration": 3.4,
+  "zoom": "on",
+  "frameMode": "auto",
+  "autoGrid": 1,
+  "renderVer": 40,
+  "qSS": 2,
+  "headSize": 0.6,
+  "sparkSize": 0.45,
+  "emberSize": 1,
+  "texW": 2048,
+  "texH": 2048,
+  "grid": {
+   "cols": 4,
+   "rows": 4,
+   "chans": 4,
+   "frames": 59,
+   "cellW": 512,
+   "cellH": 512,
+   "pages": 1,
+   "pageFrames": [
+    59
+   ],
+   "capacityPerPage": 64
+  },
+  "mobileCell": {
+   "cellW": 256,
+   "cellH": 256
+  },
+  "spriteM": 228.8,
+  "frames30": {
+   "shown": 59,
+   "total": 59,
+   "ratio": 1,
+   "maxJump": 1
+  },
+  "minFpsActive": 28.3,
+  "minFpsFade": 10.8,
+  "avgFps": 17.4,
+  "flowerM": 210.1,
+  "screen": {
+   "frac": 0.3333333333333333,
+   "flowerPx": 360,
+   "spritePx": 392,
+   "mag": 0.77,
+   "magMobile256": 1.53,
+   "mag512": 0.77,
+   "mag1024": 0.38,
+   "suggestPC": 512
+  },
+  "perspectiveReference": [
+   {
+    "dist": 800,
+    "spritePx": 267,
+    "mag": 0.52
+   },
+   {
+    "dist": 1000,
+    "spritePx": 214,
+    "mag": 0.42
+   },
+   {
+    "dist": 1200,
+    "spritePx": 178,
+    "mag": 0.35
+   }
+  ],
+  "game": [
+   {
+    "dist": 800,
+    "spritePx": 490,
+    "mag": 0.96
+   },
+   {
+    "dist": 1000,
+    "spritePx": 392,
+    "mag": 0.77
+   },
+   {
+    "dist": 1200,
+    "spritePx": 327,
+    "mag": 0.64
+   }
+  ],
+  "deadSize": {
+   "atFull": 0,
+   "atStart": 0,
+   "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+  },
+  "sizeDead": {
+   "head": false,
+   "spark": false
+  },
+  "sizeResponse": {
+   "head": {
+    "size": 0.6,
+    "energy": 7.259393215179443,
+    "enlarged": 8.781492948532104,
+    "ratio": 1.209673134962567
+   },
+   "spark": {
+    "size": 0.45,
+    "energy": 4.083784580230713,
+    "enlarged": 4.941117286682129,
+    "ratio": 1.2099358302594359
+   }
+  }
+ },
+ "standard": {
+  "单格 ≥ PC 下限": true,
+  "手机单格 ≥ 下限": true,
+  "屏幕放大 ≤ 1": true,
+  "30fps 显示帧 ≥ 90%": true,
+  "燃烧段有效帧率 ≥ 下限": true,
+  "淡出段有效帧率 ≥ 下限": true,
+  "尺寸参数有效": true
+ },
+ "source_sha256": "c6d65da232a76df0c1a5c0418336102e45cee66b3498b2ed993f537ebd04e4d7"
+}

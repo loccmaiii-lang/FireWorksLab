@@ -1,6 +1,6 @@
 // 画质：烘焙的空间超采样、快门子样本、光晕（光点一律按像素覆盖积分画，41_particles40.js；3.7 的高斯核 / 亮核开关 4.3 去掉了）
 function qualityOf(P) {
-  return { haloFrac: clamp(P.haloFrac == null ? .22 : +P.haloFrac, 0, .85), haloR: clamp(+P.haloR || 3, 1, 8),
+  return { coreProfile: +P.coreProfile === 1 ? 1 : 0, haloFrac: clamp(P.haloFrac == null ? .22 : +P.haloFrac, 0, .85), haloR: clamp(+P.haloR || 3, 1, 8),
     ss: clamp(Math.round(+P.qSS || 2), 1, 8), hz: clamp(+P.qHz || 300, 120, 1920), maxSub: clamp(Math.round(+P.qMaxSub || 16), 1, 128) };
 }
 let particleQuality = qualityOf({});

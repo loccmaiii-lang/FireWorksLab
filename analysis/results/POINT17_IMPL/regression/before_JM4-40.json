@@ -1,0 +1,143 @@
+{
+ "id": "JM4-40",
+ "version": "4.3.7",
+ "frames": [
+  {
+   "t": 0.5471999999999999,
+   "sha256": "5c51470147822798c812a4ffe90fe4af0b670f0c5ee881c0dcc087445510d40c",
+   "file": "before_JM4-40_0.png"
+  },
+  {
+   "t": 1.5959999999999999,
+   "sha256": "b31eef91b9197ab5ce0b6c94af3e373fe2527598b6725126b0e525b55d73cd92",
+   "file": "before_JM4-40_1.png"
+  },
+  {
+   "t": 3.1919999999999997,
+   "sha256": "618d174f615458133a04461d9c82793fb741f9d4d2e89549d0e04ef1ab0ab5f8",
+   "file": "before_JM4-40_2.png"
+  }
+ ],
+ "metrics": {
+  "id": "JM4-40",
+  "name": "金芒菊 · 4.0 渲染（JM4 参数，待你重新验收）",
+  "type": "kiku",
+  "form": "master",
+  "duration": 4.56,
+  "zoom": "off",
+  "frameMode": "auto",
+  "autoGrid": 0,
+  "renderVer": 40,
+  "qSS": 2,
+  "headSize": 0.45,
+  "sparkSize": 0.45,
+  "emberSize": 1,
+  "texW": 2048,
+  "texH": 2048,
+  "grid": {
+   "cols": 4,
+   "rows": 4,
+   "chans": 4,
+   "frames": 64,
+   "cellW": 512,
+   "cellH": 512,
+   "pages": 1,
+   "pageFrames": [
+    64
+   ],
+   "capacityPerPage": 64
+  },
+  "mobileCell": {
+   "cellW": 256,
+   "cellH": 256
+  },
+  "spriteM": 215.6,
+  "frames30": {
+   "shown": 64,
+   "total": 64,
+   "ratio": 1,
+   "maxJump": 1
+  },
+  "minFpsActive": 13.3,
+  "minFpsFade": 8.3,
+  "avgFps": 14,
+  "flowerM": 202.7,
+  "screen": {
+   "frac": 0.3333333333333333,
+   "flowerPx": 360,
+   "spritePx": 383,
+   "mag": 0.75,
+   "magMobile256": 1.5,
+   "mag512": 0.75,
+   "mag1024": 0.37,
+   "suggestPC": 512
+  },
+  "perspectiveReference": [
+   {
+    "dist": 800,
+    "spritePx": 252,
+    "mag": 0.49
+   },
+   {
+    "dist": 1000,
+    "spritePx": 202,
+    "mag": 0.39
+   },
+   {
+    "dist": 1200,
+    "spritePx": 168,
+    "mag": 0.33
+   }
+  ],
+  "game": [
+   {
+    "dist": 800,
+    "spritePx": 479,
+    "mag": 0.93
+   },
+   {
+    "dist": 1000,
+    "spritePx": 383,
+    "mag": 0.75
+   },
+   {
+    "dist": 1200,
+    "spritePx": 319,
+    "mag": 0.62
+   }
+  ],
+  "deadSize": {
+   "atFull": 0,
+   "atStart": 0,
+   "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+  },
+  "sizeDead": {
+   "head": false,
+   "spark": false
+  },
+  "sizeResponse": {
+   "head": {
+    "size": 0.45,
+    "energy": 4.595591306686401,
+    "enlarged": 5.560208320617676,
+    "ratio": 1.2099005219475882
+   },
+   "spark": {
+    "size": 0.45,
+    "energy": 4.595591306686401,
+    "enlarged": 5.560208320617676,
+    "ratio": 1.2099005219475882
+   }
+  }
+ },
+ "standard": {
+  "单格 ≥ PC 下限": true,
+  "手机单格 ≥ 下限": true,
+  "屏幕放大 ≤ 1": true,
+  "30fps 显示帧 ≥ 90%": true,
+  "燃烧段有效帧率 ≥ 下限": true,
+  "淡出段有效帧率 ≥ 下限": true,
+  "尺寸参数有效": true
+ },
+ "source_sha256": "c6d65da232a76df0c1a5c0418336102e45cee66b3498b2ed993f537ebd04e4d7"
+}

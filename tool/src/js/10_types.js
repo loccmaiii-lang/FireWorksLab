@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.3.7';
+const VERSION = '4.3.8';
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -54,7 +54,7 @@ function blankRemoveModule(P, mod) {
 
 const BASE = {
   renderVer: 40,
-  exposure: 1, exposureLock: 0, haloFrac: .22, haloR: 3, previewBloom: 0,
+  exposure: 1, exposureLock: 0, exposureTarget: .96, coreProfile: 0, haloFrac: .22, haloR: 3, previewBloom: 0,
   trimTail: 1,
   mods: [],     // 空白发射器加了哪些模块（别的花型不用）
   duration: 3.2, seed: 7, stars: 150, burstR0: 0, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
@@ -695,7 +695,9 @@ const SCHEMA = [
     ['cellPad', '格子留边', 'px', 0, 8, 1]
   ] },
   { sec: '光点与曝光（4.0）', show: () => true, hint: '尺寸表示亮核直径。曝光固定，不随亮度和尺寸自动改变；光晕与亮核分开调。', items: [
-    ['exposure', '固定曝光', '×', .01, 20, .01, P => !P.exposureLock],
+    { sel: 'coreProfile', label: '亮核分布', options: [[0,'均匀亮核（兼容）'],[1,'渐变亮核']] },
+    ['exposure', '贴图曝光', '×', .001, 20, .001, P => !P.exposureLock],
+    ['exposureTarget', '建议亮部目标', '', .5, .98, .01],
     { sel: 'exposureLock', label: '锁定曝光', options: [[0,'未锁定（曝光仍固定）'],[1,'已锁定']] },
     ['haloFrac', '光晕能量占比', '', 0, .85, .01],
     ['haloR', '光晕半径 / 亮核半径', '×', 1, 8, .1],

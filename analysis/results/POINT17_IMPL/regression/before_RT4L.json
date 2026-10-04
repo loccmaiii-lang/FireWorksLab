@@ -1,0 +1,114 @@
+{
+ "id": "RT4L",
+ "version": "4.3.7",
+ "frames": [
+  {
+   "t": 1.53,
+   "sha256": "50c7f4f5414b622afad4a8d289aad5ec6acc9239334d9b8061bc151d13f8c890",
+   "file": "before_RT4L_0.png"
+  },
+  {
+   "t": 4.4624999999999995,
+   "sha256": "30fb17f72d18378380fa929f16bf97d60ad047a5d7ff10fbe7b30bde1e16b975",
+   "file": "before_RT4L_1.png"
+  },
+  {
+   "t": 8.924999999999999,
+   "sha256": "c04a3c9ce085a1175b827f25d9c697f7f24a2929bdea7f9e287961d47014e2aa",
+   "file": "before_RT4L_2.png"
+  }
+ ],
+ "metrics": {
+  "id": "RT4L",
+  "name": "升空尾缀 · 循环层 + 粒子 大（第 4 版）",
+  "type": "tailL",
+  "form": "emitset",
+  "duration": 12.75,
+  "zoom": "off",
+  "frameMode": "uniform",
+  "autoGrid": 0,
+  "renderVer": 40,
+  "qSS": 2,
+  "headSize": 1,
+  "sparkSize": 0.35,
+  "emberSize": 1,
+  "texW": 2048,
+  "texH": 2048,
+  "grid": {
+   "cols": 16,
+   "rows": 1,
+   "chans": 4,
+   "frames": 64,
+   "cellW": 128,
+   "cellH": 2048,
+   "beam": true
+  },
+  "frames30": {
+   "shown": 64,
+   "total": 64,
+   "ratio": 1,
+   "maxJump": 1
+  },
+  "fadeGrid": {
+   "cols": 8,
+   "rows": 1,
+   "chans": 4,
+   "frames": 32,
+   "texW": 1024,
+   "texH": 2048
+  },
+  "minFpsActive": 27.7,
+  "minFpsFade": 18.6,
+  "avgFps": 27.7,
+  "flowerM": 290,
+  "spriteM": 180,
+  "screen": {
+   "frac": 0.3333333333333333,
+   "flowerPx": 360,
+   "spritePx": 223,
+   "spritePxW": 9,
+   "mag": 0.11,
+   "magMobile256": 0.22
+  },
+  "mobileCell": {
+   "cellW": 64,
+   "cellH": 1024
+  },
+  "game": [
+   {
+    "dist": 800,
+    "spritePx": 279,
+    "mag": 0.14
+   },
+   {
+    "dist": 1000,
+    "spritePx": 223,
+    "mag": 0.11
+   },
+   {
+    "dist": 1200,
+    "spritePx": 186,
+    "mag": 0.09
+   }
+  ],
+  "deadSize": {
+   "atFull": 0.03,
+   "atStart": 0.03
+  },
+  "sizeDead": {
+   "head": false,
+   "spark": false
+  },
+  "note": "循环层 + 粒子发射器：量循环层面片；粒子层是软圆点发射器（无贴图）"
+ },
+ "standard": {
+  "单格 ≥ PC 下限": true,
+  "手机单格 ≥ 下限": true,
+  "屏幕放大 ≤ 1": true,
+  "30fps 显示帧 ≥ 90%": true,
+  "燃烧段有效帧率 ≥ 下限": true,
+  "淡出段有效帧率 ≥ 下限": true,
+  "尺寸参数有效": true
+ },
+ "source_sha256": "c6d65da232a76df0c1a5c0418336102e45cee66b3498b2ed993f537ebd04e4d7"
+}

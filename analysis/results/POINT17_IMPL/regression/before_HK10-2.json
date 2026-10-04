@@ -1,0 +1,145 @@
+{
+ "id": "HK10-2",
+ "version": "4.3.7",
+ "frames": [
+  {
+   "t": 1.44,
+   "sha256": "c04a3c9ce085a1175b827f25d9c697f7f24a2929bdea7f9e287961d47014e2aa",
+   "file": "before_HK10-2_0.png"
+  },
+  {
+   "t": 4.199999999999999,
+   "sha256": "c04a3c9ce085a1175b827f25d9c697f7f24a2929bdea7f9e287961d47014e2aa",
+   "file": "before_HK10-2_1.png"
+  },
+  {
+   "t": 8.399999999999999,
+   "sha256": "b53ac4741cb251c1212d81bcfbdf51a0ceea63cc557318af5ab4426708f2ca9a",
+   "file": "before_HK10-2_2.png"
+  }
+ ],
+ "metrics": {
+  "id": "HK10-2",
+  "name": "鸿巢四尺玉 第 9 版 · 返工 ② 红点灭（4.0 · HK9-2 参数）",
+  "type": "strobe",
+  "form": "master",
+  "duration": 12,
+  "zoom": "off",
+  "frameMode": "auto",
+  "autoGrid": 0,
+  "renderVer": 40,
+  "qSS": 2,
+  "headSize": 3.4,
+  "sparkSize": 0.35,
+  "emberSize": 1,
+  "texW": 2048,
+  "texH": 2048,
+  "grid": {
+   "cols": 4,
+   "rows": 4,
+   "chans": 4,
+   "frames": 192,
+   "cellW": 512,
+   "cellH": 512,
+   "pages": 3,
+   "pageFrames": [
+    64,
+    64,
+    64
+   ],
+   "capacityPerPage": 64
+  },
+  "mobileCell": {
+   "cellW": 256,
+   "cellH": 256
+  },
+  "spriteM": 948.7,
+  "frames30": {
+   "shown": 192,
+   "total": 192,
+   "ratio": 1,
+   "maxJump": 1
+  },
+  "minFpsActive": 10,
+  "minFpsFade": 10,
+  "avgFps": 16,
+  "flowerM": 1072.5,
+  "screen": {
+   "frac": 0.3333333333333333,
+   "flowerPx": 360,
+   "spritePx": 318,
+   "mag": 0.62,
+   "magMobile256": 1.24,
+   "mag512": 0.62,
+   "mag1024": 0.31,
+   "suggestPC": 512
+  },
+  "perspectiveReference": [
+   {
+    "dist": 800,
+    "spritePx": 1109,
+    "mag": 2.17
+   },
+   {
+    "dist": 1000,
+    "spritePx": 887,
+    "mag": 1.73
+   },
+   {
+    "dist": 1200,
+    "spritePx": 739,
+    "mag": 1.44
+   }
+  ],
+  "game": [
+   {
+    "dist": 800,
+    "spritePx": 398,
+    "mag": 0.78
+   },
+   {
+    "dist": 1000,
+    "spritePx": 318,
+    "mag": 0.62
+   },
+   {
+    "dist": 1200,
+    "spritePx": 265,
+    "mag": 0.52
+   }
+  ],
+  "deadSize": {
+   "atFull": 0,
+   "atStart": 0,
+   "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+  },
+  "sizeDead": {
+   "head": false,
+   "spark": false
+  },
+  "sizeResponse": {
+   "head": {
+    "size": 3.4,
+    "energy": 13.552229642868042,
+    "enlarged": 16.398075580596924,
+    "ratio": 1.2099909765937686
+   },
+   "spark": {
+    "size": 0.35,
+    "energy": 0.14351534843444824,
+    "enlarged": 0.17377662658691406,
+    "ratio": 1.210857434292388
+   }
+  }
+ },
+ "standard": {
+  "单格 ≥ PC 下限": true,
+  "手机单格 ≥ 下限": true,
+  "屏幕放大 ≤ 1": true,
+  "30fps 显示帧 ≥ 90%": true,
+  "燃烧段有效帧率 ≥ 下限": true,
+  "淡出段有效帧率 ≥ 下限": true,
+  "尺寸参数有效": true
+ },
+ "source_sha256": "c6d65da232a76df0c1a5c0418336102e45cee66b3498b2ed993f537ebd04e4d7"
+}

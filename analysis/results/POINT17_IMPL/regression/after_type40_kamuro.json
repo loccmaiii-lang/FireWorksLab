@@ -1,0 +1,143 @@
+{
+ "id": "type40:kamuro",
+ "version": "4.3.8",
+ "frames": [
+  {
+   "t": 0.624,
+   "sha256": "c3b1c9b478204680b109a78fdfe6c03675226575df781be63409a3db99ba9e3e",
+   "file": "after_type40_kamuro_0.png"
+  },
+  {
+   "t": 1.8199999999999998,
+   "sha256": "0640931c61155e219fd49f74787c7a7809efd9afa8070dcc635910c94792374d",
+   "file": "after_type40_kamuro_1.png"
+  },
+  {
+   "t": 3.6399999999999997,
+   "sha256": "e2330a36e6cf057b2da0c339407d2079bea016a89dbb16dae4c6c004f54d17cb",
+   "file": "after_type40_kamuro_2.png"
+  }
+ ],
+ "metrics": {
+  "id": "type40:kamuro",
+  "name": "type40:kamuro",
+  "type": "kamuro",
+  "form": "master",
+  "duration": 5.2,
+  "zoom": "off",
+  "frameMode": "auto",
+  "autoGrid": 1,
+  "renderVer": 40,
+  "qSS": 2,
+  "headSize": 0.9,
+  "sparkSize": 0.3,
+  "emberSize": 1,
+  "texW": 2048,
+  "texH": 2048,
+  "grid": {
+   "cols": 4,
+   "rows": 4,
+   "chans": 4,
+   "frames": 64,
+   "cellW": 512,
+   "cellH": 512,
+   "pages": 1,
+   "pageFrames": [
+    64
+   ],
+   "capacityPerPage": 64
+  },
+  "mobileCell": {
+   "cellW": 256,
+   "cellH": 256
+  },
+  "spriteM": 337.9,
+  "frames30": {
+   "shown": 64,
+   "total": 64,
+   "ratio": 1,
+   "maxJump": 1
+  },
+  "minFpsActive": 10,
+  "minFpsFade": 7.5,
+  "avgFps": 12.3,
+  "flowerM": 344.8,
+  "screen": {
+   "frac": 0.3333333333333333,
+   "flowerPx": 360,
+   "spritePx": 353,
+   "mag": 0.69,
+   "magMobile256": 1.38,
+   "mag512": 0.69,
+   "mag1024": 0.34,
+   "suggestPC": 512
+  },
+  "perspectiveReference": [
+   {
+    "dist": 800,
+    "spritePx": 395,
+    "mag": 0.77
+   },
+   {
+    "dist": 1000,
+    "spritePx": 316,
+    "mag": 0.62
+   },
+   {
+    "dist": 1200,
+    "spritePx": 263,
+    "mag": 0.51
+   }
+  ],
+  "game": [
+   {
+    "dist": 800,
+    "spritePx": 441,
+    "mag": 0.86
+   },
+   {
+    "dist": 1000,
+    "spritePx": 353,
+    "mag": 0.69
+   },
+   {
+    "dist": 1200,
+    "spritePx": 294,
+    "mag": 0.57
+   }
+  ],
+  "deadSize": {
+   "atFull": 0,
+   "atStart": 0,
+   "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+  },
+  "sizeDead": {
+   "head": false,
+   "spark": false
+  },
+  "sizeResponse": {
+   "head": {
+    "size": 0.9,
+    "energy": 7.487769603729248,
+    "enlarged": 9.058534383773804,
+    "ratio": 1.2097773920904622
+   },
+   "spark": {
+    "size": 0.3,
+    "energy": 0.8318088054656982,
+    "enlarged": 1.0067906379699707,
+    "ratio": 1.2103630441929583
+   }
+  }
+ },
+ "standard": {
+  "单格 ≥ PC 下限": true,
+  "手机单格 ≥ 下限": true,
+  "屏幕放大 ≤ 1": true,
+  "30fps 显示帧 ≥ 90%": true,
+  "燃烧段有效帧率 ≥ 下限": true,
+  "淡出段有效帧率 ≥ 下限": true,
+  "尺寸参数有效": true
+ },
+ "source_sha256": "5f04294ae1721e7309c79380d44348cfd06c80b1eca2f8d8cc38780a635b7c1d"
+}

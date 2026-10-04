@@ -380,7 +380,7 @@ function syncExport() {
   $('#btnVariants').disabled = k !== 'master';
 }
 
-function fmtV(v, step) { const d = step >= 1 ? 0 : step >= 0.1 ? 1 : 2; return (+v).toFixed(d); }
+function fmtV(v, step) { const d = step >= 1 ? 0 : step >= 0.1 ? 1 : step >= 0.01 ? 2 : 3; return (+v).toFixed(d); }
 // 4.3.2（渲染基础问题 H16）：「负数 = 默认」的参数以前只能把滑杆拖到 -1，中间那段负数没意义、也看不出默认是多少。
 // 改成行里一个「默认」勾选：勾上 = 存 -1（模拟照旧按默认算），滑杆变灰、显示默认的实际值；去掉勾 = 从默认的实际值开始调，滑杆只在有效范围。
 // [滑杆下限, 默认的实际值（按当前参数）, 说明]
@@ -616,10 +616,10 @@ function buildMasterPanel() {
   flameChips($('#flames'), () => state.M, redrawColors);
   const mc = $('#matColors'); mc.innerHTML = '';
   colorPair(mc, '渐变图', [['ramp0', '暗'], ['ramp1', '中暗'], ['ramp2', '中亮'], ['ramp3', '亮']], state.M);
-  const ms = $('#matSliders'); ms.innerHTML = '';
+  const ms = $('#matSliders'); ms.innerHTML = '<p class=hint>显示强度写入 Color Over Life，不改变灰度贴图。先在「曝光光晕」降低贴图曝光、保留亮部，再在这里补足亮度；合并输出作用于整层；分开输出时两项分别调星头和尾迹。</p>';
   slider(ms, 'm-xw', '变色过渡', 's', 0.01, 0.5, 0.01, () => state.M.xw, v => state.M.xw = v, MD.xw);
-  slider(ms, 'm-hi', '星头亮度', '×', 0, 4, 0.05, () => state.M.headInt, v => state.M.headInt = v, 1);
-  slider(ms, 'm-ti', '尾迹亮度', '×', 0, 4, 0.05, () => state.M.tailInt, v => state.M.tailInt = v, 1);
+  slider(ms, 'm-hi', '显示强度', '×', 0, 20, 0.05, () => state.M.headInt, v => state.M.headInt = v, 1);
+  slider(ms, 'm-ti', '尾迹显示强度', '×', 0, 20, 0.05, () => state.M.tailInt, v => state.M.tailInt = v, 1);
   $('#type').value = state.repId ? 'rep:' + state.repId : P.type; $('#mname').value = state.name; syncExport();
   syncTypeButton();
 }
@@ -709,7 +709,7 @@ function jitterParams() {
     if (sec.show && !sec.show(P)) continue;
     for (const it of sec.items) {
       if (!Array.isArray(it) || !itemVisible(it, P)) continue;
-      const [k, , , min, max, step] = it; if (state.locks.has(k) || ['duration', 'fpsFloor', 'shutter', 'segAt', 'cellPad', 'loopT', 'riseH', 'exposure'].includes(k)) continue;
+      const [k, , , min, max, step] = it; if (state.locks.has(k) || ['duration', 'fpsFloor', 'shutter', 'segAt', 'cellPad', 'loopT', 'riseH', 'exposure', 'exposureTarget'].includes(k)) continue;
       if (k === 'seed') { if (!state.locks.has('seed')) P.seed = 1 + Math.floor(r.u() * 998); continue; }
       if (!P[k]) continue;
       P[k] = clamp(Math.round(P[k] * (1 + 0.1 * (2 * r.u() - 1)) / step) * step, min, max);
@@ -836,8 +836,8 @@ function buildComboPanel() {
     slider(card, `l${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
     slider(card, `l${i}-delay`, '延迟', 's', 0, 3, 0.01, () => L.delay, v => L.delay = v, 0);
     slider(card, `l${i}-rate`, '时间倍率', '×', 0.3, 2, 0.01, () => L.rate, v => L.rate = v, 1);
-    slider(card, `l${i}-hi`, '星头亮度', '×', 0, 4, 0.05, () => L.headInt, v => L.headInt = v, 1);
-    slider(card, `l${i}-ti`, '尾迹亮度', '×', 0, 4, 0.05, () => L.tailInt, v => L.tailInt = v, 1);
+    slider(card, `l${i}-hi`, '显示强度', '×', 0, 20, 0.05, () => L.headInt, v => L.headInt = v, 1);
+    slider(card, `l${i}-ti`, '尾迹显示强度', '×', 0, 20, 0.05, () => L.tailInt, v => L.tailInt = v, 1);
     const sg = document.createElement('div'); sg.className = 'stages'; card.appendChild(sg);
     stageEditor(sg, L, 9, null, 'l' + i);
     const cc = document.createElement('div'); cc.className = 'colors'; cc.style.marginTop = '4px';

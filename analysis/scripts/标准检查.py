@@ -121,7 +121,10 @@ if __name__ == '__main__':
     ap.add_argument('targets', nargs='*')
     ap.add_argument('--no-write', action='store_true')
     ap.add_argument('--ui-state-only', action='store_true', help='只跑离线界面状态回归，不启动浏览器')
+    ap.add_argument('--point-profile-only', action='store_true', help='真实WebGL可选亮核与亮部保留回归')
     a = ap.parse_args()
+    if a.point_profile_only:
+        raise SystemExit(subprocess.run([sys.executable, str(HERE / 'point_profile_check.py')]).returncode)
     if a.ui_state_only:
         raise SystemExit(subprocess.run(['node', str(HERE / 'bake_state_check.mjs')]).returncode)
     asyncio.run(run(a.targets or None, not a.no_write, merge=bool(a.targets)))

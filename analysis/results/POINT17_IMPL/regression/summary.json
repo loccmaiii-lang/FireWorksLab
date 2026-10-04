@@ -1,0 +1,144 @@
+{
+ "comparisons": [
+  {
+   "id": "type40:kiku",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "type40:botan",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "type40:kamuro",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "type40:senrin",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "type40:strobe",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "type40:crackle",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "HK10-1",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "HK10-2",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "HN2-G",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "HN2-O",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "JM3",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "JM4-40",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "QN11-1",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "QN11-2",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "RT4L",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "RT4M",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "RT4S",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "TR2L",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "TR2M",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "TR2S",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "V5L",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "V5M",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  },
+  {
+   "id": "V5S",
+   "same": true,
+   "standardSame": true,
+   "metricsSame": true
+  }
+ ],
+ "entriesSame": true,
+ "passed": true
+}

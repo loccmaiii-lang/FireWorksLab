@@ -143,7 +143,7 @@
         <label class="field">产物<select id="x-form"></select></label>
         <p class="note" id="formNote"></p>
       </div>
-      <div id="exposureControls" class="group" hidden><button class="btn" id="suggestExposure" type="button" title="在燃烧段几个时刻试渲染，按最亮的一刻定（排除开花闪光），各帧都不会大片过曝；只有点击才更新固定曝光。">建议曝光（按最亮时刻）</button></div>
+      <div id="exposureControls" class="group" hidden><button class="btn" id="suggestExposure" type="button" title="采样燃烧段最亮时刻的99.8%分位，按「建议亮部目标」更新贴图曝光（不含开花闪光）；不是对所有像素不过曝的保证。">建议曝光（按最亮时刻）</button></div>
       <div id="params"></div>
       <details class="sec" id="colorControls" open>
         <summary>颜色 · Color</summary>

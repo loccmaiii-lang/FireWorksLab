@@ -1,0 +1,41 @@
+{
+ "id": "TR2M",
+ "version": "4.3.8",
+ "frames": [
+  {
+   "t": 1.0704,
+   "sha256": "0d18367e264276b1354b84280310e020c044de37b4566374dbeba99bb487dc0c",
+   "file": "after_TR2M_0.png"
+  },
+  {
+   "t": 3.122,
+   "sha256": "d91c12a0c6561e58efd7d3c3f6c7f3ae21640a0e932e229c869870dbe07374ac",
+   "file": "after_TR2M_1.png"
+  },
+  {
+   "t": 6.244,
+   "sha256": "0671eb48ba7535b49d4c0b464646dc40310be978d937dc50666f941d42d1f1b8",
+   "file": "after_TR2M_2.png"
+  }
+ ],
+ "metrics": {
+  "id": "TR2M",
+  "name": "升空尾缀 · 中（V5）",
+  "type": "trailM",
+  "form": "trail",
+  "duration": 8.92,
+  "zoom": "off",
+  "frameMode": "uniform",
+  "autoGrid": 0,
+  "renderVer": 40,
+  "qSS": 2,
+  "headSize": 1,
+  "sparkSize": 0.35,
+  "emberSize": 1,
+  "texW": 2048,
+  "texH": 2048,
+  "note": "只量大面片（master / segments）；这个产物是 trail"
+ },
+ "standard": {},
+ "source_sha256": "5f04294ae1721e7309c79380d44348cfd06c80b1eca2f8d8cc38780a635b7c1d"
+}

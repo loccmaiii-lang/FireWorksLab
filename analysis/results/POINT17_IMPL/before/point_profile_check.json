@@ -1,0 +1,17 @@
+{
+ "meta": {
+  "version": "4.3.7",
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "default": null,
+  "enabled": null
+ },
+ "checks": [
+  {
+   "name": "production profile defaults compatible and accepts gradient",
+   "pass": false
+  }
+ ],
+ "rows": [],
+ "errors": [],
+ "passed": false
+}

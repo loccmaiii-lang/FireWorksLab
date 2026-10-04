@@ -1,0 +1,143 @@
+{
+ "id": "QN11-2",
+ "version": "4.3.8",
+ "frames": [
+  {
+   "t": 0.6143999999999998,
+   "sha256": "a63fb5eb8285b4a94cfdc77c9f47beb297d3109ce2c5c9905b6d9d6271828bf6",
+   "file": "after_QN11-2_0.png"
+  },
+  {
+   "t": 1.7919999999999996,
+   "sha256": "f8fa73902986ec04a97debf7e89c50a2c383d476acd0ec4503f5c421655c8a18",
+   "file": "after_QN11-2_1.png"
+  },
+  {
+   "t": 3.583999999999999,
+   "sha256": "c04a3c9ce085a1175b827f25d9c697f7f24a2929bdea7f9e287961d47014e2aa",
+   "file": "after_QN11-2_2.png"
+  }
+ ],
+ "metrics": {
+  "id": "QN11-2",
+  "name": "青柠星 第 10 版 · 星头层（4.0 · QN10-2 参数）",
+  "type": "botan",
+  "form": "master",
+  "duration": 5.119999999999999,
+  "zoom": "off",
+  "frameMode": "auto",
+  "autoGrid": 0,
+  "renderVer": 40,
+  "qSS": 2,
+  "headSize": 0.8,
+  "sparkSize": 0.3,
+  "emberSize": 1,
+  "texW": 2048,
+  "texH": 2048,
+  "grid": {
+   "cols": 4,
+   "rows": 4,
+   "chans": 4,
+   "frames": 64,
+   "cellW": 512,
+   "cellH": 512,
+   "pages": 1,
+   "pageFrames": [
+    64
+   ],
+   "capacityPerPage": 64
+  },
+  "mobileCell": {
+   "cellW": 256,
+   "cellH": 256
+  },
+  "spriteM": 201,
+  "frames30": {
+   "shown": 64,
+   "total": 64,
+   "ratio": 1,
+   "maxJump": 1
+  },
+  "minFpsActive": 10.8,
+  "minFpsFade": 7.5,
+  "avgFps": 12.5,
+  "flowerM": 203.4,
+  "screen": {
+   "frac": 0.3333333333333333,
+   "flowerPx": 360,
+   "spritePx": 356,
+   "mag": 0.69,
+   "magMobile256": 1.39,
+   "mag512": 0.69,
+   "mag1024": 0.35,
+   "suggestPC": 512
+  },
+  "perspectiveReference": [
+   {
+    "dist": 800,
+    "spritePx": 235,
+    "mag": 0.46
+   },
+   {
+    "dist": 1000,
+    "spritePx": 188,
+    "mag": 0.37
+   },
+   {
+    "dist": 1200,
+    "spritePx": 157,
+    "mag": 0.31
+   }
+  ],
+  "game": [
+   {
+    "dist": 800,
+    "spritePx": 445,
+    "mag": 0.87
+   },
+   {
+    "dist": 1000,
+    "spritePx": 356,
+    "mag": 0.69
+   },
+   {
+    "dist": 1200,
+    "spritePx": 296,
+    "mag": 0.58
+   }
+  ],
+  "deadSize": {
+   "atFull": 0,
+   "atStart": 0,
+   "note": "无固定像素钳位；尺寸响应由实际 GPU 线性能量测得，8 位编码仍可能有量化损失"
+  },
+  "sizeDead": {
+   "head": false,
+   "spark": false
+  },
+  "sizeResponse": {
+   "head": {
+    "size": 0.8,
+    "energy": 16.714717149734497,
+    "enlarged": 20.222129106521606,
+    "ratio": 1.2098397433451527
+   },
+   "spark": {
+    "size": 0.3,
+    "energy": 2.3504040241241455,
+    "enlarged": 2.8430700302124023,
+    "ratio": 1.2096090719006678
+   }
+  }
+ },
+ "standard": {
+  "单格 ≥ PC 下限": true,
+  "手机单格 ≥ 下限": true,
+  "屏幕放大 ≤ 1": true,
+  "30fps 显示帧 ≥ 90%": true,
+  "燃烧段有效帧率 ≥ 下限": true,
+  "淡出段有效帧率 ≥ 下限": true,
+  "尺寸参数有效": true
+ },
+ "source_sha256": "5f04294ae1721e7309c79380d44348cfd06c80b1eca2f8d8cc38780a635b7c1d"
+}

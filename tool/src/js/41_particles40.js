@@ -86,6 +86,24 @@ const PR40 = {
   emit: compile(point40GpuSource(VS_EMIT), POINT40_FS),
   ehead: compile(point40GpuSource(VS_EHEAD), POINT40_FS)
 };
+// 4.3.8：同一个光点核的可选源分布，按需编译。兼容模式保留原始shader，
+// 避免新增运行时分支使驱动重新优化旧核，引入接近量化边界的末位变化。
+// sigma=r/2：总量πrxry和二阶矩与圆盘相同；像素覆盖积分，无屏幕模糊。
+const gradientPrograms40 = {};
+function gradientSource40(source) {
+  return source.replaceAll('4.*max(1.,uHaloR):1.', '4.*max(1.,uHaloR):3.')
+    .replace('float core=diskCoverage(vLocal,vSig), halo=0.;',
+      'float core=3.14159265*vSig.x*vSig.y*gaussianCoverage(vLocal,vSig*.5), halo=0.;');
+}
+function particleProgram40(kind) {
+  if (!particleQuality.coreProfile || (kind === 'pts' && PT_GAUSS)) return PR40[kind];
+  if (!gradientPrograms40[kind]) {
+    const vs = kind === 'pts' ? POINT40_CPU_VS : point40GpuSource({spk:VS_SPK,emit:VS_EMIT,ehead:VS_EHEAD}[kind]);
+    const stableVS = kind === 'spk' ? vs.replace('uint uid=uint(pid);', 'uint uid=uint(s)*65536u+uint(j);') : vs;
+    gradientPrograms40[kind] = compile(gradientSource40(stableVS),gradientSource40(POINT40_FS));
+  }
+  return gradientPrograms40[kind];
+}
 PR40.post = compile(VS_QUAD,FS_POST.replace('uniform sampler2D uS, uRef;', 'uniform float uBloom; uniform sampler2D uS, uRef;').replace('c+=b*.2;', 'c+=b*.2*uBloom;'));
 const pts40VAO = gl.createVertexArray(); gl.bindVertexArray(pts40VAO);
 gl.bindBuffer(gl.ARRAY_BUFFER, pb);

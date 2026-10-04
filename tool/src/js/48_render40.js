@@ -144,10 +144,11 @@ function renderLive40() {
   try { renderCell40(PL,timing,R,t,slot.samples40,slot.cell40,view); } finally { LIVE_CAP = 0; LIVE_VIEW = false; }
   hdrT.clear(); hdrT.bind(); shadeView40(P,state.M,slot.cell40,t,view,hdrT,camera); post(-1,P);
   hudText=`实时模拟 · ${state.disp==='game'&&camera?'游戏内大小 · '+state.dist+' m · ':''}${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门${liveCapNote()}`;
-  hudB='';
+  const headPx=(+P.headSize||0)*Math.min(L.cellW/(2*view[2]),L.cellH/(2*view[3]));
+  hudB=+P.headBright>0 ? `星头标称直径约 ${headPx.toFixed(2)} 纹素（当前取景）${headPx<3?' · 小光点易受采样影响，可增大单格；超采样不能替代单格分辨率':''}` : '';
 }
 // 4.0 自动固定曝光：在燃烧段几个时刻渲染线性亮度，取最亮的那一刻，让它 99.8% 分位的像素显示到 0.96。
-// 一个配方只有一个固定曝光（不随帧变），所以按最亮时刻定，之后各帧都不会大片过曝；模板默认值（EXPOSURE40）也是这样算的。
+// 一个配方只有一个固定曝光（不随帧变）；目标默认.96，可降低以保留亮部。采样和分位值不保证所有像素不饱和。
 const AUTO_EXPO40 = { fracs: [.02, .04, .07, .1, .15, .2, .3, .45, .6, .75], target: .96, pct: 99.8 };   // 开头几帧也要量（2026-10-02：只量 10% 以后，球形B 第 1 层开花那几帧过曝 3.8%）
 async function autoExposure40(P0) {
   const P={...derive({...P0}),flash:0,subFlash:0}, pl=displayPlan40(P), q=qualityOf(P), w=pl.L.cellW, h=pl.L.cellH;
@@ -159,7 +160,7 @@ async function autoExposure40(P0) {
     for (const f of AUTO_EXPO40.fracs) {
       renderCell40(P,pl,R,(pl.t0||0)+f*span,samples,cell); cell.bind(); gl.readPixels(0,0,w,h,gl.RGBA,gl.FLOAT,a);
       let energy=0; for(let i=0;i<a.length;i+=4){a[i]+=a[i+1];energy+=a[i];}
-      const v=energy<1e-6?null:clamp(expoOfChannel(a,0,AUTO_EXPO40.target,AUTO_EXPO40.pct),.0001,1000);
+      const v=energy<1e-6?null:clamp(expoOfChannel(a,0,clamp(P.exposureTarget == null ? AUTO_EXPO40.target : +P.exposureTarget,.5,.98),AUTO_EXPO40.pct),.0001,1000);
       per.push(v); if(v!=null && (best==null || v<best))best=v;
       await nextTick();
     }
@@ -173,7 +174,7 @@ async function suggestExposure40() {
   try {
     const r=await autoExposure40(state.P);
     if(r.value==null){flash('画面没有足够亮部，无法建议曝光');return;}
-    if(gen===state.gen && !state.P.exposureLock){state.P.exposure=+(r.value<1?r.value.toFixed(3):r.value.toFixed(2));refreshPanelValues();onParam();flash('已按最亮时刻更新固定曝光（未计入开花闪光）');}
+    if(gen===state.gen && !state.P.exposureLock){state.P.exposure=+(r.value<1?r.value.toFixed(3):r.value.toFixed(2));refreshPanelValues();onParam();flash('已更新贴图曝光（不含开花闪光）；最终明暗可在颜色栏调显示强度');}
   } finally { state.stillBusy=false; }
 }
 async function renderStills40(P0,M0,opt) {
