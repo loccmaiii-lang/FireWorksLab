@@ -10,7 +10,7 @@
   "对话框9": "2026-10-02 15:18",
   "对话框11": "2026-10-02 19:35",
   "对话框13": "2026-10-02 23:40",
-  "对话框15": "2026-10-04 22:58",
+  "对话框15": "2026-10-05 01:45",
   "对话框16": "2026-10-04 20:10",
   "对话框17": "2026-10-04 18:01"
  },
@@ -72,7 +72,8 @@
   "对话框17 · 光点实装（临时源码认领）": [
    "已完成并释放临时源码认领：4.3.8可选渐变亮核、建议亮部目标、显示强度区分及纹素提示。用户原话见对话记录/对话框17.md；结果、回归条件和UE未验证边界见analysis/results/POINT17_IMPL/看法.md。旧默认兼容，未替换正式/候选配方；tool/src归还对话框15，RT5及22:00排查照原计划。"
   ],
-  "排队 · 给对话框5：导入器支持 Velocity Over Life（对话框15，2026-10-04 23:xx）": [
+  "（已撤回）导入器支持 Velocity Over Life": [
+   "对话框15 2026-10-05 01:40：用户 01:28「它不会做了，你来做」——不再排给对话框5。导入器源码不在仓库，三条路（源码进仓库 / 导出绕开新模块 / 我写补丁用户贴）等用户选，见 协作/方案_底层统一与参数宪章_2026-10.md 1.1。原排队内容：",
    "烘焙器 4.4.5 起，升空尾缀「物理弹道」（RT5，用户 10-04 17:27「上升太匀速」）的 RiseLoop / HeadGlow 写新模块 {\"m\": \"VelocityOverLife\", \"VelOverLife\": {\"curve\": [[相对寿命, [x, y, z] cm/s], …], \"bake\": false}, \"Absolute\": true}（ParticleModuleVelocityOverLifetime：VelOverLife、Absolute），不再写 Drag / ConstAcceleration；格式见 spec/cascade_params_v1.md 第 5 节（⚪）和 10.E2。",
    "同一批：RiseLoop 在「循环层长度 = 跟真实尾迹」时重新写 SizeByLife（只改 Y，MultiplyX false / Y true / Z false，\"bake\": false），RiseFade 的 Initial Size / pivot_offset 和 RiseLoop 不同（各自真实大小）。GPU 发射器不再写 Acceleration、最多 2 个 InitialVelocity。",
    "要导入器做的：认 VelocityOverLife（含 Absolute 布尔），其它照旧；RT5 导出包回来后会在 analysis/results/RT5*E*/ 里。未支持前导入会报未知模块（按 10-04 的规则不静默跳过）。"
