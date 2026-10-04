@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.4.1';     // 4.4.0 包含 4.3.8（对话框17 可选渐变亮核与曝光亮部保留）；4.4.1 时间轴发射器行
+const VERSION = '4.4.2';     // 4.4.0 包含 4.3.8（对话框17 可选渐变亮核与曝光亮部保留）；4.4.1 时间轴发射器行；4.4.2 单层导出方案
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -60,6 +60,7 @@ const BASE = {
   mods: [],     // 空白发射器加了哪些模块（别的花型不用）
   duration: 3.2, seed: 7, stars: 150, burstR0: 0, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
   burn: 2.5, burnJit: 12, fade: 0.2, lastFlare: 0.35, flash: 1, flashSize: 1,
+  outPC: 'seq', outMobile: 'seq', dotSize: 1, dotBright: 1,     // 4.4.2：单层效果的导出方案（多层效果在层页头选，存在层上 L.out / L.dotSize / L.dotBright）
   endMode: 'fade', coolMode: 0,     // 4.4：结尾 / 火花冷却的开关，缺省 = 以前的做法（现有效果、导出都不变）
   headSize: 1.0, headBright: 1, flicker: 0.25,
   sparkRate: 95, sparkRateEnd: 1, sparkStop: 0, sparkStart: 0, sparkRamp: 0, sparkRampJit: 30, sparkLife: 0.55, sparkLifeEnd: 1, sparkLifeJit: 45, sparkSize: 0.35, sparkSpread: 2.5, sparkInherit: 0.2, sparkDrag: 2.2, sparkGrav: 1,
@@ -341,7 +342,9 @@ const hasComets = P => P.type === 'fan' || P.type === 'barrage';
 const isTrail = P => familyOf(P.type) === 'rise' && P.form === 'trail';
 const isPhys = P => familyOf(P.type) === 'rise' && P.form === 'phys';
 const isEmit = P => familyOf(P.type) === 'rise' && P.form === 'emitset';   // 循环层 + 粒子发射器（47_risetail.js）
-const isSeq = P => !isTrail(P) && !isPhys(P) && !isEmit(P);   // 普通花型（非尾缀序列、非物理尾缀、非循环层 + 粒子）
+const isSeq = P => !isTrail(P) && !isPhys(P) && !isEmit(P);
+// 4.4.2：单层效果的「导出方案」只给空中礼花的大面片 / 分段（多层效果在层页头；尾缀、地面、上升循环没有光点 / 单束）
+const singleSchemeOn = P => !!P && familyOf(P.type) === 'aerial' && isSeq(P) && P.form !== 'unit' && (typeof state === 'undefined' || state.tab !== 'combo');   // 普通花型（非尾缀序列、非物理尾缀、非循环层 + 粒子）
 const PATTERNS = [['sphere', '球'], ['half', '半球（贴水面）'], ['ring', '环'], ['saturn', '土星（球 + 环）'], ['heart', '心形'], ['smile', '笑脸'], ['star5', '五角星'], ['text', '文字']];
 const RISE_STYLES = [['gold', '金色曲导'], ['silver', '银竜（银色长火花）'], ['dark', '暗升（无尾）'], ['kobana', '昇り小花'], ['bunpo', '分砲（空中分叉）'], ['fue', '笛（鸣笛）'], ['spiral', '螺旋']];
 const SCHEMA = [
@@ -669,6 +672,15 @@ const SCHEMA = [
   ] },
   // 入点 / 出点（用户 2026-10-02 13:26 选 B）：先整段模拟、剔掉全黑帧；你在可见范围里选入点、出点，帧预算只分给入点到出点；
   // 入点之前在引擎里用入点那一帧从小放大（Size By Life，比例按花径自动算），或不显示；出点之后直接结束。
+  // 4.4.2（用户 10-04 21:17「为什么有些星可以导出成 Cascade 的 GPU 粒子，牡丹星不行？做成通用导出选项」）：以前只有多层效果的层页头有「导出方案」，
+  // 单层效果（花型模板、单层条目）只能出序列。现在单层也有，和层页头同一套：PC 序列 / 单束 / GPU 光点 / 不出，手机 序列 / 不出
+  { sec: '导出方案', show: P => singleSchemeOn(P), items: [
+    { sel: 'outPC', label: 'PC 导出', options: [['seq', '序列（大面片）'], ['unit', '单束（每颗星一个面片，带尾迹）'], ['dots', 'GPU 光点（只出星头）'], ['off', '不出']] },
+    { sel: 'outMobile', label: '手机导出', options: [['seq', '序列'], ['off', '不出']] },
+    ['dotSize', '光点大小（× 星头）', '×', 0.2, 4, 0.05, P => P.outPC === 'dots'],
+    ['dotBright', '光点亮度', '×', 0.1, 4, 0.05, P => P.outPC === 'dots'],
+    { info: 'schemeNote' }
+  ] },
   { sec: '入点与出点（导出）', show: usesTickPlan40, hint: '时间轴下面的时段条上有「设为入点 / 设为出点」：先看整段（全黑帧已剔掉），在想开始、结束的那一刻点一下。0 = 自动（第一次 / 最后一次看得见）。', items: [
     ['cutIn', '入点（帧从这里开始分配；0 = 第一次看得见）', 's', 0, 30, 0.0333],
     ['cutOut', '出点（0 = 最后一次看得见）', 's', 0, 30, 0.0333],

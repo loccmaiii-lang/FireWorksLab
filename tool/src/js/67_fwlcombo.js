@@ -236,3 +236,32 @@ async function comboPackFiles(name, layers, onProg) {
     return files;
   } finally { own.forEach(disposeBake); ownMobile.forEach(disposeBake); }
 }
+
+// ---- 4.4.2 单层效果的导出方案（用户 10-04 21:17：以前只有多层效果的层页头能选 GPU 光点 / 单束；单层也要）----
+// 单层没有「层」：用 state.P 里的 outPC / outMobile / dotSize / dotBright 拼一个只有一层的 L（颜色就是 state.M），和多层走同一套 fwlCombo / fwlDots / fwlUnit
+function singleOut(P) { return singleSchemeOn(P) ? { pc: ['seq', 'unit', 'dots', 'off'].includes(P.outPC) ? P.outPC : 'seq', mobile: P.outMobile === 'off' ? 'off' : 'seq' } : { pc: 'seq', mobile: 'seq' }; }
+function singleLayer(P, M) { const o = singleOut(P), L = { ...M, delay: 0, rate: 1, scale: 1, out: o }; if (+P.dotSize > 0 && +P.dotSize !== 1) L.dotSize = +P.dotSize; if (+P.dotBright > 0 && +P.dotBright !== 1) L.dotBright = +P.dotBright; return L; }
+function singleSchemeNote(P) { const L = singleLayer(P, state.M); return typeof outNote === 'function' ? outNote(L, { P }) : ''; }
+// 单层的光点：缓存在一个假条目上（参数 / 颜色变了按 dotsTables 自己的签名重算）
+const singleDotsEntry = { P: null, bake: null };
+function singleDotsTables(P, M, b) { singleDotsEntry.P = P; singleDotsEntry.bake = b; return dotsTables(singleDotsEntry, singleLayer(P, M)); }
+// 导出：PC / 手机各按方案出；文件名和单层序列一样（单束的贴图用 _L1 层名，cascade.json 里引用的就是它）
+async function singleSchemeFiles(name, b, M, onProg) {
+  const P = b.P || state.P, o = singleOut(P), L = singleLayer(P, M), files = [], own = [];
+  try {
+    let ub = null, mb = null;
+    const unitOK = o.pc === 'unit' && unitAllowed(P);
+    if (o.pc === 'seq' || (o.pc === 'unit' && !unitOK)) { files.push(...await texFiles(b, name)); files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]); }
+    else if (unitOK) { ub = await bake(unitP(P), 1, p => onProg && onProg(0.3 * p)); own.push(ub); const ln = comboLayerName(name, 0); files.push(...await texFiles(ub, ln)); files.push([`${TN(ln, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]); }
+    const pc = o.pc === 'seq' || (o.pc === 'unit' && !unitOK) ? fwlCascade(name, b, M, false) : fwlCombo(name, o.pc === 'off' ? [] : [{ L, b, i: 0, dots: o.pc === 'dots', unit: ub || undefined }], false);
+    files.push(['cascade.json', utf8(JSON.stringify(pc, null, 1))]);
+    if (o.mobile === 'seq') {
+      mb = b.mobile || await bakeMobileFor(b, p => onProg && onProg(0.3 + 0.6 * p)); if (!b.mobile) own.push(mb);
+      files.push(...await texFiles(mb, name + '_Mobile'));
+      files.push([`${TN(name + '_Mobile', 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
+      files.push([`${name}_Mobile.json`, utf8(JSON.stringify(masterJSON(mb, name + '_Mobile', M), null, 2))]);
+      files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCascade(name + '_Mobile', mb, M, true), null, 1))]);
+    } else files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCombo(name + '_Mobile', [], true), null, 1))]);
+    return { files, ub, mb, pcTex: o.pc === 'seq' || (o.pc === 'unit' && !unitOK) || !!ub };
+  } finally { own.forEach(x => { if (x !== b) disposeBake(x); }); }
+}

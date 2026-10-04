@@ -239,6 +239,10 @@ function renderExport() {
   const ev = exportViewAny(b, sa), view = ev.view;
   hdrT.bind(); additive(true);
   let f = -1;
+  // 4.4.2 单层的导出方案：PC 选 GPU 光点 → 画光点（和 cascade.json 同一份发射器数据）；不出 → 不画
+  const so = typeof singleOut === 'function' && (b.form === 'master' || b.form === 'segments') ? singleOut(b.P || state.P) : null, sch = so ? (state.platform === 'mobile' ? so.mobile : so.pc) : 'seq';
+  if (sch === 'dots') { esDraw(singleDotsTables(b.P || state.P, state.M, b), engineTick(state.t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); additive(false); post(-1); hudText = `导出效果 · PC GPU 光点（约 ${dotsCount(b.P || state.P)} 颗，软圆点，没有贴图）`; hudB = ''; return; }
+  if (sch === 'off') { additive(false); post(-1); hudText = `导出效果 · 这个平台不出（导出方案：${state.platform === 'mobile' ? '手机' : 'PC'} 不出）`; hudB = ''; return; }
   f = drawExportScene(b, state.M, state.t, view, sa);
   additive(false); post(-1);
   const s = segAt(b, state.t), L = s.meta.L, mag = ev.mag;
@@ -248,6 +252,7 @@ function renderExport() {
   const fi = b.form === 'unit' ? frameIdx(b.meta, engineTick(state.t)) : frameIdx(s.meta, engineTick(state.t) - (s.meta.t0 || 0));
   const ps = b.form === 'unit' ? 0 : preScaleAt(b, s.meta, s, engineTick(state.t), engineTick(state.t) - (s.meta.t0 || 0));
   hudText = ps > 0 ? `导出效果 · 入点前：第 1 帧放大到 ${Math.round(ps * 100)}%（${s.meta.pre.pivot ? '绕爆点' : '绕面片中心'}）· 入点 ${s.meta.t0.toFixed(2)} s` : fi < 0 ? (engineTick(state.t) < (s.meta.t0 || 0) ? '还没到入点' : '序列结束') : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? ' 段 '+bakeSegmentName(b,bakeParts(b).indexOf(s)) : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
+  if (sch === 'unit') hudText += ' · PC 导出方案是单束：这里仍按序列画（单束的引擎回放在多层效果里看）';
   hudB = '';
 }
 const flowTrail = [];

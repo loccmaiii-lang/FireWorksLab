@@ -587,7 +587,7 @@ function buildMasterPanel() {
         row = document.createElement('div'); row.className = 'spechost'; row.dataset.info = 'specBox'; det.appendChild(row);
       } else if (it.info) {   // 只读的结果行（例：「帧与贴图」顶上的「多少帧、怎么装」）
         row = document.createElement('div'); row.className = 'infohost'; row.dataset.info = it.info;
-        row._refresh = () => { row.innerHTML = it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : it.info === 'endInfo' && typeof endInfoHTML === 'function' ? endInfoHTML() : ''; };
+        row._refresh = () => { row.innerHTML = it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : it.info === 'endInfo' && typeof endInfoHTML === 'function' ? endInfoHTML() : it.info === 'schemeNote' && typeof singleSchemeNote === 'function' ? `<p class="hint endinfo">${singleSchemeNote(state.P)}</p>` : ''; };
         if (it.info === 'endInfo') row.addEventListener('click', e => { const b = e.target.closest('[data-endfit]'); if (b) { setTimingParam('duration', +b.dataset.endfit); refreshPanelValues(); flash('序列时长已加长到火花灭完'); } });
         row._refresh(); det.appendChild(row);
       } else if (it.text) {
@@ -658,7 +658,7 @@ function refreshVisibility() {
   const host = $('#params'), none = host && ![...host.querySelectorAll('section.egrp')].some(g => !g.hidden);
   if (host && none && !host.querySelector('.pempty')) host.insertAdjacentHTML('beforeend', `<p class="pempty hint"></p>`);
   if (host) { const e = host.querySelector('.pempty'); if (e) { e.hidden = !none; e.textContent = pview.changed && !q ? '和打开时比，还没改过参数' : `没有找到「${pview.q}」`; } }
-  document.querySelectorAll('#params [data-info=endInfo]').forEach(r => r._refresh && r._refresh());
+  document.querySelectorAll('#params [data-info=endInfo], #params [data-info=schemeNote]').forEach(r => r._refresh && r._refresh());
   placeSpecBox();
 }
 // 发射器标签：按发射器表的顺序，每个发射器一个（适用的才显示），最后一个「全部」

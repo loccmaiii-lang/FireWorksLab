@@ -38,6 +38,7 @@
      爆裂星的「爆裂」发射器、尾缀档位在「效果 › 规格」、空白发射器「+ 火花」/「去掉」
   S4 4.4：旧搜索 / 只看改过的时点发射器标签 = 清掉筛选、换到那一页，不改配方；「全部」把发射器都排出来
   E1 4.4：「结尾」「冷却方式」开关缺省 = 旧做法；结尾选「不淡出」序列时长加长到火花灭完、帧计划不再整体淡出
+  X2 4.4.2：单层效果（牡丹）也有导出方案：PC 序列 / 单束 / GPU 光点 / 不出、手机 序列 / 不出；选光点后 cascade.json 是 GPU 光点、引擎回放画光点；多层效果的层里不显示（在层页头选）
   T1 4.4：时间轴的发射器行：菊 = 开花闪光 / 星 / 火花，火花被序列结尾切掉时有 ✂、加长后消失；点行名右栏切到那个发射器；千轮有子花行、爆裂星有爆裂行
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
@@ -1078,6 +1079,35 @@ async def t1(pg):
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
+async def x2(pg):
+    """4.4.2（用户 10-04 21:17）：单层效果（牡丹模板）也有「导出方案」：输出 › 导出方案里 PC 能选 GPU 光点 / 单束 / 不出，手机能选不出；选光点后 cascade.json 是一个 GPU 光点发射器、引擎回放画光点、说明写有尾迹没了"""
+    bad, info = [], {}
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('botan')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate("""(() => { selectEmitTab('输出'); const x = panelRows.find(([r, it]) => it.sel === 'outPC'); if (!x) return null; const s = x[0].querySelector('select');
+      return { mod: x[0]._x.e + '›' + x[0]._x.m, shown: !x[0].hidden, opts: [...s.options].map(o => o.value) }; })()""")
+    info['牡丹'] = r
+    if not r or r['mod'] != '输出›导出方案' or not r['shown'] or r['opts'] != ['seq', 'unit', 'dots', 'off']: return False, f'单层的导出方案不对：{r}'
+    await pg.evaluate("(() => { const s = panelRows.find(([r, it]) => it.sel === 'outPC')[0].querySelector('select'); s.value = 'dots'; s.dispatchEvent(new Event('change')); return 0; })()"); await idle(pg)
+    r = await pg.evaluate("""(() => { const so = singleOut(state.P), b = state.bake, pc = b ? fwlCombo('T', [{ L: singleLayer(state.P, state.M), b, i: 0, dots: true }], false) : null;
+      const dot = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'dotSize');
+      return { so, em: pc ? pc.emitters.map(e => [e.name, e.gpu, pc.materials[e.material].role]) : null, dotRow: !!dot && !dot[0].hidden, note: ((document.querySelector('#params [data-info=schemeNote]') || {}).textContent || ''), n: dotsCount(state.P) }; })()""")
+    info['选光点'] = r
+    if r['so'] != {'pc': 'dots', 'mobile': 'seq'}: bad.append(f"方案没记住：{r['so']}")
+    if r['em'] != [['L1_Dots', True, 'soft_dot']]: bad.append(f"cascade.json 不是一个 GPU 光点发射器：{r['em']}")
+    if not r['dotRow']: bad.append('选了光点，没出现光点大小 / 亮度')
+    if 'GPU 光点' not in r['note']: bad.append(f"导出说明没写 GPU 光点：{r['note'][:60]}")
+    # 引擎回放（云端快速模式不真画）：单层 PC 按光点画、手机按序列；光点数 = 模拟里会亮的星
+    r = await pg.evaluate("(() => { const so = singleOut(state.P), v = dotVis(state.P); return { pc: so.pc, mobile: so.mobile, n: singleDotsTables(state.P, state.M, state.bake)[0].list.length, lit: v ? v.n : 0 }; })()")
+    info['引擎回放'] = r
+    if r['pc'] != 'dots' or r['mobile'] != 'seq' or not r['n'] or r['n'] != r['lit']: bad.append(f'引擎回放的光点不对：{r}')
+    await pg.evaluate("(() => { state.P.outPC = 'seq'; buildMasterPanel(); onParam(); selectEmitTab('星'); return 0; })()"); await idle(pg)
+    # 多层效果里不显示（多层在层页头选）
+    await open_effect(pg, 'hiki_nishiki'); await idle(pg)
+    r = await pg.evaluate("(() => { selectComboLayer(1); const x = panelRows.find(([r, it]) => it.sel === 'outPC'); return x ? !x[0].hidden : false; })()")
+    if r: bad.append('多层效果的层里也显示了单层的导出方案（多层应在层页头选）')
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
+
+
 async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
@@ -1087,7 +1117,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('T1', t1, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('T1', t1, False), ('X2', x2, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:
