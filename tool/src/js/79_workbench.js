@@ -488,10 +488,53 @@ function resetToOpened() {
   if (moved.size) stage2.tlSig = '';
   flash(`已把第 ${state.comboSel + 1} 层恢复到打开时的参数${moved.size ? `（接力的第 ${[...moved].map(j => j + 1).join('、')} 层跟着回去）` : ''}`);
 }
+// 4.4 时间轴的发射器行（用户 10-04 16:17 #6：子级怎么触发、时间轴怎么方便；方案 协作/方案_发射器分层与时间轴_2026-10.md §4）：
+// 正在调的那一层，每个发射器一行，画「什么时候生成、活多久、被切没被切」：
+//   星：点火 → 燃烧结束（实色）+ 燃烧时间随机的范围（淡）+ 第二段；火花 / 余烬：生成窗（实色，开始 → 停）+ 窗后还活着的那段（淡：中值，更淡：约 95%）；
+//   爆裂：星熄灭后那一团；子花：到「开花时刻」开（± 随机）再烧子星的燃烧时间；开花闪光：0 秒那一下。
+// 序列在火花灭完前就结束（或设了出点）：在结束处画红色 ✂，提示「结尾」选「不淡出」或把序列加长。把手和层轨道上的是同一套（拖哪个都一样）。
+// 时间是这一层自己的（相对开花），画的时候和层轨道一样按组合延迟 / 时间倍率换到总时间。点行名 = 右栏切到那个发射器。
+function emitTlRows(x, P, pct, glued) {
+  if (!P || familyOf(P.type) !== 'aerial') return '';
+  const sp = layerSpans(x) || { at: t => (+x.L.delay || 0) + t / (+x.L.rate || 1) };     // 还没烘好也画（发射器行只看参数）
+  const at = t => sp.at(t), seg = (a, b, cls, title) => b > a ? `<i class="${cls}" style="left:${pct(at(a))}%;width:${Math.max(0.3, pct(at(b)) - pct(at(a)))}%" title="${title}"></i>` : '';
+  const mark = (t, cls, title) => `<b class="em ${cls}" style="left:${pct(at(t))}%" title="${title}"></b>`;
+  const ph = phasesOf(P), handle = k => { const q = ph.find(z => z.k === k); return q ? `<b class="ph ph-${q.k} row-${q.row}${q.auto ? ' auto' : ''}${glued.has(x.i + ':' + q.k) ? ' glued' : ''}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s（左右拖动修改）"></b>` : ''; };
+  const ign = +P.ignDelay || 0, burn = +P.burn || 0, bj = (+P.burnJit || 0) / 100, after = +P.afterBurn > 0 ? +P.afterBurn : 0, lifeEnd = ign + burn + after;
+  const end = +P.cutOut > 0 ? +P.cutOut : +P.duration || sp.end, carrier = isCarrierType(P);
+  const le = P.sparkLifeEnd == null ? 1 : Math.max(1, +P.sparkLifeEnd), lj = P.sparkLifeJit == null ? 0.45 : P.sparkLifeJit / 100, life = (+P.sparkLife || 0) * le;
+  const cut = (t, what) => t > end + 0.02 ? `<b class="em cut-x" style="left:${pct(at(end))}%" title="序列 ${end.toFixed(2)} s 就结束了，${what}要到 ${t.toFixed(2)} s 才灭完：被切掉 ${(t - end).toFixed(2)} s。效果 › 规格 ›「结尾」选「不淡出」，或把序列时长加长">✂</b>` : '';
+  const row = (e, sub, body) => `<div class="tlb tle" data-e="${e}"><div class="tlb-label"><button type="button" class="tlb-n tle-n" data-emit="${e}" title="右栏切到「${e}」发射器">${e}<small>${sub}</small></button></div><span class="tlb-t" data-i="${x.i}">${body}</span></div>`;
+  const out = [];
+  if (+P.flash > 0) out.push(row('开花闪光', '开花那一刻', seg(0, 0.12, 'em-flash', '开花闪光：0 秒那一下，约 0.1 s 消失')));
+  if (!carrier) {
+    const lo = ign + burn * Math.max(0, 1 - 2 * bj), hi = ign + burn * (1 + 2 * bj);
+    out.push(row('星', '父级', mark(0, 'em-burst', '开花：星在这一刻一次生成') + seg(ign, ign + burn, 'em-life', `燃烧：点火 ${ign.toFixed(2)} s → 熄灭 ${(ign + burn).toFixed(2)} s（中值）`) + seg(lo, hi, 'em-rand', `燃烧时间随机 ±${(bj * 100).toFixed(0)}%：大多数星在 ${lo.toFixed(2)} – ${hi.toFixed(2)} s 之间熄灭`)
+      + (after ? seg(ign + burn, lifeEnd, 'em-after', `第二段：到 ${lifeEnd.toFixed(2)} s`) : '') + handle('ign') + handle('burn') + handle('after') + handle('dim')));
+  } else {
+    const sd = +P.subDelay || 0, sj = (+P.subJit || 0) / 100, sb = +P.subBurn || 0;
+    out.push(row('星', '父级 · 子弹', mark(0, 'em-burst', '开花：子弹在这一刻一次生成') + seg(0, sd, 'em-life', `子弹飞行：0 → ${sd.toFixed(2)} s 开成子花`)));
+    out.push(row('子花', '子级 · 到时开花', seg(sd * (1 - 2 * sj), sd * (1 + 2 * sj), 'em-rand', `开花时刻随机 ±${(sj * 100).toFixed(0)}%`) + mark(sd, 'em-event', `子花在 ${sd.toFixed(2)} s 开（子弹到「开花时刻」）`) + seg(sd, sd + sb, 'em-sub', `子星燃烧：${sd.toFixed(2)} → ${(sd + sb).toFixed(2)} s`) + cut(sd * (1 + 2 * sj) + sb, '子星')));
+  }
+  if (!carrier && (+P.sparkRate > 0 || +P.emberFrac > 0)) {
+    const ss = ign + (+P.sparkStart || 0), st = +P.sparkStop > 0 ? ign + +P.sparkStop : lifeEnd, t50 = st + life, t95 = st + life * Math.exp(1.64 * lj);
+    if (+P.sparkRate > 0) out.push(row('火花', '子级 · 跟随星', seg(ss, st, 'em-spawn', `生成窗：${ss.toFixed(2)} → ${st.toFixed(2)} s（星活着、在喷火花）`) + seg(st, t50, 'em-tail', `窗后还活着：最后一批火花寿命中值到 ${t50.toFixed(2)} s`) + seg(t50, t95, 'em-tail2', `寿命随机的长尾：约 95% 到 ${t95.toFixed(2)} s 灭完`) + handle('sstart') + handle('sstop') + cut(t95, '火花')));
+    if (+P.emberFrac > 0 && !(+P.branch > 0)) {
+      const es = P.emberAll ? lifeEnd : st, el = (+P.emberLife || 3), ee = +P.emberEnd > 0 ? Math.min(es + el * 1.5, +P.emberEnd) : es + el * 1.5;
+      out.push(row('余烬', '子级 · 跟随星', seg(ss, es, 'em-spawn em-ember', `生成：和火花一起（${P.emberAll ? '贯穿全程' : '到火花停'}）`) + seg(es, ee, 'em-tail em-ember', `余烬留到约 ${ee.toFixed(2)} s`) + handle('ember') + cut(ee, '余烬')));
+    }
+  }
+  if (+P.crackle > 0) { const dl = +P.crackleDelay || 0, a = ign + burn * Math.max(0, 1 - 2 * bj), b = ign + burn * (1 + 2 * bj) + dl * 1.7 + 0.2;
+    out.push(row('爆裂', '子级 · 星熄灭时', seg(a, b, 'em-crackle', `星熄灭后 ${(dl * 0.3).toFixed(2)} – ${(dl * 1.7).toFixed(2)} s 爆出小闪光（到 ${b.toFixed(2)} s）`) + mark(ign + burn, 'em-event', '星熄灭 → 爆裂') + cut(b, '爆裂'))); }
+  if (!out.length) return '';
+  const open = typeof store === 'undefined' || store.get('tlEmitOpen', true);
+  return `<details class="tle-box"${open ? ' open' : ''}><summary>发射器 · ${x.name}<small>谁什么时候生成、活多久；✂ = 被序列结尾切掉</small></summary>${out.join('')}</details>`;
+}
 function buildTlBars() {
   if (stage2.drag) return;   // 拖动中不重建（否则手上的把手被换掉，拖到一半断开）
   const D = curDuration(), rows = curLayerBakes(), P = editLayerP();
-  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x), lp = layerPOf(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(lp).map(q => q.t.toFixed(2)).join(':'), lp ? [lp.cutIn, lp.cutOut].join('/') : '', x.b ? bakeParts(x.b).map(s => (s.meta.L && s.meta.L.F) + '@' + (s.meta.t0 || 0).toFixed(3)).join('+') : ''].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-') + '|' + state.layerView.solo + '/' + state.layerView.mute.join(',');
+  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x), lp = layerPOf(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(lp).map(q => q.t.toFixed(2)).join(':'), lp ? [lp.cutIn, lp.cutOut].join('/') : '', x.b ? bakeParts(x.b).map(s => (s.meta.L && s.meta.L.F) + '@' + (s.meta.t0 || 0).toFixed(3)).join('+') : ''].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-') + '|' + state.layerView.solo + '/' + state.layerView.mute.join(',')
+    + '|' + (() => { const ex = rows.find(x => (state.tab !== 'combo' && P) || (state.tab === 'combo' && state.comboSel === x.i)), lp = ex && layerPOf(ex); return lp ? ['burnJit', 'sparkLife', 'sparkLifeEnd', 'sparkLifeJit', 'sparkRate', 'emberFrac', 'emberLife', 'emberAll', 'crackle', 'crackleDelay', 'subDelay', 'subJit', 'subBurn', 'flash', 'duration', 'cutOut', 'branch'].map(k => lp[k]).join('/') : ''; })();
   if (sig === stage2.tlSig) return; stage2.tlSig = sig;
   const host = $('#tlBars');
   if (state.tab === 'asset' || state.showcase || !rows.length) { host.innerHTML = ''; return; }
@@ -511,7 +554,8 @@ function buildTlBars() {
     const comb = !sp || !x.b ? '' : bakeParts(x.b).map((s, pi) => (s.meta.times || []).map((t, f) => `<i class="fc${f === 0 && pi > 0 ? ' pg' : ''}" style="left:${pct(sp.at((s.meta.t0 || 0) + t))}%"></i>`).join('')).join('');
     const combo = state.tab === 'combo', mute = state.layerView.mute.includes(x.i), solo = state.layerView.solo === x.i;
     return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><div class="tlb-label"><span class="tlb-number">${x.i + 1}</span>${combo ? `<button class="tlb-observe" type="button" data-track-mute="${x.i}" aria-label="显示第 ${x.i + 1} 层" aria-pressed="${!mute}" title="${mute ? '显示' : '隐藏'}这一层（只影响观察）">${uiIcon(mute ? 'eye-off' : 'eye')}</button>` : ''}<button type="button" class="tlb-n" data-i="${x.i}" title="点一下切换图层参数">${x.name}</button>${combo ? `<button class="tlb-observe solo" type="button" data-track-solo="${x.i}" aria-label="独看第 ${x.i + 1} 层" aria-pressed="${solo}" title="独看这一层（只影响观察）">S</button>` : ''}</div><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
-  }).join('') + '<div class="tlcv" id="tlCurves"></div><span class="tlb-ph" aria-hidden="true"></span>'
+  }).join('') + (() => { const ex = rows.find(x => (state.tab !== 'combo' && P) || (state.tab === 'combo' && state.comboSel === x.i)); return ex ? emitTlRows(ex, layerPOf(ex), pct, glued) : ''; })()
+    + '<div class="tlcv" id="tlCurves"></div><span class="tlb-ph" aria-hidden="true"></span>'
     + `<div class="tlcut">${P ? `<button type="button" class="mini" data-cut="in" title="把当前时刻设成入点：帧预算从这里开始分配">设为入点</button><button type="button" class="mini" data-cut="out" title="把当前时刻设成出点">设为出点</button><button type="button" class="mini" data-cut="clear">清除</button>
       <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动（第一次看得见）'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动（最后看得见）'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') : ''}</span>`
       : ''}<span class="tlhelp">上排圆点 = 星（点火、寿命结束…），中间菱形 = 火花（开始、停；空心 = 默认位置，拖动就打开），下方白色把手 = 入点 / 出点，都能左右拖；细刻度 = 每一帧从哪个 tick 开始。${state.tab === 'combo' ? '点轨道切到那一层；同一批星的几层在同一时刻的点连在一起动（接力）。' : ''}拖寿命结束等，序列时长跟着变</span></div>`;
@@ -523,6 +567,8 @@ function buildTlBars() {
   host.querySelectorAll('[data-track-solo]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.trackSolo, v = state.layerView; v.solo = v.solo === i ? -1 : i; buildLayerCard(); }));
   host.querySelectorAll('[data-cut]').forEach(b => b.addEventListener('click', () => setCut(b.dataset.cut)));
   host.querySelectorAll('.ph, .cut').forEach(h => h.addEventListener('pointerdown', ev => trackDrag(ev, h)));
+  host.querySelectorAll('[data-emit]').forEach(b => b.addEventListener('click', () => { if (typeof selectEmitTab === 'function') selectEmitTab(b.dataset.emit); }));
+  const eb = host.querySelector('.tle-box'); if (eb) eb.addEventListener('toggle', () => { if (typeof store !== 'undefined') store.set('tlEmitOpen', eb.open); });
   const ex = rows.find(x => (state.tab !== 'combo' && P) || (state.tab === 'combo' && state.comboSel === x.i)), phs = ex ? phasesOf(layerPOf(ex)) : [];
   const phn = phs.filter(q => !q.auto);
   if (phn.length) host.querySelector('.tlcut').insertAdjacentHTML('beforeend', `<span class="phl">${phn.map(q => `<i class="ph-${q.k}"></i>${q.lab} ${q.t.toFixed(2)} s`).join(' · ')}</span>`);

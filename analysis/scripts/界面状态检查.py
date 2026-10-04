@@ -38,6 +38,7 @@
      爆裂星的「爆裂」发射器、尾缀档位在「效果 › 规格」、空白发射器「+ 火花」/「去掉」
   S4 4.4：旧搜索 / 只看改过的时点发射器标签 = 清掉筛选、换到那一页，不改配方；「全部」把发射器都排出来
   E1 4.4：「结尾」「冷却方式」开关缺省 = 旧做法；结尾选「不淡出」序列时长加长到火花灭完、帧计划不再整体淡出
+  T1 4.4：时间轴的发射器行：菊 = 开花闪光 / 星 / 火花，火花被序列结尾切掉时有 ✂、加长后消失；点行名右栏切到那个发射器；千轮有子花行、爆裂星有爆裂行
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -1047,6 +1048,36 @@ async def e1(pg):
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
+T1_JS = r"""async () => {
+  // 4.4 时间轴的发射器行（用户 10-04 16:17 #6）：正在调的那一层每个发射器一行；火花灭完前序列就结束 → ✂；结尾「不淡出」加长后 ✂ 消失；点行名右栏切到那个发射器
+  const out = {}, bad = [], tick = () => { stage2.tlSig = ''; stage2.last = 0; stageTick(curDuration()); };
+  await openType('kiku'); await new Promise(r => setTimeout(r, 300)); tick();
+  const rows = () => [...document.querySelectorAll('#tlBars .tle')].map(r => r.dataset.e), cutx = e => !!document.querySelector(`#tlBars .tle[data-e="${e}"] .cut-x`);
+  out.kiku = { rows: rows(), cut: cutx('火花'), handles: [...document.querySelectorAll('#tlBars .tle .ph')].map(h => h.dataset.ph) };
+  if (out.kiku.rows.join() !== '开花闪光,星,火花') bad.push('菊的发射器行不对：' + out.kiku.rows);
+  if (!out.kiku.cut) bad.push('菊序列 3.2 s、火花要到 4 s 多才灭完，火花行没有 ✂');
+  for (const k of ['ign', 'burn', 'sstart', 'sstop']) if (!out.kiku.handles.includes(k)) bad.push('发射器行缺把手 ' + k);
+  state.P.endMode = 'natural'; setTimingParam('duration', sparkTailEnd(state.P)); tick();
+  out.natural = { dur: state.P.duration, cut: cutx('火花') };
+  if (out.natural.cut) bad.push('序列加长到火花灭完后还有 ✂');
+  document.querySelector('#tlBars .tle-n[data-emit="火花"]').click(); await new Promise(r => setTimeout(r, 50));
+  out.link = (document.querySelector('#params .etabs .on') || {}).dataset.e;
+  if (out.link !== '火花') bad.push('点时间轴的「火花」行名，右栏没切到火花：' + out.link);
+  await openType('senrin'); await new Promise(r => setTimeout(r, 300)); tick();
+  out.senrin = rows(); if (!out.senrin.includes('子花')) bad.push('千轮没有子花行：' + out.senrin);
+  await openType('crackle'); await new Promise(r => setTimeout(r, 300)); tick();
+  out.crackle = rows(); if (!out.crackle.includes('爆裂')) bad.push('爆裂星没有爆裂行：' + out.crackle);
+  selectEmitTab('星');
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def t1(pg):
+    """4.4：时间轴的发射器行（星 / 火花 / 余烬 / 爆裂 / 子花 / 开花闪光），✂ 标出被序列结尾切掉的，点行名右栏切到那个发射器"""
+    r = await pg.evaluate(T1_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
+
+
 async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
@@ -1056,7 +1087,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('T1', t1, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:
