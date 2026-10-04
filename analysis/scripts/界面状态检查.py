@@ -39,6 +39,7 @@
   S4 4.4：旧搜索 / 只看改过的时点发射器标签 = 清掉筛选、换到那一页，不改配方；「全部」把发射器都排出来
   E1 4.4：「结尾」「冷却方式」开关缺省 = 旧做法；结尾选「不淡出」序列时长加长到火花灭完、帧计划不再整体淡出
   X2 4.4.2：单层效果（牡丹）也有导出方案：PC 序列 / 单束 / GPU 光点 / 不出、手机 序列 / 不出；选光点后 cascade.json 是 GPU 光点、引擎回放画光点；多层效果的层里不显示（在层页头选）
+  N3 排查第 1 步：SCHEMA ↔ 默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS 对得上
   T1 4.4：时间轴的发射器行：菊 = 开花闪光 / 星 / 火花，火花被序列结尾切掉时有 ✂、加长后消失；点行名右栏切到那个发射器；千轮有子花行、爆裂星有爆裂行
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
@@ -1108,6 +1109,36 @@ async def x2(pg):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
 
 
+N3_JS = r"""(() => {
+  // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
+  const bad = [], keys = new Set(), items = [];
+  for (const sec of SCHEMA) for (const it of sec.items) { const k = Array.isArray(it) ? it[0] : it.sel || it.text || (it.info ? 'info:' + it.info : ''); if (!k) continue; keys.add(k); items.push([sec, it, k]); }
+  const types = Object.keys(TYPES), D = types.map(t => defaultsFor(t).P);
+  for (const [sec, it, k] of items) {
+    if (!k.startsWith('info:') && k !== '_trailTier' && !(k in BASE) && !D.some(P => P[k] !== undefined)) bad.push(`「${sec.sec}」的 ${k} 没有默认值（BASE 和所有花型模板都没有）`);
+    const nm = pnameOf(sec.sec, k, Array.isArray(it) ? (typeof it[1] === 'function' ? '' : it[1]) : it.label);
+    if (!nm) { bad.push(`「${sec.sec}」的 ${k} 在参数名称表里没有`); continue; }
+    if (!PEMIT.P[nm.id]) bad.push(`${k}（${nm.id}）在发射器表里没有`);
+  }
+  const has = (k, where) => { if (!keys.has(k)) bad.push(`${where} 里的 ${k} 不是面板参数`); };
+  for (const [ks] of INERT) ks.forEach(k => has(k, 'INERT'));
+  for (const [k, b] of Object.entries(RAND_OF)) { has(k, 'RAND_OF'); has(b, 'RAND_OF'); }
+  SPARK_KEYS.forEach(k => has(k, 'SPARK_KEYS')); Object.keys(PHASE_KEY).forEach(k => has(k, 'PHASE_KEY')); [...TIMING_KEYS].forEach(k => has(k, 'TIMING_KEYS'));
+  for (const [m, x] of Object.entries(BLANK_MODS)) for (const k of [...Object.keys(x.add || {}), ...Object.keys(x.off || {})]) if (!(k in BASE)) bad.push(`BLANK_MODS「${m}」的 ${k} 不在 BASE 里`);
+  const used = new Set(items.map(([sec, it, k]) => { const nm = pnameOf(sec.sec, k, Array.isArray(it) ? (typeof it[1] === 'function' ? '' : it[1]) : it.label); return nm && nm.id; }));
+  const SPEC_BOX = ['texW', 'texH', 'cols', 'rows', 'chans', 'outMode', 'encGamma', 'frameMode', 'zoom'];     // 规格框（#specBox）里的控件，不在 SCHEMA
+  const orphan = PNAMES.filter(r => !used.has(r.id) && !SPEC_BOX.includes(r.key)).map(r => r.id);
+  return { bad, n: items.length, orphan };
+})()"""
+
+
+async def n3(pg):
+    """排查计划第 1 步：SCHEMA 每一项都有默认值、名称表的名字、发射器表的归属；INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS 里的键都是面板参数；名称表里没有对不上 SCHEMA 的行"""
+    r = await pg.evaluate(N3_JS)
+    bad = list(r['bad']) + ([f"参数名称表里有 {len(r['orphan'])} 行对不上面板：{r['orphan'][:6]}"] if r['orphan'] else [])
+    return not bad, '；'.join(bad[:8]) or f"{r['n']} 项面板参数：默认值、名字、发射器归属、规则表都对得上"
+
+
 async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
@@ -1117,7 +1148,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('T1', t1, False), ('X2', x2, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('T1', t1, False), ('X2', x2, False), ('N3', n3, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

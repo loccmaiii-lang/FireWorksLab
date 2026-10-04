@@ -58,3 +58,20 @@ html = f'''<!doctype html>
 '''
 open(os.path.join(here, 'FireworkBaker.html'), 'w', encoding='utf-8').write(html)
 print('built', len(html), 'bytes', ver.group(1) if ver else '')
+
+# 4.4.3（排查计划第 1 步）：构建完跑静态检查，有错误构建失败（html 已经写出来，退出码 1）
+#   tool/lint/js_lint.mjs —— 整段脚本的 no-undef / no-redeclare / 已删掉的名字（Node 自带的 acorn；没有 node 只提示不失败）
+#   analysis/scripts/静态核对.py —— 页面元素 id ↔ 脚本引用、参数名称表 ↔ 发射器表
+import shutil, subprocess, sys
+bad = False
+node = shutil.which('node')
+if node:
+    r = subprocess.run([node, '--expose-internals', os.path.join(here, 'lint', 'js_lint.mjs'), os.path.join(here, 'FireworkBaker.html')], capture_output=True, text=True)
+    print(r.stdout.strip()); bad |= r.returncode != 0
+    if r.returncode not in (0, 1): print(r.stderr.strip())
+else:
+    print('⚠ 没有 node：跳过脚本静态检查（云端改 tool/src 时必须有）')
+r = subprocess.run([sys.executable, os.path.join(here, '..', 'analysis', 'scripts', '静态核对.py')], capture_output=True, text=True)
+print(r.stdout.strip()); bad |= r.returncode != 0
+if bad:
+    print('构建完成，但静态检查有错误（见上）'); sys.exit(1)
