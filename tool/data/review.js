@@ -6727,13 +6727,31 @@ var FW_EFFECTS = [
 "seen": false
 },
 {
+"id": "V5LE2",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "V5ME1",
 "type": "export",
 "state": "已回来",
 "seen": false
 },
 {
+"id": "V5ME2",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
 "id": "V5SE1",
+"type": "export",
+"state": "已回来",
+"seen": false
+},
+{
+"id": "V5SE2",
 "type": "export",
 "state": "已回来",
 "seen": false
@@ -6821,6 +6839,114 @@ var FW_EFFECTS = [
 "entry": "V5S",
 "ver": "f035dd61·trail4.3",
 "time": "2026-10-04 07:43",
+"packages": [
+{
+"name": "TrailS",
+"replica": "V5S",
+"files": [
+"T_TrailS_Fade20.png",
+"T_TrailS_Fade20_Cutout.png",
+"T_TrailS_Fade30.png",
+"T_TrailS_Fade30_Cutout.png",
+"T_TrailS_Loop.png",
+"T_TrailS_Loop_Cutout.png",
+"T_TrailS_Mobile_Fade20.png",
+"T_TrailS_Mobile_Fade20_Cutout.png",
+"T_TrailS_Mobile_Fade30.png",
+"T_TrailS_Mobile_Fade30_Cutout.png",
+"T_TrailS_Mobile_Loop.png",
+"T_TrailS_Mobile_Loop_Cutout.png",
+"T_TrailS_Mobile_Ramp.png",
+"T_TrailS_Ramp.png",
+"TrailS.json",
+"TrailS_Cascade参数.txt",
+"TrailS_Mobile.json",
+"TrailS_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"check": null,
+"stale": true
+},
+{
+"job": "V5LE2",
+"entry": "V5L",
+"ver": "f76d1965·trail4.3",
+"time": "2026-10-04 08:12",
+"packages": [
+{
+"name": "TrailL",
+"replica": "V5L",
+"files": [
+"T_TrailL_Fade20.png",
+"T_TrailL_Fade20_Cutout.png",
+"T_TrailL_Fade30.png",
+"T_TrailL_Fade30_Cutout.png",
+"T_TrailL_Loop.png",
+"T_TrailL_Loop_Cutout.png",
+"T_TrailL_Mobile_Fade20.png",
+"T_TrailL_Mobile_Fade20_Cutout.png",
+"T_TrailL_Mobile_Fade30.png",
+"T_TrailL_Mobile_Fade30_Cutout.png",
+"T_TrailL_Mobile_Loop.png",
+"T_TrailL_Mobile_Loop_Cutout.png",
+"T_TrailL_Mobile_Ramp.png",
+"T_TrailL_Ramp.png",
+"TrailL.json",
+"TrailL_Cascade参数.txt",
+"TrailL_Mobile.json",
+"TrailL_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"check": null,
+"stale": true
+},
+{
+"job": "V5ME2",
+"entry": "V5M",
+"ver": "a151fa7a·trail4.3",
+"time": "2026-10-04 08:12",
+"packages": [
+{
+"name": "TrailM",
+"replica": "V5M",
+"files": [
+"T_TrailM_Fade20.png",
+"T_TrailM_Fade20_Cutout.png",
+"T_TrailM_Fade30.png",
+"T_TrailM_Fade30_Cutout.png",
+"T_TrailM_Loop.png",
+"T_TrailM_Loop_Cutout.png",
+"T_TrailM_Mobile_Fade20.png",
+"T_TrailM_Mobile_Fade20_Cutout.png",
+"T_TrailM_Mobile_Fade30.png",
+"T_TrailM_Mobile_Fade30_Cutout.png",
+"T_TrailM_Mobile_Loop.png",
+"T_TrailM_Mobile_Loop_Cutout.png",
+"T_TrailM_Mobile_Ramp.png",
+"T_TrailM_Ramp.png",
+"TrailM.json",
+"TrailM_Cascade参数.txt",
+"TrailM_Mobile.json",
+"TrailM_曲线.csv",
+"cascade.json",
+"cascade_mobile.json"
+]
+}
+],
+"check": null,
+"stale": true
+},
+{
+"job": "V5SE2",
+"entry": "V5S",
+"ver": "f035dd61·trail4.3",
+"time": "2026-10-04 08:12",
 "packages": [
 {
 "name": "TrailS",
