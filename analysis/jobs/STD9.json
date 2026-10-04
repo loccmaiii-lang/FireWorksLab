@@ -1,0 +1,12 @@
+{
+ "id": "STD9",
+ "type": "std",
+ "name": "标准检查：HK10（烘焙器 4.4.4 光点点灭重导）",
+ "targets": [
+  "HK10"
+ ],
+ "priority": 8,
+ "note": "等 HK10E7 导出回来再跑（同一指纹 ·dots4.4.4+master4.3.3）。",
+ "ready": false,
+ "hold": "等 HK10E7 导出回来（标准检查要查同一指纹的新导出）"
+}

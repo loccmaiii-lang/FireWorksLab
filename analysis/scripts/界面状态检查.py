@@ -38,7 +38,7 @@
      爆裂星的「爆裂」发射器、尾缀档位在「效果 › 规格」、空白发射器「+ 火花」/「去掉」
   S4 4.4：旧搜索 / 只看改过的时点发射器标签 = 清掉筛选、换到那一页，不改配方；「全部」把发射器都排出来
   E1 4.4：「结尾」「冷却方式」开关缺省 = 旧做法（4.4.3 加：火花闪烁频率缺省 0、在火花 › 亮度的随机下面、闪烁 0 时不显示）；结尾选「不淡出」序列时长加长到火花灭完、帧计划不再整体淡出
-  X2 4.4.2：单层效果（牡丹）也有导出方案：PC 序列 / 单束 / GPU 光点 / 不出、手机 序列 / 不出；选光点后 cascade.json 是 GPU 光点、引擎回放画光点；多层效果的层里不显示（在层页头选）
+  X2 4.4.2：单层效果（牡丹）也有导出方案（4.4.3 加：点灭星的光点 Color Over Life 是方波、菊没有）：PC 序列 / 单束 / GPU 光点 / 不出、手机 序列 / 不出；选光点后 cascade.json 是 GPU 光点、引擎回放画光点；多层效果的层里不显示（在层页头选）
   N3 排查第 1 步：SCHEMA ↔ 默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS 对得上
   T1 4.4：时间轴的发射器行：菊 = 开花闪光 / 星 / 火花，火花被序列结尾切掉时有 ✂、加长后消失；点行名右栏切到那个发射器；千轮有子花行、爆裂星有爆裂行
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
@@ -1106,6 +1106,18 @@ async def x2(pg):
     info['引擎回放'] = r
     if r['pc'] != 'dots' or r['mobile'] != 'seq' or not r['n'] or r['n'] != r['lit']: bad.append(f'引擎回放的光点不对：{r}')
     await pg.evaluate("(() => { state.P.outPC = 'seq'; buildMasterPanel(); onParam(); selectEmitTab('星'); return 0; })()"); await idle(pg)
+    # 4.4.4 点灭：光点的 Color Over Life 写成方波（以前按相对寿命平均掉了、不闪）；不点灭的花型照旧。
+    # 亮的时间占比 ≈ 点灭占空比（以前取整对不上时亮边拖成斜坡、亮得晚）
+    r = await pg.evaluate("""(() => { const flips = t => { const d = defaultsFor(t, 40, true), P = derive({ ...structuredClone(d.P), type: t }), e = dotsES({ ...d.M, delay: 0, rate: 1, scale: 1 }, P, d.M, null);
+        const l = e.col.map(([u, c]) => c[0] + c[1] + c[2]); let n = 0; for (let i = 1; i < l.length; i++) if (Math.max(l[i], l[i - 1]) > 0.05 && Math.abs(l[i] - l[i - 1]) > 0.5 * Math.max(l[i], l[i - 1])) n++;
+        let on = 0, m = 0; if (+P.strobeHz > 0) { const v0 = dotVis({ ...P, strobeHz: 0 }), env = [[0, v0.alpha[0][1]], ...v0.alpha, [1, v0.alpha[v0.alpha.length - 1][1]]], u0 = +P.strobeStart || 0;
+          for (let i = 0; i < 2000; i++) { const u = u0 + (1 - u0) * (i + .5) / 2000, en = esCurve(env, u); if (en < 1e-3) continue; m++; if (esCurve(e.ak, u) > en * 0.8) on++; } }
+        return { n, on: m ? +(on / m).toFixed(3) : null, duty: +P.strobeDuty || 0.35 }; };
+      return { strobe: flips('strobe'), kiku: flips('kiku') }; })()""")
+    info['光点点灭'] = r
+    if r['strobe']['n'] < 10: bad.append(f"点灭星的光点 Color Over Life 没有亮灭（翻转 {r['strobe']['n']} 次）")
+    elif abs(r['strobe']['on'] - r['strobe']['duty']) > 0.06: bad.append(f"点灭星的光点亮的时间占比 {r['strobe']['on']}，和占空比 {r['strobe']['duty']} 对不上")
+    if r['kiku']['n'] > 4: bad.append(f"菊（不点灭）的光点亮度曲线多出了亮灭（翻转 {r['kiku']['n']} 次）")
     # 多层效果里不显示（多层在层页头选）
     await open_effect(pg, 'hiki_nishiki'); await idle(pg)
     r = await pg.evaluate("(() => { selectComboLayer(1); const x = panelRows.find(([r, it]) => it.sel === 'outPC'); return x ? !x[0].hidden : false; })()")

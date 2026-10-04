@@ -1,0 +1,9 @@
+{
+ "id": "HK10E7",
+ "type": "export",
+ "effect": "hongchao",
+ "entry": "HK10",
+ "name": "Hongchao40",
+ "priority": 9,
+ "note": "4.4.4 重导：第 2 层红点 PC = GPU 光点，点灭（3.3 Hz）以前在 Color Over Life 里被平均成常亮，4.4.4 改成亮灭方波（用户 10-04 09:58「点灭光点用 Cascade 的方式实现」）。效果参数不变，导出 + 回放检查。对话框15（底层）代做；用户 21:17 给了显卡空窗。"
+}

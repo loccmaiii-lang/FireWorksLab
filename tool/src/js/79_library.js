@@ -85,8 +85,9 @@ function outFamily(P) { const k = bakeKind(P); return k === 'segments' ? 'master
 function entryVer(e) {
   if (!e || !e.ver) return null;
   const key = e.id + '@' + e.ver; if (_entryVer.has(key)) return _entryVer.get(key);
-  const fams = new Set();
-  for (const id of (e.kind === 'combo' ? e.layerIds || [] : [e.id])) { try { if (typeof REPLICA_BY_ID !== 'undefined' && REPLICA_BY_ID[id]) { const P=replicaPM(id).P, f=outFamily(P); fams.add(f + (+P.coreProfile===1 ? '4.3.8-core1' : OUTPUT_VER[f])); } } catch (err) { } }
+  const fams = new Set(), outs = e.kind === 'combo' && e.combo && e.combo.layers ? e.combo.layers.map(L => L.out || {}) : [];
+  (e.kind === 'combo' ? e.layerIds || [] : [e.id]).forEach((id, i) => { try { if (typeof REPLICA_BY_ID !== 'undefined' && REPLICA_BY_ID[id]) { const P=replicaPM(id).P, f=outFamily(P); fams.add(f + (+P.coreProfile===1 ? '4.3.8-core1' : OUTPUT_VER[f]));
+    if (((outs[i] || {}).pc || P.outPC) === 'dots') fams.add('dots' + OUTPUT_VER.dots); } } catch (err) { } });   // 4.4.4：GPU 光点层单独一档（点灭改方波，旧光点导出过期）
   const v = e.ver + '·' + ([...fams].sort().join('+') || 'x');
   _entryVer.set(key, v); return v;
 }

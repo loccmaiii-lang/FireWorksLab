@@ -117,7 +117,20 @@ function dotsES(L, P, M, fm) {
   const sz = Math.max(0.05, (L.dotSize > 0 ? +L.dotSize : 1) * (+P.headSize || 1) * sc), gain = (+M.headInt || 1) * (+P.headBright || 1) * (L.dotBright > 0 ? +L.dotBright : 1);
   if (!v) return { name: 'Dots', gpu: true, delay: +L.delay || 0, duration: 0.1, bursts: [], life: [1, 1], size: [sz, sz], col: [[0, [0, 0, 0]], [1, [0, 0, 0]]], ak: [[0, 0], [1, 0]], seed, fit: { k: 0, g: 0, on: 0, n: 0 } };
   // 序列材质的色相来自 Ramp（灰度查表）× Color Over Life；软圆点没有 Ramp，星头亮核用 Ramp 亮端（中亮、亮两格的平均，线性）乘进颜色
-  const ak = [[0, v.alpha[0][1]], ...v.alpha, [1, v.alpha[v.alpha.length - 1][1]]], ck = colorKeys(M, v.med, v.on).map(([u, c]) => [u, c.map((x, j) => x * rc[j])]);
+  let ak = [[0, v.alpha[0][1]], ...v.alpha, [1, v.alpha[v.alpha.length - 1][1]]];
+  const ck = colorKeys(M, v.med, v.on).map(([u, c]) => [u, c.map((x, j) => x * rc[j])]);
+  // 4.4.4 点灭（用户 10-04 09:58「点灭光点用 Cascade 的方式实现」）：以前亮度按相对寿命把亮灭平均掉了、光点不闪。现在：
+  // 包络 = 不点灭时的亮度（同一份模拟去掉点灭），点灭开始之后乘上方波（亮 1.6 / 灭 0.03，和模拟里星头一样），按中位寿命换成相对寿命写进 Color Over Life。
+  // 所有粒子共用一条曲线，靠寿命随机让各粒子的亮灭慢慢错开（开始那一下是一起亮的）；GPU 发射器的曲线查找表会不会把方波抹平要 UE 验（D6）
+  if (+P.strobeHz > 0) {
+    const v0 = dotVis({ ...P, strobeHz: 0 }) || v, env = [[0, v0.alpha[0][1]], ...v0.alpha, [1, v0.alpha[v0.alpha.length - 1][1]]];
+    const u0 = clamp(+P.strobeStart || 0, 0, 1), per = 1 / Math.max(0.05, +P.strobeHz * v.med), duty = clamp(+P.strobeDuty || 0.35, 0.02, 0.98), e = Math.min(0.004, per * 0.08);
+    const R = x => +Math.min(1, x).toFixed(4), sq = [];      // 先取 4 位小数：下面关键帧时刻也是 4 位，否则「亮起」那一帧会被判成还没到、亮边拖成斜坡
+    for (let a = u0; a < 1; a += per) { const b = a + per * duty; sq.push([R(a), 1.6], [R(b - e), 1.6], [R(b), 0.03], [R(a + per - e), 0.03]); }
+    const f = u => { if (u < u0) return 1; let x = 1; for (let i = 0; i < sq.length; i++) if (sq[i][0] <= u) x = sq[i][1]; else break; return x; };
+    const ua = [...new Set([0, 1, ...env.map(k => +k[0]), ...sq.map(k => +k[0])].map(u => +clamp(u, 0, 1).toFixed(4)))].sort((a, b) => a - b);
+    ak = ua.map(u => [u, +(esCurve(env, u) * f(u)).toFixed(4)]);
+  }
   const us = [...new Set([0, 1, ...ck.map(k => +k[0]), ...ak.map(k => +k[0])].map(u => +clamp(u, 0, 1).toFixed(4)))].sort((a, b) => a - b);
   const col = esThin(us.map(u => [u, esCurve(ck, u).map(c => +(c * gain * esCurve(ak, u)).toFixed(4))]), 0.01);
   const t0 = v.bursts[0][0], bursts = v.bursts.map(([t, n]) => [(t - t0) / r, n]);
@@ -127,7 +140,7 @@ function dotsES(L, P, M, fm) {
 }
 function fwlDots(L, P, M, fm) {
   const e = dotsES(L, P, M, fm), j = esFwlEmitter(e, false, 1), f = e.fit, n = Math.round(+P.stars || 0);
-  return { ...j, notes: [`GPU 光点：这一层会亮的星只出星头光点（${f.n} 颗${f.n < n ? `，另外 ${n - f.n} 颗模拟里不发光` : ''}，球面放射），尾迹、闪烁 / 点灭（按亮灭平均）不在里面；出生位置、速度、寿命按模拟里每颗星亮起那一刻定，${e.bursts.length > 1 ? `按亮起先后分 ${e.bursts.length} 批出生、` : ''}之后的运动拟合成线性阻力（阻力 ${r4(f.k)}/s、等效重力 ${r2(f.g)} m/s²）；${f.on > 0.1 ? `第一批在 ${r2(f.on)} s 亮起；` : ''}光点直径 = 星头 × ${r2(L.dotSize > 0 ? +L.dotSize : 1)}、颜色 = 这一层的颜色 × Ramp 亮端 × 星头亮度 × ${r2(L.dotBright > 0 ? +L.dotBright : 1)}，是起点，未经 UE 验证`] };
+  return { ...j, notes: [`GPU 光点：这一层会亮的星只出星头光点（${f.n} 颗${f.n < n ? `，另外 ${n - f.n} 颗模拟里不发光` : ''}，球面放射），尾迹、星头闪烁不在里面；${+P.strobeHz > 0 ? `点灭写进 Color Over Life（${r2(+P.strobeHz)} Hz 方波，所有粒子共用一条曲线、靠寿命随机错开，GPU 曲线查找表会不会抹平未经 UE 验证）；` : ''}出生位置、速度、寿命按模拟里每颗星亮起那一刻定，${e.bursts.length > 1 ? `按亮起先后分 ${e.bursts.length} 批出生、` : ''}之后的运动拟合成线性阻力（阻力 ${r4(f.k)}/s、等效重力 ${r2(f.g)} m/s²）；${f.on > 0.1 ? `第一批在 ${r2(f.on)} s 亮起；` : ''}光点直径 = 星头 × ${r2(L.dotSize > 0 ? +L.dotSize : 1)}、颜色 = 这一层的颜色 × Ramp 亮端 × 星头亮度 × ${r2(L.dotBright > 0 ? +L.dotBright : 1)}，是起点，未经 UE 验证`] };
 }
 // 引擎回放画光点层：同一份数据，按层缓存出生表
 function dotsTables(e, L) {
