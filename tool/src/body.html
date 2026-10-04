@@ -5,8 +5,11 @@
       <span class="ab-state" id="abState"></span>
       <span class="sp"></span>
       <button class="btn ab-ur" id="abUndo" type="button" aria-label="撤销" title="撤销（Ctrl+Z）" disabled>↶</button><button class="btn ab-ur" id="abRedo" type="button" aria-label="重做" title="重做（Ctrl+Shift+Z）" disabled>↷</button>
-      <button class="btn primary" id="abSave" type="button" title="把现在的全部参数（所有层）存成你的版本（存在这台电脑的浏览器里）">保存</button>
+      <details class="ab-more ab-reset" id="abReset"><summary class="btn" title="还原：回到打开时 / 模板默认 / 只还原某个发射器（都能 Ctrl+Z 撤销）">↺ 还原</summary><div class="ab-menu" id="abResetMenu"></div></details>
+      <button class="btn primary" id="abSave" type="button" title="保存：你的效果直接保存；AI 做的效果 / 花型模板 / 正式库存成你的效果（原来的不动，之后能加层、删除）">保存</button>
       <button class="btn" id="abSaveAs" type="button">另存为…</button>
+      <button class="btn" id="abAddLayer" type="button">＋ 加层</button>
+      <button class="btn ghost ab-del" id="abDel" type="button" hidden>删除</button>
       <span class="ab-divider" aria-hidden="true"></span>
       <div class="export-actions">
         <button class="btn export-main" id="abExportPack" type="button" title="按每层的 PC / 手机导出方案导出完整素材包">导出素材包</button>
@@ -18,6 +21,11 @@
         <button type="button" id="abImportFile">导入配方文件…</button>
         <span class="menu-label">保存设置</span>
         <button type="button" id="abRepo">连接仓库文件夹…</button>
+        <span class="menu-label">模板</span>
+        <button type="button" id="abSaveTpl">把这一层存为模板</button>
+        <button type="button" id="abUpdTpl" hidden>更新模板</button>
+        <span class="menu-label">左栏</span>
+        <button type="button" id="abHide" hidden>从左栏隐藏这个效果</button>
         <span class="menu-label">协作</span>
         <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
         <button type="button" id="abMyRename" hidden>重命名这个效果</button>
@@ -67,7 +75,7 @@
           <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（V）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
           <span class="sp"></span>
           <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
-          <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="专注：收起两侧面板，画布最大（F，或双击画布）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">专注</span></button>
+          <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="精简布局：收起左右栏和底下的层轨道，画布最大（F，或双击画布；再按一次恢复，会记住）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">精简</span></button>
           <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="10" y="2.5" width="4.5" height="11" rx="1.5"/></svg></button>
         </div>
       <div class="viewframe" id="viewFrame">
@@ -115,7 +123,7 @@
       <div class="timeline">
         <button class="btn" id="play">暂停</button><button class="btn tk" id="replay" type="button" title="重播：回到 0 秒再播（R）">重播</button><select id="speed" class="btn" aria-label="播放速度">
           <option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option><option value="0.1">0.1×</option>
-        </select><output id="tlabel">0.00 s</output><label class="check tlloop" title="循环播放；关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked><span class="tku">循环</span></label><span class="sp"></span><button class="btn tk" id="tlHelpBtn" type="button" aria-pressed="false" title="说明：下面层轨道上的点、菱形、把手分别是什么；快捷键">？</button>
+        </select><output id="tlabel">0.00 s</output><label class="check tlloop" title="循环播放；关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked><span class="tku">循环</span></label><span class="sp"></span>
         <details class="ab-more timeline-tools" id="timeTools"><summary class="btn">时间工具</summary><div class="ab-menu"><button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1<span class="tku"> tick</span></button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1<span class="tku"> tick</span></button><span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span><span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>R</kbd>重播 <kbd>F</kbd>专注 <kbd>V</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span></div></details>
         <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="时间">
       </div>

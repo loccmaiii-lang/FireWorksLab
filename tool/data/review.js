@@ -7101,7 +7101,10 @@ var FW_EFFECTS = [
 "RT4ME1",
 "RT4SE1",
 "RT4ME2",
-"RT4LE1"
+"RT4LE1",
+"RT5SE1",
+"RT5ME1",
+"RT5LE1"
 ],
 "待验收版": "RT5M",
 "说明": "烘焙器 4.1.0 新产物 emitset：循环层（星头 + 白热段，贴图动态消散 + dissolve）+ GPU 金火星三档粒径 + 落火；大中小按理论推导（原理 7c–7e），实现 7f，第 2 版数量大小 7g，第 3 版白黄 / 线状 / 乱流 7h（烘焙器 4.2.1）；第 4 版 7i（烘焙器 4.2.2）：左栏分档、贴图按规范去浪费（星头在上端 + Pivot Offset、格子按长宽比、消散最小贴图、手机半边长）、一半细火星进贴图、引擎加星头光晕 / 末段爆亮 / 发射口。 第 5 版 RT5（对话框15，10-04，烘焙器 4.4.5）：按 UE 实测改——物理弹道、循环层长度跟真实尾迹 + 消散单独烘、GPU 兼容、细 / 中火花进贴图（GPU ≤ 800）、贴图亮度口径（H4）。原理 7j。",
@@ -7130,6 +7133,24 @@ var FW_EFFECTS = [
 "id": "RT4SE1",
 "type": "export",
 "state": "已回来",
+"seen": false
+},
+{
+"id": "RT5LE1",
+"type": "export",
+"state": "在算",
+"seen": false
+},
+{
+"id": "RT5ME1",
+"type": "export",
+"state": "在算",
+"seen": false
+},
+{
+"id": "RT5SE1",
+"type": "export",
+"state": "在算",
 "seen": false
 }
 ],

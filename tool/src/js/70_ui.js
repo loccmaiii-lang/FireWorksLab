@@ -519,11 +519,30 @@ function sizePxNote(k) {
   if (!(v > 0) || SIZE_KEYS[k] === 0) return '';
   return `<span class="ph-x">导出贴图上 1 像素 ≈ ${mpp < 0.1 ? mpp.toFixed(3) : mpp.toFixed(2)} m（面片 ${m.Ww.toFixed(0)} m ÷ 单格 ${Math.round(m.L.cellW)} 像素）：现在约 ${(v / mpp).toFixed(1)} 像素${v / mpp < 1 ? '（不到 1 像素：再调小主要是变暗）' : ''}</span>`;
 }
+// 4.5.0 参数说明（用户 10-05 01:28 #9 / 02:25「做个过渡动效，停留 1.5 s 出现」）：鼠标在参数名上停 1.5 s 才淡入，显示在参数栏下方；
+// 移开 0.3 s 后淡出（移进说明里看长文字不会消失）；点参数名 = 钉住（再点、点 ×、按 Esc 解除）。4.4 是点了才出、出了就一直在
+const HELP_DELAY = 1500, HELP_LEAVE = 300, helpSt = { timer: 0, hide: 0, pinned: null };
+function helpShow(row, pin) {
+  clearTimeout(helpSt.timer); clearTimeout(helpSt.hide);
+  const h = $('#pHelp'); if (!h || !row) return;
+  panelHelp(row); if (pin) helpSt.pinned = row;
+  if (helpSt.pinned) h.insertAdjacentHTML('afterbegin', '<button type="button" class="ph-close" aria-label="关闭说明" title="关闭（Esc）">×</button>');
+  h.classList.add('on'); h.classList.toggle('pinned', !!helpSt.pinned);
+}
+function helpHide(force) {
+  clearTimeout(helpSt.timer); clearTimeout(helpSt.hide);
+  if (helpSt.pinned && !force) return;
+  helpSt.pinned = null; const h = $('#pHelp'); if (h) h.classList.remove('on', 'pinned');
+}
+function helpBind(name, row) {
+  name.addEventListener('pointerenter', () => { if (helpSt.pinned) return; clearTimeout(helpSt.hide); clearTimeout(helpSt.timer); helpSt.timer = setTimeout(() => helpShow(row), HELP_DELAY); });
+  name.addEventListener('pointerleave', () => { clearTimeout(helpSt.timer); if (!helpSt.pinned) helpSt.hide = setTimeout(() => helpHide(), HELP_LEAVE); });
+  name.addEventListener('click', () => { if (helpSt.pinned === row) helpHide(true); else { helpSt.pinned = null; helpShow(row, true); } });
+}
 function panelHelp(row) {
   const h = $('#pHelp'); if (!h) return;
-  if (!row) { h.innerHTML = '<span class="ph-idle">点参数名看完整说明 · 双击参数名恢复默认</span>'; if (typeof curvesHot === 'function') curvesHot(null); return; }
+  if (!row) { h.innerHTML = ''; return; }
   const it = row._it, B = panelBaseP(), k = Array.isArray(it) ? it[0] : it.sel || it.text;
-  const cvn = typeof curvesHot === 'function' ? curvesHot(k) : '';     // 4.2.18：高亮时间轴下方对应的曲线
   if (row._nm) {      // 4.3：第一行「English · 中文 — 说明」，下面调大 / 调小、随机怎么取、UE 里对应、注意、现在不起作用的原因
     const nm = row._nm, unit = Array.isArray(it) && it[2] ? ` <small>${it[2]}</small>` : '', rng = Array.isArray(it) ? `范围 ${it[3]}–${it[4]}` : '';
     const base = B && B[k] != null ? ` · 打开时 ${Array.isArray(it) ? fmtV(B[k], it[5]) : B[k]}` : '', iw = row._inert;
@@ -531,12 +550,12 @@ function panelHelp(row) {
       + (iw ? `<span class="ph-inert">现在不起作用：${iw}</span>` : '')
       + (nm.ud ? `<span class="ph-d">${nm.ud}</span>` : '') + (nm.rnd ? `<span class="ph-x">随机：${nm.rnd}</span>` : '')
       + (nm.ue ? `<span class="ph-x">UE：${nm.ue}</span>` : '') + (nm.note ? `<span class="ph-x">注意：${nm.note}</span>` : '')
-      + (cvn ? `<span class="ph-cv">看时间轴下方 ${cvn} 曲线</span>` : '') + sizePxNote(k);
+      + sizePxNote(k);
     return;
   }
   const unit = Array.isArray(it) && it[2] ? ` <small>${it[2]}</small>` : '', rng = Array.isArray(it) ? ` · 范围 ${it[3]}–${it[4]}` : '';
   const base = B && B[k] != null ? ` · 打开时 ${Array.isArray(it) ? fmtV(B[k], it[5]) : B[k]}` : '';
-  h.innerHTML = `<b>${row._lab}</b>${unit}<span class="ph-meta">${rng}${base}</span>${row._inert ? `<span class="ph-inert">现在不起作用：${row._inert}</span>` : ''}${row._detail ? `<span class="ph-d">${row._detail}</span>` : ''}${cvn ? `<span class="ph-cv">看时间轴下方 ${cvn} 曲线</span>` : ''}`;
+  h.innerHTML = `<b>${row._lab}</b>${unit}<span class="ph-meta">${rng}${base}</span>${row._inert ? `<span class="ph-inert">现在不起作用：${row._inert}</span>` : ''}${row._detail ? `<span class="ph-d">${row._detail}</span>` : ''}`;
 }
 function buildMasterPanel() {
   pviewInit();
@@ -597,9 +616,9 @@ function buildMasterPanel() {
         row._refresh = () => { inp.value = state.P[it.text]; };
         det.appendChild(row);
       }
-      if (row._lab != null) {      // 4.4：说明条只在点参数名时换（以前悬停 / 聚焦就换，鼠标一动就跳）
+      if (row._lab != null) {      // 4.5.0：参数名上停 1.5 s 出说明、移开消失、点一下钉住（helpBind）
         row._it = it; row._x = ex; row._bm = nm && nm.mcn;
-        const name = row.querySelector('.k, .fk'); if (name) { name.classList.add('phelp-on'); name.addEventListener('click', () => panelHelp(row)); }
+        const name = row.querySelector('.k, .fk'); if (name) { name.classList.add('phelp-on'); helpBind(name, row); }
       }
       panelRows.push([row, it, sec, det]);
     }
@@ -607,8 +626,11 @@ function buildMasterPanel() {
   // 模块里按发射器表的先后排（表里常用的在前），再把随机行挂到本体下面
   host.querySelectorAll('section.egrp > details.mod').forEach(d => [...d.children].filter(c => c._x).sort((a, b) => a._x.i - b._x.i).forEach(r => d.appendChild(r)));
   p43RandLinks(); emitTabs(tabs);
-  if (!$('#pHelp')) { const h = document.createElement('div'); h.id = 'pHelp'; h.className = 'phelp'; h.setAttribute('aria-live', 'polite'); host.parentElement.insertBefore(h, host.nextSibling); }
-  panelHelp(null);
+  if (!$('#pHelp')) { const h = document.createElement('div'); h.id = 'pHelp'; h.className = 'phelp'; h.setAttribute('aria-live', 'polite'); host.parentElement.insertBefore(h, host.nextSibling);
+    h.addEventListener('pointerenter', () => clearTimeout(helpSt.hide)); h.addEventListener('pointerleave', () => { if (!helpSt.pinned) helpSt.hide = setTimeout(() => helpHide(), HELP_LEAVE); });
+    h.addEventListener('click', e => { if (e.target.closest('.ph-close')) helpHide(true); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && helpSt.pinned) { helpHide(true); e.stopImmediatePropagation(); } }, true); }
+  helpHide(true); panelHelp(null);
   refreshVisibility();
   const MD = defaultsFor(P.type).M;
   const redrawColors = () => { stageEditor($('#stages'), state.M, Math.max(1, Math.ceil(state.P.duration)), null); };
@@ -659,6 +681,7 @@ function refreshVisibility() {
   if (host && none && !host.querySelector('.pempty')) host.insertAdjacentHTML('beforeend', `<p class="pempty hint"></p>`);
   if (host) { const e = host.querySelector('.pempty'); if (e) { e.hidden = !none; e.textContent = pview.changed && !q ? '和打开时比，还没改过参数' : `没有找到「${pview.q}」`; } }
   document.querySelectorAll('#params [data-info=endInfo], #params [data-info=schemeNote], #params [data-info=ballInfo]').forEach(r => r._refresh && r._refresh());
+  if (typeof syncScopeResets === 'function') syncScopeResets();     // 4.5.0 改过的模块 / 发射器上的 ↺
   placeSpecBox();
 }
 // 发射器标签：按发射器表的顺序，每个发射器一个（适用的才显示），最后一个「全部」

@@ -57,8 +57,8 @@ STEPS = [
 VIEWS = [('实时', 'live', None, 1.0), ('引擎回放', 'export', None, 1.0), ('贴图', 'atlas', '0', 1.0), ('流转', 'atlas', '1', 1.5)]
 
 
-# --sweep 每个模板 / 效果打开后在右栏点遍发射器标签、开合时间轴的发射器行（面板和时间轴的代码都走一遍）
-TABS = "(() => { for (const b of document.querySelectorAll('#params .etabs [data-e]')) if (!b.hidden) b.click(); stage2.tlSig = ''; stage2.last = 0; stageTick(curDuration()); const eb = document.querySelector('#tlBars .tle-box'); if (eb) { eb.open = !eb.open; eb.open = !eb.open; } selectEmitTab('全部'); })()"
+# --sweep 每个模板 / 效果打开后在右栏点遍发射器标签、重建一次时间轴（面板和时间轴的代码都走一遍）
+TABS = "(() => { for (const b of document.querySelectorAll('#params .etabs [data-e]')) if (!b.hidden) b.click(); stage2.tlSig = ''; stage2.last = 0; stageTick(curDuration()); selectEmitTab('全部'); })()"
 
 
 async def main(out, full, limit, only=None, noshot=False, sweep=False):

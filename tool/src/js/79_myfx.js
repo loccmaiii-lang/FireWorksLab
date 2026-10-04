@@ -11,6 +11,7 @@ function myDelete(id) { const all = myAll(); delete all[id]; store.set('myEffect
 const myLid = () => 'l' + Math.random().toString(36).slice(2, 7);
 // 层的来源：花型模板 key / 'rep:<正式库>' / 'rv:<条目>' → { type, P, M, title }（参数复制一份，以后各改各的）
 function mySrc(key) {
+  const a = typeof assetSrc === 'function' ? assetSrc(key) : null; if (a) return a;     // 4.5.0 我的模板 / 我的效果的层
   if (key.startsWith('rep:') || key.startsWith('rv:')) {
     const id = key.replace(/^(rep|rv):/, ''), r = REPLICA_BY_ID[id]; if (!r) throw new Error('找不到 ' + id);
     const { P, M } = replicaPM(id), e = FW_REVIEW_LIST.find(x => x.id === id);
@@ -78,10 +79,7 @@ function myRename() {
   const rec = myRec(); if (!rec) return; const n = prompt('效果的中文名', rec.name); if (n == null) return;
   rec.name = n.trim() || rec.name; myPut(rec); lib.my.name = rec.name; state.comboName = rec.name; crumb('我的效果', rec.name); wbSync(); renderLib();
 }
-function myRemove() {
-  const rec = myRec(); if (!rec || !confirm(`删除你的效果「${rec.name}」？（只删这台电脑浏览器里的；已推进 git 的文件不动）`)) return;
-  myDelete(rec.id); wbPut([]); lib.my = null; openType('kiku');
-}
+function myRemove() { const rec = myRec(); if (rec) removeMyFx(rec.id); }     // 4.5.0：不弹确认，删了 6 秒内能撤销（79_assetops.js）
 // ---------------- 层：加、删、复制、改名、上下挪 ----------------
 function myAddLayer() { pkOpen({ mode: 'addLayer', title: '加一层 · 选花型模板，或现有效果里的某一层（参数复制一份）', onPick: myAddLayerFrom }); }
 async function myAddLayerFrom(key) {
@@ -161,6 +159,7 @@ function myLibGroup(host) {
   if (!list.length) g.insertAdjacentHTML('beforeend', '<p class="lsub">还没有。点最下面「＋ 新建效果」：先选第一层（花型模板或现有效果的层），再加层、改名、调参数。</p>');
   for (const r of list) {
     const t = r.snap && r.snap.layers[0] ? r.snap.layers[0].type : 'kiku', ue = packNamesFor('my:' + r.id, null, (r.snap.layers || []).length, 'MyFx').base;
-    libItem(g, 'my:' + r.id, `<span class="th" style="${typeThumbStyle(t)}"></span><span class="tx"><b>${r.name}</b><small>${ue} · ${(r.snap.layers || []).length} 层 · ${r.updated || ''}</small><span class="bds"><span class="badge">我的效果</span></span></span>`, () => openMyEffect(r.id));
+    const it = libItem(g, 'my:' + r.id, `<span class="th" style="${typeThumbStyle(t)}"></span><span class="tx"><b>${r.name}</b><small>${ue} · ${(r.snap.layers || []).length} 层${r.from ? ' · 派生自 ' + r.from.name : ''} · ${r.updated || ''}</small><span class="bds"><span class="badge">我的效果</span></span></span>`, () => openMyEffect(r.id));
+    libItemAct(it, '删除', '删除这个效果（6 秒内能撤销；已推进 git 的文件不动）', () => removeMyFx(r.id));
   }
 }

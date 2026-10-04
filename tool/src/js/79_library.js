@@ -3,7 +3,7 @@
 //  库：迭代区（tool/data/review.js，做完等你看的）/ 正式库（15_replica.js，确认过的）/ 组合 / 花型
 //  审阅：通过 / 要改 + 意见，存在这台电脑的浏览器里；「复制意见」贴给 Claude
 // =====================================================================
-const lib = { q: '', key: '', review: null, pane: 'params', open: store.get('libOpen2', {}) };
+const lib = { q: '', key: '', review: null, tpl: null, showHidden: false, pane: 'params', open: store.get('libOpen2', {}) };
 const ref2 = { on: store.get('refOn', false), off: 0 };
 
 async function setTab(tab, o = {}) {
@@ -164,6 +164,7 @@ function beforeOpen(nextEf) {
   autoDraft();
   if (lib.effect && (!nextEf || nextEf.key !== lib.effect.key)) dropEffectEdits(lib.effect);
   lib.my = null;            // 离开「我的效果」（openMyEffect 打开后会再设）
+  lib.tpl = null;           // 4.5.0 离开「我的模板」（openTemplate 打开后会再设）
 }
 function openEffect(ef) {
   beforeOpen(ef); dropEffectEdits(ef);
@@ -239,6 +240,12 @@ function libItem(host, key, html, onClick, plain) {
   d.innerHTML = html; d.addEventListener('click', onClick); d.addEventListener('keydown', ev => { if (ev.key === 'Enter') onClick(); });
   host.appendChild(d); return d;
 }
+// 4.5.0：左栏条目右边的小按钮（删除 / 改名 / 取消隐藏），点按钮不打开条目
+function libItemAct(item, label, title, fn) {
+  let box = item.querySelector('.li-act'); if (!box) { box = document.createElement('span'); box.className = 'li-act'; item.appendChild(box); }
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'mini'; b.textContent = label; b.title = title;
+  b.addEventListener('click', ev => { ev.stopPropagation(); fn(); }); b.addEventListener('keydown', ev => ev.stopPropagation()); box.appendChild(b); return b;
+}
 function libGroup(host, id, title, count, hot, extra) {
   const det = document.createElement('details'); det.className = 'lg lg-' + id; det.open = lib.q ? true : !!lib.open[id];
   det.innerHTML = `<summary><span class="lt">${title}</span><span class="n${hot ? ' hot' : ''}">${count}</span><span class="sp"></span>${extra || ''}</summary>`;
@@ -247,7 +254,7 @@ function libGroup(host, id, title, count, hot, extra) {
 }
 // 左栏（2026-10-02 界面外观第 1 步，按用户的浏览器草稿）：上下分组、可折叠——待我验收 / 制作中 / 已通过 / 花型模板 / 工具（4.3 去掉「历史」：只放当前版本）；
 // 56 px 缩略图、选中整圈青绿框；新建配方在最下面。lib.seg 仍可用（自动化脚本用 lib.seg='passed';renderLib() 打开某一组）。
-const LIB_OPEN_DEFAULT = { review: true, wip: true, passed: true, myfx: true, mine: true, types: false, tools: false };
+const LIB_OPEN_DEFAULT = { review: true, wip: true, passed: true, myfx: true, mine: true, mytpl: true, types: false, tools: false };
 function renderLib() {
   const host = $('#libBody'); host.innerHTML = '';
   lib.open = { ...LIB_OPEN_DEFAULT, ...(lib.open || {}) };
@@ -286,13 +293,17 @@ function renderLib() {
     g.appendChild(row);
   };
   const EMPTY = { review: '现在没有等你验收的效果。这里的每一项，程序都会核对证据（最新导出 = 当前版本、回放检查过、标准检查过），缺什么就标「未就绪」并写出原因。', wip: '没有制作中的效果', passed: '还没有通过的效果' };
+  // 4.5.0（用户 10-05 #5）：AI 做的效果不能删，可以从左栏隐藏（资产栏 ⋯「从左栏隐藏这个效果」）；组标题上「已隐藏 n」点一下显示 / 收起
+  const hid = typeof libHidden === 'function' ? libHidden() : new Set();
   for (const [k, t] of [['review', '待我验收'], ['wip', '制作中'], ['passed', '已通过']]) {
-    const list = effs.filter(ef => inSeg(ef, k) && libMatch(ef.名, ef.key, ef.主条目 || '', ef.说明 || '', ef.待验收版 || '', ef.已通过版 || ''));
+    const all = effs.filter(ef => inSeg(ef, k) && libMatch(ef.名, ef.key, ef.主条目 || '', ef.说明 || '', ef.待验收版 || '', ef.已通过版 || ''));
+    const nh = all.filter(ef => hid.has(ef.key)).length, list = all.filter(ef => lib.showHidden || !hid.has(ef.key));
     list.sort((x, y) => (x.阶段 === '未开始') - (y.阶段 === '未开始'));
     if (lib.q && !list.length) continue;
-    const g = libGroup(host, k, t, list.length, k === 'review' && effNewCount() > 0);
+    const g = libGroup(host, k, t, list.length, k === 'review' && effNewCount() > 0, nh ? `<button type="button" class="lg-hid" title="${lib.showHidden ? '收起隐藏的效果' : '显示隐藏的效果'}">${lib.showHidden ? '收起隐藏' : '已隐藏 ' + nh}</button>` : '');
+    const hb = g.querySelector('.lg-hid'); if (hb) hb.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); lib.showHidden = !lib.showHidden; renderLib(); });
     if (!list.length) g.insertAdjacentHTML('beforeend', `<p class="lsub">${EMPTY[k]}</p>`);
-    for (const ef of list) effRow(g, ef, k);
+    for (const ef of list) { effRow(g, ef, k); if (hid.has(ef.key)) { const it = g.querySelector(`.li[data-key="ef:${ef.key}"]`); if (it) libItemAct(it, '取消隐藏', '在左栏重新显示', () => setLibHidden(ef.key, false)); } }
   }
   // 我的效果（4.2.7，「＋ 新建效果」搭的）
   myLibGroup(host);
@@ -304,7 +315,18 @@ function renderLib() {
     for (const [k, sv] of mineF) {
       const ef = k.startsWith('ef:') ? effs.find(x => 'ef:' + x.key === k) : null, me = ef && effMainEntry(ef);
       const th = ef && ef.thumb ? `<span class="th"><i style="background-image:url(${ef.thumb})"></i></span>` : me ? thumbHTML(me) : k.startsWith('type:') ? `<span class="th" style="${typeThumbStyle(k.slice(5))}"></span>` : '<span class="th"></span>';
-      libItem(g, 'mine:' + k + ':' + sv.id, th + `<span class="tx"><b>${ef ? ef.名 : k.replace(/^\w+:/, '')} · ${sv.name}</b><small>基于 ${sv.base || '—'} · ${sv.at || ''}</small><span class="bds"><span class="badge">我的</span></span></span>`, () => openMine(k, sv.id));
+      const it = libItem(g, 'mine:' + k + ':' + sv.id, th + `<span class="tx"><b>${ef ? ef.名 : k.replace(/^\w+:/, '')} · ${sv.name}</b><small>基于 ${sv.base || '—'} · ${sv.at || ''}</small><span class="bds"><span class="badge">我的</span></span></span>`, () => openMine(k, sv.id));
+      libItemAct(it, '删除', '删除这个版本（6 秒内能撤销）', () => removeVersion(k, sv.id));
+    }
+  }
+  // 4.5.0 我的模板（用户 10-05 #6：调好的单层存成模板 / 收藏）
+  const tpls = Object.values(typeof tplAll === 'function' ? tplAll() : {}).filter(r => libMatch(r.name, r.id, TYPE_NAMES[r.type] || '')).sort((a, b) => String(b.at).localeCompare(String(a.at)));
+  if (tpls.length || !lib.q) {
+    const g = libGroup(host, 'mytpl', '我的模板', tpls.length);
+    if (!tpls.length) g.insertAdjacentHTML('beforeend', '<p class="lsub">还没有。调好的一层：资产栏 ⋯「把这一层存为模板」。</p>');
+    for (const r of tpls) {
+      const it = libItem(g, 'tpl:' + r.id, `<span class="th" style="${typeThumbStyle(r.type)}"></span><span class="tx"><b>${r.name}</b><small>基于${TYPE_NAMES[r.type] || r.type}${r.from ? ' · 来自 ' + r.from : ''} · ${r.at || ''}</small><span class="bds"><span class="badge">我的模板</span></span></span>`, () => openTemplate(r.id));
+      libItemAct(it, '改名', '改模板的名字', () => renameTemplate(r.id)); libItemAct(it, '删除', '删除这个模板（6 秒内能撤销）', () => removeTemplate(r.id));
     }
   }
   // 花型模板（从头调 / 新建配方的起点）
@@ -341,8 +363,8 @@ function rememberLayerEdit() {
   state.layerEdits = state.layerEdits || {};
   state.layerEdits[r.id] = { P: structuredClone(state.P), M: structuredClone(state.M) };
 }
-// 4.3（渲染基础问题 F3）：待验收的候选默认在「引擎回放」里看（验收只看引擎回放：导出的贴图按 cascade.json 播放；实时模拟最锐，会看走眼）
-function isCandidate(e) { const ef = lib.effect; return !!(e && ef && ef.阶段 === '待验收' && ef.待验收版 === e.id); }
+// 4.3（渲染基础问题 F3）曾让待验收的候选一打开就切到「引擎回放」。4.5.0（用户 10-05 01:28 #14「打开效果改成默认为渲染模式，不要默认回放模式」）：
+// 打开任何效果都不换视图——你在哪个视图就留在哪个（页面打开时是实时模拟）；验收时自己点「引擎回放」
 function setViewSeg(v) {
   state.view = v; toggleDeliv(false); syncStageTabs();
   if (v !== 'live' && typeof bakeIfStale === 'function') bakeIfStale(); if (typeof syncStale === 'function') syncStale();
@@ -350,7 +372,7 @@ function setViewSeg(v) {
 function openReview(e, ef) {
   const nextEf = ef || effectOfEntry(e); if (!ef) beforeOpen(nextEf);   // openEffect 已经做过
   rememberLayerEdit(); wb.entry = undefined;     // 重新打开 = 回到 AI 版（资产栏）
-  lib.effect = ef || effectOfEntry(e); lib.formal = null;
+  lib.effect = ef || effectOfEntry(e); lib.formal = null; lib.my = null; lib.tpl = null;
   lib.key = ef ? 'ef:' + ef.key : 'rv:' + e.id; store.set('lastKey', lib.key);
   const where = (lib.effect ? lib.effect.阶段 + ' · ' + lib.effect.名 : '条目') + (e.superseded ? ' · 历史' : '');
   setQueuedView(e.kind === 'queued');
@@ -365,17 +387,16 @@ function openReview(e, ef) {
   }
   lib.sig = curSig();
   setReview(e); renderLib(); crumb(where, e.name + (e.layerOf ? ' · 单层' : ''));
-  if (e.kind !== 'asset' && isCandidate(e) && state.view === 'live') setViewSeg('export');
 }
 // 组合条目：整体效果（组合页实时模拟 + 实拍并排）；各层在审阅卡里单独打开
 async function openComboEntry(e) {
-  const v = isCandidate(e) ? 'export' : 'live'; state.view = v; toggleDeliv(false); syncStageTabs();
+  toggleDeliv(false); syncStageTabs();     // 4.5.0：不换视图
   state.comboSel = -1; state.layerView = { solo: -1, mute: [] };
   await setTab('combo', { lazy: true }); await applyCombo(e.combo); lib.sig = curSig(); setReview(e); syncComboPanels();   // lazy：只烘这个组合用到的层，不先烘整套默认母版
 }
 function openFormal(r, ef) {
   if (!ef) beforeOpen(effectOfEntry({ id: r.id }));
-  wb.entry = undefined; lib.effect = ef || effectOfEntry({ id: r.id }); lib.formal = r;
+  wb.entry = undefined; lib.effect = ef || effectOfEntry({ id: r.id }); lib.formal = r; lib.my = null; lib.tpl = null;
   setQueuedView(false); lib.key = ef ? 'ef:' + ef.key : 'rep:' + r.id; setReplica(r.id); setTab('master'); lib.sig = curSig(); setReview(null, r); renderLib(); crumb(lib.effect ? lib.effect.阶段 + ' · ' + lib.effect.名 : '正式库', r.name);
 }
 function openType(t) { beforeOpen(null); wb.entry = undefined; lib.effect = null; lib.formal = null; setQueuedView(false); lib.key = 'type:' + t; setType(t); setTab('master'); setReview(null); renderLib(); crumb('花型', TYPE_NAMES[t]); }
@@ -496,7 +517,7 @@ function refSync() {
   }
 }
 
-// ---------------- 面板：左栏、右栏、专注、宽度 ----------------
+// ---------------- 面板：左栏、右栏、精简布局（4.5.0 前叫「专注」）、宽度 ----------------
 const panels = { side: store.get('sideOn', true), right: store.get('rightOn', true), before: null };
 // 4.2.3 窄屏（用户 2026-10-03 00:25「更小的笔记本屏幕打开会特别特别挤」）：窗口窄时左栏 / 右栏改成浮在画面上的抽屉，
 // 默认收起、按 L / P 或工具条按钮拉出；抽屉开关不记进「宽屏时开不开」。
@@ -511,6 +532,7 @@ function setPanels(o) {
   Object.assign(panels, o);
   const m = $('#main'); m.classList.toggle('noside', !panels.side); m.classList.toggle('noright', !panels.right);
   m.classList.toggle('drawer-side', DRAWER.side.matches); m.classList.toggle('drawer-right', DRAWER.right.matches);
+  m.classList.toggle('compact', !panels.side && !panels.right && !DRAWER.side.matches && !DRAWER.right.matches);     // 4.5.0 精简布局：层轨道也收起（窄屏抽屉模式不算）
   if (!DRAWER.side.matches) store.set('sideOn', panels.side);
   if (!DRAWER.right.matches) store.set('rightOn', panels.right);
   $('#btnSide').setAttribute('aria-pressed', String(panels.side)); $('#btnRight').setAttribute('aria-pressed', String(panels.right));
@@ -518,7 +540,7 @@ function setPanels(o) {
 }
 function toggleFocus() {
   if (!panels.side && !panels.right) setPanels(panels.before || { side: true, right: true });
-  else { panels.before = { side: panels.side, right: panels.right }; setPanels({ side: false, right: false }); flash('专注：F 或双击画布恢复'); }
+  else { panels.before = { side: panels.side, right: panels.right }; setPanels({ side: false, right: false }); flash('精简布局：F 或双击画布恢复'); }
 }
 function syncPanelMode() {
   // 两个断点可能在一次缩放中同时跨过，先读完宽屏偏好再应用，避免相互覆盖。

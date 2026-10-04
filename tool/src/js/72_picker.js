@@ -18,7 +18,7 @@ const TYPE_META = {
   wheel: ['旋转的火轮', '循环 地面 旋转'], fan: ['扇形连射的彗星', '循环 地面 扇形 连发'],
   barrage: ['一发接一发往上打，末端开小花', '循环 地面 连发'], shikake: ['发光的文字或图案', '循环 地面 文字']
 };
-const PK_CATS = [['all', '全部'], ['fx', '现有效果的层'], ['fav', '收藏'], ['recent', '最近使用'], ...TYPE_GROUPS.map(([g]) => [g, g])];
+const PK_CATS = [['all', '全部'], ['mytpl', '我的模板'], ['myfxl', '我的效果的层'], ['fx', '现有效果的层'], ['fav', '收藏'], ['recent', '最近使用'], ...TYPE_GROUPS.map(([g]) => [g, g])];
 const pk = { cat: 'all', q: '', fav: new Set(), recent: [], mode: 'open', onPick: null };
 // 4.2.7：现有效果（待我验收 / 制作中 / 已通过）的每一层，可以拿来当新效果的层（参数复制一份）
 function pkFxItems() {
@@ -47,6 +47,7 @@ function pkItems() {
     out.push({ key: t, name: TYPE_NAMES[t], cat: g, desc: m[0], tags: m[1].split(' ').filter(Boolean) });
   }
   if (pk.mode !== 'open') out.push(...pkFxItems());
+  if (typeof pkMyItems === 'function') out.push(...pkMyItems(pk.mode));     // 4.5.0 我的模板 / 我的效果的层（都能收藏）
   return out;
 }
 function pkFiltered() {
@@ -61,7 +62,7 @@ function pkRender() {
   const cats = $('#pkCats'); cats.innerHTML = '';
   const all = pkItems();
   for (const [k, l] of PK_CATS) {
-    if (k === 'fx' && pk.mode === 'open') continue;
+    if ((k === 'fx' || k === 'myfxl') && pk.mode === 'open') continue;
     const n = k === 'all' ? all.length : k === 'fav' ? pk.fav.size : k === 'recent' ? pk.recent.length : all.filter(i => i.cat === k).length;
     const b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(pk.cat === k));
     b.innerHTML = `${l}<span>${n}</span>`; b.addEventListener('click', () => { pk.cat = k; pkRender(); }); cats.appendChild(b);
@@ -71,13 +72,15 @@ function pkRender() {
   if (!items.length) { grid.innerHTML = `<p class="pk-empty">没有匹配的花型。</p>`; return; }
   for (const it of items) {
     const c = document.createElement('div'); c.className = 'pk-card' + (it.key === cur ? ' cur' : ''); c.tabIndex = 0; c.setAttribute('role', 'button');
-    const th = it.fx ? thumbHTML(it.fx).replace(/^<span class="th"/, '<span class="th pkfx"') : `<div class="th" style="${typeThumbStyle(it.key)}"></div>`;   // 只用渲染图（用户 2026-10-02 14:46：缩略图不用实拍）
+    const th = it.fx ? thumbHTML(it.fx).replace(/^<span class="th"/, '<span class="th pkfx"') : `<div class="th" style="${typeThumbStyle(it.thumbType || it.key)}"></div>`;   // 只用渲染图（用户 2026-10-02 14:46：缩略图不用实拍）
     c.innerHTML = th + `<div class="bd"><span class="nm">${it.name}</span><span class="ds">${it.desc || ''}</span><span class="tg">${it.tags.map(t => `<span>${t}</span>`).join('')}</span></div>` +
-      (it.rep ? `<span class="st">${it.rep.status || '待你确认'}</span>` : '') + `<button class="fav" type="button" aria-label="收藏" aria-pressed="${pk.fav.has(it.key)}">★</button>`;
+      (it.rep ? `<span class="st">${it.rep.status || '待你确认'}</span>` : '') + `<button class="fav" type="button" aria-label="收藏" aria-pressed="${pk.fav.has(it.key)}">★</button>`
+      + (it.cat === 'mytpl' ? `<button class="pk-del" type="button" aria-label="删除这个模板" title="删除这个模板（6 秒内能撤销）">删</button>` : '');
     c.querySelector('.fav').addEventListener('click', e => { e.stopPropagation(); pk.fav.has(it.key) ? pk.fav.delete(it.key) : pk.fav.add(it.key); store.set('fav', [...pk.fav]); pkRender(); });
+    const del = c.querySelector('.pk-del'); if (del) del.addEventListener('click', e => { e.stopPropagation(); removeTemplate(it.key.slice(4)); });
     const pick = () => { const fn = pk.onPick; pkClose(); pk.recent = [it.key, ...pk.recent.filter(k => k !== it.key)].slice(0, 12); store.set('recent', pk.recent);
       if (fn) { Promise.resolve(fn(it.key)).catch(e => { console.error(e); flash('出错了：' + (e.message || e), true); }); return; }
-      if (String(it.key).startsWith('rep:')) setType(it.key); else openType(it.key); };
+      if (String(it.key).startsWith('tpl:')) openTemplate(it.key.slice(4)); else if (String(it.key).startsWith('rep:')) setType(it.key); else openType(it.key); };
     c.addEventListener('click', pick); c.addEventListener('keydown', e => { if (e.key === 'Enter') pick(); });
     grid.appendChild(c);
   }
