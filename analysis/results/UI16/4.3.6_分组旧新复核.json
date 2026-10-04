@@ -1,0 +1,484 @@
+{
+  "old": {
+    "result": {
+      "type": "object",
+      "value": {
+        "result": {
+          "kiku": {
+            "groups": [
+              {
+                "name": "发射",
+                "open": true
+              },
+              {
+                "name": "运动",
+                "open": true
+              },
+              {
+                "name": "外观",
+                "open": true
+              },
+              {
+                "name": "输出",
+                "open": true
+              }
+            ],
+            "modules": [
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "发射器",
+                "open": true,
+                "y": 1439.5625
+              },
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "生成",
+                "open": true,
+                "y": 1573.5625
+              },
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "寿命",
+                "open": true,
+                "y": 1717.0625
+              },
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "形状",
+                "open": true,
+                "y": 1832.5625
+              },
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "初速",
+                "open": true,
+                "y": 1971.229248046875
+              },
+              {
+                "closedAncestor": false,
+                "group": "运动",
+                "name": "阻力重力",
+                "open": true,
+                "y": 662.0625
+              },
+              {
+                "closedAncestor": false,
+                "group": "外观",
+                "name": "星头",
+                "open": true,
+                "y": 827.3125
+              },
+              {
+                "closedAncestor": false,
+                "group": "外观",
+                "name": "火花",
+                "open": true,
+                "y": 1000.9791870117188
+              },
+              {
+                "closedAncestor": true,
+                "group": "外观",
+                "name": "尾迹外形",
+                "open": false,
+                "y": 1333.979248046875
+              },
+              {
+                "closedAncestor": true,
+                "group": "外观",
+                "name": "烟花特性",
+                "open": false,
+                "y": 1362.979248046875
+              },
+              {
+                "closedAncestor": true,
+                "group": "输出",
+                "name": "入点出点",
+                "open": false,
+                "y": 2134.3125
+              },
+              {
+                "closedAncestor": true,
+                "group": "输出",
+                "name": "帧与贴图",
+                "open": false,
+                "y": 2163.3125
+              },
+              {
+                "closedAncestor": true,
+                "group": "输出",
+                "name": "曝光光晕",
+                "open": false,
+                "y": 2192.3125
+              },
+              {
+                "closedAncestor": true,
+                "group": "输出",
+                "name": "画质",
+                "open": false,
+                "y": 2221.3125
+              }
+            ],
+            "right": {
+              "full": 2540,
+              "height": 658
+            }
+          },
+          "trailM": {
+            "groups": [
+              {
+                "name": "发射",
+                "open": true
+              },
+              {
+                "name": "外观",
+                "open": true
+              },
+              {
+                "name": "层",
+                "open": true
+              },
+              {
+                "name": "输出",
+                "open": true
+              }
+            ],
+            "modules": [
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "发射器",
+                "open": true,
+                "y": 1075.041748046875
+              },
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "弹道",
+                "open": true,
+                "y": 1209.041748046875
+              },
+              {
+                "closedAncestor": false,
+                "group": "外观",
+                "name": "星头",
+                "open": true,
+                "y": 688.4583740234375
+              },
+              {
+                "closedAncestor": false,
+                "group": "外观",
+                "name": "火花",
+                "open": true,
+                "y": 829.4583740234375
+              },
+              {
+                "closedAncestor": true,
+                "group": "外观",
+                "name": "尾迹外形",
+                "open": false,
+                "y": 998.4583740234376
+              },
+              {
+                "closedAncestor": false,
+                "group": "层",
+                "name": "白热火花",
+                "open": true,
+                "y": 1369.625
+              },
+              {
+                "closedAncestor": false,
+                "group": "层",
+                "name": "金火花",
+                "open": true,
+                "y": 1538.625
+              },
+              {
+                "closedAncestor": false,
+                "group": "层",
+                "name": "橙色火花",
+                "open": true,
+                "y": 1707.625
+              },
+              {
+                "closedAncestor": false,
+                "group": "层",
+                "name": "丝状火花",
+                "open": true,
+                "y": 1876.625
+              },
+              {
+                "closedAncestor": true,
+                "group": "输出",
+                "name": "曝光光晕",
+                "open": false,
+                "y": 2093.20849609375
+              },
+              {
+                "closedAncestor": false,
+                "group": "输出",
+                "name": "烘焙输出",
+                "open": true,
+                "y": 2122.20849609375
+              }
+            ],
+            "right": {
+              "full": 2725,
+              "height": 658
+            }
+          }
+        },
+        "version": "4.3.5",
+        "viewport": [
+          1280,
+          720
+        ]
+      }
+    }
+  },
+  "current": {
+    "result": {
+      "type": "object",
+      "value": {
+        "result": {
+          "kiku": {
+            "groups": [
+              {
+                "name": "发射",
+                "open": true
+              },
+              {
+                "name": "运动",
+                "open": true
+              },
+              {
+                "name": "外观",
+                "open": true
+              },
+              {
+                "name": "输出",
+                "open": true
+              }
+            ],
+            "modules": [
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "发射器",
+                "open": true,
+                "y": 1499.875
+              },
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "生成",
+                "open": true,
+                "y": 1637.875
+              },
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "寿命",
+                "open": true,
+                "y": 1785.375
+              },
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "形状",
+                "open": true,
+                "y": 1902.875
+              },
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "初速",
+                "open": true,
+                "y": 2043.541748046875
+              },
+              {
+                "closedAncestor": false,
+                "group": "运动",
+                "name": "阻力重力",
+                "open": true,
+                "y": 698.375
+              },
+              {
+                "closedAncestor": false,
+                "group": "外观",
+                "name": "星头",
+                "open": true,
+                "y": 867.625
+              },
+              {
+                "closedAncestor": false,
+                "group": "外观",
+                "name": "火花",
+                "open": true,
+                "y": 1049.291748046875
+              },
+              {
+                "closedAncestor": true,
+                "group": "外观",
+                "name": "尾迹外形",
+                "open": false,
+                "y": 1394.291748046875
+              },
+              {
+                "closedAncestor": true,
+                "group": "外观",
+                "name": "烟花特性",
+                "open": false,
+                "y": 1423.291748046875
+              },
+              {
+                "closedAncestor": true,
+                "group": "输出",
+                "name": "入点出点",
+                "open": false,
+                "y": 2208.625
+              },
+              {
+                "closedAncestor": true,
+                "group": "输出",
+                "name": "帧与贴图",
+                "open": false,
+                "y": 2237.625
+              },
+              {
+                "closedAncestor": true,
+                "group": "输出",
+                "name": "曝光光晕",
+                "open": false,
+                "y": 2266.625
+              },
+              {
+                "closedAncestor": true,
+                "group": "输出",
+                "name": "画质",
+                "open": false,
+                "y": 2295.625
+              }
+            ],
+            "right": {
+              "full": 2746,
+              "height": 671
+            }
+          },
+          "trailM": {
+            "groups": [
+              {
+                "name": "发射",
+                "open": true
+              },
+              {
+                "name": "外观",
+                "open": true
+              },
+              {
+                "name": "层",
+                "open": true
+              },
+              {
+                "name": "输出",
+                "open": true
+              }
+            ],
+            "modules": [
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "发射器",
+                "open": true,
+                "y": 1196.354248046875
+              },
+              {
+                "closedAncestor": false,
+                "group": "发射",
+                "name": "弹道",
+                "open": true,
+                "y": 1334.354248046875
+              },
+              {
+                "closedAncestor": false,
+                "group": "外观",
+                "name": "星头",
+                "open": true,
+                "y": 791.7708740234375
+              },
+              {
+                "closedAncestor": false,
+                "group": "外观",
+                "name": "火花",
+                "open": true,
+                "y": 940.7708740234376
+              },
+              {
+                "closedAncestor": true,
+                "group": "外观",
+                "name": "尾迹外形",
+                "open": false,
+                "y": 1119.7708740234375
+              },
+              {
+                "closedAncestor": false,
+                "group": "层",
+                "name": "白热火花",
+                "open": true,
+                "y": 1500.9375
+              },
+              {
+                "closedAncestor": false,
+                "group": "层",
+                "name": "金火花",
+                "open": true,
+                "y": 1679.9375
+              },
+              {
+                "closedAncestor": false,
+                "group": "层",
+                "name": "橙色火花",
+                "open": true,
+                "y": 1858.9375
+              },
+              {
+                "closedAncestor": false,
+                "group": "层",
+                "name": "丝状火花",
+                "open": true,
+                "y": 2037.9375
+              },
+              {
+                "closedAncestor": true,
+                "group": "输出",
+                "name": "曝光光晕",
+                "open": false,
+                "y": 2264.52099609375
+              },
+              {
+                "closedAncestor": false,
+                "group": "输出",
+                "name": "烘焙输出",
+                "open": true,
+                "y": 2293.52099609375
+              }
+            ],
+            "right": {
+              "full": 3047,
+              "height": 671
+            }
+          }
+        },
+        "version": "4.3.6",
+        "viewport": [
+          1280,
+          720
+        ]
+      }
+    }
+  }
+}

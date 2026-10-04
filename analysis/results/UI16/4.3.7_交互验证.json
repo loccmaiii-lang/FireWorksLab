@@ -1,0 +1,219 @@
+{
+  "s3": {
+    "bad": [],
+    "ok": true,
+    "out": {
+      "blank": {
+        "groups": [
+          "发射▾",
+          "运动▾",
+          "外观▾",
+          "输出▾"
+        ],
+        "mods": {
+          "初速": true,
+          "星头": true
+        },
+        "sliders": 13
+      },
+      "blankAdd": true,
+      "groupMemory": {
+        "group": "@发射",
+        "keptClosed": true,
+        "savedClosed": true,
+        "savedOpen": true
+      },
+      "kiku": {
+        "groups": [
+          "发射▾",
+          "运动▾",
+          "外观▾",
+          "输出▾"
+        ],
+        "mods": {
+          "初速": true,
+          "星头": true,
+          "火花": true
+        },
+        "sliders": 19
+      },
+      "trailM": {
+        "groups": [
+          "发射▾",
+          "外观▾",
+          "层▾",
+          "输出▾"
+        ],
+        "mods": {
+          "丝状火花": true,
+          "橙色火花": true,
+          "白热火花": true,
+          "金火花": true
+        },
+        "sliders": 35
+      }
+    }
+  },
+  "s4": {
+    "bad": [],
+    "ok": true,
+    "out": {
+      "all": {
+        "filtersCleared": true,
+        "groupsExpanded": true,
+        "modulesExpanded": true,
+        "recipeUnchanged": true
+      },
+      "context": {
+        "reviewHidden": true,
+        "wholeHidden": true
+      },
+      "spark": {
+        "expanded": true,
+        "filtersCleared": true,
+        "listed": true,
+        "located": true,
+        "otherFoldUnchanged": true,
+        "recipeUnchanged": true
+      },
+      "tail": {
+        "filtersCleared": true,
+        "groupExpanded": true,
+        "listed": true,
+        "located": true,
+        "modulesExpanded": true,
+        "recipeUnchanged": true
+      }
+    }
+  },
+  "s4Small": {
+    "bad": [],
+    "ok": true,
+    "out": {
+      "all": {
+        "filtersCleared": true,
+        "groupsExpanded": true,
+        "modulesExpanded": true,
+        "recipeUnchanged": true
+      },
+      "context": {
+        "reviewHidden": true,
+        "wholeHidden": true
+      },
+      "spark": {
+        "expanded": true,
+        "filtersCleared": true,
+        "listed": true,
+        "located": true,
+        "otherFoldUnchanged": true,
+        "recipeUnchanged": true
+      },
+      "tail": {
+        "filtersCleared": true,
+        "groupExpanded": true,
+        "listed": true,
+        "located": true,
+        "modulesExpanded": true,
+        "recipeUnchanged": true
+      }
+    }
+  },
+  "tailPage": {
+    "dpr": 1.0000000298023224,
+    "header": {
+      "bottom": 120.33333587646484,
+      "height": 57.66666793823242,
+      "left": 2120.666748046875,
+      "right": 2560.0000915527344,
+      "top": 62.66666793823242,
+      "width": 439.3333435058594,
+      "x": 2120.666748046875,
+      "y": 62.66666793823242
+    },
+    "options": [
+      {
+        "label": "分组定位",
+        "value": ""
+      },
+      {
+        "label": "显示全部分组",
+        "value": "all"
+      },
+      {
+        "label": "发射（整组）",
+        "value": "g:发射"
+      },
+      {
+        "label": "发射器",
+        "value": "m:发射器"
+      },
+      {
+        "label": "弹道",
+        "value": "m:弹道"
+      },
+      {
+        "label": "外观（整组）",
+        "value": "g:外观"
+      },
+      {
+        "label": "星头",
+        "value": "m:星头"
+      },
+      {
+        "label": "火花",
+        "value": "m:火花"
+      },
+      {
+        "label": "尾迹外形",
+        "value": "m:尾迹外形"
+      },
+      {
+        "label": "尾缀各层（整组）",
+        "value": "g:层"
+      },
+      {
+        "label": "白热火花",
+        "value": "m:白热火花"
+      },
+      {
+        "label": "金火花",
+        "value": "m:金火花"
+      },
+      {
+        "label": "橙色火花",
+        "value": "m:橙色火花"
+      },
+      {
+        "label": "丝状火花",
+        "value": "m:丝状火花"
+      },
+      {
+        "label": "渲染输出（整组）",
+        "value": "g:输出"
+      },
+      {
+        "label": "曝光光晕",
+        "value": "m:曝光光晕"
+      },
+      {
+        "label": "烘焙输出",
+        "value": "m:烘焙输出"
+      }
+    ],
+    "overflow": 0,
+    "right": {
+      "bottom": 1440.00004196167,
+      "height": 1377.3333740234375,
+      "left": 2120,
+      "right": 2560,
+      "top": 62.66666793823242,
+      "width": 440,
+      "x": 2120,
+      "y": 62.66666793823242
+    },
+    "viewport": [
+      2560,
+      1440
+    ]
+  }
+}

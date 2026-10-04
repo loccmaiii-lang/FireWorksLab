@@ -106,6 +106,7 @@ function syncComboPanels() {
   if (combo) { $('#pMaster').hidden = !lay; $('#pCombo').hidden = lay; }
   $('#pMaster').classList.toggle('layermode', lay); $('#layerHead').hidden = !lay;
   $('#pCombo').classList.toggle('effmode', combo && (!!(lib.review && lib.review.kind === 'combo') || !!lib.my));   // 我的效果也不要旧预设（4.2.7）
+  syncParameterNav();
 }
 
 // ---------------- 你的版本（保存 / 切换 / 文件） ----------------

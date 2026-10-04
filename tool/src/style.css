@@ -1234,7 +1234,12 @@ header.top .upd{height:var(--ui-control);font-size:var(--ui-label)}
 .li .tx small,.lg>summary,.side-foot .btn{font-size:var(--ui-small)}
 .right-head{position:sticky;top:0;z-index:8;display:flex;align-items:center;background:var(--panel);border-bottom:1px solid var(--line2);flex:none}
 .right-head>.ptabs{position:static;flex:1;min-width:0;border-bottom:0}
-.right-head .ptabs button{font-size:clamp(16px,.9vw,18px)}
+.right-head .ptabs button{font-size:clamp(16px,.9vw,18px);padding-inline:10px;white-space:nowrap}
+#paramNav{flex:none;width:96px;max-width:32%;margin:8px 10px 4px 0;min-height:32px;padding:5px 6px;font-size:12px;color:var(--text);background:var(--panel2);border:1px solid var(--line2);border-radius:5px}
+main.drawer-right .right-head{flex-wrap:wrap}
+main.drawer-right .right-head .ptabs{padding-inline:8px}
+main.drawer-right .right-close{order:2}
+main.drawer-right #paramNav{order:3;flex-basis:calc(100% - 20px);width:auto;max-width:none;margin:0 10px 8px}
 .right-close{display:none;margin:8px 10px 4px 0;min-height:36px;white-space:nowrap}
 main.drawer-right .right-close{display:block}
 #pMaster .sl .k{font-size:var(--ui-label)}

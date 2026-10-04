@@ -1,0 +1,12 @@
+{
+  "result": {
+    "type": "object",
+    "value": {
+      "bad": [
+        "参数栏缺少固定分组定位入口"
+      ],
+      "ok": false,
+      "out": {}
+    }
+  }
+}

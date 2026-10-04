@@ -1,0 +1,40 @@
+{
+  "version": "4.3.7",
+  "nodeSyntax": true,
+  "pythonSyntax": true,
+  "oldDomIDsMissing": [],
+  "duplicateDomIDs": [],
+  "newID": "paramNav",
+  "outputAndDefaultTypesUnchanged": true,
+  "changedSource": [
+    "tool/src/body.html",
+    "tool/src/js/10_types.js",
+    "tool/src/js/70_ui.js",
+    "tool/src/js/79_library.js",
+    "tool/src/js/79_workbench.js",
+    "tool/src/js/90_events.js",
+    "tool/src/style.css"
+  ],
+  "screenshots": {
+    "4.3.7_实际界面.jpg": [
+      1618,
+      972
+    ],
+    "4.3.7_火花定位_1280.jpg": [
+      1280,
+      720
+    ],
+    "4.3.7_火花定位_390.jpg": [
+      390,
+      844
+    ],
+    "4.3.7_火花定位_320.jpg": [
+      320,
+      640
+    ],
+    "4.3.7_尾缀各层_2560.jpg": [
+      2560,
+      1440
+    ]
+  }
+}

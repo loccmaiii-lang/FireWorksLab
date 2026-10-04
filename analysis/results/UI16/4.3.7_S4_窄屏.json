@@ -1,0 +1,37 @@
+{
+  "result": {
+    "type": "object",
+    "value": {
+      "bad": [],
+      "ok": true,
+      "out": {
+        "all": {
+          "filtersCleared": true,
+          "groupsExpanded": true,
+          "modulesExpanded": true,
+          "recipeUnchanged": true
+        },
+        "context": {
+          "reviewHidden": true,
+          "wholeHidden": true
+        },
+        "spark": {
+          "expanded": true,
+          "filtersCleared": true,
+          "listed": true,
+          "located": true,
+          "otherFoldUnchanged": true,
+          "recipeUnchanged": true
+        },
+        "tail": {
+          "filtersCleared": true,
+          "groupExpanded": true,
+          "listed": true,
+          "located": true,
+          "modulesExpanded": true,
+          "recipeUnchanged": true
+        }
+      }
+    }
+  }
+}

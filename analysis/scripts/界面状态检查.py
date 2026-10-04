@@ -936,7 +936,7 @@ async def s2(p, b):
 
 
 S3_JS = r"""async () => {
-  // 4.3.4 后（用户 10-04 13:26「参数栏好像丢了一部分，尾缀火星什么都不见了」）：打开一个花型，第一眼的参数要看得见
+  // 4.3.4 后：默认展开时参数、模块应可访问；此处检查祖先开合，实际视口定位见 S4。
   const out = {}, bad = [];
   // 收起的 <details> 里的东西 offsetParent 不一定是 null（新版 Chrome 用 content-visibility 藏），按祖先 details 是否展开判断
   const shown = el => { if (!el || !el.offsetParent) return false; for (let a = el.parentElement, c = el; a; c = a, a = a.parentElement) { if (a.hidden) return false; if (a.tagName === 'DETAILS' && !a.open && c.tagName !== 'SUMMARY') return false; } return true; };
@@ -946,7 +946,7 @@ S3_JS = r"""async () => {
     await openType(t); await new Promise(r => setTimeout(r, 400));
     const n = vis(), m = Object.fromEntries(mods.map(x => [x, modVis(x)]));
     out[t] = { sliders: n, mods: m, groups: [...document.querySelectorAll('#params details.pgrp')].filter(g => !g.hidden).map(g => g.dataset.g + (g.open ? '▾' : '▸')) };
-    if (n < need) bad.push(`${t} 打开后看得见的参数只有 ${n} 个（应 ≥ ${need}）`);
+    if (n < need) bad.push(`${t} 展开后可访问的参数只有 ${n} 个（应 ≥ ${need}）`);
     for (const [k, v] of Object.entries(m)) if (!v) bad.push(`${t} 的「${k}」模块看不见`);
     if (t === 'blank') { const b = document.querySelector('#blankAdd [data-addmod="火花"]'); out.blankAdd = shown(b); if (!out.blankAdd) bad.push('空白发射器的「+ 火花」看不见'); }
   }
@@ -966,9 +966,66 @@ S3_JS = r"""async () => {
 
 
 async def s3(pg):
-    """4.3.4 后：打开菊 / 空白发射器 / 升空尾缀，第一眼的参数、模块（尾缀各层的火花）、空白发射器的「+ 火花」都看得见（分组不能默认全收起）"""
+    """4.3.4 后：打开菊 / 空白发射器 / 升空尾缀，参数及模块可访问、空白的「+ 火花」可达；不表示所有行位于同一首屏"""
     await pg.evaluate("store.set('pModOpen', {}); pview.ready = false; pviewInit(); 0")     # 没有存过展开状态的新用户
     r = await pg.evaluate(S3_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
+
+
+S4_JS = r"""async () => {
+  // 旧折叠 / 搜索 / 只看改过的不能把「找回分组」入口也藏掉；定位本身不改配方、不触发重新烘焙。
+  const out = {}, bad = [], nav = document.querySelector('#paramNav');
+  if (!nav) return { ok: false, bad: ['参数栏缺少固定分组定位入口'], out };
+  const wait = () => new Promise(r => setTimeout(r, 30));
+  const saved = { mopen: structuredClone(store.get('pModOpen', {})), changed: store.get('pChanged', false), q: pview.q };
+  const mods = () => [...document.querySelectorAll('#params details.mod')];
+  const group = g => [...document.querySelectorAll('#params details.pgrp')].find(d => d.dataset.g === g);
+  const snapshot = () => JSON.stringify([state.P, state.M, state.gen]);
+  const select = async value => { nav.value = value; nav.dispatchEvent(new Event('change', { bubbles: true })); await wait(); };
+  const block = async (g, names) => {
+    pview.mopen = { ...pview.mopen, ['@' + g]: false, ...Object.fromEntries(names.map(n => [n, false])) };
+    store.set('pModOpen', pview.mopen); pview.changed = true; store.set('pChanged', true); pview.q = '没有匹配的旧搜索';
+    buildMasterPanel(); await wait();
+  };
+  const atTop = el => { const b = el.getBoundingClientRect(), h = document.querySelector('.right-head').getBoundingClientRect(), r = document.querySelector('#right').getBoundingClientRect(); return b.top >= h.bottom - 1 && b.bottom <= r.bottom + 1; };
+  try {
+    await openType('kiku'); await new Promise(r => setTimeout(r, 400));
+    await block('外观', ['火花']);
+    const listed = [...nav.options].some(o => o.value === 'm:火花'), before = snapshot();
+    const oldOutput = pview.mopen['@输出'];
+    await select('m:火花');
+    const fire = mods().find(d => d._mod === '火花');
+    out.spark = { listed, filtersCleared: !pview.q && !pview.changed, expanded: group('外观').open && fire.open && !fire.hidden,
+      located: atTop(fire.querySelector('summary')), recipeUnchanged: snapshot() === before, otherFoldUnchanged: pview.mopen['@输出'] === oldOutput };
+    for (const [k, v] of Object.entries(out.spark)) if (!v) bad.push('火花恢复失败：' + k);
+    await openType('trailM'); await new Promise(r => setTimeout(r, 400));
+    const tail = ['白热火花', '金火花', '橙色火花', '丝状火花'];
+    await block('层', tail);
+    const tailListed = ['g:层', ...tail.map(n => 'm:' + n)].every(v => [...nav.options].some(o => o.value === v)), tailBefore = snapshot();
+    await select('g:层');
+    out.tail = { listed: tailListed, filtersCleared: !pview.q && !pview.changed, groupExpanded: group('层').open,
+      modulesExpanded: tail.every(n => mods().some(d => d._mod === n && d.open && !d.hidden)), located: atTop(group('层').querySelector('summary')), recipeUnchanged: snapshot() === tailBefore };
+    for (const [k, v] of Object.entries(out.tail)) if (!v) bad.push('尾缀各层恢复失败：' + k);
+    await block('层', tail); const allBefore = snapshot();
+    await select('all');
+    out.all = { filtersCleared: !pview.q && !pview.changed,
+      groupsExpanded: [...document.querySelectorAll('#params details.pgrp')].filter(d => !d.hidden).every(d => d.open),
+      modulesExpanded: mods().filter(d => !d.hidden).every(d => d.open), recipeUnchanged: snapshot() === allBefore };
+    for (const [k, v] of Object.entries(out.all)) if (!v) bad.push('显示全部分组失败：' + k);
+    const pane = lib.pane; lib.pane = 'review'; syncPtabs(); const reviewHidden = nav.hidden; lib.pane = pane; syncPtabs();
+    const tab = state.tab, sel = state.comboSel; state.tab = 'combo'; state.comboSel = -1; syncComboPanels();
+    const wholeHidden = nav.hidden; state.tab = tab; state.comboSel = sel; await setTab(tab); syncPtabs();
+    out.context = { reviewHidden, wholeHidden };
+    if (!reviewHidden || !wholeHidden) bad.push('审阅或整体页显示了不适用的参数定位入口');
+  } finally {
+    store.set('pModOpen', saved.mopen); store.set('pChanged', saved.changed); pview.ready = false; pviewInit(); pview.q = saved.q; buildMasterPanel();
+  }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def s4(pg):
+    r = await pg.evaluate(S4_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
@@ -981,7 +1038,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

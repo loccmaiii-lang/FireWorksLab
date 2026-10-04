@@ -657,6 +657,46 @@ function refreshVisibility() {
   if (host && none && !empty) host.insertAdjacentHTML('beforeend', `<p class="pempty hint"></p>`);
   if (host) { const e = host.querySelector('.pempty'); if (e) { e.hidden = !none; e.textContent = pview.changed && !q ? '和打开时比，还没改过参数' : `没有找到「${pview.q}」`; } }
   placeSpecBox();
+  syncParameterNav();
+}
+// 定位清单按当前花型的适用行生成，独立于搜索、改动筛选及开合；被筛掉的模块仍能找回。
+function parameterSections() {
+  const P = state.P, valid = new Set(panelRows.filter(([, it, sec, det]) => blankHas(P, det._mod) && itemVisible(it, P) && !(sec.show && !sec.show(P))).map(([, , , det]) => det));
+  return [...document.querySelectorAll('#params details.pgrp')].map(g => ({
+    el: g, key: 'g:' + g.dataset.g, label: (P43_GROUPS.find(x => x[0] === g.dataset.g) || [null, g.dataset.g])[1].split('·').pop().trim(),
+    mods: [...g.querySelectorAll(':scope > details.mod')].filter(d => valid.has(d)),
+  })).filter(g => g.mods.length);
+}
+function syncParameterNav() {
+  const nav = $('#paramNav'); if (!nav || !nav.options) return;
+  nav.hidden = $('#pMaster').hidden || lib.pane === 'review' || $('#right').classList.contains('qmode');
+  if (nav.hidden) return;
+  const groups = parameterSections(), sig = JSON.stringify(groups.map(g => [g.key, g.mods.map(d => d._mod)]));
+  if (nav._sig === sig) return;
+  nav._sig = sig; nav.replaceChildren(new Option('分组定位', ''), new Option('显示全部分组', 'all'));
+  for (const g of groups) {
+    const opt = document.createElement('optgroup'); opt.label = g.label;
+    opt.appendChild(new Option(g.label + '（整组）', g.key));
+    for (const d of g.mods) opt.appendChild(new Option(d._mod, 'm:' + d._mod));
+    nav.appendChild(opt);
+  }
+}
+function focusParameterSection(key) {
+  const nav = $('#paramNav'); nav.value = '';
+  if (!key || nav.hidden) return;
+  const groups = parameterSections(), selected = groups.find(g => g.key === key || g.mods.some(d => 'm:' + d._mod === key));
+  if (key !== 'all' && !selected) return;
+  pview.q = ''; pview.changed = false; store.set('pChanged', false);
+  $('#params .ptools input[type=search]').value = ''; $('#params .pchg input').checked = false;
+  const expand = (d, k) => { pview.mopen[k] = true; d._autoOpen = false; d._auto = true; d.open = true; setTimeout(() => d._auto = false, 0); };
+  for (const g of key === 'all' ? groups : [selected]) {
+    expand(g.el, '@' + g.el.dataset.g);
+    for (const d of g.mods) if (key === 'all' || key === g.key || key === 'm:' + d._mod) expand(d, d._mod);
+  }
+  store.set('pModOpen', pview.mopen); refreshVisibility();
+  const target = key === 'all' ? $('#params') : key === selected.key ? selected.el : selected.mods.find(d => 'm:' + d._mod === key);
+  const right = $('#right'), head = document.querySelector('.right-head');
+  right.scrollTop += target.getBoundingClientRect().top - right.getBoundingClientRect().top - head.offsetHeight - 8;
 }
 function refreshPanelValues() { for (const [row] of panelRows) row._refresh && row._refresh(); }
 function applyShellLocked(n) {

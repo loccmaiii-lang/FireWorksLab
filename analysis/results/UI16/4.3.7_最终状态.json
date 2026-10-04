@@ -1,0 +1,32 @@
+{
+  "result": {
+    "type": "object",
+    "value": {
+      "dpr": 1.0000000298023224,
+      "filters": {
+        "changed": false,
+        "q": ""
+      },
+      "gen": 7,
+      "header": {
+        "bottom": 116.66666793823242,
+        "height": 54.66666793823242,
+        "left": 1244.916748046875,
+        "right": 1602.666748046875,
+        "top": 62,
+        "width": 357.75,
+        "x": 1244.916748046875,
+        "y": 62
+      },
+      "navVisible": true,
+      "overflow": 0,
+      "time": "1.50 / 7.50 s",
+      "unchanged": true,
+      "version": "4.3.7",
+      "viewport": [
+        1618,
+        972
+      ]
+    }
+  }
+}
