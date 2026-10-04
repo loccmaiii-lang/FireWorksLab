@@ -30,6 +30,7 @@
   C1 曲线视图（4.2.18，只读）：单层 / 多层选中层，时间轴下面有 亮度 / 亮着的星 / 火花生成 / 火花寿命 / 星速度 / 颜色 六条；
      改「火花起势」火花生成曲线的上升变慢、旧曲线留作对照；改「渐隐」亮度曲线末段变；悬停参数高亮对应曲线；开关、悬停都不触发烘焙；多层没选层时给提示
   S1 4.3.2 收尾：子花那几个「负数 = 默认」的参数是「用默认」勾选（H16）；只剩 GPU 模拟内核、存档 / 旧母版的 CPU 换成 GPU（H12）；物理尾缀过顶后按下落段算、开花晚于到顶有提示（E11③ / H15②）
+  S2 4.3.3 新建效果：打开就在第 1 层的参数上；加的层是这个效果自己的一份，改了不动原条目；保存再打开还在；不写「AI 版」
   N1 4.3 新参数面板（预览开关）：默认关 = 原样；打开后按模块排、名字来自参数命名表、英文名开关、看得见的参数一个不少、
      「××随机」收在本体参数的「随机」下（点开才出、记住）、不起作用的参数变灰写原因（菊：点火时刻随机；牡丹：火花寿命）、
      搜索认新名 / 旧名 / 英文名、说明条第一行「English · 中文 — 说明」；关掉回到原样
@@ -897,6 +898,42 @@ async def s1(pg):
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
+async def s2(p, b):
+    """4.3.3（用户 10-04 11:56）：新建效果 → 选牡丹模板 → 加引菊 → 锦的引菊层：打开就在第 1 层的参数上（不是「整体」）；
+    每层的模拟参数能改，改的是这个效果自己的一份（原条目、原效果不变）；保存再打开还在"""
+    ctx = await b.new_context(viewport={'width': 1440, 'height': 900}); pg = await ctx.new_page(); errs = []
+    pg.on('pageerror', lambda e: errs.append(str(e)))
+    pg.on('dialog', lambda d: asyncio.ensure_future(d.accept('检查新建' if d.type == 'prompt' else None)))
+    await pg.goto(HTML, wait_until='domcontentloaded', timeout=0); await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
+    await pg.evaluate(REC if REAL else FAKE); await pg.evaluate('state.playing = false')
+    bad, info = [], {}
+    rows = "(() => [...document.querySelectorAll('#params .sl')].filter(r => r.offsetParent && !r.querySelector('input[type=range]').disabled).map(r => r._lab || r.querySelector('.k').textContent))()"
+    await pg.click('#newRecipe'); await pg.wait_for_timeout(500)
+    await pg.evaluate("(() => { pk.cat = 'all'; pkRender(); const c = [...document.querySelectorAll('#pkGrid .pk-card')].find(x => x.querySelector('.nm').textContent.startsWith('牡丹')); c.click(); return 0; })()")
+    await pg.wait_for_timeout(1500); await idle(pg)
+    info['新建后'] = await pg.evaluate(f"({{ sel: state.comboSel, type: state.P.type, n: state.layers.length, rows: {rows}.length }})")
+    if info['新建后']['sel'] != 0 or info['新建后']['type'] != 'botan': bad.append(f"新建后没停在第 1 层的参数上（{info['新建后']}）")
+    if info['新建后']['rows'] < 8: bad.append(f"新建后看得到的参数只有 {info['新建后']['rows']} 个")
+    await pg.evaluate("(() => { $('#myAdd').click(); setTimeout(() => { pk.cat = 'fx'; pkRender(); const c = [...document.querySelectorAll('#pkGrid .pk-card')].find(x => x.textContent.includes('引菊') && x.textContent.includes('HN2-O')); c.click(); }, 50); return 0; })()")
+    await pg.wait_for_timeout(2500); await idle(pg)
+    o0 = await pg.evaluate("replicaPM('HN2-O').P.stars")
+    info['加层后'] = await pg.evaluate(f"({{ sel: state.comboSel, n: state.layers.length, own: state.layers.map(L => !!(layerEntryOf(L) || {{}}).own), rows: {rows}.length, stars: state.P.stars }})")
+    if info['加层后']['sel'] != 1 or not all(info['加层后']['own']): bad.append(f"加层后没选新层或层不是自己的一份（{info['加层后']}）")
+    await pg.evaluate("state.P.stars = 77; refreshPanelValues(); onParam(); 0"); await pg.wait_for_timeout(600); await idle(pg)
+    info['改星数'] = await pg.evaluate("({ layer: layerEntryOf(state.layers[1]).P.stars, orig: replicaPM('HN2-O').P.stars, other: state.layers.map(L => layerEntryOf(L).P.stars) })")
+    if info['改星数']['layer'] != 77 or info['改星数']['orig'] != o0: bad.append(f"改星数没改到这一层或改到了原条目（{info['改星数']}，原来 {o0}）")
+    await pg.evaluate("mySave(false)"); await pg.wait_for_timeout(800)
+    rid = await pg.evaluate("lib.my.id")
+    await pg.evaluate(f"openType('kiku')"); await pg.wait_for_timeout(1000); await idle(pg)
+    await pg.evaluate(f"openMyEffect('{rid}')"); await pg.wait_for_timeout(1500); await idle(pg)
+    info['再打开'] = await pg.evaluate("({ sel: state.comboSel, stars: state.layers.map(L => layerEntryOf(L).P.stars), label: typeof srcLabel === 'function' ? srcLabel() : '' })")
+    if info['再打开']['stars'][1] != 77: bad.append(f"保存再打开第 2 层星数不是 77（{info['再打开']}）")
+    if 'AI 版' in info['再打开']['label']: bad.append(f"自己的效果写着「{info['再打开']['label']}」")
+    if errs: bad.append('页面错误：' + errs[0][:150])
+    await ctx.close()
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
+
+
 async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
@@ -906,7 +943,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

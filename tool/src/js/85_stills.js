@@ -35,7 +35,7 @@ async function renderStills(P0, M0, opt) {
       const ts = Math.max(0, t - W + (j + 0.5) * W / nsub);
       while (sim.t < ts - 1e-9) sim.step(H_STEP);
       const [nh, nt] = sim.gather(bufH, bufT);
-      drawPoints(bufH, nh, view, ppm, [1, 0, 0, 0], 1 / nsub);
+      drawHeads(bufH, nh, sim.gFlash, view, ppm, [1, 0, 0, 0], 1 / nsub);
       if (gpu) drawSparksGPU(track, ts, view, ppm, [0, 1, 0, 0], 1 / nsub, tw * 16 + j);
       else drawPoints(bufT, nt, view, ppm, [0, 1, 0, 0], 1 / nsub);
     }

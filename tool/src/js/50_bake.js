@@ -55,7 +55,7 @@ function makeRenderer(P, kind) {
       }
       const xf = unit ? R.xfAt() : null;
       let l = 0; for (let i = 0; i < nh; i++) l += bufH[i * 4 + 2]; for (let i = 0; i < nt; i++) l += bufT[i * 4 + 2] * 0.3;
-      drawPoints(bufH, nh, view, ppm, [1, 0, 0, 0], w, xf);
+      drawHeads(bufH, nh, sim.gFlash, view, ppm, [1, 0, 0, 0], w, xf);
       if (gpu) drawSparksGPU(track, ts, view, ppm, [0, 1, 0, 0], w, tw, { xf });
       else drawPoints(bufT, nt, view, ppm, [0, 1, 0, 0], w, xf);
       return l;

@@ -45,7 +45,7 @@ function measureRun(P) {
       if (sp.T0[j] * (1 - P.cooling * sp.age[j] / sp.life[j]) < 1050) continue;
       r = Math.max(r, Math.hypot(sp.p[j * 3], sp.p[j * 3 + 1]));
     }
-    if (s.t < 0.25 && s.fam === 'aerial') r = Math.max(r, 3 * Math.max(2, P.v0 * 0.045));
+    if (s.t < 0.25 && s.fam === 'aerial') r = Math.max(r, 3 * Math.max(2, P.v0 * 0.045) * (+P.flashSize > 0 ? +P.flashSize : 1));
     prof.push([s.t, v, r]);
     ds.sort((a, b) => a - b); ys.sort((a, b) => a - b);
     stat.push({ t: s.t, r95: ds.length ? ds[Math.floor(ds.length * 0.95)] : 0, cy: vis ? sy / vis : 0, top: vis ? ys[Math.floor(ys.length * 0.97)] : 0, bot: vis ? ys[Math.floor(ys.length * 0.03)] : 0, vis });

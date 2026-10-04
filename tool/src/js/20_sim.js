@@ -140,7 +140,7 @@ class Sim {
     this.flashes = [];
     this.events = [];                    // 声音节点：[时刻, 类型]
     if (this.fam === 'rise') { this.initRise(); return; }
-    this.flashes.push({ t0: 0, x: 0, y: 0, I: P.flash, sig: Math.max(2, P.v0 * 0.045) });
+    this.flashes.push({ t0: 0, x: 0, y: 0, I: P.flash, sig: Math.max(2, P.v0 * 0.045) * (+P.flashSize > 0 ? +P.flashSize : 1) });     // 4.3.3 开花闪光大小（默认 1 = 以前）
     this.events.push([0, 'burst']);
     const dirs = dirsFor(P, this.rng);
     const carrier = P.type === 'senrin' || P.type === 'crossette';
@@ -369,14 +369,25 @@ class Sim {
         for (let k = 1; k <= 4; k++) { const f = k / 4; push(bufH, nh++, s.x + ux * len * f, s.y + uy * len * f, I * (1 - 0.75 * f), sz * (1 - 0.7 * f)); } } }
       if (refl > 0 && s.y > 0) push(bufH, nh++, s.x + ripple(s.y, this.t), -s.y, I * refl * Math.exp(-s.y / 400), sz * 1.3);
     }
+    // 爆裂小闪、落水闪光（f.abs）：照旧按星头核画（实心亮核 + 光晕）
     for (const f of this.flashes) {
+      if (f.abs == null) continue;
       const a = this.t - f.t0, cut = f.cut || 0.25; if (a < 0 || a > cut || nh >= capH - 1) continue;
-      if (P._unit && f.abs == null) continue;      // 单元序列不含开花闪光（另挂）
-      let I = f.abs != null ? f.abs * Math.exp(-a / f.tau) : f.I * Math.exp(-a / 0.035) * 1.5 * 6.2832 * f.sig * f.sig;
-      // 旧闪光预乘高斯面积以表达峰值亮度；新核直接接收面亮度，必须还原单位，不能再乘一次面积。
-      I/=6.2832*f.sig*f.sig;
+      const I = f.abs * Math.exp(-a / f.tau) / (6.2832 * f.sig * f.sig);
       push(bufH, nh++, f.x, f.y, I, f.sig * 2);
       if (refl > 0 && f.y >= 0) push(bufH, nh++, f.x, -f.y - 0.01, I * refl, f.sig * 2.6);
+    }
+    // 4.3.3（用户 10-04 11:56）：开花闪光（主花、子花开花、曲导到顶）放在最后，调用方从 this.gFlash 起按高斯画（PT_GAUSS，σ = f.sig）：
+    // 一团柔光，峰值亮度和以前的实心亮核一样（= 开花闪光 × 1.5 × 衰减），没有硬边、没有伸出格子的光晕。强度照旧由「开花闪光」调。
+    // 高斯点的强度口径是总光量（峰值 × 2πσ²），所以这里不再除面积。
+    this.gFlash = nh;
+    for (const f of this.flashes) {
+      if (f.abs != null) continue;
+      const a = this.t - f.t0, cut = f.cut || 0.25; if (a < 0 || a > cut || nh >= capH - 1) continue;
+      if (P._unit) continue;      // 单元序列不含开花闪光（另挂）
+      const I = f.I * Math.exp(-a / 0.035) * 1.5 * 6.2832 * f.sig * f.sig;
+      push(bufH, nh++, f.x, f.y, I, f.sig * 2);
+      if (refl > 0 && f.y >= 0 && nh < capH - 1) push(bufH, nh++, f.x, -f.y - 0.01, I * refl * 1.69, f.sig * 2.6);     // 倒影 σ × 1.3，总光量 × 1.69 保持峰值 × refl
     }
     const sp = this.sp; let nt = 0;
     const gl = P.glitter, gd = P.glitterDelay;
