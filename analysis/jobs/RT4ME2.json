@@ -1,0 +1,9 @@
+{
+ "id": "RT4ME2",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT4M",
+ "name": "RiseTailM",
+ "priority": 9,
+ "note": "4.4.1 重导（OUTPUT_VER emitset 4.4：消散面片和循环层同样全长、不写 Size By Life、循环层出场淡入——用户 10-04 17:41 UE 实测改的）。效果参数不变。RT4 的星头过曝（回放检查 2.8%）仍在，RT5 修；这次导出给用户在 UE 里看衔接。对话框15 代做。"
+}
