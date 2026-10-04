@@ -1,0 +1,25 @@
+用户要求：显卡与更新记录恢复右上角；基于当前行为改善保存、另存为、单束、查看交付的入口。保留选定大预览布局和原色板，只做草稿。
+输入一：协作/烟花烘焙器选定布局修订_2026-10-04.png
+输入二：协作/烟花烘焙器当前工具栏参照_2026-10-04.png
+结果：协作/烟花烘焙器操作分组草稿_2026-10-04.png
+这是交互排法建议的图像草稿，不是生产截图，不表示菜单已实现。
+
+Edit the FIRST reference image into ONE refined desktop UI draft. The second image is a reference of the REAL current toolbar and its existing features, not the target layout. Keep the selected first-image layout, the large single orange firework preview, compact bottom layer timeline, left library and right parameter inspector. Preserve the same dark grey and mint-green DF palette and understated professional editor styling. This is a scoped UI layout draft; do not redesign the overall app.
+
+USER FEEDBACK:
+- Keep the product title EXACTLY "烟花烘培器" (use 培), DF logo, subtle v4.3.2.
+- Top current-effect thumbnail/title/layer count and AI-version selector stay removed.
+- GPU information and 更新记录 must be restored to the FAR TOP RIGHT, as in the real toolbar.
+- Save, Save As, single-streak and delivery should be easier to understand and find. Keep important actions visible.
+
+RECOMMENDED INTERACTION LAYOUT, draw accurately:
+1. Top header is one tidy 62-pixel-high row with three clear groups. Left: DF logo, 烟花烘培器, v4.3.2. Middle-right action group: undo icon, redo icon, small divider, solid mint "保存", adjacent dark outlined "另存为…", divider, mint outlined split button "导出素材包" with a small separate downward-chevron segment, then a subtle "⋯" utility button. These fit comfortably, are not all filled green, and have regular 8px gaps.
+2. Far right of that SAME top row, after a thin separator: a small GPU chip icon and plain secondary status text "显卡 · GeForce RTX 5080", followed by a visible dark outlined "更新记录" button with a small orange unread dot. Fit both in the header and never wrap them to a second row. Remove the GPU text from the footer entirely. No floating GPU pill anywhere.
+3. Remove the top global "单束" and "查看交付" buttons because their functions are relocated visibly below, not deleted.
+4. The preview mode row, directly above the firework, contains "实时模拟" selected in mint, "引擎回放", "贴图", "流转", and a NEW clearly visible "交付清单" tab with a small file-list icon. Then a divider and the original 实拍对照 switch. On the right of that row keep PC/手机 and 专注. The new tab fits without colliding with the real-photo toggle or device controls. It represents the existing delivery file-list view; this draft stays on live preview.
+5. In the right inspector, keep 参数/审阅 tabs and 当前图层 · 金锦 header. Immediately below this header add a compact outlined output-settings block labeled "导出方案". It shows "PC [单束 ▾]" and "手机 [序列 ▾]" clearly on one row, plus a muted short helper "单束随整包导出". Thus the single-streak mode is VISIBLE at the layer level rather than hidden in a global menu. The PC 单束 control has a mint outline and selected text. Do NOT draw a huge modal, do not open the dropdown, and do not add unrelated modes. The existing linked-preview help and parameter search can follow this compact block. Keep Color, Motion, Emitter, Spawn, Velocity and Render panels with same controls; naturally compress their spacing just enough to fit after adding this block, no important module removed.
+6. Left library and +新建效果 bottom-left MUST remain intact. Keep selected 引菊→锦 effect in the left list and two layer names 橙引线 and 金锦 in the timeline. Keep firework size, black canvas, preview controls, loop/playback controls, time ruler, two layer bars and folded curve area intact. No layout variants, no side-by-side previews, no extra lower panel.
+7. Bottom footer only keeps subtle "界面草稿 · 示例内容" at the far right. The GPU belongs only at top right.
+8. No annotations, explanatory labels, arrows, enlarged toolbar inset, or new branding outside the app screenshot. This must look like a faithful full-screen editor screenshot. All Chinese text must be legible, consistent, and correctly written.
+
+Colors exactly in the same family: bg #25292a, panels #2b3032/#323a3d, recessed #181e21, borders #394245, main text #e0e6e8, secondary #adb8bc, mint #00d49b, preview #080a0d. 6–8px radii, system Chinese sans. Keep screenshot landscape aspect ratio and crisp UI.
