@@ -371,7 +371,7 @@ function syncExport() {
     let n = $('#x-gridNote'); if (!n) { n = document.createElement('small'); n.id = 'x-gridNote'; n.className = 'note'; $('#x-rows').closest('label').appendChild(n); }
     n.textContent = ec !== P.cols || er !== P.rows ? `实际 ${ec} × ${er}（单格 ${Math.round(P.texW / ec)} px${oc ? '，按「单格」' : '，单格不小于 512'}）` : '';
   }
-  $('#x-chans').value = P.chans; $('#x-out').value = P.outMode; $('#x-enc').value = P.encGamma; $('#x-frame').value = P.frameMode; $('#x-zoom').value = P.zoom; $('#x-engine').value = P.engine;
+  $('#x-chans').value = P.chans; $('#x-out').value = P.outMode; $('#x-enc').value = P.encGamma; $('#x-frame').value = P.frameMode; $('#x-zoom').value = P.zoom;
   $('#x-flip').checked = !!P.unitFlip; $('#flipBox').hidden = !(k === 'unit' || k === 'riseLoop');
   $('#x-autogrid').checked = !!P.autoGrid; $('#gridBox').hidden = k === 'master' || k === 'segments';
   $('#x-zoom').disabled = k !== 'master' && k !== 'segments'; $('#x-frame').disabled = k === 'loop' || k === 'riseLoop';
@@ -381,6 +381,28 @@ function syncExport() {
 }
 
 function fmtV(v, step) { const d = step >= 1 ? 0 : step >= 0.1 ? 1 : 2; return (+v).toFixed(d); }
+// 4.3.2（渲染基础问题 H16）：「负数 = 默认」的参数以前只能把滑杆拖到 -1，中间那段负数没意义、也看不出默认是多少。
+// 改成行里一个「默认」勾选：勾上 = 存 -1（模拟照旧按默认算），滑杆变灰、显示默认的实际值；去掉勾 = 从默认的实际值开始调，滑杆只在有效范围。
+// [滑杆下限, 默认的实际值（按当前参数）, 说明]
+const AUTO_DEF = {
+  subKeep: [0, P => P.subPattern === 'cross' ? 0.25 : 0.35, '小球（千轮）0.35、十字（分裂）0.25'],
+  subSpeedJit: [0, P => +P.speedJit || 0, '跟主层的初速随机'],
+  subGrav: [0, P => P.grav == null ? 1 : +P.grav, '跟主层的重力'],
+  subFlash: [0, P => +(+P.flash * 0.3).toFixed(3), '主层开花闪光 × 0.3'],
+};
+function autoDefRow(row, k, step) {
+  const a = AUTO_DEF[k]; if (!a) return;
+  const inp = row.querySelector('input[type=range]'), num = row.querySelector('.num');
+  inp.min = a[0];
+  const lb = document.createElement('label'); lb.className = 'adef'; lb.title = '勾上 = 用默认（' + a[2] + '）；去掉勾再调';
+  lb.innerHTML = '<input type="checkbox"> 用默认（' + a[2] + '）'; row.appendChild(lb);
+  const cb = lb.querySelector('input');
+  const sync = () => { const on = !(+state.P[k] >= 0); cb.checked = on; inp.disabled = on; num.disabled = on; row.classList.toggle('adef-on', on);
+    if (on) { const v = a[1](state.P); inp.value = v; num.value = fmtV(v, step); } };
+  cb.addEventListener('change', () => { state.P[k] = cb.checked ? -1 : Math.max(a[0], +a[1](state.P)); onParam(); sync(); });
+  row.querySelector('.k').addEventListener('dblclick', () => setTimeout(sync, 0));     // 双击恢复默认 = 勾上
+  const r0 = row._refresh; row._refresh = () => { r0(); sync(); }; sync();
+}
 function slider(host, id, label, unit, min, max, step, get, set, def, lockKey) {
   const row = document.createElement('div'); row.className = 'sl' + (lockKey ? '' : ' nolock');
   row.innerHTML = (lockKey ? `<button class="lk" type="button" title="锁定：切换号数、随机微调时不变" aria-label="锁定 ${label}" aria-pressed="false">●</button>` : '') +
@@ -542,6 +564,7 @@ function buildMasterPanel() {
       if (Array.isArray(it)) {
         const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
         row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { if (TIMING_KEYS.has(k)) setTimingParam(k, v); else { state.P[k] = v; onParam(); } }, D[k], k);
+        autoDefRow(row, k, step);
         const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}` : short) + (unit ? `（${unit}）` : '') + '；双击恢复默认';
         row._lab = short; row._detail = detail; row._nm = nm;
       } else if (it.sel) {

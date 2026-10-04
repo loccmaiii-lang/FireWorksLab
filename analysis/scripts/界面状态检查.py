@@ -29,6 +29,7 @@
   R1 「恢复到打开时」（单层）把被接力带动的另一层也恢复（10-03 复现：恢复第 1 层后第 2 层的延时点火还停在被带动的位置）
   C1 曲线视图（4.2.18，只读）：单层 / 多层选中层，时间轴下面有 亮度 / 亮着的星 / 火花生成 / 火花寿命 / 星速度 / 颜色 六条；
      改「火花起势」火花生成曲线的上升变慢、旧曲线留作对照；改「渐隐」亮度曲线末段变；悬停参数高亮对应曲线；开关、悬停都不触发烘焙；多层没选层时给提示
+  S1 4.3.2 收尾：子花那几个「负数 = 默认」的参数是「用默认」勾选（H16）；只剩 GPU 模拟内核、存档 / 旧母版的 CPU 换成 GPU（H12）；物理尾缀过顶后按下落段算、开花晚于到顶有提示（E11③ / H15②）
   N1 4.3 新参数面板（预览开关）：默认关 = 原样；打开后按模块排、名字来自参数命名表、英文名开关、看得见的参数一个不少、
      「××随机」收在本体参数的「随机」下（点开才出、记住）、不起作用的参数变灰写原因（菊：点火时刻随机；牡丹：火花寿命）、
      搜索认新名 / 旧名 / 英文名、说明条第一行「English · 中文 — 说明」；关掉回到原样
@@ -851,6 +852,51 @@ async def n2(pg):
     return not bad, '；'.join(bad) or f"{r['types']} 个花型的参数都有名字（命名表 {r['rows']} 行）、没有旧词"
 
 
+S1_JS = r'''async () => {
+  const out = {}, bad = [];
+  // H16：「负数 = 默认」的参数是「用默认」勾选
+  await openType('senrin'); await new Promise(r => setTimeout(r, 300));
+  const rowOf = k => (panelRows.find(([r, it]) => Array.isArray(it) && it[0] === k) || [])[0];
+  for (const [k, want] of [['subKeep', 0.35], ['subGrav', +state.P.grav], ['subFlash', +(state.P.flash * 0.3).toFixed(3)], ['subSpeedJit', +state.P.speedJit]]) {
+    const row = rowOf(k); if (!row) { bad.push(k + ' 没有这一行'); continue; }
+    const cb = row.querySelector('.adef input'), rg = row.querySelector('input[type=range]'), num = row.querySelector('.num');
+    if (!cb) { bad.push(k + ' 没有「用默认」勾选'); continue; }
+    const r = { on: cb.checked, dis: rg.disabled, min: +rg.min, shown: +num.value };
+    cb.checked = false; cb.dispatchEvent(new Event('change')); r.off = { v: state.P[k], dis: rg.disabled };
+    cb.checked = true; cb.dispatchEvent(new Event('change')); r.back = state.P[k];
+    out[k] = r;
+    if (!(r.on && r.dis && r.min >= 0)) bad.push(k + ' 打开时没勾上 / 滑杆没变灰 / 下限还是负数 ' + JSON.stringify(r));
+    if (Math.abs(r.shown - want) > 0.011 * Math.max(1, Math.abs(want))) bad.push(`${k} 勾着时显示 ${r.shown}，默认的实际值是 ${want}`);
+    if (!(Math.abs(r.off.v - want) < 1e-6 && !r.off.dis)) bad.push(`${k} 去掉勾后 = ${r.off.v}（应从默认实际值 ${want} 开始、滑杆可调）`);
+    if (r.back !== -1) bad.push(`${k} 再勾上后 = ${r.back}（应存 -1）`);
+  }
+  // H12：只剩 GPU 模拟内核
+  out.engineSelect = !!document.querySelector('#x-engine');
+  out.stored = storedParams({ type: 'kiku', engine: 'cpu', renderVer: 40 }).engine;
+  importParams({ params: { type: 'kiku', stars: 120 } }, 'old.json'); out.imported = state.P.engine;
+  if (out.engineSelect) bad.push('还有「模拟内核」选择');
+  if (out.stored !== 'gpu' || out.imported !== 'gpu') bad.push(`存档 / 旧母版没换成 GPU（${out.stored} / ${out.imported}）`);
+  // E11③：物理尾缀过顶后按下落段（tanh）算，速度不超过终端速度、位置连续
+  const tp = Object.keys(TYPES).find(t => TYPES[t].p && TYPES[t].p.form === 'phys');
+  if (tp) {
+    const P = { ...defaultsFor(tp).P, type: tp }, pt = new PhysTrail(P), ta = pt.ba / pt.bw, vt = Math.sqrt(G / P.phK);
+    const a = pt.shell(ta - 1e-4), b = pt.shell(ta + 1e-4), c = pt.shell(ta + 40);
+    out.phys = { type: tp, ta: +ta.toFixed(3), dz: +(b.z - a.z).toFixed(5), vzLate: +c.vz.toFixed(2), vt: +vt.toFixed(2) };
+    if (Math.abs(b.z - a.z) > 0.01) bad.push('物理尾缀到顶前后位置不连续 ' + JSON.stringify(out.phys));
+    if (!(c.vz < 0 && Math.abs(c.vz) <= vt * 1.001)) bad.push('物理尾缀过顶 40 s 后下落速度超过终端速度 ' + JSON.stringify(out.phys));
+    out.lateWarn = physStats({ ...P, phT: +(ta + 1).toFixed(2) }).includes('开花晚于到顶');
+    if (!out.lateWarn) bad.push('开花晚于到顶没有提示（H15②）');
+  } else bad.push('找不到物理尾缀模板');
+  return { ok: !bad.length, bad, out };
+}'''
+
+
+async def s1(pg):
+    """4.3.2 收尾：「用默认」勾选（H16）、只剩 GPU 模拟内核（H12）、物理尾缀过顶后弹道 + 开花晚于到顶提示（E11③ / H15②）"""
+    r = await pg.evaluate(S1_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
+
+
 async def main():
     global HTML, REAL
     ap = argparse.ArgumentParser(); ap.add_argument('--only', default=''); ap.add_argument('--out', default=''); ap.add_argument('--html', default=''); ap.add_argument('--real', action='store_true')
@@ -860,7 +906,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

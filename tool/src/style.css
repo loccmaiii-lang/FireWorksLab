@@ -974,6 +974,9 @@ details.sec>p.hint:not([hidden]){border-left:2px solid var(--line2);padding-left
 .ptools .p43t{color:var(--amber)}
 details.sec.mod>summary .men{margin-left:8px;font:500 10.5px var(--mono);color:var(--faint);letter-spacing:.02em}
 details.sec.mod>p.hint .hsec{display:block;margin-top:4px}
+.sl .adef{grid-column:1 / -1;justify-self:start;margin:0 0 2px 18px;color:var(--faint);font-size:11px;display:flex;align-items:center;gap:4px;cursor:pointer;white-space:nowrap}
+.sl .adef input{margin:0}
+.sl.adef-on input[type=range],.sl.adef-on .num{opacity:.45}
 .sl .rndb{grid-column:1 / -1;justify-self:start;margin:0 0 2px 18px;background:none;border:1px dashed var(--line2);border-radius:5px;color:var(--faint);font-size:11px;padding:0 6px;cursor:pointer;white-space:nowrap}
 .sl .rndb.set{color:var(--dim);border-style:solid}
 .sl .rndb.on{color:var(--amber);border-color:var(--amber)}

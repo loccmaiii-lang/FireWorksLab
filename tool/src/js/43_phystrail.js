@@ -41,8 +41,11 @@ class PhysTrail {
   turb(z, ax) { const m = this.tm[ax]; let s = 0; for (let i = 0; i < m.L.length; i++) s += m.a[i] * Math.sin(2 * Math.PI * z / m.L[i] + m.ph[i]); return this.P.phTurb * s; }
   // 飞行时刻 s → 位置、速度（三维，z 向上）
   shell(s) {
-    const P = this.P, k = P.phK, ph = clamp(this.ba - this.bw * s, -1.5, 1.5);
-    const z = Math.log(Math.cos(ph) / this.bcos) / k, vz = Math.sqrt(G / k) * Math.tan(ph), la = P.phLeanA, lb = P.phLeanB;
+    const P = this.P, k = P.phK, ph = this.ba - this.bw * s, vt = Math.sqrt(G / k);
+    // 二次阻力竖直弹道：上升段 v = vt·tan φ、z = ln(cos φ / cos φ0) / k；过顶后（φ < 0）是下落段 v = −vt·tanh ψ、z = 顶点 − ln(cosh ψ) / k（ψ = −φ）。
+    // 4.3.2（渲染基础问题 E11③）：以前过顶后照用 tan（还夹在 −1.5），下落速度会一直涨到终端速度的 14 倍；现在的预设都在顶点前开花，碰不到
+    const z = ph >= 0 ? Math.log(Math.cos(Math.min(ph, 1.5)) / this.bcos) / k : (Math.log(1 / this.bcos) - Math.log(Math.cosh(Math.min(-ph, 20)))) / k;
+    const vz = ph >= 0 ? vt * Math.tan(Math.min(ph, 1.5)) : -vt * Math.tanh(-ph), la = P.phLeanA, lb = P.phLeanB;
     return { x: la * z + lb * z * z + this.wob(z, 0), y: this.wob(z, 1), z, vx: (la + 2 * lb * z + this.wob(z, 0, true)) * vz, vy: this.wob(z, 1, true) * vz, vz };
   }
   emit(c, pi) {
@@ -129,8 +132,10 @@ function physBake(P) {
   return { form: 'phys', P, head: { dispose() { } }, meta: { expoH: e, expoT: e, L: { cols: 1, rows: 1, F: 1, chans: 1, cellW: 1, cellH: 1 }, duration: P.duration } };
 }
 function physStats(P) {
-  const pt = new PhysTrail(P);
-  return `升空尾缀 · 物理（实时模拟）· 出膛 <b>${P.phV0}</b> m/s · 开花 <b>${P.phT}</b> s · 火花 <b>${pt.total.toLocaleString()}</b> 颗<br>` +
+  const pt = new PhysTrail(P), ta = pt.ba / pt.bw;     // 到顶时刻（二次阻力）
+  // 4.3.2（H15②）：开花时刻晚于到顶时给提示（过顶后按下落段算，星头在往下掉时开花）
+  const late = P.phT > ta + 0.05 ? ` · <span class="warn">开花晚于到顶 ${(P.phT - ta).toFixed(2)} s（${ta.toFixed(2)} s 到顶，之后星头在往下掉）</span>` : ` · ${ta.toFixed(2)} s 到顶`;
+  return `升空尾缀 · 物理（实时模拟）· 出膛 <b>${P.phV0}</b> m/s · 开花 <b>${P.phT}</b> s${late} · 火花 <b>${pt.total.toLocaleString()}</b> 颗<br>` +
     `镜头跟着星头，视野 ${P.phView} m；实拍面板按同一比例跟拍。贴图导出：<code>analysis/scripts/trail_phys_bake.py</code>`;
 }
 // 实拍面板跟拍：星头在视频里的位置（按视频高度归一化）→ 和模拟画面同一比例、同一取景

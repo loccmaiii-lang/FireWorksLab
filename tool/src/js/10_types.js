@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.3.1';
+const VERSION = '4.3.2';
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -254,6 +254,7 @@ function usesTickPlan40(P) { return familyOf(P.type)==='aerial' && ['master','se
 const CAL40 = {"trailS": {"exposure": 0.000976819, "headK": 40.4011, "previewBloom": 1}, "trailM": {"exposure": 0.00167152, "headK": 32.8159, "previewBloom": 1}, "trailL": {"exposure": 0.00244725, "headK": 8.9465, "previewBloom": 1}, "fountain": {"exposure": 0.3476, "headK": 7.142, "previewBloom": 1}, "falls": {"exposure": 1.1293, "headK": 2.8017, "previewBloom": 1}, "wheel": {"exposure": 0.1962, "headK": 19.4854, "previewBloom": 1}, "fan": {"exposure": 5.2794, "headK": 1.2846, "previewBloom": 1}, "barrage": {"exposure": 3.194, "headK": 1.2195, "previewBloom": 1}, "shikake": {"exposure": 0.886, "headK": 1.6659, "previewBloom": 1}, "rise": {"exposure": 0.6847, "headK": 4.9887, "previewBloom": 1}};
 function migrate37(P, ...given) {      // given[0]：原始存档的版本（显式传 undefined = 没写版本 = 3.7 时代的）；不传就看 P 自己的
   const srcVer = given.length ? given[0] : P && P.renderVer;
+  if (P) P.engine = 'gpu';      // 4.3.2（H12）：只剩 GPU 模拟内核；存档里的 'cpu' 一律换成 GPU
   if (!P || +srcVer >= 40) { if (P) P.renderVer = 40; return P; }
   const fam = familyOf(P.type), c = CAL40[P.type];
   if (fam === 'aerial') {

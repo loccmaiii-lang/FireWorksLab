@@ -19,7 +19,6 @@ $('#x-out').addEventListener('change', e => { state.P.outMode = e.target.value; 
 $('#x-enc').addEventListener('change', e => { state.P.encGamma = +e.target.value; onParam(); });
 $('#x-frame').addEventListener('change', e => { state.P.frameMode = e.target.value; onParam(); });
 $('#x-zoom').addEventListener('change', e => { state.P.zoom = e.target.value; onParam(); });
-$('#x-engine').addEventListener('change', e => { state.P.engine = e.target.value; onParam(); });
 $('#x-flip').addEventListener('change', e => { state.P.unitFlip = e.target.checked ? 1 : 0; onParam(); });
 $('#x-autogrid').addEventListener('change', e => { state.P.autoGrid = e.target.checked ? 1 : 0; onParam(); });
 $('#expo').addEventListener('input', e => { state.expo = +e.target.value; const o = $('#expoOut'); o.textContent = (+state.expo.toFixed(2)) + '×'; o.classList.toggle('off', Math.abs(state.expo - 1) > 1e-3); });
@@ -59,9 +58,8 @@ function importParams(j, fname) {
   const p = j.params || j;
   if (!TYPES[p.type]) throw new Error('不认识的花型');
   state.P = derive(storedParams(p)); state.M = normalizeM(j.materialDefaults || {}, p.type);
-  // 旧版消え口离散默认 1.2%，新版默认 6%，导入时保留原值；旧版没有 engine 字段的用 CPU 内核
-  if (!p.engine) { state.P.engine = 'cpu'; flash('旧版母版：已切换到 CPU 内核以完全复现'); }
-  if (j.name) state.name = j.name; buildMasterPanel(); onParam(); if (p.engine) flash('已导入 ' + (j.name || fname));
+  // 4.3.2：只剩 GPU 模拟内核（渲染基础问题 H12）；旧版母版（没有 engine 字段的）以前切到 CPU 内核复现，3.7 画法删掉以后本来就复现不了，一律 GPU
+  if (j.name) state.name = j.name; buildMasterPanel(); onParam(); flash('已导入 ' + (j.name || fname) + (!p.engine || p.engine === 'cpu' ? '（旧版母版：模拟内核换成 GPU，火花细节会和当年略有不同）' : ''));
 }
 $('#fileIn').addEventListener('change', async e => {
   const f = e.target.files[0]; if (!f) return;
