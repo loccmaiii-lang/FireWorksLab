@@ -41,6 +41,8 @@
   X2 4.4.2：单层效果（牡丹）也有导出方案（4.4.3 加：点灭星的光点 Color Over Life 是方波、菊没有）：PC 序列 / 单束 / GPU 光点 / 不出、手机 序列 / 不出；选光点后 cascade.json 是 GPU 光点、引擎回放画光点；多层效果的层里不显示（在层页头选）
   N3 排查第 1 步：SCHEMA ↔ 默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS 对得上
   T1 4.4：时间轴的发射器行：菊 = 开花闪光 / 星 / 火花，火花被序列结尾切掉时有 ✂、加长后消失；点行名右栏切到那个发射器；千轮有子花行、爆裂星有爆裂行
+  R5 4.4.5 升空尾缀 RT5 选项：缺省旧做法；物理弹道到设定高度、第 1 秒减速够猛、星头光晕跟弹道（Velocity Over Life）；GPU 兼容（无 Acceleration、≤ 2 个 Initial Velocity）、
+     GPU 粒子上限、细 / 中火花进贴图、H4 新口径和温度偏移无关；循环层长度起步不伸到发射点以下；面板「弹道」在星头 › 弹道、选物理后升空时间藏起
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -791,6 +793,10 @@ async def n1(pg):
         if any(m.endswith('›' + old) for m in on['mods']): bad.append(f'还有旧模块「{old}」')
     want = await pg.evaluate("[PEMIT.P[pnameOf('开花与燃烧', 'burn').id][2], PEMIT.P[pnameOf('开花与燃烧', 'v0').id][2], pnameOf('开花与燃烧', 'burn').en]")
     if on['burn'] != want[0] or on['v0'] != want[1] or want[0] != '燃烧时间': bad.append(f"名字不是发射器表里的：{on['burn']} / {on['v0']}（表：{want[:2]}）")
+    # 所有短名和名称表全名不一样的行（例：火花 › 寿命 › 「寿命」，全名「火花寿命」）：面板上必须是短名
+    sh = await pg.evaluate("(() => { const out = { n: 0, bad: [] }; for (const [r, it] of panelRows) { const nm = r._nm, x = nm && nm.id ? PEMIT.P[nm.id] : null; if (!x || !x[2] || x[2] === nm.cn) continue; out.n++; if (r._lab !== x[2]) out.bad.push([nm.key, r._lab, x[2]]); } return out; })()")
+    info['短名'] = sh['n']
+    if sh['n'] < 10 or sh['bad']: bad.append(f"面板名字不是发射器表的短名（{len(sh['bad'])} / {sh['n']}）：{sh['bad'][:4]}")
     folded = await pg.evaluate("panelRows.filter(([r]) => r._randOf).map(([r, it]) => it[0])"); info['收起的随机'] = folded
     if 'burnJit' not in folded or 'speedJit' not in folded: bad.append(f'燃烧时间随机 / 初速随机没收到本体下面：{folded}')
     r = await pg.evaluate("(() => { const b = panelRows.find(([r, it]) => it[0] === 'burn')[0], j = panelRows.find(([r, it]) => it[0] === 'burnJit')[0]; const h0 = j.hidden; b.querySelector('.rndb').click(); const h1 = j.hidden, next = b.nextElementSibling === j; return { h0, h1, next, txt: b.querySelector('.rndb').textContent, stored: !!store.get('pRandOpen', {}).burn }; })()")
@@ -1026,7 +1032,10 @@ E1_JS = r"""async () => {
   // 4.4（用户 10-04 16:17 #2 #3）：「结尾」「冷却方式」两个开关，缺省 = 旧做法；结尾选「不淡出」序列时长加长到火花灭完、帧计划不再整体淡出
   const out = {}, bad = [];
   await openType('kiku'); await new Promise(r => setTimeout(r, 300));
-  out.defaults = { end: state.P.endMode, cool: state.P.coolMode, fade: !displayPlan40(state.P).noEndFade };
+  // 末尾 0.05 s 那一刻的整体亮度倍数（真正画的时候用的 frameFade40，不只看计划上的标记）
+  const endMul = () => { const pl = displayPlan40(state.P); return +frameFade40(pl, (pl.t0 || 0) + pl.duration - 0.05, false).toFixed(3); };
+  out.defaults = { end: state.P.endMode, cool: state.P.coolMode, fade: !displayPlan40(state.P).noEndFade, endMul: endMul() };
+  if (!(out.defaults.endMul < 0.5)) bad.push('缺省（淡出）最后 0.05 s 没在淡出：' + out.defaults.endMul);
   if (out.defaults.end !== 'fade' || +out.defaults.cool !== 0 || !out.defaults.fade) bad.push('缺省不是旧做法：' + JSON.stringify(out.defaults));
   const where = k => { const x = panelRows.find(([r, it]) => it.sel === k); return x ? x[0]._x.e + '›' + x[0]._x.m : null; };
   out.where = { end: where('endMode'), cool: where('coolMode') };
@@ -1037,8 +1046,8 @@ E1_JS = r"""async () => {
   if (!/差/.test(out.before) || !(e > d0)) bad.push('菊的序列比火花短，却没写差多少：' + out.before);
   const row = panelRows.find(([r, it]) => it.sel === 'endMode')[0], s = row.querySelector('select'); s.value = 'natural'; s.dispatchEvent(new Event('change'));
   await new Promise(r => setTimeout(r, 200));
-  out.after = { dur: state.P.duration, want: e, noFade: !!displayPlan40(state.P).noEndFade, info: info() };
-  if (Math.abs(state.P.duration - e) > 0.051 || !out.after.noFade || /差/.test(out.after.info)) bad.push('选「不淡出」后不对：' + JSON.stringify(out.after));
+  out.after = { dur: state.P.duration, want: e, noFade: !!displayPlan40(state.P).noEndFade, endMul: endMul(), info: info() };
+  if (Math.abs(state.P.duration - e) > 0.051 || !out.after.noFade || out.after.endMul !== 1 || /差/.test(out.after.info)) bad.push('选「不淡出」后不对：' + JSON.stringify(out.after));
   // 4.4.3 E6：火花闪烁频率在「火花 › 亮度」、跟着闪烁收在随机下面；闪烁 0 时不显示，> 0 显示；缺省 0（以前的做法）
   const tw = () => { const x = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'twinkleHz'); return x ? { at: x[0]._x.e + '›' + x[0]._x.m, rand: x[0]._randOf, vis: itemVisible(x[1], state.P) } : null; };
   out.twHz = { def: +state.P.twinkleHz, on: tw() }; const tw0 = state.P.twinkle; state.P.twinkle = 0; out.twHz.off = tw(); state.P.twinkle = tw0;
