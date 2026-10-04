@@ -1,0 +1,11 @@
+{
+  "version": "4.3.6",
+  "allScreenshotPixelsMatchCssViewports": true,
+  "allNinePrimaryControlsInAllTenViewports": true,
+  "oldDomIdsMissing": [],
+  "duplicateDomIds": [],
+  "staticDomIds": 195,
+  "generatedUtf8Bytes": 1488450,
+  "generatedSha256": "79cfec9655acb018c19ea58d59774115669406d9742c1f237089fbf5b1b08447",
+  "updatesEmbedIncludes436": true
+}

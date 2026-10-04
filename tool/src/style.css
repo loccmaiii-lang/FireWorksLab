@@ -1205,3 +1205,99 @@ header.top #status{position:fixed;right:16px;bottom:16px;z-index:100;max-width:m
   .tlb-label{gap:2px;padding:3px}.tlb-observe{width:24px}
   .preview-controls{gap:5px}
 }
+
+/* 4.3.6 屏幕适配：以CSS视口计算，系统缩放自然生效；不缩放画布或输出贴图。 */
+:root{
+  --ui-body:clamp(13px,calc(11px + .12vw),15px);
+  --ui-label:clamp(13.5px,calc(11.5px + .125vw),16px);
+  --ui-small:clamp(12px,calc(10px + .12vw),14.5px);
+  --ui-control:clamp(36px,2vw,42px);
+  --side-auto:clamp(230px,17.2vw,300px);
+  --right-auto:clamp(340px,23.1vw,440px);
+}
+body{font-size:var(--ui-body)}
+.app{height:100dvh;grid-template-rows:auto minmax(0,1fr)}
+main{--sw:min(var(--sideW,var(--side-auto)),clamp(240px,19vw,340px));--rw:min(var(--rightW,var(--right-auto)),clamp(350px,27vw,520px))}
+main.drawer-side>#side{width:min(var(--sideW,var(--side-auto)),340px,calc(100vw - 24px))}
+main.drawer-right>#right{width:min(var(--rightW,var(--right-auto)),520px,calc(100vw - 24px))}
+.picker{right:calc(min(var(--rightW,var(--right-auto)),clamp(350px,27vw,520px)) + 5px)}
+.gutter{touch-action:none}
+header.top .brand .mark{font-size:clamp(30px,1.5vw,40px)}
+header.top .brand>b{font-size:clamp(22px,1.1vw,28px)}
+header.top .assetbar .btn{font-size:var(--ui-label);min-height:var(--ui-control)}
+header.top .assetbar .ab-unit>summary{height:var(--ui-control);min-height:var(--ui-control)}
+header.top .gpu,header.top .brand small{font-size:var(--ui-small)}
+header.top .upd{height:var(--ui-control);font-size:var(--ui-label)}
+.stage>.viewbar .seg button,.stage>.viewbar .tgl{font-size:var(--ui-label);min-height:var(--ui-control)}
+.stage>.viewbar #btnSide,.stage>.viewbar #btnRight{width:var(--ui-control)}
+.li .tx b{font-size:var(--ui-label)}
+.li .tx small,.lg>summary,.side-foot .btn{font-size:var(--ui-small)}
+.right-head{position:sticky;top:0;z-index:8;display:flex;align-items:center;background:var(--panel);border-bottom:1px solid var(--line2);flex:none}
+.right-head>.ptabs{position:static;flex:1;min-width:0;border-bottom:0}
+.right-head .ptabs button{font-size:clamp(16px,.9vw,18px)}
+.right-close{display:none;margin:8px 10px 4px 0;min-height:36px;white-space:nowrap}
+main.drawer-right .right-close{display:block}
+#pMaster .sl .k{font-size:var(--ui-label)}
+#pMaster .sl .num{font-size:var(--ui-small)}
+#pMaster .sl{padding-block:3px}
+#params>.pgrp>summary,#colorControls>summary,.layerhead .lh-t b{font-size:var(--ui-label)}
+.field,.lh-out>.field,.lh-out>.field select{font-size:var(--ui-small)}
+#params>.pgrp .sl{grid-template-columns:14px clamp(105px,6.5vw,132px) minmax(0,1fr) clamp(60px,3.7vw,74px)}
+#params>.pgrp .sl.nolock{grid-template-columns:clamp(105px,6.5vw,132px) minmax(0,1fr) clamp(60px,3.7vw,74px)}
+#matSliders .sl{grid-template-columns:clamp(90px,5.6vw,114px) minmax(0,1fr) clamp(60px,3.7vw,74px)}
+.tlbars{--labelW:clamp(180px,11.1vw,220px);max-height:40%;scrollbar-gutter:stable}
+.tlr{position:sticky;top:-4px;z-index:4;background:var(--panel)}
+.tlb-label,.timeline #tlabel{font-size:var(--ui-small)}
+.preview-controls .seg button,.preview-settings>summary,.viewframe .preview-controls,.preview-controls .fexpo output{font-size:var(--ui-small)}
+.viewframe .preview-controls{column-gap:8px;row-gap:5px}
+.ab-menu{max-width:calc(100vw - 24px);max-height:min(65dvh,600px);overflow-y:auto}
+.preview-settings>.ab-menu{min-width:min(260px,calc(100vw - 32px))}
+@media(max-width:1180px){.picker{right:0}}
+@media(max-width:1100px){
+  header.top .assetbar .sp{display:none}
+  .stage>.viewbar .sp{flex-basis:0}
+}
+@media(max-width:650px){
+  header.top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 10px;padding:8px 10px}
+  header.top .brand{grid-column:1;grid-row:1;margin:0;gap:7px}
+  header.top .brand .mark{font-size:24px}header.top .brand>b{font-size:16px}
+  header.top .brand small{display:inline;font-size:10px}
+  header.top .upd{grid-column:2;grid-row:1;font-size:12px;height:32px;padding:4px 8px}
+  header.top .gpu{grid-column:1 / -1;grid-row:2;justify-self:end;max-width:100%;font-size:11px}
+  header.top .assetbar{grid-column:1 / -1;grid-row:3;gap:5px;min-width:0;justify-content:flex-end;flex-wrap:wrap;overflow:visible}
+  header.top .assetbar .btn{min-height:32px;padding:5px 8px;font-size:12px}
+  header.top .assetbar .ab-ur{min-width:32px;padding:5px 6px}
+  header.top .assetbar .ab-unit>summary{height:32px;min-height:32px;padding:5px 6px}
+  .stage{padding:6px;gap:6px}
+  .stage>.viewbar .seg button,.stage>.viewbar .tgl{font-size:12px;min-height:34px;padding:6px 7px}
+  .stage>.viewbar #btnSide,.stage>.viewbar #btnRight{width:32px}
+  .stage>.viewbar .sp{display:none}
+  .tlbars{--labelW:142px;padding-inline:6px;max-height:35%}
+  .viewframe .preview-controls{padding:5px 7px;max-width:calc(100% - 12px)}
+  .preview-controls .seg button{padding:4px 6px;font-size:11px}
+  .timeline .sp{min-width:0}
+}
+@media(max-height:720px){
+  header.top{padding-block:6px;min-height:0}
+  .stage{padding-block:5px;gap:5px}
+  .stage>.viewbar{min-height:34px;padding-block:0}
+  .stage>.viewbar .seg button,.stage>.viewbar .tgl{min-height:32px;padding-block:5px}
+  .timeline{padding-block:6px 4px}
+  .tlbars{gap:4px;padding-block:3px 6px;max-height:32%}
+  .tlr,.tlr-track{height:24px}.tlr{top:-3px}
+  .tlb-ph{top:24px}
+  .tlb,.tlb-label{height:32px}.tlb-label{padding-block:1px}
+  .tlcv{padding-top:2px}.tlcv .cvtog{padding-block:4px}
+  .ptabs{padding-top:4px}.right-head .ptabs button{padding-block:6px}
+}
+@media(max-width:520px){
+  .stage>.viewbar #viewSeg{flex:1 1 calc(100% - 37px);min-width:0;max-width:calc(100% - 37px);overflow-x:auto;padding-block:2px;scrollbar-width:thin}
+  .stage>.viewbar #viewSeg button{flex:none}
+}
+@media(max-width:520px) and (max-height:700px){
+  .stage{overflow-y:auto}
+  .stage>.viewbar{position:sticky;top:-5px;z-index:10;background:var(--bg);flex:none}
+  .viewframe{flex:none;min-height:280px}
+  .viewframe .preview-controls{position:static;transform:none;align-self:center;flex:none;width:auto;margin:4px 6px}
+  .tlbars{max-height:none}
+}

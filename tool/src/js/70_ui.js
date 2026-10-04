@@ -553,7 +553,9 @@ function buildMasterPanel() {
   host.querySelector('[data-en]').addEventListener('change', e => { pview.en = e.target.checked; store.set('pEN', pview.en); buildMasterPanel(); });
   const grp = {};
   for (const [g, title] of P43_GROUPS) {
-    const d = document.createElement('details'); d.className = 'pgrp p43'; d.dataset.g = g; d._auto = true; d.open = pview.mopen['@' + g] !== false;     // 4.3.4 后（用户 13:26「参数栏好像丢了一部分」）：分组默认展开（4.3.4 只展开「运动」，菊打开只剩 2 个参数、尾缀一个都没有）；用户收起过的照记 setTimeout(() => d._auto = false, 0);
+    // 4.3.5：分组默认展开，用户收起过的照记。初次程序开合结束后才能保存手动开合。
+    const d = document.createElement('details'); d.className = 'pgrp p43'; d.dataset.g = g; d._auto = true; d.open = pview.mopen['@' + g] !== false;
+    setTimeout(() => d._auto = false, 0);
     d.innerHTML = `<summary><span class="pg-t">${title}</span><span class="pg-n"></span></summary>`;
     d.addEventListener('toggle', () => { if (d._auto) return; pview.mopen['@' + g] = d.open; store.set('pModOpen', pview.mopen); });
     grp[g] = d; host.appendChild(d);

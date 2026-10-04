@@ -500,8 +500,13 @@ const panels = { side: store.get('sideOn', true), right: store.get('rightOn', tr
 // 4.2.3 窄屏（用户 2026-10-03 00:25「更小的笔记本屏幕打开会特别特别挤」）：窗口窄时左栏 / 右栏改成浮在画面上的抽屉，
 // 默认收起、按 L / P 或工具条按钮拉出；抽屉开关不记进「宽屏时开不开」。
 const mediaQ = q => typeof matchMedia === 'function' ? matchMedia(q) : { matches: false, addEventListener() { } };
-const DRAWER = { side: mediaQ('(max-width:1180px)'), right: mediaQ('(max-width:820px)') };
+const DRAWER = { side: mediaQ('(max-width:1180px)'), right: mediaQ('(max-width:960px)') };
 function setPanels(o) {
+  // 两个浮动抽屉共用画面；开一个时关另一个，宽屏的开关偏好仍独立保存。
+  if (DRAWER.side.matches && DRAWER.right.matches) {
+    if (o.right === true) o = { ...o, side: false };
+    else if (o.side === true) o = { ...o, right: false };
+  }
   Object.assign(panels, o);
   const m = $('#main'); m.classList.toggle('noside', !panels.side); m.classList.toggle('noright', !panels.right);
   m.classList.toggle('drawer-side', DRAWER.side.matches); m.classList.toggle('drawer-right', DRAWER.right.matches);
@@ -514,21 +519,30 @@ function toggleFocus() {
   if (!panels.side && !panels.right) setPanels(panels.before || { side: true, right: true });
   else { panels.before = { side: panels.side, right: panels.right }; setPanels({ side: false, right: false }); flash('专注：F 或双击画布恢复'); }
 }
+function syncPanelMode() {
+  // 两个断点可能在一次缩放中同时跨过，先读完宽屏偏好再应用，避免相互覆盖。
+  setPanels({ side: DRAWER.side.matches ? false : store.get('sideOn', true), right: DRAWER.right.matches ? false : store.get('rightOn', true) });
+}
 function initPanels() {
   const root = document.documentElement;
-  root.style.setProperty('--sideW', store.get('sideW', 278) + 'px'); root.style.setProperty('--rightW', store.get('rightW', 374) + 'px');
+  const width = (key, value) => {
+    if (Number.isFinite(value) && value > 0) root.style.setProperty('--' + key, value + 'px');
+    else root.style.removeProperty('--' + key); // 无偏好时使用CSS随视口变化的默认值
+  };
+  width('sideW', store.get('sideW', null)); width('rightW', store.get('rightW', null));
   const drag = (el, fn) => el.addEventListener('pointerdown', e0 => {
     e0.preventDefault(); el.setPointerCapture(e0.pointerId); el.classList.add('drag'); document.body.classList.add('dragging');
     const mv = e => fn(e.clientX), up = () => { el.classList.remove('drag'); document.body.classList.remove('dragging'); el.removeEventListener('pointermove', mv); el.removeEventListener('pointerup', up); };
     el.addEventListener('pointermove', mv); el.addEventListener('pointerup', up);
   });
-  drag($('#gutL'), x => { const lim = window.innerWidth - (panels.right ? $('#right').offsetWidth : 0) - 420, w = Math.round(Math.max(200, Math.min(460, lim, x))); root.style.setProperty('--sideW', w + 'px'); store.set('sideW', w); });
-  drag($('#gutR'), x => { const lim = window.innerWidth - (panels.side ? $('#side').offsetWidth : 0) - 420, w = Math.round(Math.max(300, Math.min(700, lim, window.innerWidth - x))); root.style.setProperty('--rightW', w + 'px'); store.set('rightW', w); });
-  $('#gutL').addEventListener('dblclick', () => { root.style.setProperty('--sideW', '278px'); store.set('sideW', 278); });
-  $('#gutR').addEventListener('dblclick', () => { root.style.setProperty('--rightW', '374px'); store.set('rightW', 374); });
+  drag($('#gutL'), x => { const lim = window.innerWidth - (panels.right && !DRAWER.right.matches ? $('#right').offsetWidth : 0) - 480, w = Math.round(Math.max(200, Math.min(460, lim, x))); width('sideW', w); store.set('sideW', $('#side').offsetWidth); });
+  drag($('#gutR'), x => { const lim = window.innerWidth - (panels.side && !DRAWER.side.matches ? $('#side').offsetWidth : 0) - 480, w = Math.round(Math.max(300, Math.min(700, lim, window.innerWidth - x))); width('rightW', w); store.set('rightW', $('#right').offsetWidth); });
+  $('#gutL').addEventListener('dblclick', () => { width('sideW', null); store.set('sideW', null); });
+  $('#gutR').addEventListener('dblclick', () => { width('rightW', null); store.set('rightW', null); });
   $('#btnSide').addEventListener('click', () => setPanels({ side: !panels.side }));
   $('#sideClose').addEventListener('click', () => setPanels({ side: false }));
   $('#btnRight').addEventListener('click', () => setPanels({ right: !panels.right }));
+  $('#rightClose').addEventListener('click', () => setPanels({ right: false }));
   $('#btnFocus').addEventListener('click', toggleFocus);
   $('#btnRef').addEventListener('click', () => refToggle());
   $('#refClose').addEventListener('click', () => refToggle(false));
@@ -551,8 +565,7 @@ function initPanels() {
     }
   });
   // 进入抽屉模式先收起；回到宽屏恢复上次的开关
-  const dr = k => () => setPanels({ [k]: DRAWER[k].matches ? false : store.get(k === 'side' ? 'sideOn' : 'rightOn', true) });
-  DRAWER.side.addEventListener('change', dr('side')); DRAWER.right.addEventListener('change', dr('right'));
+  DRAWER.side.addEventListener('change', syncPanelMode); DRAWER.right.addEventListener('change', syncPanelMode);
   if (DRAWER.side.matches) panels.side = false;
   if (DRAWER.right.matches) panels.right = false;
   // 抽屉开着时：在左栏点开一个条目、或点画面，就收起左栏（右栏抽屉只在点画面时收）

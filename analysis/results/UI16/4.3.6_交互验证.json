@@ -1,0 +1,69 @@
+{
+  "version": "4.3.6",
+  "realPeriodStart": "2026-10-04T06:26:50.085Z",
+  "library": "drawer-side noright drawer-right",
+  "parameter": {
+    "close": {
+      "h": 36,
+      "w": 51.33333587646485,
+      "x": 313.3333435058594,
+      "y": 118.16667175292967
+    },
+    "main": "drawer-side drawer-right noside",
+    "overflow": false
+  },
+  "delivery": {
+    "active": [
+      "delivery"
+    ],
+    "overflow": false
+  },
+  "sticky": {
+    "close": {
+      "h": 36,
+      "w": 51.33333587646485,
+      "x": 328.66668701171875,
+      "y": 118.16667175292967
+    },
+    "scroll": 650
+  },
+  "scrollFixture": "CDP scrollTop=650, restored to 0",
+  "restore": {
+    "main": "",
+    "rightWidth": 373.75,
+    "sideWidth": 278.29168701171875
+  },
+  "views": [
+    {
+      "active": [
+        "live"
+      ],
+      "overflow": false
+    },
+    {
+      "active": [
+        "export"
+      ],
+      "overflow": false
+    },
+    {
+      "active": [
+        "atlas"
+      ],
+      "overflow": false
+    },
+    {
+      "active": [
+        "flow"
+      ],
+      "overflow": false
+    },
+    {
+      "active": [
+        "delivery"
+      ],
+      "overflow": false
+    }
+  ],
+  "errors": []
+}

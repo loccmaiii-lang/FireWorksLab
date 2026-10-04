@@ -950,13 +950,24 @@ S3_JS = r"""async () => {
     for (const [k, v] of Object.entries(m)) if (!v) bad.push(`${t} 的「${k}」模块看不见`);
     if (t === 'blank') { const b = document.querySelector('#blankAdd [data-addmod="火花"]'); out.blankAdd = shown(b); if (!out.blankAdd) bad.push('空白发射器的「+ 火花」看不见'); }
   }
+  // 4.3.6：默认展开不能把用户的手动开合永久当成程序操作；重建参数面板后仍应记住。
+  const group = [...document.querySelectorAll('#params details.pgrp')].find(g => !g.hidden), key = '@' + group.dataset.g;
+  group.querySelector('summary').click(); await new Promise(r => setTimeout(r, 20));
+  const savedClosed = store.get('pModOpen', {})[key] === false;
+  buildMasterPanel(); await new Promise(r => setTimeout(r, 20));
+  const rebuilt = [...document.querySelectorAll('#params details.pgrp')].find(g => '@' + g.dataset.g === key), keptClosed = !rebuilt.open;
+  if (!rebuilt.open) rebuilt.querySelector('summary').click();
+  await new Promise(r => setTimeout(r, 20));
+  const savedOpen = store.get('pModOpen', {})[key] === true;
+  out.groupMemory = { group: key, savedClosed, keptClosed, savedOpen };
+  if (!savedClosed || !keptClosed || !savedOpen) bad.push('手动收起 / 展开参数分组后没有记住，重建面板会恢复默认');
   return { ok: !bad.length, bad, out };
 }"""
 
 
 async def s3(pg):
     """4.3.4 后：打开菊 / 空白发射器 / 升空尾缀，第一眼的参数、模块（尾缀各层的火花）、空白发射器的「+ 火花」都看得见（分组不能默认全收起）"""
-    await pg.evaluate("store.set('pModOpen', {}); 0")     # 没有存过展开状态的新用户
+    await pg.evaluate("store.set('pModOpen', {}); pview.ready = false; pviewInit(); 0")     # 没有存过展开状态的新用户
     r = await pg.evaluate(S3_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 

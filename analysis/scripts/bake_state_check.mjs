@@ -171,6 +171,30 @@ await check('asset status: editing/baking/failure stay in flow; only task overla
   assert.equal(overlay.position, 'absolute', 'explicit export/library task overlay must keep its position');
   assert.equal(overlay.inset, '0', 'task overlay remains bounded by the canvas');
 });
+await check('responsive panels: drawers are exclusive and preserve desktop preferences', async f => {
+  const saved = new Map([['sideOn', true], ['rightOn', true]]);
+  f.ctx.store = { get: (key, fallback) => saved.has(key) ? saved.get(key) : fallback, set: (key, value) => saved.set(key, value) };
+  f.ctx.setInterval = () => 0;
+  f.ctx.matchMedia = () => ({ matches: true, addEventListener() {} });
+  const classes = new Set();
+  f.elements.set('#main', { classList: { toggle(name, on) { on ? classes.add(name) : classes.delete(name); } } });
+  vm.runInContext(fs.readFileSync(path.join(root, 'tool/src/js/79_library.js'), 'utf8'), f.ctx);
+  f.run('setPanels({ side: true });');
+  assert.equal(f.run('panels.right'), false, 'opening library must close parameter drawer');
+  f.run('setPanels({ right: true });');
+  assert.equal(f.run('panels.side'), false, 'opening parameters must close library drawer');
+  assert.equal(f.run('panels.right'), true);
+  f.run('setPanels({ right: false });');
+  assert.equal(saved.get('sideOn'), true, 'drawer toggles must not overwrite desktop library preference');
+  assert.equal(saved.get('rightOn'), true, 'drawer toggles must not overwrite desktop parameter preference');
+  f.run('DRAWER.side.matches = false; DRAWER.right.matches = false; syncPanelMode();');
+  assert.equal(f.run('panels.side && panels.right'), true, 'desktop supports both panels');
+  f.run('DRAWER.side.matches = true; DRAWER.right.matches = true; syncPanelMode();');
+  assert.equal(f.run('panels.side || panels.right'), false, 'narrow mode starts with both drawers closed');
+  f.run('DRAWER.side.matches = false; DRAWER.right.matches = false; syncPanelMode();');
+  assert.equal(f.run('panels.side && panels.right'), true, 'one resize across both breakpoints must restore both desktop preferences');
+  assert.ok(!classes.has('drawer-side') && !classes.has('drawer-right'));
+});
 console.log(JSON.stringify(result, null, 2));
 const outIndex = process.argv.indexOf('--out');
 if (outIndex >= 0) {

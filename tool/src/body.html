@@ -51,7 +51,7 @@
       <div class="side-foot"><button class="btn newrec" id="newRecipe" type="button" title="自己搭一个效果：先选第一层（花型模板或现有效果的层），再加层、改名、调参数">＋ 新建效果</button><button class="btn ghost" id="rvCopy" type="button" title="把通过 / 要改和意见复制下来，贴到对话里">复制我的意见</button>
         <div hidden><button class="btn" id="cloudRecipesOpen" type="button">云端配方预览</button><button class="btn ghost" id="assetOpen2" type="button" title="临时看某个结果文件夹">打开结果文件夹…</button></div></div>
     </aside>
-    <div class="gutter" id="gutL" title="拖动调整宽度"></div>
+    <div class="gutter" id="gutL" title="拖动调整宽度；双击恢复自适应宽度"></div>
     <section class="stage">
       <div id="showcaseBar" class="showcase-bar" hidden><b id="showcaseTitle">云端配方预览</b><select id="showcaseType" aria-label="云端配方"></select><select id="cloudLayer" aria-label="查看配方图层"></select><button id="showcaseParams" class="btn ghost">保存完整配方</button><button id="showcaseClose" class="btn ghost">退出预览</button><p id="showcaseNote">正在烘焙配方…</p><details id="cloudPending"></details></div>
       <div id="bakeError" class="bake-error" role="alert" hidden><span id="bakeErrorText"></span><button class="btn" id="bakeRetry" type="button">重试烘焙</button></div>
@@ -121,13 +121,13 @@
       </div>
       <div class="tlbars" id="tlBars"></div>
     </section>
-    <div class="gutter" id="gutR" title="拖动调整宽度"></div>
+    <div class="gutter" id="gutR" title="拖动调整宽度；双击恢复自适应宽度"></div>
     <div class="right" id="right">
-    <div class="ptabs" id="ptabs" role="tablist">
+    <div class="right-head"><div class="ptabs" id="ptabs" role="tablist">
       <button role="tab" data-tab="master" aria-selected="true">参数</button>
       <button role="tab" data-tab="review" aria-selected="false">审阅<i class="dot" id="rvDot" hidden></i></button>
       <button role="tab" data-tab="iter" aria-selected="false">工具</button>
-    </div>
+    </div><button class="btn ghost right-close" id="rightClose" type="button" aria-label="收起右栏" title="收起右栏（P 或 Esc）">收起</button></div>
     <section class="review" id="pReview" hidden></section>
     <details class="lcard" id="layerCard" hidden></details>
     <aside class="panel" id="pMaster">

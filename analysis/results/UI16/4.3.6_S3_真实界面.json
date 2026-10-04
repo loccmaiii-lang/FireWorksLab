@@ -1,0 +1,64 @@
+{
+  "version": "4.3.6",
+  "execution": "S3_JS via CUA CDP, real application functions, no FAKE bake",
+  "result": {
+    "result": {
+      "type": "object",
+      "value": {
+        "bad": [],
+        "ok": true,
+        "out": {
+          "blank": {
+            "groups": [
+              "发射▾",
+              "运动▾",
+              "外观▾",
+              "输出▾"
+            ],
+            "mods": {
+              "初速": true,
+              "星头": true
+            },
+            "sliders": 13
+          },
+          "blankAdd": true,
+          "groupMemory": {
+            "group": "@发射",
+            "keptClosed": true,
+            "savedClosed": true,
+            "savedOpen": true
+          },
+          "kiku": {
+            "groups": [
+              "发射▾",
+              "运动▾",
+              "外观▾",
+              "输出▾"
+            ],
+            "mods": {
+              "初速": true,
+              "星头": true,
+              "火花": true
+            },
+            "sliders": 19
+          },
+          "trailM": {
+            "groups": [
+              "发射▾",
+              "外观▾",
+              "层▾",
+              "输出▾"
+            ],
+            "mods": {
+              "丝状火花": true,
+              "橙色火花": true,
+              "白热火花": true,
+              "金火花": true
+            },
+            "sliders": 35
+          }
+        }
+      }
+    }
+  }
+}

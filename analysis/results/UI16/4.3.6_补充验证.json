@@ -1,0 +1,64 @@
+{
+  "cap": 520,
+  "reset": 440,
+  "short": {
+    "clear": {
+      "h": 22.58333396911621,
+      "w": 40.33333587646485,
+      "x": 151.33334350585938,
+      "y": 605.75
+    },
+    "inViewport": true,
+    "scroll": 171.3333282470703
+  },
+  "state": {
+    "result": {
+      "type": "object",
+      "value": {
+        "comboSel": 1,
+        "groups": [
+          {
+            "g": "发射",
+            "hidden": false,
+            "open": true
+          },
+          {
+            "g": "运动",
+            "hidden": false,
+            "open": true
+          },
+          {
+            "g": "外观",
+            "hidden": false,
+            "open": true
+          },
+          {
+            "g": "层",
+            "hidden": true,
+            "open": true
+          },
+          {
+            "g": "输出",
+            "hidden": false,
+            "open": true
+          }
+        ],
+        "headSize": 0.6,
+        "live": "live",
+        "mopen": {},
+        "output": {
+          "emitset": "4.3",
+          "loop": "4.3",
+          "master": "4.3.3",
+          "riseLoop": "4.3",
+          "trail": "4.3",
+          "unit": "4.3"
+        },
+        "platform": "pc",
+        "t": 1.5,
+        "unchanged": true,
+        "version": "4.3.6"
+      }
+    }
+  }
+}

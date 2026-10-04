@@ -1,0 +1,66 @@
+{
+  "version": "4.3.6 before group timer fix",
+  "execution": "S3_JS via CUA CDP, FAKE bake, existing IAB local tab",
+  "result": {
+    "result": {
+      "type": "object",
+      "value": {
+        "bad": [
+          "手动收起 / 展开参数分组后没有记住，重建面板会恢复默认"
+        ],
+        "ok": false,
+        "out": {
+          "blank": {
+            "groups": [
+              "发射▾",
+              "运动▾",
+              "外观▾",
+              "输出▾"
+            ],
+            "mods": {
+              "初速": true,
+              "星头": true
+            },
+            "sliders": 13
+          },
+          "blankAdd": true,
+          "groupMemory": {
+            "group": "@发射",
+            "keptClosed": false,
+            "savedClosed": false,
+            "savedOpen": false
+          },
+          "kiku": {
+            "groups": [
+              "发射▾",
+              "运动▾",
+              "外观▾",
+              "输出▾"
+            ],
+            "mods": {
+              "初速": true,
+              "星头": true,
+              "火花": true
+            },
+            "sliders": 19
+          },
+          "trailM": {
+            "groups": [
+              "发射▾",
+              "外观▾",
+              "层▾",
+              "输出▾"
+            ],
+            "mods": {
+              "丝状火花": true,
+              "橙色火花": true,
+              "白热火花": true,
+              "金火花": true
+            },
+            "sliders": 35
+          }
+        }
+      }
+    }
+  }
+}
