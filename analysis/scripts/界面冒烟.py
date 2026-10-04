@@ -1,10 +1,12 @@
 """烘焙器界面冒烟检查（改完 tool/src、推送前跑）：真的打开页面，按用户的路径点一遍，抓页面报错和「烘焙失败」横幅
 
-用法：python3 analysis/scripts/界面冒烟.py [--out 目录] [--full]
+用法：python3 analysis/scripts/界面冒烟.py [--out 目录] [--full] [--noshot] [--sweep]
   默认把每次烘焙降成小规格（1024 贴图、≤40 颗星、火花 ×0.2），云端软件渲染几分钟跑完；--full 用原参数（本机显卡用）。
   走的路径：花型库模板（菊 / 柳 / 点灭）、待验收条目（JM4-40）、多层效果（鸿巢）、尾缀（V5）、左栏各分组、新建配方；
   每处切 实时模拟 / 引擎回放 / 贴图 / 流转动画。
-输出：<out>/冒烟.json（每步的报错、横幅文字、HUD）+ 每步截图；有报错时退出码 1。
+输出：<out>/冒烟.json（每步的报错、横幅文字、HUD）+ 每步截图；有报错时退出码 1。console 里的 error 也算报错。
+  --noshot（排查计划第 2 步，云端软件渲染截图会卡住）：不截图，只记报错和 HUD。
+  --sweep：全面扫一遍——36 个花型模板每个都切四个视图、点遍右栏每个发射器标签；左栏每个效果都打开（多层的每一层都选一遍）。
 2026-10-01 加：4.0.2 的统计行读了空的 budget.fps，烘焙结果出不来，离线检查没发现——这类错误只有在页面里才看得到。
 """
 import argparse, asyncio, json, os, pathlib, platform, sys, time
@@ -55,7 +57,11 @@ STEPS = [
 VIEWS = [('实时', 'live', None, 1.0), ('引擎回放', 'export', None, 1.0), ('贴图', 'atlas', '0', 1.0), ('流转', 'atlas', '1', 1.5)]
 
 
-async def main(out, full, limit, only=None):
+# --sweep 每个模板 / 效果打开后在右栏点遍发射器标签、开合时间轴的发射器行（面板和时间轴的代码都走一遍）
+TABS = "(() => { for (const b of document.querySelectorAll('#params .etabs [data-e]')) if (!b.hidden) b.click(); stage2.tlSig = ''; stage2.last = 0; stageTick(curDuration()); const eb = document.querySelector('#tlBars .tle-box'); if (eb) { eb.open = !eb.open; eb.open = !eb.open; } selectEmitTab('全部'); })()"
+
+
+async def main(out, full, limit, only=None, noshot=False, sweep=False):
     from playwright.async_api import async_playwright
     out.mkdir(parents=True, exist_ok=True); rep = []; errs = []
     async with async_playwright() as p:
@@ -80,11 +86,19 @@ async def main(out, full, limit, only=None):
             return f'超过 {limit} 秒没烘完'
 
         async def snap(name):
-            n = len(rep) + 1; await pg.evaluate('state.playing=false'); await pg.screenshot(path=str(out / f'{n:02d}_{name}.jpg'), type='jpeg', quality=70, timeout=240000)
+            n = len(rep) + 1; await pg.evaluate('state.playing=false')
+            if not noshot: await pg.screenshot(path=str(out / f'{n:02d}_{name}.jpg'), type='jpeg', quality=70, timeout=240000)
             hud = await pg.evaluate("(document.querySelector('#hud')||{}).textContent || ''")
             rep.append({'step': name, 'errors': errs[:], 'hud': hud}); errs.clear()
 
-        for name, js, views in [st for st in STEPS if not only or any(st[0].startswith(o) for o in only)]:
+        steps = list(STEPS)
+        if sweep:
+            types = await pg.evaluate("Object.keys(TYPES)")
+            effs = await pg.evaluate("EFFS().map(e => e.key)")
+            steps = [(f'全模板_{t}', f"setType('{t}');" + TABS, 'views') for t in types]
+            # 多层效果：打开后每一层都选一遍（右栏换成那一层的参数、点遍标签），再回整体
+            for k in effs: steps.append((f'全效果_{k}', f"openEffect(EFFS().find(e=>e.key==='{k}')).then(()=>{{ {TABS}; if (state.tab === 'combo') {{ for (let i = 0; i < state.layers.length; i++) {{ selectComboLayer(i); {TABS}; }} selectComboLayer(-1); }} }})", 'views'))
+        for name, js, views in [st for st in steps if not only or any(st[0].startswith(o) for o in only)]:
             t0 = time.time()
             try:
                 await pg.evaluate(js); await pg.wait_for_timeout(500)
@@ -114,5 +128,6 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('--out', default=str(ROOT / 'analysis' / 'probe' / '界面冒烟'))
     ap.add_argument('--full', action='store_true'); ap.add_argument('--limit', type=int, default=900)
     ap.add_argument('--only', nargs='*', help='只跑名字以这些开头的步骤（云端快速复查用）')
+    ap.add_argument('--noshot', action='store_true', help='不截图（云端软件渲染截图会卡住）'); ap.add_argument('--sweep', action='store_true', help='全部模板 × 四个视图 + 全部效果')
     a = ap.parse_args()
-    sys.exit(0 if asyncio.run(main(pathlib.Path(a.out), a.full, a.limit, a.only)) else 1)
+    sys.exit(0 if asyncio.run(main(pathlib.Path(a.out), a.full, a.limit, a.only, a.noshot, a.sweep)) else 1)

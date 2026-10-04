@@ -75,7 +75,7 @@ def run_job(job, s, force=False):
             elif job['type'] == 'smoke':
                 log(f"开始：{job.get('name', '')}（界面冒烟检查）")
                 import subprocess   # 冒烟脚本用自己的浏览器（异步接口），放在子进程里跑，不和本会话的同步浏览器混用
-                r = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '界面冒烟.py'), '--full', '--out', out, '--limit', str(job.get('limit', 600))],
+                r = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '界面冒烟.py'), '--full', '--out', out, '--limit', str(job.get('limit', 600))] + (['--sweep', '--noshot'] if job.get('sweep') else []),     # 4.4.3：sweep = 全部模板 × 四视图 + 全部效果（不截图）
                                    capture_output=True, text=True, encoding='utf-8', errors='replace')
                 for line in (r.stdout or '').splitlines()[-40:]: log(line)
                 if r.returncode not in (0, 1) or not os.path.exists(os.path.join(out, '冒烟.json')): raise RuntimeError('界面冒烟脚本没跑完：' + (r.stderr or '')[-3000:])
