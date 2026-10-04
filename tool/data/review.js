@@ -6798,7 +6798,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
-"check": null,
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": true
 },
 {
@@ -6834,7 +6837,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
-"check": null,
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": true
 },
 {
@@ -6870,7 +6876,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
-"check": null,
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": true
 },
 {
@@ -6906,7 +6915,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
-"check": null,
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": true
 },
 {
@@ -6942,7 +6954,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
-"check": null,
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": true
 },
 {
@@ -6978,7 +6993,10 @@ var FW_EFFECTS = [
 ]
 }
 ],
-"check": null,
+"check": {
+"passed": true,
+"fails": []
+},
 "stale": true
 }
 ],
@@ -7066,7 +7084,13 @@ var FW_EFFECTS = [
 ]
 }
 ],
-"check": null,
+"check": {
+"passed": false,
+"fails": [
+"RiseLoop：过曝像素 2.8%",
+"RiseFade：过曝像素 3.1%"
+]
+},
 "stale": true
 }
 ],

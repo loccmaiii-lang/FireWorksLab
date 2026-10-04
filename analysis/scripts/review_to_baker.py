@@ -367,7 +367,11 @@ def effects_from_status(out):
                 if os.path.exists(cf):      # 回放检查（贴图按引擎方式播放：空帧、裁切、过曝、抖动）——烘焙器「检查与验收」卡片用
                     try:
                         c = json.load(open(cf, encoding='utf-8'))
-                        ck = dict(passed=bool(c.get('pass')), fails=[f"{L.get('pack', '').split('·')[-1].strip()}：{'；'.join(L.get('fails') or [])}" for L in c.get('layers', []) if L.get('fails')])
+                        # 4.3.2 后（10-04 用户看到 V5 / RT4「导出没有回放检查」）：尾缀 / 循环层 + 粒子的回放检查按贴图组分开做，文件是列表
+                        # [{pass, layers}, …]；以前按单个对象读，读失败就当成没有回放检查。列表 = 每组都过才算过，层合在一起列
+                        cs = c if isinstance(c, list) else [c]
+                        ck = dict(passed=bool(cs) and all(bool(x.get('pass')) for x in cs),
+                                  fails=[f"{L.get('pack', '').split('·')[-1].strip()}：{'；'.join(L.get('fails') or [])}" for x in cs for L in x.get('layers', []) if L.get('fails')])
                     except Exception: ck = None
                 ex.append(dict(job=jid, entry=m.get('entry'), ver=m.get('ver'), time=m.get('time'), packages=m.get('packages', []), check=ck,
                                stale=bool(m.get('entry') and by.get(m['entry']) and by[m['entry']].get('ver') != m.get('ver'))))
