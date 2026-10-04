@@ -115,7 +115,7 @@
 | `required.cutout` | Cutout Texture，同时设 Sub Images 1×1、Eight Vertices、Opacity Source = Alpha、Alpha Threshold 0.1 | ✅ |
 | `required.sub_images` | `[水平, 竖直]`，只有真的用 SubUV 时才写 | ⚪ |
 | `required.max_draw_count` | bUseMaxDrawCount + MaxDrawCount | ✅ |
-| `required.pivot_offset` | Pivot Offset `[x, y]`（默认 −0.5, −0.5 是面片中心）。速度朝向的尾缀用它把星头放在粒子位置 | ⚪（2026-09-30 烘焙器开始输出，导入器待支持） |
+| `required.pivot_offset` | Pivot Offset `[x, y]`（默认 −0.5, −0.5 是面片中心，**引擎内部口径**）。速度朝向的尾缀用它把星头放在粒子位置。**注意**：编辑器里的「Pivot Offset」模块（`ParticleModulePivotOffset.PivotOffset`）字段口径不同，文档写「默认 (0.5, 0.5) = 面片中心、UV 空间」，导入时要换算，不能原样写：大概率是 `(−x, −y)`（星头在上端时 ≈ (0.5, 0.015)），也可能是 `(x + 1, y + 1)`（≈ (0.5, 0.985)），两者竖直方向相反，等 UE 实测定（2026-10-04 用户测 RT4L） | ⚪（2026-09-30 烘焙器开始输出；导入器 10-04 起写 Pivot Offset 模块，换算口径未实测） |
 | `required.local_space` | bUseLocalSpace | ⚪ |
 | `spawn.rate` | Spawn Rate（分布） | ✅ |
 | `spawn.bursts` | `[[时间秒, 数量], …]` → BurstList | ✅ |
