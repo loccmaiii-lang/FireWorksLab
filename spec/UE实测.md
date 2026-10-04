@@ -38,3 +38,10 @@
 本次还实测了保存差异：自动贴图导入任务的save=False会只留内存；复制材质实例会提前保存并自动标记添加。若粒子组装失败而最终统一保存未执行，会出现材质已添加、贴图未保存/未纳管、粒子仅部分链接。已改为依赖分阶段保存；核对实际非空.uasset，再通过当前`unreal.SourceControl`的`mark_file_for_add`和`query_file_state`确认`is_valid && is_added`。未启用版本管理、服务不可用、添加被拒绝和缺文件应分别显示。
 
 按用户要求保留已手调的前两个发射器，仅补后8个。10个发射器及5贴图/2实例/1粒子的磁盘保存和P4添加状态已确认，新增模块与完整曲线读回通过。空Burst数组文本可能留下Count=0的中性条目，不能按条目数误判为额外发射。此轮是结构、参数、文件和版本管理核对；真实播放画质、重启加载仍未验收，不能据此更改效果验收状态。
+
+### 2026-10-04 14:58 · 升空尾缀 RT4L 进引擎（用户截图，对话框15 记录）
+
+- **Acceleration 模块在 GPU Sprites 上不可用**（Cascade 里标红）。RT1–RT4 每个 GPU 火花发射器写了 3 个 Acceleration（空气乱流：大涡按发射器时间的曲线 + 小涡两个均匀分布相加），一直标的是「未经 UE 验证（⚪）」→ 现在 ❌。以后 GPU 发射器不写 Acceleration；乱流放进贴图（烘焙器里算），GPU 粒子只靠 Initial Velocity 的随机散开。Const Acceleration（重力）可用。
+- **RiseLoop 上没有 Pivot Offset 模块**：cascade.json 写了 `required.pivot_offset = [-0.5, -0.0154]`（星头在面片上端），但截图里 RiseLoop 的模块是 Required / Spawn / Lifetime / Initial Size / Initial Velocity / Drag / Const Acceleration / Size By Life / Dynamic / Color Over Life，没有 Pivot Offset → 面片按中心放在粒子上，贴图里的星头比真实星头高半个面片，GPU 火花（从真实星头出生）看起来在贴图中段 / 尾部。导入器 10-04 说支持 `ParticleModulePivotOffset`，这个发射器是不是走的那条路还没对上（可能是之前手调保留的发射器）。
+- **同屏粒子数**：RT4L 一条尾缀 GPU 粒子同时活着约 1 万（UE 统计 SparksFine 3528、SparksMid 4751、SparksCoarse 1327…；烘焙器估 7282）。用户要求：**一条尾缀的拖尾粒子同时活着不超过 800**（同屏还有很多别的粒子）；做法是密的、会闪的火花进贴图，Cascade 只留少量粒子和贴图错开、让闪烁明显。
+
