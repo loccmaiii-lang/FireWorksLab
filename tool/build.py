@@ -25,6 +25,15 @@ if os.path.exists(nf):
 js = 'const PNAMES = ' + json.dumps(pn, ensure_ascii=False, separators=(',', ':')) + ';\n' + js
 # 4.3：模块表（模块的中英文、默认展开、放什么）→ PMODULES，面板模块的说明和默认展开按它
 mf = os.path.join(here, '..', 'analysis', '命名', '模块表.json')
+# 4.4：发射器表（参数归哪个发射器 / 模块、面板上的短名）→ PEMIT，参数面板按「发射器 → 模块 → 参数」排
+ef = os.path.join(here, '..', 'analysis', '命名', '发射器表.json')
+if os.path.exists(ef):
+    ed = json.load(open(ef, encoding='utf-8'))
+    pe = {'E': [{'n': e['名'], 'en': e['en'], 'lv': e['级'], 'what': e['说明'], 'mods': e['模块']} for e in ed['发射器']],
+          'P': {r['id']: [r['发射器'], r['模块'], r['名'], i] for i, r in enumerate(ed['参数'])}}
+else:
+    pe = {'E': [], 'P': {}}
+js = 'const PEMIT = ' + json.dumps(pe, ensure_ascii=False, separators=(',', ':')) + ';\n' + js
 js = 'const PMODULES = ' + (json.dumps(json.load(open(mf, encoding='utf-8')), ensure_ascii=False, separators=(',', ':')) if os.path.exists(mf) else '[]') + ';\n' + js
 html = f'''<!doctype html>
 <html lang="zh-CN">

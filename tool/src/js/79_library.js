@@ -26,7 +26,6 @@ function syncPtabs() {
   $('#right').classList.toggle('pane-review', rv);
   const cur = rv ? 'review' : tab === 'iter' ? 'iter' : 'master';
   for (const b of $('#ptabs').children) b.setAttribute('aria-selected', String(b.dataset.tab === cur));
-  syncParameterNav();
 }
 // ---------------- 审阅记录 ----------------
 const rvGet = () => store.get('review', {});

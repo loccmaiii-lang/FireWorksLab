@@ -10,16 +10,16 @@
 const PNAME = (() => { const m = new Map(); for (const r of (typeof PNAMES !== 'undefined' ? PNAMES : [])) { const k = r.sec + '|' + r.key; if (!m.has(k)) m.set(k, []); m.get(k).push(r); } return m; })();
 // 同一节里同一个键可能有两行（例：形状里「开花图案」和地面的「灯芯图案」都是 pattern）：按旧名对上
 function pnameOf(sec, key, label) { const a = PNAME.get(sec + '|' + key); if (!a) return null; if (a.length > 1 && label != null) { const L = String(label); return a.find(r => r.old === L || L.startsWith(r.old) || r.old.startsWith(L.split('（')[0])) || a[0]; } return a[0]; }
-// 阶段 → 模块（按 Cascade 发射器从上到下，analysis/命名/模块表.json）。4.3：尾缀那几族原来的「受力 / 外观 / 尾迹」并进
-// 「阻力重力 / 星头 / 火花 / 曝光光晕」（和空中礼花同一个词）；尾缀各层、上升、弹道、地面、烘焙输出是那几族自己的模块
-const P43_GROUPS = [
-  ['发射', 'Emitter · 发射', ['发射器', '生成', '寿命', '形状', '初速', '上升', '弹道', '自转与喷射', '地面']],
-  ['运动', 'Motion · 运动', ['阻力重力']],
-  ['外观', 'Appearance · 外观', ['星头', '火花', '尾迹外形', '烟花特性', '子花', '蜂']],
-  ['层', 'Layers · 尾缀各层', ['白热火花', '金火花', '橙色火花', '丝状火花', '星头燃气焰', '落火', '烟带']],
-  ['输出', 'Render · 渲染输出', ['入点出点', '帧与贴图', '曝光光晕', '画质', '镜头', '引擎附加', '烘焙输出']],
-];
-const P43_MODULE_GROUP = (() => { const m = {}; for (const [g, , mods] of P43_GROUPS) for (const x of mods) m[x] = g; return m; })();
+// 4.4：面板按「发射器 → 模块 → 参数」排（用户 2026-10-04 16:17 / 17:13：按 Niagara 的发射器分层，父级 / 子级清楚、名字不带重复前缀）。
+// 归属和短名只看 analysis/命名/发射器表.json（build.py → PEMIT，唯一来源）；「全名」仍是参数名称表的 cn，用在搜索、说明条。
+// 顶上一排发射器标签（效果 / 星 / 火花 / 余烬 / 爆裂 / 子花 / 开花闪光 / 输出 …），一次看一个发射器；搜索、只看改过的跨所有发射器。
+const EMIT_DEF = (() => { const m = {}; (typeof PEMIT !== 'undefined' ? PEMIT.E : []).forEach((e, i) => { m[e.n] = { ...e, i }; }); return m; })();
+// 这一行归哪：{ e: 发射器, m: 模块, n: 面板上的短名 }。表里没有的（不该有，P1 检查会报）按节名猜一个
+function emitOf(nm, sec) {
+  const x = nm && nm.id && typeof PEMIT !== 'undefined' ? PEMIT.P[nm.id] : null;
+  if (x) return { e: x[0], m: x[1], n: x[2], i: x[3] };
+  return { e: /输出|导出|画质|曝光|规格|入点/.test(sec && sec.sec || '') ? '输出' : '效果', m: nm && nm.mcn || (sec && sec.sec) || '其它', n: nm ? nm.cn : '', i: 9999 };
+}
 // 「××随机」挂在哪个本体参数下面（没列的按「键名去掉 Jit」找；找不到就照常单独一行）
 const RAND_OF = { speedJit: 'v0', dirJit: 'v0', burnJit: 'burn', ignJit: 'ignDelay', afterJit: 'afterBurn', sparkRampJit: 'sparkRamp', sparkLifeJit: 'sparkLife',
   sparkSpread: 'sparkInherit', twinkle: 'sparkBright', starBright: 'sparkBright', tailJit: 'sparkSize', subJit: 'subDelay', subSpeedJit: 'subSpeed', subScaleJit: 'subSpeed' };
@@ -34,7 +34,7 @@ const INERT = [
   [['ignJit', 'ignSeed'], P => !(+P.ignDelay > 0) && !isCarrierType(P), '「点火延迟」是 0 时不起作用（随机的是点火延迟的长短）'],
   [['headDim'], P => +P.headDim < 1 && !(+P.headDimUntil > 0), '「前段结束」是 0 时不起作用：先设前段到第几秒结束'],
   [['turbScale'], P => !(+P.turb > 0), '「湍流强度」是 0 时不起作用'],
-  [['burn', 'ignDelay', 'ignJit', 'ignSeed', 'afterBurn', 'afterJit'], P => isCarrierType(P), '千轮 / 分裂的星是子弹：子弹飞多久看「子花开花时刻」，子星看「子星寿命」；这一项对它们不起作用'],
+  [['burn', 'ignDelay', 'ignJit', 'ignSeed', 'afterBurn', 'afterJit'], P => isCarrierType(P), '千轮 / 分裂的星是子弹：子弹飞多久看「子花开花时刻」，子星看「子花 › 燃烧时间」；这一项对它们不起作用'],
   [['sparkRate'], P => isCarrierType(P), '千轮 / 分裂：子弹的火花看「子弹火花率」，子星的火花看「子星火花率」；这一项不起作用'],
   [SPARK_KEYS, P => !isCarrierType(P) && !(+P.sparkRate > 0), '「火花生成率」是 0（这一层没有火花）时不起作用'],
   [SPARK_KEYS, P => isCarrierType(P) && !(+P.carrierTail > 0) && !(+P.subTail > 0), '「子弹火花率」「子星火花率」都是 0（这一层没有火花）时不起作用'],
@@ -54,51 +54,32 @@ function inertWhy(key, P) {
   for (const [ks, f, why] of INERT) if (ks.includes(key) && f(P)) return why;
   return '';
 }
-function p43Label(nm, fallback) { return nm ? (pview.en ? nm.en || nm.cn : nm.cn || nm.en) : fallback; }
-// 烟花特性里「开了才展开」：这几个开关不是 0 时，模块打开时自动展开（爆裂星、点灭星、带余烬的锦冠……一打开就看得到起作用的那几项）
-const FX_SWITCH = ['strobeHz', 'glitter', 'crackle', 'branch', 'flutter', 'emberFrac'];
-const fxOn = P => FX_SWITCH.some(k => +P[k] > 0);
+function p43Label(nm, fallback) { if (!nm) return fallback; const x = nm.id && typeof PEMIT !== 'undefined' ? PEMIT.P[nm.id] : null; return pview.en ? nm.en || nm.cn : (x && x[2]) || nm.cn || nm.en; }
 const PMODULE = (() => { const m = {}; for (const x of (typeof PMODULES !== 'undefined' ? PMODULES : [])) m[x.cn] = x; return m; })();
-// 阶段 → 模块。返回 place(sec, it, key, nm) → 这一行该放进的地方（模块，或模块里的「更多」）
-function p43Skeleton(host, grp, P) {
-  const mods = {};
-  // 每个模块有没有「第一眼」的行：全是「更多」的模块（尾迹外形、烟花特性、渲染输出那几个）不再套一层「更多」，整个模块收起来就是
-  const hasCore = {};
-  for (const sec of SCHEMA) for (const it of sec.items) {
-    const key = Array.isArray(it) ? it[0] : it.sel || it.text || (it.info ? 'info:' + it.info : ''); if (!key) continue;
-    const nm = pnameOf(sec.sec, key, Array.isArray(it) ? (typeof it[1] === 'function' ? '' : it[1]) : it.label); if (nm && nm.tier !== 'more') hasCore[nm.mcn] = true;
-  }
-  const modOf = (sec, nm) => { let mod = nm && nm.mcn || (/输出|导出|画质|曝光|规格|入点/.test(sec.sec) ? '帧与贴图' : '烟花特性'); return P43_MODULE_GROUP[mod] ? mod : '烟花特性'; };
-  const place = (sec, it, key, nm) => {
-    const mod = modOf(sec, nm);
-    if (!mods[mod]) {
-      const g = P43_MODULE_GROUP[mod], d = document.createElement('details'); d.className = 'sec mod';
-      const pm = PMODULE[mod], dflt = pm ? pm.open : true;
-      // 一建好时的开合不算用户操作（不然「爆裂星打开时烟花特性自动展开」会被记成「以后都展开」）
-      d._auto = true; d.open = mod === '烟花特性' && fxOn(P) ? true : pview.mopen[mod] != null ? pview.mopen[mod] : dflt; setTimeout(() => d._auto = false, 0);
-      const men = pm && pm.en || nm && nm.men || (PNAMES.find(r => r.mcn === mod) || {}).men || '';
-      d.innerHTML = `<summary>${mod}${men ? `<small class="men">${men}</small>` : ''}</summary>`;
-      d.addEventListener('toggle', () => { if (d._auto) return; pview.mopen[mod] = d.open; store.set('pModOpen', pview.mopen); });
-      d._sec = { sec: mod }; d._g = g; d._mod = mod;
-      // 模块按 P43_GROUPS 里的顺序插：找后面第一个已经建好的模块，插在它前面
-      const order = P43_GROUPS.find(x => x[0] === g)[2], after = order.slice(order.indexOf(mod) + 1).map(m => mods[m]).find(Boolean);
-      grp[g].insertBefore(d, after || null); mods[mod] = d;
-      // 模块说明（「？」）：模块表的「放什么」；尾缀 / 地面那几族的模块没有模块表，用节说明
-      const what = pm ? pm.what : '';
-      if (what) addModHelp(d, what);
-    }
-    const d = mods[mod];
-    if (!PMODULE[mod] && sec.hint && !(d._hints || (d._hints = new Set())).has(sec.sec)) { d._hints.add(sec.sec); addModHelp(d, sec.hint); }
-    if (!(nm && nm.tier === 'more') || !hasCore[mod]) return d;
-    if (!d._more) {
-      const m = document.createElement('details'); m.className = 'more'; m._auto = true; m.open = !!pview.more[mod]; setTimeout(() => m._auto = false, 0);
-      m.innerHTML = '<summary><span class="mn">更多</span></summary>';
-      m.addEventListener('toggle', () => { if (m._auto) return; pview.more[mod] = m.open; store.set('pMoreOpen', pview.more); });
-      d.appendChild(m); d._more = m;
-    }
-    return d._more;
+// 返回 place(sec, it, key, nm) → 这一行该放进的模块（发射器 section 里的 details.mod）。4.4 没有「更多」：模块默认展开，模块本身可以收起（记住）
+function p43Skeleton(host) {
+  const secs = {}, mods = {};
+  const emitSec = e => {
+    if (secs[e]) return secs[e];
+    const d = EMIT_DEF[e] || { n: e, en: '', lv: '', what: '', mods: [], i: 99 }, s = document.createElement('section');
+    s.className = 'egrp pgrp p43'; s.dataset.g = e; s._i = d.i;
+    s.innerHTML = `<div class="ehead"><b class="pg-t">${e}</b>${d.en ? `<small class="men">${d.en}</small>` : ''}${d.lv ? `<span class="elv">${d.lv}</span>` : ''}<span class="pg-n" hidden></span><p class="ewhat">${d.what || ''}</p></div>`;
+    const after = [...host.querySelectorAll(':scope > section.egrp')].find(x => x._i > d.i);
+    host.insertBefore(s, after || null); secs[e] = s; return s;
   };
-  return place;
+  return (sec, it, key, nm) => {
+    const x = emitOf(nm, sec), k = x.e + '›' + x.m;
+    if (!mods[k]) {
+      const s = emitSec(x.e), order = (EMIT_DEF[x.e] || {}).mods || [], d = document.createElement('details');
+      d.className = 'sec mod'; d._auto = true; d.open = pview.mopen[k] != null ? pview.mopen[k] : true; setTimeout(() => d._auto = false, 0);
+      d.innerHTML = `<summary>${x.m}</summary>`;
+      d.addEventListener('toggle', () => { if (d._auto) return; pview.mopen[k] = d.open; store.set('pModOpen', pview.mopen); });
+      d._sec = { sec: x.m }; d._g = x.e; d._mod = x.m; d._key = k; d._oi = order.includes(x.m) ? order.indexOf(x.m) : 99;
+      const after = [...s.querySelectorAll(':scope > details.mod')].find(m => m._oi > d._oi);
+      s.insertBefore(d, after || null); mods[k] = d;
+    }
+    return mods[k];
+  };
 }
 function addModHelp(d, text) {
   let p = d.querySelector(':scope > p.hint');
@@ -135,24 +116,18 @@ function p43RandSync(P) {
     row._rndb.title = row._rands.map(([r]) => r._lab).join('、') + (open ? '（点一下收起）' : '（点一下展开）');
   }
 }
-// 空白发射器（4.3）：没加的模块整块藏起来；「外观」后面一行「+ 添加模块」，加了的模块标题上有「去掉」
-function p43BlankControls(grp, P) {
+// 空白发射器（4.3；4.4 放在发射器标签下面一行）：没加的部分整块藏起来；「+ 火花」加上，已加的有「去掉」
+function p43BlankControls(host, P) {
   if (!isBlank(P)) return;
-  const g = grp['外观']; if (!g) return;
   const box = document.createElement('div'); box.className = 'addmod'; box.id = 'blankAdd';
-  box.innerHTML = '<span class="hint">空白发射器只有星。要火花、尾迹、点灭 / 爆裂这些就加模块：</span><span class="addmod-btns"></span>';
-  g.appendChild(box);
-  for (const d of document.querySelectorAll('#params details.mod')) {
-    if (!BLANK_MODS[d._mod]) continue;
-    const x = document.createElement('button'); x.type = 'button'; x.className = 'btn mini ghost modrm'; x.textContent = '去掉'; x.title = `去掉「${d._mod}」模块（它的参数回到不起作用的值）`;
-    x.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); if (blankRemoveModule(state.P, d._mod)) { buildMasterPanel(); onParam(); } });
-    d.querySelector('summary').appendChild(x);
-  }
+  box.innerHTML = '<span class="hint">空白发射器只有星。要火花、尾迹、点灭 / 爆裂这些就加上：</span><span class="addmod-btns"></span>';
+  host.appendChild(box);
 }
 function p43BlankSync(P) {
   const box = $('#blankAdd'); if (!box) return;
-  const btns = box.querySelector('.addmod-btns'), todo = Object.keys(BLANK_MODS).filter(m => !(P.mods || []).includes(m));
-  btns.innerHTML = todo.map(m => `<button type="button" class="btn mini" data-addmod="${m}" title="${BLANK_MODS[m].what}">+ ${m}</button>`).join('') || '<span class="hint">都加上了</span>';
-  btns.querySelectorAll('[data-addmod]').forEach(b => b.addEventListener('click', () => { if (blankAddModule(state.P, b.dataset.addmod)) { pview.mopen[b.dataset.addmod] = true; buildMasterPanel(); onParam(); } }));
+  const btns = box.querySelector('.addmod-btns'), has = P.mods || [], todo = Object.keys(BLANK_MODS).filter(m => !has.includes(m));
+  btns.innerHTML = todo.map(m => `<button type="button" class="btn mini" data-addmod="${m}" title="${BLANK_MODS[m].what}">+ ${m}</button>`).join('')
+    + has.filter(m => BLANK_MODS[m]).map(m => `<span class="addmod-on">${m}<button type="button" class="btn mini ghost modrm" data-rmmod="${m}" title="去掉「${m}」（它的参数回到不起作用的值）">去掉</button></span>`).join('');
+  btns.querySelectorAll('[data-addmod]').forEach(b => b.addEventListener('click', () => { if (blankAddModule(state.P, b.dataset.addmod)) { buildMasterPanel(); onParam(); } }));
+  btns.querySelectorAll('[data-rmmod]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); if (blankRemoveModule(state.P, b.dataset.rmmod)) { buildMasterPanel(); onParam(); } }));
 }
-

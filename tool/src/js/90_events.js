@@ -8,7 +8,6 @@ for (const [g, types] of TYPE_GROUPS) {
 $('#verLabel').textContent = 'v' + VERSION;
 document.title = '烟花烘培器 · v' + VERSION;
 $('#type').addEventListener('change', e => setType(e.target.value));
-$('#paramNav').addEventListener('change', e => focusParameterSection(e.target.value));
 $('#mname').addEventListener('input', e => state.name = e.target.value);
 $('#x-form').addEventListener('change', e => setForm(e.target.value));
 $('#x-texW').addEventListener('change', e => { state.P.texW = +e.target.value; onParam(); });

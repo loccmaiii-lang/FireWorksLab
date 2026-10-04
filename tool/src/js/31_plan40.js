@@ -269,7 +269,7 @@ function plan40(P,fm,ta=0,tb=P.duration) {
   return {...base,L:L2,fitPack:fit,t0,duration:D,sizeKeys,frameScale,times,dur,ticks,nTicks:N,keys:keysFromTicks40(ticks,N),area,
     frameTiming:'tick-start',frameFps:30,capacityFrames:cap,sequenceStart:t0,sequenceEnd:end/30,
     budget:{mode,burstEnd:B.burstEnd,fadeAt:B.fadeAt,strobeFrom:B.strobeFrom,strobeAlias:B.strobeAlias,fps:mode==='tiers'?holds.map(fpsOf):null,strobeFps:fpsOf(B.strobeHold),pages:Math.ceil(F/cap),holdMin:Math.min(...dur)*30,holdMax:Math.max(...dur)*30},
-    fadeEnd:P.duration,avgFps:F/D,minFps,maxDisp};
+    fadeEnd:P.duration,noEndFade:P.endMode==='natural',avgFps:F/D,minFps,maxDisp};
 }
 // 「按帧数选最小贴图」：单格大小不变，RGBA 接力，在 1×1 / 2×1 / 2×2 / 4×2 / 4×4 / 8×4 / 8×8 里挑第一个放得下 F 帧、又不超过原来格子的
 function fitLayout40(L,F){

@@ -66,6 +66,42 @@ function curveSparkAt(P, s, t, D) {
   if (hot > 0 && tau > hot) r *= P.emberFrac;          // 火花停之后只剩余烬
   return [Math.max(0, r), clamp(tau / Math.max(0.05, death - born), 0, 1)];
 }
+// 4.4（用户 10-04 16:17「火星到最后没完全消失就切掉了」）：最后一批火花约 98% 灭完的时刻（秒，从开花算）。
+// 每颗星（含子花）：火花停的时刻 + 火花寿命 × 末段寿命 × 寿命随机（对数正态 +1.64σ，约 95%；寿命末尾本来就只剩百分之几的亮度）；余烬按余烬寿命（+2.05 × 0.2）；爆裂星加爆裂延迟。
+// 星本身用 CPU 星模拟走到全灭（便宜：只有星，没有火花）。按参数缓存
+const tailEndCache = new Map();
+function sparkTailEnd(P0) {
+  const P = derive({ ...structuredClone(P0), engine: 'gpu' }), key = JSON.stringify(P);
+  if (tailEndCache.has(key)) return tailEndCache.get(key);
+  const rise = familyOf(P.type) === 'rise', le = rise || P.sparkLifeEnd == null ? 1 : +P.sparkLifeEnd, lj = rise || P.sparkLifeJit == null ? 0.45 : P.sparkLifeJit / 100;
+  const tail = sparkEff(P).life * Math.max(1, le) * Math.exp(1.64 * lj), embAll = P.emberFrac > 0 && P.emberAll;
+  let etail = P.emberFrac > 0 && !(+P.branch > 0) ? (+P.emberLife || 3) * Math.exp(0.41) : 0;
+  const sim = new Sim(P), H = Math.max(8, (+P.duration || 3) * 3 + 4);
+  let quiet = 0; while (sim.t < H) { sim.step(1 / 30); if (sim.t > 0.5 && !sim.all.some(s => s.alive)) { if (++quiet > 30) break; } else quiet = 0; }
+  let end = 0;
+  for (const s of sim.all) {
+    const ig = s.birth + (s.ign || 0), dead = s.birth + (s.vis != null ? s.vis : s.burn);
+    end = Math.max(end, dead);
+    if (s.rate > 0) {
+      const stop = P.sparkStop > 0 && s.kind !== 5 && !embAll ? Math.min(dead, ig + P.sparkStop) : dead;
+      end = Math.max(end, stop + tail, etail > 0 ? (embAll ? dead : stop) + etail : 0);
+    }
+    if (P.crackle > 0 && !s.dark) end = Math.max(end, dead + (+P.crackleDelay || 0) * 1.7 + 0.25);
+  }
+  if (P.emberEnd > 0) end = Math.min(end, Math.max(P.emberEnd + 0.3, ...sim.all.map(s => s.birth + (s.vis != null ? s.vis : s.burn))));
+  const v = Math.ceil(end / 0.05) * 0.05;
+  if (tailEndCache.size > 64) tailEndCache.delete(tailEndCache.keys().next().value);
+  tailEndCache.set(key, +v.toFixed(2)); return +v.toFixed(2);
+}
+// 「效果 › 规格」里的只读行：最后一批火花什么时候灭完、和序列时长比
+function endInfoHTML() {
+  const P = state.P; if (!P || familyOf(P.type) !== 'aerial') return '';
+  let e; try { e = sparkTailEnd(P); } catch (err) { return ''; }
+  const D = +P.cutOut > 0 ? +P.cutOut : +P.duration, short = e - D;
+  const fade = P.endMode !== 'natural' ? '现在最后 0.3 s 整体淡出' : '不淡出';
+  if (short > 0.04) return `<p class="hint endinfo warn">最后一批火花约 <b>${e.toFixed(2)} s</b> 灭完，序列到 ${D.toFixed(2)} s，差 ${short.toFixed(2)} s（${fade}，看着像被切掉）。<button type="button" class="btn mini" data-endfit="${e}">序列时长设成 ${e.toFixed(2)} s</button></p>`;
+  return `<p class="hint endinfo">最后一批火花约 ${e.toFixed(2)} s 灭完，序列 ${D.toFixed(2)} s 盖得住（${fade}）。</p>`;
+}
 async function curveCompute(P0, key, live, tid = '') {
   const t0 = performance.now(), P = derive({ ...structuredClone(P0), engine: 'gpu' }), D = Math.max(0.1, +P.duration || 3);
   // 步长：星多的（千轮子花几千颗）放粗一点，曲线是看趋势的，不用和烘焙一样细；取样仍是每 1/30 s

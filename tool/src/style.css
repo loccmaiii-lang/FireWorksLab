@@ -1121,11 +1121,10 @@ header.top #status{position:fixed;right:16px;bottom:16px;z-index:100;max-width:m
 #colorControls .stage-row{grid-template-columns:15px 27px minmax(0,1fr) 58px 20px;gap:5px}
 #colorControls .line2{flex-wrap:wrap}
 #colorControls .line2 .btn{padding:5px 8px;font-size:11px}
-#params>.pgrp[data-g=运动]{order:30}
-#params>.pgrp[data-g=外观]{order:40}
-#params>.pgrp[data-g=发射]{order:50}
-#params>.pgrp[data-g=层]{order:55}
-#params>.pgrp[data-g=输出]{order:60}
+#params>.etabs{order:25}
+#params>#blankAdd{order:26}
+#params>.egrp{order:40}
+#params>.pempty{order:41}
 #pHelp{order:70}
 #exposureControls{order:75}
 #pMaster>.actions{order:80}
@@ -1235,12 +1234,10 @@ header.top .upd{height:var(--ui-control);font-size:var(--ui-label)}
 .right-head{position:sticky;top:0;z-index:8;display:flex;align-items:center;background:var(--panel);border-bottom:1px solid var(--line2);flex:none}
 .right-head>.ptabs{position:static;flex:1;min-width:0;border-bottom:0}
 .right-head .ptabs button{font-size:clamp(16px,.9vw,18px);padding-inline:10px;white-space:nowrap}
-#paramNav{flex:none;width:96px;max-width:32%;margin:8px 10px 4px 0;min-height:32px;padding:5px 6px;font-size:12px;color:var(--text);background:var(--panel2);border:1px solid var(--line2);border-radius:5px}
 main.drawer-right .right-head{flex-wrap:wrap}
 main.drawer-right .right-head .ptabs{padding-inline:8px}
 main.drawer-right .right-close{order:2}
-main.drawer-right #paramNav{order:3;flex-basis:calc(100% - 20px);width:auto;max-width:none;margin:0 10px 8px}
-.right-close{display:none;margin:8px 10px 4px 0;min-height:36px;white-space:nowrap}
+main.drawer-right .right-close{display:none;margin:8px 10px 4px 0;min-height:36px;white-space:nowrap}
 main.drawer-right .right-close{display:block}
 #pMaster .sl .k{font-size:var(--ui-label)}
 #pMaster .sl .num{font-size:var(--ui-small)}
@@ -1306,3 +1303,24 @@ main.drawer-right .right-close{display:block}
   .viewframe .preview-controls{position:static;transform:none;align-self:center;flex:none;width:auto;margin:4px 6px}
   .tlbars{max-height:none}
 }
+
+/* 4.4 发射器标签 + 发射器卡片（发射器表.json）：一次看一个发射器；标题写它是父级还是子级、什么时候生成 */
+#params .etabs{display:flex;flex-wrap:wrap;gap:5px;margin:2px 0 8px;padding:6px 0;position:sticky;top:0;z-index:4;background:var(--panel)}
+#params .etabs .et{font:inherit;font-size:13.5px;font-weight:600;color:var(--dim);background:var(--low);border:1px solid var(--line2);border-radius:16px;padding:5px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;min-height:30px}
+#params .etabs .et:hover{color:var(--text);border-color:var(--dim)}
+#params .etabs .et.on{color:var(--accInk);background:var(--acc);border-color:var(--acc)}
+#params .etabs .et-n{font-size:11px;font-weight:600;border-radius:8px;padding:0 5px;background:var(--amber);color:#111;line-height:16px}
+#params .etabs .et[data-e=全部]{margin-left:auto;font-weight:500}
+#params>.egrp>.ehead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 8px;padding:8px 0 6px;border-bottom:1px solid var(--line)}
+#params>.egrp>.ehead .pg-t{font-size:16px;color:var(--text)}
+#params>.egrp>.ehead .men{color:var(--dim);font-size:12px}
+#params>.egrp>.ehead .elv{font-size:12px;color:var(--acc);border:1px solid currentColor;border-radius:9px;padding:0 7px}
+#params>.egrp>.ehead .pg-n{font-size:11px;color:var(--amber);border:1px solid currentColor;border-radius:9px;padding:0 7px}
+#params>.egrp>.ehead .ewhat{flex-basis:100%;margin:2px 0 0;font-size:12.5px;color:var(--dim);line-height:1.5}
+#params>.egrp>details.sec{border-top:0;padding:2px 0 4px}
+#params>.egrp>details.sec>summary{font-size:14px;font-weight:600;color:var(--text);padding:7px 0 4px;cursor:pointer}
+#params .phelp-on{cursor:help}
+#params .addmod .addmod-on{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;color:var(--text);border:1px solid var(--line2);border-radius:14px;padding:1px 4px 1px 9px}
+#params .endinfo{margin:2px 0 6px;font-size:12.5px;line-height:1.5}
+#params .endinfo.warn{color:var(--amber)}
+#params .endinfo .btn{margin-left:6px}

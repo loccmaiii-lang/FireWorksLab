@@ -130,7 +130,7 @@ const VS_SPK = `#version 300 es
 precision highp float; precision highp int; precision highp sampler2D;
 uniform sampler2D uPos, uVel, uInfo;
 uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw, uBr;
-uniform float uInh, uSpread, uLife, uLifeEnd, uLifeJit, uK, uG, uT0, uCool, uTwk, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
+uniform float uInh, uSpread, uLife, uLifeEnd, uLifeJit, uK, uG, uT0, uCool, uCoolAbs, uTwk, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
 uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShoulder, uDif, uDifL, uRise, uStarB, uWShape, uWidth, uPinH, uPinT, uBelly;
 uniform float uRamp, uRampJ;     // 4.2.17 火花起势：开始出火花后几秒到满密度、每颗星 ± 随机
 // 和 20_sim.js starHash(id, seed, k) 同一个整数哈希（CPU / GPU 内核每颗星的起势时长一样）
@@ -161,7 +161,10 @@ void main(){
   // 4.2.17 火花起势：按出生时刻的密度比例抽稀（smoothstep，开头很稀、慢慢连成线）；分叉火花和母火花同一个编号，一起留或一起去
   if(uRamp>0.){ float Tr=max(.01,uRamp*(1.+uRampJ*(2.*starHashG(uint(s),17u)-1.))), xr=clamp((tb-inf.x)/Tr,0.,1.); if(hsh(uid,64u)>=xr*xr*(3.-2.*xr)){ cull(); return; } }
   float phase=clamp((tb-inf.x)/max(.05,inf.y-inf.x),0.,1.);
-  float life=uLife*(1.+(uLifeEnd-1.)*phase)*exp(uLifeJit*gss(uid,2u)); float age=uT-tb;
+  float lifeN=uLife*(1.+(uLifeEnd-1.)*phase), life=lifeN*exp(uLifeJit*gss(uid,2u)); float age=uT-tb;
+  // 4.4「冷却方式 = 按实际时间」（用户 10-04 16:17：火花不是老的先灭、而是一条线上随机灭）：温度按离开星多久降（同样老的火花一样暗），
+  // 寿命只决定每颗最后什么时候灭（最后 30% 寿命淡出，不会一下子消失）；uCoolAbs = 0 时和以前逐位相同
+  float lifeC=uCoolAbs>.5 ? lifeN : life;
   // 余烬长尾（锦冠的木炭余烬 / 受光烟迹）：一部分火花寿命长、亮度低，沿星的轨迹留下暗长线；
   // uEmbF > 0 时亮度跟着母星：母星烧完后 uEmbF 秒内淡掉（烟迹是被星自己照亮的）
   bool emb=uEmb>0. && uBr==0 && hsh(uid,51u)<uEmb; if(emb) life=uEmbL*exp(.2*gss(uid,52u));
@@ -193,7 +196,7 @@ void main(){
       float a=clamp(length(ph-sp)/max(1e-3,length(ph-starAt(s,t0))),0.,1.);
       wtail=a>uBelly; wq=!wtail ? 1.-uPinH*(1.-smoothstep(0.,uBelly,a)) : 1.-uPinT*smoothstep(uBelly,1.,a); W=uWidth*wq;
       p+=(W-1.)*(uK>1e-4 ? (1.-exp(-uK*age))/uK : age)*vec3(gss(uid,5u),gss(uid,7u),gss(uid,9u))*uSpread; }
-    float gl=emb ? glowOf(T0)*uEmbB*exp(-2.*age/life)*(1.-smoothstep(.75,1.,age/life))*(uEmbF>0. ? 1.-smoothstep(inf.y-.15,inf.y+uEmbF,uT) : 1.)*(uEmbE>0. ? 1.-smoothstep(uEmbE-.6,uEmbE+.3,uT) : 1.) : glowOf(T0*(1.-uCool*age/life));
+    float gl=emb ? glowOf(T0)*uEmbB*exp(-2.*age/life)*(1.-smoothstep(.75,1.,age/life))*(uEmbF>0. ? 1.-smoothstep(inf.y-.15,inf.y+uEmbF,uT) : 1.)*(uEmbE>0. ? 1.-smoothstep(uEmbE-.6,uEmbE+.3,uT) : 1.) : glowOf(T0*(1.-uCool*age/lifeC))*(uCoolAbs>.5 ? 1.-smoothstep(.7,1.,age/life) : 1.);
     if(emb) size=uSize*uEmbS;
     if(uGlit>0.){ float tf=uGlitD*(.5+hsh(uid,17u)); float e=(age-tf)/.03; gl=gl*(1.-.85*uGlit)+uGlit*6.*exp(-e*e); }
     I=gl;
@@ -202,7 +205,7 @@ void main(){
     vec3 dv=normalize(vec3(gss(u2,31u),gss(u2,33u),gss(u2,35u))+1e-4)*(4.+uSpread*1.5)*(.6+.8*hsh(u2,37u));
     float a2=age-ts, x=a2/life2;
     p=mot(pc,vc*.5+dv,U,g,uK*1.5,a2);
-    I=glowOf(T0*(1.-uCool*ts/life)*1.08)*1.8*(1.-x)*(1.-x); size=uSize*.7;
+    I=glowOf(T0*(1.-uCool*ts/lifeC)*1.08)*1.8*(1.-x)*(1.-x); size=uSize*.7;
   }
   // 尾迹扩散（4.2.0，tailDiffuse / tailDiffuseScale，用户 2026-10-02 16:22）：火花被阻力停下来以后仍被空气扰流带着走，越老离原位越远。
   // 位移 = 扰流速度 × Tl × x/√(1+x)，x = 年龄 / Tl，Tl = 尺度 / 速度：刚出生像被吹着走（∝ 年龄），老了变成扩散（∝ √年龄）。
@@ -423,7 +426,7 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   gl.uniform1f(pr.u.uInh, P.sparkInherit); gl.uniform1f(pr.u.uSpread, P.sparkSpread); gl.uniform1f(pr.u.uLife, se.life);
   gl.uniform1f(pr.u.uLifeEnd, familyOf(P.type) === 'rise' || P.sparkLifeEnd == null ? 1 : P.sparkLifeEnd);
   gl.uniform1f(pr.u.uLifeJit, familyOf(P.type) === 'rise' || P.sparkLifeJit == null ? 0.45 : P.sparkLifeJit / 100);
-  gl.uniform1f(pr.u.uK, P.sparkDrag); gl.uniform1f(pr.u.uG, G * P.sparkGrav); gl.uniform1f(pr.u.uT0, se.T0); gl.uniform1f(pr.u.uCool, P.cooling);
+  gl.uniform1f(pr.u.uK, P.sparkDrag); gl.uniform1f(pr.u.uG, G * P.sparkGrav); gl.uniform1f(pr.u.uT0, se.T0); gl.uniform1f(pr.u.uCool, P.cooling); if (pr.u.uCoolAbs) gl.uniform1f(pr.u.uCoolAbs, +P.coolMode === 1 && familyOf(P.type) === 'aerial' ? 1 : 0);
   gl.uniform1f(pr.u.uTwk, P.twinkle); gl.uniform1f(pr.u.uBright, P.sparkBright); gl.uniform1f(pr.u.uSize, P.sparkSize);
   gl.uniform1f(pr.u.uGlit, P.glitter || 0); gl.uniform1f(pr.u.uGlitD, P.glitterDelay || 0.25);
   gl.uniform1f(pr.u.uEmb, P.emberFrac || 0); gl.uniform1f(pr.u.uEmbL, P.emberLife || 3); gl.uniform1f(pr.u.uEmbB, P.emberBright || 0.1); gl.uniform1f(pr.u.uEmbF, P.emberFollow || 0); gl.uniform1f(pr.u.uEmbS, P.emberSize || 1);

@@ -57,7 +57,7 @@ function drawFrameSamples40(P, pl, R, t, view, ppm, ppmY = ppm, range = null) {
   return [a,b];
 }
 function frameFade40(pl, t, noFade = false) {
-  return pl.loop || noFade ? 1 : clamp(((pl.fadeEnd==null?(pl.t0||0)+pl.duration:pl.fadeEnd)-t)/.3,0,1);
+  return pl.loop || noFade || pl.noEndFade ? 1 : clamp(((pl.fadeEnd==null?(pl.t0||0)+pl.duration:pl.fadeEnd)-t)/.3,0,1);
 }
 function packCell40(P, source, target, fade = 1) {
   const q=qualityOf(P), pr=PR.pack;

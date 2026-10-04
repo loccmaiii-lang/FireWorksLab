@@ -1,11 +1,12 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.3.8';
+const VERSION = '4.4.0';     // 4.4.0 包含 4.3.8（对话框17 可选渐变亮核与曝光亮部保留）
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
-const OUTPUT_VER = { master: '4.3.3', emitset: '4.3', riseLoop: '4.3', trail: '4.3', unit: '4.3', loop: '4.3' };     // 4.3.3：大面片开花闪光改成柔光（开头几帧变了）→ master 4.3.3；4.3：所有产物都要用 4.3 重新导出（只剩一个渲染核；固定取景用 Pivot 对齐爆点；碰边放大；单束补第二段、随机、风；尾缀末段爆亮颜色键）
+const OUTPUT_VER = { master: '4.3.3', emitset: '4.4',     // 4.4：升空尾缀（循环层 + 粒子）循环层 / 消散面片同样全长（不再 Size By Life 压短）、循环层出场淡入
+   riseLoop: '4.3', trail: '4.3', unit: '4.3', loop: '4.3' };     // 4.3.3：大面片开花闪光改成柔光（开头几帧变了）→ master 4.3.3；4.3：所有产物都要用 4.3 重新导出（只剩一个渲染核；固定取景用 Pivot 对齐爆点；碰边放大；单束补第二段、随机、风；尾缀末段爆亮颜色键）
 // 家族：aerial = 空中开花（大面片或单元序列）；rise = 上升段；ground = 地面循环类
 const TYPE_INFO = {
   blank: ['空白发射器', 'Blank', 'aerial'],
@@ -59,6 +60,7 @@ const BASE = {
   mods: [],     // 空白发射器加了哪些模块（别的花型不用）
   duration: 3.2, seed: 7, stars: 150, burstR0: 0, v0: 150, vt: 18, grav: 1, speedJit: 3, dirJit: 1.5,
   burn: 2.5, burnJit: 12, fade: 0.2, lastFlare: 0.35, flash: 1, flashSize: 1,
+  endMode: 'fade', coolMode: 0,     // 4.4：结尾 / 火花冷却的开关，缺省 = 以前的做法（现有效果、导出都不变）
   headSize: 1.0, headBright: 1, flicker: 0.25,
   sparkRate: 95, sparkRateEnd: 1, sparkStop: 0, sparkStart: 0, sparkRamp: 0, sparkRampJit: 30, sparkLife: 0.55, sparkLifeEnd: 1, sparkLifeJit: 45, sparkSize: 0.35, sparkSpread: 2.5, sparkInherit: 0.2, sparkDrag: 2.2, sparkGrav: 1,
   T0: 2050, cooling: 0.42, sparkBright: 1, twinkle: 0.6,
@@ -348,6 +350,8 @@ const SCHEMA = [
   ] },
   { sec: '开花与燃烧', show: isAir, items: [
     ['duration', '序列时长', 's', 0.8, 16, 0.05],
+    { sel: 'endMode', label: '结尾', options: [['fade', '最后 0.3 s 整体淡出（旧）'], ['natural', '不淡出，等火花自然灭完']] },
+    { info: 'endInfo' },
     ['seed', '随机种子', '', 1, 999, 1],
     ['stars', '星数', '颗', 4, 3000, 1],
     ['burstR0', '起始半径', 'm', 0, 300, 1],
@@ -428,6 +432,7 @@ const SCHEMA = [
     ['sparkGrav', '火花下坠', '×', 0, 3, 0.05],
     ['T0', '初始温度', 'K', 1500, 2800, 10],
     ['cooling', '冷却速度', '', 0, 0.8, 0.01],
+    { sel: 'coolMode', label: '冷却方式', show: isAir, options: [[0, '按各自寿命（旧：线上随机灭）'], [1, '按实际时间（老的先暗）']] },
     ['sparkBright', '火花亮度', '×', 0, 3, 0.05],
     ['emberFrac', '余烬长尾比例（锦冠木炭余烬 / 受光烟迹：暗而长的轨迹线，0 关）', '', 0, 0.9, 0.01, isAir],
     ['emberLife', '余烬长尾寿命', 's', 0.3, 8, 0.05, P => isAir(P) && P.emberFrac > 0],

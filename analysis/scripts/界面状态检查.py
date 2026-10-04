@@ -13,8 +13,9 @@
   A5 切到别的效果：没保存的改动自动存成草稿，回来能选
   A6 切走再回来：带改动的状态不能被当成 AI 版基准（要么回到 AI 版，要么亮「参数已变」）
   A7 新建效果：新建 → 加层 → 改名 → 复制 → 勾同一批星 → 保存 → 刷新 → 打开：层、名字、参数、同一批星都在
-  P1 参数栏改版（用户 10-02 19:41 #3：参数和备注太多、没有分类、难找）：6 大类（运动 / 星头 / 尾迹 / 特效 / 环境 / 输出），每一节都归进一类；
-     参数名短（≤ 12 字），长说明进悬停提示 + 底部说明条；节说明默认收起；搜索；「只看改过的」；多层时每一层的参数也一样
+  P1 4.4 参数面板按发射器分（用户 10-04 16:17 / 17:13）：发射器标签（效果 / 星 / 火花 / … / 输出 / 全部），打开菊默认只看「星」（≤ 30 项）；
+     每一行都在发射器表里、没有「更多」；星的寿命叫「燃烧时间」；搜索 / 只看改过的跨发射器、标签上标改过几项；点标签换页、记住；
+     说明条点参数名才换（鼠标移过去不换）；多层时每一层的参数也一样
   U1 撤销 / 重做：单层改两步 → Ctrl+Z 两次一步步回去 → Ctrl+Shift+Z 重做；多层改一层 → 撤销只回这一层、只重烘这一层、贴图和参数一致；
      切到别的效果后撤销不会改到新效果；资产栏有撤销 / 重做按钮
   B1 滑杆和拖动同一套规则（走查 B10–B12）：滑杆改燃烧，序列时长跟着变（和拖燃烧结束一样）；滑杆改引线层的「火花停」，接力的锦层点火跟着动；
@@ -31,10 +32,12 @@
      改「火花起势」火花生成曲线的上升变慢、旧曲线留作对照；改「渐隐」亮度曲线末段变；悬停参数高亮对应曲线；开关、悬停都不触发烘焙；多层没选层时给提示
   S1 4.3.2 收尾：子花那几个「负数 = 默认」的参数是「用默认」勾选（H16）；只剩 GPU 模拟内核、存档 / 旧母版的 CPU 换成 GPU（H12）；物理尾缀过顶后按下落段算、开花晚于到顶有提示（E11③ / H15②）
   S2 4.3.3 新建效果：打开就在第 1 层的参数上；加的层是这个效果自己的一份，改了不动原条目；保存再打开还在；不写「AI 版」
-  S3 4.3.4 后：打开菊 / 空白发射器 / 升空尾缀，第一眼的参数、尾缀各层的火花模块、空白发射器的「+ 火花」看得见（分组不能默认全收起）
-  N1 4.3 新参数面板（预览开关）：默认关 = 原样；打开后按模块排、名字来自参数命名表、英文名开关、看得见的参数一个不少、
-     「××随机」收在本体参数的「随机」下（点开才出、记住）、不起作用的参数变灰写原因（菊：点火时刻随机；牡丹：火花寿命）、
-     搜索认新名 / 旧名 / 英文名、说明条第一行「English · 中文 — 说明」；关掉回到原样
+  S3 4.4：打开菊 / 空白发射器 / 升空尾缀，默认页的参数、各发射器标签（星 / 火花 / 尾缀各层…）、空白发射器的「+ 火花」看得见；模块开合、选的标签记得住
+  N1 4.4 面板：发射器 → 模块的顺序、短名来自发射器表、英文名开关、「××随机」收在本体参数的「随机」下（点开才出、记住）、
+     不起作用的参数变灰写原因（菊：点火延迟随机；牡丹：火花寿命）、搜索认短名 / 全名 / 英文名 / 模块名、说明条第一行「English · 中文 — 说明」、
+     爆裂星的「爆裂」发射器、尾缀档位在「效果 › 规格」、空白发射器「+ 火花」/「去掉」
+  S4 4.4：旧搜索 / 只看改过的时点发射器标签 = 清掉筛选、换到那一页，不改配方；「全部」把发射器都排出来
+  E1 4.4：「结尾」「冷却方式」开关缺省 = 旧做法；结尾选「不淡出」序列时长加长到火花灭完、帧计划不再整体淡出
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -329,12 +332,15 @@ async def l1(p, b):
 # 4.3：只有一个面板（没有新旧开关）。「看得见」= 没被藏、所在的模块 / 「更多」都是打开的（关着的 <details> 里的行 offsetParent 也不是 null，不能用它判断）
 P1_SHOWN = r"""const shown = el => { if (!el || el.hidden || el.closest('[hidden]')) return false; for (let d = el.parentElement && el.parentElement.closest('details'); d; d = d.parentElement && d.parentElement.closest('details')) if (!d.open) return false; return true; };"""
 P1_STATE = r"""(() => { const host = $('#params'); """ + P1_SHOWN + r"""
-  const grps = [...host.querySelectorAll('details.pgrp')].filter(g => !g.hidden), secs = [...host.querySelectorAll('details.sec')];
-  const rows = panelRows.filter(([r]) => r._lab != null && shown(r)), labs = rows.map(([r, it]) => ({ k: Array.isArray(it) ? it[0] : it.sel || it.text, t: r._lab }));
-  const more = [...host.querySelectorAll('details.mod')].filter(d => !d.hidden && d._more && !d._more.hidden).map(d => ({ m: d._mod, open: d._more.open, txt: d._more.querySelector('summary').textContent, n: [...d._more.children].filter(c => c.tagName !== 'SUMMARY' && !c.hidden).length }));
+  const secs = [...host.querySelectorAll('details.sec')];
+  const rows = panelRows.filter(([r]) => r._lab != null && shown(r)), labs = rows.map(([r, it]) => ({ k: Array.isArray(it) ? it[0] : it.sel || it.text, t: r._lab, e: r._x && r._x.e }));
+  const on = host.querySelector('.etabs .on');
   return { tools: !!host.querySelector('.ptools input[type=search]') && !!host.querySelector('.ptools input[type=checkbox]'), toggle: !!host.querySelector('[data-v43]'),
-    groups: grps.map(g => g.dataset.g), orphan: secs.filter(d => !d.closest('.pgrp')).map(d => d.querySelector('summary').textContent),
-    hintsShown: [...host.querySelectorAll('details.sec > p.hint')].filter(p => shown(p)).length, more,
+    tabs: [...host.querySelectorAll('.etabs [data-e]')].filter(b => !b.hidden).map(b => b.dataset.e), on: on ? on.dataset.e : '',
+    egrps: [...host.querySelectorAll('section.egrp')].filter(g => !g.hidden).map(g => g.dataset.g),
+    orphan: secs.filter(d => !d.closest('section.egrp')).map(d => d.querySelector('summary').textContent),
+    unmapped: panelRows.filter(([r]) => r._x && !(r._x.i < 9999)).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.text),
+    more: host.querySelectorAll('details.more').length, hintsShown: [...host.querySelectorAll('details.sec > p.hint')].filter(p => shown(p)).length,
     labs, long: labs.filter(x => x.t.length > 12).map(x => x.t), noName: panelRows.filter(([r, it]) => r._lab != null && !r._nm).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.text) }; })()"""
 P1_SEARCH = r"""(q) => { const i = $('#params .ptools input[type=search]'); i.value = q; i.dispatchEvent(new Event('input', { bubbles: true })); """ + P1_SHOWN + r"""
   return panelRows.filter(([r, it]) => Array.isArray(it) && shown(r)).map(([r, it]) => it[0]); }"""
@@ -343,43 +349,56 @@ P1_CHANGED = r"""(on) => { const c = $('#params .ptools input[type=checkbox]'); 
 
 
 async def p1(pg):
+    """4.4 参数面板：发射器标签（效果 / 星 / 火花 / … / 输出 / 全部）一次看一个；每一行都在发射器表里；没有「更多」；搜索 / 只看改过的跨发射器"""
     bad, info = [], {}
-    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    await pg.evaluate("(() => { store.set('pEmitTab', {}); pview.ready = false; pviewInit(); window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
     st = await pg.evaluate(P1_STATE)
+    info['标签'] = st['tabs']; info['默认'] = st['on']
     if not st['tools']: bad.append('没有搜索框 / 「只看改过的」')
     if st['toggle']: bad.append('还有新旧面板开关（4.3 只有一个面板）')
-    if st['groups'][:3] != ['发射', '运动', '外观'] or st['groups'][-1:] != ['输出'] or '层' in st['groups']: bad.append(f"大类不对：{st['groups']}")
-    if st['orphan']: bad.append(f"没归类的节：{st['orphan'][:4]}")
+    if st['tabs'][:3] != ['效果', '星', '火花'] or st['tabs'][-2:] != ['输出', '全部']: bad.append(f"发射器标签不对：{st['tabs']}")
+    if st['on'] != '星' or st['egrps'] != ['星']: bad.append(f"打开菊默认不是只看「星」：标签 {st['on']}，显示 {st['egrps']}")
+    if st['orphan']: bad.append(f"没归进发射器的模块：{st['orphan'][:4]}")
+    if st['unmapped']: bad.append(f"发射器表里没有的参数：{st['unmapped'][:5]}")
+    if st['more']: bad.append(f"还有「更多」{st['more']} 处（4.4 不再藏参数）")
     if st['hintsShown']: bad.append(f"模块说明默认展开了 {st['hintsShown']} 段")
     if st['long']: bad.append(f"参数名太长 {len(st['long'])} 个：{st['long'][:3]}")
     if st['noName']: bad.append(f"参数没有命名表里的名字：{st['noName'][:5]}")
-    # 第一眼 ≤ 30 项（需求重梳 2026-10-03 第 3 条）；其余在模块里的「更多 N 项」，默认收起
     info['第一眼参数'] = len(st['labs']); info['参数名平均字数'] = round(sum(len(x['t']) for x in st['labs']) / max(1, len(st['labs'])), 1)
-    if len(st['labs']) > 30: bad.append(f"打开菊第一眼就有 {len(st['labs'])} 项（要 ≤ 30）")
-    sp = next((m for m in st['more'] if m['m'] == '火花'), None); info['火花 更多'] = sp
-    if not sp or sp['open'] or not sp['n'] or sp['txt'] != f"更多 {sp['n']} 项": bad.append(f'火花模块的「更多」不对：{sp}')
-    if any(x['k'] == 'sparkRateEnd' for x in st['labs']): bad.append('「末段生成率」（更多）第一眼就看得到')
+    if len(st['labs']) > 30: bad.append(f"打开菊「星」一页就有 {len(st['labs'])} 项（要 ≤ 30）")
+    if any(x['e'] != '星' for x in st['labs']): bad.append(f"「星」一页里有别的发射器的参数：{[x for x in st['labs'] if x['e'] != '星'][:3]}")
+    burn = next((x['t'] for x in st['labs'] if x['k'] == 'burn'), None); info['星的寿命叫'] = burn
+    if burn != '燃烧时间': bad.append(f'星的寿命显示「{burn}」（用户 10-04 改回「燃烧时间」）')
     if not bad:
         r = await pg.evaluate(P1_SEARCH, '粗细')
-        if 'tailWidth' not in r or 'stars' in r: bad.append(f'搜「粗细」结果不对：{r[:6]}')
+        if 'tailWidth' not in r or 'stars' in r: bad.append(f'搜「粗细」（在火花发射器里，当前看的是星）结果不对：{r[:6]}')
         info['搜粗细'] = r
         r = await pg.evaluate(P1_SEARCH, '末段生成')
-        if 'sparkRateEnd' not in r: bad.append(f'搜「末段生成」没把「更多」里的末段生成率翻出来：{r[:6]}')
+        if 'sparkRateEnd' not in r: bad.append(f'搜「末段生成」没找到末段生成率：{r[:6]}')
         r = await pg.evaluate(P1_SEARCH, '')
-        if 'stars' not in r or 'sparkRateEnd' in r: bad.append(f'清空搜索后没回到原样：{r[:8]}')
+        if 'stars' not in r or 'sparkRateEnd' in r: bad.append(f'清空搜索后没回到「星」一页：{r[:8]}')
         r = await pg.evaluate(P1_CHANGED, True)
         if r: bad.append(f'没改过任何参数，「只看改过的」还显示 {r[:4]}')
         await pg.evaluate("(() => { state.P.sparkRateEnd = (+state.P.sparkRateEnd || 0) + 0.2; onParam(); return 0; })()"); await idle(pg)
         r = await pg.evaluate(P1_CHANGED, True)
-        if r != ['sparkRateEnd']: bad.append(f'改了末段生成率后「只看改过的」显示 {r[:4]}（应为 sparkRateEnd，在「更多」里也要翻出来）')
+        if r != ['sparkRateEnd']: bad.append(f'改了末段生成率后「只看改过的」显示 {r[:4]}（应为 sparkRateEnd，跨发射器也要翻出来）')
         await pg.evaluate(P1_CHANGED, False)
-        h = await pg.evaluate("(() => { panelHelp(panelRows.find(([r, it]) => it[0] === 'tailWidth')[0]); return $('#pHelp').textContent; })()")
-        if '横向散开' not in h: bad.append(f'「尾迹粗细」底部说明条没出完整说明：「{h[:40]}」')
+        n = await pg.evaluate("(+(document.querySelector('#params .etabs [data-e=\"火花\"] .et-n') || {}).textContent || 0)")
+        if n != 1: bad.append(f'「火花」标签上没标改过 1 项（{n}）')
+        # 点标签换发射器
+        r = await pg.evaluate("(() => { document.querySelector('#params .etabs [data-e=\"火花\"]').click(); " + P1_SHOWN + " return { on: document.querySelector('#params .etabs .on').dataset.e, rows: panelRows.filter(([r, it]) => Array.isArray(it) && shown(r)).map(([r, it]) => it[0]), saved: store.get('pEmitTab', {}).aerial }; })()")
+        info['点火花'] = {'on': r['on'], 'n': len(r['rows']), 'saved': r['saved']}
+        if r['on'] != '火花' or 'tailWidth' not in r['rows'] or 'stars' in r['rows'] or r['saved'] != '火花': bad.append(f'点「火花」标签不对：{info["点火花"]}')
+        # 说明条：点参数名才换，鼠标移过去不换
+        h0 = await pg.evaluate("(() => { panelHelp(null); const row = panelRows.find(([r, it]) => it[0] === 'tailWidth')[0]; row.dispatchEvent(new MouseEvent('mouseenter')); const a = $('#pHelp').textContent; row.querySelector('.k').click(); return [a, $('#pHelp').textContent]; })()")
+        if '横向散开' in h0[0]: bad.append('鼠标移到参数上说明条就换了（应点参数名才换）')
+        if '横向散开' not in h0[1]: bad.append(f'点「粗细」参数名，说明条没出完整说明：「{h0[1][:40]}」')
+        await pg.evaluate("selectEmitTab('星'); 0")
     if not bad:     # 多层效果：选中某一层时右栏也是同一套
         await open_effect(pg, 'hiki_nishiki')
         await pg.evaluate("(() => { selectComboLayer(1); return 0; })()"); await idle(pg)
         st = await pg.evaluate(P1_STATE)
-        if not st['tools'] or st['orphan'] or not st['groups'] or st['noName']: bad.append(f"多层效果里第 2 层的面板不对：工具 {st['tools']}、没归类 {st['orphan'][:3]}、没名字 {st['noName'][:3]}")
+        if not st['tools'] or st['orphan'] or not st['egrps'] or st['noName']: bad.append(f"多层效果里第 2 层的面板不对：工具 {st['tools']}、没归类 {st['orphan'][:3]}、没名字 {st['noName'][:3]}")
     return not bad, '；'.join(bad) or json.dumps(info, ensure_ascii=False)
 
 
@@ -754,86 +773,80 @@ async def c1(pg):
 
 
 async def n1(pg):
-    """4.3 面板：模块顺序、命名表的名字、随机折叠、不起作用变灰、说明条、搜索（新名 / 英文名；旧名不再认）、英文名开关、烟花特性开了才展开"""
+    """4.4 面板：发射器 → 模块的顺序、短名来自发射器表、随机折叠、不起作用变灰、说明条、搜索（短名 / 全名 / 英文名 / 模块名）、英文名开关、空白发射器加 / 去掉"""
     bad, info = [], {}
     await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    await pg.evaluate("selectEmitTab('全部'); 0")
     lab = "(k) => { const x = panelRows.find(([r, it]) => (Array.isArray(it) ? it[0] : it.sel) === k); return x ? x[0]._lab : null; }"
-    on = await pg.evaluate("({ groups: [...document.querySelectorAll('#params details.pgrp')].filter(d => !d.hidden).map(d => d.dataset.g), mods: [...document.querySelectorAll('#params details.mod')].filter(d => !d.hidden).map(d => d._mod), burn: (%s)('burn'), v0: (%s)('v0'), fx: (document.querySelector('#params details.mod[data-x]') || [...document.querySelectorAll('#params details.mod')].find(d => d._mod === '烟花特性') || {}).open })" % (lab, lab))
-    info['打开'] = on
-    # 模块按 Cascade 发射器从上到下（analysis/命名/模块表.json）：发射 → 运动 → 外观 → 输出
-    if on['groups'][:3] != ['发射', '运动', '外观'] or '寿命' not in on['mods'] or '火花' not in on['mods'] or '阻力重力' not in on['mods']: bad.append(f"没按模块排：{on['groups']} {on['mods']}")
-    for old in ('受力', '外观', '尾迹'):
-        if old in on['mods']: bad.append(f'还有旧模块「{old}」')
-    want = await pg.evaluate("[pnameOf('开花与燃烧', 'burn').cn, pnameOf('开花与燃烧', 'v0').cn, pnameOf('开花与燃烧', 'burn').en]")
-    if on['burn'] != want[0] or on['v0'] != want[1]: bad.append(f"名字不是命名表里的：{on['burn']} / {on['v0']}（表：{want[:2]}）")
-    if on['fx']: bad.append('菊没开任何烟花特性，「烟花特性」模块却默认展开')
+    on = await pg.evaluate("({ emit: [...document.querySelectorAll('#params section.egrp')].filter(d => !d.hidden).map(d => d.dataset.g), mods: [...document.querySelectorAll('#params details.mod')].filter(d => !d.hidden).map(d => d._key), burn: (%s)('burn'), v0: (%s)('v0') })" % (lab, lab))
+    info['打开'] = {'emit': on['emit']}
+    if on['emit'][:3] != ['效果', '星', '火花'] or on['emit'][-1:] != ['输出']: bad.append(f"发射器顺序不对：{on['emit']}")
+    for k in ('星›生成', '星›初速', '星›受力', '星›寿命', '火花›生成', '火花›寿命', '火花›受力'):
+        if k not in on['mods']: bad.append(f'没有模块「{k}」')
+    if on['mods'].index('星›生成') > on['mods'].index('星›寿命'): bad.append('星的模块顺序不对（生成应在寿命前）')
+    for old in ('阻力重力', '烟花特性', '尾迹外形'):
+        if any(m.endswith('›' + old) for m in on['mods']): bad.append(f'还有旧模块「{old}」')
+    want = await pg.evaluate("[PEMIT.P[pnameOf('开花与燃烧', 'burn').id][2], PEMIT.P[pnameOf('开花与燃烧', 'v0').id][2], pnameOf('开花与燃烧', 'burn').en]")
+    if on['burn'] != want[0] or on['v0'] != want[1] or want[0] != '燃烧时间': bad.append(f"名字不是发射器表里的：{on['burn']} / {on['v0']}（表：{want[:2]}）")
     folded = await pg.evaluate("panelRows.filter(([r]) => r._randOf).map(([r, it]) => it[0])"); info['收起的随机'] = folded
-    if 'burnJit' not in folded or 'speedJit' not in folded: bad.append(f'寿命随机 / 初速随机没收到本体下面：{folded}')
-    # 随机：点开 / 收起
+    if 'burnJit' not in folded or 'speedJit' not in folded: bad.append(f'燃烧时间随机 / 初速随机没收到本体下面：{folded}')
     r = await pg.evaluate("(() => { const b = panelRows.find(([r, it]) => it[0] === 'burn')[0], j = panelRows.find(([r, it]) => it[0] === 'burnJit')[0]; const h0 = j.hidden; b.querySelector('.rndb').click(); const h1 = j.hidden, next = b.nextElementSibling === j; return { h0, h1, next, txt: b.querySelector('.rndb').textContent, stored: !!store.get('pRandOpen', {}).burn }; })()")
     info['随机'] = r
-    if not r['h0'] or r['h1'] or not r['next'] or not r['stored']: bad.append(f'寿命随机折叠不对：{r}')
-    # 不起作用：菊没有点火延迟 → 点火延迟随机变灰写原因
+    if not r['h0'] or r['h1'] or not r['next'] or not r['stored']: bad.append(f'燃烧时间随机折叠不对：{r}')
     r = await pg.evaluate("(() => { const b = panelRows.find(([r, it]) => it[0] === 'ignDelay')[0]; if (b.querySelector('.rndb') && !pview.ropen.ignDelay) b.querySelector('.rndb').click(); const j = panelRows.find(([r, it]) => it[0] === 'ignJit')[0]; panelHelp(j); return { inert: j.classList.contains('inert'), why: j._inert, help: $('#pHelp').textContent }; })()")
     info['菊 点火延迟随机'] = {k: r[k] for k in ('inert', 'why')}
     if not r['inert'] or '点火延迟' not in (r['why'] or '') or '现在不起作用' not in r['help']: bad.append(f'菊的点火延迟随机没标不起作用：{r}')
     if 'Ignition' not in r['help'] or '·' not in r['help']: bad.append('说明条第一行不是「English · 中文」')
-    # 4.3 新加的不起作用：前段亮度 = 1 时「前段结束」变灰
     r = await pg.evaluate("(() => { const x = panelRows.find(([r, it]) => it[0] === 'headDimUntil'); return x ? { inert: x[0].classList.contains('inert'), why: x[0]._inert, dim: state.P.headDim } : null; })()")
     info['菊 前段结束'] = r
     if not r or not r['inert'] or '前段亮度' not in (r['why'] or ''): bad.append(f'前段亮度 = 1 时「前段结束」没标不起作用：{r}')
-    # 说明条：寿命
     h = await pg.evaluate("(() => { panelHelp(panelRows.find(([r, it]) => it[0] === 'burn')[0]); return $('#pHelp').textContent; })()")
-    if not h.startswith(want[2] + ' · ' + want[0]): bad.append(f'说明条第一行：{h[:40]}')
-    for w in ('调大', 'UE'):
+    full = await pg.evaluate("pnameOf('开花与燃烧', 'burn').cn")
+    if not h.startswith(want[2] + ' · ' + full): bad.append(f'说明条第一行：{h[:40]}')
+    for w in ('调大', 'UE', '星 › 寿命'):
         if w not in h: bad.append(f'说明条没有「{w}」')
-    if '旧名' in h: bad.append('说明条还写「旧名」')
-    # 搜索：英文名、新名字找得到；旧名字（燃烧时间）不再认
     SR = "(q) => { const i = $('#params .ptools input[type=search]'); i.value = q; i.dispatchEvent(new Event('input')); return panelRows.filter(([r]) => !r.hidden).map(([r, it]) => it[0]); }"
-    for q, k in (('Lifetime', 'burn'), ('寿命', 'burn'), ('Spawn Burst', 'stars')):
+    for q, k in (('Lifetime', 'burn'), ('燃烧时间', 'burn'), ('寿命', 'sparkLife'), ('Spawn Burst', 'stars')):
         r = await pg.evaluate(SR, q)
         if k not in r: bad.append(f'搜「{q}」找不到 {k}（{r[:6]}）')
-    r = await pg.evaluate(SR, '燃烧时间')
-    if 'burn' in r: bad.append('搜旧名「燃烧时间」还能找到寿命（4.3 不认旧名）')
     await pg.evaluate("(() => { const i = $('#params .ptools input[type=search]'); i.value = ''; i.dispatchEvent(new Event('input')); return 0; })()")
-    # 英文名开关
     await pg.evaluate("document.querySelector('#params [data-en]').click(); 0"); await pg.wait_for_timeout(200)
     en = await pg.evaluate("(%s)('burn')" % lab)
-    if en != want[2]: bad.append(f'英文名开关：寿命显示「{en}」')
+    if en != want[2]: bad.append(f'英文名开关：燃烧时间显示「{en}」')
     await pg.evaluate("document.querySelector('#params [data-en]').click(); 0")
     # 牡丹：没有火花 → 火花寿命变灰
     await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('botan')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
     r = await pg.evaluate("(() => { const x = panelRows.find(([r, it]) => it[0] === 'sparkLife'); return x ? { inert: x[0].classList.contains('inert'), why: x[0]._inert, rate: state.P.sparkRate } : null; })()")
     info['牡丹 火花寿命'] = r
     if not r or not r['inert']: bad.append(f'牡丹（火花 0）的火花寿命没标不起作用：{r}')
-    # 爆裂星：烟花特性一打开就展开，爆裂范围 / 速度在里面
+    # 爆裂星：「爆裂」发射器里有数量 / 延迟 / 范围 / 速度
     await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('crackle')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
-    r = await pg.evaluate("(() => { const d = [...document.querySelectorAll('#params details.mod')].find(d => d._mod === '烟花特性'); const has = k => { const x = panelRows.find(([r, it]) => it[0] === k); return !!x && !x[0].hidden && d.contains(x[0]); }; return { open: !!d && d.open, R: has('crackleR'), V: has('crackleV') }; })()")
-    info['爆裂星 烟花特性'] = r
-    if not r['open'] or not r['R'] or not r['V']: bad.append(f'爆裂星的烟花特性没自动展开 / 没有爆裂范围、爆裂速度：{r}')
-    # 升空尾缀：一个入口，档位在「发射器」里
+    r = await pg.evaluate("(() => { selectEmitTab('爆裂'); const g = document.querySelector('#params section.egrp[data-g=\"爆裂\"]'); const has = k => { const x = panelRows.find(([r, it]) => it[0] === k); return !!x && !x[0].hidden && !!g && g.contains(x[0]); }; return { shown: !!g && !g.hidden, N: has('crackle'), R: has('crackleR'), V: has('crackleV') }; })()")
+    info['爆裂星 爆裂'] = r
+    if not all(r.values()): bad.append(f'爆裂星的「爆裂」发射器不对：{r}')
+    # 升空尾缀：一个入口，档位在「效果 › 规格」里
     await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('trailM')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
-    r = await pg.evaluate("(() => { const x = panelRows.find(([r, it]) => it.sel === '_trailTier'); return x ? { mod: x[0].closest('details.mod') && x[0].closest('details.mod')._mod, lab: x[0]._lab, hidden: x[0].hidden, mods: [...document.querySelectorAll('#params details.mod')].filter(d => !d.hidden).map(d => d._mod) } : null; })()")
+    r = await pg.evaluate("(() => { selectEmitTab('全部'); const x = panelRows.find(([r, it]) => it.sel === '_trailTier'); return x ? { mod: x[0].closest('details.mod') && x[0].closest('details.mod')._key, lab: x[0]._lab, hidden: x[0].hidden, emit: [...document.querySelectorAll('#params section.egrp')].filter(d => !d.hidden).map(d => d.dataset.g) } : null; })()")
     info['尾缀档位'] = r
-    if not r or r['mod'] != '发射器' or r['hidden'] or not r['lab']: bad.append(f'升空尾缀的档位不在「发射器」里：{r}')
-    elif any(m in r['mods'] for m in ('受力', '外观', '尾迹')): bad.append(f"升空尾缀还有旧模块：{r['mods']}")
-    # 空白发射器（需求重梳 2026-10-03 第 6 条）：只有星；「+ 火花」加上火花模块（生成率按菊的模板）、「去掉」回到 0
-    MODS = "(() => ({ mods: [...document.querySelectorAll('#params details.mod')].filter(d => !d.hidden).map(d => d._mod), add: [...document.querySelectorAll('#params [data-addmod]')].map(b => b.dataset.addmod), rate: state.P.sparkRate, pm: state.P.mods }))()"
+    if not r or r['mod'] != '效果›规格' or r['hidden'] or not r['lab']: bad.append(f'升空尾缀的档位不在「效果 › 规格」里：{r}')
+    elif not all(e in r['emit'] for e in ('星头', '白热火花', '金火花', '橙色火花', '丝状火花')): bad.append(f"升空尾缀的发射器不全：{r['emit']}")
+    # 空白发射器：只有星；「+ 火花」加上火花发射器（生成率按菊的模板）、「去掉」回到 0
+    MODS = "(() => ({ tabs: [...document.querySelectorAll('#params .etabs [data-e]')].filter(b => !b.hidden).map(b => b.dataset.e), add: [...document.querySelectorAll('#params [data-addmod]')].map(b => b.dataset.addmod), rm: [...document.querySelectorAll('#params [data-rmmod]')].map(b => b.dataset.rmmod), rate: state.P.sparkRate, pm: state.P.mods }))()"
     await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('blank')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
     r0 = await pg.evaluate(MODS)
     await pg.evaluate("document.querySelector('#params [data-addmod=\"火花\"]').click(); 0"); await idle(pg)
     r1 = await pg.evaluate(MODS)
-    await pg.evaluate("[...document.querySelectorAll('#params details.mod')].find(d => d._mod === '火花').querySelector('.modrm').click(); 0"); await idle(pg)
+    await pg.evaluate("document.querySelector('#params [data-rmmod=\"火花\"]').click(); 0"); await idle(pg)
     r2 = await pg.evaluate(MODS)
     info['空白发射器'] = {'打开': r0, '加火花': r1, '去掉': r2}
-    if any(m in r0['mods'] for m in ('火花', '尾迹外形', '烟花特性')) or r0['rate'] != 0 or sorted(r0['add']) != sorted(['火花', '尾迹外形', '烟花特性']) or '星头' not in r0['mods']: bad.append(f'空白发射器打开时不对：{r0}')
-    if '火花' not in r1['mods'] or not r1['rate'] or '火花' in r1['add']: bad.append(f'加「火花」不对：{r1}')
-    if '火花' in r2['mods'] or r2['rate'] != 0 or '火花' not in r2['add']: bad.append(f'去掉「火花」不对：{r2}')
+    if '火花' in r0['tabs'] or r0['rate'] != 0 or sorted(r0['add']) != sorted(['火花', '尾迹外形', '烟花特性']) or '星' not in r0['tabs']: bad.append(f'空白发射器打开时不对：{r0}')
+    if '火花' not in r1['tabs'] or not r1['rate'] or '火花' in r1['add'] or '火花' not in r1['rm']: bad.append(f'加「火花」不对：{r1}')
+    if '火花' in r2['tabs'] or r2['rate'] != 0 or '火花' not in r2['add']: bad.append(f'去掉「火花」不对：{r2}')
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
 
 
 # N2（4.3 清理清单 B1 / B2）：每个花型的每个参数都在命名表里有名字；命名表的名字、说明和模块说明里不再出现词汇表「不用」的词
-OLD_WORDS = ['炭头', '火星', '火粉', '光丝', '长尾', '小割', '离散', '燃烧时间', '炸开', '尾巴', '旧名']
+OLD_WORDS = ['炭头', '火星', '火粉', '光丝', '长尾', '小割', '离散', '炸开', '尾巴', '旧名']     # 「燃烧时间」10-04 用户改回，不再算旧词
 N2_SCAN = r"""(OLD) => { const miss = {}, hits = [];
   for (const t of Object.keys(TYPES)) { const P = defaultsFor(t).P;
     for (const sec of SCHEMA) { if (sec.show && !sec.show(P)) continue;
@@ -936,89 +949,66 @@ async def s2(p, b):
 
 
 S3_JS = r"""async () => {
-  // 4.3.4 后：默认展开时参数、模块应可访问；此处检查祖先开合，实际视口定位见 S4。
+  // 4.4：打开菊 / 空白 / 升空尾缀，默认那一页的参数看得见；各发射器标签点了就看得见它的模块；模块收起和选的标签重建面板后记得住
   const out = {}, bad = [];
-  // 收起的 <details> 里的东西 offsetParent 不一定是 null（新版 Chrome 用 content-visibility 藏），按祖先 details 是否展开判断
   const shown = el => { if (!el || !el.offsetParent) return false; for (let a = el.parentElement, c = el; a; c = a, a = a.parentElement) { if (a.hidden) return false; if (a.tagName === 'DETAILS' && !a.open && c.tagName !== 'SUMMARY') return false; } return true; };
   const vis = () => [...document.querySelectorAll('#params .sl')].filter(shown).length;
-  const modVis = m => [...document.querySelectorAll('#params details.mod')].some(d => d._mod === m && shown(d.querySelector('summary')));
-  for (const [t, need, mods] of [['kiku', 15, ['星头', '火花', '初速']], ['blank', 8, ['星头', '初速']], ['trailM', 10, ['白热火花', '金火花', '橙色火花', '丝状火花']]]) {
+  const tabOk = async e => { const b = document.querySelector(`#params .etabs [data-e="${e}"]`); if (!b || b.hidden) return false; b.click(); await new Promise(r => setTimeout(r, 30));
+    const g = document.querySelector(`#params section.egrp[data-g="${e}"]`); return !!g && !g.hidden && [...g.querySelectorAll(':scope > details.mod')].some(d => shown(d.querySelector('summary'))) && [...g.querySelectorAll('.sl')].some(shown); };
+  for (const [t, need, emits] of [['kiku', 15, ['星', '火花', '余烬', '爆裂']], ['blank', 8, ['星']], ['trailM', 4, ['星头', '白热火花', '金火花', '橙色火花', '丝状火花']]]) {
+    store.set('pEmitTab', {}); pview.tab = {};
     await openType(t); await new Promise(r => setTimeout(r, 400));
-    const n = vis(), m = Object.fromEntries(mods.map(x => [x, modVis(x)]));
-    out[t] = { sliders: n, mods: m, groups: [...document.querySelectorAll('#params details.pgrp')].filter(g => !g.hidden).map(g => g.dataset.g + (g.open ? '▾' : '▸')) };
-    if (n < need) bad.push(`${t} 展开后可访问的参数只有 ${n} 个（应 ≥ ${need}）`);
-    for (const [k, v] of Object.entries(m)) if (!v) bad.push(`${t} 的「${k}」模块看不见`);
+    const n = vis(), m = {}; for (const e of emits) m[e] = await tabOk(e);
+    out[t] = { sliders: n, emits: m };
+    if (n < need) bad.push(`${t} 默认一页看得见的参数只有 ${n} 个（应 ≥ ${need}）`);
+    for (const [k, v] of Object.entries(m)) if (!v) bad.push(`${t} 的「${k}」发射器点了看不见`);
     if (t === 'blank') { const b = document.querySelector('#blankAdd [data-addmod="火花"]'); out.blankAdd = shown(b); if (!out.blankAdd) bad.push('空白发射器的「+ 火花」看不见'); }
   }
-  // 4.3.6：默认展开不能把用户的手动开合永久当成程序操作；重建参数面板后仍应记住。
-  const group = [...document.querySelectorAll('#params details.pgrp')].find(g => !g.hidden), key = '@' + group.dataset.g;
-  group.querySelector('summary').click(); await new Promise(r => setTimeout(r, 20));
+  // 手动收起模块、选的标签：重建面板后记得住
+  await openType('kiku'); await new Promise(r => setTimeout(r, 300)); selectEmitTab('火花');
+  const mod = [...document.querySelectorAll('#params section.egrp[data-g="火花"] > details.mod')].find(d => !d.hidden), key = mod._key;
+  mod.querySelector('summary').click(); await new Promise(r => setTimeout(r, 20));
   const savedClosed = store.get('pModOpen', {})[key] === false;
   buildMasterPanel(); await new Promise(r => setTimeout(r, 20));
-  const rebuilt = [...document.querySelectorAll('#params details.pgrp')].find(g => '@' + g.dataset.g === key), keptClosed = !rebuilt.open;
-  if (!rebuilt.open) rebuilt.querySelector('summary').click();
-  await new Promise(r => setTimeout(r, 20));
+  const rebuilt = [...document.querySelectorAll('#params details.mod')].find(d => d._key === key), keptClosed = !rebuilt.open, keptTab = (document.querySelector('#params .etabs .on') || {}).dataset.e === '火花';
+  rebuilt.querySelector('summary').click(); await new Promise(r => setTimeout(r, 20));
   const savedOpen = store.get('pModOpen', {})[key] === true;
-  out.groupMemory = { group: key, savedClosed, keptClosed, savedOpen };
-  if (!savedClosed || !keptClosed || !savedOpen) bad.push('手动收起 / 展开参数分组后没有记住，重建面板会恢复默认');
+  out.memory = { key, savedClosed, keptClosed, savedOpen, keptTab };
+  if (!savedClosed || !keptClosed || !savedOpen) bad.push('手动收起 / 展开模块后没有记住，重建面板会恢复默认');
+  if (!keptTab) bad.push('重建面板后没停在刚选的「火花」');
+  selectEmitTab('星');
   return { ok: !bad.length, bad, out };
 }"""
 
 
 async def s3(pg):
-    """4.3.4 后：打开菊 / 空白发射器 / 升空尾缀，参数及模块可访问、空白的「+ 火花」可达；不表示所有行位于同一首屏"""
-    await pg.evaluate("store.set('pModOpen', {}); pview.ready = false; pviewInit(); 0")     # 没有存过展开状态的新用户
+    """4.4：打开菊 / 空白发射器 / 升空尾缀，默认页和各发射器标签的参数可访问、空白的「+ 火花」可达、模块开合和标签记得住"""
+    await pg.evaluate("store.set('pModOpen', {}); store.set('pEmitTab', {}); pview.ready = false; pviewInit(); 0")     # 没有存过展开状态的新用户
     r = await pg.evaluate(S3_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
 S4_JS = r"""async () => {
-  // 旧折叠 / 搜索 / 只看改过的不能把「找回分组」入口也藏掉；定位本身不改配方、不触发重新烘焙。
-  const out = {}, bad = [], nav = document.querySelector('#paramNav');
-  if (!nav) return { ok: false, bad: ['参数栏缺少固定分组定位入口'], out };
-  const wait = () => new Promise(r => setTimeout(r, 30));
-  const saved = { mopen: structuredClone(store.get('pModOpen', {})), changed: store.get('pChanged', false), q: pview.q };
-  const mods = () => [...document.querySelectorAll('#params details.mod')];
-  const group = g => [...document.querySelectorAll('#params details.pgrp')].find(d => d.dataset.g === g);
+  // 4.4：旧搜索 / 只看改过的 / 收起的模块不能把参数藏得找不回来：点发射器标签 = 清掉筛选、换到那一页；不改配方
+  const out = {}, bad = [], wait = () => new Promise(r => setTimeout(r, 30));
+  const saved = { mopen: structuredClone(store.get('pModOpen', {})), changed: store.get('pChanged', false), q: pview.q, tab: structuredClone(store.get('pEmitTab', {})) };
   const snapshot = () => JSON.stringify([state.P, state.M, state.gen]);
-  const select = async value => { nav.value = value; nav.dispatchEvent(new Event('change', { bubbles: true })); await wait(); };
-  const block = async (g, names) => {
-    pview.mopen = { ...pview.mopen, ['@' + g]: false, ...Object.fromEntries(names.map(n => [n, false])) };
-    store.set('pModOpen', pview.mopen); pview.changed = true; store.set('pChanged', true); pview.q = '没有匹配的旧搜索';
-    buildMasterPanel(); await wait();
-  };
-  const atTop = el => { const b = el.getBoundingClientRect(), h = document.querySelector('.right-head').getBoundingClientRect(), r = document.querySelector('#right').getBoundingClientRect(); return b.top >= h.bottom - 1 && b.bottom <= r.bottom + 1; };
+  const shown = el => { if (!el || !el.offsetParent) return false; for (let a = el.parentElement, c = el; a; c = a, a = a.parentElement) { if (a.hidden) return false; if (a.tagName === 'DETAILS' && !a.open && c.tagName !== 'SUMMARY') return false; } return true; };
   try {
     await openType('kiku'); await new Promise(r => setTimeout(r, 400));
-    await block('外观', ['火花']);
-    const listed = [...nav.options].some(o => o.value === 'm:火花'), before = snapshot();
-    const oldOutput = pview.mopen['@输出'];
-    await select('m:火花');
-    const fire = mods().find(d => d._mod === '火花');
-    out.spark = { listed, filtersCleared: !pview.q && !pview.changed, expanded: group('外观').open && fire.open && !fire.hidden,
-      located: atTop(fire.querySelector('summary')), recipeUnchanged: snapshot() === before, otherFoldUnchanged: pview.mopen['@输出'] === oldOutput };
-    for (const [k, v] of Object.entries(out.spark)) if (!v) bad.push('火花恢复失败：' + k);
-    await openType('trailM'); await new Promise(r => setTimeout(r, 400));
-    const tail = ['白热火花', '金火花', '橙色火花', '丝状火花'];
-    await block('层', tail);
-    const tailListed = ['g:层', ...tail.map(n => 'm:' + n)].every(v => [...nav.options].some(o => o.value === v)), tailBefore = snapshot();
-    await select('g:层');
-    out.tail = { listed: tailListed, filtersCleared: !pview.q && !pview.changed, groupExpanded: group('层').open,
-      modulesExpanded: tail.every(n => mods().some(d => d._mod === n && d.open && !d.hidden)), located: atTop(group('层').querySelector('summary')), recipeUnchanged: snapshot() === tailBefore };
-    for (const [k, v] of Object.entries(out.tail)) if (!v) bad.push('尾缀各层恢复失败：' + k);
-    await block('层', tail); const allBefore = snapshot();
-    await select('all');
-    out.all = { filtersCleared: !pview.q && !pview.changed,
-      groupsExpanded: [...document.querySelectorAll('#params details.pgrp')].filter(d => !d.hidden).every(d => d.open),
-      modulesExpanded: mods().filter(d => !d.hidden).every(d => d.open), recipeUnchanged: snapshot() === allBefore };
-    for (const [k, v] of Object.entries(out.all)) if (!v) bad.push('显示全部分组失败：' + k);
-    const pane = lib.pane; lib.pane = 'review'; syncPtabs(); const reviewHidden = nav.hidden; lib.pane = pane; syncPtabs();
-    const tab = state.tab, sel = state.comboSel; state.tab = 'combo'; state.comboSel = -1; syncComboPanels();
-    const wholeHidden = nav.hidden; state.tab = tab; state.comboSel = sel; await setTab(tab); syncPtabs();
-    out.context = { reviewHidden, wholeHidden };
-    if (!reviewHidden || !wholeHidden) bad.push('审阅或整体页显示了不适用的参数定位入口');
+    selectEmitTab('星');
+    pview.changed = true; store.set('pChanged', true); pview.q = '没有匹配的旧搜索'; buildMasterPanel(); await wait();
+    const tabsShown = [...document.querySelectorAll('#params .etabs [data-e]')].filter(b => !b.hidden).map(b => b.dataset.e), before = snapshot();
+    document.querySelector('#params .etabs [data-e="火花"]').click(); await wait();
+    const g = document.querySelector('#params section.egrp[data-g="火花"]');
+    out.spark = { tabsWhileFiltered: tabsShown.includes('火花'), filtersCleared: !pview.q && !pview.changed && !$('#params .ptools input[type=search]').value, shown: !!g && !g.hidden,
+      rows: [...g.querySelectorAll('.sl')].filter(shown).length, recipeUnchanged: snapshot() === before, onlyThis: [...document.querySelectorAll('#params section.egrp')].filter(x => !x.hidden).length === 1 };
+    for (const [k, v] of Object.entries(out.spark)) if (!v) bad.push('火花找回失败：' + k);
+    document.querySelector('#params .etabs [data-e="全部"]').click(); await wait();
+    out.all = { emitters: [...document.querySelectorAll('#params section.egrp')].filter(x => !x.hidden).length };
+    if (out.all.emitters < 5) bad.push('「全部」没把发射器都排出来：' + out.all.emitters);
   } finally {
-    store.set('pModOpen', saved.mopen); store.set('pChanged', saved.changed); pview.ready = false; pviewInit(); pview.q = saved.q; buildMasterPanel();
+    store.set('pModOpen', saved.mopen); store.set('pChanged', saved.changed); store.set('pEmitTab', saved.tab); pview.ready = false; pviewInit(); pview.q = saved.q; buildMasterPanel();
   }
   return { ok: !bad.length, bad, out };
 }"""
@@ -1026,6 +1016,34 @@ S4_JS = r"""async () => {
 
 async def s4(pg):
     r = await pg.evaluate(S4_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
+
+
+E1_JS = r"""async () => {
+  // 4.4（用户 10-04 16:17 #2 #3）：「结尾」「冷却方式」两个开关，缺省 = 旧做法；结尾选「不淡出」序列时长加长到火花灭完、帧计划不再整体淡出
+  const out = {}, bad = [];
+  await openType('kiku'); await new Promise(r => setTimeout(r, 300));
+  out.defaults = { end: state.P.endMode, cool: state.P.coolMode, fade: !displayPlan40(state.P).noEndFade };
+  if (out.defaults.end !== 'fade' || +out.defaults.cool !== 0 || !out.defaults.fade) bad.push('缺省不是旧做法：' + JSON.stringify(out.defaults));
+  const where = k => { const x = panelRows.find(([r, it]) => it.sel === k); return x ? x[0]._x.e + '›' + x[0]._x.m : null; };
+  out.where = { end: where('endMode'), cool: where('coolMode') };
+  if (out.where.end !== '效果›规格' || out.where.cool !== '火花›颜色') bad.push('开关不在该在的模块：' + JSON.stringify(out.where));
+  selectEmitTab('效果'); await new Promise(r => setTimeout(r, 50));
+  const info = () => (document.querySelector('#params [data-info=endInfo]') || {}).textContent || '';
+  out.before = info(); const e = sparkTailEnd(state.P), d0 = state.P.duration;
+  if (!/差/.test(out.before) || !(e > d0)) bad.push('菊的序列比火花短，却没写差多少：' + out.before);
+  const row = panelRows.find(([r, it]) => it.sel === 'endMode')[0], s = row.querySelector('select'); s.value = 'natural'; s.dispatchEvent(new Event('change'));
+  await new Promise(r => setTimeout(r, 200));
+  out.after = { dur: state.P.duration, want: e, noFade: !!displayPlan40(state.P).noEndFade, info: info() };
+  if (Math.abs(state.P.duration - e) > 0.051 || !out.after.noFade || /差/.test(out.after.info)) bad.push('选「不淡出」后不对：' + JSON.stringify(out.after));
+  selectEmitTab('星');
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def e1(pg):
+    """4.4：结尾 / 冷却方式开关缺省是旧做法、在效果 › 规格和火花 › 颜色；结尾选「不淡出」把序列加长到火花灭完、不再整体淡出"""
+    r = await pg.evaluate(E1_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
@@ -1038,7 +1056,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('C1', c1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

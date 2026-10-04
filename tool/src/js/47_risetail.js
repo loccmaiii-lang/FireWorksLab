@@ -37,6 +37,9 @@ function rtLoopInfo(P) {
 }
 // 火粉的寿命上限（对数正态取到 +2.5σ）
 const rtPowderLifeMax = P => P.rtALife * Math.exp(2.5 * (P.rtALsig || 0));
+// 4.4：循环层出场的淡入时长（尾迹攒满要多久 ≈ 白热火粉的寿命）和 t 时刻的倍数（smoothstep）
+const rtLoopIn = P => clamp(+P.rtALife || 0.6, 0.3, 1.5);
+const rtLoopInAt = (P, t) => { const u = clamp(t / rtLoopIn(P), 0, 1); return u * u * (3 - 2 * u); };
 // 白热段长度（随弹体速度）：速度 × 白热时间 + 向后喷出后停下的距离
 const rtWhiteLen = (P, V) => Math.max(0.5, Math.abs(V) * P.rtALife + (P.rtAJet || 0) / Math.max(1, P.rtAKd));
 // 火粉第 gi 颗（周期性编号：每个循环周期正好 M 颗，编号取模定随机量 → 真循环）
@@ -437,8 +440,10 @@ async function bakeEmitSet(P, scale, onProg) {
   const Rf = makeRiseTailLoopRenderer(P, LI, Vref, { stop, fadeDur: Df, bot, fr: [Df / Ff, stop] });
   const bf = await bakeFrames(Pf, scale, onP(0.7, 1), pf, Rf, { expo, noFade: true });
   bf.form = 'esFade'; bf.fps = Ff / Df; bf.meta.fadeSeconds = Df; bf.P = Pf;
-  // 面片长度随弹体速度：Size By Life 的 Y（循环层寿命 = 升空时间；绕星头缩放 = Pivot Offset）
-  const sk = []; for (let i = 0; i <= 16; i++) { const t = i / 16 * T, v = ball.vel(t); sk.push([+(i / 16).toFixed(4), +clamp(rtWhiteLen(P, Math.hypot(v[0], v[2])) / rtWhiteLen(P, Vref), 0.02, 1.5).toFixed(4)]); }
+  // 4.4（用户 10-04 17:41 UE 实测）：面片长度不再随速度用 Size By Life 压短。以前开花时把循环层 / 消散压到 白热段长(开花速度) ÷ 白热段长(出膛速度)
+  // （RT4L 0.061），UE 里循环层到最后还是全长、消散一出来却是扁的 → 跳变；用户把消散改成和循环层一样大就接上了。现在两者都是全长（Size By Life 恒 1、不导出这个模块）。
+  // 升空一开始尾迹还没攒出来：循环层前 rtLoopIn 秒亮度从 0 升到 1（Color Over Life），不再像「从地上长出来」。
+  const sk = [[0, 1], [1, 1]];
   Object.assign(b.meta, { es: true, ball: { k: ball.k, v0: ball.v0, vz0: ball.vz0, vx0: ball.vx0, T, H: ball.H, Hwant: ball.Hwant, vb: ball.vb, ok: ball.ok, lean: P.rtLean || 0 },
     T, Tl, nRev: LI.nRev, loopFps: LI.fps, Vref, stop, fEnd: Math.floor(stop / Tl * F) % F, sizeKeysRise: sk, fadeFrames: Ff, fadeFps: bf.fps, fadeSeconds: Df, hb: lay.hb,
     texSparks: rtTexClasses(P, LI).map(C => C.k) });
@@ -486,6 +491,12 @@ function rtSawKeys(m) {
   }
   return out;
 }
+// 4.4：循环层 Color Over Life 乘上出场淡入（rtLoopInAt）：在淡入那段补几个关键点，原来的颜色键照留
+function rtLoopInKeys(P, col, T) {
+  const at = u => { let i = 0; while (i < col.length - 1 && col[i + 1][0] < u) i++; const a = col[i], b = col[Math.min(i + 1, col.length - 1)]; const f = b[0] > a[0] ? clamp((u - a[0]) / (b[0] - a[0]), 0, 1) : 0; return a[1].map((x, k) => x + (b[1][k] - x) * f); };
+  const tin = rtLoopIn(P), us = new Set(col.map(([u]) => u)); for (let i = 0; i <= 6; i++) us.add(r4(Math.min(1, i / 6 * tin / T)));
+  return [...us].sort((a, b) => a - b).map(u => [u, at(u).map(x => r4(x * rtLoopInAt(P, u * T)))]);
+}
 function fwlEmitSet(name, b, M, mobile) {
   const m = b.meta, P = b.P, L = m.L, F = L.F, fd = b.fades[0], Lf = fd.meta.L, bl = m.ball;
   const textures = {
@@ -514,9 +525,8 @@ function fwlEmitSet(name, b, M, mobile) {
       { m: 'InitialVelocity', StartVelocity: { const: [r1(bl.vx0 * 100), 0, r1(bl.vz0 * 100)] } },
       { m: 'Drag', DragCoefficientRaw: { const: r4(bl.k) } },
       { m: 'ConstAcceleration', Acceleration: [0, 0, -981] },
-      { m: 'SizeByLife', LifeMultiplier: { curve: m.sizeKeysRise.map(([u, v]) => [r4(u), [1, r4(v), 1]]) }, MultiplyX: true, MultiplyY: true, MultiplyZ: false },
       { m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(rtSawKeys(m), F) } } },
-      { m: 'ColorOverLife', ColorOverLife: { curve: col }, AlphaOverLife: { const: 1 } }
+      { m: 'ColorOverLife', ColorOverLife: { curve: rtLoopInKeys(P, col, m.T) }, AlphaOverLife: { const: 1 } }
     ]
   }, {
     name: 'RiseFade', material: 'fade', gpu: false,
@@ -574,12 +584,12 @@ function rtCascadeText(name, b, M) {
 【RiseLoop】CPU · 材质角色 beam_flipbook（${P.texW}×${P.texH}，${m.L.cols}×${m.L.rows} 格 × ${m.L.chans} 通道 = ${m.L.F} 帧，RGBA 接力）· Screen Alignment = Velocity · Pivot Offset (−0.5, ${(-(1 - m.hb)).toFixed(4)}) · Duration ${m.T.toFixed(3)} s · Burst 0 s × 1
   Lifetime ${m.T.toFixed(3)} · Initial Size ${(m.Ww * 100).toFixed(1)} × ${(m.Wh * 100).toFixed(1)} cm（星头在面片上端，Pivot Offset 放在粒子位置）
   Initial Velocity (${(bl.vx0 * 100).toFixed(1)}, 0, ${(bl.vz0 * 100).toFixed(1)}) · Drag ${bl.k.toFixed(4)} · Const Acceleration (0, 0, −981)
-  Size By Life（只改 Y）：${m.sizeKeysRise.map(([u, v]) => u + ' → ' + v).join('，')}
+  面片长度不随速度变（不写 Size By Life；4.4 起，和消散同样大）· 出场淡入：Color Over Life 前 ${rtLoopIn(P).toFixed(2)} s 从 0 升到 1（尾迹还没攒出来）
   Dynamic Parameter 帧号：锯齿，每 ${m.Tl.toFixed(3)} s 一个循环（${m.nRev} 圈自转），${rtSawKeys(m).length} 个关键点
   Color Over Life × ${P.rtBright}
 
 【RiseFade】CPU · beam_flipbook（${fd.P ? fd.P.texW + '×' + fd.P.texH + '，' : ''}${fd.meta.L.cols}×${fd.meta.L.rows} × ${fd.meta.L.chans} = ${fd.meta.L.F} 帧，格子和循环层一样大）· Pivot Offset 同上 · Delay ${m.T.toFixed(3)} s · Duration ${m.fadeSeconds.toFixed(3)} s（${m.fadeFps.toFixed(1)} fps）
-  Initial Location = 开花点 · Initial Size Y = 循环层最后的长度 · 帧号 0 → ${fd.meta.L.F - 0.01}${P.rtDissolve > 0 ? ' · dissolve 0 →（后 60%）' + P.rtDissolve : ''}
+  Initial Location = 开花点 · Initial Size = 和循环层一样大 · 帧号 0 → ${fd.meta.L.F - 0.01}${P.rtDissolve > 0 ? ' · dissolve 0 →（后 60%）' + P.rtDissolve : ''}
 
 【粒子层 · PC】同时活着最多约 ${pkP.peak} 颗
 ${esCascadeText(b.es || rtBuildES(P), false, 1)}
@@ -590,9 +600,8 @@ ${esCascadeText(b.es || rtBuildES(P), false, 1)}
 }
 function rtCurvesCSV(b, M) {
   const m = b.meta, rows = ['段,曲线,相对时间,值1,值2,值3'];
-  for (const [u, v] of m.sizeKeysRise) rows.push(`RiseLoop,SizeByLife_Y倍数,${u},${v},,`);
   for (const [u, v] of rtSawKeys(m)) rows.push(`RiseLoop,DynamicParameter_帧号,${u},${v},,`);
-  for (const [u, c] of colorKeys(M, m.T, 0)) rows.push(`RiseLoop,ColorOverLife_线性RGB,${u},${c[0]},${c[1]},${c[2]}`);
+  for (const [u, c] of rtLoopInKeys(b.P, fwlColor(M, m.T, 0, 1), m.T)) rows.push(`RiseLoop,ColorOverLife_线性RGB,${u},${c[0]},${c[1]},${c[2]}`);
   for (const e of (b.es || rtBuildES(b.P)).emitters) for (const [u, c] of e.col) rows.push(`${e.name},ColorOverLife_线性RGB,${u},${c[0]},${c[1]},${c[2]}`);
   return '﻿' + rows.join('\n') + '\n';
 }
@@ -658,7 +667,8 @@ function renderEmitExport(b) {
     const w = m.Ww, h = m.Wh * s.sy, hb = m.hb == null ? 0.5 : m.hb, pr = PR.mat; gl.useProgram(pr.p);
     gl.uniform4fv(pr.u.uRect, [s.x - w / 2, s.z - h * hb, s.x + w / 2, s.z + h * (1 - hb)]); gl.uniform4fv(pr.u.uView, view);   // 星头 = 粒子位置（Pivot Offset）
     bindSeqTextures(pr, s.bb); gl.uniform1f(pr.u.uFrame, s.f); gl.uniform1f(pr.u.uMirror, 0);
-    setMatUniforms(pr, { ...M, headInt: (M.headInt || 1) * (P.rtBright || 1) }, t);
+    const kin = s.phase === 'rise' ? rtLoopInAt(P, t) : 1;     // 4.4：出场淡入（和导出的 Color Over Life 一样）
+    setMatUniforms(pr, { ...M, headInt: (M.headInt || 1) * (P.rtBright || 1) * kin, tailInt: (M.tailInt == null ? 1 : M.tailInt) * kin }, t);
     gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
   }
   const nd = esDraw(rtTables(b, !!b.esMobile), t, view, ppm, ppmY, 1);
