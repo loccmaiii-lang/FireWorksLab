@@ -6712,7 +6712,7 @@ var FW_EFFECTS = [
 "缺": [
 "UE 4.24 实机导入未验证"
 ],
-"下一步": "V5S/M/LE1（烘焙器 4.3.0）回放检查 ✅、STD7 ✅；对照图「导出效果」一行有 4.3.0 的界面报错 sb is not defined（只是标签，4.3.1 修了），排 V5S/M/LE2 重出干净的对照图，内容不变 → 等用户验收（看法在 analysis/results/V5*E1/）。通过前已通过的 TR2 素材包照用",
+"下一步": "V5S/M/LE1（4.3.0）+ V5S/M/LE2（4.3.1，干净的对照图）回放检查 ✅、STD7 ✅ → 就绪，等用户验收（看法在 analysis/results/V5*E1、V5*E2/）。通过前已通过的 TR2 素材包照用",
 "说明": "已通过：正式库 TR2S/M/L（3.7 画法，素材包 analysis/results/TR2）。4.3 候选：V5S/M/L（同参数，新画法，analysis/原理/条目_升空尾缀V5.json）。",
 "英文名": "RiseTrail",
 "ver": null,
@@ -6733,7 +6733,7 @@ var FW_EFFECTS = [
 "id": "V5LE2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "V5ME1",
@@ -6745,7 +6745,7 @@ var FW_EFFECTS = [
 "id": "V5ME2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "V5SE1",
@@ -6757,7 +6757,7 @@ var FW_EFFECTS = [
 "id": "V5SE2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 }
 ],
 "exports": [
