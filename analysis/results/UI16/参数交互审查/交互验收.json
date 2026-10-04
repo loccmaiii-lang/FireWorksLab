@@ -1,0 +1,137 @@
+{
+  "assertions": {
+    "focusDoesNotOpen": true,
+    "hoverDoesNotOpen": true,
+    "manualHelpOpened": true,
+    "helpHasSeparateSpace": true,
+    "editFocusKeepsHelp": true,
+    "escapeClosesOnlyHelp": true,
+    "closedMoreLabel": true,
+    "randomStateLabel": true,
+    "emptySearch": true,
+    "navClearsFilters": true,
+    "allTypeParametersAndNamesPreserved": true,
+    "inventoryDoesNotEditParams": true,
+    "realNumericEditing": true,
+    "visibleResetUsesOriginalDefault": true,
+    "layerKeyboardSelection": true,
+    "soloObserve": true,
+    "muteObserve": true,
+    "observationDoesNotChangeRecipe": true,
+    "blankAddModule": true,
+    "moduleHelpManual": true,
+    "blankRemoveModule": true,
+    "tailLayersPreserved": true,
+    "mobile390Fits": true,
+    "mobile320ActiveParamVisible": true,
+    "mobile320Fits": true,
+    "desktop1440Fits": true,
+    "desktop2560Fits": true,
+    "largeScreenTypography": true,
+    "latestRecipeUnchanged": true,
+    "noConsoleErrors": true
+  },
+  "metrics": {
+    "deviceScale": 1.0000000298023224,
+    "groups": [
+      "Emitter · 发射",
+      "Motion · 运动",
+      "Appearance · 外观",
+      "Layers · 尾缀各层",
+      "Render · 渲染输出"
+    ],
+    "help": "寿命",
+    "layerFont": "16.0225px",
+    "mode": "live",
+    "names": 359,
+    "outputVersion": {
+      "emitset": "4.3",
+      "loop": "4.3",
+      "master": "4.3.3",
+      "riseLoop": "4.3",
+      "trail": "4.3",
+      "unit": "4.3"
+    },
+    "parameterFont": "14.0225px",
+    "platform": "pc",
+    "schemaRows": 349,
+    "selectedLayer": 1,
+    "viewport": [
+      1618,
+      972
+    ]
+  },
+  "viewports": {
+    "large": {
+      "fits": true,
+      "labelFont": "15.2px",
+      "layerFont": "17.2px",
+      "rowOverflow": 0,
+      "size": [
+        2560,
+        1440
+      ]
+    },
+    "mobile390": {
+      "closeRect": {
+        "bottom": 664.6666870117188,
+        "height": 30,
+        "left": 336.66668701171875,
+        "right": 378.0000228881836,
+        "top": 634.6666870117188,
+        "width": 41.33333587646485,
+        "x": 336.66668701171875,
+        "y": 634.6666870117188
+      },
+      "contentRect": {
+        "bottom": 624.0000305175781,
+        "height": 418.1666870117187,
+        "left": 24.666667938232425,
+        "right": 390.0000114440918,
+        "top": 205.83334350585935,
+        "width": 365.3333435058594,
+        "x": 24.666667938232425,
+        "y": 205.83334350585935
+      },
+      "dockRect": {
+        "bottom": 844,
+        "height": 220,
+        "left": 24.666667938232425,
+        "right": 390.0000114440918,
+        "top": 624,
+        "width": 365.3333435058594,
+        "x": 24.666667938232425,
+        "y": 624
+      },
+      "helpScroll": true,
+      "pageFits": true,
+      "rightRect": {
+        "bottom": 844.0000457763672,
+        "height": 736.8333740234375,
+        "left": 24,
+        "right": 390,
+        "top": 107.16667175292967,
+        "width": 366,
+        "x": 24,
+        "y": 107.16667175292967
+      },
+      "rowOverflow": [],
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    "mobile320": {
+      "closeVisible": true,
+      "contentHeight": 175,
+      "fits": true,
+      "overlap": false,
+      "rowOverflow": [],
+      "viewport": [
+        320,
+        568
+      ]
+    }
+  },
+  "console": []
+}

@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.vite/
+public/baker.html
+public/source-integrity.json

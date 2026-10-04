@@ -1,0 +1,212 @@
+{
+  "source": "tool/FireworkBaker.html",
+  "sourceSha256": "cb29f215d98c0e5113e7f5622b570570842539bff1ab690887fa09fddb39ca9d",
+  "coreFiles": [
+    {
+      "file": "00_util.js",
+      "sha256": "91a8b1acb95da2514d30274f637e94d689975b2ebe8e114932072718596680cf",
+      "unchanged": true
+    },
+    {
+      "file": "05_quality.js",
+      "sha256": "ac074e1c21aaf4243c36125aed0586ff8ec1d201a6f2f7b027cc80fd9f655d52",
+      "unchanged": true
+    },
+    {
+      "file": "10_types.js",
+      "sha256": "2931066c0a91f648e27a111a586edf587f79b5c8973a7716653809f39024e253",
+      "unchanged": true
+    },
+    {
+      "file": "14_pending.js",
+      "sha256": "8b263d8d2755ee165f561fb8efda42b21688d8af469ecd90d6d85cf51b636439",
+      "unchanged": true
+    },
+    {
+      "file": "15_replica.js",
+      "sha256": "45621f4dbd523d0d06637e55efb8d1e238b04189fe3bbf22ed3230784afaed79",
+      "unchanged": true
+    },
+    {
+      "file": "16_thumbs.js",
+      "sha256": "3746658149ea99529d4a35baab29e28954fc0e0162e732e21a5860595852e16c",
+      "unchanged": true
+    },
+    {
+      "file": "17_cloudrecipes.js",
+      "sha256": "cb568e83886e5648f6569ff2a26c0ed2c9cfe17de6b0ce8e98e060679285c963",
+      "unchanged": true
+    },
+    {
+      "file": "20_sim.js",
+      "sha256": "b1d7cd94124d72891994372f5f10ae9833b0179941b7f4bf90004f5e46de26cf",
+      "unchanged": true
+    },
+    {
+      "file": "30_plan.js",
+      "sha256": "80134f26d320ef416d9ef435f159654ad16307d536a8cdfa91a7fea993728e9f",
+      "unchanged": true
+    },
+    {
+      "file": "31_plan40.js",
+      "sha256": "2c1044f2e9145beea9242bee6cb7dffdf0d872ecfc2160718e7c603106256b6f",
+      "unchanged": true
+    },
+    {
+      "file": "40_gl.js",
+      "sha256": "558c68789e6c5914e839c5fbe62c443173064fd6943ea6a843a651288ca6e0ca",
+      "unchanged": true
+    },
+    {
+      "file": "41_particles40.js",
+      "sha256": "6cb3c1ff4abfe77df40c869146801db9e8a1a27051c40c67b4df708abbea1a74",
+      "unchanged": true
+    },
+    {
+      "file": "42_trail.js",
+      "sha256": "6fb9c23857d55bbf86ec319e7cbfb5786f8c7a820662db5feb5643d07ffa046c",
+      "unchanged": true
+    },
+    {
+      "file": "43_phystrail.js",
+      "sha256": "7e260e44e84a6a04b9c128159d2d49fef015e6a1eb3f8f638f18372a13b1f42d",
+      "unchanged": true
+    },
+    {
+      "file": "44_physrecipes.js",
+      "sha256": "3f5c8d4c36202c01abac0249f457cb1aa72ca673ad95fa4dcf05d625888a260a",
+      "unchanged": true
+    },
+    {
+      "file": "45_physbody.js",
+      "sha256": "20fcdcd75e01c9f03f41b9b6b30b0be15b3ff0e29ce56e3999203ae7675c1e86",
+      "unchanged": true
+    },
+    {
+      "file": "46_emitset.js",
+      "sha256": "45bd61fd43380977f5b247887c031f8bb76ad92357dea70a6286eab6a4d0afee",
+      "unchanged": true
+    },
+    {
+      "file": "47_risetail.js",
+      "sha256": "e9f1225c8f4774beab16737cce6b5fc6902fc3401fb4662c753f296b8d7a7d91",
+      "unchanged": true
+    },
+    {
+      "file": "48_render40.js",
+      "sha256": "e434863ad85af12964680e3566f77e93fa5b92a8c2ca40ea10bc61c6dcbdc351",
+      "unchanged": true
+    },
+    {
+      "file": "49_playback.js",
+      "sha256": "8f5b3f18cfe0f7c80f982ec4fcf6836befe3b29dd15266308ecc004b8cbd7d33",
+      "unchanged": true
+    },
+    {
+      "file": "50_bake.js",
+      "sha256": "e7dff15ab28ea83b1afd5a19dfdc392d64c73e8ffa9489613d5d6457ad5859d1",
+      "unchanged": true
+    },
+    {
+      "file": "60_export.js",
+      "sha256": "a2e3f07a79ed5213c0a6217e56264c2c7c4ae1ecbf8606f22619a3586a8c31d2",
+      "unchanged": true
+    },
+    {
+      "file": "61_naming.js",
+      "sha256": "d0f6a56373632a268417a1b6ac066cc99b121a278e46b520531280fa0414bd30",
+      "unchanged": true
+    },
+    {
+      "file": "65_cascade.js",
+      "sha256": "704cc57728d70bb64518b5c4c0ea9ae42e8513766be313b73ac329535259515a",
+      "unchanged": true
+    },
+    {
+      "file": "66_fwlcascade.js",
+      "sha256": "2c5c49bd3b070e62106060dfcacad15ed9009d096b39675b90fd6e19b36ff24f",
+      "unchanged": true
+    },
+    {
+      "file": "67_fwlcombo.js",
+      "sha256": "f48469a3e89342b6215bd12071fe26663bafff94d6b2016f9d2b90e4a50786ef",
+      "unchanged": true
+    },
+    {
+      "file": "69_icons.js",
+      "sha256": "c523ec82c5e287751420e064deeaaa6be46c55ec642cfcea602058277029d954",
+      "unchanged": true
+    },
+    {
+      "file": "72_picker.js",
+      "sha256": "ea5fed21b838b3271c2d434df8c6970f82f65106ea48a27872c62f7a20f8ce7e",
+      "unchanged": true
+    },
+    {
+      "file": "77_assets.js",
+      "sha256": "11abd143c016d63695b3e104a22169147388ce8b59526bcaf1cfcaccee1626fb",
+      "unchanged": true
+    },
+    {
+      "file": "78_updates.js",
+      "sha256": "df4fe084110744b7a8076a4d6a0165b917f9713e4f8503ebda563cf18a96c036",
+      "unchanged": true
+    },
+    {
+      "file": "79_curves.js",
+      "sha256": "a506390ed9b32ab3b79a5ed8207c25b5eb4acae563bd384c856c409fa113bfd2",
+      "unchanged": true
+    },
+    {
+      "file": "79_library.js",
+      "sha256": "4c52adad40089e3be1016c1c57d408ee9e9aa31281bb7eaaa8c2e0867c0431c5",
+      "unchanged": true
+    },
+    {
+      "file": "79_myfx.js",
+      "sha256": "f2c91273fee0a99570cbb4bfb7115790a1e8605c76b9429517c9ceb9bd2eb143",
+      "unchanged": true
+    },
+    {
+      "file": "79_repo.js",
+      "sha256": "c51b5fef7d25f8fc26e6d0cd56359698d21afe3ac4281c7c79c85b8bb606a5b6",
+      "unchanged": true
+    },
+    {
+      "file": "79_undo.js",
+      "sha256": "504e0dd4b82aed8706123e4186106d1c9e875daad459b91e882783fc1490dfe8",
+      "unchanged": true
+    },
+    {
+      "file": "80_render.js",
+      "sha256": "e8e92a01db58c7ac1233c64793720593f8d6919fc2466b0db1e1f1dcb27ebf08",
+      "unchanged": true
+    },
+    {
+      "file": "82_showcase.js",
+      "sha256": "44ce11a724cee46d6467ccffb7fdf024127e718da667fccb0d190e6a7b686589",
+      "unchanged": true
+    },
+    {
+      "file": "85_stills.js",
+      "sha256": "5371609752742d82e4693e61b0eeb806bcb9823b648f1c596accc57928cabee5",
+      "unchanged": true
+    },
+    {
+      "file": "90_events.js",
+      "sha256": "942297881c4894c2b344b280b8fe9c675fd61e4655159542be93c0e4a06a0cd5",
+      "unchanged": true
+    }
+  ],
+  "nameFiles": {
+    "analysis\\命名\\参数名称表.json": "42dd869d24756c4db7c32803f16433401b59219c54d1474d82db353ee9d32593",
+    "analysis\\命名\\模块表.json": "2312d0b571b0e2ccbdc9420c096fbd1b2206d5a48da074c34554ca2acfe54582"
+  },
+  "storageNamespace": "fwb.draftUI1.",
+  "modifiedUiOnly": [
+    "70_ui.js",
+    "71_panel43.js",
+    "75_iter.js",
+    "79_workbench.js"
+  ]
+}
