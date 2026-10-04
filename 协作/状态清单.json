@@ -27,6 +27,9 @@
   "用户验收": "只由用户点「通过」设置，AI 不能改成 true"
  },
  "共享文件": {
+  "对话框17 · 光点隔离诊断": [
+   "负责：对话框17（2026-10-04，用户要求测试后给解决方案）；只写analysis/scripts/point_light_diagnostic.py及analysis/results/POINT17/**，真实渲染核只读，少量离屏测试。tool/src认领仍归对话框15，不改生产配方/产物，不下发后台GPU队列。"
+  ],
   "只由生成脚本改": [
    "tool/FireworkBaker.html",
    "tool/data/review.js",
