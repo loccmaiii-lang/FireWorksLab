@@ -16,14 +16,14 @@ function fixture() {
     setTimeout(fn, ms) { const t = setTimeout(fn, ms); timers.add(t); return t; },
     clearTimeout(t) { clearTimeout(t); timers.delete(t); },
     $(id) {
-      if (!elements.has(id)) elements.set(id, { hidden: true, textContent: '', innerHTML: '', value: '', style: {} });
+      if (!elements.has(id)) elements.set(id, { hidden: true, textContent: '', innerHTML: '', value: '', style: {}, dataset: {}, querySelector: () => null, setAttribute() {} });
       return elements.get(id);
     },
     disposeBake(b) { if (b) disposed.push(b.id); },
     afterBake(b) { published.push(b.id); },
   });
   const run = code => vm.runInContext(code, ctx);
-  for (const f of ['tool/data/review.js', 'tool/src/js/10_types.js', 'tool/src/js/14_pending.js', 'tool/src/js/15_replica.js', 'tool/src/js/70_ui.js']) {
+  for (const f of ['tool/data/review.js', 'tool/src/js/10_types.js', 'tool/src/js/14_pending.js', 'tool/src/js/15_replica.js', 'tool/src/js/69_icons.js', 'tool/src/js/70_ui.js']) {
     vm.runInContext(fs.readFileSync(path.join(root, f), 'utf8'), ctx, { filename: f });
   }
   run('showStats = () => {}; syncExport = () => {}; buildMasterPanel = () => {}; refreshVisibility = () => {};');

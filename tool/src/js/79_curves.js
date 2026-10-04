@@ -28,7 +28,7 @@ const CURVE_LANES = [
 const CURVE_KEY_LANES = (() => { const m = {}; for (const L of CURVE_LANES) for (const k of L.keys) (m[k] = m[k] || []).push(L.k); return m; })();
 const curveSt = { on: null, data: null, base: null, busy: false, want: '', pendKey: '', pendAt: 0, drawSig: '', hot: null, baseSrc: '', baseP: null };
 
-function curvesOn() { if (curveSt.on == null) curveSt.on = typeof store === 'undefined' ? true : !!store.get('curvesOn', true); return curveSt.on; }
+function curvesOn() { if (curveSt.on == null) curveSt.on = typeof store === 'undefined' ? false : !!store.get('curvesOn', false); return curveSt.on; }
 function curvesShow(on) { curveSt.on = !!on; if (typeof store !== 'undefined') store.set('curvesOn', curveSt.on); curveSt.drawSig = ''; curvesMount(); }
 // 正在编辑的那一层：{ P, M, d, r, name } / { hint } / null
 function curveTarget() {

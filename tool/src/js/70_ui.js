@@ -550,7 +550,7 @@ function buildMasterPanel() {
   host.querySelector('[data-en]').addEventListener('change', e => { pview.en = e.target.checked; store.set('pEN', pview.en); buildMasterPanel(); });
   const grp = {};
   for (const [g, title] of P43_GROUPS) {
-    const d = document.createElement('details'); d.className = 'pgrp p43'; d.dataset.g = g; d._auto = true; d.open = pview.mopen['@' + g] !== false; setTimeout(() => d._auto = false, 0);
+    const d = document.createElement('details'); d.className = 'pgrp p43'; d.dataset.g = g; d._auto = true; d.open = pview.mopen['@' + g] == null ? g === '运动' : pview.mopen['@' + g]; setTimeout(() => d._auto = false, 0);
     d.innerHTML = `<summary><span class="pg-t">${title}</span><span class="pg-n"></span></summary>`;
     d.addEventListener('toggle', () => { if (d._auto) return; pview.mopen['@' + g] = d.open; store.set('pModOpen', pview.mopen); });
     grp[g] = d; host.appendChild(d);
@@ -646,7 +646,7 @@ function refreshVisibility() {
   document.querySelectorAll('#params details.pgrp').forEach(g => {
     g.hidden = ![...g.querySelectorAll(':scope > details.sec')].some(d => !d.hidden);
     const n = nChg[g.dataset.g] || 0, b = g.querySelector('.pg-n'); b.textContent = n ? `${n} 项改过` : ''; b.hidden = !n;
-    autoOpen(g, auto && !g.hidden, pview.mopen['@' + g.dataset.g] !== false);
+    autoOpen(g, auto && !g.hidden, pview.mopen['@' + g.dataset.g] == null ? g.dataset.g === '运动' : pview.mopen['@' + g.dataset.g]);
   });
   const host = $('#params'), empty = host && host.querySelector('.pempty'), none = host && ![...host.querySelectorAll('details.pgrp')].some(g => !g.hidden);
   if (host && none && !empty) host.insertAdjacentHTML('beforeend', `<p class="pempty hint"></p>`);

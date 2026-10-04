@@ -1,34 +1,34 @@
 <div class="app">
   <header class="top">
-    <div class="brand"><span class="mark">DF</span><b>特效工作台</b><small id="verLabel">烟花烘焙器</small></div>
+    <div class="brand"><span class="mark">DF</span><b>烟花烘培器</b><small id="verLabel"></small></div>
     <div class="assetbar" id="assetBar" hidden>
-      <span class="ab-th" id="abThumb"></span>
-      <span class="ab-tx"><b id="abName"></b><small id="abSub"></small></span>
-      <label class="ab-src" title="看哪个版本：AI 交的版本，或你自己保存的版本">版本<select id="abSrc"></select></label>
-      <span class="ab-chg" id="abChg" hidden>参数已变 · 未保存</span>
       <span class="ab-state" id="abState"></span>
       <span class="sp"></span>
       <button class="btn ab-ur" id="abUndo" type="button" aria-label="撤销" title="撤销（Ctrl+Z）" disabled>↶</button><button class="btn ab-ur" id="abRedo" type="button" aria-label="重做" title="重做（Ctrl+Shift+Z）" disabled>↷</button>
       <button class="btn primary" id="abSave" type="button" title="把现在的全部参数（所有层）存成你的版本（存在这台电脑的浏览器里）">保存</button>
       <button class="btn" id="abSaveAs" type="button">另存为…</button>
-      <details class="ab-more"><summary class="btn" title="更多">⋯</summary><div class="ab-menu">
-        <button type="button" id="abRepo">连接仓库文件夹（保存时顺便存进 git）…</button>
-        <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
+      <span class="ab-divider" aria-hidden="true"></span>
+      <div class="export-actions">
+        <button class="btn export-main" id="abExportPack" type="button" title="按每层的 PC / 手机导出方案导出完整素材包">导出素材包</button>
+        <details class="ab-more ab-unit" id="abUnit"><summary class="btn" aria-label="更多导出选项" title="单束导出与单束预览">⌄</summary><div class="ab-menu" id="abUnitMenu"></div></details>
+      </div>
+      <details class="ab-more" id="abMore"><summary class="btn" aria-label="更多操作" title="配方文件、保存设置、协作">⋯</summary><div class="ab-menu">
+        <span class="menu-label">配方文件</span>
         <button type="button" id="abExportFile">导出配方文件（.json）</button>
         <button type="button" id="abImportFile">导入配方文件…</button>
+        <span class="menu-label">保存设置</span>
+        <button type="button" id="abRepo">连接仓库文件夹…</button>
+        <span class="menu-label">协作</span>
+        <button type="button" id="abCopyDiff">复制我的改动（发给 AI）</button>
         <button type="button" id="abMyRename" hidden>重命名这个效果</button>
         <button type="button" id="abMyDelete" hidden>删除这个效果</button>
-        <button type="button" id="abRename">重命名这个版本</button>
-        <button type="button" id="abDelete">删除这个版本</button>
         <input type="file" id="abFile" accept=".json,application/json" hidden>
       </div></details>
-      <details class="ab-more ab-unit" id="abUnit"><summary class="btn" title="单束：只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条">单束</summary><div class="ab-menu" id="abUnitMenu"></div></details>
-      <button class="btn" id="abDeliv" type="button" aria-pressed="false" title="看这个效果导出的素材包里有什么：每层每段的贴图、平台、单格、延迟">查看交付</button>
     </div>
     <div class="crumb" id="crumb" hidden aria-hidden="true"></div>
     <div class="gpu" id="gpu"></div>
     <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
-    <div id="status"></div>
+    <div id="status" role="status" aria-live="polite"></div>
   </header>
   <main id="main">
     <aside class="side" id="side" aria-label="库">
@@ -37,6 +37,17 @@
         <button class="btn ghost side-x" id="sideClose" type="button" title="收起左栏（L 或 Esc）" aria-label="收起左栏">×</button>
       </div>
       <div class="side-body" id="libBody"></div>
+      <details class="ab-more version-history" id="versionHistory" hidden>
+        <summary class="btn">版本记录<span class="version-summary" id="versionSummary"></span></summary>
+        <div class="ab-menu">
+          <div class="version-current"><span class="ab-th" id="abThumb"></span><span class="ab-tx"><b id="abName"></b><small id="abSub"></small></span></div>
+          <label class="ab-src">查看版本<select id="abSrc" aria-label="查看版本"></select></label>
+          <span class="ab-chg" id="abChg" hidden>参数已变 · 未保存</span>
+          <button type="button" id="abRename">重命名这个版本</button>
+          <button type="button" id="abDelete">删除这个版本</button>
+          <p class="hint">保存的版本、未保存草稿和导出时的恢复点都在这里。</p>
+        </div>
+      </details>
       <div class="side-foot"><button class="btn newrec" id="newRecipe" type="button" title="自己搭一个效果：先选第一层（花型模板或现有效果的层），再加层、改名、调参数">＋ 新建效果</button><button class="btn ghost" id="rvCopy" type="button" title="把通过 / 要改和意见复制下来，贴到对话里">复制我的意见</button>
         <div hidden><button class="btn" id="cloudRecipesOpen" type="button">云端配方预览</button><button class="btn ghost" id="assetOpen2" type="button" title="临时看某个结果文件夹">打开结果文件夹…</button></div></div>
     </aside>
@@ -44,40 +55,23 @@
     <section class="stage">
       <div id="showcaseBar" class="showcase-bar" hidden><b id="showcaseTitle">云端配方预览</b><select id="showcaseType" aria-label="云端配方"></select><select id="cloudLayer" aria-label="查看配方图层"></select><button id="showcaseParams" class="btn ghost">保存完整配方</button><button id="showcaseClose" class="btn ghost">退出预览</button><p id="showcaseNote">正在烘焙配方…</p><details id="cloudPending"></details></div>
       <div id="bakeError" class="bake-error" role="alert" hidden><span id="bakeErrorText"></span><button class="btn" id="bakeRetry" type="button">重试烘焙</button></div>
-      <div class="viewframe" id="viewFrame">
         <div class="viewbar" id="viewbar">
           <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="1.5" y="2.5" width="4.5" height="11" rx="1.5"/></svg><span class="tl">库</span></button>
           <div class="seg" id="viewSeg">
             <button data-view="live" aria-pressed="true">实时模拟</button>
             <button data-view="export" aria-pressed="false">引擎回放</button>
             <button data-view="atlas" aria-pressed="false">贴图</button>
+            <button data-view="flow" aria-pressed="false">流转</button>
+            <button id="abDeliv" type="button" data-view="delivery" aria-pressed="false" title="查看完整素材包的文件、平台、规格和延迟">交付清单</button>
           </div>
-          <div class="bakectl" id="bakeCtl"><button class="bakebtn" id="bakeNow" type="button" title="按当前参数烘焙贴图（B）">贴图最新</button><label class="bk-auto" title="自动烘焙：开 = 改参数停手后自动烘；关 = 改参数只更新实时模拟，按 B、切到引擎回放 / 贴图或导出时再烘"><input type="checkbox" id="autoBakeChk">自动</label></div>
-          <div class="seg small" id="atlasSeg" hidden>
-            <button data-layer="head" aria-pressed="true">星头</button>
-            <button data-layer="tail" aria-pressed="false">尾迹</button>
-          </div>
-          <div class="seg small" id="flowSeg" hidden>
-            <button data-flow="0" aria-pressed="true">整张</button>
-            <button data-flow="1" aria-pressed="false">流转动画</button>
-          </div>
-          <div class="seg small" id="segSeg" hidden>
-            <button data-seg="0" aria-pressed="true">段 A</button>
-            <button data-seg="1" aria-pressed="false">段 B</button>
-          </div>
-          <div class="seg small" id="dispSeg" hidden>
-            <button data-disp="fit" aria-pressed="false">适应窗口</button>
-            <button data-disp="px" aria-pressed="false">1:1 像素</button>
-            <button data-disp="game" aria-pressed="true">游戏内大小</button>
-          </div>
-          <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
-          <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
           <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（V）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
-          <button class="vt" id="vtGrid" type="button" aria-pressed="false" title="构图网格（三分线 + 中心十字，只影响观察）"><svg viewBox="0 0 16 16"><rect x="1.5" y="1.5" width="13" height="13" rx="1"/><path d="M6 1.5v13M10 1.5v13M1.5 6h13M1.5 10h13"/></svg></button>
-          <button class="vt" id="vtNote" type="button" title="记录当前帧：把时间、视图、平台、距离、图层、版本写进意见"><svg viewBox="0 0 16 16"><rect x="1.5" y="4" width="13" height="9.5" rx="1.5"/><circle cx="8" cy="8.7" r="2.6"/><path d="M5.5 4l1-2h3l1 2"/></svg></button>
+          <span class="sp"></span>
+          <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
           <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="专注：收起两侧面板，画布最大（F，或双击画布）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">专注</span></button>
           <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="10" y="2.5" width="4.5" height="11" rx="1.5"/></svg></button>
         </div>
+      <div class="viewframe" id="viewFrame">
+      <div class="vf-heading"><span id="vfTitle"></span></div>
       <div class="canvas-wrap">
         <div class="canvas-box ref-box" id="refBox" hidden><video id="refVid" muted playsinline preload="auto"></video>
           <span class="tag" id="refTag">实拍</span>
@@ -101,21 +95,29 @@
           <div class="gridov" aria-hidden="true"></div>
         </div>
       </div>
-      <div class="vf-foot"><span id="vfTitle"></span><span id="vfSpec"></span><span class="sp"></span><label class="fexpo" id="distBox" hidden title="观看距离 50–1200 m（对数刻度）；标准检查按 1000 m">距离<input type="range" id="dist" min="0" max="1000" step="1" value="943"><output id="distOut">1000 m</output></label><label class="fexpo" title="显示曝光（只影响预览，不改素材）">曝光<input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label><span id="vfTick"></span></div>
+      <div class="preview-controls">
+        <div class="seg small" id="dispSeg" hidden><button data-disp="fit" aria-pressed="false">适应窗口</button><button data-disp="px" aria-pressed="false">1:1</button><button data-disp="game" aria-pressed="true">游戏内大小</button></div>
+        <label class="fexpo" id="distBox" hidden title="观看距离 50–1200 m（对数刻度）；标准检查按 1000 m">距离<input type="range" id="dist" min="0" max="1000" step="1" value="943"><output id="distOut">1000 m</output></label>
+        <label class="fexpo" title="显示曝光（只影响预览，不改素材）">显示曝光<input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label>
+        <details class="ab-more preview-settings" id="previewSettings"><summary class="btn" title="烘焙、贴图图层、构图网格、记录当前帧">预览设置</summary><div class="ab-menu">
+          <div class="bakectl" id="bakeCtl"><button class="bakebtn" id="bakeNow" type="button" title="按当前参数烘焙贴图（B）">贴图最新</button><label class="bk-auto" title="自动烘焙：开 = 改参数停手后自动烘；关 = 按 B、切到引擎回放 / 贴图或导出时再烘"><input type="checkbox" id="autoBakeChk">自动烘焙</label></div>
+          <div class="seg small" id="atlasSeg" hidden><button data-layer="head" aria-pressed="true">星头</button><button data-layer="tail" aria-pressed="false">尾迹</button></div>
+          <div class="seg small" id="flowSeg" hidden><button data-flow="0" aria-pressed="true">整张</button><button data-flow="1" aria-pressed="false">流转动画</button></div>
+          <div class="seg small" id="segSeg" hidden><button data-seg="0" aria-pressed="true">段 A</button><button data-seg="1" aria-pressed="false">段 B</button></div>
+          <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
+          <button id="vtGrid" type="button" aria-pressed="false" title="只影响观察">构图网格</button>
+          <button id="vtNote" type="button" title="把时间、视图、平台、距离、图层、版本写进意见">记录当前帧到意见</button>
+        </div></details>
+      </div>
+      <div class="vf-foot"><span id="vfSpec"></span><span class="sp"></span><span id="vfTick"></span></div>
       </div>
       <div class="delivview" id="delivView" hidden></div>
       <div class="timeline">
-        <button class="btn" id="play">暂停</button>
-        <button class="btn tk" id="replay" type="button" title="重播：回到 0 秒再播（R）">重播</button>
-        <button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1<span class="tku"> tick</span></button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1<span class="tku"> tick</span></button>
-        <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="时间">
-        <output id="tlabel">0.00 s</output>
-        <select id="speed" class="btn" aria-label="播放速度">
+        <button class="btn" id="play">暂停</button><button class="btn tk" id="replay" type="button" title="重播：回到 0 秒再播（R）">重播</button><select id="speed" class="btn" aria-label="播放速度">
           <option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option><option value="0.1">0.1×</option>
-        </select>
-        <label class="check tlloop" title="循环播放；关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked><span class="tku">循环</span></label>
-        <span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span><button class="btn tk" id="tlHelpBtn" type="button" aria-pressed="false" title="说明：下面层轨道上的点、菱形、把手分别是什么；快捷键">？</button>
-        <span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>R</kbd>重播 <kbd>F</kbd>专注 <kbd>V</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span>
+        </select><output id="tlabel">0.00 s</output><label class="check tlloop" title="循环播放；关掉 = 播放一遍停在最后"><input type="checkbox" id="loopChk" checked><span class="tku">循环</span></label><span class="sp"></span><button class="btn tk" id="tlHelpBtn" type="button" aria-pressed="false" title="说明：下面层轨道上的点、菱形、把手分别是什么；快捷键">？</button>
+        <details class="ab-more timeline-tools" id="timeTools"><summary class="btn">时间工具</summary><div class="ab-menu"><button class="btn tk" id="tickPrev" type="button" title="退 1 个 tick（1/30 s，←）">−1<span class="tku"> tick</span></button><button class="btn tk" id="tickNext" type="button" title="进 1 个 tick（1/30 s，→）">+1<span class="tku"> tick</span></button><span class="jumps"><button type="button" data-jump="open" title="开花那一刻（0 s）">开花</button><button type="button" data-jump="full" title="花开到最大（燃烧段结束、开始淡出的时刻）">展开</button><button type="button" data-jump="fade" title="淡出段中间">衰减</button></span><span class="keys" title="快捷键"><kbd>空格</kbd>播放 <kbd>R</kbd>重播 <kbd>F</kbd>专注 <kbd>V</kbd>实拍 <kbd>L</kbd>/<kbd>P</kbd>两侧 <kbd>←</kbd><kbd>→</kbd>±1 tick <kbd>↑</kbd><kbd>↓</kbd>切换条目</span></div></details>
+        <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="时间">
       </div>
       <div class="tlbars" id="tlBars"></div>
     </section>
@@ -127,7 +129,7 @@
       <button role="tab" data-tab="iter" aria-selected="false">工具</button>
     </div>
     <section class="review" id="pReview" hidden></section>
-    <section class="lcard" id="layerCard" hidden></section>
+    <details class="lcard" id="layerCard" hidden></details>
     <aside class="panel" id="pMaster">
       <div class="layerhead" id="layerHead" hidden></div>
       <div class="group pm-ident">
@@ -143,13 +145,15 @@
       </div>
       <div id="exposureControls" class="group" hidden><button class="btn" id="suggestExposure" type="button" title="在燃烧段几个时刻试渲染，按最亮的一刻定（排除开花闪光），各帧都不会大片过曝；只有点击才更新固定曝光。">建议曝光（按最亮时刻）</button></div>
       <div id="params"></div>
-      <details class="sec" open>
-        <summary>颜色（预览材质）</summary>
-        <p class="hint">不参与烘焙。模拟项目材质：灰度查渐变图，再乘 Color Over Life。合并输出时 Color Over Life 作用于整层；星头要单独变色，请把输出改为「分开」。</p>
-        <div class="stages" id="stages"></div>
-        <div class="flames" id="flames"></div>
-        <div class="colors" id="matColors"></div>
+      <details class="sec" id="colorControls" open>
+        <summary>颜色 · Color</summary>
         <div id="matSliders"></div>
+        <div class="stages" id="stages"></div>
+        <details class="color-extra"><summary>材质与颜色预设</summary>
+          <div class="flames" id="flames"></div>
+          <div class="colors" id="matColors"></div>
+          <p class="hint">不参与烘焙。模拟项目材质：灰度查渐变图，再乘 Color Over Life。合并输出时 Color Over Life 作用于整层；星头要单独变色，请把输出改为「分开」。</p>
+        </details>
       </details>
       <div class="actions">
         <div id="specHome"></div>
@@ -251,3 +255,11 @@
     <div class="pk-grid" id="pkGrid"></div>
   </div>
 </div>
+<dialog class="save-dialog" id="saveNameDlg" aria-labelledby="saveNameTitle" aria-describedby="saveNameNote">
+  <form method="dialog">
+    <h2 id="saveNameTitle">保存我的版本</h2>
+    <p id="saveNameNote"></p>
+    <label class="field">名称<input type="text" id="saveNameInput" autocomplete="off" required></label>
+    <div class="save-dialog-actions"><button class="btn" type="submit" value="cancel" formnovalidate>取消</button><button class="btn primary" id="saveNameSubmit" type="submit" value="save">保存</button></div>
+  </form>
+</dialog>

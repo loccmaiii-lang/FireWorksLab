@@ -62,7 +62,7 @@ async function mySave(asNew) {
   const rec = myRec(); if (!rec) return;
   if (repoDir.h && !repoDir.ok) await repoPerm(true);
   let out = rec;
-  if (asNew) { const nm = prompt('另存为新效果，叫什么？', rec.name + ' 副本'); if (nm == null) return; out = { ...structuredClone(rec), id: 'fx' + Date.now().toString(36), name: nm.trim() || rec.name + ' 副本', created: wbNow() }; }
+  if (asNew) { const nm = await askSaveName('另存为新效果', '复制当前全部图层、参数和联动关系，保留原效果。新效果会出现在左侧「我的效果」。', rec.name + ' 副本', '另存为'); if (nm == null) return; out = { ...structuredClone(rec), id: 'fx' + Date.now().toString(36), name: nm.trim() || rec.name + ' 副本', created: wbNow() }; }
   Object.assign(out, { updated: wbNow(), snap: mySnap(), links: myLinksLid() }); delete out.linksLive;
   myPut(out);
   const drafts = wbList().filter(x => x.draft); if (drafts.length && !asNew) wbPut(wbList().filter(x => !x.draft));   // 存了就不要草稿了

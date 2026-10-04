@@ -4,7 +4,7 @@
 //  审阅：通过 / 要改 + 意见，存在这台电脑的浏览器里；「复制意见」贴给 Claude
 // =====================================================================
 const lib = { q: '', key: '', review: null, pane: 'params', open: store.get('libOpen2', {}) };
-const ref2 = { on: store.get('refOn', true), off: 0 };
+const ref2 = { on: store.get('refOn', false), off: 0 };
 
 async function setTab(tab, o = {}) {
   const changed = tab !== state.tab;
@@ -343,7 +343,7 @@ function rememberLayerEdit() {
 // 4.3（渲染基础问题 F3）：待验收的候选默认在「引擎回放」里看（验收只看引擎回放：导出的贴图按 cascade.json 播放；实时模拟最锐，会看走眼）
 function isCandidate(e) { const ef = lib.effect; return !!(e && ef && ef.阶段 === '待验收' && ef.待验收版 === e.id); }
 function setViewSeg(v) {
-  state.view = v; document.querySelectorAll('#viewSeg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === v));
+  state.view = v; toggleDeliv(false); syncStageTabs();
   if (v !== 'live' && typeof bakeIfStale === 'function') bakeIfStale(); if (typeof syncStale === 'function') syncStale();
 }
 function openReview(e, ef) {
@@ -368,7 +368,7 @@ function openReview(e, ef) {
 }
 // 组合条目：整体效果（组合页实时模拟 + 实拍并排）；各层在审阅卡里单独打开
 async function openComboEntry(e) {
-  const v = isCandidate(e) ? 'export' : 'live'; state.view = v; document.querySelectorAll('#viewSeg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === v));
+  const v = isCandidate(e) ? 'export' : 'live'; state.view = v; toggleDeliv(false); syncStageTabs();
   state.comboSel = -1; state.layerView = { solo: -1, mute: [] };
   await setTab('combo', { lazy: true }); await applyCombo(e.combo); lib.sig = curSig(); setReview(e); syncComboPanels();   // lazy：只烘这个组合用到的层，不先烘整套默认母版
 }
@@ -516,7 +516,7 @@ function toggleFocus() {
 }
 function initPanels() {
   const root = document.documentElement;
-  root.style.setProperty('--sideW', store.get('sideW', 232) + 'px'); root.style.setProperty('--rightW', store.get('rightW', 340) + 'px');
+  root.style.setProperty('--sideW', store.get('sideW', 278) + 'px'); root.style.setProperty('--rightW', store.get('rightW', 374) + 'px');
   const drag = (el, fn) => el.addEventListener('pointerdown', e0 => {
     e0.preventDefault(); el.setPointerCapture(e0.pointerId); el.classList.add('drag'); document.body.classList.add('dragging');
     const mv = e => fn(e.clientX), up = () => { el.classList.remove('drag'); document.body.classList.remove('dragging'); el.removeEventListener('pointermove', mv); el.removeEventListener('pointerup', up); };
@@ -524,8 +524,8 @@ function initPanels() {
   });
   drag($('#gutL'), x => { const lim = window.innerWidth - (panels.right ? $('#right').offsetWidth : 0) - 420, w = Math.round(Math.max(200, Math.min(460, lim, x))); root.style.setProperty('--sideW', w + 'px'); store.set('sideW', w); });
   drag($('#gutR'), x => { const lim = window.innerWidth - (panels.side ? $('#side').offsetWidth : 0) - 420, w = Math.round(Math.max(300, Math.min(700, lim, window.innerWidth - x))); root.style.setProperty('--rightW', w + 'px'); store.set('rightW', w); });
-  $('#gutL').addEventListener('dblclick', () => { root.style.setProperty('--sideW', '232px'); store.set('sideW', 232); });
-  $('#gutR').addEventListener('dblclick', () => { root.style.setProperty('--rightW', '340px'); store.set('rightW', 340); });
+  $('#gutL').addEventListener('dblclick', () => { root.style.setProperty('--sideW', '278px'); store.set('sideW', 278); });
+  $('#gutR').addEventListener('dblclick', () => { root.style.setProperty('--rightW', '374px'); store.set('rightW', 374); });
   $('#btnSide').addEventListener('click', () => setPanels({ side: !panels.side }));
   $('#sideClose').addEventListener('click', () => setPanels({ side: false }));
   $('#btnRight').addEventListener('click', () => setPanels({ right: !panels.right }));

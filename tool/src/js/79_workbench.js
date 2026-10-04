@@ -26,7 +26,7 @@ function buildLayerCard() {
       <span class="lb"><button type="button" class="mini${solo ? ' on' : ''}" data-solo="${i}" aria-pressed="${solo}">独看</button><button type="button" class="mini${mute ? ' on' : ''}" data-mute="${i}" aria-pressed="${mute}">静音</button></span>${lib.my ? myLayerTools(i) : ''}</div>`;
   });
   if (lib.my) rows.push(`<button type="button" class="btn mini myadd" id="myAdd" title="加一层：花型模板，或现有效果里的某一层（参数复制一份）">＋ 加一层</button>`);
-  box.innerHTML = `<div class="lc-h"><b>观察图层</b><small>点一层改它的参数（画面仍是整朵）。独看 / 静音只影响观察。</small></div>
+  box.innerHTML = `<summary>图层管理 · ${state.layers.length} 层${lib.my ? ' · 加层 / 排序 / 复制' : ''}</summary><div class="lc-h"><small>时间轴点一层改参数；显示 / 独看只影响观察。</small></div>
     <div class="lrow whole${state.comboSel < 0 ? ' cur' : ''}" data-i="-1" tabindex="0" role="button"><span class="th whole">${state.layers.length}</span><span class="tx"><b>整体</b><small>各层的位置、延迟、时间倍率、颜色</small></span></div>${rows.join('')}`;
   box.querySelectorAll('.lrow').forEach(r => {
     const go = ev => { if (ev.target.closest('button,input')) return; selectComboLayer(+r.dataset.i); };
@@ -73,10 +73,10 @@ function outNote(L, e) {
 }
 function buildLayerHead(i) {
   const L = state.layers[i], host = $('#layerHead'); host.innerHTML = '';
-  host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b>正在调：第 ${i + 1} 层 · ${layerName(i)}</b><span class="shelp" role="button" tabindex="0" id="lhHelp" title="这一层怎么调">？</span></div>
+  host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b title="第 ${i + 1} 层 · ${layerName(i)}">当前图层 · ${layerName(i)}</b><button class="shelp" type="button" id="lhHelp" title="这一层怎么调">？</button></div>
     <p class="hint" id="lhHelpText" hidden>下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 寿命结束 / 火花停止（圆点）都可以直接拖。每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
-    ${lib.my ? myLinkHTML(i) : linkedWith(i).length ? `<p class="lh-link">联动：和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、随机等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>` : ''}`);
-  const pos = document.createElement('details'); pos.className = 'sec'; pos.open = true; pos.innerHTML = '<summary>在整朵里的位置</summary>'; host.appendChild(pos);
+    ${lib.my || linkedWith(i).length ? `<details class="lh-link-details"><summary>轨迹联动${linkedWith(i).length ? ' · 第 ' + linkedWith(i).map(j => j + 1).join('、') + ' 层' : ' · 关联图层'}</summary>${lib.my ? myLinkHTML(i) : `<p class="lh-link">和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、随机等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>`}</details>` : ''}`);
+  const pos = document.createElement('details'); pos.className = 'sec lh-position'; pos.open = false; pos.innerHTML = '<summary>位置与时间 · 缩放 / 延迟 / 镜像</summary>'; host.appendChild(pos);
   slider(pos, `lh${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
   slider(pos, `lh${i}-delay`, '延迟', 's', 0, 10, 0.01, () => L.delay, v => L.delay = v, 0);
   slider(pos, `lh${i}-rate`, '时间倍率', '×', 0.3, 2, 0.01, () => L.rate, v => L.rate = v, 1);
@@ -84,13 +84,14 @@ function buildLayerHead(i) {
   const cb = mir.querySelector('input'); cb.checked = !!L.mirror; cb.addEventListener('change', () => L.mirror = cb.checked); pos.appendChild(mir);
   // 4.2.12 导出方案（用户 10-02 20:04：PC 序列 + 粒子、手机纯图片，导出前在图层上选）
   const ex = document.createElement('details'); ex.className = 'sec'; ex.open = true; ex.id = 'lhOut';
-  ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><div id="lhDots"></div><p class="note" id="lhOutNote"></p>`;
-  host.appendChild(ex);
+  ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><div id="lhDots"></div><details class="lh-out-info"><summary>随整包导出 · 方案说明</summary><p class="note" id="lhOutNote"></p></details>`;
+  host.insertBefore(ex, host.querySelector('.lh-t').nextSibling);
   // 4.2.15 光点的大小 / 亮度（XD2：默认偏大偏亮）：只在 PC 选「光点」时出现；1 = 不写进层（没动过的层和以前逐字一样）
   const dh = ex.querySelector('#lhDots'), dset = k => v => { if (Math.abs(v - 1) < 1e-9) delete L[k]; else L[k] = v; };
   slider(dh, `lh${i}-dotSize`, '光点大小', '× 星头', 0.2, 4, 0.05, () => L.dotSize > 0 ? +L.dotSize : 1, dset('dotSize'), 1);
   slider(dh, `lh${i}-dotBright`, '光点亮度', '×', 0.1, 4, 0.05, () => L.dotBright > 0 ? +L.dotBright : 1, dset('dotBright'), 1);
   const syncOut = () => { const o = layerOut(L), le = layerEntryOf(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = o.mobile; $('#lhOutNote').textContent = outNote(L, le); dh.hidden = o.pc !== 'dots';
+    const info = ex.querySelector('.lh-out-info'), warn = $('#lhOutNote').textContent.includes('注意：') || (o.pc === 'off' && o.mobile === 'off'); info.open = warn; info.classList.toggle('warn', warn);
     const uo = ex.querySelector('[data-out=pc] option[value=unit]'); if (uo && le) { uo.disabled = !unitAllowed(le.P) && o.pc !== 'unit'; uo.title = unitAllowed(le.P) ? '' : '千轮、分裂、蜂、非球形图案不能出单束'; } };
   ex.querySelectorAll('[data-out]').forEach(sel => sel.addEventListener('change', () => { L.out = { ...layerOut(L), [sel.dataset.out]: sel.value }; if (L.out.pc === 'seq' && L.out.mobile === 'seq') delete L.out; syncOut(); if (stage2.deliv) renderDeliv(); wbSync(); }));
   syncOut();
@@ -140,7 +141,7 @@ function wbRefresh() {
   wbSync();
 }
 function wbSync() {
-  const bar = $('#assetBar'); bar.hidden = !wbVisible(); if (bar.hidden) return;
+  const bar = $('#assetBar'); bar.hidden = !wbVisible(); $('#versionHistory').hidden = bar.hidden; if (bar.hidden) return;
   const ef = lib.effect, e = lib.review, combo = state.tab === 'combo';
   $('#abName').textContent = lib.my ? lib.my.name : ef ? ef.名 : e ? e.name : lib.formal ? lib.formal.name : lib.key === 'combo' ? '组合编辑器' : TYPE_NAMES[state.P.type] || '';
   $('#abSub').textContent = lib.my ? [packNamesFor(wb.key, null, state.layers.length, 'MyFx').base, state.layers.length + ' 层', '我的效果'].join(' · ')
@@ -155,7 +156,11 @@ function wbSync() {
   sel.value = cur;
   const changed = !!wb.sig && wbSig() !== wb.sig;
   $('#abChg').hidden = !changed; $('#abChg').textContent = wb.src.kind === 'mine' ? '参数已变 · 未保存到「' + ((list.find(x => x.id === wb.src.id) || {}).name || '') + '」' : '参数已变 · 未保存'; wb.changed = changed;
-  $('#abSave').classList.toggle('primary', changed); $('#abSave').title = wb.src.kind === 'mine' ? `覆盖保存「${(list.find(s => s.id === wb.src.id) || {}).name || ''}」` : '存成你的一个版本（起个名字）';
+  $('#abSave').title = lib.my ? '保存当前效果' : wb.src.kind === 'mine' ? `覆盖保存「${(list.find(s => s.id === wb.src.id) || {}).name || ''}」` : '保存为我的版本（首次保存需要命名）';
+  $('#abSaveAs').title = lib.my ? '另存为新效果，保留当前效果' : '另存为新版本，保留当前版本';
+  $('#versionSummary').textContent = changed ? '未保存' : wb.src.kind === 'mine' ? '我的版本' : lib.my ? '已保存' : '原始版本';
+  $('#versionSummary').classList.toggle('changed', changed);
+  $('#abExportPack').disabled = !$('#busy').hidden || state.baking || (combo && !wbIdle());
   $('#abRename').hidden = $('#abDelete').hidden = wb.src.kind !== 'mine';
 }
 setInterval(() => { if (!document.hidden && !$('#assetBar').hidden) wbSync(); }, 1000);
@@ -174,6 +179,15 @@ function autoDraft() {
 }
 if (window.addEventListener) window.addEventListener('beforeunload', () => { try { autoDraft(); } catch (e) { } });
 function wbNow() { return new Date().toLocaleString('zh-CN', { hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(/\//g, '-'); }
+function askSaveName(title, note, initial, action = '保存') {
+  const dlg = $('#saveNameDlg'), input = $('#saveNameInput');
+  $('#saveNameTitle').textContent = title; $('#saveNameNote').textContent = note; $('#saveNameSubmit').textContent = action;
+  input.value = initial; dlg.returnValue = 'cancel';
+  return new Promise(resolve => {
+    dlg.addEventListener('close', () => resolve(dlg.returnValue === 'save' ? input.value.trim() : null), { once: true });
+    dlg.showModal(); input.focus(); input.select();
+  });
+}
 async function wbSave(asNew) {
   if (lib.my) return mySave(asNew);                         // 我的效果：保存 = 覆盖这个效果，另存为 = 复制成新效果（4.2.7）
   if (repoDir.h && !repoDir.ok) await repoPerm(true);      // 连过仓库文件夹：先趁这次点击问一下「允许」（浏览器重开后第一次）
@@ -181,7 +195,7 @@ async function wbSave(asNew) {
   let it = !asNew && mine && !mine.draft && !mine.auto && mine;        // 草稿、导出时自动存的不覆盖：存成正式的一个版本（起名字）；草稿删掉
   if (mine && mine.draft && !asNew) list.splice(list.indexOf(mine), 1);
   if (!it) {
-    const name = prompt('给这个版本起个名字（存在这台电脑的浏览器里）', `我的 ${list.length + 1}`);
+    const name = await askSaveName(asNew ? '另存为新版本' : '保存我的版本', '保存当前全部图层和参数，原始版本保留。版本存在这台电脑；连接仓库文件夹后会同时写入文件。', `我的 ${list.length + 1}`, asNew ? '另存为' : '保存');
     if (name == null) return;
     it = { id: Date.now().toString(36), name: name.trim() || `我的 ${list.length + 1}` }; list.push(it);
   }
@@ -280,9 +294,11 @@ function initWorkbench() {
   $('#abSrc').addEventListener('change', e => wbLoad(e.target.value));
   $('#abSave').addEventListener('click', () => wbSave(false));
   $('#abSaveAs').addEventListener('click', () => wbSave(true));
-  $('#abDeliv').addEventListener('click', () => toggleDeliv());
+  $('#abExportPack').addEventListener('click', exportCurrentPack);
+  $('#abUndo').innerHTML = uiIcon('arrow-back-up'); $('#abRedo').innerHTML = uiIcon('arrow-forward-up');
+  $('#abUnit > summary').innerHTML = uiIcon('chevron-down');
   initStage();
-  const close = () => document.querySelector('.ab-more').removeAttribute('open');
+  const close = () => document.querySelectorAll('.ab-more[open]').forEach(m => m.open = false);
   $('#abCopyDiff').addEventListener('click', () => { close(); wbCopyDiff(); });
   $('#abRepo').addEventListener('click', () => { close(); repoMenu(); });
   $('#abMyRename').addEventListener('click', () => { close(); myRename(); });
@@ -294,7 +310,8 @@ function initWorkbench() {
   $('#abRename').addEventListener('click', () => { close(); const list = wbList(), s = list.find(x => x.id === wb.src.id); if (!s) return; const n = prompt('新名字', s.name); if (n == null) return; s.name = n.trim() || s.name; wbPut(list); wbSync(); renderLib(); });
   $('#abDelete').addEventListener('click', () => { close(); const list = wbList(), s = list.find(x => x.id === wb.src.id); if (!s || !confirm(`删除你的版本「${s.name}」？（不影响 AI 版）`)) return; wbPut(list.filter(x => x !== s)); renderLib(); wbLoadAI(); });
   $('#pReview').addEventListener('click', e => { const n = e.target.closest('.rnote'); if (n) n.classList.toggle('full'); });
-  document.addEventListener('click', e => { const m = document.querySelector('.ab-more'); if (m && m.open && !m.contains(e.target)) m.removeAttribute('open'); });
+  document.addEventListener('click', e => { document.querySelectorAll('.ab-more[open]').forEach(m => { if (!m.contains(e.target)) m.open = false; }); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 }
 
 
@@ -306,6 +323,25 @@ function initWorkbench() {
 // =====================================================================
 const stage2 = { deliv: false, tlSig: '', last: 0 };
 const VIEW_NAMES = { live: '实时模拟', export: '引擎回放', atlas: '贴图' };
+// 流转仍是贴图视图的播放方式；交付清单是覆盖页，不给渲染器增加新的视图状态。
+function syncStageTabs() {
+  const view = stage2.deliv ? 'delivery' : state.view === 'atlas' && state.atlasFlow ? 'flow' : state.view;
+  $('#viewSeg').querySelectorAll('[data-view]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === view)));
+  $('#flowSeg').querySelectorAll('[data-flow]').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.flow === '1') === !!state.atlasFlow)));
+}
+function selectStageView(view) {
+  if (view === 'delivery') { toggleDeliv(true); return; }
+  toggleDeliv(false);
+  state.view = view === 'flow' ? 'atlas' : view;
+  if (state.view === 'atlas') { state.atlasFlow = view === 'flow'; flowTrail.length = 0; $('#qlabels').dataset.key = ''; }
+  if (state.view !== 'live') bakeIfStale();
+  syncStale(); syncStageTabs();
+}
+function exportCurrentPack() {
+  if (!$('#busy').hidden || state.baking) return;
+  if (state.tab === 'combo') { if (wbIdle()) exportCombo(); else flash('请等所有图层烘焙完成后导出', true); }
+  else $('#btnExport').click();
+}
 function curLayerBakes() {
   if (state.tab === 'combo') return state.layers.map((L, i) => { const e = layerEntryOf(L); return { i, L, e, b: e && e.bake, name: layerName(i) }; });
   return [{ i: 0, L: { delay: 0, rate: 1, scale: 1 }, e: null, b: state.bake, name: state.repId ? (REPLICA_BY_ID[state.repId] || {}).name || state.name : TYPE_NAMES[state.P.type] }];
@@ -455,13 +491,15 @@ function resetToOpened() {
 function buildTlBars() {
   if (stage2.drag) return;   // 拖动中不重建（否则手上的把手被换掉，拖到一半断开）
   const D = curDuration(), rows = curLayerBakes(), P = editLayerP();
-  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x), lp = layerPOf(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(lp).map(q => q.t.toFixed(2)).join(':'), lp ? [lp.cutIn, lp.cutOut].join('/') : '', x.b ? bakeParts(x.b).map(s => (s.meta.L && s.meta.L.F) + '@' + (s.meta.t0 || 0).toFixed(3)).join('+') : ''].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-');
+  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x), lp = layerPOf(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(lp).map(q => q.t.toFixed(2)).join(':'), lp ? [lp.cutIn, lp.cutOut].join('/') : '', x.b ? bakeParts(x.b).map(s => (s.meta.L && s.meta.L.F) + '@' + (s.meta.t0 || 0).toFixed(3)).join('+') : ''].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-') + '|' + state.layerView.solo + '/' + state.layerView.mute.join(',');
   if (sig === stage2.tlSig) return; stage2.tlSig = sig;
   const host = $('#tlBars');
   if (state.tab === 'asset' || state.showcase || !rows.length) { host.innerHTML = ''; return; }
   const glued = gluedPhases(rows);
   const pct = t => clamp(t / D * 100, 0, 100), seg = (a, b, cls, title) => b > a ? `<i class="${cls}" style="left:${pct(a)}%;width:${Math.max(0.3, pct(b) - pct(a))}%"${title ? ` title="${title}"` : ''}></i>` : '';
-  host.innerHTML = rows.map(x => {
+  const step = Math.max(1, Math.ceil(D / 12)), ticks = Array.from({ length: Math.floor(D / step) + 1 }, (_, i) => i * step);
+  const ruler = `<header class="tlr"><span>图层与时间</span><div class="tlr-track" title="点刻度跳到对应时间">${ticks.map(t => `<span style="left:${pct(t)}%">${t}s</span>`).join('')}</div></header>`;
+  host.innerHTML = ruler + rows.map(x => {
     const sp = layerSpans(x), on = state.tab !== 'combo' || layerShown(x.i), sel = state.tab === 'combo' && state.comboSel === x.i, lp = layerPOf(x);
     const bars = !sp ? '' : seg(sp.at(sp.vis[0]), sp.at(sp.vis[1]), 'vis', '整段可见范围（全黑帧已剔掉）')
       + (sp.pre ? seg(sp.at(sp.pre.from), sp.at(sp.t0), 'pre', `入点前：第 1 帧从 ${Math.round(sp.pre.keys[0][1] * 100)}% 放大`) : '')
@@ -471,7 +509,8 @@ function buildTlBars() {
     const ph = sp ? phasesOf(lp).map(q => `<b class="ph ph-${q.k} row-${q.row}${q.auto ? ' auto' : ''}${glued.has(x.i + ':' + q.k) ? ' glued' : ''}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s（左右拖动修改${glued.has(x.i + ':' + q.k) ? '；和同一批星的另一层在同一时刻，一起动' : ''}）"></b>`).join('') : '';
     // 帧刻度：每一帧从哪个 tick 开始（密 = 帧率高）；换张的地方刻度长一点
     const comb = !sp || !x.b ? '' : bakeParts(x.b).map((s, pi) => (s.meta.times || []).map((t, f) => `<i class="fc${f === 0 && pi > 0 ? ' pg' : ''}" style="left:${pct(sp.at((s.meta.t0 || 0) + t))}%"></i>`).join('')).join('');
-    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><span class="tlb-n" data-i="${x.i}" title="${x.name}${state.tab === 'combo' ? '（点一下切到这一层）' : ''}">${state.tab === 'combo' ? x.i + 1 + ' · ' : ''}${x.name}</span><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
+    const combo = state.tab === 'combo', mute = state.layerView.mute.includes(x.i), solo = state.layerView.solo === x.i;
+    return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><div class="tlb-label"><span class="tlb-number">${x.i + 1}</span>${combo ? `<button class="tlb-observe" type="button" data-track-mute="${x.i}" aria-label="显示第 ${x.i + 1} 层" aria-pressed="${!mute}" title="${mute ? '显示' : '隐藏'}这一层（只影响观察）">${uiIcon(mute ? 'eye-off' : 'eye')}</button>` : ''}<button type="button" class="tlb-n" data-i="${x.i}" title="点一下切换图层参数">${x.name}</button>${combo ? `<button class="tlb-observe solo" type="button" data-track-solo="${x.i}" aria-label="独看第 ${x.i + 1} 层" aria-pressed="${solo}" title="独看这一层（只影响观察）">S</button>` : ''}</div><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
   }).join('') + '<div class="tlcv" id="tlCurves"></div><span class="tlb-ph" aria-hidden="true"></span>'
     + `<div class="tlcut">${P ? `<button type="button" class="mini" data-cut="in" title="把当前时刻设成入点：帧预算从这里开始分配">设为入点</button><button type="button" class="mini" data-cut="out" title="把当前时刻设成出点">设为出点</button><button type="button" class="mini" data-cut="clear">清除</button>
       <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动（第一次看得见）'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动（最后看得见）'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') : ''}</span>`
@@ -479,6 +518,9 @@ function buildTlBars() {
   // 点轨道（不是把手）：跳到那个时刻；多层时顺便切到这一层（用户 16:22 第 3 条）
   host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { if (ev.target !== t && !ev.target.matches('i, .fcs')) return; const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); if (state.tab === 'combo' && state.comboSel !== +t.dataset.i) selectComboLayer(+t.dataset.i); }));
   host.querySelectorAll('.tlb-n[data-i]').forEach(n => n.addEventListener('click', () => { if (state.tab === 'combo') selectComboLayer(state.comboSel === +n.dataset.i ? -1 : +n.dataset.i); }));
+  host.querySelector('.tlr-track').addEventListener('pointerdown', ev => { const r = ev.currentTarget.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); });
+  host.querySelectorAll('[data-track-mute]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.trackMute, v = state.layerView; v.mute = v.mute.includes(i) ? v.mute.filter(x => x !== i) : [...v.mute, i]; buildLayerCard(); }));
+  host.querySelectorAll('[data-track-solo]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.trackSolo, v = state.layerView; v.solo = v.solo === i ? -1 : i; buildLayerCard(); }));
   host.querySelectorAll('[data-cut]').forEach(b => b.addEventListener('click', () => setCut(b.dataset.cut)));
   host.querySelectorAll('.ph, .cut').forEach(h => h.addEventListener('pointerdown', ev => trackDrag(ev, h)));
   const ex = rows.find(x => (state.tab !== 'combo' && P) || (state.tab === 'combo' && state.comboSel === x.i)), phs = ex ? phasesOf(layerPOf(ex)) : [];
@@ -615,6 +657,8 @@ function applyCut(P, sp, kind, tl, drag) {
 }
 // 每帧调用（80_render 的主循环）：tick 号、播放头；标题 / 脚注 / 时段条 / 通过门槛每 1/4 秒刷新
 function stageTick(D) {
+  const playing = String(state.playing), play = $('#play');
+  if (play.dataset.playing !== playing || !play.querySelector('.ui-icon')) { play.dataset.playing = playing; play.innerHTML = uiIcon(state.playing ? 'player-pause' : 'player-play'); play.setAttribute('aria-label', state.playing ? '暂停' : '播放'); play.title = state.playing ? '暂停（空格）' : '播放（空格）'; }
   $('#vfTick').textContent = `30 fps · tick ${Math.floor(engineTick(Math.min(state.t, D)) * 30 + 1e-6)}`;
   // 4.2.22 播放头：轨道的位置每 1/4 秒量一次（offsetLeft 每帧强制排版），播放头用 transform 挪（不触发排版）
   const now = performance.now(), host = $('#tlBars'), ph = host.querySelector('.tlb-ph');
@@ -748,13 +792,14 @@ async function exportUnitPack(P0, M, name) {
 function toggleDeliv(on) {
   stage2.deliv = on == null ? !stage2.deliv : on;
   $('#delivView').hidden = !stage2.deliv; $('#viewFrame').hidden = stage2.deliv;
-  $('#abDeliv').setAttribute('aria-pressed', String(stage2.deliv)); $('#abDeliv').textContent = stage2.deliv ? '返回画面' : '查看交付';
+  syncStageTabs();
   if (stage2.deliv) renderDeliv();
 }
 function tickStep(n) { state.playing = false; $('#play').textContent = '播放'; state.t = Math.max(0, Math.min(curDuration(), engineTick(state.t + 1e-6) + n / 30)); }
 // 重播（4.2.0，用户 16:22）：回到 0 秒并播放；快捷键 R
 function replay() { state.t = 0; state.playing = true; $('#play').textContent = '暂停'; }
 function initStage() {
+  $('#replay').innerHTML = uiIcon('refresh'); $('#replay').setAttribute('aria-label', '重播');
   $('#replay').addEventListener('click', replay);
   $('#abUnit').addEventListener('toggle', () => { if ($('#abUnit').open) renderUnitMenu(); });
   $('#tickPrev').addEventListener('click', () => tickStep(-1));

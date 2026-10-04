@@ -5,8 +5,8 @@ for (const [g, types] of TYPE_GROUPS) {
   for (const t of types) og.appendChild(new Option(TYPE_NAMES[t], t));
   $('#type').appendChild(og);
 }
-$('#verLabel').innerHTML = '<span class="bn">烟花烘焙器 </span>v' + VERSION;
-document.title = '烟花母版烘焙器 · v' + VERSION;
+$('#verLabel').textContent = 'v' + VERSION;
+document.title = '烟花烘培器 · v' + VERSION;
 $('#type').addEventListener('change', e => setType(e.target.value));
 $('#mname').addEventListener('input', e => state.name = e.target.value);
 $('#x-form').addEventListener('change', e => setForm(e.target.value));
@@ -30,10 +30,10 @@ const segBtns = (id, fn) => $(id).addEventListener('click', e => {
 });
 segBtns('#dispSeg', b => state.disp = b.dataset.disp);
 segBtns('#platformSeg', b => setPreviewPlatform(b.dataset.platform));
-segBtns('#viewSeg', b => { state.view = b.dataset.view; if (state.view !== 'live') bakeIfStale(); syncStale(); });     // 4.2.16：切到引擎回放 / 贴图时，贴图旧了就烘
+$('#viewSeg').addEventListener('click', e => { const b = e.target.closest('button[data-view]'); if (b) selectStageView(b.dataset.view); });
 segBtns('#atlasSeg', b => state.atlasLayer = b.dataset.layer);
 segBtns('#segSeg', b => state.atlasSeg = +b.dataset.seg);
-segBtns('#flowSeg', b => { state.atlasFlow = b.dataset.flow === '1'; flowTrail.length = 0; $('#qlabels').dataset.key = ''; });
+segBtns('#flowSeg', b => { state.atlasFlow = b.dataset.flow === '1'; flowTrail.length = 0; $('#qlabels').dataset.key = ''; syncStageTabs(); });
 $('#dist').value = sliderFromDist(state.dist);
 $('#dist').addEventListener('input', e => { state.dist = distFromSlider(+e.target.value); $('#distOut').textContent = state.dist + ' m'; });
 $('#dist').addEventListener('dblclick', () => { state.dist = 1000; $('#dist').value = sliderFromDist(1000); $('#distOut').textContent = '1000 m'; });
