@@ -10,7 +10,7 @@
   "对话框9": "2026-10-02 15:18",
   "对话框11": "2026-10-02 19:35",
   "对话框13": "2026-10-02 23:40",
-  "对话框15": "2026-10-05 01:45",
+  "对话框15": "2026-10-05 02:50",
   "对话框16": "2026-10-04 20:10",
   "对话框17": "2026-10-04 18:01"
  },
@@ -77,6 +77,12 @@
    "烘焙器 4.4.5 起，升空尾缀「物理弹道」（RT5，用户 10-04 17:27「上升太匀速」）的 RiseLoop / HeadGlow 写新模块 {\"m\": \"VelocityOverLife\", \"VelOverLife\": {\"curve\": [[相对寿命, [x, y, z] cm/s], …], \"bake\": false}, \"Absolute\": true}（ParticleModuleVelocityOverLifetime：VelOverLife、Absolute），不再写 Drag / ConstAcceleration；格式见 spec/cascade_params_v1.md 第 5 节（⚪）和 10.E2。",
    "同一批：RiseLoop 在「循环层长度 = 跟真实尾迹」时重新写 SizeByLife（只改 Y，MultiplyX false / Y true / Z false，\"bake\": false），RiseFade 的 Initial Size / pivot_offset 和 RiseLoop 不同（各自真实大小）。GPU 发射器不再写 Acceleration、最多 2 个 InitialVelocity。",
    "要导入器做的：认 VelocityOverLife（含 Absolute 布尔），其它照旧；RT5 导出包回来后会在 analysis/results/RT5*E*/ 里。未支持前导入会报未知模块（按 10-04 的规则不静默跳过）。"
+  ],
+  "分派中（只产出文档，不碰 tool/src）": [
+   "对话框18 参数大筛查 → 协作/筛查/参数清单_分类结果.csv + 参数大筛查_报告.md",
+   "对话框19 隐性耦合与自动行为清单 → 协作/筛查/隐性耦合清单.md",
+   "对话框20 界面走查与功能完整性 → 协作/筛查/界面走查_功能矩阵.md / 问题清单.md / 交互宪章_草案.md",
+   "提示词：对话记录/新对话提示词_对话框18/19/20_*.md（对话框15 2026-10-05 写，用户自己开）"
   ]
  },
  "effects": [
