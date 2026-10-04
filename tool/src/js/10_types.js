@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.4.2';     // 4.4.0 包含 4.3.8（对话框17 可选渐变亮核与曝光亮部保留）；4.4.1 时间轴发射器行；4.4.2 单层导出方案
+const VERSION = '4.4.3';     // 4.4.0 包含 4.3.8（对话框17）；4.4.1 时间轴发射器行；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -64,7 +64,7 @@ const BASE = {
   endMode: 'fade', coolMode: 0,     // 4.4：结尾 / 火花冷却的开关，缺省 = 以前的做法（现有效果、导出都不变）
   headSize: 1.0, headBright: 1, flicker: 0.25,
   sparkRate: 95, sparkRateEnd: 1, sparkStop: 0, sparkStart: 0, sparkRamp: 0, sparkRampJit: 30, sparkLife: 0.55, sparkLifeEnd: 1, sparkLifeJit: 45, sparkSize: 0.35, sparkSpread: 2.5, sparkInherit: 0.2, sparkDrag: 2.2, sparkGrav: 1,
-  T0: 2050, cooling: 0.42, sparkBright: 1, twinkle: 0.6,
+  T0: 2050, cooling: 0.42, sparkBright: 1, twinkle: 0.6, twinkleHz: 0,
   subDelay: 0.9, subJit: 10, subStars: 36, subSpeed: 40, subBurn: 0.9, subTail: 0, carrierTail: 30, subPattern: 'sphere',
   spin: 14, chaos: 0.8, beeSpeed: 28,
   // 物理
@@ -444,7 +444,8 @@ const SCHEMA = [
     ['emberSize', '余烬长尾粗细（× 颗粒）', '×', 0.2, 2, 0.01, P => isAir(P) && P.emberFrac > 0],
     ['emberEnd', '光丝整体熄灭时刻（受光烟迹：星转点灭、色光变弱后烟迹一起暗掉，0 关）', 's', 0, 10, 0.05, P => isAir(P) && P.emberFrac > 0],
     ['emberAll', '余烬贯穿整个燃烧期（1 = 不受「火花只在前几秒」限制：外层引き火花先停，光丝一直跟到星头）', '', 0, 1, 1, P => isAir(P) && P.emberFrac > 0],
-    ['twinkle', '火花闪烁', '', 0, 1, 0.01]
+    ['twinkle', '火花闪烁', '', 0, 1, 0.01],
+    ['twinkleHz', '火花闪烁频率（0 = 每个时间片随机）', 'Hz', 0, 30, 0.5, P => +P.twinkle > 0]
   ] },
   { sec: '尾迹外形', show: P => isSeq(P) && familyOf(P.type) === 'aerial', hint: '每个效果（多层时每一层）自己的外形量，0 = 原样，不影响别的效果。尾长、尾缀粗细、星头大小、亮度、闪烁就是上面的「火花寿命」「尾缀粗细（散布）」「颗粒大小」「星头大小」「火花亮度」「火花闪烁」。', items: [
     ['tailJit', '粗细随机（星与星、火花与火花之间的粗细差别）', '', 0, 1, 0.01],

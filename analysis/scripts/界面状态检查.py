@@ -37,7 +37,7 @@
      不起作用的参数变灰写原因（菊：点火延迟随机；牡丹：火花寿命）、搜索认短名 / 全名 / 英文名 / 模块名、说明条第一行「English · 中文 — 说明」、
      爆裂星的「爆裂」发射器、尾缀档位在「效果 › 规格」、空白发射器「+ 火花」/「去掉」
   S4 4.4：旧搜索 / 只看改过的时点发射器标签 = 清掉筛选、换到那一页，不改配方；「全部」把发射器都排出来
-  E1 4.4：「结尾」「冷却方式」开关缺省 = 旧做法；结尾选「不淡出」序列时长加长到火花灭完、帧计划不再整体淡出
+  E1 4.4：「结尾」「冷却方式」开关缺省 = 旧做法（4.4.3 加：火花闪烁频率缺省 0、在火花 › 亮度的随机下面、闪烁 0 时不显示）；结尾选「不淡出」序列时长加长到火花灭完、帧计划不再整体淡出
   X2 4.4.2：单层效果（牡丹）也有导出方案：PC 序列 / 单束 / GPU 光点 / 不出、手机 序列 / 不出；选光点后 cascade.json 是 GPU 光点、引擎回放画光点；多层效果的层里不显示（在层页头选）
   N3 排查第 1 步：SCHEMA ↔ 默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS 对得上
   T1 4.4：时间轴的发射器行：菊 = 开花闪光 / 星 / 火花，火花被序列结尾切掉时有 ✂、加长后消失；点行名右栏切到那个发射器；千轮有子花行、爆裂星有爆裂行
@@ -1039,6 +1039,10 @@ E1_JS = r"""async () => {
   await new Promise(r => setTimeout(r, 200));
   out.after = { dur: state.P.duration, want: e, noFade: !!displayPlan40(state.P).noEndFade, info: info() };
   if (Math.abs(state.P.duration - e) > 0.051 || !out.after.noFade || /差/.test(out.after.info)) bad.push('选「不淡出」后不对：' + JSON.stringify(out.after));
+  // 4.4.3 E6：火花闪烁频率在「火花 › 亮度」、跟着闪烁收在随机下面；闪烁 0 时不显示，> 0 显示；缺省 0（以前的做法）
+  const tw = () => { const x = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'twinkleHz'); return x ? { at: x[0]._x.e + '›' + x[0]._x.m, rand: x[0]._randOf, vis: itemVisible(x[1], state.P) } : null; };
+  out.twHz = { def: +state.P.twinkleHz, on: tw() }; const tw0 = state.P.twinkle; state.P.twinkle = 0; out.twHz.off = tw(); state.P.twinkle = tw0;
+  if (out.twHz.def !== 0 || !out.twHz.on || out.twHz.on.at !== '火花›亮度' || out.twHz.on.rand !== 'sparkBright' || !out.twHz.on.vis || out.twHz.off.vis) bad.push('火花闪烁频率不对：' + JSON.stringify(out.twHz));
   selectEmitTab('星');
   return { ok: !bad.length, bad, out };
 }"""

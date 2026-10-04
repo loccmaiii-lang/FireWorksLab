@@ -401,7 +401,8 @@ class Sim {
       if (gl > 0) { const tf = gd * (0.5 + sp.rnd[i]), e = (sp.age[i] - tf) / 0.03; g = g * (1 - 0.85 * gl) + gl * 6 * Math.exp(-e * e); }
       const j = i * 3, x = sp.p[j], y = sp.p[j + 1];
       if (refl > 0 && y < 0) continue;
-      const I = g * (1 + P.twinkle * (rr.u() * 2 - 1)) * P.sparkBright * 0.6;
+      const tw = +P.twinkleHz > 0 ? Math.sin(6.2831853 * (P.twinkleHz * this.t + sp.rnd[i] * 7.31 % 1)) : rr.u() * 2 - 1;     // 4.4.3 闪烁频率（和 GPU 核同一条）
+      const I = g * (1 + P.twinkle * tw) * P.sparkBright * 0.6;
       push(bufT, nt++, x, y, I, P.sparkSize * (emb ? P.emberSize : 1));
       if (refl > 0 && nt < capT - 1) push(bufT, nt++, x + ripple(y, this.t), -y, I * refl * Math.exp(-y / 400), P.sparkSize * 1.3);
     }
