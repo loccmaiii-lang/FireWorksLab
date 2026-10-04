@@ -1,0 +1,8 @@
+08:11:56 开始：TrailL（导出素材）
+08:12:04 TrailL 导出 9 秒：T_TrailL_Fade20.png、T_TrailL_Fade20_Cutout.png、T_TrailL_Fade30.png、T_TrailL_Fade30_Cutout.png、T_TrailL_Loop.png、T_TrailL_Loop_Cutout.png、T_TrailL_Mobile_Fade20.png、T_TrailL_Mobile_Fade20_Cutout.png、T_TrailL_Mobile_Fade30.png、T_TrailL_Mobile_Fade30_Cutout.png、T_TrailL_Mobile_Loop.png、T_TrailL_Mobile_Loop_Cutout.png、T_TrailL_Mobile_Ramp.png、T_TrailL_Ramp.png、TrailL.json、TrailL_Cascade参数.txt、TrailL_Mobile.json、TrailL_曲线.csv、cascade.json、cascade_mobile.json
+08:12:06 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\V5LE2\回放检查.jpg（✅ 通过）
+08:12:22 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\V5LE2\烘焙回放.jpg
+08:12:23 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\V5LE2\烘焙回放_原尺寸.jpg
+08:12:23 烘焙器预览 preview.js：1 KB
+08:12:23 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+08:12:23 完成，用时 0.5 分钟
