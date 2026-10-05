@@ -62,7 +62,8 @@ for i in ids:
 for e in et['发射器']:
     used_m = {r['模块'] for r in et['参数'] if r['发射器'] == e['名']}
     for m in e['模块']:
-        if m not in used_m: warns.append(f'发射器「{e["名"]}」的模块「{m}」没有参数')
+        # 4.6.0：9 个标准模块即使没有参数也列（面板写明「跟谁 / 为什么没有」，71_panel43.js MOD_EMPTY），不算问题
+        if m not in used_m and m not in ('生成', '形状', '初速', '受力', '寿命', '大小', '颜色', '亮度', '闪烁'): warns.append(f'发射器「{e["名"]}」的模块「{m}」没有参数')
 
 for e in errors: print('❌ ' + e)
 if '--warn' in sys.argv:

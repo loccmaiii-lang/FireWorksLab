@@ -48,6 +48,8 @@
   W3 4.5.8（9 处 bug + 5 条小修，用户 10-05 21:40 / 21:55）：删效果撤销连版本一起回来；连删两个都能撤销；删层进 Ctrl+Z、不弹框；删当前模板后顶栏不剩「更新模板」；
      多层某层新参数烘焙失败时导出拦住；显示强度 0 导出也是 0；关自动烘焙时同一批星的层马上同步；内置效果「暂时不联动」不带进我的效果；组合说明按最终贴图写；
      贴图结尾全黑被裁掉要写明；换版本前先存草稿；浏览器存不进去要报错（读坏了先备份）；尾缀 S / M / L 模板导出 GPU 安全写法；子花继承标签写对
+  W4 4.6.0（5.0 第 1 步）：每个发射器都列 9 个标准模块（没参数的写跟谁 / 为什么没有）；爆裂 / 开花闪光 / 子花 / 点灭 / 余烬 / 分叉火花 / 辉星以前写死的数变成参数且真起作用；
+     「＋ 加发射器」：加、改、在模拟里生成光点 / 星、曲线几行时刻→值、去掉；「游戏内大小」按真实米数（四尺玉 1000 m 占 1/3，别的按真实大小）
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -1387,6 +1389,69 @@ async def w3(pg):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
 
 
+async def w4(pg):
+    """4.6.0（5.0 第 1 步，用户 10-05 20:22「每一个子发射器拥有的参数都是全的」）"""
+    bad, info = [], {}
+    STD = ['生成', '形状', '初速', '受力', '寿命', '大小', '颜色', '亮度', '闪烁']
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('crackle')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate("""(() => { const out = {}; for (const e of ['星', '火花', '余烬', '分叉火花', '爆裂', '开花闪光']) { const g = document.querySelector(`#params section.egrp[data-g="${e}"]`);
+      out[e] = g ? [...g.querySelectorAll(':scope > details.mod > summary')].map(x => x.firstChild.textContent.trim()) : null; } return out; })()""")
+    info['模块'] = r
+    for e, ms in r.items():
+        if not ms or [m for m in STD if m not in ms]: bad.append(f'「{e}」没有列全 9 个模块：{ms}')
+        elif [m for m in ms if m in STD] != STD: bad.append(f'「{e}」9 个模块顺序不对：{ms}')
+    # 爆裂 / 开花闪光的新参数真起作用（模拟里的小闪）
+    r = await pg.evaluate("""(() => { const P = derive({ ...structuredClone(state.P), crackle: 12, crackleSize: 2, crackleSizeJit: 0, crackleBright: 5, crackleBrightJit: 0, crackleLife: 0.2, crackleTau: 0.05, flashR: 10, flashSize: 1 });
+      const s = new Sim(P); for (let i = 0; i < Math.ceil((P.burn + 1.5) / H_STEP); i++) s.step(H_STEP);
+      const cr = s.flashes.filter(f => f.abs != null), fl = s.flashes[0]; const avg = a => a.reduce((x, y) => x + y, 0) / Math.max(1, a.length);
+      return { n: cr.length, sig: +avg(cr.map(f => f.sig)).toFixed(3), abs: +avg(cr.map(f => f.abs)).toFixed(3), cut: cr[0] && cr[0].cut, tau: cr[0] && cr[0].tau, flashSig: fl.sig }; })()""")
+    info['爆裂 / 开花闪光'] = r
+    if not r['n'] or abs(r['sig'] - 2) > 1e-6 or abs(r['abs'] - 5) > 1e-6 or r['cut'] != 0.2 or r['tau'] != 0.05: bad.append(f'爆裂的大小 / 亮度 / 寿命 / 衰减参数没起作用：{r}')
+    if abs(r['flashSig'] - 10) > 1e-6: bad.append(f'开花闪光半径没起作用：{r}')
+    r = await pg.evaluate("""(() => { const row = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'flashR'); return { row: !!row, adef: !!(row && row[0].querySelector('.adef input')), on: !!(row && row[0].querySelector('.adef input').checked) }; })()""")
+    info['开花闪光半径用默认'] = r
+    if not (r['row'] and r['adef'] and r['on']): bad.append(f'开花闪光半径没有「用默认（跟初速）」勾选：{r}')
+    # 子花：子星大小 / 亮度
+    r = await pg.evaluate("""(() => { const P = derive({ ...structuredClone(defaultsFor('senrin').P), type: 'senrin', subSize: 2.5, subBright: 0.4 }); const s = new Sim(P);
+      for (let i = 0; i < Math.ceil((P.subDelay + 0.3) / H_STEP); i++) s.step(H_STEP); const k = s.all.filter(x => x.kind === 2); return { n: k.length, sz: k[0] && k[0].sz, I: k[0] && k[0].I }; })()""")
+    info['子花'] = r
+    if not r['n'] or r['sz'] != 2.5 or abs(r['I'] - 0.4) > 1e-9: bad.append(f'子星大小 / 亮度没起作用：{r}')
+    # 火花 / 余烬 / 分叉 / 辉星的着色器参数都接上了
+    r = await pg.evaluate("(() => { const pr = particleProgram40('spk'); return ['uInhA', 'uT0J', 'uEmbDk', 'uEmbFa', 'uBrL', 'uBrV', 'uBrKd', 'uBrT', 'uBrB', 'uBrS', 'uGlW', 'uGlPk', 'uGlDim'].filter(k => !pr.u[k]); })()")
+    info['着色器参数缺'] = r
+    if r: bad.append(f'火花着色器里这些参数没接上：{r}')
+    # ＋ 加发射器
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate("""(async () => { const b = document.querySelector('#exAdd'); if (!b) return { btn: false }; b.click(); await new Promise(z => setTimeout(z, 300));
+      const g = document.querySelector('#params section.egrp[data-g="自定义 1"]'), tab = document.querySelector('#params .etabs [data-e="自定义 1"]');
+      return { btn: true, on: state.P.x1On, tab: !!tab && !tab.hidden, sel: tab && tab.classList.contains('on'), vis: !!g && !g.hidden, mods: g ? [...g.querySelectorAll(':scope > details.mod > summary')].map(x => x.firstChild.textContent.trim()) : [] }; })()""")
+    info['加发射器'] = r
+    if not r.get('btn') or r.get('on') != 1 or not r.get('tab') or not r.get('vis'): bad.append(f'「＋ 加发射器」没加出「自定义 1」：{r}')
+    elif [m for m in STD if m not in r['mods']]: bad.append(f'「自定义 1」没有列全 9 个模块：{r["mods"]}')
+    r = await pg.evaluate("""(() => { const P = derive({ ...structuredClone(state.P), x1On: 1, x1Event: 'death', x1N: 5, x1Kind: 'dot', x1BrightCurve: '0:1, 0.5:2, 1:0' }); const s = new Sim(P);
+      for (let i = 0; i < Math.ceil((P.burn * 1.4 + 0.2) / H_STEP); i++) s.step(H_STEP); const n = s.exDots.length, bh = new Float32Array(4 * 200000), bt = new Float32Array(4 * 4);
+      const P0 = derive({ ...structuredClone(state.P), x1On: 0 }), s0 = new Sim(P0); for (let i = 0; i < Math.ceil((P.burn * 1.4 + 0.2) / H_STEP); i++) s0.step(H_STEP);
+      const [nh] = s.gather(bh, bt), [nh0] = s0.gather(new Float32Array(4 * 200000), bt);
+      const P2 = derive({ ...P, x1Kind: 'star', x1Spark: 50, x1Size: 1.7 }), s2 = new Sim(P2); for (let i = 0; i < Math.ceil((P.burn * 1.4 + 0.2) / H_STEP); i++) s2.step(H_STEP);
+      const k7 = s2.all.filter(x => x.kind === 7); return { stars: P.stars, dots: n, drawn: nh - nh0, k7: k7.length, k7sz: k7[0] && k7[0].sz, curve: parseCurve(P.x1BrightCurve), mid: lifeCurveAt(parseCurve(P.x1BrightCurve), 0.25) }; })()""")
+    info['自定义 1 模拟'] = r
+    if r['dots'] < r['stars'] * 4 or r['drawn'] <= 0: bad.append(f'「自定义 1」星熄灭时没生成 / 没画光点：{r}')
+    if r['k7'] < r['stars'] * 4 or r['k7sz'] is None: bad.append(f'「自定义 1」选「星」时没生成星：{r}')
+    if not r['curve'] or len(r['curve']) != 3 or abs(r['mid'] - 1.5) > 1e-9: bad.append(f'曲线「时刻:值」没按几行点算：{r}')
+    r = await pg.evaluate("""(async () => { selectEmitTab('自定义 1'); const row = panelRows.find(([r, it]) => it.curve === 'x1SizeCurve'); if (!row) return { row: false }; const inp = row[0].querySelector('input');
+      inp.value = '0:1, 1:0.2'; inp.dispatchEvent(new Event('change')); await new Promise(z => setTimeout(z, 100)); const t = row[0].querySelector('.cv-keys').textContent;
+      exRemoveSlot(1); await new Promise(z => setTimeout(z, 200)); const tab = document.querySelector('#params .etabs [data-e="自定义 1"]');
+      return { row: true, val: state.P.x1SizeCurve, keys: t, off: state.P.x1On, tab: !!tab && !tab.hidden }; })()""")
+    info['曲线 / 去掉'] = r
+    if not r.get('row') or r.get('val') != '0:1, 1:0.2' or '2 个点' not in r.get('keys', ''): bad.append(f'曲线输入不对：{r}')
+    if r.get('off') != 0 or r.get('tab'): bad.append(f'「去掉这个发射器」没去掉：{r}')
+    # 游戏内大小：真实米数
+    r = await pg.evaluate("(() => { const k = gamePixelsPerMeter({}, 300, 1080, 1000), k2 = gamePixelsPerMeter({}, 780, 1080, 1000), old = gamePixelsPerMeter({ screenFrac: 1 / 3 }, 300, 1080, 1000); return { same: Math.abs(k - k2) < 1e-12, yon: +(780 * k2).toFixed(3), d300: +(300 * k).toFixed(3), old300: +(300 * old).toFixed(3) }; })()")
+    info['游戏内大小'] = r
+    if not r['same'] or abs(r['yon'] - 360) > 1e-6 or abs(r['d300'] - 360 * 300 / 780) > 1e-3 or abs(r['old300'] - 360) > 1e-6: bad.append(f'游戏内大小不是真实米数（四尺玉 1000 m 占 1/3）：{r}')
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
+
+
 async def x2(pg):
     """4.4.2（用户 10-04 21:17）：单层效果（牡丹模板）也有「导出方案」：输出 › 导出方案里 PC 能选 GPU 光点 / 单束 / 不出，手机能选不出；选光点后 cascade.json 是一个 GPU 光点发射器、引擎回放画光点、说明写有尾迹没了"""
     bad, info = [], {}
@@ -1431,7 +1496,7 @@ async def x2(pg):
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
-  for (const sec of SCHEMA) for (const it of sec.items) { const k = Array.isArray(it) ? it[0] : it.sel || it.text || (it.info ? 'info:' + it.info : ''); if (!k) continue; keys.add(k); items.push([sec, it, k]); }
+  for (const sec of SCHEMA) for (const it of sec.items) { const k = Array.isArray(it) ? it[0] : it.sel || it.text || it.curve || (it.info ? 'info:' + it.info : ''); if (!k) continue; keys.add(k); items.push([sec, it, k]); }
   const types = Object.keys(TYPES), D = types.map(t => defaultsFor(t).P);
   for (const [sec, it, k] of items) {
     if (!k.startsWith('info:') && k !== '_trailTier' && !(k in BASE) && !D.some(P => P[k] !== undefined)) bad.push(`「${sec.sec}」的 ${k} 没有默认值（BASE 和所有花型模板都没有）`);
@@ -1467,7 +1532,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

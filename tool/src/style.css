@@ -1087,8 +1087,8 @@ header.top #status{position:fixed;right:16px;bottom:16px;z-index:100;max-width:m
 .layerhead>#lhHelpText{order:67}
 .lh-link-details>summary{font-size:12px;cursor:pointer;padding:8px 2px;color:var(--dim)}
 #pMaster .pm-ident{order:1}
-#params .ptools{order:10;position:static;margin:0 0 6px;padding:4px 0}
-#colorControls{order:20;border:1px solid var(--line);border-radius:7px;padding:4px 10px 8px;background:var(--panel2);margin-bottom:8px}
+#params .ptools{order:6;position:static;margin:0 0 6px;padding:4px 0}
+#colorControls{order:45;border:1px solid var(--line);border-radius:7px;padding:4px 10px 8px;background:var(--panel2);margin-bottom:8px}
 #colorControls>summary{padding:6px 0;font-size:14px}
 #matSliders{display:flex;flex-direction:column;margin:4px 0 8px}
 #matSliders .sl{flex:none;grid-template-columns:90px minmax(0,1fr) 60px}
@@ -1100,8 +1100,8 @@ header.top #status{position:fixed;right:16px;bottom:16px;z-index:100;max-width:m
 #colorControls .stage-row{grid-template-columns:15px 27px minmax(0,1fr) 58px 20px;gap:5px}
 #colorControls .line2{flex-wrap:wrap}
 #colorControls .line2 .btn{padding:5px 8px;font-size:11px}
-#params>.etabs{order:25}
-#params>#blankAdd{order:26}
+#params>.etabs{order:5}     /* 4.6.0（5.0 第 1 步 · 交互宪章）：右栏第一屏是发射器标签 + 模块；这一层的颜色放到发射器下面 */
+#params>#blankAdd{order:7}
 #params>.egrp{order:40}
 #params>.pempty{order:41}
 #pHelp{order:70}
@@ -1332,3 +1332,15 @@ main.drawer-right .right-close{display:block}
 
 /* 4.5.8 浏览器存不进去：常驻提示，点「知道了」才关 */
 .store-err{position:fixed;left:50%;top:70px;transform:translateX(-50%);z-index:60;display:flex;gap:12px;align-items:center;max-width:min(720px,92vw);padding:10px 14px;border-radius:6px;background:#5a1d1d;border:1px solid #c0504d;color:#ffe9e7;font-size:13.5px;line-height:1.5;box-shadow:0 6px 24px rgba(0,0,0,.45)}
+
+/* 4.6.0（5.0 第 1 步）：没有参数的标准模块、曲线输入、＋ 加发射器 */
+details.mod-empty>summary{color:var(--muted,#adb8bc);opacity:.75}
+details.mod-empty .mod-note{font-size:12.5px;color:var(--muted,#adb8bc);padding:2px 10px 8px 22px;line-height:1.5}
+.curvef input[type=text]{width:100%;font:13px/1.4 var(--mono,monospace)}
+.curvef .cv-keys{display:block;font-size:12px;color:var(--muted,#adb8bc);margin-top:2px}
+.curvef .cv-keys.bad{color:#ff8a7a}
+.etabs .et-add{border-style:dashed;color:var(--accent,#00d49b)}
+
+/* 4.6.0：花型 / 产物那一块压紧，第一屏留给发射器 */
+#pMaster .pm-ident #formNote{font-size:12px;margin:2px 0 4px;max-height:3.2em;overflow:hidden}
+#pMaster .pm-ident .typebtn .tb-txt small{display:none}

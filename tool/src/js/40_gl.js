@@ -133,6 +133,7 @@ uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw, uBr;
 uniform float uInh, uSpread, uLife, uLifeEnd, uLifeJit, uK, uG, uT0, uCool, uCoolAbs, uTwk, uTwHz, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
 uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShoulder, uDif, uDifL, uRise, uStarB, uWShape, uWidth, uPinH, uPinT, uBelly;
 uniform float uRamp, uRampJ;     // 4.2.17 火花起势：开始出火花后几秒到满密度、每颗星 ± 随机
+uniform float uInhA, uInhB, uT0J, uEmbLJ, uEmbDk, uEmbFa, uBrL, uBrLA, uBrLB, uBrV, uBrVA, uBrVB, uBrInh, uBrKd, uBrT, uBrB, uBrFd, uBrS, uGlA, uGlB, uGlW, uGlPk, uGlDim;     // 4.6.0（5.0 第 1 步）：以前写死的随机范围、余烬衰减、分叉火花、辉星闪光，默认 = 以前的常数
 // 和 20_sim.js starHash(id, seed, k) 同一个整数哈希（CPU / GPU 内核每颗星的起势时长一样）
 float starHashG(uint id, uint k){ uint h=((id+1u)*0x9E3779B1u)^((uint(uSeed)+7u)*0x85EBCA77u)^((k+3u)*0xC2B2AE3Du); h^=h>>16u; h*=0x7FEB352Du; h^=h>>15u; h*=0x846CA68Bu; h^=h>>16u; return float(h)/4294967296.; }
 uniform vec4 uTm[3]; uniform float uTa[3];
@@ -167,11 +168,11 @@ void main(){
   float lifeC=uCoolAbs>.5 ? lifeN : life;
   // 余烬长尾（锦冠的木炭余烬 / 受光烟迹）：一部分火花寿命长、亮度低，沿星的轨迹留下暗长线；
   // uEmbF > 0 时亮度跟着母星：母星烧完后 uEmbF 秒内淡掉（烟迹是被星自己照亮的）
-  bool emb=uEmb>0. && uBr==0 && hsh(uid,51u)<uEmb; if(emb) life=uEmbL*exp(.2*gss(uid,52u));
+  bool emb=uEmb>0. && uBr==0 && hsh(uid,51u)<uEmb; if(emb) life=uEmbL*exp(uEmbLJ*gss(uid,52u));
   // emberAll：余烬（光丝）贯穿整个燃烧期，普通火花只在前 sparkStop 秒（分层星外层的引き火花先停）
   if(!emb && uHotStop>0. && tb-inf.x>uHotStop){ cull(); return; }
   float ts=uBr>0 ? life*uBrAt*(.8+.4*hsh(uid,21u)) : 1e9;
-  uint u2=uid*7u+uint(c); float life2=.16*(.6+.8*hsh(u2,23u));
+  uint u2=uid*7u+uint(c); float life2=uBrL*(uBrLA+uBrLB*hsh(u2,23u));
   if(c==0){ if(age>=life||age>=ts){ cull(); return; } }
   else if(age<ts||age>=ts+life2){ cull(); return; }
   float fi=tb/uDT; int i0=clamp(int(floor(fi)),0,uNs-2); float f=clamp(fi-float(i0),0.,1.);
@@ -180,10 +181,10 @@ void main(){
   float f2=f*f, f3=f2*f;
   vec3 sp=(2.*f3-3.*f2+1.)*p0+(f3-2.*f2+f)*uDT*v0+(-2.*f3+3.*f2)*p1+(f3-f2)*uDT*v1;
   vec3 sv=mix(v0,v1,f);
-  float inh=uInh*(.3+1.4*hsh(uid,4u));
+  float inh=uInh*(uInhA+uInhB*hsh(uid,4u));
   vec3 vel=sv*inh+vec3(gss(uid,5u),gss(uid,7u),gss(uid,9u))*uSpread;
   vec3 U=vec3(airAt(sp.xy,tb),0.), g=vec3(0.,-uG,0.);
-  float T0=uT0+120.*gss(uid,11u), I, size=uSize; vec3 p;
+  float T0=uT0+uT0J*gss(uid,11u), I, size=uSize; vec3 p;
   // 尾迹粗细 / 梭形（4.2.8，用户 10-02 19:41 #4、20:04「是梭形」）：沿尾迹（a = 出生点离星头的距离 ÷ 尾迹全长，0 = 星头，1 = 尾端；
   // 按距离不按年龄：星在减速，新火花挤在星头附近，按年龄算最粗处会贴到星头上）的宽度曲线
   // wq(a)：最粗处 uBelly 之前从 1−uPinH 升到 1，之后降到 1−uPinT；W = 粗细 × wq。只改火花横向散开的那部分位移（散布速度 × 阻力衰减），
@@ -196,16 +197,16 @@ void main(){
       float a=clamp(length(ph-sp)/max(1e-3,length(ph-starAt(s,t0))),0.,1.);
       wtail=a>uBelly; wq=!wtail ? 1.-uPinH*(1.-smoothstep(0.,uBelly,a)) : 1.-uPinT*smoothstep(uBelly,1.,a); W=uWidth*wq;
       p+=(W-1.)*(uK>1e-4 ? (1.-exp(-uK*age))/uK : age)*vec3(gss(uid,5u),gss(uid,7u),gss(uid,9u))*uSpread; }
-    float gl=emb ? glowOf(T0)*uEmbB*exp(-2.*age/life)*(1.-smoothstep(.75,1.,age/life))*(uEmbF>0. ? 1.-smoothstep(inf.y-.15,inf.y+uEmbF,uT) : 1.)*(uEmbE>0. ? 1.-smoothstep(uEmbE-.6,uEmbE+.3,uT) : 1.) : glowOf(T0*(1.-uCool*age/lifeC))*(uCoolAbs>.5 ? 1.-smoothstep(.7,1.,age/life) : 1.);
+    float gl=emb ? glowOf(T0)*uEmbB*exp(-uEmbDk*age/life)*(1.-smoothstep(uEmbFa,1.,age/life))*(uEmbF>0. ? 1.-smoothstep(inf.y-.15,inf.y+uEmbF,uT) : 1.)*(uEmbE>0. ? 1.-smoothstep(uEmbE-.6,uEmbE+.3,uT) : 1.) : glowOf(T0*(1.-uCool*age/lifeC))*(uCoolAbs>.5 ? 1.-smoothstep(.7,1.,age/life) : 1.);
     if(emb) size=uSize*uEmbS;
-    if(uGlit>0.){ float tf=uGlitD*(.5+hsh(uid,17u)); float e=(age-tf)/.03; gl=gl*(1.-.85*uGlit)+uGlit*6.*exp(-e*e); }
+    if(uGlit>0.){ float tf=uGlitD*(uGlA+uGlB*hsh(uid,17u)); float e=(age-tf)/uGlW; gl=gl*(1.-uGlDim*uGlit)+uGlit*uGlPk*exp(-e*e); }
     I=gl;
   } else {
     vec3 pc=mot(sp,vel,U,g,uK,ts), vc=motv(vel,U,g,uK,ts);
-    vec3 dv=normalize(vec3(gss(u2,31u),gss(u2,33u),gss(u2,35u))+1e-4)*(4.+uSpread*1.5)*(.6+.8*hsh(u2,37u));
+    vec3 dv=normalize(vec3(gss(u2,31u),gss(u2,33u),gss(u2,35u))+1e-4)*(uBrV+uSpread*1.5)*(uBrVA+uBrVB*hsh(u2,37u));
     float a2=age-ts, x=a2/life2;
-    p=mot(pc,vc*.5+dv,U,g,uK*1.5,a2);
-    I=glowOf(T0*(1.-uCool*ts/lifeC)*1.08)*1.8*(1.-x)*(1.-x); size=uSize*.7;
+    p=mot(pc,vc*uBrInh+dv,U,g,uK*uBrKd,a2);
+    I=glowOf(T0*(1.-uCool*ts/lifeC)*uBrT)*uBrB*(uBrFd==2. ? (1.-x)*(1.-x) : pow(max(0.,1.-x),uBrFd)); size=uSize*uBrS;
   }
   // 尾迹扩散（4.2.0，tailDiffuse / tailDiffuseScale，用户 2026-10-02 16:22）：火花被阻力停下来以后仍被空气扰流带着走，越老离原位越远。
   // 位移 = 扰流速度 × Tl × x/√(1+x)，x = 年龄 / Tl，Tl = 尺度 / 速度：刚出生像被吹着走（∝ 年龄），老了变成扩散（∝ √年龄）。
@@ -410,6 +411,16 @@ function disposeTrack(tr) {
 }
 // 火花的有效参数：银竜的尾迹更白、更长
 function sparkEff(P) { const silver = familyOf(P.type) === 'rise' && P.riseStyle === 'silver'; return { T0: P.T0 + (silver ? 250 : 0), life: P.sparkLife * (silver ? 1.5 : 1) }; }
+// 4.6.0（5.0 第 1 步）：火花 / 余烬 / 分叉火花 / 辉星以前写死的数变成参数（默认 = 以前的常数，算出来的 float 和字面量一样，逐位不变）
+function setSparkModUniforms(pr, P) {
+  const u = (k, v) => { if (pr.u[k]) gl.uniform1f(pr.u[k], v); }, n = (v, d) => v == null || v === '' || !isFinite(+v) ? d : +v;
+  const [ia, ib] = jitAB(P.sparkInhJit, 70, 0.3, 1.4); u('uInhA', ia); u('uInhB', ib); u('uT0J', n(P.T0Jit, 120));
+  u('uEmbLJ', n(P.emberLifeJit, 0.2)); u('uEmbDk', n(P.emberDecay, 2)); u('uEmbFa', n(P.emberFadeAt, 0.75));
+  const [la, lb] = jitAB(P.branchLifeJit, 40, 0.6, 0.8), [va, vb] = jitAB(P.branchVJit, 40, 0.6, 0.8);
+  u('uBrL', n(P.branchLife, 0.16)); u('uBrLA', la); u('uBrLB', lb); u('uBrV', n(P.branchV, 4)); u('uBrVA', va); u('uBrVB', vb);
+  u('uBrInh', n(P.branchInh, 0.5)); u('uBrKd', n(P.branchKd, 1.5)); u('uBrT', n(P.branchT, 1.08)); u('uBrB', n(P.branchBright, 1.8)); u('uBrFd', n(P.branchFade, 2)); u('uBrS', n(P.branchSize, 0.7));
+  const [ga, gb] = jitAB(P.glitterDelayJit, 50, 0.5, 1); u('uGlA', ga); u('uGlB', gb); u('uGlW', n(P.glitterW, 0.03)); u('uGlPk', n(P.glitterPeak, 6)); u('uGlDim', n(P.glitterDim, 0.85));
+}
 function setAirUniforms(pr, P) {
   const tm = P.turb > 0 ? turbModes(P) : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]];
   gl.uniform1f(pr.u.uWind, P.wind || 0);
@@ -438,6 +449,7 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   if (pr.u.uWShape) { const ws = tailShapeOf(P); gl.uniform1f(pr.u.uWShape, ws.on ? 1 : 0); gl.uniform1f(pr.u.uWidth, ws.w); gl.uniform1f(pr.u.uPinH, ws.h); gl.uniform1f(pr.u.uPinT, ws.t); gl.uniform1f(pr.u.uBelly, ws.m); }
   if (pr.u.uDif) { gl.uniform1f(pr.u.uDif, familyOf(P.type) === 'aerial' ? +P.tailDiffuse || 0 : 0); gl.uniform1f(pr.u.uDifL, Math.max(1, +P.tailDiffuseScale || 20)); }
   const br = Math.round(P.branch || 0); gl.uniform1i(pr.u.uBr, br); gl.uniform1f(pr.u.uBrAt, P.branchAt || 0.5);
+  setSparkModUniforms(pr, P);
   setAirUniforms(pr, P);
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
   gl.uniform4fv(pr.u.uXf, opt.xf || [0, 0, 1, 0]); gl.uniform1f(pr.u.uUseXf, opt.xf ? 1 : 0);

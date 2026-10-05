@@ -991,7 +991,7 @@ function renderEmitLive() {
   post();
   const cnt = rtAliveCounts(tabs, t);
   rtLayerBarSync([['near', np, false], ...(far ? [['far', nf, false]] : []), ...tabs.map((x, i) => [x.e.name, cnt[i], !!x.e.gpu])]);
-  const dist = state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m（开花直径 ${P.rtBurstD} m 占屏高 1/3）` : '';
+  const dist = state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m（真实米数：四尺玉 ${GAME_REF_D} m 在 1000 m 占屏高 1/3）` : '';
   hudText = `实时模拟 · 升空尾缀 · ${t <= ball.T ? '上升 ' + t.toFixed(2) + ' / ' + ball.T.toFixed(2) + ' s' : '已开花，火花各自燃尽中'} · ${far ? '近段 ' + np.toLocaleString() + ' + 远段 ' + nf.toLocaleString() : '循环层火花 ' + np.toLocaleString()} 颗 + 粒子层 ${nd.toLocaleString()} 颗（${mobile ? '手机减量' : 'PC'}）${dist}${rtShowNote()}`;
   hudB = '';
 }

@@ -392,6 +392,11 @@ const AUTO_DEF = {
   subSpeedJit: [0, P => +P.speedJit || 0, '跟主层的初速随机'],
   subGrav: [0, P => P.grav == null ? 1 : +P.grav, '跟主层的重力'],
   subFlash: [0, P => +(+P.flash * 0.3).toFixed(3), '主层开花闪光 × 0.3'],
+  // 4.6.0（5.0 第 1 步）：以前藏在代码里的联动，现在看得见、能断开
+  flashR: [0.5, P => +Math.max(2, (+P.v0 || 0) * 0.045).toFixed(2), '跟初速：max(2 m, 0.045 × 初速)'],
+  subSize: [0.05, P => +(+P.headSize || 1).toFixed(2), '同主星大小'],
+  subBright: [0, P => +(+P.headBright).toFixed(2), '同主星亮度'],
+  subFlashR: [0.1, P => +Math.max(1, (+P.subSpeed || 0) * 0.05).toFixed(2), '跟子花初速：max(1 m, 0.05 × 子花初速)'],
 };
 function autoDefRow(row, k, step) {
   const a = AUTO_DEF[k]; if (!a) return;
@@ -580,7 +585,7 @@ function buildMasterPanel() {
   for (const sec of SCHEMA) {
     for (const it of sec.items) {
       let row;
-      const ikey = Array.isArray(it) ? it[0] : it.sel || it.text || (it.info ? 'info:' + it.info : ''), nm = ikey ? pnameOf(sec.sec, ikey, Array.isArray(it) ? (typeof it[1] === 'function' ? it[1](P) : it[1]) : it.label) : null;
+      const ikey = Array.isArray(it) ? it[0] : it.sel || it.text || it.curve || (it.info ? 'info:' + it.info : ''), nm = ikey ? pnameOf(sec.sec, ikey, Array.isArray(it) ? (typeof it[1] === 'function' ? it[1](P) : it[1]) : it.label) : null;
       const det = place(sec, it, ikey, nm), ex = emitOf(nm, sec);          // 这一行放进它的发射器 › 模块
       if (Array.isArray(it)) {
         const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
@@ -609,10 +614,19 @@ function buildMasterPanel() {
         row = document.createElement('div'); row.className = 'spechost'; row.dataset.info = 'specBox'; det.appendChild(row);
       } else if (it.info) {   // 只读的结果行（例：「帧与贴图」顶上的「多少帧、怎么装」）
         row = document.createElement('div'); row.className = 'infohost'; row.dataset.info = it.info;
-        row._refresh = () => { row.innerHTML = it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : it.info === 'endInfo' && typeof endInfoHTML === 'function' ? endInfoHTML() : it.info === 'schemeNote' && typeof singleSchemeNote === 'function' ? `<p class="hint endinfo">${singleSchemeNote(state.P)}</p>` : it.info === 'ballInfo' && typeof rtBallInfoHTML === 'function' ? rtBallInfoHTML(state.P) : ''; };
+        row._refresh = () => { row.innerHTML = it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : it.info === 'endInfo' && typeof endInfoHTML === 'function' ? endInfoHTML() : it.info === 'schemeNote' && typeof singleSchemeNote === 'function' ? `<p class="hint endinfo">${singleSchemeNote(state.P)}</p>` : it.info === 'ballInfo' && typeof rtBallInfoHTML === 'function' ? rtBallInfoHTML(state.P) : /^exColor/.test(it.info) ? exColorHTML(+it.info.slice(7)) : ''; };
         if (it.info === 'endInfo') row.addEventListener('click', e => { const b = e.target.closest('[data-endfit]'); if (b) { setTimingParam('duration', +b.dataset.endfit); refreshPanelValues(); flash('序列时长已加长到火花灭完'); }
           if (e.target.closest('[data-cutclear]')) { state.P.cutOut = 0; onParam(); refreshPanelValues(); flash('出点已清除：序列放到序列时长为止'); } });
         row._refresh(); det.appendChild(row);
+      } else if (it.curve) {      // 4.6.0：按寿命变化的曲线 = 几行「时刻:值」（用户 10-05 20:45 定：先填几个数，拖点编辑器以后做）
+        const lab = nm ? p43Label(nm, it.label) : it.label;
+        row = document.createElement('label'); row.className = 'field curvef'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false" placeholder="空 = 不变；例 0:1, 0.7:1, 1:0"><small class="cv-keys"></small>`; row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm;
+        const inp = row.querySelector('input'), out = row.querySelector('.cv-keys');
+        const show = () => { const ks = parseCurve(state.P[it.curve]); out.textContent = ks ? ks.length + ' 个点：' + ks.map(k => `${+k[0].toFixed(3)} → ${+k[1].toFixed(3)}`).join('，') : (String(state.P[it.curve] || '').trim() ? '看不懂：写成「时刻:值, 时刻:值」，时刻 0–1' : '不变（全程 × 1）'); out.classList.toggle('bad', !ks && !!String(state.P[it.curve] || '').trim()); };
+        inp.value = P[it.curve] || ''; show();
+        inp.addEventListener('change', () => { state.P[it.curve] = inp.value.trim(); show(); onParam(); });
+        row._refresh = () => { inp.value = state.P[it.curve] || ''; show(); };
+        det.appendChild(row);
       } else if (it.text) {
         row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${nm ? p43Label(nm, it.label) : it.label}</span><input type="text" maxlength="6">`; row._lab = nm ? p43Label(nm, it.label) : it.label; row._detail = nm ? nm.desc : ''; row._nm = nm;
         const inp = row.querySelector('input'); inp.value = P[it.text];
@@ -629,6 +643,7 @@ function buildMasterPanel() {
   }
   // 模块里按发射器表的先后排（表里常用的在前），再把随机行挂到本体下面
   host.querySelectorAll('section.egrp > details.mod').forEach(d => [...d.children].filter(c => c._x).sort((a, b) => a._x.i - b._x.i).forEach(r => d.appendChild(r)));
+  p43StdModules(host);
   p43RandLinks(); emitTabs(tabs);
   if (!$('#pHelp')) { const h = document.createElement('div'); h.id = 'pHelp'; h.className = 'phelp'; h.setAttribute('aria-live', 'polite'); host.parentElement.insertBefore(h, host.nextSibling);
     h.addEventListener('pointerenter', () => clearTimeout(helpSt.hide)); h.addEventListener('pointerleave', () => { if (!helpSt.pinned) helpSt.hide = setTimeout(() => helpHide(), HELP_LEAVE); });
@@ -670,8 +685,10 @@ function refreshVisibility() {
   const auto = !!(q || pview.changed);
   const autoOpen = (d, on, mine) => { if (on) { if (!d.open) { d._autoOpen = true; d._auto = true; d.open = true; setTimeout(() => d._auto = false, 0); } }
     else if (d._autoOpen) { d._autoOpen = false; d._auto = true; d.open = mine; setTimeout(() => d._auto = false, 0); } };
-  document.querySelectorAll('#params details.sec').forEach(det => { det.hidden = ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden);
+  document.querySelectorAll('#params details.sec').forEach(det => { if (det._ph) return; det.hidden = ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden);
     autoOpen(det, auto && !det.hidden, det._key && pview.mopen[det._key] != null ? pview.mopen[det._key] : true); });
+  // 4.6.0：没有参数的标准模块（「这个发射器没有这一项 / 跟谁」）只在这个发射器有别的模块看得见、又没在搜索 / 只看改过的时候出现
+  document.querySelectorAll('#params details.mod-empty').forEach(det => { const g = det.parentElement; det.hidden = auto || pview.changed || ![...g.querySelectorAll(':scope > details.sec')].some(d => !d._ph && !d.hidden); });
   const tab = emitTabNow(appl);
   document.querySelectorAll('#params section.egrp').forEach(g => {
     const e = g.dataset.g, has = [...g.querySelectorAll(':scope > details.sec')].some(d => !d.hidden);
@@ -689,10 +706,22 @@ function refreshVisibility() {
   placeSpecBox();
 }
 // 发射器标签：按发射器表的顺序，每个发射器一个（适用的才显示），最后一个「全部」
+// 4.6.0（5.0 第 1 步）：自定义发射器的颜色模块——一层输出只有一条颜色（灰度贴图 + Ramp + Color Over Life），所以跟这一层；要别的颜色就拆层
+function exColorHTML(i) { return `<p class="hint">颜色：跟这一层（灰度贴图越亮越接近渐变图的亮端，再乘这一层的颜色曲线）。要和星不一样的颜色：把它放进另一层（「＋ 加层」后在那一层里加这个发射器）。</p><p class="hint"><button type="button" class="btn mini ghost" data-exoff="${i}">去掉这个发射器</button></p>`; }
+function exAddSlot() {
+  const P = state.P; for (let i = 1; i <= EX_SLOTS; i++) if (!(+P['x' + i + 'On'] > 0)) { P['x' + i + 'On'] = 1; buildMasterPanel(); onParam(); selectEmitTab('自定义 ' + i); flash(`加了「自定义 ${i}」：默认是星熄灭时生成 8 个光点，在右边改`); return i; }
+  flash(`最多 ${EX_SLOTS} 个自定义发射器（要更多：「＋ 加层」在另一层里再加）`, true); return 0;
+}
+function exRemoveSlot(i) { state.P['x' + i + 'On'] = 0; buildMasterPanel(); onParam(); selectEmitTab('星'); flash(`去掉了「自定义 ${i}」（Ctrl+Z 撤回）`); }
 function emitTabs(bar) {
   const es = [...document.querySelectorAll('#params section.egrp')].map(g => g.dataset.g);
   bar.innerHTML = es.concat('全部').map(e => { const d = EMIT_DEF[e]; return `<button type="button" role="tab" class="et" data-e="${e}" title="${d ? (d.lv ? d.lv + '：' : '') + d.what : '所有发射器排在一起'}">${e}<span class="et-n" hidden></span></button>`; }).join('');
   bar.querySelectorAll('[data-e]').forEach(b => b.addEventListener('click', () => selectEmitTab(b.dataset.e)));
+  if (familyOf(state.P.type) === 'aerial' && !isBlank(state.P)) {
+    bar.insertAdjacentHTML('beforeend', `<button type="button" class="et et-add" id="exAdd" title="加一个发射器：挂在星熄灭 / 开花 / 某个时刻 / 沿路上，生成光点或星；参数和别的发射器一样全">＋ 加发射器</button>`);
+    bar.querySelector('#exAdd').addEventListener('click', exAddSlot);
+  }
+  const host = $('#params'); if (host && !host._exoff) { host._exoff = true; host.addEventListener('click', e => { const b = e.target.closest('[data-exoff]'); if (b) { e.preventDefault(); exRemoveSlot(+b.dataset.exoff); } }); }
 }
 // 现在看哪个发射器：按花型族记住上次选的；没选过 / 这个花型没有它 → 第一个不是「效果」「输出」的发射器
 function emitTabFamily() { return isEmit(state.P) ? 'emit' : isTrail(state.P) ? 'trail' : isPhys(state.P) ? 'phys' : familyOf(state.P.type); }

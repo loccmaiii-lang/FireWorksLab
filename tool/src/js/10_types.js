@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.5.10';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）
+const VERSION = '4.6.0';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -121,7 +121,17 @@ const BASE = {
   fpsBurst: 30, burstSec: 0.5, fpsActive: 15, fpsFade: 10, fadeAt: 0, maxPages: 0, fitPages: 1,
   qSS: 2, qHz: 300, qMaxSub: 16,   // 画质（05_quality.js）
   texW: 2048, texH: 2048, cols: 8, rows: 8, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'auto', zoom: 'on', engine: 'gpu',
-  form: 'master', unitElev: 0, unitFlip: 0, cellPad: 2, autoGrid: 1
+  form: 'master', unitElev: 0, unitFlip: 0, cellPad: 2, autoGrid: 1,
+  // 4.6.0（5.0 第 1 步，用户 10-05 20:22「每一个子发射器拥有的参数都是全的」）：以前写死的数变成参数，默认 = 原来的数（逐像素不变）；x1 / x2 = 自定义发射器（＋ 加发射器，默认关）
+  crackleDelayJit: 70, crackleRIn: 1 / 7, crackleFollow: 0.3, crackleLife: 0.07, crackleTau: 0.012, crackleBright: 2.2, crackleBrightJit: 40, crackleSize: 0.5,
+  crackleSizeJit: 30, strobeOn: 1.6, strobeOff: 0.03, strobeHzJit: 15, glitterDelayJit: 50, glitterW: 0.03, glitterPeak: 6, glitterDim: 0.85, branchLife: 0.16,
+  branchLifeJit: 40, branchV: 4, branchVJit: 40, branchInh: 0.5, branchKd: 1.5, branchT: 1.08, branchBright: 1.8, branchFade: 2, branchSize: 0.7, flashR: -1,
+  flashTau: 0.035, flashLife: 0.25, subSize: -1, subBright: -1, subFlashR: -1, sparkInhJit: 70, T0Jit: 120, emberLifeJit: 0.2, emberDecay: 2, emberFadeAt: 0.75,
+  x1Event: 'death', x1T: 1, x1Kind: 'dot', x1N: 8, x1Rate: 20, x1Prob: 1, x1Delay: 0, x1DelayJit: 0, x1Spark: 0, x1R: 0, x1V: 8, x1VJit: 30, x1Inh: 0.3, x1Grav: 1,
+  x1Drag: 1.5, x1Life: 0.5, x1LifeJit: 20, x1Size: 0.6, x1SizeJit: 20, x1SizeCurve: '', x1Bright: 1, x1BrightJit: 20, x1BrightCurve: '0:1, 0.7:1, 1:0', x1Flick: 0,
+  x1FlickHz: 8, x2Event: 'death', x2T: 1, x2Kind: 'dot', x2N: 8, x2Rate: 20, x2Prob: 1, x2Delay: 0, x2DelayJit: 0, x2Spark: 0, x2R: 0, x2V: 8, x2VJit: 30,
+  x2Inh: 0.3, x2Grav: 1, x2Drag: 1.5, x2Life: 0.5, x2LifeJit: 20, x2Size: 0.6, x2SizeJit: 20, x2SizeCurve: '', x2Bright: 1, x2BrightJit: 20, x2BrightCurve: '0:1, 0.7:1, 1:0',
+  x2Flick: 0, x2FlickHz: 8, x1On: 0, x2On: 0
 };
 const RAMP_POS = [0, 0.3, 0.65, 1];
 // 颜色：stages = [[时刻 s, 颜色], …]，最多 5 段；xw = 变色过渡时长
@@ -373,7 +383,10 @@ const SCHEMA = [
     ['fade', '渐隐比例', '', 0, 0.9, 0.01],
     ['lastFlare', '熄灭前闪亮', '', 0, 1.5, 0.05],
     ['flash', '开花闪光', '', 0, 3, 0.05],
-    ['flashSize', '开花闪光大小', '×', 0.3, 3, 0.05]
+    ['flashSize', '开花闪光大小', '×', 0.3, 3, 0.05],
+    ['flashR', '开花闪光半径（-1 = 跟初速）', 'm', -1, 60, 0.5],
+    ['flashTau', '开花闪光衰减', 's', 0.005, 0.5, 0.005],
+    ['flashLife', '开花闪光可见时长', 's', 0.05, 2, 0.01]     // 4.6.0（5.0 第 1 步）
   ] },
   { sec: '形状', show: P => isAir(P) || P.type === 'shikake', items: [
     { sel: 'pattern', label: '星的排布', options: PATTERNS, show: isAir },
@@ -415,7 +428,33 @@ const SCHEMA = [
     ['branch', '松叶分叉（每粒火花）', '支', 0, 4, 1],
     ['branchAt', '分叉时刻', '×寿命', 0.1, 0.9, 0.01, P => P.branch > 0],
     ['flutter', '飘落摆动', 'm/s', 0, 10, 0.1],
-    ['flutterHz', '摆动频率', 'Hz', 0.1, 3, 0.05, P => P.flutter > 0]
+    ['flutterHz', '摆动频率', 'Hz', 0.1, 3, 0.05, P => P.flutter > 0],
+    ['crackleDelayJit', '爆裂延迟随机', '%', 0, 100, 1, P => P.crackle > 0],
+    ['crackleRIn', '爆裂最近距离（× 范围）', '', 0, 1, 0.01, P => P.crackle > 0],
+    ['crackleFollow', '爆裂跟随星的速度', '', 0, 1, 0.01, P => P.crackle > 0],
+    ['crackleLife', '爆裂小闪可见时长', 's', 0.01, 1, 0.005, P => P.crackle > 0],
+    ['crackleTau', '爆裂小闪衰减', 's', 0.002, 0.5, 0.001, P => P.crackle > 0],
+    ['crackleBright', '爆裂小闪亮度', '×', 0, 10, 0.05, P => P.crackle > 0],
+    ['crackleBrightJit', '爆裂小闪亮度随机', '%', 0, 100, 1, P => P.crackle > 0],
+    ['crackleSize', '爆裂小闪大小', 'm', 0.05, 5, 0.01, P => P.crackle > 0],
+    ['crackleSizeJit', '爆裂小闪大小随机', '%', 0, 100, 1, P => P.crackle > 0],
+    ['strobeOn', '点灭亮相亮度', '×', 0, 5, 0.05, P => P.strobeHz > 0],
+    ['strobeOff', '点灭暗相亮度', '×', 0, 1, 0.01, P => P.strobeHz > 0],
+    ['strobeHzJit', '点灭频率随机', '%', 0, 100, 1, P => P.strobeHz > 0],
+    ['glitterDelayJit', '辉星延迟随机', '%', 0, 100, 1, P => P.glitter > 0],
+    ['glitterW', '辉星闪光宽度', 's', 0.005, 0.3, 0.005, P => P.glitter > 0],
+    ['glitterPeak', '辉星闪光亮度', '×', 0, 20, 0.1, P => P.glitter > 0],
+    ['glitterDim', '辉星闪前压暗', '', 0, 1, 0.01, P => P.glitter > 0],
+    ['branchLife', '分叉火花寿命', 's', 0.02, 2, 0.01, P => P.branch > 0],
+    ['branchLifeJit', '分叉火花寿命随机', '%', 0, 100, 1, P => P.branch > 0],
+    ['branchV', '分叉甩出速度', 'm/s', 0, 40, 0.5, P => P.branch > 0],
+    ['branchVJit', '分叉速度随机', '%', 0, 100, 1, P => P.branch > 0],
+    ['branchInh', '分叉继承火花速度', '', 0, 1, 0.01, P => P.branch > 0],
+    ['branchKd', '分叉火花阻力（× 火花）', '×', 0, 5, 0.05, P => P.branch > 0],
+    ['branchT', '分叉火花温度（× 火花）', '×', 0.5, 1.5, 0.01, P => P.branch > 0],
+    ['branchBright', '分叉火花亮度', '×', 0, 6, 0.05, P => P.branch > 0],
+    ['branchFade', '分叉火花变暗快慢', '', 0.2, 6, 0.1, P => P.branch > 0],
+    ['branchSize', '分叉火花大小（× 火花）', '×', 0.1, 3, 0.01, P => P.branch > 0]     // 4.6.0（5.0 第 1 步）
   ] },
   { sec: '炭头（星头）', show: isSeq, items: [
     ['headSize', '炭头大小', 'm', 0.15, 6, 0.05],
@@ -450,7 +489,12 @@ const SCHEMA = [
     ['emberEnd', '光丝整体熄灭时刻（受光烟迹：星转点灭、色光变弱后烟迹一起暗掉，0 关）', 's', 0, 10, 0.05, P => isAir(P) && P.emberFrac > 0],
     ['emberAll', '余烬贯穿整个燃烧期（1 = 不受「火花只在前几秒」限制：外层引き火花先停，光丝一直跟到星头）', '', 0, 1, 1, P => isAir(P) && P.emberFrac > 0],
     ['twinkle', '火花闪烁', '', 0, 1, 0.01],
-    ['twinkleHz', '火花闪烁频率（0 = 每个时间片随机）', 'Hz', 0, 30, 0.5, P => +P.twinkle > 0]
+    ['twinkleHz', '火花闪烁频率（0 = 每个时间片随机）', 'Hz', 0, 30, 0.5, P => +P.twinkle > 0],
+    ['sparkInhJit', '跟随星体随机', '%', 0, 100, 1],
+    ['T0Jit', '初始温度随机', 'K', 0, 400, 5],
+    ['emberLifeJit', '余烬寿命随机', '', 0, 1, 0.01, P => isAir(P) && P.emberFrac > 0],
+    ['emberDecay', '余烬变暗快慢', '', 0, 8, 0.1, P => isAir(P) && P.emberFrac > 0],
+    ['emberFadeAt', '余烬最后淡出开始（× 寿命）', '×', 0.3, 1, 0.01, P => isAir(P) && P.emberFrac > 0]     // 4.6.0（5.0 第 1 步）
   ] },
   { sec: '尾迹外形', show: P => isSeq(P) && familyOf(P.type) === 'aerial', hint: '每个效果（多层时每一层）自己的外形量，0 = 原样，不影响别的效果。尾长、尾缀粗细、星头大小、亮度、闪烁就是上面的「火花寿命」「尾缀粗细（散布）」「颗粒大小」「星头大小」「火花亮度」「火花闪烁」。', items: [
     ['tailJit', '粗细随机（星与星、火花与火花之间的粗细差别）', '', 0, 1, 0.01],
@@ -480,7 +524,66 @@ const SCHEMA = [
     ['subSpeedJit', '子星初速离散（-1 = 同主星的初速离散）', '%', -1, 40, 1],
     ['subVt', '子星终端速度（0 = 同主层）', 'm/s', 0, 80, 0.5],
     ['subGrav', '子星下坠（-1 = 同主层）', '×', -1, 3, 0.05],
-    ['subFlash', '子花开花闪光（-1 = 默认）', '', -1, 1, 0.01]
+    ['subFlash', '子花开花闪光（-1 = 默认）', '', -1, 1, 0.01],
+    ['subSize', '子星大小（-1 = 同星）', 'm', -1, 6, 0.05],
+    ['subBright', '子星亮度（-1 = 同星）', '×', -1, 3, 0.05],
+    ['subFlashR', '子花闪光半径（-1 = 跟子花初速）', 'm', -1, 30, 0.1]     // 4.6.0（5.0 第 1 步）
+  ] },
+  { sec: '自定义发射器 1', show: P => isAir(P) && +P.x1On > 0, hint: '自定义发射器（4.6.0，＋ 加发射器）：挂在星的事件上，生成光点或星；每个模块都在：生成 / 形状 / 初速 / 受力 / 寿命 / 大小 / 颜色 / 亮度 / 闪烁。颜色跟这一层（灰度贴图 + Ramp），要别的颜色就拆成另一层。', items: [
+    { sel: 'x1Event', label: '什么时候生成', options: [['death', '星熄灭时'], ['birth', '开花时（星出生）'], ['time', '开花后某个时刻'], ['trail', '星燃烧时沿路']] },
+    ['x1T', '开花后第几秒', 's', 0, 10, 0.05, P => P.x1Event === 'time'],
+    { sel: 'x1Kind', label: '生成什么', options: [['dot', '光点（小闪、碎光、落火）'], ['star', '星（会烧、带火花，像子花）']] },
+    ['x1N', '每颗星生成几个', '个', 0, 200, 1, P => P.x1Event !== 'trail'],
+    ['x1Rate', '每颗星每秒生成', '个/秒', 0, 500, 1, P => P.x1Event === 'trail'],
+    ['x1Prob', '触发比例', '', 0, 1, 0.01],
+    ['x1Delay', '延迟', 's', 0, 3, 0.01],
+    ['x1DelayJit', '延迟随机', '%', 0, 100, 1],
+    ['x1Spark', '火花密度（生成的是星时）', '个/秒', 0, 2000, 1, P => P.x1Kind === 'star'],
+    ['x1R', '起始半径', 'm', 0, 30, 0.1],
+    ['x1V', '初速', 'm/s', 0, 200, 0.5],
+    ['x1VJit', '初速随机', '%', 0, 100, 1],
+    ['x1Inh', '继承星的速度', '', 0, 1, 0.01],
+    ['x1Grav', '重力倍率', '×', -1, 3, 0.05],
+    ['x1Drag', '阻力', '1/s', 0, 20, 0.05],
+    ['x1Life', '寿命', 's', 0.01, 10, 0.01],
+    ['x1LifeJit', '寿命随机', '%', 0, 100, 1],
+    ['x1Size', '大小', 'm', 0.01, 10, 0.01],
+    ['x1SizeJit', '大小随机', '%', 0, 100, 1],
+    { curve: 'x1SizeCurve', label: '大小随寿命' },
+    ['x1Bright', '亮度', '×', 0, 10, 0.05],
+    ['x1BrightJit', '亮度随机', '%', 0, 100, 1],
+    { curve: 'x1BrightCurve', label: '亮度随寿命' },
+    ['x1Flick', '闪烁幅度', '', 0, 1, 0.01],
+    ['x1FlickHz', '闪烁频率', 'Hz', 0, 40, 0.5, P => +P.x1Flick > 0],
+    { info: 'exColor1' }
+  ] },
+  { sec: '自定义发射器 2', show: P => isAir(P) && +P.x2On > 0, hint: '自定义发射器（4.6.0，＋ 加发射器）：挂在星的事件上，生成光点或星；每个模块都在：生成 / 形状 / 初速 / 受力 / 寿命 / 大小 / 颜色 / 亮度 / 闪烁。颜色跟这一层（灰度贴图 + Ramp），要别的颜色就拆成另一层。', items: [
+    { sel: 'x2Event', label: '什么时候生成', options: [['death', '星熄灭时'], ['birth', '开花时（星出生）'], ['time', '开花后某个时刻'], ['trail', '星燃烧时沿路']] },
+    ['x2T', '开花后第几秒', 's', 0, 10, 0.05, P => P.x2Event === 'time'],
+    { sel: 'x2Kind', label: '生成什么', options: [['dot', '光点（小闪、碎光、落火）'], ['star', '星（会烧、带火花，像子花）']] },
+    ['x2N', '每颗星生成几个', '个', 0, 200, 1, P => P.x2Event !== 'trail'],
+    ['x2Rate', '每颗星每秒生成', '个/秒', 0, 500, 1, P => P.x2Event === 'trail'],
+    ['x2Prob', '触发比例', '', 0, 1, 0.01],
+    ['x2Delay', '延迟', 's', 0, 3, 0.01],
+    ['x2DelayJit', '延迟随机', '%', 0, 100, 1],
+    ['x2Spark', '火花密度（生成的是星时）', '个/秒', 0, 2000, 1, P => P.x2Kind === 'star'],
+    ['x2R', '起始半径', 'm', 0, 30, 0.1],
+    ['x2V', '初速', 'm/s', 0, 200, 0.5],
+    ['x2VJit', '初速随机', '%', 0, 100, 1],
+    ['x2Inh', '继承星的速度', '', 0, 1, 0.01],
+    ['x2Grav', '重力倍率', '×', -1, 3, 0.05],
+    ['x2Drag', '阻力', '1/s', 0, 20, 0.05],
+    ['x2Life', '寿命', 's', 0.01, 10, 0.01],
+    ['x2LifeJit', '寿命随机', '%', 0, 100, 1],
+    ['x2Size', '大小', 'm', 0.01, 10, 0.01],
+    ['x2SizeJit', '大小随机', '%', 0, 100, 1],
+    { curve: 'x2SizeCurve', label: '大小随寿命' },
+    ['x2Bright', '亮度', '×', 0, 10, 0.05],
+    ['x2BrightJit', '亮度随机', '%', 0, 100, 1],
+    { curve: 'x2BrightCurve', label: '亮度随寿命' },
+    ['x2Flick', '闪烁幅度', '', 0, 1, 0.01],
+    ['x2FlickHz', '闪烁频率', 'Hz', 0, 40, 0.5, P => +P.x2Flick > 0],
+    { info: 'exColor2' }
   ] },
   { sec: '蜂', show: P => P.type === 'hachi', items: [
     ['spin', '旋转速度', 'rad/s', 0, 40, 0.5],

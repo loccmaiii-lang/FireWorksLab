@@ -4,9 +4,13 @@ function engineTick(t) { return Math.floor(t*30+1e-8)/30; }
 const DIST_MIN=50, DIST_MAX=1200;
 const distFromSlider=v=>{const d=DIST_MIN*Math.pow(DIST_MAX/DIST_MIN,v/1000);return d<200?Math.round(d/5)*5:Math.round(d/10)*10;};   // 对数刻度：近处也好调
 const sliderFromDist=d=>Math.round(1000*Math.log(d/DIST_MIN)/Math.log(DIST_MAX/DIST_MIN));
+// 5.0 第 1 步（4.6.0，用户 10-05 21:40 Q2「按真实米数」，协作/标准.md 2.1）：「游戏内大小」用固定相机——四尺玉（40 号，花径 GAME_REF_D 米）在 1000 m 占屏高 1/3，
+// 别的号数、升空尾缀都按自己的真实米数显示，能比出谁大谁小。以前是「每个效果自己的花径都占 1/3」，小号和四尺玉一样大。
+// 条目里写了 screenFrac 的照旧（按那个效果的花径占 screenFrac 屏高）；贴图分辨率下限的「花径 = 屏高 1/3」在标准检查里另算，不受这里影响
+const GAME_REF_D = 780;
 function gamePixelsPerMeter(P,diameter,height=canvas.height,distance=state.dist) {
-  const fraction=Number.isFinite(+P.screenFrac) && +P.screenFrac>0 ? +P.screenFrac : 1/3;
-  return height*fraction*1000/(Math.max(1e-3,diameter)*clamp(distance,DIST_MIN,DIST_MAX));
+  if(Number.isFinite(+P.screenFrac) && +P.screenFrac>0) return height*(+P.screenFrac)*1000/(Math.max(1e-3,diameter)*clamp(distance,DIST_MIN,DIST_MAX));
+  return height*(1/3)*1000/(GAME_REF_D*clamp(distance,DIST_MIN,DIST_MAX));
 }
 const gameDiameterCache=new WeakMap();
 function gameDiameter(b,fallback) {

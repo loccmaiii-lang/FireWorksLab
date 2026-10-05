@@ -22,7 +22,7 @@ function emitOf(nm, sec) {
 }
 // 「××随机」挂在哪个本体参数下面（没列的按「键名去掉 Jit」找；找不到就照常单独一行）
 const RAND_OF = { speedJit: 'v0', dirJit: 'v0', burnJit: 'burn', ignJit: 'ignDelay', afterJit: 'afterBurn', sparkRampJit: 'sparkRamp', sparkLifeJit: 'sparkLife',
-  sparkSpread: 'sparkInherit', twinkle: 'sparkBright', twinkleHz: 'sparkBright', starBright: 'sparkBright', tailJit: 'sparkSize', subJit: 'subDelay', subSpeedJit: 'subSpeed', subScaleJit: 'subSpeed' };
+  sparkSpread: 'sparkInherit', sparkInhJit: 'sparkInherit', twinkle: 'sparkBright', twinkleHz: 'sparkBright', starBright: 'sparkBright', tailJit: 'sparkSize', subJit: 'subDelay', subSpeedJit: 'subSpeed', subScaleJit: 'subSpeed' };
 function randBaseOf(key, keys) { const b = RAND_OF[key] || (/Jit$/.test(key) ? key.slice(0, -3) : ''); return b && keys.has(b) ? b : ''; }
 const isCarrierType = P => P.type === 'senrin' || P.type === 'crossette';
 const SPARK_KEYS = ['sparkRateEnd', 'sparkStop', 'sparkStart', 'sparkRamp', 'sparkRampJit', 'sparkLife', 'sparkLifeEnd', 'sparkLifeJit', 'sparkSpread', 'sparkSize', 'sparkInherit', 'sparkDrag', 'sparkGrav',
@@ -130,4 +130,28 @@ function p43BlankSync(P) {
     + has.filter(m => BLANK_MODS[m]).map(m => `<span class="addmod-on">${m}<button type="button" class="btn mini ghost modrm" data-rmmod="${m}" title="去掉「${m}」（它的参数回到不起作用的值）">去掉</button></span>`).join('');
   btns.querySelectorAll('[data-addmod]').forEach(b => b.addEventListener('click', () => { if (blankAddModule(state.P, b.dataset.addmod)) { buildMasterPanel(); onParam(); } }));
   btns.querySelectorAll('[data-rmmod]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); if (blankRemoveModule(state.P, b.dataset.rmmod)) { buildMasterPanel(); onParam(); } }));
+}
+// 4.6.0（5.0 第 1 步，用户 10-05 20:22「每一个子发射器拥有的参数都是全的」）：每个发射器都列同一套 9 个模块。
+// 有参数的照常；没有参数的也列出来，写明「跟谁」或「为什么没有」——看得出哪些是全的、哪些借父级、哪些是物理上没有
+const STD_MODS = ['生成', '形状', '初速', '受力', '寿命', '大小', '颜色', '亮度', '闪烁'];
+const MOD_EMPTY = {
+  '星': { 颜色: '在下面「颜色」一节：这一层的渐变图 + 变色（一层只有一条颜色）', 闪烁: '在「亮度」里：闪烁强度；点灭在「点灭」' },
+  '火花': { 形状: '从星身上喷出（位置 = 星走过的路），没有单独的形状', 闪烁: '在「亮度」的随机下面：火花闪烁 / 闪烁频率' },
+  '余烬': { 形状: '跟火花：从星身上喷出', 初速: '跟火花：「火花 › 初速」（跟随星体 / 速度随机）', 受力: '跟火花：「火花 › 受力」（阻力 / 下坠）', 颜色: '出生时的温度（跟火花），之后不降温', 闪烁: '跟火花的闪烁' },
+  '分叉火花': { 形状: '从分叉的那粒火花身上甩出', 闪烁: '跟火花的闪烁' },
+  '爆裂': { 受力: '小闪只亮零点几秒，原地不动（位置在出生那一刻算好：范围 + 速度 × 延迟）', 颜色: '跟这一层的颜色（灰度贴图 + 渐变图）；要别的颜色就拆层', 闪烁: '小闪本身就是一闪' },
+  '子花': { 颜色: '跟这一层的颜色', 闪烁: '跟主星的闪烁强度' },
+  '开花闪光': { 生成: '开花那一刻，固定 1 团', 形状: '在开花点', 初速: '不动', 受力: '不动', 颜色: '跟这一层的颜色', 闪烁: '—' },
+};
+function p43StdModules(host) {
+  for (const g of host.querySelectorAll(':scope > section.egrp')) {
+    const e = g.dataset.g; if (e === '效果' || e === '输出' || !MOD_EMPTY[e] && !/^自定义/.test(e)) continue;
+    const order = (EMIT_DEF[e] || {}).mods || STD_MODS, have = new Set([...g.querySelectorAll(':scope > details.mod')].map(d => d._mod));
+    for (const m of STD_MODS) {
+      if (have.has(m)) continue;
+      const d = document.createElement('details'); d.className = 'sec mod mod-empty'; d._ph = true; d._mod = m; d._g = e; d._key = e + '›' + m; d._oi = order.includes(m) ? order.indexOf(m) : 99; d.open = true;
+      d.innerHTML = `<summary>${m}</summary><div class="mod-note">${(MOD_EMPTY[e] || {})[m] || '这个发射器没有这一项'}</div>`;
+      const after = [...g.querySelectorAll(':scope > details.mod')].find(x => x._oi > d._oi); g.insertBefore(d, after || null);
+    }
+  }
 }

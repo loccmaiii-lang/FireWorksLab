@@ -129,6 +129,36 @@ function riseInfo(P) {
   return { v0, ta: vt / G * Math.atan(v0 / vt) };
 }
 
+// 5.0 第 1 步（烘焙器 4.6.0，用户 10-05 20:22「每一个子发射器拥有的参数都是全的」）：以前写死在代码里的随机范围变成参数。
+// 倍数 = a + b·u（u 均匀 0–1），j = ±百分比；j 等于原来的值时用原来的字面常数（逐位不变），改了才按 1 ± j 算
+function jitAB(j, jDef, aDef, bDef) { const x = j == null || j === '' || !isFinite(+j) ? jDef : +j; return x === jDef ? [aDef, bDef] : [Math.max(0, 1 - x / 100), 2 * x / 100]; }
+const pnum = (v, d) => v == null || v === '' || !isFinite(+v) ? d : +v;
+// 4.6.0（5.0 第 1 步 · 用户 10-05 20:45「按寿命曲线先填几个数」）：曲线 = 几行「时刻:值」，时刻是寿命的比例 0–1，例 "0:1, 0.7:1, 1:0"；空 = 不变（全程 1）
+function parseCurve(txt) {
+  if (Array.isArray(txt)) return txt.length ? txt : null;
+  const ks = String(txt || '').split(/[,，;；\n]+/).map(x => x.trim()).filter(Boolean).map(x => x.split(/[:：\s]+/).map(Number)).filter(k => k.length >= 2 && isFinite(k[0]) && isFinite(k[1])).map(k => [clamp(k[0], 0, 1), k[1]]);
+  ks.sort((a, b) => a[0] - b[0]); return ks.length ? ks : null;
+}
+function lifeCurveAt(ks, x) {
+  if (!ks) return 1; if (x <= ks[0][0]) return ks[0][1]; const L = ks[ks.length - 1]; if (x >= L[0]) return L[1];
+  for (let i = 1; i < ks.length; i++) if (x <= ks[i][0]) { const a = ks[i - 1], b = ks[i], f = (x - a[0]) / Math.max(1e-9, b[0] - a[0]); return a[1] + (b[1] - a[1]) * f; }
+  return L[1];
+}
+// 自定义发射器（＋ 加发射器）：最多 EX_SLOTS 个，每个是同一套模块（生成 / 形状 / 初速 / 受力 / 寿命 / 大小 / 颜色 / 亮度 / 闪烁），挂在星的事件上
+const EX_SLOTS = 2;
+const EX_EVENTS = [['death', '星熄灭时'], ['birth', '开花时（星出生）'], ['time', '开花后某个时刻'], ['trail', '星燃烧时沿路']];
+function exSlotsOf(P) {
+  const out = [];
+  for (let i = 1; i <= EX_SLOTS; i++) {
+    const g = k => P['x' + i + k]; if (!(+g('On') > 0)) continue;
+    out.push({ i, ev: g('Event') || 'death', t: pnum(g('T'), 1), kind: g('Kind') === 'star' ? 'star' : 'dot', n: Math.max(0, Math.round(pnum(g('N'), 8))), rate: pnum(g('Rate'), 20), prob: clamp(pnum(g('Prob'), 1), 0, 1),
+      delay: pnum(g('Delay'), 0), delayJ: pnum(g('DelayJit'), 0) / 100, v: pnum(g('V'), 8), vJ: pnum(g('VJit'), 30) / 100, inh: pnum(g('Inh'), 0.3), shell: pnum(g('R'), 0),
+      life: Math.max(0.01, pnum(g('Life'), 0.5)), lifeJ: pnum(g('LifeJit'), 20) / 100, grav: pnum(g('Grav'), 1), drag: Math.max(0, pnum(g('Drag'), 1.5)),
+      size: Math.max(0.01, pnum(g('Size'), 0.6)), sizeJ: pnum(g('SizeJit'), 20) / 100, sizeC: parseCurve(g('SizeCurve')), bright: pnum(g('Bright'), 1), brightJ: pnum(g('BrightJit'), 20) / 100, brightC: parseCurve(g('BrightCurve')),
+      fl: clamp(pnum(g('Flick'), 0), 0, 1), flHz: pnum(g('FlickHz'), 8), spark: pnum(g('Spark'), 0) });
+  }
+  return out;
+}
 class Sim {
   constructor(P) {
     this.P = P; this.fam = familyOf(P.type); this.rng = new RNG(P.seed); this.rr = new RNG(P.seed + 9973);
@@ -139,8 +169,10 @@ class Sim {
     this.tm = P.turb > 0 ? turbModes(P) : null;
     this.flashes = [];
     this.events = [];                    // 声音节点：[时刻, 类型]
+    this.ex = this.fam === 'aerial' ? exSlotsOf(P) : []; this.exDots = []; this.exRng = new RNG((P.seed | 0) + 7177); this.exDone = {};     // 4.6.0 自定义发射器（默认没有 → 不碰主随机序列）
     if (this.fam === 'rise') { this.initRise(); return; }
-    this.flashes.push({ t0: 0, x: 0, y: 0, I: P.flash, sig: Math.max(2, P.v0 * 0.045) * (+P.flashSize > 0 ? +P.flashSize : 1) });     // 4.3.3 开花闪光大小（默认 1 = 以前）
+    // 4.3.3 开花闪光大小（默认 1 = 以前）；4.6.0 开花闪光自己的半径（-1 = 跟初速：max(2 m, 0.045 × 初速)）、衰减、可见时长
+    this.flashes.push({ t0: 0, x: 0, y: 0, I: P.flash, sig: (+P.flashR > 0 ? +P.flashR : Math.max(2, P.v0 * 0.045)) * (+P.flashSize > 0 ? +P.flashSize : 1), dec: +P.flashTau > 0 ? +P.flashTau : undefined, cut: +P.flashLife > 0 ? +P.flashLife : undefined });
     this.events.push([0, 'burst']);
     const dirs = dirsFor(P, this.rng);
     const carrier = P.type === 'senrin' || P.type === 'crossette';
@@ -164,7 +196,38 @@ class Sim {
       // 单元序列：星熄灭后粒子继续按轨迹运动（Cascade 里粒子不会停），只是不再发光、不再发火花
       if (P._unit) { st.vis = st.burn; st.burn = 1e9; }
     }
+    if (this.ex.length) for (const st of this.stars) this.exEvent('birth', st);
   }
+  // ---- 4.6.0 自定义发射器：在星的事件上生成光点或星 ----
+  exEvent(ev, s) {
+    if (!this.ex.length || s.dark || s.kind === 5 || s.kind === 7) return;
+    for (const c of this.ex) if (c.ev === ev) this.exSpawn(c, s, c.n);
+  }
+  exSpawn(c, s, n) {
+    const r = this.exRng;
+    for (let q = 0; q < n; q++) {
+      if (c.prob < 1 && r.u() >= c.prob) continue;
+      const d = randUnit(r), sp = c.v * Math.max(0, 1 + c.vJ * r.n()), dl = Math.max(0, c.delay * (1 + c.delayJ * (2 * r.u() - 1)));
+      const vx = s.vx * c.inh + d[0] * sp, vy = s.vy * c.inh + d[1] * sp, vz = s.vz * c.inh + d[2] * sp, x = s.x + d[0] * c.shell, y = s.y + d[1] * c.shell, z = s.z + d[2] * c.shell;
+      const life = c.life * Math.max(0.05, 1 + c.lifeJ * r.n()), size = c.size * Math.max(0.05, 1 + c.sizeJ * r.n()), I = c.bright * Math.max(0, 1 + c.brightJ * r.n());
+      if (c.kind === 'star') {
+        const ch = this.mk(x, y, z, vx, vy, vz, life, 7, c.spark, I); ch.sz = size; ch.grav = c.grav; ch.c = 0; ch.kd = c.drag; ch.exC = c; ch.ign = dl; ch.burn += dl; this.stars.push(ch);
+      } else this.exDots.push({ t0: this.t + dl, x, y, vx, vy, life, size, I, c, ph: r.u() });
+    }
+  }
+  // 光点的位置：线性阻力 + 重力 + 风（和 Cascade 的 Drag + Const Acceleration 同一个式子，引擎里做得出来）
+  exPos(q, a) {
+    const k = q.c.drag, gy = G * q.c.grav, u = this.P.wind || 0;
+    if (k > 1e-6) { const e = (1 - Math.exp(-k * a)) / k, vt = -gy / k; return [q.x + u * a + (q.vx - u) * e, q.y + vt * a + (q.vy - vt) * e]; }
+    return [q.x + q.vx * a, q.y + q.vy * a - 0.5 * gy * a * a];
+  }
+  exStep() {
+    const t = this.t;
+    for (const c of this.ex) {
+      if (c.ev === 'time' && !this.exDone[c.i] && t >= c.t) { this.exDone[c.i] = 1; for (const s of this.stars) if (s.alive && s.age >= s.ign) this.exEvent1(c, s, c.n); }
+    }
+  }
+  exEvent1(c, s, n) { if (!s.dark && s.kind !== 5 && s.kind !== 7) this.exSpawn(c, s, n); }
   initRise() {
     const P = this.P, ri = riseInfo(P), st = P.riseStyle;
     this.ri = ri; this.cShell = G / (P.vtShell * P.vtShell);
@@ -205,12 +268,13 @@ class Sim {
       const sp = P.subSpeed * fs * (1 + (P.subSpeedJit >= 0 ? P.subSpeedJit : P.speedJit) / 100 * rng.n());   // 子星初速离散（-1 = 同主星；千轮：子弹飞得远近不一、小花本身要圆）
       const b = P.subBurn * (1 + P.burnJit / 100 * rng.n());
       const ch = this.mk(s.x, s.y, s.z, s.vx * keep + d[0] * sp, s.vy * keep + d[1] * sp, s.vz * keep + d[2] * sp,
-        Math.max(0.05, b), 2, P.subTail, P.headBright);
+        Math.max(0.05, b), 2, P.subTail, +P.subBright >= 0 ? +P.subBright : P.headBright);     // 4.6.0 子星亮度（-1 = 同星）
       if (P.subVt > 0) ch.c = G / (P.subVt * P.subVt);
       if (P.subGrav >= 0) ch.grav = P.subGrav;
+      if (+P.subSize > 0) ch.sz = +P.subSize;                                                   // 4.6.0 子星大小（-1 = 同星）
       this.stars.push(ch);
     }
-    this.flashes.push({ t0: this.t, x: s.x, y: s.y, I: P.subFlash >= 0 ? P.subFlash : P.flash * 0.3, sig: Math.max(1, P.subSpeed * 0.05) });
+    this.flashes.push({ t0: this.t, x: s.x, y: s.y, I: P.subFlash >= 0 ? P.subFlash : P.flash * 0.3, sig: +P.subFlashR > 0 ? +P.subFlashR : Math.max(1, P.subSpeed * 0.05) });     // 4.6.0 子花闪光半径（-1 = 跟子花初速）
     this.events.push([this.t, P.subPattern === 'cross' ? 'crack' : 'pop']);
   }
   kobanaBurst(s) {
@@ -226,10 +290,14 @@ class Sim {
   }
   crackleBurst(s) {
     const P = this.P, rng = starRng(s.id, P.seed, 41);
+    // 4.6.0（5.0 第 1 步）：爆裂小闪的亮度、大小、衰减、可见时长、随机范围、跟随星的比例都变成参数；默认值 = 以前写死的数（逐位不变）
+    const [da, db] = jitAB(P.crackleDelayJit, 70, 0.3, 1.4), [ba, bb] = jitAB(P.crackleBrightJit, 40, 0.6, 0.8), [sa, sb] = jitAB(P.crackleSizeJit, 30, 0.7, 0.6);
+    const rin = pnum(P.crackleRIn, 1 / 7), [ra, rb] = Math.abs(rin - 1 / 7) < 1e-9 ? [0.5, 3] : [3.5 * rin, 3.5 * (1 - rin)];
+    const B = pnum(P.crackleBright, 2.2), S = pnum(P.crackleSize, 0.5), fol = pnum(P.crackleFollow, 0.3), tau = +P.crackleTau > 0 ? +P.crackleTau : 0.012, cut = +P.crackleLife > 0 ? +P.crackleLife : 0.07;
     for (let i = 0; i < P.crackle; i++) {
-      // 4.3 爆裂范围 / 速度（用户 10-03 选「加」）：小闪离星最远 crackleR 米（最近 = 1/7），每晚 1 秒往外多飞 crackleV 米；默认 3.5 / 0 = 以前的 0.5–3.5 m、不动（逐位不变）
-      const dt = P.crackleDelay * (0.3 + 1.4 * rng.u()), d = randUnit(rng), r = (0.5 + 3 * rng.u()) * (P.crackleR == null ? 1 : P.crackleR / 3.5) + (+P.crackleV || 0) * dt;
-      this.flashes.push({ t0: this.t + dt, x: s.x + s.vx * dt * 0.3 + d[0] * r, y: s.y + s.vy * dt * 0.3 + d[1] * r, abs: 2.2 * (0.6 + 0.8 * rng.u()), sig: 0.35 + 0.3 * rng.u(), tau: 0.012, cut: 0.07 });
+      // 4.3 爆裂范围 / 速度（用户 10-03 选「加」）：小闪离星最远 crackleR 米（最近 = 内外比 × 最远），每晚 1 秒往外多飞 crackleV 米
+      const dt = P.crackleDelay * (da + db * rng.u()), d = randUnit(rng), r = (ra + rb * rng.u()) * (P.crackleR == null ? 1 : P.crackleR / 3.5) + (+P.crackleV || 0) * dt;
+      this.flashes.push({ t0: this.t + dt, x: s.x + s.vx * dt * fol + d[0] * r, y: s.y + s.vy * dt * fol + d[1] * r, abs: B * (ba + bb * rng.u()), sig: S * (sa + sb * rng.u()), tau, cut });
     }
     this.events.push([this.t + P.crackleDelay, 'crackle']);
   }
@@ -239,6 +307,7 @@ class Sim {
     return [u, v];
   }
   step(h) {
+    if (this.ex.length) this.exStep();
     const P = this.P, rng0 = this.rng, gy = -G * P.grav, st = this.stars, sp = this.sp;
     const bee = P.type === 'hachi', sq = Math.sqrt(h), windy = P.wind !== 0 || !!this.tm, water = P.waterRefl > 0;
     let dead = 0;
@@ -253,7 +322,7 @@ class Sim {
       let c = s.c; if (P.massLoss > 0 && s.kind !== 5) c /= Math.max(0.15, 1 - P.massLoss * clamp((s.age - s.ign) / Math.max(0.05, (s.mref != null ? s.mref : s.vis != null ? s.vis : s.burn) - s.ign), 0, 1));
       {
         // 二次阻力半隐式（相对风速度按 1/(1 + c·v·h) 衰减），不会因为终端速度很小而反号发散成 NaN（问题清单 E4）
-        const k = 1 / (1 + c * v * h);
+        const k = s.kd != null ? Math.exp(-s.kd * h) : 1 / (1 + c * v * h);     // 4.6.0 自定义发射器的星：线性阻力（和 Cascade Drag 一样）
         s.vx = ax + rx * k; s.vy = ay + ry * k + (s.kind === 5 ? -G : s.grav != null ? -G * s.grav : gy) * h; s.vz = rz * k;
       }
       if (bee) {
@@ -281,7 +350,8 @@ class Sim {
       }
       s.x += s.vx * h; s.y += s.vy * h; s.z += s.vz * h;
       s.flick = clamp(s.flick + rng.n() * sq * 2.2 * P.flicker, 1 - P.flicker, 1 + P.flicker * 0.4);
-      if (s.vis != null && !s.ended && s.age >= s.vis) { s.ended = true; if (P.crackle > 0 && !s.dark) this.crackleBurst(s); }     // 4.3（H8）：被「发光星比例」藏起来的星不爆
+      if (s.vis != null && !s.ended && s.age >= s.vis) { s.ended = true; if (P.crackle > 0 && !s.dark) this.crackleBurst(s); if (this.ex.length) this.exEvent('death', s); }     // 4.3（H8）：被「发光星比例」藏起来的星不爆
+      if (this.ex.length && s.age >= s.ign && !s.ended && s.age < (s.vis != null ? s.vis : s.burn)) for (const c of this.ex) if (c.ev === 'trail') { const k = this.exRng.poisson(c.rate * h); if (k) this.exEvent1(c, s, k); }
       const hotOff = P.sparkStop > 0 && s.kind !== 5 && s.age - s.ign > P.sparkStop, embAll = P.emberFrac > 0 && P.emberAll;
       if (s.rate > 0 && !this.noSparks && s.age >= s.ign && !s.ended && !(hotOff && !embAll) && !(P.sparkStart > 0 && s.kind !== 5 && s.age - s.ign < P.sparkStart)) {
         const fr = (s.kind === 5 || P.sparkRateEnd == null || P.sparkRateEnd === 1 ? 1 : Math.max(0, 1 + (P.sparkRateEnd - 1) * clamp((s.age - s.ign) / Math.max(0.05, (s.vis != null ? s.vis : s.burn) - s.ign), 0, 1)))
@@ -323,6 +393,7 @@ class Sim {
         else if (s.kind === 6) this.smallFlower(s);
         else if (s.kind === 5 && !s.child) { this.flashes.push({ t0: this.t, x: s.x, y: s.y, I: 0.6, sig: 3 }); this.events.push([this.t, 'apex']); }
         else if (P.crackle > 0 && (s.kind === 0 || s.kind === 2) && !s.dark) this.crackleBurst(s);
+        if (this.ex.length && s.vis == null && s.kind !== 6) this.exEvent('death', s);
       }
     }
     if (dead > 64 && dead > st.length / 2) this.stars = st.filter(s => s.alive);
@@ -341,16 +412,18 @@ class Sim {
     if (s.dark || a < 0 || s.age >= end) return 0;
     const dur = Math.max(0.05, end - off), ign = Math.min(1, a / 0.05), rem = end - s.age;
     let f = 1;
-    if (P.fade > 0 && s.kind !== 1 && s.kind !== 5) f = clamp(rem / (dur * P.fade), 0, 1);
-    const last = s.kind === 1 || s.kind === 5 ? 1 : 1 + P.lastFlare * Math.exp(-((rem / 0.05) ** 2));
+    if (P.fade > 0 && s.kind !== 1 && s.kind !== 5 && s.kind !== 7) f = clamp(rem / (dur * P.fade), 0, 1);
+    const last = s.kind === 1 || s.kind === 5 || s.kind === 7 ? 1 : 1 + P.lastFlare * Math.exp(-((rem / 0.05) ** 2));
     let st = 1;
-    if (P.strobeHz > 0 && s.kind !== 1 && s.kind !== 5 && a > P.strobeStart * dur) {
-      const ph = (a * P.strobeHz * (0.85 + 0.3 * s.ph2) + s.ph) % 1; st = ph < P.strobeDuty ? 1.6 : 0.03;
+    if (P.strobeHz > 0 && s.kind !== 1 && s.kind !== 5 && s.kind !== 7 && a > P.strobeStart * dur) {
+      const [ha, hb] = jitAB(P.strobeHzJit, 15, 0.85, 0.3);      // 4.6.0 点灭频率随机、亮相 / 暗相亮度（默认 ±15%、1.6、0.03 = 以前）
+      const ph = (a * P.strobeHz * (ha + hb * s.ph2) + s.ph) % 1; st = ph < P.strobeDuty ? pnum(P.strobeOn, 1.6) : pnum(P.strobeOff, 0.03);
     }
     if (P.flutter > 0) st *= 0.55 + 0.45 * Math.abs(Math.cos(3.1416 * P.flutterHz * s.age + s.ph * 6.2832));
     // 分层星外层（引き）：前段只有木炭火焰、星头暗；到 headDimUntil 秒前后 0.25 s 过渡到色光层的正常亮度
-    if (P.headDim < 1 && P.headDimUntil > 0 && s.kind !== 1 && s.kind !== 5) { const x = clamp((a - P.headDimUntil + 0.25) / 0.25, 0, 1); st *= P.headDim + (1 - P.headDim) * x * x * (3 - 2 * x); }
+    if (P.headDim < 1 && P.headDimUntil > 0 && s.kind !== 1 && s.kind !== 5 && s.kind !== 7) { const x = clamp((a - P.headDimUntil + 0.25) / 0.25, 0, 1); st *= P.headDim + (1 - P.headDim) * x * x * (3 - 2 * x); }
     if (s.kind === 5 && P.riseStyle === 'fue') st *= 0.6 + 0.4 * Math.sin(6.2832 * 9 * s.age);
+    if (s.exC) { const c = s.exC, x = clamp(a / dur, 0, 1); st *= lifeCurveAt(c.brightC, x); if (c.fl > 0) st *= Math.max(0, 1 + c.fl * Math.sin(6.2831853 * (c.flHz * s.age + s.ph))); }     // 4.6.0 自定义发射器的星
     return s.I * s.flick * ign * f * last * st;
   }
   // 每点 [x, y, 强度, 尺寸]：3.7 是总光量 / 2σ，4.0 是面亮度 / 亮核直径（米）。
@@ -362,7 +435,7 @@ class Sim {
       if (!s.alive) continue;
       const I = this.headI(s); if (I <= 0) continue;
       if (nh >= capH - 1) { this.dropH = (this.dropH || 0) + 1; continue; }     // 4.3（E9）：星头缓冲满了没画的星（自检报警）
-      const sz = P.headSize * (s.kind === 1 || s.kind === 6 ? 0.8 : 1);
+      const sz = s.sz != null ? s.sz * (s.exC && s.exC.sizeC ? Math.max(0, lifeCurveAt(s.exC.sizeC, clamp((s.age - (s.ign || 0)) / Math.max(0.05, s.burn - (s.ign || 0)), 0, 1))) : 1) : P.headSize * (s.kind === 1 || s.kind === 6 ? 0.8 : 1);     // 4.6.0 子星 / 自定义发射器的星有自己的大小
       push(bufH, nh++, s.x, s.y, I, sz);
       // 尾迹外形「泪滴星头」（headTear）：沿运动反方向补几个越来越小、越来越暗的点，速度越快拉得越长（默认 0 不进来）
       if (P.headTear > 0 && nh < capH - 5) { const v = Math.hypot(s.vx, s.vy); if (v > 0.5) { const ux = -s.vx / v, uy = -s.vy / v, len = P.headTear * (sz * 2 + v * 0.025);
@@ -377,6 +450,15 @@ class Sim {
       push(bufH, nh++, f.x, f.y, I, f.sig * 2);
       if (refl > 0 && f.y >= 0) push(bufH, nh++, f.x, -f.y - 0.01, I * refl, f.sig * 2.6);
     }
+    // 4.6.0 自定义发射器的光点：和星头同一种画法（亮核 + 光晕）；亮度 / 大小按寿命曲线、闪烁
+    for (const q of this.exDots) {
+      const a = this.t - q.t0; if (a < 0 || a >= q.life || nh >= capH - 1) continue;
+      const c = q.c, x = a / q.life, [px, py] = this.exPos(q, a);
+      let I = q.I * lifeCurveAt(c.brightC, x); if (c.fl > 0) I *= Math.max(0, 1 + c.fl * Math.sin(6.2831853 * (c.flHz * this.t + q.ph)));
+      if (I <= 0) continue;
+      push(bufH, nh++, px, py, I, q.size * Math.max(0, lifeCurveAt(c.sizeC, x)));
+      if (refl > 0 && py >= 0 && nh < capH - 1) push(bufH, nh++, px, -py - 0.01, I * refl, q.size * 1.3);
+    }
     // 4.3.3（用户 10-04 11:56）：开花闪光（主花、子花开花、曲导到顶）放在最后，调用方从 this.gFlash 起按高斯画（PT_GAUSS，σ = f.sig）：
     // 一团柔光，峰值亮度和以前的实心亮核一样（= 开花闪光 × 1.5 × 衰减），没有硬边、没有伸出格子的光晕。强度照旧由「开花闪光」调。
     // 高斯点的强度口径是总光量（峰值 × 2πσ²），所以这里不再除面积。
@@ -385,7 +467,7 @@ class Sim {
       if (f.abs != null) continue;
       const a = this.t - f.t0, cut = f.cut || 0.25; if (a < 0 || a > cut || nh >= capH - 1) continue;
       if (P._unit) continue;      // 单元序列不含开花闪光（另挂）
-      const I = f.I * Math.exp(-a / 0.035) * 1.5 * 6.2832 * f.sig * f.sig;
+      const I = f.I * Math.exp(-a / (f.dec || 0.035)) * 1.5 * 6.2832 * f.sig * f.sig;     // 4.6.0 开花闪光衰减（默认 0.035 s）
       push(bufH, nh++, f.x, f.y, I, f.sig * 2);
       if (refl > 0 && f.y >= 0 && nh < capH - 1) push(bufH, nh++, f.x, -f.y - 0.01, I * refl * 1.69, f.sig * 2.6);     // 倒影 σ × 1.3，总光量 × 1.69 保持峰值 × refl
     }

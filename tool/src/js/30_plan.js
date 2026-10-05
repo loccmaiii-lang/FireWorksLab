@@ -32,6 +32,7 @@ function measureRun(P) {
       if (s.headI(st) > 0) { const d = Math.hypot(st.x, st.y); ds.push(d); sy += st.y; vis++; ys.push(st.y); }
     }
     for (const f of s.flashes) { const a = s.t - f.t0; if (a >= 0 && a < (f.cut || 0.25)) ext(f.x + Math.sign(f.x) * f.sig * 2, f.y + Math.sign(f.y) * f.sig * 2); }
+    for (const q of s.exDots || []) { const a = s.t - q.t0; if (a >= 0 && a < q.life) { const [x, y] = s.exPos(q, a); ext(x + Math.sign(x) * q.size, y + Math.sign(y) * q.size); } }     // 4.6.0 自定义发射器的光点
     const sp = s.sp;
     for (let j = 0; j < sp.n; j += 2) {
       if (sp.T0[j] * (1 - P.cooling * sp.age[j] / sp.life[j]) < 1050) continue;
@@ -41,11 +42,12 @@ function measureRun(P) {
     let r = 0;
     for (const st of s.stars) if (st.alive) r = Math.max(r, Math.hypot(st.x, st.y));
     for (const f of s.flashes) { const a = s.t - f.t0; if (a >= 0 && a < (f.cut || 0.25)) r = Math.max(r, Math.hypot(f.x, f.y) + f.sig * 3); }
+    for (const q of s.exDots || []) { const a = s.t - q.t0; if (a >= 0 && a < q.life) { const [x, y] = s.exPos(q, a); r = Math.max(r, Math.hypot(x, y) + q.size); } }
     for (let j = 0; j < sp.n; j += 2) {
       if (sp.T0[j] * (1 - P.cooling * sp.age[j] / sp.life[j]) < 1050) continue;
       r = Math.max(r, Math.hypot(sp.p[j * 3], sp.p[j * 3 + 1]));
     }
-    if (s.t < 0.25 && s.fam === 'aerial') r = Math.max(r, 3 * Math.max(2, P.v0 * 0.045) * (+P.flashSize > 0 ? +P.flashSize : 1));
+    if (s.t < 0.25 && s.fam === 'aerial') r = Math.max(r, 3 * (+P.flashR > 0 ? +P.flashR : Math.max(2, P.v0 * 0.045)) * (+P.flashSize > 0 ? +P.flashSize : 1));
     prof.push([s.t, v, r]);
     ds.sort((a, b) => a - b); ys.sort((a, b) => a - b);
     stat.push({ t: s.t, r95: ds.length ? ds[Math.floor(ds.length * 0.95)] : 0, cy: vis ? sy / vis : 0, top: vis ? ys[Math.floor(ys.length * 0.97)] : 0, bot: vis ? ys[Math.floor(ys.length * 0.03)] : 0, vis });

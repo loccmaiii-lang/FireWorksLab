@@ -106,7 +106,7 @@
       </div>
       <div class="preview-controls">
         <div class="rtlay" id="rtLayerBar" hidden title="升空尾缀分层看（只影响观察，不改参数和导出）：点一层开 / 关，双击只看这一层，「全部」恢复"></div>
-        <div class="seg small" id="dispSeg" hidden><button data-disp="fit" aria-pressed="false">适应窗口</button><button data-disp="px" aria-pressed="false">1:1</button><button data-disp="game" aria-pressed="true">游戏内大小</button></div>
+        <div class="seg small" id="dispSeg" hidden><button data-disp="fit" aria-pressed="false">适应窗口</button><button data-disp="px" aria-pressed="false">1:1</button><button data-disp="game" aria-pressed="true" title="真实米数（4.6.0）：相机按「四尺玉在 1000 m 占屏高 1/3」定一次，别的号数、升空尾缀都按自己的真实大小显示">游戏内大小</button></div>
         <label class="fexpo" id="distBox" hidden title="观看距离 50–1200 m（对数刻度）；标准检查按 1000 m">距离<input type="range" id="dist" min="0" max="1000" step="1" value="943"><output id="distOut">1000 m</output></label>
         <label class="fexpo" title="显示曝光（只影响预览，不改素材）">显示曝光<input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label>
         <details class="ab-more preview-settings" id="previewSettings"><summary class="btn" title="烘焙、贴图图层、构图网格、记录当前帧">预览设置</summary><div class="ab-menu">
