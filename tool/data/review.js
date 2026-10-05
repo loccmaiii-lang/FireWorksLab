@@ -6461,7 +6461,7 @@ var FW_EFFECTS = [
 "id": "JM4-40E8",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 }
 ],
 "exports": [
@@ -8339,7 +8339,7 @@ var FW_EFFECTS = [
 "id": "QN11E10",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "QN11E2",
@@ -9029,7 +9029,7 @@ var FW_EFFECTS = [
 "id": "HK10E8",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 }
 ],
 "exports": [
@@ -9408,7 +9408,7 @@ var FW_EFFECTS = [
 "id": "HN2E15",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "HN2E2",
