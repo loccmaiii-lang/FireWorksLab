@@ -149,6 +149,7 @@ function rtGpuSplit(P) {
 const rtTexFrac = (P, k) => { const R = +P['rt' + k + 'Rate'] || 0; if (!(R > 0)) return 0; if (rtIsFar(P)) return clamp(1 - rtGpuSplit(P).g[k] / R, 0, 1); return k === 'C' ? 0 : clamp(P['rt' + k + 'Tex'] || 0, 0, 1); };
 // GPU 火花远看直径（rtGpuDisp > 0）：尺寸取 max(真实, 远看直径)，亮度按光量不变除以放大倍数²
 const rtDispS = (P, S) => Math.max(S, +P.rtGpuDisp > 0 ? +P.rtGpuDisp : 0);
+const rtFarVzOf = P => Math.max(0, P.rtFarVz == null ? 0.5 : +P.rtFarVz);     // 4.5.3 远段面片上移速度（m/s）
 const rtNearExpoK = P => rtIsFar(P) ? clamp(+P.rtNearExpo || 1, 0.2, 1) : 1;     // 4.5.1 近段贴图曝光倍数（只在近段 + 远段时）
 const rtDispK = (P, S0) => +P.rtGpuDisp > 0 ? (S0 / rtDispS(P, S0)) ** 2 * (P.rtGpuGain == null ? 1 : +P.rtGpuGain) : 1;     // 亮度倍数：光量不变 × 远看增益
 function rtTexClasses(P, LI) {
@@ -300,9 +301,10 @@ function rtWorldDraw(P, LI, ball, t, view, ppm, w, wf, cx) {
 }
 // 4.5.1 远段 TrailFar 渲染器（世界坐标，面片立在发射点附近）：bakeFrames 的接口 draw(ts, view, ppm, w)；ts = 发射后的绝对时间
 //   开花（ts ≥ T）以后所有火花都归远段（近段循环层到 T 结束，没有 RiseFade 消散层）
-function makeRiseTailFarRenderer(P, LI, ball, cx) {
+//   4.5.3 vz / t0（用户 10-05 18:02 UE 实测：1 cm/s 的初速定不住速度朝向，给 50 cm/s 才竖直）：面片按 vz（m/s）往上走，烘焙时视图跟着面片上移，内容仍按世界坐标（不漂）
+function makeRiseTailFarRenderer(P, LI, ball, cx, vz = 0, t0 = 0) {
   const nw = rtNearW(P), wf = a => 1 - nw(a), T = ball.T;
-  return { slots: 0, subW: 0, draw(ts, view, ppm, w) { setParticleProfile(P); rtWorldDraw(P, LI, ball, ts, view, ppm, w, ts >= T ? null : wf, cx); }, dispose() { } };
+  return { slots: 0, subW: 0, draw(ts, view, ppm, w) { setParticleProfile(P); rtWorldDraw(P, LI, ball, ts, vz ? [view[0], view[1] + vz * (ts - t0), view[2], view[3]] : view, ppm, w, ts >= T ? null : wf, cx); }, dispose() { } };
 }
 // ---- 粒子层：按理论生成发射器（46_emitset.js 的数据）----
 const RT_LAM = [610e-9, 550e-9, 465e-9];
@@ -617,7 +619,7 @@ function rtLayoutFar(P, ball, LI) {
   let xa = 0, xb = N - 1;
   if (tot > 0) { let c = 0; while (xa < N - 1 && c + colW[xa] < 0.002 * tot) c += colW[xa++]; c = 0; while (xb > 0 && c + colW[xb] < 0.002 * tot) c += colW[xb--]; }
   const zb = y1 >= 0 ? Y(y0) - 2 * pxY : 0, zt = y1 >= 0 ? Y(y1) + 2 * pxY : ball.H, xl = X(xa) - 2 * pxX, xr = X(xb) + 2 * pxX;
-  const W0 = Math.max(4, xr - xl), H0 = Math.max(10, zt - zb), HX = W0 / 2 * 1.04, HY = H0 / 2 * 1.02, cx = (xl + xr) / 2, cz = (zb + zt) / 2;
+  const W0 = Math.max(4, xr - xl), H0 = Math.max(10, zt - zb), HX = W0 / 2 * 1.04, cx = (xl + xr) / 2;
   const [cols, rows] = rtGridFor(P, W0, H0), F = cols * rows * 4;
   // 帧时刻：上升段 Fr 帧按「交接中点之前」的弹体走过的路平均分，开花后 Fd 帧按时间平均分
   const Fd = clamp(Math.round(Df * 6), 6, Math.floor(F / 3)), Fr = F - Fd, n = 400, S = [0];
@@ -626,9 +628,11 @@ function rtLayoutFar(P, ball, LI) {
   // 开花后：刚开花那一下年轻火花还在往后退、减速，帧排密一点（t ∝ (f / Fd)^1.5），后面只剩慢慢变暗
   const edges = []; for (let f = 0; f < Fr; f++) edges.push(tOfS(f / Fr * S[n])); for (let f = 0; f <= Fd; f++) edges.push(T + Math.pow(f / Fd, 1.5) * Df);
   const Dtot = edges[F] - tA, times = [], dur = [], keys = [];
+  // 4.5.3 面片上移 vz（m/s）：寿命里一共走 vz · Dtot，面片加高这么多、开始时中心放低一半，内容始终在面片里
+  const vz = rtFarVzOf(P), drift = vz * Dtot, HY = (H0 + drift) / 2 * 1.02, cz = (zb + zt) / 2 - drift / 2;
   for (let f = 0; f < F; f++) { times.push((edges[f] + edges[f + 1]) / 2 - tA); dur.push(edges[f + 1] - edges[f]); keys.push([+((edges[f] - tA) / Dtot).toFixed(5), f]); }
   keys.push([1, F - 0.01]);
-  const out = { t0: tA, Dtot, Df, Fr, Fd, cols, rows, F, cx, cz, HX, HY, Ww: 2 * HX, Wh: 2 * HY, times, dur, keys, measured: y1 >= 0 };
+  const out = { t0: tA, Dtot, Df, Fr, Fd, cols, rows, F, cx, cz, vz, HX, HY, Ww: 2 * HX, Wh: 2 * HY, times, dur, keys, measured: y1 >= 0 };
   rtFarCache.set(key, out); if (rtFarCache.size > 8) rtFarCache.delete(rtFarCache.keys().next().value);
   return out;
 }
@@ -668,7 +672,7 @@ async function bakeEmitSet(P, scale, onProg) {
     // 4.5.1 远段 TrailFar：世界坐标的全程序列（原来的曝光，Ramp 和实时模拟一致）；开花后所有火花都归它（不再有 RiseFade 消散层）
     const fa = rtLayoutFar(P, ball, LI), Pa = { ...P, cols: fa.cols, rows: fa.rows, chans: 4 };
     const pa = rtPlan(Pa, { HX: fa.HX, HY: fa.HY, cy: fa.cz, hb: 0.5 }, fa.times, fa.dur, { loop: false, t0: fa.t0, duration: fa.Dtot, keys: fa.keys });
-    const ba = await bakeFrames(Pa, scale, onP(0.6, 1), pa, makeRiseTailFarRenderer(P, LI, ball, fa.cx), { expo: [E0, E0], noFade: true });
+    const ba = await bakeFrames(Pa, scale, onP(0.6, 1), pa, makeRiseTailFarRenderer(P, LI, ball, fa.cx, fa.vz || 0, fa.t0), { expo: [E0, E0], noFade: true });
     ba.form = 'esFar'; ba.P = Pa; Object.assign(ba.meta, { far: fa });
     b.far = ba;
   }
@@ -704,7 +708,7 @@ function rtLoopStateAt(b, t) {
 function rtFarStateAt(b, t) {
   const ba = b.far; if (!ba) return null; const fa = ba.meta.far, u = (t - fa.t0) / fa.Dtot;
   if (u < 0 || u >= 1) return null;
-  return { bb: ba, f: clamp(Math.floor(evalKeys(fa.keys, u)), 0, fa.F - 1), x: fa.cx, z: fa.cz, w: fa.Ww, h: fa.Wh };
+  return { bb: ba, f: clamp(Math.floor(evalKeys(fa.keys, u)), 0, fa.F - 1), x: fa.cx, z: fa.cz + (fa.vz || 0) * (t - fa.t0), w: fa.Ww, h: fa.Wh };
 }
 // 观察镜头：游戏内大小按开花直径定比例（和这一档的开花在同一比例）；看不下整段时跟着星头
 function rtView(P, b, t) {
@@ -795,13 +799,13 @@ function fwlEmitSet(name, b, M, mobile) {
   }])];
   if (ba) emitters.push({
     name: 'TrailFar', material: 'far', gpu: false,
-    // 竖直面片：速度朝向 + 一个 1 cm/s 的向上初速（只用来定朝向，寿命内挪不到 0.2 m）；Pivot 居中，Initial Location = 面片中心（相对发射点）
+    // 竖直面片：速度朝向 + 向上的初速（4.5.3：UE 里 1 cm/s 定不住朝向，改成 rtFarVz，默认 50 cm/s；烘焙时内容按面片上移补回，不漂）；Pivot 居中，Initial Location = 开始时的面片中心（相对发射点）
     required: { screen_alignment: 'Velocity', duration_s: r4(fa.Dtot), loops: 1, delay_s: r4(fa.t0), cutout: 'cutoutFar', max_draw_count: 1, pivot_offset: [-0.5, -0.5] },
     spawn: { rate: { const: 0 }, bursts: [[0, 1]] },
     modules: [
       { m: 'Lifetime', Lifetime: { const: r4(fa.Dtot) } },
       { m: 'InitialLocation', StartLocation: { const: [r1(fa.cx * 100), 0, r1(fa.cz * 100)] } },
-      { m: 'InitialVelocity', StartVelocity: { const: [0, 0, 1] } },
+      { m: 'InitialVelocity', StartVelocity: { const: [0, 0, r1(Math.max(1, (fa.vz || 0) * 100))] } },
       { m: 'InitialSize', StartSize: { const: [r1(fa.Ww * 100), r1(fa.Wh * 100), 1] } },
       { m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(fa.keys, La.F) } } },
       { m: 'ColorOverLife', ColorOverLife: { curve: [[0, col[col.length - 1][1]], [1, col[col.length - 1][1]]] }, AlphaOverLife: { const: 1 } }
@@ -816,7 +820,7 @@ function fwlEmitSet(name, b, M, mobile) {
     notes: [
       `循环层 RiseLoop：速度朝向单粒子，星头在面片上端（Pivot Offset ${pivotY}，和 V5 尾缀同一写法；导入器若还不支持这个字段，手动在 Required 里填）；弹道 = ${bl.quad ? 'Initial Velocity + Velocity Over Life（Absolute，物理弹道：平方阻力、终端速度 ' + r1(bl.vt) + ' m/s；这个模块要导入器支持，未经 UE 验证）' : 'Initial Velocity + Drag + Const Acceleration（线性阻力'}，和粒子层的出生曲线同一条）。帧号锯齿：${m.nRev} 圈自转 / ${r2(m.Tl)} s 一个循环。${(m.texSparks || []).length ? (rtTexFrac(P, 'M') > 0 ? '贴图里有星头、白热段火花和 ' + rtTexWhat(P) + '（真循环；其余在 GPU 发射器）。' : '贴图里有星头、白热段火花和 ' + Math.round(rtTexFrac(P, 'F') * 100) + '% 的细火花（真循环；其余细火花在 SparksFine）。') : ''}${m.grow ? '面片长度跟真实尾迹（Size By Life 只改 Y，起步从短长出来、减速变短，最短 × ' + r2(+P.rtLoopMin || 0.25) + '）。' : ''}`,
       ...(!fd ? [] : [`消散 RiseFade：开花时刻（${r2(m.T)} s）在开花点出生，贴图里每颗火花按自己的寿命熄灭；${Lf.F} 帧 / ${r2(m.fadeSeconds)} s。${m.grow ? '按循环层最后的等效速度 ' + r1(fm.Vf) + ' m/s 单独取景烘焙，面片 ' + r1(fm.Ww * 100) + ' × ' + r1(fm.Wh * 100) + ' cm 是真实大小（不压扁），和循环层最后一帧一样长；Pivot Offset ' + pivotF + '。' : ''}${P.rtDissolve > 0 ? 'dissolve 动态参数在后 60% 从 0 升到 ' + r2(P.rtDissolve) + '（材质里溶解怎么表现未经 UE 验证）。' : '不写 dissolve。'}`]),
-      ...(ba ? [`远段 TrailFar（4.5.1 近段 + 远段）：开花后所有火花都在远段里演完熄灭，没有 RiseFade 消散层。${kN !== 1 ? '循环层贴图按曝光 × ' + r2(kN) + ' 烘（白热段不顶到 255），RiseLoop 的 Color Over Life × ' + r2(1 / (kN * kN)) + ' 补回（暗处和远段一样亮）。' : ''}年龄 ≥ ${r2(m.nearA[0])}–${r2(m.nearA[1])} s 的火花（已停在空气里）用世界坐标烘成全程序列，一个竖直面片 ${r1(fa.Ww)} × ${r1(fa.Wh)} m 立在发射点上（中心在发射点上方 ${r1(fa.cz)} m${Math.abs(fa.cx) > 0.05 ? '、横向 ' + r1(fa.cx) + ' m' : ''}），${r2(fa.t0)} s 出现、${r2(fa.Dtot)} s 播完：上升段 ${fa.Fr} 帧按弹体走过的路平均分、开花后 ${fa.Fd} 帧自己演完熄灭（帧号曲线不是匀速）。RiseLoop / RiseFade 只剩年轻火花，两段按年龄交叉淡化、相加 = 实时模拟。速度朝向 + 1 cm/s 向上初速 = 只绕竖轴转向相机（和 RiseFade 同一写法）。`,
+      ...(ba ? [`远段 TrailFar（4.5.1 近段 + 远段）：开花后所有火花都在远段里演完熄灭，没有 RiseFade 消散层。${kN !== 1 ? '循环层贴图按曝光 × ' + r2(kN) + ' 烘（白热段不顶到 255），RiseLoop 的 Color Over Life × ' + r2(1 / (kN * kN)) + ' 补回（暗处和远段一样亮）。' : ''}年龄 ≥ ${r2(m.nearA[0])}–${r2(m.nearA[1])} s 的火花（已停在空气里）用世界坐标烘成全程序列，一个竖直面片 ${r1(fa.Ww)} × ${r1(fa.Wh)} m 立在发射点上（中心在发射点上方 ${r1(fa.cz)} m${Math.abs(fa.cx) > 0.05 ? '、横向 ' + r1(fa.cx) + ' m' : ''}），${r2(fa.t0)} s 出现、${r2(fa.Dtot)} s 播完：上升段 ${fa.Fr} 帧按弹体走过的路平均分、开花后 ${fa.Fd} 帧自己演完熄灭（帧号曲线不是匀速）。RiseLoop / RiseFade 只剩年轻火花，两段按年龄交叉淡化、相加 = 实时模拟。速度朝向 + ${r1((fa.vz || 0) * 100)} cm/s 向上初速 = 竖直、只绕竖轴转向相机；面片寿命里往上走 ${r1((fa.vz || 0) * fa.Dtot)} m，贴图里的内容已按这个上移补回（世界位置不变）。`,
         `GPU 火花按档预算（同时活着）：粗 ${P.rtGpuC} / 闪烁（中）${P.rtGpuM} / 细 ${P.rtGpuF} 颗${m.gpuSplit && m.gpuSplit.f < 1 ? '，加上落火、末段爆亮超过上限 ' + P.rtGpuMax + '，一起 × ' + m.gpuSplit.f.toFixed(2) : ''}；GPU 那份从贴图里扣掉，贴图 + GPU = 全部火花。${+P.rtGpuDisp > 0 ? 'GPU 火花按远看直径 ' + r2(+P.rtGpuDisp) + ' m 画（光量不变）。' : ''}`] : []),
       `粒子层：出生位置 / 初速是按发射器时间的曲线（"bake": false 不烘查找表，避免关键点被查找表抹掉）；第二个 Initial Velocity 是随机散开。按 spec 第 2 节，出生类曲线按发射器时间取值在 GPU 发射器上还没实测（⚪）。`,
       `同时活着的粒子最多约 ${peak.peak} 颗（${mobile ? '手机' : 'PC'}，第 ${peak.at} s）。软圆点亮度口径未经 UE 验证：烘焙器按「中心值 = 颜色、σ = 尺寸 / 4」的高斯画。`,
@@ -864,7 +868,7 @@ ${!fd ? '' : `【RiseFade】CPU · beam_flipbook（${fd.P ? fd.P.texW + '×' + f
   Initial Location = 开花点 · Initial Size = ${m.grow ? (fd.meta.Ww * 100).toFixed(1) + ' × ' + (fd.meta.Wh * 100).toFixed(1) + ' cm（按循环层最后的等效速度 ' + fd.meta.Vf.toFixed(1) + ' m/s 烘的真实大小）' : '和循环层一样大'} · 帧号 0 → ${fd.meta.L.F - 0.01}${P.rtDissolve > 0 ? ' · dissolve 0 →（后 60%）' + P.rtDissolve : ''}
 
 `}${b.far ? (() => { const fa = b.far.meta.far, La = b.far.meta.L; return `【TrailFar】CPU · beam_flipbook（${b.far.P.texW}×${b.far.P.texH}，${La.cols}×${La.rows} × ${La.chans} = ${La.F} 帧）· Screen Alignment = Velocity · Pivot Offset (−0.5, −0.5) · Delay ${fa.t0.toFixed(3)} s · Duration ${fa.Dtot.toFixed(3)} s
-  Initial Location (${(fa.cx * 100).toFixed(1)}, 0, ${(fa.cz * 100).toFixed(1)}) · Initial Velocity (0, 0, 1)（只定朝向）· Initial Size ${(fa.Ww * 100).toFixed(1)} × ${(fa.Wh * 100).toFixed(1)} cm
+  Initial Location (${(fa.cx * 100).toFixed(1)}, 0, ${(fa.cz * 100).toFixed(1)}) · Initial Velocity (0, 0, ${((fa.vz || 0) * 100).toFixed(0)})（定朝向；面片往上走，贴图内容已补回）· Initial Size ${(fa.Ww * 100).toFixed(1)} × ${(fa.Wh * 100).toFixed(1)} cm
   Dynamic Parameter 帧号：上升段 ${fa.Fr} 帧按弹体走过的路、开花后 ${fa.Fd} 帧（开花后所有火花都在这里演完，没有 RiseFade），${fa.keys.length} 个关键点（不是匀速，完整见 cascade.json）
 
 `; })() : ''}【粒子层 · PC】同时活着最多约 ${pkP.peak} 颗

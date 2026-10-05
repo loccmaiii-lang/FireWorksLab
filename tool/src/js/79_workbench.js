@@ -384,8 +384,11 @@ function jumpTimes() {
 function editLayerP() { if (state.tab !== 'combo') return state.tab === 'master' && usesTickPlan40(state.P) ? state.P : null; const L = state.layers[state.comboSel], e = L && layerEntryOf(L); return e && usesTickPlan40(e.P) ? e.P : null; }
 function layerSpans(x) {
   const m = x.b && x.b.meta; if (!m) return null;
-  const r = +x.L.rate || 1, d = +x.L.delay || 0, t0 = m.t0 || 0, end = bakeTotal(x.b), pre = m.pre;
-  const vis = m.vis || [pre ? pre.from : t0, end];
+  const r = +x.L.rate || 1, d = +x.L.delay || 0, t0 = m.t0 || 0, pre = m.pre;
+  // 4.5.3：贴图还是旧参数（自动烘焙关、改了序列时长 / 入出点还没按 B）时，轨道按现在的参数画，不再停在旧贴图的长度
+  const Pc = layerPOf(x), stale = !!(Pc && x.b.P && ['duration', 'cutIn', 'cutOut'].some(k => Math.abs((+x.b.P[k] || 0) - (+Pc[k] || 0)) > 1e-6));
+  const end = stale ? (+Pc.cutOut > 0 ? Math.min(+Pc.cutOut, +Pc.duration) : +Pc.duration) : bakeTotal(x.b);
+  const vis = stale ? [+Pc.cutIn > 0 ? +Pc.cutIn : (pre ? pre.from : t0), end] : m.vis || [pre ? pre.from : t0, end];
   return { d, r, t0, end, pre, vis, at: t => d + t / r };
 }
 // 层轨道（用户 2026-10-02 13:09 a：接力关系藏在每层的参数里，找不到）：把决定「这一层什么时候亮、什么时候停」的参数画在时段条上，

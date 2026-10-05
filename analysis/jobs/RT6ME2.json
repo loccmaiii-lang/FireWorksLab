@@ -1,0 +1,9 @@
+{
+ "id": "RT6ME2",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT6M",
+ "name": "RiseTailM",
+ "priority": 8,
+ "note": "RT6M 重导（烘焙器 4.5.3：远段 TrailFar 向上初速 50 cm/s、面片上移内容补回——用户 10-05 18:02 UE 实测 1 cm/s 朝向不对）。导出 + 回放检查。对话框15。"
+}

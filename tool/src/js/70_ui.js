@@ -607,7 +607,8 @@ function buildMasterPanel() {
       } else if (it.info) {   // 只读的结果行（例：「帧与贴图」顶上的「多少帧、怎么装」）
         row = document.createElement('div'); row.className = 'infohost'; row.dataset.info = it.info;
         row._refresh = () => { row.innerHTML = it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : it.info === 'endInfo' && typeof endInfoHTML === 'function' ? endInfoHTML() : it.info === 'schemeNote' && typeof singleSchemeNote === 'function' ? `<p class="hint endinfo">${singleSchemeNote(state.P)}</p>` : it.info === 'ballInfo' && typeof rtBallInfoHTML === 'function' ? rtBallInfoHTML(state.P) : ''; };
-        if (it.info === 'endInfo') row.addEventListener('click', e => { const b = e.target.closest('[data-endfit]'); if (b) { setTimingParam('duration', +b.dataset.endfit); refreshPanelValues(); flash('序列时长已加长到火花灭完'); } });
+        if (it.info === 'endInfo') row.addEventListener('click', e => { const b = e.target.closest('[data-endfit]'); if (b) { setTimingParam('duration', +b.dataset.endfit); refreshPanelValues(); flash('序列时长已加长到火花灭完'); }
+          if (e.target.closest('[data-cutclear]')) { state.P.cutOut = 0; onParam(); refreshPanelValues(); flash('出点已清除：序列放到序列时长为止'); } });
         row._refresh(); det.appendChild(row);
       } else if (it.text) {
         row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${nm ? p43Label(nm, it.label) : it.label}</span><input type="text" maxlength="6">`; row._lab = nm ? p43Label(nm, it.label) : it.label; row._detail = nm ? nm.desc : ''; row._nm = nm;

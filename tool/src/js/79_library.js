@@ -254,7 +254,7 @@ function libGroup(host, id, title, count, hot, extra) {
 }
 // 左栏（2026-10-02 界面外观第 1 步，按用户的浏览器草稿）：上下分组、可折叠——待我验收 / 制作中 / 已通过 / 花型模板 / 工具（4.3 去掉「历史」：只放当前版本）；
 // 56 px 缩略图、选中整圈青绿框；新建配方在最下面。lib.seg 仍可用（自动化脚本用 lib.seg='passed';renderLib() 打开某一组）。
-const LIB_OPEN_DEFAULT = { review: true, wip: true, passed: true, myfx: true, mine: true, mytpl: true, types: false, tools: false };
+const LIB_OPEN_DEFAULT = { review: true, wip: true, myfx: true, mytpl: true, types: false, tools: false };
 function renderLib() {
   const host = $('#libBody'); host.innerHTML = '';
   lib.open = { ...LIB_OPEN_DEFAULT, ...(lib.open || {}) };
@@ -264,7 +264,7 @@ function renderLib() {
   const inSeg = (ef, k) => k === 'review' ? ef.阶段 === '待验收' && !!ef.待验收版
     : k === 'passed' ? (ef.阶段 === '已通过' || !!ef.已通过版)
     : !(ef.阶段 === '待验收' && ef.待验收版) && !(ef.阶段 === '已通过' || ef.已通过版);
-  if (lib.seg) { lib.open[lib.seg] = true; lib.seg = ''; }      // 指定的那一组展开（旧的「分栏」入口）
+  if (lib.seg) { lib.open[lib.seg === 'passed' ? 'myfx' : lib.seg] = true; lib.seg = ''; }     // 4.5.3 已通过并进我的效果      // 指定的那一组展开（旧的「分栏」入口）
   const thumbOf = ef => {
     const me = effMainEntry(ef), fm = (ef.主条目 || '').startsWith('rep:') ? REPLICA_BY_ID[ef.主条目.slice(4)] : null;
     return ef.thumb ? `<span class="th"><i style="background-image:url(${ef.thumb})"></i></span>` : fm ? thumbHTML({ ...fm, key: 'rep:' + fm.id }) : me ? thumbHTML(me) : '<span class="th"></span>';
@@ -295,9 +295,11 @@ function renderLib() {
   const EMPTY = { review: '现在没有等你验收的效果。这里的每一项，程序都会核对证据（最新导出 = 当前版本、回放检查过、标准检查过），缺什么就标「未就绪」并写出原因。', wip: '没有制作中的效果', passed: '还没有通过的效果' };
   // 4.5.0（用户 10-05 #5）：AI 做的效果不能删，可以从左栏隐藏（资产栏 ⋯「从左栏隐藏这个效果」）；组标题上「已隐藏 n」点一下显示 / 收起
   const hid = typeof libHidden === 'function' ? libHidden() : new Set();
-  for (const [k, t] of [['review', '待我验收'], ['wip', '制作中'], ['passed', '已通过']]) {
-    const all = effs.filter(ef => inSeg(ef, k) && libMatch(ef.名, ef.key, ef.主条目 || '', ef.说明 || '', ef.待验收版 || '', ef.已通过版 || ''));
-    const nh = all.filter(ef => hid.has(ef.key)).length, list = all.filter(ef => lib.showHidden || !hid.has(ef.key));
+  const segList = k => { const all = effs.filter(ef => inSeg(ef, k) && libMatch(ef.名, ef.key, ef.主条目 || '', ef.说明 || '', ef.待验收版 || '', ef.已通过版 || ''));
+    return [all.filter(ef => hid.has(ef.key)).length, all.filter(ef => lib.showHidden || !hid.has(ef.key))]; };
+  // 4.5.3（用户 10-05 18:02「已通过直接并入我的效果」）：左栏不再单独有「已通过」组，通过的效果排在「我的效果」最上面
+  for (const [k, t] of [['review', '待我验收'], ['wip', '制作中']]) {
+    const [nh, list] = segList(k);
     list.sort((x, y) => (x.阶段 === '未开始') - (y.阶段 === '未开始'));
     if (lib.q && !list.length) continue;
     const g = libGroup(host, k, t, list.length, k === 'review' && effNewCount() > 0, nh ? `<button type="button" class="lg-hid" title="${lib.showHidden ? '收起隐藏的效果' : '显示隐藏的效果'}">${lib.showHidden ? '收起隐藏' : '已隐藏 ' + nh}</button>` : '');
@@ -305,20 +307,10 @@ function renderLib() {
     if (!list.length) g.insertAdjacentHTML('beforeend', `<p class="lsub">${EMPTY[k]}</p>`);
     for (const ef of list) { effRow(g, ef, k); if (hid.has(ef.key)) { const it = g.querySelector(`.li[data-key="ef:${ef.key}"]`); if (it) libItemAct(it, '取消隐藏', '在左栏重新显示', () => setLibHidden(ef.key, false)); } }
   }
-  // 我的效果（4.2.7，「＋ 新建效果」搭的）
-  myLibGroup(host);
-  // 我的版本（用户在资产栏保存的，存在这台电脑的浏览器里）
-  const mine = []; for (const [k, list] of Object.entries(store.get('mySaves', {}))) for (const sv of list || []) if (!sv.auto) mine.push([k, sv]);     // 导出时自动存的只在资产栏「版本」里
-  const mineF = mine.filter(([k, sv]) => libMatch(sv.name, k, sv.base || ''));
-  if (mineF.length) {
-    const g = libGroup(host, 'mine', '我的版本', mineF.length);
-    for (const [k, sv] of mineF) {
-      const ef = k.startsWith('ef:') ? effs.find(x => 'ef:' + x.key === k) : null, me = ef && effMainEntry(ef);
-      const th = ef && ef.thumb ? `<span class="th"><i style="background-image:url(${ef.thumb})"></i></span>` : me ? thumbHTML(me) : k.startsWith('type:') ? `<span class="th" style="${typeThumbStyle(k.slice(5))}"></span>` : '<span class="th"></span>';
-      const it = libItem(g, 'mine:' + k + ':' + sv.id, th + `<span class="tx"><b>${ef ? ef.名 : k.replace(/^\w+:/, '')} · ${sv.name}</b><small>基于 ${sv.base || '—'} · ${sv.at || ''}</small><span class="bds"><span class="badge">我的</span></span></span>`, () => openMine(k, sv.id));
-      libItemAct(it, '删除', '删除这个版本（6 秒内能撤销）', () => removeVersion(k, sv.id));
-    }
-  }
+  // 我的效果（4.2.7，「＋ 新建效果」搭的）；4.5.3 通过的 AI 效果排在最上面
+  const [nhP, passed] = segList('passed');
+  myLibGroup(host, passed.length, g => { for (const ef of passed) { effRow(g, ef, 'passed'); if (hid.has(ef.key)) { const it = g.querySelector(`.li[data-key="ef:${ef.key}"]`); if (it) libItemAct(it, '取消隐藏', '在左栏重新显示', () => setLibHidden(ef.key, false)); } } }, nhP);
+  // 4.5.3（用户 10-05 18:02「去掉我的版本模块」）：左栏不再有「我的版本」组。以前存的版本还在这台电脑里：打开那个效果，资产栏「版本」里能选，选了点「保存」就变成我的效果
   // 4.5.0 我的模板（用户 10-05 #6：调好的单层存成模板 / 收藏）
   const tpls = Object.values(typeof tplAll === 'function' ? tplAll() : {}).filter(r => libMatch(r.name, r.id, TYPE_NAMES[r.type] || '')).sort((a, b) => String(b.at).localeCompare(String(a.at)));
   if (tpls.length || !lib.q) {

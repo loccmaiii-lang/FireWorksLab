@@ -38,6 +38,7 @@
   E1 4.4：「结尾」「冷却方式」开关缺省 = 旧做法（4.4.3 加：火花闪烁频率缺省 0、在火花 › 亮度的随机下面、闪烁 0 时不显示）；结尾选「不淡出」序列时长加长到火花灭完、帧计划不再整体淡出
   X2 4.4.2：单层效果（牡丹）也有导出方案（4.4.3 加：点灭星的光点 Color Over Life 是方波、菊没有）：PC 序列 / 单束 / GPU 光点 / 不出、手机 序列 / 不出；选光点后 cascade.json 是 GPU 光点、引擎回放画光点；多层效果的层里不显示（在层页头选）
   N3 排查第 1 步：SCHEMA ↔ 默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS 对得上
+  W2 4.5.3：左栏没有「我的版本」「已通过」（通过的进「我的效果」最上面）、我的效果每项没有删除；出点提示 + 一键清除；没烘时时间轴按新时长；远段面片上移
   R6 4.5.1 升空尾缀 RT6 近段 + 远段：缺省关 = RT5；开了贴图有粗 / 中 / 细、GPU 按档预算（上限一起降、降掉的回贴图）、贴图 + GPU = 出生率；交接权重相加 = 1；闪烁层；远看直径光量不变；
      TrailFar 导出、没有 RiseFade、命名 Loop + Far；近段贴图曝光 k → RiseLoop Color Over Life × 1 / k²；面板；4.5.2 分层看（近段 / 远段 / 每个 GPU 层开关、双击只看、全部恢复）
   R5 4.4.5 升空尾缀 RT5 选项：缺省旧做法；物理弹道到设定高度、第 1 秒减速够猛、星头光晕跟弹道（Velocity Over Life）；GPU 兼容（无 Acceleration、≤ 2 个 Initial Velocity）、
@@ -1100,7 +1101,7 @@ R6_JS = r"""async () => {
   if (Math.abs(out.disp.size[1] - 2) > 0.01 || Math.abs(out.disp.light[1] / out.disp.light[0] - 1) > 0.02) bad.push('远看直径不对（尺寸 = 2 m、光量不变）：' + JSON.stringify(out.disp));
   // 导出：有远段时 cascade.json 多 TrailFar（速度朝向竖直面片、帧号曲线、立在发射点上）、命名多一张 Far
   const ball = rtBallistic(Z), LIz = rtLoopInfo(Z), F = 64, keys = [...Array(F).keys()].map(f => [+(f / F).toFixed(4), f]).concat([[1, F - 0.01]]);
-  const fa = { t0: 0.8, Dtot: ball.T + 3, Df: 3.8, Fr: 48, Fd: 16, cols: 16, rows: 1, F, cx: 1, cz: 200, HX: 15, HY: 215, Ww: 30, Wh: 430, keys };
+  const fa = { t0: 0.8, Dtot: ball.T + 3, Df: 3.8, Fr: 48, Fd: 16, cols: 16, rows: 1, F, cx: 1, cz: 200, vz: 0.5, HX: 15, HY: 215, Ww: 30, Wh: 430, keys };
   const Lf = layoutOf({ ...Z, cols: 16, rows: 1, chans: 4 }), meta = { L: Lf, far: fa };
   const lay = { L: layoutOf(Z), T: ball.T, Tl: LIz.Tl, nRev: LIz.nRev, Ww: 10, Wh: 100, hb: 0.9, sizeKeysRise: [[0, 0.1], [1, 0.2]], grow: true, fadeSeconds: 1, fadeFps: 20, ball: { ...ball, pos: undefined, vel: undefined }, nearA: [a0, a1], gpuSplit: rtGpuSplit(Z), nearExpo: 0.8 };
   const b = { form: 'emitset', P: Z, es: ESz, meta: lay, fades: [], far: { meta, P: { ...Z, cols: 16, rows: 1, chans: 4 } } };     // 近段 + 远段：开花后归远段，没有消散层
@@ -1111,7 +1112,8 @@ R6_JS = r"""async () => {
   if (j.emitters.some(x => x.name === 'RiseFade') || j.textures.fade) bad.push('近段 + 远段时不该有 RiseFade：' + out.exp.em);
   if (Math.abs(out.exp.nearComp - 1 / 0.64) > 0.01) bad.push('近段贴图曝光 0.8 时 RiseLoop 的 Color Over Life 应该 × 1 / 0.64：' + out.exp.nearComp);
   if (!tf) bad.push('cascade.json 没有 TrailFar'); else {
-    const mods = Object.fromEntries(tf.modules.map(x => [x.m, x])); out.exp.far = { align: tf.required.screen_alignment, delay: tf.required.delay_s, life: mods.Lifetime.Lifetime.const, size: mods.InitialSize.StartSize.const, loc: mods.InitialLocation.StartLocation.const, keys: mods.DynamicParameter.params.frame.curve.length };
+    const mods = Object.fromEntries(tf.modules.map(x => [x.m, x])); out.exp.far = { align: tf.required.screen_alignment, delay: tf.required.delay_s, life: mods.Lifetime.Lifetime.const, size: mods.InitialSize.StartSize.const, loc: mods.InitialLocation.StartLocation.const, vel: mods.InitialVelocity.StartVelocity.const, keys: mods.DynamicParameter.params.frame.curve.length };
+    if (out.exp.far.vel[2] !== 50) bad.push('TrailFar 向上初速应该 = 远段上移速度 0.5 m/s = 50 cm/s（UE 里 1 cm/s 定不住朝向）：' + out.exp.far.vel);
     if (tf.required.screen_alignment !== 'Velocity' || Math.abs(tf.required.delay_s - 0.8) > 1e-6 || mods.InitialSize.StartSize.const[1] !== 43000 || mods.InitialLocation.StartLocation.const[2] !== 20000 || mods.DynamicParameter.params.frame.curve.length !== F + 1 || j.textures[j.materials[tf.material].textures.main].file.indexOf('_Far') < 0)
       bad.push('TrailFar 导出不对：' + JSON.stringify(out.exp.far)); }
   if (out.exp.sheets.join() !== 'Loop,Far') bad.push('命名应该是循环层 + 远段：' + out.exp.sheets);
@@ -1212,6 +1214,37 @@ async def w1(pg):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
 
 
+async def w2(pg):
+    """4.5.3（用户 10-05 18:02）：左栏没有「我的版本」「已通过」组，通过的效果在「我的效果」最上面；我的效果每项没有「删除」（删除在资产栏 ⋯）；
+    设了出点时「火花灭完」写明出点在哪、能一键清除；自动烘焙关、改了序列时长还没烘时，时间轴按新的时长画（不停在旧贴图的长度）；远段面片上移时贴图内容补回（引擎回放位置 = 世界位置）"""
+    bad, info = [], {}
+    r = await pg.evaluate("""(() => { renderLib(); const g = [...document.querySelectorAll('#libBody details.lg')].map(d => d.className.replace('lg lg-', ''));
+      const my = document.querySelector('#libBody details.lg-myfx'), passed = FW_EFFECTS.filter(ef => ef.阶段 === '已通过' || ef.已通过版).map(ef => 'ef:' + ef.key);
+      const keys = my ? [...my.querySelectorAll('.li')].map(x => x.dataset.key) : [];
+      return { groups: g, passed, inMy: passed.filter(k => keys.includes(k)).length, first: keys.slice(0, passed.length), del: my ? [...my.querySelectorAll('.li .li-act button')].filter(b => b.textContent === '删除').length : -1 }; })()""")
+    info['左栏'] = r
+    if 'mine' in r['groups'] or 'passed' in r['groups']: bad.append(f"左栏还有「我的版本」/「已通过」组：{r['groups']}")
+    if r['inMy'] != len(r['passed']) or sorted(r['first']) != sorted(r['passed']): bad.append(f'通过的效果没排在「我的效果」最上面：{r}')
+    if r['del']: bad.append(f"我的效果里每项还有「删除」：{r['del']}")
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('crackle')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate("""(async () => { const P = state.P; P.cutOut = 2.83; P.duration = 9; onParam(); refreshVisibility(); await new Promise(z => setTimeout(z, 100));
+      const box = document.querySelector('#params [data-info=endInfo]'), txt = box ? box.textContent : '', btn = box && box.querySelector('[data-cutclear]');
+      if (btn) btn.click(); await new Promise(z => setTimeout(z, 100)); return { txt: txt.slice(0, 90), btn: !!btn, after: state.P.cutOut }; })()""")
+    info['出点'] = r
+    if not r['btn'] or '出点在 2.83' not in r['txt'] or r['after'] != 0: bad.append(f'设了出点时没说清楚 / 清除不了：{r}')
+    await idle(pg)
+    r = await pg.evaluate("""(() => { setAutoBake(false); const b0 = state.bake ? bakeTotal(state.bake) : null; state.P.duration = 7; onParam();
+      const x = curLayerBakes()[0], sp = layerSpans(x); setAutoBake(true); return { bake: b0, end: sp && sp.end }; })()""")
+    info['时间轴'] = r
+    if not r['end'] or abs(r['end'] - 7) > 1e-6: bad.append(f'改了序列时长、还没烘时，时间轴没按新的时长画：{r}')
+    await idle(pg)
+    r = await pg.evaluate("""(() => { const ball = { T: 5 }, fa = { t0: 0.8, Dtot: 10, F: 64, keys: [[0, 0], [1, 63.99]], cx: 0, cz: 100, vz: 0.5, Ww: 20, Wh: 400 };
+      const s = rtFarStateAt({ far: { meta: { far: fa } } }, 4.8); return { z: s && s.z }; })()""")
+    info['远段上移'] = r
+    if not r['z'] or abs(r['z'] - (100 + 0.5 * 4)) > 1e-6: bad.append(f'引擎回放里远段面片没按上移速度走：{r}')
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
+
+
 async def x2(pg):
     """4.4.2（用户 10-04 21:17）：单层效果（牡丹模板）也有「导出方案」：输出 › 导出方案里 PC 能选 GPU 光点 / 单束 / 不出，手机能选不出；选光点后 cascade.json 是一个 GPU 光点发射器、引擎回放画光点、说明写有尾迹没了"""
     bad, info = [], {}
@@ -1292,7 +1325,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

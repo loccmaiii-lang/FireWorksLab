@@ -153,13 +153,15 @@ function bindMyLayerTools(box) {
   const add = box.querySelector('#myAdd'); if (add) add.addEventListener('click', myAddLayer);
 }
 // 左栏「我的效果」
-function myLibGroup(host) {
+// 4.5.3（用户 10-05 18:02）：通过的 AI 效果（nPassed 个，renderPassed 画）排在最上面；每项不再挂「删除」，删除在资产栏 ⋯ 里
+function myLibGroup(host, nPassed = 0, renderPassed = null, nHidden = 0) {
   const list = Object.values(myAll()).filter(r => libMatch(r.name, r.id)).sort((a, b) => String(b.updated).localeCompare(String(a.updated)));
-  const g = libGroup(host, 'myfx', '我的效果', list.length);
-  if (!list.length) g.insertAdjacentHTML('beforeend', '<p class="lsub">还没有。点最下面「＋ 新建效果」：先选第一层（花型模板或现有效果的层），再加层、改名、调参数。</p>');
+  const g = libGroup(host, 'myfx', '我的效果', list.length + nPassed, false, nHidden ? `<button type="button" class="lg-hid" title="${lib.showHidden ? '收起隐藏的效果' : '显示隐藏的效果'}">${lib.showHidden ? '收起隐藏' : '已隐藏 ' + nHidden}</button>` : '');
+  const hb = g.querySelector('.lg-hid'); if (hb) hb.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); lib.showHidden = !lib.showHidden; renderLib(); });
+  if (renderPassed && nPassed) renderPassed(g);
+  if (!list.length && !nPassed) g.insertAdjacentHTML('beforeend', '<p class="lsub">还没有。点最下面「＋ 新建效果」：先选第一层（花型模板或现有效果的层），再加层、改名、调参数。你通过的效果也会出现在这里。</p>');
   for (const r of list) {
     const t = r.snap && r.snap.layers[0] ? r.snap.layers[0].type : 'kiku', ue = packNamesFor('my:' + r.id, null, (r.snap.layers || []).length, 'MyFx').base;
     const it = libItem(g, 'my:' + r.id, `<span class="th" style="${typeThumbStyle(t)}"></span><span class="tx"><b>${r.name}</b><small>${ue} · ${(r.snap.layers || []).length} 层${r.from ? ' · 派生自 ' + r.from.name : ''} · ${r.updated || ''}</small><span class="bds"><span class="badge">我的效果</span></span></span>`, () => openMyEffect(r.id));
-    libItemAct(it, '删除', '删除这个效果（6 秒内能撤销；已推进 git 的文件不动）', () => removeMyFx(r.id));
   }
 }
