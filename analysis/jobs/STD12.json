@@ -1,7 +1,7 @@
 {
  "id": "STD12",
  "type": "std",
- "name": "标准检查：RT6S / RT6M / RT6L（烘焙器 4.5.3）",
+ "name": "标准检查：RT6S / RT6M / RT6L（烘焙器 4.5.4）",
  "targets": [
   "RT6S",
   "RT6M",
@@ -9,6 +9,6 @@
  ],
  "priority": 7,
  "ready": false,
- "hold": "等 RT6SE2 / RT6ME2 / RT6LE2 导出回来",
+ "hold": "等 RT6SE3 / RT6ME3 / RT6LE3 导出回来（4.5.4 曲线精简后导出变了；STD11 崩的探针已修）",
  "note": "放行时去掉 ready / hold。"
 }

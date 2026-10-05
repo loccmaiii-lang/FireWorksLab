@@ -1,0 +1,9 @@
+{
+ "id": "RT6SE3",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT6S",
+ "name": "RiseTailS",
+ "priority": 8,
+ "note": "RT6S 重导（烘焙器 4.5.4：远段帧号曲线几个拐点、开花后 ≥ 7.5 fps；软圆点发射器不跟脉动 / 螺旋，曲线点数大减——用户 10-05 19:31「曲线太复杂」）。导出 + 回放检查。对话框15。"
+}

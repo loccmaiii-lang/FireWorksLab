@@ -44,8 +44,12 @@ JS_METRICS = r"""
     const fAt = t => Math.floor(((t % LI.Tl) / LI.Tl) * L.F) % L.F; let seen = new Set(), maxJump = 0, prev = null;
     for (let i = 0; i / fps < T; i++) { const f = fAt(i / fps); seen.add(f); if (prev !== null && f >= prev) maxJump = Math.max(maxJump, f - prev); prev = f; }
     out.frames30 = { shown: seen.size, total: L.F, ratio: +(seen.size / L.F).toFixed(3), maxJump };
-    out.fadeGrid = { cols: lay.fade.cols, rows: lay.fade.rows, chans: lay.fade.chans, frames: lay.fade.F, texW: lay.fade.texW, texH: lay.fade.texH };
-    out.minFpsActive = +(L.F / LI.Tl).toFixed(1); out.minFpsFade = +Math.min(30, lay.fade.fps).toFixed(1); out.avgFps = out.minFpsActive;
+    // 4.5.1 近段 + 远段（rtFar = 1）：没有消散层（lay.fade = null，STD11 在这里崩过），开花后归远段 TrailFar → 「淡出段」按远段开花后的帧率算，远段格子另记
+    const fa = lay.fade ? null : rtLayoutFar(P, ball, LI);
+    if (fa) { out.farGrid = { cols: fa.cols, rows: fa.rows, chans: 4, frames: fa.F, riseFrames: fa.Fr, fadeFrames: fa.Fd, spriteM: [+fa.Ww.toFixed(1), +fa.Wh.toFixed(1)], keys: fa.keys.length };
+      out.fadeGrid = { cols: fa.cols, rows: fa.rows, chans: 4, frames: fa.Fd, texW: P.texW, texH: P.texH, far: true }; }
+    else out.fadeGrid = { cols: lay.fade.cols, rows: lay.fade.rows, chans: lay.fade.chans, frames: lay.fade.F, texW: lay.fade.texW, texH: lay.fade.texH };
+    out.minFpsActive = +(L.F / LI.Tl).toFixed(1); out.minFpsFade = +Math.min(30, fa ? fa.Fd / fa.Df : lay.fade.fps).toFixed(1); out.avgFps = out.minFpsActive;
     const diameter = P.rtBurstD || 190, fraction = P.screenFrac || frac, flowerPx = fraction * screenH, ppmS = flowerPx / diameter;
     const pxH = 2 * box.HY * ppmS, pxW = 2 * box.HX * ppmS; out.flowerM = diameter; out.spriteM = +(2 * box.HY).toFixed(1);
     out.screen = { frac: fraction, flowerPx: Math.round(flowerPx), spritePx: Math.round(pxH), spritePxW: Math.round(pxW), mag: +Math.max(pxH / L.cellH, pxW / L.cellW).toFixed(2), magMobile256: +(Math.max(pxH / L.cellH, pxW / L.cellW) / clamp(P.rtMobileTex == null ? 0.5 : P.rtMobileTex, 0.25, 1)).toFixed(2) };

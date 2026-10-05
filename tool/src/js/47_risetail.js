@@ -137,7 +137,7 @@ const rtGpuSplitCache = new Map();
 function rtGpuSplit(P) {
   const key = ['F', 'M', 'C'].map(k => [P['rt' + k + 'Rate'], P['rt' + k + 'Life'], P['rtGpu' + k]].join(',')).join('|') + '|' + [P.rtGpuMax, P.rtERate, P.rtELife, P.rtPopRate, P.rtCLife, P.rtPulse, P.rtPulseHz, P.rtSpin, P.seed, P.cols, P.rows, P.chans].join(',');
   let o = rtGpuSplitCache.get(key); if (o) return o;
-  const LI = rtLoopInfo(P); let pk = 1; for (let i = 0; i < 512; i++) pk = Math.max(pk, LI.pulse(i / 512 * LI.Tl));
+  const pk = 1;     // 4.5.4：近段 + 远段时 GPU 发射器不跟喷射脉动（出生率是常数，脉动在贴图里）
   const g = {}; let est = 0;
   for (const k of ['F', 'M', 'C']) { const R = Math.max(0, +P['rt' + k + 'Rate'] || 0), L = Math.max(0.05, +P['rt' + k + 'Life'] || 1); g[k] = Math.min(R, Math.max(0, +P['rtGpu' + k] || 0) / (L * pk)); est += g[k] * pk * L; }
   est += (P.rtERate > 0 ? P.rtERate * pk * P.rtELife : 0) + (P.rtPopRate > 0 ? P.rtPopRate * pk * P.rtCLife * 0.9 : 0);
@@ -370,7 +370,7 @@ function rtBuildES(P) {
   const loc = tl.map(t => { const p = ball.pos(t), ph = phase(t); return [t, [p[0] + R0 * Math.cos(ph), R0 * Math.sin(ph), p[2]]]; });
   const vel = (jet, fling) => tl.map(t => { const v = ball.vel(t), sp = Math.hypot(v[0], v[2]) || 1, ph = phase(t);
     return [t, [v[0] - jet * v[0] / sp - fling * Math.sin(ph), fling * Math.cos(ph), v[2] - jet * v[2] / sp]]; });
-  const spawn = rate => ts.map(t => [t, rate * LI.pulse(t)]);
+  const spawn0 = rate => ts.map(t => [t, rate * LI.pulse(t)]);
   // 横向散开：两个均匀分布相加（两个 Initial Velocity）→ 三角分布，均方根和原来 ±c 的均匀分布一样，边缘不再是一刀切
   // 4.4.5 rtGpuSafe = 1（RT5，UE 4.24 实测 10-04 14:58）：GPU Sprites 不支持 Acceleration（标红）→ GPU 发射器不写乱流（乱流只在贴图里）；
   //   Initial Velocity 最多 2 个（出生曲线 + 一个随机散开）→ 软边散开改成一个均匀分布（均方根不变）。0 = 旧做法
@@ -382,6 +382,11 @@ function rtBuildES(P) {
     accelJit: us > 0 ? [0, 1].map(() => [[-us * kd, -us * kd, -us * kd * 0.7], [us * kd, us * kd, us * kd * 0.7]]) : null });
   const sJ = clamp((P.rtSizeJit == null ? 25 : P.rtSizeJit) / 100, 0, 0.9), kJ = clamp((P.rtKdJit == null ? 20 : P.rtKdJit) / 100, 0, 0.9);
   const em = [], far = rtIsFar(P), gs = far ? rtGpuSplit(P) : null;
+  // 4.5.4（用户 10-05 19:31「曲线太复杂了……没变化就 2 个点，有变化的加几个变化的点」）：近段 + 远段时软圆点发射器（GPU 火花、落火、爆亮、星头光晕）
+  //   不跟喷射脉动、不跟喷口转圈（螺旋和脉动都在近段 / 远段贴图里），出生率是常数（2 个点），出生位置 / 初速是平滑弹道（抽稀到 0.3 m / 0.5 m/s）→ 曲线只剩十几个点
+  const spawn = far ? (rate => [[0, rate], [T, rate]]) : spawn0;
+  const locS = far ? esThin(tl.map(t => { const p = ball.pos(t); return [t, [p[0], 0, p[2]]]; }), 0.3) : loc;
+  const velS = (jet, fling) => far ? esThin(tl.map(t => { const v = ball.vel(t), sp = Math.hypot(v[0], v[2]) || 1; return [t, [v[0] - jet * v[0] / sp, 0, v[2] - jet * v[2] / sp]]; }), 0.5) : vel(jet, fling);
   // 4.5.1 远看直径（rtGpuDisp）：GPU 软圆点按 max(真实, 远看直径) 画，Color Over Life × (真实 ÷ 画的)²（光量不变）
   for (const [k, name0, salt] of [['F', 'SparksFine', 1], ['M', 'SparksMid', 2], ['C', 'SparksCoarse', 3]]) {
     const rate = (P['rt' + k + 'Rate'] || 0) * (1 - rtTexFrac(P, k)); if (rate <= 0) continue;   // 烘进贴图的那部分不再出 GPU
@@ -394,21 +399,22 @@ function rtBuildES(P) {
     if (sl) col = col.map(([u, c]) => [u, c.map(x => +(x / esCurve(sl, u)).toFixed(4))]);
     em.push({ name, gpu: true, delay: 0, duration: T, seed: seed * 13 + salt, spawn: spawn(rate),
       life: [L * (1 - j), L * (1 + j)], size: [S * (1 - sJ), S * (1 + sJ)], drag: [kd * (1 - kJ), kd * (1 + kJ)], ...turb(kd),
-      loc, vel: vel(P.rtJet, P.rtFling), velAdd: cone, sizeLife, col,
+      loc: locS, vel: velS(P.rtJet, P.rtFling), velAdd: cone, sizeLife, col,
       ...(sl ? { align: 'screen', stretch: 1, stretchLife: sl } : {}) });
   }
   if ((P.rtERate || 0) > 0) {
     const L = P.rtELife, kd = P.rtEKd, S = rtDispS(P, P.rtESize), k2 = rtDispK(P, P.rtESize);
     em.push({ name: 'Embers', gpu: true, delay: 0, duration: T, seed: seed * 13 + 4, spawn: spawn(P.rtERate * (gs ? gs.f : 1)),
       life: [L * 0.7, L * 1.3], size: [S * 0.8, S * 1.2], drag: [kd * 0.7, kd * 1.3], ...turb(kd),
-      loc, vel: vel(P.rtJet * 0.6, P.rtFling * 0.5), velAdd: soft || (safe && (P.rtConeSoft || 0) > 0) ? cone : [[-c * 1.5, -c * 1.5, -c], [c * 1.5, c * 1.5, c * 0.3]],
+      loc: locS, vel: velS(P.rtJet * 0.6, P.rtFling * 0.5), velAdd: soft || (safe && (P.rtConeSoft || 0) > 0) ? cone : [[-c * 1.5, -c * 1.5, -c], [c * 1.5, c * 1.5, c * 0.3]],
       sizeLife: [[0, 1], [0.8, 0.9], [1, 0.4]], col: rtSparkColor(P, L, P.rtEI * (P.rtDotGain == null ? 1 : P.rtDotGain) * k2, -180) });
   }
   // ---- 引擎里加的效果（4.2.2，用户 19:25「在引擎也加上一些效果会更丰富」；都是软圆点，不新增材质）----
   // 星头光晕：星头的强光被空气 / 烟散射成一团柔光（贴图格子窄，放不下这么大的光晕 → 引擎里单独一颗）。弹道和循环层同一套（Initial Velocity + Drag + 重力），亮度跟喷射脉动
   if ((P.rtGlow || 0) > 0) {
     const S = P.rtGlowSize || 4, bb = rtBB(P.rtT0 || 2450), r = rtLum(bb), keys = [];
-    for (const t of ts) { const u = t / T, f = 1 - 0.35 * smoothstepJS(0.85, 1, u); keys.push([+u.toFixed(5), bb.map(x => +(x / r * 0.25 * P.rtGlow * LI.pulse(t) * f).toFixed(4))]); }
+    for (const t of ts) { const u = t / T, f = 1 - 0.35 * smoothstepJS(0.85, 1, u); keys.push([+u.toFixed(5), bb.map(x => +(x / r * 0.25 * P.rtGlow * (far ? 1 : LI.pulse(t)) * f).toFixed(4))]); }
+    if (far) { const th = esThin(keys, 0.002 * P.rtGlow); keys.length = 0; keys.push(...th); }     // 4.5.4 不跟脉动：开头一段平的 + 末段变暗，几个点
     em.push({ name: 'HeadGlow', gpu: false, delay: 0, duration: T, seed: seed * 13 + 6, spawn: [], bursts: [[0, 1]],
       life: [T, T], size: [S, S], ...(ball.quad ? { velLife: rtVelLife(ball) } : { drag: [ball.k, ball.k], accel: [0, 0, -G] }), loc: [[0, [0, 0, 0]]], vel: [[0, [ball.vx0, 0, ball.vz0]]],
       sizeLife: [[0, 1], [1, 0.8]], col: keys });
@@ -420,7 +426,7 @@ function rtBuildES(P) {
     const c = (k2) => hot.map(x => +(x * I * k2).toFixed(4)), gold = rtBB(P.rtTb || 2150), rg = rtLum(gold);
     em.push({ name: 'SparkPops', gpu: true, delay: 0, duration: T, seed: seed * 13 + 7, spawn: spawn(P.rtPopRate * (gs ? gs.f : 1)),
       life: [L * 0.6, L * 1.2], size: [S * 0.7, S * 1.3], drag: [kd * (1 - kJ), kd * (1 + kJ)], ...turb(kd),
-      loc, vel: vel(P.rtJet, P.rtFling), velAdd: cone, sizeLife: [[0, 0.4], [u0, 0.4], [u0 + 0.02, 1.2], [1, 0.6]],
+      loc: locS, vel: velS(P.rtJet, P.rtFling), velAdd: cone, sizeLife: [[0, 0.4], [u0, 0.4], [u0 + 0.02, 1.2], [1, 0.6]],
       // 4.3（H3）：闪光后面三个键按剩下的寿命等比缩（d ≤ 0.15），不越过 1、不重复（以前 0.85 时两个 u = 1，> 0.92 时越界乱序）
       col: (() => { const d = Math.min(0.15, 1 - u0), k = [[0, [0, 0, 0]], [+(u0 - 0.001).toFixed(4), [0, 0, 0]], [+u0.toFixed(4), c(1)], [+(u0 + d * 0.2).toFixed(4), c(0.6)], [+(u0 + d * 0.8 / 1.5).toFixed(4), gold.map(x => +(x / rg * I * 0.12).toFixed(4))], [+Math.min(1, u0 + d).toFixed(4), [0, 0, 0]], [1, [0, 0, 0]]];
         return k.filter((q, i) => i === 0 || q[0] > k[i - 1][0]); })() });
@@ -621,17 +627,21 @@ function rtLayoutFar(P, ball, LI) {
   const zb = y1 >= 0 ? Y(y0) - 2 * pxY : 0, zt = y1 >= 0 ? Y(y1) + 2 * pxY : ball.H, xl = X(xa) - 2 * pxX, xr = X(xb) + 2 * pxX;
   const W0 = Math.max(4, xr - xl), H0 = Math.max(10, zt - zb), HX = W0 / 2 * 1.04, cx = (xl + xr) / 2;
   const [cols, rows] = rtGridFor(P, W0, H0), F = cols * rows * 4;
-  // 帧时刻：上升段 Fr 帧按「交接中点之前」的弹体走过的路平均分，开花后 Fd 帧按时间平均分
-  const Fd = clamp(Math.round(Df * 6), 6, Math.floor(F / 3)), Fr = F - Fd, n = 400, S = [0];
+  // 帧时刻（4.5.4，用户 10-05 19:31「曲线太复杂了，序列的曲线你建了 63 个点……有变化的就加几个变化的点」）：
+  //   先定一条只有几个拐点的帧号折线，再按它反推每帧时刻 → 导出的帧号曲线就是这几个点（不再一帧一个点）。
+  //   上升段：理想是按「交接中点之前」的弹体走过的路平均分（出膛那几秒走得快、前沿一帧不跳几十米），按 0.4 帧的误差抽成几段折线。
+  //   开花后：按时间平均分，帧率 ≥ 7.5 fps（标准里淡出段的下限）。
+  const Fd = clamp(Math.ceil(7.5 * Df + 1e-6), 6, Math.floor(F / 2)), Fr = F - Fd, n = 400, S = [0];
   for (let i = 1; i <= n; i++) { const ta = (T - tA) * (i - 0.5) / n, v = ball.vel(ta); S.push(S[i - 1] + Math.hypot(v[0], v[2]) * (T - tA) / n); }
-  const tOfS = sv => { let i = 0; while (i < n && S[i + 1] < sv) i++; const f = S[i + 1] > S[i] ? (sv - S[i]) / (S[i + 1] - S[i]) : 0; return tA + (T - tA) * (i + clamp(f, 0, 1)) / n; };
-  // 开花后：刚开花那一下年轻火花还在往后退、减速，帧排密一点（t ∝ (f / Fd)^1.5），后面只剩慢慢变暗
-  const edges = []; for (let f = 0; f < Fr; f++) edges.push(tOfS(f / Fr * S[n])); for (let f = 0; f <= Fd; f++) edges.push(T + Math.pow(f / Fd, 1.5) * Df);
-  const Dtot = edges[F] - tA, times = [], dur = [], keys = [];
+  const fine = []; for (let i = 0; i <= n; i++) fine.push([tA + (T - tA) * i / n, Fr * S[i] / Math.max(1e-9, S[n])]);
+  const knots = esThin(fine, 0.4).map(([t, f]) => [t, f]); knots[0] = [tA, 0]; knots[knots.length - 1] = [T, Fr]; knots.push([T + Df, F]);
+  const tOfF = fv => { let i = 0; while (i < knots.length - 2 && knots[i + 1][1] < fv) i++; const a = knots[i], b = knots[i + 1]; return a[0] + (b[0] - a[0]) * clamp((fv - a[1]) / Math.max(1e-9, b[1] - a[1]), 0, 1); };
+  const edges = []; for (let f = 0; f <= F; f++) edges.push(tOfF(f));
+  const Dtot = edges[F] - tA, times = [], dur = [];
   // 4.5.3 面片上移 vz（m/s）：寿命里一共走 vz · Dtot，面片加高这么多、开始时中心放低一半，内容始终在面片里
   const vz = rtFarVzOf(P), drift = vz * Dtot, HY = (H0 + drift) / 2 * 1.02, cz = (zb + zt) / 2 - drift / 2;
-  for (let f = 0; f < F; f++) { times.push((edges[f] + edges[f + 1]) / 2 - tA); dur.push(edges[f + 1] - edges[f]); keys.push([+((edges[f] - tA) / Dtot).toFixed(5), f]); }
-  keys.push([1, F - 0.01]);
+  for (let f = 0; f < F; f++) { times.push((edges[f] + edges[f + 1]) / 2 - tA); dur.push(edges[f + 1] - edges[f]); }
+  const keys = knots.map(([t, f], i) => [+((t - tA) / Dtot).toFixed(5), i === knots.length - 1 ? F - 0.01 : +f.toFixed(3)]);
   const out = { t0: tA, Dtot, Df, Fr, Fd, cols, rows, F, cx, cz, vz, HX, HY, Ww: 2 * HX, Wh: 2 * HY, times, dur, keys, measured: y1 >= 0 };
   rtFarCache.set(key, out); if (rtFarCache.size > 8) rtFarCache.delete(rtFarCache.keys().next().value);
   return out;

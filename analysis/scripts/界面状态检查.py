@@ -1076,7 +1076,7 @@ R6_JS = r"""async () => {
     const LI = rtLoopInfo(Z), CL = rtTexClasses(Z, LI), ES = rtBuildES(Z), sp = rtGpuSplit(Z), o = { tex: CL.map(C => C.k).join(), est: ES.gpuEst.est, f: +sp.f.toFixed(3), cls: {} };
     for (const [k, nm] of [['F', 'SparksFine'], ['M', 'SparksTwinkle'], ['C', 'SparksCoarse']]) {
       const R = +Z['rt' + k + 'Rate'], C = CL.find(c => c.k === k), em = ES.emitters.find(x => x.name === nm), L = +Z['rt' + k + 'Life'];
-      const g = em ? em.spawn[0][1] / LI.pulse(em.spawn[0][0]) : 0, tx = C ? C.rate : 0, alive = g * sp.pk * L;
+      const g = em ? em.spawn[0][1] : 0,     /* 4.5.4 近段 + 远段时 GPU 出生率是常数（不跟脉动） */ tx = C ? C.rate : 0, alive = g * sp.pk * L;
       o.cls[k] = { R, tex: +tx.toFixed(1), gpu: +g.toFixed(1), alive: Math.round(alive), budget: +Z['rtGpu' + k] };
       if (Math.abs(tx + g - R) > Math.max(1.5 / LI.Tl, 0.005 * R)) bad.push(`${tag} ${k} 档贴图 + GPU ≠ 出生率：${tx.toFixed(1)} + ${g.toFixed(1)} ≠ ${R}`);
       if (sp.f >= 1 && Math.abs(alive - Math.min(+Z['rtGpu' + k], R * sp.pk * L)) > 0.03 * Math.max(10, +Z['rtGpu' + k])) bad.push(`${tag} ${k} 档 GPU 同时活着 ${alive.toFixed(0)} ≠ 预算 ${Z['rtGpu' + k]}`);
@@ -1117,6 +1117,14 @@ R6_JS = r"""async () => {
     if (tf.required.screen_alignment !== 'Velocity' || Math.abs(tf.required.delay_s - 0.8) > 1e-6 || mods.InitialSize.StartSize.const[1] !== 43000 || mods.InitialLocation.StartLocation.const[2] !== 20000 || mods.DynamicParameter.params.frame.curve.length !== F + 1 || j.textures[j.materials[tf.material].textures.main].file.indexOf('_Far') < 0)
       bad.push('TrailFar 导出不对：' + JSON.stringify(out.exp.far)); }
   if (out.exp.sheets.join() !== 'Loop,Far') bad.push('命名应该是循环层 + 远段：' + out.exp.sheets);
+  // 4.5.4 曲线点数（用户 10-05 19:31「没变化就 2 个点，有变化的加几个变化的点」）：GPU / 软圆点发射器出生率 2 个点、出生位置 / 初速十几个点、星头光晕颜色几个点；远段帧号曲线几个拐点
+  out.keys = Object.fromEntries(j.emitters.filter(x => x.material === 'dot').map(x => [x.name, [x.spawn.rate.curve ? x.spawn.rate.curve.length : 0, ...['InitialLocation', 'InitialVelocity', 'ColorOverLife'].map(m => { const q = x.modules.find(y => y.m === m); const v = q && (q.StartLocation || q.StartVelocity || q.ColorOverLife); return v && v.curve ? v.curve.length : 0; })]]));
+  for (const [nm, [sp, lo, ve, co]] of Object.entries(out.keys)) if (sp > 2 || lo > 40 || ve > 40 || co > 16) bad.push(`${nm} 曲线点太多（出生率 / 位置 / 初速 / 颜色）：${[sp, lo, ve, co]}`);
+  { const ball2 = rtBallistic(Z), fa2 = rtLayoutFar(Z, ball2, rtLoopInfo(Z)); out.farKeys = fa2.keys.length; out.farFade = +(fa2.Fd / fa2.Df).toFixed(2);
+    if (fa2.keys.length > 12) bad.push('远段帧号曲线点太多：' + fa2.keys.length);
+    if (fa2.Fd / fa2.Df < 7.5 - 1e-6 && fa2.Fd < fa2.F / 2) bad.push('远段开花后帧率低于 7.5 fps：' + out.farFade);
+    let okF = true; for (let f = 0; f < fa2.F; f++) { const u = ((fa2.times[f] - fa2.dur[f] / 2) + fa2.dur[f] * 0.5) / fa2.Dtot; if (Math.floor(evalKeys(fa2.keys, u) + 1e-6) !== f) { okF = false; out.farBad = [f, u, evalKeys(fa2.keys, u)]; break; } }
+    if (!okF) bad.push('远段帧号曲线和每帧烘焙时刻对不上：' + out.farBad); }
   // 面板：「贴图怎么分」在火花共用 › 贴图；选近段 + 远段后旧的「烘进贴图的比例」藏起来、交接年龄 / GPU 颗数出来
   await openType('tailL'); await new Promise(r => setTimeout(r, 300));
   const row = panelRows.find(([r, it]) => it.sel === 'rtFar'); if (!row) bad.push('面板没有「贴图怎么分」'); else {
