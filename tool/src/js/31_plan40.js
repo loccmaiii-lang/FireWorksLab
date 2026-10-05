@@ -237,6 +237,12 @@ function plan40(P,fm,ta=0,tb=P.duration) {
     let pages=Math.max(1,Math.round(+P.pageTarget||1)),r;
     for(;;pages++){r=motionSchedule40(B,w,first,end,cap*pages,maxHold,maxHoldBurn);if(!r.over||pages>=12)break;}
     ticks=r.ticks;pagesUsed=pages;
+  } else if(mode==='fixed'){
+    // 5.0（用户 10-05 01:28 #13 / 02:25 拍板 6.2，19:40「全按推荐」）：固定机位 + 匀速帧——整段同一个停留 tick 数 k（1 / 2 / 3，取放得下的最小值），帧号一条直线；
+    // 放不下 k = 3（10 fps，燃烧段下限）就加贴图张数（最多 pageTarget 起往上加到 8 张）
+    const pagesMin=Math.max(1,Math.round(+P.pageTarget||1));let k=1,pages=pagesMin;
+    for(;;){if(Math.ceil(N/k)<=cap*pages)break;if(k<3)k++;else if(pages<8)pages++;else break;}
+    ticks=[];for(let t=0;t<N;t+=k)ticks.push(t);pagesUsed=pages;
   } else if(mode==='full'){ticks=[];for(let k=first;k<end;k++)ticks.push(k-first);}
   else ticks=tickSchedule40(B,holds,first,end);
   // 降档：先淡出、再燃烧、最后开花段；下限 7.5 / 10 / 15 fps
@@ -269,7 +275,7 @@ function plan40(P,fm,ta=0,tb=P.duration) {
   return {...base,L:L2,fitPack:fit,t0,duration:D,sizeKeys,frameScale,times,dur,ticks,nTicks:N,keys:keysFromTicks40(ticks,N),area,
     frameTiming:'tick-start',frameFps:30,capacityFrames:cap,sequenceStart:t0,sequenceEnd:end/30,
     budget:{mode,burstEnd:B.burstEnd,fadeAt:B.fadeAt,strobeFrom:B.strobeFrom,strobeAlias:B.strobeAlias,fps:mode==='tiers'?holds.map(fpsOf):null,strobeFps:fpsOf(B.strobeHold),pages:Math.ceil(F/cap),holdMin:Math.min(...dur)*30,holdMax:Math.max(...dur)*30},
-    fadeEnd:P.duration,noEndFade:P.endMode==='natural',avgFps:F/D,minFps,maxDisp};
+    fadeEnd:P.duration,noEndFade:P.endMode==='natural'||familyOf(P.type)==='aerial',avgFps:F/D,minFps,maxDisp};
 }
 // 「按帧数选最小贴图」：单格大小不变，RGBA 接力，在 1×1 / 2×1 / 2×2 / 4×2 / 4×4 / 8×4 / 8×8 里挑第一个放得下 F 帧、又不超过原来格子的
 function fitLayout40(L,F){

@@ -35,7 +35,7 @@
      不起作用的参数变灰写原因（菊：点火延迟随机；牡丹：火花寿命）、搜索认短名 / 全名 / 英文名 / 模块名、说明条第一行「English · 中文 — 说明」、
      爆裂星的「爆裂」发射器、尾缀档位在「效果 › 规格」、空白发射器「+ 火花」/「去掉」
   S4 4.4：旧搜索 / 只看改过的时点发射器标签 = 清掉筛选、换到那一页，不改配方；「全部」把发射器都排出来
-  E1 4.4：「结尾」「冷却方式」开关缺省 = 旧做法（4.4.3 加：火花闪烁频率缺省 0、在火花 › 亮度的随机下面、闪烁 0 时不显示）；结尾选「不淡出」序列时长加长到火花灭完、帧计划不再整体淡出
+  E1 5.0 第 2 步（4.7.0）：一套物理——空中类火花按实际年龄冷却、结尾等火花自然灭完，「结尾」「冷却方式」开关删了；模板序列时长盖到火花灭完；缺省固定机位 + 匀速帧（4.4.3 的火花闪烁频率照查）
   X2 4.4.2：单层效果（牡丹）也有导出方案（4.4.3 加：点灭星的光点 Color Over Life 是方波、菊没有）：PC 序列 / 单束 / GPU 光点 / 不出、手机 序列 / 不出；选光点后 cascade.json 是 GPU 光点、引擎回放画光点；多层效果的层里不显示（在层页头选）
   N3 排查第 1 步：SCHEMA ↔ 默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS 对得上
   W2 4.5.3：左栏没有「我的版本」「已通过」（通过的进「我的效果」最上面）、我的效果每项没有删除；出点提示 + 一键清除；没烘时时间轴按新时长；远段面片上移
@@ -978,26 +978,23 @@ async def s4(pg):
 
 
 E1_JS = r"""async () => {
-  // 4.4（用户 10-04 16:17 #2 #3）：「结尾」「冷却方式」两个开关，缺省 = 旧做法；结尾选「不淡出」序列时长加长到火花灭完、帧计划不再整体淡出
+  // 5.0 第 2 步（4.7.0，用户 10-05 19:40「全按推荐」、21:55「直接开 5.0」）：一套物理——空中类火花只按实际年龄冷却（老的先暗）、结尾等火花自然灭完；
+  // 「结尾」「冷却方式」两个旧 / 新开关从面板删掉；花型模板的序列时长盖到最后一批火花；帧计划缺省固定机位 + 匀速帧、Zoom 缺省关
   const out = {}, bad = [];
   await openType('kiku'); await new Promise(r => setTimeout(r, 300));
-  // 末尾 0.05 s 那一刻的整体亮度倍数（真正画的时候用的 frameFade40，不只看计划上的标记）
   const endMul = () => { const pl = displayPlan40(state.P); return +frameFade40(pl, (pl.t0 || 0) + pl.duration - 0.05, false).toFixed(3); };
-  out.defaults = { end: state.P.endMode, cool: state.P.coolMode, fade: !displayPlan40(state.P).noEndFade, endMul: endMul() };
-  if (!(out.defaults.endMul < 0.5)) bad.push('缺省（淡出）最后 0.05 s 没在淡出：' + out.defaults.endMul);
-  if (out.defaults.end !== 'fade' || +out.defaults.cool !== 0 || !out.defaults.fade) bad.push('缺省不是旧做法：' + JSON.stringify(out.defaults));
-  const where = k => { const x = panelRows.find(([r, it]) => it.sel === k); return x ? x[0]._x.e + '›' + x[0]._x.m : null; };
-  out.where = { end: where('endMode'), cool: where('coolMode') };
-  if (out.where.end !== '效果›规格' || out.where.cool !== '火花›颜色') bad.push('开关不在该在的模块：' + JSON.stringify(out.where));
-  selectEmitTab('效果'); await new Promise(r => setTimeout(r, 50));
-  const info = () => (document.querySelector('#params [data-info=endInfo]') || {}).textContent || '';
-  out.before = info(); const e = sparkTailEnd(state.P), d0 = state.P.duration;
-  if (!/差/.test(out.before) || !(e > d0)) bad.push('菊的序列比火花短，却没写差多少：' + out.before);
-  const row = panelRows.find(([r, it]) => it.sel === 'endMode')[0], s = row.querySelector('select'); s.value = 'natural'; s.dispatchEvent(new Event('change'));
-  await new Promise(r => setTimeout(r, 200));
-  out.after = { dur: state.P.duration, want: e, noFade: !!displayPlan40(state.P).noEndFade, endMul: endMul(), info: info() };
-  if (Math.abs(state.P.duration - e) > 0.051 || !out.after.noFade || out.after.endMul !== 1 || /差/.test(out.after.info)) bad.push('选「不淡出」后不对：' + JSON.stringify(out.after));
-  // 4.4.3 E6：火花闪烁频率在「火花 › 亮度」、跟着闪烁收在随机下面；闪烁 0 时不显示，> 0 显示；缺省 0（以前的做法）
+  const pl = displayPlan40(state.P);
+  out.defaults = { noFade: !!pl.noEndFade, endMul: endMul(), fb: state.P.frameBudget, zoom: state.P.zoom, mode: pl.budget && pl.budget.mode, holds: pl.budget ? [pl.budget.holdMin, pl.budget.holdMax] : null };
+  if (!out.defaults.noFade || out.defaults.endMul !== 1) bad.push('结尾还在整体淡出：' + JSON.stringify(out.defaults));
+  if (out.defaults.fb !== 'fixed' || out.defaults.zoom !== 'off' || out.defaults.mode !== 'fixed') bad.push('缺省不是固定机位 + 匀速帧：' + JSON.stringify(out.defaults));
+  if (!out.defaults.holds || out.defaults.holds[0] !== out.defaults.holds[1]) bad.push('匀速帧：每帧停的 tick 数不一样：' + JSON.stringify(out.defaults.holds));
+  out.sel = ['endMode', 'coolMode'].filter(k => panelRows.some(([r, it]) => it.sel === k));
+  if (out.sel.length) bad.push('面板上还有旧 / 新开关：' + out.sel);
+  const e = sparkTailEnd(state.P); out.end = { dur: state.P.duration, spark: e };
+  if (e > state.P.duration + 0.051) bad.push('菊模板的序列时长没盖住最后一批火花：' + JSON.stringify(out.end));
+  // 冷却：空中类着色器按实际年龄（uCoolAbs = 1），不管存档里的 coolMode
+  const pr = particleProgram40('spk'); out.coolAbs = !!pr.u.uCoolAbs;
+  // 4.4.3 E6：火花闪烁频率在「火花 › 亮度」、跟着闪烁收在随机下面；闪烁 0 时不显示，> 0 显示；缺省 0
   const tw = () => { const x = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'twinkleHz'); return x ? { at: x[0]._x.e + '›' + x[0]._x.m, rand: x[0]._randOf, vis: itemVisible(x[1], state.P) } : null; };
   out.twHz = { def: +state.P.twinkleHz, on: tw() }; const tw0 = state.P.twinkle; state.P.twinkle = 0; out.twHz.off = tw(); state.P.twinkle = tw0;
   if (out.twHz.def !== 0 || !out.twHz.on || out.twHz.on.at !== '火花›亮度' || out.twHz.on.rand !== 'sparkBright' || !out.twHz.on.vis || out.twHz.off.vis) bad.push('火花闪烁频率不对：' + JSON.stringify(out.twHz));
@@ -1007,7 +1004,7 @@ E1_JS = r"""async () => {
 
 
 async def e1(pg):
-    """4.4：结尾 / 冷却方式开关缺省是旧做法、在效果 › 规格和火花 › 颜色；结尾选「不淡出」把序列加长到火花灭完、不再整体淡出"""
+    """5.0 第 2 步：一套物理（按实际年龄冷却、自然灭完，旧 / 新开关删了）、模板序列时长盖到火花灭完、缺省固定机位 + 匀速帧"""
     r = await pg.evaluate(E1_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 

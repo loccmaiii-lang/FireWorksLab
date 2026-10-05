@@ -174,7 +174,7 @@
           <label class="field">星头火花输出<select id="x-out"><option value="combined">星头与火花合并</option><option value="split">星头、火花分开</option></select></label>
           <label class="field">灰度编码<select id="x-enc"><option value="1">线性灰度</option><option value="2.2">Gamma 2.2（暗部更细；UE 材质不还原，没在 UE 验证前别用）</option></select></label>
           <label class="field">取帧方式<select id="x-frame"><option value="tick30" hidden>30 fps（自动分段）</option><option value="auto">自动（按运动快慢）</option><option value="uniform">均匀</option></select></label>
-          <label class="field">面片取景<select id="x-zoom"><option value="off">固定大小（面片不缩放，画面中心放在花的上下范围中间）</option><option value="on">随开花放大（Zoom：爆点在中心，每帧一个大小，4.2.3 起不再一胀一缩）</option></select></label>
+          <label class="field">面片取景<select id="x-zoom"><option value="off">固定大小（5.0 默认：面片不缩放，整段一个取景）</option><option value="on">旧（待删）· 随开花放大（Zoom：每帧一个大小，靠 Size By Life 补）</option></select></label>
         </div>
         <label class="check" id="flipBox" hidden><input type="checkbox" id="x-flip"> 星头朝下（引擎里速度对齐方向相反时勾选）</label>
         <label class="check" id="gridBox" hidden><input type="checkbox" id="x-autogrid"> 自动选格子（帧数不变，按内容长宽比挑列 × 行，少浪费像素）</label>

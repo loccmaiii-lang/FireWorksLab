@@ -476,7 +476,7 @@ class Sim {
     for (let i = 0; i < sp.n && nt < capT - 1; i++) {
       const emb = P.emberFrac > 0 && sp.rnd[i] < P.emberFrac;
       // 4.4 冷却方式「按实际时间」：温度按年龄 ÷ 中值寿命（不按每颗自己的寿命），最后 30% 寿命淡出（和 GPU 核同一条）
-      const abs = +P.coolMode === 1 && !emb, lc = abs ? P.sparkLife : sp.life[i], T = emb ? sp.T0[i] : sp.T0[i] * (1 - P.cooling * sp.age[i] / lc);
+      const abs = this.fam === 'aerial' && !emb, lc = abs ? P.sparkLife : sp.life[i], T = emb ? sp.T0[i] : sp.T0[i] * (1 - P.cooling * sp.age[i] / lc);
       let g = (T - 900) / 1150; if (g <= 0 && gl <= 0) continue; g = g > 0 ? g * g * g : 0;
       if (abs) { const x = (sp.age[i] / sp.life[i] - 0.7) / 0.3; g *= x <= 0 ? 1 : x >= 1 ? 0 : 1 - x * x * (3 - 2 * x); }
       if (emb) { const x = sp.age[i] / sp.life[i], ss = e => e <= 0 ? 0 : e >= 1 ? 1 : e * e * (3 - 2 * e); g *= P.emberBright * Math.exp(-2 * x) * (1 - ss((x - 0.75) / 0.25)) * (P.emberFollow > 0 ? 1 - ss((this.t - sp.pd[i] + 0.15) / (P.emberFollow + 0.15)) : 1) * (P.emberEnd > 0 ? 1 - ss((this.t - P.emberEnd + 0.6) / 0.9) : 1); }

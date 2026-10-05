@@ -205,7 +205,7 @@
    "video": "vidio/2.0/金芒菊A.mp4",
    "tags": "金芒菊 JM4 4.0 重新验收",
    "p": {
-    "duration": 4.56,
+    "duration": 5.5,
     "seed": 7,
     "stars": 316.0,
     "burstR0": 52,
@@ -31488,7 +31488,7 @@
    "name": "鸿巢四尺玉 第 9 版 · 返工 ① 锦冠主层（4.0 · HK9-1 参数）",
    "base": "kamuro",
    "p": {
-    "duration": 12,
+    "duration": 18.45,
     "seed": 41,
     "stars": 800,
     "burstR0": 0,
@@ -31662,7 +31662,6 @@
     "cellPad": 2,
     "autoGrid": 0,
     "renderVer": 40,
-    "frameBudget": "motion",
     "pageTarget": 1,
     "maxHold": 4,
     "exposure": 0.5128
@@ -31700,7 +31699,7 @@
    "name": "鸿巢四尺玉 第 9 版 · 返工 ② 红点灭（4.0 · HK9-2 参数）",
    "base": "strobe",
    "p": {
-    "duration": 12,
+    "duration": 12.25,
     "seed": 41,
     "stars": 800,
     "burstR0": 0,
@@ -31874,7 +31873,6 @@
     "cellPad": 2,
     "autoGrid": 0,
     "renderVer": 40,
-    "frameBudget": "motion",
     "pageTarget": 1,
     "maxHold": 4,
     "exposure": 3.762
@@ -34174,7 +34172,6 @@
     "cellPad": 2,
     "autoGrid": 0,
     "renderVer": 40,
-    "frameBudget": "motion",
     "pageTarget": 1,
     "maxHold": 4,
     "exposure": 0.0503
@@ -34378,7 +34375,6 @@
     "cellPad": 2,
     "autoGrid": 0,
     "renderVer": 40,
-    "frameBudget": "motion",
     "pageTarget": 1,
     "maxHold": 4,
     "exposure": 2.051
