@@ -293,6 +293,12 @@ JSON里的局部配置：
 - 循环层长度两种：全程不变（4.4，出场淡入）；跟真实尾迹（`SizeByLife` 只改 Y、`"bake": false`，起步从短长出来、减速变短；`RiseFade` 用自己的 Initial Size / Pivot Offset，真实大小）。
 - **GPU 发射器不写 `Acceleration`**（2026-10-04 UE 4.24 实测 GPU Sprites 标红）；每个发射器最多 2 个 `InitialVelocity`。烘焙器选项「GPU 兼容」= UE 4.24 实测时照这条导出。
 - 一条尾缀 PC 上 GPU 粒子同时活着 ≤ 800（用户 2026-10-04）：细 / 中火花烘进循环层贴图，GPU 只留粗火花等少量。
+- **近段 + 远段**（4.5.1，RT6，⚪ 未经 UE 验证）：`RiseLoop` 只画年轻的火花（年龄 < 交接年龄）；新发射器 `TrailFar` = 年老火花的全程序列：
+  - CPU 1 颗，`screen_alignment: Velocity` + `InitialVelocity (0, 0, 1)` cm/s（只定朝向 = 竖直、只绕竖轴转向相机），`pivot_offset [-0.5, -0.5]`；
+  - `InitialLocation` = 面片中心（相对发射点），`delay_s` = 交接中点，`DynamicParameter.frame` 曲线不是匀速（上升段按弹体走过的路、开花后前密后疏）；
+  - 开花后所有火花在 TrailFar 里演完，**没有 `RiseFade`**；
+  - GPU 火花按档预算：`SparksCoarse` / `SparksTwinkle`（中火花的 GPU 那份，带闪烁）/ `SparksFine`，GPU 那份从贴图里扣掉；
+  - `RiseLoop` 的 Color Over Life 可能 × 1 / k²（近段贴图按曝光 × k 烘）。
 
 ### D. 千轮单元 × 粒子（一张小花单元序列，多粒子摆位）⚪
 - `SphereLocation`：只在表面出生，勾 Velocity，`VelocityScale` 给向外的速度，配合 `Drag` 让小球飞出去后停住；

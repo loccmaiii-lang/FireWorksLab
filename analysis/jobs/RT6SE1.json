@@ -1,0 +1,11 @@
+{
+ "id": "RT6SE1",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT6S",
+ "name": "RiseTailS",
+ "priority": 8,
+ "ready": false,
+ "hold": "等用户给显卡空窗（用户说可以就去掉 ready / hold）",
+ "note": "RT6S 第一次导出（烘焙器 4.5.1：近段 + 远段 TrailFar + GPU 按档预算，没有 RiseFade）。导出 + 回放检查（看循环层、远段过曝，烘焙回放里实时 vs 导出）。对话框15（trail_phys 负责）。"
+}

@@ -38,6 +38,8 @@
   E1 4.4：「结尾」「冷却方式」开关缺省 = 旧做法（4.4.3 加：火花闪烁频率缺省 0、在火花 › 亮度的随机下面、闪烁 0 时不显示）；结尾选「不淡出」序列时长加长到火花灭完、帧计划不再整体淡出
   X2 4.4.2：单层效果（牡丹）也有导出方案（4.4.3 加：点灭星的光点 Color Over Life 是方波、菊没有）：PC 序列 / 单束 / GPU 光点 / 不出、手机 序列 / 不出；选光点后 cascade.json 是 GPU 光点、引擎回放画光点；多层效果的层里不显示（在层页头选）
   N3 排查第 1 步：SCHEMA ↔ 默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS 对得上
+  R6 4.5.1 升空尾缀 RT6 近段 + 远段：缺省关 = RT5；开了贴图有粗 / 中 / 细、GPU 按档预算（上限一起降、降掉的回贴图）、贴图 + GPU = 出生率；交接权重相加 = 1；闪烁层；远看直径光量不变；
+     TrailFar 导出、没有 RiseFade、命名 Loop + Far；近段贴图曝光 k → RiseLoop Color Over Life × 1 / k²；面板
   R5 4.4.5 升空尾缀 RT5 选项：缺省旧做法；物理弹道到设定高度、第 1 秒减速够猛、星头光晕跟弹道（Velocity Over Life）；GPU 兼容（无 Acceleration、≤ 2 个 Initial Velocity）、
      GPU 粒子上限、细 / 中火花进贴图、H4 新口径和温度偏移无关；循环层长度起步不伸到发射点以下；面板「弹道」在星头 › 弹道、选物理后升空时间藏起
   W1 4.5.0 工作台快改：时间轴无发射器行 / 曲线、精简布局收层轨道；时长跟随 / 粘连开关；AI 效果保存 = 派生成我的效果、能加层；存模板 → 花型库能打开；
@@ -1061,6 +1063,79 @@ async def r5(pg):
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
+R6_JS = r"""async () => {
+  // 4.5.1 RT6（用户 10-05 01:28「合并渲染再加 800 个 cascade 粒子」、14:35「近段 RT4 主体循环 + 远段一次性大量粒子序列 + ≤ 800 GPU」）
+  const out = {}, bad = [];
+  const e = entryById('RT6L') || entryById('RT5L'), d = defaultsFor(e.base), P5 = derive({ ...d.P, ...e.p, rtFar: 0, rtGpuDisp: 0, rtGpuGain: 1, rtNearExpo: 1 });     // 左栏只放当前版本：有 RT6 用 RT6 的参数（关掉近段 + 远段 = RT5 的做法）
+  // 缺省（rtFar 0）= RT5：贴图只有细 / 中、没有近段权重、没有闪烁层
+  out.def = { far: +P5.rtFar, tex: rtTexClasses(P5, rtLoopInfo(P5)).map(C => C.k).join(), nw: rtNearW(P5) === null, em: rtBuildES(P5).emitters.map(x => x.name) };
+  if (out.def.far !== 0 || out.def.tex !== 'F,M' || !out.def.nw || out.def.em.includes('SparksTwinkle')) bad.push('缺省不是 RT5 的做法：' + JSON.stringify(out.def));
+  // 近段 + 远段：贴图有粗火花；GPU 三档 = 预算；贴图 + GPU = 出生率（一颗不多一颗不少）
+  const chk = (Z, tag) => {
+    const LI = rtLoopInfo(Z), CL = rtTexClasses(Z, LI), ES = rtBuildES(Z), sp = rtGpuSplit(Z), o = { tex: CL.map(C => C.k).join(), est: ES.gpuEst.est, f: +sp.f.toFixed(3), cls: {} };
+    for (const [k, nm] of [['F', 'SparksFine'], ['M', 'SparksTwinkle'], ['C', 'SparksCoarse']]) {
+      const R = +Z['rt' + k + 'Rate'], C = CL.find(c => c.k === k), em = ES.emitters.find(x => x.name === nm), L = +Z['rt' + k + 'Life'];
+      const g = em ? em.spawn[0][1] / LI.pulse(em.spawn[0][0]) : 0, tx = C ? C.rate : 0, alive = g * sp.pk * L;
+      o.cls[k] = { R, tex: +tx.toFixed(1), gpu: +g.toFixed(1), alive: Math.round(alive), budget: +Z['rtGpu' + k] };
+      if (Math.abs(tx + g - R) > Math.max(1.5 / LI.Tl, 0.005 * R)) bad.push(`${tag} ${k} 档贴图 + GPU ≠ 出生率：${tx.toFixed(1)} + ${g.toFixed(1)} ≠ ${R}`);
+      if (sp.f >= 1 && Math.abs(alive - Math.min(+Z['rtGpu' + k], R * sp.pk * L)) > 0.03 * Math.max(10, +Z['rtGpu' + k])) bad.push(`${tag} ${k} 档 GPU 同时活着 ${alive.toFixed(0)} ≠ 预算 ${Z['rtGpu' + k]}`);
+    }
+    if (o.tex !== 'F,M,C') bad.push(tag + ' 贴图火花档应该是细 / 中 / 粗：' + o.tex);
+    if (+Z.rtGpuMax > 0 && !(ES.gpuEst.est <= +Z.rtGpuMax * 1.001)) bad.push(tag + ' GPU 估算超上限：' + JSON.stringify(ES.gpuEst));
+    return o;
+  };
+  const Z = { ...P5, rtFar: 1 };
+  out.far = chk(Z, '近段 + 远段');
+  out.cap = chk({ ...Z, rtGpuMax: 400 }, '上限 400');
+  if (!(out.cap.f < 1)) bad.push('上限 400 时 GPU 应该一起降：' + out.cap.f);
+  // 交接权重：近段 + 远段 = 1，交接前全在近段、交接完全在远段
+  const nw = rtNearW(Z), [a0, a1] = rtNearA(Z); out.w = [0, a0, (a0 + a1) / 2, a1, 3].map(a => +nw(a).toFixed(3));
+  if (out.w[0] !== 1 || out.w[1] !== 1 || Math.abs(out.w[2] - 0.5) > 0.01 || out.w[3] !== 0 || out.w[4] !== 0) bad.push('近段权重不对：' + out.w);
+  // 闪烁层：Color Over Life 中段一亮一暗；远看直径：尺寸放大、光量（中心亮度 × 尺寸²）不变
+  const ESz = rtBuildES(Z), tw = ESz.emitters.find(x => x.name === 'SparksTwinkle');
+  if (!tw) bad.push('没有闪烁层 SparksTwinkle'); else { const lum = tw.col.filter(([u]) => u > 0.2 && u < 0.75).map(([, c]) => rtLum(c)); let alt = 0; for (let i = 2; i < lum.length; i++) if ((lum[i] - lum[i - 1]) * (lum[i - 1] - lum[i - 2]) < 0) alt++; out.twAlt = alt; if (alt < 2) bad.push('闪烁层没有一亮一暗：' + lum.map(x => x.toFixed(2))); }
+  const ESd = rtBuildES({ ...Z, rtGpuDisp: 2 }), c0 = ESz.emitters.find(x => x.name === 'SparksCoarse'), c1 = ESd.emitters.find(x => x.name === 'SparksCoarse');
+  const lt = x => Math.max(...x.col.map(([u, c]) => rtLum(c) * (x.stretchLife ? esCurve(x.stretchLife, u) : 1))) * ((x.size[0] + x.size[1]) / 2) ** 2;     // 光量 = 中心亮度 × 宽 × 高（拉长的 Y 再 × 拉长倍数）
+  out.disp = { size: [c0.size, c1.size].map(s => +((s[0] + s[1]) / 2).toFixed(2)), light: [+lt(c0).toFixed(4), +lt(c1).toFixed(4)] };
+  if (Math.abs(out.disp.size[1] - 2) > 0.01 || Math.abs(out.disp.light[1] / out.disp.light[0] - 1) > 0.02) bad.push('远看直径不对（尺寸 = 2 m、光量不变）：' + JSON.stringify(out.disp));
+  // 导出：有远段时 cascade.json 多 TrailFar（速度朝向竖直面片、帧号曲线、立在发射点上）、命名多一张 Far
+  const ball = rtBallistic(Z), LIz = rtLoopInfo(Z), F = 64, keys = [...Array(F).keys()].map(f => [+(f / F).toFixed(4), f]).concat([[1, F - 0.01]]);
+  const fa = { t0: 0.8, Dtot: ball.T + 3, Df: 3.8, Fr: 48, Fd: 16, cols: 16, rows: 1, F, cx: 1, cz: 200, HX: 15, HY: 215, Ww: 30, Wh: 430, keys };
+  const Lf = layoutOf({ ...Z, cols: 16, rows: 1, chans: 4 }), meta = { L: Lf, far: fa };
+  const lay = { L: layoutOf(Z), T: ball.T, Tl: LIz.Tl, nRev: LIz.nRev, Ww: 10, Wh: 100, hb: 0.9, sizeKeysRise: [[0, 0.1], [1, 0.2]], grow: true, fadeSeconds: 1, fadeFps: 20, ball: { ...ball, pos: undefined, vel: undefined }, nearA: [a0, a1], gpuSplit: rtGpuSplit(Z), nearExpo: 0.8 };
+  const b = { form: 'emitset', P: Z, es: ESz, meta: lay, fades: [], far: { meta, P: { ...Z, cols: 16, rows: 1, chans: 4 } } };     // 近段 + 远段：开花后归远段，没有消散层
+  const j = fwlEmitSet('T', b, defaultsFor('tailL').M, false), tf = j.emitters.find(x => x.name === 'TrailFar'), rl = j.emitters.find(x => x.name === 'RiseLoop');
+  const j1 = fwlEmitSet('T', { ...b, meta: { ...lay, nearExpo: 1 } }, defaultsFor('tailL').M, false), rl1 = j1.emitters.find(x => x.name === 'RiseLoop');
+  const cl = x => x.modules.find(q => q.m === 'ColorOverLife').ColorOverLife.curve[0][1][0];
+  out.exp = { em: j.emitters.map(x => x.name).slice(0, 4), tex: Object.keys(j.textures), sheets: namingSheets(b).map(x => x[0]), nearComp: +(cl(rl) / cl(rl1)).toFixed(3) };
+  if (j.emitters.some(x => x.name === 'RiseFade') || j.textures.fade) bad.push('近段 + 远段时不该有 RiseFade：' + out.exp.em);
+  if (Math.abs(out.exp.nearComp - 1 / 0.64) > 0.01) bad.push('近段贴图曝光 0.8 时 RiseLoop 的 Color Over Life 应该 × 1 / 0.64：' + out.exp.nearComp);
+  if (!tf) bad.push('cascade.json 没有 TrailFar'); else {
+    const mods = Object.fromEntries(tf.modules.map(x => [x.m, x])); out.exp.far = { align: tf.required.screen_alignment, delay: tf.required.delay_s, life: mods.Lifetime.Lifetime.const, size: mods.InitialSize.StartSize.const, loc: mods.InitialLocation.StartLocation.const, keys: mods.DynamicParameter.params.frame.curve.length };
+    if (tf.required.screen_alignment !== 'Velocity' || Math.abs(tf.required.delay_s - 0.8) > 1e-6 || mods.InitialSize.StartSize.const[1] !== 43000 || mods.InitialLocation.StartLocation.const[2] !== 20000 || mods.DynamicParameter.params.frame.curve.length !== F + 1 || j.textures[j.materials[tf.material].textures.main].file.indexOf('_Far') < 0)
+      bad.push('TrailFar 导出不对：' + JSON.stringify(out.exp.far)); }
+  if (out.exp.sheets.join() !== 'Loop,Far') bad.push('命名应该是循环层 + 远段：' + out.exp.sheets);
+  // 面板：「贴图怎么分」在火花共用 › 贴图；选近段 + 远段后旧的「烘进贴图的比例」藏起来、交接年龄 / GPU 颗数出来
+  await openType('tailL'); await new Promise(r => setTimeout(r, 300));
+  const row = panelRows.find(([r, it]) => it.sel === 'rtFar'); if (!row) bad.push('面板没有「贴图怎么分」'); else {
+    out.where = row[0]._x.e + '›' + row[0]._x.m; if (out.where !== '火花共用›贴图') bad.push('「贴图怎么分」不在火花共用 › 贴图：' + out.where);
+    const vis = k => { const x = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === k); return x ? itemVisible(x[1], state.P) : null; };
+    const s = row[0].querySelector('select'); s.value = '1'; s.dispatchEvent(new Event('change')); await new Promise(r => setTimeout(r, 200));
+    out.panel = { rtFTex: vis('rtFTex'), rtNearA0: vis('rtNearA0'), rtGpuC: vis('rtGpuC'), rtGpuDisp: vis('rtGpuDisp') };
+    if (out.panel.rtFTex !== false || out.panel.rtNearA0 !== true || out.panel.rtGpuC !== true || out.panel.rtGpuDisp !== true) bad.push('选近段 + 远段后面板不对：' + JSON.stringify(out.panel));
+    s.value = '0'; s.dispatchEvent(new Event('change')); }
+  selectEmitTab('星');
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def r6(pg):
+    """4.5.1 RT6：近段 + 远段（rtFar）缺省关 = RT5；开了：粗 / 中 / 细都进贴图、GPU 按档预算（含上限一起降）、贴图 + GPU = 出生率；交接权重相加 = 1；
+    闪烁层带闪烁；远看直径光量不变；cascade.json 多 TrailFar、命名多 Far；面板「贴图怎么分」"""
+    r = await pg.evaluate(R6_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
+
+
 async def w1(pg):
     """4.5.0 工作台快改（用户 10-05 01:28 / 02:25）：时间轴没有发射器行和曲线、精简布局收起层轨道；AI 效果调了保存 = 存成我的效果（派生）、能加层；
     单层存模板 → 花型库「我的模板」、能打开；删除不弹框、6 秒内能撤销；AI 效果能从左栏隐藏；只还原一个发射器 / 回到模板默认；时长跟随 / 同一时刻粘连两个开关"""
@@ -1203,7 +1278,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('W1', w1, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

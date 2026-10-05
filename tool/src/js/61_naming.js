@@ -35,7 +35,7 @@ function fwTexName(base, layer, L, sheet, kind, mobile) {
 const namingApplies = b => b && (b.form === 'master' || b.form === 'segments' || b.form === 'emitset');
 // 一个烘焙在包里的每张序列：[内部段名, 格子, 名字里加的部分, 序号]。emitset 的循环 / 消散两张按「层」Loop / Fade 命名
 function namingSheets(b) {
-  if (b.form === 'emitset') return [['Loop', b.meta.L, 'Loop', 1], ['Fade', b.fades[0].meta.L, 'Fade', 1]];
+  if (b.form === 'emitset') return [['Loop', b.meta.L, 'Loop', 1], ...(b.fades[0] ? [['Fade', b.fades[0].meta.L, 'Fade', 1]] : []), ...(b.far ? [['Far', b.far.meta.L, 'Far', 1]] : [])];     // 4.5.1 远段 Far
   return bakeParts(b).map((s, k) => [bakeSegmentName(b, k), s.meta.L, '', k + 1]);
 }
 // entries：[{ ln, mn, b, layer }]：内部 PC 名、内部手机名、这一层的烘焙、层英文名

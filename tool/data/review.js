@@ -1,20 +1,20 @@
 // 由 analysis/scripts/review_to_baker.py 生成：迭代区（做完、等你看的东西）。不要手改。
 var FW_REVIEW = [
 {
-"id": "RT5S",
-"task": "RT5S",
+"id": "RT6S",
+"task": "RT6S",
 "kind": "preset",
-"date": "2026-10-04",
-"name": "升空尾缀 · 循环层 + 粒子 小（第 5 版）",
-"note": "第 5 版（对话框15，10-04；烘焙器 4.4.5）：按用户在 UE 里看 RT4L 的反馈改（spec/UE实测.md 14:58 / 17:27）。①物理弹道：平方阻力、终端速度按弹径，出膛快、前段减速猛、顶点附近吊住，升空时间由开花高度算出来（不再手填）；引擎里循环层 / 星头光晕用 Velocity Over Life。②循环层长度跟真实尾迹：起步从弹体后面长出来、不伸到地下，减速变短（最短 × 0.15）；消散按开花前的长度单独烘，真实大小、和循环层最后一帧接上。③GPU 兼容：GPU 发射器不写 Acceleration、Initial Velocity ≤ 2。④细 / 中火花全进贴图，GPU 只留粗火花、末段爆亮、落火、发射口，同时活着 ≤ 800。⑤贴图火花亮度换成和温度偏移无关的口径（H4），数值 40 → 300 保持原亮度。其余效果参数和第 4 版相同。原理 7j。",
+"date": "2026-10-05",
+"name": "升空尾缀 · 近段 + 远段 + GPU 小（第 6 版）",
+"note": "第 6 版（对话框15，10-05；烘焙器 4.5.1）：用户 10-05 01:28「合并渲染再加 800 个 cascade 粒子」、14:35「近段 RT4 主体循环 + 远段一次性大量粒子序列 + ≤ 800 GPU」。①近段循环层只画年轻的（年龄 < 0.6–1.0 s：星头、白热段、刚喷出的细 / 中 / 粗火花），面片短了、更清楚；②远段 TrailFar：年老的火花用世界坐标烘成从发射点到开花点的全程序列（一次性不循环，开花后自己演完熄灭），两段按年龄交叉淡化；③GPU 按档预算再加：粗 300、闪烁（中）200、细 150（加落火、末段爆亮总共 ≤ 800），GPU 那份从贴图里扣掉，贴图 + GPU = 全部火花；④GPU 火花远看直径 1.5 m、增益 ×2（远处 1–2 像素的亮点）。其余参数和 RT5 相同。原理 7k。",
 "look": [
-"引擎回放：升空开头尾缀从弹体后面长出来（不再一出来就连着地面），前段快、越往上越慢，顶点附近吊住",
-"开花那一刻：循环层换成消散时长度对得上、不再扁一块",
-"贴图（Loop）：白热段两边有细 / 中火花；远处看会不会太暗太橙（GPU 只剩粗火花）",
-"UE 里：RiseLoop 的 Velocity Over Life 要导入器支持（未支持前会报未知模块）；GPU 发射器没有标红的 Acceleration、粒子数 ≤ 800"
+"引擎回放：上升段近段（亮的白热段 + 年轻火花）下面接远段（大量停在空中的老火花，慢慢变暗、漂开），交接处没有缝、没有一截空的",
+"开花后远段自己演完熄灭（以前老火花挤在消散面片里过曝）",
+"GPU 亮点：粗火花、会闪的中火花、细火花都有，远看是清楚的亮点；同时活着 ≤ 800",
+"UE 里看：两段交接有没有缝、远段帧率够不够（前沿一帧跳几米）、Velocity Over Life"
 ],
-"opinion": "待本机导出 + 回放检查后写。云端量过：循环层过曝像素（回放检查同一口径）大 0.9% / 中 0.6% / 小 1.2%（上限 2%，第 4 版大 3.7%）；GPU 粒子估算 ≤ 800。",
-"tags": "尾缀 上升 循环层 粒子 GPU 螺旋 小 RT5 物理弹道",
+"opinion": null,
+"tags": "尾缀 上升 循环层 粒子 GPU 螺旋 小 RT6 物理弹道 近段 远段",
 "doc": null,
 "imagesTitle": null,
 "principle": true,
@@ -152,7 +152,17 @@ var FW_REVIEW = [
 "rtGpuSafe": 1,
 "rtMTex": 1,
 "rtTexCal": 1,
-"rtGpuMax": 800
+"rtGpuMax": 800,
+"rtFar": 1,
+"rtNearA0": 0.6,
+"rtNearA1": 1.0,
+"rtGpuC": 300,
+"rtGpuM": 200,
+"rtGpuF": 150,
+"rtGpuTw": 0.8,
+"rtGpuDisp": 1.5,
+"rtGpuGain": 2,
+"rtNearExpo": 0.8
 },
 "m": {
 "stages": [
@@ -170,23 +180,23 @@ var FW_REVIEW = [
 "tailInt": 1
 },
 "thumbRef": "data:image/jpeg;base64,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",
-"ver": "c11ae4f7"
+"ver": "00659261"
 },
 {
-"id": "RT5M",
-"task": "RT5M",
+"id": "RT6M",
+"task": "RT6M",
 "kind": "preset",
-"date": "2026-10-04",
-"name": "升空尾缀 · 循环层 + 粒子 中（第 5 版）",
-"note": "第 5 版（对话框15，10-04；烘焙器 4.4.5）：按用户在 UE 里看 RT4L 的反馈改（spec/UE实测.md 14:58 / 17:27）。①物理弹道：平方阻力、终端速度按弹径，出膛快、前段减速猛、顶点附近吊住，升空时间由开花高度算出来（不再手填）；引擎里循环层 / 星头光晕用 Velocity Over Life。②循环层长度跟真实尾迹：起步从弹体后面长出来、不伸到地下，减速变短（最短 × 0.15）；消散按开花前的长度单独烘，真实大小、和循环层最后一帧接上。③GPU 兼容：GPU 发射器不写 Acceleration、Initial Velocity ≤ 2。④细 / 中火花全进贴图，GPU 只留粗火花、末段爆亮、落火、发射口，同时活着 ≤ 800。⑤贴图火花亮度换成和温度偏移无关的口径（H4），数值 40 → 300 保持原亮度。其余效果参数和第 4 版相同。原理 7j。",
+"date": "2026-10-05",
+"name": "升空尾缀 · 近段 + 远段 + GPU 中（第 6 版）",
+"note": "第 6 版（对话框15，10-05；烘焙器 4.5.1）：用户 10-05 01:28「合并渲染再加 800 个 cascade 粒子」、14:35「近段 RT4 主体循环 + 远段一次性大量粒子序列 + ≤ 800 GPU」。①近段循环层只画年轻的（年龄 < 0.6–1.0 s：星头、白热段、刚喷出的细 / 中 / 粗火花），面片短了、更清楚；②远段 TrailFar：年老的火花用世界坐标烘成从发射点到开花点的全程序列（一次性不循环，开花后自己演完熄灭），两段按年龄交叉淡化；③GPU 按档预算再加：粗 300、闪烁（中）200、细 150（加落火、末段爆亮总共 ≤ 800），GPU 那份从贴图里扣掉，贴图 + GPU = 全部火花；④GPU 火花远看直径 1.5 m、增益 ×2（远处 1–2 像素的亮点）。其余参数和 RT5 相同。原理 7k。",
 "look": [
-"引擎回放：升空开头尾缀从弹体后面长出来（不再一出来就连着地面），前段快、越往上越慢，顶点附近吊住",
-"开花那一刻：循环层换成消散时长度对得上、不再扁一块",
-"贴图（Loop）：白热段两边有细 / 中火花；远处看会不会太暗太橙（GPU 只剩粗火花）",
-"UE 里：RiseLoop 的 Velocity Over Life 要导入器支持（未支持前会报未知模块）；GPU 发射器没有标红的 Acceleration、粒子数 ≤ 800"
+"引擎回放：上升段近段（亮的白热段 + 年轻火花）下面接远段（大量停在空中的老火花，慢慢变暗、漂开），交接处没有缝、没有一截空的",
+"开花后远段自己演完熄灭（以前老火花挤在消散面片里过曝）",
+"GPU 亮点：粗火花、会闪的中火花、细火花都有，远看是清楚的亮点；同时活着 ≤ 800",
+"UE 里看：两段交接有没有缝、远段帧率够不够（前沿一帧跳几米）、Velocity Over Life"
 ],
-"opinion": "待本机导出 + 回放检查后写。云端量过：循环层过曝像素（回放检查同一口径）大 0.9% / 中 0.6% / 小 1.2%（上限 2%，第 4 版大 3.7%）；GPU 粒子估算 ≤ 800。",
-"tags": "尾缀 上升 循环层 粒子 GPU 螺旋 中 RT5 物理弹道",
+"opinion": null,
+"tags": "尾缀 上升 循环层 粒子 GPU 螺旋 中 RT6 物理弹道 近段 远段",
 "doc": null,
 "imagesTitle": null,
 "principle": true,
@@ -324,7 +334,17 @@ var FW_REVIEW = [
 "rtGpuSafe": 1,
 "rtMTex": 1,
 "rtTexCal": 1,
-"rtGpuMax": 800
+"rtGpuMax": 800,
+"rtFar": 1,
+"rtNearA0": 0.6,
+"rtNearA1": 1.0,
+"rtGpuC": 300,
+"rtGpuM": 200,
+"rtGpuF": 150,
+"rtGpuTw": 0.8,
+"rtGpuDisp": 1.5,
+"rtGpuGain": 2,
+"rtNearExpo": 0.8
 },
 "m": {
 "stages": [
@@ -342,23 +362,23 @@ var FW_REVIEW = [
 "tailInt": 1
 },
 "thumbRef": "data:image/jpeg;base64,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",
-"ver": "f509f6bf"
+"ver": "9f19f997"
 },
 {
-"id": "RT5L",
-"task": "RT5L",
+"id": "RT6L",
+"task": "RT6L",
 "kind": "preset",
-"date": "2026-10-04",
-"name": "升空尾缀 · 循环层 + 粒子 大（第 5 版）",
-"note": "第 5 版（对话框15，10-04；烘焙器 4.4.5）：按用户在 UE 里看 RT4L 的反馈改（spec/UE实测.md 14:58 / 17:27）。①物理弹道：平方阻力、终端速度按弹径，出膛快、前段减速猛、顶点附近吊住，升空时间由开花高度算出来（不再手填）；引擎里循环层 / 星头光晕用 Velocity Over Life。②循环层长度跟真实尾迹：起步从弹体后面长出来、不伸到地下，减速变短（最短 × 0.15）；消散按开花前的长度单独烘，真实大小、和循环层最后一帧接上。③GPU 兼容：GPU 发射器不写 Acceleration、Initial Velocity ≤ 2。④细 / 中火花全进贴图，GPU 只留粗火花、末段爆亮、落火、发射口，同时活着 ≤ 800。⑤贴图火花亮度换成和温度偏移无关的口径（H4），数值 40 → 300 保持原亮度。其余效果参数和第 4 版相同。原理 7j。",
+"date": "2026-10-05",
+"name": "升空尾缀 · 近段 + 远段 + GPU 大（第 6 版）",
+"note": "第 6 版（对话框15，10-05；烘焙器 4.5.1）：用户 10-05 01:28「合并渲染再加 800 个 cascade 粒子」、14:35「近段 RT4 主体循环 + 远段一次性大量粒子序列 + ≤ 800 GPU」。①近段循环层只画年轻的（年龄 < 0.6–1.0 s：星头、白热段、刚喷出的细 / 中 / 粗火花），面片短了、更清楚；②远段 TrailFar：年老的火花用世界坐标烘成从发射点到开花点的全程序列（一次性不循环，开花后自己演完熄灭），两段按年龄交叉淡化；③GPU 按档预算再加：粗 300、闪烁（中）200、细 150（加落火、末段爆亮总共 ≤ 800），GPU 那份从贴图里扣掉，贴图 + GPU = 全部火花；④GPU 火花远看直径 1.5 m、增益 ×2（远处 1–2 像素的亮点）。其余参数和 RT5 相同。原理 7k。",
 "look": [
-"引擎回放：升空开头尾缀从弹体后面长出来（不再一出来就连着地面），前段快、越往上越慢，顶点附近吊住",
-"开花那一刻：循环层换成消散时长度对得上、不再扁一块",
-"贴图（Loop）：白热段两边有细 / 中火花；远处看会不会太暗太橙（GPU 只剩粗火花）",
-"UE 里：RiseLoop 的 Velocity Over Life 要导入器支持（未支持前会报未知模块）；GPU 发射器没有标红的 Acceleration、粒子数 ≤ 800"
+"引擎回放：上升段近段（亮的白热段 + 年轻火花）下面接远段（大量停在空中的老火花，慢慢变暗、漂开），交接处没有缝、没有一截空的",
+"开花后远段自己演完熄灭（以前老火花挤在消散面片里过曝）",
+"GPU 亮点：粗火花、会闪的中火花、细火花都有，远看是清楚的亮点；同时活着 ≤ 800",
+"UE 里看：两段交接有没有缝、远段帧率够不够（前沿一帧跳几米）、Velocity Over Life"
 ],
-"opinion": "待本机导出 + 回放检查后写。云端量过：循环层过曝像素（回放检查同一口径）大 0.9% / 中 0.6% / 小 1.2%（上限 2%，第 4 版大 3.7%）；GPU 粒子估算 ≤ 800。",
-"tags": "尾缀 上升 循环层 粒子 GPU 螺旋 大 RT5 物理弹道",
+"opinion": null,
+"tags": "尾缀 上升 循环层 粒子 GPU 螺旋 大 RT6 物理弹道 近段 远段",
 "doc": null,
 "imagesTitle": null,
 "principle": true,
@@ -496,7 +516,17 @@ var FW_REVIEW = [
 "rtGpuSafe": 1,
 "rtMTex": 1,
 "rtTexCal": 1,
-"rtGpuMax": 800
+"rtGpuMax": 800,
+"rtFar": 1,
+"rtNearA0": 0.6,
+"rtNearA1": 1.0,
+"rtGpuC": 300,
+"rtGpuM": 200,
+"rtGpuF": 150,
+"rtGpuTw": 0.8,
+"rtGpuDisp": 1.5,
+"rtGpuGain": 2,
+"rtNearExpo": 0.8
 },
 "m": {
 "stages": [
@@ -514,7 +544,7 @@ var FW_REVIEW = [
 "tailInt": 1
 },
 "thumbRef": "data:image/jpeg;base64,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",
-"ver": "78078c43"
+"ver": "53af0196"
 },
 {
 "id": "V5S",
@@ -7062,26 +7092,26 @@ var FW_EFFECTS = [
 {
 "key": "trail_phys",
 "名": "升空尾缀 · 循环层 + 粒子 小 / 中 / 大",
-"负责": "对话框15（2026-10-04 09:58 用户「尾缀星头按你说的改」，接手出 RT5）；之前：对话框11",
+"负责": "对话框15（2026-10-04 09:58 用户「尾缀星头按你说的改」接手出 RT5；10-05 01:28「RT5 你来做」出 RT6）；之前：对话框11",
 "阶段": "制作中",
 "参考": [
 "vidio/2.0/尾缀C.mp4",
 "vidio/2.0/尾缀B.mp4",
 "vidio/2.0/尾缀A.mp4"
 ],
-"主条目": "RT5M",
-"工作版": "RT5M",
+"主条目": "RT6M",
+"工作版": "RT6M",
 "方案": [
 {
-"id": "RT5S",
+"id": "RT6S",
 "label": "小"
 },
 {
-"id": "RT5M",
+"id": "RT6M",
 "label": "中"
 },
 {
-"id": "RT5L",
+"id": "RT6L",
 "label": "大"
 }
 ],
@@ -7092,11 +7122,11 @@ var FW_EFFECTS = [
 "用户验收": false
 },
 "缺": [
-"未经 UE 验证：Velocity Over Life 模块（导入器待支持，排给对话框5）、循环层 Size By Life 是否按曲线播、开花时循环层和消散接不接得上、GPU 只留 2 个 Initial Velocity 后的样子",
-"远处贴图火花亮度（细 / 中火花全进贴图了，Ramp 口径偏暗偏橙）请在引擎里看一眼",
-"粒子大小 / 亮度等用户在引擎里按例子标定"
+"本机导出 RT6SE1 / RT6ME1 / RT6LE1 + 回放检查（挂着，等用户给显卡空窗）→ STD11",
+"未经 UE 验证：近段 / 远段交接有没有缝、远段帧率（出膛那几秒前沿一帧约 10 m）、TrailFar 竖直面片朝向、GPU 远看直径 1.5 m × 增益 2 在 1000 m 的样子、Velocity Over Life（导入器待支持，协作/备忘_导入器.md）、Size By Life 是否按曲线播",
+"长度：用户 14:35 觉得大号约 120 m 偏长，可在 Cascade 里缩，或调白热时间 / 细中火花寿命"
 ],
-"下一步": "【对话框15 2026-10-05 14:xx · RT5 看完 → 做 RT6】RT5SE1/ME1/LE1（4.4.5）回放检查：循环层过，消散 RiseFade 过曝 7.0 / 5.3 / 5.0% 不过 → 不进就绪、STD10 hold（analysis/results/RT5LE1/看法.md）。用户 10-05 14:02 UE 截图：粒子少了（RT5 GPU ≤ 683 只粗火花，细 / 中进了贴图——按旧理解做的）、尺寸像过大（量过：亮段最长 ~90 m 不比 RT4 的 ~110 m 长，但面片宽 11.3 m / 亮芯 ~9 m，RT4 6.9 m / ~6 m；星头光晕 14 m）。RT6 = 方案 6.4：近段循环（火焰主体）+ 远段 + GPU ≤ 800 分粗 / 细 / 闪烁 / 落火、远看清楚；宽度回 RT4 量级并可调；消散过曝一起修。尺寸基准等用户说 RT4 比例测试的结论。 ｜ 【对话框15 2026-10-04 23:xx · RT5】条目 RT5S/M/L（analysis/原理/条目_升空尾缀.json）已加，烘焙器 4.4.5 的通用选项全开；云端量过循环层过曝 大 0.9% / 中 0.6% / 小 1.2%（RT4L 同口径 3.7%）、GPU 粒子估算 ≤ 800。下一步：本机导出 RT5SE1 / RT5ME1 / RT5LE1 + 回放检查 → 标准检查 → 看引擎回放（起步长出来、开花接上）→ 进待我验收、RT4 加 replaces 搬归档。导入要等对话框5 支持 Velocity Over Life（共享文件排队）。 ｜ 【对话框15 2026-10-04 18:40】4.4.0 已改 ⑥ 的一半：消散面片 = 循环层全长、循环层不写 Size By Life、循环层出场淡入（用户 17:41 UE 里把消散改成和循环层一样大就接上了）。RT4 条目要用 4.4.0 重导（OUTPUT_VER emitset 4.4）。其余 RT5 项照旧。 ｜ 【对话框15 2026-10-04 17:40 · RT5 清单（用户 14:58 + 17:27 两轮 UE 反馈）】① GPU 发射器不写 Acceleration（UE 标红），乱流进贴图；② Initial Velocity 只留 2 个；③ 一条尾缀 GPU 粒子同时活着 ≤ 800，密的、会闪的火花进贴图；④ 星头自动曝光 + 软压缩、H4；⑤ Pivot 按对话框5 v2.8（面板 = 内部 + 0.5）核对；⑥ 消散 RiseFade 按开花时真实速度单独取景烘焙、不压扁（现在 RT4L 被压到 0.061，截图里扁的就是它），循环层压缩设下限；⑦ 弹道改「弹径 → 终端速度 → 平方阻力」，出膛快、前段减速猛、顶点附近吊住，升空时间由高度算；循环层用 Velocity Over Life（待对话框5 确认导入器支持）。详见 spec/UE实测.md 17:27 一节。排在参数面板改版之后做。 ｜ 【对话框15 10-04 15:10，用户 RT4L 进引擎后】RT5 要改的（spec/UE实测.md 10-04 14:58）：① GPU 发射器不写 Acceleration（UE 4.24 GPU Sprites 不支持，标红），乱流进贴图；② Initial Velocity 合并成「弹道曲线 + 一个随机散开」；③ **拖尾粒子同时活着 ≤ 800（PC，一条尾缀）**，细 / 中火花（带闪烁）全进贴图，Cascade 只留粗火花 + 爆亮 + 余烬 + 发射口，和贴图错开闪；④ 星头软压缩 + 自动曝光（过曝）、H4；⑤ Pivot Offset格式已由对话框5核准并同步（2026-10-04 16:00，用户要求写给Claude）：JSON保持内部偏移，模块值=内部值+0.5；[-0.5,-0.0154]→面板(0,0.4846)，中心[-0.5,-0.5]→(0,0)。正确JSON/原生格式见spec/cascade_params_v1.md，定义证据与未实播界限见spec/UE实测.md；私有工作台v2.8已修换算，现有用户资源未自动改写，RT5按此格式导出并验实际对齐。 ｜ 【对话框15 接手，10-04 22:00 后做】RT5：烘焙器通用能力 ① 循环层 + 粒子走 autoExposure40 按最亮时刻定曝光 ② 星头 / 白热段软压缩（参数默认 0），顺带修 H4；RT4 条目不动（用户今天可能先把 RT4 导进引擎）。见 协作/排查计划_2026-10.md。 ｜ 【对话框15 2026-10-04，给负责人】RT4ME1（烘焙器 4.3.0，RT4M 第一次内部导出）回放检查 ❌ 过曝：循环 2.8%、消散 3.1%（上限 2%），在贴图上端星头 + 白热段（贴图本身到顶，不是检查的色调；RT2ME 2.3% / RT2ME2 1.2%，一直在边上）。其余都过、STD7 ✅、烘焙回放实时和导出一致。RT4 不能进「就绪」，要出 RT5：① 降星头 / 白热段在贴图里的亮度或曝光，亮度用 Color Over Life 补回；② 顺带修渲染基础问题 H4（47_risetail.js:81 温度偏移 ref = 0.25，rtTexI 40 → 约 300 保持现在的亮度；tool/src 4.3 之后先在共享文件排队，或交对话框15 改）；再内部导出 + 回放检查。用户 10-04 02:55 说过不用等确认。 ｜ 之前：等用户验收 RT4（左栏「升空尾缀」下面一排小 / 中 / 大；导出由用户自己在烘焙器里点） 2026-10-03（对话框2，4.2.5）：「待我验收」改成按证据把关（版本指纹带烘焙器输出版本）——RT4M 要一次内部导出（export 任务，导出清单记 entryVer）+ 回放检查；标准检查对话框2 已排 STD5 重跑。没有就一直显示「未就绪：还没导出」。 ｜ 4.3（对话框15 留给负责人）：渲染基础问题 H4——「温度偏移」rtFdT 让贴图火花亮度反着变（47_risetail.js:81-82 ref 用了 Tb+dT 的亮度，Tb 2450 / dT −400 时 ×7.5，越冷越亮）。修法：ref = 0.25（和 GPU rtSparkColor 同口径），同时把 RT4 的 rtTexI 从 40 调到约 300 保持现在的亮度。改了 RT4 画面，要你决定是否出 RT5 再验收；4.3 没动。另外 4.3 所有产物 OUTPUT_VER → 4.3，RT4M 要用 4.3 重新内部导出。",
+"下一步": "【对话框15 2026-10-05 17:xx · RT6 = 烘焙器 4.5.1】近段（循环层，只画年轻火花，曝光 × 0.8）+ 远段 TrailFar（年老火花世界坐标全程序列，开花后全归它，没有 RiseFade）+ GPU 按档预算（粗 300 / 闪烁 200 / 细 150，总 ≤ 800，GPU 那份从贴图扣掉）；条目 RT6S/M/L，原理 7k。云端单格原尺寸量过曝：近段 L 1.35–1.47% / M 0.57–0.63% / S 0.85–1.03%，远段 L ≤ 0.41%。R6 检查。下一步：用户给显卡空窗 → 放行 RT6SE1/ME1/LE1（ready:false）→ 看回放检查 + 烘焙回放（实时 vs 导出、交接处有没有缝）→ 放行 STD11 → 待我验收；RT5 加 replaces 搬归档。 ｜ 【对话框15 2026-10-05 14:xx · RT5 看完 → 做 RT6】RT5SE1/ME1/LE1（4.4.5）回放检查：循环层过，消散 RiseFade 过曝 7.0 / 5.3 / 5.0% 不过 → 不进就绪、STD10 hold（analysis/results/RT5LE1/看法.md）。用户 10-05 14:02 UE 截图：粒子少了（RT5 GPU ≤ 683 只粗火花，细 / 中进了贴图——按旧理解做的）、尺寸像过大（量过：亮段最长 ~90 m 不比 RT4 的 ~110 m 长，但面片宽 11.3 m / 亮芯 ~9 m，RT4 6.9 m / ~6 m；星头光晕 14 m）。RT6 = 方案 6.4：近段循环（火焰主体）+ 远段 + GPU ≤ 800 分粗 / 细 / 闪烁 / 落火、远看清楚；宽度回 RT4 量级并可调；消散过曝一起修。尺寸基准等用户说 RT4 比例测试的结论。 ｜ 【对话框15 2026-10-04 23:xx · RT5】条目 RT5S/M/L（analysis/原理/条目_升空尾缀.json）已加，烘焙器 4.4.5 的通用选项全开；云端量过循环层过曝 大 0.9% / 中 0.6% / 小 1.2%（RT4L 同口径 3.7%）、GPU 粒子估算 ≤ 800。下一步：本机导出 RT5SE1 / RT5ME1 / RT5LE1 + 回放检查 → 标准检查 → 看引擎回放（起步长出来、开花接上）→ 进待我验收、RT4 加 replaces 搬归档。导入要等对话框5 支持 Velocity Over Life（共享文件排队）。 ｜ 【对话框15 2026-10-04 18:40】4.4.0 已改 ⑥ 的一半：消散面片 = 循环层全长、循环层不写 Size By Life、循环层出场淡入（用户 17:41 UE 里把消散改成和循环层一样大就接上了）。RT4 条目要用 4.4.0 重导（OUTPUT_VER emitset 4.4）。其余 RT5 项照旧。 ｜ 【对话框15 2026-10-04 17:40 · RT5 清单（用户 14:58 + 17:27 两轮 UE 反馈）】① GPU 发射器不写 Acceleration（UE 标红），乱流进贴图；② Initial Velocity 只留 2 个；③ 一条尾缀 GPU 粒子同时活着 ≤ 800，密的、会闪的火花进贴图；④ 星头自动曝光 + 软压缩、H4；⑤ Pivot 按对话框5 v2.8（面板 = 内部 + 0.5）核对；⑥ 消散 RiseFade 按开花时真实速度单独取景烘焙、不压扁（现在 RT4L 被压到 0.061，截图里扁的就是它），循环层压缩设下限；⑦ 弹道改「弹径 → 终端速度 → 平方阻力」，出膛快、前段减速猛、顶点附近吊住，升空时间由高度算；循环层用 Velocity Over Life（待对话框5 确认导入器支持）。详见 spec/UE实测.md 17:27 一节。排在参数面板改版之后做。 ｜ 【对话框15 10-04 15:10，用户 RT4L 进引擎后】RT5 要改的（spec/UE实测.md 10-04 14:58）：① GPU 发射器不写 Acceleration（UE 4.24 GPU Sprites 不支持，标红），乱流进贴图；② Initial Velocity 合并成「弹道曲线 + 一个随机散开」；③ **拖尾粒子同时活着 ≤ 800（PC，一条尾缀）**，细 / 中火花（带闪烁）全进贴图，Cascade 只留粗火花 + 爆亮 + 余烬 + 发射口，和贴图错开闪；④ 星头软压缩 + 自动曝光（过曝）、H4；⑤ Pivot Offset格式已由对话框5核准并同步（2026-10-04 16:00，用户要求写给Claude）：JSON保持内部偏移，模块值=内部值+0.5；[-0.5,-0.0154]→面板(0,0.4846)，中心[-0.5,-0.5]→(0,0)。正确JSON/原生格式见spec/cascade_params_v1.md，定义证据与未实播界限见spec/UE实测.md；私有工作台v2.8已修换算，现有用户资源未自动改写，RT5按此格式导出并验实际对齐。 ｜ 【对话框15 接手，10-04 22:00 后做】RT5：烘焙器通用能力 ① 循环层 + 粒子走 autoExposure40 按最亮时刻定曝光 ② 星头 / 白热段软压缩（参数默认 0），顺带修 H4；RT4 条目不动（用户今天可能先把 RT4 导进引擎）。见 协作/排查计划_2026-10.md。 ｜ 【对话框15 2026-10-04，给负责人】RT4ME1（烘焙器 4.3.0，RT4M 第一次内部导出）回放检查 ❌ 过曝：循环 2.8%、消散 3.1%（上限 2%），在贴图上端星头 + 白热段（贴图本身到顶，不是检查的色调；RT2ME 2.3% / RT2ME2 1.2%，一直在边上）。其余都过、STD7 ✅、烘焙回放实时和导出一致。RT4 不能进「就绪」，要出 RT5：① 降星头 / 白热段在贴图里的亮度或曝光，亮度用 Color Over Life 补回；② 顺带修渲染基础问题 H4（47_risetail.js:81 温度偏移 ref = 0.25，rtTexI 40 → 约 300 保持现在的亮度；tool/src 4.3 之后先在共享文件排队，或交对话框15 改）；再内部导出 + 回放检查。用户 10-04 02:55 说过不用等确认。 ｜ 之前：等用户验收 RT4（左栏「升空尾缀」下面一排小 / 中 / 大；导出由用户自己在烘焙器里点） 2026-10-03（对话框2，4.2.5）：「待我验收」改成按证据把关（版本指纹带烘焙器输出版本）——RT4M 要一次内部导出（export 任务，导出清单记 entryVer）+ 回放检查；标准检查对话框2 已排 STD5 重跑。没有就一直显示「未就绪：还没导出」。 ｜ 4.3（对话框15 留给负责人）：渲染基础问题 H4——「温度偏移」rtFdT 让贴图火花亮度反着变（47_risetail.js:81-82 ref 用了 Tb+dT 的亮度，Tb 2450 / dT −400 时 ×7.5，越冷越亮）。修法：ref = 0.25（和 GPU rtSparkColor 同口径），同时把 RT4 的 rtTexI 从 40 调到约 300 保持现在的亮度。改了 RT4 画面，要你决定是否出 RT5 再验收；4.3 没动。另外 4.3 所有产物 OUTPUT_VER → 4.3，RT4M 要用 4.3 重新内部导出。",
 "导出任务": [
 "RT4ME1",
 "RT4SE1",
@@ -7104,12 +7134,15 @@ var FW_EFFECTS = [
 "RT4LE1",
 "RT5SE1",
 "RT5ME1",
-"RT5LE1"
+"RT5LE1",
+"RT6SE1",
+"RT6ME1",
+"RT6LE1"
 ],
-"待验收版": "RT5M",
+"待验收版": "RT6M",
 "说明": "烘焙器 4.1.0 新产物 emitset：循环层（星头 + 白热段，贴图动态消散 + dissolve）+ GPU 金火星三档粒径 + 落火；大中小按理论推导（原理 7c–7e），实现 7f，第 2 版数量大小 7g，第 3 版白黄 / 线状 / 乱流 7h（烘焙器 4.2.1）；第 4 版 7i（烘焙器 4.2.2）：左栏分档、贴图按规范去浪费（星头在上端 + Pivot Offset、格子按长宽比、消散最小贴图、手机半边长）、一半细火星进贴图、引擎加星头光晕 / 末段爆亮 / 发射口。 第 5 版 RT5（对话框15，10-04，烘焙器 4.4.5）：按 UE 实测改——物理弹道、循环层长度跟真实尾迹 + 消散单独烘、GPU 兼容、细 / 中火花进贴图（GPU ≤ 800）、贴图亮度口径（H4）。原理 7j。",
 "英文名": "RiseTrailPhys",
-"ver": "f509f6bf",
+"ver": "9f19f997",
 "jobs": [
 {
 "id": "RT4LE1",
@@ -7151,6 +7184,24 @@ var FW_EFFECTS = [
 "id": "RT5SE1",
 "type": "export",
 "state": "已回来",
+"seen": false
+},
+{
+"id": "RT6LE1",
+"type": "export",
+"state": "挂起",
+"seen": false
+},
+{
+"id": "RT6ME1",
+"type": "export",
+"state": "挂起",
+"seen": false
+},
+{
+"id": "RT6SE1",
+"type": "export",
+"state": "挂起",
 "seen": false
 }
 ],
@@ -7332,7 +7383,7 @@ var FW_EFFECTS = [
 "RiseFade：过曝像素 5.0%"
 ]
 },
-"stale": true
+"stale": false
 },
 {
 "job": "RT5ME1",
@@ -7367,7 +7418,7 @@ var FW_EFFECTS = [
 "RiseFade：过曝像素 5.3%"
 ]
 },
-"stale": true
+"stale": false
 },
 {
 "job": "RT5SE1",
@@ -7402,7 +7453,7 @@ var FW_EFFECTS = [
 "RiseFade：过曝像素 7.0%"
 ]
 },
-"stale": true
+"stale": false
 }
 ],
 "thumb": "data:image/jpeg;base64,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",

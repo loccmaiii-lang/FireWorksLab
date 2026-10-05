@@ -1,0 +1,14 @@
+{
+ "id": "STD11",
+ "type": "std",
+ "name": "标准检查：RT6S / RT6M / RT6L（烘焙器 4.5.1）",
+ "targets": [
+  "RT6S",
+  "RT6M",
+  "RT6L"
+ ],
+ "priority": 7,
+ "ready": false,
+ "hold": "等 RT6SE1 / RT6ME1 / RT6LE1 导出回来（标准检查要查同一指纹的新导出）",
+ "note": "放行时去掉 ready / hold。"
+}

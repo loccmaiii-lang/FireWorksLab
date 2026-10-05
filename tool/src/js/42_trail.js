@@ -223,4 +223,4 @@ function trailRelayDiff(b, fades) {
   const A = cell(a, b.meta.fEnd, b.N, b.NH, b.cw, b.chh);
   return fades.map(f => { const B = cell(readRGBA8(f.head), 0, f.N, f.NH, f.cw, f.chh); let d = 0; for (let i = 0; i < A.length; i++) d += Math.abs(A[i] - B[i]); return +(d / A.length).toFixed(3); });
 }
-function disposeTrail(b) { if (b && b.fades) b.fades.forEach(f => { f.head.dispose(); f.tail && f.tail.dispose(); }); }
+function disposeTrail(b) { if (b && b.fades) b.fades.forEach(f => { f.head.dispose(); f.tail && f.tail.dispose(); }); if (b && b.far) { b.far.head.dispose(); b.far.tail && b.far.tail.dispose(); } }     // 4.5.1 升空尾缀远段
