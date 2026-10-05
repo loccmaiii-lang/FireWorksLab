@@ -1,7 +1,7 @@
 """多层花型模板的界面走一遍（4.5.5，对话框新花型）：左栏一组 → 打开 → 多层查看器（每层参数、引擎回放）→ 资产栏 → 新建效果选多层模板 → 导出一个包
 
-用法：python3 analysis/scripts/多层模板界面检查.py [--id yaeshin] [--tex 512] [--out 目录]
-  --tex：每层贴图边长（云端软件渲染用小贴图省时间，只验证流程；画质看 多层模板.py 和标准检查）
+用法：python3 analysis/scripts/多层模板界面检查.py [--id shinBotan] [--out 目录]
+  --tex：每层贴图边长（默认 0 = 各层自己的 2048；设小了取帧计划凑不出 ≥ 512 的单格会卡住，别用）。云端软件渲染一层要几分钟
 退出码 0 = 全过。结果写 <out>/多层模板界面检查.json，引擎回放截图 <out>/<id>_引擎回放.png。
 """
 import argparse, asyncio, base64, json, pathlib, sys, time, zipfile, io
@@ -12,6 +12,15 @@ ROOT = HERE.parents[1]
 HTML = ROOT / 'tool' / 'FireworkBaker.html'
 
 
+async def wait_idle(pg, idle):
+    """等烘完；每 30 s 打一行进度（云端软件渲染很慢，看得出没卡死）"""
+    t0 = time.time()
+    while not await pg.evaluate(idle):
+        st = await pg.evaluate('() => ({ baking: state.baking, q: state.layerQueue ? state.layerQueue.size : 0, refine: state.layerRefine ? state.layerRefine.size : 0, due: !!state.refineDue, busy: !$("#busy").hidden, busyText: $("#busy").textContent.slice(0, 60), baked: state.layers.filter(L => { const e = layerEntryOf(L); return e && e.bake; }).length })')
+        print(f'  …{time.time() - t0:.0f}s', json.dumps(st, ensure_ascii=False), flush=True)
+        await asyncio.sleep(30)
+
+
 async def main(a):
     from playwright.async_api import async_playwright
     out = pathlib.Path(a.out); out.mkdir(parents=True, exist_ok=True)
@@ -20,7 +29,7 @@ async def main(a):
     async with async_playwright() as p:
         b = await launch_async(p)
         ctx = await b.new_context(viewport={'width': 1440, 'height': 900}, accept_downloads=True)
-        await ctx.add_init_script(f'window.FW_LIB_TEX = {a.tex};')
+        if a.tex: await ctx.add_init_script(f'window.FW_LIB_TEX = {a.tex};')     # 只在要试小贴图时设；4.2.6 起单格 ≥ 512 由取帧计划保证，贴图小于 2048 时计划会一直找不到格子（卡住），默认不设
         pg = await ctx.new_page()
         pg.on('pageerror', lambda e: errs.append(str(e)))
         pg.on('dialog', lambda d: asyncio.ensure_future(d.accept('多层模板检查')))
@@ -34,7 +43,7 @@ async def main(a):
         t0 = time.time()
         await pg.evaluate(f'document.querySelector(\'#libBody .lg-mtypes .tile[data-key="mt:{a.id}"]\').click()')
         await pg.wait_for_function(f'state.tab === "combo" && state.layers.length === MULTI_BY_ID["{a.id}"].layers.length', timeout=0)
-        await pg.wait_for_function(idle, timeout=0, polling=500)
+        await wait_idle(pg, idle)
         info = await pg.evaluate('''(id) => ({ n: state.layers.length, key: lib.key, sel: state.comboSel, name: $('#abName').textContent, sub: $('#abSub').textContent, bar: !$('#assetBar').hidden,
           titles: state.layers.map(L => L.title), delays: state.layers.map(L => L.delay), outs: state.layers.map(L => layerOut(L).pc),
           baked: state.layers.every(L => { const e = layerEntryOf(L); return e && e.bake; }), panel: !$('#pMaster').hidden && document.querySelectorAll('#pMaster input, #pMaster select').length,
@@ -47,7 +56,7 @@ async def main(a):
         # 切到第 2 层改一个参数，只重烘这一层，回到整体
         ch = await pg.evaluate('''async () => { selectComboLayer(1); const e = layerEntryOf(state.layers[1]), e0 = layerEntryOf(state.layers[0]); const r0 = e0.bakeRev || 0;
           state.P.stars = Math.round(state.P.stars * 0.9); onParam(); return { r0, stars: state.P.stars, lib: e.name }; }''')
-        await pg.wait_for_function(idle, timeout=0, polling=500)
+        await wait_idle(pg, idle)
         ch2 = await pg.evaluate('() => ({ stars: layerEntryOf(state.layers[1]).P.stars, r0: layerEntryOf(state.layers[0]).bakeRev || 0, changed: !!wb.changed })')
         ok('改第 2 层参数：只改这一层，资产栏标「已变」', ch2['stars'] == ch['stars'] and ch2['r0'] == ch['r0'] and ch2['changed'], json.dumps(ch2))
         # 引擎回放截图（整体）
@@ -70,11 +79,10 @@ async def main(a):
         await pg.evaluate('() => myNew()')
         await pg.evaluate('() => [...document.querySelectorAll("#pkCats button")].find(b => b.textContent.startsWith("多层模板")).click()')
         await pg.evaluate('() => [...document.querySelectorAll("#pkGrid .pk-card")].find(c => c.querySelector(".nm").textContent === "芯入菊").click()')
-        await pg.wait_for_function(f'Object.keys(myAll()).length === {before + 1} && lib.my', timeout=0)
-        await pg.wait_for_function(idle, timeout=0, polling=500)
-        my = await pg.evaluate('() => ({ n: state.layers.length, from: lib.my.from && lib.my.from.key, name: lib.my.name })')
-        ok('新建效果选多层模板 = 整套层存成我的效果', my['n'] == 2 and my['from'] == 'mt:shinKiku', json.dumps(my, ensure_ascii=False))
-        await pg.evaluate('() => removeMyFx(lib.my.id)')
+        await pg.wait_for_function(f'Object.keys(myAll()).length === {before + 1}', timeout=0)
+        # 只核对存下来的记录（整套层、来源）；打开以后各层要重新烘（云端软件渲染一层菊要四十分钟），不等
+        my = await pg.evaluate('() => { const r = Object.values(myAll()).sort((a, b) => String(b.id).localeCompare(String(a.id)))[0]; return { n: r.snap.layers.length, from: r.from && r.from.key, name: r.name, titles: r.snap.layers.map(x => x.L.title), pack: packNamesFor("my:" + r.id, null, r.snap.layers.length, "X") }; }')
+        ok('新建效果选多层模板 = 整套层存成我的效果（层名、来源、导出名）', my['n'] == 2 and my['from'] == 'mt:shinKiku' and my['pack']['base'] == 'ShinKiku', json.dumps(my, ensure_ascii=False))
         ok('页面没有脚本错误', not errs, '；'.join(errs)[:300])
         await b.close()
     (out / '多层模板界面检查.json').write_text(json.dumps({'checks': res, 'errors': errs}, ensure_ascii=False, indent=1), encoding='utf-8')
@@ -84,6 +92,6 @@ async def main(a):
 
 
 if __name__ == '__main__':
-    ap = argparse.ArgumentParser(); ap.add_argument('--id', default='yaeshin'); ap.add_argument('--tex', type=int, default=512)
+    ap = argparse.ArgumentParser(); ap.add_argument('--id', default='yaeshin'); ap.add_argument('--tex', type=int, default=0)
     ap.add_argument('--out', default=str(ROOT / 'analysis' / 'probe' / '多层模板'))
     raise SystemExit(asyncio.run(main(ap.parse_args())))

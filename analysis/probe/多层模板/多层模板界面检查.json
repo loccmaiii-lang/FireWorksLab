@@ -1,0 +1,60 @@
+{
+ "checks": [
+  {
+   "name": "左栏有「多层花型模板」一组，每个模板一个缩略图",
+   "pass": true,
+   "note": "13/13"
+  },
+  {
+   "name": "打开 = 多层查看器，层数 / 层名 / 延迟按模板",
+   "pass": true,
+   "note": "[\"亲星 · 红牡丹\", \"芯 1 · 绿\"]"
+  },
+  {
+   "name": "打开就选第 1 层，右栏是这一层的完整参数",
+   "pass": true,
+   "note": "控件 768"
+  },
+  {
+   "name": "每层都烘好（引擎回放有贴图）",
+   "pass": true,
+   "note": "636s"
+  },
+  {
+   "name": "资产栏显示模板名、多层花型模板",
+   "pass": true,
+   "note": "芯入牡丹 · 2 层 · 多层花型模板"
+  },
+  {
+   "name": "导出名默认是模板英文名 + 层英文名",
+   "pass": true,
+   "note": "{\"base\": \"ShinBotan\", \"layers\": [\"Red\", \"Green\"], \"custom\": true}"
+  },
+  {
+   "name": "改第 2 层参数：只改这一层，资产栏标「已变」",
+   "pass": true,
+   "note": "{\"stars\": 267, \"r0\": 0, \"changed\": true}"
+  },
+  {
+   "name": "引擎回放画整体（按导出贴图）",
+   "pass": true,
+   "note": "芯入牡丹 · 引擎回放（每层贴图叠放）· 2 层"
+  },
+  {
+   "name": "导出：一个包，cascade.json（PC）+ cascade_mobile.json，每层有贴图 / Ramp",
+   "pass": true,
+   "note": "ShinBotan.zip · 14 个文件 · 发射器 2"
+  },
+  {
+   "name": "新建效果选多层模板 = 整套层存成我的效果（层名、来源、导出名）",
+   "pass": true,
+   "note": "{\"n\": 2, \"from\": \"mt:shinKiku\", \"name\": \"多层模板检查\", \"titles\": [\"亲星 · 金菊\", \"芯 1 · 青\"], \"pack\": {\"base\": \"ShinKiku\", \"layers\": [\"Kiku\", \"Blue\"], \"custom\": true}}"
+  },
+  {
+   "name": "页面没有脚本错误",
+   "pass": true,
+   "note": ""
+  }
+ ],
+ "errors": []
+}
