@@ -1,0 +1,956 @@
+{
+  "name": "RiseTailS_Mobile",
+  "type": "tailS",
+  "typeName": "升空尾缀 · 循环层 + 粒子 小",
+  "form": "emitset",
+  "tool": "烟花母版烘焙器 4.5.3",
+  "ballistic": {
+    "k": 0,
+    "v0": 165.15400606100445,
+    "vz0": 165.15400606100445,
+    "vx0": 0,
+    "T": 2.9543508790366744,
+    "H": 190.00000000000006,
+    "Hwant": 190,
+    "vb": 24,
+    "ok": true,
+    "lean": 0,
+    "quad": true,
+    "vt": 37.3026723131484
+  },
+  "loop": {
+    "periodS": 2.5,
+    "frames": 64,
+    "revolutions": 4,
+    "spriteSizeCm": [
+      517.7,
+      15429.6
+    ],
+    "refSpeed": 165.15400606100445,
+    "sizeByLifeY": [
+      [
+        0,
+        0.0087
+      ],
+      [
+        0.0781,
+        0.2205
+      ],
+      [
+        0.1523,
+        0.3878
+      ],
+      [
+        0.2344,
+        0.5404
+      ],
+      [
+        0.2792,
+        0.61
+      ],
+      [
+        0.3594,
+        0.5088
+      ],
+      [
+        0.457,
+        0.419
+      ],
+      [
+        0.5938,
+        0.3291
+      ],
+      [
+        0.7656,
+        0.2495
+      ],
+      [
+        1,
+        0.1725
+      ]
+    ],
+    "frameKeys": [
+      [
+        0,
+        0
+      ],
+      [
+        0.84618,
+        63.99
+      ],
+      [
+        0.84621,
+        0
+      ],
+      [
+        1,
+        11.63
+      ]
+    ],
+    "texture": [
+      1024,
+      1024
+    ],
+    "grid": [
+      16,
+      1,
+      4
+    ],
+    "cellPx": [
+      64,
+      1024
+    ],
+    "pivotHead": 0.9858374233253978,
+    "pivotOffset": [
+      -0.5,
+      -0.0142
+    ],
+    "fill": {
+      "x": 0.896,
+      "y": 0.915
+    },
+    "texSparks": [
+      "F",
+      "M",
+      "C"
+    ]
+  },
+  "fade": null,
+  "nearExpo": 0.8,
+  "far": {
+    "delayS": 0.8,
+    "seconds": 4.123,
+    "afterBurstS": 1.969,
+    "riseFrames": 52,
+    "fadeFrames": 12,
+    "grid": [
+      16,
+      1,
+      4
+    ],
+    "frames": 64,
+    "centerM": [
+      0.35,
+      97.91
+    ],
+    "spriteSizeCm": [
+      873.6,
+      19010.2
+    ],
+    "frameKeys": [
+      [
+        0,
+        0
+      ],
+      [
+        0.00474,
+        1
+      ],
+      [
+        0.00959,
+        2
+      ],
+      [
+        0.01456,
+        3
+      ],
+      [
+        0.01965,
+        4
+      ],
+      [
+        0.02487,
+        5
+      ],
+      [
+        0.03021,
+        6
+      ],
+      [
+        0.03568,
+        7
+      ],
+      [
+        0.04128,
+        8
+      ],
+      [
+        0.04702,
+        9
+      ],
+      [
+        0.0529,
+        10
+      ],
+      [
+        0.05892,
+        11
+      ],
+      [
+        0.0651,
+        12
+      ],
+      [
+        0.07143,
+        13
+      ],
+      [
+        0.07791,
+        14
+      ],
+      [
+        0.08456,
+        15
+      ],
+      [
+        0.09137,
+        16
+      ],
+      [
+        0.09836,
+        17
+      ],
+      [
+        0.10553,
+        18
+      ],
+      [
+        0.11288,
+        19
+      ],
+      [
+        0.12041,
+        20
+      ],
+      [
+        0.12814,
+        21
+      ],
+      [
+        0.13608,
+        22
+      ],
+      [
+        0.14422,
+        23
+      ],
+      [
+        0.15258,
+        24
+      ],
+      [
+        0.16116,
+        25
+      ],
+      [
+        0.16996,
+        26
+      ],
+      [
+        0.17901,
+        27
+      ],
+      [
+        0.1883,
+        28
+      ],
+      [
+        0.19785,
+        29
+      ],
+      [
+        0.20766,
+        30
+      ],
+      [
+        0.21775,
+        31
+      ],
+      [
+        0.22813,
+        32
+      ],
+      [
+        0.2388,
+        33
+      ],
+      [
+        0.24978,
+        34
+      ],
+      [
+        0.26109,
+        35
+      ],
+      [
+        0.27273,
+        36
+      ],
+      [
+        0.28473,
+        37
+      ],
+      [
+        0.29709,
+        38
+      ],
+      [
+        0.30984,
+        39
+      ],
+      [
+        0.32299,
+        40
+      ],
+      [
+        0.33657,
+        41
+      ],
+      [
+        0.3506,
+        42
+      ],
+      [
+        0.3651,
+        43
+      ],
+      [
+        0.38009,
+        44
+      ],
+      [
+        0.39562,
+        45
+      ],
+      [
+        0.41171,
+        46
+      ],
+      [
+        0.4284,
+        47
+      ],
+      [
+        0.44573,
+        48
+      ],
+      [
+        0.46374,
+        49
+      ],
+      [
+        0.4825,
+        50
+      ],
+      [
+        0.50205,
+        51
+      ],
+      [
+        0.52246,
+        52
+      ],
+      [
+        0.53395,
+        53
+      ],
+      [
+        0.55495,
+        54
+      ],
+      [
+        0.58215,
+        55
+      ],
+      [
+        0.61436,
+        56
+      ],
+      [
+        0.6509,
+        57
+      ],
+      [
+        0.6913,
+        58
+      ],
+      [
+        0.73522,
+        59
+      ],
+      [
+        0.7824,
+        60
+      ],
+      [
+        0.83263,
+        61
+      ],
+      [
+        0.88574,
+        62
+      ],
+      [
+        0.94157,
+        63
+      ],
+      [
+        1,
+        63.99
+      ]
+    ],
+    "texture": [
+      1024,
+      1024
+    ],
+    "fill": {
+      "x": 0.646,
+      "y": 0.338
+    }
+  },
+  "nearAge": [
+    0.6,
+    1
+  ],
+  "gpuSplit": {
+    "g": {
+      "F": 178.6505481892893,
+      "M": 151.58228331212425,
+      "C": 138.95042636944723
+    },
+    "f": 1,
+    "est": 688,
+    "pk": 1.1994685516367278
+  },
+  "emitters": [
+    {
+      "name": "SparksFine",
+      "gpuPC": true,
+      "life": [
+        0.42,
+        0.9799999999999999
+      ],
+      "size": [
+        0.8250000000000001,
+        2.175
+      ],
+      "drag": [
+        3.25,
+        6.75
+      ],
+      "spawnKeys": 72
+    },
+    {
+      "name": "SparksTwinkle",
+      "gpuPC": true,
+      "life": [
+        0.7150000000000001,
+        1.4850000000000003
+      ],
+      "size": [
+        0.8250000000000001,
+        2.175
+      ],
+      "drag": [
+        2.3400000000000003,
+        4.86
+      ],
+      "spawnKeys": 72
+    },
+    {
+      "name": "SparksCoarse",
+      "gpuPC": true,
+      "life": [
+        1.26,
+        2.3400000000000003
+      ],
+      "size": [
+        0.8250000000000001,
+        2.175
+      ],
+      "drag": [
+        1.1700000000000002,
+        2.43
+      ],
+      "spawnKeys": 72
+    },
+    {
+      "name": "Embers",
+      "gpuPC": true,
+      "life": [
+        1.75,
+        3.25
+      ],
+      "size": [
+        1.2000000000000002,
+        1.7999999999999998
+      ],
+      "drag": [
+        1.75,
+        3.25
+      ],
+      "spawnKeys": 72
+    },
+    {
+      "name": "HeadGlow",
+      "gpuPC": false,
+      "life": [
+        2.9543508790366744,
+        2.9543508790366744
+      ],
+      "size": [
+        6,
+        6
+      ],
+      "spawnKeys": 0
+    },
+    {
+      "name": "SparkPops",
+      "gpuPC": true,
+      "life": [
+        1.08,
+        2.16
+      ],
+      "size": [
+        1.0499999999999998,
+        1.9500000000000002
+      ],
+      "drag": [
+        1.1700000000000002,
+        2.43
+      ],
+      "spawnKeys": 72
+    },
+    {
+      "name": "LaunchGlow",
+      "gpuPC": false,
+      "life": [
+        0.3,
+        0.3
+      ],
+      "size": [
+        6,
+        6
+      ],
+      "spawnKeys": 0
+    },
+    {
+      "name": "LaunchSparks",
+      "gpuPC": true,
+      "life": [
+        0.35,
+        1
+      ],
+      "size": [
+        0.12,
+        0.3
+      ],
+      "drag": [
+        2.5,
+        4.5
+      ],
+      "spawnKeys": 0
+    }
+  ],
+  "peakAlive": {
+    "pc": {
+      "peak": 583,
+      "at": 2.35
+    },
+    "mobile": {
+      "peak": 71,
+      "at": 2.55
+    }
+  },
+  "colorOverLife": [
+    [
+      0,
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1
+      ]
+    ]
+  ],
+  "selfCheck": {
+    "clipFrames": [],
+    "edgeFrames": [],
+    "chanUse": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "emptyMid": [],
+    "similar": 0,
+    "seam": 0.8676243044689287,
+    "maxClip": 0.012505789717461788
+  },
+  "params": {
+    "renderVer": 40,
+    "exposure": 0.45,
+    "exposureLock": 0,
+    "exposureTarget": 0.96,
+    "coreProfile": 0,
+    "haloFrac": 0.04,
+    "haloR": 2,
+    "previewBloom": 0,
+    "trimTail": 1,
+    "mods": [],
+    "duration": 6.4,
+    "seed": 7,
+    "stars": 150,
+    "burstR0": 0,
+    "v0": 150,
+    "vt": 18,
+    "grav": 1,
+    "speedJit": 3,
+    "dirJit": 1.5,
+    "burn": 2.5,
+    "burnJit": 12,
+    "fade": 0.2,
+    "lastFlare": 0.35,
+    "flash": 1,
+    "flashSize": 1,
+    "outPC": "seq",
+    "outMobile": "seq",
+    "dotSize": 1,
+    "dotBright": 1,
+    "endMode": "fade",
+    "coolMode": 0,
+    "headSize": 1,
+    "headBright": 1,
+    "flicker": 0.25,
+    "sparkRate": 95,
+    "sparkRateEnd": 1,
+    "sparkStop": 0,
+    "sparkStart": 0,
+    "sparkRamp": 0,
+    "sparkRampJit": 30,
+    "sparkLife": 0.55,
+    "sparkLifeEnd": 1,
+    "sparkLifeJit": 45,
+    "sparkSize": 0.35,
+    "sparkSpread": 2.5,
+    "sparkInherit": 0.2,
+    "sparkDrag": 2.2,
+    "sparkGrav": 1,
+    "T0": 2050,
+    "cooling": 0.42,
+    "sparkBright": 1,
+    "twinkle": 0.6,
+    "twinkleHz": 0,
+    "subDelay": 0.9,
+    "subJit": 10,
+    "subStars": 36,
+    "subSpeed": 40,
+    "subBurn": 0.9,
+    "subTail": 0,
+    "carrierTail": 30,
+    "subPattern": "sphere",
+    "spin": 14,
+    "chaos": 0.8,
+    "beeSpeed": 28,
+    "shellNo": 0,
+    "wind": 0,
+    "turb": 0,
+    "turbScale": 60,
+    "massLoss": 0,
+    "shellVx": 0,
+    "shellVy": 0,
+    "shellSpin": 0,
+    "pattern": "sphere",
+    "tilt": 0,
+    "ringFrac": 0.45,
+    "text": "祭",
+    "waterRefl": 0,
+    "ignDelay": 0,
+    "ignJit": 10,
+    "ignSeed": 0,
+    "keepFrac": 1,
+    "afterBurn": 0,
+    "afterJit": 15,
+    "headDim": 1,
+    "headDimUntil": 0,
+    "emberFrac": 0,
+    "emberLife": 3,
+    "emberBright": 0.1,
+    "emberFollow": 0,
+    "emberSize": 1,
+    "emberAll": 0,
+    "emberEnd": 0,
+    "carrierHead": 0.4,
+    "subKeep": -1,
+    "subSpeedJit": -1,
+    "trimLead": 1,
+    "tailJit": 0,
+    "tailShoulder": 0,
+    "tailWidth": 1,
+    "tailPinchHead": 0,
+    "tailPinchTail": 0,
+    "tailBellyAt": 0.45,
+    "headTear": 0,
+    "tailDiffuse": 0,
+    "tailDiffuseScale": 20,
+    "sparkRise": 0,
+    "starBright": 0,
+    "tailHaze": 0,
+    "tailHazeR": 6,
+    "frameCount": 24,
+    "outPack": "grid",
+    "outCell": 0,
+    "cutIn": 0,
+    "cutOut": 0,
+    "preRoll": 1,
+    "preFrom": -1,
+    "visTo": 0,
+    "preScale0": 0,
+    "prePivot": 0,
+    "subScaleJit": 0,
+    "subVt": 0,
+    "subGrav": -1,
+    "subFlash": -1,
+    "strobeHz": 0,
+    "strobeDuty": 0.35,
+    "strobeStart": 0.4,
+    "glitter": 0,
+    "glitterDelay": 0.25,
+    "crackle": 0,
+    "crackleDelay": 0.3,
+    "crackleR": 3.5,
+    "crackleV": 0,
+    "branch": 0,
+    "branchAt": 0.45,
+    "flutter": 0,
+    "flutterHz": 0.7,
+    "riseH": 250,
+    "vtShell": 55,
+    "riseStyle": "gold",
+    "wobble": 0,
+    "wobbleHz": 1.6,
+    "kobanaN": 4,
+    "bunpoN": 3,
+    "trV": 43.5,
+    "trFps": 30,
+    "trInh": 0.1,
+    "trDrag": 3,
+    "trGrav": 0.3,
+    "trCool": 1,
+    "trFRate": 2600,
+    "trFLife": 0.6,
+    "trFSpread": 0.45,
+    "trFSize": 0.1,
+    "trFBright": 0.03,
+    "trMRate": 600,
+    "trMLife": 0.75,
+    "trMSpread": 0.8,
+    "trMSize": 0.14,
+    "trMBright": 0.05,
+    "trCRate": 60,
+    "trCLife": 0.9,
+    "trCSpread": 1.2,
+    "trCSize": 0.18,
+    "trCBright": 0.12,
+    "trWRate": 0,
+    "trWLife": 0.12,
+    "trWSpread": 14,
+    "trWSize": 0.06,
+    "trWBright": 0.06,
+    "trHeadSize": 0.26,
+    "trHeadBright": 1.2,
+    "trHeadExpo": 1,
+    "trHalo": 3,
+    "trHaloBright": 0.15,
+    "trTwist": 0.35,
+    "trTwistN": 5,
+    "trWiggle": 0.08,
+    "trTwistLag": 0.35,
+    "trFollow": 0,
+    "trBright": 1.6,
+    "trExport4K": 1,
+    "trIgnite": 0,
+    "trPhys": 0,
+    "rtH": 190,
+    "rtT": 3.5,
+    "rtVb": 24,
+    "rtLean": 0,
+    "rtD": 0.1,
+    "rtBurstD": 110,
+    "rtSpin": 1.6,
+    "rtSpinPh": 0,
+    "rtFling": 2,
+    "rtJet": 27,
+    "rtCone": 5.5,
+    "rtPulse": 0.2,
+    "rtPulseHz": 6,
+    "rtHeadSize": 0.45,
+    "rtHeadI": 3,
+    "rtHeadFl": 0.6,
+    "rtHeadFlI": 0.6,
+    "rtARate": 9000,
+    "rtALife": 0.6,
+    "rtALsig": 0.35,
+    "rtAJet": 33,
+    "rtAKd": 14,
+    "rtACone": 5,
+    "rtASize": 0.42,
+    "rtAI": 1.1,
+    "rtAWarm": 0.8,
+    "rtFRate": 2400,
+    "rtFLife": 0.7,
+    "rtFJit": 40,
+    "rtFSize": 0.13,
+    "rtFI": 5,
+    "rtFKd": 5,
+    "rtMRate": 850,
+    "rtMLife": 1.1,
+    "rtMJit": 35,
+    "rtMSize": 0.2,
+    "rtMI": 10,
+    "rtMKd": 3.6,
+    "rtCRate": 150,
+    "rtCLife": 1.8,
+    "rtCJit": 30,
+    "rtCSize": 0.28,
+    "rtCI": 24,
+    "rtCKd": 1.8,
+    "rtFdT": -400,
+    "rtMdT": 0,
+    "rtCdT": 500,
+    "rtSizeJit": 45,
+    "rtKdJit": 35,
+    "rtConeSoft": 1,
+    "rtStreakT": 0.02,
+    "rtStreakMax": 6,
+    "rtFStreak": 0.3,
+    "rtMStreak": 1,
+    "rtCStreak": 1,
+    "rtTurb": 1,
+    "rtTurbL": 20,
+    "rtTurbS": 0.6,
+    "rtT0": 2700,
+    "rtTb": 2450,
+    "rtTc": 0.35,
+    "rtTend": 1450,
+    "rtTw": 0.3,
+    "rtShrink": 0.5,
+    "rtERate": 3,
+    "rtELife": 2.5,
+    "rtESize": 0.7,
+    "rtEI": 4,
+    "rtEKd": 2.5,
+    "rtSmoke": 0,
+    "rtSmokeRate": 25,
+    "rtSmokeLife": 3.5,
+    "rtSmokeSize": 2.5,
+    "rtSmokeGrow": 4,
+    "rtBright": 4,
+    "rtDotGain": 1,
+    "rtMobile": 0.12,
+    "rtDissolve": 1,
+    "rtFadeFps": 0,
+    "rtFTex": 1,
+    "rtTexI": 300,
+    "rtGlow": 0.3,
+    "rtGlowSize": 6,
+    "rtPopRate": 15,
+    "rtPopI": 20,
+    "rtPopSize": 0.4,
+    "rtPopAt": 0.85,
+    "rtLaunch": 1,
+    "rtLaunchSize": 6,
+    "rtLaunchN": 60,
+    "rtLaunchV": 25,
+    "rtLaunchCone": 20,
+    "rtLaunchI": 8,
+    "rtGrid": 0,
+    "rtMobileTex": 0.5,
+    "rtBall": 1,
+    "rtVt": 0,
+    "rtLoopSize": 1,
+    "rtLoopMin": 0.15,
+    "rtGpuSafe": 1,
+    "rtMTex": 1,
+    "rtTexCal": 1,
+    "rtGpuMax": 800,
+    "rtFar": 1,
+    "rtNearA0": 0.6,
+    "rtNearA1": 1,
+    "rtGpuF": 150,
+    "rtGpuM": 200,
+    "rtGpuC": 300,
+    "rtGpuTw": 0.8,
+    "rtGpuDisp": 1.5,
+    "rtGpuGain": 2,
+    "rtNearExpo": 0.8,
+    "rtFarVz": 0.5,
+    "loopT": 1,
+    "nozzles": 1,
+    "fanAngle": 70,
+    "spacing": 6,
+    "shotRate": 3,
+    "shotSpeed": 70,
+    "cometBurn": 1.4,
+    "burstStars": 0,
+    "wheelR": 3,
+    "jetSpeed": 28,
+    "jetCone": 10,
+    "jetDir": 90,
+    "groundH": 0,
+    "shutter": 0.5,
+    "fpsFloor": 24,
+    "frameBudget": "motion",
+    "pageTarget": 1,
+    "maxHold": 4,
+    "maxHoldBurn": 3,
+    "fpsBurst": 30,
+    "burstSec": 0.5,
+    "fpsActive": 15,
+    "fpsFade": 10,
+    "fadeAt": 0,
+    "maxPages": 0,
+    "fitPages": 1,
+    "qSS": 2,
+    "qHz": 300,
+    "qMaxSub": 16,
+    "texW": 1024,
+    "texH": 1024,
+    "cols": 16,
+    "rows": 1,
+    "chans": 4,
+    "outMode": "combined",
+    "encGamma": 1,
+    "frameMode": "uniform",
+    "zoom": "off",
+    "engine": "gpu",
+    "form": "emitset",
+    "unitElev": 0,
+    "unitFlip": 0,
+    "cellPad": 2,
+    "autoGrid": 0,
+    "type": "tailS"
+  },
+  "materialDefaults": {
+    "stages": [
+      [
+        0,
+        "#ffffff"
+      ]
+    ],
+    "xw": 0.08,
+    "ramp0": "#000000",
+    "ramp1": "#8a3a0c",
+    "ramp2": "#ffbe5c",
+    "ramp3": "#fff6e6",
+    "headInt": 1,
+    "tailInt": 1
+  }
+}

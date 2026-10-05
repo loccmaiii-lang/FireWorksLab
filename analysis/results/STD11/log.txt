@@ -1,4 +1,4 @@
-17:51:55 出错：
+18:22:34 出错：
 Traceback (most recent call last):
   File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 65, in run_job
     if r.returncode != 0: raise RuntimeError('标准检查没跑完：' + (r.stderr or '')[-3000:])
