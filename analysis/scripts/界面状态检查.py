@@ -50,6 +50,7 @@
      贴图结尾全黑被裁掉要写明；换版本前先存草稿；浏览器存不进去要报错（读坏了先备份）；尾缀 S / M / L 模板导出 GPU 安全写法；子花继承标签写对
   W4 4.6.0（5.0 第 1 步）：每个发射器都列 9 个标准模块（没参数的写跟谁 / 为什么没有）；爆裂 / 开花闪光 / 子花 / 点灭 / 余烬 / 分叉火花 / 辉星以前写死的数变成参数且真起作用；
      「＋ 加发射器」：加、改、在模拟里生成光点 / 星、曲线几行时刻→值、去掉；「游戏内大小」按真实米数（四尺玉 1000 m 占 1/3，别的按真实大小）
+  W5 4.8.0（5.0 第 3 步一部分）：星 / 子星 / 火花 / 余烬 / 分叉火花 / 爆裂 / 开花闪光都有「大小 / 亮度随寿命」曲线行（几行 时刻:倍数），空 = 不乘；填了真起作用（模拟里的星头、小闪、闪光；火花着色器的曲线参数接上）
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -1449,6 +1450,31 @@ async def w4(pg):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
 
 
+async def w5(pg):
+    """4.8.0：每个发射器的大小 / 亮度按寿命曲线"""
+    bad, info = [], {}
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('crackle')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate("""(() => { const want = ['starSizeCurve', 'starBrightCurve', 'sparkSizeCurve', 'sparkBrightCurve', 'emberBrightCurve', 'branchBrightCurve', 'crackleSizeCurve', 'crackleBrightCurve', 'flashBrightCurve', 'subSizeCurve', 'subBrightCurve'];
+      const rows = new Map(panelRows.filter(([r, it]) => it.curve).map(([r, it]) => [it.curve, r._x ? r._x.e + '›' + r._x.m : '?'])); return { miss: want.filter(k => !rows.has(k)), where: Object.fromEntries(rows), def: want.map(k => state.P[k]).filter(v => v) }; })()""")
+    info['曲线行'] = r
+    if r['miss']: bad.append(f'这些曲线行没有：{r["miss"]}')
+    if r['def']: bad.append(f'曲线缺省不是空：{r["def"]}')
+    r = await pg.evaluate("""(() => { const run = q => { const P = derive({ ...structuredClone(state.P), crackle: 6, ...q }), s = new Sim(P); const T = P.burn * 0.5;
+        for (let i = 0; i < Math.ceil(T / H_STEP); i++) s.step(H_STEP); const st = s.stars.find(x => x.alive && x.kind === 0); return { I: st ? s.headI(st) : null }; };
+      const a = run({}), b = run({ starBrightCurve: '0:0.25, 1:0.25' });
+      const c = (q => { const P = derive({ ...structuredClone(state.P), crackle: 6, crackleSizeJit: 0, crackleBrightJit: 0, ...q }), s = new Sim(P); for (let i = 0; i < Math.ceil((P.burn * 1.3 + 0.5) / H_STEP); i++) s.step(H_STEP);
+        const f = s.flashes.find(f => f.crk); if (!f) return null; s.t = f.t0 + f.cut * 0.5; const bh = new Float32Array(4 * 400000), [nh] = s.gather(bh, new Float32Array(8)); for (let i = 0; i < nh; i++) if (Math.abs(bh[i * 4] - f.x) < 1e-3 && Math.abs(bh[i * 4 + 1] - f.y) < 1e-3) return { I: bh[i * 4 + 2], sz: bh[i * 4 + 3] }; return 'notfound'; });
+      return { star: [a.I, b.I], crk: [c({}), c({ crackleBrightCurve: '0:2, 1:2', crackleSizeCurve: '0:3, 1:3' })] }; })()""")
+    info['模拟'] = r
+    if not (r['star'][0] and r['star'][1] and abs(r['star'][1] / r['star'][0] - 0.25) < 1e-6): bad.append(f'星头亮度随寿命没起作用：{r["star"]}')
+    k = r['crk']
+    if not (isinstance(k[0], dict) and isinstance(k[1], dict) and abs(k[1]['I'] / k[0]['I'] - 2) < 1e-6 and abs(k[1]['sz'] / k[0]['sz'] - 3) < 1e-6): bad.append(f'爆裂小闪大小 / 亮度随寿命没起作用：{k}')
+    r = await pg.evaluate("(() => { const pr = particleProgram40('spk'); return ['uCvSpS[0]', 'uCvSpSN', 'uCvSpB[0]', 'uCvSpBN', 'uCvEmB[0]', 'uCvEmBN', 'uCvBrB[0]', 'uCvBrBN'].filter(k => !pr.u[k]); })()")
+    info['着色器缺'] = r
+    if r: bad.append(f'火花着色器里曲线参数没接上：{r}')
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
+
+
 async def x2(pg):
     """4.4.2（用户 10-04 21:17）：单层效果（牡丹模板）也有「导出方案」：输出 › 导出方案里 PC 能选 GPU 光点 / 单束 / 不出，手机能选不出；选光点后 cascade.json 是一个 GPU 光点发射器、引擎回放画光点、说明写有尾迹没了"""
     bad, info = [], {}
@@ -1529,7 +1555,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

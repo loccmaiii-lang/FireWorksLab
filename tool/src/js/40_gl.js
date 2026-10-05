@@ -133,6 +133,10 @@ uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw, uBr;
 uniform float uInh, uSpread, uLife, uLifeEnd, uLifeJit, uK, uG, uT0, uCool, uCoolAbs, uTwk, uTwHz, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
 uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShoulder, uDif, uDifL, uRise, uStarB, uWShape, uWidth, uPinH, uPinT, uBelly;
 uniform float uRamp, uRampJ;     // 4.2.17 火花起势：开始出火花后几秒到满密度、每颗星 ± 随机
+uniform vec2 uCvSpS[6], uCvSpB[6], uCvEmB[6], uCvBrB[6]; uniform int uCvSpSN, uCvSpBN, uCvEmBN, uCvBrBN;     // 4.8.0 按寿命曲线（几行 时刻:倍数，N = 0 不乘）
+float cvAt(vec2 k0,vec2 k1,vec2 k2,vec2 k3,vec2 k4,vec2 k5,int n,float x){ vec2 k[6]=vec2[6](k0,k1,k2,k3,k4,k5); if(x<=k[0].x) return k[0].y;
+  for(int i=1;i<6;i++){ if(i>=n) break; if(x<=k[i].x) return mix(k[i-1].y,k[i].y,(x-k[i-1].x)/max(1e-6,k[i].x-k[i-1].x)); } return k[clamp(n-1,0,5)].y; }
+#define CV(a,n,x) cvAt(a[0],a[1],a[2],a[3],a[4],a[5],n,x)
 uniform float uInhA, uInhB, uT0J, uEmbLJ, uEmbDk, uEmbFa, uBrL, uBrLA, uBrLB, uBrV, uBrVA, uBrVB, uBrInh, uBrKd, uBrT, uBrB, uBrFd, uBrS, uGlA, uGlB, uGlW, uGlPk, uGlDim;     // 4.6.0（5.0 第 1 步）：以前写死的随机范围、余烬衰减、分叉火花、辉星闪光，默认 = 以前的常数
 // 和 20_sim.js starHash(id, seed, k) 同一个整数哈希（CPU / GPU 内核每颗星的起势时长一样）
 float starHashG(uint id, uint k){ uint h=((id+1u)*0x9E3779B1u)^((uint(uSeed)+7u)*0x85EBCA77u)^((k+3u)*0xC2B2AE3Du); h^=h>>16u; h*=0x7FEB352Du; h^=h>>15u; h*=0x846CA68Bu; h^=h>>16u; return float(h)/4294967296.; }
@@ -199,6 +203,8 @@ void main(){
       p+=(W-1.)*(uK>1e-4 ? (1.-exp(-uK*age))/uK : age)*vec3(gss(uid,5u),gss(uid,7u),gss(uid,9u))*uSpread; }
     float gl=emb ? glowOf(T0)*uEmbB*exp(-uEmbDk*age/life)*(1.-smoothstep(uEmbFa,1.,age/life))*(uEmbF>0. ? 1.-smoothstep(inf.y-.15,inf.y+uEmbF,uT) : 1.)*(uEmbE>0. ? 1.-smoothstep(uEmbE-.6,uEmbE+.3,uT) : 1.) : glowOf(T0*(1.-uCool*age/lifeC))*(uCoolAbs>.5 ? 1.-smoothstep(.7,1.,age/life) : 1.);
     if(emb) size=uSize*uEmbS;
+    if(emb){ if(uCvEmBN>0) gl*=max(0.,CV(uCvEmB,uCvEmBN,clamp(age/life,0.,1.))); }
+    else { if(uCvSpBN>0) gl*=max(0.,CV(uCvSpB,uCvSpBN,clamp(age/life,0.,1.))); if(uCvSpSN>0) size*=max(0.,CV(uCvSpS,uCvSpSN,clamp(age/life,0.,1.))); }     // 4.8.0
     if(uGlit>0.){ float tf=uGlitD*(uGlA+uGlB*hsh(uid,17u)); float e=(age-tf)/uGlW; gl=gl*(1.-uGlDim*uGlit)+uGlit*uGlPk*exp(-e*e); }
     I=gl;
   } else {
@@ -206,7 +212,7 @@ void main(){
     vec3 dv=normalize(vec3(gss(u2,31u),gss(u2,33u),gss(u2,35u))+1e-4)*(uBrV+uSpread*1.5)*(uBrVA+uBrVB*hsh(u2,37u));
     float a2=age-ts, x=a2/life2;
     p=mot(pc,vc*uBrInh+dv,U,g,uK*uBrKd,a2);
-    I=glowOf(T0*(1.-uCool*ts/lifeC)*uBrT)*uBrB*(uBrFd==2. ? (1.-x)*(1.-x) : pow(max(0.,1.-x),uBrFd)); size=uSize*uBrS;
+    I=glowOf(T0*(1.-uCool*ts/lifeC)*uBrT)*uBrB*(uBrFd==2. ? (1.-x)*(1.-x) : pow(max(0.,1.-x),uBrFd)); size=uSize*uBrS; if(uCvBrBN>0) I*=max(0.,CV(uCvBrB,uCvBrBN,clamp(x,0.,1.)));
   }
   // 尾迹扩散（4.2.0，tailDiffuse / tailDiffuseScale，用户 2026-10-02 16:22）：火花被阻力停下来以后仍被空气扰流带着走，越老离原位越远。
   // 位移 = 扰流速度 × Tl × x/√(1+x)，x = 年龄 / Tl，Tl = 尺度 / 速度：刚出生像被吹着走（∝ 年龄），老了变成扩散（∝ √年龄）。
@@ -420,6 +426,10 @@ function setSparkModUniforms(pr, P) {
   u('uBrL', n(P.branchLife, 0.16)); u('uBrLA', la); u('uBrLB', lb); u('uBrV', n(P.branchV, 4)); u('uBrVA', va); u('uBrVB', vb);
   u('uBrInh', n(P.branchInh, 0.5)); u('uBrKd', n(P.branchKd, 1.5)); u('uBrT', n(P.branchT, 1.08)); u('uBrB', n(P.branchBright, 1.8)); u('uBrFd', n(P.branchFade, 2)); u('uBrS', n(P.branchSize, 0.7));
   const [ga, gb] = jitAB(P.glitterDelayJit, 50, 0.5, 1); u('uGlA', ga); u('uGlB', gb); u('uGlW', n(P.glitterW, 0.03)); u('uGlPk', n(P.glitterPeak, 6)); u('uGlDim', n(P.glitterDim, 0.85));
+  // 4.8.0 按寿命曲线：最多 6 个点（多了均匀取 6 个，首尾保留）；空 = N 0 = 不乘
+  const cv = (k, key) => { let ks = parseCurve(P[key]) || []; if (ks.length > 6) ks = [0, 1, 2, 3, 4, 5].map(i => ks[Math.round(i * (ks.length - 1) / 5)]); const a = new Float32Array(12); ks.forEach((q, i) => { a[i * 2] = q[0]; a[i * 2 + 1] = q[1]; });
+    const loc = pr.u[k + '[0]']; if (loc) gl.uniform2fv(loc, a); if (pr.u[k + 'N']) gl.uniform1i(pr.u[k + 'N'], ks.length); };
+  cv('uCvSpS', 'sparkSizeCurve'); cv('uCvSpB', 'sparkBrightCurve'); cv('uCvEmB', 'emberBrightCurve'); cv('uCvBrB', 'branchBrightCurve');
 }
 function setAirUniforms(pr, P) {
   const tm = P.turb > 0 ? turbModes(P) : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]];

@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.7.0';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）
+const VERSION = '4.8.0';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -132,7 +132,10 @@ const BASE = {
   x1Drag: 1.5, x1Life: 0.5, x1LifeJit: 20, x1Size: 0.6, x1SizeJit: 20, x1SizeCurve: '', x1Bright: 1, x1BrightJit: 20, x1BrightCurve: '0:1, 0.7:1, 1:0', x1Flick: 0,
   x1FlickHz: 8, x2Event: 'death', x2T: 1, x2Kind: 'dot', x2N: 8, x2Rate: 20, x2Prob: 1, x2Delay: 0, x2DelayJit: 0, x2Spark: 0, x2R: 0, x2V: 8, x2VJit: 30,
   x2Inh: 0.3, x2Grav: 1, x2Drag: 1.5, x2Life: 0.5, x2LifeJit: 20, x2Size: 0.6, x2SizeJit: 20, x2SizeCurve: '', x2Bright: 1, x2BrightJit: 20, x2BrightCurve: '0:1, 0.7:1, 1:0',
-  x2Flick: 0, x2FlickHz: 8, x1On: 0, x2On: 0
+  x2Flick: 0, x2FlickHz: 8, x1On: 0, x2On: 0,
+  // 4.6.0 / 4.8.0（5.0 第 1、3 步，用户 10-05 20:22「每一个子发射器拥有的参数都是全的」）：以前写死的数变成参数、各发射器的按寿命曲线，默认 = 原来（逐像素不变）
+  starSizeCurve: '', starBrightCurve: '', sparkSizeCurve: '', sparkBrightCurve: '', emberBrightCurve: '', branchBrightCurve: '', crackleSizeCurve: '', crackleBrightCurve: '',
+  flashBrightCurve: '', subSizeCurve: '', subBrightCurve: ''
 };
 const RAMP_POS = [0, 0.3, 0.65, 1];
 // 颜色：stages = [[时刻 s, 颜色], …]，最多 5 段；xw = 变色过渡时长
@@ -386,7 +389,8 @@ const SCHEMA = [
     ['flashSize', '开花闪光大小', '×', 0.3, 3, 0.05],
     ['flashR', '开花闪光半径（-1 = 跟初速）', 'm', -1, 60, 0.5],
     ['flashTau', '开花闪光衰减', 's', 0.005, 0.5, 0.005],
-    ['flashLife', '开花闪光可见时长', 's', 0.05, 2, 0.01]     // 4.6.0（5.0 第 1 步）
+    ['flashLife', '开花闪光可见时长', 's', 0.05, 2, 0.01],     // 4.6.0（5.0 第 1 步）
+    { curve: 'flashBrightCurve', label: '开花闪光亮度随寿命' }     // 4.6.0（5.0 第 1 步）
   ] },
   { sec: '形状', show: P => isAir(P) || P.type === 'shikake', items: [
     { sel: 'pattern', label: '星的排布', options: PATTERNS, show: isAir },
@@ -454,12 +458,17 @@ const SCHEMA = [
     ['branchT', '分叉火花温度（× 火花）', '×', 0.5, 1.5, 0.01, P => P.branch > 0],
     ['branchBright', '分叉火花亮度', '×', 0, 6, 0.05, P => P.branch > 0],
     ['branchFade', '分叉火花变暗快慢', '', 0.2, 6, 0.1, P => P.branch > 0],
-    ['branchSize', '分叉火花大小（× 火花）', '×', 0.1, 3, 0.01, P => P.branch > 0]     // 4.6.0（5.0 第 1 步）
+    ['branchSize', '分叉火花大小（× 火花）', '×', 0.1, 3, 0.01, P => P.branch > 0],     // 4.6.0（5.0 第 1 步）
+    { curve: 'branchBrightCurve', label: '分叉火花亮度随寿命', show: P => P.branch > 0 },
+    { curve: 'crackleSizeCurve', label: '爆裂小闪大小随寿命', show: P => P.crackle > 0 },
+    { curve: 'crackleBrightCurve', label: '爆裂小闪亮度随寿命', show: P => P.crackle > 0 }     // 4.6.0（5.0 第 1 步）
   ] },
   { sec: '炭头（星头）', show: isSeq, items: [
     ['headSize', '炭头大小', 'm', 0.15, 6, 0.05],
     ['headBright', '炭头亮度', '×', 0, 3, 0.05],
-    ['flicker', '闪烁强度', '', 0, 1, 0.01]
+    ['flicker', '闪烁强度', '', 0, 1, 0.01],
+    { curve: 'starSizeCurve', label: '星头大小随寿命' },
+    { curve: 'starBrightCurve', label: '星头亮度随寿命' }     // 4.6.0（5.0 第 1 步）
   ] },
   { sec: '尾缀（炭火火花）', show: isSeq, hint: '可见尾长由星体运动、火花跟随、寿命和冷却共同决定。末段寿命控制后来出生的火花，不改变已有火花。', items: [
     ['sparkRate', '火花密度', '个/秒', 0, 3000, 1],
@@ -493,7 +502,10 @@ const SCHEMA = [
     ['T0Jit', '初始温度随机', 'K', 0, 400, 5],
     ['emberLifeJit', '余烬寿命随机', '', 0, 1, 0.01, P => isAir(P) && P.emberFrac > 0],
     ['emberDecay', '余烬变暗快慢', '', 0, 8, 0.1, P => isAir(P) && P.emberFrac > 0],
-    ['emberFadeAt', '余烬最后淡出开始（× 寿命）', '×', 0.3, 1, 0.01, P => isAir(P) && P.emberFrac > 0]     // 4.6.0（5.0 第 1 步）
+    ['emberFadeAt', '余烬最后淡出开始（× 寿命）', '×', 0.3, 1, 0.01, P => isAir(P) && P.emberFrac > 0],     // 4.6.0（5.0 第 1 步）
+    { curve: 'sparkSizeCurve', label: '火花大小随寿命' },
+    { curve: 'sparkBrightCurve', label: '火花亮度随寿命' },
+    { curve: 'emberBrightCurve', label: '余烬亮度随寿命', show: P => isAir(P) && P.emberFrac > 0 }     // 4.6.0（5.0 第 1 步）
   ] },
   { sec: '尾迹外形', show: P => isSeq(P) && familyOf(P.type) === 'aerial', hint: '每个效果（多层时每一层）自己的外形量，0 = 原样，不影响别的效果。尾长、尾缀粗细、星头大小、亮度、闪烁就是上面的「火花寿命」「尾缀粗细（散布）」「颗粒大小」「星头大小」「火花亮度」「火花闪烁」。', items: [
     ['tailJit', '粗细随机（星与星、火花与火花之间的粗细差别）', '', 0, 1, 0.01],
@@ -526,7 +538,9 @@ const SCHEMA = [
     ['subFlash', '子花开花闪光（-1 = 默认）', '', -1, 1, 0.01],
     ['subSize', '子星大小（-1 = 同星）', 'm', -1, 6, 0.05],
     ['subBright', '子星亮度（-1 = 同星）', '×', -1, 3, 0.05],
-    ['subFlashR', '子花闪光半径（-1 = 跟子花初速）', 'm', -1, 30, 0.1]     // 4.6.0（5.0 第 1 步）
+    ['subFlashR', '子花闪光半径（-1 = 跟子花初速）', 'm', -1, 30, 0.1],     // 4.6.0（5.0 第 1 步）
+    { curve: 'subSizeCurve', label: '子星大小随寿命' },
+    { curve: 'subBrightCurve', label: '子星亮度随寿命' }     // 4.6.0（5.0 第 1 步）
   ] },
   { sec: '自定义发射器 1', show: P => isAir(P) && +P.x1On > 0, hint: '自定义发射器（4.6.0，＋ 加发射器）：挂在星的事件上，生成光点或星；每个模块都在：生成 / 形状 / 初速 / 受力 / 寿命 / 大小 / 颜色 / 亮度 / 闪烁。颜色跟这一层（灰度贴图 + Ramp），要别的颜色就拆成另一层。', items: [
     { sel: 'x1Event', label: '什么时候生成', options: [['death', '星熄灭时'], ['birth', '开花时（星出生）'], ['time', '开花后某个时刻'], ['trail', '星燃烧时沿路']] },

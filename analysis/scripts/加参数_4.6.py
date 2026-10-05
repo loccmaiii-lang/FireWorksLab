@@ -160,6 +160,22 @@ for i in (1, 2):
     add(f'{x}FlickHz', sec, '闪烁频率', 'Hz', 0, 40, 0.5, 8, f"P => +P.{x}Flick > 0", em, '闪烁', '频率', f'{em} · 闪烁频率', f'Custom {i} Flicker Rate',
         '每秒闪几次（每个粒子相位随机）。', '调大：闪得快；调小：慢')
 
+# 4.8.0（5.0 第 3 步一部分）：每个发射器的大小 / 亮度都有「按寿命曲线」（几行 时刻:倍数，空 = 不乘，画面不变）
+CV = '几行「时刻:倍数」，时刻是寿命的比例 0–1，在原来的变化上再乘这条曲线；空 = 不乘（和以前一样）。例「0:0.3, 0.2:1, 1:1」= 刚出来小、很快长到正常。'
+def curve(key, sec, em, mod, cn, en, what, cond=''):
+    add(key, sec, cn, '', 0, 0, 0, '', cond, em, mod, '随寿命', cn, en, what + CV, '—', ue='Cascade：Size By Life / Color Over Life 的关键帧（几行）', kind='curve')
+curve('starSizeCurve', '炭头（星头）', '星', '大小', '星头大小随寿命', 'Star Size Over Life', '星头大小随燃烧进度变化（寿命 = 燃烧时间）。')
+curve('starBrightCurve', '炭头（星头）', '星', '亮度', '星头亮度随寿命', 'Star Brightness Over Life', '星头亮度随燃烧进度变化（在渐隐、熄灭前闪亮之上再乘）。')
+curve('sparkSizeCurve', '尾缀（炭火火花）', '火花', '大小', '火花大小随寿命', 'Sparkler Size Over Life', '每粒火花的大小随它的寿命变化（梭形 / 尾迹粗细用这一条做：用户 10-05 20:45 定）。')
+curve('sparkBrightCurve', '尾缀（炭火火花）', '火花', '亮度', '火花亮度随寿命', 'Sparkler Brightness Over Life', '每粒火花的亮度随它的寿命变化（在温度冷却之上再乘）。')
+curve('emberBrightCurve', '尾缀（炭火火花）', '余烬', '亮度', '余烬亮度随寿命', 'Ember Brightness Over Life', '余烬亮度随它的寿命变化（在变暗快慢之上再乘）。', 'P => isAir(P) && P.emberFrac > 0')
+curve('branchBrightCurve', '星效果', '分叉火花', '亮度', '分叉火花亮度随寿命', 'Branch Brightness Over Life', '分叉小火花的亮度随它的寿命变化（在变暗指数之上再乘）。', 'P => P.branch > 0')
+curve('crackleSizeCurve', '星效果', '爆裂', '大小', '爆裂小闪大小随寿命', 'Crackle Size Over Life', '每个小闪的大小随它的寿命变化。', 'P => P.crackle > 0')
+curve('crackleBrightCurve', '星效果', '爆裂', '亮度', '爆裂小闪亮度随寿命', 'Crackle Brightness Over Life', '每个小闪的亮度随它的寿命变化（在衰减之上再乘）。', 'P => P.crackle > 0')
+curve('flashBrightCurve', '开花与燃烧', '开花闪光', '亮度', '开花闪光亮度随寿命', 'Burst Flash Brightness Over Life', '开花闪光的亮度随它的寿命变化（在衰减之上再乘）。')
+curve('subSizeCurve', '千轮 / 分裂', '子花', '大小', '子星大小随寿命', 'Sub Star Size Over Life', '子花每颗子星的大小随燃烧进度变化。')
+curve('subBrightCurve', '千轮 / 分裂', '子花', '亮度', '子星亮度随寿命', 'Sub Star Brightness Over Life', '子花每颗子星的亮度随燃烧进度变化。')
+
 def js(v):
     if isinstance(v, str): return "'" + v.replace("'", "\\'") + "'"
     if isinstance(v, float) and abs(v - 1 / 7) < 1e-12: return '1 / 7'
@@ -170,7 +186,7 @@ def main():
     base_add = [p for p in P if re.search(r'\b' + p['key'] + r':', src.split('const BASE = {', 1)[1].split('\n};', 1)[0]) is None]
     on_keys = [f'x{i}On' for i in (1, 2) if f'x{i}On:' not in src]
     if base_add or on_keys:
-        line = '  // 4.6.0（5.0 第 1 步，用户 10-05 20:22「每一个子发射器拥有的参数都是全的」）：以前写死的数变成参数，默认 = 原来的数（逐像素不变）；x1 / x2 = 自定义发射器（＋ 加发射器，默认关）\n  '
+        line = '  // 4.6.0 / 4.8.0（5.0 第 1、3 步，用户 10-05 20:22「每一个子发射器拥有的参数都是全的」）：以前写死的数变成参数、各发射器的按寿命曲线，默认 = 原来（逐像素不变）\n  '
         items = [f"{p['key']}: {js(p['d'])}" for p in base_add] + [f'{k}: 0' for k in on_keys]
         chunks, cur = [], []
         for it in items:
@@ -196,7 +212,9 @@ def main():
         if head in src.split('const SCHEMA = [', 1)[1]:
             i0 = src.index(head, src.index('const SCHEMA = ['))
             i1 = src.index('\n  ] }', i0)
-            ins = ',\n' + ',\n'.join('    ' + item_js(p) for p in ps) + '     // 4.6.0（5.0 第 1 步）' if True else ''
+            ls = src.rfind('\n', 0, i1) + 1; last = src[ls:i1]; cm = re.search(r'\s*//.*$', last)      # 节里最后一行可能带注释：逗号要加在注释前面
+            if cm: src = src[:ls] + last[:cm.start()] + ',' + last[cm.start():] + src[i1:]; i1 = src.index('\n  ] }', ls)
+            ins = (',' if not cm else '') + '\n' + ',\n'.join('    ' + item_js(p) for p in ps) + '     // 4.6.0+（5.0）'
             src = src[:i1] + ins + src[i1:]
         else:
             n = sec.split()[-1]

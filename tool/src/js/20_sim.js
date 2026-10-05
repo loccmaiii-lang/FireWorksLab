@@ -169,10 +169,12 @@ class Sim {
     this.tm = P.turb > 0 ? turbModes(P) : null;
     this.flashes = [];
     this.events = [];                    // 声音节点：[时刻, 类型]
+    // 4.8.0（5.0 第 3 步一部分）：各发射器的大小 / 亮度按寿命曲线（空 = 不乘，画面不变）
+    this.cv = { ss: parseCurve(P.starSizeCurve), sb: parseCurve(P.starBrightCurve), us: parseCurve(P.subSizeCurve), ub: parseCurve(P.subBrightCurve), cs: parseCurve(P.crackleSizeCurve), cb: parseCurve(P.crackleBrightCurve), fb: parseCurve(P.flashBrightCurve) };
     this.ex = this.fam === 'aerial' ? exSlotsOf(P) : []; this.exDots = []; this.exRng = new RNG((P.seed | 0) + 7177); this.exDone = {};     // 4.6.0 自定义发射器（默认没有 → 不碰主随机序列）
     if (this.fam === 'rise') { this.initRise(); return; }
     // 4.3.3 开花闪光大小（默认 1 = 以前）；4.6.0 开花闪光自己的半径（-1 = 跟初速：max(2 m, 0.045 × 初速)）、衰减、可见时长
-    this.flashes.push({ t0: 0, x: 0, y: 0, I: P.flash, sig: (+P.flashR > 0 ? +P.flashR : Math.max(2, P.v0 * 0.045)) * (+P.flashSize > 0 ? +P.flashSize : 1), dec: +P.flashTau > 0 ? +P.flashTau : undefined, cut: +P.flashLife > 0 ? +P.flashLife : undefined });
+    this.flashes.push({ t0: 0, x: 0, y: 0, I: P.flash, sig: (+P.flashR > 0 ? +P.flashR : Math.max(2, P.v0 * 0.045)) * (+P.flashSize > 0 ? +P.flashSize : 1), dec: +P.flashTau > 0 ? +P.flashTau : undefined, cut: +P.flashLife > 0 ? +P.flashLife : undefined, main: 1 });
     this.events.push([0, 'burst']);
     const dirs = dirsFor(P, this.rng);
     const carrier = P.type === 'senrin' || P.type === 'crossette';
@@ -297,7 +299,7 @@ class Sim {
     for (let i = 0; i < P.crackle; i++) {
       // 4.3 爆裂范围 / 速度（用户 10-03 选「加」）：小闪离星最远 crackleR 米（最近 = 内外比 × 最远），每晚 1 秒往外多飞 crackleV 米
       const dt = P.crackleDelay * (da + db * rng.u()), d = randUnit(rng), r = (ra + rb * rng.u()) * (P.crackleR == null ? 1 : P.crackleR / 3.5) + (+P.crackleV || 0) * dt;
-      this.flashes.push({ t0: this.t + dt, x: s.x + s.vx * dt * fol + d[0] * r, y: s.y + s.vy * dt * fol + d[1] * r, abs: B * (ba + bb * rng.u()), sig: S * (sa + sb * rng.u()), tau, cut });
+      this.flashes.push({ t0: this.t + dt, x: s.x + s.vx * dt * fol + d[0] * r, y: s.y + s.vy * dt * fol + d[1] * r, abs: B * (ba + bb * rng.u()), sig: S * (sa + sb * rng.u()), tau, cut, crk: 1 });
     }
     this.events.push([this.t + P.crackleDelay, 'crackle']);
   }
@@ -424,6 +426,7 @@ class Sim {
     if (P.headDim < 1 && P.headDimUntil > 0 && s.kind !== 1 && s.kind !== 5 && s.kind !== 7) { const x = clamp((a - P.headDimUntil + 0.25) / 0.25, 0, 1); st *= P.headDim + (1 - P.headDim) * x * x * (3 - 2 * x); }
     if (s.kind === 5 && P.riseStyle === 'fue') st *= 0.6 + 0.4 * Math.sin(6.2832 * 9 * s.age);
     if (s.exC) { const c = s.exC, x = clamp(a / dur, 0, 1); st *= lifeCurveAt(c.brightC, x); if (c.fl > 0) st *= Math.max(0, 1 + c.fl * Math.sin(6.2831853 * (c.flHz * s.age + s.ph))); }     // 4.6.0 自定义发射器的星
+    else if (this.cv) { const cb = s.kind === 2 ? this.cv.ub : s.kind === 0 || s.kind === 1 ? this.cv.sb : null; if (cb) st *= Math.max(0, lifeCurveAt(cb, clamp(a / dur, 0, 1))); }     // 4.8.0 星 / 子星亮度随寿命
     return s.I * s.flick * ign * f * last * st;
   }
   // 每点 [x, y, 强度, 尺寸]：3.7 是总光量 / 2σ，4.0 是面亮度 / 亮核直径（米）。
@@ -435,7 +438,8 @@ class Sim {
       if (!s.alive) continue;
       const I = this.headI(s); if (I <= 0) continue;
       if (nh >= capH - 1) { this.dropH = (this.dropH || 0) + 1; continue; }     // 4.3（E9）：星头缓冲满了没画的星（自检报警）
-      const sz = s.sz != null ? s.sz * (s.exC && s.exC.sizeC ? Math.max(0, lifeCurveAt(s.exC.sizeC, clamp((s.age - (s.ign || 0)) / Math.max(0.05, s.burn - (s.ign || 0)), 0, 1))) : 1) : P.headSize * (s.kind === 1 || s.kind === 6 ? 0.8 : 1);     // 4.6.0 子星 / 自定义发射器的星有自己的大小
+      let sz = s.sz != null ? s.sz * (s.exC && s.exC.sizeC ? Math.max(0, lifeCurveAt(s.exC.sizeC, clamp((s.age - (s.ign || 0)) / Math.max(0.05, s.burn - (s.ign || 0)), 0, 1))) : 1) : P.headSize * (s.kind === 1 || s.kind === 6 ? 0.8 : 1);     // 4.6.0 子星 / 自定义发射器的星有自己的大小
+      { const cs = s.kind === 2 ? this.cv.us : s.kind === 0 || s.kind === 1 ? this.cv.ss : null; if (cs) { const off = s.st1 != null ? s.st1 : s.ign, end = s.vis != null ? s.vis : s.burn; sz *= Math.max(0, lifeCurveAt(cs, clamp((s.age - off) / Math.max(0.05, end - off), 0, 1))); } }     // 4.8.0 星 / 子星大小随寿命
       push(bufH, nh++, s.x, s.y, I, sz);
       // 尾迹外形「泪滴星头」（headTear）：沿运动反方向补几个越来越小、越来越暗的点，速度越快拉得越长（默认 0 不进来）
       if (P.headTear > 0 && nh < capH - 5) { const v = Math.hypot(s.vx, s.vy); if (v > 0.5) { const ux = -s.vx / v, uy = -s.vy / v, len = P.headTear * (sz * 2 + v * 0.025);
@@ -446,8 +450,9 @@ class Sim {
     for (const f of this.flashes) {
       if (f.abs == null) continue;
       const a = this.t - f.t0, cut = f.cut || 0.25; if (a < 0 || a > cut || nh >= capH - 1) continue;
-      const I = f.abs * Math.exp(-a / f.tau) / (6.2832 * f.sig * f.sig);
-      push(bufH, nh++, f.x, f.y, I, f.sig * 2);
+      let I = f.abs * Math.exp(-a / f.tau) / (6.2832 * f.sig * f.sig), fs = f.sig * 2;
+      if (f.crk && (this.cv.cb || this.cv.cs)) { const x = clamp(a / cut, 0, 1); if (this.cv.cb) I *= Math.max(0, lifeCurveAt(this.cv.cb, x)); if (this.cv.cs) fs *= Math.max(0, lifeCurveAt(this.cv.cs, x)); }     // 4.8.0 爆裂小闪随寿命
+      push(bufH, nh++, f.x, f.y, I, fs);
       if (refl > 0 && f.y >= 0) push(bufH, nh++, f.x, -f.y - 0.01, I * refl, f.sig * 2.6);
     }
     // 4.6.0 自定义发射器的光点：和星头同一种画法（亮核 + 光晕）；亮度 / 大小按寿命曲线、闪烁
@@ -467,7 +472,8 @@ class Sim {
       if (f.abs != null) continue;
       const a = this.t - f.t0, cut = f.cut || 0.25; if (a < 0 || a > cut || nh >= capH - 1) continue;
       if (P._unit) continue;      // 单元序列不含开花闪光（另挂）
-      const I = f.I * Math.exp(-a / (f.dec || 0.035)) * 1.5 * 6.2832 * f.sig * f.sig;     // 4.6.0 开花闪光衰减（默认 0.035 s）
+      let I = f.I * Math.exp(-a / (f.dec || 0.035)) * 1.5 * 6.2832 * f.sig * f.sig;     // 4.6.0 开花闪光衰减（默认 0.035 s）
+      if (f.main && this.cv.fb) I *= Math.max(0, lifeCurveAt(this.cv.fb, clamp(a / cut, 0, 1)));     // 4.8.0 开花闪光亮度随寿命
       push(bufH, nh++, f.x, f.y, I, f.sig * 2);
       if (refl > 0 && f.y >= 0 && nh < capH - 1) push(bufH, nh++, f.x, -f.y - 0.01, I * refl * 1.69, f.sig * 2.6);     // 倒影 σ × 1.3，总光量 × 1.69 保持峰值 × refl
     }
