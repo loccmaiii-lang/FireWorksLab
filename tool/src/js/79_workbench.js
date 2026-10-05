@@ -105,7 +105,7 @@ function syncComboPanels() {
   const combo = state.tab === 'combo', lay = combo && state.comboSel >= 0;
   if (combo) { $('#pMaster').hidden = !lay; $('#pCombo').hidden = lay; }
   $('#pMaster').classList.toggle('layermode', lay); $('#layerHead').hidden = !lay;
-  $('#pCombo').classList.toggle('effmode', combo && (!!(lib.review && lib.review.kind === 'combo') || !!lib.my));   // 我的效果也不要旧预设（4.2.7）
+  $('#pCombo').classList.toggle('effmode', combo && (!!(lib.review && lib.review.kind === 'combo') || !!lib.my || /^mt:/.test(lib.key || '')));   // 我的效果、多层花型模板（4.5.5）也不要旧预设（4.2.7）
 }
 
 // ---------------- 你的版本（保存 / 切换 / 文件） ----------------
@@ -118,7 +118,9 @@ function wbKey() {
   const k = lib.key || '', m = /^mine:(.+):[^:]+$/.exec(k);     // 从左栏「我的版本」打开的：归到原来那个键（组合编辑器 / 花型模板）
   return m ? m[1] : k;
 }
-function wbBaseId() { return lib.my ? lib.my.name : lib.review ? lib.review.id : lib.formal ? lib.formal.id : lib.key === 'combo' ? '组合编辑器' : state.P.type; }
+function wbBaseId() { return lib.my ? lib.my.name : lib.review ? lib.review.id : lib.formal ? lib.formal.id : lib.key === 'combo' ? '组合编辑器' : mtOpenId() ? MULTI_BY_ID[mtOpenId()].name : state.P.type; }
+// 4.5.5：现在打开的是不是多层花型模板（lib.key = 'mt:<id>'，18_multitypes.js）
+function mtOpenId() { const m = /^mt:(.+)$/.exec(wbKey()); return m && MULTI_BY_ID[m[1]] ? m[1] : null; }
 const wbAll = () => store.get('mySaves', {});
 const wbList = () => (wbAll()[wb.key] || []);
 function wbPut(list) { const all = wbAll(); all[wb.key] = list; store.set('mySaves', all); }
@@ -134,7 +136,7 @@ function wbArm() {
   const tick = () => { if (n !== wb.arm) return; if (wbIdle()) { wb.sig = wbSig(); wbSync(); if (typeof undoReset === 'function') undoReset(); } else setTimeout(tick, 400); };
   setTimeout(tick, 300);
 }
-function wbVisible() { return !state.showcase && !!(lib.review ? lib.review.kind !== 'queued' : lib.formal || /^(type:|combo$|my:|tpl:)/.test(wbKey())); }
+function wbVisible() { return !state.showcase && !!(lib.review ? lib.review.kind !== 'queued' : lib.formal || /^(type:|combo$|my:|tpl:|mt:)/.test(wbKey())); }
 function wbRefresh() {
   const k = wbKey();
   if (k !== wb.key || lib.review !== wb.entry) { wb.key = k; wb.entry = lib.review; wb.src = { kind: 'ai' }; wbArm(); }
@@ -143,9 +145,11 @@ function wbRefresh() {
 function wbSync() {
   const bar = $('#assetBar'); bar.hidden = !wbVisible(); $('#versionHistory').hidden = bar.hidden; if (bar.hidden) return;
   const ef = lib.effect, e = lib.review, combo = state.tab === 'combo';
-  $('#abName').textContent = lib.my ? lib.my.name : lib.tpl ? lib.tpl.name : ef ? ef.名 : e ? e.name : lib.formal ? lib.formal.name : lib.key === 'combo' ? '组合编辑器' : TYPE_NAMES[state.P.type] || '';
+  const mtId = mtOpenId();
+  $('#abName').textContent = lib.my ? lib.my.name : lib.tpl ? lib.tpl.name : ef ? ef.名 : e ? e.name : lib.formal ? lib.formal.name : lib.key === 'combo' ? '组合编辑器' : mtId ? MULTI_BY_ID[mtId].name : TYPE_NAMES[state.P.type] || '';
   $('#abSub').textContent = lib.my ? [packNamesFor(wb.key, null, state.layers.length, 'MyFx').base, state.layers.length + ' 层', '我的效果' + (lib.my.from ? ' · 派生自 ' + lib.my.from.name : '')].join(' · ')
     : lib.tpl ? [TYPE_NAMES[lib.tpl.type] || lib.tpl.type, '我的模板'].join(' · ')
+    : mtId ? [state.layers.length + ' 层', '多层花型模板'].join(' · ')
     : [wbBaseId(), combo ? state.layers.length + ' 层' : '单层', ef ? ef.阶段 : lib.formal ? '正式库' : e ? '条目' : '花型模板'].join(' · ');
   $('#abMyRename').hidden = $('#abMyDelete').hidden = !lib.my;
   const th = ef && ef.thumb ? `<i style="background-image:url(${ef.thumb})"></i>` : '';
@@ -227,7 +231,7 @@ async function wbLoadAI() {
     const ids = e && e.kind === 'combo' ? e.layerIds || [] : e ? [e.id] : [];
     for (const id of ids) { delete state.layerEdits[id]; const le = state.lib.find(x => x.rep === id); if (le && le.editSig) { dropLibBake(le); state.lib.splice(state.lib.indexOf(le), 1); } }
   }
-  if (e) await openReview(e, lib.effect); else if (lib.formal) openFormal(lib.formal, lib.effect); else if ((lib.key || '').startsWith('type:')) openType(lib.key.slice(5));
+  if (e) await openReview(e, lib.effect); else if (lib.formal) openFormal(lib.formal, lib.effect); else if ((lib.key || '').startsWith('type:')) openType(lib.key.slice(5)); else if (mtOpenId()) await openMultiType(mtOpenId());
   wb.src = { kind: 'ai' }; wbArm(); wbSync();
 }
 async function wbLoad(id) {

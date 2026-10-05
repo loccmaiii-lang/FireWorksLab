@@ -178,6 +178,7 @@ async function openMine(k, id) {
   else if (k.startsWith('rv:')) { const e = FW_REVIEW_LIST.find(x => x.id === k.slice(3)); if (!e) return; await openReview(e); }
   else if (k.startsWith('rep:')) { const r = REPLICA_BY_ID[k.slice(4)]; if (!r) return; openFormal(r); }
   else if (k.startsWith('type:')) openType(k.slice(5));
+  else if (k.startsWith('mt:')) await openMultiType(k.slice(3));     // 4.5.5：多层花型模板的草稿
   else if (k.startsWith('my:')) await openMyEffect(k.slice(3));          // 4.2.7：我的效果的草稿
   else return;
   await wbLoad(id); lib.key = 'mine:' + k + ':' + id; renderLib();
@@ -254,7 +255,7 @@ function libGroup(host, id, title, count, hot, extra) {
 }
 // 左栏（2026-10-02 界面外观第 1 步，按用户的浏览器草稿）：上下分组、可折叠——待我验收 / 制作中 / 已通过 / 花型模板 / 工具（4.3 去掉「历史」：只放当前版本）；
 // 56 px 缩略图、选中整圈青绿框；新建配方在最下面。lib.seg 仍可用（自动化脚本用 lib.seg='passed';renderLib() 打开某一组）。
-const LIB_OPEN_DEFAULT = { review: true, wip: true, myfx: true, mytpl: true, types: false, tools: false };
+const LIB_OPEN_DEFAULT = { review: true, wip: true, myfx: true, mytpl: true, types: false, mtypes: true, tools: false };
 function renderLib() {
   const host = $('#libBody'); host.innerHTML = '';
   lib.open = { ...LIB_OPEN_DEFAULT, ...(lib.open || {}) };
@@ -333,6 +334,8 @@ function renderLib() {
       d.addEventListener('click', () => openType(t)); grid.appendChild(d);
     }
   }
+  // 4.5.5 多层花型模板（18_multitypes.js；对话框新花型，用户 10-05 17:18）
+  mtLibGroup(host);
   // 工具：云端配方预览、打开结果文件夹（4.3 去掉组合编辑器、4.0 对照橱窗：清理清单 C2 / C3）
   const tools = [
     ['tool:cloud', $('#cloudRecipesOpen').textContent, '云端配好的多层配方，本机烘焙后看', () => $('#cloudRecipesOpen').click()],

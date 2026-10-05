@@ -7,6 +7,7 @@
 目标写法：
   <条目 id>      迭代 / 正式库条目（烘焙器 REPLICA_BY_ID 里的 id，例如 JM4、HK9-1）
   type:<花型>    花型库模板默认参数（例如 type:kiku）；type40:<花型> 和 type: 相同（4.3 起只有一套画法，留着兼容旧命令）
+  mt:<模板>:<层>  多层花型模板的某一层（4.5.5，tool/src/js/18_multitypes.js，例如 mt:yaeshin:0 是八重芯的亲星）
 
 输出（--out，默认 analysis/probe/<时间>/）：
   探针.json      每个目标的全部数值
@@ -34,6 +35,7 @@ JS_METRICS = r"""
   const { id, fps, dists, screenH, frac } = a;
   let P, M, name = id;
   if (id.startsWith('type:') || id.startsWith('type40:')) { const v40 = id.startsWith('type40:'), t = id.slice(v40 ? 7 : 5); if (!TYPES[t]) return { id, error: '没有这个花型：' + t }; const d = defaultsFor(t); P = derive({ ...d.P }); M = d.M; }
+  else if (id.startsWith('mt:')) { const [, mid, li] = id.split(':'); if (typeof MULTI_BY_ID === 'undefined' || !MULTI_BY_ID[mid]) return { id, error: '没有这个多层模板：' + mid }; const l = mtLayers(mid)[+li]; if (!l) return { id, error: '没有这一层：' + id }; P = l.P; M = l.M; name = MULTI_BY_ID[mid].name + ' · ' + l.title; }
   else { if (!REPLICA_BY_ID[id]) return { id, error: '没有这个条目：' + id }; const r = __fw.replicaPM(id); P = r.P; M = r.M; name = REPLICA_BY_ID[id].name; }
   const out = { id, name, type: P.type, form: P.form, duration: P.duration, zoom: P.zoom, frameMode: P.frameMode, autoGrid: P.autoGrid,
                 renderVer:40, qSS: P.qSS || 2, headSize: P.headSize, sparkSize: P.sparkSize, emberSize: P.emberSize, texW: P.texW, texH: P.texH };
@@ -126,7 +128,7 @@ JS_METRICS = r"""
 
 JS_BAKE = r"""
 async (id) => {
-  let P, M; if (id.startsWith('type:') || id.startsWith('type40:')) { const v40 = id.startsWith('type40:'), d = defaultsFor(id.slice(v40 ? 7 : 5)); P = derive({ ...d.P }); M = d.M; } else { const r = __fw.replicaPM(id); P = r.P; M = r.M; }
+  let P, M; if (id.startsWith('type:') || id.startsWith('type40:')) { const v40 = id.startsWith('type40:'), d = defaultsFor(id.slice(v40 ? 7 : 5)); P = derive({ ...d.P }); M = d.M; } else if (id.startsWith('mt:')) { const [, mid, li] = id.split(':'), l = mtLayers(mid)[+li]; P = l.P; M = l.M; } else { const r = __fw.replicaPM(id); P = r.P; M = r.M; }
   const b = await __fw.bake(P, 1, null); const L = b.meta.L;
   const parts=[];for(let s=b;s;s=s.next)parts.push(s);
   const r = { grid: { cols: L.cols, rows: L.rows, chans: L.chans, frames: parts.reduce((n,s)=>n+s.meta.L.F,0), pages:parts.length,pageFrames:parts.map(s=>s.meta.L.F),cellW: L.cellW, cellH: L.cellH }, t0: b.meta.t0 || 0, darkTail: parts.at(-1).meta.darkTail, edgeFrames: parts.flatMap(s=>s.meta.check?.edgeFrames||[]) };

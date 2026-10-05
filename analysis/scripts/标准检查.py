@@ -1,7 +1,7 @@
 """标准检查（协作/标准.md 第 4 节，4.0-d）：每个条目按标准逐项给 ✅ / ❌，结果给烘焙器左栏和审阅卡显示
 
 用法：
-  python3 analysis/scripts/标准检查.py                # 当前条目（状态清单里各效果的主条目 / 待验收版）+ 正式库 + 花型库模板（4.0）
+  python3 analysis/scripts/标准检查.py                # 当前条目（状态清单里各效果的主条目 / 待验收版）+ 正式库 + 花型库模板（4.0）+ 多层花型模板（4.5.5，mt:<模板>）
   python3 analysis/scripts/标准检查.py JM4 HK9 type40:kiku ...   # 只查这几个（结果并进上一次的完整结果）
   选项：--all（迭代区全部非历史条目）  --no-write（不写 tool/data/standard.js）
   --ui-state-only：只跑离线界面状态回归（需Node；不启动浏览器、不改条目结果）
@@ -69,10 +69,15 @@ async def run(targets, write, merge=False):
               for (const r of (typeof REPLICAS !== 'undefined' ? REPLICAS : [])) if (!r.fromReview) ids.add(r.id);
               return [...ids]; }""")
             targets += ['type40:' + t for t in LIB_TYPES]
+            targets += await pg.evaluate("typeof MULTI_TYPES !== 'undefined' ? MULTI_TYPES.map(r => 'mt:' + r.id) : []")     # 4.5.5 多层花型模板：按多层组合查（每层都要过）
         for t in targets:
             t0 = time.time()
             if t.startswith('type'):
                 info = {'id': t, 'kind': 'preset', 'name': t, 'form': 'master', 'renderVer': 40}
+            elif t.startswith('mt:'):
+                info = await pg.evaluate("(id) => { const r = typeof MULTI_BY_ID !== 'undefined' && MULTI_BY_ID[id]; return r ? { name: r.name, n: r.layers.length } : null; }", t[3:])
+                if not info: out[t] = {'id': t, 'error': '找不到多层模板'}; continue
+                info = {'id': t, 'kind': 'combo', 'name': info['name'], 'form': 'master', 'renderVer': 40, 'video': False, 'layers': [f'{t}:{i}' for i in range(info['n'])]}
             else:
                 info = await pg.evaluate(JS_ENTRY, t)
                 if not info: out[t] = {'id': t, 'error': '找不到条目'}; continue
