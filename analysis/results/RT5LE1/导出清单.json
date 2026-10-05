@@ -1,0 +1,29 @@
+{
+ "effect": "trail_phys",
+ "entry": "RT5L",
+ "ver": "78078c43·emitset4.4",
+ "time": "2026-10-05 13:32",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "RiseTailL",
+   "replica": "RT5L",
+   "files": [
+    "RiseTailL.json",
+    "RiseTailL_Cascade参数.txt",
+    "RiseTailL_Mobile.json",
+    "RiseTailL_曲线.csv",
+    "T_EFX_FireWorks_RiseTrailPhys_L_Fade_8x2_01.png",
+    "T_EFX_FireWorks_RiseTrailPhys_L_Fade_8x2_01_C.png",
+    "T_EFX_FireWorks_RiseTrailPhys_L_Fade_8x2_01_HD.png",
+    "T_EFX_FireWorks_RiseTrailPhys_L_Loop_16x1_01.png",
+    "T_EFX_FireWorks_RiseTrailPhys_L_Loop_16x1_01_C.png",
+    "T_EFX_FireWorks_RiseTrailPhys_L_Loop_16x1_01_HD.png",
+    "T_EFX_FireWorks_RiseTrailPhys_L_R.png",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}
