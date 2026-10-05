@@ -111,7 +111,7 @@ const MULTI_TYPES = [
 ];
 const MULTI_BY_ID = Object.fromEntries(MULTI_TYPES.map(r => [r.id, r]));
 // 每层贴图曝光（analysis/scripts/多层模板曝光.py 按 autoExposure40 算的，和花型模板 EXPOSURE40 同一算法）；没有就用花型模板的
-const MT_EXPOSURE = {"shinKiku": [0.843, 2.49], "shinBotan": [2.9, 2.49], "yaeshin": [0.619, 2.45, 1.62], "yaeHenka": [1.97, 2.54, 1.64], "mieshin": [0.851, 2.58, 2.5, 1.49], "yoeshin": [2.87, 2.63, 2.54, 1.79, 1.4], "itsueHenka": [1.97, 2.68, 2.57, 2.03, 1.67, 1.38], "yaeStrobe": [2.22, 2.52, 1.66], "kamuroShin": [2.54, 2.51], "crackleShin": [2.9, 1.74], "strobeShin": [2.87, 1.7], "fourColorCrackle": [3.07, 3.04, 3.07, 3.07, 1.72], "yaeBlueBotan": [2.78, 0.549, 0.134]};
+const MT_EXPOSURE = {"shinKiku": [0.833, 2.49], "shinBotan": [2.9, 2.49], "yaeshin": [0.613, 2.45, 1.62], "yaeHenka": [1.97, 2.54, 1.64], "mieshin": [0.843, 2.58, 2.5, 1.49], "yoeshin": [2.87, 2.63, 2.54, 1.79, 1.4], "itsueHenka": [1.97, 2.68, 2.57, 2.03, 1.67, 1.38], "yaeStrobe": [2.91, 2.52, 1.66], "kamuroShin": [2.26, 2.57], "crackleShin": [2.9, 1.86], "strobeShin": [2.87, 2.23], "fourColorCrackle": [3.07, 3.04, 3.07, 3.07, 1.73], "yaeBlueBotan": [2.78, 0.546, 0.136]};
 // 每层的显示强度（Color Over Life 倍数）：各层贴图都按自己最亮处归一，这里按游戏内大小看过定层间明暗（亲星最亮、芯略暗）
 // 彩色芯按颜色的亮度补：铜蓝、锶红、紫这些亮度低的色给高一点，柠檬绿、黄、银白不补（(0.45 / 相对亮度)^0.5，夹在 0.9–1.45）
 const mtLum = hex => { const c = hexToLin(hex); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
@@ -127,6 +127,8 @@ function mtLayers(id) {
     const P = derive({ ...d.P, renderVer: 40, seed: 41 + 11 * i, burn, burnJit: 4, fade: 0.14, lastFlare: 0, vt, v0, burstR0: 0, speedJit: 3, dirJit: 1.2,
       duration: +(Math.max(burn, l.p.burn || 0) + (l.type === 'kamuro' ? 1.6 : 0.55)).toFixed(2), flash: i ? 0 : 1, ...l.p });
     if (l.type === 'kamuro') P.duration = Math.max(P.duration, d.P.duration);
+    // 4.7.0 起结尾等火花自然灭完（不再最后整体淡出）：时长盖到这一层最后一批火花（和花型模板同一口径，sparkTailEnd）
+    if (+P.sparkRate > 0 && typeof sparkTailEnd === 'function') { const end = sparkTailEnd(P); if (end > P.duration) P.duration = +(end + 0.05).toFixed(2); }
     const ex = MT_EXPOSURE[id] && MT_EXPOSURE[id][i]; if (ex) P.exposure = ex;
     const M = normalizeM({ ...d.M, ...l.m }, l.type);
     return { title: l.title, en: l.en, type: l.type, P, M, delay: l.delay || 0, headInt: mtHeadInt(r, i), tailInt: 1, out: l.out };
