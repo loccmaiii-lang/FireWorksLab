@@ -1,0 +1,170 @@
+[
+ {
+  "name": "kiku",
+  "old": "4.5.10",
+  "new": "4.6.0",
+  "planSame": true,
+  "stills": [
+   {
+    "t": 0.384,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 1.12,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 2.24,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": true
+ },
+ {
+  "name": "botan",
+  "old": "4.5.10",
+  "new": "4.6.0",
+  "planSame": true,
+  "stills": [
+   {
+    "t": 0.336,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 0.98,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 1.96,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": true
+ },
+ {
+  "name": "kamuro",
+  "old": "4.5.10",
+  "new": "4.6.0",
+  "planSame": true,
+  "stills": [
+   {
+    "t": 0.624,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 1.82,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 3.64,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": true
+ },
+ {
+  "name": "senrin",
+  "old": "4.5.10",
+  "new": "4.6.0",
+  "planSame": true,
+  "stills": [
+   {
+    "t": 0.336,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 0.98,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 1.96,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": true
+ },
+ {
+  "name": "strobe",
+  "old": "4.5.10",
+  "new": "4.6.0",
+  "planSame": true,
+  "stills": [
+   {
+    "t": 0.504,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 1.47,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 2.94,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": true
+ },
+ {
+  "name": "crackle",
+  "old": "4.5.10",
+  "new": "4.6.0",
+  "planSame": true,
+  "stills": [
+   {
+    "t": 0.408,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 1.802,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 2.04,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": true
+ },
+ {
+  "name": "jinmangju",
+  "old": "4.5.10",
+  "new": "4.6.0",
+  "planSame": true,
+  "stills": [
+   {
+    "t": 0.547,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 1.596,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 3.192,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": true
+ }
+]
