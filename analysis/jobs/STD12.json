@@ -8,7 +8,5 @@
   "RT6L"
  ],
  "priority": 7,
- "ready": false,
- "hold": "等 RT6SE3 / RT6ME3 / RT6LE3 导出回来（4.5.4 曲线精简后导出变了；STD11 崩的探针已修）",
- "note": "放行时去掉 ready / hold。"
+ "note": "RT6SE3/ME3/LE3 回放检查三档全过（10-05 20:xx），对话框15 放行。"
 }
