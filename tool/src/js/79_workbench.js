@@ -794,6 +794,7 @@ function unitHTML(xs, combo) {
 }
 async function exportUnitPack(P0, M, name) {
   const P = { ...P0, form: 'unit', cols: 16, rows: 2, chans: 4, frameMode: 'auto', autoGrid: 1 };
+  if (!busyCan(true)) return;
   busy(true, '单束：烘焙一颗星的序列…', 0);
   let b = null;
   try {

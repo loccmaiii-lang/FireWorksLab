@@ -51,6 +51,7 @@
   W4 4.6.0（5.0 第 1 步）：每个发射器都列 9 个标准模块（没参数的写跟谁 / 为什么没有）；爆裂 / 开花闪光 / 子花 / 点灭 / 余烬 / 分叉火花 / 辉星以前写死的数变成参数且真起作用；
      「＋ 加发射器」：加、改、在模拟里生成光点 / 星、曲线几行时刻→值、去掉；「游戏内大小」按真实米数（四尺玉 1000 m 占 1/3，别的按真实大小）
   W5 4.8.0（5.0 第 3 步一部分）：星 / 子星 / 火花 / 余烬 / 分叉火花 / 爆裂 / 开花闪光都有「大小 / 亮度随寿命」曲线行（几行 时刻:倍数），空 = 不乘；填了真起作用（模拟里的星头、小闪、闪光；火花着色器的曲线参数接上）
+  W6 4.8.1（走查 20-05）：导出可以取消（进度条旁「取消」，上次结果还在）；导出没做完再点导出不会叠第二个
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -1475,6 +1476,27 @@ async def w5(pg):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
 
 
+async def w6(pg):
+    """4.8.1：导出可以取消、不叠两个"""
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate("""(async () => { window.__fl = []; const of = flash; flash = (m, e) => { window.__fl.push([String(m), !!e]); return of(m, e); };
+      const ob = bakeFinal, orf = refineBake, od = download; let dl = 0; download = () => { dl++; };
+      bakeFinal = async (P, sc, onProg) => { for (let i = 0; i <= 40; i++) { onProg && onProg(i / 40); await new Promise(z => setTimeout(z, 25)); } return ob(P, sc); };
+      refineBake = async () => null; const keep = state.bake; state.bake = null;
+      const run = exportMaster(); await new Promise(z => setTimeout(z, 120));
+      const btn = document.querySelector('#busy .busy-cancel'), shown = !!btn && !btn.hidden;
+      await exportMaster(); const blocked = window.__fl.some(([m, e]) => e && /正在导出/.test(m));
+      if (btn) btn.click(); await run; const cancelled = window.__fl.some(([m, e]) => e && /已取消/.test(m));
+      const after = { on: busyJob.on, hidden: $('#busy').hidden };
+      bakeFinal = ob; refineBake = orf; download = od; flash = of; state.bake = keep;
+      return { shown, blocked, cancelled, dl, after }; })()""")
+    bad = []
+    if not r['shown']: bad.append('导出时进度条旁没有「取消」')
+    if not r['blocked']: bad.append('导出没做完再点导出，没拦住')
+    if not r['cancelled'] or r['dl'] or r['after']['on'] or not r['after']['hidden']: bad.append(f'点了取消没停下 / 停下后状态没复原：{r}')
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(r, ensure_ascii=False)
+
+
 async def x2(pg):
     """4.4.2（用户 10-04 21:17）：单层效果（牡丹模板）也有「导出方案」：输出 › 导出方案里 PC 能选 GPU 光点 / 单束 / 不出，手机能选不出；选光点后 cascade.json 是一个 GPU 光点发射器、引擎回放画光点、说明写有尾迹没了"""
     bad, info = [], {}
@@ -1555,7 +1577,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

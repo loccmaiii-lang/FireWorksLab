@@ -16,9 +16,21 @@ const state = {
 const live = { sim: null, gen: -1, track: null, tgen: -1, tw: 0, E: null, egen: -1 };
 let hdrT = null, rgT = null;
 
+// 4.8.1（走查 20-05，交互宪章 3.3）：导出这类你点出来的长作业可以「取消」（上次的结果都还在），重复点导出不会叠两个
+const busyJob = { on: false, req: false };
+function busyCan(on) {
+  if (on && busyJob.on) { flash('正在导出：等它做完，或点进度条旁边的「取消」', true); return false; }
+  busyJob.on = on; busyJob.req = false;
+  const b = $('#busy'); let c = b && b.querySelector('.busy-cancel');
+  if (b && !c) { c = document.createElement('button'); c.type = 'button'; c.className = 'btn mini busy-cancel'; c.textContent = '取消'; c.addEventListener('click', () => { busyJob.req = true; c.disabled = true; c.textContent = '正在取消…'; }); b.appendChild(c); }
+  if (c) { c.hidden = !on; c.disabled = false; c.textContent = '取消'; }
+  return true;
+}
 function busy(on, text, p) {
   $('#busy').hidden = !on;
-  if (on) { if (text) $('#busyText').textContent = text; if (p != null) $('#busyBar').style.width = Math.round(p * 100) + '%'; }
+  if (!on) { if (busyJob.on) busyCan(false); return; }
+  if (text) $('#busyText').textContent = text; if (p != null) $('#busyBar').style.width = Math.round(p * 100) + '%';
+  if (busyJob.on && busyJob.req && p != null) { busyJob.req = false; throw new Error('已取消（你点了取消；上次的结果、参数都还在）'); }
 }
 let flashTimer = 0;
 function flash(msg, bad) { if (!bad && typeof storeJustFailed === 'function' && storeJustFailed() && /保存|存成|已存|已更新|已新建/.test(msg)) { msg = '没存上（浏览器里存不进去）：' + msg; bad = true; } const s = $('#status'); s.textContent = msg; s.className = bad ? '' : 'on'; clearTimeout(flashTimer); flashTimer = setTimeout(() => { s.textContent = ''; s.className = ''; }, 3500); }
@@ -907,6 +919,7 @@ async function exportCombo() {
   // 素材包名要是英文 / 数字（spec）：迭代区组合条目用条目号，否则用组合名里的英文数字部分
   const rv = typeof lib !== 'undefined' && lib.review && lib.review.kind === 'combo' ? lib.review.id : '';
   const name = (rv || state.comboName || 'Combo').replace(/[^\w\-]+/g, '_').replace(/^_+|_+$/g, '') || 'Combo';
+  if (!busyCan(true)) return;
   busy(true, '组合素材包：准备各层…', 0);
   try {
     const files = await comboPackFiles(name, state.layers, p => busy(true, '组合素材包…', p));

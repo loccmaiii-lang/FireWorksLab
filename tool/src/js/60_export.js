@@ -237,6 +237,7 @@ async function exportSingleScheme(name, b) {
 }
 async function exportMaster() {
   const name = safeName();
+  if (!busyCan(true)) return;
   busy(true, '准备导出…', 0);
   let own = false, b = null;
   try {
@@ -274,6 +275,7 @@ async function exportMaster() {
 async function exportVariants() {
   const name = safeName();
   if (bakeKind(state.P) !== 'master') { flash('种子变体只用于大面片母版', true); return; }
+  if (!busyCan(true)) return;
   busy(true, '烘焙种子变体…', 0);
   let bs = [];
   try {

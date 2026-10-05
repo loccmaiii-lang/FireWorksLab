@@ -1344,3 +1344,6 @@ details.mod-empty .mod-note{font-size:12.5px;color:var(--muted,#adb8bc);padding:
 /* 4.6.0：花型 / 产物那一块压紧，第一屏留给发射器 */
 #pMaster .pm-ident #formNote{font-size:12px;margin:2px 0 4px;max-height:3.2em;overflow:hidden}
 #pMaster .pm-ident .typebtn .tb-txt small{display:none}
+
+/* 4.8.1：导出可以取消 */
+.busy .busy-cancel{margin-left:10px;pointer-events:auto}
