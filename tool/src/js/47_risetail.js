@@ -932,24 +932,59 @@ function rtShadeLoop(P, M, t) {
   gl.uniform1f(pr.u.uEH, fixedExposure(P)); gl.uniform1f(pr.u.uET, fixedExposure(P)); gl.uniform1f(pr.u.uG, P.encGamma || 1); gl.uniform1f(pr.u.uComb, 1);
   setMatUniforms(pr, { ...M, headInt: (M.headInt || 1) * (P.rtBright || 1) }, t); drawQuad();
 }
+// ---- 4.5.1 分层看（用户 10-05 17:39「我没法单独看近段、远段和 GPU 粒子层」）：只影响观察，不改参数和导出 ----
+//   工具条上一排：近段 / 远段 / 每个 GPU（和 CPU 软圆点）发射器，后面是此刻的颗数；点一下开 / 关，双击只看这一层，「全部」恢复
+const RT_LAYER_CN = { near: '近段', far: '远段', SparksCoarse: '粗火花', SparksTwinkle: '闪烁火花', SparksMid: '中火花', SparksFine: '细火花', Embers: '落火', SparkPops: '末段爆亮',
+  HeadGlow: '星头光晕', LaunchGlow: '发射口闪光', LaunchSparks: '发射口火花', Smoke: '烟带' };
+const rtShow = { off: new Set(), sig: '' };
+const rtOn = k => !rtShow.off.has(k);
+function rtAliveCounts(tables, t) { return tables.map(T => { let n = 0; for (const q of T.list) { if (q.t0 > t) break; if (t - q.t0 < q.life) n++; } return n; }); }
+function rtLayerBarSync(items) {     // items: [[key, 颗数 | null, GPU?]]
+  const bar = typeof document !== 'undefined' && document.getElementById('rtLayerBar'); if (!bar) return;
+  const sig = items.map(x => x[0]).join(',');
+  if (rtShow.sig !== sig) {
+    rtShow.sig = sig; for (const k of [...rtShow.off]) if (!items.some(x => x[0] === k)) rtShow.off.delete(k);
+    bar.innerHTML = '<button type="button" data-all="1">全部</button><span class="sep"></span>' + items.map(([k, , g], i) => (i && g && !items[i - 1][2] ? '<span class="sep"></span>' : '') +
+      `<button type="button" data-k="${k}" title="${g ? 'GPU 发射器' : k === 'near' ? '近段 = 循环层（跟着弹体走的年轻火花 + 星头 + 白热段）' : k === 'far' ? '远段 = TrailFar（停在空中的老火花，开花后全部火花）' : 'CPU 软圆点'}：点一下开 / 关，双击只看这一层">${RT_LAYER_CN[k] || k}<span class="n"></span></button>`).join('');
+    bar.querySelector('[data-all]').addEventListener('click', () => { rtShow.off.clear(); });
+    bar.querySelectorAll('[data-k]').forEach(btn => {
+      btn.addEventListener('click', () => { const k = btn.dataset.k; if (rtShow.off.has(k)) rtShow.off.delete(k); else rtShow.off.add(k); });
+      btn.addEventListener('dblclick', () => { const k = btn.dataset.k; rtShow.off = new Set(items.map(x => x[0]).filter(x => x !== k)); });
+    });
+  }
+  items.forEach(([k, n]) => { const btn = bar.querySelector(`[data-k="${k}"]`); if (!btn) return; btn.classList.toggle('off', !rtOn(k)); btn.querySelector('.n').textContent = n == null ? '' : n.toLocaleString(); });
+}
+const rtShowNote = () => rtShow.off.size ? ' · 分层看：关了 ' + [...rtShow.off].map(k => RT_LAYER_CN[k] || k).join('、') : '';
 function renderEmitLive() {
   const P = state.P, M = state.M, b = state.bake && state.bake.form === 'emitset' ? state.bake : null, mobile = state.platform === 'mobile';
   const t = Math.min(state.t, P.duration), view = rtView(P, b, t), ppm = rgT.w / (2 * view[2]), ppmY = rgT.h / (2 * view[3]);
-  const ball = rtBallistic(P), LI = rtLoopInfo(P);
+  const ball = rtBallistic(P), LI = rtLoopInfo(P), far = rtIsFar(P), T = ball.T;
   rgT.clear(); rgT.bind(); additive(true); PPMY = ppmY;
-  let np = 0; try { np = drawRiseTailLive(P, LI, ball, t, view, ppm); } finally { PPMY = 0; }
+  let np = 0, nf = 0;
+  try {
+    if (!far) { if (rtOn('near')) np = drawRiseTailLive(P, LI, ball, t, view, ppm); }
+    else {     // 近段 + 远段：按年龄权重分开画（两份相加 = 全部）；开花后全归远段
+      const nw = rtNearW(P);
+      if (rtOn('near') && t <= T) { setParticleProfile(P); const p = ball.pos(t), v = ball.vel(t), sp = Math.hypot(v[0], v[2]) || 1;
+        drawPoints(bufH, rtHeadPts(P, p[0], p[2], -v[0] / sp, -v[2] / sp, P.rtHeadI * LI.pulse(t), 0) / 4, view, ppm, [1, 0, 0, 0], 1); np = rtWorldDraw(P, LI, ball, t, view, ppm, 1, nw, 0); }
+      if (rtOn('far')) nf = rtWorldDraw(P, LI, ball, t, view, ppm, 1, t <= T ? a => 1 - nw(a) : null, 0);
+    }
+  } finally { PPMY = 0; }
   additive(false);
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); rtShadeLoop(P, M, t);
-  additive(true); const nd = esDraw(rtLiveTables(P, mobile), t, view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); additive(false);
+  const tabs = rtLiveTables(P, mobile), on = tabs.map(x => rtOn(x.e.name));
+  additive(true); const nd = esDraw(tabs, t, view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1, on); additive(false);
   post();
+  const cnt = rtAliveCounts(tabs, t);
+  rtLayerBarSync([['near', np, false], ...(far ? [['far', nf, false]] : []), ...tabs.map((x, i) => [x.e.name, cnt[i], !!x.e.gpu])]);
   const dist = state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m（开花直径 ${P.rtBurstD} m 占屏高 1/3）` : '';
-  hudText = `实时模拟 · 升空尾缀 · ${t <= ball.T ? '上升 ' + t.toFixed(2) + ' / ' + ball.T.toFixed(2) + ' s' : '已开花，火花各自燃尽中'} · 循环层火花 ${np.toLocaleString()} 颗 + 粒子层 ${nd.toLocaleString()} 颗（${mobile ? '手机减量' : 'PC'}）${dist}`;
+  hudText = `实时模拟 · 升空尾缀 · ${t <= ball.T ? '上升 ' + t.toFixed(2) + ' / ' + ball.T.toFixed(2) + ' s' : '已开花，火花各自燃尽中'} · ${far ? '近段 ' + np.toLocaleString() + ' + 远段 ' + nf.toLocaleString() : '循环层火花 ' + np.toLocaleString()} 颗 + 粒子层 ${nd.toLocaleString()} 颗（${mobile ? '手机减量' : 'PC'}）${dist}${rtShowNote()}`;
   hudB = '';
 }
 function renderEmitExport(b) {
   const P = b.P, M = state.M, m = b.meta, t = engineTick(state.t), view = rtView(P, b, t), ppm = hdrT.w / (2 * view[2]), ppmY = hdrT.h / (2 * view[3]);
   hdrT.clear(); hdrT.bind(); additive(true);
-  const s = rtLoopStateAt(b, t), sa = rtFarStateAt(b, t);
+  const s = rtOn('near') ? rtLoopStateAt(b, t) : null, sa = rtOn('far') ? rtFarStateAt(b, t) : null;     // 4.5.1 分层看
   if (sa) {     // 4.5.1 远段：面片中心在 (cx, cz)，速度朝向竖直（Pivot 居中）
     const pr = PR.mat; gl.useProgram(pr.p);
     gl.uniform4fv(pr.u.uRect, [sa.x - sa.w / 2, sa.z - sa.h / 2, sa.x + sa.w / 2, sa.z + sa.h / 2]); gl.uniform4fv(pr.u.uView, view);
@@ -965,9 +1000,11 @@ function renderEmitExport(b) {
     setMatUniforms(pr, { ...M, headInt: (M.headInt || 1) * (P.rtBright || 1) * kin, tailInt: (M.tailInt == null ? 1 : M.tailInt) * kin }, t);
     gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
   }
-  const nd = esDraw(rtTables(b, !!b.esMobile), t, view, ppm, ppmY, 1);
+  const tabs = rtTables(b, !!b.esMobile), nd = esDraw(tabs, t, view, ppm, ppmY, 1, tabs.map(x => rtOn(x.e.name)));
   additive(false); post();
+  const cnt = rtAliveCounts(tabs, t);
+  rtLayerBarSync([['near', null, false], ...(b.far ? [['far', null, false]] : []), ...tabs.map((x, i) => [x.e.name, cnt[i], !!x.e.gpu])]);
   const dist = state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m` : '';
-  hudText = `引擎回放 · ${b.esMobile ? '手机' : 'PC'} · 循环层 ${!s ? '已结束' : s.phase === 'rise' ? '上升循环第 ' + (s.f + 1) + '/' + m.L.F + ' 帧' : '贴图动态消散第 ' + (s.f + 1) + '/' + s.bb.meta.L.F + ' 帧'}（面片 ${((s && s.w) || m.Ww).toFixed(1)} × ${(((s && s.h) || m.Wh) * (s ? s.sy : 1)).toFixed(1)} m）${b.far ? ' + 远段 ' + (sa ? '第 ' + (sa.f + 1) + '/' + sa.bb.meta.far.F + ' 帧' : '—') : ''} + 粒子层 ${nd.toLocaleString()} 颗${dist} · 溶解另由材质处理（未经 UE 验证）`;
+  hudText = `引擎回放 · ${b.esMobile ? '手机' : 'PC'} · 循环层 ${!rtOn('near') ? '（分层看关了）' : !s ? '已结束' : s.phase === 'rise' ? '上升循环第 ' + (s.f + 1) + '/' + m.L.F + ' 帧' : '贴图动态消散第 ' + (s.f + 1) + '/' + s.bb.meta.L.F + ' 帧'}（面片 ${((s && s.w) || m.Ww).toFixed(1)} × ${(((s && s.h) || m.Wh) * (s ? s.sy : 1)).toFixed(1)} m）${b.far ? ' + 远段 ' + (sa ? '第 ' + (sa.f + 1) + '/' + sa.bb.meta.far.F + ' 帧' : '—') : ''} + 粒子层 ${nd.toLocaleString()} 颗${dist} · 溶解另由材质处理（未经 UE 验证）${rtShowNote()}`;
   hudB = '';
 }

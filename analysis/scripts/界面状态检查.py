@@ -39,7 +39,7 @@
   X2 4.4.2：单层效果（牡丹）也有导出方案（4.4.3 加：点灭星的光点 Color Over Life 是方波、菊没有）：PC 序列 / 单束 / GPU 光点 / 不出、手机 序列 / 不出；选光点后 cascade.json 是 GPU 光点、引擎回放画光点；多层效果的层里不显示（在层页头选）
   N3 排查第 1 步：SCHEMA ↔ 默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS 对得上
   R6 4.5.1 升空尾缀 RT6 近段 + 远段：缺省关 = RT5；开了贴图有粗 / 中 / 细、GPU 按档预算（上限一起降、降掉的回贴图）、贴图 + GPU = 出生率；交接权重相加 = 1；闪烁层；远看直径光量不变；
-     TrailFar 导出、没有 RiseFade、命名 Loop + Far；近段贴图曝光 k → RiseLoop Color Over Life × 1 / k²；面板
+     TrailFar 导出、没有 RiseFade、命名 Loop + Far；近段贴图曝光 k → RiseLoop Color Over Life × 1 / k²；面板；4.5.2 分层看（近段 / 远段 / 每个 GPU 层开关、双击只看、全部恢复）
   R5 4.4.5 升空尾缀 RT5 选项：缺省旧做法；物理弹道到设定高度、第 1 秒减速够猛、星头光晕跟弹道（Velocity Over Life）；GPU 兼容（无 Acceleration、≤ 2 个 Initial Velocity）、
      GPU 粒子上限、细 / 中火花进贴图、H4 新口径和温度偏移无关；循环层长度起步不伸到发射点以下；面板「弹道」在星头 › 弹道、选物理后升空时间藏起
   W1 4.5.0 工作台快改：时间轴无发射器行 / 曲线、精简布局收层轨道；时长跟随 / 粘连开关；AI 效果保存 = 派生成我的效果、能加层；存模板 → 花型库能打开；
@@ -1124,6 +1124,20 @@ R6_JS = r"""async () => {
     out.panel = { rtFTex: vis('rtFTex'), rtNearA0: vis('rtNearA0'), rtGpuC: vis('rtGpuC'), rtGpuDisp: vis('rtGpuDisp') };
     if (out.panel.rtFTex !== false || out.panel.rtNearA0 !== true || out.panel.rtGpuC !== true || out.panel.rtGpuDisp !== true) bad.push('选近段 + 远段后面板不对：' + JSON.stringify(out.panel));
     s.value = '0'; s.dispatchEvent(new Event('change')); }
+  // 4.5.2 分层看（用户 10-05 17:39「没法单独看近段、远段和 GPU 粒子层」）：工具条一排近段 / 远段 / 每个 GPU 层 + 颗数；关掉远段 → 远段 0 颗、HUD 写着；「全部」恢复
+  Object.assign(state.P, { rtFar: 1 }); state.gen++; const v0 = state.view, t0 = state.t; state.view = 'live'; state.t = 3; ensureTargets();
+  try {
+    renderEmitLive(); const bar = document.querySelector('#rtLayerBar'), keys = [...bar.querySelectorAll('[data-k]')].map(x => x.dataset.k), n0 = hudText;
+    bar.querySelector('[data-k="far"]').click(); renderEmitLive(); const n1 = hudText, offCls = bar.querySelector('[data-k="far"]').classList.contains('off');
+    bar.querySelector('[data-k="far"]').dispatchEvent(new MouseEvent('dblclick')); renderEmitLive(); const n2 = hudText;
+    bar.querySelector('[data-all]').click(); renderEmitLive(); const n3 = hudText;
+    out.layers = { keys, off: offCls, hud: [n0, n1, n2, n3].map(h => (h.match(/近段 [\d,]+ \+ 远段 [\d,]+/) || [''])[0]) };
+    const num = (h, w) => +((h.match(new RegExp(w + ' ([\\d,]+)')) || [0, '-1'])[1].replace(/,/g, ''));
+    if (!['near', 'far', 'SparksCoarse', 'SparksTwinkle', 'SparksFine'].every(k => keys.includes(k))) bad.push('分层看没有近段 / 远段 / GPU 层：' + keys);
+    if (!(num(n0, '远段') > 0) || num(n1, '远段') !== 0 || !offCls || !/分层看/.test(n1)) bad.push('关掉远段不对：' + JSON.stringify(out.layers));
+    if (num(n2, '近段') !== 0 || !(num(n2, '远段') > 0)) bad.push('双击远段应该只看远段：' + JSON.stringify(out.layers));
+    if (/分层看/.test(n3) || !(num(n3, '近段') > 0)) bad.push('「全部」没恢复：' + JSON.stringify(out.layers));
+  } finally { state.P.rtFar = 0; state.gen++; state.view = v0; state.t = t0; rtShow.off.clear(); }
   selectEmitTab('星');
   return { ok: !bad.length, bad, out };
 }"""
