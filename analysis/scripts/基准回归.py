@@ -14,6 +14,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from browser_runtime import launch_async
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
+AT = None
 TEMPLATES = ['kiku', 'botan', 'kamuro', 'senrin', 'strobe', 'crackle']
 FR = {'crackle': [0.12, 0.53, 0.6]}    # 4.3：爆裂星的小闪在熄灭后 0.1–0.6 s（约 0.5–0.68 T），默认时刻抓不到
 FAKE = re.search(r'FAKE = r"""(.*?)"""', (ROOT / 'analysis' / 'scripts' / '界面状态检查.py').read_text(encoding='utf-8'), re.S).group(1)
@@ -21,7 +22,7 @@ RUN = r"""async (a) => {
   let P, M;
   if (a.type) { const d = defaultsFor(a.type, 40); P = derive({ ...structuredClone(d.P), type: a.type }); M = structuredClone(d.M); }
   else { P = derive(structuredClone(state.P)); M = structuredClone(state.M); }
-  const fm = measure(P), pl = plan(P, fm), T = P.duration, times = a.fr.map(f => +(f * T).toFixed(3));
+  const fm = measure(P), pl = plan(P, fm), T = P.duration, times = a.at ? a.at.filter(t => t < T) : a.fr.map(f => +(f * T).toFixed(3));     // --at：按开花后同一秒比（序列时长改了时，按比例取的时刻不是同一时刻）
   const sig = JSON.stringify({ F: pl.L.F, cols: pl.L.cols, rows: pl.L.rows, times: pl.times.map(x => +x.toFixed(5)), keys: pl.keys, HX: +pl.HX.toFixed(4), HY: +pl.HY.toFixed(4), fm: [fm.x0, fm.x1, fm.y0, fm.y1].map(x => +x.toFixed(4)) });
   const st = await renderStills40(P, M, { times, px: a.px, plan: pl });
   return { sig, times, png: st.map(s => s.png), ver: VERSION };
@@ -47,8 +48,8 @@ async def render(html, cases, px, fr):
                 for _ in range(80):
                     await pg.wait_for_timeout(250)
                     if await pg.evaluate("!window.__opening && !state.baking"): break
-                out[name] = await pg.evaluate(RUN, {'px': px, 'fr': fr})
-            else: out[name] = await pg.evaluate(RUN, {'type': name, 'px': px, 'fr': FR.get(name, fr)})
+                out[name] = await pg.evaluate(RUN, {'px': px, 'fr': fr, 'at': AT})
+            else: out[name] = await pg.evaluate(RUN, {'type': name, 'px': px, 'fr': FR.get(name, fr), 'at': AT})
             print(' ', pathlib.Path(html).name, name, out[name]['ver'], flush=True)
             await pg.context.close()
         await b.close()
@@ -57,8 +58,9 @@ async def render(html, cases, px, fr):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--old', required=True); ap.add_argument('--new', default=str(ROOT / 'tool' / 'FireworkBaker.html'))
-    ap.add_argument('--out', default=str(ROOT / 'analysis' / 'probe' / '基准回归')); ap.add_argument('--px', type=int, default=256); ap.add_argument('--only', default='')
+    ap.add_argument('--out', default=str(ROOT / 'analysis' / 'probe' / '基准回归')); ap.add_argument('--px', type=int, default=256); ap.add_argument('--only', default=''); ap.add_argument('--at', default='', help='开花后几秒，逗号分隔（例 0.6,1.6,2.6）；不给就按序列时长的比例取')
     a = ap.parse_args(); out = pathlib.Path(a.out); out.mkdir(parents=True, exist_ok=True)
+    global AT; AT = [float(x) for x in a.at.split(',') if x.strip()] or None
     cases = [(t, 'type') for t in TEMPLATES] + [('jinmangju', 'effect')]
     if a.only: cases = [c for c in cases if c[0] in a.only.split(',')]
     fr = [0.12, 0.35, 0.7]
