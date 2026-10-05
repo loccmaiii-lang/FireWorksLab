@@ -7190,7 +7190,7 @@ var FW_EFFECTS = [
 "id": "RT6LE1",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "RT6ME1",

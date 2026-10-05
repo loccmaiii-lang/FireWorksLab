@@ -8,7 +8,5 @@
   "RT6L"
  ],
  "priority": 7,
- "ready": false,
- "hold": "等 RT6SE1 / RT6ME1 / RT6LE1 导出回来（标准检查要查同一指纹的新导出）",
- "note": "放行时去掉 ready / hold。"
+ "note": "RT6SE1/ME1/LE1 回来了（10-05 17:42），对话框15 18:20 放行。"
 }
