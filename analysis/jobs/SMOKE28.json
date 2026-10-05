@@ -1,0 +1,9 @@
+{
+ "id": "SMOKE28",
+ "type": "smoke",
+ "state": true,
+ "sweep": true,
+ "name": "4.5.x 本机全面冒烟（36 模板 × 四视图 + 全部效果每层）+ 界面状态检查（真烘焙）",
+ "priority": 11,
+ "note": "烘焙器 4.5.3（SMOKE27 跑的是 4.4.2，冒烟脚本 openEffect 的 .then 已改 Promise.resolve）。console error / 页面报错 / 烘焙失败横幅都算失败。不截图（--noshot），只记报错和 HUD。用户 10-05 17:39 说本机显卡默认直接用；几分钟。对话框21 排（全局冒烟），结果对话框21 看，有错交对话框15。"
+}
