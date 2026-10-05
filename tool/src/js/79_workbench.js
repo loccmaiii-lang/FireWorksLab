@@ -168,6 +168,38 @@ function wbSync() {
   $('#versionSummary').classList.toggle('changed', changed);
   $('#abExportPack').disabled = !$('#busy').hidden || state.baking || (combo && !wbIdle());
   $('#abRename').hidden = $('#abDelete').hidden = wb.src.kind !== 'mine';
+  idBarSync(list, changed); abStateSync();
+}
+// 4.9.1（5.0 第 3 步，交互宪章 5「身份条」）：顶栏一眼看到——打开的是什么、从哪来、哪个版本、改了没保存、素材包和现在一不一样。
+// 以前名字只在左栏「版本记录」里，左栏收起就不知道开的是谁。贴图新旧在旁边的 #abState（烘焙中 / 旧 / 失败）。
+const OUT_SIG = () => { try { return JSON.stringify(OUTPUT_VER); } catch (e) { return ''; } };
+function idBarInfo(list, changed) {
+  const ef = lib.effect, e = lib.review, mtId = mtOpenId(), chips = [];
+  const name = $('#abName').textContent || wbBaseId();
+  const src = lib.my ? ['我的效果' + (lib.my.from ? ' · 派生自 ' + lib.my.from.name : ''), ''] : lib.tpl ? ['我的模板', ''] : mtId ? ['多层花型模板', ''] : ef ? ['AI · ' + (ef.阶段 || '条目') + (e ? ' · ' + e.id : ''), ''] : e ? ['AI 条目 · ' + e.id, ''] : lib.formal ? ['正式库 · ' + lib.formal.id, 'ok'] : lib.key === 'combo' ? ['组合编辑器', ''] : ['花型模板', ''];
+  chips.push(src);
+  const v = wb.src.kind === 'mine' && list.find(x => x.id === wb.src.id);
+  chips.push(v ? [v.draft ? '版本：草稿' : v.auto ? `版本：导出时 ${v.at.slice(5)}` : `版本：${v.name}`, 'v'] : [lib.my ? '版本：已保存' : '版本：原始', 'v']);
+  if (changed) chips.push(['● 改了没保存', 'warn']);
+  // 素材包：AI 条目看状态清单里的导出（同一指纹 = 一致）；自己的效果 / 模板看这台浏览器里「导出时」存的那份和现在比
+  let pk = null;
+  if (ef && e && typeof effReady === 'function' && !changed && wb.src.kind !== 'mine') { const r = effReady(ef); pk = !r.ex ? ['素材包：还没导出', 'dim'] : r.ex.ver === r.ver ? [`素材包 ✓ 和这一版一致（${r.ex.job || ''}）`, 'ok'] : ['素材包：过期（导出后参数或烘焙器改了）', 'warn']; }
+  else if (ef && e) pk = ['素材包：你改过参数，和 AI 导出的不一样', 'dim'];
+  else { const autos = list.filter(s => s.auto === 'export'), last = autos[autos.length - 1];
+    if (!last) pk = ['素材包：这台电脑没导出过', 'dim'];
+    else { let same = false; try { same = JSON.stringify(last.snap) === wbSig() && (!last.ov || last.ov === OUT_SIG()); } catch (err) { }
+      pk = same ? [`素材包 ✓ 导出于 ${last.at.slice(5)}，和现在一致`, 'ok'] : [`素材包：导出于 ${last.at.slice(5)}，之后改过`, 'warn']; } }
+  if (pk) chips.push(pk);
+  return { name, chips };
+}
+function idBarSync(list, changed) {
+  const host = $('#abId'); if (!host) return;
+  let info; try { info = idBarInfo(list, changed); } catch (err) { host.hidden = true; return; }
+  if (host.hidden) host.hidden = false;
+  const html = info.chips.map(([t, c]) => `<span class="idc ${c || ''}">${t}</span>`).join('');
+  if ($('#abIdName').textContent !== info.name) $('#abIdName').textContent = info.name;
+  const ch = $('#abIdChips'); if (ch.dataset.h !== html) { ch.innerHTML = html; ch.dataset.h = html; }
+  const tt = [info.name, ...info.chips.map(x => x[0])].join('\n'); if (host.title !== tt) host.title = tt;
 }
 setInterval(() => { if (!document.hidden && !$('#assetBar').hidden) wbSync(); }, 1000);
 
@@ -218,7 +250,7 @@ async function wbSave(asNew) {
 const WB_AUTO_MAX = 3;
 function wbAutoExport(label) {
   try {
-    const list = wbList(), it = { id: 'x' + Date.now().toString(36), name: '导出时', auto: 'export', label: String(label || ''), at: wbNow(), base: wbBaseId(), baseVer: lib.review && lib.review.ver || '', snap: wbSnap() };
+    const list = wbList(), it = { id: 'x' + Date.now().toString(36), name: '导出时', auto: 'export', label: String(label || ''), at: wbNow(), base: wbBaseId(), baseVer: lib.review && lib.review.ver || '', snap: wbSnap(), ov: OUT_SIG() };     // 4.9.1 ov：身份条拿它判断素材包和现在一不一样
     list.push(it); const autos = list.filter(s => s.auto); for (const s of autos.slice(0, Math.max(0, autos.length - WB_AUTO_MAX))) list.splice(list.indexOf(s), 1);
     wbPut(list); wbSync();
   } catch (e) { console.warn('导出时存版本失败', e); }
@@ -483,11 +515,26 @@ function setTimingParam(k, v) {
   const P = state.P, li = state.tab === 'combo' ? state.comboSel : 0, pk = PHASE_KEY[k];
   const q = pk && phasesOf(P).find(z => z.k === pk), ign = +P.ignDelay || 0;
   const at = { ign: v, burn: ign + v, after: ign + (+P.burn || 0) + v, sstart: ign + v, sstop: ign + v, dim: v, ember: v }[pk];
-  const before = JSON.stringify([P.duration, P.cutIn, P.cutOut, P.burn, P.sparkStart, P.sparkStop]);
+  const before = JSON.stringify([P.duration, P.cutIn, P.cutOut, P.burn, P.sparkStart, P.sparkStop]), b0 = TIMING_SHOWN.map(x => +P[x] || 0);
   const { moved } = timingEdit(P, li, () => { if (q && !(pk === 'sstart' && !(v > 0)) && !(pk === 'sstop' && !(v > 0))) q.set(at); else P[k] = v; });
   if (JSON.stringify([P.duration, P.cutIn, P.cutOut, P.burn, P.sparkStart, P.sparkStop]) !== before) refreshPanelValues();
   onParam();
   if (moved.size) { for (const j of moved) { const e2 = state.layers[j] && state.lib.find(x => x.name === state.layers[j].lib); if (e2) queueLayerBake(e2); } stage2.tlSig = ''; }
+  timingNote(k, TIMING_SHOWN.map((x, i) => [x, b0[i], +P[x] || 0]).filter(([x, a, b]) => x !== k && Math.abs(a - b) > 1e-6), moved, li);
+}
+// 4.9.2（隐性耦合 T01 / 筛查 #5「时间约束先显示」、交互宪章 3.4「系统替你做的事要写出来」）：改一个时刻，别的时刻被规则推着走了，
+// 以前只是数值悄悄变；现在提示一行：跟着变了哪几个、从多少到多少、为什么、怎么单独改。拖滑杆时同一组变化 2 秒内只提示一次
+const TIMING_SHOWN = ['ignDelay', 'burn', 'afterBurn', 'sparkStart', 'sparkStop', 'duration', 'cutIn', 'cutOut'];
+const TIMING_NAME = { ignDelay: '点火延迟', burn: '燃烧时间', afterBurn: '第二段燃烧', sparkStart: '火花开始时刻', sparkStop: '火花停止时刻', duration: '序列时长', cutIn: '入点', cutOut: '出点', sparkLife: '火花寿命', sparkLifeEnd: '末段火花寿命', emberLife: '余烬寿命', headDimUntil: '前段结束' };
+function timingNote(k, pushed, moved, li) {
+  if (!pushed.length && !(moved && moved.size)) return '';
+  const f = x => (+x).toFixed(2);
+  const msg = `改「${TIMING_NAME[k] || k}」，跟着变了：` + [pushed.map(([x, a, b]) => `${TIMING_NAME[x] || x} ${f(a)} → ${f(b)} s`).join('、'),
+    moved && moved.size ? `同一时刻粘在一起的第 ${[...moved].map(j => j + 1).join('、')} 层也挪了` : ''].filter(Boolean).join('；')
+    + '（时间先后不能乱：火花在燃烧期间、入点在出点前、序列盖住内容；要单独改，在时间轴上关掉「跟着走」「粘连」）';
+  const sig = k + '|' + pushed.map(x => x[0]).join(',') + '|' + (moved ? [...moved].join(',') : ''), now = Date.now();
+  if (!(stage2.tnote && stage2.tnote.sig === sig && now - stage2.tnote.t < 2000)) flash(msg, false, 7000);
+  stage2.tnote = { sig, t: now, msg }; return msg;
 }
 // 「恢复」= 回到打开时的版本（AI 版 / 你保存的版本，wbArm 记下的样子），不是花型模板默认（走查 B12）；多层时只恢复正在调的这一层
 function putObj(o, v) { for (const k of Object.keys(o)) delete o[k]; Object.assign(o, structuredClone(v)); }
@@ -576,11 +623,13 @@ function trackDrag(ev, h) {
     if (cut) { applyCut(P, sp, cut, tl, true); return; }
     // 同一批星的另一层在同一时刻的点（接力：引线火花停 = 锦点火；四尺玉燃烧结束 = 红点亮起）一起移动。
     // 不只是拖的这个点：这一层里因为它跟着变的点（拖点火时燃烧结束、火花停都跟着走；燃烧结束收到火花停前面时火花停也收）也带着各自的接力点走
+    const b0 = TIMING_SHOWN.map(x => +P[x] || 0);
     const { dd, moved } = timingEdit(P, li, () => q.set(tl));     // 4.2.9：和右栏滑杆同一套规则（时长跟着、接力一起动、入点跟着点火）
+    const own = Object.keys(PHASE_KEY).filter(x => PHASE_KEY[x] === q.k), pushed = TIMING_SHOWN.map((x, i) => [x, b0[i], +P[x] || 0]).filter(([x, a, b]) => !own.includes(x) && x !== 'duration' && Math.abs(a - b) > 1e-6);     // 4.9.2：这一层里被推着走的别的时刻也写出来
     const q1 = phasesOf(P).find(z => z.k === q.k); tl = q1 ? q1.t : tl;   // set 可能夹住 / 改回默认：按实际落点
     refreshPanelValues(); refreshVisibility(); onParam();
     if (moved.size) rebakeLayers([...moved]);
-    flash(`${q.lab} 改到 ${tl.toFixed(2)} s${dd ? `，序列时长跟着${dd > 0 ? '加' : '减'} ${Math.abs(dd).toFixed(2)} s` : ''}${moved.size ? `；第 ${[...moved].map(j => j + 1).join('、')} 层接力的点一起动` : ''}，正在重烘`);
+    flash(`${q.lab} 改到 ${tl.toFixed(2)} s${dd ? `，序列时长跟着${dd > 0 ? '加' : '减'} ${Math.abs(dd).toFixed(2)} s` : ''}${pushed.length ? `；跟着变了：${pushed.map(([x, a, b]) => `${TIMING_NAME[x] || x} ${a.toFixed(2)} → ${b.toFixed(2)} s`).join('、')}（时间先后不能乱）` : ''}${moved.size ? `；第 ${[...moved].map(j => j + 1).join('、')} 层接力的点一起动` : ''}，正在重烘`, false, pushed.length || moved.size ? 7000 : 0);
   };
   h.addEventListener('pointermove', mv); h.addEventListener('pointerup', up); h.addEventListener('pointercancel', up);
 }
@@ -624,7 +673,7 @@ function unitExportLayer(i) {
 }
 function renderUnitMenu() {
   const host = $('#abUnitMenu'), ts = unitTargets(), combo = state.tab === 'combo';
-  host.innerHTML = `<p class="hint">单束 = 只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条；比大面片省 overdraw。</p>`
+  host.innerHTML = `<p class="hint">单束 = 只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条；比大面片省 overdraw。</p><p class="hint">注意：单束贴图里的星按直线、不受力烘——重力、风、湍流、初速 / 燃烧时间随机都关了；弯曲和快慢不一由 Cascade 的发射器做（4.9.2 写明）。</p>`
     + (ts.length ? ts.map(t => `<button type="button" data-u="${t.i}">${combo ? `${t.label}：PC 改成单束（导出整包时在里面）` : `导出 ${t.label} 的单束包`}</button>`).join('') : '<p class="hint">当前效果没有能出单束的层（千轮、分裂、蜂和非球形排布不行）。</p>')
     + (!combo && ts.length && state.P.form !== 'unit' ? '<button type="button" id="abUnitView">把产物改成单束（在画面里看）</button>' : '');
   host.querySelectorAll('[data-u]').forEach(b => b.addEventListener('click', () => { $('#abUnit').open = false; unitExportLayer(+b.dataset.u); }));
@@ -689,8 +738,16 @@ function stageTick(D) {
   $('#vfTitle').textContent = `${srcLabel() || (lib.key === 'combo' ? '组合编辑器' : '')}${srcLabel() ? ' · ' : ''}${state.tab === 'asset' ? '贴图回放' : VIEW_NAMES[state.view] || ''}${scopeLabel()}`;
   $('#vfSpec').textContent = state.tab === 'asset' ? '' : specLabel();
   buildTlBars(); syncGate();
-  const ab = $('#abState'); if (ab) { const st = state.bakeError ? ['bad', '烘焙失败 · 保留上次成功'] : state.baking || state.dirty ? ['is-baking', '烘焙中…'] : ['', '']; ab.className = 'ab-state ' + st[0]; ab.textContent = st[1]; }
+  abStateSync();
   if (stage2.deliv && !$('#delivView').hidden && stage2.delivSig !== stage2.tlSig) renderDeliv();
+}
+// 4.9.1：自动烘焙关时改了参数不烘，以前这里一直写「烘焙中…」；现在烘焙中 / 贴图是旧的 / 失败分开写（stageTick 和 wbSync 都调）
+function abStateSync() {
+  const ab = $('#abState'); if (!ab) return; const busyB = state.baking || (typeof bakesPending === 'function' && bakesPending()), stale = typeof bakeStale === 'function' ? bakeStale() : state.dirty;
+  const auto = typeof autoBakeOn === 'function' && autoBakeOn();     // 自动烘焙开：停手 0.38 s 后自己烘，中间也算「烘焙中」
+  const st = state.bakeError ? ['bad', '烘焙失败 · 保留上次成功'] : busyB || (stale && auto) ? ['is-baking', '烘焙中…'] : stale ? ['stale', '贴图是旧的 · 按 B 烘'] : ['', ''];
+  if (ab.textContent !== st[1]) { ab.className = 'ab-state ' + st[0]; ab.textContent = st[1]; }
+  const tt = stale && !busyB && !state.bakeError ? '实时模拟已经是新参数；引擎回放 / 贴图 / 导出用的贴图还是上次烘的（自动烘焙关着）' : ''; if (ab.title !== tt) ab.title = tt;
 }
 // 通过门槛：只影响「通过」按钮（意见、要改照常）
 function gateReasons() {

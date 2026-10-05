@@ -54,6 +54,10 @@
   W6 4.8.1（走查 20-05）：导出可以取消（进度条旁「取消」，上次结果还在）；导出没做完再点导出不会叠第二个
   W7 4.9.0（5.0 第 3 步，Q1「物理给默认，每个值都能改」+ 参数表「删」）：联动的值都有链条——接着时灰字显示算出来的值、直接改就断开存你填的数、点链条接回去存哨兵值，
      模拟按哨兵值算出来和按算出来的数填进去一样；旧（待删）参数这个效果没用上时收进模块底下的「旧（待删）」开关、用着的照常显示带「旧」，搜索找得到；所有花型打开时参数值不变
+  W8 4.9.1（交互宪章 5 身份条）：顶栏有名字、来源、版本；改了参数标「改了没保存」；自己的效果导出后标「素材包 ✓ 和现在一致」、再改标「之后改过」；
+     AI 待验收效果（就绪的）标「素材包 ✓ 和这一版一致」；自动烘焙关时改参数，顶栏写「贴图是旧的」不写「烘焙中…」
+  W9 4.9.2（梳理 6.2 / 6.4、隐性耦合 T01）：改一个时刻、别的时刻被规则推着走时提示「跟着变了：× a → b s」；数值超出滑杆范围时数值框标出来并写明照样起作用；
+     单束导出菜单写明贴图里的星不受力、随机关了
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -1561,6 +1565,55 @@ async def w7(pg):
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:900]
 
 
+async def w8(pg):
+    """4.9.1：身份条"""
+    bad, info = [], {}
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    rd = "(() => { wbSync(); return { name: $('#abIdName').textContent, chips: [...document.querySelectorAll('#abIdChips .idc')].map(c => c.textContent), hidden: $('#abId').hidden, ab: $('#abState').textContent }; })()"
+    r = await pg.evaluate(rd); info['菊'] = r
+    if r['hidden'] or '菊' not in r['name'] or '花型模板' not in r['chips'] or not any(c.startswith('版本') for c in r['chips']): bad.append(f'菊打开时身份条不对：{r}')
+    await pg.evaluate("(() => { bakeMode.auto = false; state.P.stars += 3; onParam(); return 0; })()"); await pg.wait_for_timeout(900)
+    r = await pg.evaluate(rd); info['改了'] = r
+    if '● 改了没保存' not in r['chips']: bad.append(f'改了参数，身份条没标「改了没保存」：{r}')
+    if '烘焙中' in r['ab'] or '贴图是旧的' not in r['ab']: bad.append(f"自动烘焙关时改参数，顶栏写的是「{r['ab']}」（应写贴图是旧的）")
+    await pg.evaluate("(() => { wbAutoExport('检查'); return 0; })()")
+    r = await pg.evaluate(rd); info['导出后'] = r['chips']
+    if not any(c.startswith('素材包 ✓') for c in r['chips']): bad.append(f'导出后身份条没标素材包一致：{r}')
+    await pg.evaluate("(() => { state.P.stars += 2; onParam(); return 0; })()")
+    r = await pg.evaluate(rd); info['导出后又改'] = r['chips']
+    if not any('之后改过' in c for c in r['chips']): bad.append(f'导出后又改，身份条没标「之后改过」：{r}')
+    await pg.evaluate("(() => { state.P.stars -= 5; onParam(); bakeMode.auto = null; return 0; })()")
+    key = await pg.evaluate("(() => { const ef = EFFS().find(f => f.阶段 === '待验收' && f.待验收版 && effReady(f).ok); return ef ? ef.key : null; })()")
+    if key:
+        await pg.evaluate(f"(() => {{ window.__opening = true; Promise.resolve(openEffect(EFFS().find(e => e.key === {json.dumps(key)}))).finally(() => window.__opening = false); return 0; }})()"); await idle(pg)
+        r = await pg.evaluate(rd); info['AI ' + key] = r['chips']
+        if not any(c.startswith('AI · 待验收') for c in r['chips']) or not any(c.startswith('素材包 ✓ 和这一版一致') for c in r['chips']): bad.append(f'就绪的待验收效果身份条不对：{r}')
+    else: bad.append('找不到就绪的待验收效果')
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)[:900]
+
+
+async def w9(pg):
+    """4.9.2：时间约束提示、超出滑杆范围、单束说明"""
+    bad, info = [], {}
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate("""(() => { const fl = []; const of = flash; flash = (m, e, ms) => { fl.push(String(m)); return of(m, e, ms); };
+      const P = state.P, b = +P.burn; setTimingParam('sparkStop', +(b * 0.6).toFixed(2)); stage2.tnote = null;     // 先把火花停止时刻打开（填一个数），再往后推
+      setTimingParam('sparkStop', +(b + 0.8).toFixed(2)); const a1 = { burn: +P.burn, stop: +P.sparkStop, msg: fl.slice(-1)[0] || '' };
+      stage2.tnote = null; setTimingParam('burn', +(b * 0.5).toFixed(2)); const a2x = 0; const a2 = { burn: +P.burn, stop: +P.sparkStop, msg: fl.slice(-1)[0] || '' };
+      flash = of; return { b, a1, a2 }; })()""")
+    info['时间约束'] = r
+    if not (r['a1']['burn'] > r['b'] + 1e-6 and '燃烧时间' in r['a1']['msg'] and '跟着变了' in r['a1']['msg']): bad.append(f"火花停止时刻推后、燃烧时间被推着走，没提示：{r['a1']}")
+    if not ('火花停止时刻' in r['a2']['msg'] and '跟着变了' in r['a2']['msg']): bad.append(f"燃烧时间缩短、火花停止时刻被收回来，没提示：{r['a2']}")
+    r = await pg.evaluate("""(() => { const x = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'crackle'); if (!x) return null; const row = x[0], num = row.querySelector('.num'), max = +row.querySelector('input[type=range]').max;
+      num.value = String(max * 2.5); num.dispatchEvent(new Event('change')); const o = { v: state.P.crackle, max, over: row.classList.contains('over'), tip: num.title };
+      num.value = String(max / 2); num.dispatchEvent(new Event('change')); o.back = row.classList.contains('over'); state.P.crackle = 0; onParam(); row._refresh(); return o; })()""")
+    info['超出滑杆'] = r
+    if not r or not r['over'] or '照样起作用' not in r['tip'] or r['back'] or abs(r['v'] - r['max'] * 2.5) > 1e-6: bad.append(f'数值超出滑杆范围没标出来 / 没写明：{r}')
+    r = await pg.evaluate("(() => { renderUnitMenu(); return $('#abUnitMenu').textContent; })()")
+    if '不受力' not in r: bad.append('单束导出菜单没写明贴图里的星不受力、随机关了')
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)[:900]
+
+
 async def x2(pg):
     """4.4.2（用户 10-04 21:17）：单层效果（牡丹模板）也有「导出方案」：输出 › 导出方案里 PC 能选 GPU 光点 / 单束 / 不出，手机能选不出；选光点后 cascade.json 是一个 GPU 光点发射器、引擎回放画光点、说明写有尾迹没了"""
     bad, info = [], {}
@@ -1641,7 +1694,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

@@ -33,7 +33,7 @@ function busy(on, text, p) {
   if (busyJob.on && busyJob.req && p != null) { busyJob.req = false; throw new Error('已取消（你点了取消；上次的结果、参数都还在）'); }
 }
 let flashTimer = 0;
-function flash(msg, bad) { if (!bad && typeof storeJustFailed === 'function' && storeJustFailed() && /保存|存成|已存|已更新|已新建/.test(msg)) { msg = '没存上（浏览器里存不进去）：' + msg; bad = true; } const s = $('#status'); s.textContent = msg; s.className = bad ? '' : 'on'; clearTimeout(flashTimer); flashTimer = setTimeout(() => { s.textContent = ''; s.className = ''; }, 3500); }
+function flash(msg, bad, ms) { if (!bad && typeof storeJustFailed === 'function' && storeJustFailed() && /保存|存成|已存|已更新|已新建/.test(msg)) { msg = '没存上（浏览器里存不进去）：' + msg; bad = true; } const s = $('#status'); s.textContent = msg; s.className = bad ? '' : 'on'; clearTimeout(flashTimer); flashTimer = setTimeout(() => { s.textContent = ''; s.className = ''; }, ms || 3500); }
 function setStatus(msg) { const s = $('#status'); s.textContent = msg; s.className = msg ? 'on' : ''; }
 
 // 上升类的序列时长跟随到顶时间
@@ -362,7 +362,7 @@ function formOptions(P) {
 const FORM_NOTES = {
   master: '整朵花烘成一张序列，一个面片播放。远景、大型礼花的主层。',
   segments: '长时花型（锦冠、柳）帧数不够时，把开花段和下垂段分成两张贴图、两个发射器，各自分配帧数。',
-  unit: '贴图里只有一颗星的星头和尾迹（沿速度方向），Cascade 按拟合的轨迹发射每颗星。菊类最省 overdraw。',
+  unit: '贴图里只有一颗星的星头和尾迹（沿速度方向），Cascade 按拟合的轨迹发射每颗星。菊类最省 overdraw。贴图里的星按直线烘：重力、风、湍流、初速 / 燃烧随机都关了，弯曲和快慢不一由 Cascade 做。',
   loop: '周期内的火花按周期性编号生成，最后一帧直接接回第一帧。Cascade 里 Emitter Loops = 0 无限循环。',
   emitset: '循环层 + 粒子发射器：星头和白热段烘成一个速度朝向的循环面片（开花后换贴图动态消散），火花、落火、烟带是 Cascade 软圆点发射器（PC GPU / 手机 CPU），每颗自己的寿命、错落熄灭；出生位置和初速按弹道曲线。',
   trail: '升空尾缀：星头 + 尾迹整条烘进细长面片（速度朝向）。循环 64 帧真循环；开花后换消散序列（30 fps / 20 fps 两个版本），第 0 帧就是上升结束那一帧。'
@@ -429,7 +429,7 @@ function autoDefRow(row, k, step) {
     bt.setAttribute('aria-label', on ? '联动中，点一下断开（固定在现在的值）' : '已断开，点一下接回联动');
     bt.title = on ? `联动中：${a[2]}。直接拖 / 输入就断开；点链条也能断开（固定在 ${fmtV(v, step)}）` : `已断开：用你填的 ${fmtV(P[k], step)}。点链条接回去（${a[2]}，现在算出来是 ${fmtV(v, step)}）`;
     tx.textContent = on ? `跟着算：${a[2]}` : `你填的 · 跟着算是 ${fmtV(v, step)}（${a[2]}）`;
-    if (on) { inp.value = v; num.value = fmtV(v, step); }
+    if (on) { inp.value = v; num.value = fmtV(v, step); row.classList.remove('over'); num.title = ''; }
   };
   bt.addEventListener('click', () => { const P = state.P; P[k] = autoLinked(k, P[k]) ? Math.max(a[0], +a[1](P)) : a[3]; onParam(); sync(); });
   inp.addEventListener('input', () => sync()); num.addEventListener('change', () => sync());     // slider() 先存你填的数（断开），这里只刷新链条
@@ -442,7 +442,9 @@ function slider(host, id, label, unit, min, max, step, get, set, def, lockKey) {
     `<label class="k" for="${id}" title="${label}${unit ? '（' + unit + '）' : ''}；双击恢复默认">${label}${unit ? `<small>${unit}</small>` : ''}</label>` +
     `<input type="range" id="${id}" min="${min}" max="${max}" step="${step}"><input class="num" type="number" step="${step}" aria-label="${label} 数值">`;
   const inp = row.querySelector('input[type=range]'), num = row.querySelector('.num');
-  const show = () => { num.value = fmtV(get(), step); };
+  // 4.9.2（梳理 6.2「滑杆范围不够」：你把爆裂数填到 100，滑杆只到 40，看不出来）：滑杆只是常用范围，数值框不设上限；超出时数值框描琥珀色边、悬停写明
+  const show = () => { const v = +get(); num.value = fmtV(v, step); const o = isFinite(v) && !row.classList.contains('adef-on') && (v > +inp.max + 1e-9 || v < +inp.min - 1e-9);
+    row.classList.toggle('over', o); num.title = o ? `超出滑杆的常用范围（${inp.min}–${inp.max}），照样起作用；滑杆停在一头` : ''; };
   inp.value = get(); show();
   inp.addEventListener('input', () => { set(+inp.value); show(); });
   // 数值框：可以直接输入，允许超出滑杆范围（滑杆停在两端）
