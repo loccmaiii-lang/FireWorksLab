@@ -1,0 +1,27 @@
+{
+ "effect": "jinmangju",
+ "entry": "JM4-40",
+ "ver": "624d9bfe·master5.0",
+ "time": "2026-10-05 23:23",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "JinMangJu",
+   "replica": "JM4-40",
+   "files": [
+    "JinMangJu.json",
+    "JinMangJu_Cascade参数.txt",
+    "JinMangJu_Mobile.json",
+    "JinMangJu_曲线.csv",
+    "T_EFX_FireWorks_GoldChrysanthemum_4x4_01.png",
+    "T_EFX_FireWorks_GoldChrysanthemum_4x4_01_C.png",
+    "T_EFX_FireWorks_GoldChrysanthemum_4x4_01_HD.png",
+    "T_EFX_FireWorks_GoldChrysanthemum_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,56 @@
+23:21:50 开始：4.7.0（5.0 第 2 步：一套物理 + 固定机位匀速帧）本机全面冒烟 + 界面状态检查（真烘焙）（界面冒烟检查）
+23:28:32 全模板_henka：6 s 
+23:28:32 全模板_strobe：5 s 
+23:28:32 全模板_glitter：5 s 
+23:28:32 全模板_crackle：6 s 
+23:28:32 全模板_matsuba：6 s 
+23:28:32 全模板_crossette：5 s 
+23:28:32 全模板_ochiba：5 s 
+23:28:32 全模板_jisa：5 s 
+23:28:32 全模板_ring：5 s 
+23:28:32 全模板_saturn：5 s 
+23:28:32 全模板_kata：5 s 
+23:28:32 全模板_water：6 s 
+23:28:32 全模板_rise：4 s 
+23:28:32 全模板_tailS：6 s 
+23:28:32 全模板_tailM：6 s 
+23:28:32 全模板_tailL：7 s 
+23:28:32 全模板_trailS：5 s 
+23:28:32 全模板_trailM：5 s 
+23:28:32 全模板_trailL：5 s 
+23:28:32 全模板_fountain：4 s 
+23:28:32 全模板_falls：4 s 
+23:28:32 全模板_wheel：5 s 
+23:28:32 全模板_fan：4 s 
+23:28:32 全模板_barrage：4 s 
+23:28:32 全模板_shikake：5 s 
+23:28:32 全模板_physS：4 s 
+23:28:32 全模板_physM：4 s 
+23:28:32 全模板_physL：4 s 
+23:28:32 全效果_jinmangju：6 s 
+23:28:32 全效果_trail_v5：5 s 
+23:28:32 全效果_trail_phys：8 s 
+23:28:32 全效果_qiuxing_a：140 s 
+23:28:32 全效果_qiuxing_b：7 s 
+23:28:32 全效果_qiuxing_c：6 s 
+23:28:32 全效果_qiuxing_d：10 s 
+23:28:32 全效果_qingning：6 s 
+23:28:32 全效果_wancai：6 s 
+23:28:32 全效果_hongchao：23 s 
+23:28:32 全效果_hiki_nishiki：9 s 
+23:28:32 ✅ 没有报错
+23:28:32 界面冒烟：✅ 没有报错
+23:34:48 ✅ S4 {"spark": {"tabsWhileFiltered": true, "filtersCleared": true, "shown": true, "rows": 22, "recipeUnchanged": true, "onlyThis": true}, "all": {"emitters": 8}} （1.2 s）
+23:34:48 ✅ E1 {"defaults": {"noFade": true, "endMul": 1, "fb": "fixed", "zoom": "off", "mode": "fixed", "holds": [3, 3]}, "sel": [], "end": {"dur": 4.4, "spark": 4.4}, "coolAbs": true, "twHz": {"def": 0, "on": {"at": "火花›亮度", "rand": "sparkBright", "vis": true}, "off": {"at": "火花›亮度", "rand": "sparkBright", "vis": false}}} （0.9 s）
+23:34:48 ✅ X2 {"牡丹": {"mod": "输出›导出方案", "shown": true, "opts": ["seq", "unit", "dots", "off"]}, "选光点": {"so": {"pc": "dots", "mobile": "seq"}, "em": [["L1_Dots", true, "soft_dot"]], "dotRow": true, "note": "PC：GPU 光点（约 90 颗，软圆点材质，没有贴图） · 手机：序列（纯图片）", "n": 90}, "引擎回放": {"pc": "dots", "mobile": "seq", "n": 90, "lit": 90}, "光点点灭": {"strobe": {"n": 47, "on": 0.305, "duty": 0.3}, "kiku": {"n": 2, "on": null, "duty": 0.35}}} （9.8 s）
+23:34:48 ✅ N3 478 项面板参数：默认值、名字、发射器归属、规则表都对得上 （0.5 s）
+23:34:48 ✅ R5 {"defaults": [0, 0, 1, 0, 0, 0], "phys": {"v0": 156.9, "T": 7.37, "H": 410, "want": 410, "s1": 107.2, "vb": 4}, "lin": {"v0": 106.5, "s1": 90.9}, "glow": [353.2, 353.1], "gpu": {"est": 800, "raw": 1435, "cap": 800, "f": 0.5576704426076864}, "emit": ["SparksCoarse", "Embers", "HeadGlow", "SparkPops", "LaunchGlow", "LaunchSparks"], "tex": ["F", "M"], "cal": [1.386, 1.498, 11.192], "sk": [0.007, 0.6504, 0.15], "where": "星头›弹道", "panel": {"rtT": false, "rtVt": true, "info": "物理弹道：终端速度 64.6 m/s（按弹径 0.3 m 算） · 出膛 156", "dur": 12.12}} （1.0 s）
+23:34:48 ✅ R6 {"def": {"far": 0, "tex": "F,M", "nw": true, "em": ["SparksCoarse", "Embers", "HeadGlow", "SparkPops", "LaunchGlow", "LaunchSparks"]}, "far": {"tex": "F,M,C", "est": 800, "f": 0.963, "cls": {"F": {"R": 4200, "tex": 4079.8, "gpu": 120.3, "alive": 144, "budget": 150}, "M": {"R": 1600, "tex": 1512.3, "gpu": 87.5, "alive": 193, "budget": 200}, "C": {"R": 300, "tex": 214.9, "gpu": 84.9, "alive": 289, "budget": 300}}}, "cap": {"tex": "F,M,C", "est": 400, "f": 0.481, "cls": {"F": {"R": 4200, "tex": 4139.6, "gpu": 60.2, "alive": 72, "budget": 150}, "M": {"R": 1600, "tex": 1556.1, "gpu": 43.8, "alive": 96, "budget": 200}, "C": {"R": 300, "tex": 257.4, "gpu": 42.5, "alive": 144, "budget": 300}}}, "w": [1, 1, 0.5, 0, 0], "twAlt": 3, "disp": {"size": [0.38, 2], "light": [1.7033, 1.7031]}, "exp": {"em": ["RiseLoop", "TrailFar", "SparksFine", "SparksTwinkle"], "tex": ["loop", "cutoutLoop", "ramp", "far", "cutoutFar"], "sheets": ["Loop", "Far"], "nearComp": 1.563, "far": {"align": "Velocity", "delay": 0.8, "life": 10.3651, "size": [3000, 43000, 1], "loc": [100, 0, 20000], "vel": [0, 0, 50], "keys": 65}}, "keys": {"SparksFine": [2, 23, 10, 12], "SparksTwinkle": [2, 23, 10, 12], "SparksCoarse": [2, 23, 10, 12], "Embers": [2, 23, 10, 12], "HeadGlow": [0, 0, 0, 7], "SparkPops": [2, 23, 10, 6], "LaunchGlow": [0, 0, 0, 4], "LaunchSparks": [0, 0, 0, 10]}, "farKeys": 7, "farFade": 7.53, "where": "火花共用›贴图", "panel": {"rtFTex": false, "rtNearA0": true, "rtGpuC": true, "rtGpuDisp": true}, "layers": {"keys": ["near", "far", "SparksFine", "SparksTwinkle", "SparksCoarse", "Embers", "HeadGlow", "SparkPops", "LaunchGlow", "LaunchSparks"], "off": true, "hud": ["近段 15,782 + 远段 9,811", "近段 15,782 + 远段 0", "近段 0 + 远段 9,811", "近段 15,782 + 远段 9,811"]}} （1.6 s）
+23:34:48 ✅ W1 {"时间轴": {"tle": 0, "curves": false, "rows": 2, "opts": ["follow", "glue"]}, "精简布局": {"hid": true, "back": true}, "开关": {"d0": 3.55, "i0": 1.28, "s0": 1.2, "on": {"dur": 3.75, "ign2": 1.48}, "back": {"dur": 3.55, "ign2": 1.28}, "off": {"dur": 3.55, "ign2": 1.28}}, "派生": {"my": true, "from": "引菊 → 锦（橙色直线菊转金锦，尾缀3.0_A 主层）", "n0": 2, "n1": 2, "n2": 3, "sl": 3.1, "id": "fxmuvesvbi", "links": 1}, "模板": {"n": 1, "id": "tmuvet0zz", "type": "kiku", "inPicker": true, "tpl": true, "key": "tpl:tmuvet0zz", "stars": 293, "want": 293, "del": "删除这个模板（删了 6 秒内能撤销）"}, "删除撤销": {"gone": true, "back": true, "g2": true, "b2": true}, "还原": {"a": {"sl": 0.55, "v0": 170}, "b": {"v0": 150}, "d": {"sl": 0.55, "v0": 150}}, "隐藏": {"hid": true, "back": true}} （24.2 s）
+23:34:48 ✅ W2 {"左栏": {"groups": ["review", "wip", "myfx", "mytpl", "types", "mtypes", "tools"], "passed": ["ef:jinmangju", "ef:trail_v5"], "inMy": 2, "first": ["ef:jinmangju", "ef:trail_v5"], "del": 0}, "出点": {"txt": "最后一批火花约 2.80 s 灭完，序列 2.83 s 盖得住（5.0 起不整体淡出，等火花自然灭完）。 出点在 2.83 s：序列时长 9.00 s 后面那段不导出 清除出点", "btn": true, "after": 0}, "时间轴": {"bake": 2.6666666666666665, "end": 7}, "远段上移": {"z": 102}} （4.6 s）
+23:34:48 ✅ W3 {"20-01": {"id": "fxmuvet9qp", "key": "my:fxmuvet9qp", "gone": true, "n0": 0, "back": true, "n1": 2, "open": "my:fxmuvet9qp"}, "20-02": {"a": true, "b": true, "gone": true, "btns": 2}, "20-04": {"before": true, "tpl": false, "upd": false, "key": "type:kiku"}, "20-03": {"n0": 2, "n1": 1, "n2": 2, "st": 77, "confirms": 0}, "19-C03": {"a": 163, "b": 163}, "19-C04": {"off": true, "a": 157, "b": 157}, "19-C01": {"err": "第 1 层「菊」按新参数烘焙失败，导出会拿旧贴图：先改参数或点「重试」"}, "19-C05": {"cm": [1234, 1234], "sc": [1, 1]}, "19-C02": {"n": 1, "max": 0}, "小修1": {"txt": "最后一批火花约 2.80 s 灭完，序列 9.00 s 盖得住（5.0 起不整体淡出，等火花自然灭完）。 贴图实际只烘到 2.73 s：2.73–9.00 s 全黑（最亮像素 < 2/255）没烘，时间轴也到这里为止。序列时长再加长也一样；要更长，调星的燃烧时间或火花寿命。"}, "小修2": {"draft": true, "stars": 211}, "小修3": {"ok": false, "errFlash": true, "bak": true}, "小修4": {"s": 1, "m": 1, "l": 1}, "小修5": "子花继承子弹速度（-1 = 默认：十字排布 0.25，其它 0.35）"} （31.4 s）
+23:34:48 ✅ W4 {"模块": {"星": ["生成", "形状", "初速", "受力", "寿命", "大小", "颜色", "亮度", "闪烁", "点灭", "飘落", "蜂"], "火花": ["生成", "形状", "初速", "受力", "寿命", "大小", "颜色", "亮度", "闪烁", "辉星"], "余烬": ["生成", "形状", "初速", "受力", "寿命", "大小", "颜色", "亮度", "闪烁"], "分叉火花": ["生成", "形状", "初速", "受力", "寿命", "大小", "颜色", "亮度", "闪烁"], "爆裂": ["生成", "形状", "初速", "受力", "寿命", "大小", "颜色", "亮度", "闪烁"], "开花闪光": ["生成", "形状", "初速", "受力", "寿命", "大小", "颜色", "亮度", "闪烁", "闪光"]}, "爆裂 / 开花闪光": {"n": 840, "sig": 2, "abs": 5, "cut": 0.2, "tau": 0.05, "flashSig": 10}, "开花闪光半径用默认": {"row": true, "adef": true, "on": true}, "子花": {"n": 720, "sz": 2.5, "I": 0.4}, "着色器参数缺": [], "加发射器": {"btn": true, "on": 1, "tab": true, "sel": true, "vis": true, "mods": ["生成", "形状", "初速", "受力", "寿命", "大小", "颜色", "亮度", "闪烁"]}, "自定义 1 模拟": {"stars": 150, "dots": 750, "drawn": 4, "k7": 750, "k7sz": 2.1718681511400497, "curve": [[0, 1], [0.5, 2], [1, 0]], "mid": 1.5}, "曲线 / 去掉": {"row": true, "val": "0:1, 1:0.2", "keys": "2 个点：0 → 1，1 → 0.2", "off": 0, "tab": false}, "游戏内大小": {"same": true, "yon": 360, "d300": 138.462, "old300": 360}} （3.8 s）
+23:34:48 ✅ W5 {"曲线行": {"miss": [], "where": {"flashBrightCurve": "开花闪光›亮度", "branchBrightCurve": "分叉火花›亮度", "crackleSizeCurve": "爆裂›大小", "crackleBrightCurve": "爆裂›亮度", "starSizeCurve": "星›大小", "starBrightCurve": "星›亮度", "sparkSizeCurve": "火花›大小", "sparkBrightCurve": "火花›亮度", "emberBrightCurve": "余烬›亮度", "subSizeCurve": "子花›大小", "subBrightCurve": "子花›亮度", "x1SizeCurve": "自定义 1›大小", "x1BrightCurve": "自定义 1›亮度", "x2SizeCurve": "自定义 2›大小", "x2BrightCurve": "自定义 2›亮度"}, "def": []}, "模拟": {"star": [0.8488720705239823, 0.21221801763099557], "crk": [{"I": 0.07578958570957184, "sz": 1}, {"I": 0.15157917141914368, "sz": 3}]}, "着色器缺": []} （1.8 s）
+23:34:48 ✅ L1 版本 burn 1.4 ✓、切层后贴图按新参数 ✓、14 张贴图按命名规则 ✓、PC + 手机 cascade ✓、缩放抖动 [0, 0] ✓、取景收紧 ['fixed', 'none'] （40.1 s）
+23:34:48 界面状态检查：✅ 全过
+23:34:49 完成，用时 13.0 分钟
