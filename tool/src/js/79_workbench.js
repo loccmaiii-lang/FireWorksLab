@@ -21,7 +21,7 @@ function buildLayerCard() {
     const e = layerEntryOf(L), le = e && e.rep ? FW_REVIEW_LIST.find(x => x.id === e.rep) : null;
     const dur = e && e.bake ? bakeTotal(e.bake) / (L.rate || 1) : 0, solo = v.solo === i, mute = v.mute.includes(i);
     return `<div class="lrow${state.comboSel === i ? ' cur' : ''}${mute || (v.solo >= 0 && !solo) ? ' muted' : ''}" data-i="${i}" tabindex="0" role="button">
-      ${le ? thumbHTML(le) : `<span class="th" style="${e ? typeThumbStyle(e.type) : ''}"></span>`}
+      <span class="th" style="${e ? thStyleFor('', () => [thLayerOf(e.P, { ...e.M, stages: L.stages || e.M.stages }, 1)]) : ''}"></span>
       <span class="tx"><b>${i + 1} · ${layerName(i)}</b><small>开始 <input class="lst" type="number" min="0" max="10" step="0.01" value="${(+L.delay || 0).toFixed(2)}" data-st="${i}" aria-label="第 ${i + 1} 层开始时间"> s · 时长 ${dur.toFixed(2)} s${e && e.editSig ? ' · <em>已调</em>' : ''}</small></span>
       <span class="lb"><button type="button" class="mini${solo ? ' on' : ''}" data-solo="${i}" aria-pressed="${solo}">独看</button><button type="button" class="mini${mute ? ' on' : ''}" data-mute="${i}" aria-pressed="${mute}">静音</button></span>${lib.my ? myLayerTools(i) : ''}</div>`;
   });
@@ -152,8 +152,8 @@ function wbSync() {
     : mtId ? [state.layers.length + ' 层', '多层花型模板'].join(' · ')
     : [wbBaseId(), combo ? state.layers.length + ' 层' : '单层', ef ? ef.阶段 : lib.formal ? '正式库' : e ? '条目' : '花型模板'].join(' · ');
   $('#abMyRename').hidden = $('#abMyDelete').hidden = !lib.my;
-  const th = ef && ef.thumb ? `<i style="background-image:url(${ef.thumb})"></i>` : '';
-  const thHost = $('#abThumb'); if (thHost.dataset.k !== wb.key) { thHost.dataset.k = wb.key; thHost.innerHTML = th || (e ? thumbHTML(e).replace(/^<span class="th"/, '<span class="th in"') : `<span class="th in" style="${typeThumbStyle(state.P.type)}"></span>`); }
+  // 4.5.5 示意缩略图（19_thumbsvg.js）：按现在打开的各层现画；层数变了重画
+  const thHost = $('#abThumb'), thK = wb.key + ':' + (combo ? state.layers.length : 1); if (thHost.dataset.k !== thK) { const st = thStyleFor('', thLayersOfState); thHost.dataset.k = st ? thK : ''; thHost.innerHTML = `<span class="th in" style="${st || typeThumbStyle(state.P.type)}"></span>`; }
   const list = wbList(), sel = $('#abSrc'), cur = wb.src.kind === 'mine' ? wb.src.id : 'ai';
   const opts = [['ai', lib.my ? `已保存 · ${(myRec() || {}).updated || ''}` : `AI 版 · ${wbBaseId()}`], ...list.map(s => [s.id, s.auto ? `导出时 · ${s.at.slice(5)}${s.label ? ' · ' + s.label : ''}` : `我的 · ${s.name}（${s.at.slice(5)}）`])];
   const html = opts.map(([v, t]) => `<option value="${v}">${t}</option>`).join('');

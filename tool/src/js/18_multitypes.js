@@ -50,6 +50,13 @@ const MULTI_TYPES = [
       mtOyaKiku('亲星 · 银白菊', 'Kiku', MT_COL.warm, { T0: 2550, sparkLife: 0.28, sparkRate: 140, headBright: 2 }, { ...MT_RAMP_GOLD, ramp2: '#ffdcb0', ramp3: '#fffbf5' }),
       mtCore('芯 1 · 洋红', 'Magenta', MT_RATIO[2][0], MT_COL.magenta, { stars: 360, headSize: 1.0 }),
       mtCore('芯 2 · 绿', 'Green', MT_RATIO[2][1], MT_COL.lime, { stars: 200 })] },
+  { id: 'yaeBlueBotan', name: '八重芯青牡丹 · 金银芯', en: 'YaeshinBlueBotan', group: 0, burn: 2.9,
+    note: '用户参考图 1：亲星是青色牡丹（无尾的铜蓝光点），芯 1 金色长尾菊（金线就是芯星的炭火尾），芯 2 银白短尾菊（中心一团白）。和「八重芯 · 银菊洋红绿」反过来：外层无尾、里面带尾。',
+    src: '用户参考图 1（2026-10-05 20:43）；伊势神宫奉纳花火大会玉名「八重芯ブルー牡丹」（伊势市 PDF）', layers: [
+      mtOyaBotan('亲星 · 青牡丹', 'Blue', MT_COL.blue, { headSize: 1.15, stars: 320 }),
+      // 金线要直、要长：火花几乎不继承星速、少下坠、寿命长（留在出生的地方连成线）
+      mtL('芯 1 · 金长尾菊', 'Gold', 'kiku', 0.8, { stars: 120, headSize: 0.85, headBright: 1.2, sparkRate: 260, sparkLife: 1.15, sparkSpread: 1.0, sparkInherit: 0.06, sparkGrav: 0.35, T0: 2250, cooling: 0.36 }, MT_COL.gold, MT_RAMP_GOLD),
+      mtL('芯 2 · 银白菊', 'Silver', 'kiku', 0.38, { stars: 300, headSize: 1.0, headBright: 1.4, sparkRate: 170, sparkLife: 0.35, T0: 2800, cooling: 0.3 }, MT_COL.silver, MT_RAMP_SILVER, { hi: 1.6 })] },
   { id: 'yaeHenka', name: '八重芯变化菊', en: 'YaeshinHenka', group: 0, burn: 3.0,
     note: '亲星先「引」（橙色带尾、星头暗，0.5 s）再变红、1.55 s 变绿；两层芯同一时刻变色（青 → 银白、黄 → 红）。各层同开、同变、同灭。',
     src: '大曲 / 土浦競技大会常见玉名「八重芯変化菊」；变色星 = 分层星（外层先烧）', layers: [
@@ -79,11 +86,11 @@ const MULTI_TYPES = [
       mtL('亲星 · 银点灭', 'Strobe', 'strobe', 1, { stars: 320, headSize: 1.0, strobeHz: 9, strobeDuty: 0.32, strobeStart: 0.32 }, [[0, MT_COL.orange], [0.45, MT_COL.silver]], MT_RAMP_SILVER, { out: { pc: 'dots', mobile: 'seq' } }),
       ...mtCores([['红', 'Red', MT_COL.red], ['青', 'Blue', MT_COL.blue]])] },
   // ---------------- 冠 · 效果芯 ----------------
-  { id: 'kamuroShin', name: '芯入锦冠菊', en: 'KamuroShin', group: 1, burn: 3.8, R: 130,
-    note: '亲星金锦冠（长火花、慢慢下垂成冠）+ 红芯。芯是普通色星（燃烧短），先灭；冠尾留到最后。',
+  { id: 'kamuroShin', name: '芯入锦冠菊 · 绿芯', en: 'KamuroShin', group: 1, burn: 3.8, R: 130,
+    note: '亲星金锦冠（长火花、慢慢下垂成冠）+ 绿芯。芯是普通色星（燃烧短），先灭；冠尾留到最后。金冠里用绿芯（钡）对比最强，红芯会被金色火花淹掉。',
     src: '锦冠（炭 + 钛长尾下垂）见配方总表 1.3、鸿巢四尺玉返工；「芯入錦冠菊」为常见玉名', layers: [
-      mtL('亲星 · 金锦冠', 'Kamuro', 'kamuro', 1, { stars: 150, vt: 24 }, MT_COL.gold, MT_RAMP_GOLD, { hi: 0.7 }),     // 锦冠火花多而暗、色芯亮：冠压一点，芯才不被冠的火花淹掉
-      mtCore('芯 · 红', 'Red', 0.45, MT_COL.red, { burn: 2.4, vt: 17, stars: 260, headSize: 1.05 }, { hi: 1.7 })] },
+      mtL('亲星 · 金锦冠', 'Kamuro', 'kamuro', 1, { stars: 150, vt: 24 }, MT_COL.gold, MT_RAMP_GOLD, { hi: 0.55 }),     // 锦冠火花多而暗、色芯亮：冠压一点，芯才不被冠的火花淹掉
+      mtCore('芯 · 绿', 'Green', 0.45, MT_COL.green, { burn: 2.4, vt: 17, stars: 260, headSize: 1.05 }, { hi: 1.5 })] },
   { id: 'crackleShin', name: '霹雳蕊牡丹', en: 'CrackleShin', group: 1, burn: 2.8,
     note: '洋红牡丹 + 金色霹雳芯（芯星烧完一起噼啪爆裂）。中式叫法「蕊」= 芯。',
     src: '永丰 10 寸「四色牡丹霹雳蕊」的蕊（配方总表 2.1 霹雳芯）；霹雳星化学见配方总表 1.4', layers: [
@@ -104,7 +111,7 @@ const MULTI_TYPES = [
 ];
 const MULTI_BY_ID = Object.fromEntries(MULTI_TYPES.map(r => [r.id, r]));
 // 每层贴图曝光（analysis/scripts/多层模板曝光.py 按 autoExposure40 算的，和花型模板 EXPOSURE40 同一算法）；没有就用花型模板的
-const MT_EXPOSURE = {"shinKiku": [0.843, 2.56], "shinBotan": [2.9, 2.56], "yaeshin": [0.619, 2.52, 2.35], "yaeHenka": [1.97, 2.61, 2.07], "mieshin": [0.838, 2.66, 2.51, 2.02], "yoeshin": [2.87, 2.66, 2.53, 2.44, 1.56], "itsueHenka": [1.97, 2.69, 2.6, 2.53, 2.45, 1.61], "yaeStrobe": [2.22, 2.63, 2.09], "kamuroShin": [2.54, 2.6], "crackleShin": [2.9, 1.74], "strobeShin": [2.87, 1.7], "fourColorCrackle": [3.07, 3.04, 3.07, 3.07, 1.72]};
+const MT_EXPOSURE = {"shinKiku": [0.843, 2.49], "shinBotan": [2.9, 2.49], "yaeshin": [0.619, 2.45, 1.62], "yaeHenka": [1.97, 2.54, 1.64], "mieshin": [0.851, 2.58, 2.5, 1.49], "yoeshin": [2.87, 2.63, 2.54, 1.79, 1.4], "itsueHenka": [1.97, 2.68, 2.57, 2.03, 1.67, 1.38], "yaeStrobe": [2.22, 2.52, 1.66], "kamuroShin": [2.54, 2.51], "crackleShin": [2.9, 1.74], "strobeShin": [2.87, 1.7], "fourColorCrackle": [3.07, 3.04, 3.07, 3.07, 1.72], "yaeBlueBotan": [2.78, 0.549, 0.134]};
 // 每层的显示强度（Color Over Life 倍数）：各层贴图都按自己最亮处归一，这里按游戏内大小看过定层间明暗（亲星最亮、芯略暗）
 // 彩色芯按颜色的亮度补：铜蓝、锶红、紫这些亮度低的色给高一点，柠檬绿、黄、银白不补（(0.45 / 相对亮度)^0.5，夹在 0.9–1.45）
 const mtLum = hex => { const c = hexToLin(hex); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
@@ -156,14 +163,8 @@ async function mtCreateMine(id) {
   myPut(rec); setPackNames('my:' + recId, r.en, r.layers.map(l => l.en)); await openMultiTypeMine(recId);
 }
 async function openMultiTypeMine(recId) { await openMyEffect(recId); flash('已按多层模板新建：右栏「观察图层」里加层、改名；调好了点资产栏「保存」'); }
-// 缩略图：渲染图（analysis/scripts/多层模板缩略图.py 写进 MT_THUMBS）；没有就按各层颜色画同心圆示意
-const MT_THUMBS = {};
-function mtThumbStyle(id) {
-  if (MT_THUMBS[id]) return `background-image:url(${MT_THUMBS[id]})`;
-  const r = MULTI_BY_ID[id]; if (!r) return '';
-  const rings = r.layers.map(l => [l.k, Array.isArray(l.m.stages) ? l.m.stages[l.m.stages.length - 1][1] : '#fff']).sort((a, b) => b[0] - a[0]);
-  return 'background:' + rings.map(([k, c]) => `radial-gradient(circle at 50% 48%, transparent ${(k * 40 - 5).toFixed(1)}%, ${c} ${(k * 40 - 2.5).toFixed(1)}%, ${c}88 ${(k * 40).toFixed(1)}%, transparent ${(k * 40 + 2).toFixed(1)}%)`).join(',') + ',#05060a';
-}
+// 缩略图：同心圆示意图（19_thumbsvg.js，用户 10-05 20:43「现在的缩略图就很好了，不用出新的缩略图」）
+function mtThumbStyle(id) { return MULTI_BY_ID[id] ? thStyleFor('mt:' + id, () => mtLayers(id).map(l => thLayerOf(l.P, l.M))) : ''; }
 // 左栏「多层花型模板」一组（花型模板下面）
 function mtLibGroup(host) {
   const list = MULTI_TYPES.filter(r => libMatch(r.name, r.en, r.note, MT_GROUPS[r.group], '多层'));

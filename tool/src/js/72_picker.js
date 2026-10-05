@@ -32,13 +32,12 @@ function pkFxItems() {
   }
   return out;
 }
+// 4.5.5（用户 10-05 20:43）：示意缩略图（19_thumbsvg.js：同心发光圆 + 花型小记号），不再用渲染图（16_thumbs.js / thumbSim 留着不用）
 function typeThumbStyle(key) {
-  const rep = key.startsWith('rep:') ? REPLICA_BY_ID[key.slice(4)] : null;
-  const src = (rep && rep.thumbSim) || (typeof THUMBS !== 'undefined' && THUMBS[key]) || null;
-  if (src) return `background-image:url(${src})`;
-  const d = key.startsWith('rep:') ? null : defaultsFor(key);
-  const c = d ? d.M.stages[0][1] : '#e9b45f';
-  return `background:radial-gradient(circle at 50% 45%, ${c} 0 6%, ${c}55 22%, #05060a 60%)`;
+  key = String(key || '');
+  if (key.startsWith('mt:')) return mtThumbStyle(key.slice(3));
+  if (key.startsWith('rep:')) return REPLICA_BY_ID[key.slice(4)] ? thRepStyle(key.slice(4)) : thTypeStyle('kiku');
+  return thTypeStyle(TYPES[key] ? key : 'kiku');
 }
 function pkItems() {
   const out = [];

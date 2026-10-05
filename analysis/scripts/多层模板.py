@@ -1,10 +1,9 @@
-"""多层花型模板（tool/src/js/18_multitypes.js）的曝光、定帧总表、缩略图（4.5.5，对话框新花型）
+"""多层花型模板（tool/src/js/18_multitypes.js）的曝光、定帧总表、参数表（4.5.5，对话框新花型）
 
 用法：
   python3 analysis/scripts/多层模板.py --expo            # 每层贴图曝光（燃烧中段 99.8% 分位 → 0.93，全程过曝 ≤ 1.5%；口径见 JS_EXPO），写进 MT_EXPOSURE
   python3 analysis/scripts/多层模板.py [id ...] [--out 目录] [--px 360]
                                                      # 每个模板 4 个时刻的定帧（所有层画在同一画面，实时模拟口径），拼成 <out>/多层模板总表.jpg
-  python3 analysis/scripts/多层模板.py --thumbs          # 同时把第 2 个时刻缩成 160×160 写进 MT_THUMBS（左栏 / 花型库缩略图）
   python3 analysis/scripts/多层模板.py --table           # 打印原理文档第 5 节的每层参数表（Markdown）
   --ref 图片 --ref-id yaeshin --ref-t 1.3              # 参考图和某个模板的某一时刻并排（只测量对照，不进素材）
 
@@ -117,19 +116,12 @@ async def main(a):
         g.text((6, 28 + r_ * px + px // 2 - 30), f"{v['name']}\n{i} · {v['n']} 层\n燃烧 {v['burn']} s", fill=(220, 210, 180), font=f)
         for k, im in enumerate(v['ims']): sheet.paste(im, (170 + k * px, 28 + r_ * px))
     sheet.save(out / '多层模板总表.jpg', quality=88); print('→', out / '多层模板总表.jpg')
-    if a.thumbs:
-        s = SRC.read_text(encoding='utf-8'); m = re.search(r'const MT_THUMBS = (\{.*?\});', s, re.S)
-        cur = json.loads(m.group(1)) if m else {}
-        for i, v in res.items():
-            buf = io.BytesIO(); v['ims'][1].resize((160, 160), Image.LANCZOS).save(buf, 'JPEG', quality=82)
-            cur[i] = 'data:image/jpeg;base64,' + base64.b64encode(buf.getvalue()).decode()
-        s = re.sub(r'const MT_THUMBS = \{.*?\};', lambda _: 'const MT_THUMBS = ' + json.dumps(cur, separators=(', ', ': ')) + ';', s, count=1, flags=re.S)
-        SRC.write_text(s, encoding='utf-8'); print('缩略图已写入', SRC, '（要重新 build）')
+    # 缩略图不再用渲染图（用户 10-05 20:43）：左栏 / 花型库是 19_thumbsvg.js 按参数现画的示意图
 
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('ids', nargs='*')
     ap.add_argument('--out', default=str(ROOT / 'analysis' / 'probe' / '多层模板')); ap.add_argument('--px', type=int, default=360)
-    ap.add_argument('--expo', action='store_true'); ap.add_argument('--thumbs', action='store_true'); ap.add_argument('--table', action='store_true')
+    ap.add_argument('--expo', action='store_true'); ap.add_argument('--table', action='store_true')
     ap.add_argument('--ref'); ap.add_argument('--ref-id', default='yaeshin'); ap.add_argument('--ref-t', type=float, default=1.3)
     asyncio.run(main(ap.parse_args()))

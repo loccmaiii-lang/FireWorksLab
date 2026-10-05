@@ -226,14 +226,12 @@ function bindEffHeader(box, ef) {
 setInterval(() => { const el = document.getElementById('effReady'); if (el && lib.effect && !document.hidden) { const h = readyHTML(lib.effect, lib.review || (lib.formal ? { id: lib.formal.id } : null)); if (el.innerHTML !== h) el.innerHTML = h; } }, 1500);
 
 // ---------------- 左栏 ----------------
-// 缩略图一律用渲染的（用户 2026-10-02 14:46「所有效果缩略图不要用实拍，用渲染的」）：
-// 本机显卡按当前配方渲染的（review_to_baker 已换进 thumbSim）→ 对照图里模拟的那一半 → 花型模板的渲染图。实拍缩略图不显示。
+// 缩略图（4.5.5，用户 10-05 20:43「根据当前这套缩略图的风格替我把之前所有的缩略图都替换掉，这样查找更方便」，取代 10-02 14:46「一律用渲染的」）：
+// 按参数现画的示意图（19_thumbsvg.js）：每层一个发光圆圈（半径按这一层的大小、颜色按最后一段），花型用小记号区分
 function thumbHTML(e) {
-  if (e.thumbSim) return `<span class="th"><i style="background-image:url(${e.thumbSim})"></i></span>`;
-  // 多层条目还没有渲染缩略图：用第一层（有渲染图的那层，或它的花型模板渲染图）
-  if (e.layerIds && typeof FW_REVIEW_LIST !== 'undefined') { const l = e.layerIds.map(id => FW_REVIEW_LIST.find(x => x.id === id)).filter(Boolean); const l0 = l.find(x => x.thumbSim) || l.find(x => x.base); if (l0) return thumbHTML(l0); }
-  const k = e.base && typeof TYPE_NAMES !== 'undefined' && TYPE_NAMES[e.base] ? e.base : (e.key || e.id);
-  return `<span class="th" style="${typeThumbStyle(k)}"></span>`;
+  const k = e && e.key && String(e.key).startsWith('rep:') && REPLICA_BY_ID[e.key.slice(4)] ? e.key.slice(4) : null;
+  const st = k ? thRepStyle(k) : thEntryStyle(e);
+  return `<span class="th" style="${st || typeThumbStyle(e && e.base ? e.base : 'kiku')}"></span>`;
 }
 function libMatch(...txt) { const q = lib.q.trim().toLowerCase(); return !q || txt.join(' ').toLowerCase().includes(q); }
 function libItem(host, key, html, onClick, plain) {
@@ -268,7 +266,7 @@ function renderLib() {
   if (lib.seg) { lib.open[lib.seg === 'passed' ? 'myfx' : lib.seg] = true; lib.seg = ''; }     // 4.5.3 已通过并进我的效果      // 指定的那一组展开（旧的「分栏」入口）
   const thumbOf = ef => {
     const me = effMainEntry(ef), fm = (ef.主条目 || '').startsWith('rep:') ? REPLICA_BY_ID[ef.主条目.slice(4)] : null;
-    return ef.thumb ? `<span class="th"><i style="background-image:url(${ef.thumb})"></i></span>` : fm ? thumbHTML({ ...fm, key: 'rep:' + fm.id }) : me ? thumbHTML(me) : '<span class="th"></span>';
+    return fm ? thumbHTML({ ...fm, key: 'rep:' + fm.id }) : me ? thumbHTML(me) : '<span class="th"></span>';     // 4.5.5 不用 ef.thumb（渲染图）
   };
   const effRow = (g, ef, k) => {
     const rd = k === 'review' ? effReady(ef) : null;
@@ -318,7 +316,7 @@ function renderLib() {
     const g = libGroup(host, 'mytpl', '我的模板', tpls.length);
     if (!tpls.length) g.insertAdjacentHTML('beforeend', '<p class="lsub">还没有。调好的一层：资产栏 ⋯「把这一层存为模板」。</p>');
     for (const r of tpls) {
-      const it = libItem(g, 'tpl:' + r.id, `<span class="th" style="${typeThumbStyle(r.type)}"></span><span class="tx"><b>${r.name}</b><small>基于${TYPE_NAMES[r.type] || r.type}${r.from ? ' · 来自 ' + r.from : ''} · ${r.at || ''}</small><span class="bds"><span class="badge">我的模板</span></span></span>`, () => openTemplate(r.id));
+      const it = libItem(g, 'tpl:' + r.id, `<span class="th" style="${thPMStyle('tpl:' + r.id + '@' + (r.at || ''), r.P, r.M) || typeThumbStyle(r.type)}"></span><span class="tx"><b>${r.name}</b><small>基于${TYPE_NAMES[r.type] || r.type}${r.from ? ' · 来自 ' + r.from : ''} · ${r.at || ''}</small><span class="bds"><span class="badge">我的模板</span></span></span>`, () => openTemplate(r.id));
       libItemAct(it, '改名', '改模板的名字', () => renameTemplate(r.id)); libItemAct(it, '删除', '删除这个模板（6 秒内能撤销）', () => removeTemplate(r.id));
     }
   }
