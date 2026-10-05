@@ -7138,19 +7138,19 @@ var FW_EFFECTS = [
 {
 "id": "RT5LE1",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
 "id": "RT5ME1",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
 "id": "RT5SE1",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 }
 ],
@@ -7298,6 +7298,111 @@ var FW_EFFECTS = [
 ]
 },
 "stale": false
+},
+{
+"job": "RT5LE1",
+"entry": "RT5L",
+"ver": "78078c43·emitset4.4",
+"time": "2026-10-05 13:32",
+"packages": [
+{
+"name": "RiseTailL",
+"replica": "RT5L",
+"files": [
+"RiseTailL.json",
+"RiseTailL_Cascade参数.txt",
+"RiseTailL_Mobile.json",
+"RiseTailL_曲线.csv",
+"T_EFX_FireWorks_RiseTrailPhys_L_Fade_8x2_01.png",
+"T_EFX_FireWorks_RiseTrailPhys_L_Fade_8x2_01_C.png",
+"T_EFX_FireWorks_RiseTrailPhys_L_Fade_8x2_01_HD.png",
+"T_EFX_FireWorks_RiseTrailPhys_L_Loop_16x1_01.png",
+"T_EFX_FireWorks_RiseTrailPhys_L_Loop_16x1_01_C.png",
+"T_EFX_FireWorks_RiseTrailPhys_L_Loop_16x1_01_HD.png",
+"T_EFX_FireWorks_RiseTrailPhys_L_R.png",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": false,
+"fails": [
+"RiseFade：过曝像素 5.0%"
+]
+},
+"stale": true
+},
+{
+"job": "RT5ME1",
+"entry": "RT5M",
+"ver": "f509f6bf·emitset4.4",
+"time": "2026-10-05 13:32",
+"packages": [
+{
+"name": "RiseTailM",
+"replica": "RT5M",
+"files": [
+"RiseTailM.json",
+"RiseTailM_Cascade参数.txt",
+"RiseTailM_Mobile.json",
+"RiseTailM_曲线.csv",
+"T_EFX_FireWorks_RiseTrailPhys_M_Fade_4x2_01.png",
+"T_EFX_FireWorks_RiseTrailPhys_M_Fade_4x2_01_C.png",
+"T_EFX_FireWorks_RiseTrailPhys_M_Fade_4x2_01_HD.png",
+"T_EFX_FireWorks_RiseTrailPhys_M_Loop_16x1_01.png",
+"T_EFX_FireWorks_RiseTrailPhys_M_Loop_16x1_01_C.png",
+"T_EFX_FireWorks_RiseTrailPhys_M_Loop_16x1_01_HD.png",
+"T_EFX_FireWorks_RiseTrailPhys_M_R.png",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": false,
+"fails": [
+"RiseFade：过曝像素 5.3%"
+]
+},
+"stale": true
+},
+{
+"job": "RT5SE1",
+"entry": "RT5S",
+"ver": "c11ae4f7·emitset4.4",
+"time": "2026-10-05 13:32",
+"packages": [
+{
+"name": "RiseTailS",
+"replica": "RT5S",
+"files": [
+"RiseTailS.json",
+"RiseTailS_Cascade参数.txt",
+"RiseTailS_Mobile.json",
+"RiseTailS_曲线.csv",
+"T_EFX_FireWorks_RiseTrailPhys_S_Fade_4x2_01.png",
+"T_EFX_FireWorks_RiseTrailPhys_S_Fade_4x2_01_C.png",
+"T_EFX_FireWorks_RiseTrailPhys_S_Fade_4x2_01_HD.png",
+"T_EFX_FireWorks_RiseTrailPhys_S_Loop_16x1_01.png",
+"T_EFX_FireWorks_RiseTrailPhys_S_Loop_16x1_01_C.png",
+"T_EFX_FireWorks_RiseTrailPhys_S_Loop_16x1_01_HD.png",
+"T_EFX_FireWorks_RiseTrailPhys_S_R.png",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": false,
+"fails": [
+"RiseFade：过曝像素 7.0%"
+]
+},
+"stale": true
 }
 ],
 "thumb": "data:image/jpeg;base64,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",
@@ -8750,7 +8855,7 @@ var FW_EFFECTS = [
 {
 "id": "HK10E7",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 }
 ],
@@ -8947,6 +9052,39 @@ var FW_EFFECTS = [
 "entry": "HK10",
 "ver": "dd5beed2·master4.3.3",
 "time": "2026-10-04 21:22",
+"packages": [
+{
+"name": "Hongchao40",
+"replica": "HK10",
+"files": [
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01_HD.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_R.png",
+"T_EFX_FireWorks_YonshakuKamuro_Red_4x4_01.png",
+"T_EFX_FireWorks_YonshakuKamuro_Red_4x4_01_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Red_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "HK10E7",
+"entry": "HK10",
+"ver": "dd5beed2·dots4.4.4+master4.3.3",
+"time": "2026-10-05 13:33",
 "packages": [
 {
 "name": "Hongchao40",
