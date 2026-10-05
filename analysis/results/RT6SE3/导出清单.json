@@ -1,0 +1,29 @@
+{
+ "effect": "trail_phys",
+ "entry": "RT6S",
+ "ver": "00659261·emitset4.4",
+ "time": "2026-10-05 19:52",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "RiseTailS",
+   "replica": "RT6S",
+   "files": [
+    "RiseTailS.json",
+    "RiseTailS_Cascade参数.txt",
+    "RiseTailS_Mobile.json",
+    "RiseTailS_曲线.csv",
+    "T_EFX_FireWorks_RiseTrailPhys_S_Far_16x1_01.png",
+    "T_EFX_FireWorks_RiseTrailPhys_S_Far_16x1_01_C.png",
+    "T_EFX_FireWorks_RiseTrailPhys_S_Far_16x1_01_HD.png",
+    "T_EFX_FireWorks_RiseTrailPhys_S_Loop_16x1_01.png",
+    "T_EFX_FireWorks_RiseTrailPhys_S_Loop_16x1_01_C.png",
+    "T_EFX_FireWorks_RiseTrailPhys_S_Loop_16x1_01_HD.png",
+    "T_EFX_FireWorks_RiseTrailPhys_S_R.png",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

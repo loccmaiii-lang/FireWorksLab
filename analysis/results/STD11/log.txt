@@ -1,38 +1,5 @@
-18:22:34 出错：
-Traceback (most recent call last):
-  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 65, in run_job
-    if r.returncode != 0: raise RuntimeError('标准检查没跑完：' + (r.stderr or '')[-3000:])
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-RuntimeError: 标准检查没跑完：Traceback (most recent call last):
-  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\标准检查.py", line 130, in <module>
-    asyncio.run(run(a.targets or None, not a.no_write, merge=bool(a.targets)))
-  File "C:\Users\locmai\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 195, in run
-    return runner.run(main)
-           ^^^^^^^^^^^^^^^^
-  File "C:\Users\locmai\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
-    return self._loop.run_until_complete(task)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\locmai\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
-    return future.result()
-           ^^^^^^^^^^^^^^^
-  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\标准检查.py", line 84, in run
-    m = await pg.evaluate(probe.JS_METRICS, {'id': lid, 'fps': 30, 'dists': [800, 1000, 1200], 'screenH': 1080, 'frac': 1 / 3})
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\async_api\_generated.py", line 9421, in evaluate
-    await self._impl_obj.evaluate(
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_page.py", line 474, in evaluate
-    return await self._main_frame.evaluate(expression, arg)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_frame.py", line 346, in evaluate
-    await self._channel.send(
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 76, in send
-    return await self._connection.wrap_api_call(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 632, in wrap_api_call
-    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
-playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of null (reading 'cols')
-    at eval (eval at evaluate (:311:30), <anonymous>:15:37)
-    at UtilityScript.evaluate (<anonymous>:318:18)
-    at UtilityScript.<anonymous> (<anonymous>:1:44)
-
-
+19:52:34 RT6S ✅ 
+19:52:34 RT6M ✅ 
+19:52:34 RT6L ✅ 
+19:52:34 → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\probe\标准检查
+19:52:34 完成，用时 0.1 分钟
