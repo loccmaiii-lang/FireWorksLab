@@ -225,6 +225,14 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
         # 真循环（帧号锯齿曲线）：从最后几帧回到开头几帧是循环接缝，不算回跳（对话框11，2026-10-02：升空尾缀循环层）
         tka = np.asarray(tk); wrap = (steps < 0) & (tka[:-1] >= p.frames - 3) & (tka[1:] <= 2) if len(tk) > 1 else np.array([False])
         shown = len(set(tk)); back = int(((steps < 0) & ~wrap).sum()); loop_wraps = int(wrap.sum())
+        # 4.5.4（用户 2026-10-05 19:40「改检查口径」，RT6M 循环层随喷射脉动被判抖动）：真循环（帧号锯齿、播放里绕回开头）不是取景缩放，
+        #   相邻帧中心挪动是内容自己在动，不查「中心抖动」；改查循环接缝：最后一帧 → 第 0 帧的中心跳变，不超过上限、也不超过循环里相邻帧最大跳变的 1.5 倍
+        is_loop = loop_wraps > 0
+        seam = None
+        if is_loop and cpos.get(p.frames - 1) and cpos.get(0):
+            seam = float(np.hypot(cpos[p.frames - 1][0] - cpos[0][0], cpos[p.frames - 1][1] - cpos[0][1]))
+        adj = [float(np.hypot(cpos[f + 1][0] - cpos[f][0], cpos[f + 1][1] - cpos[f][1])) for f in range(p.frames - 1) if f in cpos and f + 1 in cpos]
+        if is_loop: zoom = False
         L = dict(pack=p.label, frames=p.frames, grid=f'{p.cols}x{p.rows}x{p.ch}', cell_px=[p.cw, p.chh], life_s=round(p.life, 3), pad_px=pad,
                  ticks=len(tk), shown=shown, shown_frac=round(shown / p.frames, 3), max_skip=int(steps.max()) if len(steps) else 0, back_jumps=back, loop_wraps=loop_wraps,
                  edge_max=round(max(edge), 4), edge_frames=int(sum(e > lim['edge_frac'] for e in edge)), saturated_max=round(max(sat), 4),
@@ -232,6 +240,7 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
                  centers=cens,
                  center_jump_top=[[jf[i], round(jumps[i], 2)] for i in np.argsort(jumps)[::-1][:5]] if jumps else [],
                  center_jitter_px512=round(max(jit), 2) if jit else 0, jitter_applies=zoom, empty_mid_frames=mid_list,
+                 loop_seam_px512=round(seam, 2) if seam is not None else None, loop_adj_max_px512=round(max(adj), 2) if adj else None,
                  center_jitter_top=[[jitf[i], round(jit[i], 2)] for i in np.argsort(jit)[::-1][:5]] if jit else [],
                  fill_union=round(max((ubox[1] - ubox[0] + 1) / (p.cw - 2 * pad), (ubox[3] - ubox[2] + 1) / (p.chh - 2 * pad)), 3) if ubox else 0,
                  fill_med=round(float(np.median(fills)), 3) if fills else 0, fill_p10=round(float(np.percentile(fills, 10)), 3) if fills else 0,
@@ -244,6 +253,7 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
         if empty_mid > lim['empty_mid']: fails.append(f'中间空帧 {empty_mid}')
         if empty_tail > lim['empty_tail']: fails.append(f'末尾空帧 {empty_tail}')
         if zoom and L['center_jitter_px512'] > lim['jump_px512']: fails.append(f"中心抖动 {L['center_jitter_px512']} px（512 格）")
+        if L.get('loop_seam_px512') is not None and L['loop_seam_px512'] > max(lim['jump_px512'], 1.5 * (L.get('loop_adj_max_px512') or 0)): fails.append(f"循环接缝跳变 {L['loop_seam_px512']} px（512 格，循环里相邻帧最大 {L.get('loop_adj_max_px512')}）")
         L['zoom_pulse_pct'], L['zoom_pulse_top'] = zoom_pulse(p.e, fps)
         if L['zoom_pulse_pct'] > lim['zoom_pulse_pct']: fails.append(f"缩放抖动 {L['zoom_pulse_pct']}%（同一帧停着时面片在变大小）")
         L['pass'] = not fails; L['fails'] = fails
