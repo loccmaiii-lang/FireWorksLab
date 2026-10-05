@@ -398,29 +398,42 @@ function syncExport() {
 function fmtV(v, step) { const d = step >= 1 ? 0 : step >= 0.1 ? 1 : step >= 0.01 ? 2 : 3; return (+v).toFixed(d); }
 // 4.3.2（渲染基础问题 H16）：「负数 = 默认」的参数以前只能把滑杆拖到 -1，中间那段负数没意义、也看不出默认是多少。
 // 改成行里一个「默认」勾选：勾上 = 存 -1（模拟照旧按默认算），滑杆变灰、显示默认的实际值；去掉勾 = 从默认的实际值开始调，滑杆只在有效范围。
-// [滑杆下限, 默认的实际值（按当前参数）, 说明]
+// [滑杆下限, 联动算出来的值（按当前参数）, 跟谁 / 怎么算, 哨兵值（存这个数 = 接着联动；-1：负数都算，0：≤ 0 都算）]
+// 4.9.0（5.0 第 3 步，Q1「物理给默认，每个值都能改」）：「用默认」勾选换成链条——
+// 接着 = 数值用灰字显示算出来是多少，滑杆照样能拖；直接拖 / 输入就断开（存你填的数）；点链条接回去（存哨兵值，模拟照旧按联动算）。画面不变。
 const AUTO_DEF = {
-  subKeep: [0, P => P.subPattern === 'cross' ? 0.25 : 0.35, '小球（千轮）0.35、十字（分裂）0.25'],
-  subSpeedJit: [0, P => +P.speedJit || 0, '跟主层的初速随机'],
-  subGrav: [0, P => P.grav == null ? 1 : +P.grav, '跟主层的重力'],
-  subFlash: [0, P => +(+P.flash * 0.3).toFixed(3), '主层开花闪光 × 0.3'],
+  subKeep: [0, P => P.subPattern === 'cross' ? 0.25 : 0.35, '小球（千轮）0.35、十字（分裂）0.25', -1],
+  subSpeedJit: [0, P => +P.speedJit || 0, '跟主层的初速随机', -1],
+  subGrav: [0, P => P.grav == null ? 1 : +P.grav, '跟主层的重力', -1],
+  subFlash: [0, P => +(+P.flash * 0.3).toFixed(3), '主层开花闪光 × 0.3', -1],
   // 4.6.0（5.0 第 1 步）：以前藏在代码里的联动，现在看得见、能断开
-  flashR: [0.5, P => +Math.max(2, (+P.v0 || 0) * 0.045).toFixed(2), '跟初速：max(2 m, 0.045 × 初速)'],
-  subSize: [0.05, P => +(+P.headSize || 1).toFixed(2), '同主星大小'],
-  subBright: [0, P => +(+P.headBright).toFixed(2), '同主星亮度'],
-  subFlashR: [0.1, P => +Math.max(1, (+P.subSpeed || 0) * 0.05).toFixed(2), '跟子花初速：max(1 m, 0.05 × 子花初速)'],
+  flashR: [0.5, P => +Math.max(2, (+P.v0 || 0) * 0.045).toFixed(2), '跟初速：max(2 m, 0.045 × 初速)', -1],
+  subSize: [0.05, P => +(+P.headSize || 1).toFixed(2), '同主星大小', -1],
+  subBright: [0, P => +(+P.headBright).toFixed(2), '同主星亮度', -1],
+  subFlashR: [0.1, P => +Math.max(1, (+P.subSpeed || 0) * 0.05).toFixed(2), '跟子花初速：max(1 m, 0.05 × 子花初速)', -1],
+  // 4.9.0：「0 = 跟谁」的几项也换成链条
+  subVt: [1, P => +(+P.vt || 0).toFixed(1), '同主层的终端速度', 0],
+  rtVt: [1, P => +(typeof rtVtOf === 'function' ? rtVtOf({ ...P, rtVt: 0 }) : 0).toFixed(1), '按弹径算（球形弹体在空气里的终端速度）', 0],
+  rtFadeFps: [1, () => 30, '自动 30 fps', 0],
 };
+const autoLinked = (k, v) => { const a = AUTO_DEF[k]; return !!a && (a[3] === 0 ? !(+v > 0) : !(+v >= 0)); };
 function autoDefRow(row, k, step) {
   const a = AUTO_DEF[k]; if (!a) return;
   const inp = row.querySelector('input[type=range]'), num = row.querySelector('.num');
   inp.min = a[0];
-  const lb = document.createElement('label'); lb.className = 'adef'; lb.title = '勾上 = 用默认（' + a[2] + '）；去掉勾再调';
-  lb.innerHTML = '<input type="checkbox"> 用默认（' + a[2] + '）'; row.appendChild(lb);
-  const cb = lb.querySelector('input');
-  const sync = () => { const on = !(+state.P[k] >= 0); cb.checked = on; inp.disabled = on; num.disabled = on; row.classList.toggle('adef-on', on);
-    if (on) { const v = a[1](state.P); inp.value = v; num.value = fmtV(v, step); } };
-  cb.addEventListener('change', () => { state.P[k] = cb.checked ? -1 : Math.max(a[0], +a[1](state.P)); onParam(); sync(); });
-  row.querySelector('.k').addEventListener('dblclick', () => setTimeout(sync, 0));     // 双击恢复默认 = 勾上
+  const ln = document.createElement('div'); ln.className = 'adef';
+  ln.innerHTML = '<button type="button" class="chain" aria-pressed="true"></button><span class="adef-t"></span>'; row.appendChild(ln);
+  const bt = ln.querySelector('.chain'), tx = ln.querySelector('.adef-t');
+  const sync = () => {
+    const P = state.P, on = autoLinked(k, P[k]), v = a[1](P); row.classList.toggle('adef-on', on); bt.setAttribute('aria-pressed', String(on)); bt.classList.toggle('off', !on);
+    bt.setAttribute('aria-label', on ? '联动中，点一下断开（固定在现在的值）' : '已断开，点一下接回联动');
+    bt.title = on ? `联动中：${a[2]}。直接拖 / 输入就断开；点链条也能断开（固定在 ${fmtV(v, step)}）` : `已断开：用你填的 ${fmtV(P[k], step)}。点链条接回去（${a[2]}，现在算出来是 ${fmtV(v, step)}）`;
+    tx.textContent = on ? `跟着算：${a[2]}` : `你填的 · 跟着算是 ${fmtV(v, step)}（${a[2]}）`;
+    if (on) { inp.value = v; num.value = fmtV(v, step); }
+  };
+  bt.addEventListener('click', () => { const P = state.P; P[k] = autoLinked(k, P[k]) ? Math.max(a[0], +a[1](P)) : a[3]; onParam(); sync(); });
+  inp.addEventListener('input', () => sync()); num.addEventListener('change', () => sync());     // slider() 先存你填的数（断开），这里只刷新链条
+  row.querySelector('.k').addEventListener('dblclick', () => setTimeout(sync, 0));     // 双击恢复默认（默认是联动的就接回去）
   const r0 = row._refresh; row._refresh = () => { r0(); sync(); }; sync();
 }
 function slider(host, id, label, unit, min, max, step, get, set, def, lockKey) {
@@ -559,6 +572,7 @@ function helpBind(name, row) {
   name.addEventListener('pointerleave', () => { clearTimeout(helpSt.timer); if (!helpSt.pinned) helpSt.hide = setTimeout(() => helpHide(), HELP_LEAVE); });
   name.addEventListener('click', () => { if (helpSt.pinned === row) helpHide(true); else { helpSt.pinned = null; helpShow(row, true); } });
 }
+const legacyHelp = (row, k) => row._legacy ? `<span class="ph-inert">旧（5.0 要删）：${row._legacy[0]}。${legacyInUse(k, state.P) ? '这个效果用着，先留着，画面照旧。' : '这个效果没用上。'}</span>` : '';
 function panelHelp(row) {
   const h = $('#pHelp'); if (!h) return;
   if (!row) { h.innerHTML = ''; return; }
@@ -567,7 +581,7 @@ function panelHelp(row) {
     const nm = row._nm, unit = Array.isArray(it) && it[2] ? ` <small>${it[2]}</small>` : '', rng = Array.isArray(it) ? `范围 ${it[3]}–${it[4]}` : '';
     const base = B && B[k] != null ? ` · 打开时 ${Array.isArray(it) ? fmtV(B[k], it[5]) : B[k]}` : '', iw = row._inert;
     h.innerHTML = `<b>${nm.en}</b> · <b>${nm.cn}</b>${unit} — ${nm.desc}<span class="ph-meta">${rng}${base} · ${row._x ? row._x.e + ' › ' + row._x.m : nm.mcn || nm.tag}</span>`
-      + (iw ? `<span class="ph-inert">现在不起作用：${iw}</span>` : '')
+      + (iw ? `<span class="ph-inert">现在不起作用：${iw}</span>` : '') + legacyHelp(row, k)
       + (nm.ud ? `<span class="ph-d">${nm.ud}</span>` : '') + (nm.rnd ? `<span class="ph-x">随机：${nm.rnd}</span>` : '')
       + (nm.ue ? `<span class="ph-x">UE：${nm.ue}</span>` : '') + (nm.note ? `<span class="ph-x">注意：${nm.note}</span>` : '')
       + sizePxNote(k);
@@ -575,7 +589,7 @@ function panelHelp(row) {
   }
   const unit = Array.isArray(it) && it[2] ? ` <small>${it[2]}</small>` : '', rng = Array.isArray(it) ? ` · 范围 ${it[3]}–${it[4]}` : '';
   const base = B && B[k] != null ? ` · 打开时 ${Array.isArray(it) ? fmtV(B[k], it[5]) : B[k]}` : '';
-  h.innerHTML = `<b>${row._lab}</b>${unit}<span class="ph-meta">${rng}${base}</span>${row._inert ? `<span class="ph-inert">现在不起作用：${row._inert}</span>` : ''}${row._detail ? `<span class="ph-d">${row._detail}</span>` : ''}`;
+  h.innerHTML = `<b>${row._lab}</b>${unit}<span class="ph-meta">${rng}${base}</span>${row._inert ? `<span class="ph-inert">现在不起作用：${row._inert}</span>` : ''}${legacyHelp(row, k)}${row._detail ? `<span class="ph-d">${row._detail}</span>` : ''}`;
 }
 function buildMasterPanel() {
   pviewInit();
@@ -656,7 +670,7 @@ function buildMasterPanel() {
   // 模块里按发射器表的先后排（表里常用的在前），再把随机行挂到本体下面
   host.querySelectorAll('section.egrp > details.mod').forEach(d => [...d.children].filter(c => c._x).sort((a, b) => a._x.i - b._x.i).forEach(r => d.appendChild(r)));
   p43StdModules(host);
-  p43RandLinks(); emitTabs(tabs);
+  p43RandLinks(); p43Legacy(); emitTabs(tabs);
   if (!$('#pHelp')) { const h = document.createElement('div'); h.id = 'pHelp'; h.className = 'phelp'; h.setAttribute('aria-live', 'polite'); host.parentElement.insertBefore(h, host.nextSibling);
     h.addEventListener('pointerenter', () => clearTimeout(helpSt.hide)); h.addEventListener('pointerleave', () => { if (!helpSt.pinned) helpSt.hide = setTimeout(() => helpHide(), HELP_LEAVE); });
     h.addEventListener('click', e => { if (e.target.closest('.ph-close')) helpHide(true); });
@@ -690,9 +704,10 @@ function refreshVisibility() {
     const key = Array.isArray(it) ? it[0] : it.sel || '', iw = vis && key ? inertWhy(key, P) : '';
     row._inert = iw; row.classList.toggle('inert', !!iw); if (iw) row.title = '现在不起作用：' + iw; else row.removeAttribute('title');
     const folded = row._randOf && !pview.ropen[row._randOf] && !q && !(pview.changed && chg);
-    row.hidden = !vis || folded || !rowMatches(row, it, sec, q) || (pview.changed && !chg);
+    row._applies = vis; const lf = legacyFolded(row, det, P, q, chg);     // 4.9.0：没用上的旧（待删）参数收进模块底下的开关
+    row.hidden = !vis || folded || lf || !rowMatches(row, it, sec, q) || (pview.changed && !chg);
   }
-  p43RandSync(P); p43BlankSync(P);
+  p43RandSync(P); p43BlankSync(P); p43LegacySync(P);
   // 搜索 / 只看改过的时：所有发射器里有结果的都显示、模块自动展开（记 _autoOpen，清空后收回到用户自己的开合）
   const auto = !!(q || pview.changed);
   const autoOpen = (d, on, mine) => { if (on) { if (!d.open) { d._autoOpen = true; d._auto = true; d.open = true; setTimeout(() => d._auto = false, 0); } }

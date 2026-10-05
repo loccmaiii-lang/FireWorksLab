@@ -28,7 +28,7 @@
      烘到一半参数又变，这次直接丢掉（不等烘完再烘一遍）；自动烘焙开时改完自动烘、不收紧；多层导出不会拿到旧贴图；开关记住
   K2 按需烘焙 · 真烘焙（只在 --real）：真的显卡烘焙烘到一半改参数 → 这次作废、最后的贴图是最新参数、没有页面错误；自动烘焙关时按 B 烘到最新并收紧取景
   R1 「恢复到打开时」（单层）把被接力带动的另一层也恢复（10-03 复现：恢复第 1 层后第 2 层的延时点火还停在被带动的位置）
-  S1 4.3.2 收尾：子花那几个「负数 = 默认」的参数是「用默认」勾选（H16）；只剩 GPU 模拟内核、存档 / 旧母版的 CPU 换成 GPU（H12）；物理尾缀过顶后按下落段算、开花晚于到顶有提示（E11③ / H15②）
+  S1 4.3.2 收尾：子花那几个「负数 = 默认」的参数是联动（H16；4.9.0 起是链条）；只剩 GPU 模拟内核、存档 / 旧母版的 CPU 换成 GPU（H12）；物理尾缀过顶后按下落段算、开花晚于到顶有提示（E11③ / H15②）
   S2 4.3.3 新建效果：打开就在第 1 层的参数上；加的层是这个效果自己的一份，改了不动原条目；保存再打开还在；不写「AI 版」
   S3 4.4：打开菊 / 空白发射器 / 升空尾缀，默认页的参数、各发射器标签（星 / 火花 / 尾缀各层…）、空白发射器的「+ 火花」看得见；模块开合、选的标签记得住
   N1 4.4 面板：发射器 → 模块的顺序、短名来自发射器表、英文名开关、「××随机」收在本体参数的「随机」下（点开才出、记住）、
@@ -52,6 +52,8 @@
      「＋ 加发射器」：加、改、在模拟里生成光点 / 星、曲线几行时刻→值、去掉；「游戏内大小」按真实米数（四尺玉 1000 m 占 1/3，别的按真实大小）
   W5 4.8.0（5.0 第 3 步一部分）：星 / 子星 / 火花 / 余烬 / 分叉火花 / 爆裂 / 开花闪光都有「大小 / 亮度随寿命」曲线行（几行 时刻:倍数），空 = 不乘；填了真起作用（模拟里的星头、小闪、闪光；火花着色器的曲线参数接上）
   W6 4.8.1（走查 20-05）：导出可以取消（进度条旁「取消」，上次结果还在）；导出没做完再点导出不会叠第二个
+  W7 4.9.0（5.0 第 3 步，Q1「物理给默认，每个值都能改」+ 参数表「删」）：联动的值都有链条——接着时灰字显示算出来的值、直接改就断开存你填的数、点链条接回去存哨兵值，
+     模拟按哨兵值算出来和按算出来的数填进去一样；旧（待删）参数这个效果没用上时收进模块底下的「旧（待删）」开关、用着的照常显示带「旧」，搜索找得到；所有花型打开时参数值不变
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -403,7 +405,7 @@ async def p1(pg):
         # 点标签换发射器
         r = await pg.evaluate("(() => { document.querySelector('#params .etabs [data-e=\"火花\"]').click(); " + P1_SHOWN + " return { on: document.querySelector('#params .etabs .on').dataset.e, rows: panelRows.filter(([r, it]) => Array.isArray(it) && shown(r)).map(([r, it]) => it[0]), saved: store.get('pEmitTab', {}).aerial }; })()")
         info['点火花'] = {'on': r['on'], 'n': len(r['rows']), 'saved': r['saved']}
-        if r['on'] != '火花' or 'tailWidth' not in r['rows'] or 'stars' in r['rows'] or r['saved'] != '火花': bad.append(f'点「火花」标签不对：{info["点火花"]}')
+        if r['on'] != '火花' or 'sparkSize' not in r['rows'] or 'stars' in r['rows'] or r['saved'] != '火花': bad.append(f'点「火花」标签不对：{info["点火花"]}')
         # 4.5.0 说明（用户 10-05 #9）：停 1.5 s 才淡入、移开消失；点参数名钉住，移开不消失，Esc 解除
         hv = "(() => { const h = $('#pHelp'); return { on: h.classList.contains('on'), pin: h.classList.contains('pinned'), txt: h.classList.contains('on') ? h.textContent : '' }; })()"
         nm = "panelRows.find(([r, it]) => it[0] === 'tailWidth')[0].querySelector('.k')"
@@ -829,21 +831,21 @@ async def n2(pg):
 
 S1_JS = r'''async () => {
   const out = {}, bad = [];
-  // H16：「负数 = 默认」的参数是「用默认」勾选
+  // H16：「负数 = 默认」的参数（4.9.0 起是链条：接着 = 灰字显示算出来的值、滑杆照样能拖；点链条断开 / 接回）
   await openType('senrin'); await new Promise(r => setTimeout(r, 300));
   const rowOf = k => (panelRows.find(([r, it]) => Array.isArray(it) && it[0] === k) || [])[0];
   for (const [k, want] of [['subKeep', 0.35], ['subGrav', +state.P.grav], ['subFlash', +(state.P.flash * 0.3).toFixed(3)], ['subSpeedJit', +state.P.speedJit]]) {
     const row = rowOf(k); if (!row) { bad.push(k + ' 没有这一行'); continue; }
-    const cb = row.querySelector('.adef input'), rg = row.querySelector('input[type=range]'), num = row.querySelector('.num');
-    if (!cb) { bad.push(k + ' 没有「用默认」勾选'); continue; }
-    const r = { on: cb.checked, dis: rg.disabled, min: +rg.min, shown: +num.value };
-    cb.checked = false; cb.dispatchEvent(new Event('change')); r.off = { v: state.P[k], dis: rg.disabled };
-    cb.checked = true; cb.dispatchEvent(new Event('change')); r.back = state.P[k];
+    const bt = row.querySelector('.chain'), rg = row.querySelector('input[type=range]'), num = row.querySelector('.num');
+    if (!bt) { bad.push(k + ' 没有链条'); continue; }
+    const r = { on: bt.getAttribute('aria-pressed') === 'true', dis: rg.disabled, min: +rg.min, shown: +num.value };
+    bt.click(); r.off = { v: state.P[k], dis: rg.disabled, on: bt.getAttribute('aria-pressed') === 'true' };
+    bt.click(); r.back = state.P[k];
     out[k] = r;
-    if (!(r.on && r.dis && r.min >= 0)) bad.push(k + ' 打开时没勾上 / 滑杆没变灰 / 下限还是负数 ' + JSON.stringify(r));
-    if (Math.abs(r.shown - want) > 0.011 * Math.max(1, Math.abs(want))) bad.push(`${k} 勾着时显示 ${r.shown}，默认的实际值是 ${want}`);
-    if (!(Math.abs(r.off.v - want) < 1e-6 && !r.off.dis)) bad.push(`${k} 去掉勾后 = ${r.off.v}（应从默认实际值 ${want} 开始、滑杆可调）`);
-    if (r.back !== -1) bad.push(`${k} 再勾上后 = ${r.back}（应存 -1）`);
+    if (!(r.on && !r.dis && r.min >= 0)) bad.push(k + ' 打开时链条没接着 / 滑杆不能拖 / 下限还是负数 ' + JSON.stringify(r));
+    if (Math.abs(r.shown - want) > 0.011 * Math.max(1, Math.abs(want))) bad.push(`${k} 接着时显示 ${r.shown}，算出来的值是 ${want}`);
+    if (!(Math.abs(r.off.v - want) < 1e-6 && !r.off.dis && !r.off.on)) bad.push(`${k} 断开后 = ${r.off.v}（应固定在算出来的 ${want}、滑杆可调）`);
+    if (r.back !== -1) bad.push(`${k} 再接回去后 = ${r.back}（应存 -1）`);
   }
   // H12：只剩 GPU 模拟内核
   out.engineSelect = !!document.querySelector('#x-engine');
@@ -1407,9 +1409,9 @@ async def w4(pg):
     info['爆裂 / 开花闪光'] = r
     if not r['n'] or abs(r['sig'] - 2) > 1e-6 or abs(r['abs'] - 5) > 1e-6 or r['cut'] != 0.2 or r['tau'] != 0.05: bad.append(f'爆裂的大小 / 亮度 / 寿命 / 衰减参数没起作用：{r}')
     if abs(r['flashSig'] - 10) > 1e-6: bad.append(f'开花闪光半径没起作用：{r}')
-    r = await pg.evaluate("""(() => { const row = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'flashR'); return { row: !!row, adef: !!(row && row[0].querySelector('.adef input')), on: !!(row && row[0].querySelector('.adef input').checked) }; })()""")
-    info['开花闪光半径用默认'] = r
-    if not (r['row'] and r['adef'] and r['on']): bad.append(f'开花闪光半径没有「用默认（跟初速）」勾选：{r}')
+    r = await pg.evaluate("""(() => { const row = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'flashR'), bt = row && row[0].querySelector('.chain'); return { row: !!row, chain: !!bt, on: !!bt && bt.getAttribute('aria-pressed') === 'true' }; })()""")
+    info['开花闪光半径跟初速'] = r
+    if not (r['row'] and r['chain'] and r['on']): bad.append(f'开花闪光半径没有链条（跟初速）：{r}')
     # 子花：子星大小 / 亮度
     r = await pg.evaluate("""(() => { const P = derive({ ...structuredClone(defaultsFor('senrin').P), type: 'senrin', subSize: 2.5, subBright: 0.4 }); const s = new Sim(P);
       for (let i = 0; i < Math.ceil((P.subDelay + 0.3) / H_STEP); i++) s.step(H_STEP); const k = s.all.filter(x => x.kind === 2); return { n: k.length, sz: k[0] && k[0].sz, I: k[0] && k[0].I }; })()""")
@@ -1497,6 +1499,68 @@ async def w6(pg):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(r, ensure_ascii=False)
 
 
+W7_JS = r'''async () => {
+  const bad = [], out = {};
+  const rowOf = k => (panelRows.find(([r, it]) => Array.isArray(it) && it[0] === k) || [])[0];
+  // 链条：每个联动的值；senrin 有子花，rtVt / rtFadeFps 在升空尾缀
+  const fams = { senrin: ['subKeep', 'subSpeedJit', 'subGrav', 'subFlash', 'flashR', 'subSize', 'subBright', 'subFlashR', 'subVt'], tailM: ['rtFadeFps', 'rtVt'] };
+  for (const [t, ks] of Object.entries(fams)) {
+    await openType(t); await new Promise(r => setTimeout(r, 200));
+    if (t === 'tailM') { state.P.rtBall = 1; buildMasterPanel(); onParam(); }     // 终端速度只在平方阻力弹道时有
+    for (const k of ks) {
+      const row = rowOf(k), a = AUTO_DEF[k]; if (!row || !a) { bad.push(`${t} ${k} 没有这一行 / 不在联动表`); continue; }
+      if (row.hidden && !(state.P.rtBall === 1 && k === 'rtVt')) { /* 当前发射器标签外的行是藏着的，不影响 */ }
+      const bt = row.querySelector('.chain'), num = row.querySelector('.num'), rg = row.querySelector('input[type=range]'), tx = (row.querySelector('.adef-t') || {}).textContent || '';
+      const P0 = structuredClone(state.P), v0 = state.P[k], want = a[1](state.P);
+      const r = { linked: bt && bt.getAttribute('aria-pressed') === 'true', gray: row.classList.contains('adef-on'), dis: rg.disabled || num.disabled, shown: +num.value, want, tx };
+      if (!bt) { bad.push(`${t} ${k} 没有链条`); continue; }
+      if (!autoLinked(k, v0)) { out[t + '.' + k] = { note: '这个模板填了数（断开）', v0 }; state.P[k] = a[3]; onParam(); row._refresh(); r.linked = bt.getAttribute('aria-pressed') === 'true'; r.shown = +num.value; r.gray = row.classList.contains('adef-on'); }
+      if (!r.linked || !r.gray || r.dis) bad.push(`${t} ${k} 接着时链条 / 灰字 / 能拖不对 ${JSON.stringify(r)}`);
+      if (Math.abs(r.shown - want) > 0.051 * Math.max(1, Math.abs(want))) bad.push(`${t} ${k} 接着时显示 ${r.shown}，算出来是 ${want}`);
+      // 直接输入 → 断开，存你填的数
+      const typed = +(Math.max(a[0], want) * 1.5 + 1).toFixed(2); num.value = String(typed); num.dispatchEvent(new Event('change'));
+      r.typed = { v: state.P[k], linked: bt.getAttribute('aria-pressed') === 'true', tx: (row.querySelector('.adef-t') || {}).textContent };
+      if (Math.abs(r.typed.v - typed) > 1e-9 || r.typed.linked || !/跟着算是/.test(r.typed.tx)) bad.push(`${t} ${k} 直接输入没断开 / 没存你填的数 ${JSON.stringify(r.typed)}`);
+      bt.click(); r.relink = { v: state.P[k], linked: bt.getAttribute('aria-pressed') === 'true' };
+      if (r.relink.v !== a[3] || !r.relink.linked) bad.push(`${t} ${k} 点链条没接回去 ${JSON.stringify(r.relink)}`);
+      bt.click(); r.unlink = { v: state.P[k], linked: bt.getAttribute('aria-pressed') === 'true' };
+      if (Math.abs(r.unlink.v - Math.max(a[0], want)) > 1e-9 || r.unlink.linked) bad.push(`${t} ${k} 点链条断开没固定在算出来的值 ${JSON.stringify(r.unlink)}`);
+      state.P = derive(P0); buildMasterPanel(); onParam();
+      out[t + '.' + k] = Object.assign(out[t + '.' + k] || {}, { want: +(+want).toFixed(3), ok: true });
+    }
+  }
+  // 联动 = 填进算出来的数：子花的几项按哨兵值和按算出来的数模拟，子星一模一样
+  { const base = derive({ ...structuredClone(defaultsFor('senrin').P), type: 'senrin' }), fill = { ...structuredClone(base) };
+    for (const k of ['subKeep', 'subSpeedJit', 'subGrav', 'subSize', 'subBright', 'subVt']) fill[k] = AUTO_DEF[k][1](base);
+    const run = P => { const s = new Sim(derive(P)); for (let i = 0; i < Math.ceil((P.subDelay + 0.6) / H_STEP); i++) s.step(H_STEP); return s.all.filter(x => x.kind === 2).slice(0, 6).map(x => [x.x, x.y, x.z, +x.sz > 0 ? x.sz : P.headSize, x.I].map(v => +(+v).toFixed(4)).join(',')).join(' '); };
+    const a = run(base), b = run(fill); out.sub = a === b; if (a !== b) bad.push('子花按「跟着算」和按算出来的数模拟不一样'); }
+  // 旧（待删）：菊没用上的收起来、模块底下有开关；搜索能找到；用着的照常显示带「旧」
+  await openType('kiku'); await new Promise(r => setTimeout(r, 200)); selectEmitTab('火花');
+  const L = k => (panelRows.find(([r, it]) => (Array.isArray(it) ? it[0] : it.sel) === k) || [])[0];
+  const pinch = L('tailPinchHead'), sw = pinch && pinch.closest('details').querySelector('.oldb');
+  out.kiku = { pinchHidden: pinch && pinch.hidden, tag: !!(pinch && pinch.querySelector('.old-tag')), btn: sw && !sw.hidden ? sw.textContent : null };
+  if (!pinch || !pinch.hidden || !out.kiku.tag || !out.kiku.btn) bad.push('菊的「星头端收尖」（旧）没收起来 / 没「旧」标记 / 模块底下没开关 ' + JSON.stringify(out.kiku));
+  if (sw) { sw.click(); out.kiku.open = !pinch.hidden; sw.click(); out.kiku.closed = pinch.hidden; if (!out.kiku.open || !out.kiku.closed) bad.push('「旧（待删）」开关点了不显示 / 再点不收起 ' + JSON.stringify(out.kiku)); }
+  const q = document.querySelector('#params .ptools input[type=search]'); q.value = '收尖'; q.dispatchEvent(new Event('input')); out.kiku.search = !pinch.hidden; q.value = ''; q.dispatchEvent(new Event('input'));
+  if (!out.kiku.search) bad.push('搜「收尖」找不到收起来的旧参数');
+  state.P.tailPinchHead = 0.4; onParam(); out.kiku.inUse = !pinch.hidden; state.P.tailPinchHead = 0; onParam();
+  if (!out.kiku.inUse) bad.push('填了「星头端收尖」以后它还收着（用着的旧参数应照常显示）');
+  // 所有花型打开时参数值不变（链条、收起只是界面）
+  const changed = [];
+  for (const t of Object.keys(TYPES)) { if (t === 'blank') continue; const d = derive({ ...structuredClone(defaultsFor(t).P), type: t }); await openType(t); const P = state.P;
+    for (const k of Object.keys(AUTO_DEF).concat(Object.keys(LEGACY))) if (String(P[k]) !== String(d[k])) changed.push(`${t}.${k} ${d[k]}→${P[k]}`); }
+  out.changed = changed.slice(0, 8); if (changed.length) bad.push('打开花型时联动 / 旧参数的值变了：' + changed.slice(0, 5).join('；'));
+  return { ok: !bad.length, bad, out };
+}'''
+
+
+async def w7(pg):
+    """4.9.0：链条（Q1）+ 旧（待删）收起"""
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate(W7_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:900]
+
+
 async def x2(pg):
     """4.4.2（用户 10-04 21:17）：单层效果（牡丹模板）也有「导出方案」：输出 › 导出方案里 PC 能选 GPU 光点 / 单束 / 不出，手机能选不出；选光点后 cascade.json 是一个 GPU 光点发射器、引擎回放画光点、说明写有尾迹没了"""
     bad, info = [], {}
@@ -1577,7 +1641,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

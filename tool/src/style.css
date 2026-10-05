@@ -954,9 +954,17 @@ details.sec>p.hint:not([hidden]){border-left:2px solid var(--line2);padding-left
 .ptools .p43t{color:var(--amber)}
 details.sec.mod>summary .men{margin-left:8px;font:500 10.5px var(--mono);color:var(--faint);letter-spacing:.02em}
 details.sec.mod>p.hint .hsec{display:block;margin-top:4px}
-.sl .adef{grid-column:1 / -1;justify-self:start;margin:0 0 2px 18px;color:var(--faint);font-size:11px;display:flex;align-items:center;gap:4px;cursor:pointer;white-space:nowrap}
-.sl .adef input{margin:0}
-.sl.adef-on input[type=range],.sl.adef-on .num{opacity:.45}
+.sl .adef{grid-column:1 / -1;justify-self:start;margin:0 0 2px 18px;color:var(--faint);font-size:11px;display:flex;align-items:center;gap:5px;min-width:0;max-width:100%}
+.sl .adef-t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* 4.9.0 链条（Q1）：接着 = 亮的链条 + 数值灰字；断开 = 链条上一道斜线 */
+.sl .chain{position:relative;width:18px;height:16px;padding:0;border:1px solid var(--line2);border-radius:4px;background:var(--low);cursor:pointer;flex:none}
+.sl .chain::before{content:"";position:absolute;left:3px;top:5px;width:6px;height:4px;border:1.5px solid var(--acc);border-radius:3px}
+.sl .chain::after{content:"";position:absolute;left:8px;top:5px;width:6px;height:4px;border:1.5px solid var(--acc);border-radius:3px}
+.sl .chain.off::before,.sl .chain.off::after{border-color:var(--faint)}
+.sl .chain.off{background:linear-gradient(135deg,transparent 46%,var(--faint) 47%,var(--faint) 53%,transparent 54%),var(--low)}
+.sl .chain:hover{border-color:var(--acc)}
+.sl.adef-on .num{color:var(--faint);font-style:italic}
+.sl.adef-on input[type=range]{opacity:.55}
 .sl .rndb{grid-column:1 / -1;justify-self:start;margin:0 0 2px 18px;background:none;border:1px dashed var(--line2);border-radius:5px;color:var(--faint);font-size:11px;padding:0 6px;cursor:pointer;white-space:nowrap}
 .sl .rndb.set{color:var(--dim);border-style:solid}
 .sl .rndb.on{color:var(--amber);border-color:var(--amber)}
@@ -1347,3 +1355,8 @@ details.mod-empty .mod-note{font-size:12.5px;color:var(--muted,#adb8bc);padding:
 
 /* 4.8.1：导出可以取消 */
 .busy .busy-cancel{margin-left:10px;pointer-events:auto}
+/* 4.9.0 旧（待删）参数：名字前的「旧」标记、模块底下的收起开关 */
+.old-tag{display:inline-block;font-size:10px;line-height:13px;padding:0 3px;margin-right:4px;border:1px solid var(--faint);border-radius:3px;color:var(--faint);vertical-align:1px;font-style:normal}
+.sl.legacy:not(.chg) .k,.field.legacy:not(.chg) .fk{color:var(--dim)}
+.oldb{display:block;margin:4px 0 2px 2px;background:none;border:1px dashed var(--line2);border-radius:5px;color:var(--faint);font-size:11px;padding:1px 7px;cursor:pointer}
+.oldb.on{color:var(--dim);border-style:solid}

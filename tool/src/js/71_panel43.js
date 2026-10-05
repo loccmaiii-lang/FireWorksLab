@@ -49,6 +49,63 @@ const INERT = [
   [['spacing'], P => familyOf(P.type) === 'ground' && P.type !== 'shikake' && Math.round(+P.nozzles || 1) <= 1, '「喷口数」是 1 时不起作用'],
   [['fade', 'lastFlare', 'flicker', 'headSize', 'headTear', 'headDim', 'headDimUntil', 'strobeHz', 'strobeDuty', 'strobeStart', 'carrierHead'], P => !(+P.headBright > 0), '「星头亮度」是 0（星头不发光，只有尾迹 / 火花）时不起作用'],
 ];
+// 4.9.0（5.0 第 3 步，参数宪章 + 参数表「删」「改成常量」，用户 19:40「全按推荐」）：代码先不删——你的配方、待验收效果里用着的照旧算，画面不变。面板上：
+// - 这个效果用着（值不等于「不用」时的值）→ 照常显示，名字后面一个「旧」标记，说明条写为什么要删、用什么代替；
+// - 没用上 → 收进模块底下的「旧（待删）· N 项」，点开才显示；搜索、只看改过的照样找得到。
+// [为什么要删 / 用什么代替, 不用时的值（不写 = BASE 的默认值）, 用着没有（不写 = 值 ≠ 不用时的值）]
+const LG_SHAPE = '直接捏尾迹外形的旋钮；5.0 用火花「大小随寿命」曲线（梭形）代替';
+const LG_V5 = 'V5 尾缀的旧旋钮（RT6 起不用）';
+const LG_PRE = '入点前另做从小放大（旧取景）；5.0 固定机位不用';
+const LEGACY = {
+  headDim: ['按一段时间压暗星头；5.0 用星「亮度随寿命」曲线代替'], headDimUntil: ['按一段时间压暗星头；5.0 用星「亮度随寿命」曲线代替', null, P => +P.headDim < 1],
+  sparkLifeEnd: ['出生越晚的火花寿命再乘一次；5.0 一套燃烧模型，不分出生早晚'],
+  emberFollow: ['按母星熄灭再把余烬整体淡掉；5.0 余烬按自己的年龄燃尽'], emberEnd: ['到某个时刻把余烬整体熄掉；5.0 余烬按自己的年龄燃尽'],
+  tailJit: [LG_SHAPE], tailShoulder: [LG_SHAPE], tailWidth: [LG_SHAPE], tailPinchHead: [LG_SHAPE], tailPinchTail: [LG_SHAPE],
+  tailBellyAt: [LG_SHAPE, null, P => +P.tailPinchHead > 0 || +P.tailPinchTail > 0],
+  headTear: ['沿速度补点造泪滴星头，和快门拖影重复'],
+  tailHaze: ['线间底光是后期模糊加回来的，不是发光颗粒'], tailHazeR: ['线间底光是后期模糊加回来的，不是发光颗粒', null, P => +P.tailHaze > 0],
+  trPhys: [LG_V5], trTwist: [LG_V5], trTwistN: [LG_V5, null, P => +P.trTwist > 0], trWiggle: [LG_V5], trTwistLag: [LG_V5, null, P => +P.trTwist > 0],
+  rtBall: ['线性阻力弹道（旧）；RT6 用平方阻力，升空时间是算出来的', 1], rtT: ['线性阻力弹道（旧）才用的升空时间；平方阻力时是算出来的', null, P => +P.rtBall !== 1],
+  rtConeSoft: ['散开分布开关；5.0 固定一种', 0], rtGpuSafe: ['旧写法 GPU 发射器也写 Acceleration，UE 4.24 里标红', 1], rtTexCal: ['旧的贴图亮度口径（跟温度偏移漂）', 1],
+  rtFdT: ['每档温度偏移；5.0 白黄对比由粒径决定'], rtMdT: ['每档温度偏移；5.0 白黄对比由粒径决定'], rtCdT: ['每档温度偏移；5.0 白黄对比由粒径决定'],
+  rtStreakMax: ['拖影上限只夹外观；5.0 拖影由速度 × 快门决定'], rtLoopSize: ['固定长循环层（4.4 旧做法）', 1], rtLoopMin: ['循环层的人为最短长度；5.0 按星头可见长度自动算'],
+  rtDotGain: ['粒子层另乘的总亮度（光晕、发射口不乘），名不副实'], rtDissolve: ['消散溶解终值；5.0 固定', 1],
+  preRoll: [LG_PRE, 0, P => +P.cutIn > 0], preScale0: [LG_PRE, null, P => +P.preRoll > 0 && +P.preScale0 > 0], prePivot: [LG_PRE, null, P => +P.preRoll > 0 && +P.prePivot !== 0],
+  fpsFloor: ['旧帧计划才读；固定机位 + 匀速帧不读'], trimLead: ['开头空白不烘；5.0 固定为裁掉', 1],
+};
+const legacyOf = k => LEGACY[k] || (/^ph[A-Z]/.test(k) ? ['物理尾缀（已归档）的参数'] : null);
+function legacyInUse(k, P) {
+  const L = legacyOf(k); if (!L || !P) return false;
+  const off = L[1] != null ? L[1] : BASE[k], v = P[k];
+  if (v == null || String(v) === String(off) || (typeof off === 'number' && +v === off)) return false;
+  return L[2] ? !!L[2](P) : true;
+}
+// 面板建好以后：给旧参数行打标记，每个模块底下一个「旧（待删）· N 项」开关（refreshVisibility 里按用没用上收起 / 显示）
+function p43Legacy() {
+  for (const [row, it, , det] of panelRows) {
+    const k = Array.isArray(it) ? it[0] : it.sel || ''; const L = k && legacyOf(k); if (!L) continue;
+    row._legacy = L; row.classList.add('legacy');
+    const nm = row.querySelector('.k, .fk'); if (nm && !nm.querySelector('.old-tag')) nm.insertAdjacentHTML('afterbegin', `<span class="old-tag" title="5.0 要删：${L[0]}">旧</span>`);
+    if (!det._oldb) { const b = document.createElement('button'); b.type = 'button'; b.className = 'oldb'; b.hidden = true;
+      b.addEventListener('click', e => { e.preventDefault(); pview.oopen = pview.oopen || {}; pview.oopen[det._key] = !pview.oopen[det._key]; refreshVisibility(); });
+      det._oldb = b; det._oldRows = []; }
+    det._oldRows.push(row);
+  }
+  for (const [, , , det] of panelRows) if (det._oldb && !det._oldb.parentElement) det.appendChild(det._oldb);
+}
+// 某行是不是被「旧（待删）」收起：旧参数、这个效果没用上、模块的开关没打开、没在搜索 / 只看改过的
+function legacyFolded(row, det, P, q, chg) { return !!row._legacy && !legacyInUse(row._it && (Array.isArray(row._it) ? row._it[0] : row._it.sel), P) && !(pview.oopen && pview.oopen[det._key]) && !q && !(pview.changed && chg); }
+function p43LegacySync(P) {
+  const seen = new Set();
+  for (const [, , , det] of panelRows) {
+    if (!det._oldb || seen.has(det)) continue; seen.add(det);
+    const open = !!(pview.oopen && pview.oopen[det._key]), idle = det._oldRows.filter(r => r._applies && !legacyInUse(Array.isArray(r._it) ? r._it[0] : r._it.sel, P));
+    det._oldb.hidden = !idle.length || !!pview.q || pview.changed;
+    det._oldb.textContent = open ? `旧（待删）▾ 收起 ${idle.length} 项` : `旧（待删）▸ ${idle.length} 项没用上`;
+    det._oldb.title = (open ? '点一下收起。' : '点一下显示。') + '5.0 要删的参数（参数宪章）：这个效果没用上，所以收起来了；用着的照常显示、名字前有「旧」。' + idle.map(r => r._lab).join('、');
+    det._oldb.classList.toggle('on', open);
+  }
+}
 function inertWhy(key, P) {
   if (!P) return '';
   for (const [ks, f, why] of INERT) if (ks.includes(key) && f(P)) return why;
