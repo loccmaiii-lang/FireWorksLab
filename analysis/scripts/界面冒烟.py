@@ -40,7 +40,7 @@ STEPS = [
     ('多层_鸿巢_返回画面', "toggleDeliv(false);document.querySelector('.jumps [data-jump=full]').click()", None),
     ('多层_鸿巢_回整体', "lib.pane='params';syncPtabs();selectComboLayer(-1)", None),
     ('尾缀_V5', "openEffect(EFFS().find(e=>e.key==='trail_v5'))", 'views'),
-    ('多层_引菊_选第2层', "openEffect(EFFS().find(e=>e.key==='hiki_nishiki')).then(()=>selectComboLayer(1))", 'views'),
+    ('多层_引菊_选第2层', "Promise.resolve(openEffect(EFFS().find(e=>e.key==='hiki_nishiki'))).then(()=>selectComboLayer(1))", 'views'),
     ('多层_引菊_查看交付', "toggleDeliv(true)", None),
     ('多层_引菊_层2_拖入点', "toggleDeliv(false);(()=>{stage2.tlSig='';stage2.last=0;stageTick(curDuration());const h=document.querySelector('#tlBars .tlb:nth-of-type(2) .cut-in');if(!h)throw new Error('第 2 层没有入点把手');const r=h.getBoundingClientRect(),o={bubbles:true,pointerId:1,clientX:r.left+1,clientY:r.bottom-3,button:0};h.dispatchEvent(new PointerEvent('pointerdown',o));h.dispatchEvent(new PointerEvent('pointermove',{...o,clientX:r.left+50}));h.dispatchEvent(new PointerEvent('pointerup',{...o,clientX:r.left+50}));if(!(state.P.cutIn>0))throw new Error('拖入点没有改到参数');})()", 'views'),
     ('多层_引菊_层1_拖阶段点', "(()=>{stage2.tlSig='';stage2.last=0;stageTick(curDuration());const h=document.querySelector('#tlBars .tlb:nth-of-type(1) .ph-burn');if(!h)throw new Error('第 1 层没有燃烧结束点');const r=h.getBoundingClientRect(),o={bubbles:true,pointerId:1,clientX:r.left+1,clientY:r.top+2,button:0};h.dispatchEvent(new PointerEvent('pointerdown',o));h.dispatchEvent(new PointerEvent('pointermove',{...o,clientX:r.left-30}));h.dispatchEvent(new PointerEvent('pointerup',{...o,clientX:r.left-30}));if(state.comboSel!==0)throw new Error('拖第 1 层没有切到第 1 层');})()", 'views'),
@@ -97,7 +97,7 @@ async def main(out, full, limit, only=None, noshot=False, sweep=False):
             effs = await pg.evaluate("EFFS().map(e => e.key)")
             steps = [(f'全模板_{t}', f"setType('{t}');" + TABS, 'views') for t in types]
             # 多层效果：打开后每一层都选一遍（右栏换成那一层的参数、点遍标签），再回整体
-            for k in effs: steps.append((f'全效果_{k}', f"openEffect(EFFS().find(e=>e.key==='{k}')).then(()=>{{ {TABS}; if (state.tab === 'combo') {{ for (let i = 0; i < state.layers.length; i++) {{ selectComboLayer(i); {TABS}; }} selectComboLayer(-1); }} }})", 'views'))
+            for k in effs: steps.append((f'全效果_{k}', f"Promise.resolve(openEffect(EFFS().find(e=>e.key==='{k}'))).then(()=>{{ {TABS}; if (state.tab === 'combo') {{ for (let i = 0; i < state.layers.length; i++) {{ selectComboLayer(i); {TABS}; }} selectComboLayer(-1); }} }})", 'views'))
         for name, js, views in [st for st in steps if not only or any(st[0].startswith(o) for o in only)]:
             t0 = time.time()
             try:
