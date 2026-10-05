@@ -54,8 +54,8 @@
   W6 4.8.1（走查 20-05）：导出可以取消（进度条旁「取消」，上次结果还在）；导出没做完再点导出不会叠第二个
   W7 4.9.0（5.0 第 3 步，Q1「物理给默认，每个值都能改」+ 参数表「删」）：联动的值都有链条——接着时灰字显示算出来的值、直接改就断开存你填的数、点链条接回去存哨兵值，
      模拟按哨兵值算出来和按算出来的数填进去一样；旧（待删）参数这个效果没用上时收进模块底下的「旧（待删）」开关、用着的照常显示带「旧」，搜索找得到；所有花型打开时参数值不变
-  W8 4.9.1（交互宪章 5 身份条）：顶栏有名字、来源、版本；改了参数标「改了没保存」；自己的效果导出后标「素材包 ✓ 和现在一致」、再改标「之后改过」；
-     AI 待验收效果（就绪的）标「素材包 ✓ 和这一版一致」；自动烘焙关时改参数，顶栏写「贴图是旧的」不写「烘焙中…」
+  W8 4.9.1（交互宪章 5 身份条）：顶栏有名字、来源、版本；改了参数标「● 没保存」；自己的效果导出后标「素材包 ✓」、再改标「素材包要重导」；
+     AI 待验收效果（就绪的）标「素材包 ✓」；自动烘焙关时改参数，顶栏写「贴图是旧的」不写「烘焙中…」
   W9 4.9.2（梳理 6.2 / 6.4、隐性耦合 T01）：改一个时刻、别的时刻被规则推着走时提示「跟着变了：× a → b s」；数值超出滑杆范围时数值框标出来并写明照样起作用；
      单束导出菜单写明贴图里的星不受力、随机关了
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
@@ -1571,23 +1571,23 @@ async def w8(pg):
     await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
     rd = "(() => { wbSync(); return { name: $('#abIdName').textContent, chips: [...document.querySelectorAll('#abIdChips .idc')].map(c => c.textContent), hidden: $('#abId').hidden, ab: $('#abState').textContent }; })()"
     r = await pg.evaluate(rd); info['菊'] = r
-    if r['hidden'] or '菊' not in r['name'] or '花型模板' not in r['chips'] or not any(c.startswith('版本') for c in r['chips']): bad.append(f'菊打开时身份条不对：{r}')
+    if r['hidden'] or '菊' not in r['name'] or '花型模板' not in r['chips'] or '原始' not in r['chips']: bad.append(f'菊打开时身份条不对：{r}')
     await pg.evaluate("(() => { bakeMode.auto = false; state.P.stars += 3; onParam(); return 0; })()"); await pg.wait_for_timeout(900)
     r = await pg.evaluate(rd); info['改了'] = r
-    if '● 改了没保存' not in r['chips']: bad.append(f'改了参数，身份条没标「改了没保存」：{r}')
+    if '● 没保存' not in r['chips']: bad.append(f'改了参数，身份条没标「没保存」：{r}')
     if '烘焙中' in r['ab'] or '贴图是旧的' not in r['ab']: bad.append(f"自动烘焙关时改参数，顶栏写的是「{r['ab']}」（应写贴图是旧的）")
     await pg.evaluate("(() => { wbAutoExport('检查'); return 0; })()")
     r = await pg.evaluate(rd); info['导出后'] = r['chips']
-    if not any(c.startswith('素材包 ✓') for c in r['chips']): bad.append(f'导出后身份条没标素材包一致：{r}')
+    if '素材包 ✓' not in r['chips']: bad.append(f'导出后身份条没标素材包一致：{r}')
     await pg.evaluate("(() => { state.P.stars += 2; onParam(); return 0; })()")
     r = await pg.evaluate(rd); info['导出后又改'] = r['chips']
-    if not any('之后改过' in c for c in r['chips']): bad.append(f'导出后又改，身份条没标「之后改过」：{r}')
+    if '素材包要重导' not in r['chips']: bad.append(f'导出后又改，身份条没标「素材包要重导」：{r}')
     await pg.evaluate("(() => { state.P.stars -= 5; onParam(); bakeMode.auto = null; return 0; })()")
     key = await pg.evaluate("(() => { const ef = EFFS().find(f => f.阶段 === '待验收' && f.待验收版 && effReady(f).ok); return ef ? ef.key : null; })()")
     if key:
         await pg.evaluate(f"(() => {{ window.__opening = true; Promise.resolve(openEffect(EFFS().find(e => e.key === {json.dumps(key)}))).finally(() => window.__opening = false); return 0; }})()"); await idle(pg)
         r = await pg.evaluate(rd); info['AI ' + key] = r['chips']
-        if not any(c.startswith('AI · 待验收') for c in r['chips']) or not any(c.startswith('素材包 ✓ 和这一版一致') for c in r['chips']): bad.append(f'就绪的待验收效果身份条不对：{r}')
+        if not any(c.startswith('AI · ') for c in r['chips']) or '素材包 ✓' not in r['chips']: bad.append(f'就绪的待验收效果身份条不对：{r}')
     else: bad.append('找不到就绪的待验收效果')
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)[:900]
 

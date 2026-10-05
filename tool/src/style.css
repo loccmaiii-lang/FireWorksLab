@@ -1360,18 +1360,17 @@ details.mod-empty .mod-note{font-size:12.5px;color:var(--muted,#adb8bc);padding:
 .sl.legacy:not(.chg) .k,.field.legacy:not(.chg) .fk{color:var(--dim)}
 .oldb{display:block;margin:4px 0 2px 2px;background:none;border:1px dashed var(--line2);border-radius:5px;color:var(--faint);font-size:11px;padding:1px 7px;cursor:pointer}
 .oldb.on{color:var(--dim);border-style:solid}
-/* 4.9.1 身份条：名字 + 来源 / 版本 / 没保存 / 素材包 */
-.ab-id{display:flex;align-items:center;gap:6px;min-width:0;flex:0 1 auto;overflow:hidden}
+/* 4.9.1 身份条：上一行名字，下一行标签（没保存 / 素材包 / 来源 / 版本，要紧的在前） */
+.ab-id{display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:90px;flex:0 1 auto;overflow:hidden}
 .ab-id[hidden]{display:none}
-.ab-id .id-name{font-size:13.5px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;flex:0 1 auto}
-.ab-id .id-chips{display:flex;gap:4px;min-width:0;overflow:hidden;flex:0 1 auto}
-.ab-id .idc{font-size:11px;line-height:18px;padding:0 6px;border:1px solid var(--line2);border-radius:9px;color:var(--dim);white-space:nowrap;flex:none}
+.ab-id .id-name{font-size:13px;line-height:16px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px}
+.ab-id .id-chips{display:flex;gap:4px;min-width:0;overflow:hidden}
+.ab-id .idc{font-size:10.5px;line-height:15px;padding:0 5px;border:1px solid var(--line2);border-radius:8px;color:var(--dim);white-space:nowrap;flex:none}
 .ab-id .idc.v{color:var(--faint)}
 .ab-id .idc.warn{color:var(--amber);border-color:#6b5a3a}
 .ab-id .idc.ok{color:var(--acc);border-color:#1f5b49}
 .ab-id .idc.dim{color:var(--faint);border-style:dashed}
 .ab-state.stale{color:var(--amber)}
-@media (max-width:1280px){.ab-id .idc.v,.ab-id .idc.dim{display:none}}
 @media (max-width:1100px){.ab-id .id-chips{display:none}}
 /* 4.9.2 数值超出滑杆的常用范围 */
 .sl.over .num{border-color:var(--amber)}

@@ -174,32 +174,32 @@ function wbSync() {
 // 以前名字只在左栏「版本记录」里，左栏收起就不知道开的是谁。贴图新旧在旁边的 #abState（烘焙中 / 旧 / 失败）。
 const OUT_SIG = () => { try { return JSON.stringify(OUTPUT_VER); } catch (e) { return ''; } };
 function idBarInfo(list, changed) {
+  // 每个标签 [短字, 样式, 悬停的完整说明]；顺序 = 要紧的在前（窄的时候后面的先被挤掉）
   const ef = lib.effect, e = lib.review, mtId = mtOpenId(), chips = [];
   const name = $('#abName').textContent || wbBaseId();
-  const src = lib.my ? ['我的效果' + (lib.my.from ? ' · 派生自 ' + lib.my.from.name : ''), ''] : lib.tpl ? ['我的模板', ''] : mtId ? ['多层花型模板', ''] : ef ? ['AI · ' + (ef.阶段 || '条目') + (e ? ' · ' + e.id : ''), ''] : e ? ['AI 条目 · ' + e.id, ''] : lib.formal ? ['正式库 · ' + lib.formal.id, 'ok'] : lib.key === 'combo' ? ['组合编辑器', ''] : ['花型模板', ''];
+  if (changed) chips.push(['● 没保存', 'warn', '参数改过，还没保存（切走 / 刷新会先存成草稿）']);
+  // 素材包：AI 条目看状态清单里的导出（同一指纹 = 一致）；自己的效果 / 模板看这台浏览器里「导出时」存的那份和现在比
+  if (ef && e && typeof effReady === 'function' && !changed && wb.src.kind !== 'mine') { const r = effReady(ef);
+    chips.push(!r.ex ? ['还没导出', 'dim', 'AI 还没导出这一版的素材包'] : r.ex.ver === r.ver ? ['素材包 ✓', 'ok', `素材包和这一版一致（${r.ex.job || ''}，指纹 ${r.ver}）`] : ['素材包过期', 'warn', '导出后参数或烘焙器输出规则改了，素材包要重导']); }
+  else if (ef && e) chips.push(['和 AI 包不同', 'dim', '你改过参数 / 看的是你的版本：和 AI 导出的素材包不一样']);
+  else { const autos = list.filter(s => s.auto === 'export'), last = autos[autos.length - 1];
+    if (!last) chips.push(['还没导出', 'dim', '这台电脑的浏览器里没导出过这个效果']);
+    else { let same = false; try { same = JSON.stringify(last.snap) === wbSig() && (!last.ov || last.ov === OUT_SIG()); } catch (err) { }
+      chips.push(same ? ['素材包 ✓', 'ok', `素材包导出于 ${last.at}，和现在一致`] : ['素材包要重导', 'warn', `素材包导出于 ${last.at}，之后改过参数（或烘焙器输出规则变了）`]); } }
+  const src = lib.my ? ['我的效果', '', '我的效果' + (lib.my.from ? '（派生自 ' + lib.my.from.name + '）' : '')] : lib.tpl ? ['我的模板', '', '我的模板'] : mtId ? ['多层模板', '', '多层花型模板'] : ef ? [e ? `AI · ${e.id}` : `AI · ${ef.阶段 || '条目'}`, '', `AI 做的效果 · ${ef.阶段 || ''}${e ? ' · 条目 ' + e.id : ''}`] : e ? ['AI 条目', '', 'AI 条目 ' + e.id] : lib.formal ? ['正式库', 'ok', '正式库 ' + lib.formal.id] : lib.key === 'combo' ? ['组合编辑器', '', '组合编辑器'] : ['花型模板', '', '花型模板'];
   chips.push(src);
   const v = wb.src.kind === 'mine' && list.find(x => x.id === wb.src.id);
-  chips.push(v ? [v.draft ? '版本：草稿' : v.auto ? `版本：导出时 ${v.at.slice(5)}` : `版本：${v.name}`, 'v'] : [lib.my ? '版本：已保存' : '版本：原始', 'v']);
-  if (changed) chips.push(['● 改了没保存', 'warn']);
-  // 素材包：AI 条目看状态清单里的导出（同一指纹 = 一致）；自己的效果 / 模板看这台浏览器里「导出时」存的那份和现在比
-  let pk = null;
-  if (ef && e && typeof effReady === 'function' && !changed && wb.src.kind !== 'mine') { const r = effReady(ef); pk = !r.ex ? ['素材包：还没导出', 'dim'] : r.ex.ver === r.ver ? [`素材包 ✓ 和这一版一致（${r.ex.job || ''}）`, 'ok'] : ['素材包：过期（导出后参数或烘焙器改了）', 'warn']; }
-  else if (ef && e) pk = ['素材包：你改过参数，和 AI 导出的不一样', 'dim'];
-  else { const autos = list.filter(s => s.auto === 'export'), last = autos[autos.length - 1];
-    if (!last) pk = ['素材包：这台电脑没导出过', 'dim'];
-    else { let same = false; try { same = JSON.stringify(last.snap) === wbSig() && (!last.ov || last.ov === OUT_SIG()); } catch (err) { }
-      pk = same ? [`素材包 ✓ 导出于 ${last.at.slice(5)}，和现在一致`, 'ok'] : [`素材包：导出于 ${last.at.slice(5)}，之后改过`, 'warn']; } }
-  if (pk) chips.push(pk);
+  chips.push(v ? [v.draft ? '草稿' : v.auto ? '导出时' : v.name, 'v', v.draft ? '版本：草稿（没保存就切走时自动存的）' : v.auto ? `版本：导出时 ${v.at}` : `版本：${v.name}（${v.at}）`] : [lib.my ? '已保存' : '原始', 'v', lib.my ? '版本：已保存的样子' : '版本：打开时的原始版本']);
   return { name, chips };
 }
 function idBarSync(list, changed) {
   const host = $('#abId'); if (!host) return;
   let info; try { info = idBarInfo(list, changed); } catch (err) { host.hidden = true; return; }
   if (host.hidden) host.hidden = false;
-  const html = info.chips.map(([t, c]) => `<span class="idc ${c || ''}">${t}</span>`).join('');
+  const html = info.chips.map(([t, c, d]) => `<span class="idc ${c || ''}" title="${String(d || t).replace(/"/g, '&quot;')}">${t}</span>`).join('');
   if ($('#abIdName').textContent !== info.name) $('#abIdName').textContent = info.name;
   const ch = $('#abIdChips'); if (ch.dataset.h !== html) { ch.innerHTML = html; ch.dataset.h = html; }
-  const tt = [info.name, ...info.chips.map(x => x[0])].join('\n'); if (host.title !== tt) host.title = tt;
+  const tt = [info.name, ...info.chips.map(x => x[2] || x[0])].join('\n'); if (host.title !== tt) host.title = tt;
 }
 setInterval(() => { if (!document.hidden && !$('#assetBar').hidden) wbSync(); }, 1000);
 
