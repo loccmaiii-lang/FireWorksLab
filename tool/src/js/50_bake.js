@@ -448,6 +448,7 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
         }
       };
       await bakePlan(pl,0,opt.pl?1:.75);
+      const pl0={t0:pl.t0,end:pl.t0+pl.duration};      // 4.5.8（小修 1）：自动裁掉全黑帧以前要烘的范围，记下来给界面说明
       // 真实编码贴图决定可见性，头和尾合看；裁后重新打包，不能留下不播放的占位帧。
       // 重新分帧后最后一帧可能又落到全黑处：最多裁 3 轮
       for(let pass=0;pass<3&&!opt.pl;pass++){
@@ -472,6 +473,8 @@ async function bakeMaster(P, scale, onProg, opt = {}) {
       first.meta.plan=pl;first.srcP=P;     // 取景实测收紧（refineBake）用：整段计划 + 烘的参数
       if(cutIn&&+P.preRoll!==0&&!first.meta.zoom)first.meta.pre=preRollOf(P,fm,first.meta.t0);
       first.meta.cut={in:cutIn,out:cutOut};
+      // 4.5.8（小修 1，用户 10-05 18:02「填 9 s 时间轴还是 2.83 s」的真因）：开头 / 结尾全黑的帧（最亮像素 < 2/255）自动不烘，以前不说
+      {const end=pl.t0+pl.duration;if(end<pl0.end-0.02||pl.t0>pl0.t0+0.02)first.meta.trim={reqT0:pl0.t0,reqEnd:pl0.end,t0:pl.t0,end};}
       // 整段可见范围（时段条的淡色底）：没设入出点 = 这次自动裁出来的；设了 = 设入点时记下的范围
       first.meta.vis=cutIn||cutOut?[+P.preFrom>=0?Math.min(+P.preFrom,first.meta.t0):first.meta.t0,Math.max(bakeTotal(first),+P.visTo||0)]:[first.meta.t0,bakeTotal(first)];
       return first;

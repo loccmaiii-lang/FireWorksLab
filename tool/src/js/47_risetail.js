@@ -944,7 +944,7 @@ function rtLiveTables(P, mobile) {
 function rtShadeLoop(P, M, t) {
   const pr = PR.rgmat; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, rgT.tex); gl.uniform1i(pr.u.uS, 0);
   gl.uniform1f(pr.u.uEH, fixedExposure(P)); gl.uniform1f(pr.u.uET, fixedExposure(P)); gl.uniform1f(pr.u.uG, P.encGamma || 1); gl.uniform1f(pr.u.uComb, 1);
-  setMatUniforms(pr, { ...M, headInt: (M.headInt || 1) * (P.rtBright || 1) }, t); drawQuad();
+  setMatUniforms(pr, { ...M, headInt: intOr1(M.headInt) * (P.rtBright || 1) }, t); drawQuad();
 }
 // ---- 4.5.1 分层看（用户 10-05 17:39「我没法单独看近段、远段和 GPU 粒子层」）：只影响观察，不改参数和导出 ----
 //   工具条上一排：近段 / 远段 / 每个 GPU（和 CPU 软圆点）发射器，后面是此刻的颗数；点一下开 / 关，双击只看这一层，「全部」恢复
@@ -1003,7 +1003,7 @@ function renderEmitExport(b) {
     const pr = PR.mat; gl.useProgram(pr.p);
     gl.uniform4fv(pr.u.uRect, [sa.x - sa.w / 2, sa.z - sa.h / 2, sa.x + sa.w / 2, sa.z + sa.h / 2]); gl.uniform4fv(pr.u.uView, view);
     bindSeqTextures(pr, sa.bb); gl.uniform1f(pr.u.uFrame, sa.f); gl.uniform1f(pr.u.uMirror, 0);
-    setMatUniforms(pr, { ...M, headInt: (M.headInt || 1) * (P.rtBright || 1) }, t);
+    setMatUniforms(pr, { ...M, headInt: intOr1(M.headInt) * (P.rtBright || 1) }, t);
     gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
   }
   if (s) {
@@ -1011,7 +1011,7 @@ function renderEmitExport(b) {
     gl.uniform4fv(pr.u.uRect, [s.x - w / 2, s.z - h * hb, s.x + w / 2, s.z + h * (1 - hb)]); gl.uniform4fv(pr.u.uView, view);   // 星头 = 粒子位置（Pivot Offset）
     bindSeqTextures(pr, s.bb); gl.uniform1f(pr.u.uFrame, s.f); gl.uniform1f(pr.u.uMirror, 0);
     const kin = (s.phase === 'rise' && !m.grow ? rtLoopInAt(P, t) : 1) / (s.phase === 'rise' && m.nearExpo ? m.nearExpo * m.nearExpo : 1);     // 4.5.1 近段贴图曝光补回（和导出的 Color Over Life 一样）     // 4.4：出场淡入（和导出的 Color Over Life 一样）；4.4.5 跟尾迹长度时不淡入
-    setMatUniforms(pr, { ...M, headInt: (M.headInt || 1) * (P.rtBright || 1) * kin, tailInt: (M.tailInt == null ? 1 : M.tailInt) * kin }, t);
+    setMatUniforms(pr, { ...M, headInt: intOr1(M.headInt) * (P.rtBright || 1) * kin, tailInt: (M.tailInt == null ? 1 : M.tailInt) * kin }, t);
     gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
   }
   const tabs = rtTables(b, !!b.esMobile), nd = esDraw(tabs, t, view, ppm, ppmY, 1, tabs.map(x => rtOn(x.e.name)));

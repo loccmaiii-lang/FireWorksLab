@@ -6,7 +6,7 @@
 //  英文名（UE 资产名：效果名 + 每层名）在「查看交付」里改，和其它效果同一套命名规则。
 // =====================================================================
 const myAll = () => store.get('myEffects', {});
-function myPut(rec) { const all = myAll(); all[rec.id] = rec; store.set('myEffects', all); }
+function myPut(rec) { const all = myAll(); all[rec.id] = rec; return store.set('myEffects', all); }
 function myDelete(id) { const all = myAll(); delete all[id]; store.set('myEffects', all); }
 const myLid = () => 'l' + Math.random().toString(36).slice(2, 7);
 // 层的来源：花型模板 key / 'rep:<正式库>' / 'rv:<条目>' → { type, P, M, title }（参数复制一份，以后各改各的）
@@ -68,7 +68,7 @@ async function mySave(asNew) {
   let out = rec;
   if (asNew) { const nm = await askSaveName('另存为新效果', '复制当前全部图层、参数和联动关系，保留原效果。新效果会出现在左侧「我的效果」。', rec.name + ' 副本', '另存为'); if (nm == null) return; out = { ...structuredClone(rec), id: 'fx' + Date.now().toString(36), name: nm.trim() || rec.name + ' 副本', created: wbNow() }; }
   Object.assign(out, { updated: wbNow(), snap: mySnap(), links: myLinksLid() }); delete out.linksLive;
-  myPut(out);
+  if (!myPut(out)) return;            // 4.5.8：浏览器里没存上就别说「已保存」（store.set 已经报错）
   const drafts = wbList().filter(x => x.draft); if (drafts.length && !asNew) wbPut(wbList().filter(x => !x.draft));   // 存了就不要草稿了
   let path = null; try { path = await repoWrite('my:' + out.id, { id: out.id, name: out.name, at: out.updated, base: '我的效果', snap: out.snap, links: out.links, ue: packNamesFor('my:' + out.id, null, state.layers.length, 'MyFx') }); } catch (e) { flash('存进仓库文件夹失败：' + (e.message || e), true); }
   if (asNew) { await openMyEffect(out.id, { keep: true }); }
@@ -93,12 +93,15 @@ async function myDupLayer(i) {
   state.layers.splice(i + 1, 0, { ...rest, lib: f.name, title: (L.title || layerName(i)) + ' 副本', lid: myLid() });
   myLayersChanged(); selectComboLayer(i + 1);
 }
+// 4.5.8（20-03）：删层不弹框，进 Ctrl+Z（以前弹确认框、不进撤销，提示说「版本 → 已保存」能找回，其实只能找回更旧的）
 function myDelLayer(i) {
   if (state.layers.length <= 1) { flash('至少留一层', true); return; }
-  if (!confirm(`删掉第 ${i + 1} 层「${layerName(i)}」？（保存前都能用「版本 → 已保存」找回）`)) return;
-  const L = state.layers.splice(i, 1)[0], e = state.lib.find(x => x.name === L.lib);
+  if (typeof undoNote === 'function') { undoCommit(); undoNote(); }
+  const nm = layerName(i), L = state.layers.splice(i, 1)[0], e = state.lib.find(x => x.name === L.lib);
   if (e && e.own && !state.layers.some(x => x.lib === e.name)) { dropLibBake(e); state.lib.splice(state.lib.indexOf(e), 1); }
   state.comboSel = -1; myLayersChanged(); syncComboPanels();
+  if (typeof undoCommit === 'function') undoCommit();
+  flash(`删掉了第 ${i + 1} 层「${nm}」：Ctrl+Z（或资产栏撤销）能撤回`);
 }
 function myMoveLayer(i, d) {
   const j = i + d; if (j < 0 || j >= state.layers.length) return;
@@ -112,6 +115,7 @@ function myRenameLayer(i) {
 function myLayersChanged() {
   computeLinks(); buildComboPanel(); buildLayerCard(); if (state.comboSel >= 0) buildLayerHead(state.comboSel);
   stage2.tlSig = ''; wbSync();
+  if (typeof undoNote === 'function') undoNote();      // 4.5.8：加层 / 复制 / 挪层也进撤销
 }
 // ---------------- 同一批星（明确勾选，不靠猜） ----------------
 // lib.my.linksLive：[[lid, lid, …], …]（按层的稳定编号记，层挪位置、加删都不乱）；同一组里的层轨迹参数（种子、星数、初速、终端速度、重力、离散…）一起变

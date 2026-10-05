@@ -40,7 +40,7 @@ function fwlUnit(name, b, M, L) {
         { m: 'Drag', DragCoefficientRaw: { const: r4(f.k * r) } },
         { m: 'ConstAcceleration', Acceleration: [r1((+P.wind || 0) * f.k * 100 * sc * r * r), 0, r1(-f.a * 100 * sc * r * r)] },
         { m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(m.keys, Lg.F) } } },
-        { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, Du, 0, M.headInt || 1) }, AlphaOverLife: { const: 1 } }
+        { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, Du, 0, intOr1(M.headInt)) }, AlphaOverLife: { const: 1 } }
       ],
       notes: [`单束：每颗星一个面片（${Math.round(+P.stars || 0)} 颗），贴图是一颗代表星的序列，轨迹由 Cascade 算（初速 ${r2(f.v0)} m/s、阻力 ${r4(f.k)}/s、下坠 ${r2(f.a)} m/s²）；Pivot Offset 把星头放在粒子位置（导入器待支持，未经 UE 验证）`]
     }
@@ -114,7 +114,7 @@ function dotsCount(P) { return +P.headBright > 0 ? Math.round((+P.stars || 0) * 
 function dotsES(L, P, M, fm) {
   const v = dotVis(P), r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1, seed = ((+P.seed || 1) * 31 + 7) | 0;
   const rl = [M.ramp2, M.ramp3].filter(Boolean).map(hexToLin), rc = rl.length ? [0, 1, 2].map(j => rl.reduce((a, c) => a + c[j], 0) / rl.length) : [1, 1, 1];
-  const sz = Math.max(0.05, (L.dotSize > 0 ? +L.dotSize : 1) * (+P.headSize || 1) * sc), gain = (+M.headInt || 1) * (+P.headBright || 1) * (L.dotBright > 0 ? +L.dotBright : 1);
+  const sz = Math.max(0.05, (L.dotSize > 0 ? +L.dotSize : 1) * (+P.headSize || 1) * sc), gain = intOr1(M.headInt) * intOr1(P.headBright) * (L.dotBright > 0 ? +L.dotBright : 1);
   if (!v) return { name: 'Dots', gpu: true, delay: +L.delay || 0, duration: 0.1, bursts: [], life: [1, 1], size: [sz, sz], col: [[0, [0, 0, 0]], [1, [0, 0, 0]]], ak: [[0, 0], [1, 0]], seed, fit: { k: 0, g: 0, on: 0, n: 0 } };
   // 序列材质的色相来自 Ramp（灰度查表）× Color Over Life；软圆点没有 Ramp，星头亮核用 Ramp 亮端（中亮、亮两格的平均，线性）乘进颜色
   let ak = [[0, v.alpha[0][1]], ...v.alpha, [1, v.alpha[v.alpha.length - 1][1]]];
@@ -196,6 +196,9 @@ async function comboLayerBakes(layers, onProg) {
   for (let i = 0; i < layers.length; i++) {
     const L = layers[i], e = state.lib.find(x => x.name === L.lib);
     if (!e || !e.bake) throw new Error(`第 ${i + 1} 层「${L.lib}」还没有烘焙`);
+    // 4.5.8（19-C01）：这一层按新参数烘焙失败了（或还没烘到最新），手上的是旧贴图 → 拦住，不导出和参数对不上的包
+    if (e.failedRev != null && e.failedRev === e.pRev) throw new Error(`第 ${i + 1} 层「${layerName(i)}」按新参数烘焙失败，导出会拿旧贴图：先改参数或点「重试」`);
+    if (layerStale(e)) throw new Error(`第 ${i + 1} 层「${layerName(i)}」的贴图还不是最新参数烘的（烘焙没跑完）：等烘完再导出`);
     let b = e.bake;
     // 4.2.5：导出用收紧后的取景（预览可能还没来得及在后台收紧）
     if (!b.tail && b.scale === 1 && !b.meta.fitted) { const nb = await refineBake(b, p => onProg && onProg((i + p) / layers.length)); if (nb) { dropLibBake(e); e.bake = b = nb; } }

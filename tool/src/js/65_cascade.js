@@ -120,7 +120,7 @@ ${pasteSection([
    : m.zoom ? [['Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points', ueVecPts(m.sizeKeys.map(([u, v]) => [u, [v, v, 1]]))]]
    : Math.abs(+m.cy || 0) > 1e-4 ? [['Required → Pivot Offset', `(X=${ue6(-0.5)},Y=${ue6(-0.5 - m.cy / m.Wh)})`]] : []),
   ['Dynamic Parameter → 帧号参数（按导入配置，实测第 0 个）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(fwlFrameKeys(m.keys, m.L.F))],
-  ['Color Over Life → Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）', ueVecPts(colorKeys(M, m.duration, m.t0 || 0).map(([u, c]) => [u, c.map(x => x * (M.headInt || 1))]))]
+  ['Color Over Life → Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）', ueVecPts(colorKeys(M, m.duration, m.t0 || 0).map(([u, c]) => [u, c.map(x => x * intOr1(M.headInt))]))]
 ])}【帧与流畅度${label || ''}】
 平均 ${fx(m.avgFps, 1)} fps，最低 ${fx(m.minFps, 1)} fps，每帧最大位移 ${fx(m.maxDisp, 1)} 像素（建议 ≤ 3）
 平均面片面积为最大尺寸的 ${Math.round(m.area * 100)}%（overdraw 按此折算）
@@ -156,7 +156,7 @@ ${pasteSection([
   ['Initial Size → Start Size → Distribution Vector Constant → Constant', ueVec(m.Ww * 100, m.Wh * 100, 1)],
   ['Size By Life → Life Multiplier → Distribution Vector Constant Curve → Constant Curve → Points', ueVecPts(mergeXY(m.sizeKeysX, m.sizeKeysY))],
   ['Dynamic Parameter → 帧号参数（按导入配置，实测第 0 个）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points', ueFloatPts(fwlFrameKeys(m.keys, m.L.F))],
-  ['Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）', ueVecPts(colorKeys(M, Du, 0).map(([u, c]) => [u, c.map(x => x * (M.headInt || 1))]))]
+  ['Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）', ueVecPts(colorKeys(M, Du, 0).map(([u, c]) => [u, c.map(x => x * intOr1(M.headInt))]))]
 ])}轨迹拟合（线性阻力 + 恒定加速度 对 真实二次阻力）：初速 ${fx(f.v0, 1)} m/s，阻力 ${fx(f.k, 3)} /s，下坠加速度 ${fx(f.a, 2)} m/s²，
   位置误差约为花半径的 ${fx(f.err * 100, 1)}%。开花闪光请另挂一个短序列（母版模式导出前 0.3 s）或项目现有闪光贴图。
   贴图里的拖尾是直的（烘焙时去掉了重力弯曲），下垂由粒子轨迹体现；风、湍流也交给 Cascade（Const Acceleration、Orbit）。

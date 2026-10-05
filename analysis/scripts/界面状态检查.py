@@ -45,6 +45,9 @@
      GPU 粒子上限、细 / 中火花进贴图、H4 新口径和温度偏移无关；循环层长度起步不伸到发射点以下；面板「弹道」在星头 › 弹道、选物理后升空时间藏起
   W1 4.5.0 工作台快改：时间轴无发射器行 / 曲线、精简布局收层轨道；时长跟随 / 粘连开关；AI 效果保存 = 派生成我的效果、能加层；存模板 → 花型库能打开；
      删除不弹框、能撤销；AI 效果从左栏隐藏；只还原一个发射器、回到模板默认
+  W3 4.5.8（9 处 bug + 5 条小修，用户 10-05 21:40 / 21:55）：删效果撤销连版本一起回来；连删两个都能撤销；删层进 Ctrl+Z、不弹框；删当前模板后顶栏不剩「更新模板」；
+     多层某层新参数烘焙失败时导出拦住；显示强度 0 导出也是 0；关自动烘焙时同一批星的层马上同步；内置效果「暂时不联动」不带进我的效果；组合说明按最终贴图写；
+     贴图结尾全黑被裁掉要写明；换版本前先存草稿；浏览器存不进去要报错（读坏了先备份）；尾缀 S / M / L 模板导出 GPU 安全写法；子花继承标签写对
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -1013,8 +1016,10 @@ R5_JS = r"""async () => {
   await openType('tailL'); await new Promise(r => setTimeout(r, 300));
   const P0 = derive(structuredClone(state.P));
   out.defaults = ['rtBall', 'rtLoopSize', 'rtGpuSafe', 'rtMTex', 'rtTexCal', 'rtGpuMax'].map(k => +P0[k]);
-  if (out.defaults.some(v => v !== 0)) bad.push('缺省不是旧做法：' + out.defaults);
-  const ES0 = rtBuildES(P0); if (!ES0.emitters.some(e => e.gpu && e.accelCurve)) bad.push('缺省（旧做法）GPU 火花应该还有乱流 Acceleration');
+  // 4.5.8（用户 10-05 21:40 小修 4）：尾缀 S / M / L 模板缺省改 GPU 安全写法（rtGpuSafe 1），其余照旧
+  if (out.defaults.some((v, i) => v !== (i === 2 ? 1 : 0))) bad.push('缺省不对（除 GPU 兼容 = 1 外应是旧做法）：' + out.defaults);
+  const ES0 = rtBuildES(P0); if (ES0.emitters.some(e => e.gpu && e.accelCurve)) bad.push('缺省（GPU 安全写法）GPU 火花不该再写乱流 Acceleration');
+  const ESo = rtBuildES({ ...P0, rtGpuSafe: 0 }); if (!ESo.emitters.some(e => e.gpu && e.accelCurve)) bad.push('旧做法（GPU 兼容 0）GPU 火花应该还有乱流 Acceleration');
   // 物理弹道
   const Q = { ...P0, rtBall: 1 }, b = rtBallistic(Q), sp = t => { const v = b.vel(t); return Math.hypot(v[0], v[2]); };
   out.phys = { v0: +b.v0.toFixed(1), T: +b.T.toFixed(2), H: +b.H.toFixed(1), want: Q.rtH, s1: +sp(1).toFixed(1), vb: +b.vb.toFixed(2) };
@@ -1253,6 +1258,135 @@ async def w2(pg):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
 
 
+async def w3(pg):
+    """4.5.8：那 9 处 bug（协作/筛查/汇总_要你定的.md §6）+ 5 条小修（协作/5.0_需求梳理.md §6.7）。每项先在 4.5.7 上失败，再修到通过"""
+    bad, info = [], {}
+    cur = ["?"]
+    async def ev(js):
+        try: return await pg.evaluate(js)
+        except Exception as e: raise RuntimeError(f"{cur[0]}：{str(e)[:300]}")
+    await pg.evaluate("window.askSaveName = async (t, n, init) => '检查 · ' + init; window.__confirms = 0; window.confirm = () => { window.__confirms++; return true; }; window.__flashes = []; const _f = flash; flash = (m, e) => { window.__flashes.push([String(m), !!e]); return _f(m, e); }; 0")
+    clicks = "(async () => { for (const b of [...document.querySelectorAll('#undoToast button')]) { b.click(); await new Promise(z => setTimeout(z, 80)); } return 0; })()"
+    cur[0] = '20-01'
+    # 20-01 删当前打开的我的效果：撤销后版本也回来
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(myCreate('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await ev("""(async () => { const id = lib.my.id, key = 'my:' + id; const all = wbAll(); all[key] = [{ id: 'v1', name: '检查版本 1', at: wbNow(), snap: wbSnap() }, { id: 'draft', name: '草稿', draft: true, at: wbNow(), snap: wbSnap() }]; store.set('mySaves', all);
+      removeMyFx(id); const gone = !myAll()[id], n0 = (wbAll()[key] || []).length; return { id, key, gone, n0 }; })()""")
+    await idle(pg); await pg.evaluate(clicks); await idle(pg)
+    r2 = await ev(f"(() => ({{ back: !!myAll()['{r['id']}'], n1: (wbAll()['{r['key']}'] || []).length, open: lib.key }}))()")
+    info['20-01'] = {**r, **r2}
+    if not r2['back'] or r2['n1'] != 2: bad.append(f'20-01 删当前我的效果后撤销，版本没一起回来：{info["20-01"]}')
+    cur[0] = '20-02'
+    # 20-02 连删两个模板，两个都能撤销
+    r = await ev("""(async () => { const a = { id: 'tA' + Date.now().toString(36), name: '检查模板 A', type: 'kiku', P: structuredClone(defaultsFor('kiku').P), M: structuredClone(defaultsFor('kiku').M), at: wbNow() };
+      const b = { ...structuredClone(a), id: a.id + 'b', name: '检查模板 B' }; tplPut(a); tplPut(b); removeTemplate(a.id); removeTemplate(b.id);
+      const gone = !tplAll()[a.id] && !tplAll()[b.id], btns = document.querySelectorAll('#undoToast button').length; return { a: a.id, b: b.id, gone, btns }; })()""")
+    await pg.evaluate(clicks)
+    r2 = await ev(f"(() => ({{ a: !!tplAll()['{r['a']}'], b: !!tplAll()['{r['b']}'] }}))()")
+    info['20-02'] = {**r, **r2}
+    if not (r['gone'] and r2['a'] and r2['b']): bad.append(f'20-02 连删两个模板，没有两个都能撤销：{info["20-02"]}')
+    cur[0] = '20-04'
+    # 20-04 删当前打开的模板：顶栏不再是「更新模板」
+    r = await ev(f"""(async () => {{ openTemplate('{r['a']}'); await new Promise(z => setTimeout(z, 300)); const before = !$('#abUpdTpl').hidden; removeTemplate('{r['a']}'); await new Promise(z => setTimeout(z, 300));
+      return {{ before, tpl: !!lib.tpl, upd: !$('#abUpdTpl').hidden, key: lib.key }}; }})()""")
+    await idle(pg)
+    info['20-04'] = r
+    if r['tpl'] or r['upd']: bad.append(f'20-04 删了当前模板，顶栏还认它 / 还显示「更新模板」：{r}')
+    cur[0] = '20-03'
+    # 20-03 删层进 Ctrl+Z、不弹确认框
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(myCreate('kiku')).then(() => myAddLayerFrom('botan')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    await pg.wait_for_timeout(900)
+    r = await ev("""(async () => { selectComboLayer(1); state.P.stars = 77; onParam(); await new Promise(z => setTimeout(z, 900)); const c0 = window.__confirms, n0 = state.layers.length;
+      myDelLayer(1); await new Promise(z => setTimeout(z, 900)); const n1 = state.layers.length; await undoStep(-1); await new Promise(z => setTimeout(z, 300));
+      const n2 = state.layers.length, st = n2 > 1 ? layerEntryOf(state.layers[1]).P.stars : null; return { n0, n1, n2, st, confirms: window.__confirms - c0 }; })()""")
+    await idle(pg)
+    info['20-03'] = r
+    if r['confirms'] or r['n1'] != r['n0'] - 1 or r['n2'] != r['n0'] or r['st'] != 77: bad.append(f'20-03 删层没进 Ctrl+Z（或还弹确认框）：{r}')
+    cur[0] = '19-C03'
+    # 19-C03 关自动烘焙：同一批星的层马上同步（不等源层烘完）
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(myCreate('kiku')).then(() => myAddLayerFrom('kiku')).then(() => { mySetLinked(0, 1, true); return mySave(false); }).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    await pg.wait_for_timeout(900)
+    r = await ev("""(async () => { setAutoBake(false); selectComboLayer(0); state.P.v0 = +(state.P.v0 + 13).toFixed(1); onParam();
+      const a = state.P.v0, b = layerEntryOf(state.layers[1]).P.v0; setAutoBake(true); return { a, b }; })()""")
+    await idle(pg)
+    info['19-C03'] = r
+    if abs(r['a'] - r['b']) > 1e-9: bad.append(f'19-C03 关自动烘焙时同一批星的层没马上同步：{r}')
+    cur[0] = '19-C04'
+    # 19-C04 内置效果里「暂时不联动」不带进我的效果
+    r = await ev("""(async () => { const id = lib.my.id; state.linkOff = true; await openMyEffect(id); await new Promise(z => setTimeout(z, 600));
+      selectComboLayer(0); state.P.v0 = +(state.P.v0 + 7).toFixed(1); onParam(); await new Promise(z => setTimeout(z, 200));
+      return { off: !!state.linkOff, a: state.P.v0, b: layerEntryOf(state.layers[1]).P.v0 }; })()""")
+    await idle(pg)
+    info['19-C04'] = r
+    if abs(r['a'] - r['b']) > 1e-9: bad.append(f'19-C04 内置效果关了联动，打开我的效果后勾着的同一批星不联动：{r}')
+    cur[0] = '19-C01'
+    # 19-C01 某层按新参数烘焙失败：导出要拦住，不拿旧贴图
+    r = await ev("""(async () => { const ob = bake; bake = async (P, ...a) => { if (P.stars === 66) throw new Error('检查：故意烘焙失败'); return ob(P, ...a); };
+      selectComboLayer(1); state.P.stars = 66; onParam(); await new Promise(z => setTimeout(z, 1500)); let err = '';
+      try { await comboLayerBakes(state.layers); } catch (e) { err = e.message || String(e); } bake = ob; state.P.stars = 77; onParam(); return { err }; })()""")
+    await idle(pg)
+    info['19-C01'] = r
+    if not r['err']: bad.append(f'19-C01 有一层新参数烘焙失败，导出没拦住（会拿旧贴图）：{r}')
+    cur[0] = '19-C05'
+    # 19-C05 组合说明按最终贴图写（导出过程中贴图变了，说明跟着变）
+    r = await ev("""(async () => { const oz = makeZip, od = download, oc = comboPackFiles; let got = null;
+      comboPackFiles = async (name, layers) => { for (const L of layers) { const e = layerEntryOf(L); e.bake.meta.Ww = 12.34; } return []; };
+      makeZip = async files => { got = files; return new Blob([]); }; download = () => 0;
+      try { await exportCombo(); } finally { makeZip = oz; download = od; comboPackFiles = oc; }
+      const f = got && got.find(([n]) => n.endsWith('_组合说明.json')); if (!f) return { json: null };
+      const j = JSON.parse(new TextDecoder().decode(f[1])); return { cm: j.layers.map(l => l.spriteSizeCm && l.spriteSizeCm[0]), sc: state.layers.map(L => L.scale) }; })()""")
+    info['19-C05'] = r
+    if not r.get('cm') or any(abs(c - 1234 * s) > 0.6 for c, s in zip(r['cm'], r['sc'])): bad.append(f'19-C05 组合说明没按导出时最终的贴图写：{r}')
+    cur[0] = '19-C02'
+    # 19-C02 显示强度 0：导出的 Color Over Life 也是 0
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await ev("""(() => { const M = { ...state.M, headInt: 0, tailInt: 0 }; const c = fwlCascade('Chk', state.bake, M);
+      const col = c.emitters.flatMap(e => e.modules.filter(m => m.m === 'ColorOverLife').map(m => m.ColorOverLife.curve)); const mx = Math.max(0, ...col.flat().map(k => Math.max(...k[1])));
+      return { n: col.length, max: mx }; })()""")
+    info['19-C02'] = r
+    if not r['n'] or r['max'] > 0: bad.append(f'19-C02 显示强度 0，导出的 Color Over Life 不是 0：{r}')
+    cur[0] = '小修 1'
+    # 小修 1：贴图结尾全黑被裁掉，「火花灭完」那行要写明
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('crackle')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await ev("""(async () => {
+      const b = state.bake; if (!b) return { txt: 'no bake' }; b.meta.trim = { reqEnd: 9, end: 2.73, t0: 0 }; state.P.duration = 9; refreshVisibility(); await new Promise(z => setTimeout(z, 100));
+      const box = document.querySelector('#params [data-info=endInfo]'); return { txt: box ? box.textContent.slice(0, 160) : '' }; })()""")
+    await idle(pg)
+    info['小修1'] = r
+    if '全黑' not in r['txt'] or '2.73' not in r['txt']: bad.append(f'小修 1：结尾全黑帧被裁掉，「火花灭完」那行没写明：{r}')
+    cur[0] = '小修 2'
+    # 小修 2：换版本前先存草稿
+    await open_effect(pg, 'jinmangju'); await idle(pg)
+    r = await ev("""(async () => { let n = 0; while (!wb.sig && n++ < 100) await new Promise(z => setTimeout(z, 100)); const list = wbList(); list.push({ id: 'vchk', name: '检查版本', at: wbNow(), snap: wbSnap() }); wbPut(list);
+      selectComboLayer(0); state.P.stars = 211; onParam(); await new Promise(z => setTimeout(z, 300)); await wbLoad('vchk'); await new Promise(z => setTimeout(z, 300));
+      const d = wbList().find(x => x.draft); return { draft: !!d, stars: d ? (d.snap.P ? d.snap.P.stars : d.snap.layers[0].P.stars) : null }; })()""")
+    await idle(pg)
+    info['小修2'] = r
+    if not r['draft'] or r['stars'] != 211: bad.append(f'小修 2：换版本前没把没保存的改动存成草稿：{r}')
+    cur[0] = '小修 3'
+    # 小修 3：浏览器存不进去要报错（不能说「已保存」）；读坏了先备份原文
+    r = await ev("""(async () => { const os = Storage.prototype.setItem; window.__flashes = [];
+      Storage.prototype.setItem = function (k, v) { if (String(k).startsWith('fwb.myEffects')) { const e = new Error('QuotaExceededError'); e.name = 'QuotaExceededError'; throw e; } return os.call(this, k, v); };
+      let ok = null; try { ok = store.set('myEffects', { x: 1 }); } finally { Storage.prototype.setItem = os; }
+      const errFlash = window.__flashes.some(([m, e]) => e && /存不进|没存上|保存失败/.test(m));
+      localStorage.setItem('fwb.myTemplates', '{坏的'); const v = store.get('myTemplates', {}); const bak = Object.keys(localStorage).some(k => k.startsWith('fwb.myTemplates.坏') || k.startsWith('fwb.myTemplates.corrupt'));
+      localStorage.removeItem('fwb.myTemplates'); return { ok, errFlash, bak }; })()""")
+    info['小修3'] = r
+    if r['ok'] is not False or not r['errFlash']: bad.append(f'小修 3：浏览器存不进去时没报错：{r}')
+    if not r['bak']: bad.append(f'小修 3：读坏了没先备份原文（下次保存会把整张表覆盖）：{r}')
+    cur[0] = '小修 4'
+    # 小修 4：尾缀 S / M / L 模板默认 GPU 安全写法
+    r = await ev("(() => ({ s: defaultsFor('tailS').P.rtGpuSafe, m: defaultsFor('tailM').P.rtGpuSafe, l: defaultsFor('tailL').P.rtGpuSafe }))()")
+    info['小修4'] = r
+    if not (r['s'] == 1 and r['m'] == 1 and r['l'] == 1): bad.append(f'小修 4：尾缀 S / M / L 模板导出还是 GPU 写 Acceleration 的旧写法：{r}')
+    cur[0] = '小修 5'
+    # 小修 5：子花继承标签写对（十字 0.25）
+    r = await ev("(() => { for (const sec of SCHEMA) for (const it of sec.items) if (Array.isArray(it) && it[0] === 'subKeep') return typeof it[1] === 'function' ? it[1](state.P) : it[1]; return ''; })()")
+    info['小修5'] = r
+    if '0.25' not in r: bad.append(f'小修 5：子花继承标签没写十字排布 0.25：{r}')
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
+
+
 async def x2(pg):
     """4.4.2（用户 10-04 21:17）：单层效果（牡丹模板）也有「导出方案」：输出 › 导出方案里 PC 能选 GPU 光点 / 单束 / 不出，手机能选不出；选光点后 cascade.json 是一个 GPU 光点发射器、引擎回放画光点、说明写有尾迹没了"""
     bad, info = [], {}
@@ -1333,7 +1467,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

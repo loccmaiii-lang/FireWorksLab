@@ -36,7 +36,7 @@ function fwlMaster(name, b, M, mobile) {
     if (pre) mods.push({ m: 'SizeByLife', preRoll: true, LifeMultiplier: { curve: [...pre.keys.map(([u, v]) => [r4(u * pu), [r4(v), r4(v), 1]]), [1, [1, 1, 1]]] }, MultiplyX: true, MultiplyY: true, MultiplyZ: false });
     const fk = pre ? [[0, 0], ...m.keys.map(([u, v]) => [pu + u * (1 - pu), v])] : m.keys;
     mods.push({ m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(fk, L.F) } } });
-    mods.push({ m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, life, pre ? pre.from : m.t0 || 0, M.headInt || 1) }, AlphaOverLife: { const: 1 } });
+    mods.push({ m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, life, pre ? pre.from : m.t0 || 0, intOr1(M.headInt)) }, AlphaOverLife: { const: 1 } });
     if (s.tail) materials[mk + 'Tail'] = { role: 'flipbook_rgba', textures: { main: key + 'Tail', ramp: 'ramp' }, scalars: { rows: L.rows, cols: L.cols } };
     emitters.push({
       name: seg ? 'Main' + seg : 'Main', material: mk, gpu: false,
@@ -48,7 +48,7 @@ function fwlMaster(name, b, M, mobile) {
     });
     if (s.tail) { const e0 = emitters[emitters.length - 1];
       emitters.push({ ...e0, name: e0.name + 'Tail', material: mk + 'Tail',
-        modules: e0.modules.map(q => q.m === 'ColorOverLife' ? { ...q, ColorOverLife: { curve: fwlColor(M, life, pre ? pre.from : m.t0 || 0, M.tailInt || 1) } } : q),
+        modules: e0.modules.map(q => q.m === 'ColorOverLife' ? { ...q, ColorOverLife: { curve: fwlColor(M, life, pre ? pre.from : m.t0 || 0, intOr1(M.tailInt)) } } : q),
         notes: [...(e0.notes || []), '星头、火花分开输出：这是火花层（…_Tail 贴图），除贴图和颜色外和星头层相同'] }); }
   }
   textures.ramp = { file: TN(name, 'Ramp') + '.png', class: 'ramp' };

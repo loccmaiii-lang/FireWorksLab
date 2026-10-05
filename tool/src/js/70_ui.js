@@ -21,7 +21,7 @@ function busy(on, text, p) {
   if (on) { if (text) $('#busyText').textContent = text; if (p != null) $('#busyBar').style.width = Math.round(p * 100) + '%'; }
 }
 let flashTimer = 0;
-function flash(msg, bad) { const s = $('#status'); s.textContent = msg; s.className = bad ? '' : 'on'; clearTimeout(flashTimer); flashTimer = setTimeout(() => { s.textContent = ''; s.className = ''; }, 3500); }
+function flash(msg, bad) { if (!bad && typeof storeJustFailed === 'function' && storeJustFailed() && /保存|存成|已存|已更新|已新建/.test(msg)) { msg = '没存上（浏览器里存不进去）：' + msg; bad = true; } const s = $('#status'); s.textContent = msg; s.className = bad ? '' : 'on'; clearTimeout(flashTimer); flashTimer = setTimeout(() => { s.textContent = ''; s.className = ''; }, 3500); }
 function setStatus(msg) { const s = $('#status'); s.textContent = msg; s.className = msg ? 'on' : ''; }
 
 // 上升类的序列时长跟随到顶时间
@@ -265,8 +265,10 @@ function computeLinks() {
   for (const arr of g.values()) if (arr.length > 1) state.links.push(arr);
 }
 const linkedWith = i => ((state.links || []).find(a => a.includes(i)) || []).filter(j => j !== i);
+// 4.5.8（19-C04）：「暂时不联动」只管内置效果自动猜的同一批星；我的效果里是你勾的，不受它挡
+const linkOffNow = () => !!state.linkOff && !(typeof lib !== 'undefined' && lib.my);
 function syncLinkedLayers(i) {
-  if (state.linkOff) return;
+  if (linkOffNow()) return;
   const e = state.lib.find(x => x.name === state.layers[i].lib), done = [];
   for (const j of linkedWith(i)) {
     const e2 = state.lib.find(x => x.name === state.layers[j].lib); if (!e2 || e2 === e) continue;
@@ -294,12 +296,13 @@ function onParam() {
   derive(state.P); state.gen++; $('#stats').textContent = '烘焙中…';
   // 组合里正在调某一层：这一层马上进自己的重烘队列（4.2.3 走查 A4：不等防抖，切层也不会丢）
   const le = state.tab === 'combo' && state.comboSel >= 0 && state.layers[state.comboSel] ? state.lib.find(x => x.name === state.layers[state.comboSel].lib) : null;
-  if (le && le.P === state.P) { state.bakeError = null; syncBakeError(); queueLayerBake(le); }
+  if (le && le.P === state.P) { state.bakeError = null; syncBakeError(); queueLayerBake(le); syncLinkedLayers(state.comboSel); }     // 4.5.8（19-C03）：同一批星马上同步，不等这一层烘完（自动烘焙关时以前一直不同步，保存会存下不一致的两层）
   else { state.dirty = true; syncBakeError(); scheduleBake(); }
   refreshVisibility();
   if (typeof undoNote === 'function') undoNote();
 }
 function showStats(b) {
+  document.querySelectorAll('#params [data-info=endInfo]').forEach(r => r._refresh && r._refresh());     // 4.5.8：烘完了，「火花灭完」那行按真的贴图长度写
   if (b.form === 'emitset') { $('#stats').innerHTML = rtStatsHTML(b); return; }
   const m = b.meta, L = m.L, P = b.P, cls = ok => ok ? 'ok' : 'warn', c = m.check || {};
   const parts=bakeParts(b),totalFrames=parts.reduce((n,s)=>n+s.meta.L.F,0);
@@ -863,21 +866,22 @@ function buildComboPanel() {
 }
 async function exportCombo() {
   // 4.0：多层效果导出成一个素材包（每层每段一个发射器 + 延迟），附上原来的组合说明 JSON
-  const layers = state.layers.map(L => {
-    const e = state.lib.find(x => x.name === L.lib);
-    return { master: L.lib, masterType: e ? e.type : '', scale: L.scale, delay: L.delay, timeRate: L.rate, mirror: L.mirror,
-      colorStages: L.stages, transition: L.xw, Ramp: [L.ramp0, L.ramp1, L.ramp2, L.ramp3], HeadInt: L.headInt, TailInt: L.tailInt,
-      colorOverLife: e ? colorKeys(L, e.bake.meta.duration) : null,
-      spriteSizeCm: e ? [+(e.bake.meta.Ww * L.scale * 100).toFixed(1), +(e.bake.meta.Wh * L.scale * 100).toFixed(1)] : null };
-  });
-  const json = { name: state.comboName, note: '每层一个面片，共用同一个爆点；Age = (礼花时间 − delay) × timeRate；颜色为 sRGB 十六进制，colorOverLife 为线性 RGB', layers };
+  // 4.5.8（19-C05）：组合说明在贴图最终烘焙之后再写（以前在烘之前读，改完时长马上导出，说明和贴图可能对不上）
+  const comboJson = () => ({ name: state.comboName, note: '每层一个面片，共用同一个爆点；Age = (礼花时间 − delay) × timeRate；颜色为 sRGB 十六进制，colorOverLife 为线性 RGB',
+    layers: state.layers.map(L => {
+      const e = state.lib.find(x => x.name === L.lib);
+      return { master: L.lib, masterType: e ? e.type : '', scale: L.scale, delay: L.delay, timeRate: L.rate, mirror: L.mirror,
+        colorStages: L.stages, transition: L.xw, Ramp: [L.ramp0, L.ramp1, L.ramp2, L.ramp3], HeadInt: L.headInt, TailInt: L.tailInt,
+        colorOverLife: e ? colorKeys(L, e.bake.meta.duration) : null,
+        spriteSizeCm: e ? [+(e.bake.meta.Ww * L.scale * 100).toFixed(1), +(e.bake.meta.Wh * L.scale * 100).toFixed(1)] : null };
+    }) });
   // 素材包名要是英文 / 数字（spec）：迭代区组合条目用条目号，否则用组合名里的英文数字部分
   const rv = typeof lib !== 'undefined' && lib.review && lib.review.kind === 'combo' ? lib.review.id : '';
   const name = (rv || state.comboName || 'Combo').replace(/[^\w\-]+/g, '_').replace(/^_+|_+$/g, '') || 'Combo';
   busy(true, '组合素材包：准备各层…', 0);
   try {
     const files = await comboPackFiles(name, state.layers, p => busy(true, '组合素材包…', p));
-    files.push([`${name}_组合说明.json`, utf8(JSON.stringify(json, null, 2))]);
+    files.push([`${name}_组合说明.json`, utf8(JSON.stringify(comboJson(), null, 2))]);
     busy(true, '打包 ZIP…', 1);
     const pk = files.some(([f]) => f.startsWith(FW_TEX_PREFIX)) ? packNamesFor(wbKey(), lib.effect, state.layers.length, name).base : name;
     download(await makeZip(files.map(([f, d]) => [`${pk}/${f}`, d])), `${pk}.zip`);

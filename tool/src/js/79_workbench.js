@@ -139,7 +139,7 @@ function wbArm() {
 function wbVisible() { return !state.showcase && !!(lib.review ? lib.review.kind !== 'queued' : lib.formal || /^(type:|combo$|my:|tpl:|mt:)/.test(wbKey())); }
 function wbRefresh() {
   const k = wbKey();
-  if (k !== wb.key || lib.review !== wb.entry) { wb.key = k; wb.entry = lib.review; wb.src = { kind: 'ai' }; wbArm(); }
+  if (k !== wb.key || lib.review !== wb.entry) { if (k !== wb.key) state.linkOff = false; wb.key = k; wb.entry = lib.review; wb.src = { kind: 'ai' }; wbArm(); }     // 4.5.8（19-C04）：「暂时不联动」只管当前这个效果
   wbSync();
 }
 function wbSync() {
@@ -176,7 +176,7 @@ function autoDraft() {
   if (!wb.key || !wb.sig || !wbVisible()) return false;
   let sig; try { sig = wbSig(); } catch (e) { return false; }
   if (!sig || sig === wb.sig) return false;
-  const list = wbList(); let d = list.find(x => x.draft);
+  const list = wbList(); let d = list.find(x => x.id === 'draft');
   if (!d) { d = { id: 'draft', name: '草稿（没保存就切走了）', draft: true }; list.push(d); }
   Object.assign(d, { at: wbNow(), base: wbBaseId(), baseVer: lib.review && lib.review.ver || '', from: wb.src.kind === 'mine' ? wb.src.id : 'ai', snap: wbSnap() });
   wbPut(list); wb.sig = sig;
@@ -235,6 +235,10 @@ async function wbLoadAI() {
   wb.src = { kind: 'ai' }; wbArm(); wbSync();
 }
 async function wbLoad(id) {
+  // 4.5.8（小修 2）：换版本 / 回到已保存以前，没保存的改动先存成草稿（以前直接没了，撤销也清空）。
+  //  要看的正好是草稿：先把旧草稿另存成「草稿（更早）」，再存现在的改动，两份都在
+  const old = id === 'draft' ? structuredClone(wbList().find(x => x.id === 'draft') || null) : null;
+  if (autoDraft() && old) { const list = wbList(); old.id = 'd' + Date.now().toString(36); old.draft = false; old.name = '草稿（更早，' + (old.at || '') + '）'; list.push(old); wbPut(list); id = old.id; }
   if (id === 'ai') return wbLoadAI();
   const s = wbList().find(x => x.id === id); if (!s) return;
   await wbApply(s.snap); wb.src = { kind: 'mine', id }; wbArm(); wbSync(); flash(`正在看你的版本「${s.name}」`);
@@ -628,7 +632,7 @@ function renderUnitMenu() {
 }
 // 粘在一起的点：同一批星（联动）的几层里，非默认位置、总时间相差 < 0.02 s 的点
 function gluePartners(li, at) {
-  if (state.tab !== 'combo' || state.linkOff || state.glueOff) return [];
+  if (state.tab !== 'combo' || linkOffNow() || state.glueOff) return [];
   const out = [];
   for (const j of linkedWith(li)) {
     const x2 = curLayerBakes().find(r => r.i === j), sp2 = x2 && layerSpans(x2), P2 = x2 && layerPOf(x2); if (!sp2 || !P2) continue;
@@ -637,7 +641,7 @@ function gluePartners(li, at) {
   return out;
 }
 function gluedPhases(rows) {
-  const set = new Set(); if (state.tab !== 'combo' || state.linkOff || state.glueOff) return set;
+  const set = new Set(); if (state.tab !== 'combo' || linkOffNow() || state.glueOff) return set;
   for (const x of rows) { const sp = layerSpans(x), P = layerPOf(x); if (!sp || !P) continue;
     for (const q of phasesOf(P)) if (!q.auto && gluePartners(x.i, sp.at(q.t)).length) set.add(x.i + ':' + q.k); }
   return set;

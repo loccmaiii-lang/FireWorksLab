@@ -9,18 +9,21 @@
 // =====================================================================
 
 // ---- 删了能撤销 ----
-let undoToastTimer = 0;
+// 4.5.8（20-02）：以前只有一条撤销提示，连删两个只有第二个能撤销。现在每删一个叠一条（最新的在上面），各自 8 秒、各自能撤销
 function undoToast(msg, onUndo) {
   let t = $('#undoToast');
-  if (!t) { t = document.createElement('div'); t.id = 'undoToast'; t.className = 'undo-toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
-  t.innerHTML = `<span></span><button type="button" class="btn mini">撤销</button>`; t.querySelector('span').textContent = msg;
-  t.querySelector('button').addEventListener('click', () => { clearTimeout(undoToastTimer); t.classList.remove('on'); onUndo(); });
-  t.classList.add('on'); clearTimeout(undoToastTimer); undoToastTimer = setTimeout(() => t.classList.remove('on'), 6000);
+  if (!t) { t = document.createElement('div'); t.id = 'undoToast'; t.className = 'undo-toast on'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
+  const it = document.createElement('div'); it.className = 'ut-item';
+  it.innerHTML = `<span></span><button type="button" class="btn mini">撤销</button>`; it.querySelector('span').textContent = msg;
+  let timer = 0; const drop = () => { clearTimeout(timer); it.remove(); if (!t.children.length) t.classList.remove('on'); };
+  it.querySelector('button').addEventListener('click', async () => { drop(); try { await onUndo(); } catch (e) { flash('撤销没做成：' + (e.message || e), true); } });
+  t.prepend(it); t.classList.add('on'); timer = setTimeout(drop, 8000);
+  while (t.children.length > 6) t.lastElementChild.remove();
 }
 
 // ---- 我的模板（单层：type + P + M）----
 const tplAll = () => store.get('myTemplates', {});
-function tplPut(rec) { const all = tplAll(); all[rec.id] = rec; store.set('myTemplates', all); }
+function tplPut(rec) { const all = tplAll(); all[rec.id] = rec; return store.set('myTemplates', all); }
 function tplDelete(id) { const all = tplAll(); delete all[id]; store.set('myTemplates', all); }
 // 当前这一层（单层 = 整个；多层 = 选中的那层）
 function curLayerForTemplate() {
@@ -38,12 +41,12 @@ async function saveLayerAsTemplate() {
   const nm = await askSaveName('把这一层存为模板', '存成你自己的花型模板：以后「新建效果」「加一层」「花型库」里都能选（在「我的模板」里），也能收藏。', s.title + ' · 模板', '存为模板');
   if (nm == null) return;
   const rec = { id: 't' + Date.now().toString(36), name: nm.trim() || s.title, type: s.type, P: s.P, M: s.M, at: wbNow(), from: $('#abName').textContent || '' };
-  tplPut(rec); renderLib(); flash(`已存为模板「${rec.name}」：花型库 / 加一层里的「我的模板」，左栏「我的模板」`);
+  if (!tplPut(rec)) return; renderLib(); flash(`已存为模板「${rec.name}」：花型库 / 加一层里的「我的模板」，左栏「我的模板」`);
 }
 function updateTemplate() {
   if (!lib.tpl || state.tab === 'combo') return;
   const rec = tplAll()[lib.tpl.id]; if (!rec) return;
-  Object.assign(rec, { P: structuredClone(state.P), M: structuredClone(state.M), at: wbNow() }); tplPut(rec); lib.tpl = rec;
+  Object.assign(rec, { P: structuredClone(state.P), M: structuredClone(state.M), at: wbNow() }); if (!tplPut(rec)) return; lib.tpl = rec;
   wb.sig = wbSig(); wbSync(); renderLib(); flash(`已更新模板「${rec.name}」`);
 }
 function openTemplate(id) {
@@ -60,8 +63,12 @@ function renameTemplate(id) {
 }
 function removeTemplate(id) {
   const rec = tplAll()[id]; if (!rec) return;
-  tplDelete(id); renderLib(); if (typeof pkRender === 'function' && !$('#picker').hidden) pkRender();
-  undoToast(`已删除模板「${rec.name}」`, () => { tplPut(rec); renderLib(); if (!$('#picker').hidden) pkRender(); });
+  const cur = lib.tpl && lib.tpl.id === id;
+  tplDelete(id);
+  // 4.5.8（20-04）：删的是当前打开的模板 → 离开它（打开它的花型），顶栏不再显示「更新模板」
+  if (cur) { lib.tpl = null; openType(rec.type); } else renderLib();
+  if (typeof pkRender === 'function' && !$('#picker').hidden) pkRender();
+  undoToast(`已删除模板「${rec.name}」`, () => { tplPut(rec); renderLib(); if (!$('#picker').hidden) pkRender(); if (cur) openTemplate(id); });
 }
 // 层的来源键（花型库 / 加一层用）：tpl:<id> = 我的模板；myl:<效果>:<层> = 我的效果里的某一层
 function assetSrc(key) {
@@ -101,13 +108,13 @@ async function wbDeriveMine(o = {}) {
   snap.name = name;
   const links = state.tab === 'combo' ? (state.links || []).map(g => g.map(i => snap.layers[i] && snap.layers[i].L.lid).filter(Boolean)).filter(g => g.length > 1) : [];
   const rec = { id: 'fx' + Date.now().toString(36), name, created: wbNow(), updated: wbNow(), links, from, snap };
-  myPut(rec);
+  if (!myPut(rec)) return null;
   // 导出名（UE 资产名）跟着原来的走：派生自引菊 → 锦的，贴图照样叫 HikiNishiki_Hiki / _Nishiki（「查看交付」里能改）
   const combo = state.tab === 'combo', pn = packNamesFor(wb.key, lib.effect, snap.layers.length, combo ? 'MyFx' : (TYPE_EN[state.P.type] || 'MyFx'), combo ? '' : state.P.type);
   setPackNames('my:' + rec.id, pn.base, pn.layers);
   const drafts = wbList().filter(x => x.draft); if (drafts.length) wbPut(wbList().filter(x => !x.draft));
   wb.sig = wbSig();     // 原来那个效果算「没改过」（不再存草稿）
-  try { await repoWrite('my:' + rec.id, { id: rec.id, name: rec.name, at: rec.updated, base: '我的效果', from, snap: rec.snap, links: rec.links, ue: packNamesFor('my:' + rec.id, null, snap.layers.length, 'MyFx') }); } catch (e) { }
+  try { await repoWrite('my:' + rec.id, { id: rec.id, name: rec.name, at: rec.updated, base: '我的效果', from, snap: rec.snap, links: rec.links, ue: packNamesFor('my:' + rec.id, null, snap.layers.length, 'MyFx') }); } catch (e) { flash('存进仓库文件夹失败：' + (e.message || e), true); }
   await openMyEffect(rec.id, { keep: true });
   flash(`已存成你的效果「${rec.name}」（派生自「${fromName}」，原来的不动）：现在能加层、删层、改名、删除`);
   return rec;
@@ -120,9 +127,11 @@ async function addLayerAnywhere() {
 // ---- 删除（当前打开的 / 左栏某一项）----
 function removeMyFx(id) {
   const rec = myAll()[id]; if (!rec) return;
-  const cur = lib.my && lib.my.id === id;
-  myDelete(id); if (cur) { lib.my = null; wbPut([]); openType('kiku'); } else renderLib();
-  undoToast(`已删除你的效果「${rec.name}」`, async () => { myPut(rec); renderLib(); if (cur) await openMyEffect(id); });
+  const cur = lib.my && lib.my.id === id, vkey = 'my:' + id, vers = structuredClone(wbAll()[vkey] || []);
+  // 4.5.8（20-01）：它的版本 / 草稿 / 导出时版本一起删，撤销时一起回来（以前撤销只回效果，版本没了）
+  myDelete(id); { const a = wbAll(); delete a[vkey]; store.set('mySaves', a); }
+  if (cur) { lib.my = null; openType('kiku'); } else renderLib();
+  undoToast(`已删除你的效果「${rec.name}」（连同 ${vers.length} 个版本）`, async () => { myPut(rec); if (vers.length) { const a = wbAll(); a[vkey] = vers; store.set('mySaves', a); } renderLib(); if (cur) await openMyEffect(id); });
 }
 function removeVersion(key, id) {
   const all = wbAll(), list = all[key] || [], s = list.find(x => x.id === id); if (!s) return;

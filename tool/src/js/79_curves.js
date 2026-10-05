@@ -66,15 +66,25 @@ function sparkTailEnd(P0) {
   tailEndCache.set(key, +v.toFixed(2)); return +v.toFixed(2);
 }
 // 「效果 › 规格」里的只读行：最后一批火花什么时候灭完、和序列时长比
+// 4.5.8（小修 1）：面板现在对着的那份烘焙（单层 = 整个；多层 = 选中的那层）
+function panelBake() {
+  if (state.tab === 'combo') { const L = state.comboSel >= 0 && state.layers[state.comboSel], e = L && layerEntryOf(L); return e && e.P === state.P ? e.bake : null; }
+  return state.bake && state.bake.P && state.bake.P.type === state.P.type ? state.bake : null;
+}
+function trimNoteHTML() {
+  const b = panelBake(), tr = b && b.meta && b.meta.trim; if (!tr || !(tr.end < tr.reqEnd - 0.02)) return '';
+  return ` <span class="warn">贴图实际只烘到 <b>${tr.end.toFixed(2)} s</b>：${tr.end.toFixed(2)}–${tr.reqEnd.toFixed(2)} s 全黑（最亮像素 &lt; 2/255）没烘，时间轴也到这里为止。序列时长再加长也一样；要更长，调星的燃烧时间或火花寿命。</span>`;
+}
 function endInfoHTML() {
   const P = state.P; if (!P || familyOf(P.type) !== 'aerial') return '';
   let e; try { e = sparkTailEnd(P); } catch (err) { return ''; }
+  const trim = trimNoteHTML();
   const D = +P.cutOut > 0 ? +P.cutOut : +P.duration, short = e - D;
   const fade = P.endMode !== 'natural' ? '现在最后 0.3 s 整体淡出' : '不淡出';
   // 4.5.3（用户 10-05 18:02「序列时长填 9 s，图层与时间还是 2.83 s，改不了」）：设了出点时，序列到出点为止，改序列时长不管用 → 说清楚、给一键清除
   const cut = +P.cutOut > 0 && +P.cutOut < +P.duration - 1e-3 ? ` <span class="warn">出点在 ${(+P.cutOut).toFixed(2)} s：序列时长 ${(+P.duration).toFixed(2)} s 后面那段不导出</span> <button type="button" class="btn mini" data-cutclear="1">清除出点</button>` : '';
   if (short > 0.04) return `<p class="hint endinfo warn">最后一批火花约 <b>${e.toFixed(2)} s</b> 灭完，序列到 ${D.toFixed(2)} s，差 ${short.toFixed(2)} s（${fade}，看着像被切掉）。${cut ? '' : `<button type="button" class="btn mini" data-endfit="${e}">序列时长设成 ${e.toFixed(2)} s</button>`}${cut}</p>`;
-  return `<p class="hint endinfo">最后一批火花约 ${e.toFixed(2)} s 灭完，序列 ${D.toFixed(2)} s 盖得住（${fade}）。${cut}</p>`;
+  return `<p class="hint endinfo${trim ? ' warn' : ''}">最后一批火花约 ${e.toFixed(2)} s 灭完，序列 ${D.toFixed(2)} s 盖得住（${fade}）。${cut}${trim}</p>`;
 }
 async function curveCompute(P0, key, live, tid = '') {
   const t0 = performance.now(), P = derive({ ...structuredClone(P0), engine: 'gpu' }), D = Math.max(0.1, +P.duration || 3);

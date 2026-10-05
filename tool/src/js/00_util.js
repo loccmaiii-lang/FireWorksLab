@@ -45,3 +45,5 @@ function fibDirs(n, rng, R, jitDeg) {
   return out;
 }
 function randUnit(rng) { const x = rng.n(), y = rng.n(), z = rng.n(), l = Math.hypot(x, y, z) || 1; return [x / l, y / l, z / l]; }
+// 4.5.8（19-C02）：显示强度 / 亮度倍数没填才算 1；填 0 就是 0（以前导出写 `|| 1`，预览是 0、导出变 1）
+const intOr1 = v => v == null || v === '' || !Number.isFinite(+v) ? 1 : +v;

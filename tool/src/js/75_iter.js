@@ -3,10 +3,36 @@
 //  A/B 分屏、实拍叠加、数值测量对比去掉了（清理清单 C3 / C5）；store、cloneM、resolveRecipe、afterBake 别的文件还在用
 // =====================================================================
 const cloneM = M => ({ ...M, stages: M.stages.map(s => [...s]) });
+// 4.5.8（用户 10-05 21:40 小修 3）：以前写不进去（浏览器存满 / 禁用）什么都不说，界面照样「已保存」；读坏了返回空表，下次保存把整张表覆盖成一条。
+//  现在：写不进去返回 false、报错（常驻提示 + 状态行红字）；读坏了先把原文另存一份（fwb.<键>.坏<时间>）再报错，不会被下次保存覆盖掉
 const store = {
-  get(k, d) { try { const v = localStorage.getItem('fwb.' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
-  set(k, v) { try { localStorage.setItem('fwb.' + k, JSON.stringify(v)); } catch (e) { } }
+  failAt: 0,
+  get(k, d) {
+    let v = null; try { v = localStorage.getItem('fwb.' + k); } catch (e) { return d; }
+    if (!v) return d;
+    try { return JSON.parse(v); }
+    catch (e) {
+      const bk = 'fwb.' + k + '.坏' + Date.now().toString(36);
+      try { localStorage.setItem(bk, v); localStorage.removeItem('fwb.' + k); } catch (e2) { }
+      storeFail(`浏览器里「${k}」读出来是坏的：原文另存为 ${bk}，这次按空的打开`);
+      return d;
+    }
+  },
+  set(k, v) {
+    try { localStorage.setItem('fwb.' + k, JSON.stringify(v)); return true; }
+    catch (e) { storeFail(`浏览器里存不进去（${e && e.name === 'QuotaExceededError' ? '存满了' : e && e.message || e}）：刚才的「${k}」没存上。先用 ⋯「导出配方文件」存一份`); return false; }
+  }
 };
+function storeFail(msg) {
+  store.failAt = typeof performance !== 'undefined' ? performance.now() : Date.now();
+  if (typeof document === 'undefined') return;
+  let b = document.getElementById('storeErr');
+  if (!b) { b = document.createElement('div'); b.id = 'storeErr'; b.className = 'store-err'; b.setAttribute('role', 'alert'); b.innerHTML = '<span></span><button type="button" class="btn mini">知道了</button>'; b.querySelector('button').addEventListener('click', () => b.remove()); document.body.appendChild(b); }
+  b.querySelector('span').textContent = msg;
+  if (typeof flash === 'function') flash(msg, true);
+}
+// 刚存失败的那一下，别再说「已保存」
+const storeJustFailed = () => store.failAt && (typeof performance !== 'undefined' ? performance.now() : Date.now()) - store.failAt < 3000;
 
 // ---------------- 版本、缩略图、批注 ----------------
 let pendingThumb = null;

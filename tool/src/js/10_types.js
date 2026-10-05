@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.5.9';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）
+const VERSION = '4.5.10';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -158,7 +158,7 @@ const TYPES = {
   water: { p: { duration: 3.0, stars: 110, v0: 90, vt: 16, pattern: 'half', waterRefl: 0.4, burn: 2.0, sparkRate: 60, flash: 1.4 }, m: { stages: [[0, '#ffc766'], [0.9, '#52ff5e']] } },
   rise: { p: { duration: 5.2, riseH: 250, vtShell: 55, sparkRate: 600, sparkLife: 1.5, sparkSpread: 1.4, sparkInherit: 0.05, sparkDrag: 1.4, sparkSize: 0.45, sparkBright: 1.6, headSize: 1.4, headBright: 1.4, burn: 99, flicker: 0.35, T0: 2100, cooling: 0.3, zoom: 'off', form: 'unit', cols: 8, rows: 2, chans: 1, texW: 1024, texH: 1024 }, m: GROUND_RAMP },
   // 升空尾缀 · 循环层 + 粒子（原理 7e 的三档：小 ≈ 比十寸更直、中 ≈ 十寸、大 ≈ 用户图 1）
-  tailS: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.45, rtBright: 4, haloFrac: 0.04, haloR: 2, seed: 7, rtH: 190, rtT: 3.5, rtVb: 24, rtD: 0.10, rtBurstD: 110, rtSpin: 1.6, rtFling: 2.0,
+  tailS: { p: { rtGpuSafe: 1, renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.45, rtBright: 4, haloFrac: 0.04, haloR: 2, seed: 7, rtH: 190, rtT: 3.5, rtVb: 24, rtD: 0.10, rtBurstD: 110, rtSpin: 1.6, rtFling: 2.0,
     rtHeadSize: 0.45, rtHeadI: 3, rtHeadFl: 0.6, rtARate: 9000, rtALife: 0.6,
     rtCone: 5.5, rtFRate: 2400, rtFLife: 0.7, rtFSize: 0.13, rtMRate: 850, rtMLife: 1.1, rtMSize: 0.2, rtCRate: 150, rtCLife: 1.8, rtCSize: 0.28,
     rtERate: 3, rtELife: 2.5, rtESize: 0.7,
@@ -166,12 +166,12 @@ const TYPES = {
     rtACone: 5, rtASize: 0.42, rtAI: 1.1, rtAWarm: 0.8, rtFI: 5, rtMI: 10, rtCI: 24, rtCKd: 1.8, rtT0: 2700, rtTb: 2450, rtEKd: 2.5, rtSmoke: 0, rtMobile: 0.12, rtFdT: -400, rtCdT: 500, rtSizeJit: 45, rtKdJit: 35, rtConeSoft: 1, rtStreakT: 0.02, rtFStreak: 0.3, rtTurb: 1, rtTurbL: 20, rtTurbS: 0.6,
     // 第 4 版（对话框11，10-02 19:25：一半细火星烘进贴图、星头光晕、末段爆亮、发射口）
     rtFTex: 0.5, rtTexI: 40, rtGlow: 0.3, rtGlowSize: 6, rtPopRate: 15, rtPopSize: 0.4, rtLaunch: 1.0, rtLaunchSize: 6, rtLaunchN: 60, rtLaunchV: 25 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
-  tailM: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.3, rtBright: 6, haloFrac: 0.04, haloR: 2, seed: 7,
+  tailM: { p: { rtGpuSafe: 1, renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.3, rtBright: 6, haloFrac: 0.04, haloR: 2, seed: 7,
     // 第 2 / 3 版（对话框11，10-02：RT2 火星数量大小 + RT3 白黄对比、线状拖影、空气乱流）
     rtCone: 7, rtACone: 6, rtASize: 0.5, rtAI: 1.1, rtAWarm: 0.8, rtFRate: 3000, rtFSize: 0.15, rtFI: 5, rtMRate: 1100, rtMSize: 0.23, rtMI: 10, rtCRate: 200, rtCSize: 0.32, rtCI: 24, rtCKd: 1.8, rtT0: 2700, rtTb: 2450, rtERate: 5, rtEKd: 2.5, rtSmoke: 0, rtMobile: 0.1, rtFdT: -400, rtCdT: 500, rtSizeJit: 45, rtKdJit: 35, rtConeSoft: 1, rtStreakT: 0.02, rtFStreak: 0.3, rtTurb: 1, rtTurbL: 20, rtTurbS: 0.6,
     // 第 4 版（对话框11，10-02 19:25：一半细火星烘进贴图、星头光晕、末段爆亮、发射口）
     rtFTex: 0.5, rtTexI: 40, rtGlow: 0.35, rtGlowSize: 9, rtPopRate: 30, rtPopSize: 0.5, rtLaunch: 1.2, rtLaunchSize: 8, rtLaunchN: 100, rtLaunchV: 30 }, m: { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#8a3a0c', ramp2: '#ffbe5c', ramp3: '#fff6e6', headInt: 1, tailInt: 1 } },
-  tailL: { p: { renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.3, rtBright: 6, haloFrac: 0.04, haloR: 2, seed: 7, rtH: 410, rtT: 8, rtVb: 4, rtD: 0.30, rtBurstD: 290, rtSpin: 2.6, rtFling: 5.0,
+  tailL: { p: { rtGpuSafe: 1, renderVer: 40, form: 'emitset', texW: 2048, texH: 2048, cols: 16, rows: 1, chans: 4, outMode: 'combined', encGamma: 1, frameMode: 'uniform', zoom: 'off', engine: 'gpu', autoGrid: 0, cellPad: 2, shutter: 0.5, exposure: 0.3, rtBright: 6, haloFrac: 0.04, haloR: 2, seed: 7, rtH: 410, rtT: 8, rtVb: 4, rtD: 0.30, rtBurstD: 290, rtSpin: 2.6, rtFling: 5.0,
     rtHeadSize: 0.7, rtHeadI: 3.2, rtHeadFl: 1.2, rtARate: 12000, rtALife: 0.9,
     rtCone: 9.5, rtFRate: 4200, rtFLife: 1.2, rtFSize: 0.18, rtMRate: 1600, rtMLife: 2.2, rtMSize: 0.27, rtCRate: 300, rtCLife: 3.4, rtCSize: 0.38,
     rtERate: 8, rtELife: 3.5, rtESize: 0.9, rtSmokeRate: 35, rtMobile: 0.06,
@@ -475,7 +475,7 @@ const SCHEMA = [
     ['subTail', '子花火花密度', '个/秒', 0, 400, 1],
     ['carrierTail', '子弹尾迹密度', '个/秒', 0, 400, 1],
     ['carrierHead', '子弹（小割玉）亮度（0 = 飞行时不可见）', '×', 0, 1, 0.01],
-    ['subKeep', '子花继承子弹速度（-1 = 默认 0.35）', '', -1, 1, 0.01],
+    ['subKeep', '子花继承子弹速度（-1 = 默认：十字排布 0.25，其它 0.35）', '', -1, 1, 0.01],
     ['subScaleJit', '每朵子花大小离散', '%', 0, 50, 1],
     ['subSpeedJit', '子星初速离散（-1 = 同主星的初速离散）', '%', -1, 40, 1],
     ['subVt', '子星终端速度（0 = 同主层）', 'm/s', 0, 80, 0.5],

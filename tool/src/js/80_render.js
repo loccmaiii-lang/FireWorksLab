@@ -97,7 +97,7 @@ function drawTrailLayer(b, L, t, view, yOff = 0) {
   const pr = PR.mat; gl.useProgram(pr.p);
   gl.uniform4fv(pr.u.uRect, [-w / 2, y0, w / 2, y0 + h]); gl.uniform4fv(pr.u.uView, view);
   bindSeqTextures(pr, s.bb); gl.uniform1f(pr.u.uFrame, s.f); gl.uniform1f(pr.u.uMirror, 0);
-  setMatUniforms(pr, { ...L, headInt: (L.headInt || 1) * (b.P.trBright || 1) }, t);
+  setMatUniforms(pr, { ...L, headInt: intOr1(L.headInt) * (b.P.trBright || 1) }, t);
   gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
   return s.f;
 }
