@@ -24,7 +24,7 @@ async def main(a):
         pg = await ctx.new_page()
         pg.on('pageerror', lambda e: errs.append(str(e)))
         pg.on('dialog', lambda d: asyncio.ensure_future(d.accept('多层模板检查')))
-        await pg.goto(HTML.resolve().as_uri() + '?autobake=1', wait_until='domcontentloaded', timeout=0)
+        await pg.goto(HTML.resolve().as_uri() + '?fast&autobake=1', wait_until='domcontentloaded', timeout=0)     # fast：不自动打开待验收的效果（不然先烘别的）
         await pg.wait_for_function('window.__fw && typeof MULTI_TYPES !== "undefined" && document.querySelector("#libBody .li, #libBody .tile")', timeout=0)
         idle = 'window.__fw.idle() && document.querySelector("#busy").hidden'
         n = await pg.evaluate('MULTI_TYPES.length')
@@ -32,7 +32,7 @@ async def main(a):
         ok('左栏有「多层花型模板」一组，每个模板一个缩略图', len(tiles) == n and n > 0, f'{len(tiles)}/{n}')
         # 打开
         t0 = time.time()
-        await pg.click(f'#libBody .lg-mtypes .tile[data-key="mt:{a.id}"]')
+        await pg.evaluate(f'document.querySelector(\'#libBody .lg-mtypes .tile[data-key="mt:{a.id}"]\').click()')
         await pg.wait_for_function(f'state.tab === "combo" && state.layers.length === MULTI_BY_ID["{a.id}"].layers.length', timeout=0)
         await pg.wait_for_function(idle, timeout=0, polling=500)
         info = await pg.evaluate('''(id) => ({ n: state.layers.length, key: lib.key, sel: state.comboSel, name: $('#abName').textContent, sub: $('#abSub').textContent, bar: !$('#assetBar').hidden,
@@ -68,8 +68,8 @@ async def main(a):
         # 「＋ 新建效果」选多层模板 → 存成我的效果（整套层）
         before = await pg.evaluate('Object.keys(myAll()).length')
         await pg.evaluate('() => myNew()')
-        await pg.click('#pkCats button:has-text("多层模板")')
-        await pg.click('#pkGrid .pk-card:has-text("芯入菊")')
+        await pg.evaluate('() => [...document.querySelectorAll("#pkCats button")].find(b => b.textContent.startsWith("多层模板")).click()')
+        await pg.evaluate('() => [...document.querySelectorAll("#pkGrid .pk-card")].find(c => c.querySelector(".nm").textContent === "芯入菊").click()')
         await pg.wait_for_function(f'Object.keys(myAll()).length === {before + 1} && lib.my', timeout=0)
         await pg.wait_for_function(idle, timeout=0, polling=500)
         my = await pg.evaluate('() => ({ n: state.layers.length, from: lib.my.from && lib.my.from.key, name: lib.my.name })')
