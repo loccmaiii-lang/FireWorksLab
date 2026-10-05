@@ -162,9 +162,29 @@ JSON里的局部配置：
 | `ColorOverLife` | Color Over Life | `ColorOverLife`（向量）、`AlphaOverLife` | ✅ |
 | `ColorScaleOverLife` | Scale Color / Life | `ColorScaleOverLife`（向量）、`AlphaScaleOverLife` | ⚪ |
 | `DynamicParameter` | Dynamic Parameter | `params`：按**角色**写，见第 6 节 | ✅ 写入 🟡 播放 |
-| `VelocityOverLife` | Velocity/Life | `VelOverLife`（向量分布，按相对寿命，cm/s）；`Absolute`（布尔，true = 速度直接取曲线值，不累加） | ⚪ 导入器待支持（烘焙器 4.4.5 起，升空尾缀物理弹道的 RiseLoop / HeadGlow 用；Cascade 的 Drag 只有线性） |
+| `VelocityOverLife` | Velocity/Life（`ParticleModuleVelocityOverLifetime`） | `VelOverLife`（向量分布，按相对寿命，cm/s）；`Absolute`（布尔，true = 速度直接取曲线值，不累加） | ✅ 私有导入器 v2.13 创建/挂接，独立 CPU 原生写入及读回通过；🟡 实际烟花播放未验（烘焙器 4.4.5 起的 RiseLoop / HeadGlow 使用） |
 
 模块可以新增、删除、开关，分布类型可以互换。导入器是从空的粒子系统开始逐个建出来的，不依赖模板。✅
+
+### Velocity/Life 与单轴 Size By Life（2026-10-05）
+
+`m: "VelocityOverLife"` 是交换格式标识，Cascade 面板显示名是 **Velocity/Life**。导入创建 `ParticleModuleVelocityOverLifetime`，填 `VelOverLife` 向量分布及 `Absolute` 并挂接到当前发射器的 `LOD.Modules`。常量、随机范围、Linear 曲线都已写入/读回；CPU 省略 `bake` 默认不烘，显式 `bake:false` 也保持。`Absolute` 省略时保留原生默认 false，不推断为 true；物理弹道导出要明确写 true。数值必须使用当前包，不改成 Initial Velocity、重新拟合阻力或自动叠加加速度。
+
+曲线时间使用粒子的相对寿命 0–1，关键点按时间排序、向量必须是三个有限数字。单个分布只允许 const / uniform / curve 一种形式；曲线不能为空，uniform 各轴 min ≤ max，bake、Absolute 和 MultiplyX/Y/Z 必须是布尔。这些检查在预览和执行写入之前完成；未知模块和实际原生字段错误仍报错，不能静默丢参数。旧包可省略 SizeByLife.LifeMultiplier 并保留原生默认分布，没有 SizeByLife 的固定面片不要求补节点。
+
+只改变尾迹长度时，源格式如下（仅演示格式，实际曲线从包读取）：
+
+```json
+{
+  "m": "SizeByLife",
+  "LifeMultiplier": {"curve": [[0, [1, 0.03, 1]], [0.25, [1, 1, 1]], [1, [1, 0.4, 1]]], "bake": false},
+  "MultiplyX": false,
+  "MultiplyY": true,
+  "MultiplyZ": false
+}
+```
+
+独立 CPU 测试系统已原生核对上述轴开关与完整曲线，三个发射器各自独立 Pivot 的 +0.5 换算也通过；六个真实 RT5 包及当前 RT6 包完整模拟导入通过。此处 ✅ 只表示创建/挂接/写入/读回；实际运动、尾迹长度、两层对齐与 GPU 方波的最终采样仍需 UE 实播，不能用本次字段验证替代。GPU 仍沿用默认烘查找表的现有规则，没有因 CPU Velocity/Life 精确曲线而统一关闭 GPU 分布烘焙。
 
 ### 模块元数据与原生字段（2026-10-04）
 
