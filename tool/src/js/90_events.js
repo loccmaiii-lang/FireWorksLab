@@ -23,6 +23,9 @@ $('#x-flip').addEventListener('change', e => { state.P.unitFlip = e.target.check
 $('#x-autogrid').addEventListener('change', e => { state.P.autoGrid = e.target.checked ? 1 : 0; onParam(); });
 $('#expo').addEventListener('input', e => { state.expo = +e.target.value; const o = $('#expoOut'); o.textContent = (+state.expo.toFixed(2)) + '×'; o.classList.toggle('off', Math.abs(state.expo - 1) > 1e-3); });
 $('#exportResolution').addEventListener('change', e => state.exportResolution = e.target.checked);
+// 4.9.2（梳理 6.4「实时模拟有引擎里没有的东西」）：预览泛光看得见、能关；只改画面显示，不烘焙、不进导出（存在这个效果的参数里）
+$('#previewBloomChk').addEventListener('change', e => { state.P.previewBloom = e.target.checked ? 1 : 0; if (typeof wbSync === 'function') wbSync(); flash(e.target.checked ? '预览泛光开：只在烘焙器画面上，导出的贴图和引擎里都没有' : '预览泛光关：画面更接近引擎里'); });
+$('#previewSettings').addEventListener('toggle', () => { const c = $('#previewBloomChk'); if (c) c.checked = !!+state.P.previewBloom; });
 $('#suggestExposure').addEventListener('click', suggestExposure40);
 const segBtns = (id, fn) => $(id).addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return; fn(b);

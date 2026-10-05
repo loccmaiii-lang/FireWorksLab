@@ -184,7 +184,8 @@ function idBarInfo(list, changed) {
   else if (ef && e) chips.push(['和 AI 包不同', 'dim', '你改过参数 / 看的是你的版本：和 AI 导出的素材包不一样']);
   else { const autos = list.filter(s => s.auto === 'export'), last = autos[autos.length - 1];
     if (!last) chips.push(['还没导出', 'dim', '这台电脑的浏览器里没导出过这个效果']);
-    else { let same = false; try { same = JSON.stringify(last.snap) === wbSig() && (!last.ov || last.ov === OUT_SIG()); } catch (err) { }
+    else { let same = false; const noPrev = o => JSON.stringify(o, (k, v) => k === 'previewBloom' ? undefined : v);     // 预览泛光只是画面显示，不算改了素材包
+      try { same = noPrev(last.snap) === noPrev(wbSnap()) && (!last.ov || last.ov === OUT_SIG()); } catch (err) { }
       chips.push(same ? ['素材包 ✓', 'ok', `素材包导出于 ${last.at}，和现在一致`] : ['素材包要重导', 'warn', `素材包导出于 ${last.at}，之后改过参数（或烘焙器输出规则变了）`]); } }
   const src = lib.my ? ['我的效果', '', '我的效果' + (lib.my.from ? '（派生自 ' + lib.my.from.name + '）' : '')] : lib.tpl ? ['我的模板', '', '我的模板'] : mtId ? ['多层模板', '', '多层花型模板'] : ef ? [e ? `AI · ${e.id}` : `AI · ${ef.阶段 || '条目'}`, '', `AI 做的效果 · ${ef.阶段 || ''}${e ? ' · 条目 ' + e.id : ''}`] : e ? ['AI 条目', '', 'AI 条目 ' + e.id] : lib.formal ? ['正式库', 'ok', '正式库 ' + lib.formal.id] : lib.key === 'combo' ? ['组合编辑器', '', '组合编辑器'] : ['花型模板', '', '花型模板'];
   chips.push(src);

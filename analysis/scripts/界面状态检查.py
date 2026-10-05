@@ -57,7 +57,7 @@
   W8 4.9.1（交互宪章 5 身份条）：顶栏有名字、来源、版本；改了参数标「● 没保存」；自己的效果导出后标「素材包 ✓」、再改标「素材包要重导」；
      AI 待验收效果（就绪的）标「素材包 ✓」；自动烘焙关时改参数，顶栏写「贴图是旧的」不写「烘焙中…」
   W9 4.9.2（梳理 6.2 / 6.4、隐性耦合 T01）：改一个时刻、别的时刻被规则推着走时提示「跟着变了：× a → b s」；数值超出滑杆范围时数值框标出来并写明照样起作用；
-     单束导出菜单写明贴图里的星不受力、随机关了
+     单束导出菜单写明贴图里的星不受力、随机关了；预览设置里能开关「预览泛光（引擎里没有）」，不触发烘焙
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -1611,6 +1611,12 @@ async def w9(pg):
     if not r or not r['over'] or '照样起作用' not in r['tip'] or r['back'] or abs(r['v'] - r['max'] * 2.5) > 1e-6: bad.append(f'数值超出滑杆范围没标出来 / 没写明：{r}')
     r = await pg.evaluate("(() => { renderUnitMenu(); return $('#abUnitMenu').textContent; })()")
     if '不受力' not in r: bad.append('单束导出菜单没写明贴图里的星不受力、随机关了')
+    r = await pg.evaluate("""(() => { const d = $('#previewSettings'), c = $('#previewBloomChk'); if (!c) return null; const g0 = state.gen, b0 = !!+state.P.previewBloom;
+      d.open = true; d.dispatchEvent(new Event('toggle')); const shown = c.checked === b0; c.checked = !b0; c.dispatchEvent(new Event('change'));
+      const o = { shown, after: +state.P.previewBloom, want: b0 ? 0 : 1, gen: state.gen - g0, label: c.closest('label').textContent };
+      c.checked = b0; c.dispatchEvent(new Event('change')); d.open = false; return o; })()""")
+    info['预览泛光'] = r
+    if not r or not r['shown'] or r['after'] != r['want'] or r['gen'] or '引擎里没有' not in r['label']: bad.append(f'预览设置里的「预览泛光」不对（要能开关、不触发烘焙、写明引擎里没有）：{r}')
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)[:900]
 
 
