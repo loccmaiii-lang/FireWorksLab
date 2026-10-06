@@ -9740,11 +9740,11 @@ var FW_REVIEW = [
 "base": "botan",
 "p": {
 "stars": 500,
-"v0": 600,
-"vt": 16.5,
+"v0": 71.4,
+"vt": 31.4,
 "burn": 7.3,
 "burnJit": 4,
-"headSize": 0.98,
+"headSize": 3.48,
 "flicker": 0.15,
 "flash": 0,
 "fade": 0.14,
@@ -9770,7 +9770,7 @@ var FW_REVIEW = [
 "headInt": 2.4,
 "tailInt": 1
 },
-"ver": "a8fecb00"
+"ver": "da401c6e"
 },
 {
 "id": "MYFL-C",
@@ -11651,7 +11651,7 @@ var FW_REVIEW = [
 "返工 ② 红点灭（主层同轨迹第二段）",
 "芯"
 ],
-"ver": "b5269f1c"
+"ver": "90675899"
 },
 {
 "id": "JMG03",
@@ -27780,10 +27780,17 @@ var FW_EFFECTS = [
 "NFE-MYHK-H",
 "NFE-MYHK-J",
 "NFE-MYHK-C",
-"NFE-MYHK-J-2"
+"NFE-MYHK-J-2",
+"NFE-MYHK-C-2"
 ],
 "ver": "394fa278",
 "jobs": [
+{
+"id": "NFE-MYHK-C-2",
+"type": "export",
+"state": "挂起",
+"seen": false
+},
 {
 "id": "NFE-MYHK-C",
 "type": "export",

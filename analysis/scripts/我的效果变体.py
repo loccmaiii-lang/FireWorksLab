@@ -185,14 +185,16 @@ SHAPES = [('K', '冠', shape_K), ('Y', '柳', shape_Y),
 WARM = lambda hexs: any(int(h[1:3], 16) > int(h[5:7], 16) + 40 for h in hexs)
 
 
-def core_layer(P0, M0, R0):
+def core_layer(P0, M0, R0, n0=6):
     """芯入：加一圈无尾牡丹芯（半径 0.5、对比色：暖色效果配青，冷色配金）、和亲星同时开同时灭"""
     cols = [c for _, c in (M0.get('stages') or [[0, '#ffffff']])]
     hot = [M0[k] for k in ('ramp2', 'ramp3') if M0.get(k)]     # 颜色多半在 Ramp 里（窜天猴的颜色是金色 Ramp、颜色曲线近白）
     col = '#4f7bff' if WARM(cols + hot) or cols == ['#ffffff'] else '#ffd29a'
-    vt = 16.5; burn = P0['burn']
+    vt = 16.5; burn = P0['burn']; head = min(2.0, max(0.75, P0['headSize'] * 1.4))
+    if n0 >= 15:     # 大玉（鸿巢四尺玉 ≈ 38 号）：芯星按号数表的星头（× 1.2）、终端速度（× 0.8）——0.98 m 的星头放在 700 m 的花里不到 1 像素，回放里芯看不见（NFR2-MYHK 芯入）
+        r = row(n0); vt = round(r[5] * 0.8, 1); head = max(head, r[6] * 1.2)
     P = {'stars': int(round(min(500, max(160, P0['stars'] * 0.8)))), 'v0': round(max(10, min(600, v0for(R0 * 0.5, vt, burn))), 1), 'vt': vt, 'burn': burn, 'burnJit': 4,
-         'headSize': round(min(2.0, max(0.75, P0['headSize'] * 1.4)), 3), 'sparkRate': 0, 'flicker': 0.15, 'flash': 0, 'fade': 0.14, 'lastFlare': 0, 'seed': (P0.get('seed') or 7) + 11,
+         'headSize': round(head, 3), 'sparkRate': 0, 'flicker': 0.15, 'flash': 0, 'fade': 0.14, 'lastFlare': 0, 'seed': (P0.get('seed') or 7) + 11,
          'duration': round(burn + 0.55, 2), 'exposure': 2.5, 'renderVer': 40, 'riseH': P0.get('riseH', 250), 'speedJit': 3, 'dirJit': 1.2}
     # 星头强度：青色本身暗（同样曝光下比金色暗一大截，NFV3 金曜菊-A / 鸿巢的青芯几乎看不见）→ 青 2.4、金 1.3
     M = {'stages': [[0, col]], 'xw': 0.1, 'ramp0': '#000000', 'ramp1': '#4a4f5c', 'ramp2': '#c9ced9', 'ramp3': '#ffffff', 'headInt': 2.4 if col == '#4f7bff' else 1.3, 'tailInt': 1}
@@ -266,7 +268,7 @@ def main(a):
                     for k in ('v0', 'stars', 'burstR0', 'speedJit', 'dirJit'):
                         if k in lays[0][0]: lays[i][0][k] = lays[0][0][k]
             if how and how[1] == 'C':
-                Pc, Mc, note = core_layer(rc['layers'][0]['P'], rc['layers'][0]['M'], R0)
+                Pc, Mc, note = core_layer(rc['layers'][0]['P'], rc['layers'][0]['M'], R0, n0)
                 lays.append((Pc, Mc, {'delay': 0, 'scale': 1, 'title': '芯'}, 'botan', note))
             tid = f"{rc['pre']}-{tag}"; multi = len(lays) > 1
             ids = []

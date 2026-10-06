@@ -1,0 +1,21 @@
+{
+ "id": "NFV6",
+ "type": "script",
+ "priority": 5,
+ "name": "我的效果变体：鸿巢四尺玉每档曝光（芯入的芯星头改 3.5 m 后重算）",
+ "steps": [
+  {
+   "name": "鸿巢四尺玉 · 我的（myv_fxmuwols5x）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuwols5x",
+    "--out",
+    "{out}/myv_fxmuwols5x"
+   ],
+   "must": false,
+   "timeout": 3600
+  }
+ ],
+ "note": "对话框新花型。NFR2-MYHK 芯入看不见芯（0.98 m 星头在 700 m 的花里不到 1 像素）→ 大玉芯星头按号数表；只为芯层重算曝光，别的档写回时不变。"
+}
