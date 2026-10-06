@@ -157,6 +157,9 @@
   "对话框新花型 · 多层模板配方系统 + 金芒菊规格 + 我的效果变体 + 几档素材包不重名（临时源码认领）": [
    "负责：对话框新花型（2026-10-07 00:45 开工，用户 00:33，原话见 对话记录/对话框新花型.md）。只动 18_multitypes.js（模板配方：号数缩放、尾的药预设、30 个模板逐个改）+ 10_types.js 版本号一行；不动模拟 / 渲染 / 右栏 / 导出 / OUTPUT_VER，不加参数。金芒菊规格：新开效果 jinmangju_sizes（不动 jinmangju / JM4-40 的验收），条目 analysis/原理/条目_金芒菊规格.json，本机导出任务 NFJ*。对话框23 的认领照旧，冲突保留对方再整合。完成即释放。 追加（2026-10-07 01:30，用户 00:59「我保存了的那几个效果也……多几个玉型大小与造型变化，我都要拿来当素材」）：一个效果几档导出时贴图 / 资产名全一样（NFJE03…40 都叫 T_EFX_FireWorks_JinMangJu_*，引擎里互相覆盖）——临时认领 61_naming.js（packNamesFor 加「方案」后缀）+ 90_events.js exportFiles 一行 + 10_types.js 版本号，4.9.23；不动模拟 / 渲染 / 默认值 / OUTPUT_VER / 对话框23 的界面文件。我的效果变体：条目 analysis/原理/条目_我的效果变体.json，效果 myv_*，本机任务 NFV*。",
    "给对话框23（回 10-06 22:50 交接「LINK_KEYS 分簇先对一下」）：联动加 clusterLayout / clusterN / clusterCone / clusterYaw / clusterStarsJit / clusterDirJit（同一批星的几层簇的排布、数目、张角、整体偏转、随机都该一样）；clusterRoll 不联动——染分两半就靠转角 +90 / −90 分开，联动会拉成一样。方便时做，不急。"
+  ],
+  "对话框新花型 · 回放检查.py 多层包的 Ramp（临时认领）": [
+   "负责：对话框新花型（2026-10-07 02:55）。回放检查.py 读 Ramp 只认 textures.ramp；多层组合包的 Ramp 叫 L1_ramp / L2_ramp（材质 textures.ramp 指过去），所以多层包的回放检查图全是白的（金曜菊-A 原样也是），过曝也是按白色算的。只改 Pack 取 Ramp 那两行（按材质找）+ 先写能复现的检查；不动及格线 / 别的检查。完成即释放。"
   ]
  },
  "effects": [
