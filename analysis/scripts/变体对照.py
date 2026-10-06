@@ -72,7 +72,7 @@ async def run(a):
                     if au is None: continue
                 ex[L['id']] = round(au * k, 4)
         for t in tiers:
-            print(t['id'], t['label'], [(L['id'], round(info[L['id']]['auto'], 4), info[L['id']]['cur'], '→', ex.get(L['id'])) for L in t['layers']], flush=True)
+            print(t['id'], t['label'], [(L['id'], (round(info[L['id']]['auto'], 4) if info[L['id']]['auto'] is not None else None), info[L['id']]['cur'], '→', ex.get(L['id'])) for L in t['layers']], flush=True)
         (out / '曝光.json').write_text(json.dumps({**ex, '_auto': {i: v['auto'] for i, v in info.items()}, '_k': k0, '_fallback': fb, '_renderer': ren}, ensure_ascii=False, indent=1), encoding='utf-8')
         dur = {t['id']: max(L['delay'] + info[L['id']]['end'] for L in t['layers']) for t in tiers}
         R = {t['id']: max(info[L['id']]['R'] * L['scale'] for L in t['layers']) for t in tiers}

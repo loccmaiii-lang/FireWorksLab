@@ -1,0 +1,21 @@
+{
+ "id": "NFV5",
+ "type": "script",
+ "priority": 5,
+ "name": "我的效果变体：窜天猴每档曝光 + 对照图（NFV3 这一步自动曝光量不到闪烁层，脚本加了兜底）",
+ "steps": [
+  {
+   "name": "金曜菊-窜天猴（myv_fxmuw5v7bh）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuw5v7bh",
+    "--out",
+    "{out}/myv_fxmuw5v7bh"
+   ],
+   "must": false,
+   "timeout": 3600
+  }
+ ],
+ "note": "对话框新花型。NFV4 打印时 round(None) 出错（柳那一档有一层自动曝光为 None），修了打印。"
+}
