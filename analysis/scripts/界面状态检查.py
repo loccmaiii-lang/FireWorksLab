@@ -64,6 +64,9 @@
      填了就乘在导出的 Size By Life / Color Over Life 上、空的时候导出逐位不变；地面火花、彗星也认曲线，没寿命的喷口亮点标不起作用
   W12 4.9.4（交互宪章 5「一个效果只留一个英文名」）：右栏没有可改的「母版名称」，只显示英文名、点了去交付清单改；交付清单所有产物都能改英文名；
      改了右栏、导出文件名跟着变，恢复默认回去
+  W13 4.9.5（宪章遗漏 1 / 2 / 5）：输出栏「直接调」就是那 9 个、「算出来的」帧率 / 张数 / 单格灰字可改（固定机位填了每帧停几 tick 帧计划照办）、大面片别的输出模块默认收起；
+     发射器表每个参数都有类别（物理量 / 引擎字段 / 预览设置 / 旧（待删）/ 只读），物理量有单位，说明条显示类别；打开旧存档（结尾淡出、冷却按各自寿命）画面上方写明不再起作用
+  W14 4.9.5（宪章遗漏 3 / 4）：对象 × 动作表里的入口都在；1366×768 和 1920×1080 首屏看得到顶栏主动作、左栏第一个条目、画布、播放、发射器标签和第一行参数
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -1190,7 +1193,7 @@ async def r6(pg):
 
 async def w1(pg):
     """4.5.0 工作台快改（用户 10-05 01:28 / 02:25）：时间轴没有发射器行和曲线、精简布局收起层轨道；AI 效果调了保存 = 存成我的效果（派生）、能加层；
-    单层存模板 → 花型库「我的模板」、能打开；删除不弹框、6 秒内能撤销；AI 效果能从左栏隐藏；只还原一个发射器 / 回到模板默认；时长跟随 / 同一时刻粘连两个开关"""
+    单层存模板 → 花型库「我的模板」、能打开；删除不弹框、8 秒内能撤销；AI 效果能从左栏隐藏；只还原一个发射器 / 回到模板默认；时长跟随 / 同一时刻粘连两个开关"""
     bad, info = [], {}
     await pg.evaluate("window.askSaveName = async (t, n, init) => '检查 · ' + init; 0")       # 起名对话框：直接用默认名
     # 1 时间轴、精简布局
@@ -1787,6 +1790,109 @@ async def w12(pg):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)[:700]
 
 
+W13_JS = r'''async (rec) => {
+  const bad = [], out = {}, wait = ms => new Promise(r => setTimeout(r, ms));
+  // 1 输出栏：直接调 9 个控件 + 算出来的 3 个
+  store.set('pModOpen', {}); pview.mopen = {};
+  await openType('kiku'); await wait(300); selectEmitTab('输出');
+  const g = document.querySelector('#params section.egrp[data-g="输出"]'), mods = [...g.querySelectorAll('details.mod')].filter(d => !d.hidden);
+  out.mods = mods.map(d => [d.querySelector('summary').textContent.replace('↺', '').trim(), d.open]);
+  const dmod = mods.find(d => d._mod === '直接调'), cmod = mods.find(d => d._mod === '算出来的');
+  if (!dmod || !cmod || mods.indexOf(dmod) !== 0 || mods.indexOf(cmod) !== 1) bad.push('输出的前两个模块不是「直接调」「算出来的」：' + JSON.stringify(out.mods));
+  if (mods.slice(2).some(d => d.open)) bad.push('大面片的其它输出模块没有默认收起：' + JSON.stringify(out.mods));
+  const ctl = d => [...d.querySelectorAll('input[type=range], select, .num')].filter(x => x.offsetParent && !x.closest('.adef') && !(x.classList.contains('num'))).map(x => x.id || (x.closest('[data-info]') || {}).dataset?.info || x.closest('.sl, .field')?._lab || '?');
+  const dkeys = panelRows.filter(([r]) => !r.hidden && r.closest('details') === dmod).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.info);
+  const spec = ['x-texW', 'x-texH', 'x-cols', 'x-rows'].filter(id => dmod.contains(document.getElementById(id)));
+  out.direct = { rows: dkeys, spec };
+  const want = ['outPC', 'outMobile', 'cutIn', 'cutOut', 'exposure', 'cellPad'];
+  if (want.some(k => !dkeys.includes(k)) || spec.length !== 4 || dkeys.filter(k => k !== 'specBox').length !== 6) bad.push('「直接调」不是那 9 个（PC / 手机怎么出、入点、出点、贴图宽 × 高、列 × 行、曝光、留边）：' + JSON.stringify(out.direct));
+  const ckeys = panelRows.filter(([r]) => !r.hidden && r.closest('details') === cmod).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.info);
+  out.calc = ckeys; if (!['holdTicks', 'pageTarget', 'outCell'].every(k => ckeys.includes(k))) bad.push('「算出来的」缺帧率 / 张数 / 单格：' + JSON.stringify(ckeys));
+  const hrow = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'holdTicks')[0], hb = hrow.querySelector('.chain');
+  out.hold = { linked: hb && hb.getAttribute('aria-pressed') === 'true', gray: hrow.classList.contains('adef-on'), shown: +hrow.querySelector('.num').value, calc: outCalc().hold };
+  if (!out.hold.linked || !out.hold.gray || out.hold.shown !== out.hold.calc) bad.push('帧率没有灰字显示算出来的值 / 没链条：' + JSON.stringify(out.hold));
+  const oc = panelRows.find(([r, it]) => it.sel === 'outCell')[0].querySelector('option[value="0"]').textContent; out.cellLabel = oc;
+  if (!/自动：现在 \d+ px/.test(oc)) bad.push('单格没写现在算出来的是多少：' + oc);
+  // 填了每帧停几 tick：帧计划照办（k = 2 → 帧号每次跳 2 个 tick）；0 = 自动和以前一样
+  { const P0 = derive({ ...structuredClone(state.P) }), fm = measure(P0), p0 = plan(P0, fm), p2 = plan({ ...P0, holdTicks: 2 }, fm);
+    const step = pl => pl.ticks && pl.ticks.length > 1 ? pl.ticks[1] - pl.ticks[0] : null; out.plan = { auto: step(p0), two: step(p2), F0: p0.L.F, F2: p2.L.F };
+    if (out.plan.two !== 2) bad.push('填了每帧停 2 tick，帧计划没照办：' + JSON.stringify(out.plan)); }
+  // 旧帧数模式的开花段 / 淡出段：固定机位时收进旧（待删）
+  { const r = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'burstSec'); out.burstSecHidden = r && r[0].hidden; if (!r || !r[0].hidden || !r[0]._legacy) bad.push('固定机位时「开花段时长」没收进旧（待删）'); }
+  // 2 类别：说明条显示
+  selectEmitTab('星'); const sr = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'stars')[0]; panelHelp(sr); out.help = $('#pHelp').textContent.slice(-40);
+  if (!/物理量（颗）|物理量（个）|物理量（/.test($('#pHelp').textContent)) bad.push('说明条没写类别 / 单位：' + out.help);
+  out.cats = (() => { const c = {}; for (const id in PEMIT.P) { const k = PEMIT.P[id][4] || '（空）'; c[k] = (c[k] || 0) + 1; } return c; })();
+  if (out.cats['（空）']) bad.push(`发射器表还有 ${out.cats['（空）']} 行没类别`);
+  // 5 不静默：打开存着「结尾淡出 / 冷却按各自寿命」的旧存档，画面上方写明
+  if (rec) { myPut({ id: rec.id, name: rec.name, created: '', updated: '', links: rec.links || [], snap: rec.snap }); await openMyEffect(rec.id); await wait(500);
+    out.mig = { shown: !$('#migNote').hidden, text: $('#migNoteText').textContent.slice(0, 160) };
+    if (!out.mig.shown || !/结尾/.test(out.mig.text) || !/冷却方式/.test(out.mig.text)) bad.push('打开旧存档没写明「结尾 / 冷却方式」不再起作用：' + JSON.stringify(out.mig));
+    $('#migNoteOk').click(); out.mig.closed = $('#migNote').hidden; await openType('kiku'); await wait(200); out.mig.afterTemplate = $('#migNote').hidden;
+    if (!out.mig.closed || !out.mig.afterTemplate) bad.push('「知道了」关不掉 / 换到模板还挂着'); }
+  else bad.push('找不到旧存档样本（analysis/我的配方 里结尾 = 淡出的）');
+  return { bad, out };
+}'''
+
+
+async def w13(pg):
+    """4.9.5：输出栏收口、参数类别、不静默"""
+    import glob
+    rec = None
+    for f in sorted(glob.glob(str(ROOT / 'analysis' / '我的配方' / 'my_*' / '*.json'))):
+        try:
+            d = json.load(open(f, encoding='utf-8'))
+            if any(L['P'].get('endMode') == 'fade' and str(L['P'].get('coolMode')) == '0' for L in d['snap']['layers']): rec = d; break
+        except Exception: pass
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate(W13_JS, rec)
+    return not r['bad'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:900]
+
+
+W14_FS = r'''async () => { await openType('kiku'); await new Promise(r => setTimeout(r, 400)); selectEmitTab('星'); $('#right').scrollTop = 0; $('#libBody').scrollTop = 0;
+  const vh = innerHeight, vw = innerWidth, R = el => { if (!el) return null; const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && r.bottom <= vh + 1 && r.top >= -1 && r.right <= vw + 1 && r.left >= -1; };
+  const firstRow = panelRows.map(([r]) => r).find(r => !r.hidden && r.offsetParent && r.closest('section.egrp:not([hidden])') && r.closest('details.mod') && r.closest('details.mod').open);
+  return { name: R($('#abIdName')), save: R($('#abSave')), exportPack: R($('#abExportPack')), more: R(document.querySelector('#abMore > summary')), tabs: R($('#params .etabs')),
+    firstRow: R(firstRow), review: R(document.querySelector('#libBody .li')), newRecipe: R($('#newRecipe')), canvas: R(document.querySelector('.canvas-wrap')), play: R($('#play')) }; }'''
+
+
+async def w14(p, b):
+    """4.9.5：对象 × 动作的入口、首屏（1366×768 / 1920×1080）"""
+    bad, info = [], {}
+    # 对象 × 动作（交互宪章第 7 节）：表里写的入口在页面上都有
+    ctx = await b.new_context(viewport={'width': 1440, 'height': 900}); pg = await ctx.new_page()
+    try:
+        await pg.add_init_script("window.requestAnimationFrame = () => 0;")
+        await pg.goto(HTML, wait_until='load', timeout=0); await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
+        await pg.evaluate(REC if REAL else FAKE); await pg.evaluate(ask_stub('检查入口'))
+        await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+        r = await pg.evaluate("""(async () => { const has = s => !!document.querySelector(s), miss = [];
+          const need = { 花型模板: ['#libBody', '#newRecipe', '#abSave', '#abReset', '#abSaveTpl', '#abExportPack', '#abExportFile'], AI效果: ['#abHide', '#abCopyDiff', '#delivView'],
+            我的效果: ['#abSaveAs', '#abMyRename', '#abMyDelete', '#abRepo', '#abRepoRead'], 版本: ['#versionHistory', '#abSrc', '#abRename', '#abDelete'],
+            层: ['#abAddLayer'], 我的模板: ['#abUpdTpl'], 配方文件: ['#abImportFile', '#abFile', '#toolImport', '#toolExport'], 素材包: ['#abUnit', '#enNameEdit', '#busy'],
+            发射器: ['#exAdd'], 对话框: ['#saveNameDlg', '#confirmDlg', '#keysDlg'] };
+          for (const [o, ss] of Object.entries(need)) for (const s of ss) if (!has(s)) miss.push(o + ' ' + s);
+          pkOpen({ mode: 'open', title: '检查' }); await new Promise(r => setTimeout(r, 200)); if (!document.querySelector('#pkGrid .pk-card .fav')) miss.push('收藏 星标'); if (!document.querySelector('#pkCats')) miss.push('收藏 分类'); pkClose();
+          const fns = ['myRename', 'myRemove', 'myRenameLayer', 'myDupLayer', 'myMoveLayer', 'renameTemplate', 'removeTemplate', 'removeVersion', 'exRemoveSlot', 'wbImportFile', 'exportCombo', 'exportMaster', 'bakeCancel', 'undoStep'];
+          for (const f of fns) if (typeof window[f] !== 'function') miss.push('函数 ' + f);
+          return miss; })()""")
+        info['入口缺'] = r
+        if r: bad.append('对象 × 动作表里的入口缺：' + '、'.join(r))
+    finally:
+        await ctx.close()
+    for vw, vh in [(1366, 768), (1920, 1080)]:
+        ctx = await b.new_context(viewport={'width': vw, 'height': vh}); pg = await ctx.new_page()
+        try:
+            await pg.add_init_script("window.requestAnimationFrame = () => 0;")
+            await pg.goto(HTML, wait_until='load', timeout=0); await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
+            await pg.evaluate(REC if REAL else FAKE)
+            r = await pg.evaluate(W14_FS); info[f'{vw}×{vh}'] = [k for k, v in r.items() if not v]
+            if info[f'{vw}×{vh}']: bad.append(f'{vw}×{vh} 首屏看不到：' + '、'.join(info[f'{vw}×{vh}']))
+        finally:
+            await ctx.close()
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
+
+
 async def x2(pg):
     """4.4.2（用户 10-04 21:17）：单层效果（牡丹模板）也有「导出方案」：输出 › 导出方案里 PC 能选 GPU 光点 / 单束 / 不出，手机能选不出；选光点后 cascade.json 是一个 GPU 光点发射器、引擎回放画光点、说明写有尾迹没了"""
     bad, info = [], {}
@@ -1794,7 +1900,7 @@ async def x2(pg):
     r = await pg.evaluate("""(() => { selectEmitTab('输出'); const x = panelRows.find(([r, it]) => it.sel === 'outPC'); if (!x) return null; const s = x[0].querySelector('select');
       return { mod: x[0]._x.e + '›' + x[0]._x.m, shown: !x[0].hidden, opts: [...s.options].map(o => o.value) }; })()""")
     info['牡丹'] = r
-    if not r or r['mod'] != '输出›导出方案' or not r['shown'] or r['opts'] != ['seq', 'unit', 'dots', 'off']: return False, f'单层的导出方案不对：{r}'
+    if not r or r['mod'] != '输出›直接调' or not r['shown'] or r['opts'] != ['seq', 'unit', 'dots', 'off']: return False, f'单层的导出方案不对：{r}'
     await pg.evaluate("(() => { const s = panelRows.find(([r, it]) => it.sel === 'outPC')[0].querySelector('select'); s.value = 'dots'; s.dispatchEvent(new Event('change')); return 0; })()"); await idle(pg)
     r = await pg.evaluate("""(() => { const so = singleOut(state.P), b = state.bake, pc = b ? fwlCombo('T', [{ L: singleLayer(state.P, state.M), b, i: 0, dots: true }], false) : null;
       const dot = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'dotSize');
@@ -1867,7 +1973,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

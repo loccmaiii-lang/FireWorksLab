@@ -17,7 +17,7 @@ const EMIT_DEF = (() => { const m = {}; (typeof PEMIT !== 'undefined' ? PEMIT.E 
 // 这一行归哪：{ e: 发射器, m: 模块, n: 面板上的短名 }。表里没有的（不该有，P1 检查会报）按节名猜一个
 function emitOf(nm, sec) {
   const x = nm && nm.id && typeof PEMIT !== 'undefined' ? PEMIT.P[nm.id] : null;
-  if (x) return { e: x[0], m: x[1], n: x[2], i: x[3] };
+  if (x) return { e: x[0], m: x[1], n: x[2], i: x[3], c: x[4] || '', u: x[5] || '' };
   return { e: /输出|导出|画质|曝光|规格|入点/.test(sec && sec.sec || '') ? '输出' : '效果', m: nm && nm.mcn || (sec && sec.sec) || '其它', n: nm ? nm.cn : '', i: 9999 };
 }
 // 「××随机」挂在哪个本体参数下面（没列的按「键名去掉 Jit」找；找不到就照常单独一行）
@@ -73,11 +73,15 @@ const LEGACY = {
   rtStreakMax: ['拖影上限只夹外观；5.0 拖影由速度 × 快门决定'], rtLoopSize: ['固定长循环层（4.4 旧做法）', 1], rtLoopMin: ['循环层的人为最短长度；5.0 按星头可见长度自动算'],
   rtDotGain: ['粒子层另乘的总亮度（光晕、发射口不乘），名不副实'], rtDissolve: ['消散溶解终值；5.0 固定', 1],
   preRoll: [LG_PRE, 0, P => +P.cutIn > 0], preScale0: [LG_PRE, null, P => +P.preRoll > 0 && +P.preScale0 > 0], prePivot: [LG_PRE, null, P => +P.preRoll > 0 && +P.prePivot !== 0],
-  fpsFloor: ['旧帧计划才读；固定机位 + 匀速帧不读'], trimLead: ['开头空白不烘；5.0 固定为裁掉', 1],
+  fpsFloor: ['旧帧计划才读；固定机位 + 匀速帧不读'],
+  // 4.9.5（宪章遗漏 1）：旧帧数模式（按运动分 / 最省 / 手动 / 分段帧率）的参数；固定机位 + 匀速帧不读。用没用上看帧数模式，不看值
+  burstSec: ['旧帧数模式才用的「开花段」；固定机位 + 匀速帧整段一个帧率', null, P => !['fixed', 'full'].includes(P.frameBudget || 'motion'), true],
+  fadeAt: ['旧帧数模式才用的「淡出段」；固定机位 + 匀速帧整段一个帧率', null, P => !['fixed', 'full'].includes(P.frameBudget || 'motion'), true], trimLead: ['开头空白不烘；5.0 固定为裁掉', 1],
 };
 const legacyOf = k => LEGACY[k] || (/^ph[A-Z]/.test(k) ? ['物理尾缀（已归档）的参数'] : null);
 function legacyInUse(k, P) {
   const L = legacyOf(k); if (!L || !P) return false;
+  if (L[3]) return !!L[2](P);                     // 4.9.5：只看条件（例：帧数模式），不看值
   const off = L[1] != null ? L[1] : BASE[k], v = P[k];
   if (v == null || String(v) === String(off) || (typeof off === 'number' && +v === off)) return false;
   return L[2] ? !!L[2](P) : true;
@@ -115,6 +119,9 @@ function inertWhy(key, P) {
 }
 function p43Label(nm, fallback) { if (!nm) return fallback; const x = nm.id && typeof PEMIT !== 'undefined' ? PEMIT.P[nm.id] : null; return pview.en ? nm.en || nm.cn : (x && x[2]) || nm.cn || nm.en; }
 const PMODULE = (() => { const m = {}; for (const x of (typeof PMODULES !== 'undefined' ? PMODULES : [])) m[x.cn] = x; return m; })();
+// 4.9.5（宪章遗漏 1，输出栏收口）：大面片 / 分段 / 地面循环的「输出」只展开「直接调」「算出来的」，别的模块默认收起（点开会记住）
+const OUT_FIRST = ['直接调', '算出来的'];
+function modDefaultOpen(key) { const [e, m] = String(key).split('›'); return !(e === '输出' && typeof isSeq === 'function' && isSeq(state.P) && !OUT_FIRST.includes(m)); }
 // 返回 place(sec, it, key, nm) → 这一行该放进的模块（发射器 section 里的 details.mod）。4.4 没有「更多」：模块默认展开，模块本身可以收起（记住）
 function p43Skeleton(host) {
   const secs = {}, mods = {};
@@ -130,7 +137,7 @@ function p43Skeleton(host) {
     const x = emitOf(nm, sec), k = x.e + '›' + x.m;
     if (!mods[k]) {
       const s = emitSec(x.e), order = (EMIT_DEF[x.e] || {}).mods || [], d = document.createElement('details');
-      d.className = 'sec mod'; d._auto = true; d.open = pview.mopen[k] != null ? pview.mopen[k] : true; setTimeout(() => d._auto = false, 0);
+      d.className = 'sec mod'; d._auto = true; d.open = pview.mopen[k] != null ? pview.mopen[k] : modDefaultOpen(k); setTimeout(() => d._auto = false, 0);
       d.innerHTML = `<summary>${x.m}</summary>`;
       d.addEventListener('toggle', () => { if (d._auto) return; pview.mopen[k] = d.open; store.set('pModOpen', pview.mopen); });
       d._sec = { sec: x.m }; d._g = x.e; d._mod = x.m; d._key = k; d._oi = order.includes(x.m) ? order.indexOf(x.m) : 99;

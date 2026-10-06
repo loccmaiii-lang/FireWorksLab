@@ -1387,4 +1387,8 @@ details.mod-empty .mod-note{font-size:12.5px;color:var(--muted,#adb8bc);padding:
 .enname{display:flex;align-items:center;gap:6px;min-width:0;min-height:28px}
 .enname b{font:12.5px var(--mono);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .enname .btn{flex:none;padding:1px 6px;font-size:11px}
+/* 4.9.5 不静默：打开旧存档时自动改写 / 不再起作用的提示 */
+.mig-note{display:flex;align-items:center;gap:12px;padding:8px 14px;color:#f6e3c4;background:#3c352b;border-bottom:1px solid #6b5a3a;font-size:12px;line-height:1.5}
+.mig-note[hidden]{display:none}
+.mig-note span{flex:1;overflow-wrap:anywhere}
 

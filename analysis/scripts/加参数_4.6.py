@@ -259,7 +259,8 @@ def main():
                          'desc': p['desc'], 'updown': p['updown'], 'unit': p['unit'], 'range': rng, 'default': dflt, 'random': '', 'ue': p['ue'], 'tag': '烟花特性',
                          'note': p['note'] if p.get('note') else '4.6.0（5.0 第 1 步）加：以前写死在代码里，默认 = 原来的数。' if not p['key'].startswith('x') else '4.6.0（5.0 第 1 步）自定义发射器：资产栏下面发射器标签行「＋ 加发射器」打开。',
                          'check': p['check'], 'family': p.get('fam') or '空中礼花', 'id': rid, 'tier': 'more'})
-        if rid not in haveE: eml['参数'].append({'id': rid, 'sec': p['sec'], 'key': p['key'], '全名': p['cn'], '发射器': p['em'], '模块': p['mod'], '名': p['short']})
+        if rid not in haveE: eml['参数'].append({'id': rid, 'sec': p['sec'], 'key': p['key'], '全名': p['cn'], '发射器': p['em'], '模块': p['mod'], '名': p['short'],
+            '类别': p.get('cat') or '物理量', '单位': p.get('cat_unit') or ('×（随寿命）' if p['kind'] == 'curve' else '选项' if p['kind'] == 'sel' else p['unit'] or '1')})     # 4.9.5 参数宪章第 1 条：类别 + 单位
     if new_rows:
         rows += new_rows
         NAMES_J.write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding='utf-8')

@@ -30,7 +30,7 @@ ef = os.path.join(here, '..', 'analysis', '命名', '发射器表.json')
 if os.path.exists(ef):
     ed = json.load(open(ef, encoding='utf-8'))
     pe = {'E': [{'n': e['名'], 'en': e['en'], 'lv': e['级'], 'what': e['说明'], 'mods': e['模块']} for e in ed['发射器']],
-          'P': {r['id']: [r['发射器'], r['模块'], r['名'], i] for i, r in enumerate(ed['参数'])}}
+          'P': {r['id']: [r['发射器'], r['模块'], r['名'], i, r.get('类别', ''), r.get('单位', '')] for i, r in enumerate(ed['参数'])}}     # 4.9.5 类别 + 单位（参数宪章第 1 条），说明条里显示
 else:
     pe = {'E': [], 'P': {}}
 js = 'const PEMIT = ' + json.dumps(pe, ensure_ascii=False, separators=(',', ':')) + ';\n' + js

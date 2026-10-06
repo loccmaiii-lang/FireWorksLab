@@ -59,6 +59,24 @@ for r in et['参数']:
     if not str(r.get('名', '')).strip(): errors.append(f'发射器表「{r["id"]}」没有短名')
 for i in ids:
     if i not in set(eids): errors.append(f'参数名称表「{i}」不在发射器表里（面板上会掉进「其它」）')
+
+# ---- 4.9.5 参数宪章第 1 条「三选一」进构建（宪章遗漏 2，用户 10-06 09:40「按推荐」）----
+# 发射器表每个参数行都要有「类别」：物理量 / 引擎字段 / 预览设置（三选一）；过渡期另有「旧（待删）」（面板标「旧」的）和「只读」（info:* 结果行，不是参数）。
+# 物理量必须写单位（无量纲写 1、倍数 ×、百分比 %、下拉选项写「选项」）；引擎字段在参数名称表 ue 列写明写到 cascade.json 哪一项。面板上标「旧」的（71_panel43.js LEGACY、ph*）类别必须是旧（待删）。
+CATS = ['物理量', '引擎字段', '预览设置', '旧（待删）', '只读']
+ROWS = {r['id']: r for r in rows}     # 引擎字段要能指出写到哪：参数名称表 ue 列
+_p43 = js.get('71_panel43.js', '')
+_lb = _p43[_p43.index('const LEGACY = {'):_p43.index('};', _p43.index('const LEGACY = {'))] if 'const LEGACY = {' in _p43 else ''
+LEG = set(re.findall(r'\b([A-Za-z]\w*): \[', _lb))
+for r in et['参数']:
+    k, c, u = r['key'], r.get('类别'), str(r.get('单位', '')).strip()
+    if not c: errors.append(f'发射器表「{r["id"]}」（{k}）没有类别：参数宪章第 1 条，物理量 / 引擎字段 / 预览设置三选一（新参数要在表里写清楚；可以先跑 参数类别_4.9.5.py）')
+    elif c not in CATS: errors.append(f'发射器表「{r["id"]}」（{k}）的类别「{c}」不对，只能是 {" / ".join(CATS)}')
+    elif c == '物理量' and not u: errors.append(f'发射器表「{r["id"]}」（{k}）是物理量，没写单位（无量纲写 1）')
+    elif c == '引擎字段' and not (lambda ue: ue and not ue.startswith('UE 里没有'))(str(ROWS.get(r['id'], {}).get('ue', '')).strip()): errors.append(f'发射器表「{r["id"]}」（{k}）是引擎字段，参数名称表的「UE 对应」（ue）没写它写到 cascade.json 的哪一项 / 贴图的哪个属性')
+    if c and k.startswith('info:') and c != '只读': errors.append(f'发射器表「{r["id"]}」（{k}）是结果行，类别应是「只读」')
+    if c and (k in LEG or (k.startswith('ph') and k[2:3].isupper())) and c != '旧（待删）': errors.append(f'发射器表「{r["id"]}」（{k}）面板上标了「旧」，类别应是「旧（待删）」')
+    if c == '旧（待删）' and k not in LEG and not (k.startswith('ph') and k[2:3].isupper()): warns.append(f'发射器表「{r["id"]}」（{k}）类别是旧（待删），但面板没标「旧」（71_panel43.js LEGACY）')
 for e in et['发射器']:
     used_m = {r['模块'] for r in et['参数'] if r['发射器'] == e['名']}
     for m in e['模块']:

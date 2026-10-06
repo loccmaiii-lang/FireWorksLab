@@ -39,7 +39,7 @@ function setStatus(msg) { const s = $('#status'); s.textContent = msg; s.classNa
 // 上升类的序列时长跟随到顶时间
 function derive(P) {
   // 紧凑取景已禁用（2026-09-29 引擎实测会抖，spec/pipeline_v1.md）：旧配方里的 tight 一律按 Zoom 处理
-  if (P.zoom === 'tight') P.zoom = 'on';
+  if (P.zoom === 'tight') migSet(P, 'zoom', 'on', '紧凑取景已禁用（引擎里会抖），按 Zoom 取景');     // 4.9.5 不静默：打开旧存档时列进提示
   if (familyOf(P.type) === 'rise' && P.form === 'phys') { P.duration = +(P.phT + 3.5).toFixed(2); return P; }
   if (familyOf(P.type) === 'rise' && P.form === 'emitset') { P.duration = rtDuration(P); return P; }
   if (familyOf(P.type) === 'rise') P.duration = P.form === 'trail' ? +(riseInfo(P).ta + 64 / 20 + 0.3).toFixed(2) : +(riseInfo(P).ta + 1.2).toFixed(2);
@@ -334,6 +334,8 @@ function onParam() {
 }
 function showStats(b) {
   document.querySelectorAll('#params [data-info=endInfo]').forEach(r => r._refresh && r._refresh());     // 4.5.8：烘完了，「火花灭完」那行按真的贴图长度写
+  for (const [r, it] of panelRows) if (Array.isArray(it) && (it[0] === 'holdTicks' || it[0] === 'pageTarget') && r._refresh) r._refresh();     // 4.9.5：「算出来的」灰字跟着这次烘焙
+  syncOutCellLabel();
   if (b.form === 'emitset') { $('#stats').innerHTML = rtStatsHTML(b); return; }
   const m = b.meta, L = m.L, P = b.P, cls = ok => ok ? 'ok' : 'warn', c = m.check || {};
   const parts=bakeParts(b),totalFrames=parts.reduce((n,s)=>n+s.meta.L.F,0);
@@ -434,8 +436,27 @@ const AUTO_DEF = {
   subVt: [1, P => +(+P.vt || 0).toFixed(1), '同主层的终端速度', 0],
   rtVt: [1, P => +(typeof rtVtOf === 'function' ? rtVtOf({ ...P, rtVt: 0 }) : 0).toFixed(1), '按弹径算（球形弹体在空气里的终端速度）', 0],
   rtFadeFps: [1, () => 30, '自动 30 fps', 0],
+  // 4.9.5（宪章遗漏 1，输出栏收口）：「算出来的」帧率 / 张数也用链条——接着 = 灰字显示这次烘焙算出来的，改了就用你填的
+  holdTicks: [1, () => outCalc().hold, '放得下的最快（1 = 30 fps、2 = 15、3 = 10）', 0],
+  pageTarget: [1, () => outCalc().pages, '从 1 张起，放不下自动加', 1, v => !(+v > 1)],
 };
-const autoLinked = (k, v) => { const a = AUTO_DEF[k]; return !!a && (a[3] === 0 ? !(+v > 0) : !(+v >= 0)); };
+const autoLinked = (k, v) => { const a = AUTO_DEF[k]; return !!a && (a[4] ? a[4](v) : a[3] === 0 ? !(+v > 0) : !(+v >= 0)); };
+// 4.9.5：「单格」下拉的第一项写出现在算出来的是多少（不选数值 = 用它）
+function syncOutCellLabel() {
+  const x = panelRows.find(([r, it]) => it.sel === 'outCell'); if (!x) return;
+  const o = x[0].querySelector('select option[value="0"]'); if (!o) return;
+  const t = `自动：现在 ${outCalc().cell} px（贴图宽 ÷ 列数，至少 512）`; if (o.textContent !== t) o.textContent = t;
+  x[0].classList.toggle('adef-on', !(+state.P.outCell > 0));
+}
+// 4.9.5：这次烘焙实际用的帧率 / 张数 / 单格（没烘好时按参数估：单格 = 贴图宽 ÷ 列，至少 512）
+function outCalc() {
+  const P = state.P, b = state.tab === 'combo' && state.comboSel >= 0 ? (layerEntryOf(state.layers[state.comboSel]) || {}).bake : state.bake;
+  const parts = b && b.meta && typeof bakeParts === 'function' ? bakeParts(b) : [], bud = b && b.meta && (b.meta.plan && b.meta.plan.budget || b.meta.budget);
+  const hold = bud && isFinite(bud.holdMin) ? Math.round(bud.holdMin) : 1, pages = bud && bud.pages ? bud.pages : Math.max(1, parts.length);
+  const L = parts[0] && parts[0].meta && parts[0].meta.L, oc = +P.outCell > 0 ? Math.max(512, +P.outCell) : 0;
+  const cell = L ? Math.round(L.cellW) : oc || Math.round(P.texW / Math.max(1, Math.min(P.cols, Math.floor(P.texW / 512) || 1)));
+  return { hold: Math.max(1, Math.min(3, hold)), pages: Math.max(1, pages), cell };
+}
 function autoDefRow(row, k, step) {
   const a = AUTO_DEF[k]; if (!a) return;
   const inp = row.querySelector('input[type=range]'), num = row.querySelector('.num');
@@ -526,9 +547,12 @@ function flameChips(host, getM, onChange) {
 // ---------------- 参数面板 ----------------
 let panelRows = [];
 function placeSpecBox() {
-  const box = $('#specBox'), host = document.querySelector('#params [data-info=specBox]'), det = host && host.closest('details');
-  const where = host && det && det.style.display !== 'none' && !det.hidden ? host : $('#specHome');
-  if (box && box.parentElement !== where) where.appendChild(box);
+  // 4.9.5（宪章遗漏 1，输出栏收口）：规格框拆两块——贴图宽 × 高、列 × 行在「直接调」（specBox），通道 / 编码 / 取帧 / 取景在「贴图」（specMore）
+  for (const id of ['specBox', 'specMore']) {
+    const box = $('#' + id), host = document.querySelector(`#params [data-info=${id}]`), det = host && host.closest('details');
+    const where = host && det && det.style.display !== 'none' && !det.hidden ? host : $('#specHome');
+    if (box && box.parentElement !== where) where.appendChild(box);
+  }
 }
 function itemVisible(it, P) { const f = Array.isArray(it) ? it[6] : it.show; return !f || f(P); }
 // ---------------- 参数栏（4.3 定稿：只有一种面板，按 Cascade 发射器的模块排，名字全用新名，analysis/命名/参数名称表.json）----------------
@@ -601,7 +625,7 @@ function panelHelp(row) {
   if (row._nm) {      // 4.3：第一行「English · 中文 — 说明」，下面调大 / 调小、随机怎么取、UE 里对应、注意、现在不起作用的原因
     const nm = row._nm, unit = Array.isArray(it) && it[2] ? ` <small>${it[2]}</small>` : '', rng = Array.isArray(it) ? `范围 ${it[3]}–${it[4]}` : '';
     const base = B && B[k] != null ? ` · 打开时 ${Array.isArray(it) ? fmtV(B[k], it[5]) : B[k]}` : '', iw = row._inert;
-    h.innerHTML = `<b>${nm.en}</b> · <b>${nm.cn}</b>${unit} — ${nm.desc}<span class="ph-meta">${rng}${base} · ${row._x ? row._x.e + ' › ' + row._x.m : nm.mcn || nm.tag}</span>`
+    h.innerHTML = `<b>${nm.en}</b> · <b>${nm.cn}</b>${unit} — ${nm.desc}<span class="ph-meta">${rng}${base} · ${row._x ? row._x.e + ' › ' + row._x.m : nm.mcn || nm.tag}${row._x && row._x.c ? ' · ' + row._x.c + (row._x.c === '物理量' && row._x.u ? '（' + row._x.u + '）' : row._x.c === '预览设置' ? '（不进导出）' : '') : ''}</span>`
       + (iw ? `<span class="ph-inert">现在不起作用：${iw}</span>` : '') + legacyHelp(row, k)
       + (nm.ud ? `<span class="ph-d">${nm.ud}</span>` : '') + (nm.rnd ? `<span class="ph-x">随机：${nm.rnd}</span>` : '')
       + (nm.ue ? `<span class="ph-x">UE：${nm.ue}</span>` : '') + (nm.note ? `<span class="ph-x">注意：${nm.note}</span>` : '')
@@ -615,7 +639,7 @@ function panelHelp(row) {
 function buildMasterPanel() {
   pviewInit();
   const P = state.P, D = defaultsFor(P.type).P;
-  const box = $('#specBox'); if (box && $('#params').contains(box)) $('#specHome').appendChild(box);   // 规格框先放回原处，别跟着旧的面板一起被清掉
+  for (const id of ['specBox', 'specMore']) { const box = $('#' + id); if (box && $('#params').contains(box)) $('#specHome').appendChild(box); }   // 规格框先放回原处，别跟着旧的面板一起被清掉
   const host = $('#params'); host.innerHTML = ''; panelRows = [];
   // 顶上：搜索 + 只看改过的 + 英文名
   host.insertAdjacentHTML('beforeend', `<div class="ptools"><input type="search" placeholder="搜参数：名字 / 英文名 / 说明里的字" aria-label="搜参数" value="${pview.q.replace(/"/g, '&quot;')}"><label class="pchg" title="只显示和打开时（AI 版 / 你保存的版本）不一样的参数"><input type="checkbox"${pview.changed ? ' checked' : ''}> 只看改过的</label>`
@@ -657,8 +681,8 @@ function buildMasterPanel() {
         });
         row._refresh = () => { s.value = String(it.sel === '_trailTier' ? state.P.type : state.P[it.sel]); };
         det.appendChild(row);
-      } else if (it.info === 'specBox') {   // 4.2.6：规格框（贴图尺寸、列 × 行、通道…）放进「帧与贴图」
-        row = document.createElement('div'); row.className = 'spechost'; row.dataset.info = 'specBox'; det.appendChild(row);
+      } else if (it.info === 'specBox' || it.info === 'specMore') {   // 4.2.6：规格框放进面板；4.9.5 拆成两块（贴图宽高 + 格子 / 其它）
+        row = document.createElement('div'); row.className = 'spechost'; row.dataset.info = it.info; det.appendChild(row);
       } else if (it.info) {   // 只读的结果行（例：「帧与贴图」顶上的「多少帧、怎么装」）
         row = document.createElement('div'); row.className = 'infohost'; row.dataset.info = it.info;
         row._refresh = () => { row.innerHTML = it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : it.info === 'endInfo' && typeof endInfoHTML === 'function' ? endInfoHTML() : it.info === 'schemeNote' && typeof singleSchemeNote === 'function' ? `<p class="hint endinfo">${singleSchemeNote(state.P)}</p>` : it.info === 'ballInfo' && typeof rtBallInfoHTML === 'function' ? rtBallInfoHTML(state.P) : /^exColor/.test(it.info) ? exColorHTML(+it.info.slice(7)) : ''; };
@@ -685,6 +709,7 @@ function buildMasterPanel() {
         row._it = it; row._x = ex; row._bm = nm && nm.mcn;
         const name = row.querySelector('.k, .fk'); if (name) { name.classList.add('phelp-on'); helpBind(name, row); }
       }
+      if (row && !row._x && ex && (it.info === 'specBox' || it.info === 'specMore' || it.info)) row._x = ex;     // 4.9.5：规格框 / 结果行也按发射器表的先后排
       panelRows.push([row, it, sec, det]);
     }
   }
@@ -728,13 +753,13 @@ function refreshVisibility() {
     row._applies = vis; const lf = legacyFolded(row, det, P, q, chg);     // 4.9.0：没用上的旧（待删）参数收进模块底下的开关
     row.hidden = !vis || folded || lf || !rowMatches(row, it, sec, q) || (pview.changed && !chg);
   }
-  p43RandSync(P); p43BlankSync(P); p43LegacySync(P);
+  p43RandSync(P); p43BlankSync(P); p43LegacySync(P); syncOutCellLabel();
   // 搜索 / 只看改过的时：所有发射器里有结果的都显示、模块自动展开（记 _autoOpen，清空后收回到用户自己的开合）
   const auto = !!(q || pview.changed);
   const autoOpen = (d, on, mine) => { if (on) { if (!d.open) { d._autoOpen = true; d._auto = true; d.open = true; setTimeout(() => d._auto = false, 0); } }
     else if (d._autoOpen) { d._autoOpen = false; d._auto = true; d.open = mine; setTimeout(() => d._auto = false, 0); } };
   document.querySelectorAll('#params details.sec').forEach(det => { if (det._ph) return; det.hidden = ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden);
-    autoOpen(det, auto && !det.hidden, det._key && pview.mopen[det._key] != null ? pview.mopen[det._key] : true); });
+    autoOpen(det, auto && !det.hidden, det._key && pview.mopen[det._key] != null ? pview.mopen[det._key] : modDefaultOpen(det._key || '')); });
   // 4.6.0：没有参数的标准模块（「这个发射器没有这一项 / 跟谁」）只在这个发射器有别的模块看得见、又没在搜索 / 只看改过的时候出现
   document.querySelectorAll('#params details.mod-empty').forEach(det => { const g = det.parentElement; det.hidden = auto || pview.changed || ![...g.querySelectorAll(':scope > details.sec')].some(d => !d._ph && !d.hidden); });
   const tab = emitTabNow(appl);

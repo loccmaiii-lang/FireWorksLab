@@ -282,7 +282,7 @@ async function wbLoad(id) {
   if (autoDraft() && old) { const list = wbList(); old.id = 'd' + Date.now().toString(36); old.draft = false; old.name = '草稿（更早，' + (old.at || '') + '）'; list.push(old); wbPut(list); id = old.id; }
   if (id === 'ai') return wbLoadAI();
   const s = wbList().find(x => x.id === id); if (!s) return;
-  await wbApply(s.snap); wb.src = { kind: 'mine', id }; wbArm(); wbSync(); flash(`正在看你的版本「${s.name}」`);
+  migBegin(); await wbApply(s.snap); wb.src = { kind: 'mine', id }; wbArm(); wbSync(); flash(`正在看你的版本「${s.name}」`); migEnd();     // 4.9.5 不静默
 }
 async function wbApply(snap) {
   bakeMode.demand = true;          // 4.2.16：换版本 / 恢复 = 打开，照常烘（自动烘焙关也烘）
@@ -759,6 +759,25 @@ function abStateSync() {
   const cb = $('#abBakeCancel'); if (cb) { const show = !state.bakeError && (busyB || (stale && auto)); if (cb.hidden === show) cb.hidden = !show; }     // 4.9.4 长烘焙可以取消
   const tt = stale && !busyB && !state.bakeError ? '实时模拟已经是新参数；引擎回放 / 贴图 / 导出用的贴图还是上次烘的（自动烘焙关着）' : ''; if (ab.title !== tt) ab.title = tt;
 }
+// 4.9.5（宪章遗漏 5「不静默」）：打开旧存档时系统替你改了什么、存了什么现在不起作用，画面上方写一条（「知道了」关掉；换效果自动关）。
+// 打开开始 migBegin（beforeOpen、换版本、导入），打开完 migEnd：只报现在打开的这个效果（它的参数 / 它的层）
+function migBegin() { MIG_LOG.length = 0; MIG_ON = true; }
+function migEnd() { MIG_ON = false; migNotify(); }
+function migNotify() {
+  const open = new Set([state.P]); try { if (state.tab === 'combo') for (const L of state.layers || []) { const e = layerEntryOf(L); if (e && e.P) open.add(e.P); } } catch (err) { }
+  const hit = MIG_LOG.filter(x => open.has(x.P)); MIG_LOG.length = 0;
+  if (!hit.length) return;
+  const g = new Map(); for (const x of hit) { const key = x.k + '|' + x.why; if (!g.has(key)) g.set(key, { ...x, n: 0 }); g.get(key).n++; }
+  const f = v => v == null ? '（空）' : typeof v === 'number' ? +(+v).toFixed(4) : String(v);
+  const NM = { endMode: '结尾', coolMode: '冷却方式', engine: '模拟内核', cols: '列数', rows: '行数', zoom: '面片取景', exposure: '贴图曝光', trHeadExpo: '星头曝光', headBright: '星头亮度', frameMode: '取帧方式' };
+  const nm = k => NM[k] || ((typeof PNAMES !== 'undefined' ? PNAMES : []).find(r => r.key === k) || {}).cn || k;
+  const items = [...g.values()].map(x => (x.to == null ? `「${nm(x.k)}」存的是 ${f(x.from)}，不再起作用：${x.why}` : `「${nm(x.k)}」${f(x.from)} → ${f(x.to)}（${x.why}）`) + (x.n > 1 ? `（${x.n} 层）` : ''));
+  const box = $('#migNote'); if (!box) return;
+  const prev = box.hidden ? [] : (box._items || []); box._items = [...new Set([...prev, ...items])];
+  $('#migNoteText').textContent = `打开的是旧存档，系统按现在的规则改了 / 不再用这些（画面会和当时存的不一样）：${box._items.slice(0, 4).join('；')}${box._items.length > 4 ? `；还有 ${box._items.length - 4} 项` : ''}`;
+  box.title = box._items.join('\n'); box.hidden = false;
+}
+function migNoteHide() { const b = $('#migNote'); if (b) { b.hidden = true; b._items = []; } }
 // 通过门槛：只影响「通过」按钮（意见、要改照常）
 function gateReasons() {
   const r = [], v = state.layerView || { solo: -1, mute: [] };

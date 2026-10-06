@@ -1,6 +1,6 @@
 // =====================================================================
 //  4.5.0 资产操作（用户 2026-10-05 01:28 #5 / #6 / #7 / #8，方案 协作/方案_底层统一与参数宪章_2026-10.md 6.9）
-//  · 删除放到眼前：左栏「我的效果 / 我的模板 / 我的版本」每项一个删除；资产栏「删除」；删了 6 秒内能撤销（不再弹确认框）
+//  · 删除放到眼前：左栏「我的效果 / 我的模板 / 我的版本」每项一个删除；资产栏「删除」；删了 8 秒内能撤销（不再弹确认框）
 //  · AI 做的效果不能删，可以「从左栏隐藏」（不动仓库里的东西）
 //  · 还原：资产栏「↺ 还原」= 回到打开时 / 回到模板默认 / 只还原某个发射器；面板上每个改过的模块、发射器也有 ↺
 //  · AI 效果 / 花型模板 / 正式库调了「保存」= 存成「我的效果（派生自 ×）」：之后能加层、删层、改名、删除（以前存成「AI 效果下的我的版本」，层数锁着）
@@ -228,7 +228,7 @@ function initAssetOps() {
 // 资产栏上这几个按钮什么时候出现（wbSync 调）
 function syncAssetOps() {
   const dl = deleteLabel(), combo = state.tab === 'combo';
-  $('#abDel').hidden = !dl; $('#abDel').textContent = dl ? '删除' : ''; $('#abDel').title = dl ? dl + '（删了 6 秒内能撤销）' : '';
+  $('#abDel').hidden = !dl; $('#abDel').textContent = dl ? '删除' : ''; $('#abDel').title = dl ? dl + '（删了 8 秒内能撤销）' : '';
   $('#abAddLayer').title = lib.my ? '加一层：花型模板、我的模板，或现有效果里的某一层（参数复制一份）' : '加一层：先把现在的样子存成你的效果（原来的不动），再加层';
   $('#abSaveTpl').hidden = combo && state.comboSel < 0; $('#abSaveTpl').textContent = combo ? `把第 ${state.comboSel + 1} 层存为模板` : '把这一层存为模板';
   $('#abUpdTpl').hidden = !(lib.tpl && !combo); $('#abUpdTpl').textContent = lib.tpl ? `更新模板「${lib.tpl.name}」` : '';

@@ -161,6 +161,7 @@ function dropEffectEdits(ef) {
   }
 }
 function beforeOpen(nextEf) {
+  if (typeof migNoteHide === 'function') { migNoteHide(); migBegin(); }     // 4.9.5 换效果：上一个的「旧存档」提示关掉，开始记这次打开时的迁移
   autoDraft();
   if (lib.effect && (!nextEf || nextEf.key !== lib.effect.key)) dropEffectEdits(lib.effect);
   lib.my = null;            // 离开「我的效果」（openMyEffect 打开后会再设）
@@ -317,7 +318,7 @@ function renderLib() {
     if (!tpls.length) g.insertAdjacentHTML('beforeend', '<p class="lsub">还没有。调好的一层：资产栏 ⋯「把这一层存为模板」。</p>');
     for (const r of tpls) {
       const it = libItem(g, 'tpl:' + r.id, `<span class="th" style="${thPMStyle('tpl:' + r.id + '@' + (r.at || ''), r.P, r.M) || typeThumbStyle(r.type)}"></span><span class="tx"><b>${r.name}</b><small>基于${TYPE_NAMES[r.type] || r.type}${r.from ? ' · 来自 ' + r.from : ''} · ${r.at || ''}</small><span class="bds"><span class="badge">我的模板</span></span></span>`, () => openTemplate(r.id));
-      libItemAct(it, '改名', '改模板的名字', () => renameTemplate(r.id)); libItemAct(it, '删除', '删除这个模板（6 秒内能撤销）', () => removeTemplate(r.id));
+      libItemAct(it, '改名', '改模板的名字', () => renameTemplate(r.id)); libItemAct(it, '删除', '删除这个模板（8 秒内能撤销）', () => removeTemplate(r.id));
     }
   }
   // 花型模板（从头调 / 新建配方的起点）
@@ -380,17 +381,20 @@ function openReview(e, ef) {
   }
   lib.sig = curSig();
   setReview(e); renderLib(); crumb(where, e.name + (e.layerOf ? ' · 单层' : ''));
+  migEnd();     // 4.9.5 不静默
 }
 // 组合条目：整体效果（组合页实时模拟 + 实拍并排）；各层在审阅卡里单独打开
 async function openComboEntry(e) {
   toggleDeliv(false); syncStageTabs();     // 4.5.0：不换视图
   state.comboSel = -1; state.layerView = { solo: -1, mute: [] };
   await setTab('combo', { lazy: true }); await applyCombo(e.combo); lib.sig = curSig(); setReview(e); syncComboPanels();   // lazy：只烘这个组合用到的层，不先烘整套默认母版
+  migEnd();     // 4.9.5 不静默
 }
 function openFormal(r, ef) {
   if (!ef) beforeOpen(effectOfEntry({ id: r.id }));
   wb.entry = undefined; lib.effect = ef || effectOfEntry({ id: r.id }); lib.formal = r; lib.my = null; lib.tpl = null;
   setQueuedView(false); lib.key = ef ? 'ef:' + ef.key : 'rep:' + r.id; setReplica(r.id); setTab('master'); lib.sig = curSig(); setReview(null, r); renderLib(); crumb(lib.effect ? lib.effect.阶段 + ' · ' + lib.effect.名 : '正式库', r.name);
+  migEnd();     // 4.9.5 不静默
 }
 function openType(t) { beforeOpen(null); wb.entry = undefined; lib.effect = null; lib.formal = null; setQueuedView(false); lib.key = 'type:' + t; setType(t); setTab('master'); setReview(null); renderLib(); crumb('花型', TYPE_NAMES[t]); }
 

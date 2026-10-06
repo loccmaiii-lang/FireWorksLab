@@ -75,7 +75,7 @@ function pkRender() {
     const th = it.fx ? thumbHTML(it.fx).replace(/^<span class="th"/, '<span class="th pkfx"') : `<div class="th" style="${it.thumbStyle || typeThumbStyle(it.thumbType || it.key)}"></div>`;   // 只用渲染图（用户 2026-10-02 14:46：缩略图不用实拍）
     c.innerHTML = th + `<div class="bd"><span class="nm">${it.name}</span><span class="ds">${it.desc || ''}</span><span class="tg">${it.tags.map(t => `<span>${t}</span>`).join('')}</span></div>` +
       (it.rep ? `<span class="st">${it.rep.status || '待你确认'}</span>` : '') + `<button class="fav" type="button" aria-label="收藏" aria-pressed="${pk.fav.has(it.key)}">★</button>`
-      + (it.cat === 'mytpl' ? `<button class="pk-del" type="button" aria-label="删除这个模板" title="删除这个模板（6 秒内能撤销）">删</button>` : '');
+      + (it.cat === 'mytpl' ? `<button class="pk-del" type="button" aria-label="删除这个模板" title="删除这个模板（8 秒内能撤销）">删</button>` : '');
     c.querySelector('.fav').addEventListener('click', e => { e.stopPropagation(); pk.fav.has(it.key) ? pk.fav.delete(it.key) : pk.fav.add(it.key); store.set('fav', [...pk.fav]); pkRender(); });
     const del = c.querySelector('.pk-del'); if (del) del.addEventListener('click', e => { e.stopPropagation(); removeTemplate(it.key.slice(4)); });
     const pick = () => { const fn = pk.onPick, mode = pk.mode; pkClose(); pk.recent = [it.key, ...pk.recent.filter(k => k !== it.key)].slice(0, 12); store.set('recent', pk.recent);

@@ -48,6 +48,7 @@ keyBind('keys', e => { e.preventDefault(); keysShow(); });
 { const kt = $('#keysTools'); if (kt) kt.innerHTML = keysTableHTML(); }
 $('#btnExport').addEventListener('click', exportMaster);
 $('#bakeRetry').addEventListener('click', retryPreviewBake);
+$('#migNoteOk').addEventListener('click', () => migNoteHide());
 $('#btnVariants').addEventListener('click', exportVariants);
 $('#btnReset').addEventListener('click', () => resetToOpened());     // 4.2.9：回到打开时的版本，不是模板默认（走查 B12）
 $('#btnJitter').addEventListener('click', jitterParams);
@@ -59,12 +60,14 @@ function importParams(j, fname) {
     for (const r of j.recipes) { try { const { P, M } = resolveRecipe(r), k = 'type:' + r.type; (all[k] = all[k] || []).push({ id: 'r' + Date.now().toString(36) + n, name: '配方 · ' + r.name, at: wbNow(), base: r.type, snap: { kind: 'single', P, M, repId: null } }); n++; } catch (e) { } }
     state.recipes = prev; store.set('mySaves', all); renderLib(); flash(`已把 ${n} 个配方存成花型模板的版本：打开对应花型（左栏「花型模板」），资产栏「版本」里选`); return; }
   bakeMode.demand = true;          // 4.2.16：导入 = 打开，照常烘
-  if (j.diff && j.type) { const { P, M } = resolveRecipe(j); state.P = P; state.M = M; state.name = j.name || fname; buildMasterPanel(); onParam(); flash('已导入配方 ' + state.name); return; }
+  if (typeof migBegin === 'function') migBegin();     // 4.9.5 不静默：导入旧档时改了什么写出来
+  if (j.diff && j.type) { const { P, M } = resolveRecipe(j); state.P = P; state.M = M; state.name = j.name || fname; buildMasterPanel(); onParam(); flash('已导入配方 ' + state.name); migEnd(); return; }
   const p = j.params || j;
   if (!TYPES[p.type]) throw new Error('不认识的花型');
   state.P = derive(storedParams(p)); state.M = normalizeM(j.materialDefaults || {}, p.type);
   // 4.3.2：只剩 GPU 模拟内核（渲染基础问题 H12）；旧版母版（没有 engine 字段的）以前切到 CPU 内核复现，3.7 画法删掉以后本来就复现不了，一律 GPU
   if (j.name) state.name = j.name; buildMasterPanel(); onParam(); flash('已导入 ' + (j.name || fname) + (!p.engine || p.engine === 'cpu' ? '（旧版母版：模拟内核换成 GPU，火花细节会和当年略有不同）' : ''));
+  migEnd();
 }
 $('#fileIn').addEventListener('change', async e => {
   const f = e.target.files[0]; if (!f) return;

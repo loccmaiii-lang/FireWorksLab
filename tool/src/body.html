@@ -64,6 +64,7 @@
     <div class="gutter" id="gutL" title="拖动调整宽度；双击恢复自适应宽度"></div>
     <section class="stage">
       <div id="showcaseBar" class="showcase-bar" hidden><b id="showcaseTitle">云端配方预览</b><select id="showcaseType" aria-label="云端配方"></select><select id="cloudLayer" aria-label="查看配方图层"></select><button id="showcaseParams" class="btn ghost">保存完整配方</button><button id="showcaseClose" class="btn ghost">退出预览</button><p id="showcaseNote">正在烘焙配方…</p><details id="cloudPending"></details></div>
+      <div id="migNote" class="mig-note" role="status" hidden><span id="migNoteText"></span><button class="btn" id="migNoteOk" type="button">知道了</button></div>
       <div id="bakeError" class="bake-error" role="alert" hidden><span id="bakeErrorText"></span><button class="btn" id="bakeRetry" type="button">重试烘焙</button></div>
         <div class="viewbar" id="viewbar">
           <button class="tgl" id="btnSide" type="button" aria-pressed="true" title="显示 / 隐藏左栏（L）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="1.5" y="2.5" width="4.5" height="11" rx="1.5"/></svg><span class="tl">库</span></button>
@@ -172,6 +173,8 @@
         <div class="grid2" id="specBox">
           <label class="field" title="贴图尺寸按效果定（用户 2026-10-02 19:41：不要强制 2048）。规则只有下限：PC 单格 ≥ 512、手机 ≥ 256；引擎里一般用到 2048，4096 是给你自己压缩的高质量来源">贴图宽度 × 高度<span class="pair2"><select id="x-texW" aria-label="贴图宽"></select><span>×</span><select id="x-texH" aria-label="贴图高"></select></span></label>
           <label class="field">列数 × 行数<span class="pair2"><select id="x-cols" aria-label="列数"></select><span>×</span><select id="x-rows" aria-label="行数"></select></span></label>
+        </div>
+        <div class="grid2" id="specMore">
           <label class="field">通道接力<select id="x-chans"><option value="4">RGBA 接力（先填满 R）</option><option value="1">单通道（短序列）</option></select></label>
           <label class="field">星头火花输出<select id="x-out"><option value="combined">星头与火花合并</option><option value="split">星头、火花分开</option></select></label>
           <label class="field">灰度编码<select id="x-enc"><option value="1">线性灰度</option><option value="2.2">Gamma 2.2（暗部更细；UE 材质不还原，没在 UE 验证前别用）</option></select></label>

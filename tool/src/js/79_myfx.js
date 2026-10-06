@@ -46,7 +46,7 @@ async function myCreate(key) {
 }
 async function openMyEffect(id, o = {}) {
   const rec = myAll()[id]; if (!rec) { flash('找不到这个效果', true); return; }
-  if (!o.keep) beforeOpen(null);
+  if (!o.keep) beforeOpen(null); else if (typeof migBegin === 'function') migBegin();
   setQueuedView(false); lib.effect = null; lib.formal = null; lib.my = { ...rec, linksLive: structuredClone(rec.links || []) }; wb.entry = undefined; lib.key = 'my:' + id; store.set('lastKey', lib.key);
   setReview(null); state.comboSel = -1; state.layerView = { solo: -1, mute: [] };
   await setTab('combo', { lazy: true }); syncComboPanels();
@@ -55,6 +55,7 @@ async function openMyEffect(id, o = {}) {
   // 4.3.3（用户 10-04 11:56「新建效果选了层，但都没有参数可以调整，只是组合」）：以前打开停在「整体」（只有各层的位置 / 延迟 / 颜色），
   // 要点层名才出这一层的模拟参数，看起来像不能改。打开就选第 1 层，参数面板直接是这一层自己的那份参数（改了只改这个效果）
   if (state.layers.length && layerEntryOf(state.layers[0])) selectComboLayer(0);
+  if (typeof migEnd === 'function') migEnd();     // 4.9.5 不静默：旧存档打开时改了 / 不再用的参数写出来
 }
 // 按快照搭层：每层一份自己的参数（libOwn 烘焙），层上带名字、稳定编号
 async function myApplySnap(snap) {
@@ -79,7 +80,7 @@ async function myRename() {
   const rec = myRec(); if (!rec) return; const n = await askText('重命名这个效果', '效果的中文名（左栏、顶栏显示的名字）；英文名在「交付清单」里设。', rec.name, '改名'); if (n == null) return;
   rec.name = n.trim() || rec.name; myPut(rec); lib.my.name = rec.name; state.comboName = rec.name; crumb('我的效果', rec.name); wbSync(); renderLib();
 }
-function myRemove() { const rec = myRec(); if (rec) removeMyFx(rec.id); }     // 4.5.0：不弹确认，删了 6 秒内能撤销（79_assetops.js）
+function myRemove() { const rec = myRec(); if (rec) removeMyFx(rec.id); }     // 4.5.0：不弹确认，删了 8 秒内能撤销（79_assetops.js）
 // ---------------- 层：加、删、复制、改名、上下挪 ----------------
 function myAddLayer() { pkOpen({ mode: 'addLayer', title: '加一层 · 选花型模板，或现有效果里的某一层（参数复制一份）', onPick: myAddLayerFrom }); }
 async function myAddLayerFrom(key) {

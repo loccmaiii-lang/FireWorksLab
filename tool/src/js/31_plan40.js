@@ -240,8 +240,10 @@ function plan40(P,fm,ta=0,tb=P.duration) {
   } else if(mode==='fixed'){
     // 5.0（用户 10-05 01:28 #13 / 02:25 拍板 6.2，19:40「全按推荐」）：固定机位 + 匀速帧——整段同一个停留 tick 数 k（1 / 2 / 3，取放得下的最小值），帧号一条直线；
     // 放不下 k = 3（10 fps，燃烧段下限）就加贴图张数（最多 pageTarget 起往上加到 8 张）
-    const pagesMin=Math.max(1,Math.round(+P.pageTarget||1));let k=1,pages=pagesMin;
-    for(;;){if(Math.ceil(N/k)<=cap*pages)break;if(k<3)k++;else if(pages<8)pages++;else break;}
+    // 4.9.5（宪章遗漏 1，输出栏收口）：holdTicks > 0 = 你定的每帧停几 tick；放不下先加张数（到 8 张），还放不下才往上降帧率
+    const pagesMin=Math.max(1,Math.round(+P.pageTarget||1)),hk=Math.max(0,Math.min(3,Math.round(+P.holdTicks||0)));let k=hk||1,pages=pagesMin;
+    if(hk)for(;;){if(Math.ceil(N/k)<=cap*pages)break;if(pages<8)pages++;else if(k<3)k++;else break;}
+    else for(;;){if(Math.ceil(N/k)<=cap*pages)break;if(k<3)k++;else if(pages<8)pages++;else break;}
     ticks=[];for(let t=0;t<N;t+=k)ticks.push(t);pagesUsed=pages;
   } else if(mode==='full'){ticks=[];for(let k=first;k<end;k++)ticks.push(k-first);}
   else ticks=tickSchedule40(B,holds,first,end);
