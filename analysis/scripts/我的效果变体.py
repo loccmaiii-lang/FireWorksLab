@@ -126,7 +126,9 @@ def shape_K(P, has_tail):     # 冠：长尾下坠 + 木炭余烬；星变重一
 
 
 def shape_Y(P, has_tail):     # 柳：星慢（终端速度 × 0.45）、烧得久（× 1.5）、尾很长、几乎不继承星速 → 整朵垂下来
+    R0 = radius(P)
     P['vt'] = round(P['vt'] * 0.45, 2); P['burn'] = round(P['burn'] * 1.5, 3); P['grav'] = max(P.get('grav') or 1, 1.2)
+    P['stars'] = max(30, int(round(P['stars'] * max(0.35, radius(P) / R0))))     # 花径缩到 1/3 左右，星数跟着减（柳是少而大的星；不减就是同样多的星挤进小球，糊成白团）
     for k in ('sparkStop', 'sparkStart', 'headDimUntil'):     # 星的时间线跟燃烧一起拉长
         if float(P.get(k) or 0) > 0: P[k] = round(float(P[k]) * 1.5, 3)
     if has_tail:
@@ -136,16 +138,19 @@ def shape_Y(P, has_tail):     # 柳：星慢（终端速度 × 0.45）、烧得�
         P['sparkInherit'] = 0.15; P['sparkGrav'] = 0.35; P['sparkDrag'] = 2.5
         ext_duration(P, P['sparkLife'] * 1.5 + 0.8)
     else: ext_duration(P, 0.6)
-    return '柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来'
+    return f"柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、星数跟花径减到 {P['stars']} 颗、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来"
 
 
 def shape_pattern(name, **kw):
     def f(P, has_tail):
-        for k, v in kw.items(): P[k] = v
         extra = ''
         if float(P.get('speedJit') or 0) > 6 or float(P.get('dirJit') or 0) > 1.5:     # 散得很开的（窜天猴：速度离散 50%、方向 15°）排不出形状
             extra = f"；原来速度离散 {P.get('speedJit')}%、方向离散 {P.get('dirJit')}° 收到 ≤ 6% / 1.5°，不然看不出形状"
             P['speedJit'] = min(float(P.get('speedJit') or 0), 6); P['dirJit'] = min(float(P.get('dirJit') or 0), 1.5)
+        if float(P.get('burstR0') or 0) > 0 and not carrier(P):     # 从半径 R0 的球面出发（金芒菊 52 m）：形状被一个大圆盖住（心形变圆、簇散到角上）→ 改从中心出发、初速补到同一花径
+            R = radius(P); extra += f"；原来从 {P['burstR0']} m 的球面出发，改从中心出发（初速补到同一花径 {2 * R:.0f} m），不然形状被大圆盖住"
+            P['burstR0'] = 0; P['v0'] = round(max(5, min(600, v0for(R, P['vt'], P['burn']))), 1)
+        for k, v in kw.items(): P[k] = v     # 造型自己要的（万華鏡的初速离散 12%）最后写，不被上面收掉
         return name + extra
     return f
 
@@ -170,7 +175,7 @@ def core_layer(P0, M0, R0):
     col = '#4f7bff' if WARM(cols) or cols == ['#ffffff'] else '#ffd29a'
     vt = 16.5; burn = P0['burn']
     P = {'stars': int(round(min(500, max(160, P0['stars'] * 0.8)))), 'v0': round(max(10, min(600, v0for(R0 * 0.5, vt, burn))), 1), 'vt': vt, 'burn': burn, 'burnJit': 4,
-         'headSize': round(max(0.75, P0['headSize'] * 1.4), 3), 'sparkRate': 0, 'flicker': 0.15, 'flash': 0, 'fade': 0.14, 'lastFlare': 0, 'seed': (P0.get('seed') or 7) + 11,
+         'headSize': round(min(2.0, max(0.75, P0['headSize'] * 1.4)), 3), 'sparkRate': 0, 'flicker': 0.15, 'flash': 0, 'fade': 0.14, 'lastFlare': 0, 'seed': (P0.get('seed') or 7) + 11,
          'duration': round(burn + 0.55, 2), 'exposure': 2.5, 'renderVer': 40, 'riseH': P0.get('riseH', 250), 'speedJit': 3, 'dirJit': 1.2}
     M = {'stages': [[0, col]], 'xw': 0.1, 'ramp0': '#000000', 'ramp1': '#4a4f5c', 'ramp2': '#c9ced9', 'ramp3': '#ffffff', 'headInt': 1.3, 'tailInt': 1}
     return P, M, '芯入：加一圈无尾牡丹芯（半径约亲星 0.5、' + ('青' if col == '#4f7bff' else '金') + '色、和亲星同开同灭）'
@@ -225,18 +230,25 @@ def main(a):
                 elif how and how[1] != 'C':
                     fn = next(s for s in SHAPES if s[0] == how[1])[2]; note = fn(P, (P.get('sparkRate') or 0) > 0)
                     stretch_cuts(P, l['P'])
-                lays.append((P, M, L, l['type']))
+                lays.append((P, M, L, l['type'], note))
+            # 同一批星拆的几层（原来初速 / 终端速度 / 星数 / 种子 / 起始半径都一样）：缩放 / 造型后也必须是同一批星——
+            # 初速按第 1 层反推（以前每层按自己的燃烧反推，金曜菊-A 3 号两层初速 32 / 39.7，两层的星就分开了），星数也取第 1 层的
+            sig = lambda Q: tuple(Q.get(k) for k in ('v0', 'vt', 'stars', 'seed', 'burstR0', 'pattern'))
+            for i in range(1, len(lays)):
+                if sig(rc['layers'][i]['P']) == sig(rc['layers'][0]['P']):
+                    for k in ('v0', 'stars', 'burstR0', 'speedJit', 'dirJit'):
+                        if k in lays[0][0]: lays[i][0][k] = lays[0][0][k]
             if how and how[1] == 'C':
                 Pc, Mc, note = core_layer(rc['layers'][0]['P'], rc['layers'][0]['M'], R0)
-                lays.append((Pc, Mc, {'delay': 0, 'scale': 1, 'title': '芯'}, 'botan'))
+                lays.append((Pc, Mc, {'delay': 0, 'scale': 1, 'title': '芯'}, 'botan', note))
             tid = f"{rc['pre']}-{tag}"; multi = len(lays) > 1
             ids = []
-            for i, (P, M, L, typ) in enumerate(lays):
+            for i, (P, M, L, typ, lnote) in enumerate(lays):
                 eid = f'{tid}-{i + 1}' if multi else tid
                 if eid in expo and expo[eid]: P['exposure'] = expo[eid]
                 elif eid in old and 'exposure' in old[eid]['p'] and how is not None: P['exposure'] = old[eid]['p']['exposure']
                 e = {'id': eid, 'date': '2026-10-07', 'name': f"{rc['name']} · {label}" + (f" · {L['title']}" if multi else ''), 'base': typ, 'tags': f"我的效果 变体 {rc['name']} {label} {eid}",
-                     'p': slim(P, typ, D), 'm': M, 'note': (note or '照你保存的原样，一个数没改。') + f"（来源：{rc['file']}）",
+                     'p': slim(P, typ, D), 'm': M, 'note': (lnote or note or '照你保存的原样，一个数没改。') + f"（来源：{rc['file']}）",
                      'look': ['这一排变体放在一起看：大小、造型是不是拉开了', '引擎回放 + 游戏内大小', '哪个不要、哪个再调，直接说']}
                 if multi: e['hidden'] = True
                 entries.append(e); ids.append((eid, L))

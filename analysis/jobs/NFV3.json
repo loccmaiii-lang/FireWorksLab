@@ -1,0 +1,81 @@
+{
+ "id": "NFV3",
+ "type": "script",
+ "priority": 3,
+ "name": "我的效果变体：每档自动曝光 + 对照图（第 3 轮：同一批星的层对齐、起始半径取景、柳星数、芯曝光）",
+ "steps": [
+  {
+   "name": "分裂星（myv_fxmuux2arh）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuux2arh",
+    "--out",
+    "{out}/myv_fxmuux2arh"
+   ],
+   "must": false,
+   "timeout": 3600
+  },
+  {
+   "name": "Crackle（myv_fxmuuzfeg7）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuuzfeg7",
+    "--out",
+    "{out}/myv_fxmuuzfeg7"
+   ],
+   "must": false,
+   "timeout": 3600
+  },
+  {
+   "name": "金曜菊-A（myv_fxmuv6vhrq）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuv6vhrq",
+    "--out",
+    "{out}/myv_fxmuv6vhrq"
+   ],
+   "must": false,
+   "timeout": 3600
+  },
+  {
+   "name": "金芒菊 · 我的（myv_fxmuv7n3ih）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuv7n3ih",
+    "--out",
+    "{out}/myv_fxmuv7n3ih"
+   ],
+   "must": false,
+   "timeout": 3600
+  },
+  {
+   "name": "金曜菊-窜天猴（myv_fxmuw5v7bh）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuw5v7bh",
+    "--out",
+    "{out}/myv_fxmuw5v7bh"
+   ],
+   "must": false,
+   "timeout": 3600
+  },
+  {
+   "name": "鸿巢四尺玉 · 我的（myv_fxmuwols5x）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuwols5x",
+    "--out",
+    "{out}/myv_fxmuwols5x"
+   ],
+   "must": false,
+   "timeout": 3600
+  }
+ ],
+ "note": "对话框新花型。NFV2 看法见 analysis/results/NFV2/看法.md。"
+}

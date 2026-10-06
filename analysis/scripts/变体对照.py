@@ -15,6 +15,7 @@ HTML = ROOT / 'tool' / 'FireworkBaker.html'
 LIST = ROOT / 'analysis' / '原理' / '我的效果变体_清单.json'
 FR = [0.12, 0.3, 0.5, 0.75]     # 占「看得见的整段」（各层延迟 + 结尾：layerEndOf + 子花 / 爆裂，出点截住；不是序列时长——你存的 Crackle 时长 9.8 s，2.8 s 以后就没东西了）
 CORE = 1.6
+YCAP = 1.5
 
 # 一档的层：单条目 = 自己；组合 = 每层条目 + 延迟 / 缩放
 JS_TIER = r"""(id) => { const e = FW_REVIEW_LIST.find(x => x.id === id); if (!e) return null;
@@ -63,7 +64,8 @@ async def run(a):
         ex = {}
         for t in tiers[1:]:
             for i, L in enumerate(t['layers']):
-                k = k0[i] if i < len(k0) else k0[0] * CORE     # 芯入多出来的芯层：按第 1 层的比再亮一点（自动曝光把它压得和长尾的主花一样暗，芯就看不见）
+                k = k0[i] if i < len(k0) else CORE     # 芯入多出来的芯层：自动 × 1.6（不跟你主花的手调比——那是给长尾调的；自动曝光把无尾芯压得和长尾主花一样暗，芯就看不见）
+                if t['id'].endswith('-Y') and k > YCAP: k = YCAP     # 柳：尾长、星挤，你原来给这一层的「比自动亮 n 倍」照搬会过曝成白团
                 ex[L['id']] = round(info[L['id']]['auto'] * k, 4)
         for t in tiers:
             print(t['id'], t['label'], [(L['id'], round(info[L['id']]['auto'], 4), info[L['id']]['cur'], '→', ex.get(L['id'])) for L in t['layers']], flush=True)
@@ -72,7 +74,7 @@ async def run(a):
         R = {t['id']: max(info[L['id']]['R'] * L['scale'] for L in t['layers']) for t in tiers}
         own, one = {}, {}
         for t in tiers:
-            r = await pg.evaluate(JS_STILLS, {'layers': t['layers'], 'expo': ex, 'px': a.px, 'times': [round(f * dur[t['id']], 3) for f in FR + [0.35]]})
+            r = await pg.evaluate(JS_STILLS, {'layers': t['layers'], 'expo': ex, 'px': a.px, 'times': [round(f * dur[t['id']], 3) for f in FR + [0.35]], 'half': R[t['id']] * 1.22})     # 各自取景（算上起始半径 burstR0；mtRenderLayers 自己的取景不算它）
             one[t['id']] = min(r, key=lambda x: abs(x['t'] - 0.35 * dur[t['id']]))     # mtRenderLayers 按时刻排好返回：挑出 35% 那张，其余 4 张是 FR
             own[t['id']] = [x for x in sorted(r, key=lambda x: x['t']) if x is not one[t['id']]][:len(FR)]
             print('定帧', t['id'], flush=True)
