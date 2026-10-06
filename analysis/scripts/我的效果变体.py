@@ -11,6 +11,7 @@
 曝光先沿用原样；本机 变体对照.py 算出每档自动曝光（× 原样那层的手调 / 自动比）后用 --expo 写回。
 用法：python3 analysis/scripts/我的效果变体.py [--expo analysis/results/<任务>/<效果>/曝光.json ...] [--status]
   --status：同时写状态清单（新加 / 更新 myv_* 效果，别的不动）
+  --jobs export：排每档导出（NFE-<档>，状态清单「导出任务」一起写）；--jobs check：排全程回放检查（NFR-<前缀>）+ 标准检查（NFS-V）
 """
 import argparse, collections, copy, glob, json, math, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -218,9 +219,12 @@ def main(a):
     (ROOT / 'analysis' / '原理' / '我的效果变体_清单.json').write_text(json.dumps(effects, ensure_ascii=False, indent=1), encoding='utf-8')
     print('→', OUT, len(entries), '条目', len(combos), '组合')
     if a.status: write_status(effects)
+    if a.jobs:
+        ids = write_jobs(effects, a.jobs)
+        if a.jobs == 'export': write_status(effects, ids)
 
 
-def write_status(effects):
+def write_status(effects, export_ids=None):
     d = json.loads(STATUS.read_text(encoding='utf-8'), object_pairs_hook=collections.OrderedDict)
     have = {e['key']: e for e in d['effects']}
     for fx in effects:
@@ -232,11 +236,43 @@ def write_status(effects):
                                          ('下一步', ''), ('说明', f"你保存的「{fx['name']}」（analysis/我的配方/）出的一组素材变体：原样 + 大小 + 造型。原样一个数没改。"), ('英文名', fx['en'])])
             d['effects'].append(e)
         else: e['方案'] = fx['tiers']
-        e['层英文名'] = fx['layer_en']     # 多层的组合包每层名字（你保存时起的层名；芯入多出来的一层叫 Core）
+        e['层英文名'] = fx['layer_en']
+        if export_ids: e['导出任务'] = [j for j in export_ids if j.startswith('NFE-' + fx['tiers'][0]['id'].split('-')[0] + '-')]     # 多层的组合包每层名字（你保存时起的层名；芯入多出来的一层叫 Core）
     STATUS.write_text(json.dumps(d, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
     print('状态清单：', ', '.join(fx['key'] for fx in effects))
 
 
+TIMES = '0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95'     # 全程回放检查的采样（占整段）：参考视频只有几秒，带参考时大玉后段采不到
+
+
+def pack_dir(fx, t):
+    return fx['en'] + (('_' + t['en']) if t.get('en') else '')
+
+
+def write_jobs(effects, what):
+    """--jobs export：每档一个导出任务 NFE-<档>；--jobs check：每个效果一个全程回放检查（脚本任务 NFR-<前缀>，直接读本机素材包目录、不带参考）+ 一个标准检查 NFS-V"""
+    J = ROOT / 'analysis' / 'jobs'; ids = []
+    for fx in effects:
+        pre = fx['tiers'][0]['id'].split('-')[0]
+        if what == 'export':
+            for t in fx['tiers']:
+                jid = 'NFE-' + t['id']; ids.append(jid)
+                (J / f'{jid}.json').write_text(json.dumps({'id': jid, 'type': 'export', 'effect': fx['key'], 'entry': t['id'], 'name': pack_dir(fx, t), 'priority': 4,
+                    'note': f"我的效果变体（对话框新花型，用户 2026-10-07 00:59）：{fx['name']} · {t['label']}。曝光已按本机 NFV1 写回。导出 + 回放检查。"}, ensure_ascii=False, indent=1), encoding='utf-8')
+        else:
+            jid = 'NFR-' + pre; ids.append(jid)
+            steps = [{'name': f"{t['label']}（{pack_dir(fx, t)}）", 'script': '回放检查.py', 'args': ['{out}/' + pack_dir(fx, t) + '.jpg', 'analysis/local/输出/素材包/' + pack_dir(fx, t), '--times', TIMES],
+                      'must': False, 'ok': [0, 1], 'timeout': 900} for t in fx['tiers']]
+            (J / f'{jid}.json').write_text(json.dumps({'id': jid, 'type': 'script', 'priority': 1, 'name': f"全程回放检查：{fx['name']} · 大小与造型（{len(steps)} 档）", 'steps': steps,
+                'note': '对话框新花型。按 cascade.json 的播法合成整段 8 个时刻（不带参考视频，所以能采到大玉的后半段）；有不过的项退出码 1，照样记下继续下一档。'}, ensure_ascii=False, indent=1), encoding='utf-8')
+    if what == 'check':
+        jid = 'NFS-V'; ids.append(jid)
+        (J / f'{jid}.json').write_text(json.dumps({'id': jid, 'type': 'std', 'priority': 1, 'targets': [t['id'] for fx in effects for t in fx['tiers']],
+            'name': '标准检查：我的效果变体（6 个效果、全部档）', 'note': '对话框新花型。只查这些档，并进上一次的完整结果。'}, ensure_ascii=False, indent=1), encoding='utf-8')
+    print('任务：', len(ids), ids[:3], '…')
+    return ids
+
+
 if __name__ == '__main__':
-    ap = argparse.ArgumentParser(); ap.add_argument('--expo', nargs='*'); ap.add_argument('--status', action='store_true')
+    ap = argparse.ArgumentParser(); ap.add_argument('--expo', nargs='*'); ap.add_argument('--status', action='store_true'); ap.add_argument('--jobs', choices=['export', 'check'])
     main(ap.parse_args())
