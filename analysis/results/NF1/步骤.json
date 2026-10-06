@@ -1,0 +1,44 @@
+[
+ {
+  "name": "基准回归 4.9.15 → 4.9.16 花型模板 6 个（簇转角缺省 0，应逐像素相同；金芒菊要效果数据，临时取出的旧版没有，跳过）",
+  "script": "基准回归.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ },
+ {
+  "name": "多层模板定帧回归 4.9.15 → 4.9.16（mtRenderStills 拆出 mtRenderLayers，应逐像素相同）",
+  "script": "多层模板回归.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "新模板每层曝光（只写 json）",
+  "script": "多层模板.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "新模板定帧（套上刚算的曝光）",
+  "script": "多层模板.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "全部缩略图（截图法，套上新模板曝光）",
+  "script": "渲染缩略图_截图法.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.6
+ },
+ {
+  "name": "尾迹新旧对比（4.6.0 = 4.7.0 之前最后一版）",
+  "script": "尾迹新旧对比.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.4
+ }
+]

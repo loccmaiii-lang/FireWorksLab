@@ -1,0 +1,117 @@
+[
+ {
+  "id": "shinKiku",
+  "old": "4.9.15",
+  "new": "4.9.16",
+  "stills": [
+   {
+    "t": 0.4,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 1.3,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 2.6,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": true
+ },
+ {
+  "id": "yaeHenka",
+  "old": "4.9.15",
+  "new": "4.9.16",
+  "stills": [
+   {
+    "t": 0.4,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 1.3,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 2.6,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": true
+ },
+ {
+  "id": "yaeBlueBotan",
+  "old": "4.9.15",
+  "new": "4.9.16",
+  "stills": [
+   {
+    "t": 0.4,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 1.3,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 2.6,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": true
+ },
+ {
+  "id": "colorSenrin",
+  "old": "4.9.15",
+  "new": "4.9.16",
+  "stills": [
+   {
+    "t": 0.4,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 1.3,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 2.6,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": true
+ },
+ {
+  "id": "mieKamuroSaki",
+  "old": "4.9.15",
+  "new": "4.9.16",
+  "stills": [
+   {
+    "t": 0.4,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 1.3,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 2.6,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": true
+ }
+]
