@@ -34,8 +34,7 @@ const segBtns = (id, fn) => $(id).addEventListener('click', e => {
 segBtns('#dispSeg', b => state.disp = b.dataset.disp);
 segBtns('#platformSeg', b => setPreviewPlatform(b.dataset.platform));
 $('#viewSeg').addEventListener('click', e => { const b = e.target.closest('button[data-view]'); if (b) selectStageView(b.dataset.view); });
-segBtns('#atlasSeg', b => state.atlasLayer = b.dataset.layer);
-segBtns('#segSeg', b => state.atlasSeg = +b.dataset.seg);
+segBtns('#texSeg', b => { state.texSheet = b.dataset.sheet || ''; texSheetSig = ''; flowTrail.length = 0; $('#qlabels').dataset.key = ''; });     // 4.9.20 贴图 / 流转：这一层的每一张序列
 segBtns('#flowSeg', b => { state.atlasFlow = b.dataset.flow === '1'; flowTrail.length = 0; $('#qlabels').dataset.key = ''; syncStageTabs(); });
 $('#dist').value = sliderFromDist(state.dist);
 $('#dist').addEventListener('input', e => { state.dist = distFromSlider(+e.target.value); $('#distOut').textContent = state.dist + ' m'; });

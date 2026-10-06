@@ -1754,3 +1754,7 @@ header.top .upd{height:32px;min-height:32px;font-size:12px;padding:4px 12px;back
 .cv-table th{font:11.5px var(--sans);color:var(--dim);font-weight:400;padding:3px 6px;border:1px solid var(--line);background:var(--low)}
 .cv-table td{padding:3px 6px;text-align:center;border:1px solid var(--line)}
 #right #params .curvef .cv-keys{grid-row:3}
+
+/* 4.9.20 贴图 / 流转：这一层导出的每一张序列都能切（和素材包里的贴图文件一一对应） */
+.preview-controls .texseg{flex-wrap:wrap;max-width:100%}
+.preview-controls .texseg button{white-space:nowrap}

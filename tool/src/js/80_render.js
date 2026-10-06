@@ -256,16 +256,42 @@ function renderExport() {
   hudB = '';
 }
 const flowTrail = [];
-// 贴图 / 流转看哪一张：默认「自动」= 跟着时间走（一层分两张时播完第一张接着播第二张——用户 2026-10-02 13:09）；点段按钮锁定某一张
-function atlasSegOf(b0) { const parts=bakeParts(b0); return state.atlasSeg<0 ? segAt(b0, state.t) : parts[clamp(state.atlasSeg,0,parts.length-1)]; }
-let atlasSegmentSource=null;
-function syncAtlasSegments(b) {
-  if(b===atlasSegmentSource)return;atlasSegmentSource=b;
-  state.atlasSeg=state.atlasSeg<0?-1:clamp(state.atlasSeg,0,Math.max(0,bakeParts(b).length-1));
-  const box=$('#segSeg');box.replaceChildren();
-  const auto=document.createElement('button');auto.dataset.seg='-1';auto.textContent='自动（跟时间）';auto.setAttribute('aria-pressed',String(state.atlasSeg<0));box.appendChild(auto);
-  bakeParts(b).forEach((s,i)=>{const button=document.createElement('button');button.dataset.seg=String(i);
-    button.textContent='第 '+(i+1)+' 张';button.setAttribute('aria-pressed',String(i===state.atlasSeg));box.appendChild(button);});
+// 贴图 / 流转看哪一张（4.9.20，对话框23，用户 10-06 21:12「不要单独只为这个尾缀添加功能，切换的时候有好几张贴图，就都可以切换」）：
+// 列出这一层导出的每一张序列，和素材包里的贴图文件一一对应——分张（A / B…）、合并 / 星头 / 尾迹、循环层 / 消散 / 远段；不按效果种类单做。
+// 默认「自动」= 跟着时间走（分张时播完第一张接着播第二张，用户 2026-10-02 13:09）；点一张锁定看它。以前只能切「第 n 张」「星头 / 尾迹」，
+// 循环层 + 粒子的远段、消散，尾缀的消散都看不到
+function texSheets(b0) {
+  if (!b0 || !b0.meta) return [];
+  const out = [], parts = bakeParts(b0), es = b0.form === 'emitset' || b0.form === 'trail';
+  const add = (key, label, b, tail) => out.push({ key, label, b, show: tail ? b.tail : b.head });
+  parts.forEach((s, i) => {
+    const base = es ? '循环层' : parts.length > 1 ? `第 ${i + 1} 张` : '序列';
+    if (s.tail) { add(`p${i}h`, base + ' · 星头', s, false); add(`p${i}t`, base + ' · 尾迹', s, true); } else add(`p${i}`, base, s, false);
+  });
+  // 消散：循环层 + 粒子的消散有自己的 meta；尾缀（V5）的几张消散和循环层同一格子、按自己的帧率整段播
+  (b0.fades || []).forEach((f, i, a) => {
+    const L = b0.meta.L, m = f.meta || { L, loop: true, duration: L.F / (f.fps || 30), keys: [[0, 0], [1, L.F]], times: [] };
+    add(`f${i}`, '消散' + (a.length > 1 ? ` ${f.fps} fps` : ''), f.meta ? f : { ...f, meta: m, P: f.P || b0.P }, false);
+  });
+  if (b0.far) add('far', '远段', b0.far, false);
+  return out.filter(x => x.show && x.show.tex);
+}
+// 现在看的那一张：锁定的那张还在就看它；否则自动（跟时间找分张，看星头 / 合并那张）
+function texSheetOf(b0) {
+  const list = texSheets(b0), x = state.texSheet && list.find(s => s.key === state.texSheet);
+  if (x) return x;
+  const seg = segAt(b0, state.t); return list.find(s => s.b === seg && s.show === seg.head) || list[0];
+}
+let texSheetSig = '';
+function syncTexSheets(b0) {
+  const box = $('#texSeg'); if (!box) return;
+  const list = texSheets(b0), sig = list.map(s => s.key + ':' + s.label).join('|') + '#' + (state.texSheet || '');
+  box.hidden = list.length < 2; if (sig === texSheetSig) return; texSheetSig = sig;
+  if (state.texSheet && !list.some(s => s.key === state.texSheet)) state.texSheet = '';
+  box.replaceChildren();
+  const mk = (key, text, title) => { const b = document.createElement('button'); b.type = 'button'; b.dataset.sheet = key; b.textContent = text; if (title) b.title = title; b.setAttribute('aria-pressed', String((state.texSheet || '') === key)); box.appendChild(b); };
+  mk('', '自动（跟时间）', '跟着时间走：分成几张时播完一张接着播下一张');
+  for (const s of list) { const L = s.b.meta.L; mk(s.key, s.label, `${s.label}：${s.b.N || L.cols * L.cellW}×${s.b.NH || L.rows * L.cellH} · ${L.cols}×${L.rows}${L.chans === 4 ? '×RGBA' : ''} 格 · ${L.F} 帧`); }
 }
 function drawAtlasQuad(b, show, f, n, trail) {
   const L = b.meta.L, pr = PR.atlas; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, show.tex);
@@ -278,14 +304,14 @@ function renderAtlas() {
   const b0 = previewBake();
   gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, canvas.width, canvas.height); gl.clearColor(0.02, 0.02, 0.03, 1); gl.clear(gl.COLOR_BUFFER_BIT);
   if (!b0) { hudText = '烘焙中…'; return; }
-  syncAtlasSegments(b0);const b = atlasSegOf(b0);
-  const L = b.meta.L, show = state.atlasLayer === 'tail' && b.tail ? b.tail : b.head, f = frameIdx(b.meta, state.t - (b.meta.t0 || 0));
-  if (state.atlasFlow) { renderAtlasFlow(b0, b, show, f); return; }
+  syncTexSheets(b0); const sh = texSheetOf(b0); state.texSheetNow = sh; if (!sh) { hudText = '这一层没有序列贴图'; return; }
+  const b = sh.b, show = sh.show, L = b.meta.L, f = frameIdx(b.meta, state.t - (b.meta.t0 || 0));
+  if (state.atlasFlow) { renderAtlasFlow(b0, b, show, f, sh); return; }
   drawAtlasQuad(b, show, f, canvas.width, null);
-  hudText = `${b.tail ? (show === b.tail ? '尾迹' : '星头') : '合并'}贴图${b0.next ? ` 第 ${bakeParts(b0).indexOf(b)+1} / ${bakeParts(b0).length} 张` : ''} ${b.P.texW}×${b.P.texH} · ${L.cols}×${L.rows} 格 · 金框 = 当前帧 · 红色 = 过曝像素`; hudB = '';
+  hudText = `${sh.label}贴图 ${b.N || b.P.texW}×${b.NH || b.P.texH} · ${L.cols}×${L.rows} 格 · ${L.F} 帧 · 金框 = 当前帧 · 红色 = 过曝像素${f < 0 ? '（这一刻这张没在播）' : ''}`; hudB = '';
 }
 // 贴图流转：左边放大当前格，右边整张贴图上金框走动（淡框 = 刚走过的格），下面是帧号曲线
-function renderAtlasFlow(b0, b, show, f) {
+function renderAtlasFlow(b0, b, show, f, sh) {
   const S = canvas.width, L = b.meta.L, top = Math.round(S * 0.30), H = Math.round(S * 0.66);
   if (f >= 0 && flowTrail[0] !== f) { flowTrail.unshift(f); flowTrail.length = Math.min(flowTrail.length, 7); }
   // 当前格：保持单格像素长宽比
@@ -301,7 +327,7 @@ function renderAtlasFlow(b0, b, show, f) {
   gl.viewport(0, 0, S, S);
   drawFlowCurve(b, f);
   const t = state.t - (b.meta.t0 || 0), ch = L.chans === 4 && f >= 0 ? 'RGBA'[Math.floor(f / L.per)] + ' 通道 · ' : '';
-  const pi = bakeParts(b0).indexOf(b), pn = bakeParts(b0).length, pg = pn > 1 ? `第 ${pi + 1} / ${pn} 张 · ` : '';
+  const pg = sh && texSheets(b0).length > 1 ? `${sh.label} · ` : '';
   hudText = f < 0 ? (t < 0 ? pg + '还没开始' : pg + '这一张播完了') : `贴图流转 · ${pg}第 ${f + 1}/${L.F} 帧 · ${ch}第 ${f % L.per + 1} 格（第 ${Math.floor((f % L.per) / L.cols) + 1} 行第 ${f % L.cols + 1} 列）· 时间 ${Math.max(0, t).toFixed(2)} s`;
   hudB = '';
 }
@@ -421,7 +447,7 @@ function renderCombo() {
   hudText = `${state.comboName} · 引擎回放（每层贴图叠放）· ${items.length} 层${notes.length ? ' · ' + (mob ? '手机' : 'PC') + '：' + notes.join('、') : ''}${state.layerView && (state.layerView.solo >= 0 || state.layerView.mute.length) ? ' · 独看 / 静音中（只影响观察）' : ''}`; hudB = '';
 }
 function updateLabels() {
-  const q = $('#qlabels'), b = previewBake();
+  const q = $('#qlabels'), b = state.texSheetNow && state.view === 'atlas' ? state.texSheetNow.b : previewBake();     // 4.9.20：按现在看的那一张
   if (state.tab !== 'combo' && state.view === 'atlas' && state.atlasFlow && b) {
     if (q.dataset.key !== 'flow') { q.dataset.key = 'flow'; q.innerHTML = `<span class="qlabel" style="top:8px;left:3%">当前格 · 原始灰度 · 最近邻（看得到真实像素）</span><span class="qlabel" style="top:8px;left:52%">整张贴图 · 金框 = 当前帧 · 淡框 = 刚走过</span>`; }
   } else if (state.tab !== 'combo' && state.view === 'atlas' && b && b.meta.L.chans === 4) {
@@ -466,8 +492,7 @@ function loop(now) {
   $('#hud').textContent = hudText; $('#hudB').textContent = hudB; updateLabels();
   const ab = state.tab === 'combo' ? comboAtlasBake() : state.bake, mv = (state.tab !== 'combo' || state.view === 'atlas') && state.tab !== 'asset';
   $('#viewSeg').hidden=!!state.showcase;
-  $('#atlasSeg').hidden = !mv || state.view !== 'atlas' || !(ab && ab.tail);
-  $('#segSeg').hidden = !mv || state.view !== 'atlas' || !(ab && ab.next);
+  if (!mv || state.view !== 'atlas' || !ab) { const ts = $('#texSeg'); if (ts) ts.hidden = true; }     // 4.9.20：贴图 / 流转时 renderAtlas 里按这一层的贴图清单显示
   $('#flowSeg').hidden = !mv || state.view !== 'atlas'; $('#flowCv').hidden = !mv || state.view !== 'atlas' || !state.atlasFlow;
   $('#dispSeg').hidden = state.tab==='asset' ? false : state.view !== 'export' && !(state.view==='live' && ((familyOf(state.P.type)==='aerial' && ['master','segments'].includes(state.P.form)) || isEmit(state.P)));
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';

@@ -68,6 +68,7 @@
      发射器表每个参数都有类别（物理量 / 引擎字段 / 预览设置 / 旧（待删）/ 只读），物理量有单位，说明条显示类别；打开旧存档（结尾淡出、冷却按各自寿命）画面上方写明不再起作用
   W14 4.9.5（宪章遗漏 3 / 4）：对象 × 动作表里的入口都在；1366×768 / 1440×900 / 1920×1080 首屏看得到顶栏主动作、左栏第一个条目、画布、播放、发射器标签和第一行参数；4.9.14 第一屏按参考稿口径（模块摘要、对齐、一屏看得到几个模块）；
   W16 4.9.14 主链路八步连着走（用户 10-06 15:15）：选效果与图层 → 调参数 → 调色并返回 → 调层延迟 → 撤销 / 重做 → 保存刷新 → 烘焙回放 → 导出 PC / 手机，鼠标 / 键盘点真的控件
+  W17 4.9.20 贴图 / 流转：这一层导出的每一张序列都能切（分张、星头 / 尾迹、循环层 / 消散 / 远段；不为哪种效果单做）
       4.9.8 加：顶上「现在改的是」和搜索入口看得到，第一屏至少 8 行参数（菊 › 星、引菊 → 锦 金锦层 › 火花）
   W15 4.9.7 起（对话框23 参数栏交互）：4.9.8 引菊 → 锦六步（定位 / 改寿命 / 改颜色 / 调接力 / 撤销保存刷新重开）；切「工具」「审阅」再回来时间 / 层 / 发射器 / 模块开合 / 滚动位置都在、多层里有「工具」页；撤销一次操作一步（两个参数紧挨着改 = 两步、拖动中途停 = 一步、数值框回车 = 一步）
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
@@ -2279,6 +2280,56 @@ async def w16(p, b):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
 
 
+W17_JS = r"""async () => {
+  // 4.9.20（用户 10-06 21:12「不要单独只为这个尾缀添加功能，切换的时候有好几张贴图，就都可以切换」）：贴图 / 流转能切这一层导出的每一张序列
+  // 假烘焙没有真贴图：给每张序列挂一张 4×4 的小贴图（Target），再造「分两张 + 星头 / 尾迹」「循环层 + 消散 + 远段」两种，看清单、按钮、HUD、帧号都跟着这一张
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
+  const tex = () => new Target(4, 4, gl.RGBA8);
+  const hud = () => { loop(performance.now()); return $('#hud').textContent; };
+  const btns = () => [...$('#texSeg').querySelectorAll('button')].map(b => b.textContent);
+  const click = async label => { const b = [...$('#texSeg').querySelectorAll('button')].find(x => x.textContent === label); if (!b) return false; b.click(); await wait(30); return true; };
+  const baked = async prev => { for (let i = 0; i < 100 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); };
+  await openType('kiku'); await baked(); state.playing = false;
+  // 1 大面片分两张、星头 / 尾迹分开（导出是 A_Head / A_Tail / B_Head / B_Tail 四张）
+  const b0 = state.bake, b1 = { ...b0, meta: { ...b0.meta, t0: b0.meta.t0 + 1 }, next: null };
+  b0.head = tex(); b0.tail = tex(); b1.head = tex(); b1.tail = tex(); b0.next = b1; b0.N = b0.NH = b1.N = b1.NH = 4;
+  selectStageView('atlas'); await wait(50); state.t = 0.2; hud();
+  out.master = { list: btns(), shown: !$('#texSeg').hidden };
+  const want1 = ['自动（跟时间）', '第 1 张 · 星头', '第 1 张 · 尾迹', '第 2 张 · 星头', '第 2 张 · 尾迹'];
+  if (JSON.stringify(out.master.list) !== JSON.stringify(want1) || !out.master.shown) bad.push('分两张 + 星头 / 尾迹时清单不对：' + JSON.stringify(out.master));
+  await click('第 2 张 · 尾迹'); out.master.pick = { hud: hud().slice(0, 12), sheet: state.texSheetNow && state.texSheetNow.key, isTail: state.texSheetNow && state.texSheetNow.show === b1.tail };
+  if (!out.master.pick.isTail || !/^第 2 张 · 尾迹/.test(out.master.pick.hud)) bad.push('点「第 2 张 · 尾迹」没换过去：' + JSON.stringify(out.master.pick));
+  await click('自动（跟时间）'); state.t = 0.2; hud(); out.master.auto0 = state.texSheetNow.key; state.t = b1.meta.t0 + 0.1; hud(); out.master.auto1 = state.texSheetNow.key;
+  if (out.master.auto0 !== 'p0h' || out.master.auto1 !== 'p1h') bad.push('「自动」没跟着时间换张：' + JSON.stringify(out.master));
+  // 流转动画也按这一张
+  await click('第 1 张 · 尾迹'); selectStageView('flow'); await wait(30); state.t = 0.3; out.master.flow = hud().slice(0, 40);
+  if (!/第 1 张 · 尾迹/.test(out.master.flow)) bad.push('流转动画没写 / 没用选中的那张：' + out.master.flow);
+  // 2 循环层 + 消散 + 远段（升空尾缀、地面循环这类的几张；远段有自己的开始时刻和帧号曲线）
+  const m = b0.meta, loopB = { ...b0, form: 'emitset', next: null, tail: null, head: tex(), meta: { ...m, loop: true, duration: 2.5 } };
+  loopB.fades = [{ head: tex(), N: 4, NH: 4, P: b0.P, meta: { ...m, loop: false, t0: 4, duration: 2, keys: [[0, 0], [1, m.L.F]] } }];
+  loopB.far = { head: tex(), N: 4, NH: 4, P: b0.P, meta: { ...m, loop: false, t0: 0.8, duration: 6, keys: [[0, 0], [1, m.L.F]] } };
+  state.bake = loopB; selectStageView('atlas'); await wait(30); state.texSheet = ''; state.t = 1; hud();
+  out.emitset = { list: btns() };
+  if (JSON.stringify(out.emitset.list) !== JSON.stringify(['自动（跟时间）', '循环层', '消散', '远段'])) bad.push('循环层 + 消散 + 远段时清单不对：' + JSON.stringify(out.emitset.list));
+  await click('远段'); state.t = 0.5; out.emitset.before = { hud: hud().slice(0, 20), f: frameIdx(state.texSheetNow.b.meta, state.t - state.texSheetNow.b.meta.t0) };
+  state.t = 3.8; out.emitset.mid = { f: frameIdx(state.texSheetNow.b.meta, state.t - state.texSheetNow.b.meta.t0), key: state.texSheetNow.key };
+  if (out.emitset.mid.key !== 'far' || out.emitset.before.f !== -1 || !(out.emitset.mid.f > 0)) bad.push('选「远段」没按远段自己的开始时刻 / 帧号走：' + JSON.stringify(out.emitset));
+  if (!/^远段贴图/.test(out.emitset.before.hud)) bad.push('选「远段」HUD 没写：' + out.emitset.before.hud);
+  // 3 只有一张序列：不显示切换
+  { const prev = state.bake; await openType('botan'); await baked(prev); } state.bake.head = tex(); state.bake.N = state.bake.NH = 4; state.texSheet = ''; selectStageView('atlas'); await wait(30); hud();
+  out.single = { shown: !$('#texSeg').hidden, list: btns() };
+  if (out.single.shown) bad.push('只有一张贴图时也显示了切换：' + JSON.stringify(out.single));
+  selectStageView('live');
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w17(pg):
+    """4.9.20 贴图 / 流转：这一层导出的每一张序列都能切（分张、星头 / 尾迹、循环层 / 消散 / 远段），自动跟时间，流转动画跟着选的那张"""
+    r = await pg.evaluate(W17_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
+
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -2318,7 +2369,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

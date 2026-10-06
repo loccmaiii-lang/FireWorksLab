@@ -2,7 +2,7 @@
 //  状态与界面
 // =====================================================================
 const state = {
-  tab: 'master', view: 'live', atlasLayer: 'head', atlasSeg: -1,
+  tab: 'master', view: 'live', texSheet: '', texSheetNow: null,
   ...defaultsFor('kiku'), name: 'Kiku_01',
   t: 0, playing: true, speed: 1, expo: 1, disp: 'game', dist: 1000, exportResolution: true, platform: 'pc',
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
