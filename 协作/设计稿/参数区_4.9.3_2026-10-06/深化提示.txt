@@ -1,0 +1,43 @@
+2026-10-06 | 第1稿：顺手调参，选定方向深化
+基线：源码4.9.4，延续上一轮目录；不是4.9.4实页截图。
+参考图：01_顺手调参.png，已直接查看并传入内置ImageGen。
+生成结果：01_顺手调参_深化.png，原稿保留。
+
+Create a realistic production-quality UI design, a refined SINGLE version of the attached selected FireWorksLab design. Follow its DF charcoal and teal visual identity, three-column wide browser workspace and continuous accordion inspector. This is a focused working editor screen, not a marketing composition or feature inventory. Retain all visual strengths of the attached image but improve practical professional parameter editing. NO explanatory arrows, numbered callouts, side-by-side variants, desktop/browser chrome, device frame, perspective, or floating app mockup.
+
+Target dimensions 1920 x 1080, natural 16:9 browser viewport. Full bleed, sharp readable Simplified Chinese UI. Current date 2026-10-06, version baseline 4.9.4, label near title "交互深化稿". Left library about 190px, central preview about 1160px, right inspector about 550px. Shared base #25292a; panels #2b3032; inset inputs/sidebar #181e21; primary text #e0e6e8, secondary #adb8bc, borders #424b4e, DF accent #00d49b. Amber #e4bb7c only for modified/outdated state. NEVER literally print color names such as "琥珀色". Restrained flat separators, no nested cards, no giant rounded boxes or neon glows. UI typography approximately 14–16px equivalent, compact professional readable tools.
+
+Reference influences translated into native product UI: Niagara-like explicit selected object and parent relationship; Unity-like numeric base, adjacent random disclosure and lifetime-curve multiplier; Houdini-like parameter scope, source navigation, row-level recoverability. Do not show logos or names of reference software.
+
+Overall layout:
+Slim top brand bar "DF 特效工作台", "烟花烘焙器 · 交互深化稿". Far right only "显卡 · GeForce RTX 5080" and "更新记录". No breadcrumb dumping beside brand. No top-right new recipe.
+Left: "效果库", search, groups 待我验收 / 制作中 / 已通过 / 花型模板, small distinct firework thumbnails and effect titles. Selected 引菊 → 锦 row has thin teal full rectangular outline and faint teal fill. Others include 金芒菊, 青柠星, 鸿巢四尺玉. Bottom fixed "+ 新建效果".
+Central top asset bar: "引菊 → 锦" and compact "HN2 · 草稿" with amber "未保存" and muted amber "贴图是旧的"; on right quiet undo/redo icons, primary 保存, secondary 导出素材包, overflow.
+Directly above viewer: left tabs 实时模拟 (selected) / 引擎回放 / 贴图 / 流转, next compact 适应窗口 / 1:1 / 游戏内大小 and PC / 手机. Right smaller 实拍对照, 专注. A second slim preview strip can hold "对比打开时" with tiny gray text "同一时刻 · 同一种子", plus 曝光 slider. Keep these close to preview, not spanning above the entire application.
+Canvas huge dark near-black field and finely detailed golden firework with beautiful realistic long thin slightly drooping gold trails, complete circular spread occupying roughly 65% central width. No bright oversized bloom. Tiny discreet caption "示意画面". Bottom compact playback row: play icon, scrub line, 2.10 / 4.20 s, 1×; two fine layer tracks 橙引线 and 金锦 with 金锦 selected teal outline. No giant editing timeline.
+
+RIGHT INSPECTOR is hero:
+Stable top compact breadcrumb "金锦 › 火花" showing the actual selected layer and emitter; far right subtle 独看 / 静音 observation controls. Next one emitter tab row: 星, 火花 (teal selected underline), 余烬, 爆裂, +. Show subtle relationship line "来自 星 · 沿轨迹生成" and "定位来源 ↗" right. No full node graph.
+Next search field placeholder "搜索当前层参数", next small unchecked toggle "仅改动". Below a small muted line "改动基准：打开时". These are ordinary controls not pills/cards.
+Then EXACTLY nine accordion module headings in EXACT order, with compact summaries when collapsed. Render modules as flat continuous rows separated by single subtle rules. Module headers are 34px-ish. No numbered modules and no checkboxes that falsely imply arbitrary module disabling.
+1 "▸ 生成" summary "300 个/s · 起势 0.80 s"
+2 "▸ 形状" summary "随星轨迹 · 无独立形状"
+3 "▸ 初速" summary "跟随星体 0.20"
+4 "▾ 受力" expanded:
+   two aligned rows "火花阻力" slider + numeric field "1.50" unit "1/s"; "火花下坠" slider + numeric "1.00" unit "×". Quiet labels, aligned value/unit columns, approximately 32px rows.
+5 "▾ 寿命" expanded:
+   main row "火花寿命" slider + numeric "0.90" unit "s"; a small amber modified dot beside this value and quiet row-end curved reset arrow.
+   next indented one-line collapsed disclosure "▸ 随机" with right summary "离散 20%". Do NOT render random as a new module, no mode-switch implying base and random are mutually exclusive.
+   compact secondary row "末段出生寿命" numeric "1.00" unit "×".
+6 "▾ 大小" expanded:
+   main row "颗粒大小" slider + numeric "0.45" unit "m".
+   subordinate line "按寿命变化" and tiny toggle enabled.
+   adjacent small non-interactive curve preview and a compact clearly editable numeric table, three rows with column labels "寿命 0–1" / "倍率": 0.00 / 0.40, 0.30 / 1.00, 1.00 / 0.60. Curve rises then gently declines matching these exact points. No draggable Bezier handles.
+   concise muted note "实际大小 = 基础值 × 曲线倍率".
+7 "▸ 颜色" summary "跟随金锦层颜色" with small "定位 ↗", not an independent emitter color wheel. This is shared layer color, no misleading unlink switch.
+8 "▸ 亮度" summary "1.20 × · 含寿命曲线"
+9 "▸ 闪烁" summary "未启用".
+Keep all nine headers visible if possible within right panel; prioritize readability. No separate "我的常用" panel competing with this selected continuous workflow.
+At bottom of inspector small amber-dot legend "相对打开时已修改" plus very restrained action "恢复本发射器到打开时". This is a precise baseline, NEVER ambiguous "重置全部". Do not show open dropdown menus obscuring fields.
+
+Spacing and hierarchy: Favor grouping, alignment, typography, then separators, subtle surfaces; no ornamental cards. The actual nine-module order and parameter scopes matter. Fixed application layout, content scrolls only in inspector if required. The viewer must remain large and tall. End result should feel like a serious bespoke VFX authoring tool someone would work in all day, retaining the selected attached design's familiar DF look, with polished row alignment and less cognitive ambiguity. This image is a visual interaction proposal, not a claim of implemented behavior.
