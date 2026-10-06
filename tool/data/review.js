@@ -6398,7 +6398,7 @@ var FW_EFFECTS = [
 "缺": [
 "高清化：按用户决定暂停，以后 Ultra 统一升级"
 ],
-"下一步": "【对话框15 2026-10-06 00:05】5.0 第 2 步重导 JM4-40E8（烘焙器 4.7.0，指纹 master5.0）回放检查 ✅、STD13 ✅，烘焙回放看过实时和导出一致 → 就绪，等你验收（analysis/results/JM4-40E8/看法.md）。 ｜ 【对话框15 2026-10-05 23:40 · 5.0 第 2 步（烘焙器 4.7.0）】一套物理（火花按实际年龄冷却、结尾自然灭完）+ 固定机位匀速帧，序列时长盖到最后一批火花（数据迁移见 tool/CHANGELOG.md 4.7.0）；OUTPUT_VER master → 5.0，旧导出过期。已排 JM4-40E8 重导 + 回放检查，回来后对话框15 看、放行 STD13 → 就绪。用户 21:55「直接开 5.0」。 ｜ JM4-40E6（烘焙器 4.3.0）回放检查 ✅（和 JM4-40E5 相同）、STD7 ✅，就绪。 ｜ 4.0 渲染版 JM4-40 等你验收（参数不变，只换 4.0 渲染）；通过后替换正式库。正式库 JM1 → JM4 的替换也一起确认",
+"下一步": "【对话框23 2026-10-06 15:45】帧数分配默认改回按运动分（烘焙器 4.9.13，用户 15:15）：这个效果跟着缺省走，帧号 / 格子变了 → 排本机重导 JM4-40E9，对话框23 看过回放检查和引擎回放后放行 STD14。之前：【对话框15 2026-10-06 00:05】5.0 第 2 步重导 JM4-40E8（烘焙器 4.7.0，指纹 master5.0）回放检查 ✅、STD13 ✅，烘焙回放看过实时和导出一致 → 就绪，等你验收（analysis/results/JM4-40E8/看法.md）。 ｜ 【对话框15 2026-10-05 23:40 · 5.0 第 2 步（烘焙器 4.7.0）】一套物理（火花按实际年龄冷却、结尾自然灭完）+ 固定机位匀速帧，序列时长盖到最后一批火花（数据迁移见 tool/CHANGELOG.md 4.7.0）；OUTPUT_VER master → 5.0，旧导出过期。已排 JM4-40E8 重导 + 回放检查，回来后对话框15 看、放行 STD13 → 就绪。用户 21:55「直接开 5.0」。 ｜ JM4-40E6（烘焙器 4.3.0）回放检查 ✅（和 JM4-40E5 相同）、STD7 ✅，就绪。 ｜ 4.0 渲染版 JM4-40 等你验收（参数不变，只换 4.0 渲染）；通过后替换正式库。正式库 JM1 → JM4 的替换也一起确认",
 "说明": "用户 09-29 23:10 通过 JM3（艺术效果）；JM4 只是换成 Zoom 取景，不改效果。 2026-10-01：4.0 交付时由对话框2 做了 JM4-40（同参数、4.0 渲染、全程 30 fps、单格 512），放进待我验收。",
 "导出任务": [
 "JM4-40E5",
@@ -6462,6 +6462,12 @@ var FW_EFFECTS = [
 "type": "export",
 "state": "已回来",
 "seen": true
+},
+{
+"id": "JM4-40E9",
+"type": "export",
+"state": "已回来",
+"seen": false
 }
 ],
 "exports": [
@@ -6744,6 +6750,37 @@ var FW_EFFECTS = [
 "entry": "JM4-40",
 "ver": "624d9bfe·master5.0",
 "time": "2026-10-05 23:23",
+"packages": [
+{
+"name": "JinMangJu",
+"replica": "JM4-40",
+"files": [
+"JinMangJu.json",
+"JinMangJu_Cascade参数.txt",
+"JinMangJu_Mobile.json",
+"JinMangJu_曲线.csv",
+"T_EFX_FireWorks_GoldChrysanthemum_4x4_01.png",
+"T_EFX_FireWorks_GoldChrysanthemum_4x4_01_C.png",
+"T_EFX_FireWorks_GoldChrysanthemum_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldChrysanthemum_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "JM4-40E9",
+"entry": "JM4-40",
+"ver": "624d9bfe·master4.9.13",
+"time": "2026-10-06 17:13",
 "packages": [
 {
 "name": "JinMangJu",
@@ -8303,7 +8340,7 @@ var FW_EFFECTS = [
 "用户验收": false
 },
 "说明": "QN11 = QN10 原样迁到 4.0（2026-10-01）。3.7 版的说明和交付记录在「历史」里 QN10 一条。",
-"下一步": "【对话框15 2026-10-06 00:05】5.0 第 2 步重导 QN11E10（烘焙器 4.7.0，指纹 master5.0）回放检查 ✅、STD13 ✅，烘焙回放看过实时和导出一致 → 就绪，等你验收（analysis/results/QN11E10/看法.md）。 ｜ 【对话框15 2026-10-05 23:40 · 5.0 第 2 步（烘焙器 4.7.0）】一套物理（火花按实际年龄冷却、结尾自然灭完）+ 固定机位匀速帧，序列时长盖到最后一批火花（数据迁移见 tool/CHANGELOG.md 4.7.0）；OUTPUT_VER master → 5.0，旧导出过期。已排 QN11E10 重导 + 回放检查，回来后对话框15 看、放行 STD13 → 就绪。用户 21:55「直接开 5.0」。 ｜ QN11E8（烘焙器 4.3.0）回放检查 ✅、STD7 ✅，就绪，等你验收。 ｜ 之前：QN11（QN10 原样迁 4.0）等你验收：QN11E7 导出 + 回放检查 + STD6 标准检查全过，左栏「就绪」。新旧对照 UI12 已看（analysis/results/UI12/看法.md）：运动、时间、颜色和 QN10 一致，没有退化；4.0 画面里显得大是取景放得更满，不是花变大。",
+"下一步": "【对话框23 2026-10-06 15:45】帧数分配默认改回按运动分（烘焙器 4.9.13，用户 15:15）：这个效果跟着缺省走，帧号 / 格子变了 → 排本机重导 QN11E11，对话框23 看过回放检查和引擎回放后放行 STD14。之前：【对话框15 2026-10-06 00:05】5.0 第 2 步重导 QN11E10（烘焙器 4.7.0，指纹 master5.0）回放检查 ✅、STD13 ✅，烘焙回放看过实时和导出一致 → 就绪，等你验收（analysis/results/QN11E10/看法.md）。 ｜ 【对话框15 2026-10-05 23:40 · 5.0 第 2 步（烘焙器 4.7.0）】一套物理（火花按实际年龄冷却、结尾自然灭完）+ 固定机位匀速帧，序列时长盖到最后一批火花（数据迁移见 tool/CHANGELOG.md 4.7.0）；OUTPUT_VER master → 5.0，旧导出过期。已排 QN11E10 重导 + 回放检查，回来后对话框15 看、放行 STD13 → 就绪。用户 21:55「直接开 5.0」。 ｜ QN11E8（烘焙器 4.3.0）回放检查 ✅、STD7 ✅，就绪，等你验收。 ｜ 之前：QN11（QN10 原样迁 4.0）等你验收：QN11E7 导出 + 回放检查 + STD6 标准检查全过，左栏「就绪」。新旧对照 UI12 已看（analysis/results/UI12/看法.md）：运动、时间、颜色和 QN10 一致，没有退化；4.0 画面里显得大是取景放得更满，不是花变大。",
 "导出任务": [
 "QN11E3",
 "QN11E7",
@@ -8340,6 +8377,12 @@ var FW_EFFECTS = [
 "type": "export",
 "state": "已回来",
 "seen": true
+},
+{
+"id": "QN11E11",
+"type": "export",
+"state": "已回来",
+"seen": false
 },
 {
 "id": "QN11E2",
@@ -8729,6 +8772,37 @@ var FW_EFFECTS = [
 "fails": []
 },
 "stale": true
+},
+{
+"job": "QN11E11",
+"entry": "QN11",
+"ver": "02d08d40·master4.9.13",
+"time": "2026-10-06 17:13",
+"packages": [
+{
+"name": "Qingning40",
+"replica": "QN11",
+"files": [
+"T_EFX_FireWorks_LimeStar_Head_4x4_01.png",
+"T_EFX_FireWorks_LimeStar_Head_4x4_01_C.png",
+"T_EFX_FireWorks_LimeStar_Head_4x4_01_HD.png",
+"T_EFX_FireWorks_LimeStar_Head_R.png",
+"T_EFX_FireWorks_LimeStar_Tail_4x4_01.png",
+"T_EFX_FireWorks_LimeStar_Tail_4x4_01_C.png",
+"T_EFX_FireWorks_LimeStar_Tail_4x4_01_HD.png",
+"T_EFX_FireWorks_LimeStar_Tail_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
 }
 ],
 "thumb": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCACgAKADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD5nooorUQUUUUAFFFFABRVi90680140vbWe2aSNZkWZChZGGVYZ6gjoe9a2j+HrTX7zSbCy1Ax3Vz5hvPtCBI7YISdytn5x5YLY4JI2jJIpOSSuBg0Hjg10Mp0iwNtI2jz3NssFzam6EzpHeThmCToSPlChoyU5zjnG6l1zxNJqkl4LV5ZDq8Vu2oGaCMO1wnLeXtHyru6YwSOuanmb2QHO0fiK6K/1BLbX4NV1DTdIvUuLZJvsVs2yAZi2KGCH5WBAYrn73XrWp4mF9qVr4d8O2WoaLq1qjNb6fLZwrDM/wAyp++zhhls7d56ZPQ0ufYDiaK29K8MjUpZ7WTVtOsr2O5S3SG5k2rJ9/e/mfdCps5PfcMZqreeHtV061e7vLCe3hS5NoxlXYVmCByhU8g7SD07iq51ewGdRR70VQBRRRQAUUUUALijFFFAgxRiiruk6Rea3dNa2MayzrE82wuqllRdzAZIycA4A5PbNDdtWBSAGeeR3rc16z8Nx2sNzoWo30zSXEqPa3kKrJFEApjYspKsWywOOm33pNWuNQi0HSNPvtJt7aIK91aXf2bZNcwyN3f/AJaIGVsE8jkZxxT42tbrw1Jb6docs91CouL++bL/AGcCQqpTbjZGwdVYNn5gCCM4qG9mMt+G9fv7bU4PEGp2l3rVlpUItP3v7yOENG6woxYEBMkkKeoBAx1rB1K4t7/U557SyisIJpS0dqjlkgUnhQzckD1NP03crZnW+OmebEL37NkZTd0z93dw23d3qC4SE3cotPMMHmERebgOUz8u7HGcYzjjNCSUrgaviPS7rRXttFk1WK/aIuz2ttIZEtZy5VlB+6xYIh3JkEFar6Hdro95Lffa7yy1CzTzbF4I1JFwrrgPu+6MbjnBOQBjk1J9hGg3WoQ3txPZaxp0iC2S32upmWQbsyKcDaBuBXIJGKzbu6nv7ma6uZnluJ3aSSVzlndjksfUknNC1Vhkt6LD7JaSQT3L3jiRrtZEARDu+XYQctleTkDBrRg0rTo7a4s9Wlu9L1aIvL/pER8sxiLcsezG7zHYqAThQDzUMkuiXeo3Un2W70+zNufIgicTETBAFDM+PkZwST1AOBnFULu7uL+5kubqea4nkOWllcu7cY5J5PAFGr0EX9Ae+uBd6TZ3Nnbx30WZ2uWRFKxZlADt905XgDljgVPZazdX8kCjTP7U1Zr8XpuJt88txhR+6ZMkMpILN3PTOBVQSX+iW89vLarEupWqEG4twWaEuGV4ywyoJX7y9RkUmlJewrd6hY36WUlnFuLC48qVw52FY8csSGOQP4c54pNJ3YGjcT3XjvUVhs9GgOr3M9xdzzW52CVSN2AnCRpGqsePU5qn4l8OSeG72K3a+sb6OaFbiKe0l3pIjdDjgr0PDAHGDjBFQWTabDZtPO9xJeJcRhLZV2xSQ4PmbnByD90AAdCT2FQ38yXl9Pcw2cVnFPKzx28O4pGCeEXOSQOBySaaTTstgK2KMVraz4cutDeO3uj/AKaIzJdWnlOJLLnhZcgAEghuMgBhk5OKyapNPVCDFGKKKYBRS0cD0oGT2Fp9vvrezE9vA08ixiS4kEcaZOMs3ZR3PaumvNLlsLS013w5Z6jayaPsS/vRKrxLdrIQJIXHVfu9M4JHYiqUWk+J9P0HU3GkXaaYzRR3kktmD5R+/HlmXdHkHORgEHGTVHTNZksWghuov7Q06KYztp08siwSMV2kkIQQcY5GDwKzd3qgK+px36XGNSjuEmkUTATqVJV/mDAHs2cgjg5qxc6lqmryT3btIWW3jhnaCPYvlKFRd+wAc4UZP3jjOTTb+J5La0vJdRguWmVkWATtJLbKhwquD90Y+7gkY9OlLDr+pWujT6NDdNFY3MgkmiUAeawAADNjJHAO3OMgHGQDT6aAO0nU0tbS+sZlYw36RxNIJXUQ7ZFbfsUgSYAPytkc5GDzVXUILe2v7mC0u1vbeORkjuFQoJkB4fa3IyOx6U6ayWLT7a8F5ayNO8iNboxMsO3GGcYwA2eCCc4PTFWtN1HTbG3UzaQl9dCVyWnmbyWiMZULsXB3BjvDbuwGKPNDKtpbW8tpdyS3a28kKK0MRiZvPbcAUBHC4UlsnrjFMsZLWG+t5L2B7i1WRWmhSTy2kQH5lDYO0kZGcHHpTo9RvE0+TTVuZRZyypO8OfkaRQVVyPUBiPxNQxTNbTpOhAeJhICQCAQc9DwenSnbcCzb6gto16IbW2eO6iaEeegkaFSwIKHs4AA3ehPrSW+kaleSWkdvYXUz3hYWypExM5BwdnHzYIwcdKuajpWtXfiS6sZ7J5dXlmZ5ILdFJLkF22qny4wc4HAHpiqEd/doINt3cAW4PkYlb91uOTs5+XJOTjGc0vQCebW9SudNTSZbuWWzSYTLE/OHCbByecBeAM4HpT7mx1Pwnroh1HTzbX9jKjva3kWcMMMA6HggjGR0INVoLWF7G5uXvYoZomQRW5Ri04JO4qQNo2gAnJGcjGakElveR3txqF7dG7CKYBs8zz33AEO5bKgLkg85IA460W6IA1CeyuoYriMz/wBoTSyyXS+WiQLlgU8sLyOrZBAA4AqxcT3N5oFq9zrKOLCQ21pp7bi8cbZdpFwNoXd1yckn0FUbOyub+5S2s7aa5uJOEigjLu3GeFAJPANXYzqXiq8ggmvYne3tfKie7nSJI4YkJChmwOADgdSemSaHYDW1LxJo9xa3kelQatpJu4ra2mgS4EsdyiDMrzMfmZmcBgowo71k+KtJg0TX7uwtmkaCJh5ZllilfaVB+ZoiU3c8hScdOtWNE0iwmtV1S6vbOdLVzLdaY05t5pIVK/ckKkFnLYCrlhgkjFO0+yg8WavpWh6bY2OlSzztALiSaRhIXfK7ycgbRhRtAz35NSrRemwjn6KsX1o9he3FpIUZ4JWiYocglSRkH04qCtQFrb8IQ41UajJafa7fTV+1zxLcRxOVU9V8wEMQcErtbIByMViVq2MFjZ2a6herbX6zebCtpHdGKeCTHyysAp+XPQd+hxUz2sBcuNYv7t5PEFxqFvci4uPImsPtLK0kY+YIyKR+5/hABwMYAHFVdct7W7ubrVdD0u/tNEMyxr5/7xYJGXd5RkAwejbQfmKjnPJqtrN/qerXxv8AVXlkuZ0VvMkjCeYoAVSAAARgDkdas/aZvDOq7LLULDUooWDhkQzWsxKdTHIoDEbiOV4I4qUrbbgU11O7j0uTTRIv2SSZbhk8tSfMVSoIbG4cE8A4PpWrLcnw9b2kUVppxvZLaRpblZku0mhmUbVKcrHIgz0wwJ5wRWDu6+npWg+jGDVorFpUvFby3dtNYXB2FQzbcdWCk5B6EEHGDTaXUZQijlmYRxRvIx6KilifwFNOA3B/CrqXz6VqputFvbyAwSsba5B8qYLkgN8p+ViOoBPU81JZalGyWdhqayy6XBcNO8dsI0mO4ANtkKnnCjAbIHpTuwHX0+hvpdmLK01CHUkAFy8k6PBLwclRtDKc44JIwKy+hzT2wrtsB2Enbu64rQ069sjFBYajaKbP7UJpri2jH2vZt2lFZjjHfBHXmjYDPjkkhk3xSNGyk4ZGII+hFMHJ28euKc2Nx2g7c8Z64rRfVy2gJpEkO/yrk3EM2/HlhlAddoHzbiqHJPG3AHJpsCre3UN0YPJsobVYoViYRFj5rDOZG3E/M3fGBxwBRDpt3PYXGoRwM1rbPGk0uRhGfO0HnPO1unpVzTNMMljdX9zp97cWo/0WKS3cKEumXMYYEEsMBiVAyeORVS8ktmitoorJraeFGSd2kLGZ9xO7aR8mBhcD0z1pX6IQulx38+pW8OmG4+3TSCGAQOVkZm+UKCCOucfjUFxBJbTyW8qFZYnKOp/hYHBH4EU1cgg5Ix6dasxWkD6fcXTX0EU0UiIlqQ3mTBs5ZSBtAXAzkg8jGaewy1P4X1S38P23iBoI3064lMCyxzI5WQfwuoO5CQCQCORzV60nnt9GupLXTNJtXtbc2t3JdMrXE/mtwyRyHIcAYzGvyqST1zWDAszSxrbiRpdwKLGCW3dsAc5+lasVtL4luZ7/AFbxBbpfS3UUUhv3keeUucGUnacheN2SD6A1D8xGU9pcRRLLJbzJG33XaMhT9DjBqKuq17Vr7ToNR8Kapqd3rMNlIsVk0eos1pCUON6JyrArwBkbcmuVqottXYCgZOK157aDR/tsLRWesRSIIoL+B5RFFJwxZDhQzAZBVhislSVYEdQciu01nxEmqQaVB4gmeS3liku7k6Veh3lmYFUMkRPlROAFBCqDt5OTSm3dAc5rmuy649mZI/JSztY7SNPOkkUKvpvY7c5ztGFHYCs3rWtazXXhe807VLW606ad4/PQIyXAizldsiEEK3faeRkHrTPEmvT+J9cvNYu44op7t/MdY87QcAcZJPahaaLYA1/SRpN3EIY79bO5hS4tZL2ERPNGw++ACRt3BgCDziooo7nT7a21W2vooZHkkjRYLnFxHgDLFR8yqQ2Ae+GHaqRYkDJ3YHHParGoQW1tcmK0vRew7VImWNowSVBI2tzwSRnvjNNdmAsFtBNYXNy97bxSQlFjt2Vt8+SclSBtG3AzuI6jGajtGt0u4HvI5ZbUSKZUicI7pn5grEEAkZwSDj0NS6jqd1qksct1IjvHDHAu2NUARBhRhQATjv1Pem6fZf2jc+QLm0tfkd/MuZfLT5VLYz6nGAO5IHen01GSX91aXKQR2lklqsIdS28s82XJUvnjcFIX5QAducVHeXpvDA3kW8BihSHEEewPtGN7ernue5ovrWC1kjWC+gu1aJJC0auoRmGSh3AcqeCRwexNLZ2K3cNzI17aW5gVWCTOQ02WC4TAOSM5OccA0tFqAgu0GnNafZbYu0wl+0lT5ygKRsBzjYc5IxnIHPaq465rXTQVnnk0yynbUdW+1+RDFZKJIZ0wcukmQSdwGBjkHPHSskYVsMMkHp/SmmnsA+3up7O4iubWaSCeJxJHLGxVkYHIYEcgj1qaa0v5rRtWmiuJLeWdomu3BKvNjeylj1bB3Hvzmprm4026XUJ0tJbKeSVGtbeA7oIkJO9WLkvwNu3k989qgtdUvLG3ura3naOG7j8qdMAh13BscjjkDkYPFLXoBY0y508WtxZ6jAFSTMqXMMIe4R1RtqAlgBGzEbuCeBj0KxaR9ntFutU+02EVxbPPYObYut4ytt2g5GFzuBfnBXGKzTnvVv8As+7OljUtqm1E32YN5qlg+3djZndjB64xnjOaGvMCS2S8063ttas9Sitp0uCkQgudl1EygHzNo+ZV54b1BHam6XpGqeI9SWw0uzutRvpyzLDAheSTuTjqe5JqvbS+TcQzSQLcJG4YxSZ2SAH7pwQcHpwRVvWNWg1C7jms9LtNI2ptMVm8mGOSd3zsTnBA4OOBRr0Bmn4e8PwR6tqEXiPTdTa00yGQ3sdnLFHPbsPlBw/DYbqo5/KucOMnHT3rTtrNGtZLWfSL+bU7oxtYyKxUAE8/u9pMm7sQR+NZ9xbzWs8kFxFJDNGxV45FKshHUEHkGiO4iXTrqKyvobmeygvo423NbzlhHKPRtpBx9CK0NO+x3Gla150OlRz7ElgkuJpUlT5+UgRflYkHnf0AyDmscCuq8R6/pVpfi38OQ2txp0WnrZrPeWEYkdmUGSQ8ff3ZCufmApS3sgMDUdVudXvje3xWWQhFby40iBVQAAAoAHA649zmr+uSaXp/iR7jw64ksI3jmtxJukCnAYoxdVL4bIJKgH6Vnxag0emz2K29m6TyJIZ2hDTLtz8qSdVU55A64FVcepp8oFzWNTm1nVLvUriO3imupWmdIIxHGpJyQqjgD2plrc2sdtdx3FqbiaSMJBIJiot33AlioHzZUEYOMZz2q1ceG9Ttp7+FrcSNp0YmumhlSRIUJUAllODyyjjPJx2NO1LWk1HSdKsTZpHLp0ckRnVhmVWfcoKgDGMnkkk569BRdaWHqZagn2BPU9qnvraKzvbiCG6ivYYnKJcwhlSUD+JQwBwfcA0ttdRQW91DJZQTvOipHLIW3W5DAlkwQMkAqdwIwT35qfS9Bv8AWY76WyiWSOwt2urh2kVBHGDjOWIySSAAOSabdtWBXlt7eOytp0vElnlMgktxGwMABG0liMNuyTx0xz1pdM0+bVb6Kzg2eZJnG+RUHClj8zEAcA9T7U5reEacl0t3B55mMRtQG8wKFB8wnGNpJ2gZzkHiksYbSY3H2y7a2CQO8WITJ5sgHyocH5Qf73alfQCFbaaS2a6SKRoUYK8gQ7UJztBPQE4OAfQ1FU63VzHayWyXEy28rK0kQchHZc7SV6EjJwT0zUunxWclwp1F7qKywwaS3iDsr7SVABIHLAZ56ZPancQy11G8soLuC3uZIoryMQ3CKeJkDBgreo3KD9QKbc2dzZ+WLm2mgM0azR+YhXfG33XGeqnnBHBqEEjGeD3q7B5F5DcNfajLHJb24+yqyNKJSGAEWc/IMEkHpxjvQ9AJxFor6R5gur+HU40yY3jV4Z2LgAKwIKAJkncDkjAxWXt5yMZ6ZHWrR06Yab/aPmW5iMxt9nnL5u7buyY87tuP4sYzx1qzc3tpZx3Vnpu27tbqOHM15aIs8TrhmCEE7RuyMg/MvUCkvIZPPcR+IEVPsU7a07wW9vDYQIsMqBdvKKNzSk7eR15zzVFdSvLTT7rSCI0gnlV5UkgTzA6ZAAYjevfIBAPcVXhmkt5UmhkkilRgyPGxVlI6EEcg+4rpNKuPLmubDTNW06f+17Ai8l1WBYxHJyzIsj5w+R8rgjJI6UnoIiT4h+KDrlprJ12+ivrW3SziuICEeKBRt2KAAAMfmetZGsyW0uq3Ulpd3V5A8hZbi6TZLJnklxubBznua1fC9ubq01KOwtHvNVMDEQPbxSxC225kf5yGSReCpXJrnevSiKV9AFrptDksn0GRbb7Hba3ZXP8AaC3dyUQGFFGI1Lsd7l8ERhOe5I4HM1s+EEsZtftob/S5NVSQ7I7RboWyyyn7oeQ/dTPXBBx3FOa0At3VzpUD68b27g1m/vIUa3u47ZtizswaRgSU2kDK52sD2AHNZukWKX8OoRrYajeXMds00P2TG2EKQXklGCSgXPTGCQSauSWtrZ2moXWo6Nc4u2ki06aCbbbRSK/z4JB81VBAAB7gkmsSOWSLd5cjpvBVtrEZHocdR7UorTQB0NtLcMY7eGSZgpcrGhbCgZJwOwHOe1R5zzxit67tB4YbTJYdXeaW/shLeQ2UuxoYpCQYGcEgsyDLDGBuAIPNUTYrql3qEmmQi3tYEkuVinuFLRwqeFLHG9sEDAGSegpqXUY7WtVtdVdGttGsNMKs7N9kMm1gxGFw7NgKBgd+TnNZtaWkWUeoRXdrHYX97qLR77UWzDagTLSs64JYBAehGOSelVdOuLW3vYJ7yzF9bI4aS381oxKv93cvI+ooWmiASWyure0gvJbaaO2uS6wzMhCSlCAwU9DgkA46ZqDrjFWLW+ms7m2nQo5tpBLGkyiSPcCDgo2QQSOQeD3qOaZp7h53CBpHLsFUKuScnAHAHPQU9QL8FlZN4cu72SUfbUuooYYxcKDsKszsY8ZYcAbgRg8EHNVoby+a0Olwy3D20syzG1Qkq8oBUNtHVsEgHrg1V4x17VoTQ6r4W1opJ9o07U7CUco22SCQYIIYHgjg5BpWApPDLGiO8bokmSpZSA2DgkevPFTXlpHZ/ZzHeW12JYEmYQ7j5LHOY2yB8645xkcjk0k99d3cMEM9zNLHbBlhjdyyxBmLMFB6AsSTjqTmlvdOu9OFsbuBohdQLcw7sfvImztYexwfyp+oC39yNSv5rmGztrQStuFtbKRGnsoJJx7Zpmnw2txfQQ3t2bK2dwstwIjL5K922Agtj0HNTaVFN50t3bXsFpNYx/a42kl8t2ZGXAj9Xycgd8H0qvd3U17czXVxIZZpXaSR8DLMTknjjkml5ICzqWi3uk6s2l3NtILkMoWPHzSBsFCAM/eBBH1pusLAuqXKW1hcafGH2i1ncvJCRwVJIBJBz1GfWpNb0i58P3yW09xazMYo5kmtZxIjKyhlIYd/bqCKtR3Ok6nf6fJf3GrW0zljqN9uFy7yEkrIinafTILEnBIPalfqI0X8Ra/Lod7JpkVnpejxsILi0tdgAaRArHa5aQh9mTglQw421ydWdT1C61fUJ7++uXu7qZt0k8n3pD0yffAFVqcY2AKCARggEe9FFXcVzSj1TVn0OfTY5J301ZEllUJuVDkhctj5RljxkAk55NR6M5j1KAjTE1RiSqWjq7CViCBwnzHBIOB1x6U7S9Zn0/Fu+65055457iwaVkhuih+UPtIJ6keoycV12sxXNh4f0y70fTI9Ie2txqFxqGBbXE7XDuirES5dolUFVwBkBmPHNZSlbS24zguU4PBHHvRgZGRWlo3h691xL2a38mO3sIDcXNxO+yOJewJ7sx+VVGST+JD9QZbnR9Pu/N0yKSMNZ/ZbdCs5VPm86XsSxcgNnJ29ABV8yvYB6alpcmrXl2+n3FnaywyrBa2NyR5TlMIpd8sUzyw6kZFUbFLFpJRfy3EaCFzH5CBi0uPkU5PCk9T1AquEZV3FTtzgHHBP1q9qGmRWthpl1FNPIbyJ3k325jSN1kZdqMeJOApJHQtjtSskMgmslj0+3vBd2ztO8iG3RiZYgu35nGMANuOOedpq54YMo1y0MK6Y0g8wganj7N/q2zvzx0zj/a21lseDg4HQE9qt6ncWd1emSzsfsNuVQCASmQqQoDHc3Ukgt7Zx2pvVWAmsNCfURpqW97Yme/mNusMk4RoSNoDSlsBVbdwSexzinQjVLzSruzWcNY6exvZInlQBWYrGXUE5YnKjC545xgZqpqIshfXC6c1w9lvIhNyAJCnbcBxn6VW9DilZsRaks449OhvBe2zySSvE1qCfNjChSHbjG1txAweqnOK0mh1Tw/pMxN4lt/aSi3nsXGJmhwkqOVYfcY4KsD1BrN/su++xNffY7n7IhQNP5Z2DeWC/N05KsB6lT6VLZwS6xK6TahDE0NuzI13KQGCLkRqTnBI4UcDPFD1ApDBYZyB3xWjr9volrNHFol9eXqqGEs9xCIlc5+UouSQNuMhuhBwSCKzCeMjnjitPW9P0myWCTStZ/tFJA29XtmheHAXG4HIOcnoT90+1N7oC3Z+J5vDV7O/he6u7e2uYUSeO7jikLnGWVhgqy7i2DgHB5q5b6jZeE08Oa3pCOmvQGSS7t72AvF1zDKgYAbWQ9jwRkY4NZb6jpeZXXQkVJbJYFBuXPlXAC5nU+5BJQ5HzH2xHqHiTVdV0ux0u+u3uLXT9wtVkALQqcZQNjds44XOBzgDNRyX6eoFO9vJ9QvJ7y5kMk9xI0sjkAFmY5J49zUFFFaiuFFOoosFhtaehahYWmqRT6xYNqdqEMbQmUqwBGAyn1UcgHjIGeBis6ik43VgOnjsfC114a1TUP7VudPv47pha6Yw83zoyMxjcMfd+bc7Y6AAEtxk6Vb6XdI9ve3MtrczTwxwXDEfZ4ULHzHl4LHA24C+/tWd2rp5tT0VbnV9S0aGHTIzAlnaWF1H9pkkV02Sy7z8quMFs9i+FHpDTiMz5/EWpWuk3Phq31Mz6P57OqCMBXO4HeMjcu7apIz2GelQWEN1rk0Gnm+ijSCKVojdz7IolAaRlUnpkg4A6sR3NM1WCzS/uTpLXc2miUpBNcRhXcY43AcBjycZ6Vv3mj3cJsfBB8PLYa+9yr3M164WV2dcxoCeI4wjAkHqeSeAKG0lp/XmBj2jap4Zn0vWUgWJpka4s3mjWRZFBaMttOQQCGHI6iq2q6guq38l4tpaWauFAhtU2RrtULwPfGT7kmiwtIr+9jtLq/is4SHBnl3MiAKT255IwMdzVqXVYNZudTv8AW/Pa8nt82xtkREE42Ku9cY2bAw+XnOPen1uBX0yKzW5hl1aO9GnvvVntgA5YKcBS3HDFM+xPtUf2tW0tLI2tsJFmM32kKfNIKgbCc42AjIGOpNNmu7w2MVjJLP8AZY2eeGFiQqs4ALAepCrz7CtrXNNh1bU9VudAS1k0/TrWGaR4QYgyBY42cI5zku3IHuelD31Ah1u08TaTZxWWrrqNvawySWaQzOfLV423tGBnGVMgbHbfkdayrbT7u9hupre3llitYvNuHQZESFgu4+gywGfemSzzSIVeWRwCWAdyRuPU89zgc+1dBrWiWdtc38nh7VFudPtrK1lmd5wruZVjEiKON4WRiCMcAZPTNG2jAo6jfW2tRXmoXbrBqheFYoLa2VIJECFXY4Pyt8qHgfMWY8GtA6n5fkHwzYSSQaS6akbi5tEknhfagcSMow0IkAxuGPm561P4bh8KP4d1a51Fz/atvZzeVbzn5Lh3ZFiMRXBV0y5OcgjHvjD/ALbul02Gwi8qBYhMhlhXZLNHIVLRyMPvrleAemTU2volsBo674pF1p82iacjJoz3g1FIriJPNhnaMLIFZRwhPbphV7iucp1FaRikrIQ2inUU7BYKKKKYwooooAKKKKAN3SPF91pOhahov2Wzu7a8Vtn2lN/2WRgA0sY6CQqAu45wBx1NWPC9lp/ivWbx/FGuXFqiWr3LXL/vXlKbfkyx5JTdj1IUVzVFZuC1to2BraPpdvfahLNMt5/Y1o6yXk0SqZYrcyBA2M43Hcox6mrlz4Ve8k0uTRYLn7LqFs7RSXjonmTQpm4CkHhVIwM4JrngzKCAxAbggHr9aC7FQpZiq5wCeBnrim4u90wOrsGl1yPRTbafd65ewWtxZvb3K4gVFR2iWNlwcqhd8E5yvpVbRpNPtfFhGk66dPsHjljj1C/t9xCNAwIdFz94krxnqDWNFqt9BYtYRXc0dq0wnMSthTIFKbvrtJH0JqrU+z3A6bxHc+H9M1uwl8NQPmxKi486QT29xNGw/eR55MbhclW6ZI6VT1W+hsdQ12zsm07ULW8k2pdJbFAFEgcNCG5j/u4/u5FYtFUoJAFFFFWAUUUUAFFFFAH/2Q==",
@@ -8956,7 +9030,7 @@ var FW_EFFECTS = [
 "用户验收": false
 },
 "说明": "HK10 = HK9 原样迁到 4.0（2026-10-01）。3.7 版的说明和交付记录在「历史」里 HK9 一条。",
-"下一步": "【对话框15 2026-10-06 00:05】5.0 第 2 步重导 HK10E8（烘焙器 4.7.0，指纹 master5.0）回放检查 ✅、STD13 ✅，烘焙回放看过实时和导出一致 → 就绪，等你验收（analysis/results/HK10E8/看法.md）。 ｜ 【对话框15 2026-10-05 23:40 · 5.0 第 2 步（烘焙器 4.7.0）】一套物理（火花按实际年龄冷却、结尾自然灭完）+ 固定机位匀速帧，序列时长盖到最后一批火花（数据迁移见 tool/CHANGELOG.md 4.7.0）；OUTPUT_VER master → 5.0，旧导出过期。已排 HK10E8 重导 + 回放检查，回来后对话框15 看、放行 STD13 → 就绪。用户 21:55「直接开 5.0」。 ｜ 【对话框15 2026-10-05】HK10E7 回放检查过、STD9 HK10 ✅ → 就绪，等用户验收（analysis/results/HK10E7/看法.md）；UE 里红点闪不闪未验（D6）。 ｜ 4.4.4（对话框15 代做，用户 10-04 09:58「点灭光点用 Cascade 的方式实现」）：红点层 PC 光点的 Color Over Life 改成亮灭方波（以前平均成常亮、不闪）；版本指纹多一档 dots4.4.4，HK10E6 的导出因此过期 → 排 HK10E7 重导 + 回放检查、STD9 标准检查（hold，等 HK10E7 回来放行）。回来看引擎回放 PC 红点闪不闪、和手机序列对得上，就绪后等用户验收。未经 UE 验证：GPU 曲线查找表会不会把方波抹平（D6）、Pivot Offset。 ｜ 之前：HK10E6（4.4.1 重导）+ STD8 全过、就绪。HK10E5（烘焙器 4.3.0，第 2 层 PC = GPU 光点）回放检查 ✅、STD7 ✅，引擎回放看过：实时和导出一致，PC 红点是光点（点灭按亮灭平均成常亮，不闪）→ 就绪，等用户验收（analysis/results/HK10E5/看法.md）。未经 UE 验证：光点层、Pivot Offset。 ｜ 之前：4.3（对话框15 代做，用户 10-04「要，pc光点可以改」）：HK10 的红点层 PC 改成 GPU 光点（analysis/迭代/条目.json 组合 HK10 第 2 层 out.pc = dots；手机仍是序列），所有产物 4.3 要重导 → 排 HK10E5（4.3 导出 + 回放检查）和标准检查；回来看引擎回放 PC / 手机两种红点是否对得上，就绪后等用户验收。之前：HK10E4 + STD6 全过；XD3（4.2.15）光点试导和实时模拟一致。",
+"下一步": "【对话框23 2026-10-06 15:45】帧数分配默认改回按运动分（烘焙器 4.9.13，用户 15:15）：这个效果跟着缺省走，帧号 / 格子变了 → 排本机重导 HK10E9，对话框23 看过回放检查和引擎回放后放行 STD14。之前：【对话框15 2026-10-06 00:05】5.0 第 2 步重导 HK10E8（烘焙器 4.7.0，指纹 master5.0）回放检查 ✅、STD13 ✅，烘焙回放看过实时和导出一致 → 就绪，等你验收（analysis/results/HK10E8/看法.md）。 ｜ 【对话框15 2026-10-05 23:40 · 5.0 第 2 步（烘焙器 4.7.0）】一套物理（火花按实际年龄冷却、结尾自然灭完）+ 固定机位匀速帧，序列时长盖到最后一批火花（数据迁移见 tool/CHANGELOG.md 4.7.0）；OUTPUT_VER master → 5.0，旧导出过期。已排 HK10E8 重导 + 回放检查，回来后对话框15 看、放行 STD13 → 就绪。用户 21:55「直接开 5.0」。 ｜ 【对话框15 2026-10-05】HK10E7 回放检查过、STD9 HK10 ✅ → 就绪，等用户验收（analysis/results/HK10E7/看法.md）；UE 里红点闪不闪未验（D6）。 ｜ 4.4.4（对话框15 代做，用户 10-04 09:58「点灭光点用 Cascade 的方式实现」）：红点层 PC 光点的 Color Over Life 改成亮灭方波（以前平均成常亮、不闪）；版本指纹多一档 dots4.4.4，HK10E6 的导出因此过期 → 排 HK10E7 重导 + 回放检查、STD9 标准检查（hold，等 HK10E7 回来放行）。回来看引擎回放 PC 红点闪不闪、和手机序列对得上，就绪后等用户验收。未经 UE 验证：GPU 曲线查找表会不会把方波抹平（D6）、Pivot Offset。 ｜ 之前：HK10E6（4.4.1 重导）+ STD8 全过、就绪。HK10E5（烘焙器 4.3.0，第 2 层 PC = GPU 光点）回放检查 ✅、STD7 ✅，引擎回放看过：实时和导出一致，PC 红点是光点（点灭按亮灭平均成常亮，不闪）→ 就绪，等用户验收（analysis/results/HK10E5/看法.md）。未经 UE 验证：光点层、Pivot Offset。 ｜ 之前：4.3（对话框15 代做，用户 10-04「要，pc光点可以改」）：HK10 的红点层 PC 改成 GPU 光点（analysis/迭代/条目.json 组合 HK10 第 2 层 out.pc = dots；手机仍是序列），所有产物 4.3 要重导 → 排 HK10E5（4.3 导出 + 回放检查）和标准检查；回来看引擎回放 PC / 手机两种红点是否对得上，就绪后等用户验收。之前：HK10E4 + STD6 全过；XD3（4.2.15）光点试导和实时模拟一致。",
 "导出任务": [
 "HK10E2",
 "HK10E4",
@@ -9030,6 +9104,12 @@ var FW_EFFECTS = [
 "type": "export",
 "state": "已回来",
 "seen": true
+},
+{
+"id": "HK10E9",
+"type": "export",
+"state": "已回来",
+"seen": false
 }
 ],
 "exports": [
@@ -9318,6 +9398,39 @@ var FW_EFFECTS = [
 "fails": []
 },
 "stale": true
+},
+{
+"job": "HK10E9",
+"entry": "HK10",
+"ver": "fa965cae·dots4.4.4+master4.9.13",
+"time": "2026-10-06 17:14",
+"packages": [
+{
+"name": "Hongchao40",
+"replica": "HK10",
+"files": [
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_01_HD.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_4x4_02_HD.png",
+"T_EFX_FireWorks_YonshakuKamuro_Main_R.png",
+"T_EFX_FireWorks_YonshakuKamuro_Red_4x4_01.png",
+"T_EFX_FireWorks_YonshakuKamuro_Red_4x4_01_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Red_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
 }
 ],
 "thumb": "data:image/jpeg;base64,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",
@@ -9340,7 +9453,7 @@ var FW_EFFECTS = [
 "用户验收": false
 },
 "说明": "用户 2026-10-01 14:46 选 A：4.0 期间在 experiments/引线/ 独立做「引线层」（沿星轨迹的连续线，不靠随机火花凑）+「锦火星层」，先出考卷（实拍同一秒指标 + 旧反例必须判不及格），考卷全过才交一次；验证后交 4.0 负责人合进 tool/src。通用于青柠星开头、球形A 金线、球形C/D 橙红短放射。 17:24 用户指出中间空隙 → 补「引药延迟点火 + 火花寿命随星速」。",
-"下一步": "【对话框15 2026-10-06 00:05】5.0 第 2 步重导 HN2E15（烘焙器 4.7.0，指纹 master5.0）回放检查 ✅、STD13 ✅，烘焙回放看过实时和导出一致 → 就绪，等你验收（analysis/results/HN2E15/看法.md）。 ｜ 【对话框15 2026-10-05 23:40 · 5.0 第 2 步（烘焙器 4.7.0）】一套物理（火花按实际年龄冷却、结尾自然灭完）+ 固定机位匀速帧，序列时长盖到最后一批火花（数据迁移见 tool/CHANGELOG.md 4.7.0）；OUTPUT_VER master → 5.0，旧导出过期。已排 HN2E15 重导 + 回放检查，回来后对话框15 看、放行 STD13 → 就绪。用户 21:55「直接开 5.0」。 ｜ HN2E13（烘焙器 4.3.0）回放检查 ✅（逐项和 HN2E12 相同）、STD7 ✅，就绪（对话框15 看过，analysis/results/HN2E13/看法.md）。 ｜ 颜色已定稿（HN2E9）；等用户验收。用户若把 4.1.1 自己调的动态参数（「复制我的参数」）发来，合进 HN2 后重导一次。 2026-10-03（对话框2，4.2.4）：用户的动态改走烘焙器「保存」→ analysis/我的配方/ef_hiki_nishiki/ 进 git（不用再复制粘贴）；文件到了就合进 HN2。对话框2 之后用 HN2 走一遍「改层 → 切层 → 保存 → 刷新 → 导出 PC + 手机」闭环（只验证管线，不改效果）。 【对话框2 2026-10-03 留言】烘焙器 4.2.17 有了「火花起势」（尾缀（炭火火花）→ 火花起势 / 火花起势随机）：用户 12:27 指出锦段火花一下子全出来，参考（开花后 1.1–1.9 s）是各线先后变金、每条线先零星几点再连成线。金锦层可以试起势 0.3–0.4 s、随机 ±50%，再配合点火离散；示意图 analysis/复盘/火花起势_示意_4.2.17.png（上 = 没起势，下 = 起势 0.35 s ±50%，金锦层 110 颗简化）。默认 0，HN2 现在的画面没变。 ｜ 【对话框15 2026-10-04 16:40 留言】用户 16:17 说引菊层「星像长出来，不像爆开的线」：查实是 HN2-O 星头亮度 0 + 火花烧旺 0.35 s（亮度 1−e^(−年龄/0.35)）+ 初速 250 / 终端 20——开花后 0.3 s 星已到 43 m，「亮过一半」的线头才到 12 m，整条线总光量只有不烧旺的 33 %（算式与表见 协作/方案_发射器分层与时间轴_2026-10.md §1.1）。请用 时刻对照.py 在开花后 0.1 / 0.2 / 0.3 s 和实拍比，大概率烧旺缩到约 0.1 s、星头给一点亮度（0.2–0.3）。不改烘焙器。",
+"下一步": "【对话框23 2026-10-06 15:45】帧数分配默认改回按运动分（烘焙器 4.9.13，用户 15:15）：这个效果跟着缺省走，帧号 / 格子变了 → 排本机重导 HN2E16，对话框23 看过回放检查和引擎回放后放行 STD14。之前：【对话框15 2026-10-06 00:05】5.0 第 2 步重导 HN2E15（烘焙器 4.7.0，指纹 master5.0）回放检查 ✅、STD13 ✅，烘焙回放看过实时和导出一致 → 就绪，等你验收（analysis/results/HN2E15/看法.md）。 ｜ 【对话框15 2026-10-05 23:40 · 5.0 第 2 步（烘焙器 4.7.0）】一套物理（火花按实际年龄冷却、结尾自然灭完）+ 固定机位匀速帧，序列时长盖到最后一批火花（数据迁移见 tool/CHANGELOG.md 4.7.0）；OUTPUT_VER master → 5.0，旧导出过期。已排 HN2E15 重导 + 回放检查，回来后对话框15 看、放行 STD13 → 就绪。用户 21:55「直接开 5.0」。 ｜ HN2E13（烘焙器 4.3.0）回放检查 ✅（逐项和 HN2E12 相同）、STD7 ✅，就绪（对话框15 看过，analysis/results/HN2E13/看法.md）。 ｜ 颜色已定稿（HN2E9）；等用户验收。用户若把 4.1.1 自己调的动态参数（「复制我的参数」）发来，合进 HN2 后重导一次。 2026-10-03（对话框2，4.2.4）：用户的动态改走烘焙器「保存」→ analysis/我的配方/ef_hiki_nishiki/ 进 git（不用再复制粘贴）；文件到了就合进 HN2。对话框2 之后用 HN2 走一遍「改层 → 切层 → 保存 → 刷新 → 导出 PC + 手机」闭环（只验证管线，不改效果）。 【对话框2 2026-10-03 留言】烘焙器 4.2.17 有了「火花起势」（尾缀（炭火火花）→ 火花起势 / 火花起势随机）：用户 12:27 指出锦段火花一下子全出来，参考（开花后 1.1–1.9 s）是各线先后变金、每条线先零星几点再连成线。金锦层可以试起势 0.3–0.4 s、随机 ±50%，再配合点火离散；示意图 analysis/复盘/火花起势_示意_4.2.17.png（上 = 没起势，下 = 起势 0.35 s ±50%，金锦层 110 颗简化）。默认 0，HN2 现在的画面没变。 ｜ 【对话框15 2026-10-04 16:40 留言】用户 16:17 说引菊层「星像长出来，不像爆开的线」：查实是 HN2-O 星头亮度 0 + 火花烧旺 0.35 s（亮度 1−e^(−年龄/0.35)）+ 初速 250 / 终端 20——开花后 0.3 s 星已到 43 m，「亮过一半」的线头才到 12 m，整条线总光量只有不烧旺的 33 %（算式与表见 协作/方案_发射器分层与时间轴_2026-10.md §1.1）。请用 时刻对照.py 在开花后 0.1 / 0.2 / 0.3 s 和实拍比，大概率烧旺缩到约 0.1 s、星头给一点亮度（0.2–0.3）。不改烘焙器。",
 "工作版": "HN2",
 "缺": [
 "未经 UE 验证（自发光倍数、BC7 串扰）",
@@ -9409,6 +9522,12 @@ var FW_EFFECTS = [
 "type": "export",
 "state": "已回来",
 "seen": true
+},
+{
+"id": "HN2E16",
+"type": "export",
+"state": "已回来",
+"seen": false
 },
 {
 "id": "HN2E2",
@@ -9949,6 +10068,40 @@ var FW_EFFECTS = [
 "entry": "HN2",
 "ver": "338206f5·master5.0",
 "time": "2026-10-05 23:22",
+"packages": [
+{
+"name": "HikiNishiki",
+"replica": "HN2",
+"files": [
+"T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01.png",
+"T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01_C.png",
+"T_EFX_FireWorks_HikiNishiki_Hiki_4x4_01_HD.png",
+"T_EFX_FireWorks_HikiNishiki_Hiki_R.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01_C.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_01_HD.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_02.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_02_C.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_4x4_02_HD.png",
+"T_EFX_FireWorks_HikiNishiki_Nishiki_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "HN2E16",
+"entry": "HN2",
+"ver": "338206f5·master4.9.13",
+"time": "2026-10-06 17:12",
 "packages": [
 {
 "name": "HikiNishiki",
