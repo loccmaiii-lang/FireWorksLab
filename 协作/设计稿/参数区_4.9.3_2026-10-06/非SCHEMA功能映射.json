@@ -1,0 +1,418 @@
+[
+  {
+    "id": "UI-01",
+    "name": "图层入口与整体",
+    "source": "79_workbench.js: layerCard / syncComboPanels",
+    "target": "参数 > 图层管理",
+    "behavior": "整体展示各层概况；选层返回该层最近的子页/发射器；稳定lid定位，不用列表索引。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-02",
+    "name": "观察图层",
+    "source": "79_workbench.js: layerCard",
+    "target": "图层管理；画布观察条",
+    "behavior": "独看/静音仅改观察，切编辑层不自动独看，不能当作禁用导出。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-03",
+    "name": "图层开始与时长",
+    "source": "79_workbench.js: layerCard",
+    "target": "图层管理",
+    "behavior": "开始可编辑；显示时长由烘焙总长/时间倍率计算，只读。时间轴与右栏双向一致。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-04",
+    "name": "图层新增/复制/删除/改名/排序",
+    "source": "79_myfx.js",
+    "target": "图层管理 > 行菜单、加一层",
+    "behavior": "我的效果可编辑；候选/模板先派生。至少保留一层；复制独立参数与材质；支持撤销。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-05",
+    "name": "模板来源选择",
+    "source": "79_myfx.js / 79_assetops.js",
+    "target": "加一层 > 模板选择器",
+    "behavior": "现有模板、我的模板、我的效果图层；不另建空壳对象系统。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-06",
+    "name": "本层存模板",
+    "source": "79_myfx.js / 79_workbench.js",
+    "target": "当前图层 > 菜单",
+    "behavior": "菜单保留当前层身份；不可把整朵误存成单层。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-07",
+    "name": "缩放/延迟/时间倍率/镜像",
+    "source": "70_ui.js: comboLayerHead / comboPanel",
+    "target": "参数 > 层设置 > 位置与时间",
+    "behavior": "L层变换，区别P参数；无XYZ位置控件。多处延迟范围现不一致，统一前核验数据兼容。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-08",
+    "name": "同一批星轨迹联动",
+    "source": "70_ui.js / 79_myfx.js",
+    "target": "参数 > 层设置 > 轨迹联动",
+    "behavior": "明确目标层；关联即从当前层同步轨迹；颜色独立。区分默认推断组与用户显式组。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-09",
+    "name": "标准/默认值自动联动",
+    "source": "71_panel43.js / 70_ui.js: autoDef",
+    "target": "参数行 > 链条与说明",
+    "behavior": "只针对该字段来源/覆盖；不是跨层轨迹链接。覆盖/恢复来源随撤销保存。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-10",
+    "name": "规格/环境/玉体/场景",
+    "source": "10_types.js: 效果归属",
+    "target": "参数 > 层设置",
+    "behavior": "24条定义逐项见SCHEMA表；组合时作用于当前层P，不标整朵共用。号数变化列出受影响参数。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-11",
+    "name": "发射器选择与更多",
+    "source": "70_ui.js / 71_panel43.js: PEMIT",
+    "target": "参数 > 发射器",
+    "behavior": "保留首屏标签；溢出放更多，但当前名称始终露出。全部显示为可选密集模式。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-12",
+    "name": "自定义发射器",
+    "source": "10_types.js / 70_ui.js: EX_SLOTS",
+    "target": "参数 > 发射器 > ＋ / 自定义1、2",
+    "behavior": "最多2个；死时/出生/指定时刻/沿路改变条件项；光点/星决定火花项。删除仍在颜色模块。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-13",
+    "name": "九模块与专业例外",
+    "source": "71_panel43.js: STD / MOD_EMPTY",
+    "target": "参数 > 发射器",
+    "behavior": "普通空中发射器固定九模块；RT6共用/星头/地面喷口按实际结构。特殊模块继续存在。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-14",
+    "name": "随机控制",
+    "source": "71_panel43.js: RAND_OF",
+    "target": "参数 > 对应主字段下",
+    "behavior": "收起显示随机摘要；范围/比例/分布依实际定义，不统一改成百分比。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-15",
+    "name": "曲线与数值表",
+    "source": "70_ui.js / 71_panel43.js",
+    "target": "参数 > 对应大小/亮度/其他模块",
+    "behavior": "保留0–1生命期与倍率意义及现有Linear；不凭图片实现自由贝塞尔。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-16",
+    "name": "搜索/仅改动/EN",
+    "source": "70_ui.js / 71_panel43.js",
+    "target": "参数 > 当前层搜索工具条",
+    "behavior": "建议跨该层四子页搜索，结果给完整路径并跳转。保留筛选状态；现有切发射器会清空需改。",
+    "status": "部分新增行为"
+  },
+  {
+    "id": "UI-17",
+    "name": "锁定/随机微调",
+    "source": "70_ui.js",
+    "target": "参数行锁定；工具 > 参数操作",
+    "behavior": "锁定范围与随机影响可见；组合模式恢复入口不能偷换选中层。",
+    "status": "部分新增行为"
+  },
+  {
+    "id": "UI-18",
+    "name": "说明浮层与数值反馈",
+    "source": "71_panel43.js / 70_ui.js",
+    "target": "参数行",
+    "behavior": "保留悬停1.5s、离开0.3s、点击固定、Esc；默认/打开时/联动/边界解释；越过滑杆范围不截断。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-19",
+    "name": "旧参数",
+    "source": "71_panel43.js: LEGACY / INERT",
+    "target": "原模块 > 旧版参数折叠区",
+    "behavior": "有值正在用则可见标旧，未用收起；不因界面简化丢弃历史配方键。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-20",
+    "name": "恢复与对比",
+    "source": "79_assetops.js / 79_undo.js",
+    "target": "参数行/发射器菜单；画布比较",
+    "behavior": "区分默认值、打开时、来源；发射器恢复/跨子页改动/曲线差异还需实现，不能仅迁按钮。",
+    "status": "部分新增行为"
+  },
+  {
+    "id": "UI-21",
+    "name": "编辑历史",
+    "source": "79_undo.js",
+    "target": "资产栏撤销重做；字段操作",
+    "behavior": "一次拖动一笔，联动包含同笔；当前600ms归组不等同目标规则，需任务验证。",
+    "status": "部分新增行为"
+  },
+  {
+    "id": "UI-22",
+    "name": "颜色时间线",
+    "source": "70_ui.js: colorStages",
+    "target": "参数 > 层颜色",
+    "behavior": "最多5段，第一段0s固定不可删，添加/删除/排序/选中段、点火橙、变色过渡均保留。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-23",
+    "name": "Ramp与焰色",
+    "source": "70_ui.js: matFields / flamePresets",
+    "target": "参数 > 层颜色",
+    "behavior": "四档Ramp；焰色作用到选中颜色段；RT6温度着色与独立颜色字段不可误并。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-24",
+    "name": "材质显示强度",
+    "source": "70_ui.js: headInt / tailInt",
+    "target": "参数 > 层颜色",
+    "behavior": "合并/拆分输出决定可调项；不是P.exposure烘焙曝光，也不是state.expo观察曝光。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-25",
+    "name": "平台方案",
+    "source": "67_fwlcombo.js / 70_ui.js / 79_workbench.js",
+    "target": "参数 > 烘焙输出 > 导出方案",
+    "behavior": "单层P.outPC/outMobile与组合L.out适配；PC序列/单束（每颗星面片含尾迹）/GPU点/关，手机序列/关；条件能力不硬开。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-26",
+    "name": "GPU点设置",
+    "source": "67_fwlcombo.js / 70_ui.js",
+    "target": "参数 > 烘焙输出 > PC GPU点",
+    "behavior": "仅GPU点方案显示点大小与亮度；平台关闭不改变观察静音。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-27",
+    "name": "产物form与单星限制",
+    "source": "10_types.js / 67_fwlcombo.js",
+    "target": "参数 > 烘焙输出 > 产物与取景",
+    "behavior": "senrin/crossette/hachi等及非球形不能硬开单星；组合强制master时解释锁定。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-28",
+    "name": "外部DOM贴图规格",
+    "source": "body.html: specBox / 70_ui.js",
+    "target": "参数 > 烘焙输出 > 帧与贴图",
+    "behavior": "texW/H、cols/rows、RGBA/单通道、outMode合并拆分、frameMode、zoom/旧zoom、unitFlip、autoGrid按真实条件。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-29",
+    "name": "输出SCHEMA",
+    "source": "10_types.js: 输出归属",
+    "target": "参数 > 烘焙输出",
+    "behavior": "58条SCHEMA定义保全。按09:40批准要求，首层9个直接项：PC、手机、入点、出点、宽、高、格子、曝光、留边；帧率/张数/单格算出灰字，可解锁覆盖；其他归高级或旧（待删）。逐项条件见表。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-30",
+    "name": "编码",
+    "source": "body.html / 70_ui.js: encGamma",
+    "target": "参数 > 烘焙输出 > 编码与方向",
+    "behavior": "线性/2.2按真实选择；不凭图新增PNG16位灰度或未支持的文件格式。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-31",
+    "name": "RT6平台与格子",
+    "source": "10_types.js / 47_risetail.js",
+    "target": "参数 > 烘焙输出 > RT6",
+    "behavior": "手机贴图/粒子比例、rgrid、循环长度、消散/fps等继续按条件；年龄与整朵秒数明确。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-32",
+    "name": "RT6发射器及共用",
+    "source": "10_types.js / 71_panel43.js",
+    "target": "参数 > 发射器 > 火花共用/细中粗/其他",
+    "behavior": "共享近远贴图/温度/预算不复制三份；星头/白热/落火/烟带/爆亮/发射口等通过选择器到达。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-33",
+    "name": "地面家族",
+    "source": "10_types.js",
+    "target": "参数 > 层设置/发射器",
+    "behavior": "喷口、彗星、火花、子花；转轮/瀑布/文字等条件不丢失；不伪造喷口生成时机/随机偏移。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-34",
+    "name": "烘焙状态与取消",
+    "source": "70_ui.js: bakeNow / bakeCancel / bakeTok",
+    "target": "参数 > 烘焙输出；资产栏",
+    "behavior": "现有自动烘焙/取消保留；烘焙此层是待接入的明确作用域命令，不能直接绑定会重烘整包的旧入口。",
+    "status": "部分新增行为"
+  },
+  {
+    "id": "UI-35",
+    "name": "输出统计/警告",
+    "source": "70_ui.js / 79_workbench.js: outNote",
+    "target": "烘焙输出页顶部摘要/对应字段",
+    "behavior": "帧数、尺寸、内存、丢帧/裁切/画质预算真实计算；异常靠近原因，状态不只颜色。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-36",
+    "name": "英文命名",
+    "source": "61_naming.js / body.html / 79_workbench.js",
+    "target": "烘焙输出只读摘要 → 交付清单",
+    "behavior": "唯一写入口仍为交付清单；不重复增加英文名输入框。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-37",
+    "name": "素材包导出",
+    "source": "79_workbench.js",
+    "target": "资产栏主操作 → 交付清单",
+    "behavior": "整包、平台、各层依赖/时间/Ramp/Cutout/Cascade清楚；被观察静音仍按导出设置导出。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-38",
+    "name": "种子变体与单星导出",
+    "source": "70_ui.js / body.html",
+    "target": "资产栏导出菜单/交付清单",
+    "behavior": "master的V1–V3种子变体及单星产物等既有命令保留，不塞回参数长表。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-39",
+    "name": "画布观察",
+    "source": "body.html / 79_workbench.js",
+    "target": "画布相邻工具条",
+    "behavior": "显示曝光、Bloom、网格/截图/专注、实时/回放/贴图、平台/大小/实拍。观察参数不混输出。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-40",
+    "name": "RT6观察部件",
+    "source": "body.html / 47_risetail.js",
+    "target": "画布 > 观察",
+    "behavior": "近/远/火花/落火/烟带/发射口只是观察过滤，不是层，也不改产物。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-41",
+    "name": "审阅对象身份",
+    "source": "79_library.js",
+    "target": "审阅顶部",
+    "behavior": "当前候选/历史/正式/我的效果/部分层等状态明确；修改后区分参数版本与产物版本。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-42",
+    "name": "变更/说明/图/文档",
+    "source": "79_library.js",
+    "target": "审阅 > 本次变化 / 看什么",
+    "behavior": "保留源说明和附件；不默认铺长篇技术文本。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-43",
+    "name": "检查与通过门槛",
+    "source": "79_library.js",
+    "target": "审阅 > 检查与验收",
+    "behavior": "完整性/平台/画面包版本/UE证据分行；禁用附原因；整体、回放、大小、版本等真实门槛不削弱。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-44",
+    "name": "意见与历史",
+    "source": "79_library.js",
+    "target": "审阅 > 我的意见 / 版本历史",
+    "behavior": "版本关联本地意见、复制、需要修改/通过；记录帧是拟补入口，需要正确时间和观察上下文。",
+    "status": "部分新增行为"
+  },
+  {
+    "id": "UI-45",
+    "name": "工具多层可达",
+    "source": "79_library.js: setTab / syncPtabs",
+    "target": "右栏 > 工具",
+    "behavior": "现有组合隐藏工具且切iter会影响combo选择，须修入口与状态再重排；不丢layer/emitter。",
+    "status": "部分新增行为"
+  },
+  {
+    "id": "UI-46",
+    "name": "JSON/配方导入导出",
+    "source": "body.html: pIter / 70_ui.js",
+    "target": "工具 > 导入导出",
+    "behavior": "保留3种既有命令；前置影响摘要属于提案，不假定已有确认/合并语义。",
+    "status": "部分新增行为"
+  },
+  {
+    "id": "UI-47",
+    "name": "仓库操作",
+    "source": "79_repo.js / body.html",
+    "target": "工具 > 仓库与保存",
+    "behavior": "连接/读取等原命令重用，不重复创建存储体系；当前顶部溢出入口可保持快捷。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-48",
+    "name": "快捷键",
+    "source": "68_keys.js / body.html: keysDlg",
+    "target": "工具 > 快捷键",
+    "behavior": "统一KEYMAP生成列表，不手写会漂移的第二份；保留?完整表。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-49",
+    "name": "显卡测速",
+    "source": "body.html: pIter / 70_ui.js",
+    "target": "工具 > 显卡测速",
+    "behavior": "入口/进行中/未测试/结果；无测量不得填性能数字。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-50",
+    "name": "旧版配方留底",
+    "source": "70_ui.js",
+    "target": "工具 > 旧版数据",
+    "behavior": "只在检测到旧数据时出现；不删除历史兼容。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-51",
+    "name": "导入素材只读",
+    "source": "77_assets.js: pAsset",
+    "target": "素材预览专用右栏",
+    "behavior": "贴图版本、发射器显隐、Cutout、天空、参数表来源；没有对应源效果不显示可用编辑入口。",
+    "status": "现有能力重排"
+  },
+  {
+    "id": "UI-52",
+    "name": "旧素材入口",
+    "source": "77_assets.js / body.html",
+    "target": "原兼容入口 > 素材预览",
+    "behavior": "当前入口隐藏的兼容能力予以记录，是否重新公开单列决策；不擅自新增顶级主导航。",
+    "status": "保留兼容，不默认公开"
+  }
+]
