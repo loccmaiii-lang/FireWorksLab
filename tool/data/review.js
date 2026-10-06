@@ -22946,27 +22946,33 @@ var FW_EFFECTS = [
 "方案": [
 {
 "id": "JMG03",
-"label": "3 号"
+"label": "3 号",
+"en": "03"
 },
 {
 "id": "JMG05",
-"label": "5 号"
+"label": "5 号",
+"en": "05"
 },
 {
 "id": "JMG10",
-"label": "尺玉"
+"label": "尺玉",
+"en": "10"
 },
 {
 "id": "JMG20",
-"label": "2 尺"
+"label": "2 尺",
+"en": "20"
 },
 {
 "id": "JMG30",
-"label": "3 尺"
+"label": "3 尺",
+"en": "30"
 },
 {
 "id": "JMG40",
-"label": "4 尺"
+"label": "4 尺",
+"en": "40"
 }
 ],
 "进度": {
@@ -23247,55 +23253,68 @@ var FW_EFFECTS = [
 },
 {
 "id": "MYFL-S03",
-"label": "3 号"
+"label": "3 号",
+"en": "03"
 },
 {
 "id": "MYFL-S10",
-"label": "尺玉"
+"label": "尺玉",
+"en": "10"
 },
 {
 "id": "MYFL-S20",
-"label": "2 尺"
+"label": "2 尺",
+"en": "20"
 },
 {
 "id": "MYFL-S30",
-"label": "3 尺"
+"label": "3 尺",
+"en": "30"
 },
 {
 "id": "MYFL-S40",
-"label": "4 尺"
+"label": "4 尺",
+"en": "40"
 },
 {
 "id": "MYFL-K",
-"label": "冠"
+"label": "冠",
+"en": "Crown"
 },
 {
 "id": "MYFL-Y",
-"label": "柳"
+"label": "柳",
+"en": "Willow"
 },
 {
 "id": "MYFL-R",
-"label": "环"
+"label": "环",
+"en": "Ring"
 },
 {
 "id": "MYFL-T",
-"label": "土星"
+"label": "土星",
+"en": "Saturn"
 },
 {
 "id": "MYFL-M",
-"label": "万華鏡"
+"label": "万華鏡",
+"en": "Kaleido"
 },
 {
 "id": "MYFL-H",
-"label": "心形"
+"label": "心形",
+"en": "Heart"
 },
 {
 "id": "MYFL-J",
-"label": "时差"
+"label": "时差",
+"en": "Jisa"
 },
 {
 "id": "MYFL-C",
-"label": "芯入"
+"label": "芯入",
+"en": "Core"
 }
 ],
 "进度": {
@@ -23312,6 +23331,10 @@ var FW_EFFECTS = [
 "下一步": "",
 "说明": "你保存的「分裂星」（analysis/我的配方/）出的一组素材变体：原样 + 大小 + 造型。原样一个数没改。",
 "英文名": "Crossette",
+"层英文名": [
+"Main",
+"Core"
+],
 "ver": "313c8659",
 "jobs": [],
 "exports": [],
@@ -23333,59 +23356,73 @@ var FW_EFFECTS = [
 },
 {
 "id": "MYCR-S03",
-"label": "3 号"
+"label": "3 号",
+"en": "03"
 },
 {
 "id": "MYCR-S05",
-"label": "5 号"
+"label": "5 号",
+"en": "05"
 },
 {
 "id": "MYCR-S10",
-"label": "尺玉"
+"label": "尺玉",
+"en": "10"
 },
 {
 "id": "MYCR-S20",
-"label": "2 尺"
+"label": "2 尺",
+"en": "20"
 },
 {
 "id": "MYCR-S30",
-"label": "3 尺"
+"label": "3 尺",
+"en": "30"
 },
 {
 "id": "MYCR-S40",
-"label": "4 尺"
+"label": "4 尺",
+"en": "40"
 },
 {
 "id": "MYCR-K",
-"label": "冠"
+"label": "冠",
+"en": "Crown"
 },
 {
 "id": "MYCR-Y",
-"label": "柳"
+"label": "柳",
+"en": "Willow"
 },
 {
 "id": "MYCR-R",
-"label": "环"
+"label": "环",
+"en": "Ring"
 },
 {
 "id": "MYCR-T",
-"label": "土星"
+"label": "土星",
+"en": "Saturn"
 },
 {
 "id": "MYCR-M",
-"label": "万華鏡"
+"label": "万華鏡",
+"en": "Kaleido"
 },
 {
 "id": "MYCR-H",
-"label": "心形"
+"label": "心形",
+"en": "Heart"
 },
 {
 "id": "MYCR-J",
-"label": "时差"
+"label": "时差",
+"en": "Jisa"
 },
 {
 "id": "MYCR-C",
-"label": "芯入"
+"label": "芯入",
+"en": "Core"
 }
 ],
 "进度": {
@@ -23402,6 +23439,10 @@ var FW_EFFECTS = [
 "下一步": "",
 "说明": "你保存的「Crackle」（analysis/我的配方/）出的一组素材变体：原样 + 大小 + 造型。原样一个数没改。",
 "英文名": "Crackle",
+"层英文名": [
+"Main",
+"Core"
+],
 "ver": "8fd3f286",
 "jobs": [],
 "exports": [],
@@ -23423,59 +23464,73 @@ var FW_EFFECTS = [
 },
 {
 "id": "MYJA-S03",
-"label": "3 号"
+"label": "3 号",
+"en": "03"
 },
 {
 "id": "MYJA-S05",
-"label": "5 号"
+"label": "5 号",
+"en": "05"
 },
 {
 "id": "MYJA-S10",
-"label": "尺玉"
+"label": "尺玉",
+"en": "10"
 },
 {
 "id": "MYJA-S20",
-"label": "2 尺"
+"label": "2 尺",
+"en": "20"
 },
 {
 "id": "MYJA-S30",
-"label": "3 尺"
+"label": "3 尺",
+"en": "30"
 },
 {
 "id": "MYJA-S40",
-"label": "4 尺"
+"label": "4 尺",
+"en": "40"
 },
 {
 "id": "MYJA-K",
-"label": "冠"
+"label": "冠",
+"en": "Crown"
 },
 {
 "id": "MYJA-Y",
-"label": "柳"
+"label": "柳",
+"en": "Willow"
 },
 {
 "id": "MYJA-R",
-"label": "环"
+"label": "环",
+"en": "Ring"
 },
 {
 "id": "MYJA-T",
-"label": "土星"
+"label": "土星",
+"en": "Saturn"
 },
 {
 "id": "MYJA-M",
-"label": "万華鏡"
+"label": "万華鏡",
+"en": "Kaleido"
 },
 {
 "id": "MYJA-H",
-"label": "心形"
+"label": "心形",
+"en": "Heart"
 },
 {
 "id": "MYJA-J",
-"label": "时差"
+"label": "时差",
+"en": "Jisa"
 },
 {
 "id": "MYJA-C",
-"label": "芯入"
+"label": "芯入",
+"en": "Core"
 }
 ],
 "进度": {
@@ -23492,6 +23547,11 @@ var FW_EFFECTS = [
 "下一步": "",
 "说明": "你保存的「金曜菊-A」（analysis/我的配方/）出的一组素材变体：原样 + 大小 + 造型。原样一个数没改。",
 "英文名": "GoldRay",
+"层英文名": [
+"A",
+"B",
+"Core"
+],
 "ver": "5d7c30bc",
 "jobs": [],
 "exports": [],
@@ -23513,55 +23573,68 @@ var FW_EFFECTS = [
 },
 {
 "id": "MYJM-S03",
-"label": "3 号"
+"label": "3 号",
+"en": "03"
 },
 {
 "id": "MYJM-S10",
-"label": "尺玉"
+"label": "尺玉",
+"en": "10"
 },
 {
 "id": "MYJM-S20",
-"label": "2 尺"
+"label": "2 尺",
+"en": "20"
 },
 {
 "id": "MYJM-S30",
-"label": "3 尺"
+"label": "3 尺",
+"en": "30"
 },
 {
 "id": "MYJM-S40",
-"label": "4 尺"
+"label": "4 尺",
+"en": "40"
 },
 {
 "id": "MYJM-K",
-"label": "冠"
+"label": "冠",
+"en": "Crown"
 },
 {
 "id": "MYJM-Y",
-"label": "柳"
+"label": "柳",
+"en": "Willow"
 },
 {
 "id": "MYJM-R",
-"label": "环"
+"label": "环",
+"en": "Ring"
 },
 {
 "id": "MYJM-T",
-"label": "土星"
+"label": "土星",
+"en": "Saturn"
 },
 {
 "id": "MYJM-M",
-"label": "万華鏡"
+"label": "万華鏡",
+"en": "Kaleido"
 },
 {
 "id": "MYJM-H",
-"label": "心形"
+"label": "心形",
+"en": "Heart"
 },
 {
 "id": "MYJM-J",
-"label": "时差"
+"label": "时差",
+"en": "Jisa"
 },
 {
 "id": "MYJM-C",
-"label": "芯入"
+"label": "芯入",
+"en": "Core"
 }
 ],
 "进度": {
@@ -23578,6 +23651,10 @@ var FW_EFFECTS = [
 "下一步": "",
 "说明": "你保存的「金芒菊 · 我的」（analysis/我的配方/）出的一组素材变体：原样 + 大小 + 造型。原样一个数没改。",
 "英文名": "GoldChrysanthemum",
+"层英文名": [
+"Main",
+"Core"
+],
 "ver": "ebda065c",
 "jobs": [],
 "exports": [],
@@ -23599,59 +23676,73 @@ var FW_EFFECTS = [
 },
 {
 "id": "MYJC-S03",
-"label": "3 号"
+"label": "3 号",
+"en": "03"
 },
 {
 "id": "MYJC-S05",
-"label": "5 号"
+"label": "5 号",
+"en": "05"
 },
 {
 "id": "MYJC-S10",
-"label": "尺玉"
+"label": "尺玉",
+"en": "10"
 },
 {
 "id": "MYJC-S20",
-"label": "2 尺"
+"label": "2 尺",
+"en": "20"
 },
 {
 "id": "MYJC-S30",
-"label": "3 尺"
+"label": "3 尺",
+"en": "30"
 },
 {
 "id": "MYJC-S40",
-"label": "4 尺"
+"label": "4 尺",
+"en": "40"
 },
 {
 "id": "MYJC-K",
-"label": "冠"
+"label": "冠",
+"en": "Crown"
 },
 {
 "id": "MYJC-Y",
-"label": "柳"
+"label": "柳",
+"en": "Willow"
 },
 {
 "id": "MYJC-R",
-"label": "环"
+"label": "环",
+"en": "Ring"
 },
 {
 "id": "MYJC-T",
-"label": "土星"
+"label": "土星",
+"en": "Saturn"
 },
 {
 "id": "MYJC-M",
-"label": "万華鏡"
+"label": "万華鏡",
+"en": "Kaleido"
 },
 {
 "id": "MYJC-H",
-"label": "心形"
+"label": "心形",
+"en": "Heart"
 },
 {
 "id": "MYJC-J",
-"label": "时差"
+"label": "时差",
+"en": "Jisa"
 },
 {
 "id": "MYJC-C",
-"label": "芯入"
+"label": "芯入",
+"en": "Core"
 }
 ],
 "进度": {
@@ -23668,6 +23759,11 @@ var FW_EFFECTS = [
 "下一步": "",
 "说明": "你保存的「金曜菊-窜天猴」（analysis/我的配方/）出的一组素材变体：原样 + 大小 + 造型。原样一个数没改。",
 "英文名": "GoldRayRocket",
+"层英文名": [
+"L1",
+"L2",
+"Core"
+],
 "ver": "55f0d560",
 "jobs": [],
 "exports": [],
@@ -23689,51 +23785,63 @@ var FW_EFFECTS = [
 },
 {
 "id": "MYHK-S03",
-"label": "3 号"
+"label": "3 号",
+"en": "03"
 },
 {
 "id": "MYHK-S05",
-"label": "5 号"
+"label": "5 号",
+"en": "05"
 },
 {
 "id": "MYHK-S10",
-"label": "尺玉"
+"label": "尺玉",
+"en": "10"
 },
 {
 "id": "MYHK-S20",
-"label": "2 尺"
+"label": "2 尺",
+"en": "20"
 },
 {
 "id": "MYHK-S30",
-"label": "3 尺"
+"label": "3 尺",
+"en": "30"
 },
 {
 "id": "MYHK-Y",
-"label": "柳"
+"label": "柳",
+"en": "Willow"
 },
 {
 "id": "MYHK-R",
-"label": "环"
+"label": "环",
+"en": "Ring"
 },
 {
 "id": "MYHK-T",
-"label": "土星"
+"label": "土星",
+"en": "Saturn"
 },
 {
 "id": "MYHK-M",
-"label": "万華鏡"
+"label": "万華鏡",
+"en": "Kaleido"
 },
 {
 "id": "MYHK-H",
-"label": "心形"
+"label": "心形",
+"en": "Heart"
 },
 {
 "id": "MYHK-J",
-"label": "时差"
+"label": "时差",
+"en": "Jisa"
 },
 {
 "id": "MYHK-C",
-"label": "芯入"
+"label": "芯入",
+"en": "Core"
 }
 ],
 "进度": {
@@ -23750,6 +23858,11 @@ var FW_EFFECTS = [
 "下一步": "",
 "说明": "你保存的「鸿巢四尺玉 · 我的」（analysis/我的配方/）出的一组素材变体：原样 + 大小 + 造型。原样一个数没改。",
 "英文名": "YonshakuKamuro",
+"层英文名": [
+"Main",
+"Red",
+"Core"
+],
 "ver": "394fa278",
 "jobs": [],
 "exports": [],

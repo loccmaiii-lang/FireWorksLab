@@ -15,10 +15,21 @@ const asciiName = s => String(s == null ? '' : s).replace(/[^A-Za-z0-9]+/g, '_')
 // 名称来源：你在交付页改的（这台电脑的浏览器，按效果记）→ 状态清单的英文名 → 内部名
 // type：这一包的花型。升空尾缀小 / 中 / 大（tailS / M / L）是同一个效果的三档，名字后面加 _S / _M / _L，引擎里不重名
 const FW_SIZE_SFX = { tailS: 'S', tailM: 'M', tailL: 'L' };
-function packNamesFor(key, ef, nLayers, fallback, type) {
+// 4.9.23（对话框新花型，用户 10-07 00:33 / 00:59「一个效果多做几个不同规格给我导出」「我都要拿来当素材」）：一个效果几档（状态清单「方案」），
+// 以前每档导出的贴图 / UE 资产名全一样（金芒菊规格 6 档都叫 T_EFX_FireWorks_JinMangJu_4x4_01_HD，导进引擎互相覆盖）。
+// 方案里写了 en 的那一档，名字后面加 _<en>（JinMangJu_40）；没写 en 的照旧（以前导出的东西名字不变）。
+function planSfx(ef, entryId) {
+  if (!ef || !entryId) return '';
+  const id = String(entryId).replace(/^rep:/, '').replace(/@.*$/, ''), v = (ef.方案 || []).find(x => x && x.id && x.id.replace(/^rep:/, '').replace(/@.*$/, '') === id);
+  return v ? asciiName(v.en) : '';
+}
+// entryId：这一包是哪个条目（本机导出任务传条目号）；不传 = 烘焙器里现在打开的那个（左栏点的那一档）
+function packNamesFor(key, ef, nLayers, fallback, type, entryId) {
   const o = (store.get('packNames', {})[key]) || {};
   let base = asciiName(o.base) || asciiName(ef && ef.英文名) || asciiName(fallback) || 'Firework';
   const sz = FW_SIZE_SFX[type]; if (sz) base = base.replace(/_[SML]$/, '') + '_' + sz;
+  const eid = entryId !== undefined ? entryId : (typeof lib !== 'undefined' && lib.review && ef && lib.effect === ef ? lib.review.id : null), ps = planSfx(ef, eid);
+  if (ps && !base.endsWith('_' + ps)) base += '_' + ps;
   const layers = Array.from({ length: nLayers }, (_, i) => asciiName((o.layers || [])[i]) || asciiName(((ef && ef.层英文名) || [])[i]) || (nLayers > 1 ? 'L' + (i + 1) : ''));
   return { base, layers, custom: !!(o.base || (o.layers || []).some(Boolean)) };
 }

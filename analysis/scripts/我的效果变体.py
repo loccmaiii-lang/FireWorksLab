@@ -26,6 +26,8 @@ SIZES = [(3, 'S03', '3 号'), (5, 'S05', '5 号'), (10, 'S10', '尺玉'), (20, '
 # 每个保存的效果：条目前缀、英文名（素材包名）
 META = {'fxmuux2arh': ('MYFL', 'Crossette'), 'fxmuuzfeg7': ('MYCR', 'Crackle'), 'fxmuv6vhrq': ('MYJA', 'GoldRay'),
         'fxmuv7n3ih': ('MYJM', 'GoldChrysanthemum'), 'fxmuw5v7bh': ('MYJC', 'GoldRayRocket'), 'fxmuwols5x': ('MYHK', 'YonshakuKamuro')}
+# 每档素材包名字的后缀（状态清单「方案」的 en，烘焙器 4.9.23 起贴图 / 资产名 = <英文名>_<en>，几档导进引擎不重名）；原样不加
+EN_SFX = {'S03': '03', 'S05': '05', 'S10': '10', 'S20': '20', 'S30': '30', 'S40': '40', 'K': 'Crown', 'Y': 'Willow', 'R': 'Ring', 'T': 'Saturn', 'M': 'Kaleido', 'H': 'Heart', 'J': 'Jisa', 'C': 'Core'}
 SKIP_KEYS = set()     # type 留着（条目的 base 也是它，replicaPM 会用 base 覆盖）
 TIME_KEYS = ['sparkLife', 'sparkStop', 'sparkStart', 'headDimUntil', 'ignDelay', 'subDelay', 'subBurn', 'emberLife', 'duration', 'crackleDelay']
 
@@ -150,7 +152,9 @@ def load():
             L = x['L']; M = {k: L[k] for k in ('stages', 'xw', 'ramp0', 'ramp1', 'ramp2', 'ramp3', 'headInt', 'tailInt') if k in L}
             if not M.get('stages'): M['stages'] = (x.get('M') or {}).get('stages') or [[0, '#fff0dc']]
             layers.append({'type': x['type'], 'P': P, 'M': M, 'L': {'delay': L.get('delay', 0), 'scale': L.get('scale', 1), 'title': L.get('title') or x['type'], 'out': L.get('out')}})
-        out.append({'rid': rid, 'name': d['name'], 'pre': pre, 'en': en, 'file': str(pathlib.Path(f).relative_to(ROOT)), 'layers': layers})
+        ln = [re.sub(r'[^A-Za-z0-9]', '', x or '') for x in (d.get('ue') or {}).get('layers') or []]
+        ln = [x or ('Main' if len(layers) == 1 else f'L{i + 1}') for i, x in enumerate((ln + [''] * len(layers))[:len(layers)])]
+        out.append({'rid': rid, 'name': d['name'], 'pre': pre, 'en': en, 'file': str(pathlib.Path(f).relative_to(ROOT)), 'layers': layers, 'layer_en': ln + ['Core']})
     return out
 
 
@@ -202,8 +206,8 @@ def main(a):
                 combos.append({'id': tid, 'date': '2026-10-07', 'name': f"{rc['name']} · {label}",
                                'layers': [dict({'m': 'rep:' + eid, 'scale': L.get('scale', 1), 'delay': L.get('delay', 0)}, **({'out': L['out']} if L.get('out') else {})) for eid, L in ids],
                                'layerNames': [L.get('title') for _, L in ids], 'tags': f"我的效果 变体 {rc['name']} {label} {tid}", 'note': note or '照你保存的原样。'})
-            fx_tiers.append({'id': tid, 'label': label})
-        effects.append({'key': 'myv_' + rc['rid'], 'name': rc['name'], 'en': rc['en'], 'tiers': fx_tiers, 'n0': n0, 'R0': R0})
+            fx_tiers.append(dict({'id': tid, 'label': label}, **({'en': EN_SFX[tag]} if tag in EN_SFX else {})))
+        effects.append({'key': 'myv_' + rc['rid'], 'name': rc['name'], 'en': rc['en'], 'layer_en': rc['layer_en'], 'tiers': fx_tiers, 'n0': n0, 'R0': R0})
         print(rc['name'], f'直径 {2 * R0:.0f} m ≈ {n0:.1f} 号', '→', ' '.join(t['label'] for t in fx_tiers))
     doc = {'说明': '我的效果变体（对话框新花型，用户 2026-10-07 00:59「我保存了的那几个效果也一起帮我多几个玉型大小变化与更多的造型变化，我都要拿来当素材」）：'
                    'analysis/我的配方/ 下每个效果出原样 + 大小（按号数表）+ 造型（冠 / 柳 / 环 / 土星 / 万華鏡 / 心形 / 时差 / 芯入）。由 analysis/scripts/我的效果变体.py 生成，不要手改（改脚本重跑）。',
@@ -226,6 +230,7 @@ def write_status(effects):
                                          ('下一步', ''), ('说明', f"你保存的「{fx['name']}」（analysis/我的配方/）出的一组素材变体：原样 + 大小 + 造型。原样一个数没改。"), ('英文名', fx['en'])])
             d['effects'].append(e)
         else: e['方案'] = fx['tiers']
+        e['层英文名'] = fx['layer_en']     # 多层的组合包每层名字（你保存时起的层名；芯入多出来的一层叫 Core）
     STATUS.write_text(json.dumps(d, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
     print('状态清单：', ', '.join(fx['key'] for fx in effects))
 

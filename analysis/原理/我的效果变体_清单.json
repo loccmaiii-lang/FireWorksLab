@@ -3,6 +3,10 @@
   "key": "myv_fxmuux2arh",
   "name": "分裂星",
   "en": "Crossette",
+  "layer_en": [
+   "Main",
+   "Core"
+  ],
   "tiers": [
    {
     "id": "MYFL-O",
@@ -10,55 +14,68 @@
    },
    {
     "id": "MYFL-S03",
-    "label": "3 号"
+    "label": "3 号",
+    "en": "03"
    },
    {
     "id": "MYFL-S10",
-    "label": "尺玉"
+    "label": "尺玉",
+    "en": "10"
    },
    {
     "id": "MYFL-S20",
-    "label": "2 尺"
+    "label": "2 尺",
+    "en": "20"
    },
    {
     "id": "MYFL-S30",
-    "label": "3 尺"
+    "label": "3 尺",
+    "en": "30"
    },
    {
     "id": "MYFL-S40",
-    "label": "4 尺"
+    "label": "4 尺",
+    "en": "40"
    },
    {
     "id": "MYFL-K",
-    "label": "冠"
+    "label": "冠",
+    "en": "Crown"
    },
    {
     "id": "MYFL-Y",
-    "label": "柳"
+    "label": "柳",
+    "en": "Willow"
    },
    {
     "id": "MYFL-R",
-    "label": "环"
+    "label": "环",
+    "en": "Ring"
    },
    {
     "id": "MYFL-T",
-    "label": "土星"
+    "label": "土星",
+    "en": "Saturn"
    },
    {
     "id": "MYFL-M",
-    "label": "万華鏡"
+    "label": "万華鏡",
+    "en": "Kaleido"
    },
    {
     "id": "MYFL-H",
-    "label": "心形"
+    "label": "心形",
+    "en": "Heart"
    },
    {
     "id": "MYFL-J",
-    "label": "时差"
+    "label": "时差",
+    "en": "Jisa"
    },
    {
     "id": "MYFL-C",
-    "label": "芯入"
+    "label": "芯入",
+    "en": "Core"
    }
   ],
   "n0": 5.2,
@@ -68,6 +85,10 @@
   "key": "myv_fxmuuzfeg7",
   "name": "Crackle",
   "en": "Crackle",
+  "layer_en": [
+   "Main",
+   "Core"
+  ],
   "tiers": [
    {
     "id": "MYCR-O",
@@ -75,59 +96,73 @@
    },
    {
     "id": "MYCR-S03",
-    "label": "3 号"
+    "label": "3 号",
+    "en": "03"
    },
    {
     "id": "MYCR-S05",
-    "label": "5 号"
+    "label": "5 号",
+    "en": "05"
    },
    {
     "id": "MYCR-S10",
-    "label": "尺玉"
+    "label": "尺玉",
+    "en": "10"
    },
    {
     "id": "MYCR-S20",
-    "label": "2 尺"
+    "label": "2 尺",
+    "en": "20"
    },
    {
     "id": "MYCR-S30",
-    "label": "3 尺"
+    "label": "3 尺",
+    "en": "30"
    },
    {
     "id": "MYCR-S40",
-    "label": "4 尺"
+    "label": "4 尺",
+    "en": "40"
    },
    {
     "id": "MYCR-K",
-    "label": "冠"
+    "label": "冠",
+    "en": "Crown"
    },
    {
     "id": "MYCR-Y",
-    "label": "柳"
+    "label": "柳",
+    "en": "Willow"
    },
    {
     "id": "MYCR-R",
-    "label": "环"
+    "label": "环",
+    "en": "Ring"
    },
    {
     "id": "MYCR-T",
-    "label": "土星"
+    "label": "土星",
+    "en": "Saturn"
    },
    {
     "id": "MYCR-M",
-    "label": "万華鏡"
+    "label": "万華鏡",
+    "en": "Kaleido"
    },
    {
     "id": "MYCR-H",
-    "label": "心形"
+    "label": "心形",
+    "en": "Heart"
    },
    {
     "id": "MYCR-J",
-    "label": "时差"
+    "label": "时差",
+    "en": "Jisa"
    },
    {
     "id": "MYCR-C",
-    "label": "芯入"
+    "label": "芯入",
+    "en": "Core"
    }
   ],
   "n0": 4.3,
@@ -137,6 +172,11 @@
   "key": "myv_fxmuv6vhrq",
   "name": "金曜菊-A",
   "en": "GoldRay",
+  "layer_en": [
+   "A",
+   "B",
+   "Core"
+  ],
   "tiers": [
    {
     "id": "MYJA-O",
@@ -144,59 +184,73 @@
    },
    {
     "id": "MYJA-S03",
-    "label": "3 号"
+    "label": "3 号",
+    "en": "03"
    },
    {
     "id": "MYJA-S05",
-    "label": "5 号"
+    "label": "5 号",
+    "en": "05"
    },
    {
     "id": "MYJA-S10",
-    "label": "尺玉"
+    "label": "尺玉",
+    "en": "10"
    },
    {
     "id": "MYJA-S20",
-    "label": "2 尺"
+    "label": "2 尺",
+    "en": "20"
    },
    {
     "id": "MYJA-S30",
-    "label": "3 尺"
+    "label": "3 尺",
+    "en": "30"
    },
    {
     "id": "MYJA-S40",
-    "label": "4 尺"
+    "label": "4 尺",
+    "en": "40"
    },
    {
     "id": "MYJA-K",
-    "label": "冠"
+    "label": "冠",
+    "en": "Crown"
    },
    {
     "id": "MYJA-Y",
-    "label": "柳"
+    "label": "柳",
+    "en": "Willow"
    },
    {
     "id": "MYJA-R",
-    "label": "环"
+    "label": "环",
+    "en": "Ring"
    },
    {
     "id": "MYJA-T",
-    "label": "土星"
+    "label": "土星",
+    "en": "Saturn"
    },
    {
     "id": "MYJA-M",
-    "label": "万華鏡"
+    "label": "万華鏡",
+    "en": "Kaleido"
    },
    {
     "id": "MYJA-H",
-    "label": "心形"
+    "label": "心形",
+    "en": "Heart"
    },
    {
     "id": "MYJA-J",
-    "label": "时差"
+    "label": "时差",
+    "en": "Jisa"
    },
    {
     "id": "MYJA-C",
-    "label": "芯入"
+    "label": "芯入",
+    "en": "Core"
    }
   ],
   "n0": 8.0,
@@ -206,6 +260,10 @@
   "key": "myv_fxmuv7n3ih",
   "name": "金芒菊 · 我的",
   "en": "GoldChrysanthemum",
+  "layer_en": [
+   "Main",
+   "Core"
+  ],
   "tiers": [
    {
     "id": "MYJM-O",
@@ -213,55 +271,68 @@
    },
    {
     "id": "MYJM-S03",
-    "label": "3 号"
+    "label": "3 号",
+    "en": "03"
    },
    {
     "id": "MYJM-S10",
-    "label": "尺玉"
+    "label": "尺玉",
+    "en": "10"
    },
    {
     "id": "MYJM-S20",
-    "label": "2 尺"
+    "label": "2 尺",
+    "en": "20"
    },
    {
     "id": "MYJM-S30",
-    "label": "3 尺"
+    "label": "3 尺",
+    "en": "30"
    },
    {
     "id": "MYJM-S40",
-    "label": "4 尺"
+    "label": "4 尺",
+    "en": "40"
    },
    {
     "id": "MYJM-K",
-    "label": "冠"
+    "label": "冠",
+    "en": "Crown"
    },
    {
     "id": "MYJM-Y",
-    "label": "柳"
+    "label": "柳",
+    "en": "Willow"
    },
    {
     "id": "MYJM-R",
-    "label": "环"
+    "label": "环",
+    "en": "Ring"
    },
    {
     "id": "MYJM-T",
-    "label": "土星"
+    "label": "土星",
+    "en": "Saturn"
    },
    {
     "id": "MYJM-M",
-    "label": "万華鏡"
+    "label": "万華鏡",
+    "en": "Kaleido"
    },
    {
     "id": "MYJM-H",
-    "label": "心形"
+    "label": "心形",
+    "en": "Heart"
    },
    {
     "id": "MYJM-J",
-    "label": "时差"
+    "label": "时差",
+    "en": "Jisa"
    },
    {
     "id": "MYJM-C",
-    "label": "芯入"
+    "label": "芯入",
+    "en": "Core"
    }
   ],
   "n0": 5.8,
@@ -271,6 +342,11 @@
   "key": "myv_fxmuw5v7bh",
   "name": "金曜菊-窜天猴",
   "en": "GoldRayRocket",
+  "layer_en": [
+   "L1",
+   "L2",
+   "Core"
+  ],
   "tiers": [
    {
     "id": "MYJC-O",
@@ -278,59 +354,73 @@
    },
    {
     "id": "MYJC-S03",
-    "label": "3 号"
+    "label": "3 号",
+    "en": "03"
    },
    {
     "id": "MYJC-S05",
-    "label": "5 号"
+    "label": "5 号",
+    "en": "05"
    },
    {
     "id": "MYJC-S10",
-    "label": "尺玉"
+    "label": "尺玉",
+    "en": "10"
    },
    {
     "id": "MYJC-S20",
-    "label": "2 尺"
+    "label": "2 尺",
+    "en": "20"
    },
    {
     "id": "MYJC-S30",
-    "label": "3 尺"
+    "label": "3 尺",
+    "en": "30"
    },
    {
     "id": "MYJC-S40",
-    "label": "4 尺"
+    "label": "4 尺",
+    "en": "40"
    },
    {
     "id": "MYJC-K",
-    "label": "冠"
+    "label": "冠",
+    "en": "Crown"
    },
    {
     "id": "MYJC-Y",
-    "label": "柳"
+    "label": "柳",
+    "en": "Willow"
    },
    {
     "id": "MYJC-R",
-    "label": "环"
+    "label": "环",
+    "en": "Ring"
    },
    {
     "id": "MYJC-T",
-    "label": "土星"
+    "label": "土星",
+    "en": "Saturn"
    },
    {
     "id": "MYJC-M",
-    "label": "万華鏡"
+    "label": "万華鏡",
+    "en": "Kaleido"
    },
    {
     "id": "MYJC-H",
-    "label": "心形"
+    "label": "心形",
+    "en": "Heart"
    },
    {
     "id": "MYJC-J",
-    "label": "时差"
+    "label": "时差",
+    "en": "Jisa"
    },
    {
     "id": "MYJC-C",
-    "label": "芯入"
+    "label": "芯入",
+    "en": "Core"
    }
   ],
   "n0": 7.8,
@@ -340,6 +430,11 @@
   "key": "myv_fxmuwols5x",
   "name": "鸿巢四尺玉 · 我的",
   "en": "YonshakuKamuro",
+  "layer_en": [
+   "Main",
+   "Red",
+   "Core"
+  ],
   "tiers": [
    {
     "id": "MYHK-O",
@@ -347,51 +442,63 @@
    },
    {
     "id": "MYHK-S03",
-    "label": "3 号"
+    "label": "3 号",
+    "en": "03"
    },
    {
     "id": "MYHK-S05",
-    "label": "5 号"
+    "label": "5 号",
+    "en": "05"
    },
    {
     "id": "MYHK-S10",
-    "label": "尺玉"
+    "label": "尺玉",
+    "en": "10"
    },
    {
     "id": "MYHK-S20",
-    "label": "2 尺"
+    "label": "2 尺",
+    "en": "20"
    },
    {
     "id": "MYHK-S30",
-    "label": "3 尺"
+    "label": "3 尺",
+    "en": "30"
    },
    {
     "id": "MYHK-Y",
-    "label": "柳"
+    "label": "柳",
+    "en": "Willow"
    },
    {
     "id": "MYHK-R",
-    "label": "环"
+    "label": "环",
+    "en": "Ring"
    },
    {
     "id": "MYHK-T",
-    "label": "土星"
+    "label": "土星",
+    "en": "Saturn"
    },
    {
     "id": "MYHK-M",
-    "label": "万華鏡"
+    "label": "万華鏡",
+    "en": "Kaleido"
    },
    {
     "id": "MYHK-H",
-    "label": "心形"
+    "label": "心形",
+    "en": "Heart"
    },
    {
     "id": "MYHK-J",
-    "label": "时差"
+    "label": "时差",
+    "en": "Jisa"
    },
    {
     "id": "MYHK-C",
-    "label": "芯入"
+    "label": "芯入",
+    "en": "Core"
    }
   ],
   "n0": 38.0,
