@@ -1,0 +1,7 @@
+02:43:51 开始：GoldRay_40（导出素材）
+02:45:01 GoldRay_40 组合素材包 70 秒：T_EFX_FireWorks_GoldRay_40_A_4x4_01.png、T_EFX_FireWorks_GoldRay_40_A_4x4_01_C.png、T_EFX_FireWorks_GoldRay_40_A_4x4_01_HD.png、T_EFX_FireWorks_GoldRay_40_A_4x4_02.png、T_EFX_FireWorks_GoldRay_40_A_4x4_02_C.png、T_EFX_FireWorks_GoldRay_40_A_4x4_02_HD.png、T_EFX_FireWorks_GoldRay_40_A_R.png、T_EFX_FireWorks_GoldRay_40_B_4x4_01.png、T_EFX_FireWorks_GoldRay_40_B_4x4_01_C.png、T_EFX_FireWorks_GoldRay_40_B_4x4_01_HD.png、T_EFX_FireWorks_GoldRay_40_B_4x4_02.png、T_EFX_FireWorks_GoldRay_40_B_4x4_02_C.png、T_EFX_FireWorks_GoldRay_40_B_4x4_02_HD.png、T_EFX_FireWorks_GoldRay_40_B_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+02:45:03 回放检查：✅ 通过
+02:45:22 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJA-S40-2\烘焙回放.jpg
+02:45:22 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJA-S40-2\烘焙回放_原尺寸.jpg
+02:45:22 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+02:45:22 完成，用时 1.5 分钟

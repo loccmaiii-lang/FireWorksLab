@@ -1,0 +1,27 @@
+02:45:04 第 1/13 步：原样（YonshakuKamuro）
+02:45:04   ✅ 原样（YonshakuKamuro）（0.0 分钟）
+02:45:04 第 2/13 步：3 号（YonshakuKamuro_03）
+02:45:04   ✅ 3 号（YonshakuKamuro_03）（0.0 分钟）
+02:45:04 第 3/13 步：5 号（YonshakuKamuro_05）
+02:45:05   ✅ 5 号（YonshakuKamuro_05）（0.0 分钟）
+02:45:05 第 4/13 步：尺玉（YonshakuKamuro_10）
+02:45:05   ✅ 尺玉（YonshakuKamuro_10）（0.0 分钟）
+02:45:05 第 5/13 步：2 尺（YonshakuKamuro_20）
+02:45:05   ✅ 2 尺（YonshakuKamuro_20）（0.0 分钟）
+02:45:05 第 6/13 步：3 尺（YonshakuKamuro_30）
+02:45:06   ✅ 3 尺（YonshakuKamuro_30）（0.0 分钟）
+02:45:06 第 7/13 步：柳（YonshakuKamuro_Willow）
+02:45:06   ✅ 柳（YonshakuKamuro_Willow）（0.0 分钟）
+02:45:06 第 8/13 步：环（YonshakuKamuro_Ring）
+02:45:06   ✅ 环（YonshakuKamuro_Ring）（0.0 分钟）
+02:45:06 第 9/13 步：土星（YonshakuKamuro_Saturn）
+02:45:07   ✅ 土星（YonshakuKamuro_Saturn）（0.0 分钟）
+02:45:07 第 10/13 步：万華鏡（YonshakuKamuro_Kaleido）
+02:45:07   ✅ 万華鏡（YonshakuKamuro_Kaleido）（0.0 分钟）
+02:45:07 第 11/13 步：心形（YonshakuKamuro_Heart）
+02:45:07   ✅ 心形（YonshakuKamuro_Heart）（0.0 分钟）
+02:45:07 第 12/13 步：时差（YonshakuKamuro_Jisa）
+02:45:08   ✅ 时差（YonshakuKamuro_Jisa）（0.0 分钟）
+02:45:08 第 13/13 步：芯入（YonshakuKamuro_Core）
+02:45:08   ✅ 芯入（YonshakuKamuro_Core）（0.0 分钟）
+02:45:08 完成，用时 0.1 分钟

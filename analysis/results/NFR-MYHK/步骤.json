@@ -1,0 +1,93 @@
+[
+ {
+  "name": "原样（YonshakuKamuro）",
+  "script": "回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "3 号（YonshakuKamuro_03）",
+  "script": "回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "5 号（YonshakuKamuro_05）",
+  "script": "回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "尺玉（YonshakuKamuro_10）",
+  "script": "回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "2 尺（YonshakuKamuro_20）",
+  "script": "回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "3 尺（YonshakuKamuro_30）",
+  "script": "回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "柳（YonshakuKamuro_Willow）",
+  "script": "回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "环（YonshakuKamuro_Ring）",
+  "script": "回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "土星（YonshakuKamuro_Saturn）",
+  "script": "回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "万華鏡（YonshakuKamuro_Kaleido）",
+  "script": "回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "心形（YonshakuKamuro_Heart）",
+  "script": "回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "时差（YonshakuKamuro_Jisa）",
+  "script": "回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "芯入（YonshakuKamuro_Core）",
+  "script": "回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ }
+]

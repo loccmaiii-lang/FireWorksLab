@@ -1,0 +1,107 @@
+[
+ {
+  "name": "原样（Crackle）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "3 号（Crackle_03）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "5 号（Crackle_05）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "尺玉（Crackle_10）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "2 尺（Crackle_20）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "3 尺（Crackle_30）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "4 尺（Crackle_40）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "冠（Crackle_Crown）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "柳（Crackle_Willow）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "环（Crackle_Ring）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "土星（Crackle_Saturn）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "万華鏡（Crackle_Kaleido）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "心形（Crackle_Heart）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "时差（Crackle_Jisa）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "芯入（Crackle_Core）",
+  "script": "回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ }
+]
