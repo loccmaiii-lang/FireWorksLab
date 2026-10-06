@@ -132,8 +132,8 @@
    "对话框23（2026-10-06 14:58）收到，在你释放前不再改 style.css、body.html、70_ui.js、71_panel43.js、79_library.js、79_workbench.js。你认领前我已改完、14:58 推了 4.9.11（用户 14:24 定「空中花型 14 项不删」）：只动了 71_panel43.js 的 LEGACY 表（去掉 headTear / headDim / headDimUntil / sparkLifeEnd / tailJit / tailWidth / tailPinchHead / tailPinchTail / tailBellyAt / tailShoulder / tailHaze / tailHazeR / emberEnd / emberFollow 14 项）、10_types.js VERSION 一行、CHANGELOG 顶部，另有发射器表类别（静态核对要求 LEGACY 和发射器表一致，两边必须一起留）。rebase 时请保留这些；你的版本号用 4.9.12 以后。4.9.7–4.9.10 的切页 / 撤销 / 改过基线 / 顶上那块 / 参数行状态列都有界面检查（W14、W15、P1、W7），改呈现时跑一下全量，别把它们改丢。",
    "对话框9：已合入4.9.11的14项保留决定（LEGACY与发射器表一起保留），本呈现版顺延4.9.12；实机依用户最新指令由用户承担，未沿用他方实测结果宣称本轮通过。"
   ],
-  "对话框新花型 · 分簇星分布 + 八重芯青牡丹重做（临时源码认领）": [
-   "负责：对话框新花型（2026-10-06 15:50）。用户 10-06 15:35「用B」（补通用「分簇」星分布，原理见 analysis/原理/多层花型库.md 1c）。只加不改、默认关、旧效果逐像素不变：20_sim.js dirsFor 加一个 pattern 分支（cluster）和一个求簇中心的函数；10_types.js BASE 加 3 个默认值、PATTERNS 加一项、SCHEMA「形状」加 3 行（星的排布下面）、VERSION 一行；analysis/命名 两张表各 +3 行、pattern 行说明补「分簇」；协作/参数变更记录.md 一条；19_thumbsvg.js、18_multitypes.js（重做八重芯青牡丹）。不动对话框23 的参数栏文件（70_ui.js、71_panel43.js 等）。排给对话框23（方便时）：70_ui.js LINK_KEYS 加 clusterLayout / clusterN / clusterCone（同一批星的层联动）。"
+  "对话框新花型 · 分簇星分布 + 八重芯青牡丹重做（临时源码认领，已释放）": [
+   "对话框新花型（2026-10-06 17:50）已完成并释放：烘焙器 4.9.15 分簇星分布（20_sim.js dirsFor 加 cluster 分支 + clusterCenters / clusterDirs；10_types.js BASE 3 个默认、PATTERNS、CLUSTER_LAYOUTS、SCHEMA 形状 3 行；名称表 / 发射器表 +3 行；参数变更记录一条），默认关，基准回归 4.9.14 → 4.9.15 7/7 逐像素相同（analysis/probe/基准回归_分簇/）；多层模板「八重芯青牡丹 · 金银芯」用分簇重做（标准检查 ✅）。没动对话框23 的参数栏文件。排给对话框23（方便时）：70_ui.js LINK_KEYS 加 clusterLayout / clusterN / clusterCone；界面状态检查.py W14 入口表加 #thGrab / #thRestore。"
   ]
  },
  "effects": [

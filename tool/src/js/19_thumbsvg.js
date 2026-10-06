@@ -14,6 +14,7 @@ function thStyleOf(P) {
   if (t === 'blank') return 'blank';
   if (fam === 'rise') return 'rise';
   if (fam === 'ground') return ['fountain', 'falls', 'wheel', 'fan', 'barrage', 'shikake'].includes(t) ? t : 'fountain';
+  if (P.pattern === 'cluster') return 'clusters';     // 4.9.15 分簇：一束一束
   if (P.pattern === 'ring') return 'ellipse';
   if (P.pattern === 'saturn') return 'saturn';
   if (['heart', 'smile', 'star5', 'text'].includes(P.pattern)) return 'heart';
@@ -42,7 +43,9 @@ function thColorOf(M, style) {
 function thLayerOf(P, M, scale = 1) {
   const style = thStyleOf(P), fam = familyOf(P.type);
   const R = fam === 'aerial' && +P.v0 > 0 && +P.vt > 0 ? reachOf(+P.v0, +P.vt, +(P.type === 'senrin' || P.type === 'crossette' ? (P.subDelay || P.burn) : P.burn) || 1) * (scale || 1) : 1;
-  return { style, R: Math.max(1e-3, R), color: thColorOf(M, style), stages: ((M && M.stages) || []).map(s => thHex(s[1])), fam };
+  // 4.9.15 分簇：各簇方向投影到画面（长度 = 投影长度，对着镜头的簇缩进中心）
+  const dirs = style === 'clusters' && typeof clusterCenters === 'function' ? (() => { const t = (+P.tilt || 0) * Math.PI / 180; return clusterCenters({ ...P, clusterLayout: P.clusterLayout === 'sphere' ? 'ring' : P.clusterLayout }, null, null).map(([x, y, z]) => [x, y * Math.cos(t) - z * Math.sin(t)]); })() : null;
+  return { style, R: Math.max(1e-3, R), color: thColorOf(M, style), stages: ((M && M.stages) || []).map(s => thHex(s[1])), fam, dirs, cone: +P.clusterCone || 0 };
 }
 // ---------------- 画 ----------------
 const thPt = (r, a) => [TH_C.x + r * Math.cos(a), TH_C.y + r * Math.sin(a)];
@@ -65,6 +68,10 @@ function thDraw(L, r) {
       N(10, (i, a0) => { const a = -Math.PI + (i + 0.5) / 10 * Math.PI, [px, py] = thPt(r, a), dx = Math.cos(a) * r * 0.22, drop = r * (W ? 1.05 : 0.7) * (0.6 + 0.4 * Math.abs(Math.cos(a))); return `<path d="M${thF(px)} ${thF(py)}Q${thF(px + dx * 1.6)} ${thF(py)} ${thF(px + dx * 1.8)} ${thF(py + drop)}" fill="none" stroke="${c}" stroke-width="0.9" opacity=".8"/>`; }); break; }
     case 'fall': o.push(ring(1.3, `stroke-dasharray="${thF(r * 0.1)} ${thF(r * 0.18)}"`)); N(7, (i, a) => { const px = x - r * 0.75 + i * r * 0.25, py = y + r * 0.55 + (i % 3) * 4; return `<circle cx="${thF(px)}" cy="${thF(py)}" r="1.1" fill="${c}" opacity="${thF(0.35 + 0.1 * (i % 3))}"/>`; }); break;
     case 'fade': N(16, (i, a) => { const [px, py] = thPt(r, a); return `<circle cx="${thF(px)}" cy="${thF(py)}" r="1.4" fill="${c}" opacity="${thF(0.25 + 0.75 * ((i * 7) % 16) / 15)}"/>`; }); break;
+    case 'clusters': { const sp = Math.max(0.06, Math.min(0.4, (L.cone || 8) * Math.PI / 180));
+      for (const [dx, dy] of (L.dirs || [])) { const len = Math.hypot(dx, dy); if (len < 0.15) continue; const a = Math.atan2(-dy, dx);
+        for (const k of [-1, 0, 1]) { const b = a + k * sp * 0.6, [x2, y2] = thPt(r * len * (k ? 0.92 : 1), b), [x1, y1] = thPt(r * len * 0.35, b); o.push(`<line x1="${thF(x1)}" y1="${thF(y1)}" x2="${thF(x2)}" y2="${thF(y2)}" stroke="${c}" stroke-width="${k ? 0.8 : 1.3}" opacity="${k ? 0.7 : 1}"/>`); } }
+      break; }
     case 'ellipse': o.push(`<ellipse cx="${x}" cy="${y}" rx="${thF(r)}" ry="${thF(r * 0.42)}" fill="none" stroke="${c}" stroke-width="1.8" transform="rotate(-18 ${x} ${y})"/>`); break;
     case 'saturn': o.push(`<circle cx="${x}" cy="${y}" r="${thF(r * 0.5)}" fill="none" stroke="${L.stages[0] || c}" stroke-width="1.6"/><ellipse cx="${x}" cy="${y}" rx="${thF(r * 1.05)}" ry="${thF(r * 0.3)}" fill="none" stroke="${c}" stroke-width="1.6" transform="rotate(-14 ${x} ${y})"/>`); break;
     case 'heart': { const s = r / 17, pts = []; for (let i = 0; i <= 60; i++) { const t = i / 60 * 2 * Math.PI; pts.push(`${thF(x + 16 * Math.sin(t) ** 3 * s)} ${thF(y - (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) * s)}`); } o.push(`<path d="M${pts.join('L')}Z" fill="none" stroke="${c}" stroke-width="1.7"/>`); break; }

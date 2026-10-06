@@ -120,8 +120,42 @@ function dirsFor(P, rng) {
       return [...planar(shapePoints('ring', nr), 1.25, false), ...fibDirs(n - nr, rng, R, P.dirJit).map(d => [...d, 0.55])];
     }
     case 'heart': case 'smile': case 'star5': case 'text': return planar(shapePoints(P.pattern, n, P.text), 1, true);
+    case 'cluster': return clusterDirs(P, rng, R);     // 4.9.15 分簇（对话框新花型）
     default: return fibDirs(n, rng, R, P.dirJit).map(d => [...d, 1]);
   }
+}
+// ---------------- 4.9.15 分簇（对话框新花型；用户 10-06 15:35「用B」；原理 analysis/原理/多层花型库.md 1c，参数变更记录同日一条）----------------
+// 星不铺满球壳，集中在几个对称方向（型物 / 万華鏡 / 色分け 的装法：一小撮一小撮放在壳里几个位置），每簇一个小锥，开花后每簇飞成一束几乎平行的径向线。
+// 看的方向 = z 轴（画面 = x-y 平面）；「倾斜」绕 x 轴转整套簇。排法本身不随机转：烘出来的面片是固定视角，转了哪几簇在画面里长、哪几簇缩进中心就变了。
+// 只有 pattern = 'cluster' 才走这里（缺省不是），现有模板逐像素不变。
+function clusterCenters(P, rng, R) {
+  const n = Math.max(1, Math.round(+P.clusterN || 8)), s3 = 1 / Math.sqrt(3);
+  const axes = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]], corners = [];
+  for (const x of [1, -1]) for (const y of [1, -1]) for (const z of [1, -1]) corners.push([x * s3, y * s3, z * s3]);
+  switch (P.clusterLayout || 'cube') {
+    case 'axes': return axes;
+    case 'corners': return corners;
+    case 'ico': { const g = (1 + Math.sqrt(5)) / 2, v = []; for (const a of [1, -1]) for (const b of [g, -g]) v.push([0, a, b], [a, b, 0], [b, 0, a]); return v.map(d => { const l = Math.hypot(...d); return d.map(q => q / l); }); }
+    case 'ring': return Array.from({ length: n }, (_, i) => { const a = Math.PI / 2 + i / n * 2 * Math.PI; return [Math.cos(a), Math.sin(a), 0]; });
+    case 'sphere': return fibDirs(n, rng, R, 0);
+    default: return [...axes, ...corners];     // cube
+  }
+}
+function clusterDirs(P, rng, R) {
+  const tl = (+P.tilt || 0) * Math.PI / 180, ct = Math.cos(tl), st = Math.sin(tl);
+  const C = clusterCenters(P, rng, R).map(([x, y, z]) => [x, y * ct - z * st, y * st + z * ct]);
+  const n = Math.max(0, Math.round(P.stars)), cosMax = Math.cos(clamp(+P.clusterCone || 0, 0, 90) * Math.PI / 180), jit = (+P.dirJit || 0) * Math.PI / 180, out = [];
+  for (let i = 0; i < n; i++) {
+    const c = C[i % C.length], a = Math.abs(c[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0];
+    let u = [c[1] * a[2] - c[2] * a[1], c[2] * a[0] - c[0] * a[2], c[0] * a[1] - c[1] * a[0]]; const lu = Math.hypot(...u) || 1; u = u.map(q => q / lu);
+    const w = [c[1] * u[2] - c[2] * u[1], c[2] * u[0] - c[0] * u[2], c[0] * u[1] - c[1] * u[0]];
+    // 锥内按立体角均匀：cosθ 在 [cos 张角, 1] 均匀
+    const cz = 1 - rng.u() * (1 - cosMax), sz = Math.sqrt(Math.max(0, 1 - cz * cz)), ph = rng.u() * 2 * Math.PI;
+    let d = [0, 1, 2].map(k => c[k] * cz + (u[k] * Math.cos(ph) + w[k] * Math.sin(ph)) * sz);
+    if (jit > 0) d = d.map(q => q + rng.n() * jit);
+    const l = Math.hypot(...d) || 1; out.push([d[0] / l, d[1] / l, d[2] / l, 1]);
+  }
+  return out;
 }
 // 上升：竖直二次阻力，给定开花高度求出膛速度与到顶时间
 function riseInfo(P) {

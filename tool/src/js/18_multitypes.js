@@ -15,7 +15,8 @@ const MT_RAMP_SILVER = { ramp0: '#000000', ramp1: '#5d6680', ramp2: '#dfe6ff', r
 // 焰色（发色剂见原理文档第 2 节；sRGB 起点，按游戏内大小看过调）
 const MT_COL = { red: '#ff3b2a', magenta: '#ff66c4', pink: '#ff7ac4', green: '#5cff66', lime: '#b4ff4a', blue: '#4f7bff', purple: '#b35cff',
   yellow: '#ffc53a', orange: '#ff8a2e', silver: '#eef2ff', gold: '#ffd29a', warm: '#fff0da',
-  lemon: '#eaff52', mint: '#c8ffb0', redOrange: '#ff5a2a', amber: '#ffa640' };     // 4.9.6 第二批：柠黄 / 白绿（球形 D 的四段）、橙红点火药（球形 C 的芯）、橙金芯
+  lemon: '#eaff52', mint: '#c8ffb0', redOrange: '#ff5a2a', amber: '#ffa640',
+  violetBlue: '#6a4dff' };     // 4.9.15 参考图 1 的铜蓝（相机里偏紫，光晕 RGB ≈ 62, 36, 151）     // 4.9.6 第二批：柠黄 / 白绿（球形 D 的四段）、橙红点火药（球形 C 的芯）、橙金芯
 // 半径比（芯 / 亲星）：参考图（八重芯）量到 1 : 0.61 : 0.32；层数多时每层间距按同样的比例收（原理文档第 3 节）
 const MT_RATIO = { 1: [0.55], 2: [0.61, 0.32], 3: [0.70, 0.48, 0.27], 4: [0.74, 0.55, 0.38, 0.22], 5: [0.78, 0.62, 0.47, 0.33, 0.19] };
 // 芯星比亲星小 → 终端速度低（vt ∝ √星径）；层越靠里越小
@@ -52,12 +53,14 @@ const MULTI_TYPES = [
       mtCore('芯 1 · 洋红', 'Magenta', MT_RATIO[2][0], MT_COL.magenta, { stars: 360, headSize: 1.0 }),
       mtCore('芯 2 · 绿', 'Green', MT_RATIO[2][1], MT_COL.lime, { stars: 200 })] },
   { id: 'yaeBlueBotan', name: '八重芯青牡丹 · 金银芯', en: 'YaeshinBlueBotan', group: 0, burn: 2.9,
-    note: '用户参考图 1：亲星是青色牡丹（无尾的铜蓝光点），芯 1 金色长尾菊（金线就是芯星的炭火尾），芯 2 银白短尾菊（中心一团白）。和「八重芯 · 银菊洋红绿」反过来：外层无尾、里面带尾。',
-    src: '用户参考图 1（2026-10-05 20:43）；伊势神宫奉纳花火大会玉名「八重芯ブルー牡丹」（伊势市 PDF）', layers: [
-      mtOyaBotan('亲星 · 青牡丹', 'Blue', MT_COL.blue, { headSize: 1.15, stars: 320 }),
-      // 金线要直、要长：火花几乎不继承星速、少下坠、寿命长（留在出生的地方连成线）
-      mtL('芯 1 · 金长尾菊', 'Gold', 'kiku', 0.8, { stars: 120, headSize: 0.85, headBright: 1.2, sparkRate: 260, sparkLife: 1.15, sparkSpread: 1.0, sparkInherit: 0.06, sparkGrav: 0.35, T0: 2250, cooling: 0.36 }, MT_COL.gold, MT_RAMP_GOLD),
-      mtL('芯 2 · 银白菊', 'Silver', 'kiku', 0.38, { stars: 300, headSize: 1.0, headBright: 1.4, sparkRate: 170, sparkLife: 0.35, T0: 2800, cooling: 0.3 }, MT_COL.silver, MT_RAMP_SILVER, { hi: 1.6 })] },
+    note: '用户参考图 1（4.9.15 按 3D 重做）：亲星青牡丹（无尾，偏紫的铜蓝）；金线是单独一层金菊，112 颗星分成 14 簇（立方 6 轴 + 8 角），顺轴看就是 8 束——轴向 4 束长、对角 4 束短，对着镜头的 2 簇缩进中心；金色火花亮得久、几乎不动，整条飞行路径留在空中；里面一圈橙色短尾芯、中心一团过曝的银白芯。',
+    src: '用户参考图 1（2026-10-05 20:43、10-06 14:55 / 15:22 指出金线分 8 簇）；伊势神宫奉纳花火大会玉名「八重芯ブルー牡丹」；原理 analysis/原理/多层花型库.md 1c', layers: [
+      mtOyaBotan('亲星 · 青牡丹', 'Blue', MT_COL.violetBlue, { headSize: 1.0, stars: 420 }),
+      // 金线：分簇（14 簇 × 8 颗；倾斜 3° 让对角两簇微微错开、不完全重合；金星终端速度试过 26：早期飞不到参考的 0.9，退回默认）；火花几乎不继承星速、散得少、下坠小、冷却很慢、寿命长 → 从中心到星头一整条亮线（4.7.0 起老火花先暗，冷却要很慢才连得回中心）
+      mtL('金线 · 金菊（分簇）', 'GoldSpokes', 'kiku', 0.9, { stars: 112, pattern: 'cluster', clusterLayout: 'cube', clusterCone: 7, tilt: 3, headSize: 0.75, headBright: 0.6,
+        sparkRate: 300, sparkLife: 2.0, sparkLifeJit: 20, sparkSpread: 0.35, sparkInherit: 0.02, sparkGrav: 0.15, sparkDrag: 4, T0: 2250, cooling: 0.1 }, MT_COL.gold, MT_RAMP_GOLD),
+      mtL('芯 1 · 橙菊（毛圈）', 'Orange', 'kiku', 0.58, { stars: 320, headSize: 0.8, headBright: 1.2, sparkRate: 130, sparkLife: 0.32, T0: 2150, cooling: 0.4 }, MT_COL.amber, MT_RAMP_GOLD),
+      mtL('芯 2 · 银白菊', 'Silver', 'kiku', 0.4, { stars: 340, headSize: 1.0, headBright: 1.4, sparkRate: 170, sparkLife: 0.35, T0: 2800, cooling: 0.3 }, MT_COL.silver, MT_RAMP_SILVER, { hi: 1.6 })] },
   { id: 'yaeHenka', name: '八重芯变化菊', en: 'YaeshinHenka', group: 0, burn: 3.0,
     note: '亲星先「引」（橙色带尾、星头暗，0.5 s）再变红、1.55 s 变绿；两层芯同一时刻变色（青 → 银白、黄 → 红）。各层同开、同变、同灭。',
     src: '大曲 / 土浦競技大会常见玉名「八重芯変化菊」；变色星 = 分层星（外层先烧）', layers: [
@@ -186,7 +189,7 @@ const MULTI_TYPES = [
 ];
 const MULTI_BY_ID = Object.fromEntries(MULTI_TYPES.map(r => [r.id, r]));
 // 每层贴图曝光（analysis/scripts/多层模板曝光.py 按 autoExposure40 算的，和花型模板 EXPOSURE40 同一算法）；没有就用花型模板的
-const MT_EXPOSURE = {"shinKiku": [0.833, 2.49], "shinBotan": [2.9, 2.49], "yaeshin": [0.613, 2.45, 1.62], "yaeHenka": [1.97, 2.54, 1.64], "mieshin": [0.843, 2.58, 2.5, 1.49], "yoeshin": [2.87, 2.63, 2.54, 1.79, 1.4], "itsueHenka": [1.97, 2.68, 2.57, 2.03, 1.67, 1.38], "yaeStrobe": [2.91, 2.52, 1.66], "kamuroShin": [2.26, 2.57], "crackleShin": [2.9, 1.86], "strobeShin": [2.87, 2.23], "fourColorCrackle": [3.07, 3.04, 3.07, 3.07, 1.73], "yaeBlueBotan": [2.78, 0.546, 0.136], "jisaShinBotan": [2.07, 2.37], "henkaKikuShin": [2.06, 2.45], "mieStrobeKiku": [1.95, 2.58, 2.5, 1.49], "kiraShin": [2.9, 0.684], "shiyuShin": [0.647, 2.51, 2.82], "palmShin": [0.284, 1.62], "hikiSakiKiku": [1.97], "henkaBotan": [2.9], "mieKamuroSaki": [2.6, 3.21, 2.76, 2.52, 1.88], "ginKamuro": [1.79], "ginYanagi": [0.582], "colorSenrin": [2.08, 1.91, 1.27, 1.98], "yanagiTips": [0.772, 2.7]};
+const MT_EXPOSURE = {"shinKiku": [0.833, 2.49], "shinBotan": [2.9, 2.49], "yaeshin": [0.613, 2.45, 1.62], "yaeHenka": [1.97, 2.54, 1.64], "mieshin": [0.843, 2.58, 2.5, 1.49], "yoeshin": [2.87, 2.63, 2.54, 1.79, 1.4], "itsueHenka": [1.97, 2.68, 2.57, 2.03, 1.67, 1.38], "yaeStrobe": [2.91, 2.52, 1.66], "kamuroShin": [2.26, 2.57], "crackleShin": [2.9, 1.86], "strobeShin": [2.87, 2.23], "fourColorCrackle": [3.07, 3.04, 3.07, 3.07, 1.73], "jisaShinBotan": [2.07, 2.37], "henkaKikuShin": [2.06, 2.45], "mieStrobeKiku": [1.95, 2.58, 2.5, 1.49], "kiraShin": [2.9, 0.684], "shiyuShin": [0.647, 2.51, 2.82], "palmShin": [0.284, 1.62], "hikiSakiKiku": [1.97], "henkaBotan": [2.9], "mieKamuroSaki": [2.6, 3.21, 2.76, 2.52, 1.88], "ginKamuro": [1.79], "ginYanagi": [0.582], "colorSenrin": [2.08, 1.91, 1.27, 1.98], "yanagiTips": [0.772, 2.7], "yaeBlueBotan": [2.92, 0.201, 0.81, 0.136]};
 // 每层的显示强度（Color Over Life 倍数）：各层贴图都按自己最亮处归一，这里按游戏内大小看过定层间明暗（亲星最亮、芯略暗）
 // 彩色芯按颜色的亮度补：铜蓝、锶红、紫这些亮度低的色给高一点，柠檬绿、黄、银白不补（(0.45 / 相对亮度)^0.5，夹在 0.9–1.45）
 const mtLum = hex => { const c = hexToLin(hex); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
