@@ -1,11 +1,11 @@
 {
  "format": "fwl.myrecipe/1",
  "key": "my:fxmuuzfeg7",
- "tool": "4.5.3",
+ "tool": "4.9.17",
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmuuzfeg7",
  "name": "Crackle",
- "at": "2026-10-05 20:12",
+ "at": "2026-10-06 19:55",
  "base": "我的效果",
  "snap": {
   "kind": "combo",
@@ -164,8 +164,8 @@
      "strobeStart": 0.4,
      "glitter": 0,
      "glitterDelay": 0.25,
-     "crackle": 100,
-     "crackleDelay": 0.47,
+     "crackle": 80,
+     "crackleDelay": 0.43,
      "crackleR": 7.4,
      "crackleV": 5,
      "branch": 0,
@@ -366,7 +366,13 @@
      "unitFlip": 0,
      "cellPad": 2,
      "autoGrid": 1,
-     "type": "crackle"
+     "type": "crackle",
+     "crackleSize": 0.54,
+     "crackleSizeJit": 27,
+     "crackleBright": 2.2,
+     "crackleTau": 0.028,
+     "crackleLife": 1,
+     "crackleDelayJit": 100
     },
     "M": {
      "stages": [
