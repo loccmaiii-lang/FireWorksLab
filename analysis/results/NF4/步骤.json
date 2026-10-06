@@ -1,0 +1,30 @@
+[
+ {
+  "name": "受影响 14 个模板每层曝光（只写 json）",
+  "script": "多层模板.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.3
+ },
+ {
+  "name": "尾迹复查（4.6.0 对 4.9.18，套上新曝光）",
+  "script": "尾迹新旧对比.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ },
+ {
+  "name": "受影响模板定帧（套上新曝光）",
+  "script": "多层模板.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "全部缩略图重渲（套上新曝光）",
+  "script": "渲染缩略图_截图法.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.6
+ }
+]
