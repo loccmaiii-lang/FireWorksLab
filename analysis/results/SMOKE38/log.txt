@@ -1,0 +1,56 @@
+13:31:51 开始：4.9.8（参数栏交互：4.9.7 切页 / 撤销 / 旧存档提示 + 4.9.8 右栏布局）本机全面冒烟 + 界面状态检查（真烘焙）（界面冒烟检查）
+13:38:13 全模板_henka：5 s 
+13:38:13 全模板_strobe：5 s 
+13:38:13 全模板_glitter：5 s 
+13:38:13 全模板_crackle：5 s 
+13:38:13 全模板_matsuba：5 s 
+13:38:13 全模板_crossette：5 s 
+13:38:13 全模板_ochiba：5 s 
+13:38:13 全模板_jisa：5 s 
+13:38:13 全模板_ring：5 s 
+13:38:13 全模板_saturn：5 s 
+13:38:13 全模板_kata：5 s 
+13:38:13 全模板_water：5 s 
+13:38:13 全模板_rise：4 s 
+13:38:13 全模板_tailS：6 s 
+13:38:13 全模板_tailM：7 s 
+13:38:13 全模板_tailL：7 s 
+13:38:13 全模板_trailS：5 s 
+13:38:13 全模板_trailM：5 s 
+13:38:13 全模板_trailL：5 s 
+13:38:13 全模板_fountain：4 s 
+13:38:13 全模板_falls：4 s 
+13:38:13 全模板_wheel：5 s 
+13:38:13 全模板_fan：4 s 
+13:38:13 全模板_barrage：4 s 
+13:38:13 全模板_shikake：5 s 
+13:38:13 全模板_physS：4 s 
+13:38:13 全模板_physM：4 s 
+13:38:13 全模板_physL：4 s 
+13:38:13 全效果_jinmangju：7 s 
+13:38:13 全效果_trail_v5：5 s 
+13:38:13 全效果_trail_phys：9 s 
+13:38:13 全效果_qiuxing_a：105 s 
+13:38:13 全效果_qiuxing_b：7 s 
+13:38:13 全效果_qiuxing_c：6 s 
+13:38:13 全效果_qiuxing_d：12 s 
+13:38:13 全效果_qingning：6 s 
+13:38:13 全效果_wancai：6 s 
+13:38:13 全效果_hongchao：32 s 
+13:38:13 全效果_hiki_nishiki：12 s 
+13:38:13 ✅ 没有报错
+13:38:13 界面冒烟：✅ 没有报错
+13:48:04 ✅ W5 {"曲线行": {"miss": [], "where": {"flashBrightCurve": "开花闪光›亮度", "flashSizeCurve": "开花闪光›大小", "branchBrightCurve": "分叉火花›亮度", "crackleSizeCurve": "爆裂›大小", "crackleBrightCurve": "爆裂›亮度", "branchSizeCurve": "分叉火花›大小", "starSizeCurve": "星›大小", "starBrightCurve": "星›亮度", "sparkSizeCurve": "火花›大小", "sparkBrightCurve": "火花›亮度", "emberBrightCurve": "余烬›亮度", "emberSizeCurve": "余烬›大小", "subSizeCurve": "子花›大小", "subBrightCurve": "子花›亮度", "x1SizeCurve": "自定义 1›大小", "x1BrightCurve": "自定义 1›亮度", "x2SizeCurve": "自定义 2›大小", "x2BrightCurve": "自定义 2›亮度", "rtFSizeCurve": "细火花›大小", "rtFBrightCurve": "细火花›亮度", "rtMSizeCurve": "中火花›大小", "rtMBrightCurve": "中火花›亮度", "rtCSizeCurve": "粗火花›大小", "rtCBrightCurve": "粗火花›亮度", "rtPopSizeCurve": "爆亮›大小", "rtPopBrightCurve": "爆亮›亮度", "rtLaunchSizeCurve": "发射口›闪光", "rtLaunchBrightCurve": "发射口›闪光", "rtLaunchSparkSizeCurve": "发射口›火花", "rtLaunchSparkBrightCurve": "发射口›火花", "rtGlowSizeCurve": "星头›光晕", "rtGlowBrightCurve": "星头›光晕", "rtESizeCurve": "落火›大小", "rtEBrightCurve": "落火›亮度", "rtSmokeSizeCurve": "烟带›大小", "rtSmokeBrightCurve": "烟带›亮度"}, "def": []}, "模拟": {"star": [0.8488720705239823, 0.21221801763099557], "crk": [{"I": 0.07578958570957184, "sz": 1}, {"I": 0.15157917141914368, "sz": 3}]}, "着色器缺": []} （2.0 s）
+13:48:04 ✅ W6 {"shown": true, "blocked": true, "cancelled": true, "dl": 0, "after": {"on": false, "hidden": true}} （2.3 s）
+13:48:04 ✅ W7 {"senrin.subKeep": {"want": 0.35, "ok": true}, "senrin.subSpeedJit": {"want": 3, "ok": true}, "senrin.subGrav": {"want": 1, "ok": true}, "senrin.subFlash": {"want": 0.3, "ok": true}, "senrin.flashR": {"want": 4.27, "ok": true}, "senrin.subSize": {"want": 0.6, "ok": true}, "senrin.subBright": {"want": 1, "ok": true}, "senrin.subFlashR": {"want": 2.25, "ok": true}, "senrin.subVt": {"want": 20, "ok": true}, "tailM.rtFadeFps": {"want": 30, "ok": true}, "tailM.rtVt": {"want": 44.1, "ok": true}, "sub": true, "kiku": {"pinchHidden": true, "tag": true, "btn": "旧（待删）▸ 7 项没用上", "open": true, "closed": true, "search": true, "inUse": true}, "changed": []} （5.7 s）
+13:48:04 ✅ W8 {"菊": {"name": "菊", "chips": ["还没导出", "花型模板", "原始"], "hidden": false, "ab": ""}, "改了": {"name": "菊", "chips": ["● 没保存", "还没导出", "花型模板", "原始"], "hidden": false, "ab": "贴图是旧的 · 按 B 烘"}, "导出后": ["● 没保存", "素材包 ✓", "花型模板", "原始"], "导出后又改": ["● 没保存", "素材包要重导", "花型模板", "原始"], "AI jinmangju": ["素材包 ✓", "AI · JM4-40", "原始"]} （6.0 s）
+13:48:04 ✅ W9 {"时间约束": {"b": 2.5, "a1": {"burn": 4.3, "stop": 3.3, "msg": "改「火花停止时刻」，跟着变了：燃烧时间 2.50 → 4.30 s、序列时长 3.85 → 5.65 s（时间先后不能乱：火花在燃烧期间、入点在出点前、序列盖住内容；要单独改，在时间轴上关掉「跟着走」「粘连」）"}, "a2": {"burn": 1.25, "stop": 1.25, "msg": "改「燃烧时间」，跟着变了：火花停止时刻 3.30 → 1.25 s、序列时长 5.65 → 3.15 s（时间先后不能乱：火花在燃烧期间、入点在出点前、序列盖住内容；要单独改，在时间轴上关掉「跟着走」「粘连」）"}}, "超出滑杆": {"v": 100, "max": 40, "over": true, "tip": "超出滑杆的常用范围（0–40），照样起作用；滑杆停在一头", "back": false}, "预览泛光": {"shown": true, "after": 1, "want": 1, "gen": 0, "label": "预览泛光（引擎里没有）"}} （2.2 s）
+13:48:04 ✅ W10 {"prompt": 0, "confirm": 1, "askText": {"open": true, "act": "改名", "v": "新名"}, "askConfirm": {"open": true, "y": true, "n": false}, "unbound": [], "toolsRows": 16, "?": {"open": true, "rows": 16, "n": 16, "closed": true}, "L": [true, false, true], "Esc 关菜单": {"menu": false, "side": false, "right": false}, "取消烘焙": {"s0": 150, "mid": {"baking": true, "btn": true, "ab": "烘焙中…"}, "after": {"baking": false, "same": true, "stale": true, "ab": "贴图是旧的 · 按 B 烘", "btn": false}, "idle": {"calls": 0, "baking": false}, "again": {"stale": false, "stars": 154, "want": 154}}} （6.3 s）
+13:48:04 ✅ W11 {"wrong": [], "notEmpty": [], "flash": [{"sz": 13.5, "I": 24.662569046020508}, {"sz": 27, "I": 98.65027618408203}], "shader": [], "same": true, "rt": {"SparksFine": {"size": 2, "col": 0.779}, "SparksMid": {"size": 2, "col": 0.926}, "SparksCoarse": {"size": 2, "col": 0.853}, "Embers": {"size": 2, "col": 0.5}, "HeadGlow": {"size": 2, "col": 0.5}, "SparkPops": {"size": 2, "col": null}, "LaunchGlow": {"size": 2, "col": 0.5}, "LaunchSparks": {"size": 2, "col": 0.5}, "Smoke": {"size": 2, "col": 0.5}}, "inert": {"fountain": "地面的喷口 / 灯芯亮点一直亮着，没有寿命；只有扇形、连发的彗星按「彗星燃烧」算寿命", "fan": ""}} （2.1 s）
+13:48:04 ✅ W12 {"菊": {"mname": false, "shown": "Kiku_01", "eff": "Kiku_01", "safe0": "Kiku_01", "deliv": true, "focus": "dvBase", "after": {"shown": "Kiku_Check_9", "safe": "Kiku_Check_9", "eff": "Kiku_Check_9"}, "reset": {"shown": "Kiku_01", "safe": "Kiku_01"}}, "V5": {"base": true, "name": "TrailS_01"}} （4.4 s）
+13:48:04 ✅ W13 {"mods": [["直接调", true], ["算出来的", true], ["导出方案", false], ["帧", false], ["贴图", false], ["画质", false], ["曝光光晕", false]], "direct": {"rows": ["outPC", "outMobile", "cutIn", "cutOut", "specBox", "cellPad", "exposure"], "spec": ["x-texW", "x-texH", "x-cols", "x-rows"]}, "calc": ["outSummary", "outCell", "pageTarget", "holdTicks"], "hold": {"linked": true, "gray": true, "shown": 2, "calc": 2}, "cellLabel": "自动：现在 512 px（贴图宽 ÷ 列数，至少 512）", "plan": {"auto": 3, "two": 2, "F0": 44, "F2": 66}, "burstSecHidden": true, "help": "合里「同一批星」的层（种子、星数、初速、终端速度相同）会联动，改一处几层一起变。", "cats": {"物理量": 317, "引擎字段": 98, "只读": 8, "预览设置": 5, "旧（待删）": 82}, "mig": {"shown": true, "text": "打开的是旧存档，系统按现在的规则改了 / 不再用这些（画面会和当时存的不一样）：「结尾」原来是「最后 0.3 s 整体淡出」，不再起作用：5.0 起没有这个选项，等火花自然灭完（4.7.0）；「冷却方式」原来是「按各自寿命」，不再起作用：5.0 起没有这个选项，按实际年龄冷却、老的先暗（4.7.0）", "closed": true, "afterTemplate": true}} （4.0 s）
+13:48:04 ✅ W14 {"入口缺": [], "1366×768": [], "1366×768 参数行": {"菊 › 星": 10, "金锦层 › 火花": 8, "顶上": "金锦层›火花"}, "1920×1080": [], "1920×1080 参数行": {"菊 › 星": 15, "金锦层 › 火花": 12, "顶上": "金锦层›火花"}} （22.5 s）
+13:48:04 ✅ W15 {"切走前": {"t": 1.23, "sel": 1, "tab": "火花", "solo": 1, "scroll": 260, "tools": true}, "工具页": {"tools": true, "params": false, "layers": false, "tab": "combo", "t": 1.23}, "切回来": {"t": 1.23, "sel": 1, "tab": "火花", "solo": 1, "scroll": 260, "params": true}, "1 定位": {"sel": 1, "scope": "金锦层›火花", "solo": -1, "mute": 0, "sticky": "sticky"}, "2 改寿命": {"v0": 2.8, "v": 3.2, "layerP": 3.2, "st": "改过", "chg": true, "t": 1.2, "gen": true, "stale": true, "ab": "贴图是旧的 · 按 B 烘"}, "3 改颜色": {"inView": true, "sum": "本层颜色 · 这一层所有发射器共用", "changed": true, "other": true, "backText": "← 回到 火花 › 颜色", "s0": 383.3333435058594, "s1": 383.3333435058594, "tab": "火花"}, "4 调接力": {"inEff": true, "d0": 0, "d": 0.5, "cell": 0.5, "b0": 11.1455, "b1": 15.0888, "other": true}, "6 撤销一次": {"d": 0, "life": 3.2, "col": "#123456"}, "6 保存": {"id": "fxmuw9a4gk", "life": 3.2, "d": 0, "col": "#123456", "n": 2}, "6 刷新重开": {"id": "fxmuw9a4gk", "life": 3.2, "d": 0, "col": "#123456", "n": 2}, "撤销步数": {"两个参数紧挨着": 2, "拖动中途停 0.9 s": 1, "数值框回车": 1}, "撤销一次": [{"stars": 1691, "burn": 6.35}, {"stars": 1691, "burn": 6.35}]} （41.5 s）
+13:48:04 ✅ L1 版本 burn 1.4 ✓、切层后贴图按新参数 ✓、14 张贴图按命名规则 ✓、PC + 手机 cascade ✓、缩放抖动 [0, 0] ✓、取景收紧 ['fixed', 'none'] （68.5 s）
+13:48:04 界面状态检查：❌ 有不过的项，见 界面状态检查.json
+13:48:04 完成，用时 16.2 分钟
