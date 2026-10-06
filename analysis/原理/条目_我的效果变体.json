@@ -917,6 +917,8 @@
     "maxHold": 2,
     "maxHoldBurn": 2,
     "burstSec": 0.398,
+    "cols": 3,
+    "rows": 3,
     "crackleSize": 0.54,
     "crackleSizeJit": 27,
     "crackleTau": 0.028,
@@ -938,7 +940,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 140 m ≈ 4.3 号）缩放到 3 号（直径约 60 m）（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
+   "note": "按号数表从原样（直径 140 m ≈ 4.3 号）缩放到 3 号（直径约 60 m）；导出回放检查：屏幕放大 1.06（3 号花径 59 m，爆裂和下坠的余量几乎不随玉变小，面片是花径的 1.7 倍）→ 格子 3 × 3（单格 682 px）（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -1301,6 +1303,8 @@
     "crackleV": 5,
     "maxHold": 2,
     "maxHoldBurn": 2,
+    "cols": 3,
+    "rows": 3,
     "crackleSize": 0.54,
     "crackleSizeJit": 27,
     "crackleTau": 0.028,
@@ -1322,7 +1326,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
+   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠；导出回放检查：屏幕放大 1.01（冠下垂，面片是花径的 1.55 倍）→ 格子 3 × 3（单格 682 px）（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3783,8 +3787,7 @@
     "visTo": 4.3065,
     "prePivot": 0,
     "branch": 3,
-    "branchAt": 0.92,
-    "zoom": "on"
+    "branchAt": 0.92
    },
    "m": {
     "stages": [
@@ -3801,7 +3804,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）；导出回放检查：中心抖动 3.77 px（Zoom 取景；时差每颗星先后点亮，亮部中心本来就会走）→ 固定取景（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3856,8 +3859,7 @@
     "glitterDelay": 1.43,
     "crackleV": 17.5,
     "branch": 1,
-    "branchAt": 0.8,
-    "zoom": "on"
+    "branchAt": 0.8
    },
    "m": {
     "stages": [
@@ -3874,7 +3876,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）；导出回放检查：和第 1 层一样改固定取景（同一批星的两层取景一致）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -5019,7 +5021,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 3 号 MYJC-S03-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.1772,
     "duration": 2.728,
     "stars": 49,
     "v0": 46.0,
@@ -5090,7 +5092,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 3 号 MYJC-S03-2",
    "p": {
     "renderVer": 40,
-    "exposure": 2.8,
+    "exposure": 4.5486,
     "duration": 2.106,
     "stars": 49,
     "v0": 46.0,
@@ -5150,7 +5152,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 5 号 MYJC-S05-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.1834,
     "duration": 3.703,
     "stars": 71,
     "v0": 281.2,
@@ -5221,7 +5223,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 5 号 MYJC-S05-2",
    "p": {
     "renderVer": 40,
-    "exposure": 2.8,
+    "exposure": 3.2164,
     "duration": 2.858,
     "stars": 71,
     "v0": 281.2,
@@ -5281,7 +5283,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 尺玉 MYJC-S10-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.2144,
     "duration": 5.457,
     "stars": 125,
     "v0": 525.6,
@@ -5352,7 +5354,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 尺玉 MYJC-S10-2",
    "p": {
     "renderVer": 40,
-    "exposure": 2.8,
+    "exposure": 3.7592,
     "duration": 4.211,
     "stars": 125,
     "v0": 525.6,
@@ -5412,7 +5414,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 2 尺 MYJC-S20-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.2732,
     "duration": 7.6,
     "stars": 216,
     "v0": 383.5,
@@ -5484,7 +5486,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 2 尺 MYJC-S20-2",
    "p": {
     "renderVer": 40,
-    "exposure": 2.8,
+    "exposure": 2.6125,
     "duration": 5.866,
     "stars": 216,
     "v0": 383.5,
@@ -5545,7 +5547,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 3 尺 MYJC-S30-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.3138,
     "duration": 8.77,
     "stars": 298,
     "v0": 314.0,
@@ -5617,7 +5619,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 3 尺 MYJC-S30-2",
    "p": {
     "renderVer": 40,
-    "exposure": 2.8,
+    "exposure": 2.3957,
     "duration": 6.768,
     "stars": 298,
     "v0": 314.0,
@@ -5678,7 +5680,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 4 尺 MYJC-S40-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.3364,
     "duration": 10.134,
     "stars": 405,
     "v0": 507.5,
@@ -5750,7 +5752,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 4 尺 MYJC-S40-2",
    "p": {
     "renderVer": 40,
-    "exposure": 2.8,
+    "exposure": 2.5676,
     "duration": 7.821,
     "stars": 405,
     "v0": 507.5,
@@ -5811,7 +5813,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 冠 MYJC-K-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.278,
     "duration": 6.1,
     "stars": 100,
     "v0": 377,
@@ -5926,7 +5928,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 柳 MYJC-Y-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.1247,
     "duration": 7.1,
     "stars": 35,
     "v0": 377,
@@ -6043,7 +6045,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 环 MYJC-R-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.1711,
     "duration": 4.794,
     "stars": 100,
     "v0": 377,
@@ -6159,7 +6161,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 土星 MYJC-T-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.1834,
     "duration": 4.794,
     "stars": 100,
     "v0": 377,
@@ -6277,7 +6279,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 万華鏡 MYJC-M-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.2071,
     "duration": 4.794,
     "stars": 100,
     "v0": 377,
@@ -6395,7 +6397,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 心形 MYJC-H-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.2338,
     "duration": 4.794,
     "stars": 100,
     "v0": 377,
@@ -6509,7 +6511,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 时差 MYJC-J-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.2181,
     "duration": 4.98,
     "stars": 100,
     "v0": 377,
@@ -6576,7 +6578,7 @@
    "tags": "我的效果 变体 金曜菊-窜天猴 时差 MYJC-J-2",
    "p": {
     "renderVer": 40,
-    "exposure": 2.8,
+    "exposure": 4.5486,
     "duration": 6.81,
     "stars": 100,
     "v0": 377,
@@ -6677,7 +6679,7 @@
     "headInt": 1.875,
     "tailInt": 1
    },
-   "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、金色、和亲星同开同灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、青色、和亲星同开同灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6727,7 +6729,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、金色、和亲星同开同灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、青色、和亲星同开同灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6754,7 +6756,7 @@
     "lastFlare": 0,
     "seed": 18,
     "duration": 2.55,
-    "exposure": 2.5,
+    "exposure": 0.8064,
     "renderVer": 40,
     "dirJit": 1.2
    },
@@ -6762,7 +6764,7 @@
     "stages": [
      [
       0,
-      "#ffd29a"
+      "#4f7bff"
      ]
     ],
     "xw": 0.1,
@@ -6770,10 +6772,10 @@
     "ramp1": "#4a4f5c",
     "ramp2": "#c9ced9",
     "ramp3": "#ffffff",
-    "headInt": 1.3,
+    "headInt": 2.4,
     "tailInt": 1
    },
-   "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、金色、和亲星同开同灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、青色、和亲星同开同灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -9546,7 +9548,7 @@
     "芯"
    ],
    "tags": "我的效果 变体 金曜菊-窜天猴 芯入 MYJC-C",
-   "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、金色、和亲星同开同灭）"
+   "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、青色、和亲星同开同灭）"
   },
   {
    "id": "MYHK-O",

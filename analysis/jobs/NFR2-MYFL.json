@@ -1,0 +1,233 @@
+{
+ "id": "NFR2-MYFL",
+ "type": "script",
+ "priority": 1,
+ "name": "全程回放检查：分裂星 · 大小与造型（14 档）",
+ "steps": [
+  {
+   "name": "原样（Crossette）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette.jpg",
+    "analysis/local/输出/素材包/Crossette",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "3 号（Crossette_03）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_03.jpg",
+    "analysis/local/输出/素材包/Crossette_03",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "尺玉（Crossette_10）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_10.jpg",
+    "analysis/local/输出/素材包/Crossette_10",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "2 尺（Crossette_20）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_20.jpg",
+    "analysis/local/输出/素材包/Crossette_20",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "3 尺（Crossette_30）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_30.jpg",
+    "analysis/local/输出/素材包/Crossette_30",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "4 尺（Crossette_40）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_40.jpg",
+    "analysis/local/输出/素材包/Crossette_40",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "冠（Crossette_Crown）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Crown.jpg",
+    "analysis/local/输出/素材包/Crossette_Crown",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "柳（Crossette_Willow）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Willow.jpg",
+    "analysis/local/输出/素材包/Crossette_Willow",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "环（Crossette_Ring）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Ring.jpg",
+    "analysis/local/输出/素材包/Crossette_Ring",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "土星（Crossette_Saturn）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Saturn.jpg",
+    "analysis/local/输出/素材包/Crossette_Saturn",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "万華鏡（Crossette_Kaleido）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Kaleido.jpg",
+    "analysis/local/输出/素材包/Crossette_Kaleido",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "心形（Crossette_Heart）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Heart.jpg",
+    "analysis/local/输出/素材包/Crossette_Heart",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "时差（Crossette_Jisa）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Jisa.jpg",
+    "analysis/local/输出/素材包/Crossette_Jisa",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "芯入（Crossette_Core）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Core.jpg",
+    "analysis/local/输出/素材包/Crossette_Core",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  }
+ ],
+ "note": "对话框新花型。按 cascade.json 的播法合成整段 8 个时刻（不带参考视频，所以能采到大玉的后半段；GPU 光点 / 单束层没有贴图，跳过）；有不过的项退出码 1，照样记下继续下一档。"
+}

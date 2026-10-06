@@ -32,6 +32,10 @@ EN_SFX = {'S03': '03', 'S05': '05', 'S10': '10', 'S20': '20', 'S30': '30', 'S40'
 # 金曜菊-A 2–4 尺第 2 层「过曝 2.4–3.4%」不算：那时回放检查.py 多层包没读 Ramp、按白色算的过曝（已修），不压曝光，等重导后按金色再测。
 # 导出回放检查（NFE-*）不过的，按测出来的改（键 = 条目；expoMul 乘在写回的曝光上；其余键直接写进参数）。依据见 analysis/results/NFE-*/回放检查.json
 FIXES = {
+    'MYCR-S03': {'cols': 3, 'rows': 3, '_why': '屏幕放大 1.06（3 号花径 59 m，爆裂和下坠的余量几乎不随玉变小，面片是花径的 1.7 倍）→ 格子 3 × 3（单格 682 px）'},
+    'MYCR-K': {'cols': 3, 'rows': 3, '_why': '屏幕放大 1.01（冠下垂，面片是花径的 1.55 倍）→ 格子 3 × 3（单格 682 px）'},
+    'MYJA-J-1': {'zoom': 'off', '_why': '中心抖动 3.77 px（Zoom 取景；时差每颗星先后点亮，亮部中心本来就会走）→ 固定取景'},
+    'MYJA-J-2': {'zoom': 'off', '_why': '和第 1 层一样改固定取景（同一批星的两层取景一致）'},
     'MYJA-K-1': {'cutOut': 0, 'visTo': 0, 'preFrom': -1, '_why': '末尾空帧 2（第 1 层你设的出点在看得见的结尾之后）→ 出点改自动（最后一次看得见）'},
     'MYJA-S20-1': {'cutOut': 0, 'visTo': 0, 'preFrom': -1, '_why': '末尾空帧 1 → 出点改自动'},
     'MYJA-S30-1': {'cutOut': 0, 'visTo': 0, 'preFrom': -1, '_why': '末尾空帧 2 → 出点改自动'},
@@ -180,7 +184,8 @@ WARM = lambda hexs: any(int(h[1:3], 16) > int(h[5:7], 16) + 40 for h in hexs)
 def core_layer(P0, M0, R0):
     """芯入：加一圈无尾牡丹芯（半径 0.5、对比色：暖色效果配青，冷色配金）、和亲星同时开同时灭"""
     cols = [c for _, c in (M0.get('stages') or [[0, '#ffffff']])]
-    col = '#4f7bff' if WARM(cols) or cols == ['#ffffff'] else '#ffd29a'
+    hot = [M0[k] for k in ('ramp2', 'ramp3') if M0.get(k)]     # 颜色多半在 Ramp 里（窜天猴的颜色是金色 Ramp、颜色曲线近白）
+    col = '#4f7bff' if WARM(cols + hot) or cols == ['#ffffff'] else '#ffd29a'
     vt = 16.5; burn = P0['burn']
     P = {'stars': int(round(min(500, max(160, P0['stars'] * 0.8)))), 'v0': round(max(10, min(600, v0for(R0 * 0.5, vt, burn))), 1), 'vt': vt, 'burn': burn, 'burnJit': 4,
          'headSize': round(min(2.0, max(0.75, P0['headSize'] * 1.4)), 3), 'sparkRate': 0, 'flicker': 0.15, 'flash': 0, 'fade': 0.14, 'lastFlare': 0, 'seed': (P0.get('seed') or 7) + 11,
@@ -321,13 +326,13 @@ def write_jobs(effects, what):
                 (J / f'{jid}.json').write_text(json.dumps({'id': jid, 'type': 'export', 'effect': fx['key'], 'entry': t['id'], 'name': pack_dir(fx, t), 'priority': 4,
                     'note': f"我的效果变体（对话框新花型，用户 2026-10-07 00:59）：{fx['name']} · {t['label']}。曝光已按本机变体对照（NFV3 / NFV4）写回。导出 + 回放检查。"}, ensure_ascii=False, indent=1), encoding='utf-8')
         else:
-            jid = 'NFR-' + pre; ids.append(jid)
-            steps = [{'name': f"{t['label']}（{pack_dir(fx, t)}）", 'script': '回放检查.py', 'args': ['{out}/' + pack_dir(fx, t) + '.jpg', 'analysis/local/输出/素材包/' + pack_dir(fx, t), '--times', TIMES],
+            jid = 'NFR2-' + pre; ids.append(jid)
+            steps = [{'name': f"{t['label']}（{pack_dir(fx, t)}）", 'script': '全程回放检查.py', 'args': ['{out}/' + pack_dir(fx, t) + '.jpg', 'analysis/local/输出/素材包/' + pack_dir(fx, t), '--times', TIMES],
                       'must': False, 'ok': [0, 1], 'timeout': 900} for t in fx['tiers']]
             (J / f'{jid}.json').write_text(json.dumps({'id': jid, 'type': 'script', 'priority': 1, 'name': f"全程回放检查：{fx['name']} · 大小与造型（{len(steps)} 档）", 'steps': steps,
-                'note': '对话框新花型。按 cascade.json 的播法合成整段 8 个时刻（不带参考视频，所以能采到大玉的后半段）；有不过的项退出码 1，照样记下继续下一档。'}, ensure_ascii=False, indent=1), encoding='utf-8')
+                'note': '对话框新花型。按 cascade.json 的播法合成整段 8 个时刻（不带参考视频，所以能采到大玉的后半段；GPU 光点 / 单束层没有贴图，跳过）；有不过的项退出码 1，照样记下继续下一档。'}, ensure_ascii=False, indent=1), encoding='utf-8')
     if what == 'check':
-        jid = 'NFS-V'; ids.append(jid)
+        jid = 'NFS-V2'; ids.append(jid)
         (J / f'{jid}.json').write_text(json.dumps({'id': jid, 'type': 'std', 'priority': 1, 'targets': [t['id'] for fx in effects for t in fx['tiers']],
             'name': '标准检查：我的效果变体（6 个效果、全部档）', 'note': '对话框新花型。只查这些档，并进上一次的完整结果。'}, ensure_ascii=False, indent=1), encoding='utf-8')
     print('任务：', len(ids), ids[:3], '…')

@@ -1,12 +1,12 @@
 {
- "id": "NFR-MYJC",
+ "id": "NFR2-MYJC",
  "type": "script",
  "priority": 1,
  "name": "全程回放检查：金曜菊-窜天猴 · 大小与造型（15 档）",
  "steps": [
   {
    "name": "原样（GoldRayRocket）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket.jpg",
     "analysis/local/输出/素材包/GoldRayRocket",
@@ -22,7 +22,7 @@
   },
   {
    "name": "3 号（GoldRayRocket_03）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_03.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_03",
@@ -38,7 +38,7 @@
   },
   {
    "name": "5 号（GoldRayRocket_05）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_05.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_05",
@@ -54,7 +54,7 @@
   },
   {
    "name": "尺玉（GoldRayRocket_10）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_10.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_10",
@@ -70,7 +70,7 @@
   },
   {
    "name": "2 尺（GoldRayRocket_20）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_20.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_20",
@@ -86,7 +86,7 @@
   },
   {
    "name": "3 尺（GoldRayRocket_30）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_30.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_30",
@@ -102,7 +102,7 @@
   },
   {
    "name": "4 尺（GoldRayRocket_40）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_40.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_40",
@@ -118,7 +118,7 @@
   },
   {
    "name": "冠（GoldRayRocket_Crown）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_Crown.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_Crown",
@@ -134,7 +134,7 @@
   },
   {
    "name": "柳（GoldRayRocket_Willow）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_Willow.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_Willow",
@@ -150,7 +150,7 @@
   },
   {
    "name": "环（GoldRayRocket_Ring）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_Ring.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_Ring",
@@ -166,7 +166,7 @@
   },
   {
    "name": "土星（GoldRayRocket_Saturn）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_Saturn.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_Saturn",
@@ -182,7 +182,7 @@
   },
   {
    "name": "万華鏡（GoldRayRocket_Kaleido）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_Kaleido.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_Kaleido",
@@ -198,7 +198,7 @@
   },
   {
    "name": "心形（GoldRayRocket_Heart）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_Heart.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_Heart",
@@ -214,7 +214,7 @@
   },
   {
    "name": "时差（GoldRayRocket_Jisa）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_Jisa.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_Jisa",
@@ -230,7 +230,7 @@
   },
   {
    "name": "芯入（GoldRayRocket_Core）",
-   "script": "回放检查.py",
+   "script": "全程回放检查.py",
    "args": [
     "{out}/GoldRayRocket_Core.jpg",
     "analysis/local/输出/素材包/GoldRayRocket_Core",
@@ -245,7 +245,5 @@
    "timeout": 900
   }
  ],
- "note": "对话框新花型。按 cascade.json 的播法合成整段 8 个时刻（不带参考视频，所以能采到大玉的后半段）；有不过的项退出码 1，照样记下继续下一档。",
- "ready": false,
- "hold": "等窜天猴导出（NFE-MYJC-*）回来再放行"
+ "note": "对话框新花型。按 cascade.json 的播法合成整段 8 个时刻（不带参考视频，所以能采到大玉的后半段；GPU 光点 / 单束层没有贴图，跳过）；有不过的项退出码 1，照样记下继续下一档。"
 }
