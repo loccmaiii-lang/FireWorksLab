@@ -32,6 +32,7 @@ const REMOVED = [
   ['x-engine', '4.3.2 去掉了模拟内核下拉（只剩 GPU）'], ['paramNav', '4.4.0 去掉了分组定位下拉（发射器标签取代）'],
   ['P43_GROUPS', '4.4.0 面板改按发射器表排'], ['P43_MODULE_GROUP', '4.4.0'], ['pMoreOpen', '4.4.0 没有「更多」了'],
   ['focusParameterSection', '4.4.0'], ['syncParameterNav', '4.4.0'], ['parameterSections', '4.4.0'],
+  ['pModMore', '4.9.14 模块里又不收「更多」了（模块默认收起 + 摘要代替）'], ['p43MoreSync', '4.9.14'], ['ps-find', '4.9.14 搜索框总看得见，没有「搜索」按钮了'],
   ['expoMode', '4.3 去掉 3.7 曝光'], ['expoQ', '4.3'], ['qKernel', '4.3 只剩一个渲染核'], ['qCore', '4.3'], ['data-v43', '4.3 只有一个面板'],
 ];
 

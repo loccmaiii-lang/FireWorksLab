@@ -464,9 +464,9 @@ function autoDefRow(row, k, step) {
   const a = AUTO_DEF[k]; if (!a) return;
   const inp = row.querySelector('input[type=range]'), num = row.querySelector('.num');
   inp.min = a[0]; row._stChain = true; row.classList.add('has-chain');
-  const st = row.querySelector('.st'); st.innerHTML = '<button type="button" class="chain" aria-pressed="true"></button>';
-  const ln = document.createElement('div'); ln.className = 'adef'; ln.innerHTML = '<span class="adef-t"></span>'; row.appendChild(ln);
-  const bt = st.querySelector('.chain'), tx = ln.querySelector('.adef-t');
+  // 4.9.14：「跟着算 / 接回」按钮和说明放在滑杆下面同一行（不再占一列）
+  const ln = document.createElement('div'); ln.className = 'adef'; ln.innerHTML = '<button type="button" class="chain" aria-pressed="true"></button><span class="adef-t"></span>'; row.appendChild(ln);
+  const bt = ln.querySelector('.chain'), tx = ln.querySelector('.adef-t');
   const sync = () => {
     const P = state.P, on = autoLinked(k, P[k]), v = a[1](P); row.classList.toggle('adef-on', on); row.classList.toggle('adef-off', !on); bt.setAttribute('aria-pressed', String(on)); bt.classList.toggle('off', !on);
     bt.textContent = on ? '跟着算' : '接回';
@@ -486,7 +486,7 @@ function slider(host, id, label, unit, min, max, step, get, set, def, lockKey) {
   const row = document.createElement('div'); row.className = 'sl' + (lockKey ? '' : ' nolock');
   row.innerHTML = (lockKey ? `<button class="lk" type="button" title="锁定：切换号数、随机微调时不变" aria-label="锁定 ${label}" aria-pressed="false">●</button>` : '') +
     `<label class="k" for="${id}" title="${label}${unit ? '（' + unit + '）' : ''}；双击恢复默认">${label}${unit ? `<small>${unit}</small>` : ''}</label>` +
-    `<input type="range" id="${id}" min="${min}" max="${max}" step="${step}" aria-label="${label}${unit ? '（' + unit + '）' : ''}"><input class="num" type="number" step="${step}" aria-label="${label}${unit ? '（' + unit + '）' : ''} 数值"><span class="punit" aria-hidden="true">${unit || ''}</span><span class="st"></span>`;
+    `<input type="range" id="${id}" min="${min}" max="${max}" step="${step}" aria-label="${label}${unit ? '（' + unit + '）' : ''}"><input class="num" type="number" step="${step}" aria-label="${label}${unit ? '（' + unit + '）' : ''} 数值"><span class="punit" aria-hidden="true">${unit || ''}</span><span class="st"></span><button type="button" class="rrst" hidden>↺</button>`;
   const inp = row.querySelector('input[type=range]'), num = row.querySelector('.num');
   // 4.9.2（梳理 6.2「滑杆范围不够」：你把爆裂数填到 100，滑杆只到 40，看不出来）：滑杆只是常用范围，数值框不设上限；超出时数值框描琥珀色边、状态列写「超范围」
   const show = () => { const v = +get(); num.value = fmtV(v, step); const o = isFinite(v) && !row.classList.contains('adef-on') && (v > +inp.max + 1e-9 || v < +inp.min - 1e-9);
@@ -504,19 +504,28 @@ function slider(host, id, label, unit, min, max, step, get, set, def, lockKey) {
     const lk = row.querySelector('.lk'), upd = () => { const on = state.locks.has(lockKey); lk.setAttribute('aria-pressed', String(on)); row.classList.toggle('locked', on); rowStatusSync(row); };
     lk.addEventListener('click', () => { state.locks.has(lockKey) ? state.locks.delete(lockKey) : state.locks.add(lockKey); upd(); }); upd();
   }
+  rrstBind(row);
   row._refresh = () => { inp.value = get(); show(); };
   host.appendChild(row); return row;
 }
-// 状态列：有链条的行是链条按钮（autoDefRow 管）；别的按要紧程度写一个词，悬停写全（「旧」写在名字前面，这里不重复）
+// 状态（4.9.14 照 01_顺手调参_深化：不再占一列 / 一行）：改过 = 数值框琥珀色 + 行尾 ↺（点了还原到打开时）；超范围 = 下面一行写全；锁定 = 名字左边的锁亮着；
+// 不起作用 = 整行变灰、悬停写原因。状态词照样写在 .st 里（读屏读得到，画面上不占地方）；有链条的行是「跟着算 / 接回」那一行（autoDefRow 管）
 function rowStatusSync(row) {
-  const st = row && row._st || (row && (row._st = row.querySelector(':scope > .st'))); if (!st || row._stChain) return;
-  const c = row.classList, B = row._baseTxt;
+  if (!row) return;
+  const rr = row._rrst || (row._rrst = row.querySelector(':scope > .rrst')), c = row.classList, B = row._baseTxt;
+  if (rr) { const on = c.contains('chg'); rr.hidden = !on; if (on) { const t = `改过（打开时 ${B != null ? B : '—'}）：点一下还原到打开时；Ctrl+Z 撤销`; if (rr.title !== t) { rr.title = t; rr.setAttribute('aria-label', t); } } }
+  const st = row._st || (row._st = row.querySelector(':scope > .st')); if (!st || row._stChain) return;
   const s = c.contains('over') ? ['超范围', 'over', (row.querySelector('.num') || {}).title || '超出滑杆的常用范围，照样起作用']
     : c.contains('chg') ? ['改过', 'chg', '和打开时不一样' + (B != null ? `（打开时 ${B}）` : '') + '；Ctrl+Z 撤销，双击参数名恢复默认']
     : c.contains('locked') ? ['锁定', 'lock', '锁定：切换号数、随机微调时不变']
     : c.contains('inert') ? ['不起作用', 'inert', '现在不起作用：' + (row._inert || '')] : ['', '', ''];
   if (st.textContent !== s[0]) st.textContent = s[0];
   st.className = 'st' + (s[1] ? ' st-' + s[1] : ''); st.title = s[2];
+}
+// 行尾 ↺：这一项还原到打开时（只这一项；和模块标题的 ↺、底部「恢复本发射器」同一个口径，进 Ctrl+Z）
+function rrstBind(row) {
+  const b = row.querySelector(':scope > .rrst'); if (!b) return;
+  b.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); if (typeof resetRow === 'function') resetRow(row); });
 }
 function colorPair(host, label, keys, obj, onChange) {
   const k = document.createElement('span'); k.textContent = label; k.style.fontSize = '12.5px';
@@ -685,18 +694,18 @@ function buildMasterPanel() {
   for (const id of ['specBox', 'specMore']) { const box = $('#' + id); if (box && $('#params').contains(box)) $('#specHome').appendChild(box); }   // 规格框先放回原处，别跟着旧的面板一起被清掉
   pmIdentHome(); layerBitsHome();     // 4.9.8：花型 / 产物（效果标签里）、这一层的导出方案 / 位置与时间（输出 / 效果标签里）也先放回原处
   const host = $('#params'); host.innerHTML = ''; panelRows = [];
-  // 4.9.8（对话框23）：顶上固定一块（滚动时不消失）——第一行「现在改的是：金锦层 › 火花」+ 一个「搜索 · 改过 N」入口；第二行发射器标签（一行，放不下横着滚）。
-  // 搜索框、只看改过的、英文名收在那个入口里（点开一行；在搜 / 只看改过的时一直开着）
+  // 4.9.14（对话框23，照 01_顺手调参_深化）：顶上固定一块 = 「金锦 › 火花」+ 独看 / 静音（多层）+ 一行发射器标签；
+  // 下面一行搜索框 + 仅改动 + 英文名（总看得见，跟着内容滚；4.9.8 收在「搜索」按钮里，要多点一下）
   host.insertAdjacentHTML('beforeend', `<div class="pscope" role="group" aria-label="现在改的是"><div class="ps-row"><span class="ps-lab">现在改的是</span><b class="ps-path"></b>`
-    + `<button type="button" class="ps-find" aria-expanded="false" title="搜这一层的参数 / 只看和打开时不一样的参数">搜索<span class="ps-n" hidden></span></button></div>`
-    + `<div class="ptools ps-search" hidden><input type="search" placeholder="搜参数：名字 / 英文名 / 说明里的字" aria-label="搜参数" value="${pview.q.replace(/"/g, '&quot;')}"><label class="pchg" title="只显示和打开时（AI 版 / 你保存的版本）不一样的参数"><input type="checkbox"${pview.changed ? ' checked' : ''}> 只看改过的</label>`
-    + `<label class="pchg" title="参数名显示英文名（Cascade / Niagara 的叫法；说明第一行总有英文）"><input type="checkbox" data-en${pview.en ? ' checked' : ''}> 英文名</label></div></div>`);
-  const scope = host.querySelector('.pscope'), qi = host.querySelector('.ptools input[type=search]'), ci = host.querySelector('.ptools .pchg:first-of-type input'), fb = scope.querySelector('.ps-find');
+    + `<span class="ps-view" hidden><button type="button" class="ps-solo" aria-pressed="false" title="只看这一层（不改参数、不影响导出）">独看</button><button type="button" class="ps-mute" aria-pressed="false" title="先不看这一层（不改参数、不影响导出）">静音</button></span></div></div>`
+    + `<div class="ptools ps-search"><input type="search" placeholder="搜索当前层参数…" aria-label="搜参数（名字 / 英文名 / 说明里的字）" value="${pview.q.replace(/"/g, '&quot;')}"><label class="pchg" title="只显示和打开时（AI 版 / 你保存的版本）不一样的参数"><input type="checkbox"${pview.changed ? ' checked' : ''}> 仅改动</label>`
+    + `<label class="pchg pen" title="参数名显示英文名（Cascade / Niagara 的叫法；说明第一行总有英文）"><input type="checkbox" data-en${pview.en ? ' checked' : ''}> 英文名</label></div>`);
+  const scope = host.querySelector('.pscope'), qi = host.querySelector('.ptools input[type=search]'), ci = host.querySelector('.ptools .pchg:first-of-type input');
   qi.addEventListener('input', () => { pview.q = qi.value.trim(); refreshVisibility(); });
-  qi.addEventListener('keydown', e => { if (e.key === 'Escape') { if (qi.value) { qi.value = ''; pview.q = ''; refreshVisibility(); } else { pview.find = false; scopeSync(); fb.focus(); } e.stopPropagation(); } });
+  qi.addEventListener('keydown', e => { if (e.key === 'Escape') { if (qi.value) { qi.value = ''; pview.q = ''; refreshVisibility(); } else qi.blur(); e.stopPropagation(); } });
   ci.addEventListener('change', () => { pview.changed = ci.checked; store.set('pChanged', pview.changed); refreshVisibility(); });
   host.querySelector('[data-en]').addEventListener('change', e => { pview.en = e.target.checked; store.set('pEN', pview.en); buildMasterPanel(); });
-  fb.addEventListener('click', () => { pview.find = !scope.querySelector('.ps-search').hidden ? false : true; if (!pview.find && (pview.q || pview.changed)) { pview.q = ''; qi.value = ''; pview.changed = false; ci.checked = false; store.set('pChanged', false); refreshVisibility(); } scopeSync(); if (pview.find) qi.focus(); });
+  scope.querySelector('.ps-solo').addEventListener('click', () => scopeView('solo')); scope.querySelector('.ps-mute').addEventListener('click', () => scopeView('mute'));
   // 发射器标签（一次看一个发射器；refreshVisibility 按适用的行显示 / 隐藏、标改过几项）
   const tabs = document.createElement('div'); tabs.className = 'etabs'; tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', '发射器'); scope.appendChild(tabs);
   tabs.addEventListener('wheel', e => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && tabs.scrollWidth > tabs.clientWidth) { tabs.scrollLeft += e.deltaY; e.preventDefault(); } }, { passive: false });     // 鼠标滚轮在标签上 = 横着滚
@@ -717,8 +726,8 @@ function buildMasterPanel() {
       } else if (it.sel) {
         const [short0, detail0] = splitLab(it.label), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
         row = document.createElement('label'); row.className = 'field';
-        row.innerHTML = `<span class="fk" title="${(nm ? `${nm.en} · ${nm.cn}` : short).replace(/"/g, '&quot;')}">${short}</span><select></select><span class="st"></span>`;
-        row._lab = short; row._detail = detail; row._nm = nm;
+        row.innerHTML = `<span class="fk" title="${(nm ? `${nm.en} · ${nm.cn}` : short).replace(/"/g, '&quot;')}">${short}</span><select></select><span class="st"></span><button type="button" class="rrst" hidden>↺</button>`;
+        row._lab = short; row._detail = detail; row._nm = nm; rrstBind(row);
         const s = row.querySelector('select'); for (const [v, l] of it.options) s.add(new Option(l, v));
         s.value = String(it.sel === '_trailTier' ? P.type : P[it.sel]);
         s.addEventListener('change', () => {
@@ -741,10 +750,12 @@ function buildMasterPanel() {
         row._refresh(); det.appendChild(row);
       } else if (it.curve) {      // 4.6.0：按寿命变化的曲线 = 几行「时刻:值」（用户 10-05 20:45 定：先填几个数，拖点编辑器以后做）
         const lab = nm ? p43Label(nm, it.label) : it.label;
-        row = document.createElement('label'); row.className = 'field curvef'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false" placeholder="空 = 不变；例 0:1, 0.7:1, 1:0"><span class="st"></span><span class="cv-preview"></span><small class="cv-keys"></small>`; row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm;
+        row = document.createElement('label'); row.className = 'field curvef'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false" placeholder="空 = 不变；例 0:1, 0.7:1, 1:0"><span class="st"></span><span class="cv-box"><span class="cv-preview"></span><span class="cv-tab"></span></span><small class="cv-keys"></small>`; row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm;
         const inp = row.querySelector('input'), out = row.querySelector('.cv-keys');
         const show = () => { const ks = parseCurve(state.P[it.curve]), bad = !ks && !!String(state.P[it.curve] || '').trim(); out.textContent = ks ? ks.length + ' 个点：' + ks.map(k => `${+k[0].toFixed(3)} → ${+k[1].toFixed(3)}`).join('，') : (bad ? '看不懂：写成「时刻:值, 时刻:值」，时刻 0–1' : '不变（全程 × 1）'); out.classList.toggle('bad', bad); inp.setAttribute('aria-invalid', String(bad));
-          const graph = row.querySelector('.cv-preview'), sig = JSON.stringify([ks, bad]); if (graph.dataset.curve !== sig) { graph.innerHTML = bad ? '' : inspectorCurveHTML(ks); graph.dataset.curve = sig; } };
+          const graph = row.querySelector('.cv-preview'), sig = JSON.stringify([ks, bad]); if (graph.dataset.curve !== sig) { graph.innerHTML = bad ? '' : inspectorCurveHTML(ks); graph.dataset.curve = sig;
+            // 4.9.14（照 01_顺手调参_深化）：图旁边一张小表「寿命 0–1 | 倍率」，就是上面那串数（只读；改还是在输入框里）
+            row.querySelector('.cv-tab').innerHTML = ks && !bad ? `<table class="cv-table"><thead><tr><th>寿命 0–1</th><th>倍率</th></tr></thead><tbody>${ks.map(k => `<tr><td>${(+k[0]).toFixed(2)}</td><td>${(+k[1]).toFixed(2)}</td></tr>`).join('')}</tbody></table>` : ''; } };
         inp.value = P[it.curve] || ''; show();
         inp.addEventListener('change', () => { state.P[it.curve] = inp.value.trim(); show(); onParam(); });
         row._refresh = () => { inp.value = state.P[it.curve] || ''; show(); };
@@ -767,14 +778,14 @@ function buildMasterPanel() {
   // 模块里按发射器表的先后排（表里常用的在前），再把随机行挂到本体下面
   host.querySelectorAll('section.egrp > details.mod').forEach(d => [...d.children].filter(c => c._x).sort((a, b) => a._x.i - b._x.i).forEach(r => d.appendChild(r)));
   p43StdModules(host);
-  p43RandLinks(); p43Legacy(); p43More(); emitTabs(tabs);
+  p43RandLinks(); p43Legacy(); emitTabs(tabs);
   pmIdentPlace(); layerBitsPlace(); colorLinks();
   if (!$('#pHelp')) { const h = document.createElement('div'); h.id = 'pHelp'; h.className = 'phelp'; h.setAttribute('aria-live', 'polite'); h.setAttribute('role', 'region'); h.setAttribute('aria-label', '参数说明'); host.parentElement.insertBefore(h, host.nextSibling);
     h.addEventListener('click', e => { if (e.target.closest('.ph-close')) helpHide(true); });
     keyBind('esc', () => { if (!helpSt.pinned) return false; helpHide(true); return true; }, 10);     // 4.9.4 快捷键登记表（68_keys.js）：Esc 先关说明
     keyBind('help', helpKey); }     // 4.9.8：F1
   helpHide(true); panelHelp(null);
-  refreshVisibility();
+  refreshVisibility(); p43DefaultOpen(); modSummarySync(); footSync();
   const MD = defaultsFor(P.type).M;
   const redrawColors = () => { stageEditor($('#stages'), state.M, Math.max(1, Math.ceil(state.P.duration)), null); };
   redrawColors();
@@ -808,11 +819,10 @@ function refreshVisibility() {
     rowStatusSync(row);
   }
   const auto = !!(q || pview.changed);
-  p43MoreSync(P, auto);     // 4.9.8：常用的直接显示，别的收进模块底下「更多」
   p43RandSync(P); p43BlankSync(P); p43LegacySync(P); syncOutCellLabel();
   // 搜索 / 只看改过的时：所有发射器里有结果的都显示、模块自动展开（记 _autoOpen，清空后收回到用户自己的开合）
-  const autoOpen = (d, on, mine) => { if (on) { if (!d.open) { d._autoOpen = true; d._auto = true; d.open = true; setTimeout(() => d._auto = false, 0); } }
-    else if (d._autoOpen) { d._autoOpen = false; d._auto = true; d.open = mine; setTimeout(() => d._auto = false, 0); } };
+  const autoOpen = (d, on, mine) => { if (on) { if (!d.open) { d._autoOpen = true; modSetOpen(d, true); } }
+    else if (d._autoOpen) { d._autoOpen = false; modSetOpen(d, mine); } };
   document.querySelectorAll('#params details.sec').forEach(det => { if (det._ph) return; det.hidden = ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden && !c.classList.contains('moreb'));
     autoOpen(det, auto && !det.hidden, det._key && pview.mopen[det._key] != null ? pview.mopen[det._key] : modDefaultOpen(det._key || '')); });
   // 4.9.8：没有参数的模块合成的那块灰字，只在这个发射器有别的模块看得见、又没在搜索 / 只看改过的时候出现
@@ -835,12 +845,14 @@ function refreshVisibility() {
   document.querySelectorAll('#params [data-info=endInfo], #params [data-info=schemeNote], #params [data-info=ballInfo]').forEach(r => r._refresh && r._refresh());
   if (typeof syncScopeResets === 'function') syncScopeResets();     // 4.5.0 改过的模块 / 发射器上的 ↺
   placeSpecBox(); modSummarySync();
-  pview.nChgAll = Object.values(nChg).reduce((a, b) => a + b, 0); pview.tabNow = auto ? '' : tab; scopeSync();
+  pview.nChgAll = Object.values(nChg).reduce((a, b) => a + b, 0); pview.nChg = nChg; pview.tabNow = auto ? '' : tab;
+  if (host) host.classList.toggle('multi', auto || tab === '全部');     // 4.9.14：一次看一个发射器时，发射器标题由顶上「金锦 › 火花」代替
+  scopeSync(); footSync();
 }
 // ---- 4.9.8（对话框23）参数栏：顶上那块、效果标签里的花型 / 产物、层的导出方案 / 位置与时间、模块收起时的摘要 ----
 // 「现在改的是：金锦层 › 火花」（单层：「菊 › 星」）；在搜索 / 只看改过的时写「› 搜索「寿命」」「› 改过的」
 function scopeLayerName() {
-  if (state.tab === 'combo' && state.comboSel >= 0 && typeof layerName === 'function') { const n = String(layerName(state.comboSel) || ''); return /层$/.test(n) ? n : n + '层'; }
+  if (state.tab === 'combo' && state.comboSel >= 0 && typeof layerName === 'function') return String(layerName(state.comboSel) || '');     // 4.9.14：照参考稿写「金锦 › 火花」（4.9.8 写「金锦层」）
   const id = $('#abIdName'), nm = id && !$('#abId').hidden ? id.textContent.trim() : '';     // 单层：效果的名字（花型模板就是「菊」）
   return (nm || String(TYPE_NAMES[state.P.type] || state.P.type || '')).replace(/[（(].*$/, '').trim();
 }
@@ -849,11 +861,33 @@ function scopeSync() {
   const q = pview.q || '', emit = q ? `搜索「${q}」` : pview.changed ? '改过的参数' : pview.tabNow === '全部' ? '全部发射器' : pview.tabNow || '';
   const path = sc.querySelector('.ps-path'), ln = scopeLayerName(), title = `现在改的是：${ln} › ${emit}`;
   if (path.title !== title) { path.replaceChildren(); for (const [cls, text] of [['ps-layer', ln], ['ps-sep', '›'], ['ps-emit', emit]]) { const part = document.createElement('span'); part.className = cls; part.textContent = text; path.appendChild(part); } path.title = title; }
-  const open = !!(pview.find || q || pview.changed), row = sc.querySelector('.ps-search'), fb = sc.querySelector('.ps-find'), n = sc.querySelector('.ps-n');
-  row.hidden = !open; fb.setAttribute('aria-expanded', String(open)); fb.classList.toggle('on', open);
-  const c = pview.nChgAll || 0; n.hidden = !c; n.textContent = c ? ` · 改过 ${c}` : '';
-  fb.title = (open ? '收起搜索（清掉搜索和「只看改过的」）' : '搜这一层的参数 / 只看和打开时不一样的参数') + (c ? `；和打开时比改过 ${c} 项` : '');
+  // 4.9.14：多层里这一层的独看 / 静音（只影响观察，和图层管理那两个按钮是同一个开关）
+  const lay = state.tab === 'combo' && state.comboSel >= 0 && state.layerView, pv = sc.querySelector('.ps-view');
+  if (pv) { pv.hidden = !lay; if (lay) { const v = state.layerView, i = state.comboSel, so = v.solo === i, mu = (v.mute || []).includes(i);
+    const bs = pv.querySelector('.ps-solo'), bm = pv.querySelector('.ps-mute'); bs.classList.toggle('on', so); bs.setAttribute('aria-pressed', String(so)); bm.classList.toggle('on', mu); bm.setAttribute('aria-pressed', String(mu)); } }
   inspectorNavSync(sc.querySelector('.etabs'));
+}
+function scopeView(k) {
+  if (state.tab !== 'combo' || state.comboSel < 0 || !state.layerView) return;
+  const v = state.layerView, i = state.comboSel;
+  if (k === 'solo') v.solo = v.solo === i ? -1 : i; else v.mute = (v.mute || []).includes(i) ? v.mute.filter(x => x !== i) : [...(v.mute || []), i];
+  if (typeof buildLayerCard === 'function') buildLayerCard(); scopeSync();
+}
+// 4.9.14 右栏底部一条（照 01_顺手调参_深化）：「相对打开时改过 N 项」（点了 = 仅改动）+「恢复本发射器到打开时」（和 ⋯ 菜单里「只还原一个发射器」同一个操作，Ctrl+Z 能撤）
+function footSync() {
+  const pm = $('#pMaster'); if (!pm) return;
+  let f = $('#pFoot');
+  if (!f) { f = document.createElement('div'); f.id = 'pFoot'; f.className = 'pfoot'; f.setAttribute('role', 'group'); f.setAttribute('aria-label', '和打开时比');
+    f.innerHTML = '<button type="button" class="pf-chg"></button><button type="button" class="pf-reset"></button>'; pm.appendChild(f);
+    f.querySelector('.pf-chg').addEventListener('click', () => { const c = $('#params .ptools .pchg input'); if (c) { c.checked = !c.checked; c.dispatchEvent(new Event('change')); } });
+    f.querySelector('.pf-reset').addEventListener('click', () => { const e = pview.tabNow; if (e && e !== '全部' && typeof resetScope === 'function') resetScope(e); else { const b = $('#btnReset'); if (b) b.click(); } }); }
+  if (f.parentElement !== pm || f !== pm.lastElementChild) pm.appendChild(f);
+  const e = pview.tabNow, one = !!e && e !== '全部', n = one ? (pview.nChg || {})[e] || 0 : pview.nChgAll || 0, all = pview.nChgAll || 0;
+  const c = f.querySelector('.pf-chg'), r = f.querySelector('.pf-reset');
+  c.textContent = pview.changed ? '显示全部参数' : n ? `相对打开时改过 ${n} 项` : '和打开时一样'; c.classList.toggle('on', !!n || pview.changed);
+  c.title = pview.changed ? '点一下回到全部参数' : `点一下只看改过的（和打开时比：${one ? `「${e}」${n} 项，` : ''}这一层一共 ${all} 项）`;
+  r.textContent = one ? '恢复本发射器到打开时' : '恢复本层到打开时'; r.disabled = one ? !n : !all;
+  r.title = one ? `把「${e}」改过的 ${n} 项还原到打开时（Ctrl+Z 能撤销）` : '把这一层的参数和颜色还原到打开时（Ctrl+Z 能撤销）';
 }
 // 右栏顶上「参数 / 审阅 / 工具」那一行的高度：顶上那块固定在它下面
 function rightHeadVar() {
@@ -882,6 +916,10 @@ function colorLinks() {
     const d = [...g.querySelectorAll(':scope > details.mod')].find(x => x._mod === '颜色'); if (!d || d.querySelector('.clink')) continue;
     const p = document.createElement('p'); p.className = 'clink'; p.innerHTML = `<span>颜色随本层（这一层所有发射器共用一条）</span><button type="button" class="btn mini ghost" title="滚到下面的「本层颜色」去改；改完点那里的「← 回到」回来">去改</button>`;
     d.querySelector('summary').after(p); p.querySelector('button').addEventListener('click', ev => { ev.preventDefault(); colorGo(e); });
+    // 4.9.14：模块收起时标题这一行就能去（照 01_顺手调参_深化「颜色  跟随金锦层颜色  定位 ↗」）
+    const go = document.createElement('span'); go.className = 'mgo'; go.setAttribute('role', 'button'); go.tabIndex = 0; go.textContent = '定位 ↗'; go.title = '去下面的「本层颜色」改（改完点那里的「← 回到」回来）';
+    const goF = ev => { ev.preventDefault(); ev.stopPropagation(); colorGo(e); }; go.addEventListener('click', goF); go.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') goF(ev); });
+    d.querySelector('summary').appendChild(go); d._colorLink = true;
   }
 }
 function colorGo(fromEmit) {
@@ -893,17 +931,32 @@ function colorGo(fromEmit) {
   const top = cc.getBoundingClientRect().top - R.getBoundingClientRect().top - ((document.querySelector('#params .pscope') || {}).offsetHeight || 0) - (parseFloat(R.style.getPropertyValue('--rhH')) || 0) - 8;
   R.scrollTop += top;
 }
-// 模块收起时，标题后面写前两个参数现在的值（例：「生成  生成率 300 · 起势 0.00」），收起了也看得到大概
+// 模块收起时，标题右边写摘要（4.9.14 照 01_顺手调参_深化：「300 个/s · 起势 0.80 s」「未启用」「含寿命曲线」），收起了也看得到大概；
+// 有改过的参数时摘要前一个琥珀色圆点
 function rowValText(row) {
-  if (row.classList.contains('sl')) { const n = row.querySelector('.num'), u = row.querySelector('.k small'); return n ? n.value + (u ? ' ' + u.textContent : '') : ''; }
-  const sel = row.querySelector('select'); if (sel) { const o = sel.options[sel.selectedIndex]; return o ? splitLab(o.textContent)[0] : ''; }
+  if (row.classList.contains('sl')) { const n = row.querySelector('.num'), u = row.querySelector('.punit'); return n ? n.value + (u && u.textContent ? (/^[×%]/.test(u.textContent) ? '' : ' ') + u.textContent : '') : ''; }
+  const sel = row.querySelector('select'); if (sel) { const o = sel.options[sel.selectedIndex]; return o ? splitLab(o.textContent)[0].replace(/^旧（待删）· /, '') : ''; }
   const t = row.querySelector('input[type=text]'); return t ? (t.value || '空') : '';
+}
+function modSummaryText(d) {
+  const rows = [...d.children].filter(r => r._lab != null && r._applies && !r._randOf && !r.hidden && !(r._legacy && !legacyInUse(Array.isArray(r._it) ? r._it[0] : r._it.sel, state.P)));
+  const vals = rows.filter(r => !r.classList.contains('curvef'));
+  if (!vals.length) return d._colorLink ? '随本层颜色' : rows.length ? '曲线' : '';
+  const v0 = vals[0], on = vals.slice(1).filter(r => !r._inert);
+  const pre = d._colorLink ? '随本层颜色' : '';
+  // 功能模块（闪烁、点灭、辉星、蜂……不是 9 个标准模块里的「生成 / 寿命 / 大小」这些）第一项是 0、别的都不起作用 → 「未启用」
+  const feat = d._mod === '闪烁' || (typeof STD_MODS !== 'undefined' && !STD_MODS.includes(d._mod));
+  if (feat && !on.length && v0.classList.contains('sl') && !(+(v0.querySelector('.num') || {}).value)) return '未启用';
+  // 第一项名字里有模块名的（生成 › 生成率、寿命 › 火花寿命）只写数，别的写「名字 数」：「300 个/秒 · 起势 0.80 s」「阻力 4.00 1/s · 重力倍率 0.05×」
+  const parts = vals.filter(r => !r._inert).slice(0, 2).map((r, i) => !i && String(r._lab).includes(d._mod) ? rowValText(r) : `${r._lab} ${rowValText(r)}`);
+  if (rows.some(r => r.classList.contains('curvef') && String(state.P[r._it.curve] || '').trim())) parts.push('含寿命曲线');
+  return (pre ? [pre, ...parts] : parts).join(' · ');
 }
 function modSummarySync() {
   for (const d of document.querySelectorAll('#params section.egrp:not([hidden]) > details.mod')) {
     const sm = d.querySelector(':scope > summary'); let sp = sm.querySelector('.msum'); if (!sp) { sp = document.createElement('span'); sp.className = 'msum'; sm.appendChild(sp); }
-    const rows = d.open ? [] : [...d.children].filter(r => r._lab != null && r._applies && !r._randOf && !(r._legacy && !legacyInUse(Array.isArray(r._it) ? r._it[0] : r._it.sel, state.P))).slice(0, 2);
-    const t = rows.map(r => `${r._lab} ${rowValText(r)}`).join(' · '); if (sp.textContent !== t) sp.textContent = t;
+    const t = d.open ? '' : modSummaryText(d); if (sp.textContent !== t) { sp.textContent = t; sp.title = t; }
+    const n = [...d.children].filter(r => r._applies && r.classList.contains('chg')).length; sm.classList.toggle('mchg', !!n); sm.dataset.chg = n ? `${n} 项改过` : '';
   }
 }
 // 发射器标签：按发射器表的顺序，每个发射器一个（适用的才显示），最后一个「全部」

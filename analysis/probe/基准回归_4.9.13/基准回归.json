@@ -1,0 +1,170 @@
+[
+ {
+  "name": "kiku",
+  "old": "4.9.12",
+  "new": "4.9.13",
+  "planSame": false,
+  "stills": [
+   {
+    "t": 0.528,
+    "max": 198,
+    "frac": 0.09618
+   },
+   {
+    "t": 1.54,
+    "max": 77,
+    "frac": 0.05948
+   },
+   {
+    "t": 3.08,
+    "max": 14,
+    "frac": 0.00551
+   }
+  ],
+  "same": false
+ },
+ {
+  "name": "botan",
+  "old": "4.9.12",
+  "new": "4.9.13",
+  "planSame": false,
+  "stills": [
+   {
+    "t": 0.378,
+    "max": 154,
+    "frac": 0.03061
+   },
+   {
+    "t": 1.102,
+    "max": 98,
+    "frac": 0.02029
+   },
+   {
+    "t": 2.205,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": false
+ },
+ {
+  "name": "kamuro",
+  "old": "4.9.12",
+  "new": "4.9.13",
+  "planSame": false,
+  "stills": [
+   {
+    "t": 0.816,
+    "max": 114,
+    "frac": 0.07886
+   },
+   {
+    "t": 2.38,
+    "max": 79,
+    "frac": 0.04733
+   },
+   {
+    "t": 4.76,
+    "max": 0,
+    "frac": 0.0
+   }
+  ],
+  "same": false
+ },
+ {
+  "name": "senrin",
+  "old": "4.9.12",
+  "new": "4.9.13",
+  "planSame": false,
+  "stills": [
+   {
+    "t": 0.384,
+    "max": 56,
+    "frac": 0.00716
+   },
+   {
+    "t": 1.12,
+    "max": 118,
+    "frac": 0.12453
+   },
+   {
+    "t": 2.24,
+    "max": 10,
+    "frac": 0.00786
+   }
+  ],
+  "same": false
+ },
+ {
+  "name": "strobe",
+  "old": "4.9.12",
+  "new": "4.9.13",
+  "planSame": false,
+  "stills": [
+   {
+    "t": 0.534,
+    "max": 112,
+    "frac": 0.02599
+   },
+   {
+    "t": 1.557,
+    "max": 223,
+    "frac": 0.05325
+   },
+   {
+    "t": 3.115,
+    "max": 223,
+    "frac": 0.02019
+   }
+  ],
+  "same": false
+ },
+ {
+  "name": "crackle",
+  "old": "4.9.12",
+  "new": "4.9.13",
+  "planSame": false,
+  "stills": [
+   {
+    "t": 0.408,
+    "max": 155,
+    "frac": 0.03999
+   },
+   {
+    "t": 1.802,
+    "max": 233,
+    "frac": 0.03548
+   },
+   {
+    "t": 2.04,
+    "max": 226,
+    "frac": 0.0452
+   }
+  ],
+  "same": false
+ },
+ {
+  "name": "jinmangju",
+  "old": "4.9.12",
+  "new": "4.9.13",
+  "planSame": false,
+  "stills": [
+   {
+    "t": 0.66,
+    "max": 48,
+    "frac": 0.12465
+   },
+   {
+    "t": 1.925,
+    "max": 0,
+    "frac": 0.0
+   },
+   {
+    "t": 3.85,
+    "max": 6,
+    "frac": 0.00433
+   }
+  ],
+  "same": false
+ }
+]

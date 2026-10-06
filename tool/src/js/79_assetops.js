@@ -183,6 +183,14 @@ function resetScope(e, m) {
   derive(P); refreshPanelValues(); refreshVisibility(); onParam();
   flash(`已把「${e}${m ? ' › ' + m : ''}」的 ${n} 项还原到打开时；Ctrl+Z 能撤销`);
 }
+// 4.9.14：一行还原到打开时（参数行尾的 ↺）
+function resetRow(row) {
+  const pr = panelRows.find(([r]) => r === row); if (!pr) return;
+  const it = pr[1], k = Array.isArray(it) ? it[0] : it.sel || it.curve || it.text, B = panelBaseP(), P = state.P;
+  if (!k || B[k] === undefined) { flash('打开时没有这一项，没法还原'); return; }
+  P[k] = structuredClone(B[k]); derive(P); refreshPanelValues(); refreshVisibility(); onParam();
+  flash(`「${row._lab}」还原到打开时（${row._baseTxt != null ? row._baseTxt : B[k]}）；Ctrl+Z 能撤销`);
+}
 function changedByEmitter() { const n = {}; for (const [row, , , det] of panelRows) if (row.classList.contains('chg')) n[det._g] = (n[det._g] || 0) + 1; return n; }
 function renderResetMenu() {
   const host = $('#abResetMenu'), combo = state.tab === 'combo', lay = combo && state.comboSel >= 0, chg = changedByEmitter();

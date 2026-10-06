@@ -66,7 +66,8 @@
      改了右栏、导出文件名跟着变，恢复默认回去
   W13 4.9.5（宪章遗漏 1 / 2 / 5）：输出栏「直接调」就是那 9 个、「算出来的」帧率 / 张数 / 单格灰字可改（固定机位填了每帧停几 tick 帧计划照办）、大面片别的输出模块默认收起；
      发射器表每个参数都有类别（物理量 / 引擎字段 / 预览设置 / 旧（待删）/ 只读），物理量有单位，说明条显示类别；打开旧存档（结尾淡出、冷却按各自寿命）画面上方写明不再起作用
-  W14 4.9.5（宪章遗漏 3 / 4）：对象 × 动作表里的入口都在；1366×768 和 1920×1080 首屏看得到顶栏主动作、左栏第一个条目、画布、播放、发射器标签和第一行参数；
+  W14 4.9.5（宪章遗漏 3 / 4）：对象 × 动作表里的入口都在；1366×768 / 1440×900 / 1920×1080 首屏看得到顶栏主动作、左栏第一个条目、画布、播放、发射器标签和第一行参数；4.9.14 第一屏按参考稿口径（模块摘要、对齐、一屏看得到几个模块）；
+  W16 4.9.14 主链路八步连着走（用户 10-06 15:15）：选效果与图层 → 调参数 → 调色并返回 → 调层延迟 → 撤销 / 重做 → 保存刷新 → 烘焙回放 → 导出 PC / 手机，鼠标 / 键盘点真的控件
       4.9.8 加：顶上「现在改的是」和搜索入口看得到，第一屏至少 8 行参数（菊 › 星、引菊 → 锦 金锦层 › 火花）
   W15 4.9.7 起（对话框23 参数栏交互）：4.9.8 引菊 → 锦六步（定位 / 改寿命 / 改颜色 / 调接力 / 撤销保存刷新重开）；切「工具」「审阅」再回来时间 / 层 / 发射器 / 模块开合 / 滚动位置都在、多层里有「工具」页；撤销一次操作一步（两个参数紧挨着改 = 两步、拖动中途停 = 一步、数值框回车 = 一步）
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
@@ -375,7 +376,9 @@ async def l1(p, b):
 P1_SHOWN = r"""const shown = el => { if (!el || el.hidden || el.closest('[hidden]')) return false; for (let d = el.parentElement && el.parentElement.closest('details'); d; d = d.parentElement && d.parentElement.closest('details')) if (!d.open) return false; return true; };"""
 P1_STATE = r"""(() => { const host = $('#params'); """ + P1_SHOWN + r"""
   const secs = [...host.querySelectorAll('details.sec')];
-  const rows = panelRows.filter(([r]) => r._lab != null && shown(r)), labs = rows.map(([r, it]) => ({ k: Array.isArray(it) ? it[0] : it.sel || it.text, t: r._lab, e: r._x && r._x.e }));
+  // 4.9.14：模块默认收起（标题写摘要、点一下就展开），所以「这一页有哪些参数」按列在页上（没被藏）算，不按模块开没开
+  const listed = el => !!el && !el.hidden && !el.closest('[hidden]');
+  const rows = panelRows.filter(([r]) => r._lab != null && listed(r)), labs = rows.map(([r, it]) => ({ k: Array.isArray(it) ? it[0] : it.sel || it.text, t: r._lab, e: r._x && r._x.e }));
   const on = host.querySelector('.etabs .on');
   return { tools: !!host.querySelector('.ptools input[type=search]') && !!host.querySelector('.ptools input[type=checkbox]'), toggle: !!host.querySelector('[data-v43]'),
     tabs: [...host.querySelectorAll('.etabs [data-e]')].filter(b => !b.hidden).map(b => b.dataset.e), on: on ? on.dataset.e : '',
@@ -428,7 +431,7 @@ async def p1(pg):
         n = await pg.evaluate("(+(document.querySelector('#params .etabs [data-e=\"火花\"] .et-n') || {}).textContent || 0)")
         if n != 1: bad.append(f'「火花」标签上没标改过 1 项（{n}）')
         # 点标签换发射器
-        r = await pg.evaluate("(() => { document.querySelector('#params .etabs [data-e=\"火花\"]').click(); " + P1_SHOWN + " return { on: document.querySelector('#params .etabs .on').dataset.e, rows: panelRows.filter(([r, it]) => Array.isArray(it) && shown(r)).map(([r, it]) => it[0]), saved: store.get('pEmitTab', {}).aerial }; })()")
+        r = await pg.evaluate("(() => { document.querySelector('#params .etabs [data-e=\"火花\"]').click(); " + P1_SHOWN + " return { on: document.querySelector('#params .etabs .on').dataset.e, rows: panelRows.filter(([r, it]) => Array.isArray(it) && !r.hidden && !r.closest('[hidden]')).map(([r, it]) => it[0]), saved: store.get('pEmitTab', {}).aerial }; })()")
         info['点火花'] = {'on': r['on'], 'n': len(r['rows']), 'saved': r['saved']}
         if r['on'] != '火花' or 'sparkSize' not in r['rows'] or 'stars' in r['rows'] or r['saved'] != '火花': bad.append(f'点「火花」标签不对：{info["点火花"]}')
         # 4.9.8 说明（交互宪章 3.5；用户 10-04 偏好「频繁移动鼠标时不得自动弹参数说明；主动点 ? / F1 后打开固定说明区，关闭 / Esc 收起」）：
@@ -441,7 +444,7 @@ async def p1(pg):
         bottom = await pg.evaluate("(() => { const h = $('#pHelp'), R = $('#right').getBoundingClientRect(), r = h.getBoundingClientRect(); return getComputedStyle(h).position === 'sticky' && r.bottom <= Math.min(R.bottom, innerHeight) + 1; })()")
         await pg.evaluate(f"{nm}.click()"); await pg.wait_for_timeout(100); c = await pg.evaluate(hv)
         await pg.evaluate(f"{nm}.click()"); await pg.wait_for_timeout(100); await pg.keyboard.press('Escape'); d = await pg.evaluate(hv)
-        await pg.evaluate("panelRows.find(([r, it]) => it[0] === 'sparkSize')[0].querySelector('.num').focus(); 0"); await pg.keyboard.press('F1'); await pg.wait_for_timeout(100); e = await pg.evaluate(hv)
+        await pg.evaluate("(() => { const r = panelRows.find(([r, it]) => it[0] === 'sparkSize')[0]; r.closest('details').open = true; r.querySelector('.num').focus(); return 0; })()"); await pg.keyboard.press('F1'); await pg.wait_for_timeout(100); e = await pg.evaluate(hv)     # 4.9.14：模块默认收起，先点开
         await pg.keyboard.press('F1'); await pg.wait_for_timeout(100); f = await pg.evaluate(hv)
         reg = await pg.evaluate("KEYMAP.some(k => k.id === 'help' && k.label === 'F1') && (KEY_FNS.help || []).length > 0")
         info['说明'] = {'停 1.9s': a['on'], '点名字': [b['on'], b['pin']], '底部固定': bottom, '再点': c['on'], 'Esc': d['on'], 'F1': e['on'], 'F1 再按': f['on'], 'KEYMAP': reg}
@@ -949,18 +952,22 @@ async def s2(p, b):
 
 
 S3_JS = r"""async () => {
-  // 4.4：打开菊 / 空白 / 升空尾缀，默认那一页的参数看得见；各发射器标签点了就看得见它的模块；模块收起和选的标签重建面板后记得住
+  // 4.4：打开菊 / 空白 / 升空尾缀，默认那一页看得见（4.9.14：模块一行一个写摘要、第一个展开）；各发射器标签点了就看得见它的模块；模块收起和选的标签重建面板后记得住
   const out = {}, bad = [];
   const shown = el => { if (!el || !el.offsetParent) return false; for (let a = el.parentElement, c = el; a; c = a, a = a.parentElement) { if (a.hidden) return false; if (a.tagName === 'DETAILS' && !a.open && c.tagName !== 'SUMMARY') return false; } return true; };
   const vis = () => [...document.querySelectorAll('#params .sl')].filter(shown).length;
   const tabOk = async e => { const b = document.querySelector(`#params .etabs [data-e="${e}"]`); if (!b || b.hidden) return false; b.click(); await new Promise(r => setTimeout(r, 30));
     const g = document.querySelector(`#params section.egrp[data-g="${e}"]`); return !!g && !g.hidden && [...g.querySelectorAll(':scope > details.mod')].some(d => shown(d.querySelector('summary'))) && [...g.querySelectorAll('.sl')].some(shown); };
-  for (const [t, need, emits] of [['kiku', 15, ['星', '火花', '余烬', '爆裂']], ['blank', 8, ['星']], ['trailM', 4, ['星头', '白热火花', '金火花', '橙色火花', '丝状火花']]]) {
+  // 4.9.14（照 01_顺手调参_深化）：默认一页 = 这个发射器的模块一行一个（收起的写摘要），第一个模块展开、看得见参数（4.4 起要「≥ 15 个参数」，那是模块全展开时的口径）
+  const modsOf = () => { const g = [...document.querySelectorAll('#params section.egrp')].find(x => !x.hidden); const ms = g ? [...g.querySelectorAll(':scope > details.mod')].filter(d => !d.hidden) : [];
+    return { n: ms.length, titled: ms.filter(d => shown(d.querySelector('summary'))).length, sum: ms.filter(d => d.open || ((d.querySelector('summary .msum') || {}).textContent || '').trim()).length, open: ms.filter(d => d.open).length }; };
+  for (const [t, need, emits] of [['kiku', 1, ['星', '火花', '余烬', '爆裂']], ['blank', 1, ['星']], ['trailM', 1, ['星头', '白热火花', '金火花', '橙色火花', '丝状火花']]]) {
     store.set('pEmitTab', {}); pview.tab = {};
     await openType(t); await new Promise(r => setTimeout(r, 400));
-    const n = vis(), m = {}; for (const e of emits) m[e] = await tabOk(e);
-    out[t] = { sliders: n, emits: m };
-    if (n < need) bad.push(`${t} 默认一页看得见的参数只有 ${n} 个（应 ≥ ${need}）`);
+    const n = vis(), mm = modsOf(), m = {}; for (const e of emits) m[e] = await tabOk(e);
+    out[t] = { sliders: n, mods: mm, emits: m };
+    if (n < need || mm.open < 1) bad.push(`${t} 默认一页没有展开的模块 / 看不见参数（${n} 个）`);
+    if (mm.titled !== mm.n || mm.sum !== mm.n) bad.push(`${t} 默认一页的模块没都列出来 / 收起的没写摘要：${JSON.stringify(mm)}`);
     for (const [k, v] of Object.entries(m)) if (!v) bad.push(`${t} 的「${k}」发射器点了看不见`);
     if (t === 'blank') { const b = document.querySelector('#blankAdd [data-addmod="火花"]'); out.blankAdd = shown(b); if (!out.blankAdd) bad.push('空白发射器的「+ 火花」看不见'); }
   }
@@ -1021,15 +1028,23 @@ async def s4(pg):
 
 E1_JS = r"""async () => {
   // 5.0 第 2 步（4.7.0，用户 10-05 19:40「全按推荐」、21:55「直接开 5.0」）：一套物理——空中类火花只按实际年龄冷却（老的先暗）、结尾等火花自然灭完；
-  // 「结尾」「冷却方式」两个旧 / 新开关从面板删掉；花型模板的序列时长盖到最后一批火花；帧计划缺省固定机位 + 匀速帧、Zoom 缺省关
+  // 「结尾」「冷却方式」两个旧 / 新开关从面板删掉；花型模板的序列时长盖到最后一批火花；帧计划缺省按运动分（4.9.13 起；4.7.0–4.9.12 是匀速帧）、Zoom 缺省关
   const out = {}, bad = [];
   await openType('kiku'); await new Promise(r => setTimeout(r, 300));
   const endMul = () => { const pl = displayPlan40(state.P); return +frameFade40(pl, (pl.t0 || 0) + pl.duration - 0.05, false).toFixed(3); };
   const pl = displayPlan40(state.P);
   out.defaults = { noFade: !!pl.noEndFade, endMul: endMul(), fb: state.P.frameBudget, zoom: state.P.zoom, mode: pl.budget && pl.budget.mode, holds: pl.budget ? [pl.budget.holdMin, pl.budget.holdMax] : null };
   if (!out.defaults.noFade || out.defaults.endMul !== 1) bad.push('结尾还在整体淡出：' + JSON.stringify(out.defaults));
-  if (out.defaults.fb !== 'fixed' || out.defaults.zoom !== 'off' || out.defaults.mode !== 'fixed') bad.push('缺省不是固定机位 + 匀速帧：' + JSON.stringify(out.defaults));
-  if (!out.defaults.holds || out.defaults.holds[0] !== out.defaults.holds[1]) bad.push('匀速帧：每帧停的 tick 数不一样：' + JSON.stringify(out.defaults.holds));
+  // 4.9.13（用户 10-06 15:15「把帧数分配默认改回按运动分」）：缺省按运动分（开花段每 tick 一帧）、Zoom 关；匀速帧仍可选、每帧停一样多
+  if (out.defaults.fb !== 'motion' || out.defaults.zoom !== 'off') bad.push('缺省不是按运动分 + 固定取景：' + JSON.stringify(out.defaults));
+  { const t = pl.ticks || (pl.budget && pl.budget.ticks) || null; const pl2 = displayPlan40(state.P);
+    out.motion = { F: pl2.L && pl2.L.F, fps0: pl2.dur && pl2.dur.length ? +(1 / Math.max(pl2.dur[0], 1 / 30)).toFixed(1) : null };
+    if (out.motion.fps0 != null && out.motion.fps0 < 29.9) bad.push('按运动分：开花第一帧不是 30 fps：' + JSON.stringify(out.motion)); }
+  { const keep = state.P.frameBudget; state.P.frameBudget = 'fixed'; const pf = displayPlan40(state.P); state.P.frameBudget = keep;
+    out.fixed = { mode: pf.budget && pf.budget.mode, holds: pf.budget ? [pf.budget.holdMin, pf.budget.holdMax] : null };
+    if (!out.fixed.holds || out.fixed.holds[0] !== out.fixed.holds[1]) bad.push('匀速帧：每帧停的 tick 数不一样：' + JSON.stringify(out.fixed)); }
+  { const fr = panelRows.find(([r, it]) => it && it.sel === 'frameBudget'), opt = fr ? [...fr[0].querySelectorAll('select option')].map(o => o.textContent) : [];
+    out.fbOpts = opt.length ? opt.map(t => t.slice(0, 8)) : null; if (opt.length && /旧/.test(opt[0] || '')) bad.push('「帧数」第一项还标着旧：' + opt[0]); }
   out.sel = ['endMode', 'coolMode'].filter(k => panelRows.some(([r, it]) => it.sel === k));
   if (out.sel.length) bad.push('面板上还有旧 / 新开关：' + out.sel);
   const e = sparkTailEnd(state.P); out.end = { dur: state.P.duration, spark: e };
@@ -1833,18 +1848,24 @@ W13_JS = r'''async (rec) => {
   const want = ['outPC', 'outMobile', 'cutIn', 'cutOut', 'exposure', 'cellPad'];
   if (want.some(k => !dkeys.includes(k)) || spec.length !== 4 || dkeys.filter(k => k !== 'specBox').length !== 6) bad.push('「直接调」不是那 9 个（PC / 手机怎么出、入点、出点、贴图宽 × 高、列 × 行、曝光、留边）：' + JSON.stringify(out.direct));
   const ckeys = panelRows.filter(([r]) => !r.hidden && r.closest('details') === cmod).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.info);
-  out.calc = ckeys; if (!['holdTicks', 'pageTarget', 'outCell'].every(k => ckeys.includes(k))) bad.push('「算出来的」缺帧率 / 张数 / 单格：' + JSON.stringify(ckeys));
+  out.calc = ckeys; if (!['pageTarget', 'outCell'].every(k => ckeys.includes(k))) bad.push('「算出来的」缺张数 / 单格：' + JSON.stringify(ckeys));
+  // 4.9.13：缺省按运动分（帧率按运动自动分，没有「每帧停几 tick」）；换成固定机位 + 匀速帧时「算出来的」多一行帧率
+  state.P.frameBudget = 'fixed'; refreshVisibility();
+  const ck2 = panelRows.filter(([r]) => !r.hidden && r.closest('details') === cmod).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.info); out.calcFixed = ck2;
+  if (!ck2.includes('holdTicks') || ckeys.includes('holdTicks')) bad.push('「每帧停几 tick」应只在匀速帧时出现：' + JSON.stringify({ motion: ckeys, fixed: ck2 }));
   const hrow = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'holdTicks')[0], hb = hrow.querySelector('.chain');
   out.hold = { linked: hb && hb.getAttribute('aria-pressed') === 'true', gray: hrow.classList.contains('adef-on'), shown: +hrow.querySelector('.num').value, calc: outCalc().hold };
   if (!out.hold.linked || !out.hold.gray || out.hold.shown !== out.hold.calc) bad.push('帧率没有灰字显示算出来的值 / 没链条：' + JSON.stringify(out.hold));
   const oc = panelRows.find(([r, it]) => it.sel === 'outCell')[0].querySelector('option[value="0"]').textContent; out.cellLabel = oc;
   if (!/自动：现在 \d+ px/.test(oc)) bad.push('单格没写现在算出来的是多少：' + oc);
   // 填了每帧停几 tick：帧计划照办（k = 2 → 帧号每次跳 2 个 tick）；0 = 自动和以前一样
-  { const P0 = derive({ ...structuredClone(state.P) }), fm = measure(P0), p0 = plan(P0, fm), p2 = plan({ ...P0, holdTicks: 2 }, fm);
+  { const P0 = derive({ ...structuredClone(state.P), frameBudget: 'fixed' }), fm = measure(P0), p0 = plan(P0, fm), p2 = plan({ ...P0, holdTicks: 2 }, fm);
     const step = pl => pl.ticks && pl.ticks.length > 1 ? pl.ticks[1] - pl.ticks[0] : null; out.plan = { auto: step(p0), two: step(p2), F0: p0.L.F, F2: p2.L.F };
     if (out.plan.two !== 2) bad.push('填了每帧停 2 tick，帧计划没照办：' + JSON.stringify(out.plan)); }
-  // 旧帧数模式的开花段 / 淡出段：固定机位时收进旧（待删）
-  { const r = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'burstSec'); out.burstSecHidden = r && r[0].hidden; if (!r || !r[0].hidden || !r[0]._legacy) bad.push('固定机位时「开花段时长」没收进旧（待删）'); }
+  // 开花段时长：按运动分要读（4.9.13 不再是旧），匀速帧不读、不显示
+  { const r = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'burstSec'); const hidFixed = r && r[0].hidden; state.P.frameBudget = 'motion'; refreshVisibility(); const hidMotion = r && r[0].hidden;
+    out.burstSec = { fixed: hidFixed ? '不显示' : '显示', motion: hidMotion ? '不显示' : '显示', legacy: !!(r && r[0]._legacy) };
+    if (!r || !hidFixed || hidMotion || r[0]._legacy) bad.push('「开花段时长」应是按运动分时显示（不标旧）、匀速帧时不显示：' + JSON.stringify(out.burstSec)); }
   // 2 类别：说明条显示
   selectEmitTab('星'); const sr = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'stars')[0]; panelHelp(sr); out.help = $('#pHelp').textContent.slice(-40);
   if (!/物理量（颗）|物理量（个）|物理量（/.test($('#pHelp').textContent)) bad.push('说明条没写类别 / 单位：' + out.help);
@@ -1881,10 +1902,16 @@ W14_FS = r'''async () => { await openType('kiku'); await new Promise(r => setTim
   const firstRow = panelRows.map(([r]) => r).find(r => !r.hidden && r.offsetParent && r.closest('section.egrp:not([hidden])') && r.closest('details.mod') && r.closest('details.mod').open);
   return { name: R($('#abIdName')), save: R($('#abSave')), exportPack: R($('#abExportPack')), more: R(document.querySelector('#abMore > summary')), tabs: R($('#params .etabs')),
     firstRow: R(firstRow), review: R(document.querySelector('#libBody .li')), newRecipe: R($('#newRecipe')), canvas: R(document.querySelector('.canvas-wrap')), play: R($('#play')),
-    scope: R($('#params .pscope .ps-path')), find: R($('#params .pscope .ps-find')) }; }'''
-# 4.9.8（对话框23）：第一屏看得到几行参数（整行在右栏里、在窗口里）
-W14_ROWS = r'''(() => { const R = $('#right').getBoundingClientRect(), vh = innerHeight;
-  return [...document.querySelectorAll('#params .sl, #params details.mod > .field')].filter(r => { if (r.hidden || !r.offsetParent) return false; const b = r.getBoundingClientRect(); return b.height > 0 && b.top >= R.top - 1 && b.bottom <= Math.min(R.bottom, vh) + 1; }).length; })()'''
+    scope: R($('#params .pscope .ps-path')), search: R($('#params .ptools input[type=search]')), foot: R($('#pFoot')) }; }'''
+# 4.9.14（对话框23，用户 10-06 15:15「回滚再来」，照 01_顺手调参_深化）：第一屏的「舒适」口径——不再数参数行（4.9.8 的「≥ 8 行」把模块全展开往下堆）：
+# 这个发射器的模块一屏看得到几个（收起的都写了摘要）、参数行的滑杆和数值框各在一条竖线上、底部「和打开时比」那一条在
+W14_LAYOUT = r'''(() => { const R = $('#right').getBoundingClientRect(), vh = innerHeight, foot = $('#pFoot'), fb = foot && foot.offsetParent ? foot.getBoundingClientRect().top : Math.min(R.bottom, vh);
+  const inView = el => { const b = el.getBoundingClientRect(); return b.height > 0 && b.top >= R.top - 1 && b.bottom <= Math.min(fb, vh) + 1; };
+  const g = [...document.querySelectorAll('#params section.egrp')].find(x => !x.hidden), mods = g ? [...g.querySelectorAll(':scope > details.mod')].filter(d => !d.hidden) : [];
+  const rows = [...document.querySelectorAll('#params details.mod[open] > .sl:not(.rnd-row)')].filter(r => !r.hidden && r.offsetParent && inView(r));     // 收起的 details 里的行在 Chromium 里照样有位置，要按 open 筛
+  const xs = sel => [...new Set(rows.map(r => r.querySelector(sel)).filter(Boolean).map(e => Math.round(e.getBoundingClientRect().left)))];
+  return { emit: g && g.dataset.g, mods: mods.length, seen: mods.map(d => d.querySelector(':scope > summary')).filter(inView).length, open: mods.filter(d => d.open).map(d => d._mod),
+    noSum: mods.filter(d => !d.open && !((d.querySelector(':scope > summary .msum') || {}).textContent || '').trim()).map(d => d._mod), rows: rows.length, numX: xs(':scope > .num'), rangeX: xs(':scope > input[type=range]') }; })()'''
 
 
 async def w14(p, b):
@@ -1911,7 +1938,7 @@ async def w14(p, b):
         if r: bad.append('对象 × 动作表里的入口缺：' + '、'.join(r))
     finally:
         await ctx.close()
-    for vw, vh in [(1366, 768), (1920, 1080)]:
+    for vw, vh in [(1366, 768), (1440, 900), (1920, 1080)]:
         ctx = await b.new_context(viewport={'width': vw, 'height': vh}); pg = await ctx.new_page()
         try:
             await pg.add_init_script("window.requestAnimationFrame = () => 0;")
@@ -1919,13 +1946,19 @@ async def w14(p, b):
             await pg.evaluate(REC if REAL else FAKE)
             r = await pg.evaluate(W14_FS); info[f'{vw}×{vh}'] = [k for k, v in r.items() if not v]
             if info[f'{vw}×{vh}']: bad.append(f'{vw}×{vh} 首屏看不到：' + '、'.join(info[f'{vw}×{vh}']))
-            # 4.9.8：第一屏至少 8 行参数（提示词 W14 加的一条，建议值）：菊 › 星、引菊 → 锦 金锦层 › 火花
-            n1 = await pg.evaluate(W14_ROWS)
+            # 4.9.14：菊 › 星、引菊 → 锦 金锦 › 火花：收起的模块都写了摘要；滑杆、数值框各对齐成一条竖线；一屏看得到的模块——
+            # 1920×1080 两个都全部、1440×900 菊全部、1366×768 至少 6 个（参考稿 941 高时 9 个模块 3 个展开一屏看完）
+            need = {(1366, 768): (6, 6), (1440, 900): (99, 6), (1920, 1080): (99, 99)}[(vw, vh)]
+            l1 = await pg.evaluate(W14_LAYOUT)
             await open_effect(pg, 'hiki_nishiki'); await pg.evaluate("(() => { state.playing = false; selectComboLayer(1); selectEmitTab('火花'); $('#right').scrollTop = 0; return 0; })()"); await pg.wait_for_timeout(300)
-            n2 = await pg.evaluate(W14_ROWS); sc = await pg.evaluate("$('#params .pscope .ps-path').textContent")
-            info[f'{vw}×{vh} 参数行'] = {'菊 › 星': n1, '金锦层 › 火花': n2, '顶上': sc}
-            if n1 < 8 or n2 < 8: bad.append(f'{vw}×{vh} 第一屏参数不到 8 行：菊 {n1}、金锦层 › 火花 {n2}')
-            if sc.replace(' ', '') != '金锦层›火花': bad.append(f'顶上没写「金锦层 › 火花」：{sc}')
+            l2 = await pg.evaluate(W14_LAYOUT); sc = await pg.evaluate("$('#params .pscope .ps-path').textContent")
+            info[f'{vw}×{vh} 第一屏'] = {'菊 › 星': l1, '金锦 › 火花': l2, '顶上': sc}
+            for nm, l, n in (('菊 › 星', l1, need[0]), ('金锦 › 火花', l2, need[1])):
+                if l['seen'] < min(n, l['mods']): bad.append(f"{vw}×{vh} {nm}：一屏只看得到 {l['seen']} / {l['mods']} 个模块（应 ≥ {min(n, l['mods'])}）")
+                if l['noSum']: bad.append(f"{vw}×{vh} {nm}：收起的模块没写摘要：{l['noSum']}")
+                if len(l['numX']) > 1 or len(l['rangeX']) > 1: bad.append(f"{vw}×{vh} {nm}：参数行没对齐（数值框 x {l['numX']}、滑杆 x {l['rangeX']}）")
+                if not l['rows']: bad.append(f'{vw}×{vh} {nm}：第一屏没有一行参数（默认该展开第一个模块）')
+            if sc.replace(' ', '') != '金锦›火花': bad.append(f'顶上没写「金锦 › 火花」：{sc}')
         finally:
             await ctx.close()
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
@@ -2016,7 +2049,7 @@ async def w15(p, b):
         await pg.click('#params .etabs [data-e="火花"]'); await pg.wait_for_timeout(200)
         s1 = await pg.evaluate("({ sel: state.comboSel, scope: $('#params .pscope .ps-path').textContent.replace(/\\s/g, ''), solo: state.layerView.solo, mute: state.layerView.mute.length, sticky: getComputedStyle($('#params .pscope')).position })")
         info['1 定位'] = s1
-        if s1['sel'] != 1 or s1['scope'] != '金锦层›火花': bad.append(f'第 1 步定位不对：{s1}')
+        if s1['sel'] != 1 or s1['scope'] != '金锦›火花': bad.append(f'第 1 步定位不对：{s1}')
         if s1['solo'] != -1 or s1['mute']: bad.append(f'第 1 步选层改了观察（独看 / 静音）：{s1}')
         if s1['sticky'] != 'sticky': bad.append('顶上那块没固定（滚动时会消失）')
         sc = await pg.evaluate("(() => { const R = $('#right'); R.scrollTop = R.scrollHeight; const a = $('#params .pscope').getBoundingClientRect(), r = R.getBoundingClientRect(); return a.top >= r.top - 1 && a.bottom <= r.bottom + 1; })()")
@@ -2088,7 +2121,8 @@ async def w15(p, b):
         await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg); await pg.wait_for_timeout(900); await idle(pg)
         await pg.evaluate("(() => { state.playing = false; selectEmitTab('星'); return 0; })()"); await pg.wait_for_timeout(200)
         async def box(k):
-            return await pg.evaluate("""(k => { const el = document.querySelector(`#params input[type=range][id^="p-${k}-"]`); if (!el) return null; el.scrollIntoView({ block: 'center' }); const b = el.getBoundingClientRect(); return { x: b.left, y: b.top + b.height / 2, w: b.width }; })""", k)
+            return await pg.evaluate("""(k => { const el = document.querySelector(`#params input[type=range][id^="p-${k}-"]`); if (!el) return null; const d = el.closest('details.mod'); if (d && !d.open) d.open = true;     // 4.9.14 模块默认收起：先点开
+              el.scrollIntoView({ block: 'center' }); const b = el.getBoundingClientRect(); return { x: b.left, y: b.top + b.height / 2, w: b.width }; })""", k)
         n0 = await pg.evaluate("undo.back.length")
         v0 = await pg.evaluate("({ stars: state.P.stars, burn: state.P.burn })")
         bs = await box('stars'); await pg.mouse.click(bs['x'] + bs['w'] * 0.3, bs['y']); await pg.wait_for_timeout(60)
@@ -2110,6 +2144,135 @@ async def w15(p, b):
         info['撤销一次'] = [v2, v3]
         if v3 != v2: bad.append(f'撤销一次没正好回到数值框输入之前：{v3}（应 {v2}）')
         if v0 == v2: bad.append('滑杆没改到参数（检查本身不对）')
+    finally:
+        await ctx.close()
+    if errs: bad.append('页面错误：' + errs[0][:160])
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)
+
+
+async def w16(p, b):
+    """4.9.14 主链路八步连着走（用户 10-06 15:15：「选效果与图层 → 调参数 → 调色并返回 → 调层延迟 → 撤销/重做 → 保存刷新 → 烘焙回放 → 导出 PC/手机」；
+    GPT 方案的首条纵向链）。引菊 → 锦，1440×900，鼠标点、键盘敲真的控件（不直接改 state）：
+    1 左栏点「引菊 → 锦」→ 图层那一行点「金锦」→ 发射器点「火花」：顶上「金锦 › 火花」、不改独看 / 静音
+    2 点开「寿命」→ 数值框输入回车：参数改到金锦层、行尾 ↺、标签「火花 1」、底部「相对打开时改过 1 项」
+    3 颜色那一行点「定位 ↗」→ 本层颜色展开、看得见 → 改第一段颜色 →「← 回到 火花 › 颜色」：回到原位置、只改金锦层
+    4 点「效果」→「这一层在整朵里」开始时间输入回车：层的延迟、图层管理那一格、时间轴的条一起动
+    5 Ctrl+Z：只回开始时间（寿命、颜色还在）；Ctrl+Shift+Z：重做回来
+    6 点「保存」（AI 效果存成我的效果）→ 刷新 → 重开：寿命、颜色、开始时间都在
+    7 点「引擎回放」→ 按 B 烘焙：每层贴图按最新参数、不标旧
+    8 点「导出素材包」：包里有 PC cascade.json + 手机 cascade_mobile.json、两层贴图，按最新参数（云端是假烘焙，本机 --real 是真烘焙）"""
+    bad, info = [], {}
+    ctx = await b.new_context(viewport={'width': 1440, 'height': 900}); pg = await ctx.new_page(); errs = []
+    pg.on('pageerror', lambda e: errs.append(str(e)))
+    async def tag(js, name):     # 用页面里的逻辑找到控件，打上 data-w16，再用 Playwright 真的点
+        ok = await pg.evaluate("(([js, name]) => { document.querySelectorAll(`[data-w16='${name}']`).forEach(x => x.removeAttribute('data-w16')); const el = (0, eval)(js); if (!el) return false; el.setAttribute('data-w16', name); el.scrollIntoView({ block: 'nearest' }); return true; })", [js, name])
+        return ok
+    async def click(js, name):
+        if not await tag(js, name): return False
+        await pg.click(f"[data-w16='{name}']"); await pg.wait_for_timeout(150); return True
+    async def type_num(js, name, val):
+        if not await tag(js, name): return False
+        await pg.click(f"[data-w16='{name}']"); await pg.keyboard.press('Control+a'); await pg.keyboard.type(str(val)); await pg.keyboard.press('Enter'); await pg.wait_for_timeout(200); return True
+    try:
+        await pg.add_init_script("window.requestAnimationFrame = () => 0;")
+        await pg.goto(HTML, wait_until='load', timeout=0); await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
+        await pg.evaluate(REC if REAL else FAKE); await pg.evaluate(ask_stub('主链路检查'))
+        await pg.evaluate("setAutoBake(false); 0")
+        # 1 选效果与图层
+        ok = await click("[...document.querySelectorAll('#libBody .li')].find(x => /引菊/.test(x.textContent))", 'lib')
+        await idle(pg); await pg.wait_for_timeout(600); await idle(pg)
+        await pg.evaluate("state.playing = false; 0")
+        ok = ok and await click("document.querySelector('#layerCard .lc-chip[data-i=\"1\"]') || document.querySelector('#layerCard .lrow[data-i=\"1\"]')", 'layer')
+        ok = ok and await click("document.querySelector('#params .etabs [data-e=\"火花\"]')", 'tab')
+        s1 = await pg.evaluate("({ key: lib.key, sel: state.comboSel, scope: $('#params .pscope .ps-path').textContent.replace(/\\s/g, ''), solo: state.layerView.solo, mute: state.layerView.mute.length })")
+        info['1 选效果与图层'] = s1
+        if not ok or s1['sel'] != 1 or s1['scope'] != '金锦›火花': bad.append(f'第 1 步没选到「金锦 › 火花」：{s1}')
+        if s1['solo'] != -1 or s1['mute']: bad.append('第 1 步选层改了独看 / 静音')
+        # 2 调参数：点开「寿命」模块（默认收起），数值框输入
+        life0 = await pg.evaluate("layerEntryOf(state.layers[1]).P.sparkLife"); want = round(life0 + 0.4, 2)
+        ok = await click("[...document.querySelectorAll('#params section.egrp[data-g=\"火花\"] > details.mod')].find(d => d._mod === '寿命').querySelector(':scope > summary')", 'lifesum')
+        ok = ok and await type_num("panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'sparkLife')[0].querySelector('.num')", 'lifenum', want)
+        s2 = await pg.evaluate("""(() => { const row = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'sparkLife')[0];
+          return { life: layerEntryOf(state.layers[1]).P.sparkLife, chg: row.classList.contains('chg'), rr: !row.querySelector('.rrst').hidden, n: +((document.querySelector('#params .etabs [data-e="火花"] .et-n') || {}).textContent || 0),
+            foot: $('#pFoot .pf-chg').textContent, stale: bakeStale() }; })()""")
+        info['2 调参数'] = s2
+        if not ok or abs(s2['life'] - want) > 1e-6: bad.append(f'第 2 步寿命没改到金锦层：{s2}（应 {want}）')
+        if not (s2['chg'] and s2['rr'] and s2['n'] == 1 and '改过 1 项' in s2['foot']): bad.append(f'第 2 步「改过」没标全（行尾 ↺ / 标签数 / 底部）：{s2}')
+        # 3 调色并返回
+        c0 = await pg.evaluate("[JSON.stringify(state.layers[0].stages), state.layers[1].stages[0][1]]")
+        ok = await click("[...document.querySelectorAll('#params section.egrp[data-g=\"火花\"] > details.mod')].find(d => d._mod === '颜色').querySelector('.mgo')", 'mgo')
+        await pg.wait_for_timeout(150)
+        s3a = await pg.evaluate("(() => { const cc = $('#colorControls'), R = $('#right').getBoundingClientRect(), r = cc.getBoundingClientRect(); return { open: cc.open, inView: r.top < R.bottom && r.bottom > R.top, sum: cc.querySelector('summary').textContent }; })()")
+        await pg.evaluate("""(() => { const col = $('#colorControls #stages input[type=color]'); col.value = state.layers[1].stages[0][1] === '#123456' ? '#654321' : '#123456'; col.dispatchEvent(new Event('input', { bubbles: true })); col.dispatchEvent(new Event('change', { bubbles: true })); return 0; })()""")
+        ok = ok and await click("$('#colorControls .cback')", 'back')
+        await pg.wait_for_timeout(150)
+        s3 = await pg.evaluate("""(() => { const d = [...document.querySelectorAll('#params section.egrp[data-g="火花"] > details.mod')].find(d => d._mod === '颜色'), R = $('#right').getBoundingClientRect(), r = d.querySelector('summary').getBoundingClientRect();
+          return { col: state.layers[1].stages[0][1], other: JSON.stringify(state.layers[0].stages), tab: pview.tabNow, back: r.top >= R.top - 1 && r.bottom <= R.bottom + 1 }; })()""")
+        info['3 调色并返回'] = {**s3a, 'tab': s3['tab'], 'back': s3['back'], 'changed': s3['col'] != c0[1], 'other': s3['other'] == c0[0]}
+        if not ok or not s3a['open'] or not s3a['inView'] or '所有发射器' not in s3a['sum']: bad.append(f'第 3 步「定位」没把本层颜色（写明整层共用）展开到眼前：{s3a}')
+        if s3['col'] == c0[1] or s3['other'] != c0[0]: bad.append('第 3 步颜色没改到金锦层 / 改到了别的层')
+        if s3['tab'] != '火花' or not s3['back']: bad.append(f"第 3 步「← 回到」没回到火花 › 颜色：{info['3 调色并返回']}")
+        # 4 调层延迟
+        ok = await click("document.querySelector('#params .etabs [data-e=\"效果\"]')", 'efftab')
+        d0 = await pg.evaluate("state.layers[1].delay"); dw = round(d0 + 0.5, 2)
+        bar = "(() => { stage2.tlSig = ''; buildTlBars(); const m = document.querySelector('#tlBars .tlb-t[data-i=\"1\"] i.main'); return m ? parseFloat(m.style.left) : null; })()"
+        b0 = await pg.evaluate(bar)
+        await pg.evaluate("(() => { const pos = $('#lhPos'); if (pos && pos.tagName === 'DETAILS') pos.open = true; return 0; })()")
+        ok = ok and await type_num("$('#lhPos input[id$=\"-delay\"]').closest('.sl').querySelector('.num')", 'delay', dw)
+        s4 = await pg.evaluate("({ d: state.layers[1].delay, other: state.layers[0].delay, cell: +(document.querySelector('#layerCard [data-st=\"1\"]') || {}).value })")
+        s4['b0'] = b0; s4['b1'] = await pg.evaluate(bar)
+        info['4 调层延迟'] = s4
+        if not ok or abs(s4['d'] - dw) > 1e-6: bad.append(f'第 4 步开始时间没改到：{s4}（应 {dw}）')
+        if s4['b0'] is None or s4['b1'] is None or not s4['b1'] > s4['b0']: bad.append(f'第 4 步时间轴上金锦层的条没往后挪：{s4}')
+        # 5 撤销 / 重做
+        await pg.mouse.click(700, 420); await pg.keyboard.press('Control+z'); await idle(pg); await pg.wait_for_timeout(250)
+        u = await pg.evaluate("({ d: state.layers[1].delay, life: layerEntryOf(state.layers[1]).P.sparkLife, col: state.layers[1].stages[0][1] })")
+        await pg.keyboard.press('Control+Shift+z'); await idle(pg); await pg.wait_for_timeout(250)
+        r = await pg.evaluate("({ d: state.layers[1].delay, life: layerEntryOf(state.layers[1]).P.sparkLife, col: state.layers[1].stages[0][1] })")
+        info['5 撤销 / 重做'] = {'撤销': u, '重做': r}
+        if abs(u['d'] - d0) > 1e-6 or abs(u['life'] - want) > 1e-6 or u['col'] != s3['col']: bad.append(f'第 5 步撤销一次没正好回一步（开始时间回去、寿命 / 颜色还在）：{u}')
+        if abs(r['d'] - dw) > 1e-6 or abs(r['life'] - want) > 1e-6: bad.append(f'第 5 步重做没回来：{r}')
+        # 6 保存刷新
+        ok = await click("$('#abSave')", 'save'); await pg.wait_for_timeout(1200); await idle(pg)
+        saved = await pg.evaluate("({ id: lib.my && lib.my.id, life: layerEntryOf(state.layers[1]).P.sparkLife, d: state.layers[1].delay, col: state.layers[1].stages[0][1], n: state.layers.length })")
+        info['6 保存'] = saved
+        if not ok or not saved['id']: bad.append('第 6 步保存没存成我的效果')
+        else:
+            await pg.reload(wait_until='load'); await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
+            await pg.evaluate(REC if REAL else FAKE); await pg.evaluate(ask_stub('主链路检查')); await pg.evaluate("setAutoBake(false); 0")
+            await pg.evaluate(f"(() => {{ window.__opening = true; Promise.resolve(openMyEffect({json.dumps(saved['id'])})).finally(() => window.__opening = false); return 0; }})()"); await idle(pg); await pg.wait_for_timeout(600); await idle(pg)
+            again = await pg.evaluate("({ id: lib.my && lib.my.id, life: layerEntryOf(state.layers[1]).P.sparkLife, d: state.layers[1].delay, col: state.layers[1].stages[0][1], n: state.layers.length })")
+            info['6 刷新重开'] = again
+            if again != saved: bad.append(f'第 6 步刷新重开和保存的不一样：{saved} → {again}')
+        # 7 烘焙回放
+        await pg.evaluate("state.playing = false; 0")
+        ok = await click("document.querySelector('.viewbar [data-view=\"export\"]')", 'engine')
+        await pg.mouse.click(700, 420); await pg.keyboard.press('b'); await pg.wait_for_timeout(500); await idle(pg)
+        if REAL: await pg.wait_for_timeout(1500); await idle(pg)
+        s7 = await pg.evaluate("""(() => { const ls = state.layers.map(L => layerEntryOf(L)); return { view: state.view, stale: bakeStale(), layers: ls.map(e => ({ baked: !!(e && e.bake), old: layerStale(e) })),
+          life: ls[1] && ls[1].bake ? (ls[1].bake.srcP || ls[1].bake.P || {}).sparkLife : null, want: ls[1] && ls[1].P.sparkLife }; })()""")
+        info['7 烘焙回放'] = s7
+        if not ok or s7['view'] != 'export': bad.append(f"第 7 步没切到引擎回放：{s7['view']}")
+        if s7['stale'] or any(not x['baked'] or x['old'] for x in s7['layers']) or s7['life'] is None or abs(s7['life'] - s7['want']) > 1e-6: bad.append(f'第 7 步烘焙后贴图不是最新参数 / 还标着旧：{s7}')
+        # 8 导出 PC / 手机：截下素材包（不真下载）
+        await pg.evaluate("""(() => { window.__zip = null; window.__mz = makeZip; window.__dl = download; makeZip = async files => { window.__zip = files.map(([n, d]) => [n, n.endsWith('.json') ? new TextDecoder().decode(d) : d.length || d.byteLength || 0]); return new Blob([]); }; download = () => 0; return 0; })()""")
+        if not REAL:     # 云端假烘焙没有真贴图：只把「贴图编码成 PNG」「手机版重烘」换成占位，导出流程（每层是不是最新、PC / 手机 cascade、命名）照旧走
+            await pg.evaluate("(() => { window.__tf = texFiles; window.__bm = bakeMobileFor; texFiles = async (b, name) => [[TN(name, 'Seq', b.meta && b.meta.L, 1) + '.png', new Uint8Array(4)]]; bakeMobileFor = async b => b; return 0; })()")
+        ok = await click("$('#abExportPack')", 'export'); st8 = []
+        for _ in range(240 if REAL else 60):
+            if await pg.evaluate("!!window.__zip"): break
+            st8.append(await pg.evaluate("$('#status').textContent")); await pg.wait_for_timeout(500)
+        info['8 导出时的提示'] = [x for x in dict.fromkeys(st8) if x][:3]
+        s8 = await pg.evaluate("""(() => { const z = window.__zip || [], nm = z.map(f => f[0]); makeZip = window.__mz; download = window.__dl; if (window.__tf) { texFiles = window.__tf; bakeMobileFor = window.__bm; }
+          const pc = z.find(f => /\\/cascade\\.json$/.test(f[0])), mb = z.find(f => /\\/cascade_mobile\\.json$/.test(f[0])), J = f => { try { return JSON.parse(f[1]); } catch (e) { return null; } };
+          const e2 = layerEntryOf(state.layers[1]);
+          return { status: $('#status').textContent, busy: $('#busy').hidden ? '' : $('#busyText').textContent, job: busyJob.on, idle: typeof wbIdle === 'function' ? wbIdle() : null, dis: $('#abExportPack').disabled, files: nm.length, pc: !!pc, mobile: !!mb, png: nm.filter(n => n.endsWith('.png')).length, pcEm: pc && J(pc) ? (J(pc).emitters || []).length : 0, mbEm: mb && J(mb) ? (J(mb).emitters || []).length : 0,
+            hiki: nm.some(n => /_Hiki_/.test(n)), nishiki: nm.some(n => /_Nishiki_/.test(n)), life: e2 && e2.bake ? (e2.bake.srcP || e2.bake.P || {}).sparkLife : null, want: e2 && e2.P.sparkLife }; })()""")
+        info['8 导出 PC / 手机'] = s8
+        if not ok or not s8['files']: bad.append('第 8 步点「导出素材包」没出包')
+        elif not (s8['pc'] and s8['mobile'] and s8['pcEm'] >= 2 and s8['mbEm'] >= 1 and s8['png'] >= 2 and (not REAL or (s8['hiki'] and s8['nishiki']))): bad.append(f'第 8 步素材包不全（PC + 手机 cascade、两层贴图）：{s8}')
+        elif s8['life'] is None or abs(s8['life'] - s8['want']) > 1e-6: bad.append(f'第 8 步导出拿的不是最新参数的贴图：{s8}')
+        if saved.get('id'): await pg.evaluate(f"(() => {{ myDelete({json.dumps(saved['id'])}); return 0; }})()")     # 收拾：删掉检查用的效果
     finally:
         await ctx.close()
     if errs: bad.append('页面错误：' + errs[0][:160])
@@ -2155,7 +2318,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

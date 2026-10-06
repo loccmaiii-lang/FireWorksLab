@@ -18,7 +18,9 @@ function buildLayerCard() {
   box.hidden = !on; if (!on) { box.innerHTML = ''; return; }
   // 4.9.8（对话框23；用户 10-04 偏好「图层管理默认展开、入口清晰」）：默认展开，你收起 / 展开会记住；每层压成紧凑的一行
   // 屏幕矮（< 860 px，例：1366×768）时默认收起成一行「图层 [1 橙引线] [2 金锦] … 整体」，点层名就切；你收起 / 展开过就按你的
-  if (!box._init) { box._init = true; box.open = store.get('lcardOpen', typeof innerHeight === 'number' ? innerHeight >= 860 : true); box.addEventListener('toggle', () => store.set('lcardOpen', box.open)); }
+  // 4.9.14（照 01_顺手调参_深化：参数页顶上是「金锦 › 火花」，不是整张图层表）：默认收成一行「图层 [1 橙引线] [2 金锦] … 整体」，点层名就切；
+  // 点「图层」展开图层管理（开始时间、独看 / 静音、加层 / 排序）。你开合过就按你的（4.9.8 起记的 lcardOpen 是「≥ 860 px 默认展开」时记的，换个名重新起算）
+  if (!box._init) { box._init = true; box.open = store.get('lcardOpen2', false); box.addEventListener('toggle', () => store.set('lcardOpen2', box.open)); }
   const v = state.layerView;
   const rows = state.layers.map((L, i) => {
     const e = layerEntryOf(L), le = e && e.rep ? FW_REVIEW_LIST.find(x => x.id === e.rep) : null;
@@ -41,6 +43,7 @@ function buildLayerCard() {
   box.querySelectorAll('[data-solo]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.solo; v.solo = v.solo === i ? -1 : i; buildLayerCard(); }));
   box.querySelectorAll('[data-mute]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.mute; v.mute = v.mute.includes(i) ? v.mute.filter(x => x !== i) : [...v.mute, i]; buildLayerCard(); }));
   if (lib.my) bindMyLayerTools(box);
+  if (typeof scopeSync === 'function') scopeSync();     // 4.9.14：顶上「金锦 › 火花」旁的独看 / 静音跟着（时间轴、图层管理、顶上三处是同一个开关）
 }
 function selectComboLayer(i) {
   if (state.tab !== 'combo') return;
@@ -662,7 +665,7 @@ function outSummaryHTML() {
   const burnMin = Math.min(...parts.map(s => s.meta.minFps || 30));
   const used = parts.reduce((n, s) => n + s.meta.L.F, 0), cap = parts.reduce((n, s) => n + s.meta.L.cols * s.meta.L.rows * s.meta.L.chans, 0);
   const sheet = s => { const L = s.meta.L; return `${L.cols}×${L.rows}${L.chans === 4 ? '×RGBA' : ''} · ${Math.round(L.cols * L.cellW)}×${Math.round(L.rows * L.cellH)}`; };
-  const mode = { motion: '自动', lean: '最省', count: '手动', tiers: '分段帧率', full: '全程 30 fps' }[P.frameBudget || 'motion'] || '';
+  const mode = { motion: '按运动分', fixed: '匀速帧', lean: '最省', count: '手动', tiers: '分段帧率', full: '全程 30 fps' }[P.frameBudget || 'motion'] || '';
   const warn = [];
   if (burnMin < 10 - 0.05) warn.push(`燃烧段最慢 ${burnMin.toFixed(1)} fps，低于标准的 10 fps`);
   if (minF < 7.5 - 0.05) warn.push(`最慢 ${minF.toFixed(1)} fps，低于标准的 7.5 fps`);

@@ -66,9 +66,8 @@ const LEGACY = {
   rtDotGain: ['粒子层另乘的总亮度（光晕、发射口不乘），名不副实'], rtDissolve: ['消散溶解终值；5.0 固定', 1],
   preRoll: [LG_PRE, 0, P => +P.cutIn > 0], preScale0: [LG_PRE, null, P => +P.preRoll > 0 && +P.preScale0 > 0], prePivot: [LG_PRE, null, P => +P.preRoll > 0 && +P.prePivot !== 0],
   fpsFloor: ['旧帧计划才读；固定机位 + 匀速帧不读'],
-  // 4.9.5（宪章遗漏 1）：旧帧数模式（按运动分 / 最省 / 手动 / 分段帧率）的参数；固定机位 + 匀速帧不读。用没用上看帧数模式，不看值
-  burstSec: ['旧帧数模式才用的「开花段」；固定机位 + 匀速帧整段一个帧率', null, P => !['fixed', 'full'].includes(P.frameBudget || 'motion'), true],
-  fadeAt: ['旧帧数模式才用的「淡出段」；固定机位 + 匀速帧整段一个帧率', null, P => !['fixed', 'full'].includes(P.frameBudget || 'motion'), true], trimLead: ['开头空白不烘；5.0 固定为裁掉', 1],
+  // 4.9.13：开花段时长 burstSec、淡出起点 fadeAt 是按运动分的参数，帧数分配默认改回按运动分（用户 10-06 15:15）后不再是旧
+  trimLead: ['开头空白不烘；5.0 固定为裁掉', 1],
 };
 const legacyOf = k => LEGACY[k] || (/^ph[A-Z]/.test(k) ? ['物理尾缀（已归档）的参数'] : null);
 function legacyInUse(k, P) {
@@ -105,38 +104,8 @@ function p43LegacySync(P) {
     g._oldb.classList.toggle('on', open);
   }
 }
-// 4.9.8（对话框23 参数栏交互）：每个模块常用的直接显示，别的收进「更多 N 项」（开关在模块标题这一行右边，点开记住）。
-// 常用 = 命名表 tier「core」，加上改过的（和打开时不一样）；说明行 / 规格框总显示。模块里常用的不到 1 项、或者别的不到 3 项，就全显示（不值得收）。
-// 搜索 / 只看改过的时不收。随机行跟着本体走；旧（待删）有自己的开关
-function p43More() {
-  const seen = new Set();
-  for (const [, , , det] of panelRows) {
-    if (seen.has(det) || !det.classList.contains('mod')) continue; seen.add(det);
-    const b = document.createElement('span'); b.className = 'moreb'; b.hidden = true; b.setAttribute('role', 'button'); b.tabIndex = 0;
-    const go = e => { e.preventDefault(); e.stopPropagation(); pview.more = pview.more || store.get('pModMore', {}); pview.more[det._key] = !pview.more[det._key]; store.set('pModMore', pview.more); refreshVisibility(); };
-    b.addEventListener('click', go); b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') go(e); });
-    det._moreb = b; det.querySelector(':scope > summary').appendChild(b);
-  }
-}
-const isCoreRow = r => r._lab == null || !r._nm || r._nm.tier !== 'more' || r.classList.contains('chg');
-function p43MoreSync(P, auto) {
-  pview.more = pview.more || store.get('pModMore', {});
-  const byDet = new Map();
-  for (const [row, , , det] of panelRows) { if (!det._moreb) continue; if (!byDet.has(det)) byDet.set(det, []); if (row._applies && !row._randOf && !row._legacy) byDet.get(det).push(row); }
-  for (const [det, rows] of byDet) {
-    const core = rows.filter(isCoreRow), more = rows.filter(r => !isCoreRow(r)), open = !!pview.more[det._key];
-    const fixed = det._g === '输出' && OUT_FIRST.includes(det._mod);     // 输出的「直接调」「算出来的」本来就是收口后的那几项（交互宪章第 2 节），不再收
-    const fold = !auto && !fixed && core.length >= 1 && more.length >= 3, b = det._moreb;
-    b.hidden = !fold;
-    if (fold) {
-      const D = defaultsFor(P.type).P, set = more.filter(r => { const k = Array.isArray(r._it) ? r._it[0] : r._it.sel || r._it.curve || r._it.text; return k && D[k] !== undefined && String(P[k]) !== String(D[k]) && !(+P[k] === +D[k]); }).length;
-      b.textContent = open ? `收起 ${more.length} 项` : `更多 ${more.length} 项${set ? ` · ${set} 项设过` : ''}`;
-      b.title = (open ? '点一下收起这些不常用的参数：' : '点一下显示这些不常用的参数（搜索也找得到）') + (set && !open ? `；其中 ${set} 项不是模板默认值` : '') + '：' + more.map(r => r._lab).join('、');
-      b.classList.toggle('on', open);
-      if (!open) for (const r of more) { r.hidden = true; if (r._rands) for (const [rr] of r._rands) rr.hidden = true; }
-    }
-  }
-}
+// 4.9.14（对话框23，用户 10-06 15:15「回滚再来」，照 01_顺手调参_深化）：模块里不再收「更多」——模块默认收起、标题右边写摘要，点开整块参数都露出来。
+// （4.4.0 去掉过「更多」；4.9.8 又加回来，结果 4.9.11 留下的 14 项看不见。）收起 / 展开按模块记住
 function inertWhy(key, P) {
   if (!P) return '';
   for (const [ks, f, why] of INERT) if (ks.includes(key) && f(P)) return why;
@@ -146,7 +115,31 @@ function p43Label(nm, fallback) { if (!nm) return fallback; const x = nm.id && t
 const PMODULE = (() => { const m = {}; for (const x of (typeof PMODULES !== 'undefined' ? PMODULES : [])) m[x.cn] = x; return m; })();
 // 4.9.5（宪章遗漏 1，输出栏收口）：大面片 / 分段 / 地面循环的「输出」只展开「直接调」「算出来的」，别的模块默认收起（点开会记住）
 const OUT_FIRST = ['直接调', '算出来的'];
-function modDefaultOpen(key) { const [e, m] = String(key).split('›'); return !(e === '输出' && typeof isSeq === 'function' && isSeq(state.P) && !OUT_FIRST.includes(m)); }
+// 4.9.14：模块默认收起（标题右边写摘要，一眼看完一个发射器有哪些模块、各是多少）；每个发射器第一个有参数的模块默认展开，示范怎么调；
+// 序列效果的「输出」照旧先展开「直接调」「算出来的」（交互宪章第 2 节输出栏收口）。你开合过的按你的（pModOpen）
+function modDefaultOpen(key) {
+  const [e, m] = String(key).split('›');
+  if (e === '输出' && typeof isSeq === 'function' && isSeq(state.P)) return OUT_FIRST.includes(m);
+  return !!(pview.defOpen && pview.defOpen[key]);
+}
+// 程序开 / 关模块（默认、搜索时自动展开）不算你开合过：记下要的样子，toggle 事件来了对得上就不存。
+// （4.9.13 以前用「_auto + setTimeout 0」挡：details 的 toggle 事件和定时器不是同一个任务队列，定时器先跑时程序的开合被当成你点的存下来——
+// 4.9.14 改成默认收起后，换花型时会把「生成」记成你收起的）
+function modSetOpen(d, v) { v = !!v; if (d.open === v) return; d._prog = v; d.open = v; }
+function modProgToggle(d) { if (d._prog === undefined) return false; const p = d._prog; d._prog = undefined; return p === d.open; }
+// 面板建好、按适用的行显示 / 隐藏以后：每个发射器第一个有适用参数的模块记为「默认展开」；你没开合过的模块按默认开 / 关
+function p43DefaultOpen() {
+  pview.defOpen = {};
+  for (const g of document.querySelectorAll('#params > section.egrp')) {
+    // 按「这个花型有没有这一项」挑（_applies），不按现在显不显示——搜索 / 仅改动时模块都可能藏着，清掉以后要回到默认
+    const first = [...g.querySelectorAll(':scope > details.mod')].find(d => [...d.children].some(r => r._applies && !r._randOf)); if (first) pview.defOpen[first._key] = true;
+  }
+  for (const d of document.querySelectorAll('#params details.mod')) {
+    if (pview.mopen[d._key] != null || d._autoOpen) continue;
+    modSetOpen(d, modDefaultOpen(d._key));
+  }
+}
+
 // 4.9.8（对话框23，用户 10-06 12:30「放到发射器的框右上角，鼠标停留1.5s出现一个x，我点就删除，不要放在颜色模块中」）：
 // 只有能去掉的发射器（自定义发射器）有 ×：鼠标在发射器框里停 1.5 秒出现，移开收起；键盘 Tab 进这个框马上出现。点了 = 去掉（Ctrl+Z 撤回）
 const EDEL_DELAY = 1500;
@@ -177,9 +170,9 @@ function p43Skeleton(host) {
     const x = emitOf(nm, sec), k = x.e + '›' + x.m;
     if (!mods[k]) {
       const s = emitSec(x.e), order = (EMIT_DEF[x.e] || {}).mods || [], d = document.createElement('details');
-      d.className = 'sec mod'; d._auto = true; d.open = pview.mopen[k] != null ? pview.mopen[k] : modDefaultOpen(k); setTimeout(() => d._auto = false, 0);
+      d.className = 'sec mod'; modSetOpen(d, pview.mopen[k] != null ? pview.mopen[k] : modDefaultOpen(k));
       d.innerHTML = `<summary>${x.m}</summary>`;
-      d.addEventListener('toggle', () => { if (typeof modSummarySync === 'function') modSummarySync(); if (d._auto) return; pview.mopen[k] = d.open; store.set('pModOpen', pview.mopen); });
+      d.addEventListener('toggle', () => { if (typeof modSummarySync === 'function') modSummarySync(); if (modProgToggle(d)) return; pview.mopen[k] = d.open; store.set('pModOpen', pview.mopen); });
       d._sec = { sec: x.m }; d._g = x.e; d._mod = x.m; d._key = k; d._oi = order.includes(x.m) ? order.indexOf(x.m) : 99;
       const after = [...s.querySelectorAll(':scope > details.mod')].find(m => m._oi > d._oi);
       s.insertBefore(d, after || null); mods[k] = d;
@@ -217,7 +210,8 @@ function p43RandSync(P) {
   for (const [row] of panelRows) {
     if (!row._rndb) continue;
     const open = !!pview.ropen[row._it[0]], vals = row._rands.map(([r, it]) => { const v = +P[it[0]]; return isFinite(v) && v !== 0 ? `±${+(+v).toFixed(2)}${it[2] === '%' ? '%' : it[2] ? ' ' + it[2] : ''}` : ''; }).filter(Boolean);
-    row._rndb.textContent = (open ? '随机 ▾' : '随机 ▸') + (vals.length ? ' ' + vals.join(' ') : '');
+    const txt = [open ? '随机 ▾' : '随机 ▸', vals.length ? ' ' + vals.join(' ') : ''];     // 4.9.14：左「随机」右边随机量（一行子项）
+    if (row._rndb.textContent !== txt.join('')) row._rndb.innerHTML = `<span class="rk">随机<span class="ra">${txt[0].slice(2)}</span></span><span class="rv">${txt[1]}</span>`;
     row._rndb.classList.toggle('on', open); row._rndb.classList.toggle('set', !!vals.length);
     row._rndb.title = row._rands.map(([r]) => r._lab).join('、') + (open ? '（点一下收起）' : '（点一下展开）');
   }
