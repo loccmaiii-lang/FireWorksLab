@@ -1,0 +1,1 @@
+FW_ASSET_LOADED("NFJF05", {"manifest": {"title": "JinMangJu05", "duration": 4.73, "view": 195.2, "variants": {"JinMangJu05": "JinMangJu05"}, "emitters": [], "note": "金芒菊规格（对话框新花型）：05 档按 4.9.23 重新导出——以前 6 档贴图 / 资产名都叫 T_EFX_FireWorks_JinMangJu_*（引擎里互相覆盖），现在叫 JinMangJu_05。参数没变；同一目录覆盖 NFJE05 的包。"}, "images": {}});

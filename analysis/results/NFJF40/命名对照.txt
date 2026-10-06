@@ -1,0 +1,10 @@
+烘焙器内部名 → 素材包里的名字（用户 2026-10-02 定的规范）
+T_JinMangJu40_A.png → T_EFX_FireWorks_JinMangJu_40_4x4_01_HD.png
+T_JinMangJu40_A_Cutout.png → T_EFX_FireWorks_JinMangJu_40_4x4_01_C.png
+T_JinMangJu40_A_FrameTest.png → _检查/T_EFX_FireWorks_JinMangJu_40_4x4_01_FrameTest.png
+T_JinMangJu40_B.png → T_EFX_FireWorks_JinMangJu_40_4x4_02_HD.png
+T_JinMangJu40_B_Cutout.png → T_EFX_FireWorks_JinMangJu_40_4x4_02_C.png
+T_JinMangJu40_B_FrameTest.png → _检查/T_EFX_FireWorks_JinMangJu_40_4x4_02_FrameTest.png
+T_JinMangJu40_Mobile_A.png → T_EFX_FireWorks_JinMangJu_40_4x4_01.png
+T_JinMangJu40_Mobile_B.png → T_EFX_FireWorks_JinMangJu_40_4x4_02.png
+T_JinMangJu40_Ramp.png → T_EFX_FireWorks_JinMangJu_40_R.png
