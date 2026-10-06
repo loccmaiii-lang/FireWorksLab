@@ -27,7 +27,9 @@ async (id) => {
   const out = [], busy = state.stillBusy; state.stillBusy = true;     // 让出画布：不然每个 nextTick 都在画实时模拟，慢十几倍
   try {
     for (const l of mtLayers(id)) {
-      const P = { ...derive({ ...l.P }), flash: 0, subFlash: 0 }, pl = displayPlan40(P), q = qualityOf(P), w = pl.L.cellW, h = pl.L.cellH, T = P.burn;
+      const P = { ...derive({ ...l.P }), flash: 0, subFlash: 0 }, pl = displayPlan40(P), q = qualityOf(P), w = pl.L.cellW, h = pl.L.cellH;
+      // 燃烧时间：千轮 / 分裂的 burn 是载体（小玉）的，子星 subDelay 之后才开（4.9.6 彩色千轮：按 burn 量只量到载体，曝光高了 2.7 倍）
+      const T = ['senrin', 'crossette'].includes(P.type) ? +P.subDelay + +P.subBurn : +P.burn + (+P.ignDelay || 0);
       const R = makeRenderer(P, 'burst'), samples = new Target(w * q.ss, h * q.ss, gl.RGBA16F), cell = new Target(w, h, gl.RGBA16F), a = new Float32Array(w * h * 4), frames = [];
       try {
         for (const f of [.02, .05, .1, .2, .3, .45, .6, .75, .9, .98]) {
@@ -52,7 +54,7 @@ JS_TABLE = r"""
   stages: l.M.stages.map(s => (s[0] ? s[0] + ' s ' : '') + s[1]).join(' → '), hi: l.headInt, E: l.P.exposure, out: l.out ? l.out.pc : 'seq' })) }))
 """
 JS_STILLS = r"""
-async (a) => { const r = MULTI_BY_ID[a.id], L = mtLayers(a.id), T = L[0].P.burn;
+async (a) => { const r = MULTI_BY_ID[a.id], L = mtLayers(a.id), P0 = L[0].P, T = ['senrin', 'crossette'].includes(P0.type) ? +P0.subDelay + +P0.subBurn : +P0.burn + (+P0.ignDelay || 0);     // 千轮按子花开完算（4.9.6）
   const res = await mtRenderStills(a.id, { times: a.times || a.fracs.map(f => f * T), px: a.px });
   return { name: r.name, n: L.length, burn: T, expo: L.map(l => l.P.exposure), v0: L.map(l => l.P.v0), times: res.map(x => x.t), pngs: res.map(x => x.png) }; }
 """

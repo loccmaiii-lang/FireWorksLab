@@ -129,3 +129,122 @@ function thRepStyle(id) { return thStyleFor('rep:' + id, () => thLayersOfRep(id)
 function thEntryStyle(e) { return thStyleFor('e:' + (e && e.id) + '@' + (e && e.ver || ''), () => thLayersOfEntry(e)); }
 function thSnapStyle(key, sn) { return thStyleFor(key, () => thLayersOfSnap(sn)); }
 function thPMStyle(key, P, M) { return thStyleFor(key, () => [thLayerOf(derive({ ...P }), M)]); }
+
+// =====================================================================
+//  4.9.6 自己截的缩略图（对话框新花型；用户 2026-10-06 07:18「我挪到x帧，点生成缩略图，旧的被覆盖删除」）
+//  · 时间轴挪到哪一刻，点时间轴上的「生成缩略图」= 把这一刻画布上的画面（实时模拟 / 引擎回放，看的是哪个就截哪个）截成现在打开这一项的缩略图：
+//    自动框住亮的部分（烟花本身），存 160 px JPEG。再点一次 = 覆盖，旧图直接删掉（不留历史）
+//  · ⋯「恢复示意图」= 删掉截图，回到按参数画的示意图（上面那套）
+//  · 存在这台电脑的浏览器里（store「userThumbs」，按条目键：type: / mt: / ef: / rv: / rep: / my: / tpl:）。左栏、花型库、新建效果、版本记录都先看有没有截图。
+//    不写进仓库、不进素材包；换电脑 / 清浏览器数据就回到示意图
+// =====================================================================
+const TH_USER_PX = 160, TH_USER_MAX = 400;
+let _thUser = null;
+const thUserAll = () => _thUser || (_thUser = store.get('userThumbs', {}) || {});
+if (typeof window !== 'undefined') window.addEventListener('storage', e => { if (e.key === 'fwb.userThumbs') _thUser = null; });     // 另一个标签页改了
+function thUserGet(key) { const u = key && thUserAll()[key]; return u && typeof u.img === 'string' && u.img.startsWith('data:image/') ? u : null; }
+function thUser(key) { const u = thUserGet(key); return u ? `background-image:url('${u.img}')` : ''; }
+const thUserAt = key => { const u = thUserGet(key); return u ? String(u.at || '') : ''; };
+function thUserPut(all) { _thUser = null; const ok = store.set('userThumbs', all); _thUser = null; return ok; }
+// 现在打开的这一项在各处用的键：资产栏的键（wbKey）+ 打开的是效果的某个条目 / 正式库时，那个条目自己的键（分档缩略图、新建效果里的 AI 效果用它）
+function thUserKeys() {
+  if (typeof wbKey !== 'function' || (typeof wbVisible === 'function' && !wbVisible())) return [];
+  const k = wbKey(), out = [k];
+  if (lib.review && lib.review.id) out.push('rv:' + lib.review.id);
+  if (lib.formal && lib.formal.id) out.push('rep:' + lib.formal.id);
+  return [...new Set(out)].filter(x => /^(type|mt|ef|rv|rep|my|tpl):./.test(String(x || '')));
+}
+// 截图：框住亮的部分（亮度 > 48/255 的像素，两头各去掉 0.4% 零星火花），正方形、留 14% 边，最小取画面短边的 30%
+function thCrop(src) {
+  const W = src.width, H = src.height; if (!W || !H) return null;
+  const s0 = Math.min(1, 256 / Math.max(W, H)), w = Math.max(1, Math.round(W * s0)), h = Math.max(1, Math.round(H * s0));
+  const a = document.createElement('canvas'); a.width = w; a.height = h; const ax = a.getContext('2d', { willReadFrequently: true }); ax.drawImage(src, 0, 0, w, h);
+  const d = ax.getImageData(0, 0, w, h).data, rows = new Float64Array(h), cols = new Float64Array(w); let n = 0;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const i = 4 * (y * w + x); if (Math.max(d[i], d[i + 1], d[i + 2]) > 48) { rows[y]++; cols[x]++; n++; } }
+  if (n < 6) return null;     // 黑的
+  const cut = arr => { const lim = Math.floor(n * 0.004); let a0 = 0, acc = 0; while (a0 < arr.length - 1 && acc + arr[a0] <= lim) acc += arr[a0++]; let a1 = arr.length - 1; acc = 0; while (a1 > a0 && acc + arr[a1] <= lim) acc += arr[a1--]; return [a0, a1 + 1]; };
+  const [x0, x1] = cut(cols), [y0, y1] = cut(rows), mn = Math.min(w, h);
+  const side = Math.min(mn, Math.max((Math.max(x1 - x0, y1 - y0)) * 1.14, mn * 0.3));
+  const sx = Math.min(Math.max(0, (x0 + x1) / 2 - side / 2), w - side), sy = Math.min(Math.max(0, (y0 + y1) / 2 - side / 2), h - side);
+  const o = document.createElement('canvas'); o.width = o.height = TH_USER_PX; const ox = o.getContext('2d');
+  ox.fillStyle = '#000'; ox.fillRect(0, 0, TH_USER_PX, TH_USER_PX); ox.imageSmoothingQuality = 'high';
+  ox.drawImage(src, sx / s0, sy / s0, side / s0, side / s0, 0, 0, TH_USER_PX, TH_USER_PX);
+  return { img: o.toDataURL('image/jpeg', 0.85), lit: +(n / (w * h)).toFixed(4) };
+}
+// 等主循环画完下一帧再截（WebGL 画布只有刚画完的那一刻读得到）。烘焙中 / 软件渲染一帧可能要好几秒：2.5 秒还没轮到就提示在等；
+// 主循环一直停着（定帧渲染中）就 3 分钟后放弃。截的是那一帧的画面：等待期间时间轴停着就还是你挪到的那一帧
+function thGrab(wait = 180000) {
+  return new Promise((res, rej) => {
+    const prev = pendingThumb;
+    const slow = setTimeout(() => flash(state.baking ? '正在烘焙，等画面刷新一帧再截…' : '等画面刷新一帧再截…'), 2500);
+    const to = setTimeout(() => { clearTimeout(slow); if (pendingThumb === f) pendingThumb = prev; rej(new Error('画面一直没刷新（定帧渲染中？等一下再点）')); }, wait);
+    const f = arg => { clearTimeout(to); clearTimeout(slow); if (prev) { try { prev(arg); } catch (e) { } } try { const r = thCrop(canvas); res(r && { ...r, t: +state.t || 0 }); } catch (e) { rej(e); } };     // t = 截到的那一帧的时刻（播放中也对）
+    pendingThumb = f;
+  });
+}
+// 删掉已经不存在的「我的效果 / 我的模板」的截图；太多了删最旧的
+function thUserPrune(all) {
+  const my = typeof myAll === 'function' ? myAll() : null, tp = typeof tplAll === 'function' ? tplAll() : null;
+  for (const k of Object.keys(all)) { if ((my && k.startsWith('my:') && !my[k.slice(3)]) || (tp && k.startsWith('tpl:') && !tp[k.slice(4)])) delete all[k]; }
+  const ks = Object.keys(all).sort((x, y) => String(all[y].at || '').localeCompare(String(all[x].at || '')));
+  for (const k of ks.slice(TH_USER_MAX)) delete all[k];
+  return all;
+}
+function thUserChanged() {
+  try { renderLib(); } catch (e) { console.warn(e); }
+  const h = $('#abThumb'); if (h) h.dataset.k = '';
+  if (typeof wbSync === 'function') wbSync();
+  if (typeof syncTypeButton === 'function') try { syncTypeButton(); } catch (e) { }
+  if (!$('#picker').hidden && typeof pkRender === 'function') pkRender();
+}
+async function thCapture() {
+  const keys = thUserKeys();
+  if (!keys.length) { flash('先在左栏打开一项（花型模板 / 多层模板 / 效果 / 我的效果），再截它的缩略图', true); return false; }
+  const btn = $('#thGrab'); if (btn) btn.disabled = true;
+  try {
+    const r = await thGrab();
+    if (!r) { flash('这一刻画面是黑的：把时间轴挪到看得见烟花的那一帧再点', true); return false; }
+    const all = { ...thUserAll() }, at = new Date().toISOString(), t = +r.t.toFixed(2), had = keys.some(k => all[k]);
+    const when = typeof wbNow === 'function' ? wbNow() : at.slice(0, 16).replace('T', ' ');
+    for (const k of keys) all[k] = { img: r.img, at, when, t, view: state.tab === 'combo' ? 'combo:' + state.view : state.view };
+    if (!thUserPut(thUserPrune(all))) return false;
+    thUserChanged();
+    flash(`缩略图换成了 ${t.toFixed(2)} s 这一帧${had ? '（旧的已删掉）' : ''}；⋯ 里能恢复示意图`);
+    return true;
+  } catch (e) { flash('没截到：' + (e.message || e), true); return false; }
+  finally { if (btn) btn.disabled = false; }
+}
+// 恢复示意图 = 删掉截图；8 秒内能撤销（交互宪章第 8 节：删除要有撤销提示），撤销 = 把刚删的那张放回去
+function thRestore() {
+  const keys = thUserKeys(), all = { ...thUserAll() }, gone = {};
+  for (const k of keys) if (all[k]) { gone[k] = all[k]; delete all[k]; }
+  if (!Object.keys(gone).length) { flash('这一项用的就是示意图'); return false; }
+  if (!thUserPut(all)) return false;
+  thUserChanged();
+  if (typeof undoToast === 'function') undoToast('缩略图恢复成示意图（截的那张删了）', () => { if (thUserPut({ ...thUserAll(), ...gone })) thUserChanged(); });
+  else flash('缩略图恢复成示意图（按参数画的）');
+  return true;
+}
+// 按钮：时间轴上「生成缩略图」（挪到哪一帧就截哪一帧）；⋯ 菜单「缩略图」一节「恢复示意图」。只在打开了一项（资产栏出现）时显示
+function thUserSync(hidden) {
+  const g = $('#thGrab'), r = $('#thRestore'), lb = $('#thRestoreLabel');
+  const keys = hidden ? [] : thUserKeys(), u = keys.map(thUserGet).find(Boolean);
+  if (g) { g.hidden = !keys.length; g.classList.toggle('on', !!u);
+    g.title = u ? `把现在这一帧截成这一项的缩略图，覆盖 ${u.when || ''} 截的那张（${u.t} s）；⋯ 里能恢复示意图` : '把现在这一帧截成这一项在左栏 / 花型库里的缩略图（再点 = 覆盖旧的）'; }
+  if (r) r.hidden = !u; if (lb) lb.hidden = !u;
+}
+function thUserInit() {
+  if ($('#thGrab')) return;
+  const tt = $('#timeTools');
+  if (tt) { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn tk th-grab'; b.id = 'thGrab'; b.textContent = '生成缩略图'; b.hidden = true;
+    b.addEventListener('click', () => thCapture()); tt.before(b); }
+  const menu = document.querySelector('#abMore .ab-menu');
+  if (menu) {
+    const before = [...menu.querySelectorAll('.menu-label')].find(x => x.textContent.trim() === '左栏') || null;
+    const lb = document.createElement('span'); lb.className = 'menu-label'; lb.id = 'thRestoreLabel'; lb.textContent = '缩略图'; lb.hidden = true;
+    const r = document.createElement('button'); r.type = 'button'; r.id = 'thRestore'; r.textContent = '恢复示意图（删掉生成的缩略图）'; r.hidden = true;
+    r.addEventListener('click', () => { const m = $('#abMore'); if (m) m.open = false; thRestore(); });
+    menu.insertBefore(lb, before); menu.insertBefore(r, before);
+  }
+}
+if (typeof document !== 'undefined') { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', thUserInit); else thUserInit(); }

@@ -35,6 +35,7 @@ function pkFxItems() {
 // 4.5.5（用户 10-05 20:43）：示意缩略图（19_thumbsvg.js：同心发光圆 + 花型小记号），不再用渲染图（16_thumbs.js / thumbSim 留着不用）
 function typeThumbStyle(key) {
   key = String(key || '');
+  const u = thUser(TYPES[key] ? 'type:' + key : key); if (u) return u;     // 4.9.6 自己截的缩略图优先（19_thumbsvg.js「生成缩略图」）
   if (key.startsWith('mt:')) return mtThumbStyle(key.slice(3));
   if (key.startsWith('rep:')) return REPLICA_BY_ID[key.slice(4)] ? thRepStyle(key.slice(4)) : thTypeStyle('kiku');
   return thTypeStyle(TYPES[key] ? key : 'kiku');
@@ -72,7 +73,7 @@ function pkRender() {
   if (!items.length) { grid.innerHTML = `<p class="pk-empty">没有匹配的花型。</p>`; return; }
   for (const it of items) {
     const c = document.createElement('div'); c.className = 'pk-card' + (it.key === cur ? ' cur' : ''); c.tabIndex = 0; c.setAttribute('role', 'button');
-    const th = it.fx ? thumbHTML(it.fx).replace(/^<span class="th"/, '<span class="th pkfx"') : `<div class="th" style="${it.thumbStyle || typeThumbStyle(it.thumbType || it.key)}"></div>`;   // 只用渲染图（用户 2026-10-02 14:46：缩略图不用实拍）
+    const th = it.fx ? thumbHTML(it.fx).replace(/^<span class="th"/, '<span class="th pkfx"') : `<div class="th" style="${thUser(it.key) || it.thumbStyle || typeThumbStyle(it.thumbType || it.key)}"></div>`;   // 只用渲染图（用户 2026-10-02 14:46：缩略图不用实拍）
     c.innerHTML = th + `<div class="bd"><span class="nm">${it.name}</span><span class="ds">${it.desc || ''}</span><span class="tg">${it.tags.map(t => `<span>${t}</span>`).join('')}</span></div>` +
       (it.rep ? `<span class="st">${it.rep.status || '待你确认'}</span>` : '') + `<button class="fav" type="button" aria-label="收藏" aria-pressed="${pk.fav.has(it.key)}">★</button>`
       + (it.cat === 'mytpl' ? `<button class="pk-del" type="button" aria-label="删除这个模板" title="删除这个模板（8 秒内能撤销）">删</button>` : '');

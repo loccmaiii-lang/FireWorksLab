@@ -35,7 +35,7 @@ async def main(a):
         pg.on('dialog', lambda d: asyncio.ensure_future(d.accept('多层模板检查')))
         await pg.goto(HTML.resolve().as_uri() + '?fast&autobake=1', wait_until='domcontentloaded', timeout=0)     # fast：不自动打开待验收的效果（不然先烘别的）
         await pg.wait_for_function('window.__fw && typeof MULTI_TYPES !== "undefined" && document.querySelector("#libBody .li, #libBody .tile")', timeout=0)
-        # 4.9.4（对话框15）：新建效果起名换成应用内对话框，这里直接替它回答（原生 dialog 监听留着兜底）
+        # 4.9.6（对话框15）：新建效果起名换成应用内对话框，这里直接替它回答（原生 dialog 监听留着兜底）
         await pg.evaluate("window.askSaveName = async () => '多层模板检查'; window.askConfirm = async () => true; 0")
         idle = 'window.__fw.idle() && document.querySelector("#busy").hidden'
         n = await pg.evaluate('MULTI_TYPES.length')
@@ -68,6 +68,17 @@ async def main(a):
         (out / f'{a.id}_引擎回放.png').write_bytes(base64.b64decode(shot.split(',')[1]))
         hud = await pg.evaluate('() => (typeof hudText !== "undefined" ? hudText : "")')
         ok('引擎回放画整体（按导出贴图）', bool(shot) and len(shot) > 5000, hud[:80])
+        # 4.9.6「生成缩略图」：停在这一帧截成缩略图（左栏、资产栏 / 版本记录都换），再截 = 覆盖，⋯「恢复示意图」= 回到示意图
+        th = await pg.evaluate('''async (id) => { const tile = () => (document.querySelector(`#libBody .lg-mtypes .tile[data-key="mt:${id}"] .im`) || { getAttribute: () => '' }).getAttribute('style') || '';
+          const b0 = !$('#thGrab').hidden, s0 = tile().slice(0, 40);
+          const ok1 = await thCapture(); const u1 = thUserGet('mt:' + id), s1 = tile().slice(0, 40), ab1 = ($('#abThumb .th') || { getAttribute: () => '' }).getAttribute('style').slice(0, 40), r1 = !$('#thRestore').hidden;
+          state.t = 0.6; const ok2 = await thCapture(); const u2 = thUserGet('mt:' + id), n2 = Object.keys(thUserAll()).filter(k => k === 'mt:' + id).length;
+          const ok3 = thRestore(); const s3 = tile().slice(0, 40), left = !!thUserGet('mt:' + id);
+          return { b0, s0, ok1, t1: u1 && u1.t, len1: u1 && u1.img.length, s1, ab1, r1, ok2, t2: u2 && u2.t, n2, ok3, s3, left, img: u2 && u2.img }; }''', a.id)
+        if th.get('img'): (out / f'{a.id}_截的缩略图.jpg').write_bytes(base64.b64decode(th.pop('img').split(',')[1]))
+        ok('生成缩略图：时间轴上有按钮；截了左栏 / 资产栏换成截图，再截覆盖（只留一张），恢复回示意图',
+           th['b0'] and th['ok1'] and 'image/jpeg' in th['s1'] and 'image/jpeg' in th['ab1'] and th['r1'] and th['ok2'] and th['t2'] == 0.6 and th['n2'] == 1 and th['ok3'] and 'svg' in th['s3'] and not th['left'],
+           json.dumps(th, ensure_ascii=False)[:300])
         # 导出一个包（多层 → 一个 zip，每层一个发射器）
         async with pg.expect_download(timeout=0) as dl:
             await pg.evaluate('() => exportCombo()')

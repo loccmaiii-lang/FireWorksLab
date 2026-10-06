@@ -143,7 +143,7 @@ function wbRefresh() {
   wbSync();
 }
 function wbSync() {
-  const bar = $('#assetBar'); bar.hidden = !wbVisible(); $('#versionHistory').hidden = bar.hidden; if (bar.hidden) return;
+  const bar = $('#assetBar'); bar.hidden = !wbVisible(); $('#versionHistory').hidden = bar.hidden; thUserSync(bar.hidden); if (bar.hidden) return;     // 4.9.6 时间轴「生成缩略图」跟资产栏一起出现
   const ef = lib.effect, e = lib.review, combo = state.tab === 'combo';
   const mtId = mtOpenId();
   $('#abName').textContent = lib.my ? lib.my.name : lib.tpl ? lib.tpl.name : ef ? ef.名 : e ? e.name : lib.formal ? lib.formal.name : lib.key === 'combo' ? '组合编辑器' : mtId ? MULTI_BY_ID[mtId].name : TYPE_NAMES[state.P.type] || '';
@@ -153,7 +153,8 @@ function wbSync() {
     : [wbBaseId(), combo ? state.layers.length + ' 层' : '单层', ef ? ef.阶段 : lib.formal ? '正式库' : e ? '条目' : '花型模板'].join(' · ');
   $('#abMyRename').hidden = $('#abMyDelete').hidden = !lib.my;
   // 4.5.5 示意缩略图（19_thumbsvg.js）：按现在打开的各层现画；层数变了重画
-  const thHost = $('#abThumb'), thK = wb.key + ':' + (combo ? state.layers.length : 1); if (thHost.dataset.k !== thK) { const st = thStyleFor('', thLayersOfState); thHost.dataset.k = st ? thK : ''; thHost.innerHTML = `<span class="th in" style="${st || typeThumbStyle(state.P.type)}"></span>`; }
+  // 4.9.6 自己截的（「生成缩略图」）优先；截了 / 恢复了重画
+  const thHost = $('#abThumb'), thK = wb.key + ':' + (combo ? state.layers.length : 1) + ':' + thUserAt(wb.key); if (thHost.dataset.k !== thK) { const st = thUser(wb.key) || thStyleFor('', thLayersOfState); thHost.dataset.k = st ? thK : ''; thHost.innerHTML = `<span class="th in" style="${st || typeThumbStyle(state.P.type)}"></span>`; }
   const list = wbList(), sel = $('#abSrc'), cur = wb.src.kind === 'mine' ? wb.src.id : 'ai';
   const opts = [['ai', lib.my ? `已保存 · ${(myRec() || {}).updated || ''}` : `AI 版 · ${wbBaseId()}`], ...list.map(s => [s.id, s.auto ? `导出时 · ${s.at.slice(5)}${s.label ? ' · ' + s.label : ''}` : `我的 · ${s.name}（${s.at.slice(5)}）`])];
   const html = opts.map(([v, t]) => `<option value="${v}">${t}</option>`).join('');

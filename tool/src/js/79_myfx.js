@@ -167,6 +167,6 @@ function myLibGroup(host, nPassed = 0, renderPassed = null, nHidden = 0) {
   if (!list.length && !nPassed) g.insertAdjacentHTML('beforeend', '<p class="lsub">还没有。点最下面「＋ 新建效果」：先选第一层（花型模板或现有效果的层），再加层、改名、调参数。你通过的效果也会出现在这里。</p>');
   for (const r of list) {
     const t = r.snap && r.snap.layers[0] ? r.snap.layers[0].type : 'kiku', ue = packNamesFor('my:' + r.id, null, (r.snap.layers || []).length, 'MyFx').base;
-    const it = libItem(g, 'my:' + r.id, `<span class="th" style="${thSnapStyle('my:' + r.id + '@' + (r.updated || ''), r.snap) || typeThumbStyle(t)}"></span><span class="tx"><b>${r.name}</b><small>${ue} · ${(r.snap.layers || []).length} 层${r.from ? ' · 派生自 ' + r.from.name : ''} · ${r.updated || ''}</small><span class="bds"><span class="badge">我的效果</span></span></span>`, () => openMyEffect(r.id));
+    const it = libItem(g, 'my:' + r.id, `<span class="th" style="${thUser('my:' + r.id) || thSnapStyle('my:' + r.id + '@' + (r.updated || ''), r.snap) || typeThumbStyle(t)}"></span><span class="tx"><b>${r.name}</b><small>${ue} · ${(r.snap.layers || []).length} 层${r.from ? ' · 派生自 ' + r.from.name : ''} · ${r.updated || ''}</small><span class="bds"><span class="badge">我的效果</span></span></span>`, () => openMyEffect(r.id));
   }
 }

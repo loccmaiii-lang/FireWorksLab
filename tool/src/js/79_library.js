@@ -231,7 +231,7 @@ setInterval(() => { const el = document.getElementById('effReady'); if (el && li
 // 按参数现画的示意图（19_thumbsvg.js）：每层一个发光圆圈（半径按这一层的大小、颜色按最后一段），花型用小记号区分
 function thumbHTML(e) {
   const k = e && e.key && String(e.key).startsWith('rep:') && REPLICA_BY_ID[e.key.slice(4)] ? e.key.slice(4) : null;
-  const st = k ? thRepStyle(k) : thEntryStyle(e);
+  const st = thUser(k ? 'rep:' + k : e && e.id ? 'rv:' + e.id : '') || (k ? thRepStyle(k) : thEntryStyle(e));     // 4.9.6 自己截的（「生成缩略图」）优先
   return `<span class="th" style="${st || typeThumbStyle(e && e.base ? e.base : 'kiku')}"></span>`;
 }
 function libMatch(...txt) { const q = lib.q.trim().toLowerCase(); return !q || txt.join(' ').toLowerCase().includes(q); }
@@ -266,6 +266,7 @@ function renderLib() {
     : !(ef.阶段 === '待验收' && ef.待验收版) && !(ef.阶段 === '已通过' || ef.已通过版);
   if (lib.seg) { lib.open[lib.seg === 'passed' ? 'myfx' : lib.seg] = true; lib.seg = ''; }     // 4.5.3 已通过并进我的效果      // 指定的那一组展开（旧的「分栏」入口）
   const thumbOf = ef => {
+    const u = thUser('ef:' + ef.key); if (u) return `<span class="th" style="${u}"></span>`;     // 4.9.6 自己截的
     const me = effMainEntry(ef), fm = (ef.主条目 || '').startsWith('rep:') ? REPLICA_BY_ID[ef.主条目.slice(4)] : null;
     return fm ? thumbHTML({ ...fm, key: 'rep:' + fm.id }) : me ? thumbHTML(me) : '<span class="th"></span>';     // 4.5.5 不用 ef.thumb（渲染图）
   };
@@ -317,7 +318,7 @@ function renderLib() {
     const g = libGroup(host, 'mytpl', '我的模板', tpls.length);
     if (!tpls.length) g.insertAdjacentHTML('beforeend', '<p class="lsub">还没有。调好的一层：资产栏 ⋯「把这一层存为模板」。</p>');
     for (const r of tpls) {
-      const it = libItem(g, 'tpl:' + r.id, `<span class="th" style="${thPMStyle('tpl:' + r.id + '@' + (r.at || ''), r.P, r.M) || typeThumbStyle(r.type)}"></span><span class="tx"><b>${r.name}</b><small>基于${TYPE_NAMES[r.type] || r.type}${r.from ? ' · 来自 ' + r.from : ''} · ${r.at || ''}</small><span class="bds"><span class="badge">我的模板</span></span></span>`, () => openTemplate(r.id));
+      const it = libItem(g, 'tpl:' + r.id, `<span class="th" style="${thUser('tpl:' + r.id) || thPMStyle('tpl:' + r.id + '@' + (r.at || ''), r.P, r.M) || typeThumbStyle(r.type)}"></span><span class="tx"><b>${r.name}</b><small>基于${TYPE_NAMES[r.type] || r.type}${r.from ? ' · 来自 ' + r.from : ''} · ${r.at || ''}</small><span class="bds"><span class="badge">我的模板</span></span></span>`, () => openTemplate(r.id));
       libItemAct(it, '改名', '改模板的名字', () => renameTemplate(r.id)); libItemAct(it, '删除', '删除这个模板（8 秒内能撤销）', () => removeTemplate(r.id));
     }
   }
