@@ -1579,17 +1579,21 @@ W7_JS = r'''async () => {
     for (const k of ['subKeep', 'subSpeedJit', 'subGrav', 'subSize', 'subBright', 'subVt']) fill[k] = AUTO_DEF[k][1](base);
     const run = P => { const s = new Sim(derive(P)); for (let i = 0; i < Math.ceil((P.subDelay + 0.6) / H_STEP); i++) s.step(H_STEP); return s.all.filter(x => x.kind === 2).slice(0, 6).map(x => [x.x, x.y, x.z, +x.sz > 0 ? x.sz : P.headSize, x.I].map(v => +(+v).toFixed(4)).join(',')).join(' '); };
     const a = run(base), b = run(fill); out.sub = a === b; if (a !== b) bad.push('子花按「跟着算」和按算出来的数模拟不一样'); }
-  // 旧（待删）：菊没用上的收起来、模块底下有开关；搜索能找到；用着的照常显示带「旧」
-  await openType('kiku'); await new Promise(r => setTimeout(r, 200)); selectEmitTab('火花');
+  // 旧（待删）：菊没用上的收起来、发射器末尾有开关；搜索能找到；用着的照常显示带「旧」（4.9.11：空中花型的形状旋钮用户 14:24 定留下，换「输出 › 裁掉开头空白」查）
+  await openType('kiku'); await new Promise(r => setTimeout(r, 200)); selectEmitTab('输出');
   const L = k => (panelRows.find(([r, it]) => (Array.isArray(it) ? it[0] : it.sel) === k) || [])[0];
-  const pinch = L('tailPinchHead'), sw = pinch && pinch.closest('section.egrp').querySelector(':scope > .oldb');     // 4.9.8：「旧（待删）」开关一个发射器一个，在发射器末尾
+  const pinch = L('trimLead'), sw = pinch && pinch.closest('section.egrp').querySelector(':scope > .oldb');
   out.kiku = { pinchHidden: pinch && pinch.hidden, tag: !!(pinch && pinch.querySelector('.old-tag')), btn: sw && !sw.hidden ? sw.textContent : null };
-  if (!pinch || !pinch.hidden || !out.kiku.tag || !out.kiku.btn) bad.push('菊的「星头端收尖」（旧）没收起来 / 没「旧」标记 / 发射器末尾没开关 ' + JSON.stringify(out.kiku));
+  if (!pinch || !pinch.hidden || !out.kiku.tag || !out.kiku.btn) bad.push('菊的「裁掉开头空白」（旧）没收起来 / 没「旧」标记 / 发射器末尾没开关 ' + JSON.stringify(out.kiku));
   if (sw) { sw.click(); out.kiku.open = !pinch.hidden; sw.click(); out.kiku.closed = pinch.hidden; if (!out.kiku.open || !out.kiku.closed) bad.push('「旧（待删）」开关点了不显示 / 再点不收起 ' + JSON.stringify(out.kiku)); }
-  const q = document.querySelector('#params .ptools input[type=search]'); q.value = '收尖'; q.dispatchEvent(new Event('input')); out.kiku.search = !pinch.hidden; q.value = ''; q.dispatchEvent(new Event('input'));
-  if (!out.kiku.search) bad.push('搜「收尖」找不到收起来的旧参数');
-  state.P.tailPinchHead = 0.4; onParam(); out.kiku.inUse = !pinch.hidden; state.P.tailPinchHead = 0; onParam();
-  if (!out.kiku.inUse) bad.push('填了「星头端收尖」以后它还收着（用着的旧参数应照常显示）');
+  const q = document.querySelector('#params .ptools input[type=search]'); q.value = '开头空白'; q.dispatchEvent(new Event('input')); out.kiku.search = !pinch.hidden; q.value = ''; q.dispatchEvent(new Event('input'));
+  if (!out.kiku.search) bad.push('搜「开头空白」找不到收起来的旧参数');
+  const tl0 = state.P.trimLead; state.P.trimLead = 0; onParam(); out.kiku.inUse = !pinch.hidden; state.P.trimLead = tl0; onParam();
+  if (!out.kiku.inUse) bad.push('改了「裁掉开头空白」以后它还收着（用着的旧参数应照常显示）');
+  // 4.9.11（用户 10-06 14:24「整体调粗细，头部这些……是可以保留的」）：空中花型 14 项不再是旧（待删）：照常显示（常用的直接看到、别的在「更多」里）、名字前没有「旧」
+  selectEmitTab('火花'); const keep = ['tailWidth', 'tailPinchHead', 'tailPinchTail', 'tailBellyAt', 'tailJit', 'tailShoulder', 'tailHaze', 'tailHazeR', 'sparkLifeEnd'];
+  out.kept = keep.filter(k => { const r = L(k); return !r || r.querySelector('.old-tag') || r._legacy || typeof LEGACY[k] !== 'undefined'; });
+  if (out.kept.length) bad.push('用户说留下的旋钮还标着「旧」：' + out.kept.join('、'));
   // 所有花型打开时参数值不变（链条、收起只是界面）
   const changed = [];
   for (const t of Object.keys(TYPES)) { if (t === 'blank') continue; const d = derive({ ...structuredClone(defaultsFor(t).P), type: t }); await openType(t); const P = state.P;

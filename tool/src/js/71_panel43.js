@@ -55,17 +55,9 @@ const INERT = [
 // - 这个效果用着（值不等于「不用」时的值）→ 照常显示，名字后面一个「旧」标记，说明条写为什么要删、用什么代替；
 // - 没用上 → 收进模块底下的「旧（待删）· N 项」，点开才显示；搜索、只看改过的照样找得到。
 // [为什么要删 / 用什么代替, 不用时的值（不写 = BASE 的默认值）, 用着没有（不写 = 值 ≠ 不用时的值）]
-const LG_SHAPE = '直接捏尾迹外形的旋钮；5.0 用火花「大小随寿命」曲线（梭形）代替';
 const LG_V5 = 'V5 尾缀的旧旋钮（RT6 起不用）';
 const LG_PRE = '入点前另做从小放大（旧取景）；5.0 固定机位不用';
 const LEGACY = {
-  headDim: ['按一段时间压暗星头；5.0 用星「亮度随寿命」曲线代替'], headDimUntil: ['按一段时间压暗星头；5.0 用星「亮度随寿命」曲线代替', null, P => +P.headDim < 1],
-  sparkLifeEnd: ['出生越晚的火花寿命再乘一次；5.0 一套燃烧模型，不分出生早晚'],
-  emberFollow: ['按母星熄灭再把余烬整体淡掉；5.0 余烬按自己的年龄燃尽'], emberEnd: ['到某个时刻把余烬整体熄掉；5.0 余烬按自己的年龄燃尽'],
-  tailJit: [LG_SHAPE], tailShoulder: [LG_SHAPE], tailWidth: [LG_SHAPE], tailPinchHead: [LG_SHAPE], tailPinchTail: [LG_SHAPE],
-  tailBellyAt: [LG_SHAPE, null, P => +P.tailPinchHead > 0 || +P.tailPinchTail > 0],
-  headTear: ['沿速度补点造泪滴星头，和快门拖影重复'],
-  tailHaze: ['线间底光是后期模糊加回来的，不是发光颗粒'], tailHazeR: ['线间底光是后期模糊加回来的，不是发光颗粒', null, P => +P.tailHaze > 0],
   trPhys: [LG_V5], trTwist: [LG_V5], trTwistN: [LG_V5, null, P => +P.trTwist > 0], trWiggle: [LG_V5], trTwistLag: [LG_V5, null, P => +P.trTwist > 0],
   rtBall: ['线性阻力弹道（旧）；RT6 用平方阻力，升空时间是算出来的', 1], rtT: ['线性阻力弹道（旧）才用的升空时间；平方阻力时是算出来的', null, P => +P.rtBall !== 1],
   rtConeSoft: ['散开分布开关；5.0 固定一种', 0], rtGpuSafe: ['旧写法 GPU 发射器也写 Acceleration，UE 4.24 里标红', 1], rtTexCal: ['旧的贴图亮度口径（跟温度偏移漂）', 1],
