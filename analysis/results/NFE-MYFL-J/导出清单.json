@@ -1,0 +1,27 @@
+{
+ "effect": "myv_fxmuux2arh",
+ "entry": "MYFL-J",
+ "ver": "58401e7b·master4.9.13",
+ "time": "2026-10-07 02:24",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "Crossette_Jisa",
+   "replica": "MYFL-J",
+   "files": [
+    "Crossette_Jisa.json",
+    "Crossette_Jisa_Cascade参数.txt",
+    "Crossette_Jisa_Mobile.json",
+    "Crossette_Jisa_曲线.csv",
+    "T_EFX_FireWorks_Crossette_Jisa_4x4_01.png",
+    "T_EFX_FireWorks_Crossette_Jisa_4x4_01_C.png",
+    "T_EFX_FireWorks_Crossette_Jisa_4x4_01_HD.png",
+    "T_EFX_FireWorks_Crossette_Jisa_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

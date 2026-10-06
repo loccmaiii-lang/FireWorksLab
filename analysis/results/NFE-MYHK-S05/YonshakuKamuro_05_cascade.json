@@ -1,0 +1,548 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "YonshakuKamuro_05",
+ "platform": "pc",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.23",
+  "combo": true,
+  "layers": [
+   {
+    "type": "kamuro",
+    "form": "master",
+    "renderVer": 40
+   },
+   {
+    "type": "strobe",
+    "form": "dots",
+    "renderVer": 40
+   }
+  ],
+  "plan_sig": "8d80eb71"
+ },
+ "textures": {
+  "L1_seq": {
+   "file": "T_EFX_FireWorks_YonshakuKamuro_05_Main_4x4_01_HD.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 63,
+   "asset": "T_EFX_FireWorks_YonshakuKamuro_05_Main_4x4_01_HD"
+  },
+  "L1_cutout": {
+   "file": "T_EFX_FireWorks_YonshakuKamuro_05_Main_4x4_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_YonshakuKamuro_05_Main_4x4_01_C"
+  },
+  "L1_ramp": {
+   "file": "T_EFX_FireWorks_YonshakuKamuro_05_Main_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_YonshakuKamuro_05_Main_R"
+  }
+ },
+ "materials": {
+  "L1_main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "L1_seq",
+    "ramp": "L1_ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  },
+  "L2_dot": {
+   "role": "soft_dot"
+  }
+ },
+ "emitters": [
+  {
+   "name": "L1_Main",
+   "material": "L1_main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 3.8667,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "L1_cutout",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.4179
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 3.8667
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       18092.8,
+       18092.8,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.25,
+         29.01
+        ],
+        [
+         0.5086,
+         44.01
+        ],
+        [
+         0.9741,
+         62.01
+        ],
+        [
+         1,
+         62.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.9,
+         1.9,
+         1.9
+        ]
+       ],
+       [
+        0.5959,
+        [
+         1.9,
+         1.9,
+         1.9
+        ]
+       ],
+       [
+        0.8028,
+        [
+         1.9,
+         1.3503,
+         1.2561
+        ]
+       ],
+       [
+        0.8997,
+        [
+         1.9,
+         1.0974,
+         1.0015
+        ]
+       ],
+       [
+        1,
+        [
+         1.9,
+         1.0974,
+         1.0015
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ],
+   "notes": [
+    "固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 -14.9 m），仰视时也对得上；未经 UE 验证"
+   ],
+   "layer": 1
+  },
+  {
+   "name": "L2_Dots",
+   "material": "L2_dot",
+   "gpu": true,
+   "required": {
+    "screen_alignment": "Square",
+    "duration_s": 1.9,
+    "loops": 1,
+    "delay_s": 2.525
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      7
+     ],
+     [
+      0.1,
+      15
+     ],
+     [
+      0.225,
+      8
+     ],
+     [
+      0.35,
+      8
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "uniform": [
+       0.85,
+       1.45
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "uniform": [
+       [
+        94.7,
+        94.7,
+        94.7
+       ],
+       [
+        128.1,
+        128.1,
+        128.1
+       ]
+      ]
+     }
+    },
+    {
+     "m": "SphereLocation",
+     "StartRadius": {
+      "uniform": [
+       6245.3,
+       9287.1
+      ]
+     },
+     "VelocityScale": {
+      "uniform": [
+       0.1017,
+       0.1685
+      ]
+     },
+     "SurfaceOnly": true,
+     "Velocity": true,
+     "note": "球面放射：表面出生、速度 = 出生位置 × VelocityScale（1/s）"
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       -858.6,
+       1267.5,
+       -448.5
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "const": [
+       -77.5,
+       138.7,
+       -1052.4
+      ]
+     }
+    },
+    {
+     "m": "Drag",
+     "DragCoefficientRaw": {
+      "uniform": [
+       2.5119,
+       2.5119
+      ]
+     }
+    },
+    {
+     "m": "ConstAcceleration",
+     "Acceleration": [
+      0,
+      0,
+      -2943
+     ]
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.5773,
+         0.108,
+         0.1666
+        ]
+       ],
+       [
+        0.0125,
+        [
+         1.5773,
+         0.108,
+         0.1666
+        ]
+       ],
+       [
+        0.0375,
+        [
+         2.9264,
+         0.2005,
+         0.3092
+        ]
+       ],
+       [
+        0.0625,
+        [
+         3.1671,
+         0.2169,
+         0.3346
+        ]
+       ],
+       [
+        0.0882,
+        [
+         3.1985,
+         0.2191,
+         0.3379
+        ]
+       ],
+       [
+        0.0922,
+        [
+         0.0601,
+         0.0041,
+         0.0063
+        ]
+       ],
+       [
+        0.2625,
+        [
+         0.0599,
+         0.0041,
+         0.0063
+        ]
+       ],
+       [
+        0.2635,
+        [
+         3.1979,
+         0.2191,
+         0.3378
+        ]
+       ],
+       [
+        0.3125,
+        [
+         3.1848,
+         0.2182,
+         0.3365
+        ]
+       ],
+       [
+        0.3375,
+        [
+         3.1255,
+         0.2141,
+         0.3302
+        ]
+       ],
+       [
+        0.3517,
+        [
+         3.1571,
+         0.2163,
+         0.3335
+        ]
+       ],
+       [
+        0.3557,
+        [
+         0.0593,
+         0.0041,
+         0.0063
+        ]
+       ],
+       [
+        0.523,
+        [
+         0.0597,
+         0.0041,
+         0.0063
+        ]
+       ],
+       [
+        0.527,
+        [
+         3.1776,
+         0.2177,
+         0.3357
+        ]
+       ],
+       [
+        0.5625,
+        [
+         3.153,
+         0.216,
+         0.3331
+        ]
+       ],
+       [
+        0.5875,
+        [
+         3.1741,
+         0.2174,
+         0.3353
+        ]
+       ],
+       [
+        0.6152,
+        [
+         3.1526,
+         0.216,
+         0.3331
+        ]
+       ],
+       [
+        0.6192,
+        [
+         0.0591,
+         0.004,
+         0.0062
+        ]
+       ],
+       [
+        0.7875,
+        [
+         0.0517,
+         0.0035,
+         0.0055
+        ]
+       ],
+       [
+        0.7905,
+        [
+         2.7184,
+         0.1862,
+         0.2872
+        ]
+       ],
+       [
+        0.8125,
+        [
+         2.4682,
+         0.1691,
+         0.2608
+        ]
+       ],
+       [
+        0.8375,
+        [
+         2.1224,
+         0.1454,
+         0.2242
+        ]
+       ],
+       [
+        0.8787,
+        [
+         1.6189,
+         0.1109,
+         0.171
+        ]
+       ],
+       [
+        0.8827,
+        [
+         0.0295,
+         0.002,
+         0.0031
+        ]
+       ],
+       [
+        1,
+        [
+         0.0041,
+         0.0003,
+         0.0004
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ],
+   "notes": [
+    "GPU 光点：这一层会亮的星只出星头光点（38 颗，另外 110 颗模拟里不发光，球面放射），尾迹、星头闪烁不在里面；点灭写进 Color Over Life（3.3 Hz 方波，所有粒子共用一条曲线、靠寿命随机错开，GPU 曲线查找表会不会抹平未经 UE 验证）；出生位置、速度、寿命按模拟里每颗星亮起那一刻定，按亮起先后分 4 批出生、之后的运动拟合成线性阻力（阻力 2.5119/s、等效重力 29.43 m/s²）；第一批在 2.52 s 亮起；光点直径 = 星头 × 1、颜色 = 这一层的颜色 × Ramp 亮端 × 星头亮度 × 1，是起点，未经 UE 验证"
+   ],
+   "layer": 2
+  }
+ ],
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 1.2
+ },
+ "notes": [
+  "多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。"
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "YonshakuKamuro_05",
+  "layers": [
+   "Main",
+   "Red"
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "entry": "MYJM-S30",
+ "ver": "4f6440d7·master4.9.13",
+ "times_s": [
+  1.0,
+  2.99,
+  4.98,
+  6.97,
+  8.96
+ ],
+ "square_px": 690,
+ "header_px": 22,
+ "label_px": 90,
+ "rows": [
+  "实时模拟",
+  "导出效果"
+ ],
+ "projection": null,
+ "reference": null,
+ "note": "每行整段固定取景；实时和导出各自的视野不同，比较几何时须记录整段统一换算，不能逐帧放大。"
+}

@@ -1,0 +1,30 @@
+{
+ "effect": "myv_fxmuuzfeg7",
+ "entry": "MYCR-S30",
+ "ver": "369dc908·master4.3.8-core1",
+ "time": "2026-10-07 02:23",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "Crackle_30",
+   "replica": "MYCR-S30",
+   "files": [
+    "Crackle_30.json",
+    "Crackle_30_Cascade参数.txt",
+    "Crackle_30_Mobile.json",
+    "Crackle_30_曲线.csv",
+    "T_EFX_FireWorks_Crackle_30_4x4_01.png",
+    "T_EFX_FireWorks_Crackle_30_4x4_01_C.png",
+    "T_EFX_FireWorks_Crackle_30_4x4_01_HD.png",
+    "T_EFX_FireWorks_Crackle_30_4x4_02.png",
+    "T_EFX_FireWorks_Crackle_30_4x4_02_C.png",
+    "T_EFX_FireWorks_Crackle_30_4x4_02_HD.png",
+    "T_EFX_FireWorks_Crackle_30_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

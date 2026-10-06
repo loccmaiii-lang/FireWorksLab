@@ -1,0 +1,27 @@
+{
+ "effect": "myv_fxmuuzfeg7",
+ "entry": "MYCR-O",
+ "ver": "8fd3f286·master4.3.8-core1",
+ "time": "2026-10-07 02:22",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "Crackle",
+   "replica": "MYCR-O",
+   "files": [
+    "Crackle.json",
+    "Crackle_Cascade参数.txt",
+    "Crackle_Mobile.json",
+    "Crackle_曲线.csv",
+    "T_EFX_FireWorks_Crackle_4x4_01.png",
+    "T_EFX_FireWorks_Crackle_4x4_01_C.png",
+    "T_EFX_FireWorks_Crackle_4x4_01_HD.png",
+    "T_EFX_FireWorks_Crackle_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+02:32:31 开始：GoldChrysanthemum_03（导出素材）
+02:32:34 GoldChrysanthemum_03 导出 3 秒：GoldChrysanthemum_03.json、GoldChrysanthemum_03_Cascade参数.txt、GoldChrysanthemum_03_Mobile.json、GoldChrysanthemum_03_曲线.csv、T_EFX_FireWorks_GoldChrysanthemum_03_4x4_01.png、T_EFX_FireWorks_GoldChrysanthemum_03_4x4_01_C.png、T_EFX_FireWorks_GoldChrysanthemum_03_4x4_01_HD.png、T_EFX_FireWorks_GoldChrysanthemum_03_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+02:32:34 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJM-S03\回放检查.jpg（✅ 通过）
+02:32:50 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJM-S03\烘焙回放.jpg
+02:32:50 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJM-S03\烘焙回放_原尺寸.jpg
+02:32:50 烘焙器预览 preview.js：1002 KB
+02:32:50 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+02:32:50 完成，用时 0.3 分钟

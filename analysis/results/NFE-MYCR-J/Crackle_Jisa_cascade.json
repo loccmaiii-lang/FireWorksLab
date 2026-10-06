@@ -1,0 +1,400 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "Crackle_Jisa",
+ "platform": "pc",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.23",
+  "type": "crackle",
+  "form": "master",
+  "quality": {
+   "ss": 2,
+   "hz": 300
+  },
+  "plan_sig": "03cd73d7"
+ },
+ "textures": {
+  "seqA": {
+   "file": "T_EFX_FireWorks_Crackle_Jisa_4x4_01_HD.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_Crackle_Jisa_4x4_01_HD"
+  },
+  "cutoutA": {
+   "file": "T_EFX_FireWorks_Crackle_Jisa_4x4_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_Crackle_Jisa_4x4_01_C"
+  },
+  "seqB": {
+   "file": "T_EFX_FireWorks_Crackle_Jisa_4x4_02_HD.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 48,
+   "asset": "T_EFX_FireWorks_Crackle_Jisa_4x4_02_HD"
+  },
+  "cutoutB": {
+   "file": "T_EFX_FireWorks_Crackle_Jisa_4x4_02_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_Crackle_Jisa_4x4_02_C"
+  },
+  "ramp": {
+   "file": "T_EFX_FireWorks_Crackle_Jisa_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_Crackle_Jisa_R"
+  }
+ },
+ "materials": {
+  "mainA": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seqA",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  },
+  "mainB": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seqB",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 1.2
+ },
+ "emitters": [
+  {
+   "name": "MainA",
+   "material": "mainA",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 2.3333,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutoutA",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.4261
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 2.3333
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       21046.7,
+       21046.7,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "preRoll": true,
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         0.02,
+         0.02,
+         1
+        ]
+       ],
+       [
+        0.0107,
+        [
+         0.02,
+         0.02,
+         1
+        ]
+       ],
+       [
+        0.0214,
+        [
+         0.02,
+         0.02,
+         1
+        ]
+       ],
+       [
+        0.0321,
+        [
+         0.02,
+         0.02,
+         1
+        ]
+       ],
+       [
+        0.0429,
+        [
+         0.02,
+         0.02,
+         1
+        ]
+       ],
+       [
+        0.0536,
+        [
+         0.02,
+         0.02,
+         1
+        ]
+       ],
+       [
+        0.0643,
+        [
+         0.02,
+         0.02,
+         1
+        ]
+       ],
+       [
+        0.075,
+        [
+         0.02,
+         0.02,
+         1
+        ]
+       ],
+       [
+        0.0857,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0
+        ],
+        [
+         0.0857,
+         0.01
+        ],
+        [
+         0.9857,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ],
+   "notes": [
+    "入点前放大：出生后 0.2 s 停在第 0 帧、Size By Life 从 0.02 放大到 1（绕爆点：Pivot Offset 和没设入点时同一个，烟花实播对齐未经 UE 验证），之后从入点 0.2 s 照常播"
+   ]
+  },
+  {
+   "name": "MainB",
+   "material": "mainB",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 2.2,
+    "loops": 1,
+    "delay_s": 2.3333,
+    "cutout": "cutoutB",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.4261
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 2.2
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       21046.7,
+       21046.7,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.4545,
+         30.01
+        ],
+        [
+         0.9697,
+         47.01
+        ],
+        [
+         1,
+         47.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ],
+   "notes": [
+    "固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 -15.5 m），仰视时也对得上；未经 UE 验证"
+   ]
+  }
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "Crackle_Jisa",
+  "layers": [
+   ""
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ }
+}

@@ -1,0 +1,8 @@
+02:23:24 开始：Crackle_40（导出素材）
+02:23:38 Crackle_40 导出 14 秒：Crackle_40.json、Crackle_40_Cascade参数.txt、Crackle_40_Mobile.json、Crackle_40_曲线.csv、T_EFX_FireWorks_Crackle_40_4x4_01.png、T_EFX_FireWorks_Crackle_40_4x4_01_C.png、T_EFX_FireWorks_Crackle_40_4x4_01_HD.png、T_EFX_FireWorks_Crackle_40_4x4_02.png、T_EFX_FireWorks_Crackle_40_4x4_02_C.png、T_EFX_FireWorks_Crackle_40_4x4_02_HD.png、T_EFX_FireWorks_Crackle_40_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+02:23:39 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYCR-S40\回放检查.jpg（✅ 通过）
+02:24:04 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYCR-S40\烘焙回放.jpg
+02:24:04 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYCR-S40\烘焙回放_原尺寸.jpg
+02:24:04 烘焙器预览没做成（不影响导出）：分张（A/B…）母版不生成旧式 preview.js；在烘焙器条目里看引擎回放
+02:24:04 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+02:24:04 完成，用时 0.7 分钟

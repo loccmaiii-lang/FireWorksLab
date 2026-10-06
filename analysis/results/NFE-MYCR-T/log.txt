@@ -1,0 +1,8 @@
+02:23:35 开始：Crackle_Saturn（导出素材）
+02:23:37 Crackle_Saturn 导出 2 秒：Crackle_Saturn.json、Crackle_Saturn_Cascade参数.txt、Crackle_Saturn_Mobile.json、Crackle_Saturn_曲线.csv、T_EFX_FireWorks_Crackle_Saturn_4x4_01.png、T_EFX_FireWorks_Crackle_Saturn_4x4_01_C.png、T_EFX_FireWorks_Crackle_Saturn_4x4_01_HD.png、T_EFX_FireWorks_Crackle_Saturn_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+02:23:37 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYCR-T\回放检查.jpg（✅ 通过）
+02:23:54 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYCR-T\烘焙回放.jpg
+02:23:54 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYCR-T\烘焙回放_原尺寸.jpg
+02:23:54 烘焙器预览 preview.js：454 KB
+02:23:54 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+02:23:54 完成，用时 0.3 分钟

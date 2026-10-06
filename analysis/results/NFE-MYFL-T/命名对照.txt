@@ -1,0 +1,6 @@
+烘焙器内部名 → 素材包里的名字（用户 2026-10-02 定的规范）
+T_Crossette_Saturn.png → T_EFX_FireWorks_Crossette_Saturn_4x4_01_HD.png
+T_Crossette_Saturn_Cutout.png → T_EFX_FireWorks_Crossette_Saturn_4x4_01_C.png
+T_Crossette_Saturn_FrameTest.png → _检查/T_EFX_FireWorks_Crossette_Saturn_4x4_01_FrameTest.png
+T_Crossette_Saturn_Mobile.png → T_EFX_FireWorks_Crossette_Saturn_4x4_01.png
+T_Crossette_Saturn_Ramp.png → T_EFX_FireWorks_Crossette_Saturn_R.png

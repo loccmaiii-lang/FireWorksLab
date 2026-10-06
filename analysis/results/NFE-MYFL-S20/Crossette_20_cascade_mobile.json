@@ -1,0 +1,305 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "Crossette_20_Mobile",
+ "platform": "mobile",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.23",
+  "type": "crossette",
+  "form": "master",
+  "quality": {
+   "ss": 2,
+   "hz": 300
+  },
+  "plan_sig": "bcd899b9"
+ },
+ "textures": {
+  "seqA": {
+   "file": "T_EFX_FireWorks_Crossette_20_4x4_01.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_Crossette_20_4x4_01"
+  },
+  "cutoutA": {
+   "file": "T_EFX_FireWorks_Crossette_20_4x4_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_Crossette_20_4x4_01_C"
+  },
+  "seqB": {
+   "file": "T_EFX_FireWorks_Crossette_20_4x4_02.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_Crossette_20_4x4_02"
+  },
+  "cutoutB": {
+   "file": "T_EFX_FireWorks_Crossette_20_4x4_02_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_Crossette_20_4x4_02_C"
+  },
+  "ramp": {
+   "file": "T_EFX_FireWorks_Crossette_20_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_Crossette_20_R"
+  }
+ },
+ "materials": {
+  "mainA": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seqA",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  },
+  "mainB": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seqB",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 54345,
+  "preview_warmup_s": 1.2
+ },
+ "emitters": [
+  {
+   "name": "MainA",
+   "material": "mainA",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 2.1333,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutoutA",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.4593
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 2.1333
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       41803.6,
+       41803.6,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.9844,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ],
+   "notes": [
+    "固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 -17 m），仰视时也对得上；未经 UE 验证"
+   ]
+  },
+  {
+   "name": "MainB",
+   "material": "mainB",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 3.7667,
+    "loops": 1,
+    "delay_s": 2.1333,
+    "cutout": "cutoutB",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.4593
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 3.7667
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       41803.6,
+       41803.6,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.1327,
+         15.01
+        ],
+        [
+         0.9823,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    }
+   ],
+   "notes": [
+    "固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 -17 m），仰视时也对得上；未经 UE 验证"
+   ]
+  }
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "Crossette_20",
+  "layers": [
+   ""
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ }
+}

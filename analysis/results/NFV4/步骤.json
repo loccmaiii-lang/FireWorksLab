@@ -1,0 +1,10 @@
+[
+ {
+  "name": "金曜菊-窜天猴（myv_fxmuw5v7bh）",
+  "script": "变体对照.py",
+  "code": 1,
+  "ok": false,
+  "minutes": 0.1,
+  "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\变体对照.py\", line 114, in <module>\n    raise SystemExit(asyncio.run(run(ap.parse_args())))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\asyncio\\runners.py\", line 195, in run\n    return runner.run(main)\n           ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\asyncio\\runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\asyncio\\base_events.py\", line 691, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\变体对照.py\", line 75, in run\n    print(t['id'], t['label'], [(L['id'], round(info[L['id']]['auto'], 4), info[L['id']]['cur'], '→', ex.get(L['id'])) for L in t['layers']], flush=True)\n                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: type NoneType doesn't define __round__ method\n"
+ }
+]

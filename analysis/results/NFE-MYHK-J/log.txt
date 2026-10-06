@@ -1,0 +1,8 @@
+02:25:38 开始：YonshakuKamuro_Jisa（导出素材）
+02:26:38 YonshakuKamuro_Jisa 组合素材包 60 秒：T_EFX_FireWorks_YonshakuKamuro_Jisa_Main_4x4_01.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Main_4x4_01_C.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Main_4x4_01_HD.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Main_4x4_02.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Main_4x4_02_C.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Main_4x4_02_HD.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Main_4x4_03.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Main_4x4_03_C.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Main_4x4_03_HD.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Main_R.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Red_4x4_01.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Red_4x4_01_C.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Red_4x4_02.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Red_4x4_02_C.png、T_EFX_FireWorks_YonshakuKamuro_Jisa_Red_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+02:26:38 回放检查不查的粒子发射器（光点 / 单束）：L2_Dots
+02:26:40 回放检查：❌ YonshakuKamuro_Jisa · L1_MainA：中间空帧 16
+02:26:58 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYHK-J\烘焙回放.jpg
+02:26:58 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYHK-J\烘焙回放_原尺寸.jpg
+02:26:58 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+02:26:58 完成，用时 1.3 分钟

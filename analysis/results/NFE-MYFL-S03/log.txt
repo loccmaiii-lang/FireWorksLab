@@ -1,0 +1,8 @@
+02:24:36 开始：Crossette_03（导出素材）
+02:24:38 Crossette_03 导出 2 秒：Crossette_03.json、Crossette_03_Cascade参数.txt、Crossette_03_Mobile.json、Crossette_03_曲线.csv、T_EFX_FireWorks_Crossette_03_4x4_01.png、T_EFX_FireWorks_Crossette_03_4x4_01_C.png、T_EFX_FireWorks_Crossette_03_4x4_01_HD.png、T_EFX_FireWorks_Crossette_03_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+02:24:38 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYFL-S03\回放检查.jpg（✅ 通过）
+02:24:54 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYFL-S03\烘焙回放.jpg
+02:24:54 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYFL-S03\烘焙回放_原尺寸.jpg
+02:24:54 烘焙器预览 preview.js：480 KB
+02:24:54 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+02:24:54 完成，用时 0.3 分钟

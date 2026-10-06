@@ -1,0 +1,27 @@
+{
+ "effect": "myv_fxmuv7n3ih",
+ "entry": "MYJM-M",
+ "ver": "f7d5fb1f·master4.9.13",
+ "time": "2026-10-07 02:32",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "GoldChrysanthemum_Kaleido",
+   "replica": "MYJM-M",
+   "files": [
+    "GoldChrysanthemum_Kaleido.json",
+    "GoldChrysanthemum_Kaleido_Cascade参数.txt",
+    "GoldChrysanthemum_Kaleido_Mobile.json",
+    "GoldChrysanthemum_Kaleido_曲线.csv",
+    "T_EFX_FireWorks_GoldChrysanthemum_Kaleido_4x4_01.png",
+    "T_EFX_FireWorks_GoldChrysanthemum_Kaleido_4x4_01_C.png",
+    "T_EFX_FireWorks_GoldChrysanthemum_Kaleido_4x4_01_HD.png",
+    "T_EFX_FireWorks_GoldChrysanthemum_Kaleido_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

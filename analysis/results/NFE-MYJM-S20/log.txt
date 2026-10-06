@@ -1,0 +1,8 @@
+02:32:48 开始：GoldChrysanthemum_20（导出素材）
+02:32:56 GoldChrysanthemum_20 导出 8 秒：GoldChrysanthemum_20.json、GoldChrysanthemum_20_Cascade参数.txt、GoldChrysanthemum_20_Mobile.json、GoldChrysanthemum_20_曲线.csv、T_EFX_FireWorks_GoldChrysanthemum_20_4x4_01.png、T_EFX_FireWorks_GoldChrysanthemum_20_4x4_01_C.png、T_EFX_FireWorks_GoldChrysanthemum_20_4x4_01_HD.png、T_EFX_FireWorks_GoldChrysanthemum_20_4x4_02.png、T_EFX_FireWorks_GoldChrysanthemum_20_4x4_02_C.png、T_EFX_FireWorks_GoldChrysanthemum_20_4x4_02_HD.png、T_EFX_FireWorks_GoldChrysanthemum_20_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+02:32:57 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJM-S20\回放检查.jpg（✅ 通过）
+02:33:14 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJM-S20\烘焙回放.jpg
+02:33:14 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJM-S20\烘焙回放_原尺寸.jpg
+02:33:14 烘焙器预览没做成（不影响导出）：分张（A/B…）母版不生成旧式 preview.js；在烘焙器条目里看引擎回放
+02:33:14 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+02:33:14 完成，用时 0.4 分钟

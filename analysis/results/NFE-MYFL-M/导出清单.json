@@ -1,0 +1,27 @@
+{
+ "effect": "myv_fxmuux2arh",
+ "entry": "MYFL-M",
+ "ver": "65bf4e78·master4.9.13",
+ "time": "2026-10-07 02:24",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "Crossette_Kaleido",
+   "replica": "MYFL-M",
+   "files": [
+    "Crossette_Kaleido.json",
+    "Crossette_Kaleido_Cascade参数.txt",
+    "Crossette_Kaleido_Mobile.json",
+    "Crossette_Kaleido_曲线.csv",
+    "T_EFX_FireWorks_Crossette_Kaleido_4x4_01.png",
+    "T_EFX_FireWorks_Crossette_Kaleido_4x4_01_C.png",
+    "T_EFX_FireWorks_Crossette_Kaleido_4x4_01_HD.png",
+    "T_EFX_FireWorks_Crossette_Kaleido_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

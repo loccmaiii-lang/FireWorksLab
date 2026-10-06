@@ -1,0 +1,19 @@
+02:21:52 第 1/1 步：金曜菊-窜天猴（myv_fxmuw5v7bh）
+02:21:59   MYJC-O 原样 [('MYJC-O-1', 0.1176, 0.2, '→', None), ('MYJC-O-2', 8.4947, 2.8, '→', None)]
+02:21:59   MYJC-S03 3 号 [('MYJC-S03-1', 0.1041, 0.2, '→', 0.1772), ('MYJC-S03-2', 13.7996, 2.8, '→', 4.5486)]
+02:21:59   MYJC-S05 5 号 [('MYJC-S05-1', 0.1078, 0.2, '→', 0.1834), ('MYJC-S05-2', 9.7578, 2.8, '→', 3.2164)]
+02:21:59   MYJC-S10 尺玉 [('MYJC-S10-1', 0.126, 0.2, '→', 0.2144), ('MYJC-S10-2', 11.4047, 2.8, '→', 3.7592)]
+02:21:59   MYJC-S20 2 尺 [('MYJC-S20-1', 0.1606, 0.2, '→', 0.2732), ('MYJC-S20-2', 7.9258, 2.8, '→', 2.6125)]
+02:21:59   MYJC-S30 3 尺 [('MYJC-S30-1', 0.1845, 0.2, '→', 0.3138), ('MYJC-S30-2', 7.268, 2.8, '→', 2.3957)]
+02:21:59   MYJC-S40 4 尺 [('MYJC-S40-1', 0.1977, 0.2, '→', 0.3364), ('MYJC-S40-2', 7.7896, 2.8, '→', 2.5676)]
+02:21:59   MYJC-K 冠 [('MYJC-K-1', 0.1634, 0.2, '→', 0.278), ('MYJC-K-2', 8.4947, 2.8, '→', 2.8)]
+02:21:59   ❌ 金曜菊-窜天猴（myv_fxmuw5v7bh）（0.1 分钟）：^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\locmai\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\变体对照.py", line 75, in run
+    print(t['id'], t['label'], [(L['id'], round(info[L['id']]['auto'], 4), info[L['id']]['cur'], '→', ex.get(L['id'])) for L in t['layers']], flush=True)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: type NoneType doesn't define __round__ method
+
+02:21:59 完成，用时 0.1 分钟

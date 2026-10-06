@@ -1,0 +1,8 @@
+02:23:37 开始：Crackle_Willow（导出素材）
+02:23:42 Crackle_Willow 导出 4 秒：Crackle_Willow.json、Crackle_Willow_Cascade参数.txt、Crackle_Willow_Mobile.json、Crackle_Willow_曲线.csv、T_EFX_FireWorks_Crackle_Willow_4x4_01.png、T_EFX_FireWorks_Crackle_Willow_4x4_01_C.png、T_EFX_FireWorks_Crackle_Willow_4x4_01_HD.png、T_EFX_FireWorks_Crackle_Willow_4x4_02.png、T_EFX_FireWorks_Crackle_Willow_4x4_02_C.png、T_EFX_FireWorks_Crackle_Willow_4x4_02_HD.png、T_EFX_FireWorks_Crackle_Willow_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+02:23:42 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYCR-Y\回放检查.jpg（✅ 通过）
+02:24:00 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYCR-Y\烘焙回放.jpg
+02:24:00 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYCR-Y\烘焙回放_原尺寸.jpg
+02:24:00 烘焙器预览没做成（不影响导出）：分张（A/B…）母版不生成旧式 preview.js；在烘焙器条目里看引擎回放
+02:24:00 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+02:24:00 完成，用时 0.4 分钟
