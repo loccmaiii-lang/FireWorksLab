@@ -152,7 +152,7 @@
     "cellPad": 2,
     "autoGrid": 0,
     "renderVer": 40,
-    "exposure": 0.2
+    "exposure": 0.1035
    },
    "m": {
     "stages": [
@@ -327,7 +327,7 @@
     "cellPad": 2,
     "autoGrid": 0,
     "renderVer": 40,
-    "exposure": 0.2
+    "exposure": 0.1866
    },
    "m": {
     "stages": [
@@ -502,7 +502,7 @@
     "cellPad": 2,
     "autoGrid": 0,
     "renderVer": 40,
-    "exposure": 0.2
+    "exposure": 0.2462
    },
    "m": {
     "stages": [
@@ -677,7 +677,7 @@
     "cellPad": 2,
     "autoGrid": 0,
     "renderVer": 40,
-    "exposure": 0.2
+    "exposure": 0.2639
    },
    "m": {
     "stages": [
@@ -852,7 +852,7 @@
     "cellPad": 2,
     "autoGrid": 0,
     "renderVer": 40,
-    "exposure": 0.2
+    "exposure": 0.2594
    },
    "m": {
     "stages": [
@@ -1027,7 +1027,7 @@
     "cellPad": 2,
     "autoGrid": 0,
     "renderVer": 40,
-    "exposure": 0.2
+    "exposure": 0.3031
    },
    "m": {
     "stages": [
