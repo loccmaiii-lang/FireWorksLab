@@ -177,7 +177,8 @@ def core_layer(P0, M0, R0):
     P = {'stars': int(round(min(500, max(160, P0['stars'] * 0.8)))), 'v0': round(max(10, min(600, v0for(R0 * 0.5, vt, burn))), 1), 'vt': vt, 'burn': burn, 'burnJit': 4,
          'headSize': round(min(2.0, max(0.75, P0['headSize'] * 1.4)), 3), 'sparkRate': 0, 'flicker': 0.15, 'flash': 0, 'fade': 0.14, 'lastFlare': 0, 'seed': (P0.get('seed') or 7) + 11,
          'duration': round(burn + 0.55, 2), 'exposure': 2.5, 'renderVer': 40, 'riseH': P0.get('riseH', 250), 'speedJit': 3, 'dirJit': 1.2}
-    M = {'stages': [[0, col]], 'xw': 0.1, 'ramp0': '#000000', 'ramp1': '#4a4f5c', 'ramp2': '#c9ced9', 'ramp3': '#ffffff', 'headInt': 1.3, 'tailInt': 1}
+    # 星头强度：青色本身暗（同样曝光下比金色暗一大截，NFV3 金曜菊-A / 鸿巢的青芯几乎看不见）→ 青 2.4、金 1.3
+    M = {'stages': [[0, col]], 'xw': 0.1, 'ramp0': '#000000', 'ramp1': '#4a4f5c', 'ramp2': '#c9ced9', 'ramp3': '#ffffff', 'headInt': 2.4 if col == '#4f7bff' else 1.3, 'tailInt': 1}
     return P, M, '芯入：加一圈无尾牡丹芯（半径约亲星 0.5、' + ('青' if col == '#4f7bff' else '金') + '色、和亲星同开同灭）'
 
 
@@ -305,7 +306,7 @@ def write_jobs(effects, what):
             for t in fx['tiers']:
                 jid = 'NFE-' + t['id']; ids.append(jid)
                 (J / f'{jid}.json').write_text(json.dumps({'id': jid, 'type': 'export', 'effect': fx['key'], 'entry': t['id'], 'name': pack_dir(fx, t), 'priority': 4,
-                    'note': f"我的效果变体（对话框新花型，用户 2026-10-07 00:59）：{fx['name']} · {t['label']}。曝光已按本机 NFV1 写回。导出 + 回放检查。"}, ensure_ascii=False, indent=1), encoding='utf-8')
+                    'note': f"我的效果变体（对话框新花型，用户 2026-10-07 00:59）：{fx['name']} · {t['label']}。曝光已按本机变体对照（NFV3 / NFV4）写回。导出 + 回放检查。"}, ensure_ascii=False, indent=1), encoding='utf-8')
         else:
             jid = 'NFR-' + pre; ids.append(jid)
             steps = [{'name': f"{t['label']}（{pack_dir(fx, t)}）", 'script': '回放检查.py', 'args': ['{out}/' + pack_dir(fx, t) + '.jpg', 'analysis/local/输出/素材包/' + pack_dir(fx, t), '--times', TIMES],

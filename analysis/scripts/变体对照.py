@@ -61,15 +61,19 @@ async def run(a):
             for L in t['layers']: info[L['id']] = await pg.evaluate(JS_EXPO, L['id'])
         o = tiers[0]; assert o['label'] == '原样'
         k0 = [(info[L['id']]['cur'] / info[L['id']]['auto']) if info[L['id']]['cur'] and info[L['id']]['auto'] else 1 for L in o['layers']]
-        ex = {}
+        ex, fb = {}, []
         for t in tiers[1:]:
             for i, L in enumerate(t['layers']):
                 k = k0[i] if i < len(k0) else CORE     # 芯入多出来的芯层：自动 × 1.6（不跟你主花的手调比——那是给长尾调的；自动曝光把无尾芯压得和长尾主花一样暗，芯就看不见）
                 if t['id'].endswith('-Y') and k > YCAP: k = YCAP     # 柳：尾长、星挤，你原来给这一层的「比自动亮 n 倍」照搬会过曝成白团
-                ex[L['id']] = round(info[L['id']]['auto'] * k, 4)
+                au = info[L['id']]['auto']
+                if au is None:     # 自动曝光量不到亮部（闪烁层几个取样时刻正好都在灭的那一拍）：用原样同一层的自动值
+                    oid = o['layers'][min(i, len(o['layers']) - 1)]['id']; au = info[oid]['auto']; fb.append(L['id'])
+                    if au is None: continue
+                ex[L['id']] = round(au * k, 4)
         for t in tiers:
             print(t['id'], t['label'], [(L['id'], round(info[L['id']]['auto'], 4), info[L['id']]['cur'], '→', ex.get(L['id'])) for L in t['layers']], flush=True)
-        (out / '曝光.json').write_text(json.dumps({**ex, '_auto': {i: v['auto'] for i, v in info.items()}, '_k': k0, '_renderer': ren}, ensure_ascii=False, indent=1), encoding='utf-8')
+        (out / '曝光.json').write_text(json.dumps({**ex, '_auto': {i: v['auto'] for i, v in info.items()}, '_k': k0, '_fallback': fb, '_renderer': ren}, ensure_ascii=False, indent=1), encoding='utf-8')
         dur = {t['id']: max(L['delay'] + info[L['id']]['end'] for L in t['layers']) for t in tiers}
         R = {t['id']: max(info[L['id']]['R'] * L['scale'] for L in t['layers']) for t in tiers}
         own, one = {}, {}

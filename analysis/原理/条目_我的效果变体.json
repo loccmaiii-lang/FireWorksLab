@@ -59,7 +59,7 @@
    "tags": "我的效果 变体 分裂星 3 号 MYFL-S03",
    "p": {
     "renderVer": 40,
-    "exposure": 1.8,
+    "exposure": 1.4876,
     "duration": 2.309,
     "seed": 170,
     "stars": 17,
@@ -119,7 +119,7 @@
    "tags": "我的效果 变体 分裂星 尺玉 MYFL-S10",
    "p": {
     "renderVer": 40,
-    "exposure": 1.8,
+    "exposure": 1.4369,
     "duration": 4.619,
     "seed": 170,
     "stars": 42,
@@ -179,7 +179,7 @@
    "tags": "我的效果 变体 分裂星 2 尺 MYFL-S20",
    "p": {
     "renderVer": 40,
-    "exposure": 1.8,
+    "exposure": 1.089,
     "duration": 6.433,
     "seed": 170,
     "stars": 74,
@@ -240,7 +240,7 @@
    "tags": "我的效果 变体 分裂星 3 尺 MYFL-S30",
    "p": {
     "renderVer": 40,
-    "exposure": 1.8,
+    "exposure": 0.8693,
     "duration": 7.423,
     "seed": 170,
     "stars": 102,
@@ -301,7 +301,7 @@
    "tags": "我的效果 变体 分裂星 4 尺 MYFL-S40",
    "p": {
     "renderVer": 40,
-    "exposure": 1.8,
+    "exposure": 0.8845,
     "duration": 8.577,
     "seed": 170,
     "stars": 138,
@@ -362,7 +362,7 @@
    "tags": "我的效果 变体 分裂星 冠 MYFL-K",
    "p": {
     "renderVer": 40,
-    "exposure": 1.8,
+    "exposure": 1.4621,
     "duration": 4.15,
     "seed": 170,
     "stars": 25,
@@ -417,7 +417,7 @@
    "tags": "我的效果 变体 分裂星 柳 MYFL-Y",
    "p": {
     "renderVer": 40,
-    "exposure": 1.8,
+    "exposure": 0.6255,
     "duration": 4.47,
     "seed": 170,
     "stars": 30,
@@ -476,7 +476,7 @@
    "tags": "我的效果 变体 分裂星 环 MYFL-R",
    "p": {
     "renderVer": 40,
-    "exposure": 1.8,
+    "exposure": 1.6795,
     "duration": 3.2,
     "seed": 170,
     "stars": 25,
@@ -528,7 +528,7 @@
    "tags": "我的效果 变体 分裂星 土星 MYFL-T",
    "p": {
     "renderVer": 40,
-    "exposure": 1.8,
+    "exposure": 1.4876,
     "duration": 3.2,
     "seed": 170,
     "stars": 25,
@@ -581,7 +581,7 @@
    "tags": "我的效果 变体 分裂星 万華鏡 MYFL-M",
    "p": {
     "renderVer": 40,
-    "exposure": 1.8,
+    "exposure": 1.295,
     "duration": 3.2,
     "seed": 170,
     "stars": 25,
@@ -635,7 +635,7 @@
    "tags": "我的效果 变体 分裂星 心形 MYFL-H",
    "p": {
     "renderVer": 40,
-    "exposure": 1.8,
+    "exposure": 1.2509,
     "duration": 3.2,
     "seed": 170,
     "stars": 25,
@@ -801,7 +801,7 @@
     "lastFlare": 0,
     "seed": 181,
     "duration": 1.4,
-    "exposure": 2.5,
+    "exposure": 1.7588,
     "renderVer": 40,
     "dirJit": 1.2
    },
@@ -817,7 +817,7 @@
     "ramp1": "#4a4f5c",
     "ramp2": "#c9ced9",
     "ramp3": "#ffffff",
-    "headInt": 1.3,
+    "headInt": 2.4,
     "tailInt": 1
    },
    "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、青色、和亲星同开同灭）（来源：analysis/我的配方/my_fxmuux2arh/分裂星__fxmuux2arh.json）",
@@ -888,7 +888,7 @@
    "tags": "我的效果 变体 Crackle 3 号 MYCR-S03",
    "p": {
     "renderVer": 40,
-    "exposure": 3.4,
+    "exposure": 1.9528,
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 7.795,
@@ -1018,7 +1018,7 @@
    "tags": "我的效果 变体 Crackle 尺玉 MYCR-S10",
    "p": {
     "renderVer": 40,
-    "exposure": 3.4,
+    "exposure": 3.5199,
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 15.591,
@@ -1083,7 +1083,7 @@
    "tags": "我的效果 变体 Crackle 2 尺 MYCR-S20",
    "p": {
     "renderVer": 40,
-    "exposure": 3.4,
+    "exposure": 3.1723,
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 21.716,
@@ -1149,7 +1149,7 @@
    "tags": "我的效果 变体 Crackle 3 尺 MYCR-S30",
    "p": {
     "renderVer": 40,
-    "exposure": 3.4,
+    "exposure": 2.8099,
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 25.057,
@@ -1215,7 +1215,7 @@
    "tags": "我的效果 变体 Crackle 4 尺 MYCR-S40",
    "p": {
     "renderVer": 40,
-    "exposure": 3.4,
+    "exposure": 2.909,
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 28.955,
@@ -1281,7 +1281,7 @@
    "tags": "我的效果 变体 Crackle 冠 MYCR-K",
    "p": {
     "renderVer": 40,
-    "exposure": 3.4,
+    "exposure": 3.1723,
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 9.8,
@@ -1337,7 +1337,7 @@
    "tags": "我的效果 变体 Crackle 柳 MYCR-Y",
    "p": {
     "renderVer": 40,
-    "exposure": 3.4,
+    "exposure": 2.5767,
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 9.8,
@@ -1398,7 +1398,7 @@
    "tags": "我的效果 变体 Crackle 环 MYCR-R",
    "p": {
     "renderVer": 40,
-    "exposure": 3.4,
+    "exposure": 2.3629,
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 9.8,
@@ -1452,7 +1452,7 @@
    "tags": "我的效果 变体 Crackle 土星 MYCR-T",
    "p": {
     "renderVer": 40,
-    "exposure": 3.4,
+    "exposure": 2.8099,
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 9.8,
@@ -1507,7 +1507,7 @@
    "tags": "我的效果 变体 Crackle 万華鏡 MYCR-M",
    "p": {
     "renderVer": 40,
-    "exposure": 3.4,
+    "exposure": 2.6218,
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 9.8,
@@ -1563,7 +1563,7 @@
    "tags": "我的效果 变体 Crackle 心形 MYCR-H",
    "p": {
     "renderVer": 40,
-    "exposure": 3.4,
+    "exposure": 2.7617,
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 9.8,
@@ -1616,7 +1616,7 @@
    "tags": "我的效果 变体 Crackle 时差 MYCR-J",
    "p": {
     "renderVer": 40,
-    "exposure": 3.4,
+    "exposure": 3.7725,
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 9.8,
@@ -1734,7 +1734,7 @@
     "lastFlare": 0,
     "seed": 18,
     "duration": 2.15,
-    "exposure": 2.5,
+    "exposure": 0.3219,
     "renderVer": 40,
     "dirJit": 1.2
    },
@@ -1750,7 +1750,7 @@
     "ramp1": "#4a4f5c",
     "ramp2": "#c9ced9",
     "ramp3": "#ffffff",
-    "headInt": 1.3,
+    "headInt": 2.4,
     "tailInt": 1
    },
    "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、青色、和亲星同开同灭）（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
@@ -1915,7 +1915,7 @@
    "tags": "我的效果 变体 金曜菊-A 3 号 MYJA-S03-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.8,
+    "exposure": 0.2639,
     "duration": 2.162,
     "stars": 142,
     "v0": 32.0,
@@ -1994,7 +1994,7 @@
    "tags": "我的效果 变体 金曜菊-A 3 号 MYJA-S03-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.3,
+    "exposure": 0.9852,
     "duration": 3.836,
     "stars": 142,
     "v0": 32.0,
@@ -2073,7 +2073,7 @@
    "tags": "我的效果 变体 金曜菊-A 5 号 MYJA-S05-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.8,
+    "exposure": 0.7464,
     "duration": 2.934,
     "stars": 205,
     "v0": 184.7,
@@ -2152,7 +2152,7 @@
    "tags": "我的效果 变体 金曜菊-A 5 号 MYJA-S05-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.3,
+    "exposure": 1.2129,
     "duration": 5.206,
     "stars": 205,
     "v0": 184.7,
@@ -2231,7 +2231,7 @@
    "tags": "我的效果 变体 金曜菊-A 尺玉 MYJA-S10-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.8,
+    "exposure": 0.814,
     "duration": 4.323,
     "stars": 359,
     "v0": 337.7,
@@ -2310,7 +2310,7 @@
    "tags": "我的效果 变体 金曜菊-A 尺玉 MYJA-S10-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.3,
+    "exposure": 1.3933,
     "duration": 7.672,
     "stars": 359,
     "v0": 337.7,
@@ -2389,7 +2389,7 @@
    "tags": "我的效果 变体 金曜菊-A 2 尺 MYJA-S20-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.8,
+    "exposure": 0.721,
     "duration": 6.022,
     "stars": 621,
     "v0": 251.7,
@@ -2468,7 +2468,7 @@
    "tags": "我的效果 变体 金曜菊-A 2 尺 MYJA-S20-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.3,
+    "exposure": 1.6569,
     "duration": 10.686,
     "stars": 621,
     "v0": 251.7,
@@ -2547,7 +2547,7 @@
    "tags": "我的效果 变体 金曜菊-A 3 尺 MYJA-S30-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.8,
+    "exposure": 0.5011,
     "duration": 6.948,
     "stars": 859,
     "v0": 208.2,
@@ -2626,7 +2626,7 @@
    "tags": "我的效果 变体 金曜菊-A 3 尺 MYJA-S30-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.3,
+    "exposure": 1.6859,
     "duration": 12.33,
     "stars": 859,
     "v0": 208.2,
@@ -2705,7 +2705,7 @@
    "tags": "我的效果 变体 金曜菊-A 4 尺 MYJA-S40-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.8,
+    "exposure": 0.6277,
     "duration": 8.029,
     "stars": 1166,
     "v0": 331.9,
@@ -2784,7 +2784,7 @@
    "tags": "我的效果 变体 金曜菊-A 4 尺 MYJA-S40-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.3,
+    "exposure": 1.8385,
     "duration": 14.248,
     "stars": 1166,
     "v0": 331.9,
@@ -2863,7 +2863,7 @@
    "tags": "我的效果 变体 金曜菊-A 冠 MYJA-K-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.8,
+    "exposure": 0.3193,
     "duration": 6.66,
     "stars": 293,
     "v0": 250,
@@ -3008,7 +3008,7 @@
    "tags": "我的效果 变体 金曜菊-A 柳 MYJA-Y-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.8,
+    "exposure": 0.1899,
     "duration": 8.09,
     "stars": 103,
     "v0": 250,
@@ -3081,7 +3081,7 @@
    "tags": "我的效果 变体 金曜菊-A 柳 MYJA-Y-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.3,
+    "exposure": 0.3846,
     "duration": 11.71,
     "stars": 103,
     "v0": 250,
@@ -3154,7 +3154,7 @@
    "tags": "我的效果 变体 金曜菊-A 环 MYJA-R-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.8,
+    "exposure": 0.5464,
     "duration": 3.86,
     "stars": 293,
     "v0": 250,
@@ -3229,7 +3229,7 @@
    "tags": "我的效果 变体 金曜菊-A 环 MYJA-R-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.3,
+    "exposure": 0.9683,
     "duration": 6.85,
     "stars": 293,
     "v0": 250,
@@ -3304,7 +3304,7 @@
    "tags": "我的效果 变体 金曜菊-A 土星 MYJA-T-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.8,
+    "exposure": 0.6277,
     "duration": 3.86,
     "stars": 293,
     "v0": 250,
@@ -3380,7 +3380,7 @@
    "tags": "我的效果 变体 金曜菊-A 土星 MYJA-T-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.3,
+    "exposure": 1.1123,
     "duration": 6.85,
     "stars": 293,
     "v0": 250,
@@ -3456,7 +3456,7 @@
    "tags": "我的效果 变体 金曜菊-A 万華鏡 MYJA-M-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.8,
+    "exposure": 0.6063,
     "duration": 3.86,
     "stars": 293,
     "v0": 250,
@@ -3532,7 +3532,7 @@
    "tags": "我的效果 变体 金曜菊-A 万華鏡 MYJA-M-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.3,
+    "exposure": 1.0024,
     "duration": 6.85,
     "stars": 293,
     "v0": 250,
@@ -3682,7 +3682,7 @@
    "tags": "我的效果 变体 金曜菊-A 心形 MYJA-H-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.3,
+    "exposure": 1.4177,
     "duration": 6.85,
     "stars": 293,
     "v0": 250,
@@ -3756,7 +3756,7 @@
    "tags": "我的效果 变体 金曜菊-A 时差 MYJA-J-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.8,
+    "exposure": 0.721,
     "duration": 6.49,
     "stars": 293,
     "v0": 250,
@@ -3829,7 +3829,7 @@
    "tags": "我的效果 变体 金曜菊-A 时差 MYJA-J-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.3,
+    "exposure": 1.2341,
     "duration": 6.86,
     "stars": 293,
     "v0": 250,
@@ -4059,7 +4059,7 @@
     "lastFlare": 0,
     "seed": 18,
     "duration": 3.81,
-    "exposure": 2.5,
+    "exposure": 1.6411,
     "renderVer": 40,
     "dirJit": 1.2
    },
@@ -4075,7 +4075,7 @@
     "ramp1": "#4a4f5c",
     "ramp2": "#c9ced9",
     "ramp3": "#ffffff",
-    "headInt": 1.3,
+    "headInt": 2.4,
     "tailInt": 1
    },
    "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、青色、和亲星同开同灭）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
@@ -4146,7 +4146,7 @@
    "tags": "我的效果 变体 金芒菊 · 我的 3 号 MYJM-S03",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.1035,
     "duration": 3.099,
     "stars": 195,
     "burstR0": 16.1,
@@ -4205,7 +4205,7 @@
    "tags": "我的效果 变体 金芒菊 · 我的 尺玉 MYJM-S10",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.2462,
     "duration": 6.198,
     "stars": 492,
     "burstR0": 85.8,
@@ -4264,7 +4264,7 @@
    "tags": "我的效果 变体 金芒菊 · 我的 2 尺 MYJM-S20",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.2685,
     "duration": 8.633,
     "stars": 852,
     "burstR0": 128.7,
@@ -4324,7 +4324,7 @@
    "tags": "我的效果 变体 金芒菊 · 我的 3 尺 MYJM-S30",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.2549,
     "duration": 9.961,
     "stars": 1177,
     "burstR0": 147.4,
@@ -4384,7 +4384,7 @@
    "tags": "我的效果 变体 金芒菊 · 我的 4 尺 MYJM-S40",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.2979,
     "duration": 11.511,
     "stars": 1600,
     "burstR0": 209.1,
@@ -4444,7 +4444,7 @@
    "tags": "我的效果 变体 金芒菊 · 我的 冠 MYJM-K",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.2639,
     "duration": 6.85,
     "stars": 316,
     "burstR0": 52,
@@ -4497,7 +4497,7 @@
    "tags": "我的效果 变体 金芒菊 · 我的 柳 MYJM-Y",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.1297,
     "duration": 8.2,
     "stars": 238,
     "burstR0": 52,
@@ -4550,7 +4550,7 @@
    "tags": "我的效果 变体 金芒菊 · 我的 环 MYJM-R",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.0933,
     "duration": 4.56,
     "stars": 316,
     "v0": 216.1,
@@ -4603,7 +4603,7 @@
    "tags": "我的效果 变体 金芒菊 · 我的 土星 MYJM-T",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.0518,
     "duration": 4.56,
     "stars": 316,
     "v0": 216.1,
@@ -4657,7 +4657,7 @@
    "tags": "我的效果 变体 金芒菊 · 我的 万華鏡 MYJM-M",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.1149,
     "duration": 4.56,
     "stars": 316,
     "v0": 216.1,
@@ -4711,7 +4711,7 @@
    "tags": "我的效果 变体 金芒菊 · 我的 心形 MYJM-H",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.0917,
     "duration": 4.56,
     "stars": 316,
     "v0": 216.1,
@@ -4763,7 +4763,7 @@
    "tags": "我的效果 变体 金芒菊 · 我的 时差 MYJM-J",
    "p": {
     "renderVer": 40,
-    "exposure": 0.2,
+    "exposure": 0.1682,
     "duration": 6.3,
     "stars": 316,
     "burstR0": 52,
@@ -4882,7 +4882,7 @@
     "lastFlare": 0,
     "seed": 18,
     "duration": 3.24,
-    "exposure": 2.5,
+    "exposure": 1.0641,
     "renderVer": 40,
     "dirJit": 1.2
    },
@@ -6940,7 +6940,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 3 号 MYHK-S03-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.5128,
+    "exposure": 0.0831,
     "duration": 5.105,
     "seed": 41,
     "stars": 103,
@@ -7025,7 +7025,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 3 号 MYHK-S03-2",
    "p": {
     "renderVer": 40,
-    "exposure": 3.762,
+    "exposure": 3.3323,
     "duration": 3.389,
     "seed": 41,
     "stars": 103,
@@ -7092,7 +7092,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 5 号 MYHK-S05-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.5128,
+    "exposure": 0.6766,
     "duration": 6.928,
     "seed": 41,
     "stars": 148,
@@ -7177,7 +7177,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 5 号 MYHK-S05-2",
    "p": {
     "renderVer": 40,
-    "exposure": 3.762,
+    "exposure": 3.3323,
     "duration": 4.6,
     "seed": 41,
     "stars": 148,
@@ -7244,7 +7244,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 尺玉 MYHK-S10-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.5128,
+    "exposure": 0.8928,
     "duration": 10.209,
     "seed": 41,
     "stars": 259,
@@ -7329,7 +7329,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 尺玉 MYHK-S10-2",
    "p": {
     "renderVer": 40,
-    "exposure": 3.762,
+    "exposure": 3.3323,
     "duration": 6.779,
     "seed": 41,
     "stars": 259,
@@ -7396,7 +7396,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 2 尺 MYHK-S20-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.5128,
+    "exposure": 0.6424,
     "duration": 14.22,
     "seed": 41,
     "stars": 448,
@@ -7481,7 +7481,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 2 尺 MYHK-S20-2",
    "p": {
     "renderVer": 40,
-    "exposure": 3.762,
+    "exposure": 3.8278,
     "duration": 9.442,
     "seed": 41,
     "stars": 448,
@@ -7548,7 +7548,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 3 尺 MYHK-S30-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.5128,
+    "exposure": 0.3626,
     "duration": 16.408,
     "seed": 41,
     "stars": 619,
@@ -7633,7 +7633,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 3 尺 MYHK-S30-2",
    "p": {
     "renderVer": 40,
-    "exposure": 3.762,
+    "exposure": 3.5101,
     "duration": 10.894,
     "seed": 41,
     "stars": 619,
@@ -7700,7 +7700,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 柳 MYHK-Y-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.5128,
+    "exposure": 0.2327,
     "duration": 19.37,
     "seed": 41,
     "stars": 280,
@@ -7781,7 +7781,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 柳 MYHK-Y-2",
    "p": {
     "renderVer": 40,
-    "exposure": 3.762,
+    "exposure": 3.3323,
     "duration": 14.45,
     "seed": 41,
     "stars": 280,
@@ -7841,7 +7841,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 环 MYHK-R-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.5128,
+    "exposure": 0.5496,
     "duration": 18.45,
     "seed": 41,
     "stars": 800,
@@ -7922,7 +7922,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 环 MYHK-R-2",
    "p": {
     "renderVer": 40,
-    "exposure": 3.762,
+    "exposure": 2.7539,
     "duration": 12.25,
     "seed": 41,
     "stars": 800,
@@ -7982,7 +7982,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 土星 MYHK-T-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.5128,
+    "exposure": 0.2796,
     "duration": 18.45,
     "seed": 41,
     "stars": 800,
@@ -8064,7 +8064,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 土星 MYHK-T-2",
    "p": {
     "renderVer": 40,
-    "exposure": 3.762,
+    "exposure": 3.0032,
     "duration": 12.25,
     "seed": 41,
     "stars": 800,
@@ -8125,7 +8125,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 万華鏡 MYHK-M-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.5128,
+    "exposure": 0.5993,
     "duration": 18.45,
     "seed": 41,
     "stars": 800,
@@ -8207,7 +8207,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 万華鏡 MYHK-M-2",
    "p": {
     "renderVer": 40,
-    "exposure": 3.762,
+    "exposure": 2.8021,
     "duration": 12.25,
     "seed": 41,
     "stars": 800,
@@ -8268,7 +8268,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 心形 MYHK-H-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.5128,
+    "exposure": 0.569,
     "duration": 18.45,
     "seed": 41,
     "stars": 800,
@@ -8348,7 +8348,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 心形 MYHK-H-2",
    "p": {
     "renderVer": 40,
-    "exposure": 3.762,
+    "exposure": 2.9516,
     "duration": 12.25,
     "seed": 41,
     "stars": 800,
@@ -8407,7 +8407,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 时差 MYHK-J-1",
    "p": {
     "renderVer": 40,
-    "exposure": 0.5128,
+    "exposure": 1.4255,
     "duration": 20.65,
     "seed": 41,
     "stars": 800,
@@ -8489,7 +8489,7 @@
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 时差 MYHK-J-2",
    "p": {
     "renderVer": 40,
-    "exposure": 3.762,
+    "exposure": 4.3969,
     "duration": 17.37,
     "seed": 41,
     "stars": 800,
@@ -8700,7 +8700,7 @@
     "lastFlare": 0,
     "seed": 52,
     "duration": 7.85,
-    "exposure": 2.5,
+    "exposure": 6.7957,
     "renderVer": 40,
     "dirJit": 1.2
    },
@@ -8716,7 +8716,7 @@
     "ramp1": "#4a4f5c",
     "ramp2": "#c9ced9",
     "ramp3": "#ffffff",
-    "headInt": 1.3,
+    "headInt": 2.4,
     "tailInt": 1
    },
    "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、青色、和亲星同开同灭）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
