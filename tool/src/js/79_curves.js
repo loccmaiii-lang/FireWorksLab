@@ -43,7 +43,7 @@ function curveSparkAt(P, s, t, D) {
 // 星本身用 CPU 星模拟走到全灭（便宜：只有星，没有火花）。按参数缓存
 const tailEndCache = new Map();
 function sparkTailEnd(P0) {
-  const P = derive({ ...structuredClone(P0), engine: 'gpu' }), key = JSON.stringify(P);
+  const P = derive({ ...structuredClone(fxP(P0)), engine: 'gpu' }), key = JSON.stringify(P);     // 4.9.21 整体调整
   if (tailEndCache.has(key)) return tailEndCache.get(key);
   const rise = familyOf(P.type) === 'rise', le = rise || P.sparkLifeEnd == null ? 1 : +P.sparkLifeEnd, lj = rise || P.sparkLifeJit == null ? 0.45 : P.sparkLifeJit / 100;
   const tail = sparkEff(P).life * Math.max(1, le) * Math.exp(1.64 * lj), embAll = P.emberFrac > 0 && P.emberAll;
@@ -87,7 +87,7 @@ function endInfoHTML() {
   return `<p class="hint endinfo${trim ? ' warn' : ''}">最后一批火花约 ${e.toFixed(2)} s 灭完，序列 ${D.toFixed(2)} s 盖得住（${fade}）。${cut}${trim}</p>`;
 }
 async function curveCompute(P0, key, live, tid = '') {
-  const t0 = performance.now(), P = derive({ ...structuredClone(P0), engine: 'gpu' }), D = Math.max(0.1, +P.duration || 3);
+  const t0 = performance.now(), P = derive({ ...structuredClone(fxP(P0)), engine: 'gpu' }), D = Math.max(0.1, +P.duration || 3);
   // 步长：星多的（千轮子花几千颗）放粗一点，曲线是看趋势的，不用和烘焙一样细；取样仍是每 1/30 s
   const est = (+P.stars || 0) * (P.type === 'senrin' || P.type === 'crossette' ? 1 + (+P.subStars || 0) : 1), h = est > 4000 ? 1 / 30 : est > 1500 ? 1 / 60 : 1 / 120;
   const sim = new Sim(P), dt = 1 / 30, n = Math.floor(D / dt + 1e-6) + 1, rise = familyOf(P.type) === 'rise';

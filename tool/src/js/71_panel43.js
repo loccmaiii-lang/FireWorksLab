@@ -22,7 +22,7 @@ function emitOf(nm, sec) {
 }
 // 「××随机」挂在哪个本体参数下面（没列的按「键名去掉 Jit」找；找不到就照常单独一行）
 const RAND_OF = { speedJit: 'v0', dirJit: 'v0', burnJit: 'burn', ignJit: 'ignDelay', afterJit: 'afterBurn', sparkRampJit: 'sparkRamp', sparkLifeJit: 'sparkLife',
-  sparkSpread: 'sparkInherit', sparkInhJit: 'sparkInherit', twinkle: 'sparkBright', twinkleHz: 'sparkBright', starBright: 'sparkBright', tailJit: 'sparkSize', subJit: 'subDelay', subSpeedJit: 'subSpeed', subScaleJit: 'subSpeed' };
+  sparkSpread: 'sparkInherit', sparkInhJit: 'sparkInherit', twinkle: 'sparkBright', twinkleHz: 'sparkBright', starBright: 'sparkBright', subJit: 'subDelay', subSpeedJit: 'subSpeed', subScaleJit: 'subSpeed' };
 function randBaseOf(key, keys) { const b = RAND_OF[key] || (/Jit$/.test(key) ? key.slice(0, -3) : ''); return b && keys.has(b) ? b : ''; }
 const isCarrierType = P => P.type === 'senrin' || P.type === 'crossette';
 const SPARK_KEYS = ['sparkRateEnd', 'sparkStop', 'sparkStart', 'sparkRamp', 'sparkRampJit', 'sparkLife', 'sparkLifeEnd', 'sparkLifeJit', 'sparkSpread', 'sparkSize', 'sparkInherit', 'sparkDrag', 'sparkGrav',
@@ -41,7 +41,7 @@ const INERT = [
   [['emberAll'], P => !(+P.sparkStop > 0), '「火花停止时刻」是 0 时不起作用（火花本来就全程都有，余烬也一样）'],
   // 4.3（H13 / 渲染基础问题清单审计 4.4）：
   [['headDimUntil'], P => !(+P.headDim < 1), '「前段亮度」是 1（不压暗）时不起作用：先把前段亮度调到 1 以下'],
-  [['preRoll', 'preScale0', 'prePivot'], P => P.zoom === 'on', '「面片取景」是「随开花放大」时不起作用（Zoom 本来就从小放大）'],
+  [['preRoll', 'preScale0'], P => P.zoom === 'on', '「面片取景」是「随开花放大」时不起作用（Zoom 本来就从小放大）'],
   [['emberFrac', 'emberLife', 'emberBright', 'emberFollow', 'emberSize', 'emberEnd', 'emberAll'], P => +P.branch > 0, '「松叶分叉数」> 0 时不出余烬（分叉的火花占了余烬那一路）'],
   [['chaos'], P => !(+P.spin > 0), '「旋转速度」是 0 时不起作用'],
   // 地面：只有 1 个喷口时，喷口之间的间距、彗星扇面没有意义（喷泉的扇面角度是喷射张角，照样起作用）
@@ -64,7 +64,7 @@ const LEGACY = {
   rtFdT: ['每档温度偏移；5.0 白黄对比由粒径决定'], rtMdT: ['每档温度偏移；5.0 白黄对比由粒径决定'], rtCdT: ['每档温度偏移；5.0 白黄对比由粒径决定'],
   rtStreakMax: ['拖影上限只夹外观；5.0 拖影由速度 × 快门决定'], rtLoopSize: ['固定长循环层（4.4 旧做法）', 1], rtLoopMin: ['循环层的人为最短长度；5.0 按星头可见长度自动算'],
   rtDotGain: ['粒子层另乘的总亮度（光晕、发射口不乘），名不副实'], rtDissolve: ['消散溶解终值；5.0 固定', 1],
-  preRoll: [LG_PRE, 0, P => +P.cutIn > 0], preScale0: [LG_PRE, null, P => +P.preRoll > 0 && +P.preScale0 > 0], prePivot: [LG_PRE, null, P => +P.preRoll > 0 && +P.prePivot !== 0],
+  preRoll: [LG_PRE, 0, P => +P.cutIn > 0], preScale0: [LG_PRE, null, P => +P.preRoll > 0 && +P.preScale0 > 0],
   fpsFloor: ['旧帧计划才读；固定机位 + 匀速帧不读'],
   // 4.9.13：开花段时长 burstSec、淡出起点 fadeAt 是按运动分的参数，帧数分配默认改回按运动分（用户 10-06 15:15）后不再是旧
   trimLead: ['开头空白不烘；5.0 固定为裁掉', 1],

@@ -1,0 +1,272 @@
+[
+ {
+  "item": "A1",
+  "pass": true,
+  "why": "{\"key\": \"my:fxmuwsaubs\", \"effect\": null, \"name\": \"检查版本\", \"deliv\": \"MyFx\", \"review\": null}",
+  "sec": 2.3
+ },
+ {
+  "item": "A2",
+  "pass": true,
+  "why": "{\"第 1 次打开\": {\"key\": \"my:fxmuwsavty0\", \"tab\": \"combo\", \"n\": 2, \"stars\": [77, 90]}, \"第 2 次打开\": {\"key\": \"my:fxmuwsavty0\", \"tab\": \"combo\", \"n\": 2, \"stars\": [77, 55]}}",
+  "sec": 6.8
+ },
+ {
+  "item": "A3",
+  "pass": true,
+  "why": "{\"before\": [90, 90], \"same\": false, \"stars\": [55, 90]}",
+  "sec": 2.7
+ },
+ {
+  "item": "A4",
+  "pass": true,
+  "why": "{\"切层前没开烘\": {\"p\": 1.61, \"baked\": 1.61}, \"烘到一半切层\": {\"p\": 3.97, \"baked\": 3.97}}",
+  "sec": 5.2
+ },
+ {
+  "item": "A5",
+  "pass": true,
+  "why": "{\"草稿\": [{\"name\": \"草稿（没保存就切走了）\", \"stars\": 329}], \"版本选项\": [\"AI 版 · JM4-40\", \"我的 · 草稿（没保存就切走了）（10-06 22:39）\"]}",
+  "sec": 9.2
+ },
+ {
+  "item": "A6",
+  "pass": true,
+  "why": "{\"AI 版 burn\": 1.3, \"burn\": 1.3, \"chg\": false, \"gate\": [], \"src\": \"ai\"}",
+  "sec": 9.6
+ },
+ {
+  "item": "A7",
+  "pass": true,
+  "why": "3 层 ['中心', '中心 副本', '引菊 → 锦 · 橙引线层']、星数 [123, 123, 293]、同一批星 ✓、复制的层独立 ✓",
+  "sec": 17.2
+ },
+ {
+  "item": "P1",
+  "pass": true,
+  "why": "{\"标签\": [\"效果\", \"星\", \"火花\", \"余烬\", \"分叉火花\", \"爆裂\", \"开花闪光\", \"输出\", \"全部\"], \"默认\": \"星\", \"第一眼参数\": 22, \"参数名平均字数\": 3.5, \"星的寿命叫\": \"燃烧时间\", \"搜粗细\": [\"sparkSpread\", \"sparkSize\", \"adjSparkSize\", \"tailJit\", \"tailWidth\"], \"点火花\": {\"on\": \"火花\", \"n\": 21, \"saved\": \"火花\"}, \"说明\": {\"停 1.9s\": false, \"点名字\": [true, true], \"底部固定\": true, \"再点\": false, \"Esc\": false, \"F1\": true, \"F1 再按\": false, \"KEYMAP\": true}}",
+  "sec": 6.7
+ },
+ {
+  "item": "U1",
+  "pass": true,
+  "why": "{\"单层\": [{\"stars\": 150, \"burn\": 2.5}, {\"stars\": 170, \"burn\": 2.5, \"baked\": 2.5}, {\"stars\": 150, \"burn\": 2.5}, {\"stars\": 170, \"burn\": 2.5}], \"多层\": {\"n\": 2, \"s0\": 293, \"b1\": 3.8, \"baked1\": 3.8, \"bakes\": [2.5, 2.5, 2.9, 2.5, 2.5, 2.5, 1.3, 3.8, 4.07, 3.8], \"新烘\": 1}}",
+  "sec": 17.2
+ },
+ {
+  "item": "B1",
+  "pass": true,
+  "why": "{\"滑杆改燃烧\": [{\"d\": 4.4, \"end\": 3.05}, {\"d\": 5.4, \"end\": 4.05}], \"点火 +0.3 后入点\": 0.9, \"接力\": [{\"stop\": 1.2, \"ign1\": 1.28}, {\"stop\": 1.4, \"ign1\": 1.48, \"baked1\": 1.48}], \"恢复\": {\"AI 版\": 2.6851851851851847, \"模板\": 2.5, \"恢复后\": 2.6851851851851847}}",
+  "sec": 11.4
+ },
+ {
+  "item": "V1",
+  "pass": true,
+  "why": "{\"导出时\": {\"auto\": [[\"导出时\", 2.89], [\"导出时\", 2.99], [\"导出时\", 3.09]], \"opts\": [\"AI 版 · JM4-40\", \"导出时 · 10-06 22:40 · test\", \"导出时 · 10-06 22:40 · test\", \"导出时 · 10-06 22:40 · test\"]}}",
+  "sec": 8.4
+ },
+ {
+  "item": "X1",
+  "pass": true,
+  "why": "{\"选了光点\": {\"out\": {\"pc\": \"dots\", \"mobile\": \"seq\"}, \"chg\": true, \"note\": \"PC：GPU 光点（约 0 颗，软圆点材质，没有贴图） · 手机：序列（纯图片）。注意：这一层星头不发光（星头亮度 0，只有尾迹 / 火花）：光点什么都出不来，PC 请用序列；这一层有尾迹：PC 光点只出星头，尾迹没有（要尾迹就用序列，或另加一层序列只出尾迹）\", \"undo\": true}, \"光点大小 1 → 2\": [[[60, 60, 60], [60, 60, 60]], [[120, 120, 120], [120, 120, 120]], 2], \"引擎回放\": {\"pc\": [\"seq\", \"dots\"], \"mb\": [\"seq\", \"seq\"], \"l2\": [0, 0, 293], \"l1\": [293, 293, 293]}, \"PC 第 2 层发射器\": [[\"L2_Dots\", true, \"soft_dot\"]], \"撤三次\": [{\"pc\": \"dots\", \"dot\": 2}, {\"pc\": \"dots\", \"dot\": 1}, {\"pc\": \"seq\", \"dot\": 1}], \"单束选项\": {\"has\": true, \"disabled\": false, \"allowed\": true}, \"选了单束\": {\"out\": {\"pc\": \"unit\", \"mobile\": \"seq\"}, \"note\": \"PC：单束（每颗星一个面片，293 个；贴图是一颗星的序列，引擎回放第一次要烘一会儿） · 手机：序列（纯图片）。注意：这一层尾迹长 / 烧得久（锦冠、柳、余烬这类）：单束的尾迹是沿速度的直线，下垂以后会都指向花心上方、像辐条；这种层建议用序列\", \"draw\": \"unit\"}}",
+  "sec": 7.6
+ },
+ {
+  "item": "G1",
+  "pass": true,
+  "why": "{\"exJob\": \"X10\", \"why\": [\"标准检查是旧版本的结果\"]}",
+  "sec": 0.7
+ },
+ {
+  "item": "K1",
+  "pass": true,
+  "why": "{\"打开候选时的视图\": \"live\", \"自动烘焙关 · 改参数\": {\"n\": 1, \"stale\": true, \"btn\": \"烘焙 ●\", \"bar\": false, \"want\": 323}, \"切到引擎回放\": {\"n\": 2, \"last\": {\"stars\": 323, \"burn\": 2.6851851851851847}, \"stale\": false, \"bar\": false, \"refine\": 2}, \"引擎回放里改参数\": {\"n\": 2, \"bar\": true, \"txt\": \"贴图还是旧参数（实时模拟已是新的）烘焙（B）\", \"want\": 328}, \"按 B\": {\"n\": 3, \"last\": {\"stars\": 328, \"burn\": 2.6851851851851847}, \"bar\": false}, \"自动烘焙开 · 烘到一半又改\": {\"n\": 4, \"last\": {\"stars\": 333, \"burn\": 2.6851851851851847}, \"aborted\": 1, \"refine\": 3, \"want\": 333, \"stale\": false}, \"多层 · 自动烘焙关 · 改第 1 层\": {\"n\": 6, \"baked\": 1.3, \"stale\": true}, \"多层导出\": {\"b\": 1.5, \"want\": 1.5, \"stale\": false}}",
+  "sec": 19.7
+ },
+ {
+  "item": "R1",
+  "pass": true,
+  "why": "{\"打开时\": [[1.3, 1.2, 0.08], [3.8, 0, 1.28]], \"改第 1 层燃烧 1.0 后\": [[1, 1, 0.08], [3.8, 0, 1.08]], \"恢复第 1 层后\": [[1.3, 1.2, 0.08], [3.8, 0, 1.28]]}",
+  "sec": 5.2
+ },
+ {
+  "item": "N1",
+  "pass": true,
+  "why": "{\"打开\": {\"emit\": [\"效果\", \"星\", \"火花\", \"余烬\", \"分叉火花\", \"爆裂\", \"开花闪光\", \"输出\"]}, \"短名\": 265, \"收起的随机\": [\"speedJit\", \"dirJit\", \"burnJit\", \"ignJit\", \"afterJit\", \"crackleDelayJit\", \"crackleBrightJit\", \"crackleSizeJit\", \"strobeHzJit\", \"glitterDelayJit\", \"branchLifeJit\", \"branchVJit\", \"sparkRampJit\", \"sparkLifeJit\", \"sparkSpread\", \"twinkle\", \"twinkleHz\", \"sparkInhJit\", \"T0Jit\", \"emberLifeJit\", \"starBright\", \"subJit\", \"subScaleJit\", \"subSpeedJit\", \"x1DelayJit\", \"x1VJit\", \"x1LifeJit\", \"x1SizeJit\", \"x1BrightJit\", \"x2DelayJit\", \"x2VJit\", \"x2LifeJit\", \"x2SizeJit\", \"x2BrightJit\"], \"随机\": {\"h0\": true, \"h1\": false, \"next\": true, \"txt\": \"随机 ▾ ±12%\", \"stored\": true}, \"菊 点火延迟随机\": {\"inert\": true, \"why\": \"「点火延迟」是 0 时不起作用（随机的是点火延迟的长短）\"}, \"菊 前段结束\": {\"inert\": true, \"why\": \"「前段亮度」是 1（不压暗）时不起作用：先把前段亮度调到 1 以下\", \"dim\": 1}, \"牡丹 火花寿命\": {\"inert\": true, \"why\": \"「火花生成率」是 0（这一层没有火花）时不起作用\", \"rate\": 0}, \"爆裂星 爆裂\": {\"shown\": true, \"N\": true, \"R\": true, \"V\": true}, \"尾缀档位\": {\"mod\": \"效果›规格\", \"lab\": \"尾缀档位\", \"hidden\": false, \"emit\": [\"效果\", \"星头\", \"白热火花\", \"金火花\", \"橙色火花\", \"丝状火花\", \"火花共用\", \"输出\"]}, \"空白发射器\": {\"打开\": {\"tabs\": [\"效果\", \"星\", \"开花闪光\", \"输出\", \"全部\"], \"add\": [\"火花\", \"尾迹外形\", \"烟花特性\"], \"rm\": [], \"rate\": 0, \"pm\": []}, \"加火花\": {\"tabs\": [\"效果\", \"星\", \"火花\", \"开花闪光\", \"输出\", \"全部\"], \"add\": [\"尾迹外形\", \"烟花特性\"], \"rm\": [\"火花\"], \"rate\": 95, \"pm\": [\"火花\"]}, \"去掉\": {\"tabs\": [\"效果\", \"星\", \"开花闪光\", \"输出\", \"全部\"], \"add\": [\"火花\", \"尾迹外形\", \"烟花特性\"], \"rm\": [], \"rate\": 0, \"pm\": []}}}",
+  "sec": 27.3
+ },
+ {
+  "item": "N2",
+  "pass": true,
+  "why": "36 个花型的参数都有名字（命名表 522 行）、没有旧词",
+  "sec": 0.8
+ },
+ {
+  "item": "S1",
+  "pass": true,
+  "why": "{\"subKeep\": {\"on\": true, \"dis\": false, \"min\": 0, \"shown\": 0.35, \"off\": {\"v\": 0.35, \"dis\": false, \"on\": false}, \"back\": -1}, \"subGrav\": {\"on\": true, \"dis\": false, \"min\": 0, \"shown\": 1, \"off\": {\"v\": 1, \"dis\": false, \"on\": false}, \"back\": -1}, \"subFlash\": {\"on\": true, \"dis\": false, \"min\": 0, \"shown\": 0.3, \"off\": {\"v\": 0.3, \"dis\": false, \"on\": false}, \"back\": -1}, \"subSpeedJit\": {\"on\": true, \"dis\": false, \"min\": 0, \"shown\": 3, \"off\": {\"v\": 3, \"dis\": false, \"on\": false}, \"back\": -1}, \"engineSelect\": false, \"stored\": \"gpu\", \"imported\": \"gpu\", \"phys\": {\"type\": \"physS\", \"ta\": 6.207, \"dz\": 0, \"vzLate\": -59.84, \"vt\": 59.84}, \"lateWarn\": true}",
+  "sec": 2.0
+ },
+ {
+  "item": "S2",
+  "pass": true,
+  "why": "{\"新建后\": {\"sel\": 0, \"type\": \"botan\", \"n\": 1, \"rows\": 19}, \"加层后\": {\"sel\": 1, \"n\": 2, \"own\": [true, true], \"rows\": 20, \"stars\": 293}, \"改星数\": {\"layer\": 77, \"orig\": 293, \"other\": [90, 77]}, \"再打开\": {\"sel\": 0, \"stars\": [90, 77], \"label\": \"我的效果「检查新建」\"}}",
+  "sec": 18.7
+ },
+ {
+  "item": "S3",
+  "pass": true,
+  "why": "{\"kiku\": {\"sliders\": 3, \"mods\": {\"n\": 9, \"titled\": 9, \"sum\": 9, \"open\": 1}, \"emits\": {\"星\": true, \"火花\": true, \"余烬\": true, \"爆裂\": true}}, \"blank\": {\"sliders\": 3, \"mods\": {\"n\": 7, \"titled\": 7, \"sum\": 7, \"open\": 1}, \"emits\": {\"星\": true}}, \"blankAdd\": true, \"trailM\": {\"sliders\": 3, \"mods\": {\"n\": 5, \"titled\": 5, \"sum\": 5, \"open\": 1}, \"emits\": {\"星头\": true, \"白热火花\": true, \"金火花\": true, \"橙色火花\": true, \"丝状火花\": true}}, \"memory\": {\"key\": \"火花›生成\", \"savedClosed\": true, \"keptClosed\": true, \"savedOpen\": true, \"keptTab\": true}}",
+  "sec": 36.3
+ },
+ {
+  "item": "S4",
+  "pass": true,
+  "why": "{\"spark\": {\"tabsWhileFiltered\": true, \"filtersCleared\": true, \"shown\": true, \"rows\": 5, \"recipeUnchanged\": true, \"onlyThis\": true}, \"all\": {\"emitters\": 8}}",
+  "sec": 2.1
+ },
+ {
+  "item": "E1",
+  "pass": true,
+  "why": "{\"defaults\": {\"noFade\": true, \"endMul\": 1, \"fb\": \"motion\", \"zoom\": \"off\", \"mode\": \"motion\", \"holds\": [1, 4]}, \"motion\": {\"F\": 64, \"fps0\": 30}, \"fixed\": {\"mode\": \"fixed\", \"holds\": [3, 3]}, \"fbOpts\": [\"按运动分（默认）\", \"固定机位 + 匀\", \"旧（待删）· 最\", \"旧（待删）· 手\", \"旧（待删）· 分\", \"旧（待删）· 全\"], \"sel\": [], \"end\": {\"dur\": 4.4, \"spark\": 4.4}, \"coolAbs\": true, \"twHz\": {\"def\": 0, \"on\": {\"at\": \"火花›亮度\", \"rand\": \"sparkBright\", \"vis\": true}, \"off\": {\"at\": \"火花›亮度\", \"rand\": \"sparkBright\", \"vis\": false}}}",
+  "sec": 1.7
+ },
+ {
+  "item": "X2",
+  "pass": true,
+  "why": "{\"牡丹\": {\"mod\": \"输出›直接调\", \"shown\": true, \"opts\": [\"seq\", \"unit\", \"dots\", \"off\"]}, \"选光点\": {\"so\": {\"pc\": \"dots\", \"mobile\": \"seq\"}, \"em\": [[\"L1_Dots\", true, \"soft_dot\"]], \"dotRow\": true, \"note\": \"PC：GPU 光点（约 90 颗，软圆点材质，没有贴图） · 手机：序列（纯图片）\", \"n\": 90}, \"引擎回放\": {\"pc\": \"dots\", \"mobile\": \"seq\", \"n\": 90, \"lit\": 90}, \"光点点灭\": {\"strobe\": {\"n\": 47, \"on\": 0.305, \"duty\": 0.3}, \"kiku\": {\"n\": 2, \"on\": null, \"duty\": 0.35}}}",
+  "sec": 4.8
+ },
+ {
+  "item": "N3",
+  "pass": true,
+  "why": "513 项面板参数：默认值、名字、发射器归属、规则表都对得上",
+  "sec": 0.8
+ },
+ {
+  "item": "R5",
+  "pass": true,
+  "why": "{\"defaults\": [0, 0, 1, 0, 0, 0], \"phys\": {\"v0\": 156.9, \"T\": 7.37, \"H\": 410, \"want\": 410, \"s1\": 107.2, \"vb\": 4}, \"lin\": {\"v0\": 106.5, \"s1\": 90.9}, \"glow\": [353.2, 353.1], \"gpu\": {\"est\": 800, \"raw\": 1435, \"cap\": 800, \"f\": 0.5576704426076864}, \"emit\": [\"SparksCoarse\", \"Embers\", \"HeadGlow\", \"SparkPops\", \"LaunchGlow\", \"LaunchSparks\"], \"tex\": [\"F\", \"M\"], \"cal\": [1.386, 1.498, 11.192], \"sk\": [0.007, 0.6504, 0.15], \"where\": \"星头›弹道\", \"panel\": {\"rtT\": false, \"rtVt\": true, \"info\": \"物理弹道：终端速度 64.6 m/s（按弹径 0.3 m 算） · 出膛 156\", \"dur\": 12.12}}",
+  "sec": 1.7
+ },
+ {
+  "item": "R6",
+  "pass": true,
+  "why": "{\"def\": {\"far\": 0, \"tex\": \"F,M\", \"nw\": true, \"em\": [\"SparksCoarse\", \"Embers\", \"HeadGlow\", \"SparkPops\", \"LaunchGlow\", \"LaunchSparks\"]}, \"far\": {\"tex\": \"F,M,C\", \"est\": 800, \"f\": 0.963, \"cls\": {\"F\": {\"R\": 4200, \"tex\": 4079.8, \"gpu\": 120.3, \"alive\": 144, \"budget\": 150}, \"M\": {\"R\": 1600, \"tex\": 1512.3, \"gpu\": 87.5, \"alive\": 193, \"budget\": 200}, \"C\": {\"R\": 300, \"tex\": 214.9, \"gpu\": 84.9, \"alive\": 289, \"budget\": 300}}}, \"cap\": {\"tex\": \"F,M,C\", \"est\": 400, \"f\": 0.481, \"cls\": {\"F\": {\"R\": 4200, \"tex\": 4139.6, \"gpu\": 60.2, \"alive\": 72, \"budget\": 150}, \"M\": {\"R\": 1600, \"tex\": 1556.1, \"gpu\": 43.8, \"alive\": 96, \"budget\": 200}, \"C\": {\"R\": 300, \"tex\": 257.4, \"gpu\": 42.5, \"alive\": 144, \"budget\": 300}}}, \"w\": [1, 1, 0.5, 0, 0], \"twAlt\": 3, \"disp\": {\"size\": [0.38, 2], \"light\": [1.7033, 1.7031]}, \"exp\": {\"em\": [\"RiseLoop\", \"TrailFar\", \"SparksFine\", \"SparksTwinkle\"], \"tex\": [\"loop\", \"cutoutLoop\", \"ramp\", \"far\", \"cutoutFar\"], \"sheets\": [\"Loop\", \"Far\"], \"nearComp\": 1.563, \"far\": {\"align\": \"Velocity\", \"delay\": 0.8, \"life\": 10.3651, \"size\": [3000, 43000, 1], \"loc\": [100, 0, 20000], \"vel\": [0, 0, 50], \"keys\": 65}}, \"keys\": {\"SparksFine\": [2, 23, 10, 12], \"SparksTwinkle\": [2, 23, 10, 12], \"SparksCoarse\": [2, 23, 10, 12], \"Embers\": [2, 23, 10, 12], \"HeadGlow\": [0, 0, 0, 7], \"SparkPops\": [2, 23, 10, 6], \"LaunchGlow\": [0, 0, 0, 4], \"LaunchSparks\": [0, 0, 0, 10]}, \"farKeys\": 7, \"farFade\": 7.53, \"where\": \"火花共用›贴图\", \"panel\": {\"rtFTex\": false, \"rtNearA0\": true, \"rtGpuC\": true, \"rtGpuDisp\": true}, \"layers\": {\"keys\": [\"near\", \"far\", \"SparksFine\", \"SparksTwinkle\", \"SparksCoarse\", \"Embers\", \"HeadGlow\", \"SparkPops\", \"LaunchGlow\", \"LaunchSparks\"], \"off\": true, \"hud\": [\"近段 15,782 + 远段 9,811\", \"近段 15,782 + 远段 0\", \"近段 0 + 远段 9,811\", \"近段 15,782 + 远段 9,811\"]}}",
+  "sec": 14.9
+ },
+ {
+  "item": "W1",
+  "pass": true,
+  "why": "{\"时间轴\": {\"tle\": 0, \"curves\": false, \"rows\": 2, \"opts\": [\"follow\", \"glue\"]}, \"精简布局\": {\"hid\": true, \"back\": true}, \"开关\": {\"d0\": 3.55, \"i0\": 1.28, \"s0\": 1.2, \"on\": {\"dur\": 3.75, \"ign2\": 1.48}, \"back\": {\"dur\": 3.55, \"ign2\": 1.28}, \"off\": {\"dur\": 3.55, \"ign2\": 1.28}}, \"派生\": {\"my\": true, \"from\": \"引菊 → 锦（橙色直线菊转金锦，尾缀3.0_A 主层）\", \"n0\": 2, \"n1\": 2, \"n2\": 3, \"sl\": 3.1, \"id\": \"fxmuwsg4ik\", \"links\": 1}, \"模板\": {\"n\": 1, \"id\": \"tmuwsg5e2\", \"type\": \"kiku\", \"inPicker\": true, \"tpl\": true, \"key\": \"tpl:tmuwsg5e2\", \"stars\": 293, \"want\": 293, \"del\": \"删除这个模板（删了 8 秒内能撤销）\"}, \"删除撤销\": {\"gone\": true, \"back\": true, \"g2\": true, \"b2\": true}, \"还原\": {\"a\": {\"sl\": 0.55, \"v0\": 170}, \"b\": {\"v0\": 150}, \"d\": {\"sl\": 0.55, \"v0\": 150}}, \"隐藏\": {\"hid\": true, \"back\": true}}",
+  "sec": 11.2
+ },
+ {
+  "item": "W2",
+  "pass": true,
+  "why": "{\"左栏\": {\"groups\": [\"review\", \"wip\", \"myfx\", \"mytpl\", \"types\", \"mtypes\", \"tools\"], \"passed\": [\"ef:jinmangju\", \"ef:trail_v5\"], \"inMy\": 2, \"first\": [\"ef:jinmangju\", \"ef:trail_v5\"], \"del\": 0}, \"出点\": {\"txt\": \"最后一批火花约 2.80 s 灭完，序列 2.83 s 盖得住（5.0 起不整体淡出，等火花自然灭完）。 出点在 2.83 s：序列时长 9.00 s 后面那段不导出 清除出点\", \"btn\": true, \"after\": 0}, \"时间轴\": {\"bake\": 9, \"end\": 7}, \"远段上移\": {\"z\": 102}}",
+  "sec": 3.7
+ },
+ {
+  "item": "W3",
+  "pass": true,
+  "why": "{\"20-01\": {\"id\": \"fxmuwsgbr1\", \"key\": \"my:fxmuwsgbr1\", \"gone\": true, \"n0\": 0, \"back\": true, \"n1\": 2, \"open\": \"my:fxmuwsgbr1\"}, \"20-02\": {\"a\": true, \"b\": true, \"gone\": true, \"btns\": 2}, \"20-04\": {\"before\": true, \"tpl\": false, \"upd\": false, \"key\": \"type:kiku\"}, \"20-03\": {\"n0\": 2, \"n1\": 1, \"n2\": 2, \"st\": 77, \"confirms\": 0}, \"19-C03\": {\"a\": 163, \"b\": 163}, \"19-C04\": {\"off\": true, \"a\": 157, \"b\": 157}, \"19-C01\": {\"err\": \"第 1 层「菊」按新参数烘焙失败，导出会拿旧贴图：先改参数或点「重试」\"}, \"19-C05\": {\"cm\": [1234, 1234], \"sc\": [1, 1]}, \"19-C02\": {\"n\": 1, \"max\": 0}, \"小修1\": {\"txt\": \"最后一批火花约 2.80 s 灭完，序列 9.00 s 盖得住（5.0 起不整体淡出，等火花自然灭完）。 贴图实际只烘到 2.73 s：2.73–9.00 s 全黑（最亮像素 < 2/255）没烘，时间轴也到这里为止。序列时长再加长也一样；要更长，调星的燃烧时间或火花寿命。\"}, \"小修2\": {\"draft\": true, \"stars\": 211}, \"小修3\": {\"ok\": false, \"errFlash\": true, \"bak\": true}, \"小修4\": {\"s\": 1, \"m\": 1, \"l\": 1}, \"小修5\": \"子花继承子弹速度（-1 = 默认：十字排布 0.25，其它 0.35）\"}",
+  "sec": 20.0
+ },
+ {
+  "item": "W4",
+  "pass": true,
+  "why": "{\"模块\": {\"星\": {\"real\": [\"生成\", \"形状\", \"初速\", \"受力\", \"寿命\", \"大小\", \"亮度\", \"点灭\", \"飘落\", \"蜂\"], \"empty\": [{\"ms\": [\"颜色\"], \"why\": \"：随本层颜色（见下方「本层颜色」）\"}, {\"ms\": [\"闪烁\"], \"why\": \"：见「亮度」的闪烁强度；点灭见「点灭」\"}], \"emptyDetails\": 0}, \"火花\": {\"real\": [\"生成\", \"初速\", \"受力\", \"寿命\", \"大小\", \"颜色\", \"亮度\", \"辉星\"], \"empty\": [{\"ms\": [\"形状\"], \"why\": \"：沿星体轨迹发射，无独立形状\"}, {\"ms\": [\"闪烁\"], \"why\": \"：见「亮度」的随机项（闪烁强度、闪烁频率）\"}], \"emptyDetails\": 0}, \"余烬\": {\"real\": [\"生成\", \"寿命\", \"大小\", \"亮度\"], \"empty\": [{\"ms\": [\"形状\", \"初速\", \"受力\", \"闪烁\"], \"why\": \"：同火花\"}, {\"ms\": [\"颜色\"], \"why\": \"：取出生时的火花温度，此后不再冷却\"}], \"emptyDetails\": 0}, \"分叉火花\": {\"real\": [\"生成\", \"初速\", \"受力\", \"寿命\", \"大小\", \"颜色\", \"亮度\"], \"empty\": [{\"ms\": [\"形状\"], \"why\": \"：自母火花的分叉点发射\"}, {\"ms\": [\"闪烁\"], \"why\": \"：同火花\"}], \"emptyDetails\": 0}, \"爆裂\": {\"real\": [\"生成\", \"形状\", \"初速\", \"寿命\", \"大小\", \"亮度\"], \"empty\": [{\"ms\": [\"受力\"], \"why\": \"：寿命极短，于出生位置静止发光\"}, {\"ms\": [\"颜色\"], \"why\": \"：随本层颜色\"}, {\"ms\": [\"闪烁\"], \"why\": \"：本身即单次闪光\"}], \"emptyDetails\": 0}, \"开花闪光\": {\"real\": [\"寿命\", \"大小\", \"亮度\", \"闪光\"], \"empty\": [{\"ms\": [\"生成\"], \"why\": \"：开花瞬间生成 1 次\"}, {\"ms\": [\"形状\", \"初速\", \"受力\"], \"why\": \"：开花点单次闪光，无位移\"}, {\"ms\": [\"颜色\"], \"why\": \"：随本层颜色\"}, {\"ms\": [\"闪烁\"], \"why\": \"：不适用\"}], \"emptyDetails\": 0}}, \"爆裂 / 开花闪光\": {\"n\": 840, \"sig\": 2, \"abs\": 5, \"cut\": 0.2, \"tau\": 0.05, \"flashSig\": 10}, \"开花闪光半径跟初速\": {\"row\": true, \"chain\": true, \"on\": true}, \"子花\": {\"n\": 720, \"sz\": 2.5, \"I\": 0.4}, \"着色器参数缺\": [], \"加发射器\": {\"btn\": true, \"on\": 1, \"tab\": true, \"sel\": true, \"vis\": true, \"mods\": [\"生成\", \"形状\", \"初速\", \"受力\", \"寿命\", \"大小\", \"颜色\", \"亮度\", \"闪烁\"]}, \"自定义 1 模拟\": {\"stars\": 150, \"dots\": 750, \"drawn\": 4, \"k7\": 750, \"k7sz\": 2.1718681511400497, \"curve\": [[0, 1], [0.5, 2], [1, 0]], \"mid\": 1.5}, \"曲线 / 去掉\": {\"row\": true, \"val\": \"0:1, 1:0.2\", \"keys\": \"2 个点：0 → 1，1 → 0.2\", \"off\": 0, \"tab\": false}, \"游戏内大小\": {\"same\": true, \"yon\": 360, \"d300\": 138.462, \"old300\": 360}}",
+  "sec": 4.1
+ },
+ {
+  "item": "W5",
+  "pass": true,
+  "why": "{\"曲线行\": {\"miss\": [], \"where\": {\"flashBrightCurve\": \"开花闪光›亮度\", \"flashSizeCurve\": \"开花闪光›大小\", \"branchBrightCurve\": \"分叉火花›亮度\", \"crackleSizeCurve\": \"爆裂›大小\", \"crackleBrightCurve\": \"爆裂›亮度\", \"branchSizeCurve\": \"分叉火花›大小\", \"starSizeCurve\": \"星›大小\", \"starBrightCurve\": \"星›亮度\", \"sparkSizeCurve\": \"火花›大小\", \"sparkBrightCurve\": \"火花›亮度\", \"emberBrightCurve\": \"余烬›亮度\", \"emberSizeCurve\": \"余烬›大小\", \"subSizeCurve\": \"子花›大小\", \"subBrightCurve\": \"子花›亮度\", \"x1SizeCurve\": \"自定义 1›大小\", \"x1BrightCurve\": \"自定义 1›亮度\", \"x2SizeCurve\": \"自定义 2›大小\", \"x2BrightCurve\": \"自定义 2›亮度\", \"rtFSizeCurve\": \"细火花›大小\", \"rtFBrightCurve\": \"细火花›亮度\", \"rtMSizeCurve\": \"中火花›大小\", \"rtMBrightCurve\": \"中火花›亮度\", \"rtCSizeCurve\": \"粗火花›大小\", \"rtCBrightCurve\": \"粗火花›亮度\", \"rtPopSizeCurve\": \"爆亮›大小\", \"rtPopBrightCurve\": \"爆亮›亮度\", \"rtLaunchSizeCurve\": \"发射口›闪光\", \"rtLaunchBrightCurve\": \"发射口›闪光\", \"rtLaunchSparkSizeCurve\": \"发射口›火花\", \"rtLaunchSparkBrightCurve\": \"发射口›火花\", \"rtGlowSizeCurve\": \"星头›光晕\", \"rtGlowBrightCurve\": \"星头›光晕\", \"rtESizeCurve\": \"落火›大小\", \"rtEBrightCurve\": \"落火›亮度\", \"rtSmokeSizeCurve\": \"烟带›大小\", \"rtSmokeBrightCurve\": \"烟带›亮度\"}, \"def\": []}, \"模拟\": {\"star\": [0.8488720705239823, 0.21221801763099557], \"crk\": [{\"I\": 0.07578958570957184, \"sz\": 1}, {\"I\": 0.15157917141914368, \"sz\": 3}]}, \"着色器缺\": []}",
+  "sec": 1.9
+ },
+ {
+  "item": "W6",
+  "pass": true,
+  "why": "{\"shown\": true, \"blocked\": true, \"cancelled\": true, \"dl\": 0, \"after\": {\"on\": false, \"hidden\": true}}",
+  "sec": 1.9
+ },
+ {
+  "item": "W7",
+  "pass": true,
+  "why": "{\"senrin.subKeep\": {\"want\": 0.35, \"ok\": true}, \"senrin.subSpeedJit\": {\"want\": 3, \"ok\": true}, \"senrin.subGrav\": {\"want\": 1, \"ok\": true}, \"senrin.subFlash\": {\"want\": 0.3, \"ok\": true}, \"senrin.flashR\": {\"want\": 4.27, \"ok\": true}, \"senrin.subSize\": {\"want\": 0.6, \"ok\": true}, \"senrin.subBright\": {\"want\": 1, \"ok\": true}, \"senrin.subFlashR\": {\"want\": 2.25, \"ok\": true}, \"senrin.subVt\": {\"want\": 20, \"ok\": true}, \"tailM.rtFadeFps\": {\"want\": 30, \"ok\": true}, \"tailM.rtVt\": {\"want\": 44.1, \"ok\": true}, \"sub\": true, \"kiku\": {\"pinchHidden\": true, \"tag\": true, \"btn\": \"旧（待删）▸ 1 项没用上\", \"open\": true, \"closed\": true, \"search\": true, \"inUse\": true}, \"kept\": [], \"changed\": []}",
+  "sec": 8.9
+ },
+ {
+  "item": "W8",
+  "pass": true,
+  "why": "{\"菊\": {\"name\": \"菊\", \"chips\": [\"还没导出\", \"花型模板\", \"原始\"], \"hidden\": false, \"ab\": \"\"}, \"改了\": {\"name\": \"菊\", \"chips\": [\"● 没保存\", \"还没导出\", \"花型模板\", \"原始\"], \"hidden\": false, \"ab\": \"贴图是旧的 · 按 B 烘\"}, \"导出后\": [\"● 没保存\", \"素材包 ✓\", \"花型模板\", \"原始\"], \"导出后又改\": [\"● 没保存\", \"素材包要重导\", \"花型模板\", \"原始\"], \"AI trail_v5\": [\"素材包 ✓\", \"AI · V5M\", \"原始\"]}",
+  "sec": 23.3
+ },
+ {
+  "item": "W9",
+  "pass": true,
+  "why": "{\"时间约束\": {\"b\": 2.5, \"a1\": {\"burn\": 4.3, \"stop\": 3.3, \"msg\": \"改「火花停止时刻」，跟着变了：燃烧时间 2.50 → 4.30 s、序列时长 3.85 → 5.65 s（时间先后不能乱：火花在燃烧期间、入点在出点前、序列盖住内容；要单独改，在时间轴上关掉「跟着走」「粘连」）\"}, \"a2\": {\"burn\": 1.25, \"stop\": 1.25, \"msg\": \"改「燃烧时间」，跟着变了：火花停止时刻 3.30 → 1.25 s、序列时长 5.65 → 3.15 s（时间先后不能乱：火花在燃烧期间、入点在出点前、序列盖住内容；要单独改，在时间轴上关掉「跟着走」「粘连」）\"}}, \"超出滑杆\": {\"v\": 100, \"max\": 40, \"over\": true, \"tip\": \"超出滑杆的常用范围（0–40），照样起作用；滑杆停在一头\", \"back\": false}, \"预览泛光\": {\"shown\": true, \"after\": 1, \"want\": 1, \"gen\": 0, \"label\": \"预览泛光（引擎里没有）\"}}",
+  "sec": 1.9
+ },
+ {
+  "item": "W10",
+  "pass": true,
+  "why": "{\"prompt\": 0, \"confirm\": 1, \"askText\": {\"open\": true, \"act\": \"改名\", \"v\": \"新名\"}, \"askConfirm\": {\"open\": true, \"y\": true, \"n\": false}, \"unbound\": [], \"toolsRows\": 16, \"?\": {\"open\": true, \"rows\": 16, \"n\": 16, \"closed\": true}, \"L\": [true, false, true], \"Esc 关菜单\": {\"menu\": false, \"side\": false, \"right\": false}, \"取消烘焙\": {\"s0\": 150, \"mid\": {\"baking\": true, \"btn\": true, \"ab\": \"烘焙中…\"}, \"after\": {\"baking\": false, \"same\": true, \"stale\": true, \"ab\": \"贴图是旧的 · 按 B 烘\", \"btn\": false}, \"idle\": {\"calls\": 0, \"baking\": false}, \"again\": {\"stale\": false, \"stars\": 154, \"want\": 154}}}",
+  "sec": 5.5
+ },
+ {
+  "item": "W11",
+  "pass": true,
+  "why": "{\"wrong\": [], \"notEmpty\": [], \"flash\": [{\"sz\": 13.5, \"I\": 24.662569046020508}, {\"sz\": 27, \"I\": 98.65027618408203}], \"shader\": [], \"same\": true, \"rt\": {\"SparksFine\": {\"size\": 2, \"col\": 0.779}, \"SparksMid\": {\"size\": 2, \"col\": 0.926}, \"SparksCoarse\": {\"size\": 2, \"col\": 0.853}, \"Embers\": {\"size\": 2, \"col\": 0.5}, \"HeadGlow\": {\"size\": 2, \"col\": 0.5}, \"SparkPops\": {\"size\": 2, \"col\": null}, \"LaunchGlow\": {\"size\": 2, \"col\": 0.5}, \"LaunchSparks\": {\"size\": 2, \"col\": 0.5}, \"Smoke\": {\"size\": 2, \"col\": 0.5}}, \"inert\": {\"fountain\": \"地面的喷口 / 灯芯亮点一直亮着，没有寿命；只有扇形、连发的彗星按「彗星燃烧」算寿命\", \"fan\": \"\"}}",
+  "sec": 2.0
+ },
+ {
+  "item": "W12",
+  "pass": true,
+  "why": "{\"菊\": {\"mname\": false, \"shown\": \"Kiku_01\", \"eff\": \"Kiku_01\", \"safe0\": \"Kiku_01\", \"deliv\": true, \"focus\": \"dvBase\", \"after\": {\"shown\": \"Kiku_Check_9\", \"safe\": \"Kiku_Check_9\", \"eff\": \"Kiku_Check_9\"}, \"reset\": {\"shown\": \"Kiku_01\", \"safe\": \"Kiku_01\"}}, \"V5\": {\"base\": true, \"name\": \"TrailS_01\"}}",
+  "sec": 22.4
+ },
+ {
+  "item": "W13",
+  "pass": true,
+  "why": "{\"mods\": [[\"直接调\", true], [\"算出来的\", true], [\"导出方案\", false], [\"帧\", false], [\"贴图\", false], [\"画质\", false], [\"曝光光晕\", false]], \"direct\": {\"rows\": [\"outPC\", \"outMobile\", \"cutIn\", \"cutOut\", \"specBox\", \"cellPad\", \"exposure\"], \"spec\": [\"x-texW\", \"x-texH\", \"x-cols\", \"x-rows\"]}, \"calc\": [\"outSummary\", \"outCell\", \"pageTarget\"], \"calcFixed\": [\"outSummary\", \"outCell\", \"pageTarget\", \"holdTicks\"], \"hold\": {\"linked\": true, \"gray\": true, \"shown\": 1, \"calc\": 1}, \"cellLabel\": \"自动：现在 512 px（贴图宽 ÷ 列数，至少 512）\", \"plan\": {\"auto\": 3, \"two\": 2, \"F0\": 44, \"F2\": 66}, \"burstSec\": {\"fixed\": \"不显示\", \"motion\": \"显示\", \"legacy\": false}, \"help\": \"合里「同一批星」的层（种子、星数、初速、终端速度相同）会联动，改一处几层一起变。\", \"cats\": {\"物理量\": 344, \"引擎字段\": 100, \"只读\": 8, \"预览设置\": 5, \"旧（待删）\": 65}, \"mig\": {\"shown\": true, \"text\": \"打开的是旧存档，系统按现在的规则改了 / 不再用这些（画面会和当时存的不一样）：「结尾」原来是「最后 0.3 s 整体淡出」，不再起作用：5.0 起没有这个选项，等火花自然灭完（4.7.0）；「冷却方式」原来是「按各自寿命」，不再起作用：5.0 起没有这个选项，按实际年龄冷却、老的先",
+  "sec": 3.4
+ },
+ {
+  "item": "W14",
+  "pass": true,
+  "why": "{\"入口缺\": [], \"1366×768\": [], \"1366×768 第一屏\": {\"菊 › 星\": {\"emit\": \"星\", \"mods\": 9, \"seen\": 9, \"open\": [\"生成\"], \"noSum\": [], \"rows\": 3, \"numX\": [1217], \"rangeX\": [1114]}, \"金锦 › 火花\": {\"emit\": \"火花\", \"mods\": 8, \"seen\": 6, \"open\": [\"生成\"], \"noSum\": [], \"rows\": 5, \"numX\": [1217], \"rangeX\": [1114]}, \"顶上\": \"金锦›火花\"}, \"1440×900\": [], \"1440×900 第一屏\": {\"菊 › 星\": {\"emit\": \"星\", \"mods\": 9, \"seen\": 9, \"open\": [\"生成\"], \"noSum\": [], \"rows\": 3, \"numX\": [1290], \"rangeX\": [1176]}, \"金锦 › 火花\": {\"emit\": \"火花\", \"mods\": 8, \"seen\": 8, \"open\": [\"生成\"], \"noSum\": [], \"rows\": 5, \"numX\": [1290], \"rangeX\": [1176]}, \"顶上\": \"金锦›火花\"}, \"1920×1080\": [], \"1920×1080 第一屏\": {\"菊 › 星\": {\"emit\": \"星\", \"mods\": 9, \"seen\": 9, \"open\": [\"生成\"], \"noSum\": [], \"rows\": 3, \"numX\": [1737], \"rangeX\": [1575]}, \"金锦 › 火花\": {\"emit\": \"火花\", \"mods\": 8, \"seen\": 8, \"open\": [\"生成\"], \"noSum\": [], \"rows\": 5, \"numX\": [1737], \"rangeX\": [1575]}, \"顶上\": \"金锦›火花\"}}",
+  "sec": 10.3
+ },
+ {
+  "item": "W15",
+  "pass": true,
+  "why": "{\"切走前\": {\"t\": 1.23, \"sel\": 1, \"tab\": \"火花\", \"solo\": 1, \"scroll\": 140, \"tools\": true}, \"工具页\": {\"tools\": true, \"params\": false, \"layers\": false, \"tab\": \"combo\", \"t\": 1.23}, \"切回来\": {\"t\": 1.23, \"sel\": 1, \"tab\": \"火花\", \"solo\": 1, \"scroll\": 140, \"params\": true}, \"1 定位\": {\"sel\": 1, \"scope\": \"金锦›火花\", \"solo\": -1, \"mute\": 0, \"sticky\": \"sticky\"}, \"2 改寿命\": {\"v0\": 2.8, \"v\": 3.2, \"layerP\": 3.2, \"st\": \"改过\", \"chg\": true, \"t\": 1.2, \"gen\": true, \"stale\": true, \"ab\": \"贴图是旧的 · 按 B 烘\"}, \"3 改颜色\": {\"inView\": true, \"sum\": \"本层颜色这一层所有发射器共用一条\", \"changed\": true, \"other\": true, \"backText\": \"← 回到 火花 › 颜色\", \"s0\": 40, \"s1\": 40, \"tab\": \"火花\"}, \"4 调接力\": {\"inEff\": true, \"d0\": 0, \"d\": 0.5, \"cell\": 0.5, \"b0\": 0, \"b1\": 4.43787, \"other\": true}, \"6 撤销一次\": {\"d\": 0, \"life\": 3.2, \"col\": \"#123456\"}, \"6 保存\": {\"id\": \"fxmuwsip7z\", \"life\": 3.2, \"d\": 0, \"col\": \"#123456\", \"n\": 2}, \"6 刷新重开\": {\"id\": \"fxmuwsip7z\", \"life\": 3.2, \"d\": 0, \"col\": \"#123456\", \"n\": 2}, \"等烘焙时改\": {\"armed0\": false, \"during\": true, \"armed\": true, \"after\": true}, \"撤销步数\": {\"两个参数紧挨着\": 2, \"拖动中途停 0.9 s\": 1, \"数值框回车\": 1}, \"撤销一次\": [{\"stars\": 1678, \"burn\": 6.25}, {\"stars\": 1678, \"burn\": 6.25}]}",
+  "sec": 22.4
+ },
+ {
+  "item": "W16",
+  "pass": true,
+  "why": "{\"1 选效果与图层\": {\"key\": \"ef:hiki_nishiki\", \"sel\": 1, \"scope\": \"金锦›火花\", \"solo\": -1, \"mute\": 0}, \"2 调参数\": {\"life\": 3.2, \"chg\": true, \"rr\": true, \"n\": 1, \"foot\": \"相对打开时改过 1 项\", \"stale\": true}, \"3 调色并返回\": {\"open\": true, \"inView\": true, \"sum\": \"本层颜色这一层所有发射器共用一条\", \"tab\": \"火花\", \"back\": true, \"changed\": true, \"other\": true}, \"4 调层延迟\": {\"d\": 0.5, \"other\": 0, \"cell\": 0.5, \"b0\": 0, \"b1\": 4.43787}, \"5 撤销 / 重做\": {\"撤销\": {\"d\": 0, \"life\": 3.2, \"col\": \"#123456\"}, \"重做\": {\"d\": 0.5, \"life\": 3.2, \"col\": \"#123456\"}}, \"6 保存\": {\"id\": \"fxmuwsj702\", \"life\": 3.2, \"d\": 0.5, \"col\": \"#123456\", \"n\": 2}, \"6 刷新重开\": {\"id\": \"fxmuwsj702\", \"life\": 3.2, \"d\": 0.5, \"col\": \"#123456\", \"n\": 2}, \"7 烘焙回放\": {\"view\": \"export\", \"stale\": false, \"layers\": [{\"baked\": true, \"old\": false}, {\"baked\": true, \"old\": false}], \"life\": 3.2, \"want\": 3.2}, \"8 导出时的提示\": [], \"8 导出 PC / 手机\": {\"status\": \"已导出组合素材包 Combo\", \"busy\": \"\", \"job\": false, \"idle\": true, \"dis\": false, \"files\": 10, \"pc\": true, \"mobile\": true, \"png\": 6, \"pcEm\": 3, \"mbEm\": 3, \"hiki\": true, \"nishiki\": true, \"life\": 3.2, \"want\": 3.2}}",
+  "sec": 11.5
+ },
+ {
+  "item": "W17",
+  "pass": true,
+  "why": "{\"master\": {\"list\": [\"自动（跟时间）\", \"第 1 张 · 星头\", \"第 1 张 · 尾迹\", \"第 2 张 · 星头\", \"第 2 张 · 尾迹\"], \"shown\": true, \"pick\": {\"hud\": \"第 2 张 · 尾迹贴图\", \"sheet\": \"p1t\", \"isTail\": true}, \"auto0\": \"p0h\", \"auto1\": \"p1h\", \"flow\": \"贴图流转 · 第 1 张 · 尾迹 · 第 10/64 帧 · R 通道 · 第\"}, \"emitset\": {\"list\": [\"自动（跟时间）\", \"循环层\", \"消散\", \"远段\"], \"before\": {\"hud\": \"远段贴图 4×4 · 4×4 格 · 6\", \"f\": -1}, \"mid\": {\"f\": 32, \"key\": \"far\"}}, \"single\": {\"shown\": false, \"list\": [\"自动（跟时间）\", \"序列\"]}}",
+  "sec": 2.7
+ },
+ {
+  "item": "W18",
+  "pass": true,
+  "why": "{\"where\": true, \"rows\": [\"尾长\", \"尾缀粗细\", \"尾缀散布\", \"星头大小\", \"火花亮度\", \"闪烁\", \"粗细随机\", \"亮肩\", \"泪滴星头\"], \"modOrder\": [\"规格\", \"环境\", \"玉体\", \"场景\", \"整体调整\"], \"sum0\": \"原样\", \"stored\": {\"adj\": 2, \"life\": 0.55, \"emb\": 3}, \"eff\": {\"life\": 1.1, \"emb\": 6, \"adj\": 1}, \"sim\": 1.1, \"measure\": [173.88, 180.63, 169.66, 172.74], \"end\": [3.05, 3.6], \"tail\": [4.4, 5.55], \"baked\": {\"life\": 1.1, \"adj\": 1}, \"live\": 1.1, \"lifeRow\": 0.55, \"sum1\": \"尾长 2.00×\", \"others\": {\"head\": [1, 2], \"size\": [0.35, 0.5249999999999999], \"spread\": [2.5, 1.25], \"bright\": [1, 2], \"tw\": [0.6, 1]}, \"dots\": [0.85, 1.7], \"undo\": 1, \"combo\": {\"l0\": 2, \"l1\": 1, \"live\": [2, 1, 1, 1], \"undo\": 1, \"fountain\": false, \"trailM\": false}}",
+  "sec": 32.8
+ },
+ {
+  "item": "W19",
+  "pass": true,
+  "why": "{\"pre\": {\"from\": 0, \"dur\": 0.3, \"s0\": 0.02, \"pivot\": null, \"cy\": -14.38, \"t0\": 0.3}, \"export\": {\"pivot\": [-0.5, -0.424], \"loc\": [0, 0, 0], \"notes\": \"入点前放大：出生后 0.3 s 停在第 0 帧、Size By Life 从 0.02 放大到 1（绕爆点：Pivot Offset 和没设入点时同一个，烟花实\", \"sizeByLife\": 1}, \"noCut\": [-0.5, -0.424], \"rect\": [-5, -15, 5, 1], \"hud\": \"导出效果 · 入点前：第 1 帧放大到 55%（绕爆点）· 入点 0.30 s\", \"mig\": {\"shown\": true, \"text\": \"打开的是旧存档，系统按现在的规则改了 / 不再用这些（画面会和当时存的不一样）：「入点前放大的中心」原来是「面片中心」，不再起作用：入点前放大一律绕爆点，和没设入点时一样（4.9.21）\"}}",
+  "sec": 224.0
+ }
+]

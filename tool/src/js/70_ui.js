@@ -639,7 +639,7 @@ function rowMatches(row, it, sec, q) {
 const SIZE_KEYS = { headSize: 1, sparkSize: 1, emberSize: 'sparkSize', subScale: 0 };
 function sizePxNote(k) {
   if (!(k in SIZE_KEYS)) return '';
-  const b = state.bake, m = b && b.meta, P = state.P; if (!m || !m.L || !(m.Ww > 0) || !(m.L.cellW > 0)) return '';
+  const b = state.bake, m = b && b.meta, P = fxP(state.P); if (!m || !m.L || !(m.Ww > 0) || !(m.L.cellW > 0)) return '';
   const mpp = m.Ww / m.L.cellW, v = SIZE_KEYS[k] === 'sparkSize' ? (+P.sparkSize || 0) * (+P.emberSize || 1) : +P[k];
   if (!(v > 0) || SIZE_KEYS[k] === 0) return '';
   return `<span class="ph-x">导出贴图上 1 像素 ≈ ${mpp < 0.1 ? mpp.toFixed(3) : mpp.toFixed(2)} m（面片 ${m.Ww.toFixed(0)} m ÷ 单格 ${Math.round(m.L.cellW)} 像素）：现在约 ${(v / mpp).toFixed(1)} 像素${v / mpp < 1 ? '（不到 1 像素：再调小主要是变暗）' : ''}</span>`;
@@ -942,6 +942,9 @@ function modSummaryText(d) {
   const rows = [...d.children].filter(r => r._lab != null && r._applies && !r._randOf && !r.hidden && !(r._legacy && !legacyInUse(Array.isArray(r._it) ? r._it[0] : r._it.sel, state.P)));
   const vals = rows.filter(r => !r.classList.contains('curvef'));
   if (!vals.length) return d._colorLink ? '随本层颜色' : rows.length ? '曲线' : '';
+  // 4.9.21 效果 › 整体调整：只写不是原样的几项（倍数 ≠ 1，粗细随机 / 亮肩 / 泪滴星头 ≠ 0）；都是原样写「原样」
+  if (d._mod === '整体调整') { const nd = vals.filter(r => { const k = Array.isArray(r._it) ? r._it[0] : r._it.sel, v = state.P[k] == null ? (/^adj/.test(k) ? 1 : 0) : +state.P[k]; return Math.abs(v - (/^adj/.test(k) ? 1 : 0)) > 1e-9; });
+    return nd.length ? nd.slice(0, 3).map(r => `${r._lab} ${rowValText(r)}`).join(' · ') + (nd.length > 3 ? ` 等 ${nd.length} 项` : '') : '原样'; }
   const v0 = vals[0], on = vals.slice(1).filter(r => !r._inert);
   const pre = d._colorLink ? '随本层颜色' : '';
   // 功能模块（闪烁、点灭、辉星、蜂……不是 9 个标准模块里的「生成 / 寿命 / 大小」这些）第一项是 0、别的都不起作用 → 「未启用」

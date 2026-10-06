@@ -371,6 +371,7 @@ function trackStarEstimate(P) { const carrier = P.type === 'senrin' || P.type ==
 // 4.2.21 同一份参数的星轨道共用（实时模拟、烘焙、收紧以前各建一份）：按参数内容记，引用计数；没人用了留最近 1 份备用（切回来不用重算）
 const TRACK_CACHE = new Map();
 function buildTrack(P) {
+  P = fxP(P);     // 4.9.21 效果 › 整体调整（全是 1 时原样）
   let key = null; try { key = JSON.stringify({ ...P, engine: 'gpu' }) + '|' + MAX_TEX; } catch (e) { }
   const c = key && TRACK_CACHE.get(key);
   if (c && !gl.isContextLost()) { c.refs++; return c.tr; }

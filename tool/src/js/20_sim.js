@@ -215,6 +215,7 @@ function exSlotsOf(P) {
 }
 class Sim {
   constructor(P) {
+    P = fxP(P);     // 4.9.21 效果 › 整体调整（全是 1 时原样）
     this.P = P; this.fam = familyOf(P.type); this.rng = new RNG(P.seed); this.rr = new RNG(P.seed + 9973);
     this.t = 0; this.stars = []; this.all = []; this.noSparks = P.engine === 'gpu';
     const big = P.type === 'kamuro' || P.type === 'yanagi' || P.type === 'palm';

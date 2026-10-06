@@ -25,8 +25,9 @@ function fwlMaster(name, b, M, mobile) {
     // 入点前放大（用户 2026-10-02 选 B）：发射器从「第一次看得见」出生，前 pu 段寿命停在第 0 帧、Size By Life 从小放大到 1，之后照常
     const pre = i === 0 && m.pre && !m.zoom ? m.pre : null, life = m.duration + (pre ? pre.dur : 0), pu = pre ? pre.dur / life : 0;
     // 4.3（渲染基础问题 D8）：固定取景的爆点对齐改用 Pivot Offset（爆点在贴图里的位置），不再把面片往上挪 cy：
-    // 面片总是面向相机，挪 InitialLocation Z 在仰视时爆点会偏 cy(1 − cosθ)，多层 cy 不同就错位。入点前放大选「绕面片中心」时照旧（绕中心放大要中心在粒子上）。
-    const pivot = pre ? pre.pivot : !m.zoom && Math.abs(+m.cy || 0) > 1e-4;
+    // 面片总是面向相机，挪 InitialLocation Z 在仰视时爆点会偏 cy(1 − cosθ)，多层 cy 不同就错位。
+    // 4.9.21（用户 10-06 21:51）：入点前放大也一律绕爆点（以前缺省绕面片中心：面片中心在爆点下面，花小时整朵偏下、放大时往上走）
+    const pivot = !m.zoom && Math.abs(+m.cy || 0) > 1e-4;
     const mods = [
       { m: 'Lifetime', Lifetime: { const: r4(life) } },
       { m: 'InitialSize', StartSize: { const: [r1(m.Ww * 100), r1(m.Wh * 100), 1] } },
@@ -43,7 +44,7 @@ function fwlMaster(name, b, M, mobile) {
       required: { screen_alignment: 'Rectangle', duration_s: r4(life), loops: 1, delay_s: r4(pre ? pre.from : m.t0 || 0), cutout: 'cutout' + seg, max_draw_count: 1,
         ...(pivot ? { pivot_offset: [-0.5, r4(-0.5 - m.cy / m.Wh)] } : {}) },
       spawn: { rate: { const: 0 }, bursts: [[0, 1]] }, modules: mods,
-      ...(pre ? { notes: [`入点前放大：出生后 ${r4(pre.dur)} s 停在第 0 帧、Size By Life 从 ${r4(pre.keys[0][1])} 放大到 1（${pivot ? '绕爆点：Pivot Offset，未经 UE 验证' : '绕面片中心'}），之后从入点 ${r4(m.t0)} s 照常播`] }
+      ...(pre ? { notes: [`入点前放大：出生后 ${r4(pre.dur)} s 停在第 0 帧、Size By Life 从 ${r4(pre.keys[0][1])} 放大到 1（绕爆点${pivot ? '：Pivot Offset 和没设入点时同一个，烟花实播对齐未经 UE 验证' : '：爆点就在面片中心'}），之后从入点 ${r4(m.t0)} s 照常播`] }
         : pivot ? { notes: ['固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 ' + r1(m.cy) + ' m），仰视时也对得上；未经 UE 验证'] } : {})
     });
     if (s.tail) { const e0 = emitters[emitters.length - 1];

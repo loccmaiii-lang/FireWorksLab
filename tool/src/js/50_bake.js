@@ -5,6 +5,7 @@
 
 // 渲染器：draw(ts, view, ppm, w, tw) 把星头画进 R、火花画进 G；ts 为绝对时间
 function makeRenderer(P, kind) {
+  P = fxP(P);     // 4.9.21 效果 › 整体调整（全是 1 时原样）
   const gpu = P.engine === 'gpu';
   if (kind === 'loop' || kind === 'riseLoop') {
     const E = buildEmitter(P), rl = kind === 'riseLoop';
@@ -139,7 +140,7 @@ function fitGrid(P, box) {
   return best ? { ...P, cols: best.c, rows: best.r } : P;
 }
 // 4.3（H2）：加上第二段（afterBurn，按随机的上限），以前第二段长的层导出单束会被截掉
-function unitDuration(P) { return +(P.burn + (P.ignDelay || 0) + (+P.afterBurn > 0 ? +P.afterBurn * (1 + (+P.afterJit || 0) / 100) : 0) + P.sparkLife * 1.6 + 0.1).toFixed(3); }
+function unitDuration(P) { return +(P.burn + (P.ignDelay || 0) + (+P.afterBurn > 0 ? +P.afterBurn * (1 + (+P.afterJit || 0) / 100) : 0) + fxv(P, 'sparkLife') * 1.6 + 0.1).toFixed(3); }
 function loopPlan(P, box, Tp) {
   const L = layoutOf(P), a = L.cellW / L.cellH;
   const W0 = 2 * Math.max(-box[0], box[1]), H0 = box[3] - box[2];
@@ -596,7 +597,7 @@ function bakeKind(P) {
 function unitAllowed(P) { return familyOf(P.type) === 'aerial' && !['senrin', 'crossette', 'hachi'].includes(P.type) && (P.pattern === 'sphere' || P.pattern === 'half'); }
 async function bake(P, scale, onProg) {
   if (P.zoom === 'tight') P = { ...P, zoom: 'on' };   // 紧凑取景已禁用（引擎里会抖）
-  P = { ...P };
+  P = { ...fxP(P) };     // 4.9.21 整体调整乘在这里：烘焙结果 b.P 记的是乘完的数（导出说明和贴图对得上）
   switch (bakeKind(P)) {
     case 'loop': return bakeLoop(P, scale, onProg);
     case 'riseLoop': return bakeRiseLoop(P, scale, onProg);
@@ -622,7 +623,7 @@ function preRollOf(P, fm, t0) {
   const keys = []; for (let i = 0; i <= 8; i++) { const u = i / 8, t = from + u * (t0 - from), raw = clamp(rAt(t) / rIn, 0, 1);
     const v = +P.preScale0 > 0 ? s0 + (1 - s0) * clamp((rAt(t) - r0) / Math.max(1e-6, rIn - r0), 0, 1) : Math.max(s0, raw); keys.push([u, +Math.min(1, v).toFixed(4)]); }
   keys[keys.length - 1][1] = 1;
-  return { from, dur: t0 - from, keys, s0, pivot: +P.prePivot === 1 ? 1 : 0 };
+  return { from, dur: t0 - from, keys, s0 };     // 4.9.21（用户 10-06 21:51 选「一律绕爆点」）：一律绕爆点放大，没有「面片中心」可选
 }
 function leadOf(fm) { const q = fm.stat.find(x => x.vis > 0); return q ? Math.max(0, q.t - 0.05) : 0; }
 async function bakeMasterLead(P, scale, onProg) {

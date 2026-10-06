@@ -112,6 +112,7 @@ function dotVisRun(P, sub) {
 function dotsCount(P) { return +P.headBright > 0 ? Math.round((+P.stars || 0) * (P.keepFrac != null ? clamp(+P.keepFrac, 0, 1) : 1)) : 0; }
 // L.dotSize：光点直径 × 炭头大小（默认 1）；L.dotBright：光点亮度倍数（默认 1）——层页头「导出方案」选光点时可调（XD2：以前 × 1.7 偏大）
 function dotsES(L, P, M, fm) {
+  P = fxP(P);     // 4.9.21 整体调整（星头大小）
   const v = dotVis(P), r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1, seed = ((+P.seed || 1) * 31 + 7) | 0;
   const rl = [M.ramp2, M.ramp3].filter(Boolean).map(hexToLin), rc = rl.length ? [0, 1, 2].map(j => rl.reduce((a, c) => a + c[j], 0) / rl.length) : [1, 1, 1];
   const sz = Math.max(0.05, (L.dotSize > 0 ? +L.dotSize : 1) * (+P.headSize || 1) * sc), gain = intOr1(M.headInt) * intOr1(P.headBright) * (L.dotBright > 0 ? +L.dotBright : 1);

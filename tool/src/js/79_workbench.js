@@ -66,7 +66,7 @@ function outNote(L, e) {
   if (o.pc === 'off' && o.mobile === 'off') return '两个平台都不出这一层（画面里照样看得到，导出时跳过）';
   if (o.pc === 'unit' && P && !unitAllowed(P)) w.push('这种花型 / 图案不能出单束（千轮、分裂、蜂、非球形图案），导出时 PC 按序列出');
   // XU1 试导（引菊 → 锦的锦层）：单束的尾巴是直的、沿速度方向；星下垂以后速度朝下，长尾巴都指向花心上方同一点（线性阻力的几何性质），后段像辐条。长尾、下垂多的层用序列
-  if (o.pc === 'unit' && P && unitAllowed(P) && (['kamuro', 'yanagi'].includes(P.type) || +P.emberFrac > 0 || (+P.sparkLife || 0) * Math.max(1, +P.sparkLifeEnd || 1) > 1.2 || (+P.burn || 0) > 4))
+  if (o.pc === 'unit' && P && unitAllowed(P) && (['kamuro', 'yanagi'].includes(P.type) || +P.emberFrac > 0 || (fxv(P, 'sparkLife') || 0) * Math.max(1, +P.sparkLifeEnd || 1) > 1.2 || (+P.burn || 0) > 4))
     w.push('这一层尾迹长 / 烧得久（锦冠、柳、余烬这类）：单束的尾迹是沿速度的直线，下垂以后会都指向花心上方、像辐条；这种层建议用序列');
   if (o.pc === 'dots' && P) {
     if (familyOf(P.type) !== 'aerial') w.push('这种花型不是礼花，光点没法表达，PC 请用序列');
@@ -487,6 +487,7 @@ function phasesOf(P) {
 }
 // 这一层最后看得见的时刻（估算）：星头燃尽、火花 / 光丝寿命走完。拖时刻时序列时长跟着平移这么多（用户 16:22 第 4 条）
 function layerEndOf(P) {
+  P = fxP(P);     // 4.9.21 整体调整（尾长）
   const ign = +P.ignDelay || 0, head = ign + (+P.burn || 0) + (+P.afterBurn > 0 ? +P.afterBurn : 0);
   const life = (+P.sparkLife || 0) * Math.max(1, +P.sparkLifeEnd || 1);
   const spark = +P.sparkRate > 0 ? (+P.sparkStop > 0 ? ign + +P.sparkStop : head) + life : 0;
@@ -782,11 +783,11 @@ function migNotify() {
   const hit = MIG_LOG.filter(x => open.has(x.P)); MIG_LOG.length = 0;
   if (!hit.length) return;
   const g = new Map(); for (const x of hit) { const key = x.k + '|' + x.why; if (!g.has(key)) g.set(key, { ...x, n: 0 }); g.get(key).n++; }
-  const NM = { endMode: '结尾', coolMode: '冷却方式', engine: '模拟内核', cols: '列数', rows: '行数', zoom: '面片取景', exposure: '贴图曝光', trHeadExpo: '星头曝光', headBright: '星头亮度', frameMode: '取帧方式' };
+  const NM = { endMode: '结尾', coolMode: '冷却方式', engine: '模拟内核', cols: '列数', rows: '行数', zoom: '面片取景', exposure: '贴图曝光', trHeadExpo: '星头曝光', headBright: '星头亮度', frameMode: '取帧方式', prePivot: '入点前放大的中心' };
   const nm = k => NM[k] || ((typeof PNAMES !== 'undefined' ? PNAMES : []).find(r => r.key === k) || {}).cn || k;
   // 4.9.7（对话框23 参数栏交互第 9 条）：值也写中文（以前写「存的是 fade」「存的是 0」这种内部值）
   const VAL = { endMode: { fade: '最后 0.3 s 整体淡出', natural: '等火花自然灭完', cut: '到序列时长直接切' }, coolMode: { 0: '按各自寿命', 1: '按实际年龄' }, engine: { cpu: 'CPU', gpu: 'GPU' },
-    zoom: { off: '固定大小', on: 'Zoom（随开花放大）', tight: '紧凑取景' }, frameMode: { content: '按画面变化', auto: '自动（按运动快慢）', uniform: '均匀', tick30: '30 fps（自动分段）' } };
+    zoom: { off: '固定大小', on: 'Zoom（随开花放大）', tight: '紧凑取景' }, frameMode: { content: '按画面变化', auto: '自动（按运动快慢）', uniform: '均匀', tick30: '30 fps（自动分段）' }, prePivot: { 0: '面片中心', 1: '爆点' } };
   const selLabel = (k, v) => { for (const sec of (typeof SCHEMA !== 'undefined' ? SCHEMA : [])) for (const it of sec.items) if (it.sel === k && it.options) { const o = it.options.find(o => String(o[0]) === String(v)); if (o) return splitLab(o[1])[0]; } return null; };
   const unitOf = k => { for (const sec of (typeof SCHEMA !== 'undefined' ? SCHEMA : [])) for (const it of sec.items) if (Array.isArray(it) && it[0] === k) return it[2] || ''; return ''; };
   const f = (k, v) => { if (v == null || v === '') return '空'; const t = VAL[k] && VAL[k][String(v)] != null ? VAL[k][String(v)] : selLabel(k, v); if (t != null) return `「${t}」`; if (typeof v === 'number' || isFinite(+v)) { const u = unitOf(k); return +(+v).toFixed(4) + (u && u !== '1' ? ' ' + u : ''); } return `「${String(v)}」`; };

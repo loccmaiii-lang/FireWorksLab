@@ -9,6 +9,7 @@ function tailShapeOf(P) {
 // 每次给一份拷贝（调用方改了也不会污染缓存）。
 const MEASURE_CACHE = new Map();
 function measure(P) {
+  P = fxP(P);     // 4.9.21 效果 › 整体调整（全是 1 时原样）
   let key = null; try { key = JSON.stringify(P); } catch (e) { }
   const c = key && MEASURE_CACHE.get(key);
   if (c) { MEASURE_CACHE.delete(key); MEASURE_CACHE.set(key, c); return structuredClone(c); }
@@ -111,6 +112,7 @@ function layoutOf(P) { const per = P.cols * P.rows; return { cols: P.cols, rows:
 // 每一帧的烘焙时刻取「曲线值 = 帧号 + 0.5」的时刻，引擎取整后正好显示这一帧
 // a、b：分段烘焙时只取 [a, b] 这一段（长时母版分成开花段与下垂段）
 function plan(P, fm0, ta = 0, tb = P.duration) {
+  P = fxP(P);     // 4.9.21 效果 › 整体调整（全是 1 时原样）
   return usesTickPlan40(P)
     ? plan40(P,fm0,ta,tb) : planLegacy(P,fm0,ta,tb);
 }

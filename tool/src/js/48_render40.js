@@ -79,6 +79,7 @@ function renderCell40(P, pl, R, t, samples, cell, view = frameView40(pl,t)) {
   return window;
 }
 function displayPlan40(P) {
+  P=fxP(P);
   if (familyOf(P.type)!=='ground') return plan(P,measure(P));
   const R=makeRenderer(P,'loop');
   try {
@@ -119,7 +120,7 @@ function liveRenderer40(slot,P) {
   return slot.R40;
 }
 function renderLive40() {
-  const P=state.P, slot=liveSlot('A40'); prepSlot(slot,P,state.gen);
+  const P=fxP(state.P), slot=liveSlot('A40'); prepSlot(slot,P,state.gen);     // 4.9.21 整体调整
   const R=liveRenderer40(slot,P), b=previewBake();
   const pl=b && state.bakeGen===state.gen && ['master','segments','loop'].includes(b.form) ? segAt(b,state.t).meta : slot.plan40;
   const q=qualityOf(P), L=state.platform==='mobile' && !b?layoutOf(mobileParams(P)):pl.L;
@@ -151,7 +152,7 @@ function renderLive40() {
 // 一个配方只有一个固定曝光（不随帧变）；目标默认.96，可降低以保留亮部。采样和分位值不保证所有像素不饱和。
 const AUTO_EXPO40 = { fracs: [.02, .04, .07, .1, .15, .2, .3, .45, .6, .75], target: .96, pct: 99.8 };   // 开头几帧也要量（2026-10-02：只量 10% 以后，球形B 第 1 层开花那几帧过曝 3.8%）
 async function autoExposure40(P0) {
-  const P={...derive({...P0}),flash:0,subFlash:0}, pl=displayPlan40(P), q=qualityOf(P), w=pl.L.cellW, h=pl.L.cellH;
+  const P={...derive({...fxP(P0)}),flash:0,subFlash:0}, pl=displayPlan40(P), q=qualityOf(P), w=pl.L.cellW, h=pl.L.cellH;
   const R=makeRenderer(P,familyOf(P.type)==='ground'?'loop':'burst'), span=familyOf(P.type)==='ground'?(P.loopT||P.duration):Math.min(P.duration,pl.duration||P.duration);
   gl.activeTexture(gl.TEXTURE0);
   let samples=null, cell=null, best=null; const per=[];
@@ -178,7 +179,7 @@ async function suggestExposure40() {
   } finally { state.stillBusy=false; }
 }
 async function renderStills40(P0,M0,opt) {
-  const P=derive({...P0}), M=normalizeM(M0||{},P.type), pl=opt.plan||displayPlan40(P);
+  const P=derive({...fxP(P0)}), M=normalizeM(M0||{},P.type), pl=opt.plan||displayPlan40(P);
   const px=opt.px||pl.L.cellW, q=qualityOf(P), R=makeRenderer(P,familyOf(P.type)==='ground'?'loop':'burst');
   const saved={hdr:hdrT,rg:rgT,mode:state.ref.mode,expo:state.expo,busy:state.stillBusy};
   state.stillBusy=true; await nextTick();

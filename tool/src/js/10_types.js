@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.9.20';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）
+const VERSION = '4.9.21';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -77,7 +77,7 @@ const BASE = {
   // 星效果
   ignDelay: 0, ignJit: 10, ignSeed: 0, keepFrac: 1, afterBurn: 0, afterJit: 15, headDim: 1, headDimUntil: 0,
   emberFrac: 0, emberLife: 3, emberBright: 0.1, emberFollow: 0, emberSize: 1, emberAll: 0, emberEnd: 0,
-  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, tailJit: 0, tailShoulder: 0, tailWidth: 1, tailPinchHead: 0, tailPinchTail: 0, tailBellyAt: 0.45, headTear: 0, tailDiffuse: 0, tailDiffuseScale: 20, sparkRise: 0, starBright: 0, tailHaze: 0, tailHazeR: 6, frameCount: 24, outPack: 'grid', outCell: 0, cutIn: 0, cutOut: 0, preRoll: 1, preFrom: -1, visTo: 0, preScale0: 0, prePivot: 0, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
+  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, tailJit: 0, tailShoulder: 0, tailWidth: 1, tailPinchHead: 0, tailPinchTail: 0, tailBellyAt: 0.45, headTear: 0, tailDiffuse: 0, tailDiffuseScale: 20, sparkRise: 0, starBright: 0, tailHaze: 0, tailHazeR: 6, frameCount: 24, outPack: 'grid', outCell: 0, cutIn: 0, cutOut: 0, preRoll: 1, preFrom: -1, visTo: 0, preScale0: 0, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
   strobeHz: 0, strobeDuty: 0.35, strobeStart: 0.4, glitter: 0, glitterDelay: 0.25,
   crackle: 0, crackleDelay: 0.3, crackleR: 3.5, crackleV: 0, branch: 0, branchAt: 0.45, flutter: 0, flutterHz: 0.7,
   // 上升
@@ -140,8 +140,28 @@ const BASE = {
   // 4.9.4（交互宪章 5「所有发射器的按寿命曲线」，用户 10-06 07:56）：余烬 / 分叉火花 / 开花闪光的大小，升空尾缀 RT6 各粒子发射器的大小 / 亮度；空 = 不乘（逐像素不变）
   emberSizeCurve: '', branchSizeCurve: '', flashSizeCurve: '', rtFSizeCurve: '', rtFBrightCurve: '', rtMSizeCurve: '', rtMBrightCurve: '', rtCSizeCurve: '',
   rtCBrightCurve: '', rtESizeCurve: '', rtEBrightCurve: '', rtPopSizeCurve: '', rtPopBrightCurve: '', rtSmokeSizeCurve: '', rtSmokeBrightCurve: '', rtLaunchSizeCurve: '',
-  rtLaunchBrightCurve: '', rtLaunchSparkSizeCurve: '', rtLaunchSparkBrightCurve: '', rtGlowSizeCurve: '', rtGlowBrightCurve: ''
+  rtLaunchBrightCurve: '', rtLaunchSparkSizeCurve: '', rtLaunchSparkBrightCurve: '', rtGlowSizeCurve: '', rtGlowBrightCurve: '',
+  // 4.9.21 效果 › 整体调整（用户 10-06 21:51「就按照之前的全局风格帮我加回去，放在效果层里，类似一个最后的全局调整」，每层一份）：1 = 原样
+  adjTailLen: 1, adjSparkSize: 1, adjSpread: 1, adjHeadSize: 1, adjSparkBright: 1, adjTwinkle: 1
 };
+// 4.9.21 整体调整：照 4.1.1 全局风格层（62_style.js styledP）的 6 个倍数，叠在最后——存的火花寿命等原值不动，模拟 / 烘焙 / 导出前才乘（fxP）。
+// 只管空中花型；不管自定义发射器。全是 1 时返回原对象（逐像素不变）。乘完的那份把倍数写回 1，再调一次 fxP 不会再乘（烘焙结果 b.P 就是这份）。
+const ADJ_DEF = [['adjTailLen', ['sparkLife', 'emberLife']], ['adjSparkSize', ['sparkSize']], ['adjSpread', ['sparkSpread']], ['adjHeadSize', ['headSize']], ['adjSparkBright', ['sparkBright']], ['adjTwinkle', ['twinkle']]];
+const adjOf = (P, k) => { const v = P[k]; return v == null || v === '' || !(+v >= 0) ? 1 : +v; };
+const adjNeutral = P => ADJ_DEF.every(([k]) => adjOf(P, k) === 1);
+const FX_CACHE = new WeakMap();
+function fxP(P) {
+  if (!P || typeof P !== 'object' || adjNeutral(P) || familyOf(P.type) !== 'aerial') return P;
+  let sig = ''; try { sig = JSON.stringify(P); } catch (e) { }
+  const c = FX_CACHE.get(P); if (c && c.sig === sig) return c.out;     // 同一份参数没变 → 同一个对象（实时模拟按对象判断要不要重建）
+  const o = { ...P };
+  for (const [k, ks] of ADJ_DEF) { const a = adjOf(P, k); o[k] = 1; if (a === 1) continue;
+    for (const q of ks) { const v = P[q] != null && P[q] !== '' ? +P[q] : BASE[q]; if (v != null && isFinite(v)) o[q] = v * a; } }
+  if (adjOf(P, 'adjTwinkle') !== 1 && o.twinkle > 1) o.twinkle = 1;     // 闪烁 = 亮度 ×（1 ± 这个数），超过 1 会出负亮度
+  FX_CACHE.set(P, { sig, out: o }); return o;
+}
+// 单个量乘完是多少（显示用，不建整份）
+function fxv(P, q) { const d = ADJ_DEF.find(x => x[1].includes(q)), v = +P[q]; if (!d || familyOf(P.type) !== 'aerial') return v; const r = v * adjOf(P, d[0]); return q === 'twinkle' ? Math.min(1, r) : r; }
 const RAMP_POS = [0, 0.3, 0.65, 1];
 // 颜色：stages = [[时刻 s, 颜色], …]，最多 5 段；xw = 变色过渡时长
 const MAT_BASE = { stages: [[0, '#ffffff']], xw: 0.08, ramp0: '#000000', ramp1: '#7a1e04', ramp2: '#ffa53a', ramp3: '#fff3dc', headInt: 1, tailInt: 1 };
@@ -289,6 +309,8 @@ function migrate37(P, ...given) {      // given[0]：原始存档的版本（显
   if (P && P.engine != null) migSet(P, 'engine', 'gpu', '只剩 GPU 模拟内核（4.3.2）'); else if (P) P.engine = 'gpu';      // 4.3.2（H12）：只剩 GPU 模拟内核；存档里的 'cpu' 一律换成 GPU
   // 4.7.0 起一套物理：存档里写的「结尾整体淡出」「冷却按各自寿命」不再起作用（键留着，画面按新规则）
   if (P && familyOf(P.type) === 'aerial') { if (P.endMode === 'fade') migIgnored(P, 'endMode', '5.0 起没有这个选项，等火花自然灭完（4.7.0）'); if (P.coolMode != null && +P.coolMode === 0) migIgnored(P, 'coolMode', '5.0 起没有这个选项，按实际年龄冷却、老的先暗（4.7.0）'); }
+  // 4.9.21（用户 10-06 21:51 选「一律绕爆点」）：「放大的中心」删了，入点前放大一律绕爆点；存的是「面片中心」（缺省）又真的在放大的，打开时提示
+  if (P && 'prePivot' in P) { if (familyOf(P.type) === 'aerial' && +P.cutIn > 0 && +P.preRoll !== 0 && P.zoom !== 'on' && +P.prePivot !== 1) migIgnored(P, 'prePivot', '入点前放大一律绕爆点，和没设入点时一样（4.9.21）'); delete P.prePivot; }
   if (!P || +srcVer >= 40) { if (P) P.renderVer = 40; return P; }
   const fam = familyOf(P.type), c = CAL40[P.type];
   if (fam === 'aerial') {
@@ -531,7 +553,16 @@ const SCHEMA = [
     { curve: 'emberBrightCurve', label: '余烬亮度随寿命', show: P => isAir(P) && P.emberFrac > 0 },     // 4.6.0（5.0 第 1 步）
     { curve: 'emberSizeCurve', label: '余烬大小随寿命', show: P => isAir(P) && P.emberFrac > 0 }     // 4.6.0+（5.0）
   ] },
-  { sec: '尾迹外形', show: P => isSeq(P) && familyOf(P.type) === 'aerial', hint: '每个效果（多层时每一层）自己的外形量，0 = 原样，不影响别的效果。尾长、尾缀粗细、星头大小、亮度、闪烁就是上面的「火花寿命」「尾缀粗细（散布）」「颗粒大小」「星头大小」「火花亮度」「火花闪烁」。', items: [
+  // 4.9.21（用户 10-06 21:51「就按照之前的全局风格帮我加回去，放在效果层里，类似一个最后的全局调整」，每层一份）：面板在「效果 › 整体调整」，粗细随机 / 亮肩 / 泪滴星头（上一节）也挪过去
+  { sec: '整体调整', show: P => isSeq(P) && familyOf(P.type) === 'aerial', hint: '最后的整体调整（照 4.1.1 全局风格层）：这一层的火花、余烬、星头一起乘，1 = 原样。下面火花、星里的数还是存的原值，模拟和导出前才乘。', items: [
+    ['adjTailLen', '尾长（火花寿命、余烬寿命一起乘）', '×', 0.3, 3, 0.01],
+    ['adjSparkSize', '尾缀粗细（火花大小乘；余烬、分叉火花跟着变）', '×', 0.3, 3, 0.01],
+    ['adjSpread', '尾缀散布（火花速度随机乘：尾迹更宽、更松）', '×', 0.3, 3, 0.01],
+    ['adjHeadSize', '星头大小（乘）', '×', 0.3, 3, 0.01],
+    ['adjSparkBright', '火花亮度（乘，含余烬）', '×', 0.3, 3, 0.01],
+    ['adjTwinkle', '闪烁（火花闪烁乘，乘完最多到 1）', '×', 0, 3, 0.01]
+  ] },
+  { sec: '尾迹外形', show: P => isSeq(P) && familyOf(P.type) === 'aerial', hint: '每个效果（多层时每一层）自己的外形量，0 = 原样，不影响别的效果。粗细随机、亮肩、泪滴星头在「效果 › 整体调整」（4.9.21）。', items: [
     ['tailJit', '粗细随机（星与星、火花与火花之间的粗细差别）', '', 0, 1, 0.01],
     ['tailShoulder', '亮肩（正：靠近星头的火花更大更亮、尾端更细更暗；负：反过来）', '', -1, 1, 0.01],
     ['tailWidth', '尾迹粗细（火花横向散开和颗粒大小的倍数；1 = 原样）', '×', 0.3, 3, 0.01],
@@ -869,8 +900,7 @@ const SCHEMA = [
     ['cutIn', '入点（帧从这里开始分配；0 = 第一次看得见）', 's', 0, 30, 0.0333],
     ['cutOut', '出点（0 = 最后一次看得见）', 's', 0, 30, 0.0333],
     { sel: 'preRoll', label: '入点之前', show: P => +P.cutIn > 0, options: [[1, '用入点那一帧从小放大（Size By Life）'], [0, '不显示（发射器延迟到入点）']] },
-    ['preScale0', '开始放大时的大小（0 = 按花径自动）', '×', 0, 1, 0.01, P => +P.cutIn > 0 && +P.preRoll !== 0],
-    { sel: 'prePivot', label: '放大的中心', show: P => +P.cutIn > 0 && +P.preRoll !== 0, options: [[0, '面片中心（UE 一定支持；花小的时候会偏向面片中心）'], [1, '爆点（用 Pivot Offset，更准，未经 UE 验证）']] }
+    ['preScale0', '开始放大时的大小（0 = 按花径自动）', '×', 0, 1, 0.01, P => +P.cutIn > 0 && +P.preRoll !== 0]
   ] },
   // 4.2.0（用户 2026-10-02 16:22「单层输出成多少总帧数我也无法控制……能不能梳理一下」）：一节里定「多少帧 → 怎么装进贴图」，顶上一行实时显示结果
   { sec: '输出：帧数 · 格子 · 贴图（导出）', show: isSeq, hint: '帧号由 Dynamic Parameter 的帧号通道给出（通道按本机导入配置，实测第 0 通道）、不做帧间混合。顺序：入点 → 出点之间有多少 tick → 按下面的「帧数」挑出要烘的帧 → 按「格子」装进贴图（RGBA 接力，先填满 R）。改了入出点、寿命，帧数和格子会自动重算；时间轴每层轨道上的小刻度就是每一帧从哪个 tick 开始。', items: [

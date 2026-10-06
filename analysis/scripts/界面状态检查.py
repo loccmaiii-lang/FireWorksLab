@@ -69,6 +69,9 @@
   W14 4.9.5（宪章遗漏 3 / 4）：对象 × 动作表里的入口都在；1366×768 / 1440×900 / 1920×1080 首屏看得到顶栏主动作、左栏第一个条目、画布、播放、发射器标签和第一行参数；4.9.14 第一屏按参考稿口径（模块摘要、对齐、一屏看得到几个模块）；
   W16 4.9.14 主链路八步连着走（用户 10-06 15:15）：选效果与图层 → 调参数 → 调色并返回 → 调层延迟 → 撤销 / 重做 → 保存刷新 → 烘焙回放 → 导出 PC / 手机，鼠标 / 键盘点真的控件
   W17 4.9.20 贴图 / 流转：这一层导出的每一张序列都能切（分张、星头 / 尾迹、循环层 / 消散 / 远段；不为哪种效果单做）
+  W18 4.9.21 效果 › 整体调整（用户 10-06 21:51，每层一份）：位置和 9 项顺序、全是 1 时原样、改尾长后实时模拟 / 测量 / 烘焙 / 尾迹终点 / 层结束 / 光点都跟着、
+      存的原值不动、乘完不再乘、闪烁最多 1、摘要、撤销；多层只动这一层；地面 / 升空没有这个模块
+  W19 4.9.21 入点前放大一律绕爆点（用户 21:51 选）：「放大的中心」删了；cascade.json 写 Pivot Offset、Initial Location 0；回放绕爆点；存过「面片中心」的打开时提示
       4.9.8 加：顶上「现在改的是」和搜索入口看得到，第一屏至少 8 行参数（菊 › 星、引菊 → 锦 金锦层 › 火花）
   W15 4.9.7 起（对话框23 参数栏交互）：4.9.8 引菊 → 锦六步（定位 / 改寿命 / 改颜色 / 调接力 / 撤销保存刷新重开）；切「工具」「审阅」再回来时间 / 层 / 发射器 / 模块开合 / 滚动位置都在、多层里有「工具」页；撤销一次操作一步（两个参数紧挨着改 = 两步、拖动中途停 = 一步、数值框回车 = 一步）
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
@@ -82,10 +85,11 @@ HTML = (ROOT / 'tool' / 'FireworkBaker.html').as_uri() + '?fast'
 
 FAKE = r"""(() => {
   window.__bakes = [];
+  if (!window.__realBake) window.__realBake = bake;     // 4.9.21 W18：查真烘焙入口乘了整体调整
   const chk = { clipFrames: [], edgeFrames: [], chanUse: [true, true, true, true], emptyMid: [], similar: 0, seam: null, maxClip: 0 };
   bake = async (P, scale, onProg) => {
     if (!['master', 'segments'].includes(P.form)) throw new Error('假烘焙只造大面片 / 分段；「' + P.form + '」要真烘焙（--real）');
-    const Pc = structuredClone(P), fm = measure(Pc), pl = plan(Pc, fm), pages = typeof splitPlan40 === 'function' ? splitPlan40(pl) : [pl];
+    const Pc = structuredClone(typeof fxP === 'function' ? fxP(P) : P), fm = measure(Pc), pl = plan(Pc, fm), pages = typeof splitPlan40 === 'function' ? splitPlan40(pl) : [pl];
     const parts = pages.map(meta => ({ P: Pc, form: Pc.form, N: 4, NH: 4, cw: 1, chh: 1, scale: 1, fm, head: { dispose() { } }, tail: null,
       meta: { ...meta, check: chk, lightKeys: [[0, 1], [1, 0]], darkTail: 0, frameMaxes: [], quality: qualityOf(Pc), expoH: 1, expoT: 1, bakeMs: 1, sparkSlots: 0 } }));
     parts.forEach((b, i) => b.next = parts[i + 1]);
@@ -102,7 +106,7 @@ FAKE = r"""(() => {
 REC = r"""(() => {
   window.__bakes = [];
   const ob = bake;
-  bake = async (P, scale, onProg) => { const Pc = structuredClone(P); const b = await ob(P, scale, onProg); window.__bakes.push({ P: Pc, at: performance.now() }); return b; };
+  bake = async (P, scale, onProg) => { const Pc = structuredClone(typeof fxP === 'function' ? fxP(P) : P); const b = await ob(P, scale, onProg); window.__bakes.push({ P: Pc, at: performance.now() }); return b; };
   return 0;
 })()"""
 
@@ -2330,6 +2334,153 @@ async def w17(pg):
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
+W18_JS = r"""async () => {
+  // 4.9.21（用户 10-06 21:51「就按照之前的全局风格帮我加回去，放在效果层里，类似一个最后的全局调整」，选「每层一份」）
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms)), key = it => Array.isArray(it) ? it[0] : it.sel;
+  const idle = async () => { for (let i = 0; i < 300 && !(window.__fw.idle() && !state.baking && !(state.layerQueue && state.layerQueue.size) && $('#busy').hidden); i++) await wait(50); };
+  const modOf = (g, m) => [...document.querySelectorAll(`section.egrp[data-g="${g}"] > details.mod`)].find(d => d._mod === m);
+  const setNum = async (row, v) => { const n = row.querySelector('.num'); n.focus(); n.value = String(v); n.dispatchEvent(new Event('input', { bubbles: true })); n.dispatchEvent(new Event('change', { bubbles: true })); n.blur(); await wait(450); await idle(); };
+  state.playing = false; selectEmitTab('效果'); await wait(30);
+  // 1 位置：效果 › 整体调整，照 4.1.1 全局风格层 9 项的顺序
+  const mod = modOf('效果', '整体调整'); out.where = !!mod && !mod.hidden;
+  if (!mod) { bad.push('「效果」里没有「整体调整」模块'); return { ok: false, bad, out }; }
+  const rows = [...mod.children].filter(r => r._lab != null && r._applies && !r._randOf && !r.hidden);
+  out.rows = rows.map(r => r._lab);
+  const want = ['adjTailLen', 'adjSparkSize', 'adjSpread', 'adjHeadSize', 'adjSparkBright', 'adjTwinkle', 'tailJit', 'tailShoulder', 'headTear'];
+  if (JSON.stringify(rows.map(r => key(r._it))) !== JSON.stringify(want)) bad.push('整体调整的 9 项不对 / 顺序不对：' + JSON.stringify(rows.map(r => key(r._it))));
+  const order = (EMIT_DEF['效果'] || {}).mods || []; out.modOrder = order; if (order[order.length - 1] !== '整体调整') bad.push('整体调整不是「效果」最后一个模块：' + JSON.stringify(order));
+  modSetOpen(mod, false); modSummarySync(); out.sum0 = (mod.querySelector('.msum') || {}).textContent;
+  if (out.sum0 !== '原样') bad.push('全是原样时摘要应写「原样」：' + out.sum0);
+  // 2 全是 1：fxP 原样返回（逐像素不变的前提）
+  const P0 = state.P, life0 = +P0.sparkLife, emb0 = +P0.emberLife, ref = { m: measure(P0), end: layerEndOf(P0), tail: sparkTailEnd(P0) };
+  if (fxP(P0) !== P0) bad.push('全是 1 时 fxP 没原样返回');
+  // 3 面板上把尾长改成 2
+  modSetOpen(mod, true); await setNum(rows[0], 2);
+  out.stored = { adj: state.P.adjTailLen, life: state.P.sparkLife, emb: state.P.emberLife };
+  if (+state.P.adjTailLen !== 2) bad.push('面板改尾长没存进参数：' + JSON.stringify(out.stored));
+  if (Math.abs(state.P.sparkLife - life0) > 1e-9 || Math.abs(state.P.emberLife - emb0) > 1e-9) bad.push('改尾长把存的火花 / 余烬寿命改了（应该只在最后乘）：' + JSON.stringify(out.stored));
+  const F = fxP(state.P); out.eff = { life: F.sparkLife, emb: F.emberLife, adj: F.adjTailLen };
+  if (Math.abs(F.sparkLife - 2 * life0) > 1e-9 || Math.abs(F.emberLife - 2 * emb0) > 1e-9 || F.adjTailLen !== 1) bad.push('fxP 没把火花、余烬寿命都乘 2（或倍数没写回 1）：' + JSON.stringify(out.eff));
+  if (fxP(F) !== F) bad.push('乘完的那份再 fxP 又乘了一次');
+  if (fxP(state.P) !== F) bad.push('同一份参数 fxP 每次给新对象（实时模拟会每帧重建）');
+  { const sim = new Sim(state.P); out.sim = sim.P.sparkLife; if (Math.abs(sim.P.sparkLife - 2 * life0) > 1e-9) bad.push('模拟（Sim）没乘尾长：' + out.sim); }
+  { const m1 = measure(state.P); out.measure = [+(ref.m.y1 - ref.m.y0).toFixed(2), +(m1.y1 - m1.y0).toFixed(2), +(ref.m.x1 - ref.m.x0).toFixed(2), +(m1.x1 - m1.x0).toFixed(2)];
+    if (JSON.stringify(m1.prof) === JSON.stringify(ref.m.prof) && out.measure[0] === out.measure[1] && out.measure[2] === out.measure[3]) bad.push('测量（取景 / 帧计划用的）没跟着尾长变'); }
+  out.end = [+ref.end.toFixed(2), +layerEndOf(state.P).toFixed(2)]; if (!(out.end[1] > out.end[0])) bad.push('层结束时刻没跟着尾长变长：' + JSON.stringify(out.end));
+  out.tail = [+ref.tail.toFixed(2), +sparkTailEnd(state.P).toFixed(2)]; if (!(out.tail[1] > out.tail[0] + 0.1)) bad.push('最后一批火花灭完的时刻没跟着变：' + JSON.stringify(out.tail));
+  const last = window.__bakes[window.__bakes.length - 1]; out.baked = last && { life: last.P.sparkLife, adj: last.P.adjTailLen };
+  if (!last || Math.abs(last.P.sparkLife - 2 * life0) > 1e-6 || +last.P.adjTailLen !== 1) bad.push('烘焙用的参数没乘尾长：' + JSON.stringify(out.baked));
+  if (window.__realBake && !/fxP\(/.test(String(window.__realBake))) bad.push('真烘焙入口没乘整体调整');
+  // 实时模拟：画一帧，实时的那份参数是乘完的
+  selectStageView('live'); state.t = 0.5; loop(performance.now()); out.live = live.A40 && live.A40.P && live.A40.P.sparkLife;
+  if (!(Math.abs(out.live - 2 * life0) < 1e-9)) bad.push('实时模拟没乘尾长：' + out.live);
+  { loop(performance.now()); const s0 = { P: live.A40.P, R: live.A40.R40 }; loop(performance.now()); if (live.A40.P !== s0.P || live.A40.R40 !== s0.R) bad.push('参数没变时实时模拟每帧重建'); }
+  // 火花 › 寿命行显示的还是存的原值
+  selectEmitTab('火花'); await wait(30); { const lr = panelRows.find(([r, it]) => key(it) === 'sparkLife'); out.lifeRow = lr && +lr[0].querySelector('.num').value; if (!(Math.abs(out.lifeRow - life0) < 0.011)) bad.push('「火花 › 寿命」显示的不是存的原值：' + out.lifeRow); }
+  selectEmitTab('效果'); await wait(30); modSetOpen(mod, false); modSummarySync(); out.sum1 = (mod.querySelector('.msum') || {}).textContent;
+  if (!/^尾长 2/.test(out.sum1 || '')) bad.push('摘要没写改过的那项：' + out.sum1);
+  // 其余几项：星头大小 → 光点直径；尾缀粗细 → 火花大小（余烬按比例）；闪烁乘完最多 1
+  { const Q = { ...state.P, adjTailLen: 1, adjHeadSize: 2, adjSparkSize: 1.5, adjSpread: 0.5, adjSparkBright: 2, adjTwinkle: 3 }, G = fxP(Q);
+    out.others = { head: [P0.headSize, G.headSize], size: [P0.sparkSize, G.sparkSize], spread: [P0.sparkSpread, G.sparkSpread], bright: [P0.sparkBright, G.sparkBright], tw: [P0.twinkle, G.twinkle] };
+    if (Math.abs(G.headSize - 2 * P0.headSize) > 1e-9 || Math.abs(G.sparkSize - 1.5 * P0.sparkSize) > 1e-9 || Math.abs(G.sparkSpread - 0.5 * P0.sparkSpread) > 1e-9 || Math.abs(G.sparkBright - 2 * P0.sparkBright) > 1e-9) bad.push('星头大小 / 尾缀粗细 / 散布 / 亮度没按倍数乘：' + JSON.stringify(out.others));
+    if (!(G.twinkle <= 1) || G.emberSize !== P0.emberSize) bad.push('闪烁乘完超过 1，或余烬大小（比例）被改了：' + JSON.stringify(out.others));
+    try { const M = normalizeM({}, 'kiku'), fm = measure(P0), L = { scale: 1, rate: 1, delay: 0 }, a = dotsES(L, P0, M, fm), b = dotsES(L, Q, M, fm); out.dots = [a.size[0], b.size[0]];
+      if (!(Math.abs(b.size[0] - 2 * a.size[0]) < 1e-6)) bad.push('导出成 GPU 光点时光点直径没乘星头大小：' + JSON.stringify(out.dots)); } catch (e) { bad.push('光点：' + e.message); } }
+  // 撤销：回到 1
+  await undoStep(-1); await wait(300); await idle(); out.undo = state.P.adjTailLen; if (+state.P.adjTailLen !== 1) bad.push('撤销没把尾长回到 1：' + out.undo);
+  return { ok: !bad.length, bad, out };
+}"""
+
+W18_COMBO_JS = r"""async () => {
+  // 多层：每层一份，改第 1 层的整体调整，第 2 层不动、实时模拟里只有第 1 层乘
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms)), key = it => Array.isArray(it) ? it[0] : it.sel;
+  const idle = async () => { for (let i = 0; i < 300 && !(window.__fw.idle() && !state.baking && !(state.layerQueue && state.layerQueue.size) && $('#busy').hidden); i++) await wait(50); };
+  state.playing = false; selectComboLayer(0); await wait(50); selectEmitTab('效果'); await wait(30);
+  const e0 = layerEntryOf(state.layers[0]), e1 = layerEntryOf(state.layers[1]);
+  const x = panelRows.find(([r, it]) => key(it) === 'adjSparkBright'); if (!x) { bad.push('多层第 1 层没有「火花亮度」整体调整'); return { ok: false, bad, out }; }
+  modSetOpen(x[0].closest('details'), true); const n = x[0].querySelector('.num'); n.focus(); n.value = '2'; n.dispatchEvent(new Event('input', { bubbles: true })); n.dispatchEvent(new Event('change', { bubbles: true })); n.blur(); await wait(450); await idle();
+  out.l0 = e0.P.adjSparkBright; out.l1 = e1.P.adjSparkBright;
+  if (+e0.P.adjSparkBright !== 2 || +(e1.P.adjSparkBright == null ? 1 : e1.P.adjSparkBright) !== 1) bad.push('每层一份：改第 1 层带动了第 2 层（或没存进第 1 层）：' + JSON.stringify(out));
+  if (fxP(e1.P) !== e1.P) bad.push('第 2 层全是 1 也被改了');
+  selectStageView('live'); state.t = 1; loop(performance.now());
+  out.live = [live.combo0 && live.combo0.P && live.combo0.P.sparkBright, live.combo1 && live.combo1.P && live.combo1.P.sparkBright, e0.P.sparkBright, e1.P.sparkBright];
+  if (!(Math.abs(out.live[0] - 2 * e0.P.sparkBright) < 1e-9) || out.live[1] !== e1.P.sparkBright) bad.push('多层实时模拟没按每层自己的整体调整：' + JSON.stringify(out.live));
+  await undoStep(-1); await wait(300); await idle(); out.undo = e0.P.adjSparkBright; if (+e0.P.adjSparkBright !== 1) bad.push('多层撤销没回到 1：' + out.undo);
+  // 地面 / 升空：没有这个模块
+  for (const t of ['fountain', 'trailM']) { await openType(t); await wait(100); selectEmitTab('效果'); await wait(30);
+    const d = [...document.querySelectorAll('section.egrp[data-g="效果"] > details.mod')].find(d => d._mod === '整体调整');
+    const on = !!d && !d.hidden && [...d.children].some(r => r._applies && !r.hidden); out[t] = on; if (on) bad.push(t + ' 也显示了整体调整（只管空中花型）'); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w18(pg):
+    """4.9.21 效果 › 整体调整：每层一份、叠在最后、实时 / 测量 / 烘焙 / 光点都跟着、默认原样"""
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate(W18_JS)
+    await open_effect(pg, 'hiki_nishiki')
+    r2 = await pg.evaluate(W18_COMBO_JS)
+    bad = r['bad'] + r2['bad']
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps({**r['out'], 'combo': r2['out']}, ensure_ascii=False)[:1400]
+
+
+W19_JS = r"""async (rec) => {
+  // 4.9.21（用户 10-06 21:51「为什么有些效果我调了入点，引擎回放与UE中会先从下往上生长这样跳一下」，选「一律绕爆点」）
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
+  const baked = async prev => { for (let i = 0; i < 100 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); };
+  // 1 选项删了
+  if (SCHEMA.some(s => s.items.some(it => it.sel === 'prePivot'))) bad.push('「放大的中心」选项还在');
+  if ('prePivot' in BASE) bad.push('BASE 里还有 prePivot');
+  // 2 导出：设了入点 + 从小放大 → Pivot Offset 绕爆点、Initial Location 0
+  { const prev = state.bake; await openType('kiku'); await baked(prev); } state.playing = false;
+  { const prev = state.bake; state.P.cutIn = 0.3; state.P.preRoll = 1; onParam(); await baked(prev); }
+  // 假烘焙按自动入点排帧：这里照 bakeMaster 按入点 0.3 s 重排第一张的帧计划，再算入点前放大（和 bakeMaster 同一个函数）
+  const b = state.bake, fm = measure(b.P), pl0 = plan(b.P, fm, +b.P.cutIn), pg0 = typeof splitPlan40 === 'function' ? splitPlan40(pl0)[0] : pl0;
+  b.meta = { ...b.meta, ...pg0 }; b.next = null; const m = b.meta; m.pre = preRollOf(b.P, fm, m.t0);
+  out.pre = m.pre && { from: m.pre.from, dur: +m.pre.dur.toFixed(3), s0: m.pre.s0, pivot: m.pre.pivot, cy: +m.cy.toFixed(2), t0: m.t0 };
+  if (!m.pre) { bad.push('设了入点 0.3 s 没有入点前放大'); return { ok: false, bad, out }; }
+  if ('pivot' in m.pre) bad.push('入点前放大还带「中心」选择');
+  if (!(Math.abs(m.cy) > 1)) bad.push('菊的面片中心应在爆点下面（cy 不是 0），这条查不出来：' + m.cy);
+  const cj = fwlCascade('T', b, state.M), e = cj.emitters[0], loc = (e.modules.find(q => q.m === 'InitialLocation') || {}).StartLocation;
+  out.export = { pivot: e.required.pivot_offset, loc: loc && loc.const, notes: (e.notes || []).join(' ').slice(0, 80), sizeByLife: e.modules.filter(q => q.m === 'SizeByLife').length };
+  const py = -0.5 - m.cy / m.Wh;
+  if (!e.required.pivot_offset || Math.abs(e.required.pivot_offset[1] - py) > 1e-3 || e.required.pivot_offset[0] !== -0.5) bad.push('入点前放大没写 Pivot Offset（爆点）：' + JSON.stringify(out.export));
+  if (!loc || loc.const[2] !== 0) bad.push('Initial Location Z 应为 0（爆点靠 Pivot Offset 对齐）：' + JSON.stringify(out.export));
+  if (!/绕爆点/.test(out.export.notes)) bad.push('说明没写绕爆点：' + out.export.notes);
+  if (out.export.sizeByLife !== 1) bad.push('入点前放大应有一条 Size By Life：' + out.export.sizeByLife);
+  // 没设入点的同一个效果：Pivot Offset 一样
+  { const b2 = { ...b, meta: { ...m, pre: null } }, e2 = fwlCascade('T', b2, state.M).emitters[0]; out.noCut = e2.required.pivot_offset;
+    if (JSON.stringify(e2.required.pivot_offset) !== JSON.stringify(e.required.pivot_offset)) bad.push('设入点和没设入点的 Pivot Offset 不一样：' + JSON.stringify([out.noCut, out.export.pivot])); }
+  // 3 引擎回放：入点前那段绕爆点放大（面片坐标原点 = 爆点）
+  { const r = preRect([-10, -30, 10, 2], 0.5); out.rect = r; if (JSON.stringify(r) !== JSON.stringify([-5, -15, 5, 1])) bad.push('回放的入点前放大不是绕爆点：' + JSON.stringify(r)); }
+  { const tex = () => new Target(4, 4, gl.RGBA8); for (let s = b; s; s = s.next) { s.head = tex(); s.N = s.NH = 4; }
+    selectStageView('export'); await wait(30); state.t = (m.pre.from + m.t0) / 2; loop(performance.now()); out.hud = $('#hud').textContent.slice(0, 40);
+    if (!/入点前.*绕爆点/.test(out.hud)) bad.push('引擎回放入点前 HUD 没写绕爆点：' + out.hud); selectStageView('live'); }
+  // 4 存过「面片中心」的效果：打开时提示，参数里不再有 prePivot
+  if (rec) { myPut({ id: rec.id, name: rec.name, created: '', updated: '', links: rec.links || [], snap: rec.snap }); await openMyEffect(rec.id); await wait(500);
+    out.mig = { shown: !$('#migNote').hidden, text: $('#migNoteText').textContent };
+    if (!out.mig.shown || !/入点前放大的中心/.test(out.mig.text) || !/面片中心/.test(out.mig.text)) bad.push('打开存过「面片中心」的效果没提示：' + JSON.stringify(out.mig).slice(0, 300));
+    const Ps = state.tab === 'combo' ? state.layers.map(L => (layerEntryOf(L) || {}).P).filter(Boolean) : [state.P];
+    if (Ps.some(P => 'prePivot' in P)) bad.push('打开后参数里还有 prePivot');
+    out.mig.text = out.mig.text.slice(0, 120); $('#migNoteOk').click(); }
+  else bad.push('找不到存过「面片中心」+ 入点的样本（analysis/我的配方）');
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w19(pg):
+    """4.9.21 入点前放大一律绕爆点：删「放大的中心」、导出 Pivot Offset、回放同口径、旧存档提示"""
+    import glob
+    rec = None
+    for f in sorted(glob.glob(str(ROOT / 'analysis' / '我的配方' / 'my_*' / '*.json'))):
+        try:
+            d = json.load(open(f, encoding='utf-8'))
+            if any(float(L['P'].get('cutIn') or 0) > 0 and str(L['P'].get('prePivot')) == '0' and str(L['P'].get('preRoll', 1)) != '0' for L in d['snap']['layers']): rec = d; break
+        except Exception: pass
+    r = await pg.evaluate(W19_JS, rec)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1200]
+
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -2369,7 +2520,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

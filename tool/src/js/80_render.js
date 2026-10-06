@@ -34,20 +34,17 @@ function bindSeqTextures(pr, b) {
   gl.uniform1f(pr.u.uCols, b.meta.L.cols); gl.uniform1f(pr.u.uRows, b.meta.L.rows); gl.uniform1f(pr.u.uChans, b.meta.L.chans);
   gl.uniform1f(pr.u.uComb, b.tail ? 0 : 1); gl.uniform2f(pr.u.uInset, 0.5 / b.cw, 0.5 / b.chh);
 }
-// 入点前放大（用户 2026-10-02 选 B）：第一段的 meta.pre = { from, dur, keys, pivot }；这段时间显示第 0 帧，面片按 keys 从小放大到 1
+// 入点前放大（用户 2026-10-02 选 B）：第一段的 meta.pre = { from, dur, keys, s0 }；这段时间显示第 0 帧，面片按 keys 从小放大到 1
 function preScaleAt(b0, m, b, age0, age) { return b === b0 && m.pre && age < 0 && age0 >= m.pre.from ? evalKeys(m.pre.keys, clamp((age0 - m.pre.from) / m.pre.dur, 0, 1)) : 0; }
-function preRect(r, s, pivot) {
-  if (pivot) return [r[0] * s, r[1] * s, r[2] * s, r[3] * s];        // 绕爆点（面片坐标原点 = 爆点）
-  const cx = (r[0] + r[2]) / 2, cy = (r[1] + r[3]) / 2, hw = (r[2] - r[0]) / 2 * s, hh = (r[3] - r[1]) / 2 * s;
-  return [cx - hw, cy - hh, cx + hw, cy + hh];                       // 绕面片中心（Cascade Size By Life 的默认行为）
-}
+// 4.9.21（用户 10-06 21:51 选「一律绕爆点」）：绕爆点放大（面片坐标原点 = 爆点；导出用 Pivot Offset 把爆点放在粒子上）
+function preRect(r, s) { return [r[0] * s, r[1] * s, r[2] * s, r[3] * s]; }
 function drawLayer(b0, L, t, view, origin = [0, 0]) {
   t=engineTick(t);
   const age0 = (t - L.delay) * L.rate, b = segAt(b0, age0), m = b.meta, age = age0 - (m.t0 || 0), ps = preScaleAt(b0, m, b, age0, age);
   const f = ps > 0 ? 0 : frameIdx(m, age);
   if (f < 0) return f;
   const pr = PR.mat; gl.useProgram(pr.p);
-  const r = ps > 0 ? preRect(layerRectAt(m, L, 0), ps, m.pre.pivot) : layerRectAt(m, L, age);
+  const r = ps > 0 ? preRect(layerRectAt(m, L, 0), ps) : layerRectAt(m, L, age);
   gl.uniform4fv(pr.u.uRect, [r[0] + origin[0], r[1] + origin[1], r[2] + origin[0], r[3] + origin[1]]); gl.uniform4fv(pr.u.uView, view);
   bindSeqTextures(pr, b);
   gl.uniform1f(pr.u.uFrame, f); gl.uniform1f(pr.u.uMirror, L.mirror ? 1 : 0);
@@ -251,7 +248,7 @@ function renderExport() {
   if (b.form === 'trail') { hudText = !tsx ? '序列结束' : `导出效果 · 升空尾缀 · ${tsx.phase === 'rise' ? '上升循环' : '消散（' + tsx.bb.fps + ' fps）'} · 第 ${tsx.f + 1}/64 帧 · ${'RGBA'[Math.floor(tsx.f / 16)]} 通道 · 镜头跟着星头（面片沿弹道上升，Size By Life Y ${tsx.sy.toFixed(2)}）`; hudB = ''; return; }
   const fi = b.form === 'unit' ? frameIdx(b.meta, engineTick(state.t)) : frameIdx(s.meta, engineTick(state.t) - (s.meta.t0 || 0));
   const ps = b.form === 'unit' ? 0 : preScaleAt(b, s.meta, s, engineTick(state.t), engineTick(state.t) - (s.meta.t0 || 0));
-  hudText = ps > 0 ? `导出效果 · 入点前：第 1 帧放大到 ${Math.round(ps * 100)}%（${s.meta.pre.pivot ? '绕爆点' : '绕面片中心'}）· 入点 ${s.meta.t0.toFixed(2)} s` : fi < 0 ? (engineTick(state.t) < (s.meta.t0 || 0) ? '还没到入点' : '序列结束') : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? ' 段 '+bakeSegmentName(b,bakeParts(b).indexOf(s)) : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
+  hudText = ps > 0 ? `导出效果 · 入点前：第 1 帧放大到 ${Math.round(ps * 100)}%（绕爆点）· 入点 ${s.meta.t0.toFixed(2)} s` : fi < 0 ? (engineTick(state.t) < (s.meta.t0 || 0) ? '还没到入点' : '序列结束') : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? ' 段 '+bakeSegmentName(b,bakeParts(b).indexOf(s)) : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
   if (sch === 'unit') hudText += ' · PC 导出方案是单束：这里仍按序列画（单束的引擎回放在多层效果里看）';
   hudB = '';
 }
@@ -372,18 +369,18 @@ function renderComboLive() {
   if (!items.length) { post(); hudText = '没有图层'; return; }
   let view = null;
   items.forEach(([L, e, i]) => {
-    const slot = liveSlot('combo' + i); prepSlot(slot, e.P, 'c' + i + ':' + e.name + ':' + (e.rev || 0));
-    const v = sceneView(e.P, e.bake.meta, slot), s = L.scale || 1, vs = [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
+    const P = fxP(e.P), slot = liveSlot('combo' + i); prepSlot(slot, P, 'c' + i + ':' + e.name + ':' + (e.rev || 0));     // 4.9.21 整体调整（每层自己的）
+    const v = sceneView(P, e.bake.meta, slot), s = L.scale || 1, vs = [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
     view = view ? unionView(view, vs) : vs;
   });
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   let n = 0;
   // 4.2.20：几层一起算显卡负担，超预算时每层都少画几个快门子样本（见 48_render40.js liveCtl）
-  let work = 0; items.forEach(([L, e, i]) => { const age = (state.t - (L.delay || 0)) * (L.rate || 1); if (age < 0 || age > e.P.duration || !layerShown(i)) return; const R = !isTrail(e.P) && !isPhys(e.P) ? liveRenderer40(liveSlot('combo' + i), e.P) : null; work += R ? trackDraws(R.track, e.P) + (e.P.stars || 0) : 0; });
+  let work = 0; items.forEach(([L, e, i]) => { const age = (state.t - (L.delay || 0)) * (L.rate || 1); if (age < 0 || age > e.P.duration || !layerShown(i)) return; const P = fxP(e.P), R = !isTrail(P) && !isPhys(P) ? liveRenderer40(liveSlot('combo' + i), P) : null; work += R ? trackDraws(R.track, P) + (P.stars || 0) : 0; });
   LIVE_CAP = liveCapFor(work); LIVE_VIEW = true;
   try {
   items.forEach(([L, e, i]) => {
-    const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = e.P;
+    const age = (state.t - (L.delay || 0)) * (L.rate || 1), P = fxP(e.P);
     if (age < 0 || age > P.duration || !layerShown(i)) return;
     const s = L.scale || 1, vL = [view[0] / s, view[1] / s, view[2] / s, view[3] / s], ppm = rgT.w / (2 * vL[2]);
     rgT.clear(); rgT.bind(); additive(true);
