@@ -1,0 +1,86 @@
+{
+ "id": "NF4",
+ "type": "script",
+ "priority": 5,
+ "name": "对话框新花型 4.9.18：带尾多层模板冷却调回后的曝光、尾迹复查、全部缩略图重渲",
+ "note": "NF3 扫出冷却倍数 0.74–0.76：亲星菊 0.42 → 0.32、锦冠层 0.35 → 0.26（14 个模板）。回来由对话框新花型并曝光、收缩略图。",
+ "steps": [
+  {
+   "name": "受影响 14 个模板每层曝光（只写 json）",
+   "script": "多层模板.py",
+   "args": [
+    "shinKiku",
+    "yaeshin",
+    "yaeHenka",
+    "mieshin",
+    "itsueHenka",
+    "mieStrobeKiku",
+    "henkaKikuShin",
+    "shiyuShin",
+    "hikiSakiKiku",
+    "yoeshinKoro",
+    "kamuroShin",
+    "mieKamuroSaki",
+    "kowariUkimoyo",
+    "ginKamuro",
+    "--expo",
+    "--expo-json",
+    "{out}/曝光.json"
+   ],
+   "must": true,
+   "timeout": 2400
+  },
+  {
+   "name": "尾迹复查（4.6.0 对 4.9.18，套上新曝光）",
+   "script": "尾迹新旧对比.py",
+   "args": [
+    "--old",
+    "{git:263888a^:tool/FireworkBaker.html}",
+    "--out",
+    "{out}/尾迹对比",
+    "--px",
+    "240",
+    "--expo-from",
+    "{out}/曝光.json",
+    "--only",
+    "mt:shinKiku,mt:yaeshin,mt:mieshin,mt:kamuroShin,mt:yaeHenka,mt:itsueHenka,mt:yoeshinKoro,mt:kowariUkimoyo,mt:ginKamuro,mt:mieKamuroSaki"
+   ],
+   "must": false,
+   "timeout": 3600
+  },
+  {
+   "name": "受影响模板定帧（套上新曝光）",
+   "script": "多层模板.py",
+   "args": [
+    "shinKiku",
+    "yaeshin",
+    "kamuroShin",
+    "yoeshinKoro",
+    "kowariUkimoyo",
+    "ginKamuro",
+    "--expo-from",
+    "{out}/曝光.json",
+    "--out",
+    "{out}/定帧",
+    "--sheet-name",
+    "冷却调回后总表.jpg",
+    "--px",
+    "300"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "全部缩略图重渲（套上新曝光）",
+   "script": "渲染缩略图_截图法.py",
+   "args": [
+    "--out",
+    "{out}/缩略图",
+    "--expo-from",
+    "{out}/曝光.json"
+   ],
+   "must": false,
+   "timeout": 10800
+  }
+ ]
+}

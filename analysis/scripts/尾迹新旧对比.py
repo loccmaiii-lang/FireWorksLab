@@ -83,6 +83,9 @@ async def run(a):
             await pg.goto(html.resolve().as_uri() + '?fast&autobake=0', wait_until='domcontentloaded', timeout=0)
             await pg.wait_for_function('window.__fw && typeof renderStills40 === "function"', timeout=0)
             pages[tag] = pg
+        if a.expo_from and pathlib.Path(a.expo_from).exists():     # 4.9.18：新版先套上同一任务刚算出的多层模板曝光
+            await pages['新'].evaluate('''(ex) => { for (const [k, v] of Object.entries(ex)) { const old = MT_EXPOSURE[k] || []; MT_EXPOSURE[k] = v.map((x, j) => x != null ? x : (old[j] != null ? old[j] : 1)); } }''',
+                                       json.loads(pathlib.Path(a.expo_from).read_text(encoding='utf-8')))
         rec['renderer'] = verify_renderer(await pages['新'].evaluate("(()=>{const g=document.createElement('canvas').getContext('webgl2');const x=g&&g.getExtension('WEBGL_debug_renderer_info');return x?g.getParameter(x.UNMASKED_RENDERER_WEBGL):'?'})()"))
         rec['ver'] = {t: await pg.evaluate('VERSION') for t, pg in pages.items()}
         items = [x for x in await pages['新'].evaluate(JS_LIST) if not only or x['key'] in only]
@@ -159,5 +162,5 @@ async def scan(a, pages, items, out, png, rec):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--old', required=True); ap.add_argument('--out', required=True); ap.add_argument('--only'); ap.add_argument('--px', type=int, default=300)
-    ap.add_argument('--cool-scan', help='4.9.17：冷却倍数（逗号分开），只量面积比、不出对照图，写 冷却扫描.json / .md')
+    ap.add_argument('--expo-from', help='新版先套上这个 json 里的多层模板曝光'); ap.add_argument('--cool-scan', help='4.9.17：冷却倍数（逗号分开），只量面积比、不出对照图，写 冷却扫描.json / .md')
     raise SystemExit(asyncio.run(run(ap.parse_args())))

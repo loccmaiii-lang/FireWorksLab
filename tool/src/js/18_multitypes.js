@@ -28,7 +28,10 @@ const mtL = (title, en, type, k, p = {}, c = MT_COL.warm, ramp = MT_RAMP_NEUTRAL
 // 芯（无尾牡丹星）：内层小而密——星数按半径比收得比面积慢（芯星小、排得密），星头略小于亲星
 const mtCore = (title, en, k, c, p = {}, o = {}) => mtL(title, en, 'botan', k, { stars: Math.round(Math.max(90, 400 * Math.pow(k, 0.5))), headSize: +(0.78 + 0.25 * k).toFixed(2), sparkRate: 0, flicker: 0.15, ...p }, c, MT_RAMP_NEUTRAL, o);
 // 亲星 · 菊（带尾）：炭火短尾；前段「引」（橙色带尾、星头暗）→ 色光无尾，用 sparkStop + headDim（和青柠星同一个机制）
-const mtOyaKiku = (title, en, c, p = {}, ramp = MT_RAMP_GOLD) => mtL(title, en, 'kiku', 1, { stars: 380, headSize: 1.0, headBright: 1.5, sparkRate: 130, sparkLife: 0.36, sparkSpread: 1.8, T0: 2400, cooling: 0.42, ...p }, c, ramp);
+// 4.9.17 老火花先暗（用户 10-06 17:57 第 5 条）：4.7.0 起火花按年龄降温，亲星菊的尾比 4.6.0 短（亮面积少 7–11%）；
+// 本机 NF3 扫冷却倍数，面积回到旧版的倍数 0.74–0.76（芯入菊 / 八重芯 / 三重芯）→ 冷却 0.42 × 0.76 ≈ 0.32
+const MT_KIKU_COOL = 0.32, MT_KAMURO_COOL = 0.26;     // 锦冠层：花型模板默认 0.35，扫出来 0.755 倍（芯入锦冠菊，面积少 12–19%）→ 0.26
+const mtOyaKiku = (title, en, c, p = {}, ramp = MT_RAMP_GOLD) => mtL(title, en, 'kiku', 1, { stars: 380, headSize: 1.0, headBright: 1.5, sparkRate: 130, sparkLife: 0.36, sparkSpread: 1.8, T0: 2400, cooling: MT_KIKU_COOL, ...p }, c, ramp);
 const mtOyaBotan = (title, en, c, p = {}) => mtL(title, en, 'botan', 1, { stars: 360, headSize: 1.05, sparkRate: 0, flicker: 0.15, ...p }, c, MT_RAMP_NEUTRAL);
 // 一组芯：colors 从外到内，按层数取半径比
 const mtCores = (colors, p = {}) => colors.map((c, i) => { const k = MT_RATIO[colors.length][i]; return mtCore('芯 ' + (i + 1) + ' · ' + c[0], c[1], k, c[2], p); });
@@ -112,15 +115,15 @@ const MULTI_TYPES = [
     src: '伊势神宫奉纳花火大会玉名「三重芯錦冠先変化菊」（伊势市 PDF）；锦冠见配方总表 1.3', layers: [
       // 星头和尾颜色不同（尾金、星头后段红 → 绿）：一个发射器只有一条颜色曲线 → 拆成同一模拟的两层（同种子、同初速、同星数，星位重合；球形 D 的 YD1 / YD2 同一做法）。
       // 尾层用金色渐变图（火花冷却的暖色过渡），星头层用中性渐变图（红、绿不被染暖）
-      mtL('亲星 · 金锦冠（尾）', 'KamuroTail', 'kamuro', 1, { stars: 150, vt: 24, seed: 41, sparkStop: 2.2, headBright: 0.06 }, MT_COL.gold, MT_RAMP_GOLD, { hi: 0.7 }),
-      mtL('亲星 · 星头 金 → 红 → 绿（同一批星）', 'KamuroHead', 'kamuro', 1, { stars: 150, vt: 24, seed: 41, sparkRate: 0, headBright: 1.3, headDim: 0.35, headDimUntil: 2.2, flash: 0 }, [[0, MT_COL.gold], [2.2, MT_COL.red], [2.9, MT_COL.green]], MT_RAMP_NEUTRAL, { hi: 1.5 }),     // 先变化那一段要从金色冠尾里跳出来：星头层显示强度 1.5（定帧看过 1.0 不够）
+      mtL('亲星 · 金锦冠（尾）', 'KamuroTail', 'kamuro', 1, { stars: 150, vt: 24, seed: 41, cooling: MT_KAMURO_COOL, sparkStop: 2.2, headBright: 0.06 }, MT_COL.gold, MT_RAMP_GOLD, { hi: 0.7 }),
+      mtL('亲星 · 星头 金 → 红 → 绿（同一批星）', 'KamuroHead', 'kamuro', 1, { stars: 150, vt: 24, seed: 41, cooling: MT_KAMURO_COOL, sparkRate: 0, headBright: 1.3, headDim: 0.35, headDimUntil: 2.2, flash: 0 }, [[0, MT_COL.gold], [2.2, MT_COL.red], [2.9, MT_COL.green]], MT_RAMP_NEUTRAL, { hi: 1.5 }),     // 先变化那一段要从金色冠尾里跳出来：星头层显示强度 1.5（定帧看过 1.0 不够）
       ...mtCores([['银白', 'Silver', MT_COL.silver], ['青', 'Blue', MT_COL.blue], ['绿', 'Green', MT_COL.green]]).map(l => ({ ...l, hi: 1.4 }))] },
   // ---- 4.9.16（对话框新花型，用户 10-06 17:57「现在能做的3个一起做了」）----
   { id: 'yoeshinKoro', name: '四重芯菊先紫光露', en: 'YoeshinKikuSakiKoro', group: 0, burn: 3.0,
     note: '亲星先是金色带尾的菊，2.0 s 尾停、星头变紫（菊先紫），燃烧最后 0.2 s 星头变白、猛地一亮再灭（光露：星熄灭前像挂着露珠一样「ピカッ」一闪；燃烧时间几乎一样，所以整圈差不多同时闪）。尾和星头颜色不同，亲星拆成同一模拟的两层（尾 / 星头）。里面青 / 红 / 绿 / 银白四层芯（芯的颜色玉名没写，按常见配色），和亲星同时灭。',
     src: '伊势神宫奉纳花火大会玉名「四重芯菊先紫光露」（伊势市 PDF）；「露」= 星が消える直前に先端が露を持ったようにピカッと一瞬強く光って消える（UMK テレビ宮崎 2026-08「花火用語に隠された気象の要素」）', layers: [
       // 同一批星（同种子、同终端速度、同燃烧离散）：尾层只画尾，星头层只画星头。燃烧离散收到 2.5%（±0.08 s），光露差不多同时闪
-      mtL('亲星 · 金菊（尾）', 'KikuTail', 'kiku', 1, { stars: 360, vt: MT_VT[0], seed: 41, burnJit: 2.5, headSize: 1.0, headBright: 0.06, sparkRate: 130, sparkLife: 0.36, sparkSpread: 1.8, T0: 2400, cooling: 0.42, sparkStop: 2.0 }, MT_COL.gold, MT_RAMP_GOLD),
+      mtL('亲星 · 金菊（尾）', 'KikuTail', 'kiku', 1, { stars: 360, vt: MT_VT[0], seed: 41, burnJit: 2.5, headSize: 1.0, headBright: 0.06, sparkRate: 130, sparkLife: 0.36, sparkSpread: 1.8, T0: 2400, cooling: MT_KIKU_COOL, sparkStop: 2.0 }, MT_COL.gold, MT_RAMP_GOLD),
       // 光露：星头亮度随寿命在 90% 之后冲到 2.8 倍、保持到 97.5%、最后 2.5% 灭；大小同时放大 1.5 倍。不用「末端爆亮」（lastFlare 只有 0.05 s，烘焙帧抓不稳），也关掉末段淡出（fade，不然闪的那一下被淡掉）。
       // 曝光按紫色那一段量（燃烧 72–86%），光露那一闪本来就该过曝发白
       mtL('亲星 · 星头 金 → 紫 → 光露（同一批星）', 'KikuHead', 'kiku', 1, { stars: 360, vt: MT_VT[0], seed: 41, burnJit: 2.5, headSize: 1.0, headBright: 1.5, sparkRate: 0, flash: 0, fade: 0,
@@ -130,7 +133,7 @@ const MULTI_TYPES = [
   { id: 'kamuroShin', name: '芯入锦冠菊 · 绿芯', en: 'KamuroShin', group: 1, burn: 3.8, R: 130,
     note: '亲星金锦冠（长火花、慢慢下垂成冠）+ 绿芯。芯是普通色星（燃烧短），先灭；冠尾留到最后。金冠里用绿芯（钡）对比最强，红芯会被金色火花淹掉。',
     src: '锦冠（炭 + 钛长尾下垂）见配方总表 1.3、鸿巢四尺玉返工；「芯入錦冠菊」为常见玉名', layers: [
-      mtL('亲星 · 金锦冠', 'Kamuro', 'kamuro', 1, { stars: 150, vt: 24 }, MT_COL.gold, MT_RAMP_GOLD, { hi: 0.55 }),     // 锦冠火花多而暗、色芯亮：冠压一点，芯才不被冠的火花淹掉
+      mtL('亲星 · 金锦冠', 'Kamuro', 'kamuro', 1, { stars: 150, vt: 24, cooling: MT_KAMURO_COOL }, MT_COL.gold, MT_RAMP_GOLD, { hi: 0.55 }),     // 锦冠火花多而暗、色芯亮：冠压一点，芯才不被冠的火花淹掉
       mtCore('芯 · 绿', 'Green', 0.45, MT_COL.green, { burn: 2.4, vt: 17, stars: 260, headSize: 1.05 }, { hi: 1.5 })] },
   { id: 'crackleShin', name: '霹雳蕊牡丹', en: 'CrackleShin', group: 1, burn: 2.8,
     note: '洋红牡丹 + 金色霹雳芯（芯星烧完一起噼啪爆裂）。中式叫法「蕊」= 芯。',
@@ -176,7 +179,7 @@ const MULTI_TYPES = [
   { id: 'kowariUkimoyo', name: '锦冠菊小割浮模様', en: 'KamuroKowariUkimoyo', group: 3, burn: 3.8, R: 130,
     note: '亲星金锦冠菊开花后，同时抛出的二十几个小玉还留在里面（约亲星半径的 0.38），1.5–1.75 s 在中间一朵朵开成红 / 绿 / 青的小花（带一点短尾的小菊），浮在金冠里（浮模様）；小花小（半径约亲星的 0.12）、开得稍有先后。每种颜色一层（千轮）。',
     src: '玉名「錦冠菊小割浮模様」一类（小割 = 小玉装在大玉里，浮模様 = 小花在主花中间浮出一片图样，配方总表 0.2 半割物）；项目 analysis/原理/引菊转锦.md 实拍「开花后约 3 s 的彩色小割（浮模様）」', layers: [
-      mtL('亲星 · 金锦冠菊', 'Kamuro', 'kamuro', 1, { stars: 150, vt: 24 }, MT_COL.gold, MT_RAMP_GOLD, { hi: 0.55 }),     // 同芯入锦冠菊：冠压一点，彩色小花才不被金火花淹掉
+      mtL('亲星 · 金锦冠菊', 'Kamuro', 'kamuro', 1, { stars: 150, vt: 24, cooling: MT_KAMURO_COOL }, MT_COL.gold, MT_RAMP_GOLD, { hi: 0.55 }),     // 同芯入锦冠菊：冠压一点，彩色小花才不被金火花淹掉
       // 小玉：比星重（终端速度 30）、初速按 1.5 s 飞到亲星半径 0.38 反推（burn = 小玉飞行时间，千轮的星头不走 burn）；小花：子星初速 20、燃烧 1.0 s；三色开花时刻差 0.12 s，各自 ±12%
       ...[['红', 'Red', MT_COL.red], ['绿', 'Green', MT_COL.green], ['青', 'Blue', MT_COL.blue]].map((c, i) =>
         // 4.9.17（NF1 定帧：小花子星 0.6 m、燃烧 1.0 s，在金冠里只剩几粒暗点）：子星 1.1 m、亮度 1.5、32 颗、带一点短尾（小菊）、燃烧 1.4 s，显示强度 1.7
@@ -185,7 +188,7 @@ const MULTI_TYPES = [
   { id: 'ginKamuro', name: '银冠', en: 'GinKamuro', group: 4, burn: 3.8, R: 130,
     note: '锦冠的银色版：长火花慢慢下垂成冠，火花是银白（钛 / 铝系）。参数和花型模板「锦冠」一样，只换火花颜色（渐变图）、温度略高。',
     src: '銀冠（配方总表 0.2：银冠、冠柳现在能做）', layers: [
-      mtL('银冠', 'GinKamuro', 'kamuro', 1, { stars: 150, vt: 24, T0: 2050 }, MT_COL.silver, MT_RAMP_SILVER)] },     // 温度只比金冠（1950）高一点：太热了按最亮处归一后冷下来的火花相对太暗，冠尾变短（T0 2600 试过）
+      mtL('银冠', 'GinKamuro', 'kamuro', 1, { stars: 150, vt: 24, T0: 2050, cooling: MT_KAMURO_COOL }, MT_COL.silver, MT_RAMP_SILVER)] },     // 温度只比金冠（1950）高一点：太热了按最亮处归一后冷下来的火花相对太暗，冠尾变短（T0 2600 试过）
   { id: 'ginYanagi', name: '银柳', en: 'GinYanagi', group: 4, burn: 5.2,
     note: '柳的银色版：壳只裂开，银白长火花慢慢垂下来。参数和花型模板「柳」一样（初速、终端速度、燃烧都沿用），只换火花颜色和温度。',
     src: '柳 / 銀柳（配方总表 0.2 ポカ物）', layers: [
@@ -223,7 +226,7 @@ const MULTI_TYPES = [
 ];
 const MULTI_BY_ID = Object.fromEntries(MULTI_TYPES.map(r => [r.id, r]));
 // 每层贴图曝光（analysis/scripts/多层模板曝光.py 按 autoExposure40 算的，和花型模板 EXPOSURE40 同一算法）；没有就用花型模板的
-const MT_EXPOSURE = {"shinKiku": [0.833, 2.49], "shinBotan": [2.9, 2.49], "yaeshin": [0.613, 2.45, 1.62], "yaeHenka": [1.97, 2.54, 1.64], "mieshin": [0.843, 2.58, 2.5, 1.49], "yoeshin": [2.87, 2.63, 2.54, 1.79, 1.4], "itsueHenka": [1.97, 2.68, 2.57, 2.03, 1.67, 1.38], "yaeStrobe": [2.91, 2.52, 1.66], "kamuroShin": [2.26, 2.57], "crackleShin": [2.9, 1.86], "strobeShin": [2.87, 2.23], "fourColorCrackle": [3.07, 3.04, 3.07, 3.07, 1.73], "jisaShinBotan": [2.07, 2.37], "henkaKikuShin": [2.06, 2.45], "mieStrobeKiku": [1.95, 2.58, 2.5, 1.49], "kiraShin": [2.9, 0.684], "shiyuShin": [0.647, 2.51, 2.82], "palmShin": [0.284, 1.62], "hikiSakiKiku": [1.97], "henkaBotan": [2.9], "mieKamuroSaki": [2.6, 3.21, 2.76, 2.52, 1.88], "ginKamuro": [1.79], "ginYanagi": [0.582], "colorSenrin": [2.08, 1.91, 1.27, 1.98], "yanagiTips": [0.772, 2.7], "yaeBlueBotan": [2.92, 0.201, 0.81, 0.136], "yoeshinKoro": [1.11, 1.9, 2.65, 2.51, 1.87, 1.37], "somewakeBotan": [2.85, 2.83], "kowariUkimoyo": [2.11, 1.36, 1.32, 1.47], "mangekyo": [1.79, 1.84, 0.381, 1.62]};
+const MT_EXPOSURE = {"shinKiku": [0.833, 2.49], "shinBotan": [2.9, 2.49], "yaeshin": [0.613, 2.45, 1.62], "yaeHenka": [1.97, 2.54, 1.64], "mieshin": [0.843, 2.58, 2.5, 1.49], "yoeshin": [2.87, 2.63, 2.54, 1.79, 1.4], "itsueHenka": [1.97, 2.68, 2.57, 2.03, 1.67, 1.38], "yaeStrobe": [2.91, 2.52, 1.66], "kamuroShin": [2.26, 2.57], "crackleShin": [2.9, 1.86], "strobeShin": [2.87, 2.23], "fourColorCrackle": [3.07, 3.04, 3.07, 3.07, 1.73], "jisaShinBotan": [2.07, 2.37], "henkaKikuShin": [2.06, 2.45], "mieStrobeKiku": [1.95, 2.58, 2.5, 1.49], "kiraShin": [2.9, 0.684], "shiyuShin": [0.647, 2.51, 2.82], "palmShin": [0.284, 1.62], "hikiSakiKiku": [1.97], "henkaBotan": [2.9], "mieKamuroSaki": [2.6, 3.21, 2.76, 2.52, 1.88], "ginKamuro": [1.79], "ginYanagi": [0.582], "colorSenrin": [2.08, 1.91, 1.27, 1.98], "yanagiTips": [0.772, 2.7], "yaeBlueBotan": [2.92, 0.207, 0.81, 0.136], "yoeshinKoro": [1.11, 1.9, 2.65, 2.51, 1.87, 1.37], "somewakeBotan": [2.85, 2.83], "kowariUkimoyo": [2.11, 0.426, 0.438, 0.516], "mangekyo": [2.75, 2.67, 0.381, 1.62]};
 // 每层的显示强度（Color Over Life 倍数）：各层贴图都按自己最亮处归一，这里按游戏内大小看过定层间明暗（亲星最亮、芯略暗）
 // 彩色芯按颜色的亮度补：铜蓝、锶红、紫这些亮度低的色给高一点，柠檬绿、黄、银白不补（(0.45 / 相对亮度)^0.5，夹在 0.9–1.45）
 const mtLum = hex => { const c = hexToLin(hex); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
