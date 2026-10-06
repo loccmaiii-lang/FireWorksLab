@@ -423,18 +423,18 @@ function fmtV(v, step) { const d = step >= 1 ? 0 : step >= 0.1 ? 1 : step >= 0.0
 // 4.9.0（5.0 第 3 步，Q1「物理给默认，每个值都能改」）：「用默认」勾选换成链条——
 // 接着 = 数值用灰字显示算出来是多少，滑杆照样能拖；直接拖 / 输入就断开（存你填的数）；点链条接回去（存哨兵值，模拟照旧按联动算）。画面不变。
 const AUTO_DEF = {
-  subKeep: [0, P => P.subPattern === 'cross' ? 0.25 : 0.35, '小球（千轮）0.35、十字（分裂）0.25', -1],
-  subSpeedJit: [0, P => +P.speedJit || 0, '跟主层的初速随机', -1],
-  subGrav: [0, P => P.grav == null ? 1 : +P.grav, '跟主层的重力', -1],
-  subFlash: [0, P => +(+P.flash * 0.3).toFixed(3), '主层开花闪光 × 0.3', -1],
+  subKeep: [0, P => P.subPattern === 'cross' ? 0.25 : 0.35, '按子花样式：千轮 0.35，分裂 0.25', -1],
+  subSpeedJit: [0, P => +P.speedJit || 0, '同主层的「初速随机」', -1],
+  subGrav: [0, P => P.grav == null ? 1 : +P.grav, '同主层的「重力倍率」', -1],
+  subFlash: [0, P => +(+P.flash * 0.3).toFixed(3), '主层开花闪光的 0.3 倍', -1],
   // 4.6.0（5.0 第 1 步）：以前藏在代码里的联动，现在看得见、能断开
-  flashR: [0.5, P => +Math.max(2, (+P.v0 || 0) * 0.045).toFixed(2), '跟初速：max(2 m, 0.045 × 初速)', -1],
-  subSize: [0.05, P => +(+P.headSize || 1).toFixed(2), '同主星大小', -1],
-  subBright: [0, P => +(+P.headBright).toFixed(2), '同主星亮度', -1],
-  subFlashR: [0.1, P => +Math.max(1, (+P.subSpeed || 0) * 0.05).toFixed(2), '跟子花初速：max(1 m, 0.05 × 子花初速)', -1],
+  flashR: [0.5, P => +Math.max(2, (+P.v0 || 0) * 0.045).toFixed(2), '按初速：初速 × 0.045，至少 2 m', -1],
+  subSize: [0.05, P => +(+P.headSize || 1).toFixed(2), '同主星的大小', -1],
+  subBright: [0, P => +(+P.headBright).toFixed(2), '同主星的亮度', -1],
+  subFlashR: [0.1, P => +Math.max(1, (+P.subSpeed || 0) * 0.05).toFixed(2), '按子花初速：子花初速 × 0.05，至少 1 m', -1],
   // 4.9.0：「0 = 跟谁」的几项也换成链条
-  subVt: [1, P => +(+P.vt || 0).toFixed(1), '同主层的终端速度', 0],
-  rtVt: [1, P => +(typeof rtVtOf === 'function' ? rtVtOf({ ...P, rtVt: 0 }) : 0).toFixed(1), '按弹径算（球形弹体在空气里的终端速度）', 0],
+  subVt: [1, P => +(+P.vt || 0).toFixed(1), '同主层的「终端速度」', 0],
+  rtVt: [1, P => +(typeof rtVtOf === 'function' ? rtVtOf({ ...P, rtVt: 0 }) : 0).toFixed(1), '按弹径算（球形弹体在空气中的终端速度）', 0],
   rtFadeFps: [1, () => 30, '自动 30 fps', 0],
   // 4.9.5（宪章遗漏 1，输出栏收口）：「算出来的」帧率 / 张数也用链条——接着 = 灰字显示这次烘焙算出来的，改了就用你填的
   holdTicks: [1, () => outCalc().hold, '放得下的最快（1 = 30 fps、2 = 15、3 = 10）', 0],
@@ -457,18 +457,21 @@ function outCalc() {
   const cell = L ? Math.round(L.cellW) : oc || Math.round(P.texW / Math.max(1, Math.min(P.cols, Math.floor(P.texW / 512) || 1)));
   return { hold: Math.max(1, Math.min(3, hold)), pages: Math.max(1, pages), cell };
 }
+// 4.9.8（对话框23，用户 11:18「不知道看怎么断开怎么接回去」）：链条从 18 px 小图标换成状态列里带字的按钮——
+// 接着时按钮写「跟着算」（点一下 = 断开，固定在现在算出来的数），下面一行写跟谁、怎么算；断开时按钮写「接回」，下面一行写「已断开：用你填的 ×；跟着算是 ×」
 function autoDefRow(row, k, step) {
   const a = AUTO_DEF[k]; if (!a) return;
   const inp = row.querySelector('input[type=range]'), num = row.querySelector('.num');
-  inp.min = a[0];
-  const ln = document.createElement('div'); ln.className = 'adef';
-  ln.innerHTML = '<button type="button" class="chain" aria-pressed="true"></button><span class="adef-t"></span>'; row.appendChild(ln);
-  const bt = ln.querySelector('.chain'), tx = ln.querySelector('.adef-t');
+  inp.min = a[0]; row._stChain = true; row.classList.add('has-chain');
+  const st = row.querySelector('.st'); st.innerHTML = '<button type="button" class="chain" aria-pressed="true"></button>';
+  const ln = document.createElement('div'); ln.className = 'adef'; ln.innerHTML = '<span class="adef-t"></span>'; row.appendChild(ln);
+  const bt = st.querySelector('.chain'), tx = ln.querySelector('.adef-t');
   const sync = () => {
-    const P = state.P, on = autoLinked(k, P[k]), v = a[1](P); row.classList.toggle('adef-on', on); bt.setAttribute('aria-pressed', String(on)); bt.classList.toggle('off', !on);
-    bt.setAttribute('aria-label', on ? '联动中，点一下断开（固定在现在的值）' : '已断开，点一下接回联动');
-    bt.title = on ? `联动中：${a[2]}。直接拖 / 输入就断开；点链条也能断开（固定在 ${fmtV(v, step)}）` : `已断开：用你填的 ${fmtV(P[k], step)}。点链条接回去（${a[2]}，现在算出来是 ${fmtV(v, step)}）`;
-    tx.textContent = on ? `跟着算：${a[2]}` : `你填的 · 跟着算是 ${fmtV(v, step)}（${a[2]}）`;
+    const P = state.P, on = autoLinked(k, P[k]), v = a[1](P); row.classList.toggle('adef-on', on); row.classList.toggle('adef-off', !on); bt.setAttribute('aria-pressed', String(on)); bt.classList.toggle('off', !on);
+    bt.textContent = on ? '跟着算' : '接回';
+    bt.setAttribute('aria-label', on ? `跟着算（${a[2]}）：点一下断开，固定在 ${fmtV(v, step)}` : `已断开：点一下接回（${a[2]}，现在算出来是 ${fmtV(v, step)}）`);
+    bt.title = on ? `跟着算：${a[2]}。直接拖 / 输入就断开；点这里也能断开（固定在 ${fmtV(v, step)}）` : `已断开：用你填的 ${fmtV(P[k], step)}。点「接回」回到跟着算（${a[2]}，现在算出来是 ${fmtV(v, step)}）`;
+    tx.textContent = on ? `跟着算：${a[2]}` : `已断开：用你填的 ${fmtV(P[k], step)}；跟着算是 ${fmtV(v, step)}（${a[2]}）`;
     if (on) { inp.value = v; num.value = fmtV(v, step); row.classList.remove('over'); num.title = ''; }
   };
   bt.addEventListener('click', () => { const P = state.P; P[k] = autoLinked(k, P[k]) ? Math.max(a[0], +a[1](P)) : a[3]; onParam(); sync(); });
@@ -476,15 +479,17 @@ function autoDefRow(row, k, step) {
   row.querySelector('.k').addEventListener('dblclick', () => setTimeout(sync, 0));     // 双击恢复默认（默认是联动的就接回去）
   const r0 = row._refresh; row._refresh = () => { r0(); sync(); }; sync();
 }
+// 4.9.8（对话框23）：参数行统一一种网格——名字 | 滑杆 | 数值 | 状态。状态用字写（跟着算 / 接回 / 超范围 / 改过 / 旧 / 锁定，rowStatusSync），不靠图标颜色；
+// 锁移到名字左边，鼠标移上去或锁着时才出现（锁定的参数状态列写「锁定」）
 function slider(host, id, label, unit, min, max, step, get, set, def, lockKey) {
   const row = document.createElement('div'); row.className = 'sl' + (lockKey ? '' : ' nolock');
   row.innerHTML = (lockKey ? `<button class="lk" type="button" title="锁定：切换号数、随机微调时不变" aria-label="锁定 ${label}" aria-pressed="false">●</button>` : '') +
     `<label class="k" for="${id}" title="${label}${unit ? '（' + unit + '）' : ''}；双击恢复默认">${label}${unit ? `<small>${unit}</small>` : ''}</label>` +
-    `<input type="range" id="${id}" min="${min}" max="${max}" step="${step}"><input class="num" type="number" step="${step}" aria-label="${label} 数值">`;
+    `<input type="range" id="${id}" min="${min}" max="${max}" step="${step}"><input class="num" type="number" step="${step}" aria-label="${label} 数值"><span class="st"></span>`;
   const inp = row.querySelector('input[type=range]'), num = row.querySelector('.num');
-  // 4.9.2（梳理 6.2「滑杆范围不够」：你把爆裂数填到 100，滑杆只到 40，看不出来）：滑杆只是常用范围，数值框不设上限；超出时数值框描琥珀色边、悬停写明
+  // 4.9.2（梳理 6.2「滑杆范围不够」：你把爆裂数填到 100，滑杆只到 40，看不出来）：滑杆只是常用范围，数值框不设上限；超出时数值框描琥珀色边、状态列写「超范围」
   const show = () => { const v = +get(); num.value = fmtV(v, step); const o = isFinite(v) && !row.classList.contains('adef-on') && (v > +inp.max + 1e-9 || v < +inp.min - 1e-9);
-    row.classList.toggle('over', o); num.title = o ? `超出滑杆的常用范围（${inp.min}–${inp.max}），照样起作用；滑杆停在一头` : ''; };
+    row.classList.toggle('over', o); num.title = o ? `超出滑杆的常用范围（${inp.min}–${inp.max}），照样起作用；滑杆停在一头` : ''; rowStatusSync(row); };
   inp.value = get(); show();
   inp.addEventListener('input', () => { set(+inp.value); show(); });
   // 数值框：可以直接输入，允许超出滑杆范围（滑杆停在两端）
@@ -492,11 +497,22 @@ function slider(host, id, label, unit, min, max, step, get, set, def, lockKey) {
   num.addEventListener('keydown', e => { if (e.key === 'Enter') num.blur(); });
   row.querySelector('.k').addEventListener('dblclick', () => { if (def == null) return; set(def); inp.value = def; show(); });
   if (lockKey) {
-    const lk = row.querySelector('.lk'), upd = () => { const on = state.locks.has(lockKey); lk.setAttribute('aria-pressed', String(on)); row.classList.toggle('locked', on); };
+    const lk = row.querySelector('.lk'), upd = () => { const on = state.locks.has(lockKey); lk.setAttribute('aria-pressed', String(on)); row.classList.toggle('locked', on); rowStatusSync(row); };
     lk.addEventListener('click', () => { state.locks.has(lockKey) ? state.locks.delete(lockKey) : state.locks.add(lockKey); upd(); }); upd();
   }
   row._refresh = () => { inp.value = get(); show(); };
   host.appendChild(row); return row;
+}
+// 状态列：有链条的行是链条按钮（autoDefRow 管）；别的按要紧程度写一个词，悬停写全（「旧」写在名字前面，这里不重复）
+function rowStatusSync(row) {
+  const st = row && row._st || (row && (row._st = row.querySelector(':scope > .st'))); if (!st || row._stChain) return;
+  const c = row.classList, B = row._baseTxt;
+  const s = c.contains('over') ? ['超范围', 'over', (row.querySelector('.num') || {}).title || '超出滑杆的常用范围，照样起作用']
+    : c.contains('chg') ? ['改过', 'chg', '和打开时不一样' + (B != null ? `（打开时 ${B}）` : '') + '；Ctrl+Z 撤销，双击参数名恢复默认']
+    : c.contains('locked') ? ['锁定', 'lock', '锁定：切换号数、随机微调时不变']
+    : c.contains('inert') ? ['不起作用', 'inert', '现在不起作用：' + (row._inert || '')] : ['', '', ''];
+  if (st.textContent !== s[0]) st.textContent = s[0];
+  st.className = 'st' + (s[1] ? ' st-' + s[1] : ''); st.title = s[2];
 }
 function colorPair(host, label, keys, obj, onChange) {
   const k = document.createElement('span'); k.textContent = label; k.style.fontSize = '12.5px';
@@ -570,6 +586,8 @@ function pviewInit() { if (pview.ready) return; pview.ready = true; pview.change
   pview.ropen = store.get('pRandOpen', {}); pview.tab = store.get('pEmitTab', {}); }   // 英文名、模块 / 随机 / 更多展开
 // 「改过的」和谁比：打开时的版本（AI 版 / 你保存的版本，wbArm 记下的样子）；没有就和花型模板默认值比
 function panelBaseP() {
+  // 4.9.8：打开后还在等烘焙稳定、没记下「打开时」的样子（wbArm）时，先不比（以前拿花型模板默认值比，刚打开的 AI 效果满屏「改过」）
+  if (typeof wb !== 'undefined' && !wb.sig && wb.arm > 0 && typeof wbVisible === 'function' && wbVisible()) return null;
   try {
     const s = typeof wb !== 'undefined' && wb.sig ? JSON.parse(wb.sig) : null;
     if (s && s.kind === 'single' && s.P) return s.P;
@@ -578,6 +596,7 @@ function panelBaseP() {
   return defaultsFor(state.P.type).P;
 }
 function rowChanged(it, P, B) {
+  if (!B) return false;
   if (Array.isArray(it)) { const k = it[0], a = +P[k], b = +B[k]; if (!isFinite(a) && !isFinite(b)) return false; return !(Math.abs((isFinite(a) ? a : 0) - (isFinite(b) ? b : 0)) <= (+it[5] || 0) / 2 + 1e-9); }
   if (it.sel) return String(P[it.sel]) !== String(B[it.sel]);
   if (it.text) return String(P[it.text]) !== String(B[it.text]);
@@ -597,25 +616,30 @@ function sizePxNote(k) {
   if (!(v > 0) || SIZE_KEYS[k] === 0) return '';
   return `<span class="ph-x">导出贴图上 1 像素 ≈ ${mpp < 0.1 ? mpp.toFixed(3) : mpp.toFixed(2)} m（面片 ${m.Ww.toFixed(0)} m ÷ 单格 ${Math.round(m.L.cellW)} 像素）：现在约 ${(v / mpp).toFixed(1)} 像素${v / mpp < 1 ? '（不到 1 像素：再调小主要是变暗）' : ''}</span>`;
 }
-// 4.5.0 参数说明（用户 10-05 01:28 #9 / 02:25「做个过渡动效，停留 1.5 s 出现」）：鼠标在参数名上停 1.5 s 才淡入，显示在参数栏下方；
-// 移开 0.3 s 后淡出（移进说明里看长文字不会消失）；点参数名 = 钉住（再点、点 ×、按 Esc 解除）。4.4 是点了才出、出了就一直在
-const HELP_DELAY = 1500, HELP_LEAVE = 300, helpSt = { timer: 0, hide: 0, pinned: null };
+// 参数说明（4.9.8，对话框23；用户 10-04 偏好「频繁移动鼠标时不得自动弹参数说明；主动点 ? / F1 后打开固定说明区，关闭 / Esc 收起」，交互宪章 3.5）：
+// 鼠标移过去不再弹；点参数名（或模块标题旁的 ？）才打开，固定在右栏底部；再点同一个名字、点 ×、按 Esc 关掉；F1 = 打开 / 关掉光标所在参数的说明。
+// 以前（4.5.0）是停 1.5 s 自动淡入
+const helpSt = { timer: 0, hide: 0, pinned: null };
 function helpShow(row, pin) {
-  clearTimeout(helpSt.timer); clearTimeout(helpSt.hide);
   const h = $('#pHelp'); if (!h || !row) return;
-  panelHelp(row); if (pin) helpSt.pinned = row;
-  if (helpSt.pinned) h.insertAdjacentHTML('afterbegin', '<button type="button" class="ph-close" aria-label="关闭说明" title="关闭（Esc）">×</button>');
-  h.classList.add('on'); h.classList.toggle('pinned', !!helpSt.pinned);
+  panelHelp(row); helpSt.pinned = row;
+  h.insertAdjacentHTML('afterbegin', '<button type="button" class="ph-close" aria-label="关闭说明" title="关闭（Esc）">×</button>');
+  h.classList.add('on', 'pinned');
+  document.querySelectorAll('#params .phelp-cur').forEach(x => x.classList.remove('phelp-cur')); row.classList.add('phelp-cur');
 }
 function helpHide(force) {
-  clearTimeout(helpSt.timer); clearTimeout(helpSt.hide);
-  if (helpSt.pinned && !force) return;
   helpSt.pinned = null; const h = $('#pHelp'); if (h) h.classList.remove('on', 'pinned');
+  document.querySelectorAll('#params .phelp-cur').forEach(x => x.classList.remove('phelp-cur'));
 }
-function helpBind(name, row) {
-  name.addEventListener('pointerenter', () => { if (helpSt.pinned) return; clearTimeout(helpSt.hide); clearTimeout(helpSt.timer); helpSt.timer = setTimeout(() => helpShow(row), HELP_DELAY); });
-  name.addEventListener('pointerleave', () => { clearTimeout(helpSt.timer); if (!helpSt.pinned) helpSt.hide = setTimeout(() => helpHide(), HELP_LEAVE); });
-  name.addEventListener('click', () => { if (helpSt.pinned === row) helpHide(true); else { helpSt.pinned = null; helpShow(row, true); } });
+function helpToggle(row) { if (!row) return; if (helpSt.pinned === row) helpHide(true); else helpShow(row, true); }
+function helpBind(name, row) { name.addEventListener('click', () => helpToggle(row)); }
+// F1：光标所在的参数（Tab 选中的滑杆 / 数值框 / 下拉）打开说明；说明开着时再按 = 关掉
+function helpKey(e) {
+  e.preventDefault();
+  const el = document.activeElement, row = el && el.closest && el.closest('#params .sl, #params .field'), pr = row && panelRows.find(([r]) => r === row);
+  if (pr && pr[0]._lab != null) { helpToggle(pr[0]); return; }
+  if (helpSt.pinned) { helpHide(true); return; }
+  flash('先点一下参数的滑杆或数值框（或用 Tab 选中），再按 F1 看它的说明；点参数名也能看');
 }
 const legacyHelp = (row, k) => row._legacy ? `<span class="ph-inert">旧（5.0 要删）：${row._legacy[0]}。${legacyInUse(k, state.P) ? '这个效果用着，先留着，画面照旧。' : '这个效果没用上。'}</span>` : '';
 function panelHelp(row) {
@@ -640,17 +664,24 @@ function buildMasterPanel() {
   pviewInit();
   const P = state.P, D = defaultsFor(P.type).P;
   for (const id of ['specBox', 'specMore']) { const box = $('#' + id); if (box && $('#params').contains(box)) $('#specHome').appendChild(box); }   // 规格框先放回原处，别跟着旧的面板一起被清掉
+  pmIdentHome(); layerBitsHome();     // 4.9.8：花型 / 产物（效果标签里）、这一层的导出方案 / 位置与时间（输出 / 效果标签里）也先放回原处
   const host = $('#params'); host.innerHTML = ''; panelRows = [];
-  // 顶上：搜索 + 只看改过的 + 英文名
-  host.insertAdjacentHTML('beforeend', `<div class="ptools"><input type="search" placeholder="搜参数：名字 / 英文名 / 说明里的字" aria-label="搜参数" value="${pview.q.replace(/"/g, '&quot;')}"><label class="pchg" title="只显示和打开时（AI 版 / 你保存的版本）不一样的参数"><input type="checkbox"${pview.changed ? ' checked' : ''}> 只看改过的</label>`
-    + `<label class="pchg" title="参数名显示英文名（Cascade / Niagara 的叫法；说明条第一行总有英文）"><input type="checkbox" data-en${pview.en ? ' checked' : ''}> 英文名</label></div>`);
-  const qi = host.querySelector('.ptools input[type=search]'), ci = host.querySelector('.ptools .pchg:first-of-type input');
+  // 4.9.8（对话框23）：顶上固定一块（滚动时不消失）——第一行「现在改的是：金锦层 › 火花」+ 一个「搜索 · 改过 N」入口；第二行发射器标签（一行，放不下横着滚）。
+  // 搜索框、只看改过的、英文名收在那个入口里（点开一行；在搜 / 只看改过的时一直开着）
+  host.insertAdjacentHTML('beforeend', `<div class="pscope" role="group" aria-label="现在改的是"><div class="ps-row"><span class="ps-lab">现在改的是</span><b class="ps-path"></b>`
+    + `<button type="button" class="ps-find" aria-expanded="false" title="搜这一层的参数 / 只看和打开时不一样的参数">搜索<span class="ps-n" hidden></span></button></div>`
+    + `<div class="ptools ps-search" hidden><input type="search" placeholder="搜参数：名字 / 英文名 / 说明里的字" aria-label="搜参数" value="${pview.q.replace(/"/g, '&quot;')}"><label class="pchg" title="只显示和打开时（AI 版 / 你保存的版本）不一样的参数"><input type="checkbox"${pview.changed ? ' checked' : ''}> 只看改过的</label>`
+    + `<label class="pchg" title="参数名显示英文名（Cascade / Niagara 的叫法；说明第一行总有英文）"><input type="checkbox" data-en${pview.en ? ' checked' : ''}> 英文名</label></div></div>`);
+  const scope = host.querySelector('.pscope'), qi = host.querySelector('.ptools input[type=search]'), ci = host.querySelector('.ptools .pchg:first-of-type input'), fb = scope.querySelector('.ps-find');
   qi.addEventListener('input', () => { pview.q = qi.value.trim(); refreshVisibility(); });
-  qi.addEventListener('keydown', e => { if (e.key === 'Escape' && qi.value) { qi.value = ''; pview.q = ''; refreshVisibility(); e.stopPropagation(); } });
+  qi.addEventListener('keydown', e => { if (e.key === 'Escape') { if (qi.value) { qi.value = ''; pview.q = ''; refreshVisibility(); } else { pview.find = false; scopeSync(); fb.focus(); } e.stopPropagation(); } });
   ci.addEventListener('change', () => { pview.changed = ci.checked; store.set('pChanged', pview.changed); refreshVisibility(); });
   host.querySelector('[data-en]').addEventListener('change', e => { pview.en = e.target.checked; store.set('pEN', pview.en); buildMasterPanel(); });
+  fb.addEventListener('click', () => { pview.find = !scope.querySelector('.ps-search').hidden ? false : true; if (!pview.find && (pview.q || pview.changed)) { pview.q = ''; qi.value = ''; pview.changed = false; ci.checked = false; store.set('pChanged', false); refreshVisibility(); } scopeSync(); if (pview.find) qi.focus(); });
   // 发射器标签（一次看一个发射器；refreshVisibility 按适用的行显示 / 隐藏、标改过几项）
-  const tabs = document.createElement('div'); tabs.className = 'etabs'; tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', '发射器'); host.appendChild(tabs);
+  const tabs = document.createElement('div'); tabs.className = 'etabs'; tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', '发射器'); scope.appendChild(tabs);
+  tabs.addEventListener('wheel', e => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && tabs.scrollWidth > tabs.clientWidth) { tabs.scrollLeft += e.deltaY; e.preventDefault(); } }, { passive: false });     // 鼠标滚轮在标签上 = 横着滚
+  rightHeadVar();
   p43BlankControls(host, P);
   const place = p43Skeleton(host);
   for (const sec of SCHEMA) {
@@ -667,7 +698,7 @@ function buildMasterPanel() {
       } else if (it.sel) {
         const [short0, detail0] = splitLab(it.label), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
         row = document.createElement('label'); row.className = 'field';
-        row.innerHTML = `<span class="fk" title="${(nm ? `${nm.en} · ${nm.cn}` : short).replace(/"/g, '&quot;')}">${short}</span><select></select>`;
+        row.innerHTML = `<span class="fk" title="${(nm ? `${nm.en} · ${nm.cn}` : short).replace(/"/g, '&quot;')}">${short}</span><select></select><span class="st"></span>`;
         row._lab = short; row._detail = detail; row._nm = nm;
         const s = row.querySelector('select'); for (const [v, l] of it.options) s.add(new Option(l, v));
         s.value = String(it.sel === '_trailTier' ? P.type : P[it.sel]);
@@ -691,7 +722,7 @@ function buildMasterPanel() {
         row._refresh(); det.appendChild(row);
       } else if (it.curve) {      // 4.6.0：按寿命变化的曲线 = 几行「时刻:值」（用户 10-05 20:45 定：先填几个数，拖点编辑器以后做）
         const lab = nm ? p43Label(nm, it.label) : it.label;
-        row = document.createElement('label'); row.className = 'field curvef'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false" placeholder="空 = 不变；例 0:1, 0.7:1, 1:0"><small class="cv-keys"></small>`; row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm;
+        row = document.createElement('label'); row.className = 'field curvef'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false" placeholder="空 = 不变；例 0:1, 0.7:1, 1:0"><span class="st"></span><small class="cv-keys"></small>`; row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm;
         const inp = row.querySelector('input'), out = row.querySelector('.cv-keys');
         const show = () => { const ks = parseCurve(state.P[it.curve]); out.textContent = ks ? ks.length + ' 个点：' + ks.map(k => `${+k[0].toFixed(3)} → ${+k[1].toFixed(3)}`).join('，') : (String(state.P[it.curve] || '').trim() ? '看不懂：写成「时刻:值, 时刻:值」，时刻 0–1' : '不变（全程 × 1）'); out.classList.toggle('bad', !ks && !!String(state.P[it.curve] || '').trim()); };
         inp.value = P[it.curve] || ''; show();
@@ -699,13 +730,13 @@ function buildMasterPanel() {
         row._refresh = () => { inp.value = state.P[it.curve] || ''; show(); };
         det.appendChild(row);
       } else if (it.text) {
-        row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${nm ? p43Label(nm, it.label) : it.label}</span><input type="text" maxlength="6">`; row._lab = nm ? p43Label(nm, it.label) : it.label; row._detail = nm ? nm.desc : ''; row._nm = nm;
+        row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${nm ? p43Label(nm, it.label) : it.label}</span><input type="text" maxlength="6"><span class="st"></span>`; row._lab = nm ? p43Label(nm, it.label) : it.label; row._detail = nm ? nm.desc : ''; row._nm = nm;
         const inp = row.querySelector('input'); inp.value = P[it.text];
         inp.addEventListener('change', () => { state.P[it.text] = inp.value || '祭'; onParam(); });
         row._refresh = () => { inp.value = state.P[it.text]; };
         det.appendChild(row);
       }
-      if (row._lab != null) {      // 4.5.0：参数名上停 1.5 s 出说明、移开消失、点一下钉住（helpBind）
+      if (row._lab != null) {      // 4.9.8：点参数名才出说明（helpBind）
         row._it = it; row._x = ex; row._bm = nm && nm.mcn;
         const name = row.querySelector('.k, .fk'); if (name) { name.classList.add('phelp-on'); helpBind(name, row); }
       }
@@ -716,11 +747,12 @@ function buildMasterPanel() {
   // 模块里按发射器表的先后排（表里常用的在前），再把随机行挂到本体下面
   host.querySelectorAll('section.egrp > details.mod').forEach(d => [...d.children].filter(c => c._x).sort((a, b) => a._x.i - b._x.i).forEach(r => d.appendChild(r)));
   p43StdModules(host);
-  p43RandLinks(); p43Legacy(); emitTabs(tabs);
-  if (!$('#pHelp')) { const h = document.createElement('div'); h.id = 'pHelp'; h.className = 'phelp'; h.setAttribute('aria-live', 'polite'); host.parentElement.insertBefore(h, host.nextSibling);
-    h.addEventListener('pointerenter', () => clearTimeout(helpSt.hide)); h.addEventListener('pointerleave', () => { if (!helpSt.pinned) helpSt.hide = setTimeout(() => helpHide(), HELP_LEAVE); });
+  p43RandLinks(); p43Legacy(); p43More(); emitTabs(tabs);
+  pmIdentPlace(); layerBitsPlace(); colorLinks();
+  if (!$('#pHelp')) { const h = document.createElement('div'); h.id = 'pHelp'; h.className = 'phelp'; h.setAttribute('aria-live', 'polite'); h.setAttribute('role', 'region'); h.setAttribute('aria-label', '参数说明'); host.parentElement.insertBefore(h, host.nextSibling);
     h.addEventListener('click', e => { if (e.target.closest('.ph-close')) helpHide(true); });
-    keyBind('esc', () => { if (!helpSt.pinned) return false; helpHide(true); return true; }, 10); }     // 4.9.4 快捷键登记表（68_keys.js）：Esc 先关钉住的说明
+    keyBind('esc', () => { if (!helpSt.pinned) return false; helpHide(true); return true; }, 10);     // 4.9.4 快捷键登记表（68_keys.js）：Esc 先关说明
+    keyBind('help', helpKey); }     // 4.9.8：F1
   helpHide(true); panelHelp(null);
   refreshVisibility();
   const MD = defaultsFor(P.type).M;
@@ -746,25 +778,31 @@ function refreshVisibility() {
     const vis = itemVisible(it, P) && !(sec.show && !sec.show(P)) && blankHas(P, row._bm), chg = vis && rowChanged(it, P, B);
     if (vis) appl[det._g] = true;
     row.classList.toggle('chg', chg); if (chg) nChg[det._g] = (nChg[det._g] || 0) + 1;
+    { const k = Array.isArray(it) ? it[0] : it.sel || it.text || it.curve; row._baseTxt = k && B && B[k] != null ? (Array.isArray(it) ? fmtV(B[k], it[5]) : String(B[k]) || '空') : null; }
     // 4.3：不起作用的参数变灰、写原因（不藏：藏了反而找不到）；随机行收在本体参数的「随机」下面
     const key = Array.isArray(it) ? it[0] : it.sel || '', iw = vis && key ? inertWhy(key, P) : '';
     row._inert = iw; row.classList.toggle('inert', !!iw); if (iw) row.title = '现在不起作用：' + iw; else row.removeAttribute('title');
     const folded = row._randOf && !pview.ropen[row._randOf] && !q && !(pview.changed && chg);
     row._applies = vis; const lf = legacyFolded(row, det, P, q, chg);     // 4.9.0：没用上的旧（待删）参数收进模块底下的开关
     row.hidden = !vis || folded || lf || !rowMatches(row, it, sec, q) || (pview.changed && !chg);
+    rowStatusSync(row);
   }
+  const auto = !!(q || pview.changed);
+  p43MoreSync(P, auto);     // 4.9.8：常用的直接显示，别的收进模块底下「更多」
   p43RandSync(P); p43BlankSync(P); p43LegacySync(P); syncOutCellLabel();
   // 搜索 / 只看改过的时：所有发射器里有结果的都显示、模块自动展开（记 _autoOpen，清空后收回到用户自己的开合）
-  const auto = !!(q || pview.changed);
   const autoOpen = (d, on, mine) => { if (on) { if (!d.open) { d._autoOpen = true; d._auto = true; d.open = true; setTimeout(() => d._auto = false, 0); } }
     else if (d._autoOpen) { d._autoOpen = false; d._auto = true; d.open = mine; setTimeout(() => d._auto = false, 0); } };
-  document.querySelectorAll('#params details.sec').forEach(det => { if (det._ph) return; det.hidden = ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden);
+  document.querySelectorAll('#params details.sec').forEach(det => { if (det._ph) return; det.hidden = ![...det.children].some(c => c.tagName !== 'SUMMARY' && c.tagName !== 'P' && !c.hidden && !c.classList.contains('moreb'));
     autoOpen(det, auto && !det.hidden, det._key && pview.mopen[det._key] != null ? pview.mopen[det._key] : modDefaultOpen(det._key || '')); });
-  // 4.6.0：没有参数的标准模块（「这个发射器没有这一项 / 跟谁」）只在这个发射器有别的模块看得见、又没在搜索 / 只看改过的时候出现
-  document.querySelectorAll('#params details.mod-empty').forEach(det => { const g = det.parentElement; det.hidden = auto || pview.changed || ![...g.querySelectorAll(':scope > details.sec')].some(d => !d._ph && !d.hidden); });
+  // 4.9.8：没有参数的模块合成的那块灰字，只在这个发射器有别的模块看得见、又没在搜索 / 只看改过的时候出现
+  document.querySelectorAll('#params .mod-empties').forEach(box => { const g = box.parentElement; box.hidden = auto || ![...g.querySelectorAll(':scope > details.sec')].some(d => !d._ph && !d.hidden); });
+  // 4.9.8：花型 / 英文名 / 产物在「效果」标签里（单层）：效果标签总在
+  const idIn = !!document.querySelector('#params section.egrp[data-g="效果"] > .pm-ident') && !$('#pMaster').classList.contains('layermode');
+  if (idIn) appl['效果'] = true;
   const tab = emitTabNow(appl);
   document.querySelectorAll('#params section.egrp').forEach(g => {
-    const e = g.dataset.g, has = [...g.querySelectorAll(':scope > details.sec')].some(d => !d.hidden);
+    const e = g.dataset.g, has = [...g.querySelectorAll(':scope > details.sec')].some(d => !d.hidden) || (e === '效果' && idIn);
     g.hidden = !has || (!auto && tab !== '全部' && e !== tab);
     const n = nChg[e] || 0, b = g.querySelector('.pg-n'); b.textContent = n ? `${n} 项改过` : ''; b.hidden = !n;
   });
@@ -776,11 +814,80 @@ function refreshVisibility() {
   if (host) { const e = host.querySelector('.pempty'); if (e) { e.hidden = !none; e.textContent = pview.changed && !q ? '和打开时比，还没改过参数' : `没有找到「${pview.q}」`; } }
   document.querySelectorAll('#params [data-info=endInfo], #params [data-info=schemeNote], #params [data-info=ballInfo]').forEach(r => r._refresh && r._refresh());
   if (typeof syncScopeResets === 'function') syncScopeResets();     // 4.5.0 改过的模块 / 发射器上的 ↺
-  placeSpecBox();
+  placeSpecBox(); modSummarySync();
+  pview.nChgAll = Object.values(nChg).reduce((a, b) => a + b, 0); pview.tabNow = auto ? '' : tab; scopeSync();
+}
+// ---- 4.9.8（对话框23）参数栏：顶上那块、效果标签里的花型 / 产物、层的导出方案 / 位置与时间、模块收起时的摘要 ----
+// 「现在改的是：金锦层 › 火花」（单层：「菊 › 星」）；在搜索 / 只看改过的时写「› 搜索「寿命」」「› 改过的」
+function scopeLayerName() {
+  if (state.tab === 'combo' && state.comboSel >= 0 && typeof layerName === 'function') { const n = String(layerName(state.comboSel) || ''); return /层$/.test(n) ? n : n + '层'; }
+  const id = $('#abIdName'), nm = id && !$('#abId').hidden ? id.textContent.trim() : '';     // 单层：效果的名字（花型模板就是「菊」）
+  return (nm || String(TYPE_NAMES[state.P.type] || state.P.type || '')).replace(/[（(].*$/, '').trim();
+}
+function scopeSync() {
+  const sc = document.querySelector('#params .pscope'); if (!sc) return;
+  const q = pview.q || '', emit = q ? `搜索「${q}」` : pview.changed ? '改过的参数' : pview.tabNow === '全部' ? '全部发射器' : pview.tabNow || '';
+  const path = sc.querySelector('.ps-path'), ln = scopeLayerName(), html = `<span class="ps-layer">${ln}</span><span class="ps-sep">›</span><span class="ps-emit">${emit}</span>`;
+  if (path.innerHTML !== html) path.innerHTML = html; path.title = `现在改的是：${ln} › ${emit}`;
+  const open = !!(pview.find || q || pview.changed), row = sc.querySelector('.ps-search'), fb = sc.querySelector('.ps-find'), n = sc.querySelector('.ps-n');
+  row.hidden = !open; fb.setAttribute('aria-expanded', String(open)); fb.classList.toggle('on', open);
+  const c = pview.nChgAll || 0; n.hidden = !c; n.textContent = c ? ` · 改过 ${c}` : '';
+  fb.title = (open ? '收起搜索（清掉搜索和「只看改过的」）' : '搜这一层的参数 / 只看和打开时不一样的参数') + (c ? `；和打开时比改过 ${c} 项` : '');
+}
+// 右栏顶上「参数 / 审阅 / 工具」那一行的高度：顶上那块固定在它下面
+function rightHeadVar() {
+  const R = $('#right'), h = document.querySelector('.right-head'); if (!R || !h) return;
+  const set = () => R.style.setProperty('--rhH', h.offsetHeight + 'px'); set();
+  if (!R._rhObs && typeof ResizeObserver !== 'undefined') { R._rhObs = new ResizeObserver(set); R._rhObs.observe(h); }
+}
+// 花型 / 英文名 / 产物：单层时放进「效果」发射器的顶上（不再占右栏第一屏）；没有「效果」发射器时留在原处
+function pmIdentHome() { const el = document.querySelector('.pm-ident'), pm = $('#pMaster'), host = $('#params'); if (el && pm && host && el.parentElement !== pm) pm.insertBefore(el, host); }
+function pmIdentPlace() {
+  const el = document.querySelector('.pm-ident'), g = document.querySelector('#params section.egrp[data-g="效果"]'); if (!el || !g) return;
+  g.querySelector(':scope > .ehead').after(el);
+}
+// 多层里这一层的「导出方案」放进「输出」发射器顶上（交互宪章第 7 节：导出方案在层的「输出」），「位置与时间」「轨迹联动」放进「效果」发射器顶上（这一层在整朵里的设置）
+const LAYER_BITS = [['lhOut', '输出'], ['lhLink', '效果'], ['lhPos', '效果']];
+function layerBitsHome() { const lh = $('#layerHead'); if (!lh) return; for (const [id] of LAYER_BITS) { const el = document.getElementById(id); if (el && !lh.contains(el)) lh.appendChild(el); } }
+function layerBitsPlace() {
+  if (state.tab !== 'combo' || state.comboSel < 0) return;
+  for (const [id, e] of LAYER_BITS) { const el = document.getElementById(id), g = document.querySelector(`#params section.egrp[data-g="${e}"]`); if (el && g) g.querySelector(':scope > .ehead').after(el); }
+  const g = document.querySelector('#params section.egrp[data-g="效果"]'), id = document.querySelector('#params section.egrp[data-g="效果"] > .pm-ident'); if (g && id) g.querySelector(':scope > .ehead').after(id);
+}
+// 每个发射器的「颜色」模块：一行「本层颜色（这一层所有发射器共用）· 去改」，点了滚到下面的「本层颜色」，那里有「← 回到 火花 › 颜色」
+function colorLinks() {
+  for (const g of document.querySelectorAll('#params section.egrp')) {
+    const e = g.dataset.g; if (e === '效果' || e === '输出') continue;
+    const d = [...g.querySelectorAll(':scope > details.mod')].find(x => x._mod === '颜色'); if (!d || d.querySelector('.clink')) continue;
+    const p = document.createElement('p'); p.className = 'clink'; p.innerHTML = `<span>颜色随本层（这一层所有发射器共用一条）</span><button type="button" class="btn mini ghost" title="滚到下面的「本层颜色」去改；改完点那里的「← 回到」回来">去改</button>`;
+    d.querySelector('summary').after(p); p.querySelector('button').addEventListener('click', ev => { ev.preventDefault(); colorGo(e); });
+  }
+}
+function colorGo(fromEmit) {
+  const R = $('#right'), cc = $('#colorControls'); if (!R || !cc) return;
+  pview.colorBack = { emit: fromEmit, scroll: R.scrollTop }; cc.open = true;
+  let back = cc.querySelector('.cback'); if (!back) { back = document.createElement('button'); back.type = 'button'; back.className = 'btn mini cback'; cc.querySelector('summary').after(back);
+    back.addEventListener('click', () => { const b = pview.colorBack; if (!b) return; pview.colorBack = null; back.hidden = true; if (b.emit && pview.tabNow !== b.emit) selectEmitTab(b.emit); R.scrollTop = b.scroll; }); }
+  back.hidden = false; back.textContent = `← 回到 ${fromEmit} › 颜色`;
+  const top = cc.getBoundingClientRect().top - R.getBoundingClientRect().top - ((document.querySelector('#params .pscope') || {}).offsetHeight || 0) - (parseFloat(R.style.getPropertyValue('--rhH')) || 0) - 8;
+  R.scrollTop += top;
+}
+// 模块收起时，标题后面写前两个参数现在的值（例：「生成  生成率 300 · 起势 0.00」），收起了也看得到大概
+function rowValText(row) {
+  if (row.classList.contains('sl')) { const n = row.querySelector('.num'), u = row.querySelector('.k small'); return n ? n.value + (u ? ' ' + u.textContent : '') : ''; }
+  const sel = row.querySelector('select'); if (sel) { const o = sel.options[sel.selectedIndex]; return o ? splitLab(o.textContent)[0] : ''; }
+  const t = row.querySelector('input[type=text]'); return t ? (t.value || '空') : '';
+}
+function modSummarySync() {
+  for (const d of document.querySelectorAll('#params section.egrp:not([hidden]) > details.mod')) {
+    const sm = d.querySelector(':scope > summary'); let sp = sm.querySelector('.msum'); if (!sp) { sp = document.createElement('span'); sp.className = 'msum'; sm.appendChild(sp); }
+    const rows = d.open ? [] : [...d.children].filter(r => r._lab != null && r._applies && !r._randOf && !(r._legacy && !legacyInUse(Array.isArray(r._it) ? r._it[0] : r._it.sel, state.P))).slice(0, 2);
+    const t = rows.map(r => `${r._lab} ${rowValText(r)}`).join(' · '); if (sp.textContent !== t) sp.textContent = t;
+  }
 }
 // 发射器标签：按发射器表的顺序，每个发射器一个（适用的才显示），最后一个「全部」
 // 4.6.0（5.0 第 1 步）：自定义发射器的颜色模块——一层输出只有一条颜色（灰度贴图 + Ramp + Color Over Life），所以跟这一层；要别的颜色就拆层
-function exColorHTML(i) { return `<p class="hint">颜色：跟这一层（灰度贴图越亮越接近渐变图的亮端，再乘这一层的颜色曲线）。要和星不一样的颜色：把它放进另一层（「＋ 加层」后在那一层里加这个发射器）。</p><p class="hint"><button type="button" class="btn mini ghost" data-exoff="${i}">去掉这个发射器</button></p>`; }
+function exColorHTML(i) { return `<p class="hint">颜色随本层：灰度贴图越亮越接近渐变图的亮端，再乘本层的颜色曲线。要和星不同的颜色，把它放进另一层（「＋ 加层」后在那一层加这个发射器）。去掉这个发射器：鼠标在发射器框里停 1.5 秒，右上角出现 ×。</p>`; }     // 4.9.8：去掉的入口挪到发射器框右上角（用户 10-06 12:30）
 function exAddSlot() {
   const P = state.P; for (let i = 1; i <= EX_SLOTS; i++) if (!(+P['x' + i + 'On'] > 0)) { P['x' + i + 'On'] = 1; buildMasterPanel(); onParam(); selectEmitTab('自定义 ' + i); flash(`加了「自定义 ${i}」：默认是星熄灭时生成 8 个光点，在右边改`); return i; }
   flash(`最多 ${EX_SLOTS} 个自定义发射器（要更多：「＋ 加层」在另一层里再加）`, true); return 0;
@@ -810,8 +917,10 @@ function selectEmitTab(e) {
   pview.tab[emitTabFamily()] = e; store.set('pEmitTab', pview.tab);
   if (pview.q || pview.changed) { pview.q = ''; pview.changed = false; store.set('pChanged', false); const i = $('#params .ptools input[type=search]'); if (i) i.value = ''; const c = $('#params .ptools .pchg input'); if (c) c.checked = false; }
   refreshVisibility();
-  const bar = $('#params .etabs'), right = $('#right'), head = document.querySelector('.right-head');
-  if (bar && right && bar.getBoundingClientRect().top < right.getBoundingClientRect().top + (head ? head.offsetHeight : 0)) right.scrollTop += bar.getBoundingClientRect().top - right.getBoundingClientRect().top - (head ? head.offsetHeight : 0) - 8;
+  // 4.9.8：顶上那块固定着；换了发射器、而页面已经往下滚过，就滚回这个发射器的开头（紧贴在顶上那块下面）；选中的标签横着滚进视野
+  const sc = $('#params .pscope'), right = $('#right'), g = document.querySelector(`#params section.egrp[data-g="${e}"]`);
+  if (sc && right && g && !g.hidden) { const d = g.getBoundingClientRect().top - sc.getBoundingClientRect().bottom; if (d < 0) right.scrollTop += d - 4; }
+  const tb = document.querySelector(`#params .etabs [data-e="${e}"]`); if (tb && tb.scrollIntoView) tb.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 function refreshPanelValues() { for (const [row] of panelRows) row._refresh && row._refresh(); }
 function applyShellLocked(n) {

@@ -87,29 +87,62 @@ function legacyInUse(k, P) {
   return L[2] ? !!L[2](P) : true;
 }
 // 面板建好以后：给旧参数行打标记，每个模块底下一个「旧（待删）· N 项」开关（refreshVisibility 里按用没用上收起 / 显示）
+// 4.9.8（对话框23）：「旧（待删）」开关一个发射器一个，放在发射器末尾（以前每个模块底下一个，占行）
 function p43Legacy() {
   for (const [row, it, , det] of panelRows) {
     const k = Array.isArray(it) ? it[0] : it.sel || ''; const L = k && legacyOf(k); if (!L) continue;
     row._legacy = L; row.classList.add('legacy');
     const nm = row.querySelector('.k, .fk'); if (nm && !nm.querySelector('.old-tag')) nm.insertAdjacentHTML('afterbegin', `<span class="old-tag" title="5.0 要删：${L[0]}">旧</span>`);
-    if (!det._oldb) { const b = document.createElement('button'); b.type = 'button'; b.className = 'oldb'; b.hidden = true;
-      b.addEventListener('click', e => { e.preventDefault(); pview.oopen = pview.oopen || {}; pview.oopen[det._key] = !pview.oopen[det._key]; refreshVisibility(); });
-      det._oldb = b; det._oldRows = []; }
-    det._oldRows.push(row);
+    const g = det.closest('section.egrp'); if (!g) continue;
+    if (!g._oldb) { const b = document.createElement('button'); b.type = 'button'; b.className = 'oldb'; b.hidden = true;
+      b.addEventListener('click', e => { e.preventDefault(); pview.oopen = pview.oopen || {}; pview.oopen[g.dataset.g] = !pview.oopen[g.dataset.g]; refreshVisibility(); });
+      g._oldb = b; g._oldRows = []; }
+    det._oldb = g._oldb; g._oldRows.push(row);
   }
-  for (const [, , , det] of panelRows) if (det._oldb && !det._oldb.parentElement) det.appendChild(det._oldb);
+  for (const g of document.querySelectorAll('#params > section.egrp')) if (g._oldb && !g._oldb.parentElement) { const me = g.querySelector(':scope > .mod-empties'); g.insertBefore(g._oldb, me || null); }
 }
-// 某行是不是被「旧（待删）」收起：旧参数、这个效果没用上、模块的开关没打开、没在搜索 / 只看改过的
-function legacyFolded(row, det, P, q, chg) { return !!row._legacy && !legacyInUse(row._it && (Array.isArray(row._it) ? row._it[0] : row._it.sel), P) && !(pview.oopen && pview.oopen[det._key]) && !q && !(pview.changed && chg); }
+// 某行是不是被「旧（待删）」收起：旧参数、这个效果没用上、发射器的开关没打开、没在搜索 / 只看改过的
+function legacyFolded(row, det, P, q, chg) { return !!row._legacy && !legacyInUse(row._it && (Array.isArray(row._it) ? row._it[0] : row._it.sel), P) && !(pview.oopen && pview.oopen[det._g]) && !q && !(pview.changed && chg); }
 function p43LegacySync(P) {
+  for (const g of document.querySelectorAll('#params > section.egrp')) {
+    if (!g._oldb) continue;
+    const open = !!(pview.oopen && pview.oopen[g.dataset.g]), idle = g._oldRows.filter(r => r._applies && !legacyInUse(Array.isArray(r._it) ? r._it[0] : r._it.sel, P));
+    g._oldb.hidden = !idle.length || !!pview.q || pview.changed;
+    g._oldb.textContent = open ? `旧（待删）▾ 收起 ${idle.length} 项` : `旧（待删）▸ ${idle.length} 项没用上`;
+    g._oldb.title = (open ? '点一下收起。' : '点一下显示（显示在各自的模块里）。') + '5.0 要删的参数（参数宪章）：这个效果没用上，所以收起来了；用着的照常显示、名字前有「旧」。' + idle.map(r => r._lab).join('、');
+    g._oldb.classList.toggle('on', open);
+  }
+}
+// 4.9.8（对话框23 参数栏交互）：每个模块常用的直接显示，别的收进「更多 N 项」（开关在模块标题这一行右边，点开记住）。
+// 常用 = 命名表 tier「core」，加上改过的（和打开时不一样）；说明行 / 规格框总显示。模块里常用的不到 1 项、或者别的不到 3 项，就全显示（不值得收）。
+// 搜索 / 只看改过的时不收。随机行跟着本体走；旧（待删）有自己的开关
+function p43More() {
   const seen = new Set();
   for (const [, , , det] of panelRows) {
-    if (!det._oldb || seen.has(det)) continue; seen.add(det);
-    const open = !!(pview.oopen && pview.oopen[det._key]), idle = det._oldRows.filter(r => r._applies && !legacyInUse(Array.isArray(r._it) ? r._it[0] : r._it.sel, P));
-    det._oldb.hidden = !idle.length || !!pview.q || pview.changed;
-    det._oldb.textContent = open ? `旧（待删）▾ 收起 ${idle.length} 项` : `旧（待删）▸ ${idle.length} 项没用上`;
-    det._oldb.title = (open ? '点一下收起。' : '点一下显示。') + '5.0 要删的参数（参数宪章）：这个效果没用上，所以收起来了；用着的照常显示、名字前有「旧」。' + idle.map(r => r._lab).join('、');
-    det._oldb.classList.toggle('on', open);
+    if (seen.has(det) || !det.classList.contains('mod')) continue; seen.add(det);
+    const b = document.createElement('span'); b.className = 'moreb'; b.hidden = true; b.setAttribute('role', 'button'); b.tabIndex = 0;
+    const go = e => { e.preventDefault(); e.stopPropagation(); pview.more = pview.more || store.get('pModMore', {}); pview.more[det._key] = !pview.more[det._key]; store.set('pModMore', pview.more); refreshVisibility(); };
+    b.addEventListener('click', go); b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') go(e); });
+    det._moreb = b; det.querySelector(':scope > summary').appendChild(b);
+  }
+}
+const isCoreRow = r => r._lab == null || !r._nm || r._nm.tier !== 'more' || r.classList.contains('chg');
+function p43MoreSync(P, auto) {
+  pview.more = pview.more || store.get('pModMore', {});
+  const byDet = new Map();
+  for (const [row, , , det] of panelRows) { if (!det._moreb) continue; if (!byDet.has(det)) byDet.set(det, []); if (row._applies && !row._randOf && !row._legacy) byDet.get(det).push(row); }
+  for (const [det, rows] of byDet) {
+    const core = rows.filter(isCoreRow), more = rows.filter(r => !isCoreRow(r)), open = !!pview.more[det._key];
+    const fixed = det._g === '输出' && OUT_FIRST.includes(det._mod);     // 输出的「直接调」「算出来的」本来就是收口后的那几项（交互宪章第 2 节），不再收
+    const fold = !auto && !fixed && core.length >= 1 && more.length >= 3, b = det._moreb;
+    b.hidden = !fold;
+    if (fold) {
+      const D = defaultsFor(P.type).P, set = more.filter(r => { const k = Array.isArray(r._it) ? r._it[0] : r._it.sel || r._it.curve || r._it.text; return k && D[k] !== undefined && String(P[k]) !== String(D[k]) && !(+P[k] === +D[k]); }).length;
+      b.textContent = open ? `收起 ${more.length} 项` : `更多 ${more.length} 项${set ? ` · ${set} 项设过` : ''}`;
+      b.title = (open ? '点一下收起这些不常用的参数：' : '点一下显示这些不常用的参数（搜索也找得到）') + (set && !open ? `；其中 ${set} 项不是模板默认值` : '') + '：' + more.map(r => r._lab).join('、');
+      b.classList.toggle('on', open);
+      if (!open) for (const r of more) { r.hidden = true; if (r._rands) for (const [rr] of r._rands) rr.hidden = true; }
+    }
   }
 }
 function inertWhy(key, P) {
@@ -122,6 +155,16 @@ const PMODULE = (() => { const m = {}; for (const x of (typeof PMODULES !== 'und
 // 4.9.5（宪章遗漏 1，输出栏收口）：大面片 / 分段 / 地面循环的「输出」只展开「直接调」「算出来的」，别的模块默认收起（点开会记住）
 const OUT_FIRST = ['直接调', '算出来的'];
 function modDefaultOpen(key) { const [e, m] = String(key).split('›'); return !(e === '输出' && typeof isSeq === 'function' && isSeq(state.P) && !OUT_FIRST.includes(m)); }
+// 4.9.8（对话框23，用户 10-06 12:30「放到发射器的框右上角，鼠标停留1.5s出现一个x，我点就删除，不要放在颜色模块中」）：
+// 只有能去掉的发射器（自定义发射器）有 ×：鼠标在发射器框里停 1.5 秒出现，移开收起；键盘 Tab 进这个框马上出现。点了 = 去掉（Ctrl+Z 撤回）
+const EDEL_DELAY = 1500;
+function edelBind(sec) {
+  let t = 0; const show = on => { const b = sec.querySelector('.edel'); if (b) b.classList.toggle('on', on); };
+  sec.addEventListener('pointerenter', () => { clearTimeout(t); t = setTimeout(() => show(true), EDEL_DELAY); });
+  sec.addEventListener('pointerleave', () => { clearTimeout(t); if (!sec.contains(document.activeElement)) show(false); });
+  sec.addEventListener('focusin', () => { clearTimeout(t); show(true); });
+  sec.addEventListener('focusout', e => { if (!sec.contains(e.relatedTarget) && !sec.matches(':hover')) show(false); });
+}
 // 返回 place(sec, it, key, nm) → 这一行该放进的模块（发射器 section 里的 details.mod）。4.4 没有「更多」：模块默认展开，模块本身可以收起（记住）
 function p43Skeleton(host) {
   const secs = {}, mods = {};
@@ -129,7 +172,12 @@ function p43Skeleton(host) {
     if (secs[e]) return secs[e];
     const d = EMIT_DEF[e] || { n: e, en: '', lv: '', what: '', mods: [], i: 99 }, s = document.createElement('section');
     s.className = 'egrp pgrp p43'; s.dataset.g = e; s._i = d.i;
-    s.innerHTML = `<div class="ehead"><b class="pg-t">${e}</b>${d.en ? `<small class="men">${d.en}</small>` : ''}${d.lv ? `<span class="elv">${d.lv}</span>` : ''}<span class="pg-n" hidden></span><p class="ewhat">${d.what || ''}</p></div>`;
+    const xi = /^自定义 (\d+)$/.exec(e);
+    s.innerHTML = `<div class="ehead"><b class="pg-t">${e}</b>${d.en ? `<small class="men">${d.en}</small>` : ''}${d.lv ? `<span class="elv">${d.lv}</span>` : ''}<span class="pg-n" hidden></span>`
+      + (xi ? `<button type="button" class="edel" data-exoff="${xi[1]}" aria-label="去掉「${e}」" title="去掉「${e}」（Ctrl+Z 能撤回）">×</button>` : '')
+      + `<p class="ewhat" title="点一下看全文">${d.what || ''}</p></div>`;
+    if (xi) edelBind(s);
+    const ew = s.querySelector('.ewhat'); ew.addEventListener('click', () => ew.classList.toggle('full'));
     const after = [...host.querySelectorAll(':scope > section.egrp')].find(x => x._i > d.i);
     host.insertBefore(s, after || null); secs[e] = s; return s;
   };
@@ -139,7 +187,7 @@ function p43Skeleton(host) {
       const s = emitSec(x.e), order = (EMIT_DEF[x.e] || {}).mods || [], d = document.createElement('details');
       d.className = 'sec mod'; d._auto = true; d.open = pview.mopen[k] != null ? pview.mopen[k] : modDefaultOpen(k); setTimeout(() => d._auto = false, 0);
       d.innerHTML = `<summary>${x.m}</summary>`;
-      d.addEventListener('toggle', () => { if (d._auto) return; pview.mopen[k] = d.open; store.set('pModOpen', pview.mopen); });
+      d.addEventListener('toggle', () => { if (typeof modSummarySync === 'function') modSummarySync(); if (d._auto) return; pview.mopen[k] = d.open; store.set('pModOpen', pview.mopen); });
       d._sec = { sec: x.m }; d._g = x.e; d._mod = x.m; d._key = k; d._oi = order.includes(x.m) ? order.indexOf(x.m) : 99;
       const after = [...s.querySelectorAll(':scope > details.mod')].find(m => m._oi > d._oi);
       s.insertBefore(d, after || null); mods[k] = d;
@@ -198,26 +246,32 @@ function p43BlankSync(P) {
   btns.querySelectorAll('[data-rmmod]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); if (blankRemoveModule(state.P, b.dataset.rmmod)) { buildMasterPanel(); onParam(); } }));
 }
 // 4.6.0（5.0 第 1 步，用户 10-05 20:22「每一个子发射器拥有的参数都是全的」）：每个发射器都列同一套 9 个模块。
-// 有参数的照常；没有参数的也列出来，写明「跟谁」或「为什么没有」——看得出哪些是全的、哪些借父级、哪些是物理上没有
+// 4.9.8（对话框23，用户 10-06 12:30「尽量精简描述，描述用词专业点……可以书面化精简些」）：没有参数的模块不再一个个占位，
+// 在发射器末尾合成一块灰字，原因相同的合成一行（例：「形状 · 初速 · 受力：开花点单次闪光，无位移」）。模块照样都在，看得出哪些是全的、哪些借父级、哪些物理上没有
 const STD_MODS = ['生成', '形状', '初速', '受力', '寿命', '大小', '颜色', '亮度', '闪烁'];
 const MOD_EMPTY = {
-  '星': { 颜色: '在下面「颜色」一节：这一层的渐变图 + 变色（一层只有一条颜色）', 闪烁: '在「亮度」里：闪烁强度；点灭在「点灭」' },
-  '火花': { 形状: '从星身上喷出（位置 = 星走过的路），没有单独的形状', 闪烁: '在「亮度」的随机下面：火花闪烁 / 闪烁频率' },
-  '余烬': { 形状: '跟火花：从星身上喷出', 初速: '跟火花：「火花 › 初速」（跟随星体 / 速度随机）', 受力: '跟火花：「火花 › 受力」（阻力 / 下坠）', 颜色: '出生时的温度（跟火花），之后不降温', 闪烁: '跟火花的闪烁' },
-  '分叉火花': { 形状: '从分叉的那粒火花身上甩出', 闪烁: '跟火花的闪烁' },
-  '爆裂': { 受力: '小闪只亮零点几秒，原地不动（位置在出生那一刻算好：范围 + 速度 × 延迟）', 颜色: '跟这一层的颜色（灰度贴图 + 渐变图）；要别的颜色就拆层', 闪烁: '小闪本身就是一闪' },
-  '子花': { 颜色: '跟这一层的颜色', 闪烁: '跟主星的闪烁强度' },
-  '开花闪光': { 生成: '开花那一刻，固定 1 团', 形状: '在开花点', 初速: '不动', 受力: '不动', 颜色: '跟这一层的颜色', 闪烁: '—' },
+  '星': { 颜色: '随本层颜色（见下方「本层颜色」）', 闪烁: '见「亮度」的闪烁强度；点灭见「点灭」' },
+  '火花': { 形状: '沿星体轨迹发射，无独立形状', 闪烁: '见「亮度」的随机项（闪烁强度、闪烁频率）' },
+  '余烬': { 形状: '同火花', 初速: '同火花', 受力: '同火花', 闪烁: '同火花', 颜色: '取出生时的火花温度，此后不再冷却' },
+  '分叉火花': { 形状: '自母火花的分叉点发射', 闪烁: '同火花' },
+  '爆裂': { 受力: '寿命极短，于出生位置静止发光', 颜色: '随本层颜色', 闪烁: '本身即单次闪光' },
+  '子花': { 颜色: '随本层颜色', 闪烁: '同主星闪烁强度' },
+  '开花闪光': { 生成: '开花瞬间生成 1 次', 形状: '开花点单次闪光，无位移', 初速: '开花点单次闪光，无位移', 受力: '开花点单次闪光，无位移', 颜色: '随本层颜色', 闪烁: '不适用' },
 };
+// 这个发射器没参数的模块 → [[模块, …], 原因]（按 9 个模块的顺序，原因相同的合一行）
+function emptyModGroups(e, have) {
+  const g = new Map();
+  for (const m of STD_MODS) { if (have.has(m)) continue; const why = (MOD_EMPTY[e] || {})[m] || '不适用'; if (!g.has(why)) g.set(why, []); g.get(why).push(m); }
+  return [...g.entries()].map(([why, ms]) => [ms, why]);
+}
 function p43StdModules(host) {
   for (const g of host.querySelectorAll(':scope > section.egrp')) {
     const e = g.dataset.g; if (e === '效果' || e === '输出' || !MOD_EMPTY[e] && !/^自定义/.test(e)) continue;
-    const order = (EMIT_DEF[e] || {}).mods || STD_MODS, have = new Set([...g.querySelectorAll(':scope > details.mod')].map(d => d._mod));
-    for (const m of STD_MODS) {
-      if (have.has(m)) continue;
-      const d = document.createElement('details'); d.className = 'sec mod mod-empty'; d._ph = true; d._mod = m; d._g = e; d._key = e + '›' + m; d._oi = order.includes(m) ? order.indexOf(m) : 99; d.open = true;
-      d.innerHTML = `<summary>${m}</summary><div class="mod-note">${(MOD_EMPTY[e] || {})[m] || '这个发射器没有这一项'}</div>`;
-      const after = [...g.querySelectorAll(':scope > details.mod')].find(x => x._oi > d._oi); g.insertBefore(d, after || null);
-    }
+    const have = new Set([...g.querySelectorAll(':scope > details.mod')].map(d => d._mod)), rows = emptyModGroups(e, have);
+    if (!rows.length) continue;
+    const box = document.createElement('div'); box.className = 'mod-empties'; box._ph = true; box.setAttribute('role', 'note');
+    box.title = '这些模块在这个发射器上没有可调的参数（模块照样都在：9 个标准模块 = 生成 / 形状 / 初速 / 受力 / 寿命 / 大小 / 颜色 / 亮度 / 闪烁）';
+    box.innerHTML = rows.map(([ms, why]) => `<p class="me-row">${ms.map(m => `<span class="me-m" data-m="${m}">${m}</span>`).join('<span class="me-dot"> · </span>')}<span class="me-why">：${why}</span></p>`).join('');
+    g.appendChild(box);
   }
 }

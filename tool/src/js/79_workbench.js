@@ -16,18 +16,23 @@ function layerName(i) {
 function buildLayerCard() {
   const box = $('#layerCard'), on = state.tab === 'combo' && state.layers.length > 0 && !state.showcase;
   box.hidden = !on; if (!on) { box.innerHTML = ''; return; }
+  // 4.9.8（对话框23；用户 10-04 偏好「图层管理默认展开、入口清晰」）：默认展开，你收起 / 展开会记住；每层压成紧凑的一行
+  // 屏幕矮（< 860 px，例：1366×768）时默认收起成一行「图层 [1 橙引线] [2 金锦] … 整体」，点层名就切；你收起 / 展开过就按你的
+  if (!box._init) { box._init = true; box.open = store.get('lcardOpen', typeof innerHeight === 'number' ? innerHeight >= 860 : true); box.addEventListener('toggle', () => store.set('lcardOpen', box.open)); }
   const v = state.layerView;
   const rows = state.layers.map((L, i) => {
     const e = layerEntryOf(L), le = e && e.rep ? FW_REVIEW_LIST.find(x => x.id === e.rep) : null;
     const dur = e && e.bake ? bakeTotal(e.bake) / (L.rate || 1) : 0, solo = v.solo === i, mute = v.mute.includes(i);
-    return `<div class="lrow${state.comboSel === i ? ' cur' : ''}${mute || (v.solo >= 0 && !solo) ? ' muted' : ''}" data-i="${i}" tabindex="0" role="button">
+    return `<div class="lrow${state.comboSel === i ? ' cur' : ''}${mute || (v.solo >= 0 && !solo) ? ' muted' : ''}" data-i="${i}" tabindex="0" role="button" title="第 ${i + 1} 层 · ${layerName(i)} · 开始 ${(+L.delay || 0).toFixed(2)} s · 时长 ${dur.toFixed(2)} s（点一下改这一层的参数）">
       <span class="th" style="${e ? thStyleFor('', () => [thLayerOf(e.P, { ...e.M, stages: L.stages || e.M.stages }, 1)]) : ''}"></span>
-      <span class="tx"><b>${i + 1} · ${layerName(i)}</b><small>开始 <input class="lst" type="number" min="0" max="10" step="0.01" value="${(+L.delay || 0).toFixed(2)}" data-st="${i}" aria-label="第 ${i + 1} 层开始时间"> s · 时长 ${dur.toFixed(2)} s${e && e.editSig ? ' · <em>已调</em>' : ''}</small></span>
+      <span class="tx"><b>${i + 1} · ${layerName(i)}</b><small>开始 <input class="lst" type="number" min="0" max="10" step="0.01" value="${(+L.delay || 0).toFixed(2)}" data-st="${i}" aria-label="第 ${i + 1} 层开始时间"> s<span class="ldur"> · 时长 ${dur.toFixed(2)} s</span>${e && e.editSig ? ' · <em>已调</em>' : ''}</small></span>
       <span class="lb"><button type="button" class="mini${solo ? ' on' : ''}" data-solo="${i}" aria-pressed="${solo}">独看</button><button type="button" class="mini${mute ? ' on' : ''}" data-mute="${i}" aria-pressed="${mute}">静音</button></span>${lib.my ? myLayerTools(i) : ''}</div>`;
   });
   if (lib.my) rows.push(`<button type="button" class="btn mini myadd" id="myAdd" title="加一层：花型模板，或现有效果里的某一层（参数复制一份）">＋ 加一层</button>`);
-  box.innerHTML = `<summary>图层管理 · ${state.layers.length} 层${lib.my ? ' · 加层 / 排序 / 复制' : ''}</summary><div class="lc-h"><small>时间轴点一层改参数；显示 / 独看只影响观察。${lib.my ? '每层是这个效果自己的一份参数（从模板 / 原效果复制来的），改了不影响原来的效果。' : ''}</small></div>
-    <div class="lrow whole${state.comboSel < 0 ? ' cur' : ''}" data-i="-1" tabindex="0" role="button"><span class="th whole">${state.layers.length}</span><span class="tx"><b>整体</b><small>各层的位置、延迟、时间倍率、颜色</small></span></div>${rows.join('')}`;
+  // 4.9.8：「整体」挪到标题这一行右边（各层的位置、延迟、时间倍率、颜色），省一行给参数
+  box.innerHTML = `<summary><span class="lc-t">图层管理 · ${state.layers.length} 层${lib.my ? ' · 加层 / 排序 / 复制' : ''}</span><span class="lc-chips">${state.layers.map((L, i) => `<button type="button" class="lc-chip${state.comboSel === i ? ' cur' : ''}" data-i="${i}" aria-pressed="${state.comboSel === i}" title="改第 ${i + 1} 层 · ${layerName(i)} 的参数">${i + 1} ${layerName(i)}</button>`).join('')}</span><button type="button" class="lc-whole${state.comboSel < 0 ? ' cur' : ''}" data-i="-1" title="整体：各层在整朵里的位置、延迟、时间倍率、颜色" aria-pressed="${state.comboSel < 0}">整体</button></summary><div class="lc-h"><small>时间轴点一层改参数；显示 / 独看只影响观察。${lib.my ? '每层是这个效果自己的一份参数（从模板 / 原效果复制来的），改了不影响原来的效果。' : ''}</small></div>
+    ${rows.join('')}`;
+  box.querySelectorAll('.lc-whole, .lc-chip').forEach(b => b.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); selectComboLayer(+b.dataset.i); }));
   box.querySelectorAll('.lrow').forEach(r => {
     const go = ev => { if (ev.target.closest('button,input')) return; selectComboLayer(+r.dataset.i); };
     r.addEventListener('click', go); r.addEventListener('keydown', ev => { if (ev.key === 'Enter') go(ev); });
@@ -73,12 +78,15 @@ function outNote(L, e) {
 }
 function buildLayerHead(i) {
   const L = state.layers[i], host = $('#layerHead'); host.innerHTML = '';
+  for (const id of ['lhOut', 'lhPos', 'lhLink']) { const el = document.getElementById(id); if (el) el.remove(); }     // 4.9.8：上一层的导出方案 / 位置与时间放在参数栏里（layerBitsPlace），先拿掉
   host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b title="第 ${i + 1} 层 · ${layerName(i)}">当前图层 · ${layerName(i)}</b><button class="shelp" type="button" id="lhHelp" title="这一层怎么调">？</button></div>
     <p class="hint" id="lhHelpText" hidden>下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 寿命结束 / 火花停止（圆点）都可以直接拖。每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
-    ${lib.my || linkedWith(i).length ? `<details class="lh-link-details"><summary>轨迹联动${linkedWith(i).length ? ' · 第 ' + linkedWith(i).map(j => j + 1).join('、') + ' 层' : ' · 关联图层'}</summary>${lib.my ? myLinkHTML(i) : `<p class="lh-link">和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、随机等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>`}</details>` : ''}`);
-  const pos = document.createElement('details'); pos.className = 'sec lh-position'; pos.open = false; pos.innerHTML = '<summary>位置与时间 · 缩放 / 延迟 / 镜像</summary>'; host.appendChild(pos);
+    ${lib.my || linkedWith(i).length ? `<details class="lh-link-details sec" id="lhLink"><summary>轨迹联动${linkedWith(i).length ? ' · 第 ' + linkedWith(i).map(j => j + 1).join('、') + ' 层' : ' · 关联图层'}</summary>${lib.my ? myLinkHTML(i) : `<p class="lh-link">和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、随机等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>`}</details>` : ''}`);
+  // 4.9.8：「位置与时间」放进这一层的「效果」发射器顶上，默认展开（接力调开始时间常用）；开始时间和图层管理里那一格是同一个值
+  const pos = document.createElement('details'); pos.className = 'sec lh-position'; pos.id = 'lhPos'; pos.open = store.get('lhPosOpen', true); pos.innerHTML = '<summary title="开始时间、缩放、时间倍率、水平镜像（这一层在整朵里的位置和时间）">这一层在整朵里</summary>'; host.appendChild(pos);
+  pos.addEventListener('toggle', () => store.set('lhPosOpen', pos.open));
+  slider(pos, `lh${i}-delay`, '开始时间', 's', 0, 10, 0.01, () => L.delay, v => { L.delay = v; const c = document.querySelector(`#layerCard [data-st="${i}"]`); if (c) c.value = (+v).toFixed(2); stage2.tlSig = ''; }, 0);
   slider(pos, `lh${i}-scale`, '缩放', '×', 0.1, 6, 0.01, () => L.scale, v => L.scale = v, 1);
-  slider(pos, `lh${i}-delay`, '延迟', 's', 0, 10, 0.01, () => L.delay, v => L.delay = v, 0);
   slider(pos, `lh${i}-rate`, '时间倍率', '×', 0.3, 2, 0.01, () => L.rate, v => L.rate = v, 1);
   const mir = document.createElement('label'); mir.className = 'check'; mir.innerHTML = '<input type="checkbox"> 水平镜像';
   const cb = mir.querySelector('input'); cb.checked = !!L.mirror; cb.addEventListener('change', () => L.mirror = cb.checked); pos.appendChild(mir);
@@ -100,6 +108,7 @@ function buildLayerHead(i) {
   host.querySelector('#lhBack').addEventListener('click', () => selectComboLayer(-1));
   const lo = host.querySelector('#lhLinkOff'); if (lo) lo.addEventListener('change', () => { state.linkOff = lo.checked; });
   host.querySelectorAll('[data-link]').forEach(cb => cb.addEventListener('change', () => mySetLinked(i, +cb.dataset.link, cb.checked)));
+  if (typeof layerBitsPlace === 'function') { layerBitsPlace(); refreshVisibility(); }     // 4.9.8：导出方案 → 「输出」，位置与时间 / 轨迹联动 → 「效果」
 }
 function syncComboPanels() {
   const combo = state.tab === 'combo', lay = combo && state.comboSel >= 0;
@@ -133,7 +142,7 @@ const wbIdle = () => !state.baking && !state.dirty && !(state.layerQueue && stat
 // 打开 / 换版本后，等烘焙稳定了再记「没改过」的样子（烘焙会自动补一些派生字段，不算你的改动）
 function wbArm() {
   const n = ++wb.arm; wb.sig = '';
-  const tick = () => { if (n !== wb.arm) return; if (wbIdle()) { wb.sig = wbSig(); wbSync(); if (typeof undoReset === 'function') undoReset(); } else setTimeout(tick, 400); };
+  const tick = () => { if (n !== wb.arm) return; if (wbIdle()) { wb.sig = wbSig(); wbSync(); if (typeof undoReset === 'function') undoReset(); if (typeof refreshVisibility === 'function' && $('#params').childElementCount) refreshVisibility(); } else setTimeout(tick, 400); };
   setTimeout(tick, 300);
 }
 function wbVisible() { return !state.showcase && !!(lib.review ? lib.review.kind !== 'queued' : lib.formal || /^(type:|combo$|my:|tpl:|mt:)/.test(wbKey())); }
@@ -199,7 +208,7 @@ function idBarSync(list, changed) {
   let info; try { info = idBarInfo(list, changed); } catch (err) { host.hidden = true; return; }
   if (host.hidden) host.hidden = false;
   const html = info.chips.map(([t, c, d]) => `<span class="idc ${c || ''}" title="${String(d || t).replace(/"/g, '&quot;')}">${t}</span>`).join('');
-  if ($('#abIdName').textContent !== info.name) $('#abIdName').textContent = info.name;
+  if ($('#abIdName').textContent !== info.name) { $('#abIdName').textContent = info.name; if (typeof scopeSync === 'function') scopeSync(); }     // 4.9.8：右栏顶上「现在改的是」跟着名字
   const ch = $('#abIdChips'); if (ch.dataset.h !== html) { ch.innerHTML = html; ch.dataset.h = html; }
   const tt = [info.name, ...info.chips.map(x => x[2] || x[0])].join('\n'); if (host.title !== tt) host.title = tt;
 }

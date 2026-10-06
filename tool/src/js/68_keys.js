@@ -24,8 +24,9 @@ const KEYMAP = [
   { id: 'nextItem', label: '↓', what: '左栏下一个 AI 条目', where: '左栏', guard: 'typing', test: e => plain(e) && e.key === 'ArrowDown' },
   { id: 'undo', label: 'Ctrl+Z', what: '撤销（参数、加层 / 删层 / 挪层、删除效果）', where: '全局', guard: 'text', test: e => (e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase() === 'z' },
   { id: 'redo', label: 'Ctrl+Shift+Z / Ctrl+Y', what: '重做', where: '全局', guard: 'text', test: e => (e.ctrlKey || e.metaKey) && !e.altKey && ((e.shiftKey && e.key.toLowerCase() === 'z') || e.key.toLowerCase() === 'y') },
-  { id: 'esc', label: 'Esc', what: '关掉最上面的一样：钉住的说明 → 花型库 → 更新记录 → 打开的菜单 → 抽屉式的栏；都没有时切精简布局', where: '全局', guard: 'none', test: e => e.key === 'Escape' },
+  { id: 'esc', label: 'Esc', what: '关掉最上面的一样：参数说明 → 花型库 → 更新记录 → 打开的菜单 → 抽屉式的栏；都没有时切精简布局', where: '全局', guard: 'none', test: e => e.key === 'Escape' },
   { id: 'keys', label: '?', what: '看这张快捷键表', where: '全局', guard: 'typing', test: e => !e.ctrlKey && !e.metaKey && !e.altKey && e.key === '?' },
+  { id: 'help', label: 'F1', what: '参数说明：打开光标所在参数的说明（固定在右栏底部）；开着时再按一次关掉', where: '右栏', guard: 'none', test: e => e.key === 'F1' && !e.ctrlKey && !e.metaKey && !e.altKey },     // 4.9.8（对话框23）
 ];
 function plain(e) { return !e.ctrlKey && !e.metaKey && !e.altKey; }     // 和以前一样：按着 Shift 也算（R / F / V / L / P、方向键）
 const KEY_FNS = {};

@@ -159,7 +159,7 @@
       <div id="exposureControls" class="group" hidden><button class="btn" id="suggestExposure" type="button" title="采样燃烧段最亮时刻的99.8%分位，按「建议亮部目标」更新贴图曝光（不含开花闪光）；不是对所有像素不过曝的保证。">建议曝光（按最亮时刻）</button></div>
       <div id="params"></div>
       <details class="sec" id="colorControls" open>
-        <summary>颜色 · Color</summary>
+        <summary>本层颜色 · 这一层所有发射器共用</summary>
         <div id="matSliders"></div>
         <div class="stages" id="stages"></div>
         <details class="color-extra"><summary>材质与颜色预设</summary>
@@ -194,7 +194,7 @@
           <button class="btn ghost" id="btnJitter">随机微调（未锁定参数）</button>
           <input type="file" id="fileIn" accept=".json,application/json" hidden>
         </div>
-        <p class="note">双击滑杆名称恢复默认值；点名称左边的锁可锁定参数（切换号数、随机微调时不变）。调参后自动重新烘焙，预览与导出的 2K 贴图一致。「实时模拟」是物理原始效果；「导出效果」按项目材质的方式播放：Dynamic Parameter 帧号取整、不做帧间混合、灰度查渐变图上色。</p>
+        <p class="note">点参数名看说明（固定在右栏底部，Esc 关；F1 = 光标所在参数的说明）；双击参数名恢复默认值；鼠标移到参数名左边出现锁，锁定的参数切换号数、随机微调时不变。调参后自动重新烘焙，预览与导出的 2K 贴图一致。「实时模拟」是物理原始效果；「导出效果」按项目材质的方式播放：Dynamic Parameter 帧号取整、不做帧间混合、灰度查渐变图上色。</p>
       </div>
     </aside>
 
