@@ -34,13 +34,13 @@ async (a) => {
     if (typeof MULTI_BY_ID === 'undefined' || !MULTI_BY_ID[ref]) return { missing: true };
     const L = mtLayers(ref); R = a.R || Math.max(...L.map(l => reach(l.P)));
     info = L.map(l => ({ t: l.title, cooling: l.P.cooling, life: l.P.sparkLife, rate: l.P.sparkRate, T0: l.P.T0, dur: l.P.duration, E: l.P.exposure }));
-    if (a.nocool) {
+    if (a.nocool || a.coolf != null) {     // 不冷却（诊断）/ 冷却 × coolf（4.9.17 扫描：只改带火花的层）
       if (typeof mtRenderLayers !== 'function') return { missing: true };
-      res = await mtRenderLayers(L.map(l => ({ ...l, P: derive({ ...l.P, cooling: 0 }) })), { times: a.times, px: a.px, half: R * 1.3, cy: -R * 0.15 });
+      res = await mtRenderLayers(L.map(l => !(+l.P.sparkRate > 0) ? l : ({ ...l, P: derive({ ...l.P, cooling: a.nocool ? 0 : l.P.cooling * a.coolf }) })), { times: a.times, px: a.px, half: R * 1.3, cy: -R * 0.15 });
     } else res = await mtRenderStills(ref, { times: a.times, px: a.px, half: R * 1.3, cy: -R * 0.15 });
   } else {
     if (!TYPES[ref]) return { missing: true };
-    const d = defaultsFor(ref, 40), P = derive({ ...structuredClone(d.P), type: ref, ...(a.nocool ? { cooling: 0 } : {}) }); R = a.R || reach(P);
+    const d = defaultsFor(ref, 40), P0 = structuredClone(d.P), P = derive({ ...P0, type: ref, ...(a.nocool ? { cooling: 0 } : a.coolf != null ? { cooling: P0.cooling * a.coolf } : {}) }); R = a.R || reach(P);
     info = [{ t: TYPE_NAMES[ref], cooling: P.cooling, life: P.sparkLife, rate: P.sparkRate, T0: P.T0, dur: P.duration, E: P.exposure }];
     res = await renderStills40(P, d.M, { times: a.times.filter(t => t < P.duration), px: a.px, half: R * 1.3, cx: 0, cy: -R * 0.15 });
   }
@@ -86,6 +86,8 @@ async def run(a):
         rec['renderer'] = verify_renderer(await pages['新'].evaluate("(()=>{const g=document.createElement('canvas').getContext('webgl2');const x=g&&g.getExtension('WEBGL_debug_renderer_info');return x?g.getParameter(x.UNMASKED_RENDERER_WEBGL):'?'})()"))
         rec['ver'] = {t: await pg.evaluate('VERSION') for t, pg in pages.items()}
         items = [x for x in await pages['新'].evaluate(JS_LIST) if not only or x['key'] in only]
+        if a.cool_scan:
+            await scan(a, pages, items, out, png, rec); await b.close(); return 0
         print(f"新 {rec['ver']['新']} / 旧 {rec['ver']['旧']} · {len(items)} 项", flush=True)
         ft = font(14)
         for n, it in enumerate(items):
@@ -127,7 +129,35 @@ async def run(a):
     return 0
 
 
+async def scan(a, pages, items, out, png, rec):
+    """4.9.17：冷却 × 几个倍数，量新 / 旧亮面积比（开花后 0.8 s 起、旧版面积 > 0.002 的时刻取平均），插值出比值 = 1 的倍数"""
+    fs = [float(x) for x in a.cool_scan.split(',')]; res = {}
+    for it in items:
+        old = await pages['旧'].evaluate(JS_ONE, {'key': it['key'], 'times': TIMES, 'px': a.px})
+        if not old or old.get('missing'): continue
+        mo = {f"{fr['t']:.2f}": measure(png(fr['png']))['area'] for fr in old['frames']}
+        row = {}
+        for f in fs:
+            new = await pages['新'].evaluate(JS_ONE, {'key': it['key'], 'times': TIMES, 'px': a.px, 'R': old['R'], 'coolf': f})
+            mn = {f"{fr['t']:.2f}": measure(png(fr['png']))['area'] for fr in new['frames']}
+            rs = [mn[t] / mo[t] for t in mn if t in mo and float(t) >= 0.8 and mo[t] > 0.002]
+            row[f] = round(sum(rs) / len(rs), 3) if rs else None
+        pts = sorted((f, r) for f, r in row.items() if r is not None)
+        best = None
+        for (f1, r1), (f2, r2) in zip(pts, pts[1:]):     # 冷却越小越亮：比值随倍数下降，找跨过 1 的那段线性插值
+            if (r1 - 1) * (r2 - 1) <= 0 and r1 != r2: best = round(f1 + (1 - r1) * (f2 - f1) / (r2 - r1), 3); break
+        if best is None and pts: best = min(pts, key=lambda x: abs(x[1] - 1))[0]
+        res[it['key']] = {'name': it['name'], '倍数→新/旧面积': row, '比值=1 的倍数': best, 'cooling': [x.get('cooling') for x in (old.get('info') or [])]}
+        print(f"{it['key']} {it['name']} {row} → {best}", flush=True)
+    rec['scan'] = res
+    (out / '冷却扫描.json').write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding='utf-8')
+    md = ['# 冷却倍数扫描（新版冷却 × 倍数，对旧版 4.6.0 的亮面积比）', '', '| 项 | ' + ' | '.join(f'× {f}' for f in fs) + ' | 比值 = 1 的倍数 |', '|' + ' --- |' * (len(fs) + 2)]
+    for k, v in res.items(): md.append(f"| {v['name']} (`{k}`) | " + ' | '.join(str(v['倍数→新/旧面积'].get(f)) for f in fs) + f" | {v['比值=1 的倍数']} |")
+    (out / '冷却扫描.md').write_text('\n'.join(md) + '\n', encoding='utf-8'); print('→', out / '冷却扫描.md', flush=True)
+
+
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--old', required=True); ap.add_argument('--out', required=True); ap.add_argument('--only'); ap.add_argument('--px', type=int, default=300)
+    ap.add_argument('--cool-scan', help='4.9.17：冷却倍数（逗号分开），只量面积比、不出对照图，写 冷却扫描.json / .md')
     raise SystemExit(asyncio.run(run(ap.parse_args())))

@@ -23,6 +23,9 @@ ROOT = HERE.parents[1]
 HTML = ROOT / 'tool' / 'FireworkBaker.html'
 OUT_JS = ROOT / 'tool' / 'data' / 'thumbs.js'
 FR = [0.1, 0.17, 0.24, 0.32, 0.4, 0.5, 0.62, 0.76]
+# 看过候选后改挑的（--ingest 默认用；命令行 --pick 优先）。键 → 第几个候选（按 FR 从 0 数）。
+# 4.9.17 看 NF1：牡丹类（无尾）星越往后越小越暗，面积却不减，自动挑到了暗的后段 → 改挑开花后 0.5–0.7 s 那帧
+PICKS = {'mt:shinBotan': 1, 'mt:crackleShin': 1, 'mt:kiraShin': 2, 'mt:henkaBotan': 0, 'mt:fourColorCrackle': 1, 'mt:somewakeBotan': 1}
 
 JS_LIST = r"""
 () => {
@@ -92,12 +95,13 @@ def font(sz):
 def safe(key): return re.sub(r'[\\/:*?"<>|]', '_', key)
 
 
-def pick(cands):
-    """整体还够亮（≥ 最亮那帧 50%）里，亮的面积最大的一帧"""
-    ok = [i for i, c in enumerate(cands) if c.get('img')]
+def pick(cands, bg):
+    """整体还够亮（亮度减掉背景后 ≥ 最亮那帧的 50%）里，亮的面积最大的一帧。
+    4.9.17：减掉背景（4.9.16 第一版没减，背景占了大头，门槛形同虚设）。挑得不好的（牡丹类星变暗了面积还大）看过候选后用 --ingest --pick 改"""
+    ok = [i for i, c in enumerate(cands) if c.get('img') or c.get('ok')]
     if not ok: return None
-    mx = max(cands[i]['E'] for i in ok)
-    el = [i for i in ok if cands[i]['E'] >= 0.5 * mx] or ok
+    mx = max(cands[i]['E'] - bg for i in ok)
+    el = [i for i in ok if cands[i]['E'] - bg >= 0.5 * mx] or ok
     return max(el, key=lambda i: (cands[i]['lit'], -i))
 
 
@@ -126,7 +130,7 @@ async def run(a):
             rec['expo_from'] = str(a.expo_from)
         L = await pg.evaluate(JS_LIST)
         rec['ver'] = L['ver']; rec['alias'] = L['alias']
-        items = [x for x in L['items'] if not only or x['key'] in only]
+        items = [x for x in L['items'] if not only or x['key'] in only]; got = {}
         print(f"烘焙器 {L['ver']} · {rec['renderer']} · {len(items)} 项", flush=True)
         for n, it in enumerate(items):
             t0 = time.time()
@@ -136,20 +140,25 @@ async def run(a):
                 r = {'error': str(e).splitlines()[0][:300]}
             if r.get('error'):
                 rec['items'][it['key']] = {**it, 'error': r['error']}; print(f"[{n + 1}/{len(items)}] {it['key']} {it['name']} ❌ {r['error']}", flush=True); continue
-            c = r['cands']; k = pick(c); f = safe(it['key'])
-            if k is None:
-                rec['items'][it['key']] = {**it, 'error': '每一帧都是黑的', 'T': r['T']}; print(f"[{n + 1}/{len(items)}] {it['key']} 全黑", flush=True); continue
-            (out / '选中' / (f + '.jpg')).write_bytes(base64.b64decode(c[k]['img'].split(',', 1)[1]))
-            strip = Image.new('RGB', (160 * len(c), 160 + 22), (10, 11, 15)); g = ImageDraw.Draw(strip); ft = font(13)
-            for j, x in enumerate(c):
-                if x.get('img'): strip.paste(img_of(x['img']), (160 * j, 22))
-                g.text((160 * j + 4, 3), f"{j} · {x['t']:.2f}s · 面积 {x['lit']:.3f}", fill=(233, 180, 95) if j == k else (150, 150, 150), font=ft)
-                if j == k: g.rectangle([160 * j, 22, 160 * j + 159, 181], outline=(255, 210, 60), width=3)
-            strip.save(out / '候选' / (f + '.jpg'), quality=80)
-            rec['items'][it['key']] = {**it, 'T': r['T'], 'layers': r['n'], 'pick': k, 'file': f + '.jpg', 'cands': [{x2: x[x2] for x2 in ('t', 'lit', 'E')} for x in c]}
-            print(f"[{n + 1}/{len(items)}] {it['key']} {it['name']} · {r['n']} 层 · 挑 {k}（{c[k]['t']:.2f}s）· {time.time() - t0:.1f}s", flush=True)
+            got[it['key']] = (it, r)
+            print(f"[{n + 1}/{len(items)}] {it['key']} {it['name']} · {r['n']} 层 · {time.time() - t0:.1f}s", flush=True)
         rec['errors'] = errs[:20]
         await b.close()
+    # 背景亮度 = 所有候选里最暗的一帧（定帧的底色是同一个）；再按 面积 ×（亮度 − 背景）挑
+    allE = [x['E'] for _, r in got.values() for x in r['cands']]; bg = min(allE) if allE else 0; rec['bg'] = bg
+    ft = font(13)
+    for key, (it, r) in got.items():
+        c = r['cands']; k = pick(c, bg); f = safe(key)
+        if k is None:
+            rec['items'][key] = {**it, 'error': '每一帧都是黑的', 'T': r['T']}; print(f"{key} 全黑", flush=True); continue
+        (out / '选中' / (f + '.jpg')).write_bytes(base64.b64decode(c[k]['img'].split(',', 1)[1]))
+        strip = Image.new('RGB', (160 * len(c), 160 + 22), (10, 11, 15)); g = ImageDraw.Draw(strip)
+        for j, x in enumerate(c):
+            if x.get('img'): strip.paste(img_of(x['img']), (160 * j, 22))
+            g.text((160 * j + 4, 3), f"{j} · {x['t']:.2f}s · 面积 {x['lit']:.3f}", fill=(233, 180, 95) if j == k else (150, 150, 150), font=ft)
+            if j == k: g.rectangle([160 * j, 22, 160 * j + 159, 181], outline=(255, 210, 60), width=3)
+        strip.save(out / '候选' / (f + '.jpg'), quality=80)
+        rec['items'][key] = {**it, 'T': r['T'], 'layers': r['n'], 'pick': k, 'file': f + '.jpg', 'cands': [{x2: x[x2] for x2 in ('t', 'lit', 'E')} for x in c]}
     (out / '缩略图.json').write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding='utf-8')
     sheets(out, rec)
     bad = [k for k, v in rec['items'].items() if v.get('error')]
@@ -176,13 +185,16 @@ def sheets(out, rec):
 
 def ingest(a):
     src = pathlib.Path(a.ingest); rec = json.loads((src / '缩略图.json').read_text(encoding='utf-8'))
-    picks = dict(x.split('=') for x in (a.pick or '').split(',') if '=' in x); drop = set(x for x in (a.drop or '').split(',') if x)
+    picks = {**PICKS, **dict(x.split('=') for x in (a.pick or '').split(',') if '=' in x)}; drop = set(x for x in (a.drop or '').split(',') if x)
     from PIL import Image
     db, at = {}, time.strftime('%Y-%m-%d %H:%M', time.localtime((src / '缩略图.json').stat().st_mtime))
     job = src.parent.name if src.name == '缩略图' else src.name
     for k, v in rec['items'].items():
         if v.get('error') or not v.get('file') or k in drop: continue
         j = int(picks.get(k, v['pick']))
+        if a.repick and k not in picks:     # 4.9.17：老结果按新规则重挑
+            bg = rec.get('bg') or min(x['E'] for vv in rec['items'].values() for x in vv.get('cands') or [{'E': 1}])
+            j = pick([{**x, 'ok': True} for x in v['cands']], bg)
         if j == v['pick']: b = (src / '选中' / v['file']).read_bytes()
         else:     # 改挑：从候选那一排裁出来
             im = Image.open(src / '候选' / v['file']).convert('RGB').crop((160 * j, 22, 160 * j + 160, 182)); bb = io.BytesIO(); im.save(bb, 'JPEG', quality=85); b = bb.getvalue()
@@ -205,7 +217,7 @@ def ingest(a):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--out'); ap.add_argument('--only'); ap.add_argument('--px', type=int, default=512); ap.add_argument('--expo-from'); ap.add_argument('--fr', help='候选时刻（时长的比例，逗号分开；只在试脚本时改）')
-    ap.add_argument('--ingest'); ap.add_argument('--pick'); ap.add_argument('--drop')
+    ap.add_argument('--ingest'); ap.add_argument('--pick'); ap.add_argument('--drop'); ap.add_argument('--repick', action='store_true', help='按 4.9.17 的挑法（亮度减背景）重挑（老结果用）')
     a = ap.parse_args()
     if a.ingest: ingest(a)
     elif a.out: raise SystemExit(asyncio.run(run(a)))

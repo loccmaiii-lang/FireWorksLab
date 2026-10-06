@@ -53,11 +53,12 @@ const MULTI_TYPES = [
       mtCore('芯 1 · 洋红', 'Magenta', MT_RATIO[2][0], MT_COL.magenta, { stars: 360, headSize: 1.0 }),
       mtCore('芯 2 · 绿', 'Green', MT_RATIO[2][1], MT_COL.lime, { stars: 200 })] },
   { id: 'yaeBlueBotan', name: '八重芯青牡丹 · 金银芯', en: 'YaeshinBlueBotan', group: 0, burn: 2.9,
-    note: '用户参考图 1（4.9.15 按 3D 重做）：亲星青牡丹（无尾，偏紫的铜蓝）；金线是单独一层金菊，112 颗星分成 14 簇（立方 6 轴 + 8 角），顺轴看就是 8 束——轴向 4 束长、对角 4 束短，对着镜头的 2 簇缩进中心；金色火花亮得久、几乎不动，整条飞行路径留在空中；里面一圈橙色短尾芯、中心一团过曝的银白芯。',
+    note: '用户参考图 1（4.9.15 按 3D 重做）：亲星青牡丹（无尾，偏紫的铜蓝）；金线是单独一层金菊，112 颗星分成 14 簇（立方 6 轴 + 8 角），顺轴看就是 8 束——轴向 4 束长、对角 4 束短，对着镜头的 2 簇缩进中心；整套按参考图转 14°，每簇星数、方向略有随机（4.9.17）；金色火花亮得久、几乎不动，整条飞行路径留在空中；里面一圈橙色短尾芯、中心一团过曝的银白芯。',
     src: '用户参考图 1（2026-10-05 20:43、10-06 14:55 / 15:22 指出金线分 8 簇）；伊势神宫奉纳花火大会玉名「八重芯ブルー牡丹」；原理 analysis/原理/多层花型库.md 1c', layers: [
       mtOyaBotan('亲星 · 青牡丹', 'Blue', MT_COL.violetBlue, { headSize: 1.0, stars: 420 }),
       // 金线：分簇（14 簇 × 8 颗；倾斜 3° 让对角两簇微微错开、不完全重合；金星终端速度试过 26：早期飞不到参考的 0.9，退回默认）；火花几乎不继承星速、散得少、下坠小、冷却很慢、寿命长 → 从中心到星头一整条亮线（4.7.0 起老火花先暗，冷却要很慢才连得回中心）
-      mtL('金线 · 金菊（分簇）', 'GoldSpokes', 'kiku', 0.9, { stars: 112, pattern: 'cluster', clusterLayout: 'cube', clusterCone: 7, tilt: 3, headSize: 0.75, headBright: 0.6,
+      // 4.9.17：整套转 14°（参考图 8 束方位 12 / 65 / 105 / 153 / 197 / 238 / 285 / 323°，比轴向平均多转约 15°）；每簇星数 ±30%、方向随机 3°（手工装的一撮撮不一样多、不完全对齐）
+      mtL('金线 · 金菊（分簇）', 'GoldSpokes', 'kiku', 0.9, { stars: 112, pattern: 'cluster', clusterLayout: 'cube', clusterCone: 7, tilt: 3, clusterRoll: 14, clusterStarsJit: 30, clusterDirJit: 3, headSize: 0.75, headBright: 0.6,
         sparkRate: 300, sparkLife: 2.0, sparkLifeJit: 20, sparkSpread: 0.35, sparkInherit: 0.02, sparkGrav: 0.15, sparkDrag: 4, T0: 2250, cooling: 0.1 }, MT_COL.gold, MT_RAMP_GOLD),
       mtL('芯 1 · 橙菊（毛圈）', 'Orange', 'kiku', 0.58, { stars: 320, headSize: 0.8, headBright: 1.2, sparkRate: 130, sparkLife: 0.32, T0: 2150, cooling: 0.4 }, MT_COL.amber, MT_RAMP_GOLD),
       mtL('芯 2 · 银白菊', 'Silver', 'kiku', 0.4, { stars: 340, headSize: 1.0, headBright: 1.4, sparkRate: 170, sparkLife: 0.35, T0: 2800, cooling: 0.3 }, MT_COL.silver, MT_RAMP_SILVER, { hi: 1.6 })] },
@@ -173,12 +174,13 @@ const MULTI_TYPES = [
         // 花型模板「千轮」的小花大（子星初速 45）、小玉近，四组叠在一起每朵都成了混色（第一次定帧看到的）
         mtL('小花 · ' + c[0], c[1], 'senrin', 1, { stars: 6, v0: 120, vt: 30, burn: 0.9, subSpeed: 24, subStars: 30, duration: 3.2, seed: 71 + 7 * i }, c[2], MT_RAMP_NEUTRAL)) },
   { id: 'kowariUkimoyo', name: '锦冠菊小割浮模様', en: 'KamuroKowariUkimoyo', group: 3, burn: 3.8, R: 130,
-    note: '亲星金锦冠菊开花后，同时抛出的二十几个小玉还留在里面（约亲星半径的 0.38），1.5–1.75 s 在中间一朵朵开成红 / 绿 / 青的小花，浮在金冠里（浮模様）；小花小（半径约亲星的 0.1）、开得稍有先后。每种颜色一层（千轮）。',
+    note: '亲星金锦冠菊开花后，同时抛出的二十几个小玉还留在里面（约亲星半径的 0.38），1.5–1.75 s 在中间一朵朵开成红 / 绿 / 青的小花（带一点短尾的小菊），浮在金冠里（浮模様）；小花小（半径约亲星的 0.12）、开得稍有先后。每种颜色一层（千轮）。',
     src: '玉名「錦冠菊小割浮模様」一类（小割 = 小玉装在大玉里，浮模様 = 小花在主花中间浮出一片图样，配方总表 0.2 半割物）；项目 analysis/原理/引菊转锦.md 实拍「开花后约 3 s 的彩色小割（浮模様）」', layers: [
       mtL('亲星 · 金锦冠菊', 'Kamuro', 'kamuro', 1, { stars: 150, vt: 24 }, MT_COL.gold, MT_RAMP_GOLD, { hi: 0.55 }),     // 同芯入锦冠菊：冠压一点，彩色小花才不被金火花淹掉
       // 小玉：比星重（终端速度 30）、初速按 1.5 s 飞到亲星半径 0.38 反推（burn = 小玉飞行时间，千轮的星头不走 burn）；小花：子星初速 20、燃烧 1.0 s；三色开花时刻差 0.12 s，各自 ±12%
       ...[['红', 'Red', MT_COL.red], ['绿', 'Green', MT_COL.green], ['青', 'Blue', MT_COL.blue]].map((c, i) =>
-        mtL('小割 · ' + c[0], c[1], 'senrin', 0.38, { stars: 9, vt: 30, burn: 1.5, subDelay: +(1.5 + 0.12 * i).toFixed(2), subJit: 12, subSpeed: 20, subStars: 26, subBurn: 1.0, carrierTail: 12, subTail: 0, flash: 0, seed: 71 + 7 * i, duration: 3.6 }, c[2], MT_RAMP_NEUTRAL))] },
+        // 4.9.17（NF1 定帧：小花子星 0.6 m、燃烧 1.0 s，在金冠里只剩几粒暗点）：子星 1.1 m、亮度 1.5、32 颗、带一点短尾（小菊）、燃烧 1.4 s，显示强度 1.7
+        mtL('小割 · ' + c[0], c[1], 'senrin', 0.38, { stars: 9, vt: 30, burn: 1.5, subDelay: +(1.5 + 0.12 * i).toFixed(2), subJit: 12, subSpeed: 22, subStars: 32, subBurn: 1.4, subSize: 1.1, subBright: 1.5, carrierTail: 12, subTail: 18, flash: 0, seed: 71 + 7 * i, duration: 4.0 }, c[2], MT_RAMP_NEUTRAL, { hi: 1.7 }))] },
   // ---------------- 单层变体（4.9.6）：花型模板换颜色 / 换尾的常见玉名，一层 ----------------
   { id: 'ginKamuro', name: '银冠', en: 'GinKamuro', group: 4, burn: 3.8, R: 130,
     note: '锦冠的银色版：长火花慢慢下垂成冠，火花是银白（钛 / 铝系）。参数和花型模板「锦冠」一样，只换火花颜色（渐变图）、温度略高。',
@@ -206,10 +208,11 @@ const MULTI_TYPES = [
       mtOyaBotan('红 → 绿 → 黄', 'HenkaBotan', [[0, MT_COL.red], [1.0, MT_COL.green], [1.9, MT_COL.yellow]])] },
   // ---------------- 型物 · 分簇（4.9.16，对话框新花型）：星分簇装（4.9.15 分簇）+ 整套簇转角（4.9.16）；看的方向固定，簇排在画面平面里 ----------------
   { id: 'mangekyo', name: '万華鏡 · 红绿金', en: 'Mangekyo', group: 5, burn: 2.8,
-    note: '星不铺满球壳，一小撮一小撮装在对称位置：外圈 8 束（红 4 束、绿 4 束交替，每束一种颜色、束之间留空），里圈 8 束金色短尾菊插在外圈两束中间，中心一团银白芯。像从万花筒里看到的对称图样。整套排在画面平面里（烘出来的面片是固定视角，正对着看最整齐）。',
+    note: '星不铺满球壳，一小撮一小撮装在对称位置：外圈 8 瓣（红 4 瓣、绿 4 瓣交替，每瓣一种颜色、瓣之间留空），里圈 8 束金色短尾菊插在外圈两束中间，中心一团银白芯。像从万花筒里看到的对称图样。整套排在画面平面里（烘出来的面片是固定视角，正对着看最整齐）。',
     src: 'Walkerplus 花火の種類「万華鏡を覗いたような形状」（型物一类）；分簇装法见原理 analysis/原理/多层花型库.md 1c', layers: [
-      mtL('外圈 · 红束（4 簇）', 'RedSpokes', 'botan', 1, { stars: 120, vt: MT_VT[0], pattern: 'cluster', clusterLayout: 'ring', clusterN: 4, clusterCone: 11, clusterRoll: 0, headSize: 1.0, sparkRate: 0, flicker: 0.15 }, MT_COL.red, MT_RAMP_NEUTRAL),
-      mtL('外圈 · 绿束（4 簇，错开 45°）', 'GreenSpokes', 'botan', 1, { stars: 120, vt: MT_VT[0], pattern: 'cluster', clusterLayout: 'ring', clusterN: 4, clusterCone: 11, clusterRoll: 45, headSize: 1.0, sparkRate: 0, flicker: 0.15 }, MT_COL.green, MT_RAMP_NEUTRAL),
+      // 4.9.17（NF1 定帧：星速一样时每簇投影成一道切向短划）：速度离散 14% → 每簇沿径向拉开成一片花瓣
+      mtL('外圈 · 红束（4 簇）', 'RedSpokes', 'botan', 1, { stars: 120, vt: MT_VT[0], pattern: 'cluster', clusterLayout: 'ring', clusterN: 4, clusterCone: 9, speedJit: 14, clusterRoll: 0, headSize: 1.0, sparkRate: 0, flicker: 0.15 }, MT_COL.red, MT_RAMP_NEUTRAL),
+      mtL('外圈 · 绿束（4 簇，错开 45°）', 'GreenSpokes', 'botan', 1, { stars: 120, vt: MT_VT[0], pattern: 'cluster', clusterLayout: 'ring', clusterN: 4, clusterCone: 9, speedJit: 14, clusterRoll: 45, headSize: 1.0, sparkRate: 0, flicker: 0.15 }, MT_COL.green, MT_RAMP_NEUTRAL),
       mtL('里圈 · 金菊（8 簇，错开 22.5°）', 'GoldSpokes', 'kiku', 0.55, { stars: 160, pattern: 'cluster', clusterLayout: 'ring', clusterN: 8, clusterCone: 6, clusterRoll: 22.5, headSize: 0.8, headBright: 1.2, sparkRate: 130, sparkLife: 0.35, T0: 2300, cooling: 0.4 }, MT_COL.gold, MT_RAMP_GOLD),
       mtCore('芯 · 银白', 'Silver', 0.24, MT_COL.silver, { stars: 160 })] },
   { id: 'somewakeBotan', name: '染分牡丹 · 红绿', en: 'SomewakeBotan', group: 5, burn: 2.8,
@@ -220,7 +223,7 @@ const MULTI_TYPES = [
 ];
 const MULTI_BY_ID = Object.fromEntries(MULTI_TYPES.map(r => [r.id, r]));
 // 每层贴图曝光（analysis/scripts/多层模板曝光.py 按 autoExposure40 算的，和花型模板 EXPOSURE40 同一算法）；没有就用花型模板的
-const MT_EXPOSURE = {"shinKiku": [0.833, 2.49], "shinBotan": [2.9, 2.49], "yaeshin": [0.613, 2.45, 1.62], "yaeHenka": [1.97, 2.54, 1.64], "mieshin": [0.843, 2.58, 2.5, 1.49], "yoeshin": [2.87, 2.63, 2.54, 1.79, 1.4], "itsueHenka": [1.97, 2.68, 2.57, 2.03, 1.67, 1.38], "yaeStrobe": [2.91, 2.52, 1.66], "kamuroShin": [2.26, 2.57], "crackleShin": [2.9, 1.86], "strobeShin": [2.87, 2.23], "fourColorCrackle": [3.07, 3.04, 3.07, 3.07, 1.73], "jisaShinBotan": [2.07, 2.37], "henkaKikuShin": [2.06, 2.45], "mieStrobeKiku": [1.95, 2.58, 2.5, 1.49], "kiraShin": [2.9, 0.684], "shiyuShin": [0.647, 2.51, 2.82], "palmShin": [0.284, 1.62], "hikiSakiKiku": [1.97], "henkaBotan": [2.9], "mieKamuroSaki": [2.6, 3.21, 2.76, 2.52, 1.88], "ginKamuro": [1.79], "ginYanagi": [0.582], "colorSenrin": [2.08, 1.91, 1.27, 1.98], "yanagiTips": [0.772, 2.7], "yaeBlueBotan": [2.92, 0.201, 0.81, 0.136]};
+const MT_EXPOSURE = {"shinKiku": [0.833, 2.49], "shinBotan": [2.9, 2.49], "yaeshin": [0.613, 2.45, 1.62], "yaeHenka": [1.97, 2.54, 1.64], "mieshin": [0.843, 2.58, 2.5, 1.49], "yoeshin": [2.87, 2.63, 2.54, 1.79, 1.4], "itsueHenka": [1.97, 2.68, 2.57, 2.03, 1.67, 1.38], "yaeStrobe": [2.91, 2.52, 1.66], "kamuroShin": [2.26, 2.57], "crackleShin": [2.9, 1.86], "strobeShin": [2.87, 2.23], "fourColorCrackle": [3.07, 3.04, 3.07, 3.07, 1.73], "jisaShinBotan": [2.07, 2.37], "henkaKikuShin": [2.06, 2.45], "mieStrobeKiku": [1.95, 2.58, 2.5, 1.49], "kiraShin": [2.9, 0.684], "shiyuShin": [0.647, 2.51, 2.82], "palmShin": [0.284, 1.62], "hikiSakiKiku": [1.97], "henkaBotan": [2.9], "mieKamuroSaki": [2.6, 3.21, 2.76, 2.52, 1.88], "ginKamuro": [1.79], "ginYanagi": [0.582], "colorSenrin": [2.08, 1.91, 1.27, 1.98], "yanagiTips": [0.772, 2.7], "yaeBlueBotan": [2.92, 0.201, 0.81, 0.136], "yoeshinKoro": [1.11, 1.9, 2.65, 2.51, 1.87, 1.37], "somewakeBotan": [2.85, 2.83], "kowariUkimoyo": [2.11, 1.36, 1.32, 1.47], "mangekyo": [1.79, 1.84, 0.381, 1.62]};
 // 每层的显示强度（Color Over Life 倍数）：各层贴图都按自己最亮处归一，这里按游戏内大小看过定层间明暗（亲星最亮、芯略暗）
 // 彩色芯按颜色的亮度补：铜蓝、锶红、紫这些亮度低的色给高一点，柠檬绿、黄、银白不补（(0.45 / 相对亮度)^0.5，夹在 0.9–1.45）
 const mtLum = hex => { const c = hexToLin(hex); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };

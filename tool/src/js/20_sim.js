@@ -145,10 +145,26 @@ function clusterDirs(P, rng, R) {
   const tl = (+P.tilt || 0) * Math.PI / 180, ct = Math.cos(tl), st = Math.sin(tl);
   // 4.9.16 簇转角（clusterRoll，用户 10-06 17:57「可以加这个参数」）：倾斜以后整套簇在画面里绕看的方向（z 轴）转，逆时针为正；缺省 0 = 不转（逐位同 4.9.15）
   const rl = (+P.clusterRoll || 0) * Math.PI / 180, cr = Math.cos(rl), sr = Math.sin(rl);
-  const C = clusterCenters(P, rng, R).map(([x, y, z]) => [x, y * ct - z * st, y * st + z * ct]).map(([x, y, z]) => rl ? [x * cr - y * sr, x * sr + y * cr, z] : [x, y, z]);
+  let C = clusterCenters(P, rng, R).map(([x, y, z]) => [x, y * ct - z * st, y * st + z * ct]).map(([x, y, z]) => rl ? [x * cr - y * sr, x * sr + y * cr, z] : [x, y, z]);
   const n = Math.max(0, Math.round(P.stars)), cosMax = Math.cos(clamp(+P.clusterCone || 0, 0, 90) * Math.PI / 180), jit = (+P.dirJit || 0) * Math.PI / 180, out = [];
+  // 4.9.17（用户 10-06 19:27「按照你推荐的前两个继续迭代」）：簇方向随机（°）、每簇星数随机（±%）——手工装药不完全对称、每撮不一样多。
+  // 用自己的随机数（种子跟着「随机种子」走），不动星本身的随机序列；两项都是 0 时不进来，和以前逐位相同
+  const dj = clamp(+P.clusterDirJit || 0, 0, 90), nj = clamp(+P.clusterStarsJit || 0, 0, 100);
+  let asg = null;
+  if (dj > 0 || nj > 0) {
+    const cr2 = new RNG(((+P.seed || 1) * 7919 + 1013) | 0);
+    if (dj > 0) { const cm = Math.cos(dj * Math.PI / 180); C = C.map(c => {     // 每簇的中心方向在半角 dj 的锥里随机偏（按立体角均匀）
+      const a = Math.abs(c[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0]; let u = [c[1] * a[2] - c[2] * a[1], c[2] * a[0] - c[0] * a[2], c[0] * a[1] - c[1] * a[0]]; const lu = Math.hypot(...u) || 1; u = u.map(q => q / lu);
+      const w = [c[1] * u[2] - c[2] * u[1], c[2] * u[0] - c[0] * u[2], c[0] * u[1] - c[1] * u[0]], cz = 1 - cr2.u() * (1 - cm), sz = Math.sqrt(Math.max(0, 1 - cz * cz)), ph = cr2.u() * 2 * Math.PI;
+      const d = [0, 1, 2].map(k => c[k] * cz + (u[k] * Math.cos(ph) + w[k] * Math.sin(ph)) * sz), l = Math.hypot(...d) || 1; return d.map(q => q / l); }); }
+    if (nj > 0 && C.length > 1) {     // 每簇分到的星数 ∝ 1 ± nj%（最少 5%），最大余数法凑整；分配时各簇轮流（星的序号不扎堆在一簇）
+      const wt = C.map(() => Math.max(0.05, 1 + nj / 100 * (2 * cr2.u() - 1))), sw = wt.reduce((x, y) => x + y, 0), raw = wt.map(x => n * x / sw), cnt = raw.map(Math.floor);
+      raw.map((x, k) => [x - cnt[k], k]).sort((x, y) => y[0] - x[0]).slice(0, n - cnt.reduce((x, y) => x + y, 0)).forEach(([, k]) => cnt[k]++);
+      asg = []; for (let pass = 0; asg.length < n; pass++) for (let k = 0; k < C.length; k++) if (pass < cnt[k]) asg.push(k);
+    }
+  }
   for (let i = 0; i < n; i++) {
-    const c = C[i % C.length], a = Math.abs(c[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0];
+    const c = C[asg ? asg[i] : i % C.length], a = Math.abs(c[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0];
     let u = [c[1] * a[2] - c[2] * a[1], c[2] * a[0] - c[0] * a[2], c[0] * a[1] - c[1] * a[0]]; const lu = Math.hypot(...u) || 1; u = u.map(q => q / lu);
     const w = [c[1] * u[2] - c[2] * u[1], c[2] * u[0] - c[0] * u[2], c[0] * u[1] - c[1] * u[0]];
     // 锥内按立体角均匀：cosθ 在 [cos 张角, 1] 均匀

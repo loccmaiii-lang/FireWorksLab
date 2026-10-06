@@ -1,0 +1,115 @@
+{
+ "id": "NF3",
+ "type": "script",
+ "priority": 5,
+ "name": "对话框新花型 4.9.17：簇随机两项回归、带尾模板冷却倍数扫描、三个改过的模板曝光 + 定帧 + 参考图对照",
+ "note": "用户 10-06 19:27「按照你推荐的前两个继续迭代」。冷却扫描结果回来由对话框新花型定倍数、改模板，再排 NF4（曝光、缩略图、尾迹复查）。",
+ "steps": [
+  {
+   "name": "基准回归 4.9.16 → 4.9.17 花型模板 6 个（新参数缺省 0，应逐像素相同）",
+   "script": "基准回归.py",
+   "args": [
+    "--old",
+    "{git:a3a5344:tool/FireworkBaker.html}",
+    "--new",
+    "tool/FireworkBaker.html",
+    "--out",
+    "{out}/基准回归",
+    "--only",
+    "kiku,botan,kamuro,senrin,strobe,crackle"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "多层模板定帧回归 4.9.16 → 4.9.17（没改的 5 个，应逐像素相同）",
+   "script": "多层模板回归.py",
+   "args": [
+    "--old",
+    "{git:a3a5344:tool/FireworkBaker.html}",
+    "--out",
+    "{out}/多层模板回归",
+    "--ids",
+    "shinKiku,yaeHenka,colorSenrin,mieKamuroSaki,somewakeBotan"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "冷却倍数扫描（4.6.0 对 4.9.17，带尾的第一批模板）",
+   "script": "尾迹新旧对比.py",
+   "args": [
+    "--old",
+    "{git:263888a^:tool/FireworkBaker.html}",
+    "--out",
+    "{out}/冷却扫描",
+    "--px",
+    "240",
+    "--cool-scan",
+    "1,0.8,0.65,0.5,0.35",
+    "--only",
+    "mt:shinKiku,mt:yaeshin,mt:mieshin,mt:kamuroShin,type:kiku,type:kamuro"
+   ],
+   "must": false,
+   "timeout": 3600
+  },
+  {
+   "name": "改过的 3 个模板每层曝光（只写 json）",
+   "script": "多层模板.py",
+   "args": [
+    "kowariUkimoyo",
+    "mangekyo",
+    "yaeBlueBotan",
+    "--expo",
+    "--expo-json",
+    "{out}/曝光.json"
+   ],
+   "must": true,
+   "timeout": 2400
+  },
+  {
+   "name": "改过的 3 个模板定帧（套上刚算的曝光）",
+   "script": "多层模板.py",
+   "args": [
+    "kowariUkimoyo",
+    "mangekyo",
+    "yaeBlueBotan",
+    "--expo-from",
+    "{out}/曝光.json",
+    "--out",
+    "{out}/定帧",
+    "--sheet-name",
+    "改过的模板总表.jpg",
+    "--px",
+    "360",
+    "--fracs",
+    "0.12,0.3,0.45,0.62,0.8"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "八重芯青牡丹和参考图 1 对照（开花后 1.15 s）",
+   "script": "多层模板.py",
+   "args": [
+    "yaeBlueBotan",
+    "--expo-from",
+    "{out}/曝光.json",
+    "--out",
+    "{out}/参考对照",
+    "--px",
+    "480",
+    "--fracs",
+    "0.35",
+    "--ref",
+    "analysis/probe/多层模板/参考图1_原图.jpg",
+    "--ref-id",
+    "yaeBlueBotan",
+    "--ref-t",
+    "1.15"
+   ],
+   "must": false,
+   "timeout": 1200
+  }
+ ]
+}
