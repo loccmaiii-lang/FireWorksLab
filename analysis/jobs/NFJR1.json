@@ -1,0 +1,105 @@
+{
+ "id": "NFJR1",
+ "type": "script",
+ "priority": 2,
+ "name": "全程回放检查：金芒菊规格 6 档（NFJF 素材包）",
+ "steps": [
+  {
+   "name": "03 档（JinMangJu03）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/JinMangJu03.jpg",
+    "analysis/local/输出/素材包/JinMangJu03",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "05 档（JinMangJu05）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/JinMangJu05.jpg",
+    "analysis/local/输出/素材包/JinMangJu05",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "10 档（JinMangJu10）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/JinMangJu10.jpg",
+    "analysis/local/输出/素材包/JinMangJu10",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "20 档（JinMangJu20）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/JinMangJu20.jpg",
+    "analysis/local/输出/素材包/JinMangJu20",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "30 档（JinMangJu30）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/JinMangJu30.jpg",
+    "analysis/local/输出/素材包/JinMangJu30",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "40 档（JinMangJu40）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/JinMangJu40.jpg",
+    "analysis/local/输出/素材包/JinMangJu40",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  }
+ ],
+ "note": "对话框新花型。按 cascade.json 的播法合成整段 8 个时刻（不带参考视频——参考只有 4 s，带参考时大玉后段采不到）。"
+}
