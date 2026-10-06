@@ -9,7 +9,7 @@
     时差（星陆续点亮）、芯入（加一圈对比色芯）。同一模拟拆的几层（同种子）一起变：轨迹类的改动（终端速度、燃烧、排布、点火）每层都改，火花类的只改带火花的层。
 多层效果每档是一个组合条目（每层一个条目，组合引用）；状态清单每个效果一项（key myv_<id>，左栏一排分档缩略图）。
 曝光先沿用原样；本机 变体对照.py 算出每档自动曝光（× 原样那层的手调 / 自动比）后用 --expo 写回。
-用法：python3 analysis/scripts/我的效果变体.py [--expo analysis/results/<任务>/变体对照/曝光.json] [--status]
+用法：python3 analysis/scripts/我的效果变体.py [--expo analysis/results/<任务>/<效果>/曝光.json ...] [--status]
   --status：同时写状态清单（新加 / 更新 myv_* 效果，别的不动）
 """
 import argparse, collections, copy, glob, json, math, pathlib, re
@@ -167,7 +167,9 @@ def slim(P, typ, D):
 
 
 def main(a):
-    recs = load(); expo = json.loads(pathlib.Path(a.expo).read_text(encoding='utf-8')) if a.expo else {}
+    recs = load(); expo = {}
+    for f in a.expo or []:     # 本机 变体对照.py 每个效果一份 曝光.json（_auto / _k 这些不是条目，不管）
+        expo.update({k: v for k, v in json.loads(pathlib.Path(f).read_text(encoding='utf-8')).items() if not k.startswith('_')})
     D = json.loads(DEFAULTS.read_text(encoding='utf-8'))['types'] if DEFAULTS.exists() else {}
     old = {e['id']: e for e in json.loads(OUT.read_text(encoding='utf-8')).get('entries', [])} if OUT.exists() else {}
     entries, combos, effects = [], [], []
@@ -236,5 +238,5 @@ def write_status(effects):
 
 
 if __name__ == '__main__':
-    ap = argparse.ArgumentParser(); ap.add_argument('--expo'); ap.add_argument('--status', action='store_true')
+    ap = argparse.ArgumentParser(); ap.add_argument('--expo', nargs='*'); ap.add_argument('--status', action='store_true')
     main(ap.parse_args())

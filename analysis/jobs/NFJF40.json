@@ -1,0 +1,9 @@
+{
+ "id": "NFJF40",
+ "type": "export",
+ "effect": "jinmangju_sizes",
+ "entry": "JMG40",
+ "name": "JinMangJu40",
+ "priority": 4,
+ "note": "金芒菊规格（对话框新花型）：40 档按 4.9.23 重新导出——以前 6 档贴图 / 资产名都叫 T_EFX_FireWorks_JinMangJu_*（引擎里互相覆盖），现在叫 JinMangJu_40。参数没变；同一目录覆盖 NFJE40 的包。"
+}
