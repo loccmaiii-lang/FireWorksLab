@@ -29,15 +29,13 @@ META = {'fxmuux2arh': ('MYFL', 'Crossette'), 'fxmuuzfeg7': ('MYCR', 'Crackle'), 
         'fxmuv7n3ih': ('MYJM', 'GoldChrysanthemum'), 'fxmuw5v7bh': ('MYJC', 'GoldRayRocket'), 'fxmuwols5x': ('MYHK', 'YonshakuKamuro')}
 # 每档素材包名字的后缀（状态清单「方案」的 en，烘焙器 4.9.23 起贴图 / 资产名 = <英文名>_<en>，几档导进引擎不重名）；原样不加
 EN_SFX = {'S03': '03', 'S05': '05', 'S10': '10', 'S20': '20', 'S30': '30', 'S40': '40', 'K': 'Crown', 'Y': 'Willow', 'R': 'Ring', 'T': 'Saturn', 'M': 'Kaleido', 'H': 'Heart', 'J': 'Jisa', 'C': 'Core'}
+# 金曜菊-A 2–4 尺第 2 层「过曝 2.4–3.4%」不算：那时回放检查.py 多层包没读 Ramp、按白色算的过曝（已修），不压曝光，等重导后按金色再测。
 # 导出回放检查（NFE-*）不过的，按测出来的改（键 = 条目；expoMul 乘在写回的曝光上；其余键直接写进参数）。依据见 analysis/results/NFE-*/回放检查.json
 FIXES = {
     'MYJA-K-1': {'cutOut': 0, 'visTo': 0, 'preFrom': -1, '_why': '末尾空帧 2（第 1 层你设的出点在看得见的结尾之后）→ 出点改自动（最后一次看得见）'},
     'MYJA-S20-1': {'cutOut': 0, 'visTo': 0, 'preFrom': -1, '_why': '末尾空帧 1 → 出点改自动'},
     'MYJA-S30-1': {'cutOut': 0, 'visTo': 0, 'preFrom': -1, '_why': '末尾空帧 2 → 出点改自动'},
     'MYJA-S40-1': {'cutOut': 0, 'visTo': 0, 'preFrom': -1, '_why': '末尾空帧 3 → 出点改自动'},
-    'MYJA-S20-2': {'expoMul': 0.79, '_why': '过曝像素 2.4%（标准 ≤ 2%）→ 曝光 × 0.79'},
-    'MYJA-S30-2': {'expoMul': 0.65, '_why': '过曝像素 2.9% → 曝光 × 0.65'},
-    'MYJA-S40-2': {'expoMul': 0.56, '_why': '过曝像素 3.4% → 曝光 × 0.56'},
 }
 SKIP_KEYS = set()     # type 留着（条目的 base 也是它，replicaPM 会用 base 覆盖）
 # 跟着玉的大小一起拉长的时刻（燃烧比）：星的时间线、入点 / 出点、淡出段。爆裂 / 辉星 / 开花闪光这类药剂本身的时间不随玉变（不在这里）

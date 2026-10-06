@@ -2465,7 +2465,7 @@
    "tags": "我的效果 变体 金曜菊-A 2 尺 MYJA-S20-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.309,
+    "exposure": 1.6569,
     "duration": 10.686,
     "stars": 621,
     "v0": 251.7,
@@ -2513,7 +2513,6 @@
     "burstSec": 0.78,
     "zoom": "on"
    },
-   "expo0": 1.6569,
    "m": {
     "stages": [
      [
@@ -2529,7 +2528,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 2 尺（直径约 480 m）；导出回放检查：过曝像素 2.4%（标准 ≤ 2%）→ 曝光 × 0.79（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 2 尺（直径约 480 m）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -2621,7 +2620,7 @@
    "tags": "我的效果 变体 金曜菊-A 3 尺 MYJA-S30-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.0958,
+    "exposure": 1.6859,
     "duration": 12.33,
     "stars": 859,
     "v0": 208.2,
@@ -2669,7 +2668,6 @@
     "burstSec": 0.9,
     "zoom": "on"
    },
-   "expo0": 1.6859,
    "m": {
     "stages": [
      [
@@ -2685,7 +2683,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 3 尺（直径约 550 m）；导出回放检查：过曝像素 2.9% → 曝光 × 0.65（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 3 尺（直径约 550 m）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -2777,7 +2775,7 @@
    "tags": "我的效果 变体 金曜菊-A 4 尺 MYJA-S40-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.0296,
+    "exposure": 1.8385,
     "duration": 14.248,
     "stars": 1166,
     "v0": 331.9,
@@ -2825,7 +2823,6 @@
     "burstSec": 1.04,
     "zoom": "on"
    },
-   "expo0": 1.8385,
    "m": {
     "stages": [
      [
@@ -2841,7 +2838,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 4 尺（直径约 780 m）；导出回放检查：过曝像素 3.4% → 曝光 × 0.56（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 4 尺（直径约 780 m）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",

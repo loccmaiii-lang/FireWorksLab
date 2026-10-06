@@ -2755,7 +2755,7 @@ var FW_REVIEW = [
 "kind": "preset",
 "date": "2026-10-07",
 "name": "金曜菊-A · 2 尺 · 引菊 → 锦 · 金锦层",
-"note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 2 尺（直径约 480 m）；导出回放检查：过曝像素 2.4%（标准 ≤ 2%）→ 曝光 × 0.79（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+"note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 2 尺（直径约 480 m）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
 "look": [
 "这一排变体放在一起看：大小、造型是不是拉开了",
 "引擎回放 + 游戏内大小",
@@ -2771,7 +2771,7 @@ var FW_REVIEW = [
 "base": "kiku",
 "p": {
 "renderVer": 40,
-"exposure": 1.309,
+"exposure": 1.6569,
 "duration": 10.686,
 "stars": 621,
 "v0": 251.7,
@@ -2834,7 +2834,7 @@ var FW_REVIEW = [
 "headInt": 1,
 "tailInt": 1
 },
-"ver": "8da8e3f8"
+"ver": "b3b21062"
 },
 {
 "id": "MYJA-S30-1",
@@ -2926,7 +2926,7 @@ var FW_REVIEW = [
 "kind": "preset",
 "date": "2026-10-07",
 "name": "金曜菊-A · 3 尺 · 引菊 → 锦 · 金锦层",
-"note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 3 尺（直径约 550 m）；导出回放检查：过曝像素 2.9% → 曝光 × 0.65（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+"note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 3 尺（直径约 550 m）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
 "look": [
 "这一排变体放在一起看：大小、造型是不是拉开了",
 "引擎回放 + 游戏内大小",
@@ -2942,7 +2942,7 @@ var FW_REVIEW = [
 "base": "kiku",
 "p": {
 "renderVer": 40,
-"exposure": 1.0958,
+"exposure": 1.6859,
 "duration": 12.33,
 "stars": 859,
 "v0": 208.2,
@@ -3005,7 +3005,7 @@ var FW_REVIEW = [
 "headInt": 1,
 "tailInt": 1
 },
-"ver": "604722b9"
+"ver": "5341aabb"
 },
 {
 "id": "MYJA-S40-1",
@@ -3097,7 +3097,7 @@ var FW_REVIEW = [
 "kind": "preset",
 "date": "2026-10-07",
 "name": "金曜菊-A · 4 尺 · 引菊 → 锦 · 金锦层",
-"note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 4 尺（直径约 780 m）；导出回放检查：过曝像素 3.4% → 曝光 × 0.56（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+"note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 4 尺（直径约 780 m）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
 "look": [
 "这一排变体放在一起看：大小、造型是不是拉开了",
 "引擎回放 + 游戏内大小",
@@ -3113,7 +3113,7 @@ var FW_REVIEW = [
 "base": "kiku",
 "p": {
 "renderVer": 40,
-"exposure": 1.0296,
+"exposure": 1.8385,
 "duration": 14.248,
 "stars": 1166,
 "v0": 331.9,
@@ -3176,7 +3176,7 @@ var FW_REVIEW = [
 "headInt": 1,
 "tailInt": 1
 },
-"ver": "280910dd"
+"ver": "81e596de"
 },
 {
 "id": "MYJA-K-1",
@@ -10018,7 +10018,7 @@ var FW_REVIEW = [
 "引菊 → 锦 · 橙引线层",
 "引菊 → 锦 · 金锦层"
 ],
-"ver": "1db875cb"
+"ver": "28269d73"
 },
 {
 "id": "MYJA-S30",
@@ -10056,7 +10056,7 @@ var FW_REVIEW = [
 "引菊 → 锦 · 橙引线层",
 "引菊 → 锦 · 金锦层"
 ],
-"ver": "529ffa5a"
+"ver": "d92147c1"
 },
 {
 "id": "MYJA-S40",
@@ -10094,7 +10094,7 @@ var FW_REVIEW = [
 "引菊 → 锦 · 橙引线层",
 "引菊 → 锦 · 金锦层"
 ],
-"ver": "812b59c6"
+"ver": "452d9a5b"
 },
 {
 "id": "MYJA-K",

@@ -80,7 +80,9 @@ class Pack:
         seq = self.c['textures'][tk]; self.cols, self.rows, self.ch, self.frames = seq['cols'], seq['rows'], seq.get('channels', 1), seq['frames']
         self.tex = np.array(Image.open(os.path.join(d, seq['file'])).convert('RGBA' if self.ch == 4 else 'L'), np.float32) / 255
         if self.tex.ndim == 2: self.tex = self.tex[..., None]
-        rp = self.c['textures'].get('ramp'); self.ramp = None
+        # Ramp 按这个发射器的材质找（多层组合包每层一个：L1_ramp / L2_ramp）；单层包材质里没写就是 textures.ramp。
+        # 2026-10-07 对话框新花型：以前只认 textures.ramp，多层包每层都当没有 Ramp（回放检查图全白、过曝按白色算）。复现检查：回放检查_多层Ramp检查.py
+        rp = self.c['textures'].get((mat.get('textures') or {}).get('ramp') or 'ramp'); self.ramp = None
         if rp and os.path.exists(os.path.join(d, rp['file'])):
             r = np.array(Image.open(os.path.join(d, rp['file'])).convert('RGB'), np.float32) / 255; self.ramp = srgb_to_lin(r[r.shape[0] // 2])
         self.mods = {m['m']: m for m in self.e['modules']}
