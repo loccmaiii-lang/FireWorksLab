@@ -1,0 +1,8 @@
+01:02:34 开始：JinMangJu40（导出素材）
+01:02:51 JinMangJu40 导出 17 秒：JinMangJu40.json、JinMangJu40_Cascade参数.txt、JinMangJu40_Mobile.json、JinMangJu40_曲线.csv、T_EFX_FireWorks_JinMangJu_4x4_01.png、T_EFX_FireWorks_JinMangJu_4x4_01_C.png、T_EFX_FireWorks_JinMangJu_4x4_01_HD.png、T_EFX_FireWorks_JinMangJu_4x4_02.png、T_EFX_FireWorks_JinMangJu_4x4_02_C.png、T_EFX_FireWorks_JinMangJu_4x4_02_HD.png、T_EFX_FireWorks_JinMangJu_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+01:02:53 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFJE40\回放检查.jpg（✅ 通过）
+01:03:17 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFJE40\烘焙回放.jpg
+01:03:18 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFJE40\烘焙回放_原尺寸.jpg
+01:03:18 烘焙器预览没做成（不影响导出）：分张（A/B…）母版不生成旧式 preview.js；在烘焙器条目里看引擎回放
+01:03:18 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+01:03:18 完成，用时 0.7 分钟

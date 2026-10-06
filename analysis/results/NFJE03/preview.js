@@ -1,0 +1,1 @@
+FW_ASSET_LOADED("NFJE03", {"manifest": {"title": "JinMangJu03", "duration": 3.53, "view": 71.2, "variants": {"JinMangJu03": "JinMangJu03"}, "emitters": [], "note": "金芒菊规格（对话框新花型，用户 2026-10-07 00:33「把一个效果多做几个不同规格给我导出」）：03 号这一档（曝光已按 NFJ1 写回）。导出 + 回放检查。"}, "images": {}});

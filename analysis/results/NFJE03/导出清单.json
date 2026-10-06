@@ -1,0 +1,27 @@
+{
+ "effect": "jinmangju_sizes",
+ "entry": "JMG03",
+ "ver": "fadaca5d·master4.9.13",
+ "time": "2026-10-07 01:01",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "JinMangJu03",
+   "replica": "JMG03",
+   "files": [
+    "JinMangJu03.json",
+    "JinMangJu03_Cascade参数.txt",
+    "JinMangJu03_Mobile.json",
+    "JinMangJu03_曲线.csv",
+    "T_EFX_FireWorks_JinMangJu_4x4_01.png",
+    "T_EFX_FireWorks_JinMangJu_4x4_01_C.png",
+    "T_EFX_FireWorks_JinMangJu_4x4_01_HD.png",
+    "T_EFX_FireWorks_JinMangJu_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}
