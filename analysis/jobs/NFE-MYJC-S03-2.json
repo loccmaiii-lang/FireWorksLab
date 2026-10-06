@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MYJC-S03-2",
+ "type": "export",
+ "effect": "myv_fxmuw5v7bh",
+ "entry": "MYJC-S03",
+ "name": "GoldRayRocket_03",
+ "priority": 4,
+ "note": "我的效果变体：MYJC-S03 重导（点灭层频率随机 50%（不再整帧全黑）；点灭层贴图 4096（屏幕放大））。同一目录覆盖。"
+}

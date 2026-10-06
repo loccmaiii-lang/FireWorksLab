@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MYJC-T-2",
+ "type": "export",
+ "effect": "myv_fxmuw5v7bh",
+ "entry": "MYJC-T",
+ "name": "GoldRayRocket_Saturn",
+ "priority": 4,
+ "note": "我的效果变体：MYJC-T 重导（点灭层频率随机 50%（不再整帧全黑））。同一目录覆盖。"
+}

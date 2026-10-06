@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MYJC-M-2",
+ "type": "export",
+ "effect": "myv_fxmuw5v7bh",
+ "entry": "MYJC-M",
+ "name": "GoldRayRocket_Kaleido",
+ "priority": 4,
+ "note": "我的效果变体：MYJC-M 重导（点灭层频率随机 50%（不再整帧全黑））。同一目录覆盖。"
+}

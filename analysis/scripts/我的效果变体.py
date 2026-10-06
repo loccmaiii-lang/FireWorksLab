@@ -29,9 +29,13 @@ META = {'fxmuux2arh': ('MYFL', 'Crossette'), 'fxmuuzfeg7': ('MYCR', 'Crackle'), 
         'fxmuv7n3ih': ('MYJM', 'GoldChrysanthemum'), 'fxmuw5v7bh': ('MYJC', 'GoldRayRocket'), 'fxmuwols5x': ('MYHK', 'YonshakuKamuro')}
 # 每档素材包名字的后缀（状态清单「方案」的 en，烘焙器 4.9.23 起贴图 / 资产名 = <英文名>_<en>，几档导进引擎不重名）；原样不加
 EN_SFX = {'S03': '03', 'S05': '05', 'S10': '10', 'S20': '20', 'S30': '30', 'S40': '40', 'K': 'Crown', 'Y': 'Willow', 'R': 'Ring', 'T': 'Saturn', 'M': 'Kaleido', 'H': 'Heart', 'J': 'Jisa', 'C': 'Core'}
-# 金曜菊-A 2–4 尺第 2 层「过曝 2.4–3.4%」不算：那时回放检查.py 多层包没读 Ramp、按白色算的过曝（已修），不压曝光，等重导后按金色再测。
+# 金曜菊-A 2–4 尺第 2 层过曝：回放检查修了 Ramp 以后按金色再测还是 2.4 / 2.9 / 3.4%（NFE-MYJA-S*-3）→ 曝光压到 2% 以下（留一点余量）。
 # 导出回放检查（NFE-*）不过的，按测出来的改（键 = 条目；expoMul 乘在写回的曝光上；其余键直接写进参数）。依据见 analysis/results/NFE-*/回放检查.json
 FIXES = {
+    'MYJA-S20-2': {'expoMul': 0.75, '_why': '过曝像素 2.4%（标准 ≤ 2%，按金色 Ramp 测）→ 曝光 × 0.75'},
+    'MYJA-S30-2': {'expoMul': 0.62, '_why': '过曝像素 2.9% → 曝光 × 0.62'},
+    'MYJA-S40-2': {'expoMul': 0.53, '_why': '过曝像素 3.4% → 曝光 × 0.53'},
+    'MYJC-S03-2': {'texW': 4096, 'texH': 4096, '_why': '屏幕放大 > 1（3 号花径 68 m，闪烁层散得比主花开，面片是花径的 2 倍）→ 这一层贴图 4096（单格 1024）'},
     'MYCR-S03': {'cols': 3, 'rows': 3, '_why': '屏幕放大 1.06（3 号花径 59 m，爆裂和下坠的余量几乎不随玉变小，面片是花径的 1.7 倍）→ 格子 3 × 3（单格 682 px）'},
     'MYCR-K': {'cols': 3, 'rows': 3, '_why': '屏幕放大 1.01（冠下垂，面片是花径的 1.55 倍）→ 格子 3 × 3（单格 682 px）'},
     'MYJA-J-1': {'zoom': 'off', '_why': '中心抖动 3.77 px（Zoom 取景；时差每颗星先后点亮，亮部中心本来就会走）→ 固定取景'},
@@ -245,6 +249,15 @@ def main(a):
                     fn = next(s for s in SHAPES if s[0] == how[1])[2]; note = fn(P, (P.get('sparkRate') or 0) > 0)
                     stretch_cuts(P, l['P'])
                 lays.append((P, M, L, l['type'], note))
+            for i, (P, M, L, typ, ln_) in enumerate(lays):
+                if i >= len(rc['layers']) or how is None: continue
+                P0 = rc['layers'][i]['P']
+                # 手动总帧数（frameBudget = count，窜天猴第 1 层 64 帧）：看得见的时间变长，帧数跟着加（不然 2 尺以上燃烧段只剩 6 fps，标准检查不过）
+                if P.get('frameBudget') == 'count' and float(P.get('frameCount') or 0) > 0:
+                    P['frameCount'] = int(min(256, max(P0['frameCount'], round(P0['frameCount'] * end_of(P) / max(1e-6, end_of(P0))))))
+                # 点灭星（窜天猴第 2 层 22 Hz、频率随机 15%）：开花时所有星同相，匀速取帧落在灭相就是整帧全黑（导出中间空帧 23）→ 频率随机 50%，每颗星各闪各的（真的点灭星本来也不同步）
+                if float(P.get('strobeHz') or 0) > 13.5 and float(P.get('strobeHzJit') or 0) < 50:
+                    P['strobeHzJit'] = 50; lays[i] = (P, M, L, typ, (ln_ or note or '') + '；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）')
             # 同一批星拆的几层（原来初速 / 终端速度 / 星数 / 种子 / 起始半径都一样）：缩放 / 造型后也必须是同一批星——
             # 初速按第 1 层反推（以前每层按自己的燃烧反推，金曜菊-A 3 号两层初速 32 / 39.7，两层的星就分开了），星数也取第 1 层的
             sig = lambda Q: tuple(Q.get(k) for k in ('v0', 'vt', 'stars', 'seed', 'burstR0', 'pattern'))

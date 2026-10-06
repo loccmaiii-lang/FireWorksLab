@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MYJC-Y-2",
+ "type": "export",
+ "effect": "myv_fxmuw5v7bh",
+ "entry": "MYJC-Y",
+ "name": "GoldRayRocket_Willow",
+ "priority": 4,
+ "note": "我的效果变体：MYJC-Y 重导（点灭层频率随机 50%（不再整帧全黑）；第 1 层手动总帧数跟看得见的时间加）。同一目录覆盖。"
+}
