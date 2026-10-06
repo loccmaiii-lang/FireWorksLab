@@ -8,7 +8,7 @@ for (const [g, types] of TYPE_GROUPS) {
 $('#verLabel').textContent = 'v' + VERSION;
 document.title = '烟花烘培器 · v' + VERSION;
 $('#type').addEventListener('change', e => setType(e.target.value));
-$('#mname').addEventListener('input', e => state.name = e.target.value);
+$('#enNameEdit').addEventListener('click', () => { toggleDeliv(true); setTimeout(() => { const i = $('#dvBase'); if (i) { i.focus(); i.select(); } }, 0); });     // 4.9.4 英文名只在交付清单里改
 $('#x-form').addEventListener('change', e => setForm(e.target.value));
 $('#x-texW').addEventListener('change', e => { state.P.texW = +e.target.value; onParam(); });
 $('#x-texH').addEventListener('change', e => { state.P.texH = +e.target.value; onParam(); });

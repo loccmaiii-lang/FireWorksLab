@@ -1,7 +1,7 @@
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.9.3';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步（对话框新花型）
+const VERSION = '4.9.4';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -135,7 +135,11 @@ const BASE = {
   x2Flick: 0, x2FlickHz: 8, x1On: 0, x2On: 0,
   // 4.6.0 / 4.8.0（5.0 第 1、3 步，用户 10-05 20:22「每一个子发射器拥有的参数都是全的」）：以前写死的数变成参数、各发射器的按寿命曲线，默认 = 原来（逐像素不变）
   starSizeCurve: '', starBrightCurve: '', sparkSizeCurve: '', sparkBrightCurve: '', emberBrightCurve: '', branchBrightCurve: '', crackleSizeCurve: '', crackleBrightCurve: '',
-  flashBrightCurve: '', subSizeCurve: '', subBrightCurve: ''
+  flashBrightCurve: '', subSizeCurve: '', subBrightCurve: '',
+  // 4.9.4（交互宪章 5「所有发射器的按寿命曲线」，用户 10-06 07:56）：余烬 / 分叉火花 / 开花闪光的大小，升空尾缀 RT6 各粒子发射器的大小 / 亮度；空 = 不乘（逐像素不变）
+  emberSizeCurve: '', branchSizeCurve: '', flashSizeCurve: '', rtFSizeCurve: '', rtFBrightCurve: '', rtMSizeCurve: '', rtMBrightCurve: '', rtCSizeCurve: '',
+  rtCBrightCurve: '', rtESizeCurve: '', rtEBrightCurve: '', rtPopSizeCurve: '', rtPopBrightCurve: '', rtSmokeSizeCurve: '', rtSmokeBrightCurve: '', rtLaunchSizeCurve: '',
+  rtLaunchBrightCurve: '', rtLaunchSparkSizeCurve: '', rtLaunchSparkBrightCurve: '', rtGlowSizeCurve: '', rtGlowBrightCurve: ''
 };
 const RAMP_POS = [0, 0.3, 0.65, 1];
 // 颜色：stages = [[时刻 s, 颜色], …]，最多 5 段；xw = 变色过渡时长
@@ -390,7 +394,8 @@ const SCHEMA = [
     ['flashR', '开花闪光半径（-1 = 跟初速）', 'm', -1, 60, 0.5],
     ['flashTau', '开花闪光衰减', 's', 0.005, 0.5, 0.005],
     ['flashLife', '开花闪光可见时长', 's', 0.05, 2, 0.01],     // 4.6.0（5.0 第 1 步）
-    { curve: 'flashBrightCurve', label: '开花闪光亮度随寿命' }     // 4.6.0（5.0 第 1 步）
+    { curve: 'flashBrightCurve', label: '开花闪光亮度随寿命' },     // 4.6.0（5.0 第 1 步）
+    { curve: 'flashSizeCurve', label: '开花闪光大小随寿命' }     // 4.6.0+（5.0）
   ] },
   { sec: '形状', show: P => isAir(P) || P.type === 'shikake', items: [
     { sel: 'pattern', label: '星的排布', options: PATTERNS, show: isAir },
@@ -461,7 +466,8 @@ const SCHEMA = [
     ['branchSize', '分叉火花大小（× 火花）', '×', 0.1, 3, 0.01, P => P.branch > 0],     // 4.6.0（5.0 第 1 步）
     { curve: 'branchBrightCurve', label: '分叉火花亮度随寿命', show: P => P.branch > 0 },
     { curve: 'crackleSizeCurve', label: '爆裂小闪大小随寿命', show: P => P.crackle > 0 },
-    { curve: 'crackleBrightCurve', label: '爆裂小闪亮度随寿命', show: P => P.crackle > 0 }     // 4.6.0（5.0 第 1 步）
+    { curve: 'crackleBrightCurve', label: '爆裂小闪亮度随寿命', show: P => P.crackle > 0 },     // 4.6.0（5.0 第 1 步）
+    { curve: 'branchSizeCurve', label: '分叉火花大小随寿命', show: P => P.branch > 0 }     // 4.6.0+（5.0）
   ] },
   { sec: '炭头（星头）', show: isSeq, items: [
     ['headSize', '炭头大小', 'm', 0.15, 6, 0.05],
@@ -505,7 +511,8 @@ const SCHEMA = [
     ['emberFadeAt', '余烬最后淡出开始（× 寿命）', '×', 0.3, 1, 0.01, P => isAir(P) && P.emberFrac > 0],     // 4.6.0（5.0 第 1 步）
     { curve: 'sparkSizeCurve', label: '火花大小随寿命' },
     { curve: 'sparkBrightCurve', label: '火花亮度随寿命' },
-    { curve: 'emberBrightCurve', label: '余烬亮度随寿命', show: P => isAir(P) && P.emberFrac > 0 }     // 4.6.0（5.0 第 1 步）
+    { curve: 'emberBrightCurve', label: '余烬亮度随寿命', show: P => isAir(P) && P.emberFrac > 0 },     // 4.6.0（5.0 第 1 步）
+    { curve: 'emberSizeCurve', label: '余烬大小随寿命', show: P => isAir(P) && P.emberFrac > 0 }     // 4.6.0+（5.0）
   ] },
   { sec: '尾迹外形', show: P => isSeq(P) && familyOf(P.type) === 'aerial', hint: '每个效果（多层时每一层）自己的外形量，0 = 原样，不影响别的效果。尾长、尾缀粗细、星头大小、亮度、闪烁就是上面的「火花寿命」「尾缀粗细（散布）」「颗粒大小」「星头大小」「火花亮度」「火花闪烁」。', items: [
     ['tailJit', '粗细随机（星与星、火花与火花之间的粗细差别）', '', 0, 1, 0.01],
@@ -725,7 +732,13 @@ const SCHEMA = [
     ['rtCRate', '粗 · 出生率', '颗/秒', 0, 2000, 1], ['rtCLife', '粗 · 寿命', 's', 0.1, 8, 0.01], ['rtCJit', '粗 · 寿命离散', '%', 0, 90, 1], ['rtCSize', '粗 · 粒子尺寸', 'm', 0.05, 5, 0.01], ['rtCI', '粗 · 亮度', '×', 0, 40, 0.01], ['rtCKd', '粗 · 阻力', '1/s', 0.2, 30, 0.05],
     ['rtSizeJit', '尺寸离散（远处亮度 ∝ 尺寸²）', '±%', 0, 90, 1], ['rtKdJit', '阻力离散', '±%', 0, 90, 1],
     ['rtConeSoft', '散开分布（0 均匀 = 边缘一刀切；1 两个均匀相加 = 中间密、边缘软）', '', 0, 1, 1, P => +P.rtGpuSafe !== 1],
-    { sel: 'rtGpuSafe', label: 'GPU 兼容', options: [[0, '旧（GPU 也写 Acceleration 乱流、软边散开写 2 个）'], [1, 'UE 4.24 实测：GPU 不写 Acceleration、Initial Velocity ≤ 2']] }
+    { sel: 'rtGpuSafe', label: 'GPU 兼容', options: [[0, '旧（GPU 也写 Acceleration 乱流、软边散开写 2 个）'], [1, 'UE 4.24 实测：GPU 不写 Acceleration、Initial Velocity ≤ 2']] },
+    { curve: 'rtFSizeCurve', label: '细火花大小随寿命', show: P => P.rtFRate > 0 },
+    { curve: 'rtFBrightCurve', label: '细火花亮度随寿命', show: P => P.rtFRate > 0 },
+    { curve: 'rtMSizeCurve', label: '中火花大小随寿命', show: P => P.rtMRate > 0 },
+    { curve: 'rtMBrightCurve', label: '中火花亮度随寿命', show: P => P.rtMRate > 0 },
+    { curve: 'rtCSizeCurve', label: '粗火花大小随寿命', show: P => P.rtCRate > 0 },
+    { curve: 'rtCBrightCurve', label: '粗火花亮度随寿命', show: P => P.rtCRate > 0 }     // 4.9.4 按寿命曲线
   ] },
   { sec: '尾缀 · 贴图里的火星（循环层）', show: isEmit, hint: '细火花的一部分烘进循环层贴图（随体坐标，和白热段火花同一套真循环；运动、散开、小涡、拖影和 GPU 细火花同一套公式），其余留在 GPU（细火花出生率 × (1 − 比例)）。细火花寿命短、在面片长度以内就烧完，适合进贴图；中 / 粗火花飞得远、留在 GPU。贴图亮度是灰度 + Ramp 口径（暗的是橙红、亮的是金白），和 GPU 的倍数不通用：1 = 一颗细火花是一颗白热段火花光量的 1%。', items: [
     { sel: 'rtFar', label: '贴图怎么分', options: [[0, '旧：循环层（细 / 中火花按比例进贴图，其余 GPU）'], [1, '近段 + 远段：年轻的进循环层、年老的进远段全程序列，GPU 按档预算再加']] },
@@ -749,7 +762,15 @@ const SCHEMA = [
     ['rtGlow', '星头光晕亮度（0 关）', '×', 0, 5, 0.01], ['rtGlowSize', '星头光晕直径', 'm', 0.5, 30, 0.1, P => P.rtGlow > 0],
     ['rtPopRate', '末段爆亮 · 出生率（0 关）', '颗/秒', 0, 400, 1], ['rtPopI', '末段爆亮 · 亮度', '×', 0, 80, 0.1, P => P.rtPopRate > 0], ['rtPopSize', '末段爆亮 · 尺寸', 'm', 0.05, 3, 0.01, P => P.rtPopRate > 0], ['rtPopAt', '末段爆亮 · 在寿命的哪里闪', '', 0.2, 0.95, 0.01, P => P.rtPopRate > 0],
     ['rtLaunch', '发射口闪光亮度（0 关）', '×', 0, 10, 0.01], ['rtLaunchSize', '发射口闪光直径', 'm', 1, 40, 0.1, P => P.rtLaunch > 0], ['rtLaunchN', '发射口火星颗数', '颗', 0, 1000, 1, P => P.rtLaunch > 0],
-    ['rtLaunchV', '发射口火星速度', 'm/s', 2, 80, 0.5, P => P.rtLaunch > 0 && P.rtLaunchN > 0], ['rtLaunchCone', '发射口火星张角', '°', 2, 60, 1, P => P.rtLaunch > 0 && P.rtLaunchN > 0], ['rtLaunchI', '发射口火星亮度', '×', 0, 40, 0.1, P => P.rtLaunch > 0 && P.rtLaunchN > 0]
+    ['rtLaunchV', '发射口火星速度', 'm/s', 2, 80, 0.5, P => P.rtLaunch > 0 && P.rtLaunchN > 0], ['rtLaunchCone', '发射口火星张角', '°', 2, 60, 1, P => P.rtLaunch > 0 && P.rtLaunchN > 0], ['rtLaunchI', '发射口火星亮度', '×', 0, 40, 0.1, P => P.rtLaunch > 0 && P.rtLaunchN > 0],
+    { curve: 'rtPopSizeCurve', label: '爆亮大小随寿命', show: P => P.rtPopRate > 0 },
+    { curve: 'rtPopBrightCurve', label: '爆亮亮度随寿命', show: P => P.rtPopRate > 0 },
+    { curve: 'rtLaunchSizeCurve', label: '发射口闪光大小随寿命', show: P => P.rtLaunch > 0 },
+    { curve: 'rtLaunchBrightCurve', label: '发射口闪光亮度随寿命', show: P => P.rtLaunch > 0 },
+    { curve: 'rtLaunchSparkSizeCurve', label: '发射口火花大小随寿命', show: P => P.rtLaunch > 0 && P.rtLaunchN > 0 },
+    { curve: 'rtLaunchSparkBrightCurve', label: '发射口火花亮度随寿命', show: P => P.rtLaunch > 0 && P.rtLaunchN > 0 },
+    { curve: 'rtGlowSizeCurve', label: '星头光晕大小随寿命', show: P => P.rtGlow > 0 },
+    { curve: 'rtGlowBrightCurve', label: '星头光晕亮度随寿命', show: P => P.rtGlow > 0 }     // 4.6.0+（5.0）
   ] },
   { sec: '尾缀 · 火星明暗与线状', show: isEmit, hint: '白 / 黄分开：每档火花一个温度偏移（粗粒更热更亮 → 相机里过曝发白；细粒偏金偏暗）。线状：看的人（和相机）盯着星头走，火花相对星头往下退 → 拖影长度 = 相对星头的速度 × 拖影时间（快门 / 视觉暂留）；老火花几乎停在空中，拖得最长。引擎里 Screen Alignment = Rectangle（沿屏幕竖直）、Size By Life 的 Y 按寿命拉长；光量守恒（拖得越长单位长度越暗，要更亮才过曝发白）。', items: [
     ['rtFdT', '细 · 温度偏移', 'K', -800, 800, 10], ['rtMdT', '中 · 温度偏移', 'K', -800, 800, 10], ['rtCdT', '粗 · 温度偏移', 'K', -800, 800, 10],
@@ -771,14 +792,18 @@ const SCHEMA = [
     ['rtShrink', '烧到最后的大小（× 出生时）', '×', 0.05, 1.5, 0.01]
   ] },
   { sec: '尾缀 · 落火', show: isEmit, hint: '少量长寿大颗，阻力小、下坠，零星掉在尾迹下方（0 关）。', items: [
-    ['rtERate', '出生率', '颗/秒', 0, 200, 1], ['rtELife', '寿命', 's', 0.2, 8, 0.05], ['rtESize', '粒子尺寸', 'm', 0.05, 5, 0.01], ['rtEI', '亮度', '×', 0, 10, 0.01], ['rtEKd', '阻力', '1/s', 0.1, 10, 0.05]
+    ['rtERate', '出生率', '颗/秒', 0, 200, 1], ['rtELife', '寿命', 's', 0.2, 8, 0.05], ['rtESize', '粒子尺寸', 'm', 0.05, 5, 0.01], ['rtEI', '亮度', '×', 0, 10, 0.01], ['rtEKd', '阻力', '1/s', 0.1, 10, 0.05],
+    { curve: 'rtESizeCurve', label: '落火大小随寿命', show: P => P.rtERate > 0 },
+    { curve: 'rtEBrightCurve', label: '落火亮度随寿命', show: P => P.rtERate > 0 }     // 4.6.0+（5.0）
   ] },
   { sec: '尾缀 · 烟带', show: isEmit, hint: '曲导燃烧留下的淡烟，被火花照亮（夜里是散射光，用加法软圆点做成很淡的发光烟，不新增材质）。慢慢变大、变淡（0 关）。', items: [
     ['rtSmoke', '亮度（0 关）', '×', 0, 0.5, 0.001],
     ['rtSmokeRate', '出生率', '团/秒', 1, 200, 1, P => P.rtSmoke > 0],
     ['rtSmokeLife', '寿命', 's', 0.5, 10, 0.05, P => P.rtSmoke > 0],
     ['rtSmokeSize', '出生尺寸', 'm', 0.2, 20, 0.1, P => P.rtSmoke > 0],
-    ['rtSmokeGrow', '变大到（× 出生尺寸）', '×', 1, 10, 0.1, P => P.rtSmoke > 0]
+    ['rtSmokeGrow', '变大到（× 出生尺寸）', '×', 1, 10, 0.1, P => P.rtSmoke > 0],
+    { curve: 'rtSmokeSizeCurve', label: '烟带大小随寿命', show: P => P.rtSmoke > 0 },
+    { curve: 'rtSmokeBrightCurve', label: '烟带亮度随寿命', show: P => P.rtSmoke > 0 }     // 4.6.0+（5.0）
   ] },
   { sec: '尾缀 · 引擎与导出', show: isEmit, hint: '循环层：一个速度朝向的序列面片（CPU，1 颗），星头在面片上端（Pivot Offset 放在粒子位置，和 V5 尾缀一样），面片只包住看得见的部分；格子按长宽比在 16×1 / 8×2 / 4×4 里挑（单格 = 512² 像素），RGBA 64 帧真循环。开花后换「贴图动态消散」序列（每颗火花 / 火花按自己的寿命熄灭），格子一样大、贴图按帧数挑最小、四个通道用满；另写 dissolve 动态参数。手机贴图边长 × 比例（默认一半 = 单格 256² 像素）。粒子层：PC 用 GPU、手机用 CPU 并按比例减量。', items: [
     { sel: 'rtLoopSize', label: '循环层长度', options: [[0, '全程不变（4.4，出场淡入）'], [1, '跟真实尾迹（起步从短长出来、减速变短）']] },

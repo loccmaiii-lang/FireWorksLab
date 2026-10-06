@@ -58,10 +58,10 @@ async def render(html, cases, px, fr):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--old', required=True); ap.add_argument('--new', default=str(ROOT / 'tool' / 'FireworkBaker.html'))
-    ap.add_argument('--out', default=str(ROOT / 'analysis' / 'probe' / '基准回归')); ap.add_argument('--px', type=int, default=256); ap.add_argument('--only', default=''); ap.add_argument('--at', default='', help='开花后几秒，逗号分隔（例 0.6,1.6,2.6）；不给就按序列时长的比例取')
+    ap.add_argument('--out', default=str(ROOT / 'analysis' / 'probe' / '基准回归')); ap.add_argument('--px', type=int, default=256); ap.add_argument('--only', default=''); ap.add_argument('--types', default='', help='花型模板换成这几个（逗号分隔，4.9.4 加：地面类也能比）'); ap.add_argument('--at', default='', help='开花后几秒，逗号分隔（例 0.6,1.6,2.6）；不给就按序列时长的比例取')
     a = ap.parse_args(); out = pathlib.Path(a.out); out.mkdir(parents=True, exist_ok=True)
     global AT; AT = [float(x) for x in a.at.split(',') if x.strip()] or None
-    cases = [(t, 'type') for t in TEMPLATES] + [('jinmangju', 'effect')]
+    cases = [(t, 'type') for t in (a.types.split(',') if a.types else TEMPLATES)] + ([] if a.types else [('jinmangju', 'effect')])
     if a.only: cases = [c for c in cases if c[0] in a.only.split(',')]
     fr = [0.12, 0.35, 0.7]
     old = asyncio.run(render(a.old, cases, a.px, fr)); new = asyncio.run(render(a.new, cases, a.px, fr))

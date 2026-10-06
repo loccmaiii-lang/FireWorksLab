@@ -13,8 +13,8 @@ EMIT_J = ROOT / 'analysis' / '命名' / '发射器表.json'
 
 # 每行：key, SCHEMA 节, 面板旧名（SCHEMA label）, 单位, 下限, 上限, 步长, 默认, 显示条件(JS), 发射器, 模块, 短名, 全名, 英文, 说明, 调大调小, 引擎, 代码
 P = []
-def add(key, sec, label, unit, lo, hi, step, d, cond, em, mod, short, cn, en, desc, updown, ue='只影响烘焙出的贴图', check='', kind='num', options=None):
-    P.append(dict(key=key, sec=sec, label=label, unit=unit, lo=lo, hi=hi, step=step, d=d, cond=cond, em=em, mod=mod, short=short, cn=cn, en=en, desc=desc, updown=updown, ue=ue, check=check, kind=kind, options=options))
+def add(key, sec, label, unit, lo, hi, step, d, cond, em, mod, short, cn, en, desc, updown, ue='只影响烘焙出的贴图', check='', kind='num', options=None, fam='空中礼花', note=None):
+    P.append(dict(key=key, sec=sec, label=label, unit=unit, lo=lo, hi=hi, step=step, d=d, cond=cond, em=em, mod=mod, short=short, cn=cn, en=en, desc=desc, updown=updown, ue=ue, check=check, kind=kind, options=options, fam=fam, note=note))
 
 CR = 'P => P.crackle > 0'
 add('crackleDelayJit', '星效果', '爆裂延迟随机', '%', 0, 100, 1, 70, CR, '爆裂', '生成', '延迟随机', '爆裂延迟随机', 'Crackle Delay Random',
@@ -162,8 +162,8 @@ for i in (1, 2):
 
 # 4.8.0（5.0 第 3 步一部分）：每个发射器的大小 / 亮度都有「按寿命曲线」（几行 时刻:倍数，空 = 不乘，画面不变）
 CV = '几行「时刻:倍数」，时刻是寿命的比例 0–1，在原来的变化上再乘这条曲线；空 = 不乘（和以前一样）。例「0:0.3, 0.2:1, 1:1」= 刚出来小、很快长到正常。'
-def curve(key, sec, em, mod, cn, en, what, cond=''):
-    add(key, sec, cn, '', 0, 0, 0, '', cond, em, mod, '随寿命', cn, en, what + CV, '—', ue='Cascade：Size By Life / Color Over Life 的关键帧（几行）', kind='curve')
+def curve(key, sec, em, mod, cn, en, what, cond='', short='随寿命', fam='空中礼花', note=None, ue='Cascade：Size By Life / Color Over Life 的关键帧（几行）'):
+    add(key, sec, cn, '', 0, 0, 0, '', cond, em, mod, short, cn, en, what + CV, '—', ue=ue, kind='curve', fam=fam, note=note)
 curve('starSizeCurve', '炭头（星头）', '星', '大小', '星头大小随寿命', 'Star Size Over Life', '星头大小随燃烧进度变化（寿命 = 燃烧时间）。')
 curve('starBrightCurve', '炭头（星头）', '星', '亮度', '星头亮度随寿命', 'Star Brightness Over Life', '星头亮度随燃烧进度变化（在渐隐、熄灭前闪亮之上再乘）。')
 curve('sparkSizeCurve', '尾缀（炭火火花）', '火花', '大小', '火花大小随寿命', 'Sparkler Size Over Life', '每粒火花的大小随它的寿命变化（梭形 / 尾迹粗细用这一条做：用户 10-05 20:45 定）。')
@@ -175,6 +175,28 @@ curve('crackleBrightCurve', '星效果', '爆裂', '亮度', '爆裂小闪亮度
 curve('flashBrightCurve', '开花与燃烧', '开花闪光', '亮度', '开花闪光亮度随寿命', 'Burst Flash Brightness Over Life', '开花闪光的亮度随它的寿命变化（在衰减之上再乘）。')
 curve('subSizeCurve', '千轮 / 分裂', '子花', '大小', '子星大小随寿命', 'Sub Star Size Over Life', '子花每颗子星的大小随燃烧进度变化。')
 curve('subBrightCurve', '千轮 / 分裂', '子花', '亮度', '子星亮度随寿命', 'Sub Star Brightness Over Life', '子花每颗子星的亮度随燃烧进度变化。')
+# 4.9.4（交互宪章 5「所有发射器的按寿命曲线」，用户 10-06 07:56「把交互宪章第五节剩下的做完」）：空中类补齐余烬 / 分叉火花 / 开花闪光的大小；
+# 升空尾缀 RT6 的 Cascade 粒子发射器（细 / 中 / 粗火花、落火、爆亮、烟带、发射口、星头光晕）各加大小、亮度两条——乘在导出的 Size By Life / Color Over Life 上，引擎回放、实时模拟同一份
+N494 = '4.9.4（5.0，交互宪章 5）加：按寿命曲线，空 = 不乘，画面不变。'
+curve('emberSizeCurve', '尾缀（炭火火花）', '余烬', '大小', '余烬大小随寿命', 'Ember Size Over Life', '余烬的大小随它的寿命变化（在「余烬大小」之上再乘）。', 'P => isAir(P) && P.emberFrac > 0', note=N494)
+curve('branchSizeCurve', '星效果', '分叉火花', '大小', '分叉火花大小随寿命', 'Branch Size Over Life', '分叉小火花的大小随它的寿命变化（在「分叉火花大小」之上再乘）。', 'P => P.branch > 0', note=N494)
+curve('flashSizeCurve', '开花与燃烧', '开花闪光', '大小', '开花闪光大小随寿命', 'Burst Flash Size Over Life', '开花闪光那团光的大小随它的寿命变化（峰值亮度不变，变大时总光量跟着变多）。', note=N494)
+RT = dict(fam='升空尾缀', note=N494, ue='Cascade：乘在这个发射器导出的 Size By Life / Color Over Life 上（几行关键帧）')
+for k, nm, en in (('F', '细火花', 'Fine Sparks'), ('M', '中火花', 'Medium Sparks'), ('C', '粗火花', 'Coarse Sparks')):
+    curve(f'rt{k}SizeCurve', '尾缀 · 金火星（GPU 粒子 · 三档粒径）', nm, '大小', f'{nm}大小随寿命', f'{en} Size Over Life', f'{nm}每颗的大小随它的寿命变化（在原来的「尾端收小」之上再乘）。', f'P => P.rt{k}Rate > 0', **RT)
+    curve(f'rt{k}BrightCurve', '尾缀 · 金火星（GPU 粒子 · 三档粒径）', nm, '亮度', f'{nm}亮度随寿命', f'{en} Brightness Over Life', f'{nm}每颗的亮度随它的寿命变化（在温度冷却之上再乘）。', f'P => P.rt{k}Rate > 0', **RT)
+curve('rtESizeCurve', '尾缀 · 落火', '落火', '大小', '落火大小随寿命', 'Falling Embers Size Over Life', '落火每颗的大小随它的寿命变化。', 'P => P.rtERate > 0', **RT)
+curve('rtEBrightCurve', '尾缀 · 落火', '落火', '亮度', '落火亮度随寿命', 'Falling Embers Brightness Over Life', '落火每颗的亮度随它的寿命变化。', 'P => P.rtERate > 0', **RT)
+curve('rtPopSizeCurve', '尾缀 · 引擎里加的效果', '爆亮', '大小', '爆亮大小随寿命', 'Spark Pops Size Over Life', '末段爆亮每颗的大小随它的寿命变化。', 'P => P.rtPopRate > 0', **RT)
+curve('rtPopBrightCurve', '尾缀 · 引擎里加的效果', '爆亮', '亮度', '爆亮亮度随寿命', 'Spark Pops Brightness Over Life', '末段爆亮每颗的亮度随它的寿命变化（在寿命末段那一闪之上再乘）。', 'P => P.rtPopRate > 0', **RT)
+curve('rtSmokeSizeCurve', '尾缀 · 烟带', '烟带', '大小', '烟带大小随寿命', 'Smoke Size Over Life', '烟团的大小随它的寿命变化（在「变大到」之上再乘）。', 'P => P.rtSmoke > 0', **RT)
+curve('rtSmokeBrightCurve', '尾缀 · 烟带', '烟带', '亮度', '烟带亮度随寿命', 'Smoke Brightness Over Life', '烟团的亮度随它的寿命变化。', 'P => P.rtSmoke > 0', **RT)
+curve('rtLaunchSizeCurve', '尾缀 · 引擎里加的效果', '发射口', '闪光', '发射口闪光大小随寿命', 'Launch Flash Size Over Life', '发射口那一团闪光的大小随它的寿命变化。', 'P => P.rtLaunch > 0', short='大小随寿命', **RT)
+curve('rtLaunchBrightCurve', '尾缀 · 引擎里加的效果', '发射口', '闪光', '发射口闪光亮度随寿命', 'Launch Flash Brightness Over Life', '发射口那一团闪光的亮度随它的寿命变化。', 'P => P.rtLaunch > 0', short='亮度随寿命', **RT)
+curve('rtLaunchSparkSizeCurve', '尾缀 · 引擎里加的效果', '发射口', '火花', '发射口火花大小随寿命', 'Launch Sparks Size Over Life', '发射口喷出的火花每颗的大小随它的寿命变化。', 'P => P.rtLaunch > 0 && P.rtLaunchN > 0', short='大小随寿命', **RT)
+curve('rtLaunchSparkBrightCurve', '尾缀 · 引擎里加的效果', '发射口', '火花', '发射口火花亮度随寿命', 'Launch Sparks Brightness Over Life', '发射口喷出的火花每颗的亮度随它的寿命变化。', 'P => P.rtLaunch > 0 && P.rtLaunchN > 0', short='亮度随寿命', **RT)
+curve('rtGlowSizeCurve', '尾缀 · 引擎里加的效果', '星头', '光晕', '星头光晕大小随寿命', 'Head Glow Size Over Life', '星头光晕的大小随升空进度变化（寿命 = 升空时间）。', 'P => P.rtGlow > 0', short='大小随寿命', **RT)
+curve('rtGlowBrightCurve', '尾缀 · 引擎里加的效果', '星头', '光晕', '星头光晕亮度随寿命', 'Head Glow Brightness Over Life', '星头光晕的亮度随升空进度变化。', 'P => P.rtGlow > 0', short='亮度随寿命', **RT)
 
 def js(v):
     if isinstance(v, str): return "'" + v.replace("'", "\\'") + "'"
@@ -235,8 +257,8 @@ def main():
         dflt = (str(p['d']) if not isinstance(p['d'], float) else f"{p['d']:.4g}") if p['kind'] != 'sel' else dict(p['options'])[p['d']]
         new_rows.append({'sec': p['sec'], 'key': p['key'], 'old': p['label'], 'module_cn': p['em'], 'module_en': '', 'en': p['en'], 'en_niagara': False, 'cn': p['cn'],
                          'desc': p['desc'], 'updown': p['updown'], 'unit': p['unit'], 'range': rng, 'default': dflt, 'random': '', 'ue': p['ue'], 'tag': '烟花特性',
-                         'note': '4.6.0（5.0 第 1 步）加：以前写死在代码里，默认 = 原来的数。' if not p['key'].startswith('x') else '4.6.0（5.0 第 1 步）自定义发射器：资产栏下面发射器标签行「＋ 加发射器」打开。',
-                         'check': p['check'], 'family': '空中礼花', 'id': rid, 'tier': 'more'})
+                         'note': p['note'] if p.get('note') else '4.6.0（5.0 第 1 步）加：以前写死在代码里，默认 = 原来的数。' if not p['key'].startswith('x') else '4.6.0（5.0 第 1 步）自定义发射器：资产栏下面发射器标签行「＋ 加发射器」打开。',
+                         'check': p['check'], 'family': p.get('fam') or '空中礼花', 'id': rid, 'tier': 'more'})
         if rid not in haveE: eml['参数'].append({'id': rid, 'sec': p['sec'], 'key': p['key'], '全名': p['cn'], '发射器': p['em'], '模块': p['mod'], '名': p['short']})
     if new_rows:
         rows += new_rows

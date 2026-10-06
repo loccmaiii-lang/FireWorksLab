@@ -126,6 +126,10 @@ void emitPt(vec2 q, float I, float size){ vec2 sig=max(size*.5*vec2(uPPM,uPPMY),
 // 再用线性阻力 + 重力的解析解直接算出任意时刻的位置，显存里不存任何火花状态。
 // 风与湍流：取发射点处的气流速度 U，按解析解整体偏移（衰减噪声偏移近似）。
 // 松叶：每粒火花在寿命的某一时刻分成 uBr 支短命的亮枝；辉星：火花在延迟后闪一下。
+// 4.8.0 按寿命曲线的取值（几行 时刻:倍数，最多 6 个点）；4.9.4 地面的火花 / 彗星着色器也用
+const GLSL_CV = `float cvAt(vec2 k0,vec2 k1,vec2 k2,vec2 k3,vec2 k4,vec2 k5,int n,float x){ vec2 k[6]=vec2[6](k0,k1,k2,k3,k4,k5); if(x<=k[0].x) return k[0].y;
+  for(int i=1;i<6;i++){ if(i>=n) break; if(x<=k[i].x) return mix(k[i-1].y,k[i].y,(x-k[i-1].x)/max(1e-6,k[i].x-k[i-1].x)); } return k[clamp(n-1,0,5)].y; }
+#define CV(a,n,x) cvAt(a[0],a[1],a[2],a[3],a[4],a[5],n,x)`;
 const VS_SPK = `#version 300 es
 precision highp float; precision highp int; precision highp sampler2D;
 uniform sampler2D uPos, uVel, uInfo;
@@ -133,10 +137,8 @@ uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw, uBr;
 uniform float uInh, uSpread, uLife, uLifeEnd, uLifeJit, uK, uG, uT0, uCool, uCoolAbs, uTwk, uTwHz, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
 uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShoulder, uDif, uDifL, uRise, uStarB, uWShape, uWidth, uPinH, uPinT, uBelly;
 uniform float uRamp, uRampJ;     // 4.2.17 火花起势：开始出火花后几秒到满密度、每颗星 ± 随机
-uniform vec2 uCvSpS[6], uCvSpB[6], uCvEmB[6], uCvBrB[6]; uniform int uCvSpSN, uCvSpBN, uCvEmBN, uCvBrBN;     // 4.8.0 按寿命曲线（几行 时刻:倍数，N = 0 不乘）
-float cvAt(vec2 k0,vec2 k1,vec2 k2,vec2 k3,vec2 k4,vec2 k5,int n,float x){ vec2 k[6]=vec2[6](k0,k1,k2,k3,k4,k5); if(x<=k[0].x) return k[0].y;
-  for(int i=1;i<6;i++){ if(i>=n) break; if(x<=k[i].x) return mix(k[i-1].y,k[i].y,(x-k[i-1].x)/max(1e-6,k[i].x-k[i-1].x)); } return k[clamp(n-1,0,5)].y; }
-#define CV(a,n,x) cvAt(a[0],a[1],a[2],a[3],a[4],a[5],n,x)
+uniform vec2 uCvSpS[6], uCvSpB[6], uCvEmB[6], uCvBrB[6], uCvEmS[6], uCvBrS[6]; uniform int uCvSpSN, uCvSpBN, uCvEmBN, uCvBrBN, uCvEmSN, uCvBrSN;     // 4.8.0 按寿命曲线（几行 时刻:倍数，N = 0 不乘）；4.9.4 余烬 / 分叉火花大小
+${GLSL_CV}
 uniform float uInhA, uInhB, uT0J, uEmbLJ, uEmbDk, uEmbFa, uBrL, uBrLA, uBrLB, uBrV, uBrVA, uBrVB, uBrInh, uBrKd, uBrT, uBrB, uBrFd, uBrS, uGlA, uGlB, uGlW, uGlPk, uGlDim;     // 4.6.0（5.0 第 1 步）：以前写死的随机范围、余烬衰减、分叉火花、辉星闪光，默认 = 以前的常数
 // 和 20_sim.js starHash(id, seed, k) 同一个整数哈希（CPU / GPU 内核每颗星的起势时长一样）
 float starHashG(uint id, uint k){ uint h=((id+1u)*0x9E3779B1u)^((uint(uSeed)+7u)*0x85EBCA77u)^((k+3u)*0xC2B2AE3Du); h^=h>>16u; h*=0x7FEB352Du; h^=h>>15u; h*=0x846CA68Bu; h^=h>>16u; return float(h)/4294967296.; }
@@ -203,7 +205,7 @@ void main(){
       p+=(W-1.)*(uK>1e-4 ? (1.-exp(-uK*age))/uK : age)*vec3(gss(uid,5u),gss(uid,7u),gss(uid,9u))*uSpread; }
     float gl=emb ? glowOf(T0)*uEmbB*exp(-uEmbDk*age/life)*(1.-smoothstep(uEmbFa,1.,age/life))*(uEmbF>0. ? 1.-smoothstep(inf.y-.15,inf.y+uEmbF,uT) : 1.)*(uEmbE>0. ? 1.-smoothstep(uEmbE-.6,uEmbE+.3,uT) : 1.) : glowOf(T0*(1.-uCool*age/lifeC))*(uCoolAbs>.5 ? 1.-smoothstep(.7,1.,age/life) : 1.);
     if(emb) size=uSize*uEmbS;
-    if(emb){ if(uCvEmBN>0) gl*=max(0.,CV(uCvEmB,uCvEmBN,clamp(age/life,0.,1.))); }
+    if(emb){ if(uCvEmBN>0) gl*=max(0.,CV(uCvEmB,uCvEmBN,clamp(age/life,0.,1.))); if(uCvEmSN>0) size*=max(0.,CV(uCvEmS,uCvEmSN,clamp(age/life,0.,1.))); }
     else { if(uCvSpBN>0) gl*=max(0.,CV(uCvSpB,uCvSpBN,clamp(age/life,0.,1.))); if(uCvSpSN>0) size*=max(0.,CV(uCvSpS,uCvSpSN,clamp(age/life,0.,1.))); }     // 4.8.0
     if(uGlit>0.){ float tf=uGlitD*(uGlA+uGlB*hsh(uid,17u)); float e=(age-tf)/uGlW; gl=gl*(1.-uGlDim*uGlit)+uGlit*uGlPk*exp(-e*e); }
     I=gl;
@@ -212,7 +214,7 @@ void main(){
     vec3 dv=normalize(vec3(gss(u2,31u),gss(u2,33u),gss(u2,35u))+1e-4)*(uBrV+uSpread*1.5)*(uBrVA+uBrVB*hsh(u2,37u));
     float a2=age-ts, x=a2/life2;
     p=mot(pc,vc*uBrInh+dv,U,g,uK*uBrKd,a2);
-    I=glowOf(T0*(1.-uCool*ts/lifeC)*uBrT)*uBrB*(uBrFd==2. ? (1.-x)*(1.-x) : pow(max(0.,1.-x),uBrFd)); size=uSize*uBrS; if(uCvBrBN>0) I*=max(0.,CV(uCvBrB,uCvBrBN,clamp(x,0.,1.)));
+    I=glowOf(T0*(1.-uCool*ts/lifeC)*uBrT)*uBrB*(uBrFd==2. ? (1.-x)*(1.-x) : pow(max(0.,1.-x),uBrFd)); size=uSize*uBrS; if(uCvBrBN>0) I*=max(0.,CV(uCvBrB,uCvBrBN,clamp(x,0.,1.))); if(uCvBrSN>0) size*=max(0.,CV(uCvBrS,uCvBrSN,clamp(x,0.,1.)));
   }
   // 尾迹扩散（4.2.0，tailDiffuse / tailDiffuseScale，用户 2026-10-02 16:22）：火花被阻力停下来以后仍被空气扰流带着走，越老离原位越远。
   // 位移 = 扰流速度 × Tl × x/√(1+x)，x = 年龄 / Tl，Tl = 尺度 / 速度：刚出生像被吹着走（∝ 年龄），老了变成扩散（∝ √年龄）。
@@ -242,8 +244,10 @@ uniform sampler2D uSrc;
 uniform float uT, uRate, uLife, uK, uG, uSpread, uInh, uT0, uCool, uTwk, uBright, uSize, uJet, uCone, uOmega, uShot, uShotSpd, uFan, uCBurn, uCK, uGH, uSpacing, uWR;
 uniform int uMode, uMw, uNsrc, uMp, uNshot, uSeed, uTw;
 uniform vec3 uFV; uniform vec4 uView; uniform float uPPM, uPPMY, uMax;
+uniform vec2 uCvSpS[6], uCvSpB[6]; uniform int uCvSpSN, uCvSpBN;     // 4.9.4 地面火花也按「火花大小 / 亮度随寿命」
 out float vI; out vec2 vSig; out float vPS;
 ${GLSL_HASH}
+${GLSL_CV}
 vec3 coneDir(vec3 base, uint key){ float th=uCone*sqrt(hsh(key,41u)), ph=6.2831853*hsh(key,43u);
   vec3 b1=normalize(vec3(-base.y,base.x,0.)+1e-6), b2=vec3(0.,0.,1.); return base*cos(th)+(b1*cos(ph)+b2*sin(ph))*sin(th); }
 void comet(int km, float ct, out vec3 p, out vec3 v){
@@ -274,7 +278,8 @@ void main(){
   vec3 p=mot(sp,vel,vec3(0.),g,uK,age); if(uMode==3) p-=uFV*age;
   float I=glowOf((uT0+120.*gss(key,11u))*(1.-uCool*age/life)); if(I<=0.){ cull(); return; }
   I*=(1.+uTwk*(2.*hsh(key,uint(uTw)*16u+13u)-1.))*uBright*.6;
-  emitPt(p.xy,I,uSize);
+  float sz=uSize, cx=clamp(age/life,0.,1.); if(uCvSpBN>0) I*=max(0.,CV(uCvSpB,uCvSpBN,cx)); if(uCvSpSN>0) sz*=max(0.,CV(uCvSpS,uCvSpSN,cx));
+  emitPt(p.xy,I,sz);
 }`;
 // 地面类的「星头」：仕掛け的灯芯（模式 0）、转轮喷口（1）、彗星与末端小花（2）
 const VS_EHEAD = `#version 300 es
@@ -283,8 +288,10 @@ uniform sampler2D uSrc;
 uniform float uT, uShot, uShotSpd, uFan, uCBurn, uCK, uGH, uSpacing, uWR, uOmega, uHead, uHI, uFlick, uSS, uSB;
 uniform int uMode, uNsrc, uNshot, uSeed, uTw, uNb;
 uniform vec4 uView; uniform float uPPM, uPPMY, uMax;
+uniform vec2 uCvStS[6], uCvStB[6]; uniform int uCvStSN, uCvStBN;     // 4.9.4 彗星按「星头大小 / 亮度随寿命」（寿命 = 彗星燃烧）
 out float vI; out vec2 vSig; out float vPS;
 ${GLSL_HASH}
+${GLSL_CV}
 void comet(int km, float ct, out vec3 p, out vec3 v){
   int n=km-(km/uNsrc)*uNsrc; float fr=uNsrc>1?float(n)/float(uNsrc-1):.5;
   float ang=1.5707963+uFan*(.5-fr)+.02*gss(uint(km),3u);
@@ -297,7 +304,8 @@ void main(){
   int nb=1+uNb; int kr=id/nb, b=id-kr*nb;
   int k=int(floor(uT*uShot))-kr; float ts=float(k)/uShot, ca=uT-ts; if(ca<0.){ cull(); return; }
   int km=((k%uNshot)+uNshot)%uNshot; vec3 p, v;
-  if(b==0){ if(ca>=uCBurn){ cull(); return; } comet(km,ca,p,v); emitPt(p.xy,uHI*fl*min(1.,ca/.04),uHead); return; }
+  if(b==0){ if(ca>=uCBurn){ cull(); return; } comet(km,ca,p,v); float hi=uHI*fl*min(1.,ca/.04), hs=uHead, cx=clamp(ca/uCBurn,0.,1.);
+    if(uCvStBN>0) hi*=max(0.,CV(uCvStB,uCvStBN,cx)); if(uCvStSN>0) hs*=max(0.,CV(uCvStS,uCvStSN,cx)); emitPt(p.xy,hi,hs); return; }
   if(ca<uCBurn){ cull(); return; }
   uint key=uint(km)*131u+uint(b); float a2=ca-uCBurn, life=uSB*(.8+.4*hsh(key,3u)); if(a2>=life){ cull(); return; }
   comet(km,uCBurn,p,v); vec3 d=normalize(vec3(gss(key,5u),gss(key,7u),gss(key,9u))+1e-4);
@@ -426,10 +434,12 @@ function setSparkModUniforms(pr, P) {
   u('uBrL', n(P.branchLife, 0.16)); u('uBrLA', la); u('uBrLB', lb); u('uBrV', n(P.branchV, 4)); u('uBrVA', va); u('uBrVB', vb);
   u('uBrInh', n(P.branchInh, 0.5)); u('uBrKd', n(P.branchKd, 1.5)); u('uBrT', n(P.branchT, 1.08)); u('uBrB', n(P.branchBright, 1.8)); u('uBrFd', n(P.branchFade, 2)); u('uBrS', n(P.branchSize, 0.7));
   const [ga, gb] = jitAB(P.glitterDelayJit, 50, 0.5, 1); u('uGlA', ga); u('uGlB', gb); u('uGlW', n(P.glitterW, 0.03)); u('uGlPk', n(P.glitterPeak, 6)); u('uGlDim', n(P.glitterDim, 0.85));
-  // 4.8.0 按寿命曲线：最多 6 个点（多了均匀取 6 个，首尾保留）；空 = N 0 = 不乘
-  const cv = (k, key) => { let ks = parseCurve(P[key]) || []; if (ks.length > 6) ks = [0, 1, 2, 3, 4, 5].map(i => ks[Math.round(i * (ks.length - 1) / 5)]); const a = new Float32Array(12); ks.forEach((q, i) => { a[i * 2] = q[0]; a[i * 2 + 1] = q[1]; });
-    const loc = pr.u[k + '[0]']; if (loc) gl.uniform2fv(loc, a); if (pr.u[k + 'N']) gl.uniform1i(pr.u[k + 'N'], ks.length); };
-  cv('uCvSpS', 'sparkSizeCurve'); cv('uCvSpB', 'sparkBrightCurve'); cv('uCvEmB', 'emberBrightCurve'); cv('uCvBrB', 'branchBrightCurve');
+  setCurveU(pr, P, [['uCvSpS', 'sparkSizeCurve'], ['uCvSpB', 'sparkBrightCurve'], ['uCvEmB', 'emberBrightCurve'], ['uCvBrB', 'branchBrightCurve'], ['uCvEmS', 'emberSizeCurve'], ['uCvBrS', 'branchSizeCurve']]);
+}
+// 4.8.0 按寿命曲线：最多 6 个点（多了均匀取 6 个，首尾保留）；空 = N 0 = 不乘。4.9.4 抽成公用（地面火花 / 彗星也用）
+function setCurveU(pr, P, pairs) {
+  for (const [k, key] of pairs) { let ks = parseCurve(P[key]) || []; if (ks.length > 6) ks = [0, 1, 2, 3, 4, 5].map(i => ks[Math.round(i * (ks.length - 1) / 5)]); const a = new Float32Array(12); ks.forEach((q, i) => { a[i * 2] = q[0]; a[i * 2 + 1] = q[1]; });
+    const loc = pr.u[k + '[0]']; if (loc) gl.uniform2fv(loc, a); if (pr.u[k + 'N']) gl.uniform1i(pr.u[k + 'N'], ks.length); }
 }
 function setAirUniforms(pr, P) {
   const tm = P.turb > 0 ? turbModes(P) : [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]];
@@ -529,6 +539,7 @@ function drawEmit(E, t, view, ppm, chan, w, tw) {
   gl.uniform1f(pr.u.uSpread, P.sparkSpread); gl.uniform1f(pr.u.uInh, P.sparkInherit); gl.uniform1f(pr.u.uT0, se.T0); gl.uniform1f(pr.u.uCool, P.cooling);
   gl.uniform1f(pr.u.uTwk, P.twinkle); gl.uniform1f(pr.u.uBright, P.sparkBright); gl.uniform1f(pr.u.uSize, P.sparkSize);
   gl.uniform1f(pr.u.uJet, P.jetSpeed); gl.uniform1f(pr.u.uCone, P.jetCone * Math.PI / 180); gl.uniform3fv(pr.u.uFV, [0, E.V || 0, 0]);
+  setCurveU(pr, P, [['uCvSpS', 'sparkSizeCurve'], ['uCvSpB', 'sparkBrightCurve']]);     // 4.9.4
   setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w);
   gl.bindVertexArray(emptyVAO); drawParticleBatch(E.nv, modern); gl.bindVertexArray(null);
 }
@@ -538,6 +549,7 @@ function drawEmitHeads(E, t, view, ppm, chan, w, tw) {
   setEmitCommon(pr, E, t, view, ppm, tw);
   gl.uniform1f(pr.u.uHead, P.headSize); gl.uniform1f(pr.u.uHI, P.headBright); gl.uniform1f(pr.u.uFlick, P.flicker);
   gl.uniform1f(pr.u.uSS, P.subSpeed); gl.uniform1f(pr.u.uSB, P.subBurn); gl.uniform1i(pr.u.uNb, Math.round(P.burstStars || 0));
+  setCurveU(pr, P, [['uCvStS', 'starSizeCurve'], ['uCvStB', 'starBrightCurve']]);     // 4.9.4 彗星
   setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w);
   const n = E.mode === 2 ? E.hslots * (1 + Math.round(P.burstStars || 0)) : E.nsrc;
   gl.bindVertexArray(emptyVAO); drawParticleBatch(n, modern); gl.bindVertexArray(null);

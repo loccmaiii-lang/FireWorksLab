@@ -22,7 +22,16 @@ function packNamesFor(key, ef, nLayers, fallback, type) {
   const layers = Array.from({ length: nLayers }, (_, i) => asciiName((o.layers || [])[i]) || asciiName(((ef && ef.层英文名) || [])[i]) || (nLayers > 1 ? 'L' + (i + 1) : ''));
   return { base, layers, custom: !!(o.base || (o.layers || []).some(Boolean)) };
 }
-function setPackNames(key, base, layers) { const all = store.get('packNames', {}); all[key] = { base, layers }; store.set('packNames', all); }
+// 4.9.4（交互宪章 5「一个效果只留一个英文名，在交付清单里设」）：以前有三个名字——右栏「母版名称」、交付清单「名称（英文）」、左栏中文名。
+// 现在英文名只有一个：交付清单里设（存在 packNames），右栏只显示、点「在交付清单里改」过去。素材包、贴图、UE 资产名都用它；
+// 沿用旧命名的产物（V5 尾缀、单束等）设过英文名以后，文件名也用它（没设过时照旧用内部名，以前导出的东西不变）。
+function effEnName() {
+  try { const xs = typeof curLayerBakes === 'function' ? curLayerBakes() : [], t = xs.length === 1 && xs[0].b ? xs[0].b.P.type : (state.tab === 'combo' ? '' : state.P.type);
+    return packNamesFor(wbKey(), lib.effect, Math.max(1, xs.length), typeof delivName === 'function' ? delivName() : state.name, t).base; } catch (e) { return state.name || 'Firework'; }
+}
+function effEnCustom() { try { return asciiName((store.get('packNames', {})[wbKey()] || {}).base); } catch (e) { return ''; } }
+function syncEnName() { const el = typeof document !== 'undefined' && document.getElementById('enName'); if (el) { const n = effEnName(); if (el.textContent !== n) el.textContent = n; } }
+function setPackNames(key, base, layers) { const all = store.get('packNames', {}); all[key] = { base, layers }; store.set('packNames', all); if (typeof syncEnName === 'function') syncEnName(); }
 function fwTexName(base, layer, L, sheet, kind, mobile) {
   const stem = FW_TEX_PREFIX + base + (layer ? '_' + layer : '');
   if (kind === 'R') return stem + '_R';

@@ -708,7 +708,7 @@ function buildMasterPanel() {
   slider(ms, 'm-xw', '变色过渡', 's', 0.01, 0.5, 0.01, () => state.M.xw, v => state.M.xw = v, MD.xw);
   slider(ms, 'm-hi', '显示强度', '×', 0, 20, 0.05, () => state.M.headInt, v => state.M.headInt = v, 1);
   slider(ms, 'm-ti', '尾迹显示强度', '×', 0, 20, 0.05, () => state.M.tailInt, v => state.M.tailInt = v, 1);
-  $('#type').value = state.repId ? 'rep:' + state.repId : P.type; $('#mname').value = state.name; syncExport();
+  $('#type').value = state.repId ? 'rep:' + state.repId : P.type; syncEnName(); syncExport();
   syncTypeButton();
 }
 function refreshVisibility() {

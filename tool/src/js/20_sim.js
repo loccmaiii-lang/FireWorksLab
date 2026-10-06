@@ -170,7 +170,7 @@ class Sim {
     this.flashes = [];
     this.events = [];                    // 声音节点：[时刻, 类型]
     // 4.8.0（5.0 第 3 步一部分）：各发射器的大小 / 亮度按寿命曲线（空 = 不乘，画面不变）
-    this.cv = { ss: parseCurve(P.starSizeCurve), sb: parseCurve(P.starBrightCurve), us: parseCurve(P.subSizeCurve), ub: parseCurve(P.subBrightCurve), cs: parseCurve(P.crackleSizeCurve), cb: parseCurve(P.crackleBrightCurve), fb: parseCurve(P.flashBrightCurve) };
+    this.cv = { ss: parseCurve(P.starSizeCurve), sb: parseCurve(P.starBrightCurve), us: parseCurve(P.subSizeCurve), ub: parseCurve(P.subBrightCurve), cs: parseCurve(P.crackleSizeCurve), cb: parseCurve(P.crackleBrightCurve), fb: parseCurve(P.flashBrightCurve), fs: parseCurve(P.flashSizeCurve) };     // 4.9.4 开花闪光大小随寿命
     this.ex = this.fam === 'aerial' ? exSlotsOf(P) : []; this.exDots = []; this.exRng = new RNG((P.seed | 0) + 7177); this.exDone = {};     // 4.6.0 自定义发射器（默认没有 → 不碰主随机序列）
     if (this.fam === 'rise') { this.initRise(); return; }
     // 4.3.3 开花闪光大小（默认 1 = 以前）；4.6.0 开花闪光自己的半径（-1 = 跟初速：max(2 m, 0.045 × 初速)）、衰减、可见时长
@@ -472,10 +472,11 @@ class Sim {
       if (f.abs != null) continue;
       const a = this.t - f.t0, cut = f.cut || 0.25; if (a < 0 || a > cut || nh >= capH - 1) continue;
       if (P._unit) continue;      // 单元序列不含开花闪光（另挂）
-      let I = f.I * Math.exp(-a / (f.dec || 0.035)) * 1.5 * 6.2832 * f.sig * f.sig;     // 4.6.0 开花闪光衰减（默认 0.035 s）
+      const sig = f.main && this.cv.fs ? f.sig * Math.max(0, lifeCurveAt(this.cv.fs, clamp(a / cut, 0, 1))) : f.sig;     // 4.9.4 开花闪光大小随寿命（峰值不变：总光量按 σ² 跟着变）
+      let I = f.I * Math.exp(-a / (f.dec || 0.035)) * 1.5 * 6.2832 * sig * sig;     // 4.6.0 开花闪光衰减（默认 0.035 s）
       if (f.main && this.cv.fb) I *= Math.max(0, lifeCurveAt(this.cv.fb, clamp(a / cut, 0, 1)));     // 4.8.0 开花闪光亮度随寿命
-      push(bufH, nh++, f.x, f.y, I, f.sig * 2);
-      if (refl > 0 && f.y >= 0 && nh < capH - 1) push(bufH, nh++, f.x, -f.y - 0.01, I * refl * 1.69, f.sig * 2.6);     // 倒影 σ × 1.3，总光量 × 1.69 保持峰值 × refl
+      push(bufH, nh++, f.x, f.y, I, sig * 2);
+      if (refl > 0 && f.y >= 0 && nh < capH - 1) push(bufH, nh++, f.x, -f.y - 0.01, I * refl * 1.69, sig * 2.6);     // 倒影 σ × 1.3，总光量 × 1.69 保持峰值 × refl
     }
     const sp = this.sp; let nt = 0;
     const gl = P.glitter, gd = P.glitterDelay;

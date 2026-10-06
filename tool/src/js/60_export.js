@@ -100,7 +100,7 @@ function sawKeys(m, T) {
   return keys;
 }
 
-const safeName = () => (state.name || 'Firework').replace(/[^\w\-]+/g, '_');
+const safeName = () => ((typeof effEnCustom === 'function' && effEnCustom()) || state.name || 'Firework').replace(/[^\w\-]+/g, '_');     // 4.9.4：交付清单里设了英文名就用它（一个效果一个英文名）
 // 帧号测试图：和正式贴图同样的格子、RGBA 接力、取景（面片移动 / 缩放完全相同），内容换成
 //   ① 左上角帧号（贴在格子上）；② 以爆点为中心、固定世界尺寸的圆和十字；③ 固定世界间距的网格。
 // 在引擎里把材质实例的贴图换成它播放：帧号应当连续递增不倒退；圆应当不动、不胀缩、不变扁。哪一项不对，就知道是帧号曲线 / 材质、尺寸曲线还是对齐方式的问题。

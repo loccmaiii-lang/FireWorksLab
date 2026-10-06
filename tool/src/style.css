@@ -1383,4 +1383,8 @@ details.mod-empty .mod-note{font-size:12.5px;color:var(--muted,#adb8bc);padding:
 .keys-tbl kbd{font:11px var(--mono);padding:0 4px;border:1px solid var(--line2);border-radius:3px;background:var(--low);color:var(--text)}
 .keys-dialog{max-width:620px}
 .assetbar .ab-bcancel{padding:2px 8px;font-size:12px;min-height:0;flex:none}
+/* 4.9.4 一个英文名：右栏只显示，在交付清单里改 */
+.enname{display:flex;align-items:center;gap:6px;min-width:0;min-height:28px}
+.enname b{font:12.5px var(--mono);color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.enname .btn{flex:none;padding:1px 6px;font-size:11px}
 

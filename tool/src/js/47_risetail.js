@@ -393,7 +393,7 @@ function rtBuildES(P) {
     const L = P['rt' + k + 'Life'], j = (P['rt' + k + 'Jit'] || 0) / 100, S0 = P['rt' + k + 'Size'], kd = P['rt' + k + 'Kd'], S = rtDispS(P, S0), k2 = rtDispK(P, S0);
     // 4.5.1 近段 + 远段：中火花的 GPU 那份是「闪烁层」（Color Over Life 带闪烁 rtGpuTw）
     const tw = far && k === 'M', name = tw ? 'SparksTwinkle' : name0;
-    const sizeLife = [[0, 1], [0.7, 1], [1, P.rtShrink == null ? 0.5 : P.rtShrink]];
+    const sizeLife = esMulKeys([[0, 1], [0.7, 1], [1, P.rtShrink == null ? 0.5 : P.rtShrink]], parseCurve(P['rt' + k + 'SizeCurve']));     // 4.9.4 大小随寿命（在拉长之前乘，拖影长度跟着）
     const sl = rtStretchLife(P, ball, P.rtJet, kd, L, S, sizeLife, P['rt' + k + 'Streak']);
     let col = rtSparkColor(tw ? { ...P, rtTw: +P.rtGpuTw || 0 } : P, L, P['rt' + k + 'I'] * (P.rtDotGain == null ? 1 : P.rtDotGain) * k2, P['rt' + k + 'dT'] || 0);
     if (sl) col = col.map(([u, c]) => [u, c.map(x => +(x / esCurve(sl, u)).toFixed(4))]);
@@ -453,6 +453,15 @@ function rtBuildES(P) {
   // 4.4.5 rtGpuMax > 0（RT5）：PC 上一条尾缀的 GPU 粒子同时活着不超过它（UE 里同屏还有很多别的粒子；用户 10-04 14:58 要 ≤ 800）。
   //   估算 = 每个持续生成的 GPU 发射器「最大出生率 × 平均寿命」相加；超了就把这些发射器的出生率一起按比例降（发射口那一下 Burst 不算、不降）。
   //   不补亮度：要尾迹还这么密，就把细 / 中火花多放进贴图（rtFTex / rtMTex）
+  // 4.9.4（交互宪章 5「所有发射器的按寿命曲线」）：每个粒子发射器的「大小 / 亮度随寿命」乘到导出的 Size By Life / Color Over Life 上；
+  //   实时模拟、引擎回放、cascade.json 都用这份 em，所以三处一致。没填就原样（逐位不变）。三档火花的大小在上面拉长之前已经乘过
+  const CVK = { SparksFine: ['', 'rtFBrightCurve'], SparksMid: ['', 'rtMBrightCurve'], SparksTwinkle: ['', 'rtMBrightCurve'], SparksCoarse: ['', 'rtCBrightCurve'],
+    Embers: ['rtESizeCurve', 'rtEBrightCurve'], SparkPops: ['rtPopSizeCurve', 'rtPopBrightCurve'], Smoke: ['rtSmokeSizeCurve', 'rtSmokeBrightCurve'],
+    LaunchGlow: ['rtLaunchSizeCurve', 'rtLaunchBrightCurve'], LaunchSparks: ['rtLaunchSparkSizeCurve', 'rtLaunchSparkBrightCurve'], HeadGlow: ['rtGlowSizeCurve', 'rtGlowBrightCurve'] };
+  for (const e of em) { const kk = CVK[e.name]; if (!kk) continue;
+    const cs = kk[0] && parseCurve(P[kk[0]]), cb = parseCurve(P[kk[1]]);
+    if (cs) e.sizeLife = esMulKeys(e.sizeLife, cs);
+    if (cb) e.col = esMulKeys(e.col, cb); }
   const gpuEst = () => em.filter(e => e.gpu && e.spawn && e.spawn.length).reduce((a, e) => a + Math.max(...e.spawn.map(k => k[1])) * (e.life[0] + e.life[1]) / 2, 0);
   const est0 = gpuEst(), cap = +P.rtGpuMax > 0 ? +P.rtGpuMax : 0, fCap = cap > 0 && est0 > cap ? cap / est0 : 1;
   if (fCap < 1) for (const e of em) if (e.gpu && e.spawn && e.spawn.length) e.spawn = e.spawn.map(([t, r]) => [t, r * fCap]);

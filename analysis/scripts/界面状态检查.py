@@ -58,6 +58,12 @@
      AI 待验收效果（就绪的）标「素材包 ✓」；自动烘焙关时改参数，顶栏写「贴图是旧的」不写「烘焙中…」
   W9 4.9.2（梳理 6.2 / 6.4、隐性耦合 T01）：改一个时刻、别的时刻被规则推着走时提示「跟着变了：× a → b s」；数值超出滑杆范围时数值框标出来并写明照样起作用；
      单束导出菜单写明贴图里的星不受力、随机关了；预览设置里能开关「预览泛光（引擎里没有）」，不触发烘焙
+  W10 4.9.4（交互宪章 5 收尾）：起名 / 确认是应用内对话框（页面脚本里没有原生 prompt / confirm）；快捷键都登记在一张表、每个都挂了处理、? 弹出的表就是这张；
+     Esc 先关菜单不切精简布局；预览烘焙中点「取消」马上停、贴图留着上次的、同一组参数不自己重烘，按 B 再烘
+  W11 4.9.4（交互宪章 5「所有发射器的按寿命曲线」）：空中类的余烬 / 分叉火花 / 开花闪光补了大小；升空尾缀 RT6 每个粒子发射器都有大小 / 亮度随寿命，
+     填了就乘在导出的 Size By Life / Color Over Life 上、空的时候导出逐位不变；地面火花、彗星也认曲线，没寿命的喷口亮点标不起作用
+  W12 4.9.4（交互宪章 5「一个效果只留一个英文名」）：右栏没有可改的「母版名称」，只显示英文名、点了去交付清单改；交付清单所有产物都能改英文名；
+     改了右栏、导出文件名跟着变，恢复默认回去
   L1 HN2 闭环（只在 --real）：改一层立刻切层 → 保存 → 刷新 → 打开这个版本 → 导出 PC + 手机：参数、贴图、文件名、两套 cascade、缩放抖动
 """
 import argparse, asyncio, json, sys, time, pathlib
@@ -1630,6 +1636,157 @@ async def w9(pg):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)[:900]
 
 
+W10_JS = r'''async () => {
+  const bad = [], out = {}, wait = ms => new Promise(r => setTimeout(r, ms));
+  // 1 应用内对话框：页面脚本里没有原生 prompt / confirm（askConfirm 和隔离检查的退路除外）
+  const src = [...document.scripts].map(x => x.textContent).join('\n');
+  out.prompt = (src.match(/[^.\w]prompt\(/g) || []).length; out.confirm = (src.match(/[^.\w:]\s?confirm\(/g) || []).filter(m => !/:\s?confirm/.test(m)).length;
+  if (out.prompt) bad.push(`页面里还有 ${out.prompt} 处原生 prompt`);
+  { const pr = askText('起个名字', '说明', '旧名', '改名'); await wait(50); const open = $('#saveNameDlg').open, act = $('#saveNameSubmit').textContent;
+    $('#saveNameInput').value = '新名'; $('#saveNameSubmit').click(); const v = await pr; out.askText = { open, act, v };
+    if (!open || v !== '新名' || act !== '改名') bad.push('askText 不是应用内对话框 / 没拿到填的名字 ' + JSON.stringify(out.askText)); }
+  { const pr = askConfirm('要不要', '说明', '要', '不要'); await wait(50); const open = $('#confirmDlg').open; $('#confirmYes').click(); const y = await pr;
+    const pr2 = askConfirm('要不要', ''); await wait(50); $('#confirmNo').click(); const n = await pr2; out.askConfirm = { open, y, n };
+    if (!open || y !== true || n !== false) bad.push('askConfirm 不对 ' + JSON.stringify(out.askConfirm)); }
+  { const pr = askText('起个名字', '', '默认名'); await wait(50); $('#saveNameDlg').close(); const v = await pr; if (v !== null) bad.push('关掉起名对话框（Esc）应当等于取消，拿到的是 ' + v); }
+  // 2 快捷键登记表：每个都挂了处理；工具页和 ? 弹出的表就是这张
+  out.unbound = KEYMAP.filter(k => !(KEY_FNS[k.id] || []).length).map(k => k.id);
+  if (out.unbound.length) bad.push('快捷键表里有没挂处理的：' + out.unbound.join(','));
+  out.toolsRows = document.querySelectorAll('#keysTools .keys-tbl tr').length;
+  if (out.toolsRows !== KEYMAP.length) bad.push(`工具页快捷键表 ${out.toolsRows} 行，登记表 ${KEYMAP.length} 个`);
+  return { bad, out };
+}'''
+
+
+async def w10(p, b):
+    """4.9.4：应用内对话框、快捷键登记表、预览烘焙可取消"""
+    ctx = await b.new_context(viewport={'width': 1440, 'height': 900}); pg = await ctx.new_page(); errs = []
+    pg.on('pageerror', lambda e: errs.append(str(e)))
+    natives = []
+    pg.on('dialog', lambda d: (natives.append(d.type), asyncio.ensure_future(d.dismiss())))
+    try:
+        await pg.add_init_script("window.requestAnimationFrame = () => 0;")
+        await pg.goto(HTML, wait_until='load', timeout=0); await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
+        await pg.evaluate(REC if REAL else FAKE)
+        await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+        r = await pg.evaluate(W10_JS); bad, info = r['bad'], r['out']
+        # ? 弹出快捷键表，Esc 关掉
+        await pg.evaluate("document.activeElement && document.activeElement.blur(); 0"); await pg.keyboard.press('?'); await pg.wait_for_timeout(200)
+        k = await pg.evaluate("({ open: $('#keysDlg').open, rows: document.querySelectorAll('#keysBody .keys-tbl tr').length, n: KEYMAP.length })")
+        await pg.keyboard.press('Escape'); await pg.wait_for_timeout(200); k['closed'] = not await pg.evaluate("$('#keysDlg').open"); info['?'] = k
+        if not k['open'] or k['rows'] != k['n'] or not k['closed']: bad.append(f'? 没弹出快捷键表 / 行数不对 / Esc 关不掉：{k}')
+        # L 收左栏、再按放回；菜单开着按 Esc 只关菜单、不切精简布局
+        s0 = await pg.evaluate("panels.side"); await pg.keyboard.press('l'); s1 = await pg.evaluate("panels.side"); await pg.keyboard.press('l'); s2_ = await pg.evaluate("panels.side")
+        info['L'] = [s0, s1, s2_]
+        if s1 == s0 or s2_ != s0: bad.append(f'L 收 / 放左栏不对：{info["L"]}')
+        await pg.evaluate("setPanels({ side: false, right: false }); $('#abMore').open = true; 0"); await pg.keyboard.press('Escape'); await pg.wait_for_timeout(100)
+        e1 = await pg.evaluate("({ menu: $('#abMore').open, side: panels.side, right: panels.right })"); info['Esc 关菜单'] = e1
+        if e1['menu'] or e1['side'] or e1['right']: bad.append(f'菜单开着按 Esc：菜单没关，或者顺带切了精简布局 {e1}')
+        await pg.evaluate("setPanels({ side: true, right: true }); 0")
+        # 预览烘焙取消
+        r = await pg.evaluate("""(async () => { const wait = ms => new Promise(r => setTimeout(r, ms)); const ob = bake; let calls = 0;
+          bake = async (P, s, onProg) => { calls++; for (let i = 0; i <= 20; i++) { onProg && onProg(i / 20); await wait(40); } return ob(P, s, onProg); };
+          const old = state.bake, s0 = old && old.P ? old.P.stars : null; state.P.stars += 4; onParam(); bakeNow({ quiet: true }); await wait(250);
+          abStateSync(); const mid = { baking: state.baking, btn: !$('#abBakeCancel').hidden, ab: $('#abState').textContent };
+          $('#abBakeCancel').click(); await wait(400); abStateSync();
+          const after = { baking: state.baking, same: state.bake === old, stale: bakeStale(), ab: $('#abState').textContent, btn: !$('#abBakeCancel').hidden };
+          const c1 = calls; await wait(900); const idle = { calls: calls - c1, baking: state.baking };
+          bakeNow({ quiet: true }); for (let i = 0; i < 100 && (state.baking || bakesPending()); i++) await wait(50);
+          const again = { stale: bakeStale(), stars: state.bake && state.bake.P ? state.bake.P.stars : null, want: state.P.stars };
+          bake = ob; state.P.stars -= 4; onParam(); return { s0, mid, after, idle, again }; })()""")
+        info['取消烘焙'] = r
+        if not (r['mid']['baking'] and r['mid']['btn']): bad.append(f"烘焙中顶栏没有「取消」：{r['mid']}")
+        if r['after']['baking'] or not r['after']['same'] or not r['after']['stale'] or '旧' not in r['after']['ab'] or r['after']['btn']: bad.append(f"点了取消没停下 / 贴图不是上次的 / 没标旧：{r['after']}")
+        if r['idle']['calls'] or r['idle']['baking']: bad.append(f"取消后同一组参数又自己烘了：{r['idle']}")
+        if r['again']['stale'] or r['again']['stars'] != r['again']['want']: bad.append(f"取消后按 B 没按新参数烘完：{r['again']}")
+        if natives: bad.append(f'弹出了浏览器原生对话框：{natives}')
+        if errs: bad.append('页面报错：' + '；'.join(errs[:3]))
+        return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)[:900]
+    finally:
+        await ctx.close()
+
+
+W11_JS = r'''async () => {
+  const bad = [], out = {};
+  // 1 每个发射器都有大小 / 亮度随寿命（行在、放在对的发射器 › 模块）
+  const want = { emberSizeCurve: '余烬›大小', branchSizeCurve: '分叉火花›大小', flashSizeCurve: '开花闪光›大小',
+    rtFSizeCurve: '细火花›大小', rtFBrightCurve: '细火花›亮度', rtMSizeCurve: '中火花›大小', rtMBrightCurve: '中火花›亮度', rtCSizeCurve: '粗火花›大小', rtCBrightCurve: '粗火花›亮度',
+    rtESizeCurve: '落火›大小', rtEBrightCurve: '落火›亮度', rtPopSizeCurve: '爆亮›大小', rtPopBrightCurve: '爆亮›亮度', rtSmokeSizeCurve: '烟带›大小', rtSmokeBrightCurve: '烟带›亮度',
+    rtLaunchSizeCurve: '发射口›闪光', rtLaunchBrightCurve: '发射口›闪光', rtLaunchSparkSizeCurve: '发射口›火花', rtLaunchSparkBrightCurve: '发射口›火花', rtGlowSizeCurve: '星头›光晕', rtGlowBrightCurve: '星头›光晕' };
+  const where = Object.fromEntries(panelRows.filter(([r, it]) => it.curve).map(([r, it]) => [it.curve, r._x ? r._x.e + '›' + r._x.m : '?']));
+  out.wrong = Object.entries(want).filter(([k, w]) => where[k] !== w).map(([k, w]) => `${k}: ${where[k] || '没有'}（应在 ${w}）`);
+  if (out.wrong.length) bad.push('曲线行不对：' + out.wrong.join('；'));
+  out.notEmpty = Object.keys(want).filter(k => BASE[k] !== '');
+  if (out.notEmpty.length) bad.push('缺省不是空：' + out.notEmpty.join(','));
+  // 2 开花闪光大小随寿命：模拟里闪光变大（峰值不变）
+  { const run = q => { const P = derive({ ...structuredClone(defaultsFor('kiku').P), type: 'kiku', ...q }), s = new Sim(P); s.step(H_STEP); const f = s.flashes.find(x => x.main); if (!f) return null;
+      s.t = f.t0 + (f.cut || 0.25) * 0.4; const bh = new Float32Array(4 * 400000), [nh] = s.gather(bh, new Float32Array(8)); let best = null;
+      for (let i = s.gFlash; i < nh; i++) if (Math.abs(bh[i * 4] - f.x) < 1e-3 && Math.abs(bh[i * 4 + 1] - f.y) < 1e-3) { best = { sz: bh[i * 4 + 3], I: bh[i * 4 + 2] }; break; } return best; };
+    const a = run({}), b = run({ flashSizeCurve: '0:2, 1:2' }); out.flash = [a, b];
+    if (!a || !b || Math.abs(b.sz / a.sz - 2) > 1e-6 || Math.abs(b.I / a.I - 4) > 1e-6) bad.push('开花闪光大小随寿命没起作用（大小应 ×2、总光量 ×4、峰值不变）：' + JSON.stringify(out.flash)); }
+  // 3 着色器：余烬 / 分叉大小、地面火花、彗星的曲线参数接上
+  { const miss = [];
+    for (const [kind, ks] of [['spk', ['uCvEmS[0]', 'uCvEmSN', 'uCvBrS[0]', 'uCvBrSN']], ['emit', ['uCvSpS[0]', 'uCvSpSN', 'uCvSpB[0]', 'uCvSpBN']], ['ehead', ['uCvStS[0]', 'uCvStSN', 'uCvStB[0]', 'uCvStBN']]]) {
+      const pr = particleProgram40(kind); for (const k of ks) if (!pr.u[k]) miss.push(kind + '.' + k); }
+    out.shader = miss; if (miss.length) bad.push('着色器里曲线参数没接上：' + miss.join(',')); }
+  // 4 升空尾缀：乘到导出的 Size By Life / Color Over Life 上；空的时候逐位不变
+  { const P0 = derive({ ...structuredClone(defaultsFor('tailM').P), type: 'tailM', rtERate: 20, rtPopRate: 10, rtSmoke: 0.2, rtLaunch: 1, rtLaunchN: 20, rtGlow: 1 });
+    const es0 = rtBuildES(P0), em0 = Object.fromEntries(es0.emitters.map(e => [e.name, e]));
+    const es1 = rtBuildES({ ...P0 }); out.same = JSON.stringify(es0.emitters) === JSON.stringify(es1.emitters);
+    const q = {}; for (const k of Object.keys(want)) if (k.startsWith('rt')) q[k] = /Size/.test(k) ? '0:2, 1:2' : '0:0.5, 1:0.5';
+    const es2 = rtBuildES({ ...P0, ...q }), em2 = Object.fromEntries(es2.emitters.map(e => [e.name, e])), at = (k, u) => esCurve(k, u);
+    const chk = {};
+    for (const n of Object.keys(em0)) { const a = em0[n], b = em2[n]; if (!b || !a.col) continue;
+      const u = 0.3, ca = at(a.col, u), cb = at(b.col, u), sa = at(a.sizeLife || [[0, 1], [1, 1]], u), sb = at(b.sizeLife || [[0, 1], [1, 1]], u);
+      const cr = Array.isArray(ca) ? (ca[0] > 1e-6 ? cb[0] / ca[0] : null) : null;
+      chk[n] = { size: +(sb / sa).toFixed(3), col: cr == null ? null : +cr.toFixed(3) }; }
+    out.rt = chk;
+    const sizeX = { Embers: 2, SparkPops: 2, Smoke: 2, LaunchGlow: 2, LaunchSparks: 2, HeadGlow: 2, SparksCoarse: 2, SparksFine: 2 };
+    for (const [n, c] of Object.entries(chk)) {
+      if (sizeX[n] && Math.abs(c.size - 2) > 0.02) bad.push(`升空尾缀 ${n} 大小随寿命没乘上（×${c.size}）`);
+      if (c.col != null && n !== 'SparksFine' && n !== 'SparksCoarse' && n !== 'SparksMid' && n !== 'SparksTwinkle' && Math.abs(c.col - 0.5) > 0.02) bad.push(`升空尾缀 ${n} 亮度随寿命没乘上（×${c.col}）`);
+    }
+    if (!out.same) bad.push('同一组参数建两次发射器，结果不一样'); }
+  // 5 地面：喷泉的星头曲线标不起作用，扇形（有彗星）的不标
+  out.inert = { fountain: inertWhy('starSizeCurve', { ...defaultsFor('fountain').P, type: 'fountain' }), fan: inertWhy('starSizeCurve', { ...defaultsFor('fan').P, type: 'fan' }) };
+  if (!out.inert.fountain || out.inert.fan) bad.push('地面的星头曲线「不起作用」标得不对：' + JSON.stringify(out.inert));
+  return { bad, out };
+}'''
+
+
+async def w11(pg):
+    """4.9.4：所有发射器的按寿命曲线"""
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate(W11_JS)
+    return not r['bad'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:900]
+
+
+async def w12(pg):
+    """4.9.4：一个效果只留一个英文名"""
+    bad, info = [], {}
+    await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
+    r = await pg.evaluate("""(async () => { const wait = ms => new Promise(r => setTimeout(r, ms)); const o = { mname: !!document.querySelector('#mname'), shown: $('#enName').textContent, eff: effEnName(), safe0: safeName() };
+      $('#enNameEdit').click(); await wait(80); o.deliv = !$('#delivView').hidden; o.focus = document.activeElement && document.activeElement.id;
+      $('#dvBase').value = 'Kiku Check 9'; $('#dvSaveNames').click(); await wait(80);
+      o.after = { shown: $('#enName').textContent, safe: safeName(), eff: effEnName() };
+      const rs = $('#dvResetNames'); if (rs) rs.click(); await wait(80); o.reset = { shown: $('#enName').textContent, safe: safeName() };
+      toggleDeliv(false); return o; })()""")
+    info['菊'] = r
+    if r['mname']: bad.append('右栏还有可改的「母版名称」输入框')
+    if r['shown'] != r['eff']: bad.append(f"右栏显示的英文名 {r['shown']} 和素材包用的 {r['eff']} 不一样")
+    if not r['deliv'] or r['focus'] != 'dvBase': bad.append(f'点「在交付清单里改」没打开交付清单 / 没把光标放到英文名：{r}')
+    if r['after']['shown'] != 'Kiku_Check_9' or r['after']['safe'] != 'Kiku_Check_9': bad.append(f"交付清单改了英文名，右栏 / 导出文件名没跟着：{r['after']}")
+    if r['reset']['shown'] != r['shown'] or r['reset']['safe'] != r['safe0']: bad.append(f"恢复默认没回去：{r['reset']}（原来 {r['shown']} / {r['safe0']}）")
+    # 沿用旧命名的产物（升空尾缀 V5）交付清单里也能改英文名
+    tr = await pg.evaluate("Object.keys(TYPES).find(t => familyOf(t) === 'rise' && (defaultsFor(t).P.form === 'trail'))")
+    if tr:
+        await pg.evaluate(f"(() => {{ window.__opening = true; Promise.resolve(openType('{tr}')).finally(() => window.__opening = false); return 0; }})()"); await idle(pg)
+        r2 = await pg.evaluate("(async () => { toggleDeliv(true); await new Promise(r => setTimeout(r, 80)); const o = { base: !!$('#dvBase'), name: $('#enName').textContent }; toggleDeliv(false); return o; })()")
+        info['V5'] = r2
+        if not r2['base']: bad.append('升空尾缀 V5 的交付清单里不能改英文名')
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps(info, ensure_ascii=False)[:700]
+
+
 async def x2(pg):
     """4.4.2（用户 10-04 21:17）：单层效果（牡丹模板）也有「导出方案」：输出 › 导出方案里 PC 能选 GPU 光点 / 单束 / 不出，手机能选不出；选光点后 cascade.json 是一个 GPU 光点发射器、引擎回放画光点、说明写有尾迹没了"""
     bad, info = [], {}
@@ -1710,7 +1867,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

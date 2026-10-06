@@ -25,6 +25,15 @@ function esCurve(keys, u) {
   }
   return keys[keys.length - 1][1];
 }
+// 4.9.4（交互宪章 5「所有发射器的按寿命曲线」）：把用户填的「随寿命」曲线（parseCurve 的几行 时刻:倍数）乘到一条关键帧上（Size By Life 的数、Color Over Life 的颜色都行）。
+// 取两条曲线所有关键点的时刻，再在相邻两点之间加一个中点（两条折线相乘是二次的，中点让误差很小）；没填曲线就原样返回，导出不变
+function esMulKeys(keys, cv) {
+  if (!cv || !cv.length) return keys;
+  const base = keys && keys.length ? keys : [[0, 1], [1, 1]];
+  const us = [...new Set([...base.map(k => +k[0]), ...cv.map(q => +q[0])].filter(u => u >= 0 && u <= 1).concat([0, 1]))].sort((a, b) => a - b), all = [];
+  us.forEach((u, i) => { if (i) all.push((us[i - 1] + u) / 2); all.push(u); });
+  return all.map(u => { const m = Math.max(0, lifeCurveAt(cv, u)), v = esCurve(base, u); return [+u.toFixed(5), Array.isArray(v) ? v.map(x => +(x * m).toFixed(4)) : +(v * m).toFixed(4)]; });
+}
 // 出生表：每个发射器一张，按出生时刻排好（确定性：同一组数据永远得到同一批粒子）
 // 盒子或盒子数组 → 盒子数组
 const esBoxes = b => !b ? [] : Array.isArray(b[0][0]) ? b : [b];

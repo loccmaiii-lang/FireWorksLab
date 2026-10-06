@@ -168,7 +168,7 @@ function wbSync() {
   $('#versionSummary').classList.toggle('changed', changed);
   $('#abExportPack').disabled = !$('#busy').hidden || state.baking || (combo && !wbIdle());
   $('#abRename').hidden = $('#abDelete').hidden = wb.src.kind !== 'mine';
-  idBarSync(list, changed); abStateSync();
+  idBarSync(list, changed); abStateSync(); if (typeof syncEnName === 'function') syncEnName();
 }
 // 4.9.1（5.0 第 3 步，交互宪章 5「身份条」）：顶栏一眼看到——打开的是什么、从哪来、哪个版本、改了没保存、素材包和现在一不一样。
 // 以前名字只在左栏「版本记录」里，左栏收起就不知道开的是谁。贴图新旧在旁边的 #abState（烘焙中 / 旧 / 失败）。
@@ -833,7 +833,7 @@ function renderDeliv() {
   const lyInputs = combo ? xs.map(x => `<label>第 ${x.i + 1} 层<input type="text" data-ly="${x.i}" value="${nm.layers[x.i]}" placeholder="L${x.i + 1}" title="${x.name}"></label>`).join('') : '';
   host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '这种产物沿用原来的命名'}</small></div><span class="sp"></span>
     <button class="btn primary" type="button" id="dvExport">导出素材包（PC + 手机）</button><button class="btn" type="button" id="dvBack">返回画面</button></div>
-    ${useNew ? `<div class="dv-names"><label>名称（礼花英文名）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>只能用英文字母、数字和下划线；名称存在这台电脑的浏览器里，按效果记。</small></div>` : ''}
+    <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>只能用英文字母、数字和下划线；素材包、贴图、UE 资产名都用它（右栏「英文名」显示的就是这个）。${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}存在这台电脑的浏览器里，按效果记；我的效果连了仓库文件夹会一起存。</small></div>
     <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table>
     <p class="hint">按当前烘焙推算；导出时手机版按单格下限独立烘焙。独看 / 静音不影响导出。</p>
     ${unitHTML(xs, combo)}`;
@@ -848,7 +848,7 @@ function renderDeliv() {
     const dup = layers.filter(Boolean).find((v, i, a) => a.indexOf(v) !== i); if (dup) { flash('层名重复：' + dup, true); return; }
     setPackNames(wbKey(), base, layers); renderDeliv(); flash('名称已保存');
   });
-  const rs = host.querySelector('#dvResetNames'); if (rs) rs.addEventListener('click', () => { const all = store.get('packNames', {}); delete all[wbKey()]; store.set('packNames', all); renderDeliv(); });
+  const rs = host.querySelector('#dvResetNames'); if (rs) rs.addEventListener('click', () => { const all = store.get('packNames', {}); delete all[wbKey()]; store.set('packNames', all); syncEnName(); renderDeliv(); });
   stage2.delivSig = stage2.tlSig;
 }
 // 单束（单元序列：一颗星一条序列，Cascade 里每颗星一个粒子按初速放射发射——用户 2026-10-02 13:09 问「单束输出没了」）
