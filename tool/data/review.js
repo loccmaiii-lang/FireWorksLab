@@ -22932,7 +22932,7 @@ var FW_EFFECTS = [
 "key": "jinmangju_sizes",
 "名": "金芒菊 · 规格（3 号–4 尺）",
 "负责": "对话框新花型",
-"阶段": "制作中",
+"阶段": "待验收",
 "参考": [
 "vidio/2.0/金芒菊A.mp4"
 ],
@@ -22972,15 +22972,14 @@ var FW_EFFECTS = [
 ],
 "进度": {
 "计算": true,
-"AI自检": false,
-"素材导出": false,
+"AI自检": true,
+"素材导出": true,
 "用户验收": false
 },
 "缺": [
-"导出 + 回放检查 + 标准检查（本机 NFJE* / NFJS1）",
 "UE 4.24 实机导入未验证"
 ],
-"下一步": "【对话框新花型 2026-10-07 01:20】NFJE03…40 + NFJS1 回来：回放检查 6 档全过、标准检查 6 档 ✅、引擎回放和实时模拟对得上；但 6 档贴图 / 资产名都叫 T_EFX_FireWorks_JinMangJu_*（导进引擎互相覆盖）→ 4.9.23 方案加 en 后缀，NFJF03…40 按新名字（JinMangJu_03…_40）重新导出（同一目录覆盖）。回来排全程回放检查（参考视频只有 4 s，大玉后段没看到）+ 标准检查，看过进待我验收。",
+"下一步": "【对话框新花型 2026-10-07 02:20】待你验收：6 档（3 号 / 5 号 / 尺玉 / 2 尺 / 3 尺 / 4 尺）新名字导出（JinMangJu_03…_40，NFJF*）、全程回放 6 档全过（NFJR1）、标准检查 6 档 ✅（NFJS2）。看法 analysis/results/NFJR1/看法.md。哪一档太密 / 太稀 / 太快直接说。",
 "说明": "和「金芒菊」（JM4-40，对话框1）分开：那边的验收不动；这里只是同一个配方按玉的大小出一组规格。",
 "英文名": "JinMangJu",
 "导出任务": [
@@ -22991,79 +22990,80 @@ var FW_EFFECTS = [
 "NFJF30",
 "NFJF40"
 ],
+"待验收版": "JMG10",
 "ver": "8ae1a025",
 "jobs": [
 {
 "id": "NFJE03",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFJE05",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFJE10",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFJE20",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFJE30",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFJE40",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFJF03",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFJF05",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFJF10",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFJF20",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFJF30",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFJF40",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 }
 ],
 "exports": [
