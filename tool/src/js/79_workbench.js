@@ -769,10 +769,16 @@ function migNotify() {
   const hit = MIG_LOG.filter(x => open.has(x.P)); MIG_LOG.length = 0;
   if (!hit.length) return;
   const g = new Map(); for (const x of hit) { const key = x.k + '|' + x.why; if (!g.has(key)) g.set(key, { ...x, n: 0 }); g.get(key).n++; }
-  const f = v => v == null ? '（空）' : typeof v === 'number' ? +(+v).toFixed(4) : String(v);
   const NM = { endMode: '结尾', coolMode: '冷却方式', engine: '模拟内核', cols: '列数', rows: '行数', zoom: '面片取景', exposure: '贴图曝光', trHeadExpo: '星头曝光', headBright: '星头亮度', frameMode: '取帧方式' };
   const nm = k => NM[k] || ((typeof PNAMES !== 'undefined' ? PNAMES : []).find(r => r.key === k) || {}).cn || k;
-  const items = [...g.values()].map(x => (x.to == null ? `「${nm(x.k)}」存的是 ${f(x.from)}，不再起作用：${x.why}` : `「${nm(x.k)}」${f(x.from)} → ${f(x.to)}（${x.why}）`) + (x.n > 1 ? `（${x.n} 层）` : ''));
+  // 4.9.7（对话框23 参数栏交互第 9 条）：值也写中文（以前写「存的是 fade」「存的是 0」这种内部值）
+  const VAL = { endMode: { fade: '最后 0.3 s 整体淡出', natural: '等火花自然灭完', cut: '到序列时长直接切' }, coolMode: { 0: '按各自寿命', 1: '按实际年龄' }, engine: { cpu: 'CPU', gpu: 'GPU' },
+    zoom: { off: '固定大小', on: 'Zoom（随开花放大）', tight: '紧凑取景' }, frameMode: { content: '按画面变化', auto: '自动（按运动快慢）', uniform: '均匀', tick30: '30 fps（自动分段）' } };
+  const selLabel = (k, v) => { for (const sec of (typeof SCHEMA !== 'undefined' ? SCHEMA : [])) for (const it of sec.items) if (it.sel === k && it.options) { const o = it.options.find(o => String(o[0]) === String(v)); if (o) return splitLab(o[1])[0]; } return null; };
+  const unitOf = k => { for (const sec of (typeof SCHEMA !== 'undefined' ? SCHEMA : [])) for (const it of sec.items) if (Array.isArray(it) && it[0] === k) return it[2] || ''; return ''; };
+  const f = (k, v) => { if (v == null || v === '') return '空'; const t = VAL[k] && VAL[k][String(v)] != null ? VAL[k][String(v)] : selLabel(k, v); if (t != null) return `「${t}」`; if (typeof v === 'number' || isFinite(+v)) { const u = unitOf(k); return +(+v).toFixed(4) + (u && u !== '1' ? ' ' + u : ''); } return `「${String(v)}」`; };
+  const sp = v => (v.startsWith('「') ? '' : ' ') + v;
+  const items = [...g.values()].map(x => (x.to == null ? `「${nm(x.k)}」原来是${sp(f(x.k, x.from))}，不再起作用：${x.why}` : `「${nm(x.k)}」${f(x.k, x.from)} → ${f(x.k, x.to)}（${x.why}）`) + (x.n > 1 ? `（${x.n} 层）` : ''));
   const box = $('#migNote'); if (!box) return;
   const prev = box.hidden ? [] : (box._items || []); box._items = [...new Set([...prev, ...items])];
   $('#migNoteText').textContent = `打开的是旧存档，系统按现在的规则改了 / 不再用这些（画面会和当时存的不一样）：${box._items.slice(0, 4).join('；')}${box._items.length > 4 ? `；还有 ${box._items.length - 4} 项` : ''}`;
@@ -799,7 +805,7 @@ function frameContext() {
 async function noteFrame() {
   const t = frameContext(), ta = document.querySelector('#rvTxt');
   if (ta && lib.review && lib.review.kind !== 'queued') {
-    lib.pane = 'review'; syncPtabs();
+    paneGo('review');
     ta.value = (ta.value ? ta.value.replace(/\s*$/, '\n') : '') + t + ' ';
     ta.dispatchEvent(new Event('input')); ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length);
     flash('已把当前帧写进意见，接着写哪里不对');

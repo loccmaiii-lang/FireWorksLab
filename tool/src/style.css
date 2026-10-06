@@ -1392,3 +1392,5 @@ details.mod-empty .mod-note{font-size:12.5px;color:var(--muted,#adb8bc);padding:
 .mig-note[hidden]{display:none}
 .mig-note span{flex:1;overflow-wrap:anywhere}
 
+/* 4.9.7 右栏换页（参数 / 审阅 / 工具）只换显示的内容：工具页不再是另一个 state.tab */
+#right.pane-tools #layerCard,#right.pane-tools aside.panel:not(#pIter){display:none!important}

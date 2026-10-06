@@ -6,25 +6,39 @@
 const lib = { q: '', key: '', review: null, tpl: null, showHidden: false, pane: 'params', open: store.get('libOpen2', {}) };
 const ref2 = { on: store.get('refOn', false), off: 0 };
 
+// 4.9.7（对话框23，参数栏交互第 7 条）：右栏的「参数 / 审阅 / 工具」只是右栏换页（lib.pane），不是打开了别的东西。
+// 以前「工具」是 state.tab = 'iter'，切过去再回来 state.t 归零、多层选中的层 / 独看清掉，多层里「工具」页干脆藏着。
+// 现在 state.tab 只管打开的是什么（master 单层 / combo 多层 / asset 素材），换页不动它、不动播放时间、选中的层、发射器和展开的模块；滚动位置按页记
 async function setTab(tab, o = {}) {
+  if (tab === 'iter') { paneGo('tools'); return; }     // 旧的调用（工具页）= 换页
   const changed = tab !== state.tab;
   state.tab = tab; if (changed) state.t = 0;
   if (tab !== 'combo') { state.comboSel = -1; state.layerView = { solo: -1, mute: [] }; }
-  $('#pMaster').hidden = tab !== 'master'; $('#pCombo').hidden = tab !== 'combo'; $('#pIter').hidden = tab !== 'iter'; $('#pAsset').hidden = tab !== 'asset';
+  $('#pMaster').hidden = tab !== 'master'; $('#pCombo').hidden = tab !== 'combo'; $('#pAsset').hidden = tab !== 'asset';
   syncComboPanels();
   $('#viewSeg').hidden = tab === 'asset'; $('#assetCv').hidden = tab !== 'asset';
   syncPtabs();
   if (!changed) return;
-  if (tab === 'iter') renderLegacy();
   if (tab === 'asset') assetPanel();
 }
-
+// 右栏换页：参数（params）/ 审阅（review）/ 工具（tools）。只换右栏显示的内容，打开的效果、时间、层、发射器都不动；各页的滚动位置各记各的
+lib.scroll = {};
+function paneGo(k) {
+  const right = $('#right'), from = lib.pane || 'params';
+  if (k === from) { syncPtabs(); return; }
+  if (right) lib.scroll[from] = right.scrollTop;
+  lib.pane = k; syncPtabs();
+  if (k === 'tools' && typeof renderLegacy === 'function') renderLegacy();
+  if (right) right.scrollTop = lib.scroll[k] || 0;
+}
 function syncPtabs() {
-  const tab = state.tab, rv = lib.pane === 'review';
+  const tab = state.tab, pane = state.tab === 'asset' ? 'params' : lib.pane || 'params';
   $('#ptabs').hidden = tab === 'asset' || $('#right').classList.contains('qmode');
-  $('#ptabs [data-tab=iter]').hidden = tab === 'combo';
-  $('#right').classList.toggle('pane-review', rv);
-  const cur = rv ? 'review' : tab === 'iter' ? 'iter' : 'master';
+  $('#ptabs [data-tab=iter]').hidden = false;
+  $('#right').classList.toggle('pane-review', pane === 'review');
+  $('#right').classList.toggle('pane-tools', pane === 'tools');
+  $('#pIter').hidden = pane !== 'tools';
+  const cur = pane === 'review' ? 'review' : pane === 'tools' ? 'iter' : 'master';
   for (const b of $('#ptabs').children) b.setAttribute('aria-selected', String(b.dataset.tab === cur));
 }
 // ---------------- 审阅记录 ----------------
@@ -412,7 +426,7 @@ function setReview(e, formal) {
   setRefVideo(vidEntry);
   const ef = lib.effect;
   if (!e) {
-    if (formal && ef) { const x = effParts(ef, { id: formal.id }); box.hidden = false; box.innerHTML = `<div class="rstrip"><span class="badge ok">正式库</span><b>${formal.id}</b><span class="sp"></span><button class="btn mini" type="button" data-pane="review">审阅 →</button></div><div class="rcard rfull"><div class="rh">${x.head}</div>${x.pills}<p class="rnote">正式库条目：${formal.name}</p></div><details class="rcard rfold rfull"><summary>版本与历史 · 准备情况</summary>${x.more}</details>`; box.querySelectorAll('[data-pane]').forEach(b => b.addEventListener('click', () => { lib.pane = 'review'; syncPtabs(); })); bindEffHeader(box, ef); }
+    if (formal && ef) { const x = effParts(ef, { id: formal.id }); box.hidden = false; box.innerHTML = `<div class="rstrip"><span class="badge ok">正式库</span><b>${formal.id}</b><span class="sp"></span><button class="btn mini" type="button" data-pane="review">审阅 →</button></div><div class="rcard rfull"><div class="rh">${x.head}</div>${x.pills}<p class="rnote">正式库条目：${formal.name}</p></div><details class="rcard rfold rfull"><summary>版本与历史 · 准备情况</summary>${x.more}</details>`; box.querySelectorAll('[data-pane]').forEach(b => b.addEventListener('click', () => { paneGo('review'); })); bindEffHeader(box, ef); }
     else { box.hidden = true; box.innerHTML = ''; }
     $('#rvDot').hidden = true; if (lib.pane === 'review' && box.hidden) lib.pane = 'params'; syncPtabs();
     buildLayerCard(); wbRefresh();
@@ -448,7 +462,7 @@ function setReview(e, formal) {
     </div>
     ${x.more ? `<details class="rcard rfold rfull"><summary>版本与历史 · 准备情况 · 交付说明</summary>${x.more}</details>` : ''}`;
   bindEffHeader(box, ef);
-  box.querySelectorAll('[data-pane]').forEach(b => b.addEventListener('click', () => { lib.pane = 'review'; syncPtabs(); $('#right').scrollTop = 0; }));
+  box.querySelectorAll('[data-pane]').forEach(b => b.addEventListener('click', () => { paneGo('review'); $('#right').scrollTop = 0; }));
   $('#rvDot').hidden = !(cand && !r.st);
   const setSt = st => { const cur = rvOf(e).st; rvSet(rvKey(e), { st: cur === st ? '' : st }); setReview(e); renderLib(); };
   box.querySelectorAll('[data-whole]').forEach(b => b.addEventListener('click', () => { const ce = FW_REVIEW_LIST.find(x => x.id === b.dataset.whole && x.kind === 'combo'); if (ce) openReview(ce); }));
@@ -602,12 +616,8 @@ function initLibrary() {
   $('#libSearch').addEventListener('input', e => { lib.q = e.target.value; renderLib(); });
   $('#libSearch').addEventListener('keydown', e => { if (e.key === 'Escape') { e.target.value = ''; lib.q = ''; renderLib(); e.target.blur(); } });
   // 右栏三页：参数（观察图层 + 完整参数，默认）/ 审阅（本次变化、检查与验收、版本与历史）/ 工具（A/B、版本回滚…，单层才有）
-  for (const b of $('#ptabs').children) b.addEventListener('click', () => {
-    const k = b.dataset.tab;
-    if (k === 'review') { lib.pane = 'review'; syncPtabs(); return; }
-    lib.pane = 'params';
-    if (k === 'iter') setTab('iter'); else if (state.tab === 'iter') setTab('master'); else syncPtabs();
-  });
+  // 4.9.7：三页都只换右栏（paneGo），不重开效果、不动时间和选中的层
+  for (const b of $('#ptabs').children) b.addEventListener('click', () => { const k = b.dataset.tab; paneGo(k === 'review' ? 'review' : k === 'iter' ? 'tools' : 'params'); });
   $('#refVid').addEventListener('loadedmetadata', layoutRef);
   $('#rvCopy').addEventListener('click', rvCopy);
   initWorkbench();
