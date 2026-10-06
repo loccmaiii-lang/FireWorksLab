@@ -31,7 +31,7 @@ function buildLayerCard() {
   if (lib.my) rows.push(`<button type="button" class="btn mini myadd" id="myAdd" title="加一层：花型模板，或现有效果里的某一层（参数复制一份）">＋ 加一层</button>`);
   // 4.9.8：「整体」挪到标题这一行右边（各层的位置、延迟、时间倍率、颜色），省一行给参数
   box.innerHTML = `<summary><span class="lc-t">图层管理 · ${state.layers.length} 层${lib.my ? ' · 加层 / 排序 / 复制' : ''}</span><span class="lc-chips">${state.layers.map((L, i) => `<button type="button" class="lc-chip${state.comboSel === i ? ' cur' : ''}" data-i="${i}" aria-pressed="${state.comboSel === i}" title="改第 ${i + 1} 层 · ${layerName(i)} 的参数">${i + 1} ${layerName(i)}</button>`).join('')}</span><button type="button" class="lc-whole${state.comboSel < 0 ? ' cur' : ''}" data-i="-1" title="整体：各层在整朵里的位置、延迟、时间倍率、颜色" aria-pressed="${state.comboSel < 0}">整体</button></summary><div class="lc-h"><small>时间轴点一层改参数；显示 / 独看只影响观察。${lib.my ? '每层是这个效果自己的一份参数（从模板 / 原效果复制来的），改了不影响原来的效果。' : ''}</small></div>
-    ${rows.join('')}`;
+    <div class="lc-rows">${rows.join('')}</div>`;
   box.querySelectorAll('.lc-whole, .lc-chip').forEach(b => b.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); selectComboLayer(+b.dataset.i); }));
   box.querySelectorAll('.lrow').forEach(r => {
     const go = ev => { if (ev.target.closest('button,input')) return; selectComboLayer(+r.dataset.i); };
@@ -164,6 +164,7 @@ function wbSync() {
   // 4.5.5 示意缩略图（19_thumbsvg.js）：按现在打开的各层现画；层数变了重画
   // 4.9.6 自己截的（「生成缩略图」）优先；截了 / 恢复了重画
   const thHost = $('#abThumb'), thK = wb.key + ':' + (combo ? state.layers.length : 1) + ':' + thUserAt(wb.key); if (thHost.dataset.k !== thK) { const st = thUser(wb.key) || thStyleFor('', thLayersOfState); thHost.dataset.k = st ? thK : ''; thHost.innerHTML = `<span class="th in" style="${st || typeThumbStyle(state.P.type)}"></span>`; }
+  const identityThumb = $('#assetIdentityThumb'); if (identityThumb && identityThumb.innerHTML !== thHost.innerHTML) identityThumb.innerHTML = thHost.innerHTML;
   const list = wbList(), sel = $('#abSrc'), cur = wb.src.kind === 'mine' ? wb.src.id : 'ai';
   const opts = [['ai', lib.my ? `已保存 · ${(myRec() || {}).updated || ''}` : `AI 版 · ${wbBaseId()}`], ...list.map(s => [s.id, s.auto ? `导出时 · ${s.at.slice(5)}${s.label ? ' · ' + s.label : ''}` : `我的 · ${s.name}（${s.at.slice(5)}）`])];
   const html = opts.map(([v, t]) => `<option value="${v}">${t}</option>`).join('');

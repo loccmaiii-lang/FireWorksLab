@@ -37,7 +37,7 @@ const REMOVED = [
 
 const [, , file, ...flags] = process.argv;
 const html = readFileSync(file, 'utf8');
-const m = html.match(/<script>\n'use strict';\n([\s\S]*)<\/script>\s*<\/body>/);
+const m = html.match(/<script>\r?\n'use strict';\r?\n([\s\S]*)<\/script>\s*<\/body>/);
 if (!m) { console.error('找不到主脚本'); process.exit(2); }
 const src = "'use strict';\n" + m[1], lineOff = html.slice(0, m.index).split('\n').length;   // 报行号时换算成 html 里的行
 

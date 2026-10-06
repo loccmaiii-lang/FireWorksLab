@@ -1,7 +1,36 @@
 <div class="app">
   <header class="top">
-    <div class="brand"><span class="mark">DF</span><b>烟花烘培器</b><small id="verLabel"></small></div>
+    <div class="brand"><span class="mark">DF</span><b>特效工作台</b><span class="brand-tool">烟花烘培器</span><small id="verLabel"></small></div>
+    <div class="crumb" id="crumb" hidden aria-hidden="true"></div>
+    <div class="gpu" id="gpu"></div>
+    <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
+    <div id="status" role="status" aria-live="polite"></div>
+  </header>
+  <main id="main">
+    <aside class="side" id="side" aria-label="库">
+      <div class="side-head">
+        <input type="search" id="libSearch" placeholder="搜索：名字 / 任务号 / 花型" aria-label="搜索库">
+        <button class="btn ghost side-x" id="sideClose" type="button" title="收起左栏（L 或 Esc）" aria-label="收起左栏">×</button>
+      </div>
+      <div class="side-body" id="libBody"></div>
+      <details class="ab-more version-history" id="versionHistory" hidden>
+        <summary class="btn">版本记录<span class="version-summary" id="versionSummary"></span></summary>
+        <div class="ab-menu">
+          <div class="version-current"><span class="ab-th" id="abThumb"></span><span class="ab-tx"><b id="abName"></b><small id="abSub"></small></span></div>
+          <label class="ab-src">查看版本<select id="abSrc" aria-label="查看版本"></select></label>
+          <span class="ab-chg" id="abChg" hidden>参数已变 · 未保存</span>
+          <button type="button" id="abRename">重命名这个版本</button>
+          <button type="button" id="abDelete">删除这个版本</button>
+          <p class="hint">保存的版本、未保存草稿和导出时的恢复点都在这里。</p>
+        </div>
+      </details>
+      <div class="side-foot"><button class="btn newrec" id="newRecipe" type="button" title="自己搭一个效果：先选第一层（花型模板或现有效果的层），再加层、改名、调参数">＋ 新建效果</button><button class="btn ghost" id="rvCopy" type="button" title="把通过 / 要改和意见复制下来，贴到对话里">复制我的意见</button>
+        <div hidden><button class="btn" id="cloudRecipesOpen" type="button">云端配方预览</button><button class="btn ghost" id="assetOpen2" type="button" title="临时看某个结果文件夹">打开结果文件夹…</button></div></div>
+    </aside>
+    <div class="gutter" id="gutL" title="拖动调整宽度；双击恢复自适应宽度"></div>
+    <section class="stage">
     <div class="assetbar" id="assetBar" hidden>
+      <span class="ab-th" id="assetIdentityThumb" aria-hidden="true"></span>
       <span class="ab-id" id="abId" title=""><b class="id-name" id="abIdName"></b><span class="id-chips" id="abIdChips"></span></span>
       <span class="ab-state" id="abState"></span><button class="btn ab-bcancel" id="abBakeCancel" type="button" hidden title="停下这次烘焙：贴图留着上次烘好的（标旧），改参数或按 B 再烘">取消</button>
       <span class="sp"></span>
@@ -35,34 +64,7 @@
         <input type="file" id="abFile" accept=".json,application/json" hidden>
       </div></details>
     </div>
-    <div class="crumb" id="crumb" hidden aria-hidden="true"></div>
-    <div class="gpu" id="gpu"></div>
-    <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
-    <div id="status" role="status" aria-live="polite"></div>
-  </header>
-  <main id="main">
-    <aside class="side" id="side" aria-label="库">
-      <div class="side-head">
-        <input type="search" id="libSearch" placeholder="搜索：名字 / 任务号 / 花型" aria-label="搜索库">
-        <button class="btn ghost side-x" id="sideClose" type="button" title="收起左栏（L 或 Esc）" aria-label="收起左栏">×</button>
-      </div>
-      <div class="side-body" id="libBody"></div>
-      <details class="ab-more version-history" id="versionHistory" hidden>
-        <summary class="btn">版本记录<span class="version-summary" id="versionSummary"></span></summary>
-        <div class="ab-menu">
-          <div class="version-current"><span class="ab-th" id="abThumb"></span><span class="ab-tx"><b id="abName"></b><small id="abSub"></small></span></div>
-          <label class="ab-src">查看版本<select id="abSrc" aria-label="查看版本"></select></label>
-          <span class="ab-chg" id="abChg" hidden>参数已变 · 未保存</span>
-          <button type="button" id="abRename">重命名这个版本</button>
-          <button type="button" id="abDelete">删除这个版本</button>
-          <p class="hint">保存的版本、未保存草稿和导出时的恢复点都在这里。</p>
-        </div>
-      </details>
-      <div class="side-foot"><button class="btn newrec" id="newRecipe" type="button" title="自己搭一个效果：先选第一层（花型模板或现有效果的层），再加层、改名、调参数">＋ 新建效果</button><button class="btn ghost" id="rvCopy" type="button" title="把通过 / 要改和意见复制下来，贴到对话里">复制我的意见</button>
-        <div hidden><button class="btn" id="cloudRecipesOpen" type="button">云端配方预览</button><button class="btn ghost" id="assetOpen2" type="button" title="临时看某个结果文件夹">打开结果文件夹…</button></div></div>
-    </aside>
-    <div class="gutter" id="gutL" title="拖动调整宽度；双击恢复自适应宽度"></div>
-    <section class="stage">
+
       <div id="showcaseBar" class="showcase-bar" hidden><b id="showcaseTitle">云端配方预览</b><select id="showcaseType" aria-label="云端配方"></select><select id="cloudLayer" aria-label="查看配方图层"></select><button id="showcaseParams" class="btn ghost">保存完整配方</button><button id="showcaseClose" class="btn ghost">退出预览</button><p id="showcaseNote">正在烘焙配方…</p><details id="cloudPending"></details></div>
       <div id="migNote" class="mig-note" role="status" hidden><span id="migNoteText"></span><button class="btn" id="migNoteOk" type="button">知道了</button></div>
       <div id="bakeError" class="bake-error" role="alert" hidden><span id="bakeErrorText"></span><button class="btn" id="bakeRetry" type="button">重试烘焙</button></div>
@@ -159,9 +161,10 @@
       <div id="exposureControls" class="group" hidden><button class="btn" id="suggestExposure" type="button" title="采样燃烧段最亮时刻的99.8%分位，按「建议亮部目标」更新贴图曝光（不含开花闪光）；不是对所有像素不过曝的保证。">建议曝光（按最亮时刻）</button></div>
       <div id="params"></div>
       <details class="sec" id="colorControls" open>
-        <summary>本层颜色 · 这一层所有发射器共用</summary>
-        <div id="matSliders"></div>
+        <summary>本层颜色<span class="scope-caption">整层共用</span></summary>
+        <p class="color-scope">影响这一层的所有发射器</p>
         <div class="stages" id="stages"></div>
+        <div id="matSliders"></div>
         <details class="color-extra"><summary>材质与颜色预设</summary>
           <div class="flames" id="flames"></div>
           <div class="colors" id="matColors"></div>
@@ -194,7 +197,7 @@
           <button class="btn ghost" id="btnJitter">随机微调（未锁定参数）</button>
           <input type="file" id="fileIn" accept=".json,application/json" hidden>
         </div>
-        <p class="note">点参数名看说明（固定在右栏底部，Esc 关；F1 = 光标所在参数的说明）；双击参数名恢复默认值；鼠标移到参数名左边出现锁，锁定的参数切换号数、随机微调时不变。调参后自动重新烘焙，预览与导出的 2K 贴图一致。「实时模拟」是物理原始效果；「导出效果」按项目材质的方式播放：Dynamic Parameter 帧号取整、不做帧间混合、灰度查渐变图上色。</p>
+        <p class="note">点参数名看说明（固定在右栏底部，Esc 关；F1 = 光标所在参数的说明）；双击参数名恢复默认值；鼠标移到参数名左边出现锁，锁定的参数切换号数、随机微调时不变。开启自动烘焙后，调参停手会更新贴图；关闭时按 B 烘焙。贴图规格在「输出」里设置。「实时模拟」是物理原始效果；「引擎回放」按项目材质的方式播放：Dynamic Parameter 帧号取整、不做帧间混合、灰度查渐变图上色。</p>
       </div>
     </aside>
 

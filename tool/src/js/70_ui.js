@@ -486,7 +486,7 @@ function slider(host, id, label, unit, min, max, step, get, set, def, lockKey) {
   const row = document.createElement('div'); row.className = 'sl' + (lockKey ? '' : ' nolock');
   row.innerHTML = (lockKey ? `<button class="lk" type="button" title="锁定：切换号数、随机微调时不变" aria-label="锁定 ${label}" aria-pressed="false">●</button>` : '') +
     `<label class="k" for="${id}" title="${label}${unit ? '（' + unit + '）' : ''}；双击恢复默认">${label}${unit ? `<small>${unit}</small>` : ''}</label>` +
-    `<input type="range" id="${id}" min="${min}" max="${max}" step="${step}"><input class="num" type="number" step="${step}" aria-label="${label} 数值"><span class="st"></span>`;
+    `<input type="range" id="${id}" min="${min}" max="${max}" step="${step}" aria-label="${label}${unit ? '（' + unit + '）' : ''}"><input class="num" type="number" step="${step}" aria-label="${label}${unit ? '（' + unit + '）' : ''} 数值"><span class="punit" aria-hidden="true">${unit || ''}</span><span class="st"></span>`;
   const inp = row.querySelector('input[type=range]'), num = row.querySelector('.num');
   // 4.9.2（梳理 6.2「滑杆范围不够」：你把爆裂数填到 100，滑杆只到 40，看不出来）：滑杆只是常用范围，数值框不设上限；超出时数值框描琥珀色边、状态列写「超范围」
   const show = () => { const v = +get(); num.value = fmtV(v, step); const o = isFinite(v) && !row.classList.contains('adef-on') && (v > +inp.max + 1e-9 || v < +inp.min - 1e-9);
@@ -521,12 +521,20 @@ function rowStatusSync(row) {
 function colorPair(host, label, keys, obj, onChange) {
   const k = document.createElement('span'); k.textContent = label; k.style.fontSize = '12.5px';
   const d = document.createElement('div'); d.className = 'pair';
+  const ramp = host.id === 'matColors' ? document.createElement('div') : null;
+  const syncRamp = () => { if (ramp) ramp.style.background = 'linear-gradient(90deg,' + keys.map(([key]) => obj[key]).join(',') + ')'; };
+  if (ramp) { ramp.className = 'ramp-preview'; ramp.setAttribute('role', 'img'); ramp.setAttribute('aria-label', '当前材质的渐变图，从暗到亮'); d.classList.add('ramp-pair'); syncRamp(); }
   keys.forEach(([key, cap], i) => {
-    if (i) d.appendChild(Object.assign(document.createElement('span'), { textContent: '→' }));
+    if (i && !ramp) d.appendChild(Object.assign(document.createElement('span'), { textContent: '→' }));
     const c = document.createElement('input'); c.type = 'color'; c.value = obj[key]; c.title = cap; c.setAttribute('aria-label', label + ' ' + cap);
-    c.addEventListener('input', () => { obj[key] = c.value; onChange && onChange(); }); d.appendChild(c);
+    let hex;
+    if (ramp) {
+      const sw = document.createElement('label'); sw.className = 'ramp-stop'; const capEl = document.createElement('span'); capEl.textContent = cap;
+      hex = document.createElement('output'); hex.textContent = c.value.toUpperCase(); sw.append(capEl, c, hex); d.appendChild(sw);
+    } else d.appendChild(c);
+    c.addEventListener('input', () => { obj[key] = c.value; if (hex) hex.textContent = c.value.toUpperCase(); syncRamp(); onChange && onChange(); });
   });
-  host.append(k, d);
+  if (ramp) host.append(k, ramp, d); else host.append(k, d);
 }
 // 分段变色编辑器：最多 5 段；点焰色预设给当前选中的段上色
 function stageEditor(host, M, maxT, onChange, compact) {
@@ -544,7 +552,13 @@ function stageEditor(host, M, maxT, onChange, compact) {
     r.addEventListener('change', () => { M.stages.sort((a, b) => a[0] - b[0]); redraw(); });
     const x = document.createElement('button'); x.className = 'x'; x.textContent = '×'; x.title = '删除这一段'; x.disabled = i === 0;
     x.addEventListener('click', () => { M.stages.splice(i, 1); state.activeStage = 0; redraw(); onChange && onChange(); });
-    row.append(sel, c, r, o, x); host.appendChild(row);
+    if (!compact) {
+      const time = document.createElement('input'); time.type = 'number'; time.className = 'stage-time'; time.min = '0'; time.max = String(maxT); time.step = '0.01'; time.value = (+s[0]).toFixed(2); time.disabled = i === 0; time.setAttribute('aria-label', `第 ${i + 1} 段开始时刻（秒）`);
+      time.addEventListener('change', () => { const n = time.valueAsNumber; if (!Number.isFinite(n)) { time.value = (+s[0]).toFixed(2); return; } s[0] = clamp(n, 0, maxT); M.stages.sort((a, b) => a[0] - b[0]); redraw(); onChange && onChange(); });
+      const value = document.createElement('output'); value.className = 'stage-hex'; value.textContent = c.value.toUpperCase(); c.addEventListener('input', () => { value.textContent = c.value.toUpperCase(); });
+      const unit = document.createElement('span'); unit.className = 'stage-unit'; unit.textContent = 's'; row.classList.add('stage-exact'); row.append(sel, c, time, unit, value, x);
+    } else row.append(sel, c, r, o, x);
+    host.appendChild(row);
   });
   const line = document.createElement('div'); line.className = 'line2';
   const add = document.createElement('button'); add.className = 'btn ghost'; add.textContent = '+ 加一段'; add.disabled = M.stages.length >= 5;
@@ -727,9 +741,10 @@ function buildMasterPanel() {
         row._refresh(); det.appendChild(row);
       } else if (it.curve) {      // 4.6.0：按寿命变化的曲线 = 几行「时刻:值」（用户 10-05 20:45 定：先填几个数，拖点编辑器以后做）
         const lab = nm ? p43Label(nm, it.label) : it.label;
-        row = document.createElement('label'); row.className = 'field curvef'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false" placeholder="空 = 不变；例 0:1, 0.7:1, 1:0"><span class="st"></span><small class="cv-keys"></small>`; row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm;
+        row = document.createElement('label'); row.className = 'field curvef'; row.innerHTML = `<span class="fk">${lab}</span><input type="text" spellcheck="false" placeholder="空 = 不变；例 0:1, 0.7:1, 1:0"><span class="st"></span><span class="cv-preview"></span><small class="cv-keys"></small>`; row._lab = lab; row._detail = nm ? nm.desc : ''; row._nm = nm;
         const inp = row.querySelector('input'), out = row.querySelector('.cv-keys');
-        const show = () => { const ks = parseCurve(state.P[it.curve]); out.textContent = ks ? ks.length + ' 个点：' + ks.map(k => `${+k[0].toFixed(3)} → ${+k[1].toFixed(3)}`).join('，') : (String(state.P[it.curve] || '').trim() ? '看不懂：写成「时刻:值, 时刻:值」，时刻 0–1' : '不变（全程 × 1）'); out.classList.toggle('bad', !ks && !!String(state.P[it.curve] || '').trim()); };
+        const show = () => { const ks = parseCurve(state.P[it.curve]), bad = !ks && !!String(state.P[it.curve] || '').trim(); out.textContent = ks ? ks.length + ' 个点：' + ks.map(k => `${+k[0].toFixed(3)} → ${+k[1].toFixed(3)}`).join('，') : (bad ? '看不懂：写成「时刻:值, 时刻:值」，时刻 0–1' : '不变（全程 × 1）'); out.classList.toggle('bad', bad); inp.setAttribute('aria-invalid', String(bad));
+          const graph = row.querySelector('.cv-preview'), sig = JSON.stringify([ks, bad]); if (graph.dataset.curve !== sig) { graph.innerHTML = bad ? '' : inspectorCurveHTML(ks); graph.dataset.curve = sig; } };
         inp.value = P[it.curve] || ''; show();
         inp.addEventListener('change', () => { state.P[it.curve] = inp.value.trim(); show(); onParam(); });
         row._refresh = () => { inp.value = state.P[it.curve] || ''; show(); };
@@ -766,7 +781,7 @@ function buildMasterPanel() {
   flameChips($('#flames'), () => state.M, redrawColors);
   const mc = $('#matColors'); mc.innerHTML = '';
   colorPair(mc, '渐变图', [['ramp0', '暗'], ['ramp1', '中暗'], ['ramp2', '中亮'], ['ramp3', '亮']], state.M);
-  const ms = $('#matSliders'); ms.innerHTML = '<p class=hint>显示强度写入 Color Over Life，不改变灰度贴图。先在「曝光光晕」降低贴图曝光、保留亮部，再在这里补足亮度；合并输出作用于整层；分开输出时两项分别调星头和尾迹。</p>';
+  const ms = $('#matSliders'); ms.innerHTML = '<details class="color-note"><summary>显示强度与贴图曝光的关系</summary><p class="hint">显示强度写入 Color Over Life，不改变灰度贴图。先在「曝光光晕」降低贴图曝光、保留亮部，再在这里补足亮度；合并输出作用于整层；分开输出时两项分别调星头和尾迹。</p></details>';
   slider(ms, 'm-xw', '变色过渡', 's', 0.01, 0.5, 0.01, () => state.M.xw, v => state.M.xw = v, MD.xw);
   slider(ms, 'm-hi', '显示强度', '×', 0, 20, 0.05, () => state.M.headInt, v => state.M.headInt = v, 1);
   slider(ms, 'm-ti', '尾迹显示强度', '×', 0, 20, 0.05, () => state.M.tailInt, v => state.M.tailInt = v, 1);
@@ -832,12 +847,13 @@ function scopeLayerName() {
 function scopeSync() {
   const sc = document.querySelector('#params .pscope'); if (!sc) return;
   const q = pview.q || '', emit = q ? `搜索「${q}」` : pview.changed ? '改过的参数' : pview.tabNow === '全部' ? '全部发射器' : pview.tabNow || '';
-  const path = sc.querySelector('.ps-path'), ln = scopeLayerName(), html = `<span class="ps-layer">${ln}</span><span class="ps-sep">›</span><span class="ps-emit">${emit}</span>`;
-  if (path.innerHTML !== html) path.innerHTML = html; path.title = `现在改的是：${ln} › ${emit}`;
+  const path = sc.querySelector('.ps-path'), ln = scopeLayerName(), title = `现在改的是：${ln} › ${emit}`;
+  if (path.title !== title) { path.replaceChildren(); for (const [cls, text] of [['ps-layer', ln], ['ps-sep', '›'], ['ps-emit', emit]]) { const part = document.createElement('span'); part.className = cls; part.textContent = text; path.appendChild(part); } path.title = title; }
   const open = !!(pview.find || q || pview.changed), row = sc.querySelector('.ps-search'), fb = sc.querySelector('.ps-find'), n = sc.querySelector('.ps-n');
   row.hidden = !open; fb.setAttribute('aria-expanded', String(open)); fb.classList.toggle('on', open);
   const c = pview.nChgAll || 0; n.hidden = !c; n.textContent = c ? ` · 改过 ${c}` : '';
   fb.title = (open ? '收起搜索（清掉搜索和「只看改过的」）' : '搜这一层的参数 / 只看和打开时不一样的参数') + (c ? `；和打开时比改过 ${c} 项` : '');
+  inspectorNavSync(sc.querySelector('.etabs'));
 }
 // 右栏顶上「参数 / 审阅 / 工具」那一行的高度：顶上那块固定在它下面
 function rightHeadVar() {
@@ -906,7 +922,45 @@ function emitTabs(bar) {
     bar.insertAdjacentHTML('beforeend', `<button type="button" class="et et-add" id="exAdd" title="加一个发射器：挂在星熄灭 / 开花 / 某个时刻 / 沿路上，生成光点或星；参数和别的发射器一样全">＋ 加发射器</button>`);
     bar.querySelector('#exAdd').addEventListener('click', exAddSlot);
   }
+  const more = document.createElement('select'); more.className = 'emit-more'; more.setAttribute('aria-label', '更多发射器与输出');
+  more.addEventListener('change', () => { const e = more.value; if (e) { selectEmitTab(e); const b = [...bar.querySelectorAll('[data-e]')].find(x => x.dataset.e === e); if (b) b.focus({ preventScroll: true }); } });
+  bar.appendChild(more);
+  bar.addEventListener('keydown', ev => {
+    if (!ev.target.matches('button[data-e]') || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(ev.key)) return;
+    const bs = [...bar.querySelectorAll('[data-e]')].filter(b => !b.hidden && !b.classList.contains('nav-overflow')), i = bs.indexOf(ev.target);
+    const j = ev.key === 'Home' ? 0 : ev.key === 'End' ? bs.length - 1 : (i + (ev.key === 'ArrowRight' ? 1 : -1) + bs.length) % bs.length;
+    if (bs[j]) { ev.preventDefault(); bs[j].click(); bs[j].focus({ preventScroll: true }); }
+  });
   const host = $('#params'); if (host && !host._exoff) { host._exoff = true; host.addEventListener('click', e => { const b = e.target.closest('[data-exoff]'); if (b) { e.preventDefault(); exRemoveSlot(+b.dataset.exoff); } }); }
+}
+// 4.9.12：固定一行分段导航；当前发射器始终露出，其余在原生下拉里，不能用渐隐遮掉入口。
+function inspectorNavItems(names, current) {
+  const shown = names.slice(0, 4);
+  if (names.includes(current) && !shown.includes(current)) shown[shown.length - 1] = current;
+  return { shown, more: names.filter(n => !shown.includes(n)) };
+}
+// 只读图表直接使用引擎的分段线性曲线；编辑仍在原来的数值输入框，拖点编辑以后做。
+function inspectorCurveHTML(keys) {
+  const ks = keys || [[0, 1], [1, 1]], lo = Math.min(0, ...ks.map(k => k[1])), hi = Math.max(1, ...ks.map(k => k[1]));
+  if (!Number.isFinite(lo) || !Number.isFinite(hi)) return '';
+  const x = t => 30 + t * 216, y = v => 82 - (v - lo) / (hi - lo) * 68, fmt = v => +v.toFixed(3);
+  const pts = [[0, ks[0][1]], ...ks, [1, ks[ks.length - 1][1]]];
+  const line = pts.map(k => `${fmt(x(k[0]))},${fmt(y(k[1]))}`).join(' ');
+  return `<svg class="cv-plot" viewBox="0 0 264 106" role="img" aria-label="按寿命变化曲线：横轴寿命零到一，纵轴倍数 ${fmt(lo)} 到 ${fmt(hi)}"><path class="cv-grid" d="M30 14H246M30 48H246M30 82H246M30 14V82M138 14V82M246 14V82"/><polyline class="cv-line" points="${line}"/>${ks.map(k => `<circle class="cv-point" cx="${fmt(x(k[0]))}" cy="${fmt(y(k[1]))}" r="2.8"/>`).join('')}<text x="24" y="18" text-anchor="end">${fmt(hi)}</text><text x="24" y="85" text-anchor="end">${fmt(lo)}</text><text x="30" y="100">0</text><text x="138" y="100" text-anchor="middle">寿命 0.5</text><text x="246" y="100" text-anchor="end">1</text></svg>`;
+}
+function inspectorNavSync(bar) {
+  if (!bar) return;
+  const bs = [...bar.querySelectorAll('[data-e]')], names = bs.filter(b => !b.hidden).map(b => b.dataset.e);
+  const nav = inspectorNavItems(names, pview.tabNow), more = bar.querySelector('.emit-more');
+  const focusTab = nav.shown.includes(pview.tabNow) ? pview.tabNow : nav.shown[0];
+  bs.forEach(b => { b.classList.toggle('nav-overflow', !nav.shown.includes(b.dataset.e)); b.tabIndex = b.dataset.e === focusTab ? 0 : -1; });
+  if (!more) return;
+  const sig = JSON.stringify(nav.more);
+  if (more.dataset.items !== sig) {
+    more.replaceChildren(); const hint = document.createElement('option'); hint.value = ''; hint.textContent = `更多 ${nav.more.length}`; more.appendChild(hint);
+    nav.more.forEach(n => { const o = document.createElement('option'); o.value = n; o.textContent = n; more.appendChild(o); }); more.dataset.items = sig;
+  }
+  more.hidden = !nav.more.length; more.value = '';
 }
 // 现在看哪个发射器：按花型族记住上次选的；没选过 / 这个花型没有它 → 第一个不是「效果」「输出」的发射器
 function emitTabFamily() { return isEmit(state.P) ? 'emit' : isTrail(state.P) ? 'trail' : isPhys(state.P) ? 'phys' : familyOf(state.P.type); }

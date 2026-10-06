@@ -1,5 +1,7 @@
 # 烟花烘培器右栏交互落地 Implementation Plan
 
+> **2026-10-06 最新执行修订（4.9.12）**：用户改为按已选参考直接还原正式界面，实机审阅由用户承担。已在 4.9.10 上实现一套连续布局，未用隔离原型、A/B 或双布局；下文原先的隔离架构与 AI 实机发布门槛不再作为本轮执行要求。实现范围及仍暂缓的能力见 `协作/设计稿/参数区_4.9.3_2026-10-06/4.9.12_还原说明.md`。只读曲线图已接真实数据，拖点编辑仍暂缓；未自动升级 5.0。
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 将右栏十状态静态探索转成完整、可操作、可验证的编辑工作流，在保持真实模拟、配方和交付规则的前提下，提高连续调参效率。

@@ -1,0 +1,19 @@
+{
+  "version": "4.9.12",
+  "baseline": "7db2c34",
+  "originalControlIds": 223,
+  "retainedIds": 223,
+  "newIds": [
+    "assetIdentityThumb"
+  ],
+  "duplicateIds": false,
+  "immutableSourceFiles": 33,
+  "coreDataChanged": false,
+  "realBrowserReview": "本轮用户承担，未执行",
+  "standardOffline": "6/7；原有 asset status 检查报 store is not defined",
+  "inspectorOfflineCases": 110,
+  "build": "通过，脚本静态检查 0 错误/16 提示；ID/映射核对 0 错误/4 提示",
+  "checkedAt": "2026-10-06 15:04",
+  "initialBaseline": "4255be1",
+  "upstream411Preserved": true
+}

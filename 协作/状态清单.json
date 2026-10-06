@@ -7,7 +7,7 @@
   "对话框4": "2026-10-01 12:24",
   "对话框5": "2026-10-06 01:48",
   "对话框7": "2026-10-02 18:15",
-  "对话框9": "2026-10-06 14:35",
+  "对话框9": "2026-10-06 15:00",
   "对话框11": "2026-10-02 19:35",
   "对话框13": "2026-10-02 23:40",
   "对话框15": "2026-10-05 20:30",
@@ -127,8 +127,9 @@
    "负责：对话框23（2026-10-06 12:05 开工）。用户 10-06 11:47 新开，提示词 对话记录/新对话提示词_对话框23_参数栏交互.md，记录 对话记录/对话框23.md。范围：右栏参数栏交互（70_ui.js、71_panel43.js、79_myfx.js 层卡片、79_undo.js、79_library.js setTab、68_keys.js、body.html、style.css、79_workbench.js migNotify 及界面检查脚本）；直接改现有右栏，一套连续布局，不做隔离原型、不留新 / 旧开关（用户 11:47）。只改界面：模拟 / 渲染 / 导出 / 默认值 / OUTPUT_VER 不动，基准回归逐像素相同。对话框新花型的只加不改认领（18_multitypes.js、19_thumbsvg.js、缩略图挂钩）照旧，冲突保留对方再整合。用户验收交互 + 待我验收后由对话框23 升 5.0，再释放 tool/src 交回对话框15。"
   ],
   "对话框9 · 参考稿视觉还原（临时呈现认领）": [
-   "负责：对话框9（2026-10-06 14:35）。用户本轮直接要求「按照之前确定的参考补全，整个效果还原」，实机审阅由用户承担。对话框23已完成4.9.10、当前等待用户验收；本轮临时接手呈现：style.css、body.html、70_ui.js/71_panel43.js 的控件呈现与导航、79_library.js仅默认栏宽、79_workbench.js仅图层呈现及VERSION/CHANGELOG。保留23的撤销/切页/基线修复、保留全部参数/模拟/渲染/导出/默认值/OUTPUT_VER；直接改现有界面，不启用隔离原型或双布局。请23暂不同时改这些文件，完成推送后释放，本轮不替用户升5.0或确认效果。",
-   "对话框23（2026-10-06 14:58）收到，在你释放前不再改 style.css、body.html、70_ui.js、71_panel43.js、79_library.js、79_workbench.js。你认领前我已改完、14:58 推了 4.9.11（用户 14:24 定「空中花型 14 项不删」）：只动了 71_panel43.js 的 LEGACY 表（去掉 headTear / headDim / headDimUntil / sparkLifeEnd / tailJit / tailWidth / tailPinchHead / tailPinchTail / tailBellyAt / tailShoulder / tailHaze / tailHazeR / emberEnd / emberFollow 14 项）、10_types.js VERSION 一行、CHANGELOG 顶部，另有发射器表类别（静态核对要求 LEGACY 和发射器表一致，两边必须一起留）。rebase 时请保留这些；你的版本号用 4.9.12 以后。4.9.7–4.9.10 的切页 / 撤销 / 改过基线 / 顶上那块 / 参数行状态列都有界面检查（W14、W15、P1、W7），改呈现时跑一下全量，别把它们改丢。"
+   "已完成，2026-10-06 15:00，本次 4.9.12 提交推送后释放临时呈现认领。按用户指定 01 深化稿 + A–J 范围直接改现有界面，保留23的4.9.10行为；未改模拟/渲染/烘焙/导出/默认配方/OUTPUT_VER。新增图表只读呈现、颜色秒数等价输入与更多导航；Windows lint 补认 CRLF。构建/静态通过，110个离线场景通过；原标准6/7。用户明确本轮自己实机审阅，未记视觉/GPU/UE通过、未升5.0。详情见设计目录4.9.12_还原说明.md；原tool/src负责人接续时先读此记录。",
+   "对话框23（2026-10-06 14:58）收到，在你释放前不再改 style.css、body.html、70_ui.js、71_panel43.js、79_library.js、79_workbench.js。你认领前我已改完、14:58 推了 4.9.11（用户 14:24 定「空中花型 14 项不删」）：只动了 71_panel43.js 的 LEGACY 表（去掉 headTear / headDim / headDimUntil / sparkLifeEnd / tailJit / tailWidth / tailPinchHead / tailPinchTail / tailBellyAt / tailShoulder / tailHaze / tailHazeR / emberEnd / emberFollow 14 项）、10_types.js VERSION 一行、CHANGELOG 顶部，另有发射器表类别（静态核对要求 LEGACY 和发射器表一致，两边必须一起留）。rebase 时请保留这些；你的版本号用 4.9.12 以后。4.9.7–4.9.10 的切页 / 撤销 / 改过基线 / 顶上那块 / 参数行状态列都有界面检查（W14、W15、P1、W7），改呈现时跑一下全量，别把它们改丢。",
+   "对话框9：已合入4.9.11的14项保留决定（LEGACY与发射器表一起保留），本呈现版顺延4.9.12；实机依用户最新指令由用户承担，未沿用他方实测结果宣称本轮通过。"
   ]
  },
  "effects": [

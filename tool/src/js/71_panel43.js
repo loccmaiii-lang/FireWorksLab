@@ -167,9 +167,9 @@ function p43Skeleton(host) {
     const xi = /^自定义 (\d+)$/.exec(e);
     s.innerHTML = `<div class="ehead"><b class="pg-t">${e}</b>${d.en ? `<small class="men">${d.en}</small>` : ''}${d.lv ? `<span class="elv">${d.lv}</span>` : ''}<span class="pg-n" hidden></span>`
       + (xi ? `<button type="button" class="edel" data-exoff="${xi[1]}" aria-label="去掉「${e}」" title="去掉「${e}」（Ctrl+Z 能撤回）">×</button>` : '')
-      + `<p class="ewhat" title="点一下看全文">${d.what || ''}</p></div>`;
+      + `<button type="button" class="ewhat" title="点一下看完整说明" aria-expanded="false">${d.what || ''}</button></div>`;
     if (xi) edelBind(s);
-    const ew = s.querySelector('.ewhat'); ew.addEventListener('click', () => ew.classList.toggle('full'));
+    const ew = s.querySelector('.ewhat'); ew.addEventListener('click', () => { const open = ew.classList.toggle('full'); ew.setAttribute('aria-expanded', String(open)); });
     const after = [...host.querySelectorAll(':scope > section.egrp')].find(x => x._i > d.i);
     host.insertBefore(s, after || null); secs[e] = s; return s;
   };
