@@ -30,7 +30,10 @@ META = {'fxmuux2arh': ('MYFL', 'Crossette'), 'fxmuuzfeg7': ('MYCR', 'Crackle'), 
 # 每档素材包名字的后缀（状态清单「方案」的 en，烘焙器 4.9.23 起贴图 / 资产名 = <英文名>_<en>，几档导进引擎不重名）；原样不加
 EN_SFX = {'S03': '03', 'S05': '05', 'S10': '10', 'S20': '20', 'S30': '30', 'S40': '40', 'K': 'Crown', 'Y': 'Willow', 'R': 'Ring', 'T': 'Saturn', 'M': 'Kaleido', 'H': 'Heart', 'J': 'Jisa', 'C': 'Core'}
 SKIP_KEYS = set()     # type 留着（条目的 base 也是它，replicaPM 会用 base 覆盖）
-TIME_KEYS = ['sparkLife', 'sparkStop', 'sparkStart', 'headDimUntil', 'ignDelay', 'subDelay', 'subBurn', 'emberLife', 'duration', 'crackleDelay']
+# 跟着玉的大小一起拉长的时刻（燃烧比）：星的时间线、入点 / 出点、淡出段。爆裂 / 辉星 / 开花闪光这类药剂本身的时间不随玉变（不在这里）
+TIME_KEYS = ['sparkLife', 'sparkStop', 'sparkStart', 'headDimUntil', 'ignDelay', 'afterBurn', 'subDelay', 'subBurn', 'emberLife', 'emberFollow', 'emberEnd', 'duration',
+             'cutIn', 'cutOut', 'visTo', 'preFrom', 'burstSec', 'fadeAt']
+CUT_KEYS = ['cutOut', 'visTo', 'fadeAt']     # 造型拉长了整段（冠 / 柳 / 时差）时按「看得见的结尾」的比例往后挪；0 = 自动的不动
 
 
 def row(n):
@@ -43,6 +46,28 @@ def row(n):
 def reach(v0, vt, T): c = G / vt ** 2; return math.log(1 + c * v0 * T) / c
 def v0for(R, vt, T): c = G / vt ** 2; return (math.exp(min(c * R, 30)) - 1) / (c * T)
 def carrier(P): return P['type'] in ('senrin', 'crossette')
+
+
+def end_of(P):
+    """看得见的结尾（秒）：照烘焙器 layerEndOf（79_workbench.js），再算上千轮 / 分裂的子花、爆裂小闪"""
+    g = lambda k, d=0: float(P.get(k) or d)
+    ign = g('ignDelay') * (1 + g('ignJit', 10) / 100); head = ign + g('burn') + max(0, g('afterBurn'))
+    life = g('sparkLife') * max(1, g('sparkLifeEnd', 1))
+    spark = ((ign + g('sparkStop')) if g('sparkStop') > 0 else head) + life if g('sparkRate') > 0 else 0
+    ember = (g('emberEnd') if g('emberEnd') > 0 else head + g('emberLife')) if g('emberFrac') > 0 else 0
+    sub = g('subDelay') + g('subBurn') + (life if g('sparkRate') > 0 else 0) if carrier(P) else 0
+    crk = head + g('crackleDelay', 0.3) * 1.7 + g('crackleLife', 0.07) if g('crackle') > 0 else 0
+    return max(head, spark, ember, sub, crk)
+
+
+def stretch_cuts(P, P0):
+    """造型改了时间线：出点 / 淡出段跟着看得见的结尾往后挪（你设的出点是「结尾前多少」的意思，不能把拉长的尾巴切掉）"""
+    k = end_of(P) / max(1e-6, end_of(P0))
+    if k > 1.001:
+        for c in CUT_KEYS:
+            if float(P.get(c) or 0) > 0: P[c] = round(float(P[c]) * k, 4)
+        P['duration'] = round(max(float(P.get('duration') or 0), end_of(P) + 0.3, float(P.get('cutOut') or 0) + 0.05), 2)
+        if float(P.get('visTo') or 0) > P['duration']: P['visTo'] = P['duration']     # 记的「看得见到哪」不超过整段
 
 
 def radius(P):
@@ -93,32 +118,41 @@ def shape_K(P, has_tail):     # 冠：长尾下坠 + 木炭余烬；星变重一
     P['vt'] = round(P['vt'] * 0.8, 2); P['grav'] = max(P.get('grav') or 1, 1)
     if has_tail:
         P['sparkLife'] = round(P['sparkLife'] * 2.2, 3); P['cooling'] = round((P.get('cooling') or 0.4) * 0.6, 3)
+        P['sparkRate'] = round(P['sparkRate'] * 0.6, 1)     # 尾长了 2.2 倍，密度压一点（同时活着的火花 ≈ 1.3 倍），不然糊成一片过曝
         P['emberFrac'] = max(P.get('emberFrac') or 0, 0.3); P['emberLife'] = max(P.get('emberLife') or 3, 3)
         P['sparkGrav'] = max(P.get('sparkGrav') or 0, 0.6); P['sparkInherit'] = min(P.get('sparkInherit') or 0.2, 0.2)
         ext_duration(P, P['sparkLife'] * 1.6 + 1.0)
-    return '冠：尾寿命 × 2.2、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠'
+    return '冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠'
 
 
 def shape_Y(P, has_tail):     # 柳：星慢（终端速度 × 0.45）、烧得久（× 1.5）、尾很长、几乎不继承星速 → 整朵垂下来
     P['vt'] = round(P['vt'] * 0.45, 2); P['burn'] = round(P['burn'] * 1.5, 3); P['grav'] = max(P.get('grav') or 1, 1.2)
+    for k in ('sparkStop', 'sparkStart', 'headDimUntil'):     # 星的时间线跟燃烧一起拉长
+        if float(P.get(k) or 0) > 0: P[k] = round(float(P[k]) * 1.5, 3)
     if has_tail:
-        P['sparkLife'] = round(max(P['sparkLife'] * 2.5, 1.6), 3); P['cooling'] = round((P.get('cooling') or 0.4) * 0.5, 3)
+        k = max(P['sparkLife'] * 2.5, 1.6) / max(P['sparkLife'], 1e-6)
+        P['sparkLife'] = round(P['sparkLife'] * k, 3); P['cooling'] = round((P.get('cooling') or 0.4) * 0.5, 3)
+        P['sparkRate'] = round(P['sparkRate'] * min(1, 1.25 / k), 1)     # 同时活着的火花最多 1.25 倍（不压就是 2.5 倍，整朵过曝成白团）
         P['sparkInherit'] = 0.15; P['sparkGrav'] = 0.35; P['sparkDrag'] = 2.5
         ext_duration(P, P['sparkLife'] * 1.5 + 0.8)
     else: ext_duration(P, 0.6)
-    return '柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来'
+    return '柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来'
 
 
 def shape_pattern(name, **kw):
     def f(P, has_tail):
         for k, v in kw.items(): P[k] = v
-        return name
+        extra = ''
+        if float(P.get('speedJit') or 0) > 6 or float(P.get('dirJit') or 0) > 1.5:     # 散得很开的（窜天猴：速度离散 50%、方向 15°）排不出形状
+            extra = f"；原来速度离散 {P.get('speedJit')}%、方向离散 {P.get('dirJit')}° 收到 ≤ 6% / 1.5°，不然看不出形状"
+            P['speedJit'] = min(float(P.get('speedJit') or 0), 6); P['dirJit'] = min(float(P.get('dirJit') or 0), 1.5)
+        return name + extra
     return f
 
 
-def shape_J(P, has_tail):     # 时差：星陆续点亮
-    P['ignDelay'] = round(max(P.get('ignDelay') or 0, 0.35 * P['burn'] / 3), 3); P['ignJit'] = 90; P['burnJit'] = max(P.get('burnJit') or 0, 12)
-    return '时差：点火延迟约燃烧的 12%、离散 90%（每颗星先后点亮）、燃烧离散 ≥ 12%（陆续熄灭）'
+def shape_J(P, has_tail):     # 时差：星陆续点亮（照 jisa 预设：点火延迟 ≈ 燃烧、离散 55%；这里按燃烧的一半、离散 80%）
+    P['ignDelay'] = round(max(P.get('ignDelay') or 0, 0.5 * P['burn']), 3); P['ignJit'] = 80; P['burnJit'] = max(P.get('burnJit') or 0, 15)
+    return '时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）'
 
 
 SHAPES = [('K', '冠', shape_K), ('Y', '柳', shape_Y),
@@ -136,7 +170,7 @@ def core_layer(P0, M0, R0):
     col = '#4f7bff' if WARM(cols) or cols == ['#ffffff'] else '#ffd29a'
     vt = 16.5; burn = P0['burn']
     P = {'stars': int(round(min(500, max(160, P0['stars'] * 0.8)))), 'v0': round(max(10, min(600, v0for(R0 * 0.5, vt, burn))), 1), 'vt': vt, 'burn': burn, 'burnJit': 4,
-         'headSize': round(max(0.6, P0['headSize'] * 1.1), 3), 'sparkRate': 0, 'flicker': 0.15, 'flash': 0, 'fade': 0.14, 'lastFlare': 0, 'seed': (P0.get('seed') or 7) + 11,
+         'headSize': round(max(0.75, P0['headSize'] * 1.4), 3), 'sparkRate': 0, 'flicker': 0.15, 'flash': 0, 'fade': 0.14, 'lastFlare': 0, 'seed': (P0.get('seed') or 7) + 11,
          'duration': round(burn + 0.55, 2), 'exposure': 2.5, 'renderVer': 40, 'riseH': P0.get('riseH', 250), 'speedJit': 3, 'dirJit': 1.2}
     M = {'stages': [[0, col]], 'xw': 0.1, 'ramp0': '#000000', 'ramp1': '#4a4f5c', 'ramp2': '#c9ced9', 'ramp3': '#ffffff', 'headInt': 1.3, 'tailInt': 1}
     return P, M, '芯入：加一圈无尾牡丹芯（半径约亲星 0.5、' + ('青' if col == '#4f7bff' else '金') + '色、和亲星同开同灭）'
@@ -190,6 +224,7 @@ def main(a):
                     P, M, L = scale_layer(P, M, L, n0, how[1]); note = f'按号数表从原样（直径 {2 * R0:.0f} m ≈ {n0:.1f} 号）缩放到 {label}（直径约 {row(how[1])[1]:.0f} m）'
                 elif how and how[1] != 'C':
                     fn = next(s for s in SHAPES if s[0] == how[1])[2]; note = fn(P, (P.get('sparkRate') or 0) > 0)
+                    stretch_cuts(P, l['P'])
                 lays.append((P, M, L, l['type']))
             if how and how[1] == 'C':
                 Pc, Mc, note = core_layer(rc['layers'][0]['P'], rc['layers'][0]['M'], R0)

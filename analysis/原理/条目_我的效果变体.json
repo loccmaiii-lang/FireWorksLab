@@ -84,10 +84,10 @@
     "carrierHead": 0.48,
     "prePivot": 0,
     "subFlash": 0.1,
-    "crackleDelay": 0.216,
     "riseH": 120,
     "maxHold": 2,
-    "maxHoldBurn": 2
+    "maxHoldBurn": 2,
+    "burstSec": 0.361
    },
    "m": {
     "stages": [
@@ -144,10 +144,10 @@
     "carrierHead": 0.48,
     "prePivot": 0,
     "subFlash": 0.1,
-    "crackleDelay": 0.433,
     "riseH": 330,
     "maxHold": 2,
-    "maxHoldBurn": 2
+    "maxHoldBurn": 2,
+    "burstSec": 0.722
    },
    "m": {
     "stages": [
@@ -205,10 +205,10 @@
     "carrierHead": 0.48,
     "prePivot": 0,
     "subFlash": 0.1,
-    "crackleDelay": 0.603,
     "riseH": 500,
     "maxHold": 2,
-    "maxHoldBurn": 2
+    "maxHoldBurn": 2,
+    "burstSec": 1.005
    },
    "m": {
     "stages": [
@@ -266,10 +266,10 @@
     "carrierHead": 0.48,
     "prePivot": 0,
     "subFlash": 0.1,
-    "crackleDelay": 0.696,
     "riseH": 600,
     "maxHold": 2,
-    "maxHoldBurn": 2
+    "maxHoldBurn": 2,
+    "burstSec": 1.16
    },
    "m": {
     "stages": [
@@ -327,10 +327,10 @@
     "carrierHead": 0.48,
     "prePivot": 0,
     "subFlash": 0.1,
-    "crackleDelay": 0.804,
     "riseH": 750,
     "maxHold": 2,
-    "maxHoldBurn": 2
+    "maxHoldBurn": 2,
+    "burstSec": 1.34
    },
    "m": {
     "stages": [
@@ -363,7 +363,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 1.8,
-    "duration": 3.61,
+    "duration": 4.15,
     "seed": 170,
     "stars": 25,
     "vt": 14.4,
@@ -371,6 +371,7 @@
     "coolMode": 0,
     "headSize": 0.85,
     "headBright": 1.85,
+    "sparkRate": 57.0,
     "sparkLife": 1.1,
     "sparkSize": 0.18,
     "cooling": 0.252,
@@ -401,7 +402,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "冠：尾寿命 × 2.2、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuux2arh/分裂星__fxmuux2arh.json）",
+   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuux2arh/分裂星__fxmuux2arh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -427,6 +428,7 @@
     "coolMode": 0,
     "headSize": 0.85,
     "headBright": 1.85,
+    "sparkRate": 37.1,
     "sparkLife": 1.6,
     "sparkSize": 0.18,
     "sparkInherit": 0.15,
@@ -459,7 +461,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuux2arh/分裂星__fxmuux2arh.json）",
+   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuux2arh/分裂星__fxmuux2arh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -583,7 +585,7 @@
     "duration": 3.2,
     "seed": 170,
     "stars": 25,
-    "speedJit": 12,
+    "speedJit": 6,
     "endMode": "fade",
     "coolMode": 0,
     "headSize": 0.85,
@@ -618,7 +620,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）（来源：analysis/我的配方/my_fxmuux2arh/分裂星__fxmuux2arh.json）",
+   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 12%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuux2arh/分裂星__fxmuux2arh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -688,7 +690,7 @@
     "duration": 3.2,
     "seed": 170,
     "stars": 25,
-    "burnJit": 12,
+    "burnJit": 15,
     "endMode": "fade",
     "coolMode": 0,
     "headSize": 0.85,
@@ -699,8 +701,8 @@
     "subStars": 5,
     "subSpeed": 69,
     "carrierTail": 300,
-    "ignDelay": 0.099,
-    "ignJit": 90,
+    "ignDelay": 0.425,
+    "ignJit": 80,
     "carrierHead": 0.48,
     "prePivot": 0,
     "subFlash": 0.1,
@@ -722,7 +724,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的 12%、离散 90%（每颗星先后点亮）、燃烧离散 ≥ 12%（陆续熄灭）（来源：analysis/我的配方/my_fxmuux2arh/分裂星__fxmuux2arh.json）",
+   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuux2arh/分裂星__fxmuux2arh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -792,7 +794,7 @@
     "vt": 16.5,
     "burn": 0.85,
     "burnJit": 4,
-    "headSize": 0.935,
+    "headSize": 1.19,
     "flicker": 0.15,
     "flash": 0,
     "fade": 0.14,
@@ -903,17 +905,18 @@
     "subSpeed": 21.2,
     "subBurn": 0.716,
     "emberLife": 2.386,
-    "cutIn": 0.2,
+    "cutIn": 0.159,
     "preFrom": 0,
-    "visTo": 2.8333,
+    "visTo": 2.254,
     "prePivot": 0,
     "crackle": 80,
-    "crackleDelay": 0.342,
+    "crackleDelay": 0.43,
     "crackleR": 7.4,
     "crackleV": 5,
     "riseH": 120,
     "maxHold": 2,
     "maxHoldBurn": 2,
+    "burstSec": 0.398,
     "crackleSize": 0.54,
     "crackleSizeJit": 27,
     "crackleTau": 0.028,
@@ -967,17 +970,18 @@
     "subSpeed": 44.4,
     "subBurn": 0.972,
     "emberLife": 3.239,
-    "cutIn": 0.2,
+    "cutIn": 0.216,
     "preFrom": 0,
-    "visTo": 2.8333,
+    "visTo": 3.059,
     "prePivot": 0,
     "crackle": 80,
-    "crackleDelay": 0.464,
+    "crackleDelay": 0.43,
     "crackleR": 7.4,
     "crackleV": 5,
     "riseH": 190,
     "maxHold": 2,
     "maxHoldBurn": 2,
+    "burstSec": 0.54,
     "crackleSize": 0.54,
     "crackleSizeJit": 27,
     "crackleTau": 0.028,
@@ -1031,17 +1035,18 @@
     "subSpeed": 56.7,
     "subBurn": 1.432,
     "emberLife": 4.773,
-    "cutIn": 0.2,
+    "cutIn": 0.318,
     "preFrom": 0,
-    "visTo": 2.8333,
+    "visTo": 4.508,
     "prePivot": 0,
     "crackle": 80,
-    "crackleDelay": 0.684,
+    "crackleDelay": 0.43,
     "crackleR": 7.4,
     "crackleV": 5,
     "riseH": 330,
     "maxHold": 2,
     "maxHoldBurn": 2,
+    "burstSec": 0.795,
     "crackleSize": 0.54,
     "crackleSizeJit": 27,
     "crackleTau": 0.028,
@@ -1096,17 +1101,18 @@
     "subSpeed": 61.0,
     "subBurn": 1.994,
     "emberLife": 6.648,
-    "cutIn": 0.2,
+    "cutIn": 0.443,
     "preFrom": 0,
-    "visTo": 2.8333,
+    "visTo": 6.278,
     "prePivot": 0,
     "crackle": 80,
-    "crackleDelay": 0.953,
+    "crackleDelay": 0.43,
     "crackleR": 7.4,
     "crackleV": 5,
     "riseH": 500,
     "maxHold": 2,
     "maxHoldBurn": 2,
+    "burstSec": 1.108,
     "crackleSize": 0.54,
     "crackleSizeJit": 27,
     "crackleTau": 0.028,
@@ -1161,17 +1167,18 @@
     "subSpeed": 60.6,
     "subBurn": 2.301,
     "emberLife": 7.67,
-    "cutIn": 0.2,
+    "cutIn": 0.511,
     "preFrom": 0,
-    "visTo": 2.8333,
+    "visTo": 7.244,
     "prePivot": 0,
     "crackle": 80,
-    "crackleDelay": 1.099,
+    "crackleDelay": 0.43,
     "crackleR": 7.4,
     "crackleV": 5,
     "riseH": 600,
     "maxHold": 2,
     "maxHoldBurn": 2,
+    "burstSec": 1.278,
     "crackleSize": 0.54,
     "crackleSizeJit": 27,
     "crackleTau": 0.028,
@@ -1226,17 +1233,18 @@
     "subSpeed": 74.4,
     "subBurn": 2.659,
     "emberLife": 8.864,
-    "cutIn": 0.2,
+    "cutIn": 0.591,
     "preFrom": 0,
-    "visTo": 2.8333,
+    "visTo": 8.371,
     "prePivot": 0,
     "crackle": 80,
-    "crackleDelay": 1.27,
+    "crackleDelay": 0.43,
     "crackleR": 7.4,
     "crackleV": 5,
     "riseH": 750,
     "maxHold": 2,
     "maxHoldBurn": 2,
+    "burstSec": 1.477,
     "crackleSize": 0.54,
     "crackleSizeJit": 27,
     "crackleTau": 0.028,
@@ -1278,14 +1286,14 @@
     "haloR": 5.1,
     "duration": 9.8,
     "vt": 14.4,
-    "sparkRate": 107,
+    "sparkRate": 64.2,
     "sparkRateEnd": 1.88,
     "sparkLife": 0.66,
     "cooling": 0.252,
     "emberFrac": 0.3,
     "cutIn": 0.2,
     "preFrom": 0,
-    "visTo": 2.8333,
+    "visTo": 3.9127,
     "prePivot": 0,
     "crackle": 80,
     "crackleDelay": 0.43,
@@ -1314,7 +1322,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "冠：尾寿命 × 2.2、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
+   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -1336,7 +1344,7 @@
     "vt": 8.1,
     "grav": 1.2,
     "burn": 2.4,
-    "sparkRate": 107,
+    "sparkRate": 25.1,
     "sparkRateEnd": 1.88,
     "sparkLife": 1.6,
     "sparkInherit": 0.15,
@@ -1345,7 +1353,7 @@
     "cooling": 0.21,
     "cutIn": 0.2,
     "preFrom": 0,
-    "visTo": 2.8333,
+    "visTo": 3.5138,
     "prePivot": 0,
     "crackle": 80,
     "crackleDelay": 0.43,
@@ -1374,7 +1382,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
+   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -1502,7 +1510,7 @@
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 9.8,
-    "speedJit": 12,
+    "speedJit": 6,
     "sparkRate": 107,
     "sparkRateEnd": 1.88,
     "pattern": "cluster",
@@ -1539,7 +1547,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
+   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 12%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -1611,13 +1619,14 @@
     "coreProfile": 1,
     "haloR": 5.1,
     "duration": 9.8,
+    "burnJit": 15,
     "sparkRate": 107,
     "sparkRateEnd": 1.88,
-    "ignDelay": 0.187,
-    "ignJit": 90,
+    "ignDelay": 0.8,
+    "ignJit": 80,
     "cutIn": 0.2,
     "preFrom": 0,
-    "visTo": 2.8333,
+    "visTo": 4.0581,
     "prePivot": 0,
     "crackle": 80,
     "crackleDelay": 0.43,
@@ -1646,7 +1655,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的 12%、离散 90%（每颗星先后点亮）、燃烧离散 ≥ 12%（陆续熄灭）（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
+   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -1718,7 +1727,6 @@
     "vt": 16.5,
     "burn": 1.6,
     "burnJit": 4,
-    "headSize": 1.1,
     "flicker": 0.15,
     "flash": 0,
     "fade": 0.14,
@@ -1944,14 +1952,14 @@
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
-    "cutOut": 2.3333,
+    "cutOut": 1.307,
     "preFrom": 0,
-    "visTo": 2.3333,
+    "visTo": 1.307,
     "prePivot": 0,
-    "crackleDelay": 0.168,
     "branch": 3,
     "branchAt": 0.92,
     "riseH": 120,
+    "burstSec": 0.28,
     "zoom": "on"
    },
    "m": {
@@ -2021,16 +2029,16 @@
     "emberLife": 1.68,
     "tailDiffuse": 0.5,
     "tailDiffuseScale": 43,
-    "cutOut": 5.3,
-    "preFrom": 0.4333,
-    "visTo": 6.5333,
+    "cutOut": 2.968,
+    "preFrom": 0.243,
+    "visTo": 3.659,
     "prePivot": 0,
     "glitterDelay": 1.43,
-    "crackleDelay": 0.168,
     "crackleV": 17.5,
     "branch": 1,
     "branchAt": 0.8,
     "riseH": 120,
+    "burstSec": 0.28,
     "zoom": "on"
    },
    "m": {
@@ -2102,14 +2110,14 @@
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
-    "cutOut": 2.3333,
+    "cutOut": 1.773,
     "preFrom": 0,
-    "visTo": 2.3333,
+    "visTo": 1.773,
     "prePivot": 0,
-    "crackleDelay": 0.228,
     "branch": 3,
     "branchAt": 0.92,
     "riseH": 190,
+    "burstSec": 0.38,
     "zoom": "on"
    },
    "m": {
@@ -2179,16 +2187,16 @@
     "emberLife": 2.28,
     "tailDiffuse": 0.5,
     "tailDiffuseScale": 43,
-    "cutOut": 5.3,
-    "preFrom": 0.4333,
-    "visTo": 6.5333,
+    "cutOut": 4.028,
+    "preFrom": 0.329,
+    "visTo": 4.965,
     "prePivot": 0,
     "glitterDelay": 1.43,
-    "crackleDelay": 0.228,
     "crackleV": 17.5,
     "branch": 1,
     "branchAt": 0.8,
     "riseH": 190,
+    "burstSec": 0.38,
     "zoom": "on"
    },
    "m": {
@@ -2260,14 +2268,14 @@
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
-    "cutOut": 2.3333,
+    "cutOut": 2.613,
     "preFrom": 0,
-    "visTo": 2.3333,
+    "visTo": 2.613,
     "prePivot": 0,
-    "crackleDelay": 0.336,
     "branch": 3,
     "branchAt": 0.92,
     "riseH": 330,
+    "burstSec": 0.56,
     "zoom": "on"
    },
    "m": {
@@ -2337,16 +2345,16 @@
     "emberLife": 3.36,
     "tailDiffuse": 0.5,
     "tailDiffuseScale": 43,
-    "cutOut": 5.3,
-    "preFrom": 0.4333,
-    "visTo": 6.5333,
+    "cutOut": 5.936,
+    "preFrom": 0.485,
+    "visTo": 7.317,
     "prePivot": 0,
     "glitterDelay": 1.43,
-    "crackleDelay": 0.336,
     "crackleV": 17.5,
     "branch": 1,
     "branchAt": 0.8,
     "riseH": 330,
+    "burstSec": 0.56,
     "zoom": "on"
    },
    "m": {
@@ -2418,14 +2426,14 @@
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
-    "cutOut": 2.3333,
+    "cutOut": 3.64,
     "preFrom": 0,
-    "visTo": 2.3333,
+    "visTo": 3.64,
     "prePivot": 0,
-    "crackleDelay": 0.468,
     "branch": 3,
     "branchAt": 0.92,
     "riseH": 500,
+    "burstSec": 0.78,
     "zoom": "on"
    },
    "m": {
@@ -2495,16 +2503,16 @@
     "emberLife": 4.68,
     "tailDiffuse": 0.5,
     "tailDiffuseScale": 43,
-    "cutOut": 5.3,
-    "preFrom": 0.4333,
-    "visTo": 6.5333,
+    "cutOut": 8.268,
+    "preFrom": 0.676,
+    "visTo": 10.192,
     "prePivot": 0,
     "glitterDelay": 1.43,
-    "crackleDelay": 0.468,
     "crackleV": 17.5,
     "branch": 1,
     "branchAt": 0.8,
     "riseH": 500,
+    "burstSec": 0.78,
     "zoom": "on"
    },
    "m": {
@@ -2576,14 +2584,14 @@
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
-    "cutOut": 2.3333,
+    "cutOut": 4.2,
     "preFrom": 0,
-    "visTo": 2.3333,
+    "visTo": 4.2,
     "prePivot": 0,
-    "crackleDelay": 0.54,
     "branch": 3,
     "branchAt": 0.92,
     "riseH": 600,
+    "burstSec": 0.9,
     "zoom": "on"
    },
    "m": {
@@ -2653,16 +2661,16 @@
     "emberLife": 5.4,
     "tailDiffuse": 0.5,
     "tailDiffuseScale": 43,
-    "cutOut": 5.3,
-    "preFrom": 0.4333,
-    "visTo": 6.5333,
+    "cutOut": 9.54,
+    "preFrom": 0.78,
+    "visTo": 11.76,
     "prePivot": 0,
     "glitterDelay": 1.43,
-    "crackleDelay": 0.54,
     "crackleV": 17.5,
     "branch": 1,
     "branchAt": 0.8,
     "riseH": 600,
+    "burstSec": 0.9,
     "zoom": "on"
    },
    "m": {
@@ -2734,14 +2742,14 @@
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
-    "cutOut": 2.3333,
+    "cutOut": 4.853,
     "preFrom": 0,
-    "visTo": 2.3333,
+    "visTo": 4.853,
     "prePivot": 0,
-    "crackleDelay": 0.624,
     "branch": 3,
     "branchAt": 0.92,
     "riseH": 750,
+    "burstSec": 1.04,
     "zoom": "on"
    },
    "m": {
@@ -2811,16 +2819,16 @@
     "emberLife": 6.24,
     "tailDiffuse": 0.5,
     "tailDiffuseScale": 43,
-    "cutOut": 5.3,
-    "preFrom": 0.4333,
-    "visTo": 6.5333,
+    "cutOut": 11.024,
+    "preFrom": 0.901,
+    "visTo": 13.589,
     "prePivot": 0,
     "glitterDelay": 1.43,
-    "crackleDelay": 0.624,
     "crackleV": 17.5,
     "branch": 1,
     "branchAt": 0.8,
     "riseH": 750,
+    "burstSec": 1.04,
     "zoom": "on"
    },
    "m": {
@@ -2855,7 +2863,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 0.8,
-    "duration": 5.49,
+    "duration": 6.66,
     "stars": 293,
     "v0": 250,
     "vt": 16.0,
@@ -2868,7 +2876,7 @@
     "headSize": 0.6,
     "headBright": 0,
     "flicker": 0,
-    "sparkRate": 1265,
+    "sparkRate": 759.0,
     "sparkRateEnd": 0,
     "sparkStop": 1.09,
     "sparkLife": 0.77,
@@ -2887,9 +2895,9 @@
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
-    "cutOut": 2.3333,
+    "cutOut": 4.4191,
     "preFrom": 0,
-    "visTo": 2.3333,
+    "visTo": 4.4191,
     "prePivot": 0,
     "branch": 3,
     "branchAt": 0.92,
@@ -2910,7 +2918,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "冠：尾寿命 × 2.2、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -2939,7 +2947,7 @@
     "headSize": 0.6,
     "headBright": 0,
     "flicker": 0,
-    "sparkRate": 300,
+    "sparkRate": 180.0,
     "sparkRateEnd": 0.8,
     "sparkRamp": 1.01,
     "sparkLife": 4.642,
@@ -2958,9 +2966,9 @@
     "emberFrac": 0.3,
     "tailDiffuse": 0.5,
     "tailDiffuseScale": 43,
-    "cutOut": 5.3,
+    "cutOut": 8.2183,
     "preFrom": 0.4333,
-    "visTo": 6.5333,
+    "visTo": 10.1307,
     "prePivot": 0,
     "glitterDelay": 1.43,
     "crackleV": 17.5,
@@ -2983,7 +2991,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "冠：尾寿命 × 2.2、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3014,9 +3022,9 @@
     "headSize": 0.6,
     "headBright": 0,
     "flicker": 0,
-    "sparkRate": 1265,
+    "sparkRate": 345.9,
     "sparkRateEnd": 0,
-    "sparkStop": 1.09,
+    "sparkStop": 1.635,
     "sparkLife": 1.6,
     "sparkLifeEnd": 2,
     "sparkLifeJit": 20,
@@ -3033,9 +3041,9 @@
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
-    "cutOut": 2.3333,
+    "cutOut": 3.4666,
     "preFrom": 0,
-    "visTo": 2.3333,
+    "visTo": 3.4666,
     "prePivot": 0,
     "branch": 3,
     "branchAt": 0.92,
@@ -3056,7 +3064,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3086,7 +3094,7 @@
     "headSize": 0.6,
     "headBright": 0,
     "flicker": 0,
-    "sparkRate": 300,
+    "sparkRate": 150.0,
     "sparkRateEnd": 0.8,
     "sparkRamp": 1.01,
     "sparkLife": 5.275,
@@ -3104,9 +3112,9 @@
     "ignSeed": 91,
     "tailDiffuse": 0.5,
     "tailDiffuseScale": 43,
-    "cutOut": 5.3,
+    "cutOut": 10.1005,
     "preFrom": 0.4333,
-    "visTo": 6.5333,
+    "visTo": 11.71,
     "prePivot": 0,
     "glitterDelay": 1.43,
     "crackleV": 17.5,
@@ -3129,7 +3137,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3151,7 +3159,7 @@
     "v0": 250,
     "vt": 20,
     "grav": 0.15,
-    "speedJit": 8,
+    "speedJit": 6,
     "burn": 3.26,
     "burnJit": 4,
     "lastFlare": 0,
@@ -3204,7 +3212,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）；原来速度离散 8%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3226,7 +3234,7 @@
     "v0": 250,
     "vt": 20,
     "grav": 0.15,
-    "speedJit": 8,
+    "speedJit": 6,
     "burn": 2,
     "burnJit": 10,
     "lastFlare": 0,
@@ -3279,7 +3287,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）；原来速度离散 8%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3301,7 +3309,7 @@
     "v0": 250,
     "vt": 20,
     "grav": 0.15,
-    "speedJit": 8,
+    "speedJit": 6,
     "burn": 3.26,
     "burnJit": 4,
     "lastFlare": 0,
@@ -3355,7 +3363,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）；原来速度离散 8%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3377,7 +3385,7 @@
     "v0": 250,
     "vt": 20,
     "grav": 0.15,
-    "speedJit": 8,
+    "speedJit": 6,
     "burn": 2,
     "burnJit": 10,
     "lastFlare": 0,
@@ -3431,7 +3439,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）；原来速度离散 8%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3453,7 +3461,7 @@
     "v0": 250,
     "vt": 20,
     "grav": 0.15,
-    "speedJit": 12,
+    "speedJit": 6,
     "burn": 3.26,
     "burnJit": 4,
     "lastFlare": 0,
@@ -3507,7 +3515,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 12%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3529,7 +3537,7 @@
     "v0": 250,
     "vt": 20,
     "grav": 0.15,
-    "speedJit": 12,
+    "speedJit": 6,
     "burn": 2,
     "burnJit": 10,
     "lastFlare": 0,
@@ -3583,7 +3591,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 12%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3605,7 +3613,7 @@
     "v0": 250,
     "vt": 20,
     "grav": 0.15,
-    "speedJit": 8,
+    "speedJit": 6,
     "burn": 3.26,
     "burnJit": 4,
     "lastFlare": 0,
@@ -3657,7 +3665,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "心形（型物）：星排成正对镜头的心形（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "心形（型物）：星排成正对镜头的心形；原来速度离散 8%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3679,7 +3687,7 @@
     "v0": 250,
     "vt": 20,
     "grav": 0.15,
-    "speedJit": 8,
+    "speedJit": 6,
     "burn": 2,
     "burnJit": 10,
     "lastFlare": 0,
@@ -3731,7 +3739,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "心形（型物）：星排成正对镜头的心形（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "心形（型物）：星排成正对镜头的心形；原来速度离散 8%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3748,13 +3756,14 @@
    "p": {
     "renderVer": 40,
     "exposure": 0.8,
-    "duration": 3.86,
+    "duration": 6.49,
     "stars": 293,
     "v0": 250,
     "vt": 20,
     "grav": 0.15,
     "speedJit": 8,
     "burn": 3.26,
+    "burnJit": 15,
     "lastFlare": 0,
     "flash": 0.5,
     "endMode": "fade",
@@ -3775,14 +3784,14 @@
     "T0": 1900,
     "cooling": 0.3,
     "twinkle": 0,
-    "ignDelay": 0.38,
-    "ignJit": 90,
+    "ignDelay": 1.63,
+    "ignJit": 80,
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
-    "cutOut": 2.3333,
+    "cutOut": 4.3065,
     "preFrom": 0,
-    "visTo": 2.3333,
+    "visTo": 4.3065,
     "prePivot": 0,
     "branch": 3,
     "branchAt": 0.92,
@@ -3803,7 +3812,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的 12%、离散 90%（每颗星先后点亮）、燃烧离散 ≥ 12%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3820,13 +3829,14 @@
    "p": {
     "renderVer": 40,
     "exposure": 1.3,
-    "duration": 6.85,
+    "duration": 6.86,
     "stars": 293,
     "v0": 250,
     "vt": 20,
     "grav": 0.15,
     "speedJit": 8,
     "burn": 2,
+    "burnJit": 15,
     "lastFlare": 0,
     "flash": 0,
     "headSize": 0.6,
@@ -3845,14 +3855,14 @@
     "T0": 2250,
     "cooling": 0.25,
     "twinkle": 0.4,
-    "ignDelay": 0.44,
-    "ignJit": 90,
+    "ignDelay": 1.0,
+    "ignJit": 80,
     "ignSeed": 91,
     "tailDiffuse": 0.5,
     "tailDiffuseScale": 43,
-    "cutOut": 5.3,
+    "cutOut": 6.8117,
     "preFrom": 0.4333,
-    "visTo": 6.5333,
+    "visTo": 6.86,
     "prePivot": 0,
     "glitterDelay": 1.43,
     "crackleV": 17.5,
@@ -3875,7 +3885,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的 12%、离散 90%（每颗星先后点亮）、燃烧离散 ≥ 12%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -4041,7 +4051,7 @@
     "vt": 16.5,
     "burn": 3.26,
     "burnJit": 4,
-    "headSize": 0.66,
+    "headSize": 0.84,
     "flicker": 0.15,
     "flash": 0,
     "fade": 0.14,
@@ -4166,8 +4176,8 @@
     "subBurn": 0.612,
     "emberLife": 2.039,
     "prePivot": 0,
-    "crackleDelay": 0.204,
     "riseH": 120,
+    "burstSec": 0.34,
     "autoGrid": 0,
     "segAt": 0
    },
@@ -4225,8 +4235,8 @@
     "subBurn": 1.223,
     "emberLife": 4.078,
     "prePivot": 0,
-    "crackleDelay": 0.408,
     "riseH": 330,
+    "burstSec": 0.68,
     "autoGrid": 0,
     "segAt": 0
    },
@@ -4285,8 +4295,8 @@
     "subBurn": 1.704,
     "emberLife": 5.68,
     "prePivot": 0,
-    "crackleDelay": 0.568,
     "riseH": 500,
+    "burstSec": 0.947,
     "autoGrid": 0,
     "segAt": 0
    },
@@ -4345,8 +4355,8 @@
     "subBurn": 1.966,
     "emberLife": 6.553,
     "prePivot": 0,
-    "crackleDelay": 0.655,
     "riseH": 600,
+    "burstSec": 1.092,
     "autoGrid": 0,
     "segAt": 0
    },
@@ -4405,8 +4415,8 @@
     "subBurn": 2.272,
     "emberLife": 7.573,
     "prePivot": 0,
-    "crackleDelay": 0.757,
     "riseH": 750,
+    "burstSec": 1.262,
     "autoGrid": 0,
     "segAt": 0
    },
@@ -4447,7 +4457,7 @@
     "coolMode": 0,
     "headSize": 0.45,
     "headBright": 0.06090534979423868,
-    "sparkRate": 314.6153846153846,
+    "sparkRate": 188.8,
     "sparkRateEnd": 0.35,
     "sparkLife": 1.98,
     "sparkSize": 0.45,
@@ -4471,7 +4481,7 @@
      ]
     ]
    },
-   "note": "冠：尾寿命 × 2.2、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuv7n3ih/金芒菊_·_我的__fxmuv7n3ih.json）",
+   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuv7n3ih/金芒菊_·_我的__fxmuv7n3ih.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -4501,7 +4511,7 @@
     "coolMode": 0,
     "headSize": 0.45,
     "headBright": 0.06090534979423868,
-    "sparkRate": 314.6153846153846,
+    "sparkRate": 157.3,
     "sparkRateEnd": 0.35,
     "sparkLife": 2.25,
     "sparkSize": 0.45,
@@ -4524,7 +4534,7 @@
      ]
     ]
    },
-   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuv7n3ih/金芒菊_·_我的__fxmuv7n3ih.json）",
+   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuv7n3ih/金芒菊_·_我的__fxmuv7n3ih.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -4654,7 +4664,7 @@
     "burstR0": 52,
     "v0": 35,
     "grav": 0.391,
-    "speedJit": 12,
+    "speedJit": 6,
     "burn": 2.6851851851851847,
     "fade": 0.38,
     "lastFlare": 0,
@@ -4688,7 +4698,7 @@
      ]
     ]
    },
-   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）（来源：analysis/我的配方/my_fxmuv7n3ih/金芒菊_·_我的__fxmuv7n3ih.json）",
+   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 12%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuv7n3ih/金芒菊_·_我的__fxmuv7n3ih.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -4757,13 +4767,14 @@
    "p": {
     "renderVer": 40,
     "exposure": 0.2,
-    "duration": 4.56,
+    "duration": 6.3,
     "stars": 316,
     "burstR0": 52,
     "v0": 35,
     "grav": 0.391,
     "speedJit": 6,
     "burn": 2.6851851851851847,
+    "burnJit": 15,
     "fade": 0.38,
     "lastFlare": 0,
     "endMode": "fade",
@@ -4781,8 +4792,8 @@
     "T0": 2300,
     "cooling": 0.3,
     "sparkBright": 1.9500000000000002,
-    "ignDelay": 0.313,
-    "ignJit": 90,
+    "ignDelay": 1.343,
+    "ignJit": 80,
     "prePivot": 0,
     "autoGrid": 0,
     "segAt": 0
@@ -4795,7 +4806,7 @@
      ]
     ]
    },
-   "note": "时差：点火延迟约燃烧的 12%、离散 90%（每颗星先后点亮）、燃烧离散 ≥ 12%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv7n3ih/金芒菊_·_我的__fxmuv7n3ih.json）",
+   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv7n3ih/金芒菊_·_我的__fxmuv7n3ih.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -4867,7 +4878,7 @@
     "vt": 16.5,
     "burn": 2.6851851851851847,
     "burnJit": 4,
-    "headSize": 0.6,
+    "headSize": 0.75,
     "flicker": 0.15,
     "flash": 0,
     "fade": 0.14,
@@ -5056,9 +5067,9 @@
     "tailDiffuseScale": 37,
     "frameCount": 64,
     "prePivot": 0,
-    "crackleDelay": 0.171,
     "riseH": 120,
     "frameBudget": "count",
+    "burstSec": 0.285,
     "autoGrid": 0,
     "x1Kind": "star",
     "segAt": 0
@@ -5110,17 +5121,17 @@
     "subDelay": 0.512,
     "subSpeed": 17.3,
     "subBurn": 0.512,
-    "afterBurn": 0.05,
+    "afterBurn": 0.028,
     "emberLife": 1.707,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
     "strobeStart": 0,
-    "crackleDelay": 0.171,
     "flutter": 1.6,
     "flutterHz": 0.4,
     "riseH": 120,
     "frameBudget": "fixed",
+    "burstSec": 0.285,
     "flashLife": 0.05
    },
    "m": {
@@ -5187,9 +5198,9 @@
     "tailDiffuseScale": 37,
     "frameCount": 64,
     "prePivot": 0,
-    "crackleDelay": 0.232,
     "riseH": 190,
     "frameBudget": "count",
+    "burstSec": 0.386,
     "autoGrid": 0,
     "x1Kind": "star",
     "segAt": 0
@@ -5241,17 +5252,17 @@
     "subDelay": 0.695,
     "subSpeed": 36.1,
     "subBurn": 0.695,
-    "afterBurn": 0.05,
+    "afterBurn": 0.039,
     "emberLife": 2.317,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
     "strobeStart": 0,
-    "crackleDelay": 0.232,
     "flutter": 1.6,
     "flutterHz": 0.4,
     "riseH": 190,
     "frameBudget": "fixed",
+    "burstSec": 0.386,
     "flashLife": 0.05
    },
    "m": {
@@ -5318,9 +5329,9 @@
     "tailDiffuseScale": 37,
     "frameCount": 64,
     "prePivot": 0,
-    "crackleDelay": 0.341,
     "riseH": 330,
     "frameBudget": "count",
+    "burstSec": 0.569,
     "autoGrid": 0,
     "x1Kind": "star",
     "segAt": 0
@@ -5372,17 +5383,17 @@
     "subDelay": 1.024,
     "subSpeed": 46.1,
     "subBurn": 1.024,
-    "afterBurn": 0.05,
+    "afterBurn": 0.057,
     "emberLife": 3.415,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
     "strobeStart": 0,
-    "crackleDelay": 0.341,
     "flutter": 1.6,
     "flutterHz": 0.4,
     "riseH": 330,
     "frameBudget": "fixed",
+    "burstSec": 0.569,
     "flashLife": 0.05
    },
    "m": {
@@ -5450,9 +5461,9 @@
     "tailDiffuseScale": 37,
     "frameCount": 64,
     "prePivot": 0,
-    "crackleDelay": 0.476,
     "riseH": 500,
     "frameBudget": "count",
+    "burstSec": 0.793,
     "autoGrid": 0,
     "x1Kind": "star",
     "segAt": 0
@@ -5505,17 +5516,17 @@
     "subDelay": 1.427,
     "subSpeed": 49.6,
     "subBurn": 1.427,
-    "afterBurn": 0.05,
+    "afterBurn": 0.079,
     "emberLife": 4.756,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
     "strobeStart": 0,
-    "crackleDelay": 0.476,
     "flutter": 1.6,
     "flutterHz": 0.4,
     "riseH": 500,
     "frameBudget": "fixed",
+    "burstSec": 0.793,
     "flashLife": 0.05
    },
    "m": {
@@ -5583,9 +5594,9 @@
     "tailDiffuseScale": 37,
     "frameCount": 64,
     "prePivot": 0,
-    "crackleDelay": 0.549,
     "riseH": 600,
     "frameBudget": "count",
+    "burstSec": 0.915,
     "autoGrid": 0,
     "x1Kind": "star",
     "segAt": 0
@@ -5638,17 +5649,17 @@
     "subDelay": 1.646,
     "subSpeed": 49.3,
     "subBurn": 1.646,
-    "afterBurn": 0.05,
+    "afterBurn": 0.091,
     "emberLife": 5.488,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
     "strobeStart": 0,
-    "crackleDelay": 0.549,
     "flutter": 1.6,
     "flutterHz": 0.4,
     "riseH": 600,
     "frameBudget": "fixed",
+    "burstSec": 0.915,
     "flashLife": 0.05
    },
    "m": {
@@ -5716,9 +5727,9 @@
     "tailDiffuseScale": 37,
     "frameCount": 64,
     "prePivot": 0,
-    "crackleDelay": 0.634,
     "riseH": 750,
     "frameBudget": "count",
+    "burstSec": 1.057,
     "autoGrid": 0,
     "x1Kind": "star",
     "segAt": 0
@@ -5771,17 +5782,17 @@
     "subDelay": 1.902,
     "subSpeed": 60.5,
     "subBurn": 1.902,
-    "afterBurn": 0.05,
+    "afterBurn": 0.106,
     "emberLife": 6.341,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
     "strobeStart": 0,
-    "crackleDelay": 0.634,
     "flutter": 1.6,
     "flutterHz": 0.4,
     "riseH": 750,
     "frameBudget": "fixed",
+    "burstSec": 1.057,
     "flashLife": 0.05
    },
    "m": {
@@ -5827,7 +5838,7 @@
     "lastFlare": 0,
     "headSize": 6,
     "headBright": 0.06090534979423868,
-    "sparkRate": 314.6153846153846,
+    "sparkRate": 188.8,
     "sparkRateEnd": 2,
     "sparkRamp": 0.15,
     "sparkLife": 1.936,
@@ -5864,7 +5875,7 @@
     "headInt": 1.875,
     "tailInt": 1
    },
-   "note": "冠：尾寿命 × 2.2、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -5914,7 +5925,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "冠：尾寿命 × 2.2、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -5943,7 +5954,7 @@
     "lastFlare": 0,
     "headSize": 6,
     "headBright": 0.06090534979423868,
-    "sparkRate": 314.6153846153846,
+    "sparkRate": 157.3,
     "sparkRateEnd": 2,
     "sparkRamp": 0.15,
     "sparkLife": 2.2,
@@ -5979,7 +5990,7 @@
     "headInt": 1.875,
     "tailInt": 1
    },
-   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6031,7 +6042,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6052,8 +6063,7 @@
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
-    "speedJit": 50,
-    "dirJit": 15,
+    "speedJit": 6,
     "burn": 2,
     "fade": 0.38,
     "lastFlare": 0,
@@ -6097,7 +6107,7 @@
     "headInt": 1.875,
     "tailInt": 1
    },
-   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6118,8 +6128,7 @@
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
-    "speedJit": 50,
-    "dirJit": 15,
+    "speedJit": 6,
     "headSize": 1.9,
     "headBright": 1.65,
     "pattern": "ring",
@@ -6149,7 +6158,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6170,8 +6179,7 @@
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
-    "speedJit": 50,
-    "dirJit": 15,
+    "speedJit": 6,
     "burn": 2,
     "fade": 0.38,
     "lastFlare": 0,
@@ -6216,7 +6224,7 @@
     "headInt": 1.875,
     "tailInt": 1
    },
-   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6237,8 +6245,7 @@
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
-    "speedJit": 50,
-    "dirJit": 15,
+    "speedJit": 6,
     "headSize": 1.9,
     "headBright": 1.65,
     "pattern": "saturn",
@@ -6269,7 +6276,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6290,8 +6297,7 @@
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
-    "speedJit": 12,
-    "dirJit": 15,
+    "speedJit": 6,
     "burn": 2,
     "fade": 0.38,
     "lastFlare": 0,
@@ -6336,7 +6342,7 @@
     "headInt": 1.875,
     "tailInt": 1
    },
-   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 12%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6357,8 +6363,7 @@
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
-    "speedJit": 12,
-    "dirJit": 15,
+    "speedJit": 6,
     "headSize": 1.9,
     "headBright": 1.65,
     "pattern": "cluster",
@@ -6389,7 +6394,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 12%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6410,8 +6415,7 @@
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
-    "speedJit": 50,
-    "dirJit": 15,
+    "speedJit": 6,
     "burn": 2,
     "fade": 0.38,
     "lastFlare": 0,
@@ -6454,7 +6458,7 @@
     "headInt": 1.875,
     "tailInt": 1
    },
-   "note": "心形（型物）：星排成正对镜头的心形（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "心形（型物）：星排成正对镜头的心形；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6475,8 +6479,7 @@
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
-    "speedJit": 50,
-    "dirJit": 15,
+    "speedJit": 6,
     "headSize": 1.9,
     "headBright": 1.65,
     "pattern": "heart",
@@ -6505,7 +6508,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "心形（型物）：星排成正对镜头的心形（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "心形（型物）：星排成正对镜头的心形；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6522,13 +6525,14 @@
    "p": {
     "renderVer": 40,
     "exposure": 0.2,
-    "duration": 4.794,
+    "duration": 4.98,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
     "speedJit": 50,
     "dirJit": 15,
     "burn": 2,
+    "burnJit": 15,
     "fade": 0.38,
     "lastFlare": 0,
     "headSize": 6,
@@ -6545,8 +6549,8 @@
     "T0": 2300,
     "cooling": 0.1,
     "sparkBright": 1.9500000000000002,
-    "ignDelay": 0.233,
-    "ignJit": 90,
+    "ignDelay": 1.0,
+    "ignJit": 80,
     "tailWidth": 1.26,
     "tailDiffuseScale": 37,
     "frameCount": 64,
@@ -6571,7 +6575,7 @@
     "headInt": 1.875,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的 12%、离散 90%（每颗星先后点亮）、燃烧离散 ≥ 12%（陆续熄灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6588,16 +6592,17 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 3.7,
+    "duration": 6.81,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
     "speedJit": 50,
     "dirJit": 15,
+    "burnJit": 15,
     "headSize": 1.9,
     "headBright": 1.65,
-    "ignDelay": 0.397,
-    "ignJit": 90,
+    "ignDelay": 1.7,
+    "ignJit": 80,
     "afterBurn": 0.05,
     "tailDiffuseScale": 37,
     "prePivot": 0,
@@ -6623,7 +6628,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的 12%、离散 90%（每颗星先后点亮）、燃烧离散 ≥ 12%（陆续熄灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6757,7 +6762,7 @@
     "vt": 16.5,
     "burn": 2,
     "burnJit": 4,
-    "headSize": 6.6,
+    "headSize": 8.4,
     "flicker": 0.15,
     "flash": 0,
     "fade": 0.14,
@@ -6972,11 +6977,11 @@
     "emberFrac": 0.45,
     "emberLife": 1.793,
     "emberBright": 0.6,
-    "emberFollow": 0.6,
+    "emberFollow": 0.166,
     "emberSize": 0.8,
     "prePivot": 0,
-    "crackleDelay": 0.083,
     "riseH": 120,
+    "burstSec": 0.138,
     "autoGrid": 0,
     "expoMode": "frames",
     "expoQ": 0.7,
@@ -7043,15 +7048,15 @@
     "subBurn": 0.249,
     "massLoss": 0.15,
     "keepFrac": 0.2,
-    "afterBurn": 3.2,
+    "afterBurn": 0.885,
     "afterJit": 30,
     "emberLife": 0.83,
     "prePivot": 0,
     "strobeHz": 3.3,
     "strobeDuty": 0.35,
     "strobeStart": 0,
-    "crackleDelay": 0.083,
     "riseH": 120,
+    "burstSec": 0.138,
     "autoGrid": 0,
     "expoMode": "frames",
     "expoQ": 0.7,
@@ -7124,11 +7129,11 @@
     "emberFrac": 0.45,
     "emberLife": 2.433,
     "emberBright": 0.6,
-    "emberFollow": 0.6,
+    "emberFollow": 0.225,
     "emberSize": 0.8,
     "prePivot": 0,
-    "crackleDelay": 0.113,
     "riseH": 190,
+    "burstSec": 0.188,
     "autoGrid": 0,
     "expoMode": "frames",
     "expoQ": 0.7,
@@ -7195,15 +7200,15 @@
     "subBurn": 0.338,
     "massLoss": 0.15,
     "keepFrac": 0.2,
-    "afterBurn": 3.2,
+    "afterBurn": 1.202,
     "afterJit": 30,
     "emberLife": 1.126,
     "prePivot": 0,
     "strobeHz": 3.3,
     "strobeDuty": 0.35,
     "strobeStart": 0,
-    "crackleDelay": 0.113,
     "riseH": 190,
+    "burstSec": 0.188,
     "autoGrid": 0,
     "expoMode": "frames",
     "expoQ": 0.7,
@@ -7276,11 +7281,11 @@
     "emberFrac": 0.45,
     "emberLife": 3.586,
     "emberBright": 0.6,
-    "emberFollow": 0.6,
+    "emberFollow": 0.332,
     "emberSize": 0.8,
     "prePivot": 0,
-    "crackleDelay": 0.166,
     "riseH": 330,
+    "burstSec": 0.277,
     "autoGrid": 0,
     "expoMode": "frames",
     "expoQ": 0.7,
@@ -7347,15 +7352,15 @@
     "subBurn": 0.498,
     "massLoss": 0.15,
     "keepFrac": 0.2,
-    "afterBurn": 3.2,
+    "afterBurn": 1.771,
     "afterJit": 30,
     "emberLife": 1.66,
     "prePivot": 0,
     "strobeHz": 3.3,
     "strobeDuty": 0.35,
     "strobeStart": 0,
-    "crackleDelay": 0.166,
     "riseH": 330,
+    "burstSec": 0.277,
     "autoGrid": 0,
     "expoMode": "frames",
     "expoQ": 0.7,
@@ -7428,11 +7433,11 @@
     "emberFrac": 0.45,
     "emberLife": 4.994,
     "emberBright": 0.6,
-    "emberFollow": 0.6,
+    "emberFollow": 0.462,
     "emberSize": 0.8,
     "prePivot": 0,
-    "crackleDelay": 0.231,
     "riseH": 500,
+    "burstSec": 0.385,
     "autoGrid": 0,
     "expoMode": "frames",
     "expoQ": 0.7,
@@ -7499,15 +7504,15 @@
     "subBurn": 0.694,
     "massLoss": 0.15,
     "keepFrac": 0.2,
-    "afterBurn": 3.2,
+    "afterBurn": 2.466,
     "afterJit": 30,
     "emberLife": 2.312,
     "prePivot": 0,
     "strobeHz": 3.3,
     "strobeDuty": 0.35,
     "strobeStart": 0,
-    "crackleDelay": 0.231,
     "riseH": 500,
+    "burstSec": 0.385,
     "autoGrid": 0,
     "expoMode": "frames",
     "expoQ": 0.7,
@@ -7580,11 +7585,11 @@
     "emberFrac": 0.45,
     "emberLife": 5.763,
     "emberBright": 0.6,
-    "emberFollow": 0.6,
+    "emberFollow": 0.534,
     "emberSize": 0.8,
     "prePivot": 0,
-    "crackleDelay": 0.267,
     "riseH": 600,
+    "burstSec": 0.445,
     "autoGrid": 0,
     "expoMode": "frames",
     "expoQ": 0.7,
@@ -7651,15 +7656,15 @@
     "subBurn": 0.8,
     "massLoss": 0.15,
     "keepFrac": 0.2,
-    "afterBurn": 3.2,
+    "afterBurn": 2.846,
     "afterJit": 30,
     "emberLife": 2.668,
     "prePivot": 0,
     "strobeHz": 3.3,
     "strobeDuty": 0.35,
     "strobeStart": 0,
-    "crackleDelay": 0.267,
     "riseH": 600,
+    "burstSec": 0.445,
     "autoGrid": 0,
     "expoMode": "frames",
     "expoQ": 0.7,
@@ -7714,7 +7719,7 @@
     "headSize": 0.7,
     "headBright": 0.25,
     "flicker": 0.1,
-    "sparkRate": 700,
+    "sparkRate": 350.0,
     "sparkRateEnd": 0.4,
     "sparkLife": 5.078,
     "sparkSize": 0.22,
@@ -7763,7 +7768,7 @@
     "headInt": 1.9,
     "tailInt": 1
    },
-   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -7780,7 +7785,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 3.762,
-    "duration": 12.25,
+    "duration": 14.45,
     "seed": 41,
     "stars": 800,
     "v0": 345,
@@ -7823,7 +7828,7 @@
     "headInt": 2.6,
     "tailInt": 1
    },
-   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -7845,8 +7850,7 @@
     "stars": 800,
     "v0": 345,
     "vt": 34,
-    "speedJit": 12,
-    "dirJit": 3,
+    "speedJit": 6,
     "burn": 7.3,
     "burnJit": 6,
     "fade": 0.05,
@@ -7905,7 +7909,7 @@
     "headInt": 1.9,
     "tailInt": 1
    },
-   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）；原来速度离散 12%、方向离散 3° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -7927,8 +7931,7 @@
     "stars": 800,
     "v0": 345,
     "vt": 34,
-    "speedJit": 12,
-    "dirJit": 3,
+    "speedJit": 6,
     "burn": 7.3,
     "burnJit": 6,
     "fade": 0.25,
@@ -7966,7 +7969,7 @@
     "headInt": 2.6,
     "tailInt": 1
    },
-   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）；原来速度离散 12%、方向离散 3° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -7988,8 +7991,7 @@
     "stars": 800,
     "v0": 345,
     "vt": 34,
-    "speedJit": 12,
-    "dirJit": 3,
+    "speedJit": 6,
     "burn": 7.3,
     "burnJit": 6,
     "fade": 0.05,
@@ -8049,7 +8051,7 @@
     "headInt": 1.9,
     "tailInt": 1
    },
-   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）；原来速度离散 12%、方向离散 3° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -8071,8 +8073,7 @@
     "stars": 800,
     "v0": 345,
     "vt": 34,
-    "speedJit": 12,
-    "dirJit": 3,
+    "speedJit": 6,
     "burn": 7.3,
     "burnJit": 6,
     "fade": 0.25,
@@ -8111,7 +8112,7 @@
     "headInt": 2.6,
     "tailInt": 1
    },
-   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）；原来速度离散 12%、方向离散 3° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -8133,8 +8134,7 @@
     "stars": 800,
     "v0": 345,
     "vt": 34,
-    "speedJit": 12,
-    "dirJit": 3,
+    "speedJit": 6,
     "burn": 7.3,
     "burnJit": 6,
     "fade": 0.05,
@@ -8194,7 +8194,7 @@
     "headInt": 1.9,
     "tailInt": 1
    },
-   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 12%、方向离散 3° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -8216,8 +8216,7 @@
     "stars": 800,
     "v0": 345,
     "vt": 34,
-    "speedJit": 12,
-    "dirJit": 3,
+    "speedJit": 6,
     "burn": 7.3,
     "burnJit": 6,
     "fade": 0.25,
@@ -8256,7 +8255,7 @@
     "headInt": 2.6,
     "tailInt": 1
    },
-   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 12%、方向离散 3° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -8278,8 +8277,7 @@
     "stars": 800,
     "v0": 345,
     "vt": 34,
-    "speedJit": 12,
-    "dirJit": 3,
+    "speedJit": 6,
     "burn": 7.3,
     "burnJit": 6,
     "fade": 0.05,
@@ -8337,7 +8335,7 @@
     "headInt": 1.9,
     "tailInt": 1
    },
-   "note": "心形（型物）：星排成正对镜头的心形（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "心形（型物）：星排成正对镜头的心形；原来速度离散 12%、方向离散 3° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -8359,8 +8357,7 @@
     "stars": 800,
     "v0": 345,
     "vt": 34,
-    "speedJit": 12,
-    "dirJit": 3,
+    "speedJit": 6,
     "burn": 7.3,
     "burnJit": 6,
     "fade": 0.25,
@@ -8397,7 +8394,7 @@
     "headInt": 2.6,
     "tailInt": 1
    },
-   "note": "心形（型物）：星排成正对镜头的心形（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "心形（型物）：星排成正对镜头的心形；原来速度离散 12%、方向离散 3° 收到 ≤ 6% / 1.5°，不然看不出形状（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -8414,7 +8411,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 0.5128,
-    "duration": 18.45,
+    "duration": 20.65,
     "seed": 41,
     "stars": 800,
     "v0": 345,
@@ -8422,7 +8419,7 @@
     "speedJit": 12,
     "dirJit": 3,
     "burn": 7.3,
-    "burnJit": 12,
+    "burnJit": 15,
     "fade": 0.05,
     "flash": 0.5,
     "headSize": 0.7,
@@ -8441,8 +8438,8 @@
     "sparkBright": 4,
     "twinkle": 0.2,
     "massLoss": 0.15,
-    "ignDelay": 0.852,
-    "ignJit": 90,
+    "ignDelay": 3.65,
+    "ignJit": 80,
     "emberFrac": 0.45,
     "emberLife": 6.4799999999999995,
     "emberBright": 0.6,
@@ -8479,7 +8476,7 @@
     "headInt": 1.9,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的 12%、离散 90%（每颗星先后点亮）、燃烧离散 ≥ 12%（陆续熄灭）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -8496,7 +8493,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 3.762,
-    "duration": 12.25,
+    "duration": 17.37,
     "seed": 41,
     "stars": 800,
     "v0": 345,
@@ -8504,12 +8501,13 @@
     "speedJit": 12,
     "dirJit": 3,
     "burn": 7.3,
+    "burnJit": 15,
     "fade": 0.25,
     "flash": 0,
     "headSize": 3.4,
     "massLoss": 0.15,
-    "ignDelay": 0.852,
-    "ignJit": 90,
+    "ignDelay": 3.65,
+    "ignJit": 80,
     "keepFrac": 0.2,
     "afterBurn": 3.2,
     "afterJit": 30,
@@ -8539,7 +8537,7 @@
     "headInt": 2.6,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的 12%、离散 90%（每颗星先后点亮）、燃烧离散 ≥ 12%（陆续熄灭）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -8698,7 +8696,7 @@
     "vt": 16.5,
     "burn": 7.3,
     "burnJit": 4,
-    "headSize": 0.77,
+    "headSize": 0.98,
     "flicker": 0.15,
     "flash": 0,
     "fade": 0.14,
@@ -8962,7 +8960,7 @@
     "引菊 → 锦 · 金锦层"
    ],
    "tags": "我的效果 变体 金曜菊-A 冠 MYJA-K",
-   "note": "冠：尾寿命 × 2.2、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠"
+   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠"
   },
   {
    "id": "MYJA-Y",
@@ -8985,7 +8983,7 @@
     "引菊 → 锦 · 金锦层"
    ],
    "tags": "我的效果 变体 金曜菊-A 柳 MYJA-Y",
-   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来"
+   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来"
   },
   {
    "id": "MYJA-R",
@@ -9008,7 +9006,7 @@
     "引菊 → 锦 · 金锦层"
    ],
    "tags": "我的效果 变体 金曜菊-A 环 MYJA-R",
-   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）"
+   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）；原来速度离散 8%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状"
   },
   {
    "id": "MYJA-T",
@@ -9031,7 +9029,7 @@
     "引菊 → 锦 · 金锦层"
    ],
    "tags": "我的效果 变体 金曜菊-A 土星 MYJA-T",
-   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）"
+   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）；原来速度离散 8%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状"
   },
   {
    "id": "MYJA-M",
@@ -9054,7 +9052,7 @@
     "引菊 → 锦 · 金锦层"
    ],
    "tags": "我的效果 变体 金曜菊-A 万華鏡 MYJA-M",
-   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）"
+   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 12%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状"
   },
   {
    "id": "MYJA-H",
@@ -9077,7 +9075,7 @@
     "引菊 → 锦 · 金锦层"
    ],
    "tags": "我的效果 变体 金曜菊-A 心形 MYJA-H",
-   "note": "心形（型物）：星排成正对镜头的心形"
+   "note": "心形（型物）：星排成正对镜头的心形；原来速度离散 8%、方向离散 1.5° 收到 ≤ 6% / 1.5°，不然看不出形状"
   },
   {
    "id": "MYJA-J",
@@ -9100,7 +9098,7 @@
     "引菊 → 锦 · 金锦层"
    ],
    "tags": "我的效果 变体 金曜菊-A 时差 MYJA-J",
-   "note": "时差：点火延迟约燃烧的 12%、离散 90%（每颗星先后点亮）、燃烧离散 ≥ 12%（陆续熄灭）"
+   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）"
   },
   {
    "id": "MYJA-C",
@@ -9368,7 +9366,7 @@
     "点灭星"
    ],
    "tags": "我的效果 变体 金曜菊-窜天猴 冠 MYJC-K",
-   "note": "冠：尾寿命 × 2.2、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠"
+   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠"
   },
   {
    "id": "MYJC-Y",
@@ -9395,7 +9393,7 @@
     "点灭星"
    ],
    "tags": "我的效果 变体 金曜菊-窜天猴 柳 MYJC-Y",
-   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来"
+   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来"
   },
   {
    "id": "MYJC-R",
@@ -9422,7 +9420,7 @@
     "点灭星"
    ],
    "tags": "我的效果 变体 金曜菊-窜天猴 环 MYJC-R",
-   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）"
+   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状"
   },
   {
    "id": "MYJC-T",
@@ -9449,7 +9447,7 @@
     "点灭星"
    ],
    "tags": "我的效果 变体 金曜菊-窜天猴 土星 MYJC-T",
-   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）"
+   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状"
   },
   {
    "id": "MYJC-M",
@@ -9476,7 +9474,7 @@
     "点灭星"
    ],
    "tags": "我的效果 变体 金曜菊-窜天猴 万華鏡 MYJC-M",
-   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）"
+   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 12%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状"
   },
   {
    "id": "MYJC-H",
@@ -9503,7 +9501,7 @@
     "点灭星"
    ],
    "tags": "我的效果 变体 金曜菊-窜天猴 心形 MYJC-H",
-   "note": "心形（型物）：星排成正对镜头的心形"
+   "note": "心形（型物）：星排成正对镜头的心形；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状"
   },
   {
    "id": "MYJC-J",
@@ -9530,7 +9528,7 @@
     "点灭星"
    ],
    "tags": "我的效果 变体 金曜菊-窜天猴 时差 MYJC-J",
-   "note": "时差：点火延迟约燃烧的 12%、离散 90%（每颗星先后点亮）、燃烧离散 ≥ 12%（陆续熄灭）"
+   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）"
   },
   {
    "id": "MYJC-C",
@@ -9752,7 +9750,7 @@
     "返工 ② 红点灭（主层同轨迹第二段）"
    ],
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 柳 MYHK-Y",
-   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来"
+   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来"
   },
   {
    "id": "MYHK-R",
@@ -9779,7 +9777,7 @@
     "返工 ② 红点灭（主层同轨迹第二段）"
    ],
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 环 MYHK-R",
-   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）"
+   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）；原来速度离散 12%、方向离散 3° 收到 ≤ 6% / 1.5°，不然看不出形状"
   },
   {
    "id": "MYHK-T",
@@ -9806,7 +9804,7 @@
     "返工 ② 红点灭（主层同轨迹第二段）"
    ],
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 土星 MYHK-T",
-   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）"
+   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）；原来速度离散 12%、方向离散 3° 收到 ≤ 6% / 1.5°，不然看不出形状"
   },
   {
    "id": "MYHK-M",
@@ -9833,7 +9831,7 @@
     "返工 ② 红点灭（主层同轨迹第二段）"
    ],
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 万華鏡 MYHK-M",
-   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）"
+   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 12%、方向离散 3° 收到 ≤ 6% / 1.5°，不然看不出形状"
   },
   {
    "id": "MYHK-H",
@@ -9860,7 +9858,7 @@
     "返工 ② 红点灭（主层同轨迹第二段）"
    ],
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 心形 MYHK-H",
-   "note": "心形（型物）：星排成正对镜头的心形"
+   "note": "心形（型物）：星排成正对镜头的心形；原来速度离散 12%、方向离散 3° 收到 ≤ 6% / 1.5°，不然看不出形状"
   },
   {
    "id": "MYHK-J",
@@ -9887,7 +9885,7 @@
     "返工 ② 红点灭（主层同轨迹第二段）"
    ],
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 时差 MYHK-J",
-   "note": "时差：点火延迟约燃烧的 12%、离散 90%（每颗星先后点亮）、燃烧离散 ≥ 12%（陆续熄灭）"
+   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）"
   },
   {
    "id": "MYHK-C",

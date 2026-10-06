@@ -4,7 +4,7 @@
 读 analysis/原理/我的效果变体_清单.json 里这个效果的各档（原样 / 大小 / 造型），条目在 tool/data/review.js（条目_我的效果变体.json 生成）。
 曝光：每层 autoExposure40（和「自动曝光」同一算法）×「原样」同一层的「手调 / 自动」比（你存的曝光是在自动值上调过的，各档保持同样的调法）；
       芯入多出来的芯层按第 1 层的比。原样不写（一个数不改）。
-出：<目录>/曝光.json（{条目: 曝光}，另附 _auto / _k）、各档.jpg（每档一行、4 个时刻，各自取景）、大小_同一比例.jpg（原样 + 各大小档，同一米数比例、整段 45% 处）、
+出：<目录>/曝光.json（{条目: 曝光}，另附 _auto / _k）、各档.jpg（每档一行、看得见的整段 12 / 30 / 50 / 75%，各自取景）、大小_同一比例.jpg（原样 + 各大小档，同一米数比例、整段 45% 处）、
     一览.jpg（每档一格，整段 35% 处，各自取景——发给用户看的那张）。
 """
 import argparse, asyncio, base64, io, json, pathlib, sys
@@ -13,7 +13,8 @@ sys.path.insert(0, str(HERE))
 ROOT = HERE.parents[1]
 HTML = ROOT / 'tool' / 'FireworkBaker.html'
 LIST = ROOT / 'analysis' / '原理' / '我的效果变体_清单.json'
-FR = [0.12, 0.3, 0.5, 0.75]
+FR = [0.12, 0.3, 0.5, 0.75]     # 占「看得见的整段」（各层延迟 + 结尾：layerEndOf + 子花 / 爆裂，出点截住；不是序列时长——你存的 Crackle 时长 9.8 s，2.8 s 以后就没东西了）
+CORE = 1.6
 
 # 一档的层：单条目 = 自己；组合 = 每层条目 + 延迟 / 缩放
 JS_TIER = r"""(id) => { const e = FW_REVIEW_LIST.find(x => x.id === id); if (!e) return null;
@@ -21,7 +22,10 @@ JS_TIER = r"""(id) => { const e = FW_REVIEW_LIST.find(x => x.id === id); if (!e)
   return { name: e.name, layers: e.layerIds.map((lid, i) => ({ id: lid, delay: +(e.combo.layers[i] || {}).delay || 0, scale: +(e.combo.layers[i] || {}).scale || 1 })) }; }"""
 JS_EXPO = r"""async (id) => { const { P } = replicaPM(id); const r = await autoExposure40(P); const sub = ['senrin', 'crossette'].includes(P.type);
   const R = sub ? reachOf(P.v0, P.vt, P.subDelay) + reachOf(P.subSpeed, +P.subVt > 0 ? +P.subVt : P.vt, P.subBurn) : (+P.burstR0 || 0) + reachOf(P.v0, P.vt, P.burn);
-  return { auto: r.value, cur: +P.exposure || null, dur: +P.duration, R }; }"""
+  const life = (+P.sparkLife || 0) * Math.max(1, +P.sparkLifeEnd || 1), head = (+P.ignDelay || 0) * (1 + (+P.ignJit || 0) / 100) + (+P.burn || 0) + Math.max(0, +P.afterBurn || 0);
+  let end = Math.max(layerEndOf(P), sub ? +P.subDelay + +P.subBurn + (+P.sparkRate > 0 ? life : 0) : 0, +P.crackle > 0 ? head + (+P.crackleDelay || 0.3) * 1.7 + (+P.crackleLife || 0.07) : 0);
+  if (+P.cutOut > 0) end = Math.min(end, +P.cutOut); end = Math.min(end, +P.duration);
+  return { auto: r.value, cur: +P.exposure || null, dur: +P.duration, end, R }; }"""
 JS_STILLS = r"""async (a) => { const layers = a.layers.map(L => { const { P, M } = replicaPM(L.id); if (a.expo[L.id]) P.exposure = a.expo[L.id]; return { P, M, delay: L.delay, scale: L.scale, headInt: M.headInt != null ? +M.headInt : 1 }; });
   return (await mtRenderLayers(layers, { times: a.times, px: a.px, half: a.half || undefined, cy: a.half ? -a.half * 0.1 : undefined })).map(x => ({ t: x.t, png: x.png })); }"""
 
@@ -59,12 +63,12 @@ async def run(a):
         ex = {}
         for t in tiers[1:]:
             for i, L in enumerate(t['layers']):
-                k = k0[i] if i < len(k0) else k0[0]
+                k = k0[i] if i < len(k0) else k0[0] * CORE     # 芯入多出来的芯层：按第 1 层的比再亮一点（自动曝光把它压得和长尾的主花一样暗，芯就看不见）
                 ex[L['id']] = round(info[L['id']]['auto'] * k, 4)
         for t in tiers:
             print(t['id'], t['label'], [(L['id'], round(info[L['id']]['auto'], 4), info[L['id']]['cur'], '→', ex.get(L['id'])) for L in t['layers']], flush=True)
         (out / '曝光.json').write_text(json.dumps({**ex, '_auto': {i: v['auto'] for i, v in info.items()}, '_k': k0, '_renderer': ren}, ensure_ascii=False, indent=1), encoding='utf-8')
-        dur = {t['id']: max(L['delay'] + info[L['id']]['dur'] for L in t['layers']) for t in tiers}
+        dur = {t['id']: max(L['delay'] + info[L['id']]['end'] for L in t['layers']) for t in tiers}
         R = {t['id']: max(info[L['id']]['R'] * L['scale'] for L in t['layers']) for t in tiers}
         own, one = {}, {}
         for t in tiers:

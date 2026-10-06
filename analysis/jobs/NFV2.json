@@ -1,0 +1,81 @@
+{
+ "id": "NFV2",
+ "type": "script",
+ "priority": 3,
+ "name": "我的效果变体：每档自动曝光 + 对照图（第 2 轮：时间线 / 柳冠密度 / 散开的排形 / 时差 / 芯）",
+ "steps": [
+  {
+   "name": "分裂星（myv_fxmuux2arh）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuux2arh",
+    "--out",
+    "{out}/myv_fxmuux2arh"
+   ],
+   "must": false,
+   "timeout": 3600
+  },
+  {
+   "name": "Crackle（myv_fxmuuzfeg7）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuuzfeg7",
+    "--out",
+    "{out}/myv_fxmuuzfeg7"
+   ],
+   "must": false,
+   "timeout": 3600
+  },
+  {
+   "name": "金曜菊-A（myv_fxmuv6vhrq）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuv6vhrq",
+    "--out",
+    "{out}/myv_fxmuv6vhrq"
+   ],
+   "must": false,
+   "timeout": 3600
+  },
+  {
+   "name": "金芒菊 · 我的（myv_fxmuv7n3ih）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuv7n3ih",
+    "--out",
+    "{out}/myv_fxmuv7n3ih"
+   ],
+   "must": false,
+   "timeout": 3600
+  },
+  {
+   "name": "金曜菊-窜天猴（myv_fxmuw5v7bh）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuw5v7bh",
+    "--out",
+    "{out}/myv_fxmuw5v7bh"
+   ],
+   "must": false,
+   "timeout": 3600
+  },
+  {
+   "name": "鸿巢四尺玉 · 我的（myv_fxmuwols5x）",
+   "script": "变体对照.py",
+   "args": [
+    "--fx",
+    "myv_fxmuwols5x",
+    "--out",
+    "{out}/myv_fxmuwols5x"
+   ],
+   "must": false,
+   "timeout": 3600
+  }
+ ],
+ "note": "对话框新花型。NFV1 看过：Crackle 时长 9.8 s 但 2.8 s 后就没东西（对照图按时长取样全是黑）→ 改按看得见的整段取样；大小档没缩放入点 / 出点 / 第二段（afterBurn）等时刻（鸿巢 3 号的红闪飞出画面）→ 补上；柳 / 冠过曝 → 火花密度跟着尾长压；窜天猴的环 / 土星 / 心形看不出形状 → 速度 / 方向离散收小；时差太弱 → 点火延迟约燃烧一半；芯看不见 → 星头 × 1.4、曝光 × 1.6。"
+}
