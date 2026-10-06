@@ -1,0 +1,66 @@
+19:41:50 第 1/6 步：基准回归 4.9.16 → 4.9.17 花型模板 6 个（新参数缺省 0，应逐像素相同）
+19:42:02     FireworkBaker.html kiku 4.9.16
+19:42:02     FireworkBaker.html botan 4.9.16
+19:42:02     FireworkBaker.html kamuro 4.9.16
+19:42:02     FireworkBaker.html senrin 4.9.16
+19:42:02     FireworkBaker.html strobe 4.9.16
+19:42:02     FireworkBaker.html crackle 4.9.16
+19:42:02     FireworkBaker.html kiku 4.9.17
+19:42:02     FireworkBaker.html botan 4.9.17
+19:42:02     FireworkBaker.html kamuro 4.9.17
+19:42:02     FireworkBaker.html senrin 4.9.17
+19:42:02     FireworkBaker.html strobe 4.9.17
+19:42:02     FireworkBaker.html crackle 4.9.17
+19:42:02   ✅ kiku 帧计划相同 [{"t": 0.528, "max": 0, "frac": 0.0}, {"t": 1.54, "max": 0, "frac": 0.0}, {"t": 3.08, "max": 0, "frac": 0.0}]
+19:42:02   ✅ botan 帧计划相同 [{"t": 0.378, "max": 0, "frac": 0.0}, {"t": 1.102, "max": 0, "frac": 0.0}, {"t": 2.205, "max": 0, "frac": 0.0}]
+19:42:02   ✅ kamuro 帧计划相同 [{"t": 0.816, "max": 0, "frac": 0.0}, {"t": 2.38, "max": 0, "frac": 0.0}, {"t": 4.76, "max": 0, "frac": 0.0}]
+19:42:02   ✅ senrin 帧计划相同 [{"t": 0.384, "max": 0, "frac": 0.0}, {"t": 1.12, "max": 0, "frac": 0.0}, {"t": 2.24, "max": 0, "frac": 0.0}]
+19:42:02   ✅ strobe 帧计划相同 [{"t": 0.534, "max": 0, "frac": 0.0}, {"t": 1.557, "max": 0, "frac": 0.0}, {"t": 3.115, "max": 0, "frac": 0.0}]
+19:42:02   ✅ crackle 帧计划相同 [{"t": 0.408, "max": 0, "frac": 0.0}, {"t": 1.802, "max": 0, "frac": 0.0}, {"t": 2.04, "max": 0, "frac": 0.0}]
+19:42:02   ✅ 基准回归 4.9.16 → 4.9.17 花型模板 6 个（新参数缺省 0，应逐像素相同）（0.2 分钟）
+19:42:02 第 2/6 步：多层模板定帧回归 4.9.16 → 4.9.17（没改的 5 个，应逐像素相同）
+19:42:12     FireworkBaker.html shinKiku
+19:42:12     FireworkBaker.html yaeHenka
+19:42:12     FireworkBaker.html colorSenrin
+19:42:12     FireworkBaker.html mieKamuroSaki
+19:42:12     FireworkBaker.html somewakeBotan
+19:42:12     FireworkBaker.html shinKiku
+19:42:12     FireworkBaker.html yaeHenka
+19:42:12     FireworkBaker.html colorSenrin
+19:42:12     FireworkBaker.html mieKamuroSaki
+19:42:12     FireworkBaker.html somewakeBotan
+19:42:12   ✅ shinKiku [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+19:42:12   ✅ yaeHenka [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+19:42:12   ✅ colorSenrin [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+19:42:12   ✅ mieKamuroSaki [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+19:42:12   ❌ somewakeBotan [{"t": 0.4, "max": 18, "frac": 0.05154}, {"t": 1.3, "max": 18, "frac": 0.06874}, {"t": 2.6, "max": 18, "frac": 0.03664}]
+19:42:12   ❌ 多层模板定帧回归 4.9.16 → 4.9.17（没改的 5 个，应逐像素相同）（0.2 分钟）：
+19:42:12 第 3/6 步：冷却倍数扫描（4.6.0 对 4.9.17，带尾的第一批模板）
+19:42:23   mt:shinKiku 芯入菊 {1.0: 0.891, 0.8: 0.978, 0.65: 1.061, 0.5: 1.157, 0.35: 1.277} → 0.76
+19:42:23   mt:yaeshin 八重芯 · 银菊洋红绿 {1.0: 0.916, 0.8: 0.976, 0.65: 1.035, 0.5: 1.103, 0.35: 1.187} → 0.739
+19:42:23   mt:mieshin 三重芯 · 银红青 {1.0: 0.933, 0.8: 0.986, 0.65: 1.037, 0.5: 1.102, 0.35: 1.175} → 0.759
+19:42:23   mt:kamuroShin 芯入锦冠菊 · 绿芯 {1.0: 0.859, 0.8: 0.97, 0.65: 1.07, 0.5: 1.185, 0.35: 1.326} → 0.755
+19:42:23   type:kiku 菊 {1.0: 0.865, 0.8: 1.003, 0.65: 1.15, 0.5: 1.357, 0.35: 1.615} → 0.804
+19:42:23   type:kamuro 锦冠 {1.0: 0.857, 0.8: 0.995, 0.65: 1.126, 0.5: 1.282, 0.35: 1.461} → 0.794
+19:42:23   → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NF3\冷却扫描\冷却扫描.md
+19:42:23   ✅ 冷却倍数扫描（4.6.0 对 4.9.17，带尾的第一批模板）（0.2 分钟）
+19:42:23 第 4/6 步：改过的 3 个模板每层曝光（只写 json）
+19:42:30   kowariUkimoyo [2.11, 0.426, 0.438, 0.516] 最大过曝 % [0.01, 0, 0, 0.01] 1s
+19:42:30   mangekyo [2.75, 2.67, 0.381, 1.62] 最大过曝 % [0.05, 0.07, 0.06, 0.41] 1s
+19:42:30   yaeBlueBotan [2.92, 0.207, 0.81, 0.136] 最大过曝 % [0.32, 0.01, 0.24, 0.43] 1s
+19:42:30   曝光 → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NF3/曝光.json
+19:42:30   ✅ 改过的 3 个模板每层曝光（只写 json）（0.1 分钟）
+19:42:30 第 5/6 步：改过的 3 个模板定帧（套上刚算的曝光）
+19:42:34   套上曝光： 3 个模板
+19:42:34   kowariUkimoyo 锦冠菊小割浮模様 4 层 v0 [126, 44, 44, 44] 曝光 [2.11, 0.426, 0.438, 0.516] 0s
+19:42:34   mangekyo 万華鏡 · 红绿金 4 层 v0 [117, 117, 55, 13] 曝光 [2.75, 2.67, 0.381, 1.62] 0s
+19:42:34   yaeBlueBotan 八重芯青牡丹 · 金银芯 4 层 v0 [113, 140, 60, 31] 曝光 [2.92, 0.207, 0.81, 0.136] 0s
+19:42:34   → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NF3\定帧\改过的模板总表.jpg
+19:42:34   ✅ 改过的 3 个模板定帧（套上刚算的曝光）（0.1 分钟）
+19:42:34 第 6/6 步：八重芯青牡丹和参考图 1 对照（开花后 1.15 s）
+19:42:37   套上曝光： 3 个模板
+19:42:37   yaeBlueBotan 八重芯青牡丹 · 金银芯 4 层 v0 [113, 140, 60, 31] 曝光 [2.92, 0.207, 0.81, 0.136] 0s
+19:42:37   → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NF3\参考对照\参考对照_yaeBlueBotan.jpg
+19:42:37   → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NF3\参考对照\多层模板总表.jpg
+19:42:37   ✅ 八重芯青牡丹和参考图 1 对照（开花后 1.15 s）（0.1 分钟）
+19:42:37 完成，用时 0.8 分钟
