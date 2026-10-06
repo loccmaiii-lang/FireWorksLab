@@ -1,0 +1,45 @@
+[
+ {
+  "name": "分裂星（myv_fxmuux2arh）",
+  "script": "变体对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "Crackle（myv_fxmuuzfeg7）",
+  "script": "变体对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ },
+ {
+  "name": "金曜菊-A（myv_fxmuv6vhrq）",
+  "script": "变体对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.4
+ },
+ {
+  "name": "金芒菊 · 我的（myv_fxmuv7n3ih）",
+  "script": "变体对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ },
+ {
+  "name": "金曜菊-窜天猴（myv_fxmuw5v7bh）",
+  "script": "变体对照.py",
+  "code": 1,
+  "ok": false,
+  "minutes": 0.1,
+  "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\变体对照.py\", line 110, in <module>\n    raise SystemExit(asyncio.run(run(ap.parse_args())))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\asyncio\\runners.py\", line 195, in run\n    return runner.run(main)\n           ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\asyncio\\runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\asyncio\\base_events.py\", line 691, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\变体对照.py\", line 69, in run\n    ex[L['id']] = round(info[L['id']]['auto'] * k, 4)\n                        ~~~~~~~~~~~~~~~~~~~~~~^~~\nTypeError: unsupported operand type(s) for *: 'NoneType' and 'float'\n"
+ },
+ {
+  "name": "鸿巢四尺玉 · 我的（myv_fxmuwols5x）",
+  "script": "变体对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.7
+ }
+]
