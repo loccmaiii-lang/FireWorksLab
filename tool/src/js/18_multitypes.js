@@ -168,9 +168,13 @@ const MULTI_TYPES = [
     src: '柳 / 銀柳（配方总表 0.2 ポカ物）', layers: [
       mtL('银柳', 'GinYanagi', 'yanagi', 1, { v0: 95, vt: 9, T0: 2000 }, MT_COL.silver, MT_RAMP_SILVER)] },     // 同银冠：温度只比金柳（1900）高一点，柳丝长度不变
   { id: 'yanagiTips', name: '金柳 · 红先', en: 'YanagiRedTips', group: 4, burn: 5.2,
-    note: '金柳垂到最后（4.2 s）火花停、星头亮起来变红：柳枝末端一串红点（西方目录叫「willow with red tips」）。',
+    note: '金柳垂到最后（4.2 s）火花停、星头亮起来变红：金色柳丝末端一串红点（西方目录叫「willow with red tips」）。柳丝和星头颜色不同，拆成同一模拟的两层。',
     src: '柳 + 先（星末段变色，配方总表 0.1「先」）；「Willow with color tips」为常见商品名 〇', layers: [
-      mtL('金柳 → 红先', 'YanagiTips', 'yanagi', 1, { v0: 95, vt: 9, sparkStop: 4.2, headBright: 1.3, headDim: 0.3, headDimUntil: 4.2 }, [[0, MT_COL.gold], [4.2, MT_COL.red]], MT_RAMP_GOLD)] },
+      // 柳丝（火花）一直是金色、只有星头末段变红：一个发射器只有一条颜色曲线 → 拆成同一模拟的两层（同种子、同初速，星位重合）。
+      // 定帧看过一层的做法：4.2 s 后整棵柳连垂下来的金丝一起变红，不对
+      mtL('金柳（柳丝）', 'YanagiTail', 'yanagi', 1, { v0: 95, vt: 9, seed: 41, sparkStop: 4.2, headBright: 0.06 }, MT_COL.gold, MT_RAMP_GOLD),
+      // 曝光按亮起来的那一段量（expoAt：燃烧 90% / 98%）：按燃烧中段量的话中段星头是压暗的，归一后柳丝里一串亮白点（定帧看过）
+      mtL('星头 → 红先（同一批星）', 'YanagiTips', 'yanagi', 1, { v0: 95, vt: 9, seed: 41, sparkRate: 0, headBright: 1.3, headDim: 0.3, headDimUntil: 4.2, flash: 0 }, [[0, MT_COL.gold], [4.2, MT_COL.red]], MT_RAMP_NEUTRAL, { hi: 1.4, expoAt: [0.9, 0.98] })] },
   { id: 'hikiSakiKiku', name: '引先变化菊', en: 'HikiSakiKiku', group: 4, burn: 3.0,
     note: '「引」：先拉 0.5 s 橙色炭火尾（星头暗）→ 星头亮起变红 → 1.55 s 变绿，无尾。和多层「八重芯变化菊」的亲星同一套，单独一层。',
     src: '引 / 引先（配方总表 0.1、0.2）；云端配方预览「引先菊」', layers: [
@@ -182,7 +186,7 @@ const MULTI_TYPES = [
 ];
 const MULTI_BY_ID = Object.fromEntries(MULTI_TYPES.map(r => [r.id, r]));
 // 每层贴图曝光（analysis/scripts/多层模板曝光.py 按 autoExposure40 算的，和花型模板 EXPOSURE40 同一算法）；没有就用花型模板的
-const MT_EXPOSURE = {"shinKiku": [0.833, 2.49], "shinBotan": [2.9, 2.49], "yaeshin": [0.613, 2.45, 1.62], "yaeHenka": [1.97, 2.54, 1.64], "mieshin": [0.843, 2.58, 2.5, 1.49], "yoeshin": [2.87, 2.63, 2.54, 1.79, 1.4], "itsueHenka": [1.97, 2.68, 2.57, 2.03, 1.67, 1.38], "yaeStrobe": [2.91, 2.52, 1.66], "kamuroShin": [2.26, 2.57], "crackleShin": [2.9, 1.86], "strobeShin": [2.87, 2.23], "fourColorCrackle": [3.07, 3.04, 3.07, 3.07, 1.73], "yaeBlueBotan": [2.78, 0.546, 0.136], "jisaShinBotan": [2.07, 2.37], "henkaKikuShin": [2.06, 2.45], "mieStrobeKiku": [1.95, 2.58, 2.5, 1.49], "kiraShin": [2.9, 0.684], "shiyuShin": [0.647, 2.51, 2.82], "palmShin": [0.284, 1.62], "yanagiTips": [0.769], "hikiSakiKiku": [1.97], "henkaBotan": [2.9], "mieKamuroSaki": [2.6, 3.21, 2.76, 2.52, 1.88], "ginKamuro": [1.79]};
+const MT_EXPOSURE = {"shinKiku": [0.833, 2.49], "shinBotan": [2.9, 2.49], "yaeshin": [0.613, 2.45, 1.62], "yaeHenka": [1.97, 2.54, 1.64], "mieshin": [0.843, 2.58, 2.5, 1.49], "yoeshin": [2.87, 2.63, 2.54, 1.79, 1.4], "itsueHenka": [1.97, 2.68, 2.57, 2.03, 1.67, 1.38], "yaeStrobe": [2.91, 2.52, 1.66], "kamuroShin": [2.26, 2.57], "crackleShin": [2.9, 1.86], "strobeShin": [2.87, 2.23], "fourColorCrackle": [3.07, 3.04, 3.07, 3.07, 1.73], "yaeBlueBotan": [2.78, 0.546, 0.136], "jisaShinBotan": [2.07, 2.37], "henkaKikuShin": [2.06, 2.45], "mieStrobeKiku": [1.95, 2.58, 2.5, 1.49], "kiraShin": [2.9, 0.684], "shiyuShin": [0.647, 2.51, 2.82], "palmShin": [0.284, 1.62], "hikiSakiKiku": [1.97], "henkaBotan": [2.9], "mieKamuroSaki": [2.6, 3.21, 2.76, 2.52, 1.88], "ginKamuro": [1.79], "ginYanagi": [0.582], "colorSenrin": [2.08, 1.91, 1.27, 1.98], "yanagiTips": [0.772, 2.7]};
 // 每层的显示强度（Color Over Life 倍数）：各层贴图都按自己最亮处归一，这里按游戏内大小看过定层间明暗（亲星最亮、芯略暗）
 // 彩色芯按颜色的亮度补：铜蓝、锶红、紫这些亮度低的色给高一点，柠檬绿、黄、银白不补（(0.45 / 相对亮度)^0.5，夹在 0.9–1.45）
 const mtLum = hex => { const c = hexToLin(hex); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
@@ -202,7 +206,7 @@ function mtLayers(id) {
     if (+P.sparkRate > 0 && typeof sparkTailEnd === 'function') { const end = sparkTailEnd(P); if (end > P.duration) P.duration = +(end + 0.05).toFixed(2); }
     const ex = MT_EXPOSURE[id] && MT_EXPOSURE[id][i]; if (ex) P.exposure = ex;
     const M = normalizeM({ ...d.M, ...l.m }, l.type);
-    return { title: l.title, en: l.en, type: l.type, P, M, delay: l.delay || 0, headInt: mtHeadInt(r, i), tailInt: 1, out: l.out };
+    return { title: l.title, en: l.en, type: l.type, P, M, delay: l.delay || 0, headInt: mtHeadInt(r, i), tailInt: 1, out: l.out, expoAt: l.expoAt };
   });
 }
 // 多层查看器要的组合：每层自带参数（src），层名、延迟、显示强度、导出方案

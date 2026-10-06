@@ -2,6 +2,7 @@
 
 用法：
   python3 analysis/scripts/多层模板.py --expo            # 每层贴图曝光（燃烧中段 99.8% 分位 → 0.93，全程过曝 ≤ 1.5%；口径见 JS_EXPO），写进 MT_EXPOSURE
+  python3 analysis/scripts/多层模板.py --expo yanagiTips --layer 1   # 只重算一层（别的层留原值）
   python3 analysis/scripts/多层模板.py [id ...] [--out 目录] [--px 360]
                                                      # 每个模板 4 个时刻的定帧（所有层画在同一画面，实时模拟口径），拼成 <out>/多层模板总表.jpg
   python3 analysis/scripts/多层模板.py --table           # 打印原理文档第 5 节的每层参数表（Markdown）
@@ -20,26 +21,28 @@ SRC = ROOT / 'tool' / 'src' / 'js' / '18_multitypes.js'
 FRACS = [0.12, 0.4, 0.7, 0.92]      # 燃烧时间的比例：刚开 / 展开 / 变色后 / 将灭
 
 JS_EXPO = r"""
-async (id) => {
+async (a) => { const id = a.id, only = a.only;
   // 每层贴图曝光（4.5.5）：芯物要看的是「全开的同心球」（参考图那一刻），所以按燃烧中段（45 / 60 / 75%）最亮那帧的 99.8% 分位 → 0.93 定，
   // 再按回放检查的过曝口径（每帧顶到 250/255 的像素 ≤ 格子 2%）在全程 10 个时刻核一遍，超了就降到 1.5% 以内。
   // （花型库 autoExposure40 按「最亮一刻」定：多层里开花头几帧星挤在中间最亮，按它定后段太暗——花型库的菊也是人工 ×3。）
   const out = [], busy = state.stillBusy; state.stillBusy = true;     // 让出画布：不然每个 nextTick 都在画实时模拟，慢十几倍
   try {
-    for (const l of mtLayers(id)) {
+    for (const [li, l] of mtLayers(id).entries()) {
+      if (only != null && li !== only) { out.push(null); continue; }
       const P = { ...derive({ ...l.P }), flash: 0, subFlash: 0 }, pl = displayPlan40(P), q = qualityOf(P), w = pl.L.cellW, h = pl.L.cellH;
       // 燃烧时间：千轮 / 分裂的 burn 是载体（小玉）的，子星 subDelay 之后才开（4.9.6 彩色千轮：按 burn 量只量到载体，曝光高了 2.7 倍）
       const T = ['senrin', 'crossette'].includes(P.type) ? +P.subDelay + +P.subBurn : +P.burn + (+P.ignDelay || 0);
       const R = makeRenderer(P, 'burst'), samples = new Target(w * q.ss, h * q.ss, gl.RGBA16F), cell = new Target(w, h, gl.RGBA16F), a = new Float32Array(w * h * 4), frames = [];
       try {
-        for (const f of [.02, .05, .1, .2, .3, .45, .6, .75, .9, .98]) {
+        for (const f of [...new Set([.02, .05, .1, .2, .3, .45, .6, .75, .9, .98, ...(l.expoAt || [])])].sort((x, y) => x - y)) {
           renderCell40(P, pl, R, (pl.t0 || 0) + f * T, samples, cell); cell.bind(); gl.readPixels(0, 0, w, h, gl.RGBA, gl.FLOAT, a);
           const v = new Float32Array(w * h); for (let k = 0; k < v.length; k++) v[k] = a[4 * k] + a[4 * k + 1];
           const lit = Array.from(v.filter(x => x > 1e-5)).sort((x, y) => x - y);
           frames.push({ f, v, p998: lit.length ? lit[Math.min(lit.length - 1, Math.floor(lit.length * .998))] : 0 }); await nextTick();
         }
       } finally { samples.dispose(); cell.dispose(); R.dispose(); }
-      const mid = Math.max(...frames.filter(x => x.f >= .45 && x.f <= .75).map(x => x.p998));
+      // 量哪几帧：默认燃烧中段；层上写了 expoAt（燃烧比例）就按那几帧（4.9.6：星头先压暗、末段才亮的层按亮的那段量）
+      const at = l.expoAt || [.45, .6, .75], mid = Math.max(...frames.filter(x => at.some(f => Math.abs(x.f - f) < 1e-6)).map(x => x.p998));
       let E = mid > 0 ? -Math.log(1 - .93) / mid : 1;
       const satAt = E => Math.max(...frames.map(x => { let n = 0; const th = -Math.log(1 - 250 / 255) / E; for (const y of x.v) if (y >= th) n++; return n / x.v.length; }));
       while (satAt(E) > .015 && E > 1e-3) E *= .9;
@@ -87,14 +90,16 @@ async def main(a):
         if a.expo:
             ex = {}
             for i in ids:
-                t0 = time.time(); r = await pg.evaluate(JS_EXPO, i); ex[i] = [x['E'] for x in r]; print(i, ex[i], '最大过曝 %', [x['sat'] for x in r], f'{time.time() - t0:.0f}s', flush=True)
+                t0 = time.time(); r = await pg.evaluate(JS_EXPO, {'id': i, 'only': a.layer}); ex[i] = [x['E'] if x else None for x in r]; print(i, ex[i], '最大过曝 %', [x['sat'] if x else None for x in r], f'{time.time() - t0:.0f}s', flush=True)
             s = SRC.read_text(encoding='utf-8')
             cur = {}
             m = re.search(r'const MT_EXPOSURE = (\{.*?\});', s)
             if m:
                 try: cur = json.loads(m.group(1))
                 except Exception: cur = {}
-            cur.update(ex)
+            for k, v in ex.items():     # --layer N：只重算第 N 层，别的层留原来的
+                old = cur.get(k) or []
+                cur[k] = [x if x is not None else (old[j] if j < len(old) else 1) for j, x in enumerate(v)]
             s = re.sub(r'const MT_EXPOSURE = \{.*?\};', 'const MT_EXPOSURE = ' + json.dumps(cur, ensure_ascii=False, separators=(', ', ': ')) + ';', s, count=1)
             SRC.write_text(s, encoding='utf-8'); print('曝光已写入', SRC, '（要重新 build）')
             await b.close(); return
@@ -124,6 +129,6 @@ async def main(a):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('ids', nargs='*')
     ap.add_argument('--out', default=str(ROOT / 'analysis' / 'probe' / '多层模板')); ap.add_argument('--px', type=int, default=360)
-    ap.add_argument('--expo', action='store_true'); ap.add_argument('--table', action='store_true')
+    ap.add_argument('--expo', action='store_true'); ap.add_argument('--table', action='store_true'); ap.add_argument('--layer', type=int, help='--expo 只重算这一层（从 0 数）')
     ap.add_argument('--ref'); ap.add_argument('--ref-id', default='yaeshin'); ap.add_argument('--ref-t', type=float, default=1.3)
     asyncio.run(main(ap.parse_args()))
