@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MYJA-S20-2",
+ "type": "export",
+ "effect": "myv_fxmuv6vhrq",
+ "entry": "MYJA-S20",
+ "name": "GoldRay_20",
+ "priority": 4,
+ "note": "我的效果变体：MYJA-S20 按 NFE-MYJA-S20 回放检查改了重导（第 2 层原来没有开花闪光、被误加了 0.6（中间空帧）+ 第 2 层过曝 > 2% 曝光压 + 第 1 层出点改自动（末尾空帧））。同一目录覆盖。"
+}

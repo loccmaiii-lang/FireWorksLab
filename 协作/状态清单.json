@@ -762,7 +762,8 @@
     "NFE-MYFL-M",
     "NFE-MYFL-H",
     "NFE-MYFL-J",
-    "NFE-MYFL-C"
+    "NFE-MYFL-C",
+    "NFE-MYFL-J-2"
    ]
   },
   {
@@ -882,7 +883,8 @@
     "NFE-MYCR-M",
     "NFE-MYCR-H",
     "NFE-MYCR-J",
-    "NFE-MYCR-C"
+    "NFE-MYCR-C",
+    "NFE-MYCR-J-2"
    ]
   },
   {
@@ -1003,7 +1005,12 @@
     "NFE-MYJA-M",
     "NFE-MYJA-H",
     "NFE-MYJA-J",
-    "NFE-MYJA-C"
+    "NFE-MYJA-C",
+    "NFE-MYJA-S20-2",
+    "NFE-MYJA-S30-2",
+    "NFE-MYJA-S40-2",
+    "NFE-MYJA-K-2",
+    "NFE-MYJA-J-2"
    ]
   },
   {
@@ -1117,7 +1124,8 @@
     "NFE-MYJM-M",
     "NFE-MYJM-H",
     "NFE-MYJM-J",
-    "NFE-MYJM-C"
+    "NFE-MYJM-C",
+    "NFE-MYJM-J-2"
    ]
   },
   {
@@ -1347,7 +1355,8 @@
     "NFE-MYHK-M",
     "NFE-MYHK-H",
     "NFE-MYHK-J",
-    "NFE-MYHK-C"
+    "NFE-MYHK-C",
+    "NFE-MYHK-J-2"
    ]
   }
  ],

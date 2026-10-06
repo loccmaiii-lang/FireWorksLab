@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MYCR-J-2",
+ "type": "export",
+ "effect": "myv_fxmuuzfeg7",
+ "entry": "MYCR-J",
+ "name": "Crackle_Jisa",
+ "priority": 4,
+ "note": "我的效果变体：MYCR-J 按 NFE-MYCR-J 回放检查改了重导（时差点火离散 80 → 100%（开花闪光后黑十几帧 → 中间空帧））。同一目录覆盖。"
+}

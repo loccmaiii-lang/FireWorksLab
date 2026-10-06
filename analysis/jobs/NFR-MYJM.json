@@ -1,0 +1,233 @@
+{
+ "id": "NFR-MYJM",
+ "type": "script",
+ "priority": 1,
+ "name": "全程回放检查：金芒菊 · 我的 · 大小与造型（14 档）",
+ "steps": [
+  {
+   "name": "原样（GoldChrysanthemum）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "3 号（GoldChrysanthemum_03）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_03.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_03",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "尺玉（GoldChrysanthemum_10）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_10.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_10",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "2 尺（GoldChrysanthemum_20）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_20.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_20",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "3 尺（GoldChrysanthemum_30）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_30.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_30",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "4 尺（GoldChrysanthemum_40）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_40.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_40",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "冠（GoldChrysanthemum_Crown）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Crown.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Crown",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "柳（GoldChrysanthemum_Willow）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Willow.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Willow",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "环（GoldChrysanthemum_Ring）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Ring.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Ring",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "土星（GoldChrysanthemum_Saturn）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Saturn.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Saturn",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "万華鏡（GoldChrysanthemum_Kaleido）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Kaleido.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Kaleido",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "心形（GoldChrysanthemum_Heart）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Heart.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Heart",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "时差（GoldChrysanthemum_Jisa）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Jisa.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Jisa",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "芯入（GoldChrysanthemum_Core）",
+   "script": "回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Core.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Core",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  }
+ ],
+ "note": "对话框新花型。按 cascade.json 的播法合成整段 8 个时刻（不带参考视频，所以能采到大玉的后半段）；有不过的项退出码 1，照样记下继续下一档。"
+}

@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MYHK-J-2",
+ "type": "export",
+ "effect": "myv_fxmuwols5x",
+ "entry": "MYHK-J",
+ "name": "YonshakuKamuro_Jisa",
+ "priority": 4,
+ "note": "我的效果变体：MYHK-J 按 NFE-MYHK-J 回放检查改了重导（时差点火离散 80 → 100%（开花闪光后黑十几帧 → 中间空帧））。同一目录覆盖。"
+}

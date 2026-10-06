@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MYFL-J-2",
+ "type": "export",
+ "effect": "myv_fxmuux2arh",
+ "entry": "MYFL-J",
+ "name": "Crossette_Jisa",
+ "priority": 4,
+ "note": "我的效果变体：MYFL-J 按 NFE-MYFL-J 回放检查改了重导（时差点火离散 80 → 100%（开花闪光后黑十几帧 → 中间空帧））。同一目录覆盖。"
+}

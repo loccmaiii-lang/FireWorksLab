@@ -29,6 +29,16 @@ META = {'fxmuux2arh': ('MYFL', 'Crossette'), 'fxmuuzfeg7': ('MYCR', 'Crackle'), 
         'fxmuv7n3ih': ('MYJM', 'GoldChrysanthemum'), 'fxmuw5v7bh': ('MYJC', 'GoldRayRocket'), 'fxmuwols5x': ('MYHK', 'YonshakuKamuro')}
 # 每档素材包名字的后缀（状态清单「方案」的 en，烘焙器 4.9.23 起贴图 / 资产名 = <英文名>_<en>，几档导进引擎不重名）；原样不加
 EN_SFX = {'S03': '03', 'S05': '05', 'S10': '10', 'S20': '20', 'S30': '30', 'S40': '40', 'K': 'Crown', 'Y': 'Willow', 'R': 'Ring', 'T': 'Saturn', 'M': 'Kaleido', 'H': 'Heart', 'J': 'Jisa', 'C': 'Core'}
+# 导出回放检查（NFE-*）不过的，按测出来的改（键 = 条目；expoMul 乘在写回的曝光上；其余键直接写进参数）。依据见 analysis/results/NFE-*/回放检查.json
+FIXES = {
+    'MYJA-K-1': {'cutOut': 0, 'visTo': 0, 'preFrom': -1, '_why': '末尾空帧 2（第 1 层你设的出点在看得见的结尾之后）→ 出点改自动（最后一次看得见）'},
+    'MYJA-S20-1': {'cutOut': 0, 'visTo': 0, 'preFrom': -1, '_why': '末尾空帧 1 → 出点改自动'},
+    'MYJA-S30-1': {'cutOut': 0, 'visTo': 0, 'preFrom': -1, '_why': '末尾空帧 2 → 出点改自动'},
+    'MYJA-S40-1': {'cutOut': 0, 'visTo': 0, 'preFrom': -1, '_why': '末尾空帧 3 → 出点改自动'},
+    'MYJA-S20-2': {'expoMul': 0.79, '_why': '过曝像素 2.4%（标准 ≤ 2%）→ 曝光 × 0.79'},
+    'MYJA-S30-2': {'expoMul': 0.65, '_why': '过曝像素 2.9% → 曝光 × 0.65'},
+    'MYJA-S40-2': {'expoMul': 0.56, '_why': '过曝像素 3.4% → 曝光 × 0.56'},
+}
 SKIP_KEYS = set()     # type 留着（条目的 base 也是它，replicaPM 会用 base 覆盖）
 # 跟着玉的大小一起拉长的时刻（燃烧比）：星的时间线、入点 / 出点、淡出段。爆裂 / 辉星 / 开花闪光这类药剂本身的时间不随玉变（不在这里）
 TIME_KEYS = ['sparkLife', 'sparkStop', 'sparkStart', 'headDimUntil', 'ignDelay', 'afterBurn', 'subDelay', 'subBurn', 'emberLife', 'emberFollow', 'emberEnd', 'duration',
@@ -103,7 +113,7 @@ def scale_layer(P, M, L, n0, n):
     if (P.get('subSpeed') or 0) > 0: P['subSpeed'] = round(P['subSpeed'] * kR / kT, 1)
     if (P.get('subVt') or 0) > 0: P['subVt'] = round(P['subVt'] * r[5] / r0[5], 1)
     P['riseH'] = round(r[2])
-    if n >= 20 and n0 < 20: P['flash'] = round((P.get('flash') or 1) * 0.6, 2)
+    if n >= 20 and n0 < 20 and float(P.get('flash') or 0) > 0: P['flash'] = round(float(P['flash']) * 0.6, 2)     # 原来没开花闪光的层（金曜菊-A 第 2 层）不能给它加上（NFE 回放：闪一下、黑十几帧、再点亮 → 中间空帧）
     if M.get('stages'): M['stages'] = [[round(t * kT, 3), c] for t, c in M['stages']]
     if L.get('delay'): L['delay'] = round(L['delay'] * kT, 3)
     return P, M, L
@@ -155,9 +165,9 @@ def shape_pattern(name, **kw):
     return f
 
 
-def shape_J(P, has_tail):     # 时差：星陆续点亮（照 jisa 预设：点火延迟 ≈ 燃烧、离散 55%；这里按燃烧的一半、离散 80%）
-    P['ignDelay'] = round(max(P.get('ignDelay') or 0, 0.5 * P['burn']), 3); P['ignJit'] = 80; P['burnJit'] = max(P.get('burnJit') or 0, 15)
-    return '时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）'
+def shape_J(P, has_tail):     # 时差：星陆续点亮。离散 100% = 点火时刻在 0 到 2 × 延迟之间均匀（一开花就有星亮，后面一直有星接着点亮；离散 80% 时开花闪光后黑十几帧 → 导出中间空帧）
+    P['ignDelay'] = round(max(P.get('ignDelay') or 0, 0.45 * P['burn']), 3); P['ignJit'] = 100; P['burnJit'] = max(P.get('burnJit') or 0, 15)
+    return '时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）'
 
 
 SHAPES = [('K', '冠', shape_K), ('Y', '柳', shape_Y),
@@ -247,9 +257,14 @@ def main(a):
             for i, (P, M, L, typ, lnote) in enumerate(lays):
                 eid = f'{tid}-{i + 1}' if multi else tid
                 if eid in expo and expo[eid]: P['exposure'] = expo[eid]
-                elif eid in old and 'exposure' in old[eid]['p'] and how is not None: P['exposure'] = old[eid]['p']['exposure']
+                elif eid in old and 'exposure' in old[eid]['p'] and how is not None: P['exposure'] = old[eid].get('expo0', old[eid]['p']['exposure'])
+                expo0 = P.get('exposure'); fx = FIXES.get(eid, {})
+                for k, v in fx.items():
+                    if k == 'expoMul': P['exposure'] = round(float(P['exposure']) * v, 4)
+                    elif not k.startswith('_'): P[k] = v
+                if fx: lnote = (lnote or note or '') + f"；导出回放检查：{fx['_why']}"
                 e = {'id': eid, 'date': '2026-10-07', 'name': f"{rc['name']} · {label}" + (f" · {L['title']}" if multi else ''), 'base': typ, 'tags': f"我的效果 变体 {rc['name']} {label} {eid}",
-                     'p': slim(P, typ, D), 'm': M, 'note': (lnote or note or '照你保存的原样，一个数没改。') + f"（来源：{rc['file']}）",
+                     'p': slim(P, typ, D), **({'expo0': expo0} if fx and 'expoMul' in fx else {}), 'm': M, 'note': (lnote or note or '照你保存的原样，一个数没改。') + f"（来源：{rc['file']}）",
                      'look': ['这一排变体放在一起看：大小、造型是不是拉开了', '引擎回放 + 游戏内大小', '哪个不要、哪个再调，直接说']}
                 if multi: e['hidden'] = True
                 entries.append(e); ids.append((eid, L))

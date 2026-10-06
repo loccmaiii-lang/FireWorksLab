@@ -701,8 +701,8 @@
     "subStars": 5,
     "subSpeed": 69,
     "carrierTail": 300,
-    "ignDelay": 0.425,
-    "ignJit": 80,
+    "ignDelay": 0.383,
+    "ignJit": 100,
     "carrierHead": 0.48,
     "prePivot": 0,
     "subFlash": 0.1,
@@ -724,7 +724,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuux2arh/分裂星__fxmuux2arh.json）",
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuux2arh/分裂星__fxmuux2arh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -1623,8 +1623,8 @@
     "burnJit": 15,
     "sparkRate": 107,
     "sparkRateEnd": 1.88,
-    "ignDelay": 0.8,
-    "ignJit": 80,
+    "ignDelay": 0.72,
+    "ignJit": 100,
     "cutIn": 0.2,
     "preFrom": 0,
     "visTo": 4.0581,
@@ -1656,7 +1656,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuuzfeg7/Crackle__fxmuuzfeg7.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -2427,9 +2427,6 @@
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
-    "cutOut": 3.64,
-    "preFrom": 0,
-    "visTo": 3.64,
     "prePivot": 0,
     "branch": 3,
     "branchAt": 0.92,
@@ -2452,7 +2449,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 2 尺（直径约 480 m）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 2 尺（直径约 480 m）；导出回放检查：末尾空帧 1 → 出点改自动（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -2468,7 +2465,7 @@
    "tags": "我的效果 变体 金曜菊-A 2 尺 MYJA-S20-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.6569,
+    "exposure": 1.309,
     "duration": 10.686,
     "stars": 621,
     "v0": 251.7,
@@ -2478,7 +2475,7 @@
     "burn": 3.12,
     "burnJit": 10,
     "lastFlare": 0,
-    "flash": 0.6,
+    "flash": 0,
     "headSize": 1.008,
     "headBright": 0,
     "flicker": 0,
@@ -2516,6 +2513,7 @@
     "burstSec": 0.78,
     "zoom": "on"
    },
+   "expo0": 1.6569,
    "m": {
     "stages": [
      [
@@ -2531,7 +2529,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 2 尺（直径约 480 m）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 2 尺（直径约 480 m）；导出回放检查：过曝像素 2.4%（标准 ≤ 2%）→ 曝光 × 0.79（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -2585,9 +2583,6 @@
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
-    "cutOut": 4.2,
-    "preFrom": 0,
-    "visTo": 4.2,
     "prePivot": 0,
     "branch": 3,
     "branchAt": 0.92,
@@ -2610,7 +2605,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 3 尺（直径约 550 m）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 3 尺（直径约 550 m）；导出回放检查：末尾空帧 2 → 出点改自动（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -2626,7 +2621,7 @@
    "tags": "我的效果 变体 金曜菊-A 3 尺 MYJA-S30-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.6859,
+    "exposure": 1.0958,
     "duration": 12.33,
     "stars": 859,
     "v0": 208.2,
@@ -2636,7 +2631,7 @@
     "burn": 3.6,
     "burnJit": 10,
     "lastFlare": 0,
-    "flash": 0.6,
+    "flash": 0,
     "headSize": 1.2,
     "headBright": 0,
     "flicker": 0,
@@ -2674,6 +2669,7 @@
     "burstSec": 0.9,
     "zoom": "on"
    },
+   "expo0": 1.6859,
    "m": {
     "stages": [
      [
@@ -2689,7 +2685,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 3 尺（直径约 550 m）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 3 尺（直径约 550 m）；导出回放检查：过曝像素 2.9% → 曝光 × 0.65（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -2743,9 +2739,6 @@
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
-    "cutOut": 4.853,
-    "preFrom": 0,
-    "visTo": 4.853,
     "prePivot": 0,
     "branch": 3,
     "branchAt": 0.92,
@@ -2768,7 +2761,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 4 尺（直径约 780 m）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 4 尺（直径约 780 m）；导出回放检查：末尾空帧 3 → 出点改自动（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -2784,7 +2777,7 @@
    "tags": "我的效果 变体 金曜菊-A 4 尺 MYJA-S40-2",
    "p": {
     "renderVer": 40,
-    "exposure": 1.8385,
+    "exposure": 1.0296,
     "duration": 14.248,
     "stars": 1166,
     "v0": 331.9,
@@ -2794,7 +2787,7 @@
     "burn": 4.16,
     "burnJit": 10,
     "lastFlare": 0,
-    "flash": 0.6,
+    "flash": 0,
     "headSize": 1.44,
     "headBright": 0,
     "flicker": 0,
@@ -2832,6 +2825,7 @@
     "burstSec": 1.04,
     "zoom": "on"
    },
+   "expo0": 1.8385,
    "m": {
     "stages": [
      [
@@ -2847,7 +2841,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 4 尺（直径约 780 m）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "按号数表从原样（直径 248 m ≈ 8.0 号）缩放到 4 尺（直径约 780 m）；导出回放检查：过曝像素 3.4% → 曝光 × 0.56（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -2896,9 +2890,6 @@
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
-    "cutOut": 4.4191,
-    "preFrom": 0,
-    "visTo": 4.4191,
     "prePivot": 0,
     "branch": 3,
     "branchAt": 0.92,
@@ -2919,7 +2910,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠；导出回放检查：末尾空帧 2（第 1 层你设的出点在看得见的结尾之后）→ 出点改自动（最后一次看得见）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3785,8 +3776,8 @@
     "T0": 1900,
     "cooling": 0.3,
     "twinkle": 0,
-    "ignDelay": 1.63,
-    "ignJit": 80,
+    "ignDelay": 1.467,
+    "ignJit": 100,
     "sparkRise": 0.35,
     "starBright": 0.35,
     "tailHaze": 0.006,
@@ -3813,7 +3804,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -3856,8 +3847,8 @@
     "T0": 2250,
     "cooling": 0.25,
     "twinkle": 0.4,
-    "ignDelay": 1.0,
-    "ignJit": 80,
+    "ignDelay": 0.9,
+    "ignJit": 100,
     "ignSeed": 91,
     "tailDiffuse": 0.5,
     "tailDiffuseScale": 43,
@@ -3886,7 +3877,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv6vhrq/金曜菊-A__fxmuv6vhrq.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -4789,8 +4780,8 @@
     "T0": 2300,
     "cooling": 0.3,
     "sparkBright": 1.9500000000000002,
-    "ignDelay": 1.343,
-    "ignJit": 80,
+    "ignDelay": 1.208,
+    "ignJit": 100,
     "prePivot": 0,
     "autoGrid": 0,
     "segAt": 0
@@ -4803,7 +4794,7 @@
      ]
     ]
    },
-   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv7n3ih/金芒菊_·_我的__fxmuv7n3ih.json）",
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuv7n3ih/金芒菊_·_我的__fxmuv7n3ih.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6546,8 +6537,8 @@
     "T0": 2300,
     "cooling": 0.1,
     "sparkBright": 1.9500000000000002,
-    "ignDelay": 1.0,
-    "ignJit": 80,
+    "ignDelay": 0.9,
+    "ignJit": 100,
     "tailWidth": 1.26,
     "tailDiffuseScale": 37,
     "frameCount": 64,
@@ -6572,7 +6563,7 @@
     "headInt": 1.875,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6598,8 +6589,8 @@
     "burnJit": 15,
     "headSize": 1.9,
     "headBright": 1.65,
-    "ignDelay": 1.7,
-    "ignJit": 80,
+    "ignDelay": 1.53,
+    "ignJit": 100,
     "afterBurn": 0.05,
     "tailDiffuseScale": 37,
     "prePivot": 0,
@@ -6625,7 +6616,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -8435,8 +8426,8 @@
     "sparkBright": 4,
     "twinkle": 0.2,
     "massLoss": 0.15,
-    "ignDelay": 3.65,
-    "ignJit": 80,
+    "ignDelay": 3.285,
+    "ignJit": 100,
     "emberFrac": 0.45,
     "emberLife": 6.4799999999999995,
     "emberBright": 0.6,
@@ -8473,7 +8464,7 @@
     "headInt": 1.9,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -8503,8 +8494,8 @@
     "flash": 0,
     "headSize": 3.4,
     "massLoss": 0.15,
-    "ignDelay": 3.65,
-    "ignJit": 80,
+    "ignDelay": 3.285,
+    "ignJit": 100,
     "keepFrac": 0.2,
     "afterBurn": 3.2,
     "afterJit": 30,
@@ -8534,7 +8525,7 @@
     "headInt": 2.6,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -9095,7 +9086,7 @@
     "引菊 → 锦 · 金锦层"
    ],
    "tags": "我的效果 变体 金曜菊-A 时差 MYJA-J",
-   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）"
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）"
   },
   {
    "id": "MYJA-C",
@@ -9525,7 +9516,7 @@
     "点灭星"
    ],
    "tags": "我的效果 变体 金曜菊-窜天猴 时差 MYJC-J",
-   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）"
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）"
   },
   {
    "id": "MYJC-C",
@@ -9882,7 +9873,7 @@
     "返工 ② 红点灭（主层同轨迹第二段）"
    ],
    "tags": "我的效果 变体 鸿巢四尺玉 · 我的 时差 MYHK-J",
-   "note": "时差：点火延迟约燃烧的一半、离散 80%（每颗星在燃烧的 10%–90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）"
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）"
   },
   {
    "id": "MYHK-C",
