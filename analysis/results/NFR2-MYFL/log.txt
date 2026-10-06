@@ -1,0 +1,43 @@
+03:15:17 第 1/14 步：原样（Crossette）
+03:15:18   ✅ Crossette 
+03:15:18   ✅ 原样（Crossette）（0.0 分钟）
+03:15:18 第 2/14 步：3 号（Crossette_03）
+03:15:18   ✅ Crossette_03 
+03:15:18   ✅ 3 号（Crossette_03）（0.0 分钟）
+03:15:18 第 3/14 步：尺玉（Crossette_10）
+03:15:19   ✅ Crossette_10 
+03:15:19   ✅ 尺玉（Crossette_10）（0.0 分钟）
+03:15:19 第 4/14 步：2 尺（Crossette_20）
+03:15:21   ✅ Crossette_20 
+03:15:21   ✅ 2 尺（Crossette_20）（0.0 分钟）
+03:15:21 第 5/14 步：3 尺（Crossette_30）
+03:15:22   ✅ Crossette_30 
+03:15:22   ✅ 3 尺（Crossette_30）（0.0 分钟）
+03:15:22 第 6/14 步：4 尺（Crossette_40）
+03:15:23   ✅ Crossette_40 
+03:15:23   ✅ 4 尺（Crossette_40）（0.0 分钟）
+03:15:23 第 7/14 步：冠（Crossette_Crown）
+03:15:24   ✅ Crossette_Crown 
+03:15:24   ✅ 冠（Crossette_Crown）（0.0 分钟）
+03:15:24 第 8/14 步：柳（Crossette_Willow）
+03:15:25   ✅ Crossette_Willow 
+03:15:25   ✅ 柳（Crossette_Willow）（0.0 分钟）
+03:15:25 第 9/14 步：环（Crossette_Ring）
+03:15:26   ✅ Crossette_Ring 
+03:15:26   ✅ 环（Crossette_Ring）（0.0 分钟）
+03:15:26 第 10/14 步：土星（Crossette_Saturn）
+03:15:27   ✅ Crossette_Saturn 
+03:15:27   ✅ 土星（Crossette_Saturn）（0.0 分钟）
+03:15:27 第 11/14 步：万華鏡（Crossette_Kaleido）
+03:15:28   ✅ Crossette_Kaleido 
+03:15:28   ✅ 万華鏡（Crossette_Kaleido）（0.0 分钟）
+03:15:28 第 12/14 步：心形（Crossette_Heart）
+03:15:28   ✅ Crossette_Heart 
+03:15:28   ✅ 心形（Crossette_Heart）（0.0 分钟）
+03:15:28 第 13/14 步：时差（Crossette_Jisa）
+03:15:29   ✅ Crossette_Jisa 
+03:15:29   ✅ 时差（Crossette_Jisa）（0.0 分钟）
+03:15:29 第 14/14 步：芯入（Crossette_Core）
+03:15:30   ✅ Crossette_Core 
+03:15:30   ✅ 芯入（Crossette_Core）（0.0 分钟）
+03:15:30 完成，用时 0.2 分钟

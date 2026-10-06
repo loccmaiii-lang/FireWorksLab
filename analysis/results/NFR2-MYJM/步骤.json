@@ -1,0 +1,100 @@
+[
+ {
+  "name": "原样（GoldChrysanthemum）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "3 号（GoldChrysanthemum_03）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "尺玉（GoldChrysanthemum_10）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "2 尺（GoldChrysanthemum_20）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "3 尺（GoldChrysanthemum_30）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "4 尺（GoldChrysanthemum_40）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "冠（GoldChrysanthemum_Crown）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "柳（GoldChrysanthemum_Willow）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "环（GoldChrysanthemum_Ring）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "土星（GoldChrysanthemum_Saturn）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "万華鏡（GoldChrysanthemum_Kaleido）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "心形（GoldChrysanthemum_Heart）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "时差（GoldChrysanthemum_Jisa）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "芯入（GoldChrysanthemum_Core）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ }
+]

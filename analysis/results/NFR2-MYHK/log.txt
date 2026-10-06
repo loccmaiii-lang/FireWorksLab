@@ -1,0 +1,40 @@
+03:15:18 第 1/13 步：原样（YonshakuKamuro）
+03:15:19   ✅ YonshakuKamuro 跳过纯粒子发射器：L2_Dots
+03:15:19   ✅ 原样（YonshakuKamuro）（0.0 分钟）
+03:15:19 第 2/13 步：3 号（YonshakuKamuro_03）
+03:15:20   ✅ YonshakuKamuro_03 跳过纯粒子发射器：L2_Dots
+03:15:20   ✅ 3 号（YonshakuKamuro_03）（0.0 分钟）
+03:15:20 第 3/13 步：5 号（YonshakuKamuro_05）
+03:15:21   ✅ YonshakuKamuro_05 跳过纯粒子发射器：L2_Dots
+03:15:21   ✅ 5 号（YonshakuKamuro_05）（0.0 分钟）
+03:15:21 第 4/13 步：尺玉（YonshakuKamuro_10）
+03:15:21   ✅ YonshakuKamuro_10 跳过纯粒子发射器：L2_Dots
+03:15:21   ✅ 尺玉（YonshakuKamuro_10）（0.0 分钟）
+03:15:21 第 5/13 步：2 尺（YonshakuKamuro_20）
+03:15:23   ✅ YonshakuKamuro_20 跳过纯粒子发射器：L2_Dots
+03:15:23   ✅ 2 尺（YonshakuKamuro_20）（0.0 分钟）
+03:15:23 第 6/13 步：3 尺（YonshakuKamuro_30）
+03:15:24   ✅ YonshakuKamuro_30 跳过纯粒子发射器：L2_Dots
+03:15:24   ✅ 3 尺（YonshakuKamuro_30）（0.0 分钟）
+03:15:24 第 7/13 步：柳（YonshakuKamuro_Willow）
+03:15:25   ✅ YonshakuKamuro_Willow 跳过纯粒子发射器：L2_Dots
+03:15:25   ✅ 柳（YonshakuKamuro_Willow）（0.0 分钟）
+03:15:25 第 8/13 步：环（YonshakuKamuro_Ring）
+03:15:26   ✅ YonshakuKamuro_Ring 跳过纯粒子发射器：L2_Dots
+03:15:26   ✅ 环（YonshakuKamuro_Ring）（0.0 分钟）
+03:15:26 第 9/13 步：土星（YonshakuKamuro_Saturn）
+03:15:28   ✅ YonshakuKamuro_Saturn 跳过纯粒子发射器：L2_Dots
+03:15:28   ✅ 土星（YonshakuKamuro_Saturn）（0.0 分钟）
+03:15:28 第 10/13 步：万華鏡（YonshakuKamuro_Kaleido）
+03:15:29   ✅ YonshakuKamuro_Kaleido 跳过纯粒子发射器：L2_Dots
+03:15:29   ✅ 万華鏡（YonshakuKamuro_Kaleido）（0.0 分钟）
+03:15:29 第 11/13 步：心形（YonshakuKamuro_Heart）
+03:15:30   ✅ YonshakuKamuro_Heart 跳过纯粒子发射器：L2_Dots
+03:15:30   ✅ 心形（YonshakuKamuro_Heart）（0.0 分钟）
+03:15:30 第 12/13 步：时差（YonshakuKamuro_Jisa）
+03:15:31   ✅ YonshakuKamuro_Jisa 跳过纯粒子发射器：L2_Dots
+03:15:31   ✅ 时差（YonshakuKamuro_Jisa）（0.0 分钟）
+03:15:31 第 13/13 步：芯入（YonshakuKamuro_Core）
+03:15:33   ✅ YonshakuKamuro_Core 跳过纯粒子发射器：L2_Dots
+03:15:33   ✅ 芯入（YonshakuKamuro_Core）（0.0 分钟）
+03:15:33 完成，用时 0.3 分钟

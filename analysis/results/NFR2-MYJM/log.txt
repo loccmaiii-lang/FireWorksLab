@@ -1,0 +1,43 @@
+03:15:33 第 1/14 步：原样（GoldChrysanthemum）
+03:15:34   ✅ GoldChrysanthemum 
+03:15:34   ✅ 原样（GoldChrysanthemum）（0.0 分钟）
+03:15:34 第 2/14 步：3 号（GoldChrysanthemum_03）
+03:15:35   ✅ GoldChrysanthemum_03 
+03:15:35   ✅ 3 号（GoldChrysanthemum_03）（0.0 分钟）
+03:15:35 第 3/14 步：尺玉（GoldChrysanthemum_10）
+03:15:36   ✅ GoldChrysanthemum_10 
+03:15:36   ✅ 尺玉（GoldChrysanthemum_10）（0.0 分钟）
+03:15:36 第 4/14 步：2 尺（GoldChrysanthemum_20）
+03:15:37   ✅ GoldChrysanthemum_20 
+03:15:37   ✅ 2 尺（GoldChrysanthemum_20）（0.0 分钟）
+03:15:37 第 5/14 步：3 尺（GoldChrysanthemum_30）
+03:15:38   ✅ GoldChrysanthemum_30 
+03:15:38   ✅ 3 尺（GoldChrysanthemum_30）（0.0 分钟）
+03:15:38 第 6/14 步：4 尺（GoldChrysanthemum_40）
+03:15:40   ✅ GoldChrysanthemum_40 
+03:15:40   ✅ 4 尺（GoldChrysanthemum_40）（0.0 分钟）
+03:15:40 第 7/14 步：冠（GoldChrysanthemum_Crown）
+03:15:41   ✅ GoldChrysanthemum_Crown 
+03:15:41   ✅ 冠（GoldChrysanthemum_Crown）（0.0 分钟）
+03:15:41 第 8/14 步：柳（GoldChrysanthemum_Willow）
+03:15:42   ✅ GoldChrysanthemum_Willow 
+03:15:42   ✅ 柳（GoldChrysanthemum_Willow）（0.0 分钟）
+03:15:42 第 9/14 步：环（GoldChrysanthemum_Ring）
+03:15:43   ✅ GoldChrysanthemum_Ring 
+03:15:43   ✅ 环（GoldChrysanthemum_Ring）（0.0 分钟）
+03:15:43 第 10/14 步：土星（GoldChrysanthemum_Saturn）
+03:15:44   ✅ GoldChrysanthemum_Saturn 
+03:15:44   ✅ 土星（GoldChrysanthemum_Saturn）（0.0 分钟）
+03:15:44 第 11/14 步：万華鏡（GoldChrysanthemum_Kaleido）
+03:15:44   ✅ GoldChrysanthemum_Kaleido 
+03:15:44   ✅ 万華鏡（GoldChrysanthemum_Kaleido）（0.0 分钟）
+03:15:44 第 12/14 步：心形（GoldChrysanthemum_Heart）
+03:15:45   ✅ GoldChrysanthemum_Heart 
+03:15:45   ✅ 心形（GoldChrysanthemum_Heart）（0.0 分钟）
+03:15:45 第 13/14 步：时差（GoldChrysanthemum_Jisa）
+03:15:46   ✅ GoldChrysanthemum_Jisa 
+03:15:46   ✅ 时差（GoldChrysanthemum_Jisa）（0.0 分钟）
+03:15:46 第 14/14 步：芯入（GoldChrysanthemum_Core）
+03:15:47   ✅ GoldChrysanthemum_Core 
+03:15:47   ✅ 芯入（GoldChrysanthemum_Core）（0.0 分钟）
+03:15:47 完成，用时 0.2 分钟

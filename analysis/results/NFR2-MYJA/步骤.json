@@ -1,0 +1,107 @@
+[
+ {
+  "name": "原样（GoldRay）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "3 号（GoldRay_03）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "5 号（GoldRay_05）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "尺玉（GoldRay_10）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "2 尺（GoldRay_20）",
+  "script": "全程回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "3 尺（GoldRay_30）",
+  "script": "全程回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "4 尺（GoldRay_40）",
+  "script": "全程回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "冠（GoldRay_Crown）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "柳（GoldRay_Willow）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "环（GoldRay_Ring）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "土星（GoldRay_Saturn）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "万華鏡（GoldRay_Kaleido）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "心形（GoldRay_Heart）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "时差（GoldRay_Jisa）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "芯入（GoldRay_Core）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ }
+]

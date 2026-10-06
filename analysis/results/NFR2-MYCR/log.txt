@@ -1,0 +1,46 @@
+03:15:15 第 1/15 步：原样（Crackle）
+03:15:16   ✅ Crackle 
+03:15:16   ✅ 原样（Crackle）（0.0 分钟）
+03:15:16 第 2/15 步：3 号（Crackle_03）
+03:15:17   ✅ Crackle_03 
+03:15:17   ✅ 3 号（Crackle_03）（0.0 分钟）
+03:15:17 第 3/15 步：5 号（Crackle_05）
+03:15:18   ✅ Crackle_05 
+03:15:18   ✅ 5 号（Crackle_05）（0.0 分钟）
+03:15:18 第 4/15 步：尺玉（Crackle_10）
+03:15:19   ✅ Crackle_10 
+03:15:19   ✅ 尺玉（Crackle_10）（0.0 分钟）
+03:15:19 第 5/15 步：2 尺（Crackle_20）
+03:15:20   ✅ Crackle_20 
+03:15:20   ✅ 2 尺（Crackle_20）（0.0 分钟）
+03:15:20 第 6/15 步：3 尺（Crackle_30）
+03:15:21   ✅ Crackle_30 
+03:15:21   ✅ 3 尺（Crackle_30）（0.0 分钟）
+03:15:21 第 7/15 步：4 尺（Crackle_40）
+03:15:22   ✅ Crackle_40 
+03:15:22   ✅ 4 尺（Crackle_40）（0.0 分钟）
+03:15:22 第 8/15 步：冠（Crackle_Crown）
+03:15:24   ✅ Crackle_Crown 
+03:15:24   ✅ 冠（Crackle_Crown）（0.0 分钟）
+03:15:24 第 9/15 步：柳（Crackle_Willow）
+03:15:25   ✅ Crackle_Willow 
+03:15:25   ✅ 柳（Crackle_Willow）（0.0 分钟）
+03:15:25 第 10/15 步：环（Crackle_Ring）
+03:15:26   ✅ Crackle_Ring 
+03:15:26   ✅ 环（Crackle_Ring）（0.0 分钟）
+03:15:26 第 11/15 步：土星（Crackle_Saturn）
+03:15:26   ✅ Crackle_Saturn 
+03:15:26   ✅ 土星（Crackle_Saturn）（0.0 分钟）
+03:15:26 第 12/15 步：万華鏡（Crackle_Kaleido）
+03:15:27   ✅ Crackle_Kaleido 
+03:15:27   ✅ 万華鏡（Crackle_Kaleido）（0.0 分钟）
+03:15:27 第 13/15 步：心形（Crackle_Heart）
+03:15:28   ✅ Crackle_Heart 
+03:15:28   ✅ 心形（Crackle_Heart）（0.0 分钟）
+03:15:28 第 14/15 步：时差（Crackle_Jisa）
+03:15:29   ✅ Crackle_Jisa 
+03:15:29   ✅ 时差（Crackle_Jisa）（0.0 分钟）
+03:15:29 第 15/15 步：芯入（Crackle_Core）
+03:15:30   ✅ Crackle_Core 
+03:15:30   ✅ 芯入（Crackle_Core）（0.0 分钟）
+03:15:30 完成，用时 0.2 分钟

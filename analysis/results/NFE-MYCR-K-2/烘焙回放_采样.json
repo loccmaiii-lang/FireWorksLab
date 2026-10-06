@@ -1,0 +1,21 @@
+{
+ "entry": "MYCR-K",
+ "ver": "0aac69b7·master4.3.8-core1",
+ "times_s": [
+  0.98,
+  2.94,
+  4.9,
+  6.86,
+  8.82
+ ],
+ "square_px": 690,
+ "header_px": 22,
+ "label_px": 90,
+ "rows": [
+  "实时模拟",
+  "导出效果"
+ ],
+ "projection": null,
+ "reference": null,
+ "note": "每行整段固定取景；实时和导出各自的视野不同，比较几何时须记录整段统一换算，不能逐帧放大。"
+}

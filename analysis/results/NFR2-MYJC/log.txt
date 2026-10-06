@@ -1,0 +1,39 @@
+03:15:30 第 1/15 步：原样（GoldRayRocket）
+03:15:30   ✅ 原样（GoldRayRocket）（0.0 分钟）
+03:15:30 第 2/15 步：3 号（GoldRayRocket_03）
+03:15:30   ✅ 3 号（GoldRayRocket_03）（0.0 分钟）
+03:15:30 第 3/15 步：5 号（GoldRayRocket_05）
+03:15:31   ✅ 5 号（GoldRayRocket_05）（0.0 分钟）
+03:15:31 第 4/15 步：尺玉（GoldRayRocket_10）
+03:15:31   ✅ 尺玉（GoldRayRocket_10）（0.0 分钟）
+03:15:31 第 5/15 步：2 尺（GoldRayRocket_20）
+03:15:31   ✅ 2 尺（GoldRayRocket_20）（0.0 分钟）
+03:15:31 第 6/15 步：3 尺（GoldRayRocket_30）
+03:15:31   ✅ 3 尺（GoldRayRocket_30）（0.0 分钟）
+03:15:31 第 7/15 步：4 尺（GoldRayRocket_40）
+03:15:32   ✅ 4 尺（GoldRayRocket_40）（0.0 分钟）
+03:15:32 第 8/15 步：冠（GoldRayRocket_Crown）
+03:15:32   ✅ 冠（GoldRayRocket_Crown）（0.0 分钟）
+03:15:32 第 9/15 步：柳（GoldRayRocket_Willow）
+03:15:32   ✅ 柳（GoldRayRocket_Willow）（0.0 分钟）
+03:15:32 第 10/15 步：环（GoldRayRocket_Ring）
+03:15:33   ❌ GoldRayRocket_Ring 
+03:15:33      GoldRayRocket_Ring · L2_Main 中间空帧 23
+03:15:33   ✅ 环（GoldRayRocket_Ring）（0.0 分钟）
+03:15:33 第 11/15 步：土星（GoldRayRocket_Saturn）
+03:15:34   ❌ GoldRayRocket_Saturn 
+03:15:34      GoldRayRocket_Saturn · L2_Main 中间空帧 23
+03:15:34   ✅ 土星（GoldRayRocket_Saturn）（0.0 分钟）
+03:15:34 第 12/15 步：万華鏡（GoldRayRocket_Kaleido）
+03:15:35   ❌ GoldRayRocket_Kaleido 
+03:15:35      GoldRayRocket_Kaleido · L2_Main 中间空帧 23
+03:15:35   ✅ 万華鏡（GoldRayRocket_Kaleido）（0.0 分钟）
+03:15:35 第 13/15 步：心形（GoldRayRocket_Heart）
+03:15:36   ❌ GoldRayRocket_Heart 
+03:15:36      GoldRayRocket_Heart · L2_Main 中间空帧 23
+03:15:36   ✅ 心形（GoldRayRocket_Heart）（0.0 分钟）
+03:15:36 第 14/15 步：时差（GoldRayRocket_Jisa）
+03:15:36   ✅ 时差（GoldRayRocket_Jisa）（0.0 分钟）
+03:15:36 第 15/15 步：芯入（GoldRayRocket_Core）
+03:15:37   ✅ 芯入（GoldRayRocket_Core）（0.0 分钟）
+03:15:37 完成，用时 0.1 分钟

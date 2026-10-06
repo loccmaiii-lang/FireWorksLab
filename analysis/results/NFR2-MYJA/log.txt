@@ -1,0 +1,52 @@
+03:15:30 第 1/15 步：原样（GoldRay）
+03:15:31   ✅ GoldRay 
+03:15:31   ✅ 原样（GoldRay）（0.0 分钟）
+03:15:31 第 2/15 步：3 号（GoldRay_03）
+03:15:32   ✅ GoldRay_03 
+03:15:32   ✅ 3 号（GoldRay_03）（0.0 分钟）
+03:15:32 第 3/15 步：5 号（GoldRay_05）
+03:15:33   ✅ GoldRay_05 
+03:15:33   ✅ 5 号（GoldRay_05）（0.0 分钟）
+03:15:33 第 4/15 步：尺玉（GoldRay_10）
+03:15:35   ✅ GoldRay_10 
+03:15:35   ✅ 尺玉（GoldRay_10）（0.0 分钟）
+03:15:35 第 5/15 步：2 尺（GoldRay_20）
+03:15:36   ❌ GoldRay_20 
+03:15:36      GoldRay_20 · L2_MainA 过曝像素 2.4%
+03:15:36      GoldRay_20 · L2_MainB 过曝像素 2.4%
+03:15:36   ✅ 2 尺（GoldRay_20）（0.0 分钟）
+03:15:36 第 6/15 步：3 尺（GoldRay_30）
+03:15:38   ❌ GoldRay_30 
+03:15:38      GoldRay_30 · L2_MainA 过曝像素 2.9%
+03:15:38      GoldRay_30 · L2_MainB 过曝像素 2.9%
+03:15:38   ✅ 3 尺（GoldRay_30）（0.0 分钟）
+03:15:38 第 7/15 步：4 尺（GoldRay_40）
+03:15:40   ❌ GoldRay_40 
+03:15:40      GoldRay_40 · L2_MainA 过曝像素 3.4%
+03:15:40      GoldRay_40 · L2_MainB 过曝像素 3.3%
+03:15:40   ✅ 4 尺（GoldRay_40）（0.0 分钟）
+03:15:40 第 8/15 步：冠（GoldRay_Crown）
+03:15:42   ✅ GoldRay_Crown 
+03:15:42   ✅ 冠（GoldRay_Crown）（0.0 分钟）
+03:15:42 第 9/15 步：柳（GoldRay_Willow）
+03:15:43   ✅ GoldRay_Willow 
+03:15:43   ✅ 柳（GoldRay_Willow）（0.0 分钟）
+03:15:43 第 10/15 步：环（GoldRay_Ring）
+03:15:44   ✅ GoldRay_Ring 
+03:15:44   ✅ 环（GoldRay_Ring）（0.0 分钟）
+03:15:44 第 11/15 步：土星（GoldRay_Saturn）
+03:15:46   ✅ GoldRay_Saturn 
+03:15:46   ✅ 土星（GoldRay_Saturn）（0.0 分钟）
+03:15:46 第 12/15 步：万華鏡（GoldRay_Kaleido）
+03:15:47   ✅ GoldRay_Kaleido 
+03:15:47   ✅ 万華鏡（GoldRay_Kaleido）（0.0 分钟）
+03:15:47 第 13/15 步：心形（GoldRay_Heart）
+03:15:48   ✅ GoldRay_Heart 
+03:15:48   ✅ 心形（GoldRay_Heart）（0.0 分钟）
+03:15:48 第 14/15 步：时差（GoldRay_Jisa）
+03:15:49   ✅ GoldRay_Jisa 
+03:15:49   ✅ 时差（GoldRay_Jisa）（0.0 分钟）
+03:15:49 第 15/15 步：芯入（GoldRay_Core）
+03:15:51   ✅ GoldRay_Core 
+03:15:51   ✅ 芯入（GoldRay_Core）（0.0 分钟）
+03:15:51 完成，用时 0.4 分钟
