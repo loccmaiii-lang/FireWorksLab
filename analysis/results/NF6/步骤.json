@@ -1,0 +1,44 @@
+[
+ {
+  "name": "没改的 3 个（照参考调过的）定帧回归",
+  "script": "多层模板回归.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "27 个模板每层曝光（只写 json）",
+  "script": "多层模板.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.5
+ },
+ {
+  "name": "定帧总表 · 芯物",
+  "script": "多层模板.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ },
+ {
+  "name": "定帧总表 · 其它",
+  "script": "多层模板.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "改前改后（4.9.21 对 4.9.22，同一取景、开花后同一秒）",
+  "script": "尾迹新旧对比.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ },
+ {
+  "name": "全部缩略图重渲（套上新曝光）",
+  "script": "渲染缩略图_截图法.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.7
+ }
+]

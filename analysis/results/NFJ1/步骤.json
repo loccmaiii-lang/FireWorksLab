@@ -1,0 +1,9 @@
+[
+ {
+  "name": "规格对照",
+  "script": "规格对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ }
+]
