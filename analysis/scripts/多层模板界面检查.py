@@ -73,11 +73,12 @@ async def main(a):
           const b0 = !$('#thGrab').hidden, s0 = tile().slice(0, 40);
           const ok1 = await thCapture(); const u1 = thUserGet('mt:' + id), s1 = tile().slice(0, 40), ab1 = ($('#abThumb .th') || { getAttribute: () => '' }).getAttribute('style').slice(0, 40), r1 = !$('#thRestore').hidden;
           state.t = 0.6; const ok2 = await thCapture(); const u2 = thUserGet('mt:' + id), n2 = Object.keys(thUserAll()).filter(k => k === 'mt:' + id).length;
-          const ok3 = thRestore(); const s3 = tile().slice(0, 40), left = !!thUserGet('mt:' + id);
-          return { b0, s0, ok1, t1: u1 && u1.t, len1: u1 && u1.img.length, s1, ab1, r1, ok2, t2: u2 && u2.t, n2, ok3, s3, left, img: u2 && u2.img }; }''', a.id)
+          const ok3 = thRestore(); const s3 = tile().slice(0, 40), left = !!thUserGet('mt:' + id), built = typeof thBuiltGet === 'function' && !!thBuiltGet('mt:' + id);
+          return { b0, s0, ok1, t1: u1 && u1.t, len1: u1 && u1.img.length, s1, ab1, r1, ok2, t2: u2 && u2.t, n2, ok3, s3, left, built, img: u2 && u2.img }; }''', a.id)
         if th.get('img'): (out / f'{a.id}_截的缩略图.jpg').write_bytes(base64.b64decode(th.pop('img').split(',')[1]))
-        ok('生成缩略图：时间轴上有按钮；截了左栏 / 资产栏换成截图，再截覆盖（只留一张），恢复回示意图',
-           th['b0'] and th['ok1'] and 'image/jpeg' in th['s1'] and 'image/jpeg' in th['ab1'] and th['r1'] and th['ok2'] and th['t2'] == 0.6 and th['n2'] == 1 and th['ok3'] and 'svg' in th['s3'] and not th['left'],
+        # 4.9.16：恢复 = 回到默认图——有本机渲染的（tool/data/thumbs.js）就是那张 JPEG，没有才是示意图 SVG
+        ok('生成缩略图：时间轴上有按钮；截了左栏 / 资产栏换成截图，再截覆盖（只留一张），恢复回默认图（渲染图 / 示意图）',
+           th['b0'] and th['ok1'] and 'image/jpeg' in th['s1'] and 'image/jpeg' in th['ab1'] and th['r1'] and th['ok2'] and th['t2'] == 0.6 and th['n2'] == 1 and th['ok3'] and ('image/jpeg' if th['built'] else 'svg') in th['s3'] and not th['left'],
            json.dumps(th, ensure_ascii=False)[:300])
         # 导出一个包（多层 → 一个 zip，每层一个发射器）
         async with pg.expect_download(timeout=0) as dl:

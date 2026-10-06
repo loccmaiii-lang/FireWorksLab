@@ -1,0 +1,100 @@
+{
+ "id": "NF1",
+ "type": "script",
+ "priority": 5,
+ "name": "对话框新花型 4.9.16：新模板曝光 + 定帧、全部缩略图重渲（截图法）、尾迹新旧对比、基准回归",
+ "note": "用户 10-06 17:57：1. 光露 / 浮模様 / 万華鏡（+ 染分）模板；3. 缩略图按「生成缩略图」的方式重渲，不在云端看；5. 老火花先暗逐个查，本机算。结果回来由对话框新花型看总表、收进 tool/data/thumbs.js、并曝光进 MT_EXPOSURE。",
+ "steps": [
+  {
+   "name": "基准回归 4.9.15 → 4.9.16 花型模板 6 个（簇转角缺省 0，应逐像素相同；金芒菊要效果数据，临时取出的旧版没有，跳过）",
+   "script": "基准回归.py",
+   "args": [
+    "--old",
+    "{git:e873d62:tool/FireworkBaker.html}",
+    "--new",
+    "tool/FireworkBaker.html",
+    "--out",
+    "{out}/基准回归",
+    "--only",
+    "kiku,botan,kamuro,senrin,strobe,crackle"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "多层模板定帧回归 4.9.15 → 4.9.16（mtRenderStills 拆出 mtRenderLayers，应逐像素相同）",
+   "script": "多层模板回归.py",
+   "args": [
+    "--old",
+    "{git:e873d62:tool/FireworkBaker.html}",
+    "--out",
+    "{out}/多层模板回归"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "新模板每层曝光（只写 json）",
+   "script": "多层模板.py",
+   "args": [
+    "yoeshinKoro",
+    "kowariUkimoyo",
+    "mangekyo",
+    "somewakeBotan",
+    "--expo",
+    "--expo-json",
+    "{out}/曝光.json"
+   ],
+   "must": true,
+   "timeout": 2400
+  },
+  {
+   "name": "新模板定帧（套上刚算的曝光）",
+   "script": "多层模板.py",
+   "args": [
+    "yoeshinKoro",
+    "kowariUkimoyo",
+    "mangekyo",
+    "somewakeBotan",
+    "--expo-from",
+    "{out}/曝光.json",
+    "--out",
+    "{out}/定帧",
+    "--sheet-name",
+    "新模板总表.jpg",
+    "--px",
+    "360",
+    "--fracs",
+    "0.12,0.4,0.62,0.8,0.95"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "全部缩略图（截图法，套上新模板曝光）",
+   "script": "渲染缩略图_截图法.py",
+   "args": [
+    "--out",
+    "{out}/缩略图",
+    "--expo-from",
+    "{out}/曝光.json"
+   ],
+   "must": false,
+   "timeout": 10800
+  },
+  {
+   "name": "尾迹新旧对比（4.6.0 = 4.7.0 之前最后一版）",
+   "script": "尾迹新旧对比.py",
+   "args": [
+    "--old",
+    "{git:263888a^:tool/FireworkBaker.html}",
+    "--out",
+    "{out}/尾迹对比",
+    "--px",
+    "240"
+   ],
+   "must": false,
+   "timeout": 7200
+  }
+ ]
+}

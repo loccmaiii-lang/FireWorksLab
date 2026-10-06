@@ -17,6 +17,9 @@
     "variants": {名字: {参数改动}}（可选：额外试几组，各出一张对照图） }
   升空尾缀任务："type": "trail"，格式见 analysis/scripts/trail_job.py
   导出任务："type": "export"，格式见 analysis/scripts/export_job.py
+  通用脚本任务（4.9.16）："type": "script", "steps": [{"name", "script": analysis/scripts 下的文件名, "args": [...], "timeout": 秒, "must": true/false}]
+    按顺序跑，每步一个子进程（脚本自己开浏览器）；args 里 {out} = 本任务结果目录，{git:<提交>:<路径>} = 那个提交里的文件（取到临时目录，不进结果）。
+    must: false 的步骤失败只记下来、接着跑下一步；结果目录里 步骤.json 记每步退出码和用时
 每个任务的结果：
   best.json（最终参数）、对照.jpg（实拍 vs 模拟）、数值.json（逐时刻对照表）、
   variant_<名字>.jpg / .json、log.txt、env.json（显卡、耗时）、done.json（跑完的标记）
@@ -55,8 +58,10 @@ def run_job(job, s, force=False):
         line = time.strftime('%H:%M:%S ') + str(m); print(f'[{jid}] ' + line, flush=True); logf.write(line + '\n'); logf.flush()
     t0 = time.time()
     try:
-        if job.get('type') in ('trail', 'export', 'ui', 'smoke', 'expo', 'std'):
-            if job['type'] == 'std':
+        if job.get('type') in ('trail', 'export', 'ui', 'smoke', 'expo', 'std', 'script'):
+            if job['type'] == 'script':
+                run_script_steps(job, out, log)
+            elif job['type'] == 'std':
                 # 标准检查（协作/标准.md 第 4 节）：写 tool/data/standard.js 和报告，结果目录里放一份
                 import subprocess, shutil
                 r = subprocess.run([sys.executable, os.path.join(ROOT, 'analysis', 'scripts', '标准检查.py')] + list(job.get('targets') or []),
@@ -159,6 +164,43 @@ def run_job(job, s, force=False):
         return False
     finally:
         logf.close()
+
+
+def run_script_steps(job, out, log):
+    """4.9.16（对话框新花型）通用脚本任务：按顺序跑 analysis/scripts 下的脚本，输出进本任务结果目录"""
+    import subprocess, tempfile, re
+    sdir = os.path.join(ROOT, 'analysis', 'scripts'); tmp = tempfile.mkdtemp(prefix='fwjob_'); got = {}
+    def git_file(rev, path):
+        k = rev + ':' + path
+        if k not in got:
+            d = os.path.join(tmp, str(len(got))); os.makedirs(d, exist_ok=True); f = os.path.join(d, os.path.basename(path))
+            r = subprocess.run(['git', 'show', k], cwd=ROOT, capture_output=True)
+            if r.returncode != 0: raise RuntimeError('取不到 ' + k + '：' + r.stderr.decode('utf-8', 'replace')[-500:])
+            open(f, 'wb').write(r.stdout); got[k] = f
+        return got[k]
+    def sub(a):
+        a = str(a).replace('{out}', out)
+        return re.sub(r'\{git:([^:{}]+):([^{}]+)\}', lambda m: git_file(m.group(1), m.group(2)), a)
+    steps, rec = job.get('steps') or [], []
+    try:
+        for i, st in enumerate(steps):
+            sc = os.path.normpath(os.path.join(sdir, st['script']))
+            if os.path.dirname(sc) != os.path.normpath(sdir) or not os.path.isfile(sc): raise RuntimeError('脚本不在 analysis/scripts 里：' + st['script'])
+            argv = [sub(x) for x in st.get('args') or []]; name = st.get('name') or st['script']; t1 = time.time()
+            log(f'第 {i + 1}/{len(steps)} 步：{name}')
+            try:
+                r = subprocess.run([sys.executable, sc] + argv, cwd=ROOT, capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=int(st.get('timeout', 3600)))
+                code, so, se = r.returncode, r.stdout or '', r.stderr or ''
+            except subprocess.TimeoutExpired as e:
+                code, so, se = 'timeout', (e.stdout.decode('utf-8', 'replace') if isinstance(e.stdout, bytes) else e.stdout or ''), f"超过 {st.get('timeout', 3600)} 秒"
+            for line in so.splitlines()[-int(st.get('tail', 40)):]: log('  ' + line)
+            okc = code in (st.get('ok') or [0])
+            rec.append({'name': name, 'script': st['script'], 'code': code, 'ok': okc, 'minutes': round((time.time() - t1) / 60, 1), **({'stderr': se[-2000:]} if not okc else {})})
+            jsave(rec, os.path.join(out, '步骤.json'))
+            log(f"  {'✅' if okc else '❌'} {name}（{rec[-1]['minutes']} 分钟）" + ('' if okc else '：' + se[-600:]))
+            if not okc and st.get('must', True): raise RuntimeError(f'第 {i + 1} 步没过：{name}')
+    finally:
+        import shutil; shutil.rmtree(tmp, ignore_errors=True)
 
 
 # ---------------- 多开：每个任务「认领」后才跑，几个窗口 / 进程同时跑不会重复 ----------------

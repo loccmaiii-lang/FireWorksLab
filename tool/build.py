@@ -50,6 +50,8 @@ html = f'''<!doctype html>
 <script src="data/review.js"></script>
 <!-- 标准检查结果（analysis/scripts/标准检查.py 生成；缺了也能用） -->
 <script src="data/standard.js"></script>
+<!-- 4.9.16 默认缩略图（本机渲染，analysis/scripts/渲染缩略图_截图法.py --ingest 生成；缺了用示意图） -->
+<script src="data/thumbs.js"></script>
 <script>
 'use strict';
 {js}</script>

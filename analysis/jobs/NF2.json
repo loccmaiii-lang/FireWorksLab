@@ -1,0 +1,13 @@
+{
+ "id": "NF2",
+ "type": "std",
+ "targets": [
+  "mt:yoeshinKoro",
+  "mt:kowariUkimoyo",
+  "mt:mangekyo",
+  "mt:somewakeBotan"
+ ],
+ "priority": 4,
+ "name": "标准检查：4.9.16 新多层模板 4 个（四重芯菊先紫光露、锦冠菊小割浮模様、万華鏡、染分牡丹）",
+ "note": "对话框新花型。只查这 4 个，并进上一次的完整结果。"
+}

@@ -22,7 +22,7 @@ const MT_RATIO = { 1: [0.55], 2: [0.61, 0.32], 3: [0.70, 0.48, 0.27], 4: [0.74, 
 // 芯星比亲星小 → 终端速度低（vt ∝ √星径）；层越靠里越小
 const MT_VT = [21, 18, 16.5, 15.5, 14.5, 13.5];
 // 组：左栏「多层花型模板」里的小标题
-const MT_GROUPS = ['芯物（同心多重芯）', '冠 · 效果芯', '中式复合', '半割物 · 千轮', '单层变体（颜色 / 尾）'];     // 后两组 4.9.6 第二批
+const MT_GROUPS = ['芯物（同心多重芯）', '冠 · 效果芯', '中式复合', '半割物 · 千轮', '单层变体（颜色 / 尾）', '型物 · 分簇（万華鏡 / 染分）'];     // 后两组 4.9.6 第二批；最后一组 4.9.16（分簇 + 整套簇转角）
 // 一层：c = 颜色（字符串，或 stages 数组），ramp = 渐变图；k = 半径比（亲星 1）
 const mtL = (title, en, type, k, p = {}, c = MT_COL.warm, ramp = MT_RAMP_NEUTRAL, o = {}) => ({ title, en, type, k, p, m: { stages: Array.isArray(c) ? c : [[0, c]], xw: 0.1, ...ramp }, ...o });
 // 芯（无尾牡丹星）：内层小而密——星数按半径比收得比面积慢（芯星小、排得密），星头略小于亲星
@@ -114,6 +114,17 @@ const MULTI_TYPES = [
       mtL('亲星 · 金锦冠（尾）', 'KamuroTail', 'kamuro', 1, { stars: 150, vt: 24, seed: 41, sparkStop: 2.2, headBright: 0.06 }, MT_COL.gold, MT_RAMP_GOLD, { hi: 0.7 }),
       mtL('亲星 · 星头 金 → 红 → 绿（同一批星）', 'KamuroHead', 'kamuro', 1, { stars: 150, vt: 24, seed: 41, sparkRate: 0, headBright: 1.3, headDim: 0.35, headDimUntil: 2.2, flash: 0 }, [[0, MT_COL.gold], [2.2, MT_COL.red], [2.9, MT_COL.green]], MT_RAMP_NEUTRAL, { hi: 1.5 }),     // 先变化那一段要从金色冠尾里跳出来：星头层显示强度 1.5（定帧看过 1.0 不够）
       ...mtCores([['银白', 'Silver', MT_COL.silver], ['青', 'Blue', MT_COL.blue], ['绿', 'Green', MT_COL.green]]).map(l => ({ ...l, hi: 1.4 }))] },
+  // ---- 4.9.16（对话框新花型，用户 10-06 17:57「现在能做的3个一起做了」）----
+  { id: 'yoeshinKoro', name: '四重芯菊先紫光露', en: 'YoeshinKikuSakiKoro', group: 0, burn: 3.0,
+    note: '亲星先是金色带尾的菊，2.0 s 尾停、星头变紫（菊先紫），燃烧最后 0.2 s 星头变白、猛地一亮再灭（光露：星熄灭前像挂着露珠一样「ピカッ」一闪；燃烧时间几乎一样，所以整圈差不多同时闪）。尾和星头颜色不同，亲星拆成同一模拟的两层（尾 / 星头）。里面青 / 红 / 绿 / 银白四层芯（芯的颜色玉名没写，按常见配色），和亲星同时灭。',
+    src: '伊势神宫奉纳花火大会玉名「四重芯菊先紫光露」（伊势市 PDF）；「露」= 星が消える直前に先端が露を持ったようにピカッと一瞬強く光って消える（UMK テレビ宮崎 2026-08「花火用語に隠された気象の要素」）', layers: [
+      // 同一批星（同种子、同终端速度、同燃烧离散）：尾层只画尾，星头层只画星头。燃烧离散收到 2.5%（±0.08 s），光露差不多同时闪
+      mtL('亲星 · 金菊（尾）', 'KikuTail', 'kiku', 1, { stars: 360, vt: MT_VT[0], seed: 41, burnJit: 2.5, headSize: 1.0, headBright: 0.06, sparkRate: 130, sparkLife: 0.36, sparkSpread: 1.8, T0: 2400, cooling: 0.42, sparkStop: 2.0 }, MT_COL.gold, MT_RAMP_GOLD),
+      // 光露：星头亮度随寿命在 90% 之后冲到 2.8 倍、保持到 97.5%、最后 2.5% 灭；大小同时放大 1.5 倍。不用「末端爆亮」（lastFlare 只有 0.05 s，烘焙帧抓不稳），也关掉末段淡出（fade，不然闪的那一下被淡掉）。
+      // 曝光按紫色那一段量（燃烧 72–86%），光露那一闪本来就该过曝发白
+      mtL('亲星 · 星头 金 → 紫 → 光露（同一批星）', 'KikuHead', 'kiku', 1, { stars: 360, vt: MT_VT[0], seed: 41, burnJit: 2.5, headSize: 1.0, headBright: 1.5, sparkRate: 0, flash: 0, fade: 0,
+        starBrightCurve: '0:1, 0.9:1, 0.935:2.8, 0.975:2.8, 1:0', starSizeCurve: '0:1, 0.9:1, 0.935:1.5, 1:1.2' }, [[0, MT_COL.gold], [2.0, MT_COL.purple], [2.72, '#ffffff']], MT_RAMP_NEUTRAL, { hi: 1.4, expoAt: [0.72, 0.8, 0.86] }),
+      ...mtCores([['青', 'Blue', MT_COL.blue], ['红', 'Red', MT_COL.red], ['绿', 'Green', MT_COL.green], ['银白', 'Silver', MT_COL.silver]])] },
   // ---------------- 冠 · 效果芯 ----------------
   { id: 'kamuroShin', name: '芯入锦冠菊 · 绿芯', en: 'KamuroShin', group: 1, burn: 3.8, R: 130,
     note: '亲星金锦冠（长火花、慢慢下垂成冠）+ 绿芯。芯是普通色星（燃烧短），先灭；冠尾留到最后。金冠里用绿芯（钡）对比最强，红芯会被金色火花淹掉。',
@@ -161,6 +172,13 @@ const MULTI_TYPES = [
         // 小花要分得开、一朵一色：小玉比星重（终端速度 30）、飞得开（约 70 m），小花本身小（子星初速 24 → 半径约 15 m）。
         // 花型模板「千轮」的小花大（子星初速 45）、小玉近，四组叠在一起每朵都成了混色（第一次定帧看到的）
         mtL('小花 · ' + c[0], c[1], 'senrin', 1, { stars: 6, v0: 120, vt: 30, burn: 0.9, subSpeed: 24, subStars: 30, duration: 3.2, seed: 71 + 7 * i }, c[2], MT_RAMP_NEUTRAL)) },
+  { id: 'kowariUkimoyo', name: '锦冠菊小割浮模様', en: 'KamuroKowariUkimoyo', group: 3, burn: 3.8, R: 130,
+    note: '亲星金锦冠菊开花后，同时抛出的二十几个小玉还留在里面（约亲星半径的 0.38），1.5–1.75 s 在中间一朵朵开成红 / 绿 / 青的小花，浮在金冠里（浮模様）；小花小（半径约亲星的 0.1）、开得稍有先后。每种颜色一层（千轮）。',
+    src: '玉名「錦冠菊小割浮模様」一类（小割 = 小玉装在大玉里，浮模様 = 小花在主花中间浮出一片图样，配方总表 0.2 半割物）；项目 analysis/原理/引菊转锦.md 实拍「开花后约 3 s 的彩色小割（浮模様）」', layers: [
+      mtL('亲星 · 金锦冠菊', 'Kamuro', 'kamuro', 1, { stars: 150, vt: 24 }, MT_COL.gold, MT_RAMP_GOLD, { hi: 0.55 }),     // 同芯入锦冠菊：冠压一点，彩色小花才不被金火花淹掉
+      // 小玉：比星重（终端速度 30）、初速按 1.5 s 飞到亲星半径 0.38 反推（burn = 小玉飞行时间，千轮的星头不走 burn）；小花：子星初速 20、燃烧 1.0 s；三色开花时刻差 0.12 s，各自 ±12%
+      ...[['红', 'Red', MT_COL.red], ['绿', 'Green', MT_COL.green], ['青', 'Blue', MT_COL.blue]].map((c, i) =>
+        mtL('小割 · ' + c[0], c[1], 'senrin', 0.38, { stars: 9, vt: 30, burn: 1.5, subDelay: +(1.5 + 0.12 * i).toFixed(2), subJit: 12, subSpeed: 20, subStars: 26, subBurn: 1.0, carrierTail: 12, subTail: 0, flash: 0, seed: 71 + 7 * i, duration: 3.6 }, c[2], MT_RAMP_NEUTRAL))] },
   // ---------------- 单层变体（4.9.6）：花型模板换颜色 / 换尾的常见玉名，一层 ----------------
   { id: 'ginKamuro', name: '银冠', en: 'GinKamuro', group: 4, burn: 3.8, R: 130,
     note: '锦冠的银色版：长火花慢慢下垂成冠，火花是银白（钛 / 铝系）。参数和花型模板「锦冠」一样，只换火花颜色（渐变图）、温度略高。',
@@ -186,6 +204,19 @@ const MULTI_TYPES = [
     note: '无尾牡丹星分层变色：红 → 1.0 s 绿 → 1.9 s 黄（分层星外层先烧）。花型库只有「变色菊」，变化牡丹没单列。',
     src: '変化牡丹（配方总表 0.2 割物）', layers: [
       mtOyaBotan('红 → 绿 → 黄', 'HenkaBotan', [[0, MT_COL.red], [1.0, MT_COL.green], [1.9, MT_COL.yellow]])] },
+  // ---------------- 型物 · 分簇（4.9.16，对话框新花型）：星分簇装（4.9.15 分簇）+ 整套簇转角（4.9.16）；看的方向固定，簇排在画面平面里 ----------------
+  { id: 'mangekyo', name: '万華鏡 · 红绿金', en: 'Mangekyo', group: 5, burn: 2.8,
+    note: '星不铺满球壳，一小撮一小撮装在对称位置：外圈 8 束（红 4 束、绿 4 束交替，每束一种颜色、束之间留空），里圈 8 束金色短尾菊插在外圈两束中间，中心一团银白芯。像从万花筒里看到的对称图样。整套排在画面平面里（烘出来的面片是固定视角，正对着看最整齐）。',
+    src: 'Walkerplus 花火の種類「万華鏡を覗いたような形状」（型物一类）；分簇装法见原理 analysis/原理/多层花型库.md 1c', layers: [
+      mtL('外圈 · 红束（4 簇）', 'RedSpokes', 'botan', 1, { stars: 120, vt: MT_VT[0], pattern: 'cluster', clusterLayout: 'ring', clusterN: 4, clusterCone: 11, clusterRoll: 0, headSize: 1.0, sparkRate: 0, flicker: 0.15 }, MT_COL.red, MT_RAMP_NEUTRAL),
+      mtL('外圈 · 绿束（4 簇，错开 45°）', 'GreenSpokes', 'botan', 1, { stars: 120, vt: MT_VT[0], pattern: 'cluster', clusterLayout: 'ring', clusterN: 4, clusterCone: 11, clusterRoll: 45, headSize: 1.0, sparkRate: 0, flicker: 0.15 }, MT_COL.green, MT_RAMP_NEUTRAL),
+      mtL('里圈 · 金菊（8 簇，错开 22.5°）', 'GoldSpokes', 'kiku', 0.55, { stars: 160, pattern: 'cluster', clusterLayout: 'ring', clusterN: 8, clusterCone: 6, clusterRoll: 22.5, headSize: 0.8, headBright: 1.2, sparkRate: 130, sparkLife: 0.35, T0: 2300, cooling: 0.4 }, MT_COL.gold, MT_RAMP_GOLD),
+      mtCore('芯 · 银白', 'Silver', 0.24, MT_COL.silver, { stars: 160 })] },
+  { id: 'somewakeBotan', name: '染分牡丹 · 红绿', en: 'SomewakeBotan', group: 5, burn: 2.8,
+    note: '一发牡丹左半红、右半绿（染分 / 色分け：装药时两种颜色的星各装半个壳）。每半一层：一簇、张角 90°（= 半球），整套簇转角 +90° / −90° 摆成左右两半；两层星数、速度、燃烧一样，同开同灭。分界是竖的（转角改了就是别的方向）。',
+    src: '色分け / 染め分け（配方总表 0.2 割物「色分け（四色牡丹扇区）」，永丰「四色牡丹」实拍是扇区分色）；四色扇区（每层四分之一）用圆锥簇拼不严，没做', layers: [
+      mtL('左半 · 红', 'RedHalf', 'botan', 1, { stars: 190, vt: MT_VT[0], pattern: 'cluster', clusterLayout: 'ring', clusterN: 1, clusterCone: 90, clusterRoll: 90, headSize: 1.05, sparkRate: 0, flicker: 0.15 }, MT_COL.red, MT_RAMP_NEUTRAL),
+      mtL('右半 · 绿', 'GreenHalf', 'botan', 1, { stars: 190, vt: MT_VT[0], pattern: 'cluster', clusterLayout: 'ring', clusterN: 1, clusterCone: 90, clusterRoll: -90, headSize: 1.05, sparkRate: 0, flicker: 0.15 }, MT_COL.green, MT_RAMP_NEUTRAL)] },
 ];
 const MULTI_BY_ID = Object.fromEntries(MULTI_TYPES.map(r => [r.id, r]));
 // 每层贴图曝光（analysis/scripts/多层模板曝光.py 按 autoExposure40 算的，和花型模板 EXPOSURE40 同一算法）；没有就用花型模板的
@@ -265,22 +296,25 @@ function pkMultiItems(mode) {
   return MULTI_TYPES.map(r => ({ key: 'mt:' + r.id, name: r.name, cat: '多层模板', desc: `${r.layers.length} 层 · ${r.note}`, tags: ['多层', MT_GROUPS[r.group].replace(/（.*）/, '')], thumbStyle: mtThumbStyle(r.id) }));
 }
 // 定帧（实时模拟口径，所有层画在同一个画面里再色调映射）：缩略图、云端审看用。opt: { times, px, half, cy }
-async function mtRenderStills(id, opt) {
-  const layers = mtLayers(id), px = opt.px || 512, out = [];
+async function mtRenderStills(id, opt) { return mtRenderLayers(mtLayers(id), opt); }
+// 4.9.16：任意几层画进同一画面（层 = { P, M, delay, headInt, scale?, rate? }）；本机渲染缩略图（analysis/scripts/渲染缩略图_截图法.py）给效果的组合用。
+// 缩放 / 时间倍率和多层观察里一样（层的取景除以缩放、年龄乘倍率）；多层模板都是 1，算术和以前一样
+async function mtRenderLayers(layers, opt) {
+  const px = opt.px || 512, out = [];
   const saved = { hdr: hdrT, rg: rgT, mode: state.ref.mode, expo: state.expo, busy: state.stillBusy };
   state.stillBusy = true; await nextTick(); gl.activeTexture(gl.TEXTURE0);
   const P0 = layers[0].P, sub = ['senrin', 'crossette'].includes(P0.type);     // 千轮 / 分裂：外圈 = 小玉飞到的地方 + 小花半径
   const R0 = sub ? reachOf(P0.v0, P0.vt, P0.subDelay) + reachOf(P0.subSpeed, +P0.subVt > 0 ? +P0.subVt : P0.vt, P0.subBurn) : reachOf(P0.v0, P0.vt, P0.burn), half = opt.half || R0 * 1.22, cy = opt.cy != null ? opt.cy : -R0 * 0.1;
-  const rs = layers.map(l => ({ l, pl: displayPlan40(l.P), R: makeRenderer(l.P, 'burst'), q: qualityOf(l.P) }));
+  const rs = layers.map(l => ({ l, pl: displayPlan40(l.P), R: makeRenderer(l.P, familyOf(l.P.type) === 'ground' ? 'loop' : 'burst'), q: qualityOf(l.P) }));
   let H = null; const tg = [];
   try {
     H = new Target(px, px, gl.RGBA16F, true); canvas.width = canvas.height = px; hdrT = H; state.ref.mode = 0; state.expo = opt.expo == null ? 1 : opt.expo;
     for (const t of opt.times.slice().sort((a, b) => a - b)) {
       H.clear();
       for (const x of rs) {
-        const tl = t - x.l.delay; if (tl < 0) continue;
+        const sc = +x.l.scale > 0 ? +x.l.scale : 1, tl = (t - (x.l.delay || 0)) * (+x.l.rate > 0 ? +x.l.rate : 1); if (tl < 0) continue;
         const samples = new Target(px * x.q.ss, px * x.q.ss, gl.RGBA16F), cell = new Target(px, px, gl.RGBA16F); tg.push(samples, cell); rgT = cell;
-        const view = [0, cy, half, half]; renderCell40(x.l.P, x.pl, x.R, tl, samples, cell, view);
+        const view = [0, cy / sc, half / sc, half / sc]; renderCell40(x.l.P, x.pl, x.R, tl, samples, cell, view);
         H.bind(); additive(true); try { shadeView40(x.l.P, { ...x.l.M, headInt: x.l.headInt }, cell, tl, view, H); } finally { additive(false); }
         samples.dispose(); cell.dispose(); tg.length = 0;
       }

@@ -6,6 +6,8 @@
   python3 analysis/scripts/多层模板.py [id ...] [--out 目录] [--px 360]
                                                      # 每个模板 4 个时刻的定帧（所有层画在同一画面，实时模拟口径），拼成 <out>/多层模板总表.jpg
   python3 analysis/scripts/多层模板.py --table           # 打印原理文档第 5 节的每层参数表（Markdown）
+  --expo --expo-json 路径                               # 4.9.16 本机任务用：曝光只写进这个 json（{id: [每层]}），不改源码（云端看过再并进 MT_EXPOSURE）
+  --expo-from 路径                                      # 4.9.16 定帧前先把这个 json 里的曝光套上（同一任务里刚算出来的，源码里还没有）
   --ref 图片 --ref-id yaeshin --ref-t 1.3              # 参考图和某个模板的某一时刻并排（只测量对照，不进素材）
 
 改了 18_multitypes.js 要先 python3 tool/build.py。云端是软件渲染，一个模板几十秒。
@@ -91,6 +93,10 @@ async def main(a):
             ex = {}
             for i in ids:
                 t0 = time.time(); r = await pg.evaluate(JS_EXPO, {'id': i, 'only': a.layer}); ex[i] = [x['E'] if x else None for x in r]; print(i, ex[i], '最大过曝 %', [x['sat'] if x else None for x in r], f'{time.time() - t0:.0f}s', flush=True)
+            if a.expo_json:
+                pathlib.Path(a.expo_json).parent.mkdir(parents=True, exist_ok=True)
+                pathlib.Path(a.expo_json).write_text(json.dumps(ex, ensure_ascii=False, indent=1), encoding='utf-8'); print('曝光 →', a.expo_json)
+                await b.close(); return
             s = SRC.read_text(encoding='utf-8')
             cur = {}
             m = re.search(r'const MT_EXPOSURE = (\{.*?\});', s)
@@ -103,9 +109,13 @@ async def main(a):
             s = re.sub(r'const MT_EXPOSURE = \{.*?\};', 'const MT_EXPOSURE = ' + json.dumps(cur, ensure_ascii=False, separators=(', ', ': ')) + ';', s, count=1)
             SRC.write_text(s, encoding='utf-8'); print('曝光已写入', SRC, '（要重新 build）')
             await b.close(); return
-        res = {}
+        if a.expo_from and pathlib.Path(a.expo_from).exists():     # 4.9.16：先套上同一任务刚算出的曝光（缺的层留源码里的）
+            n = await pg.evaluate('''(ex) => { let n = 0; for (const [k, v] of Object.entries(ex)) { const old = MT_EXPOSURE[k] || []; MT_EXPOSURE[k] = v.map((x, j) => x != null ? x : (old[j] != null ? old[j] : 1)); n++; } return n; }''',
+                                  json.loads(pathlib.Path(a.expo_from).read_text(encoding='utf-8')))
+            print('套上曝光：', n, '个模板', flush=True)
+        res = {}; fr = [float(x) for x in a.fracs.split(',')] if a.fracs else FRACS
         for i in ids:
-            t0 = time.time(); r = await pg.evaluate(JS_STILLS, {'id': i, 'fracs': FRACS, 'px': a.px})
+            t0 = time.time(); r = await pg.evaluate(JS_STILLS, {'id': i, 'fracs': fr, 'px': a.px})
             r['ims'] = [png(s) for s in r['pngs']]; res[i] = r
             for k, im in enumerate(r['ims']): im.save(out / f'{i}_{k}.png')
             print(i, r['name'], r['n'], '层', 'v0', r['v0'], '曝光', r['expo'], f'{time.time() - t0:.0f}s', flush=True)
@@ -117,12 +127,13 @@ async def main(a):
             sheet.save(out / f'参考对照_{a.ref_id}.jpg', quality=90); print('→', out / f'参考对照_{a.ref_id}.jpg')
         await b.close()
     if not res: return
-    px = a.px; f = font(16); W = 170 + px * len(FRACS); sheet = Image.new('RGB', (W, 28 + px * len(res)), (10, 11, 15)); g = ImageDraw.Draw(sheet)
-    for k, fr in enumerate(FRACS): g.text((170 + k * px + 6, 4), f'燃烧 {fr:.0%}', fill=(233, 180, 95), font=f)
+    fr = [float(x) for x in a.fracs.split(',')] if a.fracs else FRACS
+    px = a.px; f = font(16); W = 170 + px * len(fr); sheet = Image.new('RGB', (W, 28 + px * len(res)), (10, 11, 15)); g = ImageDraw.Draw(sheet)
+    for k, x in enumerate(fr): g.text((170 + k * px + 6, 4), f'燃烧 {x:.0%}', fill=(233, 180, 95), font=f)
     for r_, (i, v) in enumerate(res.items()):
         g.text((6, 28 + r_ * px + px // 2 - 30), f"{v['name']}\n{i} · {v['n']} 层\n燃烧 {v['burn']} s", fill=(220, 210, 180), font=f)
         for k, im in enumerate(v['ims']): sheet.paste(im, (170 + k * px, 28 + r_ * px))
-    sheet.save(out / '多层模板总表.jpg', quality=88); print('→', out / '多层模板总表.jpg')
+    sheet.save(out / a.sheet_name, quality=88); print('→', out / a.sheet_name)
     # 缩略图不再用渲染图（用户 10-05 20:43）：左栏 / 花型库是 19_thumbsvg.js 按参数现画的示意图
 
 
@@ -131,4 +142,6 @@ if __name__ == '__main__':
     ap.add_argument('--out', default=str(ROOT / 'analysis' / 'probe' / '多层模板')); ap.add_argument('--px', type=int, default=360)
     ap.add_argument('--expo', action='store_true'); ap.add_argument('--table', action='store_true'); ap.add_argument('--layer', type=int, help='--expo 只重算这一层（从 0 数）')
     ap.add_argument('--ref'); ap.add_argument('--ref-id', default='yaeshin'); ap.add_argument('--ref-t', type=float, default=1.3)
+    ap.add_argument('--expo-json'); ap.add_argument('--expo-from'); ap.add_argument('--fracs', help='定帧时刻（燃烧时间的比例，逗号分开；缺省 0.12,0.4,0.7,0.92）')
+    ap.add_argument('--sheet-name', default='多层模板总表.jpg')
     asyncio.run(main(ap.parse_args()))

@@ -143,7 +143,9 @@ function clusterCenters(P, rng, R) {
 }
 function clusterDirs(P, rng, R) {
   const tl = (+P.tilt || 0) * Math.PI / 180, ct = Math.cos(tl), st = Math.sin(tl);
-  const C = clusterCenters(P, rng, R).map(([x, y, z]) => [x, y * ct - z * st, y * st + z * ct]);
+  // 4.9.16 簇转角（clusterRoll，用户 10-06 17:57「可以加这个参数」）：倾斜以后整套簇在画面里绕看的方向（z 轴）转，逆时针为正；缺省 0 = 不转（逐位同 4.9.15）
+  const rl = (+P.clusterRoll || 0) * Math.PI / 180, cr = Math.cos(rl), sr = Math.sin(rl);
+  const C = clusterCenters(P, rng, R).map(([x, y, z]) => [x, y * ct - z * st, y * st + z * ct]).map(([x, y, z]) => rl ? [x * cr - y * sr, x * sr + y * cr, z] : [x, y, z]);
   const n = Math.max(0, Math.round(P.stars)), cosMax = Math.cos(clamp(+P.clusterCone || 0, 0, 90) * Math.PI / 180), jit = (+P.dirJit || 0) * Math.PI / 180, out = [];
   for (let i = 0; i < n; i++) {
     const c = C[i % C.length], a = Math.abs(c[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0];

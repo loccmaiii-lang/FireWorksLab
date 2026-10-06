@@ -44,7 +44,8 @@ function thLayerOf(P, M, scale = 1) {
   const style = thStyleOf(P), fam = familyOf(P.type);
   const R = fam === 'aerial' && +P.v0 > 0 && +P.vt > 0 ? reachOf(+P.v0, +P.vt, +(P.type === 'senrin' || P.type === 'crossette' ? (P.subDelay || P.burn) : P.burn) || 1) * (scale || 1) : 1;
   // 4.9.15 分簇：各簇方向投影到画面（长度 = 投影长度，对着镜头的簇缩进中心）
-  const dirs = style === 'clusters' && typeof clusterCenters === 'function' ? (() => { const t = (+P.tilt || 0) * Math.PI / 180; return clusterCenters({ ...P, clusterLayout: P.clusterLayout === 'sphere' ? 'ring' : P.clusterLayout }, null, null).map(([x, y, z]) => [x, y * Math.cos(t) - z * Math.sin(t)]); })() : null;
+  const dirs = style === 'clusters' && typeof clusterCenters === 'function' ? (() => { const t = (+P.tilt || 0) * Math.PI / 180, q = (+P.clusterRoll || 0) * Math.PI / 180;     // 4.9.16 跟着整套簇转角
+    return clusterCenters({ ...P, clusterLayout: P.clusterLayout === 'sphere' ? 'ring' : P.clusterLayout }, null, null).map(([x, y, z]) => [x, y * Math.cos(t) - z * Math.sin(t)]).map(([x, y]) => [x * Math.cos(q) - y * Math.sin(q), x * Math.sin(q) + y * Math.cos(q)]); })() : null;
   return { style, R: Math.max(1e-3, R), color: thColorOf(M, style), stages: ((M && M.stages) || []).map(s => thHex(s[1])), fam, dirs, cone: +P.clusterCone || 0 };
 }
 // ---------------- 画 ----------------
@@ -68,9 +69,10 @@ function thDraw(L, r) {
       N(10, (i, a0) => { const a = -Math.PI + (i + 0.5) / 10 * Math.PI, [px, py] = thPt(r, a), dx = Math.cos(a) * r * 0.22, drop = r * (W ? 1.05 : 0.7) * (0.6 + 0.4 * Math.abs(Math.cos(a))); return `<path d="M${thF(px)} ${thF(py)}Q${thF(px + dx * 1.6)} ${thF(py)} ${thF(px + dx * 1.8)} ${thF(py + drop)}" fill="none" stroke="${c}" stroke-width="0.9" opacity=".8"/>`; }); break; }
     case 'fall': o.push(ring(1.3, `stroke-dasharray="${thF(r * 0.1)} ${thF(r * 0.18)}"`)); N(7, (i, a) => { const px = x - r * 0.75 + i * r * 0.25, py = y + r * 0.55 + (i % 3) * 4; return `<circle cx="${thF(px)}" cy="${thF(py)}" r="1.1" fill="${c}" opacity="${thF(0.35 + 0.1 * (i % 3))}"/>`; }); break;
     case 'fade': N(16, (i, a) => { const [px, py] = thPt(r, a); return `<circle cx="${thF(px)}" cy="${thF(py)}" r="1.4" fill="${c}" opacity="${thF(0.25 + 0.75 * ((i * 7) % 16) / 15)}"/>`; }); break;
-    case 'clusters': { const sp = Math.max(0.06, Math.min(0.4, (L.cone || 8) * Math.PI / 180));
+    case 'clusters': { const sp = Math.max(0.06, Math.min(0.4, (L.cone || 8) * Math.PI / 180)), wide = (L.cone || 0) > 25;     // 4.9.16 张角大（半球）画成一把扇
+      const ks = wide ? Array.from({ length: 9 }, (_, i) => (i - 4) / 4 * Math.min(90, L.cone) / 180 * Math.PI / (sp * 0.6)) : [-1, 0, 1];
       for (const [dx, dy] of (L.dirs || [])) { const len = Math.hypot(dx, dy); if (len < 0.15) continue; const a = Math.atan2(-dy, dx);
-        for (const k of [-1, 0, 1]) { const b = a + k * sp * 0.6, [x2, y2] = thPt(r * len * (k ? 0.92 : 1), b), [x1, y1] = thPt(r * len * 0.35, b); o.push(`<line x1="${thF(x1)}" y1="${thF(y1)}" x2="${thF(x2)}" y2="${thF(y2)}" stroke="${c}" stroke-width="${k ? 0.8 : 1.3}" opacity="${k ? 0.7 : 1}"/>`); } }
+        for (const k of ks) { const b = a + k * sp * 0.6, [x2, y2] = thPt(r * len * (k ? 0.92 : 1), b), [x1, y1] = thPt(r * len * 0.35, b); o.push(`<line x1="${thF(x1)}" y1="${thF(y1)}" x2="${thF(x2)}" y2="${thF(y2)}" stroke="${c}" stroke-width="${k ? 0.8 : 1.3}" opacity="${k ? 0.7 : 1}"/>`); } }
       break; }
     case 'ellipse': o.push(`<ellipse cx="${x}" cy="${y}" rx="${thF(r)}" ry="${thF(r * 0.42)}" fill="none" stroke="${c}" stroke-width="1.8" transform="rotate(-18 ${x} ${y})"/>`); break;
     case 'saturn': o.push(`<circle cx="${x}" cy="${y}" r="${thF(r * 0.5)}" fill="none" stroke="${L.stages[0] || c}" stroke-width="1.6"/><ellipse cx="${x}" cy="${y}" rx="${thF(r * 1.05)}" ry="${thF(r * 0.3)}" fill="none" stroke="${c}" stroke-width="1.6" transform="rotate(-14 ${x} ${y})"/>`); break;
@@ -141,7 +143,7 @@ function thPMStyle(key, P, M) { return thStyleFor(key, () => [thLayerOf(derive({
 //  4.9.6 自己截的缩略图（对话框新花型；用户 2026-10-06 07:18「我挪到x帧，点生成缩略图，旧的被覆盖删除」）
 //  · 时间轴挪到哪一刻，点时间轴上的「生成缩略图」= 把这一刻画布上的画面（实时模拟 / 引擎回放，看的是哪个就截哪个）截成现在打开这一项的缩略图：
 //    自动框住亮的部分（烟花本身），存 160 px JPEG。再点一次 = 覆盖，旧图直接删掉（不留历史）
-//  · ⋯「恢复示意图」= 删掉截图，回到按参数画的示意图（上面那套）
+//  · ⋯「恢复默认」（4.9.6 叫「恢复示意图」）= 删掉截图，回到默认图：4.9.16 起有本机渲染的（tool/data/thumbs.js）用它，没有才是按参数画的示意图（上面那套）
 //  · 存在这台电脑的浏览器里（store「userThumbs」，按条目键：type: / mt: / ef: / rv: / rep: / my: / tpl:）。左栏、花型库、新建效果、版本记录都先看有没有截图。
 //    不写进仓库、不进素材包；换电脑 / 清浏览器数据就回到示意图
 // =====================================================================
@@ -150,8 +152,11 @@ let _thUser = null;
 const thUserAll = () => _thUser || (_thUser = store.get('userThumbs', {}) || {});
 if (typeof window !== 'undefined') window.addEventListener('storage', e => { if (e.key === 'fwb.userThumbs') _thUser = null; });     // 另一个标签页改了
 function thUserGet(key) { const u = key && thUserAll()[key]; return u && typeof u.img === 'string' && u.img.startsWith('data:image/') ? u : null; }
-function thUser(key) { const u = thUserGet(key); return u ? `background-image:url('${u.img}')` : ''; }
-const thUserAt = key => { const u = thUserGet(key); return u ? String(u.at || '') : ''; };
+// 4.9.16 默认缩略图：本机显卡按「生成缩略图」同一套裁法渲染、收进仓库的（tool/data/thumbs.js，analysis/scripts/渲染缩略图_截图法.py；用户 10-06 17:57「之前做的缩略图太丑了…重新替换一遍」）。
+// 顺序：你自己截的 → 渲染的 → 示意图（上面那套，按参数现画；我的效果 / 我的模板本机任务看不到，还是它）
+function thBuiltGet(key) { const T = typeof window !== 'undefined' ? window.FW_THUMBS : null, u = key && T && T[key]; return u && typeof u.img === 'string' && u.img.startsWith('data:image/') ? u : null; }
+function thUser(key) { const u = thUserGet(key) || thBuiltGet(key); return u ? `background-image:url('${u.img}')` : ''; }
+const thUserAt = key => { const u = thUserGet(key) || thBuiltGet(key); return u ? String(u.at || '') : ''; };
 function thUserPut(all) { _thUser = null; const ok = store.set('userThumbs', all); _thUser = null; return ok; }
 // 现在打开的这一项在各处用的键：资产栏的键（wbKey）+ 打开的是效果的某个条目 / 正式库时，那个条目自己的键（分档缩略图、新建效果里的 AI 效果用它）
 function thUserKeys() {
@@ -216,7 +221,7 @@ async function thCapture() {
     for (const k of keys) all[k] = { img: r.img, at, when, t, view: state.tab === 'combo' ? 'combo:' + state.view : state.view };
     if (!thUserPut(thUserPrune(all))) return false;
     thUserChanged();
-    flash(`缩略图换成了 ${t.toFixed(2)} s 这一帧${had ? '（旧的已删掉）' : ''}；⋯ 里能恢复示意图`);
+    flash(`缩略图换成了 ${t.toFixed(2)} s 这一帧${had ? '（旧的已删掉）' : ''}；⋯ 里能恢复默认`);
     return true;
   } catch (e) { flash('没截到：' + (e.message || e), true); return false; }
   finally { if (btn) btn.disabled = false; }
@@ -225,11 +230,12 @@ async function thCapture() {
 function thRestore() {
   const keys = thUserKeys(), all = { ...thUserAll() }, gone = {};
   for (const k of keys) if (all[k]) { gone[k] = all[k]; delete all[k]; }
-  if (!Object.keys(gone).length) { flash('这一项用的就是示意图'); return false; }
+  const back = keys.some(thBuiltGet) ? '默认的渲染图' : '示意图';     // 4.9.16 有本机渲染的默认图就回到它
+  if (!Object.keys(gone).length) { flash('这一项用的就是' + back); return false; }
   if (!thUserPut(all)) return false;
   thUserChanged();
-  if (typeof undoToast === 'function') undoToast('缩略图恢复成示意图（截的那张删了）', () => { if (thUserPut({ ...thUserAll(), ...gone })) thUserChanged(); });
-  else flash('缩略图恢复成示意图（按参数画的）');
+  if (typeof undoToast === 'function') undoToast(`缩略图恢复成${back}（截的那张删了）`, () => { if (thUserPut({ ...thUserAll(), ...gone })) thUserChanged(); });
+  else flash(`缩略图恢复成${back}`);
   return true;
 }
 // 按钮：时间轴上「生成缩略图」（挪到哪一帧就截哪一帧）；⋯ 菜单「缩略图」一节「恢复示意图」。只在打开了一项（资产栏出现）时显示
@@ -237,7 +243,7 @@ function thUserSync(hidden) {
   const g = $('#thGrab'), r = $('#thRestore'), lb = $('#thRestoreLabel');
   const keys = hidden ? [] : thUserKeys(), u = keys.map(thUserGet).find(Boolean);
   if (g) { g.hidden = !keys.length; g.classList.toggle('on', !!u);
-    g.title = u ? `把现在这一帧截成这一项的缩略图，覆盖 ${u.when || ''} 截的那张（${u.t} s）；⋯ 里能恢复示意图` : '把现在这一帧截成这一项在左栏 / 花型库里的缩略图（再点 = 覆盖旧的）'; }
+    g.title = u ? `把现在这一帧截成这一项的缩略图，覆盖 ${u.when || ''} 截的那张（${u.t} s）；⋯ 里能恢复默认` : '把现在这一帧截成这一项在左栏 / 花型库里的缩略图（再点 = 覆盖旧的）'; }
   if (r) r.hidden = !u; if (lb) lb.hidden = !u;
 }
 function thUserInit() {
@@ -249,7 +255,7 @@ function thUserInit() {
   if (menu) {
     const before = [...menu.querySelectorAll('.menu-label')].find(x => x.textContent.trim() === '左栏') || null;
     const lb = document.createElement('span'); lb.className = 'menu-label'; lb.id = 'thRestoreLabel'; lb.textContent = '缩略图'; lb.hidden = true;
-    const r = document.createElement('button'); r.type = 'button'; r.id = 'thRestore'; r.textContent = '恢复示意图（删掉生成的缩略图）'; r.hidden = true;
+    const r = document.createElement('button'); r.type = 'button'; r.id = 'thRestore'; r.textContent = '恢复默认（删掉自己截的缩略图）'; r.hidden = true;     // 4.9.16 默认 = 本机渲染的图，没有才是示意图
     r.addEventListener('click', () => { const m = $('#abMore'); if (m) m.open = false; thRestore(); });
     menu.insertBefore(lb, before); menu.insertBefore(r, before);
   }
