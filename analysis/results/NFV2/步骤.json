@@ -1,0 +1,44 @@
+[
+ {
+  "name": "分裂星（myv_fxmuux2arh）",
+  "script": "变体对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "Crackle（myv_fxmuuzfeg7）",
+  "script": "变体对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ },
+ {
+  "name": "金曜菊-A（myv_fxmuv6vhrq）",
+  "script": "变体对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.4
+ },
+ {
+  "name": "金芒菊 · 我的（myv_fxmuv7n3ih）",
+  "script": "变体对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ },
+ {
+  "name": "金曜菊-窜天猴（myv_fxmuw5v7bh）",
+  "script": "变体对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ },
+ {
+  "name": "鸿巢四尺玉 · 我的（myv_fxmuwols5x）",
+  "script": "变体对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.7
+ }
+]
