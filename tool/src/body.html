@@ -3,7 +3,7 @@
     <div class="brand"><span class="mark">DF</span><b>烟花烘培器</b><small id="verLabel"></small></div>
     <div class="assetbar" id="assetBar" hidden>
       <span class="ab-id" id="abId" title=""><b class="id-name" id="abIdName"></b><span class="id-chips" id="abIdChips"></span></span>
-      <span class="ab-state" id="abState"></span>
+      <span class="ab-state" id="abState"></span><button class="btn ab-bcancel" id="abBakeCancel" type="button" hidden title="停下这次烘焙：贴图留着上次烘好的（标旧），改参数或按 B 再烘">取消</button>
       <span class="sp"></span>
       <button class="btn ab-ur" id="abUndo" type="button" aria-label="撤销" title="撤销（Ctrl+Z）" disabled>↶</button><button class="btn ab-ur" id="abRedo" type="button" aria-label="重做" title="重做（Ctrl+Shift+Z）" disabled>↷</button>
       <details class="ab-more ab-reset" id="abReset"><summary class="btn" title="还原：回到打开时 / 模板默认 / 只还原某个发射器（都能 Ctrl+Z 撤销）">↺ 还原</summary><div class="ab-menu" id="abResetMenu"></div></details>
@@ -222,6 +222,11 @@
         <div class="line2"><button class="btn ghost" id="legacyExport" type="button">导出成 .json</button></div>
       </details>
       <details class="sec" open>
+        <summary>快捷键</summary>
+        <div id="keysTools"></div>
+        <p class="hint">按 ? 随时弹出这张表。</p>
+      </details>
+      <details class="sec" open>
         <summary>显卡测速</summary>
         <p class="hint">逐级增加 GPU 火花数量，测实时帧率和 2K 烘焙耗时，结果可以直接发给我。</p>
         <button class="btn" id="perfRun">开始测速</button>
@@ -267,6 +272,21 @@
     <div class="pk-grid" id="pkGrid"></div>
   </div>
 </div>
+<dialog class="save-dialog keys-dialog" id="keysDlg" aria-labelledby="keysTitle">
+  <form method="dialog">
+    <h2 id="keysTitle">快捷键</h2>
+    <div id="keysBody"></div>
+    <p class="hint">光标在输入框、滑杆、下拉里时，单键快捷键不起作用（留给输入）；Ctrl+Z 只在文字 / 数字输入框里留给输入框。这张表也在右栏「工具」页。</p>
+    <div class="save-dialog-actions"><button class="btn primary" type="submit" value="close">关闭</button></div>
+  </form>
+</dialog>
+<dialog class="save-dialog" id="confirmDlg" aria-labelledby="confirmTitle" aria-describedby="confirmNote">
+  <form method="dialog">
+    <h2 id="confirmTitle"></h2>
+    <p id="confirmNote"></p>
+    <div class="save-dialog-actions"><button class="btn" id="confirmNo" type="submit" value="cancel" formnovalidate>取消</button><button class="btn primary" id="confirmYes" type="submit" value="ok">确定</button></div>
+  </form>
+</dialog>
 <dialog class="save-dialog" id="saveNameDlg" aria-labelledby="saveNameTitle" aria-describedby="saveNameNote">
   <form method="dialog">
     <h2 id="saveNameTitle">保存我的版本</h2>

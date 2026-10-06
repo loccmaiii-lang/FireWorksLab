@@ -57,8 +57,8 @@ function openTemplate(id) {
   state.P = derive(structuredClone(rec.P)); state.M = structuredClone(rec.M); buildMasterPanel(); onParam();
   setReview(null); renderLib(); crumb('我的模板', rec.name);
 }
-function renameTemplate(id) {
-  const rec = tplAll()[id]; if (!rec) return; const n = prompt('模板的名字', rec.name); if (n == null) return;
+async function renameTemplate(id) {
+  const rec = tplAll()[id]; if (!rec) return; const n = await askText('重命名模板', '左栏「我的模板」里显示的名字。', rec.name, '改名'); if (n == null) return;
   rec.name = n.trim() || rec.name; tplPut(rec); if (lib.tpl && lib.tpl.id === id) { lib.tpl = rec; crumb('我的模板', rec.name); wbSync(); } renderLib();
 }
 function removeTemplate(id) {

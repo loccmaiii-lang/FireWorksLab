@@ -43,7 +43,9 @@ $('#dist').addEventListener('dblclick', () => { state.dist = 1000; $('#dist').va
 $('#play').addEventListener('click', () => { state.playing = !state.playing; $('#play').textContent = state.playing ? '暂停' : '播放'; });
 $('#scrub').addEventListener('input', e => { state.t = +e.target.value / 1000 * curDuration(); });
 $('#speed').addEventListener('change', e => state.speed = +e.target.value);
-document.addEventListener('keydown', e => { if (e.code === 'Space' && !/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); $('#play').click(); } });
+keyBind('play', e => { e.preventDefault(); $('#play').click(); });     // 4.9.4 快捷键登记表（68_keys.js）
+keyBind('keys', e => { e.preventDefault(); keysShow(); });
+{ const kt = $('#keysTools'); if (kt) kt.innerHTML = keysTableHTML(); }
 $('#btnExport').addEventListener('click', exportMaster);
 $('#bakeRetry').addEventListener('click', retryPreviewBake);
 $('#btnVariants').addEventListener('click', exportVariants);
@@ -91,7 +93,8 @@ initIter();
 initLibrary();
 if (!/[?&]fast/.test(location.search)) runPreviewBake(); else state.dirty = false;
 // 4.2.16 按需烘焙：工具栏「烘焙」按钮 / 「自动」开关、画面上的「贴图是旧的」横条
-$('#bakeNow').addEventListener('click', () => bakeNow());
+$('#bakeNow').addEventListener('click', () => { if (!bakeCancel()) bakeNow(); });     // 4.9.4：烘焙中点它 = 取消
+$('#abBakeCancel').addEventListener('click', () => bakeCancel());
 $('#staleBake').addEventListener('click', () => bakeNow());
 $('#autoBakeChk').addEventListener('change', e => { setAutoBake(e.target.checked); flash(e.target.checked ? '自动烘焙：开（改参数停手后自动烘）' : '自动烘焙：关（改参数只更新实时模拟，按 B 烘焙）'); });
 $('#autoBakeChk').checked = autoBakeOn();

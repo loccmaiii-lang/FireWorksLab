@@ -61,12 +61,7 @@ function bindUndo() {
   $('#abUndo').addEventListener('click', () => undoStep(-1)); $('#abRedo').addEventListener('click', () => undoStep(1));
   // 右栏所有输入（滑杆、颜色、下拉、层的位置 / 延迟…）都算改动；搜索框、「只看改过的」这些不改快照，提交时比一下就不记
   for (const id of ['right', 'pMaster', 'pCombo']) { const el = document.getElementById(id); if (el) { el.addEventListener('input', undoNote); el.addEventListener('change', undoNote); } }
-  document.addEventListener('keydown', e => {
-    if (!(e.ctrlKey || e.metaKey) || e.altKey) return;
-    const k = e.key.toLowerCase(); if (k !== 'z' && k !== 'y') return;
-    const a = document.activeElement, tag = a && a.tagName;
-    if (tag === 'TEXTAREA' || (tag === 'INPUT' && /^(text|search|number|)$/.test(a.type || ''))) return;     // 输入框里的撤销留给输入框
-    e.preventDefault(); undoStep(k === 'y' || e.shiftKey ? 1 : -1);
-  });
+  // 4.9.4 快捷键登记表（68_keys.js）：光标在文字 / 数字输入框里时留给输入框自己的撤销（表里 guard: text）
+  keyBind('undo', e => { e.preventDefault(); undoStep(-1); }); keyBind('redo', e => { e.preventDefault(); undoStep(1); });
   undoSync();
 }

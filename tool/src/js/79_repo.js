@@ -108,7 +108,9 @@ async function repoRead({ interactive = false } = {}) {
         const savedCopy = seen[rec.id];
         if (savedCopy && savedCopy.sig === sig && myAll()[savedCopy.id]) { same++; continue; }
         conflicts++;
-        if (!interactive || !confirm(`「${rec.name}」与本浏览器的版本不同或正在打开。\n保留本浏览器的效果和当前画面，另加一份「${rec.name} · 仓库版本」？\n取消：这次不读取这一项。`)) continue;
+        // 4.9.4：应用内确认框（askConfirm，79_workbench.js）；没有它时（隔离检查）退回 confirm
+        const q = `「${rec.name}」与本浏览器的版本不同或正在打开。`, qn = `保留本浏览器的效果和当前画面，另加一份「${rec.name} · 仓库版本」？取消：这次不读取这一项。`;
+        if (!interactive || !(typeof askConfirm === 'function' ? await askConfirm(q, qn, '另加一份', '这次不读') : confirm(q + '\n' + qn))) continue;
         const sourceId = rec.id; let id;
         do { id = 'fx' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); } while (myAll()[id]);
         rec.id = id; rec.name += ' · 仓库版本'; rec.snap.name = rec.name; seen[sourceId] = { sig, id };

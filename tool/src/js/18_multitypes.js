@@ -156,7 +156,7 @@ async function openMultiType(id) {
 // 「＋ 新建效果」选了多层模板：直接存成一个我的效果（每层参数复制一份）
 async function mtCreateMine(id) {
   const r = MULTI_BY_ID[id]; if (!r) return;
-  const n = Object.keys(myAll()).length + 1, name = prompt('新效果叫什么？（中文名，之后在资产栏 ⋯ 里能改；英文名在「查看交付」里改）', r.name);
+  const n = Object.keys(myAll()).length + 1, name = await askText('新效果叫什么？', '中文名，之后在资产栏 ⋯ 里能改；英文名在「交付清单」里设。', r.name, '新建');     // 4.9.4 应用内对话框（对话框15）
   if (name == null) return;
   const recId = 'fx' + Date.now().toString(36), layers = mtLayers(id);
   const rec = { id: recId, name: name.trim() || `新效果 ${n}`, created: wbNow(), updated: wbNow(), links: [], from: { key: 'mt:' + id, name: r.name, base: r.name, ver: VERSION },

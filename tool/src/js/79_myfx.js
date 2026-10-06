@@ -36,7 +36,7 @@ function myMigrateComboSaves() {
 // 新建：先在花型库里选第一层（模板或现有效果的层），再起名字
 function myNew() { pkOpen({ mode: 'newEffect', title: '新建效果 · 先选第一层（之后可以再加层）', onPick: myCreate }); }
 async function myCreate(key) {
-  const n = Object.keys(myAll()).length + 1, name = prompt('新效果叫什么？（中文名，之后在资产栏 ⋯ 里能改；英文名在「查看交付」里改）', `新效果 ${n}`);
+  const n = Object.keys(myAll()).length + 1, name = await askText('新效果叫什么？', '中文名，之后在资产栏 ⋯ 里能改；英文名在「交付清单」里设。', `新效果 ${n}`, '新建');
   if (name == null) return;
   const s = mySrc(key), id = 'fx' + Date.now().toString(36);
   const rec = { id, name: name.trim() || `新效果 ${n}`, created: wbNow(), updated: wbNow(), links: [],
@@ -75,8 +75,8 @@ async function mySave(asNew) {
   else { lib.my = { ...out, linksLive: structuredClone(out.links) }; wb.src = { kind: 'ai' }; wb.sig = wbSig(); wbSync(); renderLib(); }
   flash(path ? `已保存「${out.name}」：浏览器里一份 + 仓库 analysis/我的配方/my_${out.id}/` : `已保存「${out.name}」（这台电脑的浏览器里；⋯「连接仓库文件夹」后会顺便存进 git）`);
 }
-function myRename() {
-  const rec = myRec(); if (!rec) return; const n = prompt('效果的中文名', rec.name); if (n == null) return;
+async function myRename() {
+  const rec = myRec(); if (!rec) return; const n = await askText('重命名这个效果', '效果的中文名（左栏、顶栏显示的名字）；英文名在「交付清单」里设。', rec.name, '改名'); if (n == null) return;
   rec.name = n.trim() || rec.name; myPut(rec); lib.my.name = rec.name; state.comboName = rec.name; crumb('我的效果', rec.name); wbSync(); renderLib();
 }
 function myRemove() { const rec = myRec(); if (rec) removeMyFx(rec.id); }     // 4.5.0：不弹确认，删了 6 秒内能撤销（79_assetops.js）
@@ -108,8 +108,8 @@ function myMoveLayer(i, d) {
   const a = state.layers; [a[i], a[j]] = [a[j], a[i]];
   const sel = state.comboSel === i ? j : state.comboSel === j ? i : state.comboSel; state.comboSel = sel; myLayersChanged();
 }
-function myRenameLayer(i) {
-  const L = state.layers[i]; const n = prompt('这一层的中文名（英文名在「查看交付」里改）', L.title || layerName(i)); if (n == null) return;
+async function myRenameLayer(i) {
+  const L = state.layers[i]; const n = await askText('这一层叫什么？', '这一层的中文名；英文名在「交付清单」里设。', L.title || layerName(i), '改名'); if (n == null) return;
   L.title = n.trim() || L.title; buildLayerCard(); if (state.comboSel === i) buildLayerHead(i); stage2.tlSig = '';
 }
 function myLayersChanged() {

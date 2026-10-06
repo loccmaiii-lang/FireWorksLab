@@ -227,6 +227,14 @@ function askSaveName(title, note, initial, action = '保存') {
     dlg.showModal(); input.focus(); input.select();
   });
 }
+// 4.9.4（交互宪章 5：原生 confirm / prompt 换成应用内对话框）：起名 / 改名都走上面这个对话框，确认走 askConfirm。
+// 浏览器原生弹框会卡住整页、样式和别处不一样、Esc / 回车的行为也不同；这两个和保存时起名是同一个样子
+function askText(title, note, initial, action = '确定') { return askSaveName(title, note || '', initial == null ? '' : String(initial), action); }
+function askConfirm(title, note, yes = '确定', no = '取消') {
+  const dlg = $('#confirmDlg'); if (!dlg || !dlg.showModal) return Promise.resolve(window.confirm(title + (note ? '\n' + note : '')));
+  $('#confirmTitle').textContent = title; $('#confirmNote').textContent = note || ''; $('#confirmYes').textContent = yes; $('#confirmNo').textContent = no; dlg.returnValue = 'cancel';
+  return new Promise(resolve => { dlg.addEventListener('close', () => resolve(dlg.returnValue === 'ok'), { once: true }); dlg.showModal(); $('#confirmYes').focus(); });
+}
 async function wbSave(asNew) {
   if (lib.my) return mySave(asNew);                         // 我的效果：保存 = 覆盖这个效果，另存为 = 复制成新效果（4.2.7）
   // 4.5.0（用户 10-05 #7「你制作的效果，我重新调参保存后，我想再增加别的层数，无法增加」）：其它来源保存 = 存成「我的效果（派生自 ×）」
@@ -353,11 +361,11 @@ function initWorkbench() {
   $('#abExportFile').addEventListener('click', () => { close(); wbExportFile(); });
   $('#abImportFile').addEventListener('click', () => { close(); $('#abFile').click(); });
   $('#abFile').addEventListener('change', e => { const f = e.target.files[0]; if (f) wbImportFile(f); e.target.value = ''; });
-  $('#abRename').addEventListener('click', () => { close(); const list = wbList(), s = list.find(x => x.id === wb.src.id); if (!s) return; const n = prompt('新名字', s.name); if (n == null) return; s.name = n.trim() || s.name; wbPut(list); wbSync(); renderLib(); });
+  $('#abRename').addEventListener('click', async () => { close(); const list = wbList(), s = list.find(x => x.id === wb.src.id); if (!s) return; const n = await askText('重命名这个版本', '只改版本记录里的名字，参数不变。', s.name, '改名'); if (n == null) return; s.name = n.trim() || s.name; wbPut(list); wbSync(); renderLib(); });
   $('#abDelete').addEventListener('click', () => { close(); if (wb.src.kind === 'mine') removeVersion(wb.key, wb.src.id); });
   $('#pReview').addEventListener('click', e => { const n = e.target.closest('.rnote'); if (n) n.classList.toggle('full'); });
   document.addEventListener('click', e => { document.querySelectorAll('.ab-more[open]').forEach(m => { if (!m.contains(e.target)) m.open = false; }); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  keyBind('esc', () => { const n = document.querySelectorAll('.ab-more[open]').length; close(); return n > 0; }, 40);     // 4.9.4 快捷键登记表：Esc 关打开的菜单（关了就不再切精简布局）
 }
 
 
@@ -745,9 +753,10 @@ function stageTick(D) {
 // 4.9.1：自动烘焙关时改了参数不烘，以前这里一直写「烘焙中…」；现在烘焙中 / 贴图是旧的 / 失败分开写（stageTick 和 wbSync 都调）
 function abStateSync() {
   const ab = $('#abState'); if (!ab) return; const busyB = state.baking || (typeof bakesPending === 'function' && bakesPending()), stale = typeof bakeStale === 'function' ? bakeStale() : state.dirty;
-  const auto = typeof autoBakeOn === 'function' && autoBakeOn();     // 自动烘焙开：停手 0.38 s 后自己烘，中间也算「烘焙中」
+  const auto = typeof autoBakeOn === 'function' && autoBakeOn() && !(typeof bakeCancelledNow === 'function' && bakeCancelledNow());     // 自动烘焙开：停手 0.38 s 后自己烘，中间也算「烘焙中」（刚取消的不算）
   const st = state.bakeError ? ['bad', '烘焙失败 · 保留上次成功'] : busyB || (stale && auto) ? ['is-baking', '烘焙中…'] : stale ? ['stale', '贴图是旧的 · 按 B 烘'] : ['', ''];
   if (ab.textContent !== st[1]) { ab.className = 'ab-state ' + st[0]; ab.textContent = st[1]; }
+  const cb = $('#abBakeCancel'); if (cb) { const show = !state.bakeError && (busyB || (stale && auto)); if (cb.hidden === show) cb.hidden = !show; }     // 4.9.4 长烘焙可以取消
   const tt = stale && !busyB && !state.bakeError ? '实时模拟已经是新参数；引擎回放 / 贴图 / 导出用的贴图还是上次烘的（自动烘焙关着）' : ''; if (ab.title !== tt) ab.title = tt;
 }
 // 通过门槛：只影响「通过」按钮（意见、要改照常）
@@ -889,10 +898,8 @@ function initStage() {
   document.querySelectorAll('.jumps [data-jump]').forEach(b => b.addEventListener('click', () => { state.playing = false; $('#play').textContent = '播放'; state.t = jumpTimes()[b.dataset.jump]; }));
   $('#vtGrid').addEventListener('click', () => { const on = !document.querySelector('.canvas-wrap').classList.contains('grid'); document.querySelector('.canvas-wrap').classList.toggle('grid', on); $('#vtGrid').setAttribute('aria-pressed', String(on)); });
   $('#vtNote').addEventListener('click', noteFrame);
-  document.addEventListener('keydown', e => {
-    if (/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName) || e.ctrlKey || e.metaKey || e.altKey) return;
-    if (e.key === 'ArrowLeft') { e.preventDefault(); tickStep(-1); } else if (e.key === 'ArrowRight') { e.preventDefault(); tickStep(1); }
-    else if (e.key.toLowerCase() === 'r') { e.preventDefault(); replay(); }
-    else if (e.key.toLowerCase() === 'b') { e.preventDefault(); bakeNow(); }        // 4.2.16 按需烘焙
-  });
+  // 4.9.4 快捷键登记表（68_keys.js）
+  keyBind('tickPrev', e => { e.preventDefault(); tickStep(-1); }); keyBind('tickNext', e => { e.preventDefault(); tickStep(1); });
+  keyBind('replay', e => { e.preventDefault(); replay(); });
+  keyBind('bake', e => { e.preventDefault(); bakeNow(); });        // 4.2.16 按需烘焙
 }

@@ -35,6 +35,8 @@ async def main(a):
         pg.on('dialog', lambda d: asyncio.ensure_future(d.accept('多层模板检查')))
         await pg.goto(HTML.resolve().as_uri() + '?fast&autobake=1', wait_until='domcontentloaded', timeout=0)     # fast：不自动打开待验收的效果（不然先烘别的）
         await pg.wait_for_function('window.__fw && typeof MULTI_TYPES !== "undefined" && document.querySelector("#libBody .li, #libBody .tile")', timeout=0)
+        # 4.9.4（对话框15）：新建效果起名换成应用内对话框，这里直接替它回答（原生 dialog 监听留着兜底）
+        await pg.evaluate("window.askSaveName = async () => '多层模板检查'; window.askConfirm = async () => true; 0")
         idle = 'window.__fw.idle() && document.querySelector("#busy").hidden'
         n = await pg.evaluate('MULTI_TYPES.length')
         tiles = await pg.evaluate('[...document.querySelectorAll(\'#libBody .lg-mtypes .tile\')].map(t => t.dataset.key)')

@@ -104,5 +104,5 @@ function initPicker() {
   $('#typeBtn').addEventListener('click', () => { libReveal(); });
   $('#pkClose').addEventListener('click', pkClose);
   $('#pkSearch').addEventListener('input', e => { pk.q = e.target.value; if (pk.q && pk.cat !== 'all') pk.cat = 'all'; pkRender(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#picker').hidden) pkClose(); });
+  keyBind('esc', () => { if ($('#picker').hidden) return false; pkClose(); return true; }, 20);     // 4.9.4 快捷键登记表
 }

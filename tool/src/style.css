@@ -1375,4 +1375,12 @@ details.mod-empty .mod-note{font-size:12.5px;color:var(--muted,#adb8bc);padding:
 /* 4.9.2 数值超出滑杆的常用范围 */
 .sl.over .num{border-color:var(--amber)}
 .sl.over input[type=range]{opacity:.7}
+/* 4.9.4 快捷键表 */
+.keys-tbl{width:100%;border-collapse:collapse;font-size:12px}
+.keys-tbl td{padding:3px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+.keys-tbl td:first-child{white-space:nowrap}
+.keys-tbl td.dim{color:var(--faint);white-space:nowrap}
+.keys-tbl kbd{font:11px var(--mono);padding:0 4px;border:1px solid var(--line2);border-radius:3px;background:var(--low);color:var(--text)}
+.keys-dialog{max-width:620px}
+.assetbar .ab-bcancel{padding:2px 8px;font-size:12px;min-height:0;flex:none}
 

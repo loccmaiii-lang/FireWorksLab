@@ -108,6 +108,13 @@ async def idle(pg, ms=None):
     return False
 
 
+# 4.9.4：起名 / 改名 / 确认换成应用内对话框（askSaveName / askText / askConfirm），不再弹浏览器原生框。
+# 检查里直接替换成自动回答：名字用 window.__ans（没设就用对话框里的默认名），确认一律「是」。原生 dialog 监听留着兜底。
+def ask_stub(ans=None):
+    a = json.dumps(ans, ensure_ascii=False) if ans is not None else 'null'
+    return "window.__ans = " + a + "; window.askSaveName = async (t, n, init) => (window.__ans != null ? window.__ans : init); window.askConfirm = async () => true; 0"
+
+
 async def fresh(p, b):
     ctx = await b.new_context(viewport={'width': 1440, 'height': 900})
     pg = await ctx.new_page(); errs = []
@@ -117,6 +124,7 @@ async def fresh(p, b):
     await pg.goto(HTML, wait_until='load', timeout=0)
     await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
     await pg.evaluate(REC if REAL else FAKE)
+    await pg.evaluate(ask_stub('检查版本'))
     return ctx, pg, errs
 
 
@@ -169,6 +177,7 @@ async def a2_same(p, b):
             await pg.goto(HTML, wait_until='load', timeout=0)
             await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
             if not REAL: await pg.evaluate(FAKE)
+            await pg.evaluate(ask_stub('检查版本'))
             if rnd == 0: await pg.evaluate(OLD_SAVE); continue          # 模拟 4.2.x 的浏览器里组合编辑器存过一个版本
             mig = await pg.evaluate("(() => { const r = Object.values(myAll()).find(x => x.name === '组合编辑器 · 旧编辑器版本'); return { id: r ? r.id : null, left: !!(store.get('mySaves', {}).combo), li: r ? !![...document.querySelectorAll('#libBody .li')].find(x => x.dataset.key === 'my:' + r.id) : false }; })()")
             if not mig['id']: bad.append('旧的组合编辑器版本没搬进「我的效果」'); break
@@ -256,6 +265,7 @@ async def a7(p, b):
             await pg.goto(HTML, wait_until='load', timeout=0)
             await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
             if not REAL: await pg.evaluate(FAKE)
+            await pg.evaluate(ask_stub(answers[0]))
             if rnd == 0:
                 await pg.evaluate("(() => { window.__opening = true; $('#newRecipe').click(); const c = [...document.querySelectorAll('#pkGrid .pk-card')].find(x => x.textContent.includes('菊') && !x.textContent.includes('锦冠')); c.click(); setTimeout(() => window.__opening = false, 2500); return 0; })()")
                 await idle(pg); await pg.wait_for_timeout(800); await idle(pg)
@@ -265,7 +275,7 @@ async def a7(p, b):
                 await pg.evaluate("(() => { window.__opening = true; $('#myAdd').click(); setTimeout(() => { pk.cat = 'fx'; pkRender(); const c = [...document.querySelectorAll('#pkGrid .pk-card')].find(x => x.textContent.includes('引菊')); c.click(); setTimeout(() => window.__opening = false, 2500); }, 50); return 0; })()")
                 await idle(pg); await pg.wait_for_timeout(800); await idle(pg)
                 answers[0] = '中心'
-                await pg.evaluate("myRenameLayer(0); 0")
+                await pg.evaluate("(async () => { window.__ans = '中心'; await myRenameLayer(0); return 0; })()")
                 await pg.evaluate("(() => { window.__opening = true; Promise.resolve(myDupLayer(0)).finally(() => window.__opening = false); return 0; })()"); await idle(pg)
                 # 改第 1 层（中心）的星数：复制出来的第 2 层不能跟着变
                 await set_layer_param(pg, 0, 'stars', 123); await idle(pg)
@@ -275,7 +285,7 @@ async def a7(p, b):
                 await set_layer_param(pg, 0, 'v0', 77); await idle(pg)
                 linked = await pg.evaluate("[layerEntryOf(state.layers[0]).P.v0, layerEntryOf(state.layers[1]).P.v0]")
                 answers[0] = '金锦冠测试'
-                await pg.evaluate("selectComboLayer(-1); wbSave(false).then(() => 0)"); await pg.wait_for_timeout(800)
+                await pg.evaluate("window.__ans = '金锦冠测试'; selectComboLayer(-1); wbSave(false).then(() => 0)"); await pg.wait_for_timeout(800)
                 before = await pg.evaluate("({ id: lib.my.id, titles: state.layers.map((L, i) => layerName(i)), stars: state.layers.map(L => layerEntryOf(L).P.stars), links: myLinksLid().length, n: state.layers.length })")
             else:
                 await pg.evaluate(f"(() => {{ window.__opening = true; const it = [...document.querySelectorAll('#libBody .li')].find(x => x.dataset.key === 'my:{before['id']}'); it.click(); setTimeout(() => window.__opening = false, 3000); return 0; }})()")
@@ -315,7 +325,7 @@ async def l1(p, b):
         for rnd in range(2):
             await pg.goto(HTML, wait_until='load', timeout=0)
             await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
-            await pg.evaluate("window.askSaveName = async () => '闭环检查'; 0")     # 4.5.0：保存 = 存成我的效果（起名对话框直接用这个名）
+            await pg.evaluate(ask_stub('闭环检查'))     # 4.5.0：保存 = 存成我的效果（起名对话框直接用这个名）
             if rnd == 0:
                 await open_effect(pg, 'hiki_nishiki')
                 ai = await pg.evaluate("layerEntryOf(state.layers[0]).P.burn"); want = round(ai + 0.1, 3)
@@ -885,7 +895,7 @@ async def s2(p, b):
     pg.on('pageerror', lambda e: errs.append(str(e)))
     pg.on('dialog', lambda d: asyncio.ensure_future(d.accept('检查新建' if d.type == 'prompt' else None)))
     await pg.goto(HTML, wait_until='domcontentloaded', timeout=0); await pg.wait_for_function('window.__fw && typeof EFFS === "function"', timeout=0)
-    await pg.evaluate(REC if REAL else FAKE); await pg.evaluate('state.playing = false')
+    await pg.evaluate(REC if REAL else FAKE); await pg.evaluate('state.playing = false'); await pg.evaluate(ask_stub('检查新建'))
     bad, info = [], {}
     rows = "(() => [...document.querySelectorAll('#params .sl')].filter(r => r.offsetParent && !r.querySelector('input[type=range]').disabled).map(r => r._lab || r.querySelector('.k').textContent))()"
     await pg.click('#newRecipe'); await pg.wait_for_timeout(500)

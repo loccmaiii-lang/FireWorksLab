@@ -566,20 +566,20 @@ function initPanels() {
   document.querySelector('.canvas-wrap').addEventListener('dblclick', e => { if (!e.target.closest('button')) toggleFocus(); });
   const cw = document.querySelector('.canvas-wrap');
   new ResizeObserver(() => { const W = cw.clientWidth, H = cw.clientHeight; cw.classList.toggle('stack', Math.min(W, H / 2) > Math.min(W / 2, H)); layoutRef(); }).observe(cw);
-  document.addEventListener('keydown', e => {
-    if (/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName) || e.ctrlKey || e.metaKey || e.altKey) return;
-    const k = e.key.toLowerCase();
-    if (k === 'f') { e.preventDefault(); toggleFocus(); }
-    else if (k === 'v') { e.preventDefault(); refToggle(); }   // 实拍对照：R 让给「重播」（用户 2026-10-02 16:22），改成 V
-    else if (k === 'l') { e.preventDefault(); setPanels({ side: !panels.side }); }
-    else if (k === 'p') { e.preventDefault(); setPanels({ right: !panels.right }); }
-    else if (k === 'escape' && ((DRAWER.side.matches && panels.side) || (DRAWER.right.matches && panels.right))) setPanels({ side: DRAWER.side.matches ? false : panels.side, right: DRAWER.right.matches ? false : panels.right });
-    else if (k === 'escape' && !panels.side && !panels.right && $('#updDlg').hidden && $('#picker').hidden) toggleFocus();
-    else if ((k === 'arrowdown' || k === 'arrowup') && /^(ef|rv|rep):/.test(lib.key)) {   // ↑ ↓ 在左栏条目之间切换
-      const items = [...document.querySelectorAll('#libBody .li')].filter(x => /^(ef|rv|rep):/.test(x.dataset.key) && x.offsetParent), i = items.findIndex(x => x.dataset.key === lib.key), j = i + (k === 'arrowdown' ? 1 : -1);
-      if (items[j]) { e.preventDefault(); items[j].click(); items[j].scrollIntoView({ block: 'nearest' }); }
-    }
-  });
+  // 4.9.4 快捷键登记表（68_keys.js）：键怎么写、在输入框里管不管都在那张表里
+  keyBind('focus', e => { e.preventDefault(); toggleFocus(); });
+  keyBind('ref', e => { e.preventDefault(); refToggle(); });   // 实拍对照：R 让给「重播」（用户 2026-10-02 16:22），改成 V
+  keyBind('side', e => { e.preventDefault(); setPanels({ side: !panels.side }); });
+  keyBind('right', e => { e.preventDefault(); setPanels({ right: !panels.right }); });
+  keyBind('esc', (e, t) => { if (TYPING(t) || !((DRAWER.side.matches && panels.side) || (DRAWER.right.matches && panels.right))) return false;
+    setPanels({ side: DRAWER.side.matches ? false : panels.side, right: DRAWER.right.matches ? false : panels.right }); return true; }, 50);
+  keyBind('esc', (e, t) => { if (TYPING(t) || panels.side || panels.right || !$('#updDlg').hidden || !$('#picker').hidden) return false; toggleFocus(); return true; }, 60);
+  const step = d => e => {   // ↑ ↓ 在左栏条目之间切换
+    if (!/^(ef|rv|rep):/.test(lib.key)) return;
+    const items = [...document.querySelectorAll('#libBody .li')].filter(x => /^(ef|rv|rep):/.test(x.dataset.key) && x.offsetParent), i = items.findIndex(x => x.dataset.key === lib.key), j = i + d;
+    if (items[j]) { e.preventDefault(); items[j].click(); items[j].scrollIntoView({ block: 'nearest' }); }
+  };
+  keyBind('prevItem', step(-1)); keyBind('nextItem', step(1));
   // 进入抽屉模式先收起；回到宽屏恢复上次的开关
   DRAWER.side.addEventListener('change', syncPanelMode); DRAWER.right.addEventListener('change', syncPanelMode);
   if (DRAWER.side.matches) panels.side = false;
