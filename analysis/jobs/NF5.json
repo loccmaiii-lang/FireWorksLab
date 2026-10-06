@@ -1,0 +1,39 @@
+{
+ "id": "NF5",
+ "type": "script",
+ "priority": 5,
+ "name": "对话框新花型 4.9.19：整套簇偏转（缺省 0）回归",
+ "note": "用户 10-06 20:04「加」（绕竖直轴转）。缺省 0 时应逐像素相同。",
+ "steps": [
+  {
+   "name": "基准回归 4.9.18 → 4.9.19 花型模板 6 个",
+   "script": "基准回归.py",
+   "args": [
+    "--old",
+    "{git:a307727:tool/FireworkBaker.html}",
+    "--new",
+    "tool/FireworkBaker.html",
+    "--out",
+    "{out}/基准回归",
+    "--only",
+    "kiku,botan,kamuro,senrin,strobe,crackle"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "多层模板定帧回归 4.9.18 → 4.9.19（这次曝光没变的 5 个，含 3 个分簇模板）",
+   "script": "多层模板回归.py",
+   "args": [
+    "--old",
+    "{git:a307727:tool/FireworkBaker.html}",
+    "--out",
+    "{out}/多层模板回归",
+    "--ids",
+    "yaeBlueBotan,mangekyo,somewakeBotan,colorSenrin,crackleShin"
+   ],
+   "must": false,
+   "timeout": 2400
+  }
+ ]
+}

@@ -44,8 +44,9 @@ function thLayerOf(P, M, scale = 1) {
   const style = thStyleOf(P), fam = familyOf(P.type);
   const R = fam === 'aerial' && +P.v0 > 0 && +P.vt > 0 ? reachOf(+P.v0, +P.vt, +(P.type === 'senrin' || P.type === 'crossette' ? (P.subDelay || P.burn) : P.burn) || 1) * (scale || 1) : 1;
   // 4.9.15 分簇：各簇方向投影到画面（长度 = 投影长度，对着镜头的簇缩进中心）
-  const dirs = style === 'clusters' && typeof clusterCenters === 'function' ? (() => { const t = (+P.tilt || 0) * Math.PI / 180, q = (+P.clusterRoll || 0) * Math.PI / 180;     // 4.9.16 跟着整套簇转角
-    return clusterCenters({ ...P, clusterLayout: P.clusterLayout === 'sphere' ? 'ring' : P.clusterLayout }, null, null).map(([x, y, z]) => [x, y * Math.cos(t) - z * Math.sin(t)]).map(([x, y]) => [x * Math.cos(q) - y * Math.sin(q), x * Math.sin(q) + y * Math.cos(q)]); })() : null;
+  const dirs = style === 'clusters' && typeof clusterCenters === 'function' ? (() => { const t = (+P.tilt || 0) * Math.PI / 180, q = (+P.clusterRoll || 0) * Math.PI / 180, w = (+P.clusterYaw || 0) * Math.PI / 180;     // 4.9.16 跟着整套簇转角；4.9.19 偏转
+    return clusterCenters({ ...P, clusterLayout: P.clusterLayout === 'sphere' ? 'ring' : P.clusterLayout }, null, null).map(([x, y, z]) => [x * Math.cos(w) + z * Math.sin(w), y, -x * Math.sin(w) + z * Math.cos(w)])
+      .map(([x, y, z]) => [x, y * Math.cos(t) - z * Math.sin(t)]).map(([x, y]) => [x * Math.cos(q) - y * Math.sin(q), x * Math.sin(q) + y * Math.cos(q)]); })() : null;
   return { style, R: Math.max(1e-3, R), color: thColorOf(M, style), stages: ((M && M.stages) || []).map(s => thHex(s[1])), fam, dirs, cone: +P.clusterCone || 0 };
 }
 // ---------------- 画 ----------------

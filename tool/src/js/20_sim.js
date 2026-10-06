@@ -145,7 +145,9 @@ function clusterDirs(P, rng, R) {
   const tl = (+P.tilt || 0) * Math.PI / 180, ct = Math.cos(tl), st = Math.sin(tl);
   // 4.9.16 簇转角（clusterRoll，用户 10-06 17:57「可以加这个参数」）：倾斜以后整套簇在画面里绕看的方向（z 轴）转，逆时针为正；缺省 0 = 不转（逐位同 4.9.15）
   const rl = (+P.clusterRoll || 0) * Math.PI / 180, cr = Math.cos(rl), sr = Math.sin(rl);
-  let C = clusterCenters(P, rng, R).map(([x, y, z]) => [x, y * ct - z * st, y * st + z * ct]).map(([x, y, z]) => rl ? [x * cr - y * sr, x * sr + y * cr, z] : [x, y, z]);
+  // 4.9.19 整套簇偏转（clusterYaw，用户 10-06 20:04「加」）：最先绕竖直轴（y）转，再倾斜（x）、再整套转角（z）——三个轴都有了，整套簇能摆到任意 3D 角度；缺省 0 不进来
+  const yw = (+P.clusterYaw || 0) * Math.PI / 180, cy2 = Math.cos(yw), sy2 = Math.sin(yw);
+  let C = clusterCenters(P, rng, R).map(([x, y, z]) => yw ? [x * cy2 + z * sy2, y, -x * sy2 + z * cy2] : [x, y, z]).map(([x, y, z]) => [x, y * ct - z * st, y * st + z * ct]).map(([x, y, z]) => rl ? [x * cr - y * sr, x * sr + y * cr, z] : [x, y, z]);
   const n = Math.max(0, Math.round(P.stars)), cosMax = Math.cos(clamp(+P.clusterCone || 0, 0, 90) * Math.PI / 180), jit = (+P.dirJit || 0) * Math.PI / 180, out = [];
   // 4.9.17（用户 10-06 19:27「按照你推荐的前两个继续迭代」）：簇方向随机（°）、每簇星数随机（±%）——手工装药不完全对称、每撮不一样多。
   // 用自己的随机数（种子跟着「随机种子」走），不动星本身的随机序列；两项都是 0 时不进来，和以前逐位相同
