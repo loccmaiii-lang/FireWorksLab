@@ -141,7 +141,7 @@ function wbSig() { try { return JSON.stringify(wbSnap()); } catch (e) { return '
 const wbIdle = () => !state.baking && !state.dirty && !(state.layerQueue && state.layerQueue.size) && $('#busy').hidden && (state.tab !== 'combo' || (state.layers.length && state.layers.every(L => { const e = layerEntryOf(L); return e && e.bake; })));
 // 打开 / 换版本后，等烘焙稳定了再记「没改过」的样子（烘焙会自动补一些派生字段，不算你的改动）
 function wbArm() {
-  const n = ++wb.arm; wb.sig = '';
+  const n = ++wb.arm; wb.sig = ''; wb.sig0 = wbSig(); wb.armEdit = false;     // 4.9.8：打开那一刻的样子（右栏「改过」在等烘焙稳定时拿它比）
   const tick = () => { if (n !== wb.arm) return; if (wbIdle()) { wb.sig = wbSig(); wbSync(); if (typeof undoReset === 'function') undoReset(); if (typeof refreshVisibility === 'function' && $('#params').childElementCount) refreshVisibility(); } else setTimeout(tick, 400); };
   setTimeout(tick, 300);
 }

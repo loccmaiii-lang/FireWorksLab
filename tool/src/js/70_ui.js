@@ -324,6 +324,7 @@ function retryPreviewBake() {
   state.failedGen = -1; state.dirty = true; runPreviewBake();
 }
 function onParam() {
+  if (typeof wb !== 'undefined' && wb.arm && !wb.sig) wb.armEdit = true;     // 4.9.8：打开后还在等烘焙稳定时就改了（panelBaseP 用打开那一刻的样子比）
   derive(state.P); state.gen++; $('#stats').textContent = '烘焙中…';
   // 组合里正在调某一层：这一层马上进自己的重烘队列（4.2.3 走查 A4：不等防抖，切层也不会丢）
   const le = state.tab === 'combo' && state.comboSel >= 0 && state.layers[state.comboSel] ? state.lib.find(x => x.name === state.layers[state.comboSel].lib) : null;
@@ -489,7 +490,10 @@ function slider(host, id, label, unit, min, max, step, get, set, def, lockKey) {
   const inp = row.querySelector('input[type=range]'), num = row.querySelector('.num');
   // 4.9.2（梳理 6.2「滑杆范围不够」：你把爆裂数填到 100，滑杆只到 40，看不出来）：滑杆只是常用范围，数值框不设上限；超出时数值框描琥珀色边、状态列写「超范围」
   const show = () => { const v = +get(); num.value = fmtV(v, step); const o = isFinite(v) && !row.classList.contains('adef-on') && (v > +inp.max + 1e-9 || v < +inp.min - 1e-9);
-    row.classList.toggle('over', o); num.title = o ? `超出滑杆的常用范围（${inp.min}–${inp.max}），照样起作用；滑杆停在一头` : ''; rowStatusSync(row); };
+    row.classList.toggle('over', o); num.title = o ? `超出滑杆的常用范围（${inp.min}–${inp.max}），照样起作用；滑杆停在一头` : '';
+    let ov = row.querySelector(':scope > .overline'); if (o && !ov) { ov = document.createElement('div'); ov.className = 'overline'; row.appendChild(ov); }     // 4.9.8：超出时下面一行写全
+    if (ov) { ov.hidden = !o; if (o) ov.textContent = `超出常用范围（滑杆 ${inp.min}–${inp.max}），照样起作用`; }
+    rowStatusSync(row); };
   inp.value = get(); show();
   inp.addEventListener('input', () => { set(+inp.value); show(); });
   // 数值框：可以直接输入，允许超出滑杆范围（滑杆停在两端）
@@ -586,10 +590,11 @@ function pviewInit() { if (pview.ready) return; pview.ready = true; pview.change
   pview.ropen = store.get('pRandOpen', {}); pview.tab = store.get('pEmitTab', {}); }   // 英文名、模块 / 随机 / 更多展开
 // 「改过的」和谁比：打开时的版本（AI 版 / 你保存的版本，wbArm 记下的样子）；没有就和花型模板默认值比
 function panelBaseP() {
-  // 4.9.8：打开后还在等烘焙稳定、没记下「打开时」的样子（wbArm）时，先不比（以前拿花型模板默认值比，刚打开的 AI 效果满屏「改过」）
-  if (typeof wb !== 'undefined' && !wb.sig && wb.arm > 0 && typeof wbVisible === 'function' && wbVisible()) return null;
+  // 4.9.8：「打开时」= 打开那一刻记下的样子（wb.sig0，wbArm 开始时记）；烘焙稳定后记下的 wb.sig 更准（含烘焙补的派生值），没在等的时候改过参数就用它。
+  // 以前在等烘焙稳定的那几秒拿花型模板默认值比（AI 效果满屏「改过」）；等的时候你改了参数，稳定后记下的样子会把你的改动当成打开时（本机真烘焙 SMOKE38 P1 查出）
   try {
-    const s = typeof wb !== 'undefined' && wb.sig ? JSON.parse(wb.sig) : null;
+    const src = typeof wb === 'undefined' ? '' : (wb.armEdit || !wb.sig) ? wb.sig0 || wb.sig : wb.sig;
+    const s = src ? JSON.parse(src) : null;
     if (s && s.kind === 'single' && s.P) return s.P;
     if (s && s.kind === 'combo' && state.comboSel >= 0 && s.layers[state.comboSel] && s.layers[state.comboSel].P) return s.layers[state.comboSel].P;
   } catch (e) { }

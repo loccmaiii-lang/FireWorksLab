@@ -1532,3 +1532,6 @@ details.mod-empty .mod-note{font-size:12.5px;color:var(--muted,#adb8bc);padding:
 #layerCard .lrow .lst::-webkit-inner-spin-button{display:none}
 #params .spechost .grid2{grid-template-columns:minmax(0,1fr)}
 #params .spechost .pair2{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:4px;align-items:center}
+.pscope .ps-emit{flex:none;max-width:48%}
+#right #params .sl .overline{grid-column:2 / -1;margin:0 0 2px;font-size:11px;color:var(--amber)}
+#right .sl .overline[hidden]{display:none}

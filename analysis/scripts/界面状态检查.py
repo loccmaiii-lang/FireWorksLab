@@ -1897,7 +1897,7 @@ async def w14(p, b):
           const need = { 花型模板: ['#libBody', '#newRecipe', '#abSave', '#abReset', '#abSaveTpl', '#abExportPack', '#abExportFile'], AI效果: ['#abHide', '#abCopyDiff', '#delivView'],
             我的效果: ['#abSaveAs', '#abMyRename', '#abMyDelete', '#abRepo', '#abRepoRead'], 版本: ['#versionHistory', '#abSrc', '#abRename', '#abDelete'],
             层: ['#abAddLayer'], 我的模板: ['#abUpdTpl'], 配方文件: ['#abImportFile', '#abFile', '#toolImport', '#toolExport'], 素材包: ['#abUnit', '#enNameEdit', '#busy'],
-            发射器: ['#exAdd'], 对话框: ['#saveNameDlg', '#confirmDlg', '#keysDlg'] };
+            发射器: ['#exAdd'], 对话框: ['#saveNameDlg', '#confirmDlg', '#keysDlg'], 缩略图: ['#thGrab', '#thRestore'] };     // 4.9.6 缩略图（对话框新花型排队：交互宪章第 7 节那一行）
           for (const [o, ss] of Object.entries(need)) for (const s of ss) if (!has(s)) miss.push(o + ' ' + s);
           pkOpen({ mode: 'open', title: '检查' }); await new Promise(r => setTimeout(r, 200)); if (!document.querySelector('#pkGrid .pk-card .fav')) miss.push('收藏 星标'); if (!document.querySelector('#pkCats')) miss.push('收藏 分类'); pkClose();
           const fns = ['myRename', 'myRemove', 'myRenameLayer', 'myDupLayer', 'myMoveLayer', 'renameTemplate', 'removeTemplate', 'removeVersion', 'exRemoveSlot', 'wbImportFile', 'exportCombo', 'exportMaster', 'bakeCancel', 'undoStep'];
@@ -2072,6 +2072,14 @@ async def w15(p, b):
             again = await pg.evaluate("({ id: lib.my && lib.my.id, life: layerEntryOf(state.layers[1]).P.sparkLife, d: state.layers[1].delay, col: state.layers[1].stages[0][1], n: state.layers.length })")
             info['6 刷新重开'] = again
             if again != saved: bad.append(f'第 6 步刷新重开和保存的不一样：{saved} → {again}')
+        # ---- 4.9.8「改过」和打开时比：打开后还在等烘焙稳定时就改了参数，稳定后也不能把这个改动当成「打开时」（本机真烘焙 SMOKE38 P1 查出）----
+        ra = await pg.evaluate("""(async () => { await openType('kiku'); const armed0 = !!wb.sig, v0 = state.P.sparkRateEnd; state.P.sparkRateEnd = +(v0 + 0.33).toFixed(2); onParam();
+          const row = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'sparkRateEnd')[0]; return { armed0, during: row.classList.contains('chg') }; })()""")
+        await pg.wait_for_timeout(1500); await idle(pg); await pg.wait_for_timeout(800)
+        ra['armed'] = await pg.evaluate("!!wb.sig"); ra['after'] = await pg.evaluate("(() => { refreshVisibility(); return panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'sparkRateEnd')[0].classList.contains('chg'); })()")
+        info['等烘焙时改'] = ra
+        if ra['armed0']: info['等烘焙时改']['note'] = '打开时已经记好（这次没碰上等的那一会儿）'
+        elif not ra['during'] or not ra['after']: bad.append(f'打开后等烘焙稳定时改的参数，没标「改过」/ 稳定后被当成打开时：{ra}')
         # ---- 撤销：一次操作一步 ----
         await pg.evaluate("(() => { window.__opening = true; Promise.resolve(openType('kiku')).finally(() => window.__opening = false); return 0; })()"); await idle(pg); await pg.wait_for_timeout(900); await idle(pg)
         await pg.evaluate("(() => { state.playing = false; selectEmitTab('星'); return 0; })()"); await pg.wait_for_timeout(200)
