@@ -1,0 +1,400 @@
+[
+ {
+  "key": "myv_fxmuux2arh",
+  "name": "分裂星",
+  "en": "Crossette",
+  "tiers": [
+   {
+    "id": "MYFL-O",
+    "label": "原样"
+   },
+   {
+    "id": "MYFL-S03",
+    "label": "3 号"
+   },
+   {
+    "id": "MYFL-S10",
+    "label": "尺玉"
+   },
+   {
+    "id": "MYFL-S20",
+    "label": "2 尺"
+   },
+   {
+    "id": "MYFL-S30",
+    "label": "3 尺"
+   },
+   {
+    "id": "MYFL-S40",
+    "label": "4 尺"
+   },
+   {
+    "id": "MYFL-K",
+    "label": "冠"
+   },
+   {
+    "id": "MYFL-Y",
+    "label": "柳"
+   },
+   {
+    "id": "MYFL-R",
+    "label": "环"
+   },
+   {
+    "id": "MYFL-T",
+    "label": "土星"
+   },
+   {
+    "id": "MYFL-M",
+    "label": "万華鏡"
+   },
+   {
+    "id": "MYFL-H",
+    "label": "心形"
+   },
+   {
+    "id": "MYFL-J",
+    "label": "时差"
+   },
+   {
+    "id": "MYFL-C",
+    "label": "芯入"
+   }
+  ],
+  "n0": 5.2,
+  "R0": 87.71264620364613
+ },
+ {
+  "key": "myv_fxmuuzfeg7",
+  "name": "Crackle",
+  "en": "Crackle",
+  "tiers": [
+   {
+    "id": "MYCR-O",
+    "label": "原样"
+   },
+   {
+    "id": "MYCR-S03",
+    "label": "3 号"
+   },
+   {
+    "id": "MYCR-S05",
+    "label": "5 号"
+   },
+   {
+    "id": "MYCR-S10",
+    "label": "尺玉"
+   },
+   {
+    "id": "MYCR-S20",
+    "label": "2 尺"
+   },
+   {
+    "id": "MYCR-S30",
+    "label": "3 尺"
+   },
+   {
+    "id": "MYCR-S40",
+    "label": "4 尺"
+   },
+   {
+    "id": "MYCR-K",
+    "label": "冠"
+   },
+   {
+    "id": "MYCR-Y",
+    "label": "柳"
+   },
+   {
+    "id": "MYCR-R",
+    "label": "环"
+   },
+   {
+    "id": "MYCR-T",
+    "label": "土星"
+   },
+   {
+    "id": "MYCR-M",
+    "label": "万華鏡"
+   },
+   {
+    "id": "MYCR-H",
+    "label": "心形"
+   },
+   {
+    "id": "MYCR-J",
+    "label": "时差"
+   },
+   {
+    "id": "MYCR-C",
+    "label": "芯入"
+   }
+  ],
+  "n0": 4.3,
+  "R0": 69.76176983679062
+ },
+ {
+  "key": "myv_fxmuv6vhrq",
+  "name": "金曜菊-A",
+  "en": "GoldRay",
+  "tiers": [
+   {
+    "id": "MYJA-O",
+    "label": "原样"
+   },
+   {
+    "id": "MYJA-S03",
+    "label": "3 号"
+   },
+   {
+    "id": "MYJA-S05",
+    "label": "5 号"
+   },
+   {
+    "id": "MYJA-S10",
+    "label": "尺玉"
+   },
+   {
+    "id": "MYJA-S20",
+    "label": "2 尺"
+   },
+   {
+    "id": "MYJA-S30",
+    "label": "3 尺"
+   },
+   {
+    "id": "MYJA-S40",
+    "label": "4 尺"
+   },
+   {
+    "id": "MYJA-K",
+    "label": "冠"
+   },
+   {
+    "id": "MYJA-Y",
+    "label": "柳"
+   },
+   {
+    "id": "MYJA-R",
+    "label": "环"
+   },
+   {
+    "id": "MYJA-T",
+    "label": "土星"
+   },
+   {
+    "id": "MYJA-M",
+    "label": "万華鏡"
+   },
+   {
+    "id": "MYJA-H",
+    "label": "心形"
+   },
+   {
+    "id": "MYJA-J",
+    "label": "时差"
+   },
+   {
+    "id": "MYJA-C",
+    "label": "芯入"
+   }
+  ],
+  "n0": 8.0,
+  "R0": 124.11599959316908
+ },
+ {
+  "key": "myv_fxmuv7n3ih",
+  "name": "金芒菊 · 我的",
+  "en": "GoldChrysanthemum",
+  "tiers": [
+   {
+    "id": "MYJM-O",
+    "label": "原样"
+   },
+   {
+    "id": "MYJM-S03",
+    "label": "3 号"
+   },
+   {
+    "id": "MYJM-S10",
+    "label": "尺玉"
+   },
+   {
+    "id": "MYJM-S20",
+    "label": "2 尺"
+   },
+   {
+    "id": "MYJM-S30",
+    "label": "3 尺"
+   },
+   {
+    "id": "MYJM-S40",
+    "label": "4 尺"
+   },
+   {
+    "id": "MYJM-K",
+    "label": "冠"
+   },
+   {
+    "id": "MYJM-Y",
+    "label": "柳"
+   },
+   {
+    "id": "MYJM-R",
+    "label": "环"
+   },
+   {
+    "id": "MYJM-T",
+    "label": "土星"
+   },
+   {
+    "id": "MYJM-M",
+    "label": "万華鏡"
+   },
+   {
+    "id": "MYJM-H",
+    "label": "心形"
+   },
+   {
+    "id": "MYJM-J",
+    "label": "时差"
+   },
+   {
+    "id": "MYJM-C",
+    "label": "芯入"
+   }
+  ],
+  "n0": 5.8,
+  "R0": 96.48532361057428
+ },
+ {
+  "key": "myv_fxmuw5v7bh",
+  "name": "金曜菊-窜天猴",
+  "en": "GoldRayRocket",
+  "tiers": [
+   {
+    "id": "MYJC-O",
+    "label": "原样"
+   },
+   {
+    "id": "MYJC-S03",
+    "label": "3 号"
+   },
+   {
+    "id": "MYJC-S05",
+    "label": "5 号"
+   },
+   {
+    "id": "MYJC-S10",
+    "label": "尺玉"
+   },
+   {
+    "id": "MYJC-S20",
+    "label": "2 尺"
+   },
+   {
+    "id": "MYJC-S30",
+    "label": "3 尺"
+   },
+   {
+    "id": "MYJC-S40",
+    "label": "4 尺"
+   },
+   {
+    "id": "MYJC-K",
+    "label": "冠"
+   },
+   {
+    "id": "MYJC-Y",
+    "label": "柳"
+   },
+   {
+    "id": "MYJC-R",
+    "label": "环"
+   },
+   {
+    "id": "MYJC-T",
+    "label": "土星"
+   },
+   {
+    "id": "MYJC-M",
+    "label": "万華鏡"
+   },
+   {
+    "id": "MYJC-H",
+    "label": "心形"
+   },
+   {
+    "id": "MYJC-J",
+    "label": "时差"
+   },
+   {
+    "id": "MYJC-C",
+    "label": "芯入"
+   }
+  ],
+  "n0": 7.8,
+  "R0": 121.677342358751
+ },
+ {
+  "key": "myv_fxmuwols5x",
+  "name": "鸿巢四尺玉 · 我的",
+  "en": "YonshakuKamuro",
+  "tiers": [
+   {
+    "id": "MYHK-O",
+    "label": "原样"
+   },
+   {
+    "id": "MYHK-S03",
+    "label": "3 号"
+   },
+   {
+    "id": "MYHK-S05",
+    "label": "5 号"
+   },
+   {
+    "id": "MYHK-S10",
+    "label": "尺玉"
+   },
+   {
+    "id": "MYHK-S20",
+    "label": "2 尺"
+   },
+   {
+    "id": "MYHK-S30",
+    "label": "3 尺"
+   },
+   {
+    "id": "MYHK-Y",
+    "label": "柳"
+   },
+   {
+    "id": "MYHK-R",
+    "label": "环"
+   },
+   {
+    "id": "MYHK-T",
+    "label": "土星"
+   },
+   {
+    "id": "MYHK-M",
+    "label": "万華鏡"
+   },
+   {
+    "id": "MYHK-H",
+    "label": "心形"
+   },
+   {
+    "id": "MYHK-J",
+    "label": "时差"
+   },
+   {
+    "id": "MYHK-C",
+    "label": "芯入"
+   }
+  ],
+  "n0": 38.0,
+  "R0": 366.2231205823248
+ }
+]
