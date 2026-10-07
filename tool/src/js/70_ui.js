@@ -726,7 +726,7 @@ function buildMasterPanel() {
       const det = place(sec, it, ikey, nm), ex = emitOf(nm, sec);          // 这一行放进它的发射器 › 模块
       if (Array.isArray(it)) {
         const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
-        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); } }, D[k], k);
+        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); } }, D[k], k);
         autoDefRow(row, k, step);
         const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}` : short) + (unit ? `（${unit}）` : '') + '；双击恢复默认';
         row._lab = short; row._detail = detail; row._nm = nm;
@@ -752,7 +752,7 @@ function buildMasterPanel() {
         row = document.createElement('div'); row.className = 'spechost'; row.dataset.info = it.info; det.appendChild(row);
       } else if (it.info) {   // 只读的结果行（例：「帧与贴图」顶上的「多少帧、怎么装」）
         row = document.createElement('div'); row.className = 'infohost'; row.dataset.info = it.info;
-        row._refresh = () => { row.innerHTML = it.info === 'lowAtNow' ? `<p class="hint endinfo">单帧现在取 ${+state.P.lowAt > 0 ? (+state.P.lowAt).toFixed(2) + ' s' : '自动（花开得最大那一刻）'} · <button type="button" class="btn mini" data-lowat="1">用时间轴现在的 ${engineTick(state.t).toFixed(2)} s</button>${+state.P.lowAt > 0 ? ' <button type="button" class="btn mini" data-lowat="0">改回自动</button>' : ''}</p>` : it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : it.info === 'endInfo' && typeof endInfoHTML === 'function' ? endInfoHTML() : it.info === 'schemeNote' && typeof singleSchemeNote === 'function' ? `<p class="hint endinfo">${singleSchemeNote(state.P)}</p>` : it.info === 'ballInfo' && typeof rtBallInfoHTML === 'function' ? rtBallInfoHTML(state.P) : /^exColor/.test(it.info) ? exColorHTML(+it.info.slice(7)) : ''; };
+        row._refresh = () => { row.innerHTML = it.info === 'lowAtNow' ? `<p class="hint endinfo">单帧现在取 ${+state.P.lowAt > 0 ? (+state.P.lowAt).toFixed(2) + ' s' : '自动（花开得最大那一刻）'} · <button type="button" class="btn mini" data-lowat="1">用时间轴现在的 ${engineTick(state.t).toFixed(2)} s</button>${+state.P.lowAt > 0 ? ' <button type="button" class="btn mini" data-lowat="0">改回自动</button>' : ''}</p>` : it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : it.info === 'endInfo' && typeof endInfoHTML === 'function' ? endInfoHTML() : it.info === 'tempoInfo' && typeof tempoInfoHTML === 'function' ? tempoInfoHTML() : it.info === 'schemeNote' && typeof singleSchemeNote === 'function' ? `<p class="hint endinfo">${singleSchemeNote(state.P)}</p>` : it.info === 'ballInfo' && typeof rtBallInfoHTML === 'function' ? rtBallInfoHTML(state.P) : /^exColor/.test(it.info) ? exColorHTML(+it.info.slice(7)) : ''; };
         if (it.info === 'endInfo') row.addEventListener('click', e => { const b = e.target.closest('[data-endfit]'); if (b) { setTimingParam('duration', +b.dataset.endfit); refreshPanelValues(); flash('序列时长已加长到火花灭完'); }
           if (e.target.closest('[data-cutclear]')) { state.P.cutOut = 0; onParam(); refreshPanelValues(); flash('出点已清除：序列放到序列时长为止'); } });
         if (it.info === 'lowAtNow') row.addEventListener('click', e => { const q = e.target.closest('[data-lowat]'); if (!q) return; state.P.lowAt = q.dataset.lowat === '1' ? +engineTick(state.t).toFixed(4) : 0; onExportScheme(); refreshPanelValues(); row._refresh(); flash(state.P.lowAt > 0 ? `单帧取 ${state.P.lowAt.toFixed(2)} s（Ctrl+Z 撤回）` : '单帧改回自动'); });     // 4.9.29
@@ -954,7 +954,7 @@ function modSummaryText(d) {
   const vals = rows.filter(r => !r.classList.contains('curvef'));
   if (!vals.length) return d._colorLink ? '随本层颜色' : rows.length ? '曲线' : '';
   // 4.9.21 效果 › 整体调整：只写不是原样的几项（倍数 ≠ 1，粗细随机 / 亮肩 / 泪滴星头 ≠ 0）；都是原样写「原样」
-  if (d._mod === '整体调整') { const nd = vals.filter(r => { const k = Array.isArray(r._it) ? r._it[0] : r._it.sel, v = state.P[k] == null ? (/^adj/.test(k) ? 1 : 0) : +state.P[k]; return Math.abs(v - (/^adj/.test(k) ? 1 : 0)) > 1e-9; });
+  if (d._mod === '整体调整') { const nd = vals.filter(r => { const k = Array.isArray(r._it) ? r._it[0] : r._it.sel, v = state.P[k] == null ? (/^adj|^tempo$/.test(k) ? 1 : 0) : +state.P[k]; return Math.abs(v - (/^adj|^tempo$/.test(k) ? 1 : 0)) > 1e-9; });     // 4.9.30 节奏缺省也是 1
     return nd.length ? nd.slice(0, 3).map(r => `${r._lab} ${rowValText(r)}`).join(' · ') + (nd.length > 3 ? ` 等 ${nd.length} 项` : '') : '原样'; }
   const v0 = vals[0], on = vals.slice(1).filter(r => !r._inert);
   const pre = d._colorLink ? '随本层颜色' : '';
@@ -1052,6 +1052,8 @@ function refreshPanelValues() { for (const [row] of panelRows) row._refresh && r
 function applyShellLocked(n) {
   const keep = {}; for (const k of state.locks) keep[k] = state.P[k];
   applyShellNo(state.P, n); Object.assign(state.P, keep);
+  // 4.9.30 号数带默认节奏「游戏紧凑」（对话框新花型，用户 10-07 13:31；12_tempo.js）：单层、没锁参数时
+  if (typeof tempoShellCompact === 'function' && state.tab !== 'combo' && !Object.keys(keep).length) { const r = tempoShellCompact(state.P, state.M, n); if (r) setTimeout(() => flash(`${n} 号：按「游戏紧凑」节奏 ×${r.T.toFixed(2)}（整段 ${r.end0.toFixed(2)} → ${r.end1.toFixed(2)} s）；要号数表写实，把「效果 › 整体调整 › 节奏」改回 1`), 0); }
 }
 function jitterParams() {
   const P = state.P, r = new RNG((Date.now() & 0xffff) ^ P.seed);

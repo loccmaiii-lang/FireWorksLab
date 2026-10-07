@@ -1,0 +1,17 @@
+{
+ "id": "NFT1",
+ "type": "script",
+ "priority": 3,
+ "name": "节奏检查（4.9.30）：真模拟 + 界面 + 定帧画面（节奏 1.5 在 t vs 原样在 1.5·t）",
+ "steps": [
+  {
+   "name": "节奏检查 --stills",
+   "script": "节奏检查.py",
+   "args": ["--stills", "--out", "{out}"],
+   "must": true,
+   "ok": [0],
+   "timeout": 1800
+  }
+ ],
+ "note": "对话框新花型（用户 10-07 13:31）。云端 T1–T4、T6 全过（analysis/probe/节奏/）；T5 定帧画面云端太慢，本机显卡跑。"
+}

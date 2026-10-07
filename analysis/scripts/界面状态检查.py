@@ -2358,8 +2358,8 @@ W18_JS = r"""async () => {
   if (!mod) { bad.push('「效果」里没有「整体调整」模块'); return { ok: false, bad, out }; }
   const rows = [...mod.children].filter(r => r._lab != null && r._applies && !r._randOf && !r.hidden);
   out.rows = rows.map(r => r._lab);
-  const want = ['adjTailLen', 'adjSparkSize', 'adjSpread', 'adjHeadSize', 'adjSparkBright', 'adjTwinkle', 'tailJit', 'tailShoulder', 'headTear'];
-  if (JSON.stringify(rows.map(r => key(r._it))) !== JSON.stringify(want)) bad.push('整体调整的 9 项不对 / 顺序不对：' + JSON.stringify(rows.map(r => key(r._it))));
+  const want = ['tempo', 'adjTailLen', 'adjSparkSize', 'adjSpread', 'adjHeadSize', 'adjSparkBright', 'adjTwinkle', 'tailJit', 'tailShoulder', 'headTear'];     // 4.9.30 第一行加了「节奏」（对话框新花型）
+  if (JSON.stringify(rows.map(r => key(r._it))) !== JSON.stringify(want)) bad.push('整体调整的 10 项不对 / 顺序不对：' + JSON.stringify(rows.map(r => key(r._it))));
   const order = (EMIT_DEF['效果'] || {}).mods || []; out.modOrder = order; if (order[order.length - 1] !== '整体调整') bad.push('整体调整不是「效果」最后一个模块：' + JSON.stringify(order));
   modSetOpen(mod, false); modSummarySync(); out.sum0 = (mod.querySelector('.msum') || {}).textContent;
   if (out.sum0 !== '原样') bad.push('全是原样时摘要应写「原样」：' + out.sum0);
@@ -2367,7 +2367,7 @@ W18_JS = r"""async () => {
   const P0 = state.P, life0 = +P0.sparkLife, emb0 = +P0.emberLife, ref = { m: measure(P0), end: layerEndOf(P0), tail: sparkTailEnd(P0) };
   if (fxP(P0) !== P0) bad.push('全是 1 时 fxP 没原样返回');
   // 3 面板上把尾长改成 2
-  modSetOpen(mod, true); await setNum(rows[0], 2);
+  modSetOpen(mod, true); await setNum(rows.find(r => key(r._it) === 'adjTailLen') || rows[0], 2);     // 4.9.30 第一行是节奏，按键找尾长
   out.stored = { adj: state.P.adjTailLen, life: state.P.sparkLife, emb: state.P.emberLife };
   if (+state.P.adjTailLen !== 2) bad.push('面板改尾长没存进参数：' + JSON.stringify(out.stored));
   if (Math.abs(state.P.sparkLife - life0) > 1e-9 || Math.abs(state.P.emberLife - emb0) > 1e-9) bad.push('改尾长把存的火花 / 余烬寿命改了（应该只在最后乘）：' + JSON.stringify(out.stored));
