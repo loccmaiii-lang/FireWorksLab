@@ -1,0 +1,9 @@
+{
+ "id": "FGE-FG7",
+ "type": "export",
+ "effect": "fan_gold",
+ "entry": "FG7",
+ "name": "FanGold",
+ "priority": 1,
+ "note": "对话框FanGold：FanGold FG7（= FG6，贴图曝光 1.0 解决过曝）导出 + 回放检查。"
+}
