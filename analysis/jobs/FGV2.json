@@ -1,0 +1,25 @@
+{
+ "id": "FGV2",
+ "type": "script",
+ "priority": 1,
+ "name": "FanGold FG2：对照 + 每层自动曝光（原样 + 3 个变体）",
+ "note": "对话框FanGold：FG1 看过后改 FG2（尾巴寿命 2.6 s、更密、冠带更大）。",
+ "steps": [
+  {
+   "name": "FG2 对照 + 曝光",
+   "script": "FanGold对照.py",
+   "args": [
+    "--entry",
+    "FG2",
+    "--out",
+    "{out}",
+    "--variants",
+    "{\"寿命更长\": {\"sparkLife\": 3.2}, \"冷却更慢\": {\"cooling\": 0.14}, \"簇更宽\": {\"clusterCone\": 12}}",
+    "--times",
+    "0.3,0.9,1.6,2.2,2.8,3.4"
+   ],
+   "must": true,
+   "timeout": 2400
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+{
+ "id": "FGE-FG2",
+ "type": "export",
+ "effect": "fan_gold",
+ "entry": "FG2",
+ "name": "FanGold",
+ "priority": 2,
+ "note": "对话框FanGold：FanGold FG2 导出（4 层 = 4 簇，一个素材包）+ 回放检查。"
+}

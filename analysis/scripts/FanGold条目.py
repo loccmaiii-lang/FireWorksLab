@@ -12,7 +12,6 @@ import json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 OUT = os.path.join(ROOT, 'analysis', '原理', '条目_FanGold.json')
 
-VER = sys.argv[1] if len(sys.argv) > 1 else 'FG1'
 DATE = '2026-10-07'
 VIDEO = 'vidio/FanGold.mp4'
 
@@ -47,6 +46,15 @@ BASE = {
 }
 M = {'stages': [[0, '#ffffff']], 'xw': 0.06, 'ramp0': '#000000', 'ramp1': '#7a3a0e', 'ramp2': '#f0b45e', 'ramp3': '#fff4e4', 'headInt': 1, 'tailInt': 1}
 
+# 各版本在 BASE 上改什么（旧版本留着，直到被取代的结果搬进 归档/）
+VERSIONS = {
+    'FG1': {},
+    # FGV1 / FGE-FG1 本机看过（17:30）：一簇多条细线对了；尾巴 1.6 s 就只剩上半截（实拍到 2.8 s 整条线还在、变银白）→ 火花寿命 1.5 → 2.6、冷却 0.35 → 0.22；
+    # 更密（每簇 22 条、火花 300/s）；冠带偏小偏暗 → 爆裂 50 个、范围 3 m、亮度 2.4；白热段 0.22 s；时长跟着火花寿命 4.4 → 5.2 s
+    'FG2': {'duration': 5.2, 'stars': 22, 'sparkRate': 300, 'sparkLife': 2.6, 'sparkLifeJit': 40, 'cooling': 0.22, 'x1Life': 0.22,
+            'crackle': 50, 'crackleR': 3.0, 'crackleBright': 2.4, 'crackleSize': 0.18},
+}
+
 # 4 簇：左外、左内、右内、右外。转角逆时针为正（+ = 偏左）；延迟 = 左 → 右扫射
 LAYERS = [
     ('ClusterL2', '左外簇', +30, 0.00, 11),
@@ -59,25 +67,32 @@ LAYERS = [
 VMETA = {'t0': 7.80, 'cx': 390 / 720, 'cy': (1080 - 15 * 30.5) / 1280, 'half': 0.22}
 
 
-def main():
+def build(VER, over):
     ents, lays = [], []
     for i, (en, cn, roll, delay, seed) in enumerate(LAYERS):
         lid = f'{VER}-{i + 1}'
-        p = dict(BASE, clusterRoll=roll, seed=seed)
+        p = dict(BASE, **over, clusterRoll=roll, seed=seed)
         ents.append({'id': lid, 'date': DATE, 'name': f'金锦冠扇形 · {cn}', 'base': 'kamuro', 'hidden': True,
                      'tags': f'FanGold 金锦冠扇形 分簇 {cn} {lid}', 'p': p, 'm': dict(M),
-                     'note': f'{cn}：一簇 {BASE["stars"]} 条细金线（细火星 + 白热火花 + 闪烁火花 + 星头光晕），张角（半角）{BASE["clusterCone"]}°，整套簇转角 {roll:+d}°（逆时针为正），比第一簇晚 {delay:.2f} s 出膛。'})
+                     'note': f'{cn}：一簇 {p["stars"]} 条细金线（细火星 + 白热火花 + 闪烁火花 + 星头光晕），张角（半角）{BASE["clusterCone"]}°，整套簇转角 {roll:+d}°（逆时针为正），比第一簇晚 {delay:.2f} s 出膛。'})
         lays.append({'m': f'rep:{lid}', 'scale': 1, 'delay': delay})
     combo = {'id': VER, 'date': DATE, 'name': '金锦冠扇形 FanGold · 4 簇', 'layers': lays, 'layerNames': [x[1] for x in LAYERS],
              'video': VIDEO, 'burst_t': VMETA['t0'], 'vmeta': VMETA,
              'tags': f'FanGold 金锦冠扇形 分簇 扇形 {VER}',
-             'note': '地面扇形组合的一排：4 簇（左外 / 左内 / 右内 / 右外，方向 +30 / +10 / −10 / −30°），每簇 18 条细金线（每条 = 细火星 + 白热火花 + 闪烁火花 + 星头光晕），'
+             'note': '地面扇形组合的一排：4 簇（左外 / 左内 / 右内 / 右外，方向 +30 / +10 / −10 / −30°），每簇 ' + str(BASE['stars'] if not over.get('stars') else over['stars']) + ' 条细金线（每条 = 细火星 + 白热火花 + 闪烁火花 + 星头光晕），'
                      '左 → 右每簇晚 0.1 s 出膛（扫射）；星减速到顶约 1.9 s 烧完，在顶上爆裂（噼啪）。原理 analysis/原理/FanGold.md。',
              'look': ['一簇一簇的：4 簇分得开、每簇是一撮几乎平行的金线', '扫射：左 → 右先后出膛', '顶上爆裂连成一条冠带', '引擎回放 + 游戏内大小']}
+    return ents, combo
+
+
+def main():
+    ents, combos = [], []
+    for v, over in VERSIONS.items():
+        e, c = build(v, over); ents += e; combos.append(c)
     out = {'说明': '金锦冠扇形 FanGold（对话框FanGold，用户 2026-10-07 16:05「一簇一簇的」）。由 analysis/scripts/FanGold条目.py 生成，不要手改。',
-           'entries': ents, 'combos': [combo]}
+           'entries': ents, 'combos': combos}
     json.dump(out, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    print('写好', OUT, '：', VER, '+', len(ents), '层')
+    print('写好', OUT, '：', ' / '.join(VERSIONS), '共', len(ents), '层')
 
 
 if __name__ == '__main__':
