@@ -1,0 +1,11 @@
+{
+ "id": "NFS-Q1",
+ "type": "std",
+ "priority": 5,
+ "targets": [
+  "QA20",
+  "QC12"
+ ],
+ "name": "标准检查：球形A QA20、球形C QC12",
+ "note": "对话框新花型（用户 10-07 19:48）。"
+}
