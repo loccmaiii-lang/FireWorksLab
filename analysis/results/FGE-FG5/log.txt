@@ -1,0 +1,8 @@
+19:01:52 开始：FanGold（导出素材）
+19:01:54 FanGold 导出 2 秒：FanGold.json、FanGold_Cascade参数.txt、FanGold_Mobile.json、FanGold_曲线.csv、T_EFX_FireWorks_FanGold_4x4_01.png、T_EFX_FireWorks_FanGold_4x4_01_C.png、T_EFX_FireWorks_FanGold_4x4_01_HD.png、T_EFX_FireWorks_FanGold_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+19:01:55 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FGE-FG5\回放检查.jpg（❌ FanGold：过曝像素 2.1%）
+19:02:11 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FGE-FG5\烘焙回放.jpg
+19:02:12 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FGE-FG5\烘焙回放_原尺寸.jpg
+19:02:12 烘焙器预览 preview.js：604 KB
+19:02:12 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+19:02:12 完成，用时 0.3 分钟

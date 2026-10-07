@@ -1,0 +1,9 @@
+19:01:56 第 1/1 步：FG5 对照 + 曝光
+19:02:02   渲染器 ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)
+19:02:02   原样 曝光 {'FG5': 0.2012}
+19:02:02   星100 曝光 {'FG5': 0.1782}
+19:02:02   尾更亮 曝光 {'FG5': 0.1977}
+19:02:02   冠带更亮 曝光 {'FG5': 0.2012}
+19:02:02   写好 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FGV5
+19:02:02   ✅ FG5 对照 + 曝光（0.1 分钟）
+19:02:02 完成，用时 0.1 分钟
