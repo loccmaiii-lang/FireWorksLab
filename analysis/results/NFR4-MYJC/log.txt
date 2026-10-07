@@ -1,0 +1,49 @@
+10:14:07 第 1/15 步：原样（GoldRayRocket）
+10:14:07   ❌ GoldRayRocket 跳过纯粒子发射器：L1_Unit
+10:14:07      GoldRayRocket · L2_Main 中间空帧 23
+10:14:07   ✅ 原样（GoldRayRocket）（0.0 分钟）
+10:14:07 第 2/15 步：3 号（GoldRayRocket_03）
+10:14:08   ✅ GoldRayRocket_03 跳过纯粒子发射器：L1_Unit
+10:14:08   ✅ 3 号（GoldRayRocket_03）（0.0 分钟）
+10:14:08 第 3/15 步：5 号（GoldRayRocket_05）
+10:14:09   ✅ GoldRayRocket_05 跳过纯粒子发射器：L1_Unit
+10:14:09   ✅ 5 号（GoldRayRocket_05）（0.0 分钟）
+10:14:09 第 4/15 步：尺玉（GoldRayRocket_10）
+10:14:10   ✅ GoldRayRocket_10 跳过纯粒子发射器：L1_Unit
+10:14:10   ✅ 尺玉（GoldRayRocket_10）（0.0 分钟）
+10:14:10 第 5/15 步：2 尺（GoldRayRocket_20）
+10:14:10   ✅ GoldRayRocket_20 跳过纯粒子发射器：L1_Unit
+10:14:10   ✅ 2 尺（GoldRayRocket_20）（0.0 分钟）
+10:14:10 第 6/15 步：3 尺（GoldRayRocket_30）
+10:14:11   ❌ GoldRayRocket_30 跳过纯粒子发射器：L1_Unit
+10:14:11      GoldRayRocket_30 · L2_Main 中间空帧 3
+10:14:11   ✅ 3 尺（GoldRayRocket_30）（0.0 分钟）
+10:14:11 第 7/15 步：4 尺（GoldRayRocket_40）
+10:14:11   ❌ GoldRayRocket_40 跳过纯粒子发射器：L1_Unit
+10:14:11      GoldRayRocket_40 · L2_Main 中间空帧 2
+10:14:11   ✅ 4 尺（GoldRayRocket_40）（0.0 分钟）
+10:14:11 第 8/15 步：冠（GoldRayRocket_Crown）
+10:14:12   ✅ GoldRayRocket_Crown 跳过纯粒子发射器：L1_Unit
+10:14:12   ✅ 冠（GoldRayRocket_Crown）（0.0 分钟）
+10:14:12 第 9/15 步：柳（GoldRayRocket_Willow）
+10:14:12   ✅ GoldRayRocket_Willow 跳过纯粒子发射器：L1_Unit
+10:14:12   ✅ 柳（GoldRayRocket_Willow）（0.0 分钟）
+10:14:12 第 10/15 步：环（GoldRayRocket_Ring）
+10:14:13   ✅ GoldRayRocket_Ring 
+10:14:13   ✅ 环（GoldRayRocket_Ring）（0.0 分钟）
+10:14:13 第 11/15 步：土星（GoldRayRocket_Saturn）
+10:14:14   ✅ GoldRayRocket_Saturn 
+10:14:14   ✅ 土星（GoldRayRocket_Saturn）（0.0 分钟）
+10:14:14 第 12/15 步：万華鏡（GoldRayRocket_Kaleido）
+10:14:15   ✅ GoldRayRocket_Kaleido 
+10:14:15   ✅ 万華鏡（GoldRayRocket_Kaleido）（0.0 分钟）
+10:14:15 第 13/15 步：心形（GoldRayRocket_Heart）
+10:14:16   ✅ GoldRayRocket_Heart 
+10:14:16   ✅ 心形（GoldRayRocket_Heart）（0.0 分钟）
+10:14:16 第 14/15 步：时差（GoldRayRocket_Jisa）
+10:14:17   ✅ GoldRayRocket_Jisa 跳过纯粒子发射器：L1_Unit
+10:14:17   ✅ 时差（GoldRayRocket_Jisa）（0.0 分钟）
+10:14:17 第 15/15 步：芯入（GoldRayRocket_Core）
+10:14:18   ✅ GoldRayRocket_Core 跳过纯粒子发射器：L1_Unit
+10:14:18   ✅ 芯入（GoldRayRocket_Core）（0.0 分钟）
+10:14:18 完成，用时 0.2 分钟

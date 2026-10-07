@@ -1,0 +1,8 @@
+10:12:57 开始：GoldRayRocket_03（导出素材）
+10:13:02 GoldRayRocket_03 组合素材包 5 秒：T_EFX_FireWorks_GoldRayRocket_03_L1_4x4_01.png、T_EFX_FireWorks_GoldRayRocket_03_L1_4x4_01_C.png、T_EFX_FireWorks_GoldRayRocket_03_L1_8x4_01_C.png、T_EFX_FireWorks_GoldRayRocket_03_L1_8x4_01_HD.png、T_EFX_FireWorks_GoldRayRocket_03_L1_R.png、T_EFX_FireWorks_GoldRayRocket_03_L2_4x4_01.png、T_EFX_FireWorks_GoldRayRocket_03_L2_4x4_01_C.png、T_EFX_FireWorks_GoldRayRocket_03_L2_4x4_01_HD.png、T_EFX_FireWorks_GoldRayRocket_03_L2_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+10:13:02 回放检查不查的粒子发射器（光点 / 单束）：L1_Unit
+10:13:03 回放检查：✅ 通过
+10:13:17 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJC-S03-3\烘焙回放.jpg
+10:13:17 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJC-S03-3\烘焙回放_原尺寸.jpg
+10:13:18 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+10:13:18 完成，用时 0.3 分钟
