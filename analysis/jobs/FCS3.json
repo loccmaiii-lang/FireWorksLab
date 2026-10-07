@@ -1,0 +1,9 @@
+{
+ "id": "FCS3",
+ "type": "std",
+ "priority": 2,
+ "targets": [
+  "FC3O"
+ ],
+ "note": "对话框FanGold：FC3O 标准检查。"
+}

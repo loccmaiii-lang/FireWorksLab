@@ -1,0 +1,9 @@
+{
+ "id": "FCE-FC3O",
+ "type": "export",
+ "effect": "fan_comet",
+ "entry": "FC3O",
+ "name": "FanCometOrange",
+ "priority": 1,
+ "note": "对话框FanGold：橙扇单条 FC3O（近段曝光 0.48、GPU 远看直径 1.0 m）导出 + 回放检查。"
+}
