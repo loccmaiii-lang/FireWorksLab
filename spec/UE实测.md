@@ -43,6 +43,13 @@
 
 照着点的测试步骤（用户只导入、录屏 / 截图、发给 AI）：[`UE实测包/怎么测_一步一步.md`](UE实测包/怎么测_一步一步.md)。
 
+### 2026-10-07 13:26 · 颜色 ×30 出「线框」→ 疑 Ramp 是 Wrap（D5，⚪ 等用户改完看）
+
+- 用户在 Cascade 里把分裂星（Crossette，`flipbook_rgba`）Color Over Life 从 1 改到 30：光晕最外缘出现灰白细线，暗处有小圈；×1 看不到。
+- 对话框21 判断：Ramp 贴图默认 Wrap。灰度 v 小于半格（0.5 / 256）时，双线性取样把第 0 格（黑）和第 255 格（白热 `#fff3dc`）混在一起 → 光晕外缘多一圈偏白的细线；Ramp 有 Mip 时更粗。云端按烘焙器材质公式模拟复现（`analysis/probe/Ramp线框_2026-10-07/`）：Wrap 细线、Wrap + Mip 成带、Clamp 干净。同一模拟里 BC7 / DXT5 在空处的误差 ≤ 5/255，不是主因。
+- 要用户做：Ramp（`…_R`）X / Y Tiling Method = Clamp、Mip Gen Settings = NoMipmaps。还有线 → 看材质里 Ramp 的 TextureSample「Sampler Source」是不是 Shared: Wrap；再不行把序列图临时改 VectorDisplacementmap（不压缩）分辨是不是串扰。
+- 确认后：第 7 节 `ramp` 导入设置改成 Clamp + NoMipmaps（不再照抄示例贴图），导入器 `ramp` 类别一律这样设（对话框5），D5 的 Ramp 一半打勾。
+
 ### 2026-10-05 19:40 · 鸿巢红点闪；整体亮度用户自己加（用户答复，对话框21 记录）
 
 - 鸿巢 HK10E7 包的 PC 红点层（GPU 光点，Color Over Life 方波，烘焙器 4.4.4）在 Cascade 里是闪的 → D6 里「GPU 发射器查找表会不会抹平方波」这一项 ✅（Cascade 预览；游戏内同一套查找表）。
