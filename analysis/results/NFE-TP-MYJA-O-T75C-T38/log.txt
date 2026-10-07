@@ -1,0 +1,7 @@
+00:11:57 开始：GoldRay_T75C（导出素材）
+00:12:10 GoldRay_T75C 组合素材包 13 秒：T_EFX_FireWorks_GoldRay_T75C_A_4x4_01.png、T_EFX_FireWorks_GoldRay_T75C_A_4x4_01_C.png、T_EFX_FireWorks_GoldRay_T75C_A_4x4_01_HD.png、T_EFX_FireWorks_GoldRay_T75C_A_R.png、T_EFX_FireWorks_GoldRay_T75C_B_4x4_01.png、T_EFX_FireWorks_GoldRay_T75C_B_4x4_01_C.png、T_EFX_FireWorks_GoldRay_T75C_B_4x4_01_HD.png、T_EFX_FireWorks_GoldRay_T75C_B_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+00:12:11 回放检查：✅ 通过
+00:12:26 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-TP-MYJA-O-T75C-T38\烘焙回放.jpg
+00:12:26 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-TP-MYJA-O-T75C-T38\烘焙回放_原尺寸.jpg
+00:12:26 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+00:12:27 完成，用时 0.5 分钟
