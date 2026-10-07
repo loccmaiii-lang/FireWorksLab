@@ -1,0 +1,25 @@
+{
+ "id": "FGV6",
+ "type": "script",
+ "priority": 1,
+ "name": "FanGold FG6：对照 + 自动曝光",
+ "note": "对话框FanGold：FG5 看过 → FG6（100 颗星、尾更亮、曝光压到不过曝）。",
+ "steps": [
+  {
+   "name": "FG6 对照 + 曝光",
+   "script": "FanGold对照.py",
+   "args": [
+    "--entry",
+    "FG6",
+    "--out",
+    "{out}",
+    "--variants",
+    "{\"冠带再亮\": {\"crackleBright\": 6}}",
+    "--times",
+    "0.15,0.3,0.6,1.2,1.7,2.0,2.4,3.0"
+   ],
+   "must": true,
+   "timeout": 2400
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+{
+ "id": "FGE-FG6",
+ "type": "export",
+ "effect": "fan_gold",
+ "entry": "FG6",
+ "name": "FanGold",
+ "priority": 2,
+ "note": "对话框FanGold：FanGold FG6 导出 + 回放检查。"
+}

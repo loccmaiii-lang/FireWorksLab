@@ -430,7 +430,7 @@
    "note": "右外簇：一簇 22 条细金线（细火星 + 白热火花 + 闪烁火花 + 星头光晕），张角（半角）9°，整套簇转角 -30°（逆时针为正），比第一簇晚 0.30 s 出膛。"
   },
   {
-   "id": "FG5",
+   "id": "FG6",
    "date": "2026-10-07",
    "name": "金锦冠扇形 FanGold · 11 筒逐筒出膛",
    "base": "kamuro",
@@ -442,12 +442,12 @@
     "cy": 0.486328125,
     "half": 0.22
    },
-   "tags": "FanGold 金锦冠扇形 扇形组合 扇面 N 簇 依次出膛 FG5",
+   "tags": "FanGold 金锦冠扇形 扇形组合 扇面 N 簇 依次出膛 FG6",
    "p": {
     "renderVer": 40,
     "duration": 5.6,
     "seed": 11,
-    "stars": 80,
+    "stars": 100,
     "pattern": "cluster",
     "clusterLayout": "fan",
     "clusterN": 11,
@@ -479,7 +479,7 @@
     "T0": 2250,
     "cooling": 0.22,
     "sparkSize": 0.12,
-    "sparkBright": 1.4,
+    "sparkBright": 1.8,
     "glitter": 0.5,
     "glitterDelay": 0.35,
     "glitterPeak": 3.5,
@@ -523,10 +523,10 @@
     "crackleR": 3.4,
     "crackleV": 1.5,
     "crackleSize": 0.24,
-    "crackleBright": 3.6,
+    "crackleBright": 4.5,
     "flash": 0.15,
     "flashR": 1.5,
-    "exposure": 2.0
+    "exposure": 1.4
    },
    "m": {
     "stages": [

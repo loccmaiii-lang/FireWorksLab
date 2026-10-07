@@ -1,0 +1,9 @@
+{
+ "id": "FGS5",
+ "type": "std",
+ "priority": 3,
+ "targets": [
+  "FG6"
+ ],
+ "note": "对话框FanGold：FG6 标准检查。"
+}
