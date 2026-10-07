@@ -1,0 +1,22 @@
+{
+ "id": "NFS-V7",
+ "type": "std",
+ "priority": 1,
+ "targets": [
+  "MYHK-O",
+  "MYHK-S03",
+  "MYHK-S05",
+  "MYHK-S10",
+  "MYHK-S20",
+  "MYHK-S30",
+  "MYHK-Y",
+  "MYHK-R",
+  "MYHK-T",
+  "MYHK-M",
+  "MYHK-H",
+  "MYHK-J",
+  "MYHK-C"
+ ],
+ "name": "标准检查：鸿巢四尺玉 · 我的 · 13 档（光点重导后）",
+ "note": "对话框新花型。"
+}

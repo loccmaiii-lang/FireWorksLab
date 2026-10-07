@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MYHK-Y-4",
+ "type": "export",
+ "effect": "myv_fxmuwols5x",
+ "entry": "MYHK-Y",
+ "name": "YonshakuKamuro_Willow",
+ "priority": 4,
+ "note": "我的效果变体：MYHK-Y 重导（烘焙器 4.9.24 起 GPU 光点的点灭方波 / 淡出改写在 Alpha——以前写在 RGB、Alpha 恒 1，UE 半透明材质里红闪层灭的那一拍是黑点；导出版本 dots4.4.4 → 4.9.24）。参数没改，同一目录覆盖。"
+}
