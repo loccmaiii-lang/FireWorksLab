@@ -1176,6 +1176,8 @@ header.top #status{position:fixed;right:16px;bottom:16px;z-index:100;max-width:m
 .tlb-observe.solo{border:1px solid var(--line2);width:24px;height:26px}
 .tlb-t{height:22px;border-radius:4px;background:var(--low)}
 .tlb-t i.main{background:var(--acc);opacity:.8}
+.tlb-t i.void{background:repeating-linear-gradient(135deg,rgba(150,160,165,.28) 0 4px,rgba(150,160,165,.07) 4px 8px);border-radius:0 4px 4px 0;overflow:hidden;display:flex;align-items:center}
+.tlb-t i.void em{font-style:normal;font-size:10.5px;line-height:1;color:var(--faint);white-space:nowrap;padding-left:6px;pointer-events:none}
 .tlb-ph{top:28px;bottom:50px;z-index:2}
 .tlcut{font-size:11px;gap:6px}
 .tlcut>span{color:var(--faint)}
@@ -2153,7 +2155,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.9.35';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）
+const VERSION = '4.9.36';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -10336,8 +10338,10 @@ function busy(on, text, p) {
   if (busyJob.on && busyJob.req && p != null) { busyJob.req = false; throw new Error('已取消（你点了取消；上次的结果、参数都还在）'); }
 }
 let flashTimer = 0;
-function flash(msg, bad, ms) { if (!bad && typeof storeJustFailed === 'function' && storeJustFailed() && /保存|存成|已存|已更新|已新建/.test(msg)) { msg = '没存上（浏览器里存不进去）：' + msg; bad = true; } const s = $('#status'); s.textContent = msg; s.className = bad ? '' : 'on'; clearTimeout(flashTimer); flashTimer = setTimeout(() => { s.textContent = ''; s.className = ''; }, ms || 3500); }
-function setStatus(msg) { const s = $('#status'); s.textContent = msg; s.className = msg ? 'on' : ''; }
+// 4.9.36：hold = 这条提示在显示期间不被烘焙进度（setStatus）盖掉（改序列时长的说明一改就重烘，以前一闪就被「重烘第 n 层… 0%」换掉）
+let flashHoldUntil = 0;
+function flash(msg, bad, ms, hold) { flashHoldUntil = hold ? Date.now() + (ms || 3500) : 0; if (!bad && typeof storeJustFailed === 'function' && storeJustFailed() && /保存|存成|已存|已更新|已新建/.test(msg)) { msg = '没存上（浏览器里存不进去）：' + msg; bad = true; } const s = $('#status'); s.textContent = msg; s.className = bad ? '' : 'on'; clearTimeout(flashTimer); flashTimer = setTimeout(() => { s.textContent = ''; s.className = ''; }, ms || 3500); }
+function setStatus(msg) { if (Date.now() < flashHoldUntil) return; const s = $('#status'); s.textContent = msg; s.className = msg ? 'on' : ''; }
 
 // 上升类的序列时长跟随到顶时间
 function derive(P) {
@@ -11029,7 +11033,7 @@ function buildMasterPanel() {
       const det = place(sec, it, ikey, nm), ex = emitOf(nm, sec);          // 这一行放进它的发射器 › 模块
       if (Array.isArray(it)) {
         const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
-        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); } }, D[k], k);
+        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); if (k === 'duration' && typeof seqNote === 'function') seqNote(state.P); } }, D[k], k);     // 4.9.36 改序列时长、设了出点：说一句
         autoDefRow(row, k, step);
         const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}` : short) + (unit ? `（${unit}）` : '') + '；双击恢复默认';
         row._lab = short; row._detail = detail; row._nm = nm;
@@ -11472,9 +11476,18 @@ async function applyCombo(c) {
   if(state.platform==='mobile')await ensureComboMobile();
   if (typeof buildLayerCard === 'function') buildLayerCard();
 }
-function comboDuration() {
+// 4.9.36（用户 10-07 20:37「两层效果都设置了序列时长……模板默认是3.17秒，那它就一直显示3.17秒？不应该我改了7秒，时间轴也会延长到7秒吗」）：
+// 时间轴 = 各层「开始时间 + 序列时长 ÷ 时间倍率」取最长（以前按烘出来的长度：出点、结尾全黑不烘都会把它压短，改序列时长时间轴不动）。
+// 出点后 / 结尾全黑没烘的那段在层轨道上画斜纹「不导出」（buildTlBars）。comboContentEnd = 以前的算法（贴图实际播到哪），脚本取样用
+function seqEndOf(P) { return P && familyOf(P.type) === 'aerial' && !isEmit(P) ? Math.max(0, +P.duration || 0) : 0; }
+function comboContentEnd() {
   let d = 0.5;
-  for (const L of state.layers) { const e = state.lib.find(x => x.name === L.lib); if (e) d = Math.max(d, L.delay + bakeTotal(e.bake) / L.rate); }
+  for (const L of state.layers) { const e = state.lib.find(x => x.name === L.lib); if (e) d = Math.max(d, (+L.delay || 0) + bakeTotal(e.bake) / (+L.rate || 1)); }
+  return d;
+}
+function comboDuration() {
+  let d = comboContentEnd();
+  for (const L of state.layers) { const e = state.lib.find(x => x.name === L.lib); if (e) d = Math.max(d, (+L.delay || 0) + seqEndOf(e.P) / (+L.rate || 1)); }
   return d;
 }
 function bakeTotal(b) { let d = 0; for (let s = b; s; s = s.next) d = Math.max(d, (s.meta.t0 || 0) + s.meta.duration); return d; }
@@ -12670,7 +12683,7 @@ function panelBake() {
 }
 function trimNoteHTML() {
   const b = panelBake(), tr = b && b.meta && b.meta.trim; if (!tr || !(tr.end < tr.reqEnd - 0.02)) return '';
-  return ` <span class="warn">贴图实际只烘到 <b>${tr.end.toFixed(2)} s</b>：${tr.end.toFixed(2)}–${tr.reqEnd.toFixed(2)} s 全黑（最亮像素 &lt; 2/255）没烘，时间轴也到这里为止。序列时长再加长也一样；要更长，调星的燃烧时间或火花寿命。</span>`;
+  return ` <span class="warn">贴图实际只烘到 <b>${tr.end.toFixed(2)} s</b>：${tr.end.toFixed(2)}–${tr.reqEnd.toFixed(2)} s 全黑（最亮像素 &lt; 2/255）没烘、不导出（时间轴画到序列时长，这段在层轨道上是斜纹）。序列时长再加长，导出也一样长；要更长，调星的燃烧时间或火花寿命，或「整体调整 › 节奏」放慢。</span>`;
 }
 function endInfoHTML() {
   const P = state.P; if (!P || familyOf(P.type) !== 'aerial') return '';
@@ -14204,7 +14217,9 @@ function layerSpans(x) {
   const Pc = layerPOf(x), stale = !!(Pc && x.b.P && ['duration', 'cutIn', 'cutOut'].some(k => Math.abs((+x.b.P[k] || 0) - (+Pc[k] || 0)) > 1e-6));
   const end = stale ? (+Pc.cutOut > 0 ? Math.min(+Pc.cutOut, +Pc.duration) : +Pc.duration) : bakeTotal(x.b);
   const vis = stale ? [+Pc.cutIn > 0 ? +Pc.cutIn : (pre ? pre.from : t0), end] : m.vis || [pre ? pre.from : t0, end];
-  return { d, r, t0, end, pre, vis, at: t => d + t / r };
+  // 4.9.36：序列时长（这一层自己的时间）。时间轴按它画；end 之后到 seq 是「不导出」（出点后 / 结尾全黑没烘），轨道上画斜纹
+  const seq = Math.max(end, typeof seqEndOf === 'function' ? seqEndOf(Pc) : 0), cut = !!(Pc && +Pc.cutOut > 0 && +Pc.cutOut < +Pc.duration - 1e-3);
+  return { d, r, t0, end, pre, vis, seq, cut, cutAt: cut ? +Pc.cutOut : 0, at: t => d + t / r };
 }
 // 层轨道（用户 2026-10-02 13:09 a：接力关系藏在每层的参数里，找不到）：把决定「这一层什么时候亮、什么时候停」的参数画在时段条上，
 // 可编辑的那一层（单层 / 观察图层里选中的层）能直接拖。时间都是这一层自己的时间（相对开花），画的时候按组合延迟 / 时间倍率换到总时间。
@@ -14332,10 +14347,26 @@ function resetToOpened() {
 }
 // 4.4.1 的「发射器行」（每个发射器一行生成 / 寿命 / ✂）和 4.2.18 的曲线视图 4.5.0 删掉了（用户 10-05 01:28 #4：「新增的时间轴没什么用，而且影响我笔记本画布屏占比」）。
 // 底部只留：刻度 + 每层一条轨道（阶段点、入点 / 出点把手、帧刻度）+ 一行入出点按钮。序列被切掉的提示仍在「效果 › 规格 › 火花灭完」。
+// 4.9.36：轨道上「不导出」那段（序列时长里，出点后 / 结尾全黑没烘）说清楚为什么、怎么变长
+function seqVoidText(sp) {
+  const a = sp.end.toFixed(2), z = sp.seq.toFixed(2);
+  return sp.cut ? `${a} – ${z} s 不导出：这一层设了出点 ${sp.cutAt.toFixed(2)} s（序列时长 ${z} s 只是时间轴画到这里）。要导出更长：时间轴下面「清除」入出点`
+    : `${a} – ${z} s 全黑（最亮像素 < 2/255），烘焙时不烘、不导出（序列时长 ${z} s 只是时间轴画到这里）。要这一层亮得更久：调燃烧时间 / 火花寿命，或「效果 › 整体调整 › 节奏」放慢`;
+}
+function seqTailNote(rows, P) {
+  const x = rows.find(r => layerPOf(r) === P), sp = x && layerSpans(x);
+  return sp && sp.seq > sp.end + 0.02 ? ` · 序列时长 ${sp.seq.toFixed(2)} s，导出到 ${sp.end.toFixed(2)} s（斜纹 = 不导出：${sp.cut ? '出点后' : '后面全黑没烘'}）` : '';
+}
+// 改序列时长（右栏滑杆 / 数值框）时，这一层设了出点：时间轴跟着变长，导出长度不变 → 说一句
+function seqNote(P) {
+  if (!P || !(typeof seqEndOf === 'function' && seqEndOf(P)) || !(+P.cutOut > 0 && +P.cutOut < +P.duration - 1e-3)) return '';
+  const msg = `序列时长 ${(+P.duration).toFixed(2)} s：时间轴画到这里；这一层设了出点 ${(+P.cutOut).toFixed(2)} s，只导出到出点（轨道上斜纹那段不导出）。要导出更长：时间轴下面「清除」入出点`;
+  flash(msg, false, 8000, true); return msg;
+}
 function buildTlBars() {
   if (stage2.drag) return;   // 拖动中不重建（否则手上的把手被换掉，拖到一半断开）
   const D = curDuration(), rows = curLayerBakes(), P = editLayerP();
-  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x), lp = layerPOf(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(lp).map(q => q.t.toFixed(2)).join(':'), lp ? [lp.cutIn, lp.cutOut].join('/') : '', x.b ? bakeParts(x.b).map(s => (s.meta.L && s.meta.L.F) + '@' + (s.meta.t0 || 0).toFixed(3)).join('+') : ''].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-') + '|' + state.layerView.solo + '/' + state.layerView.mute.join(',') + '|' + state.followOff + state.glueOff;
+  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x), lp = layerPOf(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis, sp.seq, sp.cut].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(lp).map(q => q.t.toFixed(2)).join(':'), lp ? [lp.cutIn, lp.cutOut].join('/') : '', x.b ? bakeParts(x.b).map(s => (s.meta.L && s.meta.L.F) + '@' + (s.meta.t0 || 0).toFixed(3)).join('+') : ''].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-') + '|' + state.layerView.solo + '/' + state.layerView.mute.join(',') + '|' + state.followOff + state.glueOff;
   if (sig === stage2.tlSig) return; stage2.tlSig = sig;
   const host = $('#tlBars');
   if (state.tab === 'asset' || state.showcase || !rows.length) { host.innerHTML = ''; return; }
@@ -14347,7 +14378,8 @@ function buildTlBars() {
     const sp = layerSpans(x), on = state.tab !== 'combo' || layerShown(x.i), sel = state.tab === 'combo' && state.comboSel === x.i, lp = layerPOf(x);
     const bars = !sp ? '' : seg(sp.at(sp.vis[0]), sp.at(sp.vis[1]), 'vis', '整段可见范围（全黑帧已剔掉）')
       + (sp.pre ? seg(sp.at(sp.pre.from), sp.at(sp.t0), 'pre', `入点前：第 1 帧从 ${Math.round(sp.pre.keys[0][1] * 100)}% 放大`) : '')
-      + seg(sp.at(sp.t0), sp.at(sp.end), 'main', `贴图在播：${sp.t0.toFixed(2)} – ${sp.end.toFixed(2)} s（这一层自己的时间）`);
+      + seg(sp.at(sp.t0), sp.at(sp.end), 'main', `贴图在播：${sp.t0.toFixed(2)} – ${sp.end.toFixed(2)} s（这一层自己的时间）`)
+      + (sp.seq > sp.end + 0.02 && pct(sp.at(sp.seq)) > pct(sp.at(sp.end)) ? `<i class="void" style="left:${pct(sp.at(sp.end))}%;width:${Math.max(0.3, pct(sp.at(sp.seq)) - pct(sp.at(sp.end)))}%" title="${seqVoidText(sp)}"><em>${sp.cut ? '出点后 · 不导出' : '全黑 · 不导出'}</em></i>` : '');
     const cutOK = sp && lp && usesTickPlan40(lp) && !(sp.vis[1] - sp.vis[0] < 0.2);
     const cuts = !cutOK ? '' : [['in', sp.t0, '入点', +lp.cutIn > 0], ['out', sp.end, '出点', +lp.cutOut > 0]].map(([k, t, lab, set]) => `<b class="cut cut-${k}${set ? ' set' : ''}" data-cut2="${k}" data-li="${x.i}" style="left:${pct(sp.at(t))}%" title="${lab}：${t.toFixed(2)} s${set ? '' : '（自动）'}——左右拖动修改；拖回尽头 = 自动"></b>`).join('');
     const ph = sp ? phasesOf(lp).map(q => `<b class="ph ph-${q.k} row-${q.row}${q.auto ? ' auto' : ''}${glued.has(x.i + ':' + q.k) ? ' glued' : ''}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s（左右拖动修改${glued.has(x.i + ':' + q.k) ? '；和同一批星的另一层在同一时刻，一起动' : ''}）"></b>`).join('') : '';
@@ -14357,7 +14389,7 @@ function buildTlBars() {
     return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><div class="tlb-label"><span class="tlb-number">${x.i + 1}</span>${combo ? `<button class="tlb-observe" type="button" data-track-mute="${x.i}" aria-label="显示第 ${x.i + 1} 层" aria-pressed="${!mute}" title="${mute ? '显示' : '隐藏'}这一层（只影响观察）">${uiIcon(mute ? 'eye-off' : 'eye')}</button>` : ''}<button type="button" class="tlb-n" data-i="${x.i}" title="点一下切换图层参数">${x.name}</button>${combo ? `<button class="tlb-observe solo" type="button" data-track-solo="${x.i}" aria-label="独看第 ${x.i + 1} 层" aria-pressed="${solo}" title="独看这一层（只影响观察）">S</button>` : ''}</div><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
   }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>'
     + (P || state.tab === 'combo' ? `<div class="tlcut" title="轨道上：上排圆点 = 星（点火、燃烧结束…），菱形 = 火花（开始、停；空心 = 默认位置，拖动就打开），白色把手 = 入点 / 出点，都能左右拖；细刻度 = 每一帧从哪个 tick 开始">${P ? `<button type="button" class="mini" data-cut="in" title="把当前时刻设成入点：帧从这里开始">设为入点</button><button type="button" class="mini" data-cut="out" title="把当前时刻设成出点">设为出点</button><button type="button" class="mini" data-cut="clear">清除</button>
-      <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') : ''}</span>` : '<span>点一层的轨道或名字改那一层的入点 / 出点</span>'}
+      <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') : ''}${seqTailNote(rows, P)}</span>` : '<span>点一层的轨道或名字改那一层的入点 / 出点</span>'}
       <label class="check tlopt" title="开：拖 / 改点火、燃烧结束这些时间点时，序列时长跟着这一层最后看得见的时刻伸缩，入点跟着点火平移。关：只改你动的那个参数"><input type="checkbox" data-tlopt="follow"${state.followOff ? '' : ' checked'}> 时长 / 入点跟着走</label>${state.tab === 'combo' && (state.links || []).length ? `<label class="check tlopt" title="开：同一批星的几层在同一时刻的点（例：引线火花停 = 锦点火）粘在一起，动一个另一个跟着动（轨道上带链条的点）。关：各改各的"><input type="checkbox" data-tlopt="glue"${state.glueOff ? '' : ' checked'}> 同一时刻的点一起动</label>` : ''}</div>` : '');
   // 点轨道（不是把手）：跳到那个时刻；多层时顺便切到这一层（用户 16:22 第 3 条）
   host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { if (ev.target !== t && !ev.target.matches('i, .fcs')) return; const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); if (state.tab === 'combo' && state.comboSel !== +t.dataset.i) selectComboLayer(+t.dataset.i); }));
@@ -15272,9 +15304,15 @@ function curDuration() {
   if(state.showcase && showcase.recipe)return Math.max(...showcase.layers.map(l=>l.delay+bakeTotal(l.b)));
   if (state.tab === 'combo') return comboDuration();
   if (state.tab === 'asset') return assetDuration();
-  // 时间轴：空中花型按烘焙结果的总时长（入点出点、裁首尾）；尾缀 / 地面 / 上升的烘焙结果只有一个循环周期，按参数时长（4.3 去 3.7 时保留这个区别）
-  let d = !state.dirty && state.bake && familyOf(state.P.type) === 'aerial' && !isEmit(state.P)?bakeTotal(state.bake):state.P.duration;
-  return d;
+  // 时间轴 = 序列时长（4.9.36，用户 10-07 20:37「我改了7秒，时间轴也会延长到7秒」）。以前空中花型按烘出来的长度（出点、结尾全黑不烘会压短），
+  // 改序列时长时间轴不动；现在出点后 / 全黑没烘的那段在层轨道上画斜纹「不导出」。contentDuration = 以前的算法（贴图实际播到哪），脚本取样用
+  return Math.max(contentDuration(), seqEndOf(state.P));
+}
+function contentDuration() {
+  if (state.showcase && showcase.recipe) return curDuration();
+  if (state.tab === 'combo') return comboContentEnd();
+  if (state.tab === 'asset') return assetDuration();
+  return !state.dirty && state.bake && familyOf(state.P.type) === 'aerial' && !isEmit(state.P) ? bakeTotal(state.bake) : state.P.duration;
 }
 function loop(now) {
   if (state.glLost || gl.isContextLost()) { glLostNotice(); return; }      // 4.2.20：显卡上下文丢了，停下（不再每帧报错），画面上写原因

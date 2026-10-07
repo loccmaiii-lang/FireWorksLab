@@ -126,7 +126,7 @@ async def main():
                         openS = await open_effect(pg, key, focus)
                         play = None if a.quick else await pg.evaluate(PLAY)
                         await pg.evaluate("window.requestAnimationFrame = () => 0; 0"); await pg.wait_for_timeout(200)   # 停掉自己的循环，下面手动一帧一帧画
-                        D = await pg.evaluate("curDuration()")
+                        D = await pg.evaluate("(typeof contentDuration === 'function' ? contentDuration() : curDuration())")     # 4.9.36 起时间轴 = 序列时长（可能有全黑尾巴）：按贴图实际播到哪取样，和以前一样
                         times = [round(D * 0.4, 2)] if a.quick else [round(D * f, 2) for f in (0.15, 0.4, 0.7)]
                         m = await pg.evaluate(MEASURE, {'times': times, 'caps': caps, 'K': K})
                         r = {'config': cfg, 'effect': key, 'openS': openS, 'play': play, **m, 'errors': errs[:3]}

@@ -544,9 +544,15 @@ function curDuration() {
   if(state.showcase && showcase.recipe)return Math.max(...showcase.layers.map(l=>l.delay+bakeTotal(l.b)));
   if (state.tab === 'combo') return comboDuration();
   if (state.tab === 'asset') return assetDuration();
-  // 时间轴：空中花型按烘焙结果的总时长（入点出点、裁首尾）；尾缀 / 地面 / 上升的烘焙结果只有一个循环周期，按参数时长（4.3 去 3.7 时保留这个区别）
-  let d = !state.dirty && state.bake && familyOf(state.P.type) === 'aerial' && !isEmit(state.P)?bakeTotal(state.bake):state.P.duration;
-  return d;
+  // 时间轴 = 序列时长（4.9.36，用户 10-07 20:37「我改了7秒，时间轴也会延长到7秒」）。以前空中花型按烘出来的长度（出点、结尾全黑不烘会压短），
+  // 改序列时长时间轴不动；现在出点后 / 全黑没烘的那段在层轨道上画斜纹「不导出」。contentDuration = 以前的算法（贴图实际播到哪），脚本取样用
+  return Math.max(contentDuration(), seqEndOf(state.P));
+}
+function contentDuration() {
+  if (state.showcase && showcase.recipe) return curDuration();
+  if (state.tab === 'combo') return comboContentEnd();
+  if (state.tab === 'asset') return assetDuration();
+  return !state.dirty && state.bake && familyOf(state.P.type) === 'aerial' && !isEmit(state.P) ? bakeTotal(state.bake) : state.P.duration;
 }
 function loop(now) {
   if (state.glLost || gl.isContextLost()) { glLostNotice(); return; }      // 4.2.20：显卡上下文丢了，停下（不再每帧报错），画面上写原因

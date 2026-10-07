@@ -73,7 +73,7 @@ function panelBake() {
 }
 function trimNoteHTML() {
   const b = panelBake(), tr = b && b.meta && b.meta.trim; if (!tr || !(tr.end < tr.reqEnd - 0.02)) return '';
-  return ` <span class="warn">贴图实际只烘到 <b>${tr.end.toFixed(2)} s</b>：${tr.end.toFixed(2)}–${tr.reqEnd.toFixed(2)} s 全黑（最亮像素 &lt; 2/255）没烘，时间轴也到这里为止。序列时长再加长也一样；要更长，调星的燃烧时间或火花寿命。</span>`;
+  return ` <span class="warn">贴图实际只烘到 <b>${tr.end.toFixed(2)} s</b>：${tr.end.toFixed(2)}–${tr.reqEnd.toFixed(2)} s 全黑（最亮像素 &lt; 2/255）没烘、不导出（时间轴画到序列时长，这段在层轨道上是斜纹）。序列时长再加长，导出也一样长；要更长，调星的燃烧时间或火花寿命，或「整体调整 › 节奏」放慢。</span>`;
 }
 function endInfoHTML() {
   const P = state.P; if (!P || familyOf(P.type) !== 'aerial') return '';

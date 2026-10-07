@@ -23,7 +23,7 @@ def make_job(jid, only):
         if only and k not in only: continue
         if not (e.get('主条目') or e.get('待验收版') or e.get('已通过版')): continue
         shots.append({'name': '缩略图_' + k, 'thumb': 'ef:' + k, 'shot': False, 'view': 'live', 't': 'full', 'sleep': 4000,
-                      'thumb_times': "(() => { const D = curDuration(), f = jumpTimes().full; return [f, .25 * D, .35 * D, .45 * D, .55 * D]; })()",
+                      'thumb_times': "(() => { const D = (typeof contentDuration === 'function' ? contentDuration() : curDuration()), f = jumpTimes().full; return [f, .25 * D, .35 * D, .45 * D, .55 * D]; })()",
                       'js': f"Promise.resolve(openEffect(EFFS().find(e => e.key === {json.dumps(k)}))).then(() => {{ state.disp = 'fit'; state.playing = false; state.layerView = {{ solo: -1, mute: [] }}; }})"})
         # 多层：每层独看一张（观察图层卡片、历史里的层条目用），键 = 这一层的条目号
         for i in range(len(e.get('层英文名') or [])):

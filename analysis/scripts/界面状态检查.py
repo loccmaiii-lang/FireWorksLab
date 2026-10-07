@@ -3063,6 +3063,77 @@ async def w30(pg):
     r = await pg.evaluate(W30_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
 
+W31_JS = r"""async () => {
+  // 4.9.36（用户 10-07 20:37「两层效果都设置了序列时长，但我的模板默认是3.17秒，那它就一直显示3.17秒？不应该我改了7秒，时间轴也会延长到7秒吗」）：
+  // 金曜菊-A · 快 ×1.67（TP-MYJA-O-T60）两层都设了出点（1.40 / 3.18 s），烘焙只烘到出点，时间轴按烘出来的长度 → 改序列时长时间轴不动
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms)), fb = bake;
+  // 假烘焙按入出点烘（和 bakeMaster 一样只排 [入点, 出点]），才复现得了「出点把时间轴压短」
+  const chk = { clipFrames: [], edgeFrames: [], chanUse: [true, true, true, true], emptyMid: [], similar: 0, seam: null, maxClip: 0 };
+  bake = async (P, scale, onProg) => {
+    const Pc = structuredClone(typeof fxP === 'function' ? fxP(P) : P), fm = measure(Pc), ci = +Pc.cutIn > 0 ? +Pc.cutIn : 0, co = +Pc.cutOut > ci ? Math.min(+Pc.cutOut, Pc.duration) : 0;
+    const pl = plan(Pc, fm, ci, co || Pc.duration), pages = splitPlan40(pl);
+    const parts = pages.map(meta => ({ P: Pc, form: Pc.form, N: 4, NH: 4, cw: 1, chh: 1, scale: 1, fm, head: { dispose() { } }, tail: null,
+      meta: { ...meta, check: chk, lightKeys: [[0, 1], [1, 0]], darkTail: 0, frameMaxes: [], quality: qualityOf(Pc), expoH: 1, expoT: 1, bakeMs: 1, sparkSlots: 0, cut: { in: ci, out: co } } }));
+    parts.forEach((b, i) => b.next = parts[i + 1]); if (onProg) onProg(1); await wait(30); return parts[0];
+  };
+  const busy = () => state.baking || (state.layerQueue && state.layerQueue.size) || window.__opening;
+  try {
+    const e = FW_REVIEW_LIST.find(x => x.id === 'TP-MYJA-O-T60'); if (!e) return { ok: false, bad: ['找不到 TP-MYJA-O-T60'], out };
+    window.__opening = true; try { await openReview(e); } finally { window.__opening = false; }
+    for (let k = 0; k < 300 && (state.tab !== 'combo' || busy() || !state.layers.every(L => layerEntryOf(L) && layerEntryOf(L).bake)); k++) await wait(100);
+    state.playing = false;
+    out.open = { tab: state.tab, n: state.layers.length, P: state.layers.map(L => { const P = layerEntryOf(L).P; return [P.duration, P.cutOut]; }), D: +curDuration().toFixed(3) };
+    if (state.tab !== 'combo' || state.layers.length !== 2) return { ok: false, bad: ['没打开成两层：' + JSON.stringify(out.open)], out };
+    for (const i of [0, 1]) {
+      selectComboLayer(i); await wait(80);
+      const sl = document.querySelector('#params [id^="p-duration-"]'), num = sl && sl.parentElement.querySelector('.num');
+      if (!num) { bad.push(`第 ${i + 1} 层右栏找不到「序列时长」`); continue; }
+      num.value = '7'; num.dispatchEvent(new Event('change')); await wait(60);
+      out['flash' + (i + 1)] = $('#status').textContent;
+    }
+    for (let k = 0; k < 300 && busy(); k++) await wait(100);
+    await wait(200);
+    out.flashAfterBake = $('#status').textContent;     // 改了就重烘：这句不能被「重烘第 n 层… %」盖掉
+    if (!/出点 3\.18 s/.test(out.flashAfterBake)) bad.push('出点的说明被烘焙进度盖掉了：' + out.flashAfterBake);
+    out.P = state.layers.map(L => { const P = layerEntryOf(L).P; return [P.duration, P.cutOut]; });
+    out.D = +curDuration().toFixed(3);
+    if (Math.abs(out.D - 7) > 0.02) bad.push(`两层序列时长都改成 7 s，时间轴应是 7 s：现在 ${out.D} s`);
+    out.content = typeof comboContentEnd === 'function' ? +comboContentEnd().toFixed(3) : null;
+    if (!(out.content > 3 && out.content < 3.3)) bad.push(`导出长度不该跟着变（出点还在 3.18 s）：${out.content}`);
+    stage2.tlSig = ''; buildTlBars(); loop(performance.now());
+    out.tlabel = $('#tlabel').textContent;
+    if (!/\/ 7\.00 s$/.test(out.tlabel)) bad.push('时间显示应到 7.00 s：' + out.tlabel);
+    out.ruler = [...document.querySelectorAll('#tlBars .tlr-track > span')].map(x => x.textContent).slice(-1)[0];
+    if (out.ruler !== '7s' && out.ruler !== '6s') bad.push('刻度应到 6–7 s：' + out.ruler);
+    out.voids = [...document.querySelectorAll('#tlBars .tlb-t i.void')].map(v => ({ l: v.style.left, w: v.style.width, em: v.textContent, t: v.title.slice(0, 34) }));
+    if (out.voids.length !== 2 || !out.voids.every(v => /出点后/.test(v.em) && /不导出/.test(v.t))) bad.push('两层轨道上出点后到 7 s 应画「出点后 · 不导出」：' + JSON.stringify(out.voids));
+    else { const r = parseFloat(out.voids[1].l) + parseFloat(out.voids[1].w); if (Math.abs(r - 100) > 0.5) bad.push('第 2 层斜纹应画到时间轴尽头：' + JSON.stringify(out.voids[1])); }
+    if (!/出点 3\.18 s/.test(out.flash2 || '') || !/清除/.test(out.flash2 || '')) bad.push('改序列时长、设了出点时应说一句（出点 3.18 s、怎么清除）：' + out.flash2);
+    // 清除第 2 层出点：导出长度回到内容（假烘焙不裁全黑 → 7 s），斜纹没了
+    selectComboLayer(1); await wait(60); const clr = document.querySelector('#tlBars [data-cut=clear]'); if (clr) clr.click();
+    for (let k = 0; k < 300 && busy(); k++) await wait(100);
+    await wait(200); stage2.tlSig = ''; buildTlBars();
+    out.cleared = { cut: layerEntryOf(state.layers[1]).P.cutOut, content: typeof comboContentEnd === 'function' ? +comboContentEnd().toFixed(3) : null, voids: document.querySelectorAll('#tlBars .tlb-t i.void').length };
+    if (!clr || out.cleared.cut !== 0 || out.cleared.voids !== 1) bad.push('清除第 2 层出点后应只剩第 1 层斜纹：' + JSON.stringify(out.cleared));
+    // 单层：设了出点、序列时长 7 s → 时间轴 7 s
+    const prev = state.bake; await openType('kiku'); for (let i = 0; i < 100 && (!state.bake || state.bake === prev || busy()); i++) await wait(100);
+    state.P.cutOut = 2; onParam(); for (let k = 0; k < 100 && (busy() || state.dirty); k++) await wait(100);
+    const sl = document.querySelector('#params [id^="p-duration-"]'), num = sl && sl.parentElement.querySelector('.num');
+    if (num) { num.value = '7'; num.dispatchEvent(new Event('change')); }
+    for (let k = 0; k < 100 && (busy() || state.dirty); k++) await wait(100);
+    await wait(150);
+    out.single = { D: +curDuration().toFixed(3), bake: state.bake ? +bakeTotal(state.bake).toFixed(3) : null, dur: state.P.duration };
+    if (Math.abs(out.single.D - 7) > 0.02) bad.push('单层：序列时长 7 s、出点 2 s，时间轴应是 7 s：' + JSON.stringify(out.single));
+  } finally { bake = fb; }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w31(pg):
+    """4.9.36 时间轴 = 序列时长（用户 10-07 20:37）：出点 / 结尾全黑不再把时间轴压短，不导出那段在轨道上画斜纹并说清楚"""
+    r = await pg.evaluate(W31_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1800]
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -3102,7 +3173,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

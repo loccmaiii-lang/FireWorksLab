@@ -170,7 +170,7 @@ def baker_strip(s, entry, out, ref=None, fracs=(0.1, 0.3, 0.5, 0.7, 0.9), log=pr
     s.pg.wait_for_function("window.__fw && window.__fw.idle() && (state.tab !== 'combo' || (state.layers.length > 0 && state.lib.length >= state.layers.length))", timeout=0)
     s.pg.wait_for_timeout(1500)
     apply_layer_out(s, layer_out)
-    T = s.pg.evaluate("state.tab === 'combo' ? Math.min(comboDuration(), Math.max(...state.layers.map(L => { const e = state.lib.find(x => x.name === L.lib); return (L.delay || 0) + (e ? e.P.duration : 0); }))) : (state.P && state.P.duration) || 3")
+    T = s.pg.evaluate("state.tab === 'combo' ? Math.min(typeof comboContentEnd === 'function' ? comboContentEnd() : comboDuration(), Math.max(...state.layers.map(L => { const e = state.lib.find(x => x.name === L.lib); return (L.delay || 0) + (e ? e.P.duration : 0); }))) : (state.P && state.P.duration) || 3")
     if ref:     # 不超过实拍视频剩下的长度（不然后几张实拍是黑的）
         try:
             import cv2; cap = cv2.VideoCapture(ref['video']); vd = cap.get(cv2.CAP_PROP_FRAME_COUNT) / (cap.get(cv2.CAP_PROP_FPS) or 30); cap.release()

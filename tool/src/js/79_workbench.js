@@ -470,7 +470,9 @@ function layerSpans(x) {
   const Pc = layerPOf(x), stale = !!(Pc && x.b.P && ['duration', 'cutIn', 'cutOut'].some(k => Math.abs((+x.b.P[k] || 0) - (+Pc[k] || 0)) > 1e-6));
   const end = stale ? (+Pc.cutOut > 0 ? Math.min(+Pc.cutOut, +Pc.duration) : +Pc.duration) : bakeTotal(x.b);
   const vis = stale ? [+Pc.cutIn > 0 ? +Pc.cutIn : (pre ? pre.from : t0), end] : m.vis || [pre ? pre.from : t0, end];
-  return { d, r, t0, end, pre, vis, at: t => d + t / r };
+  // 4.9.36：序列时长（这一层自己的时间）。时间轴按它画；end 之后到 seq 是「不导出」（出点后 / 结尾全黑没烘），轨道上画斜纹
+  const seq = Math.max(end, typeof seqEndOf === 'function' ? seqEndOf(Pc) : 0), cut = !!(Pc && +Pc.cutOut > 0 && +Pc.cutOut < +Pc.duration - 1e-3);
+  return { d, r, t0, end, pre, vis, seq, cut, cutAt: cut ? +Pc.cutOut : 0, at: t => d + t / r };
 }
 // 层轨道（用户 2026-10-02 13:09 a：接力关系藏在每层的参数里，找不到）：把决定「这一层什么时候亮、什么时候停」的参数画在时段条上，
 // 可编辑的那一层（单层 / 观察图层里选中的层）能直接拖。时间都是这一层自己的时间（相对开花），画的时候按组合延迟 / 时间倍率换到总时间。
@@ -598,10 +600,26 @@ function resetToOpened() {
 }
 // 4.4.1 的「发射器行」（每个发射器一行生成 / 寿命 / ✂）和 4.2.18 的曲线视图 4.5.0 删掉了（用户 10-05 01:28 #4：「新增的时间轴没什么用，而且影响我笔记本画布屏占比」）。
 // 底部只留：刻度 + 每层一条轨道（阶段点、入点 / 出点把手、帧刻度）+ 一行入出点按钮。序列被切掉的提示仍在「效果 › 规格 › 火花灭完」。
+// 4.9.36：轨道上「不导出」那段（序列时长里，出点后 / 结尾全黑没烘）说清楚为什么、怎么变长
+function seqVoidText(sp) {
+  const a = sp.end.toFixed(2), z = sp.seq.toFixed(2);
+  return sp.cut ? `${a} – ${z} s 不导出：这一层设了出点 ${sp.cutAt.toFixed(2)} s（序列时长 ${z} s 只是时间轴画到这里）。要导出更长：时间轴下面「清除」入出点`
+    : `${a} – ${z} s 全黑（最亮像素 < 2/255），烘焙时不烘、不导出（序列时长 ${z} s 只是时间轴画到这里）。要这一层亮得更久：调燃烧时间 / 火花寿命，或「效果 › 整体调整 › 节奏」放慢`;
+}
+function seqTailNote(rows, P) {
+  const x = rows.find(r => layerPOf(r) === P), sp = x && layerSpans(x);
+  return sp && sp.seq > sp.end + 0.02 ? ` · 序列时长 ${sp.seq.toFixed(2)} s，导出到 ${sp.end.toFixed(2)} s（斜纹 = 不导出：${sp.cut ? '出点后' : '后面全黑没烘'}）` : '';
+}
+// 改序列时长（右栏滑杆 / 数值框）时，这一层设了出点：时间轴跟着变长，导出长度不变 → 说一句
+function seqNote(P) {
+  if (!P || !(typeof seqEndOf === 'function' && seqEndOf(P)) || !(+P.cutOut > 0 && +P.cutOut < +P.duration - 1e-3)) return '';
+  const msg = `序列时长 ${(+P.duration).toFixed(2)} s：时间轴画到这里；这一层设了出点 ${(+P.cutOut).toFixed(2)} s，只导出到出点（轨道上斜纹那段不导出）。要导出更长：时间轴下面「清除」入出点`;
+  flash(msg, false, 8000, true); return msg;
+}
 function buildTlBars() {
   if (stage2.drag) return;   // 拖动中不重建（否则手上的把手被换掉，拖到一半断开）
   const D = curDuration(), rows = curLayerBakes(), P = editLayerP();
-  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x), lp = layerPOf(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(lp).map(q => q.t.toFixed(2)).join(':'), lp ? [lp.cutIn, lp.cutOut].join('/') : '', x.b ? bakeParts(x.b).map(s => (s.meta.L && s.meta.L.F) + '@' + (s.meta.t0 || 0).toFixed(3)).join('+') : ''].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-') + '|' + state.layerView.solo + '/' + state.layerView.mute.join(',') + '|' + state.followOff + state.glueOff;
+  const sig = D.toFixed(3) + '|' + rows.map(x => { const sp = layerSpans(x), lp = layerPOf(x); return [x.name, sp ? [sp.d, sp.r, sp.t0, sp.end, sp.pre ? sp.pre.from : '', sp.vis, sp.seq, sp.cut].join('/') : '-', state.tab !== 'combo' || layerShown(x.i), state.comboSel, phasesOf(lp).map(q => q.t.toFixed(2)).join(':'), lp ? [lp.cutIn, lp.cutOut].join('/') : '', x.b ? bakeParts(x.b).map(s => (s.meta.L && s.meta.L.F) + '@' + (s.meta.t0 || 0).toFixed(3)).join('+') : ''].join(','); }).join(';') + '|' + state.tab + '|' + (P ? [P.cutIn, P.cutOut, P.preRoll].join('/') : '-') + '|' + state.layerView.solo + '/' + state.layerView.mute.join(',') + '|' + state.followOff + state.glueOff;
   if (sig === stage2.tlSig) return; stage2.tlSig = sig;
   const host = $('#tlBars');
   if (state.tab === 'asset' || state.showcase || !rows.length) { host.innerHTML = ''; return; }
@@ -613,7 +631,8 @@ function buildTlBars() {
     const sp = layerSpans(x), on = state.tab !== 'combo' || layerShown(x.i), sel = state.tab === 'combo' && state.comboSel === x.i, lp = layerPOf(x);
     const bars = !sp ? '' : seg(sp.at(sp.vis[0]), sp.at(sp.vis[1]), 'vis', '整段可见范围（全黑帧已剔掉）')
       + (sp.pre ? seg(sp.at(sp.pre.from), sp.at(sp.t0), 'pre', `入点前：第 1 帧从 ${Math.round(sp.pre.keys[0][1] * 100)}% 放大`) : '')
-      + seg(sp.at(sp.t0), sp.at(sp.end), 'main', `贴图在播：${sp.t0.toFixed(2)} – ${sp.end.toFixed(2)} s（这一层自己的时间）`);
+      + seg(sp.at(sp.t0), sp.at(sp.end), 'main', `贴图在播：${sp.t0.toFixed(2)} – ${sp.end.toFixed(2)} s（这一层自己的时间）`)
+      + (sp.seq > sp.end + 0.02 && pct(sp.at(sp.seq)) > pct(sp.at(sp.end)) ? `<i class="void" style="left:${pct(sp.at(sp.end))}%;width:${Math.max(0.3, pct(sp.at(sp.seq)) - pct(sp.at(sp.end)))}%" title="${seqVoidText(sp)}"><em>${sp.cut ? '出点后 · 不导出' : '全黑 · 不导出'}</em></i>` : '');
     const cutOK = sp && lp && usesTickPlan40(lp) && !(sp.vis[1] - sp.vis[0] < 0.2);
     const cuts = !cutOK ? '' : [['in', sp.t0, '入点', +lp.cutIn > 0], ['out', sp.end, '出点', +lp.cutOut > 0]].map(([k, t, lab, set]) => `<b class="cut cut-${k}${set ? ' set' : ''}" data-cut2="${k}" data-li="${x.i}" style="left:${pct(sp.at(t))}%" title="${lab}：${t.toFixed(2)} s${set ? '' : '（自动）'}——左右拖动修改；拖回尽头 = 自动"></b>`).join('');
     const ph = sp ? phasesOf(lp).map(q => `<b class="ph ph-${q.k} row-${q.row}${q.auto ? ' auto' : ''}${glued.has(x.i + ':' + q.k) ? ' glued' : ''}" data-ph="${q.k}" data-li="${x.i}" style="left:${pct(sp.at(q.t))}%" title="${q.lab}：${q.t.toFixed(2)} s（左右拖动修改${glued.has(x.i + ':' + q.k) ? '；和同一批星的另一层在同一时刻，一起动' : ''}）"></b>`).join('') : '';
@@ -623,7 +642,7 @@ function buildTlBars() {
     return `<div class="tlb${on ? '' : ' off'}${sel ? ' sel' : ''}"><div class="tlb-label"><span class="tlb-number">${x.i + 1}</span>${combo ? `<button class="tlb-observe" type="button" data-track-mute="${x.i}" aria-label="显示第 ${x.i + 1} 层" aria-pressed="${!mute}" title="${mute ? '显示' : '隐藏'}这一层（只影响观察）">${uiIcon(mute ? 'eye-off' : 'eye')}</button>` : ''}<button type="button" class="tlb-n" data-i="${x.i}" title="点一下切换图层参数">${x.name}</button>${combo ? `<button class="tlb-observe solo" type="button" data-track-solo="${x.i}" aria-label="独看第 ${x.i + 1} 层" aria-pressed="${solo}" title="独看这一层（只影响观察）">S</button>` : ''}</div><span class="tlb-t" data-i="${x.i}">${bars}<span class="fcs">${comb}</span>${ph}${cuts}</span></div>`;
   }).join('') + '<span class="tlb-ph" aria-hidden="true"></span>'
     + (P || state.tab === 'combo' ? `<div class="tlcut" title="轨道上：上排圆点 = 星（点火、燃烧结束…），菱形 = 火花（开始、停；空心 = 默认位置，拖动就打开），白色把手 = 入点 / 出点，都能左右拖；细刻度 = 每一帧从哪个 tick 开始">${P ? `<button type="button" class="mini" data-cut="in" title="把当前时刻设成入点：帧从这里开始">设为入点</button><button type="button" class="mini" data-cut="out" title="把当前时刻设成出点">设为出点</button><button type="button" class="mini" data-cut="clear">清除</button>
-      <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') : ''}</span>` : '<span>点一层的轨道或名字改那一层的入点 / 出点</span>'}
+      <span>入点 ${+P.cutIn > 0 ? (+P.cutIn).toFixed(2) + ' s' : '自动'} · 出点 ${+P.cutOut > 0 ? (+P.cutOut).toFixed(2) + ' s' : '自动'}${+P.cutIn > 0 ? ' · 入点前' + (+P.preRoll === 0 ? '不显示' : '从小放大') : ''}${seqTailNote(rows, P)}</span>` : '<span>点一层的轨道或名字改那一层的入点 / 出点</span>'}
       <label class="check tlopt" title="开：拖 / 改点火、燃烧结束这些时间点时，序列时长跟着这一层最后看得见的时刻伸缩，入点跟着点火平移。关：只改你动的那个参数"><input type="checkbox" data-tlopt="follow"${state.followOff ? '' : ' checked'}> 时长 / 入点跟着走</label>${state.tab === 'combo' && (state.links || []).length ? `<label class="check tlopt" title="开：同一批星的几层在同一时刻的点（例：引线火花停 = 锦点火）粘在一起，动一个另一个跟着动（轨道上带链条的点）。关：各改各的"><input type="checkbox" data-tlopt="glue"${state.glueOff ? '' : ' checked'}> 同一时刻的点一起动</label>` : ''}</div>` : '');
   // 点轨道（不是把手）：跳到那个时刻；多层时顺便切到这一层（用户 16:22 第 3 条）
   host.querySelectorAll('.tlb-t').forEach(t => t.addEventListener('pointerdown', ev => { if (ev.target !== t && !ev.target.matches('i, .fcs')) return; const r = t.getBoundingClientRect(); state.t = clamp((ev.clientX - r.left) / r.width, 0, 1) * curDuration(); if (state.tab === 'combo' && state.comboSel !== +t.dataset.i) selectComboLayer(+t.dataset.i); }));

@@ -33,8 +33,10 @@ function busy(on, text, p) {
   if (busyJob.on && busyJob.req && p != null) { busyJob.req = false; throw new Error('已取消（你点了取消；上次的结果、参数都还在）'); }
 }
 let flashTimer = 0;
-function flash(msg, bad, ms) { if (!bad && typeof storeJustFailed === 'function' && storeJustFailed() && /保存|存成|已存|已更新|已新建/.test(msg)) { msg = '没存上（浏览器里存不进去）：' + msg; bad = true; } const s = $('#status'); s.textContent = msg; s.className = bad ? '' : 'on'; clearTimeout(flashTimer); flashTimer = setTimeout(() => { s.textContent = ''; s.className = ''; }, ms || 3500); }
-function setStatus(msg) { const s = $('#status'); s.textContent = msg; s.className = msg ? 'on' : ''; }
+// 4.9.36：hold = 这条提示在显示期间不被烘焙进度（setStatus）盖掉（改序列时长的说明一改就重烘，以前一闪就被「重烘第 n 层… 0%」换掉）
+let flashHoldUntil = 0;
+function flash(msg, bad, ms, hold) { flashHoldUntil = hold ? Date.now() + (ms || 3500) : 0; if (!bad && typeof storeJustFailed === 'function' && storeJustFailed() && /保存|存成|已存|已更新|已新建/.test(msg)) { msg = '没存上（浏览器里存不进去）：' + msg; bad = true; } const s = $('#status'); s.textContent = msg; s.className = bad ? '' : 'on'; clearTimeout(flashTimer); flashTimer = setTimeout(() => { s.textContent = ''; s.className = ''; }, ms || 3500); }
+function setStatus(msg) { if (Date.now() < flashHoldUntil) return; const s = $('#status'); s.textContent = msg; s.className = msg ? 'on' : ''; }
 
 // 上升类的序列时长跟随到顶时间
 function derive(P) {
@@ -726,7 +728,7 @@ function buildMasterPanel() {
       const det = place(sec, it, ikey, nm), ex = emitOf(nm, sec);          // 这一行放进它的发射器 › 模块
       if (Array.isArray(it)) {
         const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
-        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); } }, D[k], k);
+        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); if (k === 'duration' && typeof seqNote === 'function') seqNote(state.P); } }, D[k], k);     // 4.9.36 改序列时长、设了出点：说一句
         autoDefRow(row, k, step);
         const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}` : short) + (unit ? `（${unit}）` : '') + '；双击恢复默认';
         row._lab = short; row._detail = detail; row._nm = nm;
@@ -1169,9 +1171,18 @@ async function applyCombo(c) {
   if(state.platform==='mobile')await ensureComboMobile();
   if (typeof buildLayerCard === 'function') buildLayerCard();
 }
-function comboDuration() {
+// 4.9.36（用户 10-07 20:37「两层效果都设置了序列时长……模板默认是3.17秒，那它就一直显示3.17秒？不应该我改了7秒，时间轴也会延长到7秒吗」）：
+// 时间轴 = 各层「开始时间 + 序列时长 ÷ 时间倍率」取最长（以前按烘出来的长度：出点、结尾全黑不烘都会把它压短，改序列时长时间轴不动）。
+// 出点后 / 结尾全黑没烘的那段在层轨道上画斜纹「不导出」（buildTlBars）。comboContentEnd = 以前的算法（贴图实际播到哪），脚本取样用
+function seqEndOf(P) { return P && familyOf(P.type) === 'aerial' && !isEmit(P) ? Math.max(0, +P.duration || 0) : 0; }
+function comboContentEnd() {
   let d = 0.5;
-  for (const L of state.layers) { const e = state.lib.find(x => x.name === L.lib); if (e) d = Math.max(d, L.delay + bakeTotal(e.bake) / L.rate); }
+  for (const L of state.layers) { const e = state.lib.find(x => x.name === L.lib); if (e) d = Math.max(d, (+L.delay || 0) + bakeTotal(e.bake) / (+L.rate || 1)); }
+  return d;
+}
+function comboDuration() {
+  let d = comboContentEnd();
+  for (const L of state.layers) { const e = state.lib.find(x => x.name === L.lib); if (e) d = Math.max(d, (+L.delay || 0) + seqEndOf(e.P) / (+L.rate || 1)); }
   return d;
 }
 function bakeTotal(b) { let d = 0; for (let s = b; s; s = s.next) d = Math.max(d, (s.meta.t0 || 0) + s.meta.duration); return d; }

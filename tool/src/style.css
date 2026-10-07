@@ -1169,6 +1169,8 @@ header.top #status{position:fixed;right:16px;bottom:16px;z-index:100;max-width:m
 .tlb-observe.solo{border:1px solid var(--line2);width:24px;height:26px}
 .tlb-t{height:22px;border-radius:4px;background:var(--low)}
 .tlb-t i.main{background:var(--acc);opacity:.8}
+.tlb-t i.void{background:repeating-linear-gradient(135deg,rgba(150,160,165,.28) 0 4px,rgba(150,160,165,.07) 4px 8px);border-radius:0 4px 4px 0;overflow:hidden;display:flex;align-items:center}
+.tlb-t i.void em{font-style:normal;font-size:10.5px;line-height:1;color:var(--faint);white-space:nowrap;padding-left:6px;pointer-events:none}
 .tlb-ph{top:28px;bottom:50px;z-index:2}
 .tlcut{font-size:11px;gap:6px}
 .tlcut>span{color:var(--faint)}
