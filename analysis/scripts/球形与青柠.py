@@ -21,23 +21,23 @@ NEUTRAL = {'ramp0': '#000000', 'ramp1': '#4a4a52', 'ramp2': '#c8c8d0', 'ramp3': 
 FX = []
 
 # 球形A：效果不动，只核时间节点（看 NFQ1 的同一秒对照后填）
-FX.append(dict(id='QA20', src='QA19', key='qiuxing_a', name='球形A · 核时间（QA19 参数）', en='QiuxingA', layers=[
+FX.append(dict(id='QA20', src='QA19', key='qiuxing_a', name='球形A · 核时间（QA19 参数）', en='QiuxingA40', layers=[
     ('QA19-1', '尾巴层', dict(sparkStop=2.05), {}),     # 实拍 +2.3 s 还有细金尾（原来 +1.9 s 停、+2.2 前后没了）
     ('QA19-2', '星头层', dict(headDimUntil=1.75),     # 实拍 +1.7 s 外圈星头开始变粉、+1.8 s 已经很明显（原来 +1.85 s 才亮起来）
      dict(stages=[[0, '#ff7a40'], [0.28, '#fff0c8'], [1.6, '#ff2d8a'], [2.05, '#ff5aa8'], [2.4, '#f4f0ff']])),     # 粉 1.65 → 1.6、银白 2.5 → 2.4（实拍 +2.4 s 已转银白）
 ], note='QA19 的效果不动（用户 19:48「基本通过，我略微调整就可以用了」），只对着实拍核时间节点：星头变粉 1.65 → 1.6 s、星头亮起 1.85 → 1.75 s、转银白 2.5 → 2.4 s、金尾停 1.9 → 2.05 s（实拍 +2.3 s 还有细金尾）。按 4.9.31 重新导出。'))
 
 # 球形D：同上
-FX.append(dict(id='QD14', src='QD13', key='qiuxing_d', name='球形D · 核时间（QD13 参数）', en='QiuxingD', layers=[
+FX.append(dict(id='QD14', src='QD13', key='qiuxing_d', name='球形D · 核时间（QD13 参数）', en='QiuxingD40', layers=[
     ('QD13-1', '外层尾巴', {}, {}),
-    ('QD13-2', '外层星头', dict(burn=5.4, fade=0.2, sparkRateEnd=0.4, sparkBright=0.22),     # 实拍 +4.3 s 开始变暗、+5.3 s 前后没了（原来 +5 s 还很亮：银色短尾越到后面越密）；银尾压一点，前面的绿星相对亮一些
+    ('QD13-2', '外层星头', dict(burn=5.4, fade=0.2, sparkRateEnd=0.15, sparkBright=0.22),     # 实拍 +4.3 s 开始变暗、+5.3 s 前后没了（原来 +5 s 还很亮：银色短尾越到后面越密）；银尾压一点，前面的绿星相对亮一些
      {}),
     ('QD13-3', '芯', dict(burn=1.85, fade=0.18), {}),     # 实拍芯 +1.5 s 还亮、+1.5 → 1.8 s 暗掉（原来 +1.2 s 就开始暗）
 ], note='QD13 的效果不动（用户 19:48「基本通过，我略微调整就可以用了」），只对着实拍核时间节点：芯 +1.5 s 还亮、+1.8 s 暗掉（燃烧 1.9 → 1.85、淡出 0.35 → 0.18）；外层星头 +4.3 s 开始暗、+5.3 s 没了（燃烧 5 → 5.4、淡出 0.25 → 0.2），银色短尾越到后面越稀（生成率末段 ×1.3 → ×0.4）。按 4.9.31 重新导出。'))
 
 # 球形C：绿芯入 + 橙引转银辉星（三层：芯 / 外层橙引 / 外层银辉星，外层两层同一个模拟）
 C_OUT = dict(seed=11, stars=300, v0=300, vt=20, grav=0.5, speedJit=10, dirJit=1.5, burn=3.3, burnJit=30, fade=0.08, lastFlare=0, ignDelay=None)
-FX.append(dict(id='QC12', src='QC11', key='qiuxing_c', name='球形C · 绿芯入 + 橙引转银辉星', en='QiuxingC', layers=[
+FX.append(dict(id='QC12', src='QC11', key='qiuxing_c', name='球形C · 绿芯入 + 橙引转银辉星', en='QiuxingC40', layers=[
     ('QC11-1', '芯（绿）', dict(stars=420, v0=100, vt=13, grav=0.5, speedJit=12, burn=2.1, burnJit=8, fade=0.3, flash=0.6, headSize=1.35, headBright=1,
                                sparkRate=0, sparkStop=0, ignDelay=0.12, ignJit=10),
      dict(stages=[[0, '#ffd9a8'], [0.2, '#fffbe8'], [0.42, '#a6ff52']], xw=0.18, headInt=4)),
@@ -45,23 +45,24 @@ FX.append(dict(id='QC12', src='QC11', key='qiuxing_c', name='球形C · 绿芯�
                                  sparkInherit=0.12, sparkBright=2.5, T0=2150, cooling=0.3, glitter=0, duration=1.0),
      dict(stages=[[0, '#ff7a2a']], xw=0.1, headInt=1, **NEUTRAL)),
     ('QC11-2', '外层 · 银辉星', dict(C_OUT, headSize=1.0, headBright=0.9, flash=0, headDim=0.02, headDimUntil=0.45, sparkRate=170, sparkStart=0.42, sparkStop=2.2,
-                                  sparkLife=0.32, sparkLifeJit=40, sparkSpread=0.6, sparkInherit=0.15, sparkBright=1.6, sparkGrav=1.2, T0=2900, cooling=0.25,
-                                  glitter=1, glitterDelay=0.1, duration=5.2),
-     dict(stages=[[0, '#f6eeff'], [2.1, '#fff1d6'], [2.7, '#ffc274']], xw=0.3, headInt=1.4, **NEUTRAL)),
+                                  sparkLife=0.32, sparkLifeJit=40, sparkSpread=0.9, sparkInherit=0.15, sparkBright=1.6, sparkGrav=1.2, T0=2900, cooling=0.25,
+                                  glitter=1, glitterDelay=0.1, glitterDim=0.95, glitterPeak=8, duration=5.2,
+                                  starBrightCurve='0:1, 0.62:1, 0.72:2.2, 1:2.2'),     # NFQ2：+2.2 s 以后实拍是一颗颗亮的暖金光点，模拟太暗太小 → 辉星火花停了以后星头亮 2.2 倍
+     dict(stages=[[0, '#fbeaff'], [1.95, '#fff1d6'], [2.5, '#ffc274']], xw=0.3, headInt=1.4, **NEUTRAL)),     # 微带粉的银白；实拍 +2.17 s 已经偏暖
 ], note='用户 19:48：球形C 是「绿芯入 + 橙引转银辉星」。按实拍重拆三层：芯（青柠绿光点，+0.25 s 前后整团发白、+0.45 起绿，+1.7 开始暗、+2.2 没了）；外层是同一批星的两层——'
         '橙引（开花到 +0.26 s 橙色短放射尾）和银辉星（+0.45 s 起星头亮起来、后面拖一串一闪一闪的银色火花，+2.2 s 火花停、星头转暖金 → 橙，+2.4–3.9 s 一颗颗灭）。'
         '外层初速 300 m/s、终端速度 20 m/s（花径按实拍 +0.5 / +1.0 / +2.3 s 的比例对过），芯终端速度 13 m/s（+1.0 s 以后基本不再张大，最终约外层的 1/3）。'))
 
 # 青柠星：橙引 + 延迟起势（橙 → 柠绿），两层同一个模拟
-FX.append(dict(id='QN12', src='QN11', key='qingning', name='青柠星 · 橙引 + 延迟起势（橙 → 柠绿）', en='Qingning', layers=[
-    ('QN11-1', '橙引（只画火花）', dict(sparkRate=900, sparkStop=0.55, sparkLife=0.32, sparkLifeJit=30, sparkSpread=0.22, sparkInherit=0.1, sparkBright=5, T0=2150,
+FX.append(dict(id='QN12', src='QN11', key='qingning', name='青柠星 · 橙引 + 延迟起势（橙 → 柠绿）', en='Qingning40', layers=[
+    ('QN11-1', '橙引（只画火花）', dict(sparkRate=900, sparkStop=0.62, sparkLife=0.32, sparkLifeJit=30, sparkSpread=0.22, sparkInherit=0.1, sparkBright=5, T0=2150,
                                     cooling=0.22, headBright=0.02, flash=0.6, duration=1.3),
      dict(stages=[[0, '#ff6a1a']], xw=0.15, headInt=1.2)),
     ('QN11-2', '柠绿星头（延迟起势）', dict(headSize=1.5, headBright=1.6, sparkRate=0, flash=0,
-                                         starBrightCurve='0:0.03, 0.12:0.05, 0.2:0.45, 0.29:1, 1:1'),
+                                         starBrightCurve='0:0.03, 0.14:0.05, 0.22:0.45, 0.31:1, 1:1'),     # NFQ2：+0.6 s 模拟星头已经全亮，实拍还是橙尾为主 → 起势晚 0.05 s
      dict(stages=[[0, '#ff7a30'], [0.5, '#f0ffa0']], xw=0.25, headInt=1.4)),
 ], note='用户 19:48：青柠星是「橙引 + 延迟起势的星（从橙到柠绿）」。按实拍时间节点：开花到 +0.4 s 是一团橙色放射尾（橙引，星头看不见）；+0.4 s 起星头从外圈开始亮起来、'
-        '+0.9 s 全部变成大颗的柠绿星（起势用「星头亮度随寿命」从 0.05 升到 1：+0.4 → +0.9 s）；橙尾 +0.55 s 停、+0.9 s 前后收完；柠绿星亮度不减，+3.0–3.3 s 集中熄灭。'
+        '+0.95 s 全部变成大颗的柠绿星（起势用「星头亮度随寿命」从 0.05 升到 1：+0.45 → +0.95 s）；橙尾 +0.62 s 停、+0.95 s 前后收完；柠绿星亮度不减，+3.0–3.3 s 集中熄灭。'
         '花径随时间的比例和实拍对过（初速 140 m/s、终端速度 18.6 m/s，和 QN11 一样）。'))
 
 
@@ -92,11 +93,14 @@ def build(expo):
     print('→', OUT.relative_to(ROOT), len(entries), '层', len(combos), '组合')
 
 
-def write_status():
+def write_status(jobs=None):
     d = json.loads(STATUS.read_text(encoding='utf-8'), object_pairs_hook=collections.OrderedDict)
     for e in d['effects']:
         for fx in FX:
-            if e['key'] == fx['key']: e['工作版'] = fx['id']; e['主条目'] = fx['id']
+            if e['key'] == fx['key']:
+                e['工作版'] = fx['id']; e['主条目'] = fx['id']
+                if fx['id'] == 'QC12': e['层英文名'] = ['Core', 'Lead', 'Glitter']     # 三层：芯 / 外层橙引 / 外层银辉星
+                if jobs: e['导出任务'] = (e.get('导出任务') or []) + [j for j in jobs if j.startswith(fx['id'] + 'E') and j not in (e.get('导出任务') or [])]
     STATUS.write_text(json.dumps(d, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
 
 
@@ -118,5 +122,5 @@ if __name__ == '__main__':
         for e in json.loads(OUT.read_text(encoding='utf-8'))['entries']:
             if 'exposure' in e['p']: expo.setdefault(e['id'], e['p']['exposure'])
     build(expo)
-    if a.status: write_status()
-    if a.jobs: write_jobs(a.jobs, a.tag)
+    ids = write_jobs(a.jobs, a.tag) if a.jobs else None
+    if a.status or ids: write_status(ids)
