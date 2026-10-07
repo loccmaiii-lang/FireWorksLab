@@ -1,13 +1,13 @@
 <div id="fw-rhythm-v1">
-  <h3>烟花编排demo · 上下两层</h3>
+  <h3>烟花编排demo · 密集圆冠版</h3>
   <div class="viz-controls">
     <button class="btn btn-primary" type="button" data-play>播放</button>
     <label class="form-label">段落 <select class="form-select" data-phase aria-label="跳到段落"></select></label>
-    <label class="form-label">视野 <select class="form-select" data-view><option value="front">前台近看</option><option value="full">全场比例</option></select></label>
-    <span class="tabular-nums" data-time>02:48.8 / 03:30</span>
+    <label class="form-label">视野 <select class="form-select" data-view><option value="full">全场比例</option><option value="front">前台近看</option></select></label>
+    <span class="tabular-nums" data-time>00:24.8 / 03:30</span>
   </div>
   <canvas role="img" aria-label="正面米制比例示意：坝顶高150米，前台高50米，前台小烟花完整设计顶部低于145米。示意不是UE粒子回放。"></canvas>
-  <label class="form-label">节目时间 <input class="form-range" data-seek aria-label="节目时间，秒" type="range" min="0" max="210" step="0.1" value="168.8"></label>
+  <label class="form-label">节目时间 <input class="form-range" data-seek aria-label="节目时间，秒" type="range" min="0" max="210" step="0.1" value="24.8"></label>
   <div class="viz-row text-small"><span>● 前台专属小烟花</span><span>◎ 坝顶主景</span><span>正面比例 · 非UE回放</span></div>
   <div class="text-small" data-detail aria-live="polite"></div>
 </div>
@@ -25,8 +25,22 @@
   const timeLabel = root.querySelector('[data-time]'), detail = root.querySelector('[data-detail]');
   const probe = document.createElement('span');
   probe.style.display = 'none'; probe.setAttribute('aria-hidden','true'); root.appendChild(probe);
-  let t = 168.8, playing = false, last = 0, phaseIndex = -1;
+  let t = 24.8, playing = false, last = 0, phaseIndex = -1;
   const instance = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const profiles = new Map();
+  function spherePoints(count) {
+    if(profiles.has(count))return profiles.get(count);
+    const pts=[], core=Math.floor(count*.72), shell=count-core;
+    for(let j=0;j<core;j++) {
+      const depth=1-2*(j+.5)/core, r=Math.sqrt(1-depth*depth), angle=j*2.399963229728653;
+      pts.push([Math.cos(angle)*r, Math.sin(angle)*r]);
+    }
+    for(let j=0;j<shell;j++) {
+      const angle=j/shell*Math.PI*2;
+      pts.push([Math.cos(angle),Math.sin(angle)]);
+    }
+    profiles.set(count,pts);return pts;
+  }
   const fmt = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${(s%60).toFixed(1).padStart(4,'0')}`;
   for (const p of show.phases) {
     const o = document.createElement('option');
@@ -34,7 +48,7 @@
     phaseSelect.appendChild(o);
   }
   function applyState(s) {
-    const v = s?.privateContent;
+    const v = s?.modelContent?.version===show.version ? s.privateContent : null;
     if (v && Number.isFinite(v.time)) t = Math.min(210,Math.max(0,v.time));
     if (v && ['front','full'].includes(v.view)) view.value = v.view;
     seek.value = t;
@@ -116,15 +130,16 @@
       const u=age/life, expansion=1-Math.exp(-8*u), radius=a.diameter/2*expansion;
       const fall=(e.zone==='front'?9:25)*u*u;
       const alpha=Math.min(1,(life-age)/Math.min(1.2,life*.45));
-      const count=a.kind==='fan'?13:e.zone==='front'?28:54;
+      const count=a.kind==='fan'?13:e.zone==='front'?72:120;
+      const sphere=a.shape==='sphere'?spherePoints(count):null;
       ctx.strokeStyle=c;ctx.fillStyle=c;ctx.globalAlpha=alpha;
       for(let j=0;j<count;j++) {
         const angle=a.kind==='fan'?j/(count-1)*Math.PI:j/count*Math.PI*2;
-        const rr=radius*(.86+.14*Math.sin(j*12.9898+e.phase));
-        const vx=Math.cos(angle), vy=Math.sin(angle);
+        const rr=radius;
+        const vx=sphere?sphere[j][0]:Math.cos(angle), vy=sphere?sphere[j][1]:Math.sin(angle);
         const px=p.x+vx*rr, height=a.z+vy*rr-fall;
         ctx.beginPath();ctx.arc(x(px),z(height),Math.max(.8,scale*.75),0,Math.PI*2);ctx.fill();
-        if(a.kind!=='small' || a.hue==='gold') {
+        if(a.kind==='fan' || sphere) {
           ctx.beginPath();ctx.moveTo(x(p.x+vx*rr*.68),z(a.z+vy*rr*.68-fall*.5));
           ctx.lineTo(x(px),z(height));ctx.stroke();
         }

@@ -10,21 +10,22 @@ OUT = ROOT / '协作' / '编排demo'
 
 def build_show():
     phases = [
-        (0, 12, '低位引子', '前台三点缓慢点亮，坝顶只在末尾预告。'),
-        (12, 38, '坝顶展开', '银白、暖金两次展开；前台在两波之间轻答。'),
-        (38, 65, '上下问答', '坝顶每六秒一对，前台晚2.7秒回应，花型保持疏朗。'),
-        (65, 90, '双向流动', '坝顶左右扫两遍；前台只在扫完后补中心短句。'),
-        (90, 110, '第一次抬升', '五点到九点，三发大花抬高；前台三次短促回应。'),
-        (110, 132, '低位间奏', '上层余火先退，前台单发、对开、三点收句，随后全场留白。'),
-        (132, 165, '第二次递进', '坝顶三点、五点、九点递增；前台节奏由稀到密。'),
-        (165, 188, '金色终章', '坝顶暖金铺满，再下垂成金帘；前台最后一句后彻底退出。'),
-        (188, 200, '白色收束', '坝顶190/192/194/196秒四波九点齐爆，前台全停。'),
-        (200, 210, '自然余韵', '只让白墙自然熄灭，最后六秒静场。'),
+        (0, 12, '低位起势', '前台六轮三点追逐，坝顶6秒起加入两轮低层小花。'),
+        (12, 38, '连续展开', '六轮九点中花每4秒接力，前台七轮三点小花穿插。'),
+        (38, 65, '密集问答', '坝顶每4秒五点开花，前台晚2秒三点回应。'),
+        (65, 90, '往返扫射', '坝顶四遍九点往返扫射，每点0.28秒；前台三点短句穿插。'),
+        (90, 110, '第一次抬升', '四轮九点中花叠两轮三点大花，前台六轮追逐。'),
+        (110, 132, '低位密奏', '坝顶完全退出；前台每2秒一轮三点小花，共十轮。'),
+        (132, 165, '第二次递进', '六轮九点中花、两轮三点大花，前台十轮追逐。'),
+        (165, 188, '金色终章', '九点金花连续铺开，再接两轮九点金帘；前台最后一句后退出。'),
+        (188, 200, '白色收束', '坝顶188秒起每1.5秒一波，八轮九点白墙；前台全停。'),
+        (200, 210, '自然余韵', '白墙余火持续到206.5秒，最后3.5秒静场。'),
     ]
     templates = {}
 
     def template(key, name, zone, kind, diameter, z, rise, life, hue, extra=0):
         templates[key] = dict(name=name, zone=zone, kind=kind,
+                              shape='sphere' if kind in ('small','medium','large') else kind,
                               diameter=diameter, z=z, rise=rise, life=life,
                               hue=hue, margin=extra, top=z + diameter / 2 + extra)
 
@@ -68,69 +69,68 @@ def build_show():
                                launch=round(b-t['rise'], 2), burst=b,
                                end=round(b+t['life'], 2)))
 
-    fire(1.2, ['F1', 'F2', 'F3'], 'F_COMET', 1.4)
-    fire(5.8, ['F1', 'F3'], 'F_SILVER')
-    fire(9.0, ['F2'], 'F_GOLD')
-    fire(11, fanline, 'G_GOLD')
-    fire(12, allp, 'P_MS')
-    fire(19, fanline, 'G_GOLD')
-    fire(20, allp, 'P_MG')
-    fire(25, ['F2'], 'F_LIME')
-    fire(29, ['P2', 'P8'], 'P_LIME')
-    fire(32, ['F1', 'F3'], 'F_SILVER')
-    fire(34, ['P3', 'P7'], 'P_SILVER')
+    front = ['F1', 'F2', 'F3']
+    five = ['P1', 'P3', 'P5', 'P7', 'P9']
 
-    for i, b in enumerate((38, 44, 50, 56)):
-        fire(b, ['P2', 'P8'] if i % 2 == 0 else ['P3', 'P7'],
-             'P_GREEN' if i % 2 == 0 else 'P_MS')
-        fire(b+2.7, ['F2'] if i % 2 == 0 else ['F1', 'F3'],
-             'F_LIME' if i % 2 == 0 else 'F_SILVER')
-    fire(62, ['P5'], 'P_MG')
-    fire(66, allp, 'P_SILVER', 0.45)
-    fire(72, ['F2'], 'F_COMET')
-    fire(76, list(reversed(allp)), 'P_SPLIT', 0.45)
-    fire(82, ['F2'], 'F_CRACKLE')
-    fire(87, fanline, 'G_GOLD')
+    def front_run(times, keys, step=.2):
+        for i, b in enumerate(times):
+            fire(b, front if i % 2 == 0 else list(reversed(front)), keys[i % len(keys)], step)
+
+    front_run((1.2, 3.4, 5.2, 7, 8.8, 10.4),
+              ('F_COMET', 'F_SILVER', 'F_LIME', 'F_GOLD', 'F_CRACKLE', 'F_SILVER'))
+    fire(6, allp, 'P_SILVER', .12)
+    fire(9, allp, 'P_LIME', .12)
+    for b in (11, 15, 19, 23, 27, 31, 35):
+        fire(b, fanline, 'G_GOLD')
+    for i, b in enumerate((12, 16, 20, 24, 28, 32)):
+        fire(b, allp, 'P_MS' if i % 2 == 0 else 'P_MG')
+    front_run((14, 17, 23, 26, 29, 32, 35), ('F_SILVER', 'F_LIME', 'F_GOLD'))
+
+    for i, b in enumerate((38, 42, 46, 50, 54, 58, 62)):
+        fire(b, five, 'P_GREEN' if i % 2 == 0 else 'P_MS')
+        fire(b+2, front, 'F_LIME' if i % 2 == 0 else 'F_SILVER', .18)
+    for i, b in enumerate((66, 71, 76, 81)):
+        fire(b, allp if i % 2 == 0 else list(reversed(allp)),
+             'P_SILVER' if i % 2 == 0 else 'P_SPLIT', .28)
+    front_run((67.7, 73, 78, 83, 86), ('F_CRACKLE', 'F_SILVER', 'F_COMET'))
+    for b in (67, 77, 87):
+        fire(b, fanline, 'G_GOLD')
     fire(88, allp, 'P_MG')
 
-    fire(91, ['F1', 'F3'], 'F_GOLD')
-    fire(92, ['P1', 'P3', 'P5', 'P7', 'P9'], 'P_GREEN')
-    fire(94, ['F2'], 'F_SILVER')
-    fire(96, ['P1', 'P5', 'P9'], 'P_LS')
-    fire(99, ['F1', 'F2', 'F3'], 'F_CRACKLE', 0.35)
-    fire(103, allp, 'P_MULTI')
-    # 最后一朵上层到107秒结束；110秒起确实只剩前台。
-    fire(113, ['F2'], 'F_SILVER')
-    fire(118, ['F1', 'F3'], 'F_LIME')
-    fire(123, ['F2'], 'F_GOLD')
-    fire(127, ['F1', 'F2', 'F3'], 'F_SILVER', 0.3)
-    # 最后一朵130秒灭，132秒重启上层。
-    fire(137, ['P3', 'P5', 'P7'], 'P_MG')
-    fire(135, ['F2'], 'F_LIME')
-    fire(140, ['P1', 'P3', 'P5', 'P7', 'P9'], 'P_MULTI')
-    fire(143, ['F1', 'F3'], 'F_SILVER')
-    fire(148, allp, 'P_GREEN')
-    fire(150, ['F1', 'F2', 'F3'], 'F_CRACKLE', 0.35)
-    fire(154, ['P2', 'P5', 'P8'], 'P_LS')
-    fire(157, ['F1', 'F2', 'F3'], 'F_GOLD', 0.3)
-    fire(160, allp, 'P_MG')
-    fire(163, ['F1', 'F2', 'F3'], 'F_CRACKLE', 0.25)
+    for i, b in enumerate((92, 96, 100, 104)):
+        fire(b, allp, 'P_GREEN' if i % 2 == 0 else 'P_MULTI')
+    for b in (95, 101):
+        fire(b, ['P1', 'P5', 'P9'], 'P_LS')
+    for b in (93, 103):
+        fire(b, fanline, 'G_GOLD')
+    front_run((91, 94, 97, 100, 103, 106), ('F_GOLD', 'F_SILVER', 'F_CRACKLE'))
+    # 108秒上层全灭，110–132秒内连坝顶预发也停。
+    front_run(range(111, 130, 2), ('F_SILVER', 'F_LIME', 'F_CRACKLE'), .18)
+    for i, b in enumerate((137, 142, 147, 152, 157, 162)):
+        fire(b, allp, ('P_MG', 'P_MULTI', 'P_GREEN')[i % 3])
+    for b in (146, 156):
+        fire(b, ['P2', 'P5', 'P8'], 'P_LS')
+    for b in (139, 149, 159):
+        fire(b, fanline, 'G_GOLD')
+    front_run(range(135, 163, 3), ('F_LIME', 'F_SILVER', 'F_CRACKLE', 'F_GOLD'), .18)
 
-    fire(166, allp, 'P_MG')
-    fire(168, ['F1', 'F2', 'F3'], 'F_GOLD', 0.3)
-    fire(172, ['P1', 'P3', 'P5', 'P7', 'P9'], 'P_SPLIT')
-    fire(175, ['F1', 'F2', 'F3'], 'F_CRACKLE', 0.3)
-    fire(179, fanline, 'G_GOLD')
-    fire(180, allp, 'P_LG')
-    # 金帘187秒结束，白墙185秒已预发、190秒才开。
-    for b in (190, 192, 194, 196):
+    for b in (166, 170, 174):
+        fire(b, allp, 'P_MG')
+    fire(172, five, 'P_SPLIT')
+    for b in (167, 173, 179):
+        fire(b, fanline, 'G_GOLD')
+    for b in (179, 182):
+        fire(b, allp, 'P_LG')
+    front_run((165.5, 168, 170.5, 173, 175.5), ('F_GOLD', 'F_CRACKLE', 'F_SILVER'), .18)
+    # 八波白墙，每1.5秒一波；最后一波198.5开、206.5自然灭完。
+    for b in (188, 189.5, 191, 192.5, 194, 195.5, 197, 198.5):
         fire(b, allp, 'P_WALL')
     events.sort(key=lambda e: (e['launch'], e['point'], e['template']))
     for i, e in enumerate(events, 1):
         e['id'] = f'C{i:03}'
         e['phase'] = next(j for j, (a, b, _, _) in enumerate(phases)
                           if a <= e['burst'] < b)
-    return dict(version='front-low-v1', duration=210,
+    return dict(version='front-low-v2-dense', duration=210,
                 boundary=dict(dam=150, platform=50, frontCeiling=145,
                               platformWidth=200, platformDepth=50),
                 assumptions=dict(bendDegrees=15, frontY=45,
@@ -143,6 +143,8 @@ def validate(show):
     points, templates, events = show['points'], show['templates'], show['events']
     for e in events:
         t, p = templates[e['template']], points[e['point']]
+        if t['kind'] in ('small', 'medium', 'large'):
+            assert t['shape'] == 'sphere', e
         assert e['zone'] == t['zone'] == p['zone'], e
         assert 0 <= e['launch'] <= e['burst'] < e['end'] <= 210, e
         assert round(e['burst']-e['launch'], 2) == t['rise'], e
@@ -153,10 +155,13 @@ def validate(show):
             assert t['z']-t['diameter']/2-8 >= 50, e
             assert e['end'] < 179, e
     wall = [e for e in events if e['template']=='P_WALL']
-    assert len(wall) == 36
-    assert Counter(e['burst'] for e in wall) == {190:9, 192:9, 194:9, 196:9}
+    assert len(wall) == 72
+    assert Counter(e['burst'] for e in wall) == {b:9 for b in (188, 189.5, 191, 192.5, 194, 195.5, 197, 198.5)}
     assert not any(e['zone']=='dam' and e['launch'] < 132 and e['end'] > 110 for e in events)
-    assert max(e['end'] for e in events) == 204
+    assert max(e['end'] for e in events) == 206.5
+    assert len({(e['point'], e['template'], e['burst']) for e in events}) == len(events)
+    assert len(events) >= 279 * 3
+    assert sum(e['zone']=='front' for e in events) >= 48 * 3
     assert show['phases'][0]['start'] == 0 and show['phases'][-1]['end'] == 210
     assert all(a['end']==b['start'] for a,b in zip(show['phases'],show['phases'][1:]))
 
@@ -170,13 +175,13 @@ def main():
     (OUT/'fireworks-rhythm.html').write_text(fragment.replace('__SHOW_DATA__', json.dumps(show, ensure_ascii=False)), encoding='utf-8')
     with (OUT/'逐发时间表.csv').open('w', encoding='utf-8-sig', newline='') as f:
         w = csv.writer(f)
-        w.writerow(['ID','段落','发射秒','开花秒','结束秒','点位','区域','子模板','花型','X_cm','Y_cm','发射Z_cm','开花Z_cm','直径_cm','包络顶部_cm'])
+        w.writerow(['ID','段落','发射秒','开花秒','结束秒','点位','区域','子模板','花型','造型','X_cm','Y_cm','发射Z_cm','开花Z_cm','直径_cm','包络顶部_cm'])
         for e in show['events']:
             t, p = show['templates'][e['template']], show['points'][e['point']]
             w.writerow([e['id'],show['phases'][e['phase']]['name'],e['launch'],e['burst'],e['end'],
-                        e['point'],e['zone'],e['template'],t['name'],round(p['x']*100),round(p['y']*100),
+                        e['point'],e['zone'],e['template'],t['name'],t['shape'],round(p['x']*100),round(p['y']*100),
                         p['z']*100,t['z']*100,t['diameter']*100,t['top']*100])
-    print('PASS: 所有前台包络、区域白名单、时间、低位间奏、白墙36发及204秒熄灭检查通过')
+    print('PASS: 前台包络/区域/时间/低位密奏/白墙72发/206.5秒结束/数量至少3倍/无重复事件')
     print('TOTAL',len(show['events']),dict(Counter(e['zone'] for e in show['events'])))
     for i, p in enumerate(show['phases']):
         es = [e for e in show['events'] if e['phase']==i]

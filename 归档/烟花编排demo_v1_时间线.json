@@ -1,0 +1,3186 @@
+{
+  "version": "front-low-v1",
+  "duration": 210,
+  "boundary": {
+    "dam": 150,
+    "platform": 50,
+    "frontCeiling": 145,
+    "platformWidth": 200,
+    "platformDepth": 50
+  },
+  "assumptions": {
+    "bendDegrees": 15,
+    "frontY": 45,
+    "dimensions": "设计目标，未UE标定；前台余量含3m变化+5m光晕"
+  },
+  "phases": [
+    {
+      "start": 0,
+      "end": 12,
+      "name": "低位引子",
+      "detail": "前台三点缓慢点亮，坝顶只在末尾预告。"
+    },
+    {
+      "start": 12,
+      "end": 38,
+      "name": "坝顶展开",
+      "detail": "银白、暖金两次展开；前台在两波之间轻答。"
+    },
+    {
+      "start": 38,
+      "end": 65,
+      "name": "上下问答",
+      "detail": "坝顶每六秒一对，前台晚2.7秒回应，花型保持疏朗。"
+    },
+    {
+      "start": 65,
+      "end": 90,
+      "name": "双向流动",
+      "detail": "坝顶左右扫两遍；前台只在扫完后补中心短句。"
+    },
+    {
+      "start": 90,
+      "end": 110,
+      "name": "第一次抬升",
+      "detail": "五点到九点，三发大花抬高；前台三次短促回应。"
+    },
+    {
+      "start": 110,
+      "end": 132,
+      "name": "低位间奏",
+      "detail": "上层余火先退，前台单发、对开、三点收句，随后全场留白。"
+    },
+    {
+      "start": 132,
+      "end": 165,
+      "name": "第二次递进",
+      "detail": "坝顶三点、五点、九点递增；前台节奏由稀到密。"
+    },
+    {
+      "start": 165,
+      "end": 188,
+      "name": "金色终章",
+      "detail": "坝顶暖金铺满，再下垂成金帘；前台最后一句后彻底退出。"
+    },
+    {
+      "start": 188,
+      "end": 200,
+      "name": "白色收束",
+      "detail": "坝顶190/192/194/196秒四波九点齐爆，前台全停。"
+    },
+    {
+      "start": 200,
+      "end": 210,
+      "name": "自然余韵",
+      "detail": "只让白墙自然熄灭，最后六秒静场。"
+    }
+  ],
+  "points": {
+    "P1": {
+      "x": -374.79,
+      "y": 113.82,
+      "z": 150,
+      "zone": "dam"
+    },
+    "P2": {
+      "x": -288.19,
+      "y": 63.82,
+      "z": 150,
+      "zone": "dam"
+    },
+    "P3": {
+      "x": -196.59,
+      "y": 25.88,
+      "z": 150,
+      "zone": "dam"
+    },
+    "P4": {
+      "x": -100,
+      "y": 0,
+      "z": 150,
+      "zone": "dam"
+    },
+    "P5": {
+      "x": 0,
+      "y": 0,
+      "z": 150,
+      "zone": "dam"
+    },
+    "P6": {
+      "x": 100,
+      "y": 0,
+      "z": 150,
+      "zone": "dam"
+    },
+    "P7": {
+      "x": 196.59,
+      "y": 25.88,
+      "z": 150,
+      "zone": "dam"
+    },
+    "P8": {
+      "x": 288.19,
+      "y": 63.82,
+      "z": 150,
+      "zone": "dam"
+    },
+    "P9": {
+      "x": 374.79,
+      "y": 113.82,
+      "z": 150,
+      "zone": "dam"
+    },
+    "B1": {
+      "x": -331.49,
+      "y": 88.82,
+      "z": 150,
+      "zone": "dam"
+    },
+    "B2": {
+      "x": -242.39,
+      "y": 44.85,
+      "z": 150,
+      "zone": "dam"
+    },
+    "B3": {
+      "x": -148.3,
+      "y": 12.94,
+      "z": 150,
+      "zone": "dam"
+    },
+    "B4": {
+      "x": -50.0,
+      "y": 0.0,
+      "z": 150,
+      "zone": "dam"
+    },
+    "B5": {
+      "x": 50.0,
+      "y": 0.0,
+      "z": 150,
+      "zone": "dam"
+    },
+    "B6": {
+      "x": 148.3,
+      "y": 12.94,
+      "z": 150,
+      "zone": "dam"
+    },
+    "B7": {
+      "x": 242.39,
+      "y": 44.85,
+      "z": 150,
+      "zone": "dam"
+    },
+    "B8": {
+      "x": 331.49,
+      "y": 88.82,
+      "z": 150,
+      "zone": "dam"
+    },
+    "F1": {
+      "x": -70,
+      "y": 45,
+      "z": 50,
+      "zone": "front"
+    },
+    "F2": {
+      "x": 0,
+      "y": 45,
+      "z": 50,
+      "zone": "front"
+    },
+    "F3": {
+      "x": 70,
+      "y": 45,
+      "z": 50,
+      "zone": "front"
+    }
+  },
+  "templates": {
+    "F_COMET": {
+      "name": "前台·短彗星",
+      "zone": "front",
+      "kind": "comet",
+      "diameter": 8,
+      "z": 130,
+      "rise": 1.2,
+      "life": 0.6,
+      "hue": "gold",
+      "margin": 8,
+      "top": 142.0
+    },
+    "F_SILVER": {
+      "name": "前台·小银菊",
+      "zone": "front",
+      "kind": "small",
+      "diameter": 32,
+      "z": 112,
+      "rise": 1.2,
+      "life": 2.3,
+      "hue": "silver",
+      "margin": 8,
+      "top": 136.0
+    },
+    "F_LIME": {
+      "name": "前台·小青柠",
+      "zone": "front",
+      "kind": "small",
+      "diameter": 30,
+      "z": 105,
+      "rise": 1.1,
+      "life": 2.3,
+      "hue": "lime",
+      "margin": 8,
+      "top": 128.0
+    },
+    "F_GOLD": {
+      "name": "前台·小金花",
+      "zone": "front",
+      "kind": "small",
+      "diameter": 40,
+      "z": 115,
+      "rise": 1.3,
+      "life": 2.8,
+      "hue": "gold",
+      "margin": 8,
+      "top": 143.0
+    },
+    "F_CRACKLE": {
+      "name": "前台·短爆裂",
+      "zone": "front",
+      "kind": "small",
+      "diameter": 24,
+      "z": 112,
+      "rise": 1.1,
+      "life": 1.8,
+      "hue": "gold",
+      "margin": 8,
+      "top": 132.0
+    },
+    "P_SILVER": {
+      "name": "坝顶·低层小银菊",
+      "zone": "dam",
+      "kind": "small",
+      "diameter": 90,
+      "z": 230,
+      "rise": 2,
+      "life": 3,
+      "hue": "silver",
+      "margin": 0,
+      "top": 275.0
+    },
+    "P_LIME": {
+      "name": "坝顶·小青柠",
+      "zone": "dam",
+      "kind": "small",
+      "diameter": 90,
+      "z": 300,
+      "rise": 3.5,
+      "life": 3,
+      "hue": "lime",
+      "margin": 0,
+      "top": 345.0
+    },
+    "P_SPLIT": {
+      "name": "坝顶·金裂星",
+      "zone": "dam",
+      "kind": "small",
+      "diameter": 90,
+      "z": 300,
+      "rise": 3.5,
+      "life": 3,
+      "hue": "gold",
+      "margin": 0,
+      "top": 345.0
+    },
+    "P_MS": {
+      "name": "坝顶·银白金芒菊",
+      "zone": "dam",
+      "kind": "medium",
+      "diameter": 150,
+      "z": 360,
+      "rise": 5,
+      "life": 4,
+      "hue": "silver",
+      "margin": 0,
+      "top": 435.0
+    },
+    "P_MG": {
+      "name": "坝顶·金芒菊",
+      "zone": "dam",
+      "kind": "medium",
+      "diameter": 150,
+      "z": 360,
+      "rise": 5,
+      "life": 4,
+      "hue": "gold",
+      "margin": 0,
+      "top": 435.0
+    },
+    "P_GREEN": {
+      "name": "坝顶·金蕊青柠",
+      "zone": "dam",
+      "kind": "medium",
+      "diameter": 150,
+      "z": 360,
+      "rise": 5,
+      "life": 4,
+      "hue": "lime",
+      "margin": 0,
+      "top": 435.0
+    },
+    "P_MULTI": {
+      "name": "坝顶·多重菊",
+      "zone": "dam",
+      "kind": "medium",
+      "diameter": 150,
+      "z": 360,
+      "rise": 5,
+      "life": 4,
+      "hue": "silver",
+      "margin": 0,
+      "top": 435.0
+    },
+    "P_LS": {
+      "name": "坝顶·银彩菊",
+      "zone": "dam",
+      "kind": "large",
+      "diameter": 230,
+      "z": 480,
+      "rise": 8,
+      "life": 6,
+      "hue": "silver",
+      "margin": 0,
+      "top": 595.0
+    },
+    "P_LG": {
+      "name": "坝顶·金垂柳",
+      "zone": "dam",
+      "kind": "large",
+      "diameter": 230,
+      "z": 480,
+      "rise": 8,
+      "life": 7,
+      "hue": "gold",
+      "margin": 0,
+      "top": 595.0
+    },
+    "P_WALL": {
+      "name": "坝顶·银白墙",
+      "zone": "dam",
+      "kind": "large",
+      "diameter": 230,
+      "z": 360,
+      "rise": 5,
+      "life": 8,
+      "hue": "silver",
+      "margin": 0,
+      "top": 475.0
+    },
+    "G_GOLD": {
+      "name": "坝顶·金锦冠扇形",
+      "zone": "dam",
+      "kind": "fan",
+      "diameter": 100,
+      "z": 180,
+      "rise": 0,
+      "life": 3,
+      "hue": "gold",
+      "margin": 0,
+      "top": 230.0
+    }
+  },
+  "events": [
+    {
+      "point": "F1",
+      "template": "F_COMET",
+      "zone": "front",
+      "launch": 0.0,
+      "burst": 1.2,
+      "end": 1.8,
+      "id": "C001",
+      "phase": 0
+    },
+    {
+      "point": "F2",
+      "template": "F_COMET",
+      "zone": "front",
+      "launch": 1.4,
+      "burst": 2.6,
+      "end": 3.2,
+      "id": "C002",
+      "phase": 0
+    },
+    {
+      "point": "F3",
+      "template": "F_COMET",
+      "zone": "front",
+      "launch": 2.8,
+      "burst": 4.0,
+      "end": 4.6,
+      "id": "C003",
+      "phase": 0
+    },
+    {
+      "point": "F1",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 4.6,
+      "burst": 5.8,
+      "end": 8.1,
+      "id": "C004",
+      "phase": 0
+    },
+    {
+      "point": "F3",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 4.6,
+      "burst": 5.8,
+      "end": 8.1,
+      "id": "C005",
+      "phase": 0
+    },
+    {
+      "point": "P1",
+      "template": "P_MS",
+      "zone": "dam",
+      "launch": 7,
+      "burst": 12,
+      "end": 16,
+      "id": "C006",
+      "phase": 1
+    },
+    {
+      "point": "P2",
+      "template": "P_MS",
+      "zone": "dam",
+      "launch": 7,
+      "burst": 12,
+      "end": 16,
+      "id": "C007",
+      "phase": 1
+    },
+    {
+      "point": "P3",
+      "template": "P_MS",
+      "zone": "dam",
+      "launch": 7,
+      "burst": 12,
+      "end": 16,
+      "id": "C008",
+      "phase": 1
+    },
+    {
+      "point": "P4",
+      "template": "P_MS",
+      "zone": "dam",
+      "launch": 7,
+      "burst": 12,
+      "end": 16,
+      "id": "C009",
+      "phase": 1
+    },
+    {
+      "point": "P5",
+      "template": "P_MS",
+      "zone": "dam",
+      "launch": 7,
+      "burst": 12,
+      "end": 16,
+      "id": "C010",
+      "phase": 1
+    },
+    {
+      "point": "P6",
+      "template": "P_MS",
+      "zone": "dam",
+      "launch": 7,
+      "burst": 12,
+      "end": 16,
+      "id": "C011",
+      "phase": 1
+    },
+    {
+      "point": "P7",
+      "template": "P_MS",
+      "zone": "dam",
+      "launch": 7,
+      "burst": 12,
+      "end": 16,
+      "id": "C012",
+      "phase": 1
+    },
+    {
+      "point": "P8",
+      "template": "P_MS",
+      "zone": "dam",
+      "launch": 7,
+      "burst": 12,
+      "end": 16,
+      "id": "C013",
+      "phase": 1
+    },
+    {
+      "point": "P9",
+      "template": "P_MS",
+      "zone": "dam",
+      "launch": 7,
+      "burst": 12,
+      "end": 16,
+      "id": "C014",
+      "phase": 1
+    },
+    {
+      "point": "F2",
+      "template": "F_GOLD",
+      "zone": "front",
+      "launch": 7.7,
+      "burst": 9.0,
+      "end": 11.8,
+      "id": "C015",
+      "phase": 0
+    },
+    {
+      "point": "B1",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C016",
+      "phase": 0
+    },
+    {
+      "point": "B2",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C017",
+      "phase": 0
+    },
+    {
+      "point": "B3",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C018",
+      "phase": 0
+    },
+    {
+      "point": "B4",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C019",
+      "phase": 0
+    },
+    {
+      "point": "B5",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C020",
+      "phase": 0
+    },
+    {
+      "point": "B6",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C021",
+      "phase": 0
+    },
+    {
+      "point": "B7",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C022",
+      "phase": 0
+    },
+    {
+      "point": "B8",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C023",
+      "phase": 0
+    },
+    {
+      "point": "P1",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C024",
+      "phase": 0
+    },
+    {
+      "point": "P2",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C025",
+      "phase": 0
+    },
+    {
+      "point": "P3",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C026",
+      "phase": 0
+    },
+    {
+      "point": "P4",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C027",
+      "phase": 0
+    },
+    {
+      "point": "P5",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C028",
+      "phase": 0
+    },
+    {
+      "point": "P6",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C029",
+      "phase": 0
+    },
+    {
+      "point": "P7",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C030",
+      "phase": 0
+    },
+    {
+      "point": "P8",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C031",
+      "phase": 0
+    },
+    {
+      "point": "P9",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 11,
+      "burst": 11,
+      "end": 14,
+      "id": "C032",
+      "phase": 0
+    },
+    {
+      "point": "P1",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 15,
+      "burst": 20,
+      "end": 24,
+      "id": "C033",
+      "phase": 1
+    },
+    {
+      "point": "P2",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 15,
+      "burst": 20,
+      "end": 24,
+      "id": "C034",
+      "phase": 1
+    },
+    {
+      "point": "P3",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 15,
+      "burst": 20,
+      "end": 24,
+      "id": "C035",
+      "phase": 1
+    },
+    {
+      "point": "P4",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 15,
+      "burst": 20,
+      "end": 24,
+      "id": "C036",
+      "phase": 1
+    },
+    {
+      "point": "P5",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 15,
+      "burst": 20,
+      "end": 24,
+      "id": "C037",
+      "phase": 1
+    },
+    {
+      "point": "P6",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 15,
+      "burst": 20,
+      "end": 24,
+      "id": "C038",
+      "phase": 1
+    },
+    {
+      "point": "P7",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 15,
+      "burst": 20,
+      "end": 24,
+      "id": "C039",
+      "phase": 1
+    },
+    {
+      "point": "P8",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 15,
+      "burst": 20,
+      "end": 24,
+      "id": "C040",
+      "phase": 1
+    },
+    {
+      "point": "P9",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 15,
+      "burst": 20,
+      "end": 24,
+      "id": "C041",
+      "phase": 1
+    },
+    {
+      "point": "B1",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C042",
+      "phase": 1
+    },
+    {
+      "point": "B2",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C043",
+      "phase": 1
+    },
+    {
+      "point": "B3",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C044",
+      "phase": 1
+    },
+    {
+      "point": "B4",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C045",
+      "phase": 1
+    },
+    {
+      "point": "B5",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C046",
+      "phase": 1
+    },
+    {
+      "point": "B6",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C047",
+      "phase": 1
+    },
+    {
+      "point": "B7",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C048",
+      "phase": 1
+    },
+    {
+      "point": "B8",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C049",
+      "phase": 1
+    },
+    {
+      "point": "P1",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C050",
+      "phase": 1
+    },
+    {
+      "point": "P2",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C051",
+      "phase": 1
+    },
+    {
+      "point": "P3",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C052",
+      "phase": 1
+    },
+    {
+      "point": "P4",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C053",
+      "phase": 1
+    },
+    {
+      "point": "P5",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C054",
+      "phase": 1
+    },
+    {
+      "point": "P6",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C055",
+      "phase": 1
+    },
+    {
+      "point": "P7",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C056",
+      "phase": 1
+    },
+    {
+      "point": "P8",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C057",
+      "phase": 1
+    },
+    {
+      "point": "P9",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 19,
+      "burst": 19,
+      "end": 22,
+      "id": "C058",
+      "phase": 1
+    },
+    {
+      "point": "F2",
+      "template": "F_LIME",
+      "zone": "front",
+      "launch": 23.9,
+      "burst": 25,
+      "end": 27.3,
+      "id": "C059",
+      "phase": 1
+    },
+    {
+      "point": "P2",
+      "template": "P_LIME",
+      "zone": "dam",
+      "launch": 25.5,
+      "burst": 29,
+      "end": 32,
+      "id": "C060",
+      "phase": 1
+    },
+    {
+      "point": "P8",
+      "template": "P_LIME",
+      "zone": "dam",
+      "launch": 25.5,
+      "burst": 29,
+      "end": 32,
+      "id": "C061",
+      "phase": 1
+    },
+    {
+      "point": "F1",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 30.8,
+      "burst": 32,
+      "end": 34.3,
+      "id": "C062",
+      "phase": 1
+    },
+    {
+      "point": "F3",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 30.8,
+      "burst": 32,
+      "end": 34.3,
+      "id": "C063",
+      "phase": 1
+    },
+    {
+      "point": "P3",
+      "template": "P_SILVER",
+      "zone": "dam",
+      "launch": 32,
+      "burst": 34,
+      "end": 37,
+      "id": "C064",
+      "phase": 1
+    },
+    {
+      "point": "P7",
+      "template": "P_SILVER",
+      "zone": "dam",
+      "launch": 32,
+      "burst": 34,
+      "end": 37,
+      "id": "C065",
+      "phase": 1
+    },
+    {
+      "point": "P2",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 33,
+      "burst": 38,
+      "end": 42,
+      "id": "C066",
+      "phase": 2
+    },
+    {
+      "point": "P8",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 33,
+      "burst": 38,
+      "end": 42,
+      "id": "C067",
+      "phase": 2
+    },
+    {
+      "point": "P3",
+      "template": "P_MS",
+      "zone": "dam",
+      "launch": 39,
+      "burst": 44,
+      "end": 48,
+      "id": "C068",
+      "phase": 2
+    },
+    {
+      "point": "P7",
+      "template": "P_MS",
+      "zone": "dam",
+      "launch": 39,
+      "burst": 44,
+      "end": 48,
+      "id": "C069",
+      "phase": 2
+    },
+    {
+      "point": "F2",
+      "template": "F_LIME",
+      "zone": "front",
+      "launch": 39.6,
+      "burst": 40.7,
+      "end": 43.0,
+      "id": "C070",
+      "phase": 2
+    },
+    {
+      "point": "P2",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 45,
+      "burst": 50,
+      "end": 54,
+      "id": "C071",
+      "phase": 2
+    },
+    {
+      "point": "P8",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 45,
+      "burst": 50,
+      "end": 54,
+      "id": "C072",
+      "phase": 2
+    },
+    {
+      "point": "F1",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 45.5,
+      "burst": 46.7,
+      "end": 49.0,
+      "id": "C073",
+      "phase": 2
+    },
+    {
+      "point": "F3",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 45.5,
+      "burst": 46.7,
+      "end": 49.0,
+      "id": "C074",
+      "phase": 2
+    },
+    {
+      "point": "P3",
+      "template": "P_MS",
+      "zone": "dam",
+      "launch": 51,
+      "burst": 56,
+      "end": 60,
+      "id": "C075",
+      "phase": 2
+    },
+    {
+      "point": "P7",
+      "template": "P_MS",
+      "zone": "dam",
+      "launch": 51,
+      "burst": 56,
+      "end": 60,
+      "id": "C076",
+      "phase": 2
+    },
+    {
+      "point": "F2",
+      "template": "F_LIME",
+      "zone": "front",
+      "launch": 51.6,
+      "burst": 52.7,
+      "end": 55.0,
+      "id": "C077",
+      "phase": 2
+    },
+    {
+      "point": "P5",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 57,
+      "burst": 62,
+      "end": 66,
+      "id": "C078",
+      "phase": 2
+    },
+    {
+      "point": "F1",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 57.5,
+      "burst": 58.7,
+      "end": 61.0,
+      "id": "C079",
+      "phase": 2
+    },
+    {
+      "point": "F3",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 57.5,
+      "burst": 58.7,
+      "end": 61.0,
+      "id": "C080",
+      "phase": 2
+    },
+    {
+      "point": "P1",
+      "template": "P_SILVER",
+      "zone": "dam",
+      "launch": 64.0,
+      "burst": 66.0,
+      "end": 69.0,
+      "id": "C081",
+      "phase": 3
+    },
+    {
+      "point": "P2",
+      "template": "P_SILVER",
+      "zone": "dam",
+      "launch": 64.45,
+      "burst": 66.45,
+      "end": 69.45,
+      "id": "C082",
+      "phase": 3
+    },
+    {
+      "point": "P3",
+      "template": "P_SILVER",
+      "zone": "dam",
+      "launch": 64.9,
+      "burst": 66.9,
+      "end": 69.9,
+      "id": "C083",
+      "phase": 3
+    },
+    {
+      "point": "P4",
+      "template": "P_SILVER",
+      "zone": "dam",
+      "launch": 65.35,
+      "burst": 67.35,
+      "end": 70.35,
+      "id": "C084",
+      "phase": 3
+    },
+    {
+      "point": "P5",
+      "template": "P_SILVER",
+      "zone": "dam",
+      "launch": 65.8,
+      "burst": 67.8,
+      "end": 70.8,
+      "id": "C085",
+      "phase": 3
+    },
+    {
+      "point": "P6",
+      "template": "P_SILVER",
+      "zone": "dam",
+      "launch": 66.25,
+      "burst": 68.25,
+      "end": 71.25,
+      "id": "C086",
+      "phase": 3
+    },
+    {
+      "point": "P7",
+      "template": "P_SILVER",
+      "zone": "dam",
+      "launch": 66.7,
+      "burst": 68.7,
+      "end": 71.7,
+      "id": "C087",
+      "phase": 3
+    },
+    {
+      "point": "P8",
+      "template": "P_SILVER",
+      "zone": "dam",
+      "launch": 67.15,
+      "burst": 69.15,
+      "end": 72.15,
+      "id": "C088",
+      "phase": 3
+    },
+    {
+      "point": "P9",
+      "template": "P_SILVER",
+      "zone": "dam",
+      "launch": 67.6,
+      "burst": 69.6,
+      "end": 72.6,
+      "id": "C089",
+      "phase": 3
+    },
+    {
+      "point": "F2",
+      "template": "F_COMET",
+      "zone": "front",
+      "launch": 70.8,
+      "burst": 72,
+      "end": 72.6,
+      "id": "C090",
+      "phase": 3
+    },
+    {
+      "point": "P9",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 72.5,
+      "burst": 76.0,
+      "end": 79.0,
+      "id": "C091",
+      "phase": 3
+    },
+    {
+      "point": "P8",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 72.95,
+      "burst": 76.45,
+      "end": 79.45,
+      "id": "C092",
+      "phase": 3
+    },
+    {
+      "point": "P7",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 73.4,
+      "burst": 76.9,
+      "end": 79.9,
+      "id": "C093",
+      "phase": 3
+    },
+    {
+      "point": "P6",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 73.85,
+      "burst": 77.35,
+      "end": 80.35,
+      "id": "C094",
+      "phase": 3
+    },
+    {
+      "point": "P5",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 74.3,
+      "burst": 77.8,
+      "end": 80.8,
+      "id": "C095",
+      "phase": 3
+    },
+    {
+      "point": "P4",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 74.75,
+      "burst": 78.25,
+      "end": 81.25,
+      "id": "C096",
+      "phase": 3
+    },
+    {
+      "point": "P3",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 75.2,
+      "burst": 78.7,
+      "end": 81.7,
+      "id": "C097",
+      "phase": 3
+    },
+    {
+      "point": "P2",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 75.65,
+      "burst": 79.15,
+      "end": 82.15,
+      "id": "C098",
+      "phase": 3
+    },
+    {
+      "point": "P1",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 76.1,
+      "burst": 79.6,
+      "end": 82.6,
+      "id": "C099",
+      "phase": 3
+    },
+    {
+      "point": "F2",
+      "template": "F_CRACKLE",
+      "zone": "front",
+      "launch": 80.9,
+      "burst": 82,
+      "end": 83.8,
+      "id": "C100",
+      "phase": 3
+    },
+    {
+      "point": "P1",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 83,
+      "burst": 88,
+      "end": 92,
+      "id": "C101",
+      "phase": 3
+    },
+    {
+      "point": "P2",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 83,
+      "burst": 88,
+      "end": 92,
+      "id": "C102",
+      "phase": 3
+    },
+    {
+      "point": "P3",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 83,
+      "burst": 88,
+      "end": 92,
+      "id": "C103",
+      "phase": 3
+    },
+    {
+      "point": "P4",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 83,
+      "burst": 88,
+      "end": 92,
+      "id": "C104",
+      "phase": 3
+    },
+    {
+      "point": "P5",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 83,
+      "burst": 88,
+      "end": 92,
+      "id": "C105",
+      "phase": 3
+    },
+    {
+      "point": "P6",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 83,
+      "burst": 88,
+      "end": 92,
+      "id": "C106",
+      "phase": 3
+    },
+    {
+      "point": "P7",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 83,
+      "burst": 88,
+      "end": 92,
+      "id": "C107",
+      "phase": 3
+    },
+    {
+      "point": "P8",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 83,
+      "burst": 88,
+      "end": 92,
+      "id": "C108",
+      "phase": 3
+    },
+    {
+      "point": "P9",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 83,
+      "burst": 88,
+      "end": 92,
+      "id": "C109",
+      "phase": 3
+    },
+    {
+      "point": "B1",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C110",
+      "phase": 3
+    },
+    {
+      "point": "B2",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C111",
+      "phase": 3
+    },
+    {
+      "point": "B3",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C112",
+      "phase": 3
+    },
+    {
+      "point": "B4",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C113",
+      "phase": 3
+    },
+    {
+      "point": "B5",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C114",
+      "phase": 3
+    },
+    {
+      "point": "B6",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C115",
+      "phase": 3
+    },
+    {
+      "point": "B7",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C116",
+      "phase": 3
+    },
+    {
+      "point": "B8",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C117",
+      "phase": 3
+    },
+    {
+      "point": "P1",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C118",
+      "phase": 3
+    },
+    {
+      "point": "P1",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 92,
+      "end": 96,
+      "id": "C119",
+      "phase": 4
+    },
+    {
+      "point": "P2",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C120",
+      "phase": 3
+    },
+    {
+      "point": "P3",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C121",
+      "phase": 3
+    },
+    {
+      "point": "P3",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 92,
+      "end": 96,
+      "id": "C122",
+      "phase": 4
+    },
+    {
+      "point": "P4",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C123",
+      "phase": 3
+    },
+    {
+      "point": "P5",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C124",
+      "phase": 3
+    },
+    {
+      "point": "P5",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 92,
+      "end": 96,
+      "id": "C125",
+      "phase": 4
+    },
+    {
+      "point": "P6",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C126",
+      "phase": 3
+    },
+    {
+      "point": "P7",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C127",
+      "phase": 3
+    },
+    {
+      "point": "P7",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 92,
+      "end": 96,
+      "id": "C128",
+      "phase": 4
+    },
+    {
+      "point": "P8",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C129",
+      "phase": 3
+    },
+    {
+      "point": "P9",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 87,
+      "end": 90,
+      "id": "C130",
+      "phase": 3
+    },
+    {
+      "point": "P9",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 87,
+      "burst": 92,
+      "end": 96,
+      "id": "C131",
+      "phase": 4
+    },
+    {
+      "point": "P1",
+      "template": "P_LS",
+      "zone": "dam",
+      "launch": 88,
+      "burst": 96,
+      "end": 102,
+      "id": "C132",
+      "phase": 4
+    },
+    {
+      "point": "P5",
+      "template": "P_LS",
+      "zone": "dam",
+      "launch": 88,
+      "burst": 96,
+      "end": 102,
+      "id": "C133",
+      "phase": 4
+    },
+    {
+      "point": "P9",
+      "template": "P_LS",
+      "zone": "dam",
+      "launch": 88,
+      "burst": 96,
+      "end": 102,
+      "id": "C134",
+      "phase": 4
+    },
+    {
+      "point": "F1",
+      "template": "F_GOLD",
+      "zone": "front",
+      "launch": 89.7,
+      "burst": 91,
+      "end": 93.8,
+      "id": "C135",
+      "phase": 4
+    },
+    {
+      "point": "F3",
+      "template": "F_GOLD",
+      "zone": "front",
+      "launch": 89.7,
+      "burst": 91,
+      "end": 93.8,
+      "id": "C136",
+      "phase": 4
+    },
+    {
+      "point": "F2",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 92.8,
+      "burst": 94,
+      "end": 96.3,
+      "id": "C137",
+      "phase": 4
+    },
+    {
+      "point": "F1",
+      "template": "F_CRACKLE",
+      "zone": "front",
+      "launch": 97.9,
+      "burst": 99.0,
+      "end": 100.8,
+      "id": "C138",
+      "phase": 4
+    },
+    {
+      "point": "P1",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 98,
+      "burst": 103,
+      "end": 107,
+      "id": "C139",
+      "phase": 4
+    },
+    {
+      "point": "P2",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 98,
+      "burst": 103,
+      "end": 107,
+      "id": "C140",
+      "phase": 4
+    },
+    {
+      "point": "P3",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 98,
+      "burst": 103,
+      "end": 107,
+      "id": "C141",
+      "phase": 4
+    },
+    {
+      "point": "P4",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 98,
+      "burst": 103,
+      "end": 107,
+      "id": "C142",
+      "phase": 4
+    },
+    {
+      "point": "P5",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 98,
+      "burst": 103,
+      "end": 107,
+      "id": "C143",
+      "phase": 4
+    },
+    {
+      "point": "P6",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 98,
+      "burst": 103,
+      "end": 107,
+      "id": "C144",
+      "phase": 4
+    },
+    {
+      "point": "P7",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 98,
+      "burst": 103,
+      "end": 107,
+      "id": "C145",
+      "phase": 4
+    },
+    {
+      "point": "P8",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 98,
+      "burst": 103,
+      "end": 107,
+      "id": "C146",
+      "phase": 4
+    },
+    {
+      "point": "P9",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 98,
+      "burst": 103,
+      "end": 107,
+      "id": "C147",
+      "phase": 4
+    },
+    {
+      "point": "F2",
+      "template": "F_CRACKLE",
+      "zone": "front",
+      "launch": 98.25,
+      "burst": 99.35,
+      "end": 101.15,
+      "id": "C148",
+      "phase": 4
+    },
+    {
+      "point": "F3",
+      "template": "F_CRACKLE",
+      "zone": "front",
+      "launch": 98.6,
+      "burst": 99.7,
+      "end": 101.5,
+      "id": "C149",
+      "phase": 4
+    },
+    {
+      "point": "F2",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 111.8,
+      "burst": 113,
+      "end": 115.3,
+      "id": "C150",
+      "phase": 5
+    },
+    {
+      "point": "F1",
+      "template": "F_LIME",
+      "zone": "front",
+      "launch": 116.9,
+      "burst": 118,
+      "end": 120.3,
+      "id": "C151",
+      "phase": 5
+    },
+    {
+      "point": "F3",
+      "template": "F_LIME",
+      "zone": "front",
+      "launch": 116.9,
+      "burst": 118,
+      "end": 120.3,
+      "id": "C152",
+      "phase": 5
+    },
+    {
+      "point": "F2",
+      "template": "F_GOLD",
+      "zone": "front",
+      "launch": 121.7,
+      "burst": 123,
+      "end": 125.8,
+      "id": "C153",
+      "phase": 5
+    },
+    {
+      "point": "F1",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 125.8,
+      "burst": 127.0,
+      "end": 129.3,
+      "id": "C154",
+      "phase": 5
+    },
+    {
+      "point": "F2",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 126.1,
+      "burst": 127.3,
+      "end": 129.6,
+      "id": "C155",
+      "phase": 5
+    },
+    {
+      "point": "F3",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 126.4,
+      "burst": 127.6,
+      "end": 129.9,
+      "id": "C156",
+      "phase": 5
+    },
+    {
+      "point": "P3",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 132,
+      "burst": 137,
+      "end": 141,
+      "id": "C157",
+      "phase": 6
+    },
+    {
+      "point": "P5",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 132,
+      "burst": 137,
+      "end": 141,
+      "id": "C158",
+      "phase": 6
+    },
+    {
+      "point": "P7",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 132,
+      "burst": 137,
+      "end": 141,
+      "id": "C159",
+      "phase": 6
+    },
+    {
+      "point": "F2",
+      "template": "F_LIME",
+      "zone": "front",
+      "launch": 133.9,
+      "burst": 135,
+      "end": 137.3,
+      "id": "C160",
+      "phase": 6
+    },
+    {
+      "point": "P1",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 135,
+      "burst": 140,
+      "end": 144,
+      "id": "C161",
+      "phase": 6
+    },
+    {
+      "point": "P3",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 135,
+      "burst": 140,
+      "end": 144,
+      "id": "C162",
+      "phase": 6
+    },
+    {
+      "point": "P5",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 135,
+      "burst": 140,
+      "end": 144,
+      "id": "C163",
+      "phase": 6
+    },
+    {
+      "point": "P7",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 135,
+      "burst": 140,
+      "end": 144,
+      "id": "C164",
+      "phase": 6
+    },
+    {
+      "point": "P9",
+      "template": "P_MULTI",
+      "zone": "dam",
+      "launch": 135,
+      "burst": 140,
+      "end": 144,
+      "id": "C165",
+      "phase": 6
+    },
+    {
+      "point": "F1",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 141.8,
+      "burst": 143,
+      "end": 145.3,
+      "id": "C166",
+      "phase": 6
+    },
+    {
+      "point": "F3",
+      "template": "F_SILVER",
+      "zone": "front",
+      "launch": 141.8,
+      "burst": 143,
+      "end": 145.3,
+      "id": "C167",
+      "phase": 6
+    },
+    {
+      "point": "P1",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 143,
+      "burst": 148,
+      "end": 152,
+      "id": "C168",
+      "phase": 6
+    },
+    {
+      "point": "P2",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 143,
+      "burst": 148,
+      "end": 152,
+      "id": "C169",
+      "phase": 6
+    },
+    {
+      "point": "P3",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 143,
+      "burst": 148,
+      "end": 152,
+      "id": "C170",
+      "phase": 6
+    },
+    {
+      "point": "P4",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 143,
+      "burst": 148,
+      "end": 152,
+      "id": "C171",
+      "phase": 6
+    },
+    {
+      "point": "P5",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 143,
+      "burst": 148,
+      "end": 152,
+      "id": "C172",
+      "phase": 6
+    },
+    {
+      "point": "P6",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 143,
+      "burst": 148,
+      "end": 152,
+      "id": "C173",
+      "phase": 6
+    },
+    {
+      "point": "P7",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 143,
+      "burst": 148,
+      "end": 152,
+      "id": "C174",
+      "phase": 6
+    },
+    {
+      "point": "P8",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 143,
+      "burst": 148,
+      "end": 152,
+      "id": "C175",
+      "phase": 6
+    },
+    {
+      "point": "P9",
+      "template": "P_GREEN",
+      "zone": "dam",
+      "launch": 143,
+      "burst": 148,
+      "end": 152,
+      "id": "C176",
+      "phase": 6
+    },
+    {
+      "point": "P2",
+      "template": "P_LS",
+      "zone": "dam",
+      "launch": 146,
+      "burst": 154,
+      "end": 160,
+      "id": "C177",
+      "phase": 6
+    },
+    {
+      "point": "P5",
+      "template": "P_LS",
+      "zone": "dam",
+      "launch": 146,
+      "burst": 154,
+      "end": 160,
+      "id": "C178",
+      "phase": 6
+    },
+    {
+      "point": "P8",
+      "template": "P_LS",
+      "zone": "dam",
+      "launch": 146,
+      "burst": 154,
+      "end": 160,
+      "id": "C179",
+      "phase": 6
+    },
+    {
+      "point": "F1",
+      "template": "F_CRACKLE",
+      "zone": "front",
+      "launch": 148.9,
+      "burst": 150.0,
+      "end": 151.8,
+      "id": "C180",
+      "phase": 6
+    },
+    {
+      "point": "F2",
+      "template": "F_CRACKLE",
+      "zone": "front",
+      "launch": 149.25,
+      "burst": 150.35,
+      "end": 152.15,
+      "id": "C181",
+      "phase": 6
+    },
+    {
+      "point": "F3",
+      "template": "F_CRACKLE",
+      "zone": "front",
+      "launch": 149.6,
+      "burst": 150.7,
+      "end": 152.5,
+      "id": "C182",
+      "phase": 6
+    },
+    {
+      "point": "P1",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 155,
+      "burst": 160,
+      "end": 164,
+      "id": "C183",
+      "phase": 6
+    },
+    {
+      "point": "P2",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 155,
+      "burst": 160,
+      "end": 164,
+      "id": "C184",
+      "phase": 6
+    },
+    {
+      "point": "P3",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 155,
+      "burst": 160,
+      "end": 164,
+      "id": "C185",
+      "phase": 6
+    },
+    {
+      "point": "P4",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 155,
+      "burst": 160,
+      "end": 164,
+      "id": "C186",
+      "phase": 6
+    },
+    {
+      "point": "P5",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 155,
+      "burst": 160,
+      "end": 164,
+      "id": "C187",
+      "phase": 6
+    },
+    {
+      "point": "P6",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 155,
+      "burst": 160,
+      "end": 164,
+      "id": "C188",
+      "phase": 6
+    },
+    {
+      "point": "P7",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 155,
+      "burst": 160,
+      "end": 164,
+      "id": "C189",
+      "phase": 6
+    },
+    {
+      "point": "P8",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 155,
+      "burst": 160,
+      "end": 164,
+      "id": "C190",
+      "phase": 6
+    },
+    {
+      "point": "P9",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 155,
+      "burst": 160,
+      "end": 164,
+      "id": "C191",
+      "phase": 6
+    },
+    {
+      "point": "F1",
+      "template": "F_GOLD",
+      "zone": "front",
+      "launch": 155.7,
+      "burst": 157.0,
+      "end": 159.8,
+      "id": "C192",
+      "phase": 6
+    },
+    {
+      "point": "F2",
+      "template": "F_GOLD",
+      "zone": "front",
+      "launch": 156.0,
+      "burst": 157.3,
+      "end": 160.1,
+      "id": "C193",
+      "phase": 6
+    },
+    {
+      "point": "F3",
+      "template": "F_GOLD",
+      "zone": "front",
+      "launch": 156.3,
+      "burst": 157.6,
+      "end": 160.4,
+      "id": "C194",
+      "phase": 6
+    },
+    {
+      "point": "P1",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 161,
+      "burst": 166,
+      "end": 170,
+      "id": "C195",
+      "phase": 7
+    },
+    {
+      "point": "P2",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 161,
+      "burst": 166,
+      "end": 170,
+      "id": "C196",
+      "phase": 7
+    },
+    {
+      "point": "P3",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 161,
+      "burst": 166,
+      "end": 170,
+      "id": "C197",
+      "phase": 7
+    },
+    {
+      "point": "P4",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 161,
+      "burst": 166,
+      "end": 170,
+      "id": "C198",
+      "phase": 7
+    },
+    {
+      "point": "P5",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 161,
+      "burst": 166,
+      "end": 170,
+      "id": "C199",
+      "phase": 7
+    },
+    {
+      "point": "P6",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 161,
+      "burst": 166,
+      "end": 170,
+      "id": "C200",
+      "phase": 7
+    },
+    {
+      "point": "P7",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 161,
+      "burst": 166,
+      "end": 170,
+      "id": "C201",
+      "phase": 7
+    },
+    {
+      "point": "P8",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 161,
+      "burst": 166,
+      "end": 170,
+      "id": "C202",
+      "phase": 7
+    },
+    {
+      "point": "P9",
+      "template": "P_MG",
+      "zone": "dam",
+      "launch": 161,
+      "burst": 166,
+      "end": 170,
+      "id": "C203",
+      "phase": 7
+    },
+    {
+      "point": "F1",
+      "template": "F_CRACKLE",
+      "zone": "front",
+      "launch": 161.9,
+      "burst": 163.0,
+      "end": 164.8,
+      "id": "C204",
+      "phase": 6
+    },
+    {
+      "point": "F2",
+      "template": "F_CRACKLE",
+      "zone": "front",
+      "launch": 162.15,
+      "burst": 163.25,
+      "end": 165.05,
+      "id": "C205",
+      "phase": 6
+    },
+    {
+      "point": "F3",
+      "template": "F_CRACKLE",
+      "zone": "front",
+      "launch": 162.4,
+      "burst": 163.5,
+      "end": 165.3,
+      "id": "C206",
+      "phase": 6
+    },
+    {
+      "point": "F1",
+      "template": "F_GOLD",
+      "zone": "front",
+      "launch": 166.7,
+      "burst": 168.0,
+      "end": 170.8,
+      "id": "C207",
+      "phase": 7
+    },
+    {
+      "point": "F2",
+      "template": "F_GOLD",
+      "zone": "front",
+      "launch": 167.0,
+      "burst": 168.3,
+      "end": 171.1,
+      "id": "C208",
+      "phase": 7
+    },
+    {
+      "point": "F3",
+      "template": "F_GOLD",
+      "zone": "front",
+      "launch": 167.3,
+      "burst": 168.6,
+      "end": 171.4,
+      "id": "C209",
+      "phase": 7
+    },
+    {
+      "point": "P1",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 168.5,
+      "burst": 172,
+      "end": 175,
+      "id": "C210",
+      "phase": 7
+    },
+    {
+      "point": "P3",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 168.5,
+      "burst": 172,
+      "end": 175,
+      "id": "C211",
+      "phase": 7
+    },
+    {
+      "point": "P5",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 168.5,
+      "burst": 172,
+      "end": 175,
+      "id": "C212",
+      "phase": 7
+    },
+    {
+      "point": "P7",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 168.5,
+      "burst": 172,
+      "end": 175,
+      "id": "C213",
+      "phase": 7
+    },
+    {
+      "point": "P9",
+      "template": "P_SPLIT",
+      "zone": "dam",
+      "launch": 168.5,
+      "burst": 172,
+      "end": 175,
+      "id": "C214",
+      "phase": 7
+    },
+    {
+      "point": "P1",
+      "template": "P_LG",
+      "zone": "dam",
+      "launch": 172,
+      "burst": 180,
+      "end": 187,
+      "id": "C215",
+      "phase": 7
+    },
+    {
+      "point": "P2",
+      "template": "P_LG",
+      "zone": "dam",
+      "launch": 172,
+      "burst": 180,
+      "end": 187,
+      "id": "C216",
+      "phase": 7
+    },
+    {
+      "point": "P3",
+      "template": "P_LG",
+      "zone": "dam",
+      "launch": 172,
+      "burst": 180,
+      "end": 187,
+      "id": "C217",
+      "phase": 7
+    },
+    {
+      "point": "P4",
+      "template": "P_LG",
+      "zone": "dam",
+      "launch": 172,
+      "burst": 180,
+      "end": 187,
+      "id": "C218",
+      "phase": 7
+    },
+    {
+      "point": "P5",
+      "template": "P_LG",
+      "zone": "dam",
+      "launch": 172,
+      "burst": 180,
+      "end": 187,
+      "id": "C219",
+      "phase": 7
+    },
+    {
+      "point": "P6",
+      "template": "P_LG",
+      "zone": "dam",
+      "launch": 172,
+      "burst": 180,
+      "end": 187,
+      "id": "C220",
+      "phase": 7
+    },
+    {
+      "point": "P7",
+      "template": "P_LG",
+      "zone": "dam",
+      "launch": 172,
+      "burst": 180,
+      "end": 187,
+      "id": "C221",
+      "phase": 7
+    },
+    {
+      "point": "P8",
+      "template": "P_LG",
+      "zone": "dam",
+      "launch": 172,
+      "burst": 180,
+      "end": 187,
+      "id": "C222",
+      "phase": 7
+    },
+    {
+      "point": "P9",
+      "template": "P_LG",
+      "zone": "dam",
+      "launch": 172,
+      "burst": 180,
+      "end": 187,
+      "id": "C223",
+      "phase": 7
+    },
+    {
+      "point": "F1",
+      "template": "F_CRACKLE",
+      "zone": "front",
+      "launch": 173.9,
+      "burst": 175.0,
+      "end": 176.8,
+      "id": "C224",
+      "phase": 7
+    },
+    {
+      "point": "F2",
+      "template": "F_CRACKLE",
+      "zone": "front",
+      "launch": 174.2,
+      "burst": 175.3,
+      "end": 177.1,
+      "id": "C225",
+      "phase": 7
+    },
+    {
+      "point": "F3",
+      "template": "F_CRACKLE",
+      "zone": "front",
+      "launch": 174.5,
+      "burst": 175.6,
+      "end": 177.4,
+      "id": "C226",
+      "phase": 7
+    },
+    {
+      "point": "B1",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C227",
+      "phase": 7
+    },
+    {
+      "point": "B2",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C228",
+      "phase": 7
+    },
+    {
+      "point": "B3",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C229",
+      "phase": 7
+    },
+    {
+      "point": "B4",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C230",
+      "phase": 7
+    },
+    {
+      "point": "B5",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C231",
+      "phase": 7
+    },
+    {
+      "point": "B6",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C232",
+      "phase": 7
+    },
+    {
+      "point": "B7",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C233",
+      "phase": 7
+    },
+    {
+      "point": "B8",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C234",
+      "phase": 7
+    },
+    {
+      "point": "P1",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C235",
+      "phase": 7
+    },
+    {
+      "point": "P2",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C236",
+      "phase": 7
+    },
+    {
+      "point": "P3",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C237",
+      "phase": 7
+    },
+    {
+      "point": "P4",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C238",
+      "phase": 7
+    },
+    {
+      "point": "P5",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C239",
+      "phase": 7
+    },
+    {
+      "point": "P6",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C240",
+      "phase": 7
+    },
+    {
+      "point": "P7",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C241",
+      "phase": 7
+    },
+    {
+      "point": "P8",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C242",
+      "phase": 7
+    },
+    {
+      "point": "P9",
+      "template": "G_GOLD",
+      "zone": "dam",
+      "launch": 179,
+      "burst": 179,
+      "end": 182,
+      "id": "C243",
+      "phase": 7
+    },
+    {
+      "point": "P1",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 185,
+      "burst": 190,
+      "end": 198,
+      "id": "C244",
+      "phase": 8
+    },
+    {
+      "point": "P2",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 185,
+      "burst": 190,
+      "end": 198,
+      "id": "C245",
+      "phase": 8
+    },
+    {
+      "point": "P3",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 185,
+      "burst": 190,
+      "end": 198,
+      "id": "C246",
+      "phase": 8
+    },
+    {
+      "point": "P4",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 185,
+      "burst": 190,
+      "end": 198,
+      "id": "C247",
+      "phase": 8
+    },
+    {
+      "point": "P5",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 185,
+      "burst": 190,
+      "end": 198,
+      "id": "C248",
+      "phase": 8
+    },
+    {
+      "point": "P6",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 185,
+      "burst": 190,
+      "end": 198,
+      "id": "C249",
+      "phase": 8
+    },
+    {
+      "point": "P7",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 185,
+      "burst": 190,
+      "end": 198,
+      "id": "C250",
+      "phase": 8
+    },
+    {
+      "point": "P8",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 185,
+      "burst": 190,
+      "end": 198,
+      "id": "C251",
+      "phase": 8
+    },
+    {
+      "point": "P9",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 185,
+      "burst": 190,
+      "end": 198,
+      "id": "C252",
+      "phase": 8
+    },
+    {
+      "point": "P1",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 187,
+      "burst": 192,
+      "end": 200,
+      "id": "C253",
+      "phase": 8
+    },
+    {
+      "point": "P2",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 187,
+      "burst": 192,
+      "end": 200,
+      "id": "C254",
+      "phase": 8
+    },
+    {
+      "point": "P3",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 187,
+      "burst": 192,
+      "end": 200,
+      "id": "C255",
+      "phase": 8
+    },
+    {
+      "point": "P4",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 187,
+      "burst": 192,
+      "end": 200,
+      "id": "C256",
+      "phase": 8
+    },
+    {
+      "point": "P5",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 187,
+      "burst": 192,
+      "end": 200,
+      "id": "C257",
+      "phase": 8
+    },
+    {
+      "point": "P6",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 187,
+      "burst": 192,
+      "end": 200,
+      "id": "C258",
+      "phase": 8
+    },
+    {
+      "point": "P7",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 187,
+      "burst": 192,
+      "end": 200,
+      "id": "C259",
+      "phase": 8
+    },
+    {
+      "point": "P8",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 187,
+      "burst": 192,
+      "end": 200,
+      "id": "C260",
+      "phase": 8
+    },
+    {
+      "point": "P9",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 187,
+      "burst": 192,
+      "end": 200,
+      "id": "C261",
+      "phase": 8
+    },
+    {
+      "point": "P1",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 189,
+      "burst": 194,
+      "end": 202,
+      "id": "C262",
+      "phase": 8
+    },
+    {
+      "point": "P2",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 189,
+      "burst": 194,
+      "end": 202,
+      "id": "C263",
+      "phase": 8
+    },
+    {
+      "point": "P3",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 189,
+      "burst": 194,
+      "end": 202,
+      "id": "C264",
+      "phase": 8
+    },
+    {
+      "point": "P4",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 189,
+      "burst": 194,
+      "end": 202,
+      "id": "C265",
+      "phase": 8
+    },
+    {
+      "point": "P5",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 189,
+      "burst": 194,
+      "end": 202,
+      "id": "C266",
+      "phase": 8
+    },
+    {
+      "point": "P6",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 189,
+      "burst": 194,
+      "end": 202,
+      "id": "C267",
+      "phase": 8
+    },
+    {
+      "point": "P7",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 189,
+      "burst": 194,
+      "end": 202,
+      "id": "C268",
+      "phase": 8
+    },
+    {
+      "point": "P8",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 189,
+      "burst": 194,
+      "end": 202,
+      "id": "C269",
+      "phase": 8
+    },
+    {
+      "point": "P9",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 189,
+      "burst": 194,
+      "end": 202,
+      "id": "C270",
+      "phase": 8
+    },
+    {
+      "point": "P1",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 191,
+      "burst": 196,
+      "end": 204,
+      "id": "C271",
+      "phase": 8
+    },
+    {
+      "point": "P2",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 191,
+      "burst": 196,
+      "end": 204,
+      "id": "C272",
+      "phase": 8
+    },
+    {
+      "point": "P3",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 191,
+      "burst": 196,
+      "end": 204,
+      "id": "C273",
+      "phase": 8
+    },
+    {
+      "point": "P4",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 191,
+      "burst": 196,
+      "end": 204,
+      "id": "C274",
+      "phase": 8
+    },
+    {
+      "point": "P5",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 191,
+      "burst": 196,
+      "end": 204,
+      "id": "C275",
+      "phase": 8
+    },
+    {
+      "point": "P6",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 191,
+      "burst": 196,
+      "end": 204,
+      "id": "C276",
+      "phase": 8
+    },
+    {
+      "point": "P7",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 191,
+      "burst": 196,
+      "end": 204,
+      "id": "C277",
+      "phase": 8
+    },
+    {
+      "point": "P8",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 191,
+      "burst": 196,
+      "end": 204,
+      "id": "C278",
+      "phase": 8
+    },
+    {
+      "point": "P9",
+      "template": "P_WALL",
+      "zone": "dam",
+      "launch": 191,
+      "burst": 196,
+      "end": 204,
+      "id": "C279",
+      "phase": 8
+    }
+  ]
+}

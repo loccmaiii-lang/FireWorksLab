@@ -25,7 +25,7 @@ const assert = require('node:assert/strict');
     },t);
   }
   async function description() { return root.locator('canvas').getAttribute('aria-label'); }
-  await page.screenshot({ path:path.join(out,'front-168.8.png'), fullPage:true });
+  await page.screenshot({ path:path.join(out,'opening-20.8.png'), fullPage:true });
   for(const w of [320,390,736,1024]) {
     await page.setViewportSize({width:w,height:850});
     await page.waitForTimeout(50);
@@ -40,10 +40,10 @@ const assert = require('node:assert/strict');
   assert.match(await description(),/坝顶0个/);
   await root.locator('[data-view]').selectOption('front');
   await page.screenshot({path:path.join(out,'interlude-118.8.png'),fullPage:true});
-  await seek(197);
-  assert.match(await description(),/前台0个播放实例，坝顶36个/);
+  await seek(198.6);
+  assert.match(await description(),/前台0个播放实例，坝顶54个/);
   await root.locator('[data-view]').selectOption('full');
-  await page.screenshot({path:path.join(out,'wall-197.png'),fullPage:true});
+  await page.screenshot({path:path.join(out,'wall-198.6.png'),fullPage:true});
   // Walk every tenth of a second, including launches, fades and phase edges.
   await root.locator('[data-seek]').evaluate(el=>{
     for(let i=0;i<=2100;i++) {
@@ -72,7 +72,7 @@ const assert = require('node:assert/strict');
   const report={pass:true,render:'Chrome headless, 2D schematic; not UE',
     viewports:[320,390,736,1024],timelineSamples:2101,checks:[
       'ten phases','front/full views','slider','phase jump','play/pause',
-      'interlude dam empty','white wall 36 / front zero','all extinguished at 210',
+      'interlude dam empty','white wall 54 simultaneous / front zero','all extinguished at 210',
       'no horizontal overflow','no page errors'],errors};
   fs.writeFileSync(path.join(out,'browser-check.json'),JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(report));
