@@ -1,0 +1,305 @@
+17:22:06 第 1/101 步：JinMangJu03（JMG03）
+17:22:07   ✅ JinMangJu03 
+17:22:07   ✅ JinMangJu03（JMG03）（0.0 分钟）
+17:22:07 第 2/101 步：JinMangJu05（JMG05）
+17:22:07   ✅ JinMangJu05 
+17:22:07   ✅ JinMangJu05（JMG05）（0.0 分钟）
+17:22:07 第 3/101 步：JinMangJu10（JMG10）
+17:22:09   ✅ JinMangJu10 
+17:22:09   ✅ JinMangJu10（JMG10）（0.0 分钟）
+17:22:09 第 4/101 步：JinMangJu20（JMG20）
+17:22:10   ✅ JinMangJu20 
+17:22:10   ✅ JinMangJu20（JMG20）（0.0 分钟）
+17:22:10 第 5/101 步：JinMangJu30（JMG30）
+17:22:12   ✅ JinMangJu30 
+17:22:12   ✅ JinMangJu30（JMG30）（0.0 分钟）
+17:22:12 第 6/101 步：JinMangJu40（JMG40）
+17:22:13   ✅ JinMangJu40 
+17:22:13   ✅ JinMangJu40（JMG40）（0.0 分钟）
+17:22:13 第 7/101 步：Crossette（MYFL-O）
+17:22:14   ✅ Crossette 
+17:22:14   ✅ Crossette（MYFL-O）（0.0 分钟）
+17:22:14 第 8/101 步：Crossette_03（MYFL-S03）
+17:22:14   ✅ Crossette_03 
+17:22:14   ✅ Crossette_03（MYFL-S03）（0.0 分钟）
+17:22:14 第 9/101 步：Crossette_10（MYFL-S10）
+17:22:16   ✅ Crossette_10 
+17:22:16   ✅ Crossette_10（MYFL-S10）（0.0 分钟）
+17:22:16 第 10/101 步：Crossette_20（MYFL-S20）
+17:22:17   ✅ Crossette_20 
+17:22:17   ✅ Crossette_20（MYFL-S20）（0.0 分钟）
+17:22:17 第 11/101 步：Crossette_30（MYFL-S30）
+17:22:18   ✅ Crossette_30 
+17:22:18   ✅ Crossette_30（MYFL-S30）（0.0 分钟）
+17:22:18 第 12/101 步：Crossette_40（MYFL-S40）
+17:22:20   ✅ Crossette_40 
+17:22:20   ✅ Crossette_40（MYFL-S40）（0.0 分钟）
+17:22:20 第 13/101 步：Crossette_Crown（MYFL-K）
+17:22:21   ✅ Crossette_Crown 
+17:22:21   ✅ Crossette_Crown（MYFL-K）（0.0 分钟）
+17:22:21 第 14/101 步：Crossette_Willow（MYFL-Y）
+17:22:22   ✅ Crossette_Willow 
+17:22:22   ✅ Crossette_Willow（MYFL-Y）（0.0 分钟）
+17:22:22 第 15/101 步：Crossette_Ring（MYFL-R）
+17:22:23   ✅ Crossette_Ring 
+17:22:23   ✅ Crossette_Ring（MYFL-R）（0.0 分钟）
+17:22:23 第 16/101 步：Crossette_Saturn（MYFL-T）
+17:22:23   ✅ Crossette_Saturn 
+17:22:23   ✅ Crossette_Saturn（MYFL-T）（0.0 分钟）
+17:22:23 第 17/101 步：Crossette_Kaleido（MYFL-M）
+17:22:24   ✅ Crossette_Kaleido 
+17:22:24   ✅ Crossette_Kaleido（MYFL-M）（0.0 分钟）
+17:22:24 第 18/101 步：Crossette_Heart（MYFL-H）
+17:22:25   ✅ Crossette_Heart 
+17:22:25   ✅ Crossette_Heart（MYFL-H）（0.0 分钟）
+17:22:25 第 19/101 步：Crossette_Jisa（MYFL-J）
+17:22:26   ✅ Crossette_Jisa 
+17:22:26   ✅ Crossette_Jisa（MYFL-J）（0.0 分钟）
+17:22:26 第 20/101 步：Crossette_Core（MYFL-C）
+17:22:26   ✅ Crossette_Core 
+17:22:26   ✅ Crossette_Core（MYFL-C）（0.0 分钟）
+17:22:26 第 21/101 步：Crackle（MYCR-O）
+17:22:27   ✅ Crackle 
+17:22:27   ✅ Crackle（MYCR-O）（0.0 分钟）
+17:22:27 第 22/101 步：Crackle_03（MYCR-S03）
+17:22:28   ✅ Crackle_03 
+17:22:28   ✅ Crackle_03（MYCR-S03）（0.0 分钟）
+17:22:28 第 23/101 步：Crackle_05（MYCR-S05）
+17:22:29   ✅ Crackle_05 
+17:22:29   ✅ Crackle_05（MYCR-S05）（0.0 分钟）
+17:22:29 第 24/101 步：Crackle_10（MYCR-S10）
+17:22:30   ✅ Crackle_10 
+17:22:30   ✅ Crackle_10（MYCR-S10）（0.0 分钟）
+17:22:30 第 25/101 步：Crackle_20（MYCR-S20）
+17:22:31   ✅ Crackle_20 
+17:22:31   ✅ Crackle_20（MYCR-S20）（0.0 分钟）
+17:22:31 第 26/101 步：Crackle_30（MYCR-S30）
+17:22:32   ✅ Crackle_30 
+17:22:32   ✅ Crackle_30（MYCR-S30）（0.0 分钟）
+17:22:32 第 27/101 步：Crackle_40（MYCR-S40）
+17:22:33   ✅ Crackle_40 
+17:22:33   ✅ Crackle_40（MYCR-S40）（0.0 分钟）
+17:22:33 第 28/101 步：Crackle_Crown（MYCR-K）
+17:22:35   ✅ Crackle_Crown 
+17:22:35   ✅ Crackle_Crown（MYCR-K）（0.0 分钟）
+17:22:35 第 29/101 步：Crackle_Willow（MYCR-Y）
+17:22:36   ✅ Crackle_Willow 
+17:22:36   ✅ Crackle_Willow（MYCR-Y）（0.0 分钟）
+17:22:36 第 30/101 步：Crackle_Ring（MYCR-R）
+17:22:36   ✅ Crackle_Ring 
+17:22:36   ✅ Crackle_Ring（MYCR-R）（0.0 分钟）
+17:22:36 第 31/101 步：Crackle_Saturn（MYCR-T）
+17:22:37   ✅ Crackle_Saturn 
+17:22:37   ✅ Crackle_Saturn（MYCR-T）（0.0 分钟）
+17:22:37 第 32/101 步：Crackle_Kaleido（MYCR-M）
+17:22:38   ✅ Crackle_Kaleido 
+17:22:38   ✅ Crackle_Kaleido（MYCR-M）（0.0 分钟）
+17:22:38 第 33/101 步：Crackle_Heart（MYCR-H）
+17:22:38   ✅ Crackle_Heart 
+17:22:38   ✅ Crackle_Heart（MYCR-H）（0.0 分钟）
+17:22:38 第 34/101 步：Crackle_Jisa（MYCR-J）
+17:22:39   ✅ Crackle_Jisa 
+17:22:39   ✅ Crackle_Jisa（MYCR-J）（0.0 分钟）
+17:22:39 第 35/101 步：Crackle_Core（MYCR-C）
+17:22:40   ✅ Crackle_Core 
+17:22:40   ✅ Crackle_Core（MYCR-C）（0.0 分钟）
+17:22:40 第 36/101 步：GoldRay（MYJA-O）
+17:22:42   ✅ GoldRay 
+17:22:42   ✅ GoldRay（MYJA-O）（0.0 分钟）
+17:22:42 第 37/101 步：GoldRay_03（MYJA-S03）
+17:22:43   ✅ GoldRay_03 
+17:22:43   ✅ GoldRay_03（MYJA-S03）（0.0 分钟）
+17:22:43 第 38/101 步：GoldRay_05（MYJA-S05）
+17:22:44   ✅ GoldRay_05 
+17:22:44   ✅ GoldRay_05（MYJA-S05）（0.0 分钟）
+17:22:44 第 39/101 步：GoldRay_10（MYJA-S10）
+17:22:45   ✅ GoldRay_10 
+17:22:45   ✅ GoldRay_10（MYJA-S10）（0.0 分钟）
+17:22:45 第 40/101 步：GoldRay_20（MYJA-S20）
+17:22:46   ✅ GoldRay_20 
+17:22:46   ✅ GoldRay_20（MYJA-S20）（0.0 分钟）
+17:22:46 第 41/101 步：GoldRay_30（MYJA-S30）
+17:22:48   ✅ GoldRay_30 
+17:22:48   ✅ GoldRay_30（MYJA-S30）（0.0 分钟）
+17:22:48 第 42/101 步：GoldRay_40（MYJA-S40）
+17:22:50   ✅ GoldRay_40 
+17:22:50   ✅ GoldRay_40（MYJA-S40）（0.0 分钟）
+17:22:50 第 43/101 步：GoldRay_Crown（MYJA-K）
+17:22:52   ✅ GoldRay_Crown 
+17:22:52   ✅ GoldRay_Crown（MYJA-K）（0.0 分钟）
+17:22:52 第 44/101 步：GoldRay_Willow（MYJA-Y）
+17:22:53   ✅ GoldRay_Willow 
+17:22:53   ✅ GoldRay_Willow（MYJA-Y）（0.0 分钟）
+17:22:53 第 45/101 步：GoldRay_Ring（MYJA-R）
+17:22:55   ✅ GoldRay_Ring 
+17:22:55   ✅ GoldRay_Ring（MYJA-R）（0.0 分钟）
+17:22:55 第 46/101 步：GoldRay_Saturn（MYJA-T）
+17:22:56   ✅ GoldRay_Saturn 
+17:22:56   ✅ GoldRay_Saturn（MYJA-T）（0.0 分钟）
+17:22:56 第 47/101 步：GoldRay_Kaleido（MYJA-M）
+17:22:57   ✅ GoldRay_Kaleido 
+17:22:57   ✅ GoldRay_Kaleido（MYJA-M）（0.0 分钟）
+17:22:57 第 48/101 步：GoldRay_Heart（MYJA-H）
+17:22:58   ✅ GoldRay_Heart 
+17:22:58   ✅ GoldRay_Heart（MYJA-H）（0.0 分钟）
+17:22:58 第 49/101 步：GoldRay_Jisa（MYJA-J）
+17:22:59   ✅ GoldRay_Jisa 
+17:22:59   ✅ GoldRay_Jisa（MYJA-J）（0.0 分钟）
+17:22:59 第 50/101 步：GoldRay_Core（MYJA-C）
+17:23:01   ✅ GoldRay_Core 
+17:23:01   ✅ GoldRay_Core（MYJA-C）（0.0 分钟）
+17:23:01 第 51/101 步：GoldChrysanthemum（MYJM-O）
+17:23:02   ✅ GoldChrysanthemum 
+17:23:02   ✅ GoldChrysanthemum（MYJM-O）（0.0 分钟）
+17:23:02 第 52/101 步：GoldChrysanthemum_03（MYJM-S03）
+17:23:02   ✅ GoldChrysanthemum_03 
+17:23:02   ✅ GoldChrysanthemum_03（MYJM-S03）（0.0 分钟）
+17:23:02 第 53/101 步：GoldChrysanthemum_10（MYJM-S10）
+17:23:04   ✅ GoldChrysanthemum_10 
+17:23:04   ✅ GoldChrysanthemum_10（MYJM-S10）（0.0 分钟）
+17:23:04 第 54/101 步：GoldChrysanthemum_20（MYJM-S20）
+17:23:05   ✅ GoldChrysanthemum_20 
+17:23:05   ✅ GoldChrysanthemum_20（MYJM-S20）（0.0 分钟）
+17:23:05 第 55/101 步：GoldChrysanthemum_30（MYJM-S30）
+17:23:06   ✅ GoldChrysanthemum_30 
+17:23:06   ✅ GoldChrysanthemum_30（MYJM-S30）（0.0 分钟）
+17:23:06 第 56/101 步：GoldChrysanthemum_40（MYJM-S40）
+17:23:07   ✅ GoldChrysanthemum_40 
+17:23:07   ✅ GoldChrysanthemum_40（MYJM-S40）（0.0 分钟）
+17:23:07 第 57/101 步：GoldChrysanthemum_Crown（MYJM-K）
+17:23:09   ✅ GoldChrysanthemum_Crown 
+17:23:09   ✅ GoldChrysanthemum_Crown（MYJM-K）（0.0 分钟）
+17:23:09 第 58/101 步：GoldChrysanthemum_Willow（MYJM-Y）
+17:23:10   ✅ GoldChrysanthemum_Willow 
+17:23:10   ✅ GoldChrysanthemum_Willow（MYJM-Y）（0.0 分钟）
+17:23:10 第 59/101 步：GoldChrysanthemum_Ring（MYJM-R）
+17:23:10   ✅ GoldChrysanthemum_Ring 
+17:23:10   ✅ GoldChrysanthemum_Ring（MYJM-R）（0.0 分钟）
+17:23:10 第 60/101 步：GoldChrysanthemum_Saturn（MYJM-T）
+17:23:11   ✅ GoldChrysanthemum_Saturn 
+17:23:11   ✅ GoldChrysanthemum_Saturn（MYJM-T）（0.0 分钟）
+17:23:11 第 61/101 步：GoldChrysanthemum_Kaleido（MYJM-M）
+17:23:12   ✅ GoldChrysanthemum_Kaleido 
+17:23:12   ✅ GoldChrysanthemum_Kaleido（MYJM-M）（0.0 分钟）
+17:23:12 第 62/101 步：GoldChrysanthemum_Heart（MYJM-H）
+17:23:13   ✅ GoldChrysanthemum_Heart 
+17:23:13   ✅ GoldChrysanthemum_Heart（MYJM-H）（0.0 分钟）
+17:23:13 第 63/101 步：GoldChrysanthemum_Jisa（MYJM-J）
+17:23:14   ✅ GoldChrysanthemum_Jisa 
+17:23:14   ✅ GoldChrysanthemum_Jisa（MYJM-J）（0.0 分钟）
+17:23:14 第 64/101 步：GoldChrysanthemum_Core（MYJM-C）
+17:23:15   ✅ GoldChrysanthemum_Core 
+17:23:15   ✅ GoldChrysanthemum_Core（MYJM-C）（0.0 分钟）
+17:23:15 第 65/101 步：GoldRayRocket（MYJC-O）
+17:23:16   ❌ GoldRayRocket 跳过纯粒子发射器：L1_Unit
+17:23:16      GoldRayRocket · L2_Main 中间空帧 23
+17:23:16   ✅ GoldRayRocket（MYJC-O）（0.0 分钟）
+17:23:16 第 66/101 步：GoldRayRocket_03（MYJC-S03）
+17:23:17   ✅ GoldRayRocket_03 跳过纯粒子发射器：L1_Unit
+17:23:17   ✅ GoldRayRocket_03（MYJC-S03）（0.0 分钟）
+17:23:17 第 67/101 步：GoldRayRocket_05（MYJC-S05）
+17:23:17   ✅ GoldRayRocket_05 跳过纯粒子发射器：L1_Unit
+17:23:17   ✅ GoldRayRocket_05（MYJC-S05）（0.0 分钟）
+17:23:17 第 68/101 步：GoldRayRocket_10（MYJC-S10）
+17:23:18   ✅ GoldRayRocket_10 跳过纯粒子发射器：L1_Unit
+17:23:18   ✅ GoldRayRocket_10（MYJC-S10）（0.0 分钟）
+17:23:18 第 69/101 步：GoldRayRocket_20（MYJC-S20）
+17:23:18   ✅ GoldRayRocket_20 跳过纯粒子发射器：L1_Unit
+17:23:18   ✅ GoldRayRocket_20（MYJC-S20）（0.0 分钟）
+17:23:18 第 70/101 步：GoldRayRocket_30（MYJC-S30）
+17:23:19   ✅ GoldRayRocket_30 跳过纯粒子发射器：L1_Unit
+17:23:19   ✅ GoldRayRocket_30（MYJC-S30）（0.0 分钟）
+17:23:19 第 71/101 步：GoldRayRocket_40（MYJC-S40）
+17:23:20   ✅ GoldRayRocket_40 跳过纯粒子发射器：L1_Unit
+17:23:20   ✅ GoldRayRocket_40（MYJC-S40）（0.0 分钟）
+17:23:20 第 72/101 步：GoldRayRocket_Crown（MYJC-K）
+17:23:21   ✅ GoldRayRocket_Crown 
+17:23:21   ✅ GoldRayRocket_Crown（MYJC-K）（0.0 分钟）
+17:23:21 第 73/101 步：GoldRayRocket_Willow（MYJC-Y）
+17:23:22   ✅ GoldRayRocket_Willow 
+17:23:22   ✅ GoldRayRocket_Willow（MYJC-Y）（0.0 分钟）
+17:23:22 第 74/101 步：GoldRayRocket_Ring（MYJC-R）
+17:23:23   ✅ GoldRayRocket_Ring 
+17:23:23   ✅ GoldRayRocket_Ring（MYJC-R）（0.0 分钟）
+17:23:23 第 75/101 步：GoldRayRocket_Saturn（MYJC-T）
+17:23:24   ✅ GoldRayRocket_Saturn 
+17:23:24   ✅ GoldRayRocket_Saturn（MYJC-T）（0.0 分钟）
+17:23:24 第 76/101 步：GoldRayRocket_Kaleido（MYJC-M）
+17:23:25   ✅ GoldRayRocket_Kaleido 
+17:23:25   ✅ GoldRayRocket_Kaleido（MYJC-M）（0.0 分钟）
+17:23:25 第 77/101 步：GoldRayRocket_Heart（MYJC-H）
+17:23:26   ✅ GoldRayRocket_Heart 
+17:23:26   ✅ GoldRayRocket_Heart（MYJC-H）（0.0 分钟）
+17:23:26 第 78/101 步：GoldRayRocket_Jisa（MYJC-J）
+17:23:27   ✅ GoldRayRocket_Jisa 
+17:23:27   ✅ GoldRayRocket_Jisa（MYJC-J）（0.0 分钟）
+17:23:27 第 79/101 步：GoldRayRocket_Core（MYJC-C）
+17:23:28   ✅ GoldRayRocket_Core 跳过纯粒子发射器：L1_Unit
+17:23:28   ✅ GoldRayRocket_Core（MYJC-C）（0.0 分钟）
+17:23:28 第 80/101 步：YonshakuKamuro（MYHK-O）
+17:23:29   ✅ YonshakuKamuro 跳过纯粒子发射器：L2_Dots
+17:23:29   ✅ YonshakuKamuro（MYHK-O）（0.0 分钟）
+17:23:29 第 81/101 步：YonshakuKamuro_03（MYHK-S03）
+17:23:30   ✅ YonshakuKamuro_03 跳过纯粒子发射器：L2_Dots
+17:23:30   ✅ YonshakuKamuro_03（MYHK-S03）（0.0 分钟）
+17:23:30 第 82/101 步：YonshakuKamuro_05（MYHK-S05）
+17:23:30   ✅ YonshakuKamuro_05 跳过纯粒子发射器：L2_Dots
+17:23:30   ✅ YonshakuKamuro_05（MYHK-S05）（0.0 分钟）
+17:23:30 第 83/101 步：YonshakuKamuro_10（MYHK-S10）
+17:23:31   ✅ YonshakuKamuro_10 跳过纯粒子发射器：L2_Dots
+17:23:31   ✅ YonshakuKamuro_10（MYHK-S10）（0.0 分钟）
+17:23:31 第 84/101 步：YonshakuKamuro_20（MYHK-S20）
+17:23:32   ✅ YonshakuKamuro_20 跳过纯粒子发射器：L2_Dots
+17:23:32   ✅ YonshakuKamuro_20（MYHK-S20）（0.0 分钟）
+17:23:32 第 85/101 步：YonshakuKamuro_30（MYHK-S30）
+17:23:33   ✅ YonshakuKamuro_30 跳过纯粒子发射器：L2_Dots
+17:23:33   ✅ YonshakuKamuro_30（MYHK-S30）（0.0 分钟）
+17:23:33 第 86/101 步：YonshakuKamuro_Willow（MYHK-Y）
+17:23:35   ✅ YonshakuKamuro_Willow 跳过纯粒子发射器：L2_Dots
+17:23:35   ✅ YonshakuKamuro_Willow（MYHK-Y）（0.0 分钟）
+17:23:35 第 87/101 步：YonshakuKamuro_Ring（MYHK-R）
+17:23:36   ✅ YonshakuKamuro_Ring 跳过纯粒子发射器：L2_Dots
+17:23:36   ✅ YonshakuKamuro_Ring（MYHK-R）（0.0 分钟）
+17:23:36 第 88/101 步：YonshakuKamuro_Saturn（MYHK-T）
+17:23:37   ✅ YonshakuKamuro_Saturn 跳过纯粒子发射器：L2_Dots
+17:23:37   ✅ YonshakuKamuro_Saturn（MYHK-T）（0.0 分钟）
+17:23:37 第 89/101 步：YonshakuKamuro_Kaleido（MYHK-M）
+17:23:38   ✅ YonshakuKamuro_Kaleido 跳过纯粒子发射器：L2_Dots
+17:23:38   ✅ YonshakuKamuro_Kaleido（MYHK-M）（0.0 分钟）
+17:23:38 第 90/101 步：YonshakuKamuro_Heart（MYHK-H）
+17:23:39   ✅ YonshakuKamuro_Heart 跳过纯粒子发射器：L2_Dots
+17:23:39   ✅ YonshakuKamuro_Heart（MYHK-H）（0.0 分钟）
+17:23:39 第 91/101 步：YonshakuKamuro_Jisa（MYHK-J）
+17:23:40   ✅ YonshakuKamuro_Jisa 跳过纯粒子发射器：L2_Dots
+17:23:40   ✅ YonshakuKamuro_Jisa（MYHK-J）（0.0 分钟）
+17:23:40 第 92/101 步：YonshakuKamuro_Core（MYHK-C）
+17:23:42   ✅ YonshakuKamuro_Core 跳过纯粒子发射器：L2_Dots
+17:23:42   ✅ YonshakuKamuro_Core（MYHK-C）（0.0 分钟）
+17:23:42 第 93/101 步：JinMangJu_10_T75（TP-JMG10-T75）
+17:23:43   ✅ JinMangJu_10_T75 
+17:23:43   ✅ JinMangJu_10_T75（TP-JMG10-T75）（0.0 分钟）
+17:23:43 第 94/101 步：JinMangJu_10_T60（TP-JMG10-T60）
+17:23:44   ✅ JinMangJu_10_T60 
+17:23:44   ✅ JinMangJu_10_T60（TP-JMG10-T60）（0.0 分钟）
+17:23:44 第 95/101 步：JinMangJu_10_T75C（TP-JMG10-T75C）
+17:23:45   ✅ JinMangJu_10_T75C 
+17:23:45   ✅ JinMangJu_10_T75C（TP-JMG10-T75C）（0.0 分钟）
+17:23:45 第 96/101 步：GoldRay_T75（TP-MYJA-O-T75）
+17:23:46   ✅ GoldRay_T75 
+17:23:46   ✅ GoldRay_T75（TP-MYJA-O-T75）（0.0 分钟）
+17:23:46 第 97/101 步：GoldRay_T60（TP-MYJA-O-T60）
+17:23:47   ✅ GoldRay_T60 
+17:23:47   ✅ GoldRay_T60（TP-MYJA-O-T60）（0.0 分钟）
+17:23:47 第 98/101 步：GoldRay_T75C（TP-MYJA-O-T75C）
+17:23:48   ✅ GoldRay_T75C 
+17:23:48   ✅ GoldRay_T75C（TP-MYJA-O-T75C）（0.0 分钟）
+17:23:48 第 99/101 步：YonshakuKamuro_T75（TP-MYHK-O-T75）
+17:23:49   ✅ YonshakuKamuro_T75 跳过纯粒子发射器：L2_Dots
+17:23:49   ✅ YonshakuKamuro_T75（TP-MYHK-O-T75）（0.0 分钟）
+17:23:49 第 100/101 步：YonshakuKamuro_T60（TP-MYHK-O-T60）
+17:23:50   ✅ YonshakuKamuro_T60 跳过纯粒子发射器：L2_Dots
+17:23:50   ✅ YonshakuKamuro_T60（TP-MYHK-O-T60）（0.0 分钟）
+17:23:50 第 101/101 步：YonshakuKamuro_T75C（TP-MYHK-O-T75C）
+17:23:51   ✅ YonshakuKamuro_T75C 跳过纯粒子发射器：L2_Dots
+17:23:51   ✅ YonshakuKamuro_T75C（TP-MYHK-O-T75C）（0.0 分钟）
+17:23:51 完成，用时 1.8 分钟

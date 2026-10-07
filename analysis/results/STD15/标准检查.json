@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-07 17:22",
+ "generated": "2026-10-07 17:21",
  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "std": {
   "pcCell": 512,
@@ -5199,7 +5199,7 @@
    "name": "金芒菊 · 3 号",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "fadaca5d·master4.9.31",
+   "ver": "fadaca5d·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -5268,14 +5268,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.1
+   "seconds": 0.0
   },
   "JMG05": {
    "id": "JMG05",
    "name": "金芒菊 · 5 号",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "a00106b1·master4.9.31",
+   "ver": "a00106b1·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -5344,14 +5344,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.1
+   "seconds": 0.0
   },
   "JMG10": {
    "id": "JMG10",
    "name": "金芒菊 · 尺玉（10 号）",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "8ae1a025·master4.9.31",
+   "ver": "8ae1a025·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -5427,7 +5427,7 @@
    "name": "金芒菊 · 2 尺（20 号）",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "e5d985f3·master4.9.31",
+   "ver": "e5d985f3·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -5496,14 +5496,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.3
+   "seconds": 0.2
   },
   "JMG30": {
    "id": "JMG30",
    "name": "金芒菊 · 3 尺（30 号）",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "1df8ed6d·master4.9.31",
+   "ver": "1df8ed6d·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -5572,14 +5572,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.4
+   "seconds": 0.3
   },
   "JMG40": {
    "id": "JMG40",
    "name": "金芒菊 · 4 尺（40 号）",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "f818b7c7·master4.9.31",
+   "ver": "f818b7c7·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -5648,14 +5648,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.6
+   "seconds": 0.5
   },
   "MYFL-O": {
    "id": "MYFL-O",
    "name": "分裂星 · 原样",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "313c8659·master4.9.31",
+   "ver": "313c8659·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -5731,7 +5731,7 @@
    "name": "分裂星 · 3 号",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "6db65c89·master4.9.31",
+   "ver": "6db65c89·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -5807,7 +5807,7 @@
    "name": "分裂星 · 尺玉",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "826edefd·master4.9.31",
+   "ver": "826edefd·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -5883,7 +5883,7 @@
    "name": "分裂星 · 2 尺",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "8e0c7b0c·master4.9.31",
+   "ver": "8e0c7b0c·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -5959,7 +5959,7 @@
    "name": "分裂星 · 3 尺",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "bb4ce6d4·master4.9.31",
+   "ver": "bb4ce6d4·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -6035,7 +6035,7 @@
    "name": "分裂星 · 4 尺",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "09a41e06·master4.9.31",
+   "ver": "09a41e06·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -6111,7 +6111,7 @@
    "name": "分裂星 · 冠",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "1dc1f846·master4.9.31",
+   "ver": "1dc1f846·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -6187,7 +6187,7 @@
    "name": "分裂星 · 柳",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "f5aa2988·master4.9.31",
+   "ver": "f5aa2988·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -6263,7 +6263,7 @@
    "name": "分裂星 · 环",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "6737bb46·master4.9.31",
+   "ver": "6737bb46·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -6339,7 +6339,7 @@
    "name": "分裂星 · 土星",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "215c1250·master4.9.31",
+   "ver": "215c1250·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -6415,7 +6415,7 @@
    "name": "分裂星 · 万華鏡",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "65bf4e78·master4.9.31",
+   "ver": "65bf4e78·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -6491,7 +6491,7 @@
    "name": "分裂星 · 心形",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "8322da87·master4.9.31",
+   "ver": "8322da87·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -6567,7 +6567,7 @@
    "name": "分裂星 · 时差",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "dd7c0139·master4.9.31",
+   "ver": "dd7c0139·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -6643,7 +6643,7 @@
    "name": "分裂星 · 芯入",
    "kind": "combo",
    "renderVer": null,
-   "ver": "7ee15caf·master4.9.31",
+   "ver": "7ee15caf·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -7168,7 +7168,7 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.5
+   "seconds": 0.4
   },
   "MYCR-S40": {
    "id": "MYCR-S40",
@@ -7244,7 +7244,7 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.7
+   "seconds": 0.6
   },
   "MYCR-K": {
    "id": "MYCR-K",
@@ -7783,7 +7783,7 @@
    "name": "Crackle · 芯入",
    "kind": "combo",
    "renderVer": null,
-   "ver": "886bf2a5·master4.3.8-core1+master4.9.31",
+   "ver": "886bf2a5·master4.3.8-core1+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -7859,7 +7859,7 @@
    "name": "金曜菊-A · 原样",
    "kind": "combo",
    "renderVer": null,
-   "ver": "5d7c30bc·master4.9.31",
+   "ver": "5d7c30bc·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -7935,7 +7935,7 @@
    "name": "金曜菊-A · 3 号",
    "kind": "combo",
    "renderVer": null,
-   "ver": "a506c796·master4.9.31",
+   "ver": "a506c796·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8011,7 +8011,7 @@
    "name": "金曜菊-A · 5 号",
    "kind": "combo",
    "renderVer": null,
-   "ver": "10feb3ea·master4.9.31",
+   "ver": "10feb3ea·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8087,7 +8087,7 @@
    "name": "金曜菊-A · 尺玉",
    "kind": "combo",
    "renderVer": null,
-   "ver": "6061fdb1·master4.9.31",
+   "ver": "6061fdb1·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8163,7 +8163,7 @@
    "name": "金曜菊-A · 2 尺",
    "kind": "combo",
    "renderVer": null,
-   "ver": "fe5d2cf0·master4.9.31",
+   "ver": "fe5d2cf0·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8239,7 +8239,7 @@
    "name": "金曜菊-A · 3 尺",
    "kind": "combo",
    "renderVer": null,
-   "ver": "cc4ddd89·master4.9.31",
+   "ver": "cc4ddd89·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8315,7 +8315,7 @@
    "name": "金曜菊-A · 4 尺",
    "kind": "combo",
    "renderVer": null,
-   "ver": "6466c622·master4.9.31",
+   "ver": "6466c622·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8391,7 +8391,7 @@
    "name": "金曜菊-A · 冠",
    "kind": "combo",
    "renderVer": null,
-   "ver": "982a3eb3·master4.9.31",
+   "ver": "982a3eb3·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8467,7 +8467,7 @@
    "name": "金曜菊-A · 柳",
    "kind": "combo",
    "renderVer": null,
-   "ver": "b890e04a·master4.9.31",
+   "ver": "b890e04a·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8543,7 +8543,7 @@
    "name": "金曜菊-A · 环",
    "kind": "combo",
    "renderVer": null,
-   "ver": "0443c405·master4.9.31",
+   "ver": "0443c405·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8619,7 +8619,7 @@
    "name": "金曜菊-A · 土星",
    "kind": "combo",
    "renderVer": null,
-   "ver": "eb530607·master4.9.31",
+   "ver": "eb530607·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8695,7 +8695,7 @@
    "name": "金曜菊-A · 万華鏡",
    "kind": "combo",
    "renderVer": null,
-   "ver": "5de1537e·master4.9.31",
+   "ver": "5de1537e·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8771,7 +8771,7 @@
    "name": "金曜菊-A · 心形",
    "kind": "combo",
    "renderVer": null,
-   "ver": "725a6bec·master4.9.31",
+   "ver": "725a6bec·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8847,7 +8847,7 @@
    "name": "金曜菊-A · 时差",
    "kind": "combo",
    "renderVer": null,
-   "ver": "b6a63cf2·master4.9.31",
+   "ver": "b6a63cf2·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8923,7 +8923,7 @@
    "name": "金曜菊-A · 芯入",
    "kind": "combo",
    "renderVer": null,
-   "ver": "197a4770·master4.9.31",
+   "ver": "197a4770·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -8999,7 +8999,7 @@
    "name": "金芒菊 · 我的 · 原样",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "ebda065c·master4.9.31",
+   "ver": "ebda065c·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -9075,7 +9075,7 @@
    "name": "金芒菊 · 我的 · 3 号",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "139c3f03·master4.9.31",
+   "ver": "139c3f03·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -9151,7 +9151,7 @@
    "name": "金芒菊 · 我的 · 尺玉",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "af4c25a9·master4.9.31",
+   "ver": "af4c25a9·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -9227,7 +9227,7 @@
    "name": "金芒菊 · 我的 · 2 尺",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "c0aff52b·master4.9.31",
+   "ver": "c0aff52b·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -9303,7 +9303,7 @@
    "name": "金芒菊 · 我的 · 3 尺",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "4f6440d7·master4.9.31",
+   "ver": "4f6440d7·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -9379,7 +9379,7 @@
    "name": "金芒菊 · 我的 · 4 尺",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "e7d6ce2c·master4.9.31",
+   "ver": "e7d6ce2c·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -9455,7 +9455,7 @@
    "name": "金芒菊 · 我的 · 冠",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "919965b4·master4.9.31",
+   "ver": "919965b4·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -9531,7 +9531,7 @@
    "name": "金芒菊 · 我的 · 柳",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "0c844459·master4.9.31",
+   "ver": "0c844459·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -9607,7 +9607,7 @@
    "name": "金芒菊 · 我的 · 环",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "d3becacf·master4.9.31",
+   "ver": "d3becacf·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -9683,7 +9683,7 @@
    "name": "金芒菊 · 我的 · 土星",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "cd54996b·master4.9.31",
+   "ver": "cd54996b·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -9759,7 +9759,7 @@
    "name": "金芒菊 · 我的 · 万華鏡",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "f7d5fb1f·master4.9.31",
+   "ver": "f7d5fb1f·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -9835,7 +9835,7 @@
    "name": "金芒菊 · 我的 · 心形",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "161e2ccf·master4.9.31",
+   "ver": "161e2ccf·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -9911,7 +9911,7 @@
    "name": "金芒菊 · 我的 · 时差",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "18b026ec·master4.9.31",
+   "ver": "18b026ec·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -9987,7 +9987,7 @@
    "name": "金芒菊 · 我的 · 芯入",
    "kind": "combo",
    "renderVer": null,
-   "ver": "8d516eb0·master4.9.31",
+   "ver": "8d516eb0·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -10063,7 +10063,7 @@
    "name": "鸿巢四尺玉 · 我的 · 原样",
    "kind": "combo",
    "renderVer": null,
-   "ver": "394fa278·dots4.9.24+master4.9.31",
+   "ver": "394fa278·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -10139,7 +10139,7 @@
    "name": "鸿巢四尺玉 · 我的 · 3 号",
    "kind": "combo",
    "renderVer": null,
-   "ver": "dfc874bd·dots4.9.24+master4.9.31",
+   "ver": "dfc874bd·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -10208,14 +10208,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.1
+   "seconds": 0.0
   },
   "MYHK-S05": {
    "id": "MYHK-S05",
    "name": "鸿巢四尺玉 · 我的 · 5 号",
    "kind": "combo",
    "renderVer": null,
-   "ver": "d7e7c3fc·dots4.9.24+master4.9.31",
+   "ver": "d7e7c3fc·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -10291,7 +10291,7 @@
    "name": "鸿巢四尺玉 · 我的 · 尺玉",
    "kind": "combo",
    "renderVer": null,
-   "ver": "e18623e0·dots4.9.24+master4.9.31",
+   "ver": "e18623e0·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -10367,7 +10367,7 @@
    "name": "鸿巢四尺玉 · 我的 · 2 尺",
    "kind": "combo",
    "renderVer": null,
-   "ver": "4a49c948·dots4.9.24+master4.9.31",
+   "ver": "4a49c948·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -10443,7 +10443,7 @@
    "name": "鸿巢四尺玉 · 我的 · 3 尺",
    "kind": "combo",
    "renderVer": null,
-   "ver": "12dc4040·dots4.9.24+master4.9.31",
+   "ver": "12dc4040·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -10519,7 +10519,7 @@
    "name": "鸿巢四尺玉 · 我的 · 柳",
    "kind": "combo",
    "renderVer": null,
-   "ver": "3013c09e·dots4.9.24+master4.9.31",
+   "ver": "3013c09e·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -10595,7 +10595,7 @@
    "name": "鸿巢四尺玉 · 我的 · 环",
    "kind": "combo",
    "renderVer": null,
-   "ver": "e319d2cb·dots4.9.24+master4.9.31",
+   "ver": "e319d2cb·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -10671,7 +10671,7 @@
    "name": "鸿巢四尺玉 · 我的 · 土星",
    "kind": "combo",
    "renderVer": null,
-   "ver": "851f901b·dots4.9.24+master4.9.31",
+   "ver": "851f901b·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -10747,7 +10747,7 @@
    "name": "鸿巢四尺玉 · 我的 · 万華鏡",
    "kind": "combo",
    "renderVer": null,
-   "ver": "f4beafa0·dots4.9.24+master4.9.31",
+   "ver": "f4beafa0·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -10823,7 +10823,7 @@
    "name": "鸿巢四尺玉 · 我的 · 心形",
    "kind": "combo",
    "renderVer": null,
-   "ver": "bf9f7bac·dots4.9.24+master4.9.31",
+   "ver": "bf9f7bac·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -10899,7 +10899,7 @@
    "name": "鸿巢四尺玉 · 我的 · 时差",
    "kind": "combo",
    "renderVer": null,
-   "ver": "f3bcca16·dots4.9.24+master4.9.31",
+   "ver": "f3bcca16·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -10975,7 +10975,7 @@
    "name": "鸿巢四尺玉 · 我的 · 芯入",
    "kind": "combo",
    "renderVer": null,
-   "ver": "3003483c·dots4.9.24+master4.9.31",
+   "ver": "3003483c·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -11051,7 +11051,7 @@
    "name": "金曜菊-窜天猴 · 原样",
    "kind": "combo",
    "renderVer": null,
-   "ver": "55f0d560·master4.9.31",
+   "ver": "55f0d560·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -11127,7 +11127,7 @@
    "name": "金曜菊-窜天猴 · 3 号",
    "kind": "combo",
    "renderVer": null,
-   "ver": "7e9076ff·master4.9.31",
+   "ver": "7e9076ff·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -11203,7 +11203,7 @@
    "name": "金曜菊-窜天猴 · 5 号",
    "kind": "combo",
    "renderVer": null,
-   "ver": "dd0e6714·master4.9.31",
+   "ver": "dd0e6714·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -11279,7 +11279,7 @@
    "name": "金曜菊-窜天猴 · 尺玉",
    "kind": "combo",
    "renderVer": null,
-   "ver": "e68e437e·master4.9.31",
+   "ver": "e68e437e·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -11355,7 +11355,7 @@
    "name": "金曜菊-窜天猴 · 2 尺",
    "kind": "combo",
    "renderVer": null,
-   "ver": "c99a80ca·master4.9.31",
+   "ver": "c99a80ca·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -11424,14 +11424,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.2
+   "seconds": 0.1
   },
   "MYJC-S30": {
    "id": "MYJC-S30",
    "name": "金曜菊-窜天猴 · 3 尺",
    "kind": "combo",
    "renderVer": null,
-   "ver": "b94db74e·master4.9.31",
+   "ver": "b94db74e·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -11507,7 +11507,7 @@
    "name": "金曜菊-窜天猴 · 4 尺",
    "kind": "combo",
    "renderVer": null,
-   "ver": "dd72166c·master4.9.31",
+   "ver": "dd72166c·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -11583,7 +11583,7 @@
    "name": "金曜菊-窜天猴 · 冠",
    "kind": "combo",
    "renderVer": null,
-   "ver": "b3379745·master4.9.31",
+   "ver": "b3379745·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -11659,7 +11659,7 @@
    "name": "金曜菊-窜天猴 · 柳",
    "kind": "combo",
    "renderVer": null,
-   "ver": "e782cc49·master4.9.31",
+   "ver": "e782cc49·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -11728,14 +11728,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.2
+   "seconds": 0.1
   },
   "MYJC-R": {
    "id": "MYJC-R",
    "name": "金曜菊-窜天猴 · 环",
    "kind": "combo",
    "renderVer": null,
-   "ver": "c486d306·master4.9.31",
+   "ver": "c486d306·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -11811,7 +11811,7 @@
    "name": "金曜菊-窜天猴 · 土星",
    "kind": "combo",
    "renderVer": null,
-   "ver": "2e6ffb2e·master4.9.31",
+   "ver": "2e6ffb2e·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -11887,7 +11887,7 @@
    "name": "金曜菊-窜天猴 · 万華鏡",
    "kind": "combo",
    "renderVer": null,
-   "ver": "61fbbca0·master4.9.31",
+   "ver": "61fbbca0·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -11963,7 +11963,7 @@
    "name": "金曜菊-窜天猴 · 心形",
    "kind": "combo",
    "renderVer": null,
-   "ver": "479116d9·master4.9.31",
+   "ver": "479116d9·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -12039,7 +12039,7 @@
    "name": "金曜菊-窜天猴 · 时差",
    "kind": "combo",
    "renderVer": null,
-   "ver": "52edf83b·master4.9.31",
+   "ver": "52edf83b·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -12115,7 +12115,7 @@
    "name": "金曜菊-窜天猴 · 芯入",
    "kind": "combo",
    "renderVer": null,
-   "ver": "b1e561a2·master4.9.31",
+   "ver": "b1e561a2·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -12191,7 +12191,7 @@
    "name": "金芒菊 · 尺玉（10 号） · 快 ×1.33（整段 ¾）",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "aa7ca31e·master4.9.31",
+   "ver": "aa7ca31e·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -12267,7 +12267,7 @@
    "name": "金芒菊 · 尺玉（10 号） · 快 ×1.67（整段 0.6）",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "3344d16b·master4.9.31",
+   "ver": "3344d16b·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -12343,7 +12343,7 @@
    "name": "金芒菊 · 尺玉（10 号） · 快 ×1.33 + 收尾利落",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "bd6c1c26·master4.9.31",
+   "ver": "bd6c1c26·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -12419,7 +12419,7 @@
    "name": "金曜菊-A · 原样 · 快 ×1.33（整段 ¾）",
    "kind": "combo",
    "renderVer": null,
-   "ver": "e866cd9d·master4.9.31",
+   "ver": "e866cd9d·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -12495,7 +12495,7 @@
    "name": "金曜菊-A · 原样 · 快 ×1.67（整段 0.6）",
    "kind": "combo",
    "renderVer": null,
-   "ver": "e32b4b8d·master4.9.31",
+   "ver": "e32b4b8d·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -12571,7 +12571,7 @@
    "name": "金曜菊-A · 原样 · 快 ×1.33 + 收尾利落",
    "kind": "combo",
    "renderVer": null,
-   "ver": "ccad92c4·master4.9.31",
+   "ver": "ccad92c4·master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -12640,14 +12640,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.1
+   "seconds": 0.0
   },
   "TP-MYHK-O-T75": {
    "id": "TP-MYHK-O-T75",
    "name": "鸿巢四尺玉 · 我的 · 原样 · 快 ×1.33（整段 ¾）",
    "kind": "combo",
    "renderVer": null,
-   "ver": "92098c91·dots4.9.24+master4.9.31",
+   "ver": "92098c91·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -12723,7 +12723,7 @@
    "name": "鸿巢四尺玉 · 我的 · 原样 · 快 ×1.67（整段 0.6）",
    "kind": "combo",
    "renderVer": null,
-   "ver": "6feafc1c·dots4.9.24+master4.9.31",
+   "ver": "6feafc1c·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -12792,14 +12792,14 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.5
+   "seconds": 0.4
   },
   "TP-MYHK-O-T75C": {
    "id": "TP-MYHK-O-T75C",
    "name": "鸿巢四尺玉 · 我的 · 原样 · 快 ×1.33 + 收尾利落",
    "kind": "combo",
    "renderVer": null,
-   "ver": "5bdc3a33·dots4.9.24+master4.9.31",
+   "ver": "5bdc3a33·dots4.9.24+master4.9.13",
    "checks": [
     [
      "实时模拟",
@@ -12869,82 +12869,6 @@
    ],
    "pass": true,
    "seconds": 0.6
-  },
-  "FG2": {
-   "id": "FG2",
-   "name": "金锦冠扇形 FanGold · 4 簇",
-   "kind": "combo",
-   "renderVer": null,
-   "ver": "7b244e61·master4.9.31",
-   "checks": [
-    [
-     "实时模拟",
-     true,
-     ""
-    ],
-    [
-     "引擎回放 + 游戏内大小",
-     true,
-     ""
-    ],
-    [
-     "贴图 + 流转动画",
-     true,
-     "多层：每层在层条目里看"
-    ],
-    [
-     "完整参数",
-     true,
-     "多层：在层条目里调，回到整体会用调过的参数"
-    ],
-    [
-     "导出素材包（cascade.json PC + 手机）",
-     true,
-     ""
-    ],
-    [
-     "实拍对照",
-     true,
-     "有参考视频"
-    ],
-    [
-     "单格 ≥ PC 下限",
-     true,
-     "4/4 层通过"
-    ],
-    [
-     "手机单格 ≥ 下限",
-     true,
-     "4/4 层通过"
-    ],
-    [
-     "屏幕放大 ≤ 1",
-     true,
-     "4/4 层通过"
-    ],
-    [
-     "30fps 显示帧 ≥ 90%",
-     true,
-     "4/4 层通过"
-    ],
-    [
-     "燃烧段有效帧率 ≥ 下限",
-     true,
-     "4/4 层通过"
-    ],
-    [
-     "淡出段有效帧率 ≥ 下限",
-     true,
-     "4/4 层通过"
-    ],
-    [
-     "尺寸参数有效",
-     true,
-     "4/4 层通过"
-    ]
-   ],
-   "pass": true,
-   "seconds": 0.3
   }
  }
 }

@@ -1,0 +1,709 @@
+[
+ {
+  "name": "JinMangJu03（JMG03）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "JinMangJu05（JMG05）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "JinMangJu10（JMG10）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "JinMangJu20（JMG20）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "JinMangJu30（JMG30）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "JinMangJu40（JMG40）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette（MYFL-O）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette_03（MYFL-S03）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette_10（MYFL-S10）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette_20（MYFL-S20）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette_30（MYFL-S30）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette_40（MYFL-S40）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette_Crown（MYFL-K）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette_Willow（MYFL-Y）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette_Ring（MYFL-R）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette_Saturn（MYFL-T）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette_Kaleido（MYFL-M）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette_Heart（MYFL-H）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette_Jisa（MYFL-J）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crossette_Core（MYFL-C）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle（MYCR-O）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_03（MYCR-S03）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_05（MYCR-S05）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_10（MYCR-S10）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_20（MYCR-S20）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_30（MYCR-S30）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_40（MYCR-S40）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_Crown（MYCR-K）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_Willow（MYCR-Y）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_Ring（MYCR-R）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_Saturn（MYCR-T）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_Kaleido（MYCR-M）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_Heart（MYCR-H）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_Jisa（MYCR-J）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "Crackle_Core（MYCR-C）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay（MYJA-O）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_03（MYJA-S03）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_05（MYJA-S05）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_10（MYJA-S10）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_20（MYJA-S20）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_30（MYJA-S30）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_40（MYJA-S40）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_Crown（MYJA-K）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_Willow（MYJA-Y）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_Ring（MYJA-R）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_Saturn（MYJA-T）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_Kaleido（MYJA-M）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_Heart（MYJA-H）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_Jisa（MYJA-J）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_Core（MYJA-C）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum（MYJM-O）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum_03（MYJM-S03）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum_10（MYJM-S10）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum_20（MYJM-S20）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum_30（MYJM-S30）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum_40（MYJM-S40）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum_Crown（MYJM-K）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum_Willow（MYJM-Y）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum_Ring（MYJM-R）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum_Saturn（MYJM-T）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum_Kaleido（MYJM-M）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum_Heart（MYJM-H）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum_Jisa（MYJM-J）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldChrysanthemum_Core（MYJM-C）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket（MYJC-O）",
+  "script": "全程回放检查.py",
+  "code": 1,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_03（MYJC-S03）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_05（MYJC-S05）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_10（MYJC-S10）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_20（MYJC-S20）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_30（MYJC-S30）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_40（MYJC-S40）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_Crown（MYJC-K）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_Willow（MYJC-Y）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_Ring（MYJC-R）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_Saturn（MYJC-T）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_Kaleido（MYJC-M）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_Heart（MYJC-H）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_Jisa（MYJC-J）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRayRocket_Core（MYJC-C）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro（MYHK-O）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_03（MYHK-S03）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_05（MYHK-S05）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_10（MYHK-S10）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_20（MYHK-S20）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_30（MYHK-S30）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_Willow（MYHK-Y）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_Ring（MYHK-R）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_Saturn（MYHK-T）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_Kaleido（MYHK-M）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_Heart（MYHK-H）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_Jisa（MYHK-J）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_Core（MYHK-C）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "JinMangJu_10_T75（TP-JMG10-T75）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "JinMangJu_10_T60（TP-JMG10-T60）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "JinMangJu_10_T75C（TP-JMG10-T75C）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_T75（TP-MYJA-O-T75）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_T60（TP-MYJA-O-T60）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "GoldRay_T75C（TP-MYJA-O-T75C）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_T75（TP-MYHK-O-T75）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_T60（TP-MYHK-O-T60）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "YonshakuKamuro_T75C（TP-MYHK-O-T75C）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ }
+]
