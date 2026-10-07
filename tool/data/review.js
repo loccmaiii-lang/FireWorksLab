@@ -32996,19 +32996,19 @@ var FW_EFFECTS = [
 "id": "NFE-TP-JMG10-T60",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-TP-JMG10-T75",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-TP-JMG10-T75C",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 }
 ],
 "exports": [
@@ -33162,19 +33162,19 @@ var FW_EFFECTS = [
 "id": "NFE-TP-MYJA-O-T60",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-TP-MYJA-O-T75",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-TP-MYJA-O-T75C",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 }
 ],
 "exports": [
@@ -33328,19 +33328,19 @@ var FW_EFFECTS = [
 "id": "NFE-TP-MYHK-O-T60",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-TP-MYHK-O-T75",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-TP-MYHK-O-T75C",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 }
 ],
 "exports": [
