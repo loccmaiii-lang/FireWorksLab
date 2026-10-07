@@ -1,0 +1,30 @@
+[
+ {
+  "name": "QA19 和实拍同一秒",
+  "script": "时刻对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "QD13 和实拍同一秒",
+  "script": "时刻对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "QC11 和实拍同一秒",
+  "script": "时刻对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "QN11 和实拍同一秒",
+  "script": "时刻对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ }
+]
