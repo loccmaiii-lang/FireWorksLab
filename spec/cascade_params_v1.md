@@ -160,11 +160,17 @@ JSON里的局部配置：
 | `RotationRate` | Initial Rotation Rate | `StartRotationRate`（圈/秒） | ⚪ |
 | `InitialColor` | Initial Color | `StartColor`（向量）、`StartAlpha` | ⚪ |
 | `ColorOverLife` | Color Over Life | `ColorOverLife`（向量）、`AlphaOverLife` | ✅ |
-| `ColorScaleOverLife` | Scale Color / Life | `ColorScaleOverLife`（向量）、`AlphaScaleOverLife` | ⚪ 烘焙器 4.9.24 起**每个发射器都写**（`const [1,1,1]` / `const 1`，放在模块最后；用户 10-07 09:20「颜色倍增给我都加上去吧」），用户在 UE 里改它整体调亮 / 调透明度；导入器待支持（排给对话框5） |
+| `ColorScaleOverLife` | Scale Color / Life | `ColorScaleOverLife`（向量）、`AlphaScaleOverLife` | ✅ 私有v2.21已核CPU/GPU常量与曲线写入/读回；每发射器最后挂接（包含自动Pivot之后），烘焙器4.9.24起默认`const [1,1,1]` / `const 1`。🟡 实际烟花播放未验 |
 | `DynamicParameter` | Dynamic Parameter | `params`：按**角色**写，见第 6 节 | ✅ 写入 🟡 播放 |
 | `VelocityOverLife` | Velocity/Life（`ParticleModuleVelocityOverLifetime`） | `VelOverLife`（向量分布，按相对寿命，cm/s）；`Absolute`（布尔，true = 速度直接取曲线值，不累加） | ✅ 私有导入器 v2.13 创建/挂接，独立 CPU 原生写入及读回通过；🟡 实际烟花播放未验（烘焙器 4.4.5 起的 RiseLoop / HeadGlow 使用） |
 
 模块可以新增、删除、开关，分布类型可以互换。导入器是从空的粒子系统开始逐个建出来的，不依赖模板。✅
+
+### Scale Color/Life（2026-10-07）
+
+`m: "ColorScaleOverLife"` 对应 `ParticleModuleColorScaleOverLife`。`ColorScaleOverLife`为向量分布，`AlphaScaleOverLife`为浮点分布；两项显式填写，默认中性值分别`{"const":[1,1,1]}`与`{"const":1}`。支持第2节的常量、随机和Linear曲线；曲线为相对寿命0–1。预览与执行前检查类型、有限值、唯一分布形式、排序、bake布尔及未知分布字段；说明字段照旧过滤，实际原生属性错误不跳过。CPU默认不烘/GPU默认烘的规则保持，明确bake优先。
+
+正常映射在本机旧版已经存在，本次补严格校验与最后挂接：按包创建模块后，在自动Pivot之后挂接颜色倍增，其余模块顺序保持。该模块不替换已有ColorOverLife/AlphaOverLife：淡出和闪烁仍按源曲线导入，倍增为额外控制。8份真实新版PC/手游包模拟导入及独立CPU/GPU原生读回通过；未打开Cascade/未实播，不据此标GPU最终画面通过。
 
 ### Velocity/Life 与单轴 Size By Life（2026-10-05）
 
