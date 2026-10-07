@@ -5,7 +5,7 @@
 /* 布局：一屏舞台 = 顶部时间/计数条 + 米制比例画布 + 段落条 + 控制行；单一夜景主题 */
 :root{
   --bg:#0b0e16; --panel:#121724; --line:#262d40; --fg:#e7ebf5; --muted:#8c96ad;
-  --gold:#ffa63a; --silver:#e9eefc; --lime:#a7ee5c; --rose:#ff6f8e; --accent:#ffa63a;
+  --gold:#ffa63a; --silver:#e9eefc; --lime:#a7ee5c; --red:#ff4640; --accent:#ffa63a;
   --sans:"Noto Sans SC",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
   color-scheme:dark;
@@ -57,17 +57,52 @@ input[type=range]{flex:1 1 220px;min-width:0;accent-color:var(--gold);}
     <div class="seg" role="group" aria-label="速度"><button type="button" data-speed="1" aria-pressed="true">1×</button><button type="button" data-speed="2" aria-pressed="false">2×</button><button type="button" data-speed="4" aria-pressed="false">4×</button></div>
   </div>
   <div class="note detail" id="detail"></div>
-  <div class="legend"><em style="--c:var(--silver)">银白</em><em style="--c:var(--gold)">金</em><em style="--c:var(--lime)">青柠</em><em style="--c:var(--rose)">坝顶扇形</em><span>米制正面比例，坝顶 150 m、前台 50 m；设计示意，不是 UE 粒子回放。</span></div>
+  <div class="legend"><em style="--c:var(--silver)">银白</em><em style="--c:var(--gold)">金（含金扇 7–13 束）</em><em style="--c:var(--lime)">青柠</em><em style="--c:var(--red)">红彗星扇 3–7 束</em><em style="--c:#c4ccda">银灰扇 11–15 束</em><span>米制正面比例，坝顶 150 m、前台 50 m；每发有 0–0.45 秒延迟、高度和大小错落。设计示意，不是 UE 粒子回放。</span></div>
 </div>
 <script>
 (()=>{
 const show=__SHOW_DATA__;
 const $=id=>document.getElementById(id);
 const cv=$('cv'),ctx=cv.getContext('2d'),seek=$('seek'),play=$('play');
-const COL={silver:'233,238,252',gold:'255,166,58',lime:'167,238,92',rose:'255,111,142'};
+const COL={silver:'233,238,252',gold:'255,166,58',lime:'167,238,92',red:'255,70,64',gray:'196,204,218'};
+const GRAV=14;
+function rnd(id,i,k){const x=Math.sin((id*131.7+i*17.3+k*7.9)*12.9898)*43758.5453;return x-Math.floor(x);}
 const fmt=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${(s%60).toFixed(1).padStart(4,'0')}`;
 let t=132,playing=false,last=0,view='full',speed=1,phaseIdx=-1;
-const evs=show.events.slice().sort((a,b)=>a.launch-b.launch);
+const evs=show.events.map(e=>({...e,L:e.launch+(e.dt||0),B:e.burst+(e.dt||0),E:e.end+(e.dt||0),n:+e.id.slice(1)})).sort((a,b)=>a.L-b.L);
+function fan(e,a,p,age,X,Z,sc){
+  const n=e.beams||9,half=a.half*Math.PI/180,len=a.diameter/2*(e.scale||1),life=a.life,u=age/life;
+  const col=COL[a.hue],fade=Math.pow(Math.max(0,1-u),1.1);
+  const pos=(i,f,lf,th,s)=>{const r=len*lf*(1-Math.exp(-3.4*s));
+    return [p.x+Math.sin(th)*r,150+Math.cos(th)*r-.5*GRAV*s*s];};
+  if(age<.18){const fr=len*.35*(1-age/.18),cz=150+8;
+    const rg=ctx.createRadialGradient(X(p.x),Z(cz),0,X(p.x),Z(cz),Math.max(1,fr*sc));
+    rg.addColorStop(0,`rgba(${col},${.5*(1-age/.18)})`);rg.addColorStop(1,`rgba(${col},0)`);
+    ctx.fillStyle=rg;ctx.beginPath();ctx.arc(X(p.x),Z(cz),Math.max(1,fr*sc),0,7);ctx.fill();}
+  for(let i=0;i<n;i++){
+    const f=n===1?.5:i/(n-1),c=f*2-1;
+    const th=c*half+(rnd(e.n,i,1)-.5)*.07;
+    const lf=(.74+.26*Math.cos(c*1.25))*(.9+.2*rnd(e.n,i,2));
+    const win=.55,s0=Math.max(0,age-win),segs=9;
+    for(let k=0;k<segs;k++){
+      const s1=s0+(age-s0)*k/segs,s2=s0+(age-s0)*(k+1)/segs;
+      const [x1,z1]=pos(i,f,lf,th,s1),[x2,z2]=pos(i,f,lf,th,s2);
+      const w=(k+1)/segs;
+      ctx.strokeStyle=`rgba(${col},${.22*w*fade})`;ctx.lineWidth=Math.max(2,sc*5);
+      ctx.beginPath();ctx.moveTo(X(x1),Z(z1));ctx.lineTo(X(x2),Z(z2));ctx.stroke();
+      ctx.strokeStyle=`rgba(${col},${(.35+.65*w)*fade})`;ctx.lineWidth=Math.max(1,sc*(.8+1.2*w));
+      ctx.beginPath();ctx.moveTo(X(x1),Z(z1));ctx.lineTo(X(x2),Z(z2));ctx.stroke();}
+    const [hx,hz]=pos(i,f,lf,th,age);
+    ctx.fillStyle=`rgba(255,250,235,${fade})`;ctx.beginPath();ctx.arc(X(hx),Z(hz),Math.max(1.1,sc*1.1),0,7);ctx.fill();
+    // 脱落的火花：沿路径生成后下坠
+    for(let k=0;k<6;k++){
+      const tk=rnd(e.n,i,10+k)*Math.min(age,1.1);const d=age-tk;if(d<=0||d>1.8)continue;
+      const [sx,sz]=pos(i,f,lf,th,tk);
+      const jx=(rnd(e.n,i,30+k)-.5)*5*d,pz=sz-.5*GRAV*1.5*d*d;
+      const al=(1-d/1.8)*fade;
+      ctx.fillStyle=`rgba(${col},${al})`;ctx.beginPath();ctx.arc(X(sx+jx),Z(pz),Math.max(.8,sc*.7),0,7);ctx.fill();}
+  }
+}
 const sph={};
 function sphere(n){if(sph[n])return sph[n];const a=[],c=Math.floor(n*.72),s=n-c;
   for(let j=0;j<c;j++){const d=1-2*(j+.5)/c,r=Math.sqrt(1-d*d),g=j*2.399963;a.push([Math.cos(g)*r,Math.sin(g)*r]);}
@@ -119,42 +154,41 @@ function draw(){
   ctx.globalCompositeOperation='lighter';
   let nf=0,nd=0;
   for(const e of evs){
-    if(e.launch>t)break; if(t>=e.end)continue;
+    if(e.L>t)break; if(t>=e.E)continue;
     const a=show.templates[e.template],p=show.points[e.point];
     if(e.zone==='front')nf++;else nd++;
     if(front&&e.zone!=='front')continue;
-    const kind=a.kind,col=COL[kind==='fan'?'rose':a.hue];
-    const fz=e.zone==='front',basez=fz?p.z:150;
-    if(t<e.burst){
-      const u=Math.max(0,(t-e.launch)/a.rise);
-      if(kind==='fan'){continue;}
-      const h=basez+(a.z-basez)*(2*u-u*u),tail=fz?14:40;
+    const kind=a.kind,col=COL[kind==='fan'?a.hue:a.hue];
+    const fz=e.zone==='front',basez=fz?p.z:150,topz=a.z+(e.dz||0),sz=e.scale||1;
+    if(kind==='fan'){fan(e,a,p,t-e.B,X,Z,sc);continue;}
+    if(t<e.B){
+      const u=Math.max(0,(t-e.L)/a.rise);
+      const h=basez+(topz-basez)*(2*u-u*u),tail=fz?14:40;
       const lg=ctx.createLinearGradient(0,Z(h),0,Z(Math.max(basez,h-tail)));
       lg.addColorStop(0,`rgba(${col},.95)`);lg.addColorStop(1,`rgba(${col},0)`);
       ctx.strokeStyle=lg;ctx.lineWidth=Math.max(1,sc*(fz?1.2:1.6));
       ctx.beginPath();ctx.moveTo(X(p.x),Z(h));ctx.lineTo(X(p.x),Z(Math.max(basez,h-tail)));ctx.stroke();
       ctx.fillStyle=`rgba(${col},1)`;ctx.beginPath();ctx.arc(X(p.x),Z(h),Math.max(1.4,sc*1.3),0,7);ctx.fill();
       continue;}
-    const age=t-e.burst,life=a.life,u=age/life;
+    const age=t-e.B,life=a.life,u=age/life;
     if(kind==='comet'){
-      const h=a.z-8*u;ctx.strokeStyle=`rgba(${col},${1-u})`;ctx.lineWidth=Math.max(1,sc*1.6);
+      const h=topz-8*u;ctx.strokeStyle=`rgba(${col},${1-u})`;ctx.lineWidth=Math.max(1,sc*1.6);
       ctx.beginPath();ctx.moveTo(X(p.x),Z(h-14));ctx.lineTo(X(p.x),Z(h));ctx.stroke();continue;}
-    const r=a.diameter/2*(1-Math.exp(-8*u));
+    const dia=a.diameter*sz,r=dia/2*(1-Math.exp(-8*u));
     const willow=(a.hue==='gold'&&a.kind==='large')?2.4:1;
     const fall=(fz?9:25)*willow*u*u;
     const alpha=Math.min(1,(life-age)/Math.min(1.4,life*.45));
-    const n=kind==='fan'?15:fz?72:130;
-    if(age<.28){const fr=(a.diameter*.55)*(1-age/.28);
-      const rg=ctx.createRadialGradient(X(p.x),Z(a.z),0,X(p.x),Z(a.z),Math.max(1,fr*sc));
+    const n=fz?72:130;
+    if(age<.28){const fr=(dia*.55)*(1-age/.28);
+      const rg=ctx.createRadialGradient(X(p.x),Z(topz),0,X(p.x),Z(topz),Math.max(1,fr*sc));
       rg.addColorStop(0,`rgba(${col},${.55*(1-age/.28)})`);rg.addColorStop(1,`rgba(${col},0)`);
-      ctx.fillStyle=rg;ctx.beginPath();ctx.arc(X(p.x),Z(a.z),Math.max(1,fr*sc),0,7);ctx.fill();}
+      ctx.fillStyle=rg;ctx.beginPath();ctx.arc(X(p.x),Z(topz),Math.max(1,fr*sc),0,7);ctx.fill();}
     ctx.strokeStyle=`rgba(${col},${alpha})`;ctx.fillStyle=`rgba(${col},${alpha})`;ctx.lineWidth=Math.max(.8,sc*.8);
-    const S=kind==='fan'?null:sphere(n);
+    const S=sphere(n);
     for(let j=0;j<n;j++){
-      let vx,vy;
-      if(S){vx=S[j][0];vy=S[j][1];}else{const ang=j/(n-1)*Math.PI;vx=Math.cos(ang);vy=Math.sin(ang);}
-      const px=p.x+vx*r,pz=(kind==='fan'?a.z:a.z)+vy*r-fall;
-      const qx=p.x+vx*r*.72,qz=a.z+vy*r*.72-fall*.55;
+      const vx=S[j][0],vy=S[j][1];
+      const px=p.x+vx*r,pz=topz+vy*r-fall;
+      const qx=p.x+vx*r*.72,qz=topz+vy*r*.72-fall*.55;
       ctx.beginPath();ctx.moveTo(X(qx),Z(qz));ctx.lineTo(X(px),Z(pz));ctx.stroke();
       ctx.beginPath();ctx.arc(X(px),Z(pz),Math.max(.9,sc*.7),0,7);ctx.fill();}
   }

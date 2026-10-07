@@ -1,6 +1,7 @@
 """210秒游戏烟花编排设计数据。仅为目标包络，不代表UE实测或素材导出。"""
 import csv
 import json
+import random
 from collections import Counter
 from pathlib import Path
 
@@ -46,7 +47,14 @@ def build_show():
     template('P_LS', '坝顶·银彩菊', 'dam', 'large', 230, 480, 8, 6, 'silver')
     template('P_LG', '坝顶·金垂柳', 'dam', 'large', 230, 480, 8, 7, 'gold')
     template('P_WALL', '坝顶·银白墙', 'dam', 'large', 230, 360, 5, 8, 'silver')
-    template('G_GOLD', '坝顶·金锦冠扇形', 'dam', 'fan', 100, 180, 0, 3, 'gold')
+    # 扇形三种（对话框22 10-07用户：金色参考图型、红彗星5束、银灰13束，束数可随机）。
+    # 扇从坝顶点位斜向外喷，diameter=2×束长，half=半开角（度），beams=可随机的束数。
+    template('G_GOLD', '坝顶·金锦冠扇形', 'dam', 'fan', 170, 150, 0, 3, 'gold')
+    template('G_RED5', '坝顶·红彗星扇形', 'dam', 'fan', 140, 150, 0, 2.6, 'red')
+    template('G_SILVER13', '坝顶·银灰扇形', 'dam', 'fan', 160, 150, 0, 3.2, 'gray')
+    for k, half, beams in (('G_GOLD', 58, [7, 9, 11, 13]), ('G_RED5', 40, [3, 5, 5, 5, 7]),
+                           ('G_SILVER13', 62, [11, 13, 13, 15])):
+        templates[k].update(half=half, beams=beams)
     points = {}
     xs = [-374.79, -288.19, -196.59, -100, 0, 100, 196.59, 288.19, 374.79]
     ys = [113.82, 63.82, 25.88, 0, 0, 0, 25.88, 63.82, 113.82]
@@ -67,13 +75,19 @@ def build_show():
     fanline = allp + [f'B{i}' for i in range(1, 9)]
     events = []
 
+    rng = random.Random(20261007)
+
     def fire(burst, pts, key, step=0):
-        t = templates[key]
         for j, point in enumerate(pts):
+            k = rng.choice(['G_GOLD', 'G_RED5', 'G_SILVER13']) if key == 'G_FAN' else key
+            t = templates[k]
             b = round(burst + j * step, 2)
-            events.append(dict(point=point, template=key, zone=t['zone'],
-                               launch=round(b-t['rise'], 2), burst=b,
-                               end=round(b+t['life'], 2)))
+            ev = dict(point=point, template=k, zone=t['zone'],
+                      launch=round(b-t['rise'], 2), burst=b,
+                      end=round(b+t['life'], 2))
+            if t['kind'] == 'fan':
+                ev['beams'] = rng.choice(t['beams'])
+            events.append(ev)
 
     five = ['P1', 'P3', 'P5', 'P7', 'P9']
 
@@ -161,7 +175,7 @@ def build_show():
     fire(6, allp, 'P_SILVER', .12)
     fire(9, allp, 'P_LIME', .12)
     for b in (11, 15, 19, 23, 27, 31, 35):
-        fire(b, fanline, 'G_GOLD')
+        fire(b, fanline, 'G_FAN')
     for i, b in enumerate((12, 16, 20, 24, 28, 32)):
         fire(b, allp, 'P_MS' if i % 2 == 0 else 'P_MG')
 
@@ -171,7 +185,7 @@ def build_show():
         fire(b, allp if i % 2 == 0 else list(reversed(allp)),
              'P_SILVER' if i % 2 == 0 else 'P_SPLIT', .28)
     for b in (67, 77, 87):
-        fire(b, fanline, 'G_GOLD')
+        fire(b, fanline, 'G_FAN')
     fire(88, allp, 'P_MG')
 
     for i, b in enumerate((92, 96, 100, 104)):
@@ -179,20 +193,20 @@ def build_show():
     for b in (95, 101):
         fire(b, ['P1', 'P5', 'P9'], 'P_LS')
     for b in (93, 103):
-        fire(b, fanline, 'G_GOLD')
+        fire(b, fanline, 'G_FAN')
     # 108秒上层全灭，110–132秒内连坝顶预发也停。
     for i, b in enumerate((137, 142, 147, 152, 157, 162)):
         fire(b, allp, ('P_MG', 'P_MULTI', 'P_GREEN')[i % 3])
     for b in (146, 156):
         fire(b, ['P2', 'P5', 'P8'], 'P_LS')
     for b in (139, 149, 159):
-        fire(b, fanline, 'G_GOLD')
+        fire(b, fanline, 'G_FAN')
 
     for b in (166, 170, 174):
         fire(b, allp, 'P_MG')
     fire(172, five, 'P_SPLIT')
     for b in (167, 173, 179):
-        fire(b, fanline, 'G_GOLD')
+        fire(b, fanline, 'G_FAN')
     for b in (179, 182):
         fire(b, allp, 'P_LG')
     # 八波白墙，每1.5秒一波；最后一波198.5开、206.5自然灭完。
@@ -203,6 +217,22 @@ def build_show():
         e['id'] = f'C{i:03}'
         e['phase'] = next(j for j, (a, b, _, _) in enumerate(phases)
                           if a <= e['burst'] < b)
+    # 错落（用户10-07「不要每一个都完全一起播放」）：时间表本身不动，另记每发的
+    # 开花延迟dt、高度偏移dz、大小比例scale；回放时叠加。前台只往低、往小错，不超145 m。
+    srng = random.Random(20261008)
+    for e in events:
+        t = templates[e['template']]
+        if t['kind'] == 'fan':
+            e.update(dt=round(srng.uniform(0, .3), 2), dz=0, scale=round(srng.uniform(.85, 1.15), 2))
+        elif t['zone'] == 'front':
+            e.update(dt=round(srng.uniform(0, .2), 2), dz=-round(srng.uniform(0, 5), 1),
+                     scale=round(srng.uniform(.9, 1.0), 2))
+        elif t['kind'] == 'large':
+            e.update(dt=round(srng.uniform(0, .45), 2), dz=-round(srng.uniform(0, 22), 1),
+                     scale=round(srng.uniform(.9, 1.0), 2))
+        else:
+            e.update(dt=round(srng.uniform(0, .45), 2), dz=round(srng.uniform(-14, 10), 1),
+                     scale=round(srng.uniform(.88, 1.12), 2))
     return dict(version='front-low-v3-7pt', duration=210,
                 boundary=dict(dam=150, platform=50, frontCeiling=145,
                               platformWidth=200, platformDepth=50),
@@ -249,11 +279,11 @@ def main():
     (OUT/'fireworks-rhythm.html').write_text(fragment.replace('__SHOW_DATA__', json.dumps(show, ensure_ascii=False)), encoding='utf-8')
     with (OUT/'逐发时间表.csv').open('w', encoding='utf-8-sig', newline='') as f:
         w = csv.writer(f)
-        w.writerow(['ID','段落','发射秒','开花秒','结束秒','点位','区域','子模板','花型','造型','X_cm','Y_cm','发射Z_cm','开花Z_cm','直径_cm','包络顶部_cm'])
+        w.writerow(['ID','段落','发射秒','开花秒','结束秒','点位','区域','子模板','花型','造型','束数','偏移秒','高度偏移_m','大小比例','X_cm','Y_cm','发射Z_cm','开花Z_cm','直径_cm','包络顶部_cm'])
         for e in show['events']:
             t, p = show['templates'][e['template']], show['points'][e['point']]
             w.writerow([e['id'],show['phases'][e['phase']]['name'],e['launch'],e['burst'],e['end'],
-                        e['point'],e['zone'],e['template'],t['name'],t['shape'],round(p['x']*100),round(p['y']*100),
+                        e['point'],e['zone'],e['template'],t['name'],t['shape'],e.get('beams',''),e['dt'],e['dz'],e['scale'],round(p['x']*100),round(p['y']*100),
                         p['z']*100,t['z']*100,t['diameter']*100,t['top']*100])
     print('PASS: 前台包络/区域/时间/低位密奏/白墙72发/206.5秒结束/数量至少3倍/无重复事件')
     print('TOTAL',len(show['events']),dict(Counter(e['zone'] for e in show['events'])))
