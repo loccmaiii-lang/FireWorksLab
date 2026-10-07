@@ -645,22 +645,30 @@ function rtLayoutFar(P, ball, LI) {
   const sched = (r, hf) => { const ks = []; let k = 0;
     while (k < Nr) { let h = 1; while (h < 3 && k + h < Nr && stepPx(k, k + h + 1) <= r) h++; ks.push(k); k += h; }
     while (k < Nt) { ks.push(k); k += Math.min(hf, Nt - k); } return ks; };
-  const need = sched(refPx, 4).length;
+  const need = Math.min(Nt, sched(refPx, 4).length);
   let rows = rows0; while (cols * rows * 4 < need && rows < rows0 * 4) rows *= 2;
-  const F = Math.min(Nt, cols * rows * 4);
+  // 4.9.28（本机 RT6SE4 / ME4 / LE4 回放检查「末尾空帧 26 / 2 / 3」）：格子要正好用满——帧不能比 tick 多（S 一共才 102 个 tick，16×2×4 = 128 格空 26 格），
+  //   放不满就少用通道（16×2×3 = 96），再不行少一行；排出来的帧比格子少就把停得最久的帧拆开，直到一格一帧
+  let chans = 4; const fitCh = () => { chans = 4; while (chans > 1 && cols * rows * chans > Nt) chans--; };
+  fitCh(); while (cols * rows * chans > Nt && rows > rows0) { rows /= 2; fitCh(); }
+  const F = Math.min(Nt, cols * rows * chans);
   // 格子用满：先让上升段每 tick 一帧都放得下，开花后才从 7.5 fps 往上加（上升段的帧比开花后的帧要紧）；再按位移阈值二分把格子填满
   let hf = 4; while (hf > 1 && sched(0, hf - 1).length <= F) hf--;
   let ks = null, lo = 0, hi = Math.max(refPx, stepPx(0, Math.min(Nr, 3)) + 1);
   for (let it = 0; it < 40; it++) { const mid = (lo + hi) / 2, q = sched(mid, hf); if (q.length <= F) { ks = q; hi = mid; } else lo = mid; }
   if (!ks) ks = sched(1e9, hf);
   while (ks.length > F) ks.pop();     // 放不下（上升段已经最慢）：尾巴上合并（只在格子上限 16×4 都不够时）
+  while (ks.length < F) {     // 4.9.28 格子用满：拆停得最久的那一帧（一样久拆后面的，开花后的帧先变快）
+    let bi = -1, bh = 1; for (let f = 0; f < ks.length; f++) { const h = (f + 1 < ks.length ? ks[f + 1] : Nt) - ks[f]; if (h >= bh && h > 1) { bh = h; bi = f; } }
+    if (bi < 0) break; ks.splice(bi + 1, 0, ks[bi] + Math.floor(bh / 2));
+  }
   const Fn = ks.length, Fr = ks.filter(k => k < Nr).length, Fd = Fn - Fr, Dtot = Nt / 30, times = [], dur = [];
   // 4.5.3 面片上移 vz（m/s）：寿命里一共走 vz · Dtot，面片加高这么多、开始时中心放低一半，内容始终在面片里
   const vz = rtFarVzOf(P), drift = vz * Dtot, HY = (H0 + drift) / 2 * 1.02, cz = (zb + zt) / 2 - drift / 2;
   for (let f = 0; f < Fn; f++) { const h = (f + 1 < Fn ? ks[f + 1] : Nt) - ks[f]; times.push((ks[f] + h / 2) / 30); dur.push(h / 30); }
   const keys = keysFromTicks40(ks, Nt).map(([u, v]) => [+u.toFixed(5), +v.toFixed(3)]);
   const pxMax = Math.max(0, ...ks.filter(k => k < Nr).map((k, i, a) => stepPx(k, Math.min(Nr, i + 1 < a.length ? a[i + 1] : Nr))));
-  const out = { t0: tA0, Dtot, Df: Nf / 30, Fr, Fd, cols, rows, F: Fn, cap: cols * rows * 4, need, cx, cz, vz, HX, HY, Ww: 2 * HX, Wh: 2 * HY, times, dur, keys, measured: y1 >= 0, pxMax: +pxMax.toFixed(2), ref: refPx };
+  const out = { t0: tA0, Dtot, Df: Nf / 30, Fr, Fd, cols, rows, chans, F: Fn, cap: cols * rows * chans, need, cx, cz, vz, HX, HY, Ww: 2 * HX, Wh: 2 * HY, times, dur, keys, measured: y1 >= 0, pxMax: +pxMax.toFixed(2), ref: refPx };
   rtFarCache.set(key, out); if (rtFarCache.size > 8) rtFarCache.delete(rtFarCache.keys().next().value);
   return out;
 }
@@ -698,7 +706,7 @@ async function bakeEmitSet(P, scale, onProg) {
     bf.form = 'esFade'; bf.fps = Ff / Df; bf.meta.fadeSeconds = Df; bf.P = Pf; if (lay.grow) Object.assign(bf.meta, { hb: fl.hb, Vf: fl.Vf });
   } else {
     // 4.5.1 远段 TrailFar：世界坐标的全程序列（原来的曝光，Ramp 和实时模拟一致）；开花后所有火花都归它（不再有 RiseFade 消散层）
-    const fa = rtLayoutFar(P, ball, LI), Pa = { ...P, cols: fa.cols, rows: fa.rows, chans: 4 };
+    const fa = rtLayoutFar(P, ball, LI), Pa = { ...P, cols: fa.cols, rows: fa.rows, chans: fa.chans || 4 };     // 4.9.28 通道数跟格子用满走
     const pa = rtPlan(Pa, { HX: fa.HX, HY: fa.HY, cy: fa.cz, hb: 0.5 }, fa.times, fa.dur, { loop: false, t0: fa.t0, duration: fa.Dtot, keys: fa.keys });
     const ba = await bakeFrames(Pa, scale, onP(0.6, 1), pa, makeRiseTailFarRenderer(P, LI, ball, fa.cx, fa.vz || 0, fa.t0), { expo: [E0, E0], noFade: true });
     ba.form = 'esFar'; ba.P = Pa; Object.assign(ba.meta, { far: fa });

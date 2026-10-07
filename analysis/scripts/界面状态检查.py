@@ -2624,10 +2624,11 @@ W22_JS = r"""async () => {
   for (const id of ['RT6L', 'RT6M', 'RT6S']) { const e = entryById(id); if (!e) continue; const P = derive({ ...defaultsFor(e.base).P, ...e.p }), ball = rtBallistic(P), fa = rtLayoutFar(P, ball, rtLoopInfo(P));
     const onTick = fa.times.every((t, f) => Math.abs((t - fa.dur[f] / 2) * 30 - Math.round((t - fa.dur[f] / 2) * 30)) < 1e-6) && Math.abs(fa.t0 * 30 - Math.round(fa.t0 * 30)) < 1e-6;
     const riseMin = Math.min(...fa.dur.slice(0, fa.Fr).map(d => 1 / d)), keysOK = fa.times.every((t, f) => Math.floor(evalKeys(fa.keys, t / fa.Dtot) + 1e-6) === f);
-    out[id] = { F: fa.F, cap: fa.cap, grid: fa.cols + '×' + fa.rows, Fr: fa.Fr, riseMin: +riseMin.toFixed(1), px: fa.pxMax, keys: fa.keys.length, onTick, keysOK };
+    out[id] = { F: fa.F, cap: fa.cap, grid: fa.cols + '×' + fa.rows + '×' + fa.chans, Fr: fa.Fr, riseMin: +riseMin.toFixed(1), px: fa.pxMax, keys: fa.keys.length, onTick, keysOK };
     if (!onTick) bad.push(id + ' 远段帧没对齐 tick');
     if (riseMin < 10 - 1e-6) bad.push(id + ' 远段上升段低于 10 fps：' + riseMin);
     if (fa.F > fa.cap || fa.keys.length > 12 || !keysOK) bad.push(id + ' 远段格子 / 帧号曲线不对：' + JSON.stringify(out[id]));
+    if (fa.F !== fa.cap) bad.push(id + ` 远段格子没用满（${fa.F} / ${fa.cap}，本机回放检查会报末尾空帧）`);
     if (fa.dur.some(d => d < 1 / 30 - 1e-9)) bad.push(id + ' 远段有帧比一个 tick 短'); }
   return { ok: !bad.length, bad, out };
 }"""

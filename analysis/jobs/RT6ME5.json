@@ -1,0 +1,9 @@
+{
+ "id": "RT6ME5",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT6M",
+ "name": "RiseTailM",
+ "priority": 8,
+ "note": "RT6M 重导（烘焙器 4.9.28：远段格子正好用满——E4 回放检查报末尾空帧，S 16×2×3 = 96 帧、M 128、L 256；用户 10-07 09:20「rt6远段就帧数不够」）。导出 + 回放检查。对话框23。"
+}
