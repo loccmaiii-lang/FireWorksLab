@@ -4,7 +4,7 @@
 const state = {
   tab: 'master', view: 'live', texSheet: '', texSheetNow: null,
   ...defaultsFor('kiku'), name: 'Kiku_01',
-  t: 0, playing: true, speed: 1, expo: 1, disp: 'game', dist: 1000, exportResolution: true, platform: 'pc',
+  t: 0, playing: true, speed: 1, expo: 1, disp: 'game', dist: 1000, exportResolution: true, platform: 'pc', lowDissolve: true, lowSide: false,
   bake: null, baking: false, rebake: false, dirty: true, gen: 0,
   bakeGen: null, failedGen: -1, bakeError: null,
   lib: [], layers: [], comboName: '多层效果',
@@ -752,9 +752,10 @@ function buildMasterPanel() {
         row = document.createElement('div'); row.className = 'spechost'; row.dataset.info = it.info; det.appendChild(row);
       } else if (it.info) {   // 只读的结果行（例：「帧与贴图」顶上的「多少帧、怎么装」）
         row = document.createElement('div'); row.className = 'infohost'; row.dataset.info = it.info;
-        row._refresh = () => { row.innerHTML = it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : it.info === 'endInfo' && typeof endInfoHTML === 'function' ? endInfoHTML() : it.info === 'schemeNote' && typeof singleSchemeNote === 'function' ? `<p class="hint endinfo">${singleSchemeNote(state.P)}</p>` : it.info === 'ballInfo' && typeof rtBallInfoHTML === 'function' ? rtBallInfoHTML(state.P) : /^exColor/.test(it.info) ? exColorHTML(+it.info.slice(7)) : ''; };
+        row._refresh = () => { row.innerHTML = it.info === 'lowAtNow' ? `<p class="hint endinfo">单帧现在取 ${+state.P.lowAt > 0 ? (+state.P.lowAt).toFixed(2) + ' s' : '自动（花开得最大那一刻）'} · <button type="button" class="btn mini" data-lowat="1">用时间轴现在的 ${engineTick(state.t).toFixed(2)} s</button>${+state.P.lowAt > 0 ? ' <button type="button" class="btn mini" data-lowat="0">改回自动</button>' : ''}</p>` : it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : it.info === 'endInfo' && typeof endInfoHTML === 'function' ? endInfoHTML() : it.info === 'schemeNote' && typeof singleSchemeNote === 'function' ? `<p class="hint endinfo">${singleSchemeNote(state.P)}</p>` : it.info === 'ballInfo' && typeof rtBallInfoHTML === 'function' ? rtBallInfoHTML(state.P) : /^exColor/.test(it.info) ? exColorHTML(+it.info.slice(7)) : ''; };
         if (it.info === 'endInfo') row.addEventListener('click', e => { const b = e.target.closest('[data-endfit]'); if (b) { setTimingParam('duration', +b.dataset.endfit); refreshPanelValues(); flash('序列时长已加长到火花灭完'); }
           if (e.target.closest('[data-cutclear]')) { state.P.cutOut = 0; onParam(); refreshPanelValues(); flash('出点已清除：序列放到序列时长为止'); } });
+        if (it.info === 'lowAtNow') row.addEventListener('click', e => { const q = e.target.closest('[data-lowat]'); if (!q) return; state.P.lowAt = q.dataset.lowat === '1' ? +engineTick(state.t).toFixed(4) : 0; onExportScheme(); refreshPanelValues(); row._refresh(); flash(state.P.lowAt > 0 ? `单帧取 ${state.P.lowAt.toFixed(2)} s（Ctrl+Z 撤回）` : '单帧改回自动'); });     // 4.9.29
         if (it.info === 'outSummary') row.addEventListener('click', e => { const b = e.target.closest('[data-pages]'); if (!b) return; state.P.pageTarget = +b.dataset.pages; onParam(); refreshPanelValues(); flash(`贴图张数改成至少 ${b.dataset.pages} 张，正在重新分帧烘焙（Ctrl+Z 撤回）`); });     // 4.9.26 试算「用这个」
         row._refresh(); det.appendChild(row);
       } else if (it.curve) {      // 4.6.0：按寿命变化的曲线 = 几行「时刻:值」（用户 10-05 20:45 定：先填几个数，拖点编辑器以后做）
@@ -772,7 +773,8 @@ function buildMasterPanel() {
       } else if (it.text) {
         row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${nm ? p43Label(nm, it.label) : it.label}</span><input type="text" maxlength="6"><span class="st"></span>`; row._lab = nm ? p43Label(nm, it.label) : it.label; row._detail = nm ? nm.desc : ''; row._nm = nm;
         const inp = row.querySelector('input'); inp.value = P[it.text];
-        inp.addEventListener('change', () => { state.P[it.text] = inp.value || '祭'; onParam(); });
+        inp.addEventListener('change', () => { if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(it.text)) { state.P[it.text] = inp.value.replace(/[^A-Za-z0-9]/g, '').slice(0, 8); inp.value = state.P[it.text]; onExportScheme(); return; }     // 4.9.29 功能图后缀：导出方案，不重烘
+          state.P[it.text] = inp.value || '祭'; onParam(); });
         row._refresh = () => { inp.value = state.P[it.text]; };
         det.appendChild(row);
       }

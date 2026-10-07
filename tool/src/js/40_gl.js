@@ -340,13 +340,22 @@ ${CELLV}
 void main(){ if(vFrame<0.){ discard; } vec2 uv=clamp(v_uv,uInset,1.-uInset);
   if(uComb>.5){ float v=cellv(uH,vFrame,uv); o=vec4(ramp(v)*v*uTint*uHI*uK,1.); }
   else { float h=cellv(uH,vFrame,uv), t=cellv(uT,vFrame,uv); o=vec4((h*uTint*uHI+ramp(t)*t*uTI)*uK,1.); } }`;
+// 4.9.29 低端单帧（68_lowframe.js drawLowLayer）：uMode 0 = cascade_low.json 现在的写法（灰度查 Ramp × Color Over Life × Alpha，同序列材质）；
+// 1 = 溶解预览：彩色单帧（sRGB 贴图），功能图里 出现 ≤ 进度 < 熄灭 的像素可见（值小于进度就消失），进度 = 入点 → 出点
+const FS_LOW = HDR + `in vec2 v_uv; uniform sampler2D uC, uMap; uniform float uMode, uP, uAlpha, uHI, uTI, uK, uHasD, uHasA, uMirror; uniform vec4 uDm, uAm; uniform vec3 uTint; out vec4 o;
+${RAMP_FN}
+void main(){ vec2 uv=v_uv; if(uMirror>.5) uv.x=1.-uv.x; vec4 c=texture(uC,uv);
+  if(uMode<.5){ float v=c.r; o=vec4(ramp(v)*v*uTint*uHI*uK*uAlpha,1.); return; }
+  vec4 m=texture(uMap,uv); float d=uHasD>.5?dot(m,uDm):1., a=uHasA>.5?dot(m,uAm):0.;
+  if(uMode>1.5){ float x=dot(m,uAm); bool lit=uHasD>.5?dot(m,uDm)>0.:x<.999; o=vec4(lit?mix(vec3(.1,.35,1.),vec3(1.,.25,.05),x)*(.35+.65*x):vec3(0.),1.); return; }     // 2 = 功能图伪彩色：uAm 选要看的通道，uDm（熄灭）> 0 = 亮过；早 = 蓝、晚 = 红，没亮过 = 黑
+  float vis=(uP>=a && uP<d)?1.:0.; o=vec4(c.rgb*uTint*uHI*uK*vis,1.); }`;
 // 线间底光（4.2.0，tailHaze）：拖尾通道（G）做一次大半径高斯模糊，乘强度加回去（受光的烟 / 分辨不出的细火花）
 const FS_HAZE = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform vec2 uDir; uniform float uSig, uK; out vec4 o;
 void main(){ float st=max(1.,uSig/6.), acc=0., ws=0.; for(int i=-24;i<=24;i++){ float x=float(i)*st, w=exp(-.5*x*x/(uSig*uSig)); acc+=texture(uS,v_uv+uDir*x).g*w; ws+=w; } o=vec4(0.,acc/ws*uK,0.,0.); }`;
 const PR = {
   pack: compile(VS_QUAD, FS_PACK), enc: compile(VS_QUAD, FS_ENC), haze: compile(VS_QUAD, FS_HAZE),
   rgmat: compile(VS_QUAD, FS_RGMAT), mat: compile(VS_RECT, FS_MAT), unit: compile(VS_UNIT, FS_UNIT),
-  atlas: compile(VS_QUAD, FS_ATLAS), cell: compile(VS_QUAD, FS_CELL)
+  atlas: compile(VS_QUAD, FS_ATLAS), cell: compile(VS_QUAD, FS_CELL), low: compile(VS_RECT, FS_LOW)
 };
 const quadVAO = gl.createVertexArray(); gl.bindVertexArray(quadVAO);
 const qb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, qb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0, 1, 0, 0, 1, 1, 1]), gl.STATIC_DRAW);

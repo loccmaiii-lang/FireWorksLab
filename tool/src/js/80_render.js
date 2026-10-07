@@ -236,8 +236,25 @@ function drawExportScene(b, M, t, view, slot) {
   }
   return drawLayer(b, L, t, view);
 }
+// 4.9.29 低端单帧（单层）：按 cascade_low.json 画；勾「溶解预览」按功能图画；勾「并排」= 序列 | 单帧 · 某一帧 | 单帧 · 长曝光 同一秒
+function renderLowExport(b, Pn, view, sa) {
+  const M = state.M, L = { ...M, delay: 0, rate: 1, scale: 1, mirror: false }, lo = lowOf(Pn), dis = !!state.lowDissolve;
+  if (!state.lowSide) {
+    const lw = lowCached(b, lo, M); if (!lw) { ensureLow(b, lo, M); additive(false); post(-1); hudText = '导出效果 · 低端单帧：单帧 + 功能图烘焙中…'; hudB = ''; return; }
+    const f = drawLowLayer(lw, L, M, state.t, view, dis); additive(false); post(-1);
+    hudText = `导出效果 · 低端单帧（${lw.pick === 'expo' ? '长曝光' : `某一帧 ${lw.tStar.toFixed(2)} s`} · ${lw.S}×${lw.S}）· ${dis ? `溶解预览（功能图 ${lw.maps || '没勾'}：出现 ≤ 进度 < 熄灭 可见；材质对上前 UE 里还不是这样）` : 'cascade_low.json 现在的写法：灰度 + Ramp、Size By Life、按亮度 Alpha 淡出'}${f < 0 ? ' · 这一刻没有' : ''}`; hudB = ''; return;
+  }
+  const loF = { ...lo, pick: 'frame' }, loE = { ...lo, pick: 'expo' }, lwF = lowCached(b, loF, M), lwE = lowCached(b, loE, M);
+  if (!lwF) ensureLow(b, loF, M); else if (!lwE) ensureLow(b, loE, M);
+  const hw = view[2], at = dx => [view[0] + dx, view[1], view[2] * 3, view[3] * 3];
+  drawExportScene(b, M, state.t, at(2 * hw), sa);
+  if (lwF) drawLowLayer(lwF, L, M, state.t, at(0), dis);
+  if (lwE) drawLowLayer(lwE, L, M, state.t, at(-2 * hw), dis);
+  additive(false); post(-1);
+  hudText = `并排（同一秒）· 左：PC 序列 · 中：单帧 · 某一帧${lwF ? ` ${lwF.tStar.toFixed(2)} s` : '（烘焙中）'} · 右：单帧 · 长曝光${lwE ? '' : '（烘焙中）'} · ${dis ? '溶解预览' : 'cascade_low.json 现在的写法'}`; hudB = '';
+}
 function renderExport() {
-  const b = previewBake(); hdrT.clear();
+  const b = previewBakeLow(state.bake) || previewBake(); hdrT.clear();
   if (!b) { post(); hudText = '烘焙中…'; return; }
   if (b.form === 'emitset') return renderEmitExport(b);
   const sa = liveSlot('XA'); prepSlot(sa, b.P, state.gen);
@@ -245,9 +262,10 @@ function renderExport() {
   hdrT.bind(); additive(true);
   let f = -1;
   // 4.4.2 单层的导出方案：PC 选 GPU 光点 → 画光点（和 cascade.json 同一份发射器数据）；不出 → 不画
-  const Pn = typeof withScheme === 'function' ? withScheme(b.P || state.P) : b.P || state.P, so = typeof singleOut === 'function' && (b.form === 'master' || b.form === 'segments') ? singleOut(Pn) : null, sch = so ? (state.platform === 'mobile' ? so.mobile : so.pc) : 'seq';
+  const Pn = typeof withScheme === 'function' ? withScheme(b.P || state.P) : b.P || state.P, so = typeof singleOut === 'function' && (b.form === 'master' || b.form === 'segments') ? singleOut(Pn) : null, sch = so ? (state.platform === 'mobile' ? so.mobile : state.platform === 'low' ? so.low : so.pc) : 'seq';
+  if (sch === 'frame') { renderLowExport(b, Pn, view, sa); return; }     // 4.9.29 低端单帧
   if (sch === 'dots') { esDraw(singleDotsTables(Pn, state.M, b), engineTick(state.t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); additive(false); post(-1); hudText = `导出效果 · PC GPU 光点（约 ${dotsCount(b.P || state.P)} 颗，软圆点，没有贴图）`; hudB = ''; return; }
-  if (sch === 'off') { additive(false); post(-1); hudText = `导出效果 · 这个平台不出（导出方案：${state.platform === 'mobile' ? '手机' : 'PC'} 不出）`; hudB = ''; return; }
+  if (sch === 'off') { additive(false); post(-1); hudText = `导出效果 · 这个平台不出（导出方案：${state.platform === 'mobile' ? '手机' : state.platform === 'low' ? '低端' : 'PC'} 不出）`; hudB = ''; return; }
   // 4.9.25：单层效果 PC 选单束 → 按单束画（以前这里仍画序列，写「单束的引擎回放在多层效果里看」）；和导出同一份单束烘焙
   if (sch === 'unit' && unitAllowed(b.P || state.P)) {
     const pd = productNow(state.P, null, singleUnitHolder());
@@ -273,7 +291,14 @@ const flowTrail = [];
 // holder：有 P、unitBake 的对象（多层 = 图层条目 e，单层 = singleUnitHolder()）；单束还没烘就排一个后台烘焙（ensureLayerUnit）
 function productNow(P, L, holder) {
   if (!P || familyOf(P.type) !== 'aerial') return { kind: 'seq' };
-  const o = L ? layerOut(L) : singleOut(P), s = state.platform === 'mobile' ? o.mobile : o.pc;
+  const o = L ? layerOut(L) : singleOut(P), s = state.platform === 'mobile' ? o.mobile : state.platform === 'low' ? o.low : o.pc;
+  if (state.platform === 'low') {     // 4.9.29 低端：单帧看单帧 + 功能图；序列看手机那张
+    if (s === 'off') return { kind: 'off' };
+    if (s === 'seq') return { kind: 'seq', mobile: true };
+    const b = holder && holder.bake ? holder.bake : state.bake, M = L ? comboLayerM(L) : state.M, lo = lowOf(L || P), lw = b ? lowCached(b, lo, M) : null;
+    if (!lw && b) ensureLow(b, lo, M);
+    return { kind: 'frame', lw, M };
+  }
   if (s !== 'unit') return { kind: s === 'dots' || s === 'off' ? s : 'seq' };
   if (!unitAllowed(P)) return { kind: 'seq', note: '这种花型 / 图案不能出单束，按序列出' };
   const ub = unitBakeOf(holder, L);     // 4.9.28 多层的变体数 / 随机感在层上
@@ -281,6 +306,8 @@ function productNow(P, L, holder) {
   return { kind: 'unit', b: ub };
 }
 const PRODUCT_NONE = { dots: 'PC 这一层出 GPU 光点：没有贴图（软圆点粒子，数值在 cascade.json；引擎回放里看）', off: '这个平台不出这一层：没有贴图' };
+// 4.9.29 低端选「序列」= 手机那次烘焙（单层）
+const previewBakeLow = b => b && state.platform === 'low' && typeof singleOut === 'function' && singleOut(state.P).low === 'seq' ? b.mobile || null : null;
 // 贴图 / 流转看哪一张（4.9.20，对话框23，用户 10-06 21:12「不要单独只为这个尾缀添加功能，切换的时候有好几张贴图，就都可以切换」）：
 // 列出这一层导出的每一张序列，和素材包里的贴图文件一一对应——分张（A / B…）、合并 / 星头 / 尾迹、循环层 / 消散 / 远段；不按效果种类单做。
 // 默认「自动」= 跟着时间走（分张时播完第一张接着播第二张，用户 2026-10-02 13:09）；点一张锁定看它。以前只能切「第 n 张」「星头 / 尾迹」，
@@ -332,7 +359,8 @@ function renderAtlas(ctx = null) {
   // 4.9.25 按导出方案看：PC 单束看单束那张；光点 / 不出写明没有贴图
   const pd = state.tab === 'asset' ? { kind: 'seq' } : ctx ? productNow(ctx.P, ctx.L, ctx.holder) : productNow(state.P, null, typeof singleUnitHolder === 'function' ? singleUnitHolder() : null);
   if (pd.kind === 'dots' || pd.kind === 'off') { syncTexSheets(null); state.texSheetNow = null; hudText = PRODUCT_NONE[pd.kind]; hudB = ''; return; }
-  const b0 = pd.kind === 'unit' ? pd.b : previewBake();
+  if (pd.kind === 'frame') { syncTexSheets(null); state.texSheetNow = null; if (!pd.lw) { hudText = '低端单帧：单帧 + 功能图烘焙中…'; hudB = ''; return; } renderLowAtlas(pd.lw, pd.M); return; }     // 4.9.29
+  const b0 = pd.kind === 'unit' ? pd.b : pd.mobile && !ctx ? previewBakeLow(state.bake) : pd.mobile && ctx && ctx.holder && ctx.holder.bake ? ctx.holder.bake.mobile : previewBake();
   if (!b0) { syncTexSheets(null); hudText = pd.kind === 'unit' ? 'PC 这一层出单束：单束贴图烘焙中…' : '烘焙中…'; return; }
   syncTexSheets(b0); const sh = texSheetOf(b0); state.texSheetNow = sh; if (!sh) { hudText = '这一层没有序列贴图'; return; }
   const b = sh.b, show = sh.show, L = b.meta.L, f = frameIdx(b.meta, state.t - (b.meta.t0 || 0));
@@ -438,6 +466,7 @@ let unitTask = null;
 function ensureLayerUnit(e) {
   if (unitTask) return;
   unitTask = (async () => {
+    await new Promise(r => setTimeout(r, 0));     // 4.9.29 先让出这一帧：画面里调的，马上开烘会把显卡的渲染目标换掉
     while (state.baking) await new Promise(r => setTimeout(r, 300));
     state.baking = true;
     try { await layerUnitBake(e, p => setStatus(`单束烘焙… ${Math.round(p * 100)}%`)); } catch (err) { console.error(err); flash('单束烘焙失败：' + (err.message || err), true); }
@@ -445,7 +474,7 @@ function ensureLayerUnit(e) {
   })();
 }
 // 引擎回放里这一层怎么画（按当前预览平台的导出方案）：'seq' 贴图 / 'unit' 单束 / 'dots' 光点 / 'off' 不画
-function comboLayerDraw(L) { const o = typeof layerOut === 'function' ? layerOut(L) : { pc: 'seq', mobile: 'seq' }; return state.platform === 'mobile' ? o.mobile : o.pc; }
+function comboLayerDraw(L) { const o = typeof layerOut === 'function' ? layerOut(L) : { pc: 'seq', mobile: 'seq', low: 'off' }; return state.platform === 'mobile' ? o.mobile : state.platform === 'low' ? (o.low === 'seq' ? 'lowseq' : o.low) : o.pc; }     // 4.9.29 低端：frame / lowseq / off
 function renderCombo() {
   if (state.view === 'live') return renderComboLive();
   if (state.view === 'atlas') return renderComboAtlas();
@@ -467,6 +496,10 @@ function renderCombo() {
   for (const [L, e, i] of items) if (layerShown(i)) {
     const s = comboLayerDraw(L);
     if (s === 'off') { notes.push(`第 ${i + 1} 层不出`); continue; }
+    if (s === 'frame') { const e0 = state.lib.find(x => x.name === L.lib) || e, M = comboLayerM(L), lo = lowOf(L), lw = e0.bake ? lowCached(e0.bake, lo, M) : null;     // 4.9.29 低端单帧
+      if (!lw) { if (e0.bake) ensureLow(e0.bake, lo, M); notes.push(`第 ${i + 1} 层单帧烘焙中`); continue; }
+      drawLowLayer(lw, L, M, state.t, view, !!state.lowDissolve); notes.push(`第 ${i + 1} 层单帧${state.lowDissolve ? '（溶解预览）' : ''}`); continue; }
+    if (s === 'lowseq') { const e0 = state.lib.find(x => x.name === L.lib) || e, mb = e0.bake && e0.bake.mobile; if (!mb) { ensureComboMobile(); notes.push(`第 ${i + 1} 层序列（手机那张）烘焙中`); continue; } drawLayer(mb, L, state.t, view); notes.push(`第 ${i + 1} 层序列（手机那张）`); continue; }
     if (s === 'dots') { const e0 = state.lib.find(x => x.name === L.lib) || e; esDraw(dotsTables(e0, L), engineTick(state.t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); notes.push(`第 ${i + 1} 层光点`); continue; }
     if (s === 'unit' && unitAllowed(e.P)) {     // 4.2.13 单束：每颗星一个面片（drawUnitLayer 按 Cascade 的放射弹道画）；层的延迟 / 倍率换成这一层的年龄，缩放换成取景
       const e0 = state.lib.find(x => x.name === L.lib) || e, ub = unitBakeOf(e0, L);
@@ -532,6 +565,7 @@ function loop(now) {
   $('#distBox').hidden = $('#dispSeg').hidden || state.disp !== 'game';
   $('#rtLayerBar').hidden = !(state.tab !== 'combo' && state.tab !== 'asset' && isEmit(state.P) && (state.view === 'live' || state.view === 'export'));     // 4.5.1 升空尾缀分层看
   $('#platformSeg').hidden = !state.showcase && (state.tab==='asset' || (mv && isPhys(state.P)));
+  { const lo = $('#lowOpts'); if (lo) lo.hidden = $('#platformSeg').hidden || state.platform !== 'low' || state.view !== 'export'; }     // 4.9.29
   $('#resolutionBox').hidden = !mv || state.view!=='live' || isTrail(state.P) || isPhys(state.P) || isEmit(state.P);
   refSync();
   try { stageTick(D); } catch (e) { console.error(e); }

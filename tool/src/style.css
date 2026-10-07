@@ -1761,3 +1761,6 @@ header.top .upd{height:32px;min-height:32px;font-size:12px;padding:4px 12px;back
 /* 4.9.20 贴图 / 流转：这一层导出的每一张序列都能切（和素材包里的贴图文件一一对应） */
 .preview-controls .texseg{flex-wrap:wrap;max-width:100%}
 .preview-controls .texseg button{white-space:nowrap}
+/* 4.9.29 低端：溶解预览 / 并排（时间轴上方，只在引擎回放 + 低端时出现） */
+.lowopts{display:inline-flex;gap:10px;align-items:center}
+.lowopts .check{font-size:12px;white-space:nowrap}

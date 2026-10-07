@@ -389,7 +389,7 @@ function imgMetrics(rows) {
   return { burn: Tb, diameter: 2 * Rf, t50: tfrac(0.5), t80: tfrac(0.8), t90: tfrac(0.9), droop: r[4] / Rf, bt: r[3] / Math.max(r[2], 1e-3), kieguchi: (t[i20] - t[i80]) / Tb, peakT: t[ip] };
 }
 function bakeMetrics(b) { if (!b) return null; const rows = []; for (let s = b; s; s = s.next) if (s.meta.imgRows) rows.push(...s.meta.imgRows); return rows.length ? imgMetrics(rows) : null; }
-function disposeBake(b) { if (b) { b.head.dispose(); b.tail && b.tail.dispose(); disposeTrail(b); if (b.next) disposeBake(b.next); if(b.mobile)disposeBake(b.mobile); if (b.vars) b.vars.forEach(disposeBake); } }     // 4.9.28 单束变体
+function disposeBake(b) { if (b) { b.head.dispose(); b.tail && b.tail.dispose(); disposeTrail(b); if (b.next) disposeBake(b.next); if(b.mobile)disposeBake(b.mobile); if (b.vars) b.vars.forEach(disposeBake); if (b.lowCache && typeof disposeLow === 'function') { b.lowCache.forEach(disposeLow); b.lowCache = null; } } }     // 4.9.28 单束变体；4.9.29 低端单帧的贴图
 
 // 4.2.5 取景按实测收紧（用户 2026-10-03 00:25「贴图输出很多都不够极限，画面占比还不够」）：
 // 按烘好的贴图量每帧内容的范围（任何非零像素），能收紧 3% 以上就按收紧后的取景再烘一次（时间、帧数都不变）；收不紧返回 null。

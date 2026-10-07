@@ -65,6 +65,7 @@
 | 序列 | `T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>_HD` | 同左，不带 `_HD` |
 | Cut（外形裁切） | `T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>_C` | 和 PC 共用（手机包里不重复放） |
 | 溶解图 | `…_<序号>_D`（需要才生成；现在的效果都不需要） | 共用 |
+| 低端单帧（4.9.29） | — | 低端包：`…_1x1_01_MB`（灰度）、`…_1x1_01_Color_MB`（彩色）、`…_1x1_01_C`、功能图 `…_1x1_01_<后缀>`（见 10.H） |
 | Ramp | `T_EFX_FireWorks_<名称>[_<层>]_R` | 共用 |
 
 - `<名称>`：礼花英文名（`协作/状态清单.json` 的「英文名」，烘焙器「交付」页可改）；`<层>`：多层时每层英文名（Main / Red …）；`<序号>`：这一层的第几张贴图（01、02）；`<列>x<行>`：格子。
@@ -356,6 +357,13 @@ JSON里的局部配置：
 - 发射器名 `L<层号>_Unit`；手机版这一层是普通序列（`cascade_mobile.json` 里没有单束）。
 - **变体**（烘焙器 4.9.28，用户 10-07 11:45 选「变体数 + 随机感」）⚪ 未经 UE 验证：变体数 K > 1 时这一层有 K 个发射器 `L<层号>_Unit`、`L<层号>_Unit_V2`…，各自一张序列（`seq` / `seq_v2`…、`cutout` / `cutout_v2`…，材质 `main` / `main_v2`…，共用一张 `ramp`），`spawn.bursts` 的星数平分；素材包里贴图序号 `_01` / `_02`…。
   随机感 > 0 时 `InitialSize.StartSize` 写 `uniform`（宽 / 长各自随机：宽 ± 25 % × 随机感、长 ± 20 % × 随机感，Z = 1）；Cascade 的 Distribution Vector Uniform 不锁轴时每个轴各自随机。缺省（1 张、随机感 0）和以前逐字相同。单层效果 PC 出单束同一套（发射器名 `Unit` / `Unit_V2`…）。
+
+### H. 低端包 `cascade_low.json`：单帧 + 功能图（烘焙器 4.9.29 起，用户 10-07 09:41 / 09:54 / 12:40）⚪ 未经 UE 验证
+- 素材包多一份 `cascade_low.json`（`platform: "low"`），只在产物表「低端」列有层选了 单帧 / 序列 时才有；PC、手机两份不变。
+- **单帧层**：发射器 `L<层号>_Frame`，CPU、`Rectangle`、`bursts [[0, 1]]`、`Pivot Offset` 把爆点放在粒子位置（同大面片）；材质 `flipbook_rgba`（现有序列材质），贴图 `class: flipbook`、`cols 1 / rows 1 / channels 1 / frames 1`，`DynamicParameter.frame` = `const 0`；`SizeByLife`（从开花长到单帧那一刻，之后 1）、`ColorOverLife` + `AlphaOverLife` 曲线（单帧那一刻以后按亮度只降不升）、`ColorScaleOverLife`。
+- **extras**（导入器不用导）：`L<层号>_color` 彩色单帧（sRGB，Alpha = 灰度）、`L<层号>_maps` 功能图（线性；`channels` 写 R / G / B 各放什么：D 溶解 = 每个像素最后亮着的时刻、C 轮廓、A 出现顺序 = 第一次亮的时刻，按入点 → 出点归一到 0–1，没亮过 D = 0、A = 1）。溶解规则：进度 0 → 1，像素在 出现 ≤ 进度 < 熄灭 时可见。等对话框5 查到现成溶解材质的角色名 / 通道 / 阈值方向后，单帧发射器改用那个材质。
+- **序列层**：和手机同一张贴图（引用手机的文件，不重复放），发射器同 `cascade_mobile.json`。
+- 贴图名（用户 12:40「贴图名尾巴加_MB」）：单帧 `T_EFX_FireWorks_<名称>[_<层>]_1x1_01_MB`、彩色 `…_1x1_01_Color_MB`、轮廓 `…_1x1_01_C`、功能图 `…_1x1_01_<后缀>`（后缀用户填，缺省按勾的 D / C / A，例 `_DCA`、`_DC`）；Ramp 和 PC 共用。
 
 ## 11. 给云端 AI 的输出约定
 

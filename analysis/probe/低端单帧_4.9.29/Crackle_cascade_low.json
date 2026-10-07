@@ -1,0 +1,300 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "Crk_Low",
+ "platform": "low",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.28",
+  "combo": false,
+  "layers": [
+   {
+    "form": "frame"
+   }
+  ],
+  "plan_sig": "aad68592"
+ },
+ "textures": {
+  "L1_frame": {
+   "file": "T_EFX_FireWorks_Crk_1x1_01_MB.png",
+   "class": "flipbook",
+   "cols": 1,
+   "rows": 1,
+   "channels": 1,
+   "frames": 1,
+   "asset": "T_EFX_FireWorks_Crk_1x1_01_MB"
+  },
+  "L1_cutout": {
+   "file": "T_EFX_FireWorks_Crk_1x1_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_Crk_1x1_01_C"
+  },
+  "L1_ramp": {
+   "file": "T_EFX_FireWorks_Crk_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_Crk_R"
+  }
+ },
+ "materials": {
+  "L1_main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "L1_frame",
+    "ramp": "L1_ramp"
+   },
+   "scalars": {
+    "rows": 1,
+    "cols": 1
+   }
+  }
+ },
+ "emitters": [
+  {
+   "name": "L1_Frame",
+   "material": "L1_main",
+   "gpu": false,
+   "layer": 1,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 2.6333,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "L1_cutout",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.4956
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 2.6333
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       7455.9,
+       7780.1,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         0.947,
+         0.947,
+         1
+        ]
+       ],
+       [
+        0.0443,
+        [
+         0.714,
+         0.714,
+         1
+        ]
+       ],
+       [
+        0.057,
+        [
+         0.737,
+         0.737,
+         1
+        ]
+       ],
+       [
+        0.0949,
+        [
+         0.968,
+         0.968,
+         1
+        ]
+       ],
+       [
+        0.1582,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": false
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "const": 0
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "curve": [
+       [
+        0,
+        1
+       ],
+       [
+        0.1582,
+        1
+       ],
+       [
+        0.5633,
+        0.706
+       ],
+       [
+        0.6139,
+        0.445
+       ],
+       [
+        0.8291,
+        0.445
+       ],
+       [
+        0.8671,
+        0.371
+       ],
+       [
+        0.9051,
+        0.116
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "notes": [
+    "低端单帧（某一帧：0.40 s）：一张 512 × 512 灰度 + Ramp，走现有序列材质（1 × 1 格、帧号 0）；Size By Life 从开花长到那一刻、之后按亮度 Alpha 淡出（未经 UE 验证）",
+    "溶解要用的现成材质还没对上（对话框5 在查）：彩色单帧和功能图在 extras 里，引擎回放「溶解预览」按功能图画；对上以后这个发射器改用那个材质"
+   ]
+  }
+ ],
+ "extras": {
+  "L1_color": {
+   "file": "T_EFX_FireWorks_Crk_1x1_01_Color_MB.png",
+   "what": "彩色单帧（sRGB；Alpha = 灰度），亮度倍数在 Color Over Life",
+   "size": [
+    512,
+    512
+   ],
+   "asset": "T_EFX_FireWorks_Crk_1x1_01_Color_MB"
+  },
+  "L1_maps": {
+   "file": "T_EFX_FireWorks_Crk_1x1_01_DCA.png",
+   "what": "功能图（线性，不勾 sRGB）",
+   "size": [
+    512,
+    512
+   ],
+   "suffix": "DCA",
+   "channels": {
+    "R": "溶解（熄灭顺序）",
+    "G": "轮廓（Cut）",
+    "B": "出现顺序"
+   },
+   "dissolve": {
+    "param": "dissolve",
+    "progress": "0 → 1 = 入点 → 出点（相对寿命）",
+    "rule": "像素在 出现顺序 ≤ 进度 < 熄灭顺序 时可见（值小于进度就消失）；没光的像素熄灭 = 0",
+    "unverified": "材质读哪个通道、阈值方向等对话框5 查本机导入配置，未经 UE 验证"
+   },
+   "jitter": 0.3,
+   "asset": "T_EFX_FireWorks_Crk_1x1_01_DCA"
+  }
+ },
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 1.2
+ },
+ "notes": [
+  "低端包（用户 10-07 13:45「单独一份低端包，贴图名尾巴加_MB」）：低端机把贴图再压一档时用；单帧层一张图 + Size By Life / Alpha，序列层和手机同一张贴图。"
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "Crk",
+  "layers": [
+   ""
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ }
+}

@@ -81,6 +81,8 @@
       窜天猴冠 / 柳 / 时差第 1 层不适合（时差按先后点亮），原样那档适合；产物下拉写（不适合）、选了单束格子写偏几像素、层页头说明也写
   W24 4.9.28 单束变体数 / 随机感（用户 10-07 11:45 选）：缺省一张和以前一样；3 张 + 随机感 0.6 → 不重烘大面片、星数平分、种子 / 粗细 / 尾长倍数、
       三个发射器 + Initial Size 随机、多层 L1_ 前缀、文件 _V2 → 序号 02、贴图能切三张、引擎回放、交付清单（假烘焙也造单束）
+  W25 4.9.29 低端包 + 单帧 + 功能图（用户 10-07 09:41 / 09:54 / 12:40）：假的「圆环往外扩」序列 → 自动单帧取最大那一刻、取景收紧、D / A 里先外后、没亮过 D 0 A 255、
+      通道 / 后缀、错落只动 D、Size By Life / Alpha、cascade_low.json（现有序列材质 1 × 1、extras、第 2 层序列）、_MB 命名、产物表低端列不重烘、低端视图
   W19 4.9.21 入点前放大一律绕爆点（用户 21:51 选）：「放大的中心」删了；cascade.json 写 Pivot Offset、Initial Location 0；回放绕爆点；存过「面片中心」的打开时提示
       4.9.8 加：顶上「现在改的是」和搜索入口看得到，第一屏至少 8 行参数（菊 › 星、引菊 → 锦 金锦层 › 火花）
   W15 4.9.7 起（对话框23 参数栏交互）：4.9.8 引菊 → 锦六步（定位 / 改寿命 / 改颜色 / 调接力 / 撤销保存刷新重开）；切「工具」「审阅」再回来时间 / 层 / 发射器 / 模块开合 / 滚动位置都在、多层里有「工具」页；撤销一次操作一步（两个参数紧挨着改 = 两步、拖动中途停 = 一步、数值框回车 = 一步）
@@ -1992,7 +1994,7 @@ async def x2(pg):
       const dot = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'dotSize');
       return { so, em: pc ? pc.emitters.map(e => [e.name, e.gpu, pc.materials[e.material].role]) : null, dotRow: !!dot && !dot[0].hidden, note: ((document.querySelector('#params [data-info=schemeNote]') || {}).textContent || ''), n: dotsCount(state.P) }; })()""")
     info['选光点'] = r
-    if r['so'] != {'pc': 'dots', 'mobile': 'seq'}: bad.append(f"方案没记住：{r['so']}")
+    if {k: r['so'].get(k) for k in ('pc', 'mobile')} != {'pc': 'dots', 'mobile': 'seq'} or r['so'].get('low', 'off') != 'off': bad.append(f"方案没记住：{r['so']}")     # 4.9.29 多了低端（缺省不出）
     if r['em'] != [['L1_Dots', True, 'soft_dot']]: bad.append(f"cascade.json 不是一个 GPU 光点发射器：{r['em']}")
     if not r['dotRow']: bad.append('选了光点，没出现光点大小 / 亮度')
     if 'GPU 光点' not in r['note']: bad.append(f"导出说明没写 GPU 光点：{r['note'][:60]}")
@@ -2741,6 +2743,88 @@ async def w24(pg):
     r = await pg.evaluate(W24_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
 
+W25_JS = r"""async () => {
+  // 4.9.29 低端包 + 单帧 + 功能图（用户 10-07 09:41 / 09:54 / 12:40）：造一份「圆环往外扩」的假序列（16 帧），单帧烘焙也换成假的，查算法和导出、视图
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
+  { const prev = state.bake; await openType('crackle'); for (let i = 0; i < 100 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); } state.playing = false;
+  const P = { ...fxP(state.P), cols: 4, rows: 4, chans: 1, texW: 256, texH: 256 }, Lg = layoutOf(P), times = [], dur = [];
+  for (let f = 0; f < 16; f++) { times.push(f * 2 / 30); dur.push(2 / 30); }
+  const meta = { L: Lg, times, dur, t0: 0, duration: 32 / 30, HX: 50, HY: 50, Ww: 100, Wh: 100, cy: 0, sizeKeys: [[0, 1], [1, 1]], frameTiming: 'tick-start', keys: [[0, 0], [1, 15.99]], expoH: 1, expoT: 1 };
+  const ring = f => 0.05 + 0.025 * f, px = new Uint8Array(256 * 256 * 4);     // 圆环半径（格子 uv），越往后越大
+  for (let f = 0; f < 16; f++) { const col = f % 4, row = Math.floor(f / 4), x0 = col * 64, y0 = 256 - (row + 1) * 64;
+    for (let y = 0; y < 64; y++) for (let x = 0; x < 64; x++) { const d = Math.hypot((x + 0.5) / 64 - 0.5, (y + 0.5) / 64 - 0.5); if (Math.abs(d - ring(f)) < 0.03) px[((y0 + y) * 256 + x0 + x) * 4] = 200; } }
+  const head = new Target(256, 256, gl.RGBA8); gl.bindTexture(gl.TEXTURE_2D, head.tex); gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 256, 256, gl.RGBA, gl.UNSIGNED_BYTE, px);
+  const b = { form: 'master', P, N: 256, NH: 256, cw: 64, chh: 64, head, tail: null, meta, scale: 1 };
+  const fl = lowRenderAt;
+  lowRenderAt = async (s, items, S) => { const g = new Uint8Array(S * S);     // 单帧：同一个圆环，按要的取景画（world 米）
+    for (const { tc, view } of items) { const f = Math.round(tc * 15), R = ring(f) * 100, v = view || [0, 0, 50, 50];
+      for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) { const wx = v[0] + ((x + 0.5) / S * 2 - 1) * v[2], wy = v[1] + ((y + 0.5) / S * 2 - 1) * v[3]; if (Math.abs(Math.hypot(wx, wy) - R) < 3) g[y * S + x] = 200; } }
+    return g; };
+  const saved = { outLow: state.P.outLow, lowSize: state.P.lowSize, lowJit: state.P.lowJit, lowMaps: state.P.lowMaps, lowSuffix: state.P.lowSuffix, plat: state.platform };
+  try {
+    const lo = lowOf({ lowSize: 512, lowMaps: 'DCA', lowJit: 0 }), lw = await lowFor(b, lo, state.M);
+    out.t = { tIn: +lw.tIn.toFixed(3), tOut: +lw.tOut.toFixed(3), tStar: +lw.tStar.toFixed(3) }; out.view = lw.view.map(v => +v.toFixed(1));
+    if (Math.abs(lw.tIn) > 1e-6 || Math.abs(lw.tOut - 32 / 30) > 1e-6) bad.push('入点 / 出点不对：' + JSON.stringify(out.t));
+    if (Math.abs(lw.tStar - 30 / 30) > 1e-6) bad.push('自动单帧应取圆环最大那一帧（1.00 s）：' + JSON.stringify(out.t));
+    if (!(lw.view[2] > 40 && lw.view[2] < 50)) bad.push('单帧取景没收紧到内容（圆环半径 42.5 m + 3 m）：' + JSON.stringify(out.view));
+    // 功能图：圆环往外扩 → 里面的先亮先灭（D、A 都是里小外大）；角上没亮过：D = 0、A = 255
+    const MS = lw.MS, at = (wx, wy) => { const v = lw.view, x = Math.floor(((wx - v[0]) / v[2] + 1) / 2 * MS), y = Math.floor(((wy - v[1]) / v[3] + 1) / 2 * MS); return y * MS + x; };
+    const D = lw.cover.last, A = lw.cover.first, jIn = at(10, 0), jOut = at(40, 0), jC = at(-lw.view[2] * 0.99, lw.view[3] * 0.99);
+    out.maps = { Din: D[jIn], Dout: D[jOut], Ain: A[jIn], Aout: A[jOut], corner: [D[jC], A[jC]], chans: lw.chans, suffix: lw.suffix };
+    if (!(D[jIn] > 0 && D[jOut] > D[jIn] && A[jOut] > A[jIn])) bad.push('功能图不是里先外后（D / A 里小外大）：' + JSON.stringify(out.maps));
+    if (D[jC] !== 0 || A[jC] !== 255) bad.push('没亮过的地方应 D = 0、A = 255：' + JSON.stringify(out.maps.corner));
+    if (JSON.stringify(lw.chans) !== '{"D":"R","C":"G","A":"B"}' || lw.suffix !== 'DCA') bad.push('功能图通道 / 缺省后缀不对：' + JSON.stringify([lw.chans, lw.suffix]));
+    // 设置：后缀按勾的拼、只留字母数字；错落只动熄灭不动出现
+    out.lowOf = [lowOf({ lowMaps: 'DC' }).suffix, lowOf({ lowSuffix: 'x-y_9' }).suffix, lowOf({ lowMaps: '' }).maps, lowOf({}).size, lowOf({ lowSize: 333 }).size];
+    if (JSON.stringify(out.lowOf) !== '["DC","xy9","",1024,1024]') bad.push('lowOf 不对：' + JSON.stringify(out.lowOf));
+    { const lj = await lowFor(b, { ...lo, jit: 1 }, state.M); let dD = 0, dA = 0; for (let j = 0; j < MS * MS; j++) { if (lj.cover.last[j] !== D[j]) dD++; if (lj.cover.first[j] !== A[j]) dA++; } out.jit = { dD, dA };
+      if (!dD || dA) bad.push('错落应只改熄灭顺序：' + JSON.stringify(out.jit)); }
+    // Size By Life：开头小、到单帧那一刻 1；Alpha：最后 0
+    out.keys = { size: lw.sizeKeys, alpha: lw.alphaKeys };
+    if (!(lw.sizeKeys[0][1] < 0.5) || lw.sizeKeys[lw.sizeKeys.length - 1][1] !== 1 || lw.alphaKeys[lw.alphaKeys.length - 1][1] !== 0) bad.push('Size By Life / Alpha 曲线不对：' + JSON.stringify(out.keys));
+    // cascade_low.json：单帧走现有序列材质（1 × 1、帧号 0）；彩色 / 功能图在 extras
+    const L1 = { ...state.M, delay: 0.5, rate: 1, scale: 2 }, j = fwlLow('X_Low', [{ name: 'X_Low', lw, M: state.M, L: L1 }, { name: 'X_Mobile_L2', mb: state.bake, M: state.M, L: { ...state.M, delay: 0, rate: 1, scale: 1 } }]);
+    const e = j.emitters[0], mods = Object.fromEntries(e.modules.map(m => [m.m, m]));
+    out.json = { em: j.emitters.map(x => x.name), tex: Object.keys(j.textures), extras: Object.keys(j.extras), size: mods.InitialSize.StartSize.const, delay: e.required.delay_s, frame: mods.DynamicParameter.params.frame, role: j.materials.L1_main.role, plat: j.platform };
+    if (j.platform !== 'low' || e.name !== 'L1_Frame' || j.materials.L1_main.role !== 'flipbook_rgba' || j.textures.L1_frame.frames !== 1 || JSON.stringify(mods.DynamicParameter.params.frame) !== '{"const":0}') bad.push('cascade_low.json 单帧发射器不对：' + JSON.stringify(out.json));
+    if (Math.abs(mods.InitialSize.StartSize.const[0] - 2 * lw.view[2] * 100 * 2) > 1 || Math.abs(e.required.delay_s - 0.5) > 1e-6 || !mods.SizeByLife || !mods.ColorScaleOverLife || !mods.ColorOverLife.AlphaOverLife.curve) bad.push('单帧发射器的大小 / 延迟 / 模块不对：' + JSON.stringify(out.json));
+    if (!j.extras.L1_color || !j.extras.L1_maps || j.extras.L1_maps.channels.R !== LOW_MAP_NAMES.D || !j.emitters.some(x => x.name.startsWith('L2_'))) bad.push('extras / 第 2 层序列不对：' + JSON.stringify(out.json));
+    // 文件 + 正式名（_MB、_Color_MB、_C、_<后缀>；Ramp 共用）
+    const files = await lowFiles('X_Low', lw, state.M), named = applyPackNaming([...files, ['cascade_low.json', utf8(JSON.stringify(j))]], 'Test', [{ ln: 'X', mn: 'X_Mobile', b: state.bake, mb: state.bake, layer: '', low: { ln: 'X_Low', suffix: lw.suffix } }]).map(f => f[0]);
+    out.named = named.filter(f => /^T_/.test(f));
+    for (const want of ['T_EFX_FireWorks_Test_1x1_01_MB.png', 'T_EFX_FireWorks_Test_1x1_01_Color_MB.png', 'T_EFX_FireWorks_Test_1x1_01_C.png', 'T_EFX_FireWorks_Test_1x1_01_DCA.png', 'T_EFX_FireWorks_Test_R.png']) if (!named.includes(want)) bad.push('素材包里少了 ' + want);
+    // 产物表：低端列；选单帧不重烘
+    toggleDeliv(true); await wait(30);
+    const sel = $('#delivView select[data-prod=low]'); out.opts = sel ? [...sel.options].map(o => o.value) : null;
+    if (!sel || out.opts.join() !== 'off,frame,seq') bad.push('产物表没有低端列：' + JSON.stringify(out.opts));
+    const g0 = state.gen; if (sel) { sel.value = 'frame'; sel.dispatchEvent(new Event('change')); await wait(50); }
+    out.set = { outLow: state.P.outLow, gen: state.gen - g0 }; out.cell = ($('#delivView .dv-prod td:nth-child(4) small') || {}).textContent || '';
+    if (state.P.outLow !== 'frame' || out.set.gen) bad.push('产物表选低端单帧：没存进 outLow 或重烘了：' + JSON.stringify(out.set));
+    if (!/^单帧/.test(out.cell)) bad.push('低端那格没写单帧：' + out.cell);
+    out.files = [...document.querySelectorAll('#delivView td')].filter(td => /_1x1_01_(MB|Color_MB|C|DCA)\.png$/.test(td.textContent)).length;
+    toggleDeliv(false);
+    // 视图：把这份单帧挂到现在的烘焙上，看低端
+    Object.assign(state.P, { lowSize: 512, lowJit: 0, lowMaps: 'DCA', lowSuffix: '' }); if (!state.bake.lowCache) state.bake.lowCache = new Map(); state.bake.lowCache.set(lowSig(lowOf(state.P), state.M), lw);
+    setPreviewPlatform('low'); selectStageView('export'); state.t = 0.5; state.lowDissolve = true; loop(performance.now()); out.hudD = $('#hud').textContent.slice(0, 40);
+    state.lowDissolve = false; loop(performance.now()); out.hudN = $('#hud').textContent.slice(0, 70);
+    selectStageView('atlas'); loop(performance.now()); out.hudA = $('#hud').textContent.slice(0, 30); out.glErr = gl.getError();
+    if (!/低端单帧/.test(out.hudD) || !/溶解预览/.test(out.hudD) || !/现在的写法/.test(out.hudN) || !/^低端单帧/.test(out.hudA) || out.glErr) bad.push('低端视图不对：' + JSON.stringify([out.hudD, out.hudN, out.hudA, out.glErr]));
+    out.lowOpts = !$('#lowOpts').hidden;
+    state.P.outLow = 'off'; onExportScheme(); selectStageView('export'); loop(performance.now()); out.hudOff = $('#hud').textContent.slice(0, 40);
+    if (!/低端 不出/.test(out.hudOff)) bad.push('低端不出时没写明：' + out.hudOff);
+  } finally {
+    lowRenderAt = fl; Object.assign(state.P, saved); delete state.P.plat; setPreviewPlatform(saved.plat); selectStageView('live');
+    if (state.bake && state.bake.lowCache) state.bake.lowCache.clear(); if (b.lowCache) b.lowCache.forEach(disposeLow); head.dispose();
+  }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w25(pg):
+    """4.9.29 低端包 + 单帧 + 功能图"""
+    r = await pg.evaluate(W25_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -2780,7 +2864,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

@@ -66,8 +66,10 @@ function previewBake(b=state.bake) { return b && state.platform==='mobile' ? b.m
 function setPreviewPlatform(value) {
   state.platform=value;
   if(state.showcase){loadShowcase();return;}
-  if(state.tab==='combo') { if(value==='mobile')ensureComboMobile();return; }
-  if(value==='mobile' && state.bake && !state.bake.mobile && !isPhys(state.P)){
+  // 4.9.29 低端选「序列」= 手机那张：要手机烘焙
+  const lowSeq=value==='low'&&(state.tab==='combo'?state.layers.some(L=>typeof layerOut==='function'&&layerOut(L).low==='seq'):typeof singleOut==='function'&&singleOut(state.P).low==='seq');
+  if(state.tab==='combo') { if(value==='mobile'||lowSeq)ensureComboMobile();return; }
+  if((value==='mobile'||lowSeq) && state.bake && !state.bake.mobile && !isPhys(state.P)){
     state.dirty=true;scheduleBake();
   }
 }
