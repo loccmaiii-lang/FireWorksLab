@@ -115,6 +115,12 @@ FG4 = {
 }
 
 
+# FG4 本机看过（19:25，FGV4 / FGE-FG4 / FGS3）：整面连续、逐筒扫、筒口火舌都对了；但自动曝光被筒口火舌定死（0.11），金线很暗很稀；冠带弱；线头往下勾。
+# → FG5：星 50 → 80（每筒 7 颗左右）、火花 360/s、亮度 1.4；火舌亮度 3 → 1.2、大小 1 → 0.7、开花闪光 0.35 → 0.15；燃烧 1.7 → 1.6（到顶前就炸）；爆裂 70 / 3.6 / 3.4 m / 0.24 m
+FG5 = dict(FG4, stars=80, sparkRate=360, sparkBright=1.4, glitterPeak=3.5, x1Bright=1.2, x1Size=0.7, flash=0.15, burn=1.6,
+           crackle=70, crackleBright=3.6, crackleR=3.4, crackleSize=0.24)
+
+
 def build_v2(VER, p):
     return {'id': VER, 'date': DATE, 'name': '金锦冠扇形 FanGold · 11 筒逐筒出膛', 'base': 'kamuro', 'video': VIDEO, 'burst_t': VMETA['t0'], 'vmeta': VMETA,
             'tags': f'FanGold 金锦冠扇形 扇形组合 扇面 N 簇 依次出膛 {VER}', 'p': dict(p), 'm': dict(M),
@@ -127,11 +133,11 @@ def main():
     ents, combos = [], []
     for v, over in VERSIONS.items():
         e, c = build(v, over); ents += e; combos.append(c)
-    ents.append(build_v2('FG4', FG4))
+    ents.append(build_v2('FG5', FG5))     # FG4 被 FG5 取代（结果 / 任务在 归档/）
     out = {'说明': '金锦冠扇形 FanGold（对话框FanGold，用户 2026-10-07 16:05「一簇一簇的」）。由 analysis/scripts/FanGold条目.py 生成，不要手改。',
            'entries': ents, 'combos': combos}
     json.dump(out, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    print('写好', OUT, '：', ' / '.join(VERSIONS), '+ FG4，共', len(ents), '个条目')
+    print('写好', OUT, '：', ' / '.join(VERSIONS), '+ FG5，共', len(ents), '个条目')
 
 
 if __name__ == '__main__':

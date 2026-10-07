@@ -1,0 +1,25 @@
+{
+ "id": "FGV5",
+ "type": "script",
+ "priority": 1,
+ "name": "FanGold FG5：对照 + 自动曝光（原样 + 3 个变体）",
+ "note": "对话框FanGold：FG4 看过（曝光被火舌定死、线稀暗）→ FG5。",
+ "steps": [
+  {
+   "name": "FG5 对照 + 曝光",
+   "script": "FanGold对照.py",
+   "args": [
+    "--entry",
+    "FG5",
+    "--out",
+    "{out}",
+    "--variants",
+    "{\"星100\": {\"stars\": 100}, \"尾更亮\": {\"sparkBright\": 2.0}, \"冠带更亮\": {\"crackleBright\": 5}}",
+    "--times",
+    "0.15,0.3,0.6,1.2,1.7,2.0,2.4,3.0"
+   ],
+   "must": true,
+   "timeout": 2400
+  }
+ ]
+}
