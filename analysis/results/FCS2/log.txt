@@ -1,0 +1,4 @@
+01:51:56 FC2R ✅ 
+01:51:56 FC2O ✅ 
+01:51:56 → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\probe\标准检查
+01:51:56 完成，用时 0.1 分钟

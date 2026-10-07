@@ -1,0 +1,29 @@
+{
+ "effect": "fan_comet",
+ "entry": "FC2R",
+ "ver": "0af566a4·emitset4.9.31",
+ "time": "2026-10-08 01:52",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "FanCometRed",
+   "replica": "FC2R",
+   "files": [
+    "FanCometRed.json",
+    "FanCometRed_Cascade参数.txt",
+    "FanCometRed_Mobile.json",
+    "FanCometRed_曲线.csv",
+    "T_EFX_FireWorks_FanComet_S_Red_Far_16x1_01.png",
+    "T_EFX_FireWorks_FanComet_S_Red_Far_16x1_01_C.png",
+    "T_EFX_FireWorks_FanComet_S_Red_Far_16x1_01_HD.png",
+    "T_EFX_FireWorks_FanComet_S_Red_Loop_16x1_01.png",
+    "T_EFX_FireWorks_FanComet_S_Red_Loop_16x1_01_C.png",
+    "T_EFX_FireWorks_FanComet_S_Red_Loop_16x1_01_HD.png",
+    "T_EFX_FireWorks_FanComet_S_Red_R.png",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}
