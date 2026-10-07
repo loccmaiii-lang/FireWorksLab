@@ -77,6 +77,10 @@
       （PC 单束看单束那张、光点 / 不出写明没有贴图、手机看序列）；旧存档「单元序列」迁成 大面片 + PC 单束；产物下拉没有单束；单束只出合并的一张
   W22 4.9.26 帧账本（用户 10-07 09:20「2.可以，你标定完」）：金芒菊标定线复算一致；「输出」写游戏里每帧最多跳几像素 + 试算几档（用这个 = 改贴图张数）；
       RT6 远段帧对齐 tick、上升段最慢 10 fps、每帧位移不超过标定线（或已是每 tick 一帧）、格子用满不超、帧号曲线点少且和烘焙时刻对得上
+  W23 4.9.27 单束合不合适（用户 10-07 09:20「还是用断尾快星或者没有什么下坠直线星用」；对话框新花型 10:43 窜天猴冠 / 柳 / 时差的证据）：菊 / Crackle 适合，锦冠 / 柳 / 椰子、
+      窜天猴冠 / 柳 / 时差第 1 层不适合（时差按先后点亮），原样那档适合；产物下拉写（不适合）、选了单束格子写偏几像素、层页头说明也写
+  W24 4.9.28 单束变体数 / 随机感（用户 10-07 11:45 选）：缺省一张和以前一样；3 张 + 随机感 0.6 → 不重烘大面片、星数平分、种子 / 粗细 / 尾长倍数、
+      三个发射器 + Initial Size 随机、多层 L1_ 前缀、文件 _V2 → 序号 02、贴图能切三张、引擎回放、交付清单（假烘焙也造单束）
   W19 4.9.21 入点前放大一律绕爆点（用户 21:51 选）：「放大的中心」删了；cascade.json 写 Pivot Offset、Initial Location 0；回放绕爆点；存过「面片中心」的打开时提示
       4.9.8 加：顶上「现在改的是」和搜索入口看得到，第一屏至少 8 行参数（菊 › 星、引菊 → 锦 金锦层 › 火花）
   W15 4.9.7 起（对话框23 参数栏交互）：4.9.8 引菊 → 锦六步（定位 / 改寿命 / 改颜色 / 调接力 / 撤销保存刷新重开）；切「工具」「审阅」再回来时间 / 层 / 发射器 / 模块开合 / 滚动位置都在、多层里有「工具」页；撤销一次操作一步（两个参数紧挨着改 = 两步、拖动中途停 = 一步、数值框回车 = 一步）
@@ -2558,7 +2562,7 @@ W21_JS = r"""async () => {
   // 2 贴图 / 引擎回放按产物：挂一份假的单束烘焙（假烘焙不造单束），和真的同一个缓存位置
   { const P = unitP(state.P), fm = measure(P), pl = plan(P, fm), tex = new Target(4, 4, gl.RGBA8);
     const ub = { form: 'unit', P, N: 4, NH: 4, head: tex, tail: null, scale: 1, meta: { ...pl, unit: true, fit: { v0: 120, k: 0.8, a: 6 }, hb: 0.9, sizeKeysX: [[0, 1], [1, 1]], sizeKeysY: [[0, 1], [1, 1]], aniso: true, check: {}, quality: qualityOf(P) } };
-    singleUnitHolder().unitBake = { sig: unitSig(state.P), b: ub }; out.unitOutMode = P.outMode; }
+    singleUnitHolder().unitBake = { sig: unitSigOf(singleUnitHolder()), b: ub }; out.unitOutMode = P.outMode; }
   if (out.unitOutMode !== 'combined') bad.push('单束应该只出合并的一张（outMode combined）：' + out.unitOutMode);
   selectStageView('atlas'); await wait(30); state.t = 0.5; out.atlasUnit = { hud: hud().slice(0, 30), sheet: state.texSheetNow && state.texSheetNow.label };
   if (out.atlasUnit.sheet !== '单束' || !/^单束贴图/.test(out.atlasUnit.hud)) bad.push('PC 单束时「贴图」没看单束那张：' + JSON.stringify(out.atlasUnit));
@@ -2635,6 +2639,107 @@ async def w22(pg):
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1200]
 
 
+W23_JS = r"""async () => {
+  // 4.9.27 单束合不合适（unitFit，50_bake.js）：直尾在 800 m 外最多偏几像素、先后点亮；产物表 / 下拉写出来
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
+  const lv = P => { const f = unitFit(P); return f ? [f.level, f.px, f.spread] : null; };
+  const T = t => derive({ ...structuredClone(defaultsFor(t, 40).P), type: t });
+  const want = { kiku: 'ok', crackle: 'ok', kamuro: 'bad', yanagi: 'bad', palm: 'bad' };
+  for (const [t, w] of Object.entries(want)) { out[t] = lv(T(t)); if (!out[t] || out[t][0] !== w) bad.push(`${t} 单束合适度应为 ${w}：${JSON.stringify(out[t])}`); }
+  if (unitFit(T('senrin')) !== null) bad.push('千轮不能出单束，合适度应为空');
+  // 对话框新花型 10:43 的证据：窜天猴冠 / 柳 / 时差第 1 层单束和实时对不上，原样那档对得上
+  for (const [id, w] of [['MYJC-K-1', 'bad'], ['MYJC-Y-1', 'bad'], ['MYJC-J-1', 'bad'], ['MYJC-C-1', 'ok']]) { const e = entryById(id); if (!e || !e.p) { out[id] = '没有这个条目'; continue; }
+    out[id] = lv(derive({ ...structuredClone(defaultsFor(e.base).P), ...structuredClone(e.p) })); if (!out[id] || out[id][0] !== w) bad.push(`${id} 单束合适度应为 ${w}：${JSON.stringify(out[id])}`); }
+  if (Array.isArray(out['MYJC-J-1']) && !(out['MYJC-J-1'][2] > 0.1)) bad.push('时差那档应按先后点亮判不适合：' + JSON.stringify(out['MYJC-J-1']));
+  // 产物表：锦冠的下拉写（不适合），选了单束格子写原因；层页头的说明也写
+  { const prev = state.bake; await openType('kamuro'); for (let i = 0; i < 100 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); } state.playing = false;
+  toggleDeliv(true); await wait(30);
+  const pc = $('#delivView select[data-prod=pc]'), uo = pc && [...pc.options].find(o => o.value === 'unit');
+  out.opt = uo ? uo.textContent : null; if (!/不适合/.test(out.opt || '')) bad.push('锦冠的产物下拉，单束没写（不适合）：' + out.opt);
+  if (pc) { pc.value = 'unit'; pc.dispatchEvent(new Event('change')); await wait(50); }
+  out.cell = ($('#delivView .dv-prod td:nth-child(2) small') || {}).textContent || '';
+  if (!/不适合单束/.test(out.cell) || !/偏 [\d.]+ px/.test(out.cell)) bad.push('锦冠选了单束，格子没写不适合 / 偏几像素：' + out.cell);
+  out.note = outNote({ out: { pc: 'unit', mobile: 'seq' } }, { P: state.P }); if (!/不适合单束/.test(out.note)) bad.push('层页头说明没写不适合：' + out.note);
+  state.P.outPC = 'seq'; onExportScheme(); toggleDeliv(false);
+  // 菊：适合
+  { const prev = state.bake; await openType('kiku'); for (let i = 0; i < 100 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); }
+  toggleDeliv(true); await wait(30); { const q = $('#delivView select[data-prod=pc]'); if (q) { q.value = 'unit'; q.dispatchEvent(new Event('change')); await wait(50); } }
+  out.kikuCell = ($('#delivView .dv-prod td:nth-child(2) small') || {}).textContent || ''; if (!/适合单束/.test(out.kikuCell) || /不适合/.test(out.kikuCell)) bad.push('菊选了单束，格子应写适合：' + out.kikuCell);
+  state.P.outPC = 'seq'; onExportScheme(); toggleDeliv(false);
+  out.kikuCell = out.kikuCell.slice(-40); out.cell = out.cell.slice(-60);
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w23(pg):
+    """4.9.27 单束合不合适（直尾偏几像素、先后点亮）"""
+    r = await pg.evaluate(W23_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1200]
+
+W24_JS = r"""async () => {
+  // 4.9.28 单束变体数 / 随机感（用户 10-07 11:45 选）：假烘焙也造单束（真单束在 SwiftShader 里太慢），查变体怎么分、导出写法、命名、视图
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
+  const fb = bake, made = [];
+  bake = async (P, scale, onProg) => {
+    if (P.form !== 'unit') return fb(P, scale, onProg);
+    const Pc = fxP(P), fm = measure(Pc), pl = plan(Pc, fm), tex = new Target(4, 4, gl.RGBA8);
+    const b = { form: 'unit', P: Pc, N: 4, NH: 4, head: tex, tail: null, scale: 1, meta: { ...pl, unit: true, fit: { v0: 120, k: 0.8, a: 6 }, hb: 0.9, sizeKeysX: [[0, 1], [1, 1]], sizeKeysY: [[0, 1], [1, 1]], aniso: true, check: {}, quality: qualityOf(Pc),
+      duration: unitDuration(Pc), Ww: 2 * (+Pc.sparkSize || 0.1), Wh: 10 * (+Pc.sparkLife || 1) } };
+    made.push(b); onProg && onProg(1); return b;
+  };
+  try {
+    { const prev = state.bake; await openType('kiku'); for (let i = 0; i < 100 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); } state.playing = false;
+    state.P.stars = 61; state.P.outPC = 'unit'; onExportScheme();
+    // 1 缺省：一张、一个发射器，写法和以前一样（键的顺序、常数大小）
+    { const b = await layerUnitBake(singleUnitHolder()), u = fwlUnit('X', b, state.M, singleLayer(state.P, state.M));
+      out.def = { vars: (b.vars || []).length, em: u.emitters.map(e => e.name), tex: Object.keys(u.textures).join(','), size: Object.keys(u.emitters[0].modules.find(m => m.m === 'InitialSize').StartSize)[0], unitVar: !!b.meta.unitVar };
+      if (out.def.vars || out.def.em.join() !== 'Unit' || out.def.tex !== 'seq,cutout,ramp' || out.def.size !== 'const' || out.def.unitVar) bad.push('缺省（1 张、随机感 0）应和以前一样：' + JSON.stringify(out.def)); }
+    // 2 3 张 + 随机感 0.6：改了不重烘大面片，只重烘单束
+    const g0 = state.gen; state.P.unitVariants = 3; state.P.unitRandom = 0.6; onExportScheme(); await wait(30);
+    out.noMaster = state.gen - g0; if (out.noMaster) bad.push('改变体数 / 随机感重烘了大面片');
+    if (unitBakeOf(singleUnitHolder())) bad.push('改了变体数，旧的单束烘焙还当成对得上');
+    const b = await layerUnitBake(singleUnitHolder()), all = [b, ...(b.vars || [])];
+    out.v = all.map(x => [x.meta.unitN, x.meta.unitT, x.meta.unitL, x.P.seed]);
+    if (all.length !== 3 || all.reduce((n, x) => n + x.meta.unitN, 0) !== 61 || new Set(all.map(x => x.P.seed)).size !== 3) bad.push('3 张变体：张数 / 星数平分 / 种子不对：' + JSON.stringify(out.v));
+    if (JSON.stringify(all.map(x => x.meta.unitT)) !== '[0.76,1,1.24]' || JSON.stringify(all.map(x => x.meta.unitL)) !== '[1,1.21,0.79]') bad.push('粗细 / 尾长倍数不对：' + JSON.stringify(out.v));
+    if (!(all[2].P.sparkSize > all[0].P.sparkSize) || !(all[1].P.sparkLife > all[2].P.sparkLife)) bad.push('变体的火花大小 / 尾长没跟着倍数变（烘焙入口要乘整体调整）');
+    // 3 cascade.json：三个发射器、星数、Initial Size 随机、贴图 / 材质对上
+    const u = fwlUnit('X', b, state.M, singleLayer(state.P, state.M)), em = u.emitters;
+    out.em = em.map(e => [e.name, e.material, e.required.cutout, e.spawn.bursts[0][1]]); out.size = em[0].modules.find(m => m.m === 'InitialSize').StartSize;
+    if (em.map(e => e.name).join() !== 'Unit,Unit_V2,Unit_V3' || em.reduce((n, e) => n + e.spawn.bursts[0][1], 0) !== 61) bad.push('发射器 / 星数不对：' + JSON.stringify(out.em));
+    if (!out.size.uniform || Math.abs(out.size.uniform[1][0] / out.size.uniform[0][0] - 1.15 / 0.85) > 0.01 || Math.abs(out.size.uniform[1][1] / out.size.uniform[0][1] - 1.12 / 0.88) > 0.01) bad.push('随机感 0.6 应是宽 ± 15 %、长 ± 12 %：' + JSON.stringify(out.size));
+    if (u.materials.main_v2.textures.main !== 'seq_v2' || !/_V2\.png$/.test(u.textures.seq_v2.file) || u.textures.cutout_v3.file.indexOf('_Cutout_V3') < 0 || !u.textures.ramp) bad.push('贴图 / 材质键对不上：' + JSON.stringify(Object.keys(u.textures)));
+    // 多层：每层的变体在层上，L1_ 前缀
+    { const L = { ...singleLayer(state.P, state.M), unitVariants: 3, unitRandom: 0.6 }, c = fwlCombo('C', [{ L, b: state.bake, i: 0, unit: b }], false);
+      out.combo = c.emitters.map(e => e.name + '>' + e.material + '>' + c.materials[e.material].textures.main);
+      if (out.combo.join() !== 'L1_Unit>L1_main>L1_seq,L1_Unit_V2>L1_main_v2>L1_seq_v2,L1_Unit_V3>L1_main_v3>L1_seq_v3' || !c.textures.L1_ramp) bad.push('多层单束变体的发射器 / 材质 / 贴图前缀不对：' + JSON.stringify(out.combo)); }
+    // 4 文件名：内部 _V2 / _V3 → 素材包序号 02 / 03
+    const files = (await texFiles(b, 'X_L1')).map(f => f[0]), named = applyPackNaming((await texFiles(b, 'X_L1')).map(f => f), 'Test', [{ ln: 'X_L1', mn: 'X_Mobile_L1', b, mb: null, layer: '', pcTex: true }]).map(f => f[0]);
+    out.files = files.filter(f => !/FrameTest/.test(f)); out.named = named.filter(f => /^T_/.test(f) && !/FrameTest/.test(f));
+    if (!files.includes('T_X_L1_V2.png') || !files.includes('T_X_L1_V3.png')) bad.push('变体贴图没导出：' + files);
+    if (!['_01_HD', '_02_HD', '_03_HD'].every(k => named.some(f => f.includes(k)))) bad.push('素材包里变体没按序号 01 / 02 / 03 命名：' + named);
+    // 5 视图：贴图能切三张；引擎回放画三组、不报错；产物表写几张变体
+    selectStageView('atlas'); state.t = 0.5; loop(performance.now()); out.sheets = texSheets(b).map(x => x.label);
+    if (out.sheets.join() !== '单束 1,单束 2,单束 3') bad.push('「贴图」切不到每一张变体：' + out.sheets);
+    selectStageView('export'); state.t = 1; loop(performance.now()); out.hud = $('#hud').textContent.slice(0, 30); out.glErr = gl.getError();
+    if (!/PC 单束/.test(out.hud) || out.glErr) bad.push('引擎回放画单束变体不对：' + JSON.stringify([out.hud, out.glErr]));
+    toggleDeliv(true); await wait(30); out.cell = ($('#delivView .dv-prod td:nth-child(2) small') || {}).textContent || ''; out.rows = [...document.querySelectorAll('#delivView td')].filter(td => /单束 第 \d \/ 3 张/.test(td.textContent)).length;
+    if (!/3 张变体、随机感 0.6/.test(out.cell) || out.rows !== 3) bad.push('交付清单没写 3 张变体 / 文件清单不是 3 行：' + JSON.stringify([out.cell.slice(0, 80), out.rows]));
+    toggleDeliv(false); selectStageView('live');
+    out.cell = out.cell.slice(0, 70);
+  } finally {
+    bake = fb; delete state.P.unitVariants; delete state.P.unitRandom; state.P.outPC = 'seq'; onExportScheme();
+    const h = singleUnitHolder(); if (h.unitBake) { disposeBake(h.unitBake.b); h.unitBake = null; }
+  }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w24(pg):
+    """4.9.28 单束变体数 / 随机感"""
+    r = await pg.evaluate(W24_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -2674,7 +2779,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

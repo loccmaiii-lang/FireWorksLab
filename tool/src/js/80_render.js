@@ -54,7 +54,13 @@ function drawLayer(b0, L, t, view, origin = [0, 0]) {
   return f;
 }
 // 单元序列：模拟 Cascade 的每颗星一个粒子
-function drawUnitLayer(b, L, t, view) {
+// 4.9.28 单束变体：每一张一个发射器（fwlUnit），星数平分、编号接着排；随机感 → 每颗星宽 / 长随机（uSJ）
+function drawUnitLayer(b0, L, t, view) {
+  const uv = b0.meta.unitVar, sj = uv ? uv.sj : [0, 0]; let id0 = 0, fr = -1;
+  for (const b of [b0, ...(b0.vars || [])]) { const n = b.meta.unitN > 0 ? b.meta.unitN : b.P.stars, f = drawUnitOne(b, L, t, view, id0, sj, n); if (b === b0) fr = f; id0 += Math.round(n); }
+  return fr;
+}
+function drawUnitOne(b, L, t, view, id0, sj, n) {
   t=engineTick(t);
   const m = b.meta, P = b.P, f = m.fit, pr = PR.unit; gl.useProgram(pr.p);
   const kf = new Float32Array(16); m.keys.forEach(([u, v], i) => { kf[i * 2] = u; kf[i * 2 + 1] = v; });
@@ -62,13 +68,13 @@ function drawUnitLayer(b, L, t, view) {
   // 4.9.25 和导出（fwlUnit）同一套随机：寿命、初速都是 ±√3σ 的均匀分布（以前回放寿命 ±σ、初速不随机）
   const jit = clamp(Math.sqrt(3) * (+P.burnJit || 0) / 100, 0, 0.7), vj = clamp(Math.sqrt(3) * (+P.speedJit || 0) / 100, 0, 0.7);
   gl.uniform1f(pr.u.uLife, m.duration); gl.uniform1f(pr.u.uLJ, jit); gl.uniform1f(pr.u.uVJ, vj); gl.uniform1f(pr.u.uSX, m.Ww); gl.uniform1f(pr.u.uSY, m.Wh);
-  gl.uniform1f(pr.u.uHb, m.hb); gl.uniform1f(pr.u.uFlip, 0); gl.uniform1i(pr.u.uSeed, P.seed | 0); gl.uniform4fv(pr.u.uView, view);
+  gl.uniform1f(pr.u.uHb, m.hb); gl.uniform1f(pr.u.uFlip, 0); gl.uniform1i(pr.u.uSeed, P.seed | 0); gl.uniform1i(pr.u.uId0, id0 | 0); gl.uniform2fv(pr.u.uSJ, sj); gl.uniform4fv(pr.u.uView, view);
   gl.uniform2fv(pr.u['uKF[0]'], kf); gl.uniform1i(pr.u.uNKF, m.keys.length); gl.uniform1f(pr.u.uNF, m.L.F);
   const pack = ks => { const a = new Float32Array(16); ks.forEach(([u, v], i) => { a[i * 2] = u; a[i * 2 + 1] = v; }); return a; };
   gl.uniform2fv(pr.u['uKX[0]'], pack(m.sizeKeysX)); gl.uniform1i(pr.u.uNKX, m.sizeKeysX.length);
   gl.uniform2fv(pr.u['uKY[0]'], pack(m.sizeKeysY)); gl.uniform1i(pr.u.uNKY, m.sizeKeysY.length);
   bindSeqTextures(pr, b); setMatUniforms(pr, L, t);
-  gl.bindVertexArray(emptyVAO); gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, P.stars); gl.bindVertexArray(null);
+  gl.bindVertexArray(emptyVAO); gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, n); gl.bindVertexArray(null);
   gl.activeTexture(gl.TEXTURE0);
   return frameIdx(m, t);
 }
@@ -270,7 +276,7 @@ function productNow(P, L, holder) {
   const o = L ? layerOut(L) : singleOut(P), s = state.platform === 'mobile' ? o.mobile : o.pc;
   if (s !== 'unit') return { kind: s === 'dots' || s === 'off' ? s : 'seq' };
   if (!unitAllowed(P)) return { kind: 'seq', note: '这种花型 / 图案不能出单束，按序列出' };
-  const ub = holder && holder.unitBake && holder.unitBake.sig === unitSig(holder.P) ? holder.unitBake.b : null;
+  const ub = unitBakeOf(holder, L);     // 4.9.28 多层的变体数 / 随机感在层上
   if (!ub && holder) ensureLayerUnit(holder);
   return { kind: 'unit', b: ub };
 }
@@ -284,7 +290,7 @@ function texSheets(b0) {
   const out = [], parts = bakeParts(b0), es = b0.form === 'emitset' || b0.form === 'trail';
   const add = (key, label, b, tail) => out.push({ key, label, b, show: tail ? b.tail : b.head });
   parts.forEach((s, i) => {
-    const base = es ? '循环层' : b0.form === 'unit' ? '单束' : parts.length > 1 ? `第 ${i + 1} 张` : '序列';
+    const base = es ? '循环层' : b0.form === 'unit' ? (b0.vars ? '单束 1' : '单束') : parts.length > 1 ? `第 ${i + 1} 张` : '序列';
     if (s.tail) { add(`p${i}h`, base + ' · 星头', s, false); add(`p${i}t`, base + ' · 尾迹', s, true); } else add(`p${i}`, base, s, false);
   });
   // 消散：循环层 + 粒子的消散有自己的 meta；尾缀（V5）的几张消散和循环层同一格子、按自己的帧率整段播
@@ -293,6 +299,7 @@ function texSheets(b0) {
     add(`f${i}`, '消散' + (a.length > 1 ? ` ${f.fps} fps` : ''), f.meta ? f : { ...f, meta: m, P: f.P || b0.P }, false);
   });
   if (b0.far) add('far', '远段', b0.far, false);
+  (b0.vars || []).forEach((v, k) => add(`v${k + 1}`, `单束 ${k + 2}`, v, false));     // 4.9.28 单束变体
   return out.filter(x => x.show && x.show.tex);
 }
 // 现在看的那一张：锁定的那张还在就看它；否则自动（跟时间找分张，看星头 / 合并那张）
@@ -462,7 +469,7 @@ function renderCombo() {
     if (s === 'off') { notes.push(`第 ${i + 1} 层不出`); continue; }
     if (s === 'dots') { const e0 = state.lib.find(x => x.name === L.lib) || e; esDraw(dotsTables(e0, L), engineTick(state.t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); notes.push(`第 ${i + 1} 层光点`); continue; }
     if (s === 'unit' && unitAllowed(e.P)) {     // 4.2.13 单束：每颗星一个面片（drawUnitLayer 按 Cascade 的放射弹道画）；层的延迟 / 倍率换成这一层的年龄，缩放换成取景
-      const e0 = state.lib.find(x => x.name === L.lib) || e, ub = e0.unitBake && e0.unitBake.sig === unitSig(e0.P) ? e0.unitBake.b : null;
+      const e0 = state.lib.find(x => x.name === L.lib) || e, ub = unitBakeOf(e0, L);
       if (!ub) { ensureLayerUnit(e0); notes.push(`第 ${i + 1} 层单束烘焙中`); continue; }
       const age = (engineTick(state.t) - (+L.delay || 0)) * (+L.rate || 1), sc = +L.scale || 1;
       if (age >= 0) drawUnitLayer(ub, L, age, view.map(v => v / sc));

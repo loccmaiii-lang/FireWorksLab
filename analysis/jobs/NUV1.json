@@ -1,0 +1,9 @@
+{
+ "id": "NUV1",
+ "type": "export",
+ "entry": "MYJC-C",
+ "name": "GoldRayRocket_Core_UV3",
+ "priority": 6,
+ "layer_out": {"1": {"pc": "unit", "mobile": "seq", "unitVariants": 3, "unitRandom": 0.6}},
+ "note": "试导（不进待验收）：烘焙器 4.9.28 单束变体——金曜菊-窜天猴 · 芯入，第 1 层 PC 单束改成 3 张变体、随机感 0.6（用户 10-07 11:45 选「变体数 + 随机感」）。真烘三张单束、导出 + 回放检查 + 烘焙回放；对话框23 看三张贴图是否不同、引擎回放是否更参差。"
+}

@@ -56,6 +56,7 @@ const namingApplies = b => b && (b.form === 'master' || b.form === 'segments' ||
 // 一个烘焙在包里的每张序列：[内部段名, 格子, 名字里加的部分, 序号]。emitset 的循环 / 消散两张按「层」Loop / Fade 命名
 function namingSheets(b) {
   if (b.form === 'emitset') return [['Loop', b.meta.L, 'Loop', 1], ...(b.fades[0] ? [['Fade', b.fades[0].meta.L, 'Fade', 1]] : []), ...(b.far ? [['Far', b.far.meta.L, 'Far', 1]] : [])];     // 4.5.1 远段 Far
+  if (b.vars) return [b, ...b.vars].map((s, k) => ['', s.meta.L, '', k + 1, k + 1]);     // 4.9.28 单束变体：序号 01…04（内部名第 2 张起带 _V2…）
   return bakeParts(b).map((s, k) => [bakeSegmentName(b, k), s.meta.L, '', k + 1]);
 }
 // entries：[{ ln, mn, b, layer }]：内部 PC 名、内部手机名、这一层的烘焙、层英文名
@@ -63,12 +64,12 @@ function applyPackNaming(files, base, entries) {
   const map = new Map(), drop = new Set();
   // pcTex === false（4.2.12：这一层 PC 出光点 / 单束 / 不出）→ 手机的 Cutout / Ramp 不能当成和 PC 共用丢掉；mb = 手机那次烘焙（PC 是单束时格子和 PC 不一样，手机名按它自己的格子起）
   for (const { ln, mn, b, mb, layer, pcTex } of entries) {
-    for (const [seg, L, sub, n] of namingSheets(b)) {
+    for (const [seg, L, sub, n, vi = 1] of namingSheets(b)) {
       const ly = joinPart(layer, sub), c = fwTexName(base, ly, L, n, 'C') + '.png';
-      map.set(TN(ln, seg) + '.png', fwTexName(base, ly, L, n, 'tex', false) + '.png');
-      for (const ht of ['Head', 'Tail']) map.set(TN(ln, joinPart(seg, ht)) + '.png', fwTexName(base, ly, L, n, ht, false) + '.png');
-      map.set(TN(ln, joinPart(seg, 'Cutout')) + '.png', c);
-      map.set(TN(ln, joinPart(seg, 'FrameTest')) + '.png', fwTexName(base, ly, L, n, 'FrameTest') + '.png');
+      map.set(TN(ln, seg, null, vi) + '.png', fwTexName(base, ly, L, n, 'tex', false) + '.png');
+      for (const ht of ['Head', 'Tail']) map.set(TN(ln, joinPart(seg, ht), null, vi) + '.png', fwTexName(base, ly, L, n, ht, false) + '.png');
+      map.set(TN(ln, joinPart(seg, 'Cutout'), null, vi) + '.png', c);
+      map.set(TN(ln, joinPart(seg, 'FrameTest'), null, vi) + '.png', fwTexName(base, ly, L, n, 'FrameTest') + '.png');
     }
     for (const [seg, L, sub, n] of namingSheets(mb || b)) {
       const ly = joinPart(layer, sub), c = fwTexName(base, ly, L, n, 'C') + '.png';

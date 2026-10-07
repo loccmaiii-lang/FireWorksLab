@@ -66,8 +66,8 @@ function outNote(L, e) {
   if (o.pc === 'off' && o.mobile === 'off') return '两个平台都不出这一层（画面里照样看得到，导出时跳过）';
   if (o.pc === 'unit' && P && !unitAllowed(P)) w.push('这种花型 / 图案不能出单束（千轮、分裂、蜂、非球形图案），导出时 PC 按序列出');
   // XU1 试导（引菊 → 锦的锦层）：单束的尾巴是直的、沿速度方向；星下垂以后速度朝下，长尾巴都指向花心上方同一点（线性阻力的几何性质），后段像辐条。长尾、下垂多的层用序列
-  if (o.pc === 'unit' && P && unitAllowed(P) && (['kamuro', 'yanagi'].includes(P.type) || +P.emberFrac > 0 || (fxv(P, 'sparkLife') || 0) * Math.max(1, +P.sparkLifeEnd || 1) > 1.2 || (+P.burn || 0) > 4))
-    w.push('这一层尾迹长 / 烧得久（锦冠、柳、余烬这类）：单束的尾迹是沿速度的直线，下垂以后会都指向花心上方、像辐条；这种层建议用序列');
+  // 4.9.27 改成量出来的（unitFit，50_bake.js）：以前按花型 / 余烬 / 火花寿命 > 1.2 s / 燃烧 > 4 s 猜
+  if (o.pc === 'unit' && P && unitAllowed(P)) { const f = unitFit(P); if (f && f.level !== 'ok') w.push(`${unitFitText(f)}${f.level === 'bad' ? '（单束的尾迹是沿速度的直线，下垂以后都指向花心上方、像辐条）' : ''}`); }
   if (o.pc === 'dots' && P) {
     if (familyOf(P.type) !== 'aerial') w.push('这种花型不是礼花，光点没法表达，PC 请用序列');
     if (!(+P.headBright > 0)) w.push('这一层星头不发光（星头亮度 0，只有尾迹 / 火花）：光点什么都出不来，PC 请用序列');
@@ -95,13 +95,17 @@ function buildLayerHead(i) {
   const cb = mir.querySelector('input'); cb.checked = !!L.mirror; cb.addEventListener('change', () => L.mirror = cb.checked); pos.appendChild(mir);
   // 4.2.12 导出方案（用户 10-02 20:04：PC 序列 + 粒子、手机纯图片，导出前在图层上选）
   const ex = document.createElement('details'); ex.className = 'sec'; ex.open = true; ex.id = 'lhOut';
-  ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><div id="lhDots"></div><details class="lh-out-info"><summary>随整包导出 · 方案说明</summary><p class="note" id="lhOutNote"></p></details>`;
+  ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><div id="lhDots"></div><div id="lhUnitV"></div><details class="lh-out-info"><summary>随整包导出 · 方案说明</summary><p class="note" id="lhOutNote"></p></details>`;
   host.insertBefore(ex, host.querySelector('.lh-t').nextSibling);
   // 4.2.15 光点的大小 / 亮度（XD2：默认偏大偏亮）：只在 PC 选「光点」时出现；1 = 不写进层（没动过的层和以前逐字一样）
   const dh = ex.querySelector('#lhDots'), dset = k => v => { if (Math.abs(v - 1) < 1e-9) delete L[k]; else L[k] = v; };
   slider(dh, `lh${i}-dotSize`, '光点大小', '× 星头', 0.2, 4, 0.05, () => L.dotSize > 0 ? +L.dotSize : 1, dset('dotSize'), 1);
   slider(dh, `lh${i}-dotBright`, '光点亮度', '×', 0.1, 4, 0.05, () => L.dotBright > 0 ? +L.dotBright : 1, dset('dotBright'), 1);
-  const syncOut = () => { const o = layerOut(L), le = layerEntryOf(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = o.mobile; $('#lhOutNote').textContent = outNote(L, le); dh.hidden = o.pc !== 'dots';
+  // 4.9.28 单束变体数 / 随机感（用户 10-07 11:45 选）：只在 PC 选「单束」时出现；缺省 1 / 0 不写进层
+  const uvh = ex.querySelector('#lhUnitV'), uset = (k, d) => v => { if (Math.abs(v - d) < 1e-9) delete L[k]; else L[k] = v; if (stage2.deliv) renderDeliv(); };
+  slider(uvh, `lh${i}-unitVariants`, '单束变体数', '张', 1, 4, 1, () => unitVarOf(L).K, uset('unitVariants', 1), 1);
+  slider(uvh, `lh${i}-unitRandom`, '单束随机感', '', 0, 1, 0.05, () => unitVarOf(L).r, uset('unitRandom', 0), 0);
+  const syncOut = () => { const o = layerOut(L), le = layerEntryOf(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = o.mobile; $('#lhOutNote').textContent = outNote(L, le); dh.hidden = o.pc !== 'dots'; uvh.hidden = o.pc !== 'unit';
     const info = ex.querySelector('.lh-out-info'), warn = $('#lhOutNote').textContent.includes('注意：') || (o.pc === 'off' && o.mobile === 'off'); info.open = warn; info.classList.toggle('warn', warn);
     const uo = ex.querySelector('[data-out=pc] option[value=unit]'); if (uo && le) { uo.disabled = !unitAllowed(le.P) && o.pc !== 'unit'; uo.title = unitAllowed(le.P) ? '' : '千轮、分裂、蜂、非球形图案不能出单束'; } };
   ex.querySelectorAll('[data-out]').forEach(sel => sel.addEventListener('change', () => { L.out = { ...layerOut(L), [sel.dataset.out]: sel.value }; if (L.out.pc === 'seq' && L.out.mobile === 'seq') delete L.out; syncOut(); if (stage2.deliv) renderDeliv(); wbSync(); }));
@@ -830,7 +834,10 @@ function renderDeliv() {
     const o = combo ? layerOut(x.L) : singleOut(state.P);      // 4.2.12：每层的导出方案（4.9.25 单层也按自己的）
     if (combo) rows.push(`<tr class="grp"><td colspan="4">第 ${x.i + 1} 层 · ${x.name} · PC ${OUT_PC.find(q => q[0] === o.pc)[1]} · 手机 ${OUT_MOBILE.find(q => q[0] === o.mobile)[1]}${layerShown(x.i) ? '' : '（观察里隐藏了，导出照旧包含）'}</td></tr>`);
     if (o.pc === 'dots') rows.push(`<tr><td class="dim">（没有贴图）</td><td>PC · GPU 光点约 ${dotsCount(layerPOf(x))} 颗 · 软圆点材质 · 只出星头</td><td>${delay.toFixed(2)} s</td><td>${((+layerPOf(x).ignDelay || 0) + (+layerPOf(x).burn || 0)).toFixed(2)} s</td></tr>`);
-    if (o.pc === 'unit' && unitAllowed(layerPOf(x))) rows.push(`<tr><td>${useNew ? fwTexName(nm.base, ly, { cols: 16, rows: 2 }, 1, 'tex', false) : TN(ln) + '（单束）'}.png</td><td>PC · 单束 · 每颗星一个面片 × ${Math.round(+layerPOf(x).stars || 0)} · 16 × 2 格（列 × 行以导出为准）</td><td>${delay.toFixed(2)} s</td><td>${(unitDuration(layerPOf(x)) / rate).toFixed(2)} s</td></tr>`);
+    if (o.pc === 'unit' && unitAllowed(layerPOf(x))) {     // 4.9.28 变体几张就几行（序号 01…）
+      const uv = unitVarOf(combo ? x.L : state.P), vs = unitVarPs(layerPOf(x), uv);
+      vs.forEach((v, k) => rows.push(`<tr><td>${useNew ? fwTexName(nm.base, ly, { cols: 16, rows: 2 }, k + 1, 'tex', false) : TN(ln, '', null, k + 1) + '（单束）'}.png</td><td>PC · 单束${uv.K > 1 ? ` 第 ${k + 1} / ${uv.K} 张（粗细 × ${v.t}、尾长 × ${v.l}）` : ''} · 每颗星一个面片 × ${v.n} · 16 × 2 格（列 × 行以导出为准）</td><td>${delay.toFixed(2)} s</td><td>${(unitDuration(fxP(unitP(v.P))) / rate).toFixed(2)} s</td></tr>`));
+    }
     if (o.pc === 'off' && o.mobile === 'off') { rows.push('<tr><td colspan="4" class="dim">两个平台都不出这一层</td></tr>'); continue; }
     const pre = x.b.meta.pre;
     parts.forEach((s, k) => {
@@ -895,8 +902,10 @@ function prodCellHTML(x, pf, combo) {
   if (s === 'off') return '<span class="dim">不出</span>';
   if (s === 'dots') return `GPU 光点约 ${dotsCount(P)} 颗 · 没有贴图 · 1 个软圆点发射器`;
   if (s === 'unit' && unitAllowed(P)) {
-    const h = combo ? x.e : singleUnitHolder(), ub = h && h.unitBake && h.unitBake.sig === unitSig(h.P) ? h.unitBake.b : null;
-    return ub ? `单束 1 张 · ${ub.meta.L.F} 帧 · ${ub.meta.L.cols}×${ub.meta.L.rows}${ub.meta.L.chans === 4 ? '×RGBA' : ''} · ${Math.round(+P.stars || 0)} 颗星各一个面片` : `单束 · ${Math.round(+P.stars || 0)} 颗星各一个面片（贴图在「贴图」或导出时烘）`;
+    const h = combo ? x.e : singleUnitHolder(), ub = unitBakeOf(h, combo ? x.L : null), f = unitFit(P);
+    const fit = f ? ` · <span class="${f.level === 'ok' ? '' : 'ow-i'}" data-unitfit="${f.level}">${unitFitText(f)}</span>` : '';
+    const uv = unitVarOf(combo ? x.L : state.P), vtx = uv.K > 1 || uv.r > 0 ? ` · ${uv.K} 张变体${uv.r > 0 ? `、随机感 ${uv.r}` : ''}` : '';     // 4.9.28
+    return (ub ? `单束 ${uv.K} 张 · ${ub.meta.L.F} 帧 · ${ub.meta.L.cols}×${ub.meta.L.rows}${ub.meta.L.chans === 4 ? '×RGBA' : ''} · ${Math.round(+P.stars || 0)} 颗星各一个面片${uv.K > 1 ? `（${uv.K} 个发射器平分）` : ''}` : `单束 · ${Math.round(+P.stars || 0)} 颗星各一个面片（贴图在「贴图」或导出时烘）`) + vtx + fit;
   }
   if (!x.b || !x.b.meta) return '还没烘好';
   const parts = bakeParts(x.b), F = parts.reduce((n, q) => n + q.meta.L.F, 0), L0 = parts[0].meta.L, nTex = parts.length * (x.b.tail ? 2 : 1);
@@ -909,13 +918,14 @@ function prodTableHTML(xs, combo) {
   const rows = xs.map(x => {
     const P = layerPOf(x), seqOK = P && familyOf(P.type) === 'aerial' && (!x.b || ['master', 'segments'].includes(x.b.form)) && (combo || singleSchemeOn(P));
     if (!seqOK) return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}</td><td colspan="2" class="dim">${x.b ? FORM_NAMES[x.b.form] || x.b.form : '还没烘好'}：按这种产物自己的规则出（PC + 手机）</td></tr>`;
-    const o = combo ? layerOut(x.L) : singleOut(state.P), uOK = unitAllowed(P);
-    const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么">${opts.map(([k, t]) => `<option value="${k}"${k === v ? ' selected' : ''}${k === 'unit' && !uOK ? ' disabled title="千轮、分裂、蜂、非球形图案不能出单束"' : ''}>${t}</option>`).join('')}</select>`;
+    const o = combo ? layerOut(x.L) : singleOut(state.P), uOK = unitAllowed(P), uf = uOK ? unitFit(P) : null;     // 4.9.27 下拉里也写这层适不适合单束
+    const uAttr = !uOK ? ' disabled title="千轮、分裂、蜂、非球形图案不能出单束"' : uf && uf.level !== 'ok' ? ` title="${uf.why.join('；')}"` : '';
+    const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么">${opts.map(([k, t]) => `<option value="${k}"${k === v ? ' selected' : ''}${k === 'unit' ? uAttr : ''}>${t}${k === 'unit' && uf && uf.level === 'bad' ? ' · 不适合' : k === 'unit' && uf && uf.level === 'soft' ? ' · 近看偏直' : ''}</option>`).join('')}</select>`;
     return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}${combo && !layerShown(x.i) ? '<small>（观察里隐藏了，导出照旧）</small>' : ''}</td>
       <td>${sel('pc', OUT_PC, o.pc)}<small>${prodCellHTML(x, 'pc', combo)}</small></td><td>${sel('mobile', OUT_MOBILE, o.mobile)}<small>${prodCellHTML(x, 'mobile', combo)}</small></td></tr>`;
   });
   return `<table class="dv-t dv-prod"><thead><tr><th>产物表：每层导出什么</th><th>PC</th><th>手机</th></tr></thead><tbody>${rows.join('')}</tbody></table>
-    <p class="hint">改这里 = 改层页头「导出方案」/ 右栏「输出 › 直接调」（同一个值，进 Ctrl+Z）；「贴图」「流转」「引擎回放」按你选的看（PC 单束就看单束那张）。单束只给短尾、快、几乎不下坠的星；长尾下垂的层建议序列。单束贴图里的星按直线、不受力烘（重力、风、湍流、初速 / 燃烧随机都关了），弯曲和快慢不一由 Cascade 的发射器做。</p>`;
+    <p class="hint">改这里 = 改层页头「导出方案」/ 右栏「输出 › 直接调」（同一个值，进 Ctrl+Z）；「贴图」「流转」「引擎回放」按你选的看（PC 单束就看单束那张）。单束只给短尾、快、几乎不下坠的星；长尾下垂、先后点亮的层建议序列（选了单束，格子里写这层合不合适：直尾在 800 m 外最多偏几像素，超过 1.5 px 近看偏直、超过 4 px 或前后点亮差 0.1 s 以上不适合）。单束贴图里的星按直线、不受力烘（重力、风、湍流、初速 / 燃烧随机都关了），弯曲和快慢不一由 Cascade 的发射器做。</p>`;
 }
 function setProduct(i, pf, v) {
   if (state.tab === 'combo') { const L = state.layers[i]; if (!L) return; L.out = { ...layerOut(L), [pf]: v }; if (L.out.pc === 'seq' && L.out.mobile === 'seq') delete L.out;

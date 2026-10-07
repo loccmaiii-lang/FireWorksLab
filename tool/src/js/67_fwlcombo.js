@@ -21,20 +21,26 @@ function comboEntries(layers, mobile) {
 }
 // 单束层（PC）：每颗星一个 Velocity 对齐的面片，贴图 = 一颗代表星的序列（星头 + 拖尾，bakeUnit），轨迹交给 Cascade（球面放射 + 线性阻力 + 恒定加速度，m.fit）。
 // 和 65_cascade.js 的单元序列参数表同一套数；层的缩放 × 长度，时间倍率 ÷ 时间。CPU 发射器（GPU Sprites 对动态参数帧号的支持没在 UE 验证过）
-function fwlUnit(name, b, M, L) {
+function fwlUnit(name, b0, M, L) {
   // 4.3（H10）：模拟里寿命、初速的随机是正态（σ = 寿命随机 / 初速随机 %），Cascade 只有均匀分布 → 取同方差的均匀范围 ±√3σ；风按线性阻力折成 X 加速度（k × 风速）。湍流没有（单束近似）
-  const m = b.meta, P = b.P, f = m.fit, r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1, Du = m.duration, jit = clamp(Math.sqrt(3) * (+P.burnJit || 0) / 100, 0, 0.7), vj = clamp(Math.sqrt(3) * (+P.speedJit || 0) / 100, 0, 0.7), Lg = m.L, R = 10 * sc;
-  const xy = (() => { const us = [...new Set([...m.sizeKeysX, ...m.sizeKeysY].map(k => +k[0]))].sort((a, c) => a - c); return us.map(u => [r4(u), [r4(evalKeys(m.sizeKeysX, u)), r4(evalKeys(m.sizeKeysY, u)), 1]]); })();
-  return {
-    textures: { seq: { file: TN(name) + '.png', class: 'flipbook', cols: Lg.cols, rows: Lg.rows, channels: Lg.chans, frames: Lg.F }, cutout: { file: TN(name, 'Cutout') + '.png', class: 'cutout' }, ramp: { file: TN(name, 'Ramp') + '.png', class: 'ramp' } },
-    materials: { main: { role: 'beam_flipbook', textures: { main: 'seq', ramp: 'ramp' }, scalars: { rows: Lg.rows, cols: Lg.cols } } },
-    emitter: {
-      name: 'Unit', material: 'main', gpu: false,
-      required: { screen_alignment: 'Velocity', duration_s: r4(Du * (1 + jit) / r + 0.1), loops: 1, delay_s: r4(+L.delay || 0), cutout: 'cutout', max_draw_count: Math.max(1, Math.round(+P.stars || 1)), pivot_offset: [-0.5, r4(-(1 - m.hb))] },
-      spawn: { rate: { const: 0 }, bursts: [[0, Math.max(1, Math.round(+P.stars || 1))]] },
+  // 4.9.28 变体：b0.vars 里的每一张各一个发射器（贴图 / 材质 / 发射器名第 2 张起带 _V2…），星数平分（meta.unitN）；随机感 > 0 时 Initial Size 宽 / 长各自均匀随机
+  const r = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1, R = 10 * sc, uv = b0.meta.unitVar, sj = uv ? uv.sj : [0, 0];
+  const out = { textures: {}, materials: {}, emitters: [] };
+  [b0, ...(b0.vars || [])].forEach((b, k) => {
+    const m = b.meta, P = b.P, f = m.fit, Du = m.duration, jit = clamp(Math.sqrt(3) * (+P.burnJit || 0) / 100, 0, 0.7), vj = clamp(Math.sqrt(3) * (+P.speedJit || 0) / 100, 0, 0.7), Lg = m.L;
+    const sfx = k ? '_v' + (k + 1) : '', n = m.unitN > 0 ? m.unitN : Math.max(1, Math.round(+P.stars || 1)), W = m.Ww * 100 * sc, H = m.Wh * 100 * sc;
+    const xy = (() => { const us = [...new Set([...m.sizeKeysX, ...m.sizeKeysY].map(q => +q[0]))].sort((a, c) => a - c); return us.map(u => [r4(u), [r4(evalKeys(m.sizeKeysX, u)), r4(evalKeys(m.sizeKeysY, u)), 1]]); })();
+    out.textures['seq' + sfx] = { file: TN(name, '', null, k + 1) + '.png', class: 'flipbook', cols: Lg.cols, rows: Lg.rows, channels: Lg.chans, frames: Lg.F };
+    out.textures['cutout' + sfx] = { file: TN(name, 'Cutout', null, k + 1) + '.png', class: 'cutout' };
+    if (!k) out.textures.ramp = { file: TN(name, 'Ramp') + '.png', class: 'ramp' };     // 键的顺序和 4.9.27 以前一样（一张时 cascade.json 逐字不变）
+    out.materials['main' + sfx] = { role: 'beam_flipbook', textures: { main: 'seq' + sfx, ramp: 'ramp' }, scalars: { rows: Lg.rows, cols: Lg.cols } };
+    out.emitters.push({
+      name: 'Unit' + sfx.toUpperCase(), material: 'main' + sfx, gpu: false,
+      required: { screen_alignment: 'Velocity', duration_s: r4(Du * (1 + jit) / r + 0.1), loops: 1, delay_s: r4(+L.delay || 0), cutout: 'cutout' + sfx, max_draw_count: n, pivot_offset: [-0.5, r4(-(1 - m.hb))] },
+      spawn: { rate: { const: 0 }, bursts: [[0, n]] },
       modules: [
         { m: 'Lifetime', Lifetime: { uniform: [r4(Du * (1 - jit) / r), r4(Du * (1 + jit) / r)] } },
-        { m: 'InitialSize', StartSize: { const: [r1(m.Ww * 100 * sc), r1(m.Wh * 100 * sc), 1] } },
+        { m: 'InitialSize', StartSize: sj[0] > 0 || sj[1] > 0 ? { uniform: [[r1(W * (1 - sj[0])), r1(H * (1 - sj[1])), 1], [r1(W * (1 + sj[0])), r1(H * (1 + sj[1])), 1]] } : { const: [r1(W), r1(H), 1] } },
         { m: 'SizeByLife', LifeMultiplier: { curve: xy }, MultiplyX: true, MultiplyY: true, MultiplyZ: false },
         { m: 'SphereLocation', StartRadius: { const: r1(R) }, VelocityScale: vj > 0 ? { uniform: [r4(f.v0 * 100 * sc * r / R * (1 - vj)), r4(f.v0 * 100 * sc * r / R * (1 + vj))] } : { const: r4(f.v0 * 100 * sc * r / R) }, SurfaceOnly: true, Velocity: true },
         { m: 'Drag', DragCoefficientRaw: { const: r4(f.k * r) } },
@@ -42,9 +48,10 @@ function fwlUnit(name, b, M, L) {
         { m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(m.keys, Lg.F) } } },
         { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, Du, 0, intOr1(M.headInt)) }, AlphaOverLife: { const: 1 } }
       ],
-      notes: [`单束：每颗星一个面片（${Math.round(+P.stars || 0)} 颗），贴图是一颗代表星的序列，轨迹由 Cascade 算（初速 ${r2(f.v0)} m/s、阻力 ${r4(f.k)}/s、下坠 ${r2(f.a)} m/s²）；Pivot Offset 把星头放在粒子位置（导入器待支持，未经 UE 验证）`]
-    }
-  };
+      notes: [`单束：每颗星一个面片（${n} 颗${b0.vars ? `，第 ${k + 1} / ${b0.vars.length + 1} 张变体：种子 ${P.seed}、粗细 × ${m.unitT}、尾长 × ${m.unitL}` : ''}），贴图是一颗代表星的序列，轨迹由 Cascade 算（初速 ${r2(f.v0)} m/s、阻力 ${r4(f.k)}/s、下坠 ${r2(f.a)} m/s²）；Pivot Offset 把星头放在粒子位置（导入器待支持，未经 UE 验证）${sj[0] > 0 ? `；随机感 ${uv.r}：每颗星宽 ± ${Math.round(sj[0] * 100)} %、长 ± ${Math.round(sj[1] * 100)} %（Initial Size 均匀分布，未经 UE 验证）` : ''}`]
+    });
+  });
+  return out;
 }
 // 一层星 → 一个 GPU 光点发射器。用粒子发射器组的数据格式（46_emitset.js，米、秒），同一份数据给「引擎回放」画、给 cascade.json 导出（看到的就是导出的）。
 // 层的缩放 × 长度，时间倍率 ÷ 时间（速度 ×、阻力 ×、加速度 × 倍率²）；颜色 = 这一层的颜色 × 星头亮度，点火前和熄灭段压暗（内部是一条颜色 × 亮度曲线；4.9.24 导出时拆成 RGB 色相 + Alpha 亮度，半透明材质不发黑，esColorAlpha）
@@ -158,8 +165,8 @@ function fwlCombo(name, layers, mobile = false) {
     if (unit) {     // 4.2.13：PC 单束层
       const ln = comboLayerName(name, i), u = fwlUnit(ln, unit, comboLayerM(L), L);
       for (const [k2, v] of Object.entries(u.textures)) out.textures[pre + k2] = v;
-      out.materials[pre + 'main'] = { ...u.materials.main, textures: { main: pre + 'seq', ramp: pre + 'ramp' } };
-      out.emitters.push({ ...u.emitter, name: pre + 'Unit', material: pre + 'main', layer: i + 1, required: { ...u.emitter.required, cutout: pre + 'cutout' } });
+      for (const [k2, v] of Object.entries(u.materials)) out.materials[pre + k2] = { ...v, textures: { main: pre + v.textures.main, ramp: pre + 'ramp' } };
+      for (const em of u.emitters) out.emitters.push({ ...em, name: pre + em.name, material: pre + em.material, layer: i + 1, required: { ...em.required, cutout: pre + em.required.cutout } });     // 4.9.28 变体几张就几个发射器
       return;
     }
     if (dots) {     // 4.2.12：PC 光点层，没有贴图
@@ -216,14 +223,43 @@ async function comboLayerBakes(layers, onProg) {
 function unitP(P0) { return { ...P0, form: 'unit', cols: 16, rows: 2, chans: 4, frameMode: 'auto', autoGrid: 1, outMode: 'combined' }; }
 // 4.9.25 单层效果的单束烘焙也缓存（和多层的 e.unitBake 同一套）：贴图 / 流转 / 引擎回放 / 导出用同一份
 const singleUnitEntry = { P: null, unitBake: null };
-function singleUnitHolder() { singleUnitEntry.P = state.P; return singleUnitEntry; }
-// 单束贴图只和效果参数有关：导出方案（PC / 手机怎么出、光点大小亮度）变了不用重烘
-const unitSig = P => JSON.stringify({ ...P, outPC: 0, outMobile: 0, dotSize: 0, dotBright: 0 });
-async function layerUnitBake(e, onProg) {
-  const sig = unitSig(e.P);
+function singleUnitHolder() { singleUnitEntry.P = state.P; singleUnitEntry.unitSrc = state.P; return singleUnitEntry; }
+// 单束贴图只和效果参数有关：导出方案（PC / 手机怎么出、光点大小亮度）变了不用重烘；变体数 / 随机感（4.9.28）另算进 unitSigOf
+const unitSig = P => JSON.stringify({ ...P, outPC: 0, outMobile: 0, dotSize: 0, dotBright: 0, unitVariants: 0, unitRandom: 0 });
+// 4.9.28 单束变体（用户 10-07 09:20「这些效果要对粗细、长短或多个不同种子一起组合，提升随机感，降低随机感」；11:45 选「变体数 + 随机感」）：
+//   变体数 K（1–4）：烘 K 张单束贴图，第 k 张种子 + 101k（火花纹路不同），星数平分，每张一个发射器；
+//   随机感 r（0–1）：几张之间粗细（火花大小、星头大小 × 1 ± 0.4r）和长短（尾长 × 1 ± 0.35r，和粗细错开排）拉开；
+//   Cascade 每颗星大小再随机（Initial Size 均匀分布：宽 ± 25 % r、长 ± 20 % r），一张也有。缺省 1 / 0 = 以前那一张，cascade.json 逐字不变。
+// 单层存在 P（导出方案的键），多层存在层上（L.unitVariants / L.unitRandom，和光点大小一样）
+function unitVarOf(src) { const K = Math.round(+(src && src.unitVariants) || 1); return { K: clamp(K, 1, 4), r: clamp(+(src && src.unitRandom) || 0, 0, 1) }; }
+const UNIT_VAR_POS = { 1: [0], 2: [-1, 1], 3: [-1, 0, 1], 4: [-1, -1 / 3, 1 / 3, 1] }, UNIT_VAR_LEN = { 1: [0], 2: [1, -1], 3: [0, 1, -1], 4: [1 / 3, -1, 1, -1 / 3] };
+function unitVarPs(P, uv) {
+  const { K, r } = uv, N = Math.max(1, Math.round(+P.stars || 1)), out = [];
+  for (let k = 0; k < K; k++) {
+    const t = 1 + 0.4 * r * UNIT_VAR_POS[K][k], l = 1 + 0.35 * r * UNIT_VAR_LEN[K][k], n = Math.floor(N / K) + (k < N % K ? 1 : 0);
+    const Pk = k === 0 && t === 1 && l === 1 ? P : { ...P, seed: (+P.seed || 0) + 101 * k, adjSparkSize: adjOf(P, 'adjSparkSize') * t, adjHeadSize: adjOf(P, 'adjHeadSize') * t, adjTailLen: adjOf(P, 'adjTailLen') * l };
+    out.push({ P: Pk, t: +t.toFixed(4), l: +l.toFixed(4), n });
+  }
+  return out;
+}
+function unitSigOf(h) { return h && h.P ? unitSig(h.P) + JSON.stringify(unitVarOf(h.unitSrc || h.P)) : ''; }
+// 这个持有者（多层 = 图层条目 e，单层 = singleUnitHolder()）现在有没有对得上的单束烘焙；L：多层时这一层（变体设置在层上）
+function unitBakeOf(h, L) { if (!h) return null; if (L) h.unitSrc = L; return h.unitBake && h.unitBake.sig === unitSigOf(h) ? h.unitBake.b : null; }
+async function bakeUnitSet(P, uv, onProg) {
+  const vs = unitVarPs(P, uv), bs = [];
+  try { for (let k = 0; k < vs.length; k++) bs.push(await bake(vs[k].P, 1, p => onProg && onProg((k + p) / vs.length))); }
+  catch (err) { bs.forEach(disposeBake); throw err; }
+  const b = bs[0]; bs.forEach((x, k) => { x.meta.unitN = vs[k].n; x.meta.unitT = vs[k].t; x.meta.unitL = vs[k].l; });
+  if (bs.length > 1) b.vars = bs.slice(1);
+  if (uv.K > 1 || uv.r > 0) b.meta.unitVar = { K: uv.K, r: uv.r, sj: [+(0.25 * uv.r).toFixed(4), +(0.2 * uv.r).toFixed(4)] };
+  return b;
+}
+async function layerUnitBake(e, onProg, L) {
+  if (L) e.unitSrc = L;
+  const sig = unitSigOf(e);
   if (e.unitBake && e.unitBake.sig === sig) return e.unitBake.b;
   if (e.unitBake) { disposeBake(e.unitBake.b); e.unitBake = null; }
-  const b = await bake(unitP(e.P), 1, onProg); e.unitBake = { sig, b }; return b;
+  const b = await bakeUnitSet(unitP(e.P), unitVarOf(e.unitSrc || e.P), onProg); e.unitBake = { sig, b }; return b;
 }
 async function comboPackFiles(name, layers, onProg) {
   const files = [], { layers: lb, own } = await comboLayerBakes(layers, p => onProg && onProg(p * 0.4));
@@ -236,7 +272,7 @@ async function comboPackFiles(name, layers, onProg) {
         files.push(...await texFiles(b, ln));
         files.push([`${TN(ln, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
       } else if (o.pc === 'unit') {
-        const ub = units[i] = await layerUnitBake(e, p => onProg && onProg(0.4 + 0.1 * (i + p) / lb.length));
+        const ub = units[i] = await layerUnitBake(e, p => onProg && onProg(0.4 + 0.1 * (i + p) / lb.length), L);
         files.push(...await texFiles(ub, ln));
         files.push([`${TN(ln, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
       }
@@ -268,7 +304,7 @@ function singleSchemeNote(P) { const L = singleLayer(P, state.M); return typeof 
 // 单层的光点：缓存在一个假条目上（参数 / 颜色变了按 dotsTables 自己的签名重算）
 const singleDotsEntry = { P: null, bake: null };
 // 4.9.25 导出方案（PC / 手机怎么出、光点大小 / 亮度）改了不用重烘：画面和导出按现在的方案，模拟的数用烘焙时的参数
-const SCHEME_KEYS = ['outPC', 'outMobile', 'dotSize', 'dotBright'];
+const SCHEME_KEYS = ['outPC', 'outMobile', 'dotSize', 'dotBright', 'unitVariants', 'unitRandom'];     // 4.9.28 单束变体数 / 随机感：只重烘单束
 function withScheme(P) { if (!P || P === state.P || state.tab === 'combo' || !state.P) return P; const o = { ...P }; for (const k of SCHEME_KEYS) o[k] = state.P[k]; return o; }
 function singleDotsTables(P, M, b) { singleDotsEntry.P = P; singleDotsEntry.bake = b; return dotsTables(singleDotsEntry, singleLayer(P, M)); }
 // 导出：PC / 手机各按方案出；文件名和单层序列一样（单束的贴图用 _L1 层名，cascade.json 里引用的就是它）

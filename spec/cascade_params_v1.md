@@ -348,6 +348,8 @@ JSON里的局部配置：
 - 结构同 D（单元序列）：一颗代表星的序列（`beam_flipbook`，16 × 2 格，RGBA 接力），`screen_alignment: Velocity`，`pivot_offset` 把星头放在粒子位置；
   `spawn.bursts = [[0, 星数]]`，`SphereLocation`（表面、Velocity，`VelocityScale` = 初速 ÷ 半径）+ `Drag` + `ConstAcceleration`；`SizeByLife` X / Y 分开；帧号曲线；CPU 发射器。
 - 发射器名 `L<层号>_Unit`；手机版这一层是普通序列（`cascade_mobile.json` 里没有单束）。
+- **变体**（烘焙器 4.9.28，用户 10-07 11:45 选「变体数 + 随机感」）⚪ 未经 UE 验证：变体数 K > 1 时这一层有 K 个发射器 `L<层号>_Unit`、`L<层号>_Unit_V2`…，各自一张序列（`seq` / `seq_v2`…、`cutout` / `cutout_v2`…，材质 `main` / `main_v2`…，共用一张 `ramp`），`spawn.bursts` 的星数平分；素材包里贴图序号 `_01` / `_02`…。
+  随机感 > 0 时 `InitialSize.StartSize` 写 `uniform`（宽 / 长各自随机：宽 ± 25 % × 随机感、长 ± 20 % × 随机感，Z = 1）；Cascade 的 Distribution Vector Uniform 不锁轴时每个轴各自随机。缺省（1 张、随机感 0）和以前逐字相同。单层效果 PC 出单束同一套（发射器名 `Unit` / `Unit_V2`…）。
 
 ## 11. 给云端 AI 的输出约定
 

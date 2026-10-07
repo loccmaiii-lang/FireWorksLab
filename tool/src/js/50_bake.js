@@ -389,7 +389,7 @@ function imgMetrics(rows) {
   return { burn: Tb, diameter: 2 * Rf, t50: tfrac(0.5), t80: tfrac(0.8), t90: tfrac(0.9), droop: r[4] / Rf, bt: r[3] / Math.max(r[2], 1e-3), kieguchi: (t[i20] - t[i80]) / Tb, peakT: t[ip] };
 }
 function bakeMetrics(b) { if (!b) return null; const rows = []; for (let s = b; s; s = s.next) if (s.meta.imgRows) rows.push(...s.meta.imgRows); return rows.length ? imgMetrics(rows) : null; }
-function disposeBake(b) { if (b) { b.head.dispose(); b.tail && b.tail.dispose(); disposeTrail(b); if (b.next) disposeBake(b.next); if(b.mobile)disposeBake(b.mobile); } }
+function disposeBake(b) { if (b) { b.head.dispose(); b.tail && b.tail.dispose(); disposeTrail(b); if (b.next) disposeBake(b.next); if(b.mobile)disposeBake(b.mobile); if (b.vars) b.vars.forEach(disposeBake); } }     // 4.9.28 单束变体
 
 // 4.2.5 取景按实测收紧（用户 2026-10-03 00:25「贴图输出很多都不够极限，画面占比还不够」）：
 // 按烘好的贴图量每帧内容的范围（任何非零像素），能收紧 3% 以上就按收紧后的取景再烘一次（时间、帧数都不变）；收不紧返回 null。
@@ -595,6 +595,42 @@ function bakeKind(P) {
   return 'master';
 }
 function unitAllowed(P) { return familyOf(P.type) === 'aerial' && !['senrin', 'crossette', 'hachi'].includes(P.type) && (P.pattern === 'sphere' || P.pattern === 'half'); }
+// 4.9.27 这一层合不合适出单束（用户 10-07 09:20「还是用断尾快星或者没有什么下坠直线星用」；对话框新花型 10:43 证据：窜天猴冠 / 柳 / 时差第 1 层单束和实时对不上，
+//   NFE-MYJC-K/Y/J-4 烘焙回放：冠的光束从顶上一点散开、柳成短彗星、时差开头全黑后一起亮）。
+// 单束贴图里的尾迹是直的、沿速度方向（bakeUnit 关了重力），真的尾迹顺着星走过的弧。量一颗水平飞的星（下垂最明显）燃烧的每一刻：
+//   尾迹那段路（最近 τ 秒的星头位置；τ = 火花寿命 × 末段倍数，有余烬取余烬寿命）离「沿现在速度的直线」最远几米 → 游戏里 800 m 外几像素（帧账本同一口径）。
+//   先后点亮（点火延迟 × 点火离散）：单束所有星同一刻出生、贴图同一张 → 同时亮。
+const UNIT_FIT_OK = 1.5, UNIT_FIT_BAD = 4, UNIT_IGN_BAD = 0.1;
+const _unitFit = new Map();
+function unitFit(P0) {
+  if (!P0 || !unitAllowed(P0)) return null;
+  const P = fxP(P0); let key = ''; try { key = JSON.stringify(P); } catch (e) { }
+  if (key && _unitFit.has(key)) return _unitFit.get(key);
+  let r = null;
+  try {
+    const Du = unitDuration(P), path = starPath(P, Du), ppm = gamePixelsPerMeter(P, 0, 1080, 800);
+    const tau = Math.max((+P.sparkLife || 0) * Math.max(1, +P.sparkLifeEnd || 1), +P.emberFrac > 0 ? (+P.emberLife || 0) : 0);
+    const ign = +P.ignDelay || 0, tb = (+P.burn || 0) + ign; let dev = 0;
+    for (let i = 1; i < path.length; i++) {
+      const [t, x, y] = path[i]; if (t < ign || t > tb) continue;
+      const vx = x - path[i - 1][1], vy = y - path[i - 1][2], vl = Math.hypot(vx, vy) || 1, ux = vx / vl, uy = vy / vl;
+      for (let j = i - 1; j >= 0 && path[j][0] >= Math.max(ign, t - tau); j--) dev = Math.max(dev, Math.abs((path[j][1] - x) * uy - (path[j][2] - y) * ux));
+    }
+    const spread = ign > 0 ? 2 * ign * Math.abs(+P.ignJit || 0) / 100 : 0, px = dev * ppm;
+    const level = px > UNIT_FIT_BAD || spread > UNIT_IGN_BAD ? 'bad' : px > UNIT_FIT_OK ? 'soft' : 'ok';
+    const why = [];
+    if (px > UNIT_FIT_OK) why.push(`尾迹下垂成弧：单束的直尾最多偏 ${px.toFixed(1)} px（800 m）`);
+    if (spread > UNIT_IGN_BAD) why.push(`先后点亮（前后差 ${spread.toFixed(2)} s）：单束所有星同一刻亮`);
+    r = { px: +px.toFixed(2), devM: +dev.toFixed(2), tau: +tau.toFixed(2), spread: +spread.toFixed(2), level, why };
+  } catch (e) { r = null; }
+  if (key) { _unitFit.set(key, r); if (_unitFit.size > 24) _unitFit.delete(_unitFit.keys().next().value); }
+  return r;
+}
+function unitFitText(f) {
+  if (!f) return '';
+  if (f.level === 'ok') return `适合单束（直尾最多偏 ${f.px} px，800 m）`;
+  return `${f.level === 'bad' ? '⚠ 不适合单束，建议序列' : '单束近看会偏直'}：${f.why.join('；')}`;
+}
 async function bake(P, scale, onProg) {
   if (P.zoom === 'tight') P = { ...P, zoom: 'on' };   // 紧凑取景已禁用（引擎里会抖）
   P = { ...fxP(P) };     // 4.9.21 整体调整乘在这里：烘焙结果 b.P 记的是乘完的数（导出说明和贴图对得上）

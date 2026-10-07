@@ -187,6 +187,7 @@ async function texFiles(b, name, sfx = '', idx = 1) {
       files.push(...await cutoutFiles(tl ? [hd, tl] : [hd], s.N, s.NH, L, TN(name, joinPart(seg, 'Cutout'), null, idx), s.meta));
     }
   }
+  if (b.vars) for (const [k, v] of b.vars.entries()) files.push(...await texFiles(v, name, sfx, idx + k + 1));     // 4.9.28 单束变体：第 2–4 张（内部名 _V2…，素材包里是序号 02…）
   return files;
 }
 function masterJSON(b, name, M) {
