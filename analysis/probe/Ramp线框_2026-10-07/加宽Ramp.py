@@ -1,0 +1,21 @@
+# 加宽 Ramp（对话框21，2026-10-07）：颜色和烘焙器 rampPixels 完全一样，只是宽度从 256 加到 W。
+# 材质把 Ramp 当循环读（Wrap）时，光晕最外圈那条线的亮度和宽度都 ∝ 1 / W：4096 宽 = 现在的 1/16。
+# 跑法：python3 加宽Ramp.py <输出.png> <W> <ramp0> <ramp1> <ramp2> <ramp3>
+import sys, numpy as np
+from PIL import Image
+out, W = sys.argv[1], int(sys.argv[2]); hexes = sys.argv[3:7]
+POS = [0, .3, .65, 1]
+def h2l(h):
+    n = int(h[1:], 16); c = np.array([(n >> 16) & 255, (n >> 8) & 255, n & 255]) / 255
+    return np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
+C = [h2l(h) for h in hexes]
+def ramp_at(v):                                   # 同 60_export.js rampAt
+    for i in range(1, 4):
+        if v <= POS[i]: k = (v - POS[i - 1]) / (POS[i] - POS[i - 1]); return C[i - 1] + (C[i] - C[i - 1]) * k
+    return C[3]
+def srgb8(c):                                     # 同 60_export.js srgb8
+    c = np.clip(c, 0, 1); return np.round(255 * np.clip(np.where(c <= 0.0031308, 12.92 * c, 1.055 * np.power(c, 1 / 2.4) - 0.055), 0, 1))
+row = np.array([srgb8(ramp_at(x / (W - 1))) for x in range(W)], np.uint8)
+img = np.zeros((8, W, 4), np.uint8); img[..., :3] = row[None]; img[..., 3] = 255
+Image.fromarray(img, 'RGBA').save(out)
+print(out, W, 'x 8')

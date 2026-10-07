@@ -50,6 +50,7 @@
 - 要用户做：Ramp（`…_R`）X / Y Tiling Method = Clamp、Mip Gen Settings = NoMipmaps。还有线 → 看材质里 Ramp 的 TextureSample「Sampler Source」是不是 Shared: Wrap；再不行把序列图临时改 VectorDisplacementmap（不压缩）分辨是不是串扰。
 - 确认后：第 7 节 `ramp` 导入设置改成 Clamp + NoMipmaps（不再照抄示例贴图），导入器 `ramp` 类别一律这样设（对话框5），D5 的 Ramp 一半打勾。
 - **13:42 用户：Ramp 和序列图都改了 Clamp + NoMipmaps，没用。** 放大截图：灰白细线沿纹素网格走（圆角方框、阶梯），暗处小圈里面是黑的 → 只有「接近 0」那一档亮，仍是 Ramp 首尾混色的特征（模拟同形状：`线框形状_模拟.png`）。贴图设置没起作用 → 下一步看材质里查 Ramp 的节点 Sampler Source（Shared: Wrap 会盖掉贴图设置），以及材质实例里的 Ramp 是不是改的那张。烘焙器兜底（材质不能动时）：Ramp 最后一格放黑 + 序列编码封顶 253/255，材质 Wrap 也不出线；Ramp 加宽到 2048 只能暗 8 倍。
+- **13:50 用户：材质不能动，走烘焙器兜底。** 先给分裂星一张 4096×8 的 Ramp 试（`analysis/probe/Ramp线框_2026-10-07/试用/`，同名覆盖重导，序列图不动）：模拟 ×30 线暗到 1/16。正式改法排给对话框23。⚪ 等用户导进去看。
 
 ### 2026-10-05 19:40 · 鸿巢红点闪；整体亮度用户自己加（用户答复，对话框21 记录）
 
