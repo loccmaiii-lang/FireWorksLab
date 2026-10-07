@@ -1,0 +1,57 @@
+{
+ "id": "NFR6-MYJC",
+ "type": "script",
+ "priority": 1,
+ "name": "全程回放检查：窜天猴 冠 / 柳 / 时差（第 1 层改序列后）",
+ "steps": [
+  {
+   "name": "冠（GoldRayRocket_Crown）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_Crown.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_Crown",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "柳（GoldRayRocket_Willow）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_Willow.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_Willow",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "时差（GoldRayRocket_Jisa）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_Jisa.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_Jisa",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  }
+ ],
+ "note": "对话框新花型。"
+}

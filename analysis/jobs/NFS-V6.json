@@ -1,0 +1,12 @@
+{
+ "id": "NFS-V6",
+ "type": "std",
+ "priority": 1,
+ "targets": [
+  "MYJC-K",
+  "MYJC-Y",
+  "MYJC-J"
+ ],
+ "name": "标准检查：窜天猴 冠 / 柳 / 时差（第 1 层改序列后）",
+ "note": "对话框新花型。"
+}

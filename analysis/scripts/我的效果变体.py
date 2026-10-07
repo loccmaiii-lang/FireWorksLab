@@ -299,6 +299,12 @@ def main(a):
                      'look': ['这一排变体放在一起看：大小、造型是不是拉开了', '引擎回放 + 游戏内大小', '哪个不要、哪个再调，直接说']}
                 if multi: e['hidden'] = True
                 entries.append(e); ids.append((eid, L))
+            # PC 单束（每颗星一个面片放一小段光束）只适合直线飞的星：冠 / 柳的星下垂成弧、时差的星先后点亮，单束表达不了
+            # （NFE-MYJC-K/Y/J-4 烘焙回放：冠的光束从顶上一点散开、柳成了短彗星、时差开头全黑后一起亮）→ 这几档这一层 PC 改序列
+            if tag in ('K', 'Y', 'J'):
+                for eid_, L_ in ids:
+                    o_ = L_.get('out') or {}
+                    if o_.get('pc') == 'unit': L_['out'] = dict(o_, pc='seq'); note = (note or '') + '；第 1 层 PC 单束改序列（下垂 / 先后点亮单束表达不了）'
             if multi:
                 combos.append({'id': tid, 'date': '2026-10-07', 'name': f"{rc['name']} · {label}",
                                'layers': [dict({'m': 'rep:' + eid, 'scale': L.get('scale', 1), 'delay': L.get('delay', 0)}, **({'out': L['out']} if L.get('out') else {})) for eid, L in ids],
