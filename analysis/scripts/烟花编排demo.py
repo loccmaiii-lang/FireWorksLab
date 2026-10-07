@@ -47,14 +47,16 @@ def build_show():
     template('P_LS', '坝顶·银彩菊', 'dam', 'large', 230, 480, 8, 6, 'silver')
     template('P_LG', '坝顶·金垂柳', 'dam', 'large', 230, 480, 8, 7, 'gold')
     template('P_WALL', '坝顶·银白墙', 'dam', 'large', 230, 360, 5, 8, 'silver')
-    # 扇形三种（对话框22 10-07用户：金色参考图型、红彗星5束、银灰13束，束数可随机）。
-    # 扇从坝顶点位斜向外喷，diameter=2×束长，half=半开角（度），beams=可随机的束数。
-    template('G_GOLD', '坝顶·金锦冠扇形', 'dam', 'fan', 170, 150, 0, 1.4, 'gold')
-    template('G_RED5', '坝顶·红彗星扇形', 'dam', 'fan', 140, 150, 0, 1.4, 'red')
-    template('G_SILVER13', '坝顶·银灰扇形', 'dam', 'fan', 160, 150, 0, 1.4, 'gray')
-    for k, half, beams in (('G_GOLD', 58, [7, 9, 11, 13, 15, 17]), ('G_RED5', 40, [3, 5, 5, 7, 9, 11]),
-                           ('G_SILVER13', 62, [9, 11, 13, 13, 15, 17, 19])):
-        templates[k].update(half=half, beams=beams)
+    # 扇形三种（对话框22 10-07用户：金色参考图型、红彗星5束、银灰13束；10-08按实拍规律重做）。
+    # 一个事件 = 一个扇点打一排：一排的筒串联引线，从一侧到另一侧逐筒出膛（FanGold实拍0.035 s/筒、
+    # 11筒约0.38 s扫完）；diameter=2×星飞行长度，half=半张角，life=单颗星从出膛到熄灭。
+    # 金锦冠：计划书扇宽约100 m、燃烧3 s（±45°、70 m → 宽≈99 m）；红彗星、银灰为设计值，待用户定。
+    template('G_GOLD', '坝顶·金锦冠扇形', 'dam', 'fan', 140, 150, 0, 3.0, 'gold')
+    template('G_RED5', '坝顶·红彗星扇形', 'dam', 'fan', 150, 150, 0, 2.2, 'red')
+    template('G_SILVER13', '坝顶·银灰扇形', 'dam', 'fan', 130, 150, 0, 2.6, 'gray')
+    for k, half, beams in (('G_GOLD', 45, [9, 11, 13, 15, 17]), ('G_RED5', 35, [3, 5, 7, 9]),
+                           ('G_SILVER13', 50, [9, 11, 13, 15, 19])):
+        templates[k].update(half=half, beams=beams, gap=0.035)
     points = {}
     xs = [-374.79, -288.19, -196.59, -100, 0, 100, 196.59, 288.19, 374.79]
     ys = [113.82, 63.82, 25.88, 0, 0, 0, 25.88, 63.82, 113.82]
@@ -75,31 +77,73 @@ def build_show():
     fanline = allp + [f'B{i}' for i in range(1, 9)]
     events = []
 
-    rng = random.Random(20261007)
-    # 扫射（用户10-08「没有左右来回扫」）：一个扇点的束按角度依次发，不是一起出。
-    # 每波全线同一扫法、同一间隔，按 左→右→左 / 右→左→右 / 左→右 / 右→左 轮换。
-    sweeps = ['LRL', 'RLR', 'LR', 'RL']
-    fan_wave = [0]
-
     def fire(burst, pts, key, step=0):
-        sweep = None
-        if key == 'G_FAN':
-            sweep = sweeps[fan_wave[0] % len(sweeps)]
-            fan_wave[0] += 1
+        t = templates[key]
         for j, point in enumerate(pts):
-            k = rng.choice(['G_GOLD', 'G_RED5', 'G_SILVER13']) if key == 'G_FAN' else key
-            t = templates[k]
             b = round(burst + j * step, 2)
-            ev = dict(point=point, template=k, zone=t['zone'],
-                      launch=round(b-t['rise'], 2), burst=b,
-                      end=round(b+t['life'], 2))
-            if t['kind'] == 'fan':
-                n = rng.choice(t['beams'])
-                shots = n if len(sweep) == 2 else 2 * n - 1
-                gap = 0.08
-                ev.update(beams=n, sweep=sweep, gap=gap,
-                          end=round(b + (shots - 1) * gap + t['life'], 2))
-            events.append(ev)
+            events.append(dict(point=point, template=key, zone=t['zone'],
+                               launch=round(b-t['rise'], 2), burst=b,
+                               end=round(b+t['life'], 2)))
+
+    # ---- 扇形句型（10-08重做，参考 analysis/原理/FanGold.md 实拍：逐筒扫、排间方向交替、
+    #      排间隔1.6–2.1 s、尾声三排0.33 s连发）。一句同色同束数，不随机。 ----
+    LINE = sorted(allp + [f'B{i}' for i in range(1, 9)], key=lambda n: points[n]['x'])
+    PL = sorted(allp, key=lambda n: points[n]['x'])
+    TILT = {'P1': -15, 'P9': 15}   # 计划书：两端外左/外右，扇面朝外张开
+
+    def row(t0, point, key, n, d):
+        t = templates[key]
+        b = round(t0, 2)
+        sweep = (n - 1) * t['gap']
+        events.append(dict(point=point, template=key, zone='dam', launch=b, burst=b,
+                           end=round(b + sweep + t['life'], 2), beams=n, dir=d,
+                           tilt=TILT.get(point, 0)))
+
+    def side(point):
+        return -1 if points[point]['x'] < -1 else 1 if points[point]['x'] > 1 else 0
+
+    def fan_wall(t0, pts, key, n, mode):
+        # 齐扫：同一时刻；'out' 左半往左扫、右半往右扫（镜像外张），'in' 反过来，'L'/'R' 全线同向
+        for q in pts:
+            sd = side(q)
+            if mode in ('L', 'R'):
+                d = mode
+            elif sd == 0:
+                d = 'L' if mode == 'out' else 'R'
+            else:
+                d = ('R' if sd < 0 else 'L') if mode == 'out' else ('L' if sd < 0 else 'R')
+            row(t0, q, key, n, d)
+
+    def fan_chase(t0, pts, key, n, step, d):
+        # 追逐：一个点接一个点，扫的方向和追的方向一致（d='L' 左→右）
+        order = pts if d == 'L' else list(reversed(pts))
+        for i, q in enumerate(order):
+            row(t0 + i * step, q, key, n, d)
+
+    def fan_vee(t0, pts, key, n, step, mode):
+        # V 型：'out' 从中间往两边点（中心先），'in' 从两端往中间；扫向跟着走
+        ranks = sorted({abs(points[q]['x']) for q in pts}, reverse=(mode == 'in'))
+        for i, ax in enumerate(ranks):
+            for q in pts:
+                if abs(points[q]['x']) == ax:
+                    sd = side(q)
+                    d = ('R' if sd < 0 else 'L') if mode == 'out' else ('L' if sd < 0 else 'R')
+                    if sd == 0:
+                        d = 'L'
+                    row(t0 + i * step, q, key, n, d)
+
+    def fan_zrows(times, pts, key, n, first='L'):
+        # Z 字连排：同一批点连打几排，每排方向翻转（实拍引线走 Z 字）
+        d = first
+        for t0 in times:
+            for q in pts:
+                row(t0, q, key, n, d)
+            d = 'R' if d == 'L' else 'L'
+
+    def fan_alt(t0, groups, key, n, gap, rows):
+        # 奇偶交替：两组点轮流打，镜像外张
+        for i in range(rows):
+            fan_wall(t0 + i * gap, groups[i % 2], key, n, 'out')
 
     five = ['P1', 'P3', 'P5', 'P7', 'P9']
 
@@ -186,8 +230,6 @@ def build_show():
 
     fire(6, allp, 'P_SILVER', .12)
     fire(9, allp, 'P_LIME', .12)
-    for b in (11, 15, 19, 23, 27, 31, 35):
-        fire(b, fanline, 'G_FAN')
     for i, b in enumerate((12, 16, 20, 24, 28, 32)):
         fire(b, allp, 'P_MS' if i % 2 == 0 else 'P_MG')
 
@@ -196,31 +238,60 @@ def build_show():
     for i, b in enumerate((66, 71, 76, 81)):
         fire(b, allp if i % 2 == 0 else list(reversed(allp)),
              'P_SILVER' if i % 2 == 0 else 'P_SPLIT', .28)
-    for b in (67, 77, 87):
-        fire(b, fanline, 'G_FAN')
     fire(88, allp, 'P_MG')
 
     for i, b in enumerate((92, 96, 100, 104)):
         fire(b, allp, 'P_GREEN' if i % 2 == 0 else 'P_MULTI')
     for b in (95, 101):
         fire(b, ['P1', 'P5', 'P9'], 'P_LS')
-    for b in (93, 103):
-        fire(b, fanline, 'G_FAN')
     # 108秒上层全灭，110–132秒内连坝顶预发也停。
     for i, b in enumerate((137, 142, 147, 152, 157, 162)):
         fire(b, allp, ('P_MG', 'P_MULTI', 'P_GREEN')[i % 3])
     for b in (146, 156):
         fire(b, ['P2', 'P5', 'P8'], 'P_LS')
-    for b in (139, 149, 159):
-        fire(b, fanline, 'G_FAN')
 
     for b in (166, 170, 174):
         fire(b, allp, 'P_MG')
     fire(172, five, 'P_SPLIT')
-    for b in (167, 173, 179):
-        fire(b, fanline, 'G_FAN')
     for b in (179, 182):
         fire(b, allp, 'P_LG')
+    # ---- 扇形编排（10-08）----
+    GOLD, RED, SILV = 'G_GOLD', 'G_RED5', 'G_SILVER13'
+    PODD, PEVEN = ['P1', 'P3', 'P5', 'P7', 'P9'], ['P2', 'P4', 'P6', 'P8']
+    # 起势：0:10.4 中心先起往外扩、0:11.4 反向收回，金网迎接0:12九点齐射（计划书开场参考图）
+    fan_vee(10.4, LINE, GOLD, 11, .06, 'out')
+    fan_wall(11.4, LINE, GOLD, 11, 'in')
+    # 连续展开：两波开花之间各一句，每句换句型
+    fan_chase(14.4, PL, GOLD, 11, .15, 'L')
+    fan_chase(18.4, PL, GOLD, 11, .15, 'R')
+    fan_vee(22.4, LINE, SILV, 13, .08, 'out')
+    fan_vee(26.4, LINE, SILV, 13, .08, 'in')
+    fan_alt(30.4, (PODD, PEVEN), RED, 5, .5, 4)
+    fan_zrows((34.0, 35.8, 37.4), PL, GOLD, 13)
+    # 往返扫射：开花左右扫，扇形每次反着追回来；末尾Z字连排+尾声三连发
+    fan_chase(67.0, LINE, SILV, 13, .14, 'R')
+    fan_chase(72.0, LINE, RED, 5, .14, 'L')
+    fan_chase(77.0, LINE, GOLD, 11, .14, 'R')
+    fan_chase(82.0, LINE, SILV, 15, .14, 'L')
+    fan_zrows((84.5, 86.3, 87.9, 88.23, 88.56), PL, GOLD, 11)
+    # 第一次抬升：镜像齐扫做底
+    fan_wall(93.0, LINE, GOLD, 15, 'out')
+    fan_vee(97.6, LINE, RED, 7, .07, 'in')
+    fan_wall(103.0, LINE, SILV, 19, 'out')
+    # 第二次递进
+    fan_chase(139.0, PL, RED, 5, .12, 'L')
+    fan_chase(140.4, PL, RED, 5, .12, 'R')
+    fan_alt(144.0, (PODD, PEVEN), SILV, 13, .45, 4)
+    fan_vee(149.0, LINE, GOLD, 13, .07, 'out')
+    fan_chase(153.5, LINE, SILV, 13, .10, 'R')
+    fan_vee(159.0, LINE, GOLD, 15, .07, 'in')
+    fan_vee(160.4, LINE, GOLD, 15, .07, 'out')
+    # 金色终章：全金
+    fan_wall(167.0, LINE, GOLD, 13, 'out')
+    fan_wall(168.8, LINE, GOLD, 13, 'in')
+    fan_chase(173.0, LINE, GOLD, 15, .08, 'L')
+    fan_chase(174.6, LINE, GOLD, 15, .08, 'R')
+    fan_zrows((178.0, 179.8, 181.4, 182.4, 182.73, 183.06), PL, GOLD, 17)
     # 八波白墙，每1.5秒一波；最后一波198.5开、206.5自然灭完。
     for b in (188, 189.5, 191, 192.5, 194, 195.5, 197, 198.5):
         fire(b, allp, 'P_WALL')
@@ -235,7 +306,7 @@ def build_show():
     for e in events:
         t = templates[e['template']]
         if t['kind'] == 'fan':
-            e.update(dt=round(srng.uniform(0, .06), 2), dz=0, scale=round(srng.uniform(.92, 1.08), 2))
+            e.update(dt=0, dz=0, scale=1)  # 扇形按句型精确对齐，不加随机
         elif t['zone'] == 'front':
             e.update(dt=round(srng.uniform(0, .2), 2), dz=-round(srng.uniform(0, 5), 1),
                      scale=round(srng.uniform(.9, 1.0), 2))
@@ -295,7 +366,7 @@ def main():
         for e in show['events']:
             t, p = show['templates'][e['template']], show['points'][e['point']]
             w.writerow([e['id'],show['phases'][e['phase']]['name'],e['launch'],e['burst'],e['end'],
-                        e['point'],e['zone'],e['template'],t['name'],t['shape'],e.get('beams',''),e.get('sweep',''),e['dt'],e['dz'],e['scale'],round(p['x']*100),round(p['y']*100),
+                        e['point'],e['zone'],e['template'],t['name'],t['shape'],e.get('beams',''),e.get('dir',''),e['dt'],e['dz'],e['scale'],round(p['x']*100),round(p['y']*100),
                         p['z']*100,t['z']*100,t['diameter']*100,t['top']*100])
     print('PASS: 前台包络/区域/时间/低位密奏/白墙72发/206.5秒结束/数量至少3倍/无重复事件')
     print('TOTAL',len(show['events']),dict(Counter(e['zone'] for e in show['events'])))
