@@ -24999,7 +24999,7 @@ var FW_EFFECTS = [
 "key": "myv_fxmuv6vhrq",
 "名": "金曜菊-A · 大小与造型",
 "负责": "对话框新花型",
-"阶段": "制作中",
+"阶段": "待验收",
 "参考": [],
 "主条目": "MYJA-O",
 "工作版": "MYJA-O",
@@ -25081,16 +25081,14 @@ var FW_EFFECTS = [
 ],
 "进度": {
 "计算": true,
-"AI自检": false,
-"素材导出": false,
+"AI自检": true,
+"素材导出": true,
 "用户验收": false
 },
 "缺": [
-"每档自动曝光（本机）",
-"导出 + 回放检查 + 标准检查（本机）",
 "UE 4.24 实机导入未验证"
 ],
-"下一步": "【对话框新花型 2026-10-07 03:15】导出 + 回放检查一轮看过（7 个不过的已按测的改、重导）；回放检查.py 修了多层包的 Ramp；排了全程回放 NFR2-*（新脚本 全程回放检查.py，跳过 GPU 光点 / 单束层）+ 标准检查 NFS-V2。回来看过进待我验收。",
+"下一步": "【对话框新花型 2026-10-07 10:05】待你验收：15 档都导出了，回放检查、全程回放（NFR3-MYJA）、标准检查（NFS-V3）全过；2–4 尺第 2 层压过曝光（按金色测过曝 2.4–3.4%）。看法 analysis/results/NFR3-MYJA/看法.md。",
 "说明": "你保存的「金曜菊-A」（analysis/我的配方/）出的一组素材变体：原样 + 大小 + 造型。原样一个数没改。",
 "英文名": "GoldRay",
 "层英文名": [
@@ -25127,6 +25125,7 @@ var FW_EFFECTS = [
 "NFE-MYJA-S30-4",
 "NFE-MYJA-S40-4"
 ],
+"待验收版": "MYJA-O",
 "ver": "5d7c30bc",
 "jobs": [
 {
@@ -25223,7 +25222,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJA-S20-4",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJA-S20",
@@ -25247,7 +25246,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJA-S30-4",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJA-S30",
@@ -25271,7 +25270,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJA-S40-4",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJA-S40",
@@ -27028,7 +27027,7 @@ var FW_EFFECTS = [
 "导出 + 回放检查 + 标准检查（本机）",
 "UE 4.24 实机导入未验证"
 ],
-"下一步": "【对话框新花型 2026-10-07 03:15】导出 + 回放检查一轮看过（7 个不过的已按测的改、重导）；回放检查.py 修了多层包的 Ramp；排了全程回放 NFR2-*（新脚本 全程回放检查.py，跳过 GPU 光点 / 单束层）+ 标准检查 NFS-V2。回来看过进待我验收。",
+"下一步": "【对话框新花型 2026-10-07 10:05】用户 09:48：点灭星第二段改 0.3 s（原样不动）；重导 NFE-MYJC-*-3，回来看全程回放 NFR4-MYJC + 标准检查 NFS-V4。原样那档：第二段 0.05 s，主段 3.4 s 不亮 → 导出有空帧（你的设计，没改）。",
 "说明": "你保存的「金曜菊-窜天猴」（analysis/我的配方/）出的一组素材变体：原样 + 大小 + 造型。原样一个数没改。",
 "英文名": "GoldRayRocket",
 "层英文名": [
@@ -27087,7 +27086,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-C-2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-C-3",
@@ -27105,7 +27104,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-H-2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-H-3",
@@ -27123,7 +27122,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-J-2",
 "type": "export",
 "state": "挂起",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-J-3",
@@ -27141,7 +27140,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-K-2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-K-3",
@@ -27159,7 +27158,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-M-2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-M-3",
@@ -27183,7 +27182,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-R-2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-R-3",
@@ -27201,7 +27200,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-S03-2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-S03-3",
@@ -27219,7 +27218,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-S05-2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-S05-3",
@@ -27237,7 +27236,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-S10-2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-S10-3",
@@ -27255,7 +27254,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-S20-2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-S20-3",
@@ -27273,7 +27272,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-S30-2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-S30-3",
@@ -27291,7 +27290,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-S40-2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-S40-3",
@@ -27309,7 +27308,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-T-2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-T-3",
@@ -27327,7 +27326,7 @@ var FW_EFFECTS = [
 "id": "NFE-MYJC-Y-2",
 "type": "export",
 "state": "已回来",
-"seen": false
+"seen": true
 },
 {
 "id": "NFE-MYJC-Y-3",
@@ -28418,7 +28417,7 @@ var FW_EFFECTS = [
 "导出 + 回放检查 + 标准检查（本机）",
 "UE 4.24 实机导入未验证"
 ],
-"下一步": "【对话框新花型 2026-10-07 03:15】导出 + 回放检查一轮看过（7 个不过的已按测的改、重导）；回放检查.py 修了多层包的 Ramp；排了全程回放 NFR2-*（新脚本 全程回放检查.py，跳过 GPU 光点 / 单束层）+ 标准检查 NFS-V2。回来看过进待我验收。",
+"下一步": "【对话框新花型 2026-10-07 10:05】12 档全过；芯入：芯星头 3.5 m、曝光 0.37 重导 NFE-MYHK-C-2，回来看 NFR3-MYHK + NFS-V4 再进待验收。",
 "说明": "你保存的「鸿巢四尺玉 · 我的」（analysis/我的配方/）出的一组素材变体：原样 + 大小 + 造型。原样一个数没改。",
 "英文名": "YonshakuKamuro",
 "层英文名": [
