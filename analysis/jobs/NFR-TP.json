@@ -1,0 +1,155 @@
+{
+ "id": "NFR-TP",
+ "type": "script",
+ "priority": 1,
+ "ready": false,
+ "hold": "等 NFE-TP-* 导出回来（对话框新花型放行）",
+ "name": "全程回放检查：节奏样包（9 档）",
+ "steps": [
+  {
+   "name": "金芒菊 · 尺玉 · 快 ×1.33（整段 ¾）（JinMangJu_10_T75）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/JinMangJu_10_T75.jpg",
+    "analysis/local/输出/素材包/JinMangJu_10_T75",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "金芒菊 · 尺玉 · 快 ×1.67（整段 0.6）（JinMangJu_10_T60）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/JinMangJu_10_T60.jpg",
+    "analysis/local/输出/素材包/JinMangJu_10_T60",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "金芒菊 · 尺玉 · 快 ×1.33 + 收尾利落（JinMangJu_10_T75C）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/JinMangJu_10_T75C.jpg",
+    "analysis/local/输出/素材包/JinMangJu_10_T75C",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "金曜菊-A · 快 ×1.33（整段 ¾）（GoldRay_T75）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_T75.jpg",
+    "analysis/local/输出/素材包/GoldRay_T75",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "金曜菊-A · 快 ×1.67（整段 0.6）（GoldRay_T60）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_T60.jpg",
+    "analysis/local/输出/素材包/GoldRay_T60",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "金曜菊-A · 快 ×1.33 + 收尾利落（GoldRay_T75C）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_T75C.jpg",
+    "analysis/local/输出/素材包/GoldRay_T75C",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "鸿巢四尺玉 · 我的 · 快 ×1.33（整段 ¾）（YonshakuKamuro_T75）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_T75.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_T75",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "鸿巢四尺玉 · 我的 · 快 ×1.67（整段 0.6）（YonshakuKamuro_T60）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_T60.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_T60",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "鸿巢四尺玉 · 我的 · 快 ×1.33 + 收尾利落（YonshakuKamuro_T75C）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_T75C.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_T75C",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  }
+ ],
+ "note": "对话框新花型。不带参考视频，采整段 8 个时刻；GPU 光点 / 单束层跳过。"
+}

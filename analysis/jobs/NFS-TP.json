@@ -1,0 +1,20 @@
+{
+ "id": "NFS-TP",
+ "type": "std",
+ "priority": 1,
+ "ready": false,
+ "hold": "等 NFE-TP-* 导出回来（对话框新花型放行）",
+ "targets": [
+  "TP-JMG10-T75",
+  "TP-JMG10-T60",
+  "TP-JMG10-T75C",
+  "TP-MYJA-O-T75",
+  "TP-MYJA-O-T60",
+  "TP-MYJA-O-T75C",
+  "TP-MYHK-O-T75",
+  "TP-MYHK-O-T60",
+  "TP-MYHK-O-T75C"
+ ],
+ "name": "标准检查：节奏样包（9 档）",
+ "note": "对话框新花型。"
+}
