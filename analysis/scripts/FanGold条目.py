@@ -56,8 +56,9 @@ VERSIONS = {
     #            'crackle': 50, 'crackleR': 3.0, 'crackleBright': 2.4, 'crackleSize': 0.18},
     # FGV2 / FGE-FG2 看过（18:00）：整条线留到 2.8 s 对了；再长一点更像（寿命 3.0）；星烧到过了顶点（1.65 s）才炸，线头往下勾 → 燃烧 1.85 → 1.7；
     # 冠带还是比实拍小、暗（实拍是一整条白色噼啪带）→ 爆裂 64 个、范围 3.4 m、亮度 3.2、小闪 0.22 m
-    'FG3': {'duration': 5.6, 'stars': 22, 'sparkRate': 300, 'sparkLife': 3.0, 'sparkLifeJit': 40, 'cooling': 0.22, 'x1Life': 0.22, 'burn': 1.7,
-            'crackle': 64, 'crackleR': 3.4, 'crackleBright': 3.2, 'crackleSize': 0.22, 'crackleDelay': 0.32},
+    # 'FG3' 被 FG7 取代（结果 / 任务在 归档/）
+    # 'FG3': {'duration': 5.6, 'stars': 22, 'sparkRate': 300, 'sparkLife': 3.0, 'sparkLifeJit': 40, 'cooling': 0.22, 'x1Life': 0.22, 'burn': 1.7,
+    #        'crackle': 64, 'crackleR': 3.4, 'crackleBright': 3.2, 'crackleSize': 0.22, 'crackleDelay': 0.32},
 }
 
 # 4 簇：左外、左内、右内、右外。转角逆时针为正（+ = 偏左）；延迟 = 左 → 右扫射
@@ -147,7 +148,7 @@ def main():
     out = {'说明': '金锦冠扇形 FanGold（对话框FanGold，用户 2026-10-07 16:05「一簇一簇的」）。由 analysis/scripts/FanGold条目.py 生成，不要手改。',
            'entries': ents, 'combos': combos}
     json.dump(out, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    print('写好', OUT, '：', ' / '.join(VERSIONS), '+ FG7，共', len(ents), '个条目')
+    print('写好', OUT, '：', ' / '.join(VERSIONS) or '（第 1 版都已归档）', '+ FG7，共', len(ents), '个条目')
 
 
 if __name__ == '__main__':
