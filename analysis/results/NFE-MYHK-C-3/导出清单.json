@@ -1,0 +1,37 @@
+{
+ "effect": "myv_fxmuwols5x",
+ "entry": "MYHK-C",
+ "ver": "3003483c·dots4.9.24+master4.9.13",
+ "time": "2026-10-07 10:23",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "YonshakuKamuro_Core",
+   "replica": "MYHK-C",
+   "files": [
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Core_4x4_01.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Core_4x4_01_C.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Core_4x4_01_HD.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Core_4x4_02.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Core_4x4_02_C.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Core_4x4_02_HD.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Core_R.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Main_4x4_01.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Main_4x4_01_C.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Main_4x4_01_HD.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Main_4x4_02.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Main_4x4_02_C.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Main_4x4_02_HD.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Main_R.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Red_4x4_01.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Red_4x4_01_C.png",
+    "T_EFX_FireWorks_YonshakuKamuro_Core_Red_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

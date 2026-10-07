@@ -1,0 +1,8 @@
+10:21:58 开始：GoldRayRocket_Core（导出素材）
+10:22:04 GoldRayRocket_Core 组合素材包 6 秒：T_EFX_FireWorks_GoldRayRocket_Core_Core_4x4_01.png、T_EFX_FireWorks_GoldRayRocket_Core_Core_4x4_01_C.png、T_EFX_FireWorks_GoldRayRocket_Core_Core_4x4_01_HD.png、T_EFX_FireWorks_GoldRayRocket_Core_Core_R.png、T_EFX_FireWorks_GoldRayRocket_Core_L1_4x4_01.png、T_EFX_FireWorks_GoldRayRocket_Core_L1_4x4_01_C.png、T_EFX_FireWorks_GoldRayRocket_Core_L1_8x4_01_C.png、T_EFX_FireWorks_GoldRayRocket_Core_L1_8x4_01_HD.png、T_EFX_FireWorks_GoldRayRocket_Core_L1_R.png、T_EFX_FireWorks_GoldRayRocket_Core_L2_4x4_01.png、T_EFX_FireWorks_GoldRayRocket_Core_L2_4x4_01_C.png、T_EFX_FireWorks_GoldRayRocket_Core_L2_4x4_01_HD.png、T_EFX_FireWorks_GoldRayRocket_Core_L2_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+10:22:04 回放检查不查的粒子发射器（光点 / 单束）：L1_Unit
+10:22:05 回放检查：✅ 通过
+10:22:19 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJC-C-4\烘焙回放.jpg
+10:22:19 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJC-C-4\烘焙回放_原尺寸.jpg
+10:22:19 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+10:22:19 完成，用时 0.4 分钟

@@ -1,0 +1,47 @@
+10:24:08 第 1/15 步：原样（GoldRayRocket）
+10:24:09   ❌ GoldRayRocket 跳过纯粒子发射器：L1_Unit
+10:24:09      GoldRayRocket · L2_Main 中间空帧 23
+10:24:09   ✅ 原样（GoldRayRocket）（0.0 分钟）
+10:24:09 第 2/15 步：3 号（GoldRayRocket_03）
+10:24:10   ✅ GoldRayRocket_03 跳过纯粒子发射器：L1_Unit
+10:24:10   ✅ 3 号（GoldRayRocket_03）（0.0 分钟）
+10:24:10 第 3/15 步：5 号（GoldRayRocket_05）
+10:24:11   ✅ GoldRayRocket_05 跳过纯粒子发射器：L1_Unit
+10:24:11   ✅ 5 号（GoldRayRocket_05）（0.0 分钟）
+10:24:11 第 4/15 步：尺玉（GoldRayRocket_10）
+10:24:11   ✅ GoldRayRocket_10 跳过纯粒子发射器：L1_Unit
+10:24:11   ✅ 尺玉（GoldRayRocket_10）（0.0 分钟）
+10:24:11 第 5/15 步：2 尺（GoldRayRocket_20）
+10:24:12   ✅ GoldRayRocket_20 跳过纯粒子发射器：L1_Unit
+10:24:12   ✅ 2 尺（GoldRayRocket_20）（0.0 分钟）
+10:24:12 第 6/15 步：3 尺（GoldRayRocket_30）
+10:24:12   ✅ GoldRayRocket_30 跳过纯粒子发射器：L1_Unit
+10:24:12   ✅ 3 尺（GoldRayRocket_30）（0.0 分钟）
+10:24:12 第 7/15 步：4 尺（GoldRayRocket_40）
+10:24:13   ✅ GoldRayRocket_40 跳过纯粒子发射器：L1_Unit
+10:24:13   ✅ 4 尺（GoldRayRocket_40）（0.0 分钟）
+10:24:13 第 8/15 步：冠（GoldRayRocket_Crown）
+10:24:14   ✅ GoldRayRocket_Crown 跳过纯粒子发射器：L1_Unit
+10:24:14   ✅ 冠（GoldRayRocket_Crown）（0.0 分钟）
+10:24:14 第 9/15 步：柳（GoldRayRocket_Willow）
+10:24:14   ✅ GoldRayRocket_Willow 跳过纯粒子发射器：L1_Unit
+10:24:14   ✅ 柳（GoldRayRocket_Willow）（0.0 分钟）
+10:24:14 第 10/15 步：环（GoldRayRocket_Ring）
+10:24:15   ✅ GoldRayRocket_Ring 
+10:24:15   ✅ 环（GoldRayRocket_Ring）（0.0 分钟）
+10:24:15 第 11/15 步：土星（GoldRayRocket_Saturn）
+10:24:16   ✅ GoldRayRocket_Saturn 
+10:24:16   ✅ 土星（GoldRayRocket_Saturn）（0.0 分钟）
+10:24:16 第 12/15 步：万華鏡（GoldRayRocket_Kaleido）
+10:24:17   ✅ GoldRayRocket_Kaleido 
+10:24:17   ✅ 万華鏡（GoldRayRocket_Kaleido）（0.0 分钟）
+10:24:17 第 13/15 步：心形（GoldRayRocket_Heart）
+10:24:18   ✅ GoldRayRocket_Heart 
+10:24:18   ✅ 心形（GoldRayRocket_Heart）（0.0 分钟）
+10:24:18 第 14/15 步：时差（GoldRayRocket_Jisa）
+10:24:18   ✅ GoldRayRocket_Jisa 跳过纯粒子发射器：L1_Unit
+10:24:18   ✅ 时差（GoldRayRocket_Jisa）（0.0 分钟）
+10:24:18 第 15/15 步：芯入（GoldRayRocket_Core）
+10:24:19   ✅ GoldRayRocket_Core 跳过纯粒子发射器：L1_Unit
+10:24:19   ✅ 芯入（GoldRayRocket_Core）（0.0 分钟）
+10:24:19 完成，用时 0.2 分钟
