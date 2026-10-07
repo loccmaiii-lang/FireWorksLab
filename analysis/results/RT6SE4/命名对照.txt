@@ -1,0 +1,8 @@
+烘焙器内部名 → 素材包里的名字（用户 2026-10-02 定的规范）
+T_RiseTailS_Loop.png → T_EFX_FireWorks_RiseTrailPhys_S_Loop_16x1_01_HD.png
+T_RiseTailS_Loop_Cutout.png → T_EFX_FireWorks_RiseTrailPhys_S_Loop_16x1_01_C.png
+T_RiseTailS_Far.png → T_EFX_FireWorks_RiseTrailPhys_S_Far_16x2_01_HD.png
+T_RiseTailS_Far_Cutout.png → T_EFX_FireWorks_RiseTrailPhys_S_Far_16x2_01_C.png
+T_RiseTailS_Mobile_Loop.png → T_EFX_FireWorks_RiseTrailPhys_S_Loop_16x1_01.png
+T_RiseTailS_Mobile_Far.png → T_EFX_FireWorks_RiseTrailPhys_S_Far_16x2_01.png
+T_RiseTailS_Ramp.png → T_EFX_FireWorks_RiseTrailPhys_S_R.png

@@ -1,0 +1,8 @@
+11:01:58 开始：RiseTailM（导出素材）
+11:02:07 RiseTailM 导出 9 秒：RiseTailM.json、RiseTailM_Cascade参数.txt、RiseTailM_Mobile.json、RiseTailM_曲线.csv、T_EFX_FireWorks_RiseTrailPhys_M_Far_16x2_01.png、T_EFX_FireWorks_RiseTrailPhys_M_Far_16x2_01_C.png、T_EFX_FireWorks_RiseTrailPhys_M_Far_16x2_01_HD.png、T_EFX_FireWorks_RiseTrailPhys_M_Loop_16x1_01.png、T_EFX_FireWorks_RiseTrailPhys_M_Loop_16x1_01_C.png、T_EFX_FireWorks_RiseTrailPhys_M_Loop_16x1_01_HD.png、T_EFX_FireWorks_RiseTrailPhys_M_R.png、cascade.json、cascade_mobile.json、命名对照.txt
+11:02:08 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT6ME4\回放检查.jpg（❌ RiseTailM · TrailFar：末尾空帧 2）
+11:02:28 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT6ME4\烘焙回放.jpg
+11:02:29 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT6ME4\烘焙回放_原尺寸.jpg
+11:02:29 烘焙器预览没做成（不影响导出）：'texture'
+11:02:29 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+11:02:29 完成，用时 0.5 分钟
