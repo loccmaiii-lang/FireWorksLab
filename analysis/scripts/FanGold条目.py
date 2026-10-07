@@ -48,11 +48,12 @@ M = {'stages': [[0, '#ffffff']], 'xw': 0.06, 'ramp0': '#000000', 'ramp1': '#7a3a
 
 # 各版本在 BASE 上改什么（旧版本留着，直到被取代的结果搬进 归档/）
 VERSIONS = {
-    'FG1': {},
+    # FG1（每簇 18 条、火花寿命 1.5）、FG2（22 条、寿命 2.6）被 FG3 取代，结果 / 任务在 归档/
+    # 'FG1': {},
     # FGV1 / FGE-FG1 本机看过（17:30）：一簇多条细线对了；尾巴 1.6 s 就只剩上半截（实拍到 2.8 s 整条线还在、变银白）→ 火花寿命 1.5 → 2.6、冷却 0.35 → 0.22；
     # 更密（每簇 22 条、火花 300/s）；冠带偏小偏暗 → 爆裂 50 个、范围 3 m、亮度 2.4；白热段 0.22 s；时长跟着火花寿命 4.4 → 5.2 s
-    'FG2': {'duration': 5.2, 'stars': 22, 'sparkRate': 300, 'sparkLife': 2.6, 'sparkLifeJit': 40, 'cooling': 0.22, 'x1Life': 0.22,
-            'crackle': 50, 'crackleR': 3.0, 'crackleBright': 2.4, 'crackleSize': 0.18},
+    # 'FG2': {'duration': 5.2, 'stars': 22, 'sparkRate': 300, 'sparkLife': 2.6, 'sparkLifeJit': 40, 'cooling': 0.22, 'x1Life': 0.22,
+    #            'crackle': 50, 'crackleR': 3.0, 'crackleBright': 2.4, 'crackleSize': 0.18},
     # FGV2 / FGE-FG2 看过（18:00）：整条线留到 2.8 s 对了；再长一点更像（寿命 3.0）；星烧到过了顶点（1.65 s）才炸，线头往下勾 → 燃烧 1.85 → 1.7；
     # 冠带还是比实拍小、暗（实拍是一整条白色噼啪带）→ 爆裂 64 个、范围 3.4 m、亮度 3.2、小闪 0.22 m
     'FG3': {'duration': 5.6, 'stars': 22, 'sparkRate': 300, 'sparkLife': 3.0, 'sparkLifeJit': 40, 'cooling': 0.22, 'x1Life': 0.22, 'burn': 1.7,
