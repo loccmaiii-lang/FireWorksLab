@@ -1,0 +1,28 @@
+{
+ "effect": "qingning",
+ "entry": "QN12",
+ "ver": "96ba713b·master4.9.31",
+ "time": "2026-10-07 21:02",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "Qingning40",
+   "replica": "QN12",
+   "files": [
+    "T_EFX_FireWorks_LimeStar_Head_4x4_01.png",
+    "T_EFX_FireWorks_LimeStar_Head_4x4_01_C.png",
+    "T_EFX_FireWorks_LimeStar_Head_4x4_01_HD.png",
+    "T_EFX_FireWorks_LimeStar_Head_R.png",
+    "T_EFX_FireWorks_LimeStar_Tail_4x4_01.png",
+    "T_EFX_FireWorks_LimeStar_Tail_4x4_01_C.png",
+    "T_EFX_FireWorks_LimeStar_Tail_4x4_01_HD.png",
+    "T_EFX_FireWorks_LimeStar_Tail_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}
