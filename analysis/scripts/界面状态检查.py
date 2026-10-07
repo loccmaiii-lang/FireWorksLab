@@ -75,6 +75,8 @@
       RT6 每层、光点（点灭方波在 Alpha）；单层 / 多层 / 升空尾缀的 cascade.json 每个发射器都有 Scale Color/Life（1、1）
   W21 4.9.25 产物表（用户 10-07 09:20「4.可以，我很着急使用」）：交付清单顶上每层 PC / 手机出什么，改了不重烘、进撤销；贴图 / 流转 / 引擎回放按产物看
       （PC 单束看单束那张、光点 / 不出写明没有贴图、手机看序列）；旧存档「单元序列」迁成 大面片 + PC 单束；产物下拉没有单束；单束只出合并的一张
+  W22 4.9.26 帧账本（用户 10-07 09:20「2.可以，你标定完」）：金芒菊标定线复算一致；「输出」写游戏里每帧最多跳几像素 + 试算几档（用这个 = 改贴图张数）；
+      RT6 远段帧对齐 tick、上升段最慢 10 fps、每帧位移不超过标定线（或已是每 tick 一帧）、格子用满不超、帧号曲线点少且和烘焙时刻对得上
   W19 4.9.21 入点前放大一律绕爆点（用户 21:51 选）：「放大的中心」删了；cascade.json 写 Pivot Offset、Initial Location 0；回放绕爆点；存过「面片中心」的打开时提示
       4.9.8 加：顶上「现在改的是」和搜索入口看得到，第一屏至少 8 行参数（菊 › 星、引菊 → 锦 金锦层 › 火花）
   W15 4.9.7 起（对话框23 参数栏交互）：4.9.8 引菊 → 锦六步（定位 / 改寿命 / 改颜色 / 调接力 / 撤销保存刷新重开）；切「工具」「审阅」再回来时间 / 层 / 发射器 / 模块开合 / 滚动位置都在、多层里有「工具」页；撤销一次操作一步（两个参数紧挨着改 = 两步、拖动中途停 = 一步、数值框回车 = 一步）
@@ -2598,6 +2600,41 @@ async def w21(pg):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps({**r['out'], 'combo': r2['out']}, ensure_ascii=False)[:1200]
 
 
+W22_JS = r"""async () => {
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
+  const baked = async prev => { for (let i = 0; i < 100 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); };
+  // 1 标定线：金芒菊 4.56 s、22 / 21 / 11 / 10 帧各停 1 / 2 / 3 / 4 tick，停 ≥ 2 tick 的帧最多跳的像素 = STEP_REF_PX
+  { const e = entryById('JM4-40') || entryById('JM3'), P = { ...derive({ ...structuredClone(defaultsFor(e.base).P), ...structuredClone(e.p) }), duration: 4.56 }, fm = measure(P), times = [], dur = []; let t = 0;
+    for (const [n, k] of [[22, 1], [21, 2], [11, 3], [10, 4]]) for (let i = 0; i < n; i++) { times.push(t / 30); dur.push(k / 30); t += k; }
+    const L = frameLedger(P, fm, { times, dur }); out.ref = { calc: L.maxHeld, const: STEP_REF_PX };
+    if (!(STEP_REF_PX > 0) || Math.abs(L.maxHeld - STEP_REF_PX) > 0.05) bad.push('标定线和金芒菊复算对不上：' + JSON.stringify(out.ref)); }
+  // 2 「输出」顶上：每帧最多跳几像素 + 试算
+  { const prev = state.bake; await openType('kiku'); await baked(prev); } state.playing = false;
+  const html = outSummaryHTML(), d = document.createElement('div'); d.innerHTML = html;
+  out.sum = { jump: /游戏里每帧最多跳/.test(d.textContent), trial: d.querySelectorAll('.otrial > div').length - 1, btn: d.querySelectorAll('[data-pages]').length };
+  if (!out.sum.jump || out.sum.trial < 2 || !out.sum.btn) bad.push('「输出」没写每帧跳动 / 没有试算几档：' + JSON.stringify(out.sum));
+  { const row = [...document.querySelectorAll('#params [data-info=outSummary]')][0];
+    if (row) { row._refresh(); const b = row.querySelector('[data-pages]'); const want = b && +b.dataset.pages; if (b) { b.click(); await wait(50); out.pick = { want, got: state.P.pageTarget }; if (state.P.pageTarget !== want) bad.push('试算「用这个」没改贴图张数：' + JSON.stringify(out.pick)); undoStep && await undoStep(-1); } }
+    else bad.push('右栏没有「输出」结果行'); }
+  // 3 RT6 远段
+  for (const id of ['RT6L', 'RT6M', 'RT6S']) { const e = entryById(id); if (!e) continue; const P = derive({ ...defaultsFor(e.base).P, ...e.p }), ball = rtBallistic(P), fa = rtLayoutFar(P, ball, rtLoopInfo(P));
+    const onTick = fa.times.every((t, f) => Math.abs((t - fa.dur[f] / 2) * 30 - Math.round((t - fa.dur[f] / 2) * 30)) < 1e-6) && Math.abs(fa.t0 * 30 - Math.round(fa.t0 * 30)) < 1e-6;
+    const riseMin = Math.min(...fa.dur.slice(0, fa.Fr).map(d => 1 / d)), keysOK = fa.times.every((t, f) => Math.floor(evalKeys(fa.keys, t / fa.Dtot) + 1e-6) === f);
+    out[id] = { F: fa.F, cap: fa.cap, grid: fa.cols + '×' + fa.rows, Fr: fa.Fr, riseMin: +riseMin.toFixed(1), px: fa.pxMax, keys: fa.keys.length, onTick, keysOK };
+    if (!onTick) bad.push(id + ' 远段帧没对齐 tick');
+    if (riseMin < 10 - 1e-6) bad.push(id + ' 远段上升段低于 10 fps：' + riseMin);
+    if (fa.F > fa.cap || fa.keys.length > 12 || !keysOK) bad.push(id + ' 远段格子 / 帧号曲线不对：' + JSON.stringify(out[id]));
+    if (fa.dur.some(d => d < 1 / 30 - 1e-9)) bad.push(id + ' 远段有帧比一个 tick 短'); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w22(pg):
+    """4.9.26 帧账本 + RT6 远段帧数"""
+    r = await pg.evaluate(W22_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1200]
+
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -2637,7 +2674,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

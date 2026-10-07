@@ -607,7 +607,7 @@ function rtLayout(P) {
 // 4.5.1 远段 TrailFar 取景（世界坐标）：低分辨率渲远段在整个寿命里的几十个时刻，按烘焙的曝光口径（≥ 3/255）量出内容范围：
 //   竖向 = 最低到最高看得见的地方；横向按亮度取 0.2%–99.8%（偶尔漂远的一颗不撑大面片）。开花后的时长量到「最后还看得见」（≥ 10/255）。
 //   帧：64 帧（16×1 / 8×2 / 4×4 × RGBA），面片在发射器时间 t0 = 交接中点出现（之前远段还没有东西）。
-//   上升段的帧按弹体走过的路平均分（远段的前沿跟着「交接年龄之前」的弹体位置走，出膛那几秒走得快，按时间平均分前沿一帧会跳几十米）；
+//   上升段的帧（4.9.26 起）按「800 m 外每帧在屏幕上挪多少像素」分、对齐 tick（以前按弹体走过的路平均分，见下）；
 //   开花后的帧按时间平均分（只剩慢慢变暗、漂开）。每帧烘这一帧显示时间的中点。
 const rtFarCache = new Map();
 function rtLayoutFar(P, ball, LI) {
@@ -635,23 +635,32 @@ function rtLayoutFar(P, ball, LI) {
   if (tot > 0) { let c = 0; while (xa < N - 1 && c + colW[xa] < 0.002 * tot) c += colW[xa++]; c = 0; while (xb > 0 && c + colW[xb] < 0.002 * tot) c += colW[xb--]; }
   const zb = y1 >= 0 ? Y(y0) - 2 * pxY : 0, zt = y1 >= 0 ? Y(y1) + 2 * pxY : ball.H, xl = X(xa) - 2 * pxX, xr = X(xb) + 2 * pxX;
   const W0 = Math.max(4, xr - xl), H0 = Math.max(10, zt - zb), HX = W0 / 2 * 1.04, cx = (xl + xr) / 2;
-  const [cols, rows] = rtGridFor(P, W0, H0), F = cols * rows * 4;
-  // 帧时刻（4.5.4，用户 10-05 19:31「曲线太复杂了，序列的曲线你建了 63 个点……有变化的就加几个变化的点」）：
-  //   先定一条只有几个拐点的帧号折线，再按它反推每帧时刻 → 导出的帧号曲线就是这几个点（不再一帧一个点）。
-  //   上升段：理想是按「交接中点之前」的弹体走过的路平均分（出膛那几秒走得快、前沿一帧不跳几十米），按 0.4 帧的误差抽成几段折线。
-  //   开花后：按时间平均分，帧率 ≥ 7.5 fps（标准里淡出段的下限）。
-  const Fd = clamp(Math.ceil(7.5 * Df + 1e-6), 6, Math.floor(F / 2)), Fr = F - Fd, n = 400, S = [0];
-  for (let i = 1; i <= n; i++) { const ta = (T - tA) * (i - 0.5) / n, v = ball.vel(ta); S.push(S[i - 1] + Math.hypot(v[0], v[2]) * (T - tA) / n); }
-  const fine = []; for (let i = 0; i <= n; i++) fine.push([tA + (T - tA) * i / n, Fr * S[i] / Math.max(1e-9, S[n])]);
-  const knots = esThin(fine, 0.4).map(([t, f]) => [t, f]); knots[0] = [tA, 0]; knots[knots.length - 1] = [T, Fr]; knots.push([T + Df, F]);
-  const tOfF = fv => { let i = 0; while (i < knots.length - 2 && knots[i + 1][1] < fv) i++; const a = knots[i], b = knots[i + 1]; return a[0] + (b[0] - a[0]) * clamp((fv - a[1]) / Math.max(1e-9, b[1] - a[1]), 0, 1); };
-  const edges = []; for (let f = 0; f <= F; f++) edges.push(tOfF(f));
-  const Dtot = edges[F] - tA, times = [], dur = [];
+  // 4.9.26 远段帧数（用户 10-07 09:20「现在的rt6远段就帧数不够（比较远看不太出来，近一些很明显）」）：以前上升段按弹体走过的路平均分一张 64 帧，
+  //   RT6L 上升段 36 帧摊 6.6 s（最慢 1.9 fps，800 m 外每帧跳 5–6 像素），帧也不对齐 tick。现在和大面片同一套口径（帧账本，31_plan40.js）：
+  //   每帧从 tick 开始、停整数个 tick；上升段弹体在 800 m 外的游戏画面上每帧挪不超过标定线（金芒菊）就停久一点，最慢 10 fps；开花后最慢 7.5 fps；
+  //   一张 16×1×RGBA 放不下就加行（16×2、16×4，格子变矮——远段面片很细很高，800 m 外一格的高度远大于屏幕上的像素，看不出差别），格子用满（多的格子让慢的地方变快）
+  const [cols, rows0] = rtGridFor(P, W0, H0), tA0 = Math.ceil(tA * 30 - 1e-6) / 30, Nr = Math.max(1, Math.round((T - tA0) * 30)), Nf = Math.max(1, Math.round(Df * 30)), Nt = Nr + Nf;
+  const ppmG = gamePixelsPerMeter(P, 0, STEP_REF_H, STEP_REF_DIST), refPx = STEP_REF_PX > 0 ? STEP_REF_PX : 0.77;
+  const hp = Array.from({ length: Nr + 1 }, (_, k) => ball.pos(Math.min(T, tA0 + k / 30))), stepPx = (k0, k1) => Math.hypot(hp[k1][0] - hp[k0][0], hp[k1][2] - hp[k0][2]) * ppmG;
+  const sched = (r, hf) => { const ks = []; let k = 0;
+    while (k < Nr) { let h = 1; while (h < 3 && k + h < Nr && stepPx(k, k + h + 1) <= r) h++; ks.push(k); k += h; }
+    while (k < Nt) { ks.push(k); k += Math.min(hf, Nt - k); } return ks; };
+  const need = sched(refPx, 4).length;
+  let rows = rows0; while (cols * rows * 4 < need && rows < rows0 * 4) rows *= 2;
+  const F = Math.min(Nt, cols * rows * 4);
+  // 格子用满：先让上升段每 tick 一帧都放得下，开花后才从 7.5 fps 往上加（上升段的帧比开花后的帧要紧）；再按位移阈值二分把格子填满
+  let hf = 4; while (hf > 1 && sched(0, hf - 1).length <= F) hf--;
+  let ks = null, lo = 0, hi = Math.max(refPx, stepPx(0, Math.min(Nr, 3)) + 1);
+  for (let it = 0; it < 40; it++) { const mid = (lo + hi) / 2, q = sched(mid, hf); if (q.length <= F) { ks = q; hi = mid; } else lo = mid; }
+  if (!ks) ks = sched(1e9, hf);
+  while (ks.length > F) ks.pop();     // 放不下（上升段已经最慢）：尾巴上合并（只在格子上限 16×4 都不够时）
+  const Fn = ks.length, Fr = ks.filter(k => k < Nr).length, Fd = Fn - Fr, Dtot = Nt / 30, times = [], dur = [];
   // 4.5.3 面片上移 vz（m/s）：寿命里一共走 vz · Dtot，面片加高这么多、开始时中心放低一半，内容始终在面片里
   const vz = rtFarVzOf(P), drift = vz * Dtot, HY = (H0 + drift) / 2 * 1.02, cz = (zb + zt) / 2 - drift / 2;
-  for (let f = 0; f < F; f++) { times.push((edges[f] + edges[f + 1]) / 2 - tA); dur.push(edges[f + 1] - edges[f]); }
-  const keys = knots.map(([t, f], i) => [+((t - tA) / Dtot).toFixed(5), i === knots.length - 1 ? F - 0.01 : +f.toFixed(3)]);
-  const out = { t0: tA, Dtot, Df, Fr, Fd, cols, rows, F, cx, cz, vz, HX, HY, Ww: 2 * HX, Wh: 2 * HY, times, dur, keys, measured: y1 >= 0 };
+  for (let f = 0; f < Fn; f++) { const h = (f + 1 < Fn ? ks[f + 1] : Nt) - ks[f]; times.push((ks[f] + h / 2) / 30); dur.push(h / 30); }
+  const keys = keysFromTicks40(ks, Nt).map(([u, v]) => [+u.toFixed(5), +v.toFixed(3)]);
+  const pxMax = Math.max(0, ...ks.filter(k => k < Nr).map((k, i, a) => stepPx(k, Math.min(Nr, i + 1 < a.length ? a[i + 1] : Nr))));
+  const out = { t0: tA0, Dtot, Df: Nf / 30, Fr, Fd, cols, rows, F: Fn, cap: cols * rows * 4, need, cx, cz, vz, HX, HY, Ww: 2 * HX, Wh: 2 * HY, times, dur, keys, measured: y1 >= 0, pxMax: +pxMax.toFixed(2), ref: refPx };
   rtFarCache.set(key, out); if (rtFarCache.size > 8) rtFarCache.delete(rtFarCache.keys().next().value);
   return out;
 }
@@ -888,7 +897,7 @@ ${!fd ? '' : `【RiseFade】CPU · beam_flipbook（${fd.P ? fd.P.texW + '×' + f
 
 `}${b.far ? (() => { const fa = b.far.meta.far, La = b.far.meta.L; return `【TrailFar】CPU · beam_flipbook（${b.far.P.texW}×${b.far.P.texH}，${La.cols}×${La.rows} × ${La.chans} = ${La.F} 帧）· Screen Alignment = Velocity · Pivot Offset (−0.5, −0.5) · Delay ${fa.t0.toFixed(3)} s · Duration ${fa.Dtot.toFixed(3)} s
   Initial Location (${(fa.cx * 100).toFixed(1)}, 0, ${(fa.cz * 100).toFixed(1)}) · Initial Velocity (0, 0, ${((fa.vz || 0) * 100).toFixed(0)})（定朝向；面片往上走，贴图内容已补回）· Initial Size ${(fa.Ww * 100).toFixed(1)} × ${(fa.Wh * 100).toFixed(1)} cm
-  Dynamic Parameter 帧号：上升段 ${fa.Fr} 帧按弹体走过的路、开花后 ${fa.Fd} 帧（开花后所有火花都在这里演完，没有 RiseFade），${fa.keys.length} 个关键点（不是匀速，完整见 cascade.json）
+  Dynamic Parameter 帧号：上升段 ${fa.Fr} 帧（每帧从 tick 开始；800 m 外弹体每帧最多挪 ${fa.pxMax} 像素，标定线 ${fa.ref}）、开花后 ${fa.Fd} 帧（开花后所有火花都在这里演完，没有 RiseFade），${fa.keys.length} 个关键点（不是匀速，完整见 cascade.json）
 
 `; })() : ''}【粒子层 · PC】同时活着最多约 ${pkP.peak} 颗
 ${esCascadeText(b.es || rtBuildES(P), false, 1)}

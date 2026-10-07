@@ -1,0 +1,9 @@
+{
+ "id": "RT6SE4",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT6S",
+ "name": "RiseTailS",
+ "priority": 8,
+ "note": "RT6S 重导（烘焙器 4.9.26：远段帧从 tick 开始、按 800 m 外每帧跳动分帧、一张放不下加行——用户 10-07 09:20「现在的rt6远段就帧数不够」；也带上 4.9.24 软圆点淡出 / 闪烁写在 Alpha、Scale Color/Life）。导出 + 回放检查。对话框23。"
+}

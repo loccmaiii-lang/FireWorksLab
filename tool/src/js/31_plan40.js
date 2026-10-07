@@ -304,3 +304,30 @@ function splitPlan40(pl) {
 }
 function bakeParts(b) { const out=[];for(let s=b;s;s=s.next)out.push(s);return out; }
 function bakeSegmentName(b,i) { return !b.next ? '' : i<26 ? String.fromCharCode(65+i) : 'S'+(i+1); }
+// ---- 4.9.26 帧账本（用户 10-07 09:20「2.可以，你标定完，我可以多测试几个，譬如现在的rt6远段就帧数不够（比较远看不太出来，近一些很明显）」）----
+// 「卡不卡」不只看 fps：相邻两帧之间，跑得快的星（measure 的 90 分位星速）在游戏画面上挪了多少像素。
+// 游戏画面按标准 2.1：1080p、四尺玉占 1/3 屏高（gamePixelsPerMeter，其它号数按真实大小）；参考距离 800 m（标准里最近的观察距离，最容易看出卡）。
+// 标定线 STEP_REF_PX：金芒菊 4.56 s 放一张 64 帧（用户 10-01「在游戏中很流畅」；4.0.2 的分法：22 / 21 / 11 / 10 帧各停 1 / 2 / 3 / 4 tick）里
+// 停 2 tick 以上的帧最多跳了多少像素——这个量级你在游戏里看着不卡。开花段每 tick 一帧（30 fps 已经是上限，没得加），不算进标定、也不算超线。
+// 重算：analysis/scripts/帧账本标定.py（打开金芒菊，按上面那种分法量，打印这个数）
+const STEP_REF_DIST = 800, STEP_REF_H = 1080;
+let STEP_REF_PX = 0.77;     // 4.9.26 标定：金芒菊（JM4-40 的参数、4.56 s、22 / 21 / 11 / 10 帧停 1 / 2 / 3 / 4 tick）停 ≥ 2 tick 的帧最多跳 0.77 像素（800 m）
+function speedAt(fm, t) {
+  const pr = fm && fm.prof; if (!pr || !pr.length) return 0;
+  let lo = 0, hi = pr.length - 1; if (t <= pr[0][0]) return pr[0][1]; if (t >= pr[hi][0]) return pr[hi][1];
+  while (hi - lo > 1) { const m = (lo + hi) >> 1; if (pr[m][0] <= t) lo = m; else hi = m; }
+  const a = pr[lo], b = pr[hi]; return a[1] + (b[1] - a[1]) * (t - a[0]) / Math.max(1e-9, b[0] - a[0]);
+}
+// 每帧（times[f] 开始、停 dur[f] 秒）在游戏画面上跳多少像素：∫ 星速 dt × 每米像素
+function framePxSteps(P, fm, times, dur, dist = STEP_REF_DIST) {
+  const ppm = gamePixelsPerMeter(P, 0, STEP_REF_H, dist);
+  return times.map((t0, f) => { const d = dur[f] || 1 / 30, n = Math.max(2, Math.ceil(d * 120)); let m = 0; for (let i = 0; i < n; i++) m += speedAt(fm, t0 + (i + 0.5) * d / n) * d / n; return m * ppm; });
+}
+// 一份帧计划的账：每段停几 tick 各几帧、最慢 fps、停 ≥ 2 tick 的帧最多跳几像素、超过标定线几帧
+function frameLedger(P, fm, pl) {
+  const t0 = +pl.t0 || 0, times = (pl.times || []).map(t => t + t0), dur = pl.dur || [], px = framePxSteps(P, fm, times, dur), holds = {};     // 帧计划的 times 相对 t0（这一张开始）
+  let maxHeld = 0, maxBurst = 0, over = 0, minFps = 99;
+  for (let f = 0; f < times.length; f++) { const k = Math.max(1, Math.round((dur[f] || 1 / 30) * 30)); holds[k] = (holds[k] || 0) + 1; minFps = Math.min(minFps, 30 / k);
+    if (k >= 2) { maxHeld = Math.max(maxHeld, px[f]); if (STEP_REF_PX > 0 && px[f] > STEP_REF_PX * 1.05) over++; } else maxBurst = Math.max(maxBurst, px[f]); }
+  return { F: times.length, holds, minFps, px, maxHeld: +maxHeld.toFixed(2), maxBurst: +maxBurst.toFixed(2), over, ref: STEP_REF_PX, dist: STEP_REF_DIST };
+}

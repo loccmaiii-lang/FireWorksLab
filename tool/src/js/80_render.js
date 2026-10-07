@@ -354,6 +354,7 @@ function renderAtlasFlow(b0, b, show, f, sh) {
   hudText = f < 0 ? (t < 0 ? pg + '还没开始' : pg + '这一张播完了') : `贴图流转 · ${pg}第 ${f + 1}/${L.F} 帧 · ${ch}第 ${f % L.per + 1} 格（第 ${Math.floor((f % L.per) / L.cols) + 1} 行第 ${f % L.cols + 1} 列）· 时间 ${Math.max(0, t).toFixed(2)} s`;
   hudB = '';
 }
+const flowPxCache = new WeakMap();
 function drawFlowCurve(b, f) {
   const cv = $('#flowCv'), r = cv.getBoundingClientRect(), dpr = devicePixelRatio || 1;
   if (cv.width !== Math.round(r.width * dpr) || cv.height !== Math.round(r.height * dpr)) { cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr); }
@@ -367,6 +368,9 @@ function drawFlowCurve(b, f) {
   x.fillText('0', pl - 14 * dpr, H - pb); x.fillText(`${D.toFixed(2)} s`, W - pr - 40 * dpr, H - 4 * dpr); x.fillText('帧号（Dynamic Parameter）', pl + 6 * dpr, pt - 4 * dpr);
   // 每一帧的烘焙时刻
   x.fillStyle = 'rgba(233,180,95,.35)'; for (const t of m.times) x.fillRect(X(t / D) - dpr / 2, H - pb - 5 * dpr, dpr, 5 * dpr);
+  // 4.9.26 帧账本：停 2 tick 以上、在游戏里每帧跳得比金芒菊多的帧，底下标一道红（31_plan40.js frameLedger）
+  { let px = flowPxCache.get(b); if (px === undefined) { px = null; try { if (m.frameTiming === 'tick-start' && STEP_REF_PX > 0 && b.P) px = framePxSteps(b.P, b.fm || measure(b.P), m.times.map(t => t + (m.t0 || 0)), m.dur); } catch (e) { px = null; } flowPxCache.set(b, px); }
+    if (px) { x.fillStyle = 'rgba(232,96,74,.95)'; m.times.forEach((t, i) => { if (m.dur[i] > 1.5 / 30 && px[i] > STEP_REF_PX * 1.05) x.fillRect(X(t / D) - dpr, H - pb - 10 * dpr, 2 * dpr, 4 * dpr); }); } }
   // 帧号曲线（阶梯 = 材质取整后实际显示的帧）
   x.strokeStyle = '#e9b45f'; x.lineWidth = 1.5 * dpr; x.beginPath();
   const keys = m.loop ? [[0, 0], [1, L.F]] : m.keys;

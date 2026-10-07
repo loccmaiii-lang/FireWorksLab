@@ -754,6 +754,7 @@ function buildMasterPanel() {
         row._refresh = () => { row.innerHTML = it.info === 'outSummary' && typeof outSummaryHTML === 'function' ? outSummaryHTML() : it.info === 'endInfo' && typeof endInfoHTML === 'function' ? endInfoHTML() : it.info === 'schemeNote' && typeof singleSchemeNote === 'function' ? `<p class="hint endinfo">${singleSchemeNote(state.P)}</p>` : it.info === 'ballInfo' && typeof rtBallInfoHTML === 'function' ? rtBallInfoHTML(state.P) : /^exColor/.test(it.info) ? exColorHTML(+it.info.slice(7)) : ''; };
         if (it.info === 'endInfo') row.addEventListener('click', e => { const b = e.target.closest('[data-endfit]'); if (b) { setTimingParam('duration', +b.dataset.endfit); refreshPanelValues(); flash('序列时长已加长到火花灭完'); }
           if (e.target.closest('[data-cutclear]')) { state.P.cutOut = 0; onParam(); refreshPanelValues(); flash('出点已清除：序列放到序列时长为止'); } });
+        if (it.info === 'outSummary') row.addEventListener('click', e => { const b = e.target.closest('[data-pages]'); if (!b) return; state.P.pageTarget = +b.dataset.pages; onParam(); refreshPanelValues(); flash(`贴图张数改成至少 ${b.dataset.pages} 张，正在重新分帧烘焙（Ctrl+Z 撤回）`); });     // 4.9.26 试算「用这个」
         row._refresh(); det.appendChild(row);
       } else if (it.curve) {      // 4.6.0：按寿命变化的曲线 = 几行「时刻:值」（用户 10-05 20:45 定：先填几个数，拖点编辑器以后做）
         const lab = nm ? p43Label(nm, it.label) : it.label;

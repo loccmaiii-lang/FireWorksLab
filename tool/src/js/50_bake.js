@@ -222,7 +222,7 @@ async function bakeFrames(P, scale, onProg, pl, R, extra = {}) {
   fH.clear(); fT.clear();
   const t0 = performance.now(); bakePaceReset();
   try {     // 4.2.16：烘到一半作废（参数又变了，进度回调抛出）时，把这三张工作贴图放掉
-  for (let f = 0; f < L.F; f++) {
+  for (let f = 0; f < Math.min(L.F, pl.times.length); f++) {     // 4.9.26 帧比格子少（远段很短时）：多的格子留空
     const tc = pl.times[f], W = Math.max(P.shutter * pl.dur[f], 1e-4);
     const nsub = clamp(Math.ceil(W * q.hz), 1, q.maxSub);
     const [sx, sy] = sizeXY(pl, tc), c = centerAt(pl, tc), view = [c[0], c[1], pl.HX * sx, pl.HY * sy], ppm = ssW / (pl.Ww * sx);

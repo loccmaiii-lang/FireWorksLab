@@ -670,10 +670,12 @@ function outSummaryHTML() {
   if (burnMin < 10 - 0.05) warn.push(`燃烧段最慢 ${burnMin.toFixed(1)} fps，低于标准的 10 fps`);
   if (minF < 7.5 - 0.05) warn.push(`最慢 ${minF.toFixed(1)} fps，低于标准的 7.5 fps`);
   if (P.outPack !== 'fit' && used < cap * 0.5) warn.push(`贴图里一半以上的格子是空的（用了 ${used} / ${cap}）：可以把「格子」改成「按帧数选最小贴图」，或「帧数」改成「最省」`);
+  const led = ledgerOfBake(b);
   return `<div class="osum"><div><b>${F} 帧</b>（${mode}）· 入点 ${(m0.t0 || 0).toFixed(2)} → 出点 ${end.toFixed(2)} s，${N} 个 tick${m0.cut && (m0.cut.in || m0.cut.out) ? '（用了你设的入出点）' : '（自动：第一次到最后一次看得见）'}</div>
     <div>帧率 ${maxF.toFixed(0)} fps → 最慢 ${minF.toFixed(1)} fps（燃烧段最慢 ${burnMin.toFixed(1)}）</div>
     <div>${parts.length} 张：${parts.map(sheet).join('；')} · 单格 ${Math.round(m0.L.cellW)} px · 格子用了 ${used} / ${cap}</div>
-    ${warn.map(w => `<div class="ow">⚠ ${w}</div>`).join('')}</div>`;
+    ${led ? `<div title="相邻两帧之间，跑得快的星（90 分位星速）在游戏画面上（1080p、四尺玉占 1/3 屏高、${STEP_REF_DIST} m）挪了多少像素。标定线 = 金芒菊 4.56 s 放一张 64 帧（你 10-01 说游戏里很流畅）里停 2 tick 以上的帧最多跳的像素；开花段每 tick 一帧不算">游戏里每帧最多跳 <b>${led.maxHeld}</b> 像素（${STEP_REF_DIST} m；标定线 ${STEP_REF_PX} = 金芒菊）${led.over ? ` · <span class="ow-i">${led.over} 帧超线</span>` : ' · 都在线内'}</div>` : ''}
+    ${warn.map(w => `<div class="ow">⚠ ${w}</div>`).join('')}${frameTrialHTML(P)}</div>`;
 }
 // 4.9.25：单束以前另有资产栏「单束」菜单、交付页「导出单束包」、「把产物改成单束」三处入口，都并进交付清单的产物表（prodTableHTML）
 // 粘在一起的点：同一批星（联动）的几层里，非默认位置、总时间相差 < 0.02 s 的点
@@ -864,6 +866,26 @@ function renderDeliv() {
   const rs = host.querySelector('#dvResetNames'); if (rs) rs.addEventListener('click', () => { const all = store.get('packNames', {}); delete all[wbKey()]; store.set('packNames', all); syncEnName(); renderDeliv(); });
   stage2.delivSig = stage2.tlSig;
 }
+// 4.9.26 帧账本（用户 10-07 09:20「2.可以，你标定完，我可以多测试几个」）：一份烘焙每帧在游戏里跳多少像素（31_plan40.js frameLedger）；按 bake 记一份
+const ledgerCache = new WeakMap();
+function ledgerOfBake(b) {
+  if (!b || !b.meta || b.meta.frameTiming !== 'tick-start' || typeof frameLedger !== 'function') return null;
+  if (ledgerCache.has(b)) return ledgerCache.get(b);
+  let r = null; try { const P = b.P, fm = b.fm || measure(P), times = [], dur = []; for (const s of bakeParts(b)) { const t0 = s.meta.t0 || 0; (s.meta.times || []).forEach((t, i) => { times.push(t0 + t); dur.push(s.meta.dur[i]); }); }
+    r = frameLedger(P, fm, { times, dur }); } catch (e) { r = null; }
+  ledgerCache.set(b, r); return r;
+}
+// 试算几档（不烘，只排帧）：1 / 2 / 3 张各多少帧、最慢几 fps、最多跳几像素、超线几帧；点「用这个」= 改「贴图张数」（会重烘）
+function frameTrialHTML(P) {
+  if (!usesTickPlan40(P) || !['motion', 'fixed'].includes(P.frameBudget || 'motion')) return '';
+  let rows = []; try { const fm = measure(P), cur = Math.max(1, Math.round(+P.pageTarget || 1));
+    for (const n of [1, 2, 3]) { const pl = plan({ ...P, pageTarget: n }, fm), L = frameLedger(P, fm, pl), pages = Math.ceil(L.F / Math.max(1, pl.capacityFrames || pl.L.F));
+      rows.push({ n, pages, F: L.F, minFps: L.minFps, max: L.maxHeld, over: L.over, cur: n === cur }); } } catch (e) { return ''; }
+  const seen = new Set(); rows = rows.filter(r => { const k = r.pages + ':' + r.F; if (seen.has(k)) return false; seen.add(k); return true; });
+  if (rows.length < 2) return '';
+  const rec = rows.find(r => !r.over) || rows[rows.length - 1];
+  return `<div class="otrial"><div>试算（不烘，只排帧；游戏里 ${STEP_REF_DIST} m）：</div>${rows.map(r => `<div class="${r.cur ? 'on' : ''}">${r.pages} 张 · ${r.F} 帧 · 最慢 ${r.minFps.toFixed(r.minFps < 10 ? 1 : 0)} fps · 最多跳 ${r.max} px${r.over ? ` · ${r.over} 帧超线` : ' · 都在线内'}${r === rec ? ' · 建议' : ''}${r.cur ? ' · 现在' : `<button type="button" class="btn mini" data-pages="${r.n}">用这个</button>`}</div>`).join('')}</div>`;
+}
 // 4.9.25 产物表（用户 10-07 09:20「4.可以，我很着急使用」；讨论稿 协作/方案_导出器_2026-10-07.md 4.1）：交付清单顶上，每层 PC / 手机各出什么、
 // 多少张贴图 / 帧 / 发射器。这里的选择 = 层页头「导出方案」= 右栏「输出 › 直接调」的 PC / 手机怎么出（同一个值）；导出按钮导的就是这张表。
 // 以前单束另有三处入口（资产栏 ⌄ 菜单、交付页「导出单束包」、「把产物改成单束」），4.9.25 都并到这里
@@ -880,7 +902,8 @@ function prodCellHTML(x, pf, combo) {
   const parts = bakeParts(x.b), F = parts.reduce((n, q) => n + q.meta.L.F, 0), L0 = parts[0].meta.L, nTex = parts.length * (x.b.tail ? 2 : 1);
   let cell = Math.round(L0.cellW); if (pf === 'mobile') { try { cell = Math.round(layoutOf(mobileParams({ ...x.b.P, cols: L0.cols, rows: L0.rows })).cellW); } catch (e) { } }
   let minF = 99; for (const q of parts) for (const d of q.meta.dur || []) minF = Math.min(minF, 1 / Math.max(d, 1 / 30));
-  return `序列 ${nTex} 张 · ${F} 帧${minF < 99 ? ` · 最慢 ${minF.toFixed(minF < 10 ? 1 : 0)} fps` : ''} · ${L0.cols}×${L0.rows}${L0.chans === 4 ? '×RGBA' : ''} · 单格 ${cell} px · ${nTex} 个发射器${s === 'unit' ? '（这种花型不能出单束，按序列出）' : ''}`;
+  const led = pf === 'pc' ? ledgerOfBake(x.b) : null;
+  return `序列 ${nTex} 张 · ${F} 帧${minF < 99 ? ` · 最慢 ${minF.toFixed(minF < 10 ? 1 : 0)} fps` : ''}${led ? ` · 游戏里每帧最多跳 ${led.maxHeld} px${led.over ? `（${led.over} 帧超过金芒菊的 ${STEP_REF_PX}）` : ''}` : ''} · ${L0.cols}×${L0.rows}${L0.chans === 4 ? '×RGBA' : ''} · 单格 ${cell} px · ${nTex} 个发射器${s === 'unit' ? '（这种花型不能出单束，按序列出）' : ''}`;
 }
 function prodTableHTML(xs, combo) {
   const rows = xs.map(x => {
