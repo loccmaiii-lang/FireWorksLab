@@ -49,9 +49,9 @@ def build_show():
     template('P_WALL', '坝顶·银白墙', 'dam', 'large', 230, 360, 5, 8, 'silver')
     # 扇形三种（对话框22 10-07用户：金色参考图型、红彗星5束、银灰13束，束数可随机）。
     # 扇从坝顶点位斜向外喷，diameter=2×束长，half=半开角（度），beams=可随机的束数。
-    template('G_GOLD', '坝顶·金锦冠扇形', 'dam', 'fan', 170, 150, 0, 3, 'gold')
-    template('G_RED5', '坝顶·红彗星扇形', 'dam', 'fan', 140, 150, 0, 2.6, 'red')
-    template('G_SILVER13', '坝顶·银灰扇形', 'dam', 'fan', 160, 150, 0, 3.2, 'gray')
+    template('G_GOLD', '坝顶·金锦冠扇形', 'dam', 'fan', 170, 150, 0, 1.4, 'gold')
+    template('G_RED5', '坝顶·红彗星扇形', 'dam', 'fan', 140, 150, 0, 1.4, 'red')
+    template('G_SILVER13', '坝顶·银灰扇形', 'dam', 'fan', 160, 150, 0, 1.4, 'gray')
     for k, half, beams in (('G_GOLD', 58, [7, 9, 11, 13, 15, 17]), ('G_RED5', 40, [3, 5, 5, 7, 9, 11]),
                            ('G_SILVER13', 62, [9, 11, 13, 13, 15, 17, 19])):
         templates[k].update(half=half, beams=beams)
@@ -76,8 +76,16 @@ def build_show():
     events = []
 
     rng = random.Random(20261007)
+    # 扫射（用户10-08「没有左右来回扫」）：一个扇点的束按角度依次发，不是一起出。
+    # 每波全线同一扫法、同一间隔，按 左→右→左 / 右→左→右 / 左→右 / 右→左 轮换。
+    sweeps = ['LRL', 'RLR', 'LR', 'RL']
+    fan_wave = [0]
 
     def fire(burst, pts, key, step=0):
+        sweep = None
+        if key == 'G_FAN':
+            sweep = sweeps[fan_wave[0] % len(sweeps)]
+            fan_wave[0] += 1
         for j, point in enumerate(pts):
             k = rng.choice(['G_GOLD', 'G_RED5', 'G_SILVER13']) if key == 'G_FAN' else key
             t = templates[k]
@@ -86,7 +94,11 @@ def build_show():
                       launch=round(b-t['rise'], 2), burst=b,
                       end=round(b+t['life'], 2))
             if t['kind'] == 'fan':
-                ev['beams'] = rng.choice(t['beams'])
+                n = rng.choice(t['beams'])
+                shots = n if len(sweep) == 2 else 2 * n - 1
+                gap = 0.08
+                ev.update(beams=n, sweep=sweep, gap=gap,
+                          end=round(b + (shots - 1) * gap + t['life'], 2))
             events.append(ev)
 
     five = ['P1', 'P3', 'P5', 'P7', 'P9']
@@ -223,7 +235,7 @@ def build_show():
     for e in events:
         t = templates[e['template']]
         if t['kind'] == 'fan':
-            e.update(dt=round(srng.uniform(0, .3), 2), dz=0, scale=round(srng.uniform(.85, 1.15), 2))
+            e.update(dt=round(srng.uniform(0, .06), 2), dz=0, scale=round(srng.uniform(.92, 1.08), 2))
         elif t['zone'] == 'front':
             e.update(dt=round(srng.uniform(0, .2), 2), dz=-round(srng.uniform(0, 5), 1),
                      scale=round(srng.uniform(.9, 1.0), 2))
@@ -279,11 +291,11 @@ def main():
     (OUT/'fireworks-rhythm.html').write_text(fragment.replace('__SHOW_DATA__', json.dumps(show, ensure_ascii=False)), encoding='utf-8')
     with (OUT/'逐发时间表.csv').open('w', encoding='utf-8-sig', newline='') as f:
         w = csv.writer(f)
-        w.writerow(['ID','段落','发射秒','开花秒','结束秒','点位','区域','子模板','花型','造型','束数','偏移秒','高度偏移_m','大小比例','X_cm','Y_cm','发射Z_cm','开花Z_cm','直径_cm','包络顶部_cm'])
+        w.writerow(['ID','段落','发射秒','开花秒','结束秒','点位','区域','子模板','花型','造型','束数','扫法','偏移秒','高度偏移_m','大小比例','X_cm','Y_cm','发射Z_cm','开花Z_cm','直径_cm','包络顶部_cm'])
         for e in show['events']:
             t, p = show['templates'][e['template']], show['points'][e['point']]
             w.writerow([e['id'],show['phases'][e['phase']]['name'],e['launch'],e['burst'],e['end'],
-                        e['point'],e['zone'],e['template'],t['name'],t['shape'],e.get('beams',''),e['dt'],e['dz'],e['scale'],round(p['x']*100),round(p['y']*100),
+                        e['point'],e['zone'],e['template'],t['name'],t['shape'],e.get('beams',''),e.get('sweep',''),e['dt'],e['dz'],e['scale'],round(p['x']*100),round(p['y']*100),
                         p['z']*100,t['z']*100,t['diameter']*100,t['top']*100])
     print('PASS: 前台包络/区域/时间/低位密奏/白墙72发/206.5秒结束/数量至少3倍/无重复事件')
     print('TOTAL',len(show['events']),dict(Counter(e['zone'] for e in show['events'])))
