@@ -1,0 +1,23 @@
+[
+ {
+  "name": "冠（GoldRayRocket_Crown）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "柳（GoldRayRocket_Willow）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "时差（GoldRayRocket_Jisa）",
+  "script": "全程回放检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ }
+]
