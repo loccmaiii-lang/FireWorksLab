@@ -87,7 +87,72 @@ ENTRIES_OLD = [  # 被取代（FC2O、第 1 版）
           '第 1 版，本机导出中。', '扇形 彗星 橙 金尾 单条 RT6 近段 远段 GPU 物理弹道'),
 ]
 
+
+# ======================= 第 2 套（用户 2026-10-08 07:43）：烘焙器里用「扇面 N 簇 + 簇依次出膛」拼好整排扇 =======================
+# 用户原话：「先保留这一版，你没有做对；首先我让你给我在烘培器排拼好给我看（有个分簇功能，你做的），再者红彗星是亮肩明显，头粗尾细，
+#   头部的星头有一层很大的玫红色光晕；橙扇是头尖尾粗，根据我的想法重新核对梳理再创建一版新的」
+# 「其中一条」= 一排扇（一发）。和 FanGold FG7 同一套 aerial 模拟：一根筒一颗彗星（扇面 N 簇、锥角 0），星二次阻力冲上去、燃烧到时熄灭（不爆）。
+# RT6 的分层在这里的对应：星头光晕 → 单独一层（同一模拟）；亮肩 / 白热 → 尾迹外形「亮肩」+ 自定义发射器 1（沿路短命大亮点）；
+#   细火花 → 主火花；闪烁火花 → 自定义发射器 2。只用现有参数。
+DATE2 = '2026-10-08'
+FAN_COMMON = {
+    'renderVer': 40, 'pattern': 'cluster', 'clusterLayout': 'fan', 'clusterCone': 0, 'clusterDirJit': 0.8, 'clusterStarsJit': 0, 'tilt': 0,
+    'grav': 1, 'speedJit': 3, 'dirJit': 0.4, 'massLoss': 0, 'burnJit': 3, 'lastFlare': 0, 'crackle': 0, 'glitter': 0, 'x2On': 0,
+}
+# 红彗星：7 根筒、扇面 60°（±30°），一根筒一颗；50 mm 彗星 出膛 72 m/s、终端 38 m/s、2.2 s 燃尽（≈ 90 m）；逐筒 0.2 s 扫完
+RED_STAR = dict(FAN_COMMON, seed=21, duration=4.0, stars=7, clusterN=7, clusterFan=60, clusterSweep=0.2,
+                v0=72, vt=38, burn=2.2, fade=0.12, flash=0.08, flashR=1.0)
+# 第 2 层 亮肩彗尾：白粉亮核 + 很亮很粗的一段亮肩 + 往下迅速变细变暗的粉红尾（头粗尾细）
+RED_TAIL = dict(RED_STAR, headSize=0.6, headBright=2.2, headTear=0.25,
+                sparkRate=650, sparkLife=0.75, sparkLifeJit=40, sparkSpread=0.35, sparkInherit=0.12, sparkDrag=3.0, sparkGrav=0.3,
+                T0=2400, cooling=0.32, sparkSize=0.18, sparkBright=1.6, twinkle=0.1,
+                tailShoulder=0.85, tailPinchHead=0, tailPinchTail=0.85, tailBellyAt=0.12, tailWidth=1.25,
+                x1On=1, x1Event='trail', x1Kind='dot', x1Rate=120, x1V=2.0, x1VJit=40, x1Inh=0.2, x1Grav=0, x1Drag=6,
+                x1Life=0.22, x1LifeJit=30, x1Size=0.5, x1SizeJit=30, x1Bright=2.0, x1BrightJit=20, x1BrightCurve='0:1, 1:0', x1Flick=0,
+                exposure=1.0)
+RED_TAIL_M = {'stages': [[0, '#ffffff']], 'xw': 0.08, 'ramp0': '#000000', 'ramp1': '#5a0820', 'ramp2': '#ff3a72', 'ramp3': '#ffe8f0', 'headInt': 1, 'tailInt': 1}
+# 第 1 层 玫红光晕：同一模拟（同种子、同弹道），只画星头：一层很大的软光（直径约 4 m），玫红
+RED_GLOW = dict(RED_STAR, headSize=4.0, headBright=1.2, headTear=0, sparkRate=0, x1On=0, tailShoulder=0, exposure=1.0)
+RED_GLOW_M = {'stages': [[0, '#ffffff']], 'xw': 0.08, 'ramp0': '#000000', 'ramp1': '#4a0618', 'ramp2': '#e8205e', 'ramp3': '#ff7aa6', 'headInt': 1, 'tailInt': 1}
+
+# 橙扇：13 根筒、扇面 70°（±35°）；出膛 73 m/s、终端 40 m/s、2.45 s 燃尽（≈ 100 m）；逐筒 0.25 s 扫完。一层。
+# 头尖尾粗：星头小而尖（泪滴星头）、星头端收尖、最粗处靠尾端；火花几乎不跟星走、阻力小、横向散得开 → 越老散得越宽、往下垂
+ORANGE_FAN = dict(FAN_COMMON, seed=31, duration=4.6, stars=13, clusterN=13, clusterFan=70, clusterSweep=0.25,
+                  v0=73, vt=40, burn=2.45, fade=0.12, flash=0.12, flashR=1.2,
+                  headSize=0.25, headBright=0.7, headTear=0.85,
+                  sparkRate=900, sparkLife=1.4, sparkLifeJit=40, sparkSpread=1.6, sparkInherit=0.05, sparkDrag=1.2, sparkGrav=0.6,
+                  T0=2300, cooling=0.25, sparkSize=0.14, sparkBright=1.4, twinkle=0.3, twinkleHz=8,
+                  tailShoulder=-0.3, tailPinchHead=0.9, tailPinchTail=0, tailBellyAt=0.85,
+                  x1On=1, x1Event='trail', x1Kind='dot', x1Rate=90, x1V=0.8, x1VJit=40, x1Inh=0.3, x1Grav=0, x1Drag=6,
+                  x1Life=0.14, x1LifeJit=30, x1Size=0.2, x1SizeJit=30, x1Bright=1.6, x1BrightJit=20, x1BrightCurve='0:1, 1:0', x1Flick=0,
+                  exposure=1.0)
+ORANGE_FAN_M = {'stages': [[0, '#ffffff']], 'xw': 0.08, 'ramp0': '#000000', 'ramp1': '#7a2a06', 'ramp2': '#ffa040', 'ramp3': '#fff2dc', 'headInt': 1, 'tailInt': 1}
+
+LOOK2 = ['烘焙器里就是整排扇：一根筒一条，逐筒很快扫过去', '一起快速冲上去（越往上越慢），燃尽熄灭不爆，尾巴停在空中暗掉、漂开', '引擎回放 + 游戏内大小']
+
+
+def fan_entries(V):
+    ents, combos = [], []
+    lays = [('Glow', '玫红光晕', RED_GLOW, RED_GLOW_M), ('Comet', '亮肩彗尾', RED_TAIL, RED_TAIL_M)]
+    for i, (en, cn, p, m) in enumerate(lays):
+        ents.append({'id': f'{V}R-{i + 1}', 'date': DATE2, 'name': f'扇形彗星 · 红彗星扇 · {cn}', 'base': 'kamuro', 'hidden': True,
+                     'tags': f'扇形彗星 红彗星 扇面 N 簇 {cn} {V}R-{i + 1}', 'p': dict(p), 'm': dict(m),
+                     'note': f'红彗星扇第 {i + 1} 层「{cn}」：和另一层同一个模拟（同种子、同弹道），只是画的东西不同。'})
+    combos.append({'id': f'{V}R', 'date': DATE2, 'name': '扇形彗星 · 红彗星扇（7 筒，第 2 套）', 'layers': [{'m': f'rep:{V}R-{i + 1}', 'scale': 1, 'delay': 0} for i in range(2)],
+                   'layerNames': [x[1] for x in lays], 'tags': f'扇形彗星 红彗星 扇面 N 簇 依次出膛 亮肩 玫红光晕 {V}R', 'look': LOOK2,
+                   'note': '用户 10-08 07:43：在烘焙器里用分簇（扇面 N 簇）拼好整排；红彗星亮肩明显、头粗尾细、星头一层很大的玫红光晕。'
+                           '7 根筒扇面 60°、一根筒一颗 50 mm 彗星，逐筒 0.2 s 出膛；出膛 72 m/s、2.2 s 燃尽（约 90 m）不爆。'
+                           '两层同一模拟：① 玫红光晕（只画星头，直径约 4 m）② 亮肩彗尾（白粉亮核 + 亮肩 + 往下收细的粉红尾）。原理 analysis/原理/扇形彗星.md 第 0 节。'})
+    ents.append({'id': f'{V}O', 'date': DATE2, 'name': '扇形彗星 · 橙扇（13 筒，第 2 套）', 'base': 'kamuro',
+                 'tags': f'扇形彗星 橙扇 扇面 N 簇 依次出膛 头尖尾粗 {V}O', 'p': dict(ORANGE_FAN), 'm': dict(ORANGE_FAN_M), 'look': LOOK2,
+                 'note': '用户 10-08 07:43：在烘焙器里用分簇（扇面 N 簇）拼好整排；橙扇头尖尾粗。13 根筒扇面 70°、一根筒一颗辉星金尾彗星，逐筒 0.25 s 出膛；'
+                         '出膛 73 m/s、2.45 s 燃尽（约 100 m）不爆。星头小而尖、白热尖端，火花越老散得越开 → 尾端粗。一层。原理 analysis/原理/扇形彗星.md 第 0 节。'})
+    return ents, combos
+
+
+FAN_ENTS, FAN_COMBOS = fan_entries('FC4')
+
 if __name__ == '__main__':
-    OUT.write_text(json.dumps({'说明': '扇形彗星（红彗星 / 橙扇）单条母版，由 analysis/scripts/扇形彗星条目.py 生成，别手改。', 'entries': ENTRIES},
-                              ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
-    print('写好', OUT, [e['id'] for e in ENTRIES])
+    OUT.write_text(json.dumps({'说明': '扇形彗星（红彗星 / 橙扇），由 analysis/scripts/扇形彗星条目.py 生成，别手改。第 1 套 FC2R / FC3O = RT6 单条（用户 07:43「先保留这一版」）；第 2 套 FC4 = 烘焙器分簇拼好的整排扇。',
+                               'entries': ENTRIES + FAN_ENTS, 'combos': FAN_COMBOS}, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+    print('写好', OUT, [e['id'] for e in ENTRIES + FAN_ENTS], [c['id'] for c in FAN_COMBOS])

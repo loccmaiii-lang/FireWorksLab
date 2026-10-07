@@ -1,0 +1,10 @@
+{
+ "id": "FCS4",
+ "type": "std",
+ "priority": 2,
+ "targets": [
+  "FC4R",
+  "FC4O"
+ ],
+ "note": "对话框FanGold：FC4R / FC4O 标准检查。"
+}
