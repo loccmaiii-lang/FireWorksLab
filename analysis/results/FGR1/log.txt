@@ -1,0 +1,42 @@
+18:51:56 第 1/3 步：基准回归 4.9.33 → 4.9.34 花型模板 6 个
+18:52:11     FireworkBaker.html kiku 4.9.33
+18:52:11     FireworkBaker.html botan 4.9.33
+18:52:11     FireworkBaker.html kamuro 4.9.33
+18:52:11     FireworkBaker.html senrin 4.9.33
+18:52:11     FireworkBaker.html strobe 4.9.33
+18:52:11     FireworkBaker.html crackle 4.9.33
+18:52:11     FireworkBaker.html kiku 4.9.34
+18:52:11     FireworkBaker.html botan 4.9.34
+18:52:11     FireworkBaker.html kamuro 4.9.34
+18:52:11     FireworkBaker.html senrin 4.9.34
+18:52:11     FireworkBaker.html strobe 4.9.34
+18:52:11     FireworkBaker.html crackle 4.9.34
+18:52:11   ✅ kiku 帧计划相同 [{"t": 0.528, "max": 0, "frac": 0.0}, {"t": 1.54, "max": 0, "frac": 0.0}, {"t": 3.08, "max": 0, "frac": 0.0}]
+18:52:11   ✅ botan 帧计划相同 [{"t": 0.378, "max": 0, "frac": 0.0}, {"t": 1.102, "max": 0, "frac": 0.0}, {"t": 2.205, "max": 0, "frac": 0.0}]
+18:52:11   ✅ kamuro 帧计划相同 [{"t": 0.816, "max": 0, "frac": 0.0}, {"t": 2.38, "max": 0, "frac": 0.0}, {"t": 4.76, "max": 0, "frac": 0.0}]
+18:52:11   ✅ senrin 帧计划相同 [{"t": 0.384, "max": 0, "frac": 0.0}, {"t": 1.12, "max": 0, "frac": 0.0}, {"t": 2.24, "max": 0, "frac": 0.0}]
+18:52:11   ✅ strobe 帧计划相同 [{"t": 0.534, "max": 0, "frac": 0.0}, {"t": 1.557, "max": 0, "frac": 0.0}, {"t": 3.115, "max": 0, "frac": 0.0}]
+18:52:11   ✅ crackle 帧计划相同 [{"t": 0.408, "max": 0, "frac": 0.0}, {"t": 1.802, "max": 0, "frac": 0.0}, {"t": 2.04, "max": 0, "frac": 0.0}]
+18:52:11   ✅ 基准回归 4.9.33 → 4.9.34 花型模板 6 个（0.2 分钟）
+18:52:11 第 2/3 步：多层模板定帧回归 4.9.33 → 4.9.34（3 个分簇模板 + 2 个普通）
+18:52:19     FireworkBaker.html yaeBlueBotan
+18:52:19     FireworkBaker.html mangekyo
+18:52:19     FireworkBaker.html somewakeBotan
+18:52:19     FireworkBaker.html colorSenrin
+18:52:19     FireworkBaker.html crackleShin
+18:52:19     FireworkBaker.html yaeBlueBotan
+18:52:19     FireworkBaker.html mangekyo
+18:52:19     FireworkBaker.html somewakeBotan
+18:52:19     FireworkBaker.html colorSenrin
+18:52:19     FireworkBaker.html crackleShin
+18:52:19   ✅ yaeBlueBotan [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+18:52:19   ✅ mangekyo [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+18:52:19   ✅ somewakeBotan [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+18:52:19   ✅ colorSenrin [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+18:52:19   ✅ crackleShin [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+18:52:19   ✅ 多层模板定帧回归 4.9.33 → 4.9.34（3 个分簇模板 + 2 个普通）（0.1 分钟）
+18:52:19 第 3/3 步：扇面簇检查
+18:52:21   {"notes": [], "F1": {"条目": 26, "分簇": 6}, "F3_0.38": {"等": 15, "已出发": 18, "闪光": 11}, "F3_-0.38": {"等": 15, "已出发": 18, "闪光": 11}}
+18:52:21   全过 ✅
+18:52:21   ✅ 扇面簇检查（0.0 分钟）
+18:52:21 完成，用时 0.4 分钟

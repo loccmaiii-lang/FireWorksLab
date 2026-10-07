@@ -1,0 +1,28 @@
+{
+ "entry": "FG4",
+ "ver": "e298b972·master4.9.31",
+ "times_s": [
+  0.56,
+  1.68,
+  2.8,
+  3.92,
+  5.04
+ ],
+ "square_px": 539,
+ "header_px": 22,
+ "label_px": 90,
+ "rows": [
+  "实拍",
+  "实时模拟",
+  "导出效果"
+ ],
+ "projection": null,
+ "reference": {
+  "t0": 7.8,
+  "cx": 0.5416666666666666,
+  "cy": 0.486328125,
+  "half": 0.22,
+  "video": "C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\tool\\../vidio/FanGold.mp4"
+ },
+ "note": "每行整段固定取景；实时和导出各自的视野不同，比较几何时须记录整段统一换算，不能逐帧放大。"
+}

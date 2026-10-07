@@ -1,0 +1,10 @@
+18:52:04 第 1/1 步：FG4 对照 + 曝光
+18:52:11   渲染器 ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)
+18:52:11   原样 曝光 {'FG4': 0.1136}
+18:52:11   筒9根 曝光 {'FG4': 0.1006}
+18:52:11   锥更宽 曝光 {'FG4': 0.1116}
+18:52:11   星更多 曝光 {'FG4': 0.0776}
+18:52:11   扫更慢 曝光 {'FG4': 0.1041}
+18:52:11   写好 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FGV4
+18:52:11   ✅ FG4 对照 + 曝光（0.1 分钟）
+18:52:11 完成，用时 0.1 分钟
