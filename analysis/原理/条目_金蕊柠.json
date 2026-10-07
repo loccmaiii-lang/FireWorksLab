@@ -2,22 +2,22 @@
  "说明": "金蕊柠（金蕊青柠星，对话框新花型，用户 2026-10-07 23:02）。由 analysis/scripts/金蕊柠.py 生成，不要手改。",
  "entries": [
   {
-   "id": "JQ1-1",
+   "id": "JQ2-1",
    "date": "2026-10-07",
    "name": "金蕊柠 · 金菊芯 + 橙引转柠点星 · 橙引尾",
    "base": "botan",
-   "tags": "金蕊柠 · 金菊芯 + 橙引转柠点星 JQ1-1 金蕊青柠星",
+   "tags": "金蕊柠 · 金菊芯 + 橙引转柠点星 JQ2-1 金蕊青柠星",
    "p": {
     "duration": 1.3,
     "seed": 23,
     "stars": 520,
     "burstR0": 0,
-    "v0": 150,
-    "vt": 18,
-    "grav": 1.0,
+    "v0": 230,
+    "vt": 15,
+    "grav": 0.5,
     "speedJit": 2,
     "dirJit": 1.5,
-    "burn": 3.7,
+    "burn": 3.85,
     "burnJit": 4,
     "fade": 0.03,
     "lastFlare": 0,
@@ -27,7 +27,7 @@
     "flicker": 0.15,
     "sparkRate": 900,
     "sparkRateEnd": 1,
-    "sparkStop": 0.62,
+    "sparkStop": 0.55,
     "sparkStart": 0,
     "sparkLife": 0.32,
     "sparkSize": 0.3,
@@ -184,7 +184,8 @@
     "renderVer": 40,
     "pageTarget": 1,
     "maxHold": 4,
-    "sparkLifeJit": 30
+    "sparkLifeJit": 20,
+    "exposure": 0.0247
    },
    "m": {
     "stages": [
@@ -205,27 +206,27 @@
    "video": "vidio/2.0/金蕊青柠星_B.mp4"
   },
   {
-   "id": "JQ1-2",
+   "id": "JQ2-2",
    "date": "2026-10-07",
    "name": "金蕊柠 · 金菊芯 + 橙引转柠点星 · 柠点星",
    "base": "botan",
-   "tags": "金蕊柠 · 金菊芯 + 橙引转柠点星 JQ1-2 金蕊青柠星",
+   "tags": "金蕊柠 · 金菊芯 + 橙引转柠点星 JQ2-2 金蕊青柠星",
    "p": {
-    "duration": 4.4,
+    "duration": 4.5,
     "seed": 23,
     "stars": 520,
     "burstR0": 0,
-    "v0": 150,
-    "vt": 18,
-    "grav": 1.0,
+    "v0": 230,
+    "vt": 15,
+    "grav": 0.5,
     "speedJit": 2,
     "dirJit": 1.5,
-    "burn": 3.7,
+    "burn": 3.85,
     "burnJit": 4,
-    "fade": 0.12,
+    "fade": 0.1,
     "lastFlare": 0,
     "flash": 0,
-    "headSize": 1.5,
+    "headSize": 1.7,
     "headBright": 1.6,
     "flicker": 0.15,
     "sparkRate": 0,
@@ -388,7 +389,8 @@
     "pageTarget": 1,
     "maxHold": 4,
     "sparkLifeJit": 30,
-    "starBrightCurve": "0:0.03, 0.09:0.05, 0.125:0.55, 0.17:1, 1:1"
+    "starBrightCurve": "0:0.03, 0.08:0.05, 0.115:0.6, 0.155:1, 1:1",
+    "exposure": 1.0
    },
    "m": {
     "stages": [
@@ -417,19 +419,19 @@
    "video": "vidio/2.0/金蕊青柠星_B.mp4"
   },
   {
-   "id": "JQ1-3",
+   "id": "JQ2-3",
    "date": "2026-10-07",
    "name": "金蕊柠 · 金菊芯 + 橙引转柠点星 · 金菊蕊",
    "base": "kiku",
-   "tags": "金蕊柠 · 金菊芯 + 橙引转柠点星 JQ1-3 金蕊青柠星",
+   "tags": "金蕊柠 · 金菊芯 + 橙引转柠点星 JQ2-3 金蕊青柠星",
    "p": {
     "duration": 2.9,
     "seed": 31,
     "stars": 300,
     "burstR0": 0,
-    "v0": 90,
-    "vt": 12,
-    "grav": 1.0,
+    "v0": 85,
+    "vt": 11.5,
+    "grav": 0.5,
     "speedJit": 8,
     "dirJit": 1.5,
     "burn": 2.15,
@@ -599,7 +601,8 @@
     "renderVer": 40,
     "pageTarget": 1,
     "maxHold": 4,
-    "sparkLifeJit": 30
+    "sparkLifeJit": 30,
+    "exposure": 0.2271
    },
    "m": {
     "stages": [
@@ -608,15 +611,15 @@
       "#fff6dc"
      ],
      [
-      1.1,
+      1.0,
       "#ffd27a"
      ],
      [
-      1.7,
+      1.55,
       "#ffa040"
      ],
      [
-      2.1,
+      1.95,
       "#ff7a28"
      ]
     ],
@@ -632,19 +635,19 @@
    "video": "vidio/2.0/金蕊青柠星_B.mp4"
   },
   {
-   "id": "JQ1-4",
+   "id": "JQ2-4",
    "date": "2026-10-07",
    "name": "金蕊柠 · 金菊芯 + 橙引转柠点星 · 红点蕊",
    "base": "botan",
-   "tags": "金蕊柠 · 金菊芯 + 橙引转柠点星 JQ1-4 金蕊青柠星",
+   "tags": "金蕊柠 · 金菊芯 + 橙引转柠点星 JQ2-4 金蕊青柠星",
    "p": {
     "duration": 2.6,
     "seed": 31,
     "stars": 300,
     "burstR0": 0,
-    "v0": 90,
-    "vt": 12,
-    "grav": 1.0,
+    "v0": 85,
+    "vt": 11.5,
+    "grav": 0.5,
     "speedJit": 8,
     "dirJit": 1.5,
     "burn": 2.15,
@@ -652,8 +655,8 @@
     "fade": 0.3,
     "lastFlare": 0,
     "flash": 0,
-    "headSize": 1.0,
-    "headBright": 1.2,
+    "headSize": 1.2,
+    "headBright": 1.6,
     "flicker": 0.15,
     "sparkRate": 0,
     "sparkRateEnd": 1,
@@ -814,7 +817,8 @@
     "renderVer": 40,
     "pageTarget": 1,
     "maxHold": 4,
-    "sparkLifeJit": 30
+    "sparkLifeJit": 30,
+    "exposure": 0.525
    },
    "m": {
     "stages": [
@@ -823,12 +827,12 @@
       "#fff0d0"
      ],
      [
-      0.95,
+      0.9,
       "#ff4f6e"
      ]
     ],
     "xw": 0.25,
-    "headInt": 1.6,
+    "headInt": 2.5,
     "ramp0": "#000000",
     "ramp1": "#4a4a52",
     "ramp2": "#c8c8d0",
@@ -841,27 +845,27 @@
  ],
  "combos": [
   {
-   "id": "JQ1",
+   "id": "JQ2",
    "date": "2026-10-07",
    "name": "金蕊柠 · 金菊芯 + 橙引转柠点星",
    "layers": [
     {
-     "m": "rep:JQ1-1",
+     "m": "rep:JQ2-1",
      "scale": 1,
      "delay": 0
     },
     {
-     "m": "rep:JQ1-2",
+     "m": "rep:JQ2-2",
      "scale": 1,
      "delay": 0
     },
     {
-     "m": "rep:JQ1-3",
+     "m": "rep:JQ2-3",
      "scale": 1,
      "delay": 0
     },
     {
-     "m": "rep:JQ1-4",
+     "m": "rep:JQ2-4",
      "scale": 1,
      "delay": 0
     }
@@ -878,7 +882,7 @@
     "引擎回放 + 游戏内大小：四层叠起来顺不顺、芯和外层大小比例",
     "哪一段还差，直接说哪一秒"
    ],
-   "tags": "金蕊柠 · 金菊芯 + 橙引转柠点星 JQ1 金蕊青柠星",
+   "tags": "金蕊柠 · 金菊芯 + 橙引转柠点星 JQ2 金蕊青柠星",
    "video": "vidio/2.0/金蕊青柠星_B.mp4",
    "vmeta": {
     "v": 7,

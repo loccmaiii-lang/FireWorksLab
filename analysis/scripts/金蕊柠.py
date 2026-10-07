@@ -14,7 +14,7 @@ OUT = ROOT / 'analysis' / '原理' / '条目_金蕊柠.json'
 STATUS = ROOT / '协作' / '状态清单.json'
 DATE = '2026-10-07'
 KEY = 'jinrui_ning'
-VER = 'JQ1'
+VER = 'JQ2'
 NAME = '金蕊柠 · 金菊芯 + 橙引转柠点星'
 EN = 'GoldCoreLime'
 LAYER_EN = ['LeadTail', 'LimeStar', 'GoldCore', 'RedCore']
@@ -25,25 +25,25 @@ WARM = {'ramp0': '#000000', 'ramp1': '#7a2a08', 'ramp2': '#ff8a3a', 'ramp3': '#f
 GOLD = {'ramp0': '#000000', 'ramp1': '#8a3a10', 'ramp2': '#ffc979', 'ramp3': '#fff6e8'}
 NEUTRAL = {'ramp0': '#000000', 'ramp1': '#4a4a52', 'ramp2': '#c8c8d0', 'ramp3': '#ffffff'}
 
-# 外层（亲星）：同一个模拟。初速 / 终端速度按实拍花径随时间的比例拟合（+0.27 / 0.53 / 0.8 / 1.27 / 2.07 / 3.0 s ≈ 最终的 0.26 / 0.46 / 0.57 / 0.73 / 0.87 / 0.96），
-# 星数按 +2.6 s 数到的光点（约 470–520 个）
-OUTER = dict(seed=23, stars=520, v0=150, vt=18, grav=1.0, speedJit=2, dirJit=1.5, burn=3.7, burnJit=4, fade=0.12, lastFlare=0, ignDelay=0, burstR0=0)
-# 芯：同一个模拟。芯 +1.3 s 以后基本不再张大（约外层最终的 0.38），+0.3 s 已经是外层的 0.55 → 初速 90、终端速度 12
-CORE = dict(seed=31, stars=300, v0=90, vt=12, grav=1.0, speedJit=8, dirJit=1.5, burn=2.15, burnJit=6, lastFlare=0, ignDelay=0.06, ignJit=10, burstR0=0)
+# 外层（亲星）：同一个模拟。初速 / 终端速度按实拍花径（横向）和 +1.0 s 的比拟合：+0.53 / 2.07 / 3.0 s ≈ 0.68 / 1.29 / 1.42（JQ1 的 150 / 18 后段多长 8–10%）；
+# 开头几帧实拍量到的是橙尾（星头还暗着），比星的真实位置小，不按它拟。星数按 +2.6 s 数到的光点（约 470–520 个）
+OUTER = dict(seed=23, stars=520, v0=230, vt=15, grav=0.5, speedJit=2, dirJit=1.5, burn=3.85, burnJit=4, fade=0.1, lastFlare=0, ignDelay=0, burstR0=0)
+# 芯：同一个模拟。芯外缘（星头）+0.3 / 0.53 / 0.9 / 1.27 / 1.53 / 1.8 s ≈ 外层 +1.0 s 的 0.24 / 0.36 / 0.47 / 0.55 / 0.57 / 0.59，+1.3 s 以后基本不再张大、不往下坠 → 初速 85、终端速度 11.5、重力 0.5
+CORE = dict(seed=31, stars=300, v0=85, vt=11.5, grav=0.5, speedJit=8, dirJit=1.5, burn=2.15, burnJit=6, lastFlare=0, ignDelay=0.06, ignJit=10, burstR0=0)
 
 LAYERS = [
     # (层名, 花型, 模拟, 参数, 颜色)
-    ('橙引尾', 'botan', OUTER, dict(fade=0.03, flash=0.6, headSize=0.8, headBright=0.02, sparkRate=900, sparkStart=0, sparkStop=0.62, sparkLife=0.32, sparkLifeJit=30,
+    ('橙引尾', 'botan', OUTER, dict(fade=0.03, flash=0.6, headSize=0.8, headBright=0.02, sparkRate=900, sparkStart=0, sparkStop=0.55, sparkLife=0.32, sparkLifeJit=20,     # JQ1：+1.0 s 还剩一圈暗红尾（实拍 +0.9 s 收完）→ 早停 0.07 s
                                   sparkSpread=0.22, sparkInherit=0.1, sparkBright=5, T0=2150, cooling=0.22, duration=1.3),
      dict(stages=[[0, '#ff6a1a']], xw=0.15, headInt=3.0, **WARM)),
-    ('柠点星', 'botan', OUTER, dict(flash=0, headSize=1.5, headBright=1.6, sparkRate=0, duration=4.4,
-                                  starBrightCurve='0:0.03, 0.09:0.05, 0.125:0.55, 0.17:1, 1:1'),     # 起势：+0.33 s 起星头从暗亮起来，+0.46 s 一半、+0.63 s 全亮
+    ('柠点星', 'botan', OUTER, dict(flash=0, headSize=1.7, headBright=1.6, sparkRate=0, duration=4.5,
+                                  starBrightCurve='0:0.03, 0.08:0.05, 0.115:0.6, 0.155:1, 1:1'),     # 起势：+0.31 s 起星头从暗亮起来，+0.44 s 一半多、+0.6 s 全亮（JQ1 +0.6 s 还看不出星头）；JQ1 光点比实拍小 → 1.7
      dict(stages=[[0, '#ffc070'], [0.45, '#fff2b0'], [0.78, '#eaff7a']], xw=0.2, headInt=1.4, **NEUTRAL)),     # 刚亮起来是淡暖白，+0.8 s 起柠绿
     ('金菊蕊', 'kiku', CORE, dict(flash=0, fade=0.25, headSize=0.75, headBright=0.6, sparkRate=260, sparkRateEnd=0.5, sparkStart=0, sparkStop=2.0, sparkLife=0.6, sparkLifeJit=30,
                                  sparkSpread=0.5, sparkInherit=0.05, sparkGrav=0.3, sparkDrag=3, sparkBright=1.5, T0=2300, cooling=0.25, duration=2.9),     # 火花几乎不跟星走、寿命长 → 从芯心到星头一根根金丝
-     dict(stages=[[0, '#fff6dc'], [1.1, '#ffd27a'], [1.7, '#ffa040'], [2.1, '#ff7a28']], xw=0.3, headInt=2.0, **GOLD)),
-    ('红点蕊', 'botan', CORE, dict(flash=0, fade=0.3, headSize=1.0, headBright=1.2, sparkRate=0, duration=2.6),
-     dict(stages=[[0, '#fff0d0'], [0.95, '#ff4f6e']], xw=0.25, headInt=1.6, **NEUTRAL)),     # 前 1 s 埋在过亮的金芯里，+1.1 s 起芯的外缘一圈粉红点
+     dict(stages=[[0, '#fff6dc'], [1.0, '#ffd27a'], [1.55, '#ffa040'], [1.95, '#ff7a28']], xw=0.3, headInt=2.0, **GOLD)),     # 实拍 +2.07 s 已经是橙红（JQ1 还偏金）→ 各段早 0.1–0.15 s
+    ('红点蕊', 'botan', CORE, dict(flash=0, fade=0.3, headSize=1.2, headBright=1.6, sparkRate=0, duration=2.6),     # JQ1：金丝里看不到粉红点 → 大一点、亮一点
+     dict(stages=[[0, '#fff0d0'], [0.9, '#ff4f6e']], xw=0.25, headInt=2.5, **NEUTRAL)),     # 前 1 s 埋在过亮的金芯里，+1.1 s 起芯的外缘一圈粉红点
 ]
 NOTE = ('用户 23:02：金蕊青柠星重新逐帧拆、用现有花型分层调、出一个模板。逐帧（开花 = 视频 B 0.167 s）：外层是分层星——开花到 +0.4 s 一团橙色放射尾（橙引），'
         '+0.35 s 起尾巴尖上的星头从暗亮起来（起势），+0.8 s 转柠绿、橙尾 +0.9 s 前后收完，柠绿光点亮度不减，+3.4–3.9 s 陆续熄灭；'
