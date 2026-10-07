@@ -1,0 +1,30 @@
+{
+ "entry": "RT6L",
+ "ver": "53af0196·emitset4.9.28",
+ "times_s": [
+  0.66,
+  1.99,
+  3.31,
+  4.63,
+  5.96
+ ],
+ "square_px": 539,
+ "header_px": 22,
+ "label_px": 90,
+ "rows": [
+  "实拍",
+  "实时模拟",
+  "导出效果"
+ ],
+ "projection": null,
+ "reference": {
+  "t0": 0.033,
+  "cx": 0.6406,
+  "cy": 0.5,
+  "half": 0.5,
+  "aspect": 1.7778,
+  "v": 7,
+  "video": "C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\tool\\../vidio/2.0/尾缀A.mp4"
+ },
+ "note": "每行整段固定取景；实时和导出各自的视野不同，比较几何时须记录整段统一换算，不能逐帧放大。"
+}
