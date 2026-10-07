@@ -1,0 +1,7 @@
+20:41:55 开始：QiuxingA40（导出素材）
+20:44:54 QiuxingA40 组合素材包 179 秒：T_EFX_FireWorks_TriColorChrysanthemum_Head_4x4_01.png、T_EFX_FireWorks_TriColorChrysanthemum_Head_4x4_01_C.png、T_EFX_FireWorks_TriColorChrysanthemum_Head_4x4_01_HD.png、T_EFX_FireWorks_TriColorChrysanthemum_Head_R.png、T_EFX_FireWorks_TriColorChrysanthemum_Tail_4x4_01.png、T_EFX_FireWorks_TriColorChrysanthemum_Tail_4x4_01_C.png、T_EFX_FireWorks_TriColorChrysanthemum_Tail_4x4_01_HD.png、T_EFX_FireWorks_TriColorChrysanthemum_Tail_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+20:44:56 回放检查：✅ 通过
+20:45:12 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QA20E1\烘焙回放.jpg
+20:45:12 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QA20E1\烘焙回放_原尺寸.jpg
+20:45:12 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+20:45:13 完成，用时 3.3 分钟

@@ -1,0 +1,7 @@
+20:42:10 开始：QiuxingD40（导出素材）
+20:42:32 QiuxingD40 组合素材包 23 秒：T_EFX_FireWorks_OrangeCoreFourColor_Core_4x4_01.png、T_EFX_FireWorks_OrangeCoreFourColor_Core_4x4_01_C.png、T_EFX_FireWorks_OrangeCoreFourColor_Core_4x4_01_HD.png、T_EFX_FireWorks_OrangeCoreFourColor_Core_R.png、T_EFX_FireWorks_OrangeCoreFourColor_OuterHead_4x4_01.png、T_EFX_FireWorks_OrangeCoreFourColor_OuterHead_4x4_01_C.png、T_EFX_FireWorks_OrangeCoreFourColor_OuterHead_4x4_01_HD.png、T_EFX_FireWorks_OrangeCoreFourColor_OuterHead_4x4_02.png、T_EFX_FireWorks_OrangeCoreFourColor_OuterHead_4x4_02_C.png、T_EFX_FireWorks_OrangeCoreFourColor_OuterHead_4x4_02_HD.png、T_EFX_FireWorks_OrangeCoreFourColor_OuterHead_R.png、T_EFX_FireWorks_OrangeCoreFourColor_OuterTail_4x4_01.png、T_EFX_FireWorks_OrangeCoreFourColor_OuterTail_4x4_01_C.png、T_EFX_FireWorks_OrangeCoreFourColor_OuterTail_4x4_01_HD.png、T_EFX_FireWorks_OrangeCoreFourColor_OuterTail_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+20:42:34 回放检查：✅ 通过
+20:42:49 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QD14E1\烘焙回放.jpg
+20:42:50 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\QD14E1\烘焙回放_原尺寸.jpg
+20:42:50 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+20:42:50 完成，用时 0.7 分钟
