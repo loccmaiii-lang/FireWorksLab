@@ -37532,11 +37532,51 @@ var FW_EFFECTS = [
 {
 "id": "FGE-FG1",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 }
 ],
-"exports": [],
+"exports": [
+{
+"job": "FGE-FG1",
+"entry": "FG1",
+"ver": "584faf43·master4.9.31",
+"time": "2026-10-07 17:12",
+"packages": [
+{
+"name": "FanGold",
+"replica": "FG1",
+"files": [
+"T_EFX_FireWorks_FanGold_ClusterL1_4x4_01.png",
+"T_EFX_FireWorks_FanGold_ClusterL1_4x4_01_C.png",
+"T_EFX_FireWorks_FanGold_ClusterL1_4x4_01_HD.png",
+"T_EFX_FireWorks_FanGold_ClusterL1_R.png",
+"T_EFX_FireWorks_FanGold_ClusterL2_4x4_01.png",
+"T_EFX_FireWorks_FanGold_ClusterL2_4x4_01_C.png",
+"T_EFX_FireWorks_FanGold_ClusterL2_4x4_01_HD.png",
+"T_EFX_FireWorks_FanGold_ClusterL2_R.png",
+"T_EFX_FireWorks_FanGold_ClusterR1_4x4_01.png",
+"T_EFX_FireWorks_FanGold_ClusterR1_4x4_01_C.png",
+"T_EFX_FireWorks_FanGold_ClusterR1_4x4_01_HD.png",
+"T_EFX_FireWorks_FanGold_ClusterR1_R.png",
+"T_EFX_FireWorks_FanGold_ClusterR2_4x4_01.png",
+"T_EFX_FireWorks_FanGold_ClusterR2_4x4_01_C.png",
+"T_EFX_FireWorks_FanGold_ClusterR2_4x4_01_HD.png",
+"T_EFX_FireWorks_FanGold_ClusterR2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+}
+],
 "thumb": null,
 "thumbSim": null
 }
