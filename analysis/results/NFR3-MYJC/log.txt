@@ -1,0 +1,62 @@
+03:48:17 第 1/15 步：原样（GoldRayRocket）
+03:48:18   ❌ GoldRayRocket 跳过纯粒子发射器：L1_Unit
+03:48:18      GoldRayRocket · L2_Main 中间空帧 23
+03:48:18   ✅ 原样（GoldRayRocket）（0.0 分钟）
+03:48:18 第 2/15 步：3 号（GoldRayRocket_03）
+03:48:19   ❌ GoldRayRocket_03 跳过纯粒子发射器：L1_Unit
+03:48:19      GoldRayRocket_03 · L2_Main 中间空帧 19
+03:48:19   ✅ 3 号（GoldRayRocket_03）（0.0 分钟）
+03:48:19 第 3/15 步：5 号（GoldRayRocket_05）
+03:48:20   ❌ GoldRayRocket_05 跳过纯粒子发射器：L1_Unit
+03:48:20      GoldRayRocket_05 · L2_Main 中间空帧 25
+03:48:20   ✅ 5 号（GoldRayRocket_05）（0.0 分钟）
+03:48:20 第 4/15 步：尺玉（GoldRayRocket_10）
+03:48:20   ❌ GoldRayRocket_10 跳过纯粒子发射器：L1_Unit
+03:48:20      GoldRayRocket_10 · L2_Main 中间空帧 25
+03:48:20   ✅ 尺玉（GoldRayRocket_10）（0.0 分钟）
+03:48:20 第 5/15 步：2 尺（GoldRayRocket_20）
+03:48:21   ❌ GoldRayRocket_20 跳过纯粒子发射器：L1_Unit
+03:48:21      GoldRayRocket_20 · L2_MainA 中间空帧 36
+03:48:21   ✅ 2 尺（GoldRayRocket_20）（0.0 分钟）
+03:48:21 第 6/15 步：3 尺（GoldRayRocket_30）
+03:48:22   ❌ GoldRayRocket_30 跳过纯粒子发射器：L1_Unit
+03:48:22      GoldRayRocket_30 · L2_MainA 中间空帧 40
+03:48:22   ✅ 3 尺（GoldRayRocket_30）（0.0 分钟）
+03:48:22 第 7/15 步：4 尺（GoldRayRocket_40）
+03:48:22   ❌ GoldRayRocket_40 跳过纯粒子发射器：L1_Unit
+03:48:22      GoldRayRocket_40 · L2_MainA 中间空帧 47
+03:48:22   ✅ 4 尺（GoldRayRocket_40）（0.0 分钟）
+03:48:22 第 8/15 步：冠（GoldRayRocket_Crown）
+03:48:23   ❌ GoldRayRocket_Crown 跳过纯粒子发射器：L1_Unit
+03:48:23      GoldRayRocket_Crown · L2_Main 中间空帧 23
+03:48:23   ✅ 冠（GoldRayRocket_Crown）（0.0 分钟）
+03:48:23 第 9/15 步：柳（GoldRayRocket_Willow）
+03:48:23   ❌ GoldRayRocket_Willow 跳过纯粒子发射器：L1_Unit
+03:48:23      GoldRayRocket_Willow · L2_Main 中间空帧 45
+03:48:23   ✅ 柳（GoldRayRocket_Willow）（0.0 分钟）
+03:48:23 第 10/15 步：环（GoldRayRocket_Ring）
+03:48:24   ❌ GoldRayRocket_Ring 
+03:48:24      GoldRayRocket_Ring · L2_Main 中间空帧 23
+03:48:24   ✅ 环（GoldRayRocket_Ring）（0.0 分钟）
+03:48:24 第 11/15 步：土星（GoldRayRocket_Saturn）
+03:48:25   ❌ GoldRayRocket_Saturn 
+03:48:25      GoldRayRocket_Saturn · L2_Main 中间空帧 23
+03:48:25   ✅ 土星（GoldRayRocket_Saturn）（0.0 分钟）
+03:48:25 第 12/15 步：万華鏡（GoldRayRocket_Kaleido）
+03:48:26   ❌ GoldRayRocket_Kaleido 
+03:48:26      GoldRayRocket_Kaleido · L2_Main 中间空帧 23
+03:48:26   ✅ 万華鏡（GoldRayRocket_Kaleido）（0.0 分钟）
+03:48:26 第 13/15 步：心形（GoldRayRocket_Heart）
+03:48:27   ❌ GoldRayRocket_Heart 
+03:48:27      GoldRayRocket_Heart · L2_Main 中间空帧 23
+03:48:27   ✅ 心形（GoldRayRocket_Heart）（0.0 分钟）
+03:48:27 第 14/15 步：时差（GoldRayRocket_Jisa）
+03:48:28   ❌ GoldRayRocket_Jisa 跳过纯粒子发射器：L1_Unit
+03:48:28      GoldRayRocket_Jisa · L2_MainA 中间空帧 30
+03:48:28      GoldRayRocket_Jisa · L2_MainB 30 fps 只显示 4/5 帧；中间空帧 1
+03:48:28   ✅ 时差（GoldRayRocket_Jisa）（0.0 分钟）
+03:48:28 第 15/15 步：芯入（GoldRayRocket_Core）
+03:48:29   ❌ GoldRayRocket_Core 跳过纯粒子发射器：L1_Unit
+03:48:29      GoldRayRocket_Core · L2_Main 中间空帧 23
+03:48:29   ✅ 芯入（GoldRayRocket_Core）（0.0 分钟）
+03:48:29 完成，用时 0.2 分钟
