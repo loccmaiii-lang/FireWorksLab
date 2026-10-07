@@ -20,6 +20,30 @@ function stepKeys40(scales,ticks,N){
   keys.push([1,scales[F-1]]);
   return keys.filter((k,i,a)=>i===0||k[0]>a[i-1][0]+1e-9||k[1]!==a[i-1][1]);
 }
+// 4.9.33 Zoom 阶梯精简（用户 10-07 17:26「我检查了一遍曲线，发现你给的点位实在太多了，可以简化一下点位吗？现在又一百多个点位」）：
+// 以前每帧一个大小（53 帧 → Size By Life 106 个点）。现在最多 ZOOM_STEPS 级：连着几帧用同一个大小（= 这一段里最大的那帧，内容不会被裁），
+// 烘焙也按这一级画，贴图和面片照旧逐帧对上（不抖）；代价是有些帧取景比需要的大一点（分辨率低一点）。
+// 分段用动态规划：在级数上限内让各帧「多放大了多少」（log(级 / 本帧需要)）之和最小；每帧多放大都 ≤ 4% 时就用更少的级。关键点 ≈ 2 × 级数。
+const ZOOM_STEPS = 12, ZOOM_TOL = 1.04;
+function zoomLevels40(s) {
+  const F = s.length; if (F <= 2) return s.slice();
+  const pre = [0]; for (const v of s) pre.push(pre[pre.length - 1] + Math.log(Math.max(v, 1e-6)));
+  const cost = (i, j, m) => (j - i + 1) * Math.log(Math.max(m, 1e-6)) - (pre[j + 1] - pre[i]);
+  const arg = [], first = new Int32Array(F); let prev = new Float64Array(F), m0 = 0;
+  for (let j = 0; j < F; j++) { m0 = Math.max(m0, s[j]); prev[j] = cost(0, j, m0); }
+  arg.push(first);
+  const levels = K => { const out = new Array(F); let j = F - 1;
+    for (let k = K - 1; k >= 0 && j >= 0; k--) { const i = arg[k][j]; let m = 0; for (let q = i; q <= j; q++) m = Math.max(m, s[q]); for (let q = i; q <= j; q++) out[q] = m; j = i - 1; }
+    return out; };
+  const ok = lv => lv.every((v, f) => v <= s[f] * ZOOM_TOL + 1e-9);
+  let lv = levels(1); if (ok(lv)) return lv;
+  for (let k = 1; k < Math.min(ZOOM_STEPS, F); k++) {
+    const cur = new Float64Array(F).fill(Infinity), a = new Int32Array(F);
+    for (let j = k; j < F; j++) { let m = 0; for (let i = j; i >= k; i--) { m = Math.max(m, s[i]); const c = prev[i - 1] + cost(i, j, m); if (c < cur[j]) { cur[j] = c; a[j] = i; } } }
+    arg.push(a); prev = cur; lv = levels(k + 1); if (ok(lv)) return lv;
+  }
+  return lv;
+}
 // 4.2.5 取景按实测收紧：parts = 按 pl 烘出来的各张；每帧内容包围盒（m.boxes，格子像素）换算回世界坐标，
 //  · 固定取景：全段并集收紧（横向以爆点对称，竖向可以偏：Initial Location 的 Z 跟着改）；
 //  · Zoom：每帧大小 = 这一帧内容离爆点最远的距离（阶梯关键点照旧，每帧烘多大、引擎里就放多大）。
@@ -95,11 +119,20 @@ function fitPlan40(P, pl, parts, extra, opt = {}) {
   const a = pl.L.cellW / pl.L.cellH, ePx = Math.max(2 * pad, +opt.edgePx || 0), k = 1.02 / Math.max(.5, 1 - 2 * ePx / Math.min(pl.L.cellW, pl.L.cellH));   // 内容放进去后离格子边：留边那一圈（被压暗）+ 2%
   const area = q => { let ar = 0; for (let i = 0; i < 200; i++) { const v = evalKeys(q.sizeKeys, (i + .5) / 200); ar += v * v / 200; } return ar; };
   if (pl.zoom) {
-    const hNew = fr.map(q => { if (q.empty || q.faint || q.tl || q.tr || q.tb || q.tt) return q.hx;
-      const h = Math.min(q.hx, Math.max(-q.x0, q.x1, -q.y0, q.y1, 1e-3) * k); return q.hx / fitGainCap(q.q, q.hx / h, P); });
+    const own = q => Math.max(-q.x0, q.x1, -q.y0, q.y1, 1e-3), touch = q => q.tl || q.tr || q.tb || q.tt;
+    const hNew = fr.map(q => { if (q.empty || q.faint) return null; if (touch(q)) return q.hx;
+      const h = Math.min(q.hx, own(q) * k); return q.hx / fitGainCap(q.q, q.hx / h, P); });
+    // 4.9.33（用户 10-07 17:26「引菊那层已经放大到最后了，但在cascade曲线中，它最后会忽然放大一下再消失」）：几乎全黑 / 空的帧以前留在烘焙时的大小——
+    // 金曜菊-A 节奏快版引菊层最后 4 帧（只剩几颗暗火星，内容只占 31–64 %）从 0.68 跳回 0.99，贴图分辨率一下掉 1.46 倍，火星在引擎里像放大了一下。
+    // 现在跟前一帧一样大（开头的跟后面第一帧），自己的火星放不下才放大（离边至少 12 像素 = 回放检查的留边 + 内圈），碰边的照旧不收
+    const kF = 1.02 / Math.max(.5, 1 - 2 * Math.max(ePx, 12) / Math.min(pl.L.cellW, pl.L.cellH)), h0 = hNew.find(h => h != null);
+    for (let i = 0; i < hNew.length; i++) if (hNew[i] == null) {
+      const q = fr[i], base = i > 0 ? hNew[i - 1] : h0;
+      hNew[i] = base == null ? q.hx : q.empty ? Math.min(q.hx, base) : touch(q) ? q.hx : Math.min(q.hx, Math.max(base, own(q) * kF));
+    }
     const old = fr.map(q => q.hx), gain = hNew.map((h, i) => old[i] / h).sort((x, y) => x - y)[Math.floor(hNew.length / 2)];
     if (!(gain >= 1.03)) return null;
-    const HX = Math.max(...hNew) * Math.max(1, a), HY = HX / a, frameScale = hNew.map(h => Math.min(1, h * Math.max(1, a) / HX));
+    const HX = Math.max(...hNew) * Math.max(1, a), HY = HX / a, frameScale = zoomLevels40(hNew.map(h => Math.min(1, h * Math.max(1, a) / HX)));     // 4.9.33 阶梯最多 12 级
     const out = { ...pl, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cy: 0, ppm: pl.L.cellW / (2 * HX), py: .5, frameScale, sizeKeys: stepKeys40(frameScale, pl.ticks, pl.nTicks),
       maxDisp: pl.maxDisp * Math.max(...old.map((h, i) => h / hNew[i])), fitted: { mode: 'zoom', gain: +gain.toFixed(3), from: +pl.HX.toFixed(2), to: +HX.toFixed(2) } };
     out.area = area(out); return out;
@@ -264,7 +297,7 @@ function plan40(P,fm,ta=0,tb=P.duration) {
   const F=ticks.length,t0=first/30,D=N/30,L={...base.L,F};
   const times=ticks.map(k=>k/30),dur=ticks.map((k,f)=>((f+1<F?ticks[f+1]:N)-k)/30);
   let sizeKeys=clipSizeKeys40(envelope,P.duration,t0,D),frameScale=null;
-  if(base.zoom){frameScale=times.map(t=>evalKeys(sizeKeys,t/D));sizeKeys=stepKeys40(frameScale,ticks,N);}
+  if(base.zoom){frameScale=zoomLevels40(times.map(t=>evalKeys(sizeKeys,t/D)));sizeKeys=stepKeys40(frameScale,ticks,N);}     // 4.9.33 阶梯最多 12 级
   let area=0;for(let i=0;i<200;i++)area+=evalKeys(sizeKeys,(i+.5)/200)**2/200;
   let maxDisp=0;for(const [t,v] of fm.prof)if(t>=t0 && t<t0+D){
     const f=Math.min(F-1,Math.max(0,ticks.findLastIndex(k=>k/30<=t-t0)));

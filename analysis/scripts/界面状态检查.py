@@ -85,6 +85,7 @@
       通道 / 后缀、错落只动 D、Size By Life / Alpha、cascade_low.json（现有序列材质 1 × 1、extras、第 2 层序列）、_MB 命名、产物表低端列不重烘、低端视图
   W26 4.9.31（用户 10-07 14:56 / 14:34）：RT6 远段从交接开始 a0 出现、第一帧几乎空（以前中点一出现就半亮）；导出缩放 × k 只改长度（时间 / 阻力 / Size By Life 不动）、系统名 _S50、
   W27 4.9.32（用户 10-07 16:15「缩小到0.8/0.5，升空的高度还是之前正确的吗？」→ 16:2x「两种都要，导出时选」）：升空尾缀「升空高度：不变」只缩粗细——序列面片只缩宽、粒子大小 / 随机散开 / 球面半径 × k，位置 / 弹道 / 加速度 / 时间 / 预览距离不变、系统名 _W50；引擎回放的出生表和导出同一套（esKeepScale ↔ fwlScaleJSON keep 逐模块对上）；面板只在升空尾缀 + 缩放 < 1 时出现；等比缩时 V5 尾缀 / 单束的游戏内大小也按缩放画；
+  W28 4.9.33（用户 10-07 17:26「点位实在太多了，可以简化一下点位吗？」「它最后会忽然放大一下再消失」「单帧输出模式我想要个引擎回放」）：Zoom 阶梯最多 12 级、每级不小于这一段每帧需要的大小、关键点 ≤ 2 × 级数；几乎全黑的末帧跟前一帧一样大（不跳回大取景），自己的火星放不下才放大；OUTPUT_VER.zoom 只让 Zoom 效果过期；产物表单帧「在引擎回放里看」切到引擎回放 · 低端；
       只改 cascade*.json、菊右栏有、引擎回放游戏内大小按缩放画不重烘；护栏 Ramp 第 255 格黑、编码封顶 253
   W19 4.9.21 入点前放大一律绕爆点（用户 21:51 选）：「放大的中心」删了；cascade.json 写 Pivot Offset、Initial Location 0；回放绕爆点；存过「面片中心」的打开时提示
       4.9.8 加：顶上「现在改的是」和搜索入口看得到，第一屏至少 8 行参数（菊 › 星、引菊 → 锦 金锦层 › 火花）
@@ -2944,6 +2945,47 @@ async def w27(pg):
     r = await pg.evaluate(W27_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
 
+W28_JS = r"""async () => {
+  // 4.9.33（用户 10-07 17:26）
+  const out = {}, bad = [];
+  // ① 阶梯精简：金曜菊-A 节奏快版引菊层导出的 52 级（GoldRay_T75C L1，末尾 0.68 → 0.99 那 4 帧先按修好后的样子换成 0.68）
+  const need = [0.3779, 0.3353, 0.2819, 0.2174, 0.2554, 0.2936, 0.3267, 0.3578, 0.3856, 0.4121, 0.4349, 0.4579, 0.4786, 0.4976, 0.5159, 0.5317, 0.5478, 0.5639, 0.5802, 0.5937, 0.6073, 0.6179, 0.6304, 0.6428, 0.6554, 0.6649, 0.6776, 0.6839, 0.6835, 0.6861, 0.6851, 0.6869, 0.6866, 0.6863, 0.6858, 0.6851, 0.6843, 0.6834, 0.6861, 0.6849, 0.6836, 0.6822, 0.6806, 0.6788, 0.678, 0.6812, 0.6804, 0.6756, 0.6756, 0.6756, 0.6756, 0.6756, 0.6756];
+  const lv = zoomLevels40(need), ticks = need.map((_, f) => f), keys = stepKeys40(lv, ticks, need.length), keysOld = stepKeys40(need, ticks, need.length);
+  const nLv = lv.filter((v, i) => !i || v !== lv[i - 1]).length, worst = Math.max(...lv.map((v, f) => v / need[f]));
+  out.levels = { n: nLv, keys: keys.length, keysOld: keysOld.length, worst: +worst.toFixed(3), under: lv.some((v, f) => v < need[f] - 1e-12) };
+  if (nLv > 12 || keys.length > 2 * nLv + 1 || out.levels.under || keys.length >= keysOld / 3) bad.push('Zoom 阶梯没精简到 ≤ 12 级 / 有帧比需要的小：' + JSON.stringify(out.levels));
+  { const flat = zoomLevels40([0.5, 0.501, 0.502, 0.503, 0.5, 0.5]); out.flat = [...new Set(flat)].length; if (out.flat !== 1) bad.push('差不到 4 % 的几帧应该合成一级：' + out.flat); }
+  // ② 收紧：前面 16 帧正常、最后 4 帧几乎全黑（火星只到 0.4 倍）——以前跳回烘焙时的大取景，现在跟前一帧一样大
+  { const F = 20, cell = 512, HX = 100, s0 = Array.from({ length: F }, (_, f) => 0.3 + 0.7 * f / (F - 1)), t = s0.map((_, f) => f), m = { L: { F, cellW: cell, cellH: cell }, zoom: true, HX, HY: HX, cy: 0, duration: F / 30,
+      sizeKeys: stepKeys40(s0, t, F), times: t.map(f => f / 30), boxes: [], fx: [] };
+    for (let f = 0; f < F; f++) { const hx = HX * s0[f], faint = f >= 16, e = hx * (faint ? 0.4 : 0.6), du = 2 * hx / cell, h = new Array(256).fill(0); h[faint ? 10 : 100] = faint ? 30 : 5000;
+      m.boxes.push([Math.round((hx - e) / du), Math.round((hx + e) / du) - 1, Math.round((hx - e) / du), Math.round((hx + e) / du) - 1]); m.fx.push({ pk: faint ? 10 : 200, nz: faint ? 30 : 5000, h, px: cell * cell }); }
+    const pl = { L: m.L, zoom: true, HX, HY: HX, cy: 0, ticks: t, nTicks: F, maxDisp: 1, sizeKeys: m.sizeKeys }, fp = fitPlan40({ encGamma: 1, cellPad: 0 }, pl, [{ meta: m }]);
+    if (!fp) bad.push('合成的 Zoom 帧没收紧'); else {
+      const fs = fp.frameScale, ext = s0.map((v, f) => HX * v * (f >= 16 ? 0.4 : 0.6));
+      out.fit = { last: fs.slice(14).map(x => +x.toFixed(3)), HX: +fp.HX.toFixed(1), n: fs.filter((v, i) => !i || v !== fs[i - 1]).length, keys: fp.sizeKeys.length };
+      if (fs[19] > fs[15] * 1.02) bad.push('几乎全黑的末帧又跳回大取景了：' + JSON.stringify(out.fit));
+      if (fs.some((v, f) => v * fp.HX < ext[f] - 1e-6)) bad.push('收紧后有帧装不下自己的内容：' + JSON.stringify(out.fit));
+      if (out.fit.n > 12) bad.push('收紧后阶梯超过 12 级：' + JSON.stringify(out.fit)); } }
+  // ③ OUTPUT_VER.zoom 只让 Zoom 效果的素材包过期
+  { const sv = state.P.zoom, rest = (({ zoom, ...r }) => r)(OUTPUT_VER);
+    try { state.P.zoom = 'off'; const a = OUT_SIG(); state.P.zoom = 'on'; const b = OUT_SIG(); out.sig = { off: a === JSON.stringify(rest), on: b === JSON.stringify(rest) + '|zoom' + OUTPUT_VER.zoom };
+      if (!out.sig.off || !out.sig.on) bad.push('OUT_SIG：不用 Zoom 的效果签名该和以前一样、用 Zoom 的带 zoom 版本：' + JSON.stringify(out.sig)); } finally { state.P.zoom = sv; } }
+  // ④ 产物表单帧：格子里有「在引擎回放里看」，点了切到引擎回放 · 低端
+  { const sv = state.P.outLow; state.P.outLow = 'frame'; const html = prodCellHTML({ i: 0, b: null, name: 'x' }, 'low', false); state.P.outLow = sv;
+    out.cell = /data-lowview/.test(html); if (!out.cell) bad.push('产物表低端单帧格子里没有「在引擎回放里看」');
+    const sp = state.platform, sview = state.view; showLowReplay(); out.go = { view: state.view, platform: state.platform, pressed: $('#platformSeg button[data-platform="low"]').getAttribute('aria-pressed') };
+    if (out.go.view !== 'export' || out.go.platform !== 'low' || out.go.pressed !== 'true') bad.push('「在引擎回放里看」没切到引擎回放 · 低端：' + JSON.stringify(out.go));
+    const pb = $('#platformSeg button[data-platform="' + (sp || 'pc') + '"]'); if (pb) pb.click(); selectStageView(sview === 'export' ? 'export' : 'live'); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w28(pg):
+    """4.9.33 Zoom 阶梯精简 + 末帧不跳 + 单帧引擎回放入口"""
+    r = await pg.evaluate(W28_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -2983,7 +3025,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

@@ -203,7 +203,8 @@ function wbSync() {
 }
 // 4.9.1（5.0 第 3 步，交互宪章 5「身份条」）：顶栏一眼看到——打开的是什么、从哪来、哪个版本、改了没保存、素材包和现在一不一样。
 // 以前名字只在左栏「版本记录」里，左栏收起就不知道开的是谁。贴图新旧在旁边的 #abState（烘焙中 / 旧 / 失败）。
-const OUT_SIG = () => { try { return JSON.stringify(OUTPUT_VER); } catch (e) { return ''; } };
+// 4.9.33：OUTPUT_VER.zoom 只算进用 Zoom 取景的效果（别的效果的签名和 4.9.32 一样，不会因为它变成「素材包要重导」）
+const OUT_SIG = () => { try { const { zoom, ...rest } = OUTPUT_VER, s = wbSnap(), z = s.kind === 'combo' ? (s.layers || []).some(l => l.P && l.P.zoom === 'on') : !!(s.P && s.P.zoom === 'on'); return JSON.stringify(rest) + (z && zoom ? '|zoom' + zoom : ''); } catch (e) { return ''; } };
 function idBarInfo(list, changed) {
   // 每个标签 [短字, 样式, 悬停的完整说明]；顺序 = 要紧的在前（窄的时候后面的先被挤掉）
   const ef = lib.effect, e = lib.review, mtId = mtOpenId(), chips = [];
@@ -883,6 +884,7 @@ function renderDeliv() {
   host.querySelector('#dvExport').addEventListener('click', () => combo ? exportCombo() : $('#btnExport').click());
   host.querySelector('#dvBack').addEventListener('click', () => toggleDeliv(false));
   host.querySelectorAll('[data-prod]').forEach(sel => sel.addEventListener('change', () => setProduct(+sel.dataset.i, sel.dataset.prod, sel.value)));
+  host.querySelectorAll('[data-lowview]').forEach(b => b.addEventListener('click', showLowReplay));     // 4.9.33 单帧的引擎回放（用户 10-07 17:26「单帧输出模式我想要个引擎回放」）
   const sv = host.querySelector('#dvSaveNames');
   if (sv) sv.addEventListener('click', () => {
     const base = asciiName(host.querySelector('#dvBase').value), layers = [...host.querySelectorAll('[data-ly]')].map(i => asciiName(i.value));
@@ -923,7 +925,7 @@ function prodCellHTML(x, pf, combo) {
   if (pf === 'low') {     // 4.9.29 低端：单帧 / 序列（和手机同一张）
     if (s === 'seq') return '序列 · 和手机同一张贴图（cascade_low.json 引用，不重复放）';
     const lo = lowOf(combo ? x.L : state.P), lw = x.b && lowCached(x.b, lo, combo ? comboLayerM(x.L) : state.M);
-    return `单帧 ${lo.size} × ${lo.size} · ${lo.pick === 'expo' ? '长曝光' : lw ? `某一帧 ${lw.tStar.toFixed(2)} s` : lo.at > 0 ? `某一帧 ${lo.at.toFixed(2)} s` : '某一帧（自动：花开得最大）'} · 灰度 + Ramp（现有序列材质）+ 彩色单帧${lo.maps ? ` · 功能图 ${[...lo.maps].join(' + ')} → _${lo.suffix}` : ''}${lw ? '' : '（贴图在「引擎回放」看低端或导出时烘）'}`;
+    return `单帧 ${lo.size} × ${lo.size} · ${lo.pick === 'expo' ? '长曝光' : lw ? `某一帧 ${lw.tStar.toFixed(2)} s` : lo.at > 0 ? `某一帧 ${lo.at.toFixed(2)} s` : '某一帧（自动：花开得最大）'} · 灰度 + Ramp（现有序列材质）+ 彩色单帧${lo.maps ? ` · 功能图 ${[...lo.maps].join(' + ')} → _${lo.suffix}` : ''}${lw ? '' : '（贴图在「引擎回放」看低端或导出时烘）'} <button type="button" class="mini" data-lowview title="切到引擎回放 · 低端：按 cascade_low.json 播这张单帧（可勾溶解预览 / 并排）">在引擎回放里看</button>`;
   }
   if (s === 'dots') return `GPU 光点约 ${dotsCount(P)} 颗 · 没有贴图 · 1 个软圆点发射器`;
   if (s === 'unit' && unitAllowed(P)) {
@@ -952,7 +954,15 @@ function prodTableHTML(xs, combo) {
   return `<table class="dv-t dv-prod"><thead><tr><th>产物表：每层导出什么</th><th>PC</th><th>手机</th><th title="单独一份低端包 cascade_low.json，贴图名末尾加 _MB（用户 10-07 12:40）">低端</th></tr></thead><tbody>${rows.join('')}</tbody></table>
     <p class="hint">改这里 = 改层页头「导出方案」/ 右栏「输出 › 直接调」（同一个值，进 Ctrl+Z）；「贴图」「流转」「引擎回放」按你选的看（PC 单束就看单束那张）。单束只给短尾、快、几乎不下坠的星；长尾下垂、先后点亮的层建议序列（选了单束，格子里写这层合不合适：直尾在 800 m 外最多偏几像素，超过 1.5 px 近看偏直、超过 4 px 或前后点亮差 0.1 s 以上不适合）。单束贴图里的星按直线、不受力烘（重力、风、湍流、初速 / 燃烧随机都关了），弯曲和快慢不一由 Cascade 的发射器做。</p>`;
 }
+// 4.9.33（用户 10-07 17:26「1.单帧输出模式我想要个引擎回放」）：低端单帧的引擎回放一直在「引擎回放 · 低端」里（4.9.29），只是不好找——
+// 产物表低端列选了单帧就多一个「在引擎回放里看」，点了 = 回到画面、切引擎回放、平台切低端
+function showLowReplay() {
+  toggleDeliv(false); selectStageView('export');
+  const b = $('#platformSeg button[data-platform="low"]'); if (b) b.click();
+  flash('引擎回放 · 低端：单帧按 cascade_low.json 播（Size By Life + Alpha）；顶上勾「溶解预览」看溶解，勾「并排」和序列同一秒比');
+}
 function setProduct(i, pf, v) {
+  if (pf === 'low' && v === 'frame') setTimeout(() => flash('低端选了单帧：表里点「在引擎回放里看」，或引擎回放顶上切「低端」'), 0);
   if (state.tab === 'combo') { const L = state.layers[i]; if (!L) return; L.out = { ...layerOut(L), [pf]: v }; if (L.out.low === 'off') delete L.out.low; if (L.out.pc === 'seq' && L.out.mobile === 'seq' && !L.out.low) delete L.out;
     if (typeof undoNote === 'function') undoNote(); if (state.comboSel === i && typeof buildLayerHead === 'function') buildLayerHead(i); renderDeliv(); wbSync(); return; }
   state.P[pf === 'pc' ? 'outPC' : pf === 'low' ? 'outLow' : 'outMobile'] = v; onExportScheme();
