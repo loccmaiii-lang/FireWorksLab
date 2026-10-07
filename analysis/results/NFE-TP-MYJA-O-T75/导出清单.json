@@ -1,0 +1,28 @@
+{
+ "effect": "tempo_myja",
+ "entry": "TP-MYJA-O-T75",
+ "ver": "e866cd9d·master4.9.13",
+ "time": "2026-10-07 15:13",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "GoldRay_T75",
+   "replica": "TP-MYJA-O-T75",
+   "files": [
+    "T_EFX_FireWorks_GoldRay_T75_A_4x4_01.png",
+    "T_EFX_FireWorks_GoldRay_T75_A_4x4_01_C.png",
+    "T_EFX_FireWorks_GoldRay_T75_A_4x4_01_HD.png",
+    "T_EFX_FireWorks_GoldRay_T75_A_R.png",
+    "T_EFX_FireWorks_GoldRay_T75_B_4x4_01.png",
+    "T_EFX_FireWorks_GoldRay_T75_B_4x4_01_C.png",
+    "T_EFX_FireWorks_GoldRay_T75_B_4x4_01_HD.png",
+    "T_EFX_FireWorks_GoldRay_T75_B_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

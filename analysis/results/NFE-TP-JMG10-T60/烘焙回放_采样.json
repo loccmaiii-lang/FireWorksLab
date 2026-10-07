@@ -1,0 +1,30 @@
+{
+ "entry": "TP-JMG10-T60",
+ "ver": "3344d16b·master4.9.13",
+ "times_s": [
+  0.44,
+  1.33,
+  2.22,
+  3.11,
+  4.0
+ ],
+ "square_px": 539,
+ "header_px": 22,
+ "label_px": 90,
+ "rows": [
+  "实拍",
+  "实时模拟",
+  "导出效果"
+ ],
+ "projection": null,
+ "reference": {
+  "v": 7,
+  "t0": 0.867,
+  "cx": 0.707,
+  "cy": 0.25,
+  "half": 0.2283,
+  "aspect": 1.7778,
+  "video": "C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\tool\\../vidio/2.0/金芒菊A.mp4"
+ },
+ "note": "每行整段固定取景；实时和导出各自的视野不同，比较几何时须记录整段统一换算，不能逐帧放大。"
+}

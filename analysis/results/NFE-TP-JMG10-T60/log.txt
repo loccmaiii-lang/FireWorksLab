@@ -1,0 +1,8 @@
+15:11:52 开始：JinMangJu_10_T60（导出素材）
+15:11:55 JinMangJu_10_T60 导出 3 秒：JinMangJu_10_T60.json、JinMangJu_10_T60_Cascade参数.txt、JinMangJu_10_T60_Mobile.json、JinMangJu_10_T60_曲线.csv、T_EFX_FireWorks_JinMangJu_10_T60_4x4_01.png、T_EFX_FireWorks_JinMangJu_10_T60_4x4_01_C.png、T_EFX_FireWorks_JinMangJu_10_T60_4x4_01_HD.png、T_EFX_FireWorks_JinMangJu_10_T60_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+15:11:57 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-TP-JMG10-T60\回放检查.jpg（✅ 通过）
+15:12:14 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-TP-JMG10-T60\烘焙回放.jpg
+15:12:15 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-TP-JMG10-T60\烘焙回放_原尺寸.jpg
+15:12:15 烘焙器预览 preview.js：1187 KB
+15:12:15 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+15:12:15 完成，用时 0.4 分钟

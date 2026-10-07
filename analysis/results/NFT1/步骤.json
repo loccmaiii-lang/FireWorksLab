@@ -1,0 +1,9 @@
+[
+ {
+  "name": "节奏检查 --stills",
+  "script": "节奏检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ }
+]
