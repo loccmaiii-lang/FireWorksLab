@@ -180,6 +180,9 @@
   ],
   "对话框21 · 给对话框5 的排队（全局把控，不碰 tool/src）": [
    "对话框21（2026-10-07 13:40）：用户 13:26 分裂星颜色 ×30 出灰白「线框」，对话框21 判断是 Ramp 贴图 Wrap（v≈0 时和白热端混；模拟见 analysis/probe/Ramp线框_2026-10-07/，记录 spec/UE实测.md 10-07 13:26 节），已让用户手动改 Clamp + NoMipmaps 看。请你从本机配置核一下：① 现在导入的 Ramp（…_R）AddressX / AddressY、MipGenSettings 实际是什么；② 序列材质里查 Ramp 的 TextureSample 的 Sampler Source（From texture asset 还是 Shared: Wrap）；③ 材质实际怎么用 Ramp（是不是 ramp(v) × v）。用户确认线框消失后，导入器 ramp 类别一律 Clamp（X / Y）+ NoMipmaps，并给已导入的 Ramp 补一遍（只改这两项，不动别的手调）。"
+  ],
+  "对话框新花型 · 节奏（整体快慢）（临时源码认领）": [
+   "负责：对话框新花型（2026-10-07 13:40 开工，用户 13:31「1.加；2.推荐用游戏紧凑做默认……5.现在这个节奏就是我测试进游戏的功能，不能等之后做」，方案 协作/方案_节奏_2026-10-07.md）。只加不改：新文件 tool/src/js/12_tempo.js（节奏换算 + 面板那一块）；10_types.js 加 BASE.tempo、SCHEMA「整体调整」第一行、applyShellNo 末尾跟节奏、版本号；70_ui.js 只在 info 行的渲染链里加一个 tempoBox 分支（不动别的）；名称表 / 发射器表 +1 行（analysis/scripts/加参数_节奏.py）。不动模拟 / 渲染 / 烘焙 / 导出 / OUTPUT_VER（节奏是直接改写存的参数，和号数一样，下游照旧）。和对话框23「参数栏交互」认领并存，冲突保留对方再整合；版本号接在对话框23 后面。完成即释放。"
   ]
  },
  "effects": [
