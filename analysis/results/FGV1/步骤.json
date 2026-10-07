@@ -1,0 +1,9 @@
+[
+ {
+  "name": "FG1 对照 + 曝光",
+  "script": "FanGold对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ }
+]
