@@ -1,0 +1,7 @@
+19:11:57 第 1/1 步：FG6 对照 + 曝光
+19:12:03   渲染器 ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)
+19:12:03   原样 曝光 {'FG6': 0.1751}
+19:12:03   冠带再亮 曝光 {'FG6': 0.1751}
+19:12:03   写好 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FGV6
+19:12:03   ✅ FG6 对照 + 曝光（0.1 分钟）
+19:12:03 完成，用时 0.1 分钟

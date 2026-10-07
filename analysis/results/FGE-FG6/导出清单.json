@@ -1,0 +1,27 @@
+{
+ "effect": "fan_gold",
+ "entry": "FG6",
+ "ver": "b8488a3c·master4.9.31",
+ "time": "2026-10-07 19:11",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "FanGold",
+   "replica": "FG6",
+   "files": [
+    "FanGold.json",
+    "FanGold_Cascade参数.txt",
+    "FanGold_Mobile.json",
+    "FanGold_曲线.csv",
+    "T_EFX_FireWorks_FanGold_4x4_01.png",
+    "T_EFX_FireWorks_FanGold_4x4_01_C.png",
+    "T_EFX_FireWorks_FanGold_4x4_01_HD.png",
+    "T_EFX_FireWorks_FanGold_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}
