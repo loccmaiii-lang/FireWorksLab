@@ -1,0 +1,8 @@
+16:22:28 开始：YonshakuKamuro_T75（导出素材）
+16:23:08 YonshakuKamuro_T75 组合素材包 40 秒：T_EFX_FireWorks_YonshakuKamuro_T75_L1_4x4_01.png、T_EFX_FireWorks_YonshakuKamuro_T75_L1_4x4_01_C.png、T_EFX_FireWorks_YonshakuKamuro_T75_L1_4x4_01_HD.png、T_EFX_FireWorks_YonshakuKamuro_T75_L1_4x4_02.png、T_EFX_FireWorks_YonshakuKamuro_T75_L1_4x4_02_C.png、T_EFX_FireWorks_YonshakuKamuro_T75_L1_4x4_02_HD.png、T_EFX_FireWorks_YonshakuKamuro_T75_L1_R.png、T_EFX_FireWorks_YonshakuKamuro_T75_L2_4x4_01.png、T_EFX_FireWorks_YonshakuKamuro_T75_L2_4x4_01_C.png、T_EFX_FireWorks_YonshakuKamuro_T75_L2_4x4_02.png、T_EFX_FireWorks_YonshakuKamuro_T75_L2_4x4_02_C.png、T_EFX_FireWorks_YonshakuKamuro_T75_L2_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+16:23:08 回放检查不查的粒子发射器（光点 / 单束）：L2_Dots
+16:23:09 回放检查：✅ 通过
+16:23:26 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-TP-MYHK-O-T75-G31\烘焙回放.jpg
+16:23:26 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-TP-MYHK-O-T75-G31\烘焙回放_原尺寸.jpg
+16:23:26 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+16:23:26 完成，用时 1.0 分钟

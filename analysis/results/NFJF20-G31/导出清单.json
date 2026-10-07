@@ -1,0 +1,30 @@
+{
+ "effect": "jinmangju_sizes",
+ "entry": "JMG20",
+ "ver": "e5d985f3·master4.9.31",
+ "time": "2026-10-07 16:47",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "JinMangJu20",
+   "replica": "JMG20",
+   "files": [
+    "JinMangJu20.json",
+    "JinMangJu20_Cascade参数.txt",
+    "JinMangJu20_Mobile.json",
+    "JinMangJu20_曲线.csv",
+    "T_EFX_FireWorks_JinMangJu_20_4x4_01.png",
+    "T_EFX_FireWorks_JinMangJu_20_4x4_01_C.png",
+    "T_EFX_FireWorks_JinMangJu_20_4x4_01_HD.png",
+    "T_EFX_FireWorks_JinMangJu_20_4x4_02.png",
+    "T_EFX_FireWorks_JinMangJu_20_4x4_02_C.png",
+    "T_EFX_FireWorks_JinMangJu_20_4x4_02_HD.png",
+    "T_EFX_FireWorks_JinMangJu_20_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

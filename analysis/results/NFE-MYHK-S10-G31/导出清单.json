@@ -1,0 +1,27 @@
+{
+ "effect": "myv_fxmuwols5x",
+ "entry": "MYHK-S10",
+ "ver": "e18623e0·dots4.9.24+master4.9.31",
+ "time": "2026-10-07 16:30",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "YonshakuKamuro_10",
+   "replica": "MYHK-S10",
+   "files": [
+    "T_EFX_FireWorks_YonshakuKamuro_10_Main_4x4_01.png",
+    "T_EFX_FireWorks_YonshakuKamuro_10_Main_4x4_01_C.png",
+    "T_EFX_FireWorks_YonshakuKamuro_10_Main_4x4_01_HD.png",
+    "T_EFX_FireWorks_YonshakuKamuro_10_Main_R.png",
+    "T_EFX_FireWorks_YonshakuKamuro_10_Red_4x4_01.png",
+    "T_EFX_FireWorks_YonshakuKamuro_10_Red_4x4_01_C.png",
+    "T_EFX_FireWorks_YonshakuKamuro_10_Red_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

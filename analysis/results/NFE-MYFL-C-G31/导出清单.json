@@ -1,0 +1,28 @@
+{
+ "effect": "myv_fxmuux2arh",
+ "entry": "MYFL-C",
+ "ver": "7ee15caf·master4.9.31",
+ "time": "2026-10-07 16:25",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "Crossette_Core",
+   "replica": "MYFL-C",
+   "files": [
+    "T_EFX_FireWorks_Crossette_Core_Core_4x4_01.png",
+    "T_EFX_FireWorks_Crossette_Core_Core_4x4_01_C.png",
+    "T_EFX_FireWorks_Crossette_Core_Core_4x4_01_HD.png",
+    "T_EFX_FireWorks_Crossette_Core_Core_R.png",
+    "T_EFX_FireWorks_Crossette_Core_Main_4x4_01.png",
+    "T_EFX_FireWorks_Crossette_Core_Main_4x4_01_C.png",
+    "T_EFX_FireWorks_Crossette_Core_Main_4x4_01_HD.png",
+    "T_EFX_FireWorks_Crossette_Core_Main_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

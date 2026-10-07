@@ -1,0 +1,27 @@
+{
+ "effect": "tempo_jmg10",
+ "entry": "TP-JMG10-T75",
+ "ver": "aa7ca31e·master4.9.31",
+ "time": "2026-10-07 16:22",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "JinMangJu_10_T75",
+   "replica": "TP-JMG10-T75",
+   "files": [
+    "JinMangJu_10_T75.json",
+    "JinMangJu_10_T75_Cascade参数.txt",
+    "JinMangJu_10_T75_Mobile.json",
+    "JinMangJu_10_T75_曲线.csv",
+    "T_EFX_FireWorks_JinMangJu_10_T75_4x4_01.png",
+    "T_EFX_FireWorks_JinMangJu_10_T75_4x4_01_C.png",
+    "T_EFX_FireWorks_JinMangJu_10_T75_4x4_01_HD.png",
+    "T_EFX_FireWorks_JinMangJu_10_T75_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

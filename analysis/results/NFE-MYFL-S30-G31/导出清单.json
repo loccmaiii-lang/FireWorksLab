@@ -1,0 +1,30 @@
+{
+ "effect": "myv_fxmuux2arh",
+ "entry": "MYFL-S30",
+ "ver": "bb4ce6d4·master4.9.31",
+ "time": "2026-10-07 16:27",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "Crossette_30",
+   "replica": "MYFL-S30",
+   "files": [
+    "Crossette_30.json",
+    "Crossette_30_Cascade参数.txt",
+    "Crossette_30_Mobile.json",
+    "Crossette_30_曲线.csv",
+    "T_EFX_FireWorks_Crossette_30_4x4_01.png",
+    "T_EFX_FireWorks_Crossette_30_4x4_01_C.png",
+    "T_EFX_FireWorks_Crossette_30_4x4_01_HD.png",
+    "T_EFX_FireWorks_Crossette_30_4x4_02.png",
+    "T_EFX_FireWorks_Crossette_30_4x4_02_C.png",
+    "T_EFX_FireWorks_Crossette_30_4x4_02_HD.png",
+    "T_EFX_FireWorks_Crossette_30_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

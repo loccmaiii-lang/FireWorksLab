@@ -1,0 +1,28 @@
+{
+ "effect": "myv_fxmuuzfeg7",
+ "entry": "MYCR-C",
+ "ver": "886bf2a5·master4.3.8-core1+master4.9.31",
+ "time": "2026-10-07 16:23",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "Crackle_Core",
+   "replica": "MYCR-C",
+   "files": [
+    "T_EFX_FireWorks_Crackle_Core_Core_4x4_01.png",
+    "T_EFX_FireWorks_Crackle_Core_Core_4x4_01_C.png",
+    "T_EFX_FireWorks_Crackle_Core_Core_4x4_01_HD.png",
+    "T_EFX_FireWorks_Crackle_Core_Core_R.png",
+    "T_EFX_FireWorks_Crackle_Core_Main_4x4_01.png",
+    "T_EFX_FireWorks_Crackle_Core_Main_4x4_01_C.png",
+    "T_EFX_FireWorks_Crackle_Core_Main_4x4_01_HD.png",
+    "T_EFX_FireWorks_Crackle_Core_Main_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

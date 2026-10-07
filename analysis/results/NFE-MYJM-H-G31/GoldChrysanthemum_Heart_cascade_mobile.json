@@ -1,0 +1,192 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "GoldChrysanthemum_Heart_Mobile",
+ "platform": "mobile",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.31",
+  "type": "kiku",
+  "form": "master",
+  "quality": {
+   "ss": 2,
+   "hz": 300
+  },
+  "plan_sig": "b6fd2d32"
+ },
+ "textures": {
+  "seq": {
+   "file": "T_EFX_FireWorks_GoldChrysanthemum_Heart_4x4_01.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_GoldChrysanthemum_Heart_4x4_01"
+  },
+  "cutout": {
+   "file": "T_EFX_FireWorks_GoldChrysanthemum_Heart_4x4_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_GoldChrysanthemum_Heart_4x4_01_C"
+  },
+  "ramp": {
+   "file": "T_EFX_FireWorks_GoldChrysanthemum_Heart_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_GoldChrysanthemum_Heart_R"
+  }
+ },
+ "materials": {
+  "main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 1.2
+ },
+ "emitters": [
+  {
+   "name": "Main",
+   "material": "main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 4.5667,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutout",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.46
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 4.5667
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       21265.1,
+       21265.1,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.1752,
+         24.01
+        ],
+        [
+         0.2774,
+         31.01
+        ],
+        [
+         0.9781,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         0.8714,
+         0.7157
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         0.8714,
+         0.7157
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "notes": [
+    "固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 -8.5 m），仰视时也对得上；未经 UE 验证"
+   ]
+  }
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "GoldChrysanthemum_Heart",
+  "layers": [
+   ""
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ }
+}

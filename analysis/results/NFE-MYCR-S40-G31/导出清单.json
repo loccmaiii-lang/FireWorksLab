@@ -1,0 +1,30 @@
+{
+ "effect": "myv_fxmuuzfeg7",
+ "entry": "MYCR-S40",
+ "ver": "95e1e359·master4.3.8-core1",
+ "time": "2026-10-07 16:25",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "Crackle_40",
+   "replica": "MYCR-S40",
+   "files": [
+    "Crackle_40.json",
+    "Crackle_40_Cascade参数.txt",
+    "Crackle_40_Mobile.json",
+    "Crackle_40_曲线.csv",
+    "T_EFX_FireWorks_Crackle_40_4x4_01.png",
+    "T_EFX_FireWorks_Crackle_40_4x4_01_C.png",
+    "T_EFX_FireWorks_Crackle_40_4x4_01_HD.png",
+    "T_EFX_FireWorks_Crackle_40_4x4_02.png",
+    "T_EFX_FireWorks_Crackle_40_4x4_02_C.png",
+    "T_EFX_FireWorks_Crackle_40_4x4_02_HD.png",
+    "T_EFX_FireWorks_Crackle_40_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

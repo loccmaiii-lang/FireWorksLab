@@ -1,0 +1,7 @@
+16:32:25 开始：GoldRay_03（导出素材）
+16:32:35 GoldRay_03 组合素材包 10 秒：T_EFX_FireWorks_GoldRay_03_A_4x4_01.png、T_EFX_FireWorks_GoldRay_03_A_4x4_01_C.png、T_EFX_FireWorks_GoldRay_03_A_4x4_01_HD.png、T_EFX_FireWorks_GoldRay_03_A_R.png、T_EFX_FireWorks_GoldRay_03_B_4x4_01.png、T_EFX_FireWorks_GoldRay_03_B_4x4_01_C.png、T_EFX_FireWorks_GoldRay_03_B_4x4_01_HD.png、T_EFX_FireWorks_GoldRay_03_B_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+16:32:36 回放检查：✅ 通过
+16:32:51 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJA-S03-G31\烘焙回放.jpg
+16:32:51 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJA-S03-G31\烘焙回放_原尺寸.jpg
+16:32:51 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+16:32:51 完成，用时 0.4 分钟

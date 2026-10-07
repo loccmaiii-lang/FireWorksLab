@@ -1,0 +1,8 @@
+16:26:06 开始：Crossette_Jisa（导出素材）
+16:26:07 Crossette_Jisa 导出 1 秒：Crossette_Jisa.json、Crossette_Jisa_Cascade参数.txt、Crossette_Jisa_Mobile.json、Crossette_Jisa_曲线.csv、T_EFX_FireWorks_Crossette_Jisa_4x4_01.png、T_EFX_FireWorks_Crossette_Jisa_4x4_01_C.png、T_EFX_FireWorks_Crossette_Jisa_4x4_01_HD.png、T_EFX_FireWorks_Crossette_Jisa_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+16:26:08 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYFL-J-G31\回放检查.jpg（✅ 通过）
+16:26:23 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYFL-J-G31\烘焙回放.jpg
+16:26:23 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYFL-J-G31\烘焙回放_原尺寸.jpg
+16:26:23 烘焙器预览 preview.js：469 KB
+16:26:23 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+16:26:23 完成，用时 0.3 分钟

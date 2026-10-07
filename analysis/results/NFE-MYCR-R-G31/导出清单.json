@@ -1,0 +1,27 @@
+{
+ "effect": "myv_fxmuuzfeg7",
+ "entry": "MYCR-R",
+ "ver": "32db0b17·master4.3.8-core1",
+ "time": "2026-10-07 16:24",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "Crackle_Ring",
+   "replica": "MYCR-R",
+   "files": [
+    "Crackle_Ring.json",
+    "Crackle_Ring_Cascade参数.txt",
+    "Crackle_Ring_Mobile.json",
+    "Crackle_Ring_曲线.csv",
+    "T_EFX_FireWorks_Crackle_Ring_4x4_01.png",
+    "T_EFX_FireWorks_Crackle_Ring_4x4_01_C.png",
+    "T_EFX_FireWorks_Crackle_Ring_4x4_01_HD.png",
+    "T_EFX_FireWorks_Crackle_Ring_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

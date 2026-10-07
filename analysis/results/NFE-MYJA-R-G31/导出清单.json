@@ -1,0 +1,28 @@
+{
+ "effect": "myv_fxmuv6vhrq",
+ "entry": "MYJA-R",
+ "ver": "0443c405·master4.9.31",
+ "time": "2026-10-07 16:32",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "GoldRay_Ring",
+   "replica": "MYJA-R",
+   "files": [
+    "T_EFX_FireWorks_GoldRay_Ring_A_4x4_01.png",
+    "T_EFX_FireWorks_GoldRay_Ring_A_4x4_01_C.png",
+    "T_EFX_FireWorks_GoldRay_Ring_A_4x4_01_HD.png",
+    "T_EFX_FireWorks_GoldRay_Ring_A_R.png",
+    "T_EFX_FireWorks_GoldRay_Ring_B_4x4_01.png",
+    "T_EFX_FireWorks_GoldRay_Ring_B_4x4_01_C.png",
+    "T_EFX_FireWorks_GoldRay_Ring_B_4x4_01_HD.png",
+    "T_EFX_FireWorks_GoldRay_Ring_B_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

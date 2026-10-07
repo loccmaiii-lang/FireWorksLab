@@ -1,0 +1,7 @@
+16:35:10 开始：GoldRayRocket_Crown（导出素材）
+16:35:17 GoldRayRocket_Crown 组合素材包 7 秒：T_EFX_FireWorks_GoldRayRocket_Crown_L1_4x4_01.png、T_EFX_FireWorks_GoldRayRocket_Crown_L1_4x4_01_C.png、T_EFX_FireWorks_GoldRayRocket_Crown_L1_4x4_01_HD.png、T_EFX_FireWorks_GoldRayRocket_Crown_L1_4x4_02.png、T_EFX_FireWorks_GoldRayRocket_Crown_L1_4x4_02_C.png、T_EFX_FireWorks_GoldRayRocket_Crown_L1_4x4_02_HD.png、T_EFX_FireWorks_GoldRayRocket_Crown_L1_R.png、T_EFX_FireWorks_GoldRayRocket_Crown_L2_4x4_01.png、T_EFX_FireWorks_GoldRayRocket_Crown_L2_4x4_01_C.png、T_EFX_FireWorks_GoldRayRocket_Crown_L2_4x4_01_HD.png、T_EFX_FireWorks_GoldRayRocket_Crown_L2_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+16:35:18 回放检查：✅ 通过
+16:35:33 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJC-K-G31\烘焙回放.jpg
+16:35:33 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJC-K-G31\烘焙回放_原尺寸.jpg
+16:35:33 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+16:35:33 完成，用时 0.4 分钟

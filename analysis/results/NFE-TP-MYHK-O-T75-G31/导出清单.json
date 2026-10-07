@@ -1,0 +1,32 @@
+{
+ "effect": "tempo_myhk",
+ "entry": "TP-MYHK-O-T75",
+ "ver": "92098c91·dots4.9.24+master4.9.31",
+ "time": "2026-10-07 16:23",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "YonshakuKamuro_T75",
+   "replica": "TP-MYHK-O-T75",
+   "files": [
+    "T_EFX_FireWorks_YonshakuKamuro_T75_L1_4x4_01.png",
+    "T_EFX_FireWorks_YonshakuKamuro_T75_L1_4x4_01_C.png",
+    "T_EFX_FireWorks_YonshakuKamuro_T75_L1_4x4_01_HD.png",
+    "T_EFX_FireWorks_YonshakuKamuro_T75_L1_4x4_02.png",
+    "T_EFX_FireWorks_YonshakuKamuro_T75_L1_4x4_02_C.png",
+    "T_EFX_FireWorks_YonshakuKamuro_T75_L1_4x4_02_HD.png",
+    "T_EFX_FireWorks_YonshakuKamuro_T75_L1_R.png",
+    "T_EFX_FireWorks_YonshakuKamuro_T75_L2_4x4_01.png",
+    "T_EFX_FireWorks_YonshakuKamuro_T75_L2_4x4_01_C.png",
+    "T_EFX_FireWorks_YonshakuKamuro_T75_L2_4x4_02.png",
+    "T_EFX_FireWorks_YonshakuKamuro_T75_L2_4x4_02_C.png",
+    "T_EFX_FireWorks_YonshakuKamuro_T75_L2_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

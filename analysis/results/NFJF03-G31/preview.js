@@ -1,0 +1,1 @@
+FW_ASSET_LOADED("NFJF03-G31", {"manifest": {"title": "JinMangJu03", "duration": 3.53, "view": 71.2, "variants": {"JinMangJu03": "JinMangJu03"}, "emitters": [], "note": "对话框新花型：烘焙器 4.9.31 护栏 Ramp（第 255 格黑）+ 序列编码封顶 253（用户 10-07 14:34「后面所有导出都这样做」，OUTPUT_VER master / unit 4.9.31）→ 参数不动重导。同一目录覆盖。"}, "images": {}});

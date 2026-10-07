@@ -1,0 +1,31 @@
+{
+ "effect": "myv_fxmuv6vhrq",
+ "entry": "MYJA-Y",
+ "ver": "b890e04a·master4.9.31",
+ "time": "2026-10-07 16:34",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "GoldRay_Willow",
+   "replica": "MYJA-Y",
+   "files": [
+    "T_EFX_FireWorks_GoldRay_Willow_A_4x4_01.png",
+    "T_EFX_FireWorks_GoldRay_Willow_A_4x4_01_C.png",
+    "T_EFX_FireWorks_GoldRay_Willow_A_4x4_01_HD.png",
+    "T_EFX_FireWorks_GoldRay_Willow_A_R.png",
+    "T_EFX_FireWorks_GoldRay_Willow_B_4x4_01.png",
+    "T_EFX_FireWorks_GoldRay_Willow_B_4x4_01_C.png",
+    "T_EFX_FireWorks_GoldRay_Willow_B_4x4_01_HD.png",
+    "T_EFX_FireWorks_GoldRay_Willow_B_4x4_02.png",
+    "T_EFX_FireWorks_GoldRay_Willow_B_4x4_02_C.png",
+    "T_EFX_FireWorks_GoldRay_Willow_B_4x4_02_HD.png",
+    "T_EFX_FireWorks_GoldRay_Willow_B_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

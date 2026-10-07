@@ -1,0 +1,8 @@
+16:27:01 开始：Crossette_40（导出素材）
+16:27:09 Crossette_40 导出 8 秒：Crossette_40.json、Crossette_40_Cascade参数.txt、Crossette_40_Mobile.json、Crossette_40_曲线.csv、T_EFX_FireWorks_Crossette_40_4x4_01.png、T_EFX_FireWorks_Crossette_40_4x4_01_C.png、T_EFX_FireWorks_Crossette_40_4x4_01_HD.png、T_EFX_FireWorks_Crossette_40_4x4_02.png、T_EFX_FireWorks_Crossette_40_4x4_02_C.png、T_EFX_FireWorks_Crossette_40_4x4_02_HD.png、T_EFX_FireWorks_Crossette_40_4x4_03.png、T_EFX_FireWorks_Crossette_40_4x4_03_C.png、T_EFX_FireWorks_Crossette_40_4x4_03_HD.png、T_EFX_FireWorks_Crossette_40_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+16:27:10 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYFL-S40-G31\回放检查.jpg（✅ 通过）
+16:27:28 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYFL-S40-G31\烘焙回放.jpg
+16:27:28 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYFL-S40-G31\烘焙回放_原尺寸.jpg
+16:27:28 烘焙器预览没做成（不影响导出）：分张（A/B…）母版不生成旧式 preview.js；在烘焙器条目里看引擎回放
+16:27:28 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+16:27:28 完成，用时 0.5 分钟

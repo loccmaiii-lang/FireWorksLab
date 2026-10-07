@@ -1,0 +1,30 @@
+{
+ "effect": "myv_fxmuv7n3ih",
+ "entry": "MYJM-S20",
+ "ver": "c0aff52b·master4.9.31",
+ "time": "2026-10-07 16:43",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "GoldChrysanthemum_20",
+   "replica": "MYJM-S20",
+   "files": [
+    "GoldChrysanthemum_20.json",
+    "GoldChrysanthemum_20_Cascade参数.txt",
+    "GoldChrysanthemum_20_Mobile.json",
+    "GoldChrysanthemum_20_曲线.csv",
+    "T_EFX_FireWorks_GoldChrysanthemum_20_4x4_01.png",
+    "T_EFX_FireWorks_GoldChrysanthemum_20_4x4_01_C.png",
+    "T_EFX_FireWorks_GoldChrysanthemum_20_4x4_01_HD.png",
+    "T_EFX_FireWorks_GoldChrysanthemum_20_4x4_02.png",
+    "T_EFX_FireWorks_GoldChrysanthemum_20_4x4_02_C.png",
+    "T_EFX_FireWorks_GoldChrysanthemum_20_4x4_02_HD.png",
+    "T_EFX_FireWorks_GoldChrysanthemum_20_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

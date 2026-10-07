@@ -1,0 +1,27 @@
+{
+ "effect": "myv_fxmuuzfeg7",
+ "entry": "MYCR-M",
+ "ver": "c36f95cd·master4.3.8-core1",
+ "time": "2026-10-07 16:24",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "Crackle_Kaleido",
+   "replica": "MYCR-M",
+   "files": [
+    "Crackle_Kaleido.json",
+    "Crackle_Kaleido_Cascade参数.txt",
+    "Crackle_Kaleido_Mobile.json",
+    "Crackle_Kaleido_曲线.csv",
+    "T_EFX_FireWorks_Crackle_Kaleido_4x4_01.png",
+    "T_EFX_FireWorks_Crackle_Kaleido_4x4_01_C.png",
+    "T_EFX_FireWorks_Crackle_Kaleido_4x4_01_HD.png",
+    "T_EFX_FireWorks_Crackle_Kaleido_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,146 @@
+烟花母版：GoldChrysanthemum_30（菊）
+工具：烟花母版烘焙器 4.9.31（模拟内核：GPU；产物：大面片母版）
+
+【贴图】
+T_GoldChrysanthemum_30_A.png（星头、闪光、拖尾合并）
+T_GoldChrysanthemum_30_B.png（星头、闪光、拖尾合并）
+尺寸 2048×2048，灰度（线性），RGBA 接力：先填满 R 的 16 格（第 0–15 帧），再接 G（16–31）、B（32–47）、A（48–63）
+格子 4 列 × 4 行，行优先，左上为第 0 帧；单格 512×512 像素；共 64 帧；格子四周留空 2 像素
+导入：sRGB 关闭，压缩 BC7；1K 版本在引擎里复制一张，把最大尺寸设为 1024 即可
+T_GoldChrysanthemum_30_FrameTest.png（帧号测试）：排查用。格子、接力、取景与正式贴图完全相同，内容是帧号 + 以爆点为中心的固定大小圆和网格。
+  把材质实例的贴图临时换成它播放：帧号应连续递增不倒退，圆应不动、不胀缩、不变扁。
+  帧号乱跳 / 倒退 → 帧号曲线或材质的接力解码不对；圆胀缩、晃动 → Size By Life / 位置曲线不对；圆变扁 → 对齐方式或 Initial Size 不对
+T_GoldChrysanthemum_30_Ramp.png：渐变图 256×8（sRGB；最右一格黑 = 护栏，4.9.31），灰度从暗到亮依次取：拖尾冷却色 → 拖尾高温色 → 星头高温色
+
+【材质实例】
+项目现有的 RGBA 序列帧材质；列 = 4，行 = 4；Ramp = T_GoldChrysanthemum_30_Ramp
+
+【Cutout：裁掉面片上的空白，减少 overdraw】
+段 A：Required → Cutout Texture = T_GoldChrysanthemum_30_A_Cutout（512×512，所有帧叠在一起的轮廓）；
+  Sub Images Horizontal = 1，Vertical = 1；Bounding Mode = Eight Vertices；Opacity Source Mode = Alpha；Alpha Threshold = 0.1；不加 SubUV 模块。
+  面片剩下约 47%（引擎按轮廓外接八边形，会略大一点）。材质照旧用 Dynamic Parameter 帧号通道取帧。
+段 B：Required → Cutout Texture = T_GoldChrysanthemum_30_B_Cutout（512×512，所有帧叠在一起的轮廓）；
+  Sub Images Horizontal = 1，Vertical = 1；Bounding Mode = Eight Vertices；Opacity Source Mode = Alpha；Alpha Threshold = 0.1；不加 SubUV 模块。
+  面片剩下约 67%（引擎按轮廓外接八边形，会略大一点）。材质照旧用 Dynamic Parameter 帧号通道取帧。
+
+【Cascade 发射器 · 段 A】
+Required：Screen Alignment = Rectangle（面向相机，X、Y 尺寸分开生效；不要用 Square——Square 只认 X，Y 方向会按错的比例缩放，画面变形、抖动）；Emitter Duration = 3.17 s；Emitter Loops = 1
+所有曲线（Size By Life、Dynamic Parameter 帧号、Color Over Life、Location / Velocity 等）：每个关键点的 Interp Mode = Linear。CurveAuto 会在关键点之间冲过头：尺寸来回抖、帧号倒退一抖一抖。Size By Life 勾选 Multiply X、Multiply Y。
+Spawn：Rate = 0；Burst：Count = 1，Time = 0
+Lifetime：3.17 s（常量）
+Initial Size：X = 60908 cm，Y = 60908 cm（常量）
+Initial Location：0；Required → Pivot Offset = (−0.5, -0.4335)（爆点在贴图里的位置：面片中心比爆点高 -4053 cm；面片总是面向相机，用 Pivot 对齐仰视时也不错位；未经 UE 验证）
+Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号；Use Emitter Time 不勾选；曲线插值 Linear
+  相对时间    帧号
+  0.0000      0.010
+  0.3474      33.010
+  0.9789      63.010
+  1.0000      63.990
+  材质取整显示，不做帧间混合。最后一个值是「总帧数 − 0.01」：到总帧数会从第 0 帧重新开始。烘焙时每一帧取的正是这条曲线上对应帧号的时刻，画面与引擎一致。
+Color Over Life（线性 RGB；Alpha 恒为 1）
+  0.0000      1  0.8714  0.7157
+  1.0000      1  0.8714  0.7157
+  亮度倍数：星头 1（乘在颜色上，按项目曝光再调）
+Light（可选）：Brightness Over Life 相对值，乘以期望的峰值亮度
+  0.0000      0.005
+  0.0421      0.192
+  0.1053      0.406
+  0.2526      0.758
+  0.4105      0.947
+  0.5579      1.000
+  0.9789      0.897
+  1.0000      0.000
+Initial Rotation（可选）：−15°～15° 随机，同一母版多发时增加差异
+【可直接粘贴】在 Cascade 细节面板里：先把 Distribution 类型选成下面写的曲线类型，展开到 Points（或 Constant）那一行，右键 → 粘贴。
+  所有曲线点已是 Linear。粘贴不进去时，右键一条现有曲线的 Points → 复制，把文本发给 Claude 对格式。
+▸ Initial Size → Start Size → Distribution Vector Constant → Constant
+(X=60907.960146,Y=60907.960146,Z=1.000000)
+▸ Required → Pivot Offset
+(X=-0.500000,Y=-0.433454)
+▸ Dynamic Parameter → 帧号参数（按导入配置，实测第 0 个）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points
+((InVal=0.000000,OutVal=0.010000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.347400,OutVal=33.010000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.978900,OutVal=63.010000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=1.000000,OutVal=63.990000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear))
+▸ Color Over Life → Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）
+((InVal=0.000000,OutVal=(X=1.000000,Y=0.871400,Z=0.715700),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=1.000000,OutVal=(X=1.000000,Y=0.871400,Z=0.715700),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear))
+【帧与流畅度 · 段 A】
+平均 12.8 fps，最低 10.0 fps，每帧最大位移 2.2 像素（建议 ≤ 3）
+平均面片面积为最大尺寸的 100%（overdraw 按此折算）
+
+【Cascade 发射器 · 段 B】
+Required：Screen Alignment = Rectangle（面向相机，X、Y 尺寸分开生效；不要用 Square——Square 只认 X，Y 方向会按错的比例缩放，画面变形、抖动）；Emitter Duration = 6.80 s；Emitter Loops = 1；Emitter Delay = 3.17 s（接在上一段之后）
+所有曲线（Size By Life、Dynamic Parameter 帧号、Color Over Life、Location / Velocity 等）：每个关键点的 Interp Mode = Linear。CurveAuto 会在关键点之间冲过头：尺寸来回抖、帧号倒退一抖一抖。Size By Life 勾选 Multiply X、Multiply Y。
+Spawn：Rate = 0；Burst：Count = 1，Time = 0
+Lifetime：6.80 s（常量）
+Initial Size：X = 60908 cm，Y = 60908 cm（常量）
+Initial Location：0；Required → Pivot Offset = (−0.5, -0.4335)（爆点在贴图里的位置：面片中心比爆点高 -4053 cm；面片总是面向相机，用 Pivot 对齐仰视时也不错位；未经 UE 验证）
+Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号；Use Emitter Time 不勾选；曲线插值 Linear
+  相对时间    帧号
+  0.0000      0.010
+  0.0392      4.010
+  0.6863      48.010
+  0.9804      63.010
+  1.0000      63.990
+  材质取整显示，不做帧间混合。最后一个值是「总帧数 − 0.01」：到总帧数会从第 0 帧重新开始。烘焙时每一帧取的正是这条曲线上对应帧号的时刻，画面与引擎一致。
+Color Over Life（线性 RGB；Alpha 恒为 1）
+  0.0000      1  0.8714  0.7157
+  1.0000      1  0.8714  0.7157
+  亮度倍数：星头 1（乘在颜色上，按项目曝光再调）
+Light（可选）：Brightness Over Life 相对值，乘以期望的峰值亮度
+  0.0000      1.000
+  0.2010      0.822
+  0.3333      0.668
+  0.5539      0.214
+  0.6422      0.086
+  0.7647      0.016
+  1.0000      0.000
+Initial Rotation（可选）：−15°～15° 随机，同一母版多发时增加差异
+【可直接粘贴】在 Cascade 细节面板里：先把 Distribution 类型选成下面写的曲线类型，展开到 Points（或 Constant）那一行，右键 → 粘贴。
+  所有曲线点已是 Linear。粘贴不进去时，右键一条现有曲线的 Points → 复制，把文本发给 Claude 对格式。
+▸ Initial Size → Start Size → Distribution Vector Constant → Constant
+(X=60907.960146,Y=60907.960146,Z=1.000000)
+▸ Required → Pivot Offset
+(X=-0.500000,Y=-0.433454)
+▸ Dynamic Parameter → 帧号参数（按导入配置，实测第 0 个）→ Param Value → Distribution Float Constant Curve → Constant Curve → Points
+((InVal=0.000000,OutVal=0.010000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.039200,OutVal=4.010000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.686300,OutVal=48.010000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=0.980400,OutVal=63.010000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear),(InVal=1.000000,OutVal=63.990000,ArriveTangent=0.000000,LeaveTangent=0.000000,InterpMode=CIM_Linear))
+▸ Color Over Life → Color Over Life → Distribution Vector Constant Curve → Constant Curve → Points（已乘星头亮度倍数）
+((InVal=0.000000,OutVal=(X=1.000000,Y=0.871400,Z=0.715700),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear),(InVal=1.000000,OutVal=(X=1.000000,Y=0.871400,Z=0.715700),ArriveTangent=(X=0.000000,Y=0.000000,Z=0.000000),LeaveTangent=(X=0.000000,Y=0.000000,Z=0.000000),InterpMode=CIM_Linear))
+【帧与流畅度 · 段 B】
+平均 12.8 fps，最低 10.0 fps，每帧最大位移 2.2 像素（建议 ≤ 3）
+平均面片面积为最大尺寸的 100%（overdraw 按此折算）
+
+每段一个发射器，按各段 Emitter Delay 与寿命顺序衔接；全部 2 段共用世界取景。
+
+【自检】
+  段 A：画面占比：平均 62%，最差 10% 的帧 ≥ 52%（紧凑取景已禁用：引擎里会抖；想更满可以减少留边或改随开花放大）
+  段 A：过曝：无
+  段 A：边缘渗色：无（留边 2 像素）
+  段 A：通道布局：R 有内容，G 有内容，B 有内容，A 有内容
+  段 A：近似帧：12 对相邻帧几乎相同
+  段 A：最低帧率 10.0 fps，尾段可能发卡：可增加格子数或缩短序列时长
+  段 B：画面占比：平均 88%，最差 10% 的帧 ≥ 80%（紧凑取景已禁用：引擎里会抖；想更满可以减少留边或改随开花放大）
+  段 B：过曝：无
+  段 B：边缘渗色：无（留边 2 像素）
+  段 B：通道布局：R 有内容，G 有内容，B 有内容，A 有内容
+  段 B：近似帧：0 对相邻帧几乎相同
+  段 B：最低帧率 10.0 fps，尾段可能发卡：可增加格子数或缩短序列时长
+
+【烟（开花烟，用项目现有烟雾贴图）】
+Spawn：Burst Count = 48；Lifetime 9.87–14.87 s
+Location → Sphere：Velocity 勾选，速度约 4672 cm/s；Drag = 0.34（烟团很快停在星走过的地方）
+Initial Size 3654 cm，Size By Life 1 → 3（扩散）
+Alpha Over Life：0 → 0.3（在 0.49）→ 0
+颜色：前 5.87 s 被火光照亮，乘本母版 Color Over Life 与 Light 曲线；之后转为场景夜空灰
+
+【声音节点（相对开花，秒）】
+  0.000  开花爆响
+  玩家听到的时刻 = 事件时刻 + 距离 ÷ 343 m/s（800 m 约晚 2.3 s）
+
+【LOD 建议（1080p、竖直视角 60°）】
+LOD 0：0–1,113 m，全部层，2K 贴图
+LOD 1：1,113–2,225 m，屏幕上已小于单格像素：1K 贴图即可；粒子数/火花发射率减半；关闭 Light
+LOD 2：2,225 m 以外：只留本层；去掉芯（小缩放的牡丹层）和烟
+（Cascade：粒子系统的 LOD Distances 依次填 0、111300、222500，单位 cm）
+
+
+【说明】
+面向相机的精灵用 Initial Location 的 Z 偏移对齐爆点；从很陡的仰角看时会有轻微偏差。
+GoldChrysanthemum_30.json 保存了全部参数，用烘焙器「导入参数 JSON」即可继续修改。
