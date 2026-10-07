@@ -1,0 +1,1 @@
+FW_ASSET_LOADED("FCE-FC4O", {"manifest": {"title": "FanCometOrange", "duration": 4.9, "view": 165.4, "variants": {"FanCometOrange": "FanCometOrange"}, "emitters": [], "note": "对话框FanGold：橙扇 FC4O（扇面 13 簇、头尖尾粗）导出 + 回放检查。"}, "images": {}});

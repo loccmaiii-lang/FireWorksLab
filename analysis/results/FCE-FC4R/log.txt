@@ -1,0 +1,7 @@
+07:51:57 开始：FanCometRed（导出素材）
+07:52:00 FanCometRed 组合素材包 4 秒：T_EFX_FireWorks_FanComet_Red_Comet_4x4_01.png、T_EFX_FireWorks_FanComet_Red_Comet_4x4_01_C.png、T_EFX_FireWorks_FanComet_Red_Comet_4x4_01_HD.png、T_EFX_FireWorks_FanComet_Red_Comet_R.png、T_EFX_FireWorks_FanComet_Red_Glow_4x4_01.png、T_EFX_FireWorks_FanComet_Red_Glow_4x4_01_C.png、T_EFX_FireWorks_FanComet_Red_Glow_4x4_01_HD.png、T_EFX_FireWorks_FanComet_Red_Glow_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+07:52:01 回放检查：✅ 通过
+07:52:16 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FCE-FC4R\烘焙回放.jpg
+07:52:16 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FCE-FC4R\烘焙回放_原尺寸.jpg
+07:52:16 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+07:52:16 完成，用时 0.3 分钟
