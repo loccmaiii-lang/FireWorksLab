@@ -63,7 +63,7 @@ function namingSheets(b) {
 function applyPackNaming(files, base, entries) {
   const map = new Map(), drop = new Set();
   // pcTex === false（4.2.12：这一层 PC 出光点 / 单束 / 不出）→ 手机的 Cutout / Ramp 不能当成和 PC 共用丢掉；mb = 手机那次烘焙（PC 是单束时格子和 PC 不一样，手机名按它自己的格子起）
-  for (const { ln, mn, b, mb, layer, pcTex, low } of entries) {
+  for (const { ln, mn, b, mb, layer, pcTex, frame } of entries) {
     for (const [seg, L, sub, n, vi = 1] of namingSheets(b)) {
       const ly = joinPart(layer, sub), c = fwTexName(base, ly, L, n, 'C') + '.png';
       map.set(TN(ln, seg, null, vi) + '.png', fwTexName(base, ly, L, n, 'tex', false) + '.png');
@@ -71,27 +71,30 @@ function applyPackNaming(files, base, entries) {
       map.set(TN(ln, joinPart(seg, 'Cutout'), null, vi) + '.png', c);
       map.set(TN(ln, joinPart(seg, 'FrameTest'), null, vi) + '.png', fwTexName(base, ly, L, n, 'FrameTest') + '.png');
     }
-    for (const [seg, L, sub, n] of namingSheets(mb || b)) {
+    for (const [seg, L, sub, n, vi = 1] of namingSheets(mb || b)) {
       const ly = joinPart(layer, sub), c = fwTexName(base, ly, L, n, 'C') + '.png';
-      map.set(TN(mn, seg) + '.png', fwTexName(base, ly, L, n, 'tex', true) + '.png');
+      map.set(TN(mn, seg, null, vi) + '.png', fwTexName(base, ly, L, n, 'tex', true) + '.png');     // 4.9.35 手机单束的变体也换名（vi）
+      if (vi > 1) map.set(TN(mn, joinPart(seg, 'Cutout'), null, vi) + '.png', c);
       for (const ht of ['Head', 'Tail']) map.set(TN(mn, joinPart(seg, ht)) + '.png', fwTexName(base, ly, L, n, ht, true) + '.png');
       map.set(TN(mn, joinPart(seg, 'Cutout')) + '.png', c); if (pcTex !== false) drop.add(TN(mn, joinPart(seg, 'Cutout')) + '.png');
       drop.add(TN(mn, joinPart(seg, 'FrameTest')) + '.png');     // 帧号测试图只留 PC 的（_检查/，不导入）
     }
     const r = fwTexName(base, layer, null, 0, 'R') + '.png';
     map.set(TN(ln, 'Ramp') + '.png', r); map.set(TN(mn, 'Ramp') + '.png', r); if (pcTex !== false) drop.add(TN(mn, 'Ramp') + '.png');
-    // 4.9.29 低端单帧（用户 10-07 12:40「贴图名尾巴加_MB」）：灰度 …_1x1_01_MB、彩色 …_1x1_01_Color_MB、轮廓 …_1x1_01_C、功能图 …_1x1_01_<后缀>（后缀你填）；Ramp 和 PC 共用
-    if (low) { const g = { cols: 1, rows: 1 }, st = fwTexName(base, layer, g, 1, 'tex', true);
-      map.set(TN(low.ln, 'Frame') + '.png', st + '_MB.png'); map.set(TN(low.ln, 'Frame_Color') + '.png', st + '_Color_MB.png');
-      map.set(TN(low.ln, 'Frame_Cutout') + '.png', fwTexName(base, layer, g, 1, 'C') + '.png'); map.set(TN(low.ln, 'Frame_Maps') + '.png', st + '_' + (low.suffix || 'MAP') + '.png');
-      map.set(TN(low.ln, 'Ramp') + '.png', r); }
+    // 4.9.35 单帧（并进产物表，用户 10-07 18:50；名字不加 _MB）：PC 用的 …_1x1_01_HD、彩色 …_1x1_01_Color_HD；只有手机用的不带 _HD；
+    //   轮廓 …_1x1_01_C、功能图 …_1x1_01_<后缀>（后缀你填）、Ramp 和这一层共用。PC、手机都是单帧时手机直接用 PC 那张
+    if (frame) { const g = { cols: 1, rows: 1 }, st = fwTexName(base, layer, g, 1, 'tex', true);
+      for (const [nm, hd] of [[frame.pc ? ln : null, '_HD'], [frame.mob ? mn : null, '']]) { if (!nm) continue;
+        map.set(TN(nm, 'Frame') + '.png', st + hd + '.png'); map.set(TN(nm, 'Frame_Color') + '.png', st + '_Color' + hd + '.png');
+        map.set(TN(nm, 'Frame_Cutout') + '.png', fwTexName(base, layer, g, 1, 'C') + '.png'); map.set(TN(nm, 'Frame_Maps') + '.png', st + '_' + (frame.suffix || 'MAP') + '.png');
+        map.set(TN(nm, 'Ramp') + '.png', r); } }
   }
   const out = [], seen = new Set(), dec = new TextDecoder();
   for (const [f, d] of files) {
     if (drop.has(f)) continue;
-    if (/^cascade(_mobile|_low)?\.json$/.test(f)) {
+    if (/^cascade(_mobile)?\.json$/.test(f)) {
       const j = JSON.parse(dec.decode(d));
-      for (const t of [...Object.values(j.textures || {}), ...Object.values(j.extras || {})]) if (t && t.file) { if (map.has(t.file)) t.file = map.get(t.file); t.asset = t.file.replace(/^.*\//, '').replace(/\.png$/i, ''); }     // 4.9.29 低端包 + extras
+      for (const t of [...Object.values(j.textures || {}), ...Object.values(j.extras || {})]) if (t && t.file) { if (map.has(t.file)) t.file = map.get(t.file); t.asset = t.file.replace(/^.*\//, '').replace(/\.png$/i, ''); }     // 4.9.29 extras（彩色单帧）
       // 导入器直接用 textures[].asset 当 UE 资产名（已含 T_EFX_FireWorks_ 前缀、_HD 等后缀），不要再加前缀（spec/cascade_params_v1.md 第 1.1 节）
       j.naming = { rule: 'T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用', base, layers: entries.map(x => x.layer || ''), asset_names: 'textures[].asset', prefix_included: true };
       out.push([f, utf8(JSON.stringify(j, null, 1))]); continue;

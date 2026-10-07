@@ -65,7 +65,7 @@
 | 序列 | `T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>_HD` | 同左，不带 `_HD` |
 | Cut（外形裁切） | `T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>_C` | 和 PC 共用（手机包里不重复放） |
 | 溶解图 | `…_<序号>_D`（需要才生成；现在的效果都不需要） | 共用 |
-| 低端单帧（4.9.29） | — | 低端包：`…_1x1_01_MB`（灰度）、`…_1x1_01_Color_MB`（彩色）、`…_1x1_01_C`、功能图 `…_1x1_01_<后缀>`（见 10.H） |
+| 单帧（4.9.29；4.9.35 并进产物表） | — | 写进 cascade.json / cascade_mobile.json：PC 用的 `…_1x1_01_HD`（灰度）、`…_1x1_01_Color_HD`（彩色）；只给手机的不带 `_HD`；`…_1x1_01_C`、功能图 `…_1x1_01_<后缀>`；PC、手机都选单帧时手机直接引用 PC 那张。不再有 `_MB`、`cascade_low.json`（用户 10-07 18:50） |
 | Ramp | `T_EFX_FireWorks_<名称>[_<层>]_R` | 共用 |
 
 - `<名称>`：礼花英文名（`协作/状态清单.json` 的「英文名」，烘焙器「交付」页可改）；`<层>`：多层时每层英文名（Main / Red …）；`<序号>`：这一层的第几张贴图（01、02）；`<列>x<行>`：格子。
@@ -364,15 +364,15 @@ JSON里的局部配置：
 - **变体**（烘焙器 4.9.28，用户 10-07 11:45 选「变体数 + 随机感」）⚪ 未经 UE 验证：变体数 K > 1 时这一层有 K 个发射器 `L<层号>_Unit`、`L<层号>_Unit_V2`…，各自一张序列（`seq` / `seq_v2`…、`cutout` / `cutout_v2`…，材质 `main` / `main_v2`…，共用一张 `ramp`），`spawn.bursts` 的星数平分；素材包里贴图序号 `_01` / `_02`…。
   随机感 > 0 时 `InitialSize.StartSize` 写 `uniform`（宽 / 长各自随机：宽 ± 25 % × 随机感、长 ± 20 % × 随机感，Z = 1）；Cascade 的 Distribution Vector Uniform 不锁轴时每个轴各自随机。缺省（1 张、随机感 0）和以前逐字相同。单层效果 PC 出单束同一套（发射器名 `Unit` / `Unit_V2`…）。
 
-### H. 低端包 `cascade_low.json`：单帧 + 功能图（烘焙器 4.9.29 起，用户 10-07 09:41 / 09:54 / 12:40）⚪ 未经 UE 验证
-- 素材包多一份 `cascade_low.json`（`platform: "low"`），只在产物表「低端」列有层选了 单帧 / 序列 时才有；PC、手机两份不变。
+### H. 单帧层（烘焙器 4.9.29 起；4.9.35 并进产物表）⚪ 未经 UE 验证
+- 4.9.35（用户 10-07 18:50「低端这个分类应该不需要，直接合入产物表里」；18:5x「单帧放主包、名字不加 _MB」）：**没有 `cascade_low.json` 了**。单帧是产物表里一层的一种产物：PC 选单帧 → 写进 `cascade.json`，手机选单帧 → 写进 `cascade_mobile.json`（都选时手机直接引用 PC 那张贴图）。手机现在也能选单束（CPU、`beam_flipbook`，贴图和 PC 单束同一套；只给手机的贴图名不带 `_HD`）。
+- 有单帧层时 `cascade.json` / `cascade_mobile.json` 顶层可能多一个 `extras`（彩色单帧，导入器不用导）。
 - **单帧层**：发射器 `L<层号>_Frame`，CPU、`Rectangle`、`bursts [[0, 1]]`、`Pivot Offset` 把爆点放在粒子位置（同大面片）；材质 `flipbook_rgba`（现有序列材质），贴图 `class: flipbook`、`cols 1 / rows 1 / channels 1 / frames 1`，`DynamicParameter.frame` = `const 0`；`SizeByLife`（从开花长到单帧那一刻，之后 1）、`ColorOverLife` + `AlphaOverLife` 曲线（单帧那一刻以后按亮度只降不升）、`ColorScaleOverLife`。
 - **溶解**（4.9.31 起，用户 10-07 14:56「这个一律不开溶解是因为之前都是序列……如果网友单帧效果了，就需要开了」）：单帧发射器带 `dissolve` 标记 `{ enable: true, texture: "L<层号>_dmap", channel: "R", param: "dissolve", … }`，材质 `textures.dissolve` 指向这张图，`DynamicParameter.dissolve` = 曲线 `[[0,0],[1,1]]`（入点 → 出点）。**导入器只对带这个标记的发射器开溶解**，序列、单束、别的效果一律照旧不开。
   - 溶解图 `L<层号>_dmap`（`class: "dissolve"`，线性、不勾 sRGB；文件 `…_1x1_01_<后缀>`）按现有序列母材质的方向存（对话框5 10-07 查本机配置：读 R、进度 = 动态参数第 3 个、`fade = 1 − saturate(D + 2P − 1)`，值大的先消失、软过渡）：R = D = 1 − 熄灭时刻（早灭的值大，没亮过 = 1）；G = 轮廓（Cut，材质没有这个输入，轮廓照旧走 Required cutout）；B = 出现顺序（第一次亮的时刻，材质没有这个输入，留着）。
   - 软过渡：每一块大约要半个寿命才消失。要更利落得调材质实例的溶解强度（对话框5 定）。
 - **extras**（导入器不用导）：`L<层号>_color` 彩色单帧（sRGB，Alpha = 灰度）——要用得等用户指定能吃彩色单帧的那个材质。
-- **序列层**：和手机同一张贴图（引用手机的文件，不重复放），发射器同 `cascade_mobile.json`。
-- 贴图名（用户 12:40「贴图名尾巴加_MB」）：单帧 `T_EFX_FireWorks_<名称>[_<层>]_1x1_01_MB`、彩色 `…_1x1_01_Color_MB`、轮廓 `…_1x1_01_C`、功能图 `…_1x1_01_<后缀>`（后缀用户填，缺省按勾的 D / C / A，例 `_DCA`、`_DC`）；Ramp 和 PC 共用。
+- 贴图名（4.9.35 起不加 `_MB`）：单帧 `T_EFX_FireWorks_<名称>[_<层>]_1x1_01_HD`（只给手机的不带 `_HD`）、彩色 `…_1x1_01_Color_HD`、轮廓 `…_1x1_01_C`、功能图 `…_1x1_01_<后缀>`（后缀用户填，缺省按勾的 D / C / A，例 `_DCA`、`_DC`）；Ramp 和这一层共用。
 
 ## 11. 给云端 AI 的输出约定
 

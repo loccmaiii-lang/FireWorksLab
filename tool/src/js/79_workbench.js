@@ -63,11 +63,11 @@ function selectComboLayer(i) {
 // 导出方案的说明：这个方案在这一层上会少什么
 function outNote(L, e) {
   const o = layerOut(L), P = e && e.P, w = [];
-  if (o.pc === 'off' && o.mobile === 'off' && o.low === 'off') return '三个平台都不出这一层（画面里照样看得到，导出时跳过）';
-  if (o.pc === 'unit' && P && !unitAllowed(P)) w.push('这种花型 / 图案不能出单束（千轮、分裂、蜂、非球形图案），导出时 PC 按序列出');
+  if (o.pc === 'off' && o.mobile === 'off') return 'PC、手机都不出这一层（画面里照样看得到，导出时跳过）';
+  if ((o.pc === 'unit' || o.mobile === 'unit') && P && !unitAllowed(P)) w.push('这种花型 / 图案不能出单束（千轮、分裂、蜂、非球形图案），导出时按序列出');
   // XU1 试导（引菊 → 锦的锦层）：单束的尾巴是直的、沿速度方向；星下垂以后速度朝下，长尾巴都指向花心上方同一点（线性阻力的几何性质），后段像辐条。长尾、下垂多的层用序列
   // 4.9.27 改成量出来的（unitFit，50_bake.js）：以前按花型 / 余烬 / 火花寿命 > 1.2 s / 燃烧 > 4 s 猜
-  if (o.pc === 'unit' && P && unitAllowed(P)) { const f = unitFit(P); if (f && f.level !== 'ok') w.push(`${unitFitText(f)}${f.level === 'bad' ? '（单束的尾迹是沿速度的直线，下垂以后都指向花心上方、像辐条）' : ''}`); }
+  if ((o.pc === 'unit' || o.mobile === 'unit') && P && unitAllowed(P)) { const f = unitFit(P); if (f && f.level !== 'ok') w.push(`${unitFitText(f)}${f.level === 'bad' ? '（单束的尾迹是沿速度的直线，下垂以后都指向花心上方、像辐条）' : ''}`); }
   if (o.pc === 'dots' && P) {
     if (familyOf(P.type) !== 'aerial') w.push('这种花型不是礼花，光点没法表达，PC 请用序列');
     if (!(+P.headBright > 0)) w.push('这一层星头不发光（星头亮度 0，只有尾迹 / 火花）：光点什么都出不来，PC 请用序列');
@@ -76,15 +76,16 @@ function outNote(L, e) {
     if (+P.strobeHz > 0) w.push('点灭：光点不会闪（spec 10.B 的点灭星另配）');
     if (+P.subStars > 0 && ['senrin', 'crossette'].includes(P.type)) w.push('千轮 / 分裂的子花不在光点里');
   }
-  const lowTxt = o.low === 'frame' ? ' · 低端：单帧（一张图 + 功能图）' : o.low === 'seq' ? ' · 低端：序列（和手机同一张）' : '';     // 4.9.29
-  const s = `PC：${o.pc === 'seq' ? '这一层的序列' : o.pc === 'unit' ? `单束（每颗星一个面片，${Math.round(+(P && P.stars) || 0)} 个；贴图是一颗星的序列，引擎回放第一次要烘一会儿）` : o.pc === 'dots' ? `GPU 光点（约 ${P ? dotsCount(P) : 0} 颗，软圆点材质，没有贴图）` : '不出'} · 手机：${o.mobile === 'seq' ? '序列（纯图片）' : '不出'}${lowTxt}`;
+  // 4.9.35（用户 10-07 18:50）：单帧并进产物表，PC / 手机都能选；手机没有 GPU 光点
+  const frameTxt = '单帧（一张图 + 功能图，Size By Life 长大、按亮度淡出）';
+  const s = `PC：${o.pc === 'seq' ? '这一层的序列' : o.pc === 'unit' ? `单束（每颗星一个面片，${Math.round(+(P && P.stars) || 0)} 个；贴图是一颗星的序列，引擎回放第一次要烘一会儿）` : o.pc === 'dots' ? `GPU 光点（约 ${P ? dotsCount(P) : 0} 颗，软圆点材质，没有贴图）` : o.pc === 'frame' ? frameTxt : '不出'} · 手机：${o.mobile === 'seq' ? '序列（纯图片）' : o.mobile === 'unit' ? '单束（CPU，贴图和 PC 单束同一套）' : o.mobile === 'frame' ? frameTxt : '不出'}`;
   return s + (w.length ? '。注意：' + w.join('；') : '');
 }
 function buildLayerHead(i) {
   const L = state.layers[i], host = $('#layerHead'); host.innerHTML = '';
   for (const id of ['lhOut', 'lhPos', 'lhLink']) { const el = document.getElementById(id); if (el) el.remove(); }     // 4.9.8：上一层的导出方案 / 位置与时间放在参数栏里（layerBitsPlace），先拿掉
   host.insertAdjacentHTML('beforeend', `<div class="lh-t"><button class="btn mini" type="button" id="lhBack">← 整体</button><b title="第 ${i + 1} 层 · ${layerName(i)}">当前图层 · ${layerName(i)}</b><button class="shelp" type="button" id="lhHelp" title="这一层怎么调">？</button></div>
-    <p class="hint" id="lhHelpText" hidden>下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图」视图显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 寿命结束 / 火花停止（圆点）都可以直接拖。每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
+    <p class="hint" id="lhHelpText" hidden>下面是这一层的全部参数。改了只重烘这一层，画面仍是整朵；「贴图流转」显示这一层的贴图。颜色（预览材质）改的是这一层在整朵里的颜色。时间轴下面的层轨道上，每一层的入点 / 出点（白色把手）和点火 / 寿命结束 / 火花停止（圆点）都可以直接拖。每层有自己的输出（贴图尺寸、格子、帧数），在下面「输出」一节改；合并输出由整朵统一定。</p>
     ${lib.my || linkedWith(i).length ? `<details class="lh-link-details sec" id="lhLink"><summary>轨迹联动${linkedWith(i).length ? ' · 第 ' + linkedWith(i).map(j => j + 1).join('、') + ' 层' : ' · 关联图层'}</summary>${lib.my ? myLinkHTML(i) : `<p class="lh-link">和第 ${linkedWith(i).map(j => j + 1).join('、')} 层是同一批星——种子、星数、初速、终端速度、重力、随机等决定轨迹的参数改一处，几层一起变。<label class="check"><input type="checkbox" id="lhLinkOff"${state.linkOff ? ' checked' : ''}> 暂时不联动</label></p>`}</details>` : ''}`);
   // 4.9.8：「位置与时间」放进这一层的「效果」发射器顶上，默认展开（接力调开始时间常用）；开始时间和图层管理里那一格是同一个值
   const pos = document.createElement('details'); pos.className = 'sec lh-position'; pos.id = 'lhPos'; pos.open = store.get('lhPosOpen', true); pos.innerHTML = '<summary title="开始时间、缩放、时间倍率、水平镜像（这一层在整朵里的位置和时间）">这一层在整朵里</summary>'; host.appendChild(pos);
@@ -96,17 +97,17 @@ function buildLayerHead(i) {
   const cb = mir.querySelector('input'); cb.checked = !!L.mirror; cb.addEventListener('change', () => L.mirror = cb.checked); pos.appendChild(mir);
   // 4.2.12 导出方案（用户 10-02 20:04：PC 序列 + 粒子、手机纯图片，导出前在图层上选）
   const ex = document.createElement('details'); ex.className = 'sec'; ex.open = true; ex.id = 'lhOut';
-  ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field" title="单独一份低端包 cascade_low.json，贴图名末尾加 _MB">低端<select data-out="low">${OUT_LOW.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><div id="lhDots"></div><div id="lhUnitV"></div><div id="lhLow"></div><details class="lh-out-info"><summary>随整包导出 · 方案说明</summary><p class="note" id="lhOutNote"></p></details>`;
+  ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><div id="lhDots"></div><div id="lhUnitV"></div><div id="lhLow"></div><details class="lh-out-info"><summary>随整包导出 · 方案说明</summary><p class="note" id="lhOutNote"></p></details>`;
   host.insertBefore(ex, host.querySelector('.lh-t').nextSibling);
   // 4.2.15 光点的大小 / 亮度（XD2：默认偏大偏亮）：只在 PC 选「光点」时出现；1 = 不写进层（没动过的层和以前逐字一样）
   const dh = ex.querySelector('#lhDots'), dset = k => v => { if (Math.abs(v - 1) < 1e-9) delete L[k]; else L[k] = v; };
   slider(dh, `lh${i}-dotSize`, '光点大小', '× 星头', 0.2, 4, 0.05, () => L.dotSize > 0 ? +L.dotSize : 1, dset('dotSize'), 1);
   slider(dh, `lh${i}-dotBright`, '光点亮度', '×', 0.1, 4, 0.05, () => L.dotBright > 0 ? +L.dotBright : 1, dset('dotBright'), 1);
-  // 4.9.28 单束变体数 / 随机感（用户 10-07 11:45 选）：只在 PC 选「单束」时出现；缺省 1 / 0 不写进层
+  // 4.9.28 单束变体数 / 随机感（用户 10-07 11:45 选）：只在 PC / 手机选「单束」时出现；缺省 1 / 0 不写进层
   const uvh = ex.querySelector('#lhUnitV'), uset = (k, d) => v => { if (Math.abs(v - d) < 1e-9) delete L[k]; else L[k] = v; if (stage2.deliv) renderDeliv(); };
   slider(uvh, `lh${i}-unitVariants`, '单束变体数', '张', 1, 4, 1, () => unitVarOf(L).K, uset('unitVariants', 1), 1);
   slider(uvh, `lh${i}-unitRandom`, '单束随机感', '', 0, 1, 0.05, () => unitVarOf(L).r, uset('unitRandom', 0), 0);
-  // 4.9.29 低端单帧的设置（只在低端选「单帧」时出现；缺省值不写进层）
+  // 4.9.29 单帧的设置（4.9.35 起 PC 或手机选「单帧」时出现；缺省值不写进层）
   const lwh = ex.querySelector('#lhLow'), lset = (k, d) => v => { if (v === d || (typeof d === 'number' && Math.abs(+v - d) < 1e-9)) delete L[k]; else L[k] = v; if (stage2.deliv) renderDeliv(); };
   const lsel = (k, lab, opts, d) => { const w = document.createElement('label'); w.className = 'field'; w.innerHTML = `<span class="fk">${lab}</span><select>${opts.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select>`;
     const q = w.querySelector('select'); q.value = String(L[k] == null ? d : L[k]); q.addEventListener('change', () => { lset(k, d)(typeof d === 'number' ? +q.value : q.value); syncOut(); }); lwh.appendChild(w); };
@@ -118,10 +119,10 @@ function buildLayerHead(i) {
   lsel('lowMaps', '功能图', [['DCA', 'D + C + A'], ['DA', 'D + A'], ['DC', 'D + C'], ['D', '只要 D'], ['', '不要']], 'DCA');
   { const w = document.createElement('label'); w.className = 'field'; w.innerHTML = '<span class="fk">功能图后缀（空 = 按勾的）</span><input type="text" maxlength="8">'; const q = w.querySelector('input'); q.value = L.lowSuffix || '';
     q.addEventListener('change', () => { const v = q.value.replace(/[^A-Za-z0-9]/g, '').slice(0, 8); q.value = v; lset('lowSuffix', '')(v); }); lwh.appendChild(w); }
-  const syncOut = () => { const o = layerOut(L), le = layerEntryOf(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = o.mobile; ex.querySelector('[data-out=low]').value = o.low; lwh.hidden = o.low !== 'frame'; $('#lhOutNote').textContent = outNote(L, le); dh.hidden = o.pc !== 'dots'; uvh.hidden = o.pc !== 'unit';
+  const syncOut = () => { const o = layerOut(L), le = layerEntryOf(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = o.mobile; lwh.hidden = o.pc !== 'frame' && o.mobile !== 'frame'; $('#lhOutNote').textContent = outNote(L, le); dh.hidden = o.pc !== 'dots'; uvh.hidden = o.pc !== 'unit' && o.mobile !== 'unit';
     const info = ex.querySelector('.lh-out-info'), warn = $('#lhOutNote').textContent.includes('注意：') || (o.pc === 'off' && o.mobile === 'off'); info.open = warn; info.classList.toggle('warn', warn);
-    const uo = ex.querySelector('[data-out=pc] option[value=unit]'); if (uo && le) { uo.disabled = !unitAllowed(le.P) && o.pc !== 'unit'; uo.title = unitAllowed(le.P) ? '' : '千轮、分裂、蜂、非球形图案不能出单束'; } };
-  ex.querySelectorAll('[data-out]').forEach(sel => sel.addEventListener('change', () => { L.out = { ...layerOut(L), [sel.dataset.out]: sel.value }; if (L.out.low === 'off') delete L.out.low; if (L.out.pc === 'seq' && L.out.mobile === 'seq' && !L.out.low) delete L.out; syncOut(); if (stage2.deliv) renderDeliv(); wbSync(); }));
+    for (const pf of ['pc', 'mobile']) { const uo = ex.querySelector(`[data-out=${pf}] option[value=unit]`); if (uo && le) { uo.disabled = !unitAllowed(le.P) && o[pf] !== 'unit'; uo.title = unitAllowed(le.P) ? '' : '千轮、分裂、蜂、非球形图案不能出单束'; } } };
+  ex.querySelectorAll('[data-out]').forEach(sel => sel.addEventListener('change', () => { L.out = { ...layerOut(L), [sel.dataset.out]: sel.value }; if (L.out.pc === 'seq' && L.out.mobile === 'seq') delete L.out; syncOut(); if (stage2.deliv) renderDeliv(); wbSync(); }));
   syncOut();
   host.querySelector('#lhHelp').addEventListener('click', () => { const p = $('#lhHelpText'); p.hidden = !p.hidden; });
   // 4.2.13：以前这里有「导出这一层的单束包」按钮（另出一个包）；单束现在是下面「导出方案」的一个选项，跟着整包导出（走查 B9）
@@ -407,18 +408,18 @@ function initWorkbench() {
 //  查看交付（素材包里的每个文件：层、段、平台、单格、延迟）、通过门槛（独看 / 静音、显示曝光、改过参数时不能通过）
 // =====================================================================
 const stage2 = { deliv: false, tlSig: '', last: 0 };
-const VIEW_NAMES = { live: '实时模拟', export: '引擎回放', atlas: '贴图' };
-// 流转仍是贴图视图的播放方式；交付清单是覆盖页，不给渲染器增加新的视图状态。
+const VIEW_NAMES = { live: '实时模拟', export: '引擎回放', atlas: '贴图流转' };
+// 4.9.35（用户 10-07 18:50「贴图与流转我也认为可以合并，现在只有一个正方形，画布利用空间不够，两个页面合成一个」）：「贴图」「流转」合成一页「贴图流转」
+// （渲染器里还是 state.view = 'atlas'，按钮叫 flow）；交付清单是覆盖页，不给渲染器增加新的视图状态。
 function syncStageTabs() {
-  const view = stage2.deliv ? 'delivery' : state.view === 'atlas' && state.atlasFlow ? 'flow' : state.view;
+  const view = stage2.deliv ? 'delivery' : state.view === 'atlas' ? 'flow' : state.view;
   $('#viewSeg').querySelectorAll('[data-view]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === view)));
-  $('#flowSeg').querySelectorAll('[data-flow]').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.flow === '1') === !!state.atlasFlow)));
 }
 function selectStageView(view) {
   if (view === 'delivery') { toggleDeliv(true); return; }
   toggleDeliv(false);
   state.view = view === 'flow' ? 'atlas' : view;
-  if (state.view === 'atlas') { state.atlasFlow = view === 'flow'; flowTrail.length = 0; $('#qlabels').dataset.key = ''; }
+  if (state.view === 'atlas') { state.atlasFlow = true; flowTrail.length = 0; $('#qlabels').dataset.key = ''; }
   if (state.view !== 'live') bakeIfStale();
   syncStale(); syncStageTabs();
 }
@@ -776,10 +777,10 @@ function migNotify() {
   const hit = MIG_LOG.filter(x => open.has(x.P)); MIG_LOG.length = 0;
   if (!hit.length) return;
   const g = new Map(); for (const x of hit) { const key = x.k + '|' + x.why; if (!g.has(key)) g.set(key, { ...x, n: 0 }); g.get(key).n++; }
-  const NM = { endMode: '结尾', coolMode: '冷却方式', engine: '模拟内核', cols: '列数', rows: '行数', zoom: '面片取景', exposure: '贴图曝光', trHeadExpo: '星头曝光', headBright: '星头亮度', frameMode: '取帧方式', prePivot: '入点前放大的中心', form: '产物' };
+  const NM = { outLow: '低端导出', endMode: '结尾', coolMode: '冷却方式', engine: '模拟内核', cols: '列数', rows: '行数', zoom: '面片取景', exposure: '贴图曝光', trHeadExpo: '星头曝光', headBright: '星头亮度', frameMode: '取帧方式', prePivot: '入点前放大的中心', form: '产物' };
   const nm = k => NM[k] || ((typeof PNAMES !== 'undefined' ? PNAMES : []).find(r => r.key === k) || {}).cn || k;
   // 4.9.7（对话框23 参数栏交互第 9 条）：值也写中文（以前写「存的是 fade」「存的是 0」这种内部值）
-  const VAL = { endMode: { fade: '最后 0.3 s 整体淡出', natural: '等火花自然灭完', cut: '到序列时长直接切' }, coolMode: { 0: '按各自寿命', 1: '按实际年龄' }, engine: { cpu: 'CPU', gpu: 'GPU' },
+  const VAL = { outLow: { frame: '单帧', seq: '序列（和手机同一张）' }, endMode: { fade: '最后 0.3 s 整体淡出', natural: '等火花自然灭完', cut: '到序列时长直接切' }, coolMode: { 0: '按各自寿命', 1: '按实际年龄' }, engine: { cpu: 'CPU', gpu: 'GPU' },
     zoom: { off: '固定大小', on: 'Zoom（随开花放大）', tight: '紧凑取景' }, frameMode: { content: '按画面变化', auto: '自动（按运动快慢）', uniform: '均匀', tick30: '30 fps（自动分段）' }, prePivot: { 0: '面片中心', 1: '爆点' }, form: { unit: '单元序列（单束）', master: '大面片母版', segments: '分段母版' } };
   const selLabel = (k, v) => { for (const sec of (typeof SCHEMA !== 'undefined' ? SCHEMA : [])) for (const it of sec.items) if (it.sel === k && it.options) { const o = it.options.find(o => String(o[0]) === String(v)); if (o) return splitLab(o[1])[0]; } return null; };
   const unitOf = k => { for (const sec of (typeof SCHEMA !== 'undefined' ? SCHEMA : [])) for (const it of sec.items) if (Array.isArray(it) && it[0] === k) return it[2] || ''; return ''; };
@@ -848,31 +849,32 @@ function renderDeliv() {
     const o = combo ? layerOut(x.L) : singleOut(state.P);      // 4.2.12：每层的导出方案（4.9.25 单层也按自己的）
     if (combo) rows.push(`<tr class="grp"><td colspan="4">第 ${x.i + 1} 层 · ${x.name} · PC ${OUT_PC.find(q => q[0] === o.pc)[1]} · 手机 ${OUT_MOBILE.find(q => q[0] === o.mobile)[1]}${layerShown(x.i) ? '' : '（观察里隐藏了，导出照旧包含）'}</td></tr>`);
     if (o.pc === 'dots') rows.push(`<tr><td class="dim">（没有贴图）</td><td>PC · GPU 光点约 ${dotsCount(layerPOf(x))} 颗 · 软圆点材质 · 只出星头</td><td>${delay.toFixed(2)} s</td><td>${((+layerPOf(x).ignDelay || 0) + (+layerPOf(x).burn || 0)).toFixed(2)} s</td></tr>`);
-    if (o.pc === 'unit' && unitAllowed(layerPOf(x))) {     // 4.9.28 变体几张就几行（序号 01…）
-      const uv = unitVarOf(combo ? x.L : state.P), vs = unitVarPs(layerPOf(x), uv);
-      vs.forEach((v, k) => rows.push(`<tr><td>${useNew ? fwTexName(nm.base, ly, { cols: 16, rows: 2 }, k + 1, 'tex', false) : TN(ln, '', null, k + 1) + '（单束）'}.png</td><td>PC · 单束${uv.K > 1 ? ` 第 ${k + 1} / ${uv.K} 张（粗细 × ${v.t}、尾长 × ${v.l}）` : ''} · 每颗星一个面片 × ${v.n} · 16 × 2 格（列 × 行以导出为准）</td><td>${delay.toFixed(2)} s</td><td>${(unitDuration(fxP(unitP(v.P))) / rate).toFixed(2)} s</td></tr>`));
+    const uOK = unitAllowed(layerPOf(x)), uPC = o.pc === 'unit' && uOK, uMob = o.mobile === 'unit' && uOK;     // 4.9.35 手机也能出单束（PC 也是单束时共用 PC 那几张）
+    if (uPC || uMob) {     // 4.9.28 变体几张就几行（序号 01…）
+      const uv = unitVarOf(combo ? x.L : state.P), vs = unitVarPs(layerPOf(x), uv), um = !uPC, pfTxt = uPC && uMob ? 'PC / 手机共用' : uPC ? 'PC' : '手机';
+      vs.forEach((v, k) => rows.push(`<tr><td>${useNew ? fwTexName(nm.base, ly, { cols: 16, rows: 2 }, k + 1, 'tex', um) : TN(um ? mn : ln, '', null, k + 1) + '（单束）'}.png</td><td>${pfTxt} · 单束${uv.K > 1 ? ` 第 ${k + 1} / ${uv.K} 张（粗细 × ${v.t}、尾长 × ${v.l}）` : ''} · 每颗星一个面片 × ${v.n} · 16 × 2 格（列 × 行以导出为准）</td><td>${delay.toFixed(2)} s</td><td>${(unitDuration(fxP(unitP(v.P))) / rate).toFixed(2)} s</td></tr>`));
     }
-    // 4.9.29 低端单帧：灰度 _MB、彩色 _Color_MB、轮廓 _C、功能图 _<后缀>；低端序列 = 手机那张
-    if (o.low === 'frame') { const lo = lowOf(combo ? x.L : state.P), g = { cols: 1, rows: 1 }, st = useNew ? fwTexName(nm.base, ly, g, 1, 'tex', true) : TN(combo ? comboLayerName(name + '_Low', x.i) : name + '_Low', 'Frame');
-      rows.push(`<tr><td>${st}${useNew ? '_MB' : ''}.png</td><td>低端 · 单帧 ${lo.size} × ${lo.size} 灰度（配 Ramp，现有序列材质）· ${lo.pick === 'expo' ? '长曝光' : lo.at > 0 ? `某一帧 ${lo.at.toFixed(2)} s` : '某一帧（自动）'}</td><td>${delay.toFixed(2)} s 起</td><td></td></tr>`);
-      rows.push(`<tr class="dim"><td>${st}${useNew ? '_Color_MB' : '_Color'}.png</td><td>低端 · 彩色单帧（sRGB；随包，溶解材质对上再接）</td><td></td><td></td></tr>`);
-      rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, g, 1, 'C') : st + '_Cutout'}.png</td><td>低端 · 单帧轮廓（Cut）</td><td></td><td></td></tr>`);
-      if (lo.maps) rows.push(`<tr class="dim"><td>${st}_${useNew ? lo.suffix : 'Maps'}.png</td><td>低端 · 功能图 ${[...lo.maps].map((c, k) => `${'RGB'[k]} = ${LOW_MAP_NAMES[c]}`).join('、')}（线性，最大 512）</td><td></td><td></td></tr>`); }
-    else if (o.low === 'seq') rows.push(`<tr class="dim"><td colspan="4">低端 · 序列：和手机同一张贴图（cascade_low.json 引用，不重复放）</td></tr>`);
-    if (o.pc === 'off' && o.mobile === 'off') { rows.push(`<tr><td colspan="4" class="dim">PC、手机都不出这一层${o.low !== 'off' ? '（低端照出）' : ''}</td></tr>`); continue; }
-    const pre = x.b.meta.pre;
+    // 4.9.35 单帧（并进产物表，用户 10-07 18:50）：灰度 …_1x1_01（PC 加 _HD）、彩色 _Color、轮廓 _C、功能图 _<后缀>；PC、手机都选单帧时共用一张
+    if (o.pc === 'frame' || o.mobile === 'frame') { const lo = lowOf(combo ? x.L : state.P), g = { cols: 1, rows: 1 }, hd = o.pc === 'frame', pfTxt = o.pc === 'frame' && o.mobile === 'frame' ? 'PC / 手机共用' : hd ? 'PC' : '手机';
+      const st = useNew ? fwTexName(nm.base, ly, g, 1, 'tex', true) : TN(hd ? ln : (combo ? mn : name + '_Mobile'), 'Frame'), sfx = useNew && hd ? '_HD' : '';
+      rows.push(`<tr><td>${st}${sfx}.png</td><td>${pfTxt} · 单帧 ${lo.size} × ${lo.size} 灰度（配 Ramp，现有序列材质）· ${lo.pick === 'expo' ? '长曝光' : lo.at > 0 ? `某一帧 ${lo.at.toFixed(2)} s` : '某一帧（自动）'}</td><td>${delay.toFixed(2)} s 起</td><td></td></tr>`);
+      rows.push(`<tr class="dim"><td>${st}_Color${sfx}.png</td><td>彩色单帧（sRGB；随包，溶解材质对上再接）</td><td></td><td></td></tr>`);
+      rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, g, 1, 'C') : st + '_Cutout'}.png</td><td>单帧轮廓（Cut）</td><td></td><td></td></tr>`);
+      if (lo.maps) rows.push(`<tr class="dim"><td>${st}_${useNew ? lo.suffix : 'Maps'}.png</td><td>功能图 ${[...lo.maps].map((c, k) => `${'RGB'[k]} = ${LOW_MAP_NAMES[c]}`).join('、')}（线性，最大 512）</td><td></td><td></td></tr>`); }
+    if (o.pc === 'off' && o.mobile === 'off') { rows.push(`<tr><td colspan="4" class="dim">PC、手机都不出这一层</td></tr>`); continue; }
+    const pre = x.b.meta.pre, pcSeq = o.pc === 'seq' || (o.pc === 'unit' && !uOK), mbSeq = o.mobile === 'seq' || (o.mobile === 'unit' && !uOK);
     parts.forEach((s, k) => {
       const seg = bakeSegmentName(x.b, k), d0 = delay + ((k === 0 && pre ? pre.from : s.meta.t0) || 0) / rate, life = (s.meta.duration + (k === 0 && pre ? pre.dur : 0)) / rate, L = s.meta.L;
       for (const tt of s.tail ? ['Head', 'Tail'] : ['tex']) {
         const pc = useNew ? fwTexName(nm.base, ly, L, k + 1, tt, false) : TN(ln, joinPart(seg, tt === 'tex' ? '' : tt)), mb = useNew ? fwTexName(nm.base, ly, L, k + 1, tt, true) : TN(mn, joinPart(seg, tt === 'tex' ? '' : tt));
-        if (o.pc === 'seq' || (o.pc === 'unit' && !unitAllowed(layerPOf(x)))) rows.push(`<tr><td>${pc}.png</td><td>PC · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧${k === 0 && pre ? ` · 入点前放大 ${pre.dur.toFixed(2)} s` : ''}</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
-        if (o.mobile === 'seq') rows.push(`<tr><td>${mb}.png</td><td>手机 · 单格 ${mobCell}</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        if (pcSeq) rows.push(`<tr><td>${pc}.png</td><td>PC · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧${k === 0 && pre ? ` · 入点前放大 ${pre.dur.toFixed(2)} s` : ''}</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        if (mbSeq) rows.push(`<tr><td>${mb}.png</td><td>手机 · 单格 ${mobCell}</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
       }
-      if (o.pc === 'seq' || o.mobile === 'seq') rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, L, k + 1, 'C') : TN(ln, joinPart(seg, 'Cutout'))}.png</td><td>Cut（PC / 手机共用，512）</td><td></td><td></td></tr>`);
+      if (pcSeq || mbSeq) rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, L, k + 1, 'C') : TN(ln, joinPart(seg, 'Cutout'))}.png</td><td>Cut（PC / 手机共用，512）</td><td></td><td></td></tr>`);
     });
-    if (o.pc === 'seq' || o.mobile === 'seq') rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, null, 0, 'R') : TN(ln, 'Ramp')}.png</td><td>颜色 Ramp（PC / 手机共用）</td><td></td><td></td></tr>`);
+    if (pcSeq || mbSeq || o.pc === 'unit' || o.mobile === 'unit' || o.pc === 'frame' || o.mobile === 'frame') rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, null, 0, 'R') : TN(ln, 'Ramp')}.png</td><td>颜色 Ramp（PC / 手机共用）</td><td></td><td></td></tr>`);
   }
-  rows.push(`<tr class="grp"><td colspan="4">cascade.json（PC）· cascade_mobile.json（手机）${xs.some(x => (combo ? layerOut(x.L) : singleOut(state.P)).low !== 'off') ? ' · cascade_low.json（低端）' : ''}：每层每段一个发射器，同一个爆点，按上面的延迟出生 · 帧号测试图在 _检查/（不导入）· 命名对照.txt</td></tr>`);
+  rows.push(`<tr class="grp"><td colspan="4">cascade.json（PC）· cascade_mobile.json（手机）：每层每段一个发射器，同一个爆点，按上面的延迟出生 · 帧号测试图在 _检查/（不导入）· 命名对照.txt</td></tr>`);
   const lyInputs = combo ? xs.map(x => `<label>第 ${x.i + 1} 层<input type="text" data-ly="${x.i}" value="${nm.layers[x.i]}" placeholder="L${x.i + 1}" title="${x.name}"></label>`).join('') : '';
   const prod = prodTableHTML(xs, combo);
   host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '这种产物沿用原来的命名'}</small></div><span class="sp"></span>
@@ -920,19 +922,19 @@ function frameTrialHTML(P) {
 // 以前单束另有三处入口（资产栏 ⌄ 菜单、交付页「导出单束包」、「把产物改成单束」），4.9.25 都并到这里
 function prodCellHTML(x, pf, combo) {
   const P = layerPOf(x); if (!P) return '—';
-  const o = combo ? layerOut(x.L) : singleOut(state.P), s = pf === 'pc' ? o.pc : pf === 'low' ? o.low : o.mobile;
+  const o = combo ? layerOut(x.L) : singleOut(state.P), s = pf === 'pc' ? o.pc : o.mobile;
   if (s === 'off') return '<span class="dim">不出</span>';
-  if (pf === 'low') {     // 4.9.29 低端：单帧 / 序列（和手机同一张）
-    if (s === 'seq') return '序列 · 和手机同一张贴图（cascade_low.json 引用，不重复放）';
+  if (s === 'frame') {     // 4.9.35 单帧（并进产物表；PC / 手机都选单帧时共用一张）
     const lo = lowOf(combo ? x.L : state.P), lw = x.b && lowCached(x.b, lo, combo ? comboLayerM(x.L) : state.M);
-    return `单帧 ${lo.size} × ${lo.size} · ${lo.pick === 'expo' ? '长曝光' : lw ? `某一帧 ${lw.tStar.toFixed(2)} s` : lo.at > 0 ? `某一帧 ${lo.at.toFixed(2)} s` : '某一帧（自动：花开得最大）'} · 灰度 + Ramp（现有序列材质）+ 彩色单帧${lo.maps ? ` · 功能图 ${[...lo.maps].join(' + ')} → _${lo.suffix}` : ''}${lw ? '' : '（贴图在「引擎回放」看低端或导出时烘）'} <button type="button" class="mini" data-lowview title="切到引擎回放 · 低端：按 cascade_low.json 播这张单帧（可勾溶解预览 / 并排）">在引擎回放里看</button>`;
+    return `单帧 ${lo.size} × ${lo.size} · ${lo.pick === 'expo' ? '长曝光' : lw ? `某一帧 ${lw.tStar.toFixed(2)} s` : lo.at > 0 ? `某一帧 ${lo.at.toFixed(2)} s` : '某一帧（自动：花开得最大）'} · 灰度 + Ramp（现有序列材质）+ 彩色单帧${lo.maps ? ` · 功能图 ${[...lo.maps].join(' + ')} → _${lo.suffix}` : ''}${pf === 'mobile' && o.pc === 'frame' ? ' · 和 PC 同一张' : ''}${lw ? '' : '（贴图在引擎回放或导出时烘）'}${pf === 'pc' ? ' <button type="button" class="mini" data-lowview title="回到画面、切到引擎回放：按 cascade.json 播这张单帧（可勾溶解预览 / 并排）">在引擎回放里看</button>' : ''}`;
   }
   if (s === 'dots') return `GPU 光点约 ${dotsCount(P)} 颗 · 没有贴图 · 1 个软圆点发射器`;
   if (s === 'unit' && unitAllowed(P)) {
+    if (pf === 'mobile' && o.pc === 'unit') return '单束 · 和 PC 同一套贴图（CPU 发射器）';     // 4.9.35 手机单束
     const h = combo ? x.e : singleUnitHolder(), ub = unitBakeOf(h, combo ? x.L : null), f = unitFit(P);
     const fit = f ? ` · <span class="${f.level === 'ok' ? '' : 'ow-i'}" data-unitfit="${f.level}">${unitFitText(f)}</span>` : '';
     const uv = unitVarOf(combo ? x.L : state.P), vtx = uv.K > 1 || uv.r > 0 ? ` · ${uv.K} 张变体${uv.r > 0 ? `、随机感 ${uv.r}` : ''}` : '';     // 4.9.28
-    return (ub ? `单束 ${uv.K} 张 · ${ub.meta.L.F} 帧 · ${ub.meta.L.cols}×${ub.meta.L.rows}${ub.meta.L.chans === 4 ? '×RGBA' : ''} · ${Math.round(+P.stars || 0)} 颗星各一个面片${uv.K > 1 ? `（${uv.K} 个发射器平分）` : ''}` : `单束 · ${Math.round(+P.stars || 0)} 颗星各一个面片（贴图在「贴图」或导出时烘）`) + vtx + fit;
+    return (ub ? `单束 ${uv.K} 张 · ${ub.meta.L.F} 帧 · ${ub.meta.L.cols}×${ub.meta.L.rows}${ub.meta.L.chans === 4 ? '×RGBA' : ''} · ${Math.round(+P.stars || 0)} 颗星各一个面片${uv.K > 1 ? `（${uv.K} 个发射器平分）` : ''}` : `单束 · ${Math.round(+P.stars || 0)} 颗星各一个面片（贴图在「贴图流转」或导出时烘）`) + vtx + fit;
   }
   if (!x.b || !x.b.meta) return '还没烘好';
   const parts = bakeParts(x.b), F = parts.reduce((n, q) => n + q.meta.L.F, 0), L0 = parts[0].meta.L, nTex = parts.length * (x.b.tail ? 2 : 1);
@@ -944,28 +946,27 @@ function prodCellHTML(x, pf, combo) {
 function prodTableHTML(xs, combo) {
   const rows = xs.map(x => {
     const P = layerPOf(x), seqOK = P && familyOf(P.type) === 'aerial' && (!x.b || ['master', 'segments'].includes(x.b.form)) && (combo || singleSchemeOn(P));
-    if (!seqOK) return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}</td><td colspan="3" class="dim">${x.b ? FORM_NAMES[x.b.form] || x.b.form : '还没烘好'}：按这种产物自己的规则出（PC + 手机）</td></tr>`;
+    if (!seqOK) return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}</td><td colspan="2" class="dim">${x.b ? FORM_NAMES[x.b.form] || x.b.form : '还没烘好'}：按这种产物自己的规则出（PC + 手机）</td></tr>`;
     const o = combo ? layerOut(x.L) : singleOut(state.P), uOK = unitAllowed(P), uf = uOK ? unitFit(P) : null;     // 4.9.27 下拉里也写这层适不适合单束
     const uAttr = !uOK ? ' disabled title="千轮、分裂、蜂、非球形图案不能出单束"' : uf && uf.level !== 'ok' ? ` title="${uf.why.join('；')}"` : '';
-    const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : pf === 'low' ? '低端' : '手机'}出什么">${opts.map(([k, t]) => `<option value="${k}"${k === v ? ' selected' : ''}${k === 'unit' ? uAttr : ''}>${t}${k === 'unit' && uf && uf.level === 'bad' ? ' · 不适合' : k === 'unit' && uf && uf.level === 'soft' ? ' · 近看偏直' : ''}</option>`).join('')}</select>`;
+    const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么">${opts.map(([k, t]) => `<option value="${k}"${k === v ? ' selected' : ''}${k === 'unit' ? uAttr : ''}>${t}${k === 'unit' && uf && uf.level === 'bad' ? ' · 不适合' : k === 'unit' && uf && uf.level === 'soft' ? ' · 近看偏直' : ''}</option>`).join('')}</select>`;
     return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}${combo && !layerShown(x.i) ? '<small>（观察里隐藏了，导出照旧）</small>' : ''}</td>
-      <td>${sel('pc', OUT_PC, o.pc)}<small>${prodCellHTML(x, 'pc', combo)}</small></td><td>${sel('mobile', OUT_MOBILE, o.mobile)}<small>${prodCellHTML(x, 'mobile', combo)}</small></td><td>${sel('low', OUT_LOW, o.low)}<small>${prodCellHTML(x, 'low', combo)}</small></td></tr>`;     // 4.9.29 低端列
+      <td>${sel('pc', OUT_PC, o.pc)}<small>${prodCellHTML(x, 'pc', combo)}</small></td><td>${sel('mobile', OUT_MOBILE, o.mobile)}<small>${prodCellHTML(x, 'mobile', combo)}</small></td></tr>`;     // 4.9.35 没有低端列了（单帧并进 PC / 手机）
   });
-  return `<table class="dv-t dv-prod"><thead><tr><th>产物表：每层导出什么</th><th>PC</th><th>手机</th><th title="单独一份低端包 cascade_low.json，贴图名末尾加 _MB（用户 10-07 12:40）">低端</th></tr></thead><tbody>${rows.join('')}</tbody></table>
-    <p class="hint">改这里 = 改层页头「导出方案」/ 右栏「输出 › 直接调」（同一个值，进 Ctrl+Z）；「贴图」「流转」「引擎回放」按你选的看（PC 单束就看单束那张）。单束只给短尾、快、几乎不下坠的星；长尾下垂、先后点亮的层建议序列（选了单束，格子里写这层合不合适：直尾在 800 m 外最多偏几像素，超过 1.5 px 近看偏直、超过 4 px 或前后点亮差 0.1 s 以上不适合）。单束贴图里的星按直线、不受力烘（重力、风、湍流、初速 / 燃烧随机都关了），弯曲和快慢不一由 Cascade 的发射器做。</p>`;
+  return `<table class="dv-t dv-prod"><thead><tr><th>产物表：每层导出什么</th><th title="引擎回放画的是这一列">PC</th><th title="手机只能纯图片：序列 / 单束 / 单帧（没有 GPU）">手机</th></tr></thead><tbody>${rows.join('')}</tbody></table>
+    <p class="hint">改这里 = 改层页头「导出方案」/ 右栏「输出 › 直接调」（同一个值，进 Ctrl+Z）；「贴图流转」「引擎回放」按 PC 列看（PC 单束就看单束那张、单帧就看单帧）。单束只给短尾、快、几乎不下坠的星；长尾下垂、先后点亮的层建议序列（选了单束，格子里写这层合不合适：直尾在 800 m 外最多偏几像素，超过 1.5 px 近看偏直、超过 4 px 或前后点亮差 0.1 s 以上不适合）。单束贴图里的星按直线、不受力烘（重力、风、湍流、初速 / 燃烧随机都关了），弯曲和快慢不一由 Cascade 的发射器做。</p>`;
 }
-// 4.9.33（用户 10-07 17:26「1.单帧输出模式我想要个引擎回放」）：低端单帧的引擎回放一直在「引擎回放 · 低端」里（4.9.29），只是不好找——
-// 产物表低端列选了单帧就多一个「在引擎回放里看」，点了 = 回到画面、切引擎回放、平台切低端
+// 4.9.33（用户 10-07 17:26「1.单帧输出模式我想要个引擎回放」）：产物表单帧格子里「在引擎回放里看」；
+// 4.9.35（用户 18:50「引擎回放就只是引擎回放」）：引擎回放不分平台，直接按 PC 列画，点了 = 回到画面、切引擎回放
 function showLowReplay() {
   toggleDeliv(false); selectStageView('export');
-  const b = $('#platformSeg button[data-platform="low"]'); if (b) b.click();
-  flash('引擎回放 · 低端：单帧按 cascade_low.json 播（Size By Life + Alpha）；顶上勾「溶解预览」看溶解，勾「并排」和序列同一秒比');
+  flash('引擎回放：单帧层按 cascade.json 播（Size By Life + Alpha）；时间轴上方勾「溶解预览」看溶解，勾「并排」和序列同一秒比');
 }
 function setProduct(i, pf, v) {
-  if (pf === 'low' && v === 'frame') setTimeout(() => flash('低端选了单帧：表里点「在引擎回放里看」，或引擎回放顶上切「低端」'), 0);
-  if (state.tab === 'combo') { const L = state.layers[i]; if (!L) return; L.out = { ...layerOut(L), [pf]: v }; if (L.out.low === 'off') delete L.out.low; if (L.out.pc === 'seq' && L.out.mobile === 'seq' && !L.out.low) delete L.out;
+  if (pf === 'pc' && v === 'frame') setTimeout(() => flash('PC 选了单帧：引擎回放直接按单帧画（表里「在引擎回放里看」）'), 0);
+  if (state.tab === 'combo') { const L = state.layers[i]; if (!L) return; L.out = { ...layerOut(L), [pf]: v }; if (L.out.pc === 'seq' && L.out.mobile === 'seq') delete L.out;
     if (typeof undoNote === 'function') undoNote(); if (state.comboSel === i && typeof buildLayerHead === 'function') buildLayerHead(i); renderDeliv(); wbSync(); return; }
-  state.P[pf === 'pc' ? 'outPC' : pf === 'low' ? 'outLow' : 'outMobile'] = v; onExportScheme();
+  state.P[pf === 'pc' ? 'outPC' : 'outMobile'] = v; onExportScheme();
 }
 function toggleDeliv(on) {
   stage2.deliv = on == null ? !stage2.deliv : on;

@@ -3,8 +3,10 @@
 BASE、SCHEMA 已手改（10_types.js）。可以重复跑：已经做过的跳过。
 （只读结果行 info:lowAtNow「单帧取的时刻」是手加的，名称表 / 发射器表各 1 行）
 用法：python3 analysis/scripts/加参数_低端单帧.py
+4.9.35（用户 10-07 18:50「低端这个分类应该不需要，直接合入产物表里」）：outLow 删了，这个脚本作废（再跑会把 outLow 加回去），留着只当记录。
 """
-import csv, io, json, pathlib
+import csv, io, json, pathlib, sys
+sys.exit('4.9.35 起 outLow 已删（低端并进产物表），这个脚本作废')
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 NAMES_J = ROOT / 'analysis' / '命名' / '参数名称表.json'
 NAMES_C = ROOT / 'analysis' / '命名' / '参数名称表.csv'

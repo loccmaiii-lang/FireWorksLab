@@ -267,6 +267,9 @@
   .canvas-wrap{container-type:size;gap:8px}
   .canvas-box{height:auto;width:min(100cqw,100cqh);aspect-ratio:1;max-width:none;max-height:none}
   .canvas-wrap.split .canvas-box{width:min(calc(50cqw - 4px),100cqh)}
+  .canvas-wrap .canvas-box.wide{width:100cqw;height:100cqh;aspect-ratio:auto;max-width:none;max-height:none}     /* 4.9.35 贴图流转：画布铺满画面区（用户 10-07 18:50「现在只有一个正方形，画布利用空间不够」） */
+  .canvas-wrap.split .canvas-box.wide{width:calc(50cqw - 4px);height:100cqh}
+  .canvas-wrap.split.stack .canvas-box.wide{width:100cqw;height:calc(50cqh - 4px)}
   .canvas-box .tag{position:absolute;top:8px;left:10px;z-index:4;font-size:11px;color:#fff;background:rgba(0,0,0,.55);border-radius:4px;padding:1px 7px;pointer-events:none}
   .ref-box{overflow:hidden;background:#000;border-radius:6px;box-shadow:0 0 0 1px var(--line)}
   .ref-box video{position:absolute;max-width:none}

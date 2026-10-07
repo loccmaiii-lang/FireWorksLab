@@ -5,7 +5,7 @@
 // 功能图让它按火花的真实先后亮起 / 熄灭（D 溶解 = 最后亮着的时刻，A 出现顺序 = 第一次亮的时刻，C 轮廓），合并成一张、后缀你填。
 // 现成的溶解材质还没对上（对话框5 在查角色名 / 通道 / 阈值方向）：cascade_low.json 的发射器先用现有序列材质（1 × 1 格灰度 + Ramp，马上能用），
 // 彩色单帧和功能图随包放在 extras 里（导入器不导），引擎回放里「溶解预览」按功能图画。
-const OUT_LOW = [['off', '不出'], ['frame', '单帧（一张图 + 功能图）'], ['seq', '序列（和手机同一张）']];
+// 4.9.35（用户 10-07 18:50「低端这个分类应该不需要，直接合入产物表里」）：单帧是产物表里一层的一种产物（PC / 手机都能选），写进 cascade.json / cascade_mobile.json；没有低端列、cascade_low.json 了
 const LOW_MAP_ORDER = 'DCA', LOW_MAP_NAMES = { D: '溶解（熄灭顺序）', C: '轮廓（Cut）', A: '出现顺序' }, LOW_TH = 3, LOW_MAP_MAX = 512;
 // 单帧的设置：单层从 P、多层从层 L 读（和光点大小同一套）
 function lowOf(src) {
@@ -163,7 +163,7 @@ function drawLowLayer(lw, L, M, t, view, dissolve) {
   gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
   return 0;
 }
-// ---- 导出：cascade_low.json 的一层（name = 内部层名），文件（内部名，applyPackNaming 再换成正式名）----
+// ---- 导出：cascade.json / cascade_mobile.json 里的一个单帧层（name = 内部层名），文件（内部名，applyPackNaming 再换成正式名）----
 function fwlLowLayer(name, lw, M, L, pre) {
   const life = lw.tOut - lw.tIn, rate = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1, v = lw.view, W = 2 * v[2] * sc, H = 2 * v[3] * sc, cy = v[1] * sc;
   const pivot = Math.abs(cy) > 1e-4;
@@ -189,7 +189,7 @@ function fwlLowLayer(name, lw, M, L, pre) {
     ...(dis ? { dissolve: { enable: true, texture: pre + 'dmap', channel: lw.chans.D, param: 'dissolve', progress: '0 → 1 = 入点 → 出点（相对寿命，线性）',
       encoding: 'D = 1 − 熄灭时刻（归一到入点 → 出点）：早灭的值大；没亮过 = 1', formula: 'fade = 1 − saturate(D + 2P − 1)（现有序列母材质，对话框5 10-07 查本机配置；软过渡）',
       rule: '只给带这个标记的发射器开溶解（用户 10-07 14:56）；序列、单束、别的效果照旧不开', unverified: true } } : {}),
-    notes: [`低端单帧（${lw.pick === 'expo' ? '长曝光：入点 → 出点每个像素取最亮' : `某一帧：${lw.tStar.toFixed(2)} s`}）：一张 ${lw.S} × ${lw.S} 灰度 + Ramp，走现有序列材质（1 × 1 格、帧号 0）；Size By Life 从开花长到那一刻、之后按亮度 Alpha 淡出（未经 UE 验证）`,
+    notes: [`单帧（${lw.pick === 'expo' ? '长曝光：入点 → 出点每个像素取最亮' : `某一帧：${lw.tStar.toFixed(2)} s`}）：一张 ${lw.S} × ${lw.S} 灰度 + Ramp，走现有序列材质（1 × 1 格、帧号 0）；Size By Life 从开花长到那一刻、之后按亮度 Alpha 淡出（未经 UE 验证）`,
       dis ? `溶解：用户 10-07 14:56 授权「单帧要开」。溶解图 ${lw.chans.D} 通道 = 1 − 熄灭时刻，进度 dissolve 0 → 1；导入器只对带 dissolve 标记的发射器开（对话框5 在加），加好之前导进去是不开溶解的样子` : '没勾溶解图（D）：不开溶解'] };
   const extras = { [pre + 'color']: { file: TN(name, 'Frame_Color') + '.png', what: '彩色单帧（sRGB；Alpha = 灰度），亮度倍数在 Color Over Life；要用得等你指定能吃彩色单帧的材质', size: [lw.S, lw.S] } };
   return { textures, materials, emitter, extras };
@@ -203,30 +203,14 @@ async function lowFiles(name, lw, M) {
   files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
   return files;
 }
-// 一整份 cascade_low.json：layers = [{ name（内部层名）, lw（单帧）| mb（序列 = 手机那次烘焙）, M, L }]
-function fwlLow(name, layers) {
-  const out = { format: FWL_FORMAT, name, platform: 'low', source: { tool: '烟花母版烘焙器 ' + VERSION, combo: layers.length > 1, layers: layers.map(x => ({ form: x.lw ? 'frame' : 'seq' })) },
-    textures: {}, materials: {}, emitters: [], extras: {}, system: { preview_distance_cm: 30000, preview_warmup_s: 1.2 }, notes: ['低端包（用户 10-07 12:40「单独一份低端包，贴图名尾巴加_MB」）：低端机把贴图再压一档时用；单帧层一张图 + Size By Life / Alpha，序列层和手机同一张贴图。'] };
-  layers.forEach((x, i) => { const pre = `L${i + 1}_`, L = { ...x.L, layerNo: i + 1 };
-    if (x.lw) { const r = fwlLowLayer(x.name, x.lw, x.M, L, pre); Object.assign(out.textures, r.textures); Object.assign(out.materials, r.materials); Object.assign(out.extras, r.extras); out.emitters.push(r.emitter); out.system.preview_distance_cm = Math.max(out.system.preview_distance_cm, Math.round(2 * x.lw.view[2] * 100 * 1.3)); return; }
-    const body = fwlMaster(x.name, x.mb, x.M, true), rate = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1;
-    for (const [k, v] of Object.entries(body.textures)) out.textures[pre + k] = v;
-    for (const [k, v] of Object.entries(body.materials)) out.materials[pre + k] = { ...v, textures: Object.fromEntries(Object.entries(v.textures).map(([role, t]) => [role, pre + t])) };
-    for (const e of body.emitters) out.emitters.push({ ...e, name: pre + e.name, material: pre + e.material, layer: i + 1,
-      required: { ...e.required, duration_s: r4(e.required.duration_s / rate), delay_s: r4((+L.delay || 0) + e.required.delay_s / rate), cutout: pre + e.required.cutout },
-      modules: e.modules.map(m => m.m === 'Lifetime' ? { ...m, Lifetime: { const: r4(m.Lifetime.const / rate) } } : m.m === 'InitialSize' ? { ...m, StartSize: { const: m.StartSize.const.map((v, j) => j < 2 ? r1(v * sc) : v) } } : m) });
-  });
-  out.emitters = fwlFinish(out.emitters);
-  out.source.plan_sig = fwlPlanSig(out.emitters);
-  return out;
-}
-// 「贴图」看低端单帧：左 = 单帧（彩色），中 = 溶解图（熄灭顺序），右 = 出现顺序；伪彩色 早 = 蓝、晚 = 红（检查是不是从里往外）
+// 「贴图流转」看单帧：左 = 单帧（彩色），中 = 溶解图（熄灭顺序），右 = 出现顺序；伪彩色 早 = 蓝、晚 = 红（检查是不是从里往外）
 function renderLowAtlas(lw, M) {
-  const tx = lowTextures(lw), pr = PR.low, S = canvas.width, w = Math.round(S / 3), panels = [['color', null], ['D', 'D'], ['A', 'A']];
+  // 4.9.35 贴图流转的画布是长方形（铺满画面区）：三块正方形横排、居中
+  const tx = lowTextures(lw), pr = PR.low, W = canvas.width, H = canvas.height, gp = Math.round(Math.min(W, H) * 0.02), w = Math.round(Math.min((W - 4 * gp) / 3, H - 2 * gp)), x0 = Math.round((W - 3 * w - 2 * gp) / 2), panels = [['color', null], ['D', 'D'], ['A', 'A']];
   gl.useProgram(pr.p); gl.uniform4fv(pr.u.uRect, [0, 0, 1, 1]); gl.uniform4fv(pr.u.uView, [0.5, 0.5, 0.5, 0.5]); gl.uniform1f(pr.u.uMirror, 0);
   setMatUniforms(pr, M, lw.tStar); gl.uniform1f(pr.u.uK, 1); gl.uniform3fv(pr.u.uTint, [1, 1, 1]); gl.uniform1f(pr.u.uHI, 1);
   panels.forEach(([k, c], i) => {
-    gl.viewport(i * w, Math.round((canvas.height - w) / 2), w, w);
+    gl.viewport(x0 + i * (w + gp), Math.round((H - w) / 2), w, w);
     gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tx.color); gl.uniform1i(pr.u.uC, 0);
     gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, tx.maps); gl.uniform1i(pr.u.uMap, 1);
     const ch = c && lw.chans[c]; if (c && !ch) return;
@@ -238,5 +222,5 @@ function renderLowAtlas(lw, M) {
     gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   });
   gl.activeTexture(gl.TEXTURE0); gl.viewport(0, 0, canvas.width, canvas.height);
-  hudText = `低端单帧 ${lw.S}×${lw.S}（${lw.pick === 'expo' ? '长曝光' : `某一帧 ${lw.tStar.toFixed(2)} s`}）· 中：溶解图（熄灭顺序）· 右：出现顺序 · 伪彩色 早 = 蓝、晚 = 红 · 功能图 ${lw.MS}×${lw.MS}，后缀 _${lw.suffix}${lw.chans.D ? '' : '（没勾 D）'}${lw.chans.A ? '' : '（没勾 A）'}`; hudB = '';
+  hudText = `单帧 ${lw.S}×${lw.S}（${lw.pick === 'expo' ? '长曝光' : `某一帧 ${lw.tStar.toFixed(2)} s`}）· 中：溶解图（熄灭顺序）· 右：出现顺序 · 伪彩色 早 = 蓝、晚 = 红 · 功能图 ${lw.MS}×${lw.MS}，后缀 _${lw.suffix}${lw.chans.D ? '' : '（没勾 D）'}${lw.chans.A ? '' : '（没勾 A）'}`; hudB = '';
 }

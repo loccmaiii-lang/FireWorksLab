@@ -226,7 +226,7 @@ function readyHTML(ef, cur) {
   const row = (t, st, cls) => `<div class="rd ${cls || ''}"><span>${t}</span><b>${st}</b></div>`;
   const live = cur ? (cur.kind === 'asset' ? '无（这一条是贴图回放）' : '可以（打开就是）') : '—';
   const combo = state.tab === 'combo';
-  const baked = combo ? (state.layers.length && state.layers.every(L => { const e = state.lib.find(x => x.name === L.lib); return e && e.bake; }) ? '已在本机烘好 → 「导出效果」看' : '打开后在本机烘焙中…') : (state.bake && !state.dirty ? '已在本机烘好 → 「导出效果」「贴图」看' : '烘焙中…');
+  const baked = combo ? (state.layers.length && state.layers.every(L => { const e = state.lib.find(x => x.name === L.lib); return e && e.bake; }) ? '已在本机烘好 → 「导出效果」看' : '打开后在本机烘焙中…') : (state.bake && !state.dirty ? '已在本机烘好 → 「引擎回放」「贴图流转」看' : '烘焙中…');
   const ex = (ef.exports || []);
   const okV = x => { const e = entryById(x.entry); return !!e && !e.formal && x.ver === entryVer(e); };
   const cur1 = [...ex].reverse().find(x => !x.legacy && okV(x)), stale = [...ex].reverse().find(x => !x.legacy && !okV(x)), legacy = ex.find(x => x.legacy);

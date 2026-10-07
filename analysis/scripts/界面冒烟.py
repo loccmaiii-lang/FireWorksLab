@@ -54,7 +54,7 @@ STEPS = [
     ('烧旺_亮度离散_底光', "state.P.sparkRise=0.35;state.P.starBright=0.35;state.P.tailHaze=0.02;state.P.tailHazeR=6;refreshPanelValues();refreshVisibility();onParam()", 'views'),
     ('尾迹扩散_恢复', "state.P.sparkRise=0;state.P.starBright=0;state.P.tailHaze=0;state.P.tailDiffuse=0;state.P.frameBudget='motion';state.P.outPack='grid';refreshPanelValues();refreshVisibility();onParam()", 'views'),
 ]
-VIEWS = [('实时', 'live', None, 1.0), ('引擎回放', 'export', None, 1.0), ('贴图', 'atlas', '0', 1.0), ('流转', 'atlas', '1', 1.5)]
+VIEWS = [('实时', 'live', None, 1.0), ('引擎回放', 'export', None, 1.0), ('贴图流转', 'atlas', None, 1.5)]     # 4.9.35「贴图」「流转」合成一页
 
 
 # --sweep 每个模板 / 效果打开后在右栏点遍发射器标签、重建一次时间轴（面板和时间轴的代码都走一遍）

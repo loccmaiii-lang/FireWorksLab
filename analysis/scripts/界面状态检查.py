@@ -81,11 +81,13 @@
       窜天猴冠 / 柳 / 时差第 1 层不适合（时差按先后点亮），原样那档适合；产物下拉写（不适合）、选了单束格子写偏几像素、层页头说明也写
   W24 4.9.28 单束变体数 / 随机感（用户 10-07 11:45 选）：缺省一张和以前一样；3 张 + 随机感 0.6 → 不重烘大面片、星数平分、种子 / 粗细 / 尾长倍数、
       三个发射器 + Initial Size 随机、多层 L1_ 前缀、文件 _V2 → 序号 02、贴图能切三张、引擎回放、交付清单（假烘焙也造单束）
-  W25 4.9.29 低端包 + 单帧 + 功能图（用户 10-07 09:41 / 09:54 / 12:40）：假的「圆环往外扩」序列 → 自动单帧取最大那一刻、取景收紧、D / A 里先外后、没亮过 D 0 A 255、
-      通道 / 后缀、错落只动 D、Size By Life / Alpha、cascade_low.json（现有序列材质 1 × 1、extras、第 2 层序列）、_MB 命名、产物表低端列不重烘、低端视图
+  W25 4.9.29 单帧 + 功能图（用户 10-07 09:41 / 09:54 / 12:40；4.9.35 并进产物表，用户 18:50）：假的「圆环往外扩」序列 → 自动单帧取最大那一刻、取景收紧、D / A 里先外后、没亮过 D 0 A 255、
+      通道 / 后缀、错落只动 D、Size By Life / Alpha、cascade.json 里的单帧层（现有序列材质 1 × 1、extras、第 2 层序列、手机引用 PC 那张）、_HD 命名不加 _MB、产物表只有 PC / 手机两列且选单帧不重烘、引擎回放不分平台直接画单帧
   W26 4.9.31（用户 10-07 14:56 / 14:34）：RT6 远段从交接开始 a0 出现、第一帧几乎空（以前中点一出现就半亮）；导出缩放 × k 只改长度（时间 / 阻力 / Size By Life 不动）、系统名 _S50、
   W27 4.9.32（用户 10-07 16:15「缩小到0.8/0.5，升空的高度还是之前正确的吗？」→ 16:2x「两种都要，导出时选」）：升空尾缀「升空高度：不变」只缩粗细——序列面片只缩宽、粒子大小 / 随机散开 / 球面半径 × k，位置 / 弹道 / 加速度 / 时间 / 预览距离不变、系统名 _W50；引擎回放的出生表和导出同一套（esKeepScale ↔ fwlScaleJSON keep 逐模块对上）；面板只在升空尾缀 + 缩放 < 1 时出现；等比缩时 V5 尾缀 / 单束的游戏内大小也按缩放画；
-  W28 4.9.33（用户 10-07 17:26「点位实在太多了，可以简化一下点位吗？」「它最后会忽然放大一下再消失」「单帧输出模式我想要个引擎回放」）：Zoom 阶梯最多 12 级、每级不小于这一段每帧需要的大小、关键点 ≤ 2 × 级数；几乎全黑的末帧跟前一帧一样大（不跳回大取景），自己的火星放不下才放大；OUTPUT_VER.zoom 只让 Zoom 效果过期；产物表单帧「在引擎回放里看」切到引擎回放 · 低端；
+  W28 4.9.33（用户 10-07 17:26「点位实在太多了，可以简化一下点位吗？」「它最后会忽然放大一下再消失」「单帧输出模式我想要个引擎回放」）：Zoom 阶梯最多 12 级、每级不小于这一段每帧需要的大小、关键点 ≤ 2 × 级数；几乎全黑的末帧跟前一帧一样大（不跳回大取景），自己的火星放不下才放大；OUTPUT_VER.zoom 只让 Zoom 效果过期；产物表单帧「在引擎回放里看」回到画面切引擎回放（4.9.35 不分平台）；
+  W29 4.9.35（用户 10-07 18:50「低端这个分类应该不需要，直接合入产物表里」；18:5x「手机列保留，手机也可以选序列或者单帧或者单束，但没有GPU」「单帧放主包、名字不加 _MB」）：层 / 单层的导出方案没有低端、手机能出单束 / 单帧（引用 PC 那几张）、单帧设置 PC 或手机选单帧才出现、旧存档低端选过的提示不静默、手机单帧的正式名不带 _HD；
+  W30 4.9.35（用户 10-07 18:50「贴图与流转我也认为可以合并，现在只有一个正方形，画布利用空间不够，两个页面合成一个」）：标签只剩「贴图流转」（没有「贴图」「流转」「整张 / 流转动画」）、画布铺满画面区（不是正方形）、左边当前格 / 右边整张贴图 + 曲线、标签和曲线画布跟着布局、离开这一页画布回正方形；
       只改 cascade*.json、菊右栏有、引擎回放游戏内大小按缩放画不重烘；护栏 Ramp 第 255 格黑、编码封顶 253
   W19 4.9.21 入点前放大一律绕爆点（用户 21:51 选）：「放大的中心」删了；cascade.json 写 Pivot Offset、Initial Location 0；回放绕爆点；存过「面片中心」的打开时提示
       4.9.8 加：顶上「现在改的是」和搜索入口看得到，第一屏至少 8 行参数（菊 › 星、引菊 → 锦 金锦层 › 火花）
@@ -1993,7 +1995,7 @@ async def x2(pg):
     r = await pg.evaluate("""(() => { selectEmitTab('输出'); const x = panelRows.find(([r, it]) => it.sel === 'outPC'); if (!x) return null; const s = x[0].querySelector('select');
       return { mod: x[0]._x.e + '›' + x[0]._x.m, shown: !x[0].hidden, opts: [...s.options].map(o => o.value) }; })()""")
     info['牡丹'] = r
-    if not r or r['mod'] != '输出›直接调' or not r['shown'] or r['opts'] != ['seq', 'unit', 'dots', 'off']: return False, f'单层的导出方案不对：{r}'
+    if not r or r['mod'] != '输出›直接调' or not r['shown'] or r['opts'] != ['seq', 'unit', 'dots', 'frame', 'off']: return False, f'单层的导出方案不对：{r}'     # 4.9.35 PC 加单帧
     await pg.evaluate("(() => { const s = panelRows.find(([r, it]) => it.sel === 'outPC')[0].querySelector('select'); s.value = 'dots'; s.dispatchEvent(new Event('change')); return 0; })()"); await idle(pg)
     r = await pg.evaluate("""(() => { const so = singleOut(state.P), b = state.bake, pc = b ? fwlCombo('T', [{ L: singleLayer(state.P, state.M), b, i: 0, dots: true }], false) : null;
       const dot = panelRows.find(([r, it]) => Array.isArray(it) && it[0] === 'dotSize');
@@ -2318,8 +2320,8 @@ W17_JS = r"""async () => {
   out.master = { list: btns(), shown: !$('#texSeg').hidden };
   const want1 = ['自动（跟时间）', '第 1 张 · 星头', '第 1 张 · 尾迹', '第 2 张 · 星头', '第 2 张 · 尾迹'];
   if (JSON.stringify(out.master.list) !== JSON.stringify(want1) || !out.master.shown) bad.push('分两张 + 星头 / 尾迹时清单不对：' + JSON.stringify(out.master));
-  await click('第 2 张 · 尾迹'); out.master.pick = { hud: hud().slice(0, 12), sheet: state.texSheetNow && state.texSheetNow.key, isTail: state.texSheetNow && state.texSheetNow.show === b1.tail };
-  if (!out.master.pick.isTail || !/^第 2 张 · 尾迹/.test(out.master.pick.hud)) bad.push('点「第 2 张 · 尾迹」没换过去：' + JSON.stringify(out.master.pick));
+  await click('第 2 张 · 尾迹'); out.master.pick = { hud: hud().slice(0, 20), sheet: state.texSheetNow && state.texSheetNow.key, isTail: state.texSheetNow && state.texSheetNow.show === b1.tail };
+  if (!out.master.pick.isTail || !/^贴图流转 · 第 2 张 · 尾迹/.test(out.master.pick.hud)) bad.push('点「第 2 张 · 尾迹」没换过去：' + JSON.stringify(out.master.pick));
   await click('自动（跟时间）'); state.t = 0.2; hud(); out.master.auto0 = state.texSheetNow.key; state.t = b1.meta.t0 + 0.1; hud(); out.master.auto1 = state.texSheetNow.key;
   if (out.master.auto0 !== 'p0h' || out.master.auto1 !== 'p1h') bad.push('「自动」没跟着时间换张：' + JSON.stringify(out.master));
   // 流转动画也按这一张
@@ -2332,10 +2334,10 @@ W17_JS = r"""async () => {
   state.bake = loopB; selectStageView('atlas'); await wait(30); state.texSheet = ''; state.t = 1; hud();
   out.emitset = { list: btns() };
   if (JSON.stringify(out.emitset.list) !== JSON.stringify(['自动（跟时间）', '循环层', '消散', '远段'])) bad.push('循环层 + 消散 + 远段时清单不对：' + JSON.stringify(out.emitset.list));
-  await click('远段'); state.t = 0.5; out.emitset.before = { hud: hud().slice(0, 20), f: frameIdx(state.texSheetNow.b.meta, state.t - state.texSheetNow.b.meta.t0) };
+  await click('远段'); state.t = 0.5; out.emitset.before = { hud: hud().slice(0, 30), f: frameIdx(state.texSheetNow.b.meta, state.t - state.texSheetNow.b.meta.t0) };
   state.t = 3.8; out.emitset.mid = { f: frameIdx(state.texSheetNow.b.meta, state.t - state.texSheetNow.b.meta.t0), key: state.texSheetNow.key };
   if (out.emitset.mid.key !== 'far' || out.emitset.before.f !== -1 || !(out.emitset.mid.f > 0)) bad.push('选「远段」没按远段自己的开始时刻 / 帧号走：' + JSON.stringify(out.emitset));
-  if (!/^远段贴图/.test(out.emitset.before.hud)) bad.push('选「远段」HUD 没写：' + out.emitset.before.hud);
+  if (!/^贴图流转 · 远段/.test(out.emitset.before.hud)) bad.push('选「远段」HUD 没写：' + out.emitset.before.hud);     // 4.9.35 贴图 + 流转合成一页，HUD 先写看的是哪一张
   // 3 只有一张序列：不显示切换
   { const prev = state.bake; await openType('botan'); await baked(prev); } state.bake.head = tex(); state.bake.N = state.bake.NH = 4; state.texSheet = ''; selectStageView('atlas'); await wait(30); hud();
   out.single = { shown: !$('#texSeg').hidden, list: btns() };
@@ -2559,7 +2561,7 @@ W21_JS = r"""async () => {
   toggleDeliv(true); await wait(30);
   const pc = $('#delivView select[data-prod=pc]'), mob = $('#delivView select[data-prod=mobile]');
   out.table = { pc: !!pc, mob: !!mob, opts: pc ? [...pc.options].map(o => o.value) : [] };
-  if (!pc || !mob || out.table.opts.join() !== 'seq,unit,dots,off') bad.push('交付清单没有产物表（PC / 手机）：' + JSON.stringify(out.table));
+  if (!pc || !mob || out.table.opts.join() !== 'seq,unit,dots,frame,off') bad.push('交付清单没有产物表（PC / 手机）：' + JSON.stringify(out.table));
   const g0 = state.gen; pc.value = 'unit'; pc.dispatchEvent(new Event('change')); await wait(50);
   out.unitSet = { outPC: state.P.outPC, gen: state.gen - g0, undo: !$('#abUndo').disabled };
   if (state.P.outPC !== 'unit' || out.unitSet.gen) bad.push('产物表改 PC 单束：没存进 outPC 或触发了重烘：' + JSON.stringify(out.unitSet));
@@ -2572,7 +2574,7 @@ W21_JS = r"""async () => {
     singleUnitHolder().unitBake = { sig: unitSigOf(singleUnitHolder()), b: ub }; out.unitOutMode = P.outMode; }
   if (out.unitOutMode !== 'combined') bad.push('单束应该只出合并的一张（outMode combined）：' + out.unitOutMode);
   selectStageView('atlas'); await wait(30); state.t = 0.5; out.atlasUnit = { hud: hud().slice(0, 30), sheet: state.texSheetNow && state.texSheetNow.label };
-  if (out.atlasUnit.sheet !== '单束' || !/^单束贴图/.test(out.atlasUnit.hud)) bad.push('PC 单束时「贴图」没看单束那张：' + JSON.stringify(out.atlasUnit));
+  if (out.atlasUnit.sheet !== '单束' || !/^贴图流转 · 单束/.test(out.atlasUnit.hud)) bad.push('PC 单束时「贴图」没看单束那张：' + JSON.stringify(out.atlasUnit));
   selectStageView('export'); await wait(30); out.exportUnit = hud().slice(0, 40);
   if (!/PC 单束/.test(out.exportUnit)) bad.push('单层引擎回放没按单束画：' + out.exportUnit);
   // 手机：看序列
@@ -2765,7 +2767,7 @@ W25_JS = r"""async () => {
     for (const { tc, view } of items) { const f = Math.round(tc * 15), R = ring(f) * 100, v = view || [0, 0, 50, 50];
       for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) { const wx = v[0] + ((x + 0.5) / S * 2 - 1) * v[2], wy = v[1] + ((y + 0.5) / S * 2 - 1) * v[3]; if (Math.abs(Math.hypot(wx, wy) - R) < 3) g[y * S + x] = 200; } }
     return g; };
-  const saved = { outLow: state.P.outLow, lowSize: state.P.lowSize, lowJit: state.P.lowJit, lowMaps: state.P.lowMaps, lowSuffix: state.P.lowSuffix, plat: state.platform };
+  const saved = { outPC: state.P.outPC, lowSize: state.P.lowSize, lowJit: state.P.lowJit, lowMaps: state.P.lowMaps, lowSuffix: state.P.lowSuffix, plat: state.platform };
   try {
     const lo = lowOf({ lowSize: 512, lowMaps: 'DCA', lowJit: 0 }), lw = await lowFor(b, lo, state.M);
     out.t = { tIn: +lw.tIn.toFixed(3), tOut: +lw.tOut.toFixed(3), tStar: +lw.tStar.toFixed(3) }; out.view = lw.view.map(v => +v.toFixed(1));
@@ -2788,39 +2790,46 @@ W25_JS = r"""async () => {
     // Size By Life：开头小、到单帧那一刻 1；Alpha：最后 0
     out.keys = { size: lw.sizeKeys, alpha: lw.alphaKeys };
     if (!(lw.sizeKeys[0][1] < 0.5) || lw.sizeKeys[lw.sizeKeys.length - 1][1] !== 1 || lw.alphaKeys[lw.alphaKeys.length - 1][1] !== 0) bad.push('Size By Life / Alpha 曲线不对：' + JSON.stringify(out.keys));
-    // cascade_low.json：单帧走现有序列材质（1 × 1、帧号 0）；彩色 / 功能图在 extras
-    const L1 = { ...state.M, delay: 0.5, rate: 1, scale: 2 }, j = fwlLow('X_Low', [{ name: 'X_Low', lw, M: state.M, L: L1 }, { name: 'X_Mobile_L2', mb: state.bake, M: state.M, L: { ...state.M, delay: 0, rate: 1, scale: 1 } }]);
+    // 4.9.35 单帧并进产物表：cascade.json 里第 1 层单帧（现有序列材质 1 × 1、帧号 0；彩色在 extras）、第 2 层序列；手机单帧直接引用 PC 那张
+    const L1 = { ...state.M, delay: 0.5, rate: 1, scale: 2 }, L2 = { ...state.M, delay: 0, rate: 1, scale: 1 };
+    const j = fwlCombo('X', [{ L: L1, b: state.bake, i: 0, frame: lw, frameName: 'X_L1' }, { L: L2, b: state.bake, i: 1 }], false), jm = fwlCombo('X_Mobile', [{ L: L1, b: state.bake, i: 0, frame: lw, frameName: 'X_L1' }], true);
     const e = j.emitters[0], mods = Object.fromEntries(e.modules.map(m => [m.m, m]));
-    out.json = { em: j.emitters.map(x => x.name), tex: Object.keys(j.textures), extras: Object.keys(j.extras), size: mods.InitialSize.StartSize.const, delay: e.required.delay_s, frame: mods.DynamicParameter.params.frame, role: j.materials.L1_main.role, plat: j.platform };
-    if (j.platform !== 'low' || e.name !== 'L1_Frame' || j.materials.L1_main.role !== 'flipbook_rgba' || j.textures.L1_frame.frames !== 1 || JSON.stringify(mods.DynamicParameter.params.frame) !== '{"const":0}') bad.push('cascade_low.json 单帧发射器不对：' + JSON.stringify(out.json));
+    out.json = { em: j.emitters.map(x => x.name), tex: Object.keys(j.textures), extras: Object.keys(j.extras || {}), size: mods.InitialSize.StartSize.const, delay: e.required.delay_s, frame: mods.DynamicParameter.params.frame, role: j.materials.L1_main.role, plat: j.platform, form: j.source.layers.map(x => x.form), mob: [jm.platform, jm.textures.L1_frame && jm.textures.L1_frame.file] };
+    if (j.platform !== 'pc' || e.name !== 'L1_Frame' || j.materials.L1_main.role !== 'flipbook_rgba' || j.textures.L1_frame.frames !== 1 || JSON.stringify(mods.DynamicParameter.params.frame) !== '{"const":0}' || out.json.form[0] !== 'frame') bad.push('cascade.json 单帧发射器不对：' + JSON.stringify(out.json));
+    if (jm.platform !== 'mobile' || out.json.mob[1] !== TN('X_L1', 'Frame') + '.png') bad.push('手机单帧应直接引用 PC 那张：' + JSON.stringify(out.json.mob));
     if (Math.abs(mods.InitialSize.StartSize.const[0] - 2 * lw.view[2] * 100 * 2) > 1 || Math.abs(e.required.delay_s - 0.5) > 1e-6 || !mods.SizeByLife || !mods.ColorScaleOverLife || !mods.ColorOverLife.AlphaOverLife.curve) bad.push('单帧发射器的大小 / 延迟 / 模块不对：' + JSON.stringify(out.json));
     out.dis = { tex: j.textures.L1_dmap && j.textures.L1_dmap.class, ch: j.textures.L1_dmap && j.textures.L1_dmap.channels.R, mat: j.materials.L1_main.textures.dissolve, flag: e.dissolve && e.dissolve.enable, dp: mods.DynamicParameter.params.dissolve, l2: j.emitters.filter(x => x.name.startsWith('L2_')).map(x => !!x.dissolve) };
-    if (!j.extras.L1_color || j.extras.L1_maps || out.dis.tex !== 'dissolve' || out.dis.ch !== LOW_MAP_NAMES.D || out.dis.mat !== 'L1_dmap' || !out.dis.flag || JSON.stringify(out.dis.dp) !== '{"curve":[[0,0],[1,1]]}' || !out.dis.l2.length || out.dis.l2.some(Boolean)) bad.push('溶解标记 / 溶解图 / 第 2 层序列（不该开溶解）不对：' + JSON.stringify(out.dis));
-    // 文件 + 正式名（_MB、_Color_MB、_C、_<后缀>；Ramp 共用）
-    const files = await lowFiles('X_Low', lw, state.M), named = applyPackNaming([...files, ['cascade_low.json', utf8(JSON.stringify(j))]], 'Test', [{ ln: 'X', mn: 'X_Mobile', b: state.bake, mb: state.bake, layer: '', low: { ln: 'X_Low', suffix: lw.suffix } }]).map(f => f[0]);
+    if (!(j.extras || {}).L1_color || out.dis.tex !== 'dissolve' || out.dis.ch !== LOW_MAP_NAMES.D || out.dis.mat !== 'L1_dmap' || !out.dis.flag || JSON.stringify(out.dis.dp) !== '{"curve":[[0,0],[1,1]]}' || !out.dis.l2.length || out.dis.l2.some(Boolean)) bad.push('溶解标记 / 溶解图 / 第 2 层序列（不该开溶解）不对：' + JSON.stringify(out.dis));
+    // 文件 + 正式名（PC 用 _HD、彩色 _Color_HD、_C、_<后缀>；不再加 _MB；Ramp 共用）
+    const files = await lowFiles('X_L1', lw, state.M), named = applyPackNaming([...files, ['cascade.json', utf8(JSON.stringify(j))]], 'Test', [{ ln: 'X_L1', mn: 'X_Mobile_L1', b: state.bake, mb: state.bake, layer: '', pcTex: false, frame: { pc: true, mob: false, suffix: lw.suffix } }]).map(f => f[0]);
     out.named = named.filter(f => /^T_/.test(f));
-    for (const want of ['T_EFX_FireWorks_Test_1x1_01_MB.png', 'T_EFX_FireWorks_Test_1x1_01_Color_MB.png', 'T_EFX_FireWorks_Test_1x1_01_C.png', 'T_EFX_FireWorks_Test_1x1_01_DCA.png', 'T_EFX_FireWorks_Test_R.png']) if (!named.includes(want)) bad.push('素材包里少了 ' + want);
-    // 产物表：低端列；选单帧不重烘
+    for (const want of ['T_EFX_FireWorks_Test_1x1_01_HD.png', 'T_EFX_FireWorks_Test_1x1_01_Color_HD.png', 'T_EFX_FireWorks_Test_1x1_01_C.png', 'T_EFX_FireWorks_Test_1x1_01_DCA.png', 'T_EFX_FireWorks_Test_R.png']) if (!named.includes(want)) bad.push('素材包里少了 ' + want);
+    if (named.some(f => /_MB\.png$/.test(f)) || named.includes('cascade_low.json')) bad.push('不该再有 _MB / cascade_low.json：' + JSON.stringify(out.named));
+    // 产物表：只有 PC / 手机两列；PC 选单帧不重烘；手机有 序列 / 单束 / 单帧 / 不出（没有 GPU）
     toggleDeliv(true); await wait(30);
-    const sel = $('#delivView select[data-prod=low]'); out.opts = sel ? [...sel.options].map(o => o.value) : null;
-    if (!sel || out.opts.join() !== 'off,frame,seq') bad.push('产物表没有低端列：' + JSON.stringify(out.opts));
+    const sel = $('#delivView select[data-prod=pc]'), msel = $('#delivView select[data-prod=mobile]');
+    out.opts = { pc: sel ? [...sel.options].map(o => o.value) : null, mobile: msel ? [...msel.options].map(o => o.value) : null, low: !!$('#delivView select[data-prod=low]'), cols: [...document.querySelectorAll('#delivView .dv-prod thead th')].length };
+    if (!sel || out.opts.pc.join() !== 'seq,unit,dots,frame,off' || out.opts.mobile.join() !== 'seq,unit,frame,off' || out.opts.low || out.opts.cols !== 3) bad.push('产物表应只有 PC / 手机两列（PC 带单帧、手机 序列 / 单束 / 单帧 / 不出）：' + JSON.stringify(out.opts));
     const g0 = state.gen; if (sel) { sel.value = 'frame'; sel.dispatchEvent(new Event('change')); await wait(50); }
-    out.set = { outLow: state.P.outLow, gen: state.gen - g0 }; out.cell = ($('#delivView .dv-prod td:nth-child(4) small') || {}).textContent || '';
-    if (state.P.outLow !== 'frame' || out.set.gen) bad.push('产物表选低端单帧：没存进 outLow 或重烘了：' + JSON.stringify(out.set));
-    if (!/^单帧/.test(out.cell)) bad.push('低端那格没写单帧：' + out.cell);
-    out.files = [...document.querySelectorAll('#delivView td')].filter(td => /_1x1_01_(MB|Color_MB|C|DCA)\.png$/.test(td.textContent)).length;
+    out.set = { outPC: state.P.outPC, gen: state.gen - g0 }; out.cell = ($('#delivView .dv-prod td:nth-child(2) small') || {}).textContent || '';
+    if (state.P.outPC !== 'frame' || out.set.gen) bad.push('产物表 PC 选单帧：没存进 outPC 或重烘了：' + JSON.stringify(out.set));
+    if (!/^单帧/.test(out.cell) || !$('#delivView [data-lowview]')) bad.push('PC 那格没写单帧 / 没有「在引擎回放里看」：' + out.cell);
+    out.files = [...document.querySelectorAll('#delivView td')].filter(td => /_1x1_01_(HD|Color_HD|C|DCA)\.png$/.test(td.textContent)).length;
+    if (out.files < 4) bad.push('文件清单里单帧的贴图不全：' + out.files);
     toggleDeliv(false);
-    // 视图：把这份单帧挂到现在的烘焙上，看低端
+    // 视图：把这份单帧挂到现在的烘焙上；引擎回放不分平台，直接按 PC 列画单帧
     Object.assign(state.P, { lowSize: 512, lowJit: 0, lowMaps: 'DCA', lowSuffix: '' }); if (!state.bake.lowCache) state.bake.lowCache = new Map(); state.bake.lowCache.set(lowSig(lowOf(state.P), state.M), lw);
-    setPreviewPlatform('low'); selectStageView('export'); state.t = 0.5; state.lowDissolve = true; loop(performance.now()); out.hudD = $('#hud').textContent.slice(0, 40);
+    selectStageView('export'); state.t = 0.5; state.lowDissolve = true; loop(performance.now()); out.hudD = $('#hud').textContent.slice(0, 40);
     state.lowDissolve = false; loop(performance.now()); out.hudN = $('#hud').textContent.slice(0, 70);
+    out.plat = { hidden: $('#platformSeg').hidden, low: !!$('#platformSeg button[data-platform="low"]'), platform: state.platform };
+    if (!out.plat.hidden || out.plat.low || out.plat.platform !== 'pc') bad.push('引擎回放不该再分平台：' + JSON.stringify(out.plat));
     selectStageView('atlas'); loop(performance.now()); out.hudA = $('#hud').textContent.slice(0, 30); out.glErr = gl.getError();
-    if (!/低端单帧/.test(out.hudD) || !/溶解预览/.test(out.hudD) || !/不开溶解/.test(out.hudN) || !/^低端单帧/.test(out.hudA) || out.glErr) bad.push('低端视图不对：' + JSON.stringify([out.hudD, out.hudN, out.hudA, out.glErr]));
-    out.lowOpts = !$('#lowOpts').hidden;
-    state.P.outLow = 'off'; onExportScheme(); selectStageView('export'); loop(performance.now()); out.hudOff = $('#hud').textContent.slice(0, 40);
-    if (!/低端 不出/.test(out.hudOff)) bad.push('低端不出时没写明：' + out.hudOff);
+    if (!/单帧/.test(out.hudD) || !/溶解预览/.test(out.hudD) || !/不开溶解/.test(out.hudN) || !/^单帧/.test(out.hudA) || out.glErr) bad.push('单帧视图不对：' + JSON.stringify([out.hudD, out.hudN, out.hudA, out.glErr]));
+    selectStageView('export'); loop(performance.now()); out.lowOpts = !$('#lowOpts').hidden; if (!out.lowOpts) bad.push('PC 单帧时引擎回放上方应有「溶解预览」「并排」');
+    state.P.outPC = 'off'; onExportScheme(); selectStageView('export'); loop(performance.now()); out.hudOff = $('#hud').textContent.slice(0, 40);
+    if (!/PC 不出/.test(out.hudOff)) bad.push('PC 不出时没写明：' + out.hudOff);
   } finally {
-    lowRenderAt = fl; Object.assign(state.P, saved); delete state.P.plat; setPreviewPlatform(saved.plat); selectStageView('live');
+    lowRenderAt = fl; Object.assign(state.P, saved); delete state.P.plat; onExportScheme(); selectStageView('live');
     if (state.bake && state.bake.lowCache) state.bake.lowCache.clear(); if (b.lowCache) b.lowCache.forEach(disposeLow); head.dispose();
   }
   return { ok: !bad.length, bad, out };
@@ -2972,11 +2981,11 @@ W28_JS = r"""async () => {
     try { state.P.zoom = 'off'; const a = OUT_SIG(); state.P.zoom = 'on'; const b = OUT_SIG(); out.sig = { off: a === JSON.stringify(rest), on: b === JSON.stringify(rest) + '|zoom' + OUTPUT_VER.zoom };
       if (!out.sig.off || !out.sig.on) bad.push('OUT_SIG：不用 Zoom 的效果签名该和以前一样、用 Zoom 的带 zoom 版本：' + JSON.stringify(out.sig)); } finally { state.P.zoom = sv; } }
   // ④ 产物表单帧：格子里有「在引擎回放里看」，点了切到引擎回放 · 低端
-  { const sv = state.P.outLow; state.P.outLow = 'frame'; const html = prodCellHTML({ i: 0, b: null, name: 'x' }, 'low', false); state.P.outLow = sv;
-    out.cell = /data-lowview/.test(html); if (!out.cell) bad.push('产物表低端单帧格子里没有「在引擎回放里看」');
-    const sp = state.platform, sview = state.view; showLowReplay(); out.go = { view: state.view, platform: state.platform, pressed: $('#platformSeg button[data-platform="low"]').getAttribute('aria-pressed') };
-    if (out.go.view !== 'export' || out.go.platform !== 'low' || out.go.pressed !== 'true') bad.push('「在引擎回放里看」没切到引擎回放 · 低端：' + JSON.stringify(out.go));
-    const pb = $('#platformSeg button[data-platform="' + (sp || 'pc') + '"]'); if (pb) pb.click(); selectStageView(sview === 'export' ? 'export' : 'live'); }
+  { const sv = state.P.outPC; state.P.outPC = 'frame'; const html = prodCellHTML({ i: 0, b: null, name: 'x' }, 'pc', false); state.P.outPC = sv;     // 4.9.35 单帧在 PC 列
+    out.cell = /data-lowview/.test(html); if (!out.cell) bad.push('产物表 PC 单帧格子里没有「在引擎回放里看」');
+    const sview = state.view; toggleDeliv(true); showLowReplay(); out.go = { view: state.view, deliv: !!stage2.deliv, platform: state.platform };
+    if (out.go.view !== 'export' || out.go.deliv || out.go.platform !== 'pc') bad.push('「在引擎回放里看」没回到画面、切引擎回放：' + JSON.stringify(out.go));
+    selectStageView(sview === 'export' ? 'export' : 'live'); }
   return { ok: !bad.length, bad, out };
 }"""
 
@@ -2984,6 +2993,74 @@ W28_JS = r"""async () => {
 async def w28(pg):
     """4.9.33 Zoom 阶梯精简 + 末帧不跳 + 单帧引擎回放入口"""
     r = await pg.evaluate(W28_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
+
+W29_JS = r"""async () => {
+  // 4.9.35：低端并进产物表
+  const out = {}, bad = [], eq = (a, b) => JSON.stringify(a) === JSON.stringify(b), wait = ms => new Promise(r => setTimeout(r, ms));
+  { const prev = state.bake; await openType('kiku'); for (let i = 0; i < 100 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); } state.playing = false;
+  out.out = [layerOut({ out: { pc: 'frame', mobile: 'unit', low: 'frame' } }), layerOut({ out: { mobile: 'dots' } }), singleOut({ ...state.P, outPC: 'frame', outMobile: 'frame', outLow: 'frame' })];
+  if (!eq(out.out[0], { pc: 'frame', mobile: 'unit' }) || !eq(out.out[1], { pc: 'seq', mobile: 'seq' }) || 'low' in out.out[2] || out.out[2].mobile !== 'frame') bad.push('导出方案不该再有低端、手机不能选 GPU：' + JSON.stringify(out.out));
+  const U = { tag: 'unit' }, F = { tag: 'frame' }, b = state.bake;
+  const em = comboEntries([{ L: { out: { pc: 'unit', mobile: 'unit' } }, b, unit: U, unitName: 'A_L1' }, { L: { out: { pc: 'dots', mobile: 'frame' } }, b, frame: F, frameName: 'A_Mobile_L2' }, { L: { out: { pc: 'seq', mobile: 'off' } }, b }], true);
+  out.entries = em.map(x => [x.i, !!x.unit && x.unitName, !!x.frame && x.frameName, !!x.dots]);
+  if (!eq(out.entries, [[0, 'A_L1', false, false], [1, false, 'A_Mobile_L2', false]])) bad.push('手机的单束 / 单帧没挑出来（或手机出了光点 / 不出的层）：' + JSON.stringify(out.entries));
+  // 右栏：没有低端导出；手机 序列 / 单束 / 单帧 / 不出；单帧设置 PC 或手机选单帧才出现
+  const sec = SCHEMA.find(x => x.sec === '导出方案'), it = k => sec.items.find(x => x.sel === k || (Array.isArray(x) && x[0] === k));
+  out.schema = { low: !!it('outLow'), mob: (it('outMobile') || {}).options.map(o => o[0]), sizeMob: itemVisible(it('lowSize'), { ...state.P, outPC: 'seq', outMobile: 'frame' }), sizeNone: itemVisible(it('lowSize'), { ...state.P, outPC: 'seq', outMobile: 'seq' }), uvMob: itemVisible(it('unitVariants'), { ...state.P, outPC: 'seq', outMobile: 'unit' }) };
+  if (out.schema.low || out.schema.mob.join() !== 'seq,unit,frame,off' || !out.schema.sizeMob || out.schema.sizeNone || !out.schema.uvMob) bad.push('右栏导出方案不对：' + JSON.stringify(out.schema));
+  // 旧存档：低端选过的打开时提示，不自动改 PC / 手机（单层 P、多层层上）
+  { const P0 = { ...defaultsFor('kiku').P, outLow: 'frame', outPC: 'seq' }; migBegin(); migrate37(P0, VERSION); const e = { name: 'x', P: { type: 'kiku' }, M: defaultsFor('kiku').M }, L = newLayer(e, { out: { pc: 'seq', mobile: 'seq', low: 'frame' } });
+    const log = MIG_LOG.filter(x => x.k === 'outLow').map(x => x.from); MIG_ON = false; MIG_LOG.length = 0;
+    out.mig = { log, inP: 'outLow' in P0, pc: P0.outPC, L: L.out };
+    if (log.length !== 2 || out.mig.inP || out.mig.pc !== 'seq' || 'low' in (L.out || {})) bad.push('旧存档的低端：要提示两处、删掉键、不改 PC：' + JSON.stringify(out.mig)); }
+  // 正式名：手机才用的单帧不带 _HD，PC 的带 _HD；cascade_mobile.json 的 asset 跟着换
+  { const jm = { textures: { L2_frame: { file: TN('A_Mobile_L2', 'Frame') + '.png' } } }, png = new Uint8Array(1);
+    const named = applyPackNaming([[TN('A_Mobile_L2', 'Frame') + '.png', png], [TN('A_L1', 'Frame') + '.png', png], ['cascade_mobile.json', utf8(JSON.stringify(jm))]], 'Test',
+      [{ ln: 'A_L1', mn: 'A_Mobile_L1', b, mb: b, layer: 'One', pcTex: false, frame: { pc: true, mob: false, suffix: 'D' } }, { ln: 'A_L2', mn: 'A_Mobile_L2', b, mb: b, layer: 'Two', pcTex: false, frame: { pc: false, mob: true, suffix: 'D' } }]);
+    const names = named.map(f => f[0]), j = JSON.parse(new TextDecoder().decode(named.find(f => f[0] === 'cascade_mobile.json')[1]));
+    out.named = { names: names.filter(f => /^T_/.test(f)), asset: j.textures.L2_frame.asset };
+    if (!names.includes('T_EFX_FireWorks_Test_One_1x1_01_HD.png') || !names.includes('T_EFX_FireWorks_Test_Two_1x1_01.png') || out.named.asset !== 'T_EFX_FireWorks_Test_Two_1x1_01') bad.push('单帧正式名不对（PC 带 _HD、只给手机的不带，不加 _MB）：' + JSON.stringify(out.named)); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w29(pg):
+    """4.9.35 低端并进产物表：手机单束 / 单帧、没有低端、旧存档提示、单帧正式名"""
+    r = await pg.evaluate(W29_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
+
+W30_JS = r"""async () => {
+  // 4.9.35 贴图流转
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
+  { const prev = state.bake; await openType('kiku'); for (let i = 0; i < 100 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); } state.playing = false;
+  for (let s = state.bake; s; s = s.next) s.head = new Target(4, 4, gl.RGBA8);     // 假烘焙没有贴图：给一张 4 × 4 的，好让贴图流转画出来
+  state.t = 0.5;
+  out.tabs = [...$('#viewSeg').querySelectorAll('[data-view]')].map(b => b.dataset.view + ':' + b.textContent.trim());
+  if (out.tabs.join() !== 'live:实时模拟,export:引擎回放,flow:贴图流转,delivery:交付清单' || $('#flowSeg')) bad.push('标签应是 实时模拟 / 引擎回放 / 贴图流转 / 交付清单：' + JSON.stringify(out.tabs));
+  selectStageView('atlas'); out.aliasPressed = $('#viewSeg [data-view=flow]').getAttribute('aria-pressed');     // 以前的「贴图」入口也落到这一页
+  if (state.view !== 'atlas' || !state.atlasFlow || out.aliasPressed !== 'true') bad.push('切「贴图」没落到贴图流转：' + JSON.stringify([state.view, state.atlasFlow, out.aliasPressed]));
+  for (let k = 0; k < 3; k++) { loop(performance.now()); await wait(300); }
+  const box = $('#box').getBoundingClientRect(), cv = $('#flowCv').getBoundingClientRect();
+  out.wide = { cls: $('#box').classList.contains('wide'), box: [Math.round(box.width), Math.round(box.height)], canvas: [canvas.width, canvas.height], lay: flowLayout, cv: [Math.round(cv.left - box.left), Math.round(cv.top - box.top), Math.round(cv.width), Math.round(cv.height)], cvHidden: $('#flowCv').hidden, labels: [...document.querySelectorAll('#qlabels .qlabel')].map(x => x.textContent.slice(0, 6)) };
+  const ar = canvas.width / canvas.height, br = box.width / box.height, L = out.wide.lay;
+  if (!out.wide.cls || Math.abs(ar - br) > 0.03 * br || Math.abs(ar - 1) < 0.05) bad.push('贴图流转的画布应铺满画面区（不是正方形）：' + JSON.stringify(out.wide));
+  if (!L || !(L.prev.x + L.prev.w <= L.atl.x) || !(L.atl.y + L.atl.h <= L.crv.y) || !(L.prev.w >= L.atl.w * 0.8)) bad.push('布局应是左边当前格、右边整张贴图在上 / 曲线在下：' + JSON.stringify(L));
+  const sx = box.width / canvas.width;
+  if (out.wide.cvHidden || Math.abs(out.wide.cv[0] - L.crv.x * sx) > 3 || Math.abs(out.wide.cv[2] - L.crv.w * sx) > 3) bad.push('帧号曲线没放到布局里的位置：' + JSON.stringify(out.wide));
+  if (out.wide.labels.length !== 2) bad.push('当前格 / 整张贴图两个标签：' + JSON.stringify(out.wide.labels));
+  if (!/^贴图流转 · /.test($('#hud').textContent)) bad.push('HUD 应写贴图流转：' + $('#hud').textContent.slice(0, 40));
+  // 离开这一页：画布回正方形、曲线藏起来
+  selectStageView('live'); for (let k = 0; k < 2; k++) { loop(performance.now()); await wait(300); }
+  out.back = { cls: $('#box').classList.contains('wide'), canvas: [canvas.width, canvas.height], cv: $('#flowCv').hidden };
+  if (out.back.cls || out.back.canvas[0] !== out.back.canvas[1] || !out.back.cv) bad.push('离开贴图流转后画布应回正方形：' + JSON.stringify(out.back));
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w30(pg):
+    """4.9.35 贴图 + 流转合成「贴图流转」，画布铺满画面区"""
+    r = await pg.evaluate(W30_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
 
 N3_JS = r"""(() => {
@@ -3025,7 +3102,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

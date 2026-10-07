@@ -1135,6 +1135,8 @@ async function ensureLibEntries(keys) {
 }
 function newLayer(entry, o = {}) {
   const M = entry.M;
+  // 4.9.35（用户 10-07 18:50「低端这个分类应该不需要，直接合入产物表里」）：层上的低端导出删了；旧存档里选过的打开时提示（不静默），不自动改 PC / 手机
+  if (o.out && 'low' in o.out) { const { low, ...rest } = o.out; if (low && low !== 'off' && MIG_ON && entry.P) MIG_LOG.push({ P: entry.P, type: entry.P.type, k: 'outLow', from: low, to: null, why: '低端并进产物表了：要单帧在 PC / 手机列选「单帧」（4.9.35）' }); o = { ...o, out: rest }; }
   return { lib: entry.name, scale: 1, delay: 0, rate: 1, mirror: false, stages: M.stages.map(s => [...s]), xw: M.xw, ramp0: M.ramp0, ramp1: M.ramp1, ramp2: M.ramp2, ramp3: M.ramp3, headInt: M.headInt, tailInt: M.tailInt, ...o };
 }
 // 4.2.3（走查 A3）：同一个母版被第二层用到时复制一份（参数、颜色各自独立；贴图先共用，哪层改了哪层自己重烘）

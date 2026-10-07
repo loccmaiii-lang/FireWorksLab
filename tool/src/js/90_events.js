@@ -33,11 +33,10 @@ const segBtns = (id, fn) => $(id).addEventListener('click', e => {
 });
 segBtns('#dispSeg', b => state.disp = b.dataset.disp);
 segBtns('#platformSeg', b => setPreviewPlatform(b.dataset.platform));
-$('#lowDissolve').addEventListener('change', e => { state.lowDissolve = e.target.checked; });     // 4.9.29 低端：溶解预览 / 并排
+$('#lowDissolve').addEventListener('change', e => { state.lowDissolve = e.target.checked; });     // 4.9.29 单帧：溶解预览 / 并排
 $('#lowSide').addEventListener('change', e => { state.lowSide = e.target.checked; });
 $('#viewSeg').addEventListener('click', e => { const b = e.target.closest('button[data-view]'); if (b) selectStageView(b.dataset.view); });
 segBtns('#texSeg', b => { state.texSheet = b.dataset.sheet || ''; texSheetSig = ''; flowTrail.length = 0; $('#qlabels').dataset.key = ''; });     // 4.9.20 贴图 / 流转：这一层的每一张序列
-segBtns('#flowSeg', b => { state.atlasFlow = b.dataset.flow === '1'; flowTrail.length = 0; $('#qlabels').dataset.key = ''; syncStageTabs(); });
 $('#dist').value = sliderFromDist(state.dist);
 $('#dist').addEventListener('input', e => { state.dist = distFromSlider(+e.target.value); $('#distOut').textContent = state.dist + ' m'; });
 $('#dist').addEventListener('dblclick', () => { state.dist = 1000; $('#dist').value = sliderFromDist(1000); $('#distOut').textContent = '1000 m'; });

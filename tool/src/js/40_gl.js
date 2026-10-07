@@ -340,7 +340,7 @@ ${CELLV}
 void main(){ if(vFrame<0.){ discard; } vec2 uv=clamp(v_uv,uInset,1.-uInset);
   if(uComb>.5){ float v=cellv(uH,vFrame,uv); o=vec4(ramp(v)*v*uTint*uHI*uK,1.); }
   else { float h=cellv(uH,vFrame,uv), t=cellv(uT,vFrame,uv); o=vec4((h*uTint*uHI+ramp(t)*t*uTI)*uK,1.); } }`;
-// 4.9.29 低端单帧（68_lowframe.js drawLowLayer）：uMode 0 = cascade_low.json 现在的写法（灰度查 Ramp × Color Over Life × Alpha，同序列材质）；
+// 4.9.29 单帧（68_lowframe.js drawLowLayer）：uMode 0 = cascade.json 里单帧层现在的写法（灰度查 Ramp × Color Over Life × Alpha，同序列材质）；
 // 1 = 再乘现有序列母材质的溶解 fade = 1 − saturate(D + 2P − 1)（4.9.31 起；4.9.29 是「出现 ≤ 进度 < 熄灭」的硬边、彩色）；2 = 功能图伪彩色；3 = 彩色单帧原样
 const FS_LOW = HDR + `in vec2 v_uv; uniform sampler2D uC, uMap; uniform float uMode, uP, uAlpha, uHI, uTI, uK, uHasD, uHasA, uMirror, uInv; uniform vec4 uDm, uAm; uniform vec3 uTint; out vec4 o;
 ${RAMP_FN}

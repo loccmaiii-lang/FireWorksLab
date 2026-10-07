@@ -72,13 +72,12 @@
           <div class="seg" id="viewSeg">
             <button data-view="live" aria-pressed="true">实时模拟</button>
             <button data-view="export" aria-pressed="false">引擎回放</button>
-            <button data-view="atlas" aria-pressed="false">贴图</button>
-            <button data-view="flow" aria-pressed="false">流转</button>
+            <button data-view="flow" aria-pressed="false" title="左：当前帧放大（最近邻，看得到真实像素）；右：整张贴图（金框 = 当前帧）+ 帧号曲线">贴图流转</button>
             <button id="abDeliv" type="button" data-view="delivery" aria-pressed="false" title="查看完整素材包的文件、平台、规格和延迟">交付清单</button>
           </div>
           <button class="tgl" id="btnRef" type="button" aria-pressed="true" hidden title="实拍并排对照：开 / 关（V）"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="3" width="6.2" height="10" rx="1"/><rect class="f" x="8.8" y="3" width="6.2" height="10" rx="1"/></svg><span class="tl">实拍对照</span></button>
           <span class="sp"></span>
-          <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button><button data-platform="low" aria-pressed="false" title="低端包（cascade_low.json）：单帧 / 序列 / 不出，按产物表的低端列">低端</button></div>
+          <div class="seg small" id="platformSeg" hidden><button data-platform="pc" aria-pressed="true">PC</button><button data-platform="mobile" aria-pressed="false">手机</button></div>
           <span class="lowopts" id="lowOpts" hidden><label class="check" title="按现有序列母材质的溶解公式画（值大先消失、软过渡）：导入器给单帧开了溶解以后 UE 里就是这样；关掉 = 不开溶解的样子"><input type="checkbox" id="lowDissolve" checked> 溶解预览</label><label class="check" title="序列 | 单帧 · 某一帧 | 单帧 · 长曝光 同一秒并排"><input type="checkbox" id="lowSide"> 并排</label></span>
           <button class="tgl" id="btnFocus" type="button" aria-pressed="false" title="精简布局：收起左右栏和底下的层轨道，画布最大（F，或双击画布；再按一次恢复，会记住）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg><span class="tl">精简</span></button>
           <button class="tgl" id="btnRight" type="button" aria-pressed="true" title="显示 / 隐藏右栏（P）"><span class="tl">参数</span><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><rect class="f" x="10" y="2.5" width="4.5" height="11" rx="1.5"/></svg></button>
@@ -116,7 +115,6 @@
         <label class="fexpo" title="显示曝光（只影响预览，不改素材）">显示曝光<input type="range" id="expo" min="0.2" max="3" step="0.05" value="1"><output id="expoOut">1×</output></label>
         <details class="ab-more preview-settings" id="previewSettings"><summary class="btn" title="烘焙、贴图图层、构图网格、记录当前帧">预览设置</summary><div class="ab-menu">
           <div class="bakectl" id="bakeCtl"><button class="bakebtn" id="bakeNow" type="button" title="按当前参数烘焙贴图（B）">贴图最新</button><label class="bk-auto" title="自动烘焙：开 = 改参数停手后自动烘；关 = 按 B、切到引擎回放 / 贴图或导出时再烘"><input type="checkbox" id="autoBakeChk">自动烘焙</label></div>
-          <div class="seg small" id="flowSeg" hidden><button data-flow="0" aria-pressed="true">整张</button><button data-flow="1" aria-pressed="false">流转动画</button></div>
           <label class="expo" id="resolutionBox" hidden title="按导出分辨率预览"><input type="checkbox" id="exportResolution" checked>按导出分辨率</label>
           <label class="expo" id="bloomBox" title="只在烘焙器的画面上加一圈柔光（升空尾缀、地面效果的模板默认开）；导出的贴图、引擎里都没有"><input type="checkbox" id="previewBloomChk">预览泛光（引擎里没有）</label>
           <button id="vtGrid" type="button" aria-pressed="false" title="只影响观察">构图网格</button>
