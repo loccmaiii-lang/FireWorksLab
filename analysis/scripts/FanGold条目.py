@@ -53,6 +53,10 @@ VERSIONS = {
     # 更密（每簇 22 条、火花 300/s）；冠带偏小偏暗 → 爆裂 50 个、范围 3 m、亮度 2.4；白热段 0.22 s；时长跟着火花寿命 4.4 → 5.2 s
     'FG2': {'duration': 5.2, 'stars': 22, 'sparkRate': 300, 'sparkLife': 2.6, 'sparkLifeJit': 40, 'cooling': 0.22, 'x1Life': 0.22,
             'crackle': 50, 'crackleR': 3.0, 'crackleBright': 2.4, 'crackleSize': 0.18},
+    # FGV2 / FGE-FG2 看过（18:00）：整条线留到 2.8 s 对了；再长一点更像（寿命 3.0）；星烧到过了顶点（1.65 s）才炸，线头往下勾 → 燃烧 1.85 → 1.7；
+    # 冠带还是比实拍小、暗（实拍是一整条白色噼啪带）→ 爆裂 64 个、范围 3.4 m、亮度 3.2、小闪 0.22 m
+    'FG3': {'duration': 5.6, 'stars': 22, 'sparkRate': 300, 'sparkLife': 3.0, 'sparkLifeJit': 40, 'cooling': 0.22, 'x1Life': 0.22, 'burn': 1.7,
+            'crackle': 64, 'crackleR': 3.4, 'crackleBright': 3.2, 'crackleSize': 0.22, 'crackleDelay': 0.32},
 }
 
 # 4 簇：左外、左内、右内、右外。转角逆时针为正（+ = 偏左）；延迟 = 左 → 右扫射

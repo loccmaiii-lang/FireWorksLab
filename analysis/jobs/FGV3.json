@@ -1,0 +1,25 @@
+{
+ "id": "FGV3",
+ "type": "script",
+ "priority": 1,
+ "name": "FanGold FG3：对照 + 每层自动曝光",
+ "note": "对话框FanGold：FG2 看过后 FG3（寿命 3.0、燃烧 1.7、冠带更大更亮）。",
+ "steps": [
+  {
+   "name": "FG3 对照 + 曝光",
+   "script": "FanGold对照.py",
+   "args": [
+    "--entry",
+    "FG3",
+    "--out",
+    "{out}",
+    "--variants",
+    "{\"冠带再亮\": {\"crackleBright\": 4.2}, \"簇稍宽\": {\"clusterCone\": 10.5}}",
+    "--times",
+    "0.3,0.9,1.6,2.0,2.4,3.0"
+   ],
+   "must": true,
+   "timeout": 2400
+  }
+ ]
+}
