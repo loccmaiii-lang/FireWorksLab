@@ -257,9 +257,15 @@ def main(a):
                 # 手动总帧数（frameBudget = count，窜天猴第 1 层 64 帧）：看得见的时间变长，帧数跟着加（不然 2 尺以上燃烧段只剩 6 fps，标准检查不过）
                 if P.get('frameBudget') == 'count' and float(P.get('frameCount') or 0) > 0:
                     P['frameCount'] = int(min(256, max(P0['frameCount'], round(P0['frameCount'] * end_of(P) / max(1e-6, end_of(P0))))))
-                # 点灭星（窜天猴第 2 层 22 Hz、频率随机 15%）：开花时所有星同相，匀速取帧落在灭相就是整帧全黑（导出中间空帧 23）→ 频率随机 50%，每颗星各闪各的（真的点灭星本来也不同步）
-                if float(P.get('strobeHz') or 0) > 13.5 and float(P.get('strobeHzJit') or 0) < 50:
-                    P['strobeHzJit'] = 50; lays[i] = (P, M, L, typ, (ln_ or note or '') + '；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）')
+                # 点灭星接力层（窜天猴第 2 层：「第二段」0.05 s = 主段 3.4 s 不亮、烧完只闪 0.05 s）。NFE-MYJC 回放：开花闪光后 0.1–2.2 s 全黑 → 中间空帧。
+                # 用户 10-07 09:48「你帮我改成 0.3」：第二段 0.05 → 0.3 s（大小档按燃烧比）；这一层自己的开花闪光关掉（第 1 层已有），
+                # 开头全黑的帧就会被自动裁掉（烘焙按「第一次看得见」开始分帧），帧只花在点灭那一段。原样不动。
+                # （之前以为是所有星同相，改了点灭频率随机 50%——不对：每颗星本来就有随机相位，已撤回。）
+                if 0 < float(P0.get('afterBurn') or 0) < 0.2 and float(P0.get('strobeHz') or 0) > 0:     # 只管「烧完只闪一下」的（鸿巢的红闪第二段 3.2 s 是正常接力，不动）
+                    k = float(P.get('afterBurn') or P0['afterBurn']) / float(P0['afterBurn'])
+                    P['afterBurn'] = round(0.3 * k, 3); P['flash'] = 0
+                    P['duration'] = round(max(float(P.get('duration') or 0), end_of(P) + 0.2), 2)
+                    lays[i] = (P, M, L, typ, (ln_ or note or '') + f"；点灭星第二段 0.05 → {P['afterBurn']} s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）")
             # 同一批星拆的几层（原来初速 / 终端速度 / 星数 / 种子 / 起始半径都一样）：缩放 / 造型后也必须是同一批星——
             # 初速按第 1 层反推（以前每层按自己的燃烧反推，金曜菊-A 3 号两层初速 32 / 39.7，两层的星就分开了），星数也取第 1 层的
             sig = lambda Q: tuple(Q.get(k) for k in ('v0', 'vt', 'stars', 'seed', 'burstR0', 'pattern'))

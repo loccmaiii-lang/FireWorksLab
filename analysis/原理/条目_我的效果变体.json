@@ -5096,7 +5096,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 4.5486,
-    "duration": 2.106,
+    "duration": 2.3,
     "stars": 49,
     "v0": 46.0,
     "vt": 14.04,
@@ -5104,6 +5104,7 @@
     "speedJit": 50,
     "dirJit": 15,
     "burn": 1.935,
+    "flash": 0,
     "headSize": 0.927,
     "headBright": 1.65,
     "sparkLife": 0.313,
@@ -5111,7 +5112,7 @@
     "subDelay": 0.512,
     "subSpeed": 17.3,
     "subBurn": 0.512,
-    "afterBurn": 0.028,
+    "afterBurn": 0.168,
     "emberLife": 1.707,
     "tailDiffuseScale": 37,
     "prePivot": 0,
@@ -5124,7 +5125,6 @@
     "burstSec": 0.285,
     "texW": 4096,
     "texH": 4096,
-    "strobeHzJit": 50,
     "flashLife": 0.05
    },
    "m": {
@@ -5142,7 +5142,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 3 号（直径约 60 m）；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）；导出回放检查：屏幕放大 > 1（3 号花径 68 m，闪烁层散得比主花开，面片是花径的 2 倍）→ 这一层贴图 4096（单格 1024）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 3 号（直径约 60 m）；点灭星第二段 0.05 → 0.168 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）；导出回放检查：屏幕放大 > 1（3 号花径 68 m，闪烁层散得比主花开，面片是花径的 2 倍）→ 这一层贴图 4096（单格 1024）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -5230,7 +5230,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 3.2164,
-    "duration": 2.858,
+    "duration": 3.06,
     "stars": 71,
     "v0": 281.2,
     "vt": 15.69,
@@ -5238,6 +5238,7 @@
     "speedJit": 50,
     "dirJit": 15,
     "burn": 2.626,
+    "flash": 0,
     "headSize": 1.467,
     "headBright": 1.65,
     "sparkLife": 0.425,
@@ -5245,7 +5246,7 @@
     "subDelay": 0.695,
     "subSpeed": 36.1,
     "subBurn": 0.695,
-    "afterBurn": 0.039,
+    "afterBurn": 0.234,
     "emberLife": 2.317,
     "tailDiffuseScale": 37,
     "prePivot": 0,
@@ -5256,7 +5257,6 @@
     "riseH": 190,
     "frameBudget": "fixed",
     "burstSec": 0.386,
-    "strobeHzJit": 50,
     "flashLife": 0.05
    },
    "m": {
@@ -5274,7 +5274,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 5 号（直径约 170 m）；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 5 号（直径约 170 m）；点灭星第二段 0.05 → 0.234 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -5362,7 +5362,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 3.7592,
-    "duration": 4.211,
+    "duration": 4.41,
     "stars": 125,
     "v0": 525.6,
     "vt": 19.82,
@@ -5370,6 +5370,7 @@
     "speedJit": 50,
     "dirJit": 15,
     "burn": 3.87,
+    "flash": 0,
     "headSize": 2.24,
     "headBright": 1.65,
     "sparkLife": 0.626,
@@ -5377,7 +5378,7 @@
     "subDelay": 1.024,
     "subSpeed": 46.1,
     "subBurn": 1.024,
-    "afterBurn": 0.057,
+    "afterBurn": 0.342,
     "emberLife": 3.415,
     "tailDiffuseScale": 37,
     "prePivot": 0,
@@ -5388,7 +5389,6 @@
     "riseH": 330,
     "frameBudget": "fixed",
     "burstSec": 0.569,
-    "strobeHzJit": 50,
     "flashLife": 0.05
    },
    "m": {
@@ -5406,7 +5406,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 尺玉（直径约 320 m）；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 尺玉（直径约 320 m）；点灭星第二段 0.05 → 0.342 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -5495,7 +5495,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.6125,
-    "duration": 5.866,
+    "duration": 6.06,
     "stars": 216,
     "v0": 383.5,
     "vt": 26.42,
@@ -5503,7 +5503,7 @@
     "speedJit": 50,
     "dirJit": 15,
     "burn": 5.39,
-    "flash": 0.6,
+    "flash": 0,
     "headSize": 3.244,
     "headBright": 1.65,
     "sparkLife": 0.872,
@@ -5511,7 +5511,7 @@
     "subDelay": 1.427,
     "subSpeed": 49.6,
     "subBurn": 1.427,
-    "afterBurn": 0.079,
+    "afterBurn": 0.474,
     "emberLife": 4.756,
     "tailDiffuseScale": 37,
     "prePivot": 0,
@@ -5522,7 +5522,6 @@
     "riseH": 500,
     "frameBudget": "fixed",
     "burstSec": 0.793,
-    "strobeHzJit": 50,
     "flashLife": 0.05
    },
    "m": {
@@ -5540,7 +5539,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 2 尺（直径约 480 m）；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 2 尺（直径约 480 m）；点灭星第二段 0.05 → 0.474 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -5629,7 +5628,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.3957,
-    "duration": 6.768,
+    "duration": 6.97,
     "stars": 298,
     "v0": 314.0,
     "vt": 29.72,
@@ -5637,7 +5636,7 @@
     "speedJit": 50,
     "dirJit": 15,
     "burn": 6.22,
-    "flash": 0.6,
+    "flash": 0,
     "headSize": 3.862,
     "headBright": 1.65,
     "sparkLife": 1.006,
@@ -5645,7 +5644,7 @@
     "subDelay": 1.646,
     "subSpeed": 49.3,
     "subBurn": 1.646,
-    "afterBurn": 0.091,
+    "afterBurn": 0.546,
     "emberLife": 5.488,
     "tailDiffuseScale": 37,
     "prePivot": 0,
@@ -5656,7 +5655,6 @@
     "riseH": 600,
     "frameBudget": "fixed",
     "burstSec": 0.915,
-    "strobeHzJit": 50,
     "flashLife": 0.05
    },
    "m": {
@@ -5674,7 +5672,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 3 尺（直径约 550 m）；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 3 尺（直径约 550 m）；点灭星第二段 0.05 → 0.546 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -5763,7 +5761,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.5676,
-    "duration": 7.821,
+    "duration": 8.02,
     "stars": 405,
     "v0": 507.5,
     "vt": 33.03,
@@ -5771,7 +5769,7 @@
     "speedJit": 50,
     "dirJit": 15,
     "burn": 7.187,
-    "flash": 0.6,
+    "flash": 0,
     "headSize": 4.634,
     "headBright": 1.65,
     "sparkLife": 1.163,
@@ -5779,7 +5777,7 @@
     "subDelay": 1.902,
     "subSpeed": 60.5,
     "subBurn": 1.902,
-    "afterBurn": 0.106,
+    "afterBurn": 0.636,
     "emberLife": 6.341,
     "tailDiffuseScale": 37,
     "prePivot": 0,
@@ -5790,7 +5788,6 @@
     "riseH": 750,
     "frameBudget": "fixed",
     "burstSec": 1.057,
-    "strobeHzJit": 50,
     "flashLife": 0.05
    },
    "m": {
@@ -5808,7 +5805,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 4 尺（直径约 780 m）；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 4 尺（直径约 780 m）；点灭星第二段 0.05 → 0.636 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -5890,15 +5887,16 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 3.7,
+    "duration": 3.9,
     "stars": 100,
     "v0": 377,
     "vt": 14.4,
     "speedJit": 50,
     "dirJit": 15,
+    "flash": 0,
     "headSize": 1.9,
     "headBright": 1.65,
-    "afterBurn": 0.05,
+    "afterBurn": 0.3,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
@@ -5906,7 +5904,6 @@
     "flutter": 1.6,
     "flutterHz": 0.4,
     "frameBudget": "fixed",
-    "strobeHzJit": 50,
     "flashLife": 0.05
    },
    "m": {
@@ -5924,7 +5921,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "冠：尾寿命 × 2.2（火花密度 × 0.6）、冷却 × 0.6、加木炭余烬（0.3）、火花下坠 ≥ 0.6、星终端速度 × 0.8 → 后段下垂成冠；点灭星第二段 0.05 → 0.3 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6014,9 +6011,10 @@
     "speedJit": 50,
     "dirJit": 15,
     "burn": 5.1,
+    "flash": 0,
     "headSize": 1.9,
     "headBright": 1.65,
-    "afterBurn": 0.05,
+    "afterBurn": 0.3,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
@@ -6024,7 +6022,6 @@
     "flutter": 1.6,
     "flutterHz": 0.4,
     "frameBudget": "fixed",
-    "strobeHzJit": 50,
     "flashLife": 0.05
    },
    "m": {
@@ -6042,7 +6039,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、星数跟花径减到 35 颗、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "柳：星终端速度 × 0.45、燃烧 × 1.5、尾寿命 × 2.5（火花密度跟着压，同时活着的火花约 1.25 倍）、星数跟花径减到 35 颗、冷却 × 0.5、火花几乎不继承星速 → 星飞不远、整朵垂下来；点灭星第二段 0.05 → 0.3 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6124,16 +6121,17 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 3.7,
+    "duration": 3.9,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
     "speedJit": 6,
+    "flash": 0,
     "headSize": 1.9,
     "headBright": 1.65,
     "pattern": "ring",
     "tilt": 62,
-    "afterBurn": 0.05,
+    "afterBurn": 0.3,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
@@ -6141,7 +6139,6 @@
     "flutter": 1.6,
     "flutterHz": 0.4,
     "frameBudget": "fixed",
-    "strobeHzJit": 50,
     "flashLife": 0.05
    },
    "m": {
@@ -6159,7 +6156,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "环：星排成一个倾斜 62° 的圆环（环的转角每个种子不同）；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状；点灭星第二段 0.05 → 0.3 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6242,17 +6239,18 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 3.7,
+    "duration": 3.9,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
     "speedJit": 6,
+    "flash": 0,
     "headSize": 1.9,
     "headBright": 1.65,
     "pattern": "saturn",
     "tilt": 70,
     "ringFrac": 0.4,
-    "afterBurn": 0.05,
+    "afterBurn": 0.3,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
@@ -6260,7 +6258,6 @@
     "flutter": 1.6,
     "flutterHz": 0.4,
     "frameBudget": "fixed",
-    "strobeHzJit": 50,
     "flashLife": 0.05
    },
    "m": {
@@ -6278,7 +6275,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "土星：球 + 倾斜 70° 的环（环占星数 40%）；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状；点灭星第二段 0.05 → 0.3 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6361,15 +6358,16 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 3.7,
+    "duration": 3.9,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
     "speedJit": 12,
+    "flash": 0,
     "headSize": 1.9,
     "headBright": 1.65,
     "pattern": "cluster",
-    "afterBurn": 0.05,
+    "afterBurn": 0.3,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
@@ -6377,7 +6375,6 @@
     "flutter": 1.6,
     "flutterHz": 0.4,
     "frameBudget": "fixed",
-    "strobeHzJit": 50,
     "flashLife": 0.05,
     "clusterLayout": "ring",
     "clusterCone": 9
@@ -6397,7 +6394,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "万華鏡：星分 8 簇排在画面里（每簇张角 9°、初速离散 12% → 一瓣一瓣）；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状；点灭星第二段 0.05 → 0.3 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6478,15 +6475,16 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 3.7,
+    "duration": 3.9,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
     "speedJit": 6,
+    "flash": 0,
     "headSize": 1.9,
     "headBright": 1.65,
     "pattern": "heart",
-    "afterBurn": 0.05,
+    "afterBurn": 0.3,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
@@ -6494,7 +6492,6 @@
     "flutter": 1.6,
     "flutterHz": 0.4,
     "frameBudget": "fixed",
-    "strobeHzJit": 50,
     "flashLife": 0.05
    },
    "m": {
@@ -6512,7 +6509,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "心形（型物）：星排成正对镜头的心形；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "心形（型物）：星排成正对镜头的心形；原来速度离散 50%、方向离散 15° 收到 ≤ 6% / 1.5°，不然看不出形状；点灭星第二段 0.05 → 0.3 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6596,18 +6593,19 @@
    "p": {
     "renderVer": 40,
     "exposure": 4.5486,
-    "duration": 6.81,
+    "duration": 6.96,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
     "speedJit": 50,
     "dirJit": 15,
     "burnJit": 15,
+    "flash": 0,
     "headSize": 1.9,
     "headBright": 1.65,
     "ignDelay": 1.53,
     "ignJit": 100,
-    "afterBurn": 0.05,
+    "afterBurn": 0.3,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
@@ -6615,7 +6613,6 @@
     "flutter": 1.6,
     "flutterHz": 0.4,
     "frameBudget": "fixed",
-    "strobeHzJit": 50,
     "flashLife": 0.05
    },
    "m": {
@@ -6633,7 +6630,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "时差：点火延迟约燃烧的 0.45、离散 100%（每颗星在 0 到燃烧的 90% 之间先后点亮、先暗飞一段）、燃烧离散 ≥ 15%（陆续熄灭）；点灭星第二段 0.05 → 0.3 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -6714,15 +6711,16 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 3.7,
+    "duration": 3.9,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
     "speedJit": 50,
     "dirJit": 15,
+    "flash": 0,
     "headSize": 1.9,
     "headBright": 1.65,
-    "afterBurn": 0.05,
+    "afterBurn": 0.3,
     "tailDiffuseScale": 37,
     "prePivot": 0,
     "strobeHz": 22.1,
@@ -6730,7 +6728,6 @@
     "flutter": 1.6,
     "flutterHz": 0.4,
     "frameBudget": "fixed",
-    "strobeHzJit": 50,
     "flashLife": 0.05
    },
    "m": {
@@ -6748,7 +6745,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "；点灭频率随机 15 → 50%（各颗星各闪各的，导出不再有整帧全黑）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "；点灭星第二段 0.05 → 0.3 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -8709,7 +8706,7 @@
     "lastFlare": 0,
     "seed": 52,
     "duration": 7.85,
-    "exposure": 6.7957,
+    "exposure": 0.3698,
     "renderVer": 40,
     "dirJit": 1.2
    },

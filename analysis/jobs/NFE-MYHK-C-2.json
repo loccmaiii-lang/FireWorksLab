@@ -5,7 +5,5 @@
  "entry": "MYHK-C",
  "name": "YonshakuKamuro_Core",
  "priority": 4,
- "note": "我的效果变体：MYHK-C 重导（芯星头 0.98 → 3.5 m、终端速度按号数表，NFR2 里芯看不见）。同一目录覆盖。",
- "ready": false,
- "hold": "等 NFV6 芯层曝光写回"
+ "note": "我的效果变体：MYHK-C 重导（芯星头 0.98 → 3.5 m、终端速度按号数表，NFR2 里芯看不见）。同一目录覆盖。 芯层曝光按 NFV6 写回（0.37）。"
 }

@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MYJC-J-3",
+ "type": "export",
+ "effect": "myv_fxmuw5v7bh",
+ "entry": "MYJC-J",
+ "name": "GoldRayRocket_Jisa",
+ "priority": 4,
+ "note": "我的效果变体：MYJC-J 重导（用户 10-07 09:48「改成 0.3」：点灭星第二段 0.05 → 0.3 s、这一层开花闪光关掉，开头全黑帧自动裁掉；撤回点灭频率随机 50%）。同一目录覆盖。"
+}
