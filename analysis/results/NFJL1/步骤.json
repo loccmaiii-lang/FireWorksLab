@@ -1,0 +1,16 @@
+[
+ {
+  "name": "自动曝光：四层",
+  "script": "条目曝光.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "JQ1 和实拍同一秒",
+  "script": "时刻对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ }
+]
