@@ -27091,7 +27091,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-C-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -27109,7 +27109,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-H-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -27127,7 +27127,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-J-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -27145,7 +27145,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-K-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -27163,7 +27163,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-M-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -27187,7 +27187,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-R-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -27205,7 +27205,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-S03-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -27223,7 +27223,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-S05-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -27241,7 +27241,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-S10-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -27259,7 +27259,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-S20-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -27277,7 +27277,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-S30-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -27295,7 +27295,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-S40-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -27313,7 +27313,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-T-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -27331,7 +27331,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYJC-Y-3",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -28327,6 +28327,472 @@ var FW_EFFECTS = [
 ]
 },
 "stale": true
+},
+{
+"job": "NFE-MYJC-C-3",
+"entry": "MYJC-C",
+"ver": "400b66c4·master4.9.13",
+"time": "2026-10-07 10:12",
+"packages": [
+{
+"name": "GoldRayRocket_Core",
+"replica": "MYJC-C",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_Core_Core_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_Core_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_Core_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_Core_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Core_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "NFE-MYJC-H-3",
+"entry": "MYJC-H",
+"ver": "2caa1eb2·master4.9.13",
+"time": "2026-10-07 10:12",
+"packages": [
+{
+"name": "GoldRayRocket_Heart",
+"replica": "MYJC-H",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_Heart_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Heart_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Heart_L1_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Heart_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Heart_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Heart_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Heart_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Heart_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "NFE-MYJC-J-3",
+"entry": "MYJC-J",
+"ver": "6cc33310·master4.9.13",
+"time": "2026-10-07 10:12",
+"packages": [
+{
+"name": "GoldRayRocket_Jisa",
+"replica": "MYJC-J",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_Jisa_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Jisa_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Jisa_L1_4x4_02.png",
+"T_EFX_FireWorks_GoldRayRocket_Jisa_L1_4x4_02_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Jisa_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Jisa_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Jisa_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Jisa_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Jisa_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Jisa_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Jisa_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "NFE-MYJC-K-3",
+"entry": "MYJC-K",
+"ver": "e82ff178·master4.9.13",
+"time": "2026-10-07 10:12",
+"packages": [
+{
+"name": "GoldRayRocket_Crown",
+"replica": "MYJC-K",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_Crown_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Crown_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Crown_L1_4x4_02.png",
+"T_EFX_FireWorks_GoldRayRocket_Crown_L1_4x4_02_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Crown_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Crown_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Crown_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Crown_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Crown_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Crown_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Crown_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "NFE-MYJC-M-3",
+"entry": "MYJC-M",
+"ver": "e7ebeba4·master4.9.13",
+"time": "2026-10-07 10:12",
+"packages": [
+{
+"name": "GoldRayRocket_Kaleido",
+"replica": "MYJC-M",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L1_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Kaleido_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "NFE-MYJC-R-3",
+"entry": "MYJC-R",
+"ver": "a89d4f12·master4.9.13",
+"time": "2026-10-07 10:12",
+"packages": [
+{
+"name": "GoldRayRocket_Ring",
+"replica": "MYJC-R",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_Ring_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Ring_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Ring_L1_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Ring_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Ring_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Ring_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Ring_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Ring_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "NFE-MYJC-S03-3",
+"entry": "MYJC-S03",
+"ver": "b07efb6e·master4.9.13",
+"time": "2026-10-07 10:13",
+"packages": [
+{
+"name": "GoldRayRocket_03",
+"replica": "MYJC-S03",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_03_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_03_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "NFE-MYJC-S05-3",
+"entry": "MYJC-S05",
+"ver": "5b9d465c·master4.9.13",
+"time": "2026-10-07 10:13",
+"packages": [
+{
+"name": "GoldRayRocket_05",
+"replica": "MYJC-S05",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_05_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_05_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "NFE-MYJC-S10-3",
+"entry": "MYJC-S10",
+"ver": "39889385·master4.9.13",
+"time": "2026-10-07 10:13",
+"packages": [
+{
+"name": "GoldRayRocket_10",
+"replica": "MYJC-S10",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_02.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L1_4x4_02_C.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_10_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "NFE-MYJC-S20-3",
+"entry": "MYJC-S20",
+"ver": "79fdfda2·master4.9.13",
+"time": "2026-10-07 10:13",
+"packages": [
+{
+"name": "GoldRayRocket_20",
+"replica": "MYJC-S20",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_20_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L1_4x4_02.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L1_4x4_02_C.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_20_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "NFE-MYJC-S30-3",
+"entry": "MYJC-S30",
+"ver": "e393a865·master4.9.13",
+"time": "2026-10-07 10:13",
+"packages": [
+{
+"name": "GoldRayRocket_30",
+"replica": "MYJC-S30",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_30_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L1_4x4_02.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L1_4x4_02_C.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_30_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": false,
+"fails": [
+"L2_Main：中间空帧 3"
+]
+},
+"stale": true
+},
+{
+"job": "NFE-MYJC-S40-3",
+"entry": "MYJC-S40",
+"ver": "dab28912·master4.9.13",
+"time": "2026-10-07 10:13",
+"packages": [
+{
+"name": "GoldRayRocket_40",
+"replica": "MYJC-S40",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_40_L1_16x2_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L1_16x2_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L1_4x4_02.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L1_4x4_02_C.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_40_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": false,
+"fails": [
+"L2_Main：中间空帧 2"
+]
+},
+"stale": true
+},
+{
+"job": "NFE-MYJC-T-3",
+"entry": "MYJC-T",
+"ver": "1ef027e1·master4.9.13",
+"time": "2026-10-07 10:13",
+"packages": [
+{
+"name": "GoldRayRocket_Saturn",
+"replica": "MYJC-T",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L1_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Saturn_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "NFE-MYJC-Y-3",
+"entry": "MYJC-Y",
+"ver": "91774308·master4.9.13",
+"time": "2026-10-07 10:14",
+"packages": [
+{
+"name": "GoldRayRocket_Willow",
+"replica": "MYJC-Y",
+"files": [
+"T_EFX_FireWorks_GoldRayRocket_Willow_L1_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Willow_L1_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Willow_L1_4x4_02.png",
+"T_EFX_FireWorks_GoldRayRocket_Willow_L1_4x4_02_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Willow_L1_8x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Willow_L1_8x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Willow_L1_R.png",
+"T_EFX_FireWorks_GoldRayRocket_Willow_L2_4x4_01.png",
+"T_EFX_FireWorks_GoldRayRocket_Willow_L2_4x4_01_C.png",
+"T_EFX_FireWorks_GoldRayRocket_Willow_L2_4x4_01_HD.png",
+"T_EFX_FireWorks_GoldRayRocket_Willow_L2_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
 }
 ],
 "thumb": null,
@@ -28447,7 +28913,7 @@ var FW_EFFECTS = [
 {
 "id": "NFE-MYHK-C-2",
 "type": "export",
-"state": "在算",
+"state": "已回来",
 "seen": false
 },
 {
@@ -28998,6 +29464,46 @@ var FW_EFFECTS = [
 "T_EFX_FireWorks_YonshakuKamuro_Jisa_Red_4x4_02.png",
 "T_EFX_FireWorks_YonshakuKamuro_Jisa_Red_4x4_02_C.png",
 "T_EFX_FireWorks_YonshakuKamuro_Jisa_Red_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": true
+},
+{
+"job": "NFE-MYHK-C-2",
+"entry": "MYHK-C",
+"ver": "5ae96caf·dots4.9.24+master4.9.13",
+"time": "2026-10-07 10:13",
+"packages": [
+{
+"name": "YonshakuKamuro_Core",
+"replica": "MYHK-C",
+"files": [
+"T_EFX_FireWorks_YonshakuKamuro_Core_Core_4x4_01.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Core_4x4_01_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Core_4x4_01_HD.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Core_4x4_02.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Core_4x4_02_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Core_4x4_02_HD.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Core_R.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Main_4x4_01.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Main_4x4_01_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Main_4x4_01_HD.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Main_4x4_02.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Main_4x4_02_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Main_4x4_02_HD.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Main_R.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Red_4x4_01.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Red_4x4_01_C.png",
+"T_EFX_FireWorks_YonshakuKamuro_Core_Red_R.png",
 "_检查",
 "cascade.json",
 "cascade_mobile.json",
