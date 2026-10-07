@@ -212,9 +212,15 @@ async function comboLayerBakes(layers, onProg) {
   return { layers: out, own };
 }
 // 单束层的烘焙（和交付页「单束包」同一套：16 × 2 格、RGBA、按帧数自动）；缓存在库条目上，参数变了重烘
-function unitP(P0) { return { ...P0, form: 'unit', cols: 16, rows: 2, chans: 4, frameMode: 'auto', autoGrid: 1 }; }
+// 4.9.25：单束只出合并的一张（beam_flipbook 材质只认一张；以前选了「星头、火花分开」时贴图叫 _Head / _Tail、cascade.json 却引用不带后缀的那张）
+function unitP(P0) { return { ...P0, form: 'unit', cols: 16, rows: 2, chans: 4, frameMode: 'auto', autoGrid: 1, outMode: 'combined' }; }
+// 4.9.25 单层效果的单束烘焙也缓存（和多层的 e.unitBake 同一套）：贴图 / 流转 / 引擎回放 / 导出用同一份
+const singleUnitEntry = { P: null, unitBake: null };
+function singleUnitHolder() { singleUnitEntry.P = state.P; return singleUnitEntry; }
+// 单束贴图只和效果参数有关：导出方案（PC / 手机怎么出、光点大小亮度）变了不用重烘
+const unitSig = P => JSON.stringify({ ...P, outPC: 0, outMobile: 0, dotSize: 0, dotBright: 0 });
 async function layerUnitBake(e, onProg) {
-  const sig = JSON.stringify(e.P);
+  const sig = unitSig(e.P);
   if (e.unitBake && e.unitBake.sig === sig) return e.unitBake.b;
   if (e.unitBake) { disposeBake(e.unitBake.b); e.unitBake = null; }
   const b = await bake(unitP(e.P), 1, onProg); e.unitBake = { sig, b }; return b;
@@ -261,15 +267,19 @@ function singleLayer(P, M) { const o = singleOut(P), L = { ...M, delay: 0, rate:
 function singleSchemeNote(P) { const L = singleLayer(P, state.M); return typeof outNote === 'function' ? outNote(L, { P }) : ''; }
 // 单层的光点：缓存在一个假条目上（参数 / 颜色变了按 dotsTables 自己的签名重算）
 const singleDotsEntry = { P: null, bake: null };
+// 4.9.25 导出方案（PC / 手机怎么出、光点大小 / 亮度）改了不用重烘：画面和导出按现在的方案，模拟的数用烘焙时的参数
+const SCHEME_KEYS = ['outPC', 'outMobile', 'dotSize', 'dotBright'];
+function withScheme(P) { if (!P || P === state.P || state.tab === 'combo' || !state.P) return P; const o = { ...P }; for (const k of SCHEME_KEYS) o[k] = state.P[k]; return o; }
 function singleDotsTables(P, M, b) { singleDotsEntry.P = P; singleDotsEntry.bake = b; return dotsTables(singleDotsEntry, singleLayer(P, M)); }
 // 导出：PC / 手机各按方案出；文件名和单层序列一样（单束的贴图用 _L1 层名，cascade.json 里引用的就是它）
 async function singleSchemeFiles(name, b, M, onProg) {
-  const P = b.P || state.P, o = singleOut(P), L = singleLayer(P, M), files = [], own = [];
+  const P = withScheme(b.P || state.P), o = singleOut(P), L = singleLayer(P, M), files = [], own = [];
   try {
     let ub = null, mb = null;
     const unitOK = o.pc === 'unit' && unitAllowed(P);
     if (o.pc === 'seq' || (o.pc === 'unit' && !unitOK)) { files.push(...await texFiles(b, name)); files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]); }
-    else if (unitOK) { ub = await bake(unitP(P), 1, p => onProg && onProg(0.3 * p)); own.push(ub); const ln = comboLayerName(name, 0); files.push(...await texFiles(ub, ln)); files.push([`${TN(ln, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]); }
+    // 4.9.25 单束：和贴图 / 引擎回放同一份（缓存，不在这里丢）
+    else if (unitOK) { ub = await layerUnitBake(singleUnitHolder(), p => onProg && onProg(0.3 * p)); const ln = comboLayerName(name, 0); files.push(...await texFiles(ub, ln)); files.push([`${TN(ln, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]); }
     const pc = o.pc === 'seq' || (o.pc === 'unit' && !unitOK) ? fwlCascade(name, b, M, false) : fwlCombo(name, o.pc === 'off' ? [] : [{ L, b, i: 0, dots: o.pc === 'dots', unit: ub || undefined }], false);
     files.push(['cascade.json', utf8(JSON.stringify(pc, null, 1))]);
     if (o.mobile === 'seq') {

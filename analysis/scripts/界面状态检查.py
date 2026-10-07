@@ -73,6 +73,8 @@
       存的原值不动、乘完不再乘、闪烁最多 1、摘要、撤销；多层只动这一层；地面 / 升空没有这个模块
   W20 4.9.24 GPU / 软圆点颜色（用户 10-07 09:20：材质 Translucent、A 接透明度）：RGB 不随寿命变暗、淡出 / 闪烁 / 冷却在 Alpha、黑底上 RGB × Alpha = 原亮度；
       RT6 每层、光点（点灭方波在 Alpha）；单层 / 多层 / 升空尾缀的 cascade.json 每个发射器都有 Scale Color/Life（1、1）
+  W21 4.9.25 产物表（用户 10-07 09:20「4.可以，我很着急使用」）：交付清单顶上每层 PC / 手机出什么，改了不重烘、进撤销；贴图 / 流转 / 引擎回放按产物看
+      （PC 单束看单束那张、光点 / 不出写明没有贴图、手机看序列）；旧存档「单元序列」迁成 大面片 + PC 单束；产物下拉没有单束；单束只出合并的一张
   W19 4.9.21 入点前放大一律绕爆点（用户 21:51 选）：「放大的中心」删了；cascade.json 写 Pivot Offset、Initial Location 0；回放绕爆点；存过「面片中心」的打开时提示
       4.9.8 加：顶上「现在改的是」和搜索入口看得到，第一屏至少 8 行参数（菊 › 星、引菊 → 锦 金锦层 › 火花）
   W15 4.9.7 起（对话框23 参数栏交互）：4.9.8 引菊 → 锦六步（定位 / 改寿命 / 改颜色 / 调接力 / 撤销保存刷新重开）；切「工具」「审阅」再回来时间 / 层 / 发射器 / 模块开合 / 滚动位置都在、多层里有「工具」页；撤销一次操作一步（两个参数紧挨着改 = 两步、拖动中途停 = 一步、数值框回车 = 一步）
@@ -1676,8 +1678,8 @@ async def w9(pg):
       num.value = String(max / 2); num.dispatchEvent(new Event('change')); o.back = row.classList.contains('over'); state.P.crackle = 0; onParam(); row._refresh(); return o; })()""")
     info['超出滑杆'] = r
     if not r or not r['over'] or '照样起作用' not in r['tip'] or r['back'] or abs(r['v'] - r['max'] * 2.5) > 1e-6: bad.append(f'数值超出滑杆范围没标出来 / 没写明：{r}')
-    r = await pg.evaluate("(() => { renderUnitMenu(); return $('#abUnitMenu').textContent; })()")
-    if '不受力' not in r: bad.append('单束导出菜单没写明贴图里的星不受力、随机关了')
+    r = await pg.evaluate("(() => { toggleDeliv(true); const t = $('#delivView').textContent; toggleDeliv(false); return t; })()")     # 4.9.25 单束菜单并进交付清单的产物表
+    if '不受力' not in r: bad.append('交付清单的产物表没写明单束贴图里的星不受力、随机关了')
     r = await pg.evaluate("""(() => { const d = $('#previewSettings'), c = $('#previewBloomChk'); if (!c) return null; const g0 = state.gen, b0 = !!+state.P.previewBloom;
       d.open = true; d.dispatchEvent(new Event('toggle')); const shown = c.checked === b0; c.checked = !b0; c.dispatchEvent(new Event('change'));
       const o = { shown, after: +state.P.previewBloom, want: b0 ? 0 : 1, gen: state.gen - g0, label: c.closest('label').textContent };
@@ -1934,7 +1936,7 @@ async def w14(p, b):
         r = await pg.evaluate("""(async () => { const has = s => !!document.querySelector(s), miss = [];
           const need = { 花型模板: ['#libBody', '#newRecipe', '#abSave', '#abReset', '#abSaveTpl', '#abExportPack', '#abExportFile'], AI效果: ['#abHide', '#abCopyDiff', '#delivView'],
             我的效果: ['#abSaveAs', '#abMyRename', '#abMyDelete', '#abRepo', '#abRepoRead'], 版本: ['#versionHistory', '#abSrc', '#abRename', '#abDelete'],
-            层: ['#abAddLayer'], 我的模板: ['#abUpdTpl'], 配方文件: ['#abImportFile', '#abFile', '#toolImport', '#toolExport'], 素材包: ['#abUnit', '#enNameEdit', '#busy'],
+            层: ['#abAddLayer'], 我的模板: ['#abUpdTpl'], 配方文件: ['#abImportFile', '#abFile', '#toolImport', '#toolExport'], 素材包: ['#abExportPack', '#abDeliv', '#enNameEdit', '#busy'],
             发射器: ['#exAdd'], 对话框: ['#saveNameDlg', '#confirmDlg', '#keysDlg'], 缩略图: ['#thGrab', '#thRestore'] };     // 4.9.6 缩略图（对话框新花型排队：交互宪章第 7 节那一行）
           for (const [o, ss] of Object.entries(need)) for (const s of ss) if (!has(s)) miss.push(o + ' ' + s);
           pkOpen({ mode: 'open', title: '检查' }); await new Promise(r => setTimeout(r, 200)); if (!document.querySelector('#pkGrid .pk-card .fav')) miss.push('收藏 星标'); if (!document.querySelector('#pkCats')) miss.push('收藏 分类'); pkClose();
@@ -2535,6 +2537,67 @@ async def w20(pg):
     return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps({**r['out'], **r2['out']}, ensure_ascii=False)[:1200]
 
 
+W21_JS = r"""async () => {
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
+  const baked = async prev => { for (let i = 0; i < 100 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); };
+  const hud = () => { loop(performance.now()); return $('#hud').textContent; };
+  { const prev = state.bake; await openType('kiku'); await baked(prev); } state.playing = false;
+  // 1 产物表：单层一行，PC / 手机两个选择；改 PC = 单束不重烘、进撤销
+  toggleDeliv(true); await wait(30);
+  const pc = $('#delivView select[data-prod=pc]'), mob = $('#delivView select[data-prod=mobile]');
+  out.table = { pc: !!pc, mob: !!mob, opts: pc ? [...pc.options].map(o => o.value) : [] };
+  if (!pc || !mob || out.table.opts.join() !== 'seq,unit,dots,off') bad.push('交付清单没有产物表（PC / 手机）：' + JSON.stringify(out.table));
+  const g0 = state.gen; pc.value = 'unit'; pc.dispatchEvent(new Event('change')); await wait(50);
+  out.unitSet = { outPC: state.P.outPC, gen: state.gen - g0, undo: !$('#abUndo').disabled };
+  if (state.P.outPC !== 'unit' || out.unitSet.gen) bad.push('产物表改 PC 单束：没存进 outPC 或触发了重烘：' + JSON.stringify(out.unitSet));
+  out.cell = ($('#delivView .dv-prod td:nth-child(2) small') || {}).textContent || '';
+  if (!/单束/.test(out.cell)) bad.push('产物表 PC 那格没写单束：' + out.cell);
+  toggleDeliv(false);
+  // 2 贴图 / 引擎回放按产物：挂一份假的单束烘焙（假烘焙不造单束），和真的同一个缓存位置
+  { const P = unitP(state.P), fm = measure(P), pl = plan(P, fm), tex = new Target(4, 4, gl.RGBA8);
+    const ub = { form: 'unit', P, N: 4, NH: 4, head: tex, tail: null, scale: 1, meta: { ...pl, unit: true, fit: { v0: 120, k: 0.8, a: 6 }, hb: 0.9, sizeKeysX: [[0, 1], [1, 1]], sizeKeysY: [[0, 1], [1, 1]], aniso: true, check: {}, quality: qualityOf(P) } };
+    singleUnitHolder().unitBake = { sig: unitSig(state.P), b: ub }; out.unitOutMode = P.outMode; }
+  if (out.unitOutMode !== 'combined') bad.push('单束应该只出合并的一张（outMode combined）：' + out.unitOutMode);
+  selectStageView('atlas'); await wait(30); state.t = 0.5; out.atlasUnit = { hud: hud().slice(0, 30), sheet: state.texSheetNow && state.texSheetNow.label };
+  if (out.atlasUnit.sheet !== '单束' || !/^单束贴图/.test(out.atlasUnit.hud)) bad.push('PC 单束时「贴图」没看单束那张：' + JSON.stringify(out.atlasUnit));
+  selectStageView('export'); await wait(30); out.exportUnit = hud().slice(0, 40);
+  if (!/PC 单束/.test(out.exportUnit)) bad.push('单层引擎回放没按单束画：' + out.exportUnit);
+  // 手机：看序列
+  state.platform = 'mobile'; out.mobile = productNow(state.P, null, singleUnitHolder()).kind; state.platform = 'pc';
+  if (out.mobile !== 'seq') bad.push('手机平台不该看单束（手机出序列）：' + out.mobile);
+  // 光点 / 不出：写明没有贴图
+  for (const v of ['dots', 'off']) { state.P.outPC = v; onExportScheme(); selectStageView('atlas'); await wait(30); out[v] = hud().slice(0, 24);
+    if (out[v] !== PRODUCT_NONE[v].slice(0, 24)) bad.push(`PC ${v} 时贴图没写明：${out[v]}`); }
+  state.P.outPC = 'seq'; onExportScheme(); selectStageView('live');
+  // 3 产物下拉没有单束；旧存档「单元序列」迁成 大面片 + PC 单束
+  out.forms = formOptions(state.P).map(o => o[0]); if (out.forms.includes('unit')) bad.push('「产物」下拉还有单元序列：' + out.forms);
+  { const P = { ...structuredClone(defaultsFor('kiku').P), type: 'kiku', form: 'unit', cols: 16, rows: 2, renderVer: 40 }; migrate37(P); out.mig = { form: P.form, outPC: P.outPC, grid: P.cols + '×' + P.rows };
+    if (P.form !== 'master' || P.outPC !== 'unit' || P.cols * P.rows !== 64) bad.push('旧存档单元序列没迁成 大面片 + PC 单束：' + JSON.stringify(out.mig)); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+W21_COMBO_JS = r"""async () => {
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
+  toggleDeliv(true); await wait(30);
+  const sels = [...$('#delivView').querySelectorAll('select[data-prod=pc]')]; out.rows = sels.length;
+  if (sels.length !== state.layers.length) bad.push(`多层产物表应该每层一行：${sels.length} / ${state.layers.length}`);
+  if (sels[1]) { sels[1].value = 'dots'; sels[1].dispatchEvent(new Event('change')); await wait(30); out.l2 = layerOut(state.layers[1]);
+    if (out.l2.pc !== 'dots') bad.push('多层产物表改第 2 层 PC 没存进层：' + JSON.stringify(out.l2));
+    const s2 = [...$('#delivView').querySelectorAll('select[data-prod=pc]')][1]; s2.value = 'seq'; s2.dispatchEvent(new Event('change')); await wait(30); out.back = state.layers[1].out || null; }
+  toggleDeliv(false);
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w21(pg):
+    """4.9.25 产物表 + 视图按产物"""
+    r = await pg.evaluate(W21_JS)
+    await open_effect(pg, 'hiki_nishiki')
+    r2 = await pg.evaluate(W21_COMBO_JS)
+    bad = r['bad'] + r2['bad']
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps({**r['out'], 'combo': r2['out']}, ensure_ascii=False)[:1200]
+
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -2574,7 +2637,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

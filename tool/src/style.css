@@ -672,6 +672,11 @@ canvas#gl{box-shadow:none}
 .dv-t th{text-align:left;color:var(--dim);font-weight:500;padding:5px 8px;border-bottom:1px solid var(--line2)}
 .dv-t td{padding:6px 8px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;word-break:break-all}
 .dv-t td+td{font-family:var(--sans);color:var(--dim);white-space:nowrap;word-break:normal}
+.dv-prod{margin-bottom:6px}
+.dv-prod td{vertical-align:top}
+.dv-prod td+td{white-space:normal}
+.dv-prod select{display:block;margin-bottom:4px;max-width:100%}
+.dv-prod small{display:block;color:var(--dim);font-family:var(--sans);font-size:11.5px;line-height:1.45}
 .dv-t tr.grp td{font-family:var(--sans);color:var(--text);font-weight:600;background:var(--panel)}
 .dv-t tr.dim td,.dv-t td.dim{color:var(--faint)}
 /* 检查四行、门槛、资产栏状态 */
@@ -753,8 +758,6 @@ canvas#gl{box-shadow:none}
 .infohost .osum b{color:var(--text)}
 .infohost .osum .ow{color:#e7b45c}
 /* 资产栏「单束」菜单 */
-.ab-unit .ab-menu{min-width:260px}
-.ab-unit .ab-menu .hint{font-size:11.5px;color:var(--faint);margin:2px 8px 6px;white-space:normal}
 .layerhead .lh-link{margin:6px 0 2px;padding:6px 8px;border-radius:5px;background:var(--panel);color:var(--text);font-size:12px}
 .layerhead .lh-link .check{margin-top:4px}
 .dv-unit{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding:10px;border:1px solid var(--line2);border-radius:7px;background:var(--panel)}
@@ -1015,8 +1018,7 @@ header.top .assetbar .ab-ur{min-width:40px;padding:7px 10px;color:var(--dim)}
 header.top .assetbar .primary{padding-inline:22px;background:var(--acc);border-color:var(--acc);color:var(--accInk);font-weight:700}
 .ab-divider{height:24px;width:1px;background:var(--line2);margin:0 5px;flex:none}
 .export-actions{display:flex;align-items:stretch;flex:none}
-header.top .assetbar .export-main{border-color:var(--acc);border-radius:6px 0 0 6px}
-header.top .assetbar .ab-unit>summary{height:36px;min-height:36px;display:flex;align-items:center;padding:6px 9px;border-color:var(--acc);border-left:0;border-radius:0 6px 6px 0}
+header.top .assetbar .export-main{border-color:var(--acc);border-radius:6px}
 header.top .gpu{display:block;max-width:28ch;flex:0 1 auto;margin-left:auto;font-size:12px}
 header.top .upd{height:36px;white-space:nowrap}
 header.top #status:empty{display:none}
@@ -1178,7 +1180,6 @@ header.top #status{position:fixed;right:16px;bottom:16px;z-index:100;max-width:m
   header.top .gpu{max-width:17ch;font-size:10px}
   header.top .upd{padding:5px 7px;font-size:11px}
   header.top .assetbar .btn{min-height:32px;padding:5px 8px;font-size:12px}
-  header.top .assetbar .ab-unit>summary{height:32px;min-height:32px}
   .assetbar .ab-state{display:none}
   .ab-divider{margin:0 1px}
   .stage>.viewbar{gap:5px}.stage>.viewbar .seg button{padding:6px 7px;font-size:11px;min-height:32px}
@@ -1208,7 +1209,6 @@ main.drawer-right>#right{width:min(var(--rightW,var(--right-auto)),520px,calc(10
 header.top .brand .mark{font-size:clamp(30px,1.5vw,40px)}
 header.top .brand>b{font-size:clamp(22px,1.1vw,28px)}
 header.top .assetbar .btn{font-size:var(--ui-label);min-height:var(--ui-control)}
-header.top .assetbar .ab-unit>summary{height:var(--ui-control);min-height:var(--ui-control)}
 header.top .gpu,header.top .brand small{font-size:var(--ui-small)}
 header.top .upd{height:var(--ui-control);font-size:var(--ui-label)}
 .stage>.viewbar .seg button,.stage>.viewbar .tgl{font-size:var(--ui-label);min-height:var(--ui-control)}
@@ -1253,7 +1253,6 @@ main.drawer-right .right-close{display:block}
   header.top .assetbar{grid-column:1 / -1;grid-row:3;gap:5px;min-width:0;justify-content:flex-end;flex-wrap:wrap;overflow:visible}
   header.top .assetbar .btn{min-height:32px;padding:5px 8px;font-size:12px}
   header.top .assetbar .ab-ur{min-width:32px;padding:5px 6px}
-  header.top .assetbar .ab-unit>summary{height:32px;min-height:32px;padding:5px 6px}
   .stage{padding:6px;gap:6px}
   .stage>.viewbar .seg button,.stage>.viewbar .tgl{font-size:12px;min-height:34px;padding:6px 7px}
   .stage>.viewbar #btnSide,.stage>.viewbar #btnRight{width:32px}
@@ -1426,8 +1425,7 @@ header.top .upd{height:32px;min-height:32px;font-size:12px;padding:4px 12px;back
 .stage .assetbar .btn{min-height:32px;font-size:12px;padding:5px 9px;border-radius:4px}
 .stage .assetbar .ab-ur{width:32px;padding:4px;font-size:17px}
 .stage .assetbar .primary{background:var(--hover);border-color:var(--acc);color:var(--text);padding-inline:17px}
-.stage .assetbar .export-main{border-radius:4px 0 0 4px;border-color:var(--line2)}
-.stage .assetbar .ab-unit>summary{border-radius:0 4px 4px 0;border-left:0;height:32px;display:flex;align-items:center}
+.stage .assetbar .export-main{border-radius:4px;border-color:var(--line2)}
 .stage .ab-divider{margin:0 2px;height:22px}
 .stage>.viewbar{min-height:38px;gap:6px;padding:0;background:none}
 .stage>.viewbar .seg{gap:0;border:1px solid var(--line);border-radius:4px;overflow:visible}

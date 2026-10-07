@@ -42,8 +42,7 @@
       <button class="btn ghost ab-del" id="abDel" type="button" hidden>删除</button>
       <span class="ab-divider" aria-hidden="true"></span>
       <div class="export-actions">
-        <button class="btn export-main" id="abExportPack" type="button" title="按每层的 PC / 手机导出方案导出完整素材包">导出素材包</button>
-        <details class="ab-more ab-unit" id="abUnit"><summary class="btn" aria-label="更多导出选项" title="单束导出与单束预览">⌄</summary><div class="ab-menu" id="abUnitMenu"></div></details>
+        <button class="btn export-main" id="abExportPack" type="button" title="导出交付清单「产物表」上的东西：每层按 PC / 手机各自出什么（和交付清单的导出按钮同一个）">导出素材包</button>
       </div>
       <details class="ab-more" id="abMore"><summary class="btn" aria-label="更多操作" title="配方文件、保存设置、协作">⋯</summary><div class="ab-menu">
         <span class="menu-label">配方文件</span>
@@ -187,7 +186,7 @@
         <label class="check" id="gridBox" hidden><input type="checkbox" id="x-autogrid"> 自动选格子（帧数不变，按内容长宽比挑列 × 行，少浪费像素）</label>
         <div class="stats" id="stats">烘焙中…</div>
         <div class="line pm-btns">
-          <button class="btn primary" id="btnExport">导出 2K 母版（ZIP）</button>
+          <button class="btn primary" id="btnExport" title="和顶上「导出素材包」、交付清单的导出同一个：按产物表（PC / 手机各出什么）出包">导出素材包（按交付清单）</button>
           <button class="btn" id="btnVariants">导出种子变体 V1–V3</button>
         </div>
         <div class="line pm-btns">

@@ -59,7 +59,9 @@ function drawUnitLayer(b, L, t, view) {
   const m = b.meta, P = b.P, f = m.fit, pr = PR.unit; gl.useProgram(pr.p);
   const kf = new Float32Array(16); m.keys.forEach(([u, v], i) => { kf[i * 2] = u; kf[i * 2 + 1] = v; });
   gl.uniform1f(pr.u.uTime, t); gl.uniform1f(pr.u.uV0, f.v0); gl.uniform1f(pr.u.uDrag, f.k); gl.uniform1f(pr.u.uA, f.a); gl.uniform1f(pr.u.uWind, P.wind || 0);
-  gl.uniform1f(pr.u.uLife, m.duration); gl.uniform1f(pr.u.uLJ, P.burnJit / 100); gl.uniform1f(pr.u.uSX, m.Ww); gl.uniform1f(pr.u.uSY, m.Wh);
+  // 4.9.25 和导出（fwlUnit）同一套随机：寿命、初速都是 ±√3σ 的均匀分布（以前回放寿命 ±σ、初速不随机）
+  const jit = clamp(Math.sqrt(3) * (+P.burnJit || 0) / 100, 0, 0.7), vj = clamp(Math.sqrt(3) * (+P.speedJit || 0) / 100, 0, 0.7);
+  gl.uniform1f(pr.u.uLife, m.duration); gl.uniform1f(pr.u.uLJ, jit); gl.uniform1f(pr.u.uVJ, vj); gl.uniform1f(pr.u.uSX, m.Ww); gl.uniform1f(pr.u.uSY, m.Wh);
   gl.uniform1f(pr.u.uHb, m.hb); gl.uniform1f(pr.u.uFlip, 0); gl.uniform1i(pr.u.uSeed, P.seed | 0); gl.uniform4fv(pr.u.uView, view);
   gl.uniform2fv(pr.u['uKF[0]'], kf); gl.uniform1i(pr.u.uNKF, m.keys.length); gl.uniform1f(pr.u.uNF, m.L.F);
   const pack = ks => { const a = new Float32Array(16); ks.forEach(([u, v], i) => { a[i * 2] = u; a[i * 2 + 1] = v; }); return a; };
@@ -237,9 +239,17 @@ function renderExport() {
   hdrT.bind(); additive(true);
   let f = -1;
   // 4.4.2 单层的导出方案：PC 选 GPU 光点 → 画光点（和 cascade.json 同一份发射器数据）；不出 → 不画
-  const so = typeof singleOut === 'function' && (b.form === 'master' || b.form === 'segments') ? singleOut(b.P || state.P) : null, sch = so ? (state.platform === 'mobile' ? so.mobile : so.pc) : 'seq';
-  if (sch === 'dots') { esDraw(singleDotsTables(b.P || state.P, state.M, b), engineTick(state.t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); additive(false); post(-1); hudText = `导出效果 · PC GPU 光点（约 ${dotsCount(b.P || state.P)} 颗，软圆点，没有贴图）`; hudB = ''; return; }
+  const Pn = typeof withScheme === 'function' ? withScheme(b.P || state.P) : b.P || state.P, so = typeof singleOut === 'function' && (b.form === 'master' || b.form === 'segments') ? singleOut(Pn) : null, sch = so ? (state.platform === 'mobile' ? so.mobile : so.pc) : 'seq';
+  if (sch === 'dots') { esDraw(singleDotsTables(Pn, state.M, b), engineTick(state.t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); additive(false); post(-1); hudText = `导出效果 · PC GPU 光点（约 ${dotsCount(b.P || state.P)} 颗，软圆点，没有贴图）`; hudB = ''; return; }
   if (sch === 'off') { additive(false); post(-1); hudText = `导出效果 · 这个平台不出（导出方案：${state.platform === 'mobile' ? '手机' : 'PC'} 不出）`; hudB = ''; return; }
+  // 4.9.25：单层效果 PC 选单束 → 按单束画（以前这里仍画序列，写「单束的引擎回放在多层效果里看」）；和导出同一份单束烘焙
+  if (sch === 'unit' && unitAllowed(b.P || state.P)) {
+    const pd = productNow(state.P, null, singleUnitHolder());
+    if (!pd.b) { additive(false); post(-1); hudText = '导出效果 · PC 单束：单束贴图烘焙中…'; hudB = ''; return; }
+    const ev2 = exportViewAny(pd.b, sa), fu = drawUnitLayer(pd.b, singleLayer(state.P, state.M), engineTick(state.t), ev2.view);
+    additive(false); post(-1);
+    hudText = `导出效果 · PC 单束 · 每颗星一个面片 × ${Math.round(+pd.b.P.stars || 0)} · ${fu < 0 ? '序列结束' : `第 ${fu + 1}/${pd.b.meta.L.F} 帧`} · 贴图里一颗代表星，轨迹由 Cascade 算（和导出同一套数）`; hudB = ''; return;
+  }
   f = drawExportScene(b, state.M, state.t, view, sa);
   additive(false); post(-1);
   const s = segAt(b, state.t), L = s.meta.L, mag = ev.mag;
@@ -249,10 +259,22 @@ function renderExport() {
   const fi = b.form === 'unit' ? frameIdx(b.meta, engineTick(state.t)) : frameIdx(s.meta, engineTick(state.t) - (s.meta.t0 || 0));
   const ps = b.form === 'unit' ? 0 : preScaleAt(b, s.meta, s, engineTick(state.t), engineTick(state.t) - (s.meta.t0 || 0));
   hudText = ps > 0 ? `导出效果 · 入点前：第 1 帧放大到 ${Math.round(ps * 100)}%（绕爆点）· 入点 ${s.meta.t0.toFixed(2)} s` : fi < 0 ? (engineTick(state.t) < (s.meta.t0 || 0) ? '还没到入点' : '序列结束') : `导出效果 · ${FORM_NAMES[b.form]}${b.next ? ' 段 '+bakeSegmentName(b,bakeParts(b).indexOf(s)) : ''} · 第 ${fi + 1}/${L.F} 帧 · ${L.chans === 4 ? 'RGBA'[Math.floor(fi / L.per)] + ' 通道 ' : ''}单格 ${+L.cellW.toFixed(1)}×${+L.cellH.toFixed(1)}` + magTxt + (state.disp === 'game' && mag ? ` · 屏幕上约 ${Math.round(ev.onScreen)} 像素宽` : '') + (b.form === 'unit' ? ` · ${b.P.stars} 个粒子` : '') + (state.dirty ? ' · 等待重新烘焙' : '');
-  if (sch === 'unit') hudText += ' · PC 导出方案是单束：这里仍按序列画（单束的引擎回放在多层效果里看）';
   hudB = '';
 }
 const flowTrail = [];
+// 4.9.25（用户 10-07 09:20「4.可以，我很着急使用」：交付清单的产物表是唯一的导出口径）：这一层在当前预览平台「导出的是什么」——
+// 贴图 / 流转 / 引擎回放 / 交付清单都按它：序列（seq）/ 单束（unit，贴图是另烘的一颗代表星）/ GPU 光点（dots，没有贴图）/ 不出（off）。
+// holder：有 P、unitBake 的对象（多层 = 图层条目 e，单层 = singleUnitHolder()）；单束还没烘就排一个后台烘焙（ensureLayerUnit）
+function productNow(P, L, holder) {
+  if (!P || familyOf(P.type) !== 'aerial') return { kind: 'seq' };
+  const o = L ? layerOut(L) : singleOut(P), s = state.platform === 'mobile' ? o.mobile : o.pc;
+  if (s !== 'unit') return { kind: s === 'dots' || s === 'off' ? s : 'seq' };
+  if (!unitAllowed(P)) return { kind: 'seq', note: '这种花型 / 图案不能出单束，按序列出' };
+  const ub = holder && holder.unitBake && holder.unitBake.sig === unitSig(holder.P) ? holder.unitBake.b : null;
+  if (!ub && holder) ensureLayerUnit(holder);
+  return { kind: 'unit', b: ub };
+}
+const PRODUCT_NONE = { dots: 'PC 这一层出 GPU 光点：没有贴图（软圆点粒子，数值在 cascade.json；引擎回放里看）', off: '这个平台不出这一层：没有贴图' };
 // 贴图 / 流转看哪一张（4.9.20，对话框23，用户 10-06 21:12「不要单独只为这个尾缀添加功能，切换的时候有好几张贴图，就都可以切换」）：
 // 列出这一层导出的每一张序列，和素材包里的贴图文件一一对应——分张（A / B…）、合并 / 星头 / 尾迹、循环层 / 消散 / 远段；不按效果种类单做。
 // 默认「自动」= 跟着时间走（分张时播完第一张接着播第二张，用户 2026-10-02 13:09）；点一张锁定看它。以前只能切「第 n 张」「星头 / 尾迹」，
@@ -262,7 +284,7 @@ function texSheets(b0) {
   const out = [], parts = bakeParts(b0), es = b0.form === 'emitset' || b0.form === 'trail';
   const add = (key, label, b, tail) => out.push({ key, label, b, show: tail ? b.tail : b.head });
   parts.forEach((s, i) => {
-    const base = es ? '循环层' : parts.length > 1 ? `第 ${i + 1} 张` : '序列';
+    const base = es ? '循环层' : b0.form === 'unit' ? '单束' : parts.length > 1 ? `第 ${i + 1} 张` : '序列';
     if (s.tail) { add(`p${i}h`, base + ' · 星头', s, false); add(`p${i}t`, base + ' · 尾迹', s, true); } else add(`p${i}`, base, s, false);
   });
   // 消散：循环层 + 粒子的消散有自己的 meta；尾缀（V5）的几张消散和循环层同一格子、按自己的帧率整段播
@@ -282,6 +304,7 @@ function texSheetOf(b0) {
 let texSheetSig = '';
 function syncTexSheets(b0) {
   const box = $('#texSeg'); if (!box) return;
+  if (!b0) { box.hidden = true; texSheetSig = ''; return; }
   const list = texSheets(b0), sig = list.map(s => s.key + ':' + s.label).join('|') + '#' + (state.texSheet || '');
   box.hidden = list.length < 2; if (sig === texSheetSig) return; texSheetSig = sig;
   if (state.texSheet && !list.some(s => s.key === state.texSheet)) state.texSheet = '';
@@ -297,10 +320,13 @@ function drawAtlasQuad(b, show, f, n, trail) {
   const tr = new Float32Array(6).fill(-1); (trail || []).slice(0, 6).forEach((v, i) => tr[i] = v); gl.uniform1fv(pr.u['uTrail[0]'], tr);
   drawQuad();
 }
-function renderAtlas() {
-  const b0 = previewBake();
+function renderAtlas(ctx = null) {
   gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, canvas.width, canvas.height); gl.clearColor(0.02, 0.02, 0.03, 1); gl.clear(gl.COLOR_BUFFER_BIT);
-  if (!b0) { hudText = '烘焙中…'; return; }
+  // 4.9.25 按导出方案看：PC 单束看单束那张；光点 / 不出写明没有贴图
+  const pd = state.tab === 'asset' ? { kind: 'seq' } : ctx ? productNow(ctx.P, ctx.L, ctx.holder) : productNow(state.P, null, typeof singleUnitHolder === 'function' ? singleUnitHolder() : null);
+  if (pd.kind === 'dots' || pd.kind === 'off') { syncTexSheets(null); state.texSheetNow = null; hudText = PRODUCT_NONE[pd.kind]; hudB = ''; return; }
+  const b0 = pd.kind === 'unit' ? pd.b : previewBake();
+  if (!b0) { syncTexSheets(null); hudText = pd.kind === 'unit' ? 'PC 这一层出单束：单束贴图烘焙中…' : '烘焙中…'; return; }
   syncTexSheets(b0); const sh = texSheetOf(b0); state.texSheetNow = sh; if (!sh) { hudText = '这一层没有序列贴图'; return; }
   const b = sh.b, show = sh.show, L = b.meta.L, f = frameIdx(b.meta, state.t - (b.meta.t0 || 0));
   if (state.atlasFlow) { renderAtlasFlow(b0, b, show, f, sh); return; }
@@ -360,7 +386,7 @@ function renderComboAtlas() {
   const i = comboAtlasLayer(), L = state.layers[i], e = L && state.lib.find(x => x.name === L.lib);
   if (!e || !e.bake) { gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.clearColor(0.02, 0.02, 0.03, 1); gl.clear(gl.COLOR_BUFFER_BIT); hudText = '这一层还没烘好'; return; }
   const sb = state.bake, st = state.t; state.bake = e.bake; state.t = (st - (L.delay || 0)) * (L.rate || 1);
-  try { renderAtlas(); } finally { state.bake = sb; state.t = st; }
+  try { renderAtlas({ P: e.P, L, holder: e }); } finally { state.bake = sb; state.t = st; }
   hudText = `第 ${i + 1} 层 · ${hudText}`;
 }
 function renderComboLive() {
@@ -432,7 +458,7 @@ function renderCombo() {
     if (s === 'off') { notes.push(`第 ${i + 1} 层不出`); continue; }
     if (s === 'dots') { const e0 = state.lib.find(x => x.name === L.lib) || e; esDraw(dotsTables(e0, L), engineTick(state.t), view, hdrT.w / (2 * view[2]), hdrT.h / (2 * view[3]), 1); notes.push(`第 ${i + 1} 层光点`); continue; }
     if (s === 'unit' && unitAllowed(e.P)) {     // 4.2.13 单束：每颗星一个面片（drawUnitLayer 按 Cascade 的放射弹道画）；层的延迟 / 倍率换成这一层的年龄，缩放换成取景
-      const e0 = state.lib.find(x => x.name === L.lib) || e, ub = e0.unitBake && e0.unitBake.sig === JSON.stringify(e0.P) ? e0.unitBake.b : null;
+      const e0 = state.lib.find(x => x.name === L.lib) || e, ub = e0.unitBake && e0.unitBake.sig === unitSig(e0.P) ? e0.unitBake.b : null;
       if (!ub) { ensureLayerUnit(e0); notes.push(`第 ${i + 1} 层单束烘焙中`); continue; }
       const age = (engineTick(state.t) - (+L.delay || 0)) * (+L.rate || 1), sc = +L.scale || 1;
       if (age >= 0) drawUnitLayer(ub, L, age, view.map(v => v / sc));

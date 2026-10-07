@@ -313,7 +313,7 @@ void main(){
   float x=a2/life; emitPt(q.xy,uHI*.9*fl*(1.-x*x),uHead*.8);
 }`;
 // 单元序列的导出预览：模拟 Cascade —— 每颗星一个粒子，线性阻力 + 恒定加速度，面片沿速度方向对齐
-const VS_UNIT = HDR + `uniform float uTime, uV0, uDrag, uA, uWind, uLife, uLJ, uSX, uSY, uHb, uFlip; uniform int uSeed; uniform vec4 uView; uniform vec2 uKF[8], uKX[8], uKY[8]; uniform int uNKF, uNKX, uNKY; uniform float uNF;
+const VS_UNIT = HDR + `uniform float uTime, uV0, uVJ, uDrag, uA, uWind, uLife, uLJ, uSX, uSY, uHb, uFlip; uniform int uSeed; uniform vec4 uView; uniform vec2 uKF[8], uKX[8], uKY[8]; uniform int uNKF, uNKX, uNKY; uniform float uNF;
 out vec2 v_uv; out float vFrame;
 uint pcg(uint v){ uint s=v*747796405u+2891336453u; uint w=((s>>((s>>28u)+4u))^s)*277803737u; return (w>>22u)^w; }
 float hsh(uint a, uint b){ return float(pcg(a ^ pcg(b + uint(uSeed)*2654435769u))) / 4294967296.0; }
@@ -326,9 +326,10 @@ void main(){
   float z=2.*hsh(id,1u)-1., ph=6.2831853*hsh(id,2u), r=sqrt(max(0.,1.-z*z)); vec3 d=vec3(r*cos(ph),z,r*sin(ph));
   float life=uLife*(1.+uLJ*(2.*hsh(id,3u)-1.)), t=uTime, rel=t/life;
   if(rel>=1.||t<0.){ gl_Position=vec4(2.,2.,2.,1.); v_uv=c; vFrame=-1.; return; }
-  vec3 vi=vec3(uWind,-uA/max(uDrag,1e-4),0.), v0=d*uV0; float e=exp(-uDrag*t);
+  vec3 vi=vec3(uWind,-uA/max(uDrag,1e-4),0.), v0=d*uV0*(1.+uVJ*(2.*hsh(id,4u)-1.)); float e=exp(-uDrag*t);
   vec3 p=vi*t+(v0-vi)*(1.-e)/max(uDrag,1e-4), v=vi+(v0-vi)*e;
-  vec2 up=length(v.xy)>1e-3?normalize(v.xy):vec2(0.,1.); if(uFlip>.5) up=-up; vec2 rt=vec2(up.y,-up.x);
+  // 4.9.25 和 Cascade 的 Velocity 对齐一样：面片的「上」是三维速度方向，朝着 / 背着镜头飞的星看起来短（以前按画面里的方向拉满长度）
+  float sp=length(v); vec2 up=sp>1e-3?v.xy/sp:vec2(0.,1.); float fl=length(up); vec2 rt=fl>1e-4?vec2(up.y,-up.x)/fl:vec2(1.,0.); if(uFlip>.5) up=-up;
   vec2 lc=vec2((c.x-.5)*uSX*evalX(rel), (c.y-uHb)*uSY*evalY(rel));
   vec2 w=p.xy+rt*lc.x+up*lc.y;
   gl_Position=vec4((w-uView.xy)/uView.zw,0.,1.); v_uv=c; vFrame=clamp(floor(evalK(rel)),0.,uNF-1.);

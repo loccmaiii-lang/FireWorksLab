@@ -363,7 +363,6 @@ function initWorkbench() {
   $('#abSaveAs').addEventListener('click', () => wbSave(true));
   $('#abExportPack').addEventListener('click', exportCurrentPack);
   $('#abUndo').innerHTML = uiIcon('arrow-back-up'); $('#abRedo').innerHTML = uiIcon('arrow-forward-up');
-  $('#abUnit > summary').innerHTML = uiIcon('chevron-down');
   initStage();
   const close = () => document.querySelectorAll('.ab-more[open]').forEach(m => m.open = false);
   $('#abCopyDiff').addEventListener('click', () => { close(); wbCopyDiff(); });
@@ -676,33 +675,7 @@ function outSummaryHTML() {
     <div>${parts.length} 张：${parts.map(sheet).join('；')} · 单格 ${Math.round(m0.L.cellW)} px · 格子用了 ${used} / ${cap}</div>
     ${warn.map(w => `<div class="ow">⚠ ${w}</div>`).join('')}</div>`;
 }
-// 单束（4.2.0，用户 16:22「单束输出藏得太死」）：资产栏「单束」菜单、层参数顶上的按钮、交付页，三处都能导
-function unitTargets() {
-  const xs = curLayerBakes().filter(x => x.b && layerPOf(x) && unitAllowed(layerPOf(x))), combo = state.tab === 'combo';
-  return xs.map(x => ({ i: x.i, label: combo ? `第 ${x.i + 1} 层 · ${x.name}` : (state.name || '这个效果') }));
-}
-// 4.2.13（走查 B9：单束两条路、产物不同）：多层效果里「单束」= 把这一层的 PC 导出方案改成单束，导出整包时就在里面（手机仍是序列）；
-// 单层效果照旧出单束包，包里加了 cascade.json（PC）
-function setLayerUnit(i) {
-  const L = state.layers[i]; if (!L) return;
-  L.out = { ...layerOut(L), pc: 'unit' }; if (typeof undoNote === 'function') undoNote();
-  if (state.comboSel === i) buildLayerHead(i); if (stage2.deliv) renderDeliv(); wbSync();
-  flash(`第 ${i + 1} 层的 PC 导出方案改成单束：导出整包时 PC 这一层是每颗星一个面片，手机仍是序列（层页头「导出方案」里能改回）`);
-}
-function unitExportLayer(i) {
-  const combo = state.tab === 'combo', xs = curLayerBakes(), x = combo ? xs.find(r => r.i === i) : xs[0]; if (!x) return;
-  if (combo) { setLayerUnit(i); return; }
-  const nm = packNamesFor(wbKey(), lib.effect, xs.length, delivName(), !combo && x.b ? x.b.P.type : '');
-  exportUnitPack(layerPOf(x), combo ? x.L : state.M, nm.base + (combo && nm.layers[x.i] ? '_' + nm.layers[x.i] : ''));
-}
-function renderUnitMenu() {
-  const host = $('#abUnitMenu'), ts = unitTargets(), combo = state.tab === 'combo';
-  host.innerHTML = `<p class="hint">单束 = 只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条；比大面片省 overdraw。</p><p class="hint">注意：单束贴图里的星按直线、不受力烘——重力、风、湍流、初速 / 燃烧时间随机都关了；弯曲和快慢不一由 Cascade 的发射器做（4.9.2 写明）。</p>`
-    + (ts.length ? ts.map(t => `<button type="button" data-u="${t.i}">${combo ? `${t.label}：PC 改成单束（导出整包时在里面）` : `导出 ${t.label} 的单束包`}</button>`).join('') : '<p class="hint">当前效果没有能出单束的层（千轮、分裂、蜂和非球形排布不行）。</p>')
-    + (!combo && ts.length && state.P.form !== 'unit' ? '<button type="button" id="abUnitView">把产物改成单束（在画面里看）</button>' : '');
-  host.querySelectorAll('[data-u]').forEach(b => b.addEventListener('click', () => { $('#abUnit').open = false; unitExportLayer(+b.dataset.u); }));
-  const v = host.querySelector('#abUnitView'); if (v) v.addEventListener('click', () => { $('#abUnit').open = false; setForm('unit'); refreshPanelValues(); syncExport(); flash('产物改成「单元序列」（单束）：每颗星一个粒子'); });
-}
+// 4.9.25：单束以前另有资产栏「单束」菜单、交付页「导出单束包」、「把产物改成单束」三处入口，都并进交付清单的产物表（prodTableHTML）
 // 粘在一起的点：同一批星（联动）的几层里，非默认位置、总时间相差 < 0.02 s 的点
 function gluePartners(li, at) {
   if (state.tab !== 'combo' || linkOffNow() || state.glueOff) return [];
@@ -783,11 +756,11 @@ function migNotify() {
   const hit = MIG_LOG.filter(x => open.has(x.P)); MIG_LOG.length = 0;
   if (!hit.length) return;
   const g = new Map(); for (const x of hit) { const key = x.k + '|' + x.why; if (!g.has(key)) g.set(key, { ...x, n: 0 }); g.get(key).n++; }
-  const NM = { endMode: '结尾', coolMode: '冷却方式', engine: '模拟内核', cols: '列数', rows: '行数', zoom: '面片取景', exposure: '贴图曝光', trHeadExpo: '星头曝光', headBright: '星头亮度', frameMode: '取帧方式', prePivot: '入点前放大的中心' };
+  const NM = { endMode: '结尾', coolMode: '冷却方式', engine: '模拟内核', cols: '列数', rows: '行数', zoom: '面片取景', exposure: '贴图曝光', trHeadExpo: '星头曝光', headBright: '星头亮度', frameMode: '取帧方式', prePivot: '入点前放大的中心', form: '产物' };
   const nm = k => NM[k] || ((typeof PNAMES !== 'undefined' ? PNAMES : []).find(r => r.key === k) || {}).cn || k;
   // 4.9.7（对话框23 参数栏交互第 9 条）：值也写中文（以前写「存的是 fade」「存的是 0」这种内部值）
   const VAL = { endMode: { fade: '最后 0.3 s 整体淡出', natural: '等火花自然灭完', cut: '到序列时长直接切' }, coolMode: { 0: '按各自寿命', 1: '按实际年龄' }, engine: { cpu: 'CPU', gpu: 'GPU' },
-    zoom: { off: '固定大小', on: 'Zoom（随开花放大）', tight: '紧凑取景' }, frameMode: { content: '按画面变化', auto: '自动（按运动快慢）', uniform: '均匀', tick30: '30 fps（自动分段）' }, prePivot: { 0: '面片中心', 1: '爆点' } };
+    zoom: { off: '固定大小', on: 'Zoom（随开花放大）', tight: '紧凑取景' }, frameMode: { content: '按画面变化', auto: '自动（按运动快慢）', uniform: '均匀', tick30: '30 fps（自动分段）' }, prePivot: { 0: '面片中心', 1: '爆点' }, form: { unit: '单元序列（单束）', master: '大面片母版', segments: '分段母版' } };
   const selLabel = (k, v) => { for (const sec of (typeof SCHEMA !== 'undefined' ? SCHEMA : [])) for (const it of sec.items) if (it.sel === k && it.options) { const o = it.options.find(o => String(o[0]) === String(v)); if (o) return splitLab(o[1])[0]; } return null; };
   const unitOf = k => { for (const sec of (typeof SCHEMA !== 'undefined' ? SCHEMA : [])) for (const it of sec.items) if (Array.isArray(it) && it[0] === k) return it[2] || ''; return ''; };
   const f = (k, v) => { if (v == null || v === '') return '空'; const t = VAL[k] && VAL[k][String(v)] != null ? VAL[k][String(v)] : selLabel(k, v); if (t != null) return `「${t}」`; if (typeof v === 'number' || isFinite(+v)) { const u = unitOf(k); return +(+v).toFixed(4) + (u && u !== '1' ? ' ' + u : ''); } return `「${String(v)}」`; };
@@ -852,7 +825,7 @@ function renderDeliv() {
     const parts = bakeParts(x.b), delay = +x.L.delay || 0, rate = +x.L.rate || 1, ly = combo ? nm.layers[x.i] : '';
     const ln = combo ? comboLayerName(name, x.i) : name, mn = combo ? comboLayerName(name + '_Mobile', x.i) : name + '_Mobile';
     let mobCell = '—'; try { const mp = mobileParams({ ...x.b.P, cols: x.b.meta.L.cols, rows: x.b.meta.L.rows }); mobCell = Math.round(layoutOf(mp).cellW) + ' px'; } catch (e) { }
-    const o = combo ? layerOut(x.L) : { pc: 'seq', mobile: 'seq' };      // 4.2.12：每层的导出方案
+    const o = combo ? layerOut(x.L) : singleOut(state.P);      // 4.2.12：每层的导出方案（4.9.25 单层也按自己的）
     if (combo) rows.push(`<tr class="grp"><td colspan="4">第 ${x.i + 1} 层 · ${x.name} · PC ${OUT_PC.find(q => q[0] === o.pc)[1]} · 手机 ${OUT_MOBILE.find(q => q[0] === o.mobile)[1]}${layerShown(x.i) ? '' : '（观察里隐藏了，导出照旧包含）'}</td></tr>`);
     if (o.pc === 'dots') rows.push(`<tr><td class="dim">（没有贴图）</td><td>PC · GPU 光点约 ${dotsCount(layerPOf(x))} 颗 · 软圆点材质 · 只出星头</td><td>${delay.toFixed(2)} s</td><td>${((+layerPOf(x).ignDelay || 0) + (+layerPOf(x).burn || 0)).toFixed(2)} s</td></tr>`);
     if (o.pc === 'unit' && unitAllowed(layerPOf(x))) rows.push(`<tr><td>${useNew ? fwTexName(nm.base, ly, { cols: 16, rows: 2 }, 1, 'tex', false) : TN(ln) + '（单束）'}.png</td><td>PC · 单束 · 每颗星一个面片 × ${Math.round(+layerPOf(x).stars || 0)} · 16 × 2 格（列 × 行以导出为准）</td><td>${delay.toFixed(2)} s</td><td>${(unitDuration(layerPOf(x)) / rate).toFixed(2)} s</td></tr>`);
@@ -871,16 +844,16 @@ function renderDeliv() {
   }
   rows.push(`<tr class="grp"><td colspan="4">cascade.json（PC）· cascade_mobile.json（手机）：每层每段一个发射器，同一个爆点，按上面的延迟出生 · 帧号测试图在 _检查/（不导入）· 命名对照.txt</td></tr>`);
   const lyInputs = combo ? xs.map(x => `<label>第 ${x.i + 1} 层<input type="text" data-ly="${x.i}" value="${nm.layers[x.i]}" placeholder="L${x.i + 1}" title="${x.name}"></label>`).join('') : '';
+  const prod = prodTableHTML(xs, combo);
   host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '这种产物沿用原来的命名'}</small></div><span class="sp"></span>
     <button class="btn primary" type="button" id="dvExport">导出素材包（PC + 手机）</button><button class="btn" type="button" id="dvBack">返回画面</button></div>
     <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>只能用英文字母、数字和下划线；素材包、贴图、UE 资产名都用它（右栏「英文名」显示的就是这个）。${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}存在这台电脑的浏览器里，按效果记；我的效果连了仓库文件夹会一起存。</small></div>
+    ${prod}
     <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table>
-    <p class="hint">按当前烘焙推算；导出时手机版按单格下限独立烘焙。独看 / 静音不影响导出。</p>
-    ${unitHTML(xs, combo)}`;
+    <p class="hint">按当前烘焙推算；导出时手机版按单格下限独立烘焙。独看 / 静音不影响导出。</p>`;
   host.querySelector('#dvExport').addEventListener('click', () => combo ? exportCombo() : $('#btnExport').click());
   host.querySelector('#dvBack').addEventListener('click', () => toggleDeliv(false));
-  host.querySelectorAll('[data-unit]').forEach(b => b.addEventListener('click', () => unitExportLayer(+b.dataset.unit)));
-  const tu = host.querySelector('#dvToUnit'); if (tu) tu.addEventListener('click', () => { setForm('unit'); refreshPanelValues(); syncExport(); flash('产物改成「单元序列」（单束）：每颗星一个粒子，Cascade 里放射发射'); });
+  host.querySelectorAll('[data-prod]').forEach(sel => sel.addEventListener('change', () => setProduct(+sel.dataset.i, sel.dataset.prod, sel.value)));
   const sv = host.querySelector('#dvSaveNames');
   if (sv) sv.addEventListener('click', () => {
     const base = asciiName(host.querySelector('#dvBase').value), layers = [...host.querySelectorAll('[data-ly]')].map(i => asciiName(i.value));
@@ -891,32 +864,40 @@ function renderDeliv() {
   const rs = host.querySelector('#dvResetNames'); if (rs) rs.addEventListener('click', () => { const all = store.get('packNames', {}); delete all[wbKey()]; store.set('packNames', all); syncEnName(); renderDeliv(); });
   stage2.delivSig = stage2.tlSig;
 }
-// 单束（单元序列：一颗星一条序列，Cascade 里每颗星一个粒子按初速放射发射——用户 2026-10-02 13:09 问「单束输出没了」）
-function unitHTML(xs, combo) {
-  const ok = xs.filter(x => x.b && layerPOf(x) && unitAllowed(layerPOf(x)));
-  if (!ok.length) return '';
-  if (!combo && state.P.form === 'unit') return '<p class="hint dv-unit">现在的产物就是单束（单元序列）：上面的导出就是单束包（贴图 + 弹道与发射参数表）。</p>';
-  return `<div class="dv-unit"><b>单束（每颗星一个粒子）</b><small>只导一颗星的序列（星头 + 尾缀），Cascade 里按初速放射发射多条；比大面片省 overdraw。参数表里写了初速、阻力、重力、星数和寿命。</small>
-    ${combo ? ok.filter(x => layerOut(x.L).pc !== 'unit').map(x => `<button class="btn" type="button" data-unit="${x.i}">第 ${x.i + 1} 层 PC 改成单束</button>`).join('') + '<small>（多层效果的单束跟着整包导出：层页头「导出方案」）</small>' : `<button class="btn" type="button" data-unit="0">导出单束包</button><button class="btn ghost" type="button" id="dvToUnit">把产物改成单束（在画面里看）</button>`}</div>`;
+// 4.9.25 产物表（用户 10-07 09:20「4.可以，我很着急使用」；讨论稿 协作/方案_导出器_2026-10-07.md 4.1）：交付清单顶上，每层 PC / 手机各出什么、
+// 多少张贴图 / 帧 / 发射器。这里的选择 = 层页头「导出方案」= 右栏「输出 › 直接调」的 PC / 手机怎么出（同一个值）；导出按钮导的就是这张表。
+// 以前单束另有三处入口（资产栏 ⌄ 菜单、交付页「导出单束包」、「把产物改成单束」），4.9.25 都并到这里
+function prodCellHTML(x, pf, combo) {
+  const P = layerPOf(x); if (!P) return '—';
+  const o = combo ? layerOut(x.L) : singleOut(state.P), s = pf === 'pc' ? o.pc : o.mobile;
+  if (s === 'off') return '<span class="dim">不出</span>';
+  if (s === 'dots') return `GPU 光点约 ${dotsCount(P)} 颗 · 没有贴图 · 1 个软圆点发射器`;
+  if (s === 'unit' && unitAllowed(P)) {
+    const h = combo ? x.e : singleUnitHolder(), ub = h && h.unitBake && h.unitBake.sig === unitSig(h.P) ? h.unitBake.b : null;
+    return ub ? `单束 1 张 · ${ub.meta.L.F} 帧 · ${ub.meta.L.cols}×${ub.meta.L.rows}${ub.meta.L.chans === 4 ? '×RGBA' : ''} · ${Math.round(+P.stars || 0)} 颗星各一个面片` : `单束 · ${Math.round(+P.stars || 0)} 颗星各一个面片（贴图在「贴图」或导出时烘）`;
+  }
+  if (!x.b || !x.b.meta) return '还没烘好';
+  const parts = bakeParts(x.b), F = parts.reduce((n, q) => n + q.meta.L.F, 0), L0 = parts[0].meta.L, nTex = parts.length * (x.b.tail ? 2 : 1);
+  let cell = Math.round(L0.cellW); if (pf === 'mobile') { try { cell = Math.round(layoutOf(mobileParams({ ...x.b.P, cols: L0.cols, rows: L0.rows })).cellW); } catch (e) { } }
+  let minF = 99; for (const q of parts) for (const d of q.meta.dur || []) minF = Math.min(minF, 1 / Math.max(d, 1 / 30));
+  return `序列 ${nTex} 张 · ${F} 帧${minF < 99 ? ` · 最慢 ${minF.toFixed(minF < 10 ? 1 : 0)} fps` : ''} · ${L0.cols}×${L0.rows}${L0.chans === 4 ? '×RGBA' : ''} · 单格 ${cell} px · ${nTex} 个发射器${s === 'unit' ? '（这种花型不能出单束，按序列出）' : ''}`;
 }
-async function exportUnitPack(P0, M, name) {
-  const P = { ...P0, form: 'unit', cols: 16, rows: 2, chans: 4, frameMode: 'auto', autoGrid: 1 };
-  if (!busyCan(true)) return;
-  busy(true, '单束：烘焙一颗星的序列…', 0);
-  let b = null;
-  try {
-    b = await bake(P, 1, p => busy(true, `单束：烘焙 ${Math.round(p * 100)}%`, p * 0.9));
-    const nmU = name + '_Unit', files = await texFiles(b, nmU);
-    files.push([`${TN(nmU, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
-    files.push([`${nmU}_Cascade参数.txt`, utf8(cascadeText(nmU, b, M))]);
-    // 4.2.13（走查 B9）：单束包也带 cascade.json（PC；手机不用每颗星一个粒子，手机请导大面片序列）
-    const u = fwlUnit(nmU, b, M, { scale: 1, rate: 1, delay: 0 });
-    files.push(['cascade.json', utf8(JSON.stringify({ format: FWL_FORMAT, name: nmU, platform: 'pc', source: { tool: '烟花母版烘焙器 ' + VERSION, type: b.P.type, form: 'unit' },
-      textures: u.textures, materials: u.materials, system: { preview_distance_cm: 30000, preview_warmup_s: 0 }, emitters: fwlFinish([u.emitter]), notes: ['手机版不出单束（手机不用每颗星一个粒子）：手机请导这个效果的大面片序列'] }, null, 1))]);
-    files.push([`${nmU}.json`, utf8(JSON.stringify(masterJSON(b, nmU, M), null, 2))]);
-    busy(true, '打包 ZIP…', 1); download(await makeZip(files), `${nmU}.zip`); flash('已导出单束包 ' + nmU);
-  } catch (e) { console.error(e); flash('单束导出失败：' + e.message, true); }
-  finally { if (b) disposeBake(b); busy(false); }
+function prodTableHTML(xs, combo) {
+  const rows = xs.map(x => {
+    const P = layerPOf(x), seqOK = P && familyOf(P.type) === 'aerial' && (!x.b || ['master', 'segments'].includes(x.b.form)) && (combo || singleSchemeOn(P));
+    if (!seqOK) return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}</td><td colspan="2" class="dim">${x.b ? FORM_NAMES[x.b.form] || x.b.form : '还没烘好'}：按这种产物自己的规则出（PC + 手机）</td></tr>`;
+    const o = combo ? layerOut(x.L) : singleOut(state.P), uOK = unitAllowed(P);
+    const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么">${opts.map(([k, t]) => `<option value="${k}"${k === v ? ' selected' : ''}${k === 'unit' && !uOK ? ' disabled title="千轮、分裂、蜂、非球形图案不能出单束"' : ''}>${t}</option>`).join('')}</select>`;
+    return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}${combo && !layerShown(x.i) ? '<small>（观察里隐藏了，导出照旧）</small>' : ''}</td>
+      <td>${sel('pc', OUT_PC, o.pc)}<small>${prodCellHTML(x, 'pc', combo)}</small></td><td>${sel('mobile', OUT_MOBILE, o.mobile)}<small>${prodCellHTML(x, 'mobile', combo)}</small></td></tr>`;
+  });
+  return `<table class="dv-t dv-prod"><thead><tr><th>产物表：每层导出什么</th><th>PC</th><th>手机</th></tr></thead><tbody>${rows.join('')}</tbody></table>
+    <p class="hint">改这里 = 改层页头「导出方案」/ 右栏「输出 › 直接调」（同一个值，进 Ctrl+Z）；「贴图」「流转」「引擎回放」按你选的看（PC 单束就看单束那张）。单束只给短尾、快、几乎不下坠的星；长尾下垂的层建议序列。单束贴图里的星按直线、不受力烘（重力、风、湍流、初速 / 燃烧随机都关了），弯曲和快慢不一由 Cascade 的发射器做。</p>`;
+}
+function setProduct(i, pf, v) {
+  if (state.tab === 'combo') { const L = state.layers[i]; if (!L) return; L.out = { ...layerOut(L), [pf]: v }; if (L.out.pc === 'seq' && L.out.mobile === 'seq') delete L.out;
+    if (typeof undoNote === 'function') undoNote(); if (state.comboSel === i && typeof buildLayerHead === 'function') buildLayerHead(i); renderDeliv(); wbSync(); return; }
+  state.P[pf === 'pc' ? 'outPC' : 'outMobile'] = v; onExportScheme();
 }
 function toggleDeliv(on) {
   stage2.deliv = on == null ? !stage2.deliv : on;
@@ -930,7 +911,6 @@ function replay() { state.t = 0; state.playing = true; $('#play').textContent = 
 function initStage() {
   $('#replay').innerHTML = uiIcon('refresh'); $('#replay').setAttribute('aria-label', '重播');
   $('#replay').addEventListener('click', replay);
-  $('#abUnit').addEventListener('toggle', () => { if ($('#abUnit').open) renderUnitMenu(); });
   $('#tickPrev').addEventListener('click', () => tickStep(-1));
   $('#tickNext').addEventListener('click', () => tickStep(1));
   state.loopPlay = store.get('loopPlay', true); $('#loopChk').checked = state.loopPlay;

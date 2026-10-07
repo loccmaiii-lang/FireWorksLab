@@ -333,6 +333,13 @@ function onParam() {
   refreshVisibility();
   if (typeof undoNote === 'function') undoNote();
 }
+// 4.9.25：导出方案（PC / 手机怎么出、光点大小 / 亮度）只影响导出和「导出效果」怎么画，不重烘；交付清单的产物表、层页头、右栏「输出」改的是同一个值
+function onExportScheme() {
+  refreshVisibility(); if (typeof refreshPanelValues === 'function') refreshPanelValues();
+  if (typeof undoNote === 'function') undoNote();
+  if (typeof stage2 !== 'undefined' && stage2.deliv && typeof renderDeliv === 'function') renderDeliv();
+  if (typeof wbSync === 'function') wbSync();
+}
 function showStats(b) {
   document.querySelectorAll('#params [data-info=endInfo]').forEach(r => r._refresh && r._refresh());     // 4.5.8：烘完了，「火花灭完」那行按真的贴图长度写
   for (const [r, it] of panelRows) if (Array.isArray(it) && (it[0] === 'holdTicks' || it[0] === 'pageTarget') && r._refresh) r._refresh();     // 4.9.5：「算出来的」灰字跟着这次烘焙
@@ -377,9 +384,8 @@ function formOptions(P) {
     const ALL = { trail: '尾缀序列（V5：循环 + 消散，速度朝向）', emitset: '循环层 + 粒子发射器（RT4 用的形式）', phys: '实时物理模拟（旧，贴图用 trail_phys_bake.py 导出）', unit: '星头循环 + 弹道与火花发射器参数（旧）', master: '整段大面片（旧）' };
     const o = [['trail', ALL.trail]]; if (P.form && P.form !== 'trail' && ALL[P.form]) o.push([P.form, ALL[P.form]]); return o;
   }
-  const o = [['master', '大面片母版'], ['segments', '分段母版（按实际帧数分配贴图）']];
-  if (unitAllowed(P)) o.push(['unit', '单元序列（每颗星一个粒子，省 overdraw）']);
-  return o;
+  // 4.9.25：单束不在这里选了——在「导出方案」（交付清单的产物表 / 输出 › 直接调 / 层页头）里选 PC 单束
+  return [['master', '大面片母版'], ['segments', '分段母版（按实际帧数分配贴图）']];
 }
 const FORM_NOTES = {
   master: '整朵花烘成一张序列，一个面片播放。远景、大型礼花的主层。',
@@ -719,7 +725,7 @@ function buildMasterPanel() {
       const det = place(sec, it, ikey, nm), ex = emitOf(nm, sec);          // 这一行放进它的发射器 › 模块
       if (Array.isArray(it)) {
         const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
-        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { if (TIMING_KEYS.has(k)) setTimingParam(k, v); else { state.P[k] = v; onParam(); } }, D[k], k);
+        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); } }, D[k], k);
         autoDefRow(row, k, step);
         const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}` : short) + (unit ? `（${unit}）` : '') + '；双击恢复默认';
         row._lab = short; row._detail = detail; row._nm = nm;
@@ -736,6 +742,7 @@ function buildMasterPanel() {
           if (it.sel === 'shellNo') { applyShellLocked(v); buildMasterPanel(); onParam(); return; }
           // 4.4：结尾选「不淡出」→ 序列时长加长到火花约 98% 灭完（只加不减）
           if (it.sel === 'endMode') { state.P.endMode = v; const e = v === 'natural' && typeof sparkTailEnd === 'function' ? sparkTailEnd(state.P) : 0; if (e > +state.P.duration + 0.04 && !(+state.P.cutOut > 0)) { setTimingParam('duration', e); refreshPanelValues(); flash(`序列时长加长到 ${e.toFixed(2)} s（火花灭完）`); } else onParam(); return; }
+          if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(it.sel)) { state.P[it.sel] = v; onExportScheme(); return; }     // 4.9.25 导出方案不重烘
           state.P[it.sel] = v; onParam();
         });
         row._refresh = () => { s.value = String(it.sel === '_trailTier' ? state.P.type : state.P[it.sel]); };
