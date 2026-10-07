@@ -1,0 +1,25 @@
+{
+ "id": "FGV1",
+ "type": "script",
+ "priority": 1,
+ "name": "FanGold FG1：和实拍出膛后同一秒对照 + 每层自动曝光（原样 + 4 个变体）",
+ "note": "对话框FanGold，用户 2026-10-07 17:02「云端实在太慢了，直接排任务到本机回传」。结果给对话框FanGold 看：一览.jpg、各变体.jpg、曝光.json。",
+ "steps": [
+  {
+   "name": "FG1 对照 + 曝光",
+   "script": "FanGold对照.py",
+   "args": [
+    "--entry",
+    "FG1",
+    "--out",
+    "{out}",
+    "--variants",
+    "{\"更密\": {\"stars\": 24, \"sparkRate\": 320}, \"更细\": {\"sparkSpread\": 0.08, \"sparkSize\": 0.09, \"x2Size\": 0.15}, \"白热更长\": {\"x1Life\": 0.26, \"x1Rate\": 180}, \"爆裂更大\": {\"crackle\": 50, \"crackleR\": 3.2}}",
+    "--times",
+    "0.3,0.9,1.6,2.2,2.8"
+   ],
+   "must": true,
+   "timeout": 2400
+  }
+ ]
+}
