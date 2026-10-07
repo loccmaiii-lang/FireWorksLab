@@ -1,0 +1,10 @@
+{
+ "id": "FCS1",
+ "type": "std",
+ "priority": 2,
+ "targets": [
+  "FC1R",
+  "FC1O"
+ ],
+ "note": "对话框FanGold：FC1R / FC1O 标准检查。"
+}

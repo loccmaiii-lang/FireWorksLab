@@ -1,0 +1,9 @@
+{
+ "id": "FCE-FC1R",
+ "type": "export",
+ "effect": "fan_comet",
+ "entry": "FC1R",
+ "name": "FanCometRed",
+ "priority": 1,
+ "note": "对话框FanGold：扇形彗星 · 红彗星单条 FC1R（RT6 分层）导出 + 回放检查。"
+}
