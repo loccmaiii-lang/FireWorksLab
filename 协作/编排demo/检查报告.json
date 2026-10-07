@@ -26,12 +26,12 @@
     "host state echo cannot roll back seek"
   ],
   "errors": [],
-  "version": "front-low-v2-dense",
+  "version": "front-low-v3-7pt",
   "designOnly": true,
   "ueVerified": false,
   "userApproved": false,
-  "events": 850,
-  "frontEvents": 168,
+  "events": 980,
+  "frontEvents": 298,
   "damEvents": 682,
   "flowerEvents": 538,
   "cometEvents": 6,
@@ -43,13 +43,13 @@
   "frontMaxEnvelopeM": 143,
   "frontCeilingM": 145,
   "damHeightM": 150,
-  "frontLastEnd": 177.66,
+  "frontLastEnd": 178.3,
   "lastEnd": 206.5,
   "whiteWallWaves": 8,
   "whiteWallEvents": 72,
   "maxSimultaneousWallBlooms": 54,
-  "maxFrontBlooms": 6,
-  "maxFrontPlaying": 9,
+  "maxFrontBlooms": 15,
+  "maxFrontPlaying": 21,
   "visualReview": "已审看24.8秒全场连续圆冠、96.8秒高潮、198.6秒白墙、168.8秒前台暗主题和窄屏。球花轮廓圆形，球面投影填充内部星点，短尾径向放射；2101个时刻为程序走查，非逐帧肉眼审看。",
   "sharedStandard": {
     "pass": false,
@@ -60,5 +60,50 @@
       "asset status: store is not defined"
     ],
     "scope": "本轮重跑标准检查.py --ui-state-only；未修改对应源码，独立保留既有失败。"
-  }
+  },
+  "previousVersion": {
+    "version": "front-low-v2-dense",
+    "events": 850,
+    "frontEvents": 168,
+    "render": "Chrome headless, 2D schematic; not UE",
+    "viewports": [
+      320,
+      390,
+      736,
+      1024
+    ],
+    "timelineSamples": 2101,
+    "checks": [
+      "ten phases",
+      "front/full views",
+      "slider",
+      "phase jump",
+      "play/pause",
+      "interlude dam empty",
+      "white wall 54 simultaneous / front zero",
+      "all extinguished at 210",
+      "no horizontal overflow",
+      "no page errors",
+      "sphere shape for all blooms",
+      "front diameter/height envelope unchanged",
+      "at least 3x total and front instances",
+      "no duplicate point/template/burst events",
+      "host state echo cannot roll back seek"
+    ],
+    "visualReview": "已审看24.8秒全场连续圆冠、96.8秒高潮、198.6秒白墙、168.8秒前台暗主题和窄屏。球花轮廓圆形，球面投影填充内部星点，短尾径向放射；2101个时刻为程序走查，非逐帧肉眼审看。"
+  },
+  "frontPoints": 7,
+  "frontSpacingM": 23,
+  "frontRiseS": [
+    1.6,
+    1.8
+  ],
+  "maxInstancesPerFrontPoint": 3,
+  "checksV3": [
+    "generator validate() PASS (front only F_, top<=145 m, |x|+r+8<=100 m, bottom>=platform, 0-210 s, no dam pre-launch 110-132 s, wall 72, end 206.5 s, no duplicates)",
+    "headless Chromium: front view at 117.3 s and 10.6 s renders 7 points, no page errors (dialog 22, 2026-10-07)",
+    "9 stage sketches + front detail + density chart drawn from the same JSON and visually reviewed in Claude Docs"
+  ],
+  "browserSuiteRerun": false,
+  "note": "对话框22 未重跑对话框24 的完整浏览器检查脚本（四宽度/2101 时刻），只做了前台视图抽查；设计与示意，不是 UE 回放，用户未验收。"
 }

@@ -10,14 +10,14 @@ OUT = ROOT / '协作' / '编排demo'
 
 def build_show():
     phases = [
-        (0, 12, '低位起势', '前台六轮三点追逐，坝顶6秒起加入两轮低层小花。'),
-        (12, 38, '连续展开', '六轮九点中花每4秒接力，前台七轮三点小花穿插。'),
-        (38, 65, '密集问答', '坝顶每4秒五点开花，前台晚2秒三点回应。'),
-        (65, 90, '往返扫射', '坝顶四遍九点往返扫射，每点0.28秒；前台三点短句穿插。'),
-        (90, 110, '第一次抬升', '四轮九点中花叠两轮三点大花，前台六轮追逐。'),
-        (110, 132, '低位密奏', '坝顶完全退出；前台每2秒一轮三点小花，共十轮。'),
-        (132, 165, '第二次递进', '六轮九点中花、两轮三点大花，前台十轮追逐。'),
-        (165, 188, '金色终章', '九点金花连续铺开，再接两轮九点金帘；前台最后一句后退出。'),
+        (0, 12, '低位起势', '前台7点先起：F4彗星→F3/F5彗星→外扩→内收→单4→反向追→0:10.4光带；坝顶6/9秒两遍九点小花。'),
+        (12, 38, '连续展开', '坝顶每4秒九点中花；前台在两波之间单4/双3/外扩/内收轮换，36.5秒光带。'),
+        (38, 65, '密集问答', '坝顶每4秒五点；前台晚2秒用单4/双3回答，64秒七点追。'),
+        (65, 90, '往返扫射', '坝顶四遍九点往返扫（每点0.28秒）；前台每遍晚2.5秒反向扫（每点0.2秒），86秒彗星内收。'),
+        (90, 110, '第一次抬升', '四轮九点中花+两轮三点大花；前台单4/双3/外扩，106秒金色光带，108秒上层全灭。'),
+        (110, 132, '低位密奏', '坝顶完全退出；前台7点独奏：单发→成对外扩→光带→左右追→单双涟漪→彗星内收→金色光带。'),
+        (132, 165, '第二次递进', '六轮九点中花+两轮三点大花；前台每3秒一句，单4/双3/外扩/内收轮换，162秒光带。'),
+        (165, 188, '金色终章', '九点金花三轮+五点金裂星+两波九点金垂柳；前台金色光带开头和收尾，178.3秒前退场。'),
         (188, 200, '白色收束', '坝顶188秒起每1.5秒一波，八轮九点白墙；前台全停。'),
         (200, 210, '自然余韵', '白墙余火持续到206.5秒，最后3.5秒静场。'),
     ]
@@ -30,11 +30,12 @@ def build_show():
                               hue=hue, margin=extra, top=z + diameter / 2 + extra)
 
     # margin同时预留3m垂直变化与5m光晕；不靠裁切隐藏越界。
-    template('F_COMET', '前台·短彗星', 'front', 'comet', 8, 130, 1.2, 0.6, 'gold', 8)
-    template('F_SILVER', '前台·小银菊', 'front', 'small', 32, 112, 1.2, 2.3, 'silver', 8)
-    template('F_LIME', '前台·小青柠', 'front', 'small', 30, 105, 1.1, 2.3, 'lime', 8)
-    template('F_GOLD', '前台·小金花', 'front', 'small', 40, 115, 1.3, 2.8, 'gold', 8)
-    template('F_CRACKLE', '前台·短爆裂', 'front', 'small', 24, 112, 1.1, 1.8, 'gold', 8)
+    # 前台升空1.6–1.8 s（对话框22 10-07，原1.1–1.3 s阻力过大），阻力约2，与坝顶低层小花同一手感。
+    template('F_COMET', '前台·短彗星', 'front', 'comet', 8, 130, 1.8, 0.6, 'gold', 8)
+    template('F_SILVER', '前台·小银菊', 'front', 'small', 32, 112, 1.7, 2.3, 'silver', 8)
+    template('F_LIME', '前台·小青柠', 'front', 'small', 30, 105, 1.6, 2.3, 'lime', 8)
+    template('F_GOLD', '前台·小金花', 'front', 'small', 40, 115, 1.8, 2.8, 'gold', 8)
+    template('F_CRACKLE', '前台·短爆裂', 'front', 'small', 24, 112, 1.7, 1.8, 'gold', 8)
     template('P_SILVER', '坝顶·低层小银菊', 'dam', 'small', 90, 230, 2, 3, 'silver')
     template('P_LIME', '坝顶·小青柠', 'dam', 'small', 90, 300, 3.5, 3, 'lime')
     template('P_SPLIT', '坝顶·金裂星', 'dam', 'small', 90, 300, 3.5, 3, 'gold')
@@ -55,7 +56,12 @@ def build_show():
         a, b = points[f'P{i}'], points[f'P{i+1}']
         points[f'B{i}'] = dict(x=round((a['x']+b['x'])/2, 2),
                                  y=round((a['y']+b['y'])/2, 2), z=150, zone='dam')
-    for i, x in enumerate((-70, 0, 70), 1):
+    # B2/B7正好在弧长150 m的转角上；弦中点会落到舞台外约6.5 m（对话框22 10-07修）。
+    for name, sx in (('B2', -1), ('B7', 1)):
+        points[name].update(x=round(sx * 244.89, 2), y=38.82)
+    # 前台7点（对话框22，用户10-07「小平台可以多加几个点」）：间距23 m，
+    # 最大花径40 m时外缘69+20+8=97 m，仍在平台±100 m内。
+    for i, x in enumerate((-69, -46, -23, 0, 23, 46, 69), 1):
         points[f'F{i}'] = dict(x=x, y=45, z=50, zone='front')
     allp = [f'P{i}' for i in range(1, 10)]
     fanline = allp + [f'B{i}' for i in range(1, 9)]
@@ -69,30 +75,101 @@ def build_show():
                                launch=round(b-t['rise'], 2), burst=b,
                                end=round(b+t['life'], 2)))
 
-    front = ['F1', 'F2', 'F3']
     five = ['P1', 'P3', 'P5', 'P7', 'P9']
 
-    def front_run(times, keys, step=.2):
-        for i, b in enumerate(times):
-            fire(b, front if i % 2 == 0 else list(reversed(front)), keys[i % len(keys)], step)
+    # ---- 前台7点句型（对话框22 10-07）：只放F_专属小花，坝顶组不绑F点 ----
+    FR = [f'F{i}' for i in range(1, 8)]
+    ODD, EVEN = ['F1', 'F3', 'F5', 'F7'], ['F2', 'F4', 'F6']
+    RINGS = [['F4'], ['F3', 'F5'], ['F2', 'F6'], ['F1', 'F7']]
 
-    front_run((1.2, 3.4, 5.2, 7, 8.8, 10.4),
-              ('F_COMET', 'F_SILVER', 'F_LIME', 'F_GOLD', 'F_CRACKLE', 'F_SILVER'))
+    def spread(b, key, step=.22):      # 中心向两端
+        for k, ring in enumerate(RINGS):
+            fire(round(b + k*step, 2), ring, key)
+
+    def gather(b, key, step=.22):      # 两端向中心
+        for k, ring in enumerate(reversed(RINGS)):
+            fire(round(b + k*step, 2), ring, key)
+
+    def band(b, key):                  # 7点齐开，连成低位光带
+        fire(b, FR, key)
+
+    def chase(b, key, rev=False, step=.15):
+        fire(b, list(reversed(FR)) if rev else FR, key, step)
+
+    # 低位起势 0–12：前台单独开场，由中心一发长成7点光带
+    fire(1.8, ['F4'], 'F_COMET')
+    fire(2.6, ['F3', 'F5'], 'F_COMET')
+    spread(3.4, 'F_SILVER')
+    gather(5.2, 'F_LIME')
+    fire(7, ODD, 'F_GOLD', .25)
+    chase(8.8, 'F_CRACKLE', rev=True)
+    band(10.4, 'F_SILVER')
+    # 连续展开 12–38：坝顶九点中花之间，前台单双点交替回应
+    for b, kind, key in ((14, 'odd', 'F_SILVER'), (18, 'even', 'F_LIME'), (22, 'spread', 'F_GOLD'),
+                         (26, 'odd', 'F_LIME'), (30, 'even', 'F_SILVER'), (34, 'gather', 'F_CRACKLE')):
+        {'odd': lambda: fire(b, ODD, key), 'even': lambda: fire(b, EVEN, key),
+         'spread': lambda: spread(b, key), 'gather': lambda: gather(b, key)}[kind]()
+    band(36.5, 'F_SILVER')
+    # 密集问答 38–65：坝顶五点，前台晚2秒以单4/双3回答，最后一句7点追逐
+    for i, b in enumerate((40, 44, 48, 52, 56, 60)):
+        fire(b, ODD if i % 2 == 0 else EVEN, 'F_LIME' if i % 2 == 0 else 'F_SILVER')
+    chase(64, 'F_SILVER')
+    # 往返扫射 65–90：前台与坝顶反向扫，末尾彗星由外向内收
+    for i, b in enumerate((68.5, 73.5, 78.5, 83.5)):
+        chase(b, 'F_CRACKLE' if i % 2 == 0 else 'F_SILVER', rev=(i % 2 == 0), step=.2)
+    gather(86, 'F_COMET', .25)
+    # 第一次抬升 90–110
+    fire(91, ODD, 'F_GOLD')
+    fire(94, EVEN, 'F_SILVER')
+    spread(97, 'F_CRACKLE')
+    fire(100, ODD, 'F_GOLD')
+    fire(103, EVEN, 'F_SILVER')
+    band(106, 'F_GOLD')
+    # 低位密奏 110–132：坝顶全停，7点前台独奏（单发→成对外扩→光带→追逐→单双涟漪→彗星收→光带收束）
+    fire(111, ['F4'], 'F_GOLD')
+    fire(112.5, ['F3', 'F5'], 'F_SILVER')
+    fire(114, ['F2', 'F6'], 'F_LIME')
+    fire(115.5, ['F1', 'F7'], 'F_CRACKLE')
+    band(117, 'F_SILVER')
+    chase(119, 'F_LIME', step=.18)
+    chase(121, 'F_CRACKLE', rev=True, step=.18)
+    for b, pts, key in ((123, ODD, 'F_SILVER'), (124, EVEN, 'F_GOLD'), (125, ODD, 'F_SILVER'), (126, EVEN, 'F_GOLD')):
+        fire(b, pts, key)
+    gather(127.5, 'F_COMET', .25)
+    band(129, 'F_GOLD')
+    # 第二次递进 132–165：每3秒一句，四种句型轮换，最后一句光带
+    cyc = (('odd', 'F_LIME'), ('even', 'F_SILVER'), ('spread', 'F_CRACKLE'), ('gather', 'F_GOLD'))
+    for i, b in enumerate(range(135, 163, 3)):
+        kind, key = cyc[i % 4]
+        if b == 162:
+            band(b, 'F_SILVER')
+        elif kind == 'odd':
+            fire(b, ODD, key)
+        elif kind == 'even':
+            fire(b, EVEN, key)
+        elif kind == 'spread':
+            spread(b, key)
+        else:
+            gather(b, key)
+    # 金色终章 165–188：金色光带开头和收尾，177.7秒前全部熄灭退场
+    band(165.5, 'F_GOLD')
+    fire(168, ODD, 'F_CRACKLE')
+    fire(170.5, EVEN, 'F_SILVER')
+    spread(173, 'F_GOLD')
+    band(175.5, 'F_GOLD')
+
     fire(6, allp, 'P_SILVER', .12)
     fire(9, allp, 'P_LIME', .12)
     for b in (11, 15, 19, 23, 27, 31, 35):
         fire(b, fanline, 'G_GOLD')
     for i, b in enumerate((12, 16, 20, 24, 28, 32)):
         fire(b, allp, 'P_MS' if i % 2 == 0 else 'P_MG')
-    front_run((14, 17, 23, 26, 29, 32, 35), ('F_SILVER', 'F_LIME', 'F_GOLD'))
 
     for i, b in enumerate((38, 42, 46, 50, 54, 58, 62)):
         fire(b, five, 'P_GREEN' if i % 2 == 0 else 'P_MS')
-        fire(b+2, front, 'F_LIME' if i % 2 == 0 else 'F_SILVER', .18)
     for i, b in enumerate((66, 71, 76, 81)):
         fire(b, allp if i % 2 == 0 else list(reversed(allp)),
              'P_SILVER' if i % 2 == 0 else 'P_SPLIT', .28)
-    front_run((67.7, 73, 78, 83, 86), ('F_CRACKLE', 'F_SILVER', 'F_COMET'))
     for b in (67, 77, 87):
         fire(b, fanline, 'G_GOLD')
     fire(88, allp, 'P_MG')
@@ -103,16 +180,13 @@ def build_show():
         fire(b, ['P1', 'P5', 'P9'], 'P_LS')
     for b in (93, 103):
         fire(b, fanline, 'G_GOLD')
-    front_run((91, 94, 97, 100, 103, 106), ('F_GOLD', 'F_SILVER', 'F_CRACKLE'))
     # 108秒上层全灭，110–132秒内连坝顶预发也停。
-    front_run(range(111, 130, 2), ('F_SILVER', 'F_LIME', 'F_CRACKLE'), .18)
     for i, b in enumerate((137, 142, 147, 152, 157, 162)):
         fire(b, allp, ('P_MG', 'P_MULTI', 'P_GREEN')[i % 3])
     for b in (146, 156):
         fire(b, ['P2', 'P5', 'P8'], 'P_LS')
     for b in (139, 149, 159):
         fire(b, fanline, 'G_GOLD')
-    front_run(range(135, 163, 3), ('F_LIME', 'F_SILVER', 'F_CRACKLE', 'F_GOLD'), .18)
 
     for b in (166, 170, 174):
         fire(b, allp, 'P_MG')
@@ -121,7 +195,6 @@ def build_show():
         fire(b, fanline, 'G_GOLD')
     for b in (179, 182):
         fire(b, allp, 'P_LG')
-    front_run((165.5, 168, 170.5, 173, 175.5), ('F_GOLD', 'F_CRACKLE', 'F_SILVER'), .18)
     # 八波白墙，每1.5秒一波；最后一波198.5开、206.5自然灭完。
     for b in (188, 189.5, 191, 192.5, 194, 195.5, 197, 198.5):
         fire(b, allp, 'P_WALL')
@@ -130,7 +203,7 @@ def build_show():
         e['id'] = f'C{i:03}'
         e['phase'] = next(j for j, (a, b, _, _) in enumerate(phases)
                           if a <= e['burst'] < b)
-    return dict(version='front-low-v2-dense', duration=210,
+    return dict(version='front-low-v3-7pt', duration=210,
                 boundary=dict(dam=150, platform=50, frontCeiling=145,
                               platformWidth=200, platformDepth=50),
                 assumptions=dict(bendDegrees=15, frontY=45,
@@ -152,6 +225,7 @@ def validate(show):
             assert e['template'].startswith('F_') and t['kind'] in ('small', 'comet'), e
             assert t['diameter'] <= 40 and t['top'] <= 145, e
             assert abs(p['x'])+t['diameter']/2+8 <= 100, e
+            assert p['z'] == 50, e
             assert t['z']-t['diameter']/2-8 >= 50, e
             assert e['end'] < 179, e
     wall = [e for e in events if e['template']=='P_WALL']
