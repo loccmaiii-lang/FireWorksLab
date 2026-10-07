@@ -1,0 +1,936 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "YonshakuKamuro_20",
+ "platform": "pc",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.26",
+  "combo": true,
+  "layers": [
+   {
+    "type": "kamuro",
+    "form": "master",
+    "renderVer": 40
+   },
+   {
+    "type": "strobe",
+    "form": "dots",
+    "renderVer": 40
+   }
+  ],
+  "plan_sig": "8734b462"
+ },
+ "textures": {
+  "L1_seqA": {
+   "file": "T_EFX_FireWorks_YonshakuKamuro_20_Main_4x4_01_HD.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_YonshakuKamuro_20_Main_4x4_01_HD"
+  },
+  "L1_cutoutA": {
+   "file": "T_EFX_FireWorks_YonshakuKamuro_20_Main_4x4_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_YonshakuKamuro_20_Main_4x4_01_C"
+  },
+  "L1_seqB": {
+   "file": "T_EFX_FireWorks_YonshakuKamuro_20_Main_4x4_02_HD.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_YonshakuKamuro_20_Main_4x4_02_HD"
+  },
+  "L1_cutoutB": {
+   "file": "T_EFX_FireWorks_YonshakuKamuro_20_Main_4x4_02_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_YonshakuKamuro_20_Main_4x4_02_C"
+  },
+  "L1_ramp": {
+   "file": "T_EFX_FireWorks_YonshakuKamuro_20_Main_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_YonshakuKamuro_20_Main_R"
+  }
+ },
+ "materials": {
+  "L1_mainA": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "L1_seqA",
+    "ramp": "L1_ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  },
+  "L1_mainB": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "L1_seqB",
+    "ramp": "L1_ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  },
+  "L2_dot": {
+   "role": "soft_dot"
+  }
+ },
+ "emitters": [
+  {
+   "name": "L1_MainA",
+   "material": "L1_mainA",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 2.5,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "L1_cutoutA",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.3997
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 2.5
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       49986.8,
+       49986.8,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.7067,
+         53.01
+        ],
+        [
+         0.9733,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.9,
+         1.9,
+         1.9
+        ]
+       ],
+       [
+        1,
+        [
+         1.9,
+         1.9,
+         1.9
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "notes": [
+    "固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 -50.1 m），仰视时也对得上；未经 UE 验证"
+   ],
+   "layer": 1
+  },
+  {
+   "name": "L1_MainB",
+   "material": "L1_mainB",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 5.4333,
+    "loops": 1,
+    "delay_s": 2.5,
+    "cutout": "L1_cutoutB",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.3997
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 5.4333
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       49986.8,
+       49986.8,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.3558,
+         29.01
+        ],
+        [
+         0.9816,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1.9,
+         1.9,
+         1.9
+        ]
+       ],
+       [
+        0.4875,
+        [
+         1.9,
+         1.9,
+         1.9
+        ]
+       ],
+       [
+        0.6348,
+        [
+         1.9,
+         1.6534,
+         1.561
+        ]
+       ],
+       [
+        0.7767,
+        [
+         1.9,
+         1.0974,
+         1.0015
+        ]
+       ],
+       [
+        1,
+        [
+         1.9,
+         1.0974,
+         1.0015
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "notes": [
+    "固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 -50.1 m），仰视时也对得上；未经 UE 验证"
+   ],
+   "layer": 1
+  },
+  {
+   "name": "L2_Dots",
+   "material": "L2_dot",
+   "gpu": true,
+   "required": {
+    "screen_alignment": "Square",
+    "duration_s": 3.875,
+    "loops": 1,
+    "delay_s": 5.175
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      17
+     ],
+     [
+      0.225,
+      18
+     ],
+     [
+      0.4,
+      18
+     ],
+     [
+      0.55,
+      18
+     ],
+     [
+      0.85,
+      18
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "uniform": [
+       1.85,
+       2.925
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "uniform": [
+       [
+        209.3,
+        209.3,
+        209.3
+       ],
+       [
+        283.1,
+        283.1,
+        283.1
+       ]
+      ]
+     }
+    },
+    {
+     "m": "SphereLocation",
+     "StartRadius": {
+      "uniform": [
+       19522.5,
+       25615.4
+      ]
+     },
+     "VelocityScale": {
+      "uniform": [
+       0.0222,
+       0.0496
+      ]
+     },
+     "SurfaceOnly": true,
+     "Velocity": true,
+     "note": "球面放射：表面出生、速度 = 出生位置 × VelocityScale（1/s）"
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       1857.7,
+       737.6,
+       -5174.5
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "const": [
+       108.8,
+       40.9,
+       -2129
+      ]
+     }
+    },
+    {
+     "m": "Drag",
+     "DragCoefficientRaw": {
+      "uniform": [
+       0.2455,
+       0.2455
+      ]
+     }
+    },
+    {
+     "m": "ConstAcceleration",
+     "Acceleration": [
+      0,
+      0,
+      -578.8
+     ]
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         4,
+         0.274,
+         0.4226
+        ]
+       ],
+       [
+        0.0125,
+        [
+         4,
+         0.274,
+         0.4226
+        ]
+       ],
+       [
+        0.0375,
+        [
+         4,
+         0.274,
+         0.4225
+        ]
+       ],
+       [
+        0.0407,
+        [
+         4,
+         0.2741,
+         0.4226
+        ]
+       ],
+       [
+        0.0447,
+        [
+         4,
+         0.2738,
+         0.4207
+        ]
+       ],
+       [
+        0.1236,
+        [
+         4,
+         0.2738,
+         0.4207
+        ]
+       ],
+       [
+        0.1276,
+        [
+         4,
+         0.274,
+         0.4226
+        ]
+       ],
+       [
+        0.1682,
+        [
+         4,
+         0.274,
+         0.4226
+        ]
+       ],
+       [
+        0.1722,
+        [
+         4,
+         0.2766,
+         0.425
+        ]
+       ],
+       [
+        0.2512,
+        [
+         4,
+         0.2747,
+         0.4221
+        ]
+       ],
+       [
+        0.2552,
+        [
+         4,
+         0.274,
+         0.4226
+        ]
+       ],
+       [
+        0.2958,
+        [
+         4,
+         0.274,
+         0.4226
+        ]
+       ],
+       [
+        0.2998,
+        [
+         4,
+         0.2747,
+         0.4221
+        ]
+       ],
+       [
+        0.3788,
+        [
+         4,
+         0.2738,
+         0.4207
+        ]
+       ],
+       [
+        0.3828,
+        [
+         4,
+         0.274,
+         0.4226
+        ]
+       ],
+       [
+        0.4234,
+        [
+         4,
+         0.274,
+         0.4226
+        ]
+       ],
+       [
+        0.4274,
+        [
+         4,
+         0.2756,
+         0.4235
+        ]
+       ],
+       [
+        0.5064,
+        [
+         4,
+         0.2729,
+         0.4193
+        ]
+       ],
+       [
+        0.5104,
+        [
+         4,
+         0.274,
+         0.4225
+        ]
+       ],
+       [
+        0.551,
+        [
+         4,
+         0.274,
+         0.4225
+        ]
+       ],
+       [
+        0.555,
+        [
+         4,
+         0.2756,
+         0.4235
+        ]
+       ],
+       [
+        0.6375,
+        [
+         4,
+         0.2747,
+         0.4221
+        ]
+       ],
+       [
+        0.638,
+        [
+         4,
+         0.2739,
+         0.4226
+        ]
+       ],
+       [
+        0.6786,
+        [
+         4,
+         0.274,
+         0.4226
+        ]
+       ],
+       [
+        0.6826,
+        [
+         4,
+         0.2747,
+         0.4221
+        ]
+       ],
+       [
+        0.7625,
+        [
+         4,
+         0.2718,
+         0.4251
+        ]
+       ],
+       [
+        0.7656,
+        [
+         4,
+         0.2739,
+         0.4225
+        ]
+       ],
+       [
+        0.8062,
+        [
+         4,
+         0.274,
+         0.4225
+        ]
+       ],
+       [
+        0.8102,
+        [
+         4,
+         0.2747,
+         0.4206
+        ]
+       ],
+       [
+        0.8891,
+        [
+         4,
+         0.2744,
+         0.4188
+        ]
+       ],
+       [
+        0.8931,
+        [
+         4,
+         0.2741,
+         0.4226
+        ]
+       ],
+       [
+        0.9375,
+        [
+         4,
+         0.2742,
+         0.4225
+        ]
+       ],
+       [
+        0.9378,
+        [
+         4,
+         0.2683,
+         0.4146
+        ]
+       ],
+       [
+        1,
+        [
+         4,
+         0.3243,
+         0.4324
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "curve": [
+       [
+        0,
+        0.518
+       ],
+       [
+        0.0125,
+        0.518
+       ],
+       [
+        0.0375,
+        0.8004
+       ],
+       [
+        0.0407,
+        0.7998
+       ],
+       [
+        0.0447,
+        0.015
+       ],
+       [
+        0.1236,
+        0.015
+       ],
+       [
+        0.1276,
+        0.7986
+       ],
+       [
+        0.1682,
+        0.7907
+       ],
+       [
+        0.1722,
+        0.0148
+       ],
+       [
+        0.2512,
+        0.0149
+       ],
+       [
+        0.2552,
+        0.7961
+       ],
+       [
+        0.2958,
+        0.7957
+       ],
+       [
+        0.2998,
+        0.0149
+       ],
+       [
+        0.3788,
+        0.015
+       ],
+       [
+        0.3828,
+        0.7967
+       ],
+       [
+        0.4234,
+        0.793
+       ],
+       [
+        0.4274,
+        0.0149
+       ],
+       [
+        0.5064,
+        0.015
+       ],
+       [
+        0.5104,
+        0.8004
+       ],
+       [
+        0.551,
+        0.7935
+       ],
+       [
+        0.555,
+        0.0149
+       ],
+       [
+        0.6375,
+        0.0149
+       ],
+       [
+        0.638,
+        0.7958
+       ],
+       [
+        0.6786,
+        0.7953
+       ],
+       [
+        0.6826,
+        0.0149
+       ],
+       [
+        0.7625,
+        0.0143
+       ],
+       [
+        0.7656,
+        0.7571
+       ],
+       [
+        0.8062,
+        0.6335
+       ],
+       [
+        0.8102,
+        0.0117
+       ],
+       [
+        0.8891,
+        0.0069
+       ],
+       [
+        0.8931,
+        0.3575
+       ],
+       [
+        0.9375,
+        0.2185
+       ],
+       [
+        0.9378,
+        0.0041
+       ],
+       [
+        1,
+        0.0009
+       ]
+      ]
+     },
+     "note": "半透明材质：RGB = 色相 × 4（不随寿命变暗），淡出 / 闪烁 / 冷却在 Alpha；黑底上 RGB × Alpha = 烘焙器里的亮度"
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "notes": [
+    "GPU 光点：这一层会亮的星只出星头光点（89 颗，另外 359 颗模拟里不发光，球面放射），尾迹、星头闪烁不在里面；点灭写进 Color Over Life 的 Alpha（3.3 Hz 方波，RGB 不变；所有粒子共用一条曲线、靠寿命随机错开；10-05 HK10 实测 GPU 查找表没抹平）；出生位置、速度、寿命按模拟里每颗星亮起那一刻定，按亮起先后分 5 批出生、之后的运动拟合成线性阻力（阻力 0.2455/s、等效重力 5.79 m/s²）；第一批在 5.18 s 亮起；光点直径 = 星头 × 1、颜色 = 这一层的颜色 × Ramp 亮端 × 星头亮度 × 1，是起点，未经 UE 验证"
+   ],
+   "layer": 2
+  }
+ ],
+ "system": {
+  "preview_distance_cm": 64983,
+  "preview_warmup_s": 1.2
+ },
+ "notes": [
+  "多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。"
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "YonshakuKamuro_20",
+  "layers": [
+   "Main",
+   "Red"
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ }
+}
