@@ -1,0 +1,166 @@
+<div id="fw-rhythm-v1">
+  <h3>烟花编排demo · 上下两层</h3>
+  <div class="viz-controls">
+    <button class="btn btn-primary" type="button" data-play>播放</button>
+    <label class="form-label">段落 <select class="form-select" data-phase aria-label="跳到段落"></select></label>
+    <label class="form-label">视野 <select class="form-select" data-view><option value="front">前台近看</option><option value="full">全场比例</option></select></label>
+    <span class="tabular-nums" data-time>02:48.8 / 03:30</span>
+  </div>
+  <canvas role="img" aria-label="正面米制比例示意：坝顶高150米，前台高50米，前台小烟花完整设计顶部低于145米。示意不是UE粒子回放。"></canvas>
+  <label class="form-label">节目时间 <input class="form-range" data-seek aria-label="节目时间，秒" type="range" min="0" max="210" step="0.1" value="168.8"></label>
+  <div class="viz-row text-small"><span>● 前台专属小烟花</span><span>◎ 坝顶主景</span><span>正面比例 · 非UE回放</span></div>
+  <div class="text-small" data-detail aria-live="polite"></div>
+</div>
+<style>
+#fw-rhythm-v1 canvas { display:block; width:100%; margin:12px 0; }
+#fw-rhythm-v1 [data-detail] { margin-top:8px; color:var(--muted-foreground); }
+</style>
+<script>
+(() => {
+  const show = __SHOW_DATA__;
+  const root = document.getElementById('fw-rhythm-v1');
+  const canvas = root.querySelector('canvas'), ctx = canvas.getContext('2d');
+  const seek = root.querySelector('[data-seek]'), phaseSelect = root.querySelector('[data-phase]');
+  const view = root.querySelector('[data-view]'), play = root.querySelector('[data-play]');
+  const timeLabel = root.querySelector('[data-time]'), detail = root.querySelector('[data-detail]');
+  const probe = document.createElement('span');
+  probe.style.display = 'none'; probe.setAttribute('aria-hidden','true'); root.appendChild(probe);
+  let t = 168.8, playing = false, last = 0, phaseIndex = -1;
+  const instance = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const fmt = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${(s%60).toFixed(1).padStart(4,'0')}`;
+  for (const p of show.phases) {
+    const o = document.createElement('option');
+    o.value = p.start; o.textContent = `${fmt(p.start).slice(0,5)} ${p.name}`;
+    phaseSelect.appendChild(o);
+  }
+  function applyState(s) {
+    const v = s?.privateContent;
+    if (v && Number.isFinite(v.time)) t = Math.min(210,Math.max(0,v.time));
+    if (v && ['front','full'].includes(v.view)) view.value = v.view;
+    seek.value = t;
+  }
+  applyState(window.openai?.widgetState);
+  function save() {
+    if (window.openai?.setWidgetState) window.openai.setWidgetState({
+      modelContent:{version:show.version, time:Math.round(t*10)/10, view:view.value,
+                    phase:show.phases[Math.max(0,phaseIndex)].name},
+      privateContent:{time:Math.round(t*10)/10, view:view.value, instance}
+    }).catch(()=>{});
+  }
+  function stop() { playing=false; play.textContent='播放'; }
+  function draw() {
+    const front=view.value==='front';
+    const w = Math.max(1,root.clientWidth), h = Math.max(front?220:270,Math.min(430,w*(front?.46:.59)));
+    const dpr = window.devicePixelRatio || 1;
+    if(canvas.width!==Math.round(w*dpr) || canvas.height!==Math.round(h*dpr)) {
+      canvas.width=Math.round(w*dpr); canvas.height=Math.round(h*dpr); canvas.style.height=h+'px';
+    }
+    ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
+    const color=n=>{probe.style.color=`var(${n})`;return getComputedStyle(probe).color;};
+    const fg=color('--foreground'), muted=color('--muted-foreground'), border=color('--border');
+    const gold=color('--orange'), silver=color('--foreground'), lime=color('--green');
+    const worldW=front?260:1080, worldH=front?180:630;
+    const scale=Math.min((w-60)/worldW,(h-45)/worldH);
+    const x=v=>w/2+v*scale, z=v=>h-27-v*scale;
+    ctx.font=getComputedStyle(root).font;
+    function line(x1,y1,x2,y2,stroke,alpha=1,dash=[]) {
+      ctx.globalAlpha=alpha; ctx.strokeStyle=stroke; ctx.lineWidth=1; ctx.setLineDash(dash);
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;
+    }
+    function label(txt,px,py,align='left') {
+      ctx.fillStyle=fg;ctx.globalAlpha=1;ctx.textAlign=align;ctx.fillText(txt,px,py);
+    }
+    // 后景坝体在前、前台和小花在后画，避免示意把前台错误遮掉。
+    ctx.fillStyle=border;ctx.globalAlpha=.22;
+    ctx.fillRect(x(-374.79),z(150),749.58*scale,150*scale);ctx.globalAlpha=1;
+    line(30,z(150),w-16,z(150),muted,.7);
+    label('坝顶 150 m',w-18,z(150)-8,'right');
+    if(front) {
+      line(x(-104),z(145),x(104),z(145),gold,.8,[4,4]);
+      label('前台上限 145 m',Math.max(8,x(-104)),z(150)-30);
+    } else {
+      label('0 m',8,z(0));
+      label('600 m',8,z(600)+5);
+      line(30,z(600),w-16,z(600),border,.4);
+    }
+    ctx.fillStyle=border;ctx.globalAlpha=.7;
+    ctx.fillRect(x(-100),z(50),200*scale,50*scale);ctx.globalAlpha=1;
+    line(x(-100),z(50),x(100),z(50),fg,.7);
+    label(front?'小平台 · 50 m':'平台 50 m',x(0),z(50)+21,'center');
+    for(const [name,p] of Object.entries(show.points)) {
+      if(front && p.zone!=='front') continue;
+      if(!front && name.startsWith('B')) continue;
+      ctx.beginPath();ctx.arc(x(p.x),z(p.z),2,0,Math.PI*2);ctx.fillStyle=fg;ctx.fill();
+      if(front || p.zone==='front') label(name,x(p.x),z(p.z)-8,'center');
+    }
+    let frontVisible=0, damVisible=0;
+    for(const e of show.events) {
+      if(t<e.launch || t>=e.end) continue;
+      const a=show.templates[e.template], p=show.points[e.point];
+      if(e.zone==='front') frontVisible++; else damVisible++;
+      if(front && e.zone!=='front') continue;
+      const c=a.hue==='gold'?gold:a.hue==='lime'?lime:silver;
+      const age=t-e.burst, life=a.life;
+      if(age<0) {
+        const u=(t-e.launch)/a.rise;
+        const height=p.z+(a.z-p.z)*(2*u-u*u);
+        line(x(p.x),z(Math.max(p.z,height-(e.zone==='front'?12:32))),x(p.x),z(height),c,.85);
+        ctx.beginPath();ctx.arc(x(p.x),z(height),Math.max(1.5,1.3*scale),0,Math.PI*2);
+        ctx.fillStyle=c;ctx.fill();continue;
+      }
+      if(a.kind==='comet') {
+        const height=a.z-8*(age/life);
+        line(x(p.x),z(height-14),x(p.x),z(height),c,1-age/life);
+        continue;
+      }
+      const u=age/life, expansion=1-Math.exp(-8*u), radius=a.diameter/2*expansion;
+      const fall=(e.zone==='front'?9:25)*u*u;
+      const alpha=Math.min(1,(life-age)/Math.min(1.2,life*.45));
+      const count=a.kind==='fan'?13:e.zone==='front'?28:54;
+      ctx.strokeStyle=c;ctx.fillStyle=c;ctx.globalAlpha=alpha;
+      for(let j=0;j<count;j++) {
+        const angle=a.kind==='fan'?j/(count-1)*Math.PI:j/count*Math.PI*2;
+        const rr=radius*(.86+.14*Math.sin(j*12.9898+e.phase));
+        const vx=Math.cos(angle), vy=Math.sin(angle);
+        const px=p.x+vx*rr, height=a.z+vy*rr-fall;
+        ctx.beginPath();ctx.arc(x(px),z(height),Math.max(.8,scale*.75),0,Math.PI*2);ctx.fill();
+        if(a.kind!=='small' || a.hue==='gold') {
+          ctx.beginPath();ctx.moveTo(x(p.x+vx*rr*.68),z(a.z+vy*rr*.68-fall*.5));
+          ctx.lineTo(x(px),z(height));ctx.stroke();
+        }
+      }
+      ctx.globalAlpha=1;
+    }
+    timeLabel.textContent=`${fmt(t)} / 03:30`;
+    const idx=show.phases.findIndex(p=>t>=p.start && t<p.end);
+    const current=idx<0?show.phases.length-1:idx;
+    if(current!==phaseIndex) {
+      phaseIndex=current;phaseSelect.value=show.phases[current].start;
+      detail.textContent=show.phases[current].detail;
+    }
+    canvas.setAttribute('aria-label',`${fmt(t)}，${show.phases[current].name}。前台${frontVisible}个播放实例，坝顶${damVisible}个。前台完整设计顶部最高143米，坝顶150米。${front?'前台近看':'全场比例'}示意，非UE回放。`);
+  }
+  seek.addEventListener('input',()=>{stop();t=Number(seek.value);draw();});
+  seek.addEventListener('change',save);
+  phaseSelect.addEventListener('change',()=>{stop();t=Number(phaseSelect.value);seek.value=t;draw();save();});
+  view.addEventListener('change',()=>{draw();save();});
+  play.addEventListener('click',()=>{
+    if(playing) {stop();save();return;}
+    if(t>=210)t=0;
+    playing=true;play.textContent='暂停';last=performance.now();requestAnimationFrame(tick);
+  });
+  function tick(now) {
+    if(!playing)return;
+    t=Math.min(210,t+(now-last)/1000);last=now;seek.value=t;draw();
+    if(t>=210){stop();save();}else requestAnimationFrame(tick);
+  }
+  window.addEventListener('openai:set_globals',e=>{
+    const state=e.detail?.globals?.widgetState;
+    if(state && state.privateContent?.instance!==instance){stop();applyState(state);draw();}
+  });
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){stop();save();}});
+  new ResizeObserver(draw).observe(root);
+  new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:['class','style','data-theme']});
+  draw();
+})();
+</script>

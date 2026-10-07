@@ -1,0 +1,49 @@
+{
+  "pass": true,
+  "render": "Chrome headless, 2D schematic; not UE",
+  "viewports": [
+    320,
+    390,
+    736,
+    1024
+  ],
+  "timelineSamples": 2101,
+  "checks": [
+    "ten phases",
+    "front/full views",
+    "slider",
+    "phase jump",
+    "play/pause",
+    "interlude dam empty",
+    "white wall 36 / front zero",
+    "all extinguished at 210",
+    "no horizontal overflow",
+    "no page errors",
+    "host state echo cannot roll back a newer seek"
+  ],
+  "errors": [],
+  "version": "front-low-v1",
+  "designOnly": true,
+  "ueVerified": false,
+  "userApproved": false,
+  "events": 279,
+  "frontEvents": 48,
+  "damEvents": 231,
+  "frontMaxEnvelopeM": 143,
+  "frontCeilingM": 145,
+  "damHeightM": 150,
+  "frontLastEnd": 177.4,
+  "lastEnd": 204,
+  "archiveMatchesBaseline": true,
+  "visualReview": "已审看全场三点大花、白墙、前台近看、亮/暗主题及320px窄屏；2101个时刻为程序走查，不冒称逐帧肉眼审看。 修复并复核保存回声导致新拖动被旧时间覆盖的问题。",
+  "sharedStandard": {
+    "pass": false,
+    "passed": 5,
+    "total": 7,
+    "failures": [
+      "render version: Cannot read properties of undefined (reading base)",
+      "asset status: store is not defined"
+    ],
+    "scope": "标准检查.py --ui-state-only；未修改tool/src或标准检查脚本，失败独立保留，不修他方任务。"
+  }
+}

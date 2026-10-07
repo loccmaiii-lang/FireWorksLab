@@ -1,6 +1,6 @@
 # 烟花编排demo Implementation Plan
 
-> **For agentic workers:** Execute this plan inline, task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking. 用户已授权完成重设计，不再请求执行选择。
+> **For agentic workers:** Execute this plan inline, task-by-task. Steps use checkbox (`- [x]`) syntax for tracking. 用户已授权完成重设计，不再请求执行选择。
 
 **Goal:** 将前台改为完整效果不越过150 m坝顶的小烟花区域，交付210秒新编排与可审阅节奏示意。
 
@@ -22,9 +22,9 @@
 
 **Interfaces:** `build_show() -> dict` produces `phases`, `points`, `templates`, `events`; event fields include `launch`, `burst`, `end`, `point`, `template`, `zone`.
 
-- [ ] 定义前台五个专属小花模板、主排原尺寸模板与独立发射点。
-- [ ] 按十段逐发排程；前三点交替/两翼对打/中心到两端/密度递增，白墙四波九点。
-- [ ] 用断言核对前台白名单、完整顶部≤145、横向包络在200 m平台宽内、全部时间0–210、白墙36发；输出确定性数据和汇总。
+- [x] 定义前台五个专属小花模板、主排原尺寸模板与独立发射点。
+- [x] 按十段逐发排程；前三点交替/两翼对打/中心到两端/密度递增，白墙四波九点。
+- [x] 用断言核对前台白名单、完整顶部≤145、横向包络在200 m平台宽内、全部时间0–210、白墙36发；输出确定性数据和汇总。
 
 ### Task 2: 替换旧编排方案
 
@@ -32,9 +32,9 @@
 
 **Interfaces:** Consumes Task 1 data; writes ten phase counts, asset/group roles and explicit assumptions.
 
-- [ ] 保留旧方案为历史参考，将当前文件完整改为新方案，避免旧前台大花/同参数/旧总数混用。
-- [ ] 写清F1–F3横排、前台子模板、禁止坝顶组绑定前台、随机与光晕包络和UE校准方法。
-- [ ] 各段明确开花秒、扫射间隔、留白、发射预卷、衔接与结束；数量直接来自数据。
+- [x] 保留旧方案为历史参考，将当前文件完整改为新方案，避免旧前台大花/同参数/旧总数混用。
+- [x] 写清F1–F3横排、前台子模板、禁止坝顶组绑定前台、随机与光晕包络和UE校准方法。
+- [x] 各段明确开花秒、扫射间隔、留白、发射预卷、衔接与结束；数量直接来自数据。
 
 ### Task 3: 审阅与交接
 
@@ -42,6 +42,8 @@
 
 **Interfaces:** Consumes identical Task 1 JSON embedded in fragment; slider selects time and animation computes all positions from absolute time.
 
-- [ ] 使用同一米制比例展示坝顶/平台/前台花冠；时间拖动与播放覆盖210秒，支持段落跳转与前台近看。
-- [ ] 浏览器检查320/736宽、拖动、播放暂停、各段截图与完整210秒轨迹；修复实际发现的问题。
-- [ ] 运行数据检查和仓库标准的离线检查，报告适用范围；新增目录补地图，提交前fetch安全同步，提交并推送。
+- [x] 使用同一米制比例展示坝顶/平台/前台花冠；时间拖动与播放覆盖210秒，支持段落跳转与前台近看。
+- [x] 浏览器检查320/736宽、拖动、播放暂停、各段截图与完整210秒轨迹；修复实际发现的问题。
+- [x] 运行数据检查和仓库标准的离线检查，报告适用范围；新增目录补地图，提交前fetch安全同步，提交并推送。
+
+完成：实施与检查结论见 `对话记录/对话框24.md` 及 `协作/编排demo/检查报告.json`。UI检查不等于UE或艺术验收。
