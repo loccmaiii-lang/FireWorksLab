@@ -114,6 +114,14 @@ function fwlPlanSig(emitters) {
   for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
   return h.toString(16).padStart(8, '0');
 }
+// 4.9.24（用户 10-07 09:20「颜色倍增给我都加上去吧，Scale Color/Life这个」）：每个发射器最后加一个 Scale Color/Life（RGB 1、Alpha 1 = 烘焙器口径），
+// 在 UE 里改这一个数就能整体调亮调暗、调透明度，不用动 Color Over Life 的曲线。所有 cascade.json（单层、多层、单束包）出口都过这里。
+const FWL_SCALE_NOTE = '整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life';
+function fwlFinish(emitters) {
+  for (const e of emitters || []) { const ms = e.modules || (e.modules = []);
+    if (!ms.some(q => q.m === 'ColorScaleOverLife')) ms.push({ m: 'ColorScaleOverLife', ColorScaleOverLife: { const: [1, 1, 1] }, AlphaScaleOverLife: { const: 1 }, note: FWL_SCALE_NOTE }); }
+  return emitters;
+}
 // 返回 null 表示这种产物还没有 cascade.json（单元序列、地面循环、上升星头循环：参数表照旧）
 function fwlCascade(name, b, M, mobile = false) {
   const body = b.form === 'emitset' ? fwlEmitSet(name, b, M, mobile) : b.form === 'trail' ? fwlTrail(name, b, M, mobile) : (b.form === 'master' || b.form === 'segments') ? fwlMaster(name, b, M, mobile) : null;
@@ -121,7 +129,7 @@ function fwlCascade(name, b, M, mobile = false) {
   return {
     format: FWL_FORMAT, name, platform: mobile ? 'mobile' : 'pc',
     source: { tool: '烟花母版烘焙器 ' + VERSION, type: b.P.type, form: b.form, quality: b.meta.quality ? { ss: b.meta.quality.ss, hz: b.meta.quality.hz } : undefined, plan_sig: fwlPlanSig(body.emitters) },
-    textures: body.textures, materials: body.materials, system: body.system, emitters: body.emitters,
+    textures: body.textures, materials: body.materials, system: body.system, emitters: fwlFinish(body.emitters),
     notes: body.notes
   };
 }

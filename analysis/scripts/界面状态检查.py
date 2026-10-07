@@ -71,6 +71,8 @@
   W17 4.9.20 贴图 / 流转：这一层导出的每一张序列都能切（分张、星头 / 尾迹、循环层 / 消散 / 远段；不为哪种效果单做）
   W18 4.9.21 效果 › 整体调整（用户 10-06 21:51，每层一份）：位置和 9 项顺序、全是 1 时原样、改尾长后实时模拟 / 测量 / 烘焙 / 尾迹终点 / 层结束 / 光点都跟着、
       存的原值不动、乘完不再乘、闪烁最多 1、摘要、撤销；多层只动这一层；地面 / 升空没有这个模块
+  W20 4.9.24 GPU / 软圆点颜色（用户 10-07 09:20：材质 Translucent、A 接透明度）：RGB 不随寿命变暗、淡出 / 闪烁 / 冷却在 Alpha、黑底上 RGB × Alpha = 原亮度；
+      RT6 每层、光点（点灭方波在 Alpha）；单层 / 多层 / 升空尾缀的 cascade.json 每个发射器都有 Scale Color/Life（1、1）
   W19 4.9.21 入点前放大一律绕爆点（用户 21:51 选）：「放大的中心」删了；cascade.json 写 Pivot Offset、Initial Location 0；回放绕爆点；存过「面片中心」的打开时提示
       4.9.8 加：顶上「现在改的是」和搜索入口看得到，第一屏至少 8 行参数（菊 › 星、引菊 → 锦 金锦层 › 火花）
   W15 4.9.7 起（对话框23 参数栏交互）：4.9.8 引菊 → 锦六步（定位 / 改寿命 / 改颜色 / 调接力 / 撤销保存刷新重开）；切「工具」「审阅」再回来时间 / 层 / 发射器 / 模块开合 / 滚动位置都在、多层里有「工具」页；撤销一次操作一步（两个参数紧挨着改 = 两步、拖动中途停 = 一步、数值框回车 = 一步）
@@ -2481,6 +2483,58 @@ async def w19(pg):
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1200]
 
 
+W20_JS = r"""async () => {
+  // 4.9.24（用户 10-07 09:20「是Translucent,透明度有接a通道，color over life就可以控制alpha曲线，颜色倍增给我都加上去吧，Scale Color/Life这个」）
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
+  const baked = async prev => { for (let i = 0; i < 100 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); };
+  // 1 拆法：RGB 每个点的最大通道 = M（不变暗），Alpha 0–1，RGB × Alpha = 原来那条
+  const chkEm = (x, tag) => { const j = esFwlEmitter(x, false, 1), c = j.modules.find(q => q.m === 'ColorOverLife'); if (!c) return tag + ' 没有 Color Over Life';
+    const rgb = c.ColorOverLife.curve || x.col.map(([u]) => [u, c.ColorOverLife.const]), a = c.AlphaOverLife.curve || x.col.map(([u]) => [u, c.AlphaOverLife.const]);
+    const M = Math.max(...rgb.map(k => Math.max(...k[1]))), P = Math.max(...x.col.map(k => Math.max(...k[1])));
+    if (!(P > 0)) return null;
+    if (rgb.some(k => Math.max(...k[1]) < M * 0.999)) return tag + ' RGB 随寿命变暗了（半透明材质会发黑）';
+    if (a.some(k => !(k[1] >= 0 && k[1] <= 1))) return tag + ' Alpha 超出 0–1';
+    for (let i = 0; i < x.col.length; i++) { const u = x.col[i][0], ra = esCurve(rgb, u), aa = esCurve(a, u), want = x.col[i][1];
+      for (let ch = 0; ch < 3; ch++) if (Math.abs(ra[ch] * aa - want[ch]) > 2e-3 * Math.max(1, P)) return `${tag} RGB × Alpha ≠ 原亮度（u ${u}，${ch}：${(ra[ch] * aa).toFixed(4)} vs ${want[ch].toFixed(4)}）`; }
+    return null; };
+  { const e = entryById('RT6L'), d = defaultsFor(e.base), P = derive({ ...d.P, ...e.p }), ES = rtBuildES(P); out.rt6 = ES.emitters.map(x => x.name);
+    for (const x of ES.emitters) { const m = chkEm(x, 'RT6 ' + x.name); if (m) bad.push(m); } }
+  // 光点：点灭方波在 Alpha 里（RGB 常数），亮灭次数和以前 RGB 方波一样
+  { const d = defaultsFor('strobe', 40, true), P = derive({ ...structuredClone(d.P), type: 'strobe' }), e = dotsES({ ...d.M, delay: 0, rate: 1, scale: 1 }, P, d.M, null), m = chkEm(e, '点灭光点'); if (m) bad.push(m);
+    const j = esFwlEmitter(e, false, 1), c = j.modules.find(q => q.m === 'ColorOverLife'), a = c.AlphaOverLife.curve || [];
+    let n = 0; for (let i = 1; i < a.length; i++) if (Math.max(a[i][1], a[i - 1][1]) > 0.02 && Math.abs(a[i][1] - a[i - 1][1]) > 0.5 * Math.max(a[i][1], a[i - 1][1])) n++;
+    out.strobe = { flips: n, rgbConst: !!c.ColorOverLife.const }; if (n < 10) bad.push('点灭光点的 Alpha 没有亮灭：' + JSON.stringify(out.strobe)); }
+  // 2 Scale Color/Life：每个出口的每个发射器都有，缺省 1 / 1
+  const scaleOk = (j, tag) => { const miss = j.emitters.filter(x => { const q = x.modules.filter(y => y.m === 'ColorScaleOverLife'); return q.length !== 1 || JSON.stringify(q[0].ColorScaleOverLife) !== JSON.stringify({ const: [1, 1, 1] }) || JSON.stringify(q[0].AlphaScaleOverLife) !== JSON.stringify({ const: 1 }); });
+    out[tag] = { n: j.emitters.length, miss: miss.map(x => x.name) }; if (!j.emitters.length || miss.length) bad.push(tag + ' 有发射器没有 Scale Color/Life（或不是 1）：' + JSON.stringify(out[tag])); };
+  { const prev = state.bake; await openType('kiku'); await baked(prev); scaleOk(fwlCascade('T', state.bake, state.M), '单层大面片'); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+W20_COMBO_JS = r"""async () => {
+  const out = {}, bad = [];
+  // 多层：第 1 层出 GPU 光点，其余序列；所有发射器都有 Scale Color/Life
+  state.layers[0].out = { pc: 'dots', mobile: 'seq' };
+  const items = comboEntries(state.layers.map(L => ({ L, b: layerEntryOf(L).bake })), false), j = fwlCombo('T', items, false);
+  const miss = j.emitters.filter(x => x.modules.filter(y => y.m === 'ColorScaleOverLife').length !== 1).map(x => x.name), dot = j.emitters.find(x => /Dots$/.test(x.name));
+  out.combo = { n: j.emitters.length, miss, dot: dot && dot.name };
+  if (miss.length || !dot) bad.push('多层 cascade.json：缺 Scale Color/Life 或没有光点发射器：' + JSON.stringify(out.combo));
+  if (dot) { const c = dot.modules.find(q => q.m === 'ColorOverLife'), rgb = c.ColorOverLife.curve || [[0, c.ColorOverLife.const]], M = Math.max(...rgb.map(k => Math.max(...k[1])));
+    if (rgb.some(k => Math.max(...k[1]) < M * 0.999)) bad.push('多层光点 RGB 随寿命变暗'); }
+  delete state.layers[0].out;
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w20(pg):
+    """4.9.24 GPU / 软圆点颜色写法 + Scale Color/Life"""
+    r = await pg.evaluate(W20_JS)
+    await open_effect(pg, 'hiki_nishiki')
+    r2 = await pg.evaluate(W20_COMBO_JS)
+    bad = r['bad'] + r2['bad']
+    return not bad, ('；'.join(bad) + ' ｜ ' if bad else '') + json.dumps({**r['out'], **r2['out']}, ensure_ascii=False)[:1200]
+
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -2520,7 +2574,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

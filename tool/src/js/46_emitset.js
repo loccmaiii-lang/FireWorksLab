@@ -153,6 +153,23 @@ function esPeakAlive(tables, T) {
 }
 // ---- 导出：fwl.cascade/1 的发射器（spec/cascade_params_v1.md）----
 const esCm = v => +(v * 100).toFixed(1), esR4 = v => +(+v).toFixed(4);
+// 4.9.24（用户 10-07 09:20「是Translucent,透明度有接a通道，color over life就可以控制alpha曲线」）：soft_dot 是半透明材质，
+// RGB 到 0、Alpha 还是 1 = 一个黑点（RT6 导进去发黑的原因）。导出时把「颜色 × 亮度」一条曲线拆成两条：
+//   Color Over Life 的 RGB = 色相 × 恒定亮度 M（不随淡出 / 闪烁 / 冷却变暗，可 > 1）；Alpha Over Life = 亮度 ÷ M（淡出、闪烁、冷却都在这里）。
+// 黑底上 RGB × Alpha = 原来那条（和烘焙器预览一样）；M = max(峰值, 4)：Alpha 小，叠在亮的序列上几乎不压暗（接近加色）。
+const ES_RGB_MIN = 4;
+function esColorAlpha(col) {
+  const I = col.map(([, c]) => Math.max(0, ...c)), P = Math.max(0, ...I), eps = P * 1e-6;
+  if (!(P > 0)) return { rgb: col.map(([u]) => [esR4(u), [0, 0, 0]]), a: col.map(([u]) => [esR4(u), 0]), M: 0, P: 0 };
+  const M = Math.max(P, ES_RGB_MIN);
+  // 某一点完全黑（还没亮 / 已经灭）：色相取前一个亮的点，没有就取后一个——淡出时颜色停在最后看得见的那个
+  const hue = i => { if (I[i] > eps) return col[i][1].map(x => x / I[i]);
+    for (let d = 1; d < col.length; d++) { if (i - d >= 0 && I[i - d] > eps) return col[i - d][1].map(x => x / I[i - d]); if (i + d < col.length && I[i + d] > eps) return col[i + d][1].map(x => x / I[i + d]); }
+    return [1, 1, 1]; };
+  return { rgb: col.map(([u], i) => [esR4(u), hue(i).map(x => esR4(x * M))]), a: col.map(([u], i) => [esR4(u), esR4(Math.min(1, I[i] / M))]), M, P };
+}
+// 一条曲线所有点相同 → 常数（用户 10-05「曲线没有变化，就2个点」）
+const esConstOr = keys => keys.every(k => JSON.stringify(k[1]) === JSON.stringify(keys[0][1])) ? { const: keys[0][1] } : { curve: keys };
 // 曲线点太密时按误差抽稀（线性插值误差 < tol）
 function esThin(keys, tol) {
   if (keys.length <= 2) return keys;
@@ -191,7 +208,8 @@ function esFwlEmitter(e, mobile, frac) {
     mods.push({ m: 'SizeByLife', LifeMultiplier: { curve: us.map(u => { const k = e.sizeLife ? esCurve(e.sizeLife, u) : 1; return [esR4(u), [esR4(k), esR4(k * (sl ? esCurve(sl, u) : 1)), esR4(k)]]; }) }, MultiplyX: true, MultiplyY: true, MultiplyZ: true,
       ...(sl ? { note: `Y = 大小 × 拉长倍数（${e.align === 'screen' ? 'Rectangle：Y 朝屏幕上方' : 'Velocity：Y 沿速度'}）：拖影长短随寿命变` } : {}) });
   }
-  mods.push({ m: 'ColorOverLife', ColorOverLife: { curve: e.col.map(([u, c]) => [esR4(u), c.map(esR4)]) }, AlphaOverLife: { const: 1 } });
+  const ca = esColorAlpha(e.col || [[0, [1, 1, 1]], [1, [1, 1, 1]]]);
+  mods.push({ m: 'ColorOverLife', ColorOverLife: esConstOr(ca.rgb), AlphaOverLife: esConstOr(ca.a), note: `半透明材质：RGB = 色相 × ${esR4(ca.M)}（不随寿命变暗），淡出 / 闪烁 / 冷却在 Alpha；黑底上 RGB × Alpha = 烘焙器里的亮度` });
   return {
     name: e.name, material: 'dot', gpu,
     required: { screen_alignment: !aligned ? 'Square' : e.align === 'screen' ? 'Rectangle' : 'Velocity', duration_s: esR4(e.duration), loops: 1, delay_s: esR4(e.delay || 0) },

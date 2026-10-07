@@ -160,7 +160,7 @@ JSON里的局部配置：
 | `RotationRate` | Initial Rotation Rate | `StartRotationRate`（圈/秒） | ⚪ |
 | `InitialColor` | Initial Color | `StartColor`（向量）、`StartAlpha` | ⚪ |
 | `ColorOverLife` | Color Over Life | `ColorOverLife`（向量）、`AlphaOverLife` | ✅ |
-| `ColorScaleOverLife` | Scale Color / Life | `ColorScaleOverLife`（向量）、`AlphaScaleOverLife` | ⚪ |
+| `ColorScaleOverLife` | Scale Color / Life | `ColorScaleOverLife`（向量）、`AlphaScaleOverLife` | ⚪ 烘焙器 4.9.24 起**每个发射器都写**（`const [1,1,1]` / `const 1`，放在模块最后；用户 10-07 09:20「颜色倍增给我都加上去吧」），用户在 UE 里改它整体调亮 / 调透明度；导入器待支持（排给对话框5） |
 | `DynamicParameter` | Dynamic Parameter | `params`：按**角色**写，见第 6 节 | ✅ 写入 🟡 播放 |
 | `VelocityOverLife` | Velocity/Life（`ParticleModuleVelocityOverLifetime`） | `VelOverLife`（向量分布，按相对寿命，cm/s）；`Absolute`（布尔，true = 速度直接取曲线值，不累加） | ✅ 私有导入器 v2.13 创建/挂接，独立 CPU 原生写入及读回通过；🟡 实际烟花播放未验（烘焙器 4.4.5 起的 RiseLoop / HeadGlow 使用） |
 
@@ -213,8 +213,14 @@ JSON里的局部配置：
 | --- | --- | --- |
 | `flipbook_rgba` | RGBA 接力的序列帧大面片（母版、单元序列） | `textures.main`（序列帧）、`textures.ramp`（渐变图）；`scalars.rows / cols` = **每个通道**的行数、列数 |
 | `beam_flipbook` | 单束（一行多列的细长序列），Velocity 对齐 | 同上 |
-| `soft_dot` | 纯粒子的软圆点（点灭星、火花） | 不需要贴图 |
+| `soft_dot` | 纯粒子的软圆点（点灭星、火花） | 不需要贴图。**Translucent**，Opacity 接 Particle Color 的 A（用户 10-07 09:20）——见下面「软圆点的颜色写法」 |
 | `glow` | 光晕、闪光 | 不需要贴图 |
+
+**软圆点的颜色写法**（烘焙器 4.9.24 起；用户 10-07 09:20「是Translucent,透明度有接a通道，color over life就可以控制alpha曲线」）：
+- 半透明材质里 RGB 到 0、Alpha 还是 1 = 一个黑点（4.9.23 以前的 RT6 / 光点导进去发黑就是这个）。
+- `ColorOverLife` 的 RGB = 色相 × 恒定亮度 M（每个关键点最大通道 = M，不随寿命变暗；M = max(峰值, 4)）；淡出、闪烁 / 点灭、冷却全写在 `AlphaOverLife`（0–1）。
+- 黑底上 RGB × Alpha = 烘焙器里的亮度；M 取大、Alpha 小，叠在亮的序列上几乎不压暗（接近加色）。
+- 最后一个模块 `ColorScaleOverLife`（Scale Color/Life）`const [1,1,1]` / `const 1`：整体亮度 / 透明度在 UE 里改这里。
 
 序列帧的解码约定（和烘焙器一致）✅：
 - R→G→B→A 接力；每个通道内按行排，左上角是第 0 帧；
@@ -333,9 +339,9 @@ JSON里的局部配置：
   - `SphereLocation`（`SurfaceOnly`、`Velocity`）：`StartRadius` 是随机范围（亮起时相对整体中心的半径，均值 ± √3σ），`VelocityScale` 随机范围（速度 = 出生位置 × VelocityScale）；
   - `InitialLocation` / `InitialVelocity`：整体中心亮起时的下坠和下坠速度（开花就亮的层接近 0）；
   - `Drag` + `ConstAcceleration`：亮起后的平均半径、中心高度拟合成线性阻力 + 等效重力（模拟里是平方阻力）；
-  - `Lifetime` = 每颗星亮着的时长（10%–90% 分位）；颜色 = 层颜色 × Ramp 亮端 × 炭头亮度 × 光点亮度，亮度曲线（点火、渐隐、第二段、点灭的亮灭平均）直接压进 `ColorOverLife`（加色，等于 Alpha）；
+  - `Lifetime` = 每颗星亮着的时长（10%–90% 分位）；颜色 = 层颜色 × Ramp 亮端 × 炭头亮度 × 光点亮度，亮度曲线（点火、渐隐、第二段、点灭方波）4.9.24 起写在 `AlphaOverLife`，RGB 是色相 × 恒定亮度（见第 6 节「软圆点的颜色写法」）；
   - `InitialSize` = 炭头大小 × 光点大小（层页头可调，默认 1）± 15%。
-- 只出星头光点：尾巴、点灭的闪烁不在里面（有尾巴的层烘焙器会提示）。手机版这一层仍是序列。
+- 只出星头光点：尾巴不在里面（有尾巴的层烘焙器会提示）；点灭 4.4.4 起是方波（10-05 HK10 实测会闪），4.9.24 起在 Alpha 里。手机版这一层仍是序列。
 - 发射器名 `L<层号>_Dots`；`cascade_mobile.json` 里没有 GPU 发射器。
 
 ### G. 多层效果里某一层 PC 出「单束」（烘焙器 4.2.13 起）⚪ 未经 UE 验证

@@ -912,7 +912,7 @@ async function exportUnitPack(P0, M, name) {
     // 4.2.13（走查 B9）：单束包也带 cascade.json（PC；手机不用每颗星一个粒子，手机请导大面片序列）
     const u = fwlUnit(nmU, b, M, { scale: 1, rate: 1, delay: 0 });
     files.push(['cascade.json', utf8(JSON.stringify({ format: FWL_FORMAT, name: nmU, platform: 'pc', source: { tool: '烟花母版烘焙器 ' + VERSION, type: b.P.type, form: 'unit' },
-      textures: u.textures, materials: u.materials, system: { preview_distance_cm: 30000, preview_warmup_s: 0 }, emitters: [u.emitter], notes: ['手机版不出单束（手机不用每颗星一个粒子）：手机请导这个效果的大面片序列'] }, null, 1))]);
+      textures: u.textures, materials: u.materials, system: { preview_distance_cm: 30000, preview_warmup_s: 0 }, emitters: fwlFinish([u.emitter]), notes: ['手机版不出单束（手机不用每颗星一个粒子）：手机请导这个效果的大面片序列'] }, null, 1))]);
     files.push([`${nmU}.json`, utf8(JSON.stringify(masterJSON(b, nmU, M), null, 2))]);
     busy(true, '打包 ZIP…', 1); download(await makeZip(files), `${nmU}.zip`); flash('已导出单束包 ' + nmU);
   } catch (e) { console.error(e); flash('单束导出失败：' + e.message, true); }

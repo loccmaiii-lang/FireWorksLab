@@ -26,6 +26,40 @@ def _enc(im, fmt='PNG'):
     return f'data:image/{fmt.lower()};base64,' + base64.b64encode(b.getvalue()).decode()
 
 
+def _lerp(keys, u):
+    if u <= keys[0][0]: return keys[0][1]
+    for (a, va), (b, vb) in zip(keys, keys[1:]):
+        if u <= b:
+            k = (u - a) / max(1e-9, b - a)
+            return [x + (y - x) * k for x, y in zip(va, vb)] if isinstance(va, list) else va + (vb - va) * k
+    return keys[-1][1]
+
+
+def _keys(d, one):
+    """Distribution（const / curve）→ 关键点；uniform 取中值"""
+    if d is None: return [[0, one], [1, one]]
+    if 'curve' in d: return d['curve']
+    if 'const' in d: return [[0, d['const']], [1, d['const']]]
+    if 'uniform' in d:
+        a, b = d['uniform']; m = [(x + y) / 2 for x, y in zip(a, b)] if isinstance(a, list) else (a + b) / 2
+        return [[0, m], [1, m]]
+    return [[0, one], [1, one]]
+
+
+def _colorKeys(M):
+    """4.9.24：黑底上看到的颜色 = Color Over Life 的 RGB × Alpha × Scale Color/Life 的 RGB × Alpha（半透明材质，淡出 / 闪烁在 Alpha）。
+    几条曲线所有关键点的时刻合在一起，逐点相乘（素材页按线性插值播放）"""
+    c = M['ColorOverLife'][0] if 'ColorOverLife' in M else {}
+    s = M['ColorScaleOverLife'][0] if 'ColorScaleOverLife' in M else {}
+    ks = [_keys(c.get('ColorOverLife'), [1, 1, 1]), _keys(c.get('AlphaOverLife'), 1), _keys(s.get('ColorScaleOverLife'), [1, 1, 1]), _keys(s.get('AlphaScaleOverLife'), 1)]
+    us = sorted({k[0] for kk in ks for k in kk})
+    out = []
+    for u in us:
+        rgb, a, srgb, sa = (_lerp(kk, u) for kk in ks)
+        out.append([u, [x * y * a * sa for x, y in zip(rgb, srgb)]])
+    return out
+
+
 def _dist(d, scale=1.0):
     """Distribution → (lo, hi) 或 ('curve', keys)"""
     if 'const' in d:
@@ -82,8 +116,7 @@ def convert(pack, out, title=None, note='', view=None, diameter=None, center=Non
         if 'ConstAcceleration' in M: d['accel'] = [x * 0.01 for x in M['ConstAcceleration'][0]['Acceleration']]
         sz = _dist(M['InitialSize'][0]['StartSize'], 0.01) if 'InitialSize' in M else ([1, 1, 1], [1, 1, 1])
         sbl = M['SizeByLife'][0] if 'SizeByLife' in M else None
-        col = _dist(M['ColorOverLife'][0]['ColorOverLife']) if 'ColorOverLife' in M else ([1, 1, 1], [1, 1, 1])
-        colk = col[1] if col[0] == 'curve' else [[0, col[0]], [1, col[0]]]
+        colk = _colorKeys(M)
         if role == 'soft_dot':
             hdr = True; d['dot'] = True; d['size'] = [sz[0][0], sz[1][0]]; d['col'] = colk
             if sbl: d['sizeLife'] = [[u, v[0]] for u, v in sbl['LifeMultiplier']['curve']]

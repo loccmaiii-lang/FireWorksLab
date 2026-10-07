@@ -47,7 +47,7 @@ function fwlUnit(name, b, M, L) {
   };
 }
 // 一层星 → 一个 GPU 光点发射器。用粒子发射器组的数据格式（46_emitset.js，米、秒），同一份数据给「引擎回放」画、给 cascade.json 导出（看到的就是导出的）。
-// 层的缩放 × 长度，时间倍率 ÷ 时间（速度 ×、阻力 ×、加速度 × 倍率²）；颜色 = 这一层的颜色 × 星头亮度，点火前和熄灭段用颜色压暗（加色，等于 Alpha）
+// 层的缩放 × 长度，时间倍率 ÷ 时间（速度 ×、阻力 ×、加速度 × 倍率²）；颜色 = 这一层的颜色 × 星头亮度，点火前和熄灭段压暗（内部是一条颜色 × 亮度曲线；4.9.24 导出时拆成 RGB 色相 + Alpha 亮度，半透明材质不发黑，esColorAlpha）
 // 4.2.15 光点直接按模拟里每颗星来定（XD2 / 鸿巢红点层：只拟合「最远半径」会把光点都放在外壳上、keepFrac 不发光的星也出了光点、亮起时刻抹开）：
 // 跑一遍模拟，每颗星记「第一次亮 a、最后亮着 b」和亮起那一刻的位置、速度——
 //   个数 = 会亮的星数；出生 = 按亮起时刻分几批（Burst 列表）；寿命 = b − a；
@@ -141,7 +141,7 @@ function dotsES(L, P, M, fm) {
 }
 function fwlDots(L, P, M, fm) {
   const e = dotsES(L, P, M, fm), j = esFwlEmitter(e, false, 1), f = e.fit, n = Math.round(+P.stars || 0);
-  return { ...j, notes: [`GPU 光点：这一层会亮的星只出星头光点（${f.n} 颗${f.n < n ? `，另外 ${n - f.n} 颗模拟里不发光` : ''}，球面放射），尾迹、星头闪烁不在里面；${+P.strobeHz > 0 ? `点灭写进 Color Over Life（${r2(+P.strobeHz)} Hz 方波，所有粒子共用一条曲线、靠寿命随机错开，GPU 曲线查找表会不会抹平未经 UE 验证）；` : ''}出生位置、速度、寿命按模拟里每颗星亮起那一刻定，${e.bursts.length > 1 ? `按亮起先后分 ${e.bursts.length} 批出生、` : ''}之后的运动拟合成线性阻力（阻力 ${r4(f.k)}/s、等效重力 ${r2(f.g)} m/s²）；${f.on > 0.1 ? `第一批在 ${r2(f.on)} s 亮起；` : ''}光点直径 = 星头 × ${r2(L.dotSize > 0 ? +L.dotSize : 1)}、颜色 = 这一层的颜色 × Ramp 亮端 × 星头亮度 × ${r2(L.dotBright > 0 ? +L.dotBright : 1)}，是起点，未经 UE 验证`] };
+  return { ...j, notes: [`GPU 光点：这一层会亮的星只出星头光点（${f.n} 颗${f.n < n ? `，另外 ${n - f.n} 颗模拟里不发光` : ''}，球面放射），尾迹、星头闪烁不在里面；${+P.strobeHz > 0 ? `点灭写进 Color Over Life 的 Alpha（${r2(+P.strobeHz)} Hz 方波，RGB 不变；所有粒子共用一条曲线、靠寿命随机错开；10-05 HK10 实测 GPU 查找表没抹平）；` : ''}出生位置、速度、寿命按模拟里每颗星亮起那一刻定，${e.bursts.length > 1 ? `按亮起先后分 ${e.bursts.length} 批出生、` : ''}之后的运动拟合成线性阻力（阻力 ${r4(f.k)}/s、等效重力 ${r2(f.g)} m/s²）；${f.on > 0.1 ? `第一批在 ${r2(f.on)} s 亮起；` : ''}光点直径 = 星头 × ${r2(L.dotSize > 0 ? +L.dotSize : 1)}、颜色 = 这一层的颜色 × Ramp 亮端 × 星头亮度 × ${r2(L.dotBright > 0 ? +L.dotBright : 1)}，是起点，未经 UE 验证`] };
 }
 // 引擎回放画光点层：同一份数据，按层缓存出生表
 function dotsTables(e, L) {
@@ -187,7 +187,7 @@ function fwlCombo(name, layers, mobile = false) {
     out.system.preview_distance_cm = Math.max(out.system.preview_distance_cm, body.system.preview_distance_cm * sc);
   });
   out.notes.push('多层效果：所有发射器放在同一个粒子系统里，同一个爆点；每个发射器按 delay_s 延迟出生（Required → Emitter Delay），不需要蓝图或代码触发。');
-  out.source.plan_sig = fwlPlanSig(out.emitters);
+  out.source.plan_sig = fwlPlanSig(fwlFinish(out.emitters));     // 4.9.24 每个发射器加 Scale Color/Life
   return out;
 }
 // 组合导出用的层烘焙：分开输出（星头 / 拖尾两张）的层在素材包里改成合并输出，和引擎材质（灰度查 Ramp）一致
