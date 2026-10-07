@@ -3134,6 +3134,39 @@ async def w31(pg):
     r = await pg.evaluate(W31_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1800]
 
+W32_JS = r"""async () => {
+  // 4.9.38 素材包整理（用户 10-07 23:23）：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、写 hash
+  const out = {}, bad = [], dec = new TextDecoder(), N = 64, L = { cols: 1, rows: 1, chans: 1, per: 1, F: 1 };
+  const img = fn => { const a = new Uint8Array(N * N * 4); for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) if (fn(x + .5, y + .5)) a[(y * N + x) * 4] = 200; return a; };
+  const full = img(() => true), dot = img((x, y) => Math.hypot(x - 32, y - 32) < 10), ring = img((x, y) => Math.hypot(x - 32, y - 32) < 31);
+  const mA = {}, mB = {}, mC = {};
+  const cA = await cutoutFiles([full], N, N, L, 'T_X_L1_Cutout', mA), cB = await cutoutFiles([dot], N, N, L, 'T_X_L2_Cutout', mB), cC = await cutoutFiles([dot], N, N, L, 'T_X_L3_Cutout', mC);
+  out.save = [mA.cutout.save, mB.cutout.save, mC.cutout.save];
+  if (!(mA.cutout.save < 0.02) || !(mB.cutout.save > 0.5)) bad.push('Cutout 估省不对（满格应≈0、小圆应 > 50%）：' + JSON.stringify(out.save));
+  const rp = await encodePNG(rampPixels({ ramp0: '#401000', ramp1: '#c05010', ramp2: '#ffc060', ramp3: '#ffffff' }), 256, 8), rq = await encodePNG(rampPixels({ ramp0: '#401000', ramp1: '#c05010', ramp2: '#ffc060', ramp3: '#ffffff' }), 256, 8);
+  const j = { textures: { L1_seq: { file: 'T_X_L1.png', class: 'flipbook' }, L1_cutout: { file: 'T_X_L1_Cutout.png', class: 'cutout' }, L1_ramp: { file: 'T_X_L1_R.png', class: 'ramp' },
+      L2_cutout: { file: 'T_X_L2_Cutout.png', class: 'cutout' }, L2_ramp: { file: 'T_X_L2_R.png', class: 'ramp' }, L3_cutout: { file: 'T_X_L3_Cutout.png', class: 'cutout' } },
+    emitters: [{ name: 'L1', required: { cutout: 'L1_cutout' } }, { name: 'L2', required: { cutout: 'L2_cutout' } }, { name: 'L3', required: { cutout: 'L3_cutout' } }] };
+  const files = [['P/T_X_L1.png', utf8('seq')], ['P/' + cA[0][0], cA[0][1]], ['P/T_X_L1_R.png', rp], ['P/' + cB[0][0], cB[0][1]], ['P/T_X_L2_R.png', rq], ['P/' + cC[0][0], cC[0][1]], ['P/cascade.json', utf8(JSON.stringify(j))], ['P/命名对照.txt', utf8('x\n')]];
+  const r = await packTidy(files), names = r.files.map(f => f[0]), J = JSON.parse(dec.decode(r.files.find(f => f[0] === 'P/cascade.json')[1])), note = dec.decode(r.files.find(f => f[0] === 'P/命名对照.txt')[1]);
+  out.names = names; out.tex = Object.fromEntries(Object.entries(J.textures).map(([k, t]) => [k, t.file + (t.hash ? ' #' : '')])); out.req = J.emitters.map(e => e.required.cutout || null); out.tidy = J.texture_tidy && { merged: J.texture_tidy.merged, dropped: J.texture_tidy.cutout_dropped };
+  if (names.includes('P/T_X_L1_Cutout.png') || J.textures.L1_cutout || out.req[0]) bad.push('满格的 Cutout 应不出、L1 不设 Cutout：' + JSON.stringify(out));
+  if (names.includes('P/T_X_L2_R.png') || J.textures.L2_ramp.file !== 'T_X_L1_R.png') bad.push('一样的 Ramp 应只留一张、L2 指向 L1 那张：' + JSON.stringify(out));
+  if (names.includes('P/T_X_L3_Cutout.png') || J.textures.L3_cutout.file !== 'T_X_L2_Cutout.png' || out.req[2] !== 'L3_cutout') bad.push('一样的 Cutout 应只留一张：' + JSON.stringify(out));
+  if (!names.includes('P/T_X_L1.png') || !J.textures.L1_seq) bad.push('序列不该动：' + JSON.stringify(out));
+  if (!J.textures.L1_ramp.hash || J.textures.L1_ramp.hash !== J.textures.L2_ramp.hash || !J.textures.L2_cutout.hash) bad.push('Ramp / Cutout 要写 hash：' + JSON.stringify(J.textures));
+  if (!/T_X_L1_Cutout\.png → Cutout 估只省/.test(note) || !/T_X_L2_R\.png → 和 T_X_L1_R\.png 一模一样/.test(note)) bad.push('命名对照.txt 没写整理清单：' + note);
+  // 没有可整理的：原样返回
+  const r2 = await packTidy([['a.png', rp], ['readme.txt', utf8('x')]]); if (r2.files.length !== 2) bad.push('没有 cascade.json 的包不该动');
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w32(pg):
+    """4.9.38 素材包整理：重复 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash"""
+    r = await pg.evaluate(W32_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -3173,7 +3206,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

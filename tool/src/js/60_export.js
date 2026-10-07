@@ -25,6 +25,7 @@ async function encodePNG(rgba, w, h) {
 }
 const utf8 = s => new TextEncoder().encode(s);
 async function makeZip(files) {
+  { const r = await packTidy(files); files = r.files; packTidyLast = r.report; }     // 4.9.38 Ramp / Cutout 去重、几乎不省的 Cutout 不出
   const parts = [], central = []; let offset = 0;
   const d = new Date(), time = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), date = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
   for (const [name, content] of files) {
@@ -143,13 +144,46 @@ function cutoutMask(srcs, N, NH, L) {
       m[my * U + Math.min(U - 1, Math.floor((x - col * cw) * U / cw))] = 1;
     }
   }
-  const out = new Uint8Array(U * U * 4); let n = 0;
+  const out = new Uint8Array(U * U * 4), rows = new Array(U).fill(null); let n = 0;
   for (let j = 0; j < U; j++) for (let i = 0; i < U; i++) {
     let on = 0;
     for (let dj = -dil; dj <= dil && !on; dj++) for (let di = -dil; di <= dil; di++) { const a = i + di, b2 = j + dj; if (a >= 0 && a < U && b2 >= 0 && b2 < U && m[b2 * U + a]) { on = 1; break; } }
-    if (on) { const o = ((U - 1 - j) * U + i) * 4; out[o] = out[o + 1] = out[o + 2] = out[o + 3] = 255; n++; }
+    if (on) { const o = ((U - 1 - j) * U + i) * 4; out[o] = out[o + 1] = out[o + 2] = out[o + 3] = 255; n++; const r = rows[j]; if (!r) rows[j] = [i, i]; else r[1] = i; }
   }
-  return { U, img: out, cov: n / (U * U) };
+  return { U, img: out, cov: n / (U * U), save: cutoutSaveEst(rows, U) };
+}
+// ---- 4.9.38 Cutout 能省多少（估）：引擎按 Cutout 生成 8 顶点的包围多边形（Required：Eight Vertices、Alpha Threshold 0.1），
+//   面片上多边形外面那块不画。这里照同一个思路估：轮廓的凸包 → 每次去掉「补进来面积最小」的一条边，收到 8 个顶点 → 裁进方格 → 省 = 1 − 面积。
+//   和 UE 的算法不保证逐位相同，只用来判断「几乎不省」（用户 10-07 23:2x 定门槛 10%）
+function cutoutSaveEst(rows, U) {
+  const pts = []; for (let y = 0; y < U; y++) { const r = rows[y]; if (r) pts.push([r[0], y], [r[0], y + 1], [r[1] + 1, y], [r[1] + 1, y + 1]); }
+  if (pts.length < 3) return 1;
+  const cr = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  pts.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const lo = [], hi = [];
+  for (const p of pts) { while (lo.length >= 2 && cr(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
+  for (let i = pts.length - 1; i >= 0; i--) { const p = pts[i]; while (hi.length >= 2 && cr(hi[hi.length - 2], hi[hi.length - 1], p) <= 0) hi.pop(); hi.push(p); }
+  let v = lo.slice(0, -1).concat(hi.slice(0, -1));     // 凸包（逆时针）
+  const X = (a, b, c, d) => { const r = [b[0] - a[0], b[1] - a[1]], q = [d[0] - c[0], d[1] - c[1]], den = r[0] * q[1] - r[1] * q[0]; if (Math.abs(den) < 1e-12) return null; const t = ((c[0] - a[0]) * q[1] - (c[1] - a[1]) * q[0]) / den; return [a[0] + t * r[0], a[1] + t * r[1]]; };
+  while (v.length > 8) {
+    const N = v.length; let best = -1, bA = Infinity, bX = null;
+    for (let i = 0; i < N; i++) {
+      const a = v[(i - 1 + N) % N], b = v[i], c = v[(i + 1) % N], d = v[(i + 2) % N], x = X(a, b, d, c); if (!x) continue;
+      if ((x[0] - b[0]) * (b[0] - a[0]) + (x[1] - b[1]) * (b[1] - a[1]) < -1e-9 || (x[0] - c[0]) * (c[0] - d[0]) + (x[1] - c[1]) * (c[1] - d[1]) < -1e-9) continue;
+      const A = Math.abs(cr(b, c, x)) / 2; if (A < bA) { bA = A; best = i; bX = x; }
+    }
+    if (best < 0) { let x0 = U, x1 = 0, y0 = U, y1 = 0; for (const p of v) { x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); } return Math.max(0, 1 - (x1 - x0) * (y1 - y0) / (U * U)); }
+    const nv = []; for (let k = 0; k < N; k++) { if (k === best) nv.push(bX); else if (k !== (best + 1) % N) nv.push(v[k]); } v = nv;
+  }
+  // 裁进方格 [0, U]²（UE 也把顶点夹在面片里）
+  for (const [ax, sg] of [[0, 1], [0, -1], [1, 1], [1, -1]]) {
+    const lim = sg > 0 ? 0 : U, inside = p => sg > 0 ? p[ax] >= lim : p[ax] <= lim, nv = [];
+    for (let k = 0; k < v.length; k++) { const P = v[k], Q = v[(k + 1) % v.length], pi = inside(P), qi = inside(Q);
+      if (pi) nv.push(P); if (pi !== qi) { const t = (lim - P[ax]) / (Q[ax] - P[ax]); nv.push([P[0] + t * (Q[0] - P[0]), P[1] + t * (Q[1] - P[1])]); } }
+    v = nv; if (v.length < 3) return 1;
+  }
+  let A = 0; for (let k = 0; k < v.length; k++) { const P = v[k], Q = v[(k + 1) % v.length]; A += P[0] * Q[1] - Q[0] * P[1]; }
+  return clamp(1 - Math.abs(A) / 2 / (U * U), 0, 1);
 }
 // 贴图命名（用户 2026-09-29 晚改：按 spec 示例）：T_<效果名>[_<部件>].png，固定不变，不带日期 / 版本 / 格子（格子写在 cascade.json 里），
 // 这样重新烘焙后引擎里右键「重新导入」就能更新。种子变体第 2、3 张加 _V2 / _V3。引擎里的正式名字由本机导入工具指定。
@@ -160,9 +194,62 @@ function TN(name, part, L, idx = 1) {
 }
 const joinPart = (...a) => a.filter(Boolean).join('_');
 async function cutoutFiles(srcs, N, NH, L, file, meta) {
-  const r = cutoutMask(srcs, N, NH, L);
-  if (meta) meta.cutout = { size: r.U, cover: +r.cov.toFixed(3), file };
-  return [[`${file}.png`, await encodePNG(r.img, r.U, r.U)]];
+  const r = cutoutMask(srcs, N, NH, L), png = await encodePNG(r.img, r.U, r.U);
+  CUTOUT_INFO.set(png, { save: r.save, cover: r.cov });
+  if (meta) meta.cutout = { size: r.U, cover: +r.cov.toFixed(3), save: +r.save.toFixed(3), file };
+  return [[`${file}.png`, png]];
+}
+// ---- 4.9.38 素材包整理（用户 10-07 23:23「很多ramp图与cut图都是重复或者有些图本身就占的很满了……自动判别去掉重复的或者没有意义的cut图」；
+//   23:2x 选「导出时自动去重 + 没用的 Cutout 不出」「导入器按指纹复用」、门槛 10%）。打 ZIP 前统一做（makeZip），所有导出路径都经过：
+//   ① Cutout 估省 < 10%：不出这张，cascade.json 里删掉这张贴图和发射器 required.cutout（引擎里就不设 Cutout Texture）；
+//   ② 同一个包里内容一模一样的 Ramp / Cutout（多层颜色一样、PC / 手机、变体）只留一张，别的引用改指它；
+//   ③ 每张 Ramp / Cutout 在 textures 里写 hash（内容指纹），导入器按它复用已经导入过的同一张（对话框5）；做了什么写进 texture_tidy、命名对照.txt
+const CUTOUT_MIN_SAVE = 0.10;
+const CUTOUT_INFO = new WeakMap();     // Cutout PNG（Blob）→ { save, cover }
+let packTidyLast = null;
+function texHash(u8) { let f = 0x811c9dc5; for (let i = 0; i < u8.length; i++) { f ^= u8[i]; f = Math.imul(f, 0x01000193) >>> 0; } return ((crc32(u8) ^ 0xFFFFFFFF) >>> 0).toString(16).padStart(8, '0') + f.toString(16).padStart(8, '0') + u8.length.toString(16); }
+async function packTidy(files) {
+  const dec = new TextDecoder(), dirOf = f => f.slice(0, f.lastIndexOf('/') + 1), base = f => f.slice(f.lastIndexOf('/') + 1);
+  const J = files.map(([f, d], i) => /(^|\/)cascade(_mobile|_low)?\.json$/.test(f) ? { i, f, dir: dirOf(f), j: JSON.parse(dec.decode(d)), merged: [], dropped: [] } : null).filter(Boolean);
+  const report = { merged: [], dropped: [] };
+  if (!J.length) return { files, report };
+  const at = new Map(files.map(([f, d], i) => [f, i])), refs = x => [...Object.entries(x.j.textures || {}), ...Object.entries(x.j.extras || {})].filter(([, t]) => t && t.file && (t.class === 'ramp' || t.class === 'cutout'));
+  const before = new Set(); for (const x of J) for (const [, t] of refs(x)) before.add(x.dir + t.file);
+  // ① 几乎不省的 Cutout
+  for (const x of J) for (const [key, t] of refs(x)) {
+    if (t.class !== 'cutout') continue; const k = at.get(x.dir + t.file), info = k != null ? CUTOUT_INFO.get(files[k][1]) : null;
+    if (!info || !(info.save < CUTOUT_MIN_SAVE)) { if (info) t.save_est = +info.save.toFixed(3); continue; }
+    delete (x.j.textures || {})[key]; for (const em of x.j.emitters || []) if (em.required && em.required.cutout === key) delete em.required.cutout;
+    x.dropped.push([t.file, +info.save.toFixed(3)]); if (!report.dropped.some(r => r[0] === x.dir + t.file)) report.dropped.push([x.dir + t.file, info.save]);
+  }
+  // ② 内容一样的只留一张（同一个目录里；按文件在包里的先后，先出现的留下）+ ③ 指纹
+  const hashOf = new Map(), clsOf = new Map();
+  for (const x of J) for (const [, t] of refs(x)) { const p = x.dir + t.file, k = at.get(p); if (k == null || hashOf.has(p)) continue; const d = files[k][1]; clsOf.set(p, t.class); hashOf.set(p, texHash(d instanceof Blob ? new Uint8Array(await d.arrayBuffer()) : d)); }
+  const canon = new Map();     // 目录 + class + hash → 留下的路径
+  for (const p of [...hashOf.keys()].sort((a, b) => at.get(a) - at.get(b))) { const key = dirOf(p) + '|' + clsOf.get(p) + '|' + hashOf.get(p); if (!canon.has(key)) canon.set(key, p); }
+  for (const x of J) for (const [, t] of refs(x)) {
+    const p = x.dir + t.file, h = hashOf.get(p); if (!h) continue; const c = canon.get(x.dir + '|' + clsOf.get(p) + '|' + h);
+    if (c && c !== p) { x.merged.push([t.file, base(c)]); if (!report.merged.some(r => r[0] === p)) report.merged.push([p, c]); t.file = base(c); t.asset = t.file.replace(/\.png$/i, ''); }
+    t.hash = h;
+  }
+  const after = new Set(); for (const x of J) for (const [, t] of refs(x)) after.add(x.dir + t.file);
+  const gone = new Set([...before].filter(p => !after.has(p)));
+  const out = [];
+  for (let i = 0; i < files.length; i++) {
+    const [f, d] = files[i]; if (gone.has(f)) continue;
+    const x = J.find(q => q.i === i);
+    if (x) { x.j.texture_tidy = { rule: 'Cutout 估省 < ' + Math.round(CUTOUT_MIN_SAVE * 100) + '%（8 顶点多边形外的面积）不出、发射器不设 Cutout Texture；同一个包里内容一样的 Ramp / Cutout 只留一张；textures[].hash = 内容指纹，导入时已有同 hash 的资产可直接复用', cutout_min_save: CUTOUT_MIN_SAVE, merged: x.merged, cutout_dropped: x.dropped, baker: typeof VERSION !== 'undefined' ? VERSION : '' }; out.push([f, utf8(JSON.stringify(x.j, null, 1))]); continue; }
+    if (base(f) === '命名对照.txt' && (report.merged.length || report.dropped.length)) {
+      const mine = p => dirOf(p) === dirOf(f), lines = [...report.merged.filter(([p]) => mine(p)).map(([p, c]) => `${base(p)} → 和 ${base(c)} 一模一样，不出（引用改指它）`), ...report.dropped.filter(([p]) => mine(p)).map(([p, s]) => `${base(p)} → Cutout 估只省 ${(s * 100).toFixed(1)}%，不出`)];
+      out.push([f, utf8(dec.decode(d instanceof Blob ? new Uint8Array(await d.arrayBuffer()) : d) + (lines.length ? '\n素材包整理（4.9.38）：\n' + lines.join('\n') + '\n' : ''))]); continue;
+    }
+    out.push([f, d]);
+  }
+  return { files: out, report };
+}
+function packTidyNote() {
+  const r = packTidyLast; if (!r || (!r.merged.length && !r.dropped.length)) return '';
+  return `；整理：${r.merged.length ? `重复的 Ramp / Cutout ${r.merged.length} 张没出` : ''}${r.merged.length && r.dropped.length ? '、' : ''}${r.dropped.length ? `Cutout ${r.dropped.length} 张几乎不省（< ${Math.round(CUTOUT_MIN_SAVE * 100)}%）没出` : ''}（命名对照.txt 里有清单）`;
 }
 async function texFiles(b, name, sfx = '', idx = 1) {
   // sfx：'_4K' 表示 4K 母版；idx：种子变体的序号（01、02、03）
@@ -239,7 +326,7 @@ async function exportSingleScheme(name, b) {
   { const k = exportScaleOf(state.P), kp = exportKeepOf(state.P); out = scaleCascadeFiles(out, k, kp); zipName += exportScaleSfx(k, kp); }     // 4.9.31 导出缩放
   download(await makeZip(out), `${zipName}.zip`);
   wbAutoExport(zipName);
-  flash(`已导出 ${name}（PC ${kindCN(so.pc)} · 手机 ${kindCN(so.mobile)}）`);
+  flash(`已导出 ${name}（PC ${kindCN(so.pc)} · 手机 ${kindCN(so.mobile)}）${packTidyNote()}`, false, packTidyNote() ? 8000 : 0);
 }
 async function exportMaster() {
   const name = safeName();
@@ -273,7 +360,7 @@ async function exportMaster() {
     { const k = exportScaleOf(state.P), kp = exportKeepOf(state.P); out = scaleCascadeFiles(out, k, kp); zipName += exportScaleSfx(k, kp); }     // 4.9.31 导出缩放
     download(await makeZip(out), `${zipName}.zip`);
     wbAutoExport(zipName);     // 4.2.10：存进这个效果的「版本」（导出时），不再进工具页的全局版本列表
-    flash('已导出 ' + name);
+    flash('已导出 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { console.error(e); flash('导出失败：' + e.message, true); }
   if (own && b) disposeBake(b);
   busy(false);

@@ -1,0 +1,9 @@
+{
+ "id": "NFE-TP-MYJA-O-T75C-T38",
+ "type": "export",
+ "effect": "tempo_myja",
+ "entry": "TP-MYJA-O-T75C",
+ "name": "GoldRay_T75C",
+ "priority": 6,
+ "note": "对话框23：烘焙器 4.9.38 素材包整理的实测（用户 10-07 23:23「很多ramp图与cut图都是重复或者有些图本身就占的很满了」）。参数不动重导（同 Z33，Zoom 取景两层），看 cascade.json 的 texture_tidy（重复的 Ramp / Cutout、几乎不省的 Cutout）、textures[].hash / save_est、命名对照.txt 末尾清单；回放检查照常。"
+}
