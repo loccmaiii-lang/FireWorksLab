@@ -5,14 +5,8 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmuy8ub1e",
  "name": "银辉芯",
- "at": "2026-10-07 23:09",
+ "at": "2026-10-07 23:13",
  "base": "我的效果",
- "from": {
-  "key": "ef:qiuxing_c",
-  "name": "翠芯银辉（球形C）",
-  "base": "QC12",
-  "ver": "115482d1"
- },
  "snap": {
   "kind": "combo",
   "name": "银辉芯",
@@ -47,7 +41,11 @@
      "headInt": 4,
      "tailInt": 1,
      "title": "芯（绿）",
-     "lid": "laar4h"
+     "lid": "laar4h",
+     "out": {
+      "pc": "seq",
+      "mobile": "off"
+     }
     },
     "P": {
      "renderVer": 40,
@@ -591,7 +589,11 @@
      "headInt": 1,
      "tailInt": 1,
      "title": "外层 · 橙引",
-     "lid": "lo67nk"
+     "lid": "lo67nk",
+     "out": {
+      "pc": "seq",
+      "mobile": "off"
+     }
     },
     "P": {
      "renderVer": 40,
@@ -1135,7 +1137,11 @@
      "headInt": 1.4,
      "tailInt": 1,
      "title": "外层 · 银辉星",
-     "lid": "lpc4sw"
+     "lid": "lpc4sw",
+     "out": {
+      "pc": "seq",
+      "mobile": "off"
+     }
     },
     "P": {
      "renderVer": 40,
