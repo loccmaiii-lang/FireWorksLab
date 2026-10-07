@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmuy2yho7",
  "name": "QA",
- "at": "2026-10-07 20:31",
+ "at": "2026-10-07 20:40",
  "base": "我的效果",
  "snap": {
   "kind": "combo",
@@ -32,7 +32,7 @@
      "ramp3": "#fffaf2",
      "headInt": 1.875,
      "tailInt": 1,
-     "title": "金芒菊 · 规格（3 号–4 尺）",
+     "title": "菊芯",
      "lid": "l8yk7n"
     },
     "P": {
@@ -46,7 +46,7 @@
      "previewBloom": 0,
      "trimTail": 1,
      "mods": [],
-     "duration": 3.74,
+     "duration": 7,
      "seed": 7,
      "stars": 300,
      "burstR0": 2,
@@ -57,7 +57,7 @@
      "dirJit": 0,
      "burn": 1.825,
      "burnJit": 12,
-     "fade": 0.38,
+     "fade": 0,
      "lastFlare": 0,
      "flash": 1,
      "flashSize": 1,
@@ -79,7 +79,7 @@
      "coolMode": 1,
      "headSize": 0.262,
      "headBright": 0.06090534979423868,
-     "flicker": 0.25,
+     "flicker": 500,
      "sparkRate": 462.9,
      "sparkRateEnd": 0.35,
      "sparkStop": 0,
@@ -140,7 +140,7 @@
      "afterJit": 15,
      "headDim": 1,
      "headDimUntil": 0,
-     "emberFrac": 0,
+     "emberFrac": 0.28,
      "emberLife": 3,
      "emberBright": 0.1,
      "emberFollow": 0,
@@ -554,17 +554,21 @@
      "stages": [
       [
        0,
+       "#ffb45a"
+      ],
+      [
+       2.5,
        "#ff3cc8"
       ]
      ],
-     "xw": 0.08,
+     "xw": 0.5,
      "ramp0": "#000000",
      "ramp1": "#8a5a30",
      "ramp2": "#f2dcb0",
      "ramp3": "#fffaf2",
      "headInt": 1.875,
      "tailInt": 1,
-     "title": "金芒菊 · 规格（3 号–4 尺） 副本",
+     "title": "星头",
      "lid": "l8uq2t"
     },
     "P": {
@@ -578,7 +582,7 @@
      "previewBloom": 0,
      "trimTail": 1,
      "mods": [],
-     "duration": 6.415,
+     "duration": 4.915,
      "seed": 7,
      "stars": 300,
      "burstR0": 2,
@@ -587,7 +591,7 @@
      "grav": 0,
      "speedJit": 5,
      "dirJit": 0,
-     "burn": 4.5,
+     "burn": 3,
      "burnJit": 12,
      "fade": 0.38,
      "lastFlare": 1.5,
@@ -709,9 +713,9 @@
      "subVt": 0,
      "subGrav": -1,
      "subFlash": -1,
-     "strobeHz": 0,
+     "strobeHz": 11.2,
      "strobeDuty": 0.35,
-     "strobeStart": 0.4,
+     "strobeStart": 0.5,
      "glitter": 0,
      "glitterDelay": 0.25,
      "crackle": 0,
