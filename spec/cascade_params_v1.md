@@ -275,6 +275,12 @@ JSON里的局部配置：
 **空间缩放 × s**（整朵花放大 s 倍，快慢不变）：
 - Initial Size、Initial Location、Initial Velocity、Const Acceleration、Acceleration、Sphere 半径和速度：都 × s；
 - Drag、Lifetime、Duration、所有 Over Life 曲线、帧号曲线：都不变。
+- 烘焙器 4.9.31 起右栏「输出 › 直接调 › 导出缩放」1 / 0.8 / 0.5 就是按这条改 cascade*.json（另加 Velocity Over Life、预览距离 × s），粒子系统名加 `_S80` / `_S50`，贴图共用。
+
+**只缩粗细、升空高度不变 × s**（烘焙器 4.9.32，升空尾缀「升空高度：不变」，系统名加 `_W80` / `_W50`）：
+- 序列面片（带帧号 Dynamic Parameter 的循环层 / 远段 / 消散）的 Initial Size 只 X × s，Y（沿尾迹的长度）不变；其它发射器 Initial Size 的 X、Y × s；
+- 标「随机散开」的第 2 个 Initial Velocity、Sphere 半径 × s；
+- Initial Location、弹道初速、Velocity Over Life、加速度、Drag、时间、帧号都不变 → 升空时间、高度、尾长和原样一样，只是更细、火花更小更收。
 
 **时间缩放 × k**（整体放慢 k 倍，大小不变）：
 - Lifetime、Duration、Delay、Burst 时间：× k；

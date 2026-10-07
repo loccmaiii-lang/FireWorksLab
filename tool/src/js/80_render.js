@@ -98,7 +98,7 @@ function trailStateAt(b, t) {
 }
 function drawTrailLayer(b, L, t, view, yOff = 0) {
   const s = trailStateAt(b, t); if (!s) return -1;
-  const m = b.meta, w = m.Ww, h = m.Wh * s.sy, y0 = s.y - yOff - m.hb * h;
+  const m = b.meta, w = m.Ww * exportWidthNow(), h = m.Wh * s.sy, y0 = s.y - yOff - m.hb * h;     // 4.9.32 升空高度不变：只缩宽
   const pr = PR.mat; gl.useProgram(pr.p);
   gl.uniform4fv(pr.u.uRect, [-w / 2, y0, w / 2, y0 + h]); gl.uniform4fv(pr.u.uView, view);
   bindSeqTextures(pr, s.bb); gl.uniform1f(pr.u.uFrame, s.f); gl.uniform1f(pr.u.uMirror, 0);
@@ -203,7 +203,9 @@ function renderLive() {
 }
 // 显示比例：贴图的每个像素在屏幕上被放大了几倍，是「糊」的直接原因
 // 4.9.31 导出缩放：引擎回放 + 游戏内大小时，按缩放后的大小画（单层效果；多层用每层的「缩放」）
-const exportScaleNow = () => state.view === 'export' && state.disp === 'game' && state.tab !== 'combo' && typeof exportScaleOf === 'function' ? exportScaleOf(state.P) : 1;
+const exportScaleNow = () => state.view === 'export' && state.disp === 'game' && state.tab !== 'combo' && typeof exportScaleOf === 'function' && !exportKeepOf(state.P) ? exportScaleOf(state.P) : 1;
+// 4.9.32 升空尾缀「升空高度：不变」：引擎回放（任何显示比例）画只缩粗细的样子——面片宽 × k、软圆点大小和随机散开 × k，位置 / 高度 / 尾长不变（和导出同一套规则）
+const exportWidthNow = () => state.view === 'export' && state.tab !== 'combo' && typeof exportKeepOf === 'function' && exportKeepOf(state.P) ? exportScaleOf(state.P) : 1;
 function exportView(b) {
   const s = segAt(b, state.t), m = s.meta, sc = sizeAt(m, clamp(state.t - (m.t0 || 0), 0, m.duration));
   let full = null;
@@ -555,7 +557,7 @@ function loop(now) {
     if (state.tab === 'asset') renderAssets();
     else { ensureTargets();
     if (state.showcase)renderShowcase();else if (state.tab === 'combo') renderCombo();
-    else if (state.view === 'live' || (state.bake && state.bake.form === 'phys')) renderLive(); else if (state.view === 'export') { renderExport(); const k = exportScaleNow(); if (k !== 1 && hudText) hudText += ` · 导出缩放 × ${k}（游戏内大小按缩放后的画）`; } else renderAtlas(); }     // 4.9.31
+    else if (state.view === 'live' || (state.bake && state.bake.form === 'phys')) renderLive(); else if (state.view === 'export') { renderExport(); const k = exportScaleNow(), kw = exportWidthNow(); if (k !== 1 && hudText) hudText += ` · 导出缩放 × ${k}（游戏内大小按缩放后的画）`; else if (kw !== 1 && hudText) hudText += ` · 导出缩放 × ${kw} · 升空高度不变（只缩粗细：面片宽、火花大小和散开 × ${kw}）`; } else renderAtlas(); }     // 4.9.31
   } catch (e) { console.error(e); hudText = '渲染出错：' + e.message; }
   if (pendingThumb) { const f = pendingThumb; pendingThumb = null; try { f(thumbFromCanvas()); } catch (e) { } }
   $('#hud').textContent = hudText; $('#hudB').textContent = hudB; updateLabels();

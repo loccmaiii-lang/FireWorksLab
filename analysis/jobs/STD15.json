@@ -1,0 +1,12 @@
+{
+ "id": "STD15",
+ "type": "std",
+ "name": "标准检查：RT6S / RT6M / RT6L（烘焙器 4.9.31 重导 RT6SE6 / ME6 / LE6）",
+ "targets": [
+  "RT6S",
+  "RT6M",
+  "RT6L"
+ ],
+ "priority": 7,
+ "note": "RT6SE6 / ME6 / LE6 回放检查三档全过、烘焙回放实时和导出一致，对话框23 看过（analysis/results/RT6LE6/看法.md，2026-10-07 16:20）后放行。4.9.32 只加导出缩放「升空高度」选项，OUTPUT_VER 没变，E6 仍是当前版本。"
+}

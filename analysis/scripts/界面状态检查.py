@@ -84,6 +84,7 @@
   W25 4.9.29 低端包 + 单帧 + 功能图（用户 10-07 09:41 / 09:54 / 12:40）：假的「圆环往外扩」序列 → 自动单帧取最大那一刻、取景收紧、D / A 里先外后、没亮过 D 0 A 255、
       通道 / 后缀、错落只动 D、Size By Life / Alpha、cascade_low.json（现有序列材质 1 × 1、extras、第 2 层序列）、_MB 命名、产物表低端列不重烘、低端视图
   W26 4.9.31（用户 10-07 14:56 / 14:34）：RT6 远段从交接开始 a0 出现、第一帧几乎空（以前中点一出现就半亮）；导出缩放 × k 只改长度（时间 / 阻力 / Size By Life 不动）、系统名 _S50、
+  W27 4.9.32（用户 10-07 16:15「缩小到0.8/0.5，升空的高度还是之前正确的吗？」→ 16:2x「两种都要，导出时选」）：升空尾缀「升空高度：不变」只缩粗细——序列面片只缩宽、粒子大小 / 随机散开 / 球面半径 × k，位置 / 弹道 / 加速度 / 时间 / 预览距离不变、系统名 _W50；引擎回放的出生表和导出同一套（esKeepScale ↔ fwlScaleJSON keep 逐模块对上）；面板只在升空尾缀 + 缩放 < 1 时出现；等比缩时 V5 尾缀 / 单束的游戏内大小也按缩放画；
       只改 cascade*.json、菊右栏有、引擎回放游戏内大小按缩放画不重烘；护栏 Ramp 第 255 格黑、编码封顶 253
   W19 4.9.21 入点前放大一律绕爆点（用户 21:51 选）：「放大的中心」删了；cascade.json 写 Pivot Offset、Initial Location 0；回放绕爆点；存过「面片中心」的打开时提示
       4.9.8 加：顶上「现在改的是」和搜索入口看得到，第一屏至少 8 行参数（菊 › 星、引菊 → 锦 金锦层 › 火花）
@@ -2883,6 +2884,66 @@ async def w26(pg):
     r = await pg.evaluate(W26_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
 
+W27_JS = r"""async () => {
+  // 4.9.32（用户 10-07 16:15「2.缩小到0.8/0.5，升空的高度还是之前正确的吗？」→ 16:2x「两种都要，导出时选」）
+  const out = {}, bad = [];
+  // ① JSON：只缩粗细
+  const j0 = { name: 'R', system: { preview_distance_cm: 30000 }, source: {}, emitters: [
+    { name: 'RiseLoop', modules: [{ m: 'Lifetime', Lifetime: { const: 3 } }, { m: 'InitialSize', StartSize: { const: [1000, 15000, 1] } }, { m: 'InitialVelocity', StartVelocity: { const: [10, 0, 15000] } },
+      { m: 'VelocityOverLife', VelOverLife: { curve: [[0, [0, 0, 15000]], [1, [0, 0, 400]]] }, Absolute: true }, { m: 'DynamicParameter', params: { frame: { curve: [[0, 0], [1, 63]] } } }] },
+    { name: 'TrailFar', modules: [{ m: 'InitialLocation', StartLocation: { const: [-40, 0, 20000] } }, { m: 'InitialVelocity', StartVelocity: { const: [0, 0, 50] } }, { m: 'InitialSize', StartSize: { const: [2300, 42000, 1] } }, { m: 'DynamicParameter', params: { frame: { const: 0 } } }] },
+    { name: 'Sparks', modules: [{ m: 'InitialSize', StartSize: { uniform: [[80, 80, 80], [200, 200, 200]] } }, { m: 'InitialLocation', StartLocation: { curve: [[0, [0, 0, 0]], [1, [0, 0, 9000]]] } },
+      { m: 'SphereLocation', StartRadius: { const: 40 }, VelocityScale: { const: 2 } },
+      { m: 'InitialVelocity', StartVelocity: { curve: [[0, [0, 0, 13000]], [1, [0, 0, 1000]]] } }, { m: 'InitialVelocity', StartVelocity: { uniform: [[-950, -950, -475], [950, 950, 475]] }, note: '第 2 个 Initial Velocity：叠加的随机散开' },
+      { m: 'Drag', DragCoefficientRaw: { uniform: [1.2, 2.4] } }, { m: 'ConstAcceleration', Acceleration: [0, 0, -981] }] }] };
+  const j = fwlScaleJSON(structuredClone(j0), 0.5, true), mod = (e, m, i = 0) => j.emitters[e].modules.filter(x => x.m === m)[i];
+  out.keep = { name: j.name, mode: j.export_scale_mode, dist: j.system.preview_distance_cm, loopSize: mod(0, 'InitialSize').StartSize.const, loopV: mod(0, 'InitialVelocity').StartVelocity.const, vol: mod(0, 'VelocityOverLife').VelOverLife.curve[0][1],
+    farLoc: mod(1, 'InitialLocation').StartLocation.const, farSize: mod(1, 'InitialSize').StartSize.const, sz: mod(2, 'InitialSize').StartSize.uniform, loc: mod(2, 'InitialLocation').StartLocation.curve[1][1],
+    r: mod(2, 'SphereLocation').StartRadius.const, v1: mod(2, 'InitialVelocity', 0).StartVelocity.curve[0][1], v2: mod(2, 'InitialVelocity', 1).StartVelocity.uniform[1], acc: mod(2, 'ConstAcceleration').Acceleration, drag: mod(2, 'Drag').DragCoefficientRaw.uniform };
+  const K = out.keep, eq = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  if (K.name !== 'R_W50' || K.mode !== 'keep_height' || K.dist !== 30000) bad.push('「不变」：系统名 / 标记 / 预览距离不对：' + JSON.stringify([K.name, K.mode, K.dist]));
+  if (!eq(K.loopSize, [500, 15000, 1]) || !eq(K.farSize, [1150, 42000, 1])) bad.push('序列面片应只缩宽（Y = 沿尾迹的长度不变）：' + JSON.stringify([K.loopSize, K.farSize]));
+  if (!eq(K.loopV, [10, 0, 15000]) || K.vol[2] !== 15000 || !eq(K.farLoc, [-40, 0, 20000]) || K.loc[2] !== 9000 || K.v1[2] !== 13000 || K.acc[2] !== -981 || !eq(K.drag, [1.2, 2.4])) bad.push('弹道 / 位置 / 加速度 / 阻力不该动：' + JSON.stringify(K));
+  if (!eq(K.sz, [[40, 40, 80], [100, 100, 200]]) || !eq(K.v2, [475, 475, 237.5]) || K.r !== 20) bad.push('粒子大小 / 随机散开 / 球面半径应 × 0.5：' + JSON.stringify([K.sz, K.v2, K.r]));
+  if (fwlScaleJSON(structuredClone(j0), 0.5).name !== 'R_S50' || exportScaleSfx(0.8, true) !== '_W80') bad.push('等比缩的名字 / 后缀变了');
+  // ② 谁能选：升空尾缀 + 缩放 < 1
+  const e6 = entryById('RT6L'), P6 = e6 ? derive({ ...defaultsFor(e6.base).P, ...e6.p }) : null, ev5 = entryById('V5M') || null;
+  const item = SCHEMA.find(x => x.sec === '导出缩放').items.find(it => it.sel === 'exportScaleRise');
+  const kikuP = derive({ ...defaultsFor('kiku').P });
+  out.who = { rt6: !!P6 && isEmit(P6), keep6: exportKeepOf({ ...P6, exportScale: 0.5, exportScaleRise: 'keep' }), keep6at1: exportKeepOf({ ...P6, exportScale: 1, exportScaleRise: 'keep' }), keepKiku: exportKeepOf({ ...kikuP, exportScale: 0.5, exportScaleRise: 'keep' }),
+    row6: !!item && itemVisible(item, { ...P6, exportScale: 0.5 }), row6at1: !!item && itemVisible(item, { ...P6, exportScale: 1 }), rowKiku: !!item && itemVisible(item, { ...kikuP, exportScale: 0.5 }) };
+  if (!out.who.rt6 || !out.who.keep6 || out.who.keep6at1 || out.who.keepKiku || !out.who.row6 || out.who.row6at1 || out.who.rowKiku) bad.push('「升空高度」该只在升空尾缀 + 缩放 < 1 时出现 / 生效：' + JSON.stringify(out.who));
+  if (!SCHEME_KEYS.includes('exportScaleRise') || unitSig({ a: 1, exportScaleRise: 'keep' }) !== unitSig({ a: 1, exportScaleRise: 'scale' })) bad.push('「升空高度」改了不该重烘');
+  // ③ 引擎回放和导出同一套：esKeepScale 的发射器写成 cascade 模块 = 原发射器写成模块再 fwlScaleJSON(keep)
+  { const ES = rtBuildES(P6), k = 0.5, A = ES.emitters.map(e => ({ name: e.name, modules: esFwlEmitter(e, false, 1).modules })), B = esKeepScale(ES, k).emitters.map(e => ({ name: e.name, modules: esFwlEmitter(e, false, 1).modules }));
+    const As = fwlScaleJSON({ name: 'A', emitters: structuredClone(A) }, k, true).emitters, pick = ms => ms.filter(m => ['InitialSize', 'InitialVelocity', 'InitialLocation', 'SphereLocation', 'ConstAcceleration', 'VelocityOverLife'].includes(m.m)).map(m => { const o = { ...m }; delete o.note; if (m.m === 'InitialSize') { const xy = v => Array.isArray(v) ? v.slice(0, 2) : v, d = m.StartSize; o.StartSize = 'const' in d ? { const: xy(d.const) } : 'uniform' in d ? { uniform: d.uniform.map(xy) } : d; } return o; });     // 面片大小的 Z 对精灵没用（等比缩也不动 Z）
+    const diff = [], close = (a, b) => { if (typeof a === 'number' && typeof b === 'number') return Math.abs(a - b) <= 0.06 + 1e-4 * Math.abs(a); /* esCm 取到 0.1 cm */ if (Array.isArray(a) && Array.isArray(b)) return a.length === b.length && a.every((x, i) => close(x, b[i])); if (a && b && typeof a === 'object' && typeof b === 'object') { const ks = new Set([...Object.keys(a), ...Object.keys(b)]); return [...ks].every(q => close(a[q], b[q])); } return a === b; };
+    As.forEach((e, i) => { if (!close(pick(e.modules), pick(B[i].modules))) diff.push(e.name); });
+    out.same = { n: As.length, diff };
+    if (!As.length || diff.length) bad.push('引擎回放的发射器（esKeepScale）和导出（fwlScaleJSON 不变）对不上：' + JSON.stringify(out.same));
+    const fb = { P: P6, es: ES }, t1 = rtTables(fb, false, 1), tk = rtTables(fb, false, k), q1 = t1.find(T => T.list.length > 10), qk = tk[t1.indexOf(q1)], a = q1.list[5], b = qk.list[5];
+    out.tab = { name: q1.e.name, s: [+a.size.toFixed(3), +b.size.toFixed(3)], p: [a.p[2], b.p[2]], t0: [a.t0, b.t0] };
+    if (Math.abs(b.size / a.size - k) > 1e-6 || Math.abs(a.p[2] - b.p[2]) > 1e-9 || a.t0 !== b.t0) bad.push('「不变」的出生表：大小应 × k、位置 / 出生时刻不变：' + JSON.stringify(out.tab)); }
+  // ④ 引擎回放用哪个缩放：等比 → 游戏内大小 × k；不变 → 宽 × k、游戏内比例不动
+  { const sP = state.P, sv = state.view, sd = state.disp, st = state.tab;
+    try { state.view = 'export'; state.disp = 'game'; state.tab = 'params';
+      state.P = { ...P6, exportScale: 0.5, exportScaleRise: 'keep' }; const a = [exportScaleNow(), exportWidthNow()];
+      state.P = { ...P6, exportScale: 0.5, exportScaleRise: 'scale' }; const b = [exportScaleNow(), exportWidthNow()];
+      state.tab = 'combo'; const c = [exportScaleNow(), exportWidthNow()]; state.tab = 'params';
+      state.P = { ...kikuP, exportScale: 0.5 }; const fb = { P: state.P, meta: { Ww: 10 } }, h1 = productDisplayView(fb, [0, 0, 10, 10], 1, 20).view[2];
+      state.P = { ...kikuP, exportScale: 1 }; const h0 = productDisplayView(fb, [0, 0, 10, 10], 1, 20).view[2];
+      out.now = { keep: a, scale: b, combo: c, pdv: +(h1 / h0).toFixed(3) };
+    } finally { state.P = sP; state.view = sv; state.disp = sd; state.tab = st; }
+    const N = out.now; if (!eq(N.keep, [1, 0.5]) || !eq(N.scale, [0.5, 1]) || !eq(N.combo, [1, 1]) || Math.abs(N.pdv - 2) > 0.01) bad.push('引擎回放的缩放口径不对（等比 → 游戏内 × k；不变 → 只缩宽；多层不管；V5 / 单束游戏内也缩）：' + JSON.stringify(N)); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w27(pg):
+    """4.9.32 升空尾缀导出缩放「升空高度：不变」（只缩粗细）"""
+    r = await pg.evaluate(W27_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -2922,7 +2983,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

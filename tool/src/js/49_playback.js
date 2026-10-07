@@ -25,7 +25,7 @@ function gameDiameter(b,fallback) {
 }
 function productDisplayView(b,fit,texPPM,diameter) {
   let ppm=canvas.width/(2*fit[2]);
-  if(state.disp==='game')ppm=gamePixelsPerMeter(b.P,gameDiameter(b,diameter));
+  if(state.disp==='game')ppm=gamePixelsPerMeter(b.P,gameDiameter(b,diameter))*(typeof exportScaleNow==='function'?exportScaleNow():1);     // 4.9.32：V5 尾缀 / 单束的游戏内大小也按导出缩放画（4.9.31 漏了）
   else if(state.disp==='px')ppm=texPPM;
   const half=canvas.width/(2*ppm);
   return {view:[fit[0],fit[1],half,half],mag:ppm/texPPM,onScreen:b.meta.Ww*ppm*1080/canvas.height};

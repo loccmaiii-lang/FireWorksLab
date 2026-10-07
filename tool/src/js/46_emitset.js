@@ -34,6 +34,15 @@ function esMulKeys(keys, cv) {
   us.forEach((u, i) => { if (i) all.push((us[i - 1] + u) / 2); all.push(u); });
   return all.map(u => { const m = Math.max(0, lifeCurveAt(cv, u)), v = esCurve(base, u); return [+u.toFixed(5), Array.isArray(v) ? v.map(x => +(x * m).toFixed(4)) : +(v * m).toFixed(4)]; });
 }
+// 4.9.32 升空尾缀「升空高度：不变」（只缩粗细）的发射器组：大小、随机散开（velAdd）、球面半径 × k；出生位置、弹道初速、按寿命速度、加速度不变。
+// 和 fwlScaleJSON(…, keep) 同一套规则（Initial Size、标「随机散开」的 Initial Velocity、Sphere 半径），引擎回放看到的就是导出的
+function esKeepScale(ES, k) {
+  if (!ES || k === 1) return ES;
+  const box = B => B.map(v => v.map(x => x * k));
+  return { ...ES, emitters: ES.emitters.map(e => ({ ...e, size: e.size.map(x => x * k),
+    velAdd: e.velAdd ? (Array.isArray(e.velAdd[0][0]) ? e.velAdd.map(box) : box(e.velAdd)) : e.velAdd,
+    sphere: e.sphere ? { ...e.sphere, r: Array.isArray(e.sphere.r) ? e.sphere.r.map(x => x * k) : e.sphere.r * k, ...(e.sphere.vs ? {} : e.sphere.v ? { v: e.sphere.v.map(x => x * k) } : {}) } : e.sphere })) };
+}
 // 出生表：每个发射器一张，按出生时刻排好（确定性：同一组数据永远得到同一批粒子）
 // 盒子或盒子数组 → 盒子数组
 const esBoxes = b => !b ? [] : Array.isArray(b[0][0]) ? b : [b];

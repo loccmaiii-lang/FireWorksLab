@@ -733,9 +733,9 @@ async function bakeEmitSet(P, scale, onProg) {
   return b;
 }
 // 粒子出生表（按平台缓存在烘焙结果上）
-function rtTables(b, mobile) {
-  const k = mobile ? '_tabM' : '_tabP';
-  if (!b[k]) b[k] = esSpawn(b.es || rtBuildES(b.P), mobile ? (b.P.rtMobile == null ? BASE.rtMobile : b.P.rtMobile) : 1);
+function rtTables(b, mobile, kw = 1) {
+  const k = (mobile ? '_tabM' : '_tabP') + (kw === 1 ? '' : '_W' + kw);     // 4.9.32 升空高度不变（只缩粗细）：另一份出生表
+  if (!b[k]) b[k] = esSpawn(esKeepScale(b.es || rtBuildES(b.P), kw), mobile ? (b.P.rtMobile == null ? BASE.rtMobile : b.P.rtMobile) : 1);
   return b[k];
 }
 // 引擎回放里循环层在时刻 t 的状态：上升 = 循环贴图沿弹道、帧号锯齿、面片长按速度缩放；开花后 = 消散贴图停在开花点
@@ -1032,24 +1032,25 @@ function renderEmitLive() {
 }
 function renderEmitExport(b) {
   const P = b.P, M = state.M, m = b.meta, t = engineTick(state.t), view = rtView(P, b, t), ppm = hdrT.w / (2 * view[2]), ppmY = hdrT.h / (2 * view[3]);
+  const kw = typeof exportWidthNow === 'function' ? exportWidthNow() : 1;     // 4.9.32 升空高度不变：面片宽 × kw、粒子大小 / 散开 × kw（和导出同一套）
   hdrT.clear(); hdrT.bind(); additive(true);
   const s = rtOn('near') ? rtLoopStateAt(b, t) : null, sa = rtOn('far') ? rtFarStateAt(b, t) : null;     // 4.5.1 分层看
   if (sa) {     // 4.5.1 远段：面片中心在 (cx, cz)，速度朝向竖直（Pivot 居中）
     const pr = PR.mat; gl.useProgram(pr.p);
-    gl.uniform4fv(pr.u.uRect, [sa.x - sa.w / 2, sa.z - sa.h / 2, sa.x + sa.w / 2, sa.z + sa.h / 2]); gl.uniform4fv(pr.u.uView, view);
+    gl.uniform4fv(pr.u.uRect, [sa.x - sa.w * kw / 2, sa.z - sa.h / 2, sa.x + sa.w * kw / 2, sa.z + sa.h / 2]); gl.uniform4fv(pr.u.uView, view);
     bindSeqTextures(pr, sa.bb); gl.uniform1f(pr.u.uFrame, sa.f); gl.uniform1f(pr.u.uMirror, 0);
     setMatUniforms(pr, { ...M, headInt: intOr1(M.headInt) * (P.rtBright || 1) }, t);
     gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
   }
   if (s) {
-    const w = s.w || m.Ww, h = (s.h || m.Wh) * s.sy, hb = s.hb != null ? s.hb : m.hb == null ? 0.5 : m.hb, pr = PR.mat; gl.useProgram(pr.p);
+    const w = (s.w || m.Ww) * kw, h = (s.h || m.Wh) * s.sy, hb = s.hb != null ? s.hb : m.hb == null ? 0.5 : m.hb, pr = PR.mat; gl.useProgram(pr.p);
     gl.uniform4fv(pr.u.uRect, [s.x - w / 2, s.z - h * hb, s.x + w / 2, s.z + h * (1 - hb)]); gl.uniform4fv(pr.u.uView, view);   // 星头 = 粒子位置（Pivot Offset）
     bindSeqTextures(pr, s.bb); gl.uniform1f(pr.u.uFrame, s.f); gl.uniform1f(pr.u.uMirror, 0);
     const kin = (s.phase === 'rise' && !m.grow ? rtLoopInAt(P, t) : 1) / (s.phase === 'rise' && m.nearExpo ? m.nearExpo * m.nearExpo : 1);     // 4.5.1 近段贴图曝光补回（和导出的 Color Over Life 一样）     // 4.4：出场淡入（和导出的 Color Over Life 一样）；4.4.5 跟尾迹长度时不淡入
     setMatUniforms(pr, { ...M, headInt: intOr1(M.headInt) * (P.rtBright || 1) * kin, tailInt: (M.tailInt == null ? 1 : M.tailInt) * kin }, t);
     gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
   }
-  const tabs = rtTables(b, !!b.esMobile), nd = esDraw(tabs, t, view, ppm, ppmY, 1, tabs.map(x => rtOn(x.e.name)));
+  const tabs = rtTables(b, !!b.esMobile, kw), nd = esDraw(tabs, t, view, ppm, ppmY, 1, tabs.map(x => rtOn(x.e.name)));
   additive(false); post();
   const cnt = rtAliveCounts(tabs, t);
   rtLayerBarSync([['near', null, false], ...(b.far ? [['far', null, false]] : []), ...tabs.map((x, i) => [x.e.name, cnt[i], !!x.e.gpu])]);
