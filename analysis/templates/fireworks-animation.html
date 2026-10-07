@@ -1,0 +1,182 @@
+<title>跨年烟花秀编排动画</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* 布局：一屏舞台 = 顶部时间/计数条 + 米制比例画布 + 段落条 + 控制行；单一夜景主题 */
+:root{
+  --bg:#0b0e16; --panel:#121724; --line:#262d40; --fg:#e7ebf5; --muted:#8c96ad;
+  --gold:#ffa63a; --silver:#e9eefc; --lime:#a7ee5c; --rose:#ff6f8e; --accent:#ffa63a;
+  --sans:"Noto Sans SC",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+html,body{background:var(--bg);color:var(--fg);}
+body{margin:0;font-family:var(--sans);font-size:14px;line-height:1.5;}
+.wrap{max-width:1080px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;}
+.clock{display:flex;align-items:baseline;gap:10px;min-width:0;}
+.clock b{font:500 28px/1 var(--mono);font-variant-numeric:tabular-nums;letter-spacing:.02em;}
+.clock span{color:var(--gold);font-weight:700;font-size:16px;}
+.counts{display:flex;gap:14px;color:var(--muted);font:400 12px var(--mono);font-variant-numeric:tabular-nums;flex-wrap:wrap;}
+.counts i{font-style:normal;color:var(--fg);}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+canvas{display:block;width:100%;}
+.phases{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px;}
+.phases button{all:unset;box-sizing:border-box;cursor:pointer;padding:6px 4px 5px;border-top:3px solid var(--line);color:var(--muted);font-size:11px;line-height:1.25;text-align:center;}
+.phases button:hover{color:var(--fg);}
+.phases button[aria-current="true"]{border-top-color:var(--gold);color:var(--fg);}
+.phases button:focus-visible,.ctl button:focus-visible,.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.phases small{display:block;font:400 10px var(--mono);color:var(--muted);}
+.ctl{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.ctl>button,.seg button{all:unset;box-sizing:border-box;cursor:pointer;padding:6px 14px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--fg);}
+.ctl>button.go{background:var(--gold);border-color:var(--gold);color:#1b1206;font-weight:700;min-width:64px;text-align:center;}
+.seg{display:flex;}
+.seg button{border-radius:0;margin-left:-1px;padding:6px 10px;}
+.seg button:first-child{border-radius:4px 0 0 4px;margin-left:0;}
+.seg button:last-child{border-radius:0 4px 4px 0;}
+.seg button[aria-pressed="true"]{background:#2a3047;border-color:#4a5578;}
+input[type=range]{flex:1 1 220px;min-width:0;accent-color:var(--gold);}
+.note{color:var(--muted);font-size:12px;}
+.detail{min-height:2.8em;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);}
+.legend em{font-style:normal;display:inline-flex;align-items:center;gap:5px;}
+.legend em::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c);}
+@media (max-width:640px){.phases{grid-template-columns:repeat(5,minmax(0,1fr));}.clock b{font-size:24px}}
+</style>
+<div class="wrap">
+  <div class="top">
+    <div class="clock"><b id="time">00:00.0</b><span id="phase">低位起势</span></div>
+    <div class="counts"><span>前台 <i id="nf">0</i></span><span>坝顶 <i id="nd">0</i></span><span>同时亮着 <i id="na">0</i> / 980</span></div>
+  </div>
+  <div class="stage"><canvas id="cv" role="img" aria-label="跨年烟花秀正面比例动画"></canvas></div>
+  <div class="phases" id="phases"></div>
+  <div class="ctl">
+    <button class="go" id="play" type="button">播放</button>
+    <input id="seek" type="range" min="0" max="210" step="0.1" value="132" aria-label="节目时间，秒">
+    <div class="seg" role="group" aria-label="视野"><button type="button" data-view="full" aria-pressed="true">全场比例</button><button type="button" data-view="front" aria-pressed="false">前台近看</button></div>
+    <div class="seg" role="group" aria-label="速度"><button type="button" data-speed="1" aria-pressed="true">1×</button><button type="button" data-speed="2" aria-pressed="false">2×</button><button type="button" data-speed="4" aria-pressed="false">4×</button></div>
+  </div>
+  <div class="note detail" id="detail"></div>
+  <div class="legend"><em style="--c:var(--silver)">银白</em><em style="--c:var(--gold)">金</em><em style="--c:var(--lime)">青柠</em><em style="--c:var(--rose)">坝顶扇形</em><span>米制正面比例，坝顶 150 m、前台 50 m；设计示意，不是 UE 粒子回放。</span></div>
+</div>
+<script>
+(()=>{
+const show=__SHOW_DATA__;
+const $=id=>document.getElementById(id);
+const cv=$('cv'),ctx=cv.getContext('2d'),seek=$('seek'),play=$('play');
+const COL={silver:'233,238,252',gold:'255,166,58',lime:'167,238,92',rose:'255,111,142'};
+const fmt=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${(s%60).toFixed(1).padStart(4,'0')}`;
+let t=132,playing=false,last=0,view='full',speed=1,phaseIdx=-1;
+const evs=show.events.slice().sort((a,b)=>a.launch-b.launch);
+const sph={};
+function sphere(n){if(sph[n])return sph[n];const a=[],c=Math.floor(n*.72),s=n-c;
+  for(let j=0;j<c;j++){const d=1-2*(j+.5)/c,r=Math.sqrt(1-d*d),g=j*2.399963;a.push([Math.cos(g)*r,Math.sin(g)*r]);}
+  for(let j=0;j<s;j++){const g=j/s*Math.PI*2;a.push([Math.cos(g),Math.sin(g)]);}
+  return sph[n]=a;}
+const bar=$('phases');
+show.phases.forEach((p,i)=>{const b=document.createElement('button');b.type='button';
+  b.innerHTML=`${p.name}<small>${fmt(p.start).slice(0,5)}</small>`;
+  b.addEventListener('click',()=>{stop();t=p.start+.05;draw();});bar.appendChild(b);});
+function stop(){playing=false;play.textContent='播放';}
+function draw(){
+  const front=view==='front';
+  const W=Math.max(300,cv.parentElement.clientWidth);
+  const wx=front?250:1060,wz=front?175:620;
+  const H=Math.round(Math.max(front?260:300,Math.min(front?420:560,W*(wz/wx)*(front?1:1.0)+ (front?0:0))));
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+'px';}
+  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.globalCompositeOperation='source-over';
+  const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#070a12');g.addColorStop(1,'#141a2b');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const padL=44,padB=26,padT=10,padR=12;
+  const sc=Math.min((W-padL-padR)/wx,(H-padB-padT)/wz);
+  const cx=padL+(W-padL-padR)/2,X=v=>cx+v*sc,Z=v=>H-padB-v*sc;
+  ctx.font='11px '+getComputedStyle(document.body).getPropertyValue('--mono');
+  ctx.textBaseline='middle';
+  // 坝体
+  ctx.fillStyle='#1b2133';ctx.fillRect(X(-374.79),Z(150),749.58*sc,150*sc);
+  // 高度刻度
+  const ticks=front?[0,50,100,145]:[0,150,300,450,600];
+  ctx.lineWidth=1;
+  for(const v of ticks){ctx.strokeStyle='rgba(140,150,175,.16)';ctx.beginPath();ctx.moveTo(padL,Z(v)+.5);ctx.lineTo(W-padR,Z(v)+.5);ctx.stroke();
+    ctx.fillStyle='#8c96ad';ctx.textAlign='right';ctx.fillText(v+' m',padL-6,Z(v));}
+  ctx.strokeStyle='rgba(255,255,255,.55)';ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(padL,Z(150));ctx.lineTo(W-padR,Z(150));ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#e7ebf5';ctx.textAlign='right';ctx.fillText('坝顶 150 m',W-padR-4,Z(150)-9);
+  if(front){ctx.strokeStyle='rgba(255,166,58,.7)';ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(X(-110),Z(145));ctx.lineTo(X(110),Z(145));ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='#ffa63a';ctx.textAlign='left';ctx.fillText('前台上限 145 m',X(-110),Z(145)-9);}
+  // 平台
+  ctx.fillStyle='#2a3047';ctx.fillRect(X(-100),Z(50),200*sc,50*sc);
+  ctx.strokeStyle='#e7ebf5';ctx.beginPath();ctx.moveTo(X(-100),Z(50));ctx.lineTo(X(100),Z(50));ctx.stroke();
+  ctx.fillStyle='#e7ebf5';ctx.textAlign='center';ctx.fillText('平台 50 m',X(0),Z(25));
+  // 发射点
+  const all=Object.entries(show.points).filter(([n,p])=>p.zone==='front');
+  const wide=23*sc>15;
+  all.forEach(([n,p],i)=>{ctx.fillStyle='#e7ebf5';ctx.beginPath();ctx.arc(X(p.x),Z(p.z),2,0,7);ctx.fill();
+    if(wide||i%3===0){ctx.fillStyle='#b7c0d6';ctx.textAlign='center';ctx.fillText(n,X(p.x),Z(p.z)+11);}});
+  if(!front){ctx.fillStyle='#8c96ad';ctx.textAlign='center';
+    for(const n of ['P1','P5','P9']){const p=show.points[n];ctx.beginPath();ctx.arc(X(p.x),Z(150),2,0,7);ctx.fillStyle='#e7ebf5';ctx.fill();}}
+  // 烟花
+  ctx.globalCompositeOperation='lighter';
+  let nf=0,nd=0;
+  for(const e of evs){
+    if(e.launch>t)break; if(t>=e.end)continue;
+    const a=show.templates[e.template],p=show.points[e.point];
+    if(e.zone==='front')nf++;else nd++;
+    if(front&&e.zone!=='front')continue;
+    const kind=a.kind,col=COL[kind==='fan'?'rose':a.hue];
+    const fz=e.zone==='front',basez=fz?p.z:150;
+    if(t<e.burst){
+      const u=Math.max(0,(t-e.launch)/a.rise);
+      if(kind==='fan'){continue;}
+      const h=basez+(a.z-basez)*(2*u-u*u),tail=fz?14:40;
+      const lg=ctx.createLinearGradient(0,Z(h),0,Z(Math.max(basez,h-tail)));
+      lg.addColorStop(0,`rgba(${col},.95)`);lg.addColorStop(1,`rgba(${col},0)`);
+      ctx.strokeStyle=lg;ctx.lineWidth=Math.max(1,sc*(fz?1.2:1.6));
+      ctx.beginPath();ctx.moveTo(X(p.x),Z(h));ctx.lineTo(X(p.x),Z(Math.max(basez,h-tail)));ctx.stroke();
+      ctx.fillStyle=`rgba(${col},1)`;ctx.beginPath();ctx.arc(X(p.x),Z(h),Math.max(1.4,sc*1.3),0,7);ctx.fill();
+      continue;}
+    const age=t-e.burst,life=a.life,u=age/life;
+    if(kind==='comet'){
+      const h=a.z-8*u;ctx.strokeStyle=`rgba(${col},${1-u})`;ctx.lineWidth=Math.max(1,sc*1.6);
+      ctx.beginPath();ctx.moveTo(X(p.x),Z(h-14));ctx.lineTo(X(p.x),Z(h));ctx.stroke();continue;}
+    const r=a.diameter/2*(1-Math.exp(-8*u));
+    const willow=(a.hue==='gold'&&a.kind==='large')?2.4:1;
+    const fall=(fz?9:25)*willow*u*u;
+    const alpha=Math.min(1,(life-age)/Math.min(1.4,life*.45));
+    const n=kind==='fan'?15:fz?72:130;
+    if(age<.28){const fr=(a.diameter*.55)*(1-age/.28);
+      const rg=ctx.createRadialGradient(X(p.x),Z(a.z),0,X(p.x),Z(a.z),Math.max(1,fr*sc));
+      rg.addColorStop(0,`rgba(${col},${.55*(1-age/.28)})`);rg.addColorStop(1,`rgba(${col},0)`);
+      ctx.fillStyle=rg;ctx.beginPath();ctx.arc(X(p.x),Z(a.z),Math.max(1,fr*sc),0,7);ctx.fill();}
+    ctx.strokeStyle=`rgba(${col},${alpha})`;ctx.fillStyle=`rgba(${col},${alpha})`;ctx.lineWidth=Math.max(.8,sc*.8);
+    const S=kind==='fan'?null:sphere(n);
+    for(let j=0;j<n;j++){
+      let vx,vy;
+      if(S){vx=S[j][0];vy=S[j][1];}else{const ang=j/(n-1)*Math.PI;vx=Math.cos(ang);vy=Math.sin(ang);}
+      const px=p.x+vx*r,pz=(kind==='fan'?a.z:a.z)+vy*r-fall;
+      const qx=p.x+vx*r*.72,qz=a.z+vy*r*.72-fall*.55;
+      ctx.beginPath();ctx.moveTo(X(qx),Z(qz));ctx.lineTo(X(px),Z(pz));ctx.stroke();
+      ctx.beginPath();ctx.arc(X(px),Z(pz),Math.max(.9,sc*.7),0,7);ctx.fill();}
+  }
+  ctx.globalCompositeOperation='source-over';
+  $('time').textContent=fmt(t);
+  $('nf').textContent=nf;$('nd').textContent=nd;$('na').textContent=nf+nd;
+  const i=show.phases.findIndex(p=>t>=p.start&&t<p.end),cur=i<0?show.phases.length-1:i;
+  if(cur!==phaseIdx){phaseIdx=cur;$('phase').textContent=show.phases[cur].name;$('detail').textContent=show.phases[cur].detail;
+    [...bar.children].forEach((b,k)=>b.setAttribute('aria-current',k===cur?'true':'false'));}
+  cv.setAttribute('aria-label',`${fmt(t)} ${show.phases[cur].name}，前台${nf}发，坝顶${nd}发，${front?'前台近看':'全场比例'}`);
+}
+function tick(now){if(!playing)return;t=Math.min(210,t+(now-last)/1000*speed);last=now;seek.value=t;draw();
+  if(t>=210)stop();else requestAnimationFrame(tick);}
+play.addEventListener('click',()=>{if(playing){stop();return;}if(t>=210)t=0;playing=true;play.textContent='暂停';last=performance.now();requestAnimationFrame(tick);});
+seek.addEventListener('input',()=>{stop();t=+seek.value;draw();});
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;
+  document.querySelectorAll('[data-view]').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();}));
+document.querySelectorAll('[data-speed]').forEach(b=>b.addEventListener('click',()=>{speed=+b.dataset.speed;
+  document.querySelectorAll('[data-speed]').forEach(x=>x.setAttribute('aria-pressed',x===b));}));
+addEventListener('keydown',e=>{if(e.code==='Space'&&!/INPUT|BUTTON/.test(document.activeElement.tagName)){e.preventDefault();play.click();}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
+new ResizeObserver(draw).observe(cv.parentElement);
+seek.value=t;draw();
+})();
+</script>
