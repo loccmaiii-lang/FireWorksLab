@@ -90,14 +90,48 @@ def build(VER, over):
     return ents, combo
 
 
+# ---------------- 第 2 版 FG4（用户 17:35 原理：N 根筒 × 每筒几颗星 → 尾缀 → 爆裂；18:40 批了「扇面 N 簇 + 簇依次出膛」，烘焙器 4.9.34）----------------
+# 一层：11 根筒（扇面 N 簇、总张角 90°、筒距 9°），每筒 4–5 颗星在 5° 小锥里散开、相邻筒重叠 → 整面连续；逐筒 0.38 s 出膛（左 → 右）。
+# 每颗星：辉星金尾（整条线都亮、会闪）+ 闪烁火花（自定义发射器 2）+ 筒口火舌（自定义发射器 1「开花时」，跟着逐筒出膛扫）+ 星头不显眼；到顶后爆裂。原理 analysis/原理/FanGold.md 0.3。
+FG4 = {
+    'renderVer': 40, 'duration': 5.6, 'seed': 11,
+    'stars': 50, 'pattern': 'cluster', 'clusterLayout': 'fan', 'clusterN': 11, 'clusterFan': 90, 'clusterCone': 5, 'clusterDirJit': 1.5, 'clusterStarsJit': 20,
+    'clusterSweep': 0.38, 'tilt': 0,
+    'v0': 105, 'vt': 11, 'grav': 1, 'speedJit': 5, 'dirJit': 1.0, 'massLoss': 0,
+    'burn': 1.7, 'burnJit': 4, 'fade': 0.35, 'lastFlare': 0,
+    'headBright': 0.3, 'headSize': 0.35,
+    'sparkRate': 300, 'sparkLife': 3.0, 'sparkLifeJit': 40, 'sparkSpread': 0.15, 'sparkInherit': 0.05, 'sparkDrag': 2.5, 'sparkGrav': 0.25,
+    'T0': 2250, 'cooling': 0.22, 'sparkSize': 0.12, 'sparkBright': 1,
+    'glitter': 0.5, 'glitterDelay': 0.35, 'glitterPeak': 3,
+    # 筒口火舌：每颗星出筒时 3 个短命大光点，跟着逐筒出膛扫过去
+    'x1On': 1, 'x1Event': 'birth', 'x1Kind': 'dot', 'x1N': 3, 'x1V': 6, 'x1VJit': 30, 'x1Inh': 0.15, 'x1Grav': 0, 'x1Drag': 4,
+    'x1Life': 0.12, 'x1LifeJit': 30, 'x1Size': 1.0, 'x1SizeJit': 30, 'x1Bright': 3, 'x1BrightJit': 30, 'x1BrightCurve': '0:1, 1:0', 'x1Flick': 0,
+    # 闪烁火花（沿路少量，6 Hz）
+    'x2On': 1, 'x2Event': 'trail', 'x2Kind': 'dot', 'x2Rate': 30, 'x2V': 2.5, 'x2VJit': 50, 'x2Inh': 0.05, 'x2Grav': 0.3, 'x2Drag': 2.5,
+    'x2Life': 0.9, 'x2LifeJit': 40, 'x2Size': 0.2, 'x2SizeJit': 30, 'x2Bright': 1.0, 'x2BrightJit': 40, 'x2BrightCurve': '0:1, 0.7:0.8, 1:0', 'x2Flick': 1, 'x2FlickHz': 6,
+    'crackle': 60, 'crackleDelay': 0.3, 'crackleR': 3.2, 'crackleV': 1.5, 'crackleSize': 0.2, 'crackleBright': 3,
+    'flash': 0.35, 'flashR': 1.5,
+    'exposure': 2.0,
+}
+
+
+def build_v2(VER, p):
+    return {'id': VER, 'date': DATE, 'name': '金锦冠扇形 FanGold · 11 筒逐筒出膛', 'base': 'kamuro', 'video': VIDEO, 'burst_t': VMETA['t0'], 'vmeta': VMETA,
+            'tags': f'FanGold 金锦冠扇形 扇形组合 扇面 N 簇 依次出膛 {VER}', 'p': dict(p), 'm': dict(M),
+            'note': '地面扇形组合的一排：11 根筒排成 90° 扇面，左 → 右逐筒出膛（0.38 s 扫完）；每根筒同时打出 4–5 颗星（小锥里散开、相邻筒重叠成一整面），'
+                    '星拖辉星金尾、出筒有火舌，约 1.7 s 到顶后每颗星爆裂，冠带跟着扫。一层。原理 analysis/原理/FanGold.md 第 0 节。',
+            'look': ['整面连续的扇，不是几撮', '逐筒扫：出膛、冠带都从左到右', '金线从底到顶都亮、到处在闪', '顶上一整条白色爆裂带', '引擎回放 + 游戏内大小']}
+
+
 def main():
     ents, combos = [], []
     for v, over in VERSIONS.items():
         e, c = build(v, over); ents += e; combos.append(c)
+    ents.append(build_v2('FG4', FG4))
     out = {'说明': '金锦冠扇形 FanGold（对话框FanGold，用户 2026-10-07 16:05「一簇一簇的」）。由 analysis/scripts/FanGold条目.py 生成，不要手改。',
            'entries': ents, 'combos': combos}
     json.dump(out, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    print('写好', OUT, '：', ' / '.join(VERSIONS), '共', len(ents), '层')
+    print('写好', OUT, '：', ' / '.join(VERSIONS), '+ FG4，共', len(ents), '个条目')
 
 
 if __name__ == '__main__':

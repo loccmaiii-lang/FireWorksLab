@@ -138,6 +138,8 @@ function clusterCenters(P, rng, R) {
     case 'ico': { const g = (1 + Math.sqrt(5)) / 2, v = []; for (const a of [1, -1]) for (const b of [g, -g]) v.push([0, a, b], [a, b, 0], [b, 0, a]); return v.map(d => { const l = Math.hypot(...d); return d.map(q => q / l); }); }
     case 'ring': return Array.from({ length: n }, (_, i) => { const a = Math.PI / 2 + i / n * 2 * Math.PI; return [Math.cos(a), Math.sin(a), 0]; });
     case 'sphere': return fibDirs(n, rng, R, 0);
+    // 4.9.34 扇面 N 簇（对话框FanGold，用户 10-07 18:40 批）：N 簇在画面平面里均分「扇面总张角」、居中朝上，第 0 簇在最左（扇形组合的一排筒）
+    case 'fan': { const f = clamp(+P.clusterFan || 0, 0, 180) * Math.PI / 180; return Array.from({ length: n }, (_, i) => { const a = Math.PI / 2 + (n > 1 ? f / 2 - i * f / (n - 1) : 0); return [Math.cos(a), Math.sin(a), 0]; }); }
     default: return [...axes, ...corners];     // cube
   }
 }
@@ -165,15 +167,17 @@ function clusterDirs(P, rng, R) {
       asg = []; for (let pass = 0; asg.length < n; pass++) for (let k = 0; k < C.length; k++) if (pass < cnt[k]) asg.push(k);
     }
   }
+  // 4.9.34 簇依次出膛（clusterSweep，s；对话框FanGold，用户 10-07 18:40 批）：第 k 簇晚 k / (簇数 − 1) × |值| 出发（负 = 从最后一簇倒着来）；0 = 同时，不进来（逐位同以前）
+  const sw = +P.clusterSweep || 0, nc = C.length;
   for (let i = 0; i < n; i++) {
-    const c = C[asg ? asg[i] : i % C.length], a = Math.abs(c[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0];
+    const ci = asg ? asg[i] : i % C.length, c = C[ci], a = Math.abs(c[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0];
     let u = [c[1] * a[2] - c[2] * a[1], c[2] * a[0] - c[0] * a[2], c[0] * a[1] - c[1] * a[0]]; const lu = Math.hypot(...u) || 1; u = u.map(q => q / lu);
     const w = [c[1] * u[2] - c[2] * u[1], c[2] * u[0] - c[0] * u[2], c[0] * u[1] - c[1] * u[0]];
     // 锥内按立体角均匀：cosθ 在 [cos 张角, 1] 均匀
     const cz = 1 - rng.u() * (1 - cosMax), sz = Math.sqrt(Math.max(0, 1 - cz * cz)), ph = rng.u() * 2 * Math.PI;
     let d = [0, 1, 2].map(k => c[k] * cz + (u[k] * Math.cos(ph) + w[k] * Math.sin(ph)) * sz);
     if (jit > 0) d = d.map(q => q + rng.n() * jit);
-    const l = Math.hypot(...d) || 1; out.push([d[0] / l, d[1] / l, d[2] / l, 1]);
+    const l = Math.hypot(...d) || 1; out.push(sw && nc > 1 ? [d[0] / l, d[1] / l, d[2] / l, 1, (sw > 0 ? ci : nc - 1 - ci) / (nc - 1) * Math.abs(sw)] : [d[0] / l, d[1] / l, d[2] / l, 1]);
   }
   return out;
 }
@@ -247,6 +251,7 @@ class Sim {
       const r0 = P.burstR0 || 0;
       const st = this.mk(d[0] * r0, d[1] * r0, d[2] * r0, vx, vy, vz, Math.max(0.05, burn), carrier ? 1 : 0, carrier ? P.carrierTail : P.sparkRate, P.headBright * (carrier ? (P.carrierHead != null ? P.carrierHead : 0.4) : 1));
       this.stars.push(st);
+      if (d[4] > 0) st.birth = d[4];     // 4.9.34 簇依次出膛：出膛前星停在原点、不动、不亮、不出火花（step 里跳过），火花 / GPU 轨迹都从 birth 算起
       if (P.ignDelay > 0 && !carrier) { st.ign = Math.max(0, P.ignDelay * (1 + P.ignJit / 100 * (2 * (!P.ignSeed ? starHash(st.id, P.seed, 13) : ignRng.u()) - 1))); st.burn += st.ign; }
       // 第二段（分层星内层）：主段 burn 期间不发光、轨迹与主层相同；主段烧完后接着亮 afterBurn 秒（红点灭余烬）
       if (P.afterBurn > 0 && !carrier) { st.mref = st.burn; st.st1 = st.burn; st.burn += P.afterBurn * Math.max(0.2, 1 + P.afterJit / 100 * (2 * starHash(st.id, P.seed, 11) - 1)); }
@@ -254,6 +259,8 @@ class Sim {
       if (P._unit) { st.vis = st.burn; st.burn = 1e9; }
     }
     if (this.ex.length) for (const st of this.stars) this.exEvent('birth', st);
+    // 4.9.34 簇依次出膛：每簇出膛时一个开花闪光（筒口火），和 t = 0 那个同样大小
+    if (dirs.some(d => d[4] > 0)) { const f0 = this.flashes[this.flashes.length - 1]; for (const t0 of [...new Set(dirs.map(d => d[4] || 0))].filter(t => t > 0)) this.flashes.push({ ...f0, t0 }); }
   }
   // ---- 4.6.0 自定义发射器：在星的事件上生成光点或星 ----
   exEvent(ev, s) {
@@ -261,15 +268,15 @@ class Sim {
     for (const c of this.ex) if (c.ev === ev) this.exSpawn(c, s, c.n);
   }
   exSpawn(c, s, n) {
-    const r = this.exRng;
+    const r = this.exRng, t0 = Math.max(this.t, s.birth || 0);     // 4.9.34 还没出膛的星（簇依次出膛）：「开花时」生成的东西跟着它出膛的时刻；以前 birth ≤ t，t0 = t
     for (let q = 0; q < n; q++) {
       if (c.prob < 1 && r.u() >= c.prob) continue;
       const d = randUnit(r), sp = c.v * Math.max(0, 1 + c.vJ * r.n()), dl = Math.max(0, c.delay * (1 + c.delayJ * (2 * r.u() - 1)));
       const vx = s.vx * c.inh + d[0] * sp, vy = s.vy * c.inh + d[1] * sp, vz = s.vz * c.inh + d[2] * sp, x = s.x + d[0] * c.shell, y = s.y + d[1] * c.shell, z = s.z + d[2] * c.shell;
       const life = c.life * Math.max(0.05, 1 + c.lifeJ * r.n()), size = c.size * Math.max(0.05, 1 + c.sizeJ * r.n()), I = c.bright * Math.max(0, 1 + c.brightJ * r.n());
       if (c.kind === 'star') {
-        const ch = this.mk(x, y, z, vx, vy, vz, life, 7, c.spark, I); ch.sz = size; ch.grav = c.grav; ch.c = 0; ch.kd = c.drag; ch.exC = c; ch.ign = dl; ch.burn += dl; this.stars.push(ch);
-      } else this.exDots.push({ t0: this.t + dl, x, y, vx, vy, life, size, I, c, ph: r.u() });
+        const ch = this.mk(x, y, z, vx, vy, vz, life, 7, c.spark, I); ch.sz = size; ch.grav = c.grav; ch.c = 0; ch.kd = c.drag; ch.exC = c; ch.ign = dl; ch.burn += dl; if (t0 > this.t) ch.birth = t0; this.stars.push(ch);
+      } else this.exDots.push({ t0: t0 + dl, x, y, vx, vy, life, size, I, c, ph: r.u() });
     }
   }
   // 光点的位置：线性阻力 + 重力 + 风（和 Cascade 的 Drag + Const Acceleration 同一个式子，引擎里做得出来）
@@ -371,6 +378,7 @@ class Sim {
     for (let i = 0; i < st.length; i++) {
       const s = st[i];
       if (!s.alive) { dead++; continue; }
+      if (s.birth > this.t + 1e-9) continue;     // 4.9.34 还没出膛（簇依次出膛）
       const rng = s.rng || rng0;
       s.age += h;
       let ax = 0, ay = 0; if (windy) [ax, ay] = this.air(s.x, s.y, this.t);

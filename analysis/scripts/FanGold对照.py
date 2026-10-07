@@ -5,7 +5,7 @@
   <目录>/<变体>.jpg  上排实拍（整张竖画面）、中排模拟（同比例：出膛点 (390,1080) px、30.5 px/m）、下排模拟全景（整面扇）
   <目录>/曝光.json   {变体: {层条目: autoExposure40}}（和烘焙器「自动曝光」同一算法）；对照图按这个曝光画
   <目录>/一览.jpg    所有变体的中排拼在一起
-各层按组合里的延迟叠加（mtRenderLayers，和烘焙器多层预览同一条渲染路径）。
+单层条目或组合（组合各层按延迟叠加）（mtRenderLayers，和烘焙器多层预览同一条渲染路径）。
 """
 import argparse, asyncio, base64, io, json, pathlib, sys
 HERE = pathlib.Path(__file__).resolve().parent
@@ -15,7 +15,8 @@ HTML = ROOT / 'tool' / 'FireworkBaker.html'
 VIDEO = ROOT / 'vidio' / 'FanGold.mp4'
 S, VW, VH, BX, BY = 30.5, 720, 1280, 390, 1080     # 实拍 px/m、画面、出膛点
 
-JS_LAYERS = r"""(id) => { const e = FW_REVIEW_LIST.find(x => x.id === id); if (!e || e.kind !== 'combo') return null;
+JS_LAYERS = r"""(id) => { const e = FW_REVIEW_LIST.find(x => x.id === id); if (!e) return null;
+  if (e.kind !== 'combo') return { t0: (e.vmeta || {}).t0, layers: [{ id: e.id, delay: 0, scale: 1 }] };
   return { t0: (e.vmeta || {}).t0, layers: e.layerIds.map((lid, i) => ({ id: lid, delay: +(e.combo.layers[i] || {}).delay || 0, scale: +(e.combo.layers[i] || {}).scale || 1 })) }; }"""
 JS_EXPO = r"""async (a) => { const { P } = replicaPM(a.id); Object.assign(P, a.mods); return (await autoExposure40(P)).value; }"""
 JS_RENDER = r"""async (a) => { const layers = a.layers.map(L => { const { P, M } = replicaPM(L.id); Object.assign(P, a.mods, { exposure: a.expo[L.id] || P.exposure }); Object.assign(M, a.mmods);
@@ -59,7 +60,7 @@ async def run(a):
         ren = verify_renderer(await pg.evaluate("(()=>{const g=document.createElement('canvas').getContext('webgl2');const x=g&&g.getExtension('WEBGL_debug_renderer_info');return x?g.getParameter(x.UNMASKED_RENDERER_WEBGL):'?'})()"))
         print('渲染器', ren, flush=True)
         info = await pg.evaluate(JS_LAYERS, a.entry)
-        if not info: raise RuntimeError('找不到组合条目 ' + a.entry)
+        if not info: raise RuntimeError('找不到条目 ' + a.entry)
         refs = ref_frames(info['t0'], times, px)
         cw = refs[0].width
         # 同比例视图：正方形 42 m（画面高），中心 x = 0；裁出实拍画面那一段（出膛点左 390 px、右 330 px）

@@ -1,0 +1,25 @@
+{
+ "id": "FGV4",
+ "type": "script",
+ "priority": 1,
+ "name": "FanGold FG4（11 筒逐筒出膛，一层）：对照 + 自动曝光（原样 + 4 个变体）",
+ "note": "对话框FanGold：第 2 版原理（用户 17:35），烘焙器 4.9.34。",
+ "steps": [
+  {
+   "name": "FG4 对照 + 曝光",
+   "script": "FanGold对照.py",
+   "args": [
+    "--entry",
+    "FG4",
+    "--out",
+    "{out}",
+    "--variants",
+    "{\"筒9根\": {\"clusterN\": 9}, \"锥更宽\": {\"clusterCone\": 6.5}, \"星更多\": {\"stars\": 66}, \"扫更慢\": {\"clusterSweep\": 0.5}}",
+    "--times",
+    "0.15,0.3,0.6,1.2,1.9,2.2,3.0"
+   ],
+   "must": true,
+   "timeout": 2400
+  }
+ ]
+}

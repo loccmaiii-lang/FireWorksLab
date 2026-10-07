@@ -1,0 +1,9 @@
+{
+ "id": "FGE-FG4",
+ "type": "export",
+ "effect": "fan_gold",
+ "entry": "FG4",
+ "name": "FanGold",
+ "priority": 2,
+ "note": "对话框FanGold：FanGold FG4（一层，11 筒逐筒出膛）导出 + 回放检查。"
+}
