@@ -202,6 +202,8 @@ function renderLive() {
   hudB = '';
 }
 // 显示比例：贴图的每个像素在屏幕上被放大了几倍，是「糊」的直接原因
+// 4.9.31 导出缩放：引擎回放 + 游戏内大小时，按缩放后的大小画（单层效果；多层用每层的「缩放」）
+const exportScaleNow = () => state.view === 'export' && state.disp === 'game' && state.tab !== 'combo' && typeof exportScaleOf === 'function' ? exportScaleOf(state.P) : 1;
 function exportView(b) {
   const s = segAt(b, state.t), m = s.meta, sc = sizeAt(m, clamp(state.t - (m.t0 || 0), 0, m.duration));
   let full = null;
@@ -210,7 +212,7 @@ function exportView(b) {
   const texPPM = m.L.cellW / (m.Ww * Math.max(sxy[0], 1e-3));
   let ppmScreen;
   if (state.disp === 'px') ppmScreen = texPPM;
-  else if (state.disp === 'game') ppmScreen = gamePixelsPerMeter(b.P,gameDiameter(b,2*full[2]));
+  else if (state.disp === 'game') ppmScreen = gamePixelsPerMeter(b.P,gameDiameter(b,2*full[2])) * exportScaleNow();
   else ppmScreen = canvas.width / (2 * full[2]);
   const half = canvas.width / 2 / ppmScreen;
   return { view: [full[0], full[1], half, half], mag: ppmScreen / texPPM, onScreen: m.Ww * sxy[0] * ppmScreen * 1080/canvas.height };
@@ -242,7 +244,7 @@ function renderLowExport(b, Pn, view, sa) {
   if (!state.lowSide) {
     const lw = lowCached(b, lo, M); if (!lw) { ensureLow(b, lo, M); additive(false); post(-1); hudText = '导出效果 · 低端单帧：单帧 + 功能图烘焙中…'; hudB = ''; return; }
     const f = drawLowLayer(lw, L, M, state.t, view, dis); additive(false); post(-1);
-    hudText = `导出效果 · 低端单帧（${lw.pick === 'expo' ? '长曝光' : `某一帧 ${lw.tStar.toFixed(2)} s`} · ${lw.S}×${lw.S}）· ${dis ? `溶解预览（功能图 ${lw.maps || '没勾'}：出现 ≤ 进度 < 熄灭 可见；材质对上前 UE 里还不是这样）` : 'cascade_low.json 现在的写法：灰度 + Ramp、Size By Life、按亮度 Alpha 淡出'}${f < 0 ? ' · 这一刻没有' : ''}`; hudB = ''; return;
+    hudText = `导出效果 · 低端单帧（${lw.pick === 'expo' ? '长曝光' : `某一帧 ${lw.tStar.toFixed(2)} s`} · ${lw.S}×${lw.S}）· ${dis ? (lw.chans.D ? '溶解预览：现有序列母材质的溶解（值大先消失、软过渡）+ Size By Life + Alpha，导入器开了溶解以后 UE 里的样子' : '没勾溶解图（D），不溶解') : '不开溶解：灰度 + Ramp、Size By Life、按亮度 Alpha 淡出（导入器开溶解之前 UE 里的样子）'}${f < 0 ? ' · 这一刻没有' : ''}`; hudB = ''; return;
   }
   const loF = { ...lo, pick: 'frame' }, loE = { ...lo, pick: 'expo' }, lwF = lowCached(b, loF, M), lwE = lowCached(b, loE, M);
   if (!lwF) ensureLow(b, loF, M); else if (!lwE) ensureLow(b, loE, M);
@@ -251,7 +253,7 @@ function renderLowExport(b, Pn, view, sa) {
   if (lwF) drawLowLayer(lwF, L, M, state.t, at(0), dis);
   if (lwE) drawLowLayer(lwE, L, M, state.t, at(-2 * hw), dis);
   additive(false); post(-1);
-  hudText = `并排（同一秒）· 左：PC 序列 · 中：单帧 · 某一帧${lwF ? ` ${lwF.tStar.toFixed(2)} s` : '（烘焙中）'} · 右：单帧 · 长曝光${lwE ? '' : '（烘焙中）'} · ${dis ? '溶解预览' : 'cascade_low.json 现在的写法'}`; hudB = '';
+  hudText = `并排（同一秒）· 左：PC 序列 · 中：单帧 · 某一帧${lwF ? ` ${lwF.tStar.toFixed(2)} s` : '（烘焙中）'} · 右：单帧 · 长曝光${lwE ? '' : '（烘焙中）'} · ${dis ? '溶解预览（现有母材质的软溶解）' : '不开溶解'}`; hudB = '';
 }
 function renderExport() {
   const b = previewBakeLow(state.bake) || previewBake(); hdrT.clear();
@@ -553,7 +555,7 @@ function loop(now) {
     if (state.tab === 'asset') renderAssets();
     else { ensureTargets();
     if (state.showcase)renderShowcase();else if (state.tab === 'combo') renderCombo();
-    else if (state.view === 'live' || (state.bake && state.bake.form === 'phys')) renderLive(); else if (state.view === 'export') renderExport(); else renderAtlas(); }
+    else if (state.view === 'live' || (state.bake && state.bake.form === 'phys')) renderLive(); else if (state.view === 'export') { renderExport(); const k = exportScaleNow(); if (k !== 1 && hudText) hudText += ` · 导出缩放 × ${k}（游戏内大小按缩放后的画）`; } else renderAtlas(); }     // 4.9.31
   } catch (e) { console.error(e); hudText = '渲染出错：' + e.message; }
   if (pendingThumb) { const f = pendingThumb; pendingThumb = null; try { f(thumbFromCanvas()); } catch (e) { } }
   $('#hud').textContent = hudText; $('#hudB').textContent = hudB; updateLabels();

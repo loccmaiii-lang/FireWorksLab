@@ -293,7 +293,7 @@ async function analyze(b) {
     for (const im of imgs) {
       for (let y = y0; y < y0 + chh; y += 2) {
         let o = (y * N + x0) * 4 + ch; const gy = Math.min(SG - 1, Math.floor((y - y0) / chh * SG));
-        for (let x = 0; x < cw; x += 2, o += 8) { const v = im[o]; if (v) { const lv = Math.pow(v / 255, P.encGamma); sum += lv; nz++; if (v >= 254) nc++; if (v > mx) mx = v; sg[gy * SG + Math.min(SG - 1, Math.floor(x / cw * SG))] += lv; } }
+        for (let x = 0; x < cw; x += 2, o += 8) { const v = im[o]; if (v) { const lv = Math.pow(v / 255, P.encGamma); sum += lv; nz++; if (v >= 253) nc++     /* 4.9.31 编码封顶 253 = 过曝 */; if (v > mx) mx = v; sg[gy * SG + Math.min(SG - 1, Math.floor(x / cw * SG))] += lv; } }
       }
       // 边缘一圈像素
       for (let x = 0; x < cw; x++) { em = Math.max(em, im[((y0) * N + x0 + x) * 4 + ch], im[((y0 + chh - 1) * N + x0 + x) * 4 + ch]); }

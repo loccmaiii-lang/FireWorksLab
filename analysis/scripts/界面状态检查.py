@@ -83,6 +83,8 @@
       三个发射器 + Initial Size 随机、多层 L1_ 前缀、文件 _V2 → 序号 02、贴图能切三张、引擎回放、交付清单（假烘焙也造单束）
   W25 4.9.29 低端包 + 单帧 + 功能图（用户 10-07 09:41 / 09:54 / 12:40）：假的「圆环往外扩」序列 → 自动单帧取最大那一刻、取景收紧、D / A 里先外后、没亮过 D 0 A 255、
       通道 / 后缀、错落只动 D、Size By Life / Alpha、cascade_low.json（现有序列材质 1 × 1、extras、第 2 层序列）、_MB 命名、产物表低端列不重烘、低端视图
+  W26 4.9.31（用户 10-07 14:56 / 14:34）：RT6 远段从交接开始 a0 出现、第一帧几乎空（以前中点一出现就半亮）；导出缩放 × k 只改长度（时间 / 阻力 / Size By Life 不动）、系统名 _S50、
+      只改 cascade*.json、菊右栏有、引擎回放游戏内大小按缩放画不重烘；护栏 Ramp 第 255 格黑、编码封顶 253
   W19 4.9.21 入点前放大一律绕爆点（用户 21:51 选）：「放大的中心」删了；cascade.json 写 Pivot Offset、Initial Location 0；回放绕爆点；存过「面片中心」的打开时提示
       4.9.8 加：顶上「现在改的是」和搜索入口看得到，第一屏至少 8 行参数（菊 › 星、引菊 → 锦 金锦层 › 火花）
   W15 4.9.7 起（对话框23 参数栏交互）：4.9.8 引菊 → 锦六步（定位 / 改寿命 / 改颜色 / 调接力 / 撤销保存刷新重开）；切「工具」「审阅」再回来时间 / 层 / 发射器 / 模块开合 / 滚动位置都在、多层里有「工具」页；撤销一次操作一步（两个参数紧挨着改 = 两步、拖动中途停 = 一步、数值框回车 = 一步）
@@ -1863,7 +1865,8 @@ W13_JS = r'''async (rec) => {
   const spec = ['x-texW', 'x-texH', 'x-cols', 'x-rows'].filter(id => dmod.contains(document.getElementById(id)));
   out.direct = { rows: dkeys, spec };
   const want = ['outPC', 'outMobile', 'cutIn', 'cutOut', 'exposure', 'cellPad'];
-  if (want.some(k => !dkeys.includes(k)) || spec.length !== 4 || dkeys.filter(k => k !== 'specBox').length !== 6) bad.push('「直接调」不是那 9 个（PC / 手机怎么出、入点、出点、贴图宽 × 高、列 × 行、曝光、留边）：' + JSON.stringify(out.direct));
+  // 4.9.31：顶上多一项「导出缩放」（用户 10-07 14:56「导出可以让我选0.5/0.8/1这样」，宪章「直接调」那条）
+  if (want.some(k => !dkeys.includes(k)) || spec.length !== 4 || dkeys.filter(k => k !== 'specBox' && k !== 'exportScale').length !== 6 || dkeys[0] !== 'exportScale') bad.push('「直接调」不是那 9 个 + 导出缩放（PC / 手机怎么出、入点、出点、贴图宽 × 高、列 × 行、曝光、留边）：' + JSON.stringify(out.direct));
   const ckeys = panelRows.filter(([r]) => !r.hidden && r.closest('details') === cmod).map(([r, it]) => Array.isArray(it) ? it[0] : it.sel || it.info);
   out.calc = ckeys; if (!['pageTarget', 'outCell'].every(k => ckeys.includes(k))) bad.push('「算出来的」缺张数 / 单格：' + JSON.stringify(ckeys));
   // 4.9.13：缺省按运动分（帧率按运动自动分，没有「每帧停几 tick」）；换成固定机位 + 匀速帧时「算出来的」多一行帧率
@@ -2771,8 +2774,9 @@ W25_JS = r"""async () => {
     const MS = lw.MS, at = (wx, wy) => { const v = lw.view, x = Math.floor(((wx - v[0]) / v[2] + 1) / 2 * MS), y = Math.floor(((wy - v[1]) / v[3] + 1) / 2 * MS); return y * MS + x; };
     const D = lw.cover.last, A = lw.cover.first, jIn = at(10, 0), jOut = at(40, 0), jC = at(-lw.view[2] * 0.99, lw.view[3] * 0.99);
     out.maps = { Din: D[jIn], Dout: D[jOut], Ain: A[jIn], Aout: A[jOut], corner: [D[jC], A[jC]], chans: lw.chans, suffix: lw.suffix };
-    if (!(D[jIn] > 0 && D[jOut] > D[jIn] && A[jOut] > A[jIn])) bad.push('功能图不是里先外后（D / A 里小外大）：' + JSON.stringify(out.maps));
-    if (D[jC] !== 0 || A[jC] !== 255) bad.push('没亮过的地方应 D = 0、A = 255：' + JSON.stringify(out.maps.corner));
+    // 4.9.31 溶解图按现有母材质的方向存：D = 1 − 熄灭时刻（里面先灭 → 值大），没亮过 255
+    if (!(D[jIn] < 255 && D[jIn] > D[jOut] && A[jOut] > A[jIn])) bad.push('功能图不是里先外后（D 里大外小、A 里小外大）：' + JSON.stringify(out.maps));
+    if (D[jC] !== 255 || A[jC] !== 255) bad.push('没亮过的地方应 D = 255、A = 255：' + JSON.stringify(out.maps.corner));
     if (JSON.stringify(lw.chans) !== '{"D":"R","C":"G","A":"B"}' || lw.suffix !== 'DCA') bad.push('功能图通道 / 缺省后缀不对：' + JSON.stringify([lw.chans, lw.suffix]));
     // 设置：后缀按勾的拼、只留字母数字；错落只动熄灭不动出现
     out.lowOf = [lowOf({ lowMaps: 'DC' }).suffix, lowOf({ lowSuffix: 'x-y_9' }).suffix, lowOf({ lowMaps: '' }).maps, lowOf({}).size, lowOf({ lowSize: 333 }).size];
@@ -2788,7 +2792,8 @@ W25_JS = r"""async () => {
     out.json = { em: j.emitters.map(x => x.name), tex: Object.keys(j.textures), extras: Object.keys(j.extras), size: mods.InitialSize.StartSize.const, delay: e.required.delay_s, frame: mods.DynamicParameter.params.frame, role: j.materials.L1_main.role, plat: j.platform };
     if (j.platform !== 'low' || e.name !== 'L1_Frame' || j.materials.L1_main.role !== 'flipbook_rgba' || j.textures.L1_frame.frames !== 1 || JSON.stringify(mods.DynamicParameter.params.frame) !== '{"const":0}') bad.push('cascade_low.json 单帧发射器不对：' + JSON.stringify(out.json));
     if (Math.abs(mods.InitialSize.StartSize.const[0] - 2 * lw.view[2] * 100 * 2) > 1 || Math.abs(e.required.delay_s - 0.5) > 1e-6 || !mods.SizeByLife || !mods.ColorScaleOverLife || !mods.ColorOverLife.AlphaOverLife.curve) bad.push('单帧发射器的大小 / 延迟 / 模块不对：' + JSON.stringify(out.json));
-    if (!j.extras.L1_color || !j.extras.L1_maps || j.extras.L1_maps.channels.R !== LOW_MAP_NAMES.D || !j.emitters.some(x => x.name.startsWith('L2_'))) bad.push('extras / 第 2 层序列不对：' + JSON.stringify(out.json));
+    out.dis = { tex: j.textures.L1_dmap && j.textures.L1_dmap.class, ch: j.textures.L1_dmap && j.textures.L1_dmap.channels.R, mat: j.materials.L1_main.textures.dissolve, flag: e.dissolve && e.dissolve.enable, dp: mods.DynamicParameter.params.dissolve, l2: j.emitters.filter(x => x.name.startsWith('L2_')).map(x => !!x.dissolve) };
+    if (!j.extras.L1_color || j.extras.L1_maps || out.dis.tex !== 'dissolve' || out.dis.ch !== LOW_MAP_NAMES.D || out.dis.mat !== 'L1_dmap' || !out.dis.flag || JSON.stringify(out.dis.dp) !== '{"curve":[[0,0],[1,1]]}' || !out.dis.l2.length || out.dis.l2.some(Boolean)) bad.push('溶解标记 / 溶解图 / 第 2 层序列（不该开溶解）不对：' + JSON.stringify(out.dis));
     // 文件 + 正式名（_MB、_Color_MB、_C、_<后缀>；Ramp 共用）
     const files = await lowFiles('X_Low', lw, state.M), named = applyPackNaming([...files, ['cascade_low.json', utf8(JSON.stringify(j))]], 'Test', [{ ln: 'X', mn: 'X_Mobile', b: state.bake, mb: state.bake, layer: '', low: { ln: 'X_Low', suffix: lw.suffix } }]).map(f => f[0]);
     out.named = named.filter(f => /^T_/.test(f));
@@ -2808,7 +2813,7 @@ W25_JS = r"""async () => {
     setPreviewPlatform('low'); selectStageView('export'); state.t = 0.5; state.lowDissolve = true; loop(performance.now()); out.hudD = $('#hud').textContent.slice(0, 40);
     state.lowDissolve = false; loop(performance.now()); out.hudN = $('#hud').textContent.slice(0, 70);
     selectStageView('atlas'); loop(performance.now()); out.hudA = $('#hud').textContent.slice(0, 30); out.glErr = gl.getError();
-    if (!/低端单帧/.test(out.hudD) || !/溶解预览/.test(out.hudD) || !/现在的写法/.test(out.hudN) || !/^低端单帧/.test(out.hudA) || out.glErr) bad.push('低端视图不对：' + JSON.stringify([out.hudD, out.hudN, out.hudA, out.glErr]));
+    if (!/低端单帧/.test(out.hudD) || !/溶解预览/.test(out.hudD) || !/不开溶解/.test(out.hudN) || !/^低端单帧/.test(out.hudA) || out.glErr) bad.push('低端视图不对：' + JSON.stringify([out.hudD, out.hudN, out.hudA, out.glErr]));
     out.lowOpts = !$('#lowOpts').hidden;
     state.P.outLow = 'off'; onExportScheme(); selectStageView('export'); loop(performance.now()); out.hudOff = $('#hud').textContent.slice(0, 40);
     if (!/低端 不出/.test(out.hudOff)) bad.push('低端不出时没写明：' + out.hudOff);
@@ -2823,6 +2828,59 @@ W25_JS = r"""async () => {
 async def w25(pg):
     """4.9.29 低端包 + 单帧 + 功能图"""
     r = await pg.evaluate(W25_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
+
+W26_JS = r"""async () => {
+  // 4.9.31（用户 10-07 14:56）：① RT6 远段从交接开始 a0 出现（不在中点一下补半亮）；② 导出缩放 0.5 / 0.8 / 1；③ 护栏 Ramp（末格黑）+ 编码封顶 253（用户 14:34 批）
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
+  // ① 远段第一帧几乎是空的，之后慢慢亮（以前在中点出现，第一帧就有一半亮度）
+  const lightAt = (P, LI, ball, fa, ts) => { const N = 64, NH = 256, view = [fa.cx, fa.cz, fa.HX, fa.HY], t = new Target(N, NH, gl.RGBA16F), buf = new Float32Array(N * NH * 4), R = makeRiseTailFarRenderer(P, LI, ball, fa.cx, 0, fa.t0);
+    t.clear(); t.bind(); additive(true); PPMY = NH / (2 * view[3]); R.draw(ts, view, N / (2 * view[2]), 1); additive(false); PPMY = 0; gl.readPixels(0, 0, N, NH, gl.RGBA, gl.FLOAT, buf); t.dispose();
+    let s = 0; for (let i = 0; i < N * NH; i++) s += buf[i * 4] + buf[i * 4 + 1]; return s; };
+  for (const id of ['RT6L', 'RT6M', 'RT6S']) { const e = entryById(id); if (!e) continue; const P = derive({ ...defaultsFor(e.base).P, ...e.p }), ball = rtBallistic(P), LI = rtLoopInfo(P), fa = rtLayoutFar(P, ball, LI), [a0, a1] = rtNearA(P);
+    const Ls = [0, 1, 2, 4, 8, 16].map(f => lightAt(P, LI, ball, fa, fa.t0 + fa.times[Math.min(f, fa.F - 1)])), mx = Math.max(...Ls, 1e-9), old = lightAt(P, LI, ball, fa, Math.ceil((a0 + a1) / 2 * 30) / 30);
+    out[id] = { t0: +fa.t0.toFixed(3), a0, first: +(Ls[0] / mx).toFixed(3), seq: Ls.map(x => +(x / mx).toFixed(3)), oldStart: +(old / mx).toFixed(3) };
+    if (Math.abs(fa.t0 - Math.floor(a0 * 30 + 1e-6) / 30) > 1e-6) bad.push(id + ' 远段应从交接开始 a0 出现：' + JSON.stringify(out[id]));
+    if (!(Ls[0] / mx < 0.1)) bad.push(id + ' 远段第一帧太亮（一出现就闪）：' + JSON.stringify(out[id])); }
+  // ② 导出缩放：长度 × k、时间不变、系统名加后缀；cascade*.json 都改，别的文件不动
+  const j0 = { name: 'X', system: { preview_distance_cm: 30000 }, source: {}, emitters: [{ name: 'E', modules: [
+    { m: 'Lifetime', Lifetime: { const: 2 } }, { m: 'InitialSize', StartSize: { uniform: [[100, 200, 1], [300, 400, 1]] } }, { m: 'InitialLocation', StartLocation: { const: [10, 0, 20] } },
+    { m: 'SphereLocation', StartRadius: { const: 50 }, VelocityScale: { const: 3 } }, { m: 'InitialVelocity', StartVelocity: { curve: [[0, [0, 0, 100]], [1, [0, 0, 200]]] } },
+    { m: 'VelocityOverLife', VelOverLife: { curve: [[0, [0, 0, 1000]]] }, Absolute: true }, { m: 'ConstAcceleration', Acceleration: [0, 0, -980] }, { m: 'Acceleration', Acceleration: { uniform: [[-10, 0, 0], [10, 0, 0]] } },
+    { m: 'Drag', DragCoefficientRaw: { const: 1.5 } }, { m: 'SizeByLife', LifeMultiplier: { curve: [[0, [0.5, 0.5, 1]], [1, [1, 1, 1]]] } } ] }] };
+  const j = fwlScaleJSON(structuredClone(j0), 0.5), M = Object.fromEntries(j.emitters[0].modules.map(m => [m.m, m]));
+  out.scaled = { name: j.name, size: M.InitialSize.StartSize.uniform, loc: M.InitialLocation.StartLocation.const, r: M.SphereLocation.StartRadius.const, vs: M.SphereLocation.VelocityScale.const, vel: M.InitialVelocity.StartVelocity.curve[1][1], acc: M.ConstAcceleration.Acceleration, life: M.Lifetime.Lifetime.const, drag: M.Drag.DragCoefficientRaw.const, sbl: M.SizeByLife.LifeMultiplier.curve[0][1], dist: j.system.preview_distance_cm };
+  if (j.name !== 'X_S50' || JSON.stringify(out.scaled.size) !== '[[50,100,1],[150,200,1]]' || out.scaled.loc[2] !== 10 || out.scaled.r !== 25 || out.scaled.vs !== 3 || out.scaled.vel[2] !== 100 || out.scaled.acc[2] !== -490 || out.scaled.life !== 2 || out.scaled.drag !== 1.5 || out.scaled.sbl[0] !== 0.5 || out.scaled.dist !== 15000 || M.VelocityOverLife.VelOverLife.curve[0][1][2] !== 500 || M.Acceleration.Acceleration.uniform[1][0] !== 5) bad.push('导出缩放算得不对：' + JSON.stringify(out.scaled));
+  { const fs = scaleCascadeFiles([['cascade.json', utf8(JSON.stringify(j0))], ['cascade_low.json', utf8(JSON.stringify(j0))], ['X.json', utf8(JSON.stringify(j0))]], 0.8), dec = new TextDecoder();
+    out.files = fs.map(([f, d]) => [f, JSON.parse(dec.decode(d)).name]); if (JSON.stringify(out.files) !== '[["cascade.json","X_S80"],["cascade_low.json","X_S80"],["X.json","X"]]') bad.push('只该改 cascade*.json：' + JSON.stringify(out.files)); }
+  if (fwlScaleJSON(structuredClone(j0), 1).name !== 'X' || exportScaleOf({ exportScale: 2 }) !== 1 || exportScaleSfx(0.8) !== '_S80') bad.push('缩放 1 / 越界不该动');
+  // 面板：菊有「导出缩放」；改了不重烘；引擎回放（游戏内大小）按缩放画
+  { const prev = state.bake; await openType('kiku'); for (let i = 0; i < 100 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); } state.playing = false;
+  out.panel = itemVisible(SCHEMA.find(x => x.sec === '导出缩放').items[0], state.P) && SCHEMA.find(x => x.sec === '导出缩放').show(state.P);
+  if (!out.panel) bad.push('菊的右栏没有「导出缩放」');
+  const g0 = state.gen; state.view = 'export'; state.disp = 'game'; selectStageView('export'); const v1 = exportView(state.bake).view[2];
+  state.P.exportScale = 0.5; onExportScheme(); const v2 = exportView(state.bake).view[2]; loop(performance.now()); out.hud = $('#hud').textContent.slice(-40);
+  out.view = { v1: +v1.toFixed(1), v2: +v2.toFixed(1), gen: state.gen - g0 };
+  if (Math.abs(v2 / v1 - 2) > 0.01 || out.view.gen) bad.push('引擎回放没按缩放画 / 改缩放重烘了：' + JSON.stringify(out.view));
+  if (!/导出缩放 × 0.5/.test(out.hud)) bad.push('引擎回放没写导出缩放：' + out.hud);
+  state.P.exportScale = 1; onExportScheme(); state.disp = 'fit'; selectStageView('live');
+  if (unitSig({ a: 1, exportScale: 0.5 }) !== unitSig({ a: 1, exportScale: 1 })) bad.push('导出缩放不该让单束重烘');
+  // ③ 护栏 Ramp + 封顶 253
+  { const rp = rampPixels({ ...state.M, ramp3: '#ffffff' }), x = 255 * 4; out.ramp = [[rp[x], rp[x + 1], rp[x + 2]], [rp[254 * 4], rp[254 * 4 + 1], rp[254 * 4 + 2]]];
+    if (out.ramp[0].join() !== '0,0,0' || !(out.ramp[1][0] > 200)) bad.push('Ramp 第 255 格应是黑的、第 254 格照旧：' + JSON.stringify(out.ramp)); }
+  { const fH = new Target(4, 4, gl.RGBA16F), fT = new Target(4, 4, gl.RGBA16F), hd = new Target(4, 4, gl.RGBA8);
+    fH.bind(); gl.clearColor(50, 50, 50, 50); gl.clear(gl.COLOR_BUFFER_BIT); fT.clear(); gl.clearColor(0, 0, 0, 0);
+    const pr = PR.enc; gl.useProgram(pr.p); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, fH.tex); gl.uniform1i(pr.u.uH, 0); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, fT.tex); gl.uniform1i(pr.u.uT, 1);
+    gl.uniform1f(pr.u.uEH, 1); gl.uniform1f(pr.u.uET, 1); gl.uniform1f(pr.u.uG, 1); gl.uniform1f(pr.u.uSingle, 0); hd.bind(); gl.uniform1f(pr.u.uWhich, 1); drawQuad(); gl.activeTexture(gl.TEXTURE0);
+    const px = readRGBA8(hd); out.enc = [...px.slice(0, 4)]; fH.dispose(); fT.dispose(); hd.dispose();
+    if (out.enc.some(v => v !== 253)) bad.push('编码没封顶 253：' + out.enc); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w26(pg):
+    """4.9.31 RT6 远段从交接开始出现 + 导出缩放 + 护栏 Ramp / 封顶 253"""
+    r = await pg.evaluate(W26_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
 
 N3_JS = r"""(() => {
@@ -2864,7 +2922,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

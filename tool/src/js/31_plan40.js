@@ -32,7 +32,7 @@ const FIT_SAT = 0.018;
 function fitSatAt(q, g, P) {
   if (!q || !q.h) return 0;
   const G = +P.encGamma || 1, xs = -Math.log(1 - Math.pow(250 / 255, G));
-  let n = 0; for (let v = 1; v < 256; v++) { const c = q.h[v]; if (!c) continue; const x = v >= 255 ? Infinity : -Math.log(1 - Math.pow(v / 255, G)); if (x * g * g >= xs) n += c; }
+  let n = 0; for (let v = 1; v < 256; v++) { const c = q.h[v]; if (!c) continue; const x = v >= 253 ? Infinity : -Math.log(1 - Math.pow(v / 255, G));     /* 4.9.31 编码封顶 253 = 过曝 */ if (x * g * g >= xs) n += c; }
   return n * g * g / q.px;
 }
 function fitGainCap(q, g, P) {   // 这一帧最多能收紧多少倍（1 = 不收）

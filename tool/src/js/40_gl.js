@@ -45,7 +45,7 @@ void main(){ float m=1.; if(uPad>0.){ vec2 d=min(v_uv,1.-v_uv)*uCell; m=clamp((m
 const FS_ENC = HDR + `in vec2 v_uv; uniform sampler2D uH,uT; uniform float uEH,uET,uG,uWhich,uSingle; out vec4 o;
 void main(){ vec4 h=max(texture(uH,v_uv),0.), t=max(texture(uT,v_uv),0.);
   vec4 x = uWhich<.5 ? h*uEH+t*uET : (uWhich<1.5 ? h*uEH : t*uET);
-  vec4 v = pow(1.-exp(-x), vec4(1./uG));
+  vec4 v = min(pow(1.-exp(-x), vec4(1./uG)), vec4(253./255.));     // 4.9.31 封顶 253（Ramp 第 255 格是黑的护栏，见 60_export.js rampPixels）
   o = uSingle>.5 ? vec4(v.rrr,1.) : v; }`;
 const RAMP_FN = `uniform vec3 uR0,uR1,uR2,uR3;
 vec3 ramp(float v){ v=clamp(v,0.,1.); if(v<.3) return mix(uR0,uR1,v/.3); if(v<.65) return mix(uR1,uR2,(v-.3)/.35); return mix(uR2,uR3,(v-.65)/.35); }`;
@@ -341,14 +341,15 @@ void main(){ if(vFrame<0.){ discard; } vec2 uv=clamp(v_uv,uInset,1.-uInset);
   if(uComb>.5){ float v=cellv(uH,vFrame,uv); o=vec4(ramp(v)*v*uTint*uHI*uK,1.); }
   else { float h=cellv(uH,vFrame,uv), t=cellv(uT,vFrame,uv); o=vec4((h*uTint*uHI+ramp(t)*t*uTI)*uK,1.); } }`;
 // 4.9.29 低端单帧（68_lowframe.js drawLowLayer）：uMode 0 = cascade_low.json 现在的写法（灰度查 Ramp × Color Over Life × Alpha，同序列材质）；
-// 1 = 溶解预览：彩色单帧（sRGB 贴图），功能图里 出现 ≤ 进度 < 熄灭 的像素可见（值小于进度就消失），进度 = 入点 → 出点
-const FS_LOW = HDR + `in vec2 v_uv; uniform sampler2D uC, uMap; uniform float uMode, uP, uAlpha, uHI, uTI, uK, uHasD, uHasA, uMirror; uniform vec4 uDm, uAm; uniform vec3 uTint; out vec4 o;
+// 1 = 再乘现有序列母材质的溶解 fade = 1 − saturate(D + 2P − 1)（4.9.31 起；4.9.29 是「出现 ≤ 进度 < 熄灭」的硬边、彩色）；2 = 功能图伪彩色；3 = 彩色单帧原样
+const FS_LOW = HDR + `in vec2 v_uv; uniform sampler2D uC, uMap; uniform float uMode, uP, uAlpha, uHI, uTI, uK, uHasD, uHasA, uMirror, uInv; uniform vec4 uDm, uAm; uniform vec3 uTint; out vec4 o;
 ${RAMP_FN}
-void main(){ vec2 uv=v_uv; if(uMirror>.5) uv.x=1.-uv.x; vec4 c=texture(uC,uv);
-  if(uMode<.5){ float v=c.r; o=vec4(ramp(v)*v*uTint*uHI*uK*uAlpha,1.); return; }
-  vec4 m=texture(uMap,uv); float d=uHasD>.5?dot(m,uDm):1., a=uHasA>.5?dot(m,uAm):0.;
-  if(uMode>1.5){ float x=dot(m,uAm); bool lit=uHasD>.5?dot(m,uDm)>0.:x<.999; o=vec4(lit?mix(vec3(.1,.35,1.),vec3(1.,.25,.05),x)*(.35+.65*x):vec3(0.),1.); return; }     // 2 = 功能图伪彩色：uAm 选要看的通道，uDm（熄灭）> 0 = 亮过；早 = 蓝、晚 = 红，没亮过 = 黑
-  float vis=(uP>=a && uP<d)?1.:0.; o=vec4(c.rgb*uTint*uHI*uK*vis,1.); }`;
+void main(){ vec2 uv=v_uv; if(uMirror>.5) uv.x=1.-uv.x; vec4 c=texture(uC,uv), m=texture(uMap,uv);
+  if(uMode>2.5){ o=vec4(c.rgb,1.); return; }     // 3 = 彩色单帧原样（「贴图」左格）
+  if(uMode>1.5){ float x=dot(m,uAm); if(uInv>.5) x=1.-x; bool lit=uHasD>.5?dot(m,uDm)<.999:x<.999; o=vec4(lit?mix(vec3(.1,.35,1.),vec3(1.,.25,.05),x)*(.35+.65*x):vec3(0.),1.); return; }     // 2 = 伪彩色：早 = 蓝、晚 = 红，没亮过 = 黑
+  float v=c.r, fade=1.;
+  if(uMode>.5 && uHasD>.5) fade=1.-clamp(dot(m,uDm)+2.*uP-1.,0.,1.);     // 1 = 现有序列母材质的溶解（对话框5 10-07）：值大的先消失、软过渡
+  o=vec4(ramp(v)*v*uTint*uHI*uK*uAlpha*fade,1.); }`;
 // 线间底光（4.2.0，tailHaze）：拖尾通道（G）做一次大半径高斯模糊，乘强度加回去（受光的烟 / 分辨不出的细火花）
 const FS_HAZE = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform vec2 uDir; uniform float uSig, uK; out vec4 o;
 void main(){ float st=max(1.,uSig/6.), acc=0., ws=0.; for(int i=-24;i<=24;i++){ float x=float(i)*st, w=exp(-.5*x*x/(uSig*uSig)); acc+=texture(uS,v_uv+uDir*x).g*w; ws+=w; } o=vec4(0.,acc/ws*uK,0.,0.); }`;

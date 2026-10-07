@@ -46,7 +46,7 @@ ${TN(name, 'Loop', L)}.png（上升循环）${b.fades.map(f => `、${TN(name, 'F
 尺寸 ${P.texW}×${P.texH}，灰度线性，RGBA 接力：先填满 R 的 ${L.per} 格（第 0–${L.per - 1} 帧），再接 G、B、A，共 ${L.F} 帧
 格子 ${L.cols} 列 × ${L.rows} 行，单格 ${L.cellW}×${L.cellH}（1:${Math.round(L.cellH / L.cellW)}，贴合细长的尾迹）；格子四周留空 ${P.cellPad} 像素
 导入：sRGB 关闭，压缩 BC7
-${TN(name, 'Ramp')}.png：渐变图 256×8（sRGB），暗 → 亮 = 冷却的橙红火花 → 金色火花 → 白热段与星头
+${TN(name, 'Ramp')}.png：渐变图 256×8（sRGB；最右一格黑 = 护栏，4.9.31），暗 → 亮 = 冷却的橙红火花 → 金色火花 → 白热段与星头
 
 【材质实例】
 项目现有的 RGBA 序列帧材质；列 = ${L.cols}，行 = ${L.rows}；Ramp = ${TN(name, 'Ramp')}；循环、消散各一个材质实例（只换贴图）
@@ -65,7 +65,7 @@ ${parts.join('\n')}
 ${TN(name, 'FrameTest')}.png（帧号测试）：排查用。格子、接力、取景与正式贴图完全相同，内容是帧号 + 以爆点为中心的固定大小圆和网格。
   把材质实例的贴图临时换成它播放：帧号应连续递增不倒退，圆应不动、不胀缩、不变扁。
   帧号乱跳 / 倒退 → 帧号曲线或材质的接力解码不对；圆胀缩、晃动 → Size By Life / 位置曲线不对；圆变扁 → 对齐方式或 Initial Size 不对
-${TN(name, 'Ramp')}.png：渐变图 256×8（sRGB），灰度从暗到亮依次取：拖尾冷却色 → 拖尾高温色 → 星头高温色
+${TN(name, 'Ramp')}.png：渐变图 256×8（sRGB；最右一格黑 = 护栏，4.9.31），灰度从暗到亮依次取：拖尾冷却色 → 拖尾高温色 → 星头高温色
 
 【材质实例】
 项目现有的 RGBA 序列帧材质；列 = ${L.cols}，行 = ${L.rows}；Ramp = ${TN(name, 'Ramp')}

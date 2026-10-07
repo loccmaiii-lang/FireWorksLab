@@ -89,10 +89,12 @@ async function bakeLow(b, lo, M, onProg) {
     if (i % 8 === 7) { onProg && onProg(0.7 + 0.25 * i / fr.length); await nextTick(); } }
   // 错落：按 2 × 2 像素一小块给熄灭时刻加随机（亮的地方本来就晚灭：亮度高 → 在阈值上停得久）
   const hash = (x, y) => { let h = (x * 374761393 + y * 668265263 + 0x9e3779b9) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
-  const Dm = new Uint8Array(MS * MS), Am = new Uint8Array(MS * MS), Cm = new Uint8Array(MS * MS);
+  // 4.9.31（用户 10-07 14:56「如果网友单帧效果了，就需要开了」）：溶解图按现有序列母材质的方向存（对话框5 查本机配置：读 R、fade = 1 − saturate(D + 2P − 1)，值大的先消失）
+  //   → D = 1 − 熄灭时刻（早灭的值大）、亮过的 ≤ 254，没亮过 255（一开始就消失，本来也是黑的）。出现顺序 A 照旧存时刻（材质没有这个输入，留给以后）
+  const Dm = new Uint8Array(MS * MS).fill(255), Am = new Uint8Array(MS * MS), Cm = new Uint8Array(MS * MS);
   for (let y = 0; y < MS; y++) for (let x = 0; x < MS; x++) { const j = y * MS + x; if (first[j] < 0) { Am[j] = 255; continue; }
     const a = clamp((first[j] - tIn) / D, 0, 1), d0 = clamp((last[j] - tIn) / D, 0, 1), d = clamp(d0 + lo.jit * 0.12 * (2 * hash(x >> 1, y >> 1) - 1), a + 1 / 255, 1);
-    Am[j] = Math.round(a * 255); Dm[j] = Math.max(1, Math.round(d * 255)); }
+    Am[j] = Math.round(a * 255); Dm[j] = Math.min(254, Math.round((1 - d) * 255)); }
   // 轮廓：单帧有内容的地方外扩 3 像素（和现在的 Cutout 同一口径）
   for (let y = 0; y < MS; y++) for (let x = 0; x < MS; x++) { const gy = Math.floor((y + 0.5) / MS * S), gx = Math.floor((x + 0.5) / MS * S); if (gray[gy * S + gx] < LOW_TH) continue;
     for (let dy = -3; dy <= 3; dy++) for (let dx = -3; dx <= 3; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && yy < MS && xx >= 0 && xx < MS) Cm[yy * MS + xx] = 255; } }
@@ -142,22 +144,22 @@ function ensureLow(b, lo, M) {
     finally { state.baking = false; setStatus(''); lowTask = null; if (state.layerQueue && state.layerQueue.size) runLayerQueue(); }
   })();
 }
-// 引擎回放画一层单帧：dissolve = false 按 cascade_low.json（现有序列材质：灰度 + Ramp、Size By Life、Alpha）；true 按功能图溶解（像素在 出现 ≤ 进度 < 熄灭 时可见）
+// 引擎回放画一层单帧：dissolve = false 只看 Size By Life + Alpha（导入器没开溶解时 UE 里的样子）；true 再按现有序列母材质的溶解公式
+//   fade = 1 − saturate(D + 2P − 1)（P = 入点 → 出点 0 → 1，D = 溶解图 R；对话框5 10-07 查本机配置）——软过渡，一块要大约半个寿命才消失
 function drawLowLayer(lw, L, M, t, view, dissolve) {
   const age = (engineTick(t) - (+L.delay || 0)) * (+L.rate || 1), u = (age - lw.tIn) / Math.max(1e-6, lw.tOut - lw.tIn);
   if (u < 0 || u >= 1) return -1;
   const tx = lowTextures(lw), pr = PR.low; gl.useProgram(pr.p);
-  // 溶解预览有出现顺序图时不再 Size By Life（出现顺序已经让它从里往外长出来）；面片绕爆点缩放（Pivot Offset）
-  const sc = (+L.scale || 1) * (dissolve && lw.chans.A ? 1 : evalKeys(lw.sizeKeys, u)), v = lw.view, mir = L.mirror ? -1 : 1;
+  // 面片绕爆点缩放（Pivot Offset）；母材质没有出现顺序输入，溶解时照样 Size By Life
+  const sc = (+L.scale || 1) * evalKeys(lw.sizeKeys, u), v = lw.view, mir = L.mirror ? -1 : 1;
   const r = [mir * (v[0] - v[2]) * sc, (v[1] - v[3]) * sc, mir * (v[0] + v[2]) * sc, (v[1] + v[3]) * sc];
   gl.uniform4fv(pr.u.uRect, [Math.min(r[0], r[2]), r[1], Math.max(r[0], r[2]), r[3]]); gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uMirror, L.mirror ? 1 : 0);
-  gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, dissolve ? tx.color : tx.gray); gl.uniform1i(pr.u.uC, 0);
+  gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tx.gray); gl.uniform1i(pr.u.uC, 0);
   gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, tx.maps); gl.uniform1i(pr.u.uMap, 1);
   const mask = c => { const k = lw.chans[c]; return k ? [k === 'R' ? 1 : 0, k === 'G' ? 1 : 0, k === 'B' ? 1 : 0, 0] : [0, 0, 0, 0]; };
   gl.uniform4fv(pr.u.uDm, mask('D')); gl.uniform4fv(pr.u.uAm, mask('A')); gl.uniform1f(pr.u.uHasD, lw.chans.D ? 1 : 0); gl.uniform1f(pr.u.uHasA, lw.chans.A ? 1 : 0);
-  gl.uniform1f(pr.u.uMode, dissolve ? 1 : 0); gl.uniform1f(pr.u.uP, u); gl.uniform1f(pr.u.uAlpha, dissolve ? 1 : evalKeys(lw.alphaKeys, u));
+  gl.uniform1f(pr.u.uMode, dissolve ? 1 : 0); gl.uniform1f(pr.u.uP, u); gl.uniform1f(pr.u.uAlpha, evalKeys(lw.alphaKeys, u)); gl.uniform1f(pr.u.uInv, 0);
   setMatUniforms(pr, M, age);
-  if (dissolve) { const k = Math.max(...tintAt(M, age)); gl.uniform3fv(pr.u.uTint, [k, k, k]); }     // 彩色单帧里已经是那一刻的色相：只乘亮度
   gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
   return 0;
 }
@@ -166,7 +168,13 @@ function fwlLowLayer(name, lw, M, L, pre) {
   const life = lw.tOut - lw.tIn, rate = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1, v = lw.view, W = 2 * v[2] * sc, H = 2 * v[3] * sc, cy = v[1] * sc;
   const pivot = Math.abs(cy) > 1e-4;
   const textures = { [pre + 'frame']: { file: TN(name, 'Frame') + '.png', class: 'flipbook', cols: 1, rows: 1, channels: 1, frames: 1 }, [pre + 'cutout']: { file: TN(name, 'Frame_Cutout') + '.png', class: 'cutout' }, [pre + 'ramp']: { file: TN(name, 'Ramp') + '.png', class: 'ramp' } };
-  const materials = { [pre + 'main']: { role: 'flipbook_rgba', textures: { main: pre + 'frame', ramp: pre + 'ramp' }, scalars: { rows: 1, cols: 1 } } };
+  // 4.9.31 溶解（用户 10-07 14:56「这个一律不开溶解是因为之前都是序列……如果网友单帧效果了，就需要开了」）：只有这种发射器带 dissolve 标记，
+  //   导入器只对带标记的开溶解（序列、单束、别的一律照旧不开）。现有序列母材质：溶解图读 R、进度 = 动态参数 dissolve（第 3 个、index 2）、
+  //   fade = 1 − saturate(D + 2P − 1)（值大的先消失）→ 溶解图 D = 1 − 熄灭时刻；进度 0 → 1 = 入点 → 出点。对话框5 加好之前，导进去是不开溶解的样子（Size By Life + Alpha）
+  const dis = !!(lw.maps && lw.chans.D);
+  if (lw.maps) textures[pre + 'dmap'] = { file: TN(name, 'Frame_Maps') + '.png', class: 'dissolve', srgb: false, suffix: lw.suffix,
+    channels: Object.fromEntries(Object.entries(lw.chans).map(([c, k]) => [k, LOW_MAP_NAMES[c]])) };
+  const materials = { [pre + 'main']: { role: 'flipbook_rgba', textures: { main: pre + 'frame', ramp: pre + 'ramp', ...(dis ? { dissolve: pre + 'dmap' } : {}) }, scalars: { rows: 1, cols: 1 } } };
   const emitter = { name: pre + 'Frame', material: pre + 'main', gpu: false, layer: L.layerNo || 1,
     required: { screen_alignment: 'Rectangle', duration_s: r4(life / rate), loops: 1, delay_s: r4((+L.delay || 0) + lw.tIn / rate), cutout: pre + 'cutout', max_draw_count: 1, ...(pivot ? { pivot_offset: [-0.5, r4(-0.5 - cy / H)] } : {}) },
     spawn: { rate: { const: 0 }, bursts: [[0, 1]] },
@@ -175,19 +183,15 @@ function fwlLowLayer(name, lw, M, L, pre) {
       { m: 'InitialSize', StartSize: { const: [r1(W * 100), r1(H * 100), 1] } },
       { m: 'InitialLocation', StartLocation: { const: [0, 0, pivot ? 0 : r1(cy * 100)] } },
       { m: 'SizeByLife', LifeMultiplier: { curve: lw.sizeKeys.map(([u, s]) => [r4(u), [r4(s), r4(s), 1]]) }, MultiplyX: true, MultiplyY: true, MultiplyZ: false },
-      { m: 'DynamicParameter', params: { frame: { const: 0 } } },
+      { m: 'DynamicParameter', params: { frame: { const: 0 }, ...(dis ? { dissolve: { curve: [[0, 0], [1, 1]] } } : {}) } },
       { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, life, lw.tIn, intOr1(M.headInt)) }, AlphaOverLife: { curve: lw.alphaKeys.map(([u, a]) => [r4(u), r4(a)]) } }
     ],
+    ...(dis ? { dissolve: { enable: true, texture: pre + 'dmap', channel: lw.chans.D, param: 'dissolve', progress: '0 → 1 = 入点 → 出点（相对寿命，线性）',
+      encoding: 'D = 1 − 熄灭时刻（归一到入点 → 出点）：早灭的值大；没亮过 = 1', formula: 'fade = 1 − saturate(D + 2P − 1)（现有序列母材质，对话框5 10-07 查本机配置；软过渡）',
+      rule: '只给带这个标记的发射器开溶解（用户 10-07 14:56）；序列、单束、别的效果照旧不开', unverified: true } } : {}),
     notes: [`低端单帧（${lw.pick === 'expo' ? '长曝光：入点 → 出点每个像素取最亮' : `某一帧：${lw.tStar.toFixed(2)} s`}）：一张 ${lw.S} × ${lw.S} 灰度 + Ramp，走现有序列材质（1 × 1 格、帧号 0）；Size By Life 从开花长到那一刻、之后按亮度 Alpha 淡出（未经 UE 验证）`,
-      `溶解还没接：对话框5 查到现有序列母材质有溶解输入（读 R、进度 = 动态参数第 3 个、值大的先消失、软过渡），但没有彩色单帧角色，导入器按你的要求现在不开溶解；彩色单帧和功能图先在 extras 里，引擎回放「溶解预览」按功能图画。你指定材质、授权开溶解以后，这个发射器再接上` ] };
-  const extras = { [pre + 'color']: { file: TN(name, 'Frame_Color') + '.png', what: '彩色单帧（sRGB；Alpha = 灰度），亮度倍数在 Color Over Life', size: [lw.S, lw.S] } };
-  if (lw.maps) extras[pre + 'maps'] = { file: TN(name, 'Frame_Maps') + '.png', what: '功能图（线性，不勾 sRGB）', size: [lw.MS, lw.MS], suffix: lw.suffix,
-    channels: Object.fromEntries(Object.entries(lw.chans).map(([c, k]) => [k, LOW_MAP_NAMES[c]])),
-    // 4.9.29 对话框5 查本机配置（10-07，协作/备忘_导入器.md）：现有序列母材质有溶解贴图输入（缺省 R）、进度 = 动态参数第 3 个（index 2），
-    //   fade = 1 − saturate(D + 2P − 1)：值大的先消失、软过渡；导入器现在按用户要求不开溶解。这张图存的是「时间」（值大 = 晚灭），接那个材质要反相
-    dissolve: { param: 'dissolve', progress: '0 → 1 = 入点 → 出点（相对寿命）', encoding: '熄灭顺序：值 = 最后亮着的时刻（大 = 晚灭）；出现顺序：值 = 第一次亮的时刻；没亮过 熄灭 0 / 出现 1',
-      preview: '烘焙器「溶解预览」：像素在 出现 ≤ 进度 < 熄灭 时可见（硬边）',
-      existingMaterial: '对话框5 查到：现有序列母材质溶解读 R、进度 = 动态参数 index 2、fade = 1 − saturate(D + 2P − 1)（值大的先消失、软过渡，没有出现顺序输入）→ 接它要把熄灭顺序反相（1 − 值）；导入器现在不开溶解，要你授权、指定材质再接（未经 UE 验证）' }, jitter: lw.jit };
+      dis ? `溶解：用户 10-07 14:56 授权「单帧要开」。溶解图 ${lw.chans.D} 通道 = 1 − 熄灭时刻，进度 dissolve 0 → 1；导入器只对带 dissolve 标记的发射器开（对话框5 在加），加好之前导进去是不开溶解的样子` : '没勾溶解图（D）：不开溶解'] };
+  const extras = { [pre + 'color']: { file: TN(name, 'Frame_Color') + '.png', what: '彩色单帧（sRGB；Alpha = 灰度），亮度倍数在 Color Over Life；要用得等你指定能吃彩色单帧的材质', size: [lw.S, lw.S] } };
   return { textures, materials, emitter, extras };
 }
 async function lowFiles(name, lw, M) {
@@ -229,7 +233,8 @@ function renderLowAtlas(lw, M) {
     const msk = k => k ? [k === 'R' ? 1 : 0, k === 'G' ? 1 : 0, k === 'B' ? 1 : 0, 0] : [0, 0, 0, 0];
     // 左边整张彩色单帧（不溶解）；中 / 右：伪彩色，uDm（熄灭）> 0 = 亮过
     gl.uniform4fv(pr.u.uAm, msk(ch)); gl.uniform4fv(pr.u.uDm, msk(lw.chans.D)); gl.uniform1f(pr.u.uHasD, c && lw.chans.D ? 1 : 0); gl.uniform1f(pr.u.uHasA, 0); gl.uniform1f(pr.u.uP, 0.5);
-    gl.uniform1f(pr.u.uMode, c ? 2 : 1);
+    gl.uniform1f(pr.u.uInv, c === 'D' ? 1 : 0);     // 溶解图存的是 1 − 熄灭时刻：伪彩色翻回「早 = 蓝、晚 = 红」
+    gl.uniform1f(pr.u.uMode, c ? 2 : 3);     // 3 = 彩色单帧原样
     gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   });
   gl.activeTexture(gl.TEXTURE0); gl.viewport(0, 0, canvas.width, canvas.height);

@@ -52,9 +52,12 @@ function rampAt(M, v) {
   for (let i = 1; i < 4; i++) if (v <= RAMP_POS[i]) { const k = (v - RAMP_POS[i - 1]) / (RAMP_POS[i] - RAMP_POS[i - 1]); return C[i - 1].map((a, j) => a + (C[i][j] - a) * k); }
   return C[3];
 }
+// 4.9.31（用户 10-07 14:34 对分裂星的护栏试用：「可以做了，做的很好，太好了，后面所有导出都这样做」，对话框21 排来）：
+//   Ramp 256×8，第 0–254 格照旧、第 255 格放黑（护栏）；序列编码封顶 253（FS_ENC）。项目材质读 Ramp 时 v≈0 若混到最后一格就出「线框」，
+//   有了黑格不出线；最亮的值落在 253 格以内，星芯是满的热色。对话框5 本机读回说 Ramp 绑定是 Clamp、线框原因未定论，护栏两种情况都安全
 function rampPixels(M, w = 256, h = 8) {
   const a = new Uint8Array(w * h * 4);
-  for (let x = 0; x < w; x++) { const c = rampAt(M, x / (w - 1)).map(srgb8); for (let y = 0; y < h; y++) { const i = (y * w + x) * 4; a[i] = c[0]; a[i + 1] = c[1]; a[i + 2] = c[2]; a[i + 3] = 255; } }
+  for (let x = 0; x < w; x++) { const c = x === w - 1 ? [0, 0, 0] : rampAt(M, x / (w - 1)).map(srgb8); for (let y = 0; y < h; y++) { const i = (y * w + x) * 4; a[i] = c[0]; a[i + 1] = c[1]; a[i + 2] = c[2]; a[i + 3] = 255; } }
   return a;
 }
 const smooth = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
@@ -232,6 +235,7 @@ async function exportSingleScheme(name, b) {
   busy(true, '打包 ZIP…', 1);
   let zipName = name, out = files;
   if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: r.ub ? comboLayerName(name, 0) : name, mn: name + '_Mobile', b: r.ub || b, mb: r.mb || b, layer: '', pcTex: r.pcTex, low: r.low }]); zipName = nm.base; }
+  { const k = exportScaleOf(state.P); out = scaleCascadeFiles(out, k); zipName += exportScaleSfx(k); }     // 4.9.31 导出缩放
   download(await makeZip(out), `${zipName}.zip`);
   wbAutoExport(zipName);
   flash(`已导出 ${name}（PC ${({ seq: '序列', unit: '单束', dots: 'GPU 光点', off: '不出' })[so.pc]} · 手机 ${so.mobile === 'seq' ? '序列' : '不出'}）`);
@@ -265,6 +269,7 @@ async function exportMaster() {
     busy(true, '打包 ZIP…', 1);
     let zipName = name, out = files;
     if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); zipName = nm.base; }
+    { const k = exportScaleOf(state.P); out = scaleCascadeFiles(out, k); zipName += exportScaleSfx(k); }     // 4.9.31 导出缩放
     download(await makeZip(out), `${zipName}.zip`);
     wbAutoExport(zipName);     // 4.2.10：存进这个效果的「版本」（导出时），不再进工具页的全局版本列表
     flash('已导出 ' + name);

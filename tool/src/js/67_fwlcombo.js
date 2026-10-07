@@ -225,7 +225,7 @@ function unitP(P0) { return { ...P0, form: 'unit', cols: 16, rows: 2, chans: 4, 
 const singleUnitEntry = { P: null, unitBake: null };
 function singleUnitHolder() { singleUnitEntry.P = state.P; singleUnitEntry.unitSrc = state.P; return singleUnitEntry; }
 // 单束贴图只和效果参数有关：导出方案（PC / 手机怎么出、光点大小亮度）变了不用重烘；变体数 / 随机感（4.9.28）另算进 unitSigOf
-const unitSig = P => JSON.stringify({ ...P, outPC: 0, outMobile: 0, dotSize: 0, dotBright: 0, unitVariants: 0, unitRandom: 0, outLow: 0, lowPick: 0, lowAt: 0, lowSize: 0, lowJit: 0, lowMaps: 0, lowSuffix: 0 });
+const unitSig = P => JSON.stringify({ ...P, outPC: 0, outMobile: 0, dotSize: 0, dotBright: 0, unitVariants: 0, unitRandom: 0, outLow: 0, lowPick: 0, lowAt: 0, lowSize: 0, lowJit: 0, lowMaps: 0, lowSuffix: 0, exportScale: 0 });
 // 4.9.28 单束变体（用户 10-07 09:20「这些效果要对粗细、长短或多个不同种子一起组合，提升随机感，降低随机感」；11:45 选「变体数 + 随机感」）：
 //   变体数 K（1–4）：烘 K 张单束贴图，第 k 张种子 + 101k（火花纹路不同），星数平分，每张一个发射器；
 //   随机感 r（0–1）：几张之间粗细（火花大小、星头大小 × 1 ± 0.4r）和长短（尾长 × 1 ± 0.35r，和粗细错开排）拉开；
@@ -311,7 +311,7 @@ function singleSchemeNote(P) { const L = singleLayer(P, state.M); return typeof 
 // 单层的光点：缓存在一个假条目上（参数 / 颜色变了按 dotsTables 自己的签名重算）
 const singleDotsEntry = { P: null, bake: null };
 // 4.9.25 导出方案（PC / 手机怎么出、光点大小 / 亮度）改了不用重烘：画面和导出按现在的方案，模拟的数用烘焙时的参数
-const SCHEME_KEYS = ['outPC', 'outMobile', 'dotSize', 'dotBright', 'unitVariants', 'unitRandom', 'outLow', 'lowPick', 'lowAt', 'lowSize', 'lowJit', 'lowMaps', 'lowSuffix'];     // 4.9.29 低端 / 单帧     // 4.9.28 单束变体数 / 随机感：只重烘单束
+const SCHEME_KEYS = ['outPC', 'outMobile', 'dotSize', 'dotBright', 'unitVariants', 'unitRandom', 'outLow', 'lowPick', 'lowAt', 'lowSize', 'lowJit', 'lowMaps', 'lowSuffix', 'exportScale'];     // 4.9.29 低端 / 单帧     // 4.9.28 单束变体数 / 随机感：只重烘单束
 function withScheme(P) { if (!P || P === state.P || state.tab === 'combo' || !state.P) return P; const o = { ...P }; for (const k of SCHEME_KEYS) o[k] = state.P[k]; return o; }
 function singleDotsTables(P, M, b) { singleDotsEntry.P = P; singleDotsEntry.bake = b; return dotsTables(singleDotsEntry, singleLayer(P, M)); }
 // 导出：PC / 手机各按方案出；文件名和单层序列一样（单束的贴图用 _L1 层名，cascade.json 里引用的就是它）

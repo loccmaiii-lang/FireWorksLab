@@ -139,3 +139,37 @@ function fwlFiles(name, b, M, mobileBake=null) {
   const mob = fwlCascade(mobileBake?name+'_Mobile':name, mobileBake||b, M, true);
   return [['cascade.json', utf8(JSON.stringify(pc, null, 1))], ['cascade_mobile.json', utf8(JSON.stringify(mob, null, 1))]];
 }
+
+// ---- 4.9.31 导出缩放（用户 10-07 14:56「导出可以让我选0.5/0.8/1这样」）----
+// cascade.json 里所有「长度」× k：面片大小（X / Y）、出生位置、球面半径、初速、按寿命的速度、加速度、预览距离；时间、帧号、颜色、Size By Life 倍数、阻力（1/s）不变。
+// 球面放射的 VelocityScale 是「初速 ÷ 半径」，半径 × k 以后初速自动 × k，不用动。同一个效果等比缩小，播放快慢一样。
+const exportScaleOf = P => { const k = +(P && P.exportScale); return k > 0 && k < 1 ? k : 1; };
+const exportScaleSfx = k => k === 1 ? '' : '_S' + Math.round(k * 100);
+function fwlScaleJSON(j, k) {
+  if (!j || k === 1) return j;
+  const R = x => +(x * k).toFixed(2), sv = (v, mask) => Array.isArray(v) ? v.map((x, i) => mask && !mask[i] ? x : R(x)) : R(v);
+  const sd = (d, mask) => !d || typeof d !== 'object' ? d : 'const' in d ? { ...d, const: sv(d.const, mask) } : 'uniform' in d ? { ...d, uniform: d.uniform.map(v => sv(v, mask)) } : 'curve' in d ? { ...d, curve: d.curve.map(([t, v]) => [t, sv(v, mask)]) } : d;
+  const XY = [1, 1, 0];
+  for (const e of j.emitters || []) e.modules = (e.modules || []).map(m => {
+    switch (m.m) {
+      case 'InitialSize': return { ...m, StartSize: sd(m.StartSize, XY) };
+      case 'InitialLocation': return { ...m, StartLocation: sd(m.StartLocation) };
+      case 'SphereLocation': return { ...m, StartRadius: sd(m.StartRadius) };
+      case 'InitialVelocity': return { ...m, StartVelocity: sd(m.StartVelocity) };
+      case 'VelocityOverLife': return { ...m, VelOverLife: sd(m.VelOverLife) };
+      case 'ConstAcceleration': return { ...m, Acceleration: Array.isArray(m.Acceleration) ? m.Acceleration.map(R) : sd(m.Acceleration) };
+      case 'Acceleration': return { ...m, Acceleration: sd(m.Acceleration) };
+      default: return m;
+    }
+  });
+  if (j.system && j.system.preview_distance_cm) j.system.preview_distance_cm = Math.round(j.system.preview_distance_cm * k);
+  j.name = (j.name || '') + exportScaleSfx(k); j.export_scale = k;
+  (j.notes = j.notes || []).push(`导出缩放 × ${k}（用户 10-07 14:56）：所有长度（面片大小、位置、球面半径、速度、加速度）× ${k}，时间 / 帧号 / 贴图不变；粒子系统名加 ${exportScaleSfx(k)}，贴图名不变、几档共用`);
+  if (j.source && j.emitters) j.source.plan_sig = fwlPlanSig(j.emitters);
+  return j;
+}
+// 素材包文件里所有 cascade*.json 按缩放改；返回新的文件表
+function scaleCascadeFiles(files, k) {
+  if (k === 1) return files; const dec = new TextDecoder();
+  return files.map(([f, d]) => /(^|\/)cascade(_mobile|_low)?\.json$/.test(f) ? [f, utf8(JSON.stringify(fwlScaleJSON(JSON.parse(dec.decode(d)), k), null, 1))] : [f, d]);
+}

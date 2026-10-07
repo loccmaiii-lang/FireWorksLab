@@ -606,13 +606,15 @@ function rtLayout(P) {
 }
 // 4.5.1 远段 TrailFar 取景（世界坐标）：低分辨率渲远段在整个寿命里的几十个时刻，按烘焙的曝光口径（≥ 3/255）量出内容范围：
 //   竖向 = 最低到最高看得见的地方；横向按亮度取 0.2%–99.8%（偶尔漂远的一颗不撑大面片）。开花后的时长量到「最后还看得见」（≥ 10/255）。
-//   帧：64 帧（16×1 / 8×2 / 4×4 × RGBA），面片在发射器时间 t0 = 交接中点出现（之前远段还没有东西）。
+//   帧：64 帧（16×1 / 8×2 / 4×4 × RGBA），面片在交接开始 a0 出现（4.9.31 起；以前是交接中点，见 rtLayoutFar 里的说明）。
 //   上升段的帧（4.9.26 起）按「800 m 外每帧在屏幕上挪多少像素」分、对齐 tick（以前按弹体走过的路平均分，见下）；
 //   开花后的帧按时间平均分（只剩慢慢变暗、漂开）。每帧烘这一帧显示时间的中点。
 const rtFarCache = new Map();
 function rtLayoutFar(P, ball, LI) {
   const key = JSON.stringify(P); if (rtFarCache.has(key)) return rtFarCache.get(key);
-  const T = ball.T, CL = rtTexClasses(P, LI), [a0, a1] = rtNearA(P), tA = (a0 + a1) / 2;
+  // 4.9.31（用户 10-07 14:56「远段刚出现那一下会卡顿闪一次」）：远段以前在交接中点 (a0 + a1) / 2 才出现，可远段的权重 1 − 近段权重 从 a0 就开始 > 0——
+  //   a0 到中点之间那些火花一直只亮一半（近段已经在淡出、远段还没来），到中点远段一下补上一半亮度，就是那一下「闪」。现在从 a0 出现：第一帧的火花远段权重≈0，慢慢长出来
+  const T = ball.T, CL = rtTexClasses(P, LI), [a0, a1] = rtNearA(P), tA = a0;
   const Dmax = Math.max(rtPowderLifeMax(P), ...CL.map(C => C.lifeMax)) * 1.02;
   const pT = ball.pos(T), pad = 30 + 2 * (+P.rtCone || 0) + 15 * (+P.rtTurb || 0);
   const xlo = Math.min(0, pT[0]) - pad, xhi = Math.max(0, pT[0]) + pad, zlo = -25, zhi = ball.H + 25;
@@ -639,29 +641,36 @@ function rtLayoutFar(P, ball, LI) {
   //   RT6L 上升段 36 帧摊 6.6 s（最慢 1.9 fps，800 m 外每帧跳 5–6 像素），帧也不对齐 tick。现在和大面片同一套口径（帧账本，31_plan40.js）：
   //   每帧从 tick 开始、停整数个 tick；上升段弹体在 800 m 外的游戏画面上每帧挪不超过标定线（金芒菊）就停久一点，最慢 10 fps；开花后最慢 7.5 fps；
   //   一张 16×1×RGBA 放不下就加行（16×2、16×4，格子变矮——远段面片很细很高，800 m 外一格的高度远大于屏幕上的像素，看不出差别），格子用满（多的格子让慢的地方变快）
-  const [cols, rows0] = rtGridFor(P, W0, H0), tA0 = Math.ceil(tA * 30 - 1e-6) / 30, Nr = Math.max(1, Math.round((T - tA0) * 30)), Nf = Math.max(1, Math.round(Df * 30)), Nt = Nr + Nf;
+  const [cols, rows0] = rtGridFor(P, W0, H0), tA0 = Math.max(0, Math.floor(tA * 30 + 1e-6) / 30), Nr = Math.max(1, Math.round((T - tA0) * 30)), Nf = Math.max(1, Math.round(Df * 30)), Nt = Nr + Nf;
   const ppmG = gamePixelsPerMeter(P, 0, STEP_REF_H, STEP_REF_DIST), refPx = STEP_REF_PX > 0 ? STEP_REF_PX : 0.77;
   const hp = Array.from({ length: Nr + 1 }, (_, k) => ball.pos(Math.min(T, tA0 + k / 30))), stepPx = (k0, k1) => Math.hypot(hp[k1][0] - hp[k0][0], hp[k1][2] - hp[k0][2]) * ppmG;
   const sched = (r, hf) => { const ks = []; let k = 0;
     while (k < Nr) { let h = 1; while (h < 3 && k + h < Nr && stepPx(k, k + h + 1) <= r) h++; ks.push(k); k += h; }
     while (k < Nt) { ks.push(k); k += Math.min(hf, Nt - k); } return ks; };
-  const need = Math.min(Nt, sched(refPx, 4).length);
+  const need = Math.min(Nt, sched(refPx, 4).length);     // 要多少帧上升段才每帧不超过标定线（开花后按 7.5 fps 算）
   let rows = rows0; while (cols * rows * 4 < need && rows < rows0 * 4) rows *= 2;
   // 4.9.28（本机 RT6SE4 / ME4 / LE4 回放检查「末尾空帧 26 / 2 / 3」）：格子要正好用满——帧不能比 tick 多（S 一共才 102 个 tick，16×2×4 = 128 格空 26 格），
   //   放不满就少用通道（16×2×3 = 96），再不行少一行；排出来的帧比格子少就把停得最久的帧拆开，直到一格一帧
   let chans = 4; const fitCh = () => { chans = 4; while (chans > 1 && cols * rows * chans > Nt) chans--; };
   fitCh(); while (cols * rows * chans > Nt && rows > rows0) { rows /= 2; fitCh(); }
   const F = Math.min(Nt, cols * rows * chans);
-  // 格子用满：先让上升段每 tick 一帧都放得下，开花后才从 7.5 fps 往上加（上升段的帧比开花后的帧要紧）；再按位移阈值二分把格子填满
-  let hf = 4; while (hf > 1 && sched(0, hf - 1).length <= F) hf--;
-  let ks = null, lo = 0, hi = Math.max(refPx, stepPx(0, Math.min(Nr, 3)) + 1);
-  for (let it = 0; it < 40; it++) { const mid = (lo + hi) / 2, q = sched(mid, hf); if (q.length <= F) { ks = q; hi = mid; } else lo = mid; }
-  if (!ks) ks = sched(1e9, hf);
-  while (ks.length > F) ks.pop();     // 放不下（上升段已经最慢）：尾巴上合并（只在格子上限 16×4 都不够时）
-  while (ks.length < F) {     // 4.9.28 格子用满：拆停得最久的那一帧（一样久拆后面的，开花后的帧先变快）
-    let bi = -1, bh = 1; for (let f = 0; f < ks.length; f++) { const h = (f + 1 < ks.length ? ks[f + 1] : Nt) - ks[f]; if (h >= bh && h > 1) { bh = h; bi = f; } }
-    if (bi < 0) break; ks.splice(bi + 1, 0, ks[bi] + Math.floor(bh / 2));
+  // 格子用满（4.9.31 重写分配：远段从 a0 出现以后上升段长了，按「拆停得最久的帧」补满会让帧号曲线碎成 30 多个点）：
+  //   上升段：按位移阈值二分，在「格子 − 开花后最少帧数（7.5 fps）」里排到最多；开花后：剩下的格子把开花后的 tick 均分（长短两种停法、连成两段，帧号曲线只多一个点）；
+  //   还差几格（上升段的排法跳着变）就拆上升段最后几个停得久的帧
+  const riseSched = r => { const ks = []; let k = 0; while (k < Nr) { let h = 1; while (h < 3 && k + h < Nr && stepPx(k, k + h + 1) <= r) h++; ks.push(k); k += h; } return ks; };
+  const riseFit = budget => { let best = null, lo = 0, hi = Math.max(refPx, stepPx(0, Math.min(Nr, 3)) + 1);
+    for (let it = 0; it < 40; it++) { const mid = (lo + hi) / 2, q = riseSched(mid); if (q.length <= budget) { best = q; hi = mid; } else lo = mid; }
+    return best || riseSched(1e9); };
+  const FdMin = Math.min(Nf, Math.ceil(Nf / 4));
+  let rk = riseFit(F - FdMin), Fd0 = Math.max(1, Math.min(Nf, F - rk.length));
+  if (rk.length + Fd0 < F) { rk = riseFit(F - Fd0); Fd0 = Math.max(1, Math.min(Nf, F - rk.length)); }
+  while (rk.length + Fd0 < F) {     // 还差几格：拆上升段里最后一个停 ≥ 2 tick 的帧
+    let bi = -1; for (let f = rk.length - 1; f >= 0; f--) { const h = (f + 1 < rk.length ? rk[f + 1] : Nr) - rk[f]; if (h > 1) { bi = f; break; } }
+    if (bi < 0) break; rk.splice(bi + 1, 0, rk[bi] + 1);
   }
+  const fq = Math.floor(Nf / Fd0), frem = Nf % Fd0, ks = [...rk];     // 开花后：先短后长（刚开花时还在动）
+  for (let f = 0, k = Nr; f < Fd0 && k < Nt; f++) { ks.push(k); k += fq + (f >= Fd0 - frem ? 1 : 0); }
+  while (ks.length > F) ks.pop();     // 放不下（上升段已经最慢、格子上限 16×4 都不够）：尾巴上合并
   const Fn = ks.length, Fr = ks.filter(k => k < Nr).length, Fd = Fn - Fr, Dtot = Nt / 30, times = [], dur = [];
   // 4.5.3 面片上移 vz（m/s）：寿命里一共走 vz · Dtot，面片加高这么多、开始时中心放低一半，内容始终在面片里
   const vz = rtFarVzOf(P), drift = vz * Dtot, HY = (H0 + drift) / 2 * 1.02, cz = (zb + zt) / 2 - drift / 2;
@@ -750,7 +759,7 @@ function rtFarStateAt(b, t) {
 function rtView(P, b, t) {
   const ball = rtBallistic(P), T = ball.T, top = ball.H + 12, bot = -4, cx = ball.pos(T)[0] / 2;
   let half;
-  if (state.disp === 'game') half = canvas.width / (2 * gamePixelsPerMeter(P, P.rtBurstD || 190));
+  if (state.disp === 'game') half = canvas.width / (2 * gamePixelsPerMeter(P, P.rtBurstD || 190)) / (typeof exportScaleNow === 'function' ? exportScaleNow() : 1);     // 4.9.31 导出缩放
   else if (state.disp === 'px' && b) half = canvas.width / (2 * (b.meta.L.cellH / b.meta.Wh));
   else half = (top - bot) / 2 * 1.04;
   if (2 * half >= top - bot) return [cx, (top + bot) / 2, half, half * canvas.height / canvas.width];
@@ -931,7 +940,7 @@ function rtJSON(b, name, M) {
       texture: [P.texW, P.texH], grid: [m.L.cols, m.L.rows, m.L.chans], cellPx: [m.L.cellW, m.L.cellH], pivotHead: m.hb, pivotOffset: [-0.5, +(-(1 - m.hb)).toFixed(4)], fill: m.fill ? { x: +m.fill.x.toFixed(3), y: +m.fill.y.toFixed(3) } : null, texSparks: m.texSparks || [] },
     fade: !fd ? null : { frames: fd.meta.L.F, fps: +m.fadeFps.toFixed(3), seconds: +m.fadeSeconds.toFixed(3), dissolveEnd: P.rtDissolve,
       ...(m.grow ? { spriteSizeCm: [+(fd.meta.Ww * 100).toFixed(1), +(fd.meta.Wh * 100).toFixed(1)], pivotHead: fd.meta.hb, pivotOffset: [-0.5, +(-(1 - fd.meta.hb)).toFixed(4)], refSpeed: fd.meta.Vf } : {}), texture: fd.P ? [fd.P.texW, fd.P.texH] : null, grid: [fd.meta.L.cols, fd.meta.L.rows, fd.meta.L.chans], fill: fd.meta.fill ? { x: +fd.meta.fill.x.toFixed(3), y: +fd.meta.fill.y.toFixed(3) } : null },
-    ...(b.far ? { nearExpo: m.nearExpo || 1, far: (({ t0, Dtot, Df, Fr, Fd, cols, rows, F, cx, cz, Ww, Wh, keys }) => ({ delayS: +t0.toFixed(3), seconds: +Dtot.toFixed(3), afterBurstS: +Df.toFixed(3), riseFrames: Fr, fadeFrames: Fd, grid: [cols, rows, 4], frames: F,
+    ...(b.far ? { nearExpo: m.nearExpo || 1, far: (({ t0, Dtot, Df, Fr, Fd, cols, rows, chans, F, cx, cz, Ww, Wh, keys }) => ({ delayS: +t0.toFixed(3), seconds: +Dtot.toFixed(3), afterBurstS: +Df.toFixed(3), riseFrames: Fr, fadeFrames: Fd, grid: [cols, rows, chans || 4], frames: F,
       centerM: [+cx.toFixed(2), +cz.toFixed(2)], spriteSizeCm: [+(Ww * 100).toFixed(1), +(Wh * 100).toFixed(1)], frameKeys: keys, texture: [b.far.P.texW, b.far.P.texH], fill: b.far.meta.fill ? { x: +b.far.meta.fill.x.toFixed(3), y: +b.far.meta.fill.y.toFixed(3) } : null }))(b.far.meta.far),
       nearAge: m.nearA, gpuSplit: m.gpuSplit } : {}),
     emitters: ES.emitters.map(e => ({ name: e.name, gpuPC: !!e.gpu, life: e.life, size: e.size, drag: e.drag, spawnKeys: e.spawn.length })),
