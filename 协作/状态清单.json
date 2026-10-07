@@ -1289,7 +1289,21 @@
     "NFE-MYJC-S30-3",
     "NFE-MYJC-S40-3",
     "NFE-MYJC-T-3",
-    "NFE-MYJC-Y-3"
+    "NFE-MYJC-Y-3",
+    "NFE-MYJC-C-4",
+    "NFE-MYJC-H-4",
+    "NFE-MYJC-J-4",
+    "NFE-MYJC-K-4",
+    "NFE-MYJC-M-4",
+    "NFE-MYJC-R-4",
+    "NFE-MYJC-S03-4",
+    "NFE-MYJC-S05-4",
+    "NFE-MYJC-S10-4",
+    "NFE-MYJC-S20-4",
+    "NFE-MYJC-S30-4",
+    "NFE-MYJC-S40-4",
+    "NFE-MYJC-T-4",
+    "NFE-MYJC-Y-4"
    ]
   },
   {
@@ -1400,7 +1414,8 @@
     "NFE-MYHK-J",
     "NFE-MYHK-C",
     "NFE-MYHK-J-2",
-    "NFE-MYHK-C-2"
+    "NFE-MYHK-C-2",
+    "NFE-MYHK-C-3"
    ]
   }
  ],

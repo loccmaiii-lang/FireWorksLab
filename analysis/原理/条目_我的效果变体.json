@@ -5096,7 +5096,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 4.5486,
-    "duration": 2.3,
+    "duration": 2.91,
     "stars": 49,
     "v0": 46.0,
     "vt": 14.04,
@@ -5230,7 +5230,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 3.2164,
-    "duration": 3.06,
+    "duration": 3.88,
     "stars": 71,
     "v0": 281.2,
     "vt": 15.69,
@@ -5362,7 +5362,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 3.7592,
-    "duration": 4.41,
+    "duration": 5.62,
     "stars": 125,
     "v0": 525.6,
     "vt": 19.82,
@@ -5495,7 +5495,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.6125,
-    "duration": 6.06,
+    "duration": 7.75,
     "stars": 216,
     "v0": 383.5,
     "vt": 26.42,
@@ -5628,7 +5628,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.3957,
-    "duration": 6.97,
+    "duration": 9.32,
     "stars": 298,
     "v0": 314.0,
     "vt": 29.72,
@@ -5644,7 +5644,7 @@
     "subDelay": 1.646,
     "subSpeed": 49.3,
     "subBurn": 1.646,
-    "afterBurn": 0.546,
+    "afterBurn": 0.9,
     "emberLife": 5.488,
     "tailDiffuseScale": 37,
     "prePivot": 0,
@@ -5672,7 +5672,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 3 尺（直径约 550 m）；点灭星第二段 0.05 → 0.546 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 3 尺（直径约 550 m）；点灭星第二段 0.05 → 0.546 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）；导出回放检查：点灭星第二段 0.55 s：3 尺燃烧 6.2 s ± 离散，最早几颗星烧完后隔一段才有下一批 → 中间空帧 3 → 第二段 0.9 s 接上（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -5761,7 +5761,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.5676,
-    "duration": 8.02,
+    "duration": 10.69,
     "stars": 405,
     "v0": 507.5,
     "vt": 33.03,
@@ -5777,7 +5777,7 @@
     "subDelay": 1.902,
     "subSpeed": 60.5,
     "subBurn": 1.902,
-    "afterBurn": 0.636,
+    "afterBurn": 1.0,
     "emberLife": 6.341,
     "tailDiffuseScale": 37,
     "prePivot": 0,
@@ -5805,7 +5805,7 @@
     "headInt": 1,
     "tailInt": 1
    },
-   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 4 尺（直径约 780 m）；点灭星第二段 0.05 → 0.636 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
+   "note": "按号数表从原样（直径 243 m ≈ 7.8 号）缩放到 4 尺（直径约 780 m）；点灭星第二段 0.05 → 0.636 s（用户 10-07 09:48），这一层开花闪光关掉（开头全黑帧自动裁掉）；导出回放检查：同上（4 尺中间空帧 2）→ 第二段 1.0 s（来源：analysis/我的配方/my_fxmuw5v7bh/金曜菊-窜天猴__fxmuw5v7bh.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",
@@ -5887,7 +5887,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 3.9,
+    "duration": 4.96,
     "stars": 100,
     "v0": 377,
     "vt": 14.4,
@@ -6003,7 +6003,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 5.7,
+    "duration": 7.17,
     "stars": 35,
     "v0": 377,
     "vt": 8.1,
@@ -6121,7 +6121,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 3.9,
+    "duration": 4.96,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
@@ -6239,7 +6239,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 3.9,
+    "duration": 4.96,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
@@ -6358,7 +6358,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 3.9,
+    "duration": 4.96,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
@@ -6475,7 +6475,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 3.9,
+    "duration": 4.96,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
@@ -6593,7 +6593,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 4.5486,
-    "duration": 6.96,
+    "duration": 8.28,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
@@ -6711,7 +6711,7 @@
    "p": {
     "renderVer": 40,
     "exposure": 2.8,
-    "duration": 3.9,
+    "duration": 4.96,
     "stars": 100,
     "v0": 377,
     "grav": 0.05,
@@ -8706,10 +8706,11 @@
     "lastFlare": 0,
     "seed": 52,
     "duration": 7.85,
-    "exposure": 0.3698,
+    "exposure": 0.9245,
     "renderVer": 40,
     "dirJit": 1.2
    },
+   "expo0": 0.3698,
    "m": {
     "stages": [
      [
@@ -8725,7 +8726,7 @@
     "headInt": 2.4,
     "tailInt": 1
    },
-   "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、青色、和亲星同开同灭）（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
+   "note": "芯入：加一圈无尾牡丹芯（半径约亲星 0.5、青色、和亲星同开同灭）；导出回放检查：芯层单看是一圈青星，但叠在冠的长丝里看不出来（冠中间是长丝投影最密的地方）→ 芯曝光 × 2.5（来源：analysis/我的配方/my_fxmuwols5x/鸿巢四尺玉_·_我的__fxmuwols5x.json）",
    "look": [
     "这一排变体放在一起看：大小、造型是不是拉开了",
     "引擎回放 + 游戏内大小",

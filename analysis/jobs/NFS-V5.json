@@ -1,0 +1,25 @@
+{
+ "id": "NFS-V5",
+ "type": "std",
+ "priority": 1,
+ "targets": [
+  "MYJC-O",
+  "MYJC-S03",
+  "MYJC-S05",
+  "MYJC-S10",
+  "MYJC-S20",
+  "MYJC-S30",
+  "MYJC-S40",
+  "MYJC-K",
+  "MYJC-Y",
+  "MYJC-R",
+  "MYJC-T",
+  "MYJC-M",
+  "MYJC-H",
+  "MYJC-J",
+  "MYJC-C",
+  "MYHK-C"
+ ],
+ "name": "标准检查：窜天猴 + 鸿巢芯入（重导后）",
+ "note": "对话框新花型。只查这些档，并进上一次的完整结果。"
+}

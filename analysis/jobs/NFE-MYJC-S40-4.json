@@ -1,0 +1,9 @@
+{
+ "id": "NFE-MYJC-S40-4",
+ "type": "export",
+ "effect": "myv_fxmuw5v7bh",
+ "entry": "MYJC-S40",
+ "name": "GoldRayRocket_40",
+ "priority": 4,
+ "note": "我的效果变体：MYJC-S40 重导（点灭星接力层时长按最晚那颗星算——以前按平均燃烧算，后面几颗星的第二段被时长切掉；3 / 4 尺第二段加长接上中间空帧）。同一目录覆盖。"
+}

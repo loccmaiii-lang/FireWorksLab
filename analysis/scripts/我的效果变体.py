@@ -32,6 +32,9 @@ EN_SFX = {'S03': '03', 'S05': '05', 'S10': '10', 'S20': '20', 'S30': '30', 'S40'
 # 金曜菊-A 2–4 尺第 2 层过曝：回放检查修了 Ramp 以后按金色再测还是 2.4 / 2.9 / 3.4%（NFE-MYJA-S*-3）→ 曝光压到 2% 以下（留一点余量）。
 # 导出回放检查（NFE-*）不过的，按测出来的改（键 = 条目；expoMul 乘在写回的曝光上；其余键直接写进参数）。依据见 analysis/results/NFE-*/回放检查.json
 FIXES = {
+    'MYJC-S30-2': {'afterBurn': 0.9, '_why': '点灭星第二段 0.55 s：3 尺燃烧 6.2 s ± 离散，最早几颗星烧完后隔一段才有下一批 → 中间空帧 3 → 第二段 0.9 s 接上'},
+    'MYJC-S40-2': {'afterBurn': 1.0, '_why': '同上（4 尺中间空帧 2）→ 第二段 1.0 s'},
+    'MYHK-C-3': {'expoMul': 2.5, '_why': '芯层单看是一圈青星，但叠在冠的长丝里看不出来（冠中间是长丝投影最密的地方）→ 芯曝光 × 2.5'},
     'MYJA-S20-2': {'expoMul': 0.75, '_why': '过曝像素 2.4%（标准 ≤ 2%，按金色 Ramp 测）→ 曝光 × 0.75'},
     'MYJA-S30-2': {'expoMul': 0.62, '_why': '过曝像素 2.9% → 曝光 × 0.62'},
     'MYJA-S40-2': {'expoMul': 0.53, '_why': '过曝像素 3.4% → 曝光 × 0.53'},
@@ -287,6 +290,10 @@ def main(a):
                     if k == 'expoMul': P['exposure'] = round(float(P['exposure']) * v, 4)
                     elif not k.startswith('_'): P[k] = v
                 if fx: lnote = (lnote or note or '') + f"；导出回放检查：{fx['_why']}"
+                if 0 < float(P.get('afterBurn') or 0) and float(P.get('strobeHz') or 0) > 0 and how is not None and eid.startswith('MYJC-'):
+                    # 点灭星接力层：最晚那颗星 ≈ 燃烧 ×（1 + 2.5 × 消え口离散）（消え口离散是正态，σ = 离散%）+ 第二段 ×（1 + 第二段时长离散）（均匀）；以前按平均值算，3 / 4 尺最后几颗星的第二段被时长切掉
+                    g = lambda k, d=0: float(P.get(k) if P.get(k) is not None else D.get(typ, {}).get(k, d))
+                    P['duration'] = round(max(float(P.get('duration') or 0), g('ignDelay') * (1 + g('ignJit', 10) / 100) + g('burn') * (1 + 2.5 * g('burnJit', 10) / 100) + g('afterBurn') * (1 + g('afterJit', 15) / 100) + 0.2), 2)
                 e = {'id': eid, 'date': '2026-10-07', 'name': f"{rc['name']} · {label}" + (f" · {L['title']}" if multi else ''), 'base': typ, 'tags': f"我的效果 变体 {rc['name']} {label} {eid}",
                      'p': slim(P, typ, D), **({'expo0': expo0} if fx and 'expoMul' in fx else {}), 'm': M, 'note': (lnote or note or '照你保存的原样，一个数没改。') + f"（来源：{rc['file']}）",
                      'look': ['这一排变体放在一起看：大小、造型是不是拉开了', '引擎回放 + 游戏内大小', '哪个不要、哪个再调，直接说']}
