@@ -1,0 +1,11 @@
+{
+ "id": "NFS-J1",
+ "type": "std",
+ "priority": 5,
+ "targets": [
+  "JQ5",
+  "mt:kinzuiLime"
+ ],
+ "name": "标准检查：金蕊柠 JQ5、多层模板 mt:kinzuiLime",
+ "note": "对话框新花型（用户 10-07 23:02）。在 JQ5E1 导出之后跑。"
+}

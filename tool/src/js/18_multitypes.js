@@ -62,7 +62,7 @@ const MT_JQ = {
   out: { seed: 23, stars: 520, v0: 160, vt: 18, grav: 1, speedJit: 2, dirJit: 1.5, burn: 3.8, burnJit: 4, fade: 0.15, lastFlare: 0, ignDelay: 0 },
   core: { seed: 31, stars: 300, v0: 130, vt: 9.5, grav: 0.5, speedJit: 3, dirJit: 1.5, burn: 2.15, burnJit: 6, lastFlare: 0, ignDelay: 0.06, ignJit: 10 }
 };
-const MT_RAMP_WARM = { ramp0: '#000000', ramp1: '#7a2a08', ramp2: '#ff8a3a', ramp3: '#fff0d0' };     // 橙引尾：暖色（灰色渐变图会把橙压成褐，青柠星 QN12 看过）
+const MT_RAMP_WARM = { ramp0: '#000000', ramp1: '#8a3a10', ramp2: '#ffa850', ramp3: '#fff6e0' };     // 橙引尾：暖色（灰色渐变图会把橙压成褐，青柠星 QN12 看过；中段偏黄一点，JQ4E1 橙尾偏红）
 const MT_RAMP_GOLD_HOT = { ramp0: '#000000', ramp1: '#b8681e', ramp2: '#ffe0a0', ramp3: '#ffffff' };     // 金蕊：比 MT_RAMP_GOLD 亮（暗的火花不发褐），亮处到白
 const MT_TIME_KEYS = ['sparkLife', 'sparkStop', 'sparkStart', 'headDimUntil', 'ignDelay', 'subDelay', 'subBurn', 'emberLife', 'crackleDelay'];
 const MULTI_TYPES = [
@@ -143,13 +143,13 @@ const MULTI_TYPES = [
       { title: '橙引尾', en: 'LeadTail', type: 'botan', k: 1, p: { ...MT_JQ.out, burn: 1.0, fade: 0.03, flash: 0.6, headSize: 0.8, headBright: 0.02, flicker: 0.15, duration: 1.3,     // 只画火花（+0.55 s 停）：这一层的星活到 1.0 s 就够（星位和柠点星一样，只是不把 3.8 s 的暗星头烘进序列）
        
         sparkRate: 900, sparkStop: 0.55, sparkLife: 0.32, sparkLifeJit: 20, sparkSize: 0.3, sparkSpread: 0.22, sparkInherit: 0.1, sparkBright: 5, T0: 2150, cooling: 0.22 },
-        m: { stages: [[0, '#ff8030']], xw: 0.15, ...MT_RAMP_WARM }, hi: 3.5 },     // 实拍是亮橙（偏黄），不是橙红
+        m: { stages: [[0, '#ff9a38']], xw: 0.15, ...MT_RAMP_WARM }, hi: 3.5 },     // 实拍是亮橙（偏黄），不是橙红（颜色在线性空间相乘，#ff8030 出来偏红）
       { title: '柠点星', en: 'LimeStar', type: 'botan', k: 1, p: { ...MT_JQ.out, flash: 0, headSize: 1.7, headBright: 1.6, flicker: 0.15, sparkRate: 0, duration: 4.5,
         starBrightCurve: '0:0.03, 0.07:0.05, 0.1:0.6, 0.145:1, 1:1' },     // 起势：+0.27 s 起星头从暗亮起来，+0.38 s 一大半、+0.55 s 全亮（实拍 +0.4 s 橙尾尖上已经有亮点）
         m: { stages: [[0, '#ffc070'], [0.45, '#fff2b0'], [0.78, '#eaff7a']], xw: 0.2, ...MT_RAMP_NEUTRAL }, hi: 1.4 },     // 刚亮起来淡暖白，+0.8 s 柠绿
       { title: '金菊蕊', en: 'GoldCore', type: 'kiku', k: 0.4, p: { ...MT_JQ.core, flash: 0, fade: 0.25, headSize: 0.75, headBright: 0.6, flicker: 0.15, duration: 2.9,
         sparkRate: 300, sparkRateEnd: 0.4, sparkStop: 1.7, sparkLife: 1.0, sparkLifeJit: 25, sparkSize: 0.3, sparkSpread: 0.5, sparkInherit: 0.05, sparkGrav: 0.3, sparkDrag: 3, sparkBright: 1.5, T0: 2300, cooling: 0.25 },     // 火花几乎不跟星走、寿命长 → 芯星很快停下来以后，从芯心到星头一根根金丝还留着
-        m: { stages: [[0, '#ffffff'], [1.2, '#ffe2a0'], [1.6, '#ffb040'], [2.0, '#ff8a30']], xw: 0.3, ...MT_RAMP_GOLD_HOT }, hi: 4 },     // 显示强度高：+1.2 s 前过亮发白（实拍一大团白），之后金 → 橙
+        m: { stages: [[0, '#ffffff'], [1.2, '#ffe2a0'], [1.6, '#ffb040'], [2.0, '#ff8a30']], xw: 0.3, ...MT_RAMP_GOLD_HOT }, hi: 5.5 },     // 显示强度高：+1.2 s 前过亮发白（实拍一大团白；4 时还是淡金），之后金 → 橙
       { title: '红点蕊', en: 'RedCore', type: 'botan', k: 0.4, p: { ...MT_JQ.core, flash: 0, fade: 0.3, headSize: 1.6, headBright: 1.6, flicker: 0.15, sparkRate: 0, duration: 2.6 },
         m: { stages: [[0, '#fff0d0'], [0.9, '#ff5c8a']], xw: 0.25, ...MT_RAMP_NEUTRAL }, hi: 4 }] },     // 前 0.9 s 埋在过亮的金芯里（淡暖白），之后芯外缘一圈粉红点
   { id: 'mieStrobeKiku', name: '三重芯点灭菊', en: 'MieshinStrobeKiku', group: 0, burn: 3.0, go: 10,
@@ -273,7 +273,8 @@ const MULTI_TYPES = [
 ];
 const MULTI_BY_ID = Object.fromEntries(MULTI_TYPES.map(r => [r.id, r]));
 // 每层贴图曝光（analysis/scripts/多层模板曝光.py 按 autoExposure40 算的，和花型模板 EXPOSURE40 同一算法）；没有就用花型模板的
-const MT_EXPOSURE = {"shinKiku": [0.766, 2.48], "shinBotan": [2.62, 2.47], "yaeshin": [0.396, 2.22, 1.69], "yaeHenka": [1.91, 2.52, 1.8], "mieshin": [0.741, 2.68, 2.39, 1.43], "yoeshin": [2.39, 2.73, 2.51, 1.91, 1.35], "itsueHenka": [2.08, 2.75, 2.63, 2.32, 1.94, 1.32], "yaeStrobe": [2.22, 2.52, 1.66], "kamuroShin": [2.85, 1.62], "crackleShin": [2.67, 1.83], "strobeShin": [2.87, 1.71], "fourColorCrackle": [3.23, 3.34, 3.3, 3.31, 1.89], "jisaShinBotan": [2.07, 2.37], "henkaKikuShin": [2.06, 2.26], "mieStrobeKiku": [1.51, 2.68, 2.39, 1.43], "kiraShin": [2.9, 0.631], "shiyuShin": [0.369, 2.52, 2.78], "palmShin": [0.306, 1.42], "hikiSakiKiku": [1.94], "henkaBotan": [2.67], "mieKamuroSaki": [3.07, 2.54, 2.5, 2.28, 1.55], "ginKamuro": [0.566], "ginYanagi": [0.107], "colorSenrin": [1.32, 1.33, 1.74, 1.25], "yanagiTips": [0.757, 2.39], "yaeBlueBotan": [2.92, 0.207, 0.81, 0.136], "yoeshinKoro": [1.19, 2.03, 2.75, 2.53, 1.97, 1.41], "somewakeBotan": [2.85, 2.83], "kowariUkimoyo": [2.82, 0.548, 0.426, 0.585], "mangekyo": [2.73, 2.47, 0.39, 1.41]};
+// 4.9.39 金蕊柠（kinzuiLime）：后三层 = 本机 autoExposure40（条目曝光.py，NFJL4，和待验收条目 JQ<n> 同一组数）；橙引尾不用自动的 0.0102（按开花头 0.1 s 的闪光定，0.3–0.6 s 的橙尾只剩四分之一亮度），用 0.0445（只开花头几格中心过曝，回放检查过）
+const MT_EXPOSURE = {"kinzuiLime": [0.0445, 1.158, 0.1423, 0.4388], "shinKiku": [0.766, 2.48], "shinBotan": [2.62, 2.47], "yaeshin": [0.396, 2.22, 1.69], "yaeHenka": [1.91, 2.52, 1.8], "mieshin": [0.741, 2.68, 2.39, 1.43], "yoeshin": [2.39, 2.73, 2.51, 1.91, 1.35], "itsueHenka": [2.08, 2.75, 2.63, 2.32, 1.94, 1.32], "yaeStrobe": [2.22, 2.52, 1.66], "kamuroShin": [2.85, 1.62], "crackleShin": [2.67, 1.83], "strobeShin": [2.87, 1.71], "fourColorCrackle": [3.23, 3.34, 3.3, 3.31, 1.89], "jisaShinBotan": [2.07, 2.37], "henkaKikuShin": [2.06, 2.26], "mieStrobeKiku": [1.51, 2.68, 2.39, 1.43], "kiraShin": [2.9, 0.631], "shiyuShin": [0.369, 2.52, 2.78], "palmShin": [0.306, 1.42], "hikiSakiKiku": [1.94], "henkaBotan": [2.67], "mieKamuroSaki": [3.07, 2.54, 2.5, 2.28, 1.55], "ginKamuro": [0.566], "ginYanagi": [0.107], "colorSenrin": [1.32, 1.33, 1.74, 1.25], "yanagiTips": [0.757, 2.39], "yaeBlueBotan": [2.92, 0.207, 0.81, 0.136], "yoeshinKoro": [1.19, 2.03, 2.75, 2.53, 1.97, 1.41], "somewakeBotan": [2.85, 2.83], "kowariUkimoyo": [2.82, 0.548, 0.426, 0.585], "mangekyo": [2.73, 2.47, 0.39, 1.41]};
 // 每层的显示强度（Color Over Life 倍数）：各层贴图都按自己最亮处归一，这里按游戏内大小看过定层间明暗（亲星最亮、芯略暗）
 // 彩色芯按颜色的亮度补：铜蓝、锶红、紫这些亮度低的色给高一点，柠檬绿、黄、银白不补（(0.45 / 相对亮度)^0.5，夹在 0.9–1.45）
 const mtLum = hex => { const c = hexToLin(hex); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
