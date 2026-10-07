@@ -2,8 +2,6 @@
  "id": "NFR-G31",
  "type": "script",
  "priority": 1,
- "ready": false,
- "hold": "等 *-G31 导出回来（对话框新花型放行）",
  "name": "全程回放检查：对话框新花型的素材包按 4.9.31 重导后（101 档）",
  "steps": [
   {
