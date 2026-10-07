@@ -211,6 +211,12 @@
   ],
   "对话框FanGold · 扇面 N 簇 + 簇依次出膛（临时源码认领，已释放）": [
    "对话框FanGold（2026-10-07 20:20）已完成并释放：烘焙器 4.9.34（20_sim.js clusterCenters fan、clusterDirs 带出发时刻、Sim 跳过没出发的星、每簇开花闪光、exSpawn 跟出发时刻；10_types.js BASE 2 个默认、CLUSTER_LAYOUTS、SCHEMA 形状 2 行）。缺省关；基准回归 6 个 + 多层分簇模板 5 个逐像素相同（analysis/results/FGR1/）；检查 analysis/scripts/扇面簇检查.py。名称表 / 发射器表 +2，参数变更记录一条。LINK_KEYS 两个键排给了对话框23。"
+  ],
+  "对话框新花型 · 金蕊柠模板（临时源码认领）": [
+   "tool/src/js/18_multitypes.js（只加一个多层模板 kinzuiLime「金蕊柠」+ 一个暖色渐变图常量 + 它的 MT_EXPOSURE 一项）",
+   "tool/src/js/10_types.js（只改 VERSION 一行）",
+   "tool/CHANGELOG.md（加一条）",
+   "负责：对话框新花型（2026-10-07 23:50 认领，用户 23:02「金蕊青柠星……用现有的模板进行分层调试，给我出一个模板」）。只加不改：模拟 / 渲染 / 导出 / 默认值 / OUTPUT_VER / 现有模板都不动；做完释放。"
   ]
  },
  "effects": [
