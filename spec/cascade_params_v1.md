@@ -361,7 +361,7 @@ JSON里的局部配置：
 ### H. 低端包 `cascade_low.json`：单帧 + 功能图（烘焙器 4.9.29 起，用户 10-07 09:41 / 09:54 / 12:40）⚪ 未经 UE 验证
 - 素材包多一份 `cascade_low.json`（`platform: "low"`），只在产物表「低端」列有层选了 单帧 / 序列 时才有；PC、手机两份不变。
 - **单帧层**：发射器 `L<层号>_Frame`，CPU、`Rectangle`、`bursts [[0, 1]]`、`Pivot Offset` 把爆点放在粒子位置（同大面片）；材质 `flipbook_rgba`（现有序列材质），贴图 `class: flipbook`、`cols 1 / rows 1 / channels 1 / frames 1`，`DynamicParameter.frame` = `const 0`；`SizeByLife`（从开花长到单帧那一刻，之后 1）、`ColorOverLife` + `AlphaOverLife` 曲线（单帧那一刻以后按亮度只降不升）、`ColorScaleOverLife`。
-- **extras**（导入器不用导）：`L<层号>_color` 彩色单帧（sRGB，Alpha = 灰度）、`L<层号>_maps` 功能图（线性；`channels` 写 R / G / B 各放什么：D 溶解 = 每个像素最后亮着的时刻、C 轮廓、A 出现顺序 = 第一次亮的时刻，按入点 → 出点归一到 0–1，没亮过 D = 0、A = 1）。溶解规则：进度 0 → 1，像素在 出现 ≤ 进度 < 熄灭 时可见。等对话框5 查到现成溶解材质的角色名 / 通道 / 阈值方向后，单帧发射器改用那个材质。
+- **extras**（导入器不用导）：`L<层号>_color` 彩色单帧（sRGB，Alpha = 灰度）、`L<层号>_maps` 功能图（线性；`channels` 写 R / G / B 各放什么：D 溶解 = 每个像素最后亮着的时刻、C 轮廓、A 出现顺序 = 第一次亮的时刻，按入点 → 出点归一到 0–1，没亮过 D = 0、A = 1）。烘焙器「溶解预览」：进度 0 → 1，像素在 出现 ≤ 进度 < 熄灭 时可见。**对话框5 10-07 查本机配置**：现有序列母材质有独立溶解贴图输入（缺省读 R）、进度 = 动态参数第 3 个（index 2）+ 实例进度，`fade = 1 − saturate(D + 2P − 1)`（值大的先消失、软过渡；没有出现顺序、没有 Cut 参数，轮廓走 Required cutout）；没有彩色单帧角色；导入器按用户要求不开溶解。所以接现有材质要把熄灭顺序反相（1 − 值），并要用户指定材质、授权开溶解。
 - **序列层**：和手机同一张贴图（引用手机的文件，不重复放），发射器同 `cascade_mobile.json`。
 - 贴图名（用户 12:40「贴图名尾巴加_MB」）：单帧 `T_EFX_FireWorks_<名称>[_<层>]_1x1_01_MB`、彩色 `…_1x1_01_Color_MB`、轮廓 `…_1x1_01_C`、功能图 `…_1x1_01_<后缀>`（后缀用户填，缺省按勾的 D / C / A，例 `_DCA`、`_DC`）；Ramp 和 PC 共用。
 

@@ -179,11 +179,15 @@ function fwlLowLayer(name, lw, M, L, pre) {
       { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, life, lw.tIn, intOr1(M.headInt)) }, AlphaOverLife: { curve: lw.alphaKeys.map(([u, a]) => [r4(u), r4(a)]) } }
     ],
     notes: [`低端单帧（${lw.pick === 'expo' ? '长曝光：入点 → 出点每个像素取最亮' : `某一帧：${lw.tStar.toFixed(2)} s`}）：一张 ${lw.S} × ${lw.S} 灰度 + Ramp，走现有序列材质（1 × 1 格、帧号 0）；Size By Life 从开花长到那一刻、之后按亮度 Alpha 淡出（未经 UE 验证）`,
-      `溶解要用的现成材质还没对上（对话框5 在查）：彩色单帧和功能图在 extras 里，引擎回放「溶解预览」按功能图画；对上以后这个发射器改用那个材质` ] };
+      `溶解还没接：对话框5 查到现有序列母材质有溶解输入（读 R、进度 = 动态参数第 3 个、值大的先消失、软过渡），但没有彩色单帧角色，导入器按你的要求现在不开溶解；彩色单帧和功能图先在 extras 里，引擎回放「溶解预览」按功能图画。你指定材质、授权开溶解以后，这个发射器再接上` ] };
   const extras = { [pre + 'color']: { file: TN(name, 'Frame_Color') + '.png', what: '彩色单帧（sRGB；Alpha = 灰度），亮度倍数在 Color Over Life', size: [lw.S, lw.S] } };
   if (lw.maps) extras[pre + 'maps'] = { file: TN(name, 'Frame_Maps') + '.png', what: '功能图（线性，不勾 sRGB）', size: [lw.MS, lw.MS], suffix: lw.suffix,
     channels: Object.fromEntries(Object.entries(lw.chans).map(([c, k]) => [k, LOW_MAP_NAMES[c]])),
-    dissolve: { param: 'dissolve', progress: '0 → 1 = 入点 → 出点（相对寿命）', rule: '像素在 出现顺序 ≤ 进度 < 熄灭顺序 时可见（值小于进度就消失）；没光的像素熄灭 = 0', unverified: '材质读哪个通道、阈值方向等对话框5 查本机导入配置，未经 UE 验证' }, jitter: lw.jit };
+    // 4.9.29 对话框5 查本机配置（10-07，协作/备忘_导入器.md）：现有序列母材质有溶解贴图输入（缺省 R）、进度 = 动态参数第 3 个（index 2），
+    //   fade = 1 − saturate(D + 2P − 1)：值大的先消失、软过渡；导入器现在按用户要求不开溶解。这张图存的是「时间」（值大 = 晚灭），接那个材质要反相
+    dissolve: { param: 'dissolve', progress: '0 → 1 = 入点 → 出点（相对寿命）', encoding: '熄灭顺序：值 = 最后亮着的时刻（大 = 晚灭）；出现顺序：值 = 第一次亮的时刻；没亮过 熄灭 0 / 出现 1',
+      preview: '烘焙器「溶解预览」：像素在 出现 ≤ 进度 < 熄灭 时可见（硬边）',
+      existingMaterial: '对话框5 查到：现有序列母材质溶解读 R、进度 = 动态参数 index 2、fade = 1 − saturate(D + 2P − 1)（值大的先消失、软过渡，没有出现顺序输入）→ 接它要把熄灭顺序反相（1 − 值）；导入器现在不开溶解，要你授权、指定材质再接（未经 UE 验证）' }, jitter: lw.jit };
   return { textures, materials, emitter, extras };
 }
 async function lowFiles(name, lw, M) {
