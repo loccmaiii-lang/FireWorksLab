@@ -2,8 +2,6 @@
  "id": "NFR-TP",
  "type": "script",
  "priority": 1,
- "ready": false,
- "hold": "等 NFE-TP-* 导出回来（对话框新花型放行）",
  "name": "全程回放检查：节奏样包（9 档）",
  "steps": [
   {
