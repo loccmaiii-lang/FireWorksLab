@@ -38,18 +38,36 @@ ORANGE = dict(COMMON,
 )
 ORANGE_M = dict(RT6S['m'], ramp1='#7a2a06', ramp2='#ffa040', ramp3='#fff2dc')
 
+# 第 2 版（FC1 本机回来：近段白热段 = 速度 × 火粉寿命 ≈ 50 m 一整根白棒、星头看不出来；近段过曝 6.5 / 7.7 %、红远段 2.8 %）
+#   火粉寿命缩短、变暗 → 白热段 ≈ 15 m、粉 / 橙色多出来、星头突出；红彗星细火花更多更久（尾巴连起来）；
+#   近段贴图曝光 × 0.8 → 0.55（RiseLoop Color Over Life 补回，引擎里亮度不变）；红彗星整体曝光 0.45 → 0.4。
+RED2 = dict(RED, rtALife=0.3, rtAI=0.8, rtHeadSize=0.6, rtFRate=3000, rtFLife=1.2, rtFI=4, rtMLife=1.4, rtNearExpo=0.55, exposure=0.4)
+ORANGE2 = dict(ORANGE, rtALife=0.35, rtAI=1.0, rtNearExpo=0.55)
+
 LOOK = ['引擎回放：一条从下往上快速冲上去（出膛最快、越往上越慢），到顶前烧完，星头直接熄、尾巴（远段）自己在空中慢慢暗下去、漂开',
         '近段（星头 + 白热段 + 年轻火花）和远段（停在空中的老火花）交接处没有缝',
         'Cascade 里拼扇：同一套发射器复制几份、整套转不同角度（面片都是速度朝向，跟着转）']
 
 
-def entry(eid, name, p, m, note, opinion, tags):
-    e = dict(id=eid, date='2026-10-08', name=name, base='tailS', tags=tags, m=m, note=note, look=LOOK, opinion=opinion)
+def entry(eid, name, p, m, note, opinion, tags, replaces=None):
+    e = dict(id=eid, date='2026-10-08', name=name, base='tailS', tags=tags, m=m, note=note, look=LOOK, opinion=opinion, **({'replaces': replaces} if replaces else {}))
     e['p'] = dict(copy.deepcopy(RT6S['p']), **p)
     return e
 
 
 ENTRIES = [
+    entry('FC2R', '扇形彗星 · 红彗星（单条，第 2 版）', RED2, RED_M,
+          '对话框FanGold，10-08（用户 01:22 附图 1 左红圈）：RT6 分层的单条彗星。50 mm 粉红彗星，竖直打上去 90 m，≈ 2.2 s 烧完（不爆），'
+          '星头大而亮、后面约 15 m 白粉火焰、再往下粉红火花尾；火粉和火花全进贴图（Ramp 粉红），没有 GPU 软圆点（只有黑体色）。'
+          '第 2 版：第 1 版白热段 50 m 一整根白棒、近段过曝 → 火粉寿命 0.8 → 0.3 s、近段贴图曝光 0.55（引擎里补回）。原理 analysis/原理/扇形彗星.md。',
+          '第 2 版，本机导出中。', '扇形 彗星 红 粉 单条 RT6 近段 远段 物理弹道', replaces=['FC1R']),
+    entry('FC2O', '扇形彗星 · 橙扇（单条，第 2 版）', ORANGE2, ORANGE_M,
+          '对话框FanGold，10-08（用户 01:22 附图 1 右红圈）：RT6 分层的单条辉星金尾彗星。竖直打上去 100 m，≈ 2.4 s 烧完（不爆），'
+          '火粉密、白热段约 20 m，细 / 闪烁 / 粗火花按 RT6 GPU 预算（150 / 200 / 300），星头弱。'
+          '第 2 版：第 1 版白热段太长、近段过曝 → 火粉寿命 0.7 → 0.35 s、近段贴图曝光 0.55（引擎里补回）。原理 analysis/原理/扇形彗星.md。',
+          '第 2 版，本机导出中。', '扇形 彗星 橙 金尾 单条 RT6 近段 远段 GPU 物理弹道', replaces=['FC1O']),
+]
+ENTRIES_V1 = [
     entry('FC1R', '扇形彗星 · 红彗星（单条，第 1 版）', RED, RED_M,
           '对话框FanGold，10-08（用户 01:22 附图 1 左红圈）：RT6 分层的单条彗星。50 mm 粉红彗星，竖直打上去 90 m，≈ 2.4 s 烧完（不爆），'
           '星头大而亮；火粉和火花全进贴图（Ramp 粉红），没有 GPU 软圆点（只有黑体色）。原理 analysis/原理/扇形彗星.md。',

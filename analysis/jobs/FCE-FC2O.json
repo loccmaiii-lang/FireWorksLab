@@ -1,0 +1,9 @@
+{
+ "id": "FCE-FC2O",
+ "type": "export",
+ "effect": "fan_comet",
+ "entry": "FC2O",
+ "name": "FanCometOrange",
+ "priority": 1,
+ "note": "对话框FanGold：橙扇单条 FC2O（白热段缩短、近段曝光 0.55）导出 + 回放检查。"
+}
