@@ -5,7 +5,7 @@
  "savedFrom": "FireWorksLab/tool/FireworkBaker.html",
  "id": "fxmuy2yho7",
  "name": "QA",
- "at": "2026-10-07 20:40",
+ "at": "2026-10-07 21:00",
  "base": "我的效果",
  "snap": {
   "kind": "combo",
@@ -33,7 +33,11 @@
      "headInt": 1.875,
      "tailInt": 1,
      "title": "菊芯",
-     "lid": "l8yk7n"
+     "lid": "l8yk7n",
+     "out": {
+      "pc": "seq",
+      "mobile": "off"
+     }
     },
     "P": {
      "renderVer": 40,
@@ -46,13 +50,13 @@
      "previewBloom": 0,
      "trimTail": 1,
      "mods": [],
-     "duration": 7,
+     "duration": 7.086,
      "seed": 7,
      "stars": 300,
-     "burstR0": 2,
+     "burstR0": 6,
      "v0": 50,
      "vt": 15.5,
-     "grav": 0,
+     "grav": 0.5,
      "speedJit": 5,
      "dirJit": 0,
      "burn": 1.825,
@@ -80,14 +84,14 @@
      "headSize": 0.262,
      "headBright": 0.06090534979423868,
      "flicker": 500,
-     "sparkRate": 462.9,
+     "sparkRate": 643,
      "sparkRateEnd": 0.35,
      "sparkStop": 0,
      "sparkStart": 0,
      "sparkRamp": 0,
      "sparkRampJit": 30,
-     "sparkLife": 0.612,
-     "sparkLifeEnd": 1,
+     "sparkLife": 0.35,
+     "sparkLifeEnd": 2,
      "sparkLifeJit": 45,
      "sparkSize": 0.223,
      "sparkSpread": 0.4,
@@ -140,7 +144,7 @@
      "afterJit": 15,
      "headDim": 1,
      "headDimUntil": 0,
-     "emberFrac": 0.28,
+     "emberFrac": 0,
      "emberLife": 3,
      "emberBright": 0.1,
      "emberFollow": 0,
@@ -554,11 +558,11 @@
      "stages": [
       [
        0,
-       "#ffb45a"
+       "#ff7ab8"
       ],
       [
-       2.5,
-       "#ff3cc8"
+       1.5,
+       "#b44dff"
       ]
      ],
      "xw": 0.5,
@@ -569,26 +573,30 @@
      "headInt": 1.875,
      "tailInt": 1,
      "title": "星头",
-     "lid": "l8uq2t"
+     "lid": "l8uq2t",
+     "out": {
+      "pc": "seq",
+      "mobile": "off"
+     }
     },
     "P": {
      "renderVer": 40,
      "exposure": 0.1035,
      "exposureLock": 0,
      "exposureTarget": 0.96,
-     "coreProfile": 0,
-     "haloFrac": 0.22,
-     "haloR": 3,
+     "coreProfile": 1,
+     "haloFrac": 0.68,
+     "haloR": 1,
      "previewBloom": 0,
      "trimTail": 1,
      "mods": [],
      "duration": 4.915,
      "seed": 7,
      "stars": 300,
-     "burstR0": 2,
+     "burstR0": 6,
      "v0": 50,
      "vt": 15.5,
-     "grav": 0,
+     "grav": 0.5,
      "speedJit": 5,
      "dirJit": 0,
      "burn": 3,
@@ -613,7 +621,7 @@
      "unitRandom": 0,
      "endMode": "natural",
      "coolMode": 1,
-     "headSize": 0.7,
+     "headSize": 0.6,
      "headBright": 50,
      "flicker": 0.16,
      "sparkRate": 0,
@@ -675,7 +683,7 @@
      "afterBurn": 0,
      "afterJit": 15,
      "headDim": 0,
-     "headDimUntil": 1.6,
+     "headDimUntil": 1.4,
      "emberFrac": 0,
      "emberLife": 3,
      "emberBright": 0.1,
@@ -703,17 +711,17 @@
      "frameCount": 24,
      "outPack": "grid",
      "outCell": 0,
-     "cutIn": 0,
+     "cutIn": 1.3333,
      "cutOut": 0,
      "preRoll": 1,
-     "preFrom": -1,
-     "visTo": 0,
+     "preFrom": 0,
+     "visTo": 4,
      "preScale0": 0,
      "subScaleJit": 0,
      "subVt": 0,
      "subGrav": -1,
      "subFlash": -1,
-     "strobeHz": 11.2,
+     "strobeHz": 4.9,
      "strobeDuty": 0.35,
      "strobeStart": 0.5,
      "glitter": 0,
@@ -1081,7 +1089,12 @@
    }
   ]
  },
- "links": [],
+ "links": [
+  [
+   "l8yk7n",
+   "l8uq2t"
+  ]
+ ],
  "ue": {
   "base": "JinMangJu_03",
   "layers": [
