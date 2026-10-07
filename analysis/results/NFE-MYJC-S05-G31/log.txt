@@ -1,28 +1,8 @@
-16:37:34 开始：GoldRayRocket_05（导出素材）
-16:56:23 出错：
-Traceback (most recent call last):
-  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\run_jobs.py", line 122, in run_job
-    import export_job; export_job.run(job, s, out, log=log)
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\export_job.py", line 50, in run
-    return run_combo_pack(job, s, out, base, ver, big, log)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\scripts\export_job.py", line 129, in run_combo_pack
-    s.pg.wait_for_function(f"window.__fw && window.__fw.idle() && state.tab === 'combo' && state.comboName === {json.dumps(want['name'])} && state.layers.length === {want['n']} && state.layers.every(L => {{ const e = state.lib.find(x => x.name === L.lib); return e && e.bake; }})", timeout=0)
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\sync_api\_generated.py", line 12809, in wait_for_function
-    self._sync(
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_sync_base.py", line 115, in _sync
-    return task.result()
-           ^^^^^^^^^^^^^
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_page.py", line 1153, in wait_for_function
-    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_frame.py", line 941, in wait_for_function
-    await self._channel.send("waitForFunction", self._timeout, params)
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 76, in send
-    return await self._connection.wrap_api_call(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "F:\FireWorksLab\analysis\local\monitor_state\deps\playwright\_impl\_connection.py", line 632, in wrap_api_call
-    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
-playwright._impl._errors.TargetClosedError: Page.wait_for_function: Target page, context or browser has been closed
-
+17:02:01 开始：GoldRayRocket_05（导出素材）
+17:02:05 GoldRayRocket_05 组合素材包 4 秒：T_EFX_FireWorks_GoldRayRocket_05_L1_4x4_01.png、T_EFX_FireWorks_GoldRayRocket_05_L1_4x4_01_C.png、T_EFX_FireWorks_GoldRayRocket_05_L1_8x4_01_C.png、T_EFX_FireWorks_GoldRayRocket_05_L1_8x4_01_HD.png、T_EFX_FireWorks_GoldRayRocket_05_L1_R.png、T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01.png、T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01_C.png、T_EFX_FireWorks_GoldRayRocket_05_L2_4x4_01_HD.png、T_EFX_FireWorks_GoldRayRocket_05_L2_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+17:02:05 回放检查不查的粒子发射器（光点 / 单束）：L1_Unit
+17:02:05 回放检查：✅ 通过
+17:02:20 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJC-S05-G31\烘焙回放.jpg
+17:02:20 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-MYJC-S05-G31\烘焙回放_原尺寸.jpg
+17:02:20 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+17:02:20 完成，用时 0.3 分钟
