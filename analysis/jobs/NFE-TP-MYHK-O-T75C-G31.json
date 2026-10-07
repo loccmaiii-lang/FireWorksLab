@@ -1,0 +1,9 @@
+{
+ "id": "NFE-TP-MYHK-O-T75C-G31",
+ "type": "export",
+ "effect": "tempo_myhk",
+ "entry": "TP-MYHK-O-T75C",
+ "name": "YonshakuKamuro_T75C",
+ "priority": 3,
+ "note": "对话框新花型：烘焙器 4.9.31 护栏 Ramp（第 255 格黑）+ 序列编码封顶 253（用户 10-07 14:34「后面所有导出都这样做」，OUTPUT_VER master / unit 4.9.31）→ 参数不动重导。同一目录覆盖。"
+}

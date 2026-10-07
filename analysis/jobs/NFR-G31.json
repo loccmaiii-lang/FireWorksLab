@@ -1,0 +1,1627 @@
+{
+ "id": "NFR-G31",
+ "type": "script",
+ "priority": 1,
+ "ready": false,
+ "hold": "等 *-G31 导出回来（对话框新花型放行）",
+ "name": "全程回放检查：对话框新花型的素材包按 4.9.31 重导后（101 档）",
+ "steps": [
+  {
+   "name": "JinMangJu03（JMG03）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/JinMangJu03.jpg",
+    "analysis/local/输出/素材包/JinMangJu03",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "JinMangJu05（JMG05）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/JinMangJu05.jpg",
+    "analysis/local/输出/素材包/JinMangJu05",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "JinMangJu10（JMG10）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/JinMangJu10.jpg",
+    "analysis/local/输出/素材包/JinMangJu10",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "JinMangJu20（JMG20）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/JinMangJu20.jpg",
+    "analysis/local/输出/素材包/JinMangJu20",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "JinMangJu30（JMG30）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/JinMangJu30.jpg",
+    "analysis/local/输出/素材包/JinMangJu30",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "JinMangJu40（JMG40）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/JinMangJu40.jpg",
+    "analysis/local/输出/素材包/JinMangJu40",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette（MYFL-O）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette.jpg",
+    "analysis/local/输出/素材包/Crossette",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette_03（MYFL-S03）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_03.jpg",
+    "analysis/local/输出/素材包/Crossette_03",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette_10（MYFL-S10）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_10.jpg",
+    "analysis/local/输出/素材包/Crossette_10",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette_20（MYFL-S20）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_20.jpg",
+    "analysis/local/输出/素材包/Crossette_20",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette_30（MYFL-S30）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_30.jpg",
+    "analysis/local/输出/素材包/Crossette_30",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette_40（MYFL-S40）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_40.jpg",
+    "analysis/local/输出/素材包/Crossette_40",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette_Crown（MYFL-K）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Crown.jpg",
+    "analysis/local/输出/素材包/Crossette_Crown",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette_Willow（MYFL-Y）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Willow.jpg",
+    "analysis/local/输出/素材包/Crossette_Willow",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette_Ring（MYFL-R）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Ring.jpg",
+    "analysis/local/输出/素材包/Crossette_Ring",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette_Saturn（MYFL-T）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Saturn.jpg",
+    "analysis/local/输出/素材包/Crossette_Saturn",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette_Kaleido（MYFL-M）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Kaleido.jpg",
+    "analysis/local/输出/素材包/Crossette_Kaleido",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette_Heart（MYFL-H）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Heart.jpg",
+    "analysis/local/输出/素材包/Crossette_Heart",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette_Jisa（MYFL-J）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Jisa.jpg",
+    "analysis/local/输出/素材包/Crossette_Jisa",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crossette_Core（MYFL-C）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crossette_Core.jpg",
+    "analysis/local/输出/素材包/Crossette_Core",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle（MYCR-O）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle.jpg",
+    "analysis/local/输出/素材包/Crackle",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_03（MYCR-S03）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_03.jpg",
+    "analysis/local/输出/素材包/Crackle_03",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_05（MYCR-S05）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_05.jpg",
+    "analysis/local/输出/素材包/Crackle_05",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_10（MYCR-S10）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_10.jpg",
+    "analysis/local/输出/素材包/Crackle_10",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_20（MYCR-S20）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_20.jpg",
+    "analysis/local/输出/素材包/Crackle_20",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_30（MYCR-S30）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_30.jpg",
+    "analysis/local/输出/素材包/Crackle_30",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_40（MYCR-S40）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_40.jpg",
+    "analysis/local/输出/素材包/Crackle_40",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_Crown（MYCR-K）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Crown.jpg",
+    "analysis/local/输出/素材包/Crackle_Crown",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_Willow（MYCR-Y）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Willow.jpg",
+    "analysis/local/输出/素材包/Crackle_Willow",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_Ring（MYCR-R）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Ring.jpg",
+    "analysis/local/输出/素材包/Crackle_Ring",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_Saturn（MYCR-T）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Saturn.jpg",
+    "analysis/local/输出/素材包/Crackle_Saturn",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_Kaleido（MYCR-M）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Kaleido.jpg",
+    "analysis/local/输出/素材包/Crackle_Kaleido",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_Heart（MYCR-H）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Heart.jpg",
+    "analysis/local/输出/素材包/Crackle_Heart",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_Jisa（MYCR-J）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Jisa.jpg",
+    "analysis/local/输出/素材包/Crackle_Jisa",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "Crackle_Core（MYCR-C）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/Crackle_Core.jpg",
+    "analysis/local/输出/素材包/Crackle_Core",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay（MYJA-O）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay.jpg",
+    "analysis/local/输出/素材包/GoldRay",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_03（MYJA-S03）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_03.jpg",
+    "analysis/local/输出/素材包/GoldRay_03",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_05（MYJA-S05）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_05.jpg",
+    "analysis/local/输出/素材包/GoldRay_05",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_10（MYJA-S10）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_10.jpg",
+    "analysis/local/输出/素材包/GoldRay_10",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_20（MYJA-S20）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_20.jpg",
+    "analysis/local/输出/素材包/GoldRay_20",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_30（MYJA-S30）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_30.jpg",
+    "analysis/local/输出/素材包/GoldRay_30",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_40（MYJA-S40）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_40.jpg",
+    "analysis/local/输出/素材包/GoldRay_40",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_Crown（MYJA-K）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_Crown.jpg",
+    "analysis/local/输出/素材包/GoldRay_Crown",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_Willow（MYJA-Y）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_Willow.jpg",
+    "analysis/local/输出/素材包/GoldRay_Willow",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_Ring（MYJA-R）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_Ring.jpg",
+    "analysis/local/输出/素材包/GoldRay_Ring",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_Saturn（MYJA-T）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_Saturn.jpg",
+    "analysis/local/输出/素材包/GoldRay_Saturn",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_Kaleido（MYJA-M）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_Kaleido.jpg",
+    "analysis/local/输出/素材包/GoldRay_Kaleido",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_Heart（MYJA-H）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_Heart.jpg",
+    "analysis/local/输出/素材包/GoldRay_Heart",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_Jisa（MYJA-J）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_Jisa.jpg",
+    "analysis/local/输出/素材包/GoldRay_Jisa",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_Core（MYJA-C）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_Core.jpg",
+    "analysis/local/输出/素材包/GoldRay_Core",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum（MYJM-O）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum_03（MYJM-S03）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_03.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_03",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum_10（MYJM-S10）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_10.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_10",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum_20（MYJM-S20）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_20.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_20",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum_30（MYJM-S30）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_30.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_30",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum_40（MYJM-S40）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_40.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_40",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum_Crown（MYJM-K）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Crown.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Crown",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum_Willow（MYJM-Y）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Willow.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Willow",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum_Ring（MYJM-R）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Ring.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Ring",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum_Saturn（MYJM-T）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Saturn.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Saturn",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum_Kaleido（MYJM-M）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Kaleido.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Kaleido",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum_Heart（MYJM-H）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Heart.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Heart",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum_Jisa（MYJM-J）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Jisa.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Jisa",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldChrysanthemum_Core（MYJM-C）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldChrysanthemum_Core.jpg",
+    "analysis/local/输出/素材包/GoldChrysanthemum_Core",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket（MYJC-O）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_03（MYJC-S03）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_03.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_03",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_05（MYJC-S05）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_05.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_05",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_10（MYJC-S10）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_10.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_10",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_20（MYJC-S20）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_20.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_20",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_30（MYJC-S30）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_30.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_30",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_40（MYJC-S40）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_40.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_40",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_Crown（MYJC-K）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_Crown.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_Crown",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_Willow（MYJC-Y）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_Willow.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_Willow",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_Ring（MYJC-R）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_Ring.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_Ring",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_Saturn（MYJC-T）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_Saturn.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_Saturn",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_Kaleido（MYJC-M）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_Kaleido.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_Kaleido",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_Heart（MYJC-H）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_Heart.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_Heart",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_Jisa（MYJC-J）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_Jisa.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_Jisa",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRayRocket_Core（MYJC-C）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRayRocket_Core.jpg",
+    "analysis/local/输出/素材包/GoldRayRocket_Core",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro（MYHK-O）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_03（MYHK-S03）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_03.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_03",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_05（MYHK-S05）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_05.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_05",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_10（MYHK-S10）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_10.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_10",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_20（MYHK-S20）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_20.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_20",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_30（MYHK-S30）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_30.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_30",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_Willow（MYHK-Y）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_Willow.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_Willow",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_Ring（MYHK-R）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_Ring.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_Ring",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_Saturn（MYHK-T）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_Saturn.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_Saturn",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_Kaleido（MYHK-M）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_Kaleido.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_Kaleido",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_Heart（MYHK-H）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_Heart.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_Heart",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_Jisa（MYHK-J）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_Jisa.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_Jisa",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_Core（MYHK-C）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_Core.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_Core",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "JinMangJu_10_T75（TP-JMG10-T75）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/JinMangJu_10_T75.jpg",
+    "analysis/local/输出/素材包/JinMangJu_10_T75",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "JinMangJu_10_T60（TP-JMG10-T60）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/JinMangJu_10_T60.jpg",
+    "analysis/local/输出/素材包/JinMangJu_10_T60",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "JinMangJu_10_T75C（TP-JMG10-T75C）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/JinMangJu_10_T75C.jpg",
+    "analysis/local/输出/素材包/JinMangJu_10_T75C",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_T75（TP-MYJA-O-T75）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_T75.jpg",
+    "analysis/local/输出/素材包/GoldRay_T75",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_T60（TP-MYJA-O-T60）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_T60.jpg",
+    "analysis/local/输出/素材包/GoldRay_T60",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "GoldRay_T75C（TP-MYJA-O-T75C）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldRay_T75C.jpg",
+    "analysis/local/输出/素材包/GoldRay_T75C",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_T75（TP-MYHK-O-T75）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_T75.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_T75",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_T60（TP-MYHK-O-T60）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_T60.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_T60",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "YonshakuKamuro_T75C（TP-MYHK-O-T75C）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/YonshakuKamuro_T75C.jpg",
+    "analysis/local/输出/素材包/YonshakuKamuro_T75C",
+    "--times",
+    "0.04,0.12,0.22,0.35,0.5,0.65,0.8,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  }
+ ],
+ "note": "对话框新花型。"
+}
