@@ -52,8 +52,8 @@ def build_show():
     template('G_GOLD', '坝顶·金锦冠扇形', 'dam', 'fan', 170, 150, 0, 3, 'gold')
     template('G_RED5', '坝顶·红彗星扇形', 'dam', 'fan', 140, 150, 0, 2.6, 'red')
     template('G_SILVER13', '坝顶·银灰扇形', 'dam', 'fan', 160, 150, 0, 3.2, 'gray')
-    for k, half, beams in (('G_GOLD', 58, [7, 9, 11, 13]), ('G_RED5', 40, [3, 5, 5, 5, 7]),
-                           ('G_SILVER13', 62, [11, 13, 13, 15])):
+    for k, half, beams in (('G_GOLD', 58, [7, 9, 11, 13, 15, 17]), ('G_RED5', 40, [3, 5, 5, 7, 9, 11]),
+                           ('G_SILVER13', 62, [9, 11, 13, 13, 15, 17, 19])):
         templates[k].update(half=half, beams=beams)
     points = {}
     xs = [-374.79, -288.19, -196.59, -100, 0, 100, 196.59, 288.19, 374.79]
