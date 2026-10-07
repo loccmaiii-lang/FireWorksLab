@@ -1,0 +1,8 @@
+烘焙器内部名 → 素材包里的名字（用户 2026-10-02 定的规范）
+T_FanCometOrange_Loop.png → T_EFX_FireWorks_FanComet_S_Loop_16x1_01_HD.png
+T_FanCometOrange_Loop_Cutout.png → T_EFX_FireWorks_FanComet_S_Loop_16x1_01_C.png
+T_FanCometOrange_Far.png → T_EFX_FireWorks_FanComet_S_Far_16x2_01_HD.png
+T_FanCometOrange_Far_Cutout.png → T_EFX_FireWorks_FanComet_S_Far_16x2_01_C.png
+T_FanCometOrange_Mobile_Loop.png → T_EFX_FireWorks_FanComet_S_Loop_16x1_01.png
+T_FanCometOrange_Mobile_Far.png → T_EFX_FireWorks_FanComet_S_Far_16x2_01.png
+T_FanCometOrange_Ramp.png → T_EFX_FireWorks_FanComet_S_R.png

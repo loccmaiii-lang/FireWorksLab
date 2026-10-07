@@ -1,0 +1,1039 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "FanCometRed_Mobile",
+ "platform": "mobile",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.39",
+  "type": "tailS",
+  "form": "emitset",
+  "quality": {
+   "ss": 2,
+   "hz": 300
+  },
+  "plan_sig": "385b9ecb"
+ },
+ "textures": {
+  "loop": {
+   "file": "T_EFX_FireWorks_FanComet_S_Loop_16x1_01.png",
+   "class": "flipbook",
+   "cols": 16,
+   "rows": 1,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_FanComet_S_Loop_16x1_01"
+  },
+  "cutoutLoop": {
+   "file": "T_EFX_FireWorks_FanComet_S_Loop_16x1_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_FanComet_S_Loop_16x1_01_C",
+   "save_est": 0.143,
+   "hash": "606906a89ae6b704ef2"
+  },
+  "ramp": {
+   "file": "T_EFX_FireWorks_FanComet_S_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_FanComet_S_R",
+   "hash": "71c9cb3745daca3d137"
+  },
+  "far": {
+   "file": "T_EFX_FireWorks_FanComet_S_Far_16x1_01.png",
+   "class": "flipbook",
+   "cols": 16,
+   "rows": 1,
+   "channels": 4,
+   "frames": 64,
+   "asset": "T_EFX_FireWorks_FanComet_S_Far_16x1_01"
+  },
+  "cutoutFar": {
+   "file": "T_EFX_FireWorks_FanComet_S_Far_16x1_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_FanComet_S_Far_16x1_01_C",
+   "save_est": 0.274,
+   "hash": "966b0a0d68c55731172d"
+  }
+ },
+ "materials": {
+  "loop": {
+   "role": "beam_flipbook",
+   "textures": {
+    "main": "loop",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 1,
+    "cols": 16
+   }
+  },
+  "dot": {
+   "role": "soft_dot"
+  },
+  "far": {
+   "role": "beam_flipbook",
+   "textures": {
+    "main": "far",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 1,
+    "cols": 16
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 0
+ },
+ "emitters": [
+  {
+   "name": "RiseLoop",
+   "material": "loop",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Velocity",
+    "duration_s": 2.1584,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutoutLoop",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.0232
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 2.1584
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       539.7,
+       7014.2,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "const": [
+       0,
+       0,
+       7145
+      ]
+     }
+    },
+    {
+     "m": "VelocityOverLife",
+     "VelOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         0,
+         0,
+         7145
+        ]
+       ],
+       [
+        0.0458,
+        [
+         0,
+         0,
+         6725
+        ]
+       ],
+       [
+        0.0958,
+        [
+         0,
+         0,
+         6308
+        ]
+       ],
+       [
+        0.15,
+        [
+         0,
+         0,
+         5897.7
+        ]
+       ],
+       [
+        0.2083,
+        [
+         0,
+         0,
+         5496.7
+        ]
+       ],
+       [
+        0.2708,
+        [
+         0,
+         0,
+         5107
+        ]
+       ],
+       [
+        0.3375,
+        [
+         0,
+         0,
+         4729.5
+        ]
+       ],
+       [
+        0.4125,
+        [
+         0,
+         0,
+         4344.5
+        ]
+       ],
+       [
+        0.4958,
+        [
+         0,
+         0,
+         3957.7
+        ]
+       ],
+       [
+        0.5875,
+        [
+         0,
+         0,
+         3573.2
+        ]
+       ],
+       [
+        0.6875,
+        [
+         0,
+         0,
+         3193.7
+        ]
+       ],
+       [
+        0.8,
+        [
+         0,
+         0,
+         2807.1
+        ]
+       ],
+       [
+        0.9292,
+        [
+         0,
+         0,
+         2405
+        ]
+       ],
+       [
+        1,
+        [
+         0,
+         0,
+         2200
+        ]
+       ]
+      ]
+     },
+     "Absolute": true,
+     "note": "物理弹道（平方阻力，终端速度 38 m/s）：速度按寿命直接取曲线（Absolute）；Cascade 的 Drag 只有线性，所以不写 Drag / Const Acceleration"
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         0.0299,
+         1
+        ]
+       ],
+       [
+        0.0156,
+        [
+         1,
+         0.0348,
+         1
+        ]
+       ],
+       [
+        0.125,
+        [
+         1,
+         0.2596,
+         1
+        ]
+       ],
+       [
+        0.2344,
+        [
+         1,
+         0.4558,
+         1
+        ]
+       ],
+       [
+        0.3594,
+        [
+         1,
+         0.6511,
+         1
+        ]
+       ],
+       [
+        0.4219,
+        [
+         1,
+         0.7388,
+         1
+        ]
+       ],
+       [
+        0.4375,
+        [
+         1,
+         0.7381,
+         1
+        ]
+       ],
+       [
+        0.6023,
+        [
+         1,
+         0.61,
+         1
+        ]
+       ],
+       [
+        0.8125,
+        [
+         1,
+         0.4815,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         0.3883,
+         1
+        ]
+       ]
+      ],
+      "bake": false
+     },
+     "MultiplyX": false,
+     "MultiplyY": true,
+     "MultiplyZ": false,
+     "note": "只改 Y：面片长 = 真实尾迹长（起步从短长出来，减速变短，不低于循环层最短）；Pivot Offset 把星头放在粒子位置，绕星头缩放"
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0
+        ],
+        [
+         0.9883,
+         63.99
+        ],
+        [
+         0.9884,
+         0
+        ],
+        [
+         1,
+         0.75
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         6.25,
+         6.25,
+         6.25
+        ]
+       ],
+       [
+        1,
+        [
+         6.25,
+         6.25,
+         6.25
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ]
+  },
+  {
+   "name": "TrailFar",
+   "material": "far",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Velocity",
+    "duration_s": 3.4333,
+    "loops": 1,
+    "delay_s": 0.6,
+    "cutout": "cutoutFar",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.5
+    ]
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 3.4333
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       4496.2
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "const": [
+       0,
+       0,
+       50
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       946.4,
+       9390.2,
+       1
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.4563,
+         47.01
+        ],
+        [
+         0.8058,
+         59.01
+        ],
+        [
+         0.9612,
+         63.01
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         4,
+         4,
+         4
+        ]
+       ],
+       [
+        1,
+        [
+         4,
+         4,
+         4
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ]
+  },
+  {
+   "name": "LaunchGlow",
+   "material": "dot",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Square",
+    "duration_s": 0.5,
+    "loops": 1,
+    "delay_s": 0
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "uniform": [
+       0.3,
+       0.3
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "uniform": [
+       [
+        600,
+        600,
+        600
+       ],
+       [
+        600,
+        600,
+        600
+       ]
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       100
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         0.6,
+         0.6,
+         0.6
+        ]
+       ],
+       [
+        0.15,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1.4,
+         1.4,
+         1.4
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": true
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         4,
+         1.9586,
+         0.5161
+        ]
+       ],
+       [
+        0.2,
+        [
+         4,
+         1.9589,
+         0.5162
+        ]
+       ],
+       [
+        0.6,
+        [
+         4,
+         1.9595,
+         0.5149
+        ]
+       ],
+       [
+        1,
+        [
+         4,
+         1.9595,
+         0.5149
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "curve": [
+       [
+        0,
+        0.2622
+       ],
+       [
+        0.2,
+        0.118
+       ],
+       [
+        0.6,
+        0.021
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     },
+     "note": "半透明材质：RGB = 色相 × 4（不随寿命变暗），淡出 / 闪烁 / 冷却在 Alpha；黑底上 RGB × Alpha = 烘焙器里的亮度"
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ]
+  },
+  {
+   "name": "LaunchSparks",
+   "material": "dot",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Square",
+    "duration_s": 0.5,
+    "loops": 1,
+    "delay_s": 0
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "uniform": [
+       0.35,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "uniform": [
+       [
+        12,
+        12,
+        12
+       ],
+       [
+        30,
+        30,
+        30
+       ]
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       50
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "const": [
+       0,
+       0,
+       1875
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "uniform": [
+       [
+        -1286.8,
+        -1286.8,
+        -750
+       ],
+       [
+        1286.8,
+        1286.8,
+        750
+       ]
+      ]
+     },
+     "note": "第 2 个 Initial Velocity：叠加的随机散开"
+    },
+    {
+     "m": "Drag",
+     "DragCoefficientRaw": {
+      "uniform": [
+       2.5,
+       4.5
+      ]
+     }
+    },
+    {
+     "m": "ConstAcceleration",
+     "Acceleration": [
+      0,
+      0,
+      -981
+     ]
+    },
+    {
+     "m": "SizeByLife",
+     "LifeMultiplier": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         0.5,
+         0.5,
+         0.5
+        ]
+       ]
+      ]
+     },
+     "MultiplyX": true,
+     "MultiplyY": true,
+     "MultiplyZ": true
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         6.8092,
+         4.202,
+         1.7017
+        ]
+       ],
+       [
+        0.25,
+        [
+         6.8092,
+         4.0732,
+         1.5568
+        ]
+       ],
+       [
+        0.3,
+        [
+         6.8092,
+         4.054,
+         1.5358
+        ]
+       ],
+       [
+        0.4,
+        [
+         6.8092,
+         4.0204,
+         1.4998
+        ]
+       ],
+       [
+        0.5,
+        [
+         6.8092,
+         3.9927,
+         1.4705
+        ]
+       ],
+       [
+        0.6,
+        [
+         6.8092,
+         3.9699,
+         1.4466
+        ]
+       ],
+       [
+        0.75,
+        [
+         6.8092,
+         3.943,
+         1.4187
+        ]
+       ],
+       [
+        0.85,
+        [
+         6.8092,
+         3.1174,
+         0.7251
+        ]
+       ],
+       [
+        0.93,
+        [
+         6.8092,
+         2.4201,
+         0.3692
+        ]
+       ],
+       [
+        1,
+        [
+         6.8092,
+         2.4201,
+         0.3692
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "curve": [
+       [
+        0,
+        1
+       ],
+       [
+        0.25,
+        0.714
+       ],
+       [
+        0.3,
+        0.7554
+       ],
+       [
+        0.4,
+        0.6333
+       ],
+       [
+        0.5,
+        0.657
+       ],
+       [
+        0.6,
+        0.5639
+       ],
+       [
+        0.75,
+        0.5577
+       ],
+       [
+        0.85,
+        0.0484
+       ],
+       [
+        0.93,
+        0.0024
+       ],
+       [
+        1,
+        0
+       ]
+      ]
+     },
+     "note": "半透明材质：RGB = 色相 × 6.8092（不随寿命变暗），淡出 / 闪烁 / 冷却在 Alpha；黑底上 RGB × Alpha = 烘焙器里的亮度"
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ]
+  }
+ ],
+ "notes": [
+  "循环层 RiseLoop：速度朝向单粒子，星头在面片上端（Pivot Offset -0.0232，和 V5 尾缀同一写法；导入器若还不支持这个字段，手动在 Required 里填）；弹道 = Initial Velocity + Velocity Over Life（Absolute，物理弹道：平方阻力、终端速度 38 m/s；这个模块要导入器支持，未经 UE 验证），和粒子层的出生曲线同一条）。帧号锯齿：0 圈自转 / 2.13 s 一个循环。贴图里有星头、白热段火花和 100% 的细火花、100% 的中火花（真循环；其余在 GPU 发射器）。面片长度跟真实尾迹（Size By Life 只改 Y，起步从短长出来、减速变短，最短 × 0.15）。",
+  "远段 TrailFar（4.5.1 近段 + 远段）：开花后所有火花都在远段里演完熄灭，没有 RiseFade 消散层。循环层贴图按曝光 × 0.8 烘（白热段不顶到 255），RiseLoop 的 Color Over Life × 1.56 补回（暗处和远段一样亮）。年龄 ≥ 0.6–1 s 的火花（已停在空气里）用世界坐标烘成全程序列，一个竖直面片 9.5 × 93.9 m 立在发射点上（中心在发射点上方 45 m），0.6 s 出现、3.43 s 播完：上升段 47 帧按弹体走过的路平均分、开花后 17 帧自己演完熄灭（帧号曲线不是匀速）。RiseLoop / RiseFade 只剩年轻火花，两段按年龄交叉淡化、相加 = 实时模拟。速度朝向 + 50 cm/s 向上初速 = 竖直、只绕竖轴转向相机；面片寿命里往上走 1.7 m，贴图里的内容已按这个上移补回（世界位置不变）。",
+  "GPU 火花按档预算（同时活着）：粗 0 / 闪烁（中）0 / 细 0 颗；GPU 那份从贴图里扣掉，贴图 + GPU = 全部火花。GPU 火花按远看直径 1.5 m 画（光量不变）。",
+  "粒子层：出生位置 / 初速是按发射器时间的曲线（\"bake\": false 不烘查找表，避免关键点被查找表抹掉）；第二个 Initial Velocity 是随机散开。按 spec 第 2 节，出生类曲线按发射器时间取值在 GPU 发射器上还没实测（⚪）。",
+  "同时活着的粒子最多约 5 颗（手机，第 0 s）。软圆点亮度口径未经 UE 验证：烘焙器按「中心值 = 颜色、σ = 尺寸 / 4」的高斯画。",
+  "GPU 兼容（UE 4.24 实测）：GPU 发射器不写 Acceleration（GPU Sprites 不支持），空气乱流只在贴图里；每个发射器最多 2 个 Initial Velocity（出生曲线 + 一个随机散开）。",
+  "GPU 粒子上限 800：估同时活着约 0 颗，没超。",
+  "线状火花：拉长的发射器 Screen Alignment = Rectangle（面片 Y 朝屏幕上方 = 竖直拖影），Initial Size 的 Y 和 X 分开、Size By Life 的 Y 按寿命拉长；Color Over Life 已除以拉长倍数（光量守恒）。GPU + Rectangle 未经 UE 验证（⚪）。",
+  "LaunchGlow / LaunchSparks 发射口：0 s 一次性 Burst（Spawn Rate = 0），发射药的闪光 + 向上喷的一把火花；离地 0.5–1 m 出生。"
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "FanComet_S",
+  "layers": [
+   ""
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true
+ },
+ "texture_tidy": {
+  "rule": "Cutout 估省 < 10%（8 顶点多边形外的面积）不出、发射器不设 Cutout Texture；同一个包里内容一样的 Ramp / Cutout 只留一张；textures[].hash = 内容指纹，导入时已有同 hash 的资产可直接复用",
+  "cutout_min_save": 0.1,
+  "merged": [],
+  "cutout_dropped": [],
+  "baker": "4.9.39"
+ }
+}

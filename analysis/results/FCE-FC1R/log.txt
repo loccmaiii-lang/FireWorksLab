@@ -1,0 +1,8 @@
+01:41:54 开始：FanCometRed（导出素材）
+01:42:03 FanCometRed 导出 9 秒：FanCometRed.json、FanCometRed_Cascade参数.txt、FanCometRed_Mobile.json、FanCometRed_曲线.csv、T_EFX_FireWorks_FanComet_S_Far_16x1_01.png、T_EFX_FireWorks_FanComet_S_Far_16x1_01_C.png、T_EFX_FireWorks_FanComet_S_Far_16x1_01_HD.png、T_EFX_FireWorks_FanComet_S_Loop_16x1_01.png、T_EFX_FireWorks_FanComet_S_Loop_16x1_01_C.png、T_EFX_FireWorks_FanComet_S_Loop_16x1_01_HD.png、T_EFX_FireWorks_FanComet_S_R.png、cascade.json、cascade_mobile.json、命名对照.txt
+01:42:05 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FCE-FC1R\回放检查.jpg（❌ FanCometRed · RiseLoop：过曝像素 6.5%；FanCometRed · TrailFar：过曝像素 2.8%）
+01:42:23 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FCE-FC1R\烘焙回放.jpg
+01:42:23 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FCE-FC1R\烘焙回放_原尺寸.jpg
+01:42:23 烘焙器预览没做成（不影响导出）：'texture'
+01:42:23 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+01:42:23 完成，用时 0.5 分钟
