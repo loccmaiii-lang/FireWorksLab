@@ -383,11 +383,15 @@ def radial_profile(v, cx, cy, R, raw=None, nb=26, rmax=1.3, skip_down=True):
     if skip_down: m &= ~((ang > 60) & (ang < 120))     # 正下方（升空尾迹）不算
     bins = np.linspace(0, rmax, nb + 1); idx = np.digitize(r[m], bins) - 1; vals = v[m]
     prof = [round(float(vals[idx == i].mean()), 1) if (idx == i).any() else 0.0 for i in range(nb)]
-    sat_r = None
+    sat_r = None; white_r = None
     if raw is not None:
         s = (raw.max(2) >= 250) & m
         if s.any(): sat_r = round(float(np.percentile(r[s], 90)), 3)
-    return dict(bins=[round(float(b), 3) for b in bins[:-1]], mean=prof, sat_r90=sat_r)
+        # 白芯有多大（2026-10-08）：又亮又不饱和的像素（显示值 max > 200、min / max > 0.6）在 0.9 R 以内的 90 分位半径——
+        # 橙引、柠绿星头是饱和色，不算进去；只看芯那一团白 / 淡黄白
+        mx = raw.max(2).astype(np.float32); mn = raw.min(2).astype(np.float32); w = (mx > 200) & (mn > 0.6 * mx) & m & (r < 0.9)
+        if w.sum() > 30: white_r = round(float(np.percentile(r[w], 90)), 3)
+    return dict(bins=[round(float(b), 3) for b in bins[:-1]], mean=prof, sat_r90=sat_r, white_r90=white_r)
 
 
 # ---------------- 一个时刻 ----------------
