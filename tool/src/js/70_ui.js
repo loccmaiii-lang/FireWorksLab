@@ -728,7 +728,8 @@ function buildMasterPanel() {
       const det = place(sec, it, ikey, nm), ex = emitOf(nm, sec);          // 这一行放进它的发射器 › 模块
       if (Array.isArray(it)) {
         const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
-        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => state.P[k], v => { if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); if (k === 'duration' && typeof seqNote === 'function') seqNote(state.P); } }, D[k], k);     // 4.9.36 改序列时长、设了出点：说一句
+        const vw = it[7];     // 4.9.48 显示换算（线条宽度：存散开速度、按米显示 / 输入）
+        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => vw ? vw.get(state.P, state.P[k]) : state.P[k], v => { if (vw) v = vw.set(state.P, v); if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); if (k === 'duration' && typeof seqNote === 'function') seqNote(state.P); } }, vw ? vw.get(D, D[k]) : D[k], k);     // 4.9.36 改序列时长、设了出点：说一句
         autoDefRow(row, k, step);
         const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}` : short) + (unit ? `（${unit}）` : '') + '；双击恢复默认';
         row._lab = short; row._detail = detail; row._nm = nm;
@@ -822,7 +823,8 @@ function refreshVisibility() {
     const vis = itemVisible(it, P) && !(sec.show && !sec.show(P)) && blankHas(P, row._bm), chg = vis && rowChanged(it, P, B);
     if (vis) appl[det._g] = true;
     row.classList.toggle('chg', chg); if (chg) nChg[det._g] = (nChg[det._g] || 0) + 1;
-    { const k = Array.isArray(it) ? it[0] : it.sel || it.text || it.curve; row._baseTxt = k && B && B[k] != null ? (Array.isArray(it) ? fmtV(B[k], it[5]) : String(B[k]) || '空') : null; }
+    { const k = Array.isArray(it) ? it[0] : it.sel || it.text || it.curve; row._baseTxt = k && B && B[k] != null ? (Array.isArray(it) ? fmtV(it[7] ? it[7].get(B, B[k]) : B[k], it[5]) : String(B[k]) || '空') : null;
+      if (Array.isArray(it) && it[7] && it[7].note) { let n = row.querySelector(':scope > .vwnote'); if (!n) { n = document.createElement('div'); n.className = 'vwnote'; row.appendChild(n); } n.textContent = it[7].note(P); } }
     // 4.3：不起作用的参数变灰、写原因（不藏：藏了反而找不到）；随机行收在本体参数的「随机」下面
     const key = Array.isArray(it) ? it[0] : it.sel || '', iw = vis && key ? inertWhy(key, P) : '';
     row._inert = iw; row.classList.toggle('inert', !!iw); if (iw) row.title = '现在不起作用：' + iw; else row.removeAttribute('title');

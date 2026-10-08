@@ -365,7 +365,7 @@ const quadVAO = gl.createVertexArray(); gl.bindVertexArray(quadVAO);
 const qb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, qb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0, 1, 0, 0, 1, 1, 1]), gl.STATIC_DRAW);
 gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 const pb = gl.createBuffer();      // CPU 光点（星头、闪光）的顶点缓冲，pts40VAO 用（41_particles40.js）
-const bufH = new Float32Array(4 * 30000), bufT = new Float32Array(4 * 450000);
+const bufH = new Float32Array(4 * 240000), bufT = new Float32Array(4 * 450000);     // 4.9.48 星头形状一颗最多拆 56 个点：星头缓冲 3 万 → 24 万
 const emptyVAO = gl.createVertexArray();
 const MAX_TEX = gl.getParameter(gl.MAX_TEXTURE_SIZE);
 function floatTex(w, h, data) {
@@ -463,7 +463,8 @@ function setAirUniforms(pr, P) {
 }
 // opt：xf = 随体坐标变换 [ox, oy, cos, sin]；mir = 0 无水面 / 1 只剔除水下 / 2 倒影
 function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
-  const P = tr.P, modern = true, pr = particleProgram40('spk'), se = sparkEff(P); gl.useProgram(pr.p);
+  const P = tr.P, modern = true, str = familyOf(P.type) === 'aerial' && +P.sparkStretch > 0, pr = particleProgram40(str ? 'spkS' : 'spk'), se = sparkEff(P); gl.useProgram(pr.p);     // 4.9.48 火花拉长
+  if (str) { gl.uniform1f(pr.u.uSpkStr, +P.sparkStretch); gl.uniform1f(pr.u.uSpkStrJ, Math.max(0, +P.sparkStretchJit || 0)); }
   gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tr.pos); gl.uniform1i(pr.u.uPos, 2);
   gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tr.vel); gl.uniform1i(pr.u.uVel, 3);
   gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, tr.info); gl.uniform1i(pr.u.uInfo, 4);
@@ -589,17 +590,19 @@ class Target {
 function drawQuad() { gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); }
 function drawPoints(buf, n, view, ppm, chan, w, xf) {
   if (!n) return;
-  const modern = true, pr = particleProgram40('pts'); gl.useProgram(pr.p); gl.bindVertexArray(pts40VAO); gl.bindBuffer(gl.ARRAY_BUFFER, pb);
+  const hx = PT_HEXON && !PT_GAUSS ? PT_HEXP : null, modern = true, pr = particleProgram40(hx ? 'ptsHex' : 'pts'); gl.useProgram(pr.p); gl.bindVertexArray(pts40VAO); gl.bindBuffer(gl.ARRAY_BUFFER, pb);     // 4.9.48 六边形星头：hx 非空时用 ptsHex
   gl.bufferData(gl.ARRAY_BUFFER, buf.subarray(0, n * 4), gl.DYNAMIC_DRAW);
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
   gl.uniform4fv(pr.u.uXf, xf || [0, 0, 1, 0]); gl.uniform1f(pr.u.uUseXf, xf ? 1 : 0);
   setParticleUniforms(pr, chan); gl.uniform4fv(pr.u.uChan, chan); gl.uniform1f(pr.u.uW, w); gl.uniform1f(pr.u.uSpan, PT_SPAN); gl.uniform1f(pr.u.uGauss, PT_GAUSS);
+  if (hx) { gl.uniform1f(pr.u.uHex, hx.hex); gl.uniform1f(pr.u.uHexRot, hx.rot); }
   drawParticleBatch(n, modern);
 }
+let PT_HEXON = false;     // 4.9.48：只有 drawHeads 画星头那一批时为 true（尾迹的 CPU 点、别的光点照旧是圆）
 // 4.3.3：Sim.gather 的星头缓冲里 [0, g) 是星头 / 爆裂小闪（实心亮核 + 光晕），[g, n) 是开花闪光（高斯柔光，见 20_sim.js gather）
 function drawHeads(buf, n, g, view, ppm, chan, w, xf) {
   g = g == null ? n : Math.max(0, Math.min(g, n));
-  if (g > 0) drawPoints(buf, g, view, ppm, chan, w, xf);
+  if (g > 0) { PT_HEXON = !!PT_HEXP; try { drawPoints(buf, g, view, ppm, chan, w, xf); } finally { PT_HEXON = false; } }
   if (n > g) { const old = PT_GAUSS; PT_GAUSS = 1; try { drawPoints(buf.subarray(g * 4), n - g, view, ppm, chan, w, xf); } finally { PT_GAUSS = old; } }
 }
 // 在超采样缓冲上加线间底光（实时、定帧、烘焙都在 drawFrameSamples40 之后调这一个函数）。ppm = 这个缓冲每米多少像素

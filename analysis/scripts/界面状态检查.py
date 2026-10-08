@@ -3167,6 +3167,60 @@ async def w32(pg):
     r = await pg.evaluate(W32_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
 
+W33_JS = r"""async () => {
+  // 4.9.48 星头 / 火花形状与随机、粗细按米（用户 10-08 15:56 / 16:1x / 16:2x）
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
+  const d = defaultsFor('kiku');
+  // ① 默认全关：形状 null、六边形 null、火花程序是原来那个
+  setParticleProfile(d.P); out.def = { hs: headShapeOf(d.P), hex: PT_HEXP };
+  if (out.def.hs !== null || out.def.hex !== null) bad.push('默认值应不进形状分支：' + JSON.stringify(out.def));
+  // ② 着色器变体能编译（圆核 / 渐变核）
+  out.prog = {}; for (const cp of [0, 1]) { const q0 = particleQuality.coreProfile; particleQuality.coreProfile = cp; for (const k of ['ptsHex', 'spkS']) { try { const pr = particleProgram40(k); out.prog[k + cp] = Object.keys(pr.u).filter(n => /Hex|SpkStr/.test(n)).length; } catch (e) { out.prog[k + cp] = 'ERR'; bad.push(k + cp + ' 编译失败：' + String(e.message).slice(0, 200)); } } particleQuality.coreProfile = q0; }
+  // ③ 画出来：拉长 / 六边形 / 火花拉长，星头通道总光量不变（±3%），像素变了；大小随机平均 1
+  const energy = ov => { const P = derive({ ...d.P, ...ov }); setParticleProfile(P); const R = makeRenderer(P, 'burst'), t = new Target(256, 256, gl.RGBA16F); t.clear(); t.bind(); gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE);
+    R.draw(1.0, [0, 0, 100, 100], 1.28, 1, 0); gl.disable(gl.BLEND); const a = new Float32Array(256 * 256 * 4); t.bind(); gl.readPixels(0, 0, 256, 256, gl.RGBA, gl.FLOAT, a); R.dispose(); t.dispose();
+    let h = 0, tl = 0, sig = 0; for (let i = 0; i < a.length; i += 4) { h += a[i]; tl += a[i + 1]; sig = (sig * 31 + Math.round(a[i] * 1e3) + Math.round(a[i + 1] * 1e3)) % 1e9; } return { h: +h.toFixed(2), t: +tl.toFixed(2), sig }; };
+  const e0 = energy({}), eS = energy({ headStretch: 1.5, headKnots: 0.6 }), eH = energy({ headHex: 1, headSize: 4 }), eH0 = energy({ headSize: 4 }), eK = energy({ sparkStretch: 1.5 });
+  out.energy = { e0, eS, eH, eH0, eK };
+  const near = (a, b, r) => Math.abs(a - b) <= r * Math.abs(b);
+  if (!near(eS.h, e0.h, 0.03) || eS.sig === e0.sig) bad.push('星头拉长：总光量应不变、画面应变：' + JSON.stringify([e0, eS]));
+  if (!near(eH.h, eH0.h, 0.03) || eH.sig === eH0.sig) bad.push('六边形：总光量应和圆差不多、画面应变：' + JSON.stringify([eH0, eH]));
+  if (!near(eK.t, e0.t, 0.03) || eK.sig === e0.sig || eK.h !== e0.h) bad.push('火花拉长：火花总光量应不变、画面应变、星头不动：' + JSON.stringify([e0, eK]));
+  { const hs = headShapeOf({ headSizeJit: 1 }); let m = 0; for (let i = 0; i < 4000; i++) m += headSizeMul({ id: i }, hs, 7); out.sizeMean = +(m / 4000).toFixed(3); if (!near(out.sizeMean, 1, 0.05)) bad.push('大小随机平均倍数应≈1：' + out.sizeMean); }
+  // ④ GPU 光点：默认大小范围不变，随机时放宽
+  { const L = { delay: 0, rate: 1, scale: 1 }, M = d.M; const a = dotsES(L, d.P, M), b = dotsES(L, { ...d.P, headSizeJit: 1 }, M); out.dots = [a.size, b.size];
+    if (!(b.size[0] < a.size[0] && b.size[1] > a.size[1])) bad.push('GPU 光点：大小随机时 Initial Size 范围应放宽：' + JSON.stringify(out.dots)); }
+  // ⑤ 右栏：火花 › 大小 = 颗粒大小 / 线条宽度（米）/ 大小随机；改线条宽度 = 改散开速度；尾迹粗细收进旧（待删）
+  { const prev = state.bake; await openType('kiku'); for (let i = 0; i < 100 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); state.playing = false; }
+  selectEmitTab('火花'); await wait(80);
+  const rowOf = k => { const x = panelRows.find(r => Array.isArray(r[1]) && r[1][0] === k); return x && x[0]; }, modOf = r => { const m = r && r.closest('details'); return m ? (m.querySelector('summary') || {}).textContent || '' : ''; };
+  const rw = rowOf('sparkSpread'), rs = rowOf('sparkSize'), rj = rowOf('tailJit'), rt = rowOf('tailWidth');
+  out.rows = { width: rw && [rw._lab, modOf(rw).slice(0, 8), rw.querySelector('.punit').textContent, rw.querySelector('.num').value, (rw.querySelector('.vwnote') || {}).textContent], size: rs && [rs._lab, modOf(rs).slice(0, 8)], jit: rj && [rj._lab, modOf(rj).slice(0, 8)], tw: rt && [rt.classList.contains('legacy'), getComputedStyle(rt).display] };
+  if (!rw || rw._lab !== '线条宽度' || !/^大小/.test(modOf(rw)) || rw.querySelector('.punit').textContent !== 'm') bad.push('「线条宽度」应在火花 › 大小、单位 m：' + JSON.stringify(out.rows));
+  else { const want = +(+state.P.sparkSpread * spreadW(state.P)).toFixed(2); if (Math.abs(+rw.querySelector('.num').value - want) > 0.011) bad.push('线条宽度显示不对：' + JSON.stringify([rw.querySelector('.num').value, want]));
+    const num = rw.querySelector('.num'); num.value = '3'; num.dispatchEvent(new Event('change')); await wait(50); out.setW = [state.P.sparkSpread, +(3 / spreadW(state.P)).toFixed(5)];
+    if (Math.abs(state.P.sparkSpread - 3 / spreadW(state.P)) > 1e-4) bad.push('填线条宽度 3 m 应改散开速度：' + JSON.stringify(out.setW));
+    if (!/散开速度/.test((rw.querySelector('.vwnote') || {}).textContent || '')) bad.push('线条宽度下面应写换算：' + JSON.stringify(out.rows)); }
+  if (!rs || rs._lab !== '颗粒大小' || !/^大小/.test(modOf(rs))) bad.push('「颗粒大小」应在火花 › 大小：' + JSON.stringify(out.rows));
+  if (!rj || rj._lab !== '大小随机' || !/^大小/.test(modOf(rj))) bad.push('「大小随机」应挪到火花 › 大小：' + JSON.stringify(out.rows));
+  if (!rt || !rt.classList.contains('legacy') || !legacyFolded(rt, rt.closest('details'), state.P, '', false)) bad.push('「尾迹粗细」（1 = 没用）应收进旧（待删）：' + JSON.stringify(out.rows));
+  // ⑥ 星 › 大小：新行；从属的母项 > 0 才出现
+  selectEmitTab('星'); await wait(80); refreshVisibility();
+  const vis = k => { const r = rowOf(k); return !!r && itemVisible(r._it || panelRows.find(x => x[0] === r)[1], state.P); };
+  out.head = Object.fromEntries(['headSizeJit', 'headStretch', 'headStretchJit', 'headKnots', 'headLumpy', 'headDouble', 'headHex', 'headHexRot'].map(k => [k, [!!rowOf(k), vis(k), rowOf(k) ? modOf(rowOf(k)).slice(0, 6) : '']]));
+  for (const k of ['headSizeJit', 'headStretch', 'headLumpy', 'headDouble', 'headHex']) if (!out.head[k][0] || !out.head[k][1] || !/^大小/.test(out.head[k][2])) bad.push(`星 › 大小应有 ${k}：` + JSON.stringify(out.head[k]));
+  for (const k of ['headStretchJit', 'headKnots', 'headHexRot']) if (out.head[k][1]) bad.push(`${k} 母项为 0 时不该出现`);
+  state.P.headStretch = 1; state.P.headHex = 1; onParam(); refreshVisibility(); out.head2 = ['headStretchJit', 'headKnots', 'headHexRot'].map(vis);
+  if (!out.head2.every(Boolean)) bad.push('母项 > 0 后从属行应出现：' + JSON.stringify(out.head2));
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w33(pg):
+    """4.9.48 星头 / 火花形状与随机、粗细按米：默认不进分支、变体能编译、总光量不变、右栏位置和换算、尾迹粗细收进旧"""
+    r = await pg.evaluate(W33_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1800]
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -3206,7 +3260,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

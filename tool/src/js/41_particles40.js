@@ -95,7 +95,54 @@ function gradientSource40(source) {
     .replace('float core=diskCoverage(vLocal,vSig), halo=0.;',
       'float core=3.14159265*vSig.x*vSig.y*gaussianCoverage(vLocal,vSig*.5), halo=0.;');
 }
+// ---- 4.9.48 星头六边形、火花拉长（用户 10-08 16:2x「可以加个六边形进来吗」、15:56「火星与星头都有一个形状的调试与随机」）----
+// 和上面「可选源分布」同一个规矩：参数为 0 时用原来的程序（逐像素不变），不为 0 才编译 / 用变体。
+// 六边形：亮核按「圆 → 六边形」混合的距离函数在像素里 4 × 4 取样（面积和圆一样，同一层所有亮点一个朝向，像镜头光圈）；半径 < 1.5 像素时照旧按圆算。
+const HEX40_FN = `uniform float uHex, uHexRot;
+float shapeD40(vec2 p,vec2 r){ vec2 u=p/r; float c=cos(uHexRot), s=sin(uHexRot); u=vec2(c*u.x+s*u.y,-s*u.x+c*u.y); vec2 a=abs(u);
+  float dh=max(dot(a,vec2(.8660254,.5)),a.y)/.95229; return mix(length(u),dh,uHex); }
+float hexCov40(vec2 p,vec2 r){ if(min(r.x,r.y)<1.5) return diskCoverage(p,r); float n=0.;
+  for(int i=0;i<4;i++) for(int j=0;j<4;j++){ vec2 q=p+(vec2(float(i),float(j))-1.5)*.25; n+=step(shapeD40(q,r),1.); } return n/16.; }
+float hexGauss40(vec2 p,vec2 r){ if(min(r.x,r.y)<1.5) return 3.14159265*r.x*r.y*gaussianCoverage(p,r*.5); float n=0.;
+  for(int i=0;i<4;i++) for(int j=0;j<4;j++){ vec2 q=p+(vec2(float(i),float(j))-1.5)*.25; float d=shapeD40(q,r)*2.; n+=exp(-.5*d*d); } return 2.*n/16.; }
+void main(){`;
+function hexFS40(fs) {
+  return fs.replace('void main(){', HEX40_FN)
+    .replace('float core=diskCoverage(vLocal,vSig), halo=0.;', 'float core=hexCov40(vLocal,vSig), halo=0.;')
+    .replace('float core=3.14159265*vSig.x*vSig.y*gaussianCoverage(vLocal,vSig*.5), halo=0.;', 'float core=hexGauss40(vLocal,vSig), halo=0.;');
+}
+// 火花拉长：沿这粒火花此刻的速度拉成椭圆（长 = 拉长 × 速度 × 1/30 s，拖在后面），总光量不变；只拉普通火花 / 余烬（c == 0），分叉火花不拉
+const SPKS40_FN = `
+void emitCore40Rot(vec2 q,float I,float size,vec2 dir,float L){
+  vec2 r=max(size*.5*vec2(uPPM,uPPMY),vec2(1e-7)); float lp=L*uPPM; vec2 R=vec2(r.x+.5*lp,r.y);
+  float reach=uHaloFrac>0.?4.*max(1.,uHaloR):1.;
+  vec2 corner=vec2(float(gl_VertexID&1),float(gl_VertexID>>1))*2.-1.;
+  vec2 p=corner*(ceil(R*reach)+vec2(1.));
+  vec2 w=vec2(dir.x*p.x-dir.y*p.y,dir.y*p.x+dir.x*p.y)-dir*(.5*lp);
+  gl_Position=vec4((q+w/vec2(uPPM,uPPMY)-uView.xy)/uView.zw,0.,1.);
+  vLocal=p; vSig=R; vI=size>0.?I*r.x/R.x:0.; vPS=0.;
+}`;
+function spkStretchVS40(vs) {
+  const tail = '  emitPt(q,I,size);\n}';
+  let v = vs.replace('void emitPt(vec2 q,float I,float size){emitCore40(q,I,size);}', 'void emitPt(vec2 q,float I,float size){emitCore40(q,I,size);}' + SPKS40_FN)
+    .replace('uniform sampler2D uPos, uVel, uInfo;', 'uniform sampler2D uPos, uVel, uInfo; uniform float uSpkStr, uSpkStrJ;');
+  const at = v.lastIndexOf(tail); if (at < 0) throw new Error('火花拉长：找不到火花着色器的输出行');
+  const add = `  if(c==0 && uSpkStr>0.){ vec3 vv=motv(vel,U,g,uK,age); vec2 w2=vv.xy; if(uUseXf>.5) w2=vec2(w2.x*uXf.z-w2.y*uXf.w,w2.x*uXf.w+w2.y*uXf.z);
+    float sp=length(w2), L=uSpkStr*sp/30.*(uSpkStrJ>0.?exp(.6*uSpkStrJ*gss(uid,93u)-.18*uSpkStrJ*uSpkStrJ):1.);
+    if(L>1e-4 && sp>1e-4){ emitCore40Rot(q,I,size,w2/sp,L); return; } }
+`;
+  return v.slice(0, at) + add + v.slice(at);
+}
+const shapePrograms40 = {};
+function shapeProgram40(kind) {
+  const g = particleQuality.coreProfile ? 1 : 0, key = kind + g; if (shapePrograms40[key]) return shapePrograms40[key];
+  const G = x => g ? gradientSource40(x) : x;
+  if (kind === 'ptsHex') return shapePrograms40[key] = compile(G(POINT40_CPU_VS), hexFS40(G(POINT40_FS)));
+  if (kind === 'spkS') { const vs = point40GpuSource(VS_SPK).replace('uint uid=uint(pid);', 'uint uid=uint(s)*65536u+uint(j);'); return shapePrograms40[key] = compile(G(spkStretchVS40(vs)), G(POINT40_FS)); }
+  throw new Error('没有这种光点程序：' + kind);
+}
 function particleProgram40(kind) {
+  if (kind === 'ptsHex' || kind === 'spkS') return shapeProgram40(kind);
   if (!particleQuality.coreProfile || (kind === 'pts' && PT_GAUSS)) return PR40[kind];
   if (!gradientPrograms40[kind]) {
     const vs = kind === 'pts' ? POINT40_CPU_VS : point40GpuSource({spk:VS_SPK,emit:VS_EMIT,ehead:VS_EHEAD}[kind]);

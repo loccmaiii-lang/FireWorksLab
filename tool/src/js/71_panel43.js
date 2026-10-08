@@ -22,11 +22,11 @@ function emitOf(nm, sec) {
 }
 // 「××随机」挂在哪个本体参数下面（没列的按「键名去掉 Jit」找；找不到就照常单独一行）
 const RAND_OF = { speedJit: 'v0', dirJit: 'v0', burnJit: 'burn', ignJit: 'ignDelay', afterJit: 'afterBurn', sparkRampJit: 'sparkRamp', sparkLifeJit: 'sparkLife',
-  sparkSpread: 'sparkInherit', sparkInhJit: 'sparkInherit', twinkle: 'sparkBright', twinkleHz: 'sparkBright', starBright: 'sparkBright', subJit: 'subDelay', subSpeedJit: 'subSpeed', subScaleJit: 'subSpeed' };
+  sparkInhJit: 'sparkInherit',     /* 4.9.48 sparkSpread 改成「线条宽度」（火花 › 大小），不再收在「跟随星体」的随机下面 */ twinkle: 'sparkBright', twinkleHz: 'sparkBright', starBright: 'sparkBright', subJit: 'subDelay', subSpeedJit: 'subSpeed', subScaleJit: 'subSpeed' };
 function randBaseOf(key, keys) { const b = RAND_OF[key] || (/Jit$/.test(key) ? key.slice(0, -3) : ''); return b && keys.has(b) ? b : ''; }
 const isCarrierType = P => P.type === 'senrin' || P.type === 'crossette';
 const SPARK_KEYS = ['sparkRateEnd', 'sparkStop', 'sparkStart', 'sparkRamp', 'sparkRampJit', 'sparkLife', 'sparkLifeEnd', 'sparkLifeJit', 'sparkSpread', 'sparkSize', 'sparkInherit', 'sparkDrag', 'sparkGrav',
-  'T0', 'cooling', 'sparkBright', 'twinkle', 'twinkleHz', 'emberFrac', 'tailJit', 'tailShoulder', 'tailWidth', 'tailPinchHead', 'tailPinchTail', 'tailBellyAt', 'sparkRise', 'starBright', 'tailHaze', 'tailHazeR', 'branch', 'branchAt', 'tailDiffuse', 'tailDiffuseScale'];
+  'T0', 'cooling', 'sparkBright', 'twinkle', 'twinkleHz', 'emberFrac', 'tailJit', 'tailShoulder', 'tailWidth', 'tailPinchHead', 'tailPinchTail', 'tailBellyAt', 'sparkRise', 'starBright', 'tailHaze', 'tailHazeR', 'branch', 'branchAt', 'tailDiffuse', 'tailDiffuseScale', 'sparkStretch', 'sparkStretchJit'];
 // 不起作用的条件（空中类）：[键, 条件, 原因]。依据：analysis/probe/参数有效性/（云端：拨了曲线 / 帧计划都不变）+ analysis/results/SMOKE15/参数有效性/（本机：再加 4 个时刻的定帧画面也不变）+ 代码（20_sim.js、40_gl.js）
 const INERT = [
   [['coreProfile'], P => isTrail(P), 'V5尾缀沿用已通过的高斯核；本选项不改变它和开花闪光'],
@@ -68,6 +68,7 @@ const LEGACY = {
   fpsFloor: ['旧帧计划才读；固定机位 + 匀速帧不读'],
   // 4.9.13：开花段时长 burstSec、淡出起点 fadeAt 是按运动分的参数，帧数分配默认改回按运动分（用户 10-06 15:15）后不再是旧
   trimLead: ['开头空白不烘；5.0 固定为裁掉', 1],
+  tailWidth: ['和「火花 › 大小」的线条宽度、颗粒大小重了（线宽 × 这个数、颗粒 × √）；新做的用那两个米数（4.9.48，用户 10-08 16:2x「按米重理」）', 1],
 };
 const legacyOf = k => LEGACY[k] || (/^ph[A-Z]/.test(k) ? ['物理尾缀（已归档）的参数'] : null);
 function legacyInUse(k, P) {

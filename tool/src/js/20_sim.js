@@ -86,6 +86,42 @@ function shapePoints(kind, n, text) {
 }
 // 每颗星固定的伪随机数（0–1）：不消耗模拟的随机序列，所以加了「只让一部分星发光」「第二段时长」这类开关后，
 // 同种子的两层星位仍然一一对应（红点灭 = 主层星的一部分，接在它们的位置上）
+// ---- 4.9.48 星头形状（用户 10-08 15:56「它的亮核就不是所有都是圆形的……星头大小还无法随机」；16:2x 选拖影亮结 / 边缘起伏 / 双核 / 六边形）----
+// 都在 gather 里把一颗星头拆成几个光点（和「泪滴星头」同一个做法，实时模拟 / 烘焙 / 导出同一份），全 0 时返回 null、不进分支（以前的效果逐像素不变）。
+// 每颗星的随机按星号 + 种子取（starHash），不动模拟的随机序列。六边形在光点核里画（41_particles40.js headHexProgram），这里不管。
+function headShapeOf(P) {
+  const n = k => Math.max(0, +P[k] || 0), o = { sz: n('headSizeJit'), st: n('headStretch'), stj: n('headStretchJit'), kn: n('headKnots'), lu: n('headLumpy'), db: n('headDouble') };
+  return o.sz > 0 || o.st > 0 || o.lu > 0 || o.db > 0 ? o : null;
+}
+function hsGauss(id, seed, k) { const u1 = Math.max(1e-7, starHash(id, seed, k)), u2 = starHash(id, seed, k + 1); return Math.sqrt(-2 * Math.log(u1)) * Math.cos(6.2831853 * u2); }
+// 星头大小随机：对数正态，σ = 0.6 × 值，均值 1
+function headSizeMul(s, hs, seed) { if (!(hs.sz > 0)) return 1; const sg = 0.6 * hs.sz; return Math.exp(sg * hsGauss(s.id, seed, 301) - 0.5 * sg * sg); }
+// 一颗星头的光点：先拼「形状」（主核 + 双核 + 边上的小鼓包，偏移按米），再沿运动反方向复制成拖影（相机快门拖在后面，星头前沿就在星的位置）
+function headShapePush(push, buf, nh, cap, s, I, sz, hs, t, seed) {
+  const H = k => starHash(s.id, seed, k), parts = [[0, 0, 1, 1]];     // [dx, dy, 亮度倍数, 大小倍数]
+  if (hs.db > 0 && H(321) < hs.db) {     // 双核：第二个核错开 0.45–0.85 个直径，方向慢慢转
+    const d = sz * (0.45 + 0.4 * H(322)), a = 6.2831853 * H(323) + (H(324) - 0.5) * 1.2 * t;
+    parts[0][3] = 0.85; parts.push([Math.cos(a) * d, Math.sin(a) * d, 0.8, 0.55 + 0.3 * H(325)]);
+  }
+  if (hs.lu > 0) {     // 边缘起伏：3–6 个小鼓包贴着亮核边，离中心的距离和大小随时间慢慢变
+    const m = 3 + Math.floor(H(331) * 4), w = (H(332) - 0.5) * 1.2;
+    for (let i = 0; i < m; i++) {
+      const u = H(340 + i), a = 6.2831853 * (i / m + 0.3 * u) + w * t, r = sz * 0.42 * hs.lu * (0.6 + 0.8 * u) * (1 + 0.25 * Math.sin(6.2831853 * (0.8 * t + u)));
+      parts.push([Math.cos(a) * r, Math.sin(a) * r, 0.45, 0.4 + 0.25 * H(350 + i)]);
+    }
+  }
+  let L = 0, ux = 0, uy = 0;
+  if (hs.st > 0) { const v = Math.hypot(s.vx, s.vy); if (v > 0.5) { ux = -s.vx / v; uy = -s.vy / v; const sg = 0.6 * hs.stj; L = hs.st * v / 30 * (hs.stj > 0 ? Math.exp(sg * hsGauss(s.id, seed, 311) - 0.5 * sg * sg) : 1); } }
+  // 拖影：k 个点等距排开，总光量不变（面亮度约 × 直径 / (直径 + 长)）；亮结 = 沿拖影的亮度起伏（每颗星两组相位，随时间走）
+  const k = L > 0.15 * sz ? Math.min(8, Math.ceil(L / (0.4 * sz)) + 1) : 1, dl = k > 1 ? L / (k - 1) : 0, f = 1 / k;     // 每个点一样大：总光量不变 = 每点 1/k
+  let wsum = 0; const wk = [];
+  for (let j = 0; j < k; j++) { let w = 1; if (k > 1 && hs.kn > 0) { const x = j / (k - 1); w = Math.max(0.05, 1 + hs.kn * 1.6 * (0.6 * Math.sin(6.2831853 * (1.7 * x + 3.1 * t + H(361))) + 0.4 * Math.sin(6.2831853 * (3.3 * x - 5.3 * t + H(362))))); } wk.push(w); wsum += w; }
+  for (let j = 0; j < k; j++) {
+    const ox = ux * dl * j, oy = uy * dl * j, w = wk[j] * k / wsum;
+    for (const [dx, dy, bi, si] of parts) { if (nh >= cap - 1) return nh; push(buf, nh++, s.x + ox + dx, s.y + oy + dy, I * bi * f * w, sz * si); }
+  }
+  return nh;
+}
 function starHash(id, seed, k) {
   let h = (Math.imul(id + 1, 0x9E3779B1) ^ Math.imul((seed | 0) + 7, 0x85EBCA77) ^ Math.imul(k + 3, 0xC2B2AE3D)) >>> 0;
   h ^= h >>> 16; h = Math.imul(h, 0x7FEB352D) >>> 0; h ^= h >>> 15; h = Math.imul(h, 0x846CA68B) >>> 0; h ^= h >>> 16;
@@ -496,6 +532,7 @@ class Sim {
   gather(bufH, bufT) {
     const P = this.P, rr = this.rr, refl = P.waterRefl;
     let nh = 0; const capH = bufH.length >> 2, capT = bufT.length >> 2;
+    const hs = headShapeOf(P);     // 4.9.48 星头形状（全 0 = null，每颗星走原来那一行）
     const push = (buf, n, x, y, I, sz) => { const k = n * 4; buf[k] = x; buf[k + 1] = y; buf[k + 2] = I; buf[k + 3] = sz; };
     for (const s of this.stars) {
       if (!s.alive) continue;
@@ -503,7 +540,8 @@ class Sim {
       if (nh >= capH - 1) { this.dropH = (this.dropH || 0) + 1; continue; }     // 4.3（E9）：星头缓冲满了没画的星（自检报警）
       let sz = s.sz != null ? s.sz * (s.exC && s.exC.sizeC ? Math.max(0, lifeCurveAt(s.exC.sizeC, clamp((s.age - (s.ign || 0)) / Math.max(0.05, s.burn - (s.ign || 0)), 0, 1))) : 1) : P.headSize * (s.kind === 1 || s.kind === 6 ? 0.8 : 1);     // 4.6.0 子星 / 自定义发射器的星有自己的大小
       { const cs = s.kind === 2 ? this.cv.us : s.kind === 0 || s.kind === 1 ? this.cv.ss : null; if (cs) { const off = s.st1 != null ? s.st1 : s.ign, end = s.vis != null ? s.vis : s.burn; sz *= Math.max(0, lifeCurveAt(cs, clamp((s.age - off) / Math.max(0.05, end - off), 0, 1))); } }     // 4.8.0 星 / 子星大小随寿命
-      push(bufH, nh++, s.x, s.y, I, sz);
+      if (hs) { sz *= headSizeMul(s, hs, P.seed); nh = headShapePush(push, bufH, nh, capH, s, I, sz, hs, this.t, P.seed); }
+      else push(bufH, nh++, s.x, s.y, I, sz);
       // 尾迹外形「泪滴星头」（headTear）：沿运动反方向补几个越来越小、越来越暗的点，速度越快拉得越长（默认 0 不进来）
       if (P.headTear > 0 && nh < capH - 5) { const v = Math.hypot(s.vx, s.vy); if (v > 0.5) { const ux = -s.vx / v, uy = -s.vy / v, len = P.headTear * (sz * 2 + v * 0.025);
         for (let k = 1; k <= 4; k++) { const f = k / 4; push(bufH, nh++, s.x + ux * len * f, s.y + uy * len * f, I * (1 - 0.75 * f), sz * (1 - 0.7 * f)); } } }

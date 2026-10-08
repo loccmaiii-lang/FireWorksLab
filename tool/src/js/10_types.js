@@ -82,7 +82,7 @@ const BASE = {
   // 星效果
   ignDelay: 0, ignJit: 10, ignSeed: 0, keepFrac: 1, afterBurn: 0, afterJit: 15, headDim: 1, headDimUntil: 0,
   emberFrac: 0, emberLife: 3, emberBright: 0.1, emberFollow: 0, emberSize: 1, emberAll: 0, emberEnd: 0,
-  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, tailJit: 0, tailShoulder: 0, tailWidth: 1, tailPinchHead: 0, tailPinchTail: 0, tailBellyAt: 0.45, headTear: 0, tailDiffuse: 0, tailDiffuseScale: 20, sparkRise: 0, starBright: 0, tailHaze: 0, tailHazeR: 6, frameCount: 24, outPack: 'grid', outCell: 0, cutIn: 0, cutOut: 0, preRoll: 1, preFrom: -1, visTo: 0, preScale0: 0, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
+  carrierHead: 0.4, subKeep: -1, subSpeedJit: -1, trimLead: 1, tailJit: 0, tailShoulder: 0, tailWidth: 1, tailPinchHead: 0, tailPinchTail: 0, tailBellyAt: 0.45, headTear: 0, headSizeJit: 0, headStretch: 0, headStretchJit: 0, headKnots: 0, headLumpy: 0, headDouble: 0, headHex: 0, headHexRot: 0, sparkStretch: 0, sparkStretchJit: 0, tailDiffuse: 0, tailDiffuseScale: 20, sparkRise: 0, starBright: 0, tailHaze: 0, tailHazeR: 6, frameCount: 24, outPack: 'grid', outCell: 0, cutIn: 0, cutOut: 0, preRoll: 1, preFrom: -1, visTo: 0, preScale0: 0, subScaleJit: 0, subVt: 0, subGrav: -1, subFlash: -1,
   strobeHz: 0, strobeDuty: 0.35, strobeStart: 0.4, glitter: 0, glitterDelay: 0.25,
   crackle: 0, crackleDelay: 0.3, crackleR: 3.5, crackleV: 0, branch: 0, branchAt: 0.45, flutter: 0, flutterHz: 0.7,
   // 上升
@@ -408,6 +408,9 @@ const isTrail = P => familyOf(P.type) === 'rise' && P.form === 'trail';
 const isPhys = P => familyOf(P.type) === 'rise' && P.form === 'phys';
 const isEmit = P => familyOf(P.type) === 'rise' && P.form === 'emitset';   // 循环层 + 粒子发射器（47_risetail.js）
 const isSeq = P => !isTrail(P) && !isPhys(P) && !isEmit(P);
+// 4.9.48 线条宽度（米）⇄ 火花散开速度（m/s）：每轴正态 σ = 散开速度，线性阻力 k 下横向位移到寿命 L 时 σ·(1 − e^(−kL))/k；宽度 = 2 × 这个（约 2/3 的火花在里面）
+const spreadW = P => { const k = +P.sparkDrag || 0, L = Math.max(0.01, +P.sparkLife || 0.5); return 2 * (k > 1e-4 ? (1 - Math.exp(-k * L)) / k : L); };
+const SPREAD_VIEW = { get: (P, v) => +((+v || 0) * spreadW(P)).toFixed(4), set: (P, w) => +((+w || 0) / spreadW(P)).toFixed(5), note: P => `= 散开速度 ${(+P.sparkSpread || 0).toFixed(2)} m/s（阻力 ${(+P.sparkDrag || 0).toFixed(2)}、寿命 ${(+P.sparkLife || 0).toFixed(2)} s 时）` };
 const frameOn = P => !!P && (P.outPC === 'frame' || P.outMobile === 'frame');     // 4.9.35 单帧的设置：PC 或手机选了单帧才出现
 // 4.4.2：单层效果的「导出方案」只给空中礼花的大面片 / 分段（多层效果在层页头；尾缀、地面、上升循环没有光点 / 单束）
 const singleSchemeOn = P => !!P && familyOf(P.type) === 'aerial' && isSeq(P) && P.form !== 'unit' && (typeof state === 'undefined' || state.tab !== 'combo');   // 普通花型（非尾缀序列、非物理尾缀、非循环层 + 粒子）
@@ -525,6 +528,15 @@ const SCHEMA = [
   ] },
   { sec: '炭头（星头）', show: isSeq, items: [
     ['headSize', '炭头大小', 'm', 0.15, 6, 0.05],
+    // 4.9.48（用户 10-08 15:56「它的亮核就不是所有都是圆形的……星头大小还无法随机」，16:2x 选拖影亮结 / 边缘起伏 / 双核 / 六边形）：都默认 0 = 以前逐像素不变（20_sim.js headShapeOf）
+    ['headSizeJit', '星头大小随机（每颗星一个倍数，平均不变）', '', 0, 1, 0.01, isAir],
+    ['headStretch', '星头拉长（沿运动方向，1 = 一帧 30 fps 的相机拖影；跑得快拉得长）', '', 0, 3, 0.01, isAir],
+    ['headStretchJit', '拉长随机（每颗星长短不同）', '', 0, 1, 0.01, P => isAir(P) && +P.headStretch > 0],
+    ['headKnots', '拖影亮结（拖影里亮度一节一节不匀，随时间变）', '', 0, 1, 0.01, P => isAir(P) && +P.headStretch > 0],
+    ['headLumpy', '边缘起伏（亮核边上几个小鼓包，慢慢变形）', '', 0, 1, 0.01, isAir],
+    ['headDouble', '双核（多少比例的星由两个错开的小核拼成）', '', 0, 1, 0.01, isAir],
+    ['headHex', '六边形（0 圆 → 1 六边形，像镜头光圈；这一层所有亮点同一个朝向）', '', 0, 1, 0.01, isAir],
+    ['headHexRot', '六边形转角', '°', 0, 60, 1, P => isAir(P) && +P.headHex > 0],
     ['headBright', '炭头亮度', '×', 0, 3, 0.05],
     ['flicker', '闪烁强度', '', 0, 1, 0.01],
     { curve: 'starSizeCurve', label: '星头大小随寿命' },
@@ -541,8 +553,11 @@ const SCHEMA = [
     ['sparkLife', '火花寿命', 's', 0.05, 4, 0.01],
     ['sparkLifeEnd', '末段出生火花的寿命', '×', 0.05, 2, 0.01, P => familyOf(P.type) === 'aerial'],
     ['sparkLifeJit', '火花寿命离散', '%', 0, 80, 1, P => familyOf(P.type) === 'aerial'],
-    ['sparkSpread', '尾缀粗细（散布）', 'm/s', 0, 15, 0.1],
+    // 4.9.48 粗细按米（用户 10-08 16:1x「不知道是调整粒子大小还是整条线条的粗细」→ 16:2x「按米重理」）：存的仍是散开速度（m/s），右栏按米显示和输入（SPREAD_VIEW）
+    ['sparkSpread', '线条宽度（火花向旁边散开，约 2/3 的火花在这么宽里）', 'm', 0, 8, 0.01, null, SPREAD_VIEW],
     ['sparkSize', '颗粒大小', 'm', 0.05, 2, 0.01],
+    ['sparkStretch', '火花拉长（沿飞行方向，1 = 一帧 30 fps 的相机拖影）', '', 0, 3, 0.01, isAir],
+    ['sparkStretchJit', '火花拉长随机（每粒长短不同）', '', 0, 1, 0.01, P => isAir(P) && +P.sparkStretch > 0],
     ['sparkInherit', '跟随星体', '', 0, 1, 0.01],
     ['sparkDrag', '火花阻力', '1/s', 0, 8, 0.05],
     ['sparkGrav', '火花下坠', '×', 0, 3, 0.05],
@@ -573,8 +588,8 @@ const SCHEMA = [
     ['tempo', '节奏（整体快慢：> 1 快、< 1 慢；同一朵花放快 / 放慢，几层一起）', '×', 0.3, 3, 0.01],     // 4.9.30（对话框新花型，用户 10-07 13:31）：12_tempo.js
     { info: 'tempoInfo' },
     ['adjTailLen', '尾长（火花寿命、余烬寿命一起乘）', '×', 0.3, 3, 0.01],
-    ['adjSparkSize', '尾缀粗细（火花大小乘；余烬、分叉火花跟着变）', '×', 0.3, 3, 0.01],
-    ['adjSpread', '尾缀散布（火花速度随机乘：尾迹更宽、更松）', '×', 0.3, 3, 0.01],
+    ['adjSparkSize', '颗粒大小 ×（火花颗粒乘；余烬、分叉火花跟着变）', '×', 0.3, 3, 0.01],
+    ['adjSpread', '线条宽度 ×（火花散开乘：尾迹更宽、更松）', '×', 0.3, 3, 0.01],
     ['adjHeadSize', '星头大小（乘）', '×', 0.3, 3, 0.01],
     ['adjSparkBright', '火花亮度（乘，含余烬）', '×', 0.3, 3, 0.01],
     ['adjTwinkle', '闪烁（火花闪烁乘，乘完最多到 1）', '×', 0, 3, 0.01]
@@ -582,7 +597,7 @@ const SCHEMA = [
   { sec: '尾迹外形', show: P => isSeq(P) && familyOf(P.type) === 'aerial', hint: '每个效果（多层时每一层）自己的外形量，0 = 原样，不影响别的效果。粗细随机、亮肩、泪滴星头在「效果 › 整体调整」（4.9.21）。', items: [
     ['tailJit', '粗细随机（星与星、火花与火花之间的粗细差别）', '', 0, 1, 0.01],
     ['tailShoulder', '亮肩（正：靠近星头的火花更大更亮、尾端更细更暗；负：反过来）', '', -1, 1, 0.01],
-    ['tailWidth', '尾迹粗细（火花横向散开和颗粒大小的倍数；1 = 原样）', '×', 0.3, 3, 0.01],
+    ['tailWidth', '尾迹粗细（旧：火花横向散开和颗粒大小的倍数；1 = 原样）', '×', 0.3, 3, 0.01],
     ['tailPinchHead', '星头端收尖（梭形：靠星头那截细，0 = 原样，1 = 最尖）', '', 0, 1, 0.01],
     ['tailPinchTail', '尾端收尖（梭形：尾巴末端细，0 = 原样，1 = 最尖）', '', 0, 1, 0.01],
     ['tailBellyAt', '最粗处（沿尾迹：0 = 星头，1 = 尾端）', '', 0.1, 0.9, 0.01, P => +P.tailPinchHead > 0 || +P.tailPinchTail > 0],

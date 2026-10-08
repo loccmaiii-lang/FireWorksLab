@@ -4,7 +4,9 @@ function qualityOf(P) {
     ss: clamp(Math.round(+P.qSS || 2), 1, 8), hz: clamp(+P.qHz || 300, 120, 1920), maxSub: clamp(Math.round(+P.qMaxSub || 16), 1, 128) };
 }
 let particleQuality = qualityOf({});
-function setParticleProfile(P) { particleQuality = qualityOf(P || {}); }
+// 4.9.48 六边形星头：画星头那一批（drawHeads 的 [0, g)）用；0 = null，照旧画圆
+let PT_HEXP = null;
+function setParticleProfile(P) { particleQuality = qualityOf(P || {}); PT_HEXP = P && +P.headHex > 0 ? { hex: Math.min(1, +P.headHex), rot: (+P.headHexRot || 0) * Math.PI / 180 } : null; }
 function setParticleUniforms(pr, chan) {
   if (pr.u.uHaloFrac) gl.uniform1f(pr.u.uHaloFrac, particleQuality.haloFrac);
   if (pr.u.uHaloR) gl.uniform1f(pr.u.uHaloR, particleQuality.haloR);
