@@ -19,6 +19,7 @@ NAME = '金蕊柠 · 金菊芯 + 橙引转柠点星'
 EN = 'GoldCoreLime'
 LAYER_EN = ['LeadTail', 'LimeStar', 'GoldCore', 'RedCore']
 VIDEO = 'vidio/2.0/金蕊青柠星_B.mp4'
+OLD_EXPO = {}
 VMETA = {'v': 7, 't0': 0.167, 'cx': 0.641, 'cy': 0.343, 'half': 0.215, 'aspect': 1.7778}     # 开花 = 视频 0.167 s（第 5 帧）；花心按 +2.2 / +2.7 s 亮部重心；half 按 JQ3E1 烘焙回放花径对齐（0.25 时模拟各时刻都大 15–18%）
 LOOK = ['开花后同一秒和实拍比（左栏条目点开有实拍对照）：橙引什么时候收、柠绿星头什么时候亮起来、金芯什么时候转橙、几时熄灭', '放大看质感：星头白芯 + 柠绿小晕、各自轻微闪、前段略拉长；橙引是细而连续的橙红丝；芯丝细密、边上一颗颗淡紫白小点；星后面很淡的青绿细线（要不要留你定）', '引擎回放 + 游戏内大小：四层叠起来顺不顺、芯和外层大小比例；哪一段还差，直接说哪一秒']
 TID = 'kinzuiLime'     # 多层模板（tool/src/js/18_multitypes.js）：每层参数从模板取（4.9.37 起模板是唯一来源；JQ1 / JQ2 是从青柠星 QN12-1 起调的，记录在 git 历史）
@@ -53,7 +54,8 @@ def build(expo):
     for i, x in enumerate(L):
         eid = f'{VER}-{i + 1}'; ids.append(eid)
         p = copy.deepcopy(x['P']); p.pop('type', None)
-        if eid in expo: p['exposure'] = expo[eid]
+        if eid in expo: p['exposure'] = expo[eid]                    # --expo 明确给的
+        elif 'exposure' not in p and eid in OLD_EXPO: p['exposure'] = OLD_EXPO[eid]     # 模板没写曝光才沿用上一次条目里的（模板 MT_EXPOSURE 优先；2026-10-08 JQ6E2 前踩过：旧条目曝光盖掉了模板新值）
         m = copy.deepcopy(x['M']); m['headInt'] = x['headInt']; m['tailInt'] = x['tailInt']
         entries.append({'id': eid, 'date': DATE, 'name': f"{NAME} · {x['title']}", 'base': x['type'], 'tags': f'{NAME} {eid} 金蕊青柠星 mt:{TID}', 'p': p, 'm': m,
                         'note': NOTE + f'（参数 = 多层模板 mt:{TID}，烘焙器 {T["ver"]}）', 'video': VIDEO})
@@ -99,9 +101,9 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('--expo', nargs='*'); ap.add_argument('--status', action='store_true'); ap.add_argument('--jobs'); ap.add_argument('--tag', default='1')
     a = ap.parse_args(); expo = {}
     for f in a.expo or []: expo.update({k: v for k, v in json.loads(pathlib.Path(f).read_text(encoding='utf-8')).items() if not k.startswith('_')})
-    if OUT.exists() and not a.expo:     # 没给曝光：保留上一次写进条目的曝光（层号相同的）
+    if OUT.exists():     # 上一次写进条目的曝光（层号相同的）：只在模板没写曝光时沿用
         for e in json.loads(OUT.read_text(encoding='utf-8'))['entries']:
-            if 'exposure' in e['p']: expo.setdefault(e['id'], e['p']['exposure'])
+            if 'exposure' in e['p']: OLD_EXPO[e['id']] = e['p']['exposure']
     build(expo)
     ids = write_jobs(a.jobs, a.tag) if a.jobs else None
     if a.status or ids: write_status(ids)
