@@ -1,213 +1,196 @@
 <title>跨年烟花秀编排动画</title>
 <style>
-/* 布局：一行时间 + 米制简笔画布 + 带段落的时间轴 + 种类图例（数据驱动）；单一夜景主题 */
+/* 布局：标题行（时间 + 段落 + 图例）→ 正面比例舞台 → 播放条（时间轴带段落）→ 本段说明；单一黑底，沿用计划书草稿图的描边圆画法 */
 :root{
-  --bg:#0c0f17; --panel:#11151f; --line:#283044; --fg:#e6eaf3; --muted:#8a93a8; --accent:#ffb347;
+  --bg:#0a0a0b; --stage:#16171a; --stage2:#26272c; --line:#34353b; --fg:#ececee; --muted:#8e9097; --accent:#e9e9ec;
+  --front:#7f9fe0; --small:#27b585; --mid:#3b82f6; --large:#f26a2e;
   --sans:system-ui,-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
   color-scheme:dark;
 }
 html,body{background:var(--bg);color:var(--fg);}
 body{margin:0;font-family:var(--sans);font-size:13px;line-height:1.5;}
-.wrap{max-width:1040px;margin:0 auto;padding:14px 16px;display:flex;flex-direction:column;gap:10px;}
-.head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
-.head b{font:600 22px/1 var(--mono);font-variant-numeric:tabular-nums;}
-.head span{color:var(--accent);font-weight:600;}
-.head small{margin-left:auto;color:var(--muted);}
-canvas{display:block;width:100%;border:1px solid var(--line);border-radius:4px;background:var(--panel);}
-.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-.bar button{all:unset;box-sizing:border-box;cursor:pointer;padding:5px 12px;border:1px solid var(--line);border-radius:4px;color:var(--fg);}
-.bar button.go{background:var(--accent);border-color:var(--accent);color:#1a1206;font-weight:600;min-width:56px;text-align:center;}
-.bar button[aria-pressed="true"]{background:#252c3f;}
-.bar button:focus-visible,.tl button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.wrap{max-width:1040px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.head{display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap;}
+.head b{font:500 22px/1 var(--mono);font-variant-numeric:tabular-nums;}
+.head strong{font-size:15px;font-weight:600;}
+.head em{font-style:normal;color:var(--muted);font-size:12px;}
+.legend{margin-left:auto;display:flex;gap:4px 14px;flex-wrap:wrap;color:var(--muted);font-size:12px;}
+.legend i{display:inline-flex;align-items:center;gap:5px;font-style:normal;}
+.legend i::before{content:"";width:10px;height:10px;border-radius:50%;border:1.5px solid var(--c);box-sizing:border-box;}
+.legend i.fan::before{border:0;border-radius:0;width:12px;height:10px;background:linear-gradient(60deg,transparent 46%,var(--c) 46% 54%,transparent 54%),linear-gradient(-60deg,transparent 46%,var(--c) 46% 54%,transparent 54%),linear-gradient(90deg,transparent 46%,var(--c) 46% 54%,transparent 54%);}
+.legend i.rise::before{border:0;border-radius:0;width:0;height:11px;border-left:1.5px dashed var(--c);margin:0 5px;}
+canvas{display:block;width:100%;}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.bar button{all:unset;box-sizing:border-box;cursor:pointer;padding:5px 12px;border:1px solid var(--line);border-radius:999px;color:var(--fg);font-size:12px;}
+.bar button.go{background:var(--fg);border-color:var(--fg);color:#0a0a0b;font-weight:600;min-width:58px;text-align:center;font-size:13px;}
+.bar button[aria-pressed="true"]{background:var(--stage2);border-color:#55565d;}
+.bar button:focus-visible,.tl button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 .track{flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:2px;}
 .tl{display:flex;height:16px;}
-.tl button{all:unset;cursor:pointer;box-sizing:border-box;border-left:1px solid var(--line);padding-left:3px;color:var(--muted);font-size:10px;line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:clip;}
+.tl button{all:unset;cursor:pointer;box-sizing:border-box;border-left:1px solid var(--line);padding-left:3px;color:var(--muted);font-size:10px;line-height:16px;white-space:nowrap;overflow:hidden;}
 .tl button[aria-current="true"]{color:var(--fg);}
-input[type=range]{width:100%;margin:0;accent-color:var(--accent);}
-.legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:2px 16px;font-size:12px;}
-.legend h4{grid-column:1/-1;margin:6px 0 0;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.05em;}
-.legend div{display:flex;gap:7px;align-items:center;min-width:0;}
-.legend canvas{width:22px;height:22px;border:0;background:none;flex:none;}
-.legend span{color:var(--muted);font-variant-numeric:tabular-nums;}
+input[type=range]{width:100%;margin:0;accent-color:var(--fg);}
+.info{display:flex;flex-direction:column;gap:2px;}
+.info b{font-weight:600;}
+.info span{color:var(--muted);}
+details{color:var(--muted);font-size:12px;}
+summary{cursor:pointer;width:max-content;}
+.tbl{overflow-x:auto;margin-top:6px;}
+table{border-collapse:collapse;min-width:520px;width:100%;font-variant-numeric:tabular-nums;}
+th,td{text-align:left;padding:3px 14px 3px 0;border-bottom:1px solid var(--line);white-space:nowrap;}
+th{font-weight:500;color:var(--muted);}
+td:first-child{color:var(--fg);}
 .note{color:var(--muted);font-size:11px;}
 </style>
 <div class="wrap">
-  <div class="head"><b id="time">00:00.0</b><span id="phase"></span><small id="detail"></small></div>
-  <canvas id="cv" role="img" aria-label="跨年烟花秀正面比例简笔动画"></canvas>
+  <div class="head">
+    <b id="time">00:00.0</b><strong id="phase"></strong><em id="range"></em>
+    <div class="legend">
+      <i style="--c:var(--front)">前台小花</i><i style="--c:var(--small)">坝顶小</i><i style="--c:var(--mid)">中</i><i style="--c:var(--large)">大</i><i class="fan" style="--c:#aeb1b8">扇形</i><i class="rise" style="--c:#aeb1b8">升空中</i>
+    </div>
+  </div>
+  <canvas id="cv" role="img" aria-label="跨年烟花秀正面比例动画"></canvas>
   <div class="bar">
     <button class="go" id="play" type="button">播放</button>
     <div class="track"><div class="tl" id="tl"></div><input id="seek" type="range" min="0" max="210" step="0.1" value="10.9" aria-label="节目时间，秒"></div>
-    <button type="button" data-view="full" aria-pressed="true">全场</button><button type="button" data-view="front" aria-pressed="false">前台</button>
+    <button type="button" data-view="full" aria-pressed="true">全场</button><button type="button" data-view="front" aria-pressed="false">前台近看</button>
   </div>
-  <div class="legend" id="legend"></div>
-  <div class="note">米制正面比例，按逐发时间表回放；花径、炸点、束长与束数取自时间线数据。简笔示意，不是 UE 粒子回放。空格键播放 / 暂停。</div>
+  <div class="info"><b id="detail"></b><span id="counts"></span></div>
+  <details><summary>种类、尺寸和发数</summary><div class="tbl"><table id="kinds"></table></div></details>
+  <div class="note">正面比例，圆按逐发时间表里的花径和炸点画；设计示意，不是 UE 粒子回放。空格键播放 / 暂停。</div>
 </div>
 <script>
 (()=>{
 const show=__SHOW_DATA__;
 const $=id=>document.getElementById(id);
 const cv=$('cv'),ctx=cv.getContext('2d'),seek=$('seek'),play=$('play');
-// 每个种类一种颜色 + 一种笔画，图例与画面同一套
-const STYLE={
-  F_SILVER:{c:'#dfe6f2',sp:10},
-  F_LIME:{c:'#a6e85a',sp:10},
-  F_GOLD:{c:'#ffb347',sp:12},
-  F_CRACKLE:{c:'#ffe08a',sp:12,dots:1},
-  F_COMET:{c:'#ffd27a'},
-  P_SILVER:{c:'#cfd8e8',sp:12},
-  P_LIME:{c:'#8fdc4a',sp:12},
-  P_SPLIT:{c:'#ff9a3c',sp:12,fork:1},
-  P_MS:{c:'#f3efe2',sp:16,tip:'#ffb347'},
-  P_MG:{c:'#ff9f2e',sp:16},
-  P_GREEN:{c:'#8fdc4a',sp:16,core:'#ffb347'},
-  P_MULTI:{c:'#d4dbf0',sp:16,ring2:'#ff8fb3'},
-  P_LS:{c:'#e8eefc',sp:22,tips:['#ff6b6b','#6bd0ff','#9be15d','#ffd166']},
-  P_LG:{c:'#ffb347',sp:20,willow:1},
-  P_WALL:{c:'#ffffff',sp:18,thin:1},
-  G_GOLD:{c:'#ffb347',w:1.6},
-  G_RED5:{c:'#ff5a4e',w:1.1,head:1},
-  G_SILVER13:{c:'#a3adbf',w:1,dash:1},
-};
+const C={front:'127,159,224',small:'39,181,133',mid:'59,130,246',large:'242,106,46'};
+const FANC={G_GOLD:'214,178,92',G_RED5:'226,96,82',G_SILVER13:'170,174,182'};
+function cls(key,a){ // 颜色按大小档，和计划书草稿图一致
+  if(a.zone==='front')return 'front';
+  return a.kind==='small'?'small':a.kind==='medium'?'mid':'large';}
 const fmt=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${(s%60).toFixed(1).padStart(4,'0')}`;
+const mmss=s=>`${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}`;
 const evs=show.events.map(e=>({...e,L:e.launch+(e.dt||0),B:e.burst+(e.dt||0),E:e.end+(e.dt||0)})).sort((a,b)=>a.L-b.L);
 let t=10.9,playing=false,last=0,view='full',phaseIdx=-1;
 
-// 时间轴段落
 const tl=$('tl');
 show.phases.forEach(p=>{const b=document.createElement('button');b.type='button';b.textContent=p.name;
-  b.style.width=((p.end-p.start)/show.duration*100)+'%';b.title=`${fmt(p.start).slice(0,5)} ${p.name}`;
+  b.style.width=((p.end-p.start)/show.duration*100)+'%';b.title=`${mmss(p.start)} ${p.name}`;
   b.addEventListener('click',()=>{stop();t=p.start+.05;seek.value=t;draw();});tl.appendChild(b);});
 
-// ---- 简笔画元件 ----
-function line(x1,y1,x2,y2,c,w,a,dash){ctx.globalAlpha=a;ctx.strokeStyle=c;ctx.lineWidth=w;ctx.setLineDash(dash||[]);
-  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);}
-function dot(x,y,r,c,a){ctx.globalAlpha=a;ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();}
-function ring(x,y,r,c,w,a){ctx.globalAlpha=a;ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.arc(x,y,Math.max(.5,r),0,7);ctx.stroke();}
-// 球形花：R = 屏幕半径；drop = 屏幕下坠；u = 寿命进度
-function bloom(key,cx,cy,R,a,drop,w){
-  const S=STYLE[key],n=S.sp;
-  for(let i=0;i<n;i++){
-    const ang=i/n*Math.PI*2+Math.PI/2,ux=Math.cos(ang),uy=Math.sin(ang);
-    const x0=cx+ux*R*.38,y0=cy-uy*R*.38,x1=cx+ux*R,y1=cy-uy*R+drop;
-    if(S.dots){dot(x1,y1,Math.max(1,w*1.1),S.c,a);dot(cx+ux*R*.7,cy-uy*R*.7+drop*.5,Math.max(.8,w*.8),S.c,a);continue;}
-    if(S.willow){ctx.globalAlpha=a;ctx.strokeStyle=S.c;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(x0,y0);
-      ctx.quadraticCurveTo(cx+ux*R*.9,cy-uy*R*.9,x1,y1+R*.45*(drop>0?drop/(drop+R*.15):0)+drop*.6);ctx.stroke();continue;}
-    line(x0,y0,x1,y1,S.c,S.thin?w*.7:w,a);
-    if(S.fork){const fx=ux*R*.14,fy=uy*R*.14;line(x1,y1,x1+fx-fy*.6,y1-fy-fx*.6,S.c,w*.8,a);line(x1,y1,x1+fx+fy*.6,y1-fy+fx*.6,S.c,w*.8,a);}
-    if(S.tip)dot(x1,y1,Math.max(1,w*1.2),S.tip,a);
-    if(S.tips)dot(x1,y1,Math.max(1.1,w*1.3),S.tips[i%S.tips.length],a);
-  }
-  ring(cx,cy+drop*.5,R,S.c,Math.max(.5,w*.6),a*.35);
-  if(S.core)ring(cx,cy+drop*.3,R*.4,S.core,w,a);
-  if(S.ring2)ring(cx,cy+drop*.3,R*.62,S.ring2,w,a*.9);
-}
-// 扇形：一个事件 = 一排。筒按角度从一侧到另一侧逐个出膛（gap 秒/筒），
-// 星减速冲到顶（约 1.6 s），金锦冠到顶炸白色冠带；红彗星只画星头 + 短尾；银灰画虚线尾 + 星头。
+function stop(){playing=false;play.textContent='播放';}
+const rgba=(c,a)=>`rgba(${c},${a})`;
+function tri(x,y,s,c){ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(x,y-s);ctx.lineTo(x-s*.9,y+s*.6);ctx.lineTo(x+s*.9,y+s*.6);ctx.closePath();ctx.fill();}
+function seg(x1,y1,x2,y2,c,w,dash){ctx.strokeStyle=c;ctx.lineWidth=w;ctx.setLineDash(dash||[]);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);}
+
+// 扇形：一个事件 = 一排；筒从一侧到另一侧逐个出膛，星减速冲到顶
 function fan(e,a,X,Z,sc,ox,oz){
-  const S=STYLE[e.template],n=e.beams,half=a.half*Math.PI/180,len=a.diameter/2,life=a.life;
-  const tilt=(e.tilt||0)*Math.PI/180,age=t-e.B,w=Math.max(.8,S.w*sc*1.1);
+  const n=e.beams,half=a.half*Math.PI/180,len=a.diameter/2,life=a.life,col=FANC[e.template];
+  const tilt=(e.tilt||0)*Math.PI/180,age=t-e.B,w=Math.max(.9,sc*.9);
   for(let k=0;k<n;k++){
     const s=age-k*a.gap;if(s<0||s>life)continue;
-    const bi=e.dir==='R'?n-1-k:k;                 // L：先打最左边的筒
+    const bi=e.dir==='R'?n-1-k:k;
     const c=n===1?0:bi/(n-1)*2-1,th=c*half+tilt;
-    const lf=.8+.2*Math.cos(c*1.4);              // 外侧筒仰角低，顶点低
+    const lf=.8+.2*Math.cos(c*1.4);
     const r=len*lf*Math.min(1,1-Math.exp(-2.6*s));
     const fade=s<life*.6?1:Math.max(0,(life-s)/(life*.4));
     const hx=X(ox+Math.sin(th)*r),hy=Z(oz+Math.cos(th)*r);
     if(e.template==='G_RED5'){
       const r0=Math.max(0,r-len*.3);
-      line(X(ox+Math.sin(th)*r0),Z(oz+Math.cos(th)*r0),hx,hy,S.c,w,fade);
-      dot(hx,hy,Math.max(1.6,sc*2.2),S.c,fade);continue;}
-    line(X(ox),Z(oz),hx,hy,S.c,w,fade*(e.template==='G_GOLD'?.9:.75),S.dash?[4,3]:null);
-    if(e.template==='G_GOLD'){
-      if(s>1.6&&s<2.3){const q=1-(s-1.6)/.7,cr=Math.max(2,sc*4);   // 白色冠带
-        for(let j=0;j<4;j++){const g=j*Math.PI/4+.3;line(hx-Math.cos(g)*cr,hy-Math.sin(g)*cr,hx+Math.cos(g)*cr,hy+Math.sin(g)*cr,'#fff6e6',1,q);}}
-    }else dot(hx,hy,Math.max(1.2,sc*1.4),'#eef2fa',fade);
+      seg(X(ox+Math.sin(th)*r0),Z(oz+Math.cos(th)*r0),hx,hy,rgba(col,fade),w*1.2);
+      ctx.fillStyle=rgba(col,fade);ctx.beginPath();ctx.arc(hx,hy,Math.max(1.5,sc*2),0,7);ctx.fill();continue;}
+    seg(X(ox),Z(oz),hx,hy,rgba(col,fade*(e.template==='G_GOLD'?.85:.6)),w);
+    if(e.template==='G_GOLD'&&s>1.6&&s<2.2){ctx.fillStyle=`rgba(255,246,230,${1-(s-1.6)/.6})`;ctx.beginPath();ctx.arc(hx,hy,Math.max(1.6,sc*2.2),0,7);ctx.fill();}
   }
 }
 
-function stop(){playing=false;play.textContent='播放';}
 function draw(){
   const front=view==='front';
   const W=Math.max(300,cv.parentElement.clientWidth);
   const wx=front?250:1060,wz=front?170:620;
-  const H=Math.round(Math.min(front?380:540,Math.max(260,W*wz/wx)));
+  const H=Math.round(Math.min(front?400:560,Math.max(260,W*wz/wx*(front?1:.98))));
   const dpr=Math.min(2,window.devicePixelRatio||1);
   if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+'px';}
-  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.globalAlpha=1;ctx.clearRect(0,0,W,H);
-  const padL=40,padR=10,padB=20,padT=8;
+  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.globalAlpha=1;ctx.fillStyle='#0a0a0b';ctx.fillRect(0,0,W,H);
+  const padL=12,padR=12,padB=26,padT=10;
   const sc=Math.min((W-padL-padR)/wx,(H-padB-padT)/wz);
   const cx=padL+(W-padL-padR)/2,X=v=>cx+v*sc,Z=v=>H-padB-v*sc;
-  ctx.font='10px '+getComputedStyle(document.body).getPropertyValue('--mono');ctx.textBaseline='middle';
-  // 刻度
-  for(const v of (front?[0,50,100,145]:[0,150,300,450,600])){
-    line(padL,Z(v)+.5,W-padR,Z(v)+.5,'#283044',1,1);
-    ctx.globalAlpha=1;ctx.fillStyle='#8a93a8';ctx.textAlign='right';ctx.fillText(v+' m',padL-5,Z(v));}
-  // 坝体 / 平台（只描边）
-  ctx.globalAlpha=1;ctx.strokeStyle='#4a556f';ctx.lineWidth=1;
-  ctx.strokeRect(X(-374.79),Z(150),749.58*sc,150*sc);
-  ctx.strokeRect(X(-100),Z(50),200*sc,50*sc);
-  ctx.fillStyle='#8a93a8';if(front){ctx.textAlign='right';ctx.fillText('坝顶 150 m',W-padR-4,Z(150)-8);}else{ctx.textAlign='left';ctx.fillText('坝顶 150 m',X(-374.79)+4,Z(150)+9);}
-  ctx.textAlign='center';ctx.fillText('平台 50 m',X(0),Z(25));
-  if(front){line(X(-110),Z(145),X(110),Z(145),'#ffb347',1,.6,[3,4]);ctx.globalAlpha=1;ctx.fillStyle='#ffb347';ctx.textAlign='left';ctx.fillText('前台上限 145 m',X(-110),Z(145)-8);}
-  ctx.fillStyle='#8a93a8';ctx.textAlign='center';
+  const mono=getComputedStyle(document.body).getPropertyValue('--mono');
+  ctx.font='11px '+mono;ctx.textBaseline='middle';
+  // 坝体（5 段弧形：150/150/200/150/150）+ 前台平台
+  const xs=[-374.79,-244.89,-100,100,244.89,374.79],lens=[150,150,200,150,150];
+  ctx.fillStyle='#16171a';ctx.fillRect(X(xs[0]),Z(150),(xs[5]-xs[0])*sc,150*sc);
+  ctx.strokeStyle='#34353b';ctx.lineWidth=1;ctx.strokeRect(X(xs[0])+.5,Z(150)+.5,(xs[5]-xs[0])*sc,150*sc);
+  for(let i=1;i<5;i++)seg(X(xs[i])+.5,Z(150),X(xs[i])+.5,Z(0),'#34353b',1);
+  ctx.fillStyle='#26272c';ctx.fillRect(X(-100),Z(50),200*sc,50*sc);
+  ctx.strokeStyle='#4a4b52';ctx.strokeRect(X(-100)+.5,Z(50)+.5,200*sc,50*sc);
+  ctx.textAlign='center';ctx.fillStyle='#b9bbc2';
+  ctx.fillText('前台 50 m',X(0),Z(25));
+  if(!front){ctx.fillStyle='#8e9097';for(let i=0;i<5;i++)ctx.fillText(lens[i]+' m',X((xs[i]+xs[i+1])/2),Z(0)+14);}
+  // 坝顶 150 m 虚线
+  seg(padL,Z(150),W-padR,Z(150),'rgba(236,236,238,.35)',1,[5,5]);
+  ctx.textAlign='left';ctx.fillStyle='#b9bbc2';ctx.fillText('坝顶 150 m',padL+4,Z(150)-9);
+  if(!front){ctx.fillStyle='#6a6c73';ctx.fillText('300 m',padL+4,Z(300)-9);ctx.fillText('450 m',padL+4,Z(450)-9);ctx.fillText('600 m',padL+4,Z(600)+9);
+    for(const v of [300,450,600])seg(padL,Z(v),W-padR,Z(v),'rgba(255,255,255,.06)',1);}
+  else{seg(X(-110),Z(145),X(110),Z(145),'rgba(242,106,46,.7)',1,[3,4]);ctx.fillStyle='#f26a2e';ctx.fillText('前台上限 145 m',X(-110),Z(145)-9);}
+  // 比例尺
+  const bw=100*sc;ctx.strokeStyle='#8e9097';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(W-padR-bw,Z(0)+11);ctx.lineTo(W-padR,Z(0)+11);ctx.moveTo(W-padR-bw,Z(0)+7);ctx.lineTo(W-padR-bw,Z(0)+15);ctx.moveTo(W-padR,Z(0)+7);ctx.lineTo(W-padR,Z(0)+15);ctx.stroke();
+  ctx.textAlign='right';ctx.fillStyle='#8e9097';ctx.fillText('100 m',W-padR-bw-6,Z(0)+11);
+  // 发射点：▲主排 / 前台，○点间
   for(const [n,p] of Object.entries(show.points)){
-    if(p.zone==='front'){dot(X(p.x),Z(p.z),1.6,'#e6eaf3',1);ctx.globalAlpha=1;ctx.fillStyle='#8a93a8';if(front||n==='F1'||n==='F4'||n==='F7')ctx.fillText(n,X(p.x),Z(p.z)+8);}
-    else if(!front){line(X(p.x),Z(150),X(p.x),Z(150)+3,'#6b7590',1,1);}
+    if(p.zone==='front'){tri(X(p.x),Z(p.z)-1,Math.max(2.5,sc*3),'#e6e6e9');
+      if(front){ctx.fillStyle='#8e9097';ctx.textAlign='center';ctx.fillText(n,X(p.x),Z(p.z)+12);}}
+    else if(!front){if(n[0]==='P')tri(X(p.x),Z(150)-1,3.4,'#e6e6e9');
+      else{ctx.strokeStyle='#8e9097';ctx.lineWidth=1;ctx.beginPath();ctx.arc(X(p.x),Z(150)-2,2.2,0,7);ctx.stroke();}}
   }
-  // 烟花（简笔）
+  // 烟花
+  let nF=0,nD=0,nFan=0;
   for(const e of evs){
     if(e.L>t)break;if(t>=e.E)continue;
-    const a=show.templates[e.template],p=show.points[e.point],S=STYLE[e.template];
+    const a=show.templates[e.template],p=show.points[e.point];
+    if(a.kind==='fan')nFan++;else if(e.zone==='front')nF++;else nD++;
     if(front&&e.zone!=='front')continue;
     const fz=e.zone==='front',base=fz?p.z:150,top=a.z+(e.dz||0);
     if(a.kind==='fan'){fan(e,a,X,Z,sc,p.x,150);continue;}
-    if(t<e.B){const u=(t-e.L)/a.rise,h=base+(top-base)*(2*u-u*u),tail=fz?10:30;
-      line(X(p.x),Z(Math.max(base,h-tail)),X(p.x),Z(h),S.c,1,.7);dot(X(p.x),Z(h),1.6,S.c,1);continue;}
-    const age=t-e.B,u=age/a.life,al=u<.6?1:Math.max(0,(1-u)/.4);
-    if(a.kind==='comet'){line(X(p.x),Z(top-8*u-12),X(p.x),Z(top-8*u),S.c,1.5,al);continue;}
-    const R=a.diameter/2*(e.scale||1)*(1-Math.exp(-7*u))*sc;
-    const drop=(fz?.05:.08)*a.diameter*u*u*sc*(S.willow?3:1);
-    bloom(e.template,X(p.x),Z(top),R,al,drop,Math.max(.7,Math.min(1.6,sc*1.2)));
+    const key=cls(e.template,a),col=C[key];
+    if(t<e.B){ // 升空中：虚线 + 头
+      const u=(t-e.L)/a.rise,h=base+(top-base)*(2*u-u*u);
+      seg(X(p.x),Z(base),X(p.x),Z(h),'rgba(190,192,198,.45)',1,[3,4]);
+      ctx.fillStyle='rgba(236,236,238,.9)';ctx.beginPath();ctx.arc(X(p.x),Z(h),Math.max(1.5,sc*1.2),0,7);ctx.fill();continue;}
+    const age=t-e.B,u=age/a.life,al=u<.55?1:Math.max(0,(1-u)/.45);
+    if(a.kind==='comet'){seg(X(p.x),Z(top-8*u-12),X(p.x),Z(top-8*u),rgba('255,214,140',al),Math.max(1.5,sc*1.4));continue;}
+    const R=a.diameter/2*(e.scale||1)*(1-Math.exp(-6*Math.min(1,age/.6)))*sc;
+    const cy=Z(top)+a.diameter*(e.scale||1)*.04*u*sc;
+    ctx.beginPath();ctx.arc(X(p.x),cy,Math.max(.5,R),0,7);
+    ctx.fillStyle=rgba(col,(fz?.07:e.template==='P_WALL'?.045:.16)*al);ctx.fill();
+    ctx.strokeStyle=rgba(col,(fz?.95:.9)*al);ctx.lineWidth=fz?1.3:1.5;
+    ctx.setLineDash(e.template==='P_WALL'?[5,4]:[]);ctx.stroke();ctx.setLineDash([]);
   }
-  ctx.globalAlpha=1;
   $('time').textContent=fmt(t);
   const i=show.phases.findIndex(p=>t>=p.start&&t<p.end),cur=i<0?show.phases.length-1:i;
-  if(cur!==phaseIdx){phaseIdx=cur;$('phase').textContent=show.phases[cur].name;$('detail').textContent=show.phases[cur].detail;
+  if(cur!==phaseIdx){phaseIdx=cur;const P=show.phases[cur];
+    $('phase').textContent=P.name;$('range').textContent=`${mmss(P.start)}–${mmss(P.end)}`;$('detail').textContent=P.detail;
+    const es=show.events.filter(x=>x.phase===cur),d=es.filter(x=>x.zone==='dam'&&show.templates[x.template].kind!=='fan').length,
+      f=es.filter(x=>show.templates[x.template].kind==='fan').length,fr=es.filter(x=>x.zone==='front').length;
+    $('counts').textContent=`本段 坝顶 ${d} 发 + 扇形 ${f} 排 · 前台 ${fr}`;
     [...tl.children].forEach((b,k)=>b.setAttribute('aria-current',k===cur?'true':'false'));}
+  cv.setAttribute('aria-label',`${fmt(t)} ${show.phases[cur].name}：前台 ${nF}，坝顶 ${nD}，扇形 ${nFan} 排`);
 }
 
-// 图例：从数据读种类、尺寸、发数
-(function legend(){
-  const box=$('legend'),cnt={};show.events.forEach(e=>cnt[e.template]=(cnt[e.template]||0)+1);
-  const beams={};show.events.forEach(e=>{if(e.beams){(beams[e.template]=beams[e.template]||new Set()).add(e.beams);}});
-  const groups=[['前台（只放小花，≤145 m）',k=>k.startsWith('F_')],['坝顶花',k=>k.startsWith('P_')],['坝顶扇形（一排逐筒扫，0.035 s/筒）',k=>k.startsWith('G_')]];
-  for(const [title,f] of groups){
-    const h=document.createElement('h4');h.textContent=title;box.appendChild(h);
-    Object.entries(show.templates).filter(([k])=>f(k)).sort((a,b)=>cnt[b[0]]-cnt[a[0]]).forEach(([k,a])=>{
-      const d=document.createElement('div'),c=document.createElement('canvas');c.width=44;c.height=44;
-      const g=c.getContext('2d'),S=STYLE[k];g.scale(2,2);
-      // 迷你图标：同一笔画
-      if(a.kind==='fan'){g.strokeStyle=S.c;g.lineWidth=1.2;if(S.dash)g.setLineDash([2,2]);
-        for(let i=0;i<5;i++){const th=(i/4*2-1)*1;g.beginPath();g.moveTo(11,19);g.lineTo(11+Math.sin(th)*9,19-Math.cos(th)*9);g.stroke();}
-        if(S.head){g.fillStyle=S.c;for(let i=0;i<5;i++){const th=(i/4*2-1)*1;g.beginPath();g.arc(11+Math.sin(th)*9,19-Math.cos(th)*9,1.3,0,7);g.fill();}}}
-      else if(a.kind==='comet'){g.strokeStyle=S.c;g.lineWidth=1.6;g.beginPath();g.moveTo(11,4);g.lineTo(11,18);g.stroke();}
-      else bloomTo(g,k,11,11,9);
-      const size=a.kind==='fan'?`宽约 ${Math.round(2*a.diameter/2*Math.sin(a.half*Math.PI/180))} m · 高 ${a.diameter/2} m · ${[...beams[k]].sort((x,y)=>x-y).join('/')} 束`
-        :a.kind==='comet'?`炸点 ${a.z} m`:`⌀${a.diameter} m · 炸点 ${a.z} m`;
-      d.innerHTML=`<b style="color:${S.c};font-weight:500">${a.name.replace(/^前台·|^坝顶·/,'')}</b><span>${size} · ×${cnt[k]}</span>`;
-      d.prepend(c);box.appendChild(d);});
-  }
+// 种类表：从数据读
+(function kinds(){
+  const cnt={},bm={};show.events.forEach(e=>{cnt[e.template]=(cnt[e.template]||0)+1;if(e.beams)(bm[e.template]=bm[e.template]||new Set()).add(e.beams);});
+  let h='<tr><th>种类</th><th>花径 / 扇宽</th><th>炸点 / 扇高</th><th>升空 s</th><th>发数</th></tr>';
+  Object.entries(show.templates).forEach(([k,a])=>{
+    const nm=a.name.replace(/^前台·|^坝顶·/,''),zone=a.zone==='front'?'前台':'坝顶';
+    if(a.kind==='fan'){const w=Math.round(a.diameter*Math.sin(a.half*Math.PI/180));
+      h+=`<tr><td>${zone}·${nm}</td><td>宽约 ${w} m · ${[...bm[k]].sort((x,y)=>x-y).join('/')} 束</td><td>高 ${a.diameter/2} m</td><td>—</td><td>${cnt[k]} 排</td></tr>`;}
+    else h+=`<tr><td>${zone}·${nm}</td><td>${a.kind==='comet'?'宽 '+a.diameter+' m':'⌀'+a.diameter+' m'}</td><td>${a.z} m</td><td>${a.rise}</td><td>${cnt[k]}</td></tr>`;});
+  $('kinds').innerHTML=h;
 })();
-function bloomTo(g,key,cx,cy,R){const S=STYLE[key],n=Math.min(S.sp,14);g.lineWidth=1;
-  for(let i=0;i<n;i++){const ang=i/n*Math.PI*2,ux=Math.cos(ang),uy=Math.sin(ang);
-    const x1=cx+ux*R,y1=cy-uy*R+(S.willow&&uy<.3?3:0);
-    if(S.dots){g.fillStyle=S.c;g.beginPath();g.arc(x1,y1,1,0,7);g.fill();continue;}
-    g.strokeStyle=S.c;g.beginPath();g.moveTo(cx+ux*R*.4,cy-uy*R*.4);g.lineTo(x1,y1);g.stroke();
-    if(S.tip||S.tips){g.fillStyle=S.tip||S.tips[i%4];g.beginPath();g.arc(x1,y1,1.2,0,7);g.fill();}}
-  if(S.core){g.strokeStyle=S.core;g.beginPath();g.arc(cx,cy,R*.4,0,7);g.stroke();}
-  if(S.ring2){g.strokeStyle=S.ring2;g.beginPath();g.arc(cx,cy,R*.62,0,7);g.stroke();}}
 
 function tick(now){if(!playing)return;t=Math.min(210,t+(now-last)/1000);last=now;seek.value=t;draw();
   if(t>=210)stop();else requestAnimationFrame(tick);}
@@ -215,7 +198,7 @@ play.addEventListener('click',()=>{if(playing){stop();return;}if(t>=210)t=0;play
 seek.addEventListener('input',()=>{stop();t=+seek.value;draw();});
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;
   document.querySelectorAll('[data-view]').forEach(x=>x.setAttribute('aria-pressed',x===b));draw();}));
-addEventListener('keydown',e=>{if(e.code==='Space'&&!/INPUT|BUTTON/.test(document.activeElement.tagName)){e.preventDefault();play.click();}});
+addEventListener('keydown',e=>{if(e.code==='Space'&&!/INPUT|BUTTON|SUMMARY/.test(document.activeElement.tagName)){e.preventDefault();play.click();}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
 new ResizeObserver(()=>draw()).observe(cv.parentElement);
 seek.value=t;draw();
