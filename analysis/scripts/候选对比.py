@@ -83,7 +83,9 @@ def measure_render(png, Rref, split='auto'):
 
 # ---- 比哪些（层、时刻、量）----
 def P_(f, reg):
-    P = f['points']; return P.get(reg) or P.get('全部') or {}
+    P = f['points']
+    if reg == '里（芯）': return P.get(reg) or {}     # 没分界 = 还没有芯：里区不退回「全部」（不然量到的是外层星）
+    return P.get(reg) or P.get('全部') or {}
 def T_(f, ch): return (f.get('texture') or {}).get(ch) or {}
 def mid(x): return x[1] if isinstance(x, list) and len(x) > 1 else x
 def hue_of(rgb):
@@ -116,6 +118,34 @@ CHECKS = [
 ]
 
 
+# ---- 通用：按拆解配置（拆解卡.py 的配置.json）的层自动生成比哪些（新参考不用改脚本）----
+REG = {'外': '外（亲星）', '里': '里（芯）', '全部': '全部'}
+PT_Q = [('星头个数', 'n', 'r'), ('星与星亮度差 p90/p10', 'flux_spread', 'r'), ('大小 FWHM px', 'fwhm', 'r'), ('光晕能量占比', 'halo_ratio', 'r'),
+        ('拉长比', 'elong', 'r'), ('核心饱和度', 'core_sat', 'r'), ('光晕饱和度', 'halo_sat', 'r'), ('光晕色相°', 'halo_rgb', 'h')]
+TX_Q = [('线带里端 r/R', 'r_in', 'r'), ('线带外端 r/R', 'r_out', 'r'), ('线宽 px', 'width_px', 'r'), ('成串（沿线起伏）', 'bead', 'r'),
+        ('外段 / 内段亮度', 'grad', 'r'), ('对比度（线和线之间分得多开）', 'contrast', 'r'), ('里段色相°', 'c_in', 'h'), ('外段色相°', 'c_out', 'h'), ('线带亮度', 'level', 'r')]
+
+
+def checks_from_card(card):
+    """每层：时段里取 3–4 个时刻（开头 15% 和最后 10% 不取：亮起 / 熄灭时量不稳）；点层比 PT_Q，线纹理层比 TX_Q。
+    层里可写 "比": [量名…]（只比这些）、"比时刻": [秒…]（不用自动时刻）、"不比": [量名…]。"""
+    out = []
+    for L in card['层']:
+        a, b = L['时段']; ts = L.get('比时刻') or [round(a + (b - a) * x, 2) for x in (0.15, 0.4, 0.65, 0.9)]
+        qs = PT_Q if L['类'] == '点' else TX_Q if L['类'] in ('线纹理', '线') else []
+        want, skip = set(L.get('比') or [q[0] for q in qs]), set(L.get('不比') or [])
+        for label, key, kind in qs:
+            if label not in want or label in skip: continue
+            if L['类'] == '点':
+                reg = REG.get(L.get('区', '全部'), '全部')
+                fn = (lambda f, reg=reg, key=key: hue_of(P_(f, reg).get(key))) if kind == 'h' else (lambda f, reg=reg, key=key: mid(P_(f, reg).get(key)))
+            else:
+                ch = L['源']
+                fn = (lambda f, ch=ch, key=key: (T_(f, ch).get(key) or [None, None])[1]) if kind == 'h' else (lambda f, ch=ch, key=key: T_(f, ch).get(key))
+            out.append((L['名'], label, ts, fn, kind))
+    return out
+
+
 def gap(ref, val, kind):
     if ref is None or val is None: return None
     if kind == 'h': d = abs((val - ref + 180) % 360 - 180); return d / 30.0
@@ -134,9 +164,12 @@ def ref_crop(meta, t, Rref, size):
 
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--mt', required=True); ap.add_argument('--ref', required=True); ap.add_argument('--variant', action='append'); ap.add_argument('--pack'); ap.add_argument('--pack-name')
-    ap.add_argument('--times', default='0.33,0.47,0.6,0.8,1.2,1.5,1.8,2.0,2.3,3.0,3.8'); ap.add_argument('--px', type=int, default=1100); ap.add_argument('--out', required=True)
-    a = ap.parse_args(); a.times = [float(x) for x in a.times.split(',')]; os.makedirs(a.out, exist_ok=True)
+    ap = argparse.ArgumentParser(); ap.add_argument('--mt', required=True); ap.add_argument('--ref', required=True); ap.add_argument('--variant', action='append'); ap.add_argument('--pack'); ap.add_argument('--pack-name'); ap.add_argument('--card', help='拆解配置.json：按里面的层自动生成比哪些（不给就用金蕊柠那套）')
+    ap.add_argument('--times', default=None); ap.add_argument('--px', type=int, default=1100); ap.add_argument('--out', required=True)
+    a = ap.parse_args(); os.makedirs(a.out, exist_ok=True)
+    global CHECKS
+    if a.card: CHECKS = checks_from_card(json.load(open(a.card if os.path.isabs(a.card) else os.path.join(ROOT, a.card), encoding='utf-8')))
+    a.times = [float(x) for x in a.times.split(',')] if a.times else sorted(set(t for c in CHECKS for t in c[2]))
     ref = json.load(open(a.ref if os.path.isabs(a.ref) else os.path.join(ROOT, a.ref), encoding='utf-8'))
     rf = lambda t: min(ref['frames'], key=lambda f: abs(f['t'] - t))
     if a.pack:      # 导出的素材包：按 cascade.json 播（和回放检查 / 引擎回放同一套合成），每个时刻渲成 png

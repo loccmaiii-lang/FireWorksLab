@@ -1,6 +1,6 @@
 {
- "generated": "2026-10-08 08:41",
- "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "generated": "2026-10-08 11:31",
+ "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
  "std": {
   "pcCell": 512,
   "mobileCell": 256,
@@ -13693,18 +13693,18 @@
      "4/4 层通过"
     ],
     [
-     "淡出段有效帧率 ≥ 下限",
+     "尺寸参数有效",
      true,
      "4/4 层通过"
     ],
     [
-     "尺寸参数有效",
+     "淡出段有效帧率 ≥ 下限",
      true,
-     "4/4 层通过"
+     "3/3 层通过"
     ]
    ],
    "pass": true,
-   "seconds": 0.2
+   "seconds": 108.7
   },
   "JQ3": {
    "id": "JQ3",
