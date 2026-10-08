@@ -1,0 +1,33 @@
+{
+ "id": "NFJV-P4",
+ "type": "script",
+ "priority": 4,
+ "name": "金蕊柠 JQ6E4（已导出，回放检查过）：导出包和实拍同尺比",
+ "steps": [
+  {
+   "name": "导出包 GoldCoreLime（JQ6E4）",
+   "script": "候选对比.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--pack",
+    "analysis/local/输出/素材包/GoldCoreLime",
+    "--pack-name",
+    "JQ6E4",
+    "--ref",
+    "analysis/原理/金蕊青柠星/打点_B/打点.json",
+    "--times",
+    "0.2,0.33,0.47,0.6,0.8,1.0,1.2,1.5,1.8,2.0,2.3,2.6,3.0,3.4,3.8,4.0",
+    "--px",
+    "1100",
+    "--out",
+    "{out}/导出包"
+   ],
+   "must": true,
+   "ok": [
+    0
+   ],
+   "timeout": 1800
+  }
+ ]
+}
