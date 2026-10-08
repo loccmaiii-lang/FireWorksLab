@@ -95,7 +95,7 @@ function gradientSource40(source) {
     .replace('float core=diskCoverage(vLocal,vSig), halo=0.;',
       'float core=3.14159265*vSig.x*vSig.y*gaussianCoverage(vLocal,vSig*.5), halo=0.;');
 }
-// ---- 4.9.48 星头六边形、火花拉长（用户 10-08 16:2x「可以加个六边形进来吗」、15:56「火星与星头都有一个形状的调试与随机」）----
+// ---- 4.9.50 星头六边形、火花拉长（用户 10-08 16:2x「可以加个六边形进来吗」、15:56「火星与星头都有一个形状的调试与随机」）----
 // 和上面「可选源分布」同一个规矩：参数为 0 时用原来的程序（逐像素不变），不为 0 才编译 / 用变体。
 // 六边形：亮核按「圆 → 六边形」混合的距离函数在像素里 4 × 4 取样（面积和圆一样，同一层所有亮点一个朝向，像镜头光圈）；半径 < 1.5 像素时照旧按圆算。
 const HEX40_FN = `uniform float uHex, uHexRot;

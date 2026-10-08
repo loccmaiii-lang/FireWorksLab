@@ -1629,7 +1629,7 @@ W7_JS = r'''async () => {
   const tl0 = state.P.trimLead; state.P.trimLead = 0; onParam(); out.kiku.inUse = !pinch.hidden; state.P.trimLead = tl0; onParam();
   if (!out.kiku.inUse) bad.push('改了「裁掉开头空白」以后它还收着（用着的旧参数应照常显示）');
   // 4.9.11（用户 10-06 14:24「整体调粗细，头部这些……是可以保留的」）：空中花型 14 项不再是旧（待删）：照常显示（常用的直接看到、别的在「更多」里）、名字前没有「旧」
-  selectEmitTab('火花'); const keep = ['tailWidth', 'tailPinchHead', 'tailPinchTail', 'tailBellyAt', 'tailJit', 'tailShoulder', 'tailHaze', 'tailHazeR', 'sparkLifeEnd'];
+  selectEmitTab('火花'); const keep = [/* tailWidth：4.9.50 用户 10-08 16:2x 选「按米重理」（「尾迹粗细」并掉）→ 进旧（待删），W33 查 */ 'tailPinchHead', 'tailPinchTail', 'tailBellyAt', 'tailJit', 'tailShoulder', 'tailHaze', 'tailHazeR', 'sparkLifeEnd'];
   out.kept = keep.filter(k => { const r = L(k); return !r || r.querySelector('.old-tag') || r._legacy || typeof LEGACY[k] !== 'undefined'; });
   if (out.kept.length) bad.push('用户说留下的旋钮还标着「旧」：' + out.kept.join('、'));
   // 所有花型打开时参数值不变（链条、收起只是界面）
@@ -2365,8 +2365,8 @@ W18_JS = r"""async () => {
   if (!mod) { bad.push('「效果」里没有「整体调整」模块'); return { ok: false, bad, out }; }
   const rows = [...mod.children].filter(r => r._lab != null && r._applies && !r._randOf && !r.hidden);
   out.rows = rows.map(r => r._lab);
-  const want = ['tempo', 'adjTailLen', 'adjSparkSize', 'adjSpread', 'adjHeadSize', 'adjSparkBright', 'adjTwinkle', 'tailJit', 'tailShoulder', 'headTear'];     // 4.9.30 第一行加了「节奏」（对话框新花型）
-  if (JSON.stringify(rows.map(r => key(r._it))) !== JSON.stringify(want)) bad.push('整体调整的 10 项不对 / 顺序不对：' + JSON.stringify(rows.map(r => key(r._it))));
+  const want = ['tempo', 'adjTailLen', 'adjSparkSize', 'adjSpread', 'adjHeadSize', 'adjSparkBright', 'adjTwinkle', 'tailShoulder', 'headTear'];     // 4.9.50「粗细随机」tailJit 挪到火花 › 大小（叫大小随机）     // 4.9.30 第一行加了「节奏」（对话框新花型）
+  if (JSON.stringify(rows.map(r => key(r._it))) !== JSON.stringify(want)) bad.push('整体调整的 9 项不对 / 顺序不对：' + JSON.stringify(rows.map(r => key(r._it))));
   const order = (EMIT_DEF['效果'] || {}).mods || []; out.modOrder = order; if (order[order.length - 1] !== '整体调整') bad.push('整体调整不是「效果」最后一个模块：' + JSON.stringify(order));
   modSetOpen(mod, false); modSummarySync(); out.sum0 = (mod.querySelector('.msum') || {}).textContent;
   if (out.sum0 !== '原样') bad.push('全是原样时摘要应写「原样」：' + out.sum0);
@@ -2414,6 +2414,7 @@ W18_COMBO_JS = r"""async () => {
   // 多层：每层一份，改第 1 层的整体调整，第 2 层不动、实时模拟里只有第 1 层乘
   const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms)), key = it => Array.isArray(it) ? it[0] : it.sel;
   const idle = async () => { for (let i = 0; i < 300 && !(window.__fw.idle() && !state.baking && !(state.layerQueue && state.layerQueue.size) && $('#busy').hidden); i++) await wait(50); };
+  await idle(); await wait(300);     // 4.9.50：打开效果后还有晚到的界面恢复（层选择回到打开前），等它完了再选层，不然改的是「整体」
   state.playing = false; selectComboLayer(0); await wait(50); selectEmitTab('效果'); await wait(30);
   const e0 = layerEntryOf(state.layers[0]), e1 = layerEntryOf(state.layers[1]);
   const x = panelRows.find(([r, it]) => key(it) === 'adjSparkBright'); if (!x) { bad.push('多层第 1 层没有「火花亮度」整体调整'); return { ok: false, bad, out }; }
@@ -3168,7 +3169,7 @@ async def w32(pg):
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
 
 W33_JS = r"""async () => {
-  // 4.9.48 星头 / 火花形状与随机、粗细按米（用户 10-08 15:56 / 16:1x / 16:2x）
+  // 4.9.50 星头 / 火花形状与随机、粗细按米（用户 10-08 15:56 / 16:1x / 16:2x）
   const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
   const d = defaultsFor('kiku');
   // ① 默认全关：形状 null、六边形 null、火花程序是原来那个
@@ -3217,7 +3218,7 @@ W33_JS = r"""async () => {
 
 
 async def w33(pg):
-    """4.9.48 星头 / 火花形状与随机、粗细按米：默认不进分支、变体能编译、总光量不变、右栏位置和换算、尾迹粗细收进旧"""
+    """4.9.50 星头 / 火花形状与随机、粗细按米：默认不进分支、变体能编译、总光量不变、右栏位置和换算、尾迹粗细收进旧"""
     r = await pg.evaluate(W33_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1800]
 

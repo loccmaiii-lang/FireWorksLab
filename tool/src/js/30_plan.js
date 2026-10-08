@@ -1,7 +1,7 @@
 // 预跑一遍：求整个序列的可见范围（定取景）和星体速度随时间的变化（定取帧），顺带记录测量指标
 // 尾迹粗细 / 梭形（4.2.8）：tailWidth 粗细倍数、tailPinchHead / tailPinchTail 两头收尖、tailBellyAt 最粗处；on = 不是默认值（默认时着色器不进分支，结果逐像素不变）
 function tailShapeOf(P) {
-  const w = clamp(+P.tailWidth || 1, 0.05, 10),     /* 4.9.48 硬上限 0.3–3 → 0.05–10（用户 10-08「很多参数都是有上限的」） */ h = clamp(+P.tailPinchHead || 0, 0, 1), t = clamp(+P.tailPinchTail || 0, 0, 1), m = clamp(+P.tailBellyAt || 0.45, 0.05, 0.95);
+  const w = clamp(+P.tailWidth || 1, 0.05, 10),     /* 4.9.50 硬上限 0.3–3 → 0.05–10（用户 10-08「很多参数都是有上限的」） */ h = clamp(+P.tailPinchHead || 0, 0, 1), t = clamp(+P.tailPinchTail || 0, 0, 1), m = clamp(+P.tailBellyAt || 0.45, 0.05, 0.95);
   return { w, h, t, m, on: w !== 1 || h > 0 || t > 0 };
 }
 // 4.2.21 同一份参数的预跑只算一次（用户 10-03 17:28「一顿一顿」，SMOKE16：打开鸿巢 / 片贝时主线程停几秒）：

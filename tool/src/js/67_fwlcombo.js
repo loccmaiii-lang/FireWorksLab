@@ -148,7 +148,7 @@ function dotsES(L, P, M, fm) {
   const us = [...new Set([0, 1, ...ck.map(k => +k[0]), ...ak.map(k => +k[0])].map(u => +clamp(u, 0, 1).toFixed(4)))].sort((a, b) => a - b);
   const col = esThin(us.map(u => [u, esCurve(ck, u).map(c => +(c * gain * esCurve(ak, u)).toFixed(4))]), 0.01);
   const t0 = v.bursts[0][0], bursts = v.bursts.map(([t, n]) => [(t - t0) / r, n]);
-  return { name: 'Dots', gpu: true, delay: (+L.delay || 0) + t0 / r, duration: bursts[bursts.length - 1][0] + v.life[1] / r + 0.1, bursts, life: [v.life[0] / r, v.life[1] / r], size: +P.headSizeJit > 0 ? (q => [+(sz * 0.85 / q).toFixed(4), +(sz * 1.15 * q).toFixed(4)])(Math.exp(1.4 * 0.6 * +P.headSizeJit)) : [sz * 0.85, sz * 1.15], col, ak,     // 4.9.48 星头大小随机：Initial Size 范围放宽（±1.4σ）
+  return { name: 'Dots', gpu: true, delay: (+L.delay || 0) + t0 / r, duration: bursts[bursts.length - 1][0] + v.life[1] / r + 0.1, bursts, life: [v.life[0] / r, v.life[1] / r], size: +P.headSizeJit > 0 ? (q => [+(sz * 0.85 / q).toFixed(4), +(sz * 1.15 * q).toFixed(4)])(Math.exp(1.4 * 0.6 * +P.headSizeJit)) : [sz * 0.85, sz * 1.15], col, ak,     // 4.9.50 星头大小随机：Initial Size 范围放宽（±1.4σ）
     sphere: { r: [v.R[0] * sc, v.R[1] * sc], vs: [v.W[0] * r, v.W[1] * r] }, loc: [[0, v.c0.map(x => x * sc)]], vel: [[0, v.cv.map(x => x * sc * r)]],
     drag: [v.k * r, v.k * r], accel: [0, 0, -v.g * sc * r * r], seed, fit: { k: v.k, g: v.g, on: t0, n: v.n } };
 }

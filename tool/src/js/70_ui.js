@@ -728,7 +728,7 @@ function buildMasterPanel() {
       const det = place(sec, it, ikey, nm), ex = emitOf(nm, sec);          // 这一行放进它的发射器 › 模块
       if (Array.isArray(it)) {
         const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
-        const vw = it[7];     // 4.9.48 显示换算（线条宽度：存散开速度、按米显示 / 输入）
+        const vw = it[7];     // 4.9.50 显示换算（线条宽度：存散开速度、按米显示 / 输入）
         row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => vw ? vw.get(state.P, state.P[k]) : state.P[k], v => { if (vw) v = vw.set(state.P, v); if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); if (k === 'duration' && typeof seqNote === 'function') seqNote(state.P); } }, vw ? vw.get(D, D[k]) : D[k], k);     // 4.9.36 改序列时长、设了出点：说一句
         autoDefRow(row, k, step);
         const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}` : short) + (unit ? `（${unit}）` : '') + '；双击恢复默认';

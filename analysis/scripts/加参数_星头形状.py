@@ -1,4 +1,4 @@
-"""4.9.48 星头 / 火花形状与随机、粗细按米重理（对话框23，用户 10-08 15:56 / 16:1x / 16:2x，参数变更记录 2026-10-08 一条）。
+"""4.9.50 星头 / 火花形状与随机、粗细按米重理（对话框23，用户 10-08 15:56 / 16:1x / 16:2x，参数变更记录 2026-10-08 一条）。
 参数名称表 / 发射器表：加 10 行（星头 8 个放在 headSize 后面，火花 2 个放在 sparkSize 后面），改 6 行的名字 / 位置（sparkSize、sparkSpread、tailJit、adjSparkSize、adjSpread、tailWidth）。
 BASE、SCHEMA 已手改（10_types.js）。可以重复跑：已经做过的跳过 / 覆盖成同样的值。
 用法：python3 analysis/scripts/加参数_星头形状.py
@@ -8,7 +8,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 NAMES_J = ROOT / 'analysis' / '命名' / '参数名称表.json'
 NAMES_C = ROOT / 'analysis' / '命名' / '参数名称表.csv'
 EMIT_J = ROOT / 'analysis' / '命名' / '发射器表.json'
-NOTE = '4.9.48（对话框23，用户 10-08 15:56「它的亮核就不是所有都是圆形的……星头大小还无法随机」，16:2x 选拖影亮结 / 边缘起伏 / 双核 / 六边形）加；默认 0 = 以前逐像素不变。'
+NOTE = '4.9.50（对话框23，用户 10-08 15:56「它的亮核就不是所有都是圆形的……星头大小还无法随机」，16:2x 选拖影亮结 / 边缘起伏 / 双核 / 六边形）加；默认 0 = 以前逐像素不变。'
 CHECK = '20_sim.js headShapeOf / headShapePush；41_particles40.js hexFS40 / spkStretchVS40；W33'
 HEAD = dict(sec='炭头（星头）', module_cn='星头', module_en='Head', emitter='星', after='headSize')
 SPARK = dict(sec='尾缀（炭火火花）', module_cn='火花', module_en='Sparkler (Child Emitter)', emitter='火花', after='sparkSize')
@@ -48,7 +48,7 @@ RENAME = {
     'tailJit': ({}, {'发射器': '火花', '模块': '大小', '名': '大小随机'}),
     'adjSparkSize': ({'cn': '颗粒大小（整体倍数）'}, {'全名': '颗粒大小（整体倍数）', '名': '颗粒大小 ×'}),
     'adjSpread': ({'cn': '线条宽度（整体倍数）'}, {'全名': '线条宽度（整体倍数）', '名': '线条宽度 ×'}),
-    'tailWidth': ({'desc': '旧（4.9.48 起）：整条尾迹的横向粗细倍数，散开 × 这个数、颗粒 × √这个数；和「线条宽度」「颗粒大小」重了，新做的用那两个米数。你的效果里用着的照常算。', 'range': '0.05–10'},
+    'tailWidth': ({'desc': '旧（4.9.50 起）：整条尾迹的横向粗细倍数——火花横向散开 × 这个数、颗粒 × √这个数；和「线条宽度」「颗粒大小」重了，新做的用那两个米数。你的效果里用着的照常算。', 'range': '0.05–10'},
                   {'类别': '旧（待删）'}),
 }
 
@@ -59,15 +59,15 @@ have = {r['key'] for r in rows}
 for i, (G, p) in enumerate(NEW):
     if p['key'] in have: continue
     at = max(j for j, r in enumerate(rows) if r['key'] in [G['after']] + [q['key'] for g2, q in NEW if g2 is G]) + 1
-    rows.insert(at, {'sec': G['sec'], 'key': p['key'], 'old': '（4.9.48 新加）', 'module_cn': G['module_cn'], 'module_en': G['module_en'], 'en': p['en'], 'en_niagara': False, 'cn': p['cn'],
+    rows.insert(at, {'sec': G['sec'], 'key': p['key'], 'old': '（4.9.50 新加）', 'module_cn': G['module_cn'], 'module_en': G['module_en'], 'en': p['en'], 'en_niagara': False, 'cn': p['cn'],
                      'desc': p['desc'], 'updown': p['updown'], 'unit': p['unit'], 'range': p['rng'], 'default': p['default'], 'random': '',
-                     'ue': p['ue'], 'tag': '烘焙器专有', 'note': NOTE, 'check': CHECK, 'family': '空中礼花', 'id': f"4948-{i + 1:02d}-{p['key']}", 'tier': 'more'})
+                     'ue': p['ue'], 'tag': '烘焙器专有', 'note': NOTE, 'check': CHECK, 'family': '空中礼花', 'id': f"4950-{i + 1:02d}-{p['key']}", 'tier': 'more'})
     have.add(p['key']); log.append('名称表 +' + p['key'])
 PE = eml['参数']; haveE = {r['key'] for r in PE}
 for i, (G, p) in enumerate(NEW):
     if p['key'] in haveE: continue
     at = max(j for j, r in enumerate(PE) if r['key'] in [G['after']] + [q['key'] for g2, q in NEW if g2 is G]) + 1
-    PE.insert(at, {'id': f"4948-{i + 1:02d}-{p['key']}", 'sec': G['sec'], 'key': p['key'], '全名': p['cn'], '发射器': G['emitter'], '模块': '大小', '名': p['short'], '类别': '物理量', '单位': p['unit'] or '1'})
+    PE.insert(at, {'id': f"4950-{i + 1:02d}-{p['key']}", 'sec': G['sec'], 'key': p['key'], '全名': p['cn'], '发射器': G['emitter'], '模块': '大小', '名': p['short'], '类别': '物理量', '单位': p['unit'] or '1'})
     haveE.add(p['key']); log.append('发射器表 +' + p['key'])
 for k, (nr, er) in RENAME.items():
     for r in rows:

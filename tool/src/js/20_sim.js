@@ -86,7 +86,7 @@ function shapePoints(kind, n, text) {
 }
 // 每颗星固定的伪随机数（0–1）：不消耗模拟的随机序列，所以加了「只让一部分星发光」「第二段时长」这类开关后，
 // 同种子的两层星位仍然一一对应（红点灭 = 主层星的一部分，接在它们的位置上）
-// ---- 4.9.48 星头形状（用户 10-08 15:56「它的亮核就不是所有都是圆形的……星头大小还无法随机」；16:2x 选拖影亮结 / 边缘起伏 / 双核 / 六边形）----
+// ---- 4.9.50 星头形状（用户 10-08 15:56「它的亮核就不是所有都是圆形的……星头大小还无法随机」；16:2x 选拖影亮结 / 边缘起伏 / 双核 / 六边形）----
 // 都在 gather 里把一颗星头拆成几个光点（和「泪滴星头」同一个做法，实时模拟 / 烘焙 / 导出同一份），全 0 时返回 null、不进分支（以前的效果逐像素不变）。
 // 每颗星的随机按星号 + 种子取（starHash），不动模拟的随机序列。六边形在光点核里画（41_particles40.js headHexProgram），这里不管。
 function headShapeOf(P) {
@@ -532,7 +532,7 @@ class Sim {
   gather(bufH, bufT) {
     const P = this.P, rr = this.rr, refl = P.waterRefl;
     let nh = 0; const capH = bufH.length >> 2, capT = bufT.length >> 2;
-    const hs = headShapeOf(P);     // 4.9.48 星头形状（全 0 = null，每颗星走原来那一行）
+    const hs = headShapeOf(P);     // 4.9.50 星头形状（全 0 = null，每颗星走原来那一行）
     const push = (buf, n, x, y, I, sz) => { const k = n * 4; buf[k] = x; buf[k + 1] = y; buf[k + 2] = I; buf[k + 3] = sz; };
     for (const s of this.stars) {
       if (!s.alive) continue;

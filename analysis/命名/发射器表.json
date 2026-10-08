@@ -995,7 +995,7 @@
    "单位": "m"
   },
   {
-   "id": "4948-01-headSizeJit",
+   "id": "4950-01-headSizeJit",
    "sec": "炭头（星头）",
    "key": "headSizeJit",
    "全名": "星头大小随机",
@@ -1006,7 +1006,7 @@
    "单位": "1"
   },
   {
-   "id": "4948-02-headStretch",
+   "id": "4950-02-headStretch",
    "sec": "炭头（星头）",
    "key": "headStretch",
    "全名": "星头拉长",
@@ -1017,7 +1017,7 @@
    "单位": "1"
   },
   {
-   "id": "4948-03-headStretchJit",
+   "id": "4950-03-headStretchJit",
    "sec": "炭头（星头）",
    "key": "headStretchJit",
    "全名": "星头拉长随机",
@@ -1028,7 +1028,7 @@
    "单位": "1"
   },
   {
-   "id": "4948-04-headKnots",
+   "id": "4950-04-headKnots",
    "sec": "炭头（星头）",
    "key": "headKnots",
    "全名": "拖影亮结",
@@ -1039,7 +1039,7 @@
    "单位": "1"
   },
   {
-   "id": "4948-05-headLumpy",
+   "id": "4950-05-headLumpy",
    "sec": "炭头（星头）",
    "key": "headLumpy",
    "全名": "星头边缘起伏",
@@ -1050,7 +1050,7 @@
    "单位": "1"
   },
   {
-   "id": "4948-06-headDouble",
+   "id": "4950-06-headDouble",
    "sec": "炭头（星头）",
    "key": "headDouble",
    "全名": "双核星头",
@@ -1061,7 +1061,7 @@
    "单位": "1"
   },
   {
-   "id": "4948-07-headHex",
+   "id": "4950-07-headHex",
    "sec": "炭头（星头）",
    "key": "headHex",
    "全名": "六边形星头",
@@ -1072,7 +1072,7 @@
    "单位": "1"
   },
   {
-   "id": "4948-08-headHexRot",
+   "id": "4950-08-headHexRot",
    "sec": "炭头（星头）",
    "key": "headHexRot",
    "全名": "六边形转角",
@@ -1974,7 +1974,7 @@
    "单位": "m"
   },
   {
-   "id": "4948-09-sparkStretch",
+   "id": "4950-09-sparkStretch",
    "sec": "尾缀（炭火火花）",
    "key": "sparkStretch",
    "全名": "火花拉长",
@@ -1985,7 +1985,7 @@
    "单位": "1"
   },
   {
-   "id": "4948-10-sparkStretchJit",
+   "id": "4950-10-sparkStretchJit",
    "sec": "尾缀（炭火火花）",
    "key": "sparkStretchJit",
    "全名": "火花拉长随机",
