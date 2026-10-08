@@ -1,0 +1,37 @@
+{
+ "id": "NFJV6",
+ "type": "script",
+ "priority": 6,
+ "name": "金蕊柠 候选对比 6（4.9.40 模板 亥 / 壹 芯 +2.15 s 起压暗、粉点亮、橙引细一点 / 贰 芯丝细密 / 叁 星头亮一点晕大一点 / 肆 贰 + 叁）",
+ "steps": [
+  {
+   "name": "候选对比",
+   "script": "候选对比.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--ref",
+    "analysis/原理/金蕊青柠星/打点_B/打点.json",
+    "--variant",
+    "亥:",
+    "--variant",
+    "壹:L3.M.stages=0:#fff0c8|1.2:#ffe2a8|1.55:#ffb050|1.85:#ff9a40|2.15:#b05420|2.5:#4a1c08;L3.M.headInt=1.7;L4.M.headInt=4.5;L1.M.headInt=1.8;L1.sparkSize=0.42",
+    "--variant",
+    "贰:L3.M.stages=0:#fff0c8|1.2:#ffe2a8|1.55:#ffb050|1.85:#ff9a40|2.15:#b05420|2.5:#4a1c08;L3.M.headInt=1.7;L4.M.headInt=4.5;L1.M.headInt=1.8;L1.sparkSize=0.42;L3.sparkSize=0.3;L3.sparkRate=1200",
+    "--variant",
+    "叁:L3.M.stages=0:#fff0c8|1.2:#ffe2a8|1.55:#ffb050|1.85:#ff9a40|2.15:#b05420|2.5:#4a1c08;L3.M.headInt=1.7;L4.M.headInt=4.5;L1.M.headInt=1.8;L1.sparkSize=0.42;L2.M.headInt=1.9;L2.haloFrac=0.45",
+    "--variant",
+    "肆:L3.M.stages=0:#fff0c8|1.2:#ffe2a8|1.55:#ffb050|1.85:#ff9a40|2.15:#b05420|2.5:#4a1c08;L3.M.headInt=1.7;L4.M.headInt=4.5;L1.M.headInt=1.8;L1.sparkSize=0.42;L3.sparkSize=0.3;L3.sparkRate=1200;L2.M.headInt=1.9;L2.haloFrac=0.45",
+    "--px",
+    "1100",
+    "--out",
+    "{out}"
+   ],
+   "must": true,
+   "ok": [
+    0
+   ],
+   "timeout": 2400
+  }
+ ]
+}
