@@ -1,0 +1,8 @@
+12:01:51 第 1/1 步：候选对比
+12:02:34   叁 → 11 张
+12:02:34   甲7 → 11 张
+12:02:34   乙7 → 11 张
+12:02:34   丙7 → 11 张
+12:02:34   → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFJV7\差距.md
+12:02:34   ✅ 候选对比（0.7 分钟）
+12:02:35 完成，用时 0.7 分钟
