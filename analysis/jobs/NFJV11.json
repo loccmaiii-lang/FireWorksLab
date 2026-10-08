@@ -1,0 +1,35 @@
+{
+ "id": "NFJV11",
+ "type": "script",
+ "priority": 6,
+ "name": "金蕊柠 候选对比 11（芯改成阻力小 + 燃烧变轻停住：开头小、慢慢张到 0.58 R 停；金丝 1.0 s 停；外层重力 0.2 / 乙11 芯略大 / 丙11 芯重力 0.1）",
+ "steps": [
+  {
+   "name": "候选对比",
+   "script": "候选对比.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--ref",
+    "analysis/原理/金蕊青柠星/打点_B/打点.json",
+    "--variant",
+    "定:",
+    "--variant",
+    "甲11:L3.grav=0.05;L3.massLoss=0.95;L3.v0=50;L3.vt=19;L4.grav=0.05;L4.massLoss=0.95;L4.v0=50;L4.vt=19;L3.sparkGrav=0.05;L3.sparkStop=1.0;L3.sparkLife=2.3;L3.sparkLifeEnd=0.65;L3.sparkLifeJit=20;L3.M.stages=0:#fffaf0|1.2:#ffe8b8|1.45:#ffb050|1.7:#b0663a|2.05:#6a3016|2.4:#2a1006;L1.grav=0.2;L2.grav=0.2;L2.sparkGrav=0",
+    "--variant",
+    "乙11:L3.grav=0.05;L3.massLoss=0.96;L3.v0=52;L3.vt=20;L4.grav=0.05;L4.massLoss=0.96;L4.v0=52;L4.vt=20;L3.sparkGrav=0.05;L3.sparkStop=1.0;L3.sparkLife=2.3;L3.sparkLifeEnd=0.65;L3.sparkLifeJit=20;L3.M.stages=0:#fffaf0|1.2:#ffe8b8|1.45:#ffb050|1.7:#b0663a|2.05:#6a3016|2.4:#2a1006;L1.grav=0.2;L2.grav=0.2;L2.sparkGrav=0",
+    "--variant",
+    "丙11:L3.grav=0.1;L3.massLoss=0.95;L3.v0=50;L3.vt=19;L4.grav=0.1;L4.massLoss=0.95;L4.v0=50;L4.vt=19;L3.sparkGrav=0.1;L3.sparkStop=1.0;L3.sparkLife=2.3;L3.sparkLifeEnd=0.65;L3.sparkLifeJit=20;L3.M.stages=0:#fffaf0|1.2:#ffe8b8|1.45:#ffb050|1.7:#b0663a|2.05:#6a3016|2.4:#2a1006;L1.grav=0.2;L2.grav=0.2;L2.sparkGrav=0",
+    "--px",
+    "1100",
+    "--out",
+    "{out}"
+   ],
+   "must": true,
+   "ok": [
+    0
+   ],
+   "timeout": 2400
+  }
+ ]
+}
