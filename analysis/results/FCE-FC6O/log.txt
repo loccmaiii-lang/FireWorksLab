@@ -1,0 +1,8 @@
+08:21:57 开始：FanCometOrange（导出素材）
+08:21:59 FanCometOrange 导出 2 秒：FanCometOrange.json、FanCometOrange_Cascade参数.txt、FanCometOrange_Mobile.json、FanCometOrange_曲线.csv、T_EFX_FireWorks_FanComet_Orange_4x4_01.png、T_EFX_FireWorks_FanComet_Orange_4x4_01_C.png、T_EFX_FireWorks_FanComet_Orange_4x4_01_HD.png、T_EFX_FireWorks_FanComet_Orange_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+08:21:59 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FCE-FC6O\回放检查.jpg（✅ 通过）
+08:22:15 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FCE-FC6O\烘焙回放.jpg
+08:22:15 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FCE-FC6O\烘焙回放_原尺寸.jpg
+08:22:15 烘焙器预览 preview.js：0 KB
+08:22:15 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+08:22:15 完成，用时 0.3 分钟

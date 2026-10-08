@@ -1,0 +1,1 @@
+FW_ASSET_LOADED("FCE-FC6O", {"manifest": {"title": "FanCometOrange", "duration": 4.9, "view": 172.0, "variants": {"FanCometOrange": "FanCometOrange"}, "emitters": [], "note": "对话框FanGold：橙扇 FC6O（横向散 2.2、火花寿命 1.3，每条粗尾分得开）导出 + 回放检查。"}, "images": {}});
