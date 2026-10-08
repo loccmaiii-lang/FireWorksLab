@@ -1,0 +1,84 @@
+{
+ "id": "NFX-J1",
+ "type": "script",
+ "priority": 6,
+ "name": "金蕊柠 4.9.41：各层不同曝光下到顶像素占比（JQ6E1 回放检查 金菊蕊过曝 6.6% > 2%）",
+ "steps": [
+  {
+   "name": "过曝估算：第 3 层",
+   "script": "过曝估算.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--layer",
+    "3",
+    "--E",
+    "0.1423,0.12,0.1,0.085,0.075,0.065,0.055,0.045",
+    "--out",
+    "{out}/L3"
+   ],
+   "must": false,
+   "ok": [
+    0
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "过曝估算：第 1 层",
+   "script": "过曝估算.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--layer",
+    "1",
+    "--E",
+    "0.0445,0.035,0.025",
+    "--out",
+    "{out}/L1"
+   ],
+   "must": false,
+   "ok": [
+    0
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "过曝估算：第 2 层",
+   "script": "过曝估算.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--layer",
+    "2",
+    "--E",
+    "1.158,1.0",
+    "--out",
+    "{out}/L2"
+   ],
+   "must": false,
+   "ok": [
+    0
+   ],
+   "timeout": 900
+  },
+  {
+   "name": "过曝估算：第 4 层",
+   "script": "过曝估算.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--layer",
+    "4",
+    "--E",
+    "0.4388,0.35",
+    "--out",
+    "{out}/L4"
+   ],
+   "must": false,
+   "ok": [
+    0
+   ],
+   "timeout": 900
+  }
+ ]
+}

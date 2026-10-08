@@ -1,0 +1,37 @@
+{
+ "id": "NFJV8",
+ "type": "script",
+ "priority": 6,
+ "name": "金蕊柠 候选对比 8（4.9.41 定 / 金菊蕊曝光降到 0.1 / 0.075 / 0.055 + 显示强度补回）",
+ "steps": [
+  {
+   "name": "候选对比",
+   "script": "候选对比.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--ref",
+    "analysis/原理/金蕊青柠星/打点_B/打点.json",
+    "--variant",
+    "定:",
+    "--variant",
+    "E10:L3.exposure=0.1;L3.M.headInt=2.25",
+    "--variant",
+    "E75:L3.exposure=0.075;L3.M.headInt=2.85",
+    "--variant",
+    "E55:L3.exposure=0.055;L3.M.headInt=3.6",
+    "--variant",
+    "E75b:L3.exposure=0.075;L3.M.headInt=2.4",
+    "--px",
+    "1100",
+    "--out",
+    "{out}"
+   ],
+   "must": true,
+   "ok": [
+    0
+   ],
+   "timeout": 2400
+  }
+ ]
+}
