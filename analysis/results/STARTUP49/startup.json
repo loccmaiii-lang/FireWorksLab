@@ -1,0 +1,227 @@
+[
+  {
+    "mode": "fast",
+    "run": 1,
+    "label": "before",
+    "ready": 2187.7999999523163,
+    "idle": 2187.7999999523163,
+    "paint": [],
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "layers": 0,
+    "entry": "",
+    "error": null
+  },
+  {
+    "mode": "fast",
+    "run": 1,
+    "label": "after",
+    "ready": 1106,
+    "idle": 1106,
+    "paint": [
+      {
+        "name": "first-paint",
+        "ms": 1292
+      },
+      {
+        "name": "first-contentful-paint",
+        "ms": 1292
+      }
+    ],
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "layers": 0,
+    "entry": "",
+    "error": null
+  },
+  {
+    "mode": "fast",
+    "run": 2,
+    "label": "before",
+    "ready": 1488.2999999523163,
+    "idle": 1488.2999999523163,
+    "paint": [],
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "layers": 0,
+    "entry": "",
+    "error": null
+  },
+  {
+    "mode": "fast",
+    "run": 2,
+    "label": "after",
+    "ready": 1113.1000000238419,
+    "idle": 1113.2000000476837,
+    "paint": [
+      {
+        "name": "first-paint",
+        "ms": 1296
+      },
+      {
+        "name": "first-contentful-paint",
+        "ms": 1296
+      }
+    ],
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "layers": 0,
+    "entry": "",
+    "error": null
+  },
+  {
+    "mode": "fast",
+    "run": 3,
+    "label": "before",
+    "ready": 1496.1000000238419,
+    "idle": 1496.1000000238419,
+    "paint": [],
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "layers": 0,
+    "entry": "",
+    "error": null
+  },
+  {
+    "mode": "fast",
+    "run": 3,
+    "label": "after",
+    "ready": 1088.2999999523163,
+    "idle": 1088.2999999523163,
+    "paint": [
+      {
+        "name": "first-paint",
+        "ms": 1272
+      },
+      {
+        "name": "first-contentful-paint",
+        "ms": 1272
+      }
+    ],
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "layers": 0,
+    "entry": "",
+    "error": null
+  },
+  {
+    "mode": "normal",
+    "run": 1,
+    "label": "before",
+    "ready": 1702.4000000953674,
+    "idle": 4306.100000023842,
+    "paint": [
+      {
+        "name": "first-paint",
+        "ms": 1900
+      },
+      {
+        "name": "first-contentful-paint",
+        "ms": 1900
+      }
+    ],
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "layers": 0,
+    "entry": "ef:jinmangju",
+    "error": null
+  },
+  {
+    "mode": "normal",
+    "run": 1,
+    "label": "after",
+    "ready": 1300.8999999761581,
+    "idle": 4065.399999976158,
+    "paint": [
+      {
+        "name": "first-paint",
+        "ms": 1524
+      },
+      {
+        "name": "first-contentful-paint",
+        "ms": 1524
+      }
+    ],
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "layers": 0,
+    "entry": "ef:jinmangju",
+    "error": null
+  },
+  {
+    "mode": "normal",
+    "run": 2,
+    "label": "before",
+    "ready": 1722.2000000476837,
+    "idle": 6709.5,
+    "paint": [
+      {
+        "name": "first-paint",
+        "ms": 1932
+      },
+      {
+        "name": "first-contentful-paint",
+        "ms": 1932
+      }
+    ],
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "layers": 0,
+    "entry": "ef:jinmangju",
+    "error": null
+  },
+  {
+    "mode": "normal",
+    "run": 2,
+    "label": "after",
+    "ready": 1310.5,
+    "idle": 5716.100000023842,
+    "paint": [
+      {
+        "name": "first-paint",
+        "ms": 1504
+      },
+      {
+        "name": "first-contentful-paint",
+        "ms": 1504
+      }
+    ],
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "layers": 0,
+    "entry": "ef:jinmangju",
+    "error": null
+  },
+  {
+    "mode": "normal",
+    "run": 3,
+    "label": "before",
+    "ready": 1675.7000000476837,
+    "idle": 4527.300000071526,
+    "paint": [
+      {
+        "name": "first-paint",
+        "ms": 1872
+      },
+      {
+        "name": "first-contentful-paint",
+        "ms": 1872
+      }
+    ],
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "layers": 0,
+    "entry": "ef:jinmangju",
+    "error": null
+  },
+  {
+    "mode": "normal",
+    "run": 3,
+    "label": "after",
+    "ready": 1290.3999999761581,
+    "idle": 4174.200000047684,
+    "paint": [
+      {
+        "name": "first-paint",
+        "ms": 1484
+      },
+      {
+        "name": "first-contentful-paint",
+        "ms": 1484
+      }
+    ],
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "layers": 0,
+    "entry": "ef:jinmangju",
+    "error": null
+  }
+]

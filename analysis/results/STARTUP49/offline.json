@@ -1,0 +1,32 @@
+[
+  {
+    "name": "F0: delayed trail cannot overwrite JM4 grid or publish stale bake",
+    "pass": true
+  },
+  {
+    "name": "F1: failure stops; retained bake and persistent error survive all views",
+    "pass": true
+  },
+  {
+    "name": "render version: one core; old (3.7) records migrate with calibrated exposure",
+    "pass": false,
+    "error": "Cannot read properties of undefined (reading 'base')"
+  },
+  {
+    "name": "stored recipes: legacy import resolves with its own renderVer",
+    "pass": true
+  },
+  {
+    "name": "F1: obsolete failure does not block a newer recipe",
+    "pass": true
+  },
+  {
+    "name": "asset status: editing/baking/failure stay in flow; only task overlay covers the canvas",
+    "pass": false,
+    "error": "store is not defined"
+  },
+  {
+    "name": "responsive panels: drawers are exclusive and preserve desktop preferences",
+    "pass": true
+  }
+]

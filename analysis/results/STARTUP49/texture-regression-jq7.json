@@ -1,0 +1,125 @@
+{
+  "pass": true,
+  "before": {
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "cases": [
+      {
+        "entry": {
+          "id": "JQ7-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 47,
+            "hash": "45bf1fa32d0578b8cfe4ecd8045039518528c98f11ba100e73b98d6261c01072"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "JQ7-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "9966a5bfdc62486aeaa3b119d3ccc90ae568508fc1de4859ba3e51fff167df5b"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "JQ7-3"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "8ccd4138e71824f4781f3de7064778fd297e0075e6a8d0283509d03f8dcb42d7"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "JQ7-4"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "dbcc0994d7a9dd142aba411173193e8549869f1482ba99d9555307b84d70b5ca"
+          }
+        ]
+      }
+    ]
+  },
+  "after": {
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "cases": [
+      {
+        "entry": {
+          "id": "JQ7-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 47,
+            "hash": "45bf1fa32d0578b8cfe4ecd8045039518528c98f11ba100e73b98d6261c01072"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "JQ7-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "9966a5bfdc62486aeaa3b119d3ccc90ae568508fc1de4859ba3e51fff167df5b"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "JQ7-3"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "8ccd4138e71824f4781f3de7064778fd297e0075e6a8d0283509d03f8dcb42d7"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "JQ7-4"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "dbcc0994d7a9dd142aba411173193e8549869f1482ba99d9555307b84d70b5ca"
+          }
+        ]
+      }
+    ]
+  }
+}

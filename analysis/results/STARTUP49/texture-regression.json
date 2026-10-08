@@ -1,0 +1,1301 @@
+{
+  "pass": true,
+  "before": {
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "cases": [
+      {
+        "entry": {
+          "type": "kiku"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "fa9c8e52986fdee8b281b58c9dfaea0a9b739cb95eb8806251826c1690799642"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "type": "botan"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "25813e6c31a36e893d696c014c6e128b33251b593f07a01171a98e9bacf81158"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "type": "kamuro"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "ad832e4b7df2ff65ea7d71e8b8a96046f9bdb23f08940077245cfb4ea6caab07"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "type": "senrin"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "c151769c3c502ad8dbdb4dc7199fa59bf06a32add0371767845ace36e53e15bf"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "type": "strobe"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "6ddc0b4a5e0172256d269a6f24b75e6505c670617b60702e78d4ca44e860467f"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "c77c31fc99dba6c0cfc523db7725a90a4f9441a54fb7fc6f1c3557285d942270"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "type": "crackle"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 62,
+            "hash": "3c06f7da9562644f157831b67588756f3243a303f02325fb3b37660c102c0f53"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "FC7R-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "64db4be5a2eb4b465a0717d3fc4d30f4136b9c5c922f8fef53ef155206bd32ba"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "FC7R-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "30f44c7b011e69fabdede6238df8c4da8c522b23974db91be44f7f266ac195fb"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "FG7"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "b367d341959e7d81719ed2dc7534202001496361c7a6ab2b176f8c8489f4f793"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "HK10-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "18f8bfcd3da9d32c157f1ce77dc3b68aabd65e20789ded0edaff8403bcb4ec35"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "f0cdf97d313afc7a9d9d46edcc176af8350ecff674d685a517c54ca1727a4ef7"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "HK10-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "5e62b7e2b2e4f402d972266bf2b719ff34e425a0e91a51c7d7c35683164495f5"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "HN2-G"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "cb8b2c169e026f8b98c9d1e67788b8ad1767ce792512c9976d10548292b5db2f"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 36,
+            "hash": "8101face60e5eeacddee1999b78d03c3d5572176704de152d2246bc6b8496e9c"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "HN2-O"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 61,
+            "hash": "85eb48c3f64aebe0d28bc28b59d24e83d344c7743baa48e0acaaab48af3b64dd"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "JM4-40"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "0964254b71174e987b8c70afec9786528417c888eab7788c9fc2bc6c4431492f"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "JMG10"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "522678c5b68822cf512ae309fcb86f4ee5c5e1f8a24b655005aca25afad98b8a"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "a85de41af869089e28b39e6d224515d04223053fa11fc7c4b4e38effbb10a08b"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYCR-O"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "535497390c227e375a92abc6c15ece8f8d2a2b908ed099cb9a7d798a7903501d"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYFL-O"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "84f486e11b3a81f00d1a23589c68e2725263eabb09462dd9686a853235e068ff"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYHK-O-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "18f8bfcd3da9d32c157f1ce77dc3b68aabd65e20789ded0edaff8403bcb4ec35"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "f0cdf97d313afc7a9d9d46edcc176af8350ecff674d685a517c54ca1727a4ef7"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYHK-O-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "5e62b7e2b2e4f402d972266bf2b719ff34e425a0e91a51c7d7c35683164495f5"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYJA-O-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 63,
+            "hash": "d0861f6f391796c215b753f6947f33e988322e06336e622be820e5ad581ef2ae"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYJA-O-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "72c0a8807c02fd41720b6a4064f060b86525015e8f030dce54a34208c73743d6"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYJC-O-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 59,
+            "hash": "bc506c4e21deace0efb4ec4b229429c7921414d3b0b4ed0488664642e453d229"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYJC-O-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 43,
+            "hash": "eb94b11c1d48a0e4ba9551b96b17c7954fdc18661432547c899ca34b940496fa"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYJM-O"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "6c55292d04754bb804965cf03d026bc42a26d58b2ee0539f2796b582fb8ae330"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QA20-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "b9be1308cdc65dc13227f4f4111ee92296fdf62c376c1e8e756de688f7a978ca"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QA20-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "9873713679608ba3562b32a855a82f2df8d600c018bb744915dbe15dc81a0543"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QC12-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "71e0442859ad0b96f08f8ea032eeb84554bf015781ebbe832a26ba71625bd6fc"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QC12-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "2cfd175086cc90a5443db3c549877cb6562e5fd760c78f670b651ede44e79841"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QC12-3"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "352a705c1608478245ea6a46515999039df7cf5d8b3a52b8b62972022c748311"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QD14-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 48,
+            "hash": "55b43fa0ad582ff49089afae785f7c3c2ff90bc851be6e869af9f5c3d8dae7f9"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QD14-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "5404c13b1c33c4b306992b7cc471ab3e4c5ad86a1d74a21a4761d01a2fd3ef61"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 47,
+            "hash": "85b1071f7bd047e4f5e4b23eeefa4cb9d37055e1232e259e409e0984109a80ed"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QD14-3"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 43,
+            "hash": "6697a492d91d4166bd4b0f49c3e41a82d9575726151a3faf953861b01c84255e"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QN12-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 33,
+            "hash": "ddff9c8fc03deab491a91e98f10abaf20358b66a9d4bd25c2ff48e120c9e7f58"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QN12-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "e10565111bc3ff7f5846d67eb9cb1a7a5ed4371d2935e3b84218fa212b65d72b"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "RT6M"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "6a6a8eb16c703872169ff7a4c606f78d2f2ddc2cc4e4b26c4be4c3982509a8b9"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "TP-JMG10-T75"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "aa1791aad06e31845e3ab05c870d83f26bc4021e5dd4419321804eff59a9b107"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "TP-MYHK-O-T75-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "c4c401b7f9b0325fe8bccb723728b7dfc2f6180261e0f0406a3bc15ca9cc8728"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "2019d5407db169fb4d9847b06678395304b3258821837f2205f455e45d14385b"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "TP-MYHK-O-T75-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "913086669d551a8f38809c2887e8d7ca927b743252f94e59ec9bf08b4b9a20c6"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "e2846f1ddcec5029ef465ca572f4bdd7ec94f7c23a33bc5e827e3c46adc5b33a"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "TP-MYJA-O-T75-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 53,
+            "hash": "ac69961e984cbe034ade9885f65b899addb5c53051248df66614741e2491fe4d"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "TP-MYJA-O-T75-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "110db5cf3f04e185fb533fddae57a26d7d2ec2ca6fc438df2f4dfae4faf75015"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "V5M"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "75a8276ef5fda8be697527446f9d57b54b48ff4d1ed37718da0ee08dc36cf119"
+          },
+          {
+            "part": "fade30/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "ff3eeab0684b5dacf05875fbc44884bb434698d505e257a074aaa25baa334059"
+          },
+          {
+            "part": "fade20/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "026d2f4c9d9bda34d4f3e6441861eef5e242e5dac077fb95c3fe0f41a9fe338e"
+          }
+        ]
+      }
+    ]
+  },
+  "after": {
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "cases": [
+      {
+        "entry": {
+          "type": "kiku"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "fa9c8e52986fdee8b281b58c9dfaea0a9b739cb95eb8806251826c1690799642"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "type": "botan"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "25813e6c31a36e893d696c014c6e128b33251b593f07a01171a98e9bacf81158"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "type": "kamuro"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "ad832e4b7df2ff65ea7d71e8b8a96046f9bdb23f08940077245cfb4ea6caab07"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "type": "senrin"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "c151769c3c502ad8dbdb4dc7199fa59bf06a32add0371767845ace36e53e15bf"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "type": "strobe"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "6ddc0b4a5e0172256d269a6f24b75e6505c670617b60702e78d4ca44e860467f"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "c77c31fc99dba6c0cfc523db7725a90a4f9441a54fb7fc6f1c3557285d942270"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "type": "crackle"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 62,
+            "hash": "3c06f7da9562644f157831b67588756f3243a303f02325fb3b37660c102c0f53"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "FC7R-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "64db4be5a2eb4b465a0717d3fc4d30f4136b9c5c922f8fef53ef155206bd32ba"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "FC7R-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "30f44c7b011e69fabdede6238df8c4da8c522b23974db91be44f7f266ac195fb"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "FG7"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "b367d341959e7d81719ed2dc7534202001496361c7a6ab2b176f8c8489f4f793"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "HK10-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "18f8bfcd3da9d32c157f1ce77dc3b68aabd65e20789ded0edaff8403bcb4ec35"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "f0cdf97d313afc7a9d9d46edcc176af8350ecff674d685a517c54ca1727a4ef7"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "HK10-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "5e62b7e2b2e4f402d972266bf2b719ff34e425a0e91a51c7d7c35683164495f5"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "HN2-G"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "cb8b2c169e026f8b98c9d1e67788b8ad1767ce792512c9976d10548292b5db2f"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 36,
+            "hash": "8101face60e5eeacddee1999b78d03c3d5572176704de152d2246bc6b8496e9c"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "HN2-O"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 61,
+            "hash": "85eb48c3f64aebe0d28bc28b59d24e83d344c7743baa48e0acaaab48af3b64dd"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "JM4-40"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "0964254b71174e987b8c70afec9786528417c888eab7788c9fc2bc6c4431492f"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "JMG10"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "522678c5b68822cf512ae309fcb86f4ee5c5e1f8a24b655005aca25afad98b8a"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "a85de41af869089e28b39e6d224515d04223053fa11fc7c4b4e38effbb10a08b"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYCR-O"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "535497390c227e375a92abc6c15ece8f8d2a2b908ed099cb9a7d798a7903501d"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYFL-O"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "84f486e11b3a81f00d1a23589c68e2725263eabb09462dd9686a853235e068ff"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYHK-O-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "18f8bfcd3da9d32c157f1ce77dc3b68aabd65e20789ded0edaff8403bcb4ec35"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "f0cdf97d313afc7a9d9d46edcc176af8350ecff674d685a517c54ca1727a4ef7"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYHK-O-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "5e62b7e2b2e4f402d972266bf2b719ff34e425a0e91a51c7d7c35683164495f5"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYJA-O-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 63,
+            "hash": "d0861f6f391796c215b753f6947f33e988322e06336e622be820e5ad581ef2ae"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYJA-O-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "72c0a8807c02fd41720b6a4064f060b86525015e8f030dce54a34208c73743d6"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYJC-O-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 59,
+            "hash": "bc506c4e21deace0efb4ec4b229429c7921414d3b0b4ed0488664642e453d229"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYJC-O-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 43,
+            "hash": "eb94b11c1d48a0e4ba9551b96b17c7954fdc18661432547c899ca34b940496fa"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "MYJM-O"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "6c55292d04754bb804965cf03d026bc42a26d58b2ee0539f2796b582fb8ae330"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QA20-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "b9be1308cdc65dc13227f4f4111ee92296fdf62c376c1e8e756de688f7a978ca"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QA20-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "9873713679608ba3562b32a855a82f2df8d600c018bb744915dbe15dc81a0543"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QC12-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "71e0442859ad0b96f08f8ea032eeb84554bf015781ebbe832a26ba71625bd6fc"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QC12-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "2cfd175086cc90a5443db3c549877cb6562e5fd760c78f670b651ede44e79841"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QC12-3"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "352a705c1608478245ea6a46515999039df7cf5d8b3a52b8b62972022c748311"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QD14-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 48,
+            "hash": "55b43fa0ad582ff49089afae785f7c3c2ff90bc851be6e869af9f5c3d8dae7f9"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QD14-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "5404c13b1c33c4b306992b7cc471ab3e4c5ad86a1d74a21a4761d01a2fd3ef61"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 47,
+            "hash": "85b1071f7bd047e4f5e4b23eeefa4cb9d37055e1232e259e409e0984109a80ed"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QD14-3"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 43,
+            "hash": "6697a492d91d4166bd4b0f49c3e41a82d9575726151a3faf953861b01c84255e"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QN12-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 33,
+            "hash": "ddff9c8fc03deab491a91e98f10abaf20358b66a9d4bd25c2ff48e120c9e7f58"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "QN12-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "e10565111bc3ff7f5846d67eb9cb1a7a5ed4371d2935e3b84218fa212b65d72b"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "RT6M"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "6a6a8eb16c703872169ff7a4c606f78d2f2ddc2cc4e4b26c4be4c3982509a8b9"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "TP-JMG10-T75"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "aa1791aad06e31845e3ab05c870d83f26bc4021e5dd4419321804eff59a9b107"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "TP-MYHK-O-T75-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "c4c401b7f9b0325fe8bccb723728b7dfc2f6180261e0f0406a3bc15ca9cc8728"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "2019d5407db169fb4d9847b06678395304b3258821837f2205f455e45d14385b"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "TP-MYHK-O-T75-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "913086669d551a8f38809c2887e8d7ca927b743252f94e59ec9bf08b4b9a20c6"
+          },
+          {
+            "part": "segment1/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "e2846f1ddcec5029ef465ca572f4bdd7ec94f7c23a33bc5e827e3c46adc5b33a"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "TP-MYJA-O-T75-1"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 53,
+            "hash": "ac69961e984cbe034ade9885f65b899addb5c53051248df66614741e2491fe4d"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "TP-MYJA-O-T75-2"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "110db5cf3f04e185fb533fddae57a26d7d2ec2ca6fc438df2f4dfae4faf75015"
+          }
+        ]
+      },
+      {
+        "entry": {
+          "id": "V5M"
+        },
+        "textures": [
+          {
+            "part": "segment0/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "75a8276ef5fda8be697527446f9d57b54b48ff4d1ed37718da0ee08dc36cf119"
+          },
+          {
+            "part": "fade30/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "ff3eeab0684b5dacf05875fbc44884bb434698d505e257a074aaa25baa334059"
+          },
+          {
+            "part": "fade20/head",
+            "W": 2048,
+            "H": 2048,
+            "F": 64,
+            "hash": "026d2f4c9d9bda34d4f3e6441861eef5e242e5dac077fb95c3fe0f41a9fe338e"
+          }
+        ]
+      }
+    ]
+  }
+}

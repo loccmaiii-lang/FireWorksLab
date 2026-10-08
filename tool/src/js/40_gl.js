@@ -23,6 +23,9 @@ let PT_GAUSS = 0;     // 4.3：1 = 这一批点画成高斯（升空尾缀 V5 �
 let PT_SPAN = 0;   // 4.3：旧光点核的画点范围，现在的光点核不用（保留变量免得别处赋值报错）       // 画点范围（几倍 σ）；0 = 默认 6σ。尾缀设 10σ，边缘平滑收到 0          // 纵向每米像素数（0 = 与横向相同）；单元序列横竖分别缩放时由烘焙设置
 
 function compile(vs, fs) {
+  return lazyProgram(() => compileNow(vs, fs));
+}
+function compileNow(vs, fs) {
   const mk = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o) + '\n' + s); return o; };
   const p = gl.createProgram(); gl.attachShader(p, mk(gl.VERTEX_SHADER, vs)); gl.attachShader(p, mk(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(p);
   if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
