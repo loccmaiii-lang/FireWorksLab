@@ -65,7 +65,8 @@ def center_of(v):
     return (np.percentile(xs, 2) + np.percentile(xs, 98)) / 2, (np.percentile(ys, 2) + np.percentile(ys, 98)) / 2
 
 
-def measure_render(png, Rref):
+def measure_render(png, Rref, split='auto'):
+    """split：实拍同一时刻的里 / 外分界（r / R）；两边用同一个分界才比得上（实拍没分界 → 渲染也不分，都用「全部」）"""
     img = cv2.imdecode(np.frombuffer(base64.b64decode(png.split(',')[1]), np.uint8), cv2.IMREAD_COLOR)
     v = img.max(2).astype(np.float32); cx, cy = center_of(v); Rr = D.radius_of(v, cx, cy, 20)
     if not Rr: return None, img, (cx, cy, 0)
@@ -75,7 +76,7 @@ def measure_render(png, Rref):
         cx, cy = cx * k, cy * k
     sig = img.astype(np.float32); lin = D.to_lin(img)
     pts, lines, prof, tex = D.measure(img, sig, cx, cy, Rref, noise=1.0, lin=lin)
-    sp = D.auto_split([p['r'] for p in pts if not p['glare'] and not p.get('on_line')])
+    sp = D.auto_split([p['r'] for p in pts if not p['glare'] and not p.get('on_line')]) if split == 'auto' else split
     rep = D.summarize(pts, lines, prof, Rref, sp, tex); rep['scale'] = round(k, 3)
     return rep, img, (cx, cy, Rref)
 
@@ -150,7 +151,7 @@ def main():
     crops = {}
     for name, _ in variants:
         for s in shots[name]:
-            R = rf(s['t'])['R_px']; rep, img, (cx, cy, _) = measure_render(s['png'], R)
+            R = rf(s['t'])['R_px']; rep, img, (cx, cy, _) = measure_render(s['png'], R, rf(s['t']).get('split'))
             if rep: rep['t'] = s['t']; res['variants'][name]['frames'].append(rep)
             h = int(1.35 * R); x0, y0 = int(cx - h), int(cy - h)
             pad = cv2.copyMakeBorder(img, h, h, h, h, cv2.BORDER_CONSTANT, value=(0, 0, 0)); c = pad[y0 + h:y0 + 3 * h, x0 + h:x0 + 3 * h]
