@@ -341,12 +341,12 @@
    }
   },
   {
-   "id": "FC4R-1",
+   "id": "FC5R-1",
    "date": "2026-10-08",
    "name": "扇形彗星 · 红彗星扇 · 玫红光晕",
    "base": "kamuro",
    "hidden": true,
-   "tags": "扇形彗星 红彗星 扇面 N 簇 玫红光晕 FC4R-1",
+   "tags": "扇形彗星 红彗星 扇面 N 簇 玫红光晕 FC5R-1",
    "p": {
     "renderVer": 40,
     "pattern": "cluster",
@@ -376,13 +376,15 @@
     "fade": 0.12,
     "flash": 0.08,
     "flashR": 1.0,
-    "headSize": 4.0,
-    "headBright": 1.2,
+    "headSize": 5.0,
+    "headBright": 0.9,
     "headTear": 0,
     "sparkRate": 0,
     "x1On": 0,
     "tailShoulder": 0,
-    "exposure": 1.0
+    "exposure": 1.0,
+    "haloFrac": 0.7,
+    "haloR": 5
    },
    "m": {
     "stages": [
@@ -402,12 +404,12 @@
    "note": "红彗星扇第 1 层「玫红光晕」：和另一层同一个模拟（同种子、同弹道），只是画的东西不同。"
   },
   {
-   "id": "FC4R-2",
+   "id": "FC5R-2",
    "date": "2026-10-08",
    "name": "扇形彗星 · 红彗星扇 · 亮肩彗尾",
    "base": "kamuro",
    "hidden": true,
-   "tags": "扇形彗星 红彗星 扇面 N 簇 亮肩彗尾 FC4R-2",
+   "tags": "扇形彗星 红彗星 扇面 N 簇 亮肩彗尾 FC5R-2",
    "p": {
     "renderVer": 40,
     "pattern": "cluster",
@@ -441,18 +443,18 @@
     "headBright": 2.2,
     "headTear": 0.25,
     "sparkRate": 650,
-    "sparkLife": 0.75,
+    "sparkLife": 0.9,
     "sparkLifeJit": 40,
-    "sparkSpread": 0.35,
+    "sparkSpread": 0.5,
     "sparkInherit": 0.12,
     "sparkDrag": 3.0,
     "sparkGrav": 0.3,
     "T0": 2400,
     "cooling": 0.32,
-    "sparkSize": 0.18,
+    "sparkSize": 0.22,
     "sparkBright": 1.6,
     "twinkle": 0.1,
-    "tailShoulder": 0.85,
+    "tailShoulder": 1.0,
     "tailPinchHead": 0,
     "tailPinchTail": 0.85,
     "tailBellyAt": 0.12,
@@ -460,17 +462,17 @@
     "x1On": 1,
     "x1Event": "trail",
     "x1Kind": "dot",
-    "x1Rate": 120,
-    "x1V": 2.0,
+    "x1Rate": 220,
+    "x1V": 2.5,
     "x1VJit": 40,
     "x1Inh": 0.2,
     "x1Grav": 0,
     "x1Drag": 6,
-    "x1Life": 0.22,
+    "x1Life": 0.35,
     "x1LifeJit": 30,
-    "x1Size": 0.5,
+    "x1Size": 0.8,
     "x1SizeJit": 30,
-    "x1Bright": 2.0,
+    "x1Bright": 2.4,
     "x1BrightJit": 20,
     "x1BrightCurve": "0:1, 1:0",
     "x1Flick": 0,
@@ -494,11 +496,11 @@
    "note": "红彗星扇第 2 层「亮肩彗尾」：和另一层同一个模拟（同种子、同弹道），只是画的东西不同。"
   },
   {
-   "id": "FC4O",
+   "id": "FC5O",
    "date": "2026-10-08",
    "name": "扇形彗星 · 橙扇（13 筒，第 2 套）",
    "base": "kamuro",
-   "tags": "扇形彗星 橙扇 扇面 N 簇 依次出膛 头尖尾粗 FC4O",
+   "tags": "扇形彗星 橙扇 扇面 N 簇 依次出膛 头尖尾粗 FC5O",
    "p": {
     "renderVer": 40,
     "pattern": "cluster",
@@ -531,17 +533,17 @@
     "headSize": 0.25,
     "headBright": 0.7,
     "headTear": 0.85,
-    "sparkRate": 900,
-    "sparkLife": 1.4,
+    "sparkRate": 1800,
+    "sparkLife": 1.6,
     "sparkLifeJit": 40,
-    "sparkSpread": 1.6,
+    "sparkSpread": 3.5,
     "sparkInherit": 0.05,
     "sparkDrag": 1.2,
     "sparkGrav": 0.6,
-    "T0": 2300,
-    "cooling": 0.25,
-    "sparkSize": 0.14,
-    "sparkBright": 1.4,
+    "T0": 2450,
+    "cooling": 0.2,
+    "sparkSize": 0.2,
+    "sparkBright": 2.4,
     "twinkle": 0.3,
     "twinkleHz": 8,
     "tailShoulder": -0.3,
@@ -559,13 +561,14 @@
     "x1Drag": 6,
     "x1Life": 0.14,
     "x1LifeJit": 30,
-    "x1Size": 0.2,
+    "x1Size": 0.3,
     "x1SizeJit": 30,
-    "x1Bright": 1.6,
+    "x1Bright": 2.0,
     "x1BrightJit": 20,
     "x1BrightCurve": "0:1, 1:0",
     "x1Flick": 0,
-    "exposure": 1.0
+    "exposure": 1.5,
+    "tailWidth": 1.5
    },
    "m": {
     "stages": [
@@ -587,22 +590,25 @@
     "一起快速冲上去（越往上越慢），燃尽熄灭不爆，尾巴停在空中暗掉、漂开",
     "引擎回放 + 游戏内大小"
    ],
-   "note": "用户 10-08 07:43：在烘焙器里用分簇（扇面 N 簇）拼好整排；橙扇头尖尾粗。13 根筒扇面 70°、一根筒一颗辉星金尾彗星，逐筒 0.25 s 出膛；出膛 73 m/s、2.45 s 燃尽（约 100 m）不爆。星头小而尖、白热尖端，火花越老散得越开 → 尾端粗。一层。原理 analysis/原理/扇形彗星.md 第 0 节。"
+   "note": "用户 10-08 07:43：在烘焙器里用分簇（扇面 N 簇）拼好整排；橙扇头尖尾粗。13 根筒扇面 70°、一根筒一颗辉星金尾彗星，逐筒 0.25 s 出膛；出膛 73 m/s、2.45 s 燃尽（约 100 m）不爆。星头小而尖、白热尖端，火花越老散得越开 → 尾端粗。一层。原理 analysis/原理/扇形彗星.md 第 0 节。",
+   "replaces": [
+    "FC4O"
+   ]
   }
  ],
  "combos": [
   {
-   "id": "FC4R",
+   "id": "FC5R",
    "date": "2026-10-08",
    "name": "扇形彗星 · 红彗星扇（7 筒，第 2 套）",
    "layers": [
     {
-     "m": "rep:FC4R-1",
+     "m": "rep:FC5R-1",
      "scale": 1,
      "delay": 0
     },
     {
-     "m": "rep:FC4R-2",
+     "m": "rep:FC5R-2",
      "scale": 1,
      "delay": 0
     }
@@ -611,13 +617,16 @@
     "玫红光晕",
     "亮肩彗尾"
    ],
-   "tags": "扇形彗星 红彗星 扇面 N 簇 依次出膛 亮肩 玫红光晕 FC4R",
+   "tags": "扇形彗星 红彗星 扇面 N 簇 依次出膛 亮肩 玫红光晕 FC5R",
    "look": [
     "烘焙器里就是整排扇：一根筒一条，逐筒很快扫过去",
     "一起快速冲上去（越往上越慢），燃尽熄灭不爆，尾巴停在空中暗掉、漂开",
     "引擎回放 + 游戏内大小"
    ],
-   "note": "用户 10-08 07:43：在烘焙器里用分簇（扇面 N 簇）拼好整排；红彗星亮肩明显、头粗尾细、星头一层很大的玫红光晕。7 根筒扇面 60°、一根筒一颗 50 mm 彗星，逐筒 0.2 s 出膛；出膛 72 m/s、2.2 s 燃尽（约 90 m）不爆。两层同一模拟：① 玫红光晕（只画星头，直径约 4 m）② 亮肩彗尾（白粉亮核 + 亮肩 + 往下收细的粉红尾）。原理 analysis/原理/扇形彗星.md 第 0 节。"
+   "note": "用户 10-08 07:43：在烘焙器里用分簇（扇面 N 簇）拼好整排；红彗星亮肩明显、头粗尾细、星头一层很大的玫红光晕。7 根筒扇面 60°、一根筒一颗 50 mm 彗星，逐筒 0.2 s 出膛；出膛 72 m/s、2.2 s 燃尽（约 90 m）不爆。两层同一模拟：① 玫红光晕（只画星头，直径约 5 m 的软光）② 亮肩彗尾（白粉亮核 + 亮肩 + 往下收细的粉红尾）。原理 analysis/原理/扇形彗星.md 第 0 节。",
+   "replaces": [
+    "FC4R"
+   ]
   }
  ]
 }
