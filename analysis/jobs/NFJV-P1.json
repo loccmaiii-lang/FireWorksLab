@@ -1,0 +1,52 @@
+{
+ "id": "NFJV-P1",
+ "type": "script",
+ "priority": 2,
+ "name": "金蕊柠 JQ6E1 导出之后：导出包和实拍同尺比（候选对比 --pack）+ 模板实时渲染同尺比（看导出有没有走样）",
+ "steps": [
+  {
+   "name": "导出包 GoldCoreLime",
+   "script": "候选对比.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--pack",
+    "analysis/local/输出/素材包/GoldCoreLime",
+    "--pack-name",
+    "JQ6E1",
+    "--ref",
+    "analysis/原理/金蕊青柠星/打点_B/打点.json",
+    "--px",
+    "1100",
+    "--out",
+    "{out}/导出包"
+   ],
+   "must": true,
+   "ok": [
+    0
+   ],
+   "timeout": 1800
+  },
+  {
+   "name": "模板实时渲染（4.9.41）",
+   "script": "候选对比.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--ref",
+    "analysis/原理/金蕊青柠星/打点_B/打点.json",
+    "--variant",
+    "定:",
+    "--px",
+    "1100",
+    "--out",
+    "{out}/实时"
+   ],
+   "must": false,
+   "ok": [
+    0
+   ],
+   "timeout": 1800
+  }
+ ]
+}
