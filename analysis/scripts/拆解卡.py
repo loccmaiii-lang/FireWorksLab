@@ -42,7 +42,13 @@ def series(frames, layer, key, idx=1):
         elif layer['类'] == '线纹理': d = (fr.get('texture') or {}).get(layer['源'])
         else: d = lines_of(fr, layer['源'], layer['区'])
         if not d: continue
-        v = d.get(key)
+        if key == '_rad':      # 放射中心相对外壳中心（2026-10-08）
+            v = None if d.get('rad_dy') is None or fr.get('shell_dy') is None else d['rad_dy'] - fr['shell_dy']
+        elif key == '_cext': v = ((fr.get('core_ext') or {}).get('r') or [None] * 3)[2]
+        elif key.startswith('_g:'):      # 某个颜色组：_g:淡紫:r90 / n
+            _, gname, k2 = key.split(':'); x = (fr.get('by_color') or {}).get(gname) or {}
+            v = x.get('n') if k2 == 'n' else (x.get('r') or [None] * 3)[1 if k2 == 'r50' else 2]
+        else: v = d.get(key)
         if isinstance(v, list): v = v[idx] if len(v) > idx else None
         if isinstance(v, dict): continue
         if v is not None: out.append((t, float(v)))
@@ -72,16 +78,18 @@ def card(cfg, out):
           '每个量都是同一把尺子（`analysis/scripts/打点.py`）量的；范围 = 这一层活着的那段时间里各帧中位数的 p10 / 中位 / p90。R = 外层半径（像素，横向跨度的一半）。', '']
     # ---- 层表 ----
     KP = [('n', '个数'), ('flux_spread', '星与星亮度差 p90/p10'), ('fwhm', '大小 FWHM（px，中位）'), ('halo_ratio', '光晕能量占比（中位）'), ('elong', '拉长比（中位）'),
-          ('streak_frac', '拉长（拖影）的比例'), ('core_sat', '核心饱和度'), ('halo_sat', '光晕饱和度')]
+          ('streak_frac', '拉长（拖影）的比例'), ('core_sat', '核心饱和度'), ('halo_sat', '光晕饱和度'), ('_cext', '芯区点最远 r / R（p90，不算柠绿）')]
     KT = [('thick', '线长 ≈ 线带厚度 / R'), ('r_in', '线带里端 r / R'), ('r_out', '线带外端 r / R'), ('width_px', '线宽 px'), ('n', '一圈多少条（同一把尺子的相对数）'),
-          ('bead', '成串程度（沿线起伏）'), ('grad', '外段 / 内段亮度'), ('coh_in', '沿半径连贯长度 / R（往里）'), ('contrast', '线的对比度（角向起伏 / 平均）'), ('level', '线带亮度（平均）')]
+          ('bead', '成串程度（沿线起伏）'), ('grad', '外段 / 内段亮度'), ('coh_in', '沿半径连贯长度 / R（往里）'), ('contrast', '线的对比度（角向起伏 / 平均）'), ('level', '线带亮度（平均）'),
+          ('bend0', '线弯曲°（外半 − 里半，往下为正）'), ('_rad', '放射中心相对外壳（/ R，往下为正；≈ 0 = 从外壳中心直直放射）')]
     KL = [('n_long', '长线条数（≥ 0.15 R）'), ('len', '线长 / R（中位）'), ('width_px', '线宽 px（中位）'), ('cont', '连续性（中位）'), ('bead', '成串程度（沿线起伏，中位）'),
           ('grad', '外段 / 内段亮度（中位）'), ('sag', '下垂 / 线长（中位）'), ('r0', '里端 r / R（中位）'), ('r1', '外端 r / R（中位）')]
     md += ['## 每层', '']
     nodes = []
     for L in cfg['层']:
         md += [f"### {L['名']}（{L['类']} · {L.get('源', '')}{'·' + L['区'] if L['区'] != '全部' else ''} · {L['时段'][0]}–{L['时段'][1]} s）", '', L.get('说明', ''), '', '| 量 | ' + ' | '.join(refs) + ' |', '| --- |' + ' --- |' * len(refs)]
-        for key, label in (KP if L['类'] == '点' else KT if L['类'] == '线纹理' else KL):
+        KG = [(f"_g:{L['色']}:n", f"{L['色']}点个数"), (f"_g:{L['色']}:r50", f"{L['色']}点离中心 r / R（中位）"), (f"_g:{L['色']}:r90", f"{L['色']}点最远 r / R（p90）")] if L.get('色') else []
+        for key, label in ((KP + KG) if L['类'] == '点' else KT if L['类'] == '线纹理' else KL):
             row = [label]
             for k, r in refs.items(): row.append(str(rng(series(r['data']['frames'], L, key)) or '—'))
             md.append('| ' + ' | '.join(row) + ' |')
@@ -108,6 +116,8 @@ def card(cfg, out):
     for k, r in refs.items():
         for w, tr in r['data'].get('tracks', {}).items():
             st = tr['stats']; md.append(f"- {k} {w} s（{tr['frames']} 帧，分界 {tr.get('split')}）：" + '；'.join(f"{reg} {s.get('n')} 条，帧间起伏 {s.get('flicker_amp')}%，明显闪（> 8%）的占 {s.get('flicker_frac')}，频率 {s.get('flicker_hz')} Hz，灭的比例 {s.get('off_frac')}" for reg, s in st.items() if s.get('n')) + f"；中途出现 {tr.get('born')}、中途消失 {tr.get('died')}")
+            if tr.get('kin'):      # 运动：相对外层往外跑多快（r / R 每秒）、往下坠的加速度（R / s²）
+                md.append('  - 运动（按点的颜色）：' + '；'.join(f"{g} {x['n']} 条 往外 {x['vr']} /s、下坠 {x['ay']} R/s²" for g, x in tr['kin'].items() if x.get('n', 0) >= 5))
     md.append('')
     # 半径 → 初速 / 终端速度
     for k, r in refs.items():
