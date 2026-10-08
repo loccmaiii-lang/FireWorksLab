@@ -1,0 +1,8 @@
+13:11:58 第 1/2 步：导出包 GoldCoreLime（JQ6E3）
+13:12:22   → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFJV-P3/导出包\差距.md
+13:12:22   ✅ 导出包 GoldCoreLime（JQ6E3）（0.4 分钟）
+13:12:22 第 2/2 步：模板实时渲染（4.9.43）
+13:12:40   定 → 11 张
+13:12:40   → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFJV-P3/实时\差距.md
+13:12:40   ✅ 模板实时渲染（4.9.43）（0.3 分钟）
+13:12:40 完成，用时 0.7 分钟
