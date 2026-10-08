@@ -1,0 +1,1 @@
+FW_ASSET_LOADED("FCE-FC5O", {"manifest": {"title": "FanCometOrange", "duration": 4.9, "view": 178.9, "variants": {"FanCometOrange": "FanCometOrange"}, "emitters": [], "note": "对话框FanGold：橙扇 FC5O（火花更亮更密、尾端散开）导出 + 回放检查。"}, "images": {}});

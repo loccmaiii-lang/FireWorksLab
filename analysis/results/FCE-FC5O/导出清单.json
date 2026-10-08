@@ -1,0 +1,27 @@
+{
+ "effect": "fan_comet",
+ "entry": "FC5O",
+ "ver": "089f0ae1·master4.9.31",
+ "time": "2026-10-08 08:01",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "FanCometOrange",
+   "replica": "FC5O",
+   "files": [
+    "FanCometOrange.json",
+    "FanCometOrange_Cascade参数.txt",
+    "FanCometOrange_Mobile.json",
+    "FanCometOrange_曲线.csv",
+    "T_EFX_FireWorks_FanComet_Orange_4x4_01.png",
+    "T_EFX_FireWorks_FanComet_Orange_4x4_01_C.png",
+    "T_EFX_FireWorks_FanComet_Orange_4x4_01_HD.png",
+    "T_EFX_FireWorks_FanComet_Orange_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}
