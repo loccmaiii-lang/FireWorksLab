@@ -142,7 +142,7 @@ def fan_entries(V):
                    'layerNames': [x[1] for x in lays], 'tags': f'扇形彗星 红彗星 扇面 N 簇 依次出膛 亮肩 玫红光晕 {V}R', 'look': LOOK2,
                    'note': '用户 10-08 07:43：在烘焙器里用分簇（扇面 N 簇）拼好整排；红彗星亮肩明显、头粗尾细、星头一层很大的玫红光晕。'
                            '7 根筒扇面 60°、一根筒一颗 50 mm 彗星，逐筒 0.2 s 出膛；出膛 72 m/s、2.2 s 燃尽（约 90 m）不爆。'
-                           '两层同一模拟：① 玫红光晕（只画星头，直径约 5 m 的软光）② 亮肩彗尾（白粉亮核 + 亮肩 + 往下收细的粉红尾）。原理 analysis/原理/扇形彗星.md 第 0 节。'})
+                           '两层同一模拟：① 玫红光晕（只画星头，一团约 15 m 的玫红软光）② 亮肩彗尾（白粉亮核 + 亮肩 + 往下收细的粉红尾）。原理 analysis/原理/扇形彗星.md 第 0 节。'})
     ents.append({'id': f'{V}O', 'date': DATE2, 'name': '扇形彗星 · 橙扇（13 筒，第 2 套）', 'base': 'kamuro',
                  'tags': f'扇形彗星 橙扇 扇面 N 簇 依次出膛 头尖尾粗 {V}O', 'p': dict(ORANGE_FAN), 'm': dict(ORANGE_FAN_M), 'look': LOOK2,
                  'note': '用户 10-08 07:43：在烘焙器里用分簇（扇面 N 簇）拼好整排；橙扇头尖尾粗。13 根筒扇面 70°、一根筒一颗辉星金尾彗星，逐筒 0.25 s 出膛；'
@@ -160,9 +160,14 @@ RED_GLOW5 = dict(RED_GLOW, headSize=5.0, headBright=0.9, haloFrac=0.7, haloR=5)
 ORANGE_FAN5 = dict(ORANGE_FAN, sparkRate=1800, sparkBright=2.4, sparkSize=0.2, sparkLife=1.6, sparkSpread=3.5, T0=2450, cooling=0.2,
                    tailWidth=1.5, x1Size=0.3, x1Bright=2.0, exposure=1.5)
 RED_TAIL, RED_GLOW, ORANGE_FAN = RED_TAIL5, RED_GLOW5, ORANGE_FAN5
-FAN_ENTS, FAN_COMBOS = fan_entries('FC5')
-FAN_COMBOS[0]['replaces'] = ['FC4R']
-next(e for e in FAN_ENTS if e['id'] == 'FC5O')['replaces'] = ['FC4O']
+# FC5 本机看过（08:55，回放检查全过、实时 = 导出）：红：亮肩粗亮、往下收细 = 头粗尾细 ✓；光晕仍是一个实心粉色圆片 + 很淡的大红雾，不像「一层很大的光晕」
+#   → 光晕层核心 5 → 2.5 m、能量 85 % 给光晕、半径 × 3（软光直径约 15 m）、亮度 1.2。
+#   橙：头尖尾粗 ✓，但横向散太大，下半截连成一整块实心楔形、3 s 后一大片雾 → 横向散 3.5 → 2.2 m/s、火花寿命 1.6 → 1.3 s（每条粗尾分得开）。
+RED_GLOW = dict(RED_GLOW, headSize=2.5, headBright=1.2, haloFrac=0.85, haloR=3)
+ORANGE_FAN = dict(ORANGE_FAN, sparkSpread=2.2, sparkLife=1.3)
+FAN_ENTS, FAN_COMBOS = fan_entries('FC6')
+FAN_COMBOS[0]['replaces'] = ['FC4R', 'FC5R']
+next(e for e in FAN_ENTS if e['id'] == 'FC6O')['replaces'] = ['FC4O', 'FC5O']
 
 if __name__ == '__main__':
     OUT.write_text(json.dumps({'说明': '扇形彗星（红彗星 / 橙扇），由 analysis/scripts/扇形彗星条目.py 生成，别手改。第 1 套 FC2R / FC3O = RT6 单条（用户 07:43「先保留这一版」）；第 2 套 FC4 = 烘焙器分簇拼好的整排扇。',
