@@ -1,0 +1,100 @@
+10:01:51 第 1/4 步：标定 L2_柠点星
+10:02:47   headSize None → 4 张
+10:02:47   headSize {'headSize': 1.0} → 4 张
+10:02:47   headSize {'headSize': 1.7} → 4 张
+10:02:47   headSize {'headSize': 2.4} → 4 张
+10:02:47   coreProfile None → 4 张
+10:02:47   coreProfile {'coreProfile': 1.0} → 4 张
+10:02:47   coreProfile+haloFrac+haloR None → 4 张
+10:02:47   coreProfile+haloFrac+haloR {'coreProfile': 1.0, 'haloFrac': 0.4, 'haloR': 3.0} → 4 张
+10:02:47   coreProfile+haloFrac+haloR None → 4 张
+10:02:47   coreProfile+haloFrac+haloR {'coreProfile': 1.0, 'haloFrac': 0.7, 'haloR': 4.0} → 4 张
+10:02:47   coreProfile+haloFrac+haloR None → 4 张
+10:02:47   coreProfile+haloFrac+haloR {'coreProfile': 1.0, 'haloFrac': 0.85, 'haloR': 6.0} → 4 张
+10:02:47   starBright None → 4 张
+10:02:47   starBright {'starBright': 0.3} → 4 张
+10:02:47   starBright {'starBright': 0.6} → 4 张
+10:02:47   headTear None → 4 张
+10:02:47   headTear {'headTear': 0.4} → 4 张
+10:02:47   headTear {'headTear': 0.8} → 4 张
+10:02:47   flicker None → 4 张
+10:02:47   flicker {'flicker': 0.5} → 4 张
+10:02:47   flicker {'flicker': 0.9} → 4 张
+10:02:47   shutter None → 4 张
+10:02:47   shutter {'shutter': 0.3} → 4 张
+10:02:47   shutter {'shutter': 1.0} → 4 张
+10:02:47   M.headInt None → 4 张
+10:02:47   M.headInt {'M.headInt': 1.0} → 4 张
+10:02:47   M.headInt {'M.headInt': 2.5} → 4 张
+10:02:47   → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFJC1/L2_柠点星\标定.md
+10:02:47   ✅ 标定 L2_柠点星（0.9 分钟）
+10:02:47 第 2/4 步：标定 L1_橙引尾
+10:04:19   sparkSize None → 4 张
+10:04:19   sparkSize {'sparkSize': 0.15} → 4 张
+10:04:19   sparkSize {'sparkSize': 0.6} → 4 张
+10:04:19   sparkRate None → 4 张
+10:04:19   sparkRate {'sparkRate': 450.0} → 4 张
+10:04:19   sparkRate {'sparkRate': 1800.0} → 4 张
+10:04:19   sparkLife None → 4 张
+10:04:19   sparkLife {'sparkLife': 0.2} → 4 张
+10:04:19   sparkLife {'sparkLife': 0.5} → 4 张
+10:04:19   sparkSpread None → 4 张
+10:04:19   sparkSpread {'sparkSpread': 0.05} → 4 张
+10:04:19   sparkSpread {'sparkSpread': 0.6} → 4 张
+10:04:19   sparkInherit None → 4 张
+10:04:19   sparkInherit {'sparkInherit': 0.0} → 4 张
+10:04:19   sparkInherit {'sparkInherit': 0.3} → 4 张
+10:04:19   tailShoulder None → 4 张
+10:04:19   tailShoulder {'tailShoulder': -0.5} → 4 张
+10:04:19   tailShoulder {'tailShoulder': 0.5} → 4 张
+10:04:19   cooling None → 4 张
+10:04:19   cooling {'cooling': 0.1} → 4 张
+10:04:19   cooling {'cooling': 0.4} → 4 张
+10:04:19   tailWidth None → 4 张
+10:04:19   tailWidth {'tailWidth': 0.5} → 4 张
+10:04:19   tailWidth {'tailWidth': 2.0} → 4 张
+10:04:19   sparkRise None → 4 张
+10:04:19   sparkRise {'sparkRise': 0.05} → 4 张
+10:04:19   sparkRise {'sparkRise': 0.15} → 4 张
+10:04:19   T0 None → 4 张
+10:04:19   T0 {'T0': 1900.0} → 4 张
+10:04:19   T0 {'T0': 2500.0} → 4 张
+10:04:19   twinkle None → 4 张
+10:04:19   twinkle {'twinkle': 0.0} → 4 张
+10:04:19   twinkle {'twinkle': 1.0} → 4 张
+10:04:19   → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFJC1/L1_橙引尾\标定.md
+10:04:19   ✅ 标定 L1_橙引尾（1.5 分钟）
+10:04:19 第 3/4 步：标定 L3_金菊蕊
+10:05:49   sparkLife None → 4 张
+10:05:49   sparkLife {'sparkLife': 0.6} → 4 张
+10:05:49   sparkLife {'sparkLife': 1.6} → 4 张
+10:05:49   sparkRate None → 4 张
+10:05:49   sparkRate {'sparkRate': 150.0} → 4 张
+10:05:49   sparkRate {'sparkRate': 600.0} → 4 张
+10:05:49   sparkInherit None → 4 张
+10:05:49   sparkInherit {'sparkInherit': 0.0} → 4 张
+10:05:49   sparkInherit {'sparkInherit': 0.2} → 4 张
+10:05:49   tailHaze None → 4 张
+10:05:49   tailHaze {'tailHaze': 0.03} → 4 张
+10:05:49   tailHaze {'tailHaze': 0.08} → 4 张
+10:05:49   sparkSize None → 4 张
+10:05:49   sparkSize {'sparkSize': 0.2} → 4 张
+10:05:49   sparkSize {'sparkSize': 0.5} → 4 张
+10:05:49   cooling None → 4 张
+10:05:49   cooling {'cooling': 0.15} → 4 张
+10:05:49   cooling {'cooling': 0.4} → 4 张
+10:05:49   → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFJC1/L3_金菊蕊\标定.md
+10:05:49   ✅ 标定 L3_金菊蕊（1.5 分钟）
+10:05:49 第 4/4 步：标定 L4_红点蕊
+10:06:06   headSize None → 2 张
+10:06:06   headSize {'headSize': 1.0} → 2 张
+10:06:06   headSize {'headSize': 2.2} → 2 张
+10:06:06   coreProfile+haloFrac+haloR None → 2 张
+10:06:06   coreProfile+haloFrac+haloR {'coreProfile': 1.0, 'haloFrac': 0.5, 'haloR': 3.0} → 2 张
+10:06:06   coreProfile+haloFrac+haloR None → 2 张
+10:06:06   coreProfile+haloFrac+haloR {'coreProfile': 1.0, 'haloFrac': 0.8, 'haloR': 5.0} → 2 张
+10:06:06   starBright None → 2 张
+10:06:06   starBright {'starBright': 0.4} → 2 张
+10:06:06   → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFJC1/L4_红点蕊\标定.md
+10:06:06   ✅ 标定 L4_红点蕊（0.3 分钟）
+10:06:06 完成，用时 4.3 分钟

@@ -1,0 +1,30 @@
+[
+ {
+  "name": "标定 L2_柠点星",
+  "script": "质感标定.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.9
+ },
+ {
+  "name": "标定 L1_橙引尾",
+  "script": "质感标定.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 1.5
+ },
+ {
+  "name": "标定 L3_金菊蕊",
+  "script": "质感标定.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 1.5
+ },
+ {
+  "name": "标定 L4_红点蕊",
+  "script": "质感标定.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.3
+ }
+]
