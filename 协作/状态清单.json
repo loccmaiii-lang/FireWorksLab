@@ -215,6 +215,9 @@
   ],
   "对话框新花型 · 金蕊柠模板（临时源码认领，已释放）": [
    "对话框新花型（2026-10-08 01:50）已完成并释放：4.9.37 多层模板「金蕊柠」（kinzuiLime，18_multitypes.js 只加一个模板 + 两个渐变图常量 + 两组模拟参数）、4.9.39 按导出对照调完 + MT_EXPOSURE 一项；10_types.js 只改 VERSION 行、CHANGELOG 两条。只加不改：模拟 / 渲染 / 导出 / 默认值 / OUTPUT_VER / 现有模板没动。标准检查 mt:kinzuiLime ✅（云端 + 本机 NFS-J1）。"
+  ],
+  "对话框新花型 · 金蕊柠重做（临时源码认领）": [
+   "负责：对话框新花型（2026-10-08，用户 09:06「开始」）。只改 tool/src/js/18_multitypes.js 里 kinzuiLime 一个模板（四层参数、MT_EXPOSURE 一项）+ 10_types.js 的 VERSION 一行 + tool/CHANGELOG.md 一条；只加不改：模拟 / 渲染 / 导出 / 默认值 / OUTPUT_VER / 别的模板不动。对话框23 的右栏认领照旧，冲突保留对方再整合。做完释放。"
   ]
  },
  "effects": [
