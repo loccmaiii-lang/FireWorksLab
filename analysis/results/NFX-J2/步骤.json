@@ -1,0 +1,16 @@
+[
+ {
+  "name": "过曝估算：第 3 层（金菊蕊）",
+  "script": "过曝估算.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "过曝估算：第 4 层（红点蕊）",
+  "script": "过曝估算.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ }
+]
