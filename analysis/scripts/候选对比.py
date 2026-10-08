@@ -77,7 +77,7 @@ def measure_render(png, Rref, split='auto'):
     sig = img.astype(np.float32); lin = D.to_lin(img)
     pts, lines, prof, tex = D.measure(img, sig, cx, cy, Rref, noise=1.0, lin=lin)
     sp = D.auto_split([p['r'] for p in pts if not p['glare'] and not p.get('on_line')]) if split == 'auto' else split
-    rep = D.summarize(pts, lines, prof, Rref, sp, tex); rep['scale'] = round(k, 3)
+    rep = D.summarize(pts, lines, prof, Rref, sp, tex, center=(cx, cy)); rep['scale'] = round(k, 3)
     return rep, img, (cx, cy, Rref)
 
 
@@ -91,6 +91,14 @@ def mid(x): return x[1] if isinstance(x, list) and len(x) > 1 else x
 def hue_of(rgb):
     if not rgb: return None
     return D.hue_class(rgb)[1]
+def rad_rel(f, ch):
+    """线的放射中心相对外壳中心（/R，往下为正）：实拍测量中心按芯定、渲染图按整朵定，减掉各自的外壳偏移才可比"""
+    v = T_(f, ch).get('rad_dy'); sh = f.get('shell_dy')
+    return None if v is None or sh is None else round(v - sh, 3)
+def grp_r(f, g, i=2):
+    x = (f.get('by_color') or {}).get(g) or {}; r = x.get('r'); return r[i] if r else None
+def core_ext(f, i=2):
+    r = (f.get('core_ext') or {}).get('r'); return r[i] if r else None
 CHECKS = [
     ('橙引尾', '线带里端 r/R', [0.47, 0.6, 0.8], lambda f: T_(f, '橙线').get('r_in'), 'r'),
     ('橙引尾', '线带外端 r/R', [0.47, 0.6, 0.8], lambda f: T_(f, '橙线').get('r_out'), 'r'),
@@ -115,6 +123,14 @@ CHECKS = [
     ('金菊蕊', '里段色相°', [1.2, 1.8, 2.3], lambda f: (T_(f, '暖色线').get('c_in') or [None, None])[1], 'h'),
     ('红点蕊', '大小 FWHM px', [1.5, 2.0], lambda f: mid(P_(f, '里（芯）').get('fwhm')), 'r'),
     ('红点蕊', '光晕能量占比', [1.5, 2.0], lambda f: mid(P_(f, '里（芯）').get('halo_ratio')), 'r'),
+    # 2026-10-08 用户 14:25 以后补的（白芯有重力、淡紫点在金丝外面一圈往外飞；以前这几样没量）
+    ('橙引尾', '线弯曲°（外半 − 里半，往下为正）', [0.47, 0.6], lambda f: T_(f, '橙线').get('bend0'), 'd'),
+    ('金菊蕊', '丝弯曲°（外半 − 里半，往下为正）', [1.5, 1.8, 2.0], lambda f: T_(f, '暖色线').get('bend0'), 'd'),
+    ('金菊蕊', '丝的放射中心（相对外壳，/R，往下为正）', [1.2, 1.5, 1.8, 2.0, 2.3], lambda f: rad_rel(f, '暖色线'), 'a'),
+    ('青绿细线', '线弯曲°（外半 − 里半，往下为正）', [1.5, 2.0], lambda f: T_(f, '绿线').get('bend0'), 'd'),
+    ('柠点星', '外层线的放射中心（相对外壳，/R）', [1.5, 2.0, 2.6], lambda f: rad_rel(f, '亮线'), 'a'),
+    ('红点蕊', '芯区点最远 r/R（p90，不算柠绿）', [1.2, 1.5, 1.8, 2.0], lambda f: core_ext(f, 2), 'r'),
+    ('红点蕊', '淡紫点最远 r/R（p90）', [1.5, 1.8, 2.0], lambda f: grp_r(f, '淡紫', 2), 'r'),
 ]
 
 
@@ -123,7 +139,9 @@ REG = {'外': '外（亲星）', '里': '里（芯）', '全部': '全部'}
 PT_Q = [('星头个数', 'n', 'r'), ('星与星亮度差 p90/p10', 'flux_spread', 'r'), ('大小 FWHM px', 'fwhm', 'r'), ('光晕能量占比', 'halo_ratio', 'r'),
         ('拉长比', 'elong', 'r'), ('核心饱和度', 'core_sat', 'r'), ('光晕饱和度', 'halo_sat', 'r'), ('光晕色相°', 'halo_rgb', 'h')]
 TX_Q = [('线带里端 r/R', 'r_in', 'r'), ('线带外端 r/R', 'r_out', 'r'), ('线宽 px', 'width_px', 'r'), ('成串（沿线起伏）', 'bead', 'r'),
-        ('外段 / 内段亮度', 'grad', 'r'), ('对比度（线和线之间分得多开）', 'contrast', 'r'), ('里段色相°', 'c_in', 'h'), ('外段色相°', 'c_out', 'h'), ('线带亮度', 'level', 'r')]
+        ('外段 / 内段亮度', 'grad', 'r'), ('对比度（线和线之间分得多开）', 'contrast', 'r'), ('里段色相°', 'c_in', 'h'), ('外段色相°', 'c_out', 'h'), ('线带亮度', 'level', 'r'),
+        ('线弯曲°（往下为正）', 'bend0', 'd'), ('放射中心（相对外壳，/R）', '_rad', 'a')]
+GP_Q = [('个数', 'n', 'r'), ('离中心 r/R（中位）', 'r50', 'r'), ('最远 r/R（p90）', 'r90', 'r'), ('大小 FWHM px', 'fwhm', 'r')]
 
 
 def checks_from_card(card):
@@ -132,16 +150,24 @@ def checks_from_card(card):
     out = []
     for L in card['层']:
         a, b = L['时段']; ts = L.get('比时刻') or [round(a + (b - a) * x, 2) for x in (0.15, 0.4, 0.65, 0.9)]
-        qs = PT_Q if L['类'] == '点' else TX_Q if L['类'] in ('线纹理', '线') else []
+        qs = (GP_Q if L.get('色') else PT_Q) if L['类'] == '点' else TX_Q if L['类'] in ('线纹理', '线') else []
         want, skip = set(L.get('比') or [q[0] for q in qs]), set(L.get('不比') or [])
         for label, key, kind in qs:
             if label not in want or label in skip: continue
-            if L['类'] == '点':
+            if L['类'] == '点' and L.get('色'):
+                gname = L['色']
+                def fn(f, gname=gname, key=key):
+                    x = (f.get('by_color') or {}).get(gname) or {}
+                    if key == 'n': return x.get('n')
+                    if key == 'r50': return (x.get('r') or [None] * 3)[1]
+                    if key == 'r90': return (x.get('r') or [None] * 3)[2]
+                    return mid(x.get(key))
+            elif L['类'] == '点':
                 reg = REG.get(L.get('区', '全部'), '全部')
                 fn = (lambda f, reg=reg, key=key: hue_of(P_(f, reg).get(key))) if kind == 'h' else (lambda f, reg=reg, key=key: mid(P_(f, reg).get(key)))
             else:
                 ch = L['源']
-                fn = (lambda f, ch=ch, key=key: (T_(f, ch).get(key) or [None, None])[1]) if kind == 'h' else (lambda f, ch=ch, key=key: T_(f, ch).get(key))
+                fn = (lambda f, ch=ch, key=key: (T_(f, ch).get(key) or [None, None])[1]) if kind == 'h' else (lambda f, ch=ch: rad_rel(f, ch)) if key == '_rad' else (lambda f, ch=ch, key=key: T_(f, ch).get(key))
             out.append((L['名'], label, ts, fn, kind))
     return out
 
@@ -149,6 +175,8 @@ def checks_from_card(card):
 def gap(ref, val, kind):
     if ref is None or val is None: return None
     if kind == 'h': d = abs((val - ref + 180) % 360 - 180); return d / 30.0
+    if kind == 'd': return abs(val - ref) / 10.0       # 角度：差 10° 记 1
+    if kind == 'a': return abs(val - ref) / 0.05       # 位置偏移（/R）：差 0.05 R 记 1
     if ref <= 0 or val <= 0: return None
     return abs(math.log(val / ref))
 

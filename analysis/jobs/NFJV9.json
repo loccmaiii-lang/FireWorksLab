@@ -1,0 +1,35 @@
+{
+ "id": "NFJV9",
+ "type": "script",
+ "priority": 6,
+ "name": "金蕊柠 候选对比 9（新尺子：线弯曲 / 放射中心 / 芯区点范围；定 = 4.9.46 / 甲9 芯不坠 + 燃烧变轻停住 + 金丝 0.9 s 停、星头带淡紫继续往外，外层重力 0.45 / 乙9 芯小一点 / 丙9 金丝 1.15 s 停）",
+ "steps": [
+  {
+   "name": "候选对比",
+   "script": "候选对比.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--ref",
+    "analysis/原理/金蕊青柠星/打点_B/打点.json",
+    "--variant",
+    "定:",
+    "--variant",
+    "甲9:L3.grav=0;L3.massLoss=0.6;L3.v0=175;L3.vt=11;L4.grav=0;L4.massLoss=0.6;L4.v0=175;L4.vt=11;L3.sparkGrav=0;L3.sparkStop=0.9;L3.sparkLife=2.2;L3.sparkLifeEnd=0.75;L3.sparkLifeJit=20;L1.grav=0.45;L2.grav=0.45;L2.sparkGrav=0",
+    "--variant",
+    "乙9:L3.grav=0;L3.massLoss=0.5;L3.v0=160;L3.vt=10.5;L4.grav=0;L4.massLoss=0.5;L4.v0=160;L4.vt=10.5;L3.sparkGrav=0;L3.sparkStop=0.9;L3.sparkLife=2.2;L3.sparkLifeEnd=0.75;L3.sparkLifeJit=20;L1.grav=0.45;L2.grav=0.45;L2.sparkGrav=0",
+    "--variant",
+    "丙9:L3.grav=0;L3.massLoss=0.6;L3.v0=175;L3.vt=11;L4.grav=0;L4.massLoss=0.6;L4.v0=175;L4.vt=11;L3.sparkGrav=0;L3.sparkStop=1.15;L3.sparkLife=2.2;L3.sparkLifeEnd=0.75;L3.sparkLifeJit=20;L1.grav=0.45;L2.grav=0.45;L2.sparkGrav=0",
+    "--px",
+    "1100",
+    "--out",
+    "{out}"
+   ],
+   "must": true,
+   "ok": [
+    0
+   ],
+   "timeout": 2400
+  }
+ ]
+}

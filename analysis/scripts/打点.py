@@ -133,17 +133,19 @@ def detect_points(raw, sig, cx, cy, R, rmax=1.5, noise=None, lin=None):
         r1 = max(1.5, 2 * hw); r2 = min(W2, 2.0 * r1)
         sw = csrc[y - W2:y + W2 + 1, x - W2:x + W2 + 1]; ann = (d >= r1) & (d <= r2)
         halo = sw[ann].mean(0) if ann.any() else core
+        edge = d >= W2 - 1.0; own = np.clip(core - np.median(sw[edge], 0), 0, None) if edge.any() else core     # 点自己的颜色：中心减掉周围底光（亮芯 / 光晕上的点不被底光染色）
         satur = bool(raw[y, x].max() >= 250)
         # 线中间的亮点（不是星头）：顺着长轴前后 3 px 还和它差不多亮 → 线的一部分
         ca, sa = math.cos(ang), math.sin(ang); pk0 = vs[y, x]
         along = [vs[int(round(y + k * sa)), int(round(x + k * ca))] for k in (-3, 3) if 0 <= int(round(y + k * sa)) < H and 0 <= int(round(x + k * ca)) < W]
         on_line = bool(math.sqrt(l1 / l2) > 1.5 and along and min(along) > 0.55 * pk0)
-        core = core[::-1]; halo = halo[::-1]      # BGR → RGB
+        core = core[::-1]; halo = halo[::-1]; own = own[::-1]      # BGR → RGB
         cls, h, s = hue_class(halo if halo.max() > (2 if lin is not None else 8) else core)
         pts.append(dict(x=round(float(x + mx_), 2), y=round(float(y + my_), 2), r=round(float(np.hypot(x - cx, y - cy) / R), 3), flux=round(float(tot), 1), peak=round(float(vs[y, x]), 1),
                         sat=satur, fwhm=round(fw, 2), elong=round(math.sqrt(l1 / l2), 2), dev=round(math.degrees(dev), 1),
-                        core=[round(float(c), 1) for c in core], halo=[round(float(c), 1) for c in halo], halo_ratio=None if halo_ratio is None else round(halo_ratio, 3),
+                        core=[round(float(c), 1) for c in core], halo=[round(float(c), 1) for c in halo], own=[round(float(c), 1) for c in own], halo_ratio=None if halo_ratio is None else round(halo_ratio, 3),
                         cls=cls, hue=round(h, 1), satu=round(s, 3), glare=bool(ring[y, x] > 200), on_line=on_line))
+        pts[-1]['grp'] = color_group(pts[-1])
     # 合并太近的（< 2.5 px），留亮的
     pts.sort(key=lambda p: -p['flux']); out = []
     for p in pts:
@@ -169,6 +171,30 @@ def point_stats(pts, sel=None):
         c = np.mean(cs, 0); h = np.mean(hs, 0); st['core_rgb'] = [round(float(x), 1) for x in c]; st['halo_rgb'] = [round(float(x), 1) for x in h]
         st['core_cls'] = hue_class(c)[0]; st['halo_cls'] = hue_class(h)[0]; st['core_sat'] = round(hue_class(c)[2], 3); st['halo_sat'] = round(hue_class(h)[2], 3)
     return st
+
+
+# 点按颜色分组（用户 2026-10-08 14:25：芯边淡紫点在金丝外面一圈往外飞，以前点只按里 / 外分区，淡紫点和金丝上的亮点、投影进来的外层星混在一起，只比了大小）
+GROUPS = ('白', '淡紫', '金橙', '柠绿', '其它')
+def color_group(p):
+    """线性光 RGB：点自己的颜色（中心减周围底光；实拍还减了天空），核心过曝就看光晕。白 = 三个通道都接近；淡紫 / 粉 = 蓝、红都不比绿弱；金橙 = 红明显大于绿；柠绿 = 绿最大且远大于蓝"""
+    c = np.asarray(p['halo'] if p.get('sat') else p.get('own', p['core']), float); m = c.max()
+    if m < 2 and not p.get('sat'): c = np.asarray(p['core'], float); m = c.max()
+    if m < 2: return '其它'
+    r, g, b = c / m
+    if min(r, g, b) >= 0.82: return '白'
+    if b >= 0.9 * g and r >= 0.7 * g: return '淡紫'
+    if r >= 1.15 * g and g >= 0.9 * b: return '金橙'
+    if g >= 0.95 * r and g >= 1.2 * b: return '柠绿'
+    return '其它'
+
+
+def group_stats(pts):
+    """每个颜色组：个数、离中心距离 r / R（p10 / 中位 / p90）、大小、亮度"""
+    out = {}
+    for gname in GROUPS:
+        P = [p for p in pts if not p.get('on_line') and not p['glare'] and p.get('grp', color_group(p)) == gname]
+        if P: out[gname] = dict(n=len(P), r=q([p['r'] for p in P]), fwhm=q([p['fwhm'] for p in P]), flux=q([p['flux'] for p in P]))
+    return out
 
 
 # ---------------- 线 ----------------
@@ -282,10 +308,53 @@ def line_texture(img1, cx, cy, R, color=None, r1=1.45):
             grads.append(float(seg[-th:].mean() / max(1e-6, seg[:th].mean())))
         if Pc is not None: cin_.append(Pc[a, a_:a_ + th].mean(0)); cout_.append(Pc[a, b_ - th + 1:b_ + 1].mean(0))
     hc = lambda c: (hue_class(c)[0], round(hue_class(c)[1], 1), round(hue_class(c)[2], 3)) if c is not None else None
-    return dict(n=n, r_in=round(a_ / R, 3), r_out=round(b_ / R, 3), thick=round(L / R, 3), r_peak=round(jm / R, 3), width_px=round(width, 2),
+    bd = texture_bend(img1, cx, cy, R, max(0.06, a_ / R), b_ / R) if (b_ - a_) / R >= 0.1 else None
+    return dict(**({k: bd[k] for k in ('tilt', 'tilt_c', 'bend', 'bend0', 'rad_dx', 'rad_dy')} if bd else {}),
+                n=n, r_in=round(a_ / R, 3), r_out=round(b_ / R, 3), thick=round(L / R, 3), r_peak=round(jm / R, 3), width_px=round(width, 2),
                 coh_in=round(cin / R, 3), coh_out=round(cout / R, 3), bead=round(float(np.median(beads)), 3) if beads else None,
                 grad=round(float(np.median(grads)), 3) if grads else None, contrast=round(float(E[jm] / max(1e-6, M[jm])), 3), level=round(float(M[jm]), 1),
                 c_in=hc(np.mean(cin_, 0)) if cin_ else None, c_out=hc(np.mean(cout_, 0)) if cout_ else None)
+
+
+def texture_bend(v, cx, cy, R, r0, r1, sect=40):
+    """密线弯不弯（用户 2026-10-08 14:25：「白芯还是有重力」，以前密线只量位置 / 粗细 / 成串，没量弯曲）。
+    结构张量求每个像素的线方向；
+      rad_dx / rad_dy：所有线反向延长最集中的那一点（放射中心）相对给定中心的偏移（/R，图像向下为正）——中心估偏了会让直线看起来「歪」，先把它分出来；
+      tilt：左右两侧（±sect°）线方向和径向（相对放射中心）的夹角，往下为正（°）；
+      bend：外半圈 tilt − 里半圈 tilt（°）——重力让线越往外越往下弯，中心偏差不会随半径变大，这一项只认弯曲。
+    正下方 60–120°（升空尾迹）不算。"""
+    g = cv2.GaussianBlur(np.asarray(v, np.float32), (0, 0), 1.0)
+    gx = cv2.Sobel(g, cv2.CV_32F, 1, 0, ksize=3); gy = cv2.Sobel(g, cv2.CV_32F, 0, 1, ksize=3)
+    Jxx = cv2.GaussianBlur(gx * gx, (0, 0), 2.5); Jyy = cv2.GaussianBlur(gy * gy, (0, 0), 2.5); Jxy = cv2.GaussianBlur(gx * gy, (0, 0), 2.5)
+    ang = 0.5 * np.arctan2(2 * Jxy, Jxx - Jyy) + np.pi / 2
+    coh = np.sqrt((Jxx - Jyy) ** 2 + 4 * Jxy ** 2) / (Jxx + Jyy + 1e-6)
+    H, W = g.shape; yy, xx = np.mgrid[0:H, 0:W].astype(np.float32); rr = np.hypot(xx - cx, yy - cy) / R
+    th0 = np.degrees(np.arctan2(yy - cy, xx - cx)); ring = (rr > r0) & (rr < r1) & ~((th0 > 60) & (th0 < 120))
+    if ring.sum() < 200: return None
+    thr = 0.15 * np.percentile(g[ring], 99); m = ring & (coh > 0.25) & (g > thr)
+    if m.sum() < 200: return None
+    w = (coh * g)[m]; px, py = xx[m], yy[m]; ux, uy = np.cos(ang[m]), np.sin(ang[m]); nx, ny = -uy, ux
+    A = np.array([[np.sum(w * nx * nx), np.sum(w * nx * ny)], [np.sum(w * nx * ny), np.sum(w * ny * ny)]])
+    b = np.array([np.sum(w * nx * (nx * px + ny * py)), np.sum(w * ny * (nx * px + ny * py))])
+    try: c = np.linalg.solve(A, b)
+    except np.linalg.LinAlgError: c = np.array([cx, cy])
+    if np.hypot(c[0] - cx, c[1] - cy) > 0.25 * R: c = np.array([cx, cy])     # 解出来离谱（线太少 / 太乱）就不信
+    def tilts(ccx, ccy, sel_r=None):
+        th = np.arctan2(yy - ccy, xx - ccx); rr2 = np.hypot(xx - ccx, yy - ccy) / R; out = []
+        for side, c0 in ((1, 0.0), (-1, np.pi)):
+            sel = m & (np.abs(((th - c0) + np.pi) % (2 * np.pi) - np.pi) < np.radians(sect))
+            if sel_r is not None: sel &= (rr2 >= sel_r[0]) & (rr2 < sel_r[1])
+            if sel.sum() < 40: continue
+            d = ((ang[sel] - th[sel]) + np.pi / 2) % np.pi - np.pi / 2
+            out.append(side * float(np.degrees(np.average(d, weights=(coh * g)[sel]))))
+        return float(np.mean(out)) if out else None
+    mid = 0.5 * (r0 + r1); ti, to = tilts(c[0], c[1], (r0, mid)), tilts(c[0], c[1], (mid, r1))
+    ti0, to0 = tilts(cx, cy, (r0, mid)), tilts(cx, cy, (mid, r1))
+    t_ = tilts(cx, cy); tc = tilts(c[0], c[1])
+    r3 = lambda x: None if x is None else round(x, 2)
+    # bend0：按给定中心算的「外半圈 − 里半圈」——放射中心会把一部分下垂吸收掉，所以两样都给；中心偏 e 带来的误差约 e / r外 − e / r里（中心偏 0.05 R 时芯区约 −6°）
+    return dict(tilt=r3(t_), tilt_c=r3(tc), bend=r3(to - ti) if ti is not None and to is not None else None, bend0=r3(to0 - ti0) if ti0 is not None and to0 is not None else None,
+                rad_dx=round(float((c[0] - cx) / R), 3), rad_dy=round(float((c[1] - cy) / R), 3))
 
 
 def line_stats(lines, R, exclude=None):
@@ -340,7 +409,7 @@ def measure(raw, sig, cx, cy, R, warm=True, noise=4.0, lin=None):
     return pts, lines, radial_profile(v, cx, cy, R, raw), tex
 
 
-def summarize(pts, lines, prof, R, split, tex=None):
+def summarize(pts, lines, prof, R, split, tex=None, center=None):
     """按里（芯）/ 外（亲星）分区汇总；线按外端在不在分界里面分"""
     reg = {'全部': None}
     if split: reg = {'里（芯）': (lambda p, s=split: p['r'] < s), '外（亲星）': (lambda p, s=split: p['r'] >= s)}
@@ -352,7 +421,14 @@ def summarize(pts, lines, prof, R, split, tex=None):
             ls[k + '·里'] = line_stats([l for l in L if l['r1'] < split], R, exclude=down)
             ls[k + '·外'] = line_stats([l for l in L if l['r1'] >= split], R, exclude=down)
         ls[k] = line_stats(L, R, exclude=down)
-    return dict(R_px=round(R, 1), split=split, points=ps, lines=ls, texture=tex or {}, profile=prof)
+    ce = [p['r'] for p in pts if not p.get('on_line') and not p['glare'] and p['r'] < 0.8 and p.get('grp', color_group(p)) != '柠绿']
+    # 外壳中心相对测量中心的竖直偏移（/R，往下为正）：外层点 y 的 2–98% 中点。实拍的测量中心是按芯定的，渲染图是按整朵亮部定的——
+    # 「放射中心偏移」要减掉它才能两边比（芯的线是不是从外壳中心放射出来）
+    shell_dy = None
+    if center is not None:
+        ys = [p['y'] for p in pts if not p.get('on_line') and not p['glare'] and p['r'] > max(0.7, split or 0)]
+        if len(ys) >= 30: shell_dy = round(float(((np.percentile(ys, 2) + np.percentile(ys, 98)) / 2 - center[1]) / R), 3)
+    return dict(R_px=round(R, 1), split=split, points=ps, by_color=group_stats(pts), core_ext=dict(n=len(ce), r=q(ce)) if ce else dict(n=0), shell_dy=shell_dy, lines=ls, texture=tex or {}, profile=prof)
 
 
 def fix_radius(ts, Rs):
@@ -404,13 +480,13 @@ def track(frames, max_d=4.0):
             if len(P):
                 d = np.hypot(P[:, 0] - px, P[:, 1] - py); d[list(used)] = 1e9; j = int(np.argmin(d))
                 if d[j] <= max_d:
-                    used.add(j); p = pts[j]; tr['seq'].append((t, p['flux'], p['hue'], p['satu'], p['cls'], p['fwhm'], p['r'])); tr['last'] = (t, p['x'], p['y'], R); tr['c'] = (cx, cy); nxt.append(tr); continue
+                    used.add(j); p = pts[j]; tr['seq'].append((t, p['flux'], p['hue'], p['satu'], p['cls'], p['fwhm'], p['r'], p['x'] - cx, p['y'] - cy, R, p.get('grp'))); tr['last'] = (t, p['x'], p['y'], R); tr['c'] = (cx, cy); nxt.append(tr); continue
             tr['miss'] += 1
             if tr['miss'] <= 1: nxt.append(tr)
             else: tracks.append(tr)
         for j, p in enumerate(pts):
             if j in used: continue
-            nxt.append(dict(id=len(tracks) + len(nxt) + 1, seq=[(t, p['flux'], p['hue'], p['satu'], p['cls'], p['fwhm'], p['r'])], last=(t, p['x'], p['y'], R), c=(cx, cy), miss=0))
+            nxt.append(dict(id=len(tracks) + len(nxt) + 1, seq=[(t, p['flux'], p['hue'], p['satu'], p['cls'], p['fwhm'], p['r'], p['x'] - cx, p['y'] - cy, R, p.get('grp'))], last=(t, p['x'], p['y'], R), c=(cx, cy), miss=0))
         act = nxt
     tracks += act
     for i, tr in enumerate(tracks): tr['id'] = i + 1
@@ -433,6 +509,20 @@ def track_stats(tracks, min_len=6):
         pw = [abs(np.sum(d * np.exp(-2j * np.pi * f_ * tt))) for f_ in fs]; freq.append(float(fs[int(np.argmax(pw))]))
 
     return dict(n=len(T), flicker_amp=q([100 * (math.exp(a) - 1) for a in amp]), flicker_frac=round(len(freq) / len(T), 3), flicker_hz=q(freq) if freq else None, off_frac=q(off), len=q([len(tr['seq']) for tr in T]))
+
+
+def track_kin(tracks, min_len=6):
+    """跟踪到的每颗点怎么动（用户 14:25：「不是说好了打点跟踪吗」——以前跟踪只量了闪烁）：
+      vr：相对外层半径往外跑多快（r / R 的斜率，/s；> 0 = 比外层还往外，< 0 = 落后）；
+      ay：竖直加速度（/R/s²，往下为正；重力让星往下坠）——按颜色组分开。"""
+    by = {}
+    for tr in tracks:
+        if len(tr['seq']) < min_len or len(tr['seq'][0]) < 11: continue
+        s = tr['seq']; t = np.array([x[0] for x in s]); r = np.array([x[6] for x in s]); y = np.array([x[8] for x in s]); Rm = float(np.median([x[9] for x in s]))
+        gs = [x[10] for x in s if x[10]]; gname = max(set(gs), key=gs.count) if gs else '其它'
+        vr = float(np.polyfit(t, r, 1)[0]); ay = float(2 * np.polyfit(t - t.mean(), y, 2)[0] / max(1e-6, Rm))
+        by.setdefault(gname, []).append((vr, ay))
+    return {g: dict(n=len(v), vr=q([a for a, _ in v]), ay=q([b for _, b in v])) for g, v in by.items()}
 
 
 # ---------------- 叠图 ----------------
@@ -562,7 +652,7 @@ def main_measure(a):
     sps = smooth_split([k[0] for k in keep], [k[7] for k in keep]) if a.split == 'auto' else [k[7] for k in keep]
     for k, sp in zip(keep, sps):
         tt, cx, cy, R, pts, lines, prof, _, raw, tex = k
-        rep = summarize(pts, lines, prof, R, sp, tex); rep['t'] = round(tt, 4); res['frames'].append(rep)
+        rep = summarize(pts, lines, prof, R, sp, tex, center=(cx, cy)); rep['t'] = round(tt, 4); res['frames'].append(rep)
         if raw is not None: overlay(raw, pts, lines, cx, cy, R, os.path.join(a.out, f'叠图_{tt:.2f}.jpg'), half=1.45, title=f'+{tt:.2f}s  点 {len(pts)}  R {R:.0f}px  分界 {sp}')
         o = rep['points'].get('外（亲星）') or rep['points'].get('全部'); i_ = rep['points'].get('里（芯）') or {}; tw = tex.get('暖色线', {})
         print(f"+{tt:.2f}s R {R:.0f}px 分界 {sp} 外点 {o.get('n')} 里点 {i_.get('n', '-')} 暖色线带 {tw.get('r_in')}–{tw.get('r_out')} 宽 {tw.get('width_px')} 条 {tw.get('n')}", flush=True)
@@ -578,12 +668,12 @@ def main_measure(a):
         seq = [(tt, cx, cy, R, detect_points(raw, sig, cx, cy, R, noise=noise, lin=lin)) for tt, cx, cy, R, raw, sig, lin in raw_seq if R]
         seq = [(tt, cx, cy, R, [p for p in P if not p.get('on_line')]) for tt, cx, cy, R, P in seq]
         trs = track(seq); sp = sp_at((w[0] + w[1]) / 2)
-        st = {'全部': track_stats(trs)}
+        st = {'全部': track_stats(trs)}; kin = track_kin(trs)
         if sp:
             st['里'] = track_stats([tr for tr in trs if np.median([x[6] for x in tr['seq']]) < sp]); st['外'] = track_stats([tr for tr in trs if np.median([x[6] for x in tr['seq']]) >= sp])
         # 出现 / 消失：窗口里中途出现、中途消失的轨迹各占多少（星的点亮、熄灭分布）
         t_first = [tr['seq'][0][0] for tr in trs if len(tr['seq']) >= 3]; t_last = [tr['seq'][-1][0] for tr in trs if len(tr['seq']) >= 3]
-        res['tracks'][f'{w[0]}:{w[1]}'] = dict(frames=len(seq), split=sp, stats=st, born=q([t for t in t_first if t > seq[0][0] + 0.01]), died=q([t for t in t_last if t < seq[-1][0] - 0.01]))
+        res['tracks'][f'{w[0]}:{w[1]}'] = dict(frames=len(seq), split=sp, stats=st, kin=kin, born=q([t for t in t_first if t > seq[0][0] + 0.01]), died=q([t for t in t_last if t < seq[-1][0] - 0.01]))
         print(f'跟踪 {w}: {len(seq)} 帧、{len(trs)} 条轨迹 → {json.dumps(st, ensure_ascii=False)}', flush=True)
     json.dump(res, open(os.path.join(a.out, '打点.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print('→', os.path.join(a.out, '打点.json'))
@@ -688,6 +778,32 @@ def selftest(a):
     a1 = track_stats(flick[:40]); a0 = track_stats(flick[40:])
     good = len(flick) >= 78 and a1['flicker_amp'][1] > 15 and a0['flicker_amp'][1] < 3 and 2 <= a1['flicker_hz'][1] <= 4.5
     ok &= good; rows.append(f"{'✅' if good else '❌'} 跟踪 + 闪烁：轨迹 {len(flick)}/80；闪的那组幅度 {a1['flicker_amp']}% 频率 {a1['flicker_hz']} Hz（答案 3 Hz），不闪的那组 {a0['flicker_amp']}%"); print(rows[-1])
+    # 5.（2026-10-08 用户 14:25 后补）密线弯曲：直线 0、往下垂的越垂越大；中心估偏只算到「放射中心偏移」里，不算弯
+    bends = []
+    for sg_ in (0.0, 0.1, 0.25):
+        img, cx, cy, R, _ = synth(seed=12, n=0, lines=400, line_len=0.45, sag=sg_); bends.append(texture_bend(img.max(2).astype(np.float32), cx, cy, R, 0.55, 1.0))
+    good = abs(bends[0]['bend']) < 1.5 and bends[1]['bend'] > 2.5 and bends[2]['bend'] > bends[1]['bend'] + 1.5 and bends[2]['rad_dy'] < -0.08
+    ok &= good; rows.append(f"{'✅' if good else '❌'} 密线弯曲（下垂 0 / 0.1 / 0.25）：弯 {[b['bend'] for b in bends]}°，放射中心偏 {[b['rad_dy'] for b in bends]} R"); print(rows[-1])
+    img, cx, cy, R, _ = synth(seed=12, n=0, lines=400, line_len=0.45); img = np.roll(img, 12, axis=0); b = texture_bend(img.max(2).astype(np.float32), cx, cy, R, 0.55, 1.0)
+    chk('中心估偏 12 px：放射中心偏移（/R）', b['rad_dy'], round(12 / R, 3), 0.015); chk('中心估偏 12 px：弯曲（°）', b['bend'], 0.0, 1.5)
+    # 6. 点按颜色分组：淡紫点在外圈（0.5–0.6 R 球壳）、金点在里（0.25–0.42 R），分组后各自的 r 分得开
+    i1, cx, cy, R, _ = synth(seed=13, n=160, shell=(0.5, 0.6), color=(235, 190, 255)); i2, _, _, _, _ = synth(seed=14, n=160, shell=(0.25, 0.42), color=(255, 150, 40))
+    img = np.clip(i1.astype(np.int32) + i2.astype(np.int32), 0, 255).astype(np.uint8)
+    gs = group_stats(detect_points(img, img.astype(np.float32), cx, cy, R, noise=2.0))
+    lv, gd = gs.get('淡紫', {}), gs.get('金橙', {})
+    good = lv.get('n', 0) > 100 and gd.get('n', 0) > 100 and lv['r'][2] > 0.54 and gd['r'][2] < 0.44 and lv['r'][2] > gd['r'][2] + 0.1
+    ok &= good; rows.append(f"{'✅' if good else '❌'} 点按颜色分组：淡紫 {lv.get('n')} 个 r {lv.get('r')}（答案 p90 ≈ 0.58），金橙 {gd.get('n')} 个 r {gd.get('r')}（≈ 0.41）"); print(rows[-1])
+    # 7. 跟踪运动学：一组点比外层往外跑（vr = +0.05 /s），一组往下坠（ay = 0.2 R/s²）
+    rng = np.random.default_rng(15); P0 = [(rng.uniform(0, 2 * math.pi), rng.uniform(0.3, 0.8)) for _ in range(60)]; frames = []
+    for i in range(24):
+        t = i / 15; pts = []
+        for j, (th, r0) in enumerate(P0):
+            out_ = j < 30; r = r0 + (0.05 * t if out_ else 0.0); x = 350 + 250 * r * math.cos(th); y = 350 + 250 * r * math.sin(th) + (0 if out_ else 0.5 * 0.2 * 250 * t * t)
+            pts.append(dict(x=x, y=y, flux=900, hue=80, satu=0.6, cls='柠绿', fwhm=3, r=math.hypot(x - 350, y - 350) / 250, grp='淡紫' if out_ else '柠绿'))
+        frames.append((t, 350, 350, 250, pts))
+    kn = track_kin(track(frames))
+    chk('跟踪：往外跑的那组 vr（/s）', (kn.get('淡紫') or {}).get('vr', [None] * 3)[1], 0.05, 0.01); chk('跟踪：下坠的那组 ay（R/s²）', (kn.get('柠绿') or {}).get('ay', [None] * 3)[1], 0.2, 0.03)
+    chk('跟踪：往外跑的那组不坠 ay', (kn.get('淡紫') or {}).get('ay', [None] * 3)[1], 0.0, 0.03)
     img, cx, cy, R, _ = synth(seed=3, n=220, flux_sigma=0.5, lines=40, shell=(0.3, 1.0))
     pts = detect_points(img, img.astype(np.float32), cx, cy, R, noise=2.0); L = {'暖色线': detect_lines(np.clip(img[..., 2].astype(np.float32) - img[..., 0], 0, None), cx, cy, R, noise=2.0, color=img[..., ::-1].astype(np.float32))}
     overlay(img, pts, L, cx, cy, R, os.path.join(a.out, '自检叠图.jpg'), title='自检：合成图')
