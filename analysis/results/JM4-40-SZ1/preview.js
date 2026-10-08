@@ -1,0 +1,1 @@
+FW_ASSET_LOADED("JM4-40-SZ1", {"manifest": {"title": "JinMangJu40", "duration": 5.13, "view": 224.3, "variants": {"JinMangJu40": "JinMangJu40"}, "emitters": [], "note": "对话框23 · 4.9.51 尺寸标定（用户 10-09 00:27「烘培器会自动读」「只改大小，其他都不变」）：参数不动重导，cascade.json 按 spec/尺寸标定.json v1 的 P_MG 坝顶·金芒菊 150 m 缩放（长度 × 目标 ÷ 原样，时间不变，cascade.json 里 size_spec 写了倍数）。同一目录覆盖；回放检查照常。"}, "images": {}});
