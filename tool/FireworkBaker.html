@@ -2087,6 +2087,8 @@ header.top .upd{height:32px;min-height:32px;font-size:12px;padding:4px 12px;back
 <script src="data/standard.js"></script>
 <!-- 4.9.16 默认缩略图（本机渲染，analysis/scripts/渲染缩略图_截图法.py --ingest 生成；缺了用示意图） -->
 <script src="data/thumbs.js"></script>
+<!-- 4.9.51 尺寸标定表（spec/尺寸标定.json 生成；缺了照原大导出） -->
+<script src="data/size_spec.js"></script>
 <script>
 'use strict';
 const PMODULES = [{"cn":"发射器","en":"Emitter","stage":"发射","open":true,"what":"号数、序列时长、随机种子"},{"cn":"生成","en":"Spawn","stage":"发射","open":true,"what":"星数（一次爆发）、点火延迟、只让一部分星发光"},{"cn":"寿命","en":"Lifetime","stage":"发射","open":true,"what":"星的寿命、第二段"},{"cn":"形状","en":"Initial Location","stage":"发射","open":true,"what":"开花图案、起始半径、倾斜、环上比例、文字、水面倒影"},{"cn":"初速","en":"Initial Velocity","stage":"发射","open":true,"what":"初速、方向随机、玉体的速度和自旋"},{"cn":"阻力重力","en":"Drag & Gravity","stage":"运动","open":true,"what":"终端速度（阻力）、重力、燃烧减质量、风、湍流"},{"cn":"星头","en":"Head","stage":"外观","open":true,"what":"星头大小、亮度、渐隐、开花闪光、熄灭前闪亮、闪烁、前段压暗、泪滴"},{"cn":"火花","en":"Sparkler (Child Emitter)","stage":"外观","open":true,"what":"星喷出的火花：生成率、寿命、继承速度、阻力、重力、大小、温度、亮度"},{"cn":"尾迹外形","en":"Trail Shape","stage":"外观","open":false,"what":"火花连成的尾迹：粗细、收尖、亮肩、线间底光、扩散"},{"cn":"烟花特性","en":"Firework FX","stage":"外观","open":false,"what":"点灭、辉星、爆裂、松叶分叉、飘落、余烬（默认关，开了才展开）"},{"cn":"子花","en":"Sub Burst","stage":"外观","open":true,"what":"千轮 / 分裂：子弹飞多久、子花多少星、多大、子星寿命和火花"},{"cn":"蜂","en":"Bee Motion","stage":"外观","open":true,"what":"蜂：旋转、乱飞、推进（只在蜂）"},{"cn":"入点出点","en":"Cut In / Out","stage":"渲染输出","open":false,"what":"序列从第几秒开始、到第几秒结束、入点之前怎么办"},{"cn":"帧与贴图","en":"Frames & Texture","stage":"渲染输出","open":false,"what":"贴图尺寸、格子、通道、帧数和帧率、取景、分段"},{"cn":"曝光光晕","en":"Exposure & Halo","stage":"渲染输出","open":false,"what":"固定曝光、光晕、预览光晕"},{"cn":"画质","en":"Quality","stage":"渲染输出","open":false,"what":"超采样、快门采样、像素覆盖（烘焙用，不改样子的参数）"}];
@@ -2158,7 +2160,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.9.50';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23
+const VERSION = '4.9.51';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -9155,7 +9157,7 @@ async function exportSingleScheme(name, b) {
   busy(true, '打包 ZIP…', 1);
   let zipName = name, out = files;
   if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: r.ln, mn: r.mn, b: r.ub || b, mb: r.mb || b, layer: '', pcTex: r.pcTex, frame: r.frame }]); zipName = nm.base; }
-  { const k = exportScaleOf(state.P), kp = exportKeepOf(state.P); out = scaleCascadeFiles(out, k, kp); zipName += exportScaleSfx(k, kp); }     // 4.9.31 导出缩放
+  { const sp = exportScalePlan(state.P); out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放
   download(await makeZip(out), `${zipName}.zip`);
   wbAutoExport(zipName);
   flash(`已导出 ${name}（PC ${kindCN(so.pc)} · 手机 ${kindCN(so.mobile)}）${packTidyNote()}`, false, packTidyNote() ? 8000 : 0);
@@ -9189,7 +9191,7 @@ async function exportMaster() {
     busy(true, '打包 ZIP…', 1);
     let zipName = name, out = files;
     if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); zipName = nm.base; }
-    { const k = exportScaleOf(state.P), kp = exportKeepOf(state.P); out = scaleCascadeFiles(out, k, kp); zipName += exportScaleSfx(k, kp); }     // 4.9.31 导出缩放
+    { const sp = exportScalePlan(state.P); out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放
     download(await makeZip(out), `${zipName}.zip`);
     wbAutoExport(zipName);     // 4.2.10：存进这个效果的「版本」（导出时），不再进工具页的全局版本列表
     flash('已导出 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);
@@ -9854,8 +9856,8 @@ const exportScaleOf = P => { const k = +(P && P.exportScale); return k > 0 && k 
 // 只缩粗细——序列面片只缩宽、软圆点 / 线状火花缩大小、随机散开缩；位置、弹道、加速度、时间不动，升空高度和尾长照旧
 const exportKeepOf = P => !!P && exportScaleOf(P) < 1 && P.exportScaleRise === 'keep' && (isEmit(P) || isTrail(P));
 const exportScaleSfx = (k, keep) => k === 1 ? '' : (keep ? '_W' : '_S') + Math.round(k * 100);
-function fwlScaleJSON(j, k, keep) {
-  if (!j || k === 1) return j;
+function fwlScaleJSON(j, k, keep, spec) {
+  if (!j || (k === 1 && !spec)) return j;
   const R = x => +(x * k).toFixed(2), sv = (v, mask) => Array.isArray(v) ? v.map((x, i) => mask && !mask[i] ? x : R(x)) : R(v);
   const sd = (d, mask) => !d || typeof d !== 'object' ? d : 'const' in d ? { ...d, const: sv(d.const, mask) } : 'uniform' in d ? { ...d, uniform: d.uniform.map(v => sv(v, mask)) } : 'curve' in d ? { ...d, curve: d.curve.map(([t, v]) => [t, sv(v, mask)]) } : d;
   const XY = [1, 1, 0], X = [1, 0, 0];
@@ -9879,6 +9881,12 @@ function fwlScaleJSON(j, k, keep) {
     }
   }); }
   if (!keep && j.system && j.system.preview_distance_cm) j.system.preview_distance_cm = Math.round(j.system.preview_distance_cm * k);
+  if (spec) {     // 4.9.51 按尺寸标定：名字不加后缀（这就是这个效果的正式大小），写清用的哪一版、哪个规格、量出来多大
+    j.export_scale = k; j.size_spec = { id: spec.id, name: spec.name, version: spec.version, what: spec.what, target_m: spec.target, measured_m: spec.measured, k };
+    (j.notes = j.notes || []).push(`按尺寸标定 v${spec.version}「${spec.name}」：${spec.what === 'height' ? '开花高度' : '花径'} ${spec.target} m（原样 ${spec.measured} m）→ 所有长度 × ${k}，时间 / 帧号 / 贴图不变（用户 10-09 00:27「只改大小，其他都不变」；spec/尺寸标定.json）`);
+    if (j.source && j.emitters) j.source.plan_sig = fwlPlanSig(j.emitters);
+    return j;
+  }
   j.name = (j.name || '') + exportScaleSfx(k, keep); j.export_scale = k; if (keep) j.export_scale_mode = 'keep_height';
   (j.notes = j.notes || []).push(keep
     ? `导出缩放 × ${k} · 升空高度不变（用户 10-07 16:15 / 16:2x）：只缩粗细——序列面片（循环层 / 远段 / 消散）Initial Size 只 X × ${k}、软圆点 / 线状火花 Initial Size × ${k}、随机散开的初速和球面半径 × ${k}；出生位置、弹道、加速度、时间、帧号不变 → 升空时间、高度、尾长和原样一样。粒子系统名加 ${exportScaleSfx(k, keep)}，贴图名不变、几档共用`
@@ -9887,9 +9895,69 @@ function fwlScaleJSON(j, k, keep) {
   return j;
 }
 // 素材包文件里所有 cascade*.json 按缩放改；返回新的文件表
-function scaleCascadeFiles(files, k, keep) {
-  if (k === 1) return files; const dec = new TextDecoder();
-  return files.map(([f, d]) => /(^|\/)cascade(_mobile|_low)?\.json$/.test(f) ? [f, utf8(JSON.stringify(fwlScaleJSON(JSON.parse(dec.decode(d)), k, keep), null, 1))] : [f, d]);
+function scaleCascadeFiles(files, k, keep, spec) {
+  if (k === 1 && !spec) return files; const dec = new TextDecoder();
+  return files.map(([f, d]) => /(^|\/)cascade(_mobile|_low)?\.json$/.test(f) ? [f, utf8(JSON.stringify(fwlScaleJSON(JSON.parse(dec.decode(d)), k, keep, spec), null, 1))] : [f, d]);
+}
+// ---- 4.9.51 尺寸标定（用户 10-09 00:11「编排对话框……重新标定了所以烟花的大小尺寸，我希望每次你导出可以遵循最新的大小尺寸去导出到cascade」，
+//   00:27「烘培器会自动读不用我每次选择吧？」「只改大小，其他都不变」）：spec/尺寸标定.json（编排对话框维护）→ tool/data/size_spec.js（window.SIZE_SPEC）。
+//   导出时按 map 找到这个效果的规格：倍数 = 目标花径 ÷ 这个效果实际花径（升空尾缀用开花高度），走上面同一套 fwlScaleJSON（所有长度 × 倍数，时间不变）。
+//   不在 map 里 / 表缺了 = 照旧（手动的导出缩放还管用）。交付清单可以换成同一个效果的另一个规格，或这次不按标定（存在这台电脑，本机任务一律按表的第一个）
+const sizeSpecTable = () => { const T = typeof window !== 'undefined' ? window.SIZE_SPEC : null; return T && T.specs && T.map ? T : null; };
+function sizeSpecKeyNow() {
+  const ef = typeof lib !== 'undefined' && lib.effect ? lib.effect.key : '', rv = typeof lib !== 'undefined' && lib.review ? lib.review.id : '';
+  let wk = ''; try { wk = typeof wbKey === 'function' ? wbKey() : ''; } catch (e) { }
+  let key = ef || (/^ef:/.test(wk) ? wk.slice(3) : '');
+  if (!key && rv && typeof effectOfEntry === 'function') { try { const x = effectOfEntry(lib.review); key = x ? x.key : ''; } catch (e) { } }     // 本机导出任务只开条目（openReview 不带效果）
+  return { key, entry: rv };
+}
+function sizeSpecIds(key, entry) { const T = sizeSpecTable(); if (!T) return []; for (const k of [key, entry].filter(Boolean)) { const v = T.map[k]; if (v) return (Array.isArray(v) ? v : [v]).filter(id => T.specs[id]); } return []; }
+const sizeSpecPicks = () => { try { return (typeof store !== 'undefined' && store.get('sizeSpecPick', {})) || {}; } catch (e) { return {}; } };
+function sizeSpecFor(key, entry, useStore = true) {
+  const T = sizeSpecTable(), ids = sizeSpecIds(key, entry); if (!T || !ids.length) return null;
+  const pick = useStore ? sizeSpecPicks()[key || entry] : ''; if (pick === 'none') return { off: true, ids, version: T.version };
+  const id = ids.includes(pick) ? pick : ids[0]; return { id, ids, version: T.version, ...T.specs[id] };
+}
+const _sizeOf = new Map();
+// 这个效果现在多大：空中花型 = 花径（metricsOf：开花最大时的水平直径），升空尾缀 = 开花高度（弹道 H）
+function effectSizeOf(P) {
+  if (!P) return null;
+  if (isEmit(P) || isTrail(P)) { const b = typeof rtBallistic === 'function' ? rtBallistic(P) : null; return b && b.H > 0 ? { what: 'height', m: b.H } : null; }
+  if (familyOf(P.type) !== 'aerial') return null;
+  let key = ''; try { const { exportScale, exportScaleRise, ...rest } = P; key = JSON.stringify(rest); } catch (e) { }     // 引擎回放每帧都问：按参数记一份（measure 每次返回拷贝，太贵）
+  if (key && _sizeOf.has(key)) return _sizeOf.get(key);
+  const mt = metricsOf(P, measure(P)), r = mt && mt.diameter > 0 ? { what: 'diameter', m: mt.diameter } : null;
+  if (key) { _sizeOf.set(key, r); while (_sizeOf.size > 16) _sizeOf.delete(_sizeOf.keys().next().value); } return r;
+}
+// 多层：取最大的那层（花径 × 层缩放）
+function comboSizeOf(layers) {
+  let best = null;
+  for (const L of layers || []) { const e = typeof layerEntryOf === 'function' ? layerEntryOf(L) : null, z = e && effectSizeOf(e.P); if (!z || z.what !== 'diameter') continue; const m = z.m * (+L.scale > 0 ? +L.scale : 1); if (!best || m > best.m) best = { what: 'diameter', m }; }
+  return best;
+}
+// 规格 + 现在的大小 → 倍数（null = 不按标定）。扇形口径没定：返回 { skip } 说明原因
+function sizeSpecScale(sp, sz) {
+  if (!sp || sp.off || !sz) return null;
+  if (sp.kind === 'fan') return { skip: '扇形的标定口径还没定（表里的 diameter 是两倍飞行长度），照原大导出', id: sp.id, name: sp.name, version: sp.version };
+  const target = sz.what === 'height' ? +sp.burst_m : +sp.diameter_m; if (!(target > 0) || !(sz.m > 0)) return null;
+  const k = +(target / sz.m).toFixed(4);
+  return { id: sp.id, name: sp.name, version: sp.version, what: sz.what, target, measured: +sz.m.toFixed(1), k, warn: k > 1.3 ? `放大 × ${k.toFixed(2)}：贴图会被拉糊，建议「输出」里加大单格重烘` : '' };
+}
+function sizeSpecNow(P, keyObj) { const { key, entry } = keyObj || sizeSpecKeyNow(); const sp = sizeSpecFor(key, entry); const r = sp && sizeSpecScale(sp, effectSizeOf(P)); return r && !r.skip ? r : null; }
+function sizeSpecCombo(layers, keyObj) { const { key, entry } = keyObj || sizeSpecKeyNow(); const sp = sizeSpecFor(key, entry); const r = sp && sizeSpecScale(sp, comboSizeOf(layers)); return r && !r.skip ? r : null; }
+// 交付清单 / 输出栏一行：现在按哪个规格、多大、倍数
+function sizeSpecLine(isCombo) {
+  const T = sizeSpecTable(); if (!T) return '';
+  const { key, entry } = sizeSpecKeyNow(), sp = sizeSpecFor(key, entry); if (!sp) return `尺寸标定 v${T.version}：这个效果没配规格（照原大导出；要配在 spec/尺寸标定.json 的 map 里加一行）`;
+  if (sp.off) return `尺寸标定 v${T.version}：这次不按标定（照原大 / 手动导出缩放）`;
+  const r = sizeSpecScale(sp, isCombo ? comboSizeOf(state.layers) : effectSizeOf(state.P)); if (!r) return `尺寸标定 v${T.version}「${sp.name}」：量不出这个效果的大小，照原大导出`;
+  if (r.skip) return `尺寸标定 v${T.version}「${sp.name}」：${r.skip}`;
+  return `尺寸标定 v${T.version}「${r.name}」：${r.what === 'height' ? '开花高度' : '花径'} ${r.target} m（原样 ${r.measured} m）→ 导出 × ${r.k}${r.warn ? ' · ⚠ ' + r.warn : ''}`;
+}
+// 导出时用哪个倍数：配了尺寸标定 = 按标定（不加后缀、手动的导出缩放不再管用）；没配 = 手动导出缩放（4.9.31）
+function exportScalePlan(P, keyObj) {
+  const sk = sizeSpecNow(P, keyObj); if (sk) return { k: sk.k, keep: false, spec: sk, sfx: '' };
+  const k = exportScaleOf(P), kp = exportKeepOf(P); return { k, keep: kp, spec: null, sfx: exportScaleSfx(k, kp) };
 }
 // =====================================================================
 //  多层效果导出成「一个」素材包（协作/标准.md 第 1 节第 5 项，4.0-c）
@@ -10166,6 +10234,8 @@ async function layerUnitBake(e, onProg, L) {
   if (e.unitBake) { disposeBake(e.unitBake.b); e.unitBake = null; }
   const b = await bakeUnitSet(unitP(e.P), unitVarOf(e.unitSrc || e.P), onProg); e.unitBake = { sig, b }; return b;
 }
+// 4.9.51 多层按尺寸标定（花径 = 最大那层 × 层缩放；和左栏导出、本机任务同一条路）
+function comboSpecScale(files, layers) { const sk = typeof sizeSpecCombo === 'function' ? sizeSpecCombo(layers) : null; return sk ? scaleCascadeFiles(files, sk.k, false, sk) : files; }
 async function comboPackFiles(name, layers, onProg) {
   const files = [], { layers: lb, own } = await comboLayerBakes(layers, p => onProg && onProg(p * 0.4));
   const ownMobile = [];
@@ -10196,9 +10266,9 @@ async function comboPackFiles(name, layers, onProg) {
     // 命名规范（61_naming.js）：多层 = 礼花英文名 + 每层英文名
     if (lb.every(({ b }) => namingApplies(b))) {
       const ef = typeof lib !== 'undefined' ? lib.effect : null, key = typeof wbKey === 'function' ? wbKey() : name, nm = packNamesFor(key, ef, lb.length, name);
-      return applyPackNaming(files, nm.base, nmE.map((x, i) => ({ ...x, mb: x.mb || x.b, layer: nm.layers[i] })));
+      return comboSpecScale(applyPackNaming(files, nm.base, nmE.map((x, i) => ({ ...x, mb: x.mb || x.b, layer: nm.layers[i] }))), layers);
     }
-    return files;
+    return comboSpecScale(files, layers);
   } finally { own.forEach(disposeBake); ownMobile.forEach(disposeBake); }
 }
 
@@ -11849,6 +11919,8 @@ const INERT = [
   [['spacing'], P => familyOf(P.type) === 'ground' && P.type !== 'shikake' && Math.round(+P.nozzles || 1) <= 1, '「喷口数」是 1 时不起作用'],
   [['fade', 'lastFlare', 'flicker', 'headSize', 'headTear', 'headDim', 'headDimUntil', 'strobeHz', 'strobeDuty', 'strobeStart', 'carrierHead'], P => !(+P.headBright > 0), '「星头亮度」是 0（星头不发光，只有尾迹 / 火花）时不起作用'],
   // 4.9.4：地面的喷口 / 灯芯亮点一直亮着、没有寿命；只有扇形 / 连发的彗星按「彗星燃烧」算寿命
+  // 4.9.51：配了尺寸标定的效果导出按标定倍数，手动的导出缩放不管用（只看表，不量花径，面板刷新不卡）
+  [['exportScale', 'exportScaleRise'], P => { if (typeof sizeSpecFor !== 'function') return false; const { key, entry } = sizeSpecKeyNow(), sp = sizeSpecFor(key, entry); return !!(sp && !sp.off && sp.kind !== 'fan'); }, '这个效果按尺寸标定导出（倍数写在交付清单顶上，可以在那里选「这次不按标定」）；手动的导出缩放不管用'],
   [['starSizeCurve', 'starBrightCurve'], P => familyOf(P.type) === 'ground' && !(typeof hasComets === 'function' && hasComets(P)), '地面的喷口 / 灯芯亮点一直亮着，没有寿命；只有扇形、连发的彗星按「彗星燃烧」算寿命'],
 ];
 // 4.9.0（5.0 第 3 步，参数宪章 + 参数表「删」「改成常量」，用户 19:40「全按推荐」）：代码先不删——你的配方、待验收效果里用着的照旧算，画面不变。面板上：
@@ -13080,7 +13152,8 @@ function entryVer(e) {
   const fams = new Set(), outs = e.kind === 'combo' && e.combo && e.combo.layers ? e.combo.layers.map(L => L.out || {}) : [];
   (e.kind === 'combo' ? e.layerIds || [] : [e.id]).forEach((id, i) => { try { if (typeof REPLICA_BY_ID !== 'undefined' && REPLICA_BY_ID[id]) { const P=replicaPM(id).P, f=outFamily(P); fams.add(f + (+P.coreProfile===1 ? '4.3.8-core1' : OUTPUT_VER[f]) + (P.zoom === 'on' && OUTPUT_VER.zoom ? '-zoom' + OUTPUT_VER.zoom : ''));     /* 4.9.33 Zoom 取景单独一档 */
     if (((outs[i] || {}).pc || P.outPC) === 'dots') fams.add('dots' + OUTPUT_VER.dots); } } catch (err) { } });   // 4.4.4：GPU 光点层单独一档（点灭改方波，旧光点导出过期）
-  const v = e.ver + '·' + ([...fams].sort().join('+') || 'x');
+  let ss = ''; try { const ef = typeof sizeSpecFor === 'function' ? effectOfEntry(e) : null, sp = sizeSpecFor(ef && ef.key, e.id, false); if (sp && sp.kind !== 'fan') ss = `·size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (err) { }   // 4.9.51 尺寸标定改了 → 旧导出过期
+  const v = e.ver + '·' + ([...fams].sort().join('+') || 'x') + ss;
   _entryVer.set(key, v); return v;
 }
 // 「待我验收」按证据把关：最新导出 = 当前版本指纹、回放检查过、标准检查（同一指纹）过；状态清单里写了「例外」（引用用户的决定）的那一项不算缺
@@ -14203,7 +14276,8 @@ function wbSync() {
 // 4.9.1（5.0 第 3 步，交互宪章 5「身份条」）：顶栏一眼看到——打开的是什么、从哪来、哪个版本、改了没保存、素材包和现在一不一样。
 // 以前名字只在左栏「版本记录」里，左栏收起就不知道开的是谁。贴图新旧在旁边的 #abState（烘焙中 / 旧 / 失败）。
 // 4.9.33：OUTPUT_VER.zoom 只算进用 Zoom 取景的效果（别的效果的签名和 4.9.32 一样，不会因为它变成「素材包要重导」）
-const OUT_SIG = () => { try { const { zoom, ...rest } = OUTPUT_VER, s = wbSnap(), z = s.kind === 'combo' ? (s.layers || []).some(l => l.P && l.P.zoom === 'on') : !!(s.P && s.P.zoom === 'on'); return JSON.stringify(rest) + (z && zoom ? '|zoom' + zoom : ''); } catch (e) { return ''; } };
+const OUT_SIG = () => { try { const { zoom, ...rest } = OUTPUT_VER, s = wbSnap(), z = s.kind === 'combo' ? (s.layers || []).some(l => l.P && l.P.zoom === 'on') : !!(s.P && s.P.zoom === 'on'); let ss = ''; try { const { key, entry } = sizeSpecKeyNow(), sp = sizeSpecFor(key, entry); if (sp) ss = sp.off ? '|size-off' : `|size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (e) { }   // 4.9.51
+    return JSON.stringify(rest) + (z && zoom ? '|zoom' + zoom : '') + ss; } catch (e) { return ''; } };
 function idBarInfo(list, changed) {
   // 每个标签 [短字, 样式, 悬停的完整说明]；顺序 = 要紧的在前（窄的时候后面的先被挤掉）
   const ef = lib.effect, e = lib.review, mtId = mtOpenId(), chips = [];
@@ -14894,16 +14968,22 @@ function renderDeliv() {
   rows.push(`<tr class="grp"><td colspan="4">cascade.json（PC）· cascade_mobile.json（手机）：每层每段一个发射器，同一个爆点，按上面的延迟出生 · 帧号测试图在 _检查/（不导入）· 命名对照.txt</td></tr>`);
   const lyInputs = combo ? xs.map(x => `<label>第 ${x.i + 1} 层<input type="text" data-ly="${x.i}" value="${nm.layers[x.i]}" placeholder="L${x.i + 1}" title="${x.name}"></label>`).join('') : '';
   const prod = prodTableHTML(xs, combo);
+  // 4.9.51 尺寸标定一行（用户 10-09 00:27「烘培器会自动读不用我每次选择吧？」= 默认自动按表；同一效果配了几个规格 / 这次不按标定才用得到下拉）
+  let ssHTML = ''; if (typeof sizeSpecLine === 'function') { const ln = sizeSpecLine(combo); if (ln) { const { key, entry } = sizeSpecKeyNow(), sp = sizeSpecFor(key, entry), T = sizeSpecTable();
+    const sel = sp ? `<select id="dvSizeSpec" title="存在这台电脑；本机任务一律按表的第一个"><option value="">自动（${T.specs[sp.ids[0]].name}）</option>${sp.ids.slice(1).map(id => `<option value="${id}"${sp.id === id && !sp.off ? ' selected' : ''}>${T.specs[id].name}</option>`).join('')}<option value="none"${sp.off ? ' selected' : ''}>这次不按标定</option></select>` : '';
+    ssHTML = `<div class="dv-ss hint" id="dvSizeLine">${ln}${sel}</div>`; } }
   host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '这种产物沿用原来的命名'}</small></div><span class="sp"></span>
     <button class="btn primary" type="button" id="dvExport">导出素材包（PC + 手机）</button><button class="btn" type="button" id="dvBack">返回画面</button></div>
     <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>只能用英文字母、数字和下划线；素材包、贴图、UE 资产名都用它（右栏「英文名」显示的就是这个）。${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}存在这台电脑的浏览器里，按效果记；我的效果连了仓库文件夹会一起存。</small></div>
-    ${prod}
+    ${ssHTML}${prod}
     <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table>
     <p class="hint">按当前烘焙推算；导出时手机版按单格下限独立烘焙。独看 / 静音不影响导出。</p>`;
   host.querySelector('#dvExport').addEventListener('click', () => combo ? exportCombo() : $('#btnExport').click());
   host.querySelector('#dvBack').addEventListener('click', () => toggleDeliv(false));
   host.querySelectorAll('[data-prod]').forEach(sel => sel.addEventListener('change', () => setProduct(+sel.dataset.i, sel.dataset.prod, sel.value)));
   host.querySelectorAll('[data-lowview]').forEach(b => b.addEventListener('click', showLowReplay));     // 4.9.33 单帧的引擎回放（用户 10-07 17:26「单帧输出模式我想要个引擎回放」）
+  const ssSel = host.querySelector('#dvSizeSpec');
+  if (ssSel) ssSel.addEventListener('change', () => { const { key, entry } = sizeSpecKeyNow(), all = store.get('sizeSpecPick', {}); if (ssSel.value) all[key || entry] = ssSel.value; else delete all[key || entry]; store.set('sizeSpecPick', all); renderDeliv(); if (typeof refreshPanelValues === 'function') refreshPanelValues(); });
   const sv = host.querySelector('#dvSaveNames');
   if (sv) sv.addEventListener('click', () => {
     const base = asciiName(host.querySelector('#dvBase').value), layers = [...host.querySelectorAll('[data-ly]')].map(i => asciiName(i.value));
@@ -15216,9 +15296,9 @@ function renderLive() {
 }
 // 显示比例：贴图的每个像素在屏幕上被放大了几倍，是「糊」的直接原因
 // 4.9.31 导出缩放：引擎回放 + 游戏内大小时，按缩放后的大小画（单层效果；多层用每层的「缩放」）
-const exportScaleNow = () => state.view === 'export' && state.disp === 'game' && state.tab !== 'combo' && typeof exportScaleOf === 'function' && !exportKeepOf(state.P) ? exportScaleOf(state.P) : 1;
+const exportScaleNow = () => { if (!(state.view === 'export' && state.disp === 'game' && state.tab !== 'combo' && typeof exportScalePlan === 'function')) return 1; const sp = exportScalePlan(state.P); return sp.keep ? 1 : sp.k; };     // 4.9.51 配了尺寸标定按标定的倍数画
 // 4.9.32 升空尾缀「升空高度：不变」：引擎回放（任何显示比例）画只缩粗细的样子——面片宽 × k、软圆点大小和随机散开 × k，位置 / 高度 / 尾长不变（和导出同一套规则）
-const exportWidthNow = () => state.view === 'export' && state.tab !== 'combo' && typeof exportKeepOf === 'function' && exportKeepOf(state.P) ? exportScaleOf(state.P) : 1;
+const exportWidthNow = () => { if (!(state.view === 'export' && state.tab !== 'combo' && typeof exportScalePlan === 'function')) return 1; const sp = exportScalePlan(state.P); return sp.keep ? sp.k : 1; };
 function exportView(b) {
   const s = segAt(b, state.t), m = s.meta, sc = sizeAt(m, clamp(state.t - (m.t0 || 0), 0, m.duration));
   let full = null;
@@ -15898,7 +15978,7 @@ window.__fw = {
     files.push(...await platformFiles(name, b, M));
     // 命名规范：本机导出任务传 opt.entry（条目号）→ 找到效果的英文名
     if (namingApplies(b) && opt.naming !== false) { const ef = opt.entry ? effectOfEntry({ id: opt.entry }) : null, nm = packNamesFor(ef ? 'ef:' + ef.key : 'rv:' + (opt.entry || name), ef, 1, name, P.type, opt.entry || null); files = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); }
-    files = scaleCascadeFiles(files, exportScaleOf(P), exportKeepOf(P));     // 4.9.31 导出缩放（本机任务的参数改动里写 exportScale）
+    { const ef = opt.entry && typeof effectOfEntry === 'function' ? effectOfEntry({ id: opt.entry }) : null, sp = exportScalePlan(P, { key: ef ? ef.key : '', entry: opt.entry || '' }); files = scaleCascadeFiles(files, sp.k, sp.keep, sp.spec); }     // 4.9.31 导出缩放（本机任务的参数改动里写 exportScale）；4.9.51 配了尺寸标定按标定
     const zip = await makeZip(files); disposeBake(b);
     return new Uint8Array(await zip.arrayBuffer());
   },

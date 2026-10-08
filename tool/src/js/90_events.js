@@ -132,7 +132,7 @@ window.__fw = {
     files.push(...await platformFiles(name, b, M));
     // 命名规范：本机导出任务传 opt.entry（条目号）→ 找到效果的英文名
     if (namingApplies(b) && opt.naming !== false) { const ef = opt.entry ? effectOfEntry({ id: opt.entry }) : null, nm = packNamesFor(ef ? 'ef:' + ef.key : 'rv:' + (opt.entry || name), ef, 1, name, P.type, opt.entry || null); files = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); }
-    files = scaleCascadeFiles(files, exportScaleOf(P), exportKeepOf(P));     // 4.9.31 导出缩放（本机任务的参数改动里写 exportScale）
+    { const ef = opt.entry && typeof effectOfEntry === 'function' ? effectOfEntry({ id: opt.entry }) : null, sp = exportScalePlan(P, { key: ef ? ef.key : '', entry: opt.entry || '' }); files = scaleCascadeFiles(files, sp.k, sp.keep, sp.spec); }     // 4.9.31 导出缩放（本机任务的参数改动里写 exportScale）；4.9.51 配了尺寸标定按标定
     const zip = await makeZip(files); disposeBake(b);
     return new Uint8Array(await zip.arrayBuffer());
   },

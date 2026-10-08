@@ -273,6 +273,8 @@ async function layerUnitBake(e, onProg, L) {
   if (e.unitBake) { disposeBake(e.unitBake.b); e.unitBake = null; }
   const b = await bakeUnitSet(unitP(e.P), unitVarOf(e.unitSrc || e.P), onProg); e.unitBake = { sig, b }; return b;
 }
+// 4.9.51 多层按尺寸标定（花径 = 最大那层 × 层缩放；和左栏导出、本机任务同一条路）
+function comboSpecScale(files, layers) { const sk = typeof sizeSpecCombo === 'function' ? sizeSpecCombo(layers) : null; return sk ? scaleCascadeFiles(files, sk.k, false, sk) : files; }
 async function comboPackFiles(name, layers, onProg) {
   const files = [], { layers: lb, own } = await comboLayerBakes(layers, p => onProg && onProg(p * 0.4));
   const ownMobile = [];
@@ -303,9 +305,9 @@ async function comboPackFiles(name, layers, onProg) {
     // 命名规范（61_naming.js）：多层 = 礼花英文名 + 每层英文名
     if (lb.every(({ b }) => namingApplies(b))) {
       const ef = typeof lib !== 'undefined' ? lib.effect : null, key = typeof wbKey === 'function' ? wbKey() : name, nm = packNamesFor(key, ef, lb.length, name);
-      return applyPackNaming(files, nm.base, nmE.map((x, i) => ({ ...x, mb: x.mb || x.b, layer: nm.layers[i] })));
+      return comboSpecScale(applyPackNaming(files, nm.base, nmE.map((x, i) => ({ ...x, mb: x.mb || x.b, layer: nm.layers[i] }))), layers);
     }
-    return files;
+    return comboSpecScale(files, layers);
   } finally { own.forEach(disposeBake); ownMobile.forEach(disposeBake); }
 }
 

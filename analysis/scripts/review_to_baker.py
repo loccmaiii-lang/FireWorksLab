@@ -27,6 +27,13 @@ def job_files():
     fs = [os.path.join(ROOT, 'analysis', 'jobs', f) for f in os.listdir(os.path.join(ROOT, 'analysis', 'jobs')) if f.endswith('.json')]
     return sorted(fs, key=os.path.basename)
 OUT = os.path.join(ROOT, 'tool', 'data', 'review.js')
+# 4.9.51 尺寸标定表也顺手生成（本机刷新待验收时，编排对话框改了 spec/尺寸标定.json 没跑 build 也能跟上）
+def _size_spec():
+    sz = os.path.join(ROOT, 'spec', '尺寸标定.json')
+    if os.path.exists(sz):
+        import json as _j
+        open(os.path.join(ROOT, 'tool', 'data', 'size_spec.js'), 'w', encoding='utf-8').write('// 由 tool/build.py / review_to_baker.py 从 spec/尺寸标定.json 生成，别手改\nwindow.SIZE_SPEC = ' + _j.dumps(_j.load(open(sz, encoding='utf-8')), ensure_ascii=False) + ';\n')
+_size_spec()
 
 REVIEW = []      # 4.3：物理尾缀 TPS/TPM/TPL、万彩千轮单元 PW3 都是历史版本（归档），不再出条目
 

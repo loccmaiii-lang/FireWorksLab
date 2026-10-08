@@ -323,7 +323,7 @@ async function exportSingleScheme(name, b) {
   busy(true, '打包 ZIP…', 1);
   let zipName = name, out = files;
   if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: r.ln, mn: r.mn, b: r.ub || b, mb: r.mb || b, layer: '', pcTex: r.pcTex, frame: r.frame }]); zipName = nm.base; }
-  { const k = exportScaleOf(state.P), kp = exportKeepOf(state.P); out = scaleCascadeFiles(out, k, kp); zipName += exportScaleSfx(k, kp); }     // 4.9.31 导出缩放
+  { const sp = exportScalePlan(state.P); out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放
   download(await makeZip(out), `${zipName}.zip`);
   wbAutoExport(zipName);
   flash(`已导出 ${name}（PC ${kindCN(so.pc)} · 手机 ${kindCN(so.mobile)}）${packTidyNote()}`, false, packTidyNote() ? 8000 : 0);
@@ -357,7 +357,7 @@ async function exportMaster() {
     busy(true, '打包 ZIP…', 1);
     let zipName = name, out = files;
     if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); zipName = nm.base; }
-    { const k = exportScaleOf(state.P), kp = exportKeepOf(state.P); out = scaleCascadeFiles(out, k, kp); zipName += exportScaleSfx(k, kp); }     // 4.9.31 导出缩放
+    { const sp = exportScalePlan(state.P); out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放
     download(await makeZip(out), `${zipName}.zip`);
     wbAutoExport(zipName);     // 4.2.10：存进这个效果的「版本」（导出时），不再进工具页的全局版本列表
     flash('已导出 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);

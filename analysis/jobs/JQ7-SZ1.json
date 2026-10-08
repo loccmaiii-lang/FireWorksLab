@@ -1,0 +1,9 @@
+{
+ "id": "JQ7-SZ1",
+ "type": "export",
+ "effect": "jinrui_ning",
+ "entry": "JQ7",
+ "name": "GoldCoreLime",
+ "priority": 3,
+ "note": "对话框23 · 4.9.51 尺寸标定（用户 10-09 00:27「烘培器会自动读」「只改大小，其他都不变」）：参数不动重导，cascade.json 按 spec/尺寸标定.json v1 的 P_GREEN 150 m（四层按最大层） 缩放（长度 × 目标 ÷ 原样，时间不变，cascade.json 里 size_spec 写了倍数）。同一目录覆盖；回放检查照常。"
+}

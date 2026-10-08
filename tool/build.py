@@ -35,6 +35,11 @@ else:
     pe = {'E': [], 'P': {}}
 js = 'const PEMIT = ' + json.dumps(pe, ensure_ascii=False, separators=(',', ':')) + ';\n' + js
 js = 'const PMODULES = ' + (json.dumps(json.load(open(mf, encoding='utf-8')), ensure_ascii=False, separators=(',', ':')) if os.path.exists(mf) else '[]') + ';\n' + js
+# 4.9.51 尺寸标定表（spec/尺寸标定.json，编排对话框维护，用户 10-09 00:27）→ tool/data/size_spec.js（window.SIZE_SPEC；缺了 = 不按标定，照原大导出）
+sz = os.path.join(here, '..', 'spec', '尺寸标定.json')
+if os.path.exists(sz):
+    _spec = json.load(open(sz, encoding='utf-8'))
+    open(os.path.join(here, 'data', 'size_spec.js'), 'w', encoding='utf-8').write('// 由 tool/build.py / review_to_baker.py 从 spec/尺寸标定.json 生成，别手改\nwindow.SIZE_SPEC = ' + json.dumps(_spec, ensure_ascii=False) + ';\n')
 html = f'''<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -52,6 +57,8 @@ html = f'''<!doctype html>
 <script src="data/standard.js"></script>
 <!-- 4.9.16 默认缩略图（本机渲染，analysis/scripts/渲染缩略图_截图法.py --ingest 生成；缺了用示意图） -->
 <script src="data/thumbs.js"></script>
+<!-- 4.9.51 尺寸标定表（spec/尺寸标定.json 生成；缺了照原大导出） -->
+<script src="data/size_spec.js"></script>
 <script>
 'use strict';
 {js}</script>

@@ -205,9 +205,9 @@ function renderLive() {
 }
 // 显示比例：贴图的每个像素在屏幕上被放大了几倍，是「糊」的直接原因
 // 4.9.31 导出缩放：引擎回放 + 游戏内大小时，按缩放后的大小画（单层效果；多层用每层的「缩放」）
-const exportScaleNow = () => state.view === 'export' && state.disp === 'game' && state.tab !== 'combo' && typeof exportScaleOf === 'function' && !exportKeepOf(state.P) ? exportScaleOf(state.P) : 1;
+const exportScaleNow = () => { if (!(state.view === 'export' && state.disp === 'game' && state.tab !== 'combo' && typeof exportScalePlan === 'function')) return 1; const sp = exportScalePlan(state.P); return sp.keep ? 1 : sp.k; };     // 4.9.51 配了尺寸标定按标定的倍数画
 // 4.9.32 升空尾缀「升空高度：不变」：引擎回放（任何显示比例）画只缩粗细的样子——面片宽 × k、软圆点大小和随机散开 × k，位置 / 高度 / 尾长不变（和导出同一套规则）
-const exportWidthNow = () => state.view === 'export' && state.tab !== 'combo' && typeof exportKeepOf === 'function' && exportKeepOf(state.P) ? exportScaleOf(state.P) : 1;
+const exportWidthNow = () => { if (!(state.view === 'export' && state.tab !== 'combo' && typeof exportScalePlan === 'function')) return 1; const sp = exportScalePlan(state.P); return sp.keep ? sp.k : 1; };
 function exportView(b) {
   const s = segAt(b, state.t), m = s.meta, sc = sizeAt(m, clamp(state.t - (m.t0 || 0), 0, m.duration));
   let full = null;

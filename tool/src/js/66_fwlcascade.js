@@ -148,8 +148,8 @@ const exportScaleOf = P => { const k = +(P && P.exportScale); return k > 0 && k 
 // 只缩粗细——序列面片只缩宽、软圆点 / 线状火花缩大小、随机散开缩；位置、弹道、加速度、时间不动，升空高度和尾长照旧
 const exportKeepOf = P => !!P && exportScaleOf(P) < 1 && P.exportScaleRise === 'keep' && (isEmit(P) || isTrail(P));
 const exportScaleSfx = (k, keep) => k === 1 ? '' : (keep ? '_W' : '_S') + Math.round(k * 100);
-function fwlScaleJSON(j, k, keep) {
-  if (!j || k === 1) return j;
+function fwlScaleJSON(j, k, keep, spec) {
+  if (!j || (k === 1 && !spec)) return j;
   const R = x => +(x * k).toFixed(2), sv = (v, mask) => Array.isArray(v) ? v.map((x, i) => mask && !mask[i] ? x : R(x)) : R(v);
   const sd = (d, mask) => !d || typeof d !== 'object' ? d : 'const' in d ? { ...d, const: sv(d.const, mask) } : 'uniform' in d ? { ...d, uniform: d.uniform.map(v => sv(v, mask)) } : 'curve' in d ? { ...d, curve: d.curve.map(([t, v]) => [t, sv(v, mask)]) } : d;
   const XY = [1, 1, 0], X = [1, 0, 0];
@@ -173,6 +173,12 @@ function fwlScaleJSON(j, k, keep) {
     }
   }); }
   if (!keep && j.system && j.system.preview_distance_cm) j.system.preview_distance_cm = Math.round(j.system.preview_distance_cm * k);
+  if (spec) {     // 4.9.51 按尺寸标定：名字不加后缀（这就是这个效果的正式大小），写清用的哪一版、哪个规格、量出来多大
+    j.export_scale = k; j.size_spec = { id: spec.id, name: spec.name, version: spec.version, what: spec.what, target_m: spec.target, measured_m: spec.measured, k };
+    (j.notes = j.notes || []).push(`按尺寸标定 v${spec.version}「${spec.name}」：${spec.what === 'height' ? '开花高度' : '花径'} ${spec.target} m（原样 ${spec.measured} m）→ 所有长度 × ${k}，时间 / 帧号 / 贴图不变（用户 10-09 00:27「只改大小，其他都不变」；spec/尺寸标定.json）`);
+    if (j.source && j.emitters) j.source.plan_sig = fwlPlanSig(j.emitters);
+    return j;
+  }
   j.name = (j.name || '') + exportScaleSfx(k, keep); j.export_scale = k; if (keep) j.export_scale_mode = 'keep_height';
   (j.notes = j.notes || []).push(keep
     ? `导出缩放 × ${k} · 升空高度不变（用户 10-07 16:15 / 16:2x）：只缩粗细——序列面片（循环层 / 远段 / 消散）Initial Size 只 X × ${k}、软圆点 / 线状火花 Initial Size × ${k}、随机散开的初速和球面半径 × ${k}；出生位置、弹道、加速度、时间、帧号不变 → 升空时间、高度、尾长和原样一样。粒子系统名加 ${exportScaleSfx(k, keep)}，贴图名不变、几档共用`
@@ -181,7 +187,67 @@ function fwlScaleJSON(j, k, keep) {
   return j;
 }
 // 素材包文件里所有 cascade*.json 按缩放改；返回新的文件表
-function scaleCascadeFiles(files, k, keep) {
-  if (k === 1) return files; const dec = new TextDecoder();
-  return files.map(([f, d]) => /(^|\/)cascade(_mobile|_low)?\.json$/.test(f) ? [f, utf8(JSON.stringify(fwlScaleJSON(JSON.parse(dec.decode(d)), k, keep), null, 1))] : [f, d]);
+function scaleCascadeFiles(files, k, keep, spec) {
+  if (k === 1 && !spec) return files; const dec = new TextDecoder();
+  return files.map(([f, d]) => /(^|\/)cascade(_mobile|_low)?\.json$/.test(f) ? [f, utf8(JSON.stringify(fwlScaleJSON(JSON.parse(dec.decode(d)), k, keep, spec), null, 1))] : [f, d]);
+}
+// ---- 4.9.51 尺寸标定（用户 10-09 00:11「编排对话框……重新标定了所以烟花的大小尺寸，我希望每次你导出可以遵循最新的大小尺寸去导出到cascade」，
+//   00:27「烘培器会自动读不用我每次选择吧？」「只改大小，其他都不变」）：spec/尺寸标定.json（编排对话框维护）→ tool/data/size_spec.js（window.SIZE_SPEC）。
+//   导出时按 map 找到这个效果的规格：倍数 = 目标花径 ÷ 这个效果实际花径（升空尾缀用开花高度），走上面同一套 fwlScaleJSON（所有长度 × 倍数，时间不变）。
+//   不在 map 里 / 表缺了 = 照旧（手动的导出缩放还管用）。交付清单可以换成同一个效果的另一个规格，或这次不按标定（存在这台电脑，本机任务一律按表的第一个）
+const sizeSpecTable = () => { const T = typeof window !== 'undefined' ? window.SIZE_SPEC : null; return T && T.specs && T.map ? T : null; };
+function sizeSpecKeyNow() {
+  const ef = typeof lib !== 'undefined' && lib.effect ? lib.effect.key : '', rv = typeof lib !== 'undefined' && lib.review ? lib.review.id : '';
+  let wk = ''; try { wk = typeof wbKey === 'function' ? wbKey() : ''; } catch (e) { }
+  let key = ef || (/^ef:/.test(wk) ? wk.slice(3) : '');
+  if (!key && rv && typeof effectOfEntry === 'function') { try { const x = effectOfEntry(lib.review); key = x ? x.key : ''; } catch (e) { } }     // 本机导出任务只开条目（openReview 不带效果）
+  return { key, entry: rv };
+}
+function sizeSpecIds(key, entry) { const T = sizeSpecTable(); if (!T) return []; for (const k of [key, entry].filter(Boolean)) { const v = T.map[k]; if (v) return (Array.isArray(v) ? v : [v]).filter(id => T.specs[id]); } return []; }
+const sizeSpecPicks = () => { try { return (typeof store !== 'undefined' && store.get('sizeSpecPick', {})) || {}; } catch (e) { return {}; } };
+function sizeSpecFor(key, entry, useStore = true) {
+  const T = sizeSpecTable(), ids = sizeSpecIds(key, entry); if (!T || !ids.length) return null;
+  const pick = useStore ? sizeSpecPicks()[key || entry] : ''; if (pick === 'none') return { off: true, ids, version: T.version };
+  const id = ids.includes(pick) ? pick : ids[0]; return { id, ids, version: T.version, ...T.specs[id] };
+}
+const _sizeOf = new Map();
+// 这个效果现在多大：空中花型 = 花径（metricsOf：开花最大时的水平直径），升空尾缀 = 开花高度（弹道 H）
+function effectSizeOf(P) {
+  if (!P) return null;
+  if (isEmit(P) || isTrail(P)) { const b = typeof rtBallistic === 'function' ? rtBallistic(P) : null; return b && b.H > 0 ? { what: 'height', m: b.H } : null; }
+  if (familyOf(P.type) !== 'aerial') return null;
+  let key = ''; try { const { exportScale, exportScaleRise, ...rest } = P; key = JSON.stringify(rest); } catch (e) { }     // 引擎回放每帧都问：按参数记一份（measure 每次返回拷贝，太贵）
+  if (key && _sizeOf.has(key)) return _sizeOf.get(key);
+  const mt = metricsOf(P, measure(P)), r = mt && mt.diameter > 0 ? { what: 'diameter', m: mt.diameter } : null;
+  if (key) { _sizeOf.set(key, r); while (_sizeOf.size > 16) _sizeOf.delete(_sizeOf.keys().next().value); } return r;
+}
+// 多层：取最大的那层（花径 × 层缩放）
+function comboSizeOf(layers) {
+  let best = null;
+  for (const L of layers || []) { const e = typeof layerEntryOf === 'function' ? layerEntryOf(L) : null, z = e && effectSizeOf(e.P); if (!z || z.what !== 'diameter') continue; const m = z.m * (+L.scale > 0 ? +L.scale : 1); if (!best || m > best.m) best = { what: 'diameter', m }; }
+  return best;
+}
+// 规格 + 现在的大小 → 倍数（null = 不按标定）。扇形口径没定：返回 { skip } 说明原因
+function sizeSpecScale(sp, sz) {
+  if (!sp || sp.off || !sz) return null;
+  if (sp.kind === 'fan') return { skip: '扇形的标定口径还没定（表里的 diameter 是两倍飞行长度），照原大导出', id: sp.id, name: sp.name, version: sp.version };
+  const target = sz.what === 'height' ? +sp.burst_m : +sp.diameter_m; if (!(target > 0) || !(sz.m > 0)) return null;
+  const k = +(target / sz.m).toFixed(4);
+  return { id: sp.id, name: sp.name, version: sp.version, what: sz.what, target, measured: +sz.m.toFixed(1), k, warn: k > 1.3 ? `放大 × ${k.toFixed(2)}：贴图会被拉糊，建议「输出」里加大单格重烘` : '' };
+}
+function sizeSpecNow(P, keyObj) { const { key, entry } = keyObj || sizeSpecKeyNow(); const sp = sizeSpecFor(key, entry); const r = sp && sizeSpecScale(sp, effectSizeOf(P)); return r && !r.skip ? r : null; }
+function sizeSpecCombo(layers, keyObj) { const { key, entry } = keyObj || sizeSpecKeyNow(); const sp = sizeSpecFor(key, entry); const r = sp && sizeSpecScale(sp, comboSizeOf(layers)); return r && !r.skip ? r : null; }
+// 交付清单 / 输出栏一行：现在按哪个规格、多大、倍数
+function sizeSpecLine(isCombo) {
+  const T = sizeSpecTable(); if (!T) return '';
+  const { key, entry } = sizeSpecKeyNow(), sp = sizeSpecFor(key, entry); if (!sp) return `尺寸标定 v${T.version}：这个效果没配规格（照原大导出；要配在 spec/尺寸标定.json 的 map 里加一行）`;
+  if (sp.off) return `尺寸标定 v${T.version}：这次不按标定（照原大 / 手动导出缩放）`;
+  const r = sizeSpecScale(sp, isCombo ? comboSizeOf(state.layers) : effectSizeOf(state.P)); if (!r) return `尺寸标定 v${T.version}「${sp.name}」：量不出这个效果的大小，照原大导出`;
+  if (r.skip) return `尺寸标定 v${T.version}「${sp.name}」：${r.skip}`;
+  return `尺寸标定 v${T.version}「${r.name}」：${r.what === 'height' ? '开花高度' : '花径'} ${r.target} m（原样 ${r.measured} m）→ 导出 × ${r.k}${r.warn ? ' · ⚠ ' + r.warn : ''}`;
+}
+// 导出时用哪个倍数：配了尺寸标定 = 按标定（不加后缀、手动的导出缩放不再管用）；没配 = 手动导出缩放（4.9.31）
+function exportScalePlan(P, keyObj) {
+  const sk = sizeSpecNow(P, keyObj); if (sk) return { k: sk.k, keep: false, spec: sk, sfx: '' };
+  const k = exportScaleOf(P), kp = exportKeepOf(P); return { k, keep: kp, spec: null, sfx: exportScaleSfx(k, kp) };
 }

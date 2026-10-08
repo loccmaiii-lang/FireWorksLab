@@ -3222,6 +3222,63 @@ async def w33(pg):
     r = await pg.evaluate(W33_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1800]
 
+W34_JS = r"""async () => {
+  // 4.9.51 尺寸标定（用户 10-09 00:11 / 00:27「烘培器会自动读不用我每次选择吧？」「只改大小，其他都不变」）
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms)), T = sizeSpecTable();
+  const idleBake = async prev => { for (let i = 0; i < 150 && (!state.bake || state.bake === prev || state.baking); i++) await wait(100); state.playing = false; };
+  out.table = T ? { v: T.version, specs: Object.keys(T.specs).length, map: T.map } : null;
+  if (!T || !T.specs.P_MG || T.map.jinmangju !== 'P_MG') { bad.push('没读到 spec/尺寸标定.json（tool/data/size_spec.js）或金芒菊没配 P_MG'); return { ok: false, bad, out }; }
+  // ① 换算：花径 / 开花高度 / 扇形 / 放大警告
+  const a = sizeSpecScale({ ...T.specs.P_MG, id: 'P_MG', version: 1 }, { what: 'diameter', m: 75 }), h = sizeSpecScale({ burst_m: 210, diameter_m: 150 }, { what: 'height', m: 105 }), f = sizeSpecScale({ kind: 'fan', diameter_m: 60 }, { what: 'diameter', m: 30 }), up = sizeSpecScale({ diameter_m: 100 }, { what: 'diameter', m: 50 });
+  out.math = { a: a && a.k, h: h && h.k, fan: !!(f && f.skip), warn: !!(up && up.warn), nowarn: !(a && a.warn) };
+  if (!a || a.k !== 2 || !h || h.k !== 2 || !out.math.fan || !out.math.warn || !(sizeSpecScale({ diameter_m: 100 }, { what: 'diameter', m: 90 }).warn === '')) bad.push('倍数算错（目标 ÷ 原样；升空尾缀按开花高度；扇形跳过；放大 > 1.3 警告）：' + JSON.stringify(out.math));
+  // ② cascade.json：长度 × k、时间不变、名字不加后缀、写 size_spec；别的文件不动
+  const j0 = { name: 'X', system: { preview_distance_cm: 30000 }, source: {}, emitters: [{ name: 'E', modules: [{ m: 'Lifetime', Lifetime: { const: 2 } }, { m: 'InitialSize', StartSize: { const: [100, 100, 1] } }, { m: 'InitialVelocity', StartVelocity: { const: [0, 0, 100] } }, { m: 'SubImageIndex', SubImageIndex: { curve: [[0, 0], [2, 39]] } }] }] };
+  const sk = { id: 'P_MG', name: T.specs.P_MG.name, version: 1, what: 'diameter', target: 150, measured: 75, k: 2 };
+  const fs = scaleCascadeFiles([['cascade.json', utf8(JSON.stringify(j0))], ['cascade_mobile.json', utf8(JSON.stringify(j0))], ['X.json', utf8(JSON.stringify(j0))]], 2, false, sk), dec = new TextDecoder();
+  const J = fs.map(([n, d]) => [n, JSON.parse(dec.decode(d))]), M = Object.fromEntries(J[0][1].emitters[0].modules.map(m => [m.m, m]));
+  out.json = { name: J[0][1].name, mobName: J[1][1].name, spec: J[0][1].size_spec, scale: J[0][1].export_scale, size: M.InitialSize.StartSize.const, vel: M.InitialVelocity.StartVelocity.const, life: M.Lifetime.Lifetime.const, sub: M.SubImageIndex.SubImageIndex.curve, other: J[2][1].name, otherSpec: !!J[2][1].size_spec, prev: J[0][1].system.preview_distance_cm };
+  if (out.json.name !== 'X' || out.json.mobName !== 'X' || !out.json.spec || out.json.spec.id !== 'P_MG' || out.json.size[0] !== 200 || out.json.vel[2] !== 200 || out.json.life !== 2 || JSON.stringify(out.json.sub) !== '[[0,0],[2,39]]' || out.json.otherSpec || out.json.prev !== 60000) bad.push('按标定导出的 cascade.json 不对（长度 × k、时间 / 帧号不变、名字不加后缀、写 size_spec）：' + JSON.stringify(out.json));
+  // ③ 金芒菊：自动按 P_MG（不用选），倍数 = 150 ÷ 花径；手动导出缩放变灰、不管用
+  { const prev = state.bake; await openEffect(EFFS().find(e => e.key === 'jinmangju')); await idleBake(prev); }
+  const kNow = sizeSpecKeyNow(), d = effectSizeOf(state.P), sn = sizeSpecNow(state.P), plan = exportScalePlan(state.P);
+  out.jm = { key: kNow.key, entry: kNow.entry, d: d && +d.m.toFixed(1), k: sn && sn.k, sfx: plan.sfx, spec: plan.spec && plan.spec.id };
+  if (kNow.key !== 'jinmangju' || !d || !sn || Math.abs(sn.k - 150 / d.m) > 1e-3 || plan.sfx !== '' || plan.spec?.id !== 'P_MG') bad.push('金芒菊没自动按 P_MG：' + JSON.stringify(out.jm));
+  const es0 = state.P.exportScale; state.P.exportScale = 0.5; const plan2 = exportScalePlan(state.P); out.jm.manual = [plan2.k, plan2.sfx, inertWhy('exportScale', state.P) || ''];
+  if (plan2.k !== sn.k || plan2.sfx || !/尺寸标定/.test(out.jm.manual[2])) bad.push('配了标定还按手动缩放 / 没变灰：' + JSON.stringify(out.jm.manual));
+  // ④ 交付清单：一行写规格、原样、倍数；下拉「这次不按标定」→ 回到手动（_S50），再选回自动
+  toggleDeliv(true); await wait(150);
+  const line = document.querySelector('#dvSizeLine'), sel = document.querySelector('#dvSizeSpec'); out.line = line ? line.textContent.slice(0, 160) : null;
+  if (!line || !/尺寸标定 v1/.test(line.textContent) || !line.textContent.includes(T.specs.P_MG.name) || !/× [\d.]+/.test(line.textContent)) bad.push('交付清单顶上没写尺寸标定：' + out.line);
+  if (!sel || ![...sel.options].some(o => o.value === 'none')) bad.push('交付清单没有「这次不按标定」');
+  else { const ov0 = OUT_SIG(); sel.value = 'none'; sel.dispatchEvent(new Event('change')); await wait(100); const p3 = exportScalePlan(state.P), ov1 = OUT_SIG(); out.none = [p3.k, p3.sfx, (document.querySelector('#dvSizeLine') || {}).textContent, ov0 !== ov1, inertWhy('exportScale', state.P) || ''];
+    if (p3.k !== 0.5 || p3.sfx !== '_S50' || !/不按标定/.test(out.none[2] || '') || !out.none[3] || out.none[4]) bad.push('「这次不按标定」没回到手动缩放：' + JSON.stringify(out.none));
+    const s2 = document.querySelector('#dvSizeSpec'); s2.value = ''; s2.dispatchEvent(new Event('change')); await wait(100);
+    if (exportScalePlan(state.P).spec?.id !== 'P_MG' || 'jinmangju' in store.get('sizeSpecPick', {})) bad.push('选回「自动」没恢复'); }
+  toggleDeliv(false); state.P.exportScale = es0;
+  // ⑤ 指纹：配了的条目带 size，没配的不带
+  const vJ = entryVer(entryById('JM4-40')) || '', other = FW_REVIEW_LIST.find(e => e.ver && !sizeSpecFor(effectOfEntry(e)?.key, e.id, false)); out.ver = [vJ.slice(-40), other && (entryVer(other) || '').slice(-30)];
+  if (!/size1-P_MG-150-210$/.test(vJ) || (other && /size/.test(entryVer(other)))) bad.push('版本指纹没带尺寸标定 / 没配的也带了：' + JSON.stringify(out.ver));
+  // ⑥ 没配的花型照旧：菊默认不缩、手动 0.8 → _S80
+  { const prev = state.bake; await openType('kiku'); await idleBake(prev); }
+  const pk = exportScalePlan(state.P), pk8 = exportScalePlan({ ...state.P, exportScale: 0.8 }); out.kiku = [pk.k, pk.spec, pk8.k, pk8.sfx, sizeSpecLine(false).slice(0, 40), inertWhy('exportScale', state.P) || ''];
+  if (pk.k !== 1 || pk.spec || pk8.k !== 0.8 || pk8.sfx !== '_S80' || !/没配规格/.test(out.kiku[4]) || out.kiku[5]) bad.push('没配的效果不该按标定：' + JSON.stringify(out.kiku));
+  // ⑦ 多层：金蕊柠按最大那层（花径 × 层缩放）
+  { const prev = state.bake; await openEffect(EFFS().find(e => e.key === 'jinrui_ning')); for (let i = 0; i < 150 && (state.baking || !state.layers || !state.layers.length); i++) await wait(100); }
+  const cz = comboSizeOf(state.layers), cs = sizeSpecCombo(state.layers), per = state.layers.map(L => { const e = layerEntryOf(L), z = e && effectSizeOf(e.P); return z ? +(z.m * (+L.scale > 0 ? +L.scale : 1)).toFixed(1) : null; });
+  out.combo = { tab: state.tab, n: state.layers.length, per, max: cz && +cz.m.toFixed(1), k: cs && cs.k, id: cs && cs.id };
+  if (state.tab !== 'combo' || !cz || Math.abs(cz.m - Math.max(...per.filter(x => x != null))) > 0.2 || !cs || cs.id !== T.map.jinrui_ning || Math.abs(cs.k - T.specs[cs.id].diameter_m / cz.m) > 1e-3) bad.push('多层没按最大那层：' + JSON.stringify(out.combo));
+  // ⑧ 本机导出任务的走法：只 openReview(条目)、没有 lib.effect，也要认出效果
+  { const ef0 = lib.effect; lib.effect = null; const k8 = sizeSpecKeyNow(); lib.effect = ef0; out.job = k8; if (k8.key !== 'jinrui_ning') bad.push('只开条目时认不出效果：' + JSON.stringify(k8)); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w34(pg):
+    """4.9.51 尺寸标定：自动读 spec/尺寸标定.json、倍数 = 目标 ÷ 原样、cascade.json 长度 × k 时间不变、交付清单一行 + 「这次不按标定」、指纹、没配的照旧、多层按最大层"""
+    r = await pg.evaluate(W34_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1800]
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -3261,7 +3318,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:
