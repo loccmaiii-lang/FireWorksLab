@@ -1,0 +1,7 @@
+14:01:52 开始：GoldCoreLime（导出素材）
+14:02:16 GoldCoreLime 组合素材包 24 秒：T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01.png、T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_C.png、T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_HD.png、T_EFX_FireWorks_GoldCoreLime_GoldCore_R.png、T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01.png、T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_C.png、T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_HD.png、T_EFX_FireWorks_GoldCoreLime_LeadTail_R.png、T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01.png、T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_C.png、T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_HD.png、T_EFX_FireWorks_GoldCoreLime_LimeStar_R.png、T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01.png、T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_C.png、T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_HD.png、T_EFX_FireWorks_GoldCoreLime_RedCore_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+14:02:18 回放检查：✅ 通过
+14:02:33 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\JQ6E6\烘焙回放.jpg
+14:02:34 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\JQ6E6\烘焙回放_原尺寸.jpg
+14:02:34 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+14:02:34 完成，用时 0.7 分钟

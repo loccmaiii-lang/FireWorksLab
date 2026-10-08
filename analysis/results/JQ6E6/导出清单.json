@@ -1,0 +1,36 @@
+{
+ "effect": "jinrui_ning",
+ "entry": "JQ6",
+ "ver": "e61399a2·master4.3.8-core1+master4.9.31",
+ "time": "2026-10-08 14:02",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "GoldCoreLime",
+   "replica": "JQ6",
+   "files": [
+    "T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01.png",
+    "T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_C.png",
+    "T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_HD.png",
+    "T_EFX_FireWorks_GoldCoreLime_GoldCore_R.png",
+    "T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01.png",
+    "T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_C.png",
+    "T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_HD.png",
+    "T_EFX_FireWorks_GoldCoreLime_LeadTail_R.png",
+    "T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01.png",
+    "T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_C.png",
+    "T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_HD.png",
+    "T_EFX_FireWorks_GoldCoreLime_LimeStar_R.png",
+    "T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01.png",
+    "T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_C.png",
+    "T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_HD.png",
+    "T_EFX_FireWorks_GoldCoreLime_RedCore_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}
