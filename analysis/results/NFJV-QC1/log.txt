@@ -1,0 +1,4 @@
+11:41:57 第 1/1 步：候选对比（量导出包）
+11:42:12   → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFJV-QC1\差距.md
+11:42:12   ✅ 候选对比（量导出包）（0.2 分钟）
+11:42:12 完成，用时 0.2 分钟

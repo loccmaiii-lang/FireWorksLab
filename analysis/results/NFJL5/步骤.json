@@ -1,0 +1,23 @@
+[
+ {
+  "name": "自动曝光：四层",
+  "script": "条目曝光.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "JQ6 和实拍同一秒",
+  "script": "时刻对照.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "候选对比：模板（亥）vs 申",
+  "script": "候选对比.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.4
+ }
+]
