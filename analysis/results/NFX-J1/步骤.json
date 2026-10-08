@@ -1,0 +1,31 @@
+[
+ {
+  "name": "过曝估算：第 3 层",
+  "script": "过曝估算.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "过曝估算：第 1 层",
+  "script": "过曝估算.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "过曝估算：第 2 层",
+  "script": "过曝估算.py",
+  "code": 1,
+  "ok": false,
+  "minutes": 0.1,
+  "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\过曝估算.py\", line 65, in <module>\n    main()\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\过曝估算.py\", line 57, in main\n    for row in r['rows']: md.append(f\"| +{row['t']:.2f} | \" + ' | '.join(f\"{row[str(e)] * 100:.2f}%\" if str(e) in row else f\"{row[e] * 100:.2f}%\" for e in a.E) + ' |')\n                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\过曝估算.py\", line 57, in <genexpr>\n    for row in r['rows']: md.append(f\"| +{row['t']:.2f} | \" + ' | '.join(f\"{row[str(e)] * 100:.2f}%\" if str(e) in row else f\"{row[e] * 100:.2f}%\" for e in a.E) + ' |')\n                                                                                                                              ~~~^^^\nKeyError: 1.0\n"
+ },
+ {
+  "name": "过曝估算：第 4 层",
+  "script": "过曝估算.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ }
+]
