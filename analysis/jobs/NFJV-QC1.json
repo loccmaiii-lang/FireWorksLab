@@ -1,0 +1,33 @@
+{
+ "id": "NFJV-QC1",
+ "type": "script",
+ "priority": 4,
+ "name": "第二个参考验通用：球形C 拆解配置 + 打点，量现在待验收的导出包 QiuxingC40（QC12E2）",
+ "steps": [
+  {
+   "name": "候选对比（量导出包）",
+   "script": "候选对比.py",
+   "args": [
+    "--mt",
+    "-",
+    "--pack",
+    "analysis/local/输出/素材包/QiuxingC40",
+    "--pack-name",
+    "QC12E2",
+    "--ref",
+    "analysis/原理/球形C/打点/打点.json",
+    "--card",
+    "analysis/原理/球形C/拆解配置.json",
+    "--px",
+    "900",
+    "--out",
+    "{out}"
+   ],
+   "must": false,
+   "ok": [
+    0
+   ],
+   "timeout": 1800
+  }
+ ]
+}
