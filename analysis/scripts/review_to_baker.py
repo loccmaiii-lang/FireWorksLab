@@ -374,7 +374,9 @@ def effects_from_status(out):
                                   fails=[f"{L.get('pack', '').split('·')[-1].strip()}：{'；'.join(L.get('fails') or [])}" for x in cs for L in x.get('layers', []) if L.get('fails')])
                     except Exception: ck = None
                 ex.append(dict(job=jid, entry=m.get('entry'), ver=m.get('ver'), time=m.get('time'), packages=m.get('packages', []), check=ck,
-                               stale=bool(m.get('entry') and by.get(m['entry']) and by[m['entry']].get('ver') != m.get('ver'))))
+                               # 导出清单的 ver 是「参数指纹·输出族」（烘焙器 entryVer 同一格式），这里只有参数指纹 → 比「·」前面那段；条目已经不在（被新版本取代）= 过期
+                               # （2026-10-08 对话框新花型：以前整串比，最新的导出全标「已过期」、条目已删的旧导出反而标「当前版本」）
+                               stale=bool(m.get('entry')) and (not by.get(m['entry']) or by[m['entry']].get('ver') != (m.get('ver') or '').split('·')[0])))
             elif os.path.exists(os.path.join(res_dir(jid), 'done.json')): ex.append(dict(job=jid, legacy=True))
         # 按导出时间排（以前按任务号字面排序：HN2E9 排在 HN2E12 后面，「待我验收」拿 E9 当最新导出 → 误判未就绪）
         nat = lambda x: [int(t) if t.isdigit() else t for t in re.split(r'(\d+)', x.get('job') or '')]
