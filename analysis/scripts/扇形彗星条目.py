@@ -165,8 +165,14 @@ RED_TAIL, RED_GLOW, ORANGE_FAN = RED_TAIL5, RED_GLOW5, ORANGE_FAN5
 #   橙：头尖尾粗 ✓，但横向散太大，下半截连成一整块实心楔形、3 s 后一大片雾 → 横向散 3.5 → 2.2 m/s、火花寿命 1.6 → 1.3 s（每条粗尾分得开）。
 RED_GLOW = dict(RED_GLOW, headSize=2.5, headBright=1.2, haloFrac=0.85, haloR=3)
 ORANGE_FAN = dict(ORANGE_FAN, sparkSpread=2.2, sparkLife=1.3)
-FAN_ENTS, FAN_COMBOS = fan_entries('FC6')
-FAN_COMBOS[0]['replaces'] = ['FC4R', 'FC5R']
+FAN_ENTS6, FAN_COMBOS6 = fan_entries('FC6')
+# FC6 本机看过（09:20，回放检查全过、FCS6 ✅、实时 = 导出）：红光晕变成星头外一圈软的玫红光了，但还不够「很大」（约 2 倍亮肩宽）；橙扇头尖尾粗、每条粗尾分得开 → 橙扇定 FC6O。
+#   → 红 FC7R：光晕层核心 2.5 → 3.5 m、半径 × 3.5、亮度 1.2 → 1.6（光晕层贴图过曝 0 %，有余量）。
+RED_GLOW = dict(RED_GLOW, headSize=3.5, haloR=3.5, headBright=1.6)
+FAN_ENTS7, FAN_COMBOS7 = fan_entries('FC7')
+FAN_COMBOS7[0]['replaces'] = ['FC4R', 'FC5R', 'FC6R']
+FAN_ENTS = [e for e in FAN_ENTS7 if e['id'].startswith('FC7R')] + [e for e in FAN_ENTS6 if e['id'] == 'FC6O']
+FAN_COMBOS = FAN_COMBOS7
 next(e for e in FAN_ENTS if e['id'] == 'FC6O')['replaces'] = ['FC4O', 'FC5O']
 
 if __name__ == '__main__':

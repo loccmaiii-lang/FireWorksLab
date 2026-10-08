@@ -1,0 +1,9 @@
+{
+ "id": "FCS7",
+ "type": "std",
+ "priority": 2,
+ "targets": [
+  "FC7R"
+ ],
+ "note": "对话框FanGold：FC7R 标准检查。"
+}
