@@ -58,9 +58,11 @@ function mtGoScale(go) {
 }
 // 4.9.37 金蕊柠（kinzuiLime）：两个模拟（同种子 / 星数 / 初速 / 终端速度 / 燃烧 → 同一模拟拆出来的两层星位重合）。按实拍花径拟合（analysis/原理/金蕊青柠星.md「物理」）：
 //   外层 +0.4 / 1.2 / 2.0 / 2.8 / 3.6 s 的花径比 0.54 : 1 : 1.24 : 1.38 : 1.46；芯星很快停下来（+1.3 s 以后不再张大、几乎不坠，约外层 +1.2 s 的 0.41）
+//   4.9.47（用户 10-08 14:25「白芯还是有重力」）：芯停下来靠「燃烧变轻、阻力变大」（massLoss 0.95，初速小、阻力小：开头 0.47 R、慢慢张到 0.58 R），不靠往下掉（重力 0.5 → 0.1，丝不再坠）；
+//   外层重力 1 → 0.2（打点跟踪：实拍外层星下坠加速度 0.05 → 0.005 R/s²，细线直）。依据 analysis/原理/金蕊青柠星/拆解卡.md 顶部 14:25 那张表、analysis/results/NFJV9–11/
 const MT_JQ = {
-  out: { seed: 23, stars: 450, v0: 160, vt: 18, grav: 1, speedJit: 2, dirJit: 1.5, burn: 3.8, burnJit: 4, fade: 0.15, lastFlare: 0, ignDelay: 0 },
-  core: { seed: 31, stars: 300, v0: 130, vt: 9.5, grav: 0.5, speedJit: 3, dirJit: 1.5, burn: 2.15, burnJit: 6, lastFlare: 0, ignDelay: 0.06, ignJit: 10 }
+  out: { seed: 23, stars: 450, v0: 160, vt: 18, grav: 0.2, speedJit: 2, dirJit: 1.5, burn: 3.8, burnJit: 4, fade: 0.15, lastFlare: 0, ignDelay: 0 },
+  core: { seed: 31, stars: 300, v0: 47, vt: 19, grav: 0.1, massLoss: 0.95, speedJit: 3, dirJit: 1.5, burn: 2.15, burnJit: 6, lastFlare: 0, ignDelay: 0.06, ignJit: 10 }
 };
 const MT_RAMP_WARM = { ramp0: '#000000', ramp1: '#8a3a10', ramp2: '#ffa850', ramp3: '#fff6e0' };     // 橙引尾：暖色（灰色渐变图会把橙压成褐，青柠星 QN12 看过；中段偏黄一点，JQ4E1 橙尾偏红）
 const MT_RAMP_GOLD_HOT = { ramp0: '#000000', ramp1: '#b8681e', ramp2: '#ffe0a0', ramp3: '#ffffff' };     // 金蕊：比 MT_RAMP_GOLD 亮（暗的火花不发褐），亮处到白
@@ -148,13 +150,13 @@ const MULTI_TYPES = [
         coreProfile: 1, haloFrac: 0.45, haloR: 3,     // 白芯 + 小光晕（实拍光晕能量 0.05–0.12）
         starBrightCurve: '0:0.03, 0.07:0.05, 0.1:0.35, 0.14:0.6, 0.2:0.85, 0.26:1, 0.41:1, 0.62:0.9, 0.82:0.78, 0.92:0.62, 1:0.4',     // 起势：+0.3 s 起亮（+0.47 s 橙尾尖上已经看得到小亮点）、+0.55 s 六成、+1.0 s 全亮；之后慢慢暗
         starSizeCurve: '0:0.6, 0.14:0.75, 0.26:1, 0.3:1, 0.5:0.93, 0.75:0.8, 0.92:0.72, 1:0.68',     // 起势时星头小；燃烧中变小（实拍 FWHM 5.5 → 2.9 px）
-        sparkStart: 0.9, sparkStop: 2.0, sparkRate: 400, sparkLife: 0.9, sparkLifeJit: 20, sparkSpread: 0.3, sparkInherit: 0, sparkGrav: 0.1, sparkDrag: 3, sparkBright: 0.08, sparkSize: 0.2, T0: 2000, cooling: 0.05 },     // 青绿细线：星后面很淡、细、直、越拉越长的受光烟迹（+1.0–2.7 s）；横向散 0.3（缺省 2.5 会毛成一团）
+        sparkStart: 0.9, sparkStop: 2.0, sparkRate: 400, sparkLife: 0.9, sparkLifeJit: 20, sparkSpread: 0.3, sparkInherit: 0, sparkGrav: 0, sparkDrag: 3, sparkBright: 0.08, sparkSize: 0.2, T0: 2000, cooling: 0.05 },     // 青绿细线：星后面很淡、细、直、越拉越长的受光烟迹（+1.0–2.7 s）；横向散 0.3（缺省 2.5 会毛成一团）
         m: { stages: [[0, '#ffd8a0'], [0.6, '#fff2c8'], [1.2, '#fff0c8'], [2.0, '#fcffe8'], [2.8, '#fffff4']], xw: 0.2, ramp0: '#000000', ramp1: '#5a6e0c', ramp2: '#e8f048', ramp3: '#ffffff' }, hi: 1.9 },     // 色在渐变图（暗端干净的柠绿、亮端白），颜色曲线近白：早期偏暖（晕 49°）→ 后来柠绿（69°）
       { title: '金菊蕊', en: 'GoldCore', type: 'kiku', k: 0.4, p: { ...MT_JQ.core, flash: 0, fade: 0.25, headSize: 0.75, headBright: 0.6, flicker: 0.15, duration: 2.9,
-        sparkRate: 900, sparkRateEnd: 0.4, sparkStop: 1.7, sparkLife: 1.7, sparkLifeEnd: 0.6, sparkLifeJit: 20, sparkSize: 0.35, sparkSpread: 0.5, sparkInherit: 0.05, sparkGrav: 0.3, sparkDrag: 3, sparkBright: 1.5, T0: 2300, cooling: 0.15, tailHaze: 0.03, twinkle: 0.15 },     // 早出的火花活得长（+1.8 s 金丝还从芯心连到星头），晚出的短（+2.7 s 前收完）；底光 0.03（再多芯就成一整块白盘）
-        m: { stages: [[0, '#fff0c8'], [1.2, '#ffe2a8'], [1.45, '#ffb050'], [1.7, '#b0663a'], [2.05, '#6a3016'], [2.4, '#2a1006']], xw: 0.3, ...MT_RAMP_GOLD_HOT }, hi: 2.4 },     // +1.2 s 前淡黄白 → 金 → +1.8 s 琥珀（实拍 27°）→ +2.2 s 暗红橙 → +2.5 s 几乎黑。颜色本身要压暗：芯这时 v 接近 1，亮的颜色 × 4 × 显示强度在显示端会饱和成黄白（每段在 ±0.15 s 里过渡，段时刻要比想要的早一点）
+        sparkRate: 900, sparkRateEnd: 0.4, sparkStop: 1.05, sparkLife: 2.3, sparkLifeEnd: 0.65, sparkLifeJit: 20, sparkSize: 0.35, sparkSpread: 0.5, sparkInherit: 0.05, sparkGrav: 0.1, sparkDrag: 3, sparkBright: 1.5, T0: 2300, cooling: 0.15, tailHaze: 0.03, twinkle: 0.15 },     // 金丝只出到 +1.05 s（星头张到 0.45 R 左右），之后星头带着淡紫继续往外 0.1 R（实拍淡紫点在金丝外面一圈）；早出的火花活得长、晚出的短（+2.7 s 前收完）；底光 0.03（再多芯就成一整块白盘）
+        m: { stages: [[0, '#fffaf0'], [1.2, '#ffe8b8'], [1.45, '#ffb050'], [1.7, '#b0663a'], [2.05, '#6a3016'], [2.4, '#2a1006']], xw: 0.3, ...MT_RAMP_GOLD_HOT }, hi: 2.4 },     // +1.2 s 前淡黄白 → 金 → +1.8 s 琥珀（实拍 27°）→ +2.2 s 暗红橙 → +2.5 s 几乎黑。颜色本身要压暗：芯这时 v 接近 1，亮的颜色 × 4 × 显示强度在显示端会饱和成黄白（每段在 ±0.15 s 里过渡，段时刻要比想要的早一点）
       { title: '红点蕊', en: 'RedCore', type: 'botan', k: 0.4, p: { ...MT_JQ.core, flash: 0, fade: 0.3, headSize: 1.0, headBright: 1.6, flicker: 0.15, sparkRate: 0, duration: 2.6, coreProfile: 1, haloFrac: 0.3, haloR: 2.5 },
-        m: { stages: [[0, '#fff0d0'], [0.9, '#f4c8ff']], xw: 0.25, ...MT_RAMP_NEUTRAL }, hi: 5.5 }] },     // 芯外缘一颗颗淡紫白小点（光晕大了会糊成一圈洋红光环）
+        m: { stages: [[0, '#fff0d0'], [0.9, '#f4c8ff']], xw: 0.25, ...MT_RAMP_NEUTRAL }, hi: 6.5 }] },     // 芯外缘一颗颗淡紫白小点（光晕大了会糊成一圈洋红光环）
   { id: 'mieStrobeKiku', name: '三重芯点灭菊', en: 'MieshinStrobeKiku', group: 0, burn: 3.0, go: 10,
     note: '亲星先是金色带尾的菊，1.0 s 尾停、星头变银白开始一明一灭（点灭菊）；里面红 / 绿 / 青三层芯（芯的颜色玉名没写，按常见配色）。亲星有尾，所以导出走序列（不走光点）。',
     src: '伊势神宫奉纳花火大会玉名「三重芯点滅菊」（伊势市 PDF）；点灭化学与频率见配方总表 1.4', layers: [
