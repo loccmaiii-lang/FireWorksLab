@@ -29,6 +29,8 @@ import numpy as np, cv2
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 sys.path.insert(0, HERE)
+try: import cvcompat  # noqa: F401  Windows：cv2 读写中文路径（本机任务）
+except Exception: pass
 
 # 颜色类（色相按 HSV 度数；饱和度低于 0.22 算白）
 HUES = [('红', 345, 15), ('橙', 15, 38), ('金黄', 38, 62), ('柠绿', 62, 95), ('绿', 95, 160), ('青', 160, 200), ('蓝', 200, 255), ('紫', 255, 290), ('粉', 290, 345)]

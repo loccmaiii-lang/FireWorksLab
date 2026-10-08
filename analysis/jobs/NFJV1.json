@@ -1,0 +1,39 @@
+{
+ "id": "NFJV1",
+ "type": "script",
+ "priority": 6,
+ "name": "金蕊柠 候选对比 1（现在 / 甲 / 乙 / 丙，整朵花同一把尺子和实拍比）",
+ "steps": [
+  {
+   "name": "候选对比",
+   "script": "候选对比.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--ref",
+    "analysis/原理/金蕊青柠星/打点_B/打点.json",
+    "--variant",
+    "现在:",
+    "--variant",
+    "甲:L1.sparkRate=1800;L1.sparkSize=0.45;L1.T0=2400;L1.cooling=0.15;L1.sparkInherit=0.05;L1.sparkStop=0.7;L1.sparkLife=0.35;L1.burn=1.1;L2.headSize=1.55;L2.burn=3.9;L2.burnJit=1.5;L2.fade=0.04;L2.flicker=0.5;L2.shutter=0.35;L2.starBrightCurve=0:0.03, 0.07:0.05, 0.1:0.6, 0.15:0.85, 0.26:1, 0.41:1, 0.62:0.85, 0.82:0.65, 0.92:0.5, 1:0.25;L2.starSizeCurve=0:1, 0.3:1, 0.5:0.92, 0.75:0.75, 0.92:0.6, 1:0.5;L2.M.headInt=1.6;L3.sparkLife=1.5;L3.sparkSize=0.45;L3.tailHaze=0.06;L3.cooling=0.15;L3.M.stages=0:#ffffff|1.2:#ffe2a0|1.7:#ffb848|2.2:#ffa040;L4.coreProfile=1;L4.haloFrac=0.5;L4.haloR=3",
+    "--variant",
+    "乙:L1.sparkRate=1800;L1.sparkSize=0.45;L1.T0=2400;L1.cooling=0.15;L1.sparkInherit=0.05;L1.sparkStop=0.7;L1.sparkLife=0.35;L1.burn=1.1;L2.headSize=1.55;L2.burn=3.9;L2.burnJit=1.5;L2.fade=0.04;L2.flicker=0.5;L2.shutter=0.35;L2.starBrightCurve=0:0.03, 0.07:0.05, 0.1:0.6, 0.15:0.85, 0.26:1, 0.41:1, 0.62:0.85, 0.82:0.65, 0.92:0.5, 1:0.25;L2.starSizeCurve=0:1, 0.3:1, 0.5:0.92, 0.75:0.75, 0.92:0.6, 1:0.5;L2.M.headInt=1.6;L3.sparkLife=1.5;L3.sparkSize=0.45;L3.tailHaze=0.06;L3.cooling=0.15;L3.M.stages=0:#ffffff|1.2:#ffe2a0|1.7:#ffb848|2.2:#ffa040;L4.coreProfile=1;L4.haloFrac=0.5;L4.haloR=3;L2.coreProfile=1;L2.haloFrac=0.25;L2.haloR=2.5",
+    "--variant",
+    "丙:L1.sparkRate=1800;L1.sparkSize=0.45;L1.T0=2400;L1.cooling=0.15;L1.sparkInherit=0.05;L1.sparkStop=0.7;L1.sparkLife=0.35;L1.burn=1.1;L2.headSize=1.55;L2.burn=3.9;L2.burnJit=1.5;L2.fade=0.04;L2.flicker=0.5;L2.shutter=0.35;L2.starBrightCurve=0:0.03, 0.07:0.05, 0.1:0.6, 0.15:0.85, 0.26:1, 0.41:1, 0.62:0.85, 0.82:0.65, 0.92:0.5, 1:0.25;L2.starSizeCurve=0:1, 0.3:1, 0.5:0.92, 0.75:0.75, 0.92:0.6, 1:0.5;L2.M.headInt=1.6;L3.sparkLife=1.5;L3.sparkSize=0.45;L3.tailHaze=0.06;L3.cooling=0.15;L3.M.stages=0:#ffffff|1.2:#ffe2a0|1.7:#ffb848|2.2:#ffa040;L4.coreProfile=1;L4.haloFrac=0.5;L4.haloR=3;L2.coreProfile=1;L2.haloFrac=0.45;L2.haloR=3.5;L2.M.ramp1=#2d5a08;L2.M.ramp2=#a8e83c;L2.M.ramp3=#ffffff;L2.M.stages=0:#ffd090|0.45:#fff8d8|0.78:#f6ffd8",
+    "--variant",
+    "丁:L1.sparkRate=1800;L1.sparkSize=0.45;L1.T0=2400;L1.cooling=0.15;L1.sparkInherit=0.05;L1.sparkStop=0.7;L1.sparkLife=0.35;L1.burn=1.1;L2.headSize=1.55;L2.burn=3.9;L2.burnJit=1.5;L2.fade=0.04;L2.flicker=0.5;L2.shutter=0.35;L2.starBrightCurve=0:0.03, 0.07:0.05, 0.1:0.6, 0.15:0.85, 0.26:1, 0.41:1, 0.62:0.85, 0.82:0.65, 0.92:0.5, 1:0.25;L2.starSizeCurve=0:1, 0.3:1, 0.5:0.92, 0.75:0.75, 0.92:0.6, 1:0.5;L2.M.headInt=1.6;L3.sparkLife=1.5;L3.sparkSize=0.45;L3.tailHaze=0.06;L3.cooling=0.15;L3.M.stages=0:#ffffff|1.2:#ffe2a0|1.7:#ffb848|2.2:#ffa040;L4.coreProfile=1;L4.haloFrac=0.5;L4.haloR=3;L2.coreProfile=1;L2.haloFrac=0.45;L2.haloR=3.5;L2.M.ramp1=#2d5a08;L2.M.ramp2=#a8e83c;L2.M.ramp3=#ffffff;L2.M.stages=0:#ffd090|0.45:#fff8d8|0.78:#f6ffd8;L2.sparkRate=40;L2.sparkLife=0.12;L2.sparkBright=0.02;L2.sparkInherit=0;L2.sparkGrav=0;L2.emberFrac=0.9;L2.emberLife=1.4;L2.emberBright=0.05;L2.emberFollow=0.4;L2.emberSize=1",
+    "--variant",
+    "戊:L1.sparkRate=1800;L1.sparkSize=0.45;L1.T0=2400;L1.cooling=0.15;L1.sparkInherit=0.05;L1.sparkStop=0.7;L1.sparkLife=0.35;L1.burn=1.1;L2.headSize=1.55;L2.burn=3.9;L2.burnJit=1.5;L2.fade=0.04;L2.flicker=0.5;L2.shutter=0.35;L2.starBrightCurve=0:0.03, 0.07:0.05, 0.1:0.6, 0.15:0.85, 0.26:1, 0.41:1, 0.62:0.85, 0.82:0.65, 0.92:0.5, 1:0.25;L2.starSizeCurve=0:1, 0.3:1, 0.5:0.92, 0.75:0.75, 0.92:0.6, 1:0.5;L2.M.headInt=1.6;L3.sparkLife=1.5;L3.sparkSize=0.45;L3.tailHaze=0.06;L3.cooling=0.15;L3.M.stages=0:#ffffff|1.2:#ffe2a0|1.7:#ffb848|2.2:#ffa040;L4.coreProfile=1;L4.haloFrac=0.5;L4.haloR=3;L2.coreProfile=1;L2.haloFrac=0.35;L2.haloR=3;L2.M.ramp1=#2d5a08;L2.M.ramp2=#a8e83c;L2.M.ramp3=#ffffff",
+    "--px",
+    "1100",
+    "--out",
+    "{out}"
+   ],
+   "must": false,
+   "ok": [
+    0
+   ],
+   "timeout": 3600
+  }
+ ]
+}

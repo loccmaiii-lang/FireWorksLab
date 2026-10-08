@@ -22,6 +22,7 @@ HTML = os.path.join(ROOT, 'tool', 'FireworkBaker.html')
 def parse_sets(sets):
     out = []
     for s in sets:
+        if s == 'base': out.append(('base', [])); continue      # 只画底（不扫）：量现在的样子
         if ';' in s:     # 一档改几个参数
             kv = dict(x.split('=', 1) for x in s.split(';')); out.append(('+'.join(kv), [{k: num(v) for k, v in kv.items()}]))
         else:
