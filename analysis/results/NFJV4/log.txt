@@ -1,0 +1,8 @@
+11:11:51 第 1/1 步：候选对比
+11:12:32   卯 → 11 张
+11:12:32   辰 → 11 张
+11:12:32   巳 → 11 张
+11:12:32   午 → 11 张
+11:12:32   → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFJV4\差距.md
+11:12:32   ✅ 候选对比（0.7 分钟）
+11:12:33 完成，用时 0.7 分钟
