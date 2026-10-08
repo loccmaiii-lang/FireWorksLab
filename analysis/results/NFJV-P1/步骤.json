@@ -1,0 +1,16 @@
+[
+ {
+  "name": "导出包 GoldCoreLime",
+  "script": "候选对比.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.3
+ },
+ {
+  "name": "模板实时渲染（4.9.41）",
+  "script": "候选对比.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.3
+ }
+]
