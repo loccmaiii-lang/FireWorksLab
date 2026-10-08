@@ -1,0 +1,24 @@
+{
+ "id": "NFR-J8",
+ "type": "script",
+ "priority": 1,
+ "name": "全程回放检查：金蕊柠 GoldCoreLime（JQ7E1 导出之后）",
+ "steps": [
+  {
+   "name": "GoldCoreLime（JQ7E1）",
+   "script": "全程回放检查.py",
+   "args": [
+    "{out}/GoldCoreLime.jpg",
+    "analysis/local/输出/素材包/GoldCoreLime",
+    "--times",
+    "0.04,0.1,0.18,0.28,0.4,0.55,0.7,0.85,0.95"
+   ],
+   "must": false,
+   "ok": [
+    0,
+    1
+   ],
+   "timeout": 900
+  }
+ ]
+}

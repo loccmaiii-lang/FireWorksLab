@@ -1,0 +1,54 @@
+{
+ "id": "NFJV-P7",
+ "type": "script",
+ "priority": 4,
+ "name": "金蕊柠 JQ7E1（已导出，回放检查过）：导出包和实拍同尺比（新尺子）+ 模板实时渲染；JQ6E6 那版另量一次作对照不行（素材包已覆盖），用 NFJV11「定」当旧版对照",
+ "steps": [
+  {
+   "name": "导出包 GoldCoreLime（JQ7E1）",
+   "script": "候选对比.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--pack",
+    "analysis/local/输出/素材包/GoldCoreLime",
+    "--pack-name",
+    "JQ7E1",
+    "--ref",
+    "analysis/原理/金蕊青柠星/打点_B/打点.json",
+    "--times",
+    "0.2,0.33,0.47,0.6,0.8,1.0,1.2,1.5,1.8,2.0,2.3,2.6,3.0,3.4,3.8,4.0",
+    "--px",
+    "1100",
+    "--out",
+    "{out}/导出包"
+   ],
+   "must": true,
+   "ok": [
+    0
+   ],
+   "timeout": 1800
+  },
+  {
+   "name": "模板实时渲染（4.9.47）",
+   "script": "候选对比.py",
+   "args": [
+    "--mt",
+    "kinzuiLime",
+    "--ref",
+    "analysis/原理/金蕊青柠星/打点_B/打点.json",
+    "--variant",
+    "定:",
+    "--px",
+    "1100",
+    "--out",
+    "{out}/实时"
+   ],
+   "must": false,
+   "ok": [
+    0
+   ],
+   "timeout": 1800
+  }
+ ]
+}
