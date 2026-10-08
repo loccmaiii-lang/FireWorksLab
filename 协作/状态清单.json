@@ -221,6 +221,9 @@
   ],
   "对话框新花型 · 金蕊柠重做（临时源码认领，已释放）": [
    "对话框新花型（2026-10-08 14:25）已完成并释放：4.9.40–4.9.46 只改 18_multitypes.js 里 kinzuiLime 一个模板（四层参数、MT_EXPOSURE 金菊蕊 0.1423 → 0.075、外层星数 520 → 450）+ 10_types.js VERSION 行 + CHANGELOG。模拟 / 渲染 / 导出 / 默认值 / OUTPUT_VER / 别的模板没动。标准检查 mt:kinzuiLime、JQ6 ✅（云端 + 本机 NFS-J7）。给 tool/src 负责人（方便时）：sparkTailEnd 用 max(1, sparkLifeEnd)，sparkLifeEnd < 1 时序列时长偏长（金菊蕊 4.2 s，2.5 s 后是空帧），最后一颗火花其实是 max(sparkLife, sparkStop + sparkLife × sparkLifeEnd) × 离散，可以这样算。"
+  ],
+  "对话框新花型 · 金蕊柠芯重力 / 淡紫点（临时源码认领）": [
+   "负责：对话框新花型（2026-10-08 15:40，用户 14:25「白芯还是有重力、圈和箭头的位置没识别到」）。只改 tool/src/js/18_multitypes.js 里 kinzuiLime 一个模板 + 10_types.js VERSION 一行 + CHANGELOG；只加不改，别的模板 / 模拟 / 渲染 / 导出不动。做完释放。"
   ]
  },
  "effects": [
