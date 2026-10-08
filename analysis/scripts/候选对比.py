@@ -4,6 +4,7 @@
   python3 analysis/scripts/候选对比.py --mt kinzuiLime --ref <实拍 打点.json> \
       --variant "现在:" --variant "甲:L1.sparkRate=1800;L2.headSize=1.5;L2.M.headInt=1.2" ... \
       [--times 0.33,0.47,0.6,0.8,1.2,1.5,1.8,2.0,2.3,3.0,3.8] [--px 1100] --out <目录>
+  python3 analysis/scripts/候选对比.py --pack <素材包目录> [--pack-name 名] --ref ... --out <目录>     （量导出的素材包：按 cascade.json 播，和回放检查同一套合成）
 
 - 改动写法：L<层号>.<参数>=<值>，颜色那边写 L2.M.ramp2=#aabbcc、L2.M.headInt=1.2；stages 写 L2.M.stages=0:#ffc070|0.45:#fff2b0|0.78:#eaff7a。
 - 渲染：烘焙器 mtRenderLayers（所有层叠在一起，和实时模拟同一套渲染 + 色调映射），按实拍同一时刻外层半径缩放到同一像素尺度，再按实拍的口径量（点 / 线纹理 / 跟踪以外的全部）。
@@ -132,13 +133,19 @@ def ref_crop(meta, t, Rref, size):
 
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--mt', required=True); ap.add_argument('--ref', required=True); ap.add_argument('--variant', action='append', required=True)
+    ap = argparse.ArgumentParser(); ap.add_argument('--mt', required=True); ap.add_argument('--ref', required=True); ap.add_argument('--variant', action='append'); ap.add_argument('--pack'); ap.add_argument('--pack-name')
     ap.add_argument('--times', default='0.33,0.47,0.6,0.8,1.2,1.5,1.8,2.0,2.3,3.0,3.8'); ap.add_argument('--px', type=int, default=1100); ap.add_argument('--out', required=True)
     a = ap.parse_args(); a.times = [float(x) for x in a.times.split(',')]; os.makedirs(a.out, exist_ok=True)
     ref = json.load(open(a.ref if os.path.isabs(a.ref) else os.path.join(ROOT, a.ref), encoding='utf-8'))
     rf = lambda t: min(ref['frames'], key=lambda f: abs(f['t'] - t))
-    variants = [parse_variant(v) for v in a.variant]
-    shots = asyncio.run(render(a, variants)); ren = shots.pop('_renderer', '?')
+    if a.pack:      # 导出的素材包：按 cascade.json 播（和回放检查 / 引擎回放同一套合成），每个时刻渲成 png
+        variants = [(a.pack_name or os.path.basename(a.pack.rstrip('/\\')), {})]; ren = '素材包（回放检查合成）'; shots = {variants[0][0]: []}
+        for t in a.times:
+            img = D.render_pack([a.pack], t, a.px); ok, buf = cv2.imencode('.png', img)
+            shots[variants[0][0]].append(dict(t=t, png='data:image/png;base64,' + base64.b64encode(buf.tobytes()).decode()))
+    else:
+        variants = [parse_variant(v) for v in a.variant]
+        shots = asyncio.run(render(a, variants)); ren = shots.pop('_renderer', '?')
     res = dict(mt=a.mt, ref=a.ref, renderer=ren, variants={n: dict(mods=m, frames=[]) for n, m in variants})
     crops = {}
     for name, _ in variants:
