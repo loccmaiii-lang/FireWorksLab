@@ -1,20 +1,20 @@
 // 由 analysis/scripts/review_to_baker.py 生成：迭代区（做完、等你看的东西）。不要手改。
 var FW_REVIEW = [
 {
-"id": "FC8R-1",
-"task": "FC8R-1",
+"id": "FC9R-1",
+"task": "FC9R-1",
 "kind": "preset",
 "date": "2026-10-09",
 "name": "扇形彗星 · 红彗星扇 · 正红星头",
 "note": "红彗星扇第 1 层「正红星头」：和另一层同一个模拟（同种子、同弹道），只是画的东西不同。",
 "look": null,
 "opinion": null,
-"tags": "扇形彗星 红彗星 扇面 N 簇 正红星头 FC8R-1",
+"tags": "扇形彗星 红彗星 扇面 N 簇 正红星头 FC9R-1",
 "doc": null,
 "imagesTitle": null,
 "principle": true,
 "hidden": true,
-"layerOf": "FC8R",
+"layerOf": "FC9R",
 "base": "kamuro",
 "p": {
 "renderVer": 40,
@@ -45,16 +45,19 @@ var FW_REVIEW = [
 "fade": 0.12,
 "flash": 0.08,
 "flashR": 1.0,
-"headSize": 1.4,
+"headSize": 0.8,
 "headBright": 3.0,
 "headTear": 0,
 "coreProfile": 1,
 "haloFrac": 0.6,
-"haloR": 2.8,
+"haloR": 1.0,
 "sparkRate": 0,
 "x1On": 0,
 "tailShoulder": 0,
-"exposure": 6.0
+"exposure": 2.0,
+"haloShape": 2,
+"headStretch": 0.5,
+"encGamma": 2.2
 },
 "m": {
 "stages": [
@@ -65,29 +68,29 @@ var FW_REVIEW = [
 ],
 "xw": 0.08,
 "ramp0": "#000000",
-"ramp1": "#3a0608",
-"ramp2": "#ff1416",
-"ramp3": "#ffc8cc",
+"ramp1": "#d8060e",
+"ramp2": "#ff0a1c",
+"ramp3": "#ffd0dc",
 "headInt": 1,
 "tailInt": 1
 },
-"ver": "f056f2ff"
+"ver": "ade004e3"
 },
 {
-"id": "FC8R-2",
-"task": "FC8R-2",
+"id": "FC9R-2",
+"task": "FC9R-2",
 "kind": "preset",
 "date": "2026-10-09",
 "name": "扇形彗星 · 红彗星扇 · 炭金尾",
 "note": "红彗星扇第 2 层「炭金尾」：和另一层同一个模拟（同种子、同弹道），只是画的东西不同。",
 "look": null,
 "opinion": null,
-"tags": "扇形彗星 红彗星 扇面 N 簇 炭金尾 FC8R-2",
+"tags": "扇形彗星 红彗星 扇面 N 簇 炭金尾 FC9R-2",
 "doc": null,
 "imagesTitle": null,
 "principle": true,
 "hidden": true,
-"layerOf": "FC8R",
+"layerOf": "FC9R",
 "base": "kamuro",
 "p": {
 "renderVer": 40,
@@ -133,7 +136,7 @@ var FW_REVIEW = [
 "sparkSize": 0.5,
 "sparkBright": 2.6,
 "twinkle": 0.4,
-"tailShoulder": 0.6,
+"tailShoulder": 0.3,
 "tailPinchHead": 0,
 "tailPinchTail": 0.85,
 "tailBellyAt": 0.12,
@@ -151,7 +154,7 @@ var FW_REVIEW = [
 "x1LifeJit": 30,
 "x1Size": 0.5,
 "x1SizeJit": 30,
-"x1Bright": 0.8,
+"x1Bright": 0.4,
 "x1BrightJit": 20,
 "x1BrightCurve": "0:1, 1:0",
 "x1Flick": 0,
@@ -172,22 +175,22 @@ var FW_REVIEW = [
 "headInt": 1,
 "tailInt": 1
 },
-"ver": "4ed5800f"
+"ver": "a01ac82f"
 },
 {
-"id": "FC8R",
-"task": "FC8R",
+"id": "FC9R",
+"task": "FC9R",
 "kind": "combo",
 "date": "2026-10-09",
 "name": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾）",
-"note": "用户 10-09 18:29（相机渲染）：「先改正红，然后尾缀是炭金，然后按顺序测试」。7 根筒扇面 60°、逐筒 0.2 s 出膛；出膛 72 m/s、2.2 s 燃尽（约 90 m）不爆。两层同一模拟：① 正红星头（白热亮核 + 正红小光晕，不再是 3.5 m 粉球、星和星之间不连成雾带）② 炭金尾（金色炭火火花，亮肩、头粗尾细）。诊断 analysis/probe/星头光晕诊断_2026-10-09/诊断.md。",
+"note": "用户 10-09 18:29（相机渲染）：「先改正红，然后尾缀是炭金，然后按顺序测试」。7 根筒扇面 60°、逐筒 0.2 s 出膛；出膛 72 m/s、2.2 s 燃尽（约 90 m）不爆。两层同一模拟：① 正红星头（白热亮核 + 正红小光晕，不再是 3.5 m 粉球、星和星之间不连成雾带）② 炭金尾（金色炭火火花，亮肩、头粗尾细）。诊断 analysis/probe/星头光晕诊断_2026-10-09/诊断.md。 FC9R：照 Blender 项目里你认可的光感（万彩千轮 C/D、FanComet R4、银彩菊 V02）——光晕是饱和的红、近晕 + 远晕两层、白只在小芯里。",
 "look": [
 "烘焙器里就是整排扇：一根筒一条，逐筒很快扫过去",
 "一起快速冲上去（越往上越慢），燃尽熄灭不爆，尾巴停在空中暗掉、漂开",
 "引擎回放 + 游戏内大小"
 ],
 "opinion": null,
-"tags": "扇形彗星 红彗星 扇面 N 簇 依次出膛 正红 炭金尾 FC8R",
+"tags": "扇形彗星 红彗星 扇面 N 簇 依次出膛 正红 炭金尾 FC9R",
 "doc": null,
 "imagesTitle": null,
 "principle": true,
@@ -195,26 +198,26 @@ var FW_REVIEW = [
 "name": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾）",
 "layers": [
 {
-"m": "rep:FC8R-1",
+"m": "rep:FC9R-1",
 "scale": 1,
 "delay": 0
 },
 {
-"m": "rep:FC8R-2",
+"m": "rep:FC9R-2",
 "scale": 1,
 "delay": 0
 }
 ]
 },
 "layerIds": [
-"FC8R-1",
-"FC8R-2"
+"FC9R-1",
+"FC9R-2"
 ],
 "layerNames": [
 "正红星头",
 "炭金尾"
 ],
-"ver": "52313a99"
+"ver": "51a7879c"
 },
 {
 "id": "FC2R",
@@ -41485,7 +41488,7 @@ var FW_EFFECTS = [
 "缺": [
 "UE 4.24 实机未验：大面片在引擎里的大小 / Pivot、两层加色叠加的亮度、UE Bloom 会不会在烘焙光晕上再加一层（诊断方案 P1）"
 ],
-"下一步": "【相机渲染 2026-10-09 20:20】待你验收：红彗星扇 FC8R（正红星头 + 炭金尾；导出 FCE-FC8R 回放检查 ✅、FCS8 ✅，烘焙器 4.9.53；看法 analysis/results/FCE-FC8R/看法.md，对比图 analysis/probe/星头光晕诊断_2026-10-09/对比_FC7R_FC8R_实拍.png）。按顺序测了：P0 只改参数 → 定稿；P2 幂律光晕（4.9.53 新能力）在 FC8R 上试三组，不比高斯好，没用；P1 UE 标定等你（Bloom 开没开、强度），P3 光带烟层你没要、没做，P4 跟 P1。FC7R 搬归档。 ｜ 【相机渲染 2026-10-09 18:35】用户 18:29：「先改正红，然后尾缀是炭金，然后按顺序测试」。做 FC8R：第 1 层正红星头（渐变亮核 + 小光晕），第 2 层炭金尾（这层不画星头）；按 P0 → P2 依次测；P1 UE 标定等用户。FC7R 退回制作中，FC8R 自检过了取代它。 ｜ 【相机渲染 2026-10-09 17:50】用户 17:31 拿实拍红星头对比，说 FC7R 星头 / 光晕差很多。诊断（analysis/probe/星头光晕诊断_2026-10-09/诊断.md）：相机链路没坏，是 FC7R-1 参数造成的——3.5 m 实心圆盘 + haloFrac 0.85（滑杆上限）、σ≈6 m 高斯，所以出现粉球 + 粉雾带；复现 r50、星间雾都和截图对上。另外光点核没有幂律尾巴，UE 的 Bloom / 曝光没标定。推荐 P0：FanGold 出 FC8R，只改 FC7R-1：coreProfile 1、headSize 0.8、headBright 约 12、haloFrac 0.35、haloR 2（预估 r10/r50 1.08 → 1.72，实拍 1.77–2.01；粉带消失）。等用户定三件事：① 颜色正红还是玫红 ② 07:43 要的「很大光晕 / 光带」还要不要（要的话走烟层） ③ 游戏 Bloom 开没开。用户点头前不动 FC7R。 ｜ 【对话框FanGold 2026-10-08 09:45】待你验收（用户 07:43）：红彗星扇 FC7R（导出 FCE-FC7R、FCS7 ✅，看法 analysis/results/FCE-FC7R/看法.md）、橙扇 FC6O（导出 FCE-FC6O、FCS6 ✅，看法 analysis/results/FCE-FC6O/看法.md）；回放检查全过。FC2R / FC3O（RT6 单条）保留。 ｜ 【对话框FanGold 2026-10-08 09:25】FC6 回来（回放检查全过、FCS6 ✅）：橙扇 FC6O 头尖尾粗、每条粗尾分得开 → 定；红光晕软了但不够大 → FC7R（光晕核心 3.5 m、半径 × 3.5、亮度 1.6），排 FCE-FC7R / FCS7；FC6R 搬归档。 ｜ 【对话框FanGold 2026-10-08 09:00】FC5 回来（回放检查全过）：红亮肩 + 头粗尾细对了、光晕还是实心圆片；橙头尖尾粗对了、下半截连成实心楔形 → FC6（光晕核心 2.5 m、85 % 给光晕；橙横向散 2.2、寿命 1.3），排 FCE-FC6R / FC6O / FCS6；FC5 搬归档。 ｜ 【对话框FanGold 2026-10-08 08:30】FC4 回来（回放检查全过、FCS4 ✅、实时 = 导出）：整排扇拼好、逐筒扫对；红光晕是硬边圆片、亮肩太短，橙扇太暗太细、尾端没粗 → FC5（光晕软大、亮肩加粗加长；橙火花更密更亮、横向散 3.5 m/s、曝光 1.5），排 FCE-FC5R / FC5O / FCS5；FC4 搬归档。 ｜ 【对话框FanGold 2026-10-08 08:10】用户 07:43：没做对——要在烘焙器里用分簇拼好整排；红彗星亮肩明显、头粗尾细、星头一层很大的玫红光晕；橙扇头尖尾粗。FC2R / FC3O 保留（退回制作中）。第 2 套 FC4：红彗星扇 FC4R（7 筒 60°，两层同一模拟：玫红光晕 + 亮肩彗尾）、橙扇 FC4O（13 筒 70°，一层，头尖尾粗）；排本机 FCE-FC4R / FCE-FC4O / FCS4。 ｜ 【对话框FanGold 2026-10-08 02:55】待你验收：红彗星 FC2R（导出 FCE-FC2R，包 FanCometRed / 贴图 FanComet_S_Red）、橙扇 FC3O（导出 FCE-FC3O，包 FanCometOrange / FanComet_S_Orange）；回放检查全过、标准检查 FCS2 / FCS3 ✅；看法 analysis/results/FCE-FC2R/看法.md、FCE-FC3O/看法.md。Cascade 拼扇见原理 analysis/原理/扇形彗星.md 第 4 节。 ｜ 【对话框FanGold 2026-10-08 02:35】FC2 回来：红彗星 FC2R 回放检查全过、FCS2 ✅、实时 = 导出，星头 + 约 15 m 白粉火焰 + 粉红火花尾，就绪；橙扇 FC2O 近段过曝 2.1 % → FC3O（近段曝光 0.48、GPU 远看直径 1.0 m），排 FCE-FC3O / FCS3。 ｜ 【对话框FanGold 2026-10-08 02:15】FC1 本机回来（FCE-FC1R / FC1O、FCS1 ✅）：实时 = 导出，但近段白热段 ≈ 50 m 一整根白棒、星头看不出来，近段过曝 6.5 / 7.7 % → FC2（火粉寿命 0.3 / 0.35 s、近段贴图曝光 0.55 引擎补回；方案加英文名 Red / Orange，两包贴图不再重名）；排 FCE-FC2R / FCE-FC2O / FCS2。FC1 搬归档。 ｜ 【对话框FanGold 2026-10-08 01:55】原理 analysis/原理/扇形彗星.md（现实参考：50 mm 彗星 ≈ 100 m、终端 38–40 m/s、2–3 s 烧完）；条目 FC1R 红彗星 / FC1O 橙扇（RT6S 同一套分层，只改数值）；排本机 FCE-FC1R / FCE-FC1O（导出 + 回放检查）、FCS1（标准检查）→ 回来审看引擎回放 → 待我验收。",
+"下一步": "【相机渲染 2026-10-09 22:40】待你验收：红彗星扇 FC9R（照 Blender 里你认可的光感：万彩千轮 C/D、FanComet R4、银彩菊 V02），取代 FC8R。导出 FCE-FC9R 回放检查 ✅、FCS9 ✅，烘焙器 4.9.54（光晕形状加「多层柔光」）。看法 analysis/results/FCE-FC9R/看法.md；差距和补法 analysis/probe/星头光晕诊断_2026-10-09/诊断.md 第 7 节；对比图 对比_FC9R_Blender.png。FC8R 搬归档。等你：UE Bloom 开没开（P1）。 ｜ 【相机渲染 2026-10-09 20:20】待你验收：红彗星扇 FC8R（正红星头 + 炭金尾；导出 FCE-FC8R 回放检查 ✅、FCS8 ✅，烘焙器 4.9.53；看法 analysis/results/FCE-FC8R/看法.md，对比图 analysis/probe/星头光晕诊断_2026-10-09/对比_FC7R_FC8R_实拍.png）。按顺序测了：P0 只改参数 → 定稿；P2 幂律光晕（4.9.53 新能力）在 FC8R 上试三组，不比高斯好，没用；P1 UE 标定等你（Bloom 开没开、强度），P3 光带烟层你没要、没做，P4 跟 P1。FC7R 搬归档。 ｜ 【相机渲染 2026-10-09 18:35】用户 18:29：「先改正红，然后尾缀是炭金，然后按顺序测试」。做 FC8R：第 1 层正红星头（渐变亮核 + 小光晕），第 2 层炭金尾（这层不画星头）；按 P0 → P2 依次测；P1 UE 标定等用户。FC7R 退回制作中，FC8R 自检过了取代它。 ｜ 【相机渲染 2026-10-09 17:50】用户 17:31 拿实拍红星头对比，说 FC7R 星头 / 光晕差很多。诊断（analysis/probe/星头光晕诊断_2026-10-09/诊断.md）：相机链路没坏，是 FC7R-1 参数造成的——3.5 m 实心圆盘 + haloFrac 0.85（滑杆上限）、σ≈6 m 高斯，所以出现粉球 + 粉雾带；复现 r50、星间雾都和截图对上。另外光点核没有幂律尾巴，UE 的 Bloom / 曝光没标定。推荐 P0：FanGold 出 FC8R，只改 FC7R-1：coreProfile 1、headSize 0.8、headBright 约 12、haloFrac 0.35、haloR 2（预估 r10/r50 1.08 → 1.72，实拍 1.77–2.01；粉带消失）。等用户定三件事：① 颜色正红还是玫红 ② 07:43 要的「很大光晕 / 光带」还要不要（要的话走烟层） ③ 游戏 Bloom 开没开。用户点头前不动 FC7R。 ｜ 【对话框FanGold 2026-10-08 09:45】待你验收（用户 07:43）：红彗星扇 FC7R（导出 FCE-FC7R、FCS7 ✅，看法 analysis/results/FCE-FC7R/看法.md）、橙扇 FC6O（导出 FCE-FC6O、FCS6 ✅，看法 analysis/results/FCE-FC6O/看法.md）；回放检查全过。FC2R / FC3O（RT6 单条）保留。 ｜ 【对话框FanGold 2026-10-08 09:25】FC6 回来（回放检查全过、FCS6 ✅）：橙扇 FC6O 头尖尾粗、每条粗尾分得开 → 定；红光晕软了但不够大 → FC7R（光晕核心 3.5 m、半径 × 3.5、亮度 1.6），排 FCE-FC7R / FCS7；FC6R 搬归档。 ｜ 【对话框FanGold 2026-10-08 09:00】FC5 回来（回放检查全过）：红亮肩 + 头粗尾细对了、光晕还是实心圆片；橙头尖尾粗对了、下半截连成实心楔形 → FC6（光晕核心 2.5 m、85 % 给光晕；橙横向散 2.2、寿命 1.3），排 FCE-FC6R / FC6O / FCS6；FC5 搬归档。 ｜ 【对话框FanGold 2026-10-08 08:30】FC4 回来（回放检查全过、FCS4 ✅、实时 = 导出）：整排扇拼好、逐筒扫对；红光晕是硬边圆片、亮肩太短，橙扇太暗太细、尾端没粗 → FC5（光晕软大、亮肩加粗加长；橙火花更密更亮、横向散 3.5 m/s、曝光 1.5），排 FCE-FC5R / FC5O / FCS5；FC4 搬归档。 ｜ 【对话框FanGold 2026-10-08 08:10】用户 07:43：没做对——要在烘焙器里用分簇拼好整排；红彗星亮肩明显、头粗尾细、星头一层很大的玫红光晕；橙扇头尖尾粗。FC2R / FC3O 保留（退回制作中）。第 2 套 FC4：红彗星扇 FC4R（7 筒 60°，两层同一模拟：玫红光晕 + 亮肩彗尾）、橙扇 FC4O（13 筒 70°，一层，头尖尾粗）；排本机 FCE-FC4R / FCE-FC4O / FCS4。 ｜ 【对话框FanGold 2026-10-08 02:55】待你验收：红彗星 FC2R（导出 FCE-FC2R，包 FanCometRed / 贴图 FanComet_S_Red）、橙扇 FC3O（导出 FCE-FC3O，包 FanCometOrange / FanComet_S_Orange）；回放检查全过、标准检查 FCS2 / FCS3 ✅；看法 analysis/results/FCE-FC2R/看法.md、FCE-FC3O/看法.md。Cascade 拼扇见原理 analysis/原理/扇形彗星.md 第 4 节。 ｜ 【对话框FanGold 2026-10-08 02:35】FC2 回来：红彗星 FC2R 回放检查全过、FCS2 ✅、实时 = 导出，星头 + 约 15 m 白粉火焰 + 粉红火花尾，就绪；橙扇 FC2O 近段过曝 2.1 % → FC3O（近段曝光 0.48、GPU 远看直径 1.0 m），排 FCE-FC3O / FCS3。 ｜ 【对话框FanGold 2026-10-08 02:15】FC1 本机回来（FCE-FC1R / FC1O、FCS1 ✅）：实时 = 导出，但近段白热段 ≈ 50 m 一整根白棒、星头看不出来，近段过曝 6.5 / 7.7 % → FC2（火粉寿命 0.3 / 0.35 s、近段贴图曝光 0.55 引擎补回；方案加英文名 Red / Orange，两包贴图不再重名）；排 FCE-FC2R / FCE-FC2O / FCS2。FC1 搬归档。 ｜ 【对话框FanGold 2026-10-08 01:55】原理 analysis/原理/扇形彗星.md（现实参考：50 mm 彗星 ≈ 100 m、终端 38–40 m/s、2–3 s 烧完）；条目 FC1R 红彗星 / FC1O 橙扇（RT6S 同一套分层，只改数值）；排本机 FCE-FC1R / FCE-FC1O（导出 + 回放检查）、FCS1（标准检查）→ 回来审看引擎回放 → 待我验收。",
 "说明": "用户 10-08 07:43：在烘焙器里用分簇（扇面 N 簇 + 簇依次出膛）拼好整排扇；FC2R / FC3O（RT6 单条）保留。",
 "英文名": "FanComet",
 "层英文名": [
@@ -41494,8 +41497,8 @@ var FW_EFFECTS = [
 ],
 "方案": [
 {
-"id": "FC8R",
-"label": "红彗星扇（正红星头 + 炭金尾）",
+"id": "FC9R",
+"label": "红彗星扇（正红星头 + 炭金尾，Blender 光感）",
 "en": "Red"
 },
 {
@@ -41514,19 +41517,19 @@ var FW_EFFECTS = [
 "en": "OrangeStrand"
 }
 ],
-"主条目": "FC8R",
-"工作版": "FC8R",
+"主条目": "FC9R",
+"工作版": "FC9R",
 "导出任务": [
-"FCE-FC8R",
+"FCE-FC9R",
 "FCE-FC6O"
 ],
-"待验收版": "FC8R",
+"待验收版": "FC9R",
 "交付说明": {
-"解决了什么": "红彗星扇 FC8R（你 10-09 18:29：先改正红、尾缀炭金）：星头从 3.5 m 粉色实心球 + 连成一条的粉雾，改成白热亮核 + 正红光晕（渐变亮核 1.4 m、光晕占比 0.6 / 半径 × 2.8、贴图曝光 × 6），星和星之间不再连雾；尾巴改成炭金火花（金 Ramp 按实拍金菊尾巴颜色反推，颗粒大、带闪烁、亮肩收小，这层不画星头）。量出来星头剖面、颜色和实拍对上（r10/r50 1.83–1.93，实拍 1.77–2.01；星间雾 0.009–0.022；色相 −1°，实拍 −8° / −2°）。实时模拟和引擎回放一致。橙扇 FC6O 没动。",
-"仍有差异": "尾巴比实拍细、远处收得早一点（r3%/r50 1.97–2.14，实拍 2.26–2.84），最亮那档火花偏黄约 9°；燃尽时星头直接没了（没渐暗）；筒数、扇面角、扫射时间仍是看图估的。",
-"未经 UE 验证": "UE Bloom / 自动曝光会不会在烘焙光晕上再加一层（P1，要你截一张 Bloom 开 / 关）；大面片大小和 Pivot、两层加色叠加的亮度、自发光倍数。"
+"解决了什么": "红彗星扇 FC9R（你 10-09 20:34：照 Blender 项目里认可的光感再做一版）：星头 = 小白芯 + 贴得紧的亮红近晕 + 一大圈很淡的红远晕，沿运动方向略拉长（照 FanComet R4 的软泪滴）；光晕一路是饱和的红，不再发灰（4·r50 处饱和度 0.36 → 0.88，万彩千轮 C 0.91），光晕从 4·r50 就没了改成拖到 6·r50（亮度 0.01 → 0.11，C 0.07）。尾巴是 FC8R 那套炭金，亮肩收小，头比尾亮。烘焙器加了「光晕形状：多层柔光」（4.9.54，缺省关、别的效果逐像素不变）。实时模拟和引擎回放一致。橙扇 FC6O 没动。",
+"仍有差异": "1.80 s 星头色相 7°，比 FC8R 偏橙一点（显示色调映射逐通道压缩，Blender 按最大分量；这项没改，要先做 UE 标定）；远晕比万彩千轮 C 略大；开头 0.6 s 七颗挤在一起时远晕叠成一团；燃尽时星头直接灭；筒数、扇面角、扫射时间仍是看图估的。",
+"未经 UE 验证": "UE Bloom 会不会在烘好的远晕上再叠一层（P1，要你截一张 Bloom 开 / 关）；星头层改用 γ2.2 编码，项目材质查 Ramp 的位置没实测；大面片大小、Pivot、两层加色叠加的亮度。"
 },
-"ver": "52313a99",
+"ver": "51a7879c",
 "jobs": [
 {
 "id": "FCE-FC2R",
@@ -41547,7 +41550,7 @@ var FW_EFFECTS = [
 "seen": true
 },
 {
-"id": "FCE-FC8R",
+"id": "FCE-FC9R",
 "type": "export",
 "state": "已回来",
 "seen": true
@@ -41652,14 +41655,14 @@ var FW_EFFECTS = [
 "stale": false
 },
 {
-"job": "FCE-FC8R",
-"entry": "FC8R",
-"ver": "52313a99·master4.3.8-core1+master4.9.31",
-"time": "2026-10-09 20:05",
+"job": "FCE-FC9R",
+"entry": "FC9R",
+"ver": "51a7879c·master4.3.8-core1+master4.9.31",
+"time": "2026-10-09 22:21",
 "packages": [
 {
 "name": "FanCometRed",
-"replica": "FC8R",
+"replica": "FC9R",
 "files": [
 "T_EFX_FireWorks_FanComet_Red_Comet_4x4_01.png",
 "T_EFX_FireWorks_FanComet_Red_Comet_4x4_01_C.png",

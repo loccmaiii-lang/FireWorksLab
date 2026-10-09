@@ -341,12 +341,12 @@
    }
   },
   {
-   "id": "FC8R-1",
+   "id": "FC9R-1",
    "date": "2026-10-09",
    "name": "扇形彗星 · 红彗星扇 · 正红星头",
    "base": "kamuro",
    "hidden": true,
-   "tags": "扇形彗星 红彗星 扇面 N 簇 正红星头 FC8R-1",
+   "tags": "扇形彗星 红彗星 扇面 N 簇 正红星头 FC9R-1",
    "p": {
     "renderVer": 40,
     "pattern": "cluster",
@@ -376,16 +376,19 @@
     "fade": 0.12,
     "flash": 0.08,
     "flashR": 1.0,
-    "headSize": 1.4,
+    "headSize": 0.8,
     "headBright": 3.0,
     "headTear": 0,
     "coreProfile": 1,
     "haloFrac": 0.6,
-    "haloR": 2.8,
+    "haloR": 1.0,
     "sparkRate": 0,
     "x1On": 0,
     "tailShoulder": 0,
-    "exposure": 6.0
+    "exposure": 2.0,
+    "haloShape": 2,
+    "headStretch": 0.5,
+    "encGamma": 2.2
    },
    "m": {
     "stages": [
@@ -396,21 +399,21 @@
     ],
     "xw": 0.08,
     "ramp0": "#000000",
-    "ramp1": "#3a0608",
-    "ramp2": "#ff1416",
-    "ramp3": "#ffc8cc",
+    "ramp1": "#d8060e",
+    "ramp2": "#ff0a1c",
+    "ramp3": "#ffd0dc",
     "headInt": 1,
     "tailInt": 1
    },
    "note": "红彗星扇第 1 层「正红星头」：和另一层同一个模拟（同种子、同弹道），只是画的东西不同。"
   },
   {
-   "id": "FC8R-2",
+   "id": "FC9R-2",
    "date": "2026-10-09",
    "name": "扇形彗星 · 红彗星扇 · 炭金尾",
    "base": "kamuro",
    "hidden": true,
-   "tags": "扇形彗星 红彗星 扇面 N 簇 炭金尾 FC8R-2",
+   "tags": "扇形彗星 红彗星 扇面 N 簇 炭金尾 FC9R-2",
    "p": {
     "renderVer": 40,
     "pattern": "cluster",
@@ -455,7 +458,7 @@
     "sparkSize": 0.5,
     "sparkBright": 2.6,
     "twinkle": 0.4,
-    "tailShoulder": 0.6,
+    "tailShoulder": 0.3,
     "tailPinchHead": 0,
     "tailPinchTail": 0.85,
     "tailBellyAt": 0.12,
@@ -473,7 +476,7 @@
     "x1LifeJit": 30,
     "x1Size": 0.5,
     "x1SizeJit": 30,
-    "x1Bright": 0.8,
+    "x1Bright": 0.4,
     "x1BrightJit": 20,
     "x1BrightCurve": "0:1, 1:0",
     "x1Flick": 0,
@@ -600,17 +603,17 @@
  ],
  "combos": [
   {
-   "id": "FC8R",
+   "id": "FC9R",
    "date": "2026-10-09",
    "name": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾）",
    "layers": [
     {
-     "m": "rep:FC8R-1",
+     "m": "rep:FC9R-1",
      "scale": 1,
      "delay": 0
     },
     {
-     "m": "rep:FC8R-2",
+     "m": "rep:FC9R-2",
      "scale": 1,
      "delay": 0
     }
@@ -619,15 +622,16 @@
     "正红星头",
     "炭金尾"
    ],
-   "tags": "扇形彗星 红彗星 扇面 N 簇 依次出膛 正红 炭金尾 FC8R",
+   "tags": "扇形彗星 红彗星 扇面 N 簇 依次出膛 正红 炭金尾 FC9R",
    "look": [
     "烘焙器里就是整排扇：一根筒一条，逐筒很快扫过去",
     "一起快速冲上去（越往上越慢），燃尽熄灭不爆，尾巴停在空中暗掉、漂开",
     "引擎回放 + 游戏内大小"
    ],
-   "note": "用户 10-09 18:29（相机渲染）：「先改正红，然后尾缀是炭金，然后按顺序测试」。7 根筒扇面 60°、逐筒 0.2 s 出膛；出膛 72 m/s、2.2 s 燃尽（约 90 m）不爆。两层同一模拟：① 正红星头（白热亮核 + 正红小光晕，不再是 3.5 m 粉球、星和星之间不连成雾带）② 炭金尾（金色炭火火花，亮肩、头粗尾细）。诊断 analysis/probe/星头光晕诊断_2026-10-09/诊断.md。",
+   "note": "用户 10-09 18:29（相机渲染）：「先改正红，然后尾缀是炭金，然后按顺序测试」。7 根筒扇面 60°、逐筒 0.2 s 出膛；出膛 72 m/s、2.2 s 燃尽（约 90 m）不爆。两层同一模拟：① 正红星头（白热亮核 + 正红小光晕，不再是 3.5 m 粉球、星和星之间不连成雾带）② 炭金尾（金色炭火火花，亮肩、头粗尾细）。诊断 analysis/probe/星头光晕诊断_2026-10-09/诊断.md。 FC9R：照 Blender 项目里你认可的光感（万彩千轮 C/D、FanComet R4、银彩菊 V02）——光晕是饱和的红、近晕 + 远晕两层、白只在小芯里。",
    "replaces": [
-    "FC7R"
+    "FC7R",
+    "FC8R"
    ]
   }
  ]

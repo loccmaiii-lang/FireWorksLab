@@ -188,7 +188,7 @@ GOLD_TAIL8 = dict(RED_TAIL5, headBright=0, headTear=0,
 GOLD_TAIL8_M = {'stages': [[0, '#ffffff']], 'xw': 0.08, 'ramp0': '#000000', 'ramp1': '#6a1c08', 'ramp2': '#c84418', 'ramp3': '#ff9c50', 'headInt': 1, 'tailInt': 1}
 
 
-def fan_entries8(V, head, head_m, tail, tail_m, note_extra=''):
+def fan_entries8(V, head, head_m, tail, tail_m, note_extra='', replaces=('FC7R',), date='2026-10-09'):
     lays = [('Glow', '正红星头', head, head_m), ('Comet', '炭金尾', tail, tail_m)]
     ents = [{'id': f'{V}R-{i + 1}', 'date': '2026-10-09', 'name': f'扇形彗星 · 红彗星扇 · {cn}', 'base': 'kamuro', 'hidden': True,
              'tags': f'扇形彗星 红彗星 扇面 N 簇 {cn} {V}R-{i + 1}', 'p': dict(p), 'm': dict(m),
@@ -199,14 +199,30 @@ def fan_entries8(V, head, head_m, tail, tail_m, note_extra=''):
              'note': '用户 10-09 18:29（相机渲染）：「先改正红，然后尾缀是炭金，然后按顺序测试」。7 根筒扇面 60°、逐筒 0.2 s 出膛；出膛 72 m/s、2.2 s 燃尽（约 90 m）不爆。'
                      '两层同一模拟：① 正红星头（白热亮核 + 正红小光晕，不再是 3.5 m 粉球、星和星之间不连成雾带）② 炭金尾（金色炭火火花，亮肩、头粗尾细）。'
                      '诊断 analysis/probe/星头光晕诊断_2026-10-09/诊断.md。' + note_extra,
-             'replaces': ['FC7R']}
+             'replaces': list(replaces)}
     return ents, [combo]
 
 
 FAN_ENTS8, FAN_COMBOS8 = fan_entries8('FC8', RED_HEAD8, RED_HEAD8_M, GOLD_TAIL8, GOLD_TAIL8_M)
 
-FAN_ENTS = FAN_ENTS8 + [e for e in FAN_ENTS6 if e['id'] == 'FC6O']
-FAN_COMBOS = FAN_COMBOS8
+# ======================= FC9R（相机渲染，用户 2026-10-09 20:34）：照 Blender 项目里认可的光感 =======================
+# 用户原话：「有所好转，但效果还是不太好，我以前做过一个Blender的项目……找一些我夸过光感比较好的点，然后打开文件比对，代码和渲染差距在哪里，再给我实现一版」
+# 认可的三处（万彩千轮 C/D 色光、FanComet R4 头部、银彩菊 V02）共同做法 → 烘焙器里的对应（诊断 analysis/probe/星头光晕诊断_2026-10-09/诊断.md 第 7 节）：
+#   ① 光晕 = 星的颜色 × 亮度（暗处也是饱和的颜色，不是近黑的暗红）→ Ramp 从黑直接起到饱和色（ramp1），编码 γ2.2：材质 v·Ramp(v) 在暗部是 v²，
+#      γ2.2 编码正好抵掉，光晕亮度跟场景光量成正比、颜色不变，也不会在光晕外缘出一圈 8 位台阶；
+#   ② 近晕 + 远晕（两层 Fog Glow / 万彩千轮 near + soft）→ 4.9.55 光晕形状「多层柔光」；
+#   ③ 白只在很小的芯里 → 曝光 6 → 2（FC8R 把整个 1.4 m 亮核都烧白了），亮核 0.8 m，沿运动方向拉长 0.5（R4 的头是沿运动的软泪滴）；
+#   ④ 头最亮、尾在后：尾巴回到 FC8R 那套量对了颜色的炭金（线性编码），亮肩 1.0 → 0.3、亮肩亮点 2.0 → 0.4（FC8R 紧贴星头的金段比头还亮）。
+# 迭代 FC9R_v1–v10（analysis/probe/星头光晕诊断_2026-10-09/）：v1–v7 尾巴也开 γ2.2 → 尾比头亮、光晕太大成雾；v8 光晕范围对上万彩千轮 C；v10 Ramp 往蓝偏一点抵消显示压缩把亮红推向橙。弹道、筒数、扇面和 FC8R 一样。
+RED_HEAD9 = dict(RED_HEAD8, headSize=0.8, headBright=3.0, coreProfile=1, haloShape=2, haloFrac=0.6, haloR=1.0, headStretch=0.5, encGamma=2.2, exposure=2.0)
+RED_HEAD9_M = dict(RED_HEAD8_M, ramp0='#000000', ramp1='#d8060e', ramp2='#ff0a1c', ramp3='#ffd0dc')
+GOLD_TAIL9 = dict(GOLD_TAIL8, tailShoulder=0.3, x1Bright=0.4)
+GOLD_TAIL9_M = dict(GOLD_TAIL8_M)
+FAN_ENTS9, FAN_COMBOS9 = fan_entries8('FC9', RED_HEAD9, RED_HEAD9_M, GOLD_TAIL9, GOLD_TAIL9_M,
+    note_extra=' FC9R：照 Blender 项目里你认可的光感（万彩千轮 C/D、FanComet R4、银彩菊 V02）——光晕是饱和的红、近晕 + 远晕两层、白只在小芯里。', replaces=('FC7R', 'FC8R'))
+
+FAN_ENTS = FAN_ENTS9 + [e for e in FAN_ENTS6 if e['id'] == 'FC6O']
+FAN_COMBOS = FAN_COMBOS9
 next(e for e in FAN_ENTS if e['id'] == 'FC6O')['replaces'] = ['FC4O', 'FC5O']
 
 if __name__ == '__main__':

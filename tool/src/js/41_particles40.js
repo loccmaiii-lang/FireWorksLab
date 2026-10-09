@@ -154,9 +154,19 @@ function moffatFS40(fs) {
   return must40(fs, 'halo=3.14159265*vSig.x*vSig.y*uHaloFrac/(1.-uHaloFrac)*gaussianCoverage(vLocal,sigma)*window;',
     'vec2 qm=vLocal/sigma; halo=vSig.x*vSig.y*uHaloFrac/(1.-uHaloFrac)*(uHaloBeta-1.)/(sigma.x*sigma.y)*pow(1.+dot(qm,qm),-uHaloBeta)*window;');
 }
+// ---- 4.9.55 多层柔光（对话框相机渲染，用户 10-09 20:34「按 Blender 项目里认可的光感再做一版」；诊断 analysis/probe/星头光晕诊断_2026-10-09/诊断.md 第 7 节）----
+// 用户认可的三处 Blender 光感（万彩千轮 C/D、FanComet R4、银彩菊 V02）的辉光都是「近晕 + 远晕」两到四层：
+// 合成器两层 Fog Glow（近：小而强；远：大而弱），万彩千轮 V11 是 near 3s + soft 6s / 14s / 23s 几个高斯叠起来。单个高斯做不出「贴着亮核亮、远处一大圈很淡」。
+// haloShape = 2 时光晕 = 四个高斯，宽度 = 光晕半径倍数 × 亮核半径 × (0.6, 1.5, 3, 5.5)，能量份额 0.12 / 0.30 / 0.33 / 0.25（按万彩千轮 V11 C 各层能量折算），
+// 总光量和高斯一样（亮核 × 占比 / (1 − 占比)），每层 3.5–4σ 收尾，画到 22 × 光晕半径倍数 × 亮核半径。最外层很宽：只建议给星头这种少量的大亮点用，几十万粒火花全开会慢。
+function multiVS40(vs) { return must40(vs, '4.*max(1.,uHaloR)', '22.*max(1.,uHaloR)', true); }
+function multiFS40(fs) {
+  return must40(fs, 'halo=3.14159265*vSig.x*vSig.y*uHaloFrac/(1.-uHaloFrac)*gaussianCoverage(vLocal,sigma)*window;',
+    'const vec4 HK=vec4(.6,1.5,3.,5.5), HW=vec4(.12,.30,.33,.25); for(int i=0;i<4;i++){ vec2 sg=sigma*HK[i]; halo+=HW[i]*gaussianCoverage(vLocal,sg)*(1.-smoothstep(3.5,4.,length(vLocal/sg))); } halo*=3.14159265*vSig.x*vSig.y*uHaloFrac/(1.-uHaloFrac);');
+}
 const moffatPrograms40 = {};
-function moffatProgram40(kind) {
-  const g = particleQuality.coreProfile ? 1 : 0, key = kind + g; if (moffatPrograms40[key]) return moffatPrograms40[key];
+function moffatProgram40(kind, shape = 1) {
+  const g = particleQuality.coreProfile ? 1 : 0, key = kind + g + '_' + shape; if (moffatPrograms40[key]) return moffatPrograms40[key];
   const G = x => g ? gradientSource40(x) : x, stable = v => v.replace('uint uid=uint(pid);', 'uint uid=uint(s)*65536u+uint(j);');
   let vs, fs = G(POINT40_FS);
   if (kind === 'pts') vs = POINT40_CPU_VS;
@@ -165,10 +175,10 @@ function moffatProgram40(kind) {
   else if (kind === 'spk') vs = stable(point40GpuSource(VS_SPK));
   else if (kind === 'emit' || kind === 'ehead') vs = point40GpuSource(kind === 'emit' ? VS_EMIT : VS_EHEAD);
   else throw new Error('没有这种光点程序：' + kind);
-  return moffatPrograms40[key] = compile(moffatVS40(G(vs)), moffatFS40(fs));
+  return moffatPrograms40[key] = shape === 2 ? compile(multiVS40(G(vs)), multiFS40(fs)) : compile(moffatVS40(G(vs)), moffatFS40(fs));
 }
 function particleProgram40(kind) {
-  if (particleQuality.haloShape === 1 && particleQuality.haloFrac > 0 && !(kind === 'pts' && PT_GAUSS)) return moffatProgram40(kind);     // 4.9.53
+  if (particleQuality.haloShape > 0 && particleQuality.haloFrac > 0 && !(kind === 'pts' && PT_GAUSS)) return moffatProgram40(kind, particleQuality.haloShape);     // 4.9.53 幂律 / 4.9.55 多层柔光
   if (kind === 'ptsHex' || kind === 'spkS') return shapeProgram40(kind);
   if (!particleQuality.coreProfile || (kind === 'pts' && PT_GAUSS)) return PR40[kind];
   if (!gradientPrograms40[kind]) {

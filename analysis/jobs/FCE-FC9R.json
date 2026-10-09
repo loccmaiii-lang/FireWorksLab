@@ -1,0 +1,9 @@
+{
+ "id": "FCE-FC9R",
+ "type": "export",
+ "effect": "fan_comet",
+ "entry": "FC9R",
+ "name": "FanCometRed",
+ "priority": 1,
+ "note": "相机渲染：红彗星扇 FC9R（Blender 光感，用户 10-09 20:34）导出 + 回放检查。"
+}
