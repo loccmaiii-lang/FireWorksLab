@@ -7,6 +7,8 @@
   E4 向后喷：锥角 0 时火花速度 = −喷速 × 星速方向；锥角 30° 时和正后方的夹角都 ≤ 30°。
   E5 每米生成：火花总数 ≈ 每米 × 路程（CPU 模拟和 GPU 轨迹的计数）；每秒时快段稀、每米时快段和慢段一样密。
   E6 取景估算把起始半径、向后喷算进去（范围变大）；缺省不变。
+  H1 星头单独光晕缺省关（qualityOf 的 headHalo = null）。
+  H2（显卡）星头单独 + 值和层一样 → 和缺省逐像素相同；H3 星头不亮时星头单独光晕不改火花（逐像素相同），改层的光晕会改；H4 星头单独大光晕让画面变了。
   G1（显卡）VS_SPK 各变体能编译（spk / spkS / 渐变亮核 / 幂律光晕）；起始半径让尾巴根部变粗、向后喷 / 每米让画面变了。
 输出 <out>/火花发射器检查.json（+ G1 的定帧图）；有不过的退出码 1。
 """
@@ -63,6 +65,8 @@ JS = r"""() => {
     if (!(m1.x1 - m1.x0 > m0.x1 - m0.x0 + 5)) F('E6 起始半径 / 向后喷没算进取景');
     if (JSON.stringify([m0.x0, m0.x1, m0.y0, m0.y1]) !== JSON.stringify([m2.x0, m2.x1, m2.y0, m2.y1])) F('E6 缺省取景变了');
     out.E6 = { 缺省宽: +(m0.x1 - m0.x0).toFixed(2), 加了宽: +(m1.x1 - m1.x0).toFixed(2) }; }
+  // H1
+  { const P = derive({ ...structuredClone(defaultsFor('kamuro').P), type: 'kamuro' }); if (qualityOf(P).headHalo !== null) F('H1 缺省星头单独光晕不是关'); }
   return out;
 }"""
 
@@ -76,6 +80,13 @@ JS_GPU = r"""async () => {
   const cases = { base: {}, spawnR: { sparkSpawnR: 3 }, head: { sparkSpawnHead: 1.5 }, jet: { sparkJet: 25, sparkJetCone: 25 }, perm: { sparkRateBy: 'm', sparkPerM: 12 },
     grad: { sparkSpawnR: 2, coreProfile: 1 }, moffat: { sparkSpawnR: 2, haloShape: 1, haloFrac: 0.3 } };
   for (const [k, o] of Object.entries(cases)) { try { await shot(o, k); } catch (e) { F('G1 渲染 ' + k + '：' + e.message); } }
+  // H2–H4 星头单独光晕（4.9.58）
+  const same = (a, b) => a === b;
+  const h0 = await shot({}, 'H_base'), h2 = await shot({ headHaloOwn: 1, headHaloFrac: base.haloFrac == null ? 0.22 : base.haloFrac, headHaloR: base.haloR || 3 }, 'H2_same');
+  if (!same(h0, h2)) F('H2 星头单独（值同层）和缺省不一样');
+  const d0 = await shot({ headBright: 0 }, 'H3_dark'), d1 = await shot({ headBright: 0, headHaloOwn: 1, headHaloFrac: 0.8, headHaloR: 6 }, 'H3_dark_own'), d2 = await shot({ headBright: 0, haloFrac: 0.8, haloR: 6 }, 'H3_dark_layer');
+  if (!same(d0, d1)) F('H3 星头单独光晕改了火花'); if (same(d0, d2)) F('H3 层光晕没改火花（对照失效）');
+  const h4 = await shot({ headHaloOwn: 1, headHaloFrac: 0.8, headHaloR: 6 }, 'H4_big'); if (same(h0, h4)) F('H4 星头单独大光晕画面没变');
   return out;
 }"""
 

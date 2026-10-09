@@ -1,0 +1,49 @@
+{
+ "id": "FSR3",
+ "type": "script",
+ "priority": 2,
+ "name": "对话框FanGold 4.9.58：星头单独光晕（缺省关）回归 + 检查",
+ "note": "火花发射器补全第 2 部分。缺省「跟这一层」应逐像素相同。",
+ "steps": [
+  {
+   "name": "基准回归 4.9.57 → 4.9.58 花型模板 6 个",
+   "script": "基准回归.py",
+   "args": [
+    "--old",
+    "{git:479f0753:tool/FireworkBaker.html}",
+    "--new",
+    "tool/FireworkBaker.html",
+    "--out",
+    "{out}/基准回归",
+    "--only",
+    "kiku,botan,kamuro,senrin,strobe,crackle"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "多层模板定帧回归 4.9.57 → 4.9.58",
+   "script": "多层模板回归.py",
+   "args": [
+    "--old",
+    "{git:479f0753:tool/FireworkBaker.html}",
+    "--out",
+    "{out}/多层模板回归",
+    "--ids",
+    "shinKiku,yaeHenka,yaeBlueBotan,colorSenrin,mieKamuroSaki,mangekyo,somewakeBotan,kinzuiLime"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "火花发射器检查（含星头单独光晕 H1–H4）",
+   "script": "火花发射器检查.py",
+   "args": [
+    "--out",
+    "{out}/火花发射器检查"
+   ],
+   "must": false,
+   "timeout": 900
+  }
+ ]
+}

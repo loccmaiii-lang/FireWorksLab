@@ -589,6 +589,7 @@ class Sim {
         for (let k = 1; k <= 4; k++) { const f = k / 4; push(bufH, nh++, s.x + ux * len * f, s.y + uy * len * f, I * (1 - 0.75 * f), sz * (1 - 0.7 * f)); } } }
       if (refl > 0 && s.y > 0) push(bufH, nh++, s.x + ripple(s.y, this.t), -s.y, I * refl * Math.exp(-s.y / 400), sz * 1.3);
     }
+    this.gHead = nh;     // 4.9.58 [0, gHead) 是星头（含泪滴 / 形状 / 倒影拆出来的点），星头单独光晕只换这一批
     // 爆裂小闪、落水闪光（f.abs）：照旧按星头核画（实心亮核 + 光晕）
     for (const f of this.flashes) {
       if (f.abs == null) continue;

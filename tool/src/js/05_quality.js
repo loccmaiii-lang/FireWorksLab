@@ -2,6 +2,7 @@
 function qualityOf(P) {
   return { coreProfile: +P.coreProfile === 1 ? 1 : 0, haloFrac: clamp(P.haloFrac == null ? .22 : +P.haloFrac, 0, .85), haloR: clamp(+P.haloR || 3, 1, 8),
     haloShape: [1, 2].includes(+P.haloShape) ? +P.haloShape : 0, haloBeta: clamp(P.haloBeta == null ? 2.2 : +P.haloBeta, 1.2, 6),     // 4.9.53 光晕形状（相机渲染）：0 高斯、1 幂律；4.9.55 加 2 多层柔光
+    headHalo: +P.headHaloOwn === 1 && familyOf(P.type || 'kiku') === 'aerial' ? { frac: clamp(P.headHaloFrac == null ? .22 : +P.headHaloFrac, 0, .85), r: clamp(+P.headHaloR || 3, 1, 8) } : null,     // 4.9.58 星头单独光晕（drawHeads 画星头那一批时换上）
     ss: clamp(Math.round(+P.qSS || 2), 1, 8), hz: clamp(+P.qHz || 300, 120, 1920), maxSub: clamp(Math.round(+P.qMaxSub || 16), 1, 128) };
 }
 let particleQuality = qualityOf({});

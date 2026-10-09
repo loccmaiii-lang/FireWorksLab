@@ -633,9 +633,12 @@ function drawPoints(buf, n, view, ppm, chan, w, xf) {
 }
 let PT_HEXON = false;     // 4.9.50：只有 drawHeads 画星头那一批时为 true（尾迹的 CPU 点、别的光点照旧是圆）
 // 4.3.3：Sim.gather 的星头缓冲里 [0, g) 是星头 / 爆裂小闪（实心亮核 + 光晕），[g, n) 是开花闪光（高斯柔光，见 20_sim.js gather）
-function drawHeads(buf, n, g, view, ppm, chan, w, xf) {
+// 4.9.58 星头单独光晕（对话框FanGold）：gh = 星头个数（Sim.gHead）；这一层设了「星头单独」时 [0, gh) 换上星头的光晕占比 / 半径另画一次，[gh, g) 照旧；没设时和以前一样一次画完
+function drawHeads(buf, n, g, view, ppm, chan, w, xf, gh) {
   g = g == null ? n : Math.max(0, Math.min(g, n));
-  if (g > 0) { PT_HEXON = !!PT_HEXP; try { drawPoints(buf, g, view, ppm, chan, w, xf); } finally { PT_HEXON = false; } }
+  const hh = particleQuality.headHalo, k = hh && gh != null ? Math.max(0, Math.min(gh, g)) : 0;
+  if (k > 0) { const q = particleQuality, f0 = q.haloFrac, r0 = q.haloR; q.haloFrac = hh.frac; q.haloR = hh.r; PT_HEXON = !!PT_HEXP; try { drawPoints(buf, k, view, ppm, chan, w, xf); } finally { PT_HEXON = false; q.haloFrac = f0; q.haloR = r0; } }
+  if (g > k) { PT_HEXON = !!PT_HEXP; try { drawPoints(k ? buf.subarray(k * 4) : buf, g - k, view, ppm, chan, w, xf); } finally { PT_HEXON = false; } }
   if (n > g) { const old = PT_GAUSS; PT_GAUSS = 1; try { drawPoints(buf.subarray(g * 4), n - g, view, ppm, chan, w, xf); } finally { PT_GAUSS = old; } }
 }
 // 在超采样缓冲上加线间底光（实时、定帧、烘焙都在 drawFrameSamples40 之后调这一个函数）。ppm = 这个缓冲每米多少像素
