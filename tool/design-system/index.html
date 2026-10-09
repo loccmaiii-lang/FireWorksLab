@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FireWorksLab · 共用设计基础与状态样板</title>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="sample.css">
+  <script src="components.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="sample.js" defer></script>
+</head>
+<body class="fw-scope fw-sample" data-density="compact">
+  <a class="fw-link fw-skip" href="#main">跳到主要内容</a>
+  <aside class="fw-rail" aria-label="样板章节">
+    <div class="fw-brand"><span class="fw-brand-mark" aria-hidden="true">F</span><div>FireWorksLab<small>工作区设计基础</small></div></div>
+    <nav class="fw-nav">
+      <a class="fw-link fw-nav-link" href="#foundations">01 · 视觉基础</a>
+      <a class="fw-link fw-nav-link" href="#components">02 · 交互组件</a>
+      <a class="fw-link fw-nav-link" href="#states">03 · 任务状态</a>
+      <a class="fw-link fw-nav-link" href="#workspace">04 · 工作区衔接</a>
+    </nav>
+    <div class="fw-rail-note"><span class="fw-status">基础 v0.1.0</span><p>统一规则，一套基础。<br>每个工具保留自己的任务。</p></div>
+  </aside>
+  <main id="main" class="fw-main">
+    <header class="fw-heading">
+      <div><p class="fw-eyebrow">FOUNDATIONS / COMPONENTS / STATES</p><h1 class="fw-page-title">统一工作区 · 组件与状态</h1><p class="fw-intro">覆盖烟花制作、素材交付与演出编排的共用基础。</p></div>
+      <div class="fw-density"><span class="fw-helper" id="density-label">界面密度</span><div class="fw-segments" role="group" aria-labelledby="density-label"><button class="fw-segment" type="button" data-density-choice="compact" aria-pressed="true">紧凑</button><button class="fw-segment" type="button" data-density-choice="comfortable" aria-pressed="false">舒适</button></div></div>
+    </header>
+    <div class="fw-callout"><span class="fw-status fw-status--active">可操作样板</span><p>可试用字段校验、滑杆、列表撤销和弹窗。下方资源与任务均为示例，本页不会导出文件或执行 UE 导入。</p></div>
+
+    <section id="foundations" class="fw-section" aria-labelledby="foundation-title">
+      <div class="fw-section-heading"><h2 id="foundation-title" class="fw-section-title">01 · 视觉基础</h2><span class="fw-helper">颜色有职责，信息有层级</span></div>
+      <div class="fw-foundation-grid">
+        <article class="fw-panel"><h3 class="fw-card-title">语义颜色</h3><div class="fw-swatches">
+          <div class="fw-swatch fw-swatch--primary"><span>主要操作</span><strong>薄荷绿</strong></div>
+          <div class="fw-swatch fw-swatch--surface"><span>工作表面</span><strong>中性深色</strong></div>
+          <div class="fw-swatch fw-swatch--success"><span>完成 / 可用</span><strong>带文字的状态</strong></div>
+          <div class="fw-swatch fw-swatch--warning"><span>需核对</span><strong>不等于失败</strong></div>
+          <div class="fw-swatch fw-swatch--error"><span>失败 / 错误</span><strong>提供恢复动作</strong></div>
+        </div><p class="fw-helper">颜色只控制界面，不改变烟花画面的曝光、Ramp 或贴图。</p></article>
+        <article class="fw-panel"><h3 class="fw-card-title">字阶与密度</h3><div class="fw-type-samples"><div><span class="fw-page-title">页面标题</span><code>24 / 32</code></div><div><span class="fw-section-title">模块标题</span><code>18 / 26</code></div><div><span class="fw-body-text">正文与说明</span><code>14 / 22</code></div><div><span class="fw-label">字段与状态 · 12.50 s</span><code>13 / 20</code></div><div><span class="fw-helper">辅助信息保持可读</span><code>12 / 18</code></div></div><p class="fw-helper">4 / 8 px 间距基准 · 32 / 40 px 控件 · 粗指针目标 48 px</p></article>
+      </div>
+    </section>
+
+    <section id="components" class="fw-section" aria-labelledby="component-title">
+      <div class="fw-section-heading"><h2 id="component-title" class="fw-section-title">02 · 交互组件</h2><span class="fw-helper">原生语义 · 键盘焦点 · 每次操作可追溯</span></div>
+      <div class="fw-component-grid">
+        <article class="fw-panel"><h3 class="fw-card-title">操作层级与确认</h3><p class="fw-helper fw-card-description">主操作突出；未满足条件时说明原因。</p><div class="fw-action-row"><button id="open-review" class="fw-button fw-button--primary" type="button"><span class="fw-icon" data-fw-icon="preview"></span>查看确认样板</button><button id="show-notice" class="fw-button" type="button">普通提示</button></div><div class="fw-action-row"><button class="fw-button" type="button" disabled aria-describedby="disabled-reason">导入（禁用样例）</button><span class="fw-helper" id="disabled-reason">原因：资源检查尚未通过</span></div><div class="fw-action-row"><button class="fw-button" type="button" disabled aria-busy="true"><span class="fw-icon" data-fw-icon="refresh"></span>检查中…</button><span class="fw-status fw-status--active">忙状态样例</span></div><p class="fw-helper">Tab 定位控件，Enter / Space 操作；弹窗用 Esc 返回触发按钮。</p></article>
+        <article class="fw-panel"><h3 class="fw-card-title">字段校验与只读信息</h3><form id="sample-form" novalidate class="fw-form"><div class="fw-field"><label class="fw-label" for="resource-name">资源英文名 <span class="fw-helper">必填</span></label><input class="fw-input" id="resource-name" name="resourceName" value="Golden_Peony" required aria-describedby="name-help"><p class="fw-helper" id="name-help">样板规则：字母开头，后续仅字母、数字、下划线；最多 48 字符。</p></div><div class="fw-field"><label class="fw-label" for="resource-revision">资源修订（只读样例）</label><input class="fw-input" id="resource-revision" value="example-r003" readonly></div><div class="fw-action-row"><button class="fw-button" type="submit">校验示例名称</button><span class="fw-helper" id="name-result" role="status"></span></div></form></article>
+        <article class="fw-panel"><h3 class="fw-card-title">模块摘要与参数联动</h3><p class="fw-helper fw-card-description">摘要默认收起；展开后直接展示完整样板字段。</p><details class="fw-details"><summary class="fw-summary">回放模块 · <span id="duration-summary">6.0 s</span></summary><div class="fw-details-content"><div class="fw-parameter"><label class="fw-label" for="duration-slider">示例时长</label><input class="fw-slider" id="duration-slider" type="range" min="1" max="12" step="0.1" value="6" aria-describedby="duration-help"><label class="fw-visually-hidden" for="duration-number">示例时长数值</label><input class="fw-input" id="duration-number" type="number" min="1" max="12" step="0.1" value="6"><span class="fw-helper">s</span><button class="fw-icon-button" id="duration-reset" type="button" aria-label="重置示例时长为6秒"><span class="fw-icon" data-fw-icon="refresh"></span></button></div><p class="fw-helper" id="duration-help">仅操作样板数值；范围 1–12 秒。滑杆与数值框同步。</p><div class="fw-action-row"><button class="fw-button" id="duration-undo" type="button" disabled><span class="fw-icon" data-fw-icon="undo"></span>撤销一次参数操作</button></div></div></details></article>
+        <article class="fw-panel"><h3 class="fw-card-title">列表操作与真实撤销</h3><p class="fw-helper fw-card-description">只移除本页示例行；撤销恢复同一对象、位置与选择。</p><label class="fw-check-label"><input class="fw-check" id="sample-select" type="checkbox" checked>选中此示例资源</label><div id="sample-list" class="fw-resource-list"></div><p id="empty-list" class="fw-helper" hidden>列表为空，可用下方提示撤销。</p></article>
+      </div>
+      <div id="notice-host" class="fw-notice-host" aria-label="操作提示"></div>
+    </section>
+
+    <section id="states" class="fw-section" aria-labelledby="state-title">
+      <div class="fw-section-heading"><h2 id="state-title" class="fw-section-title">03 · 任务状态</h2><span class="fw-helper">状态展示样例 · 非当前任务进度</span></div>
+      <article class="fw-panel fw-state-panel"><div class="fw-table-scroll" role="region" aria-label="任务状态示例表" tabindex="0"><table class="fw-table"><thead><tr><th scope="col">阶段</th><th scope="col">状态样例</th><th scope="col">用户下一步</th><th scope="col">必须说明</th></tr></thead><tbody>
+        <tr><td>制作</td><td><span class="fw-status fw-status--warning">产物已过期</span></td><td>重新烘焙</td><td>参数已改变；旧产物保持可辨认</td></tr>
+        <tr><td>烘焙</td><td><span class="fw-status fw-status--active">处理中 · 样例 42%</span></td><td>查看进度 / 取消</td><td><label class="fw-visually-hidden" for="sample-progress">烘焙进度样例42%</label><progress class="fw-progress" id="sample-progress" max="100" value="42">42%</progress></td></tr>
+        <tr><td>交付</td><td><span class="fw-status fw-status--ready">完整目录已核验</span></td><td>进入导入清单</td><td>写入、哈希和回执完成后才可用</td></tr>
+        <tr><td>导入计划</td><td><span class="fw-status">新建 / 更新 / 复用 / 跳过</span></td><td>核对清单后点导入</td><td>计划不是完成；检查不会写入 UE</td></tr>
+        <tr><td>导入执行</td><td><span class="fw-status fw-status--error">部分失败</span></td><td>查看逐项结果与恢复</td><td>已保存项、失败项和版本管理分开记录</td></tr>
+        <tr><td>演出引用</td><td><span class="fw-status fw-status--warning">发现新修订</span></td><td>选择是否应用</td><td>演出固定已有修订，不自动替换</td></tr>
+      </tbody></table></div></article>
+    </section>
+
+    <section id="workspace" class="fw-section" aria-labelledby="workspace-title">
+      <div class="fw-section-heading"><h2 id="workspace-title" class="fw-section-title">04 · 三个工作区的职责</h2><span class="fw-helper">正式联动待分阶段接入</span></div>
+      <div class="fw-workspace-grid"><article class="fw-panel"><span class="fw-step">01</span><h3 class="fw-card-title">烟花烘焙器</h3><p>效果制作 → 资源交付 → 导入</p><p class="fw-helper">指定目录导出完成后，自动识别与检查，沿用现有导入器清单，由你点击导入。</p></article><article class="fw-panel"><span class="fw-step">02</span><h3 class="fw-card-title">烟花编排工作台</h3><p>资源识别 → 节奏与演出编排</p><p class="fw-helper">消费同一修订的缩略图、时长与尺度数据，保存可追踪的资源引用。</p></article><article class="fw-panel"><span class="fw-step">03</span><h3 class="fw-card-title">特效工作台</h3><p>其他常规特效内容制作</p><p class="fw-helper">前两个工具完整迁移并验收后，再移除现有烟花导入与编排功能。</p></article></div>
+      <div class="fw-flow"><span>制作配方</span><span aria-hidden="true">→</span><span>完成资源修订</span><span aria-hidden="true">→</span><span>UE 导入回执</span><span aria-hidden="true">→</span><span>演出版本引用</span></div>
+    </section>
+    <footer class="fw-footer">共用基础 v0.1.0 · 实现依据：协作/交互宪章.md · 离线原生组件 · 界面动效遵循减少动态效果偏好</footer>
+  </main>
+  <dialog id="review-dialog" class="fw-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description"><h2 id="dialog-title" class="fw-section-title">确认样板操作</h2><p id="dialog-description">这是确认弹窗的交互示例。确认后只展示提示，不执行资源导入。</p><p class="fw-helper">示例资源：Golden_Peony · example-r003</p><form method="dialog" class="fw-dialog-actions"><button class="fw-button" value="cancel" autofocus>返回核对</button><button class="fw-button fw-button--primary" value="confirm">确认样板</button></form></dialog>
+</body>
+</html>
