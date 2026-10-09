@@ -685,10 +685,6 @@
       "bytes": 339
     },
     {
-      "file": "fireworks-workbench-public.tar.gz",
-      "bytes": 171939
-    },
-    {
       "file": "formal-preserved.json",
       "bytes": 905709
     },
@@ -743,5 +739,12 @@
     "preview-feedback-fix",
     "save-share-audit"
   ],
-  "meaning": "共享版源码已上传Sites；本清单仅上传工程命名、路径、文件列表和核实状态，未补传完整源码/参数内容/节目/音乐/截图，也未发布新站点版本。"
+  "meaning": "共享版源码已上传Sites；本清单仅上传工程命名、路径、文件列表和核实状态，未补传完整源码/参数内容/节目/音乐/截图，也未发布新站点版本。",
+  "auditFolderFilesAlreadyUploaded": [
+    {
+      "file": "fireworks-workbench-public.tar.gz",
+      "destination": "Sites saved version v1",
+      "contentHash": "sha256:62b33dc1202cf3a9080025eac2173b6970c39fada5b1013ddb93786537dedfe3"
+    }
+  ]
 }
