@@ -490,8 +490,8 @@ function setAirUniforms(pr, P) {
 // opt：xf = 随体坐标变换 [ox, oy, cos, sin]；mir = 0 无水面 / 1 只剔除水下 / 2 倒影
 function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   const P = tr.P, modern = true, str = familyOf(P.type) === 'aerial' && +P.sparkStretch > 0, se = sparkEff(P);     // 4.9.50 火花拉长
-  const poly = familyOf(P.type) === 'aerial' && (+P.sparkShape === 1 || +P.sparkBrightJit > 0), pr = poly ? spkPolyProgram40(str ? 'spkS' : 'spk') : particleProgram40(str ? 'spkS' : 'spk'); gl.useProgram(pr.p);     // 4.9.57 火花多边形 / 亮度随机（缺省不进）
-  if (poly) { gl.uniform1f(pr.u.uPolyOn, +P.sparkShape === 1 ? 1 : 0); gl.uniform1f(pr.u.uPolyIrr, clamp(P.sparkShapeIrr == null ? .6 : +P.sparkShapeIrr, 0, 1)); gl.uniform1f(pr.u.uPolySpin, Math.max(0, P.sparkShapeSpin == null ? .5 : +P.sparkShapeSpin)); gl.uniform1f(pr.u.uSpkBJ, Math.max(0, +P.sparkBrightJit || 0)); }
+  const poly = sparkPolyOn(P), pr = poly ? spkPolyProgram40(str ? 'spkS' : 'spk') : particleProgram40(str ? 'spkS' : 'spk'); gl.useProgram(pr.p);     // 4.9.57 火花多边形 / 亮度随机（缺省不进）；4.9.59 不再只限礼花
+  if (poly) setSparkPolyUniforms(pr, P);
   if (str) { gl.uniform1f(pr.u.uSpkStr, +P.sparkStretch); gl.uniform1f(pr.u.uSpkStrJ, Math.max(0, +P.sparkStretchJit || 0)); }
   gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tr.pos); gl.uniform1i(pr.u.uPos, 2);
   gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tr.vel); gl.uniform1i(pr.u.uVel, 3);
@@ -581,7 +581,8 @@ function setEmitCommon(pr, E, t, view, ppm, tw) {
   gl.uniform4fv(pr.u.uView, view); gl.uniform1f(pr.u.uPPM, ppm); gl.uniform1f(pr.u.uPPMY, PPMY || ppm); gl.uniform1f(pr.u.uMax, PT_MAX);
 }
 function drawEmit(E, t, view, ppm, chan, w, tw) {
-  const P = E.P, modern = true, pr = particleProgram40('emit'), se = sparkEff(P); gl.useProgram(pr.p);
+  const P = E.P, modern = true, poly = sparkPolyOn(P), pr = poly ? spkPolyProgram40('emit') : particleProgram40('emit'), se = sparkEff(P); gl.useProgram(pr.p);     // 4.9.59 地面 / 上升循环火花也能多边形 / 亮度随机（缺省不进）
+  if (poly) setSparkPolyUniforms(pr, P);
   setEmitCommon(pr, E, t, view, ppm, tw);
   gl.uniform1f(pr.u.uRate, E.rate); gl.uniform1i(pr.u.uMp, E.Mp); gl.uniform1i(pr.u.uMw, E.Mw);
   gl.uniform1f(pr.u.uLife, se.life); gl.uniform1f(pr.u.uK, P.sparkDrag); gl.uniform1f(pr.u.uG, G * P.sparkGrav);

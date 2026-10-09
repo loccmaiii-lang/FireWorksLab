@@ -2316,8 +2316,8 @@
   "random": "",
   "ue": "烘进贴图（GPU 光点没有）",
   "tag": "烘焙器专有",
-  "note": "4.9.57（对话框相机渲染，用户 10-09 23:20）加；缺省圆 / 不随机 = 以前逐像素不变。依据 analysis/probe/星头光晕诊断_2026-10-09/诊断.md 第 8 节（Blender R4 火花 = 随机朝向的小多面体、平面自发光削顶、无运动模糊）。",
-  "check": "41_particles40.js polyVS40 / polyCov40 / spkPolyProgram40；40_gl.js drawSparksGPU；基准回归",
+  "note": "4.9.57（对话框相机渲染，用户 10-09 23:20）加；缺省圆 / 不随机 = 以前逐像素不变。依据 analysis/probe/星头光晕诊断_2026-10-09/诊断.md 第 8 节（Blender R4 火花 = 随机朝向的小多面体、平面自发光削顶、无运动模糊）。 4.9.59 起适用全部 GPU 火花 + 地面花型 / 上升循环火花（drawEmit），并修了渐变亮核时开亮度随机变圆盘的 bug；CPU 火花（物理尾缀、RT6、旧 CPU 内核）和 Cascade 光点层仍是圆、面板不显示。",
+  "check": "41_particles40.js polyVS40 / polyCov40 / spkPolyProgram40；40_gl.js drawSparksGPU；基准回归；40_gl.js drawEmit；10_types.js sparkPolyShown；analysis/scripts/火花形状检查.py",
   "family": "空中礼花",
   "id": "4957-01-sparkShape",
   "tier": "more"
@@ -2339,8 +2339,8 @@
   "random": "",
   "ue": "烘进贴图",
   "tag": "烘焙器专有",
-  "note": "4.9.57（对话框相机渲染，用户 10-09 23:20）加；缺省圆 / 不随机 = 以前逐像素不变。依据 analysis/probe/星头光晕诊断_2026-10-09/诊断.md 第 8 节（Blender R4 火花 = 随机朝向的小多面体、平面自发光削顶、无运动模糊）。",
-  "check": "41_particles40.js polyVS40 / polyCov40 / spkPolyProgram40；40_gl.js drawSparksGPU；基准回归",
+  "note": "4.9.57（对话框相机渲染，用户 10-09 23:20）加；缺省圆 / 不随机 = 以前逐像素不变。依据 analysis/probe/星头光晕诊断_2026-10-09/诊断.md 第 8 节（Blender R4 火花 = 随机朝向的小多面体、平面自发光削顶、无运动模糊）。 4.9.59 起适用全部 GPU 火花 + 地面花型 / 上升循环火花（drawEmit），并修了渐变亮核时开亮度随机变圆盘的 bug；CPU 火花（物理尾缀、RT6、旧 CPU 内核）和 Cascade 光点层仍是圆、面板不显示。",
+  "check": "41_particles40.js polyVS40 / polyCov40 / spkPolyProgram40；40_gl.js drawSparksGPU；基准回归；40_gl.js drawEmit；10_types.js sparkPolyShown；analysis/scripts/火花形状检查.py",
   "family": "空中礼花",
   "id": "4957-02-sparkShapeIrr",
   "tier": "more"
@@ -2362,8 +2362,8 @@
   "random": "",
   "ue": "烘进贴图",
   "tag": "烘焙器专有",
-  "note": "4.9.57（对话框相机渲染，用户 10-09 23:20）加；缺省圆 / 不随机 = 以前逐像素不变。依据 analysis/probe/星头光晕诊断_2026-10-09/诊断.md 第 8 节（Blender R4 火花 = 随机朝向的小多面体、平面自发光削顶、无运动模糊）。",
-  "check": "41_particles40.js polyVS40 / polyCov40 / spkPolyProgram40；40_gl.js drawSparksGPU；基准回归",
+  "note": "4.9.57（对话框相机渲染，用户 10-09 23:20）加；缺省圆 / 不随机 = 以前逐像素不变。依据 analysis/probe/星头光晕诊断_2026-10-09/诊断.md 第 8 节（Blender R4 火花 = 随机朝向的小多面体、平面自发光削顶、无运动模糊）。 4.9.59 起适用全部 GPU 火花 + 地面花型 / 上升循环火花（drawEmit），并修了渐变亮核时开亮度随机变圆盘的 bug；CPU 火花（物理尾缀、RT6、旧 CPU 内核）和 Cascade 光点层仍是圆、面板不显示。",
+  "check": "41_particles40.js polyVS40 / polyCov40 / spkPolyProgram40；40_gl.js drawSparksGPU；基准回归；40_gl.js drawEmit；10_types.js sparkPolyShown；analysis/scripts/火花形状检查.py",
   "family": "空中礼花",
   "id": "4957-03-sparkShapeSpin",
   "tier": "more"
@@ -2385,8 +2385,8 @@
   "random": "",
   "ue": "烘进贴图",
   "tag": "烘焙器专有",
-  "note": "4.9.57（对话框相机渲染，用户 10-09 23:20）加；缺省圆 / 不随机 = 以前逐像素不变。依据 analysis/probe/星头光晕诊断_2026-10-09/诊断.md 第 8 节（Blender R4 火花 = 随机朝向的小多面体、平面自发光削顶、无运动模糊）。",
-  "check": "41_particles40.js polyVS40 / polyCov40 / spkPolyProgram40；40_gl.js drawSparksGPU；基准回归",
+  "note": "4.9.57（对话框相机渲染，用户 10-09 23:20）加；缺省圆 / 不随机 = 以前逐像素不变。依据 analysis/probe/星头光晕诊断_2026-10-09/诊断.md 第 8 节（Blender R4 火花 = 随机朝向的小多面体、平面自发光削顶、无运动模糊）。 4.9.59 起适用全部 GPU 火花 + 地面花型 / 上升循环火花（drawEmit），并修了渐变亮核时开亮度随机变圆盘的 bug；CPU 火花（物理尾缀、RT6、旧 CPU 内核）和 Cascade 光点层仍是圆、面板不显示。",
+  "check": "41_particles40.js polyVS40 / polyCov40 / spkPolyProgram40；40_gl.js drawSparksGPU；基准回归；40_gl.js drawEmit；10_types.js sparkPolyShown；analysis/scripts/火花形状检查.py",
   "family": "空中礼花",
   "id": "4957-04-sparkBrightJit",
   "tier": "more"

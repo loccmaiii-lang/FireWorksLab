@@ -1,0 +1,121 @@
+{
+ "ver": "4.9.59",
+ "ok": true,
+ "rows": [
+  [
+   "S1 编译",
+   "✅",
+   "18/18 个程序"
+  ],
+  [
+   "S2 不变 kiku{\"coreProfile\":0,\"haloShape\":0,\"haloFrac\":0.3}",
+   "✅",
+   "亮度随机 1e-9 vs 0 最大差 0/255"
+  ],
+  [
+   "S3 多边形起作用 kiku{\"coreProfile\":0,\"haloShape\":0,\"haloFrac\":0.3}",
+   "✅",
+   "平均差 1.038"
+  ],
+  [
+   "S4 亮度随机起作用 kiku{\"coreProfile\":0,\"haloShape\":0,\"haloFrac\":0.3}",
+   "✅",
+   "平均差 0.744"
+  ],
+  [
+   "S2 不变 kiku{\"coreProfile\":0,\"haloShape\":1,\"haloFrac\":0.3}",
+   "✅",
+   "亮度随机 1e-9 vs 0 最大差 0/255"
+  ],
+  [
+   "S3 多边形起作用 kiku{\"coreProfile\":0,\"haloShape\":1,\"haloFrac\":0.3}",
+   "✅",
+   "平均差 0.982"
+  ],
+  [
+   "S4 亮度随机起作用 kiku{\"coreProfile\":0,\"haloShape\":1,\"haloFrac\":0.3}",
+   "✅",
+   "平均差 0.741"
+  ],
+  [
+   "S2 不变 kiku{\"coreProfile\":0,\"haloShape\":2,\"haloFrac\":0.3}",
+   "✅",
+   "亮度随机 1e-9 vs 0 最大差 0/255"
+  ],
+  [
+   "S3 多边形起作用 kiku{\"coreProfile\":0,\"haloShape\":2,\"haloFrac\":0.3}",
+   "✅",
+   "平均差 1.200"
+  ],
+  [
+   "S4 亮度随机起作用 kiku{\"coreProfile\":0,\"haloShape\":2,\"haloFrac\":0.3}",
+   "✅",
+   "平均差 0.711"
+  ],
+  [
+   "S2 不变 kiku{\"coreProfile\":1,\"haloShape\":0,\"haloFrac\":0.3}",
+   "✅",
+   "亮度随机 1e-9 vs 0 最大差 0/255"
+  ],
+  [
+   "S3 多边形起作用 kiku{\"coreProfile\":1,\"haloShape\":0,\"haloFrac\":0.3}",
+   "✅",
+   "平均差 1.000"
+  ],
+  [
+   "S4 亮度随机起作用 kiku{\"coreProfile\":1,\"haloShape\":0,\"haloFrac\":0.3}",
+   "✅",
+   "平均差 0.748"
+  ],
+  [
+   "S2 不变 kiku{\"coreProfile\":1,\"haloShape\":1,\"haloFrac\":0.3}",
+   "✅",
+   "亮度随机 1e-9 vs 0 最大差 0/255"
+  ],
+  [
+   "S3 多边形起作用 kiku{\"coreProfile\":1,\"haloShape\":1,\"haloFrac\":0.3}",
+   "✅",
+   "平均差 0.926"
+  ],
+  [
+   "S4 亮度随机起作用 kiku{\"coreProfile\":1,\"haloShape\":1,\"haloFrac\":0.3}",
+   "✅",
+   "平均差 0.744"
+  ],
+  [
+   "S2 不变 kiku{\"coreProfile\":1,\"haloShape\":2,\"haloFrac\":0.3}",
+   "✅",
+   "亮度随机 1e-9 vs 0 最大差 0/255"
+  ],
+  [
+   "S3 多边形起作用 kiku{\"coreProfile\":1,\"haloShape\":2,\"haloFrac\":0.3}",
+   "✅",
+   "平均差 1.139"
+  ],
+  [
+   "S4 亮度随机起作用 kiku{\"coreProfile\":1,\"haloShape\":2,\"haloFrac\":0.3}",
+   "✅",
+   "平均差 0.715"
+  ],
+  [
+   "S2 不变 fountain{}",
+   "✅",
+   "亮度随机 1e-9 vs 0 最大差 0/255"
+  ],
+  [
+   "S3 多边形起作用 fountain{}",
+   "✅",
+   "平均差 2.936"
+  ],
+  [
+   "S4 亮度随机起作用 fountain{}",
+   "✅",
+   "平均差 2.415"
+  ],
+  [
+   "S5 面板",
+   "✅",
+   "{\"kiku\": true, \"fountain\": true, \"tailS\": false, \"physS\": false}"
+  ]
+ ]
+}

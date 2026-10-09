@@ -183,12 +183,18 @@ function moffatProgram40(kind, shape = 1) {
 // 这里：每粒一个 4–7 边的星形多边形（顶点角度 / 半径按粒子编号随机，不规则程度 uPolyIrr），按年龄慢慢翻转（uPolySpin 圈 / 秒，每粒随机正反）；
 // 像素里 4 × 4 取样算覆盖（边缘锐利、抗锯齿），总光量和同直径圆盘一样（亮度参数含义不变）；亮核半径 < 0.6 像素时形状看不出来，按圆盘精确覆盖。
 // 辉光照旧用这一层的光晕（占比 / 半径 / 形状）。亮度随机 uSpkBJ：每粒一个固定的对数正态倍数（均值 1），对应 Blender 的 intensity 0.3–1.8。
-// 两样都缺省 0：不进这里，火花用原来的程序，逐像素不变。只有 GPU 火花（空中花型）；CPU 火花和 Cascade 光点照旧是圆。
-function polyVS40(vs) {
-  vs = must40(vs, 'uniform sampler2D uPos, uVel, uInfo;', 'uniform sampler2D uPos, uVel, uInfo; uniform float uPolySpin, uSpkBJ; flat out float vSeed; flat out float vPolyA;');
-  const tail = '  emitPt(q,I,size);\n}', at = vs.lastIndexOf(tail); if (at < 0) throw new Error('火花多边形：找不到火花着色器的输出行');
-  return vs.slice(0, at) + `  vSeed=hsh(uid,131u); vPolyA=6.2831853*(hsh(uid,133u)+uPolySpin*(2.*hsh(uid,135u)-1.)*age);
-  if(uSpkBJ>0.) I*=exp(uSpkBJ*gss(uid,137u)-.5*uSpkBJ*uSpkBJ);
+// 两样都缺省 0：不进这里，火花用原来的程序，逐像素不变。
+// 4.9.59（用户 10-10 01:37「后面别的效果也能通用吗？走查一遍」）：① 地面 / 上升循环的火花（VS_EMIT）也能用；礼花以外的家族走 GPU 火花时也能用（以前只认礼花）；
+//   ② 渐变亮核（coreProfile 1）不再被丢掉：只开亮度随机时照旧是渐变亮核，开多边形时是硬边多边形（总光量一样）。
+//   仍是圆的：CPU 火花（旧的 CPU 内核、物理尾缀、升空尾缀 RT6 近段的火星）——缓冲里没有每粒火花固定的编号，形状会逐帧乱跳；Cascade 里的 GPU 光点 / 软圆点（引擎材质）。
+// 礼花火花（VS_SPK）：编号 uid、输出行 emitPt(q,I,size)；地面 / 上升循环火花（VS_EMIT）：编号 key、输出行 emitPt(p.xy,I,sz)。两边都有 age（这粒火花的年龄）
+const POLY40_SRC = { spk: { anchor: 'uniform sampler2D uPos, uVel, uInfo;', id: 'uid', tail: '  emitPt(q,I,size);\n}' }, emit: { anchor: 'uniform sampler2D uSrc;', id: 'key', tail: '  emitPt(p.xy,I,sz);\n}' } };
+function polyVS40(vs, src = POLY40_SRC.spk) {
+  vs = must40(vs, src.anchor, src.anchor + ' uniform float uPolySpin, uSpkBJ; flat out float vSeed; flat out float vPolyA;');
+  const at = vs.lastIndexOf(src.tail); if (at < 0) throw new Error('火花多边形：找不到火花着色器的输出行');
+  const k = src.id;
+  return vs.slice(0, at) + `  vSeed=hsh(${k},131u); vPolyA=6.2831853*(hsh(${k},133u)+uPolySpin*(2.*hsh(${k},135u)-1.)*age);
+  if(uSpkBJ>0.) I*=exp(uSpkBJ*gss(${k},137u)-.5*uSpkBJ*uSpkBJ);
 ` + vs.slice(at);
 }
 const POLY40_FN = `flat in float vSeed; flat in float vPolyA; uniform float uPolyOn, uPolyIrr;
@@ -208,15 +214,25 @@ float polyCov40(vec2 p, vec2 r){
 void main(){`;
 function polyFS40(fs) {
   fs = must40(fs, 'void main(){', POLY40_FN);
-  return must40(fs, 'float core=diskCoverage(vLocal,vSig), halo=0.;', 'float core=polyCov40(vLocal,vSig), halo=0.;');
+  const disk = 'float core=diskCoverage(vLocal,vSig), halo=0.;', grad = 'float core=3.14159265*vSig.x*vSig.y*gaussianCoverage(vLocal,vSig*.5), halo=0.;';
+  if (fs.includes(disk)) return fs.replace(disk, 'float core=polyCov40(vLocal,vSig), halo=0.;');
+  // 渐变亮核：多边形开着就画硬边多边形（同样的总光量），关着（只开了亮度随机）照旧渐变
+  return must40(fs, grad, 'float core=(uPolyOn>.5 && min(vSig.x,vSig.y)>=.6) ? polyCov40(vLocal,vSig) : 3.14159265*vSig.x*vSig.y*gaussianCoverage(vLocal,vSig*.5), halo=0.;');
 }
 const spkPolyPrograms40 = {};
 function spkPolyProgram40(kind) {
-  const hs = particleQuality.haloFrac > 0 ? particleQuality.haloShape : 0, key = kind + '_' + hs; if (spkPolyPrograms40[key]) return spkPolyPrograms40[key];
-  let vs = polyVS40(point40GpuSource(VS_SPK).replace('uint uid=uint(pid);', 'uint uid=uint(s)*65536u+uint(j);')), fs = POINT40_FS;
+  const hs = particleQuality.haloFrac > 0 ? particleQuality.haloShape : 0, g = particleQuality.coreProfile ? 1 : 0, key = kind + g + '_' + hs; if (spkPolyPrograms40[key]) return spkPolyPrograms40[key];
+  let vs = kind === 'emit' ? polyVS40(point40GpuSource(VS_EMIT), POLY40_SRC.emit) : polyVS40(point40GpuSource(VS_SPK).replace('uint uid=uint(pid);', 'uint uid=uint(s)*65536u+uint(j);')), fs = POINT40_FS;
   if (kind === 'spkS') vs = spkStretchVS40(vs);
+  if (g) { vs = gradientSource40(vs); fs = gradientSource40(fs); }     // 渐变亮核（和 shapeProgram40 / moffatProgram40 同一个顺序：先拉长、再渐变、最后光晕形状）
   if (hs === 1) { vs = moffatVS40(vs); fs = moffatFS40(fs); } else if (hs === 2) { vs = multiVS40(vs); fs = multiFS40(fs); }
   return spkPolyPrograms40[key] = compile(vs, polyFS40(fs));
+}
+// 多边形 / 亮度随机的开关和 uniform（礼花火花、地面 / 上升循环火花共用）
+function sparkPolyOn(P) { return +P.sparkShape === 1 || +P.sparkBrightJit > 0; }
+function setSparkPolyUniforms(pr, P) {
+  gl.uniform1f(pr.u.uPolyOn, +P.sparkShape === 1 ? 1 : 0); gl.uniform1f(pr.u.uPolyIrr, clamp(P.sparkShapeIrr == null ? .6 : +P.sparkShapeIrr, 0, 1));
+  gl.uniform1f(pr.u.uPolySpin, Math.max(0, P.sparkShapeSpin == null ? .5 : +P.sparkShapeSpin)); gl.uniform1f(pr.u.uSpkBJ, Math.max(0, +P.sparkBrightJit || 0));
 }
 function particleProgram40(kind) {
   if (particleQuality.haloShape > 0 && particleQuality.haloFrac > 0 && !(kind === 'pts' && PT_GAUSS)) return moffatProgram40(kind, particleQuality.haloShape);     // 4.9.53 幂律 / 4.9.55 多层柔光

@@ -3,7 +3,7 @@
  "name": "FanCometRed",
  "platform": "pc",
  "source": {
-  "tool": "烟花母版烘焙器 4.9.57",
+  "tool": "烟花母版烘焙器 4.9.59",
   "combo": true,
   "layers": [
    {
@@ -375,6 +375,6 @@
   "cutout_min_save": 0.1,
   "merged": [],
   "cutout_dropped": [],
-  "baker": "4.9.57"
+  "baker": "4.9.59"
  }
 }

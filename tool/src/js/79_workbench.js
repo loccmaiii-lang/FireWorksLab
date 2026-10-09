@@ -69,6 +69,8 @@ function outNote(L, e) {
   // 4.9.27 改成量出来的（unitFit，50_bake.js）：以前按花型 / 余烬 / 火花寿命 > 1.2 s / 燃烧 > 4 s 猜
   if ((o.pc === 'unit' || o.mobile === 'unit') && P && unitAllowed(P)) { const f = unitFit(P); if (f && f.level !== 'ok') w.push(`${unitFitText(f)}${f.level === 'bad' ? '（单束的尾迹是沿速度的直线，下垂以后都指向花心上方、像辐条）' : ''}`); }
   if (o.pc === 'dots' && P) {
+    // 4.9.59（用户 10-10 01:37 走查）：光晕形状、火花多边形 / 亮度随机只烘进贴图；光点层在引擎里是项目的软圆点材质，没有这些
+    if (+P.haloShape > 0 || +P.sparkShape === 1 || +P.sparkBrightJit > 0) w.push('光晕形状、火花多边形 / 亮度随机只在贴图里有；光点层在引擎里是软圆点，看不到这些');
     if (familyOf(P.type) !== 'aerial') w.push('这种花型不是礼花，光点没法表达，PC 请用序列');
     if (!(+P.headBright > 0)) w.push('这一层星头不发光（星头亮度 0，只有尾迹 / 火花）：光点什么都出不来，PC 请用序列');
     if (+P.sparkRate > 0 || +P.emberFrac > 0) w.push('这一层有尾迹：PC 光点只出星头，尾迹没有（要尾迹就用序列，或另加一层序列只出尾迹）');
