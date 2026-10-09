@@ -1,0 +1,747 @@
+{
+  "checkedDate": "2026-10-10",
+  "scope": "8025本机工程与已发布共享版比较；文件名清单不是文件内容上传",
+  "engineeringNamesMayBeUploaded": true,
+  "sourceBlueprint": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+  "sourceBlueprintCataloguePaths": [
+    "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template"
+  ],
+  "resources": [
+    {
+      "id": "P_EFX_FireWorks_Trail_01",
+      "label": "新年烟花2.0_拖尾",
+      "role": "trail",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Trail_01_HD.P_EFX_FireWorks_Trail_01_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Trail_01_M.P_EFX_FireWorks_Trail_01_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Small_Yellow",
+      "label": "新年烟花2.0_小_Yellow",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Small_Yellow_HD.P_EFX_FireWorks_Small_Yellow_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Small_Yellow_H.P_EFX_FireWorks_Small_Yellow_H"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Small_Red",
+      "label": "新年烟花2.0_小_Red",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Small_Red_HD.P_EFX_FireWorks_Small_Red_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Small_Yellow_H.P_EFX_FireWorks_Small_Yellow_H"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Small_White",
+      "label": "新年烟花2.0_小_White",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Small_White_HD.P_EFX_FireWorks_Small_White_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Small_Yellow_H.P_EFX_FireWorks_Small_Yellow_H"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Medium_Yellow",
+      "label": "新年烟花2.0_中_Yellow",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Medium_Yellow_HD.P_EFX_FireWorks_Medium_Yellow_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Medium_Yellow_L.P_EFX_FireWorks_Medium_Yellow_L"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Medium_Red",
+      "label": "新年烟花2.0_中_Red",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Medium_Red_HD.P_EFX_FireWorks_Medium_Red_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Medium_Yellow_L.P_EFX_FireWorks_Medium_Yellow_L"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Medium_White",
+      "label": "新年烟花2.0_中_White",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Medium_White_HD.P_EFX_FireWorks_Medium_White_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Medium_Yellow_L.P_EFX_FireWorks_Medium_Yellow_L"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Large_Yellow",
+      "label": "新年烟花2.0_大_Yellow",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Large_Yellow_HD.P_EFX_FireWorks_Large_Yellow_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Large_Yellow_M.P_EFX_FireWorks_Large_Yellow_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Large_Red",
+      "label": "新年烟花2.0_大_Red",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Large_Red_HD.P_EFX_FireWorks_Large_Red_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Large_Yellow_M.P_EFX_FireWorks_Large_Yellow_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Large_White",
+      "label": "新年烟花2.0_大_White",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Large_White_HD.P_EFX_FireWorks_Large_White_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Large_Yellow_M.P_EFX_FireWorks_Large_Yellow_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Hero",
+      "label": "新年烟花2.0_大金",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Hero_HD.P_EFX_FireWorks_Hero_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Hero_M.P_EFX_FireWorks_Hero_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Mark_Smoke",
+      "label": "新年烟花2.0_口红烟",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Mark_Smoke_HD.P_EFX_FireWorks_Mark_Smoke_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Mark_Smoke_H.P_EFX_FireWorks_Mark_Smoke_H"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Props_Medium",
+      "label": "新年烟花2.0_道具_蛋花",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Props_Medium_HD.P_EFX_FireWorks_Props_Medium_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Props_Medium_M.P_EFX_FireWorks_Props_Medium_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Props_Large",
+      "label": "新年烟花2.0_道具_小金",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Props_Large_HD.P_EFX_FireWorks_Props_Large_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Props_Large_M.P_EFX_FireWorks_Props_Large_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Props_Hero",
+      "label": "新年烟花2.0_道具_大金",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Props_Hero_HD.P_EFX_FireWorks_Props_Hero_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Props_Hero_M.P_EFX_FireWorks_Props_Hero_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_FanGold_Central_01",
+      "label": "跨年烟花3.0_小型_A_金锦冠_中心",
+      "role": "fan",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_FanGold_Middle_01",
+      "label": "跨年烟花3.0_小型_A_金锦冠_中间",
+      "role": "fan",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_FanGold_OuterLeft",
+      "label": "跨年烟花3.0_小型_A_金锦冠_外左",
+      "role": "fan",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_FanGold_OuterRight",
+      "label": "跨年烟花3.0_小型_A_金锦冠_外右",
+      "role": "fan",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_FanComet_01",
+      "label": "跨年烟花3.0_小型_B_红彗星",
+      "role": "trail",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanComet_01_HD.P_EFX_FireWorks_FanComet_01_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_FanSilver_01",
+      "label": "跨年烟花3.0_小型_C_银星扇",
+      "role": "fan",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldCrackle",
+      "label": "跨年烟花3.0_小型_D_金裂星",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_NY_Small_B_HD.P_EFX_FireWork_NY_Small_B_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Comet",
+      "label": "跨年烟花3.0_小型_E_小彗星",
+      "role": "trail",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD.P_EFX_FireWorks_Comet_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_SilverChry",
+      "label": "跨年烟花3.0_小型_F_小银菊",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_NY_Medium_C_HD.P_EFX_FireWork_NY_Medium_C_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Crackle",
+      "label": "跨年烟花3.0_小型_G_爆裂星",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Lime",
+      "label": "跨年烟花3.0_小型_H_小青柠",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_OrangeGlitter",
+      "label": "跨年烟花3.0_小型_I__橙辉星",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GreenPeony_HD.P_EFX_FireWorks_GreenPeony_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Strobe",
+      "label": "跨年烟花3.0_小型_J_点灭星",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GreenPeony_HD.P_EFX_FireWorks_GreenPeony_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_GreenPeony",
+      "label": "跨年烟花3.0_中型_A_绿牡丹",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GreenPeony_HD.P_EFX_FireWorks_GreenPeony_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldSpark",
+      "label": "跨年烟花3.0_中型_B_金锦菊",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_PrismWheels",
+      "label": "跨年烟花3.0_中型_C_彩千轮",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldChry",
+      "label": "跨年烟花3.0_中型_D_金曜菊",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldChry_HD.P_EFX_FireWorks_GoldChry_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldCoreLime",
+      "label": "跨年烟花3.0_中型_E_金蕊柠",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldRayChry",
+      "label": "跨年烟花3.0_中型_B_金芒菊",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_MultiLayerChry",
+      "label": "跨年烟花3.0_中型_F_多重菊",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldKamuro",
+      "label": "跨年烟花3.0_大型_A_金垂柳",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_SilverStrobeChry",
+      "label": "跨年烟花3.0_大型_B_银彩菊",
+      "role": "burst",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_NY_Trail_Large",
+      "label": "跨年烟花3.0_大型_尾缀",
+      "role": "trail",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_NY_Trail_Medium",
+      "label": "跨年烟花3.0_中型_尾缀",
+      "role": "trail",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_NY_Trail_Small",
+      "label": "跨年烟花3.0_小型_尾缀",
+      "role": "trail",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD"
+      ]
+    },
+    {
+      "id": "P_Explosion_FireWork_Big_01",
+      "label": "常规道具",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_Explosion_Big_02_HD.P_EFX_FireWork_Explosion_Big_02_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_Explosion_FireWorks_Big_01_M.P_EFX_Explosion_FireWorks_Big_01_M"
+      ]
+    },
+    {
+      "id": "P_EFX_Explosion_Point_02",
+      "label": "常规道具",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_Explosion_Point_02_HD.P_EFX_Explosion_Point_02_HD"
+      ]
+    },
+    {
+      "id": "P_Explosion_FireWork_Real_01",
+      "label": "常规道具",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_Explosion_FireWork_Real_01_HD.P_Explosion_FireWork_Real_01_HD",
+        "/Game/Effects/Props/FireWorks/P_Explosion_FireWork_Real_M.P_Explosion_FireWork_Real_M"
+      ]
+    },
+    {
+      "id": "P_Scene_EvacuateFlameFlash_green",
+      "label": "水下撤离点_萤火棒_类似信号喷火棒",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Scene_HD/Flame_HD/FireworksEvacuation_HD/P_Scene_EvacuateFlameFlash_green_HD.P_Scene_EvacuateFlameFlash_green_HD",
+        "/Game/Effects/Scene/Flame/FireworksEvacuation/P_Scene_EvacuateFlameFlash_green.P_Scene_EvacuateFlameFlash_green"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWork_Ignition_Loop_S",
+      "label": "新年烟花2.0_点火",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_Ignition_Loop_S_HD.P_EFX_FireWork_Ignition_Loop_S_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWork_Ignition_Loop_S_M.P_EFX_FireWork_Ignition_Loop_S_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWork_Shoot_L",
+      "label": "新年烟花2.0_底座发射",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_Shoot_L_HD.P_EFX_FireWork_Shoot_L_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWork_Shoot_M.P_EFX_FireWork_Shoot_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWork_AI_RPG",
+      "label": "新年烟花2.0_鼠鼠烟花",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_AI_RPG_HD.P_EFX_FireWork_AI_RPG_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWork_AI_RPG_M.P_EFX_FireWork_AI_RPG_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWork_Merge_Medium",
+      "label": "新年烟花2.0_合并_蛋花",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_Merge_Medium_HD.P_EFX_FireWork_Merge_Medium_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWork_Merge_Medium_M.P_EFX_FireWork_Merge_Medium_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWork_Merge_Large",
+      "label": "新年烟花2.0_合并_小金",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_Merge_Medium_HD.P_EFX_FireWork_Merge_Medium_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWork_Merge_Large_M.P_EFX_FireWork_Merge_Large_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWork_Merge_Hero",
+      "label": "新年烟花2.0_合并_大金",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_Merge_Hero_HD.P_EFX_FireWork_Merge_Hero_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWork_Merge_Hero_M.P_EFX_FireWork_Merge_Hero_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWork_LuckyRain_Long",
+      "label": "新年烟花2.0_红包雨_长",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_LuckyRain_Long_HD.P_EFX_FireWork_LuckyRain_Long_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWork_LuckyRain_Long_M.P_EFX_FireWork_LuckyRain_Long_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWork_LuckyRain_Short",
+      "label": "新年烟花2.0_红包雨_短",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_LuckyRain_Short_HD.P_EFX_FireWork_LuckyRain_Short_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWork_LuckyRain_Short_M.P_EFX_FireWork_LuckyRain_Short_M"
+      ]
+    },
+    {
+      "id": "P_EFX_FireWork_Small_01",
+      "label": "常规道具",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_LuckyTips_HD.P_EFX_FireWork_LuckyTips_HD",
+        "/Game/Effects/Props/FireWorks/P_EFX_FireWork_LuckyTips_M.P_EFX_FireWork_LuckyTips_M"
+      ]
+    },
+    {
+      "id": "P_EFX_MusicFest_EmbersTrail",
+      "label": "周年庆彩蛋关-第四幕-余烬拖尾",
+      "role": "trail",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_EmbersTrail_HD.P_EFX_MusicFest_EmbersTrail_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_MusicFest_FireWorkTrail",
+      "label": "周年庆彩蛋关-第四幕-烟花拖尾",
+      "role": "trail",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWorkTrail_HD.P_EFX_MusicFest_FireWorkTrail_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_MusicFest_FireWork_Skyrocket_Boom",
+      "label": "跨年烟花3.0_窜天猴sku_烟花爆炸",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_GoldChry_HD.P_EFX_MusicFest_FireWork_Skyrocket_GoldChry_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_MusicFest_FireWork_Skyrocket_Trail",
+      "label": "跨年烟花3.0_窜天猴sku_拖尾尾缀",
+      "role": "trail",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Trail_HD.P_EFX_MusicFest_FireWork_Skyrocket_Trail_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_MusicFest_FireWork_Skyrocket_Fuse",
+      "label": "跨年烟花3.0_窜天猴sku_点火引线",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Fuse_HD.P_EFX_MusicFest_FireWork_Skyrocket_Fuse_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_MusicFest_FireWork_Skyrocket_Sparkler",
+      "label": "跨年烟花3.0_窜天猴sku_喷射焰火",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD.P_EFX_MusicFest_FireWork_Skyrocket_Sparkler_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_MusicFest_FireWork_Skyrocket_Sprint",
+      "label": "跨年烟花3.0_窜天猴sku_二次加速",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD.P_EFX_MusicFest_FireWork_Skyrocket_Sprint_HD"
+      ]
+    },
+    {
+      "id": "P_EFX_Explosion_Point_01",
+      "label": "常规道具",
+      "role": "unknown",
+      "particlePaths": [
+        "/Game/Effects/Props/FireWorks/P_EFX_Explosion_Point_01_M.P_EFX_Explosion_Point_01_M"
+      ]
+    }
+  ],
+  "dataCounts": {
+    "originalCues": 252,
+    "originalEvents": 1689,
+    "formalFixedVersions": 18,
+    "originalSourceRows": 17,
+    "originalResourceRows": 61,
+    "sharedResourceRows": 6
+  },
+  "notInSharedSource": [
+    "scripts/apply-current-timing-rules.py",
+    "scripts/apply-preview-feedback.py",
+    "scripts/apply-save-fix.py",
+    "scripts/build-resource-catalogue.mjs",
+    "scripts/claim-save-share.py",
+    "scripts/finalize-guards.py",
+    "scripts/finish-library-comparison.py",
+    "scripts/finish-library-handoff.py",
+    "scripts/finish-library-public.py",
+    "scripts/finish-library-records.py",
+    "scripts/finish-preview-navigation.py",
+    "scripts/finish-public-helper.py",
+    "scripts/implement-library.py",
+    "scripts/prepare-shared-edition.mjs",
+    "scripts/record-feedback-contract.py",
+    "scripts/record-save-share-final.py",
+    "scripts/record-upload-inventory.py",
+    "scripts/record-workflow-handoff.py",
+    "scripts/refine-call-feedback.py",
+    "scripts/refine-final-controls.py",
+    "scripts/refine-final-validation.py",
+    "scripts/refine-library-assets.py",
+    "scripts/refine-preview-continuity.py",
+    "scripts/refine-preview-responsive.py",
+    "scripts/refine-preview.py",
+    "scripts/refine-search.py",
+    "scripts/refine-selection.py",
+    "scripts/refine-shortcuts.py",
+    "scripts/refine-single-placement.py",
+    "scripts/refine-tier-preview.py",
+    "scripts/refine-workspace.py",
+    "scripts/register-preview-feedback.py",
+    "scripts/remove-snapshot-motion.py",
+    "scripts/report-history-audit.py",
+    "scripts/resolve-workflow-record.py",
+    "scripts/verify-current-timing.py",
+    "scripts/wire-feature-gaps.py",
+    "tests/basic-template.test.mjs",
+    "tests/choreography-model.test.mjs",
+    "tests/delivery-parity.test.mjs",
+    "tests/director-compact.test.mjs",
+    "tests/director-geometry.test.mjs",
+    "tests/director-source.test.mjs",
+    "tests/director.test.mjs",
+    "tests/editor.test.mjs",
+    "tests/fixed-director.test.mjs",
+    "tests/flower-layer-editor.test.mjs",
+    "tests/navigation.test.mjs",
+    "tests/playback.test.mjs",
+    "tests/point-labels.test.mjs",
+    "tests/point-numbering.test.mjs",
+    "tests/point-quality.test.mjs",
+    "tests/preview-feedback.test.mjs",
+    "tests/programme-save.test.mjs",
+    "tests/recipe-appearance.test.mjs",
+    "tests/self-authoring.test.mjs",
+    "tests/sites-worker.test.mjs",
+    "tests/stage-height.test.mjs",
+    "tests/stage-layout.test.mjs",
+    "tests/subtemplate-model.test.mjs",
+    "tests/template-library.test.mjs",
+    "tests/workbench-data.test.mjs",
+    "tests/workspace-transition.test.mjs"
+  ],
+  "differentFromSharedSource": [
+    "package-lock.json",
+    "package.json",
+    "public/data/music-data.json",
+    "public/data/resource-catalogue.json",
+    "public/data/score24-v05.json",
+    "public/data/size-spec.json",
+    "public/data/structure-data.json",
+    "public/data/subtemplate-source.json",
+    "src/App.jsx",
+    "src/BasicTemplatePreview.jsx",
+    "src/DirectorPanel.jsx",
+    "src/FixedDirectorPanel.jsx",
+    "src/TemplateLibraryCompact.jsx",
+    "src/director-model.mjs",
+    "src/director-source-map.mjs",
+    "vite.config.mjs",
+    "worker/index.js"
+  ],
+  "latestAuditFilesNotUploaded": [
+    {
+      "file": "01-stage-before.png",
+      "bytes": 118974
+    },
+    {
+      "file": "02-editor-before.png",
+      "bytes": 84203
+    },
+    {
+      "file": "03-low-disabled-before.png",
+      "bytes": 85303
+    },
+    {
+      "file": "04-basic-before.png",
+      "bytes": 83722
+    },
+    {
+      "file": "05-programme-before.png",
+      "bytes": 119097
+    },
+    {
+      "file": "06-layers-after.png",
+      "bytes": 92472
+    },
+    {
+      "file": "07-basic-after.png",
+      "bytes": 94085
+    },
+    {
+      "file": "08-return-after.png",
+      "bytes": 121256
+    },
+    {
+      "file": "09-moving-lines-after.png",
+      "bytes": 101991
+    },
+    {
+      "file": "10-responsive-780.png",
+      "bytes": 114274
+    },
+    {
+      "file": "11-unified-editor-final.png",
+      "bytes": 92212
+    },
+    {
+      "file": "12-shared-editor-local.png",
+      "bytes": 91839
+    },
+    {
+      "file": "13-history-audit.png",
+      "bytes": 88833
+    },
+    {
+      "file": "14-layer-fields-final.png",
+      "bytes": 93714
+    },
+    {
+      "file": "15-public-workbench-live.png",
+      "bytes": 91786
+    },
+    {
+      "file": "delivery-proof.json",
+      "bytes": 1399
+    },
+    {
+      "file": "download-parity.json",
+      "bytes": 339
+    },
+    {
+      "file": "fireworks-workbench-public.tar.gz",
+      "bytes": 171939
+    },
+    {
+      "file": "formal-preserved.json",
+      "bytes": 905709
+    },
+    {
+      "file": "index.html",
+      "bytes": 15146
+    },
+    {
+      "file": "invalid.dfshow",
+      "bytes": 8
+    },
+    {
+      "file": "preservation-check.json",
+      "bytes": 131
+    },
+    {
+      "file": "programme-layer-after.json",
+      "bytes": 104969
+    },
+    {
+      "file": "programme-layer-after.truncated.txt",
+      "bytes": 207602
+    },
+    {
+      "file": "qa-authored.json",
+      "bytes": 104969
+    },
+    {
+      "file": "qa-tone.wav",
+      "bytes": 192044
+    },
+    {
+      "file": "regression.txt",
+      "bytes": 8550
+    },
+    {
+      "file": "shared-publication.json",
+      "bytes": 988
+    },
+    {
+      "file": "verification-summary.json",
+      "bytes": 1104
+    }
+  ],
+  "historicalDraftFoldersNotUploaded": [
+    "authoring-proposal",
+    "before-src",
+    "execution-option2",
+    "flow-revision",
+    "implementation",
+    "library-proposal",
+    "preview-feedback-fix",
+    "save-share-audit"
+  ],
+  "meaning": "共享版源码已上传Sites；本清单仅上传工程命名、路径、文件列表和核实状态，未补传完整源码/参数内容/节目/音乐/截图，也未发布新站点版本。"
+}

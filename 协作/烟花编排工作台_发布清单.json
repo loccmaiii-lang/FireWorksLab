@@ -45,5 +45,16 @@
     "ue_size_trajectory_and_single_beam_calibration",
     "music_artistic_acceptance",
     "actual_per_point_bp_and_seq_playback"
-  ]
+  ],
+  "engineeringNamingUploadPolicy": {
+    "authorizedDate": "2026-10-10",
+    "mayUpload": [
+      "engineering_names",
+      "resource_ids",
+      "blueprint_and_actor_names",
+      "engine_asset_paths"
+    ],
+    "neverIncludeCredentials": true,
+    "fullOriginalFilesUploadedByThisCorrection": false
+  }
 }
