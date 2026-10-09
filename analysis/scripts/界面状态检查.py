@@ -3299,6 +3299,30 @@ async def w34(pg):
     r = await pg.evaluate(W34_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1800]
 
+W35_JS = r"""async () => {
+  // 4.9.56 联动表（用户 10-09 23:04「扇面筒距的问题……一起处理了吧」；对话框FanGold 排队）：同一批星的几层，簇的轨迹参数都要联动——
+  // 分簇的每个面板参数（除了 clusterRoll：染分两半靠转角 ±90 分开）都在 LINK_KEYS；改第 1 层的扇面张角 / 逐筒出膛 / 筒距，第 2 层跟着变
+  const out = {}, bad = [], wait = ms => new Promise(r => setTimeout(r, ms));
+  const keys = []; for (const sec of SCHEMA) for (const it of sec.items) { const k = Array.isArray(it) ? it[0] : it.sel; if (typeof k === 'string' && /^cluster/.test(k)) keys.push(k); }
+  out.miss = keys.filter(k => k !== 'clusterRoll' && !LINK_KEYS.includes(k)); out.roll = LINK_KEYS.includes('clusterRoll');
+  if (out.miss.length || out.roll) bad.push('分簇参数没联动：' + out.miss.join('、') + (out.roll ? '；clusterRoll 不该联动' : ''));
+  await openEffect(EFFS().find(e => e.key === 'fan_comet')); for (let i = 0; i < 150 && (state.baking || state.tab !== 'combo' || state.layers.length < 2); i++) await wait(100);
+  computeLinks(); out.links = state.links; const e0 = layerEntryOf(state.layers[0]), e1 = layerEntryOf(state.layers[1]);
+  if (!linkedWith(0).includes(1)) bad.push('扇形彗星两层不是同一批星：' + JSON.stringify(state.links));
+  else { const was = { fan: e1.P.clusterFan, sw: e1.P.clusterSweep, gap: e1.P.clusterGap, roll: e1.P.clusterRoll };
+    e0.P.clusterGap = 1.5; e0.P.clusterFan = (+e0.P.clusterFan || 60) + 4; e0.P.clusterSweep = 0.3; e0.P.clusterRoll = (+e0.P.clusterRoll || 0) + 7; syncLinkedLayers(0);
+    out.after = { gap: e1.P.clusterGap, fan: e1.P.clusterFan, sw: e1.P.clusterSweep, roll: e1.P.clusterRoll, want: [e0.P.clusterGap, e0.P.clusterFan, e0.P.clusterSweep], was };
+    if (e1.P.clusterGap !== 1.5 || e1.P.clusterFan !== e0.P.clusterFan || e1.P.clusterSweep !== 0.3) bad.push('改第 1 层的筒距 / 张角 / 出膛，第 2 层没跟：' + JSON.stringify(out.after));
+    if (e1.P.clusterRoll === e0.P.clusterRoll && was.roll !== e0.P.clusterRoll) bad.push('转角不该联动'); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w35(pg):
+    """4.9.56 分簇参数联动：扇面张角 / 逐筒出膛 / 筒距跟着同一批星的其他层（转角不联动）"""
+    r = await pg.evaluate(W35_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -3338,7 +3362,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

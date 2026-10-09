@@ -290,7 +290,8 @@ async function runLayerQueue() {
 }
 // 同一批星（种子、星数、初速、终端速度都一样）的层：决定轨迹的参数改一处、几层一起变（用户 2026-10-02 13:09：两层共用的参数要两层一起改，以前没有联动）
 const LINK_KEYS = ['seed', 'stars', 'v0', 'vt', 'grav', 'speedJit', 'dirJit', 'burstR0', 'pattern', 'tilt', 'ringFrac', 'wind', 'turb', 'turbScale', 'tailDiffuse', 'tailDiffuseScale', 'massLoss', 'shellVx', 'shellVy', 'shellSpin', 'shellNo',
-  'clusterLayout', 'clusterN', 'clusterCone', 'clusterYaw', 'clusterStarsJit', 'clusterDirJit'];     // 4.9.28 分簇（对话框新花型排队：同一批星的簇排布 / 数目 / 张角 / 偏转 / 随机一样；clusterRoll 不联动——染分两半靠转角 ±90 分开）
+  'clusterLayout', 'clusterN', 'clusterCone', 'clusterYaw', 'clusterStarsJit', 'clusterDirJit',
+  'clusterFan', 'clusterSweep', 'clusterGap'];     // 4.9.56 扇面张角 / 逐筒出膛 / 筒距（对话框FanGold 排队 clusterGap；张角、出膛 4.9.34 起漏了，用户 10-09 23:04「扇面筒距的问题……一起处理了吧」）     // 4.9.28 分簇（对话框新花型排队：同一批星的簇排布 / 数目 / 张角 / 偏转 / 随机一样；clusterRoll 不联动——染分两半靠转角 ±90 分开）
 function computeLinks() {
   if (typeof lib !== 'undefined' && lib.my) { state.links = myLinkIdx(); return; }    // 我的效果：同一批星是你勾的（4.2.7）
   const g = new Map(); state.links = [];
