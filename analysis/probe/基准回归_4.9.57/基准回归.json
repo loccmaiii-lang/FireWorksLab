@@ -1,8 +1,8 @@
 [
  {
   "name": "kiku",
-  "old": "4.9.55",
-  "new": "4.9.56",
+  "old": "4.9.56",
+  "new": "4.9.57",
   "planSame": true,
   "stills": [
    {
@@ -25,8 +25,8 @@
  },
  {
   "name": "botan",
-  "old": "4.9.55",
-  "new": "4.9.56",
+  "old": "4.9.56",
+  "new": "4.9.57",
   "planSame": true,
   "stills": [
    {
@@ -49,8 +49,8 @@
  },
  {
   "name": "kamuro",
-  "old": "4.9.55",
-  "new": "4.9.56",
+  "old": "4.9.56",
+  "new": "4.9.57",
   "planSame": true,
   "stills": [
    {
@@ -73,8 +73,8 @@
  },
  {
   "name": "senrin",
-  "old": "4.9.55",
-  "new": "4.9.56",
+  "old": "4.9.56",
+  "new": "4.9.57",
   "planSame": true,
   "stills": [
    {
@@ -97,8 +97,8 @@
  },
  {
   "name": "strobe",
-  "old": "4.9.55",
-  "new": "4.9.56",
+  "old": "4.9.56",
+  "new": "4.9.57",
   "planSame": true,
   "stills": [
    {
@@ -121,8 +121,8 @@
  },
  {
   "name": "crackle",
-  "old": "4.9.55",
-  "new": "4.9.56",
+  "old": "4.9.56",
+  "new": "4.9.57",
   "planSame": true,
   "stills": [
    {
@@ -145,8 +145,8 @@
  },
  {
   "name": "jinmangju",
-  "old": "4.9.55",
-  "new": "4.9.56",
+  "old": "4.9.56",
+  "new": "4.9.57",
   "planSame": true,
   "stills": [
    {

@@ -41545,7 +41545,7 @@ var FW_EFFECTS = [
 "id": "FCE-FC10R",
 "type": "export",
 "state": "已回来",
-"seen": true
+"seen": false
 },
 {
 "id": "FCE-FC2R",
@@ -41668,7 +41668,7 @@ var FW_EFFECTS = [
 "job": "FCE-FC10R",
 "entry": "FC10R",
 "ver": "826c3e19·master4.3.8-core1+master4.9.31",
-"time": "2026-10-10 00:09",
+"time": "2026-10-10 00:25",
 "packages": [
 {
 "name": "FanCometRed",
