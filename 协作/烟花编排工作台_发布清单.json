@@ -1,0 +1,49 @@
+{
+  "recordVersion": 1,
+  "checkedDate": "2026-10-10",
+  "owner": "烟花编排demo（24）",
+  "developmentEntry": "http://127.0.0.1:8025/",
+  "releaseRule": "8025迭代，用户确认或明确要求发布后，更新既有共享Site",
+  "sharedRelease": {
+    "title": "烟花编排工作台",
+    "url": "https://fireworks-workbench.golden-aphid-3086.chatgpt.site",
+    "projectId": "appgprj_6ac9121a0a4c819181fa4965ef9e6e94",
+    "versionId": "appgprj_6ac9121a0a4c819181fa4965ef9e6e94~appgver_dead128b08608191b0b0330a8726412e",
+    "deploymentId": "appgdep_6ac91580136081919395570860fd81bb",
+    "sourceCommit": "a83b0745b74df4a00c646d38909f5b52692fcfb4",
+    "status": "succeeded",
+    "audience": "public",
+    "defaultProgramme": "empty_with_example_library",
+    "personalDataStorage": "browser_local",
+    "hasAgentTools": false
+  },
+  "previousProgressCommit": "7ee27a47",
+  "collaborationRepositoryVisibility": "PUBLIC",
+  "uploadInventory": {
+    "sharedSourceAndDeployment": "uploaded",
+    "sanitizedProgressAndHandoff": "uploaded",
+    "completePrivate8025SourceAndTests": "local_only_not_in_public_collaboration_repository",
+    "completeAuditHtmlAndScreenshots": "local_only",
+    "personalProgrammeAndMusic": "not_uploaded_by_this_task"
+  },
+  "supportedProgrammeTransfer": {
+    "format": "df.workbench-project/1",
+    "backupVersion": 6,
+    "fileExtension": ".dfshow",
+    "embeddedMusic": true,
+    "programmeImportMaxBytes": 134217728,
+    "audioImportMaxBytes": 67108864
+  },
+  "notImplemented": [
+    "programme_two_way_cloud_sync",
+    "automatic_cloud_file_upload_and_local_import",
+    "programme_three_way_conflict_ui",
+    "cloud_to_local_ue_execution"
+  ],
+  "remainingEffectAcceptance": [
+    "three_existing_front_native_burst_heights",
+    "ue_size_trajectory_and_single_beam_calibration",
+    "music_artistic_acceptance",
+    "actual_per_point_bp_and_seq_playback"
+  ]
+}
