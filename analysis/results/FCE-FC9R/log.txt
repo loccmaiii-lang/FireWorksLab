@@ -1,7 +1,7 @@
-22:21:43 开始：FanCometRed（导出素材）
-22:21:49 FanCometRed 组合素材包 6 秒：T_EFX_FireWorks_FanComet_Red_Comet_4x4_01.png、T_EFX_FireWorks_FanComet_Red_Comet_4x4_01_C.png、T_EFX_FireWorks_FanComet_Red_Comet_4x4_01_HD.png、T_EFX_FireWorks_FanComet_Red_Comet_R.png、T_EFX_FireWorks_FanComet_Red_Glow_4x4_01.png、T_EFX_FireWorks_FanComet_Red_Glow_4x4_01_C.png、T_EFX_FireWorks_FanComet_Red_Glow_4x4_01_HD.png、T_EFX_FireWorks_FanComet_Red_Glow_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
-22:21:50 回放检查：✅ 通过
-22:22:05 烘焙回放对照：F:\FireWorksLab\analysis\results\FCE-FC9R\烘焙回放.jpg
-22:22:05 烘焙回放（原尺寸）：F:\FireWorksLab\analysis\results\FCE-FC9R\烘焙回放_原尺寸.jpg
-22:22:05 大文件（贴图）在 F:\FireWorksLab\analysis\local\输出\素材包，不上传
-22:22:05 完成，用时 0.4 分钟
+22:53:58 开始：FanCometRed（导出素材）
+22:54:03 FanCometRed 组合素材包 5 秒：T_EFX_FireWorks_FanComet_Red_Comet_4x4_01.png、T_EFX_FireWorks_FanComet_Red_Comet_4x4_01_C.png、T_EFX_FireWorks_FanComet_Red_Comet_4x4_01_HD.png、T_EFX_FireWorks_FanComet_Red_Comet_R.png、T_EFX_FireWorks_FanComet_Red_Glow_4x4_01.png、T_EFX_FireWorks_FanComet_Red_Glow_4x4_01_C.png、T_EFX_FireWorks_FanComet_Red_Glow_4x4_01_HD.png、T_EFX_FireWorks_FanComet_Red_Glow_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+22:54:04 回放检查：✅ 通过
+22:54:19 烘焙回放对照：F:\FireWorksLab\analysis\results\FCE-FC9R\烘焙回放.jpg
+22:54:19 烘焙回放（原尺寸）：F:\FireWorksLab\analysis\results\FCE-FC9R\烘焙回放_原尺寸.jpg
+22:54:19 大文件（贴图）在 F:\FireWorksLab\analysis\local\输出\素材包，不上传
+22:54:19 完成，用时 0.4 分钟
