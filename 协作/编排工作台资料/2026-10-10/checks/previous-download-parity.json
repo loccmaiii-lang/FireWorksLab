@@ -1,0 +1,18 @@
+[
+  {
+    "field": "EffectSubTemplates",
+    "exactMatch": true,
+    "characters": 3710,
+    "downloadName": "director09-high-EffectSubTemplates (1).txt"
+  },
+  {
+    "field": "EffectTemplates",
+    "exactMatch": true,
+    "characters": 2029
+  },
+  {
+    "field": "EffectScheduleGroups",
+    "exactMatch": true,
+    "characters": 254
+  }
+]

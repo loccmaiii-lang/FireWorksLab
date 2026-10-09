@@ -1,0 +1,1 @@
+((GroupName="B",Slots=((StartTime=7,TemplateName="WB_Q_NEW_B",Filter=(PlatformFlags=14,MinQualityLevel="EQuality_VeryLow")))),(GroupName="F",Slots=((StartTime=10,TemplateName="WB_Q_NEW_2_F",Filter=(PlatformFlags=14,MinQualityLevel="EQuality_VeryLow")))))

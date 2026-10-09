@@ -1,0 +1,2932 @@
+{
+  "fingerprint": "fcd535289ec2bb86577884fa29020ecda930a404c9098bd6a171d38326da8315",
+  "catalog": [
+    {
+      "key": "4fc43e3acb9bd3b5",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "FanComet",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 0,
+      "exportName": "WB_S00_FanComet"
+    },
+    {
+      "key": "677e3d9299a4bcd1",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "FanSilver",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+            "LocalTimeOffset": 0.44999998807907104,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 10
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -53
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+            "LocalTimeOffset": 0.4000000059604645,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 10
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -40.654747009277344
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+            "LocalTimeOffset": 0.3499999940395355,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 10
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -28.892658233642578
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+            "LocalTimeOffset": 0.30000001192092896,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 10
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -17.083171844482422
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+            "LocalTimeOffset": 0.25,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 10
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -6.079339027404785
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+            "LocalTimeOffset": 0.20000000298023224,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 10
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 5.7042670249938965
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+            "LocalTimeOffset": 0.15000000596046448,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 10
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 18.421911239624023
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+            "LocalTimeOffset": 0.10000000149011612,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 10
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 28.608266830444336
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+            "LocalTimeOffset": 0.05000000074505806,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 10
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 41.41669464111328
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 10
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 52.59044647216797
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.5,
+              "Y": 0.5,
+              "Z": 0.5
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 1,
+      "exportName": "WB_S01_FanSilver"
+    },
+    {
+      "key": "5ca716ea855d1843",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "FanComet",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 2,
+      "exportName": "WB_S02_FanComet"
+    },
+    {
+      "key": "76b5818cb39842c4",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "GoldCrackle",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 5
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 30,
+              "Yaw": 30,
+              "Roll": 30
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0.10000000149011612,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_GoldCrackle",
+            "LocalTimeOffset": 2,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 24000
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 2000,
+              "Y": 2000,
+              "Z": 6000
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0.10000000149011612,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 3,
+      "exportName": "WB_S03_GoldCrackle"
+    },
+    {
+      "key": "225c4f418bdae266",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "Comet",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_Comet",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 60,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 5
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 30,
+              "Yaw": 40,
+              "Roll": 40
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0.10000000149011612,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 4,
+      "exportName": "WB_S04_Comet"
+    },
+    {
+      "key": "ea8a029be1bf6b7d",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "GreenPeony",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -0.35892200469970703
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1.0184810161590576,
+              "Y": 1.0184810161590576,
+              "Z": 1.0184810161590576
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_GreenPeony",
+            "LocalTimeOffset": 3.5,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": -113.39099884033203,
+              "Z": 18100.71875
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -0.35892200469970703
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1.0184810161590576,
+              "Y": 1.0184810161590576,
+              "Z": 1.0184810161590576
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 5,
+      "exportName": "WB_S05_GreenPeony"
+    },
+    {
+      "key": "b8eb9acdbf88ef18",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "GoldSpark",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -0.35892200469970703
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1.0184810161590576,
+              "Y": 1.0184810161590576,
+              "Z": 1.0184810161590576
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_GoldSpark",
+            "LocalTimeOffset": 5,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": -162.07814025878906,
+              "Z": 25872.6953125
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -0.35892200469970703
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1.0184810161590576,
+              "Y": 1.0184810161590576,
+              "Z": 1.0184810161590576
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 6,
+      "exportName": "WB_S06_GoldSpark"
+    },
+    {
+      "key": "ef20fbc5ed2e81e7",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "PrismWheels",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -0.35892200469970703
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1.0184810161590576,
+              "Y": 1.0184810161590576,
+              "Z": 1.0184810161590576
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_PrismWheels",
+            "LocalTimeOffset": 5,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": -158.74740600585938,
+              "Z": 25341.005859375
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -0.35892200469970703
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1.0184810161590576,
+              "Y": 1.0184810161590576,
+              "Z": 1.0184810161590576
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 7,
+      "exportName": "WB_S07_PrismWheels"
+    },
+    {
+      "key": "5889231e365f85bc",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "GoldChry",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.9131159782409668,
+              "Y": 0.9131159782409668,
+              "Z": 0.9131159782409668
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_GoldChry",
+            "LocalTimeOffset": 5,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 25341.501953125
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 8,
+      "exportName": "WB_S08_GoldChry"
+    },
+    {
+      "key": "4cbcfa3781cdb942",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "GoldKamuro",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_NY_Trail_Large",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_GoldKamuro",
+            "LocalTimeOffset": 8,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 37145.4296875
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 0.9297720193862915,
+              "Y": 0.9297720193862915,
+              "Z": 0.9297720193862915
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 9,
+      "exportName": "WB_S09_GoldKamuro"
+    },
+    {
+      "key": "bb9dba4e43d83dd3",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "SilverStrobeChry",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_SilverStrobeChry",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 5
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0.10000000149011612,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 10,
+      "exportName": "WB_S10_SilverStrobeChry"
+    },
+    {
+      "key": "081fbb2fc2d1916f",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "Trail_Large",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_NY_Trail_Large",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 5
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0.10000000149011612,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 11,
+      "exportName": "WB_S11_Trail_Large"
+    },
+    {
+      "key": "34db60edc3303c18",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "Trail_Medium",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 5
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0.10000000149011612,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 12,
+      "exportName": "WB_S12_Trail_Medium"
+    },
+    {
+      "key": "3edabb4359cfb5eb",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "FanComet_A1",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.20000000298023224,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.30000001192092896,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.4000000059604645,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.5,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 13,
+      "exportName": "WB_S13_FanComet_A1"
+    },
+    {
+      "key": "eedb66c785067961",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "FanComet_A2",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.4000000059604645,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.30000001192092896,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.20000000298023224,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.10000000149011612,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 14,
+      "exportName": "WB_S14_FanComet_A2"
+    },
+    {
+      "key": "6b6ef18dbc5d7e16",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "FanComet_B1",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.10000000149011612,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.20000000298023224,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.30000001192092896,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.5,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.8999999761581421,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.800000011920929,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.699999988079071,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.6000000238418579,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.5,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 15,
+      "exportName": "WB_S15_FanComet_B1"
+    },
+    {
+      "key": "3e1946518873bac4",
+      "sub": {
+        "_struct": "ShowEffectSubTemplate",
+        "TemplateName": "FanComet_B2",
+        "Entries": [
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.4000000059604645,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.30000001192092896,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.20000000298023224,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.10000000149011612,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.5,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.6000000238418579,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": -18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.699999988079071,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 0
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.800000011920929,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 18
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          },
+          {
+            "_struct": "ShowEffectSubTemplateEntry",
+            "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+            "LocalTimeOffset": 0.8999999761581421,
+            "PositionOffset": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RotationOffset": {
+              "_struct": "Rotator",
+              "Pitch": 0,
+              "Yaw": 0,
+              "Roll": 36
+            },
+            "RandomPositionRange": {
+              "_struct": "Vector",
+              "X": 0,
+              "Y": 0,
+              "Z": 0
+            },
+            "RandomRotationRange": {
+              "_struct": "Rotator",
+              "Pitch": 2,
+              "Yaw": 2,
+              "Roll": 1
+            },
+            "EffectScale": {
+              "_struct": "Vector",
+              "X": 1,
+              "Y": 1,
+              "Z": 1
+            },
+            "RandomScaleRatio": 0,
+            "Filter": {
+              "_struct": "ShowFilterCondition",
+              "PlatformFlags": 14,
+              "MinQualityLevel": "EQuality_VeryLow"
+            }
+          }
+        ]
+      },
+      "source": "BP_FX_FireWorksShow_Template",
+      "sourcePath": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
+      "sourceIndex": 16,
+      "exportName": "WB_S16_FanComet_B2"
+    }
+  ]
+}

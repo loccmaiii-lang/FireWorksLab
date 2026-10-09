@@ -1,6 +1,6 @@
 {
   "checkedDate": "2026-10-10",
-  "scope": "8025本机工程与已发布共享版比较；文件名清单不是文件内容上传",
+  "scope": "8025本机工程与已发布共享版比较；文件名清单不是文件内容上传；2026-10-10原件补传后GitHub状态另见programmeArchive",
   "engineeringNamesMayBeUploaded": true,
   "sourceBlueprint": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.BP_FX_FireWorksShow_Template",
   "sourceBlueprintCataloguePaths": [
@@ -677,28 +677,12 @@
       "bytes": 91786
     },
     {
-      "file": "delivery-proof.json",
-      "bytes": 1399
-    },
-    {
-      "file": "download-parity.json",
-      "bytes": 339
-    },
-    {
-      "file": "formal-preserved.json",
-      "bytes": 905709
-    },
-    {
       "file": "index.html",
       "bytes": 15146
     },
     {
       "file": "invalid.dfshow",
       "bytes": 8
-    },
-    {
-      "file": "preservation-check.json",
-      "bytes": 131
     },
     {
       "file": "programme-layer-after.json",
@@ -709,24 +693,12 @@
       "bytes": 207602
     },
     {
-      "file": "qa-authored.json",
-      "bytes": 104969
-    },
-    {
-      "file": "qa-tone.wav",
-      "bytes": 192044
-    },
-    {
       "file": "regression.txt",
       "bytes": 8550
     },
     {
       "file": "shared-publication.json",
       "bytes": 988
-    },
-    {
-      "file": "verification-summary.json",
-      "bytes": 1104
     }
   ],
   "historicalDraftFoldersNotUploaded": [
@@ -745,6 +717,56 @@
       "file": "fireworks-workbench-public.tar.gz",
       "destination": "Sites saved version v1",
       "contentHash": "sha256:62b33dc1202cf3a9080025eac2173b6970c39fada5b1013ddb93786537dedfe3"
+    },
+    {
+      "file": "delivery-proof.json",
+      "destination": "协作/编排工作台资料/2026-10-10/checks/previous-delivery-proof.json",
+      "contentHash": "sha256:3d3250a1d7cc072b53db441b9cfa6e149fa5ed57192082eadce84c4596a5c0a9"
+    },
+    {
+      "file": "download-parity.json",
+      "destination": "协作/编排工作台资料/2026-10-10/checks/previous-download-parity.json",
+      "contentHash": "sha256:a6ad613cfe59613f4182e64d407becdd2e4d24077db36a0e390d065002564cf9"
+    },
+    {
+      "file": "formal-preserved.json",
+      "destination": "协作/编排工作台资料/2026-10-10/backups/save-share-formal-preserved.json",
+      "contentHash": "sha256:5283b4c05ecc670b98a64d997e9ad9cddcb26786c41293b13eea870688c4a416"
+    },
+    {
+      "file": "preservation-check.json",
+      "destination": "协作/编排工作台资料/2026-10-10/checks/previous-preservation-check.json",
+      "contentHash": "sha256:ea4b0939cb05e88b0554626b903f4ceaee92585538d2cf441b672a72cab88221"
+    },
+    {
+      "file": "qa-authored.json",
+      "destination": "协作/编排工作台资料/2026-10-10/backups/save-share-qa-authored.json",
+      "contentHash": "sha256:8884839c0b759a3b584e32271b67f1f49a5e486f19e8f1b22f1f53b966abd631"
+    },
+    {
+      "file": "qa-tone.wav",
+      "destination": "协作/编排工作台资料/2026-10-10/music/qa-tone.wav",
+      "contentHash": "sha256:5417a1641ee0b0519b78d175728e7e0eebf1e0cbfe217fac19340f65dc98d34c"
+    },
+    {
+      "file": "verification-summary.json",
+      "destination": "协作/编排工作台资料/2026-10-10/checks/previous-verification-summary.json",
+      "contentHash": "sha256:99a961660f8bb1eef9842053d8fc4ba94344dfc54aca6828614ac62a42fc2599"
     }
-  ]
+  ],
+  "programmeArchive": {
+    "manifest": "协作/编排工作台资料/2026-10-10/manifest.json",
+    "uploadedCategories": [
+      "current_complete_programme",
+      "historical_valid_backups",
+      "music_and_embedded_audio",
+      "waveform_energy_markers",
+      "resource_catalogue",
+      "blueprint_source_catalogue",
+      "size_spec",
+      "qa_three_tables",
+      "selected_file_evidence"
+    ],
+    "publicSiteContentsUnchanged": true
+  }
 }

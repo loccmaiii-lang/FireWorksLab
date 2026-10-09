@@ -1,0 +1,77 @@
+{
+  "checkedAt": "2026-10-09T17:37:51.851Z",
+  "application": "current 8025 src/program-project.mjs",
+  "scope": "Import preflight, media metadata and counts only; no new UI or UE/artistic acceptance",
+  "results": [
+    {
+      "file": "backups/execution-qa-after-save.json",
+      "preflight": true,
+      "mediaMetadata": true,
+      "cues": 6,
+      "events": 10
+    },
+    {
+      "file": "backups/execution-qa-saved.dfshow",
+      "preflight": true,
+      "mediaMetadata": true,
+      "cues": 6,
+      "events": 10
+    },
+    {
+      "file": "backups/original-20261009-v1.dfshow",
+      "preflight": true,
+      "mediaMetadata": true,
+      "cues": 252,
+      "events": 1689
+    },
+    {
+      "file": "backups/save-share-formal-preserved.json",
+      "preflight": true,
+      "mediaMetadata": true,
+      "cues": 252,
+      "events": 1689
+    },
+    {
+      "file": "backups/save-share-qa-authored.json",
+      "preflight": true,
+      "mediaMetadata": true,
+      "cues": 2,
+      "events": 5
+    },
+    {
+      "file": "backups/我的节目副本-v1.dfshow",
+      "preflight": true,
+      "mediaMetadata": true,
+      "cues": 6,
+      "events": 10
+    },
+    {
+      "file": "backups/空白到交付 · 走查-v1.dfshow",
+      "preflight": true,
+      "mediaMetadata": true,
+      "cues": 2,
+      "events": 5
+    },
+    {
+      "file": "backups/自主编排走查-v1.dfshow",
+      "preflight": true,
+      "mediaMetadata": true,
+      "cues": 6,
+      "events": 10
+    },
+    {
+      "file": "programme/current-v1.dfshow",
+      "preflight": true,
+      "mediaMetadata": true,
+      "cues": 252,
+      "events": 1689
+    },
+    {
+      "file": "reference-data/score24-v05.json",
+      "preflight": true,
+      "mediaMetadata": true,
+      "cues": 252,
+      "events": 1689
+    }
+  ]
+}

@@ -1,0 +1,519 @@
+{
+  "format": "df.programme-upload-manifest/1",
+  "capturedAt": "2026-10-10T01:37:22.564506+08:00",
+  "owner": "编排demo（24）",
+  "authorization": "节目与备份，音乐，这些可以直接上传",
+  "destination": "https://github.com/loccmaiii-lang/FireWorksLab",
+  "currentProgramme": "programme/current-v1.dfshow",
+  "music": "music/music.wav",
+  "publicSiteChanged": false,
+  "cloudSyncImplemented": false,
+  "ueVerified": false,
+  "userArtAccepted": false,
+  "files": [
+    {
+      "path": "backups/execution-qa-after-save.json",
+      "bytes": 264818,
+      "sha256": "893a21cde0684b071331113ff36872fdea1f71a6118ec11e787cf962392a2ac7",
+      "source": "8025 / subtemplate-draft-20261009/execution-option2/qa-after-save.json",
+      "copyVerified": true,
+      "category": "backups",
+      "format": "raw-backup",
+      "backupVersion": 6,
+      "programme": {},
+      "cueCount": 6,
+      "eventCount": 10,
+      "pointCount": 24,
+      "fixedFlowerVersionCount": 18,
+      "sourceSha": "cc08f7edce5db91ce03a3c1911ee8e2c199c9ae54cfb38901c012f7ca56667e6",
+      "musicOffsetS": 0,
+      "audioKind": "embedded",
+      "embeddedMusic": {
+        "bytes": 88244,
+        "sha256": "2824674df00780248aa3a4ae0a7629c1bc2a58f21dc727d3a3b00f74cf824d74",
+        "hashVerified": true,
+        "name": "test-music.wav"
+      }
+    },
+    {
+      "path": "backups/execution-qa-saved.dfshow",
+      "bytes": 278290,
+      "sha256": "e194f800fdbc8f1ef490beac3d71b0884837bccf289d83a08dd64a5ed2a0dbf4",
+      "source": "8025 / subtemplate-draft-20261009/execution-option2/qa-saved.dfshow",
+      "copyVerified": true,
+      "category": "backups",
+      "format": "df.workbench-project/1",
+      "backupVersion": 6,
+      "programme": {
+        "id": "PROGRAM_1791555893890",
+        "name": "自主编排走查",
+        "version": 1
+      },
+      "cueCount": 6,
+      "eventCount": 10,
+      "pointCount": 24,
+      "fixedFlowerVersionCount": 18,
+      "sourceSha": "cc08f7edce5db91ce03a3c1911ee8e2c199c9ae54cfb38901c012f7ca56667e6",
+      "musicOffsetS": 0,
+      "audioKind": "embedded",
+      "embeddedMusic": {
+        "bytes": 88244,
+        "sha256": "2824674df00780248aa3a4ae0a7629c1bc2a58f21dc727d3a3b00f74cf824d74",
+        "hashVerified": true,
+        "name": "test-music.wav"
+      }
+    },
+    {
+      "path": "backups/original-20261009-v1.dfshow",
+      "bytes": 82326053,
+      "sha256": "0c76cd97dcbc51da6cc50b3ff905a45c836375801373efc35b6fa08751e68b8e",
+      "source": "Downloads / 汪洋与浩渺 · 融合编排05-v1.dfshow",
+      "copyVerified": true,
+      "category": "backups",
+      "format": "df.workbench-project/1",
+      "backupVersion": 6,
+      "programme": {
+        "id": "ORIGINAL",
+        "name": "汪洋与浩渺 · 融合编排05",
+        "version": 1
+      },
+      "cueCount": 252,
+      "eventCount": 1689,
+      "pointCount": 24,
+      "fixedFlowerVersionCount": 18,
+      "sourceSha": "cc08f7edce5db91ce03a3c1911ee8e2c199c9ae54cfb38901c012f7ca56667e6",
+      "musicOffsetS": 10,
+      "audioKind": "embedded",
+      "embeddedMusic": {
+        "bytes": 61036612,
+        "sha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3",
+        "hashVerified": true,
+        "name": "原节目音乐.wav"
+      }
+    },
+    {
+      "path": "backups/save-share-formal-preserved.json",
+      "bytes": 905709,
+      "sha256": "5283b4c05ecc670b98a64d997e9ad9cddcb26786c41293b13eea870688c4a416",
+      "source": "8025 / subtemplate-draft-20261009/save-share-audit/formal-preserved.json",
+      "copyVerified": true,
+      "category": "backups",
+      "format": "raw-backup",
+      "backupVersion": 6,
+      "programme": {},
+      "cueCount": 252,
+      "eventCount": 1689,
+      "pointCount": 24,
+      "fixedFlowerVersionCount": 18,
+      "sourceSha": "cc08f7edce5db91ce03a3c1911ee8e2c199c9ae54cfb38901c012f7ca56667e6",
+      "musicOffsetS": 10,
+      "audioKind": "bundled"
+    },
+    {
+      "path": "backups/save-share-qa-authored.json",
+      "bytes": 104969,
+      "sha256": "8884839c0b759a3b584e32271b67f1f49a5e486f19e8f1b22f1f53b966abd631",
+      "source": "8025 / subtemplate-draft-20261009/save-share-audit/qa-authored.json",
+      "copyVerified": true,
+      "category": "backups",
+      "format": "raw-backup",
+      "backupVersion": 6,
+      "programme": {},
+      "cueCount": 2,
+      "eventCount": 5,
+      "pointCount": 24,
+      "fixedFlowerVersionCount": 19,
+      "sourceSha": "cc08f7edce5db91ce03a3c1911ee8e2c199c9ae54cfb38901c012f7ca56667e6",
+      "musicOffsetS": 0,
+      "audioKind": null
+    },
+    {
+      "path": "backups/我的节目副本-v1.dfshow",
+      "bytes": 264945,
+      "sha256": "449d0460c36c934120c632ae7c1b1caa77303fed1ce2f94bc57b2b3ff7777f7a",
+      "source": "Downloads / 我的节目副本-v1.dfshow",
+      "copyVerified": true,
+      "category": "backups",
+      "format": "df.workbench-project/1",
+      "backupVersion": 6,
+      "programme": {
+        "id": "PROGRAM_1791556496123",
+        "name": "我的节目副本",
+        "version": 1
+      },
+      "cueCount": 6,
+      "eventCount": 10,
+      "pointCount": 24,
+      "fixedFlowerVersionCount": 18,
+      "sourceSha": "cc08f7edce5db91ce03a3c1911ee8e2c199c9ae54cfb38901c012f7ca56667e6",
+      "musicOffsetS": 0,
+      "audioKind": "embedded",
+      "embeddedMusic": {
+        "bytes": 88244,
+        "sha256": "2824674df00780248aa3a4ae0a7629c1bc2a58f21dc727d3a3b00f74cf824d74",
+        "hashVerified": true,
+        "name": "test-music.wav"
+      }
+    },
+    {
+      "path": "backups/空白到交付 · 走查-v1.dfshow",
+      "bytes": 399248,
+      "sha256": "daca7b859b27b2957c72127d2e65b046eb26d0a6a0d6f76fc8c068c16aaa129f",
+      "source": "Downloads / 空白到交付 · 走查-v1.dfshow",
+      "copyVerified": true,
+      "category": "backups",
+      "format": "df.workbench-project/1",
+      "backupVersion": 6,
+      "programme": {
+        "id": "PROGRAM_1791560686351",
+        "name": "空白到交付 · 走查",
+        "version": 1
+      },
+      "cueCount": 2,
+      "eventCount": 5,
+      "pointCount": 24,
+      "fixedFlowerVersionCount": 19,
+      "sourceSha": "cc08f7edce5db91ce03a3c1911ee8e2c199c9ae54cfb38901c012f7ca56667e6",
+      "musicOffsetS": 0,
+      "audioKind": "embedded",
+      "embeddedMusic": {
+        "bytes": 192044,
+        "sha256": "5417a1641ee0b0519b78d175728e7e0eebf1e0cbfe217fac19340f65dc98d34c",
+        "hashVerified": true,
+        "name": "qa-tone.wav"
+      }
+    },
+    {
+      "path": "backups/自主编排走查-v1.dfshow",
+      "bytes": 264945,
+      "sha256": "6b20fdb871ef07921227b76ae16a95478acab2bdf33648b6ba3e7c5e4b8657c1",
+      "source": "Downloads / 自主编排走查-v1.dfshow",
+      "copyVerified": true,
+      "category": "backups",
+      "format": "df.workbench-project/1",
+      "backupVersion": 6,
+      "programme": {
+        "id": "PROGRAM_1791555893890",
+        "name": "自主编排走查",
+        "version": 1
+      },
+      "cueCount": 6,
+      "eventCount": 10,
+      "pointCount": 24,
+      "fixedFlowerVersionCount": 18,
+      "sourceSha": "cc08f7edce5db91ce03a3c1911ee8e2c199c9ae54cfb38901c012f7ca56667e6",
+      "musicOffsetS": 0,
+      "audioKind": "embedded",
+      "embeddedMusic": {
+        "bytes": 88244,
+        "sha256": "2824674df00780248aa3a4ae0a7629c1bc2a58f21dc727d3a3b00f74cf824d74",
+        "hashVerified": true,
+        "name": "test-music.wav"
+      }
+    },
+    {
+      "path": "checks/previous-delivery-proof.json",
+      "bytes": 1399,
+      "sha256": "3d3250a1d7cc072b53db441b9cfa6e149fa5ed57192082eadce84c4596a5c0a9",
+      "source": "8025 / subtemplate-draft-20261009/save-share-audit/delivery-proof.json",
+      "copyVerified": true,
+      "category": "checks"
+    },
+    {
+      "path": "checks/previous-download-parity.json",
+      "bytes": 339,
+      "sha256": "a6ad613cfe59613f4182e64d407becdd2e4d24077db36a0e390d065002564cf9",
+      "source": "8025 / subtemplate-draft-20261009/save-share-audit/download-parity.json",
+      "copyVerified": true,
+      "category": "checks"
+    },
+    {
+      "path": "checks/previous-preservation-check.json",
+      "bytes": 131,
+      "sha256": "ea4b0939cb05e88b0554626b903f4ceaee92585538d2cf441b672a72cab88221",
+      "source": "8025 / subtemplate-draft-20261009/save-share-audit/preservation-check.json",
+      "copyVerified": true,
+      "category": "checks"
+    },
+    {
+      "path": "checks/previous-verification-summary.json",
+      "bytes": 1104,
+      "sha256": "99a961660f8bb1eef9842053d8fc4ba94344dfc54aca6828614ac62a42fc2599",
+      "source": "8025 / subtemplate-draft-20261009/save-share-audit/verification-summary.json",
+      "copyVerified": true,
+      "category": "checks"
+    },
+    {
+      "path": "delivery/qa-authored/director09-high-EffectScheduleGroups.txt",
+      "bytes": 254,
+      "sha256": "73e7b914af6723082490466a94aa3f90f72001635250d63741bd2f82251e7e72",
+      "source": "Downloads / director09-high-EffectScheduleGroups.txt",
+      "copyVerified": true,
+      "category": "delivery"
+    },
+    {
+      "path": "delivery/qa-authored/director09-high-EffectSubTemplates (1).txt",
+      "bytes": 3710,
+      "sha256": "e749a2a2f1426256bbf07322cfb0d1798a1ab710d1555a5482a2839a63f729d1",
+      "source": "Downloads / director09-high-EffectSubTemplates (1).txt",
+      "copyVerified": true,
+      "category": "delivery"
+    },
+    {
+      "path": "delivery/qa-authored/director09-high-EffectTemplates.txt",
+      "bytes": 2029,
+      "sha256": "a058453da2cc0a404f6d93d50629090caa9ed09cad1201b2a0418305e6651ada",
+      "source": "Downloads / director09-high-EffectTemplates.txt",
+      "copyVerified": true,
+      "category": "delivery"
+    },
+    {
+      "path": "music/music.wav",
+      "bytes": 61036612,
+      "sha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3",
+      "source": "8025 / public/music.wav",
+      "copyVerified": true,
+      "category": "music",
+      "audio": {
+        "sampleRate": 48000,
+        "channels": 2,
+        "durationS": 210.8108125
+      }
+    },
+    {
+      "path": "music/qa-tone.wav",
+      "bytes": 192044,
+      "sha256": "5417a1641ee0b0519b78d175728e7e0eebf1e0cbfe217fac19340f65dc98d34c",
+      "source": "8025 / subtemplate-draft-20261009/save-share-audit/qa-tone.wav",
+      "copyVerified": true,
+      "category": "music",
+      "audio": {
+        "sampleRate": 16000,
+        "channels": 1,
+        "durationS": 6.0
+      }
+    },
+    {
+      "path": "music/test-music.wav",
+      "bytes": 88244,
+      "sha256": "2824674df00780248aa3a4ae0a7629c1bc2a58f21dc727d3a3b00f74cf824d74",
+      "source": "8025 / subtemplate-draft-20261009/execution-option2/test-music.wav",
+      "copyVerified": true,
+      "category": "music",
+      "audio": {
+        "sampleRate": 22050,
+        "channels": 1,
+        "durationS": 2.0
+      }
+    },
+    {
+      "path": "programme/current-v1.dfshow",
+      "bytes": 82326225,
+      "sha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a",
+      "source": "8025 UI download / 汪洋与浩渺 · 融合编排05-v1 (1).dfshow",
+      "copyVerified": true,
+      "category": "programme",
+      "format": "df.workbench-project/1",
+      "backupVersion": 6,
+      "programme": {
+        "id": "ORIGINAL",
+        "name": "汪洋与浩渺 · 融合编排05",
+        "version": 1
+      },
+      "cueCount": 252,
+      "eventCount": 1689,
+      "pointCount": 24,
+      "fixedFlowerVersionCount": 18,
+      "sourceSha": "cc08f7edce5db91ce03a3c1911ee8e2c199c9ae54cfb38901c012f7ca56667e6",
+      "musicOffsetS": 10,
+      "audioKind": "embedded",
+      "embeddedMusic": {
+        "bytes": 61036612,
+        "sha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3",
+        "hashVerified": true,
+        "name": "原节目音乐.wav"
+      }
+    },
+    {
+      "path": "reference-data/music-data.json",
+      "bytes": 42241,
+      "sha256": "08ed21b57787366c61a0c5adce34c200ab132053813e9438312bbedea7f73f7e",
+      "source": "8025 / public/data/music-data.json",
+      "copyVerified": true,
+      "category": "reference-data"
+    },
+    {
+      "path": "reference-data/resource-catalogue.json",
+      "bytes": 35310,
+      "sha256": "d70182642319e8f95affa6b537a1db61cf3ceeb51bf7e593504c1d76867686ae",
+      "source": "8025 / public/data/resource-catalogue.json",
+      "copyVerified": true,
+      "category": "reference-data"
+    },
+    {
+      "path": "reference-data/score24-v05.json",
+      "bytes": 1480198,
+      "sha256": "79f1b2d63e85bd51a06d20aba108e0db783ebeeca8ce7fdb86f87b82e32b594a",
+      "source": "8025 / public/data/score24-v05.json",
+      "copyVerified": true,
+      "category": "reference-data",
+      "format": "raw-backup",
+      "backupVersion": 5,
+      "programme": {},
+      "cueCount": 252,
+      "eventCount": 1689,
+      "pointCount": 24,
+      "fixedFlowerVersionCount": 0,
+      "sourceSha": "cc08f7edce5db91ce03a3c1911ee8e2c199c9ae54cfb38901c012f7ca56667e6",
+      "musicOffsetS": 10,
+      "audioKind": null
+    },
+    {
+      "path": "reference-data/size-spec.json",
+      "bytes": 5390,
+      "sha256": "d89f1d87cf847cc5b4d3355d2bd085162de8e1f8c4db60a045b8b74c0fa9f246",
+      "source": "8025 / public/data/size-spec.json",
+      "copyVerified": true,
+      "category": "reference-data"
+    },
+    {
+      "path": "reference-data/structure-data.json",
+      "bytes": 39616,
+      "sha256": "bb5830e0cc13567b184a459d341dc59ce197259f64e5c3aa68e4b49a04260801",
+      "source": "8025 / public/data/structure-data.json",
+      "copyVerified": true,
+      "category": "reference-data"
+    },
+    {
+      "path": "reference-data/subtemplate-source.json",
+      "bytes": 84149,
+      "sha256": "63e41141c8c1686a13597728586398bd3fcc8ed32be1e87409f2189d249be718",
+      "source": "8025 / public/data/subtemplate-source.json",
+      "copyVerified": true,
+      "category": "reference-data"
+    },
+    {
+      "path": "programme/current-analysis.json",
+      "bytes": 1812967,
+      "sha256": "41131becd99f82c8d5814628ae56c5c5f9a4229389435151871a2e2c2072f7dd",
+      "category": "derived_analysis",
+      "derivedFrom": "programme/current-v1.dfshow",
+      "transformation": "Remove only audio dataUrl; retain audio metadata and WAV reference. Analysis schema is not import format."
+    },
+    {
+      "path": "README.md",
+      "bytes": 3298,
+      "sha256": "44807016570be9fb3da667d68612526af7621c45dbe6ae46438a6d6fa26ebb11",
+      "category": "current_evidence_or_documentation"
+    },
+    {
+      "path": "verify.py",
+      "bytes": 1179,
+      "sha256": "f50884bde305890f3afbdce160387a384abb15befa5e9d511049c9c6eb1501f7",
+      "category": "current_evidence_or_documentation"
+    },
+    {
+      "path": "checks/current-import-preflight.json",
+      "bytes": 1798,
+      "sha256": "5b062cb8629cd8b3c9de45ed518f0fe7e21b25974b441b3e0f255c181bc8555d",
+      "category": "current_evidence_or_documentation"
+    }
+  ],
+  "duplicateSources": [
+    {
+      "source": "8025 / subtemplate-draft-20261009/execution-option2/qa-restored.json",
+      "sha256": "893a21cde0684b071331113ff36872fdea1f71a6118ec11e787cf962392a2ac7",
+      "sameAs": "backups/execution-qa-after-save.json"
+    },
+    {
+      "source": "8025 / subtemplate-draft-20261009/execution-option2/formal-after.json",
+      "sha256": "5283b4c05ecc670b98a64d997e9ad9cddcb26786c41293b13eea870688c4a416",
+      "sameAs": "backups/save-share-formal-preserved.json"
+    },
+    {
+      "source": "8025 / subtemplate-draft-20261009/save-share-audit/programme-layer-after.json",
+      "sha256": "8884839c0b759a3b584e32271b67f1f49a5e486f19e8f1b22f1f53b966abd631",
+      "sameAs": "backups/save-share-qa-authored.json"
+    }
+  ],
+  "checks": {
+    "cues": true,
+    "events": true,
+    "points": true,
+    "stage": true,
+    "subTemplateLibrary": true,
+    "choreographyLibrary": true,
+    "sections": true,
+    "profiles": true,
+    "musicMarkers": true,
+    "embeddedMatchesOriginalWav": true
+  },
+  "priorExportDocChangedPaths": [
+    "/cues/98/burstStart",
+    "/cues/98/effectiveEnd",
+    "/cues/98/end",
+    "/cues/98/lastLaunch",
+    "/cues/98/musicBinding/offset",
+    "/cues/98/start",
+    "/events/579/burst",
+    "/events/579/effectiveBurst",
+    "/events/579/effectiveEnd",
+    "/events/579/effectiveLaunch",
+    "/events/579/end",
+    "/events/579/launch",
+    "/events/580/burst",
+    "/events/580/effectiveBurst",
+    "/events/580/effectiveEnd",
+    "/events/580/effectiveLaunch",
+    "/events/580/end",
+    "/events/580/launch",
+    "/events/581/burst",
+    "/events/581/effectiveBurst",
+    "/events/581/effectiveEnd",
+    "/events/581/effectiveLaunch",
+    "/events/581/end",
+    "/events/581/launch",
+    "/events/582/burst",
+    "/events/582/effectiveBurst",
+    "/events/582/effectiveEnd",
+    "/events/582/effectiveLaunch",
+    "/events/582/end",
+    "/events/582/launch",
+    "/events/583/burst",
+    "/events/583/effectiveBurst",
+    "/events/583/effectiveEnd",
+    "/events/583/effectiveLaunch",
+    "/events/583/end",
+    "/events/583/launch",
+    "/events/584/burst",
+    "/events/584/effectiveBurst",
+    "/events/584/effectiveEnd",
+    "/events/584/effectiveLaunch",
+    "/events/584/end",
+    "/events/584/launch",
+    "/events/585/burst",
+    "/events/585/effectiveBurst",
+    "/events/585/effectiveEnd",
+    "/events/585/effectiveLaunch",
+    "/events/585/end",
+    "/events/585/launch",
+    "/events/586/burst",
+    "/events/586/effectiveBurst",
+    "/events/586/effectiveEnd",
+    "/events/586/effectiveLaunch",
+    "/events/586/end",
+    "/events/586/launch",
+    "/meta/programName",
+    "/statistics/perPointPeak/B5/time",
+    "/statistics/perPointPeak/B6/time",
+    "/statistics/perPointPeak/B7/time"
+  ],
+  "excluded": [
+    "invalid.dfshow intentional malformed fixture",
+    "*.truncated.txt incomplete capture",
+    "unrelated Downloads",
+    "account credentials",
+    "complete private application source/tests/screenshots"
+  ],
+  "cloudEditingRule": "Use current full dfshow as input baseline; keep music, stable IDs, fixed versions and three profiles unless the user specifies an artistic change. Return a new complete dfshow plus change list and checks."
+}

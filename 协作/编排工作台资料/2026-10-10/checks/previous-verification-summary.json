@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-10-10T00:24:53.829569",
+  "privateModelTests": {
+    "total": 89,
+    "pass": 89,
+    "fail": 0
+  },
+  "privateProductionBuild": "pass",
+  "sharedTests": {
+    "total": 4,
+    "pass": 4
+  },
+  "formalPreserved": {
+    "doc": true,
+    "profiles": true,
+    "musicMarkers": true
+  },
+  "downloadParity": [
+    {
+      "field": "EffectSubTemplates",
+      "exactMatch": true,
+      "characters": 3710,
+      "downloadName": "director09-high-EffectSubTemplates (1).txt"
+    },
+    {
+      "field": "EffectTemplates",
+      "exactMatch": true,
+      "characters": 2029
+    },
+    {
+      "field": "EffectScheduleGroups",
+      "exactMatch": true,
+      "characters": 254
+    }
+  ],
+  "sourceFingerprint": "1b9e6e3135dfa1bcc0341a3818cd17f5a7ed10b533f9e6dc4e04ec734a342fe6",
+  "items": 32,
+  "remaining": [
+    "旧前台三个花型原生球花Z超过坝顶，需资源核对后新版本修正",
+    "UE真实尺度、轨迹、扇形单束/整排标定",
+    "艺术音乐节奏用户验收",
+    "现场新BP/Seq与云端自动连接UE"
+  ]
+}

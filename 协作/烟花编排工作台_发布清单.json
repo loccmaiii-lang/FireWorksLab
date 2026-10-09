@@ -24,7 +24,8 @@
     "sanitizedProgressAndHandoff": "uploaded",
     "completePrivate8025SourceAndTests": "local_only_not_in_public_collaboration_repository",
     "completeAuditHtmlAndScreenshots": "local_only",
-    "personalProgrammeAndMusic": "not_uploaded_by_this_task"
+    "personalProgrammeAndMusic": "uploaded_to_public_collaboration_repository_2026-10-10",
+    "actualEngineeringReferenceData": "uploaded_resource_catalogue_blueprint_source_size_spec_and_programme_fixed_versions"
   },
   "supportedProgrammeTransfer": {
     "format": "df.workbench-project/1",
@@ -56,5 +57,21 @@
     ],
     "neverIncludeCredentials": true,
     "fullOriginalFilesUploadedByThisCorrection": false
+  },
+  "programmeArchive": {
+    "directory": "协作/编排工作台资料/2026-10-10",
+    "manifest": "协作/编排工作台资料/2026-10-10/manifest.json",
+    "currentProgramme": "协作/编排工作台资料/2026-10-10/programme/current-v1.dfshow",
+    "baseSha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a",
+    "musicSha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3",
+    "sourceFilesPreserved": true,
+    "publicSiteChanged": false
+  },
+  "programmeMusicUploadPolicy": {
+    "authorizedDate": "2026-10-10",
+    "scope": "current 8025 project programme, valid backups, music and associated recovery data",
+    "destination": "existing public FireWorksLab repository",
+    "unrelatedPersonalFilesExcluded": true,
+    "credentialsExcluded": true
   }
 }
