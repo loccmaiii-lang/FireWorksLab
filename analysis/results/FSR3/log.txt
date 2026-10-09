@@ -1,0 +1,51 @@
+00:51:56 第 1/3 步：基准回归 4.9.57 → 4.9.58 花型模板 6 个
+00:52:10     FireworkBaker.html kiku 4.9.57
+00:52:10     FireworkBaker.html botan 4.9.57
+00:52:10     FireworkBaker.html kamuro 4.9.57
+00:52:10     FireworkBaker.html senrin 4.9.57
+00:52:10     FireworkBaker.html strobe 4.9.57
+00:52:10     FireworkBaker.html crackle 4.9.57
+00:52:10     FireworkBaker.html kiku 4.9.58
+00:52:10     FireworkBaker.html botan 4.9.58
+00:52:10     FireworkBaker.html kamuro 4.9.58
+00:52:10     FireworkBaker.html senrin 4.9.58
+00:52:10     FireworkBaker.html strobe 4.9.58
+00:52:10     FireworkBaker.html crackle 4.9.58
+00:52:10   ✅ kiku 帧计划相同 [{"t": 0.528, "max": 0, "frac": 0.0}, {"t": 1.54, "max": 0, "frac": 0.0}, {"t": 3.08, "max": 0, "frac": 0.0}]
+00:52:10   ✅ botan 帧计划相同 [{"t": 0.378, "max": 0, "frac": 0.0}, {"t": 1.102, "max": 0, "frac": 0.0}, {"t": 2.205, "max": 0, "frac": 0.0}]
+00:52:10   ✅ kamuro 帧计划相同 [{"t": 0.816, "max": 0, "frac": 0.0}, {"t": 2.38, "max": 0, "frac": 0.0}, {"t": 4.76, "max": 0, "frac": 0.0}]
+00:52:10   ✅ senrin 帧计划相同 [{"t": 0.384, "max": 0, "frac": 0.0}, {"t": 1.12, "max": 0, "frac": 0.0}, {"t": 2.24, "max": 0, "frac": 0.0}]
+00:52:10   ✅ strobe 帧计划相同 [{"t": 0.534, "max": 0, "frac": 0.0}, {"t": 1.557, "max": 0, "frac": 0.0}, {"t": 3.115, "max": 0, "frac": 0.0}]
+00:52:10   ✅ crackle 帧计划相同 [{"t": 0.408, "max": 0, "frac": 0.0}, {"t": 1.802, "max": 0, "frac": 0.0}, {"t": 2.04, "max": 0, "frac": 0.0}]
+00:52:10   ✅ 基准回归 4.9.57 → 4.9.58 花型模板 6 个（0.2 分钟）
+00:52:10 第 2/3 步：多层模板定帧回归 4.9.57 → 4.9.58
+00:52:23     FireworkBaker.html shinKiku
+00:52:23     FireworkBaker.html yaeHenka
+00:52:23     FireworkBaker.html yaeBlueBotan
+00:52:23     FireworkBaker.html colorSenrin
+00:52:23     FireworkBaker.html mieKamuroSaki
+00:52:23     FireworkBaker.html mangekyo
+00:52:23     FireworkBaker.html somewakeBotan
+00:52:23     FireworkBaker.html kinzuiLime
+00:52:23     FireworkBaker.html shinKiku
+00:52:23     FireworkBaker.html yaeHenka
+00:52:23     FireworkBaker.html yaeBlueBotan
+00:52:23     FireworkBaker.html colorSenrin
+00:52:23     FireworkBaker.html mieKamuroSaki
+00:52:23     FireworkBaker.html mangekyo
+00:52:23     FireworkBaker.html somewakeBotan
+00:52:23     FireworkBaker.html kinzuiLime
+00:52:23   ✅ shinKiku [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+00:52:23   ✅ yaeHenka [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+00:52:23   ✅ yaeBlueBotan [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+00:52:23   ✅ colorSenrin [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+00:52:23   ✅ mieKamuroSaki [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+00:52:23   ✅ mangekyo [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+00:52:23   ✅ somewakeBotan [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+00:52:23   ✅ kinzuiLime [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+00:52:23   ✅ 多层模板定帧回归 4.9.57 → 4.9.58（0.2 分钟）
+00:52:23 第 3/3 步：火花发射器检查（含星头单独光晕 H1–H4）
+00:52:28   {"E1": {"条目": 26}, "E2_0": {"出发点": [-4, -2, 0, 2, 4], "闪光": 5}, "E2_0.4": {"出发点": [-4, -2, 0, 2, 4], "闪光": 5}, "E3": {"火花": 3001, "离轴最大": 2.993, "离轴平均": 1.748, "理论": 1.767}, "E3b": {"星头大小随机倍数": 0.654}, "E4": {"火花": 1786, "锥角30最大夹角": 29.96}, "E5": {"路程": 70.68, "CPU火花": 515, "期望": 565.4, "每米上下": [263, 252], "每秒上下": [332, 791]}, "E6": {"缺省宽": 169.68, "加了宽": 200.45}, "G1": {"base": {"行": 66, "星头端平均宽": 2.5, "总亮": 1140869.0}, "spawnR": {"行": 50, "星头端平均宽": 4.83, "总亮": 1137289.0}, "head": {"行": 51, "星头端平均宽": 4.42, "总亮": 1139612.0}, "jet": {"行": 44, "星头端平均宽": 2.64, "总亮": 1134004.0}, "perm": {"行": 68, "星头端平均宽": 2.47, "总亮": 1142055.0}, "grad": {"行": 49, "星头端平均宽": 5.0, "总亮": 1138232.0}, "moffat": {"行": 51, "星头端平均宽": 5.33, "总亮": 1139817.0}, "H_base": {"行": 66, "星头端平均宽": 2.5, "总亮": 1140869.0}, "H2_same": {"行": 66, "星头端平均宽": 2.5, "总亮": 1140869.0}, "H3_dark": {"行": 64, "星头端平均宽": 2.0, "总亮": 1139540.0}, "H3_dark_own": {"行": 64, "星头端平均宽": 2.0, "总亮": 1139540.0}, "H3_dark_layer": {"行": 83, "星头端平均宽": 9.4, "总亮": 1175744.0}, "H4_big": {"行": 66, "星头端平均宽": 2.5, "总亮": 1142647.0}}}
+00:52:28   全过 ✅
+00:52:28   ✅ 火花发射器检查（含星头单独光晕 H1–H4）（0.1 分钟）
+00:52:28 完成，用时 0.5 分钟
