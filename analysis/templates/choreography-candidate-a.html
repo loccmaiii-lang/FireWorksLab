@@ -1,0 +1,317 @@
+<title>汪洋与浩渺编排候选A</title>
+<style>
+/* 布局：标题行（演出时间 + 音乐时间 + 段落 + 图例）→ 正面比例舞台（倒计时叠在上面）→ 音乐能量与 cue 条（可点击跳转）→ 播放 / 档位 / 视野 → 段落按钮 → 本刻说明 → 折叠表格。
+   单一暗色：沿用计划书草稿图的描边圆画法，大小用颜色区分，扇形用金 / 红 / 银灰三色。 */
+:root{
+  --bg:#0b0c0e; --panel:#141519; --panel2:#1e1f25; --line:#2c2d34; --fg:#ececee; --muted:#8c8f98; --accent:#e9e9ec;
+  --front:#7f9fe0; --small:#27b585; --mid:#3b82f6; --large:#f26a2e;
+  --gold:#d6b25c; --red:#e26052; --silver:#aaaeb6;
+  --sans:system-ui,-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+html,body{background:var(--bg);color:var(--fg);}
+body{margin:0;font-family:var(--sans);font-size:13px;line-height:1.5;}
+.wrap{max-width:1080px;margin:0 auto;padding-block:16px;padding-inline:16px;display:flex;flex-direction:column;gap:12px;}
+.head{display:flex;align-items:flex-end;gap:8px 18px;flex-wrap:wrap;}
+.clock{display:flex;flex-direction:column;line-height:1.1;}
+.clock b{font:500 26px/1 var(--mono);font-variant-numeric:tabular-nums;}
+.clock small{color:var(--muted);font:11px/1.6 var(--mono);font-variant-numeric:tabular-nums;}
+.where{display:flex;align-items:baseline;gap:4px 10px;flex-wrap:wrap;min-width:0;}
+.where strong{font-size:15px;font-weight:600;}
+.where em{font-style:normal;font-size:11px;padding:1px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);}
+.where span{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums;}
+.legend{margin-left:auto;display:flex;gap:4px 14px;flex-wrap:wrap;color:var(--muted);font-size:12px;}
+.legend i{display:inline-flex;align-items:center;gap:5px;font-style:normal;}
+.legend i::before{content:"";width:10px;height:10px;border-radius:50%;border:1.5px solid var(--c);box-sizing:border-box;}
+.legend i.fan::before{border:0;border-radius:0;width:12px;height:10px;background:linear-gradient(60deg,transparent 46%,var(--c) 46% 54%,transparent 54%),linear-gradient(-60deg,transparent 46%,var(--c) 46% 54%,transparent 54%),linear-gradient(90deg,transparent 46%,var(--c) 46% 54%,transparent 54%);}
+canvas{display:block;width:100%;}
+#strip{cursor:pointer;touch-action:none;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.bar{display:flex;gap:8px 14px;align-items:center;flex-wrap:wrap;}
+.seg{display:inline-flex;gap:0;border:1px solid var(--line);border-radius:999px;overflow:hidden;}
+.seg button,.bar>button{all:unset;box-sizing:border-box;cursor:pointer;padding:5px 12px;color:var(--fg);font-size:12px;}
+.bar>button{border:1px solid var(--line);border-radius:999px;}
+.seg button+button{border-left:1px solid var(--line);}
+.seg button[aria-pressed="true"],.bar>button[aria-pressed="true"]{background:var(--panel2);}
+.bar>button.go{background:var(--fg);border-color:var(--fg);color:#0b0c0e;font-weight:600;min-width:58px;text-align:center;font-size:13px;}
+.bar label{color:var(--muted);font-size:12px;display:inline-flex;align-items:center;gap:6px;}
+.bar .tag{color:var(--muted);font-size:11px;}
+button:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.tl{display:flex;height:18px;}
+.tl button{all:unset;cursor:pointer;box-sizing:border-box;border-left:1px solid var(--line);padding-left:3px;color:var(--muted);font-size:10px;line-height:18px;white-space:nowrap;overflow:hidden;}
+.tl button[aria-current="true"]{color:var(--fg);}
+input[type=range]{width:100%;margin:0;accent-color:var(--fg);}
+.info{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.info b{font-weight:600;overflow-wrap:anywhere;}
+.info span{color:var(--muted);overflow-wrap:anywhere;}
+details{color:var(--muted);font-size:12px;}
+summary{cursor:pointer;width:max-content;max-width:100%;}
+.tbl{overflow-x:auto;margin-top:6px;}
+table{border-collapse:collapse;min-width:520px;width:100%;font-variant-numeric:tabular-nums;}
+th,td{text-align:left;padding:3px 14px 3px 0;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:top;}
+th{font-weight:500;color:var(--muted);}
+td:first-child{color:var(--fg);}
+td.wrapcell{white-space:normal;min-width:220px;}
+.note{color:var(--muted);font-size:11px;}
+</style>
+<div class="wrap">
+  <div class="head">
+    <div class="clock"><b id="show">00:00.0</b><small id="music">音乐 —</small></div>
+    <div class="where"><strong id="sec"></strong><em id="role"></em><span id="range"></span></div>
+    <div class="legend">
+      <i style="--c:var(--front)">前台</i><i style="--c:var(--small)">小 ⌀90</i><i style="--c:var(--mid)">中 ⌀150</i><i style="--c:var(--large)">大 ⌀230</i><i class="fan" style="--c:var(--gold)">金扇</i><i class="fan" style="--c:var(--red)">红彗星扇</i><i class="fan" style="--c:var(--silver)">银灰扇</i>
+    </div>
+  </div>
+  <canvas id="cv" role="img" aria-label="跨年烟花秀候选A正面比例动画"></canvas>
+  <canvas id="strip" role="slider" aria-label="音乐能量与 cue，点击跳转" height="112"></canvas>
+  <div class="bar">
+    <button class="go" id="play" type="button">播放</button>
+    <div class="seg" id="speed" role="group" aria-label="播放速度"><button type="button" data-v="1" aria-pressed="true">1×</button><button type="button" data-v="2" aria-pressed="false">2×</button><button type="button" data-v="4" aria-pressed="false">4×</button></div>
+    <div class="seg" id="tier" role="group" aria-label="质量档位"><button type="button" data-v="1" aria-pressed="true">高配</button><button type="button" data-v="2" aria-pressed="false">中配</button><button type="button" data-v="4" aria-pressed="false">低配</button></div>
+    <div class="seg" id="view" role="group" aria-label="视野"><button type="button" data-v="full" aria-pressed="true">全场</button><button type="button" data-v="front" aria-pressed="false">前台近看</button></div>
+    <button type="button" id="lab" aria-pressed="false">点位标签</button>
+  </div>
+  <div class="tl" id="tl"></div>
+  <input id="seek" type="range" min="0" step="0.1" value="0" aria-label="演出时间，秒">
+  <div class="info"><b id="cue"></b><span id="detail"></span><span id="counts"></span></div>
+  <details><summary>槽位、尺寸和点次</summary><div class="tbl"><table id="slots"></table></div></details>
+  <details><summary>扇形顺序写法</summary><div class="tbl"><table id="orders"></table></div></details>
+  <details><summary>音乐锚点（用户给定 / 本机检测待试听）</summary><div class="tbl"><table id="anchors"></table></div></details>
+  <div class="note">示意：每个圆从该点开花时刻 H 起画，不含升空；圆径、炸点高取自 spec/尺寸标定.json 的设计值，扇形几何是示意，都不是引擎实测。recipeKey、D、launch 全部未绑定。点位 0 起。空格键播放 / 暂停。</div>
+</div>
+<script>
+(()=>{
+const D=__PREVIEW_DATA__;
+const $=id=>document.getElementById(id);
+const cv=$('cv'),ctx=cv.getContext('2d'),st=$('strip'),sx=st.getContext('2d'),seek=$('seek'),play=$('play');
+const DUR=D.showDurationS,OFF=D.offsetS;
+seek.max=DUR;
+const COL={front:'127,159,224',small:'39,181,133',mid:'59,130,246',large:'242,106,46'};
+const HUE={gold:'214,178,92',red:'226,96,82',silver:'170,174,182',lime:'39,181,133'};
+const GEO={ // 设计示意值：直径 / 炸点高（相对发射点）/ 可见时长
+  S:{d:90,h:150,life:3.5},M:{d:150,h:210,life:5},L:{d:230,h:330,life:6},
+  F8:{d:8,h:80,life:2.2},F24:{d:24,h:62,life:2.4},F30:{d:30,h:55,life:2.8},F32:{d:32,h:62,life:2.8},F40:{d:40,h:65,life:3}};
+const FAN={gold:{n:11,half:45,len:70,gap:.035,life:3.0},red:{n:5,half:35,len:75,gap:.06,life:2.2},silver:{n:13,half:50,len:65,gap:.03,life:2.6}};
+const ORD={LR:'左→右',RL:'右→左',CO:'里→外',OC:'外→里',ALT_IN:'两头相向',ONE:'同刻(单发/镜像对)'};
+const fmt=s=>{const m=Math.floor(s/60);return `${String(m).padStart(2,'0')}:${(s-m*60).toFixed(1).padStart(4,'0')}`;};
+const mm=s=>{if(s<0)return '−'+mm(-s);const m=Math.floor(s/60);return `${m}:${(s-m*60).toFixed(1).padStart(4,'0')}`;};
+const mmss=s=>`${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}`;
+const EV=D.events,CU=D.cues;
+let t=114.8,playing=false,last=0,view='full',tier=1,speed=1,labels=innerWidth>=640,secIdx=-1;
+$('lab').setAttribute('aria-pressed',labels);
+
+// 段落按钮
+const tl=$('tl');
+D.sections.forEach(s=>{const b=document.createElement('button');b.type='button';b.textContent=s.name;
+  b.style.width=((s.showEndS-s.showStartS)/DUR*100)+'%';b.title=`${mmss(s.showStartS)} ${s.name}（${s.role}）`;
+  b.addEventListener('click',()=>{stop();t=Math.max(0,s.showStartS+.05);sync();});tl.appendChild(b);});
+const last_s=D.sections[D.sections.length-1];
+if(last_s.showEndS<DUR){const sp=document.createElement('span');sp.style.width=((DUR-last_s.showEndS)/DUR*100)+'%';sp.style.borderLeft='1px solid var(--line)';sp.style.fontSize='10px';sp.style.color='var(--muted)';sp.style.paddingLeft='3px';sp.style.whiteSpace='nowrap';sp.style.overflow='hidden';sp.style.lineHeight='18px';sp.textContent='淡出';tl.appendChild(sp);}
+
+function stop(){playing=false;play.textContent='播放';}
+const rgba=(c,a)=>`rgba(${c},${a})`;
+function tri(x,y,s,c){ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(x,y-s);ctx.lineTo(x-s*.9,y+s*.6);ctx.lineTo(x+s*.9,y+s*.6);ctx.closePath();ctx.fill();}
+function seg(x1,y1,x2,y2,c,w,dash){ctx.strokeStyle=c;ctx.lineWidth=w;ctx.setLineDash(dash||[]);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);}
+function lowerBound(a,v){let lo=0,hi=a.length;while(lo<hi){const m=(lo+hi)>>1;if(a[m].t<v)lo=m+1;else hi=m;}return lo;}
+const PX={};for(const g of ['P','B','F'])PX[g]=D.points[g].map(p=>p.x);
+
+// 扇形：一个事件 = 一个点上的一排；筒按扫向逐个出膛，星减速冲到顶
+function fan(e,age,X,Z,sc,x0,z0){
+  const g=FAN[e.hue],n=g.n,half=g.half*Math.PI/180,col=HUE[e.hue];
+  const N=PX[e.g].length,left=e.p<(N-1)/2;
+  const dirLR=e.ord==='LR'?true:e.ord==='RL'?false:left; // CO / OC：左半从左往右，右半从右往左
+  const side=PX[e.g][e.p]<0?-1:1;
+  let tilt=0;if(e.slot.indexOf('FAN_GOLD/')===0){const v=e.slot.split('/')[1];tilt=v==='OUTER_L'?-24:v==='OUTER_R'?24:v==='MID'?12*side:0;}
+  tilt*=Math.PI/180;const w=Math.max(.9,sc*.9);
+  for(let k=0;k<n;k++){
+    const s=age-k*g.gap;if(s<0||s>g.life)continue;
+    const bi=dirLR?k:n-1-k,c=n===1?0:bi/(n-1)*2-1,th=c*half+tilt;
+    const lf=.8+.2*Math.cos(c*1.4),r=g.len*lf*Math.min(1,1-Math.exp(-2.6*s));
+    const fade=s<g.life*.6?1:Math.max(0,(g.life-s)/(g.life*.4));
+    const hx=X(x0+Math.sin(th)*r),hy=Z(z0+Math.cos(th)*r);
+    if(e.hue==='red'){const r0=Math.max(0,r-g.len*.3);
+      seg(X(x0+Math.sin(th)*r0),Z(z0+Math.cos(th)*r0),hx,hy,rgba(col,fade),w*1.2);
+      ctx.fillStyle=rgba(col,fade);ctx.beginPath();ctx.arc(hx,hy,Math.max(1.5,sc*2),0,7);ctx.fill();continue;}
+    seg(X(x0),Z(z0),hx,hy,rgba(col,fade*(e.hue==='gold'?.85:.6)),w);
+    if(e.hue==='gold'&&s>1.6&&s<2.2){ctx.fillStyle=`rgba(255,246,230,${1-(s-1.6)/.6})`;ctx.beginPath();ctx.arc(hx,hy,Math.max(1.6,sc*2.2),0,7);ctx.fill();}
+  }
+}
+
+function countdown(W,H){
+  if(t>=10.5)return;
+  const fs=Math.min(150,H*.36);ctx.textAlign='center';ctx.textBaseline='middle';
+  let txt,al;
+  if(t<10){const fl=Math.floor(t);txt=String(10-fl);al=.92-.55*(t-fl);}
+  else{txt='0';al=Math.max(0,1-(t-10)/.5);}
+  ctx.font=`500 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--mono')}`;
+  ctx.fillStyle=`rgba(236,236,238,${al})`;ctx.fillText(txt,W/2,H*.34);
+  ctx.font=`12px ${getComputedStyle(document.body).getPropertyValue('--sans')}`;ctx.fillStyle='rgba(140,143,152,.95)';
+  const sub=t<5?'倒计时 · 静':t<10?'倒计时 · 音乐渐入':'';
+  if(sub)ctx.fillText(sub,W/2,H*.34+fs*.62);
+  ctx.textBaseline='middle';
+}
+
+function draw(){
+  const front=view==='front';
+  const W=Math.max(300,cv.parentElement.clientWidth);
+  const wx=front?250:1060,wz=front?170:620;
+  const H=Math.round(Math.min(front?400:560,Math.max(260,W*wz/wx*(front?1:.98))));
+  const dpr=Math.min(2,devicePixelRatio||1);
+  if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+'px';}
+  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.globalAlpha=1;ctx.fillStyle='#0b0c0e';ctx.fillRect(0,0,W,H);
+  const padL=12,padR=12,padB=26,padT=10;
+  const sc=Math.min((W-padL-padR)/wx,(H-padB-padT)/wz);
+  const cx=padL+(W-padL-padR)/2,X=v=>cx+v*sc,Z=v=>H-padB-v*sc;
+  const mono=getComputedStyle(document.body).getPropertyValue('--mono');
+  ctx.font='11px '+mono;ctx.textBaseline='middle';
+  // 坝体（5 段弧形 150/150/200/150/150）+ 前台平台
+  const xs=[-374.79,-244.89,-100,100,244.89,374.79],lens=[150,150,200,150,150];
+  ctx.fillStyle='#141519';ctx.fillRect(X(xs[0]),Z(150),(xs[5]-xs[0])*sc,150*sc);
+  ctx.strokeStyle='#2c2d34';ctx.lineWidth=1;ctx.strokeRect(X(xs[0])+.5,Z(150)+.5,(xs[5]-xs[0])*sc,150*sc);
+  for(let i=1;i<5;i++)seg(X(xs[i])+.5,Z(150),X(xs[i])+.5,Z(0),'#2c2d34',1);
+  ctx.fillStyle='#1e1f25';ctx.fillRect(X(-100),Z(50),200*sc,50*sc);
+  ctx.strokeStyle='#44454c';ctx.strokeRect(X(-100)+.5,Z(50)+.5,200*sc,50*sc);
+  ctx.textAlign='center';ctx.fillStyle='#b9bbc2';ctx.fillText('前台 50 m',X(0),Z(22));
+  if(!front){ctx.fillStyle='#8c8f98';for(let i=0;i<5;i++)ctx.fillText(lens[i]+' m',X((xs[i]+xs[i+1])/2),Z(0)+14);}
+  seg(padL,Z(150),W-padR,Z(150),'rgba(236,236,238,.35)',1,[5,5]);
+  ctx.textAlign='left';ctx.fillStyle='#b9bbc2';ctx.fillText('坝顶 150 m',padL+4,Z(150)-9);
+  if(!front){ctx.fillStyle='#6a6c73';ctx.fillText('300 m',padL+4,Z(300)-9);ctx.fillText('450 m',padL+4,Z(450)-9);ctx.fillText('600 m',padL+4,Z(600)+9);
+    for(const v of [300,450,600])seg(padL,Z(v),W-padR,Z(v),'rgba(255,255,255,.06)',1);}
+  else{seg(X(-110),Z(145),X(110),Z(145),'rgba(242,106,46,.7)',1,[3,4]);ctx.fillStyle='#f26a2e';ctx.fillText('前台上限 145 m',X(-110),Z(145)-9);}
+  const bw=100*sc;ctx.strokeStyle='#8c8f98';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(W-padR-bw,Z(0)+11);ctx.lineTo(W-padR,Z(0)+11);ctx.moveTo(W-padR-bw,Z(0)+7);ctx.lineTo(W-padR-bw,Z(0)+15);ctx.moveTo(W-padR,Z(0)+7);ctx.lineTo(W-padR,Z(0)+15);ctx.stroke();
+  ctx.textAlign='right';ctx.fillStyle='#8c8f98';ctx.fillText('100 m',W-padR-bw-6,Z(0)+11);
+  // 发射点：▲ P / F，○ B；标签 0 起
+  ctx.font='10px '+mono;
+  D.points.P.forEach((p,i)=>{if(front)return;tri(X(p.x),Z(150)-1,3.4,'#e6e6e9');
+    if(labels){ctx.fillStyle='#6a6c73';ctx.textAlign='center';ctx.fillText('P'+i,X(p.x),Z(150)+11);}});
+  D.points.B.forEach((p,i)=>{if(front)return;ctx.strokeStyle='#8c8f98';ctx.lineWidth=1;ctx.beginPath();ctx.arc(X(p.x),Z(150)-2,2.2,0,7);ctx.stroke();
+    if(labels){ctx.fillStyle='#6a6c73';ctx.textAlign='center';ctx.fillText('B'+i,X(p.x),Z(150)+23);}});
+  D.points.F.forEach((p,i)=>{tri(X(p.x),Z(50)-1,Math.max(2.5,sc*3),'#e6e6e9');
+    if(front||labels){ctx.fillStyle='#8c8f98';ctx.textAlign='center';ctx.fillText('F'+i,X(p.x),Z(50)+12);}});
+  ctx.font='11px '+mono;
+  // 扇形扫向：沿着出膛顺序连一条细线，亮点停在最近出膛的点
+  if(!front){
+    for(const c of CU){
+      if(c.kind!=='fan'||c.t>t+.05||t>c.t+c.span+1.0)continue;
+      const pts=c.ps.filter(q=>q[2]&tier).sort((a,b)=>a[1]-b[1]);if(pts.length<2)continue;
+      const col=HUE[c.hue],zz=150+(c.g==='P'?26:14);
+      ctx.strokeStyle=rgba(col,.35);ctx.lineWidth=1;ctx.setLineDash([2,3]);ctx.beginPath();
+      pts.forEach((q,i)=>{const x=X(PX[c.g][q[0]]);i?ctx.lineTo(x,Z(zz)):ctx.moveTo(x,Z(zz));});ctx.stroke();ctx.setLineDash([]);
+      const age=t-c.t;let lastOff=-1;pts.forEach(q=>{if(q[1]<=age+1e-6)lastOff=q[1];});
+      pts.forEach(q=>{if(q[1]===lastOff){ctx.fillStyle=rgba(col,.95);ctx.beginPath();ctx.arc(X(PX[c.g][q[0]]),Z(zz),3.2,0,7);ctx.fill();}});
+    }
+  }
+  // 烟花（从 H 起画）
+  let nF=0,nD=0,nFan=0;
+  for(let i=lowerBound(EV,t-6.6);i<EV.length;i++){
+    const e=EV[i];if(e.t>t)break;if(!(e.tier&tier))continue;
+    const age=t-e.t,x0=PX[e.g][e.p],z0=e.g==='F'?50:150;
+    if(e.kind==='fan'){if(age>FAN[e.hue].life)continue;nFan++;if(front)continue;fan(e,age,X,Z,sc,x0,z0);continue;}
+    const G=GEO[e.size],isF=e.g==='F';
+    if(age>G.life)continue;
+    if(isF)nF++;else nD++;
+    if(front&&!isF)continue;
+    const h=e.slot==='S_SILVER'?80:G.h,top=z0+h,u=age/G.life,al=u<.55?1:Math.max(0,(1-u)/.45);
+    if(e.size==='F8'){seg(X(x0),Z(top-8*u-12),X(x0),Z(top-8*u),rgba('255,214,140',al),Math.max(1.5,sc*1.4));continue;}
+    const key=isF?'front':e.size==='S'?'small':e.size==='M'?'mid':'large',col=COL[key];
+    const R=G.d/2*(1-Math.exp(-6*Math.min(1,age/.6)))*sc,cy=Z(top)+G.d*.04*u*sc;
+    ctx.beginPath();ctx.arc(X(x0),cy,Math.max(.5,R),0,7);
+    ctx.fillStyle=rgba(col,(isF?.07:.16)*al);ctx.fill();
+    ctx.strokeStyle=rgba(col,(isF?.95:.9)*al);ctx.lineWidth=isF?1.3:1.5;ctx.stroke();
+  }
+  countdown(W,H);
+  // 读数
+  $('show').textContent=fmt(t);
+  $('music').textContent=`音乐 ${mm(t-OFF)}`+(t<OFF?'（未开始）':'');
+  const si=D.sections.findIndex(s=>t>=s.showStartS&&t<s.showEndS),cur=si<0?D.sections.length-1:si,S=D.sections[cur];
+  if(cur!==secIdx){secIdx=cur;$('sec').textContent=S.name;$('role').textContent=S.role;
+    $('range').textContent=`演出 ${mmss(S.showStartS)}–${mmss(S.showEndS)} · 音乐 ${mmss(Math.max(0,S.musicStartS))}–${mmss(S.musicEndS)}`+(S.meanRmsDb!=null?` · 均值 ${S.meanRmsDb} dB`:'');
+    $('detail').textContent=S.note;
+    [...tl.children].forEach((b,k)=>b.setAttribute('aria-current',k===cur?'true':'false'));}
+  let cc=null;for(const c of CU){if(c.t<=t+1e-6)cc=c;else break;}
+  if(cc&&t-cc.t<5){
+    const nm=D.slots[cc.slot.split('/')[0]].name,od=ORD[cc.ord]||cc.ord,np=cc.ps.filter(q=>q[2]&tier).length;
+    $('cue').textContent=`${cc.id} ${cc.g} 排 · ${nm}${cc.x?'（对扫）':''} · ${od}${cc.gap>0?' · 间隔 '+cc.gap+' s':''} · ${np}/${cc.ps.length} 点 — ${cc.intent}`;
+  } else $('cue').textContent='此刻没有新的 cue';
+  $('counts').textContent=`此刻在场：坝顶球花 ${nD} · 扇形 ${nFan} 点 · 前台 ${nF}（${['','高配','','中配','','','','低配'][tier===1?1:tier===2?3:7]}点集）`;
+  cv.setAttribute('aria-label',`演出 ${fmt(t)} ${S.name}：前台 ${nF}，坝顶球花 ${nD}，扇形 ${nFan} 点`);
+  drawStrip();
+}
+
+// 音乐能量 + cue 条：横轴 = 演出时间；上半能量(rms)，下半 P / B / F 三行 cue 刻度
+function drawStrip(){
+  const W=Math.max(300,st.parentElement.clientWidth),H=112,dpr=Math.min(2,devicePixelRatio||1);
+  if(st.width!==Math.round(W*dpr)||st.height!==Math.round(H*dpr)){st.width=Math.round(W*dpr);st.height=Math.round(H*dpr);st.style.height=H+'px';}
+  sx.setTransform(dpr,0,0,dpr,0,0);sx.fillStyle='#0b0c0e';sx.fillRect(0,0,W,H);
+  const X=s=>s/DUR*W,mono=getComputedStyle(document.body).getPropertyValue('--mono');
+  const roleA={'铺垫':.06,'推进':.10,'释放':.20,'留白':.0,'收束':.14};
+  D.sections.forEach(s=>{sx.fillStyle=`rgba(255,255,255,${roleA[s.role]||0})`;sx.fillRect(X(s.showStartS),0,X(s.showEndS)-X(s.showStartS),H-16);
+    sx.fillStyle='rgba(255,255,255,.12)';sx.fillRect(X(s.showStartS),0,1,H-16);});
+  // 能量
+  const E=D.energy,top=6,bot=50;
+  sx.beginPath();sx.moveTo(X(OFF),bot);
+  E.forEach(p=>{const v=Math.max(0,Math.min(1,(p.db+4)/18));sx.lineTo(X(p.m+OFF),bot-(bot-top)*v);});
+  sx.lineTo(X(E[E.length-1].m+OFF),bot);sx.closePath();sx.fillStyle='rgba(127,159,224,.28)';sx.fill();
+  sx.beginPath();E.forEach((p,i)=>{const v=Math.max(0,Math.min(1,(p.db+4)/18));const x=X(p.m+OFF),y=bot-(bot-top)*v;i?sx.lineTo(x,y):sx.moveTo(x,y);});
+  sx.strokeStyle='rgba(127,159,224,.9)';sx.lineWidth=1;sx.stroke();
+  // 倒计时区
+  sx.fillStyle='rgba(140,143,152,.9)';sx.font='10px '+mono;sx.textAlign='left';sx.textBaseline='middle';
+  sx.fillText('倒计时',X(0)+4,12);
+  // cue 刻度三行
+  const rows={P:62,B:72,F:82};
+  sx.fillStyle='#6a6c73';sx.textAlign='right';
+  CU.forEach(c=>{const y=rows[c.g],x=X(c.t);
+    const pass=c.ps.some(q=>q[2]&tier);if(!pass)return;
+    const col=c.kind==='fan'?HUE[c.hue]:c.g==='F'?COL.front:c.slot[0]==='S'?COL.small:c.slot[0]==='M'?COL.mid:COL.large;
+    sx.fillStyle=rgba(col,.95);sx.fillRect(Math.round(x),y-4,2,8);
+    if(c.span>=.4){sx.fillStyle=rgba(col,.35);sx.fillRect(Math.round(x),y-1,Math.max(1,X(c.span)),2);}
+  });
+  sx.fillStyle='#6a6c73';sx.textAlign='left';['P','B','F'].forEach(g=>sx.fillText(g,3,rows[g]));
+  // 锚点：用户给定 = 白色竖虚线
+  D.anchors.forEach(a=>{const x=Math.round(X(a.showS))+.5,u=a.source.indexOf('用户给定')===0;
+    sx.strokeStyle=u?'rgba(236,236,238,.7)':'rgba(236,236,238,.18)';sx.lineWidth=1;sx.setLineDash(u?[3,3]:[1,3]);
+    sx.beginPath();sx.moveTo(x,0);sx.lineTo(x,H-16);sx.stroke();sx.setLineDash([]);});
+  // 时间刻度
+  sx.fillStyle='#6a6c73';sx.textAlign='center';
+  for(let s=0;s<=DUR;s+=30){sx.fillRect(Math.round(X(s)),H-16,1,4);sx.fillText(mmss(s),Math.min(W-14,Math.max(14,X(s))),H-5);}
+  // 播放头
+  const px=Math.round(X(t))+.5;sx.strokeStyle='#ececee';sx.lineWidth=1.5;sx.beginPath();sx.moveTo(px,0);sx.lineTo(px,H-16);sx.stroke();
+}
+
+function sync(){seek.value=t;draw();}
+function tick(now){if(!playing)return;t=Math.min(DUR,t+(now-last)/1000*speed);last=now;seek.value=t;draw();
+  if(t>=DUR)stop();else requestAnimationFrame(tick);}
+play.addEventListener('click',()=>{if(playing){stop();return;}if(t>=DUR)t=0;playing=true;play.textContent='暂停';last=performance.now();requestAnimationFrame(tick);});
+seek.addEventListener('input',()=>{stop();t=+seek.value;draw();});
+function stripSeek(ev){const r=st.getBoundingClientRect();t=Math.max(0,Math.min(DUR,(ev.clientX-r.left)/r.width*DUR));stop();sync();}
+let drag=false;st.addEventListener('pointerdown',e=>{drag=true;st.setPointerCapture(e.pointerId);stripSeek(e);});
+st.addEventListener('pointermove',e=>{if(drag)stripSeek(e);});
+st.addEventListener('pointerup',()=>{drag=false;});st.addEventListener('pointercancel',()=>{drag=false;});
+function group(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn(b.dataset.v);draw();}));}
+group('speed',v=>{speed=+v;});group('tier',v=>{tier=+v;});group('view',v=>{view=v;});
+$('lab').addEventListener('click',()=>{labels=!labels;$('lab').setAttribute('aria-pressed',labels);draw();});
+addEventListener('keydown',e=>{if(e.code==='Space'&&!/INPUT|BUTTON|SUMMARY/.test(document.activeElement.tagName)){e.preventDefault();play.click();}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
+new ResizeObserver(()=>draw()).observe(cv.parentElement);
+
+// 表格
+(function tables(){
+  const cnt={};EV.forEach(e=>{const f=e.slot.split('/')[0];cnt[f]=(cnt[f]||0)+1;});
+  let h='<tr><th>槽位</th><th>名称</th><th>组</th><th>大小</th><th>点次</th><th>同时在场(占位寿命)</th><th>按限额 10 需要的版本数</th></tr>';
+  Object.entries(D.slots).forEach(([k,s])=>{const g=GEO[s.size],cn=D.conc[k]||{};
+    const sz=s.kind==='fan'?`${s.beams} 束`:g?`⌀${s.diameterM||g.d} m`:'';
+    h+=`<tr><td>${k}</td><td>${s.name}</td><td>${s.group}</td><td>${sz}</td><td>${cnt[k]||0}</td><td>${cn['最多同时在场']??'—'}</td><td>${cn['按限额10需要的版本数']??'—'}</td></tr>`;});
+  $('slots').innerHTML=h;
+  const oc=D.orderCounts,names={LR:'LR 左→右',RL:'RL 右→左',CO:'CO 里→外',OC:'OC 外→里（两头相向）','对扫:LR':'对扫 · 该排左→右','对扫:RL':'对扫 · 该排右→左'};
+  let o='<tr><th>写法</th><th>含义</th><th>扇形 cue 数</th></tr>';
+  const mean={LR:'沿坝顶从左端到右端逐点放','RL':'从右端到左端逐点放',CO:'从中心向两侧，镜像点同刻（≤1 对）',OC:'从两端向中心，镜像点同刻','对扫:LR':'P 排和 B 排同一锚点反向各扫一遍，这一条是向右的一排','对扫:RL':'同上，向左的一排'};
+  Object.keys(names).forEach(k=>{o+=`<tr><td>${names[k]}</td><td class="wrapcell">${mean[k]}</td><td>${oc[k]||0}</td></tr>`;});
+  $('orders').innerHTML=o;
+  let a='<tr><th>音乐</th><th>演出</th><th>来源</th><th>说明</th></tr>';
+  D.anchors.forEach(x=>{a+=`<tr><td>${mm(x.musicS)}</td><td>${mm(x.showS)}</td><td>${x.source}</td><td class="wrapcell">${x.label}。${x.note}</td></tr>`;});
+  $('anchors').innerHTML=a;
+})();
+sync();
+})();
+</script>
