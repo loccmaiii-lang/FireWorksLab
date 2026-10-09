@@ -96,6 +96,27 @@ function headShapeOf(P) {
 function hsGauss(id, seed, k) { const u1 = Math.max(1e-7, starHash(id, seed, k)), u2 = starHash(id, seed, k + 1); return Math.sqrt(-2 * Math.log(u1)) * Math.cos(6.2831853 * u2); }
 // 星头大小随机：对数正态，σ = 0.6 × 值，均值 1
 function headSizeMul(s, hs, seed) { if (!(hs.sz > 0)) return 1; const sg = 0.6 * hs.sz; return Math.exp(sg * hsGauss(s.id, seed, 301) - 0.5 * sg * sg); }
+// ---- 火花发射器补全（对话框FanGold，用户 10-09 21:48 批；审查 analysis/原理/火花发射审查_2026-10-09.md）----
+// 起始半径：主火花在以星心为中心、半径 R 的球里均匀出生；R = 起始半径 + 跟星头大小 × 星头半径。
+// 星头半径 = 这颗星此刻画的星头直径 ÷ 2（和 gather 同一个口径：星头大小，子星 × 0.8，自定义发射器的星用它自己的大小；× 星头大小随机；× 星头 / 子星大小随寿命）。
+// 两个都是 0（缺省）时不进来：火花在星心一点出生，逐位同以前。GPU 火花（40_gl.js VS_SPK）读 buildTrackRun 写的同一份每颗星数据。
+function sparkHeadBase(P, s, hs) { return (s.sz != null ? s.sz : P.headSize * (s.kind === 1 || s.kind === 6 ? 0.8 : 1)) * (hs ? headSizeMul(s, hs, P.seed) : 1); }
+function sparkHeadCurveSel(s) { return s.sz != null ? 0 : s.kind === 2 ? 2 : s.kind === 0 || s.kind === 1 ? 1 : 0; }     // 0 不跟曲线 / 1 星头大小随寿命 / 2 子星大小随寿命
+function sparkHeadWin(s) { return [s.birth + (s.st1 != null ? s.st1 : s.ign || 0), s.birth + (s.vis != null ? s.vis : s.burn)]; }
+function sparkSpawnRAt(P, s, cv, hs, t) {
+  const r0 = Math.max(0, +P.sparkSpawnR || 0), kh = Math.max(0, +P.sparkSpawnHead || 0); if (!(kh > 0)) return r0;
+  let d = sparkHeadBase(P, s, hs); const sel = sparkHeadCurveSel(s), cs = sel === 1 ? cv.ss : sel === 2 ? cv.us : null;
+  if (cs) { const [a, b] = sparkHeadWin(s); d *= Math.max(0, lifeCurveAt(cs, clamp((t - a) / Math.max(0.05, b - a), 0, 1))); }
+  return r0 + kh * d / 2;
+}
+// 每米生成（sparkRateBy = 'm'）：每颗星的「每米火花数」= 每米火花数 × 这颗星的生成率 ÷ 火花密度（保留子星 / 载体尾等按种类的倍数）
+// 向后喷的方向：在轴 a（单位向量，= 星速度的反方向）周围半角 cone（弧度）的锥里，u1 / u2 是两个 0–1 随机数（GPU 版同一个式子）
+function jetDir(a, cone, u1, u2) {
+  const r = Math.abs(a[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0]; let b1 = [a[1] * r[2] - a[2] * r[1], a[2] * r[0] - a[0] * r[2], a[0] * r[1] - a[1] * r[0]]; const l = Math.hypot(...b1) || 1; b1 = b1.map(q => q / l);
+  const b2 = [a[1] * b1[2] - a[2] * b1[1], a[2] * b1[0] - a[0] * b1[2], a[0] * b1[1] - a[1] * b1[0]], th = cone * Math.sqrt(u1), ph = 6.2831853 * u2, c = Math.cos(th), sn = Math.sin(th);
+  return [0, 1, 2].map(k => a[k] * c + (b1[k] * Math.cos(ph) + b2[k] * Math.sin(ph)) * sn);
+}
+const sparkPerMOf = (P, s) => Math.max(0, +P.sparkPerM || 0) * (+P.sparkRate > 0 ? s.rate / P.sparkRate : 1);
 // 一颗星头的光点：先拼「形状」（主核 + 双核 + 边上的小鼓包，偏移按米），再沿运动反方向复制成拖影（相机快门拖在后面，星头前沿就在星的位置）
 function headShapePush(push, buf, nh, cap, s, I, sz, hs, t, seed) {
   const H = k => starHash(s.id, seed, k), parts = [[0, 0, 1, 1]];     // [dx, dy, 亮度倍数, 大小倍数]
@@ -205,6 +226,10 @@ function clusterDirs(P, rng, R) {
   }
   // 4.9.34 簇依次出膛（clusterSweep，s；对话框FanGold，用户 10-07 18:40 批）：第 k 簇晚 k / (簇数 − 1) × |值| 出发（负 = 从最后一簇倒着来）；0 = 同时，不进来（逐位同以前）
   const sw = +P.clusterSweep || 0, nc = C.length;
+  // 扇面筒距（clusterGap，m；火花发射器补全，用户 10-09 21:48）：第 k 簇的出发点在扇面基线上 x = (k − (N−1)/2) × 筒距，和簇方向一样经过偏转 / 倾斜 / 转角；
+  // 写在方向数组的 .o 属性上（长度不变，dirsFor 的 4 / 5 位不受影响），0 = 不进来（逐位同以前）
+  const gap = P.clusterLayout === 'fan' ? Math.max(0, +P.clusterGap || 0) : 0;
+  const gapAt = ci => { const x0 = (ci - (nc - 1) / 2) * gap; let v = [x0, 0, 0]; if (yw) v = [v[0] * cy2 + v[2] * sy2, v[1], -v[0] * sy2 + v[2] * cy2]; v = [v[0], v[1] * ct - v[2] * st, v[1] * st + v[2] * ct]; if (rl) v = [v[0] * cr - v[1] * sr, v[0] * sr + v[1] * cr, v[2]]; return v; };
   for (let i = 0; i < n; i++) {
     const ci = asg ? asg[i] : i % C.length, c = C[ci], a = Math.abs(c[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0];
     let u = [c[1] * a[2] - c[2] * a[1], c[2] * a[0] - c[0] * a[2], c[0] * a[1] - c[1] * a[0]]; const lu = Math.hypot(...u) || 1; u = u.map(q => q / lu);
@@ -213,7 +238,9 @@ function clusterDirs(P, rng, R) {
     const cz = 1 - rng.u() * (1 - cosMax), sz = Math.sqrt(Math.max(0, 1 - cz * cz)), ph = rng.u() * 2 * Math.PI;
     let d = [0, 1, 2].map(k => c[k] * cz + (u[k] * Math.cos(ph) + w[k] * Math.sin(ph)) * sz);
     if (jit > 0) d = d.map(q => q + rng.n() * jit);
-    const l = Math.hypot(...d) || 1; out.push(sw && nc > 1 ? [d[0] / l, d[1] / l, d[2] / l, 1, (sw > 0 ? ci : nc - 1 - ci) / (nc - 1) * Math.abs(sw)] : [d[0] / l, d[1] / l, d[2] / l, 1]);
+    const l = Math.hypot(...d) || 1, e = sw && nc > 1 ? [d[0] / l, d[1] / l, d[2] / l, 1, (sw > 0 ? ci : nc - 1 - ci) / (nc - 1) * Math.abs(sw)] : [d[0] / l, d[1] / l, d[2] / l, 1];
+    if (gap > 0) e.o = gapAt(ci);
+    out.push(e);
   }
   return out;
 }
@@ -285,7 +312,8 @@ class Sim {
       if (om) { vx += om * rs * (ax[1] * d[2] - ax[2] * d[1]); vy += om * rs * (ax[2] * d[0] - ax[0] * d[2]); vz += om * rs * (ax[0] * d[1] - ax[1] * d[0]); }
       // 起始半径：星从半径 burstR0 的球面上出发（开花第一帧就有一定大小，游戏里常用的写法）
       const r0 = P.burstR0 || 0;
-      const st = this.mk(d[0] * r0, d[1] * r0, d[2] * r0, vx, vy, vz, Math.max(0.05, burn), carrier ? 1 : 0, carrier ? P.carrierTail : P.sparkRate, P.headBright * (carrier ? (P.carrierHead != null ? P.carrierHead : 0.4) : 1));
+      const o = d.o;     // 扇面筒距（缺省没有 .o，照旧从开花点出发）
+      const st = this.mk(o ? d[0] * r0 + o[0] : d[0] * r0, o ? d[1] * r0 + o[1] : d[1] * r0, o ? d[2] * r0 + o[2] : d[2] * r0, vx, vy, vz, Math.max(0.05, burn), carrier ? 1 : 0, carrier ? P.carrierTail : P.sparkRate, P.headBright * (carrier ? (P.carrierHead != null ? P.carrierHead : 0.4) : 1));
       this.stars.push(st);
       if (d[4] > 0) st.birth = d[4];     // 4.9.34 簇依次出膛：出膛前星停在原点、不动、不亮、不出火花（step 里跳过），火花 / GPU 轨迹都从 birth 算起
       if (P.ignDelay > 0 && !carrier) { st.ign = Math.max(0, P.ignDelay * (1 + P.ignJit / 100 * (2 * (!P.ignSeed ? starHash(st.id, P.seed, 13) : ignRng.u()) - 1))); st.burn += st.ign; }
@@ -296,7 +324,13 @@ class Sim {
     }
     if (this.ex.length) for (const st of this.stars) this.exEvent('birth', st);
     // 4.9.34 簇依次出膛：每簇出膛时一个开花闪光（筒口火），和 t = 0 那个同样大小
-    if (dirs.some(d => d[4] > 0)) { const f0 = this.flashes[this.flashes.length - 1]; for (const t0 of [...new Set(dirs.map(d => d[4] || 0))].filter(t => t > 0)) this.flashes.push({ ...f0, t0 }); }
+    // 扇面筒距：开花闪光挪到各簇的出发点（每簇一个；同一时刻出膛的几簇平分亮度，筒距 → 0 时和一个闪光一样亮）
+    if (dirs.some(d => d.o)) {
+      const f0 = this.flashes.find(f => f.main), ks = new Map(), nT = new Map();
+      for (const d of dirs) { const t0 = d[4] || 0, k = t0 + '|' + d.o.join(','); if (!ks.has(k)) { ks.set(k, [t0, d.o]); nT.set(t0, (nT.get(t0) || 0) + 1); } }
+      this.flashes = this.flashes.filter(f => f !== f0);
+      for (const [t0, o] of ks.values()) this.flashes.push({ ...f0, t0, x: o[0], y: o[1], I: f0.I / nT.get(t0) });
+    } else if (dirs.some(d => d[4] > 0)) { const f0 = this.flashes[this.flashes.length - 1]; for (const t0 of [...new Set(dirs.map(d => d[4] || 0))].filter(t => t > 0)) this.flashes.push({ ...f0, t0 }); }
   }
   // ---- 4.6.0 自定义发射器：在星的事件上生成光点或星 ----
   exEvent(ev, s) {
@@ -410,6 +444,7 @@ class Sim {
     if (this.ex.length) this.exStep();
     const P = this.P, rng0 = this.rng, gy = -G * P.grav, st = this.stars, sp = this.sp;
     const bee = P.type === 'hachi', sq = Math.sqrt(h), windy = P.wind !== 0 || !!this.tm, water = P.waterRefl > 0;
+    const spawnOn = this.fam === 'aerial' && (+P.sparkSpawnR > 0 || +P.sparkSpawnHead > 0 || +P.sparkJet > 0), hsS = spawnOn ? headShapeOf(P) : null;     // 火花发射器补全（缺省 false）
     let dead = 0;
     for (let i = 0; i < st.length; i++) {
       const s = st[i];
@@ -457,7 +492,7 @@ class Sim {
       if (s.rate > 0 && !this.noSparks && s.age >= s.ign && !s.ended && !(hotOff && !embAll) && !(P.sparkStart > 0 && s.kind !== 5 && s.age - s.ign < P.sparkStart)) {
         const fr = (s.kind === 5 || P.sparkRateEnd == null || P.sparkRateEnd === 1 ? 1 : Math.max(0, 1 + (P.sparkRateEnd - 1) * clamp((s.age - s.ign) / Math.max(0.05, (s.vis != null ? s.vis : s.burn) - s.ign), 0, 1)))
           * (+P.sparkRamp > 0 && s.kind !== 5 ? sparkRampAt(P, s.id, s.age - s.ign - (P.sparkStart > 0 ? P.sparkStart : 0)) : 1);     // 4.2.17 火花起势
-        const k = rng.poisson(s.rate * fr * h), spr = P.sparkSpread, T0 = s.kind === 5 && P.riseStyle === 'silver' ? P.T0 + 250 : P.T0, lf = s.kind === 5 && P.riseStyle === 'silver' ? 1.5 : 1;
+        const perM = P.sparkRateBy === 'm' && this.fam === 'aerial' && s.kind !== 5, k = rng.poisson((perM ? sparkPerMOf(P, s) * Math.hypot(s.vx, s.vy, s.vz) * (+P.sparkRamp > 0 && s.kind !== 5 ? sparkRampAt(P, s.id, s.age - s.ign - (P.sparkStart > 0 ? P.sparkStart : 0)) : 1) : s.rate * fr) * h), spr = P.sparkSpread, T0 = s.kind === 5 && P.riseStyle === 'silver' ? P.T0 + 250 : P.T0, lf = s.kind === 5 && P.riseStyle === 'silver' ? 1.5 : 1;
         for (let j = 0; j < k; j++) {
           const u = rng.u(), inh = P.sparkInherit * (0.3 + 1.4 * rng.u()), px = s.x - s.vx * h * u, py = s.y - s.vy * h * u;
           const [aX, aY] = windy ? this.air(px, py, this.t) : [0, 0];
@@ -470,7 +505,14 @@ class Sim {
           const lifeScale = 1 + (le - 1) * phase;
           const lfe = P.sparkLife * lf * lifeScale * Math.exp(lj * rng.n()), rd = rng.u(), emb = P.emberFrac > 0 && s.kind !== 5 && rd < P.emberFrac;
           if (hotOff && !emb) continue;
-          sp.add(px, py, s.z - s.vz * h * u, s.vx * inh + rng.n() * spr, s.vy * inh + rng.n() * spr, s.vz * inh + rng.n() * spr,
+          let qx = px, qy = py, qz = s.z - s.vz * h * u, wx = s.vx * inh + rng.n() * spr, wy = s.vy * inh + rng.n() * spr, wz = s.vz * inh + rng.n() * spr;
+          if (spawnOn && s.kind !== 5) {     // 火花发射器补全：起始半径（球内均匀）+ 向后喷（锥内）；缺省不进来
+            const R = sparkSpawnRAt(P, s, this.cv, hsS, this.t - u * h);
+            if (R > 0) { const q = randUnit(rng), rr = R * Math.cbrt(rng.u()); qx += q[0] * rr; qy += q[1] * rr; qz += q[2] * rr; }
+            const jt = +P.sparkJet || 0, vs = Math.hypot(s.vx, s.vy, s.vz);
+            if (jt > 0 && vs > 1e-3) { const a = [-s.vx / vs, -s.vy / vs, -s.vz / vs], j = jetDir(a, (+P.sparkJetCone || 0) * Math.PI / 180, rng.u(), rng.u()); wx += jt * j[0]; wy += jt * j[1]; wz += jt * j[2]; }
+          }
+          sp.add(qx, qy, qz, wx, wy, wz,
             u * h, emb ? P.emberLife * Math.exp(0.2 * rng.n()) : lfe, T0 + 120 * rng.n(), rd, aX, aY, s.birth + (s.vis != null ? s.vis : s.burn));
         }
       }

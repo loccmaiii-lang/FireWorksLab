@@ -1,0 +1,57 @@
+{
+ "id": "FSR1",
+ "type": "script",
+ "priority": 2,
+ "name": "对话框FanGold 4.9.54：火花发射器补全（缺省关）回归 + 检查",
+ "note": "用户 10-09 21:48 批。缺省全 0 / 每秒时应逐像素相同；新功能按 火花发射器检查.py。",
+ "steps": [
+  {
+   "name": "基准回归 4.9.53 → 4.9.54（花型模板 + 金芒菊）",
+   "script": "基准回归.py",
+   "args": [
+    "--old",
+    "{git:8abc8c1f:tool/FireworkBaker.html}",
+    "--new",
+    "tool/FireworkBaker.html",
+    "--out",
+    "{out}/基准回归"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "多层模板定帧回归 4.9.53 → 4.9.54",
+   "script": "多层模板回归.py",
+   "args": [
+    "--old",
+    "{git:8abc8c1f:tool/FireworkBaker.html}",
+    "--out",
+    "{out}/多层模板回归",
+    "--ids",
+    "shinKiku,yaeHenka,yaeBlueBotan,colorSenrin,mieKamuroSaki,mangekyo,somewakeBotan,kinzuiLime"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "扇面簇检查",
+   "script": "扇面簇检查.py",
+   "args": [
+    "--out",
+    "{out}/扇面簇检查"
+   ],
+   "must": false,
+   "timeout": 600
+  },
+  {
+   "name": "火花发射器检查",
+   "script": "火花发射器检查.py",
+   "args": [
+    "--out",
+    "{out}/火花发射器检查"
+   ],
+   "must": false,
+   "timeout": 900
+  }
+ ]
+}

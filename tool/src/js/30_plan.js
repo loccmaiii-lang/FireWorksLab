@@ -66,7 +66,11 @@ function measureRun(P) {
       Le = Math.max(L, e);
     }
     const drift = (Le - (1 - Math.exp(-k * Le)) / k);
-    const drop = g / k * drift, spread = P.sparkSpread * L * 0.7 * Math.max(1, tailShapeOf(P).w) + 1 + (P.branch > 0 ? 4 : 0), air = (Math.abs(P.wind) + P.turb) * drift;
+    let spread = P.sparkSpread * L * 0.7 * Math.max(1, tailShapeOf(P).w) + 1 + (P.branch > 0 ? 4 : 0);
+    // 火花发射器补全（对话框FanGold）：起始半径（+ 跟星头：按星头大小随机 +2σ 估）、向后喷走得最远的距离也算进取景；缺省都是 0、不进来
+    if (familyOf(P.type) === 'aerial' && (+P.sparkSpawnR > 0 || +P.sparkSpawnHead > 0 || +P.sparkJet > 0))
+      spread += Math.max(0, +P.sparkSpawnR || 0) + Math.max(0, +P.sparkSpawnHead || 0) * (+P.headSize || 0) / 2 * Math.exp(1.2 * Math.max(0, +P.headSizeJit || 0)) + Math.max(0, +P.sparkJet || 0) * (1 - Math.exp(-k * L)) / k;
+    const drop = g / k * drift, air = (Math.abs(P.wind) + P.turb) * drift;
     x0 -= spread + air; x1 += spread + air; y1 += spread + P.turb * drift; y0 -= drop + spread + P.turb * drift;
     for (const q of prof) q[2] += spread + drop + air;
   }

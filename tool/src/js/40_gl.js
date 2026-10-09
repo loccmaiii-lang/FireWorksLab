@@ -140,6 +140,8 @@ uniform float uT, uDT; uniform int uM, uNs, uSeed, uTw, uBr;
 uniform float uInh, uSpread, uLife, uLifeEnd, uLifeJit, uK, uG, uT0, uCool, uCoolAbs, uTwk, uTwHz, uBright, uSize, uGlit, uGlitD, uBrAt, uMir, uRefl, uWind;
 uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShoulder, uDif, uDifL, uRise, uStarB, uWShape, uWidth, uPinH, uPinT, uBelly;
 uniform float uRamp, uRampJ;     // 4.2.17 火花起势：开始出火花后几秒到满密度、每颗星 ± 随机
+uniform sampler2D uLen; uniform float uPerM, uSpR, uSpH, uJet, uJetC;     // 火花发射器补全（对话框FanGold，用户 10-09 21:48）：每米生成、起始半径 + 跟星头、向后喷 + 锥角；全 0 时不进分支
+uniform vec2 uCvHsS[6], uCvHsU[6]; uniform int uCvHsSN, uCvHsUN;     // 跟星头大小时的星头 / 子星大小随寿命
 uniform vec2 uCvSpS[6], uCvSpB[6], uCvEmB[6], uCvBrB[6], uCvEmS[6], uCvBrS[6]; uniform int uCvSpSN, uCvSpBN, uCvEmBN, uCvBrBN, uCvEmSN, uCvBrSN;     // 4.8.0 按寿命曲线（几行 时刻:倍数，N = 0 不乘）；4.9.4 余烬 / 分叉火花大小
 ${GLSL_CV}
 uniform float uInhA, uInhB, uT0J, uEmbLJ, uEmbDk, uEmbFa, uBrL, uBrLA, uBrLB, uBrV, uBrVA, uBrVB, uBrInh, uBrKd, uBrT, uBrB, uBrFd, uBrS, uGlA, uGlB, uGlW, uGlPk, uGlDim;     // 4.6.0（5.0 第 1 步）：以前写死的随机范围、余烬衰减、分叉火花、辉星闪光，默认 = 以前的常数
@@ -158,6 +160,10 @@ vec2 curl2(vec2 q){ float e=.05; return vec2(vn2(q+vec2(0.,e))-vn2(q-vec2(0.,e))
 // 第 s 颗星在 t 时刻的位置（和下面出生点 sp 同一个 Hermite 插值）
 vec3 starAt(int s, float t){ float fi=t/uDT; int i0=clamp(int(floor(fi)),0,uNs-2); float f=clamp(fi-float(i0),0.,1.), f2=f*f, f3=f2*f;
   return (2.*f3-3.*f2+1.)*texelFetch(uPos,ivec2(i0,s),0).xyz+(f3-2.*f2+f)*uDT*texelFetch(uVel,ivec2(i0,s),0).xyz+(-2.*f3+3.*f2)*texelFetch(uPos,ivec2(i0+1,s),0).xyz+(f3-f2)*uDT*texelFetch(uVel,ivec2(i0+1,s),0).xyz; }
+// 每米生成：星从出生起走过的路程（uLen 每颗星每个轨迹采样一格，按时间线性插值）和反过来按路程求时刻（二分）
+float lenAt(int s, float t){ float fi=clamp(t/uDT,0.,float(uNs-1)); int i0=min(int(floor(fi)),uNs-2); float f=fi-float(i0); return mix(texelFetch(uLen,ivec2(i0,s),0).x,texelFetch(uLen,ivec2(i0+1,s),0).x,f); }
+float timeAtLen(int s, float L){ int lo=0, hi=uNs-1; for(int k=0;k<20;k++){ if(hi-lo<=1) break; int m=(lo+hi)/2; if(texelFetch(uLen,ivec2(m,s),0).x<=L) lo=m; else hi=m; }
+  float a=texelFetch(uLen,ivec2(lo,s),0).x, b=texelFetch(uLen,ivec2(hi,s),0).x; return (float(lo)+clamp((L-a)/max(1e-6,b-a),0.,1.))*uDT; }
 void main(){
   int nb=1+uBr; int id=gl_VertexID; int pid=id/nb; int c=id-pid*nb;
   int s=pid/uM; int j=pid-s*uM; uint uid=uint(pid);
@@ -165,7 +171,8 @@ void main(){
   if(inf.z<=0.){ cull(); return; }
   // 发射率随燃烧线性变化（末段火花密度）：累计数 N(t) = r0·t + a·t²，按编号反解出生时刻
   float nj=float(j)+hsh(uid,1u), tb;
-  if(abs(inf.w)<1e-6) tb=inf.x+nj/inf.z;
+  if(uPerM>.5){ float Lb=lenAt(s,inf.x), L=Lb+nj/inf.z; if(L>=lenAt(s,inf.y)){ cull(); return; } tb=max(inf.x,timeAtLen(s,L)); }     // inf.z = 这颗星的每米火花数
+  else if(abs(inf.w)<1e-6) tb=inf.x+nj/inf.z;
   else { float dsc=inf.z*inf.z+4.*inf.w*nj; if(dsc<0.){ cull(); return; } tb=inf.x+2.*nj/(inf.z+sqrt(dsc)); }
   if(tb>=inf.y||tb>uT){ cull(); return; }
   // 4.2.17 火花起势：按出生时刻的密度比例抽稀（smoothstep，开头很稀、慢慢连成线）；分叉火花和母火花同一个编号，一起留或一起去
@@ -192,6 +199,13 @@ void main(){
   vec3 sv=mix(v0,v1,f);
   float inh=uInh*(uInhA+uInhB*hsh(uid,4u));
   vec3 vel=sv*inh+vec3(gss(uid,5u),gss(uid,7u),gss(uid,9u))*uSpread;
+  // 起始半径（球内均匀）+ 跟星头大小（每颗星的星头直径在 uInfo 第 2 格：x 基本直径、y / z 曲线的起止时刻、w 跟哪条曲线）；向后喷（锥内）。和 20_sim.js sparkSpawnRAt / jetDir 同一口径
+  if(uSpR>0.||uSpH>0.){ float R=uSpR; if(uSpH>0.){ vec4 h2=texelFetch(uInfo,ivec2(1,s),0); float d=h2.x;
+      if(h2.w>.5){ float x=clamp((tb-h2.y)/max(.05,h2.z-h2.y),0.,1.); d*=max(0.,h2.w<1.5 ? (uCvHsSN>0 ? CV(uCvHsS,uCvHsSN,x) : 1.) : (uCvHsUN>0 ? CV(uCvHsU,uCvHsUN,x) : 1.)); }
+      R+=uSpH*.5*d; }
+    sp+=normalize(vec3(gss(uid,91u),gss(uid,93u),gss(uid,95u))+1e-6)*R*pow(hsh(uid,97u),1./3.); }
+  if(uJet>0.){ float vs=length(sv); if(vs>1e-3){ vec3 a=-sv/vs, b1=normalize(cross(a,abs(a.z)<.9 ? vec3(0.,0.,1.) : vec3(1.,0.,0.))), b2=cross(a,b1);
+      float th=uJetC*sqrt(hsh(uid,101u)), ph=6.2831853*hsh(uid,103u); vel+=uJet*(a*cos(th)+(b1*cos(ph)+b2*sin(ph))*sin(th)); } }
   vec3 U=vec3(airAt(sp.xy,tb),0.), g=vec3(0.,-uG,0.);
   float T0=uT0+uT0J*gss(uid,11u), I, size=uSize; vec3 p;
   // 尾迹粗细 / 梭形（4.2.8，用户 10-02 19:41 #4、20:04「是梭形」）：沿尾迹（a = 出生点离星头的距离 ÷ 尾迹全长，0 = 星头，1 = 尾端；
@@ -409,7 +423,10 @@ function buildTrackRun(P) {
     for (let q = 0; q < k; q++) sim.step(H_STEP);
   }
   const nStars = Math.min(sim.all.length, MAX_TEX);
-  const pos = new Float32Array(Ns * nStars * 4), vel = new Float32Array(Ns * nStars * 4), info = new Float32Array(nStars * 4);
+  const pos = new Float32Array(Ns * nStars * 4), vel = new Float32Array(Ns * nStars * 4), info = new Float32Array(nStars * 8);     // 每颗星 2 格：第 1 格出生 / 熄灭 / 生成率 / 末段系数，第 2 格星头直径（跟星头的起始半径用）
+  // 火花发射器补全：每米生成 → 每颗星走过的路程（每个轨迹采样一格）；跟星头大小 → 星头直径和大小曲线（缺省都不算，路程贴图 1×1）
+  const fam = familyOf(P.type), perM = fam === 'aerial' && P.sparkRateBy === 'm', headOn = fam === 'aerial' && +P.sparkSpawnHead > 0, hsT = headOn ? headShapeOf(P) : null;
+  const len = perM ? new Float32Array(Ns * nStars * 4) : null;
   let M = 1, total = 0;
   for (let q = 0; q < nStars; q++) {
     const st = sim.all[q], first = snaps.findIndex(a => a.length > q * 6);
@@ -417,6 +434,7 @@ function buildTrackRun(P) {
       const a = snaps[Math.max(i, first)], o = (q * Ns + i) * 4;
       pos[o] = a[q * 6]; pos[o + 1] = a[q * 6 + 1]; pos[o + 2] = a[q * 6 + 2];
       vel[o] = a[q * 6 + 3]; vel[o + 1] = a[q * 6 + 4]; vel[o + 2] = a[q * 6 + 5];
+      if (len) len[o] = i ? len[o - 4] + Math.hypot(pos[o] - pos[o - 4], pos[o + 1] - pos[o - 3], pos[o + 2] - pos[o - 2]) : 0;
     }
     // 分层星：外层（带木炭火花尾）烧 sparkStop 秒后火花停，内层只发光不出火花；sparkStart：点火后过几秒才开始出火花（末段才出的短尾）
     const ig = st.birth + (st.ign || 0), s0 = P.sparkStart > 0 && st.kind !== 5 ? P.sparkStart : 0, born = ig + s0;
@@ -425,13 +443,21 @@ function buildTrackRun(P) {
     const deathAt = st.tDead != null ? Math.min(death, st.tDead) : death;
     // 末段火花密度：发射率从 rate 线性变到 rate × sparkRateEnd（按整段燃烧，不按截断后的时长）
     const e = st.kind === 5 ? 1 : (P.sparkRateEnd == null ? 1 : P.sparkRateEnd), B = Math.max(0.05, st.birth + (st.vis != null ? st.vis : st.burn) - born), a = st.rate * (e - 1) / (2 * B);
-    info[q * 4] = born; info[q * 4 + 1] = deathAt; info[q * 4 + 2] = deathAt > born ? st.rate : 0; info[q * 4 + 3] = a;
+    if (headOn) { const [w0, w1] = sparkHeadWin(st); info[q * 8 + 4] = sparkHeadBase(P, st, hsT); info[q * 8 + 5] = w0; info[q * 8 + 6] = w1; info[q * 8 + 7] = sparkHeadCurveSel(st); }
+    if (perM && st.kind !== 5) {     // 每米生成：第 3 位 = 这颗星的每米火花数，末段密度不用
+      const Lt = t => { const fi = clamp(t / dt, 0, Ns - 1), i0 = Math.min(Math.floor(fi), Ns - 2), f = fi - i0, o = q * Ns * 4; return len[o + i0 * 4] + (len[o + (i0 + 1) * 4] - len[o + i0 * 4]) * f; };
+      const pm = sparkPerMOf(P, st);
+      info[q * 8] = born; info[q * 8 + 1] = deathAt; info[q * 8 + 2] = deathAt > born && st.rate > 0 ? pm : 0; info[q * 8 + 3] = 0;
+      if (st.rate > 0 && pm > 0 && deathAt > born) { const c = Math.ceil(Math.max(0, pm * (Lt(deathAt) - Lt(born)))) + 1; M = Math.max(M, c); total += c; }
+      continue;
+    }
+    info[q * 8] = born; info[q * 8 + 1] = deathAt; info[q * 8 + 2] = deathAt > born ? st.rate : 0; info[q * 8 + 3] = a;
     if (st.rate > 0 && deathAt > born) { const Bc = deathAt - born, c = Math.ceil(Math.max(0, st.rate * Bc + a * Bc * Bc)) + 1; M = Math.max(M, c); total += c; }
   }
   gl.activeTexture(gl.TEXTURE0);
-  return { pos: floatTex(Ns, nStars, pos), vel: floatTex(Ns, nStars, vel), info: floatTex(1, nStars, info), nStars, M, Ns, dt, total, P, dropStars: Math.max(0, sim.all.length - nStars) };     // dropStars：超过显卡贴图边长没上传的星（E9）
+  return { pos: floatTex(Ns, nStars, pos), vel: floatTex(Ns, nStars, vel), info: floatTex(2, nStars, info), len: len ? floatTex(Ns, nStars, len) : floatTex(1, 1, new Float32Array(4)), nStars, M, Ns, dt, total, P, dropStars: Math.max(0, sim.all.length - nStars) };     // dropStars：超过显卡贴图边长没上传的星（E9）
 }
-function deleteTrackTex(tr) { gl.deleteTexture(tr.pos); gl.deleteTexture(tr.vel); gl.deleteTexture(tr.info); }
+function deleteTrackTex(tr) { gl.deleteTexture(tr.pos); gl.deleteTexture(tr.vel); gl.deleteTexture(tr.info); if (tr.len) gl.deleteTexture(tr.len); }
 function disposeTrack(tr) {
   if (!tr) return;
   const c = tr.cacheKey && TRACK_CACHE.get(tr.cacheKey);
@@ -468,7 +494,12 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tr.pos); gl.uniform1i(pr.u.uPos, 2);
   gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tr.vel); gl.uniform1i(pr.u.uVel, 3);
   gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, tr.info); gl.uniform1i(pr.u.uInfo, 4);
+  if (pr.u.uLen) { gl.activeTexture(gl.TEXTURE5); gl.bindTexture(gl.TEXTURE_2D, tr.len); gl.uniform1i(pr.u.uLen, 5); }
   gl.activeTexture(gl.TEXTURE0);
+  { const air = familyOf(P.type) === 'aerial', u = (k, v) => { if (pr.u[k]) gl.uniform1f(pr.u[k], v); };     // 火花发射器补全（缺省全 0 = 以前）
+    u('uPerM', air && P.sparkRateBy === 'm' ? 1 : 0); u('uSpR', air ? Math.max(0, +P.sparkSpawnR || 0) : 0); u('uSpH', air ? Math.max(0, +P.sparkSpawnHead || 0) : 0);
+    u('uJet', air ? Math.max(0, +P.sparkJet || 0) : 0); u('uJetC', clamp(+P.sparkJetCone || 0, 0, 90) * Math.PI / 180);
+    if (air && +P.sparkSpawnHead > 0) setCurveU(pr, P, [['uCvHsS', 'starSizeCurve'], ['uCvHsU', 'subSizeCurve']]); }
   gl.uniform1f(pr.u.uT, t); gl.uniform1f(pr.u.uDT, tr.dt); gl.uniform1i(pr.u.uM, tr.M); gl.uniform1i(pr.u.uNs, tr.Ns);
   gl.uniform1i(pr.u.uSeed, P.seed | 0); gl.uniform1i(pr.u.uTw, tw | 0);
   gl.uniform1f(pr.u.uInh, P.sparkInherit); gl.uniform1f(pr.u.uSpread, P.sparkSpread); gl.uniform1f(pr.u.uLife, se.life);
