@@ -171,8 +171,41 @@ FAN_ENTS6, FAN_COMBOS6 = fan_entries('FC6')
 RED_GLOW = dict(RED_GLOW, headSize=3.5, haloR=3.5, headBright=1.6)
 FAN_ENTS7, FAN_COMBOS7 = fan_entries('FC7')
 FAN_COMBOS7[0]['replaces'] = ['FC4R', 'FC5R', 'FC6R']
-FAN_ENTS = [e for e in FAN_ENTS7 if e['id'].startswith('FC7R')] + [e for e in FAN_ENTS6 if e['id'] == 'FC6O']
-FAN_COMBOS = FAN_COMBOS7
+# ======================= FC8R（相机渲染，用户 2026-10-09 18:29）：正红星头 + 炭金尾 =======================
+# 用户原话：「先改正红，然后尾缀是炭金，然后按顺序测试」；参考：实拍金菊红头（金色炭火尾 + 正红星头）、红环红星。
+# 诊断 analysis/probe/星头光晕诊断_2026-10-09/诊断.md：FC7R 的「粉球 + 粉雾带」= 光晕层 3.5 m 实心圆盘 + 光晕能量 0.85（滑杆上限）、σ ≈ 6 m。
+# 第 1 层「正红星头」（同一模拟，只画星头）：渐变亮核 0.8 m（coreProfile 1）、光晕能量 0.35 / 半径 × 2；亮度靠贴图曝光 × 4（亮核削顶发白，外圈正红）；
+#   Ramp 正红（锶红，B ≈ G，不偏玫红），亮端偏暖白。
+# 第 2 层「炭金尾」（同一模拟）：这层不画星头（星头只在第 1 层）；火花炭金：Ramp 按实拍金菊尾巴的颜色反推（暗端橙红 → 中段橙金 → 亮端淡金），
+#   火花寿命略长、带一点闪烁；亮肩（靠星头的火花大而亮）和尾端收尖照旧（头粗尾细）。
+RED_HEAD8 = dict(RED_STAR, headSize=1.4, headBright=3.0, headTear=0, coreProfile=1, haloFrac=0.6, haloR=2.8,
+                 sparkRate=0, x1On=0, tailShoulder=0, exposure=6.0)
+RED_HEAD8_M = {'stages': [[0, '#ffffff']], 'xw': 0.08, 'ramp0': '#000000', 'ramp1': '#3a0608', 'ramp2': '#ff1416', 'ramp3': '#ffc8cc', 'headInt': 1, 'tailInt': 1}
+GOLD_TAIL8 = dict(RED_TAIL5, headBright=0, headTear=0,
+                  sparkRate=300, sparkLife=1.1, sparkLifeJit=50, sparkSpread=0.8, T0=2150, cooling=0.26, sparkSize=0.5, sparkBright=2.6, twinkle=0.4,
+                  tailShoulder=0.6, x1Size=0.5, x1Bright=0.8, x1Life=0.3)
+GOLD_TAIL8_M = {'stages': [[0, '#ffffff']], 'xw': 0.08, 'ramp0': '#000000', 'ramp1': '#6a1c08', 'ramp2': '#c84418', 'ramp3': '#ff9c50', 'headInt': 1, 'tailInt': 1}
+
+
+def fan_entries8(V, head, head_m, tail, tail_m, note_extra=''):
+    lays = [('Glow', '正红星头', head, head_m), ('Comet', '炭金尾', tail, tail_m)]
+    ents = [{'id': f'{V}R-{i + 1}', 'date': '2026-10-09', 'name': f'扇形彗星 · 红彗星扇 · {cn}', 'base': 'kamuro', 'hidden': True,
+             'tags': f'扇形彗星 红彗星 扇面 N 簇 {cn} {V}R-{i + 1}', 'p': dict(p), 'm': dict(m),
+             'note': f'红彗星扇第 {i + 1} 层「{cn}」：和另一层同一个模拟（同种子、同弹道），只是画的东西不同。'} for i, (en, cn, p, m) in enumerate(lays)]
+    combo = {'id': f'{V}R', 'date': '2026-10-09', 'name': '扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾）',
+             'layers': [{'m': f'rep:{V}R-{i + 1}', 'scale': 1, 'delay': 0} for i in range(2)],
+             'layerNames': [x[1] for x in lays], 'tags': f'扇形彗星 红彗星 扇面 N 簇 依次出膛 正红 炭金尾 {V}R', 'look': LOOK2,
+             'note': '用户 10-09 18:29（相机渲染）：「先改正红，然后尾缀是炭金，然后按顺序测试」。7 根筒扇面 60°、逐筒 0.2 s 出膛；出膛 72 m/s、2.2 s 燃尽（约 90 m）不爆。'
+                     '两层同一模拟：① 正红星头（白热亮核 + 正红小光晕，不再是 3.5 m 粉球、星和星之间不连成雾带）② 炭金尾（金色炭火火花，亮肩、头粗尾细）。'
+                     '诊断 analysis/probe/星头光晕诊断_2026-10-09/诊断.md。' + note_extra,
+             'replaces': ['FC7R']}
+    return ents, [combo]
+
+
+FAN_ENTS8, FAN_COMBOS8 = fan_entries8('FC8', RED_HEAD8, RED_HEAD8_M, GOLD_TAIL8, GOLD_TAIL8_M)
+
+FAN_ENTS = FAN_ENTS8 + [e for e in FAN_ENTS6 if e['id'] == 'FC6O']
+FAN_COMBOS = FAN_COMBOS8
 next(e for e in FAN_ENTS if e['id'] == 'FC6O')['replaces'] = ['FC4O', 'FC5O']
 
 if __name__ == '__main__':

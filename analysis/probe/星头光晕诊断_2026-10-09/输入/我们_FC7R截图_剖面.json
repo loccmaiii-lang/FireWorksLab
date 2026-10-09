@@ -1,0 +1,45 @@
+{
+ "file": "我们_FC7R截图.png",
+ "heads": 7,
+ "summary": {
+  "r50": 9.503,
+  "r10": 11.745,
+  "shape_r10_r50": 1.263,
+  "tail_r03_r50": 1.442,
+  "plateau_rp_r50": 0.297,
+  "sat_c": 0.042,
+  "sat_r50": 0.503,
+  "sat_2r50": 0.748,
+  "moffat_beta": 6.0,
+  "moffat_logres": 0.603,
+  "gauss_logres": 0.522
+ },
+ "星间雾_中位": 0.082,
+ "r50色相_中位": -23.4,
+ "尾巴颜色": [
+  {
+   "L": "0.15-0.3",
+   "n": 0,
+   "hue": null,
+   "sat": null
+  },
+  {
+   "L": "0.3-0.5",
+   "n": 0,
+   "hue": null,
+   "sat": null
+  },
+  {
+   "L": "0.5-0.7",
+   "n": 0,
+   "hue": null,
+   "sat": null
+  },
+  {
+   "L": "0.7-0.9",
+   "n": 0,
+   "hue": null,
+   "sat": null
+  }
+ ]
+}

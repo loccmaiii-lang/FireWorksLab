@@ -1,0 +1,9 @@
+{
+ "id": "FCS8",
+ "type": "std",
+ "priority": 2,
+ "targets": [
+  "FC8R"
+ ],
+ "note": "相机渲染：FC8R 标准检查。"
+}
