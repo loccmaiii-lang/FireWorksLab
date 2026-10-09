@@ -65,7 +65,11 @@
     "baseSha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a",
     "musicSha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3",
     "sourceFilesPreserved": true,
-    "publicSiteChanged": false
+    "publicSiteChanged": false,
+    "uploadCommit": "ae8e72ed",
+    "remoteVerified": true,
+    "verifiedManifestFiles": 29,
+    "verification": "fetch origin + commit ancestry + per-file Git blob identity + local SHA256"
   },
   "programmeMusicUploadPolicy": {
     "authorizedDate": "2026-10-10",

@@ -685,10 +685,6 @@
       "bytes": 8
     },
     {
-      "file": "programme-layer-after.json",
-      "bytes": 104969
-    },
-    {
       "file": "programme-layer-after.truncated.txt",
       "bytes": 207602
     },
@@ -752,6 +748,12 @@
       "file": "verification-summary.json",
       "destination": "协作/编排工作台资料/2026-10-10/checks/previous-verification-summary.json",
       "contentHash": "sha256:99a961660f8bb1eef9842053d8fc4ba94344dfc54aca6828614ac62a42fc2599"
+    },
+    {
+      "file": "programme-layer-after.json",
+      "destination": "协作/编排工作台资料/2026-10-10/backups/save-share-qa-authored.json",
+      "contentHash": "sha256:8884839c0b759a3b584e32271b67f1f49a5e486f19e8f1b22f1f53b966abd631",
+      "exactDuplicateOfUploadedFile": true
     }
   ],
   "programmeArchive": {
@@ -767,6 +769,7 @@
       "qa_three_tables",
       "selected_file_evidence"
     ],
-    "publicSiteContentsUnchanged": true
+    "publicSiteContentsUnchanged": true,
+    "uploadCommit": "ae8e72ed"
   }
 }
