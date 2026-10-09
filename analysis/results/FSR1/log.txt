@@ -1,0 +1,52 @@
+22:11:51 第 1/4 步：基准回归 4.9.53 → 4.9.54（花型模板 + 金芒菊）
+22:11:59     FireworkBaker.html kiku 4.9.53
+22:11:59     FireworkBaker.html botan 4.9.53
+22:11:59     FireworkBaker.html kamuro 4.9.53
+22:11:59     FireworkBaker.html senrin 4.9.53
+22:11:59     FireworkBaker.html strobe 4.9.53
+22:11:59     FireworkBaker.html crackle 4.9.53
+22:11:59   ❌ 基准回归 4.9.53 → 4.9.54（花型模板 + 金芒菊）（0.1 分钟）：ht\_impl\_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of undefined (reading '阶段')
+    at openEffect (file:///C:/Users/locmai/AppData/Local/Temp/fwjob_5y9_9fen/0/FireworkBaker.html?fast:13303:26)
+    at eval (eval at evaluate (:311:30), <anonymous>:1:51)
+    at eval (eval at evaluate (:311:30), <anonymous>:1:157)
+    at eval (<anonymous>)
+    at UtilityScript.evaluate (<anonymous>:311:30)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+
+22:11:59 第 2/4 步：多层模板定帧回归 4.9.53 → 4.9.54
+22:12:11     FireworkBaker.html shinKiku
+22:12:11     FireworkBaker.html yaeHenka
+22:12:11     FireworkBaker.html yaeBlueBotan
+22:12:11     FireworkBaker.html colorSenrin
+22:12:11     FireworkBaker.html mieKamuroSaki
+22:12:11     FireworkBaker.html mangekyo
+22:12:11     FireworkBaker.html somewakeBotan
+22:12:11     FireworkBaker.html kinzuiLime
+22:12:11     FireworkBaker.html shinKiku
+22:12:11     FireworkBaker.html yaeHenka
+22:12:11     FireworkBaker.html yaeBlueBotan
+22:12:11     FireworkBaker.html colorSenrin
+22:12:11     FireworkBaker.html mieKamuroSaki
+22:12:11     FireworkBaker.html mangekyo
+22:12:11     FireworkBaker.html somewakeBotan
+22:12:11     FireworkBaker.html kinzuiLime
+22:12:11   ✅ shinKiku [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+22:12:11   ✅ yaeHenka [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+22:12:11   ✅ yaeBlueBotan [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+22:12:11   ✅ colorSenrin [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+22:12:11   ✅ mieKamuroSaki [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+22:12:11   ✅ mangekyo [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+22:12:11   ✅ somewakeBotan [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+22:12:11   ✅ kinzuiLime [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+22:12:11   ✅ 多层模板定帧回归 4.9.53 → 4.9.54（0.2 分钟）
+22:12:11 第 3/4 步：扇面簇检查
+22:12:14   {"notes": [], "F1": {"条目": 26, "分簇": 6}, "F3_0.38": {"等": 15, "已出发": 18, "闪光": 11}, "F3_-0.38": {"等": 15, "已出发": 18, "闪光": 11}}
+22:12:14   全过 ✅
+22:12:14   ✅ 扇面簇检查（0.0 分钟）
+22:12:14 第 4/4 步：火花发射器检查
+22:12:19   {"E1": {"条目": 26}, "E2_0": {"出发点": [-4, -2, 0, 2, 4], "闪光": 5}, "E2_0.4": {"出发点": [-4, -2, 0, 2, 4], "闪光": 5}, "E3": {"火花": 3001, "离轴最大": 2.993, "离轴平均": 1.748, "理论": 1.767}, "E3b": {"星头大小随机倍数": 0.654}, "E4": {"火花": 1786, "锥角30最大夹角": 29.96}, "E5": {"路程": 70.68, "CPU火花": 515, "期望": 565.4, "每米上下": [263, 252], "每秒上下": [332, 791]}, "E6": {"缺省宽": 169.68, "加了宽": 200.45}, "G1": {"base": {"行": 66, "星头端平均宽": 2.5, "总亮": 1140869.0}, "spawnR": {"行": 50, "星头端平均宽": 4.83, "总亮": 1137289.0}, "head": {"行": 51, "星头端平均宽": 4.42, "总亮": 1139612.0}, "jet": {"行": 44, "星头端平均宽": 2.64, "总亮": 1134004.0}, "perm": {"行": 68, "星头端平均宽": 2.47, "总亮": 1142055.0}, "grad": {"行": 49, "星头端平均宽": 5.0, "总亮": 1138232.0}, "moffat": {"行": 51, "星头端平均宽": 5.33, "总亮": 1139817.0}}}
+22:12:19   全过 ✅
+22:12:19   ✅ 火花发射器检查（0.1 分钟）
+22:12:19 完成，用时 0.5 分钟

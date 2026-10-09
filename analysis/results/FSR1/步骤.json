@@ -1,0 +1,31 @@
+[
+ {
+  "name": "基准回归 4.9.53 → 4.9.54（花型模板 + 金芒菊）",
+  "script": "基准回归.py",
+  "code": 1,
+  "ok": false,
+  "minutes": 0.1,
+  "stderr": "nners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\asyncio\\base_events.py\", line 691, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"C:\\Users\\locmai\\.codex\\worktrees\\gpu-monitor\\FireWorksLab\\analysis\\scripts\\基准回归.py\", line 47, in render\n    await pg.evaluate(f\"(() => {{ window.__opening = true; Promise.resolve(openEffect(EFFS().find(e => e.key === {json.dumps(name)}))).finally(() => window.__opening = false); return 0; }})()\")\n  File \"F:\\FireWorksLab\\analysis\\local\\monitor_state\\deps\\playwright\\async_api\\_generated.py\", line 9421, in evaluate\n    await self._impl_obj.evaluate(\n  File \"F:\\FireWorksLab\\analysis\\local\\monitor_state\\deps\\playwright\\_impl\\_page.py\", line 474, in evaluate\n    return await self._main_frame.evaluate(expression, arg)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"F:\\FireWorksLab\\analysis\\local\\monitor_state\\deps\\playwright\\_impl\\_frame.py\", line 346, in evaluate\n    await self._channel.send(\n  File \"F:\\FireWorksLab\\analysis\\local\\monitor_state\\deps\\playwright\\_impl\\_connection.py\", line 76, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"F:\\FireWorksLab\\analysis\\local\\monitor_state\\deps\\playwright\\_impl\\_connection.py\", line 632, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.Error: Page.evaluate: TypeError: Cannot read properties of undefined (reading '阶段')\n    at openEffect (file:///C:/Users/locmai/AppData/Local/Temp/fwjob_5y9_9fen/0/FireworkBaker.html?fast:13303:26)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:51)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:157)\n    at eval (<anonymous>)\n    at UtilityScript.evaluate (<anonymous>:311:30)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n"
+ },
+ {
+  "name": "多层模板定帧回归 4.9.53 → 4.9.54",
+  "script": "多层模板回归.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ },
+ {
+  "name": "扇面簇检查",
+  "script": "扇面簇检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.0
+ },
+ {
+  "name": "火花发射器检查",
+  "script": "火花发射器检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ }
+]
