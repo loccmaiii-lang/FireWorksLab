@@ -67,6 +67,24 @@ SLOTS = {
 FAN_FAMILY = ('FAN_GOLD', 'FAN_RED5', 'FAN_SILVER13')
 # 占位可见时长（仅用于并发估计，真值来自固定子模板）
 LIFE_S = {'S': 4.0, 'M': 6.0, 'L': 8.0, 'fan': 3.0, 'F8': 2.5, 'F24': 2.5, 'F30': 3.0, 'F32': 3.0, 'F40': 3.0}
+# 升空尾缀的占位升空时长（秒）：取自 spec/尺寸标定.json 的设计 rise_s，只用于预览画尾缀和「调用时间 ≥ 0」检查；
+# 真值 D 来自固定子模板，实测前不写进 cue（cue 里的 launchShowS / callShowS 保持空）。扇形即发，没有尾缀。
+RISE_S = {'S_SILVER': 2.0, 'S_LIME': 3.5, 'S_SPLIT': 3.5, 'M_GOLD': 5.0, 'M_SILVER': 5.0, 'M_GREEN': 5.0, 'M_MULTI': 5.0,
+          'L_SILVER': 8.0, 'L_WILLOW': 8.0, 'F_COMET': 1.8, 'F_CRACKLE': 1.7, 'F_LIME': 1.6, 'F_SILVER': 1.7, 'F_GOLD': 1.8}
+
+
+for _k, _v in SLOTS.items():
+    if _v['kind'] == 'fan':
+        _v['tail'] = dict(has=False, note='扇形即发，没有升空尾缀')
+    else:
+        _v['tail'] = dict(has=True, inSubTemplate=True, previewRiseS=RISE_S[_k],
+                          tailOnly=(_k == 'F_COMET'),
+                          note='升空尾缀写在固定子模板里；previewRiseS 只是预览示意，真值 D 待固定子模板')
+
+
+def fam_of(slot):
+    """槽位家族：去掉 /扇形位置版本 和 @版本后缀（@A/@B = 高低版本；@1…@5 = 限额分道版本）。"""
+    return slot.split('/')[0].split('@')[0]
 
 
 def fan_variant(group, i):
@@ -149,7 +167,7 @@ _cid = {}
 
 
 def cue(sec, group, slot, pts, order, gap, k=None, beat=0, t=None, show=None, intent='', src=SRC_DET,
-        slots=None, snap=True, lead=0.0, macro=None, cid=None, weight='support'):
+        slots=None, snap=True, lead=0.0, macro=None, cid=None, weight='support', comp=None, layer=None):
     """gap、lead 用秒（必须是 0.1 的整数倍）。pts 为 None 表示整组。"""
     pts = list(ALL[group]) if pts is None else list(pts)
     assert abs(gap * 10 - round(gap * 10)) < 1e-9 and abs(lead * 10 - round(lead * 10)) < 1e-9
@@ -195,7 +213,10 @@ def cue(sec, group, slot, pts, order, gap, k=None, beat=0, t=None, show=None, in
         spanS=S(max(offs.values())),
         pointsByTier={tn: [f'{group}{p}' for p in v] for tn, v in tiers.items()},
         weight=weight, macro=macro,
+        comp=(dict(comp, layer=layer) if comp else None),
+        callShowS=None, callFormula='H − D（D 来自固定子模板，未绑定）',
     )
+    c['tailPreviewRiseS'] = max([RISE_S.get(fam_of((slotmap or {}).get(f'{group}{p}', slot)), 0.0) for p in pts]) if SLOTS[fam_of(slot)]['kind'] != 'fan' else 0.0
     CUES.append(c)
     return c
 
@@ -214,6 +235,35 @@ def alt(even_slot, odd_slot, pts=None):
     return lambda p: even_slot if p % 2 == 0 else odd_slot
 
 
+def row17(sec, k, beat, slot, order, gap=0.2, lead=0.0, intent='', src=SRC_DET, comp=None, weight='support', snap=True):
+    """17 点连扫：坝顶 P 排 + B 排看成一条 17 点的线（x 从左到右 P0 B0 P1 B1 … B7 P8），同方向、同槽位。
+    P 排 gap、B 排 gap 且晚 gap/2：P、B 交替，整条线上每 gap/2（常用 0.1 s）一发。
+    LR/RL：沿线一发接一发；CO：从 P4 起，B3/B4 镜像对、P3/P5 … 向两端；OC：反过来两头相向。
+    P 点能否放扇形待本机确认；不能时只保留 B 排（见方案文档「待确认」）。"""
+    assert round(gap * 10) % 2 == 0, '17 点连扫的 gap 必须是 0.2 的整数倍（B 排晚 gap/2 才仍是 0.1 的倍数）'
+    half = round(gap / 2, 1)
+    mid = f'R{k}.{beat}'
+    a = cue(sec, 'P', slot, None, order, gap, k=k, beat=beat, intent=intent, src=src, lead=lead, snap=snap, weight=weight,
+            macro=dict(name='ROW17', id=mid, leg='P-' + order), comp=comp, layer='fan')
+    b = cue(sec, 'B', slot, None, order, gap, k=k, beat=beat, intent=intent, src=src, lead=round(lead + half, 1), snap=snap, weight=weight,
+            macro=dict(name='ROW17', id=mid, leg='B-' + order), comp=comp, layer='fan')
+    return a, b
+
+
+_comp_seq = {}
+
+
+def new_comp(name, k, beat=0):
+    n = _comp_seq.get((name, k, beat), 0) + 1
+    _comp_seq[(name, k, beat)] = n
+    return dict(name=name, id=f'{name}_{k}' + (f'.{beat}' if beat else ''))
+
+
+def ver_ab(fam):
+    """相邻点调用同一花型的 A / B 两个高低版本（B 比 A 高，由用户在固定子模板里做）：偶数点 A，奇数点 B。"""
+    return lambda p: f'{fam}@A' if p % 2 == 0 else f'{fam}@B'
+
+
 # ───────────────────────── 节目 ─────────────────────────
 SECTIONS = []
 
@@ -226,30 +276,100 @@ def section(sid, name, role, bar_a, bar_b, note, music_a=None, music_b=None):
                          showStartS=round(ma + ARGS.offset, 1), showEndS=round(mb + ARGS.offset, 1), note=note))
 
 
-# S0 倒计时（演出时间锚点；音乐在倒计时 5 进入）
-section('S0', '倒计时', '铺垫', 0, 3, '演出 0–10 s；音乐在倒计时 5 缓缓升起；0 点（演出 10.0 s）开花', music_a=-ARGS.offset, music_b=10 - ARGS.offset)
-cdn = dict(sec='S0', group='F', order='ONE', gap=0.0, src=SRC_USER, weight='key')
-cue(pts=[3], slot='F_COMET', show=2.0, intent='T-8 中心一发彗星：点火', **cdn)
-cue(pts=[2, 4], slot='F_COMET', show=3.0, intent='T-7 向两侧扩一格', **cdn)
-cue(pts=[1, 5], slot='F_COMET', show=4.0, intent='T-6 再扩', **cdn)
-cue(pts=[0, 6], slot='F_COMET', show=5.0, intent='T-5 到边；音乐在此刻进入', **cdn)
-cue(pts=[0, 6], slot='F_CRACKLE', show=6.0, intent='T-4 边上小爆裂：折返', **cdn)
-cue(pts=[1, 5], slot='F_CRACKLE', show=7.0, intent='T-3 向中心收', **cdn)
-cue(pts=[2, 4], slot='F_CRACKLE', show=8.0, intent='T-2 收', **cdn)
-cue(pts=[3], slot='F_SILVER', show=9.0, intent='T-1 中心银菊：收到一点，留 1 秒静', **cdn)
+# ───────────────────────── 构图（对回计划书：开场三层 / 三点压顶 / 金色满层 / 白墙连波）─────────────────────────
+# 每个高潮不是单排，而是几层叠在一起：
+#   高排  M/L 九点，A/B 高低版本交错（相邻点高低差由两个固定子模板版本提供）
+#   压顶  大号 L 三点 P0/P4/P8，比高排晚 0.5 s 开，罩在最上面（计划书 ⑤ 三点压顶）
+#   中排  M 九点垫在 L 下面（金墙）
+#   低排  小号 4–5 点，低位（S_SILVER 约 80 m；S_SPLIT 约 150 m），晚 0.2–0.5 s
+#   扇形  17 点连扫（P、B 交替每 0.1 s 一发）铺底
+#   前台  里→外
+#   连波  L 九点一波接一波（计划书 ⑨ 白墙），下一波的尾缀在上一波开花时已经在升
+SRC_AUTH = '编排者定'
+LAYER_NAME = dict(high='高排', mid='中排', crown='压顶', low='低排', fan='扇形', front='前台', wave='连波', dam='坝顶', all='')
+
+
+def Hi(slot, slots=None, order='CO', gap=0.1, lead=0.0, pts=None, beat=None):
+    return dict(layer='high', group='P', slot=slot, slots=slots, order=order, gap=gap, lead=lead, pts=pts, beat=beat)
+
+
+def Mid(slot, slots=None, order='CO', gap=0.1, lead=0.3, pts=None, beat=None):
+    return dict(layer='mid', group='P', slot=slot, slots=slots, order=order, gap=gap, lead=lead, pts=pts, beat=beat)
+
+
+def Crown(slot, order='CO', gap=0.2, lead=0.5, pts=(0, 4, 8), beat=None):
+    return dict(layer='crown', group='P', slot=slot, slots=None, order=order, gap=gap, lead=lead, pts=list(pts), beat=beat)
+
+
+def Low(slot, pts, order='CO', gap=0.2, lead=0.2, beat=None):
+    return dict(layer='low', group='P', slot=slot, slots=None, order=order, gap=gap, lead=lead, pts=list(pts), beat=beat)
+
+
+def Fan(slot, order='CO', gap=0.2, lead=0.1, beat=None):
+    return dict(layer='fan', group='PB', slot=slot, slots=None, order=order, gap=gap, lead=lead, pts=None, beat=beat)
+
+
+def Front(slot, order='CO', gap=0.1, lead=0.3, pts=None, beat=None):
+    return dict(layer='front', group='F', slot=slot, slots=None, order=order, gap=gap, lead=lead, pts=pts, beat=beat)
+
+
+def stack(sec, k, name, layers, beat=0, src=SRC_DET, snap=True, note=''):
+    """叠层构图：同一小节同一拍，几层按各自的 lead 先后开；每层一条（或 P+B 两条）cue，都带同一个 comp.id。"""
+    cm = new_comp(name, k, beat)
+    for ly in layers:
+        b = beat if ly['beat'] is None else ly['beat']
+        lab = f"{note} · {LAYER_NAME[ly['layer']]}"
+        key = 'key' if ly['layer'] in ('high', 'crown', 'fan', 'wave') else 'support'
+        if ly['layer'] == 'fan':
+            row17(sec, k, b, ly['slot'], ly['order'], ly['gap'], lead=ly['lead'], intent=lab + '：17 点连扫（P、B 交替）',
+                  src=src, comp=cm, weight=key, snap=snap)
+        else:
+            cue(sec, ly['group'], ly['slot'], ly['pts'], ly['order'], ly['gap'], k=k, beat=b, lead=ly['lead'], slots=ly['slots'],
+                comp=cm, layer=ly['layer'], src=src, snap=snap, weight=key, intent=lab)
+    return cm
+
+
+def wall(sec, k0, n=8, src=SRC_DET):
+    """白墙连波（计划书 ⑨）：L 九点一小节一波，奇偶波里→外 / 外→里交替；五条分道版本（@1–@5）轮流：同一分道的两波相隔 5 小节 ≈ 8.1 s，
+    不短于占位寿命 8 s，每条分道同时在场不超过 9，躲开单资源 10 的限额（限额作用域本机还没测）；偶数波拍 2 加一次金扇 17 点连扫（LR / RL 交替），奇数波拍 2 前台回应。"""
+    cm = new_comp('WALL', k0)
+    for i in range(n):
+        k = k0 + i
+        lane = i % 5 + 1
+        cue(sec, 'P', 'L_SILVER', None, 'CO' if i % 2 == 0 else 'OC', 0.1, k=k, slots=lambda p, lane=lane: f'L_SILVER@{lane}',
+            comp=cm, layer='wave', src=src, weight='key', intent=f'白墙第 {i + 1}/{n} 波 · 分道 @{lane}（下一波的尾缀在这一波开花时已在升）')
+        if i % 2 == 0:
+            row17(sec, k, 2, 'FAN_GOLD', 'LR' if (i // 2) % 2 == 0 else 'RL', 0.2, comp=cm, src=src,
+                  intent=f'白墙第 {i + 1} 波 · 金扇 17 点连扫')
+        else:
+            cue(sec, 'F', 'F_SILVER', None, 'CO' if (i // 2) % 2 == 0 else 'OC', 0.1, k=k, beat=2, comp=cm, layer='front', src=src,
+                intent=f'白墙第 {i + 1} 波 · 前台回应')
+    return cm
+
+
+# S0 倒计时：烟花倒计时（演出时间锚点；音乐在倒计时 5 进入）
+section('S0', '倒计时', '铺垫', 0, 3, '演出 0–10 s，用烟花倒计时：坝顶 P0+P8 起，每秒一对向里放到 P4（T-8…T-4）；B 扇形 + 前台再向里一轮（T-3…T-1）；0 点从 P4 向外绽放。音乐在倒计时 5 缓缓升起', music_a=-ARGS.offset, music_b=10 - ARGS.offset)
+cm0 = new_comp('COUNTDOWN', 0)
+cdn = dict(sec='S0', order='ONE', gap=0.0, src=SRC_AUTH, weight='key', comp=cm0)
+for sh, pts in [(2.0, [0, 8]), (3.0, [1, 7]), (4.0, [2, 6]), (5.0, [3, 5])]:
+    cue(group='P', slot='S_SILVER', pts=pts, show=sh, layer='dam',
+        intent=f'T-{10 - int(sh)} 坝顶 P{pts[0]} + P{pts[1]} 各放一发小银菊，往里' + ('；音乐在这一刻进入' if sh == 5.0 else ''), **cdn)
+cue(group='P', slot='S_SPLIT', pts=[4], show=6.0, layer='dam', intent='T-4 坝顶收到中心 P4：一发金裂星', **cdn)
+for sh, bp, fp in [(7.0, [0, 7], [0, 6]), (8.0, [1, 6], [1, 5]), (9.0, [2, 5], [2, 4])]:
+    cue(group='B', slot='FAN_SILVER13', pts=bp, show=sh, layer='fan', intent=f'T-{10 - int(sh)} 坝顶扇形 B{bp[0]} + B{bp[1]} 银灰扇，往里', **cdn)
+    cue(group='F', slot='F_SILVER', pts=fp, show=sh, layer='front', intent=f'T-{10 - int(sh)} 前台 F{fp[0]} + F{fp[1]} 小银菊，往里', **cdn)
 
 # S1 开场（bars 3–9）
-section('S1', '开场', '释放', 3, 10, '倒计时 0 点大开花，随后前台低位问答，坝顶小花隔小节出现，bar 9 一次小抬升')
-cue('S1', 'P', 'M_GOLD', None, 'CO', 0.1, k=3, intent='0 点开花：金芒菊九点从中心向两侧排开', src=SRC_USER, snap=False, weight='key')
-cue('S1', 'B', 'FAN_GOLD', None, 'CO', 0.1, k=3, lead=0.2, intent='扇形里→外，晚 0.2 s 跟在球花之后', snap=False, weight='key')
-cue('S1', 'F', 'F_GOLD', None, 'CO', 0.1, k=3, lead=0.1, intent='前台小金花里→外回应', snap=False, weight='key')
+section('S1', '开场', '释放', 3, 10, '0 点开场三层（高排银白 A/B 高低交错 + 低排小银菊 + 17 点金扇连扫 + 前台），随后前台低位问答，坝顶小花隔小节出现，bar 9 一次小抬升')
+stack('S1', 3, 'OPEN3', [Hi('M_SILVER', slots=ver_ab('M_SILVER')), Low('S_SILVER', [1, 3, 5, 7], lead=0.2),
+                         Fan('FAN_GOLD', lead=0.1), Front('F_GOLD', lead=0.3)], note='0 点开场三层', src=SRC_USER, snap=False)
 cue('S1', 'F', 'F_COMET', None, 'LR', 0.2, k=4, intent='前台彗星左→右扫一遍（低位回应）')
 cue('S1', 'F', 'F_COMET', None, 'RL', 0.2, k=5, intent='回扫，右→左')
 cue('S1', 'P', 'S_SILVER', [3, 4, 5], 'CO', 0.2, k=6, intent='坝顶中间三点小银菊，第一次回到坝顶')
 cue('S1', 'F', 'F_LIME', None, 'CO', 0.2, k=7, intent='前台青柠里→外')
 cue('S1', 'P', 'S_LIME', [1, 4, 7], 'CO', 0.2, k=8, intent='坝顶三点小青柠，宽间距')
-cue('S1', 'P', 'M_SILVER', None, 'CO', 0.1, k=9, intent='句尾小抬升：银白金芒菊九点')
-cue('S1', 'B', 'FAN_SILVER13', None, 'CO', 0.2, k=9, beat=2, intent='首次银灰扇里→外，接在抬升之后')
+stack('S1', 9, 'LIFT', [Hi('M_SILVER', slots=ver_ab('M_SILVER')), Low('S_SILVER', [1, 3, 5, 7], lead=0.2),
+                        Fan('FAN_SILVER13', lead=0.0, beat=2)], note='句尾小抬升')
 
 # S2 留白 I（bars 10–16）
 section('S2', '留白 I', '留白', 10, 17, '能量落到 2–3 dB，只留前台单发 / 双发，让眼睛歇一下，bar 16 前台外→内做 pickup')
@@ -264,40 +384,37 @@ cue('S3', 'P', 'S_LIME', EVEN_P, 'CO', 0.2, k=17, intent='坝顶偶数点小青�
 cue('S3', 'F', 'F_COMET', None, 'RL', 0.2, k=18, intent='前台回应')
 cue('S3', 'P', 'S_SILVER', ODD_P, 'OC', 0.2, k=19, intent='坝顶奇数点小银菊外→内')
 cue('S3', 'F', 'F_SILVER', None, 'CO', 0.2, k=20, intent='前台里→外')
-cue('S3', 'P', 'S_SPLIT', None, 'CO', 0.1, k=21, intent='重音：金裂星九点', weight='key')
-cue('S3', 'F', 'F_GOLD', None, 'CO', 0.1, k=21, lead=0.2, intent='前台跟一圈小金花')
+stack('S3', 21, 'LAYER3', [Hi('S_SPLIT'), Low('S_SILVER', [0, 2, 4, 6, 8], lead=0.2), Front('F_GOLD', lead=0.2)], note='重音：金裂星带低排')
 cue('S3', 'F', 'F_LIME', None, 'OC', 0.2, k=22, intent='前台外→内')
 cue('S3', 'P', 'S_LIME', [1, 4, 7], 'LR', 0.3, k=23, intent='三点小青柠左→右慢扫')
 cue('S3', 'F', 'F_COMET', None, 'LR', 0.1, k=24, beat=2, intent='快速左→右一串，引到下一段')
 
 # S4 推进 II（bars 25–32）
-section('S4', '推进 II', '推进', 25, 33, '中号球花登场，金色扇形第一次沿坝顶左→右、右→左来回扫，bar 29 金芒菊九点，bar 32 收紧')
+section('S4', '推进 II', '推进', 25, 33, '中号球花登场，金扇 17 点连扫左→右、右→左来回，bar 29 中排 + 低排，bar 32 收紧')
 cue('S4', 'P', 'M_GOLD', [2, 4, 6], 'CO', 0.2, k=25, intent='中号三点起步')
 cue('S4', 'F', 'F_GOLD', None, 'CO', 0.2, k=25, beat=2, intent='前台应答')
-cue('S4', 'B', 'FAN_GOLD', None, 'LR', 0.2, k=26, intent='金扇第一次左→右扫过坝顶')
+row17('S4', 26, 0, 'FAN_GOLD', 'LR', 0.2, intent='金扇 17 点连扫：左→右，P、B 交替每 0.1 s 一发')
 cue('S4', 'P', 'M_SILVER', [1, 3, 5, 7], 'LR', 0.2, k=27, intent='银白金芒菊四点左→右')
-cue('S4', 'B', 'FAN_GOLD', None, 'RL', 0.2, k=28, intent='金扇右→左回扫')
-cue('S4', 'P', 'M_GOLD', None, 'CO', 0.1, k=29, intent='金芒菊九点', weight='key')
-cue('S4', 'F', 'F_SILVER', None, 'OC', 0.1, k=29, beat=2, intent='前台外→内')
+row17('S4', 28, 0, 'FAN_GOLD', 'RL', 0.2, intent='金扇 17 点连扫：右→左回扫')
+stack('S4', 29, 'LAYER3', [Hi('M_GOLD', slots=ver_ab('M_GOLD')), Low('S_SPLIT', [0, 2, 4, 6, 8], lead=0.3), Front('F_SILVER', 'OC', lead=0.5)], note='金芒菊九点带低排')
 xsweep('S4', 30, 0, 'FAN_RED5', 0.2, 'A', intent='红彗星扇对扫：P 排左→右 + B 排右→左')
 cue('S4', 'P', 'M_MULTI', EVEN_P, 'OC', 0.2, k=31, beat=2, intent='多重菊五点外→内')
 cue('S4', 'F', 'F_GOLD', None, 'OC', 0.1, k=32, intent='前台外→内收紧，下一小节释放')
 
 # S5 高潮 I（bars 33–40）
-section('S5', '高潮 I', '释放', 33, 41, '第一次大释放：金银交错的中号球花 + 银灰扇对扫往返；bar 40 大号银菊三点悬在随后的静里')
-cue('S5', 'P', 'M_GOLD', None, 'CO', 0.1, k=33, slots=alt('M_GOLD', 'M_SILVER'), intent='高潮 I：金银交错九点里→外', weight='key')
-xsweep('S5', 33, 2, 'FAN_SILVER13', 0.2, 'A', intent='银灰扇对扫，第一程')
-cue('S5', 'F', 'F_SILVER', None, 'CO', 0.1, k=33, intent='前台银菊里→外')
-xsweep('S5', 34, 2, 'FAN_SILVER13', 0.2, 'B', intent='银灰扇对扫，反向回程')
+section('S5', '高潮 I', '释放', 33, 41, '第一次大释放：三点压顶 + 高排金银交错 + 低排 + 银灰扇 17 点连扫 + 前台；之后对扫、连扫往返；bar 39 预抬升，bar 40 大号银菊三点悬在随后的静里')
+stack('S5', 33, 'CROWN', [Hi('M_GOLD', slots=alt('M_GOLD', 'M_SILVER')), Crown('L_SILVER'), Low('S_SILVER', [1, 3, 5, 7], lead=0.2),
+                          Fan('FAN_SILVER13', lead=0.1), Front('F_SILVER', lead=0.3)], note='高潮 I：三点压顶')
+xsweep('S5', 34, 2, 'FAN_SILVER13', 0.2, 'A', intent='银灰扇对扫')
 cue('S5', 'P', 'M_GREEN', EVEN_P, 'LR', 0.2, k=35, intent='金蕊青柠五点左→右')
 cue('S5', 'F', 'F_LIME', None, 'RL', 0.2, k=35, beat=2, intent='前台反向回应')
 cue('S5', 'P', 'M_MULTI', ODD_P, 'RL', 0.2, k=36, intent='多重菊四点右→左')
 cue('S5', 'F', 'F_COMET', None, 'CO', 0.1, k=36, beat=2, intent='前台彗星里→外')
-cue('S5', 'B', 'FAN_GOLD', None, 'CO', 0.2, k=37, intent='金扇里→外')
+row17('S5', 37, 0, 'FAN_GOLD', 'CO', 0.2, intent='金扇 17 点连扫：里→外')
 cue('S5', 'P', 'M_GOLD', [3, 4, 5], 'CO', 0.2, k=37, beat=2, intent='中间三点金芒菊')
-cue('S5', 'B', 'FAN_GOLD', None, 'OC', 0.2, k=38, intent='金扇外→内（两头相向）')
-cue('S5', 'P', 'M_SILVER', None, 'OC', 0.1, k=39, intent='银白金芒菊九点外→内', weight='key')
-cue('S5', 'F', 'F_SILVER', None, 'OC', 0.1, k=39, intent='前台外→内')
+row17('S5', 38, 0, 'FAN_GOLD', 'OC', 0.2, intent='金扇 17 点连扫：外→里（两头相向）')
+stack('S5', 39, 'LAYER3', [Hi('M_SILVER', slots=ver_ab('M_SILVER'), order='OC'), Low('S_SILVER', [0, 2, 4, 6, 8], 'OC', lead=0.2),
+                           Front('F_SILVER', 'OC', lead=0.1)], note='预抬升：银白九点带低排')
 cue('S5', 'P', 'L_SILVER', [1, 4, 7], 'CO', 0.2, k=40, intent='最强鼓点前的大号三点：收在静里', weight='key')
 
 # S6 留白 II（bars 41–47）
@@ -309,21 +426,22 @@ cue('S6', 'B', 'FAN_GOLD', [3, 4], 'CO', 0.1, k=46, intent='中心一对金扇')
 cue('S6', 'F', 'F_COMET', None, 'LR', 0.2, k=47, beat=2, intent='前台左→右 pickup')
 
 # S7 推进 III（bars 48–59）
-section('S7', '推进 III', '推进', 48, 60, '三个四小节：每四小节坝顶球花一次、扇形一次、前台一次，颜色与扫向轮换，bar 57 重音')
+section('S7', '推进 III', '推进', 48, 60, '三个四小节：每四小节坝顶球花一次、扇形一次、前台一次，颜色与扫向轮换；bar 57 金色满层是重音')
 cue('S7', 'P', 'M_GOLD', ODD_P, 'CO', 0.2, k=48, intent='坝顶四点金芒菊')
 cue('S7', 'F', 'F_GOLD', None, 'CO', 0.2, k=48, beat=2, intent='前台里→外')
-cue('S7', 'B', 'FAN_RED5', None, 'LR', 0.2, k=49, intent='红彗星扇左→右')
+row17('S7', 49, 0, 'FAN_RED5', 'LR', 0.2, intent='红彗星扇 17 点连扫：左→右')
 cue('S7', 'P', 'M_GREEN', EVEN_P, 'RL', 0.2, k=50, intent='金蕊青柠五点右→左')
 xsweep('S7', 51, 2, 'FAN_RED5', 0.2, 'B', intent='红彗星扇对扫：P 排右→左 + B 排左→右')
 cue('S7', 'P', 'M_MULTI', None, 'CO', 0.1, k=52, intent='多重菊九点')
 cue('S7', 'F', 'F_SILVER', None, 'CO', 0.1, k=52, beat=2, intent='前台里→外')
-cue('S7', 'B', 'FAN_GOLD', None, 'LR', 0.2, k=53, beat=2, intent='金扇左→右')
+cue('S7', 'B', 'FAN_GOLD', None, 'LR', 0.2, k=53, beat=2, intent='金扇 B 排左→右')
 cue('S7', 'P', 'S_SPLIT', [0, 2, 6, 8], 'OC', 0.2, k=54, intent='外侧四点金裂星')
 xsweep('S7', 55, 2, 'FAN_GOLD', 0.2, 'B', intent='金扇对扫')
 cue('S7', 'P', 'M_SILVER', ODD_P, 'LR', 0.2, k=56, intent='银白金芒菊四点左→右')
 cue('S7', 'F', 'F_LIME', None, 'LR', 0.2, k=56, beat=2, intent='前台左→右')
-cue('S7', 'P', 'M_GOLD', None, 'CO', 0.1, k=57, slots=alt('M_GOLD', 'M_GREEN'), intent='重音：金与金蕊青柠交错九点', weight='key')
-cue('S7', 'B', 'FAN_GOLD', None, 'OC', 0.2, k=58, intent='金扇外→内，向中心收')
+stack('S7', 57, 'GOLD_FULL', [Hi('M_GOLD', slots=alt('M_GOLD', 'M_GREEN')), Low('S_SPLIT', [0, 2, 4, 6, 8], lead=0.3),
+                              Fan('FAN_GOLD', lead=0.1), Front('F_GOLD', lead=0.2)], note='重音：金色满层')
+cue('S7', 'B', 'FAN_GOLD', None, 'OC', 0.2, k=58, intent='金扇 B 排外→内，向中心收')
 cue('S7', 'F', 'F_COMET', None, 'LR', 0.1, k=59, beat=2, intent='前台快速一串 pickup')
 
 # S8 蓄势（bars 60–65）
@@ -339,25 +457,21 @@ for i, (p, tt) in enumerate(zip([0, 6, 1, 5, 2, 4, 3], roll)):
         intent=f'鼓点七连第 {i + 1} 下（外→内交替，落在中心）', cid=f'A_S8_R{i + 1}', weight='key')
 
 # S9 高潮 II（bars 66–81）
-section('S9', '高潮 II', '释放', 66, 82, '用户给定 1:47 入口：大号金垂柳三点 + 金芒菊六点同时里→外；之后每四小节：球花 / 对扫 / 回应 / 收拢，bar 81 金墙收尾', )
-cue('S9', 'P', 'M_GOLD', None, 'CO', 0.1, k=66, slots=lambda p: 'L_WILLOW' if p in (1, 4, 7) else 'M_GOLD',
-    intent='高潮 II 入口（穿过风暴）：金垂柳 P1/P4/P7 + 金芒菊其余，里→外', src=SRC_USER_DET, weight='key')
-cue('S9', 'B', 'FAN_GOLD', None, 'CO', 0.1, k=66, intent='扇形里→外', src=SRC_USER_DET, weight='key')
-cue('S9', 'F', 'F_GOLD', None, 'CO', 0.1, k=66, lead=0.1, intent='前台小金花', src=SRC_USER_DET, weight='key')
+section('S9', '高潮 II', '释放', 66, 82, '用户给定 1:47 入口：五层满构图（高排金芒菊 A/B 交错 + 大号金垂柳三点压顶 + 低排金裂星 + 17 点金扇连扫 + 前台）；之后每四小节：连扫 / 对扫 / 收拢 / 压顶，bar 73 金色满层，bar 81 金墙（大号金垂柳 + 中排）收尾')
+stack('S9', 66, 'FULL5', [Hi('M_GOLD', slots=ver_ab('M_GOLD')), Crown('L_WILLOW'), Low('S_SPLIT', [0, 2, 4, 6, 8], lead=0.3),
+                          Fan('FAN_GOLD', lead=0.1), Front('F_GOLD', lead=0.3)], note='高潮 II 入口（穿过风暴）：五层满构图', src=SRC_USER_DET)
 xsweep('S9', 67, 0, 'FAN_GOLD', 0.2, 'A', intent='金扇对扫，第一程')
-cue('S9', 'P', 'M_SILVER', None, 'OC', 0.1, k=68, intent='银白金芒菊九点外→内（收拢）')
-cue('S9', 'F', 'F_SILVER', None, 'OC', 0.1, k=68, intent='前台外→内')
-cue('S9', 'B', 'FAN_GOLD', None, 'LR', 0.2, k=68, beat=2, intent='金扇左→右')
+stack('S9', 68, 'LAYER3', [Hi('M_SILVER', slots=ver_ab('M_SILVER'), order='OC'), Low('S_SILVER', [0, 2, 4, 6, 8], 'OC', lead=0.2),
+                           Front('F_SILVER', 'OC', lead=0.1)], note='收拢：银白九点外→内')
+row17('S9', 68, 2, 'FAN_GOLD', 'LR', 0.2, intent='金扇 17 点连扫：左→右')
 cue('S9', 'P', 'M_MULTI', None, 'CO', 0.1, k=69, intent='多重菊九点')
 cue('S9', 'F', 'F_LIME', None, 'CO', 0.1, k=69, beat=2, intent='前台里→外')
-xsweep('S9', 70, 0, 'FAN_RED5', 0.2, 'B', intent='红彗星扇对扫：反向')
-cue('S9', 'P', 'M_GOLD', None, 'OC', 0.1, k=71, slots=lambda p: 'L_SILVER' if p in (0, 8) else 'M_GOLD',
-    intent='大号银菊在两翼 P0/P8，其余金芒菊，外→内', weight='key')
-cue('S9', 'F', 'F_GOLD', None, 'OC', 0.1, k=71, intent='前台外→内')
-cue('S9', 'B', 'FAN_RED5', None, 'RL', 0.1, k=72, intent='红彗星扇右→左快扫（0.7 s）')
-cue('S9', 'P', 'M_GOLD', None, 'CO', 0.1, k=73, intent='高频峰：金芒菊九点', weight='key')
-cue('S9', 'B', 'FAN_GOLD', None, 'CO', 0.1, k=73, lead=0.1, intent='扇形里→外')
-cue('S9', 'F', 'F_GOLD', None, 'CO', 0.1, k=73, lead=0.1, intent='前台里→外')
+xsweep('S9', 70, 2, 'FAN_RED5', 0.2, 'B', intent='红彗星扇对扫：反向')
+stack('S9', 71, 'CROWN', [Hi('M_GOLD', slots=ver_ab('M_GOLD'), order='OC'), Crown('L_SILVER', order='OC'), Front('F_GOLD', 'OC', lead=0.2)],
+      note='三点压顶：外→内')
+cue('S9', 'F', 'F_COMET', None, 'RL', 0.1, k=72, intent='前台彗星右→左快扫（0.6 s），把红扇和下一小节的金色满层隔开')
+stack('S9', 73, 'GOLD_FULL', [Hi('M_GOLD', slots=ver_ab('M_GOLD')), Low('S_SPLIT', [0, 2, 4, 6, 8], lead=0.3),
+                              Fan('FAN_GOLD', lead=0.1), Front('F_GOLD', lead=0.2)], note='高频峰：金色满层')
 cue('S9', 'F', 'F_SILVER', [2, 3, 4], 'CO', 0.2, k=74, intent='小回落：前台中间三点')
 cue('S9', 'P', 'M_GREEN', EVEN_P, 'LR', 0.2, k=75, intent='金蕊青柠五点左→右')
 cue('S9', 'P', 'M_SILVER', ODD_P, 'RL', 0.2, k=76, intent='银白金芒菊四点右→左')
@@ -366,36 +480,36 @@ xsweep('S9', 77, 2, 'FAN_SILVER13', 0.2, 'A', intent='银灰扇对扫')
 cue('S9', 'P', 'M_MULTI', None, 'OC', 0.1, k=78, intent='多重菊九点外→内')
 cue('S9', 'F', 'F_CRACKLE', None, 'CO', 0.1, k=78, beat=2, intent='前台爆裂里→外')
 cue('S9', 'P', 'L_SILVER', [2, 4, 6], 'CO', 0.2, k=79, intent='大号银菊三点')
-cue('S9', 'B', 'FAN_GOLD', None, 'CO', 0.2, k=79, beat=2, intent='金扇里→外')
+row17('S9', 79, 2, 'FAN_GOLD', 'CO', 0.2, intent='金扇 17 点连扫：里→外')
 xsweep('S9', 80, 2, 'FAN_GOLD', 0.2, 'B', intent='金扇对扫：反向')
-cue('S9', 'P', 'L_WILLOW', None, 'CO', 0.1, k=81, intent='金墙：金垂柳九点里→外，高潮 II 收尾', weight='key')
-cue('S9', 'B', 'FAN_GOLD', None, 'CO', 0.1, k=81, lead=0.1, intent='扇形里→外', weight='key')
-cue('S9', 'F', 'F_GOLD', None, 'CO', 0.1, k=81, lead=0.1, intent='前台里→外', weight='key')
+stack('S9', 81, 'GOLD_WALL', [Hi('L_WILLOW'), Mid('M_GOLD', slots=ver_ab('M_GOLD'), lead=0.3),
+                              Low('S_SPLIT', [0, 2, 4, 6, 8], lead=0.5), Fan('FAN_GOLD', lead=0.1), Front('F_GOLD', lead=0.3)],
+      note='金墙：大号金垂柳九点 + 中排，高潮 II 收尾')
 
 # S10 转场（bars 82–100）
-section('S10', '转场', '推进', 82, 101, '高潮后回落到中号球花；bar 86 与 bar 99 两处小静；bar 89 / 93 / 95 三个小峰逐步加高，最后在 bar 100 前台 pickup 引进终章')
+section('S10', '转场', '推进', 82, 101, '高潮后回落到中号球花；bar 86 与 bar 99 两处小静；bar 89 / 93 / 95 三个小峰逐步加高（bar 95 中排 + 压顶 + 扇形），最后在 bar 100 前台 pickup 引进终章')
 cue('S10', 'F', 'F_SILVER', None, 'CO', 0.2, k=82, intent='回落：前台里→外')
 cue('S10', 'B', 'FAN_GOLD', [3, 4], 'CO', 0.1, k=83, intent='中心一对金扇')
 cue('S10', 'P', 'M_GREEN', [1, 4, 7], 'CO', 0.3, k=84, intent='金蕊青柠三点，宽间隔')
 cue('S10', 'F', 'F_LIME', None, 'LR', 0.2, k=84, beat=2, intent='前台左→右')
 cue('S10', 'P', 'M_GOLD', EVEN_P, 'CO', 0.2, k=85, intent='金芒菊五点里→外')
-cue('S10', 'B', 'FAN_RED5', None, 'RL', 0.2, k=85, beat=2, intent='红彗星扇右→左')
+cue('S10', 'B', 'FAN_RED5', None, 'RL', 0.2, k=85, beat=2, intent='红彗星扇 B 排右→左')
 cue('S10', 'F', 'F_COMET', [3], 'ONE', 0, k=86, intent='小静：一发中心彗星', weight='key')
 cue('S10', 'P', 'M_SILVER', ODD_P, 'OC', 0.2, k=87, intent='银白金芒菊四点外→内')
 cue('S10', 'F', 'F_SILVER', None, 'CO', 0.2, k=87, beat=2, intent='前台里→外')
 xsweep('S10', 88, 0, 'FAN_GOLD', 0.2, 'A', intent='金扇对扫')
 cue('S10', 'P', 'M_GOLD', None, 'CO', 0.1, k=89, slots=alt('M_GOLD', 'M_MULTI'), intent='小峰一：金芒菊与多重菊交错九点', weight='key')
 cue('S10', 'F', 'F_GOLD', None, 'CO', 0.1, k=89, lead=0.1, intent='前台小金花')
-cue('S10', 'B', 'FAN_GOLD', None, 'OC', 0.2, k=90, intent='金扇外→内（两头相向）')
+cue('S10', 'B', 'FAN_GOLD', None, 'OC', 0.2, k=90, intent='金扇 B 排外→内（两头相向）')
 cue('S10', 'F', 'F_COMET', None, 'RL', 0.2, k=90, beat=2, intent='前台右→左')
 cue('S10', 'P', 'M_MULTI', EVEN_P, 'OC', 0.2, k=91, beat=2, intent='多重菊五点外→内')
 xsweep('S10', 92, 2, 'FAN_SILVER13', 0.3, 'B', intent='银灰扇慢对扫（间隔 0.3 s）')
 cue('S10', 'P', 'M_SILVER', None, 'CO', 0.1, k=93, intent='小峰二：银白金芒菊九点', weight='key')
 cue('S10', 'F', 'F_SILVER', None, 'OC', 0.1, k=93, intent='前台外→内')
-cue('S10', 'B', 'FAN_SILVER13', None, 'CO', 0.2, k=94, beat=2, intent='银灰扇里→外（接在慢对扫之后，同色）')
+cue('S10', 'B', 'FAN_SILVER13', None, 'CO', 0.2, k=94, beat=2, intent='银灰扇 B 排里→外（接在慢对扫之后，同色）')
 cue('S10', 'F', 'F_COMET', None, 'LR', 0.1, k=94, beat=3, intent='前台快速一串')
-cue('S10', 'P', 'L_WILLOW', [2, 4, 6], 'CO', 0.2, k=95, intent='小峰三：大号金垂柳三点（高频峰）', weight='key')
-cue('S10', 'B', 'FAN_GOLD', None, 'LR', 0.2, k=95, beat=2, intent='金扇左→右')
+stack('S10', 95, 'PEAK3', [Mid('M_GOLD', slots=None, lead=0.0, pts=EVEN_P, order='CO', gap=0.2), Crown('L_WILLOW', pts=(2, 4, 6), lead=0.3),
+                           Fan('FAN_GOLD', lead=0.1, beat=2)], note='小峰三（高频峰）：中排 + 大号压顶 + 金扇')
 cue('S10', 'P', 'M_GOLD', EVEN_P, 'LR', 0.2, k=96, intent='金芒菊五点左→右')
 cue('S10', 'F', 'F_GOLD', None, 'RL', 0.2, k=96, beat=2, intent='前台右→左')
 cue('S10', 'P', 'M_GREEN', None, 'CO', 0.1, k=97, intent='金蕊青柠九点', weight='key')
@@ -406,47 +520,30 @@ cue('S10', 'F', 'F_COMET', None, 'LR', 0.1, k=100, beat=2, intent='pickup：前�
 cue('S10', 'P', 'S_SILVER', None, 'OC', 0.1, k=100, beat=3, intent='两头相向收拢，贴着终章入口', snap=False)
 
 # S11 终章（bars 101–117）
-section('S11', '终章', '释放', 101, 118, '全场最高能量；四个四小节，每段开头一堵墙（银 → 金 → 银 → 金），墙之间扇形对扫、中号球花、前台回应；最后三小节银墙三程（不同高度版本）')
-cue('S11', 'P', 'L_SILVER', None, 'CO', 0.1, k=101, intent='终章入口：银墙九点里→外', weight='key')
-cue('S11', 'B', 'FAN_GOLD', None, 'CO', 0.1, k=101, lead=0.1, intent='扇形里→外', weight='key')
-cue('S11', 'F', 'F_SILVER', None, 'CO', 0.1, k=101, lead=0.1, intent='前台银菊', weight='key')
-xsweep('S11', 102, 0, 'FAN_GOLD', 0.2, 'A', intent='金扇对扫')
+section('S11', '终章', '释放', 101, 118, '全场最高能量：bar 101 五层满构图入口；金扇连扫；bar 105 金墙（大号金垂柳 + 中排 + 低排 + 银灰扇 + 前台）；bar 109 金色压顶；bar 110–117 白墙连波 8 波（每小节一波，下一波的尾缀在上一波开花时已在升），金扇连扫与前台在波间回应')
+stack('S11', 101, 'FULL5', [Hi('M_SILVER', slots=ver_ab('M_SILVER')), Crown('L_SILVER'), Low('S_SILVER', [1, 3, 5, 7], lead=0.2),
+                            Fan('FAN_GOLD', lead=0.1), Front('F_SILVER', lead=0.3)], note='终章入口：五层满构图')
+row17('S11', 102, 0, 'FAN_GOLD', 'LR', 0.2, intent='金扇 17 点连扫：左→右')
 cue('S11', 'P', 'M_GOLD', None, 'OC', 0.1, k=103, slots=alt('M_GOLD', 'M_SILVER'), intent='金银交错九点外→内')
 cue('S11', 'F', 'F_GOLD', None, 'OC', 0.1, k=103, intent='前台外→内')
 xsweep('S11', 104, 0, 'FAN_SILVER13', 0.2, 'B', intent='银灰扇对扫：反向')
 cue('S11', 'F', 'F_COMET', None, 'LR', 0.1, k=104, beat=2, intent='前台快速一串')
-cue('S11', 'P', 'L_WILLOW', None, 'CO', 0.1, k=105, intent='金墙九点里→外', weight='key')
-cue('S11', 'B', 'FAN_SILVER13', None, 'OC', 0.1, k=105, lead=0.1, intent='银灰扇外→内（金墙配银扇，与上一程同色）', weight='key')
-cue('S11', 'F', 'F_GOLD', None, 'CO', 0.1, k=105, lead=0.1, intent='前台里→外')
-cue('S11', 'B', 'FAN_RED5', None, 'LR', 0.2, k=106, intent='红彗星扇左→右')
+stack('S11', 105, 'GOLD_WALL', [Hi('L_WILLOW'), Mid('M_GOLD', slots=ver_ab('M_GOLD'), lead=0.3), Low('S_SPLIT', [0, 2, 4, 6, 8], lead=0.5),
+                                Fan('FAN_SILVER13', 'OC', lead=0.1), Front('F_GOLD', lead=0.3)], note='金墙（配银灰扇）')
+row17('S11', 106, 0, 'FAN_SILVER13', 'LR', 0.2, intent='银灰扇 17 点连扫：左→右（接在金墙的银灰扇之后，同色）')
 cue('S11', 'F', 'F_SILVER', None, 'RL', 0.2, k=106, beat=2, intent='前台右→左')
 cue('S11', 'P', 'M_MULTI', None, 'CO', 0.1, k=107, intent='多重菊九点')
 cue('S11', 'F', 'F_LIME', None, 'CO', 0.1, k=107, beat=2, intent='前台里→外')
 xsweep('S11', 108, 0, 'FAN_GOLD', 0.2, 'A', intent='金扇对扫')
 cue('S11', 'F', 'F_COMET', None, 'RL', 0.1, k=108, beat=2, intent='前台快速一串')
-cue('S11', 'P', 'L_SILVER', None, 'OC', 0.1, k=109, intent='银墙九点外→内（收拢）', weight='key')
-cue('S11', 'B', 'FAN_GOLD', None, 'CO', 0.1, k=109, lead=0.1, intent='金扇里→外（接在金扇对扫之后，同色）', weight='key')
-cue('S11', 'P', 'M_GREEN', None, 'CO', 0.1, k=110, slots=alt('M_GREEN', 'M_GOLD'), intent='金蕊青柠与金芒菊交错')
-cue('S11', 'F', 'F_LIME', None, 'OC', 0.2, k=110, beat=2, intent='前台外→内')
-xsweep('S11', 111, 0, 'FAN_RED5', 0.2, 'B', intent='红彗星扇对扫：反向')
-cue('S11', 'P', 'S_SPLIT', None, 'LR', 0.1, k=112, beat=2, intent='金裂星九点快速左→右（0.8 s 扫完）')
-cue('S11', 'F', 'F_CRACKLE', None, 'CO', 0.1, k=112, beat=2, intent='前台爆裂里→外')
-cue('S11', 'P', 'L_WILLOW', None, 'CO', 0.1, k=113, intent='金墙九点', weight='key')
-cue('S11', 'B', 'FAN_GOLD', None, 'CO', 0.1, k=113, lead=0.1, intent='扇形里→外', weight='key')
-cue('S11', 'F', 'F_GOLD', None, 'CO', 0.1, k=113, lead=0.1, intent='前台')
-cue('S11', 'F', 'F_SILVER', None, 'OC', 0.1, k=114, intent='小凹：只留前台外→内（能量略落）')
-cue('S11', 'P', 'L_SILVER', None, 'CO', 0.1, k=115, intent='银墙第一程（低版本）', weight='key')
-cue('S11', 'P', 'L_SILVER', None, 'OC', 0.1, k=116, intent='银墙第二程（中版本）外→内', weight='key')
-cue('S11', 'B', 'FAN_GOLD', None, 'LR', 0.1, k=116, beat=2, intent='金扇快速左→右 0.7 s')
-cue('S11', 'P', 'L_SILVER', None, 'CO', 0.1, k=117, intent='银墙第三程（高版本）', weight='key')
-cue('S11', 'B', 'FAN_GOLD', None, 'RL', 0.1, k=117, beat=2, intent='金扇快速右→左 0.7 s')
-cue('S11', 'F', 'F_SILVER', None, 'CO', 0.1, k=117, intent='前台银菊')
+stack('S11', 109, 'FULL5', [Hi('M_GOLD', slots=ver_ab('M_GOLD')), Crown('L_WILLOW'), Low('S_SPLIT', [0, 2, 4, 6, 8], lead=0.3),
+                            Fan('FAN_GOLD', lead=0.1), Front('F_GOLD', lead=0.3)], note='白墙之前的金色压顶')
+wall('S11', 110, 8)
 
 # S12 收束（bars 118–128）
-section('S12', '收束', '收束', 118, 126, '终章能量降下来的一刻放最后的金墙（拉宽到 0.2 s 一格，像落雨）；之后越来越疏，bar 124 中心一发收尾；bar 125 起淡出')
-cue('S12', 'P', 'L_WILLOW', None, 'CO', 0.2, k=118, intent='最后的金墙：金垂柳九点，间隔拉宽', weight='key')
-cue('S12', 'B', 'FAN_GOLD', None, 'CO', 0.2, k=118, intent='扇形里→外，间隔拉宽', weight='key')
-cue('S12', 'F', 'F_GOLD', None, 'CO', 0.2, k=118, intent='前台里→外', weight='key')
+section('S12', '收束', '收束', 118, 126, '终章能量降下来的一刻放最后的金墙（间隔拉宽到 0.2 s，像落雨）；之后越来越疏，bar 124 中心一发收尾；bar 125 起淡出')
+stack('S12', 118, 'GOLD_WALL', [Hi('L_WILLOW', gap=0.2), Fan('FAN_GOLD', gap=0.4, lead=0.2), Front('F_GOLD', gap=0.2, lead=0.2)],
+      note='最后的金墙：间隔拉宽')
 cue('S12', 'F', 'F_GOLD', None, 'LR', 0.2, k=119, intent='落雨：前台左→右')
 cue('S12', 'P', 'M_GOLD', [2, 4, 6], 'CO', 0.3, k=120, intent='坝顶三点金芒菊，间隔 0.3 s')
 cue('S12', 'F', 'F_SILVER', None, 'CO', 0.2, k=121, intent='前台里→外')
@@ -455,6 +552,7 @@ cue('S12', 'F', 'F_LIME', None, 'OC', 0.2, k=123, intent='前台外→内')
 cue('S12', 'P', 'L_WILLOW', [4], 'ONE', 0, k=124, intent='收尾：中心一发大号金垂柳', weight='key')
 cue('S12', 'B', 'FAN_GOLD', [3, 4], 'CO', 0.1, k=124, lead=0.1, intent='中心一对金扇', weight='key')
 cue('S12', 'F', 'F_GOLD', [3], 'ONE', 0, k=124, lead=0.1, intent='前台中心小金花', weight='key')
+
 
 # ───────────────────────── 锚点表 ─────────────────────────
 ANCHORS = [
@@ -590,7 +688,7 @@ def run_checks():
     for c in CUES:
         for q, off in c['pointOffsetsS'].items():
             slot = (c['slotByPoint'] or {}).get(q, c['slot'])
-            fam = slot.split('/')[0]
+            fam = fam_of(slot)
             ev.append((c['anchorMusicS'] + off, fam, SLOTS[fam]['size']))
     # 并发：按槽位家族；金锦冠扇形另按位置版本（CENTER/MID/OUTER）拆开估计
     ev2 = []
@@ -599,17 +697,18 @@ def run_checks():
             slot = (c['slotByPoint'] or {}).get(q, c['slot'])
             ev2.append((c['anchorMusicS'] + off, slot))
     conc = {}
-    keys = set(slot for _, slot in ev2) | set(slot.split('/')[0] for _, slot in ev2)
+    keys = set(slot for _, slot in ev2) | set(fam_of(slot) for _, slot in ev2)
     for key in sorted(keys):
-        fam = key.split('/')[0]
-        pts = sorted(t for t, sl in ev2 if sl == key or (sl.split('/')[0] == key))
+        fam = fam_of(key)
+        pts = sorted(t for t, sl in ev2 if sl == key or (fam_of(sl) == key))
         if not pts:
             continue
         life = LIFE_S[SLOTS[fam]['size']]
         mx = max(sum(1 for u in pts if t - 1e-9 <= u < t + life) for t in pts)
         conc[key] = {'最多同时在场': mx, '占位寿命s': life, '按限额10需要的版本数': -(-mx // 10)}
-    over = [f for f, v in conc.items() if v['最多同时在场'] > 10 and '/' not in f]
-    rep['并发(占位寿命)'] = dict(ok=True, 超过10的槽位=over, 明细=conc,
+    over = [f for f, v in conc.items() if v['最多同时在场'] > 10 and '/' not in f and '@' not in f]
+    over_ver = [f for f, v in conc.items() if v['最多同时在场'] > 10 and ('@' in f)]
+    rep['并发(占位寿命)'] = dict(ok=True, 超过10的槽位=over, 分道版本仍超过10=over_ver, 明细=conc,
                               说明='寿命是占位估值，限额作用域也未实测；只用来提示该拆版本，不当结论')
 
     # 11) 段落密度（点次/小节），只描述
@@ -620,11 +719,84 @@ def run_checks():
         dens[sec['id']] = dict(cue=sum(1 for c in CUES if c['section'] == sec['id']), 点次=n, 小节=bars, 点次每小节=round(n / bars, 1))
     rep['段落密度(描述)'] = dens
 
-    # 12) 倒计时
+    # 12) 倒计时：烟花倒计时——坝顶 P0+P8 起每秒一对向里到 P4，再 B / F 向里一轮，0 点从 P4 向外绽放
     cd = [c for c in CUES if c['section'] == 'S0']
+    pcd = sorted((c for c in cd if c['group'] == 'P'), key=lambda c: c['anchorShowS'])
+    seq = [[int(p[1:]) for p in c['pointsByTier']['high']] for c in pcd]
+    steps = [c['anchorShowS'] for c in pcd]
+    inward_p = (seq[:1] == [[0, 8]] or seq[:1] == [[8, 0]]) and all(
+        max(a) - min(a) > max(b) - min(b) or len(b) == 1 for a, b in zip(seq, seq[1:])) and seq[-1] == [4]
+    one_per_s = all(abs((b - a) - 1.0) < 1e-9 for a, b in zip(steps, steps[1:]))
+    bloom = [c for c in CUES if c['section'] == 'S1' and c['anchorShowS'] == 10.0]
+    bloom_p = [c for c in bloom if c['group'] == 'P' and c['pointOffsetsS'].get('P4') == 0.0]
+    first_h = min(c['anchorShowS'] for c in cd)
+    musicin = [c for c in cd if c['anchorShowS'] == ARGS.offset]
     rep['倒计时'] = dict(ok=all(is_tenth(c['anchorShowS']) and c['anchorShowS'] == int(c['anchorShowS']) for c in cd)
-                      and any(c['section'] == 'S1' and c['anchorShowS'] == 10.0 for c in CUES),
-                      cue=len(cd), 开花演出时间=10.0)
+                      and inward_p and one_per_s and bool(bloom_p) and bool(musicin),
+                      坝顶步进=[(st, sq) for st, sq in zip(steps, seq)], 向里=inward_p, 每秒一步=one_per_s,
+                      开花从P4起=bool(bloom_p), 音乐进入时有倒计时发=bool(musicin), 开花演出时间=10.0, 第一发H=first_h)
+    errs += [] if rep['倒计时']['ok'] else ['倒计时']
+
+    # 13) 17 点连扫 ROW17：P、B 两条同方向同槽位；合在一条 17 点线上每 gap/2 一发，间隔完全均匀
+    xs = {**{f'P{i}': PX[i] for i in range(9)}, **{f'B{i}': BX[i] for i in range(8)}}
+    rows = {}
+    for c in CUES:
+        if c['macro'] and c['macro']['name'] == 'ROW17':
+            rows.setdefault(c['macro']['id'], []).append(c)
+    bad17 = []
+    for rid, cs in rows.items():
+        g = {c['group']: c for c in cs}
+        if set(g) != {'P', 'B'} or g['P']['slot'] != g['B']['slot'] or g['P']['order'] != g['B']['order'] or g['P']['pointGapS'] != g['B']['pointGapS']:
+            bad17.append((rid, '腿不配对')); continue
+        gap, order = g['P']['pointGapS'], g['P']['order']
+        times = {}
+        for c in cs:
+            for q, off in c['pointOffsetsS'].items():
+                times[q] = round(c['anchorShowS'] + off, 1)
+        if order in ('LR', 'RL'):
+            ordq = sorted(times, key=lambda q: xs[q], reverse=(order == 'RL'))
+            ds = [round(times[b] - times[a], 1) for a, b in zip(ordq, ordq[1:])]
+            if len(times) != 17 or any(abs(d - gap / 2) > 1e-9 for d in ds):
+                bad17.append((rid, order, ds))
+        else:  # CO / OC：按 |x| 分层，层间隔 gap/2
+            lv = {}
+            for q, t in times.items():
+                lv.setdefault(round(abs(xs[q]), 0), set()).add(t)
+            lvs = sorted(lv, reverse=(order == 'OC'))
+            ts = [sorted(lv[a]) for a in lvs]
+            flat = [x[0] for x in ts]
+            ds = [round(b - a, 1) for a, b in zip(flat, flat[1:])]
+            if any(len(x) != 1 for x in ts) or any(d < gap / 2 - 1e-9 for d in ds) or len(times) != 17:
+                bad17.append((rid, order, ds))
+    rep['17点连扫'] = dict(ok=not bad17 and len(rows) >= 8, 条数=len(rows), bad=bad17,
+                        说明='P 排与 B 排合成一条 17 点线，LR/RL 每 gap/2 一发且间隔完全均匀；CO/OC 按 |x| 分层、镜像对同刻')
+    errs += [] if rep['17点连扫']['ok'] else ['17点连扫']
+
+    # 14) 尾缀：球花 / 前台都有尾缀元数据；调用时间只记公式；占位升空不会让调用时间早于 0
+    no_tail = [k for k, v in SLOTS.items() if 'tail' not in v]
+    early = []
+    for c in CUES:
+        for q, off in c['pointOffsetsS'].items():
+            sl = (c['slotByPoint'] or {}).get(q, c['slot'])
+            r = RISE_S.get(fam_of(sl), 0.0)
+            if c['anchorShowS'] + off - r < -1e-9:
+                early.append((c['id'], q, round(c['anchorShowS'] + off - r, 1)))
+    badcall = [c['id'] for c in CUES if c['callShowS'] is not None]
+    rep['尾缀'] = dict(ok=not no_tail and not early and not badcall, 缺尾缀元数据=no_tail, 调用早于0=early, callShowS非空=badcall,
+                     说明='尾缀在固定子模板里；cue 只写开花时刻 H，调用时间=H−D 待绑定；占位升空仅用于预览与「调用时间≥0」检查')
+    errs += [] if rep['尾缀']['ok'] else ['尾缀']
+
+    # 15) 构图分层：每个叠层构图至少 3 层；FULL5 / CROWN 必有压顶
+    cmp_layers = {}
+    for c in CUES:
+        if c['comp'] and c['comp']['name'] not in ('COUNTDOWN',):
+            cmp_layers.setdefault(c['comp']['id'], set()).add(c['comp']['layer'])
+    thin = [(i, sorted(v)) for i, v in cmp_layers.items() if len(v) < 3]
+    no_crown = [i for i, v in cmp_layers.items() if (i.startswith('FULL5') or i.startswith('CROWN')) and 'crown' not in v]
+    rep['构图分层'] = dict(ok=not thin and not no_crown, 构图数=len(cmp_layers), 不足三层=thin, 缺压顶=no_crown,
+                        层数={i: sorted(v) for i, v in cmp_layers.items()})
+    errs += [] if rep['构图分层']['ok'] else ['构图分层']
+
     rep['_errors'] = errs
     return rep
 
@@ -644,8 +816,17 @@ def main():
         sel = [p['rmsDb'] for p in MUSIC['perSecond'] if sec['musicStartS'] <= p['musicS'] < sec['musicEndS']]
         sec['meanRmsDb'] = round(sum(sel) / len(sel), 1) if sel else None
 
+    vers = {}
+    for c in CUES:
+        for sl in set((c['slotByPoint'] or {c['group']: c['slot']}).values()):
+            if '@' in sl:
+                vers.setdefault(fam_of(sl), set()).add(sl.split('@')[1])
+    for fam, v in vers.items():
+        SLOTS[fam]['versions'] = dict(used=sorted(v), note='@A/@B = 高低两个固定子模板版本（B 比 A 高，相邻点交错）；@1…@5 = 内容相同、资源不同的分道版本（躲限额）。版本由用户在固定子模板里做，这里只引用名字')
+
     proposal = dict(
         format='df.choreography-proposal/1',
+        candidateRevision='A2（2026-10-09 18:33 反馈后：补尾缀、烟花倒计时、分层高潮构图、17 点连扫）',
         status='draft_requires_local_recipe_and_audio_validation',
         candidate='A',
         title='《汪洋与浩渺》跨年烟花秀 · 候选 A',
@@ -653,6 +834,9 @@ def main():
         pointNumbering=0,
         musicOffsetS=ARGS.offset,
         musicOffsetNote='候选取 5：倒计时 5 时音乐进入，0 点落在音乐 5.0 s（第 3 小节强拍）。旧规范是 10（showTime = musicTime + 10，音乐在 0 点才开始）。待用户确认，改偏移只需重跑生成器。',
+        tailNote='每个球花 / 前台花槽位都含升空尾缀（slots[*].tail，写在固定子模板里）。cue 只写开花时刻 H；调用时间 = H − D，D 待固定子模板，callShowS 保持空。预览里的尾缀按 previewRiseS 示意。扇形即发，没有尾缀。',
+        layerNote='高潮由几层叠成：高排 / 中排 / 压顶（L 三点 P0 P4 P8）/ 低排 / 扇形（17 点连扫）/ 前台 / 连波。同一构图的各条 cue 共用 comp.id，层名在 comp.layer。',
+        assumptions=['P 点能放扇形（17 点连扫、对扫都依赖；不能时只保留 B 排，见方案文档）', '金锦冠扇 CENTER/MID/OUTER_L/OUTER_R 四个版本按位置取（按名字推测）', '@A/@B（高低）、@1…@5（分道）版本由用户在固定子模板里提供'],
         timeQuantumS=0.1,
         timeQuantumNote='编排层锚点、点间隔、点位偏移一律是 0.1 s 的整数倍，最小非零 0.1 s；不使用 0.0x',
         musicDurationS=MUSIC_DUR,
@@ -673,7 +857,8 @@ def main():
     for c in CUES:
         for q, off in c['pointOffsetsS'].items():
             slot = (c['slotByPoint'] or {}).get(q, c['slot'])
-            fam = slot.split('/')[0]
+            fam = fam_of(slot)
+            ver = slot.split('@')[1] if '@' in slot else None
             mask = 1
             if q in c['pointsByTier']['medium']:
                 mask |= 2
@@ -682,41 +867,46 @@ def main():
             sd = SLOTS[fam]
             events.append(dict(t=round(c['anchorShowS'] + off, 1), m=round(c['anchorMusicS'] + off, 1), g=c['group'],
                                p=int(q[1:]), slot=slot, kind=sd['kind'], size=sd['size'], hue=sd['hue'], cue=c['id'],
-                               sec=c['section'], tier=mask, ord=c['order'], x=(c['macro'] or {}).get('name')))
+                               sec=c['section'], tier=mask, ord=c['order'], x=(c['macro'] or {}).get('name'),
+                               rise=RISE_S.get(fam, 0.0), ver=ver, comp=(c['comp'] or {}).get('id'), layer=(c['comp'] or {}).get('layer')))
     events.sort(key=lambda e: (e['t'], e['g'], e['p']))
     energy = [dict(m=p['musicS'], db=p['rmsDb'], k=p['kick'], h=p['high']) for p in MUSIC['perSecond']]
     cues_pv = []
     for c in CUES:
-        fam = c['slot'].split('/')[0]
+        fam = fam_of(c['slot'])
         ps = []
         for q, off in c['pointOffsetsS'].items():
             mk = 1 | (2 if q in c['pointsByTier']['medium'] else 0) | (4 if q in c['pointsByTier']['low'] else 0)
             ps.append([int(q[1:]), off, mk])
         cues_pv.append(dict(id=c['id'], sec=c['section'], g=c['group'], slot=c['slot'], ord=c['order'], t=c['anchorShowS'],
                             span=c['spanS'], kind=SLOTS[fam]['kind'], hue=SLOTS[fam]['hue'], intent=c['intent'],
-                            x=(c['macro'] or {}).get('name'), gap=c['pointGapS'], src=c['anchorSource'], ps=ps))
+                            x=(c['macro'] or {}).get('name'), mid=(c['macro'] or {}).get('id'), gap=c['pointGapS'], src=c['anchorSource'], ps=ps,
+                            comp=(c['comp'] or {}).get('id'), layer=(c['comp'] or {}).get('layer'), rise=c['tailPreviewRiseS']))
     order_counts = {}
     for c in CUES:
         if c['slot'] in FAN_FAMILY:
-            key = ('对扫:' if c['macro'] else '') + c['order']
+            mn = (c['macro'] or {}).get('name')
+            key = ('对扫:' if mn == 'X' else '连扫:' if mn == 'ROW17' else '') + c['order']
             order_counts[key] = order_counts.get(key, 0) + 1
     preview = dict(version='候选A', offsetS=ARGS.offset, showDurationS=round(MUSIC_DUR + ARGS.offset, 1),
                    points={g: [dict(id=f'{g}{i}', x=XS[g][i]) for i in range(N[g])] for g in N},
                    sections=SECTIONS, anchors=ANCHORS, slots=SLOTS, energy=energy, events=events, cues=cues_pv,
                    conc=rep['并发(占位寿命)']['明细'], orderCounts=order_counts,
-                   countdown=[dict(t=c['anchorShowS'], pts=c['pointsByTier']['high'], slot=c['slot']) for c in CUES if c['section'] == 'S0'])
+                   countdown=[dict(t=c['anchorShowS'], pts=c['pointsByTier']['high'], slot=c['slot']) for c in CUES if c['section'] == 'S0'],
+                   comps=sorted({(c['comp']['id'], c['comp']['name']) for c in CUES if c['comp']}))
     (OUT / '预览展开.json').write_text(json.dumps(preview, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
 
     with open(OUT / 'cue表.csv', 'w', newline='', encoding='utf-8-sig') as f:
         w = csv.writer(f)
         w.writerow(['cue', '段落', '小节', '拍', '意图', '组', '槽位', '逐点槽位', '顺序', '点间隔s', '音乐s', '演出s', '跨度s', '锚点来源',
-                    '贴靠kick', '高档点集', '中档点集', '低档点集', '对扫标记'])
+                    '贴靠kick', '高档点集', '中档点集', '低档点集', '对扫/连扫标记', '构图', '层', '占位升空s(示意)', '调用时间'])
         for c in CUES:
             sbp = ' '.join(f'{q}={s}' for q, s in (c['slotByPoint'] or {}).items()) if c['slot'] != 'FAN_GOLD' else '按位置取 CENTER/MID/OUTER'
             w.writerow([c['id'], c['section'], c['bar'], c['beat'], c['intent'], c['group'], c['slot'], sbp, c['order'], c['pointGapS'],
                         c['anchorMusicS'], c['anchorShowS'], c['spanS'], c['anchorSource'], c['snappedToKickS'] or '',
                         ' '.join(c['pointsByTier']['high']), ' '.join(c['pointsByTier']['medium']), ' '.join(c['pointsByTier']['low']),
-                        (c['macro'] or {}).get('id', '')])
+                        (c['macro'] or {}).get('id', ''), (c['comp'] or {}).get('id', ''), LAYER_NAME.get((c['comp'] or {}).get('layer'), ''),
+                        c['tailPreviewRiseS'], 'H−D（待绑定）'])
     (OUT / '检查报告.json').write_text(json.dumps(rep, ensure_ascii=False, indent=1), encoding='utf-8')
 
     # 预览页：模板 + 预览展开.json
