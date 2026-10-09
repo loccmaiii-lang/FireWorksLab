@@ -1,0 +1,98 @@
+[
+ {
+  "file": "FC8R_export_px_1.10.png",
+  "entry": "FC8R",
+  "view": "export",
+  "disp": "px",
+  "t": 1.1,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 引擎回放（每层贴图叠放）· 2 层"
+ },
+ {
+  "file": "FC8R_export_px_1.80.png",
+  "entry": "FC8R",
+  "view": "export",
+  "disp": "px",
+  "t": 1.8,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 引擎回放（每层贴图叠放）· 2 层"
+ },
+ {
+  "file": "FC8R_export_fit_1.10.png",
+  "entry": "FC8R",
+  "view": "export",
+  "disp": "fit",
+  "t": 1.1,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 引擎回放（每层贴图叠放）· 2 层"
+ },
+ {
+  "file": "FC8R_export_fit_1.80.png",
+  "entry": "FC8R",
+  "view": "export",
+  "disp": "fit",
+  "t": 1.8,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 引擎回放（每层贴图叠放）· 2 层"
+ },
+ {
+  "file": "FC8R_export_game_1.10.png",
+  "entry": "FC8R",
+  "view": "export",
+  "disp": "game",
+  "t": 1.1,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 引擎回放（每层贴图叠放）· 2 层"
+ },
+ {
+  "file": "FC8R_export_game_1.80.png",
+  "entry": "FC8R",
+  "view": "export",
+  "disp": "game",
+  "t": 1.8,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 引擎回放（每层贴图叠放）· 2 层"
+ },
+ {
+  "file": "FC8R_live_px_1.10.png",
+  "entry": "FC8R",
+  "view": "live",
+  "disp": "px",
+  "t": 1.1,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 实时模拟 · 2 层（画面里 2 层）"
+ },
+ {
+  "file": "FC8R_live_px_1.80.png",
+  "entry": "FC8R",
+  "view": "live",
+  "disp": "px",
+  "t": 1.8,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 实时模拟 · 2 层（画面里 2 层）"
+ },
+ {
+  "file": "FC8R_live_fit_1.10.png",
+  "entry": "FC8R",
+  "view": "live",
+  "disp": "fit",
+  "t": 1.1,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 实时模拟 · 2 层（画面里 2 层）"
+ },
+ {
+  "file": "FC8R_live_fit_1.80.png",
+  "entry": "FC8R",
+  "view": "live",
+  "disp": "fit",
+  "t": 1.8,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 实时模拟 · 2 层（画面里 2 层）"
+ },
+ {
+  "file": "FC8R_live_game_1.10.png",
+  "entry": "FC8R",
+  "view": "live",
+  "disp": "game",
+  "t": 1.1,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 实时模拟 · 2 层（画面里 2 层）"
+ },
+ {
+  "file": "FC8R_live_game_1.80.png",
+  "entry": "FC8R",
+  "view": "live",
+  "disp": "game",
+  "t": 1.8,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 实时模拟 · 2 层（画面里 2 层）"
+ }
+]

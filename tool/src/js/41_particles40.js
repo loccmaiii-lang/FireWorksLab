@@ -141,7 +141,34 @@ function shapeProgram40(kind) {
   if (kind === 'spkS') { const vs = point40GpuSource(VS_SPK).replace('uint uid=uint(pid);', 'uint uid=uint(s)*65536u+uint(j);'); return shapePrograms40[key] = compile(G(spkStretchVS40(vs)), G(POINT40_FS)); }
   throw new Error('没有这种光点程序：' + kind);
 }
+// ---- 4.9.53 幂律光晕（对话框相机渲染，用户 10-09 18:29「按顺序测试」；诊断 analysis/probe/星头光晕诊断_2026-10-09/诊断.md）----
+// 实拍星头的径向剖面是「亮核 + 幂律尾巴」（镜头像差 / 散射的点扩散，天文上用 Moffat 拟合，实拍 β 1.8–3.4），高斯尾巴掉得太快：
+// 想让光晕看得见只能把 σ 拉大，结果是一团雾。haloShape = 1 时光晕换成 Moffat：(β − 1)/(π αx αy)·(1 + |p/α|²)^−β，α = 光晕半径倍数 × 亮核半径，
+// 积分 = 1，所以光晕总光量和高斯一样（亮核 × 占比 / (1 − 占比)）；画到 6α（高斯 4σ），6α 外丢掉的光 < 3%（β = 2.2）。
+// 和上面的变体同一个规矩：haloShape = 0（缺省）或光晕占比 = 0 时用原来的程序，逐像素不变；= 1 才编译这里的变体（可以和渐变亮核、六边形、火花拉长叠用）。
+function must40(s, a, b, all = false) { if (!s.includes(a)) throw new Error('幂律光晕：着色器里找不到「' + a.slice(0, 60) + '」'); return all ? s.replaceAll(a, b) : s.replace(a, b); }
+function moffatVS40(vs) { return must40(vs, '4.*max(1.,uHaloR)', '6.*max(1.,uHaloR)', true); }
+function moffatFS40(fs) {
+  fs = must40(fs, 'uniform vec4 uChan; uniform float uW, uHaloFrac, uHaloR, uGauss;', 'uniform vec4 uChan; uniform float uW, uHaloFrac, uHaloR, uGauss, uHaloBeta;');
+  fs = must40(fs, 'float window=1.-smoothstep(3.5,4.,radial);', 'float window=1.-smoothstep(5.,6.,radial);');
+  return must40(fs, 'halo=3.14159265*vSig.x*vSig.y*uHaloFrac/(1.-uHaloFrac)*gaussianCoverage(vLocal,sigma)*window;',
+    'vec2 qm=vLocal/sigma; halo=vSig.x*vSig.y*uHaloFrac/(1.-uHaloFrac)*(uHaloBeta-1.)/(sigma.x*sigma.y)*pow(1.+dot(qm,qm),-uHaloBeta)*window;');
+}
+const moffatPrograms40 = {};
+function moffatProgram40(kind) {
+  const g = particleQuality.coreProfile ? 1 : 0, key = kind + g; if (moffatPrograms40[key]) return moffatPrograms40[key];
+  const G = x => g ? gradientSource40(x) : x, stable = v => v.replace('uint uid=uint(pid);', 'uint uid=uint(s)*65536u+uint(j);');
+  let vs, fs = G(POINT40_FS);
+  if (kind === 'pts') vs = POINT40_CPU_VS;
+  else if (kind === 'ptsHex') { vs = POINT40_CPU_VS; fs = hexFS40(fs); }
+  else if (kind === 'spkS') vs = spkStretchVS40(stable(point40GpuSource(VS_SPK)));
+  else if (kind === 'spk') vs = stable(point40GpuSource(VS_SPK));
+  else if (kind === 'emit' || kind === 'ehead') vs = point40GpuSource(kind === 'emit' ? VS_EMIT : VS_EHEAD);
+  else throw new Error('没有这种光点程序：' + kind);
+  return moffatPrograms40[key] = compile(moffatVS40(G(vs)), moffatFS40(fs));
+}
 function particleProgram40(kind) {
+  if (particleQuality.haloShape === 1 && particleQuality.haloFrac > 0 && !(kind === 'pts' && PT_GAUSS)) return moffatProgram40(kind);     // 4.9.53
   if (kind === 'ptsHex' || kind === 'spkS') return shapeProgram40(kind);
   if (!particleQuality.coreProfile || (kind === 'pts' && PT_GAUSS)) return PR40[kind];
   if (!gradientPrograms40[kind]) {

@@ -180,6 +180,7 @@ FAN_COMBOS7[0]['replaces'] = ['FC4R', 'FC5R', 'FC6R']
 #   火花寿命略长、带一点闪烁；亮肩（靠星头的火花大而亮）和尾端收尖照旧（头粗尾细）。
 RED_HEAD8 = dict(RED_STAR, headSize=1.4, headBright=3.0, headTear=0, coreProfile=1, haloFrac=0.6, haloR=2.8,
                  sparkRate=0, x1On=0, tailShoulder=0, exposure=6.0)
+# P2 试过（4.9.53 幂律光晕 haloShape = 1，analysis/probe/星头光晕诊断_2026-10-09/FC8R_v7–v9）：haloR 1.5 / β 2.2 太紧（r10/r50 1.46、外圈不红），haloR 4 / β 2.2 和高斯差不多（r3%/r50 2.09 vs 1.97，平顶更大、1.1 s 星间雾 0.033），haloR 5 / β 3 更差 → 定稿用高斯（上面），幂律留作选项。
 RED_HEAD8_M = {'stages': [[0, '#ffffff']], 'xw': 0.08, 'ramp0': '#000000', 'ramp1': '#3a0608', 'ramp2': '#ff1416', 'ramp3': '#ffc8cc', 'headInt': 1, 'tailInt': 1}
 GOLD_TAIL8 = dict(RED_TAIL5, headBright=0, headTear=0,
                   sparkRate=300, sparkLife=1.1, sparkLifeJit=50, sparkSpread=0.8, T0=2150, cooling=0.26, sparkSize=0.5, sparkBright=2.6, twinkle=0.4,
