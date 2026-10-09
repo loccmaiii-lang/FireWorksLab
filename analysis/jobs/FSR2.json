@@ -1,0 +1,25 @@
+{
+ "id": "FSR2",
+ "type": "script",
+ "priority": 2,
+ "name": "对话框FanGold 4.9.54：基准回归（花型模板 6 个）",
+ "note": "FSR1 第 1 步在旧版里打开金芒菊（效果 key jinmangju）就报错（旧版数据里找不到这个效果，和 4.9.54 无关），改成只比花型模板 6 个（同 FGR1）。",
+ "steps": [
+  {
+   "name": "基准回归 4.9.53 → 4.9.54 花型模板 6 个",
+   "script": "基准回归.py",
+   "args": [
+    "--old",
+    "{git:8abc8c1f:tool/FireworkBaker.html}",
+    "--new",
+    "tool/FireworkBaker.html",
+    "--out",
+    "{out}/基准回归",
+    "--only",
+    "kiku,botan,kamuro,senrin,strobe,crackle"
+   ],
+   "must": false,
+   "timeout": 2400
+  }
+ ]
+}
