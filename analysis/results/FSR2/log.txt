@@ -1,0 +1,21 @@
+22:31:57 第 1/1 步：基准回归 4.9.53 → 4.9.54 花型模板 6 个
+22:32:11     FireworkBaker.html kiku 4.9.53
+22:32:11     FireworkBaker.html botan 4.9.53
+22:32:11     FireworkBaker.html kamuro 4.9.53
+22:32:11     FireworkBaker.html senrin 4.9.53
+22:32:11     FireworkBaker.html strobe 4.9.53
+22:32:11     FireworkBaker.html crackle 4.9.53
+22:32:11     FireworkBaker.html kiku 4.9.54
+22:32:11     FireworkBaker.html botan 4.9.54
+22:32:11     FireworkBaker.html kamuro 4.9.54
+22:32:11     FireworkBaker.html senrin 4.9.54
+22:32:11     FireworkBaker.html strobe 4.9.54
+22:32:11     FireworkBaker.html crackle 4.9.54
+22:32:11   ✅ kiku 帧计划相同 [{"t": 0.528, "max": 0, "frac": 0.0}, {"t": 1.54, "max": 0, "frac": 0.0}, {"t": 3.08, "max": 0, "frac": 0.0}]
+22:32:11   ✅ botan 帧计划相同 [{"t": 0.378, "max": 0, "frac": 0.0}, {"t": 1.102, "max": 0, "frac": 0.0}, {"t": 2.205, "max": 0, "frac": 0.0}]
+22:32:11   ✅ kamuro 帧计划相同 [{"t": 0.816, "max": 0, "frac": 0.0}, {"t": 2.38, "max": 0, "frac": 0.0}, {"t": 4.76, "max": 0, "frac": 0.0}]
+22:32:11   ✅ senrin 帧计划相同 [{"t": 0.384, "max": 0, "frac": 0.0}, {"t": 1.12, "max": 0, "frac": 0.0}, {"t": 2.24, "max": 0, "frac": 0.0}]
+22:32:11   ✅ strobe 帧计划相同 [{"t": 0.534, "max": 0, "frac": 0.0}, {"t": 1.557, "max": 0, "frac": 0.0}, {"t": 3.115, "max": 0, "frac": 0.0}]
+22:32:11   ✅ crackle 帧计划相同 [{"t": 0.408, "max": 0, "frac": 0.0}, {"t": 1.802, "max": 0, "frac": 0.0}, {"t": 2.04, "max": 0, "frac": 0.0}]
+22:32:11   ✅ 基准回归 4.9.53 → 4.9.54 花型模板 6 个（0.2 分钟）
+22:32:11 完成，用时 0.2 分钟
