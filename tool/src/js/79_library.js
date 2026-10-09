@@ -102,7 +102,7 @@ function entryVer(e) {
   const fams = new Set(), outs = e.kind === 'combo' && e.combo && e.combo.layers ? e.combo.layers.map(L => L.out || {}) : [];
   (e.kind === 'combo' ? e.layerIds || [] : [e.id]).forEach((id, i) => { try { if (typeof REPLICA_BY_ID !== 'undefined' && REPLICA_BY_ID[id]) { const P=replicaPM(id).P, f=outFamily(P); fams.add(f + (+P.coreProfile===1 ? '4.3.8-core1' : OUTPUT_VER[f]) + (P.zoom === 'on' && OUTPUT_VER.zoom ? '-zoom' + OUTPUT_VER.zoom : ''));     /* 4.9.33 Zoom 取景单独一档 */
     if (((outs[i] || {}).pc || P.outPC) === 'dots') fams.add('dots' + OUTPUT_VER.dots); } } catch (err) { } });   // 4.4.4：GPU 光点层单独一档（点灭改方波，旧光点导出过期）
-  let ss = ''; try { const ef = typeof sizeSpecFor === 'function' ? effectOfEntry(e) : null, sp = sizeSpecFor(ef && ef.key, e.id, false); if (sp && sp.kind !== 'fan') ss = `·size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (err) { }   // 4.9.51 尺寸标定改了 → 旧导出过期
+  let ss = ''; try { const ef = typeof sizeSpecFor === 'function' ? effectOfEntry(e) : null, sp = sizeSpecFor(ef && ef.key, e.id, ''); if (sp) ss = `·size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (err) { }   // 4.9.51 尺寸标定改了 → 旧导出过期
   const v = e.ver + '·' + ([...fams].sort().join('+') || 'x') + ss;
   _entryVer.set(key, v); return v;
 }

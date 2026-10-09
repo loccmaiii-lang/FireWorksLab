@@ -201,21 +201,43 @@ function sizeSpecKeyNow() {
   let wk = ''; try { wk = typeof wbKey === 'function' ? wbKey() : ''; } catch (e) { }
   let key = ef || (/^ef:/.test(wk) ? wk.slice(3) : '');
   if (!key && rv && typeof effectOfEntry === 'function') { try { const x = effectOfEntry(lib.review); key = x ? x.key : ''; } catch (e) { } }     // 本机导出任务只开条目（openReview 不带效果）
-  return { key, entry: rv };
+  return { key, entry: rv, wk };
 }
+const sizePickKey = o => (o && (o.key || o.entry || o.wk)) || '';
 function sizeSpecIds(key, entry) { const T = sizeSpecTable(); if (!T) return []; for (const k of [key, entry].filter(Boolean)) { const v = T.map[k]; if (v) return (Array.isArray(v) ? v : [v]).filter(id => T.specs[id]); } return []; }
 const sizeSpecPicks = () => { try { return (typeof store !== 'undefined' && store.get('sizeSpecPick', {})) || {}; } catch (e) { return {}; } };
-function sizeSpecFor(key, entry, useStore = true) {
-  const T = sizeSpecTable(), ids = sizeSpecIds(key, entry); if (!T || !ids.length) return null;
-  const pick = useStore ? sizeSpecPicks()[key || entry] : ''; if (pick === 'none') return { off: true, ids, version: T.version };
-  const id = ids.includes(pick) ? pick : ids[0]; return { id, ids, version: T.version, ...T.specs[id] };
+// 4.9.52 尺寸档（用户 10-09 12:56「这个导出尺寸不是通用功能吗？譬如我选四尺玉，我也可以选大号，然后帮我匹配大小的把？」）：
+//   表里的规格按「口径 + 区 + 大小」合成可选的档，任何效果都能选——坝顶小号 90 / 中号 150 / 大号 230 m、前台 24–40 m、彗星、扇形（花径 = 两倍飞行长度，
+//   和 metricsOf 的花径同一口径）；升空尾缀按开花高度列。档的 id：cls:d:<区>:<米> / cls:df:<区>:<米>（扇形）/ cls:h:<区>:<米>（开花高度）
+const SIZE_ZONE = { dam: '坝顶', front: '前台' }, SIZE_KIND = { small: '小号', medium: '中号', large: '大号' };
+function sizeClasses(what) {
+  const T = sizeSpecTable(); if (!T) return [];
+  const m = new Map();
+  for (const [id, sp] of Object.entries(T.specs)) {
+    const fan = sp.kind === 'fan', v = what === 'height' ? +sp.burst_m : +sp.diameter_m; if (!(v > 0) || (what === 'height' && fan)) continue;
+    const z = SIZE_ZONE[sp.zone] || sp.zone || '', cid = `cls:${what === 'height' ? 'h' : fan ? 'df' : 'd'}:${sp.zone}:${v}`;
+    const name = what === 'height' ? `${z}开花高度 ${v} m` : fan ? `${z}扇形 ${v} m（两倍飞行长度）` : sp.kind === 'comet' ? `${z}彗星 ${v} m` : `${z}${sp.zone === 'dam' ? SIZE_KIND[sp.kind] || '' : ''} ${v} m`;
+    const c = m.get(cid) || { id: cid, name, group: what === 'height' ? '开花高度' : fan ? '扇形' : z, kind: sp.kind, zone: sp.zone, version: T.version, diameter_m: what === 'height' ? 0 : v, burst_m: what === 'height' ? v : 0, members: [] };
+    c.members.push(sp.name || id); m.set(cid, c);
+  }
+  return [...m.values()].sort((a, b) => (a.zone === b.zone ? 0 : a.zone === 'dam' ? -1 : 1) || (a.kind === 'fan') - (b.kind === 'fan') || (a.diameter_m || a.burst_m) - (b.diameter_m || b.burst_m));
+}
+const sizeClassById = cid => { const m = /^cls:(h|d|df):/.exec(cid || ''); return m ? sizeClasses(m[1] === 'h' ? 'height' : 'diameter').find(c => c.id === cid) || null : null; };
+// pick：不给 = 读这台电脑存的选择；'' = 不看选择（按表的默认）；'none' = 这次不按标定；规格 id / 档 id
+function sizeSpecFor(key, entry, pick, wk) {
+  const T = sizeSpecTable(); if (!T) return null; const ids = sizeSpecIds(key, entry);
+  if (pick === undefined) pick = sizeSpecPicks()[sizePickKey({ key, entry, wk })] || '';
+  if (pick === 'none') return ids.length ? { off: true, ids, version: T.version } : null;
+  const c = sizeClassById(pick); if (c) return { ...c, ids, picked: true };
+  if (!ids.length) return null;
+  const id = ids.includes(pick) ? pick : ids[0]; return { id, ids, version: T.version, ...T.specs[id], picked: id === pick };
 }
 const _sizeOf = new Map();
 // 这个效果现在多大：空中花型 = 花径（metricsOf：开花最大时的水平直径），升空尾缀 = 开花高度（弹道 H）
 function effectSizeOf(P) {
   if (!P) return null;
   if (isEmit(P) || isTrail(P)) { const b = typeof rtBallistic === 'function' ? rtBallistic(P) : null; return b && b.H > 0 ? { what: 'height', m: b.H } : null; }
-  if (familyOf(P.type) !== 'aerial') return null;
+  if (familyOf(P.type) !== 'aerial' && !(typeof hasComets === 'function' && hasComets(P))) return null;     // 4.9.52 地面扇形 / 连发：彗星飞行长度 × 2 = 花径
   let key = ''; try { const { exportScale, exportScaleRise, ...rest } = P; key = JSON.stringify(rest); } catch (e) { }     // 引擎回放每帧都问：按参数记一份（measure 每次返回拷贝，太贵）
   if (key && _sizeOf.has(key)) return _sizeOf.get(key);
   const mt = metricsOf(P, measure(P)), r = mt && mt.diameter > 0 ? { what: 'diameter', m: mt.diameter } : null;
@@ -230,21 +252,34 @@ function comboSizeOf(layers) {
 // 规格 + 现在的大小 → 倍数（null = 不按标定）。扇形口径没定：返回 { skip } 说明原因
 function sizeSpecScale(sp, sz) {
   if (!sp || sp.off || !sz) return null;
-  if (sp.kind === 'fan') return { skip: '扇形的标定口径还没定（表里的 diameter 是两倍飞行长度），照原大导出', id: sp.id, name: sp.name, version: sp.version };
   const target = sz.what === 'height' ? +sp.burst_m : +sp.diameter_m; if (!(target > 0) || !(sz.m > 0)) return null;
   const k = +(target / sz.m).toFixed(4);
   return { id: sp.id, name: sp.name, version: sp.version, what: sz.what, target, measured: +sz.m.toFixed(1), k, warn: k > 1.3 ? `放大 × ${k.toFixed(2)}：贴图会被拉糊，建议「输出」里加大单格重烘` : '' };
 }
-function sizeSpecNow(P, keyObj) { const { key, entry } = keyObj || sizeSpecKeyNow(); const sp = sizeSpecFor(key, entry); const r = sp && sizeSpecScale(sp, effectSizeOf(P)); return r && !r.skip ? r : null; }
-function sizeSpecCombo(layers, keyObj) { const { key, entry } = keyObj || sizeSpecKeyNow(); const sp = sizeSpecFor(key, entry); const r = sp && sizeSpecScale(sp, comboSizeOf(layers)); return r && !r.skip ? r : null; }
+const sizeSpecOf = o => { const { key, entry, wk, pick } = o || sizeSpecKeyNow(); return sizeSpecFor(key, entry, pick, wk); };
+function sizeSpecNow(P, keyObj) { const sp = sizeSpecOf(keyObj); const r = sp && sizeSpecScale(sp, effectSizeOf(P)); return r && !r.skip ? r : null; }
+function sizeSpecCombo(layers, keyObj) { const sp = sizeSpecOf(keyObj); const r = sp && sizeSpecScale(sp, comboSizeOf(layers)); return r && !r.skip ? r : null; }
 // 交付清单 / 输出栏一行：现在按哪个规格、多大、倍数
 function sizeSpecLine(isCombo) {
   const T = sizeSpecTable(); if (!T) return '';
-  const { key, entry } = sizeSpecKeyNow(), sp = sizeSpecFor(key, entry); if (!sp) return `尺寸标定 v${T.version}：这个效果没配规格（照原大导出；要配在 spec/尺寸标定.json 的 map 里加一行）`;
-  if (sp.off) return `尺寸标定 v${T.version}：这次不按标定（照原大 / 手动导出缩放）`;
-  const r = sizeSpecScale(sp, isCombo ? comboSizeOf(state.layers) : effectSizeOf(state.P)); if (!r) return `尺寸标定 v${T.version}「${sp.name}」：量不出这个效果的大小，照原大导出`;
-  if (r.skip) return `尺寸标定 v${T.version}「${sp.name}」：${r.skip}`;
-  return `尺寸标定 v${T.version}「${r.name}」：${r.what === 'height' ? '开花高度' : '花径'} ${r.target} m（原样 ${r.measured} m）→ 导出 × ${r.k}${r.warn ? ' · ⚠ ' + r.warn : ''}`;
+  const sp = sizeSpecOf(), sz = isCombo ? comboSizeOf(state.layers) : effectSizeOf(state.P), now = sz ? `${sz.what === 'height' ? '开花高度' : '花径'} ${sz.m.toFixed(0)} m` : '';
+  if (!sp) return `导出尺寸：原大${now ? '（' + now + '）' : ''}——要匹配编排的大小，在右边选一档`;
+  if (sp.off) return `导出尺寸：这次不按标定（原大 / 手动导出缩放${now ? '；' + now : ''}）`;
+  const r = sizeSpecScale(sp, sz); if (!r) return `导出尺寸「${sp.name}」：${sz ? (sz.what === 'height' ? '这一档没有开花高度' : '这一档没有花径') : '量不出这个效果的大小'}，照原大导出`;
+  return `导出尺寸「${r.name}」${sp.picked ? '' : '（表里配的）'}：${r.what === 'height' ? '开花高度' : '花径'} ${r.target} m（原样 ${r.measured} m）→ 导出 × ${r.k}${r.warn ? ' · ⚠ ' + r.warn : ''}`;
+}
+// 交付清单的下拉：自动（表里配的 / 原大）、同效果配的其他规格、按口径列的档、这次不按标定
+function sizeSpecSelectHTML(isCombo) {
+  const T = sizeSpecTable(); if (!T) return '';
+  const o = sizeSpecKeyNow(), ids = sizeSpecIds(o.key, o.entry), pick = sizeSpecPicks()[sizePickKey(o)] || '', sz = isCombo ? comboSizeOf(state.layers) : effectSizeOf(state.P);
+  if (!sz) return '';
+  const esc = t => String(t).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'), opt = (v, t, tip) => `<option value="${esc(v)}"${v === pick ? ' selected' : ''}${tip ? ` title="${esc(tip)}"` : ''}>${esc(t)}</option>`;
+  let h = opt('', ids.length ? `自动（表里配的：${T.specs[ids[0]].name}）` : '原大（不缩）');
+  if (ids.length > 1) h += `<optgroup label="这个效果配的">${ids.slice(1).map(id => opt(id, T.specs[id].name)).join('')}</optgroup>`;
+  const groups = new Map(); for (const c of sizeClasses(sz.what)) { if (!groups.has(c.group)) groups.set(c.group, []); groups.get(c.group).push(c); }
+  for (const [g, cs] of groups) h += `<optgroup label="${esc(g)}">${cs.map(c => opt(c.id, c.name, '编排里用这个大小的：' + c.members.join('、'))).join('')}</optgroup>`;
+  if (ids.length) h += opt('none', '这次不按标定（原大 / 手动缩放）');
+  return `<select id="dvSizeSpec" title="选一档 = 导出时按这个大小自动缩放（只改长度，时间不变）；存在这台电脑、按效果记">${h}</select>`;
 }
 // 导出时用哪个倍数：配了尺寸标定 = 按标定（不加后缀、手动的导出缩放不再管用）；没配 = 手动导出缩放（4.9.31）
 function exportScalePlan(P, keyObj) {

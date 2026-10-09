@@ -205,7 +205,7 @@ function wbSync() {
 // 4.9.1（5.0 第 3 步，交互宪章 5「身份条」）：顶栏一眼看到——打开的是什么、从哪来、哪个版本、改了没保存、素材包和现在一不一样。
 // 以前名字只在左栏「版本记录」里，左栏收起就不知道开的是谁。贴图新旧在旁边的 #abState（烘焙中 / 旧 / 失败）。
 // 4.9.33：OUTPUT_VER.zoom 只算进用 Zoom 取景的效果（别的效果的签名和 4.9.32 一样，不会因为它变成「素材包要重导」）
-const OUT_SIG = () => { try { const { zoom, ...rest } = OUTPUT_VER, s = wbSnap(), z = s.kind === 'combo' ? (s.layers || []).some(l => l.P && l.P.zoom === 'on') : !!(s.P && s.P.zoom === 'on'); let ss = ''; try { const { key, entry } = sizeSpecKeyNow(), sp = sizeSpecFor(key, entry); if (sp) ss = sp.off ? '|size-off' : `|size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (e) { }   // 4.9.51
+const OUT_SIG = () => { try { const { zoom, ...rest } = OUTPUT_VER, s = wbSnap(), z = s.kind === 'combo' ? (s.layers || []).some(l => l.P && l.P.zoom === 'on') : !!(s.P && s.P.zoom === 'on'); let ss = ''; try { const sp = sizeSpecOf(); if (sp) ss = sp.off ? '|size-off' : `|size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (e) { }   // 4.9.51
     return JSON.stringify(rest) + (z && zoom ? '|zoom' + zoom : '') + ss; } catch (e) { return ''; } };
 function idBarInfo(list, changed) {
   // 每个标签 [短字, 样式, 悬停的完整说明]；顺序 = 要紧的在前（窄的时候后面的先被挤掉）
@@ -898,9 +898,7 @@ function renderDeliv() {
   const lyInputs = combo ? xs.map(x => `<label>第 ${x.i + 1} 层<input type="text" data-ly="${x.i}" value="${nm.layers[x.i]}" placeholder="L${x.i + 1}" title="${x.name}"></label>`).join('') : '';
   const prod = prodTableHTML(xs, combo);
   // 4.9.51 尺寸标定一行（用户 10-09 00:27「烘培器会自动读不用我每次选择吧？」= 默认自动按表；同一效果配了几个规格 / 这次不按标定才用得到下拉）
-  let ssHTML = ''; if (typeof sizeSpecLine === 'function') { const ln = sizeSpecLine(combo); if (ln) { const { key, entry } = sizeSpecKeyNow(), sp = sizeSpecFor(key, entry), T = sizeSpecTable();
-    const sel = sp ? `<select id="dvSizeSpec" title="存在这台电脑；本机任务一律按表的第一个"><option value="">自动（${T.specs[sp.ids[0]].name}）</option>${sp.ids.slice(1).map(id => `<option value="${id}"${sp.id === id && !sp.off ? ' selected' : ''}>${T.specs[id].name}</option>`).join('')}<option value="none"${sp.off ? ' selected' : ''}>这次不按标定</option></select>` : '';
-    ssHTML = `<div class="dv-ss hint" id="dvSizeLine">${ln}${sel}</div>`; } }
+  let ssHTML = ''; if (typeof sizeSpecLine === 'function') { const ln = sizeSpecLine(combo); if (ln) ssHTML = `<div class="dv-ss hint" id="dvSizeLine">${ln} ${sizeSpecSelectHTML(combo)}</div>`; }     // 4.9.52 每个效果都能选一档（用户 10-09 12:56）
   host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '这种产物沿用原来的命名'}</small></div><span class="sp"></span>
     <button class="btn primary" type="button" id="dvExport">导出素材包（PC + 手机）</button><button class="btn" type="button" id="dvBack">返回画面</button></div>
     <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>只能用英文字母、数字和下划线；素材包、贴图、UE 资产名都用它（右栏「英文名」显示的就是这个）。${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}存在这台电脑的浏览器里，按效果记；我的效果连了仓库文件夹会一起存。</small></div>
@@ -912,7 +910,7 @@ function renderDeliv() {
   host.querySelectorAll('[data-prod]').forEach(sel => sel.addEventListener('change', () => setProduct(+sel.dataset.i, sel.dataset.prod, sel.value)));
   host.querySelectorAll('[data-lowview]').forEach(b => b.addEventListener('click', showLowReplay));     // 4.9.33 单帧的引擎回放（用户 10-07 17:26「单帧输出模式我想要个引擎回放」）
   const ssSel = host.querySelector('#dvSizeSpec');
-  if (ssSel) ssSel.addEventListener('change', () => { const { key, entry } = sizeSpecKeyNow(), all = store.get('sizeSpecPick', {}); if (ssSel.value) all[key || entry] = ssSel.value; else delete all[key || entry]; store.set('sizeSpecPick', all); renderDeliv(); if (typeof refreshPanelValues === 'function') refreshPanelValues(); });
+  if (ssSel) ssSel.addEventListener('change', () => { const pk = sizePickKey(sizeSpecKeyNow()), all = store.get('sizeSpecPick', {}); if (!pk) return; if (ssSel.value) all[pk] = ssSel.value; else delete all[pk]; store.set('sizeSpecPick', all); renderDeliv(); if (typeof refreshPanelValues === 'function') refreshPanelValues(); });
   const sv = host.querySelector('#dvSaveNames');
   if (sv) sv.addEventListener('click', () => {
     const base = asciiName(host.querySelector('#dvBase').value), layers = [...host.querySelectorAll('[data-ly]')].map(i => asciiName(i.value));

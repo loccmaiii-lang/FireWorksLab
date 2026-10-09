@@ -8,6 +8,7 @@
     组合条目（4.0 起默认）：导出「一个」素材包，目录名 <name>，cascade.json 里每层每段一个发射器（delay_s / 寿命 / 尺寸已按组合换算）；
       旧写法（每层一套，目录名 <name>_<层号>）要显式写 "combo_pack": false。单条目：一套，目录名 <name>。
     导出项里写 "_replica": "<条目号>" 可以单独指定某一项用哪个条目。
+    4.9.52 导出尺寸：写 "size": "cls:d:dam:230"（档 id，见交付清单「导出尺寸」下拉 / spec/尺寸标定.json）、规格 id 或 "none"；不写 = 表里给这个效果配的（没配 = 原大）。
   结果目录多一个 导出清单.json：{effect, entry, ver, time, packages:[{name, replica, files}]}
 素材包（spec/pipeline_v1.md：一个效果一个固定目录，cascade.json + 贴图，文件名固定）留在本机 analysis/local/输出/素材包/<导出名>/，
 重新导出覆盖同一目录；上传到 analysis/results/<id>/ 的只有参数表、JSON、cascade.json 和贴图的缩略预览。
@@ -57,7 +58,7 @@ def run(job, s, out, log=print):
         else:
             src = f"__fw.resolve({json.dumps(json.load(open(os.path.join(ROOT, job['params']), encoding='utf-8')))}, 'x')"
         b64 = s.pg.evaluate(f"""(async () => {{ const r = {src}; const P = r.P, M = r.M; Object.assign(P, {json.dumps(over)});
-            const u8 = await __fw.exportFiles(P, M, {json.dumps(name)}, {{ entry: {json.dumps(job.get('entry'))} }}); let t = '';
+            const u8 = await __fw.exportFiles(P, M, {json.dumps(name)}, {{ entry: {json.dumps(job.get('entry'))}, size: {json.dumps(job.get('size') or '')} }}); let t = '';
             for (let i = 0; i < u8.length; i += 0x8000) t += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(t); }})()""")
         d = os.path.join(big, name); os.makedirs(d, exist_ok=True)
         for old in os.listdir(d):   # 固定目录：重新导出前清掉上一版的文件（引擎里右键「重新导入」读的就是这里）
@@ -128,6 +129,8 @@ def run_combo_pack(job, s, out, name, ver, big, log=print):
     want = s.pg.evaluate(f"(() => {{ const e = FW_REVIEW_LIST.find(x => x.id === {json.dumps(entry)}); return {{ name: e.combo.name, n: e.combo.layers.length }}; }})()")
     s.pg.wait_for_function(f"window.__fw && window.__fw.idle() && state.tab === 'combo' && state.comboName === {json.dumps(want['name'])} && state.layers.length === {want['n']} && state.layers.every(L => {{ const e = state.lib.find(x => x.name === L.lib); return e && e.bake; }})", timeout=0)
     apply_layer_out(s, job.get('layer_out'))
+    # 4.9.52 导出尺寸：任务里写 size（档 id，如 cls:d:dam:230 / 规格 id / none）；不写 = 表里配的（清掉这台浏览器存的选择）
+    s.pg.evaluate(f"(() => {{ if (typeof store === 'undefined') return; const o = typeof sizeSpecKeyNow === 'function' ? sizeSpecKeyNow() : null, k = o && (o.key || o.entry || o.wk), sz = {json.dumps(job.get('size') or '')}; store.set('sizeSpecPick', k && sz ? {{ [k]: sz }} : {{}}); }})()")
     b64 = s.pg.evaluate(f"""(async () => {{ const files = await comboPackFiles({json.dumps(name)}, state.layers);
         const u8 = new Uint8Array(await (await makeZip(files)).arrayBuffer()); let t = '';
         for (let i = 0; i < u8.length; i += 0x8000) t += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(t); }})()""")

@@ -3230,8 +3230,8 @@ W34_JS = r"""async () => {
   if (!T || !T.specs.P_MG || T.map.jinmangju !== 'P_MG') { bad.push('没读到 spec/尺寸标定.json（tool/data/size_spec.js）或金芒菊没配 P_MG'); return { ok: false, bad, out }; }
   // ① 换算：花径 / 开花高度 / 扇形 / 放大警告
   const a = sizeSpecScale({ ...T.specs.P_MG, id: 'P_MG', version: 1 }, { what: 'diameter', m: 75 }), h = sizeSpecScale({ burst_m: 210, diameter_m: 150 }, { what: 'height', m: 105 }), f = sizeSpecScale({ kind: 'fan', diameter_m: 60 }, { what: 'diameter', m: 30 }), up = sizeSpecScale({ diameter_m: 100 }, { what: 'diameter', m: 50 });
-  out.math = { a: a && a.k, h: h && h.k, fan: !!(f && f.skip), warn: !!(up && up.warn), nowarn: !(a && a.warn) };
-  if (!a || a.k !== 2 || !h || h.k !== 2 || !out.math.fan || !out.math.warn || !(sizeSpecScale({ diameter_m: 100 }, { what: 'diameter', m: 90 }).warn === '')) bad.push('倍数算错（目标 ÷ 原样；升空尾缀按开花高度；扇形跳过；放大 > 1.3 警告）：' + JSON.stringify(out.math));
+  out.math = { a: a && a.k, h: h && h.k, fan: f && f.k, warn: !!(up && up.warn), nowarn: !(a && a.warn) };
+  if (!a || a.k !== 2 || !h || h.k !== 2 || out.math.fan !== 2 || !out.math.warn || !(sizeSpecScale({ diameter_m: 100 }, { what: 'diameter', m: 90 }).warn === '')) bad.push('倍数算错（目标 ÷ 原样；升空尾缀按开花高度；扇形跳过；放大 > 1.3 警告）：' + JSON.stringify(out.math));
   // ② cascade.json：长度 × k、时间不变、名字不加后缀、写 size_spec；别的文件不动
   const j0 = { name: 'X', system: { preview_distance_cm: 30000 }, source: {}, emitters: [{ name: 'E', modules: [{ m: 'Lifetime', Lifetime: { const: 2 } }, { m: 'InitialSize', StartSize: { const: [100, 100, 1] } }, { m: 'InitialVelocity', StartVelocity: { const: [0, 0, 100] } }, { m: 'SubImageIndex', SubImageIndex: { curve: [[0, 0], [2, 39]] } }] }] };
   const sk = { id: 'P_MG', name: T.specs.P_MG.name, version: 1, what: 'diameter', target: 150, measured: 75, k: 2 };
@@ -3245,11 +3245,11 @@ W34_JS = r"""async () => {
   out.jm = { key: kNow.key, entry: kNow.entry, d: d && +d.m.toFixed(1), k: sn && sn.k, sfx: plan.sfx, spec: plan.spec && plan.spec.id };
   if (kNow.key !== 'jinmangju' || !d || !sn || Math.abs(sn.k - 150 / d.m) > 1e-3 || plan.sfx !== '' || plan.spec?.id !== 'P_MG') bad.push('金芒菊没自动按 P_MG：' + JSON.stringify(out.jm));
   const es0 = state.P.exportScale; state.P.exportScale = 0.5; const plan2 = exportScalePlan(state.P); out.jm.manual = [plan2.k, plan2.sfx, inertWhy('exportScale', state.P) || ''];
-  if (plan2.k !== sn.k || plan2.sfx || !/尺寸标定/.test(out.jm.manual[2])) bad.push('配了标定还按手动缩放 / 没变灰：' + JSON.stringify(out.jm.manual));
+  if (plan2.k !== sn.k || plan2.sfx || !/导出尺寸/.test(out.jm.manual[2])) bad.push('配了标定还按手动缩放 / 没变灰：' + JSON.stringify(out.jm.manual));
   // ④ 交付清单：一行写规格、原样、倍数；下拉「这次不按标定」→ 回到手动（_S50），再选回自动
   toggleDeliv(true); await wait(150);
   const line = document.querySelector('#dvSizeLine'), sel = document.querySelector('#dvSizeSpec'); out.line = line ? line.textContent.slice(0, 160) : null;
-  if (!line || !/尺寸标定 v1/.test(line.textContent) || !line.textContent.includes(T.specs.P_MG.name) || !/× [\d.]+/.test(line.textContent)) bad.push('交付清单顶上没写尺寸标定：' + out.line);
+  if (!line || !/导出尺寸「/.test(line.textContent) || !line.textContent.includes(T.specs.P_MG.name) || !/× [\d.]+/.test(line.textContent)) bad.push('交付清单顶上没写尺寸标定：' + out.line);
   if (!sel || ![...sel.options].some(o => o.value === 'none')) bad.push('交付清单没有「这次不按标定」');
   else { const ov0 = OUT_SIG(); sel.value = 'none'; sel.dispatchEvent(new Event('change')); await wait(100); const p3 = exportScalePlan(state.P), ov1 = OUT_SIG(); out.none = [p3.k, p3.sfx, (document.querySelector('#dvSizeLine') || {}).textContent, ov0 !== ov1, inertWhy('exportScale', state.P) || ''];
     if (p3.k !== 0.5 || p3.sfx !== '_S50' || !/不按标定/.test(out.none[2] || '') || !out.none[3] || out.none[4]) bad.push('「这次不按标定」没回到手动缩放：' + JSON.stringify(out.none));
@@ -3259,23 +3259,43 @@ W34_JS = r"""async () => {
   // ⑤ 指纹：配了的条目带 size，没配的不带
   const vJ = entryVer(entryById('JM4-40')) || '', other = FW_REVIEW_LIST.find(e => e.ver && !sizeSpecFor(effectOfEntry(e)?.key, e.id, false)); out.ver = [vJ.slice(-40), other && (entryVer(other) || '').slice(-30)];
   if (!/size1-P_MG-150-210$/.test(vJ) || (other && /size/.test(entryVer(other)))) bad.push('版本指纹没带尺寸标定 / 没配的也带了：' + JSON.stringify(out.ver));
-  // ⑥ 没配的花型照旧：菊默认不缩、手动 0.8 → _S80
+  // ⑥ 没配的花型：默认原大（手动 0.8 → _S80）；4.9.52 也能选一档（用户 10-09 12:56「我选四尺玉，我也可以选大号」）
   { const prev = state.bake; await openType('kiku'); await idleBake(prev); }
   const pk = exportScalePlan(state.P), pk8 = exportScalePlan({ ...state.P, exportScale: 0.8 }); out.kiku = [pk.k, pk.spec, pk8.k, pk8.sfx, sizeSpecLine(false).slice(0, 40), inertWhy('exportScale', state.P) || ''];
-  if (pk.k !== 1 || pk.spec || pk8.k !== 0.8 || pk8.sfx !== '_S80' || !/没配规格/.test(out.kiku[4]) || out.kiku[5]) bad.push('没配的效果不该按标定：' + JSON.stringify(out.kiku));
+  if (pk.k !== 1 || pk.spec || pk8.k !== 0.8 || pk8.sfx !== '_S80' || !/原大/.test(out.kiku[4]) || out.kiku[5]) bad.push('没配的效果默认该原大：' + JSON.stringify(out.kiku));
+  const CD = sizeClasses('diameter'), CH = sizeClasses('height'); out.classes = { d: CD.map(c => c.name), h: CH.map(c => c.name) };
+  for (const want of ['坝顶小号 90 m', '坝顶中号 150 m', '坝顶大号 230 m', '前台 24 m', '前台 40 m', '前台彗星 8 m', '坝顶扇形 150 m（两倍飞行长度）']) if (!out.classes.d.includes(want)) bad.push('导出尺寸档缺「' + want + '」');
+  if (!out.classes.h.includes('坝顶开花高度 330 m') || CH.some(c => c.kind === 'fan')) bad.push('开花高度档不对：' + JSON.stringify(out.classes.h));
+  { toggleDeliv(true); await wait(150); const sel = document.querySelector('#dvSizeSpec'), dk = effectSizeOf(state.P);
+    out.kikuSel = sel ? [...sel.options].map(o => o.value).slice(0, 4) : null;
+    if (!sel || ![...sel.options].some(o => o.value === 'cls:d:dam:230') || [...sel.options].some(o => o.value === 'none')) bad.push('没配的效果交付清单没有档可选（或多了「这次不按标定」）：' + JSON.stringify(out.kikuSel));
+    else { sel.value = 'cls:d:dam:230'; sel.dispatchEvent(new Event('change')); await wait(100);
+      const p4 = exportScalePlan({ ...state.P, exportScale: 0.5 }), ln = (document.querySelector('#dvSizeLine') || {}).textContent || '';
+      out.kikuBig = [p4.k, p4.sfx, p4.spec && p4.spec.id, ln.slice(0, 70), !!inertWhy('exportScale', state.P)];
+      if (Math.abs(p4.k - 230 / dk.m) > 1e-3 || p4.sfx || p4.spec?.id !== 'cls:d:dam:230' || !/坝顶大号 230 m/.test(ln) || !out.kikuBig[4]) bad.push('菊选「大号」没按 230 m 缩：' + JSON.stringify(out.kikuBig));
+      const s3 = document.querySelector('#dvSizeSpec'); s3.value = ''; s3.dispatchEvent(new Event('change')); await wait(100); if (exportScalePlan(state.P).spec) bad.push('选回「原大」没恢复'); }
+    toggleDeliv(false); }
+  // 本机任务：任务里写 size，不看这台电脑存的
+  { const kj = { key: 'jinmangju', entry: 'JM4-40', pick: 'cls:d:dam:230' }, PJ = replicaPM('JM4-40').P, a1 = exportScalePlan(PJ, kj), a2 = exportScalePlan(PJ, { ...kj, pick: '' }), a3 = exportScalePlan(PJ, { ...kj, pick: 'none' });
+    out.job = [a1.spec && a1.spec.id, a2.spec && a2.spec.id, a3.spec]; if (out.job[0] !== 'cls:d:dam:230' || out.job[1] !== 'P_MG' || out.job[2]) bad.push('本机任务的 size 不对：' + JSON.stringify(out.job)); }
   // ⑦ 多层：金蕊柠按最大那层（花径 × 层缩放）
   { const prev = state.bake; await openEffect(EFFS().find(e => e.key === 'jinrui_ning')); for (let i = 0; i < 150 && (state.baking || !state.layers || !state.layers.length); i++) await wait(100); }
   const cz = comboSizeOf(state.layers), cs = sizeSpecCombo(state.layers), per = state.layers.map(L => { const e = layerEntryOf(L), z = e && effectSizeOf(e.P); return z ? +(z.m * (+L.scale > 0 ? +L.scale : 1)).toFixed(1) : null; });
   out.combo = { tab: state.tab, n: state.layers.length, per, max: cz && +cz.m.toFixed(1), k: cs && cs.k, id: cs && cs.id };
   if (state.tab !== 'combo' || !cz || Math.abs(cz.m - Math.max(...per.filter(x => x != null))) > 0.2 || !cs || cs.id !== T.map.jinrui_ning || Math.abs(cs.k - T.specs[cs.id].diameter_m / cz.m) > 1e-3) bad.push('多层没按最大那层：' + JSON.stringify(out.combo));
   // ⑧ 本机导出任务的走法：只 openReview(条目)、没有 lib.effect，也要认出效果
-  { const ef0 = lib.effect; lib.effect = null; const k8 = sizeSpecKeyNow(); lib.effect = ef0; out.job = k8; if (k8.key !== 'jinrui_ning') bad.push('只开条目时认不出效果：' + JSON.stringify(k8)); }
+  { const ef0 = lib.effect; lib.effect = null; const k8 = sizeSpecKeyNow(); lib.effect = ef0; out.jobKey = k8.key; if (k8.key !== 'jinrui_ning') bad.push('只开条目时认不出效果：' + JSON.stringify(k8)); }
+  // ⑨ 扇形（4.9.52）：彗星扇的花径 = 两倍飞行长度，选「坝顶扇形 150 m」按它缩
+  { await openEffect(EFFS().find(e => e.key === 'fan_comet')); for (let i = 0; i < 150 && (state.baking || state.tab !== 'combo' || !state.layers.length); i++) await wait(100);
+    const cz = comboSizeOf(state.layers), all = store.get('sizeSpecPick', {}), pk = sizePickKey(sizeSpecKeyNow()); all[pk] = 'cls:df:dam:150'; store.set('sizeSpecPick', all);
+    const cs = sizeSpecCombo(state.layers); out.fan = { key: pk, d: cz && +cz.m.toFixed(1), k: cs && cs.k }; delete all[pk]; store.set('sizeSpecPick', all);
+    if (!cz || !cs || Math.abs(cs.k - 150 / cz.m) > 1e-3) bad.push('扇形没按两倍飞行长度缩：' + JSON.stringify(out.fan)); }
   return { ok: !bad.length, bad, out };
 }"""
 
 
 async def w34(pg):
-    """4.9.51 尺寸标定：自动读 spec/尺寸标定.json、倍数 = 目标 ÷ 原样、cascade.json 长度 × k 时间不变、交付清单一行 + 「这次不按标定」、指纹、没配的照旧、多层按最大层"""
+    """4.9.51 / 4.9.52 尺寸标定：任何效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形、开花高度）、自动读 spec/尺寸标定.json、倍数 = 目标 ÷ 原样、cascade.json 长度 × k 时间不变、交付清单一行 + 「这次不按标定」、指纹、没配的照旧、多层按最大层"""
     r = await pg.evaluate(W34_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1800]
 
