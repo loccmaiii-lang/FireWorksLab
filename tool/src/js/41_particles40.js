@@ -177,6 +177,47 @@ function moffatProgram40(kind, shape = 1) {
   else throw new Error('没有这种光点程序：' + kind);
   return moffatPrograms40[key] = shape === 2 ? compile(multiVS40(G(vs)), multiFS40(fs)) : compile(moffatVS40(G(vs)), moffatFS40(fs));
 }
+// ---- 4.9.57 火花：不规则多边形 + 亮度随机（对话框相机渲染，用户 10-09 23:20「每个火花粒子都要有强烈的发光感，同时边缘锐利、轮廓清晰……粒子形状为不规则多边形（每个粒子形态各异）」）----
+// 照 Blender FanComet / FanSilver R4（用户认可）：每粒火花是一块随机朝向的小多面体（icosphere 实例，沿速度对齐），平面自发光、增益 15 远超削顶，
+// 所以核心一片白、轮廓是几何边（1 像素过渡），每粒形状和朝向都不同；没有运动模糊；辉光是合成器里另加的一圈。
+// 这里：每粒一个 4–7 边的星形多边形（顶点角度 / 半径按粒子编号随机，不规则程度 uPolyIrr），按年龄慢慢翻转（uPolySpin 圈 / 秒，每粒随机正反）；
+// 像素里 4 × 4 取样算覆盖（边缘锐利、抗锯齿），总光量和同直径圆盘一样（亮度参数含义不变）；亮核半径 < 0.6 像素时形状看不出来，按圆盘精确覆盖。
+// 辉光照旧用这一层的光晕（占比 / 半径 / 形状）。亮度随机 uSpkBJ：每粒一个固定的对数正态倍数（均值 1），对应 Blender 的 intensity 0.3–1.8。
+// 两样都缺省 0：不进这里，火花用原来的程序，逐像素不变。只有 GPU 火花（空中花型）；CPU 火花和 Cascade 光点照旧是圆。
+function polyVS40(vs) {
+  vs = must40(vs, 'uniform sampler2D uPos, uVel, uInfo;', 'uniform sampler2D uPos, uVel, uInfo; uniform float uPolySpin, uSpkBJ; flat out float vSeed; flat out float vPolyA;');
+  const tail = '  emitPt(q,I,size);\n}', at = vs.lastIndexOf(tail); if (at < 0) throw new Error('火花多边形：找不到火花着色器的输出行');
+  return vs.slice(0, at) + `  vSeed=hsh(uid,131u); vPolyA=6.2831853*(hsh(uid,133u)+uPolySpin*(2.*hsh(uid,135u)-1.)*age);
+  if(uSpkBJ>0.) I*=exp(uSpkBJ*gss(uid,137u)-.5*uSpkBJ*uSpkBJ);
+` + vs.slice(at);
+}
+const POLY40_FN = `flat in float vSeed; flat in float vPolyA; uniform float uPolyOn, uPolyIrr;
+float ph40(float k, float a){ return fract(sin(vSeed*(91.7+a)+k*(12.9898+a*.37))*43758.5453); }
+float polyCov40(vec2 p, vec2 r){
+  if(uPolyOn<.5 || min(r.x,r.y)<.6) return diskCoverage(p,r);
+  int N=4+int(floor(ph40(0.,3.1)*4.)); vec2 V[7]; float A=0.;
+  for(int k=0;k<7;k++){ if(k>=N) break; float th=vPolyA+6.2831853*(float(k)+.42*uPolyIrr*(ph40(float(k),7.7)-.5))/float(N);
+    V[k]=(1.-.5*uPolyIrr*ph40(float(k),1.3))*vec2(cos(th),sin(th)); }
+  for(int k=0;k<7;k++){ if(k>=N) break; vec2 a=V[k], b=V[k+1<N?k+1:0]; A+=.5*(a.x*b.y-a.y*b.x); }
+  float n=0.;
+  for(int i=0;i<4;i++) for(int j=0;j<4;j++){ vec2 u=(p+(vec2(float(i),float(j))-1.5)*.25)/r;
+    for(int k=0;k<7;k++){ if(k>=N) break; vec2 a=V[k], b=V[k+1<N?k+1:0];
+      if(a.x*u.y-a.y*u.x>=0. && u.x*b.y-u.y*b.x>=0. && (b.x-a.x)*(u.y-a.y)-(b.y-a.y)*(u.x-a.x)>=0.){ n+=1.; break; } } }
+  return n/16.*3.14159265/max(A,.05);
+}
+void main(){`;
+function polyFS40(fs) {
+  fs = must40(fs, 'void main(){', POLY40_FN);
+  return must40(fs, 'float core=diskCoverage(vLocal,vSig), halo=0.;', 'float core=polyCov40(vLocal,vSig), halo=0.;');
+}
+const spkPolyPrograms40 = {};
+function spkPolyProgram40(kind) {
+  const hs = particleQuality.haloFrac > 0 ? particleQuality.haloShape : 0, key = kind + '_' + hs; if (spkPolyPrograms40[key]) return spkPolyPrograms40[key];
+  let vs = polyVS40(point40GpuSource(VS_SPK).replace('uint uid=uint(pid);', 'uint uid=uint(s)*65536u+uint(j);')), fs = POINT40_FS;
+  if (kind === 'spkS') vs = spkStretchVS40(vs);
+  if (hs === 1) { vs = moffatVS40(vs); fs = moffatFS40(fs); } else if (hs === 2) { vs = multiVS40(vs); fs = multiFS40(fs); }
+  return spkPolyPrograms40[key] = compile(vs, polyFS40(fs));
+}
 function particleProgram40(kind) {
   if (particleQuality.haloShape > 0 && particleQuality.haloFrac > 0 && !(kind === 'pts' && PT_GAUSS)) return moffatProgram40(kind, particleQuality.haloShape);     // 4.9.53 幂律 / 4.9.55 多层柔光
   if (kind === 'ptsHex' || kind === 'spkS') return shapeProgram40(kind);

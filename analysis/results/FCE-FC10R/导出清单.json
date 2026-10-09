@@ -1,0 +1,28 @@
+{
+ "effect": "fan_comet",
+ "entry": "FC10R",
+ "ver": "826c3e19·master4.3.8-core1+master4.9.31",
+ "time": "2026-10-10 00:09",
+ "dir": "analysis/local/输出/素材包/",
+ "combo_pack": true,
+ "packages": [
+  {
+   "name": "FanCometRed",
+   "replica": "FC10R",
+   "files": [
+    "T_EFX_FireWorks_FanComet_Red_Comet_4x4_01.png",
+    "T_EFX_FireWorks_FanComet_Red_Comet_4x4_01_C.png",
+    "T_EFX_FireWorks_FanComet_Red_Comet_4x4_01_HD.png",
+    "T_EFX_FireWorks_FanComet_Red_Comet_R.png",
+    "T_EFX_FireWorks_FanComet_Red_Glow_4x4_01.png",
+    "T_EFX_FireWorks_FanComet_Red_Glow_4x4_01_C.png",
+    "T_EFX_FireWorks_FanComet_Red_Glow_4x4_01_HD.png",
+    "T_EFX_FireWorks_FanComet_Red_Glow_R.png",
+    "_检查",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

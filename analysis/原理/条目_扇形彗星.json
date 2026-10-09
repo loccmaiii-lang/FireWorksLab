@@ -341,12 +341,12 @@
    }
   },
   {
-   "id": "FC9R-1",
+   "id": "FC10R-1",
    "date": "2026-10-09",
    "name": "扇形彗星 · 红彗星扇 · 正红星头",
    "base": "kamuro",
    "hidden": true,
-   "tags": "扇形彗星 红彗星 扇面 N 簇 正红星头 FC9R-1",
+   "tags": "扇形彗星 红彗星 扇面 N 簇 正红星头 FC10R-1",
    "p": {
     "renderVer": 40,
     "pattern": "cluster",
@@ -408,12 +408,12 @@
    "note": "红彗星扇第 1 层「正红星头」：和另一层同一个模拟（同种子、同弹道），只是画的东西不同。"
   },
   {
-   "id": "FC9R-2",
+   "id": "FC10R-2",
    "date": "2026-10-09",
-   "name": "扇形彗星 · 红彗星扇 · 炭金尾",
+   "name": "扇形彗星 · 红彗星扇 · 炭金火花",
    "base": "kamuro",
    "hidden": true,
-   "tags": "扇形彗星 红彗星 扇面 N 簇 炭金尾 FC9R-2",
+   "tags": "扇形彗星 红彗星 扇面 N 簇 炭金尾 FC10R-2",
    "p": {
     "renderVer": 40,
     "pattern": "cluster",
@@ -446,24 +446,24 @@
     "headSize": 0.6,
     "headBright": 0,
     "headTear": 0,
-    "sparkRate": 300,
-    "sparkLife": 1.1,
+    "sparkRate": 90,
+    "sparkLife": 1.5,
     "sparkLifeJit": 50,
-    "sparkSpread": 0.8,
+    "sparkSpread": 3.6,
     "sparkInherit": 0.12,
-    "sparkDrag": 3.0,
+    "sparkDrag": 2.0,
     "sparkGrav": 0.3,
     "T0": 2150,
     "cooling": 0.26,
-    "sparkSize": 0.5,
-    "sparkBright": 2.6,
+    "sparkSize": 0.85,
+    "sparkBright": 10,
     "twinkle": 0.4,
-    "tailShoulder": 0.3,
+    "tailShoulder": -0.35,
     "tailPinchHead": 0,
     "tailPinchTail": 0.85,
     "tailBellyAt": 0.12,
     "tailWidth": 1.25,
-    "x1On": 1,
+    "x1On": 0,
     "x1Event": "trail",
     "x1Kind": "dot",
     "x1Rate": 220,
@@ -480,7 +480,17 @@
     "x1BrightJit": 20,
     "x1BrightCurve": "0:1, 1:0",
     "x1Flick": 0,
-    "exposure": 1.0
+    "exposure": 2.0,
+    "sparkShape": 1,
+    "sparkShapeIrr": 0.6,
+    "sparkShapeSpin": 0.6,
+    "shutter": 0.15,
+    "tailJit": 0.6,
+    "sparkBrightJit": 0.6,
+    "sparkSpawnR": 0.8,
+    "haloFrac": 0.25,
+    "haloR": 1.4,
+    "sparkRise": 0.15
    },
    "m": {
     "stages": [
@@ -493,7 +503,7 @@
     "ramp0": "#000000",
     "ramp1": "#6a1c08",
     "ramp2": "#c84418",
-    "ramp3": "#ff9c50",
+    "ramp3": "#fff0cc",
     "headInt": 1,
     "tailInt": 1
    },
@@ -603,35 +613,36 @@
  ],
  "combos": [
   {
-   "id": "FC9R",
+   "id": "FC10R",
    "date": "2026-10-09",
    "name": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾）",
    "layers": [
     {
-     "m": "rep:FC9R-1",
+     "m": "rep:FC10R-1",
      "scale": 1,
      "delay": 0
     },
     {
-     "m": "rep:FC9R-2",
+     "m": "rep:FC10R-2",
      "scale": 1,
      "delay": 0
     }
    ],
    "layerNames": [
     "正红星头",
-    "炭金尾"
+    "炭金火花"
    ],
-   "tags": "扇形彗星 红彗星 扇面 N 簇 依次出膛 正红 炭金尾 FC9R",
+   "tags": "扇形彗星 红彗星 扇面 N 簇 依次出膛 正红 炭金尾 FC10R",
    "look": [
     "烘焙器里就是整排扇：一根筒一条，逐筒很快扫过去",
     "一起快速冲上去（越往上越慢），燃尽熄灭不爆，尾巴停在空中暗掉、漂开",
     "引擎回放 + 游戏内大小"
    ],
-   "note": "用户 10-09 18:29（相机渲染）：「先改正红，然后尾缀是炭金，然后按顺序测试」。7 根筒扇面 60°、逐筒 0.2 s 出膛；出膛 72 m/s、2.2 s 燃尽（约 90 m）不爆。两层同一模拟：① 正红星头（白热亮核 + 正红小光晕，不再是 3.5 m 粉球、星和星之间不连成雾带）② 炭金尾（金色炭火火花，亮肩、头粗尾细）。诊断 analysis/probe/星头光晕诊断_2026-10-09/诊断.md。 FC9R：照 Blender 项目里你认可的光感（万彩千轮 C/D、FanComet R4、银彩菊 V02）——光晕是饱和的红、近晕 + 远晕两层、白只在小芯里。",
+   "note": "用户 10-09 18:29（相机渲染）：「先改正红，然后尾缀是炭金，然后按顺序测试」。7 根筒扇面 60°、逐筒 0.2 s 出膛；出膛 72 m/s、2.2 s 燃尽（约 90 m）不爆。两层同一模拟：① 正红星头（白热亮核 + 正红小光晕，不再是 3.5 m 粉球、星和星之间不连成雾带）② 炭金尾（金色炭火火花，亮肩、头粗尾细）。诊断 analysis/probe/星头光晕诊断_2026-10-09/诊断.md。 FC10R：光晕层和 FC9R 一样；火花改成照 Blender R4 的发光锐利不规则多边形（4.9.57）。",
    "replaces": [
     "FC7R",
-    "FC8R"
+    "FC8R",
+    "FC9R"
    ]
   }
  ]

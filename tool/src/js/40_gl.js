@@ -489,7 +489,9 @@ function setAirUniforms(pr, P) {
 }
 // opt：xf = 随体坐标变换 [ox, oy, cos, sin]；mir = 0 无水面 / 1 只剔除水下 / 2 倒影
 function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
-  const P = tr.P, modern = true, str = familyOf(P.type) === 'aerial' && +P.sparkStretch > 0, pr = particleProgram40(str ? 'spkS' : 'spk'), se = sparkEff(P); gl.useProgram(pr.p);     // 4.9.50 火花拉长
+  const P = tr.P, modern = true, str = familyOf(P.type) === 'aerial' && +P.sparkStretch > 0, se = sparkEff(P);     // 4.9.50 火花拉长
+  const poly = familyOf(P.type) === 'aerial' && (+P.sparkShape === 1 || +P.sparkBrightJit > 0), pr = poly ? spkPolyProgram40(str ? 'spkS' : 'spk') : particleProgram40(str ? 'spkS' : 'spk'); gl.useProgram(pr.p);     // 4.9.57 火花多边形 / 亮度随机（缺省不进）
+  if (poly) { gl.uniform1f(pr.u.uPolyOn, +P.sparkShape === 1 ? 1 : 0); gl.uniform1f(pr.u.uPolyIrr, clamp(P.sparkShapeIrr == null ? .6 : +P.sparkShapeIrr, 0, 1)); gl.uniform1f(pr.u.uPolySpin, Math.max(0, P.sparkShapeSpin == null ? .5 : +P.sparkShapeSpin)); gl.uniform1f(pr.u.uSpkBJ, Math.max(0, +P.sparkBrightJit || 0)); }
   if (str) { gl.uniform1f(pr.u.uSpkStr, +P.sparkStretch); gl.uniform1f(pr.u.uSpkStrJ, Math.max(0, +P.sparkStretchJit || 0)); }
   gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tr.pos); gl.uniform1i(pr.u.uPos, 2);
   gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, tr.vel); gl.uniform1i(pr.u.uVel, 3);

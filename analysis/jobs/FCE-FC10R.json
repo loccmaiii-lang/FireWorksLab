@@ -1,0 +1,9 @@
+{
+ "id": "FCE-FC10R",
+ "type": "export",
+ "effect": "fan_comet",
+ "entry": "FC10R",
+ "name": "FanCometRed",
+ "priority": 1,
+ "note": "相机渲染：红彗星扇 FC10R（火花多边形，用户 10-09 23:20）导出 + 回放检查。"
+}

@@ -221,8 +221,23 @@ GOLD_TAIL9_M = dict(GOLD_TAIL8_M)
 FAN_ENTS9, FAN_COMBOS9 = fan_entries8('FC9', RED_HEAD9, RED_HEAD9_M, GOLD_TAIL9, GOLD_TAIL9_M,
     note_extra=' FC9R：照 Blender 项目里你认可的光感（万彩千轮 C/D、FanComet R4、银彩菊 V02）——光晕是饱和的红、近晕 + 远晕两层、白只在小芯里。', replaces=('FC7R', 'FC8R'))
 
-FAN_ENTS = FAN_ENTS9 + [e for e in FAN_ENTS6 if e['id'] == 'FC6O']
-FAN_COMBOS = FAN_COMBOS9
+# ======================= FC10R（相机渲染，用户 2026-10-09 23:20）：光晕不动，火花发光强、边缘锐利、不规则多边形 =======================
+# 用户原话：「当前的光晕效果已经达到预期，请保持不变。接下来请优化火花粒子：每个火花粒子都要有强烈的发光感，同时边缘锐利、轮廓清晰，不能模糊发散。粒子形状为不规则多边形（每个粒子形态各异）」
+# 第 1 层 = FC9R-1 原样（光晕不变）。第 2 层火花照 Blender FanComet / FanSilver R4（诊断 第 8 节；迭代 FC10R_v1–v16，v16 定稿）：
+#   ① 形状：4.9.57「不规则多边形」，每粒 4–7 边、朝向随机、慢慢翻转（不规则 0.6、翻转 ±0.6 圈 / 秒）；
+#   ② 削顶发白 + 锐利边：颗粒 0.5 → 0.85 m（约 3.6 纹素，多边形看得出）、亮度 2.6 → 10、贴图曝光 × 2，核心削顶发白；光晕收紧（占比 0.25、半径 × 1.4，以前 0.22 / × 3）；
+#   ③ 不糊：运动模糊 0.6 → 0.15（R4 没有运动模糊）；④ 分得开：每秒 300 → 90 粒、线宽 3.6 m、出生半径 0.8 m、阻力 2（v12 颗粒 1.15 m 会连成白条、压过红光晕，退回）；
+#   ⑤ 大小 / 亮度随机：大小随机 0.6、亮度随机 0.6（R4 大小 0.45–1.6、亮度 0.3–1.8）；
+#   ⑥ 颜色随寿命：照旧按温度——新火花削顶发白（Ramp 亮端 #fff0cc），冷下来变金、橙、暗红；刚出生 0.15 s 先暗（烧旺时间），星头附近不堆成白条、星头和红光晕仍是最亮的；亮肩亮点关掉（它是圆的）。
+SPARK10 = dict(GOLD_TAIL9, sparkShape=1, sparkShapeIrr=0.6, sparkShapeSpin=0.6, shutter=0.15, x1On=0, sparkLife=1.5, tailJit=0.6, sparkBrightJit=0.6, sparkSpawnR=0.8, sparkDrag=2.0, sparkRate=90, sparkSpread=3.6, tailShoulder=-0.35, exposure=2.0, sparkSize=0.85, haloFrac=0.25, haloR=1.4, sparkBright=10, sparkRise=0.15)
+SPARK10_M = dict(GOLD_TAIL9_M, ramp3='#fff0cc')
+FAN_ENTS10, FAN_COMBOS10 = fan_entries8('FC10', RED_HEAD9, RED_HEAD9_M, SPARK10, SPARK10_M,
+    note_extra=' FC10R：光晕层和 FC9R 一样；火花改成照 Blender R4 的发光锐利不规则多边形（4.9.57）。', replaces=('FC7R', 'FC8R', 'FC9R'))
+FAN_COMBOS10[0]['layerNames'] = ['正红星头', '炭金火花']
+FAN_ENTS10[1]['name'] = '扇形彗星 · 红彗星扇 · 炭金火花'
+
+FAN_ENTS = FAN_ENTS10 + [e for e in FAN_ENTS6 if e['id'] == 'FC6O']
+FAN_COMBOS = FAN_COMBOS10
 next(e for e in FAN_ENTS if e['id'] == 'FC6O')['replaces'] = ['FC4O', 'FC5O']
 
 if __name__ == '__main__':
