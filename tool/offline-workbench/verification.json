@@ -1,60 +1,61 @@
 {
-  "format": "df.offline-verification/2",
-  "time": "2026-10-10T06:25:29.803272+00:00",
-  "toolVersion": "14",
+  "format": "df.offline-verification/3",
+  "time": "2026-10-10T07:11:21.244567+00:00",
+  "toolVersion": "15",
   "artifact": {
     "file": "tool/烟花编排工作台.html",
     "stableLocalFile": "D:\\FXTools\\DFWorkbench\\deliveries\\烟花编排工作台\\2026-10-10-v12\\烟花编排工作台.html",
-    "bytes": 2560330,
-    "sha256": "368583d7b1fff4c8d25f81960ec4f77b0820013475093ab93cf625b19a893130",
+    "bytes": 2566296,
+    "sha256": "b86cea8cc6c1117ff1cd00e22e273bfca09e21cd238d93bef86ea0a4c78b0336",
     "zipName": "烟花编排工作台-离线包.zip",
-    "zipBytes": 365505,
-    "zipSha256": "437f709642c6e3a538658ddd4afd14cdcbce4747221a7b36f694d5ad8c2c1277",
+    "zipBytes": 368695,
+    "zipSha256": "911b8bfd06412a21f0e2e3bf0e865f3e123ac597f21b7b0f5a5b4cc95e548856",
     "musicIncluded": false,
     "originalProgrammeSha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a"
   },
   "automated": {
     "productionCore": {
-      "passed": 99,
+      "passed": 108,
       "failed": 0
     },
     "offlineWrapper": {
       "passed": 37,
       "failed": 0
     },
-    "newReferenceModel": {
-      "passed": 8,
+    "newPreviewModel": {
+      "passed": 9,
       "failed": 0,
-      "oldModelRedFailures": 5
+      "initialResult": "missing new module: one test-file load failure; not nine old-model assertion failures"
     },
     "publicStandaloneModel": {
-      "passed": 8,
+      "passed": 17,
       "failed": 0
     },
-    "scope": "original show unchanged; build+source tests; old Site4 excluded; ZIP3 entries equal stable files"
+    "scope": "Original show/artistic resources unchanged; old Site4 excluded; ZIP3 entries equal stable files"
   },
   "browser": {
     "protocol": "HTTP",
     "fileProtocolVerified": false,
     "sameHtmlBytes": true,
     "passed": [
-      "source new library3→4; clear filters and selected entry",
-      "save template retains chosen anchor80",
-      "actual source timeline and pinned source version; bidirectional locate",
-      "savev3 preserves oldv1/v2; explicit one-group upgrade/Undo/Redo",
-      "old version select; copied template save-and-create at110",
-      "single linked cue copy/delete/Undo has isolated group",
-      "low/high restrictions; compact 1366 and1920 viewport",
-      "save/reload fixed references",
-      "same HTTP file v13→v14 retains saved personal name and252 cues",
-      "final HTML atomic save/place at90: library4/cues253; reload pinnedv1 retained",
-      "source/final console error lists empty"
+      "Source captured mixed8 calls, copy changes one, others preserved",
+      "Current1=3 launches and all8=10 launches; selected call2=1 low-silver launch",
+      "Template replacement/compatible P-F-B points; current fields/list linked",
+      "Tier filtering, low zero-participation explicit empty, incomplete call blocks complete save",
+      "Keep-current8→1 and restore1→8 retains current edits",
+      "Discard region bug reproduced and corrected to dam/P0 selection",
+      "Savev2 retainsv1; 80-second whole8 placement252/1689→260/1699 then Undo restores",
+      "Save/reload personal5 library entries/fixed versions",
+      "1366 screenshot; 1920 controls only",
+      "Same HTTP v14→v15 retains personal name and original252/1689",
+      "Final HTML saves2 calls; current2 preview1 gold launch",
+      "Source/final error console lists empty"
     ],
     "limitations": [
-      "file:// automatic approval review rejected earlier; no bypass/retry; HTTP is not direct-file proof",
-      "no full screen-reader/200%-zoom/mobile certification",
-      "no new audio import or actual UE writes/save/play",
-      "some transitions yielded stale screenshots; rejected and recaptured"
+      "file automatic approval review rejected earlier; no retry or bypass; HTTP is not direct-file proof",
+      "No complete responsive/screen-reader/200%-zoom/mobile certification",
+      "No real UE writes/save/play or new audio import",
+      "Old screenshot01 only structural; it is not motion evidence"
     ]
   },
   "storageCompatibility": {
@@ -64,7 +65,7 @@
     "bundledSeedReplacesLocal": false,
     "savedProgrammeRecordsRetained": true,
     "sessionUndoPersistedAcrossReload": false,
-    "conditions": "same path/browser profile; normal mode; no cleared site data; use dfshow for transfers"
+    "conditions": "same path/browser/profile; normal mode and no cleared site data; explicit dfshow transfer"
   },
   "engine": {
     "readOnly": true,
@@ -76,21 +77,14 @@
   "publicSiteUpdated": false,
   "originalProgrammeFileUntouched": true,
   "userAccepted": false,
-  "auditReport": "tool/offline-workbench/pattern-linkage-audit.md",
+  "auditReport": "tool/offline-workbench/pattern-preview-audit.md",
   "acceptedScreenshots": [
-    "tool/offline-workbench/audit-v14/01-before-library.png",
-    "tool/offline-workbench/audit-v14/04-library-1366.png",
-    "tool/offline-workbench/audit-v14/05-library-1920.png",
-    "tool/offline-workbench/audit-v14/07-offline-reference.png",
-    "tool/offline-workbench/audit-v14/08-offline-library.png",
-    "tool/offline-workbench/audit-v14/09-fixed-upgrade.png"
+    "tool/offline-workbench/audit-v15/01-before-all.png",
+    "tool/offline-workbench/audit-v15/02-current-only.png",
+    "tool/offline-workbench/audit-v15/03-all-eight.png",
+    "tool/offline-workbench/audit-v15/04-saved-current.png",
+    "tool/offline-workbench/audit-v15/05-compact-1366.png",
+    "tool/offline-workbench/audit-v15/06-offline-current.png"
   ],
-  "publication": {
-    "artifactCommit": "e78d1bc4b27910dc67f37e4aaa8ba773f5f50299",
-    "htmlBlob": "6325694b0abf5c8d2528fb71e2e018ae542c0674",
-    "zipBlob": "bc71e44cf759b9d44037fc4ea5032da4b11a0f71",
-    "remoteMainContainsCommit": true,
-    "remoteAndLocalArtifactBlobsEqual": true,
-    "verifiedAt": "2026-10-10T06:27:16.014126+00:00"
-  }
+  "publication": null
 }

@@ -1,78 +1,60 @@
 {
   "format": "df.private-source-changes/1",
   "source": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008",
-  "privateBefore": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\pattern-linkage-20261010\\source-before",
-  "privateDiffs": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\pattern-linkage-20261010\\diffs",
+  "privateBefore": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\pattern-preview-20261010\\source-before",
+  "privateDiffs": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\pattern-preview-20261010\\diffs",
   "changes": [
     {
       "file": "src/App.jsx",
-      "beforeSha256": "84d7466607d7f29c683bc2590361243e639a20012d451a60cb3255b0b24285ee",
-      "afterSha256": "f90180c71b3fb4e9851835eb03b5a2c304872662a800cc6507d19f0bd4b3b74b",
+      "beforeSha256": "f90180c71b3fb4e9851835eb03b5a2c304872662a800cc6507d19f0bd4b3b74b",
+      "afterSha256": "2eb211a5d525c854a28e1ad8d21aa0ad6a87755ec97e0f93fe20b89c955ec74c",
       "baseline": "before-implementation"
     },
     {
       "file": "src/LaunchWorkspace.jsx",
-      "beforeSha256": "bb5b5e0d712c13b11f24b70747fed5ea4421d5a62305174e1d567377e481aa0d",
-      "afterSha256": "cee1771383821da875d393e82d4b8ec1220626c9fe3dfc0c8385755d6f1641dd",
+      "beforeSha256": "cee1771383821da875d393e82d4b8ec1220626c9fe3dfc0c8385755d6f1641dd",
+      "afterSha256": "2f9fbcc36f47db69943b9649e3a1b7c79120cb93b9189fb6bb0e26a86a05039b",
       "baseline": "before-implementation"
     },
     {
-      "file": "src/TemplateLibraryCompact.jsx",
-      "beforeSha256": "51441d1b3d952ff3db19815b78c0838c82912b068da54d1ecfc7046349102fae",
-      "afterSha256": "3e7f461ddcfe7e60e862d40f3d62022c178037ffb7ab6ba6f848426b80146e22",
-      "baseline": "before-implementation"
-    },
-    {
-      "file": "src/PatternReference.jsx",
+      "file": "src/pattern-preview.mjs",
       "beforeSha256": null,
-      "afterSha256": "fd59fd3d8bcb70bbd38903df412922afd56c48d1cbec5bcc3fc14bb2043018ac",
+      "afterSha256": "6b42d11d3a7c77f78aa14587a47dd26b777bfc51a2c2f60c9ea6758cf2482822",
       "baseline": "new-file"
-    },
-    {
-      "file": "src/pattern-linkage.mjs",
-      "beforeSha256": null,
-      "afterSha256": "1e75886df5c7f78a47bb8e34173ff99f18993b20967ce4bfe538c475776cf88d",
-      "baseline": "new-file"
-    },
-    {
-      "file": "src/choreography-model.mjs",
-      "beforeSha256": "65f65b9a697a6ba26051c4a8c9ff13e946e59d6f5ce4345a2f04c183f5b9b3b5",
-      "afterSha256": "d109935a2c2dc9e4b6bd9e057928bc58d8e49bf46bec731760412459dec55370",
-      "baseline": "before-implementation"
-    },
-    {
-      "file": "src/editing-model.mjs",
-      "beforeSha256": "fa76fff9277c4e96ae9fe991c794591cd9bc91a9b486546363a6d1b690c2eaee",
-      "afterSha256": "fa8bc15c36c1e5bd72c77ef8ab4c3b766426fd44c54b88bb9f19387e00267a05",
-      "baseline": "before-implementation"
     },
     {
       "file": "src/df-theme.css",
-      "beforeSha256": "9921fa48c68da9ba38710655cd62faae6691dc5375253be909cce3e67a77a879",
-      "afterSha256": "317a299b2c4a4046f06339e87d664bfccdeb00cd1608ef3dca455434477a8795",
+      "beforeSha256": "317a299b2c4a4046f06339e87d664bfccdeb00cd1608ef3dca455434477a8795",
+      "afterSha256": "1ab9091aee51413c4bca3fe142a1cb3b68c1519f42dab6f2dcf83ed084317423",
       "baseline": "before-implementation"
     },
     {
       "file": "src/connection.mjs",
-      "beforeSha256": "9a8c83a2d6ce209db282adf188376536f6f887f0c87b6cee5542a224999e962a",
-      "afterSha256": "63d5334bb4be2d9cb63e53d267a6f7c314149f4a9301430bc17c4c2f9f3d08df",
+      "beforeSha256": "63d5334bb4be2d9cb63e53d267a6f7c314149f4a9301430bc17c4c2f9f3d08df",
+      "afterSha256": "79e5673329644b98dc5b0a1f64477df7ff1c3b761f0dc6b7a47604800adec7d2",
       "baseline": "before-implementation"
     },
     {
-      "file": "tests/pattern-linkage.test.mjs",
+      "file": "scripts/offline-workbench/connection.mjs",
+      "beforeSha256": "63d5334bb4be2d9cb63e53d267a6f7c314149f4a9301430bc17c4c2f9f3d08df",
+      "afterSha256": "79e5673329644b98dc5b0a1f64477df7ff1c3b761f0dc6b7a47604800adec7d2",
+      "baseline": "before-implementation"
+    },
+    {
+      "file": "tests/pattern-preview.test.mjs",
       "beforeSha256": null,
-      "afterSha256": "72a74206b46339b402bcb377ea4d6a015713e620c31a1cd4b83d6befaa2911d5",
+      "afterSha256": "6b69fa135d96084b19aec4e4a9b893e83fd7f054bc69e4532ad51dceffbe590b",
       "baseline": "new-file"
     },
     {
       "file": "AGENTS.md",
-      "beforeSha256": "77afca3029129f92746e9c67da492898df14a10c0b9dae61155b30b6e30ad656",
-      "afterSha256": "2d0a954a960301ccfe1f25dec0a0d6b71c41e84be75ab762ed3a181263b7bb9c",
+      "beforeSha256": "2d0a954a960301ccfe1f25dec0a0d6b71c41e84be75ab762ed3a181263b7bb9c",
+      "afterSha256": "30d22ef5821618b0f31ab4096aa2a25095c340e56e1393b7725f2066c3980141",
       "baseline": "before-implementation"
     }
   ],
   "sourceUploadedInFull": false,
-  "publicScope": "compiled HTML, original shared adapters, standalone pure reference model/tests/fixtures, fingerprints and review report",
+  "publicScope": "compiled HTML, shared adapters, standalone pure model/tests/fixtures, fingerprints and audit report",
   "excludedOtherOwnedDirectories": [
     "tool/src",
     "shared DF tokens",
