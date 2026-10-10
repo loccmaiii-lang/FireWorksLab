@@ -6,9 +6,9 @@
   <title>烟花烘焙器 · 交付与导入草稿 v1</title>
   <link rel="stylesheet" href="../../design-system/tokens.css">
   <link rel="stylesheet" href="../../design-system/components.css">
-  <link rel="stylesheet" href="draft.css?v=1.4">
+  <link rel="stylesheet" href="draft.css?v=1.5">
   <script src="../../design-system/icons.js" defer></script>
-  <script src="draft.js?v=1.4" defer></script>
+  <script src="draft.js?v=1.5" defer></script>
 </head>
 <body class="fw-scope" data-density="compact">
 <div class="workspace">
@@ -75,7 +75,7 @@
 
   <section id="log-panel" class="log-panel" aria-labelledby="log-title" hidden>
     <div class="log-heading"><h2 id="log-title" tabindex="-1">操作日志</h2><div class="log-heading-actions"><button class="fw-button fw-button--quiet" id="log-latest" hidden>回到最新</button><button class="fw-button fw-button--quiet" id="log-close" aria-label="收起操作日志">收起<span class="fw-icon" data-fw-icon="expand"></span></button></div></div>
-    <progress class="fw-progress" id="execution-progress" value="0" max="2" aria-label="已完成的平台包"></progress>
+    <div class="delivery-progress-track" id="execution-progress-track"><progress class="fw-progress" id="execution-progress" value="0" max="2" aria-label="已完成的平台包"></progress><span class="delivery-progress-fill" aria-hidden="true"></span></div>
     <ol id="logs" role="log" aria-label="按时间排列的操作记录" aria-live="off" aria-relevant="additions" tabindex="0"></ol>
   </section>
   <footer class="action-bar" aria-label="常驻检查、确认与导入操作">

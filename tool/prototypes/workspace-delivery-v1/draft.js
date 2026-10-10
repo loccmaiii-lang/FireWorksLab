@@ -167,6 +167,7 @@ function renderExecution() {
   const total=state.packages.size, done=state.completed.size;
   $('execution-progress').max=Math.max(1,total); $('execution-progress').value=done;
   $('execution-progress').setAttribute('aria-valuetext',`${total} 个平台包中完成 ${done} 个，状态演示`);
+  $('execution-progress-track').style.setProperty('--delivery-progress',`${total?100*done/total:0}%`);
 }
 
 function selectPackage(p) {

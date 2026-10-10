@@ -1,4 +1,4 @@
-# 本机资源交付服务（烘焙器 4.9.60）
+# 本机资源交付服务（烘焙器 4.9.62）
 
 直接发布烘焙器整理后的完整资源包：设置一次本机根目录，后续导出写入展开目录并自动接给既有导入器检查。目录发布不需要浏览器下载、手动解压或复制路径。原生 `fwl.cascade/1` 和文件命名保持；另外生成不可变修订、索引及回放缩略图。
 
@@ -11,7 +11,11 @@ cd F:\FireWorksLab
 python tool/local_delivery/service.py --importer D:/FXTools/DFWorkbench/df-fireworks-delivery_locmai.html
 ```
 
-也可运行 `start.cmd --importer <本机独立交付HTML的绝对路径>`。没有导入器参数时仍能制作/导出，页面明确显示导入尚未配置。通过 `http://127.0.0.1:8034/baker` 使用本机交付；直接双击旧 HTML 时，指定目录动作会说明服务启动方式。ZIP 便携交付仍可显式选择。
+推荐双击 `tool/启动烘焙器.cmd`：自动启动或复用本机交付服务，连接成功后打开烘焙器。也可运行 `start.cmd --importer <本机独立交付HTML的绝对路径>`；优先使用本机已有的 bundled Python，否则使用系统 Python。没有导入器参数时仍能制作/导出，页面明确显示导入尚未配置。
+
+启动器读取 `%USERPROFILE%/.fireworkslab/delivery-launcher.json` 的 `importerPath`（本机独立交付 HTML）和可选 `configPath`（已有目录配置）。该文件仅留本机，命令行 `--importer` / `--config` 优先。目录配置为空时仍须用户指定正式资源位置，不自动选目录；重复启动不重复开服务，不执行 UE 导入。`--no-browser` 只核对/启动服务；服务日志写在目录配置旁的 `delivery-server.log`。
+
+通过 `http://127.0.0.1:8034/baker` 制作并指定目录交付。直接打开原 HTML 时，“资源交付”会打开已运行的本机交付页，返回按钮回到原制作标签；原制作存储/参数不迁移。浏览器不能替本地 HTML 启动系统进程，服务未运行时请使用上述启动入口。ZIP 便携交付仍可显式选择。
 
 1. 打开“资源交付”，点击“选择目录…”或填写绝对路径并保存。首次配置为空，不替用户选择正式资源位置。默认配置文件为 `%USERPROFILE%/.fireworkslab/delivery-settings.json`，可用 `--config <路径>` 独立设置。
 2. 回“效果制作”，调用现有“导出素材包”。单层、组合、单层其他导出方案及种子变体均走共同交付出口；执行开始时固定所选目的地。
@@ -50,10 +54,10 @@ PC/手机保持原配置与主贴图；手机材质目标单独命名，避免�
 
 ```powershell
 cd tool/local_delivery
-python -m unittest -v test_store test_service
+python -m unittest -v test_store test_service test_launcher
 ```
 
-10 项测试覆盖完整发布、CRC/引用/路径、UTF8、多层、不可变/重复修订、持久化、污染核对、索引失败恢复、会话与只读来源、元数据封装及目录选择取消。实际页证据、原有回归失败与未完成验收见 `analysis/results/WORKSPACE_DELIVERY/README.md`；协议见 `spec/workspace_resource_v1.md`。原生 UE 实导/实播、旧批次迁移、全分辨率及严格像素基准仍需对应证据，不能由单元测试推定通过。
+16 项测试覆盖完整发布、CRC/引用/路径、UTF8、多层、不可变/重复修订、持久化、污染核对、索引失败恢复、会话与只读来源、元数据封装及目录选择取消，以及启动配置优先级、服务复用、导入器路径、隐藏启动子进程、启动失败和连接后才打开浏览器。实际页证据、原有回归失败与未完成验收见 `analysis/results/WORKSPACE_DELIVERY/README.md`；协议见 `spec/workspace_resource_v1.md`。原生 UE 实导/实播、旧批次迁移、全分辨率及严格像素基准仍需对应证据，不能由单元测试推定通过。
 
 
 ## 4.9.61 交付页呈现接入
@@ -61,3 +65,7 @@ python -m unittest -v test_store test_service
 烘焙器右上角进入资源交付，同位置返回制作；目录/历史按需展开，原导入三栏与主动作占满余下工作区。独立导入入口的私有 builder 加载 `delivery-workspace-state.js`、`delivery-presentation.js/css`，从同一 `tool/design-system` 注入基础。可通过 `python build-delivery.py --design-system <仓库>/tool/design-system` 指定来源；旧调用默认读本机当前仓库。更新后须重构独立入口；不要把原型 draft.js 的模拟状态放入生产。
 
 平台分段仅选择真实包，原检查/确认/执行不变；真实执行才自动打开CLI日志，进度按实际完成包数，不显示附加进度文字。新7组控制器检查用mock UE完成/失败/停止，原生实际写入与实播仍单独验收。
+
+## 4.9.62 五项反馈
+
+进度为原 DF 主色、8px 轨道/1px 边框/零圆角；原生语义进度与可见填充由同一真实完成包数更新，避免浏览器默认绿条覆盖主题。流程居中，队列采用整行选择与右侧圆形勾选；查看对象另用轮廓表示，确认仍沿用原操作。显卡与交付/返回入口恢复右上角，移除旧显卡伪元素图标。共享 tokens、原执行/确认/依赖及原工作台入口保持。五项实施与限定证据见 `analysis/results/WORKSPACE_DELIVERY/交付页五项修正_4.9.62.md`。

@@ -1,6 +1,6 @@
 // 4.9.60: final ZIP bytes are published by the local directory service; UE writes remain in the original importer.
 const DeliveryWorkspace = (() => {
-  let session = null, resources = [], last = null, active = false, busyDelivery = false, importerBusy = false, importerCurrent = null;
+  let session = null, resources = [], last = null, active = false, busyDelivery = false, importerBusy = false, importerCurrent = null, localDeliveryWindow = null;
   const node = id => document.getElementById(id);
   const message = (text, error = false) => { const n = node('deliveryStatus'); n.textContent = text; n.dataset.error = String(error); };
   const destination = () => node('deliveryDestination').value;
@@ -23,7 +23,14 @@ const DeliveryWorkspace = (() => {
     node('deliveryOpen').hidden = open; node('deliveryMake').hidden = !open;
     const focus = node(open?'deliveryWorkspace':'deliveryOpen'); focus.focus({preventScroll:true});
   }
-  async function open() { show(true);message('正在恢复资源与导入工作区…');try { await connect(); await refresh(); if(!last && !importerCurrent && resources.length)await select(resources[resources.length-1]); else if(last)await sendToImporter();else if(importerCurrent)message('已恢复当前素材。请使用下方导入工作区检查、核对并确认名称。');if(!last && !importerCurrent)message(session.outputRoot?'已恢复导出目录。选择已交付修订，或回效果制作导出新资源。':'首次使用请先选择资源导出目录。'); } catch(e) { message(e.message, true); } }
+  async function open() {
+    if(location.protocol==='file:'){
+      if(localDeliveryWindow&&!localDeliveryWindow.closed){localDeliveryWindow.focus();return;}
+      localDeliveryWindow=window.open('http://127.0.0.1:8034/baker#delivery-from-file','_blank');
+      if(!localDeliveryWindow){show(true);message('请允许打开本机交付页，或使用 tool/启动烘焙器.cmd。当前制作页已保留。',true);}return;
+    }
+    show(true);message('正在恢复资源与导入工作区…');try { await connect(); await refresh(); if(!last && !importerCurrent && resources.length)await select(resources[resources.length-1]); else if(last)await sendToImporter();else if(importerCurrent)message('已恢复当前素材。请使用下方导入工作区检查、核对并确认名称。');if(!last && !importerCurrent)message(session.outputRoot?'已恢复导出目录。选择已交付修订，或回效果制作导出新资源。':'首次使用请先选择资源导出目录。'); } catch(e) { message(e.message, true); }
+  }
   async function refresh() { resources = (await api('/api/resources')).resources; if(importerCurrent)presentCurrent();render(); }
   function render() {
     const list = node('deliveryList'); list.replaceChildren();
@@ -82,7 +89,10 @@ const DeliveryWorkspace = (() => {
   function init() {
     node('deliveryWorkspace').addEventListener('keydown',e=>e.stopPropagation());
     document.querySelector('.delivery-nav').addEventListener('keydown',e=>{if(active)e.stopPropagation();});
-    node('deliveryOpen').addEventListener('click', open); node('deliveryMake').addEventListener('click', ()=>show(false));
+    node('deliveryOpen').addEventListener('click', open); node('deliveryMake').addEventListener('click', ()=>{
+      if(location.hash==='#delivery-from-file'&&window.opener){try{window.opener.focus();window.close();return;}catch(_){} }
+      show(false);
+    });
     node('deliveryRefresh').addEventListener('click', ()=>refresh().catch(e=>message(e.message,true)));
     node('deliveryCheck').addEventListener('click', ()=>sendToImporter());
     node('deliveryFrame').addEventListener('load', sendToImporter);
@@ -105,6 +115,7 @@ const DeliveryWorkspace = (() => {
       for (const [id,state] of Object.entries(e.data.receipts||{})) try { await api('/api/import-receipts/'+id,state); } catch(error) { message('导入记录保存失败：'+error.message,true); }
       try { await refresh(); } catch(error) { message(error.message,true); }
     });
+    if(location.hash==='#delivery'||location.hash==='#delivery-from-file')open();
   }
   return {init,open,publish,destination};
 })();

@@ -190,10 +190,24 @@ h3 { font-size: var(--fw-type-field-size); margin: 0 0 8px; }
 .log-heading {min-height:36px;gap:8px}
 .log-heading h2 {margin:0;font-size:13px;line-height:20px;font-weight:600}
 .log-panel .fw-button {min-height:28px;padding:2px 8px;border-radius:0;font-size:12px}
-.log-panel progress {height:2px;border-radius:0;appearance:none;border:0;background:var(--fw-color-divider)}
-.log-panel progress::-webkit-progress-bar {background:var(--fw-color-divider)}
-.log-panel progress::-webkit-progress-value {background:var(--fw-color-primary)}
-.log-panel progress::-moz-progress-bar {background:var(--fw-color-primary)}
+.delivery-progress-track {height:8px;border:1px solid var(--fw-color-outline);border-radius:0;background:var(--fw-color-surface-container);position:relative;margin:4px 0 6px;overflow:hidden}
+.delivery-progress-track progress {position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;pointer-events:none}
+.delivery-progress-fill {display:block;height:100%;width:var(--delivery-progress,0%);background:var(--fw-color-primary)}
+.flow-strip {display:grid;grid-template-columns:minmax(160px,1fr) minmax(0,720px) minmax(160px,1fr);gap:12px}
+.flow-strip ol {grid-column:2;justify-content:space-between;gap:12px;width:100%;min-width:0}
+.flow-strip > span {grid-column:3;margin:0;font-size:12px;line-height:18px;max-width:24ch;justify-self:end}
+.flow-strip .step-mark {width:24px;height:24px;font-size:12px}
+.flow-strip li:not(:last-child)::after {width:clamp(12px,2vw,32px);margin-left:4px}
+.package-row {grid-template-columns:minmax(0,1fr) 24px;border:1px solid transparent;padding:12px;margin:4px 0;gap:12px}
+.package-row:has(input:checked) {background:var(--fw-color-primary-container)}
+.package-row.current {border-color:var(--fw-color-primary);background:var(--fw-color-primary-container)}
+.package-row .package-select {grid-column:1;grid-row:1}
+.package-row > input {grid-column:2;grid-row:1;align-self:center;appearance:none;width:20px;height:20px;margin:0;border:1px solid var(--fw-color-outline);border-radius:50%;position:relative;background:var(--fw-color-surface-low);cursor:pointer}
+.package-row > input:checked {background:var(--fw-color-primary);border-color:var(--fw-color-primary)}
+.package-row > input:checked::after {content:"";position:absolute;left:5px;top:5px;width:8px;height:4px;border-left:2px solid var(--fw-color-on-primary);border-bottom:2px solid var(--fw-color-on-primary);transform:rotate(-45deg)}
+.package-row > input:disabled {opacity:.55;cursor:not-allowed}
+@media(max-width:1099px){.flow-strip{grid-template-columns:minmax(0,1fr);justify-items:center}.flow-strip ol{grid-column:1;width:min(720px,100%)}}
+@media(max-width:699px){.flow-strip ol{gap:8px}.flow-strip .step-mark{display:none}.flow-strip li:not(:last-child)::after{display:none}}
 .log-panel li {border:0;padding:2px 0;gap:10px;font:12px/20px Consolas,"Cascadia Mono","Microsoft YaHei",monospace}
 .header-right #make {text-decoration:none;white-space:nowrap}
 @media(max-width:720px){.header-right{gap:8px;flex-wrap:wrap}.log-panel{padding-top:0}}
