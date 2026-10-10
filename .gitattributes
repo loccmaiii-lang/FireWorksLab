@@ -1,1 +1,2 @@
 *.bat text eol=crlf
+/tool/烟花编排工作台.html -text -diff

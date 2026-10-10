@@ -1,0 +1,62 @@
+{
+  "format": "df.offline-readonly-proof/1",
+  "time": "2026-10-10T02:52:17.387Z",
+  "target": {
+    "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_Failed_NewYearFireworks_ShowDirector_2.Default__BP_Failed_NewYearFireworks_ShowDirector_2_C",
+    "assetPath": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_Failed_NewYearFireworks_ShowDirector_2",
+    "directorId": "FailedNewYear"
+  },
+  "active": false,
+  "relatedPointCount": 36,
+  "currentNativeArrays": {
+    "EffectSubTemplates": 17,
+    "EffectTemplates": 43,
+    "EffectScheduleGroups": 3
+  },
+  "baselineConfigSha256": "05852085726ddb68e913acafd642ebe0c1ce450e0a18564bcc46023519720d87",
+  "tiers": {
+    "high": {
+      "originalTemplates": 252,
+      "uniqueTemplates": 45,
+      "originalEntries": 1689,
+      "uniqueEntries": 257,
+      "eventCount": 1689,
+      "subTemplates": 18,
+      "templates": 45,
+      "groups": 3,
+      "scheduleSlots": 252,
+      "issues": []
+    },
+    "medium": {
+      "originalTemplates": 252,
+      "uniqueTemplates": 109,
+      "originalEntries": 1130,
+      "uniqueEntries": 426,
+      "eventCount": 1130,
+      "subTemplates": 18,
+      "templates": 109,
+      "groups": 3,
+      "scheduleSlots": 252,
+      "issues": []
+    },
+    "low": {
+      "originalTemplates": 252,
+      "uniqueTemplates": 81,
+      "originalEntries": 848,
+      "uniqueEntries": 242,
+      "eventCount": 848,
+      "subTemplates": 18,
+      "templates": 81,
+      "groups": 3,
+      "scheduleSlots": 252,
+      "issues": []
+    }
+  },
+  "requestCounts": {
+    "/object/get": 38,
+    "/object/search": 1
+  },
+  "engineWriteCount": 0,
+  "engineSaveCount": 0,
+  "enginePlaybackVerified": false
+}

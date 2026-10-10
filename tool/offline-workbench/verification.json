@@ -1,0 +1,71 @@
+{
+  "format": "df.offline-verification/1",
+  "time": "2026-10-10T02:55:48.517605+00:00",
+  "artifact": {
+    "file": "tool/烟花编排工作台.html",
+    "bytes": 83913964,
+    "sha256": "50e57643737dec82826bdc7616ba5041925e0dc1631c01e2f2f808f8624863cc",
+    "programmeSha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a",
+    "embeddedMusicSha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3"
+  },
+  "automated": {
+    "packagingAndEngine": {
+      "passed": 24,
+      "failed": 0,
+      "command": "node --test tool/offline-workbench/tests/*.test.mjs"
+    },
+    "original8025Core": {
+      "passed": 91,
+      "failed": 0,
+      "scope": "原生产核心，不等于file或UE实导实播"
+    }
+  },
+  "browser": {
+    "protocol": "http",
+    "sameSingleHtmlDevelopmentPreview": true,
+    "fileProtocolVerified": false,
+    "fileProtocolBlock": "自动安全审查拒绝直接file://；浏览器工具只允许HTTP/HTTPS，未绕过",
+    "passed": [
+      "完整测试节目252/1689及原曲加载",
+      "默认完整全景100%",
+      "复制253/撤销252",
+      "改名保存，等待已保存后刷新恢复",
+      "三档切换与导入确认失效",
+      "模板库默认花型模板，统一中文名/英文ID/球花层/尾缀层/基础及随机参数编辑入口",
+      "新建0片段并撤销恢复252",
+      "右栏真实UE只读检查36关联点/1689事件",
+      "最新音频Blob播放引用，readyState4，duration210.810813，节目仍含完整原曲"
+    ],
+    "limitations": [
+      "部分浏览器输入/截图请求曾超时或出现传输帧限制；未将超时请求算通过",
+      "节目真实文件往返按同版本preflightProject/packProject与实际内嵌文件测试；未冒称最终包经过浏览器下载再导入全流程"
+    ]
+  },
+  "engine": {
+    "readOnly": true,
+    "proof": "ue-readonly.json",
+    "connection": "http://127.0.0.1:17780/gpcli",
+    "pointCount": 36,
+    "tiers": {
+      "high": {
+        "events": 1689,
+        "issues": []
+      },
+      "medium": {
+        "events": 1130,
+        "issues": []
+      },
+      "low": {
+        "events": 848,
+        "issues": []
+      }
+    },
+    "writeExecuted": false,
+    "saveExecuted": false,
+    "playbackVerified": false
+  },
+  "originalSourceUntouched": true,
+  "originalProgrammeFileUntouched": true,
+  "publicSiteUpdated": false,
+  "userAccepted": false
+}
