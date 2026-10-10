@@ -88,6 +88,11 @@
     "tool/offline-workbench/audit-v16/06-offline-lime-1366.png"
   ],
   "publication": {
-    "status": "pending artifact commit and remote verification"
+    "artifactCommit": "707b016474c552521d307934ee24d73c68788340",
+    "htmlBlob": "9ceb2d1171282ca4972a88f5ca806eaf86acd7b0",
+    "zipBlob": "151b746929d8f987785a74853f9bef31839043b8",
+    "remoteMainContainsCommit": true,
+    "remoteAndLocalArtifactBlobsEqual": true,
+    "verifiedAt": "2026-10-10T07:54:41.130055+00:00"
   }
 }

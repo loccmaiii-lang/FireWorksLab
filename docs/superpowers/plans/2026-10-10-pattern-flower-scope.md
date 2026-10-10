@@ -21,6 +21,6 @@
 ## Task 3 — Same-file delivery
 - [x] Tool version16, production build/tests and one generated HTML.
 - [x] Manual/ZIP content/hashes, same-path storage invariant checks/final saved-personal reload/source-show hash.
-- [ ] Publish pure model/tests/compiled artifacts/evidence/records, verify remote and release claim.
+- [x] Publish pure model/tests/compiled artifacts/evidence/records, verify remote and release claim.
 
 Browser file reimport blocked by extension permissions; direct file-protocol rejection not bypassed. Existing v15→v16 overlay not repeated; no UE writes. New user evidence: from-zero template is clean; copying retains all calls and label deletion does not unbind. Copy count and reversible call deletion moved next to name.
