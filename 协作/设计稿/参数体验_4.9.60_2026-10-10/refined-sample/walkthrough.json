@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-10",
+  "sourceVersion": "4.9.68",
+  "layouts": [
+    "continuous",
+    "modules",
+    "tasks"
+  ],
+  "sourceReferences": 626,
+  "modelCases": 36,
+  "modelTests": 12,
+  "browserCases": [
+    "kiku",
+    "crackle",
+    "crossette",
+    "tailM",
+    "trailM",
+    "fountain",
+    "fan",
+    "senrin"
+  ],
+  "viewports": [
+    [
+      1280,
+      720
+    ],
+    [
+      1366,
+      768
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "documentOverflow": false,
+  "consoleWarningsOrErrors": 0,
+  "pointerDrag": {
+    "from": [
+      0.7,
+      1
+    ],
+    "to": [
+      0.736707,
+      1.298
+    ],
+    "undo": [
+      0.7,
+      1
+    ],
+    "oneUndo": true
+  },
+  "objectReturn": {
+    "layout": "continuous",
+    "from": "子花",
+    "via": "星",
+    "to": "子花",
+    "beforeScroll": 354,
+    "afterScroll": 354,
+    "focusedField": "f-P-subSize"
+  },
+  "validationScope": "隔离内存样板；具体操作与限制见design-qa.md",
+  "userApproved": false,
+  "productionModified": false,
+  "ueWrites": 0
+}

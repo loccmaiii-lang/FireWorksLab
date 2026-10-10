@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>烟花烘焙器 · 参数方案</title>
+  <link rel="stylesheet" href="/tool/design-system/tokens.css">
+  <link rel="stylesheet" href="sample.css">
+</head>
+<body class="fw-scope">
+  <header class="app-header">
+    <div class="brand"><strong>DF</strong><span>特效工作台</span><small>烟花烘焙器</small></div>
+    <nav class="layout-picker" aria-label="参数方案"><button data-layout="continuous">01 连续索引</button><button data-layout="modules">02 模块索引</button><button data-layout="tasks">03 任务分页</button></nav>
+    <span class="sample-mark">参数样板</span>
+  </header>
+  <main class="workspace">
+    <aside class="object-panel">
+      <div class="side-title"><h2>效果与图层</h2></div>
+      <label class="template-label" for="template">花型</label>
+      <select id="template"></select>
+      <nav id="featured" class="featured" aria-label="花型样板"></nav>
+      <div class="side-divider"></div>
+      <div class="side-caption">当前图层</div>
+      <div class="layer-list" id="layers" aria-label="图层选择"></div>
+      <div class="side-divider"></div>
+      <div class="side-caption">当前层发射器</div>
+      <nav id="objects" class="objects" aria-label="作用对象"></nav>
+    </aside>
+    <section class="editor" aria-label="参数编辑器">
+      <header class="identity"><div><p id="effect-name"></p><h1 id="identity"></h1></div><button id="help" class="quiet-button" aria-label="当前对象说明">说明</button></header>
+      <div class="search-row"><label for="search" class="sr-only">搜索当前对象参数</label><input type="search" id="search" placeholder="搜索当前参数…"><label class="check"><input type="checkbox" id="changed">仅改动</label><label class="check"><input type="checkbox" id="english">英文名</label></div>
+      <div class="body" id="editor-body"><nav id="index" class="parameter-index" aria-label="参数导航"></nav><div id="scroll" class="parameter-scroll" tabindex="-1"><div id="fields"></div></div></div>
+      <footer class="editor-footer"><div class="undo-tools"><button id="undo" class="icon-button" aria-label="撤销"><span data-fw-icon="undo"></span></button><button id="redo" class="icon-button" aria-label="重做"><span data-fw-icon="redo"></span></button><span id="change-count"></span></div><button id="restore" class="quiet-button">恢复当前对象</button></footer>
+    </section>
+  </main>
+  <dialog id="help-dialog"><div class="dialog-heading"><h2 id="help-title"></h2><button id="help-close" class="quiet-button">关闭</button></div><div id="help-content"></div></dialog>
+  <div id="announce" class="sr-only" aria-live="polite"></div>
+  <script src="/tool/design-system/icons.js"></script>
+  <script src="/tool/src/js/10_types.js"></script>
+  <script src="/tool/src/js/12_tempo.js"></script>
+  <script src="source-contract.js"></script>
+  <script type="module" src="sample.mjs"></script>
+</body>
+</html>
