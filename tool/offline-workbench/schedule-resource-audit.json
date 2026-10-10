@@ -1,0 +1,1401 @@
+{
+  "format": "df.schedule-resource-audit/1",
+  "time": "2026-10-10T13:10:34.168Z",
+  "programme": "NewYearFireWorks_v01",
+  "revision": "R03",
+  "quality": "high",
+  "musicOffset": 10,
+  "uePlaybackVerified": false,
+  "noEngineWrites": true,
+  "noProgrammeOrSourceChanges": true,
+  "results": [
+    {
+      "role": "blueprint-cdo",
+      "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_Failed_NewYearFireworks_ShowDirector_2.Default__BP_Failed_NewYearFireworks_ShowDirector_2_C",
+      "active": false,
+      "completeArraysMatchR03": true,
+      "missingReferences": [],
+      "referencedResourceIDs": [
+        "P_EFX_FireWorks_Crackle",
+        "P_EFX_FireWorks_FanComet_01",
+        "P_EFX_FireWorks_FanSilver_01",
+        "P_EFX_FireWorks_GoldChry",
+        "P_EFX_FireWorks_GoldCoreLime",
+        "P_EFX_FireWorks_GoldCrackle",
+        "P_EFX_FireWorks_GoldKamuro",
+        "P_EFX_FireWorks_GoldRayChry",
+        "P_EFX_FireWorks_GoldSpark",
+        "P_EFX_FireWorks_GreenPeony",
+        "P_EFX_FireWorks_Lime",
+        "P_EFX_FireWorks_MultiLayerChry",
+        "P_EFX_FireWorks_NY_Trail_Large",
+        "P_EFX_FireWorks_NY_Trail_Medium",
+        "P_EFX_FireWorks_NY_Trail_Small",
+        "P_EFX_FireWorks_OrangeGlitter",
+        "P_EFX_FireWorks_PrismWheels",
+        "P_EFX_FireWorks_SilverChry",
+        "P_EFX_FireWorks_SilverStrobeChry",
+        "P_EFX_FireWorks_Strobe"
+      ],
+      "unusedLibraryIDs": [],
+      "resources": [
+        {
+          "id": "P_EFX_FireWorks_Lime",
+          "callCount": 6,
+          "segmentStarts": [
+            16.7,
+            30.6,
+            87.1
+          ],
+          "calls": [
+            {
+              "id": "P_EFX_FireWorks_Lime",
+              "parentTemplate": "WB_R03_C018_P",
+              "subTemplate": "NYR03_Lime_v1",
+              "group": "P",
+              "slot": 0,
+              "showStart": 16.700000762939453,
+              "launchTime": 16.700000762939453,
+              "effectTime": 19.65440082550049,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P0",
+                  "pointId": "P0"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Lime",
+              "parentTemplate": "WB_R03_C018_P",
+              "subTemplate": "NYR03_Lime_v1",
+              "group": "P",
+              "slot": 2,
+              "showStart": 16.700000762939453,
+              "launchTime": 17.000000774860382,
+              "effectTime": 19.954400837421417,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P2",
+                  "pointId": "P2"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Lime",
+              "parentTemplate": "WB_R03_C018_P",
+              "subTemplate": "NYR03_Lime_v1",
+              "group": "P",
+              "slot": 0,
+              "showStart": 30.600000381469727,
+              "launchTime": 30.600000381469727,
+              "effectTime": 33.55440044403076,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P0",
+                  "pointId": "P0"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Lime",
+              "parentTemplate": "WB_R03_C018_P",
+              "subTemplate": "NYR03_Lime_v1",
+              "group": "P",
+              "slot": 2,
+              "showStart": 30.600000381469727,
+              "launchTime": 30.900000393390656,
+              "effectTime": 33.85440045595169,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P2",
+                  "pointId": "P2"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Lime",
+              "parentTemplate": "WB_R03_C056_P",
+              "subTemplate": "NYR03_Lime_v1",
+              "group": "P",
+              "slot": 2,
+              "showStart": 87.0999984741211,
+              "launchTime": 87.0999984741211,
+              "effectTime": 90.05439853668213,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P2",
+                  "pointId": "P2"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Lime",
+              "parentTemplate": "WB_R03_C056_P",
+              "subTemplate": "NYR03_Lime_v1",
+              "group": "P",
+              "slot": 6,
+              "showStart": 87.0999984741211,
+              "launchTime": 87.0999984741211,
+              "effectTime": 90.05439853668213,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P6",
+                  "pointId": "P6"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "P_EFX_FireWorks_Crackle",
+          "callCount": 4,
+          "segmentStarts": [
+            25,
+            43.3
+          ],
+          "calls": [
+            {
+              "id": "P_EFX_FireWorks_Crackle",
+              "parentTemplate": "WB_R03_C022_P",
+              "subTemplate": "NYR03_Crackle_v1",
+              "group": "P",
+              "slot": 3,
+              "showStart": 25,
+              "launchTime": 25,
+              "effectTime": 27.954400062561035,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P3",
+                  "pointId": "P3"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Crackle",
+              "parentTemplate": "WB_R03_C022_P",
+              "subTemplate": "NYR03_Crackle_v1",
+              "group": "P",
+              "slot": 5,
+              "showStart": 25,
+              "launchTime": 25,
+              "effectTime": 27.954400062561035,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P5",
+                  "pointId": "P5"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Crackle",
+              "parentTemplate": "WB_R03_C022_P",
+              "subTemplate": "NYR03_Crackle_v1",
+              "group": "P",
+              "slot": 3,
+              "showStart": 43.29999923706055,
+              "launchTime": 43.29999923706055,
+              "effectTime": 46.25439929962158,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P3",
+                  "pointId": "P3"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Crackle",
+              "parentTemplate": "WB_R03_C022_P",
+              "subTemplate": "NYR03_Crackle_v1",
+              "group": "P",
+              "slot": 5,
+              "showStart": 43.29999923706055,
+              "launchTime": 43.29999923706055,
+              "effectTime": 46.25439929962158,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P5",
+                  "pointId": "P5"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "P_EFX_FireWorks_GoldCoreLime",
+          "callCount": 8,
+          "segmentStarts": [
+            48.4,
+            99.9,
+            140,
+            167,
+            189.6
+          ],
+          "calls": [
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C033_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 2,
+              "showStart": 48.400001525878906,
+              "launchTime": 48.400001525878906,
+              "effectTime": 52.777201652526855,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P2",
+                  "pointId": "P2"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C033_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 6,
+              "showStart": 48.400001525878906,
+              "launchTime": 48.400001525878906,
+              "effectTime": 52.777201652526855,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P6",
+                  "pointId": "P6"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C033_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 2,
+              "showStart": 99.9000015258789,
+              "launchTime": 99.9000015258789,
+              "effectTime": 104.27720165252686,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P2",
+                  "pointId": "P2"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C033_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 6,
+              "showStart": 99.9000015258789,
+              "launchTime": 99.9000015258789,
+              "effectTime": 104.27720165252686,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P6",
+                  "pointId": "P6"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C094_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 4,
+              "showStart": 140,
+              "launchTime": 140,
+              "effectTime": 144.37720012664795,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P4",
+                  "pointId": "P4"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C033_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 2,
+              "showStart": 167,
+              "launchTime": 167,
+              "effectTime": 171.37720012664795,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P2",
+                  "pointId": "P2"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C033_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 6,
+              "showStart": 167,
+              "launchTime": 167,
+              "effectTime": 171.37720012664795,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P6",
+                  "pointId": "P6"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C094_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 4,
+              "showStart": 189.60000610351562,
+              "launchTime": 189.60000610351562,
+              "effectTime": 193.97720623016357,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P4",
+                  "pointId": "P4"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "scene-instance",
+      "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.BP_Failed_NewYearFireworks_ShowDirector_7",
+      "active": false,
+      "completeArraysMatchR03": true,
+      "missingReferences": [],
+      "referencedResourceIDs": [
+        "P_EFX_FireWorks_Crackle",
+        "P_EFX_FireWorks_FanComet_01",
+        "P_EFX_FireWorks_FanSilver_01",
+        "P_EFX_FireWorks_GoldChry",
+        "P_EFX_FireWorks_GoldCoreLime",
+        "P_EFX_FireWorks_GoldCrackle",
+        "P_EFX_FireWorks_GoldKamuro",
+        "P_EFX_FireWorks_GoldRayChry",
+        "P_EFX_FireWorks_GoldSpark",
+        "P_EFX_FireWorks_GreenPeony",
+        "P_EFX_FireWorks_Lime",
+        "P_EFX_FireWorks_MultiLayerChry",
+        "P_EFX_FireWorks_NY_Trail_Large",
+        "P_EFX_FireWorks_NY_Trail_Medium",
+        "P_EFX_FireWorks_NY_Trail_Small",
+        "P_EFX_FireWorks_OrangeGlitter",
+        "P_EFX_FireWorks_PrismWheels",
+        "P_EFX_FireWorks_SilverChry",
+        "P_EFX_FireWorks_SilverStrobeChry",
+        "P_EFX_FireWorks_Strobe"
+      ],
+      "unusedLibraryIDs": [],
+      "resources": [
+        {
+          "id": "P_EFX_FireWorks_Lime",
+          "callCount": 6,
+          "segmentStarts": [
+            16.7,
+            30.6,
+            87.1
+          ],
+          "calls": [
+            {
+              "id": "P_EFX_FireWorks_Lime",
+              "parentTemplate": "WB_R03_C018_P",
+              "subTemplate": "NYR03_Lime_v1",
+              "group": "P",
+              "slot": 0,
+              "showStart": 16.700000762939453,
+              "launchTime": 16.700000762939453,
+              "effectTime": 19.65440082550049,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P0",
+                  "pointId": "P0"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Lime",
+              "parentTemplate": "WB_R03_C018_P",
+              "subTemplate": "NYR03_Lime_v1",
+              "group": "P",
+              "slot": 2,
+              "showStart": 16.700000762939453,
+              "launchTime": 17.000000774860382,
+              "effectTime": 19.954400837421417,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P2",
+                  "pointId": "P2"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Lime",
+              "parentTemplate": "WB_R03_C018_P",
+              "subTemplate": "NYR03_Lime_v1",
+              "group": "P",
+              "slot": 0,
+              "showStart": 30.600000381469727,
+              "launchTime": 30.600000381469727,
+              "effectTime": 33.55440044403076,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P0",
+                  "pointId": "P0"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Lime",
+              "parentTemplate": "WB_R03_C018_P",
+              "subTemplate": "NYR03_Lime_v1",
+              "group": "P",
+              "slot": 2,
+              "showStart": 30.600000381469727,
+              "launchTime": 30.900000393390656,
+              "effectTime": 33.85440045595169,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P2",
+                  "pointId": "P2"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Lime",
+              "parentTemplate": "WB_R03_C056_P",
+              "subTemplate": "NYR03_Lime_v1",
+              "group": "P",
+              "slot": 2,
+              "showStart": 87.0999984741211,
+              "launchTime": 87.0999984741211,
+              "effectTime": 90.05439853668213,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P2",
+                  "pointId": "P2"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Lime",
+              "parentTemplate": "WB_R03_C056_P",
+              "subTemplate": "NYR03_Lime_v1",
+              "group": "P",
+              "slot": 6,
+              "showStart": 87.0999984741211,
+              "launchTime": 87.0999984741211,
+              "effectTime": 90.05439853668213,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P6",
+                  "pointId": "P6"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "P_EFX_FireWorks_Crackle",
+          "callCount": 4,
+          "segmentStarts": [
+            25,
+            43.3
+          ],
+          "calls": [
+            {
+              "id": "P_EFX_FireWorks_Crackle",
+              "parentTemplate": "WB_R03_C022_P",
+              "subTemplate": "NYR03_Crackle_v1",
+              "group": "P",
+              "slot": 3,
+              "showStart": 25,
+              "launchTime": 25,
+              "effectTime": 27.954400062561035,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P3",
+                  "pointId": "P3"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Crackle",
+              "parentTemplate": "WB_R03_C022_P",
+              "subTemplate": "NYR03_Crackle_v1",
+              "group": "P",
+              "slot": 5,
+              "showStart": 25,
+              "launchTime": 25,
+              "effectTime": 27.954400062561035,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P5",
+                  "pointId": "P5"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Crackle",
+              "parentTemplate": "WB_R03_C022_P",
+              "subTemplate": "NYR03_Crackle_v1",
+              "group": "P",
+              "slot": 3,
+              "showStart": 43.29999923706055,
+              "launchTime": 43.29999923706055,
+              "effectTime": 46.25439929962158,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P3",
+                  "pointId": "P3"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_Crackle",
+              "parentTemplate": "WB_R03_C022_P",
+              "subTemplate": "NYR03_Crackle_v1",
+              "group": "P",
+              "slot": 5,
+              "showStart": 43.29999923706055,
+              "launchTime": 43.29999923706055,
+              "effectTime": 46.25439929962158,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P5",
+                  "pointId": "P5"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "P_EFX_FireWorks_GoldCoreLime",
+          "callCount": 8,
+          "segmentStarts": [
+            48.4,
+            99.9,
+            140,
+            167,
+            189.6
+          ],
+          "calls": [
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C033_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 2,
+              "showStart": 48.400001525878906,
+              "launchTime": 48.400001525878906,
+              "effectTime": 52.777201652526855,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P2",
+                  "pointId": "P2"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C033_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 6,
+              "showStart": 48.400001525878906,
+              "launchTime": 48.400001525878906,
+              "effectTime": 52.777201652526855,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P6",
+                  "pointId": "P6"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C033_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 2,
+              "showStart": 99.9000015258789,
+              "launchTime": 99.9000015258789,
+              "effectTime": 104.27720165252686,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P2",
+                  "pointId": "P2"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C033_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 6,
+              "showStart": 99.9000015258789,
+              "launchTime": 99.9000015258789,
+              "effectTime": 104.27720165252686,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P6",
+                  "pointId": "P6"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C094_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 4,
+              "showStart": 140,
+              "launchTime": 140,
+              "effectTime": 144.37720012664795,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P4",
+                  "pointId": "P4"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C033_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 2,
+              "showStart": 167,
+              "launchTime": 167,
+              "effectTime": 171.37720012664795,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P2",
+                  "pointId": "P2"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C033_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 6,
+              "showStart": 167,
+              "launchTime": 167,
+              "effectTime": 171.37720012664795,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P6",
+                  "pointId": "P6"
+                }
+              ]
+            },
+            {
+              "id": "P_EFX_FireWorks_GoldCoreLime",
+              "parentTemplate": "WB_R03_C094_P",
+              "subTemplate": "NYR03_GoldCoreLime_v1",
+              "group": "P",
+              "slot": 4,
+              "showStart": 189.60000610351562,
+              "launchTime": 189.60000610351562,
+              "effectTime": 193.97720623016357,
+              "filters": [
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                },
+                {
+                  "PlatformFlags": 14,
+                  "MinQualityLevel": "EQuality_VeryLow"
+                }
+              ],
+              "bindings": [
+                {
+                  "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.FailedNewYear_ShowEffect_P4",
+                  "pointId": "P4"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "resourceFX": [
+    {
+      "id": "P_EFX_FireWorks_Lime",
+      "rowName": "跨年烟花3.0_小型_H_小青柠",
+      "description": "跨年烟花3.0_小型_H_小青柠",
+      "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+      "particleClass": "/Script/Engine.ParticleSystem",
+      "emitterCount": 4,
+      "resourceDelay": "0.000000"
+    },
+    {
+      "id": "P_EFX_FireWorks_Crackle",
+      "rowName": "跨年烟花3.0_小型_G_爆裂星",
+      "description": "跨年烟花3.0_小型_G_爆裂星",
+      "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+      "particleClass": "/Script/Engine.ParticleSystem",
+      "emitterCount": 1,
+      "resourceDelay": "0.000000"
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldCoreLime",
+      "rowName": "跨年烟花3.0_中型_E_金蕊柠",
+      "description": "跨年烟花3.0_中型_E_金蕊柠",
+      "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+      "particleClass": "/Script/Engine.ParticleSystem",
+      "emitterCount": 4,
+      "resourceDelay": "0.000000"
+    }
+  ]
+}
