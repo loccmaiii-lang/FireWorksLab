@@ -44,4 +44,4 @@ ZIP 写入后读回 SHA256，使用不覆盖的原子发布。ZIP 记录或资�
 
 本轮通过 HTTP 页面与真实原导入器核对，file 协议浏览器入口未新验，不据此声称 file 最终验收完成。UE 写入、保存、P4、登记与实播未执行；用户艺术认可、参数 A/B/展开/形状决策继续保留原清单。
 
-本机证据在 `analysis/local/WORKSPACE_DELIVERY/qa-layout-4968/`：verified.json、formal-export-verified.json、基线/当前检查结果、default-path.png、zip-archive.png、formal-export.png。源码及文字报告可入库，本机配置、资源、ZIP、日志和截图不入库。用户后续明确本项目可直接提交推送，约定记录在CLAUDE.md第5节；本轮按实际范围独立提交。
+本机证据在 `analysis/local/WORKSPACE_DELIVERY/qa-layout-4968/`：verified.json、formal-export-verified.json、基线/当前检查结果、default-path.png、zip-archive.png、formal-export.png。源码及文字报告可入库，本机配置、资源、ZIP、日志和截图不入库。用户后续明确本项目可直接提交推送，约定记录在CLAUDE.md第5节；本轮按实际范围独立提交83c844cd并推送main，源码认领释放。
