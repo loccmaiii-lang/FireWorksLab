@@ -55,9 +55,12 @@ PC/手机保持原配置与主贴图；手机材质目标单独命名，避免�
 ```powershell
 cd tool/local_delivery
 python -m unittest -v test_store test_service test_launcher
+node test_baker_handoff.cjs
 ```
 
 16 项测试覆盖完整发布、CRC/引用/路径、UTF8、多层、不可变/重复修订、持久化、污染核对、索引失败恢复、会话与只读来源、元数据封装及目录选择取消，以及启动配置优先级、服务复用、导入器路径、隐藏启动子进程、启动失败和连接后才打开浏览器。实际页证据、原有回归失败与未完成验收见 `analysis/results/WORKSPACE_DELIVERY/README.md`；协议见 `spec/workspace_resource_v1.md`。原生 UE 实导/实播、旧批次迁移、全分辨率及严格像素基准仍需对应证据，不能由单元测试推定通过。
+
+另5组隔离导航契约覆盖file父页无API/存储迁移、复用/关闭后再开、弹窗受阻恢复、HTTP自动进入及返回opener、HTTP页内返回。仅Node VM和DOM桩，不访问file浏览器、不代表真实浏览器窗口策略已验收。
 
 
 ## 4.9.61 交付页呈现接入
