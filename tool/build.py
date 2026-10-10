@@ -4,6 +4,7 @@ import glob, os, re
 here = os.path.dirname(os.path.abspath(__file__))
 src = os.path.join(here, 'src')
 css = open(os.path.join(src, 'style.css'), encoding='utf-8').read()
+css = ''.join(open(os.path.join(here, 'design-system', f), encoding='utf-8').read() for f in ('tokens.css', 'components.css')) + '\n' + css
 body = open(os.path.join(src, 'body.html'), encoding='utf-8').read()
 js = ''.join(open(f, encoding='utf-8').read() for f in sorted(glob.glob(os.path.join(src, 'js', '*.js'))))
 ver = re.search(r"const VERSION = '([^']+)'", js)

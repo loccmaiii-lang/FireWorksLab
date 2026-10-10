@@ -1220,6 +1220,7 @@ function buildComboPanel() {
   if (!state.layers.length) host.innerHTML = '<p class="note">还没有图层。</p>';
 }
 async function exportCombo() {
+  const destination = DeliveryWorkspace.destination();
   // 4.0：多层效果导出成一个素材包（每层每段一个发射器 + 延迟），附上原来的组合说明 JSON
   // 4.5.8（19-C05）：组合说明在贴图最终烘焙之后再写（以前在烘之前读，改完时长马上导出，说明和贴图可能对不上）
   const comboJson = () => ({ name: state.comboName, note: '每层一个面片，共用同一个爆点；Age = (礼花时间 − delay) × timeRate；颜色为 sRGB 十六进制，colorOverLife 为线性 RGB',
@@ -1240,7 +1241,7 @@ async function exportCombo() {
     files.push([`${name}_组合说明.json`, utf8(JSON.stringify(comboJson(), null, 2))]);
     busy(true, '打包 ZIP…', 1);
     const pk = files.some(([f]) => f.startsWith(FW_TEX_PREFIX)) ? packNamesFor(wbKey(), lib.effect, state.layers.length, name).base : name;
-    download(await makeZip(files.map(([f, d]) => [`${pk}/${f}`, d])), `${pk}.zip`);
+    await deliverResource(await makeZip(files.map(([f, d]) => [`${pk}/${f}`, d])), `${pk}.zip`, deliveryMetadata(), destination);
     if (typeof wbAutoExport === 'function') wbAutoExport(pk);     // 4.2.10：存进这个效果的「版本」（导出时）
     flash('已导出组合素材包 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { console.error(e); flash('组合导出失败：' + e.message, true); }

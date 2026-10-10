@@ -315,7 +315,7 @@ async function platformFiles(name,b,M,onProg=null) {
   }finally{if(!b.mobile)disposeBake(mobile);}
 }
 // 4.4.2 单层效果按「导出方案」出包（文件名规则、版本记录和普通单层导出一样）
-async function exportSingleScheme(name, b) {
+async function exportSingleScheme(name, b, destination) {
   const r = await singleSchemeFiles(name, b, state.M, p => busy(true, '按导出方案烘焙…', 0.93 + 0.05 * p)), files = r.files, so = singleOut(state.P);
   const kindCN = k => ({ seq: '序列', unit: '单束', dots: 'GPU 光点', frame: '单帧', off: '不出' })[k];
   files.push([`${name}_Cascade参数.txt`, utf8(`导出方案：PC ${kindCN(so.pc)} · 手机 ${kindCN(so.mobile)}（烘焙器 ${VERSION}）\n完整数值见 cascade.json / cascade_mobile.json。\n` + (so.pc === 'seq' ? cascadeText(name, b, state.M) : '') + '\n' + singleSchemeNote(state.P) + '\n')]);
@@ -324,12 +324,13 @@ async function exportSingleScheme(name, b) {
   let zipName = name, out = files;
   if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: r.ln, mn: r.mn, b: r.ub || b, mb: r.mb || b, layer: '', pcTex: r.pcTex, frame: r.frame }]); zipName = nm.base; }
   { const sp = exportScalePlan(state.P); out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放
-  download(await makeZip(out), `${zipName}.zip`);
+  await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b), destination);
   wbAutoExport(zipName);
   flash(`已导出 ${name}（PC ${kindCN(so.pc)} · 手机 ${kindCN(so.mobile)}）${packTidyNote()}`, false, packTidyNote() ? 8000 : 0);
 }
 async function exportMaster() {
   const name = safeName();
+  const destination = DeliveryWorkspace.destination();
   if (!busyCan(true)) return;
   busy(true, '准备导出…', 0);
   let own = false, b = null;
@@ -341,7 +342,7 @@ async function exportMaster() {
     busy(true, '编码 PNG…', 0.93);
     // 4.4.2：单层效果选了别的导出方案（GPU 光点 / 单束 / 不出，或手机不出）→ 和多层层页头同一套
     const so = typeof singleOut === 'function' ? singleOut(state.P) : { pc: 'seq', mobile: 'seq' };
-    if ((so.pc !== 'seq' || so.mobile !== 'seq') && (b.form === 'master' || b.form === 'segments')) { await exportSingleScheme(name, b); if (own && b) disposeBake(b); busy(false); return; }
+    if ((so.pc !== 'seq' || so.mobile !== 'seq') && (b.form === 'master' || b.form === 'segments')) { await exportSingleScheme(name, b, destination); if (own && b) disposeBake(b); busy(false); return; }
     const files = await texFiles(b, name);
     if (b.form === 'trail' && state.P.trExport4K) {
       busy(true, '烘焙 4K 母版…', 0.94);
@@ -358,7 +359,7 @@ async function exportMaster() {
     let zipName = name, out = files;
     if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); zipName = nm.base; }
     { const sp = exportScalePlan(state.P); out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放
-    download(await makeZip(out), `${zipName}.zip`);
+    await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b), destination);
     wbAutoExport(zipName);     // 4.2.10：存进这个效果的「版本」（导出时），不再进工具页的全局版本列表
     flash('已导出 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { console.error(e); flash('导出失败：' + e.message, true); }
@@ -368,6 +369,7 @@ async function exportMaster() {
 // 种子变体：V1–V3 三张贴图，共用一套参数表
 async function exportVariants() {
   const name = safeName();
+  const destination = DeliveryWorkspace.destination();
   if (bakeKind(state.P) !== 'master') { flash('种子变体只用于大面片母版', true); return; }
   if (!busyCan(true)) return;
   busy(true, '烘焙种子变体…', 0);
@@ -381,7 +383,7 @@ async function exportVariants() {
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(bs[0], state.M))]);
     files.push([`${name}.json`, utf8(JSON.stringify({ ...masterJSON(bs[0], name, state.M), variants: bs.map((b, i) => ({ index: String(i + 1).padStart(2, '0'), seed: b.P.seed })) }, null, 2))]);
     files.push(...fwlFiles(name, bs[0], state.M));
-    download(await makeZip(files), `${name}_V1-V3.zip`);
+    await deliverResource(await makeZip(files), `${name}_V1-V3.zip`, deliveryMetadata(bs[0]), destination);
     flash('已导出三个种子变体');
   } catch (e) { console.error(e); flash('导出失败：' + e.message, true); }
   bs.forEach(disposeBake); busy(false);
