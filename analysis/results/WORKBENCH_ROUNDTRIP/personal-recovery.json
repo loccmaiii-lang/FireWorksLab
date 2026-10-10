@@ -1,0 +1,21 @@
+{
+  "format": "df.personal-recovery-check/1",
+  "time": "2026-10-10T09:30:36.832Z",
+  "checks": {
+    "programmeFileRoundtrip": true,
+    "customFlower": true,
+    "customChoreography": true,
+    "fixedVersionReferences": true,
+    "threeTiers": true,
+    "audioBytes": true,
+    "musicMarkers": true,
+    "saverIdentityIsolation": true,
+    "originalUnchanged": true
+  },
+  "cues": 1,
+  "events": 3,
+  "audioSha256": "65267ab40c3560e70ac39086cf804745ef98655bd5ef2d700853fa6802a5d975",
+  "programmeSha256": "91a72ddd5e5f28faac66d4c5d8f0cca07928a32932d08b8124ce28faa2c81b75",
+  "browserIndexedDBTested": false,
+  "fileBrowserTested": false
+}

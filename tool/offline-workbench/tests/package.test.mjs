@@ -43,3 +43,5 @@ test('embedded programme survives real version-file round trip; new programme is
  assert.deepEqual(next.doc.cues,initial.doc.cues);assert.deepEqual(next.doc.events,initial.doc.events);assert.deepEqual(next.doc.subTemplateLibrary,initial.doc.subTemplateLibrary);assert.deepEqual(next.doc.choreographyLibrary,initial.doc.choreographyLibrary);assert.deepEqual(next.profiles,initial.profiles);assert.deepEqual(next.audioRef,initial.audioRef);
  const blank=newProgram(initial,{name:'空白核对'});validateMedia(blank);assert.equal(blank.doc.cues.length,0);assert.equal(blank.doc.events.length,0);assert.equal(blank.doc.sections.length,0);assert.equal(blank.audioRef,null);assert.deepEqual(blank.musicMarkers,[]);assert.equal(blank.doc.subTemplateLibrary.length,18);
 });
+
+test('build manifest identifies its runtime',()=>{assert(['linux','win32','darwin'].includes(report.buildEnvironment.platform));assert.match(report.buildEnvironment.node,/^v\d+\.\d+\.\d+$/);assert.match(report.buildEnvironment.arch,/^[a-z0-9_]+$/);});

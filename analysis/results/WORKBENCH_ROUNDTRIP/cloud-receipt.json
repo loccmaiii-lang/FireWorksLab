@@ -1,0 +1,20 @@
+{
+  "format": "df.cloud-roundtrip/1",
+  "inputCommit": "b2a017548d497508a55acd1bb1a17df1fac8a72b",
+  "runId": "38041492156",
+  "platform": "Linux",
+  "python": "3.12.15",
+  "node": "v20.20.2",
+  "proofPatch": true,
+  "files": {
+    "tool/offline-workbench/build.mjs": "5d2b614a3a966472ec595974a7aead5a3cc8bfe9c8d9974330a627fd0fd1ba81",
+    "tool/offline-workbench/tests/package.test.mjs": "e709669923c202078610c2e527d4d367b77363873f32e6b17f153e632b0a9aa0",
+    "tool/烟花编排工作台.html": "4fb32e220c16c271e9300859e1a20690433656998f0a19d8a53ce80062b7dcad",
+    "tool/烟花编排工作台.html.build.json": "e48920ca82f4c1da764b348bdc66853f09ef51cc037ab4199b809914fd72372d",
+    "tool/烟花编排工作台-离线包.zip": "8024916d608959a153520c6a61c8b896af79f06a208f25699206e827e4245a97",
+    "tool/烟花编排工作台_使用说明.html": "7bd860886038d095e53917a5827b99fb32e7a702a8e7321d67381790223233a2"
+  },
+  "htmlSha256": "4fb32e220c16c271e9300859e1a20690433656998f0a19d8a53ce80062b7dcad",
+  "cues": 252,
+  "events": 1689
+}
