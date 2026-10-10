@@ -1,49 +1,60 @@
 {
   "format": "df.offline-verification/2",
-  "time": "2026-10-10T04:38:36.497558+00:00",
-  "toolVersion": "13",
+  "time": "2026-10-10T06:25:29.803272+00:00",
+  "toolVersion": "14",
   "artifact": {
     "file": "tool/烟花编排工作台.html",
     "stableLocalFile": "D:\\FXTools\\DFWorkbench\\deliveries\\烟花编排工作台\\2026-10-10-v12\\烟花编排工作台.html",
-    "bytes": 2545291,
-    "sha256": "01f25b8b8418acb42c5b59f590b07ea82cda47cc8fef88ba6e6496f3879eca8e",
+    "bytes": 2560330,
+    "sha256": "368583d7b1fff4c8d25f81960ec4f77b0820013475093ab93cf625b19a893130",
     "zipName": "烟花编排工作台-离线包.zip",
-    "zipBytes": 360118,
-    "zipSha256": "570d7c39f7aeeab9482893cf6869dec5d475e16d7f4799e99fc5cc243b3449b4",
+    "zipBytes": 365505,
+    "zipSha256": "437f709642c6e3a538658ddd4afd14cdcbce4747221a7b36f694d5ad8c2c1277",
     "musicIncluded": false,
     "originalProgrammeSha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a"
   },
   "automated": {
     "productionCore": {
-      "passed": 91,
+      "passed": 99,
       "failed": 0
     },
     "offlineWrapper": {
       "passed": 37,
       "failed": 0
     },
-    "scope": "source build hook; package copied to same8025 static HTTP path; original show252/1689/18 unchanged; old Site4 tests excluded"
+    "newReferenceModel": {
+      "passed": 8,
+      "failed": 0,
+      "oldModelRedFailures": 5
+    },
+    "publicStandaloneModel": {
+      "passed": 8,
+      "failed": 0
+    },
+    "scope": "original show unchanged; build+source tests; old Site4 excluded; ZIP3 entries equal stable files"
   },
   "browser": {
     "protocol": "HTTP",
     "fileProtocolVerified": false,
     "sameHtmlBytes": true,
     "passed": [
-      "choose actual director blueprint and level actor; return to default",
-      "invalid exact path blocks import without fallback",
-      "opening picker and changing tier clears old confirmation",
-      "create3-point together cue with0–0.2s per-flower delay",
-      "reroll/Undo restores previous actual timing",
-      "save and reload preserve delay configuration and selected cue",
-      "deliberate capture library3→4; fixed actual relative starts",
-      "overwrite test path v12→v13 retains saved personal programme name",
-      "new director/jitter controls present in final HTML",
-      "default full panorama100%; source/final HTML console error lists empty"
+      "source new library3→4; clear filters and selected entry",
+      "save template retains chosen anchor80",
+      "actual source timeline and pinned source version; bidirectional locate",
+      "savev3 preserves oldv1/v2; explicit one-group upgrade/Undo/Redo",
+      "old version select; copied template save-and-create at110",
+      "single linked cue copy/delete/Undo has isolated group",
+      "low/high restrictions; compact 1366 and1920 viewport",
+      "save/reload fixed references",
+      "same HTTP file v13→v14 retains saved personal name and252 cues",
+      "final HTML atomic save/place at90: library4/cues253; reload pinnedv1 retained",
+      "source/final console error lists empty"
     ],
     "limitations": [
-      "file:// tool-open blocked in prior review; not retried or bypassed",
-      "UI undo tests isolatedQA, not user programme",
-      "No new music-import UI test this turn; previousv12 same-song checks retained"
+      "file:// automatic approval review rejected earlier; no bypass/retry; HTTP is not direct-file proof",
+      "no full screen-reader/200%-zoom/mobile certification",
+      "no new audio import or actual UE writes/save/play",
+      "some transitions yielded stale screenshots; rejected and recaptured"
     ]
   },
   "storageCompatibility": {
@@ -53,11 +64,11 @@
     "bundledSeedReplacesLocal": false,
     "savedProgrammeRecordsRetained": true,
     "sessionUndoPersistedAcrossReload": false,
-    "conditions": "same path/browser profile; normal mode; no cleared site data; explicit dfshow for transfers"
+    "conditions": "same path/browser profile; normal mode; no cleared site data; use dfshow for transfers"
   },
   "engine": {
     "readOnly": true,
-    "actualPointsChecked": 36,
+    "actualPointsCheckedThisTurn": null,
     "writeExecuted": false,
     "saveExecuted": false,
     "playbackVerified": false
@@ -65,17 +76,15 @@
   "publicSiteUpdated": false,
   "originalProgrammeFileUntouched": true,
   "userAccepted": false,
-  "screenshotsLocalOnly": [
-    "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\director-jitter-20261010\\8025随机错开.png",
-    "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\director-jitter-20261010\\8025导演选择.png",
-    "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\director-jitter-20261010\\覆盖更新保留个人节目.png"
+  "auditReport": "tool/offline-workbench/pattern-linkage-audit.md",
+  "acceptedScreenshots": [
+    "tool/offline-workbench/audit-v14/01-before-library.png",
+    "tool/offline-workbench/audit-v14/04-library-1366.png",
+    "tool/offline-workbench/audit-v14/05-library-1920.png",
+    "tool/offline-workbench/audit-v14/07-offline-reference.png",
+    "tool/offline-workbench/audit-v14/08-offline-library.png"
   ],
   "publication": {
-    "artifactCommit": "f57d58ea835b6b21977a4e8ced11fb8dc14e8537",
-    "htmlBlob": "42d1e076e0134c1c34573e97e071eb32eaac3621",
-    "zipBlob": "28a2fdeb4e2894721ce55767b372bc5e71744794",
-    "remoteMainContainsCommit": true,
-    "remoteAndLocalArtifactBlobsEqual": true,
-    "verifiedAt": "2026-10-10T04:43:03.824552+00:00"
+    "remoteMainVerified": false
   }
 }

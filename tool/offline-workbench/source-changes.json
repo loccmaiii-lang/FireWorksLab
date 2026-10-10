@@ -1,126 +1,78 @@
 {
   "format": "df.private-source-changes/1",
   "source": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008",
-  "privateBefore": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\director-jitter-20261010\\source-before",
-  "privateDiffs": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\director-jitter-20261010\\diffs",
+  "privateBefore": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\pattern-linkage-20261010\\source-before",
+  "privateDiffs": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\pattern-linkage-20261010\\diffs",
   "changes": [
     {
-      "file": "src/connection.mjs",
-      "beforeSha256": "53d400550b7e34623d5ab78faee9a490e72d9fb947b344f4b0d929061501d433",
-      "afterSha256": "9a8c83a2d6ce209db282adf188376536f6f887f0c87b6cee5542a224999e962a",
-      "baseline": "before-implementation"
-    },
-    {
-      "file": "src/ConnectionProvider.jsx",
-      "beforeSha256": "d79efd30cca8d256c7188881e05f0f9380c36ea99bd5bb03d30d42db4013daa7",
-      "afterSha256": "ee6244c045789b0fcc198710827ec930975f7b8639395e2c5785c3c970506f4c",
-      "baseline": "before-implementation"
-    },
-    {
-      "file": "src/DirectorTargetPicker.jsx",
-      "beforeSha256": null,
-      "afterSha256": "04afc18dacc38b2baed32753896e2960ea82886d390c52b4f4574ab9f072a18e",
-      "baseline": "new-file"
-    },
-    {
-      "file": "src/EnginePanel.jsx",
-      "beforeSha256": "dadfa1ce5ef2deea3d06132d3035872e2f4fea1163672dc01f62734ae2084059",
-      "afterSha256": "77ed1bcefa04a2daf7066040f4a181d284762627d88693cd719372c8c9fb88de",
-      "baseline": "before-implementation"
-    },
-    {
-      "file": "src/launch-jitter.mjs",
-      "beforeSha256": null,
-      "afterSha256": "0b2ee8708751d05f42c86c973e5ded347f651530dbf623036b63bb7c5a4c139f",
-      "baseline": "new-file"
-    },
-    {
-      "file": "src/LaunchJitterControls.jsx",
-      "beforeSha256": null,
-      "afterSha256": "6124d405b83b1e4b7cf133b4a57e3399e48cacd68b79e1e0b34ec1dd890bc459",
-      "baseline": "new-file"
-    },
-    {
-      "file": "src/editing-model.mjs",
-      "beforeSha256": "c0b72da0721c494c6da17c4729318ee6084855a678e06e0c3b752e3972d64bc4",
-      "afterSha256": "fa76fff9277c4e96ae9fe991c794591cd9bc91a9b486546363a6d1b690c2eaee",
-      "baseline": "before-implementation"
-    },
-    {
-      "file": "src/editor-state.mjs",
-      "beforeSha256": "b64d0145b121bf921a706ff22f135e7743b2b07d82e9bc0849c988b4dcd82faa",
-      "afterSha256": "12eb63e0ff26fadba1e7a083e1fa30f292877053df35305908d7f545411ca671",
-      "baseline": "before-implementation"
-    },
-    {
-      "file": "src/choreography-model.mjs",
-      "beforeSha256": "fb3629164ba8579a01ce372d1661b32e60e2f4f088090124e7ee15e8f59a96f4",
-      "afterSha256": "65f65b9a697a6ba26051c4a8c9ff13e946e59d6f5ce4345a2f04c183f5b9b3b5",
+      "file": "src/App.jsx",
+      "beforeSha256": "84d7466607d7f29c683bc2590361243e639a20012d451a60cb3255b0b24285ee",
+      "afterSha256": "f90180c71b3fb4e9851835eb03b5a2c304872662a800cc6507d19f0bd4b3b74b",
       "baseline": "before-implementation"
     },
     {
       "file": "src/LaunchWorkspace.jsx",
-      "beforeSha256": "0cb9a8177eadaef7198099753ba2c45afa7ec71d743e5377bf73b6a86867e8ed",
-      "afterSha256": "bb5b5e0d712c13b11f24b70747fed5ea4421d5a62305174e1d567377e481aa0d",
-      "baseline": "before-implementation"
-    },
-    {
-      "file": "src/App.jsx",
-      "beforeSha256": "2d00099227920495cb8453428fcba15e31ad974b4f602fb4bfbf10f1793fe4cb",
-      "afterSha256": "84d7466607d7f29c683bc2590361243e639a20012d451a60cb3255b0b24285ee",
+      "beforeSha256": "bb5b5e0d712c13b11f24b70747fed5ea4421d5a62305174e1d567377e481aa0d",
+      "afterSha256": "cee1771383821da875d393e82d4b8ec1220626c9fe3dfc0c8385755d6f1641dd",
       "baseline": "before-implementation"
     },
     {
       "file": "src/TemplateLibraryCompact.jsx",
-      "beforeSha256": "11b462eb55e1086e51b5e2bfcd8ad9df50fd3f2f033b8301f266c9059e56b03e",
-      "afterSha256": "51441d1b3d952ff3db19815b78c0838c82912b068da54d1ecfc7046349102fae",
+      "beforeSha256": "51441d1b3d952ff3db19815b78c0838c82912b068da54d1ecfc7046349102fae",
+      "afterSha256": "3e7f461ddcfe7e60e862d40f3d62022c178037ffb7ab6ba6f848426b80146e22",
+      "baseline": "before-implementation"
+    },
+    {
+      "file": "src/PatternReference.jsx",
+      "beforeSha256": null,
+      "afterSha256": "fd59fd3d8bcb70bbd38903df412922afd56c48d1cbec5bcc3fc14bb2043018ac",
+      "baseline": "new-file"
+    },
+    {
+      "file": "src/pattern-linkage.mjs",
+      "beforeSha256": null,
+      "afterSha256": "1e75886df5c7f78a47bb8e34173ff99f18993b20967ce4bfe538c475776cf88d",
+      "baseline": "new-file"
+    },
+    {
+      "file": "src/choreography-model.mjs",
+      "beforeSha256": "65f65b9a697a6ba26051c4a8c9ff13e946e59d6f5ce4345a2f04c183f5b9b3b5",
+      "afterSha256": "d109935a2c2dc9e4b6bd9e057928bc58d8e49bf46bec731760412459dec55370",
+      "baseline": "before-implementation"
+    },
+    {
+      "file": "src/editing-model.mjs",
+      "beforeSha256": "fa76fff9277c4e96ae9fe991c794591cd9bc91a9b486546363a6d1b690c2eaee",
+      "afterSha256": "fa8bc15c36c1e5bd72c77ef8ab4c3b766426fd44c54b88bb9f19387e00267a05",
       "baseline": "before-implementation"
     },
     {
       "file": "src/df-theme.css",
-      "beforeSha256": "7c5cf0f9f09a55022e7c6ee32d436a4102790b84f13b08a8d1ca90ed56c115e4",
-      "afterSha256": "9921fa48c68da9ba38710655cd62faae6691dc5375253be909cce3e67a77a879",
+      "beforeSha256": "9921fa48c68da9ba38710655cd62faae6691dc5375253be909cce3e67a77a879",
+      "afterSha256": "317a299b2c4a4046f06339e87d664bfccdeb00cd1608ef3dca455434477a8795",
       "baseline": "before-implementation"
     },
     {
-      "file": "scripts/offline-release.json",
-      "beforeSha256": "e3e8c4c9052c1e2337cd2ae727ede46ad2e5da4fcd63e2ca1ddcf9a78e316b30",
-      "afterSha256": "478b4e52f2720c185a7106b21ecdd30e51d3ea7fc53d9b595d3eea40549a9156",
+      "file": "src/connection.mjs",
+      "beforeSha256": "9a8c83a2d6ce209db282adf188376536f6f887f0c87b6cee5542a224999e962a",
+      "afterSha256": "63d5334bb4be2d9cb63e53d267a6f7c314149f4a9301430bc17c4c2f9f3d08df",
       "baseline": "before-implementation"
     },
     {
-      "file": "tests/launch-jitter.test.mjs",
+      "file": "tests/pattern-linkage.test.mjs",
       "beforeSha256": null,
-      "afterSha256": "5edaaef4b59c9d04f4863c42a037fd6b8a61bb8e703308fc501f65dbd262f976",
+      "afterSha256": "72a74206b46339b402bcb377ea4d6a015713e620c31a1cd4b83d6befaa2911d5",
       "baseline": "new-file"
     },
     {
-      "file": "tests/choreography-model.test.mjs",
-      "beforeSha256": "4d6242789d19a518d0b12f6f7de1d247b6f31e7e8433cd46590a0809f8829231",
-      "afterSha256": "86e384e7217bfd55a7268970b22cf2458cae4249250ba40ecdf689993a11c87b",
-      "baseline": "before-implementation"
-    },
-    {
-      "file": "scripts/offline-workbench/tests/connection.test.mjs",
-      "beforeSha256": "fc6c4442f11dbd08af4ee7309908e248f291d6034d9de2ecc34f76bce83c2e99",
-      "afterSha256": "1605a8983f5524c56bccba1ebc1c5c75897bc7b9675c20f90047709728d671f4",
-      "baseline": "before-implementation"
-    },
-    {
-      "file": "scripts/offline-workbench/tests/package.test.mjs",
-      "beforeSha256": null,
-      "afterSha256": "a1b2b9a5cdcecc3035b09d734bc68cced872b246ed49d8e25f9bbd415272d873",
-      "baseline": "not-captured-in-before-directory"
-    },
-    {
       "file": "AGENTS.md",
-      "beforeSha256": null,
-      "afterSha256": "77afca3029129f92746e9c67da492898df14a10c0b9dae61155b30b6e30ad656",
-      "baseline": "not-captured-in-before-directory"
+      "beforeSha256": "77afca3029129f92746e9c67da492898df14a10c0b9dae61155b30b6e30ad656",
+      "afterSha256": "2d0a954a960301ccfe1f25dec0a0d6b71c41e84be75ab762ed3a181263b7bb9c",
+      "baseline": "before-implementation"
     }
   ],
   "sourceUploadedInFull": false,
-  "publicScope": "compiled HTML, connection adapters, generic jitter module, wrapper tests and build/progress fingerprints",
+  "publicScope": "compiled HTML, original shared adapters, standalone pure reference model/tests/fixtures, fingerprints and review report",
   "excludedOtherOwnedDirectories": [
     "tool/src",
     "shared DF tokens",

@@ -1,0 +1,3 @@
+export function validateEngineId(value){const id=String(value||'').trim();if(!/^[A-Za-z][A-Za-z0-9_]{0,95}$/.test(id))throw Error('英文ID须以字母开头，只使用英文字母、数字与下划线（最多96字符）');return id;}
+export function layerGroups(recipe){return ['burst','trail','fan'].flatMap(role=>{const indices=recipe.entries.flatMap((e,i)=>e.role===role?[i]:[]);return indices.length?[{role,indices}]:[]});}
+export function replaceLayerResource(recipe,index,resource){const d=structuredClone(recipe),e=d.entries[index];if(!e||e.role!==resource.role)throw Error('基础模板类型与当前图层不一致');e.native.FXResourceId=resource.id||resource.name;e.baseTemplateRef=resource.key;if(resource.preview)e.preview=structuredClone(resource.preview);return d;}
