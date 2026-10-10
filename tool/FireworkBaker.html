@@ -10366,7 +10366,7 @@ function exportScalePlan(P, keyObj) {
 }
 // 4.9.60: final ZIP bytes are published by the local directory service; UE writes remain in the original importer.
 const DeliveryWorkspace = (() => {
-  let session = null, resources = [], last = null, active = false, busyDelivery = false, importerBusy = false;
+  let session = null, resources = [], last = null, active = false, busyDelivery = false, importerBusy = false, importerCurrent = null;
   const node = id => document.getElementById(id);
   const message = (text, error = false) => { const n = node('deliveryStatus'); n.textContent = text; n.dataset.error = String(error); };
   const destination = () => node('deliveryDestination').value;
@@ -10389,8 +10389,8 @@ const DeliveryWorkspace = (() => {
     node('deliveryOpen').hidden = open; node('deliveryMake').hidden = !open;
     const focus = node(open?'deliveryWorkspace':'deliveryOpen'); focus.focus({preventScroll:true});
   }
-  async function open() { show(true); try { await connect(); await refresh(); if(!last && resources.length)await select(resources[resources.length-1]); if(!last)message(session.outputRoot?'已恢复导出目录。选择已交付修订，或回效果制作导出新资源。':'首次使用请先选择资源导出目录。'); } catch(e) { message(e.message, true); } }
-  async function refresh() { resources = (await api('/api/resources')).resources; render(); }
+  async function open() { show(true);message('正在恢复资源与导入工作区…');try { await connect(); await refresh(); if(!last && !importerCurrent && resources.length)await select(resources[resources.length-1]); else if(last)await sendToImporter();else if(importerCurrent)message('已恢复当前素材。请使用下方导入工作区检查、核对并确认名称。');if(!last && !importerCurrent)message(session.outputRoot?'已恢复导出目录。选择已交付修订，或回效果制作导出新资源。':'首次使用请先选择资源导出目录。'); } catch(e) { message(e.message, true); } }
+  async function refresh() { resources = (await api('/api/resources')).resources; if(importerCurrent)presentCurrent();render(); }
   function render() {
     const list = node('deliveryList'); list.replaceChildren();
     if (!resources.length) { const p = document.createElement('p'); p.textContent = '尚无交付资源。回到效果制作，使用“导出素材包”。'; list.append(p); }
@@ -10403,7 +10403,7 @@ const DeliveryWorkspace = (() => {
       button.disabled=importerBusy; button.addEventListener('click', ()=>{if(!importerBusy)select(r).then(()=>node('deliveryOptions').open=false).catch(e=>message(e.message,true));}); list.append(button);
     }
   }
-  async function select(receipt) {
+  function presentReceipt(receipt) {
     last = receipt; render();
     node('deliveryTitle').textContent=receipt.name;
     node('deliveryContext').textContent=`修订 ${receipt.revisionId.slice(0,8)} · ${receipt.packages.map(p=>p.platform==='mobile'?'手机':'PC').join(' / ')} · ${receipt.files.length} 个文件`;
@@ -10411,8 +10411,16 @@ const DeliveryWorkspace = (() => {
     const img = node('deliveryThumbnail'); img.hidden = receipt.thumbnail.status !== 'ready';
     if (!img.hidden) img.src = '/api/deliveries/' + receipt.deliveryId + '/' + receipt.thumbnail.file;
     node('deliveryThumbnailMissing').hidden = !img.hidden;
-    node('deliveryCheck').disabled = !session?.importerAvailable;
+    node('deliveryCheck').disabled = importerBusy || !session?.importerAvailable;
+  }
+  async function select(receipt) {
+    presentReceipt(receipt);
     await sendToImporter();
+  }
+  function presentCurrent() {
+    const current=importerCurrent,receipt=current&&resources.find(r=>r.deliveryId===current.deliveryId);
+    if(receipt){presentReceipt(receipt);node('deliveryContext').textContent=`修订 ${receipt.revisionId.slice(0,8)} · 当前 ${current.platform==='mobile'?'手机':'PC'} 包`;}
+    else if(current){last=null;node('deliveryTitle').textContent=current.name||'其他素材';node('deliveryContext').textContent=`手动素材 · 当前 ${current.platform==='mobile'?'手机':'PC'} 包`;node('deliveryReceipt').textContent=`手动素材\n${current.dir||''}\n请使用下方原导入工作区检查此素材包。`;node('deliveryThumbnail').hidden=true;node('deliveryThumbnailMissing').hidden=true;node('deliveryCheck').disabled=true;}
   }
   async function sendToImporter() {
     if (!last || !session?.importerAvailable) return;
@@ -10456,8 +10464,7 @@ const DeliveryWorkspace = (() => {
       if(e.data?.type==='workspace-view-state'){
         importerBusy=!!e.data.busy;node('deliveryMake').disabled=importerBusy;
         for(const id of ['deliveryPick','deliverySaveRoot','deliveryCheck','deliveryDestination'])node(id).disabled=importerBusy;
-        const current=e.data.current, receipt=current&&resources.find(r=>r.deliveryId===current.deliveryId);
-        if(receipt){last=receipt;node('deliveryTitle').textContent=receipt.name;node('deliveryContext').textContent=`修订 ${receipt.revisionId.slice(0,8)} · 当前 ${current.platform==='mobile'?'手机':'PC'} 包`;}else if(current){node('deliveryTitle').textContent=current.name||'其他素材';node('deliveryContext').textContent=`手动素材 · 当前 ${current.platform==='mobile'?'手机':'PC'} 包`;node('deliveryThumbnail').hidden=true;node('deliveryThumbnailMissing').hidden=true;}
+        importerCurrent=e.data.current||null;presentCurrent();
         render();return;
       }
       if(e.data?.type!=='workspace-import-state')return;

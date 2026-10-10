@@ -190,7 +190,10 @@ h3 { font-size: var(--fw-type-field-size); margin: 0 0 8px; }
 .log-heading {min-height:36px;gap:8px}
 .log-heading h2 {margin:0;font-size:13px;line-height:20px;font-weight:600}
 .log-panel .fw-button {min-height:28px;padding:2px 8px;border-radius:0;font-size:12px}
-.log-panel progress {height:2px;border-radius:0}
+.log-panel progress {height:2px;border-radius:0;appearance:none;border:0;background:var(--fw-color-divider)}
+.log-panel progress::-webkit-progress-bar {background:var(--fw-color-divider)}
+.log-panel progress::-webkit-progress-value {background:var(--fw-color-primary)}
+.log-panel progress::-moz-progress-bar {background:var(--fw-color-primary)}
 .log-panel li {border:0;padding:2px 0;gap:10px;font:12px/20px Consolas,"Cascadia Mono","Microsoft YaHei",monospace}
 .header-right #make {text-decoration:none;white-space:nowrap}
 @media(max-width:720px){.header-right{gap:8px;flex-wrap:wrap}.log-panel{padding-top:0}}
