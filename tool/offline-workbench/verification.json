@@ -96,8 +96,10 @@
   "publicSiteUpdated": false,
   "userAccepted": false,
   "publication": {
-    "artifactCommit": null,
-    "remoteMainContainsArtifactCommit": false,
-    "remoteAndLocalArtifactBlobEqual": false
+    "artifactCommit": "31b81f8b3b31ff57e091737fa6d14df2a064266d",
+    "artifactBlob": "f81afdc2cdcfda30ee684cf9a7fe5911049b54d4",
+    "remoteMainContainsArtifactCommit": true,
+    "remoteAndLocalArtifactBlobEqual": true,
+    "verifiedAt": "2026-10-10T03:54:56.948166+00:00"
   }
 }
