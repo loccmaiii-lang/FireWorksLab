@@ -1,0 +1,110 @@
+{
+  "format": "df.http-acceptance/1",
+  "date": "2026-10-10",
+  "scope": "HTTP实页、原导演三档导入读回保存、高配关卡实例原生预览、原配置恢复",
+  "userFileBrowserTestWaived": true,
+  "originalBlueprint": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_Failed_NewYearFireworks_ShowDirector_2.Default__BP_Failed_NewYearFireworks_ShowDirector_2_C",
+  "originalActor": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.BP_Failed_NewYearFireworks_ShowDirector_7",
+  "effectPoints": 36,
+  "tiers": {
+    "high": {
+      "duration": 120,
+      "subTemplates": 1,
+      "templates": 1,
+      "scheduleGroups": 1,
+      "entries": 3,
+      "foreignFieldsPreserved": true
+    },
+    "medium": {
+      "duration": 120,
+      "subTemplates": 1,
+      "templates": 1,
+      "scheduleGroups": 1,
+      "entries": 2,
+      "foreignFieldsPreserved": true
+    },
+    "low": {
+      "duration": 120,
+      "subTemplates": 1,
+      "templates": 1,
+      "scheduleGroups": 1,
+      "entries": 1,
+      "foreignFieldsPreserved": true
+    }
+  },
+  "restoration": {
+    "time": "2026-10-10T10:03:58.723Z",
+    "write": {
+      "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.BP_Failed_NewYearFireworks_ShowDirector_7",
+      "class": "BP_Failed_NewYearFireworks_ShowDirector_2_C",
+      "set_properties": [
+        "DefaultConfig"
+      ],
+      "failed_properties": []
+    },
+    "nativeStopVerified": true,
+    "originalConfigRestored": true,
+    "active": false,
+    "levelSaved": false
+  },
+  "blueprintSave": {
+    "originalConfigRestored": true,
+    "time": "2026-10-10T09:54:22.510Z",
+    "saveResponse": {
+      "called": true,
+      "return_value": "True"
+    }
+  },
+  "browser": {
+    "programName": "HTTP恢复验收 · 原导演测试",
+    "cues": 1,
+    "flowerTemplates": 19,
+    "choreographyTemplates": 4,
+    "tierPlays": [
+      3,
+      2,
+      1
+    ],
+    "musicImportAndReload": true,
+    "emptyProgramUndo": true,
+    "timelineHomeEnd": [
+      0,
+      120
+    ],
+    "choreoViewport": [
+      1024,
+      768
+    ],
+    "choreoScrollWidth": 1024,
+    "bakerViewportWidth": 1569,
+    "bakerNarrowScreenVerified": false,
+    "downloadFileRoundtripVerified": false,
+    "fileHistoryMigrated": false
+  },
+  "uePlayback": {
+    "tier": "high",
+    "nativeStopTime": "17:59:06.939",
+    "trailTimes": [
+      "17:58:24.868",
+      "17:58:24.980",
+      "17:58:25.081"
+    ],
+    "bloomTimes": [
+      "17:58:28.362",
+      "17:58:28.483",
+      "17:58:28.593"
+    ],
+    "visualHeightOrDiameterVerified": false,
+    "fullShowArtVerified": false
+  },
+  "localEvidenceHashes": {
+    "loaded-director-before.json": "93c1e991de70287bbf55bf92e166e284535a6475a8b56e45ad09e6e6cfc77517",
+    "high-import.json": "1b6ca58b1df1d198e3af12fbf3e179470705c045972a4db0e174e0ef9a71c69a",
+    "medium-import.json": "eea1e9b48350bf7813656613668538826ab68410f200e09ecdc5a064aa9fb8c6",
+    "low-import.json": "a39661e9887585bd3d69cdf15a7103a9ce09efcae7e796c10d3141b83d637bc3",
+    "final-restored-complete.json": "128e67d846e61afd553f16676757ea0cc8500ae51e29a0386a46960818113bf4",
+    "http-visible-backup.dfshow": "ba14b6aa27cfa8d870aa295da62026ccf6d91ae71aa6b2ae3ea8822c4a14952b"
+  },
+  "blueprintConfigRestored": true,
+  "actorConfigRestored": true
+}
