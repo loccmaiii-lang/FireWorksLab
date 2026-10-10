@@ -1,0 +1,66 @@
+[
+ {
+  "file": "FC10R_export_fit_1.20.png",
+  "entry": "FC10R",
+  "view": "export",
+  "disp": "fit",
+  "t": 1.2,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 引擎回放（每层贴图叠放）· 2 层"
+ },
+ {
+  "file": "FC10R_export_fit_1.80.png",
+  "entry": "FC10R",
+  "view": "export",
+  "disp": "fit",
+  "t": 1.8,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 引擎回放（每层贴图叠放）· 2 层"
+ },
+ {
+  "file": "FC10R_export_px_1.20.png",
+  "entry": "FC10R",
+  "view": "export",
+  "disp": "px",
+  "t": 1.2,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 引擎回放（每层贴图叠放）· 2 层"
+ },
+ {
+  "file": "FC10R_export_px_1.80.png",
+  "entry": "FC10R",
+  "view": "export",
+  "disp": "px",
+  "t": 1.8,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 引擎回放（每层贴图叠放）· 2 层"
+ },
+ {
+  "file": "FC10R_live_fit_1.20.png",
+  "entry": "FC10R",
+  "view": "live",
+  "disp": "fit",
+  "t": 1.2,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 实时模拟 · 2 层（画面里 2 层）"
+ },
+ {
+  "file": "FC10R_live_fit_1.80.png",
+  "entry": "FC10R",
+  "view": "live",
+  "disp": "fit",
+  "t": 1.8,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 实时模拟 · 2 层（画面里 2 层）"
+ },
+ {
+  "file": "FC10R_live_px_1.20.png",
+  "entry": "FC10R",
+  "view": "live",
+  "disp": "px",
+  "t": 1.2,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 实时模拟 · 2 层（画面里 2 层）"
+ },
+ {
+  "file": "FC10R_live_px_1.80.png",
+  "entry": "FC10R",
+  "view": "live",
+  "disp": "px",
+  "t": 1.8,
+  "hud": "扇形彗星 · 红彗星扇（7 筒，正红星头 + 炭金尾） · 实时模拟 · 2 层（画面里 2 层）"
+ }
+]

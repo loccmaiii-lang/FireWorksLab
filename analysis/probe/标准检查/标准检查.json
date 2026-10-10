@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-10 10:16",
+ "generated": "2026-10-10 11:06",
  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "std": {
   "pcCell": 512,
@@ -15228,10 +15228,10 @@
   },
   "FC10S": {
    "id": "FC10S",
-   "name": "扇形彗星 · 红彗星扇单条（中间那根，正红星头 + 炭金火花）",
+   "name": "扇形彗星 · 红彗星扇单条（一根，正红星头 + 炭金火花）",
    "kind": "combo",
    "renderVer": null,
-   "ver": "45ceeb58·master4.3.8-core1+master4.9.31",
+   "ver": "bb33c991·master4.3.8-core1+master4.9.31",
    "checks": [
     [
      "实时模拟",
