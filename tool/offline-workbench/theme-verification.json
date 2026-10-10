@@ -1,0 +1,11 @@
+{
+  "time": "2026-10-10T03:46:29.556650+00:00",
+  "tokensVersion": "0.1.1",
+  "primary": "#00d49b",
+  "surface": "#111d21",
+  "importerScriptsIdentical": true,
+  "importerOnlyThemeAdded": true,
+  "bakerAlreadyUsesDfTokens": true,
+  "bakerAndSharedTokensModified": false,
+  "importerSha256": "a80d9065c3d6b14c57130cb7782831fc152a606fbcd41f1ec542966ccdf7886d"
+}

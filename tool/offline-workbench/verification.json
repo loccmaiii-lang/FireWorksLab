@@ -1,62 +1,80 @@
 {
-  "format": "df.offline-verification/1",
-  "time": "2026-10-10T02:55:48.517605+00:00",
+  "format": "df.offline-verification/2",
+  "time": "2026-10-10T03:51:53.692959+00:00",
+  "toolVersion": 12,
   "artifact": {
     "file": "tool/烟花编排工作台.html",
-    "bytes": 83913964,
-    "sha256": "50e57643737dec82826bdc7616ba5041925e0dc1631c01e2f2f808f8624863cc",
-    "programmeSha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a",
-    "embeddedMusicSha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3"
+    "bytes": 2539191,
+    "sha256": "c7d90512c03bfaece383c64cd57587358bc5639c4e9de5bb254ab39a2f2a88a8",
+    "originalProgrammeSha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a",
+    "lightProgrammeSha256": "68f1837b3f0b4256b8940d1a18056a57e334b665e61940e816d4054a7310f9e2",
+    "musicIncluded": false,
+    "referenceMusicSha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3"
   },
   "automated": {
-    "packagingAndEngine": {
-      "passed": 24,
-      "failed": 0,
-      "command": "node --test tool/offline-workbench/tests/*.test.mjs"
-    },
     "original8025Core": {
-      "passed": 91,
+      "passed": 87,
       "failed": 0,
-      "scope": "原生产核心，不等于file或UE实导实播"
+      "excluded": "4 old Sites-worker tests; online Site not changed"
+    },
+    "packagingAndEngine": {
+      "passed": 33,
+      "failed": 0
+    },
+    "actualDailyBuildHook": {
+      "command": "npm run build",
+      "passed": true,
+      "actualToolPackagingInvocations": 1,
+      "failedChecksPreservePreviousArtifactTested": true
     }
   },
   "browser": {
     "protocol": "http",
     "sameSingleHtmlDevelopmentPreview": true,
     "fileProtocolVerified": false,
-    "fileProtocolBlock": "自动安全审查拒绝直接file://；浏览器工具只允许HTTP/HTTPS，未绕过",
+    "fileProtocolBlock": "此前自动安全审查拒绝直接file://，未绕过；本轮不重试file协议",
+    "actual8025": "http://127.0.0.1:8025/?qa=df12",
+    "artifactPreview": "http://127.0.0.1:8025/offline-qa-v12.html?qa=df12light",
     "passed": [
-      "完整测试节目252/1689及原曲加载",
-      "默认完整全景100%",
-      "复制253/撤销252",
-      "改名保存，等待已保存后刷新恢复",
-      "三档切换与导入确认失效",
-      "模板库默认花型模板，统一中文名/英文ID/球花层/尾缀层/基础及随机参数编辑入口",
-      "新建0片段并撤销恢复252",
-      "右栏真实UE只读检查36关联点/1689事件",
-      "最新音频Blob播放引用，readyState4，duration210.810813，节目仍含完整原曲"
+      "8025顶栏真实连接、重连和v12，1280首屏自动导入按钮",
+      "8025高中低实际只读检查1689/1130/848事件，切档后确认失效",
+      "最终同一HTML默认完整全景100%、252片段/1689事件/18固定花型，无audio src",
+      "原曲重新导入后Blob音频readyState4、210.810813秒，27段落保留；撤销再刷新回到无音频",
+      "最终HTML无音乐提示1280可见，真实检查36点；勾选仅启用按钮，未点击写入；重连清除确认",
+      "8025和原特效工作台实页primary=#00d49b、surface=#111d21；原导入器只增加主题，全部脚本字节一致",
+      "使用说明HTML实际渲染，离线相对工作台文件在包内存在"
     ],
     "limitations": [
-      "部分浏览器输入/截图请求曾超时或出现传输帧限制；未将超时请求算通过",
-      "节目真实文件往返按同版本preflightProject/packProject与实际内嵌文件测试；未冒称最终包经过浏览器下载再导入全流程"
+      "新8036预览页被浏览器客户端阻止，未重试；同一产物在既有8025静态开发预览核对",
+      "真实双击file环境与浏览器下载→再导入全流程未标通过",
+      "此前艺术效果、高度和原生尺度/轨迹/BP/Seq实播仍待验"
     ]
   },
   "engine": {
     "readOnly": true,
-    "proof": "ue-readonly.json",
+    "historicalCliReadProof": "ue-readonly.json",
+    "newBrowserChecks": true,
     "connection": "http://127.0.0.1:17780/gpcli",
+    "target": "BP_Failed_NewYearFireworks_ShowDirector_2",
     "pointCount": 36,
     "tiers": {
       "high": {
         "events": 1689,
+        "subTemplates": 18,
+        "templates": 45,
+        "scheduleSlots": 252,
         "issues": []
       },
       "medium": {
         "events": 1130,
+        "templates": 109,
+        "scheduleSlots": 252,
         "issues": []
       },
       "low": {
         "events": 848,
+        "templates": 81,
+        "scheduleSlots": 252,
         "issues": []
       }
     },
@@ -64,15 +82,22 @@
     "saveExecuted": false,
     "playbackVerified": false
   },
-  "originalSourceUntouched": true,
+  "palette": {
+    "source": "tool/design-system/tokens.json",
+    "version": "0.1.1",
+    "primary": "#00d49b",
+    "surface": "#111d21",
+    "sharedTokensAndBakerModified": false
+  },
+  "originalSourceUntouched": false,
+  "buildSourceUntouched": true,
   "originalProgrammeFileUntouched": true,
+  "originalBrowserDraftUntouched": true,
   "publicSiteUpdated": false,
   "userAccepted": false,
   "publication": {
-    "artifactCommit": "8b1b0524",
-    "artifactBlob": "eeb41404d5ffabb2bb800ae44874ea85e3038938",
-    "remoteMainContainsArtifactCommit": true,
-    "remoteAndLocalArtifactBlobEqual": true,
-    "verifiedAt": "2026-10-10T03:04:43.115048+00:00"
+    "artifactCommit": null,
+    "remoteMainContainsArtifactCommit": false,
+    "remoteAndLocalArtifactBlobEqual": false
   }
 }

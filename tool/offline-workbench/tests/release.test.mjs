@@ -1,0 +1,16 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs/promises';import os from 'node:os';import path from 'node:path';import {release} from '../release.mjs';import {renderTheme} from '../theme.mjs';
+test('a failed source check never replaces the last successful HTML or runs packaging',async()=>{const d=await fs.mkdtemp(path.join(os.tmpdir(),'df-release-'));try{await fs.mkdir(path.join(d,'tests'));await fs.writeFile(path.join(d,'tests/a.test.mjs'),'');const output=path.join(d,'old.html');await fs.writeFile(output,'last-good');let count=0;await assert.rejects(release({source:d,programme:path.join(d,'a.dfshow'),output},{run:async()=>{count++;throw Error('source failed')}}),/source failed/);assert.equal(count,1);assert.equal(await fs.readFile(output,'utf8'),'last-good');}finally{await fs.rm(d,{recursive:true,force:true});}});
+test('theme maps all primary and surface roles to the original DF tokens',()=>{const c={surface:'#111d21','surface-low':'#121f24','surface-container':'#1b2a2f','surface-high':'#24373d','on-surface':'#e4edef','on-surface-muted':'#b4c5cb',primary:'#00d49b','on-primary':'#062a23','primary-container':'#173d39','on-primary-container':'#a1ded0',outline:'#8da3ac',divider:'#2b4149',error:'#e7735a','error-container':'#3f2525',warning:'#e4bb7c','warning-container':'#40321e',success:'#81d8b6','success-container':'#173d39',focus:'#36e4b0'};const css=renderTheme({version:'0.1.1',color:c});assert(css.includes('--md-primary:#00d49b'));assert(css.includes('--md-surface:#111d21'));assert(!css.includes('undefined'));assert(!css.includes('canvas'));});
+for(const failPackage of [false,true])test(failPackage?'failed package verification preserves both previous files':'successful release packages once and records the final filename',async()=>{
+ const d=await fs.mkdtemp(path.join(os.tmpdir(),'df-release-'));try{
+  await fs.mkdir(path.join(d,'tests'));await fs.writeFile(path.join(d,'tests/a.test.mjs'),'');const output=path.join(d,'workbench.html');
+  await fs.writeFile(output,'last-good');await fs.writeFile(output+'.build.json','last-good-manifest');let packaging=0;
+  const action=release({source:d,programme:path.join(d,'a.dfshow'),output},{run:async(_file,args,options)=>{
+   if(path.basename(args[0])==='build.mjs'){packaging++;const staged=args[args.indexOf('--output')+1];await fs.writeFile(staged,'verified-html');await fs.writeFile(staged+'.build.json',JSON.stringify({html:path.basename(staged),sha256:'test-fingerprint'}));}
+   if(options.env?.DF_HTML_TEST_PATH){assert.equal(await fs.readFile(options.env.DF_HTML_TEST_PATH,'utf8'),'verified-html');if(failPackage)throw Error('package verification failed');}
+  }});
+  if(failPackage){await assert.rejects(action,/package verification failed/);assert.equal(await fs.readFile(output,'utf8'),'last-good');assert.equal(await fs.readFile(output+'.build.json','utf8'),'last-good-manifest');}
+  else{await action;assert.equal(await fs.readFile(output,'utf8'),'verified-html');assert.equal(JSON.parse(await fs.readFile(output+'.build.json','utf8')).html,'workbench.html');}
+  assert.equal(packaging,1);await assert.rejects(fs.stat(output+'.candidate.html'),{code:'ENOENT'});
+ }finally{await fs.rm(d,{recursive:true,force:true});}
+});

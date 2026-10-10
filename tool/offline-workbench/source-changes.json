@@ -1,0 +1,76 @@
+{
+  "time": "2026-10-10T03:48:28.914560+00:00",
+  "version": 12,
+  "sourceChanges": [
+    {
+      "file": "src/App.jsx",
+      "beforeSha256": "b09e13a54d04f5e6471eb9828569e9e70d1b7ea49f99f9107778d35021975ffb",
+      "afterSha256": "d38ab6cddf49e4c6d3aa2acb27b7140fad0f6fc84807f6779a1f7c0bf53a6dee"
+    },
+    {
+      "file": "src/main.jsx",
+      "beforeSha256": "1c55d07694b5c5997177f5c43136a76b5d52c99c408205561c7afb98f4ddea6b",
+      "afterSha256": "ac98440422a6bbc69386674f0cc5e03de3f589c6631982552c3b8fc425b050c8"
+    },
+    {
+      "file": "src/FixedDirectorPanel.jsx",
+      "beforeSha256": "b223e71a8de773786155aeedd51316edbe3c65c38343ea149bdd651770f90082",
+      "afterSha256": "e11c7f179f4e922fc4025d59bce30c1a3d7dabc5f3e41857e46507b039d4823f"
+    },
+    {
+      "file": "src/DeliveryPanel.jsx",
+      "beforeSha256": "9c10a3fd07ed959060db8bda8fc1f2420d865e2fa4fe91b604b183bb4c4aebc1",
+      "afterSha256": "9c10a3fd07ed959060db8bda8fc1f2420d865e2fa4fe91b604b183bb4c4aebc1"
+    },
+    {
+      "file": "src/ProgramPanel.jsx",
+      "beforeSha256": "5e6fb639f2ce9b6e9898c6f9b4128bd6f452147398fc5431ca6afa2dbccdfbf9",
+      "afterSha256": "2b7165ca78b287658c9fcdfd42d6bd88ef6ab46e45bc30f7acb803dff918e302"
+    },
+    {
+      "file": "package.json",
+      "beforeSha256": "391bc5c0861c558c92bdbf3ef71f835a10a3358f00eb60e3fc62fc21ff1047eb",
+      "afterSha256": "7772fb1d6d26d16e68bca882954fa69e30582d6f7882b228f2972e4066c93f37"
+    },
+    {
+      "file": "src/ConnectionProvider.jsx",
+      "afterSha256": "d79efd30cca8d256c7188881e05f0f9380c36ea99bd5bb03d30d42db4013daa7"
+    },
+    {
+      "file": "src/connection.mjs",
+      "afterSha256": "53d400550b7e34623d5ab78faee9a490e72d9fb947b344f4b0d929061501d433"
+    },
+    {
+      "file": "src/EnginePanel.jsx",
+      "afterSha256": "dadfa1ce5ef2deea3d06132d3035872e2f4fea1163672dc01f62734ae2084059"
+    },
+    {
+      "file": "src/engine.mjs",
+      "afterSha256": "0edf42d4463cf59e2b1ca09d469f58d89151b74e685f173d46b99fc43ad2c5bc"
+    },
+    {
+      "file": "src/audio-blob.mjs",
+      "afterSha256": "0be00d816ad0f42dd54f9a7f791e08d928f9aaf3f67839564601982f3eb01c4d"
+    },
+    {
+      "file": "src/light-project.mjs",
+      "afterSha256": "e0ff28e2a969971cbb8a8da5fd29859eb4631f40d250456aca2900224e6abf00"
+    },
+    {
+      "file": "src/df-theme.css",
+      "afterSha256": "7c5cf0f9f09a55022e7c6ee32d436a4102790b84f13b08a8d1ca90ed56c115e4"
+    },
+    {
+      "file": "scripts/postbuild-offline.mjs",
+      "afterSha256": "05999e34803f306cf712ab1ce13670aed8d9efdc6c87a7ac0e89b56842230dea"
+    },
+    {
+      "file": "scripts/offline-release.json",
+      "afterSha256": "e3e8c4c9052c1e2337cd2ae727ede46ad2e5da4fcd63e2ca1ddcf9a78e316b30"
+    }
+  ],
+  "localBackup": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\offline-df-20261010\\source-before",
+  "originalProgrammeUntouched": true,
+  "originalBrowserDraftUntouched": true,
+  "oldPublicSiteUpdated": false
+}
