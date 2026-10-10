@@ -54,3 +54,10 @@ python -m unittest -v test_store test_service
 ```
 
 10 项测试覆盖完整发布、CRC/引用/路径、UTF8、多层、不可变/重复修订、持久化、污染核对、索引失败恢复、会话与只读来源、元数据封装及目录选择取消。实际页证据、原有回归失败与未完成验收见 `analysis/results/WORKSPACE_DELIVERY/README.md`；协议见 `spec/workspace_resource_v1.md`。原生 UE 实导/实播、旧批次迁移、全分辨率及严格像素基准仍需对应证据，不能由单元测试推定通过。
+
+
+## 4.9.61 交付页呈现接入
+
+烘焙器右上角进入资源交付，同位置返回制作；目录/历史按需展开，原导入三栏与主动作占满余下工作区。独立导入入口的私有 builder 加载 `delivery-workspace-state.js`、`delivery-presentation.js/css`，从同一 `tool/design-system` 注入基础。可通过 `python build-delivery.py --design-system <仓库>/tool/design-system` 指定来源；旧调用默认读本机当前仓库。更新后须重构独立入口；不要把原型 draft.js 的模拟状态放入生产。
+
+平台分段仅选择真实包，原检查/确认/执行不变；真实执行才自动打开CLI日志，进度按实际完成包数，不显示附加进度文字。新7组控制器检查用mock UE完成/失败/停止，原生实际写入与实播仍单独验收。

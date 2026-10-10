@@ -125,7 +125,7 @@ h3 { font-size: var(--fw-type-field-size); margin: 0 0 8px; }
 .log-strip button[aria-expanded="false"] .fw-icon { transform: rotate(180deg); }
 .log-strip > span:last-child { margin-left: auto; white-space: nowrap; }
 #latest-log { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.log-panel { grid-row: 4; min-width: 0; min-height: 0; height: clamp(200px, 30dvh, 280px); padding: 12px 20px; border-top: 1px solid var(--fw-color-outline); border-radius: var(--fw-radius-panel) var(--fw-radius-panel) 0 0; background: var(--fw-color-surface-high); display: grid; grid-template-rows: auto auto minmax(0, 1fr); gap: 8px; animation: rise-in var(--fw-motion-panel-ms) ease-out; }
+.log-panel { grid-row: 4; min-width: 0; min-height: 0; height: clamp(160px, 27dvh, 240px); padding: 0 20px 8px; border-top: 1px solid var(--fw-color-outline); border-radius: 0; background: var(--fw-color-surface-low); display: grid; grid-template-rows: auto auto minmax(0, 1fr); gap: 8px; animation: rise-in var(--fw-motion-panel-ms) ease-out; }
 .log-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .log-heading h2 { margin: 0; font-size: var(--fw-type-body-size); line-height: var(--fw-type-body-line); }
 .log-heading-actions { display: flex; align-items: center; gap: 8px; }
@@ -185,3 +185,12 @@ h3 { font-size: var(--fw-type-field-size); margin: 0 0 8px; }
 }
 @media (pointer: coarse) { .package-row { min-height: 72px; } .draft-label,.package-select,.log-strip button { min-height: 48px; } .action-buttons > button { min-height: 48px; } }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } .log-panel { animation: none; } }
+
+/* CLI log is a local shape exception approved by the user. */
+.log-heading {min-height:36px;gap:8px}
+.log-heading h2 {margin:0;font-size:13px;line-height:20px;font-weight:600}
+.log-panel .fw-button {min-height:28px;padding:2px 8px;border-radius:0;font-size:12px}
+.log-panel progress {height:2px;border-radius:0}
+.log-panel li {border:0;padding:2px 0;gap:10px;font:12px/20px Consolas,"Cascadia Mono","Microsoft YaHei",monospace}
+.header-right #make {text-decoration:none;white-space:nowrap}
+@media(max-width:720px){.header-right{gap:8px;flex-wrap:wrap}.log-panel{padding-top:0}}

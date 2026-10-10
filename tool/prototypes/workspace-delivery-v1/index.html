@@ -6,19 +6,15 @@
   <title>烟花烘焙器 · 交付与导入草稿 v1</title>
   <link rel="stylesheet" href="../../design-system/tokens.css">
   <link rel="stylesheet" href="../../design-system/components.css">
-  <link rel="stylesheet" href="draft.css?v=1.3">
+  <link rel="stylesheet" href="draft.css?v=1.4">
   <script src="../../design-system/icons.js" defer></script>
-  <script src="draft.js?v=1.3" defer></script>
+  <script src="draft.js?v=1.4" defer></script>
 </head>
 <body class="fw-scope" data-density="compact">
 <div class="workspace">
   <header class="app-header">
     <div class="brand"><b>DF</b><span>烟花烘焙器<small>制作与交付工作区</small></span></div>
-    <nav class="workspace-nav" aria-label="烘焙器工作区">
-      <button class="fw-button fw-button--quiet workspace-entry" id="make" aria-haspopup="dialog">效果制作</button>
-      <button class="fw-button fw-button--quiet workspace-entry is-current" aria-current="page">资源交付</button>
-    </nav>
-    <div class="header-right"><button class="draft-label" id="scenarios">草稿 v1 · 状态演示</button><span class="connection" id="connection">UE 连接演示</span><button class="fw-icon-button" id="help" aria-label="查看草稿说明"><span class="fw-icon" data-fw-icon="preview"></span></button></div>
+    <div class="header-right"><a class="fw-button fw-button--quiet" id="make" href="http://127.0.0.1:8034/baker">返回效果制作</a><button class="draft-label" id="scenarios">草稿 v1 · 状态演示</button><span class="connection" id="connection">UE 连接演示</span><button class="fw-icon-button" id="help" aria-label="查看草稿说明"><span class="fw-icon" data-fw-icon="preview"></span></button></div>
   </header>
 
   <section class="context-bar" aria-label="当前资源">
@@ -78,15 +74,15 @@
   </main>
 
   <section id="log-panel" class="log-panel" aria-labelledby="log-title" hidden>
-    <div class="log-heading"><div><h2 id="log-title" tabindex="-1">操作记录与日志</h2><span class="fw-helper">金芒菊 · 修订 <code>3c9894a0</code> · 状态演示</span></div><div class="log-heading-actions"><button class="fw-button fw-button--quiet" id="log-latest" hidden>回到最新</button><button class="fw-button fw-button--quiet" id="log-close" aria-label="收起操作记录与日志">收起<span class="fw-icon" data-fw-icon="expand"></span></button></div></div>
-    <div class="execution-summary"><b id="execution-title">等待导入</b><span id="execution-count" class="fw-helper">已完成 0 / 2 包</span><progress class="fw-progress" id="execution-progress" value="0" max="2" aria-label="已完成的平台包"></progress><span class="fw-helper" id="execution-detail">检查与确认不会执行导入。</span></div>
+    <div class="log-heading"><h2 id="log-title" tabindex="-1">操作日志</h2><div class="log-heading-actions"><button class="fw-button fw-button--quiet" id="log-latest" hidden>回到最新</button><button class="fw-button fw-button--quiet" id="log-close" aria-label="收起操作日志">收起<span class="fw-icon" data-fw-icon="expand"></span></button></div></div>
+    <progress class="fw-progress" id="execution-progress" value="0" max="2" aria-label="已完成的平台包"></progress>
     <ol id="logs" role="log" aria-label="按时间排列的操作记录" aria-live="off" aria-relevant="additions" tabindex="0"></ol>
   </section>
   <footer class="action-bar" aria-label="常驻检查、确认与导入操作">
     <div class="action-summary"><b id="overall-title">检查通过 2 包 · 已确认 0 / 2</b><span id="overall-detail">8 项资产；先核对 PC 包，再确认手机包。</span></div>
     <div class="action-buttons"><button class="fw-button" id="check">重新检查</button><button class="fw-button" id="confirm">确认 PC 包</button><button class="fw-button fw-button--primary" id="import" disabled aria-describedby="overall-detail">导入已确认的 2 包</button></div>
   </footer>
-  <div class="log-strip"><button id="log-toggle" aria-expanded="false" aria-controls="log-panel"><span class="fw-icon" data-fw-icon="expand"></span>操作记录</button><span id="latest-log" role="status" aria-live="polite">演示：2 包检查通过，等待用户核对名称。</span><span>不写入 UE</span></div>
+  <div class="log-strip"><button id="log-toggle" aria-expanded="false" aria-controls="log-panel"><span class="fw-icon" data-fw-icon="expand"></span>操作日志</button><span id="latest-log" role="status" aria-live="polite">演示：2 包检查通过，等待用户核对名称。</span><span>不写入 UE</span></div>
 </div>
 
 <dialog class="fw-dialog detail-dialog" id="detail-dialog" aria-labelledby="detail-title"><div class="dialog-heading"><h2 id="detail-title" class="fw-section-title"></h2><button class="fw-button fw-button--quiet" id="detail-close" aria-label="关闭详情">关闭</button></div><div id="detail-content"></div></dialog>

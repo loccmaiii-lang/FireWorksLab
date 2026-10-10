@@ -164,26 +164,9 @@ function renderFlow() {
 }
 
 function renderExecution() {
-  const total = state.packages.size, done = state.completed.size;
-  let title = '等待导入', detail = '检查与确认不会执行导入。', status = 'waiting';
-  if(state.busy&&state.stage==='import') {
-    title = state.stop?'等待当前包结束':`正在导入 ${label(state.current)} 包（演示）`;
-    detail = state.stop?'已请求包间停止，当前包仍在执行。':'可以收起日志或请求包间停止；收起不会停止执行。';
-    status = 'running';
-  } else if(state.busy&&state.stage==='check') {
-    title = '正在检查（演示）'; detail = '核对名称、所选包与资产依赖。';
-  } else if(state.failed) {
-    title = `${label(state.failed)} 包失败（演示）`; detail = '已完成包保留；底部重试只执行未完成包。'; status = 'failed';
-  } else if(state.stopped) {
-    title = '已在包间停止（演示）'; detail = '原确认和完成记录保留；底部继续只执行剩余包。'; status = 'stopped';
-  } else if(total>0&&!unfinished().length) {
-    title = '所选包执行完成（演示）'; detail = '仅模拟回执。下一步核对演出登记；真实 UE 未写入。'; status = 'complete';
-  }
-  $('execution-title').textContent = title; $('execution-detail').textContent = detail;
-  $('execution-count').textContent = `已完成 ${done} / ${total} 包`;
-  $('execution-progress').max = Math.max(1,total); $('execution-progress').value = done;
+  const total=state.packages.size, done=state.completed.size;
+  $('execution-progress').max=Math.max(1,total); $('execution-progress').value=done;
   $('execution-progress').setAttribute('aria-valuetext',`${total} 个平台包中完成 ${done} 个，状态演示`);
-  document.querySelector('.execution-summary').dataset.status = status;
 }
 
 function selectPackage(p) {
@@ -306,7 +289,6 @@ $('system-settings').addEventListener('click',()=>{
 $('manual').addEventListener('click',()=>detail('手动接入保留为补充入口',`<p>烘焙器的完整目录发布是主流程；已有外部素材包仍可使用原导入器的目录接入、命名与平台选择。</p><p>草稿暂不读取其他目录。生产翻新将复用现有接入器，而不是另写一套导入规则。</p>`));
 $('gpu').addEventListener('click',()=>detail('GPU 待办',`<p>当前金芒菊 PC / 手机包均没有 GPU 发射器，因此没有待办。适用包保留原 GPU 上限、实测与回填入口。</p>`));
 $('old-revision').addEventListener('click',()=>detail('历史修订 b059f930',`<p>旧修订保留，已有演出仍指向原版本；最新资源不会静默替换它。</p><p>生产页面在选择旧修订时独立重查、确认和导入。这版草稿只展示当前修订的核心流程。</p>`));
-$('make').addEventListener('click',()=>detail('效果制作工作区',`<p>本版评审交付与导入布局。制作参数先评审分类、展开策略和连续调参样板，确认后制作可点击原型，再分区实装；库、画布/时间轴和完整字段保留。</p><p><a class="fw-link" href="http://127.0.0.1:8034/baker" target="_blank" rel="noopener">打开当前正式烘焙器</a></p>`));
 $('help').addEventListener('click',()=>detail('草稿 v1 · 核对与导入一屏完成',`<p>左边选资源与平台包，中间改当前包设置，右边核对资产；底部操作始终常驻。队列、设置和资产各自局部滚动。</p><p>名称和平台包是已核对金芒菊的示例；缩略图来自固定修订。检查、连接、执行、失败和登记状态全部为演示，无 UE 调用、无文件/表格写入、无生产存储修改。</p><p>正式翻新需把该布局接到原导入器的真实命令与回执，保留更新、复用、跳过、依赖、GPU、停止及恢复。</p>`));
 $('detail-close').addEventListener('click',()=>$('detail-dialog').close());
 $('scenarios').addEventListener('click',()=>$('scenario-dialog').showModal());

@@ -3,15 +3,21 @@
     <div class="brand"><span class="mark">DF</span><b>特效工作台</b><span class="brand-tool">烟花烘培器</span><small id="verLabel"></small></div>
     <div class="crumb" id="crumb" hidden aria-hidden="true"></div>
     <div class="gpu" id="gpu"></div>
-    <nav class="delivery-nav" aria-label="烘焙器工作区"><button class="btn" id="deliveryMake" type="button" aria-pressed="true">效果制作</button><button class="btn" id="deliveryOpen" type="button" aria-pressed="false">资源交付</button></nav>
+    <nav class="delivery-nav" aria-label="烘焙器工作区"><button class="btn ghost" id="deliveryMake" type="button" hidden>返回效果制作</button><button class="btn ghost" id="deliveryOpen" type="button">资源交付</button></nav>
     <button class="btn ghost upd" id="updBtn" type="button">更新记录<i id="updDot" hidden></i></button>
     <div id="status" role="status" aria-live="polite"></div>
   </header>
-  <section id="deliveryWorkspace" class="delivery-workspace fw-scope" aria-labelledby="deliveryTitle" hidden>
-    <div class="delivery-heading"><div><h1 id="deliveryTitle">资源交付</h1><p>完整资源直接写入本机目录，自动接入检查清单。</p></div><label>导出方式<select class="fw-select" id="deliveryDestination"><option value="directory">指定目录 · 自动检查</option><option value="zip">下载 ZIP · 便携交付</option></select></label></div>
-    <div class="delivery-settings"><label for="deliveryRoot">资源导出目录</label><input class="fw-input" id="deliveryRoot" placeholder="选择目录，或填写绝对路径"><button class="fw-button" id="deliveryPick" type="button">选择目录…</button><button class="fw-button" id="deliverySaveRoot" type="button">保存目录</button><button class="fw-button fw-button--quiet" id="deliveryRefresh" type="button">刷新资源</button></div>
+  <section id="deliveryWorkspace" class="delivery-workspace fw-scope" aria-labelledby="deliveryTitle" tabindex="-1" hidden>
+    <div class="delivery-heading">
+      <div class="delivery-identity"><img id="deliveryThumbnail" alt="当前修订引擎回放缩略图" hidden><span id="deliveryThumbnailMissing" hidden>缩略图待生成</span><div><h1 id="deliveryTitle">资源交付</h1><span id="deliveryContext">选择已交付修订，核对后导入。</span></div></div>
+      <details id="deliveryOptions"><summary>资源目录与版本</summary><div class="delivery-options-body">
+        <label>导出方式<select class="fw-select" id="deliveryDestination"><option value="directory">指定目录 · 自动检查</option><option value="zip">下载 ZIP · 便携交付</option></select></label>
+        <div class="delivery-settings"><label for="deliveryRoot">资源导出目录</label><input class="fw-input" id="deliveryRoot" placeholder="选择目录，或填写绝对路径"><button class="fw-button" id="deliveryPick" type="button">选择目录…</button><button class="fw-button" id="deliverySaveRoot" type="button">保存目录</button></div>
+        <p id="deliveryReceipt">选择一个修订查看交付位置与导入清单。</p><div class="delivery-library"><h2>已交付资源</h2><button class="fw-button fw-button--quiet" id="deliveryRefresh" type="button">刷新资源</button><div id="deliveryList"></div><button class="fw-button" type="button" id="deliveryCheck" disabled>重新接入当前修订</button></div>
+      </div></details>
+    </div>
     <p id="deliveryStatus" class="delivery-status" role="status" aria-live="polite">首次使用请选择资源导出目录。</p>
-    <div class="delivery-content"><aside class="delivery-library" aria-label="已交付修订"><h2>已交付资源</h2><div id="deliveryList"></div></aside><div class="delivery-current"><div class="delivery-summary"><img id="deliveryThumbnail" alt="当前修订的引擎回放缩略图" hidden><p id="deliveryThumbnailMissing">缩略图待生成</p><p id="deliveryReceipt">选择一个修订查看交付位置与导入清单。</p><button class="fw-button" type="button" id="deliveryCheck" disabled>接入所选修订</button></div><p id="deliveryImporterMissing">本机导入工作区尚未配置，资源可以正常交付。请按本机服务 README 构建并连接原导入器。</p><iframe id="deliveryFrame" title="原烟花素材导入器：检查、命名确认与执行" hidden></iframe></div></div>
+    <div class="delivery-content"><p id="deliveryImporterMissing">本机导入工作区尚未配置，资源可以正常交付。请按本机服务 README 构建并连接原导入器。</p><iframe id="deliveryFrame" title="资源交付：原导入器检查、命名确认与执行" hidden></iframe></div>
   </section>
   <main id="main">
     <aside class="side" id="side" aria-label="库">

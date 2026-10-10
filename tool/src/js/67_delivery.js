@@ -1,6 +1,6 @@
 // 4.9.60: final ZIP bytes are published by the local directory service; UE writes remain in the original importer.
 const DeliveryWorkspace = (() => {
-  let session = null, resources = [], last = null, active = false, busyDelivery = false;
+  let session = null, resources = [], last = null, active = false, busyDelivery = false, importerBusy = false;
   const node = id => document.getElementById(id);
   const message = (text, error = false) => { const n = node('deliveryStatus'); n.textContent = text; n.dataset.error = String(error); };
   const destination = () => node('deliveryDestination').value;
@@ -18,11 +18,12 @@ const DeliveryWorkspace = (() => {
     return session;
   }
   function show(open) {
-    active = open; node('deliveryWorkspace').hidden = !open;
+    active = open; document.querySelector('.app').classList.toggle('delivery-active',open); node('deliveryWorkspace').hidden = !open;
     node('main').inert = open; node('main').setAttribute('aria-hidden', String(open));
-    node('deliveryOpen').setAttribute('aria-pressed', String(open)); node('deliveryMake').setAttribute('aria-pressed', String(!open));
+    node('deliveryOpen').hidden = open; node('deliveryMake').hidden = !open;
+    const focus = node(open?'deliveryWorkspace':'deliveryOpen'); focus.focus({preventScroll:true});
   }
-  async function open() { show(true); try { await connect(); await refresh(); if(!last)message(session.outputRoot?'已恢复导出目录。选择已交付修订，或回效果制作导出新资源。':'首次使用请先选择资源导出目录。'); } catch(e) { message(e.message, true); } }
+  async function open() { show(true); try { await connect(); await refresh(); if(!last && resources.length)await select(resources[resources.length-1]); if(!last)message(session.outputRoot?'已恢复导出目录。选择已交付修订，或回效果制作导出新资源。':'首次使用请先选择资源导出目录。'); } catch(e) { message(e.message, true); } }
   async function refresh() { resources = (await api('/api/resources')).resources; render(); }
   function render() {
     const list = node('deliveryList'); list.replaceChildren();
@@ -33,11 +34,13 @@ const DeliveryWorkspace = (() => {
       const detail = document.createElement('small'); detail.textContent = r.revisionId.slice(0,8) + ' · ' + r.packages.map(p=>p.platform.toUpperCase()).join(' / ');
       const result = document.createElement('small'); result.textContent = r.importReceipt ? '导入记录：' + [...new Set(r.importReceipt.rows.map(x=>importLabel(x.state)))].join(' / ') : '资源已交付 · 待导入检查';
       button.append(title, detail, result); button.setAttribute('aria-pressed', String(last?.deliveryId === r.deliveryId));
-      button.addEventListener('click', ()=>select(r)); list.append(button);
+      button.disabled=importerBusy; button.addEventListener('click', ()=>{if(!importerBusy)select(r).then(()=>node('deliveryOptions').open=false).catch(e=>message(e.message,true));}); list.append(button);
     }
   }
   async function select(receipt) {
     last = receipt; render();
+    node('deliveryTitle').textContent=receipt.name;
+    node('deliveryContext').textContent=`修订 ${receipt.revisionId.slice(0,8)} · ${receipt.packages.map(p=>p.platform==='mobile'?'手机':'PC').join(' / ')} · ${receipt.files.length} 个文件`;
     node('deliveryReceipt').textContent = `${receipt.name} · 修订 ${receipt.revisionId}\n${receipt.directory}\n${receipt.files.length} 个文件，${receipt.packages.length} 份平台配置。原文件已校验；UE 状态见下方导入清单。`;
     const img = node('deliveryThumbnail'); img.hidden = receipt.thumbnail.status !== 'ready';
     if (!img.hidden) img.src = '/api/deliveries/' + receipt.deliveryId + '/' + receipt.thumbnail.file;
@@ -69,6 +72,8 @@ const DeliveryWorkspace = (() => {
     finally { busyDelivery = false; }
   }
   function init() {
+    node('deliveryWorkspace').addEventListener('keydown',e=>e.stopPropagation());
+    document.querySelector('.delivery-nav').addEventListener('keydown',e=>{if(active)e.stopPropagation();});
     node('deliveryOpen').addEventListener('click', open); node('deliveryMake').addEventListener('click', ()=>show(false));
     node('deliveryRefresh').addEventListener('click', ()=>refresh().catch(e=>message(e.message,true)));
     node('deliveryCheck').addEventListener('click', ()=>sendToImporter());
@@ -78,8 +83,18 @@ const DeliveryWorkspace = (() => {
       try { const requested=node('deliveryRoot').value; await connect(); const root=await api(picker?'/api/output-root/pick':'/api/output-root',picker?{}:{outputRoot:requested}); session.outputRoot=root.outputRoot; node('deliveryRoot').value=root.outputRoot||''; await refresh(); message(root.cancelled?'已取消，原目录保留。':'目录已保存，之后导出直接写入此目录。'); }
       catch(e) { message(e.message,true); } finally { button.disabled=false; }
     });
+    new ResizeObserver(()=>document.documentElement.style.setProperty('--delivery-top',document.querySelector('header.top').getBoundingClientRect().height+'px')).observe(document.querySelector('header.top'));
+    node('deliveryOptions').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();node('deliveryOptions').open=false;node('deliveryOptions').querySelector('summary').focus();}});
     window.addEventListener('message', async e=>{
-      if (e.origin!==location.origin||e.source!==node('deliveryFrame').contentWindow||e.data?.type!=='workspace-import-state') return;
+      if (e.origin!==location.origin||e.source!==node('deliveryFrame').contentWindow) return;
+      if(e.data?.type==='workspace-view-state'){
+        importerBusy=!!e.data.busy;node('deliveryMake').disabled=importerBusy;
+        for(const id of ['deliveryPick','deliverySaveRoot','deliveryCheck','deliveryDestination'])node(id).disabled=importerBusy;
+        const current=e.data.current, receipt=current&&resources.find(r=>r.deliveryId===current.deliveryId);
+        if(receipt){last=receipt;node('deliveryTitle').textContent=receipt.name;node('deliveryContext').textContent=`修订 ${receipt.revisionId.slice(0,8)} · 当前 ${current.platform==='mobile'?'手机':'PC'} 包`;}else if(current){node('deliveryTitle').textContent=current.name||'其他素材';node('deliveryContext').textContent=`手动素材 · 当前 ${current.platform==='mobile'?'手机':'PC'} 包`;node('deliveryThumbnail').hidden=true;node('deliveryThumbnailMissing').hidden=true;}
+        render();return;
+      }
+      if(e.data?.type!=='workspace-import-state')return;
       for (const [id,state] of Object.entries(e.data.receipts||{})) try { await api('/api/import-receipts/'+id,state); } catch(error) { message('导入记录保存失败：'+error.message,true); }
       try { await refresh(); } catch(error) { message(error.message,true); }
     });
