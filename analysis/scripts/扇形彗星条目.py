@@ -236,8 +236,27 @@ FAN_ENTS10, FAN_COMBOS10 = fan_entries8('FC10', RED_HEAD9, RED_HEAD9_M, SPARK10,
 FAN_COMBOS10[0]['layerNames'] = ['正红星头', '炭金火花']
 FAN_ENTS10[1]['name'] = '扇形彗星 · 红彗星扇 · 炭金火花'
 
-FAN_ENTS = FAN_ENTS10 + [e for e in FAN_ENTS6 if e['id'] == 'FC6O']
-FAN_COMBOS = FAN_COMBOS10
+# ======================= FC10S（相机渲染，用户 2026-10-10 09:14）：只要其中一束 =======================
+# 用户原话：「那这种扇类的，我只想要其中一束，咋搞？之前rt6不是可以做到把近段远段单独导出吗」
+# 同 FC10R 两层（正红星头 + 炭金火花）、同一套参数，只打中间那根筒（簇数 1，竖直）。不改烘焙器。
+# 贴图 2048 × 4096、4 × 4（单格 512 × 1024，64 帧不减）：一束又高又窄，方格子时只占格子中间一窄条（4.0 px/m，整排扇 3.7）；
+#   高格子 7.9 px/m，清楚一倍——火花 0.85 m ≈ 6.7 px、星头 0.8 m ≈ 6.3 px（整排扇里 3.1 / 2.9 px），多边形看得出。
+# 同样 2048 × 2048 只能 32 帧（帧数减半），没用。UE 里拼扇 = 复制几份转角度：竖直条转过去和真斜着打的差 10° 2.0 / 20° 3.9 / 30° 5.8 px（800 m）。
+ONE10 = dict(stars=1, clusterN=1, clusterSweep=0, texW=2048, texH=4096, cols=4, rows=4)
+FAN_ENTS10S = [dict(e, id=e['id'].replace('FC10R', 'FC10S'), name=e['name'].replace('红彗星扇', '红彗星扇单条'),
+                    tags=e['tags'].replace('FC10R', 'FC10S') + ' 单条 一束', p=dict(e['p'], **ONE10),
+                    note=e['note'] + ' FC10S：只打中间那根筒（簇数 1），单格 512 × 1024。') for e in FAN_ENTS10]
+FAN_COMBOS10S = [dict(FAN_COMBOS10[0], id='FC10S', date='2026-10-10', name='扇形彗星 · 红彗星扇单条（中间那根，正红星头 + 炭金火花）',
+                      layers=[{'m': 'rep:FC10S-1', 'scale': 1, 'delay': 0}, {'m': 'rep:FC10S-2', 'scale': 1, 'delay': 0}],
+                      tags='扇形彗星 红彗星 单条 一束 正红 炭金 多边形火花 FC10S', replaces=[],
+                      look=['一根竖直往上冲的红彗星（FC10R 中间那根）：越往上越慢，2.2 s 燃尽熄灭不爆，火花停在空中暗掉、往下飘',
+                            '星头、红光晕、炭金多边形火花和 FC10R 同一套参数；贴图单格 512 × 1024，放大看火花棱角比整排扇清楚一倍',
+                            'UE 里拼扇：复制几份、每份转一个角度（±10° 内几乎看不出，±30° 外侧那根比真的直 5.8 px / 800 m）'],
+                      note='用户 10-10 09:14：「那这种扇类的，我只想要其中一束」。FC10R 同参数、只打中间那根筒（簇数 1）；两层同一模拟：① 正红星头 ② 炭金火花。'
+                           '贴图 2048 × 4096 4 × 4（单格 512 × 1024、64 帧）。不是单束（单束不给分簇）、也不是 RT6 近段 / 远段（那是升空尾缀自己的模拟和渲染器）。')]
+
+FAN_ENTS = FAN_ENTS10 + FAN_ENTS10S + [e for e in FAN_ENTS6 if e['id'] == 'FC6O']
+FAN_COMBOS = FAN_COMBOS10 + FAN_COMBOS10S
 next(e for e in FAN_ENTS if e['id'] == 'FC6O')['replaces'] = ['FC4O', 'FC5O']
 
 if __name__ == '__main__':

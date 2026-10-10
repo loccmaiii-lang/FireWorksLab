@@ -1,0 +1,9 @@
+{
+ "id": "FCE-FC10S",
+ "type": "export",
+ "effect": "fan_comet",
+ "entry": "FC10S",
+ "name": "FanCometRedSingle",
+ "priority": 1,
+ "note": "相机渲染：红彗星扇单条 FC10S（只要其中一束，用户 10-10 09:14）导出 + 回放检查。"
+}

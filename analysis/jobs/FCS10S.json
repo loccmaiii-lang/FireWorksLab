@@ -1,0 +1,9 @@
+{
+ "id": "FCS10S",
+ "type": "std",
+ "priority": 2,
+ "targets": [
+  "FC10S"
+ ],
+ "note": "相机渲染：FC10S 标准检查。"
+}
