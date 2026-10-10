@@ -82,9 +82,15 @@
     "tool/offline-workbench/audit-v14/04-library-1366.png",
     "tool/offline-workbench/audit-v14/05-library-1920.png",
     "tool/offline-workbench/audit-v14/07-offline-reference.png",
-    "tool/offline-workbench/audit-v14/08-offline-library.png"
+    "tool/offline-workbench/audit-v14/08-offline-library.png",
+    "tool/offline-workbench/audit-v14/09-fixed-upgrade.png"
   ],
   "publication": {
-    "remoteMainVerified": false
+    "artifactCommit": "e78d1bc4b27910dc67f37e4aaa8ba773f5f50299",
+    "htmlBlob": "6325694b0abf5c8d2528fb71e2e018ae542c0674",
+    "zipBlob": "bc71e44cf759b9d44037fc4ea5032da4b11a0f71",
+    "remoteMainContainsCommit": true,
+    "remoteAndLocalArtifactBlobsEqual": true,
+    "verifiedAt": "2026-10-10T06:27:16.014126+00:00"
   }
 }
