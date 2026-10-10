@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>烟花烘焙器 · 交付与导入草稿 v1</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css">
+  <link rel="stylesheet" href="../../design-system/components.css">
+  <link rel="stylesheet" href="draft.css?v=1.2">
+  <script src="../../design-system/icons.js" defer></script>
+  <script src="draft.js?v=1.2" defer></script>
+</head>
+<body class="fw-scope" data-density="compact">
+<div class="workspace">
+  <header class="app-header">
+    <div class="brand"><b>DF</b><span>烟花烘焙器<small>制作与交付工作区</small></span></div>
+    <nav class="workspace-nav" aria-label="烘焙器工作区">
+      <button class="fw-button fw-button--quiet" id="make">效果制作</button>
+      <button class="fw-button fw-button--quiet is-current" aria-current="page">资源交付与导入</button>
+    </nav>
+    <div class="header-right"><button class="draft-label" id="scenarios">草稿 v1 · 状态演示</button><span class="connection" id="connection">UE 连接演示</span><button class="fw-icon-button" id="help" aria-label="查看草稿说明"><span class="fw-icon" data-fw-icon="preview"></span></button></div>
+  </header>
+
+  <section class="context-bar" aria-label="当前资源">
+    <div class="context-title"><span class="eyebrow">当前交付</span><h1>金芒菊 <span>GoldChrysanthemum</span></h1></div>
+    <div class="context-meta"><span>固定修订 <code id="revision">3c9894a0</code></span><span>PC / 手机</span><span>14 个文件</span><button class="context-timing" id="context-timing">产物 4.833 s · 时长说明</button></div>
+    <button class="fw-button fw-button--quiet directory" id="directory" title="查看和设置资源目录">资源目录与版本<span class="fw-icon" data-fw-icon="expand"></span></button>
+  </section>
+
+  <main class="main-layout">
+    <div class="flow-strip"><ol aria-label="交付步骤"><li class="completed">1 目录已导出</li><li class="active" id="step-check">2 核对清单</li><li id="step-import">3 用户导入</li><li id="step-register">4 演出资源登记</li></ol><span class="fw-helper">目录与缩略图来自同一修订；执行状态为演示</span></div>
+    <nav class="pane-tabs" aria-label="交付区域"><button class="fw-segment" data-pane="queue" aria-pressed="false">资源与队列</button><button class="fw-segment" data-pane="settings" aria-pressed="false">当前包设置</button><button class="fw-segment" data-pane="preview" aria-pressed="true">资产清单</button></nav>
+    <div class="panels" data-active-pane="preview">
+      <section class="panel queue-panel" data-panel="queue" aria-labelledby="queue-heading">
+        <div class="panel-heading"><h2 id="queue-heading">资源与队列</h2><button class="fw-icon-button" id="refresh" aria-label="重新检查所选资源"><span class="fw-icon" data-fw-icon="refresh"></span></button></div>
+        <div class="panel-body queue-body">
+          <div class="resource-summary"><img src="assets/gold-thumbnail.png" alt="金芒菊修订3c9894a0的产物回放缩略图"><div><b>金芒菊</b><small>3c9894a0 · 当前修订</small><span class="fw-helper">已导出 · UE 未实播</span></div></div>
+          <p class="group-label">本次导入 <span id="queue-count">2 包</span></p>
+          <div id="package-list"></div>
+          <div class="queue-note">PC 与手机分别确认；共用贴图只执行一次。</div>
+          <details class="queue-history"><summary>历史修订 · 1</summary><button class="history-row" id="old-revision"><b>b059f930</b><span>旧修订 · 查看差异</span></button></details>
+          <div class="queue-bottom"><button class="fw-button fw-button--quiet" id="manual">手动接入其他资源</button><button class="fw-button fw-button--quiet" id="gpu">GPU 待办 <span>0</span></button></div>
+        </div>
+      </section>
+
+      <section class="panel settings-panel" data-panel="settings" aria-labelledby="settings-heading">
+        <div class="panel-heading"><h2 id="settings-heading">当前包设置</h2><span class="platform-label" id="settings-platform">PC</span></div>
+        <div class="panel-body settings-body">
+          <label class="fw-field"><span class="fw-label">处理方式</span><select class="fw-select" id="mode"><option value="create">新建资产</option><option value="update">同名更新</option></select></label>
+          <p class="fw-helper mode-help" id="mode-help">已存在同名资产时停下处理，不自动覆盖。</p>
+          <label class="fw-field"><span class="fw-label">效果英文名</span><input class="fw-input" id="effect-name" value="GoldChrysanthemum" aria-describedby="name-help name-error" spellcheck="false"></label>
+          <p class="fw-helper" id="name-help">手机后缀自动补齐；PC / 手机材质各自独立。</p><p class="fw-field-error" id="name-error" hidden>使用英文字母开头，仅含字母、数字和下划线。</p>
+          <div class="setting-group"><h3>粒子系统设置</h3><dl class="compact-dl"><div><dt>时间步长</dt><dd>固定 10 FPS</dd></div><div><dt>剔除距离</dt><dd>1,200 m</dd></div><div><dt>GPU 发射器</dt><dd>本包 0 个</dd></div></dl><button class="fw-button fw-button--quiet" id="system-settings">查看完整设置</button></div>
+          <div class="setting-group"><h3>产物时间</h3><div class="time-number">4.833 <span>s</span><small>当前平台最终产物</small></div><button class="fw-button fw-button--quiet" id="timing">制作 5.500 s，为什么不同？</button></div>
+          <div class="setting-group"><h3>演出资源登记</h3><p class="fw-helper" id="mapping-status">尚未登记 · 导入后才能核对真实资产</p><button class="fw-button fw-button--quiet" id="mapping">查看登记方案</button></div>
+        </div>
+      </section>
+
+      <section class="panel preview-panel" data-panel="preview" aria-labelledby="preview-heading">
+        <div class="panel-heading"><h2 id="preview-heading">资产清单</h2><div class="heading-tools"><span class="fw-helper" id="asset-count">已选 5 / 5</span><button class="fw-button fw-button--quiet" id="target-paths">目标目录</button></div></div>
+        <div class="review-summary"><div><b id="current-package-title">PC · GoldChrysanthemum</b><p id="current-package-help">检查通过，核对以下名称与处理方式后确认此包。</p></div><span class="fw-status fw-status--warning" id="package-status">待确认</span></div>
+        <div class="panel-body asset-body" tabindex="0" aria-label="当前包资产，可在区域内滚动">
+          <table class="fw-table asset-table"><thead><tr><th scope="col">导入 / 类型</th><th scope="col">最终资产名称</th><th scope="col">处理计划</th></tr></thead><tbody id="assets"></tbody></table>
+          <div class="dependency-note" id="dependency-note">粒子依赖材质与贴图；取消依赖项会同时取消粒子。共用项的选择在两平台同步。</div>
+          <div class="inline-message" id="problem" role="status" hidden></div>
+          <details class="review-details"><summary>命名与导入规则</summary><p>粒子、材质、序列按平台独立；颜色 Ramp 和轮廓图按同一实际目标去重。新建遇重名须处理；同名更新会重建粒子发射器，保留人工改值需按原导入器规则核对。复用/跳过不代表已完成写入。</p></details>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="action-bar" aria-label="常驻检查、确认与导入操作">
+    <div class="action-summary"><b id="overall-title">检查通过 2 包 · 已确认 0 / 2</b><span id="overall-detail">8 项资产；先核对 PC 包，再确认手机包。</span></div>
+    <div class="action-buttons"><button class="fw-button" id="check">重新检查</button><button class="fw-button" id="confirm">确认 PC 包</button><button class="fw-button fw-button--primary" id="import" disabled aria-describedby="overall-detail">导入已确认的 2 包</button></div>
+  </footer>
+  <div class="log-strip"><button id="log-toggle" aria-expanded="false" aria-controls="log-panel"><span class="fw-icon" data-fw-icon="expand"></span>操作记录</button><span id="latest-log" role="status" aria-live="polite">演示：2 包检查通过，等待用户核对名称。</span><span>不写入 UE</span></div>
+  <section id="log-panel" class="log-panel" aria-label="操作记录" hidden><div><b>操作记录 · 状态演示</b><button class="fw-button fw-button--quiet" id="log-close">收起</button></div><ol id="logs"></ol></section>
+</div>
+
+<dialog class="fw-dialog detail-dialog" id="detail-dialog" aria-labelledby="detail-title"><div class="dialog-heading"><h2 id="detail-title" class="fw-section-title"></h2><button class="fw-button fw-button--quiet" id="detail-close" aria-label="关闭详情">关闭</button></div><div id="detail-content"></div></dialog>
+<dialog class="fw-dialog" id="scenario-dialog" aria-labelledby="scenario-title"><h2 class="fw-section-title" id="scenario-title">检查流程的不同状态</h2><p>仅改变本草稿的内存演示数据。</p><label class="fw-field"><span class="fw-label">选择演示状态</span><select id="scenario" class="fw-select"><option value="ready">检查通过，等待确认</option><option value="unchecked">新包接入，尚未检查</option><option value="conflict">发现同名冲突</option><option value="offline">UE 未连接</option><option value="partial">已部分完成，需要重试</option><option value="failed-run">执行时手机包失败</option></select></label><div class="fw-dialog-actions"><button class="fw-button" id="scenario-close">取消</button><button class="fw-button fw-button--primary" id="scenario-apply">载入演示状态</button></div></dialog>
+<div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
