@@ -147,12 +147,13 @@ function invalidate() {
 
 问题收口：原色与8035布局保持；右上角入口/返回；导出后原位进入实际清单；切页保留制作参数、对象与撤销，以及导入确认、任务、日志；连接失败同页重试；本机服务作为后台能力，不能要求迁移制作存档或新开制作窗口。
 
-实现：67_delivery.js只调用带随机channel、校验来源窗口/源的消息RPC。原iframe加载同源HTTP最小delivery-host，host调用原目录API与原独立importer；token仅留host，file父页不直接fetch、不修改CORS。HTTP父页只允许同源；opaque file父页仅允许直接父窗口、无远程祖先及无referrer。命令限会话/资源/发布/可信交付ID接收/目录/焦点，不暴露UE执行命令。host使用资源索引中的真实回执，保护确认/执行规则。原导入源码和宪章/tokens/参数保持。
+实现：67_delivery.js只调用带随机channel、校验来源窗口/源的消息RPC。原iframe加载同源HTTP delivery-host，直接承载原独立importer及目录API适配（无第二层iframe）；token仅留host，file父页不直接fetch、不修改CORS。HTTP父页只允许同源；opaque file父页仅允许直接父窗口、无远程祖先及无referrer。命令限会话/资源/发布/可信交付ID接收/目录/焦点，不暴露UE执行命令。host使用资源索引中的真实回执，保护确认/执行规则。原导入源码和宪章/tokens/参数保持。
 
-- [ ] Task 1：test_baker_handoff.cjs与test_file_export_handoff.cjs改为单页验收，先运行失败；新增host安全与排队测试、test_service路由检查。重点断言window.open调用=0、返回不因busy被禁用、重复切页不重复检查。
-- [ ] Task 2：新增tool/local_delivery/delivery-host.html/js与服务只读路由；host内接原importer并转发真实状态/回执，重复publish去重；会话恢复不重建已加载导入器。
-- [ ] Task 3：重构67_delivery.js为同页RPC；body添加当前页连接重试；保留短切换/减少动画；队列中的新导出不覆盖当前执行身份；4.9.64构建，OUTPUT_VER不变。
-- [ ] Task 4：原服务/原生控制器保护与新增回归、构建；实际HTTP导出/平台确认/切页值与确认恢复/错误恢复/响应尺寸证据。file隔离契约与file浏览器验收分开，禁止绕过协议策略；不执行真实UE写入。
+- [x] Task 1：test_baker_handoff.cjs与test_file_export_handoff.cjs改为单页验收，先运行失败；新增host安全与排队测试、test_service路由检查。重点断言window.open调用=0、返回不因busy被禁用、重复切页不重复检查。
+- [x] Task 2：新增tool/local_delivery/delivery-host.html/js与服务只读路由；host直接承载原importer；仅在HTTP响应内存适配两处状态广播，原私有文件/控制器保持，转发真实状态/回执，重复publish去重；会话恢复不重建已加载导入器。
+- [x] Task 3：重构67_delivery.js为同页RPC；body添加当前页连接重试；保留短切换/减少动画；队列中的新导出不覆盖当前执行身份；4.9.64构建，OUTPUT_VER不变。
+- [x] Task 4：78限定检查与构建通过；最终一层接线实际HTTP导出e8edfc35、两包检查0需处理、确认往返317参数/日志保持，API断线重试/撤销与三档DOM边界留证。真实UE未执行。
+- [ ] Task 4视觉补验：最终截图工具捕获失败，最新视觉QA未通过；file真实双击/UE原生独立清单继续，不绕过协议策略。
 - [ ] Task 5：更正README旧弹窗说明，记录已验/未验边界与截图；提交推main、安全同步主F并更新实际8034入口，释放认领。
 
 继续同一负责人/原计划内联执行。参数分类A/B、展开/视觉方向待用户确认；原生交付正确性/正式根/迁移/时长/登记/UE保存实播保留独立清单，不阻塞本次单页修复。

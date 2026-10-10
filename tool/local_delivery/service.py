@@ -90,6 +90,22 @@ class Handler(BaseHTTPRequestHandler):
                 if not self.server.importer or not self.server.importer.is_file():
                     return self.send(503, {'error': '独立导入工作区未配置，请按 README 构建本机入口'})
                 return self.send(200, self.server.importer.read_bytes(), 'text/html; charset=utf-8')
+            if path in ('/delivery-host', '/delivery-host.js'):
+                name = 'delivery-host.html' if path == '/delivery-host' else 'delivery-host.js'
+                p = Path(__file__).resolve().with_name(name)
+                if path == '/delivery-host' and self.server.importer and self.server.importer.is_file():
+                    # Adapt only the two presentation broadcasts, in memory. Native files,
+                    # confirmation, execution and persistent state remain untouched.
+                    html = self.server.importer.read_text(encoding='utf-8')
+                    for kind in ('workspace-view-state', 'workspace-import-state'):
+                        anchor = "parent.postMessage({type:'" + kind + "'"
+                        if html.count(anchor) != 1:
+                            raise ValueError('独立导入入口的状态接口不匹配，请重新构建本机入口')
+                        html = html.replace(anchor, "window.postMessage({type:'" + kind + "'")
+                    if html.count('</body>') != 1:
+                        raise ValueError('独立导入入口无效')
+                    return self.send(200, html.replace('</body>', '<script src="/delivery-host.js"></script></body>'), 'text/html; charset=utf-8')
+                return self.send(200, p.read_bytes(), 'text/html; charset=utf-8' if name.endswith('.html') else 'application/javascript; charset=utf-8')
             if path in ('/', '/baker'):
                 p = self.server.tool_root / 'FireworkBaker.html'
             else:

@@ -64,6 +64,33 @@ class ServiceTests(unittest.TestCase):
         self.assertTrue(json.loads(result)['cancelled'])
         self.assertEqual(json.loads(result)['outputRoot'], str(Path(output).resolve()))
 
+    def test_embedded_host_available_without_private_importer(self):
+        html = self.request('/delivery-host')[1]
+        script = self.request('/delivery-host.js')[1]
+        self.assertIn(b'src="/delivery-host.js"', html)
+        self.assertNotIn(b'<iframe', html)
+        self.assertIn(b'workspace-host-request', script)
+        self.assertFalse(json.loads(self.request('/api/session')[1])['importerAvailable'])
+        with self.assertRaises(urllib.error.HTTPError) as ctx:
+            self.request('/delivery-host', origin='https://evil.example')
+        self.assertEqual(ctx.exception.code, 403)
+
+    def test_native_host_adapts_only_broadcasts_without_editing_private_file(self):
+        private = Path(self.tmp.name) / 'private.html'
+        original = "<html><body><script>parent.postMessage({type:'workspace-view-state'},location.origin);parent.postMessage({type:'workspace-import-state'},location.origin);</script></body></html>"
+        private.write_text(original, encoding='utf-8')
+        self.server.importer = private
+        hosted = self.request('/delivery-host')[1].decode()
+        self.assertEqual(private.read_text(encoding='utf-8'), original)
+        self.assertEqual(self.request('/importer')[1].decode(), original)
+        self.assertIn("window.postMessage({type:'workspace-view-state'", hosted)
+        self.assertIn("window.postMessage({type:'workspace-import-state'", hosted)
+        self.assertIn('<script src="/delivery-host.js"></script>', hosted)
+        private.write_text('<body>wrong entry</body>', encoding='utf-8')
+        with self.assertRaises(urllib.error.HTTPError) as ctx:
+            self.request('/delivery-host')
+        self.assertEqual(ctx.exception.code, 409)
+
 
 if __name__ == '__main__':
     unittest.main()

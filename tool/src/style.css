@@ -1802,3 +1802,6 @@ header.top .gpu::before{content:none}
 
 @media(max-height:500px){.app.delivery-active .gpu{display:none}.delivery-heading{min-height:48px;padding-top:4px;padding-bottom:4px}.delivery-status:not([data-error=true]){display:none}}
 .delivery-content{position:relative}#deliveryLoading{position:absolute;inset:0;margin:0;padding:24px;z-index:1;background:var(--fw-color-surface);color:var(--fw-color-on-surface-muted);display:grid;place-items:center}
+
+.delivery-status-bar{display:flex;align-items:center;min-width:0;border-bottom:1px solid var(--fw-color-divider)}
+.delivery-status-bar .delivery-status{flex:1;min-width:0;border-bottom:0}.delivery-status-bar #deliveryRetry{margin-right:12px;flex-shrink:0}

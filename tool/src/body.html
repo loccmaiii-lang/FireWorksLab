@@ -16,7 +16,7 @@
         <p id="deliveryReceipt">选择一个修订查看交付位置与导入清单。</p><div class="delivery-library"><h2>已交付资源</h2><button class="fw-button fw-button--quiet" id="deliveryRefresh" type="button">刷新资源</button><div id="deliveryList"></div><button class="fw-button" type="button" id="deliveryCheck" disabled>重新接入当前修订</button></div>
       </div></details>
     </div>
-    <p id="deliveryStatus" class="delivery-status" role="status" aria-live="polite">首次使用请选择资源导出目录。</p>
+    <div class="delivery-status-bar"><p id="deliveryStatus" class="delivery-status" role="status" aria-live="polite">首次使用请选择资源导出目录。</p><button id="deliveryRetry" class="btn ghost" type="button" hidden>重试连接</button></div>
     <div class="delivery-content"><p id="deliveryLoading" role="status">正在准备导入工作区…</p><p id="deliveryImporterMissing" hidden>本机导入工作区尚未配置，资源可以正常交付。请按本机服务 README 构建并连接原导入器。</p><iframe id="deliveryFrame" title="资源交付：原导入器检查、命名确认与执行" hidden></iframe></div>
   </section>
   <main id="main">

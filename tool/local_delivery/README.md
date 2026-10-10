@@ -15,7 +15,11 @@ python tool/local_delivery/service.py --importer D:/FXTools/DFWorkbench/df-firew
 
 启动器读取 `%USERPROFILE%/.fireworkslab/delivery-launcher.json` 的 `importerPath`（本机独立交付 HTML）和可选 `configPath`（已有目录配置）。该文件仅留本机，命令行 `--importer` / `--config` 优先。目录配置为空时仍须用户指定正式资源位置，不自动选目录；重复启动不重复开服务，不执行 UE 导入。`--no-browser` 只核对/启动服务；服务日志写在目录配置旁的 `delivery-server.log`。
 
-通过 `http://127.0.0.1:8034/baker` 制作并指定目录交付。直接打开原 HTML 时，“资源交付”会打开已运行的本机交付页，返回按钮回到原制作标签；原制作存储/参数不迁移。4.9.63 的本地 HTML 导出点击会提前保留该窗口，资源生成后自动通过固定窗口传递 Blob，由本机 HTTP 页发布目录并接入原检查；只接受固定来源与 opener，服务令牌不传回文件页。相同请求只发布一次，未连接或等待超时明确提示并保留制作内容。浏览器不能替本地 HTML 启动系统进程，服务未运行时请使用上述启动入口。ZIP 便携交付仍可显式选择。
+通过 `http://127.0.0.1:8034/baker` 或原本地 HTML 制作；4.9.64 两种入口都是同一烘焙器文档内「效果制作 / 资源交付」两个视图，不再开新窗口。导出完成原位进入实际检查清单，返回保留制作对象、参数、撤销及交付确认/日志；导入进行中也可返回制作，任务继续。ZIP 便携交付仍可显式选择。
+
+内嵌 `/delivery-host` 直接承载原独立导入页面及状态适配，没有第二层iframe、重复制作页或GPU实例。服务仅在内存将两处呈现状态广播转给host；原私有HTML及执行/确认源码不修改。host通过来源窗口、源与随机channel限定RPC，目录令牌仅留HTTP host，file制作存储不迁移、不直接fetch。只允许会话、资源、发布、索引内交付ID接收、目录及焦点命令，不暴露UE执行命令；相同publish请求去重。opaque file父页还要求直接祖先、无远程祖先和空referrer；不扩大CORS。
+
+后台服务未启动时，原页显示连接错误和「重试连接」，返回制作可用；使用上述cmd启动后在此页重试。浏览器不能自行启动系统进程。服务重启只刷新连接凭据，保留已加载的导入器、确认与日志。目录输出为空时必须自行指定位置。发布等待超时可能仍在写入，应先刷新核对修订再决定重导。新资源在原导入任务忙碌时排队，不覆盖当前执行对象的身份。
 
 1. 打开“资源交付”，点击“选择目录…”或填写绝对路径并保存。首次配置为空，不替用户选择正式资源位置。默认配置文件为 `%USERPROFILE%/.fireworkslab/delivery-settings.json`，可用 `--config <路径>` 独立设置。
 2. 回“效果制作”，调用现有“导出素材包”。单层、组合、单层其他导出方案及种子变体均走共同交付出口；执行开始时固定所选目的地。
@@ -56,11 +60,13 @@ PC/手机保持原配置与主贴图；手机材质目标单独命名，避免�
 cd tool/local_delivery
 python -m unittest -v test_store test_service test_launcher
 node test_baker_handoff.cjs
+node test_file_export_handoff.cjs
+node test_delivery_host.cjs
 ```
 
-16 项测试覆盖完整发布、CRC/引用/路径、UTF8、多层、不可变/重复修订、持久化、污染核对、索引失败恢复、会话与只读来源、元数据封装及目录选择取消，以及启动配置优先级、服务复用、导入器路径、隐藏启动子进程、启动失败和连接后才打开浏览器。实际页证据、原有回归失败与未完成验收见 `analysis/results/WORKSPACE_DELIVERY/README.md`；协议见 `spec/workspace_resource_v1.md`。原生 UE 实导/实播、旧批次迁移、全分辨率及严格像素基准仍需对应证据，不能由单元测试推定通过。
+18 项测试覆盖完整发布、CRC/引用/路径、UTF8、多层、不可变/重复修订、持久化、污染核对、索引失败恢复、会话与只读来源、元数据封装及目录选择取消，内嵌host路由/私有文件内存适配，以及启动配置优先级、服务复用、导入器路径、隐藏启动子进程、启动失败和连接后才打开浏览器。实际页证据、原有回归失败与未完成验收见 `analysis/results/WORKSPACE_DELIVERY/README.md`；协议见 `spec/workspace_resource_v1.md`。原生 UE 实导/实播、旧批次迁移、全分辨率及严格像素基准仍需对应证据，不能由单元测试推定通过。
 
-另5组隔离导航契约覆盖file父页无API/存储迁移、复用/关闭后再开、弹窗受阻恢复、HTTP自动进入及返回opener、HTTP页内返回。仅Node VM和DOM桩，不访问file浏览器、不代表真实浏览器窗口策略已验收。
+4.9.64共18目录/启动/服务检查与20单页导航/导出/host契约，新增覆盖冷启动原位重试、忙时返回、身份排队、重连保持及HTTP响应内存适配。旧弹窗/opener检查已替换为同文档验收。另本机原导入21确认、5接收、4命名、10呈现/CLI检查均模拟UE，不能推定真实写入通过。file契约在Node VM验证；file浏览器协议策略不允许自动验收，未绕过。实际HTTP证据见 `analysis/results/WORKSPACE_DELIVERY/单页双工作区_4.9.64.md`。正式根、旧批次迁移、时长/登记、UE保存/实播及用户验收仍待。
 
 
 ## 4.9.61 交付页呈现接入
