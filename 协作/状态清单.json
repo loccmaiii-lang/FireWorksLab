@@ -343,9 +343,11 @@
     "跨年秀编排（22） · 给编排demo（24）的排队": [
       "对话框22（2026-10-11）排队，24 开工时读，不经用户转达：",
       "① 读每个 ResourceFX（PC 20 行 + 手机表）解析到的 ParticleSystem 的发射器数和每发射器类型（面片 / CPU 粒子），写到 FXtools/节目/NewYearFireWorks_v01/资源发射器数.json——宪章第 3.3 节「哪些效果能上手机」要用它核对，我在云端读不到引擎。",
-      "② 导演三表改成「每平台一张表 + 父模板条目 MinQualityLevel 嵌套（VeryLow ⊂ Medium ⊂ High）」，而不是三档三套表（手游编排评审第四节、宪章 3.2）；扇形子模板按束标 Filter 使 13→9→5 自动退化。先在状态清单认领再动。",
+      "② 导演三表改成「只有一张表（用户 10-11 01:52：不分平台）：平台靠条目 Filter.PlatformFlags、画质靠 MinQualityLevel 嵌套（VeryLow ⊂ Medium ⊂ High）」，而不是三档三套表，也不再用 PlatformOverrides（宪章 3.2 v1.2）；扇形子模板按束标 Filter 使 13→9→5 自动退化。先在状态清单认领再动。",
       "③ 在编辑器用 DebugPlatform=Mobile / DebugQualityLevel=Low 预览一次（只预览不保存），证实 PlatformFlags 位序、MinQualityLevel 比较方式，以及导演受不受 ResourceFX MaxInstanceNum、满额是拒还是挤。具体做法（v1.1 补，宪章 6.3）：播 R03 高档，到 120 s 附近数银星扇同时亮着的束数——设计预测 110 束（上限 10）；数出 ≤10 = 上限生效（被挤掉或拒绝），远大于 10 = 导演不受该上限。结果写进 24 的对话记录，我再改预算。",
-      "④ 宪章批后：22 出逻辑方案 B 和 逻辑方案→三表 编译器；24 负责导入、双目标读回、UE 播放证据。三表、模板库索引、时序索引都由编译器生成，不手改三表。"
+      "④ 宪章批后：22 出逻辑方案 B 和 逻辑方案→三表 编译器；24 负责导入、双目标读回、UE 播放证据。三表、模板库索引、时序索引都由编译器生成，不手改三表。",
+      "⑤（v1.2 补，22 → 24）读回条目层（EffectTemplates 的 Entries）PositionOffset.Z / Y 在 UE 里是否生效：丙构图的高低错落（±30 m）和三个主角的景深错层（±60–100 m）要用；R04 只在固定子模板里用过 PositionOffset / RotationOffset，条目层和随机字段全是 0，没有实测记录。",
+      "⑥（v1.2 补，22 → 烘焙器）主角大面片转镜头会跟着转：烘焙器大面片 Screen Alignment 写死 Rectangle（tool/src/js/66_fwlcascade.js:44、68_lowframe.js:179）。用户先在 UE 里把测试副本改 Facing Camera Position 对比；结果好再认领 tool/src 加选项，未测之前不动底层。"
     ]
   },
   "effects": [
