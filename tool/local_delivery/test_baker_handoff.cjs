@@ -5,7 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const source = fs.readFileSync(path.join(__dirname, '../src/js/67_delivery.js'), 'utf8');
 
-function fixture({protocol = 'file:', hash = '', popup = true, opener = null} = {}) {
+function fixture({protocol = 'file:', hash = '', popup = true, opener = null, motion=false, reduced=false} = {}) {
   const nodes = new Map(), calls = [], child = {closed: false, focus: () => calls.push('child.focus')};
   function node(id) {
     if (!nodes.has(id)) nodes.set(id, {id, hidden: false, inert: false, value: 'original-value', dataset: {}, listeners: {},
@@ -15,11 +15,12 @@ function fixture({protocol = 'file:', hash = '', popup = true, opener = null} = 
     return nodes.get(id);
   }
   node('deliveryWorkspace').hidden = true;
+  if(motion)for(const id of ['deliveryWorkspace','main'])node(id).animate=(frames,options)=>{calls.push({animation:id,duration:options.duration});return{cancel(){calls.push({cancel:id})}};};
   const context = vm.createContext({
     document: {getElementById: node, querySelector: node, createElement: node, addEventListener() {}, documentElement: {style: {setProperty() {}}}},
     location: {protocol, hash, origin: protocol === 'file:' ? 'null' : 'http://127.0.0.1:8034'},
     localStorage: new Proxy({}, {get() {throw Error('Original storage must not be read or migrated');}}),
-    window: {opener, addEventListener() {}, open(url, target) {calls.push({url, target}); return popup ? child : null;}, close() {calls.push('window.close');}},
+    window: {opener, matchMedia(){return{matches:reduced}},addEventListener() {}, open(url, target) {calls.push({url, target}); return popup ? child : null;}, close() {calls.push('window.close');}},
     ResizeObserver: class {observe() {}},
     fetch: async (url, options) => {
       assert.equal(protocol, 'http:', 'File parent must not use HTTP APIs');
@@ -56,7 +57,7 @@ function fixture({protocol = 'file:', hash = '', popup = true, opener = null} = 
   assert.equal(f.node('main').inert, false); assert.equal(f.node('main').value, 'original-value');
   console.log('PASS blocked popup has recoverable guidance and preserves parent values');
 
-  f = fixture({protocol: 'http:', hash: '#delivery-from-file', opener: {focus() {f.calls.push('opener.focus');}}});
+  f = fixture({protocol: 'http:', hash: '#delivery-from-file', opener: {postMessage() {},focus() {f.calls.push('opener.focus');}}});
   f.api.init(); await new Promise(resolve => setImmediate(resolve));
   assert.equal(f.node('deliveryWorkspace').hidden, false);
   assert.deepEqual(f.calls, [{api: '/api/session'}, {api: '/api/resources'}]);
@@ -69,5 +70,18 @@ function fixture({protocol = 'file:', hash = '', popup = true, opener = null} = 
   assert.equal(f.node('main').inert, false); assert.equal(f.node('deliveryWorkspace').hidden, true);
   assert.equal(f.node('main').value, 'original-value'); assert.equal(f.calls.includes('window.close'), false);
   console.log('PASS direct HTTP entry returns within the same maker page');
-  console.log('5 isolated handoff contracts passed; file browser access and UE execution remain untested.');
+  f = fixture({protocol:'http:'}); f.api.init();
+  await f.api.open(); f.node('deliveryMake').listeners.click(); await f.api.open();
+  assert.equal(f.calls.filter(c=>c.api==='/api/resources').length,1,'Repeated view navigation must preserve the initialized importer and avoid duplicate checks');
+  assert.equal(f.calls.filter(c=>c.api==='/api/session').length,1);
+  console.log('PASS repeated view navigation reuses the prepared workspace without rechecking');
+  f=fixture({protocol:'http:',motion:true});f.api.init();await f.api.open();
+  const remembered={isConnected:true,disabled:false,focus(){f.calls.push('importer.focus')}};f.node('deliveryFrame').contentDocument={activeElement:remembered};
+  f.node('deliveryMake').listeners.click();await f.api.open();
+  assert.equal(f.calls.filter(c=>c.cancel).length,2);assert(f.calls.includes('importer.focus'));assert.equal(f.node('main').value,'original-value');
+  console.log('PASS rapid return/re-entry cancels previous motion and restores importer focus without changing maker values');
+  f=fixture({protocol:'http:',motion:true,reduced:true});f.api.init();await f.api.open();f.node('deliveryMake').listeners.click();
+  assert.equal(f.calls.filter(c=>c.animation).length,0);assert.equal(f.node('main').inert,false);
+  console.log('PASS reduced motion switches directly and preserves the same navigation state');
+  console.log('8 isolated handoff contracts passed; file browser access and UE execution remain untested.');
 })().catch(error => {console.error(error); process.exitCode = 1;});

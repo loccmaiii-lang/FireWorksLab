@@ -9,7 +9,7 @@
   </header>
   <section id="deliveryWorkspace" class="delivery-workspace fw-scope" aria-labelledby="deliveryTitle" tabindex="-1" hidden>
     <div class="delivery-heading">
-      <div class="delivery-identity"><img id="deliveryThumbnail" alt="当前修订引擎回放缩略图" hidden><span id="deliveryThumbnailMissing" hidden>缩略图待生成</span><div><h1 id="deliveryTitle">资源交付</h1><span id="deliveryContext">选择已交付修订，核对后导入。</span></div></div>
+      <div class="delivery-identity"><img id="deliveryThumbnail" alt="当前修订引擎回放缩略图" hidden><span id="deliveryThumbnailMissing" hidden>缩略图待生成</span><div><small>当前交付</small><h1 id="deliveryTitle">资源交付</h1></div><span id="deliveryContext">选择已交付修订，核对后导入。</span></div>
       <details id="deliveryOptions"><summary>资源目录与版本</summary><div class="delivery-options-body">
         <label>导出方式<select class="fw-select" id="deliveryDestination"><option value="directory">指定目录 · 自动检查</option><option value="zip">下载 ZIP · 便携交付</option></select></label>
         <div class="delivery-settings"><label for="deliveryRoot">资源导出目录</label><input class="fw-input" id="deliveryRoot" placeholder="选择目录，或填写绝对路径"><button class="fw-button" id="deliveryPick" type="button">选择目录…</button><button class="fw-button" id="deliverySaveRoot" type="button">保存目录</button></div>
@@ -17,7 +17,7 @@
       </div></details>
     </div>
     <p id="deliveryStatus" class="delivery-status" role="status" aria-live="polite">首次使用请选择资源导出目录。</p>
-    <div class="delivery-content"><p id="deliveryImporterMissing">本机导入工作区尚未配置，资源可以正常交付。请按本机服务 README 构建并连接原导入器。</p><iframe id="deliveryFrame" title="资源交付：原导入器检查、命名确认与执行" hidden></iframe></div>
+    <div class="delivery-content"><p id="deliveryLoading" role="status">正在准备导入工作区…</p><p id="deliveryImporterMissing" hidden>本机导入工作区尚未配置，资源可以正常交付。请按本机服务 README 构建并连接原导入器。</p><iframe id="deliveryFrame" title="资源交付：原导入器检查、命名确认与执行" hidden></iframe></div>
   </section>
   <main id="main">
     <aside class="side" id="side" aria-label="库">
