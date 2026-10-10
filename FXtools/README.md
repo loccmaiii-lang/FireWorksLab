@@ -27,4 +27,14 @@
 
 原特效工作台和烘焙器的既有运行目录暂不搬迁，启动入口会复用它们；本次统一的是编排工作台维护和三个工具的查找入口。
 
+三个工具分别维护各自源码，不把它们合成同一个应用：
+
+| 工具 | 唯一维护位置 → 使用入口 |
+| --- | --- |
+| 烟花烘焙器 | `tool/src` → `python tool/build.py` → `tool/FireworkBaker.html` → `8034/baker`；HTTP与直接打开此HTML是同一产物 |
+| 烟花编排工作台 | `tool/workbench` → `npm run release` → 固定离线HTML；8025直接开发同份源码，`8025/release/`读取最终HTML |
+| 原特效工作台 | 当前仍为 `D:/FXTools/DFWorkbench/df-fx-workbench_v2_locmai.html`；8036按本机配置即时读取该文件，尚未迁入F盘源码 |
+
+2026-10-10实际核对：8034进程运行F盘仓库的`tool/local_delivery/service.py`，它返回的烘焙器页面与仓库`tool/FireworkBaker.html`逐字节一致。8034不是另一个要手工迁移的烘焙器副本。服务也承载独立导入器，导入器路径由本机配置指定，不能把它与烘焙器源码混为一处。
+
 完整完成状态及未完事项见 [工作台checklist](工作台checklist.md)。本项目已授权范围的改动完成检查与记录后直接提交推送。

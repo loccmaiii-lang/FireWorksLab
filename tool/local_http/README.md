@@ -13,6 +13,8 @@
 
 8034复用既有目录交付服务和本机配置；原特效工作台完整内联HTML从磁盘即时读取，HTTP响应字节与原文件相同。8025复用现有Vite，未运行时启动现有源码，不构建产物。固定8036只服务入口、原工作台和共用颜色tokens；不列目录，不开放任意路径、POST或UE代理。端口被别的应用占用则报错，不关闭现有进程。不新增页面自动导入；原有只读连接探测、UE接口和用户确认规则保持。
 
+8034的烘焙器也只有一份源码：`tool/src → tool/build.py → tool/FireworkBaker.html`。服务读取其所在仓库`tool`下的产物，不维护HTTP专用副本。2026-10-10核对当前进程为`F:/FireWorksLab/tool/local_delivery/service.py`，`8034/baker`响应SHA256与F盘`tool/FireworkBaker.html`相同。修改烘焙器源码后按原流程构建，刷新8034即可。原特效工作台和独立导入器仍按本机D盘配置读取；这两项没有因入口统一自动迁入Git源码。
+
 本机可选配置：`%USERPROFILE%/.fireworkslab/local-http-tools.json`，不提交到仓库：
 
 ```json

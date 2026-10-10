@@ -1,0 +1,79 @@
+name: 工作台云端往返核验
+on:
+  workflow_dispatch:
+    inputs:
+      proof_patch:
+        description: 云端补充构建环境信息并回传源码（仅往返核验时启用）
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: tool
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 在云端补充可验证的构建环境信息
+        if: inputs.proof_patch
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          build = Path('tool/offline-workbench/build.mjs')
+          text = build.read_text(encoding='utf-8')
+          before = "engineEndpoint:'http://127.0.0.1:17780/gpcli',sourceUntouched:true};"
+          after = "engineEndpoint:'http://127.0.0.1:17780/gpcli',sourceUntouched:true,buildEnvironment:{platform:process.platform,node:process.version,arch:process.arch}};"
+          if 'buildEnvironment' not in text:
+              assert text.count(before) == 1, '构建结构已改变，停止自动修订'
+              build.write_text(text.replace(before, after), encoding='utf-8')
+          tests = Path('tool/offline-workbench/tests/package.test.mjs')
+          text = tests.read_text(encoding='utf-8')
+          if "build manifest identifies its runtime" not in text:
+              text += "\ntest('build manifest identifies its runtime',()=>{assert(['linux','win32','darwin'].includes(report.buildEnvironment.platform));assert.match(report.buildEnvironment.node,/^v\\d+\\.\\d+\\.\\d+$/);assert.match(report.buildEnvironment.arch,/^[a-z0-9_]+$/);});\n"
+              tests.write_text(text, encoding='utf-8')
+          PY
+      - name: 安装锁定依赖
+        working-directory: tool/workbench
+        run: npm ci --no-audit --no-fund
+      - name: 检查并生成唯一离线包
+        working-directory: tool/workbench
+        run: npm run release -- --no-deploy
+      - name: 写入真实云端回执
+        env:
+          INPUT_SHA: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+          PROOF_PATCH: ${{ inputs.proof_patch }}
+        run: |
+          python - <<'PY'
+          import hashlib, json, os, platform, subprocess
+          from pathlib import Path
+          files = ['tool/offline-workbench/build.mjs', 'tool/offline-workbench/tests/package.test.mjs', 'tool/烟花编排工作台.html', 'tool/烟花编排工作台.html.build.json', 'tool/烟花编排工作台-离线包.zip', 'tool/烟花编排工作台_使用说明.html']
+          report = json.loads(Path(files[3]).read_text(encoding='utf-8'))
+          if os.environ['PROOF_PATCH'] == 'true':
+              assert report['buildEnvironment']['platform'] == 'linux'
+          receipt = {'format':'df.cloud-roundtrip/1', 'inputCommit':os.environ['INPUT_SHA'], 'runId':os.environ['RUN_ID'], 'platform':platform.system(), 'python':platform.python_version(), 'node':subprocess.check_output(['node','--version'],text=True).strip(), 'proofPatch':os.environ['PROOF_PATCH']=='true', 'files':{f:hashlib.sha256(Path(f).read_bytes()).hexdigest() for f in files}, 'htmlSha256':report['sha256'], 'cues':report['cues'], 'events':report['events']}
+          Path('cloud-roundtrip-receipt.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(receipt,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: workbench-roundtrip-${{ github.run_id }}
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            cloud-roundtrip-receipt.json
+            tool/offline-workbench/build.mjs
+            tool/offline-workbench/tests/package.test.mjs
+            tool/烟花编排工作台.html
+            tool/烟花编排工作台.html.build.json
+            tool/烟花编排工作台-离线包.zip
+            tool/烟花编排工作台_使用说明.html
