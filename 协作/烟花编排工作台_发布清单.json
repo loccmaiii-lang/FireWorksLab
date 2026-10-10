@@ -91,6 +91,14 @@
     "actualFileUIVerified": false,
     "sourceCorePassed": 91,
     "wrapperPassed": 37,
-    "ueWriteExecuted": false
+    "ueWriteExecuted": false,
+    "publication": {
+      "artifactCommit": "f57d58ea835b6b21977a4e8ced11fb8dc14e8537",
+      "htmlBlob": "42d1e076e0134c1c34573e97e071eb32eaac3621",
+      "zipBlob": "28a2fdeb4e2894721ce55767b372bc5e71744794",
+      "remoteMainContainsCommit": true,
+      "remoteAndLocalArtifactBlobsEqual": true,
+      "verifiedAt": "2026-10-10T04:43:03.824552+00:00"
+    }
   }
 }
