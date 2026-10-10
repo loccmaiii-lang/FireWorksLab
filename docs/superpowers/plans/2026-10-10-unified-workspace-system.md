@@ -111,3 +111,8 @@ def checked_member(root, name):
 Task 1–2 是本轮先行交付；Task 3–6 是用户确立的后续分阶段生产迭代，有明确文件/接口/验收与认领门槛，不称本轮已实现。正式目录导出、本机UE导入联动、编排资源识别均须实际任务另验。
 
 本轮新增检查与浏览器证据见 `analysis/results/WORKSPACE_DESIGN/README.md`；生产页、读屏、200%真实缩放和真机触控未验。既有离线UI检查5/7两项失败保留，不作为设计基础检查通过的反例或全库通过声明。
+
+
+## Task3–6 实施更新（2026-10-10，烘焙器4.9.60）
+
+详细执行与逐项状态移至同目录2026-10-10-workspace-delivery-checklist.md；原计划上述复合验收项不因局部接线自动打勾。目录服务/原最终ZIP统一出口/旁路索引workspace-thumbnail.png/私有独立导入自动原检查/8025固定资源引用已接。实导实播、严格像素标准、旧数据迁移、整体统一表现仍未完成；特效工作台两入口保持。证据与后续提示词见analysis/results/WORKSPACE_DELIVERY/README.md、协作/统一工作区_翻新评估与提示词.md。
