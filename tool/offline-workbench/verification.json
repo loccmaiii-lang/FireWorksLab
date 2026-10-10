@@ -86,5 +86,12 @@
     "tool/offline-workbench/audit-v15/05-compact-1366.png",
     "tool/offline-workbench/audit-v15/06-offline-current.png"
   ],
-  "publication": null
+  "publication": {
+    "artifactCommit": "7364ae16dde40e9b9931f9fbcc7fd3fe0e3f5930",
+    "htmlBlob": "94007ba41526218edcca1a16e4db09ffed14b7ab",
+    "zipBlob": "9fcac4bb30ecb68088859f04d168861edfda9757",
+    "remoteMainContainsCommit": true,
+    "remoteAndLocalArtifactBlobsEqual": true,
+    "verifiedAt": "2026-10-10T07:14:03.390063+00:00"
+  }
 }
