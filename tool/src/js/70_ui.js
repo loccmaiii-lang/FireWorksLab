@@ -28,7 +28,7 @@ function busyCan(on) {
 }
 function busy(on, text, p) {
   $('#busy').hidden = !on;
-  if (!on) { if (busyJob.on) busyCan(false); return; }
+  if (!on) { if (busyJob.on) busyCan(false); DeliveryWorkspace.finishExport(); return; }
   if (text) $('#busyText').textContent = text; if (p != null) $('#busyBar').style.width = Math.round(p * 100) + '%';
   if (busyJob.on && busyJob.req && p != null) { busyJob.req = false; throw new Error('已取消（你点了取消；上次的结果、参数都还在）'); }
 }
@@ -1237,6 +1237,7 @@ async function exportCombo() {
   if (!busyCan(true)) return;
   busy(true, '组合素材包：准备各层…', 0);
   try {
+    await DeliveryWorkspace.beginExport(destination);
     const files = await comboPackFiles(name, state.layers, p => busy(true, '组合素材包…', p));
     files.push([`${name}_组合说明.json`, utf8(JSON.stringify(comboJson(), null, 2))]);
     busy(true, '打包 ZIP…', 1);
@@ -1244,6 +1245,6 @@ async function exportCombo() {
     await deliverResource(await makeZip(files.map(([f, d]) => [`${pk}/${f}`, d])), `${pk}.zip`, deliveryMetadata(), destination);
     if (typeof wbAutoExport === 'function') wbAutoExport(pk);     // 4.2.10：存进这个效果的「版本」（导出时）
     flash('已导出组合素材包 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);
-  } catch (e) { console.error(e); flash('组合导出失败：' + e.message, true); }
+  } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('组合导出失败：' + e.message, true); }
   finally { busy(false); }
 }

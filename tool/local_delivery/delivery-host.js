@@ -24,7 +24,11 @@
   }
   function contextForCurrent(){
     const receipt=resources.find(r=>r.deliveryId===view.current?.deliveryId);
-    if(receipt&&contextId!==receipt.deliveryId&&window.FwDeliveryPresentation){window.FwDeliveryPresentation.setContext(receipt);contextId=receipt.deliveryId;}
+    if(receipt&&contextId!==receipt.deliveryId&&window.FwDeliveryPresentation){window.FwDeliveryPresentation.setContext(presentationReceipt(receipt));contextId=receipt.deliveryId;}
+  }
+  function presentationReceipt(receipt){
+    const thumbnailURL=receipt.thumbnail?.status==='ready'?(localUI?'http://127.0.0.1:8034':location.origin)+'/api/deliveries/'+encodeURIComponent(receipt.deliveryId)+'/'+receipt.thumbnail.file.split('/').map(encodeURIComponent).join('/'):null;
+    return{...receipt,thumbnailURL};
   }
   async function refresh(){resources=(await api('/api/resources')).resources;contextForCurrent();return{resources};}
   function importer(){if(!window.FwDeliveryBridge)throw Error('原导入工作区入口无效，请核对本机配置');return window;}
@@ -54,7 +58,9 @@
       const json=new TextEncoder().encode(JSON.stringify(payload.metadata||{})),count=new Uint8Array(4);
       new DataView(count.buffer).setUint32(0,json.length,true);
       const receipt=await api('/api/deliveries?name='+encodeURIComponent(payload.name),new Blob([count,json,payload.blob]),'application/vnd.fireworkslab.delivery');
-      await refresh();return receipt;
+      // Publication already returns a fully verified receipt. Do not rehash every historic package twice.
+      resources=resources.filter(r=>r.deliveryId!==receipt.deliveryId);resources.push(receipt);
+      post({type:'workspace-host-resources',resources});return receipt;
     }
     if(name==='accept'){
       if(!session.importerAvailable)return{unavailable:true};
@@ -62,7 +68,7 @@
       if(!receipt){await refresh();receipt=resources.find(r=>r.deliveryId===payload.deliveryId);}
       if(!receipt)throw Error('交付修订不在当前目录索引中，请刷新资源');
       const child=importer(),result=await child.FwDeliveryBridge.accept(receipt);
-      if(!result.queued){child.FwDeliveryPresentation?.setContext(receipt);contextId=receipt.deliveryId;}
+      if(!result.queued){child.FwDeliveryPresentation?.setContext(presentationReceipt(receipt));contextId=receipt.deliveryId;}
       return result;
     }
   }
@@ -72,8 +78,10 @@
       if(data?.type==='workspace-view-state'){view={busy:!!data.busy,current:data.current||null};contextForCurrent();post({type:'workspace-host-state',...view});}
       if(data?.type==='workspace-import-state'){
         try{
-          for(const [id,state] of Object.entries(data.receipts||{}))await api('/api/import-receipts/'+encodeURIComponent(id),state);
-          post({type:'workspace-host-resources',...await refresh()});
+          // The native importer keeps history across roots. Only the active directory owns these receipts.
+          const entries=Object.entries(data.receipts||{}).filter(([id])=>resources.some(r=>r.deliveryId===id));
+          for(const [id,state] of entries)await api('/api/import-receipts/'+encodeURIComponent(id),state);
+          if(entries.length)post({type:'workspace-host-resources',...await refresh()});
         }catch(error){post({type:'workspace-host-error',error:'导入记录保存失败：'+error.message});}
       }return;
     }

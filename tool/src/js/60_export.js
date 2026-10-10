@@ -335,6 +335,7 @@ async function exportMaster() {
   busy(true, '准备导出…', 0);
   let own = false, b = null;
   try {
+    await DeliveryWorkspace.beginExport(destination);
     b = state.bake && state.bake.scale === 1 && !state.dirty ? state.bake : null;
     if (b) { const nb = await refineBake(b, p => busy(true, `取景收紧… ${Math.round(p * 100)}%`, p * 0.9)); if (nb) { disposeBake(b); state.bake = b = nb; showStats(nb); } }   // 4.2.5：导出用收紧后的取景
     own = !b;
@@ -362,7 +363,7 @@ async function exportMaster() {
     await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b), destination);
     wbAutoExport(zipName);     // 4.2.10：存进这个效果的「版本」（导出时），不再进工具页的全局版本列表
     flash('已导出 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);
-  } catch (e) { console.error(e); flash('导出失败：' + e.message, true); }
+  } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('导出失败：' + e.message, true); }
   if (own && b) disposeBake(b);
   busy(false);
 }
@@ -375,6 +376,7 @@ async function exportVariants() {
   busy(true, '烘焙种子变体…', 0);
   let bs = [];
   try {
+    await DeliveryWorkspace.beginExport(destination);
     bs = await bakeVariants(state.P, 1, p => busy(true, `烘焙种子变体 ${Math.round(p * 100)}%`, p * 0.9));
     const files = [];
     for (let i = 0; i < bs.length; i++) files.push(...await texFiles(bs[i], name, '', i + 1));
@@ -385,6 +387,6 @@ async function exportVariants() {
     files.push(...fwlFiles(name, bs[0], state.M));
     await deliverResource(await makeZip(files), `${name}_V1-V3.zip`, deliveryMetadata(bs[0]), destination);
     flash('已导出三个种子变体');
-  } catch (e) { console.error(e); flash('导出失败：' + e.message, true); }
+  } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('导出失败：' + e.message, true); }
   bs.forEach(disposeBake); busy(false);
 }

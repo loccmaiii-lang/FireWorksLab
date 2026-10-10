@@ -2,18 +2,19 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const {randomUUID}=require('node:crypto');
 const source=fs.readFileSync(require('node:path').join(__dirname,'../src/js/67_delivery.js'),'utf8');
-function fixture({protocol='file:',motion=false,reduced=false,offline=false,directoryOffline=false,queued=false}={}){
+function fixture({protocol='file:',motion=false,reduced=false,offline=false,directoryOffline=false,queued=false,acceptFailure=false}={}){
   const nodes=new Map(),calls=[],listeners={};let channel='',failure=offline;
   const receipt={deliveryId:'known',name:'Test',revisionId:'12345678',directory:'trusted-root/Test',files:[],packages:[{platform:'pc'}],thumbnail:{status:'missing'}};
   const origin='http://127.0.0.1:8034';
   const emit=(data,source=frame,from=protocol==='file:'?'null':origin)=>listeners.message?.({data,source,origin:from});
   const frame={postMessage(request,target){calls.push({command:request.command,target,payload:request.payload});if(failure)return;
     const value=({session:{outputRoot:'trusted-root',importerAvailable:true},resources:{resources:[]},publish:receipt,accept:{queued},'focus.restore':{}})[request.command]||{};
-    queueMicrotask(()=>emit({type:'workspace-host-response',channel:request.channel,id:request.id,ok:!(directoryOffline&&request.command==='resources'),error:'目录服务离线',value}));}};
+    if(request.command==='publish')queueMicrotask(()=>emit({type:'workspace-host-resources',channel:request.channel,resources:[receipt]}));
+    queueMicrotask(()=>emit({type:'workspace-host-response',channel:request.channel,id:request.id,ok:!((directoryOffline&&request.command==='resources')||(acceptFailure&&request.command==='accept')),error:'检查服务不可用',value}));}};
   function node(id){if(!nodes.has(id))nodes.set(id,{id,hidden:false,inert:false,disabled:false,value:'original-value',dataset:{},listeners:{},attrs:{},classList:{toggle(){}},
-    addEventListener(type,fn){this.listeners[type]=fn},setAttribute(k,v){this.attrs[k]=v},getAttribute(k){return this.attrs[k]||null},focus(){calls.push({focus:id})},append(){},replaceChildren(){},
+    addEventListener(type,fn){this.listeners[type]=fn},setAttribute(k,v){this.attrs[k]=v},getAttribute(k){return this.attrs[k]||null},focus(){calls.push({focus:id})},append(...children){for(const child of children)child.parentNode=this},insertBefore(child){child.parentNode=this},replaceChildren(){},
     getBoundingClientRect(){return{height:50}},querySelector(){return node('summary')}});return nodes.get(id)}
-  node('deliveryFrame').contentWindow=frame;
+  node('deliveryFrame').contentWindow=frame;node('busy').parentNode=node('progressHome');node('busy').nextSibling=null;
   Object.defineProperty(node('deliveryFrame'),'src',{set(value){calls.push({src:value});this.attrs.src=value;channel=new URL(value,'file:///repo/tool/FireworkBaker.html').hash.slice(1);if(!failure)queueMicrotask(()=>emit({type:'workspace-host-ready',channel}))}});
   node('deliveryWorkspace').hidden=true;
   if(motion)for(const id of ['main','deliveryWorkspace'])node(id).animate=(_,options)=>{calls.push({animation:id,duration:options.duration});return{cancel(){calls.push({cancel:id})}}};

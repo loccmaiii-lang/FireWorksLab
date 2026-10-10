@@ -556,6 +556,7 @@ function contentDuration() {
 }
 function loop(now) {
   if (state.glLost || gl.isContextLost()) { glLostNotice(); return; }      // 4.2.20：显卡上下文丢了，停下（不再每帧报错），画面上写原因
+  if (DeliveryWorkspace.active && !pendingThumb) { lastT = now; requestAnimationFrame(loop); return; } // Hidden preview yields; explicit export/thumbnail renderers remain available.
   if (state.stillBusy) { lastT = now; requestAnimationFrame(loop); return; }   // 定帧渲染期间让出画布
   // 播放时钟按真实时间走（4.1.2：以前每帧最多推进 0.05 s，掉到 10 fps 时只按半速播、实拍还会反复往回跳）；只防切走标签页回来时的一大步
   const dt = Math.min(0.25, Math.max(0, (now - lastT) / 1000)); lastT = now;

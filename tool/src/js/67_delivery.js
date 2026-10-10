@@ -1,9 +1,9 @@
-// 4.9.65: local importer UI does not require the directory service; maker and delivery stay in one document, including local-file entry.
+// 4.9.66: local importer UI does not require the directory service; maker and delivery stay in one document, including local-file entry.
 const DeliveryWorkspace = (() => {
   const localUI=location.protocol==='file:', frameOrigin=localUI?'null':location.origin;
   const frameTarget=localUI?'*':frameOrigin;
   let session=null,resources=[],last=null,active=false,busyDelivery=false,importerBusy=false,importerCurrent=null;
-  let connecting=null,preparing=null,prepared=false,viewAnimation=null,desiredDeliveryId='',hostReady=false,readyWait=null;
+  let connecting=null,preparing=null,prepared=false,viewAnimation=null,desiredDeliveryId='',hostReady=false,readyWait=null,exportHome=null;
   const channel=crypto.randomUUID(),requests=new Map();
   const hostOrigin=location.protocol==='file:'?'http://127.0.0.1:8034':location.origin;
   const node=id=>document.getElementById(id);
@@ -42,10 +42,30 @@ const DeliveryWorkspace = (() => {
     document.querySelector('.app').classList.toggle('delivery-active',open);node('deliveryWorkspace').hidden=!open;
     node('main').inert=open;node('main').setAttribute('aria-hidden',String(open));
     node('deliveryOpen').hidden=open;node('deliveryMake').hidden=!open;
+    placeExportProgress();
     const view=node(open?'deliveryWorkspace':'main');
     if(!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches&&view.animate)
       viewAnimation=view.animate([{opacity:.45,transform:'translateY(6px)'},{opacity:1,transform:'translateY(0)'}],{duration:160,easing:'cubic-bezier(.2,0,0,1)'});
     node(open?'deliveryMake':'deliveryOpen').focus({preventScroll:true});
+  }
+  function placeExportProgress(){
+    if(!exportHome)return;
+    const progress=node('busy');
+    if(active)node('deliveryWorkspace').append(progress);
+    else exportHome.parent.insertBefore(progress,exportHome.next);
+  }
+  async function beginExport(target){
+    if(target==='zip')return;
+    const progress=node('busy');exportHome={parent:progress.parentNode,next:progress.nextSibling};
+    show(true);placeExportProgress();message('正在准备交付资源…');
+    // Paint the destination and the existing cancellable progress before CPU/GPU work.
+    await new Promise(resolve=>window.requestAnimationFrame?window.requestAnimationFrame(()=>window.requestAnimationFrame(resolve)):setTimeout(resolve,0));
+    await connect();if(session.directoryError)throw Error(session.directoryError);
+    if(!session.outputRoot)throw Error('请先在资源目录与版本中指定导出目录');
+  }
+  function exportFailed(error){if(exportHome)message('导出未完成：'+error.message,true);}
+  function finishExport(){
+    if(exportHome){exportHome.parent?.insertBefore(node('busy'),exportHome.next);exportHome=null;}
   }
   async function prepare(){
     if(prepared)return;if(preparing)return preparing;
@@ -91,7 +111,7 @@ const DeliveryWorkspace = (() => {
   async function select(receipt) {
     const previous=last;desiredDeliveryId=receipt.deliveryId;last=receipt;
     const result=await sendToImporter();
-    if(result?.queued){desiredDeliveryId='';last=previous;presentCurrent();render();}
+    if(result?.queued||result?.failed){desiredDeliveryId='';last=previous;presentCurrent();render();}
     else presentReceipt(receipt);
   }
   function presentCurrent() {
@@ -114,7 +134,7 @@ const DeliveryWorkspace = (() => {
     try{
       show(true);await connect();message('正在写入并校验完整资源…');
       const receipt=await rpc('publish',{blob,name,metadata},120000);
-      await refresh();await select(receipt);prepared=true;return receipt;
+      await select(receipt);prepared=true;return receipt;
     }catch(e){connectionError(e);message('交付失败：'+e.message+'。现有修订保留，可重试导出。',true);throw e;}
     finally{busyDelivery=false;}
   }
@@ -157,7 +177,7 @@ const DeliveryWorkspace = (() => {
     connect().catch(()=>{});
     if(['#delivery','#delivery-from-file','#delivery-export-from-file'].includes(location.hash))open();
   }
-  return{init,open,publish,destination};
+  return{init,open,publish,destination,beginExport,finishExport,exportFailed,get active(){return active;}};
 })();
 
 function deliveryMetadata(b = null) {

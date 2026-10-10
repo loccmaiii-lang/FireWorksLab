@@ -1,0 +1,23 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const {fixture}=require('./test_baker_handoff.cjs');
+(async()=>{
+  const f=fixture();
+  assert.equal(typeof f.api.beginExport,'function','export must open delivery before baking/encoding');
+  await f.api.beginExport('directory');
+  assert.equal(f.node('deliveryWorkspace').hidden,false);
+  assert.equal(f.calls.filter(x=>x.command==='publish').length,0);
+  assert.equal(f.node('busy').parentNode,f.node('deliveryWorkspace'));
+  f.node('deliveryMake').listeners.click();assert.equal(f.node('busy').parentNode,f.node('progressHome'));
+  await f.api.open();assert.equal(f.node('busy').parentNode,f.node('deliveryWorkspace'));
+  f.api.exportFailed(Error('已取消'));assert.match(f.node('deliveryStatus').textContent,/已取消/);
+  f.api.finishExport();assert.equal(f.node('busy').parentNode,f.node('progressHome'));
+  const z=fixture();await z.api.beginExport('zip');assert.equal(z.node('deliveryWorkspace').hidden,true);
+  console.log('PASS export opens the existing workspace before resource work');
+  const source=fs.readFileSync(require('node:path').join(__dirname,'../src/js/80_render.js'),'utf8');
+  const loop=source.slice(source.indexOf('function loop(now)'));
+  let frames=0;
+  const ctx=vm.createContext({state:{glLost:false,stillBusy:false,t:1},gl:{isContextLost:()=>false},DeliveryWorkspace:{active:true},pendingThumb:null,lastT:0,requestAnimationFrame(){frames++}});
+  vm.runInContext(loop,ctx);vm.runInContext('loop(2500)',ctx);
+  assert.equal(ctx.state.t,1);assert.equal(ctx.lastT,2500);assert.equal(frames,1);
+  console.log('PASS hidden preview skips rendering and clock advancement, retains next frame');
+})().catch(e=>{console.error(e);process.exitCode=1});

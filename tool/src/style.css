@@ -1805,3 +1805,6 @@ header.top .gpu::before{content:none}
 
 .delivery-status-bar{display:flex;align-items:center;min-width:0;border-bottom:1px solid var(--fw-color-divider)}
 .delivery-status-bar .delivery-status{flex:1;min-width:0;border-bottom:0}.delivery-status-bar #deliveryRetry{margin-right:12px;flex-shrink:0}
+
+/* Keep the existing export progress/cancel visible in the destination workspace. */
+#deliveryWorkspace>#busy.busy{position:absolute;inset:0;z-index:5;border-radius:0;background:rgba(6,12,16,.88)}
