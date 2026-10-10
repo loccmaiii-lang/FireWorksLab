@@ -1,0 +1,31 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import {isolateBaker} from './isolation.mjs';
+const page=fs.readFileSync(new URL('../../../../tool/FireworkBaker.html',import.meta.url),'utf8');
+const base='http://127.0.0.1:8035/协作/设计稿/参数体验_4.9.60_2026-10-10/baker-context/';
+test('真实外壳保留原生成内容，首启不自动开候选或进行烘焙',()=>{
+  const result=isolateBaker(page,base,'modules');
+  assert.match(result,/window.FW_PARAMETER_CONTEXT=true/);
+  assert.match(result,/window.FW_PARAMETER_LAYOUT="modules"/);
+  assert.match(result,/window.FW_PARAMETER_CONTEXT \|\| \/\[\?&\]fast/);
+  assert.match(result,/!window.FW_PARAMETER_CONTEXT && !\/\[\?&\]fast/);
+  for(const id of ['id="side"','id="viewFrame"','id="assetBar"','id="tlBars"','id="right"'])assert.ok(result.includes(id),id);
+  assert.ok(result.includes('bridge.js'));
+  assert.throws(()=>isolateBaker('<html></html>',base),/接口已变化/);
+});
+test('存档与目录句柄隔离，原生产存储不被访问；只允许同源只读请求',async()=>{
+  let accessed=0,reads=[],clicks=0;class Anchor{click(){clicks++;}}const window={fetch:async(...args)=>reads.push(args),open:()=>accessed++,HTMLAnchorElement:Anchor};
+  Object.defineProperty(window,'localStorage',{configurable:true,get:()=>{accessed++;throw Error('不应读生产存档');}});
+  const code=isolateBaker(page,base).match(/<script>([\s\S]*?)<\/script>/)[1];
+  vm.runInNewContext(code,{window,URL,Request,Map,Error,JSON,document:{baseURI:'http://127.0.0.1:8035/tool/'}});
+  window.localStorage.setItem('fwb.mySaves','副本');assert.equal(window.localStorage.getItem('fwb.mySaves'),'副本');
+  assert.equal(accessed,0);assert.equal(window.indexedDB,undefined);assert.equal(window.showDirectoryPicker,undefined);
+  await window.fetch('data/thumbs.js');assert.equal(reads.length,1);
+  await assert.rejects(window.fetch('http://127.0.0.1:8034/api/write',{method:'POST'}),/隔离/);
+  await assert.rejects(window.fetch('/api/write',{method:'POST'}),/隔离/);
+  assert.equal(reads.length,1);assert.equal(window.open('http://127.0.0.1:8034'),null);assert.equal(accessed,0);
+  const download=new Anchor();download.download='sample.zip';download.href='blob:sample';download.click();assert.equal(clicks,0);
+  const help=new Anchor();help.href=base;help.click();assert.equal(clicks,1);
+});

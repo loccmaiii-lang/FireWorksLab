@@ -1,0 +1,18 @@
+{
+  "beforeVsEditedDifferent": true,
+  "beforeVsUndoneEqual": true,
+  "region": [
+    235,
+    239,
+    640,
+    273
+  ],
+  "scrubValue": 397,
+  "screenshots": [
+    "00-原参数栏-同对象1280.png",
+    "01-连续索引-1280.png",
+    "02-模块索引-1280.png",
+    "03-任务分页-1280.png"
+  ],
+  "composition": "1:1，无二次缩放"
+}

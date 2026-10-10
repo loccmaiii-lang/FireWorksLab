@@ -9,6 +9,16 @@ for(const name of ['tool/src/js/10_types.js','tool/src/js/12_tempo.js'])vm.runIn
 vm.runInContext(fs.readFileSync(new URL('source-contract.js',dir),'utf8'),context);
 const source=context.window.ParameterSource,data=JSON.parse(fs.readFileSync(new URL('data.json',dir),'utf8'));
 const fresh=()=>createModel(data,source),field=(m,t,o,k)=>m.rows(t,0,o).find(r=>r.key===k);
+test('嵌入真实工作区使用原图层快照，单层不制造对照层，撤销与恢复按快照',()=>{
+  const m=createModel(data,source,{singleLayer:true});assert.equal(m.session('senrin').state.layers.length,1);
+  assert.equal(m.rows('senrin',0,'效果').some(r=>r.scope==='L'),false);
+  const layers=structuredClone(m.session('senrin').state.layers);layers[0].name='实际主层';layers[0].P.subStars=63;
+  m.loadSnapshot('senrin',layers);const r=field(m,'senrin','子花','subStars');m.commit('senrin',0,r,78);
+  assert.equal(layers[0].P.subStars,63);m.session('senrin').undo();assert.equal(m.layer('senrin',0).P.subStars,63);
+  assert.equal(m.layer('senrin',0).name,'实际主层');
+  m.commit('senrin',0,r,91);m.restore('senrin',0,[r]);assert.equal(m.layer('senrin',0).P.subStars,63);
+  m.loadSnapshot('senrin',layers,{supportsPlacement:true});assert.equal(m.rows('senrin',0,'效果').filter(r=>r.scope==='L').length,4);
+});
 test('36个花型的实际条件都能求值，对象内存储路径不重复',()=>{
   const m=fresh();
   for(const c of data.cases)for(const o of m.objects(c.id,0)){

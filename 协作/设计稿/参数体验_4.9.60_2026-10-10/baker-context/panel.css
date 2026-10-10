@@ -1,0 +1,68 @@
+/* 右栏呈现：同字段模型，在实际320–520px内布局，不把整个编辑器缩成图片。 */
+body.embedded{font:13px/1.5 system-ui,-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;background:var(--fw-color-surface-container)}
+.embedded .app-header{height:40px;padding:4px 8px;gap:0;background:var(--fw-color-surface-container)}
+.embedded .app-header>.brand,.embedded .sample-mark{display:none}
+.embedded .layout-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;margin:0;padding:0;border:0;gap:4px}
+.embedded .layout-picker button{min-height:32px;font-size:12px;padding:2px 4px}
+.embedded .workspace{display:block;height:calc(100dvh - 40px);padding:0;max-width:none;margin:0}
+.embedded .editor{height:100%;border:0;border-radius:0;grid-template-rows:auto auto auto minmax(0,1fr) 40px}
+.embedded .identity{padding:8px 10px 6px;min-height:40px;border:0;gap:6px}
+.embedded .identity p{display:none}
+.embedded .identity h1{font-size:14px;line-height:20px;overflow-wrap:normal}
+.embedded #help{font-size:12px;min-height:28px;padding:2px 5px;border-color:var(--fw-color-divider)}
+.embedded .object-panel{display:block;padding:0 10px 8px;border:0;border-radius:0;background:transparent;overflow:visible;min-height:0}
+.embedded .object-panel>:not(#objects):not(#layers){display:none}
+.embedded #layers{display:flex;gap:4px;margin-bottom:6px}
+.embedded #layers[hidden]{display:none!important}
+.embedded #layers button{flex:1;min-height:28px;padding:3px 7px;font-size:12px}
+.embedded #layers small{display:none}
+.embedded .objects{display:flex;flex-wrap:wrap;overflow:visible;gap:3px}
+.embedded .objects button{flex:1 0 auto;min-height:30px;min-width:38px;font-size:13px;text-align:center;padding:3px 6px;border:1px solid var(--fw-color-divider)}
+.embedded .objects button[aria-current=true]{border:1px solid var(--fw-color-primary);padding:3px 6px;box-shadow:inset 0 -2px 0 var(--fw-color-primary)}
+.embedded .objects button:nth-last-child(1){margin:0;border:1px solid var(--fw-color-divider);border-radius:4px}
+.embedded .search-row{padding:0 10px 8px;gap:8px;flex-wrap:nowrap;min-height:40px}
+.embedded .search-row input[type=search]{flex:1;flex-basis:auto;height:30px;min-height:30px;font-size:12px;padding:3px 7px}
+.embedded .check{font-size:12px;gap:4px}.embedded .check input{width:13px;height:13px;min-height:13px}
+.embedded .body,.embedded.layout-modules .body{grid-template-columns:76px minmax(0,1fr)}
+.embedded .parameter-index{padding:7px 4px;border-right:1px solid var(--fw-color-divider)}
+.embedded .parameter-index button{font-size:12px;line-height:18px;padding:7px 6px;min-height:36px;gap:0}
+.embedded .parameter-index .index-count{display:none}
+.embedded .parameter-scroll{padding:0 10px 14px}
+.embedded #fields{max-width:none}
+.embedded .task-heading{font-size:12px;line-height:18px;padding:10px 0 2px}
+.embedded .module summary{min-height:34px;font-size:13px;line-height:20px}
+.embedded .module summary .summary-value{display:none}
+.embedded .module-body{padding:0 0 8px}
+.embedded .param-row,.embedded .random-details .param-row{grid-template-columns:minmax(70px,1fr) minmax(24px,1fr) 62px 28px 20px;gap:4px;min-height:34px}
+.embedded .param-label{font-size:13px;line-height:20px;min-height:30px;overflow-wrap:normal}
+.embedded .param-row>input[type=range]{display:block;grid-column:2;width:100%;height:24px}
+.embedded .param-row>input[type=number],.embedded .param-row>input[type=text],.embedded .param-row>input[type=color]{grid-column:3;height:30px;min-height:30px;font-size:13px;padding:3px 4px}
+.embedded .param-row>.unit{grid-column:4;font-size:12px}
+.embedded .param-row>.row-reset{grid-column:5;grid-row:1;width:20px;min-height:24px;padding:2px}
+.embedded .param-row>.row-reset [data-fw-icon]{width:14px;height:14px}
+.embedded .param-row select{grid-column:2/5;min-height:30px;height:30px;font-size:13px;padding:3px 5px}
+.embedded .param-row .link-button{grid-column:2/5;justify-self:end;min-height:24px;font-size:12px;padding:0 4px;margin-bottom:2px}
+.embedded .random-details{margin-left:4px;padding-left:8px}
+.embedded .random-details>summary{min-height:28px;font-size:12px}
+.embedded .curve-field{padding:5px 0 8px}
+.embedded .curve-graph{height:104px;max-width:100%;margin:0}
+.embedded .curve-heading{margin-bottom:5px}
+.embedded .point-editor{gap:4px;font-size:12px;justify-content:flex-start}
+.embedded .point-editor label{gap:3px;font-size:12px}
+.embedded .point-editor input{width:48px;height:30px;min-height:30px;font-size:12px;padding:3px}
+.embedded .point-editor button{font-size:12px;padding:1px 4px;min-height:30px}
+.embedded .editor-footer{height:40px;padding:5px 10px;gap:5px}
+.embedded .editor-footer .quiet-button{min-height:30px;font-size:12px;padding:3px 7px}
+.embedded .icon-button{width:28px;height:28px;min-height:28px;padding:4px}
+.embedded #change-count{font-size:12px;margin-left:3px}
+.embedded .stage-row{gap:5px}.embedded .stage-row input[type=number]{width:50px}.embedded .stage-row input[type=text]{width:73px}.embedded .stage-row input[type=color]{width:38px}
+.embedded .output-context{font-size:12px;margin-top:8px}
+.embedded .platform-picker button{font-size:11px;min-height:26px;padding:2px 12px}
+.embedded.layout-tasks .body{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}
+.embedded.layout-tasks .parameter-index{display:flex;padding:0 8px;gap:8px;border-right:0;overflow:auto}
+.embedded.layout-tasks .parameter-index button{flex:0 0 auto;min-height:34px;white-space:nowrap;padding:7px 3px}
+.embedded.layout-tasks .module{margin-top:8px;padding:0 9px}
+.embedded.layout-tasks .curve-graph{height:115px}
+.embedded.layout-modules .task-heading{font-size:15px;padding-top:10px}
+@media(max-width:340px){.embedded .body,.embedded.layout-modules .body{grid-template-columns:64px minmax(0,1fr)}.embedded .param-row,.embedded .random-details .param-row{grid-template-columns:minmax(62px,1fr) 56px 20px 18px;gap:3px}.embedded .param-row>input[type=range]{display:none}.embedded .param-row>input[type=number],.embedded .param-row>input[type=text]{grid-column:2}.embedded .param-row>.unit{grid-column:3}.embedded .param-row>.row-reset{grid-column:4}.embedded .param-row select{grid-column:2/4}.embedded .param-row .link-button{grid-column:1/4}.embedded .check:last-child{display:none}.embedded.layout-tasks .body{grid-template-columns:minmax(0,1fr)}}
+@media(pointer:coarse){.embedded button,.embedded input,.embedded select{min-height:44px}.embedded .param-row{min-height:48px}.embedded .editor-footer{height:auto}.embedded .editor{grid-template-rows:auto auto auto minmax(0,1fr) auto}}

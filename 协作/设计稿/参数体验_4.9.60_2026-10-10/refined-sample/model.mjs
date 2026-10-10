@@ -29,8 +29,8 @@ export function taskOf(row, object) {
   if (['大小','颜色','亮度'].includes(row.module)) return '外观与颜色';
   return '事件与特性';
 }
-export function createModel(data, source) {
-  const sessions = new Map(), baseline = new Map();
+export function createModel(data, source, {singleLayer=false,normalize=P=>P}={}) {
+  const sessions = new Map(), baseline = new Map(), placement = new Map();
   const meta = new Map();
   for (const row of data.rows) {
     const id = row.sourceSection + '|' + row.key;
@@ -41,8 +41,8 @@ export function createModel(data, source) {
     if (!sessions.has(type)) {
       const def = data.cases.find(c=>c.id===type);
       if (!def) throw Error('未知花型：'+type);
-      const layers = ['主层','对照层'].map((name,i)=>({id:String(i),name,P:clone(def.P),M:clone(def.M),L:{delay:0,scale:1,rate:1,mirror:false}}));
-      const value = {layers}; baseline.set(type,clone(value)); sessions.set(type,createHistory(value));
+      const layers = (singleLayer?['主层']:['主层','对照层']).map((name,i)=>({id:String(i),name,P:clone(def.P),M:clone(def.M),L:{delay:0,scale:1,rate:1,mirror:false}}));
+      const value = {layers}; baseline.set(type,clone(value)); sessions.set(type,createHistory(value));placement.set(type,!singleLayer);
     }
     return sessions.get(type);
   }
@@ -67,9 +67,9 @@ export function createModel(data, source) {
     return result;
   }
   const layerFields = [
-    {key:'delay',label:'开始时间',unit:'s',range:[0,30,.01]},
-    {key:'scale',label:'缩放',unit:'×',range:[.01,10,.01]},
-    {key:'rate',label:'时间倍率',unit:'×',range:[.1,4,.01]},
+    {key:'delay',label:'开始时间',unit:'s',range:[0,10,.01]},
+    {key:'scale',label:'缩放',unit:'×',range:[.1,6,.01]},
+    {key:'rate',label:'时间倍率',unit:'×',range:[.3,2,.01]},
     {key:'mirror',label:'水平镜像',kind:'checkbox'}
   ].map(r=>({...r,fieldId:'LAYER-'+r.key,occurrenceId:'LAYER-'+r.key,scope:'L',kind:r.kind||'number',module:'位置与时间',emitter:'效果',fullLabel:r.label,randomParent:''}));
   const matFields = [
@@ -96,7 +96,7 @@ export function createModel(data, source) {
   function rows(type,index,object) {
     const current = layer(type,index), all = schemaRows(current.P);
     const actual = all.filter(r=>r.emitter===object);
-    if (object==='效果') return [...actual, ...layerFields, ...matFields];
+    if (object==='效果') return [...actual, ...(placement.get(type)?layerFields:[]), ...matFields];
     if (object==='输出') {
       const existing = new Set(actual.map(r=>r.key));
       const kind=source.bakeKind(current.P);
@@ -143,7 +143,7 @@ export function createModel(data, source) {
       source.retimeP(current.P,k);source.retimeM(current.M,k);current.P.tempo=+value;
     } else if (row.key==='_trailTier') current.P=clone(data.cases.find(c=>c.id===value).P);
     else current[row.scope][row.key]=row.key==='sparkSpread' ? source.spread.set(current.P,+value) : clone(value);
-    return h.commit(next);
+    normalize(current.P);return h.commit(next);
   }
   function restore(type,index,rowsToRestore) {
     const h=session(type), next=h.state, base=baseline.get(type).layers[index];
@@ -151,8 +151,13 @@ export function createModel(data, source) {
       if(base[r.scope][r.key]===undefined) delete next.layers[index][r.scope][r.key];
       else next.layers[index][r.scope][r.key]=clone(base[r.scope][r.key]);
     }
-    return h.commit(next);
+    normalize(next.layers[index].P);return h.commit(next);
   }
   const changed=(type,index,row)=>JSON.stringify(layer(type,index)[row.scope]?.[row.key])!==JSON.stringify(baseline.get(type).layers[index][row.scope]?.[row.key]);
-  return {session,layer,rows,objects,linked,value,commit,restore,changed,source,data,baseline};
+  // 完整页样板用实际烘焙器的图层快照；不再为单层模板制造第二层。
+  function loadSnapshot(type,layers,{supportsPlacement=layers?.length>1}={}) {
+    if(!data.cases.some(c=>c.id===type)||!layers?.length)throw Error('图层快照无效');
+    const value={layers:clone(layers)};baseline.set(type,clone(value));sessions.set(type,createHistory(value));placement.set(type,supportsPlacement);
+  }
+  return {session,layer,rows,objects,linked,value,commit,restore,changed,source,data,baseline,loadSnapshot};
 }

@@ -1,0 +1,7 @@
+/* 外壳尺寸、颜色与断点均来自实际烘焙器；只替换参数页的内容。 */
+#right{overflow:hidden}
+body.parameter-context:not(.native-context) #right>:not(.right-head):not(#parameterSample){display:none!important}
+#parameterSample{display:block;border:0;width:100%;flex:1;min-height:0;background:var(--panel)}
+body.parameter-context .brand small::after{content:" · 参数方案";color:var(--gold)}
+body.parameter-context #parameterSample[hidden]{display:none!important}
+body.parameter-context #assetBar{visibility:visible}

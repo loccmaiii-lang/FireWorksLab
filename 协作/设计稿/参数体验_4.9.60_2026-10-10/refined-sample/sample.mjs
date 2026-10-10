@@ -1,7 +1,10 @@
 import {createModel,standardModules,layouts,taskOf} from './model.mjs';
 import {CurveEditor} from './curve-editor.mjs';
 const $=selector=>document.querySelector(selector),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const data=await (await fetch('./data.json')).json(),model=createModel(data,window.ParameterSource);
+const embedded=new URL(location.href).searchParams.get('embedded')==='1',channel='baker-parameter-context';
+const data=await (await fetch('./data.json')).json(),model=createModel(data,window.ParameterSource,{singleLayer:embedded,normalize:embedded?P=>parent.derive(P):P=>P});
+let sourceName='',sourceKey='';
+if(embedded){document.body.classList.add('embedded');$('.identity').after($('.object-panel'));}
 let type='senrin',layerIndex=0,object='子花',layout=new URL(location).searchParams.get('layout')||'continuous';if(!layouts[layout])layout='continuous';
 const memories=new Map(),curves=new Map();let editors=[],lastFocus=null,platform='pc';
 const memoryKey=()=>[layout,type,layerIndex,object].join('|');
@@ -14,11 +17,11 @@ function switchContext(action){remember();action();lastFocus=null;render(true);}
 const featured=['senrin','kiku','crackle','crossette','tailM','fountain','fan'];
 $('#template').innerHTML=data.cases.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');
 $('#featured').innerHTML=featured.map(id=>`<button type="button" data-type="${id}">${esc(data.cases.find(c=>c.id===id).name.split(' · ')[0].replace('升空尾缀','尾缀'))}</button>`).join('');
-function changeType(next){switchContext(()=>{type=next;layerIndex=0;const objects=model.objects(type,0);object=objects.includes('子花')?'子花':objects.includes('星')?'星':objects.includes('星头')?'星头':'效果';});}
+function changeType(next){if(embedded){parent.postMessage({channel,kind:'choose-type',type:next},location.origin);return;}switchContext(()=>{type=next;layerIndex=0;const objects=model.objects(type,0);object=objects.includes('子花')?'子花':objects.includes('星')?'星':objects.includes('星头')?'星头':'效果';});}
 $('#template').onchange=e=>changeType(e.target.value);
 $('#featured').onclick=e=>{const b=e.target.closest('[data-type]');if(b)changeType(b.dataset.type);};
 $('.layout-picker').onclick=e=>{const b=e.target.closest('[data-layout]');if(!b)return;switchContext(()=>{layout=b.dataset.layout;const url=new URL(location);url.searchParams.set('layout',layout);history.replaceState(null,'',url);});};
-$('#layers').onclick=e=>{const b=e.target.closest('[data-layer]');if(b)switchContext(()=>{layerIndex=+b.dataset.layer;const objects=model.objects(type,layerIndex);if(!objects.includes(object))object='效果';});};
+$('#layers').onclick=e=>{const b=e.target.closest('[data-layer]');if(b){switchContext(()=>{layerIndex=+b.dataset.layer;const objects=model.objects(type,layerIndex);if(!objects.includes(object))object='效果';});publishEdit();}};
 $('#objects').onclick=e=>{const b=e.target.closest('[data-object]');if(b)switchContext(()=>object=b.dataset.object);};
 $('#search').oninput=()=>{memory().q=$('#search').value;renderFields();};
 $('#changed').onchange=()=>{memory().changed=$('#changed').checked;renderFields();};
@@ -36,10 +39,11 @@ function render(restoreScroll=false){
   document.title=layouts[layout]+' · 烟花参数样板';
   $('.layout-picker').querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',b.dataset.layout===layout));
   $('#template').value=type;$('#featured').querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',b.dataset.type===type));
-  const l=model.layer(type,layerIndex),name=data.cases.find(c=>c.id===type).name;
+  const l=model.layer(type,layerIndex),name=sourceName||data.cases.find(c=>c.id===type).name;
   $('#layers').innerHTML=model.session(type).state.layers.map((l,i)=>`<button type="button" data-layer="${i}" aria-current="${i===layerIndex}"><span>${l.name}</span><small>${i+1}</small></button>`).join('');
   $('#objects').innerHTML=model.objects(type,layerIndex).map(o=>`<button type="button" data-object="${esc(o)}" aria-current="${o===object}">${esc(o)}</button>`).join('');
   $('#effect-name').textContent=name+' · '+layouts[layout];$('#identity').textContent=name+' › '+l.name+' › '+object;
+  if(embedded){$('#layers').hidden=model.session(type).state.layers.length===1;parent.postMessage({channel,kind:'layout',layout,title:layouts[layout]},location.origin);}
   const m=memory();$('#search').value=m.q;$('#changed').checked=m.changed;$('#english').checked=m.english;
   renderFields();if(restoreScroll){requestAnimationFrame(()=>{$('#scroll').scrollTop=m.scroll;const field=m.focus&&document.querySelector(`[data-binding="${CSS.escape(m.focus)}"]`);field?.focus({preventScroll:true});});}
 }
@@ -106,8 +110,9 @@ function renderFields(){
   updateFooter();window.FWIcons.apply();
 }
 function binding(row){return row.scope+'.'+row.key;}
-function apply(row,value){const before=model.objects(type,layerIndex);if(model.commit(type,layerIndex,row,value)){lastFocus=binding(row);const after=model.objects(type,layerIndex);if(JSON.stringify(before)!==JSON.stringify(after))render();else refreshValues();announce('已修改'+row.label);}}
-function refreshValues(){const top=$('#scroll').scrollTop,focused=document.activeElement?.dataset?.binding||lastFocus;renderFields();$('#scroll').scrollTop=top;if(focused)document.querySelector(`[data-binding="${CSS.escape(focused)}"]`)?.focus({preventScroll:true});lastFocus=null;}
+function publishEdit(){if(embedded&&sourceKey)parent.postMessage({channel,kind:'edit',key:sourceKey,index:layerIndex,layers:model.session(type).state.layers},location.origin);}
+function apply(row,value){const before=model.objects(type,layerIndex);if(model.commit(type,layerIndex,row,value)){lastFocus=binding(row);const after=model.objects(type,layerIndex);if(JSON.stringify(before)!==JSON.stringify(after)){render();publishEdit();}else refreshValues();announce('已修改'+row.label);}}
+function refreshValues(){const top=$('#scroll').scrollTop,focused=document.activeElement?.dataset?.binding||lastFocus;renderFields();$('#scroll').scrollTop=top;if(focused)document.querySelector(`[data-binding="${CSS.escape(focused)}"]`)?.focus({preventScroll:true});lastFocus=null;publishEdit();}
 function updateFooter(){const rows=model.rows(type,layerIndex,object),changed=rows.filter(r=>model.changed(type,layerIndex,r)).length;$('#change-count').textContent=changed?'已改 '+changed+' 项':'和打开时一致';const h=model.session(type);$('#undo').disabled=!h.canUndo;$('#redo').disabled=!h.canRedo;$('#restore').disabled=!changed;}
 function appendRow(host,row){
   const rowEl=document.createElement('div');rowEl.dataset.key=row.key;rowEl.dataset.scope=row.scope;
@@ -161,4 +166,15 @@ function renderStages(host,row){
 }
 $('#scroll').onscroll=()=>{const m=memory(),scroll=$('#scroll');m.scroll=scroll.scrollTop;if(layout==='continuous'){const top=scroll.getBoundingClientRect().top+16;const section=[...scroll.querySelectorAll('.task-section')].find(s=>s.getBoundingClientRect().bottom>top);if(section){m.active=section.dataset.group;$('#index').querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',b.dataset.group===m.active));}}};
 document.addEventListener('keydown',e=>{if($('#help-dialog').open)return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){e.preventDefault();if(e.shiftKey)$('#redo').click();else $('#undo').click();}});
+if(embedded){
+  window.addEventListener('message',event=>{
+    if(event.source!==parent||event.data?.channel!==channel||event.data.kind!=='source')return;
+    const next=event.data;remember();const changed=sourceKey!==next.key;
+    layerIndex=next.index;sourceName=next.name;sourceKey=next.key;
+    if(changed){type=next.type;model.loadSnapshot(type,next.layers,{supportsPlacement:next.sourceKind==='combo'});memories.clear();curves.clear();}
+    const available=model.objects(type,layerIndex);if(!available.includes(object))object=available.includes('星')?'星':'效果';
+    render(true);
+  });
+}
 render();
+if(embedded)parent.postMessage({channel,kind:'ready'},location.origin);

@@ -1,0 +1,31 @@
+{
+  "capturedOn": "2026-10-10T22:42:43+08:00",
+  "shellVersion": "4.9.68",
+  "fieldBaseVersion": "4.9.68",
+  "sourceDefinitions": 554,
+  "additionalReferences": 72,
+  "cases": 36,
+  "sourceHashes": {
+    "tool/FireworkBaker.html": "cfc2b5245043d6d1d5bd8595e2c7ad6e13ab4f5c47374e9bc143d3ac10e032b8",
+    "tool/design-system/tokens.css": "0be3df4ae8f44610e047b1de5b4baac4c7de01ddba1d5e7b1e60eb04f4c39528",
+    "tool/design-system/icons.js": "391365ced2a13425083554c9a7f1800e7bbb4eac9f08291da591b11e3ccdef72",
+    "协作/设计稿/参数体验_4.9.60_2026-10-10/refined-sample/source-contract.js": "89677332c5f2fb6d290903bdb7860ab4ccea59fbc83e67563551a0c8ae0c8ad0",
+    "协作/设计稿/参数体验_4.9.60_2026-10-10/refined-sample/位置对齐.csv": "f9c274f8318cb1bc4c99f32b02da3036f21bed770af1635ecaaa650dbe6c28b7"
+  },
+  "scope": "只替换隔离副本右栏；生产、宪章、共享tokens未改",
+  "layoutWidths": {
+    "1280": [
+      220,
+      390
+    ],
+    "1366": [
+      220,
+      390
+    ],
+    "1920": [
+      272.6354,
+      520
+    ]
+  },
+  "qa": "design-qa.md"
+}
