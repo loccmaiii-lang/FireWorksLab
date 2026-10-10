@@ -8,10 +8,11 @@
     "bytes": 2572468,
     "sha256": "4fb32e220c16c271e9300859e1a20690433656998f0a19d8a53ce80062b7dcad",
     "zipName": "烟花编排工作台-离线包.zip",
-    "zipBytes": 370581,
-    "zipSha256": "19878ade487082739c4493db6dfb0e8572c871f84063c0ffd936371eb90ec7d2",
+    "zipBytes": 368412,
+    "zipSha256": "a8d0b248e2af753b5fbdbc212c23cb2f05a17fc45f7fa3aadb7ac065161d117f",
     "musicIncluded": false,
-    "originalProgrammeSha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a"
+    "originalProgrammeSha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a",
+    "workspaceFile": "F:\\FireWorksLab\\FXtools\\烟花编排工作台\\烟花编排工作台.html"
   },
   "automated": {
     "productionCore": {
@@ -87,12 +88,26 @@
     "tool/offline-workbench/audit-v16/04-saved-v16-lime.png",
     "tool/offline-workbench/audit-v16/06-offline-lime-1366.png"
   ],
-  "publication": {
+  "singleSourcePipeline": {
+    "report": "analysis/results/WORKBENCH_SINGLE_SOURCE/verification.json",
+    "checks": {
+      "core": 117,
+      "wrapper": 37,
+      "fixedOverwrite": 5,
+      "httpLauncher": 10
+    },
+    "status": "local_verified_not_pushed"
+  },
+  "previousV16Publication": {
     "artifactCommit": "707b016474c552521d307934ee24d73c68788340",
     "htmlBlob": "9ceb2d1171282ca4972a88f5ca806eaf86acd7b0",
     "zipBlob": "151b746929d8f987785a74853f9bef31839043b8",
     "remoteMainContainsCommit": true,
     "remoteAndLocalArtifactBlobsEqual": true,
     "verifiedAt": "2026-10-10T07:54:41.130055+00:00"
+  },
+  "publication": {
+    "status": "prepared_for_direct_push",
+    "currentBuildReport": "analysis/results/WORKBENCH_SINGLE_SOURCE/verification.json"
   }
 }

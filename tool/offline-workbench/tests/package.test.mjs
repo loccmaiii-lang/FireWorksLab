@@ -1,5 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs/promises';import path from 'node:path';import crypto from 'node:crypto';import vm from 'node:vm';import {fileURLToPath,pathToFileURL} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../..'),file=process.env.DF_HTML_TEST_PATH||path.join(root,'tool','烟花编排工作台.html');
+const sourceRoot=process.env.DF_SOURCE_TEST_PATH||path.join(root,'tool','workbench');
 const html=await fs.readFile(file,'utf8'),report=JSON.parse(await fs.readFile(file+'.build.json','utf8'));
 function script(id){const marker=`<script id="${id}" type="application/json">`,start=html.indexOf(marker);assert(start>=0);const from=start+marker.length;return html.slice(from,html.indexOf('</script>',from));}
 const programme=JSON.parse(script('df-offline-project')),data=JSON.parse(script('df-offline-data'));
@@ -17,7 +18,7 @@ test('all six real data files embedded; independent offline IndexedDB/key names'
 
 test('updates preserve v1 local storage identity and prefer saved programmes over bundled defaults',async()=>{
  assert(html.includes('df-offline-director-workbench'));assert(html.includes('df-offline-workbench-v1-draft'));assert(!html.includes('indexedDB.deleteDatabase'));
- const source=path.dirname(Object.keys(report.sourceFiles).find(f=>f.endsWith('App.jsx'))),app=await fs.readFile(path.join(source,'App.jsx'),'utf8');
+ const source=path.join(sourceRoot,'src'),app=await fs.readFile(path.join(source,'App.jsx'),'utf8');
  assert(app.indexOf('if(raw)')<app.indexOf('return seed;'));assert(app.includes('return parsed'));assert(app.includes("DRAFT_KEY+'-unrestored'"));
  const {createProgrammeSaver}=await import(pathToFileURL(path.join(source,'programme-save.mjs'))),old='local-personal-history',records=new Map([['df-offline-workbench-v1-draft-program-OLD',old]]);
  const save=createProgrammeSaver(async entries=>{for(const [k,v]of entries)records.set(k,v)},'df-offline-workbench-v1-draft',programme.payload);
@@ -25,7 +26,7 @@ test('updates preserve v1 local storage identity and prefer saved programmes ove
  assert.equal(records.get('df-offline-workbench-v1-draft-program-OLD'),old);assert.equal(JSON.parse(records.get('df-offline-workbench-v1-draft')).doc.meta.programName,'接收者自己的节目');
 });
 test('built HTML checksum and original source fingerprints match',async()=>{
- assert.equal(crypto.createHash('sha256').update(html).digest('hex'),report.sha256);for(const [f,hash] of Object.entries(report.sourceFiles))assert.equal(crypto.createHash('sha256').update(await fs.readFile(f,'utf8')).digest('hex'),hash,f);
+ assert.equal(crypto.createHash('sha256').update(html).digest('hex'),report.sha256);for(const [f,hash] of Object.entries(report.sourceFiles))assert.equal(crypto.createHash('sha256').update(await fs.readFile(path.join(sourceRoot,f),'utf8')).digest('hex'),hash,f);
 });
 test('inline JavaScript parses without browser module loading',()=>{const marker='<script id="df-offline-runtime">',from=html.indexOf(marker)+marker.length,js=html.slice(from,html.lastIndexOf('</script>'));new vm.Script(js);assert(js.includes('text/plain'));});
 test('bootstrap retrieves local JSON and embedded audio without file:// network calls',async()=>{
@@ -33,7 +34,7 @@ test('bootstrap retrieves local JSON and embedded audio without file:// network 
  assert.deepEqual(await (await scope.fetch('./data/test.json')).json(),{ok:true});assert.deepEqual(requested,[]);assert.equal(await (await scope.fetch('./music.wav')).text(),'audio');assert.deepEqual(requested,['data:audio/wav;base64,AA==']);
 });
 test('embedded programme survives real version-file round trip; new programme is truly blank',async()=>{
- const source=path.dirname(Object.keys(report.sourceFiles).find(f=>f.endsWith('App.jsx')));
+ const source=path.join(sourceRoot,'src');
  const {migrateNumbering}=await import(pathToFileURL(path.join(source,'point-numbering.mjs')));
  const {preflightProject,packProject,newProgram,validateMedia}=await import(pathToFileURL(path.join(source,'program-project.mjs')));
  const seed=migrateNumbering(data['score24-v05']),initial=preflightProject(JSON.stringify(programme),seed);

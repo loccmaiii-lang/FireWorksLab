@@ -1,0 +1,195 @@
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.031s
+
+OK
+✔ read-only table catalogue includes unused IDs and keeps unknown dimensions unknown; derived IDs are only programme additions (1.0791ms)
+✔ pattern migration preserves score and fixed native recipes; migration is idempotent (47.0326ms)
+✔ placing a saved pattern aligns actual entry, overlaps calls and filters points only (192.1504ms)
+✔ immutable pattern and placed recipe references survive future flower changes with director parity (230.6104ms)
+✔ invalid bindings and out-of-show times fail atomically (134.703ms)
+✔ backup rejects missing pattern provenance and a recipe borrowed from another flower (19.1609ms)
+✔ new calls use tenth-second timing, preserve internal precision and pair mirrored point starts (85.2559ms)
+✔ a mixed P/B/F pattern exports sparse zero-based slots with native entries and exact common timing in all tiers (758.3395ms)
+✔ actor delivery matches 8017 properties and manifest exactly for all tiers (66.3228ms)
+✔ reject incomplete, duplicate and thumbnail mismatch without changing the programme (0.9413ms)
+✔ pin immutable revision, preserve source events and restore after save (276.6744ms)
+✔ deduplicates definitions but retains every scheduled occurrence and group (2.3533ms)
+✔ invalid references fail instead of silently dropping shows (0.3193ms)
+✔ distinguishes authored offsets from target and never reports a measured diameter (0.8026ms)
+✔ explicit source distinguishes duplicate names and rejects old catalogue (0.9825ms)
+✔ source rows copy once and all three grades preserve source entries and exact event timing (226.4517ms)
+✔ fan source cannot silently replace ball flower (86.213ms)
+✔ sparse slots retain group capacity so high zero-based indices remain in range (72.6703ms)
+✔ three-array replacement expands to exact active score times/slots, without old schedule (193.8201ms)
+✔ missing source, missing slot, duplicate slot and unknown fan mode block property output (305.4097ms)
+✔ launch and first bloom move only selected cue while retaining flight and overlap (112.3018ms)
+✔ gap changes actual point spacing in original order and preserves repeats (56.4374ms)
+✔ point membership updates events; last point and invalid timing rejected (149.143ms)
+✔ splitter protects both panes at desktop and laptop heights (0.2313ms)
+✔ direction changes preserve flight, and simultaneous starts clear unused interval (109.3706ms)
+✔ migration keeps launch times, source native random, and valid timeline (43.5374ms)
+✔ every native preview entry equals expansion of the three tables for all tiers (664.2936ms)
+✔ saved edits reach director output; backup restore and undo values retain exact versions (147.3076ms)
+✔ new and copied clips derive their duration from the fixed recipe (62.4228ms)
+✔ base substitution changes ID/reference/preview only and preserves timing, native transforms, random ranges and filters (1.1189ms)
+✔ English display engine ID validation does not rename fixed identity; layer groups expose actual roles (0.6597ms)
+✔ fan directions include outside-in and preserve native values (0.4975ms)
+✔ new fans can converge from outside, and engine IDs remain fixed in three-table delivery (5.462ms)
+✔ multi-point together accepts optional jitter and shifts complete native flowers deterministically (66.9963ms)
+✔ edit/reseed/disable jitter do not accumulate, alter original dt or change unrelated cues (31.3321ms)
+✔ jitter programme roundtrip and deliberate capture preserve actual starts without rerandomization (70.0536ms)
+✔ invalid jitter and past-show delays are rejected atomically; zero defaults keep old show identical (72.3541ms)
+✔ scrubbing uses plot coordinates, clamps outside capture, and respects zoomed ranges (0.4344ms)
+✔ music selection seeks start and exits clip playback; local view follows the selected section (0.4419ms)
+✔ dam closeup is larger while keeping uniform scale and a centred ground reference (0.1603ms)
+✔ whole-pattern lime replacement removes every other actual binding, not merely hiding seven calls (41.0956ms)
+✔ whole replacement preserves call identity, offsets, chosen point order, profiles and deterministic jitter (92.2639ms)
+✔ explicit single-call replacement keeps other flowers and fixed recipe bindings unchanged (31.3355ms)
+✔ same flower can be applied again to repair a mixed copy; exact selected fixed version applies to every call (4.7914ms)
+✔ incompatible whole replacement fails atomically with the exact call and points, never silently trimming them (0.6314ms)
+✔ invalid scope, call and unrelated fixed version reject without modifying the draft (0.194ms)
+✔ whole preview, newly saved version and placed cues use only lime; original version and programme stay intact (349.3093ms)
+✔ single-call reselecting the same flower keeps its pinned old version instead of silently upgrading (5.0823ms)
+✔ reordered and added calls keep their own identities without remapping collisions (435.3672ms)
+✔ entry-aligned update follows the same call when the template calls are reordered (212.3688ms)
+✔ save then instantiate atomically; each cue points to an actual immutable template version (114.4129ms)
+✔ reusing the exact version does not save another; edited draft cannot masquerade as saved version (226.7045ms)
+✔ placement failure saves neither an unused version nor half an instance (82.0106ms)
+✔ explicit update preserves programme position, cue identity and membership; unrelated instance stays pinned (250.3663ms)
+✔ copied/deleted/individually edited calls cannot cause an accidental whole-instance upgrade (113.4885ms)
+✔ out-of-show update is atomic and mixed versions in an instance are rejected (161.2748ms)
+✔ copy retains all eight calls, replacing one does not rewrite other flowers or source data (0.9797ms)
+✔ current-call preview excludes all seven other calls and every original-show event (23.8746ms)
+✔ all-call preview deliberately includes the retained flowers, ten launches, and pinned versions (55.8597ms)
+✔ three tiers filter the same deterministic times; zero-participation tier has a finite empty preview (31.7116ms)
+✔ an unfinished other call does not block current-call audition, but whole preview and save still reject it (14.9003ms)
+✔ replacement filters incompatible P/F/B points across all tiers, preserves jitter and exact timing (0.508ms)
+✔ selecting the same flower retains extracted transforms and fixed old version (0.2508ms)
+✔ retained extracted transforms apply only to their source calls, new flower uses its own scale and offset (360.6882ms)
+✔ negative and late relative calls can audition without inheriting programme time bounds (9.0653ms)
+✔ programme clock remains authoritative before music, after its end, and without an audio file (0.999ms)
+✔ cue play/replay seeks actual first launch and stops at last extinction (1.5727ms)
+✔ show playback resumes current time, replay starts at zero, missing selection fails (0.3462ms)
+✔ dense front IDs have breathing room and no labels overlap across groups (1.9979ms)
+✔ zoomed-out or short canvases prioritize the selected ID instead of stacking illegible labels (0.5618ms)
+✔ zero migration is atomic, idempotent and preserves actual show and tiers (108.6938ms)
+✔ ambiguous mixed numbering is rejected instead of double decrement (27.5266ms)
+✔ single toggles selection; double toggles isolation independently of preceding click events (2.5825ms)
+✔ real quality tiers filter point programs without modifying shared timing (54.6181ms)
+✔ moving stroke honours original delay, advances along the full guide and expires (1.6989ms)
+✔ ball grows within its native diameter and delay, with no invented launch time (0.2832ms)
+✔ ruler and height ticks follow the actual projection at all viewport scales (0.5562ms)
+✔ active fan draws a coloured segment as well as its gray guide and numbered target (0.6132ms)
+✔ rename commits both visible names without changing programme identity, file version or arrangement (44.052ms)
+✔ manual and automatic saves serialize immutable snapshots and atomically store current plus programme records; failure can retry (68.4435ms)
+✔ bloom has a filled round crown of stars and short tails, rather than a hollow ring (5.5876ms)
+✔ local delays and exact end still gate particles (0.1942ms)
+✔ native entry vertical offset and parent height translate the entire bloom exactly once (3.7892ms)
+✔ one saved fan beam stays one beam and native Roll keeps its direction and height scale (0.3582ms)
+✔ a high small bloom fills its thumbnail while saved native geometry remains intact (4.6663ms)
+✔ a bloom with a short visible lifetime still has a thumbnail (1.1207ms)
+✔ large diagram framing keeps thin spark heads while magnifying the native fan path (0.4234ms)
+✔ 离线检查入口返回原字节、即时更新、无缓存且拒绝写入 (183.1455ms)
+✔ true blank clears every programme/music item, preserves fixed libraries and source unchanged (26.6619ms)
+✔ cue extraction preserves exact relative schedule, fixed refs and independent tiers after reapply (49.9458ms)
+✔ capturing legacy non-grid repeated events does not quantize their relative timing (57.2041ms)
+✔ section boundaries and membership do not silently move cues; explicit whole move preserves relative time (22.3934ms)
+✔ named programme roundtrip is exact; old backup remains compatible and invalid import is atomic (50.0795ms)
+✔ music offset moves only explicitly bound cues and music marks, leaves manual sections and absolute cues fixed (21.4493ms)
+✔ front comet reaches its 130m target after the full 1.8s ascent, then has visible afterglow (7.6737ms)
+✔ launch triangle tip coincides with physical origin and its body stays below that plane (0.2931ms)
+✔ fan vertical offset translates its entire flight once (4.2565ms)
+✔ fireworks draw after point ID plates, never underneath the markers (2.5154ms)
+✔ all planned front effects stay below the 150m dam plane throughout playback (79.9737ms)
+✔ stage elevation preserves saved dimensions and mirrors structural bays about launch centre (28.6832ms)
+✔ unfolded dam shows five true lengths and 50 metre launch intervals without altering plan coordinates (9.7351ms)
+✔ fan jitter is fixed; timing and angle are compiled once (2.5197ms)
+✔ coupled shell shares fixed geometry and time, with explicit height support (0.4745ms)
+✔ saved versions are immutable, explicit binding and undoable document value (2.7798ms)
+✔ invalid resource, NaN, scale and references cannot be exported (0.3771ms)
+✔ preview uses the identical native entries and marks geometry as schematic (0.6353ms)
+✔ geometry keeps the emission origin on the baseline and full native bounds inside the diagram (0.8822ms)
+✔ fan edits retain nonuniform geometry and native randomness unless explicitly editing time order (1.6211ms)
+✔ library tips use the specification target rather than performance tier or guessed size thresholds (0.9105ms)
+✔ single flower placement needs no extra choreography save and pins the exact recipe (109.6725ms)
+✔ add rejects an incompatible selected point, pins the saved version and copy preserves tier point sets (141.5966ms)
+✔ 8017 v5 backup roundtrip preserves all show data and tiers (141.7689ms)
+✔ copy, delete, empty program and tier-only removal preserve source (58.9055ms)
+✔ deliveries use exactly the active tier, effective time and point heights (32.143ms)
+✔ effective time edit and music binding remain aligned (35.7021ms)
+✔ all navigation commits immediately, including unsupported browsers and reduced motion (0.5546ms)
+✔ rapid navigation cancels old motion without delaying or restoring an earlier page (0.2191ms)
+ℹ tests 117
+ℹ suites 0
+ℹ pass 117
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1984.8351
+vite v6.4.2 building for production...
+transforming...
+✓ 4641 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/client/index.html                   0.41 kB │ gzip:   0.30 kB
+dist/client/assets/index-_hPlYK4q.css   81.95 kB │ gzip:  15.83 kB
+dist/client/assets/index-C5CgWnwt.js   540.99 kB │ gzip: 172.94 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 3.25s
+{"html":"C:\\Users\\locmai\\AppData\\Local\\Temp\\df-offline-release-bpxmqwg8\\烟花编排工作台.html.candidate.html","bytes":2572468,"sha256":"4fb32e220c16c271e9300859e1a20690433656998f0a19d8a53ce80062b7dcad","cues":252,"events":1689,"sourceUntouched":true}
+✔ director picker can return from a selected actor to the default blueprint even if search omits its CDO (8.3765ms)
+✔ director catalogue resolves loaded blueprint CDOs, deduplicates paths and excludes transient/foreign objects (0.7526ms)
+✔ explicit invalid target never silently switches to the default or another director (0.3443ms)
+✔ default UE connection uses only reads and the known director asset (0.1411ms)
+✔ one discovered director is chosen; ambiguous directors need explicit choice (0.236ms)
+✔ network failure does not write or guess a target (0.1059ms)
+✔ omit audio preserves the whole authored show, markers and versions without mutating source (0.145ms)
+✔ reimporting original music preserves anchors/sections/timing; replacement clears old musical bindings (0.1685ms)
+✔ uses importer POST/text/plain and permits only loopback service (1.7266ms)
+✔ path distinguishes BP assets and level actors without truncation (0.1924ms)
+✔ engine errors are surfaced instead of success labels (0.1455ms)
+✔ readDirector resolves BP CDO and reads only matching real point actors (0.3101ms)
+✔ wrong target or active director blocks import (0.1194ms)
+✔ concurrent configuration change stops before any write (0.4387ms)
+✔ director becoming active stops before any write (0.1394ms)
+✔ only three arrays and duration change; verified then save BP (1.9643ms)
+✔ save failure preserves verified-write status without false success (0.4389ms)
+✔ level actor is not silently saved as blueprint or entire level (0.9218ms)
+✔ write failure has no false success (0.3479ms)
+✔ native structs/key order and harmless native float precision compare correctly (0.1205ms)
+✔ partial known write is rolled back and read back without saving (0.4125ms)
+✔ foreign edit during failed write is not overwritten by rollback (0.2024ms)
+✔ unknown readback values are not guessed or rolled back (0.2347ms)
+✔ timed-out write does not retry or save because execution status is unknown (0.1919ms)
+✔ live audio uses a short Blob URL without changing the embedded bytes (19.8782ms)
+✔ single HTML includes all scripts and styles, no module/CSS/CDN links (2.8942ms)
+✔ light show keeps native data/versions and musical references, excludes audio bytes (13.7111ms)
+✔ all six real data files embedded; independent offline IndexedDB/key names (1.5617ms)
+✔ updates preserve v1 local storage identity and prefer saved programmes over bundled defaults (20.6943ms)
+✔ built HTML checksum and original source fingerprints match (27.8117ms)
+✔ inline JavaScript parses without browser module loading (8.5068ms)
+✔ bootstrap retrieves local JSON and embedded audio without file:// network calls (2.7976ms)
+✔ embedded programme survives real version-file round trip; new programme is truly blank (96.5597ms)
+✔ a failed source check never replaces the last successful HTML or runs packaging (7.9463ms)
+✔ theme maps all primary and surface roles to the original DF tokens (0.3047ms)
+8025检查通过，已生成一次离线HTML：C:\Users\locmai\AppData\Local\Temp\df-release-ux7DGe\workbench.html
+✔ successful release packages once and records the final filename (9.8868ms)
+✔ failed package verification preserves both previous files (7.2819ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 319.683
+8025检查通过，已生成一次离线HTML：C:\Users\locmai\AppData\Local\Temp\df-offline-release-bpxmqwg8\烟花编排工作台.html
+已更新固定离线入口：F:\FireWorksLab\FXtools\烟花编排工作台\烟花编排工作台.html
+已更新固定离线入口：D:\FXTools\DFWorkbench\deliveries\烟花编排工作台\2026-10-10-v12\烟花编排工作台.html
+检查入口：http://127.0.0.1:8025/release/；个人节目、音乐及浏览器历史未改动。

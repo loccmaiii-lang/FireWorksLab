@@ -1,0 +1,41 @@
+{
+  "isolatedRoot": "C:\\Users\\locmai\\AppData\\Local\\Temp\\df-portable-check-xfprhxls",
+  "cleanInstall": true,
+  "portableBuildPassed": true,
+  "localArtifact": "4fb32e220c16c271e9300859e1a20690433656998f0a19d8a53ce80062b7dcad",
+  "isolatedArtifact": "4fb32e220c16c271e9300859e1a20690433656998f0a19d8a53ce80062b7dcad",
+  "httpArtifact": "4fb32e220c16c271e9300859e1a20690433656998f0a19d8a53ce80062b7dcad",
+  "stableOfflineArtifact": "4fb32e220c16c271e9300859e1a20690433656998f0a19d8a53ce80062b7dcad",
+  "actualCloudRun": false,
+  "fileProtocolBrowserTest": false,
+  "time": "2026-10-10T17:01:37.965873",
+  "maintenanceRoot": "F:\\FireWorksLab",
+  "sourceRoot": "F:\\FireWorksLab\\tool\\workbench",
+  "htmlBytes": 2572468,
+  "zipSha256": "a8d0b248e2af753b5fbdbc212c23cb2f05a17fc45f7fa3aadb7ac065161d117f",
+  "zipBytes": 368412,
+  "sourceSemanticsUnchanged": true,
+  "sourceChanges": "Only normalized line endings/trailing blank lines; v16 runtime bytes unchanged",
+  "checks": {
+    "core": 117,
+    "wrapper": 37,
+    "fixedOverwrite": 5,
+    "httpLauncher": 10
+  },
+  "browser": {
+    "protocol": "HTTP",
+    "finalArtifactEditorEnabled": true,
+    "savedTestProgrammeRestoredAfterReload": true,
+    "consoleWarningsOrErrors": 0,
+    "isolatedQuery": "single-source-20261010",
+    "fileProtocolVerified": false
+  },
+  "devMusicRangeVerified": true,
+  "ueWriteOrSaveExecuted": false,
+  "publication": "prepared_for_direct_push",
+  "gitObjectsIndependentOfFDrive": true,
+  "originalProgrammeSha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a",
+  "userEntryRoot": "F:\\FireWorksLab\\FXtools",
+  "fAndLegacyDArtifactsEqual": true,
+  "actualFDriveDevSource": true
+}

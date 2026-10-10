@@ -1,0 +1,34 @@
+.app .library .compact-template-items{padding:0 8px;min-height:0}
+.app .library .compact-template-items .template-card{position:relative;display:flex;width:100%;min-height:66px;padding:8px;gap:10px;margin:0;border:0;border-bottom:1px solid var(--md-outline-variant);border-radius:0;flex:none;text-align:left;white-space:normal;background:transparent}
+.app .library .compact-template-items .template-card.chosen{background:var(--md-primary-container);box-shadow:inset 3px 0 var(--md-primary);border-radius:5px}
+.app .library .compact-template-items .template-card:hover{background:color-mix(in srgb,var(--md-primary) 9%,var(--md-surface-container))}
+.app .library .compact-template-items .template-card .thumb{width:48px;height:48px;flex:0 0 48px;border-radius:5px}
+.app .library .compact-template-items .template-description{flex:1;min-width:0}
+.app .library .compact-template-items b{font-size:13px;line-height:20px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.app .library .compact-template-items small{font-size:11px;line-height:17px;white-space:normal;margin:4px 0 0;color:var(--md-on-surface-variant)}
+.template-selected-mark{flex:none;color:var(--md-primary)}
+.selected-template-toolbar{flex:none;background:var(--md-surface-container);border-top:1px solid var(--md-outline-variant);padding:8px;display:flex;align-items:center;gap:6px}
+.selected-template-name{font-size:11px;line-height:20px;display:flex;gap:5px;color:var(--md-on-surface-variant);margin:0;max-width:74px;flex:0 0 auto}
+.selected-template-name b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--md-on-surface)}
+.selected-template-toolbar .pair-actions{display:flex;gap:4px;margin:0;flex:1;min-width:0}
+.selected-template-toolbar .pair-actions button{flex:1;min-height:36px;font-size:12px;padding:5px 6px;gap:5px;border:1px solid transparent;background:transparent;color:var(--md-on-surface)}
+.selected-template-toolbar .pair-actions .tonal-action{border-color:var(--md-outline-variant);color:var(--md-primary);background:color-mix(in srgb,var(--md-primary) 8%,var(--md-surface-container))}
+.library-create{padding:4px!important;min-height:28px!important;gap:2px!important;font-size:11px!important}
+.library-filter select{max-width:105px}
+.launch-step-preview{display:flex;flex-wrap:wrap;gap:5px 14px;font-size:11px;max-height:66px;overflow:auto;padding:6px 16px;color:var(--md-on-surface-variant)}
+.programme-commands{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px}
+.programme-commands button{font-size:12px;min-height:36px;padding:6px}
+.programme-body .full{margin-top:8px}
+.capture-cues{max-height:350px;overflow:auto;margin:12px 0}
+.capture-cues label{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--md-outline-variant);font-size:12px}
+.capture-cues input{flex:none}.capture-cues small{display:block;font-size:11px;color:var(--md-on-surface-variant);margin-top:3px}
+.empty-sections{font-size:11px;color:var(--md-on-surface-variant);padding:5px 10px;display:block;pointer-events:none}
+.section-range-selection{position:absolute;top:0;bottom:0;background:var(--md-primary-container);border:1px solid var(--md-primary);pointer-events:none}
+.sections{touch-action:none;user-select:none}
+.app .clip span{font-size:10px;line-height:14px;font-weight:500}
+.app .clip-selected{outline-color:var(--md-primary)}
+@media(max-width:1300px){.app .transport{flex-wrap:wrap;gap:4px}.app .transport-right{margin-left:auto}.app .library .compact-template-items .template-card{gap:7px}.template-selected-mark{width:14px}.selected-template-toolbar{display:block}.selected-template-name{max-width:none;margin-bottom:5px}.selected-template-toolbar .pair-actions{gap:6px}}
+@media(max-width:800px){.app .inspector:has(.programme-body),.app .inspector:has(.capture-cues),.app .inspector:has(.recipe-save){height:540px;max-height:540px;display:flex;flex-direction:column}.programme-body .inspector-section{width:100%;display:block}.app .library .compact-template-items .template-card .thumb{width:40px;height:40px;flex-basis:40px}.app .library .compact-template-items .template-card{min-height:66px}.selected-template-toolbar .pair-actions button{font-size:11px}}
+
+.library-edit-hint{padding:8px;background:var(--md-surface-container);border-top:1px solid var(--md-outline-variant);font-size:11px;flex:none;display:flex;gap:6px;align-items:center;flex-wrap:wrap}.library-edit-hint button{min-height:32px;font-size:12px;color:var(--md-primary)}
+.flower-layer-group{margin:16px 0}.flower-layer-group h3{font-size:14px;display:flex;align-items:center;gap:8px}.flower-layer-group h3 small{color:var(--md-on-surface-variant);font-size:11px;font-weight:400}.flower-layer-group h3 button{margin-left:auto}.flower-layer{border:1px solid var(--md-outline-variant);border-radius:8px;margin:8px 0;padding:0 10px}.flower-layer[open]{border-color:var(--md-primary);background:var(--md-surface-container)}.flower-layer>summary{padding:10px 0;cursor:pointer;display:flex;gap:8px;align-items:center;font-size:13px}.flower-layer>summary span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;font-size:10px;color:var(--md-on-surface-variant)}.flower-layer .recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.flower-layer details{margin:12px 0}.flower-layer .recipe-field input,.flower-layer .recipe-field select{min-width:0;width:100%}.flower-layer .recipe-field{font-size:12px;margin:10px 0}.layer-parameter-title{font-size:12px;font-weight:600;margin-top:14px}.layer-fan-controls{border-top:1px solid var(--md-outline-variant);margin-top:14px;padding-top:10px}.basic-static-title{padding:10px 16px;font-size:13px;flex:none;border-bottom:1px solid var(--md-outline-variant)}.basic-static-title small{font-size:11px;color:var(--md-on-surface-variant);margin-left:12px}.basic-static-canvas{flex:0 0 140px;min-height:100px;width:100%}.basic-scale-canvas{flex:1;min-height:230px;width:100%}.basic-preview .recipe-note{margin:8px 16px}.recipe-inspector .native-info{overflow-wrap:anywhere}.app .library{overflow:hidden}.app .library .selected-template-toolbar,.app .library .library-foot{flex-shrink:0}

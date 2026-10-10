@@ -1,0 +1,11 @@
+import {migrateNumbering} from '../src/point-numbering.mjs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {parseBackup,makeBackup,pointPackage,editProgram} from '../src/workbench-data.mjs';
+import {qualityEvents,cueBounds} from '../src/editing-model.mjs';
+const seed=JSON.parse(fs.readFileSync(new URL('../public/data/score24-v05.json',import.meta.url)));
+test('8017 v5 backup roundtrip preserves all show data and tiers',()=>{const b=makeBackup(seed,seed);const result=parseBackup(JSON.stringify(b),seed);for(const k of ['doc','profiles','musicMarkers'])assert.deepEqual(result[k],migrateNumbering(seed)[k]);assert.throws(()=>parseBackup('{',seed));assert.throws(()=>parseBackup(JSON.stringify({...b,sourceSha:'other'}),seed));});
+test('copy, delete, empty program and tier-only removal preserve source',()=>{let s=editProgram(seed,'copy',{id:seed.doc.cues[0].id});assert.equal(s.doc.cues.length,253);assert.equal(seed.doc.cues.length,252);const id=s.selectedCue;s=editProgram(s,'delete',{id});assert.equal(s.doc.cues.length,252);const low={...seed,tier:'low'};const d=editProgram(low,'delete',{id:seed.doc.cues[0].id});assert.deepEqual(d.doc,seed.doc);assert.deepEqual(d.profiles.low[seed.doc.cues[0].id],[]);assert.throws(()=>editProgram(low,'copy',{id:seed.doc.cues[0].id}));});
+test('deliveries use exactly the active tier, effective time and point heights',()=>{for(const tier of ['high','medium','low']){const active=qualityEvents(seed.doc,seed.profiles,tier);const packages=seed.doc.points.map(p=>pointPackage(seed.doc,active,p.id,tier));assert.equal(packages.reduce((s,p)=>s+p.events.length,0),active.length);for(const p of packages)for(const e of p.events){const src=active.find(x=>x.id===e.id);assert.equal(e.launchS,src.effectiveLaunch);assert.equal(e.offsetZM,src.dz||0);}}});
+test('effective time edit and music binding remain aligned',()=>{const id=seed.doc.cues.find(c=>c.musicBinding).id;const bounds=cueBounds(seed.doc,id);const s=editProgram(seed,'edit',{id,patch:{start:bounds.start+1}});assert.equal(cueBounds(s.doc,id).start,bounds.start+1);assert.equal(s.doc.cues.find(c=>c.id===id).musicBinding.offset,seed.doc.cues.find(c=>c.id===id).musicBinding.offset+1);});

@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DF · 本机工具入口</title><link rel="stylesheet" href="/tokens.css">
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--fw-color-surface);color:var(--fw-color-on-surface);font:14px/1.65 "Segoe UI","Microsoft YaHei",sans-serif}main{max-width:960px;margin:auto;padding:64px 24px}header{display:flex;align-items:center;gap:16px}.logo{font-weight:750;font-size:22px;background:var(--fw-color-primary);color:var(--fw-color-on-primary);padding:4px 12px;border-radius:8px}h1{font-size:24px;line-height:32px;margin:0}h2{font-size:18px;margin:0 0 8px}p{color:var(--fw-color-on-surface-muted);margin:8px 0 16px}.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:32px 0}article{display:flex;flex-direction:column;background:var(--fw-color-surface-container);border:1px solid var(--fw-color-divider);border-radius:12px;padding:24px}article p{flex:1}a{color:var(--fw-color-on-primary-container)}.open{display:block;text-align:center;color:var(--fw-color-on-primary);background:var(--fw-color-primary);padding:8px 16px;border-radius:8px;text-decoration:none;font-weight:650}.open:hover{filter:brightness(1.1)}.open:active{filter:brightness(.9)}a:focus-visible{outline:3px solid var(--fw-color-focus);outline-offset:4px}code{font:12px/20px Consolas,monospace;overflow-wrap:anywhere;color:var(--fw-color-on-surface-muted);margin-top:12px}.notes{border-top:1px solid var(--fw-color-divider);padding-top:16px}.notes p{margin:8px 0}@media(max-width:700px){main{padding:24px 16px}.tools{grid-template-columns:1fr}article{padding:20px}}
+</style></head><body class="fw-scope"><main><header><span class="logo">DF</span><h1>本机工具入口</h1></header>
+<p>固定地址 · 使用现有工具 · 无需联网</p>
+<section class="tools" aria-label="三个工具">
+<article><h2>烟花烘焙器</h2><p>效果制作、预览、烘焙与资源交付。</p><a class="open" href="http://127.0.0.1:8034/baker">打开烘焙器 →</a><code>127.0.0.1:8034/baker</code></article>
+<article><h2>特效工作台</h2><p>保留原工作台全部功能，直接读取原 HTML。</p><a class="open" href="/workbench/">打开特效工作台 →</a><code>127.0.0.1:8036/workbench/</code></article>
+<article><h2>烟花编排工作台</h2><p>开发与走查入口；日常编排仍打开固定离线 HTML。</p><a class="open" href="http://127.0.0.1:8025/">打开编排工作台 →</a><code>127.0.0.1:8025/</code><a href="http://127.0.0.1:8025/release/">检查当前离线包 →</a></article>
+</section>
+<section class="notes" aria-label="使用说明"><h2>使用前了解</h2><p>每次开机后双击「启动全部工具.cmd」。重复启动会复用服务；关闭这个网页不会关闭本机服务。</p><p>HTTP 和原 file 页面的浏览器草稿各自保存。日常继续使用原离线文件；偶尔转到 HTTP 测试时，用节目文件导入副本，两个入口不自动同步个人节目。</p><p>离线 HTML 包仍可发给别人。本页地址仅在这台电脑生效；UE 沿用本机 17780 服务，实际导入仍由你点击确认执行。</p></section>
+</main></body></html>

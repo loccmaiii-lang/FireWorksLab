@@ -5,12 +5,12 @@ export async function release({source,programme,output,afterBuild=false},{run=co
  source=path.resolve(source);programme=path.resolve(programme);output=path.resolve(output);
  const tests=(await fs.readdir(path.join(source,'tests'))).filter(n=>n.endsWith('.test.mjs')&&n!=='sites-worker.test.mjs').map(n=>path.join('tests',n));
  await run(process.execPath,['--test',...tests],{cwd:source});
- if(!afterBuild){await run(process.execPath,[path.join(source,'node_modules/vite/bin/vite.js'),'build'],{cwd:source});await run(process.execPath,['scripts/prepare-sites-build.mjs'],{cwd:source});}
+ if(!afterBuild)await run(process.execPath,[path.join(source,'node_modules/vite/bin/vite.js'),'build'],{cwd:source});
  await fs.mkdir(path.dirname(output),{recursive:true});const staged=output+'.candidate.html';
  try{
   await run(process.execPath,[path.join(here,'build.mjs'),'--source',source,'--programme',programme,'--output',staged],{cwd:here});
   const checks=(await fs.readdir(path.join(here,'tests'))).filter(n=>n.endsWith('.test.mjs')).map(n=>path.join(here,'tests',n));
-  await run(process.execPath,['--test',...checks],{cwd:here,env:{DF_HTML_TEST_PATH:staged,DF_PROGRAMME_TEST_PATH:programme}});
+  await run(process.execPath,['--test',...checks],{cwd:here,env:{DF_HTML_TEST_PATH:staged,DF_PROGRAMME_TEST_PATH:programme,DF_SOURCE_TEST_PATH:source}});
   const manifest=JSON.parse(await fs.readFile(staged+'.build.json','utf8'));manifest.html=path.basename(output);
   await fs.writeFile(staged+'.build.json',JSON.stringify(manifest,null,2)+'\n');
   await fs.rename(staged,output);await fs.rename(staged+'.build.json',output+'.build.json');

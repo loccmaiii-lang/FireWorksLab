@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {geometryAudit} from '../src/director-geometry.mjs';
+test('distinguishes authored offsets from target and never reports a measured diameter',()=>{const r=geometryAudit({zone:'front',flightHeight:62,flightS:1.7,diameter:32},{sub:{Entries:[{FXResourceId:'SilverChry',LocalTimeOffset:0,PositionOffset:{Z:0}}]}});assert.equal(r.target.riseM,62);assert.equal(r.anchors[0].heightM,0);assert(r.needsRise);assert.equal(r.diameterStatus,'unmeasured');assert(!r.geometryVerified)});

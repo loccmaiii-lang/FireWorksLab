@@ -1,13 +1,2 @@
-import React,{useState,useRef,useEffect} from 'react';
-import {listDirectors} from './connection.mjs';
-import {useEngineConnection} from './ConnectionProvider.jsx';
-export function DirectorTargetPicker({onEditing}){
- const {state,chooseTarget,writing}=useEngineConnection(),path=state.target?.path||'',ref=useRef(),generation=useRef(0);
- const [open,setOpen]=useState(false),[draft,setDraft]=useState(path),[targets,setTargets]=useState([]),[busy,setBusy]=useState(false),[error,setError]=useState('');
- useEffect(()=>{onEditing(open);return()=>onEditing(false)},[open,onEditing]);
- useEffect(()=>()=>{generation.current++;ref.current?.abort()},[]);
- async function discover(){const seq=++generation.current;ref.current?.abort();ref.current=new AbortController();setBusy(true);setError('');try{const found=await listDirectors({preferred:path||undefined,signal:ref.current.signal});if(seq===generation.current){setTargets(found);if(!found.length)setError('没有读到导演，请在UE复制导演蓝图引用路径。')}}catch(e){if(seq===generation.current)setError(e.message)}finally{if(seq===generation.current)setBusy(false)}}
- async function use(path){setBusy(true);setError('');const result=await chooseTarget(path);setBusy(false);if(result?.target){setDraft(result.target.path);setOpen(false)}else setError('目标没有通过检查，请核对导演蓝图引用路径；未切换到其他导演。')}
- const choices=[...new Map([...(state.target?[state.target]:[]),...targets].map(t=>[t.path,t])).values()];
- return <div className="director-target-picker"><div className="director-target-row"><p className="field-hint ue-target" title={state.target?.path}>目标：{state.target?.name||'未选择导演'}</p><button className="quiet-btn" disabled={writing||state.status==='checking'||busy} aria-expanded={open} onClick={()=>{setDraft(path);setOpen(v=>!v);setError('')}}>{open?'收起':'选择导演'}</button></div>{open&&<div className="director-target-fields"><label className="panel-field stacked">已加载的导演<select aria-label="选择导演文件" disabled={busy||writing} value={choices.some(t=>t.path===path)?path:''} onChange={e=>{if(e.target.value)use(e.target.value)}}><option value="">请选择导演</option>{choices.map(t=><option key={t.path} value={t.path}>{t.assetPath?'蓝图':'关卡实例'} · {t.name}</option>)}</select></label><button className="quiet-btn full" disabled={busy||writing} onClick={discover}>{busy?'正在读取…':'读取 UE 导演列表'}</button><label className="panel-field stacked">导演蓝图引用路径<input aria-label="导演蓝图引用路径" value={draft} disabled={busy||writing} onChange={e=>{setDraft(e.target.value);setError('')}} placeholder="/Game/…/BP_Director.BP_Director"/></label><button className="full tonal-action" disabled={!draft.trim()||busy||writing} onClick={()=>use(draft)}>检查并使用此导演</button><p className="field-hint">在UE内容浏览器右键导演蓝图，复制引用后粘贴。选择工程内的蓝图，检查不会导入或写入。</p>{error&&<p className="panel-warning" role="alert">{error}</p>}</div>}</div>;
-}
+// 兼容旧引用路径；业务实现统一来自仓库正式源码。
+export * from '../workbench/src/DirectorTargetPicker.jsx';

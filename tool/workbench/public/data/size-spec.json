@@ -1,0 +1,167 @@
+{
+ "说明": "烟花尺寸标定表（唯一来源）。编排对话框维护：改了任何数，version 加 1、写 date / changes，并跑 python3 tool/build.py（会生成 tool/data/size_spec.js）。烘焙器导出时自动读：按 map 找到这个效果对应的规格，把 cascade.json 里所有长度 × (目标花径 ÷ 这个效果实际花径)，时间不变（用户 10-09 00:27「只改大小，其他都不变」）。花径 = 开花最大时的水平直径；升空尾缀按 burst_m（相对发射点的开花高度）对。没在 map 里的效果照原大导出。",
+ "version": 1,
+ "date": "2026-10-09",
+ "source": "点位架构（对话记录/对话框点位架构.md 10-08「球花名义直径 90/150/230 m，坝顶相对升空 80/150/210/330 m，前台直径 24/30/32/40 m、彗星宽 8 m，相对升空 55–80 m」）+ 协作/编排demo/时间线.json templates（front-low-v3-7pt）；用户 10-09 00:27 定用这一份",
+ "changes": [
+  "v1（对话框23 代写）：从时间线.json 的 18 个模板取 diameter / z − 发射点高度（坝顶 150 m、前台平台 50 m）/ rise"
+ ],
+ "specs": {
+  "F_COMET": {
+   "name": "前台·短彗星",
+   "zone": "front",
+   "kind": "comet",
+   "diameter_m": 8,
+   "burst_m": 80,
+   "rise_s": 1.8
+  },
+  "F_SILVER": {
+   "name": "前台·小银菊",
+   "zone": "front",
+   "kind": "small",
+   "diameter_m": 32,
+   "burst_m": 62,
+   "rise_s": 1.7
+  },
+  "F_LIME": {
+   "name": "前台·小青柠",
+   "zone": "front",
+   "kind": "small",
+   "diameter_m": 30,
+   "burst_m": 55,
+   "rise_s": 1.6
+  },
+  "F_GOLD": {
+   "name": "前台·小金花",
+   "zone": "front",
+   "kind": "small",
+   "diameter_m": 40,
+   "burst_m": 65,
+   "rise_s": 1.8
+  },
+  "F_CRACKLE": {
+   "name": "前台·短爆裂",
+   "zone": "front",
+   "kind": "small",
+   "diameter_m": 24,
+   "burst_m": 62,
+   "rise_s": 1.7
+  },
+  "P_SILVER": {
+   "name": "坝顶·低层小银菊",
+   "zone": "dam",
+   "kind": "small",
+   "diameter_m": 90,
+   "burst_m": 80,
+   "rise_s": 2
+  },
+  "P_LIME": {
+   "name": "坝顶·小青柠",
+   "zone": "dam",
+   "kind": "small",
+   "diameter_m": 90,
+   "burst_m": 150,
+   "rise_s": 3.5
+  },
+  "P_SPLIT": {
+   "name": "坝顶·金裂星",
+   "zone": "dam",
+   "kind": "small",
+   "diameter_m": 90,
+   "burst_m": 150,
+   "rise_s": 3.5
+  },
+  "P_MS": {
+   "name": "坝顶·银白金芒菊",
+   "zone": "dam",
+   "kind": "medium",
+   "diameter_m": 150,
+   "burst_m": 210,
+   "rise_s": 5
+  },
+  "P_MG": {
+   "name": "坝顶·金芒菊",
+   "zone": "dam",
+   "kind": "medium",
+   "diameter_m": 150,
+   "burst_m": 210,
+   "rise_s": 5
+  },
+  "P_GREEN": {
+   "name": "坝顶·金蕊青柠",
+   "zone": "dam",
+   "kind": "medium",
+   "diameter_m": 150,
+   "burst_m": 210,
+   "rise_s": 5
+  },
+  "P_MULTI": {
+   "name": "坝顶·多重菊",
+   "zone": "dam",
+   "kind": "medium",
+   "diameter_m": 150,
+   "burst_m": 210,
+   "rise_s": 5
+  },
+  "P_LS": {
+   "name": "坝顶·银彩菊",
+   "zone": "dam",
+   "kind": "large",
+   "diameter_m": 230,
+   "burst_m": 330,
+   "rise_s": 8
+  },
+  "P_LG": {
+   "name": "坝顶·金垂柳",
+   "zone": "dam",
+   "kind": "large",
+   "diameter_m": 230,
+   "burst_m": 330,
+   "rise_s": 8
+  },
+  "P_WALL": {
+   "name": "坝顶·银白墙",
+   "zone": "dam",
+   "kind": "large",
+   "diameter_m": 230,
+   "burst_m": 210,
+   "rise_s": 5
+  },
+  "G_GOLD": {
+   "name": "坝顶·金锦冠扇形",
+   "zone": "dam",
+   "kind": "fan",
+   "diameter_m": 140,
+   "burst_m": 0,
+   "rise_s": 0,
+   "fan_half_deg": 45,
+   "note": "扇形的 diameter 是两倍飞行长度（点位架构 10-08），不是水平宽；扇形缩放口径还没定，烘焙器暂不按它缩"
+  },
+  "G_RED5": {
+   "name": "坝顶·红彗星扇形",
+   "zone": "dam",
+   "kind": "fan",
+   "diameter_m": 150,
+   "burst_m": 0,
+   "rise_s": 0,
+   "fan_half_deg": 35,
+   "note": "扇形的 diameter 是两倍飞行长度（点位架构 10-08），不是水平宽；扇形缩放口径还没定，烘焙器暂不按它缩"
+  },
+  "G_SILVER13": {
+   "name": "坝顶·银灰扇形",
+   "zone": "dam",
+   "kind": "fan",
+   "diameter_m": 130,
+   "burst_m": 0,
+   "rise_s": 0,
+   "fan_half_deg": 50,
+   "note": "扇形的 diameter 是两倍飞行长度（点位架构 10-08），不是水平宽；扇形缩放口径还没定，烘焙器暂不按它缩"
+  }
+ },
+ "map": {
+  "jinmangju": "P_MG",
+  "jinrui_ning": "P_GREEN",
+  "myv_fxmuux2arh": "P_SPLIT"
+ },
+ "map_note": "map：效果 key（协作/状态清单.json effects[].key）或条目号 → 规格。对话框23 只配了名字、大小都对得上的 3 个（金芒菊 → 坝顶·金芒菊、金蕊柠 → 坝顶·金蕊青柠、分裂星 → 坝顶·金裂星）；爆裂星（MYCR-O，现在花径约 148 m）没配：前台·短爆裂是 24 m、寿命 1.8 s 的小花，要缩到 0.16 倍，像是另一个效果，等编排对话框确认用它还是另做一个小的，其余（青柠星是坝顶 90 m 还是前台 30 m、多重菊 / 金垂柳 / 银白墙用哪个效果、升空尾缀 S / M / L 对哪个高度、扇形）请编排对话框确认后补。一个效果要出两种大小时写成列表，例：\"qingning\": [\"P_LIME\", \"F_LIME\"]（第一个是默认；导出第二个在交付清单选）。"
+}

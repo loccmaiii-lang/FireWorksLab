@@ -1,0 +1,32 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {readResourceIndex,pinResource} from '../src/delivery-resource.mjs';
+import {migrateSubTemplates} from '../src/subtemplate-model.mjs';
+import {makeBackup,parseBackup,editProgram} from '../src/workbench-data.mjs';
+import {migrateNumbering} from '../src/point-numbering.mjs';
+const seed=migrateNumbering(JSON.parse(fs.readFileSync(new URL('../public/data/score24-v05.json',import.meta.url))));
+const source=JSON.parse(fs.readFileSync(new URL('../public/data/subtemplate-source.json',import.meta.url)));
+const doc=migrateSubTemplates(seed.doc,source.catalog);
+const r={format:'df.firework-resource/1',status:'complete',resourceId:'sample',revisionId:'rev1',deliveryId:'sample-rev1',name:'Sample',packages:[{platform:'pc'}],files:[{path:'T.png',sha256:'sample-sha'}],thumbnail:{status:'missing'},metadata:{duration:3,sizePlan:{spec:{target:60}}}};
+test('reject incomplete, duplicate and thumbnail mismatch without changing the programme',()=>{
+ assert.throws(()=>readResourceIndex({format:'future',resources:[]}));
+ assert.throws(()=>pinResource(doc,{...r,status:'writing'},{engineId:'Existing_ID'}));
+ assert.throws(()=>readResourceIndex({format:r.format,resources:[r,r]}));
+ assert.throws(()=>pinResource(doc,{...r,thumbnail:{status:'ready',revisionId:'other'}},{engineId:'Existing_ID'}));
+ assert.throws(()=>pinResource(doc,r));
+});
+test('pin immutable revision, preserve source events and restore after save',()=>{
+ const result=pinResource(doc,r,{engineId:'Existing_ID',zone:'front'});
+ assert.deepEqual(result.doc.events,doc.events);
+ assert.equal(doc.templateLibrary.some(t=>t.id===result.templateId),false);
+ const t=result.doc.templateLibrary.find(t=>t.id===result.templateId);
+ assert.equal(t.workspaceResource.revisionId,'rev1');
+ const next=editProgram({...seed,doc:result.doc},'add',{templateId:result.templateId,start:80,pointId:'F0'});
+ const restored=parseBackup(JSON.stringify(makeBackup(next,seed)),seed);
+ assert.equal(restored.doc.templateLibrary.find(t=>t.id===result.templateId).workspaceResource.revisionId,'rev1');
+ const updated=pinResource(restored.doc,{...r,revisionId:'rev2',deliveryId:'sample-rev2'},{engineId:'Existing_ID',zone:'front'});
+ assert.equal(updated.doc.templateLibrary.find(t=>t.id===result.templateId).workspaceResource.revisionId,'rev1');
+ assert.deepEqual(updated.doc.events,restored.doc.events);
+ assert.throws(()=>pinResource(updated.doc,r,{engineId:'Existing_ID'}));
+});
