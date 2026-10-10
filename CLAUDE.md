@@ -27,6 +27,7 @@
 - 颜色来自 Ramp 贴图 + Color Over Life；一个发射器只有一条颜色曲线，星头和尾巴颜色不同就拆成同一模拟的两层。
 - 大面片只用固定或 Zoom 取景；紧凑取景会在引擎里抖，已禁用。
 - 素材包按 `spec/`，一个效果一个目录：`T_<效果名>.png`、`_Ramp`、`_Cutout`、`cascade.json`（PC）及 `cascade_mobile.json`（手机）。正式名字由用户本机导入工具决定。
+  - 4.9.60 起烘焙器可「交付」到用户选定的导出根目录：写完整素材 + 不可变修订 + 回放缩略图 + 索引 `df.firework-resource/1`（`spec/workspace_resource_v1.md`），ZIP 为次动作；`fwl.cascade/1` 和命名不变。导入器自动检查不写 UE，用户点导入才写。
 - PC、手机两套都要，尽量降低 overdraw；细节不能超过来源，要 2K／4K 细节用程序渲染，实拍只作对照。
 
 ## 3. 做一个效果
@@ -96,3 +97,10 @@
 - `tool/src/` 为源码，`tool/build.py` 合成 `tool/FireworkBaker.html`；`tool/data/` 为生成数据。
 - `analysis/scripts/` 放测量、对照、拟合、导出与标准检查；`analysis/jobs/` 放本机任务（起点在 `起点/`），`analysis/results/` 放本机结果，`analysis/local/` 放本机脚本，`analysis/原理/` 放原理和条目。
 - `spec/` 放导入方案（`fwl.cascade/1`）及 UE 实测；`vidio/` 放参考视频；`协作/` 放标准、状态、问题和接续；`归档/` 放不再使用的历史资料。用途／冲突见 `仓库梳理.md`。
+
+## 10. 编排工作台、FXtools 与三工具统一（用户 2026-10-10；细节见 `协作/烟花编排工作台_发布与云端协作流程.md`）
+
+- 编排工作台唯一源码 `tool/workbench`（不在 `tool/src`）；本机 8025 开发，成品 `tool/烟花编排工作台.html` + ZIP 由 `npm run release` 生成，不手工改成品；本机入口统一在 `FXtools/`（说明见 `FXtools/README.md`、`FXtools/工作台checklist.md`）。不做在线公开版。
+- 云端改编排：改 `tool/workbench/src` → `npm ci`、`npm run release -- --no-deploy` → 源码与成品一起提交；用户本机拉取后运行「更新离线工作台」。个人节目不在 Git 里，用 `.dfshow`（`df.workbench-project/1`）交换；本机打开前先备份，双方都编辑过先保留两份再合并。
+- 上传授权（用户 2026-10-10）：工程内部命名、节目、备份、音乐可以上传，凭据不传；UE 资产实体（uasset）未传（`协作/烟花编排工作台_脱敏与未上传说明.md`）。授权范围内的改动检查并记录后直接提交推送，不再问确认。
+- 三个工具（烘焙器、导入器、编排工作台）的界面规则只按 `协作/交互宪章.md` v2 和共用基础 tokens（`tool/design-system`），颜色按用户恢复的原蓝灰 / 青绿；分类、展开、形状等视觉方向未经用户确认不进生产。评估和可复制的执行提示词见 `协作/统一工作区_翻新评估与提示词.md`。
