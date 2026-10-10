@@ -45,7 +45,7 @@ class LauncherTests(unittest.TestCase):
                     launcher.ensure_service(str(Path(folder) / 'settings.json'), None, 8037)
 
     def test_browser_is_optional_and_opens_only_after_connection(self):
-        with patch.object(launcher, 'ensure_service', return_value='http://127.0.0.1:8034/baker'), patch.object(launcher.webbrowser, 'open') as browser:
+        with patch.object(launcher, 'prepare'), patch.object(launcher, 'ensure_service', return_value='http://127.0.0.1:8034/baker'), patch.object(launcher.webbrowser, 'open') as browser:
             launcher.main(['--no-browser']); browser.assert_not_called()
             launcher.main([]); browser.assert_called_once_with('http://127.0.0.1:8034/baker', new=2)
 

@@ -1,5 +1,7 @@
-// 4.9.64: maker and delivery stay in one document, including local-file entry.
+// 4.9.65: local importer UI does not require the directory service; maker and delivery stay in one document, including local-file entry.
 const DeliveryWorkspace = (() => {
+  const localUI=location.protocol==='file:', frameOrigin=localUI?'null':location.origin;
+  const frameTarget=localUI?'*':frameOrigin;
   let session=null,resources=[],last=null,active=false,busyDelivery=false,importerBusy=false,importerCurrent=null;
   let connecting=null,preparing=null,prepared=false,viewAnimation=null,desiredDeliveryId='',hostReady=false,readyWait=null;
   const channel=crypto.randomUUID(),requests=new Map();
@@ -11,20 +13,20 @@ const DeliveryWorkspace = (() => {
   function rpc(command,payload={},timeout=10000){
     return new Promise((resolve,reject)=>{
       const id=crypto.randomUUID(),timer=setTimeout(()=>{requests.delete(id);reject(Error(command==='publish'?'资源写入等待超时，可能仍在进行；请先刷新资源核对修订，再决定是否重新导出':'本机交付服务未响应，请启动 tool/启动烘焙器.cmd 后在此页重试'));},timeout);
-      requests.set(id,{resolve,reject,timer});node('deliveryFrame').contentWindow.postMessage({type:'workspace-host-request',channel,id,command,payload},hostOrigin);
+      requests.set(id,{resolve,reject,timer});node('deliveryFrame').contentWindow.postMessage({type:'workspace-host-request',channel,id,command,payload},frameTarget);
     });
   }
   function waitForHost(retry=false){
     if(hostReady)return Promise.resolve();
     if(readyWait)return readyWait.promise;
     let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no;});
-    const timer=setTimeout(()=>{readyWait=null;reject(Error('本机交付服务未连接，请启动 tool/启动烘焙器.cmd 后点击重试连接'));},8000);
+    const timer=setTimeout(()=>{readyWait=null;reject(Error('本机导入界面未就绪，请运行 tool/启动烘焙器.cmd --no-browser 修复本机组件后重试'));},8000);
     readyWait={promise,resolve,timer};
-    if(retry||!node('deliveryFrame').getAttribute('src'))node('deliveryFrame').src=hostOrigin+'/delivery-host'+(retry?'?retry='+Date.now():'')+'#'+channel;
+    if(retry||!node('deliveryFrame').getAttribute('src'))node('deliveryFrame').src=(localUI?new URL('local_delivery/runtime/importer.html',location.href).href:hostOrigin+'/delivery-host')+(retry?'?retry='+Date.now():'')+'#'+channel;
     return promise;
   }
   async function connect(retry=false){
-    if(session&&!retry)return session;
+    if(session&&!retry&&!session.directoryError)return session;
     if(connecting)return connecting;
     connecting=(async()=>{
       await waitForHost(retry);session=await rpc('session',{},15000);
@@ -48,7 +50,7 @@ const DeliveryWorkspace = (() => {
   async function prepare(){
     if(prepared)return;if(preparing)return preparing;
     preparing=(async()=>{
-      await connect();await refresh();
+      await connect();if(session.directoryError)throw Error(session.directoryError);await refresh();
       const remembered=!last&&resources.find(r=>r.deliveryId===importerCurrent?.deliveryId);
       if(remembered&&!importerBusy)await select(remembered);
       else if(!last&&!importerCurrent&&resources.length)await select(resources[resources.length-1]);
@@ -118,8 +120,8 @@ const DeliveryWorkspace = (() => {
   }
   function init(){
     window.addEventListener('message',e=>{
-      const data=e.data;if(e.source!==node('deliveryFrame').contentWindow||e.origin!==hostOrigin||data?.channel!==channel)return;
-      if(data.type==='workspace-host-ready'){hostReady=true;if(readyWait){clearTimeout(readyWait.timer);readyWait.resolve();readyWait=null;}return;}
+      const data=e.data;if(e.source!==node('deliveryFrame').contentWindow||(localUI?!['null','file://'].includes(e.origin):e.origin!==frameOrigin)||data?.channel!==channel)return;
+      if(data.type==='workspace-host-ready'){hostReady=true;node('deliveryFrame').hidden=false;node('deliveryLoading').hidden=true;if(readyWait){clearTimeout(readyWait.timer);readyWait.resolve();readyWait=null;}return;}
       if(data.type==='workspace-host-response'){
         const pending=requests.get(data.id);if(!pending)return;requests.delete(data.id);clearTimeout(pending.timer);
         if(data.ok)pending.resolve(data.value);else pending.reject(Error(data.error||'本机交付请求失败'));return;

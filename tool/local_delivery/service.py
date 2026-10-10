@@ -90,6 +90,10 @@ class Handler(BaseHTTPRequestHandler):
                 if not self.server.importer or not self.server.importer.is_file():
                     return self.send(503, {'error': '独立导入工作区未配置，请按 README 构建本机入口'})
                 return self.send(200, self.server.importer.read_bytes(), 'text/html; charset=utf-8')
+            if path in ('/directory-transport', '/directory-transport.js'):
+                if path.endswith('.js'):
+                    return self.send(200, Path(__file__).with_name('directory-transport.js').read_bytes(), 'application/javascript; charset=utf-8')
+                return self.send(200, '<!doctype html><meta charset="utf-8"><script src="/directory-transport.js"></script>', 'text/html; charset=utf-8')
             if path in ('/delivery-host', '/delivery-host.js'):
                 name = 'delivery-host.html' if path == '/delivery-host' else 'delivery-host.js'
                 p = Path(__file__).resolve().with_name(name)

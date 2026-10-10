@@ -5,6 +5,7 @@ import subprocess
 import sys
 import time
 import webbrowser
+from prepare_local import prepare
 from pathlib import Path
 from urllib.request import urlopen
 
@@ -70,6 +71,7 @@ def main(argv=None):
     parser.add_argument('--no-browser', action='store_true')
     args = parser.parse_args(argv)
     config, importer = resolve_options(args.setup, args.config, args.importer)
+    prepare(Path(__file__).resolve().parent.parent, importer, args.setup)
     url = ensure_service(config, importer, args.port)
     print('已连接烘焙器：' + url, flush=True)
     if not args.no_browser:

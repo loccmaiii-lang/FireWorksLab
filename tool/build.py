@@ -85,3 +85,8 @@ r = subprocess.run([sys.executable, os.path.join(here, '..', 'analysis', 'script
 print(r.stdout.strip()); bad |= r.returncode != 0
 if bad:
     print('构建完成，但静态检查有错误（见上）'); sys.exit(1)
+
+# Private local deployment is a separate, gitignored sidecar, never public HTML.
+from local_delivery.prepare_local import prepare
+if prepare(here):
+    print('本机导入组件已部署（不进入公共 HTML / Git）')

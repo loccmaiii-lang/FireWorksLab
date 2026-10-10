@@ -12,6 +12,14 @@ from test_store import pack
 
 
 class ServiceTests(unittest.TestCase):
+    def test_directory_transport_is_a_non_visual_same_origin_endpoint(self):
+        with urllib.request.urlopen(self.base + '/directory-transport') as response:
+            html = response.read().decode()
+        self.assertIn('directory-transport.js', html)
+        self.assertNotIn('FwImporter', html)
+        with urllib.request.urlopen(self.base + '/directory-transport.js') as response:
+            self.assertIn('directory-request', response.read().decode())
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)

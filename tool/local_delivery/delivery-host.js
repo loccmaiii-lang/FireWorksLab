@@ -1,20 +1,21 @@
-// HTTP-only adapter embedded inside the original maker. Credentials stay here.
+// Native importer adapter: local UI stays usable without directory service.
 (() => {
   'use strict';
-  const channel=location.hash.slice(1);
+  const channel=location.hash.slice(1),localUI=location.protocol==='file:';
   const requests=new Map();
   let parentOrigin=null, session=null, resources=[], view={busy:false,current:null}, contextId='', focused=null;
   const commands=new Set(['session','resources','publish','accept','root.save','root.pick','focus.restore']);
   function trustedParent(event){
     if(event.source!==parent||!/^[-a-f0-9]{36}$/i.test(channel)||event.data?.channel!==channel)return false;
     if(parentOrigin!==null)return event.origin===parentOrigin;
-    if(event.origin===location.origin)return true;
+    if(!localUI&&event.origin===location.origin)return true;
     // An opaque parent is accepted only as the direct local-file ancestor.
     const ancestors=Array.from(location.ancestorOrigins||[]);
-    return event.origin==='null'&&!document.referrer&&ancestors.length===1&&ancestors[0]==='null';
+    return ['null','file://'].includes(event.origin)&&!document.referrer&&ancestors.length===1&&['null','file://'].includes(ancestors[0]);
   }
-  const post=data=>{if(parentOrigin!==null)parent.postMessage({channel,...data},parentOrigin==='null'?'*':parentOrigin);};
+  const post=data=>{if(parentOrigin!==null)parent.postMessage({channel,...data},['null','file://'].includes(parentOrigin)?'*':parentOrigin);};
   async function api(path,body,contentType='application/json',retry=true){
+    if(localUI)return window.FwDirectoryApi(path,body,contentType);
     let response;
     try{response=await fetch(path,body===undefined?{}:{method:'POST',headers:{'Content-Type':contentType,'X-Workspace-Token':session?.token||''},body:contentType==='application/json'?JSON.stringify(body):body});}
     catch(_){throw Error('本机交付服务未连接，请启动 tool/启动烘焙器.cmd 后在此页重试');}
@@ -29,7 +30,10 @@
   function importer(){if(!window.FwDeliveryBridge)throw Error('原导入工作区入口无效，请核对本机配置');return window;}
   async function command(name,payload){
     if(name==='session'){
-      session=await api('/api/session');if(session.importerAvailable){importer();
+      try{session=await api('/api/session');}
+      catch(error){if(!localUI)throw error;session={importerAvailable:true,outputRoot:'',directoryError:error.message};}
+      if(localUI)session.importerAvailable=true;
+      if(session.importerAvailable){importer();
         if(typeof FwImporter!=='undefined'){const current=FwImporter.deliveryView();view={busy:!!current.busy,current:current.current||null};}}
       post({type:'workspace-host-state',...view});
       const {token,...publicSession}=session;return publicSession;
@@ -45,6 +49,7 @@
     }
     if(name==='publish'){
       if(!(payload.blob instanceof Blob)||typeof payload.name!=='string')throw Error('交付资源请求无效');
+      session={...await api('/api/session'),importerAvailable:localUI||session.importerAvailable};
       if(!session.outputRoot)throw Error('请先在资源交付区选择导出目录，再回制作页导出');
       const json=new TextEncoder().encode(JSON.stringify(payload.metadata||{})),count=new Uint8Array(4);
       new DataView(count.buffer).setUint32(0,json.length,true);
@@ -62,7 +67,7 @@
     }
   }
   window.addEventListener('message',async event=>{
-    if(event.source===window&&event.origin===location.origin){
+    if(event.source===window&&(localUI?['null','file://'].includes(event.origin):event.origin===location.origin)){
       const data=event.data;
       if(data?.type==='workspace-view-state'){view={busy:!!data.busy,current:data.current||null};contextForCurrent();post({type:'workspace-host-state',...view});}
       if(data?.type==='workspace-import-state'){

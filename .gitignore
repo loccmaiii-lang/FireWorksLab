@@ -13,3 +13,6 @@ analysis/local/WORKSPACE_DELIVERY/
 
 # 烘焙器「保存」顺便写进仓库文件夹的待上传副本（后台脚本挪进 analysis/我的配方/ 再推，4.2.4）
 analysis/我的配方/_待上传/
+
+# Private native importer deployed beside the local baker; never publish.
+tool/local_delivery/runtime/
