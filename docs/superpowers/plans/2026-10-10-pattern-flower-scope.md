@@ -8,17 +8,19 @@
 **Constraints:** Keep timing, points, tier subsets, jitter, original programme and fixed versions. Same delivery path/database keys. No UE writes or other-owned files.
 
 ## Task 1 — Reproduction and model
-- [ ] Capture mixed eight-call source before changes.
-- [ ] Failing regression: whole replacement, current isolation, atomic cross-zone failure and save/place consistency.
-- [ ] Implement scoped replacement using existing native-reset/compatibility rules; run tests.
+- [x] Capture mixed eight-call source before changes.
+- [x] Failing regression: whole replacement, current isolation, atomic cross-zone failure and save/place consistency.
+- [x] Implement scoped replacement using existing native-reset/compatibility rules; run tests.
 
 ## Task 2 — Explicit inspector operations
-- [ ] `LaunchWorkspace.jsx`: current/all application scope, apply selected flower to whole, restore draft and actual-flower composition/call selection.
-- [ ] Same-flower selection can repair mixed copy; no silent personal-data migration. Keep-current separately labeled.
-- [ ] Compact DF styles in `df-theme.css`, no shared token edits.
-- [ ] Actual8mixed→alllime→save→reload/oldversion, single/tier/error/1366 checks.
+- [x] `LaunchWorkspace.jsx`: current/all application scope, apply selected flower to whole, restore draft and actual-flower composition/call selection.
+- [x] Same-flower selection can repair mixed copy; no silent personal-data migration. Keep-current separately labeled.
+- [x] Compact DF styles in `df-theme.css`, no shared token edits.
+- [x] Actual8mixed→alllime→save→reload/oldversion, single/error/1366 UI checks; tier model checks.
 
 ## Task 3 — Same-file delivery
-- [ ] Tool version16, production build/tests and one generated HTML.
-- [ ] Manual/ZIP content/hashes, same-path saved-personal compatibility/source-show hash.
+- [x] Tool version16, production build/tests and one generated HTML.
+- [x] Manual/ZIP content/hashes, same-path storage invariant checks/final saved-personal reload/source-show hash.
 - [ ] Publish pure model/tests/compiled artifacts/evidence/records, verify remote and release claim.
+
+Browser file reimport blocked by extension permissions; direct file-protocol rejection not bypassed. Existing v15→v16 overlay not repeated; no UE writes. New user evidence: from-zero template is clean; copying retains all calls and label deletion does not unbind. Copy count and reversible call deletion moved next to name.

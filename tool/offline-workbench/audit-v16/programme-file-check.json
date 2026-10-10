@@ -1,0 +1,17 @@
+{
+  "downloadBytes": 82335831,
+  "sha256": "e5a090dfd4a39cd0e4c7867fcf4e131b733d41a93c6619f1c86f2e07833d56a0",
+  "programmeCues": 252,
+  "savedVersion": 3,
+  "calls": 8,
+  "templateIds": [
+    "P_LIME"
+  ],
+  "recipeRefs": [
+    "ST_P_LIME@1"
+  ],
+  "allOlderVersionsRetained": true,
+  "downloadWaitTimedOut": true,
+  "browserReimportVerified": false,
+  "privateFullFile": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\pattern-flower-scope-20261010\\qa-saved-v3.dfshow"
+}

@@ -1,55 +1,55 @@
 {
   "format": "df.private-source-changes/1",
   "source": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008",
-  "privateBefore": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\pattern-preview-20261010\\source-before",
-  "privateDiffs": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\pattern-preview-20261010\\diffs",
+  "privateBefore": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\pattern-flower-scope-20261010\\source-before",
+  "privateDiffs": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\pattern-flower-scope-20261010\\diffs",
   "changes": [
     {
       "file": "src/App.jsx",
-      "beforeSha256": "f90180c71b3fb4e9851835eb03b5a2c304872662a800cc6507d19f0bd4b3b74b",
-      "afterSha256": "2eb211a5d525c854a28e1ad8d21aa0ad6a87755ec97e0f93fe20b89c955ec74c",
+      "beforeSha256": "2eb211a5d525c854a28e1ad8d21aa0ad6a87755ec97e0f93fe20b89c955ec74c",
+      "afterSha256": "e88504a424c1278e35a4f6bf8e08412e805988cb27ab180018867fa3bcdb62e8",
       "baseline": "before-implementation"
     },
     {
       "file": "src/LaunchWorkspace.jsx",
-      "beforeSha256": "cee1771383821da875d393e82d4b8ec1220626c9fe3dfc0c8385755d6f1641dd",
-      "afterSha256": "2f9fbcc36f47db69943b9649e3a1b7c79120cb93b9189fb6bb0e26a86a05039b",
+      "beforeSha256": "2f9fbcc36f47db69943b9649e3a1b7c79120cb93b9189fb6bb0e26a86a05039b",
+      "afterSha256": "800e8f539c5b254be103434cdea24aa621323a870e3e350df7c53ac49ff4a84a",
       "baseline": "before-implementation"
     },
     {
       "file": "src/pattern-preview.mjs",
-      "beforeSha256": null,
-      "afterSha256": "6b42d11d3a7c77f78aa14587a47dd26b777bfc51a2c2f60c9ea6758cf2482822",
-      "baseline": "new-file"
+      "beforeSha256": "6b42d11d3a7c77f78aa14587a47dd26b777bfc51a2c2f60c9ea6758cf2482822",
+      "afterSha256": "d5eea31c49d3d46b51ef98978264bf81ef4eac532fab3ee29e2a417b4203153b",
+      "baseline": "before-implementation"
     },
     {
       "file": "src/df-theme.css",
-      "beforeSha256": "317a299b2c4a4046f06339e87d664bfccdeb00cd1608ef3dca455434477a8795",
-      "afterSha256": "1ab9091aee51413c4bca3fe142a1cb3b68c1519f42dab6f2dcf83ed084317423",
+      "beforeSha256": "1ab9091aee51413c4bca3fe142a1cb3b68c1519f42dab6f2dcf83ed084317423",
+      "afterSha256": "74c52c6bb86864fab727d8fd9e8c2cb85d1cb8e7c534d443e364df92f029fb62",
       "baseline": "before-implementation"
     },
     {
       "file": "src/connection.mjs",
-      "beforeSha256": "63d5334bb4be2d9cb63e53d267a6f7c314149f4a9301430bc17c4c2f9f3d08df",
-      "afterSha256": "79e5673329644b98dc5b0a1f64477df7ff1c3b761f0dc6b7a47604800adec7d2",
+      "beforeSha256": "79e5673329644b98dc5b0a1f64477df7ff1c3b761f0dc6b7a47604800adec7d2",
+      "afterSha256": "88c623172b7d8bb4b6cc197de7b6ded8d2edaf44362d91782a56c0332bf6cf56",
       "baseline": "before-implementation"
     },
     {
       "file": "scripts/offline-workbench/connection.mjs",
-      "beforeSha256": "63d5334bb4be2d9cb63e53d267a6f7c314149f4a9301430bc17c4c2f9f3d08df",
-      "afterSha256": "79e5673329644b98dc5b0a1f64477df7ff1c3b761f0dc6b7a47604800adec7d2",
+      "beforeSha256": "79e5673329644b98dc5b0a1f64477df7ff1c3b761f0dc6b7a47604800adec7d2",
+      "afterSha256": "88c623172b7d8bb4b6cc197de7b6ded8d2edaf44362d91782a56c0332bf6cf56",
       "baseline": "before-implementation"
     },
     {
-      "file": "tests/pattern-preview.test.mjs",
+      "file": "tests/pattern-flower-scope.test.mjs",
       "beforeSha256": null,
-      "afterSha256": "6b69fa135d96084b19aec4e4a9b893e83fd7f054bc69e4532ad51dceffbe590b",
+      "afterSha256": "efec606c1b2f4fdb2a236928dafcba35eced2653e1095101f5d36cf11bb0bcf9",
       "baseline": "new-file"
     },
     {
       "file": "AGENTS.md",
-      "beforeSha256": "2d0a954a960301ccfe1f25dec0a0d6b71c41e84be75ab762ed3a181263b7bb9c",
-      "afterSha256": "30d22ef5821618b0f31ab4096aa2a25095c340e56e1393b7725f2066c3980141",
+      "beforeSha256": "30d22ef5821618b0f31ab4096aa2a25095c340e56e1393b7725f2066c3980141",
+      "afterSha256": "ee8ff342d0458a83817469fa9b7d252202942ef1eae0de8c4a304dd64405de91",
       "baseline": "before-implementation"
     }
   ],

@@ -1,21 +1,21 @@
 {
   "format": "df.offline-verification/3",
-  "time": "2026-10-10T07:11:21.244567+00:00",
-  "toolVersion": "15",
+  "time": "2026-10-10T07:51:37.542911+00:00",
+  "toolVersion": "16",
   "artifact": {
     "file": "tool/烟花编排工作台.html",
     "stableLocalFile": "D:\\FXTools\\DFWorkbench\\deliveries\\烟花编排工作台\\2026-10-10-v12\\烟花编排工作台.html",
-    "bytes": 2566296,
-    "sha256": "b86cea8cc6c1117ff1cd00e22e273bfca09e21cd238d93bef86ea0a4c78b0336",
+    "bytes": 2572468,
+    "sha256": "4fb32e220c16c271e9300859e1a20690433656998f0a19d8a53ce80062b7dcad",
     "zipName": "烟花编排工作台-离线包.zip",
-    "zipBytes": 368695,
-    "zipSha256": "911b8bfd06412a21f0e2e3bf0e865f3e123ac597f21b7b0f5a5b4cc95e548856",
+    "zipBytes": 370581,
+    "zipSha256": "19878ade487082739c4493db6dfb0e8572c871f84063c0ffd936371eb90ec7d2",
     "musicIncluded": false,
     "originalProgrammeSha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a"
   },
   "automated": {
     "productionCore": {
-      "passed": 108,
+      "passed": 116,
       "failed": 0
     },
     "offlineWrapper": {
@@ -28,35 +28,39 @@
       "initialResult": "missing new module: one test-file load failure; not nine old-model assertion failures"
     },
     "publicStandaloneModel": {
-      "passed": 17,
+      "passed": 25,
       "failed": 0
     },
-    "scope": "Original show/artistic resources unchanged; old Site4 excluded; ZIP3 entries equal stable files"
+    "scope": "Original show/artistic resources unchanged; old Site4 excluded; ZIP3 entries equal stable files",
+    "newPatternFlowerModel": {
+      "passed": 8,
+      "failed": 0,
+      "initialResult": "7 tests failed because replacement API did not yet exist; eighth pinned-version test added afterward"
+    }
   },
   "browser": {
     "protocol": "HTTP",
     "fileProtocolVerified": false,
     "sameHtmlBytes": true,
     "passed": [
-      "Source captured mixed8 calls, copy changes one, others preserved",
-      "Current1=3 launches and all8=10 launches; selected call2=1 low-silver launch",
-      "Template replacement/compatible P-F-B points; current fields/list linked",
-      "Tier filtering, low zero-participation explicit empty, incomplete call blocks complete save",
-      "Keep-current8→1 and restore1→8 retains current edits",
-      "Discard region bug reproduced and corrected to dam/P0 selection",
-      "Savev2 retainsv1; 80-second whole8 placement252/1689→260/1699 then Undo restores",
-      "Save/reload personal5 library entries/fixed versions",
-      "1366 screenshot; 1920 controls only",
-      "Same HTTP v14→v15 retains personal name and original252/1689",
-      "Final HTML saves2 calls; current2 preview1 gold launch",
-      "Source/final error console lists empty"
+      "Source mixed8→whole lime8/16 launches with actual template/recipe replacement",
+      "Savev3/reload and retained mixedv2",
+      "Current replacement, keep-current, actual-call delete and restore/discard",
+      "Incompatible whole replacement rejects atomically at exact call/points",
+      "80-second v3 group8 placement252/1689→260/1705 and Undo",
+      "Real downloaded dfshow parses to252 cues and8 lime calls; older versions retained",
+      "Final same-byte HTML HTTP mixed3 copy→whole lime→save/reload/full-preview",
+      "1366 scoped controls screenshot reviewed; viewport reset"
     ],
     "limitations": [
-      "file automatic approval review rejected earlier; no retry or bypass; HTTP is not direct-file proof",
-      "No complete responsive/screen-reader/200%-zoom/mobile certification",
-      "No real UE writes/save/play or new audio import",
-      "Old screenshot01 only structural; it is not motion evidence"
-    ]
+      "Earlier file-protocol automatic approval rejection remains; no retry/bypass; HTTP is not double-click proof",
+      "Browser reimport blocked by extension file access; actual download wait timed out but saved file independently verified",
+      "No full responsive/screen-reader/200%/mobile certification; compact canvas visual calibration not assessed",
+      "Tier clock/subsets covered by pure model; full tier UI not repeated this turn",
+      "No actual UE write/save/play or new audio import",
+      "No v15→v16 same-path HTTP overlay experiment this turn; storage invariants verified by37 wrapper tests and final save/reload"
+    ],
+    "programmeFileCheck": "tool/offline-workbench/audit-v16/programme-file-check.json"
   },
   "storageCompatibility": {
     "database": "df-offline-director-workbench",
@@ -77,21 +81,13 @@
   "publicSiteUpdated": false,
   "originalProgrammeFileUntouched": true,
   "userAccepted": false,
-  "auditReport": "tool/offline-workbench/pattern-preview-audit.md",
+  "auditReport": "tool/offline-workbench/pattern-flower-scope-audit.md",
   "acceptedScreenshots": [
-    "tool/offline-workbench/audit-v15/01-before-all.png",
-    "tool/offline-workbench/audit-v15/02-current-only.png",
-    "tool/offline-workbench/audit-v15/03-all-eight.png",
-    "tool/offline-workbench/audit-v15/04-saved-current.png",
-    "tool/offline-workbench/audit-v15/05-compact-1366.png",
-    "tool/offline-workbench/audit-v15/06-offline-current.png"
+    "tool/offline-workbench/audit-v16/01-before-mixed.png",
+    "tool/offline-workbench/audit-v16/04-saved-v16-lime.png",
+    "tool/offline-workbench/audit-v16/06-offline-lime-1366.png"
   ],
   "publication": {
-    "artifactCommit": "7364ae16dde40e9b9931f9fbcc7fd3fe0e3f5930",
-    "htmlBlob": "94007ba41526218edcca1a16e4db09ffed14b7ab",
-    "zipBlob": "9fcac4bb30ecb68088859f04d168861edfda9757",
-    "remoteMainContainsCommit": true,
-    "remoteAndLocalArtifactBlobsEqual": true,
-    "verifiedAt": "2026-10-10T07:14:03.390063+00:00"
+    "status": "pending artifact commit and remote verification"
   }
 }

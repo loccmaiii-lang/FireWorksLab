@@ -16,6 +16,33 @@ export function replaceCallTemplate(doc,call,templateId){
  return next;
 }
 
+// Whole-pattern application changes bindings, rather than filtering observation.
+// Preflight every point before changing any call so mixed-zone copies fail atomically.
+export function replacePatternTemplate(doc,pattern,{scope='current',callId,templateId,recipeRef}={}){
+ if(!['all','current'].includes(scope))throw Error('花型应用范围无效');
+ const flower=doc.templateLibrary.find(t=>t.id===templateId);
+ if(!flower)throw Error('花型模板不存在');
+ const ref=recipeRef||flower.subTemplateRef,recipe=doc.subTemplateLibrary.find(r=>r.key===ref);
+ const source=doc.subTemplateLibrary.find(r=>r.key===flower.subTemplateRef);
+ if(!recipe||recipe.id!==source?.id)throw Error('固定版本与所选花型不一致');
+ const selected=scope==='all'?pattern.calls:pattern.calls.filter(c=>c.id===callId);
+ if(!selected.length)throw Error('请选择有效的编辑调用');
+ if(scope==='all'){
+  const allowed=compatiblePoints(doc,{...flower,kind:recipe.category==='fan'?'fan':recipe.category==='trail'?'comet':'small'});
+  for(const c of selected){const incompatible=c.pointIds.filter(id=>!allowed.includes(id));
+   if(incompatible.length)throw Error(`第 ${pattern.calls.indexOf(c)+1} 次调用的 ${incompatible.join('、')} 与${flower.name}不兼容。请先调整该调用，或只改当前调用。`);
+  }
+ }
+ const next=structuredClone(pattern),ids=new Set(selected.map(c=>c.id));
+ next.calls=next.calls.map(c=>{
+  if(!ids.has(c.id))return c;
+  const replaced=replaceCallTemplate(doc,c,templateId);
+  if(scope==='all'||recipeRef||c.templateId!==templateId)replaced.recipeRef=ref;
+  return replaced;
+ });
+ return next;
+}
+
 // A preview never reads programme cues or their quality profile mappings.
 // Scope only changes observation; saving/placing always uses the whole pattern.
 export function buildPatternPreview(doc,pattern,{scope='all',callId,tier='high'}={}){
