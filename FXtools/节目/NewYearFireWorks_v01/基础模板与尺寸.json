@@ -1,0 +1,1665 @@
+{
+  "revision": "R03_FULL_RECOMPOSE",
+  "source": {
+    "kind": "ResourceFXTable",
+    "readAt": "2026-10-10T11:29:54.826Z",
+    "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+    "scope": "programme",
+    "rows": 20,
+    "excluded": [
+      "P_EFX_FireWorks_Comet"
+    ],
+    "sharedParticleConfirmed": true
+  },
+  "bases": [
+    {
+      "id": "P_EFX_FireWorks_FanComet_01",
+      "key": "P_EFX_FireWorks_FanComet_01|fan",
+      "label": "跨年烟花3.0_小型_B_红彗星",
+      "name": "P_EFX_FireWorks_FanComet_01",
+      "role": "fan",
+      "sizeClass": "small",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 75,
+        "diameterM": 2,
+        "durationS": 3.1,
+        "color": "#ee8c72",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_小形_B_红彗星",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanComet_01_HD.P_EFX_FireWorks_FanComet_01_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_FanSilver_01",
+      "key": "P_EFX_FireWorks_FanSilver_01|fan",
+      "label": "跨年烟花3.0_小型_C_银星扇",
+      "name": "P_EFX_FireWorks_FanSilver_01",
+      "role": "fan",
+      "sizeClass": "small",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 65,
+        "diameterM": 2,
+        "durationS": 2.45,
+        "color": "#d7e7f6",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_小型_C_银星扇",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldCrackle",
+      "key": "P_EFX_FireWorks_GoldCrackle|burst",
+      "label": "跨年烟花3.0_小型_D_金裂星",
+      "name": "P_EFX_FireWorks_GoldCrackle",
+      "role": "burst",
+      "sizeClass": "small",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_GoldCrackle",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 90,
+        "durationS": 3,
+        "color": "#edbd68",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_小型_D_金裂星",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_NY_Small_B_HD.P_EFX_FireWork_NY_Small_B_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_SilverChry",
+      "key": "P_EFX_FireWorks_SilverChry|burst",
+      "label": "跨年烟花3.0_小型_F_小银菊",
+      "name": "P_EFX_FireWorks_SilverChry",
+      "role": "burst",
+      "sizeClass": "small",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_SilverChry",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 90,
+        "durationS": 4.56,
+        "color": "#e5efff",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_小型_F_小银菊",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleChry_HD.P_EFX_FireWorks_LittleChry_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Crackle",
+      "key": "P_EFX_FireWorks_Crackle|burst",
+      "label": "跨年烟花3.0_小型_G_爆裂星",
+      "name": "P_EFX_FireWorks_Crackle",
+      "role": "burst",
+      "sizeClass": "small",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_Crackle",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 90,
+        "durationS": 1.5,
+        "color": "#e0af65",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_小型_G_爆裂星",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Lime",
+      "key": "P_EFX_FireWorks_Lime|burst",
+      "label": "跨年烟花3.0_小型_H_小青柠",
+      "name": "P_EFX_FireWorks_Lime",
+      "role": "burst",
+      "sizeClass": "small",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_Lime",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 90,
+        "durationS": 6.5667,
+        "color": "#c6df75",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_小型_H_小青柠",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_OrangeGlitter",
+      "key": "P_EFX_FireWorks_OrangeGlitter|burst",
+      "label": "跨年烟花3.0_小型_I__橙辉星",
+      "name": "P_EFX_FireWorks_OrangeGlitter",
+      "role": "burst",
+      "sizeClass": "small",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_OrangeGlitter",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 90,
+        "durationS": 3.2,
+        "color": "#f2a24b",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_小型_I__橙辉星",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_Strobe",
+      "key": "P_EFX_FireWorks_Strobe|burst",
+      "label": "跨年烟花3.0_小型_J_点灭星",
+      "name": "P_EFX_FireWorks_Strobe",
+      "role": "burst",
+      "sizeClass": "small",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_Strobe",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 90,
+        "durationS": 3.2,
+        "color": "#ebf2ec",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_小型_J_点灭星",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GreenPeony_HD.P_EFX_FireWorks_GreenPeony_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_GreenPeony",
+      "key": "P_EFX_FireWorks_GreenPeony|burst",
+      "label": "跨年烟花3.0_中型_A_绿牡丹",
+      "name": "P_EFX_FireWorks_GreenPeony",
+      "role": "burst",
+      "sizeClass": "medium",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_GreenPeony",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 150,
+        "durationS": 4.2333,
+        "color": "#97d481",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_中型_A_绿牡丹",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ],
+      "bindingNote": "用户已确认：绿牡丹与多重菊有意共用当前粒子，分别保留ResourceId。"
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldSpark",
+      "key": "P_EFX_FireWorks_GoldSpark|burst",
+      "label": "跨年烟花3.0_中型_B_金锦菊",
+      "name": "P_EFX_FireWorks_GoldSpark",
+      "role": "burst",
+      "sizeClass": "medium",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_GoldSpark",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 150,
+        "durationS": 5.3,
+        "color": "#f0cb87",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_中型_B_金锦菊",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_PrismWheels",
+      "key": "P_EFX_FireWorks_PrismWheels|burst",
+      "label": "跨年烟花3.0_中型_C_彩千轮",
+      "name": "P_EFX_FireWorks_PrismWheels",
+      "role": "burst",
+      "sizeClass": "medium",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_PrismWheels",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 150,
+        "durationS": 3.5,
+        "color": "#d9b5e9",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_中型_C_彩千轮",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldChry",
+      "key": "P_EFX_FireWorks_GoldChry|burst",
+      "label": "跨年烟花3.0_中型_D_金曜菊",
+      "name": "P_EFX_FireWorks_GoldChry",
+      "role": "burst",
+      "sizeClass": "medium",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_GoldChry",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 150,
+        "durationS": 6,
+        "color": "#e9bd61",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_中型_D_金曜菊",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldChry_HD.P_EFX_FireWorks_GoldChry_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldCoreLime",
+      "key": "P_EFX_FireWorks_GoldCoreLime|burst",
+      "label": "跨年烟花3.0_中型_E_金蕊柠",
+      "name": "P_EFX_FireWorks_GoldCoreLime",
+      "role": "burst",
+      "sizeClass": "medium",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_GoldCoreLime",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 150,
+        "durationS": 4.4,
+        "color": "#c9d181",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_中型_E_金蕊柠",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldRayChry",
+      "key": "P_EFX_FireWorks_GoldRayChry|burst",
+      "label": "跨年烟花3.0_中型_B_金芒菊",
+      "name": "P_EFX_FireWorks_GoldRayChry",
+      "role": "burst",
+      "sizeClass": "medium",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_GoldRayChry",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 150,
+        "durationS": 4.56,
+        "color": "#f0d69d",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_中型_B_金芒菊",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_MultiLayerChry",
+      "key": "P_EFX_FireWorks_MultiLayerChry|burst",
+      "label": "跨年烟花3.0_中型_F_多重菊",
+      "name": "P_EFX_FireWorks_MultiLayerChry",
+      "role": "burst",
+      "sizeClass": "medium",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_MultiLayerChry",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 150,
+        "durationS": 4.2333,
+        "color": "#b3dabb",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_中型_F_多重菊",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ],
+      "bindingNote": "用户已确认：绿牡丹与多重菊有意共用当前粒子，分别保留ResourceId。"
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldKamuro",
+      "key": "P_EFX_FireWorks_GoldKamuro|burst",
+      "label": "跨年烟花3.0_大型_A_金垂柳",
+      "name": "P_EFX_FireWorks_GoldKamuro",
+      "role": "burst",
+      "sizeClass": "large",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_GoldKamuro",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 230,
+        "durationS": 9.7,
+        "color": "#edca87",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_大型_A_金垂柳",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_SilverStrobeChry",
+      "key": "P_EFX_FireWorks_SilverStrobeChry|burst",
+      "label": "跨年烟花3.0_大型_B_银彩菊",
+      "name": "P_EFX_FireWorks_SilverStrobeChry",
+      "role": "burst",
+      "sizeClass": "large",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_SilverStrobeChry",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 0,
+        "diameterM": 230,
+        "durationS": 4.56,
+        "color": "#e3ecff",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_大型_B_银彩菊",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_NY_Trail_Large",
+      "key": "P_EFX_FireWorks_NY_Trail_Large|trail",
+      "label": "跨年烟花3.0_大型_尾缀",
+      "name": "P_EFX_FireWorks_NY_Trail_Large",
+      "role": "trail",
+      "sizeClass": "large",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_NY_Trail_Large",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 410.212129,
+        "diameterM": 3,
+        "durationS": 7.3651,
+        "color": "#e8bf80",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_大型_尾缀",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_NY_Trail_Medium",
+      "key": "P_EFX_FireWorks_NY_Trail_Medium|trail",
+      "label": "跨年烟花3.0_中型_尾缀",
+      "name": "P_EFX_FireWorks_NY_Trail_Medium",
+      "role": "trail",
+      "sizeClass": "medium",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 265.124797,
+        "diameterM": 3,
+        "durationS": 4.3772,
+        "color": "#e8bf80",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_中型_尾缀",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    },
+    {
+      "id": "P_EFX_FireWorks_NY_Trail_Small",
+      "key": "P_EFX_FireWorks_NY_Trail_Small|trail",
+      "label": "跨年烟花3.0_小型_尾缀",
+      "name": "P_EFX_FireWorks_NY_Trail_Small",
+      "role": "trail",
+      "sizeClass": "small",
+      "native": {
+        "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+        "LocalTimeOffset": 0,
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RotationOffset": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "RandomPositionRange": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "RandomRotationRange": {
+          "Pitch": 0,
+          "Yaw": 0,
+          "Roll": 0
+        },
+        "EffectScale": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "RandomScaleRatio": 0,
+        "Filter": {
+          "PlatformFlags": 14,
+          "MinQualityLevel": "EQuality_VeryLow"
+        }
+      },
+      "preview": {
+        "heightM": 190.082893,
+        "diameterM": 3,
+        "durationS": 2.9544,
+        "color": "#e8bf80",
+        "verified": false
+      },
+      "measured": false,
+      "source": "ResourceFXTable",
+      "platforms": [
+        "PC"
+      ],
+      "capturedAt": "2026-10-10T11:29:54.826Z",
+      "sourceRows": [
+        {
+          "platform": "PC",
+          "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable",
+          "rowName": "跨年烟花3.0_小型_尾缀",
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+          "scale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+          "lifeTime": "0.000000",
+          "delay": "0.000000",
+          "high": "None",
+          "low": "None"
+        }
+      ]
+    }
+  ],
+  "flowers": [
+    {
+      "name": "R03 · 金裂星 · 90m",
+      "key": "NYR03_GoldCrackle@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Small",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 190.082893,
+      "flowerHeightOffsetM": -0.988015,
+      "rollDeg": -0.545184,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": 180.866006,
+        "Z": 18908.6273
+      },
+      "burstDelayS": 2.9544
+    },
+    {
+      "name": "R03 · 小银菊 · 90m",
+      "key": "NYR03_SilverChry@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Small",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 190.082893,
+      "flowerHeightOffsetM": -1.685042,
+      "rollDeg": 1.776514,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": -589.27694,
+        "Z": 18830.648802
+      },
+      "burstDelayS": 2.9544
+    },
+    {
+      "name": "R03 · 爆裂星 · 90m",
+      "key": "NYR03_Crackle@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Small",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 190.082893,
+      "flowerHeightOffsetM": -2.454146,
+      "rollDeg": -0.281473,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": 93.380328,
+        "Z": 18762.645328
+      },
+      "burstDelayS": 2.9544
+    },
+    {
+      "name": "R03 · 小青柠 · 90m",
+      "key": "NYR03_Lime@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Small",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 190.082893,
+      "flowerHeightOffsetM": -0.756484,
+      "rollDeg": 0.878468,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": -291.426695,
+        "Z": 18930.406756
+      },
+      "burstDelayS": 2.9544
+    },
+    {
+      "name": "R03 · 橙辉星 · 90m",
+      "key": "NYR03_OrangeGlitter@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Small",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 190.082893,
+      "flowerHeightOffsetM": 1.67814,
+      "rollDeg": 1.698771,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": -563.497,
+        "Z": 19167.749085
+      },
+      "burstDelayS": 2.9544
+    },
+    {
+      "name": "R03 · 点灭星 · 90m",
+      "key": "NYR03_Strobe@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Small",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 190.082893,
+      "flowerHeightOffsetM": 1.990802,
+      "rollDeg": -1.877422,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": 622.736877,
+        "Z": 19197.165917
+      },
+      "burstDelayS": 2.9544
+    },
+    {
+      "name": "R03 · 绿牡丹 · 150m",
+      "key": "NYR03_GreenPeony@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Medium",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 265.124797,
+      "flowerHeightOffsetM": -0.477676,
+      "rollDeg": -1.814506,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": 839.486136,
+        "Z": 26451.418102
+      },
+      "burstDelayS": 4.3772
+    },
+    {
+      "name": "R03 · 金锦菊 · 150m",
+      "key": "NYR03_GoldSpark@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Medium",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 265.124797,
+      "flowerHeightOffsetM": -1.543829,
+      "rollDeg": 0.322043,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": -149.018193,
+        "Z": 26357.678005
+      },
+      "burstDelayS": 4.3772
+    },
+    {
+      "name": "R03 · 彩千轮 · 150m",
+      "key": "NYR03_PrismWheels@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Medium",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 265.124797,
+      "flowerHeightOffsetM": 2.358209,
+      "rollDeg": 0.4582,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": -212.020655,
+        "Z": 26747.45282
+      },
+      "burstDelayS": 4.3772
+    },
+    {
+      "name": "R03 · 金曜菊 · 150m",
+      "key": "NYR03_GoldChry@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Medium",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 265.124797,
+      "flowerHeightOffsetM": 2.440048,
+      "rollDeg": -1.383405,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": 640.080887,
+        "Z": 26748.756757
+      },
+      "burstDelayS": 4.3772
+    },
+    {
+      "name": "R03 · 金芯柠 · 150m",
+      "key": "NYR03_GoldCoreLime@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Medium",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 265.124797,
+      "flowerHeightOffsetM": -2.711396,
+      "rollDeg": 0.588842,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": -272.4701,
+        "Z": 26239.939969
+      },
+      "burstDelayS": 4.3772
+    },
+    {
+      "name": "R03 · 金芒菊 · 150m",
+      "key": "NYR03_GoldRayChry@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Medium",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 265.124797,
+      "flowerHeightOffsetM": -0.682277,
+      "rollDeg": 0.608838,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": -281.722345,
+        "Z": 26442.755163
+      },
+      "burstDelayS": 4.3772
+    },
+    {
+      "name": "R03 · 多重菊 · 150m",
+      "key": "NYR03_MultiLayerChry@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Medium",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 265.124797,
+      "flowerHeightOffsetM": -1.816316,
+      "rollDeg": -1.441914,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": 667.146531,
+        "Z": 26322.452903
+      },
+      "burstDelayS": 4.3772
+    },
+    {
+      "name": "R03 · 金垂柳 · 230m",
+      "key": "NYR03_GoldKamuro@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Large",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 410.212129,
+      "flowerHeightOffsetM": -2.282163,
+      "rollDeg": -0.382872,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": 274.11717,
+        "Z": 40792.080719
+      },
+      "burstDelayS": 7.3651
+    },
+    {
+      "name": "R03 · 银彩菊 · 230m",
+      "key": "NYR03_SilverStrobeChry@1",
+      "tail": "P_EFX_FireWorks_NY_Trail_Large",
+      "tailScale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "endpointM": 410.212129,
+      "flowerHeightOffsetM": -1.019921,
+      "rollDeg": -0.643888,
+      "burstPositionCm": {
+        "X": 0,
+        "Y": 460.985277,
+        "Z": 40916.630504
+      },
+      "burstDelayS": 7.3651
+    }
+  ]
+}

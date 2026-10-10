@@ -1,0 +1,7206 @@
+{
+  "format": "df.director-delivery/2",
+  "status": "property_text_ready_UE_unverified",
+  "replaceEffectArrays": true,
+  "sourceLibrary": {
+    "mode": "document_fixed_versions"
+  },
+  "mappingAudit": [
+    {
+      "templateId": "R03_Red1",
+      "sourceName": "R03 · 红彗星·单束",
+      "exportName": "NYR03_Red1_v1",
+      "note": "固定子模板 NYR03_Red1@1"
+    },
+    {
+      "templateId": "R03_Silver5",
+      "sourceName": "R03 · 银星·五束窄扇",
+      "exportName": "NYR03_Silver5_v1",
+      "note": "固定子模板 NYR03_Silver5@1"
+    },
+    {
+      "templateId": "R03_Red5",
+      "sourceName": "R03 · 红彗星·五束齐开",
+      "exportName": "NYR03_Red5_v1",
+      "note": "固定子模板 NYR03_Red5@1"
+    },
+    {
+      "templateId": "R03_SilverChry",
+      "sourceName": "R03 · 小银菊 · 90m",
+      "exportName": "NYR03_SilverChry_v1",
+      "note": "固定子模板 NYR03_SilverChry@1"
+    },
+    {
+      "templateId": "R03_Strobe",
+      "sourceName": "R03 · 点灭星 · 90m",
+      "exportName": "NYR03_Strobe_v1",
+      "note": "固定子模板 NYR03_Strobe@1"
+    },
+    {
+      "templateId": "R03_Lime",
+      "sourceName": "R03 · 小青柠 · 90m",
+      "exportName": "NYR03_Lime_v1",
+      "note": "固定子模板 NYR03_Lime@1"
+    },
+    {
+      "templateId": "R03_OrangeGlitter",
+      "sourceName": "R03 · 橙辉星 · 90m",
+      "exportName": "NYR03_OrangeGlitter_v1",
+      "note": "固定子模板 NYR03_OrangeGlitter@1"
+    },
+    {
+      "templateId": "R03_GoldCrackle",
+      "sourceName": "R03 · 金裂星 · 90m",
+      "exportName": "NYR03_GoldCrackle_v1",
+      "note": "固定子模板 NYR03_GoldCrackle@1"
+    },
+    {
+      "templateId": "R03_Crackle",
+      "sourceName": "R03 · 爆裂星 · 90m",
+      "exportName": "NYR03_Crackle_v1",
+      "note": "固定子模板 NYR03_Crackle@1"
+    },
+    {
+      "templateId": "R03_Red9",
+      "sourceName": "R03 · 红彗星·九束左扫",
+      "exportName": "NYR03_Red9_v1",
+      "note": "固定子模板 NYR03_Red9@1"
+    },
+    {
+      "templateId": "R03_Red9R",
+      "sourceName": "R03 · 红彗星·九束右扫",
+      "exportName": "NYR03_Red9R_v1",
+      "note": "固定子模板 NYR03_Red9R@1"
+    },
+    {
+      "templateId": "R03_GreenPeony",
+      "sourceName": "R03 · 绿牡丹 · 150m",
+      "exportName": "NYR03_GreenPeony_v1",
+      "note": "固定子模板 NYR03_GreenPeony@1"
+    },
+    {
+      "templateId": "R03_GoldCoreLime",
+      "sourceName": "R03 · 金芯柠 · 150m",
+      "exportName": "NYR03_GoldCoreLime_v1",
+      "note": "固定子模板 NYR03_GoldCoreLime@1"
+    },
+    {
+      "templateId": "R03_GoldSpark",
+      "sourceName": "R03 · 金锦菊 · 150m",
+      "exportName": "NYR03_GoldSpark_v1",
+      "note": "固定子模板 NYR03_GoldSpark@1"
+    },
+    {
+      "templateId": "R03_Silver9",
+      "sourceName": "R03 · 银星·九束展开",
+      "exportName": "NYR03_Silver9_v1",
+      "note": "固定子模板 NYR03_Silver9@1"
+    },
+    {
+      "templateId": "R03_GoldRayChry",
+      "sourceName": "R03 · 金芒菊 · 150m",
+      "exportName": "NYR03_GoldRayChry_v1",
+      "note": "固定子模板 NYR03_GoldRayChry@1"
+    },
+    {
+      "templateId": "R03_GoldChry",
+      "sourceName": "R03 · 金曜菊 · 150m",
+      "exportName": "NYR03_GoldChry_v1",
+      "note": "固定子模板 NYR03_GoldChry@1"
+    },
+    {
+      "templateId": "R03_Silver13",
+      "sourceName": "R03 · 银星·十三束宽扇",
+      "exportName": "NYR03_Silver13_v1",
+      "note": "固定子模板 NYR03_Silver13@1"
+    },
+    {
+      "templateId": "R03_MultiLayerChry",
+      "sourceName": "R03 · 多重菊 · 150m",
+      "exportName": "NYR03_MultiLayerChry_v1",
+      "note": "固定子模板 NYR03_MultiLayerChry@1"
+    },
+    {
+      "templateId": "R03_PrismWheels",
+      "sourceName": "R03 · 彩千轮 · 150m",
+      "exportName": "NYR03_PrismWheels_v1",
+      "note": "固定子模板 NYR03_PrismWheels@1"
+    },
+    {
+      "templateId": "R03_GoldKamuro",
+      "sourceName": "R03 · 金垂柳 · 230m",
+      "exportName": "NYR03_GoldKamuro_v1",
+      "note": "固定子模板 NYR03_GoldKamuro@1"
+    },
+    {
+      "templateId": "R03_SilverStrobeChry",
+      "sourceName": "R03 · 银彩菊 · 230m",
+      "exportName": "NYR03_SilverStrobeChry_v1",
+      "note": "固定子模板 NYR03_SilverStrobeChry@1"
+    }
+  ],
+  "pointNumbering": 0,
+  "duration": 220.8108125,
+  "musicOffset": 10,
+  "summary": {
+    "originalTemplates": 149,
+    "uniqueTemplates": 59,
+    "originalEntries": 158,
+    "uniqueEntries": 62,
+    "eventCount": 158,
+    "subTemplates": 22,
+    "templates": 59,
+    "groups": 2,
+    "scheduleSlots": 149
+  },
+  "issues": [],
+  "EffectSubTemplates": [
+    {
+      "TemplateName": "NYR03_Red1_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_Silver5_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -25
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -12.5
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 12.5
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 25
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_Red5_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -35
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -17.5
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 17.5
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 35
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_SilverChry_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": -168.5042
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 1.776514
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_SilverChry",
+          "LocalTimeOffset": 2.9544,
+          "PositionOffset": {
+            "X": 0,
+            "Y": -589.27694,
+            "Z": 18830.648802
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 1.776514
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_Strobe_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 199.0802
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -1.877422
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_Strobe",
+          "LocalTimeOffset": 2.9544,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 622.736877,
+            "Z": 19197.165917
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -1.877422
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_Lime_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": -75.6484
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0.878468
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_Lime",
+          "LocalTimeOffset": 2.9544,
+          "PositionOffset": {
+            "X": 0,
+            "Y": -291.426695,
+            "Z": 18930.406756
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0.878468
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_OrangeGlitter_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 167.814
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 1.698771
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_OrangeGlitter",
+          "LocalTimeOffset": 2.9544,
+          "PositionOffset": {
+            "X": 0,
+            "Y": -563.497,
+            "Z": 19167.749085
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 1.698771
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_GoldCrackle_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": -98.8015
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -0.545184
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_GoldCrackle",
+          "LocalTimeOffset": 2.9544,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 180.866006,
+            "Z": 18908.6273
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -0.545184
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_Crackle_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": -245.4146
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -0.281473
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_Crackle",
+          "LocalTimeOffset": 2.9544,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 93.380328,
+            "Z": 18762.645328
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -0.281473
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_Red9_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -45
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.08,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -33.75
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.16,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -22.5
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.24,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -11.25
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.32,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.4,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 11.25
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.48,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 22.5
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.56,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 33.75
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.64,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 45
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_Red9R_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.64,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -45
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.56,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -33.75
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.48,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -22.5
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.4,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -11.25
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.32,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.24,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 11.25
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.16,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 22.5
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0.08,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 33.75
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanComet_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 45
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_GreenPeony_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": -47.7676
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -1.814506
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_GreenPeony",
+          "LocalTimeOffset": 4.3772,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 839.486136,
+            "Z": 26451.418102
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -1.814506
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_GoldCoreLime_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": -271.1396
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0.588842
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_GoldCoreLime",
+          "LocalTimeOffset": 4.3772,
+          "PositionOffset": {
+            "X": 0,
+            "Y": -272.4701,
+            "Z": 26239.939969
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0.588842
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_GoldSpark_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": -154.3829
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0.322043
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_GoldSpark",
+          "LocalTimeOffset": 4.3772,
+          "PositionOffset": {
+            "X": 0,
+            "Y": -149.018193,
+            "Z": 26357.678005
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0.322043
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_Silver9_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0.32,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -40
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0.24,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -30
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0.16,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -20
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0.08,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -10
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0.08,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 10
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0.16,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 20
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0.24,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 30
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0.32,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 40
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_GoldRayChry_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": -68.2277
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0.608838
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_GoldRayChry",
+          "LocalTimeOffset": 4.3772,
+          "PositionOffset": {
+            "X": 0,
+            "Y": -281.722345,
+            "Z": 26442.755163
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0.608838
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_GoldChry_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 244.0048
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -1.383405
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_GoldChry",
+          "LocalTimeOffset": 4.3772,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 640.080887,
+            "Z": 26748.756757
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -1.383405
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_Silver13_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -50
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -41.666667
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -33.333333
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -25
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -16.666667
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -8.333333
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 8.333333
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 16.666667
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 25
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 33.333333
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 41.666667
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 50
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_MultiLayerChry_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": -181.6316
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -1.441914
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_MultiLayerChry",
+          "LocalTimeOffset": 4.3772,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 667.146531,
+            "Z": 26322.452903
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -1.441914
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_PrismWheels_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 235.8209
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0.4582
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_PrismWheels",
+          "LocalTimeOffset": 4.3772,
+          "PositionOffset": {
+            "X": 0,
+            "Y": -212.020655,
+            "Z": 26747.45282
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0.4582
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_GoldKamuro_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Large",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": -228.2163
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -0.382872
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_GoldKamuro",
+          "LocalTimeOffset": 7.3651,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 274.11717,
+            "Z": 40792.080719
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -0.382872
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "TemplateName": "NYR03_SilverStrobeChry_v1",
+      "Entries": [
+        {
+          "FXResourceId": "P_EFX_FireWorks_NY_Trail_Large",
+          "LocalTimeOffset": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": -101.9921
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -0.643888
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "FXResourceId": "P_EFX_FireWorks_SilverStrobeChry",
+          "LocalTimeOffset": 7.3651,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 460.985277,
+            "Z": 40916.630504
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": -0.643888
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    }
+  ],
+  "EffectTemplates": [
+    {
+      "TemplateName": "WB_R03_C001_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red1_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 2,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C002_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red1_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 5,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C010_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red1_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C012_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Silver5_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 3,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C013_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red5_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 6,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C015_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_SilverChry_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 4,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C016_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_SilverChry_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 2,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C017_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Strobe_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 8,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C018_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Lime_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C019_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_OrangeGlitter_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 8,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C020_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Silver5_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 2,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C021_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GoldCrackle_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 1,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C022_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Crackle_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 5,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C023_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Strobe_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 4,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C027_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red9_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C028_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red9R_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 3,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C032_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GreenPeony_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 8,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C033_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GoldCoreLime_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 2,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C034_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GoldSpark_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 4,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C035_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red5_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 1,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C036_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Silver9_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 5,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Silver9_v1",
+          "LocalTimeOffset": 0.2,
+          "SlotIndex": 1,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C037_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red5_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C038_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GoldRayChry_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C039_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GoldChry_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 4,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C041_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red9R_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 7,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C043_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Silver13_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C044_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_MultiLayerChry_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 6,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C045_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red9R_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 1,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C048_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_PrismWheels_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C049_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_MultiLayerChry_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 5,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C050_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Silver9_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 1,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C051_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GoldKamuro_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 2,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C052_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GoldSpark_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 1,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C053_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Silver13_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 3,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C054_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_SilverChry_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 1,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C056_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Lime_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 2,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C057_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_OrangeGlitter_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 4,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C071_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GoldKamuro_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C072_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GoldChry_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 3,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C073_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_PrismWheels_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 2,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C074_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Silver13_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 1,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Silver13_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 5,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C077_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_SilverStrobeChry_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 6,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C079_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red9_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 2,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C082_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red9_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 1,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C083_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red9R_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 5,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C084_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_PrismWheels_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 1,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C085_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GreenPeony_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 5,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C086_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_MultiLayerChry_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 4,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C087_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Silver9_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 3,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C093_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_SilverStrobeChry_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 3,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C094_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GoldCoreLime_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 4,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C114_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GoldKamuro_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 4,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C116_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GoldCoreLime_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 6,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C117_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red5_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 2,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C139_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_SilverStrobeChry_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 2,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C141_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Silver13_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 0,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Silver13_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 4,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C142_B",
+      "RequiredPointCount": 8,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_Red5_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 3,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C143_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_GoldKamuro_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 1,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "WB_R03_C148_P",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "NYR03_SilverChry_v1",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 5,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    }
+  ],
+  "EffectScheduleGroups": [
+    {
+      "GroupName": "P",
+      "Slots": [
+        {
+          "StartTime": 10.1,
+          "TemplateName": "WB_R03_C015_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 10.9,
+          "TemplateName": "WB_R03_C016_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 11.7,
+          "TemplateName": "WB_R03_C017_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 16.7,
+          "TemplateName": "WB_R03_C018_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 17.5,
+          "TemplateName": "WB_R03_C019_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 24.2,
+          "TemplateName": "WB_R03_C021_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 25,
+          "TemplateName": "WB_R03_C022_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 25.8,
+          "TemplateName": "WB_R03_C023_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 30.6,
+          "TemplateName": "WB_R03_C018_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 31.4,
+          "TemplateName": "WB_R03_C019_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 42.5,
+          "TemplateName": "WB_R03_C021_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 43.3,
+          "TemplateName": "WB_R03_C022_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 44.1,
+          "TemplateName": "WB_R03_C023_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 47.6,
+          "TemplateName": "WB_R03_C032_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 48.4,
+          "TemplateName": "WB_R03_C033_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 49.2,
+          "TemplateName": "WB_R03_C034_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 54.5,
+          "TemplateName": "WB_R03_C038_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 55.7,
+          "TemplateName": "WB_R03_C039_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 60.6,
+          "TemplateName": "WB_R03_C039_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 62.2,
+          "TemplateName": "WB_R03_C044_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 67,
+          "TemplateName": "WB_R03_C048_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 68.6,
+          "TemplateName": "WB_R03_C049_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 68.7,
+          "TemplateName": "WB_R03_C051_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 73.1,
+          "TemplateName": "WB_R03_C052_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 80.2,
+          "TemplateName": "WB_R03_C054_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 82.2,
+          "TemplateName": "WB_R03_C023_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 87.1,
+          "TemplateName": "WB_R03_C056_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 88.3,
+          "TemplateName": "WB_R03_C057_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 93.4,
+          "TemplateName": "WB_R03_C048_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 95,
+          "TemplateName": "WB_R03_C049_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 99.1,
+          "TemplateName": "WB_R03_C032_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 99.9,
+          "TemplateName": "WB_R03_C033_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 100.7,
+          "TemplateName": "WB_R03_C034_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 105.6,
+          "TemplateName": "WB_R03_C038_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 106.8,
+          "TemplateName": "WB_R03_C039_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 109.8,
+          "TemplateName": "WB_R03_C071_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 112.8,
+          "TemplateName": "WB_R03_C072_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 112.8,
+          "TemplateName": "WB_R03_C073_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 116.4,
+          "TemplateName": "WB_R03_C077_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 120.2,
+          "TemplateName": "WB_R03_C038_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 126,
+          "TemplateName": "WB_R03_C084_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 126.8,
+          "TemplateName": "WB_R03_C085_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 127.6,
+          "TemplateName": "WB_R03_C086_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 128.6,
+          "TemplateName": "WB_R03_C051_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 133,
+          "TemplateName": "WB_R03_C052_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 135.6,
+          "TemplateName": "WB_R03_C093_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 140,
+          "TemplateName": "WB_R03_C094_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 145.1,
+          "TemplateName": "WB_R03_C054_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 147.1,
+          "TemplateName": "WB_R03_C023_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 148.3,
+          "TemplateName": "WB_R03_C084_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 149.1,
+          "TemplateName": "WB_R03_C085_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 149.9,
+          "TemplateName": "WB_R03_C086_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 154.8,
+          "TemplateName": "WB_R03_C048_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 156.4,
+          "TemplateName": "WB_R03_C049_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 159.7,
+          "TemplateName": "WB_R03_C038_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 160.9,
+          "TemplateName": "WB_R03_C039_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 163.2,
+          "TemplateName": "WB_R03_C114_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 166.2,
+          "TemplateName": "WB_R03_C052_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 166.6,
+          "TemplateName": "WB_R03_C071_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 167,
+          "TemplateName": "WB_R03_C116_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 169.6,
+          "TemplateName": "WB_R03_C072_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 169.6,
+          "TemplateName": "WB_R03_C073_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 172.3,
+          "TemplateName": "WB_R03_C077_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 176.1,
+          "TemplateName": "WB_R03_C038_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 178.8,
+          "TemplateName": "WB_R03_C051_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 183.2,
+          "TemplateName": "WB_R03_C052_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 185.2,
+          "TemplateName": "WB_R03_C093_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 189.6,
+          "TemplateName": "WB_R03_C094_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 189.9,
+          "TemplateName": "WB_R03_C114_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 190.7,
+          "TemplateName": "WB_R03_C139_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 194.5,
+          "TemplateName": "WB_R03_C072_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 196.4,
+          "TemplateName": "WB_R03_C143_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 197.2,
+          "TemplateName": "WB_R03_C139_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 209.2,
+          "TemplateName": "WB_R03_C021_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 210.6,
+          "TemplateName": "WB_R03_C148_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 212,
+          "TemplateName": "WB_R03_C023_P",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    },
+    {
+      "GroupName": "B",
+      "Slots": [
+        {
+          "StartTime": 0,
+          "TemplateName": "WB_R03_C001_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 1,
+          "TemplateName": "WB_R03_C002_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 2,
+          "TemplateName": "WB_R03_C001_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 3,
+          "TemplateName": "WB_R03_C002_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 4,
+          "TemplateName": "WB_R03_C001_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 5,
+          "TemplateName": "WB_R03_C002_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 6,
+          "TemplateName": "WB_R03_C001_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 7,
+          "TemplateName": "WB_R03_C002_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 8,
+          "TemplateName": "WB_R03_C001_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 9,
+          "TemplateName": "WB_R03_C010_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 9.3,
+          "TemplateName": "WB_R03_C002_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 9.6,
+          "TemplateName": "WB_R03_C012_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 10,
+          "TemplateName": "WB_R03_C013_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 10.8,
+          "TemplateName": "WB_R03_C012_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 21.3,
+          "TemplateName": "WB_R03_C020_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 35.2,
+          "TemplateName": "WB_R03_C020_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 39.4,
+          "TemplateName": "WB_R03_C027_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 40.6,
+          "TemplateName": "WB_R03_C028_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 52.4,
+          "TemplateName": "WB_R03_C035_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 56,
+          "TemplateName": "WB_R03_C036_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 57.2,
+          "TemplateName": "WB_R03_C037_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 58.9,
+          "TemplateName": "WB_R03_C027_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 59.3,
+          "TemplateName": "WB_R03_C041_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 65,
+          "TemplateName": "WB_R03_C043_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 67.4,
+          "TemplateName": "WB_R03_C045_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 68.2,
+          "TemplateName": "WB_R03_C027_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 69.4,
+          "TemplateName": "WB_R03_C028_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 72.2,
+          "TemplateName": "WB_R03_C050_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 76.3,
+          "TemplateName": "WB_R03_C053_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 98.6,
+          "TemplateName": "WB_R03_C050_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 103.9,
+          "TemplateName": "WB_R03_C035_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 107.4,
+          "TemplateName": "WB_R03_C027_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 108.6,
+          "TemplateName": "WB_R03_C028_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 110,
+          "TemplateName": "WB_R03_C027_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 110.4,
+          "TemplateName": "WB_R03_C041_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 117.2,
+          "TemplateName": "WB_R03_C074_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 120.3,
+          "TemplateName": "WB_R03_C036_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 121.5,
+          "TemplateName": "WB_R03_C037_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 123.8,
+          "TemplateName": "WB_R03_C079_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 124.6,
+          "TemplateName": "WB_R03_C045_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 127.2,
+          "TemplateName": "WB_R03_C074_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 128,
+          "TemplateName": "WB_R03_C082_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 128.8,
+          "TemplateName": "WB_R03_C083_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 131.2,
+          "TemplateName": "WB_R03_C087_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 136.2,
+          "TemplateName": "WB_R03_C053_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 139.4,
+          "TemplateName": "WB_R03_C027_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 140.6,
+          "TemplateName": "WB_R03_C028_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 143.2,
+          "TemplateName": "WB_R03_C079_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 143.2,
+          "TemplateName": "WB_R03_C083_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 153.5,
+          "TemplateName": "WB_R03_C087_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 155.8,
+          "TemplateName": "WB_R03_C036_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 157,
+          "TemplateName": "WB_R03_C037_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 160,
+          "TemplateName": "WB_R03_C050_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 164.1,
+          "TemplateName": "WB_R03_C027_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 164.5,
+          "TemplateName": "WB_R03_C041_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 167.3,
+          "TemplateName": "WB_R03_C027_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 168.5,
+          "TemplateName": "WB_R03_C028_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 172.2,
+          "TemplateName": "WB_R03_C117_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 174,
+          "TemplateName": "WB_R03_C074_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 179.7,
+          "TemplateName": "WB_R03_C079_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 180.5,
+          "TemplateName": "WB_R03_C045_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 182.9,
+          "TemplateName": "WB_R03_C074_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 183.7,
+          "TemplateName": "WB_R03_C082_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 184.5,
+          "TemplateName": "WB_R03_C083_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 186.4,
+          "TemplateName": "WB_R03_C053_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 189.1,
+          "TemplateName": "WB_R03_C036_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 190.3,
+          "TemplateName": "WB_R03_C037_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 192.8,
+          "TemplateName": "WB_R03_C079_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 192.8,
+          "TemplateName": "WB_R03_C083_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 197.3,
+          "TemplateName": "WB_R03_C141_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 198.9,
+          "TemplateName": "WB_R03_C142_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 203.8,
+          "TemplateName": "WB_R03_C043_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 205,
+          "TemplateName": "WB_R03_C087_B",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ]
+    }
+  ],
+  "source": "doc.subTemplateLibrary",
+  "bindingCheck": "not_checked",
+  "fixedVersions": [
+    {
+      "templateId": "R03_Red1",
+      "key": "NYR03_Red1@1"
+    },
+    {
+      "templateId": "R03_Silver5",
+      "key": "NYR03_Silver5@1"
+    },
+    {
+      "templateId": "R03_Red5",
+      "key": "NYR03_Red5@1"
+    },
+    {
+      "templateId": "R03_SilverChry",
+      "key": "NYR03_SilverChry@1"
+    },
+    {
+      "templateId": "R03_Strobe",
+      "key": "NYR03_Strobe@1"
+    },
+    {
+      "templateId": "R03_Lime",
+      "key": "NYR03_Lime@1"
+    },
+    {
+      "templateId": "R03_OrangeGlitter",
+      "key": "NYR03_OrangeGlitter@1"
+    },
+    {
+      "templateId": "R03_GoldCrackle",
+      "key": "NYR03_GoldCrackle@1"
+    },
+    {
+      "templateId": "R03_Crackle",
+      "key": "NYR03_Crackle@1"
+    },
+    {
+      "templateId": "R03_Red9",
+      "key": "NYR03_Red9@1"
+    },
+    {
+      "templateId": "R03_Red9R",
+      "key": "NYR03_Red9R@1"
+    },
+    {
+      "templateId": "R03_GreenPeony",
+      "key": "NYR03_GreenPeony@1"
+    },
+    {
+      "templateId": "R03_GoldCoreLime",
+      "key": "NYR03_GoldCoreLime@1"
+    },
+    {
+      "templateId": "R03_GoldSpark",
+      "key": "NYR03_GoldSpark@1"
+    },
+    {
+      "templateId": "R03_Silver9",
+      "key": "NYR03_Silver9@1"
+    },
+    {
+      "templateId": "R03_GoldRayChry",
+      "key": "NYR03_GoldRayChry@1"
+    },
+    {
+      "templateId": "R03_GoldChry",
+      "key": "NYR03_GoldChry@1"
+    },
+    {
+      "templateId": "R03_Silver13",
+      "key": "NYR03_Silver13@1"
+    },
+    {
+      "templateId": "R03_MultiLayerChry",
+      "key": "NYR03_MultiLayerChry@1"
+    },
+    {
+      "templateId": "R03_PrismWheels",
+      "key": "NYR03_PrismWheels@1"
+    },
+    {
+      "templateId": "R03_GoldKamuro",
+      "key": "NYR03_GoldKamuro@1"
+    },
+    {
+      "templateId": "R03_SilverStrobeChry",
+      "key": "NYR03_SilverStrobeChry@1"
+    }
+  ],
+  "compositionRevision": "R03_FULL_RECOMPOSE"
+}

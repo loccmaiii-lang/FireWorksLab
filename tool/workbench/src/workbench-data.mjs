@@ -5,12 +5,15 @@ import {clone,normalize,validateDoc,validateProfiles,addCue,duplicateCue,removeC
 import {editCue} from './editor-state.mjs';
 import {validateMedia} from './program-project.mjs';
 import {validateSections} from './program-sections.mjs';
+import {migrateLegacyJitter} from './launch-jitter.mjs';
 export const tiers={high:'高配',medium:'中配',low:'低配'};
-export function makeBackup(state,seed){return {version:6,programVersion:'10',sourceSha:seed.sourceSha,doc:state.doc,profiles:state.profiles,tier:state.tier||'high',musicMarkers:state.musicMarkers??(state.doc.meta.musicStatus==='none'?[]:seed.musicMarkers),time:state.time||0,selectedCue:state.selectedCue||null,...Object.fromEntries(['audioRef','musicData','structureData'].filter(k=>state[k]!==undefined).map(k=>[k,state[k]]))};}
+export function makeBackup(state,seed){return {version:6,jitterGridS:.1,programVersion:'10',sourceSha:seed.sourceSha,doc:state.doc,profiles:state.profiles,tier:state.tier||'high',musicMarkers:state.musicMarkers??(state.doc.meta.musicStatus==='none'?[]:seed.musicMarkers),time:state.time||0,selectedCue:state.selectedCue||null,...Object.fromEntries(['audioRef','musicData','structureData'].filter(k=>state[k]!==undefined).map(k=>[k,state[k]]))};}
 export function parseBackup(raw,seed){
  let s;try{s=JSON.parse(raw)}catch{throw Error('文件不是有效 JSON，当前草稿未改变');}
  if(s.sourceSha!==seed.sourceSha||!s.doc||s.doc.points?.length!==24)throw Error('请选择本工作台的完整 24 点草稿备份');
  if(s.version!==undefined&&![1,2,3,4,5,6].includes(s.version))throw Error('不支持此草稿版本');
+ if(s.jitterGridS!==undefined&&s.jitterGridS!==.1)throw Error('不支持此随机错开刻度');
+ if(s.jitterGridS===undefined){const migrated=migrateLegacyJitter(s.doc);if(migrated!==s.doc)s.doc=normalize(migrated)}
  const errors=[...validateDoc(s.doc),...(s.doc.subTemplateLibrary?validateSubTemplates(s.doc):[]),...validateChoreography(s.doc),...validateSections(s.doc)];if(errors.length)throw Error(errors[0]);validateMedia(s);
  const profiles=s.profiles||{medium:{},low:{}};if(validateProfiles(s.doc,profiles).length)throw Error('档位数据不合法');
  const markers=s.musicMarkers??seed.musicMarkers;

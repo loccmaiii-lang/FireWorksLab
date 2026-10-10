@@ -1,0 +1,637 @@
+[
+  {
+    "id": "R03_BEAT_0",
+    "pattern": "R03｜倒计时·单束左",
+    "showTime": 0,
+    "musicTime": null,
+    "cueIds": [
+      "R03_C001"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_1",
+    "pattern": "R03｜倒计时·单束右",
+    "showTime": 1,
+    "musicTime": null,
+    "cueIds": [
+      "R03_C002"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_2",
+    "pattern": "R03｜倒计时·单束左",
+    "showTime": 2,
+    "musicTime": null,
+    "cueIds": [
+      "R03_C003"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_3",
+    "pattern": "R03｜倒计时·单束右",
+    "showTime": 3,
+    "musicTime": null,
+    "cueIds": [
+      "R03_C004"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_4",
+    "pattern": "R03｜倒计时·单束左",
+    "showTime": 4,
+    "musicTime": null,
+    "cueIds": [
+      "R03_C005"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_5",
+    "pattern": "R03｜倒计时·单束右",
+    "showTime": 5,
+    "musicTime": null,
+    "cueIds": [
+      "R03_C006"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_6",
+    "pattern": "R03｜倒计时·单束左",
+    "showTime": 6,
+    "musicTime": null,
+    "cueIds": [
+      "R03_C007"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_7",
+    "pattern": "R03｜倒计时·单束右",
+    "showTime": 7,
+    "musicTime": null,
+    "cueIds": [
+      "R03_C008"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_8",
+    "pattern": "R03｜倒计时·单束左",
+    "showTime": 8,
+    "musicTime": null,
+    "cueIds": [
+      "R03_C009"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_9",
+    "pattern": "R03｜倒计时·中心合拢",
+    "showTime": 9,
+    "musicTime": null,
+    "cueIds": [
+      "R03_C010",
+      "R03_C011",
+      "R03_C012"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_10",
+    "pattern": "R03｜扇组·五束开门",
+    "showTime": 10,
+    "musicTime": 0,
+    "cueIds": [
+      "R03_C013",
+      "R03_C014"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_11",
+    "pattern": "R03｜开幕·银点渐亮",
+    "showTime": 13.1,
+    "musicTime": 3.1,
+    "cueIds": [
+      "R03_C015",
+      "R03_C016",
+      "R03_C017"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_12",
+    "pattern": "R03｜对话·绿橙两岸",
+    "showTime": 19.7,
+    "musicTime": 9.7,
+    "cueIds": [
+      "R03_C018",
+      "R03_C019",
+      "R03_C020"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_13",
+    "pattern": "R03｜标点·金裂交叉",
+    "showTime": 27.2,
+    "musicTime": 17.2,
+    "cueIds": [
+      "R03_C021",
+      "R03_C022",
+      "R03_C023"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_14",
+    "pattern": "R03｜对话·绿橙两岸",
+    "showTime": 33.6,
+    "musicTime": 23.6,
+    "cueIds": [
+      "R03_C024",
+      "R03_C025",
+      "R03_C026"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_15",
+    "pattern": "R03｜扇组·左右追逐",
+    "showTime": 39.4,
+    "musicTime": 29.4,
+    "cueIds": [
+      "R03_C027",
+      "R03_C028"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_16",
+    "pattern": "R03｜标点·金裂交叉",
+    "showTime": 45.5,
+    "musicTime": 35.5,
+    "cueIds": [
+      "R03_C029",
+      "R03_C030",
+      "R03_C031"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_17",
+    "pattern": "R03｜抬升·绿牡丹阶梯",
+    "showTime": 52,
+    "musicTime": 42,
+    "cueIds": [
+      "R03_C032",
+      "R03_C033",
+      "R03_C034",
+      "R03_C035"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_18",
+    "pattern": "R03｜扇组·中心涟漪",
+    "showTime": 56.1,
+    "musicTime": 46.1,
+    "cueIds": [
+      "R03_C036",
+      "R03_C037"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_19",
+    "pattern": "R03｜蓄力·金色向心",
+    "showTime": 58.9,
+    "musicTime": 48.9,
+    "cueIds": [
+      "R03_C038",
+      "R03_C039",
+      "R03_C040",
+      "R03_C041"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_20",
+    "pattern": "R03｜第一浪·红银层叠",
+    "showTime": 65,
+    "musicTime": 55,
+    "cueIds": [
+      "R03_C042",
+      "R03_C043",
+      "R03_C044",
+      "R03_C045"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_21",
+    "pattern": "R03｜扇组·左右追逐",
+    "showTime": 68.2,
+    "musicTime": 58.2,
+    "cueIds": [
+      "R03_C046",
+      "R03_C047"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_22",
+    "pattern": "R03｜彩轮·两翼交织",
+    "showTime": 71.4,
+    "musicTime": 61.4,
+    "cueIds": [
+      "R03_C048",
+      "R03_C049",
+      "R03_C050"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_23",
+    "pattern": "R03｜金墙·五点错层",
+    "showTime": 75.9,
+    "musicTime": 65.9,
+    "cueIds": [
+      "R03_C051",
+      "R03_C052",
+      "R03_C053"
+    ],
+    "kind": "peak"
+  },
+  {
+    "id": "R03_BEAT_24",
+    "pattern": "R03｜留白·双星呼吸",
+    "showTime": 83.2,
+    "musicTime": 73.2,
+    "cueIds": [
+      "R03_C054",
+      "R03_C055"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_25",
+    "pattern": "R03｜留白·青柠微光",
+    "showTime": 90.1,
+    "musicTime": 80.1,
+    "cueIds": [
+      "R03_C056",
+      "R03_C057"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_26",
+    "pattern": "R03｜彩轮·两翼交织",
+    "showTime": 97.8,
+    "musicTime": 87.8,
+    "cueIds": [
+      "R03_C058",
+      "R03_C059",
+      "R03_C060"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_27",
+    "pattern": "R03｜抬升·绿牡丹阶梯",
+    "showTime": 103.5,
+    "musicTime": 93.5,
+    "cueIds": [
+      "R03_C061",
+      "R03_C062",
+      "R03_C063",
+      "R03_C064"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_28",
+    "pattern": "R03｜扇组·左右追逐",
+    "showTime": 107.4,
+    "musicTime": 97.4,
+    "cueIds": [
+      "R03_C065",
+      "R03_C066"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_29",
+    "pattern": "R03｜蓄力·金色向心",
+    "showTime": 110,
+    "musicTime": 100,
+    "cueIds": [
+      "R03_C067",
+      "R03_C068",
+      "R03_C069",
+      "R03_C070"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_30",
+    "pattern": "R03｜主高潮·十七点开屏",
+    "showTime": 117.2,
+    "musicTime": 107.2,
+    "cueIds": [
+      "R03_C071",
+      "R03_C072",
+      "R03_C073",
+      "R03_C074"
+    ],
+    "kind": "peak"
+  },
+  {
+    "id": "R03_BEAT_31",
+    "pattern": "R03｜扇组·中心涟漪",
+    "showTime": 120.4,
+    "musicTime": 110.4,
+    "cueIds": [
+      "R03_C075",
+      "R03_C076"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_32",
+    "pattern": "R03｜主高潮·红银回旋",
+    "showTime": 123.8,
+    "musicTime": 113.8,
+    "cueIds": [
+      "R03_C077",
+      "R03_C078",
+      "R03_C079",
+      "R03_C080"
+    ],
+    "kind": "peak"
+  },
+  {
+    "id": "R03_BEAT_33",
+    "pattern": "R03｜扇组·十三束银墙",
+    "showTime": 127.2,
+    "musicTime": 117.2,
+    "cueIds": [
+      "R03_C081",
+      "R03_C082",
+      "R03_C083"
+    ],
+    "kind": "peak"
+  },
+  {
+    "id": "R03_BEAT_34",
+    "pattern": "R03｜再起·彩花追浪",
+    "showTime": 130.4,
+    "musicTime": 120.4,
+    "cueIds": [
+      "R03_C084",
+      "R03_C085",
+      "R03_C086",
+      "R03_C087"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_35",
+    "pattern": "R03｜金墙·五点错层",
+    "showTime": 135.8,
+    "musicTime": 125.8,
+    "cueIds": [
+      "R03_C088",
+      "R03_C089",
+      "R03_C090"
+    ],
+    "kind": "peak"
+  },
+  {
+    "id": "R03_BEAT_36",
+    "pattern": "R03｜扇组·左右追逐",
+    "showTime": 139.4,
+    "musicTime": 129.4,
+    "cueIds": [
+      "R03_C091",
+      "R03_C092"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_37",
+    "pattern": "R03｜银墙·双翼合围",
+    "showTime": 142.8,
+    "musicTime": 132.8,
+    "cueIds": [
+      "R03_C093",
+      "R03_C094",
+      "R03_C095",
+      "R03_C096"
+    ],
+    "kind": "peak"
+  },
+  {
+    "id": "R03_BEAT_38",
+    "pattern": "R03｜留白·双星呼吸",
+    "showTime": 148.1,
+    "musicTime": 138.1,
+    "cueIds": [
+      "R03_C097",
+      "R03_C098"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_39",
+    "pattern": "R03｜再起·彩花追浪",
+    "showTime": 152.7,
+    "musicTime": 142.7,
+    "cueIds": [
+      "R03_C099",
+      "R03_C100",
+      "R03_C101",
+      "R03_C102"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_40",
+    "pattern": "R03｜扇组·中心涟漪",
+    "showTime": 155.9,
+    "musicTime": 145.9,
+    "cueIds": [
+      "R03_C103",
+      "R03_C104"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_41",
+    "pattern": "R03｜彩轮·两翼交织",
+    "showTime": 159.2,
+    "musicTime": 149.2,
+    "cueIds": [
+      "R03_C105",
+      "R03_C106",
+      "R03_C107"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_42",
+    "pattern": "R03｜蓄力·金色向心",
+    "showTime": 164.1,
+    "musicTime": 154.1,
+    "cueIds": [
+      "R03_C108",
+      "R03_C109",
+      "R03_C110",
+      "R03_C111"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_43",
+    "pattern": "R03｜扇组·左右追逐",
+    "showTime": 167.3,
+    "musicTime": 157.3,
+    "cueIds": [
+      "R03_C112",
+      "R03_C113"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_44",
+    "pattern": "R03｜风暴前·三层抬升",
+    "showTime": 170.6,
+    "musicTime": 160.6,
+    "cueIds": [
+      "R03_C114",
+      "R03_C115",
+      "R03_C116",
+      "R03_C117"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_45",
+    "pattern": "R03｜主高潮·十七点开屏",
+    "showTime": 174,
+    "musicTime": 164,
+    "cueIds": [
+      "R03_C118",
+      "R03_C119",
+      "R03_C120",
+      "R03_C121"
+    ],
+    "kind": "peak"
+  },
+  {
+    "id": "R03_BEAT_46",
+    "pattern": "R03｜主高潮·红银回旋",
+    "showTime": 179.7,
+    "musicTime": 169.7,
+    "cueIds": [
+      "R03_C122",
+      "R03_C123",
+      "R03_C124",
+      "R03_C125"
+    ],
+    "kind": "peak"
+  },
+  {
+    "id": "R03_BEAT_47",
+    "pattern": "R03｜扇组·十三束银墙",
+    "showTime": 182.9,
+    "musicTime": 172.9,
+    "cueIds": [
+      "R03_C126",
+      "R03_C127",
+      "R03_C128"
+    ],
+    "kind": "peak"
+  },
+  {
+    "id": "R03_BEAT_48",
+    "pattern": "R03｜金墙·五点错层",
+    "showTime": 186,
+    "musicTime": 176,
+    "cueIds": [
+      "R03_C129",
+      "R03_C130",
+      "R03_C131"
+    ],
+    "kind": "peak"
+  },
+  {
+    "id": "R03_BEAT_49",
+    "pattern": "R03｜扇组·中心涟漪",
+    "showTime": 189.2,
+    "musicTime": 179.2,
+    "cueIds": [
+      "R03_C132",
+      "R03_C133"
+    ],
+    "kind": "hit"
+  },
+  {
+    "id": "R03_BEAT_50",
+    "pattern": "R03｜银墙·双翼合围",
+    "showTime": 192.4,
+    "musicTime": 182.4,
+    "cueIds": [
+      "R03_C134",
+      "R03_C135",
+      "R03_C136",
+      "R03_C137"
+    ],
+    "kind": "peak"
+  },
+  {
+    "id": "R03_BEAT_51",
+    "pattern": "R03｜终章·金银交响",
+    "showTime": 197.3,
+    "musicTime": 187.3,
+    "cueIds": [
+      "R03_C138",
+      "R03_C139",
+      "R03_C140",
+      "R03_C141",
+      "R03_C142"
+    ],
+    "kind": "peak"
+  },
+  {
+    "id": "R03_BEAT_52",
+    "pattern": "R03｜终章·最后一浪",
+    "showTime": 203.8,
+    "musicTime": 193.8,
+    "cueIds": [
+      "R03_C143",
+      "R03_C144",
+      "R03_C145",
+      "R03_C146"
+    ],
+    "kind": "peak"
+  },
+  {
+    "id": "R03_BEAT_53",
+    "pattern": "R03｜余韵·星火收束",
+    "showTime": 212.2,
+    "musicTime": 202.2,
+    "cueIds": [
+      "R03_C147",
+      "R03_C148",
+      "R03_C149"
+    ],
+    "kind": "hit"
+  }
+]

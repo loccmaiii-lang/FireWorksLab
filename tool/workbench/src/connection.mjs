@@ -1,5 +1,5 @@
 import {engineRequest,normalizePath,EFFECT_KEYS} from './engine.mjs';
-export const WORKBENCH_VERSION='16';
+export const WORKBENCH_VERSION='16.0.6';
 export const DEFAULT_DIRECTOR='/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_Failed_NewYearFireworks_ShowDirector_2.BP_Failed_NewYearFireworks_ShowDirector_2';
 const network=e=>/fetch|network|超时|取消/i.test(e.message);
 const reader=options=>options.request||((route,payload)=>engineRequest(route,payload,options));
@@ -8,7 +8,8 @@ export async function resolveDirector(value,options={}){
  let r=await request('/object/get',{path:input}),assetPath=null;
  if(r.properties?.GeneratedClass?.path){const [pkg,name]=r.properties.GeneratedClass.path.split('.');assetPath=pkg;r=await request('/object/get',{path:pkg+'.Default__'+name});}
  if(r.properties?.DirectorId===undefined||!EFFECT_KEYS.slice(0,3).every(k=>Array.isArray(r.properties?.DefaultConfig?.[k])))throw Error('目标不是有效导演：'+input);
- return {path:assetPath?input:r.path||input,assetPath,directorId:r.properties.DirectorId,name:input.split('.').at(-1)};
+ const objectName=(r.path||input).split('.').at(-1);
+ return {path:assetPath?input:r.path||input,assetPath,directorId:r.properties.DirectorId,objectName,name:assetPath?input.split('.').at(-1):r.properties.ActorLabel||objectName};
 }
 export async function listDirectors(options={}){
  const request=reader(options),refs=await request('/object/search',{class:'DFMShowDirector',limit:1000}),paths=new Set([DEFAULT_DIRECTOR,...(options.preferred?[options.preferred]:[])]),targets=[];

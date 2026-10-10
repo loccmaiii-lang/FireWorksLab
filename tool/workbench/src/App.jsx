@@ -3,7 +3,7 @@ import {saveAndPlacePattern,patternInstances,updatePatternInstance} from './patt
 import {LaunchJitterControls} from './LaunchJitterControls.jsx';
 import {ConnectionStatus} from './ConnectionProvider.jsx';
 import {WORKBENCH_VERSION} from './connection.mjs';
-import {audioBlobUrl} from './audio-blob.mjs';
+import {bindProgrammeAudio} from './audio-blob.mjs';
 import {attachProgrammeMusic} from './light-project.mjs';
 import {DeliveryResourcePanel} from './DeliveryResourcePanel.jsx';
 import {BasicTemplatePreview} from './BasicTemplatePreview.jsx';
@@ -71,8 +71,8 @@ function Workbench({seed,music,structure,source,spec,catalogue,initial}){
  const [audioRef,setAudioRef]=useState(initial.audioRef!==undefined?initial.audioRef:initial.doc.meta.musicStatus==='none'?null:{kind:'bundled'}),[musicOverride,setMusicOverride]=useState(initial.musicData||null),[structureOverride,setStructureOverride]=useState(initial.structureData||null);
  const [musicMarkers,setMusicMarkers]=useState(initial.musicMarkers||seed.musicMarkers),[panel,setPanel]=useState('inspector');const editorActive=['subtemplate','pattern','asset','newflower'].includes(panel);
  const [doc,setDoc]=useState(initial.doc),total=doc.meta.duration,offset=doc.meta.musicOffset??10;
- const audioSrc=useMemo(()=>doc.meta.musicStatus==='none'?undefined:audioRef?.kind==='embedded'?audioBlobUrl(audioRef.dataUrl):audioRef===null?undefined:'./music.wav',[doc.meta.musicStatus,audioRef]);
- useEffect(()=>()=>{if(audioSrc?.startsWith('blob:'))URL.revokeObjectURL(audioSrc)},[audioSrc]);
+ const [audioSrc,setAudioSrc]=useState();
+ useEffect(()=>bindProgrammeAudio(doc.meta.musicStatus,audioRef,setAudioSrc),[doc.meta.musicStatus,audioRef]);
  const currentMusic=useMemo(()=>doc.meta.musicStatus==='none'?{title:'尚未导入音乐',duration:0,waveform:[]}:musicOverride||music,[doc.meta.musicStatus,musicOverride,music]);
  const currentStructure=useMemo(()=>doc.meta.musicStatus==='none'?{energy:[],energyStep:1}:structureOverride||structure,[doc.meta.musicStatus,structureOverride,structure]);
  const [profiles,setProfiles]=useState(initial.profiles),[tier,setTier]=useState(initial.tier||'high');

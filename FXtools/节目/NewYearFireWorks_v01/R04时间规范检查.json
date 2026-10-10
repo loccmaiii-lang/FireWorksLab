@@ -1,0 +1,61 @@
+{
+  "revision": "R04_TIME_GRID_01",
+  "sourceSha256": "73e4ba97f58ba4b676b628c6b33a0c3b2522183ab844f3336f660ae5b4a27cff",
+  "changedCueCount": 31,
+  "gridS": 0.1,
+  "jitterMaxS": 0.3,
+  "unchanged": [
+    "基础库",
+    "固定花型内部参数",
+    "音乐",
+    "各档参与点",
+    "事件数量"
+  ],
+  "tiers": {
+    "high": {
+      "originalTemplates": 149,
+      "uniqueTemplates": 68,
+      "originalEntries": 410,
+      "uniqueEntries": 190,
+      "eventCount": 410,
+      "subTemplates": 22,
+      "templates": 68,
+      "groups": 2,
+      "scheduleSlots": 149,
+      "offGridSchedule": 0,
+      "offGridParentOffsets": 0,
+      "previewMatchesExport": true
+    },
+    "medium": {
+      "originalTemplates": 149,
+      "uniqueTemplates": 68,
+      "originalEntries": 353,
+      "uniqueEntries": 163,
+      "eventCount": 353,
+      "subTemplates": 22,
+      "templates": 68,
+      "groups": 2,
+      "scheduleSlots": 149,
+      "offGridSchedule": 0,
+      "offGridParentOffsets": 0,
+      "previewMatchesExport": true
+    },
+    "low": {
+      "originalTemplates": 149,
+      "uniqueTemplates": 60,
+      "originalEntries": 158,
+      "uniqueEntries": 64,
+      "eventCount": 158,
+      "subTemplates": 22,
+      "templates": 60,
+      "groups": 2,
+      "scheduleSlots": 149,
+      "offGridSchedule": 0,
+      "offGridParentOffsets": 0,
+      "previewMatchesExport": true
+    }
+  },
+  "engineWritten": false,
+  "browserProgrammeReplaced": false,
+  "outputSha256": "65df55b3d99964b4a8a06078863e04af9175e37d6890c7b9b9d479e1faf12b79"
+}

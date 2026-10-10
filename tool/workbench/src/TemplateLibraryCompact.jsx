@@ -1,7 +1,7 @@
 import React,{useState,useRef,useEffect} from 'react';
 import {PencilSimple,Plus,MagnifyingGlass,Stack,Play,CheckCircle} from '@phosphor-icons/react';
 import {drawRecipeThumbnail} from './recipe-thumbnail.mjs';
-import {resourceLibrary,sizeTip,patternTip,roleNames} from './library-model.mjs';
+import {resourceLibrary,sizeTip,patternTip,roleNames,matchesLibrarySearch} from './library-model.mjs';
 import {patternInstances} from './pattern-linkage.mjs';
 import {latestPatterns} from './choreography-model.mjs';
 function Thumbnail({t,r}){const ref=useRef();useEffect(()=>{if(r&&ref.current)drawRecipeThumbnail(ref.current,t,r)},[t,r]);const source=t.workspaceResource;if(source?.thumbnail?.status==='ready')return <img className="thumb" alt={t.name+' 固定修订回放'} src={'http://127.0.0.1:8034/api/deliveries/'+source.deliveryId+'/'+source.thumbnail.file}/>;return <canvas ref={ref} className="thumb" aria-label={t.name}/>}
@@ -10,7 +10,7 @@ export function TemplateLibrary({doc,kind,onKind,selection,onSelect,onEdit,onAdd
  useEffect(()=>{const list=listRef.current;if(!list)return;const reveal=()=>{const selected=list.querySelector('.chosen');if(!selected)return;const a=list.getBoundingClientRect(),b=selected.getBoundingClientRect();if(b.top<a.top)list.scrollTop-=a.top-b.top;else if(b.bottom>a.bottom)list.scrollTop+=b.bottom-a.bottom};const observer=new ResizeObserver(reveal);observer.observe(list);return()=>observer.disconnect()},[selection,kind]);
  useEffect(()=>{setSearch('');setCategory('all');setZone('all')},[reveal]);
  const items=kind==='flowers'?doc.templateLibrary.map(t=>{const r=doc.subTemplateLibrary.find(s=>s.key===t.subTemplateRef);return {id:t.id,name:t.name,category:r.category,t,r,tip:sizeTip(t,r,spec),subtitle:r.entries.length+' 层 · v'+r.version}}):kind==='patterns'?latestPatterns(doc).map(p=>({id:p.id,name:p.name,category:'pattern',p,tip:patternTip(doc,p,spec),subtitle:(!p.calls.every(c=>c.templateId&&c.recipeRef)?'预置框架 · ':'')+p.calls.length+' 次调用 · v'+p.version+' · '+patternInstances(doc,p.id).length+' 组引用'})):resourceLibrary(doc,catalogue).map(a=>({id:a.key,name:a.label||a.name,category:a.role==='burst'?'ball':a.role,a,tip:{tag:(roleNames[a.role]||'待确认')+' · '+({small:'小',medium:'中',large:'大'}[a.sizeClass]||'待标定'),detail:'ResourceFXTable只读目录；实际尺寸待引擎标定'},subtitle:a.platforms?.join(' / ')||'节目内资源'}));
- const visible=items.filter(i=>(category==='all'||category===i.category)&&[i.name,...(i.r?.entries.map(e=>e.native.FXResourceId)||[]),...(i.p?.calls.map(c=>c.recipeRef||c.label)||[])].join(' ').toLowerCase().includes(search.toLowerCase())&&(zone==='all'||!i.t||i.t.zone===zone));
+ const visible=items.filter(i=>(category==='all'||category===i.category)&&matchesLibrarySearch(i,search)&&(zone==='all'||!i.t||i.t.zone===zone));
  const chosen=items.find(i=>i.id===selection),disabled=tier!=='high'||!chosen;
  return <><div className="library-kinds tabs">{[['assets','基础模板'],['flowers','花型模板'],['patterns','编排模板']].map(([id,label])=><button key={id} aria-pressed={kind===id} aria-current={kind===id?'page':undefined} onClick={()=>{onKind(id);setCategory('all')}}>{label}</button>)}</div>
  <label className="search"><MagnifyingGlass size={16}/><input aria-label="搜索模板库" placeholder="搜索名称或模板" value={search} onChange={e=>setSearch(e.target.value)}/></label>

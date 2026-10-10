@@ -1,0 +1,246 @@
+{
+  "readAt": "2026-10-10T12:34:00.317Z",
+  "table": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable.ResourceFXTable",
+  "sceneLabel": "BP_Failed_NewYearFireworks_ShowDirector_2",
+  "expectedRevision": "R03",
+  "sceneMatchesR03": true,
+  "audit": [
+    {
+      "id": "P_EFX_FireWorks_FanComet_01",
+      "row": "跨年烟花3.0_小形_B_红彗星",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanComet_01_HD.P_EFX_FireWorks_FanComet_01_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanComet_01_HD.P_EFX_FireWorks_FanComet_01_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_Red1_v1",
+        "NYR03_Red5_v1",
+        "NYR03_Red9_v1",
+        "NYR03_Red9R_v1"
+      ],
+      "callCount": 123
+    },
+    {
+      "id": "P_EFX_FireWorks_FanSilver_01",
+      "row": "跨年烟花3.0_小型_C_银星扇",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_Silver5_v1",
+        "NYR03_Silver9_v1",
+        "NYR03_Silver13_v1"
+      ],
+      "callCount": 118
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldCrackle",
+      "row": "跨年烟花3.0_小型_D_金裂星",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_NY_Small_B_HD.P_EFX_FireWork_NY_Small_B_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_NY_Small_B_HD.P_EFX_FireWork_NY_Small_B_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_GoldCrackle_v1"
+      ],
+      "callCount": 6
+    },
+    {
+      "id": "P_EFX_FireWorks_SilverChry",
+      "row": "跨年烟花3.0_小型_F_小银菊",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleChry_HD.P_EFX_FireWorks_LittleChry_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleChry_HD.P_EFX_FireWorks_LittleChry_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_SilverChry_v1"
+      ],
+      "callCount": 9
+    },
+    {
+      "id": "P_EFX_FireWorks_Crackle",
+      "row": "跨年烟花3.0_小型_G_爆裂星",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD.P_EFX_FireWorks_Crackle_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_Crackle_v1"
+      ],
+      "callCount": 4
+    },
+    {
+      "id": "P_EFX_FireWorks_Lime",
+      "row": "跨年烟花3.0_小型_H_小青柠",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_Lime_v1"
+      ],
+      "callCount": 6
+    },
+    {
+      "id": "P_EFX_FireWorks_OrangeGlitter",
+      "row": "跨年烟花3.0_小型_I__橙辉星",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD.P_EFX_FireWorks_Combo_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_OrangeGlitter_v1"
+      ],
+      "callCount": 5
+    },
+    {
+      "id": "P_EFX_FireWorks_Strobe",
+      "row": "跨年烟花3.0_小型_J_点灭星",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GreenPeony_HD.P_EFX_FireWorks_GreenPeony_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GreenPeony_HD.P_EFX_FireWorks_GreenPeony_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_Strobe_v1"
+      ],
+      "callCount": 7
+    },
+    {
+      "id": "P_EFX_FireWorks_GreenPeony",
+      "row": "跨年烟花3.0_中型_A_绿牡丹",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_GreenPeony_v1"
+      ],
+      "callCount": 8
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldSpark",
+      "row": "跨年烟花3.0_中型_B_金锦菊",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD.P_EFX_FireWorks_GoldRay_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_GoldSpark_v1"
+      ],
+      "callCount": 10
+    },
+    {
+      "id": "P_EFX_FireWorks_PrismWheels",
+      "row": "跨年烟花3.0_中型_C_彩千轮",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_PrismWheels_v1"
+      ],
+      "callCount": 14
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldChry",
+      "row": "跨年烟花3.0_中型_D_金曜菊",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldChry_HD.P_EFX_FireWorks_GoldChry_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldChry_HD.P_EFX_FireWorks_GoldChry_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_GoldChry_v1"
+      ],
+      "callCount": 18
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldCoreLime",
+      "row": "跨年烟花3.0_中型_E_金蕊柠",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD.P_EFX_FireWorks_GoldCoreLime_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_GoldCoreLime_v1"
+      ],
+      "callCount": 8
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldRayChry",
+      "row": "跨年烟花3.0_中型_B_金芒菊",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD.P_EFX_FireWorks_GoldSpark_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_GoldRayChry_v1"
+      ],
+      "callCount": 18
+    },
+    {
+      "id": "P_EFX_FireWorks_MultiLayerChry",
+      "row": "跨年烟花3.0_中型_F_多重菊",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_MultiLayerChry_v1"
+      ],
+      "callCount": 10
+    },
+    {
+      "id": "P_EFX_FireWorks_GoldKamuro",
+      "row": "跨年烟花3.0_大型_A_金垂柳",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_GoldKamuro_v1"
+      ],
+      "callCount": 28
+    },
+    {
+      "id": "P_EFX_FireWorks_SilverStrobeChry",
+      "row": "跨年烟花3.0_大型_B_银彩菊",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD.P_EFX_FireWorks_SilverChry_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_SilverStrobeChry_v1"
+      ],
+      "callCount": 18
+    },
+    {
+      "id": "P_EFX_FireWorks_NY_Trail_Large",
+      "row": "跨年烟花3.0_大型_尾缀",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_GoldKamuro_v1",
+        "NYR03_SilverStrobeChry_v1"
+      ],
+      "callCount": 46
+    },
+    {
+      "id": "P_EFX_FireWorks_NY_Trail_Medium",
+      "row": "跨年烟花3.0_中型_尾缀",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_GreenPeony_v1",
+        "NYR03_GoldCoreLime_v1",
+        "NYR03_GoldSpark_v1",
+        "NYR03_GoldRayChry_v1",
+        "NYR03_GoldChry_v1",
+        "NYR03_MultiLayerChry_v1",
+        "NYR03_PrismWheels_v1"
+      ],
+      "callCount": 86
+    },
+    {
+      "id": "P_EFX_FireWorks_NY_Trail_Small",
+      "row": "跨年烟花3.0_小型_尾缀",
+      "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+      "programmeParticle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+      "pathMatches": true,
+      "subTemplates": [
+        "NYR03_SilverChry_v1",
+        "NYR03_Strobe_v1",
+        "NYR03_Lime_v1",
+        "NYR03_OrangeGlitter_v1",
+        "NYR03_GoldCrackle_v1",
+        "NYR03_Crackle_v1"
+      ],
+      "callCount": 37
+    }
+  ]
+}
