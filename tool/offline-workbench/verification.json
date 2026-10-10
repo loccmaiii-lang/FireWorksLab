@@ -67,5 +67,12 @@
   "originalSourceUntouched": true,
   "originalProgrammeFileUntouched": true,
   "publicSiteUpdated": false,
-  "userAccepted": false
+  "userAccepted": false,
+  "publication": {
+    "artifactCommit": "8b1b0524",
+    "artifactBlob": "eeb41404d5ffabb2bb800ae44874ea85e3038938",
+    "remoteMainContainsArtifactCommit": true,
+    "remoteAndLocalArtifactBlobEqual": true,
+    "verifiedAt": "2026-10-10T03:04:43.115048+00:00"
+  }
 }
