@@ -11,6 +11,7 @@ const state = {
 };
 let toastTimer;
 let revision = '3c9894a0';
+const logView = { follow: true, unread: 0, rendered: 0, returnFocus: null };
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const validName = () => /^[A-Za-z][A-Za-z0-9_]*$/.test(state.name);
 const unfinished = () => [...state.packages].filter(p => !state.completed.has(p));
@@ -30,10 +31,31 @@ function selectedAssets() {
 }
 function packageHasAssets(p) { return assets(p).some(a => state.chosen.has(a.key)); }
 function allConfirmed() { return state.packages.size > 0 && [...state.packages].every(p => state.confirmed.has(p)); }
+function appendLogs() {
+  while(logView.rendered < state.logs.length) {
+    const i = logView.rendered++, row = document.createElement('li');
+    row.innerHTML = `<span class="fw-helper">${String(i+1).padStart(2,'0')}</span><span>${esc(state.logs[i])}</span>`;
+    $('logs').append(row);
+  }
+}
+function updateLogFollow() {
+  $('log-latest').hidden = logView.follow;
+  $('log-latest').textContent = logView.unread ? `回到最新 · ${logView.unread} 条` : '回到最新';
+}
+function followLatest() {
+  logView.follow = true; logView.unread = 0; updateLogFollow();
+  requestAnimationFrame(() => { if(logView.follow) $('logs').scrollTop = $('logs').scrollHeight; });
+}
 function log(message) {
+  const selection = window.getSelection();
+  if(selection && !selection.isCollapsed && $('logs').contains(selection.anchorNode)) logView.follow = false;
   state.logs.push('演示：'+message);
   $('latest-log').textContent = state.logs.at(-1);
-  $('logs').innerHTML = state.logs.map((s,i) => `<li><span class="fw-helper">${String(i+1).padStart(2,'0')}</span> ${esc(s)}</li>`).join('');
+  appendLogs();
+  if(!$('log-panel').hidden) {
+    if(logView.follow) followLatest();
+    else { logView.unread++; updateLogFollow(); }
+  }
 }
 function toast(message) {
   clearTimeout(toastTimer);
@@ -53,14 +75,18 @@ function invalidate(reason) {
 function render() {
   const activeKey = document.activeElement?.dataset.asset;
   const activePackage = document.activeElement?.dataset.package;
+  const activeSelect = document.activeElement?.dataset.select;
   $('queue-count').textContent = state.packages.size+' 包';
   $('package-list').innerHTML = platforms.map(p => {
-    let status = state.completed.has(p)?'已完成（演示）':state.confirmed.has(p)?'已确认':!state.packages.has(p)?'未选入本次':!state.checked?'待检查':state.conflict?'需处理':state.failed===p?'执行失败':'检查通过 · 待确认';
+    let status = state.completed.has(p)?'已完成（演示）':state.failed===p?'执行失败':state.confirmed.has(p)?'已确认':!state.packages.has(p)?'未选入本次':!state.checked?'待检查':state.conflict?'需处理':'检查通过 · 待确认';
     if(state.busy && state.current===p) status = state.stage==='import'?'正在执行（演示）':'正在检查（演示）';
-    return `<div class="package-row ${state.current===p?'current':''}"><input class="fw-check" type="checkbox" data-package="${p}" aria-label="本次导入${label(p)}包" ${state.packages.has(p)?'checked':''} ${state.busy||state.completed.has(p)?'disabled':''}><button class="package-select" data-select="${p}" aria-pressed="${state.current===p}"><strong>${label(p)} 资源包</strong><small>${p==='pc'?'cascade.json':'cascade_mobile.json'}</small><span class="package-state ${state.confirmed.has(p)?'confirmed':''} ${state.failed===p||state.conflict?'error':''}">${status}</span></button></div>`;
+    return `<div class="package-row ${state.current===p?'current':''}"><input class="fw-check" type="checkbox" data-package="${p}" aria-label="本次导入${label(p)}包" ${state.packages.has(p)?'checked':''} ${state.busy||state.completed.has(p)?'disabled':''}><button class="package-select" data-select="${p}" aria-pressed="${state.current===p}" ${state.busy?'disabled':''}><strong>${label(p)} 资源包</strong><small>${p==='pc'?'cascade.json':'cascade_mobile.json'}</small><span class="package-state ${state.confirmed.has(p)?'confirmed':''} ${state.failed===p||state.conflict?'error':''}">${status}</span></button></div>`;
   }).join('');
   const p = state.current, rows = assets(p);
-  $('settings-platform').textContent = label(p);
+  document.querySelectorAll('[data-platform]').forEach(button => {
+    button.setAttribute('aria-pressed',String(button.dataset.platform===p));
+    button.disabled = state.busy;
+  });
   $('current-package-title').textContent = label(p)+' · '+state.name;
   $('asset-count').textContent = `已选 ${rows.filter(a=>state.chosen.has(a.key)).length} / ${rows.length}`;
   $('assets').innerHTML = rows.map(a => {
@@ -105,11 +131,59 @@ function render() {
   $('problem').hidden = !(state.conflict||state.failed);
   $('problem').textContent = state.conflict?'检测到同名材质。更改处理方式或名称后，重新检查并逐包确认。':state.failed?'手机包执行失败（演示）。已完成的 PC 包保持；重试不重新导入完成包。':'';
   $('mapping-status').textContent = state.mapping?'登记方案已准备（演示）':state.completed.size?'导入回执为演示 · 可预览登记方案':'尚未登记 · 导入后才能核对真实资产';
-  $('step-check').className = !state.busy&&!state.completed.size?'active':'completed';
-  $('step-import').className = state.busy&&state.stage==='import'?'active':state.completed.size?'completed':'';
-  $('step-register').className = !unfinished().length&&state.completed.size?'active':'';
+  renderFlow(); renderExecution();
   if(activeKey) document.querySelector(`[data-asset="${activeKey}"]`)?.focus({preventScroll:true});
   if(activePackage) document.querySelector(`[data-package="${activePackage}"]`)?.focus({preventScroll:true});
+  if(activeSelect) document.querySelector(`[data-select="${activeSelect}"]`)?.focus({preventScroll:true});
+}
+
+function renderFlow() {
+  const total = state.packages.size, done = state.completed.size;
+  const confirmed = [...state.packages].filter(p=>state.confirmed.has(p)).length;
+  const checked = state.checked && !state.offline && !state.conflict && validName() && total>0;
+  const ready = checked && allConfirmed();
+  const complete = total>0 && !unfinished().length;
+  const importing = state.busy && state.stage==='import';
+  const checking = state.busy && state.stage==='check';
+  const current = checking ? 1 : complete ? 3 : importing||done||state.failed||state.stopped ? 2 : 1;
+  const stages = [
+    ['step-export','completed','已导出'],
+    ['step-check',ready?'completed':current===1?(state.conflict?'failed':'active'):'',
+      state.offline?'等待连接':state.conflict?'名称冲突':state.busy&&state.stage==='check'?'检查中':!checked?'待检查':`${confirmed} / ${total} 包已确认`],
+    ['step-import',complete?'completed':state.failed?'failed':current===2?'active':'',
+      state.failed?'失败 · 可重试':state.stopped?'已停止 · 可继续':importing?(state.stop?'等待包间停止':`${label(state.current)} 包执行中`):complete?'完成（演示）':'等待确认'],
+    ['step-register',current===3?'active':'',state.mapping?'方案已准备':'尚未登记']
+  ];
+  stages.forEach(([id,kind,caption],index)=>{
+    const node = $(id); node.className = kind;
+    node.querySelector('small').textContent = caption;
+    node.setAttribute('aria-label',`${index+1}. ${node.querySelector('b').textContent}，${caption}`);
+    if(index===current) node.setAttribute('aria-current','step'); else node.removeAttribute('aria-current');
+  });
+  $('flow-summary').textContent = checking?'正在检查名称与依赖':complete?'下一步：核对演出登记方案':state.failed?'保留已完成包，重试未完成包':state.stopped?'继续时仅执行剩余包':importing?'配置已锁定，支持包间停止':ready?'核对完成，可以导入':state.offline?'连接 UE 后继续核对':state.conflict?'处理冲突后重新检查':`先核对并确认 ${total} 个平台包`;
+}
+
+function renderExecution() {
+  const total = state.packages.size, done = state.completed.size;
+  let title = '等待导入', detail = '检查与确认不会执行导入。', status = 'waiting';
+  if(state.busy&&state.stage==='import') {
+    title = state.stop?'等待当前包结束':`正在导入 ${label(state.current)} 包（演示）`;
+    detail = state.stop?'已请求包间停止，当前包仍在执行。':'可以收起日志或请求包间停止；收起不会停止执行。';
+    status = 'running';
+  } else if(state.busy&&state.stage==='check') {
+    title = '正在检查（演示）'; detail = '核对名称、所选包与资产依赖。';
+  } else if(state.failed) {
+    title = `${label(state.failed)} 包失败（演示）`; detail = '已完成包保留；底部重试只执行未完成包。'; status = 'failed';
+  } else if(state.stopped) {
+    title = '已在包间停止（演示）'; detail = '原确认和完成记录保留；底部继续只执行剩余包。'; status = 'stopped';
+  } else if(total>0&&!unfinished().length) {
+    title = '所选包执行完成（演示）'; detail = '仅模拟回执。下一步核对演出登记；真实 UE 未写入。'; status = 'complete';
+  }
+  $('execution-title').textContent = title; $('execution-detail').textContent = detail;
+  $('execution-count').textContent = `已完成 ${done} / ${total} 包`;
+  $('execution-progress').max = Math.max(1,total); $('execution-progress').value = done;
+  $('execution-progress').setAttribute('aria-valuetext',`${total} 个平台包中完成 ${done} 个，状态演示`);
+  document.querySelector('.execution-summary').dataset.status = status;
 }
 
 function selectPackage(p) {
@@ -150,6 +224,8 @@ function runImport() {
   if(state.busy) { if(state.stage==='import') {state.stop=true;log('已请求包间停止，不中断正在执行的包。');render();} return; }
   if($('import').disabled)return;
   state.busy=true; state.stage='import'; state.failed=''; state.stop=false; state.stopped=false;
+  if($('log-panel').hidden)followLatest();
+  setLogs(true,{focus:true});
   const todo = unfinished();
   function runNext() {
     const p = todo.shift();
@@ -158,7 +234,8 @@ function runImport() {
     setTimeout(() => {
       if(p==='mobile'&&state.failMobile) {
         state.failMobile=false; state.failed=p; state.busy=false;state.stage='';
-        log('手机包失败（模拟）；PC 完成结果保留。');render();return;
+        log('手机包失败（模拟）；PC 完成结果保留。');render();
+        setLogs(true);return;
       }
       state.completed.add(p);log(label(p)+'包完成（模拟），不是 UE 写入回执。');
       if(state.stop) {state.busy=false;state.stage='';state.stop=false;state.stopped=true;log('已在包间停止；其余包保留原确认。');render();return;}
@@ -183,6 +260,7 @@ function mapping() {
   });
 }
 function scenario(value) {
+  setLogs(false);
   state.packages=new Set(platforms);state.current='pc';state.confirmed.clear();state.completed.clear();
   state.checked=value!=='unchecked'&&value!=='offline';state.offline=value==='offline';state.conflict=value==='conflict';
   state.failed=value==='partial'?'mobile':'';state.failMobile=value==='failed-run';state.stop=false;state.stopped=false;state.mapping=false;
@@ -194,6 +272,18 @@ function scenario(value) {
 }
 
 $('package-list').addEventListener('click',event=>{const button=event.target.closest('[data-select]');if(button&&!state.busy)selectPackage(button.dataset.select);});
+document.querySelector('.platform-switch').addEventListener('click',event=>{
+  const button=event.target.closest('[data-platform]');
+  if(button&&!state.busy)selectPackage(button.dataset.platform);
+});
+document.querySelector('.platform-switch').addEventListener('keydown',event=>{
+  if(state.busy||!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+  const buttons=[...document.querySelectorAll('[data-platform]')];
+  const index=buttons.indexOf(event.target); if(index<0)return;
+  event.preventDefault();
+  const next=event.key==='Home'?0:event.key==='End'?1:(index+(event.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length;
+  selectPackage(buttons[next].dataset.platform); buttons[next].focus({preventScroll:true});
+});
 $('package-list').addEventListener('change',event=>{
   const p=event.target.dataset.package;if(!p)return;
   if(event.target.checked)state.packages.add(p);else state.packages.delete(p);
@@ -216,15 +306,43 @@ $('system-settings').addEventListener('click',()=>{
 $('manual').addEventListener('click',()=>detail('手动接入保留为补充入口',`<p>烘焙器的完整目录发布是主流程；已有外部素材包仍可使用原导入器的目录接入、命名与平台选择。</p><p>草稿暂不读取其他目录。生产翻新将复用现有接入器，而不是另写一套导入规则。</p>`));
 $('gpu').addEventListener('click',()=>detail('GPU 待办',`<p>当前金芒菊 PC / 手机包均没有 GPU 发射器，因此没有待办。适用包保留原 GPU 上限、实测与回填入口。</p>`));
 $('old-revision').addEventListener('click',()=>detail('历史修订 b059f930',`<p>旧修订保留，已有演出仍指向原版本；最新资源不会静默替换它。</p><p>生产页面在选择旧修订时独立重查、确认和导入。这版草稿只展示当前修订的核心流程。</p>`));
-$('make').addEventListener('click',()=>detail('效果制作工作区',`<p>本版只评审交付与导入布局。制作页下一轮按相同宪章翻新，保留库、统一画布/时间轴和完整发射器参数。</p><p><a class="fw-link" href="http://127.0.0.1:8034/baker" target="_blank" rel="noopener">打开当前正式烘焙器</a></p>`));
+$('make').addEventListener('click',()=>detail('效果制作工作区',`<p>本版评审交付与导入布局。制作参数先评审分类、展开策略和连续调参样板，确认后制作可点击原型，再分区实装；库、画布/时间轴和完整字段保留。</p><p><a class="fw-link" href="http://127.0.0.1:8034/baker" target="_blank" rel="noopener">打开当前正式烘焙器</a></p>`));
 $('help').addEventListener('click',()=>detail('草稿 v1 · 核对与导入一屏完成',`<p>左边选资源与平台包，中间改当前包设置，右边核对资产；底部操作始终常驻。队列、设置和资产各自局部滚动。</p><p>名称和平台包是已核对金芒菊的示例；缩略图来自固定修订。检查、连接、执行、失败和登记状态全部为演示，无 UE 调用、无文件/表格写入、无生产存储修改。</p><p>正式翻新需把该布局接到原导入器的真实命令与回执，保留更新、复用、跳过、依赖、GPU、停止及恢复。</p>`));
 $('detail-close').addEventListener('click',()=>$('detail-dialog').close());
 $('scenarios').addEventListener('click',()=>$('scenario-dialog').showModal());
 $('scenario-close').addEventListener('click',()=>$('scenario-dialog').close());
 $('scenario-apply').addEventListener('click',()=>{scenario($('scenario').value);$('scenario-dialog').close();});
-function setLogs(open){$('log-panel').hidden=!open;$('log-toggle').setAttribute('aria-expanded',String(open));}
-$('log-toggle').addEventListener('click',()=>setLogs($('log-panel').hidden));
-$('log-close').addEventListener('click',()=>{setLogs(false);$('log-toggle').focus();});
+function setLogs(open,{focus=false}={}) {
+  const wasOpen=!$('log-panel').hidden;
+  if(open&&!wasOpen) logView.returnFocus=document.activeElement;
+  $('log-panel').hidden=!open; $('log-toggle').setAttribute('aria-expanded',String(open));
+  $('logs').setAttribute('aria-live',open?'polite':'off');
+  $('latest-log').setAttribute('aria-live',open?'off':'polite');
+  if(open) {
+    appendLogs(); renderExecution();
+    if(logView.follow)followLatest();
+    if(focus&&!wasOpen)$('log-title').focus({preventScroll:true});
+  }
+}
+function closeLogs() {
+  setLogs(false);
+  const target=logView.returnFocus;
+  (target?.isConnected&&!target.disabled?target:$('log-toggle')).focus({preventScroll:true});
+}
+$('log-toggle').addEventListener('click',()=>{
+  if($('log-panel').hidden)setLogs(true,{focus:true}); else closeLogs();
+});
+$('log-close').addEventListener('click',closeLogs);
+$('log-latest').addEventListener('click',()=>{followLatest();$('logs').focus({preventScroll:true});});
+$('logs').addEventListener('scroll',()=>{
+  const node=$('logs'), selected=window.getSelection();
+  logView.follow=node.scrollHeight-node.scrollTop-node.clientHeight<=8 && !(selected&&!selected.isCollapsed&&node.contains(selected.anchorNode));
+  if(logView.follow)logView.unread=0;
+  updateLogFollow();
+});
+$('log-panel').addEventListener('keydown',event=>{
+  if(event.key==='Escape') {event.preventDefault();closeLogs();}
+});
 document.querySelectorAll('[data-pane]').forEach(button=>button.addEventListener('click',()=>{
   document.querySelector('.panels').dataset.activePane=button.dataset.pane;
   document.querySelectorAll('[data-pane]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
@@ -234,4 +352,4 @@ const resizeActions = new ResizeObserver(()=>{
   document.body.style.setProperty('--draft-action-offset',offset+'px');
 });
 resizeActions.observe(document.querySelector('.action-bar'));resizeActions.observe(document.querySelector('.log-strip'));
-render();FWIcons.apply();
+appendLogs();render();FWIcons.apply();

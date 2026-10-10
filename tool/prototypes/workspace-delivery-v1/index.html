@@ -6,17 +6,17 @@
   <title>烟花烘焙器 · 交付与导入草稿 v1</title>
   <link rel="stylesheet" href="../../design-system/tokens.css">
   <link rel="stylesheet" href="../../design-system/components.css">
-  <link rel="stylesheet" href="draft.css?v=1.2">
+  <link rel="stylesheet" href="draft.css?v=1.3">
   <script src="../../design-system/icons.js" defer></script>
-  <script src="draft.js?v=1.2" defer></script>
+  <script src="draft.js?v=1.3" defer></script>
 </head>
 <body class="fw-scope" data-density="compact">
 <div class="workspace">
   <header class="app-header">
     <div class="brand"><b>DF</b><span>烟花烘焙器<small>制作与交付工作区</small></span></div>
     <nav class="workspace-nav" aria-label="烘焙器工作区">
-      <button class="fw-button fw-button--quiet" id="make">效果制作</button>
-      <button class="fw-button fw-button--quiet is-current" aria-current="page">资源交付与导入</button>
+      <button class="fw-button fw-button--quiet workspace-entry" id="make" aria-haspopup="dialog">效果制作</button>
+      <button class="fw-button fw-button--quiet workspace-entry is-current" aria-current="page">资源交付</button>
     </nav>
     <div class="header-right"><button class="draft-label" id="scenarios">草稿 v1 · 状态演示</button><span class="connection" id="connection">UE 连接演示</span><button class="fw-icon-button" id="help" aria-label="查看草稿说明"><span class="fw-icon" data-fw-icon="preview"></span></button></div>
   </header>
@@ -28,7 +28,15 @@
   </section>
 
   <main class="main-layout">
-    <div class="flow-strip"><ol aria-label="交付步骤"><li class="completed">1 目录已导出</li><li class="active" id="step-check">2 核对清单</li><li id="step-import">3 用户导入</li><li id="step-register">4 演出资源登记</li></ol><span class="fw-helper">目录与缩略图来自同一修订；执行状态为演示</span></div>
+    <div class="flow-strip">
+      <ol aria-label="交付进度（状态演示）">
+        <li id="step-export"><span class="step-mark" aria-hidden="true">1</span><div><b>目录导出</b><small>已完成</small></div></li>
+        <li id="step-check"><span class="step-mark" aria-hidden="true">2</span><div><b>核对清单</b><small>待确认</small></div></li>
+        <li id="step-import"><span class="step-mark" aria-hidden="true">3</span><div><b>导入资源</b><small>未开始</small></div></li>
+        <li id="step-register"><span class="step-mark" aria-hidden="true">4</span><div><b>演出登记</b><small>未开始</small></div></li>
+      </ol>
+      <span class="fw-helper" id="flow-summary">先核对并确认两个平台包</span>
+    </div>
     <nav class="pane-tabs" aria-label="交付区域"><button class="fw-segment" data-pane="queue" aria-pressed="false">资源与队列</button><button class="fw-segment" data-pane="settings" aria-pressed="false">当前包设置</button><button class="fw-segment" data-pane="preview" aria-pressed="true">资产清单</button></nav>
     <div class="panels" data-active-pane="preview">
       <section class="panel queue-panel" data-panel="queue" aria-labelledby="queue-heading">
@@ -44,7 +52,7 @@
       </section>
 
       <section class="panel settings-panel" data-panel="settings" aria-labelledby="settings-heading">
-        <div class="panel-heading"><h2 id="settings-heading">当前包设置</h2><span class="platform-label" id="settings-platform">PC</span></div>
+        <div class="panel-heading"><h2 id="settings-heading">当前包设置</h2><div class="fw-segments platform-switch" role="group" aria-label="查看平台包"><button class="fw-segment" data-platform="pc" aria-pressed="true">PC</button><button class="fw-segment" data-platform="mobile" aria-pressed="false">手机</button></div></div>
         <div class="panel-body settings-body">
           <label class="fw-field"><span class="fw-label">处理方式</span><select class="fw-select" id="mode"><option value="create">新建资产</option><option value="update">同名更新</option></select></label>
           <p class="fw-helper mode-help" id="mode-help">已存在同名资产时停下处理，不自动覆盖。</p>
@@ -69,12 +77,16 @@
     </div>
   </main>
 
+  <section id="log-panel" class="log-panel" aria-labelledby="log-title" hidden>
+    <div class="log-heading"><div><h2 id="log-title" tabindex="-1">操作记录与日志</h2><span class="fw-helper">金芒菊 · 修订 <code>3c9894a0</code> · 状态演示</span></div><div class="log-heading-actions"><button class="fw-button fw-button--quiet" id="log-latest" hidden>回到最新</button><button class="fw-button fw-button--quiet" id="log-close" aria-label="收起操作记录与日志">收起<span class="fw-icon" data-fw-icon="expand"></span></button></div></div>
+    <div class="execution-summary"><b id="execution-title">等待导入</b><span id="execution-count" class="fw-helper">已完成 0 / 2 包</span><progress class="fw-progress" id="execution-progress" value="0" max="2" aria-label="已完成的平台包"></progress><span class="fw-helper" id="execution-detail">检查与确认不会执行导入。</span></div>
+    <ol id="logs" role="log" aria-label="按时间排列的操作记录" aria-live="off" aria-relevant="additions" tabindex="0"></ol>
+  </section>
   <footer class="action-bar" aria-label="常驻检查、确认与导入操作">
     <div class="action-summary"><b id="overall-title">检查通过 2 包 · 已确认 0 / 2</b><span id="overall-detail">8 项资产；先核对 PC 包，再确认手机包。</span></div>
     <div class="action-buttons"><button class="fw-button" id="check">重新检查</button><button class="fw-button" id="confirm">确认 PC 包</button><button class="fw-button fw-button--primary" id="import" disabled aria-describedby="overall-detail">导入已确认的 2 包</button></div>
   </footer>
   <div class="log-strip"><button id="log-toggle" aria-expanded="false" aria-controls="log-panel"><span class="fw-icon" data-fw-icon="expand"></span>操作记录</button><span id="latest-log" role="status" aria-live="polite">演示：2 包检查通过，等待用户核对名称。</span><span>不写入 UE</span></div>
-  <section id="log-panel" class="log-panel" aria-label="操作记录" hidden><div><b>操作记录 · 状态演示</b><button class="fw-button fw-button--quiet" id="log-close">收起</button></div><ol id="logs"></ol></section>
 </div>
 
 <dialog class="fw-dialog detail-dialog" id="detail-dialog" aria-labelledby="detail-title"><div class="dialog-heading"><h2 id="detail-title" class="fw-section-title"></h2><button class="fw-button fw-button--quiet" id="detail-close" aria-label="关闭详情">关闭</button></div><div id="detail-content"></div></dialog>
