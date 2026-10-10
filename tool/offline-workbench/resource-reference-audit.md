@@ -4,7 +4,9 @@
 
 ## 结论
 
-节目按ResourceId读取的就是用户指定的 `DataTable'/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable.ResourceFXTable'`，以该行FxSP为实际粒子。20个基础资源的节目路径与实时表全部一致，20个都被当前导演调用；没有发现这三种资源漏导入。
+节目按ResourceId读取的就是用户指定的 `DataTable'/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable.ResourceFXTable'`，以该行FxSP为实际粒子。20个基础资源的节目路径与实时表全部一致，20个都被当时核对的场景导演实例调用。**该结论仅覆盖场景实例，不能证明导演蓝图默认值已更新。**
+
+用户随后提供类默认值截图，v16.0.7实读确认导演Blueprint CDO仍17/43/252旧三表，缺Lime、Crackle、GoldCoreLime；上一轮遗漏了这个对象，不能把问题归结为另一独立模板BP或搜索。已从8025真实交付入口补齐CDO并保存，蓝图/实例均22/62/149且三表与R03高配完整一致。见[双目标修复证据](director-pair-import-audit.md)。以下数据保留为上一轮只读检查的历史证据。
 
 下列粒子都位于 `/Game/Effects_HD/Props_HD/FireWorks_HD/`，对象名与资产文件同名。播放次数指当前R03高配的完整花型调用，不是粒子数。
 

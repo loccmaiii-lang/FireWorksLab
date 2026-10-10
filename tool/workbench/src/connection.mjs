@@ -1,5 +1,5 @@
 import {engineRequest,normalizePath,EFFECT_KEYS} from './engine.mjs';
-export const WORKBENCH_VERSION='16.0.6';
+export const WORKBENCH_VERSION='16.0.7';
 export const DEFAULT_DIRECTOR='/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_Failed_NewYearFireworks_ShowDirector_2.BP_Failed_NewYearFireworks_ShowDirector_2';
 const network=e=>/fetch|network|超时|取消/i.test(e.message);
 const reader=options=>options.request||((route,payload)=>engineRequest(route,payload,options));

@@ -1,0 +1,605 @@
+{
+  "format": "df.director-pair-audit/1",
+  "time": "2026-10-10T12:59:05.438Z",
+  "workbenchVersion": "16.0.7",
+  "programme": "NewYearFireWorks_v01",
+  "revision": "R03",
+  "quality": "high",
+  "deliverySourceMatchesDisk": true,
+  "sourceFiles": [
+    {
+      "path": "FXtools/节目/NewYearFireWorks_v01/NewYearFireWorks_v01-R03全新编排.dfshow",
+      "sha256": "73e4ba97f58ba4b676b628c6b33a0c3b2522183ab844f3336f660ae5b4a27cff"
+    },
+    {
+      "path": "FXtools/节目/NewYearFireWorks_v01/三表-R03-high.json",
+      "sha256": "b897aa2dfb581d3463e2606a1ad8d2e47e585b14e92fe1f3995ae3ad9d0c3031"
+    }
+  ],
+  "targets": [
+    {
+      "role": "blueprint-cdo",
+      "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_Failed_NewYearFireworks_ShowDirector_2.Default__BP_Failed_NewYearFireworks_ShowDirector_2_C",
+      "actorLabel": "FailedNewYear_ShowDirector",
+      "directorId": "FailedNewYear",
+      "active": false,
+      "before": {
+        "subTemplates": 17,
+        "templates": 43,
+        "scheduleGroups": 3,
+        "scheduleSlots": 252
+      },
+      "after": {
+        "subTemplates": 22,
+        "templates": 62,
+        "scheduleGroups": 2,
+        "scheduleSlots": 149
+      },
+      "completeEffectsMatch": true,
+      "unrelatedSettingsPreserved": true,
+      "entireConfigUnchanged": false,
+      "resourcesBefore": [
+        "P_EFX_FireWorks_Comet",
+        "P_EFX_FireWorks_FanComet_01",
+        "P_EFX_FireWorks_FanSilver_01",
+        "P_EFX_FireWorks_GoldChry",
+        "P_EFX_FireWorks_GoldCrackle",
+        "P_EFX_FireWorks_GoldKamuro",
+        "P_EFX_FireWorks_GoldSpark",
+        "P_EFX_FireWorks_GreenPeony",
+        "P_EFX_FireWorks_NY_Trail_Large",
+        "P_EFX_FireWorks_NY_Trail_Medium",
+        "P_EFX_FireWorks_NY_Trail_Small",
+        "P_EFX_FireWorks_PrismWheels",
+        "P_EFX_FireWorks_SilverStrobeChry"
+      ],
+      "resourcesAfter": [
+        "P_EFX_FireWorks_Crackle",
+        "P_EFX_FireWorks_FanComet_01",
+        "P_EFX_FireWorks_FanSilver_01",
+        "P_EFX_FireWorks_GoldChry",
+        "P_EFX_FireWorks_GoldCoreLime",
+        "P_EFX_FireWorks_GoldCrackle",
+        "P_EFX_FireWorks_GoldKamuro",
+        "P_EFX_FireWorks_GoldRayChry",
+        "P_EFX_FireWorks_GoldSpark",
+        "P_EFX_FireWorks_GreenPeony",
+        "P_EFX_FireWorks_Lime",
+        "P_EFX_FireWorks_MultiLayerChry",
+        "P_EFX_FireWorks_NY_Trail_Large",
+        "P_EFX_FireWorks_NY_Trail_Medium",
+        "P_EFX_FireWorks_NY_Trail_Small",
+        "P_EFX_FireWorks_OrangeGlitter",
+        "P_EFX_FireWorks_PrismWheels",
+        "P_EFX_FireWorks_SilverChry",
+        "P_EFX_FireWorks_SilverStrobeChry",
+        "P_EFX_FireWorks_Strobe"
+      ],
+      "nativeEntries": [
+        {
+          "TemplateName": "NYR03_Lime_v1",
+          "Entries": [
+            {
+              "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+              "LocalTimeOffset": 0,
+              "PositionOffset": {
+                "X": 0,
+                "Y": 0,
+                "Z": -75.64839935302734
+              },
+              "RotationOffset": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0.8784679770469666
+              },
+              "RandomPositionRange": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "RandomRotationRange": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0
+              },
+              "EffectScale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              },
+              "RandomScaleRatio": 0,
+              "Filter": {
+                "PlatformFlags": 14,
+                "MinQualityLevel": "EQuality_VeryLow"
+              }
+            },
+            {
+              "FXResourceId": "P_EFX_FireWorks_Lime",
+              "LocalTimeOffset": 2.954400062561035,
+              "PositionOffset": {
+                "X": 0,
+                "Y": -291.42669677734375,
+                "Z": 18930.40625
+              },
+              "RotationOffset": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0.8784679770469666
+              },
+              "RandomPositionRange": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "RandomRotationRange": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0
+              },
+              "EffectScale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              },
+              "RandomScaleRatio": 0,
+              "Filter": {
+                "PlatformFlags": 14,
+                "MinQualityLevel": "EQuality_VeryLow"
+              }
+            }
+          ]
+        },
+        {
+          "TemplateName": "NYR03_Crackle_v1",
+          "Entries": [
+            {
+              "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+              "LocalTimeOffset": 0,
+              "PositionOffset": {
+                "X": 0,
+                "Y": 0,
+                "Z": -245.4145965576172
+              },
+              "RotationOffset": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": -0.2814730107784271
+              },
+              "RandomPositionRange": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "RandomRotationRange": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0
+              },
+              "EffectScale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              },
+              "RandomScaleRatio": 0,
+              "Filter": {
+                "PlatformFlags": 14,
+                "MinQualityLevel": "EQuality_VeryLow"
+              }
+            },
+            {
+              "FXResourceId": "P_EFX_FireWorks_Crackle",
+              "LocalTimeOffset": 2.954400062561035,
+              "PositionOffset": {
+                "X": 0,
+                "Y": 93.38032531738281,
+                "Z": 18762.64453125
+              },
+              "RotationOffset": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": -0.2814730107784271
+              },
+              "RandomPositionRange": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "RandomRotationRange": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0
+              },
+              "EffectScale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              },
+              "RandomScaleRatio": 0,
+              "Filter": {
+                "PlatformFlags": 14,
+                "MinQualityLevel": "EQuality_VeryLow"
+              }
+            }
+          ]
+        },
+        {
+          "TemplateName": "NYR03_GoldCoreLime_v1",
+          "Entries": [
+            {
+              "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+              "LocalTimeOffset": 0,
+              "PositionOffset": {
+                "X": 0,
+                "Y": 0,
+                "Z": -271.13958740234375
+              },
+              "RotationOffset": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0.58884197473526
+              },
+              "RandomPositionRange": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "RandomRotationRange": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0
+              },
+              "EffectScale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              },
+              "RandomScaleRatio": 0,
+              "Filter": {
+                "PlatformFlags": 14,
+                "MinQualityLevel": "EQuality_VeryLow"
+              }
+            },
+            {
+              "FXResourceId": "P_EFX_FireWorks_GoldCoreLime",
+              "LocalTimeOffset": 4.377200126647949,
+              "PositionOffset": {
+                "X": 0,
+                "Y": -272.4700927734375,
+                "Z": 26239.939453125
+              },
+              "RotationOffset": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0.58884197473526
+              },
+              "RandomPositionRange": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "RandomRotationRange": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0
+              },
+              "EffectScale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              },
+              "RandomScaleRatio": 0,
+              "Filter": {
+                "PlatformFlags": 14,
+                "MinQualityLevel": "EQuality_VeryLow"
+              }
+            }
+          ]
+        }
+      ],
+      "effectTickInterval": 0.10000000149011612
+    },
+    {
+      "role": "level-instance",
+      "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.BP_Failed_NewYearFireworks_ShowDirector_7",
+      "actorLabel": "BP_Failed_NewYearFireworks_ShowDirector_2",
+      "directorId": "FailedNewYear",
+      "active": false,
+      "before": {
+        "subTemplates": 22,
+        "templates": 62,
+        "scheduleGroups": 2,
+        "scheduleSlots": 149
+      },
+      "after": {
+        "subTemplates": 22,
+        "templates": 62,
+        "scheduleGroups": 2,
+        "scheduleSlots": 149
+      },
+      "completeEffectsMatch": true,
+      "unrelatedSettingsPreserved": true,
+      "entireConfigUnchanged": true,
+      "resourcesBefore": [
+        "P_EFX_FireWorks_Crackle",
+        "P_EFX_FireWorks_FanComet_01",
+        "P_EFX_FireWorks_FanSilver_01",
+        "P_EFX_FireWorks_GoldChry",
+        "P_EFX_FireWorks_GoldCoreLime",
+        "P_EFX_FireWorks_GoldCrackle",
+        "P_EFX_FireWorks_GoldKamuro",
+        "P_EFX_FireWorks_GoldRayChry",
+        "P_EFX_FireWorks_GoldSpark",
+        "P_EFX_FireWorks_GreenPeony",
+        "P_EFX_FireWorks_Lime",
+        "P_EFX_FireWorks_MultiLayerChry",
+        "P_EFX_FireWorks_NY_Trail_Large",
+        "P_EFX_FireWorks_NY_Trail_Medium",
+        "P_EFX_FireWorks_NY_Trail_Small",
+        "P_EFX_FireWorks_OrangeGlitter",
+        "P_EFX_FireWorks_PrismWheels",
+        "P_EFX_FireWorks_SilverChry",
+        "P_EFX_FireWorks_SilverStrobeChry",
+        "P_EFX_FireWorks_Strobe"
+      ],
+      "resourcesAfter": [
+        "P_EFX_FireWorks_Crackle",
+        "P_EFX_FireWorks_FanComet_01",
+        "P_EFX_FireWorks_FanSilver_01",
+        "P_EFX_FireWorks_GoldChry",
+        "P_EFX_FireWorks_GoldCoreLime",
+        "P_EFX_FireWorks_GoldCrackle",
+        "P_EFX_FireWorks_GoldKamuro",
+        "P_EFX_FireWorks_GoldRayChry",
+        "P_EFX_FireWorks_GoldSpark",
+        "P_EFX_FireWorks_GreenPeony",
+        "P_EFX_FireWorks_Lime",
+        "P_EFX_FireWorks_MultiLayerChry",
+        "P_EFX_FireWorks_NY_Trail_Large",
+        "P_EFX_FireWorks_NY_Trail_Medium",
+        "P_EFX_FireWorks_NY_Trail_Small",
+        "P_EFX_FireWorks_OrangeGlitter",
+        "P_EFX_FireWorks_PrismWheels",
+        "P_EFX_FireWorks_SilverChry",
+        "P_EFX_FireWorks_SilverStrobeChry",
+        "P_EFX_FireWorks_Strobe"
+      ],
+      "nativeEntries": [
+        {
+          "TemplateName": "NYR03_Lime_v1",
+          "Entries": [
+            {
+              "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+              "LocalTimeOffset": 0,
+              "PositionOffset": {
+                "X": 0,
+                "Y": 0,
+                "Z": -75.64839935302734
+              },
+              "RotationOffset": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0.8784679770469666
+              },
+              "RandomPositionRange": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "RandomRotationRange": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0
+              },
+              "EffectScale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              },
+              "RandomScaleRatio": 0,
+              "Filter": {
+                "PlatformFlags": 14,
+                "MinQualityLevel": "EQuality_VeryLow"
+              }
+            },
+            {
+              "FXResourceId": "P_EFX_FireWorks_Lime",
+              "LocalTimeOffset": 2.954400062561035,
+              "PositionOffset": {
+                "X": 0,
+                "Y": -291.42669677734375,
+                "Z": 18930.40625
+              },
+              "RotationOffset": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0.8784679770469666
+              },
+              "RandomPositionRange": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "RandomRotationRange": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0
+              },
+              "EffectScale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              },
+              "RandomScaleRatio": 0,
+              "Filter": {
+                "PlatformFlags": 14,
+                "MinQualityLevel": "EQuality_VeryLow"
+              }
+            }
+          ]
+        },
+        {
+          "TemplateName": "NYR03_Crackle_v1",
+          "Entries": [
+            {
+              "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+              "LocalTimeOffset": 0,
+              "PositionOffset": {
+                "X": 0,
+                "Y": 0,
+                "Z": -245.4145965576172
+              },
+              "RotationOffset": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": -0.2814730107784271
+              },
+              "RandomPositionRange": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "RandomRotationRange": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0
+              },
+              "EffectScale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              },
+              "RandomScaleRatio": 0,
+              "Filter": {
+                "PlatformFlags": 14,
+                "MinQualityLevel": "EQuality_VeryLow"
+              }
+            },
+            {
+              "FXResourceId": "P_EFX_FireWorks_Crackle",
+              "LocalTimeOffset": 2.954400062561035,
+              "PositionOffset": {
+                "X": 0,
+                "Y": 93.38032531738281,
+                "Z": 18762.64453125
+              },
+              "RotationOffset": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": -0.2814730107784271
+              },
+              "RandomPositionRange": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "RandomRotationRange": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0
+              },
+              "EffectScale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              },
+              "RandomScaleRatio": 0,
+              "Filter": {
+                "PlatformFlags": 14,
+                "MinQualityLevel": "EQuality_VeryLow"
+              }
+            }
+          ]
+        },
+        {
+          "TemplateName": "NYR03_GoldCoreLime_v1",
+          "Entries": [
+            {
+              "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+              "LocalTimeOffset": 0,
+              "PositionOffset": {
+                "X": 0,
+                "Y": 0,
+                "Z": -271.13958740234375
+              },
+              "RotationOffset": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0.58884197473526
+              },
+              "RandomPositionRange": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "RandomRotationRange": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0
+              },
+              "EffectScale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              },
+              "RandomScaleRatio": 0,
+              "Filter": {
+                "PlatformFlags": 14,
+                "MinQualityLevel": "EQuality_VeryLow"
+              }
+            },
+            {
+              "FXResourceId": "P_EFX_FireWorks_GoldCoreLime",
+              "LocalTimeOffset": 4.377200126647949,
+              "PositionOffset": {
+                "X": 0,
+                "Y": -272.4700927734375,
+                "Z": 26239.939453125
+              },
+              "RotationOffset": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0.58884197473526
+              },
+              "RandomPositionRange": {
+                "X": 0,
+                "Y": 0,
+                "Z": 0
+              },
+              "RandomRotationRange": {
+                "Pitch": 0,
+                "Yaw": 0,
+                "Roll": 0
+              },
+              "EffectScale": {
+                "X": 1,
+                "Y": 1,
+                "Z": 1
+              },
+              "RandomScaleRatio": 0,
+              "Filter": {
+                "PlatformFlags": 14,
+                "MinQualityLevel": "EQuality_VeryLow"
+              }
+            }
+          ]
+        }
+      ],
+      "effectTickInterval": 0.10000000149011612
+    }
+  ],
+  "independentTemplateLibrary": {
+    "path": "/Game/BluePrints/ShowDirector/Template/FX/BP_FX_FireWorksShow_Template.Default__BP_FX_FireWorksShow_Template_C",
+    "unchanged": true
+  },
+  "pairEffectsMatch": true,
+  "blueprintSavedConfirmedBy8025": true,
+  "needsLevelSave": true,
+  "uePlaybackVerified": false,
+  "timeoutRecovery": "第一次写请求15秒超时；只读确认已执行且实例未变。延长写入和保存时限到120秒，8025重新检查后跳过两端已有一致内容，仅保存蓝图；实际回执保存通过。",
+  "uiReceipt": "自动导入 UE\n\n目标：关卡实例 · BP_Failed_NewYearFireworks_ShowDirector_2\n\n选择导演\n自动导入 UE\n确认替换当前档位三表与节目时长\n\n导演蓝图与场景实例三表读回一致；蓝图已保存，请在UE保存该实例所属子关卡。\n\n重新检查导演与发射点\n\n实际写入/读回：通过 · 保存：通过 · UE 实播：未验证\n\n连接与目标详情",
+  "tests": {
+    "core": 137,
+    "packaging": 38,
+    "python": 5
+  }
+}
