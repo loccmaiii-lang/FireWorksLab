@@ -96,7 +96,7 @@
       "fixedOverwrite": 5,
       "httpLauncher": 10
     },
-    "status": "local_verified_not_pushed"
+    "status": "implemented_verified_pushed"
   },
   "previousV16Publication": {
     "artifactCommit": "707b016474c552521d307934ee24d73c68788340",
@@ -107,7 +107,16 @@
     "verifiedAt": "2026-10-10T07:54:41.130055+00:00"
   },
   "publication": {
-    "status": "prepared_for_direct_push",
-    "currentBuildReport": "analysis/results/WORKBENCH_SINGLE_SOURCE/verification.json"
+    "commit": "408c1c55f54f62879102a4ae35f8184af64e2fe8",
+    "branch": "main",
+    "remoteMainContainsCommit": true,
+    "remoteAndLocalArtifactBytesEqual": true,
+    "artifactBlobs": {
+      "tool/烟花编排工作台.html": "9ceb2d1171282ca4972a88f5ca806eaf86acd7b0",
+      "tool/烟花编排工作台-离线包.zip": "51499e05511e5c73e00daf8a3f9840b80d5e88ed",
+      "tool/烟花编排工作台.html.build.json": "226bbe832f0548f8960c44f69a014a2310a3e5f3",
+      "tool/烟花编排工作台_使用说明.html": "0e7a5226e56d2eba5f7bee2e83fd94d9e7fbe6ba"
+    },
+    "verifiedAt": "2026-10-10T17:11:29.981078+08:00"
   }
 }
