@@ -1,0 +1,21 @@
+{
+  "format": "df.local-cloud-sync/1",
+  "returnedCommit": "a95d5098920bb1fce8f81a91424969d6f371e2a2",
+  "htmlSha256": "4fb32e220c16c271e9300859e1a20690433656998f0a19d8a53ce80062b7dcad",
+  "entries": [
+    "tool/烟花编排工作台.html",
+    "FXtools/烟花编排工作台/烟花编排工作台.html",
+    "D:\\FXTools\\DFWorkbench\\deliveries\\烟花编排工作台\\2026-10-10-v12\\烟花编排工作台.html",
+    "http://127.0.0.1:8025/release/"
+  ],
+  "sameBytes": true,
+  "sourceFingerprintsMatch": true,
+  "cloudEnvironment": {
+    "platform": "linux",
+    "node": "v20.20.2",
+    "arch": "x64"
+  },
+  "baker8034Sha256": "cfc2b5245043d6d1d5bd8595e2c7ad6e13ab4f5c47374e9bc143d3ac10e032b8",
+  "ueWrites": 0,
+  "fileBrowserTested": false
+}
