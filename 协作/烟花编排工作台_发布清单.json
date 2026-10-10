@@ -3,7 +3,7 @@
   "checkedDate": "2026-10-10",
   "owner": "烟花编排demo（24）",
   "developmentEntry": "http://127.0.0.1:8025/",
-  "releaseRule": "8025迭代，用户确认或明确要求发布后，更新既有共享Site",
+  "releaseRule": "先更新8025，通过检查后同源生成一次离线HTML；固定路径/文件名覆盖，不更新旧Site，个人本机数据优先恢复",
   "sharedRelease": {
     "title": "烟花编排工作台",
     "url": "https://fireworks-workbench.golden-aphid-3086.chatgpt.site",
@@ -77,5 +77,20 @@
     "destination": "existing public FireWorksLab repository",
     "unrelatedPersonalFilesExcluded": true,
     "credentialsExcluded": true
+  },
+  "offlineRelease": {
+    "toolVersion": "13",
+    "file": "tool/烟花编排工作台.html",
+    "stableLocalFile": "D:/FXTools/DFWorkbench/deliveries/烟花编排工作台/2026-10-10-v12/烟花编排工作台.html",
+    "stableZip": "烟花编排工作台-离线包.zip",
+    "htmlSha256": "01f25b8b8418acb42c5b59f590b07ea82cda47cc8fef88ba6e6496f3879eca8e",
+    "musicIncluded": false,
+    "verification": "tool/offline-workbench/verification.json",
+    "storageIdentityUnchanged": true,
+    "currentProgrammeOverwrittenBySeed": false,
+    "actualFileUIVerified": false,
+    "sourceCorePassed": 91,
+    "wrapperPassed": 37,
+    "ueWriteExecuted": false
   }
 }

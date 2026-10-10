@@ -1,76 +1,129 @@
 {
-  "time": "2026-10-10T03:48:28.914560+00:00",
-  "version": 12,
-  "sourceChanges": [
+  "format": "df.private-source-changes/1",
+  "source": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008",
+  "privateBefore": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\director-jitter-20261010\\source-before",
+  "privateDiffs": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\director-jitter-20261010\\diffs",
+  "changes": [
     {
-      "file": "src/App.jsx",
-      "beforeSha256": "b09e13a54d04f5e6471eb9828569e9e70d1b7ea49f99f9107778d35021975ffb",
-      "afterSha256": "d38ab6cddf49e4c6d3aa2acb27b7140fad0f6fc84807f6779a1f7c0bf53a6dee"
-    },
-    {
-      "file": "src/main.jsx",
-      "beforeSha256": "1c55d07694b5c5997177f5c43136a76b5d52c99c408205561c7afb98f4ddea6b",
-      "afterSha256": "ac98440422a6bbc69386674f0cc5e03de3f589c6631982552c3b8fc425b050c8"
-    },
-    {
-      "file": "src/FixedDirectorPanel.jsx",
-      "beforeSha256": "b223e71a8de773786155aeedd51316edbe3c65c38343ea149bdd651770f90082",
-      "afterSha256": "e11c7f179f4e922fc4025d59bce30c1a3d7dabc5f3e41857e46507b039d4823f"
-    },
-    {
-      "file": "src/DeliveryPanel.jsx",
-      "beforeSha256": "9c10a3fd07ed959060db8bda8fc1f2420d865e2fa4fe91b604b183bb4c4aebc1",
-      "afterSha256": "9c10a3fd07ed959060db8bda8fc1f2420d865e2fa4fe91b604b183bb4c4aebc1"
-    },
-    {
-      "file": "src/ProgramPanel.jsx",
-      "beforeSha256": "5e6fb639f2ce9b6e9898c6f9b4128bd6f452147398fc5431ca6afa2dbccdfbf9",
-      "afterSha256": "2b7165ca78b287658c9fcdfd42d6bd88ef6ab46e45bc30f7acb803dff918e302"
-    },
-    {
-      "file": "package.json",
-      "beforeSha256": "391bc5c0861c558c92bdbf3ef71f835a10a3358f00eb60e3fc62fc21ff1047eb",
-      "afterSha256": "7772fb1d6d26d16e68bca882954fa69e30582d6f7882b228f2972e4066c93f37"
+      "file": "src/connection.mjs",
+      "beforeSha256": "53d400550b7e34623d5ab78faee9a490e72d9fb947b344f4b0d929061501d433",
+      "afterSha256": "9a8c83a2d6ce209db282adf188376536f6f887f0c87b6cee5542a224999e962a",
+      "baseline": "before-implementation"
     },
     {
       "file": "src/ConnectionProvider.jsx",
-      "afterSha256": "d79efd30cca8d256c7188881e05f0f9380c36ea99bd5bb03d30d42db4013daa7"
+      "beforeSha256": "d79efd30cca8d256c7188881e05f0f9380c36ea99bd5bb03d30d42db4013daa7",
+      "afterSha256": "ee6244c045789b0fcc198710827ec930975f7b8639395e2c5785c3c970506f4c",
+      "baseline": "before-implementation"
     },
     {
-      "file": "src/connection.mjs",
-      "afterSha256": "53d400550b7e34623d5ab78faee9a490e72d9fb947b344f4b0d929061501d433"
+      "file": "src/DirectorTargetPicker.jsx",
+      "beforeSha256": null,
+      "afterSha256": "04afc18dacc38b2baed32753896e2960ea82886d390c52b4f4574ab9f072a18e",
+      "baseline": "new-file"
     },
     {
       "file": "src/EnginePanel.jsx",
-      "afterSha256": "dadfa1ce5ef2deea3d06132d3035872e2f4fea1163672dc01f62734ae2084059"
+      "beforeSha256": "dadfa1ce5ef2deea3d06132d3035872e2f4fea1163672dc01f62734ae2084059",
+      "afterSha256": "77ed1bcefa04a2daf7066040f4a181d284762627d88693cd719372c8c9fb88de",
+      "baseline": "before-implementation"
     },
     {
-      "file": "src/engine.mjs",
-      "afterSha256": "0edf42d4463cf59e2b1ca09d469f58d89151b74e685f173d46b99fc43ad2c5bc"
+      "file": "src/launch-jitter.mjs",
+      "beforeSha256": null,
+      "afterSha256": "0b2ee8708751d05f42c86c973e5ded347f651530dbf623036b63bb7c5a4c139f",
+      "baseline": "new-file"
     },
     {
-      "file": "src/audio-blob.mjs",
-      "afterSha256": "0be00d816ad0f42dd54f9a7f791e08d928f9aaf3f67839564601982f3eb01c4d"
+      "file": "src/LaunchJitterControls.jsx",
+      "beforeSha256": null,
+      "afterSha256": "6124d405b83b1e4b7cf133b4a57e3399e48cacd68b79e1e0b34ec1dd890bc459",
+      "baseline": "new-file"
     },
     {
-      "file": "src/light-project.mjs",
-      "afterSha256": "e0ff28e2a969971cbb8a8da5fd29859eb4631f40d250456aca2900224e6abf00"
+      "file": "src/editing-model.mjs",
+      "beforeSha256": "c0b72da0721c494c6da17c4729318ee6084855a678e06e0c3b752e3972d64bc4",
+      "afterSha256": "fa76fff9277c4e96ae9fe991c794591cd9bc91a9b486546363a6d1b690c2eaee",
+      "baseline": "before-implementation"
+    },
+    {
+      "file": "src/editor-state.mjs",
+      "beforeSha256": "b64d0145b121bf921a706ff22f135e7743b2b07d82e9bc0849c988b4dcd82faa",
+      "afterSha256": "12eb63e0ff26fadba1e7a083e1fa30f292877053df35305908d7f545411ca671",
+      "baseline": "before-implementation"
+    },
+    {
+      "file": "src/choreography-model.mjs",
+      "beforeSha256": "fb3629164ba8579a01ce372d1661b32e60e2f4f088090124e7ee15e8f59a96f4",
+      "afterSha256": "65f65b9a697a6ba26051c4a8c9ff13e946e59d6f5ce4345a2f04c183f5b9b3b5",
+      "baseline": "before-implementation"
+    },
+    {
+      "file": "src/LaunchWorkspace.jsx",
+      "beforeSha256": "0cb9a8177eadaef7198099753ba2c45afa7ec71d743e5377bf73b6a86867e8ed",
+      "afterSha256": "bb5b5e0d712c13b11f24b70747fed5ea4421d5a62305174e1d567377e481aa0d",
+      "baseline": "before-implementation"
+    },
+    {
+      "file": "src/App.jsx",
+      "beforeSha256": "2d00099227920495cb8453428fcba15e31ad974b4f602fb4bfbf10f1793fe4cb",
+      "afterSha256": "84d7466607d7f29c683bc2590361243e639a20012d451a60cb3255b0b24285ee",
+      "baseline": "before-implementation"
+    },
+    {
+      "file": "src/TemplateLibraryCompact.jsx",
+      "beforeSha256": "11b462eb55e1086e51b5e2bfcd8ad9df50fd3f2f033b8301f266c9059e56b03e",
+      "afterSha256": "51441d1b3d952ff3db19815b78c0838c82912b068da54d1ecfc7046349102fae",
+      "baseline": "before-implementation"
     },
     {
       "file": "src/df-theme.css",
-      "afterSha256": "7c5cf0f9f09a55022e7c6ee32d436a4102790b84f13b08a8d1ca90ed56c115e4"
-    },
-    {
-      "file": "scripts/postbuild-offline.mjs",
-      "afterSha256": "05999e34803f306cf712ab1ce13670aed8d9efdc6c87a7ac0e89b56842230dea"
+      "beforeSha256": "7c5cf0f9f09a55022e7c6ee32d436a4102790b84f13b08a8d1ca90ed56c115e4",
+      "afterSha256": "9921fa48c68da9ba38710655cd62faae6691dc5375253be909cce3e67a77a879",
+      "baseline": "before-implementation"
     },
     {
       "file": "scripts/offline-release.json",
-      "afterSha256": "e3e8c4c9052c1e2337cd2ae727ede46ad2e5da4fcd63e2ca1ddcf9a78e316b30"
+      "beforeSha256": "e3e8c4c9052c1e2337cd2ae727ede46ad2e5da4fcd63e2ca1ddcf9a78e316b30",
+      "afterSha256": "478b4e52f2720c185a7106b21ecdd30e51d3ea7fc53d9b595d3eea40549a9156",
+      "baseline": "before-implementation"
+    },
+    {
+      "file": "tests/launch-jitter.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "5edaaef4b59c9d04f4863c42a037fd6b8a61bb8e703308fc501f65dbd262f976",
+      "baseline": "new-file"
+    },
+    {
+      "file": "tests/choreography-model.test.mjs",
+      "beforeSha256": "4d6242789d19a518d0b12f6f7de1d247b6f31e7e8433cd46590a0809f8829231",
+      "afterSha256": "86e384e7217bfd55a7268970b22cf2458cae4249250ba40ecdf689993a11c87b",
+      "baseline": "before-implementation"
+    },
+    {
+      "file": "scripts/offline-workbench/tests/connection.test.mjs",
+      "beforeSha256": "fc6c4442f11dbd08af4ee7309908e248f291d6034d9de2ecc34f76bce83c2e99",
+      "afterSha256": "1605a8983f5524c56bccba1ebc1c5c75897bc7b9675c20f90047709728d671f4",
+      "baseline": "before-implementation"
+    },
+    {
+      "file": "scripts/offline-workbench/tests/package.test.mjs",
+      "beforeSha256": null,
+      "afterSha256": "a1b2b9a5cdcecc3035b09d734bc68cced872b246ed49d8e25f9bbd415272d873",
+      "baseline": "not-captured-in-before-directory"
+    },
+    {
+      "file": "AGENTS.md",
+      "beforeSha256": null,
+      "afterSha256": "77afca3029129f92746e9c67da492898df14a10c0b9dae61155b30b6e30ad656",
+      "baseline": "not-captured-in-before-directory"
     }
   ],
-  "localBackup": "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\offline-df-20261010\\source-before",
-  "originalProgrammeUntouched": true,
-  "originalBrowserDraftUntouched": true,
-  "oldPublicSiteUpdated": false
+  "sourceUploadedInFull": false,
+  "publicScope": "compiled HTML, connection adapters, generic jitter module, wrapper tests and build/progress fingerprints",
+  "excludedOtherOwnedDirectories": [
+    "tool/src",
+    "shared DF tokens",
+    "artistic resources"
+  ]
 }

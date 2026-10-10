@@ -14,6 +14,16 @@ test('light show keeps native data/versions and musical references, excludes aud
 
 });
 test('all six real data files embedded; independent offline IndexedDB/key names',()=>{assert.equal(Object.keys(data).length,6);assert(data['resource-catalogue'].rows.length>=61);assert(html.includes('df-offline-director-workbench'));assert(html.includes('df-offline-workbench-v1-draft'));});
+
+test('updates preserve v1 local storage identity and prefer saved programmes over bundled defaults',async()=>{
+ assert(html.includes('df-offline-director-workbench'));assert(html.includes('df-offline-workbench-v1-draft'));assert(!html.includes('indexedDB.deleteDatabase'));
+ const source=path.dirname(Object.keys(report.sourceFiles).find(f=>f.endsWith('App.jsx'))),app=await fs.readFile(path.join(source,'App.jsx'),'utf8');
+ assert(app.indexOf('if(raw)')<app.indexOf('return seed;'));assert(app.includes('return parsed'));assert(app.includes("DRAFT_KEY+'-unrestored'"));
+ const {createProgrammeSaver}=await import(pathToFileURL(path.join(source,'programme-save.mjs'))),old='local-personal-history',records=new Map([['df-offline-workbench-v1-draft-program-OLD',old]]);
+ const save=createProgrammeSaver(async entries=>{for(const [k,v]of entries)records.set(k,v)},'df-offline-workbench-v1-draft',programme.payload);
+ const personal=structuredClone(programme.payload);personal.doc.meta.programId='PERSONAL';personal.doc.meta.programName='接收者自己的节目';await save(personal);
+ assert.equal(records.get('df-offline-workbench-v1-draft-program-OLD'),old);assert.equal(JSON.parse(records.get('df-offline-workbench-v1-draft')).doc.meta.programName,'接收者自己的节目');
+});
 test('built HTML checksum and original source fingerprints match',async()=>{
  assert.equal(crypto.createHash('sha256').update(html).digest('hex'),report.sha256);for(const [f,hash] of Object.entries(report.sourceFiles))assert.equal(crypto.createHash('sha256').update(await fs.readFile(f,'utf8')).digest('hex'),hash,f);
 });

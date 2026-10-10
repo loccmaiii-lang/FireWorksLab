@@ -1,105 +1,73 @@
 {
   "format": "df.offline-verification/2",
-  "time": "2026-10-10T03:51:53.692959+00:00",
-  "toolVersion": 12,
+  "time": "2026-10-10T04:38:36.497558+00:00",
+  "toolVersion": "13",
   "artifact": {
     "file": "tool/烟花编排工作台.html",
-    "bytes": 2539191,
-    "sha256": "c7d90512c03bfaece383c64cd57587358bc5639c4e9de5bb254ab39a2f2a88a8",
-    "originalProgrammeSha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a",
-    "lightProgrammeSha256": "68f1837b3f0b4256b8940d1a18056a57e334b665e61940e816d4054a7310f9e2",
+    "stableLocalFile": "D:\\FXTools\\DFWorkbench\\deliveries\\烟花编排工作台\\2026-10-10-v12\\烟花编排工作台.html",
+    "bytes": 2545291,
+    "sha256": "01f25b8b8418acb42c5b59f590b07ea82cda47cc8fef88ba6e6496f3879eca8e",
+    "zipName": "烟花编排工作台-离线包.zip",
+    "zipBytes": 360118,
+    "zipSha256": "570d7c39f7aeeab9482893cf6869dec5d475e16d7f4799e99fc5cc243b3449b4",
     "musicIncluded": false,
-    "referenceMusicSha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3"
+    "originalProgrammeSha256": "8cfc31b2b337235561f522a9ba8ca7e9fcc1a0cf1e1554c6eb3deceda9f85f2a"
   },
   "automated": {
-    "original8025Core": {
-      "passed": 87,
-      "failed": 0,
-      "excluded": "4 old Sites-worker tests; online Site not changed"
-    },
-    "packagingAndEngine": {
-      "passed": 33,
+    "productionCore": {
+      "passed": 91,
       "failed": 0
     },
-    "actualDailyBuildHook": {
-      "command": "npm run build",
-      "passed": true,
-      "actualToolPackagingInvocations": 1,
-      "failedChecksPreservePreviousArtifactTested": true
-    }
+    "offlineWrapper": {
+      "passed": 37,
+      "failed": 0
+    },
+    "scope": "source build hook; package copied to same8025 static HTTP path; original show252/1689/18 unchanged; old Site4 tests excluded"
   },
   "browser": {
-    "protocol": "http",
-    "sameSingleHtmlDevelopmentPreview": true,
+    "protocol": "HTTP",
     "fileProtocolVerified": false,
-    "fileProtocolBlock": "此前自动安全审查拒绝直接file://，未绕过；本轮不重试file协议",
-    "actual8025": "http://127.0.0.1:8025/?qa=df12",
-    "artifactPreview": "http://127.0.0.1:8025/offline-qa-v12.html?qa=df12light",
+    "sameHtmlBytes": true,
     "passed": [
-      "8025顶栏真实连接、重连和v12，1280首屏自动导入按钮",
-      "8025高中低实际只读检查1689/1130/848事件，切档后确认失效",
-      "最终同一HTML默认完整全景100%、252片段/1689事件/18固定花型，无audio src",
-      "原曲重新导入后Blob音频readyState4、210.810813秒，27段落保留；撤销再刷新回到无音频",
-      "最终HTML无音乐提示1280可见，真实检查36点；勾选仅启用按钮，未点击写入；重连清除确认",
-      "8025和原特效工作台实页primary=#00d49b、surface=#111d21；原导入器只增加主题，全部脚本字节一致",
-      "使用说明HTML实际渲染，离线相对工作台文件在包内存在"
+      "choose actual director blueprint and level actor; return to default",
+      "invalid exact path blocks import without fallback",
+      "opening picker and changing tier clears old confirmation",
+      "create3-point together cue with0–0.2s per-flower delay",
+      "reroll/Undo restores previous actual timing",
+      "save and reload preserve delay configuration and selected cue",
+      "deliberate capture library3→4; fixed actual relative starts",
+      "overwrite test path v12→v13 retains saved personal programme name",
+      "new director/jitter controls present in final HTML",
+      "default full panorama100%; source/final HTML console error lists empty"
     ],
     "limitations": [
-      "新8036预览页被浏览器客户端阻止，未重试；同一产物在既有8025静态开发预览核对",
-      "真实双击file环境与浏览器下载→再导入全流程未标通过",
-      "此前艺术效果、高度和原生尺度/轨迹/BP/Seq实播仍待验"
+      "file:// tool-open blocked in prior review; not retried or bypassed",
+      "UI undo tests isolatedQA, not user programme",
+      "No new music-import UI test this turn; previousv12 same-song checks retained"
     ]
+  },
+  "storageCompatibility": {
+    "database": "df-offline-director-workbench",
+    "draftKey": "df-offline-workbench-v1-draft",
+    "keysRotated": false,
+    "bundledSeedReplacesLocal": false,
+    "savedProgrammeRecordsRetained": true,
+    "sessionUndoPersistedAcrossReload": false,
+    "conditions": "same path/browser profile; normal mode; no cleared site data; explicit dfshow for transfers"
   },
   "engine": {
     "readOnly": true,
-    "historicalCliReadProof": "ue-readonly.json",
-    "newBrowserChecks": true,
-    "connection": "http://127.0.0.1:17780/gpcli",
-    "target": "BP_Failed_NewYearFireworks_ShowDirector_2",
-    "pointCount": 36,
-    "tiers": {
-      "high": {
-        "events": 1689,
-        "subTemplates": 18,
-        "templates": 45,
-        "scheduleSlots": 252,
-        "issues": []
-      },
-      "medium": {
-        "events": 1130,
-        "templates": 109,
-        "scheduleSlots": 252,
-        "issues": []
-      },
-      "low": {
-        "events": 848,
-        "templates": 81,
-        "scheduleSlots": 252,
-        "issues": []
-      }
-    },
+    "actualPointsChecked": 36,
     "writeExecuted": false,
     "saveExecuted": false,
     "playbackVerified": false
   },
-  "palette": {
-    "source": "tool/design-system/tokens.json",
-    "version": "0.1.1",
-    "primary": "#00d49b",
-    "surface": "#111d21",
-    "sharedTokensAndBakerModified": false
-  },
-  "originalSourceUntouched": false,
-  "buildSourceUntouched": true,
-  "originalProgrammeFileUntouched": true,
-  "originalBrowserDraftUntouched": true,
   "publicSiteUpdated": false,
+  "originalProgrammeFileUntouched": true,
   "userAccepted": false,
-  "publication": {
-    "artifactCommit": "31b81f8b3b31ff57e091737fa6d14df2a064266d",
-    "artifactBlob": "f81afdc2cdcfda30ee684cf9a7fe5911049b54d4",
-    "remoteMainContainsArtifactCommit": true,
-    "remoteAndLocalArtifactBlobEqual": true,
-    "verifiedAt": "2026-10-10T03:54:56.948166+00:00"
-  }
+  "screenshotsLocalOnly": [
+    "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\director-jitter-20261010\\8025随机错开.png",
+    "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\director-jitter-20261010\\8025导演选择.png",
+    "D:\\FXTools\\DFWorkbench\\workbench\\research\\timeline-design-20261008\\director-jitter-20261010\\覆盖更新保留个人节目.png"
+  ]
 }
