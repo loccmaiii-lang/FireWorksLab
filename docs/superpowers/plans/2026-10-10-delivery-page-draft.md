@@ -164,9 +164,12 @@ function invalidate() {
 
 目标：file分页从本机部署的原导入器加载，不再向8034索要UI。保持原控制器/确认/执行；后台只承担目录发布、索引与回执。原HTTP兼容保留，不自动迁移存储。
 
-- [ ] RED：test_baker_handoff.cjs断言file iframe.src使用local_delivery/runtime/importer.html、host就绪即显示UI；新增离线session及目录恢复检查，不能让模拟服务永远就绪掩盖冷启动。
-- [ ] 新建prepare_local.py：读取既有本机launcher配置中的importerPath，只在gitignore runtime目录生成副本；复用两处广播内存适配，注入目录客户端和host。原文件SHA256不变。build.py和launcher调用prepare，私有源码绝不写入公共HTML/git。
-- [ ] 新建directory-client.js/transport.js：file导入页与独立隐藏HTTP目录通道通信，仅白名单路径，来源窗口/channel校验；token保留HTTP通道、同源API策略不变，无UE执行命令。服务未运行只影响目录，不隐藏导入页。
-- [ ] 修改delivery-host.js：file session可离线返回importerAvailable，其他资源读取单独报告失败；publish每次检查真实目录会话。67_delivery.js分离frame就绪与目录就绪，失败不隐藏UI、不改原分页/对象/确认规则。
-- [ ] Python unittest + Node VM覆盖生产生成副本无私有文件改写、消息来源、离线页与重连；真实HTTP只读/隔离资源检查与file入口检查分别记证据，不绕过工具协议策略。
-- [ ] VERSION/CHANGELOG 4.9.65，build、git diff检查、提交推送、主F同步及runtime本机部署。8034恢复运行是临时恢复，不能代替解耦验收；不安装未请求的开机任务。
+- [x] RED：test_baker_handoff.cjs断言file iframe.src使用local_delivery/runtime/importer.html、host就绪即显示UI；新增离线session及目录恢复检查，不能让模拟服务永远就绪掩盖冷启动。
+- [x] 新建prepare_local.py：读取既有本机launcher配置中的importerPath，只在gitignore runtime目录生成副本；复用两处广播内存适配，注入目录客户端和host。原文件SHA256不变。build.py和launcher调用prepare，私有源码绝不写入公共HTML/git。
+- [x] 新建directory-client.js/transport.js：file导入页与独立隐藏HTTP目录通道通信，仅白名单路径，来源窗口/channel校验；token保留HTTP通道、同源API策略不变，无UE执行命令。服务未运行只影响目录，不隐藏导入页。
+- [x] 修改delivery-host.js：file session可离线返回importerAvailable，其他资源读取单独报告失败；publish每次检查真实目录会话。67_delivery.js分离frame就绪与目录就绪，失败不隐藏UI、不改原分页/对象/确认规则。
+- [x] Python unittest + Node VM覆盖生产生成副本无私有文件改写、消息来源、离线页与重连；真实HTTP只读/隔离资源检查与file入口检查分别记证据，不绕过工具协议策略。
+- [x] VERSION/CHANGELOG 4.9.65，build、git diff检查、提交推送、主F同步及runtime本机部署。8034恢复运行是临时恢复，不能代替解耦验收；不安装未请求的开机任务。
+
+4.9.65结果：81cab19b推main，主F构建/私有组件已部署，后台从主F运行。22+27+40限定检查及1个真实生成组件初始化检查通过；HTTP停止服务/往返/目录报错/恢复保留2/2与日志。
+- [ ] 独立未验：真实Chrome file冷启动/重新发布端到端仍因自动化协议限制未验；旧来源迁移、正式根与UE原生/用户验收继续，不以HTTP通过替代。
