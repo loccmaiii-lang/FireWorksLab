@@ -1,0 +1,75 @@
+# Workspace Delivery Checklist Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. 当前技能目录没有该辅助技能；用户明确授权当前会话顺序执行，直接以文件/检查工具落实，不派子代理。
+
+**Goal:** 烘焙器指定本机目录直接交付完整资源，自动接给原导入器检查清单，用户点导入后产生真实回执；编排识别同修订资源，再给三工具统一翻新的提示词评估。
+
+**Architecture:** 标准库本机服务托管烘焙器/新独立交付入口，读取现有最终ZIP而不改变整理/产物字节，发布不可变目录与旁路索引；私有导入呈现/引擎执行沿用，仅新增接收完整回执的适配。编排保留当前来源和数据模型，以索引适配新增只读资源及固定修订。
+
+**Tech Stack:** Python 3标准库、本机HTTP、原生HTML/JS/CSS、现有GPUECli；私有React/Vite编排。
+
+## Global Constraints
+
+- 唯一设计入口`协作/交互宪章.md`，原参数/渲染/物理/默认/正式库不改；UE 4.24 Cascade既有材质、不写引擎插件。
+- 用户选择的根目录一次设置持久化；主流程无下载/解压/复制路径；ZIP独立便携动作。
+- 未完成/失败资源不发布索引；每修订不可变，已有任务和演出不自动替换。
+- 原导入器检查/确认/新建/更新/复用/跳过/停止/失败恢复保持；检查不得执行导入。
+- 测试只写明确测试根目录；实际UE写入由用户点击触发，未实播就明确未验。
+- 共享规范/代码与私有执行配置分开，按现行用户资料授权；不上传私有实现或凭据。
+- 保留旧特效工作台两烟花功能与所有浏览器数据，移除必须过迁移/用户验收门槛。
+
+### 1. 本机目录发布服务
+
+**Files:** `tool/local_delivery/{store.py,service.py,test_store.py,test_service.py,README.md,start.cmd}`。
+**Interfaces:** `POST /api/output-root`保存经可写核对的绝对目录；`POST /api/output-root/pick`由用户打开本机选择器；`POST /api/deliveries?name=...`接收最终ZIP与配方元数据；`GET /api/resources`完整索引；`GET /api/deliveries/<id>`核验回执。只允许本机来源/会话，不提供执行脚本或任意路径读取。
+
+- [ ] 临时目录测试建立单层/多层实际ZIP结构，验证CRC、UTF8、重名/逃逸/链接、缺配置/引用、失败与不可变修订。
+- [ ] 文件发布：规范化条目→临时区写入→sha256与配置引用核对→原子发布修订→更新最新索引；既有修订不能覆盖。
+- [ ] 目录设置持久化、取消选择不丢配置；仅完成资源索引可读；只对配置根内指定文件提供读取。
+- [ ] 真实HTTP测试请求权限、资源列表/文件、未知回执、污染文件检测和原目录保留。
+
+### 2. 烘焙器接入
+
+**Files:** 新`tool/src/js/67_delivery.js`；改`60_export.js`/`70_ui.js`/`body.html`/`style.css`/`10_types.js`/`tool/build.py`/CHANGELOG。
+**Interfaces:** `deliverResource(blob,name,metadata)`统一最终输出；`DeliveryWorkspace.open()`进入资源交付；服务只接收现有`makeZip()`整理后的Blob。ZIP便携通过明确动作调用同一生成逻辑，不临时改全局模式影响运行中任务。
+
+```js
+async function deliverResource(blob, name, metadata) {
+  if (DeliveryWorkspace.destination() === 'zip') return download(blob, name);
+  return DeliveryWorkspace.publish(blob, name, metadata);
+}
+```
+
+- [ ] 单层/多层/单束/变体出口调用共同交付方法；自动化脚本内部文件写出不改。
+- [ ] 资源交付区直接消费共用tokens，显示配置、写入/失败/完成、固定修订与下一步；制作对象/时间/参数切换保留。
+- [ ] 生成旁路元数据与同产物引擎回放缩略图；缺图明确占位，不回写原cascade。
+- [ ] 升版本/构建、静态/基准回归、实际完整资源导出字节核对；没有本机服务时明确说明启动方式，不静默下载。
+
+### 3. 原导入器迁入与回执
+
+**Files:** 私有新`delivery-bridge.js`/`build-delivery.py`；在`fireworks-ui.js`暴露接收与只读结果接口；保护原`fireworks-import.js`/update/plan/policy/pack及原生importOne。
+**Interfaces:** `FwImporter.acceptDelivery(receipt)`新增批次行、保留原命名、自动调用原`preview(ids)`；`FwImporter.deliveryState()`读当前已绑定行；服务记录对应deliveryId的逐项真实结果。
+
+- [ ] 先备份并记录私有全部源/受保护函数哈希；独立交付页保留队列/设置/资产预览/确认/操作/日志。
+- [ ] 收到完整回执自动识别包和配置，执行检查，UE离线保留待检查状态；重复同修订不重复添加/丢确认。
+- [ ] 用户点导入之前不执行importOne；模式/平台/源变化保持旧确认失效；检查同名更新覆盖提示和部分失败。
+- [ ] 执行后关联真实结果，落盘/版本管理/实播分别记录；刷新恢复任务且要求原流程复核。
+
+### 4. 编排资源消费
+
+**Files:** `spec/workspace_resource_v1.md`；私有编排新资源索引adapter/资源库呈现与持久化；不修改旧节目内容。
+**Interfaces:** `df.firework-resource/1`包括resourceId、revisionId、duration、size/calibration、platform/config路径、原文件指纹、thumbnail来源；演出保存固定资源修订和原编排属性。
+
+- [ ] 完整元数据/缺缩略图/非法版本/资源丢失/新修订的消费检查。
+- [ ] 资源库可读取本机完整索引，显示当前产物缩略图/数据，用户选择资源才加入编排。
+- [ ] 演出保存/刷新保持版本引用；新版本主动应用，旧花型草稿保持可恢复。
+
+### 5. 实际任务验证与提示词评估
+
+**Files:** 本对话记录、结果目录、宪章实现状态、`协作/统一工作区_翻新评估与提示词.md`、交接/目录索引。
+
+- [ ] 从一个当前完整效果实际导出到隔离测试根，识别检查清单；确认新旧产物一致。UE写入未用户点击则不执行，不冒称完成原生实播。
+- [ ] 走刷新、目录重新选择、改参数旧产物、同名新修订、写入/连接失败和恢复；保留截图与真实回执。
+- [ ] 三工具逐条映射宪章：已实现/部分/未实现/待实页验证，并说明旧烘焙器尚未整体翻新。
+- [ ] 输出统一执行提示词 + 烘焙器/编排台/特效工作台专项段落，明确任务顺序、完整功能保留、共用基础、真实验证和移除门槛。
+- [ ] 按阶段小步提交推送、交接、释放临时源码认领；安全同步主工作区。

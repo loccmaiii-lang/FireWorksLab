@@ -36,6 +36,9 @@
   "用户验收": "只由用户点「通过」设置，AI 不能改成 true"
  },
  "共享文件": {
+  "Material调研 · 资源交付闭环（执行中）": [
+   "负责：Material调研，2026-10-10 08:16，用户已授权创建checklist并执行。临时认领本轮tool/src目录交付接线（60_export.js、70_ui.js、body.html、style.css、新67_delivery.js、10_types.js版本）、tool/build.py/CHANGELOG、tool/local_delivery、spec资源索引、共用基础/宪章/本记录；私有导入器仅新增交付接收适配与独立交付页面，原生执行函数保留；私有编排仅资源索引读入和固定修订。原导出（23）单束排队/物理/默认/正式库不接手。本轮源修改结束即归还原维护人；其他会话请本轮避开上述接线文件。现有工作台烟花两功能保持到完整迁移和用户验收，实际UE写入仍只由用户点导入。checklist见docs/superpowers/plans/2026-10-10-workspace-delivery-checklist.md。"
+  ],
   "相机渲染 · 光晕形状 / 火花多边形通用化（tool/src 临时认领，只加不改，已释放）": [
    "对话框相机渲染（2026-10-10 02:20）已完成并释放：烘焙器 4.9.59 = 火花多边形 / 亮度随机通用化 + 渐变亮核 bug。修 4.9.57 只开亮度随机时渐变亮核被画成圆盘；GPU 火花不再只限礼花；地面花型 / 上升循环火花（drawEmit）接上；面板显示条件 sparkPolyShown；工作台光点层提示一行。只改了 41_particles40.js、40_gl.js（drawSparksGPU / drawEmit 选程序）、10_types.js、79_workbench.js outNote、CHANGELOG、新检查 analysis/scripts/火花形状检查.py（全过；4.9.58 上 S2 渐变亮核 3 组失败）。基准回归 7 个逐像素相同（analysis/probe/基准回归_4.9.59/），FC10R 重导 md5 不变。tool/src 回到导出（23）手上。"
   ],
