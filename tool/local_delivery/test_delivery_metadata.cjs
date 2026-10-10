@@ -1,0 +1,16 @@
+const assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs'),path=require('node:path');
+const source=fs.readFileSync(path.join(__dirname,'../src/js/67_delivery.js'),'utf8');
+const start=source.indexOf('function deliveryClassification('),end=source.indexOf('function deliveryMetadata(',start);
+assert(start>=0,'Delivery must provide real classification metadata');
+const context=vm.createContext({familyOf:type=>/^tail[SML]$/.test(type)?'rise':'aerial'});
+vm.runInContext(source.slice(start,end),context);
+const classify=context.deliveryClassification;
+assert.equal(classify({kind:'single',P:{type:'tailM'}},{spec:null},null).size,'medium');
+assert.equal(classify({kind:'single',P:{type:'tailM'}},{spec:null},null).category,'tail');
+assert.equal(classify({kind:'single',P:{type:'kiku'}},{spec:{id:'selected'}},{kind:'large'}).size,'large');
+assert.equal(classify({kind:'single',P:{type:'kiku'}},{k:.5,spec:null},{kind:'large',off:true}).size,'unclassified');
+assert.equal(classify({kind:'single',P:{type:'tailL'}},{spec:{id:'chosen'}},{kind:'small'}).size,'small');
+assert.equal(classify({kind:'combo',layers:[{P:{type:'tailM'}},{P:{type:'tailM'}}]},{spec:null},null).category,'tail');
+assert.equal(classify({kind:'combo',layers:[{P:{type:'tailM'}},{P:{type:'kiku'}}]},{spec:null},null).category,'firework');
+assert.equal(classify({kind:'combo',layers:[{P:{type:'tailS'}},{P:{type:'tailL'}}]},{spec:null},null).size,'unclassified');
+console.log('8 actual-size and tail classification checks passed.');

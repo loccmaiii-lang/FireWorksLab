@@ -1,7 +1,7 @@
 {
   "说明": "唯一的效果状态清单（用户 2026-09-30 14:46 要求：多个对话用同一份）。所有对话开工前先读、改完推送；烘焙器左栏「待我验收 / 制作中 / 已通过」直接读它（review_to_baker.py 生成）。字段见文末「字段」。 「在线」：每个对话推送时更新自己的时间（本地时间）；90 分钟内有更新的对话负责的效果，别的会话（包括定时接续会话）不碰。",
   "在线": {
-    "Material调研": "2026-10-10 15:40",
+    "Material调研": "2026-10-10 16:19",
     "对话框24": "2026-10-10 15:54",
     "对话框1": "2026-09-30 20:48",
     "对话框3": "2026-10-01 00:07",
@@ -36,7 +36,7 @@
     "用户验收": "只由用户点「通过」设置，AI 不能改成 true"
   },
   "共享文件": {
-    "Material调研 · 默认导出目录与分类ZIP留档": "负责：Material调研，2026-10-10。认领 tool/local_delivery/store.py 与新layout及测试、tool/src/js/67_delivery.js/body.html/10_types.js、生成HTML/CHANGELOG和本任务文档。默认D:/ProjectTextures/FireWorksLab，可改根；真实大中小/尾缀/平台分类与每次ZIP递增序号，不改参数物理/OUTPUT_VER/私有执行/tokens/编排/他方文件。计划 docs/superpowers/plans/2026-10-10-delivery-path-archives.md。",
+    "Material调研 · 默认导出目录与分类ZIP留档": "实现与本机核对完成，已获直接推送授权：Material调研，2026-10-10 16:19。认领 tool/local_delivery/store.py/new layout/测试、tool/src/js/67_delivery.js/body.html/10_types.js、生成HTML/CHANGELOG和本任务文档。4.9.68默认D:/ProjectTextures/FireWorksLab可改根，实际尺寸/尾缀/平台分类与每次ZIP递增；30Python/40公共JS、构建静态，隔离v001/v002/正式制作导出D盘v001/2包原检查/字节与旧10回执核对通过。原界面状态5/7与HEAD同失败，0UE写入；file/时间迁移/保存P4实播/参数决策另验。用户后续明确本项目可直接提交推送，已记录CLAUDE.md第5节，正在独立提交并核对收口；不改物理/OUTPUT_VER/私有执行/tokens/编排/他方文件。报告analysis/results/WORKSPACE_DELIVERY/导出目录与ZIP留档_4.9.68.md。",
     "烟花编排工作台（24） · 8025自动连接与DF离线交付": "已完成并释放：编排demo（24），2026-10-10 11:54。正式8025先接真实UE状态/重连/v12、固定17780/gpcli/default导演、交付首屏自动导入与确认失效；同源无音乐HTML2.42MiB/ZIP0.34MiB/使用说明、87核心+33包装检查及npm run build自动生成一次接通。产物31b81f8b已推main，远端HTML blob一致；8025/同HTML HTTP/原曲再导入/三档/36点只读通过，0UE写入/0保存/未实播，file自动审查拒绝未绕过、用户验收待定。原DF v0.1.1只消费，原特效工作台只加主题，烘焙器/tool/src/tokens/艺术源/原节目和Site未改；私有源码本机保留备份与diff。说明tool/offline-workbench/README.md，指纹/真实范围verification.json与build.json，本机稳定D区2026-10-10-v12。",
     "Material调研 · 交付导入草稿v1交互接续": "已完成并释放：Material调研，2026-10-10 10:45。认领2064ceda、原草稿四处交互613069d6已推main；同workspace-delivery-v1/原计划接续简洁入口、真实四步、PC手机单选、导入自动升起占位非模态日志，完成/失败保留/收起不停/失败重开/旧日志暂停跟随/回最新/局部Esc焦点/减少动画。原DF共享v0.1.1及其他tokens/components/宪章/tool/src/参数物理/默认/原生执行/节目/UE保持；参数分类/展开/形状审批未变。实页五尺寸/核心保护/失败仅重试手机/包间停止继续/日志焦点和阅读限定检查完，修窄屏表头压日志标题；证据13–18仅本机，用户评审待定。原完整设置/200%/读屏/迁移/交付正确性/时长/ResourceFX/UE仍独立待验，未冒称生产上线。安全rebase保留相机任务5ef040f2及全部他方工作，主F并行修改不覆盖。",
     "Material调研 · 烘焙器参数分类与连续调参方案": [

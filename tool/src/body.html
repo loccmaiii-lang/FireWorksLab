@@ -12,7 +12,8 @@
       <div class="delivery-identity"><img id="deliveryThumbnail" alt="当前修订引擎回放缩略图" hidden><span id="deliveryThumbnailMissing" hidden>缩略图待生成</span><div><small>当前交付</small><h1 id="deliveryTitle">资源交付</h1></div><span id="deliveryContext">选择已交付修订，核对后导入。</span></div>
       <details id="deliveryOptions"><summary>资源目录与版本</summary><div class="delivery-options-body">
         <label>导出方式<select class="fw-select" id="deliveryDestination"><option value="directory">指定目录 · 自动检查</option><option value="zip">下载 ZIP · 便携交付</option></select></label>
-        <div class="delivery-settings"><label for="deliveryRoot">资源导出目录</label><input class="fw-input" id="deliveryRoot" placeholder="选择目录，或填写绝对路径"><button class="fw-button" id="deliveryPick" type="button">选择目录…</button><button class="fw-button" id="deliverySaveRoot" type="button">保存目录</button></div>
+        <div class="delivery-settings"><label for="deliveryRoot">资源导出目录</label><input class="fw-input" id="deliveryRoot" placeholder="D:\ProjectTextures\FireWorksLab"><button class="fw-button" id="deliveryPick" type="button">选择目录…</button><button class="fw-button" id="deliverySaveRoot" type="button">保存目录</button></div>
+        <p>可以选择或填写其他目录并保存。目录导出按烟花／尾缀、尺寸和平台分类，每次同时留存递增版本 ZIP。</p>
         <p id="deliveryReceipt">选择一个修订查看交付位置与导入清单。</p><div class="delivery-library"><h2>已交付资源</h2><button class="fw-button fw-button--quiet" id="deliveryRefresh" type="button">刷新资源</button><div id="deliveryList"></div><button class="fw-button" type="button" id="deliveryCheck" disabled>重新接入当前修订</button></div>
       </div></details>
     </div>

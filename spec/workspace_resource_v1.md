@@ -1,12 +1,24 @@
 # 工作区资源索引 v1
 
-格式 `df.firework-resource/1`；生产者为烘焙器 4.9.60 + `tool/local_delivery`。旁路索引不改变原生 `fwl.cascade/1`。职责和状态含义只按 `协作/交互宪章.md`，此处描述实际接口。
+格式 `df.firework-resource/1`；生产者为烘焙器 4.9.60 起（当前 4.9.68）+ `tool/local_delivery`。旁路索引不改变原生 `fwl.cascade/1`。职责和状态含义只按 `协作/交互宪章.md`，此处描述实际接口。
 
 ## 身份与目录
 
 `resourceId` 为英文交付包名（去 ZIP 后缀、不区分大小写）的 SHA256 前 16 位；改名产生另一个资源 ID。`revisionId` 为排序后的原生文件 `{path,bytes,sha256}` 清单序列化哈希前 20 位；同原生内容同修订。`deliveryId = resourceId + '-' + revisionId`。指纹不含后来生成的展示缩略图和元数据；相同内容重新发布返回原索引，不改历史配方快照。
 
-修订存 `<name>/revisions/<revisionId>/`；原文件名、原配置内引用保持。`workspace-resources.json` 是完整修订目录；`resources[]` 保留历史，不是自动替换演出引用的最新版本指令。移动根目录应通过服务设置，服务重新提供本机实际绝对路径。
+旧修订存 `<name>/revisions/<revisionId>/`，4.9.68 新修订使用下节分类目录；原文件名、原配置内引用保持。`workspace-resources.json` 是完整修订目录；`resources[]` 保留历史，不是自动替换演出引用的最新版本指令。更换导出根目录应通过服务设置；不会搬迁旧文件，服务提供所选根内实际绝对路径。
+
+## 4.9.68 分类及导出序号
+
+新修订存 `<烟花|尾缀>/<小|中|大|未分类>/<name>/revisions/<revisionId>/`。PC/手机/低配目录各自放完整原配置和所引用贴图；其余原文件放资料目录。文件内容与配置引用名不改；`packages.relativeDirectory`指向分类后的实际平台目录。
+
+`sourceFiles[]`记录原ZIP的 `{path,bytes,sha256}`，revisionId仍由它的排序哈希产生；`files[]`记录分类后的实际文件（共用贴图有平台副本）及展示缩略图。旧修订没有sourceFiles，保持原files与平铺目录可读。
+
+`classification`只有 `category:firework|tail` 和 `size:small|medium|large|unclassified`。制作端按实际规格kind或明确尾缀档位提供，服务验证固定集合；不按名称后缀猜尺寸，不改尺寸标定表或模拟参数。
+
+每次成功目录发布保存原ZIP字节到同资源容器的 `ZIP/<name>_<实际平台>_v001.zip`。导出记录在 `.workspace/exports/<resourceId>.json`；序号按同根内资源递增，同内容也有新序号但同deliveryId。记录含sequence、deliveryId、revisionId、relativePath、bytes、sha256、platforms、createdAt。HTTP回执补 `latestExport.path/status` 和该修订的exportCount；ZIP缺失标missing，不称已留档。
+
+ZIP发布前读回验证哈希，文件与索引失败回滚本次新版本。原生内容修订、ZIP留档序号、烘焙器版本、UE资产名分别表达。独立浏览器下载不走目录序号。旧资源不会因新目录配置自动迁移。
 
 ## 字段
 
@@ -16,7 +28,9 @@
 | `resourceId/revisionId/deliveryId` | 稳定资源身份、原生内容修订、一次修订的交付身份 |
 | `name/createdAt/relativeDirectory` | 英文包名、UTC 发布时间、修订相对目录 |
 | `directory` | HTTP 回执补充当前根目录下实际绝对路径，不写入不可变文件 |
-| `files[]` | `path/bytes/sha256`；包含原生文件和生成缩略图，索引本身不自哈希 |
+| `files[]/sourceFiles[]` | `path/bytes/sha256`；前者是实际目录内文件及生成缩略图，后者是原 ZIP 原生文件清单；索引本身不自哈希 |
+| `classification` | 实际类别与尺寸档位，未知尺寸为 unclassified |
+| `latestExport/exportCount` | HTTP 回执中的最近 ZIP 版本、路径/是否存在，以及该修订留档次数 |
 | `packages[]` | `relativeDirectory/configFile/platform/name`；HTTP 回执补 `directory`。平台由 PC/手机/低配配置文件识别 |
 | `metadata.bakerVersion/sourceKey/recipe` | 生产版本、制作对象来源、当次配方快照；不授权消费端回写制作参数 |
 | `metadata.duration` | 当前候选完整时长；历史首批资源只有此字段 |

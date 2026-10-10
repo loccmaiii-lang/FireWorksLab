@@ -22,7 +22,7 @@
 **Files:** 新 `tool/local_delivery/layout.py`；改 `store.py`、`test_store.py`。
 **Interfaces:** `classification(metadata)` 返回 category/size；`arrange_platforms(stage, files, packages)` 返回实际分类文件与包目录；`Store.publish(raw,name,metadata)` 返回含 latestExport 的原资源回执。
 
-- [ ] 写失败检查：平台引用可读且字节相同，尾缀中号目录，同内容第二次 ZIP 为 v002、同修订；索引失败不留下 ZIP 或新修订。
+- [x] 写失败检查：平台引用可读且字节相同，尾缀中号目录，同内容第二次 ZIP 为 v002、同修订；索引失败不留下 ZIP 或新修订。
   ```python
   first = store.publish(pack(), 'Test', {'classification': {'category': 'tail', 'size': 'medium'}})
   second = store.publish(pack(), 'Test', {'classification': {'category': 'tail', 'size': 'medium'}})
@@ -30,29 +30,32 @@
   assert second['latestExport']['sequence'] == 2
   assert Path(second['latestExport']['path']).read_bytes() == pack()
   ```
-- [ ] `python -m unittest discover -s tool/local_delivery -p test_store.py` 先失败。
-- [ ] 用原 ZIP 文件指纹计算原身份，分类后的 files 指纹与 packages 指向实际 PC/手机子目录；archive 用原始 raw，以独立原子 JSON 记录递增序号，失败回滚。
-- [ ] 同一检查通过后提交；保留旧索引读取和路径安全检查。
+- [x] `python -m unittest discover -s tool/local_delivery -p test_store.py` 先失败。
+- [x] 用原 ZIP 文件指纹计算原身份，分类后的 files 指纹与 packages 指向实际 PC/手机子目录；archive 用原始 raw，以独立原子 JSON 记录递增序号，失败回滚。
+- [x] 同一检查通过；保留旧索引读取和路径安全检查。用户后续明确本项目可直接推送，提交放在最终步骤。
 
 ### Task 2: 真实分类、默认路径与界面
 
 **Files:** `67_delivery.js`、`body.html`、`10_types.js`、CHANGELOG；`test_delivery_metadata.cjs`。
 **Interfaces:** `deliveryClassification(recipe,plan,spec)` 读取实际规格/尾缀类型；元数据增加 classification，回执显示 ZIP 版本与实际路径。
 
-- [ ] 数值缩放不代替规格；全尾缀组合/单层归尾缀，混合组合归烟花；大小来自有效规格或明确尾缀档位。
+- [x] 数值缩放不代替规格；全尾缀组合/单层归尾缀，混合组合归烟花；大小来自有效规格或明确尾缀档位。
   ```js
   assert.equal(deliveryClassification({kind:'single',P:{type:'tailM'}},{spec:null},null).size,'medium');
   assert.equal(deliveryClassification({kind:'single',P:{type:'kiku'}},{spec:null},null).size,'unclassified');
   ```
-- [ ] 原“选择目录/保存目录”继续可用；缺省根由服务提供，已保存的自定义根优先。导出期间不能改根。
-- [ ] `node tool/local_delivery/test_delivery_metadata.cjs` 与既有导航/传输/host 检查通过。
-- [ ] 版本 4.9.68；`python tool/build.py`，配置/ZIP分类不改画面及 OUTPUT_VER。
+- [x] 原“选择目录/保存目录”继续可用；缺省根由服务提供，已保存的自定义根优先。导出期间不能改根。
+- [x] `node tool/local_delivery/test_delivery_metadata.cjs` 与既有导航/传输/host 检查通过。
+- [x] 版本 4.9.68；`python tool/build.py`，配置/ZIP分类不改画面及 OUTPUT_VER。
 
 ### Task 3: 接线、文档与交付
 
 **Files:** README、资源协议、原 checklist、仓库地图、对话记录、交接；本机启动配置不入库。
 
-- [ ] 全部目录服务 unittest 与 7 组现有 JS 检查通过，原生配置字节比较。
-- [ ] 将本机根设为用户指定 D 盘，配置移到稳定用户目录并保留原配置备份；仅重启核实属于本任务的 8034 服务。
-- [ ] 实页检查保存路径、ZIP版本/历史显示及平台读取；无 UE 写入。用户原 file 入口若受工具限制，明确实测范围。
-- [ ] 更新原 checklist/下一步，fetch 后安全提交推送并释放认领；不宣称原生导入/实播验收完成。
+- [x] 30项目录服务 unittest 与6个公共JS检查文件共40组通过，原生配置字节比较。
+- [x] 将本机根设为用户指定 D 盘，配置移到稳定用户目录并保留原配置备份；仅重启核实属于本任务的 8034 服务。
+- [x] 实页检查保存路径、ZIP版本/历史显示及平台读取；正式8034选中号尾缀真实导出至D盘，自动检查2包通过，字节核对通过，无 UE 写入。用户原 file 入口未新验。
+- [x] 更新原 checklist/下一步，不宣称原生导入/实播验收完成。
+- [ ] 用户已明确本项目可直接推送；核对他方并行改动后安全提交推送并释放认领。
+
+结果：analysis/results/WORKSPACE_DELIVERY/导出目录与ZIP留档_4.9.68.md；两项界面状态旧失败与HEAD基线一致，完整标准验收仍独立保留。

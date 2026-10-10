@@ -11,9 +11,11 @@ import uuid
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
+from layout import arrange_platforms, classification, container
 
 FORMAT = 'df.firework-resource/1'
 MAX_EXPANDED = 2 * 1024 ** 3
+DEFAULT_OUTPUT_ROOT = r'D:\ProjectTextures\FireWorksLab'
 
 
 def atomic_json(path, value):
@@ -44,7 +46,7 @@ class Store:
     def __init__(self, config):
         self.config = Path(config)
         self.lock = threading.RLock()
-        self.root = None
+        self.root = Path(DEFAULT_OUTPUT_ROOT).resolve() if os.name == 'nt' else None
         if self.config.exists():
             value = json.loads(self.config.read_text(encoding='utf-8'))
             self.root = Path(value['outputRoot']).resolve()
@@ -96,7 +98,66 @@ class Store:
                 package['directory'] = str(base / package['relativeDirectory'])
             receipt = self.root / '.workspace' / 'receipts' / (delivery_id + '.json')
             data['importReceipt'] = json.loads(receipt.read_text(encoding='utf-8')) if receipt.exists() else None
+            exports = self._exports(data['resourceId'])
+            own = [x for x in exports if x['deliveryId'] == delivery_id]
+            data['exportCount'] = len(own)
+            data['latestExport'] = None
+            if own:
+                latest = own[-1]
+                archive = self.root.joinpath(*safe_relative(latest['relativePath']).parts)
+                if not archive.resolve().is_relative_to(self.root.resolve()) or any(p.is_symlink() for p in [archive, *archive.parents]):
+                    raise ValueError('ZIP 路径不可离开交付根目录')
+                data['latestExport'] = {**latest, 'path': str(archive), 'status': 'saved' if archive.is_file() else 'missing'}
             return data
+
+    def _exports(self, resource_id):
+        path = self.root / '.workspace' / 'exports' / (resource_id + '.json')
+        return json.loads(path.read_text(encoding='utf-8')).get('exports', []) if path.exists() else []
+
+    def _archive(self, raw, data):
+        previous = self._exports(data['resourceId'])
+        folder = self.root / data['relativeDirectory'].rsplit('/revisions/', 1)[0] / 'ZIP'
+        if not folder.resolve().is_relative_to(self.root.resolve()) or any(p.is_symlink() for p in [folder, *folder.parents]):
+            raise ValueError('ZIP 留档目录不可离开交付根目录')
+        folder.mkdir(parents=True, exist_ok=True)
+        labels = {'pc': 'PC', 'mobile': 'Mobile', 'low': 'Low'}
+        platforms = list(dict.fromkeys(p['platform'] for p in data['packages']))
+        suffix = '-'.join(labels[p] for p in sorted(platforms, key=lambda p: ['pc', 'mobile', 'low'].index(p)))
+        prefix = data['name'] + '_' + suffix + '_v'
+        versions = [int(m.group(1)) for p in folder.glob('*.zip') if (m := re.fullmatch(re.escape(prefix) + r'(\d+)\.zip', p.name, re.I))]
+        sequence = max([x['sequence'] for x in previous] + versions + [0]) + 1
+        path = folder / (prefix + f'{sequence:03d}.zip')
+        record = {'sequence': sequence, 'deliveryId': data['deliveryId'], 'revisionId': data['revisionId'],
+                  'relativePath': path.relative_to(self.root).as_posix(), 'bytes': len(raw),
+                  'sha256': hashlib.sha256(raw).hexdigest(), 'platforms': platforms,
+                  'createdAt': datetime.now(timezone.utc).isoformat()}
+        log = self.root / '.workspace' / 'exports' / (data['resourceId'] + '.json')
+        temp = folder / ('.archive-' + uuid.uuid4().hex + '.tmp')
+        created = False
+        try:
+            with temp.open('xb') as output:
+                output.write(raw)
+            digest = hashlib.sha256()
+            with temp.open('rb') as saved:
+                for part in iter(lambda: saved.read(1024 * 1024), b''):
+                    digest.update(part)
+            if digest.hexdigest() != record['sha256']:
+                raise ValueError('ZIP 留档写入校验失败')
+            # Windows 原子重命名拒绝覆盖已有文件。
+            # POSIX 硬链接提供同样的无覆盖发布保证。
+            if os.name == 'nt':
+                os.rename(temp, path)
+            else:
+                os.link(temp, path)
+            created = True
+            atomic_json(log, {'exports': previous + [record]})
+        except Exception:
+            if created:
+                path.unlink(missing_ok=True)
+            raise
+        finally:
+            temp.unlink(missing_ok=True)
+        return path, log, previous
 
     def record_import(self, delivery_id, state):
         r = self.receipt(delivery_id)
@@ -112,6 +173,8 @@ class Store:
         metadata = metadata or {}
         if not isinstance(metadata, dict):
             raise ValueError('元数据格式不正确')
+        metadata = dict(metadata)
+        group = classification(metadata)
         name = re.sub(r'\.zip$', '', name, flags=re.I)
         safe_relative(name)
         if '/' in name:
@@ -124,6 +187,9 @@ class Store:
             if not stage.resolve().is_relative_to(root.resolve()) or any(p.is_symlink() for p in [stage, *stage.parents]):
                 raise ValueError('交付临时目录不可通过链接离开根目录')
             stage.mkdir(parents=True)
+            source = stage / 'source'
+            published = stage / 'resource'
+            source.mkdir()
             try:
                 files, seen = [], set()
                 with zipfile.ZipFile(io.BytesIO(raw)) as z:
@@ -137,10 +203,10 @@ class Store:
                         if p.as_posix().casefold() in seen or stat.S_ISLNK(info.external_attr >> 16):
                             raise ValueError('资源包含重名文件或链接')
                         seen.add(p.as_posix().casefold())
-                        if p.name == 'workspace-resource.json':
+                        if p.name in ('workspace-resource.json', 'workspace-thumbnail.png'):
                             raise ValueError('资源包不能覆盖交付索引')
                         payload = z.read(info)  # ZIP CRC verified here, before publication.
-                        target = stage.joinpath(*p.parts)
+                        target = source.joinpath(*p.parts)
                         target.parent.mkdir(parents=True, exist_ok=True)
                         target.write_bytes(payload)
                         files.append({'path': p.as_posix(), 'bytes': len(payload), 'sha256': hashlib.sha256(payload).hexdigest()})
@@ -149,7 +215,7 @@ class Store:
                     if not re.search(r'(^|/)cascade(_mobile|_low)?\.json$', item['path']):
                         continue
                     config_path = PurePosixPath(item['path'])
-                    config = json.loads((stage / item['path']).read_text(encoding='utf-8-sig'))
+                    config = json.loads((source / item['path']).read_text(encoding='utf-8-sig'))
                     if config.get('format') != 'fwl.cascade/1' or not config.get('emitters'):
                         raise ValueError('不是完整的 Cascade 资源配置：' + item['path'])
                     for texture in [*config.get('textures', {}).values(), *config.get('extras', {}).values()]:
@@ -169,16 +235,21 @@ class Store:
                 delivery_id = resource_id + '-' + revision
                 existing = next((r for r in self._index() if r['deliveryId'] == delivery_id), None)
                 if existing:
+                    data = self.receipt(delivery_id)
+                    self._archive(raw, data)
                     return self.receipt(delivery_id)
-                relative = name + '/revisions/' + revision
+                relative = container(name, group) + '/revisions/' + revision
                 target = root / relative
                 if not target.resolve().is_relative_to(root.resolve()) or any(p.is_symlink() for p in [target, *target.parents] if p != root.parent):
                     raise ValueError('修订目录不可通过链接离开交付根目录')
                 if target.exists():
                     raise ValueError('该修订目录已存在但无完整索引，请核对目录')
+                source_files = files
+                files, packages = arrange_platforms(source, published, files, packages)
                 data = {'format': FORMAT, 'resourceId': resource_id, 'revisionId': revision, 'deliveryId': delivery_id,
                         'name': name, 'createdAt': datetime.now(timezone.utc).isoformat(), 'status': 'complete',
-                        'relativeDirectory': relative, 'files': files, 'packages': packages, 'metadata': metadata,
+                        'relativeDirectory': relative, 'files': files, 'sourceFiles': source_files, 'packages': packages, 'metadata': metadata,
+                        'classification': group,
                         'thumbnail': {'status': 'missing', 'reason': '尚未生成同修订引擎回放缩略图'}}
                 thumb = metadata.pop('thumbnailData', None)
                 if thumb:
@@ -188,20 +259,28 @@ class Store:
                     pixels = base64.b64decode(thumb.split(',', 1)[1], validate=True)
                     if len(pixels) > 8 * 1024 ** 2 or not pixels.startswith(b'\x89PNG\r\n\x1a\n'):
                         raise ValueError('缩略图格式无效')
-                    (stage / 'workspace-thumbnail.png').write_bytes(pixels)
+                    (published / 'workspace-thumbnail.png').write_bytes(pixels)
                     data['files'].append({'path': 'workspace-thumbnail.png', 'bytes': len(pixels), 'sha256': hashlib.sha256(pixels).hexdigest()})
                     data['thumbnail'] = {'status': 'ready', 'file': 'workspace-thumbnail.png', 'source': 'baker-final-product-replay', 'revisionId': revision}
-                atomic_json(stage / 'workspace-resource.json', data)
+                atomic_json(published / 'workspace-resource.json', data)
                 target.parent.mkdir(parents=True, exist_ok=True)
-                os.rename(stage, target)
+                os.rename(published, target)
+                archive = None
                 try:
+                    archive = self._archive(raw, data)
                     index = self._index()
                     index.append({k: data[k] for k in ('deliveryId', 'resourceId', 'revisionId', 'relativeDirectory', 'name')})
                     atomic_json(root / 'workspace-resources.json', {'format': FORMAT, 'resources': index})
                 except Exception:
-                    # Roll back only this new, verified task directory.
-                    if target.resolve().is_relative_to(root.resolve()) and not target.is_symlink():
-                        shutil.rmtree(target)
+                    try:
+                        if archive:
+                            archive_path, log, previous = archive
+                            archive_path.unlink(missing_ok=True)
+                            atomic_json(log, {'exports': previous})
+                    finally:
+                        # 只回滚本次新建、已经核验属于资源根的修订目录。
+                        if target.resolve().is_relative_to(root.resolve()) and not target.is_symlink():
+                            shutil.rmtree(target)
                     raise
                 return self.receipt(delivery_id)
             finally:

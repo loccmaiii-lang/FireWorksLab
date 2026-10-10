@@ -10,6 +10,10 @@ const DeliveryWorkspace = (() => {
   const message=(text,error=false)=>{const n=node('deliveryStatus');n.textContent=text;n.dataset.error=String(error);};
   const destination=()=>node('deliveryDestination').value;
   const importLabel=state=>({ready:'检查通过，待确认',conflict:'检查冲突，需处理',error:'检查失败',done:'导入已报告完成',partial:'部分完成',checking:'检查中',queued:'待检查',pending:'待检查',importing:'导入中',stopped:'已停止',saved:'UE 已报告保存'}[state]||'状态待核对');
+  function updateRootControls(){
+    for(const id of ['deliveryPick','deliverySaveRoot','deliveryDestination','deliveryRoot'])node(id).disabled=importerBusy||busyDelivery||!!exportHome;
+    node('deliveryCheck').disabled=importerBusy||!last||!session?.importerAvailable;
+  }
   function rpc(command,payload={},timeout=10000){
     return new Promise((resolve,reject)=>{
       const id=crypto.randomUUID(),timer=setTimeout(()=>{requests.delete(id);reject(Error(command==='publish'?'资源写入等待超时，可能仍在进行；请先刷新资源核对修订，再决定是否重新导出':'本机交付服务未响应，请启动 tool/启动烘焙器.cmd 后在此页重试'));},timeout);
@@ -32,6 +36,7 @@ const DeliveryWorkspace = (() => {
       await waitForHost(retry);session=await rpc('session',{},15000);
       node('deliveryRoot').value=session.outputRoot||'';node('deliveryFrame').hidden=!session.importerAvailable;
       node('deliveryImporterMissing').hidden=session.importerAvailable;node('deliveryLoading').hidden=true;node('deliveryRetry').hidden=true;
+      updateRootControls();
       return session;
     })();try{return await connecting;}finally{connecting=null;}
   }
@@ -58,6 +63,7 @@ const DeliveryWorkspace = (() => {
     if(target==='zip')return;
     const progress=node('busy');exportHome={parent:progress.parentNode,next:progress.nextSibling};
     show(true);placeExportProgress();message('正在准备交付资源…');
+    updateRootControls();
     // Paint the destination and the existing cancellable progress before CPU/GPU work.
     await new Promise(resolve=>window.requestAnimationFrame?window.requestAnimationFrame(()=>window.requestAnimationFrame(resolve)):setTimeout(resolve,0));
     await connect();if(session.directoryError)throw Error(session.directoryError);
@@ -66,6 +72,7 @@ const DeliveryWorkspace = (() => {
   function exportFailed(error){if(exportHome)message('导出未完成：'+error.message,true);}
   function finishExport(){
     if(exportHome){exportHome.parent?.insertBefore(node('busy'),exportHome.next);exportHome=null;}
+    updateRootControls();
   }
   async function prepare(){
     if(prepared)return;if(preparing)return preparing;
@@ -91,7 +98,7 @@ const DeliveryWorkspace = (() => {
     for (const r of [...resources].reverse()) {
       const button = document.createElement('button'); button.type = 'button'; button.className = 'delivery-resource fw-button';
       const title = document.createElement('b'); title.textContent = r.name;
-      const detail = document.createElement('small'); detail.textContent = r.revisionId.slice(0,8) + ' · ' + r.packages.map(p=>p.platform.toUpperCase()).join(' / ');
+      const detail = document.createElement('small'); detail.textContent = r.revisionId.slice(0,8) + ' · ' + r.packages.map(p=>p.platform==='mobile'?'手机':p.platform.toUpperCase()).join(' / ') + (r.latestExport?' · ZIP v'+String(r.latestExport.sequence).padStart(3,'0'):'');
       const result = document.createElement('small'); result.textContent = r.importReceipt ? '导入记录：' + [...new Set(r.importReceipt.rows.map(x=>importLabel(x.state)))].join(' / ') : '资源已交付 · 待导入检查';
       button.append(title, detail, result); button.setAttribute('aria-pressed', String(last?.deliveryId === r.deliveryId));
       button.disabled=importerBusy; button.addEventListener('click', ()=>{if(!importerBusy)select(r).then(()=>node('deliveryOptions').open=false).catch(e=>message(e.message,true));}); list.append(button);
@@ -103,6 +110,7 @@ const DeliveryWorkspace = (() => {
     node('deliveryTitle').textContent=sourceName&&sourceName!==receipt.name?sourceName+' · '+receipt.name:receipt.name;
     node('deliveryContext').textContent=`修订 ${receipt.revisionId.slice(0,8)} · ${receipt.packages.map(p=>p.platform==='mobile'?'手机':'PC').join(' / ')} · ${receipt.files.length} 个文件`;
     node('deliveryReceipt').textContent = `${receipt.name} · 修订 ${receipt.revisionId}\n${receipt.directory}\n${receipt.files.length} 个文件，${receipt.packages.length} 份平台配置。原文件已校验；UE 状态见下方导入清单。`;
+    if(receipt.latestExport){const x=receipt.latestExport;node('deliveryReceipt').textContent+=`\nZIP v${String(x.sequence).padStart(3,'0')} · ${x.status==='missing'?'留档文件缺失':'已留档'}\n${x.path}`;}
     const img = node('deliveryThumbnail'); img.hidden = receipt.thumbnail.status !== 'ready';
     if (!img.hidden) img.src = hostOrigin + '/api/deliveries/' + receipt.deliveryId + '/' + receipt.thumbnail.file;
     node('deliveryThumbnailMissing').hidden = !img.hidden;
@@ -131,12 +139,13 @@ const DeliveryWorkspace = (() => {
   }
   async function publish(blob,name,metadata){
     if(busyDelivery)throw Error('正在交付另一份资源，请等待完成');busyDelivery=true;
+    updateRootControls();
     try{
       show(true);await connect();message('正在写入并校验完整资源…');
       const receipt=await rpc('publish',{blob,name,metadata},120000);
       await select(receipt);prepared=true;return receipt;
     }catch(e){connectionError(e);message('交付失败：'+e.message+'。现有修订保留，可重试导出。',true);throw e;}
-    finally{busyDelivery=false;}
+    finally{busyDelivery=false;updateRootControls();}
   }
   function init(){
     window.addEventListener('message',e=>{
@@ -149,7 +158,7 @@ const DeliveryWorkspace = (() => {
       if(data.type==='workspace-host-state'){
         importerBusy=!!data.busy;importerCurrent=data.current||null;
         node('deliveryMake').disabled=false;
-        for(const id of ['deliveryPick','deliverySaveRoot','deliveryCheck','deliveryDestination'])node(id).disabled=importerBusy;
+        updateRootControls();
         presentCurrent();render();return;
       }
       if(data.type==='workspace-host-resources'){resources=data.resources||[];presentCurrent();render();return;}
@@ -169,7 +178,7 @@ const DeliveryWorkspace = (() => {
       const button=node(id);button.disabled=true;
       try{const requested=node('deliveryRoot').value;await connect();const root=await rpc(picker?'root.pick':'root.save',picker?{}:{outputRoot:requested},120000);
         session.outputRoot=root.outputRoot;node('deliveryRoot').value=root.outputRoot||'';await refresh();message(root.cancelled?'已取消，原目录保留。':'目录已保存，之后导出直接写入此目录。');}
-      catch(e){connectionError(e);}finally{button.disabled=importerBusy;}
+      catch(e){connectionError(e);}finally{updateRootControls();}
     });
     new ResizeObserver(()=>document.documentElement.style.setProperty('--delivery-top',document.querySelector('header.top').getBoundingClientRect().height+'px')).observe(document.querySelector('header.top'));
     node('deliveryOptions').addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();node('deliveryOptions').open=false;node('deliveryOptions').querySelector('summary').focus();}});
@@ -180,8 +189,17 @@ const DeliveryWorkspace = (() => {
   return{init,open,publish,destination,beginExport,finishExport,exportFailed,get active(){return active;}};
 })();
 
+function deliveryClassification(recipe, plan, spec) {
+  const parameters=recipe.kind==='combo'?(recipe.layers||[]).map(l=>l.P||{type:l.type}):[recipe.P||{}];
+  const tail=parameters.length>0&&parameters.every(p=>familyOf(p.type)==='rise');
+  const sizes={tailS:'small',tailM:'medium',tailL:'large'};
+  let size=plan?.spec&&['small','medium','large'].includes(spec?.kind)?spec.kind:'unclassified';
+  if(size==='unclassified'&&tail&&!plan?.spec){const values=new Set(parameters.map(p=>sizes[p.type]||'unclassified'));if(values.size===1)size=[...values][0];}
+  return {category:tail?'tail':'firework',size};
+}
 function deliveryMetadata(b = null) {
   const result = {bakerVersion:VERSION, sourceKey:wbKey(), recipe:wbSnap(), duration:curDuration(), sizePlan:typeof exportScalePlan==='function'?exportScalePlan(state.P):null};
+  result.classification=deliveryClassification(result.recipe,result.sizePlan,typeof sizeSpecOf==='function'?sizeSpecOf():null);
   result.artifactDuration = b ? bakeTotal(b) : comboContentEnd();
   result.boundsM = b ? {width:b.meta.Ww*(result.sizePlan?.k||1),height:b.meta.Wh*(result.sizePlan?.k||1)} : null;
   // Render the completed product with the existing engine replay, then restore the editing state.

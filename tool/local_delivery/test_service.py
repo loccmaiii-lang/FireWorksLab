@@ -43,10 +43,12 @@ class ServiceTests(unittest.TestCase):
         _, data = self.request('/api/session')
         token = json.loads(data)['token']
         self.request('/api/output-root', {'outputRoot': str(Path(self.tmp.name) / 'output')}, token=token)
-        status, data = self.request('/api/deliveries?name=Test', pack(), token=token, raw=True)
+        raw = pack()
+        status, data = self.request('/api/deliveries?name=Test', raw, token=token, raw=True)
         self.assertEqual(status, 201)
         r = json.loads(data)
-        self.assertEqual(self.request('/api/deliveries/' + r['deliveryId'] + '/T_Test.png')[1], b'original-png')
+        self.assertEqual(self.request('/api/deliveries/' + r['deliveryId'] + '/PC/T_Test.png')[1], b'original-png')
+        self.assertEqual(Path(r['latestExport']['path']).read_bytes(), raw)
         self.assertEqual(self.request('/api/resources', origin='http://127.0.0.1:8025')[0], 200)
         for path, data, origin, key in [('/api/session', None, 'http://127.0.0.1:8025', None), ('/api/output-root', {}, 'https://evil.example', token), ('/api/output-root', {}, self.base, None)]:
             with self.assertRaises(urllib.error.HTTPError) as ctx:
