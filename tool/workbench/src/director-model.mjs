@@ -1,5 +1,6 @@
 import {compileSubTemplate,validateSubTemplates} from './subtemplate-model.mjs';
 import {compactDirectorArrays} from './director-compact.mjs';
+import {nameDirectorArrays} from './director-naming.mjs';
 const clone=v=>structuredClone(v),round=v=>{if(!Number.isFinite(v))throw Error('时序包含无效数值');return Math.round(v*1e6)/1e6};
 const vec=(x=0,y=x,z=x)=>({X:x,Y:y,Z:z}),rot=()=>({Pitch:0,Yaw:0,Roll:0});
 const filter=()=>({PlatformFlags:14,MinQualityLevel:'EQuality_VeryLow'});
@@ -37,8 +38,10 @@ function compileLegacy(doc,events,target,mapping={}){
  }
  for(const group of Object.keys(groups))if(byGroup[group].length)arrays.EffectScheduleGroups.push({GroupName:group,Slots:byGroup[group].sort((a,b)=>a.StartTime-b.StartTime)});
  const compact=compactDirectorArrays(arrays);Object.assign(arrays,compact.arrays);
+ const named=issues.length?null:nameDirectorArrays(arrays);if(named)Object.assign(arrays,named.arrays);
+ const exportNames=new Map(named?.audit.subTemplates.map(x=>[x.from,x.to])||[]);
  const summary={...compact.stats,eventCount:events.length,subTemplates:arrays.EffectSubTemplates.length,templates:arrays.EffectTemplates.length,groups:arrays.EffectScheduleGroups.length,scheduleSlots:arrays.EffectScheduleGroups.reduce((n,g)=>n+g.Slots.length,0)};
- return {arrays,issues:[...new Set(issues)],summary,manifest:{format:'df.director-delivery/1',status:issues.length?'blocked_missing_mapping':'property_text_ready_UE_unverified',replaceEffectArrays:true,target:target?.target?.path,sourceLibrary:target?.sourceLibrary,mappingAudit:used.map(id=>({templateId:id,sourceIndex:mapping[id]?.sourceIndex,sourceName:catalog.get(mapping[id]?.source)?.sub.TemplateName,exportName:catalog.get(mapping[id]?.source)?.exportName,note:mapping[id]?.note})),pointNumbering:0,duration:doc.meta.duration,musicOffset:doc.meta.musicOffset||0,summary,issues:[...new Set(issues)],...arrays}};
+ return {arrays,issues:[...new Set(issues)],summary,manifest:{format:'df.director-delivery/1',status:issues.length?'blocked_missing_mapping':'property_text_ready_UE_unverified',replaceEffectArrays:true,target:target?.target?.path,sourceLibrary:target?.sourceLibrary,templateNaming:named?.audit,mappingAudit:used.map(id=>({templateId:id,sourceIndex:mapping[id]?.sourceIndex,sourceName:catalog.get(mapping[id]?.source)?.sub.TemplateName,exportName:exportNames.get(catalog.get(mapping[id]?.source)?.exportName)||catalog.get(mapping[id]?.source)?.exportName,note:mapping[id]?.note})),pointNumbering:0,duration:doc.meta.duration,musicOffset:doc.meta.musicOffset||0,summary,issues:[...new Set(issues)],...arrays}};
 }
 
 export function compileDirector(doc,events,target,mapping={}){

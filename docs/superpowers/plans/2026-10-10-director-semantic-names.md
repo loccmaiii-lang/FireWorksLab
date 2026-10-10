@@ -1,6 +1,6 @@
 # 导演三表花型命名实施计划
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 > 本任务已授权执行，直接在当前对话落实；未安装上述技能，不另开对话或改动工具设计。
 
 **Goal:** 子模板用真实花型名，父模板及全部时序引用使用花型名开头，让 UE 搜 Lime 能找到调度名称。
@@ -29,7 +29,7 @@
 - Consumes: `{EffectSubTemplates, EffectTemplates, EffectScheduleGroups}`，原生条目使用 `FXResourceId`、`SubTemplateName`、`TemplateName`。
 - Produces: `nameDirectorArrays(input) -> {arrays, audit}`；`audit.subTemplates`、`audit.templates` 每项为 `{from,to}`。`audit.scheme='effect_group_cue_variant/1'`。
 
-- [ ] 写引用闭包及完整播放展开等价测试，再运行确认缺实现失败。
+- [x] 写引用闭包及完整播放展开等价测试，再运行确认缺实现失败。
 
 ```js
 const before = resolveCalls(input);
@@ -40,8 +40,8 @@ assert.ok(arrays.EffectScheduleGroups.flatMap(g=>g.Slots).some(s=>/^Lime_P_C018_
 assert.deepEqual(nameDirectorArrays(arrays).arrays,arrays);
 ```
 
-- [ ] 实现命名：从资源ID去掉 `P_EFX_FireWorks_` 前缀和数字后缀；球花尾缀不参与主花型名；纯尾缀使用 TrailSmall/Medium/Large；扇形按束数与有序条目时间识别 Left/Right/Center。重名保留独立子模板，以 V02/V03 后缀区分。父模板从引用花型、实际分组、原 C 编号、01 起序号组成；混合父模板连接完整花型名。
-- [ ] 编译器去重后在无阻断问题时统一应用；更新 mappingAudit.exportName 和 templateNaming。缺映射仍返回既有阻断结果，不能变为异常或假交付。
+- [x] 实现命名：从资源ID去掉 `P_EFX_FireWorks_` 前缀和数字后缀；球花尾缀不参与主花型名；纯尾缀使用 TrailSmall/Medium/Large；扇形按束数与有序条目时间识别 Left/Right/Center。重名保留独立子模板，以 V02/V03 后缀区分。父模板从引用花型、实际分组、原 C 编号、01 起序号组成；混合父模板连接完整花型名。
+- [x] 编译器去重后在无阻断问题时统一应用；更新 mappingAudit.exportName 和 templateNaming。缺映射仍返回既有阻断结果，不能变为异常或假交付。
 
 ```js
 const named = issues.length ? null : nameDirectorArrays(arrays);
@@ -49,7 +49,7 @@ if (named) Object.assign(arrays,named.arrays);
 const exportedNames = new Map(named?.audit.subTemplates.map(x=>[x.from,x.to]) || []);
 ```
 
-- [ ] 运行 `node --test tests/director-naming.test.mjs tests/director-source.test.mjs tests/fixed-director.test.mjs`，覆盖不同版本、大小写冲突、混合模板、R03三档展开完全等价。
+- [x] 运行 `node --test tests/director-naming.test.mjs tests/director-source.test.mjs tests/fixed-director.test.mjs`，覆盖不同版本、大小写冲突、混合模板、R03三档展开完全等价。
 
 ### Task 2: 发布、实际交付、记录
 
@@ -64,11 +64,13 @@ const exportedNames = new Map(named?.audit.subTemplates.map(x=>[x.from,x.to]) ||
 - Consumes: Task1唯一编译器的语义命名三表；现有 `自动导入 UE` 双目标导入器。
 - Produces: v16.0.8，本机8025当前节目生成、复制、下载和自动导入相同命名；正确导演_2蓝图默认值和对应场景实例读回完全一致。
 
-- [ ] 更新规范和版本；旧三表本机备份后，仅替换三档名称及审计映射。
-- [ ] 运行 `npm run release` 完成核心/包装/Python发布检查，核对稳定离线文件相同SHA。
-- [ ] 在8025刷新当前节目，打开交付的完整JSON确认22子模板/62父模板/149时序及全部新名称；可读DOM获取三表，不读取隐藏应用状态。
-- [ ] 备份导演_2 CDO及所属场景实例；从实际交付按钮导入，保存蓝图；读回完整三表比对本轮输出，其他配置不变。场景关卡含用户其他改动，不替用户保存整个子关卡。
-- [ ] 保存真实入口截图、名称映射和读回证据，区分已导入/已保存与尚未UE实播。
-- [ ] 检查范围，`git fetch origin` 后仅加入本任务文件，提交推送并核对远端SHA。
+- [x] 更新规范和版本；旧三表本机备份后，仅替换三档名称及审计映射。
+- [x] 运行 `npm run release` 完成核心/包装/Python发布检查，核对稳定离线文件相同SHA。
+- [x] 在8025刷新当前节目，打开交付的完整JSON确认22子模板/62父模板/149时序及全部新名称；可读DOM获取三表，不读取隐藏应用状态。
+- [x] 备份导演_2 CDO及所属场景实例；从实际交付按钮导入，保存蓝图；读回完整三表比对本轮输出，其他配置不变。场景关卡含用户其他改动，不替用户保存整个子关卡。
+- [x] 保存真实入口截图、名称映射和读回证据，区分已导入/已保存与尚未UE实播。
+- [x] 检查范围，`git fetch origin` 后仅加入本任务文件，提交推送并核对远端SHA。
 
 自评：所有本轮要求均由以上两任务覆盖；不另编音乐、不改UI、不改原生配方。性能、UE实播和艺术验收仍属原有待验事项。
+
+执行结果：v16.0.8命名、三档文件、140/38/5发布检查、8025双目标导入及完整原生读回均通过。蓝图已保存，子关卡与UE实播待验。认领6d29b44f已推；结果提交见对话记录。

@@ -1,0 +1,1189 @@
+{
+  "time": "2026-10-10T13:26:30.231Z",
+  "version": "16.0.8",
+  "tiers": {
+    "high": {
+      "summary": {
+        "originalTemplates": 149,
+        "uniqueTemplates": 62,
+        "originalEntries": 410,
+        "uniqueEntries": 159,
+        "eventCount": 410,
+        "subTemplates": 22,
+        "templates": 62,
+        "groups": 2,
+        "scheduleSlots": 149
+      },
+      "naming": {
+        "scheme": "effect_group_cue_variant/1",
+        "subTemplates": [
+          {
+            "from": "NYR03_Red1_v1",
+            "to": "FanComet"
+          },
+          {
+            "from": "NYR03_Silver5_v1",
+            "to": "FanSilver5"
+          },
+          {
+            "from": "NYR03_Red5_v1",
+            "to": "FanComet5"
+          },
+          {
+            "from": "NYR03_SilverChry_v1",
+            "to": "SilverChry"
+          },
+          {
+            "from": "NYR03_Strobe_v1",
+            "to": "Strobe"
+          },
+          {
+            "from": "NYR03_Lime_v1",
+            "to": "Lime"
+          },
+          {
+            "from": "NYR03_OrangeGlitter_v1",
+            "to": "OrangeGlitter"
+          },
+          {
+            "from": "NYR03_GoldCrackle_v1",
+            "to": "GoldCrackle"
+          },
+          {
+            "from": "NYR03_Crackle_v1",
+            "to": "Crackle"
+          },
+          {
+            "from": "NYR03_Red9_v1",
+            "to": "FanComet9Left"
+          },
+          {
+            "from": "NYR03_Red9R_v1",
+            "to": "FanComet9Right"
+          },
+          {
+            "from": "NYR03_GreenPeony_v1",
+            "to": "GreenPeony"
+          },
+          {
+            "from": "NYR03_GoldCoreLime_v1",
+            "to": "GoldCoreLime"
+          },
+          {
+            "from": "NYR03_GoldSpark_v1",
+            "to": "GoldSpark"
+          },
+          {
+            "from": "NYR03_Silver9_v1",
+            "to": "FanSilver9Center"
+          },
+          {
+            "from": "NYR03_GoldRayChry_v1",
+            "to": "GoldRayChry"
+          },
+          {
+            "from": "NYR03_GoldChry_v1",
+            "to": "GoldChry"
+          },
+          {
+            "from": "NYR03_Silver13_v1",
+            "to": "FanSilver13"
+          },
+          {
+            "from": "NYR03_MultiLayerChry_v1",
+            "to": "MultiLayerChry"
+          },
+          {
+            "from": "NYR03_PrismWheels_v1",
+            "to": "PrismWheels"
+          },
+          {
+            "from": "NYR03_GoldKamuro_v1",
+            "to": "GoldKamuro"
+          },
+          {
+            "from": "NYR03_SilverStrobeChry_v1",
+            "to": "SilverStrobeChry"
+          }
+        ],
+        "templates": [
+          {
+            "from": "WB_R03_C001_B",
+            "to": "FanComet_B_C001_01"
+          },
+          {
+            "from": "WB_R03_C002_B",
+            "to": "FanComet_B_C002_01"
+          },
+          {
+            "from": "WB_R03_C010_B",
+            "to": "FanComet_B_C010_01"
+          },
+          {
+            "from": "WB_R03_C011_B",
+            "to": "FanComet_B_C011_01"
+          },
+          {
+            "from": "WB_R03_C012_B",
+            "to": "FanSilver5_B_C012_01"
+          },
+          {
+            "from": "WB_R03_C013_B",
+            "to": "FanComet5_B_C013_01"
+          },
+          {
+            "from": "WB_R03_C015_P",
+            "to": "SilverChry_P_C015_01"
+          },
+          {
+            "from": "WB_R03_C016_P",
+            "to": "SilverChry_P_C016_01"
+          },
+          {
+            "from": "WB_R03_C017_P",
+            "to": "Strobe_P_C017_01"
+          },
+          {
+            "from": "WB_R03_C018_P",
+            "to": "Lime_P_C018_01"
+          },
+          {
+            "from": "WB_R03_C019_P",
+            "to": "OrangeGlitter_P_C019_01"
+          },
+          {
+            "from": "WB_R03_C020_B",
+            "to": "FanSilver5_B_C020_01"
+          },
+          {
+            "from": "WB_R03_C021_P",
+            "to": "GoldCrackle_P_C021_01"
+          },
+          {
+            "from": "WB_R03_C022_P",
+            "to": "Crackle_P_C022_01"
+          },
+          {
+            "from": "WB_R03_C023_P",
+            "to": "Strobe_P_C023_01"
+          },
+          {
+            "from": "WB_R03_C027_B",
+            "to": "FanComet9Left_B_C027_01"
+          },
+          {
+            "from": "WB_R03_C028_B",
+            "to": "FanComet9Right_B_C028_01"
+          },
+          {
+            "from": "WB_R03_C032_P",
+            "to": "GreenPeony_P_C032_01"
+          },
+          {
+            "from": "WB_R03_C033_P",
+            "to": "GoldCoreLime_P_C033_01"
+          },
+          {
+            "from": "WB_R03_C034_P",
+            "to": "GoldSpark_P_C034_01"
+          },
+          {
+            "from": "WB_R03_C035_B",
+            "to": "FanComet5_B_C035_01"
+          },
+          {
+            "from": "WB_R03_C036_B",
+            "to": "FanSilver9Center_B_C036_01"
+          },
+          {
+            "from": "WB_R03_C037_B",
+            "to": "FanComet5_B_C037_01"
+          },
+          {
+            "from": "WB_R03_C038_P",
+            "to": "GoldRayChry_P_C038_01"
+          },
+          {
+            "from": "WB_R03_C039_P",
+            "to": "GoldChry_P_C039_01"
+          },
+          {
+            "from": "WB_R03_C040_B",
+            "to": "FanComet9Left_B_C040_01"
+          },
+          {
+            "from": "WB_R03_C041_B",
+            "to": "FanComet9Right_B_C041_01"
+          },
+          {
+            "from": "WB_R03_C042_P",
+            "to": "GoldChry_P_C042_01"
+          },
+          {
+            "from": "WB_R03_C043_B",
+            "to": "FanSilver13_B_C043_01"
+          },
+          {
+            "from": "WB_R03_C044_P",
+            "to": "MultiLayerChry_P_C044_01"
+          },
+          {
+            "from": "WB_R03_C045_B",
+            "to": "FanComet9Right_B_C045_01"
+          },
+          {
+            "from": "WB_R03_C048_P",
+            "to": "PrismWheels_P_C048_01"
+          },
+          {
+            "from": "WB_R03_C049_P",
+            "to": "MultiLayerChry_P_C049_01"
+          },
+          {
+            "from": "WB_R03_C050_B",
+            "to": "FanSilver9Center_B_C050_01"
+          },
+          {
+            "from": "WB_R03_C051_P",
+            "to": "GoldKamuro_P_C051_01"
+          },
+          {
+            "from": "WB_R03_C052_P",
+            "to": "GoldSpark_P_C052_01"
+          },
+          {
+            "from": "WB_R03_C053_B",
+            "to": "FanSilver13_B_C053_01"
+          },
+          {
+            "from": "WB_R03_C054_P",
+            "to": "SilverChry_P_C054_01"
+          },
+          {
+            "from": "WB_R03_C056_P",
+            "to": "Lime_P_C056_01"
+          },
+          {
+            "from": "WB_R03_C057_P",
+            "to": "OrangeGlitter_P_C057_01"
+          },
+          {
+            "from": "WB_R03_C071_P",
+            "to": "GoldKamuro_P_C071_01"
+          },
+          {
+            "from": "WB_R03_C072_P",
+            "to": "GoldChry_P_C072_01"
+          },
+          {
+            "from": "WB_R03_C073_P",
+            "to": "PrismWheels_P_C073_01"
+          },
+          {
+            "from": "WB_R03_C074_B",
+            "to": "FanSilver13_B_C074_01"
+          },
+          {
+            "from": "WB_R03_C077_P",
+            "to": "SilverStrobeChry_P_C077_01"
+          },
+          {
+            "from": "WB_R03_C078_P",
+            "to": "GoldRayChry_P_C078_01"
+          },
+          {
+            "from": "WB_R03_C079_B",
+            "to": "FanComet9Left_B_C079_01"
+          },
+          {
+            "from": "WB_R03_C080_B",
+            "to": "FanComet9Right_B_C080_01"
+          },
+          {
+            "from": "WB_R03_C082_B",
+            "to": "FanComet9Left_B_C082_01"
+          },
+          {
+            "from": "WB_R03_C083_B",
+            "to": "FanComet9Right_B_C083_01"
+          },
+          {
+            "from": "WB_R03_C084_P",
+            "to": "PrismWheels_P_C084_01"
+          },
+          {
+            "from": "WB_R03_C085_P",
+            "to": "GreenPeony_P_C085_01"
+          },
+          {
+            "from": "WB_R03_C086_P",
+            "to": "MultiLayerChry_P_C086_01"
+          },
+          {
+            "from": "WB_R03_C087_B",
+            "to": "FanSilver9Center_B_C087_01"
+          },
+          {
+            "from": "WB_R03_C093_P",
+            "to": "SilverStrobeChry_P_C093_01"
+          },
+          {
+            "from": "WB_R03_C094_P",
+            "to": "GoldCoreLime_P_C094_01"
+          },
+          {
+            "from": "WB_R03_C114_P",
+            "to": "GoldKamuro_P_C114_01"
+          },
+          {
+            "from": "WB_R03_C117_B",
+            "to": "FanComet5_B_C117_01"
+          },
+          {
+            "from": "WB_R03_C143_P",
+            "to": "GoldKamuro_P_C143_01"
+          },
+          {
+            "from": "WB_R03_C144_P",
+            "to": "SilverStrobeChry_P_C144_01"
+          },
+          {
+            "from": "WB_R03_C146_B",
+            "to": "FanSilver9Center_B_C146_01"
+          },
+          {
+            "from": "WB_R03_C148_P",
+            "to": "SilverChry_P_C148_01"
+          }
+        ]
+      },
+      "actualUIEqual": true
+    },
+    "medium": {
+      "summary": {
+        "originalTemplates": 149,
+        "uniqueTemplates": 65,
+        "originalEntries": 353,
+        "uniqueEntries": 151,
+        "eventCount": 353,
+        "subTemplates": 22,
+        "templates": 65,
+        "groups": 2,
+        "scheduleSlots": 149
+      },
+      "naming": {
+        "scheme": "effect_group_cue_variant/1",
+        "subTemplates": [
+          {
+            "from": "NYR03_Red1_v1",
+            "to": "FanComet"
+          },
+          {
+            "from": "NYR03_Silver5_v1",
+            "to": "FanSilver5"
+          },
+          {
+            "from": "NYR03_Red5_v1",
+            "to": "FanComet5"
+          },
+          {
+            "from": "NYR03_SilverChry_v1",
+            "to": "SilverChry"
+          },
+          {
+            "from": "NYR03_Strobe_v1",
+            "to": "Strobe"
+          },
+          {
+            "from": "NYR03_Lime_v1",
+            "to": "Lime"
+          },
+          {
+            "from": "NYR03_OrangeGlitter_v1",
+            "to": "OrangeGlitter"
+          },
+          {
+            "from": "NYR03_GoldCrackle_v1",
+            "to": "GoldCrackle"
+          },
+          {
+            "from": "NYR03_Crackle_v1",
+            "to": "Crackle"
+          },
+          {
+            "from": "NYR03_Red9_v1",
+            "to": "FanComet9Left"
+          },
+          {
+            "from": "NYR03_Red9R_v1",
+            "to": "FanComet9Right"
+          },
+          {
+            "from": "NYR03_GreenPeony_v1",
+            "to": "GreenPeony"
+          },
+          {
+            "from": "NYR03_GoldCoreLime_v1",
+            "to": "GoldCoreLime"
+          },
+          {
+            "from": "NYR03_GoldSpark_v1",
+            "to": "GoldSpark"
+          },
+          {
+            "from": "NYR03_Silver9_v1",
+            "to": "FanSilver9Center"
+          },
+          {
+            "from": "NYR03_GoldRayChry_v1",
+            "to": "GoldRayChry"
+          },
+          {
+            "from": "NYR03_GoldChry_v1",
+            "to": "GoldChry"
+          },
+          {
+            "from": "NYR03_Silver13_v1",
+            "to": "FanSilver13"
+          },
+          {
+            "from": "NYR03_MultiLayerChry_v1",
+            "to": "MultiLayerChry"
+          },
+          {
+            "from": "NYR03_PrismWheels_v1",
+            "to": "PrismWheels"
+          },
+          {
+            "from": "NYR03_GoldKamuro_v1",
+            "to": "GoldKamuro"
+          },
+          {
+            "from": "NYR03_SilverStrobeChry_v1",
+            "to": "SilverStrobeChry"
+          }
+        ],
+        "templates": [
+          {
+            "from": "WB_R03_C001_B",
+            "to": "FanComet_B_C001_01"
+          },
+          {
+            "from": "WB_R03_C002_B",
+            "to": "FanComet_B_C002_01"
+          },
+          {
+            "from": "WB_R03_C010_B",
+            "to": "FanComet_B_C010_01"
+          },
+          {
+            "from": "WB_R03_C011_B",
+            "to": "FanComet_B_C011_01"
+          },
+          {
+            "from": "WB_R03_C012_B",
+            "to": "FanSilver5_B_C012_01"
+          },
+          {
+            "from": "WB_R03_C013_B",
+            "to": "FanComet5_B_C013_01"
+          },
+          {
+            "from": "WB_R03_C015_P",
+            "to": "SilverChry_P_C015_01"
+          },
+          {
+            "from": "WB_R03_C016_P",
+            "to": "SilverChry_P_C016_01"
+          },
+          {
+            "from": "WB_R03_C017_P",
+            "to": "Strobe_P_C017_01"
+          },
+          {
+            "from": "WB_R03_C018_P",
+            "to": "Lime_P_C018_01"
+          },
+          {
+            "from": "WB_R03_C019_P",
+            "to": "OrangeGlitter_P_C019_01"
+          },
+          {
+            "from": "WB_R03_C020_B",
+            "to": "FanSilver5_B_C020_01"
+          },
+          {
+            "from": "WB_R03_C021_P",
+            "to": "GoldCrackle_P_C021_01"
+          },
+          {
+            "from": "WB_R03_C022_P",
+            "to": "Crackle_P_C022_01"
+          },
+          {
+            "from": "WB_R03_C023_P",
+            "to": "Strobe_P_C023_01"
+          },
+          {
+            "from": "WB_R03_C027_B",
+            "to": "FanComet9Left_B_C027_01"
+          },
+          {
+            "from": "WB_R03_C028_B",
+            "to": "FanComet9Right_B_C028_01"
+          },
+          {
+            "from": "WB_R03_C032_P",
+            "to": "GreenPeony_P_C032_01"
+          },
+          {
+            "from": "WB_R03_C033_P",
+            "to": "GoldCoreLime_P_C033_01"
+          },
+          {
+            "from": "WB_R03_C034_P",
+            "to": "GoldSpark_P_C034_01"
+          },
+          {
+            "from": "WB_R03_C035_B",
+            "to": "FanComet5_B_C035_01"
+          },
+          {
+            "from": "WB_R03_C036_B",
+            "to": "FanSilver9Center_B_C036_01"
+          },
+          {
+            "from": "WB_R03_C037_B",
+            "to": "FanComet5_B_C037_01"
+          },
+          {
+            "from": "WB_R03_C038_P",
+            "to": "GoldRayChry_P_C038_01"
+          },
+          {
+            "from": "WB_R03_C039_P",
+            "to": "GoldChry_P_C039_01"
+          },
+          {
+            "from": "WB_R03_C040_B",
+            "to": "FanComet9Left_B_C040_01"
+          },
+          {
+            "from": "WB_R03_C041_B",
+            "to": "FanComet9Right_B_C041_01"
+          },
+          {
+            "from": "WB_R03_C042_P",
+            "to": "GoldChry_P_C042_01"
+          },
+          {
+            "from": "WB_R03_C043_B",
+            "to": "FanSilver13_B_C043_01"
+          },
+          {
+            "from": "WB_R03_C044_P",
+            "to": "MultiLayerChry_P_C044_01"
+          },
+          {
+            "from": "WB_R03_C045_B",
+            "to": "FanComet9Right_B_C045_01"
+          },
+          {
+            "from": "WB_R03_C048_P",
+            "to": "PrismWheels_P_C048_01"
+          },
+          {
+            "from": "WB_R03_C049_P",
+            "to": "MultiLayerChry_P_C049_01"
+          },
+          {
+            "from": "WB_R03_C050_B",
+            "to": "FanSilver9Center_B_C050_01"
+          },
+          {
+            "from": "WB_R03_C051_P",
+            "to": "GoldKamuro_P_C051_01"
+          },
+          {
+            "from": "WB_R03_C052_P",
+            "to": "GoldSpark_P_C052_01"
+          },
+          {
+            "from": "WB_R03_C053_B",
+            "to": "FanSilver13_B_C053_01"
+          },
+          {
+            "from": "WB_R03_C054_P",
+            "to": "SilverChry_P_C054_01"
+          },
+          {
+            "from": "WB_R03_C056_P",
+            "to": "Lime_P_C056_01"
+          },
+          {
+            "from": "WB_R03_C057_P",
+            "to": "OrangeGlitter_P_C057_01"
+          },
+          {
+            "from": "WB_R03_C071_P",
+            "to": "GoldKamuro_P_C071_01"
+          },
+          {
+            "from": "WB_R03_C072_P",
+            "to": "GoldChry_P_C072_01"
+          },
+          {
+            "from": "WB_R03_C073_P",
+            "to": "PrismWheels_P_C073_01"
+          },
+          {
+            "from": "WB_R03_C074_B",
+            "to": "FanSilver13_B_C074_01"
+          },
+          {
+            "from": "WB_R03_C077_P",
+            "to": "SilverStrobeChry_P_C077_01"
+          },
+          {
+            "from": "WB_R03_C078_P",
+            "to": "GoldRayChry_P_C078_01"
+          },
+          {
+            "from": "WB_R03_C079_B",
+            "to": "FanComet9Left_B_C079_01"
+          },
+          {
+            "from": "WB_R03_C080_B",
+            "to": "FanComet9Right_B_C080_01"
+          },
+          {
+            "from": "WB_R03_C082_B",
+            "to": "FanComet9Left_B_C082_01"
+          },
+          {
+            "from": "WB_R03_C083_B",
+            "to": "FanComet9Right_B_C083_01"
+          },
+          {
+            "from": "WB_R03_C084_P",
+            "to": "PrismWheels_P_C084_01"
+          },
+          {
+            "from": "WB_R03_C085_P",
+            "to": "GreenPeony_P_C085_01"
+          },
+          {
+            "from": "WB_R03_C086_P",
+            "to": "MultiLayerChry_P_C086_01"
+          },
+          {
+            "from": "WB_R03_C087_B",
+            "to": "FanSilver9Center_B_C087_01"
+          },
+          {
+            "from": "WB_R03_C093_P",
+            "to": "SilverStrobeChry_P_C093_01"
+          },
+          {
+            "from": "WB_R03_C094_P",
+            "to": "GoldCoreLime_P_C094_01"
+          },
+          {
+            "from": "WB_R03_C114_P",
+            "to": "GoldKamuro_P_C114_01"
+          },
+          {
+            "from": "WB_R03_C117_B",
+            "to": "FanComet5_B_C117_01"
+          },
+          {
+            "from": "WB_R03_C138_P",
+            "to": "GoldKamuro_P_C138_01"
+          },
+          {
+            "from": "WB_R03_C141_B",
+            "to": "FanSilver13_B_C141_01"
+          },
+          {
+            "from": "WB_R03_C142_B",
+            "to": "FanComet5_B_C142_01"
+          },
+          {
+            "from": "WB_R03_C143_P",
+            "to": "GoldKamuro_P_C143_01"
+          },
+          {
+            "from": "WB_R03_C144_P",
+            "to": "SilverStrobeChry_P_C144_01"
+          },
+          {
+            "from": "WB_R03_C146_B",
+            "to": "FanSilver9Center_B_C146_01"
+          },
+          {
+            "from": "WB_R03_C148_P",
+            "to": "SilverChry_P_C148_01"
+          }
+        ]
+      },
+      "actualUIEqual": null
+    },
+    "low": {
+      "summary": {
+        "originalTemplates": 149,
+        "uniqueTemplates": 59,
+        "originalEntries": 158,
+        "uniqueEntries": 62,
+        "eventCount": 158,
+        "subTemplates": 22,
+        "templates": 59,
+        "groups": 2,
+        "scheduleSlots": 149
+      },
+      "naming": {
+        "scheme": "effect_group_cue_variant/1",
+        "subTemplates": [
+          {
+            "from": "NYR03_Red1_v1",
+            "to": "FanComet"
+          },
+          {
+            "from": "NYR03_Silver5_v1",
+            "to": "FanSilver5"
+          },
+          {
+            "from": "NYR03_Red5_v1",
+            "to": "FanComet5"
+          },
+          {
+            "from": "NYR03_SilverChry_v1",
+            "to": "SilverChry"
+          },
+          {
+            "from": "NYR03_Strobe_v1",
+            "to": "Strobe"
+          },
+          {
+            "from": "NYR03_Lime_v1",
+            "to": "Lime"
+          },
+          {
+            "from": "NYR03_OrangeGlitter_v1",
+            "to": "OrangeGlitter"
+          },
+          {
+            "from": "NYR03_GoldCrackle_v1",
+            "to": "GoldCrackle"
+          },
+          {
+            "from": "NYR03_Crackle_v1",
+            "to": "Crackle"
+          },
+          {
+            "from": "NYR03_Red9_v1",
+            "to": "FanComet9Left"
+          },
+          {
+            "from": "NYR03_Red9R_v1",
+            "to": "FanComet9Right"
+          },
+          {
+            "from": "NYR03_GreenPeony_v1",
+            "to": "GreenPeony"
+          },
+          {
+            "from": "NYR03_GoldCoreLime_v1",
+            "to": "GoldCoreLime"
+          },
+          {
+            "from": "NYR03_GoldSpark_v1",
+            "to": "GoldSpark"
+          },
+          {
+            "from": "NYR03_Silver9_v1",
+            "to": "FanSilver9Center"
+          },
+          {
+            "from": "NYR03_GoldRayChry_v1",
+            "to": "GoldRayChry"
+          },
+          {
+            "from": "NYR03_GoldChry_v1",
+            "to": "GoldChry"
+          },
+          {
+            "from": "NYR03_Silver13_v1",
+            "to": "FanSilver13"
+          },
+          {
+            "from": "NYR03_MultiLayerChry_v1",
+            "to": "MultiLayerChry"
+          },
+          {
+            "from": "NYR03_PrismWheels_v1",
+            "to": "PrismWheels"
+          },
+          {
+            "from": "NYR03_GoldKamuro_v1",
+            "to": "GoldKamuro"
+          },
+          {
+            "from": "NYR03_SilverStrobeChry_v1",
+            "to": "SilverStrobeChry"
+          }
+        ],
+        "templates": [
+          {
+            "from": "WB_R03_C001_B",
+            "to": "FanComet_B_C001_01"
+          },
+          {
+            "from": "WB_R03_C002_B",
+            "to": "FanComet_B_C002_01"
+          },
+          {
+            "from": "WB_R03_C010_B",
+            "to": "FanComet_B_C010_01"
+          },
+          {
+            "from": "WB_R03_C012_B",
+            "to": "FanSilver5_B_C012_01"
+          },
+          {
+            "from": "WB_R03_C013_B",
+            "to": "FanComet5_B_C013_01"
+          },
+          {
+            "from": "WB_R03_C015_P",
+            "to": "SilverChry_P_C015_01"
+          },
+          {
+            "from": "WB_R03_C016_P",
+            "to": "SilverChry_P_C016_01"
+          },
+          {
+            "from": "WB_R03_C017_P",
+            "to": "Strobe_P_C017_01"
+          },
+          {
+            "from": "WB_R03_C018_P",
+            "to": "Lime_P_C018_01"
+          },
+          {
+            "from": "WB_R03_C019_P",
+            "to": "OrangeGlitter_P_C019_01"
+          },
+          {
+            "from": "WB_R03_C020_B",
+            "to": "FanSilver5_B_C020_01"
+          },
+          {
+            "from": "WB_R03_C021_P",
+            "to": "GoldCrackle_P_C021_01"
+          },
+          {
+            "from": "WB_R03_C022_P",
+            "to": "Crackle_P_C022_01"
+          },
+          {
+            "from": "WB_R03_C023_P",
+            "to": "Strobe_P_C023_01"
+          },
+          {
+            "from": "WB_R03_C027_B",
+            "to": "FanComet9Left_B_C027_01"
+          },
+          {
+            "from": "WB_R03_C028_B",
+            "to": "FanComet9Right_B_C028_01"
+          },
+          {
+            "from": "WB_R03_C032_P",
+            "to": "GreenPeony_P_C032_01"
+          },
+          {
+            "from": "WB_R03_C033_P",
+            "to": "GoldCoreLime_P_C033_01"
+          },
+          {
+            "from": "WB_R03_C034_P",
+            "to": "GoldSpark_P_C034_01"
+          },
+          {
+            "from": "WB_R03_C035_B",
+            "to": "FanComet5_B_C035_01"
+          },
+          {
+            "from": "WB_R03_C036_B",
+            "to": "FanSilver9Center_B_C036_01"
+          },
+          {
+            "from": "WB_R03_C037_B",
+            "to": "FanComet5_B_C037_01"
+          },
+          {
+            "from": "WB_R03_C038_P",
+            "to": "GoldRayChry_P_C038_01"
+          },
+          {
+            "from": "WB_R03_C039_P",
+            "to": "GoldChry_P_C039_01"
+          },
+          {
+            "from": "WB_R03_C041_B",
+            "to": "FanComet9Right_B_C041_01"
+          },
+          {
+            "from": "WB_R03_C043_B",
+            "to": "FanSilver13_B_C043_01"
+          },
+          {
+            "from": "WB_R03_C044_P",
+            "to": "MultiLayerChry_P_C044_01"
+          },
+          {
+            "from": "WB_R03_C045_B",
+            "to": "FanComet9Right_B_C045_01"
+          },
+          {
+            "from": "WB_R03_C048_P",
+            "to": "PrismWheels_P_C048_01"
+          },
+          {
+            "from": "WB_R03_C049_P",
+            "to": "MultiLayerChry_P_C049_01"
+          },
+          {
+            "from": "WB_R03_C050_B",
+            "to": "FanSilver9Center_B_C050_01"
+          },
+          {
+            "from": "WB_R03_C051_P",
+            "to": "GoldKamuro_P_C051_01"
+          },
+          {
+            "from": "WB_R03_C052_P",
+            "to": "GoldSpark_P_C052_01"
+          },
+          {
+            "from": "WB_R03_C053_B",
+            "to": "FanSilver13_B_C053_01"
+          },
+          {
+            "from": "WB_R03_C054_P",
+            "to": "SilverChry_P_C054_01"
+          },
+          {
+            "from": "WB_R03_C056_P",
+            "to": "Lime_P_C056_01"
+          },
+          {
+            "from": "WB_R03_C057_P",
+            "to": "OrangeGlitter_P_C057_01"
+          },
+          {
+            "from": "WB_R03_C071_P",
+            "to": "GoldKamuro_P_C071_01"
+          },
+          {
+            "from": "WB_R03_C072_P",
+            "to": "GoldChry_P_C072_01"
+          },
+          {
+            "from": "WB_R03_C073_P",
+            "to": "PrismWheels_P_C073_01"
+          },
+          {
+            "from": "WB_R03_C074_B",
+            "to": "FanSilver13_B_C074_01"
+          },
+          {
+            "from": "WB_R03_C077_P",
+            "to": "SilverStrobeChry_P_C077_01"
+          },
+          {
+            "from": "WB_R03_C079_B",
+            "to": "FanComet9Left_B_C079_01"
+          },
+          {
+            "from": "WB_R03_C082_B",
+            "to": "FanComet9Left_B_C082_01"
+          },
+          {
+            "from": "WB_R03_C083_B",
+            "to": "FanComet9Right_B_C083_01"
+          },
+          {
+            "from": "WB_R03_C084_P",
+            "to": "PrismWheels_P_C084_01"
+          },
+          {
+            "from": "WB_R03_C085_P",
+            "to": "GreenPeony_P_C085_01"
+          },
+          {
+            "from": "WB_R03_C086_P",
+            "to": "MultiLayerChry_P_C086_01"
+          },
+          {
+            "from": "WB_R03_C087_B",
+            "to": "FanSilver9Center_B_C087_01"
+          },
+          {
+            "from": "WB_R03_C093_P",
+            "to": "SilverStrobeChry_P_C093_01"
+          },
+          {
+            "from": "WB_R03_C094_P",
+            "to": "GoldCoreLime_P_C094_01"
+          },
+          {
+            "from": "WB_R03_C114_P",
+            "to": "GoldKamuro_P_C114_01"
+          },
+          {
+            "from": "WB_R03_C116_P",
+            "to": "GoldCoreLime_P_C116_01"
+          },
+          {
+            "from": "WB_R03_C117_B",
+            "to": "FanComet5_B_C117_01"
+          },
+          {
+            "from": "WB_R03_C139_P",
+            "to": "SilverStrobeChry_P_C139_01"
+          },
+          {
+            "from": "WB_R03_C141_B",
+            "to": "FanSilver13_B_C141_01"
+          },
+          {
+            "from": "WB_R03_C142_B",
+            "to": "FanComet5_B_C142_01"
+          },
+          {
+            "from": "WB_R03_C143_P",
+            "to": "GoldKamuro_P_C143_01"
+          },
+          {
+            "from": "WB_R03_C148_P",
+            "to": "SilverChry_P_C148_01"
+          }
+        ]
+      },
+      "actualUIEqual": null
+    }
+  },
+  "native": [
+    {
+      "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_Failed_NewYearFireworks_ShowDirector_2.Default__BP_Failed_NewYearFireworks_ShowDirector_2_C",
+      "class": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_Failed_NewYearFireworks_ShowDirector_2.BP_Failed_NewYearFireworks_ShowDirector_2_C",
+      "actorLabel": "FailedNewYear_ShowDirector",
+      "directorId": "FailedNewYear",
+      "active": false,
+      "arraysMatchUI": true,
+      "otherConfigUnchanged": true,
+      "counts": [
+        22,
+        62,
+        149
+      ],
+      "limeSlots": [
+        {
+          "start": 16.700000762939453,
+          "name": "Lime_P_C018_01"
+        },
+        {
+          "start": 30.600000381469727,
+          "name": "Lime_P_C018_01"
+        },
+        {
+          "start": 48.400001525878906,
+          "name": "GoldCoreLime_P_C033_01"
+        },
+        {
+          "start": 87.0999984741211,
+          "name": "Lime_P_C056_01"
+        },
+        {
+          "start": 99.9000015258789,
+          "name": "GoldCoreLime_P_C033_01"
+        },
+        {
+          "start": 140,
+          "name": "GoldCoreLime_P_C094_01"
+        },
+        {
+          "start": 167,
+          "name": "GoldCoreLime_P_C033_01"
+        },
+        {
+          "start": 189.60000610351562,
+          "name": "GoldCoreLime_P_C094_01"
+        }
+      ]
+    },
+    {
+      "path": "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FailedFireworkOnDam_.MA5_FailedFireworkOnDam_:PersistentLevel.BP_Failed_NewYearFireworks_ShowDirector_7",
+      "class": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_Failed_NewYearFireworks_ShowDirector_2.BP_Failed_NewYearFireworks_ShowDirector_2_C",
+      "actorLabel": "BP_Failed_NewYearFireworks_ShowDirector_2",
+      "directorId": "FailedNewYear",
+      "active": false,
+      "arraysMatchUI": true,
+      "otherConfigUnchanged": true,
+      "counts": [
+        22,
+        62,
+        149
+      ],
+      "limeSlots": [
+        {
+          "start": 16.700000762939453,
+          "name": "Lime_P_C018_01"
+        },
+        {
+          "start": 30.600000381469727,
+          "name": "Lime_P_C018_01"
+        },
+        {
+          "start": 48.400001525878906,
+          "name": "GoldCoreLime_P_C033_01"
+        },
+        {
+          "start": 87.0999984741211,
+          "name": "Lime_P_C056_01"
+        },
+        {
+          "start": 99.9000015258789,
+          "name": "GoldCoreLime_P_C033_01"
+        },
+        {
+          "start": 140,
+          "name": "GoldCoreLime_P_C094_01"
+        },
+        {
+          "start": 167,
+          "name": "GoldCoreLime_P_C033_01"
+        },
+        {
+          "start": 189.60000610351562,
+          "name": "GoldCoreLime_P_C094_01"
+        }
+      ]
+    }
+  ],
+  "import": {
+    "entry": "8025 自动导入 UE",
+    "verified": true,
+    "blueprintSaved": true,
+    "needsLevelSave": true,
+    "uePlaybackVerified": false
+  },
+  "htmlSHA": "20f87e956fc4641bb34c0fbad530b765d92335e2dd8eabe5763964ac38b833de",
+  "checks": {
+    "core": 140,
+    "packaging": 38,
+    "python": 5,
+    "passed": true
+  }
+}

@@ -2,7 +2,7 @@
 
 2026-10-10，编排demo（24），8025 v16.0.7 / NewYearFireWorks_v01 / R03 / 高配。
 
-**结论：当前Lime、Crackle、GoldCoreLime已进入播放时序，不需要为补引用重编整场。** 此次从原生`EffectScheduleGroups.Slots`逐级追到父模板、子模板和实际`FXResourceId`，并核对ResourceFX及点位绑定；不是用“库中有这个名字”代替调度验证。
+**历史只读结论：Lime、Crackle、GoldCoreLime存在有效调度引用。** 但这没有解决用户提出的“UE按花型名搜索时，时序中看不到父模板名”的问题。用户随后明确要求统一命名，v16.0.8已更新三表名字和引用，并实际双目标导入，最新证据见 [命名核对](director-naming-audit.md)。以下保留v16.0.7原生追踪记录。
 
 | 资源（8025花型名） | 时序中的父模板 | 片段起点（节目秒数） | 片段数 / 单点调用数 |
 |---|---|---|---:|

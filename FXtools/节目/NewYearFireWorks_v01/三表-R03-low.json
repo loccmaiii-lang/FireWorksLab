@@ -9,133 +9,133 @@
     {
       "templateId": "R03_Red1",
       "sourceName": "R03 · 红彗星·单束",
-      "exportName": "NYR03_Red1_v1",
+      "exportName": "FanComet",
       "note": "固定子模板 NYR03_Red1@1"
     },
     {
       "templateId": "R03_Silver5",
       "sourceName": "R03 · 银星·五束窄扇",
-      "exportName": "NYR03_Silver5_v1",
+      "exportName": "FanSilver5",
       "note": "固定子模板 NYR03_Silver5@1"
     },
     {
       "templateId": "R03_Red5",
       "sourceName": "R03 · 红彗星·五束齐开",
-      "exportName": "NYR03_Red5_v1",
+      "exportName": "FanComet5",
       "note": "固定子模板 NYR03_Red5@1"
     },
     {
       "templateId": "R03_SilverChry",
       "sourceName": "R03 · 小银菊 · 90m",
-      "exportName": "NYR03_SilverChry_v1",
+      "exportName": "SilverChry",
       "note": "固定子模板 NYR03_SilverChry@1"
     },
     {
       "templateId": "R03_Strobe",
       "sourceName": "R03 · 点灭星 · 90m",
-      "exportName": "NYR03_Strobe_v1",
+      "exportName": "Strobe",
       "note": "固定子模板 NYR03_Strobe@1"
     },
     {
       "templateId": "R03_Lime",
       "sourceName": "R03 · 小青柠 · 90m",
-      "exportName": "NYR03_Lime_v1",
+      "exportName": "Lime",
       "note": "固定子模板 NYR03_Lime@1"
     },
     {
       "templateId": "R03_OrangeGlitter",
       "sourceName": "R03 · 橙辉星 · 90m",
-      "exportName": "NYR03_OrangeGlitter_v1",
+      "exportName": "OrangeGlitter",
       "note": "固定子模板 NYR03_OrangeGlitter@1"
     },
     {
       "templateId": "R03_GoldCrackle",
       "sourceName": "R03 · 金裂星 · 90m",
-      "exportName": "NYR03_GoldCrackle_v1",
+      "exportName": "GoldCrackle",
       "note": "固定子模板 NYR03_GoldCrackle@1"
     },
     {
       "templateId": "R03_Crackle",
       "sourceName": "R03 · 爆裂星 · 90m",
-      "exportName": "NYR03_Crackle_v1",
+      "exportName": "Crackle",
       "note": "固定子模板 NYR03_Crackle@1"
     },
     {
       "templateId": "R03_Red9",
       "sourceName": "R03 · 红彗星·九束左扫",
-      "exportName": "NYR03_Red9_v1",
+      "exportName": "FanComet9Left",
       "note": "固定子模板 NYR03_Red9@1"
     },
     {
       "templateId": "R03_Red9R",
       "sourceName": "R03 · 红彗星·九束右扫",
-      "exportName": "NYR03_Red9R_v1",
+      "exportName": "FanComet9Right",
       "note": "固定子模板 NYR03_Red9R@1"
     },
     {
       "templateId": "R03_GreenPeony",
       "sourceName": "R03 · 绿牡丹 · 150m",
-      "exportName": "NYR03_GreenPeony_v1",
+      "exportName": "GreenPeony",
       "note": "固定子模板 NYR03_GreenPeony@1"
     },
     {
       "templateId": "R03_GoldCoreLime",
       "sourceName": "R03 · 金芯柠 · 150m",
-      "exportName": "NYR03_GoldCoreLime_v1",
+      "exportName": "GoldCoreLime",
       "note": "固定子模板 NYR03_GoldCoreLime@1"
     },
     {
       "templateId": "R03_GoldSpark",
       "sourceName": "R03 · 金锦菊 · 150m",
-      "exportName": "NYR03_GoldSpark_v1",
+      "exportName": "GoldSpark",
       "note": "固定子模板 NYR03_GoldSpark@1"
     },
     {
       "templateId": "R03_Silver9",
       "sourceName": "R03 · 银星·九束展开",
-      "exportName": "NYR03_Silver9_v1",
+      "exportName": "FanSilver9Center",
       "note": "固定子模板 NYR03_Silver9@1"
     },
     {
       "templateId": "R03_GoldRayChry",
       "sourceName": "R03 · 金芒菊 · 150m",
-      "exportName": "NYR03_GoldRayChry_v1",
+      "exportName": "GoldRayChry",
       "note": "固定子模板 NYR03_GoldRayChry@1"
     },
     {
       "templateId": "R03_GoldChry",
       "sourceName": "R03 · 金曜菊 · 150m",
-      "exportName": "NYR03_GoldChry_v1",
+      "exportName": "GoldChry",
       "note": "固定子模板 NYR03_GoldChry@1"
     },
     {
       "templateId": "R03_Silver13",
       "sourceName": "R03 · 银星·十三束宽扇",
-      "exportName": "NYR03_Silver13_v1",
+      "exportName": "FanSilver13",
       "note": "固定子模板 NYR03_Silver13@1"
     },
     {
       "templateId": "R03_MultiLayerChry",
       "sourceName": "R03 · 多重菊 · 150m",
-      "exportName": "NYR03_MultiLayerChry_v1",
+      "exportName": "MultiLayerChry",
       "note": "固定子模板 NYR03_MultiLayerChry@1"
     },
     {
       "templateId": "R03_PrismWheels",
       "sourceName": "R03 · 彩千轮 · 150m",
-      "exportName": "NYR03_PrismWheels_v1",
+      "exportName": "PrismWheels",
       "note": "固定子模板 NYR03_PrismWheels@1"
     },
     {
       "templateId": "R03_GoldKamuro",
       "sourceName": "R03 · 金垂柳 · 230m",
-      "exportName": "NYR03_GoldKamuro_v1",
+      "exportName": "GoldKamuro",
       "note": "固定子模板 NYR03_GoldKamuro@1"
     },
     {
       "templateId": "R03_SilverStrobeChry",
       "sourceName": "R03 · 银彩菊 · 230m",
-      "exportName": "NYR03_SilverStrobeChry_v1",
+      "exportName": "SilverStrobeChry",
       "note": "固定子模板 NYR03_SilverStrobeChry@1"
     }
   ],
@@ -156,7 +156,7 @@
   "issues": [],
   "EffectSubTemplates": [
     {
-      "TemplateName": "NYR03_Red1_v1",
+      "TemplateName": "FanComet",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_FanComet_01",
@@ -195,7 +195,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_Silver5_v1",
+      "TemplateName": "FanSilver5",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
@@ -370,7 +370,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_Red5_v1",
+      "TemplateName": "FanComet5",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_FanComet_01",
@@ -545,7 +545,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_SilverChry_v1",
+      "TemplateName": "SilverChry",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
@@ -618,7 +618,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_Strobe_v1",
+      "TemplateName": "Strobe",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
@@ -691,7 +691,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_Lime_v1",
+      "TemplateName": "Lime",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
@@ -764,7 +764,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_OrangeGlitter_v1",
+      "TemplateName": "OrangeGlitter",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
@@ -837,7 +837,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_GoldCrackle_v1",
+      "TemplateName": "GoldCrackle",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
@@ -910,7 +910,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_Crackle_v1",
+      "TemplateName": "Crackle",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Small",
@@ -983,7 +983,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_Red9_v1",
+      "TemplateName": "FanComet9Left",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_FanComet_01",
@@ -1294,7 +1294,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_Red9R_v1",
+      "TemplateName": "FanComet9Right",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_FanComet_01",
@@ -1605,7 +1605,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_GreenPeony_v1",
+      "TemplateName": "GreenPeony",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
@@ -1678,7 +1678,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_GoldCoreLime_v1",
+      "TemplateName": "GoldCoreLime",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
@@ -1751,7 +1751,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_GoldSpark_v1",
+      "TemplateName": "GoldSpark",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
@@ -1824,7 +1824,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_Silver9_v1",
+      "TemplateName": "FanSilver9Center",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
@@ -2135,7 +2135,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_GoldRayChry_v1",
+      "TemplateName": "GoldRayChry",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
@@ -2208,7 +2208,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_GoldChry_v1",
+      "TemplateName": "GoldChry",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
@@ -2281,7 +2281,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_Silver13_v1",
+      "TemplateName": "FanSilver13",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_FanSilver_01",
@@ -2728,7 +2728,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_MultiLayerChry_v1",
+      "TemplateName": "MultiLayerChry",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
@@ -2801,7 +2801,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_PrismWheels_v1",
+      "TemplateName": "PrismWheels",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
@@ -2874,7 +2874,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_GoldKamuro_v1",
+      "TemplateName": "GoldKamuro",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Large",
@@ -2947,7 +2947,7 @@
       ]
     },
     {
-      "TemplateName": "NYR03_SilverStrobeChry_v1",
+      "TemplateName": "SilverStrobeChry",
       "Entries": [
         {
           "FXResourceId": "P_EFX_FireWorks_NY_Trail_Large",
@@ -3022,13 +3022,13 @@
   ],
   "EffectTemplates": [
     {
-      "TemplateName": "WB_R03_C001_B",
+      "TemplateName": "FanComet_B_C001_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red1_v1",
+          "SubTemplateName": "FanComet",
           "LocalTimeOffset": 0,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -3069,13 +3069,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C002_B",
+      "TemplateName": "FanComet_B_C002_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red1_v1",
+          "SubTemplateName": "FanComet",
           "LocalTimeOffset": 0,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -3116,13 +3116,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C010_B",
+      "TemplateName": "FanComet_B_C010_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red1_v1",
+          "SubTemplateName": "FanComet",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -3163,13 +3163,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C012_B",
+      "TemplateName": "FanSilver5_B_C012_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Silver5_v1",
+          "SubTemplateName": "FanSilver5",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -3210,13 +3210,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C013_B",
+      "TemplateName": "FanComet5_B_C013_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red5_v1",
+          "SubTemplateName": "FanComet5",
           "LocalTimeOffset": 0,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -3257,13 +3257,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C015_P",
+      "TemplateName": "SilverChry_P_C015_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_SilverChry_v1",
+          "SubTemplateName": "SilverChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -3304,13 +3304,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C016_P",
+      "TemplateName": "SilverChry_P_C016_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_SilverChry_v1",
+          "SubTemplateName": "SilverChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -3351,13 +3351,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C017_P",
+      "TemplateName": "Strobe_P_C017_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Strobe_v1",
+          "SubTemplateName": "Strobe",
           "LocalTimeOffset": 0,
           "SlotIndex": 8,
           "PositionOffset": {
@@ -3398,13 +3398,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C018_P",
+      "TemplateName": "Lime_P_C018_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Lime_v1",
+          "SubTemplateName": "Lime",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -3445,13 +3445,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C019_P",
+      "TemplateName": "OrangeGlitter_P_C019_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_OrangeGlitter_v1",
+          "SubTemplateName": "OrangeGlitter",
           "LocalTimeOffset": 0,
           "SlotIndex": 8,
           "PositionOffset": {
@@ -3492,13 +3492,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C020_B",
+      "TemplateName": "FanSilver5_B_C020_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Silver5_v1",
+          "SubTemplateName": "FanSilver5",
           "LocalTimeOffset": 0,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -3539,13 +3539,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C021_P",
+      "TemplateName": "GoldCrackle_P_C021_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GoldCrackle_v1",
+          "SubTemplateName": "GoldCrackle",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -3586,13 +3586,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C022_P",
+      "TemplateName": "Crackle_P_C022_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Crackle_v1",
+          "SubTemplateName": "Crackle",
           "LocalTimeOffset": 0,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -3633,13 +3633,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C023_P",
+      "TemplateName": "Strobe_P_C023_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Strobe_v1",
+          "SubTemplateName": "Strobe",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -3680,13 +3680,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C027_B",
+      "TemplateName": "FanComet9Left_B_C027_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red9_v1",
+          "SubTemplateName": "FanComet9Left",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -3727,13 +3727,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C028_B",
+      "TemplateName": "FanComet9Right_B_C028_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red9R_v1",
+          "SubTemplateName": "FanComet9Right",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -3774,13 +3774,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C032_P",
+      "TemplateName": "GreenPeony_P_C032_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GreenPeony_v1",
+          "SubTemplateName": "GreenPeony",
           "LocalTimeOffset": 0,
           "SlotIndex": 8,
           "PositionOffset": {
@@ -3821,13 +3821,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C033_P",
+      "TemplateName": "GoldCoreLime_P_C033_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GoldCoreLime_v1",
+          "SubTemplateName": "GoldCoreLime",
           "LocalTimeOffset": 0,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -3868,13 +3868,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C034_P",
+      "TemplateName": "GoldSpark_P_C034_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GoldSpark_v1",
+          "SubTemplateName": "GoldSpark",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -3915,13 +3915,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C035_B",
+      "TemplateName": "FanComet5_B_C035_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red5_v1",
+          "SubTemplateName": "FanComet5",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -3962,13 +3962,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C036_B",
+      "TemplateName": "FanSilver9Center_B_C036_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Silver9_v1",
+          "SubTemplateName": "FanSilver9Center",
           "LocalTimeOffset": 0,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -4005,7 +4005,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Silver9_v1",
+          "SubTemplateName": "FanSilver9Center",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -4046,13 +4046,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C037_B",
+      "TemplateName": "FanComet5_B_C037_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red5_v1",
+          "SubTemplateName": "FanComet5",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -4093,13 +4093,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C038_P",
+      "TemplateName": "GoldRayChry_P_C038_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GoldRayChry_v1",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -4140,13 +4140,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C039_P",
+      "TemplateName": "GoldChry_P_C039_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GoldChry_v1",
+          "SubTemplateName": "GoldChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -4187,13 +4187,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C041_B",
+      "TemplateName": "FanComet9Right_B_C041_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red9R_v1",
+          "SubTemplateName": "FanComet9Right",
           "LocalTimeOffset": 0,
           "SlotIndex": 7,
           "PositionOffset": {
@@ -4234,13 +4234,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C043_B",
+      "TemplateName": "FanSilver13_B_C043_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Silver13_v1",
+          "SubTemplateName": "FanSilver13",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -4281,13 +4281,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C044_P",
+      "TemplateName": "MultiLayerChry_P_C044_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_MultiLayerChry_v1",
+          "SubTemplateName": "MultiLayerChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -4328,13 +4328,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C045_B",
+      "TemplateName": "FanComet9Right_B_C045_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red9R_v1",
+          "SubTemplateName": "FanComet9Right",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -4375,13 +4375,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C048_P",
+      "TemplateName": "PrismWheels_P_C048_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_PrismWheels_v1",
+          "SubTemplateName": "PrismWheels",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -4422,13 +4422,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C049_P",
+      "TemplateName": "MultiLayerChry_P_C049_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_MultiLayerChry_v1",
+          "SubTemplateName": "MultiLayerChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -4469,13 +4469,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C050_B",
+      "TemplateName": "FanSilver9Center_B_C050_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Silver9_v1",
+          "SubTemplateName": "FanSilver9Center",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -4516,13 +4516,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C051_P",
+      "TemplateName": "GoldKamuro_P_C051_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GoldKamuro_v1",
+          "SubTemplateName": "GoldKamuro",
           "LocalTimeOffset": 0,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -4563,13 +4563,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C052_P",
+      "TemplateName": "GoldSpark_P_C052_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GoldSpark_v1",
+          "SubTemplateName": "GoldSpark",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -4610,13 +4610,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C053_B",
+      "TemplateName": "FanSilver13_B_C053_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Silver13_v1",
+          "SubTemplateName": "FanSilver13",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -4657,13 +4657,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C054_P",
+      "TemplateName": "SilverChry_P_C054_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_SilverChry_v1",
+          "SubTemplateName": "SilverChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -4704,13 +4704,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C056_P",
+      "TemplateName": "Lime_P_C056_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Lime_v1",
+          "SubTemplateName": "Lime",
           "LocalTimeOffset": 0,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -4751,13 +4751,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C057_P",
+      "TemplateName": "OrangeGlitter_P_C057_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_OrangeGlitter_v1",
+          "SubTemplateName": "OrangeGlitter",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -4798,13 +4798,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C071_P",
+      "TemplateName": "GoldKamuro_P_C071_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GoldKamuro_v1",
+          "SubTemplateName": "GoldKamuro",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -4845,13 +4845,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C072_P",
+      "TemplateName": "GoldChry_P_C072_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GoldChry_v1",
+          "SubTemplateName": "GoldChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -4892,13 +4892,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C073_P",
+      "TemplateName": "PrismWheels_P_C073_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_PrismWheels_v1",
+          "SubTemplateName": "PrismWheels",
           "LocalTimeOffset": 0,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -4939,13 +4939,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C074_B",
+      "TemplateName": "FanSilver13_B_C074_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Silver13_v1",
+          "SubTemplateName": "FanSilver13",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -4982,7 +4982,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Silver13_v1",
+          "SubTemplateName": "FanSilver13",
           "LocalTimeOffset": 0,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -5023,13 +5023,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C077_P",
+      "TemplateName": "SilverStrobeChry_P_C077_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_SilverStrobeChry_v1",
+          "SubTemplateName": "SilverStrobeChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -5070,13 +5070,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C079_B",
+      "TemplateName": "FanComet9Left_B_C079_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red9_v1",
+          "SubTemplateName": "FanComet9Left",
           "LocalTimeOffset": 0,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -5117,13 +5117,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C082_B",
+      "TemplateName": "FanComet9Left_B_C082_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red9_v1",
+          "SubTemplateName": "FanComet9Left",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -5164,13 +5164,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C083_B",
+      "TemplateName": "FanComet9Right_B_C083_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red9R_v1",
+          "SubTemplateName": "FanComet9Right",
           "LocalTimeOffset": 0,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -5211,13 +5211,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C084_P",
+      "TemplateName": "PrismWheels_P_C084_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_PrismWheels_v1",
+          "SubTemplateName": "PrismWheels",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -5258,13 +5258,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C085_P",
+      "TemplateName": "GreenPeony_P_C085_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GreenPeony_v1",
+          "SubTemplateName": "GreenPeony",
           "LocalTimeOffset": 0,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -5305,13 +5305,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C086_P",
+      "TemplateName": "MultiLayerChry_P_C086_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_MultiLayerChry_v1",
+          "SubTemplateName": "MultiLayerChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -5352,13 +5352,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C087_B",
+      "TemplateName": "FanSilver9Center_B_C087_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Silver9_v1",
+          "SubTemplateName": "FanSilver9Center",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -5399,13 +5399,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C093_P",
+      "TemplateName": "SilverStrobeChry_P_C093_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_SilverStrobeChry_v1",
+          "SubTemplateName": "SilverStrobeChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -5446,13 +5446,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C094_P",
+      "TemplateName": "GoldCoreLime_P_C094_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GoldCoreLime_v1",
+          "SubTemplateName": "GoldCoreLime",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -5493,13 +5493,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C114_P",
+      "TemplateName": "GoldKamuro_P_C114_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GoldKamuro_v1",
+          "SubTemplateName": "GoldKamuro",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -5540,13 +5540,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C116_P",
+      "TemplateName": "GoldCoreLime_P_C116_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GoldCoreLime_v1",
+          "SubTemplateName": "GoldCoreLime",
           "LocalTimeOffset": 0,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -5587,13 +5587,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C117_B",
+      "TemplateName": "FanComet5_B_C117_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red5_v1",
+          "SubTemplateName": "FanComet5",
           "LocalTimeOffset": 0,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -5634,13 +5634,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C139_P",
+      "TemplateName": "SilverStrobeChry_P_C139_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_SilverStrobeChry_v1",
+          "SubTemplateName": "SilverStrobeChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -5681,13 +5681,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C141_B",
+      "TemplateName": "FanSilver13_B_C141_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Silver13_v1",
+          "SubTemplateName": "FanSilver13",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -5724,7 +5724,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Silver13_v1",
+          "SubTemplateName": "FanSilver13",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -5765,13 +5765,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C142_B",
+      "TemplateName": "FanComet5_B_C142_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_Red5_v1",
+          "SubTemplateName": "FanComet5",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -5812,13 +5812,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C143_P",
+      "TemplateName": "GoldKamuro_P_C143_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_GoldKamuro_v1",
+          "SubTemplateName": "GoldKamuro",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -5859,13 +5859,13 @@
       }
     },
     {
-      "TemplateName": "WB_R03_C148_P",
+      "TemplateName": "SilverChry_P_C148_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "NYR03_SilverChry_v1",
+          "SubTemplateName": "SilverChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -5912,7 +5912,7 @@
       "Slots": [
         {
           "StartTime": 10.1,
-          "TemplateName": "WB_R03_C015_P",
+          "TemplateName": "SilverChry_P_C015_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -5920,7 +5920,7 @@
         },
         {
           "StartTime": 10.9,
-          "TemplateName": "WB_R03_C016_P",
+          "TemplateName": "SilverChry_P_C016_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -5928,7 +5928,7 @@
         },
         {
           "StartTime": 11.7,
-          "TemplateName": "WB_R03_C017_P",
+          "TemplateName": "Strobe_P_C017_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -5936,7 +5936,7 @@
         },
         {
           "StartTime": 16.7,
-          "TemplateName": "WB_R03_C018_P",
+          "TemplateName": "Lime_P_C018_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -5944,7 +5944,7 @@
         },
         {
           "StartTime": 17.5,
-          "TemplateName": "WB_R03_C019_P",
+          "TemplateName": "OrangeGlitter_P_C019_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -5952,7 +5952,7 @@
         },
         {
           "StartTime": 24.2,
-          "TemplateName": "WB_R03_C021_P",
+          "TemplateName": "GoldCrackle_P_C021_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -5960,7 +5960,7 @@
         },
         {
           "StartTime": 25,
-          "TemplateName": "WB_R03_C022_P",
+          "TemplateName": "Crackle_P_C022_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -5968,7 +5968,7 @@
         },
         {
           "StartTime": 25.8,
-          "TemplateName": "WB_R03_C023_P",
+          "TemplateName": "Strobe_P_C023_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -5976,7 +5976,7 @@
         },
         {
           "StartTime": 30.6,
-          "TemplateName": "WB_R03_C018_P",
+          "TemplateName": "Lime_P_C018_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -5984,7 +5984,7 @@
         },
         {
           "StartTime": 31.4,
-          "TemplateName": "WB_R03_C019_P",
+          "TemplateName": "OrangeGlitter_P_C019_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -5992,7 +5992,7 @@
         },
         {
           "StartTime": 42.5,
-          "TemplateName": "WB_R03_C021_P",
+          "TemplateName": "GoldCrackle_P_C021_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6000,7 +6000,7 @@
         },
         {
           "StartTime": 43.3,
-          "TemplateName": "WB_R03_C022_P",
+          "TemplateName": "Crackle_P_C022_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6008,7 +6008,7 @@
         },
         {
           "StartTime": 44.1,
-          "TemplateName": "WB_R03_C023_P",
+          "TemplateName": "Strobe_P_C023_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6016,7 +6016,7 @@
         },
         {
           "StartTime": 47.6,
-          "TemplateName": "WB_R03_C032_P",
+          "TemplateName": "GreenPeony_P_C032_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6024,7 +6024,7 @@
         },
         {
           "StartTime": 48.4,
-          "TemplateName": "WB_R03_C033_P",
+          "TemplateName": "GoldCoreLime_P_C033_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6032,7 +6032,7 @@
         },
         {
           "StartTime": 49.2,
-          "TemplateName": "WB_R03_C034_P",
+          "TemplateName": "GoldSpark_P_C034_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6040,7 +6040,7 @@
         },
         {
           "StartTime": 54.5,
-          "TemplateName": "WB_R03_C038_P",
+          "TemplateName": "GoldRayChry_P_C038_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6048,7 +6048,7 @@
         },
         {
           "StartTime": 55.7,
-          "TemplateName": "WB_R03_C039_P",
+          "TemplateName": "GoldChry_P_C039_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6056,7 +6056,7 @@
         },
         {
           "StartTime": 60.6,
-          "TemplateName": "WB_R03_C039_P",
+          "TemplateName": "GoldChry_P_C039_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6064,7 +6064,7 @@
         },
         {
           "StartTime": 62.2,
-          "TemplateName": "WB_R03_C044_P",
+          "TemplateName": "MultiLayerChry_P_C044_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6072,7 +6072,7 @@
         },
         {
           "StartTime": 67,
-          "TemplateName": "WB_R03_C048_P",
+          "TemplateName": "PrismWheels_P_C048_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6080,7 +6080,7 @@
         },
         {
           "StartTime": 68.6,
-          "TemplateName": "WB_R03_C049_P",
+          "TemplateName": "MultiLayerChry_P_C049_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6088,7 +6088,7 @@
         },
         {
           "StartTime": 68.7,
-          "TemplateName": "WB_R03_C051_P",
+          "TemplateName": "GoldKamuro_P_C051_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6096,7 +6096,7 @@
         },
         {
           "StartTime": 73.1,
-          "TemplateName": "WB_R03_C052_P",
+          "TemplateName": "GoldSpark_P_C052_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6104,7 +6104,7 @@
         },
         {
           "StartTime": 80.2,
-          "TemplateName": "WB_R03_C054_P",
+          "TemplateName": "SilverChry_P_C054_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6112,7 +6112,7 @@
         },
         {
           "StartTime": 82.2,
-          "TemplateName": "WB_R03_C023_P",
+          "TemplateName": "Strobe_P_C023_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6120,7 +6120,7 @@
         },
         {
           "StartTime": 87.1,
-          "TemplateName": "WB_R03_C056_P",
+          "TemplateName": "Lime_P_C056_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6128,7 +6128,7 @@
         },
         {
           "StartTime": 88.3,
-          "TemplateName": "WB_R03_C057_P",
+          "TemplateName": "OrangeGlitter_P_C057_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6136,7 +6136,7 @@
         },
         {
           "StartTime": 93.4,
-          "TemplateName": "WB_R03_C048_P",
+          "TemplateName": "PrismWheels_P_C048_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6144,7 +6144,7 @@
         },
         {
           "StartTime": 95,
-          "TemplateName": "WB_R03_C049_P",
+          "TemplateName": "MultiLayerChry_P_C049_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6152,7 +6152,7 @@
         },
         {
           "StartTime": 99.1,
-          "TemplateName": "WB_R03_C032_P",
+          "TemplateName": "GreenPeony_P_C032_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6160,7 +6160,7 @@
         },
         {
           "StartTime": 99.9,
-          "TemplateName": "WB_R03_C033_P",
+          "TemplateName": "GoldCoreLime_P_C033_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6168,7 +6168,7 @@
         },
         {
           "StartTime": 100.7,
-          "TemplateName": "WB_R03_C034_P",
+          "TemplateName": "GoldSpark_P_C034_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6176,7 +6176,7 @@
         },
         {
           "StartTime": 105.6,
-          "TemplateName": "WB_R03_C038_P",
+          "TemplateName": "GoldRayChry_P_C038_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6184,7 +6184,7 @@
         },
         {
           "StartTime": 106.8,
-          "TemplateName": "WB_R03_C039_P",
+          "TemplateName": "GoldChry_P_C039_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6192,7 +6192,7 @@
         },
         {
           "StartTime": 109.8,
-          "TemplateName": "WB_R03_C071_P",
+          "TemplateName": "GoldKamuro_P_C071_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6200,7 +6200,7 @@
         },
         {
           "StartTime": 112.8,
-          "TemplateName": "WB_R03_C072_P",
+          "TemplateName": "GoldChry_P_C072_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6208,7 +6208,7 @@
         },
         {
           "StartTime": 112.8,
-          "TemplateName": "WB_R03_C073_P",
+          "TemplateName": "PrismWheels_P_C073_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6216,7 +6216,7 @@
         },
         {
           "StartTime": 116.4,
-          "TemplateName": "WB_R03_C077_P",
+          "TemplateName": "SilverStrobeChry_P_C077_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6224,7 +6224,7 @@
         },
         {
           "StartTime": 120.2,
-          "TemplateName": "WB_R03_C038_P",
+          "TemplateName": "GoldRayChry_P_C038_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6232,7 +6232,7 @@
         },
         {
           "StartTime": 126,
-          "TemplateName": "WB_R03_C084_P",
+          "TemplateName": "PrismWheels_P_C084_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6240,7 +6240,7 @@
         },
         {
           "StartTime": 126.8,
-          "TemplateName": "WB_R03_C085_P",
+          "TemplateName": "GreenPeony_P_C085_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6248,7 +6248,7 @@
         },
         {
           "StartTime": 127.6,
-          "TemplateName": "WB_R03_C086_P",
+          "TemplateName": "MultiLayerChry_P_C086_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6256,7 +6256,7 @@
         },
         {
           "StartTime": 128.6,
-          "TemplateName": "WB_R03_C051_P",
+          "TemplateName": "GoldKamuro_P_C051_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6264,7 +6264,7 @@
         },
         {
           "StartTime": 133,
-          "TemplateName": "WB_R03_C052_P",
+          "TemplateName": "GoldSpark_P_C052_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6272,7 +6272,7 @@
         },
         {
           "StartTime": 135.6,
-          "TemplateName": "WB_R03_C093_P",
+          "TemplateName": "SilverStrobeChry_P_C093_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6280,7 +6280,7 @@
         },
         {
           "StartTime": 140,
-          "TemplateName": "WB_R03_C094_P",
+          "TemplateName": "GoldCoreLime_P_C094_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6288,7 +6288,7 @@
         },
         {
           "StartTime": 145.1,
-          "TemplateName": "WB_R03_C054_P",
+          "TemplateName": "SilverChry_P_C054_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6296,7 +6296,7 @@
         },
         {
           "StartTime": 147.1,
-          "TemplateName": "WB_R03_C023_P",
+          "TemplateName": "Strobe_P_C023_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6304,7 +6304,7 @@
         },
         {
           "StartTime": 148.3,
-          "TemplateName": "WB_R03_C084_P",
+          "TemplateName": "PrismWheels_P_C084_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6312,7 +6312,7 @@
         },
         {
           "StartTime": 149.1,
-          "TemplateName": "WB_R03_C085_P",
+          "TemplateName": "GreenPeony_P_C085_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6320,7 +6320,7 @@
         },
         {
           "StartTime": 149.9,
-          "TemplateName": "WB_R03_C086_P",
+          "TemplateName": "MultiLayerChry_P_C086_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6328,7 +6328,7 @@
         },
         {
           "StartTime": 154.8,
-          "TemplateName": "WB_R03_C048_P",
+          "TemplateName": "PrismWheels_P_C048_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6336,7 +6336,7 @@
         },
         {
           "StartTime": 156.4,
-          "TemplateName": "WB_R03_C049_P",
+          "TemplateName": "MultiLayerChry_P_C049_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6344,7 +6344,7 @@
         },
         {
           "StartTime": 159.7,
-          "TemplateName": "WB_R03_C038_P",
+          "TemplateName": "GoldRayChry_P_C038_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6352,7 +6352,7 @@
         },
         {
           "StartTime": 160.9,
-          "TemplateName": "WB_R03_C039_P",
+          "TemplateName": "GoldChry_P_C039_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6360,7 +6360,7 @@
         },
         {
           "StartTime": 163.2,
-          "TemplateName": "WB_R03_C114_P",
+          "TemplateName": "GoldKamuro_P_C114_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6368,7 +6368,7 @@
         },
         {
           "StartTime": 166.2,
-          "TemplateName": "WB_R03_C052_P",
+          "TemplateName": "GoldSpark_P_C052_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6376,7 +6376,7 @@
         },
         {
           "StartTime": 166.6,
-          "TemplateName": "WB_R03_C071_P",
+          "TemplateName": "GoldKamuro_P_C071_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6384,7 +6384,7 @@
         },
         {
           "StartTime": 167,
-          "TemplateName": "WB_R03_C116_P",
+          "TemplateName": "GoldCoreLime_P_C116_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6392,7 +6392,7 @@
         },
         {
           "StartTime": 169.6,
-          "TemplateName": "WB_R03_C072_P",
+          "TemplateName": "GoldChry_P_C072_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6400,7 +6400,7 @@
         },
         {
           "StartTime": 169.6,
-          "TemplateName": "WB_R03_C073_P",
+          "TemplateName": "PrismWheels_P_C073_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6408,7 +6408,7 @@
         },
         {
           "StartTime": 172.3,
-          "TemplateName": "WB_R03_C077_P",
+          "TemplateName": "SilverStrobeChry_P_C077_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6416,7 +6416,7 @@
         },
         {
           "StartTime": 176.1,
-          "TemplateName": "WB_R03_C038_P",
+          "TemplateName": "GoldRayChry_P_C038_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6424,7 +6424,7 @@
         },
         {
           "StartTime": 178.8,
-          "TemplateName": "WB_R03_C051_P",
+          "TemplateName": "GoldKamuro_P_C051_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6432,7 +6432,7 @@
         },
         {
           "StartTime": 183.2,
-          "TemplateName": "WB_R03_C052_P",
+          "TemplateName": "GoldSpark_P_C052_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6440,7 +6440,7 @@
         },
         {
           "StartTime": 185.2,
-          "TemplateName": "WB_R03_C093_P",
+          "TemplateName": "SilverStrobeChry_P_C093_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6448,7 +6448,7 @@
         },
         {
           "StartTime": 189.6,
-          "TemplateName": "WB_R03_C094_P",
+          "TemplateName": "GoldCoreLime_P_C094_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6456,7 +6456,7 @@
         },
         {
           "StartTime": 189.9,
-          "TemplateName": "WB_R03_C114_P",
+          "TemplateName": "GoldKamuro_P_C114_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6464,7 +6464,7 @@
         },
         {
           "StartTime": 190.7,
-          "TemplateName": "WB_R03_C139_P",
+          "TemplateName": "SilverStrobeChry_P_C139_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6472,7 +6472,7 @@
         },
         {
           "StartTime": 194.5,
-          "TemplateName": "WB_R03_C072_P",
+          "TemplateName": "GoldChry_P_C072_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6480,7 +6480,7 @@
         },
         {
           "StartTime": 196.4,
-          "TemplateName": "WB_R03_C143_P",
+          "TemplateName": "GoldKamuro_P_C143_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6488,7 +6488,7 @@
         },
         {
           "StartTime": 197.2,
-          "TemplateName": "WB_R03_C139_P",
+          "TemplateName": "SilverStrobeChry_P_C139_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6496,7 +6496,7 @@
         },
         {
           "StartTime": 209.2,
-          "TemplateName": "WB_R03_C021_P",
+          "TemplateName": "GoldCrackle_P_C021_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6504,7 +6504,7 @@
         },
         {
           "StartTime": 210.6,
-          "TemplateName": "WB_R03_C148_P",
+          "TemplateName": "SilverChry_P_C148_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6512,7 +6512,7 @@
         },
         {
           "StartTime": 212,
-          "TemplateName": "WB_R03_C023_P",
+          "TemplateName": "Strobe_P_C023_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6525,7 +6525,7 @@
       "Slots": [
         {
           "StartTime": 0,
-          "TemplateName": "WB_R03_C001_B",
+          "TemplateName": "FanComet_B_C001_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6533,7 +6533,7 @@
         },
         {
           "StartTime": 1,
-          "TemplateName": "WB_R03_C002_B",
+          "TemplateName": "FanComet_B_C002_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6541,7 +6541,7 @@
         },
         {
           "StartTime": 2,
-          "TemplateName": "WB_R03_C001_B",
+          "TemplateName": "FanComet_B_C001_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6549,7 +6549,7 @@
         },
         {
           "StartTime": 3,
-          "TemplateName": "WB_R03_C002_B",
+          "TemplateName": "FanComet_B_C002_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6557,7 +6557,7 @@
         },
         {
           "StartTime": 4,
-          "TemplateName": "WB_R03_C001_B",
+          "TemplateName": "FanComet_B_C001_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6565,7 +6565,7 @@
         },
         {
           "StartTime": 5,
-          "TemplateName": "WB_R03_C002_B",
+          "TemplateName": "FanComet_B_C002_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6573,7 +6573,7 @@
         },
         {
           "StartTime": 6,
-          "TemplateName": "WB_R03_C001_B",
+          "TemplateName": "FanComet_B_C001_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6581,7 +6581,7 @@
         },
         {
           "StartTime": 7,
-          "TemplateName": "WB_R03_C002_B",
+          "TemplateName": "FanComet_B_C002_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6589,7 +6589,7 @@
         },
         {
           "StartTime": 8,
-          "TemplateName": "WB_R03_C001_B",
+          "TemplateName": "FanComet_B_C001_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6597,7 +6597,7 @@
         },
         {
           "StartTime": 9,
-          "TemplateName": "WB_R03_C010_B",
+          "TemplateName": "FanComet_B_C010_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6605,7 +6605,7 @@
         },
         {
           "StartTime": 9.3,
-          "TemplateName": "WB_R03_C002_B",
+          "TemplateName": "FanComet_B_C002_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6613,7 +6613,7 @@
         },
         {
           "StartTime": 9.6,
-          "TemplateName": "WB_R03_C012_B",
+          "TemplateName": "FanSilver5_B_C012_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6621,7 +6621,7 @@
         },
         {
           "StartTime": 10,
-          "TemplateName": "WB_R03_C013_B",
+          "TemplateName": "FanComet5_B_C013_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6629,7 +6629,7 @@
         },
         {
           "StartTime": 10.8,
-          "TemplateName": "WB_R03_C012_B",
+          "TemplateName": "FanSilver5_B_C012_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6637,7 +6637,7 @@
         },
         {
           "StartTime": 21.3,
-          "TemplateName": "WB_R03_C020_B",
+          "TemplateName": "FanSilver5_B_C020_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6645,7 +6645,7 @@
         },
         {
           "StartTime": 35.2,
-          "TemplateName": "WB_R03_C020_B",
+          "TemplateName": "FanSilver5_B_C020_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6653,7 +6653,7 @@
         },
         {
           "StartTime": 39.4,
-          "TemplateName": "WB_R03_C027_B",
+          "TemplateName": "FanComet9Left_B_C027_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6661,7 +6661,7 @@
         },
         {
           "StartTime": 40.6,
-          "TemplateName": "WB_R03_C028_B",
+          "TemplateName": "FanComet9Right_B_C028_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6669,7 +6669,7 @@
         },
         {
           "StartTime": 52.4,
-          "TemplateName": "WB_R03_C035_B",
+          "TemplateName": "FanComet5_B_C035_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6677,7 +6677,7 @@
         },
         {
           "StartTime": 56,
-          "TemplateName": "WB_R03_C036_B",
+          "TemplateName": "FanSilver9Center_B_C036_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6685,7 +6685,7 @@
         },
         {
           "StartTime": 57.2,
-          "TemplateName": "WB_R03_C037_B",
+          "TemplateName": "FanComet5_B_C037_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6693,7 +6693,7 @@
         },
         {
           "StartTime": 58.9,
-          "TemplateName": "WB_R03_C027_B",
+          "TemplateName": "FanComet9Left_B_C027_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6701,7 +6701,7 @@
         },
         {
           "StartTime": 59.3,
-          "TemplateName": "WB_R03_C041_B",
+          "TemplateName": "FanComet9Right_B_C041_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6709,7 +6709,7 @@
         },
         {
           "StartTime": 65,
-          "TemplateName": "WB_R03_C043_B",
+          "TemplateName": "FanSilver13_B_C043_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6717,7 +6717,7 @@
         },
         {
           "StartTime": 67.4,
-          "TemplateName": "WB_R03_C045_B",
+          "TemplateName": "FanComet9Right_B_C045_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6725,7 +6725,7 @@
         },
         {
           "StartTime": 68.2,
-          "TemplateName": "WB_R03_C027_B",
+          "TemplateName": "FanComet9Left_B_C027_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6733,7 +6733,7 @@
         },
         {
           "StartTime": 69.4,
-          "TemplateName": "WB_R03_C028_B",
+          "TemplateName": "FanComet9Right_B_C028_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6741,7 +6741,7 @@
         },
         {
           "StartTime": 72.2,
-          "TemplateName": "WB_R03_C050_B",
+          "TemplateName": "FanSilver9Center_B_C050_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6749,7 +6749,7 @@
         },
         {
           "StartTime": 76.3,
-          "TemplateName": "WB_R03_C053_B",
+          "TemplateName": "FanSilver13_B_C053_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6757,7 +6757,7 @@
         },
         {
           "StartTime": 98.6,
-          "TemplateName": "WB_R03_C050_B",
+          "TemplateName": "FanSilver9Center_B_C050_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6765,7 +6765,7 @@
         },
         {
           "StartTime": 103.9,
-          "TemplateName": "WB_R03_C035_B",
+          "TemplateName": "FanComet5_B_C035_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6773,7 +6773,7 @@
         },
         {
           "StartTime": 107.4,
-          "TemplateName": "WB_R03_C027_B",
+          "TemplateName": "FanComet9Left_B_C027_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6781,7 +6781,7 @@
         },
         {
           "StartTime": 108.6,
-          "TemplateName": "WB_R03_C028_B",
+          "TemplateName": "FanComet9Right_B_C028_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6789,7 +6789,7 @@
         },
         {
           "StartTime": 110,
-          "TemplateName": "WB_R03_C027_B",
+          "TemplateName": "FanComet9Left_B_C027_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6797,7 +6797,7 @@
         },
         {
           "StartTime": 110.4,
-          "TemplateName": "WB_R03_C041_B",
+          "TemplateName": "FanComet9Right_B_C041_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6805,7 +6805,7 @@
         },
         {
           "StartTime": 117.2,
-          "TemplateName": "WB_R03_C074_B",
+          "TemplateName": "FanSilver13_B_C074_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6813,7 +6813,7 @@
         },
         {
           "StartTime": 120.3,
-          "TemplateName": "WB_R03_C036_B",
+          "TemplateName": "FanSilver9Center_B_C036_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6821,7 +6821,7 @@
         },
         {
           "StartTime": 121.5,
-          "TemplateName": "WB_R03_C037_B",
+          "TemplateName": "FanComet5_B_C037_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6829,7 +6829,7 @@
         },
         {
           "StartTime": 123.8,
-          "TemplateName": "WB_R03_C079_B",
+          "TemplateName": "FanComet9Left_B_C079_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6837,7 +6837,7 @@
         },
         {
           "StartTime": 124.6,
-          "TemplateName": "WB_R03_C045_B",
+          "TemplateName": "FanComet9Right_B_C045_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6845,7 +6845,7 @@
         },
         {
           "StartTime": 127.2,
-          "TemplateName": "WB_R03_C074_B",
+          "TemplateName": "FanSilver13_B_C074_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6853,7 +6853,7 @@
         },
         {
           "StartTime": 128,
-          "TemplateName": "WB_R03_C082_B",
+          "TemplateName": "FanComet9Left_B_C082_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6861,7 +6861,7 @@
         },
         {
           "StartTime": 128.8,
-          "TemplateName": "WB_R03_C083_B",
+          "TemplateName": "FanComet9Right_B_C083_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6869,7 +6869,7 @@
         },
         {
           "StartTime": 131.2,
-          "TemplateName": "WB_R03_C087_B",
+          "TemplateName": "FanSilver9Center_B_C087_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6877,7 +6877,7 @@
         },
         {
           "StartTime": 136.2,
-          "TemplateName": "WB_R03_C053_B",
+          "TemplateName": "FanSilver13_B_C053_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6885,7 +6885,7 @@
         },
         {
           "StartTime": 139.4,
-          "TemplateName": "WB_R03_C027_B",
+          "TemplateName": "FanComet9Left_B_C027_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6893,7 +6893,7 @@
         },
         {
           "StartTime": 140.6,
-          "TemplateName": "WB_R03_C028_B",
+          "TemplateName": "FanComet9Right_B_C028_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6901,7 +6901,7 @@
         },
         {
           "StartTime": 143.2,
-          "TemplateName": "WB_R03_C079_B",
+          "TemplateName": "FanComet9Left_B_C079_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6909,7 +6909,7 @@
         },
         {
           "StartTime": 143.2,
-          "TemplateName": "WB_R03_C083_B",
+          "TemplateName": "FanComet9Right_B_C083_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6917,7 +6917,7 @@
         },
         {
           "StartTime": 153.5,
-          "TemplateName": "WB_R03_C087_B",
+          "TemplateName": "FanSilver9Center_B_C087_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6925,7 +6925,7 @@
         },
         {
           "StartTime": 155.8,
-          "TemplateName": "WB_R03_C036_B",
+          "TemplateName": "FanSilver9Center_B_C036_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6933,7 +6933,7 @@
         },
         {
           "StartTime": 157,
-          "TemplateName": "WB_R03_C037_B",
+          "TemplateName": "FanComet5_B_C037_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6941,7 +6941,7 @@
         },
         {
           "StartTime": 160,
-          "TemplateName": "WB_R03_C050_B",
+          "TemplateName": "FanSilver9Center_B_C050_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6949,7 +6949,7 @@
         },
         {
           "StartTime": 164.1,
-          "TemplateName": "WB_R03_C027_B",
+          "TemplateName": "FanComet9Left_B_C027_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6957,7 +6957,7 @@
         },
         {
           "StartTime": 164.5,
-          "TemplateName": "WB_R03_C041_B",
+          "TemplateName": "FanComet9Right_B_C041_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6965,7 +6965,7 @@
         },
         {
           "StartTime": 167.3,
-          "TemplateName": "WB_R03_C027_B",
+          "TemplateName": "FanComet9Left_B_C027_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6973,7 +6973,7 @@
         },
         {
           "StartTime": 168.5,
-          "TemplateName": "WB_R03_C028_B",
+          "TemplateName": "FanComet9Right_B_C028_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6981,7 +6981,7 @@
         },
         {
           "StartTime": 172.2,
-          "TemplateName": "WB_R03_C117_B",
+          "TemplateName": "FanComet5_B_C117_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6989,7 +6989,7 @@
         },
         {
           "StartTime": 174,
-          "TemplateName": "WB_R03_C074_B",
+          "TemplateName": "FanSilver13_B_C074_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -6997,7 +6997,7 @@
         },
         {
           "StartTime": 179.7,
-          "TemplateName": "WB_R03_C079_B",
+          "TemplateName": "FanComet9Left_B_C079_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7005,7 +7005,7 @@
         },
         {
           "StartTime": 180.5,
-          "TemplateName": "WB_R03_C045_B",
+          "TemplateName": "FanComet9Right_B_C045_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7013,7 +7013,7 @@
         },
         {
           "StartTime": 182.9,
-          "TemplateName": "WB_R03_C074_B",
+          "TemplateName": "FanSilver13_B_C074_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7021,7 +7021,7 @@
         },
         {
           "StartTime": 183.7,
-          "TemplateName": "WB_R03_C082_B",
+          "TemplateName": "FanComet9Left_B_C082_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7029,7 +7029,7 @@
         },
         {
           "StartTime": 184.5,
-          "TemplateName": "WB_R03_C083_B",
+          "TemplateName": "FanComet9Right_B_C083_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7037,7 +7037,7 @@
         },
         {
           "StartTime": 186.4,
-          "TemplateName": "WB_R03_C053_B",
+          "TemplateName": "FanSilver13_B_C053_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7045,7 +7045,7 @@
         },
         {
           "StartTime": 189.1,
-          "TemplateName": "WB_R03_C036_B",
+          "TemplateName": "FanSilver9Center_B_C036_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7053,7 +7053,7 @@
         },
         {
           "StartTime": 190.3,
-          "TemplateName": "WB_R03_C037_B",
+          "TemplateName": "FanComet5_B_C037_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7061,7 +7061,7 @@
         },
         {
           "StartTime": 192.8,
-          "TemplateName": "WB_R03_C079_B",
+          "TemplateName": "FanComet9Left_B_C079_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7069,7 +7069,7 @@
         },
         {
           "StartTime": 192.8,
-          "TemplateName": "WB_R03_C083_B",
+          "TemplateName": "FanComet9Right_B_C083_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7077,7 +7077,7 @@
         },
         {
           "StartTime": 197.3,
-          "TemplateName": "WB_R03_C141_B",
+          "TemplateName": "FanSilver13_B_C141_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7085,7 +7085,7 @@
         },
         {
           "StartTime": 198.9,
-          "TemplateName": "WB_R03_C142_B",
+          "TemplateName": "FanComet5_B_C142_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7093,7 +7093,7 @@
         },
         {
           "StartTime": 203.8,
-          "TemplateName": "WB_R03_C043_B",
+          "TemplateName": "FanSilver13_B_C043_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7101,7 +7101,7 @@
         },
         {
           "StartTime": 205,
-          "TemplateName": "WB_R03_C087_B",
+          "TemplateName": "FanSilver9Center_B_C087_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -7202,5 +7202,336 @@
       "key": "NYR03_SilverStrobeChry@1"
     }
   ],
-  "compositionRevision": "R03_FULL_RECOMPOSE"
+  "compositionRevision": "R03_FULL_RECOMPOSE",
+  "templateNaming": {
+    "scheme": "effect_group_cue_variant/1",
+    "subTemplates": [
+      {
+        "from": "NYR03_Red1_v1",
+        "to": "FanComet"
+      },
+      {
+        "from": "NYR03_Silver5_v1",
+        "to": "FanSilver5"
+      },
+      {
+        "from": "NYR03_Red5_v1",
+        "to": "FanComet5"
+      },
+      {
+        "from": "NYR03_SilverChry_v1",
+        "to": "SilverChry"
+      },
+      {
+        "from": "NYR03_Strobe_v1",
+        "to": "Strobe"
+      },
+      {
+        "from": "NYR03_Lime_v1",
+        "to": "Lime"
+      },
+      {
+        "from": "NYR03_OrangeGlitter_v1",
+        "to": "OrangeGlitter"
+      },
+      {
+        "from": "NYR03_GoldCrackle_v1",
+        "to": "GoldCrackle"
+      },
+      {
+        "from": "NYR03_Crackle_v1",
+        "to": "Crackle"
+      },
+      {
+        "from": "NYR03_Red9_v1",
+        "to": "FanComet9Left"
+      },
+      {
+        "from": "NYR03_Red9R_v1",
+        "to": "FanComet9Right"
+      },
+      {
+        "from": "NYR03_GreenPeony_v1",
+        "to": "GreenPeony"
+      },
+      {
+        "from": "NYR03_GoldCoreLime_v1",
+        "to": "GoldCoreLime"
+      },
+      {
+        "from": "NYR03_GoldSpark_v1",
+        "to": "GoldSpark"
+      },
+      {
+        "from": "NYR03_Silver9_v1",
+        "to": "FanSilver9Center"
+      },
+      {
+        "from": "NYR03_GoldRayChry_v1",
+        "to": "GoldRayChry"
+      },
+      {
+        "from": "NYR03_GoldChry_v1",
+        "to": "GoldChry"
+      },
+      {
+        "from": "NYR03_Silver13_v1",
+        "to": "FanSilver13"
+      },
+      {
+        "from": "NYR03_MultiLayerChry_v1",
+        "to": "MultiLayerChry"
+      },
+      {
+        "from": "NYR03_PrismWheels_v1",
+        "to": "PrismWheels"
+      },
+      {
+        "from": "NYR03_GoldKamuro_v1",
+        "to": "GoldKamuro"
+      },
+      {
+        "from": "NYR03_SilverStrobeChry_v1",
+        "to": "SilverStrobeChry"
+      }
+    ],
+    "templates": [
+      {
+        "from": "WB_R03_C001_B",
+        "to": "FanComet_B_C001_01"
+      },
+      {
+        "from": "WB_R03_C002_B",
+        "to": "FanComet_B_C002_01"
+      },
+      {
+        "from": "WB_R03_C010_B",
+        "to": "FanComet_B_C010_01"
+      },
+      {
+        "from": "WB_R03_C012_B",
+        "to": "FanSilver5_B_C012_01"
+      },
+      {
+        "from": "WB_R03_C013_B",
+        "to": "FanComet5_B_C013_01"
+      },
+      {
+        "from": "WB_R03_C015_P",
+        "to": "SilverChry_P_C015_01"
+      },
+      {
+        "from": "WB_R03_C016_P",
+        "to": "SilverChry_P_C016_01"
+      },
+      {
+        "from": "WB_R03_C017_P",
+        "to": "Strobe_P_C017_01"
+      },
+      {
+        "from": "WB_R03_C018_P",
+        "to": "Lime_P_C018_01"
+      },
+      {
+        "from": "WB_R03_C019_P",
+        "to": "OrangeGlitter_P_C019_01"
+      },
+      {
+        "from": "WB_R03_C020_B",
+        "to": "FanSilver5_B_C020_01"
+      },
+      {
+        "from": "WB_R03_C021_P",
+        "to": "GoldCrackle_P_C021_01"
+      },
+      {
+        "from": "WB_R03_C022_P",
+        "to": "Crackle_P_C022_01"
+      },
+      {
+        "from": "WB_R03_C023_P",
+        "to": "Strobe_P_C023_01"
+      },
+      {
+        "from": "WB_R03_C027_B",
+        "to": "FanComet9Left_B_C027_01"
+      },
+      {
+        "from": "WB_R03_C028_B",
+        "to": "FanComet9Right_B_C028_01"
+      },
+      {
+        "from": "WB_R03_C032_P",
+        "to": "GreenPeony_P_C032_01"
+      },
+      {
+        "from": "WB_R03_C033_P",
+        "to": "GoldCoreLime_P_C033_01"
+      },
+      {
+        "from": "WB_R03_C034_P",
+        "to": "GoldSpark_P_C034_01"
+      },
+      {
+        "from": "WB_R03_C035_B",
+        "to": "FanComet5_B_C035_01"
+      },
+      {
+        "from": "WB_R03_C036_B",
+        "to": "FanSilver9Center_B_C036_01"
+      },
+      {
+        "from": "WB_R03_C037_B",
+        "to": "FanComet5_B_C037_01"
+      },
+      {
+        "from": "WB_R03_C038_P",
+        "to": "GoldRayChry_P_C038_01"
+      },
+      {
+        "from": "WB_R03_C039_P",
+        "to": "GoldChry_P_C039_01"
+      },
+      {
+        "from": "WB_R03_C041_B",
+        "to": "FanComet9Right_B_C041_01"
+      },
+      {
+        "from": "WB_R03_C043_B",
+        "to": "FanSilver13_B_C043_01"
+      },
+      {
+        "from": "WB_R03_C044_P",
+        "to": "MultiLayerChry_P_C044_01"
+      },
+      {
+        "from": "WB_R03_C045_B",
+        "to": "FanComet9Right_B_C045_01"
+      },
+      {
+        "from": "WB_R03_C048_P",
+        "to": "PrismWheels_P_C048_01"
+      },
+      {
+        "from": "WB_R03_C049_P",
+        "to": "MultiLayerChry_P_C049_01"
+      },
+      {
+        "from": "WB_R03_C050_B",
+        "to": "FanSilver9Center_B_C050_01"
+      },
+      {
+        "from": "WB_R03_C051_P",
+        "to": "GoldKamuro_P_C051_01"
+      },
+      {
+        "from": "WB_R03_C052_P",
+        "to": "GoldSpark_P_C052_01"
+      },
+      {
+        "from": "WB_R03_C053_B",
+        "to": "FanSilver13_B_C053_01"
+      },
+      {
+        "from": "WB_R03_C054_P",
+        "to": "SilverChry_P_C054_01"
+      },
+      {
+        "from": "WB_R03_C056_P",
+        "to": "Lime_P_C056_01"
+      },
+      {
+        "from": "WB_R03_C057_P",
+        "to": "OrangeGlitter_P_C057_01"
+      },
+      {
+        "from": "WB_R03_C071_P",
+        "to": "GoldKamuro_P_C071_01"
+      },
+      {
+        "from": "WB_R03_C072_P",
+        "to": "GoldChry_P_C072_01"
+      },
+      {
+        "from": "WB_R03_C073_P",
+        "to": "PrismWheels_P_C073_01"
+      },
+      {
+        "from": "WB_R03_C074_B",
+        "to": "FanSilver13_B_C074_01"
+      },
+      {
+        "from": "WB_R03_C077_P",
+        "to": "SilverStrobeChry_P_C077_01"
+      },
+      {
+        "from": "WB_R03_C079_B",
+        "to": "FanComet9Left_B_C079_01"
+      },
+      {
+        "from": "WB_R03_C082_B",
+        "to": "FanComet9Left_B_C082_01"
+      },
+      {
+        "from": "WB_R03_C083_B",
+        "to": "FanComet9Right_B_C083_01"
+      },
+      {
+        "from": "WB_R03_C084_P",
+        "to": "PrismWheels_P_C084_01"
+      },
+      {
+        "from": "WB_R03_C085_P",
+        "to": "GreenPeony_P_C085_01"
+      },
+      {
+        "from": "WB_R03_C086_P",
+        "to": "MultiLayerChry_P_C086_01"
+      },
+      {
+        "from": "WB_R03_C087_B",
+        "to": "FanSilver9Center_B_C087_01"
+      },
+      {
+        "from": "WB_R03_C093_P",
+        "to": "SilverStrobeChry_P_C093_01"
+      },
+      {
+        "from": "WB_R03_C094_P",
+        "to": "GoldCoreLime_P_C094_01"
+      },
+      {
+        "from": "WB_R03_C114_P",
+        "to": "GoldKamuro_P_C114_01"
+      },
+      {
+        "from": "WB_R03_C116_P",
+        "to": "GoldCoreLime_P_C116_01"
+      },
+      {
+        "from": "WB_R03_C117_B",
+        "to": "FanComet5_B_C117_01"
+      },
+      {
+        "from": "WB_R03_C139_P",
+        "to": "SilverStrobeChry_P_C139_01"
+      },
+      {
+        "from": "WB_R03_C141_B",
+        "to": "FanSilver13_B_C141_01"
+      },
+      {
+        "from": "WB_R03_C142_B",
+        "to": "FanComet5_B_C142_01"
+      },
+      {
+        "from": "WB_R03_C143_P",
+        "to": "GoldKamuro_P_C143_01"
+      },
+      {
+        "from": "WB_R03_C148_P",
+        "to": "SilverChry_P_C148_01"
+      }
+    ]
+  }
 }
