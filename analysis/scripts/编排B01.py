@@ -13,6 +13,8 @@
   R3 叠层：顶排大、二排小而低（B 点），底下铺扇形；R4 过渡 = 小中花 A / B 间隔，一点一发；
   R5 每段 A 领 / B 接 / C 插，同种不连续超过 2 波（墙除外），每种花都有一次领奏；
   R6 段落入口给一波最大的，随后 1–2 波余波；进入新大段前留一小节空（只剩尾缀升）；R7 强度靠 S→M→L 台阶，终章 L 墙（金→白）。
+  R8 托底扇（用户 10-11 14:08）：中 / 大花起飞时，B 点的扇与尾缀同一刻打出来托底，次序随这一波（左→右 / 右→左 / 里→外 / 外→里），
+     束型随方向和力度挑（红彗星 5 / 9 束，银扇 5 / 9 / 13 束），逐波按 GPU 预算从重往轻降级。
 """
 import argparse
 import json
@@ -93,7 +95,7 @@ SPECIES = {
     'S13': ('R03_Silver13', '银星·十三束宽扇', 'F', '#aab8d8', 0),
 }
 TID2SP = {v[0]: k for k, v in SPECIES.items()}
-FAN_PTS = {'S5': ['B1', 'B3', 'B4', 'B6'], 'S9': ['B1', 'B3', 'B4', 'B6'], 'S13': ['B3', 'B4']}
+FAN_PTS = {'S9': ['B1', 'B3', 'B4', 'B6'], 'S13': ['B3', 'B4']}   # 银扇 9 / 13 束太重：限点位；S5（每点 15）可整排 8 点，由预算逐波裁
 TAIL_GPU = {'S': 6, 'M': 2, 'L': 6}
 BEAM_GPU = {'R': 1, 'S': 3}          # 红彗星 FanComet 1 / 束，银扇 FanSilver 3 / 束
 REL_H = {'S': 190.08, 'M': 265.12, 'L': 410.21}   # 资源自带的开花高度（相对发射点）；目标 150 / 210 / 330，见说明
@@ -180,19 +182,24 @@ class Show:
         self.cur = s
         return s
 
-    def cue(self, sp, pts, H0, order='together', gap=0.0, dz=None, layer='main', tier='trim', label='', amp=25.0, keep_all=False, wave=None):
+    def cue(self, sp, pts, H0, order='together', gap=0.0, dz=None, layer='main', tier='trim', label='', amp=25.0, keep_all=False, wave=None, at=None):
         """一个 cue = 一种花型 + 一组点 + 每点开花时刻 H = H0 + rank*gap。
-        layer: main 主排 / extra 叠层（低档先去掉）；tier: all 三档都全点 / trim 中档去外两点、低档隔点"""
+        layer: main 主排 / extra 叠层（低档先去掉）；tier: all 三档都全点 / trim 中档去外两点、低档隔点
+        at: {点: 起飞时刻} 逐点给定（托底扇跟着球花尾缀起飞用），给了就不用 H0 + rank*gap，次序标 source"""
         tid, cn, size, col, gpu_body = SPECIES[sp]
         pts = [p for p in pts]
         if sp in FAN_PTS:   # 银扇每束 3 个 GPU 发射器，整排 8 把会爆预算：限制点位（24 实测 234 干净 / 312 截断）
             pts = [p for p in pts if p in FAN_PTS[sp]] or list(FAN_PTS[sp])
+        if at is not None:
+            pts = [p for p in pts if p in at]
+            if not pts:
+                return None
         rk = ranks(pts, order)
         dzm = dz_pattern(pts, dz, amp) if not isinstance(dz, dict) else dz
         rise = rise_of(sp)
         events = []
         for p in sorted(pts, key=px):
-            H = H0 + rk[p] * gap
+            H = at[p] if at is not None else H0 + rk[p] * gap
             launch = q1(H - rise)
             if launch < 0:
                 launch = 0.0
@@ -200,8 +207,8 @@ class Show:
             events.append(dict(point=p, launch=launch, burst=burst, end=round(burst + life_of(sp), 6), dz=dzm.get(p, 0.0), H=round(H, 4)))
         cid = f'B01_C{len(self.cues) + 1:03d}'
         c = dict(id=cid, section=self.cur['id'], sp=sp, templateId=tid, size=size, group=pts[0][0], points=[e['point'] for e in events],
-                 order=WB_ORDER[order] if order in WB_ORDER else 'source', gap=gap, layer=layer, tier='all' if keep_all else tier,
-                 label=label or cn, name=f"{self.cur['name']} · {label or cn}", wave=wave, events=events, H0=round(H0, 4))
+                 order='source' if at is not None else (WB_ORDER[order] if order in WB_ORDER else 'source'), gap=gap, layer=layer, tier='all' if keep_all else tier,
+                 label=label or cn, name=f"{self.cur['name']} · {label or cn}", wave=wave, events=events, H0=round(min(at.values()) if at is not None else H0, 4))
         c['profiles'] = tier_points(c)
         self.cues.append(c)
         return c
@@ -216,11 +223,9 @@ class Show:
         b = self.cue(spB, B8, H0, order, gap, 'zigD', amp=amp, wave='A/B间隔17', **kw)
         return [a, b]
 
-    def stack(self, spTop, spUnder, H0, order='out', gap=0.1, dz='arch', under_delay=0.4, fan=None, fan_H=0.0, **kw):
+    def stack(self, spTop, spUnder, H0, order='out', gap=0.1, dz='arch', under_delay=0.4, **kw):
         out = [self.cue(spTop, P9, H0, order, gap, dz, wave='叠层', **kw)]
         out.append(self.cue(spUnder, B8, H0 + under_delay, order, gap, 'flat', layer='extra', wave='叠层二排'))
-        if fan:
-            out.append(self.cue(fan, B8, H0 + fan_H, order, gap, None, layer='extra', wave='扇形铺底'))
         return out
 
     def castle(self, spL, spM, H0, order='out', gap=0.1, dz='flat', **kw):
@@ -234,6 +239,27 @@ class Show:
     def fans(self, sp, pts, H0, order='out', gap=0.1, **kw):
         kw.setdefault('layer', 'extra')
         return [self.cue(sp, pts, H0, order, gap, None, wave='扇形', **kw)]
+
+    # —— 扇组词汇（R04 的几种扇组 + 外→里；单独放，不挂在某一波上） ——
+    def chase(self, H0, **kw):
+        """左右追逐：偶数 B 点红彗星九束左→右扫、点序左→右；奇数 B 点右→左扫、点序右→左，两组对着穿过中间"""
+        ev, od = [f'B{i}' for i in (0, 2, 4, 6)], [f'B{i}' for i in (1, 3, 5, 7)]
+        return [self.cue('R9', ev, H0, 'L', 0.2, None, layer='extra', wave='扇组·左右追逐', label='左右追逐·左→右', **kw),
+                self.cue('R9R', od, H0 + BAR / 4, 'R', 0.2, None, layer='extra', wave='扇组·左右追逐', label='左右追逐·右→左', **kw)]
+
+    def inward(self, H0, **kw):
+        """向心合拢（外→里）：左翼 B0–B2 左→右扫，右翼 B5–B7 右→左扫，两翼同时往中间收"""
+        return [self.cue('R9', ['B0', 'B1', 'B2'], H0, 'L', 0.2, None, layer='extra', wave='扇组·向心合拢', label='向心合拢·左翼', **kw),
+                self.cue('R9R', ['B5', 'B6', 'B7'], H0, 'R', 0.2, None, layer='extra', wave='扇组·向心合拢', label='向心合拢·右翼', **kw)]
+
+    def ripple(self, H0, **kw):
+        """中心涟漪（里→外）：银扇九束每把中心束先、两侧后，点序从中心往两边；两端红彗星五束收尾"""
+        return [self.cue('S9', B8, H0, 'out', 0.15, None, layer='extra', wave='扇组·中心涟漪', label='中心涟漪·银扇', **kw),
+                self.cue('R5', ['B0', 'B7'], H0 + 0.45, 'together', 0.0, None, layer='extra', wave='扇组·中心涟漪', label='中心涟漪·两端', **kw)]
+
+    def outin(self, H0, **kw):
+        """外→里合拢：红彗星五束从两端 B0 B7 开始往中间 B3 B4 一把把点"""
+        return [self.cue('R5', B8, H0, 'in', 0.15, None, layer='extra', wave='扇组·外→里合拢', label='外→里合拢', **kw)]
 
 
 def tier_points(c):
@@ -266,14 +292,14 @@ def build(density=2):
 
     # —— 1 开场高潮 b3–b8（长冈 0:22→0:25：预告再整排高潮） ——
     S.section('B01_S1', '开场高潮', 3, 9, 'GR', 'SC', 'ST', '10.0 s 整排叠层高潮：顶排金芒菊 M×9 + 二排小银菊 S×8（B 点，低 75 m）+ 银扇铺底；随后一小节一波，小银菊 / 红彗星 / 点灭星接力')
-    S.stack('GR', 'SC', h(3), 'out', 0.1, 'arch', 0.4, fan='S5', fan_H=0.0, keep_all=True)
+    S.stack('GR', 'SC', h(3), 'out', 0.1, 'arch', 0.4, keep_all=True)
     S.row9('SC', h(4), 'L', 0.2, 'wave')
-    S.fans('R9', B8, h(5), 'L', 0.2)
+    S.chase(h(5))
     if d >= 2:
         S.row9('GC', h(5, 2), 'out', 0.1, 'flat')
     S.row9('GR', h(6), 'out', 0.1, 'arch')
     S.zig17('SC', 'ST', h(7), 'out', 0.1)
-    S.stack('GS', 'SC', h(8), 'out', 0.1, 'arch', 0.4, fan='S5', fan_H=0.0)
+    S.stack('GS', 'SC', h(8), 'out', 0.1, 'arch', 0.4)
 
     # —— 2 连续展开 b9–b16（长冈 1:20 环形排：金环 + 色芯，高低起伏 ±30 m） ——
     S.section('B01_S2', '连续展开', 9, 17, 'GY', 'LM', 'CL', '金曜菊领；③ 环形排 26.0 s：金曜菊与金蕊青柠星隔点交替成一圈、高低起伏 ±25 m、银扇铺底；小青柠低排接力')
@@ -289,10 +315,10 @@ def build(density=2):
     ring_dz = dz_pattern(P9, 'wave', 25.0)
     S.cue('GY', evens, h(13), 'out', 0.1, {p: ring_dz[p] for p in evens}, wave='环形排', tier='all')
     S.cue('CL', odds, h(13), 'out', 0.1, {p: ring_dz[p] for p in odds}, wave='环形排色芯', tier='all')
-    S.fans('S5', B8, h(13), 'out', 0.1)
+    S.chase(h(13))
     S.low8('OG', h(14), 'R', 0.2)
     S.row9('CL', h(15), 'out', 0.1, 'valley')
-    S.stack('GY', 'LM', h(16), 'out', 0.1, 'arch', 0.4, fan='R5', fan_H=0.0)
+    S.stack('GY', 'LM', h(16), 'out', 0.1, 'arch', 0.4)
 
     # —— 3 密集问答 b17–b24（长冈 2:14：17 点一点一发，A / B 间隔；问答 = 左半 / 右半） ——
     S.section('B01_S3', '密集问答', 17, 25, 'SC', 'GS', 'OG', '小银菊领 17 点一点一发，金锦菊接，橙辉星 / 小青柠 / 绿牡丹插；左半问右半答')
@@ -307,32 +333,32 @@ def build(density=2):
     S.zig17('SC', 'ST', h(21), 'out', 0.1)
     S.row9('GP', h(22), 'together', 0.0, 'wave')
     S.zig17('SC', 'OG', h(23), 'out', 0.1)
-    S.stack('GS', 'SC', h(24), 'out', 0.1, 'arch', 0.4, fan='R5', fan_H=0.0)
+    S.stack('GS', 'SC', h(24), 'out', 0.1, 'arch', 0.4)
 
     # —— 4 往返扫射 b25–b32（长冈 4:11：自左向右一格格开；红彗星 / 银扇对扫） ——
     S.section('B01_S4', '往返扫射', 25, 33, 'GR', 'GS', 'SC', '金芒菊整排左→右扫（0.3 s / 点）④ 50.6 s 右→左回扫；红彗星 / 银扇在 B 排来回追')
-    S.fans('R9', B8, h(25), 'L', 0.2)
+    S.chase(h(25))
     S.row9('GR', h(26), 'L', 0.3, 'arch')
     S.low8('SC', h(26) + 0.3, 'L', 0.3, layer='extra')
     S.fans('S9', B8, h(27), 'R', 0.2)
     S.row9('GR', h(28), 'R', 0.3, 'arch', keep_all=True)
     S.low8('GC', h(28) + 0.3, 'R', 0.3, layer='extra')
-    S.fans('S9', B8, h(28), 'R', 0.2)
+    S.inward(h(28))
     S.row9('SC', h(29), 'out', 0.1, 'flat')
     S.low8('LM', h(29, 2), 'in', 0.1)
     S.row9('GS', h(30), 'L', 0.3, 'arch')
     S.low8('LM', h(30) + 0.3, 'L', 0.3, layer='extra')
     S.zig17('GS', 'SC', h(31), 'out', 0.1)
-    S.fans('S5', B8, h(32), 'out', 0.1)
+    S.outin(h(32))
 
     # —— 5 第一次抬升 + 高潮 I b33–b40（⑤ 城垛：L 五点 + M 四点） ——
     S.section('B01_S5', '第一次抬升', 33, 41, 'SS', 'GS', 'ML', '银彩菊领：⑤ 58.7 s 城垛 L×5 + M×4；高潮 I（60.3–71.7）每小节叠层、墙、扫交替')
     S.castle('SS', 'GR', h(33), 'out', 0.1, 'flat', keep_all=True)
-    S.fans('S5', B8, h(33), 'out', 0.1)
-    S.stack('GS', 'SC', h(34), 'out', 0.1, 'arch', 0.4, fan='R5', fan_H=0.0, keep_all=True)
+    S.ripple(h(33))
+    S.stack('GS', 'SC', h(34), 'out', 0.1, 'arch', 0.4, keep_all=True)
     S.zig17('ML', 'ST', h(35), 'out', 0.1)
     S.row9('GS', h(36), 'out', 0.1, 'arch')
-    S.fans('S9', B8, h(36), 'out', 0.1)
+    S.ripple(h(36))
     if d >= 2:
         S.low8('CR', h(36, 2), 'out', 0.1)
     S.castle('SS', 'ML', h(37), 'out', 0.1, 'flat')
@@ -340,7 +366,7 @@ def build(density=2):
     S.row9('SS', h(39), 'out', 0.1, 'flat', keep_all=True)
     S.castle('SS', 'GR', h(40), 'out', 0.1, 'flat', keep_all=True)
     S.low8('SC', h(40), 'out', 0.1, layer='extra')
-    S.fans('S5', B8, h(40), 'out', 0.1)
+    S.inward(h(40))
 
     # —— 6 低位密奏 b41–b48（呼吸：第一小节全空，只放 B 排小花） ——
     S.section('B01_S6', '低位密奏', 41, 49, 'ST', 'GC', 'CR', '点灭星领、金裂星接：高潮后掉下来，只放低位 S 排；第 41 小节（71.7 s）全空')
@@ -360,7 +386,7 @@ def build(density=2):
     S.zig17('SC', 'LM', h(50), 'out', 0.1)
     S.row9('CL', h(51), 'in', 0.1, 'arch')
     S.low8('OG', h(52), 'L', 0.2)
-    S.fans('S5', B8, h(52), 'out', 0.1)
+    S.outin(h(52))
     S.row9('PW', h(53), 'together', 0.0, 'wave')
     S.stack('CL', 'SC', h(54), 'out', 0.1, 'arch', 0.4)
     S.castle('SS', 'CL', h(55), 'out', 0.1, 'flat')
@@ -386,31 +412,31 @@ def build(density=2):
     S.cue('SS', ['P0', 'P2', 'P6', 'P8'], h(66), 'out', 0.1, 'flat', wave='城垛L', keep_all=True)
     S.cue('ML', ['P1', 'P3', 'P5', 'P7'], h(66), 'out', 0.1, 'flat', wave='城垛M', keep_all=True)
     S.cue('SC', B8, h(66) + 0.4, 'out', 0.1, 'flat', wave='叠层二排', layer='extra')
-    S.fans('S9', B8, h(66), 'out', 0.1)
-    S.stack('CL', 'ST', h(67), 'out', 0.1, 'arch', 0.4, fan='S5', fan_H=0.0)
+    S.ripple(h(66))
+    S.stack('CL', 'ST', h(67), 'out', 0.1, 'arch', 0.4)
     S.row9('ML', h(68), 'out', 0.1, 'arch')
     S.low8('GC', h(68, 2), 'in', 0.1)
     S.castle('SS', 'CL', h(69), 'out', 0.1, 'flat')
     S.low8('SC', h(69, 2), 'out', 0.1)
     S.row9('GY', h(70), 'out', 0.1, 'arch')
-    S.fans('R9', B8, h(70), 'L', 0.2)
+    S.chase(h(70))
     S.low8('LM', h(70, 2), 'out', 0.1)
     S.zig17('PW', 'OG', h(71), 'out', 0.1)
     S.row9('SS', h(72), 'out', 0.1, 'flat', keep_all=True)
-    S.fans('S9', B8, h(72), 'out', 0.1)
+    S.ripple(h(72))
     S.row9('GS', h(73), 'L', 0.2, 'arch')
     S.low8('GC', h(73, 2), 'R', 0.1)
     S.row9('ML', h(74), 'R', 0.2, 'arch')
     S.row9('CL', h(75), 'out', 0.1, 'valley')
     S.low8('ST', h(75, 2), 'out', 0.1)
     S.castle('GK', 'ML', h(76), 'out', 0.1, 'flat')
-    S.stack('GY', 'SC', h(77), 'out', 0.1, 'arch', 0.4, fan='S5', fan_H=0.0)
+    S.stack('GY', 'SC', h(77), 'out', 0.1, 'arch', 0.4)
     S.row9('PW', h(78), 'together', 0.0, 'wave')
     S.low8('LM', h(78, 2), 'out', 0.1)
     S.zig17('GS', 'ST', h(79), 'out', 0.1)
     S.row9('GR', h(80), 'out', 0.1, 'arch')
     S.low8('GC', h(80, 2), 'out', 0.1)
-    S.fans('S5', B8, h(80), 'out', 0.1)
+    S.inward(h(80))
     S.castle('SS', 'GR', h(81), 'out', 0.1, 'flat', keep_all=True)
     S.low8('SC', h(81), 'out', 0.1, layer='extra')
     S.fans('S13', ['B2', 'B3', 'B4', 'B5'], h(81), 'out', 0.1)
@@ -430,26 +456,26 @@ def build(density=2):
     S.stack('GP', 'SC', h(89), 'out', 0.1, 'arch', 0.4)
     S.zig17('GS', 'OG', h(90), 'out', 0.1)
     S.row9('PW', h(91), 'in', 0.1, 'wave')
-    S.fans('R5', B8, h(91), 'out', 0.1)
+    S.outin(h(91))
     S.row9('GP', h(92), 'together', 0.0, 'wave')
     S.low8('LM', h(92), 'out', 0.1, layer='extra')
     S.castle('SS', 'GP', h(93), 'out', 0.1, 'flat')
     S.row9('CL', h(94), 'R', 0.2, 'arch')
-    S.stack('GY', 'ST', h(95), 'out', 0.1, 'arch', 0.4, fan='S5', fan_H=0.0)
+    S.stack('GY', 'ST', h(95), 'out', 0.1, 'arch', 0.4)
 
     # —— 12 终章 b97–b118（长冈 5:22–5:32：金墙 → 垂柳墙 → 白墙） ——
     S.section('B01_S12', '终章', 97, 119, 'GK', 'GY', 'SS', '97 小节（162.5 s，全曲最响的一小节）起前奏；102 小节（170.6 s）起整段最亮；⑧ 175.4 s 三主角垂柳墙；186.8–194.9 s 金墙三波；196.5 s 白墙')
     S.castle('GK', 'CL', h(97), 'out', 0.1, 'flat', keep_all=True)
     S.low8('SC', h(97), 'out', 0.1, layer='extra')
-    S.fans('S5', B8, h(97), 'out', 0.1)
+    S.outin(h(97))
     S.row9('GY', h(98), 'out', 0.1, 'arch')
     S.zig17('SC', 'ST', h(99), 'out', 0.1)
     S.row9('ML', h(100), 'L', 0.2, 'arch')
-    S.stack('GR', 'GC', h(101), 'out', 0.1, 'arch', 0.4, fan='S5', fan_H=0.0)
+    S.stack('GR', 'GC', h(101), 'out', 0.1, 'arch', 0.4)
     # 102 终章入口
     S.row9('SS', h(102), 'out', 0.1, 'flat', keep_all=True)
     S.low8('GC', h(102) + 0.4, 'out', 0.1, layer='extra')
-    S.fans('S5', B8, h(102), 'out', 0.1)
+    S.ripple(h(102))
     S.stack('CL', 'ST', h(103), 'out', 0.1, 'arch', 0.4)
     S.row9('GK', h(104), 'L', 0.3, 'flat')
     # ⑧ 三主角垂柳墙
@@ -461,7 +487,7 @@ def build(density=2):
         S.low8('OG', h(106, 2), 'out', 0.1)
     S.zig17('GS', 'LM', h(107), 'out', 0.1)
     S.castle('SS', 'ML', h(108), 'out', 0.1, 'flat')
-    S.fans('R9', B8, h(108), 'L', 0.2)
+    S.chase(h(108))
     S.stack('GY', 'GC', h(109), 'out', 0.1, 'arch', 0.4)
     S.row9('SS', h(110), 'R', 0.3, 'flat')
     S.row9('CL', h(111), 'together', 0.0, 'wave')
@@ -471,7 +497,7 @@ def build(density=2):
     S.row9('GR', h(113), 'out', 0.1, 'arch')
     S.low8('GC', h(113, 2), 'out', 0.1)
     S.row9('GK', h(114), 'in', 0.1, 'flat', keep_all=True)
-    S.stack('GY', 'GC', h(115), 'out', 0.1, 'arch', 0.4, fan='S5', fan_H=0.0)
+    S.stack('GY', 'GC', h(115), 'out', 0.1, 'arch', 0.4)
     S.row9('GK', h(116), 'out', 0.1, 'flat', keep_all=True)
     S.castle('GK', 'GR', h(117), 'out', 0.1, 'flat', keep_all=True)
     S.fans('S13', ['B2', 'B3', 'B4', 'B5'], h(117), 'out', 0.1)
@@ -487,7 +513,173 @@ def build(density=2):
         S.cue('SS', sel, h(k), 'out', 0.1, 'flat', wave=f'白墙{pts}', tier='all', label=f'白墙 {pts} 点')
     S.cue('GK', ['P4'], h(125, 2) + 0.2, 'together', 0.0, 'flat', wave='主角', label='余韵 金垂柳（P4）', keep_all=True)
 
+    attach_base_fans(S)
     return S
+
+
+# ═══════════════════════════ 托底扇（R8） ═══════════════════════════
+# 长冈：中 / 大花起飞时，底座的扇和尾缀同一刻打出来托底。做法：每一波 M / L 球花（P 点）按它的尾缀起飞时刻，
+# 在相邻的 B 点放扇（B_k 在 P_k 与 P_k+1 之间，取这两个 P 点里挂了最大那一级球的起飞时刻），所以扇的次序和这一波一模一样：
+# 左→右 / 右→左 / 里→外 / 外→里 / 齐发；束型随方向挑，力度看这一波有没有大花、这一小节响不响；预算不够就逐级降。
+LADDER = {   # (方向, 力度) → 从重到轻；'@4' = 只放 B1 B3 B4 B6 四把；H 重（有大花或响度 ≥ -8.5 dB）/ L 轻
+    ('left', 'H'): ['R9', 'R9@4', 'R5'], ('left', 'L'): ['R9', 'R9@4', 'R5'],
+    ('right', 'H'): ['R9R', 'R9R@4', 'R5'], ('right', 'L'): ['R9R', 'R9R@4', 'R5'],
+    ('center-out', 'H'): ['S9', 'S5', 'S5@4', 'R5'], ('center-out', 'L'): ['S5', 'S5@4', 'R5'],
+    ('outside-in', 'H'): ['S5', 'S5@4', 'R5'], ('outside-in', 'L'): ['S5@4', 'R5'],
+    ('together', 'H'): ['S13', 'S5', 'S5@4', 'R5'], ('together', 'L'): ['S5', 'S5@4', 'R5'],
+}
+HALF = ['B1', 'B3', 'B4', 'B6']
+DIR_CN = {'left': '左→右', 'right': '右→左', 'center-out': '里→外', 'outside-in': '外→里', 'together': '齐发', 'source': '齐发'}
+HEAVY_DB = -8.5
+FAN_ALIVE_MAX = GPU_HARD          # 同时在场的扇束 GPU 发射器（只算扇）≤ 234：24 实测 78 束一次放干净，104 束被截断
+_MUS = json.loads(MUSIC.read_text(encoding='utf-8'))['bars']
+
+
+def bar_db(t):
+    k = max(0, min(len(_MUS) - 1, int((t - BAR0) // BAR)))
+    return _MUS[k]['rmsDb']
+
+
+def fan_alive_series(S, t0, t1):
+    """扇束同时在场的 GPU 发射器数（高档），只看 [t0, t1] 内的峰值"""
+    ev = []
+    for c in S.cues:
+        if c['size'] != 'F':
+            continue
+        g = BEAM_GPU['R' if c['sp'].startswith('R') else 'S']
+        for e in c['events']:
+            for b in fan_beams(c['sp']):
+                a = e['launch'] + b['off']
+                ev.append((a, g))
+                ev.append((e['launch'] + life_of(c['sp']), -g))
+    ev.sort()
+    cur = peak = 0
+    for t, g in ev:
+        cur += g
+        if t0 <= t <= t1 and cur > peak:
+            peak = cur
+    return peak
+
+
+def local_gpu_peak(S, t0, t1):
+    gp = gpu_points(S, 'high')
+    _, _, series = window_max(gp)
+    return max([tot for t, tot in series if t0 - 1.0 <= t <= t1 + 0.05] or [0])
+
+
+QUIET = [(T(k), T(k + 1) - 0.1) for k in (41, 65, 96)]
+ORDER_KEY = {'left': 'L', 'right': 'R', 'center-out': 'out', 'outside-in': 'in', 'together': 'together'}
+ROT = ['center-out', 'left', 'outside-in', 'right']      # 这一波自己没有方向时，扇的方向按这个顺序轮换（四种都要出现）
+FALLBACK = [('R5', HALF), ('R5', ['B3', 'B4']), ('R1', ['B3', 'B4'])]   # 预算紧时：只留几把红扇，也不让这一波光着
+
+
+def attach_base_fans(S):
+    ball = [c for c in S.cues if c['size'] in 'ML' and c['layer'] == 'main' and c['group'] == 'P' and c['wave'] != '倒计时']
+    ball.sort(key=lambda c: min(e['burst'] for e in c['events']))
+    groups = []
+    for c in ball:
+        t = min(e['burst'] for e in c['events'])
+        if groups and groups[-1]['sec'] == c['section'] and abs(groups[-1]['t'] - t) <= 0.25:
+            groups[-1]['cues'].append(c)
+        else:
+            groups.append(dict(sec=c['section'], t=t, cues=[c]))
+    skipped, rot, ndir, plans = [], defaultdict(int), 0, []
+    secs = {s['id']: s for s in S.sections}
+    for g in groups:                                   # 先按时间顺序定方向、束型清单（方向轮换要按先后）
+        cs = g['cues']
+        n_pts = len({e['point'] for c in cs for e in c['events']})
+        has_l = any(c['size'] == 'L' for c in cs)
+        if not has_l and n_pts < 3:
+            continue
+        top = [c for c in cs if c['size'] == ('L' if has_l else 'M')]
+        pl = {}
+        for c in top:
+            for e in c['events']:
+                pl[e['point']] = min(pl.get(e['point'], 9e9), e['launch'])
+        nat = {}
+        for k in range(8):
+            nb = [pl[f'P{j}'] for j in (k, k + 1) if f'P{j}' in pl]
+            if nb:
+                nat[f'B{k}'] = q1(sum(nb) / len(nb))
+        if not nat:
+            continue
+        lead = max(top, key=lambda c: len(c['events']))
+        own = lead['order'] if lead['order'] in ('left', 'right', 'outside-in') else None
+        if own:
+            direction = own                      # 这一波自己是定向的：扇跟着走
+        elif has_l and n_pts <= 3:
+            direction = 'together'               # 主角：扇齐发、托得最重
+        else:
+            direction = ROT[ndir % 4]
+            ndir += 1
+        if direction == 'together':
+            at = {p: min(nat.values()) for p in nat}
+        elif direction == own or (direction == 'center-out' and lead['order'] == 'center-out'):
+            at = dict(nat)                       # 和这一波的尾缀逐点对齐
+        else:                                    # 换一个方向：从这一波第一支尾缀起飞的时刻开始，0.1 s 一把
+            rk = ranks(sorted(nat), ORDER_KEY[direction])
+            T0 = min(nat.values())
+            at = {p: q1(T0 + rk[p] * 0.1) for p in nat}
+        heavy = has_l or bar_db(g['t']) >= HEAVY_DB
+        ladder = list(LADDER[(direction, 'H' if heavy else 'L')])
+        if not heavy:
+            if rot[g['sec']] % 2 == 1:
+                ladder = [x for x in ladder if x[0] == 'R'] or ladder
+            rot[g['sec']] += 1
+        cand = []
+        for x in ladder:
+            sp, _, half = x.partition('@')
+            cand.append((sp, HALF if half else None))
+        cand += FALLBACK
+        plans.append(dict(g=g, cs=cs, has_l=has_l, direction=direction, at=at, cand=cand))
+    placed = []
+    for pl_ in sorted(plans, key=lambda x: (not x['has_l'], x['g']['t'])):    # 预算先给大花这一波，再给中花
+        g, cs, direction, at = pl_['g'], pl_['cs'], pl_['direction'], pl_['at']
+        if any(a <= min(at.values()) <= bb for a, bb in QUIET):      # 空小节里不放扇：这一小节只留尾缀在黑里升
+            skipped.append(dict(t=round(g['t'], 2), section=g['sec'], dir=direction, detail='空小节'))
+            continue
+        S.cur = secs[g['sec']]
+        done, dbg = None, []
+        for sp, sub in pl_['cand']:
+            use = at if sub is None else {p: v for p, v in at.items() if p in sub}
+            if not use:
+                continue
+            c = S.cue(sp, B8, 0.0, 'together', 0.0, None, layer='extra', wave='托底扇', at=use,
+                      label=f"托底 · {DIR_CN[direction]} · {SPECIES[sp][1]}" + ('' if sub is None else f'（{len(use)} 点）'))
+            if c is None:
+                continue
+            t0, t1 = min(use.values()), max(use.values()) + 4.0
+            gp, al = local_gpu_peak(S, t0, max(use.values()) + 1.0), fan_alive_series(S, t0, t1)
+            if gp <= GPU_BUDGET and al <= FAN_ALIVE_MAX:
+                done = c
+                break
+            dbg.append((sp, len(use), gp, al))
+            S.cues.pop()
+        if done is None:
+            skipped.append(dict(t=round(g['t'], 2), section=g['sec'], dir=direction, detail=dbg))
+            continue
+        done['baseOf'] = [c['id'] for c in cs]
+        done['dir'] = direction
+        placed.append((cs[-1], done))
+    # 扇紧跟在它托的那一波后面，编号重排（按插入后的顺序）
+    fan_of = defaultdict(list)
+    for last, f in placed:
+        fan_of[id(last)].append(f)
+    fan_ids = {id(f) for _, f in placed}
+    out = []
+    for c in S.cues:
+        if id(c) in fan_ids:
+            continue
+        out.append(c)
+        out.extend(fan_of.get(id(c), []))
+    S.cues = out
+    idmap = {c['id']: f'B01_C{i:03d}' for i, c in enumerate(S.cues, 1)}
+    for c in S.cues:
+        if 'baseOf' in c:
+            c['baseOf'] = [idmap[x] for x in c['baseOf']]
+        c['id'] = idmap[c['id']]
+    S.baseSkipped = skipped
+    S.baseGroups = len(plans)
 
 
 # ═══════════════════════════ 体检 ═══════════════════════════
@@ -574,11 +766,17 @@ def checks(S):
         if tot > GPU_HARD and t - lasth > 1.0:
             hard.append(dict(t=round(t, 2), gpu=tot))
             lasth = t
-    res['gpu'] = dict(soft=GPU_BUDGET, hard=GPU_HARD, peak=best, peakAt=round(arg, 2), softOver=len(over), hardOver=len(hard), softList=over[:40], hardList=hard)
+    near, lastn = [], -9
+    for t, tot in series:
+        if tot >= GPU_BUDGET - 10 and t - lastn > 2.0:
+            near.append(dict(t=round(t, 1), gpu=tot))
+            lastn = t
+    res['gpu'] = dict(soft=GPU_BUDGET, hard=GPU_HARD, peak=best, peakAt=round(arg, 2), softOver=len(over), hardOver=len(hard), softList=over[:40], hardList=hard, nearBudget=len(near), nearBudgetList=near)
     # 3 对拍：每个 cue 第一发开花对最近 1/4 小节拍线
     beat = BAR / 4
     dev = []
-    for c in S.cues:
+    timed = [c for c in S.cues if c.get('wave') != '托底扇']      # 托底扇跟尾缀起飞走，不对拍；单独在 baseFans 里查对位
+    for c in timed:
         if c['size'] == 'F':
             t0 = min(e['launch'] for e in c['events'])
         else:
@@ -588,12 +786,12 @@ def checks(S):
     res['beatLock'] = dict(within0_1=round(sum(1 for x in dev if x <= 0.1) / len(dev), 3), within0_15=round(sum(1 for x in dev if x <= 0.15) / len(dev), 3), cues=len(dev))
     # 强拍：每小节第一拍 (beat%4==0)
     strong = 0
-    for c in S.cues:
+    for c in timed:
         t0 = min(e['burst'] if c['size'] != 'F' else e['launch'] for e in c['events'])
         k = round((t0 - BAR0) / BAR)
         if abs(t0 - (BAR0 + k * BAR)) <= 0.1:
             strong += 1
-    res['strongBeat'] = round(strong / len(S.cues), 3)
+    res['strongBeat'] = round(strong / len(timed), 3)
     # 4 整排 / 同屏代数
     full = [c for c in S.cues if c['size'] != 'F' and len(c['points']) >= 7 and c['layer'] == 'main' and c['wave'] not in ('倒计时',)]
     waves = defaultdict(list)
@@ -650,6 +848,27 @@ def checks(S):
                                 fanStarts=sum(1 for e in ev if e['size'] == 'F' and a <= e['launch'] < b),
                                 tailsRising=sum(1 for e in ev if e['size'] != 'F' and e['launch'] < b and e['burst'] > a))
     res['quietBars'] = quiet
+    # 8b 托底扇：覆盖、束型、方向、与球花起飞对位、同时在场扇束 GPU
+    base = [c for c in S.cues if c.get('wave') == '托底扇']
+    byc = {c['id']: c for c in S.cues}
+    off, nbeam = [], 0
+    for c in base:
+        for e in c['events']:
+            k = int(e['point'][1:])
+            tops = [byc[i] for i in c['baseOf']]
+            ls = [t['events'][j]['launch'] for t in tops if any(x['point'] in (f'P{k}', f'P{k + 1}') for x in t['events']) for j in range(len(t['events'])) if t['events'][j]['point'] in (f'P{k}', f'P{k + 1}')]
+            if ls:
+                off.append(min(abs(e['launch'] - l) for l in ls))
+        nbeam += sum(len(fan_beams(c['sp'])) for _ in c['events'])
+    res['baseFans'] = dict(groups=getattr(S, 'baseGroups', 0), cues=len(base), events=sum(len(c['events']) for c in base),
+                           coverage=round(len(base) / max(1, getattr(S, 'baseGroups', 1)), 3), skipped=getattr(S, 'baseSkipped', []),
+                           bySpecies={sp: sum(len(c['events']) for c in base if c['sp'] == sp) for sp in sorted({c['sp'] for c in base})},
+                           byDirection={d: sum(1 for c in base if c.get('dir') == d) for d in sorted({c.get('dir') for c in base})},
+                           launchOffsetMax=round(max(off), 3) if off else None, beams=nbeam)
+    allfans = [c for c in S.cues if c['size'] == 'F']
+    res['fanSummary'] = dict(cues=len(allfans), events=sum(len(c['events']) for c in allfans),
+                             bySpecies={sp: sum(len(c['events']) for c in allfans if c['sp'] == sp) for sp in sorted({c['sp'] for c in allfans})},
+                             aliveGpuPeak=fan_alive_series(S, 0, 400))
     # 9 时间网格与高度
     off = [e for e in ev if abs(e['launch'] * 10 - round(e['launch'] * 10)) > 1e-6]
     res['grid'] = dict(offGridLaunch=len(off), maxAbsDz=max(abs(e['dz']) for e in ev), minLaunch=min(e['launch'] for e in ev), lastEnd=round(max(e['end'] for e in ev), 2))
@@ -807,4 +1026,4 @@ if __name__ == '__main__':
     export(S, ck)
     if not a.no_figs:
         make_figs(S, ck)
-    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies')}, ensure_ascii=False, indent=1))
+    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'baseFans', 'fanSummary', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies')}, ensure_ascii=False, indent=1))

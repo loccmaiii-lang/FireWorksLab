@@ -3,39 +3,39 @@
   "generatedBy": "analysis/scripts/编排B01_编译.mjs",
   "tiers": {
     "high": {
-      "events": 1661,
+      "events": 2166,
       "subTemplates": 22,
-      "templates": 102,
-      "scheduleSlots": 238,
+      "templates": 144,
+      "scheduleSlots": 329,
       "groups": {
         "P": 132,
-        "B": 106
+        "B": 197
       },
       "lastSlot": 201.5,
       "expansionProblems": [],
       "status": "property_text_ready_UE_unverified"
     },
     "medium": {
-      "events": 1365,
+      "events": 1778,
       "subTemplates": 22,
-      "templates": 102,
-      "scheduleSlots": 238,
+      "templates": 143,
+      "scheduleSlots": 329,
       "groups": {
         "P": 132,
-        "B": 106
+        "B": 197
       },
       "lastSlot": 201.5,
       "expansionProblems": [],
       "status": "property_text_ready_UE_unverified"
     },
     "low": {
-      "events": 809,
-      "subTemplates": 19,
-      "templates": 98,
-      "scheduleSlots": 181,
+      "events": 843,
+      "subTemplates": 20,
+      "templates": 104,
+      "scheduleSlots": 198,
       "groups": {
         "P": 132,
-        "B": 49
+        "B": 66
       },
       "lastSlot": 201.5,
       "expansionProblems": [],
@@ -45,12 +45,12 @@
   "preflight": "preflightProject 通过（同 8025 打开 .dfshow）",
   "file": "NewYearFireWorks_v01-B01长冈式.dfshow",
   "doc": {
-    "cues": 238,
-    "events": 1661,
+    "cues": 329,
+    "events": 2166,
     "sections": 14,
     "duration": 218.6,
     "musicOffset": 5,
     "balls": 1485,
-    "fans": 176
+    "fans": 681
   }
 }

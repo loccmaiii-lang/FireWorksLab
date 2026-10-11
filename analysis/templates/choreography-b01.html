@@ -80,15 +80,17 @@ td.wrapcell{white-space:normal;min-width:220px;}
     <div class="seg" id="colorby" role="group" aria-label="着色"><button type="button" data-v="sp" aria-pressed="true">按花色</button><button type="button" data-v="sz" aria-pressed="false">按大小</button></div>
     <button type="button" id="lab" aria-pressed="false">点位标签</button>
     <button type="button" id="tails" aria-pressed="true">升空尾缀</button>
+    <button type="button" id="basefan" aria-pressed="true">托底扇</button>
   </div>
   <div class="tl" id="tl"></div>
   <input id="seek" type="range" min="0" step="0.1" value="0" aria-label="演出时间，秒">
   <div class="info"><b id="cue"></b><span id="comp"></span><span id="detail"></span><span id="counts"></span><span class="sw" id="sw"></span></div>
   <details><summary>14 段：领 / 接 / 插、条目数</summary><div class="tbl"><table id="secs"></table></div></details>
   <details><summary>花型：大小、升空、炸点高、同屏峰值</summary><div class="tbl"><table id="slots"></table></div></details>
+  <details><summary>扇形编排：托底扇 + 扇组（方向 × 束型）</summary><div class="tbl"><table id="fanstat"></table></div></details>
   <details><summary>音乐锚点（用户给定 / 小节网格 + 响度，待试听）</summary><div class="tbl"><table id="anchors"></table></div></details>
   <details><summary>我自己找的纰漏（B01 说明第 4 节）</summary><ol class="risk" id="risks"></ol></details>
-  <div class="note">示意，不是 UE 回放：圆画在每条的开花时刻，径 = 大小；开花前的竖线是升空尾缀，按这条在 B01 里的起飞 → 开花时刻画（小 2.95 s / 中 4.38 s / 大 7.37 s，来自固定子模板）；炸点高 = 固定子模板原生 +190 / +265 / +410 m 加这条的高低错落（±25 m），比宪章目标 +150 / +210 / +330 m 高约 25%。扇形的扇角与出筒节奏是示意。金垂柳的垂裙是示意线。空格键播放 / 暂停。</div>
+  <div class="note">示意，不是 UE 回放：圆画在每条的开花时刻，径 = 大小；开花前的竖线是升空尾缀，按这条在 B01 里的起飞 → 开花时刻画（小 2.95 s / 中 4.38 s / 大 7.37 s，来自固定子模板）；炸点高 = 固定子模板原生 +190 / +265 / +410 m 加这条的高低错落（±25 m），比宪章目标 +150 / +210 / +330 m 高约 25%。扇画在它的起飞时刻：托底扇（随 M / L 花）与尾缀同一刻起，次序随这一波或按轮换的方向（左→右 / 右→左 / 里→外 / 外→里），「托底扇」按钮可单独关掉看对比；扇角与出筒节奏是示意。金垂柳的垂裙是示意线。空格键播放 / 暂停。</div>
 </div>
 <script>
 (()=>{
@@ -105,7 +107,7 @@ const TAILC=sp=>SP[sp].rgb;
 const fmt=s=>{const m=Math.floor(s/60);return `${String(m).padStart(2,'0')}:${(s-m*60).toFixed(1).padStart(4,'0')}`;};
 const mm=s=>{if(s<0)return '−'+mm(-s);const m=Math.floor(s/60);return `${m}:${(s-m*60).toFixed(1).padStart(4,'0')}`;};
 const mmss=s=>`${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}`;
-let t=11.0,playing=false,last=0,view='full',tier=1,speed=1,labels=innerWidth>=640,secIdx=-1,showTail=true,colorBy='sp';
+let t=11.0,playing=false,last=0,view='full',tier=1,speed=1,labels=innerWidth>=640,secIdx=-1,showTail=true,colorBy='sp',showBase=true;
 $('lab').setAttribute('aria-pressed',labels);
 const rgba=(c,a)=>`rgba(${c},${a})`;
 const dam=150;
@@ -196,11 +198,11 @@ function draw(){
     if(labels){ctx.fillStyle='#6a6c73';ctx.textAlign='center';ctx.fillText('B'+i,X(p.x),Z(dam)+23);}});
   ctx.font='11px '+mono;
   // 烟花
-  let nUp=0,nS=0,nM=0,nL=0,nFan=0,nGK=0;
+  let nUp=0,nS=0,nM=0,nL=0,nFan=0,nGK=0,nBase=0;
   for(let i=0;i<EV.length;i++){
     const e=EV[i];if(e.l>t)break;if(t>e.e)continue;if(!(e.tier&tier))continue;
     const x0=PX[e.g][e.p],z0=dam;
-    if(e.k==='fan'){const age=t-e.b;if(age<0)continue;nFan++;fan(e,age,X,Z,sc,x0,z0);continue;}
+    if(e.k==='fan'){if(e.bs&&!showBase)continue;const age=t-e.b;if(age<0)continue;nFan++;if(e.bs)nBase++;fan(e,age,X,Z,sc,x0,z0);continue;}
     const d=SZ[e.sz].d,H0=D.native[e.sz]+e.dz,top=z0+H0,col=colOf(e);
     if(t<e.b){ // 升空尾缀
       nUp++;if(!showTail)continue;
@@ -235,15 +237,15 @@ function draw(){
   if(cc&&t-cc.t<5){
     const np=cc.pts.filter((p,i)=>cc.tm[i]&tier).length;
     $('cue').textContent=`${cc.id} · ${SP[cc.sp].name}${cc.sz==='F'?'（扇）':'（'+SZ[cc.sz].n+'）'} · ${cc.label} · ${np}/${cc.pts.length} 点`;
-    $('comp').textContent=`${cc.wave}${cc.layer==='extra'?' · 叠层（低配不出）':''}`;
+    $('comp').textContent=`${cc.wave}${cc.dir?' · '+cc.dir:''}${cc.layer==='extra'?' · 叠层（低配不出）':''}`;
   } else {$('cue').textContent='此刻没有新的 cue';$('comp').textContent='';}
-  $('counts').textContent=`此刻：升空中 ${nUp} · 球花 ${nS+nM+nL}（小 ${nS} · 中 ${nM} · 大 ${nL}${nGK?' · 金垂柳 '+nGK:''}） · 扇形 ${nFan} 点（${['','高配','','中配','','','','低配'][tier===1?1:tier===2?3:7]}点集）`;
+  $('counts').textContent=`此刻：升空中 ${nUp} · 球花 ${nS+nM+nL}（小 ${nS} · 中 ${nM} · 大 ${nL}${nGK?' · 金垂柳 '+nGK:''}） · 扇形 ${nFan} 点（托底 ${nBase}，${['','高配','','中配','','','','低配'][tier===1?1:tier===2?3:7]}点集）`;
   cv.setAttribute('aria-label',`演出 ${fmt(t)} ${S.name}：升空中 ${nUp}，球花 ${nS+nM+nL}，扇形 ${nFan} 点`);
   drawStrip();
 }
 
 // 音乐能量 + cue 条：横轴 = 演出时间；上半能量(rms)，下半 大 / 中 / 小 / 扇 四行 cue 刻度
-const ROWS={L:60,M:70,S:80,F:90};
+const ROWS={L:56,M:65,S:74,F:83,T:92};
 function drawStrip(){
   const W=Math.max(300,st.parentElement.clientWidth),H=124,dpr=Math.min(2,devicePixelRatio||1);
   if(st.width!==Math.round(W*dpr)||st.height!==Math.round(H*dpr)){st.width=Math.round(W*dpr);st.height=Math.round(H*dpr);st.style.height=H+'px';}
@@ -261,9 +263,10 @@ function drawStrip(){
   sx.fillStyle='rgba(140,143,152,.9)';sx.font='10px '+mono;sx.textAlign='left';sx.textBaseline='middle';
   sx.fillText('倒计时',X(0)+4,12);
   sx.textAlign='left';sx.fillStyle='#6a6c73';
-  for(const k of ['L','M','S','F'])sx.fillText(k==='F'?'扇':SZ[k].n,3,ROWS[k]);
-  CU.forEach(c=>{const y=ROWS[c.sz],x=X(c.t);
+  for(const k of ['L','M','S','F','T'])sx.fillText(k==='F'?'扇':k==='T'?'托':SZ[k].n,3,ROWS[k]);
+  CU.forEach(c=>{const y=ROWS[c.wave==='托底扇'?'T':c.sz],x=X(c.t);
     if(!c.tm.some(m=>m&tier))return;
+    if(c.wave==='托底扇'&&!showBase)return;
     const col=colorBy==='sp'?SP[c.sp].rgb:(c.sz==='F'?'170,184,216':SZC[c.sz]);
     sx.fillStyle=rgba(col,.95);sx.fillRect(Math.round(x),y-4,2,8);
     if(c.span>=.4){sx.fillStyle=rgba(col,.35);sx.fillRect(Math.round(x),y-1,Math.max(1,X(c.span)),2);}
@@ -281,8 +284,8 @@ function tick(now){if(!playing)return;t=Math.min(DUR,t+(now-last)/1000*speed);la
   if(t>=DUR)stop();else requestAnimationFrame(tick);}
 play.addEventListener('click',()=>{if(playing){stop();return;}if(t>=DUR)t=0;playing=true;play.textContent='暂停';last=performance.now();requestAnimationFrame(tick);});
 seek.addEventListener('input',()=>{stop();t=+seek.value;draw();});
-// 上一波 / 下一波：在整排波（≥5 点的球花 cue 与扇形 cue 的起点）之间跳
-const WAVES=[...new Set(CU.filter(c=>c.pts.length>=5||c.wave==='主角').map(c=>+c.t.toFixed(2)))].sort((a,b)=>a-b);
+// 上一波 / 下一波：在整排波（≥5 点的球花 cue 与扇组 cue 的起点，不含托底扇）之间跳
+const WAVES=[...new Set(CU.filter(c=>c.wave!=='托底扇'&&(c.pts.length>=5||c.wave==='主角')).map(c=>+c.t.toFixed(2)))].sort((a,b)=>a-b);
 $('prev').addEventListener('click',()=>{stop();let v=0;for(const w of WAVES){if(w<t-.25)v=w;else break;}t=v;sync();});
 $('next').addEventListener('click',()=>{stop();let v=DUR;for(const w of WAVES){if(w>t+.25){v=w;break;}}t=Math.min(DUR,v);sync();});
 function stripSeek(ev){const r=st.getBoundingClientRect();t=Math.max(0,Math.min(DUR,(ev.clientX-r.left)/r.width*DUR));stop();sync();}
@@ -293,6 +296,7 @@ function group(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.ad
 group('speed',v=>{speed=+v;});group('tier',v=>{tier=+v;});group('view',v=>{view=v;});group('colorby',v=>{colorBy=v;});
 $('lab').addEventListener('click',()=>{labels=!labels;$('lab').setAttribute('aria-pressed',labels);draw();});
 $('tails').addEventListener('click',()=>{showTail=!showTail;$('tails').setAttribute('aria-pressed',showTail);draw();});
+$('basefan').addEventListener('click',()=>{showBase=!showBase;$('basefan').setAttribute('aria-pressed',showBase);draw();});
 addEventListener('keydown',e=>{if(e.code==='Space'&&!/INPUT|BUTTON|SUMMARY/.test(document.activeElement.tagName)){e.preventDefault();play.click();}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
 new ResizeObserver(()=>draw()).observe(cv.parentElement);
@@ -310,6 +314,14 @@ new ResizeObserver(()=>draw()).observe(cv.parentElement);
   let a='<tr><th>音乐</th><th>演出</th><th>来源</th><th>说明</th></tr>';
   D.anchors.forEach(x=>{a+=`<tr><td>${mm(x.musicS)}</td><td>${mm(x.showS)}</td><td>${x.source}</td><td class="wrapcell">${x.label}${x.note?'。'+x.note:''}</td></tr>`;});
   $('anchors').innerHTML=a;
+  const F=D.fanStats,DIRS=['左→右','右→左','里→外','外→里','齐发'],SPS=Object.keys(SP).filter(k=>SP[k].sz==='F');
+  let f='<tr><th>托底扇（跟 M / L 尾缀同起）</th>'+DIRS.map(d=>`<th>${d}</th>`).join('')+'<th>合计</th></tr>';
+  SPS.forEach(k=>{const r=F.baseGrid[k]||{};const n=DIRS.reduce((a,d)=>a+(r[d]||0),0);if(!n)return;f+=`<tr><td>${SP[k].name}</td>`+DIRS.map(d=>`<td>${r[d]||'·'}</td>`).join('')+`<td>${n}</td></tr>`;});
+  f+=`<tr><td>托底 ${F.baseCues} 个 cue / ${F.baseEvents} 个扇（高配）；M / L 波 ${F.groups} 组，${F.baseCovered} 组有托底（${F.baseSkipped} 组没放：空小节 / 预算）</td><td colspan="6"></td></tr>`;
+  f+='<tr><th>扇组（单独放）</th><th colspan="6">时刻</th></tr>';
+  F.phrases.forEach(p=>{f+=`<tr><td>${p.name}（${p.events} 个）</td><td colspan="6" class="wrapcell">${p.times.map(mmss).join('　')}</td></tr>`;});
+  f+=`<tr><td>同时在场的扇束 GPU 发射器峰值</td><td colspan="6">${F.aliveGpuPeak}（24 实测 234 一次放干净，312 截断）</td></tr>`;
+  $('fanstat').innerHTML=f;
   $('risks').innerHTML=D.risks.map(r=>`<li>${r}</li>`).join('');
 })();
 sync();

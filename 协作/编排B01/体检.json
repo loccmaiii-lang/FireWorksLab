@@ -1,9 +1,9 @@
 {
  "events": {
-  "total": 1661,
+  "total": 2166,
   "balls": 1485,
-  "fans": 176,
-  "cues": 238,
+  "fans": 681,
+  "cues": 329,
   "bySize": {
    "S": 716,
    "M": 572,
@@ -12,40 +12,95 @@
  },
  "tiers": {
   "high": {
-   "events": 1661,
+   "events": 2166,
    "balls": 1485,
-   "fans": 176,
-   "gpuPeakPerS": 198
+   "fans": 681,
+   "gpuPeakPerS": 199
   },
   "medium": {
-   "events": 1365,
+   "events": 1778,
    "balls": 1207,
-   "fans": 158,
-   "gpuPeakPerS": 172
+   "fans": 571,
+   "gpuPeakPerS": 190
   },
   "low": {
-   "events": 809,
+   "events": 843,
    "balls": 785,
-   "fans": 24,
+   "fans": 58,
    "gpuPeakPerS": 132
   }
  },
  "gpu": {
   "soft": 200,
   "hard": 234,
-  "peak": 198,
-  "peakAt": 162.5,
+  "peak": 199,
+  "peakAt": 13.58,
   "softOver": 0,
   "hardOver": 0,
   "softList": [],
-  "hardList": []
+  "hardList": [],
+  "nearBudget": 13,
+  "nearBudgetList": [
+   {
+    "t": 13.5,
+    "gpu": 195
+   },
+   {
+    "t": 49.2,
+    "gpu": 191
+   },
+   {
+    "t": 58.2,
+    "gpu": 190
+   },
+   {
+    "t": 61.2,
+    "gpu": 191
+   },
+   {
+    "t": 109.0,
+    "gpu": 194
+   },
+   {
+    "t": 114.3,
+    "gpu": 196
+   },
+   {
+    "t": 121.5,
+    "gpu": 194
+   },
+   {
+    "t": 128.9,
+    "gpu": 196
+   },
+   {
+    "t": 154.4,
+    "gpu": 196
+   },
+   {
+    "t": 162.8,
+    "gpu": 199
+   },
+   {
+    "t": 167.9,
+    "gpu": 191
+   },
+   {
+    "t": 172.7,
+    "gpu": 198
+   },
+   {
+    "t": 182.2,
+    "gpu": 190
+   }
+  ]
  },
  "beatLock": {
   "within0_1": 0.971,
   "within0_15": 0.979,
-  "cues": 238
+  "cues": 241
  },
- "strongBeat": 0.798,
+ "strongBeat": 0.759,
  "generations": {
   "fullWaves": 110,
   "meanTailsInFlightCues": 3.71,
@@ -415,6 +470,137 @@
    "fanStarts": 0,
    "tailsRising": 26
   }
+ },
+ "baseFans": {
+  "groups": 91,
+  "cues": 88,
+  "events": 523,
+  "coverage": 0.967,
+  "skipped": [
+   {
+    "t": 63.58,
+    "section": "B01_S5",
+    "dir": "outside-in",
+    "detail": [
+     [
+      "S5",
+      8,
+      316,
+      354
+     ],
+     [
+      "S5",
+      4,
+      256,
+      294
+     ],
+     [
+      "R5",
+      8,
+      236,
+      274
+     ],
+     [
+      "R5",
+      4,
+      216,
+      254
+     ],
+     [
+      "R5",
+      2,
+      206,
+      244
+     ],
+     [
+      "R1",
+      2,
+      198,
+      236
+     ]
+    ]
+   },
+   {
+    "t": 115.48,
+    "section": "B01_S9",
+    "dir": "right",
+    "detail": "空小节"
+   },
+   {
+    "t": 126.78,
+    "section": "B01_S9",
+    "dir": "center-out",
+    "detail": [
+     [
+      "S5",
+      8,
+      280,
+      336
+     ],
+     [
+      "S5",
+      4,
+      237,
+      285
+     ],
+     [
+      "R5",
+      8,
+      207,
+      256
+     ],
+     [
+      "R5",
+      4,
+      204,
+      245
+     ],
+     [
+      "R5",
+      2,
+      204,
+      244
+     ],
+     [
+      "R1",
+      2,
+      196,
+      236
+     ]
+    ]
+   }
+  ],
+  "bySpecies": {
+   "R1": 20,
+   "R5": 118,
+   "R9": 137,
+   "R9R": 140,
+   "S5": 102,
+   "S9": 6
+  },
+  "byDirection": {
+   "center-out": 18,
+   "left": 26,
+   "outside-in": 21,
+   "right": 21,
+   "together": 2
+  },
+  "launchOffsetMax": 0.7,
+  "beams": 3667
+ },
+ "fanSummary": {
+  "cues": 130,
+  "events": 681,
+  "bySpecies": {
+   "R1": 28,
+   "R5": 166,
+   "R9": 166,
+   "R9R": 177,
+   "S13": 6,
+   "S5": 108,
+   "S9": 30
+  },
+  "aliveGpuPeak": 234
  },
  "grid": {
   "offGridLaunch": 0,
