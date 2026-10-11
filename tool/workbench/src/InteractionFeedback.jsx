@@ -18,7 +18,7 @@ export function useMaterialFeedback(root){
 export function Snackbar({notice,onClose,onUndo}){
  const [paused,setPaused]=useState(false);const remaining=useRef(6500);
  useEffect(()=>{remaining.current=notice?.action?9000:6500;setPaused(false)},[notice?.id]);
- useEffect(()=>{if(!notice||paused||notice.kind==='error')return;const start=performance.now(),timer=setTimeout(onClose,remaining.current);return()=>{clearTimeout(timer);remaining.current=Math.max(0,remaining.current-(performance.now()-start))}},[notice?.id,paused,onClose]);
+ useEffect(()=>{if(!notice||paused||notice.kind==='error'||notice.persist)return;const start=performance.now(),timer=setTimeout(onClose,remaining.current);return()=>{clearTimeout(timer);remaining.current=Math.max(0,remaining.current-(performance.now()-start))}},[notice?.id,paused,onClose]);
  if(!notice)return null;
  const Icon=notice.kind==='error'?WarningCircle:CheckCircle;
  return <div className={'snackbar '+(notice.kind==='error'?'snackbar-error':'')} onPointerEnter={()=>setPaused(true)} onPointerLeave={()=>setPaused(false)} onFocusCapture={()=>setPaused(true)} onBlurCapture={e=>{if(!e.currentTarget.contains(e.relatedTarget))setPaused(false)}}>
