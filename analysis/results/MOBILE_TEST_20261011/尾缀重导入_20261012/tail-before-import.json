@@ -1,0 +1,806 @@
+{
+ "readAt": "2026-10-11T16:12:10.506Z",
+ "systems": {
+  "RiseTrail_S_HD": {
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
+   "soloTracking": [
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    }
+   ],
+   "emitters": [
+    {
+     "name": "RiseLoop",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_11",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_11.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": false,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_1",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_13",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": false,
+      "keys": null
+     }
+    },
+    {
+     "name": "TrailFar",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_12",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_12.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": false,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_2",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_2.DistributionVectorConstant_17",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": false,
+      "keys": null
+     }
+    },
+    {
+     "name": "SparksFine",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_13",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_13.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_3",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_3.DistributionVectorConstant_18",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 50,
+       "Y": 50,
+       "Z": 50
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "SparksTwinkle",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_14",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_14.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_4",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_4.DistributionVectorConstant_19",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 20,
+       "Y": 20,
+       "Z": 20
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "SparksCoarse",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_15",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_15.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_5",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_5.DistributionVectorConstant_20",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 20,
+       "Y": 20,
+       "Z": 20
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "Embers",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_16",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_16.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_6",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_6.DistributionVectorConstant_21",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 20,
+       "Y": 20,
+       "Z": 20
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "HeadGlow",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_17",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_17.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": false,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_7",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_7.DistributionVectorConstant_24",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 20,
+       "Y": 20,
+       "Z": 20
+      },
+      "canBake": false,
+      "keys": null
+     }
+    },
+    {
+     "name": "SparkPops",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_18",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_18.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_8",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_8.DistributionVectorConstant_25",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 20,
+       "Y": 20,
+       "Z": 20
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "LaunchGlow",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_19",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_19.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": false,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_9",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_9.DistributionVectorConstant_28",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 20,
+       "Y": 20,
+       "Z": 20
+      },
+      "canBake": false,
+      "keys": null
+     }
+    },
+    {
+     "name": "LaunchSparks",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_20",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleSpriteEmitter_20.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_10",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD:ParticleModuleColorScaleOverLife_10.DistributionVectorConstant_31",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 20,
+       "Y": 20,
+       "Z": 20
+      },
+      "canBake": true,
+      "keys": null
+     }
+    }
+   ]
+  },
+  "RiseTrail_M_HD": {
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
+   "soloTracking": [
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      0
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      0
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      0
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      0
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    }
+   ],
+   "emitters": [
+    {
+     "name": "RiseLoop",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_10",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_10.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": false,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_8",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_8.DistributionVectorConstant_13",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": false,
+      "keys": null
+     }
+    },
+    {
+     "name": "TrailFar",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_11",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_11.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": false,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_9",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_9.DistributionVectorConstant_17",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": false,
+      "keys": null
+     }
+    },
+    {
+     "name": "SparksFine",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_12",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_12.ParticleLODLevel_0",
+     "enabled": false,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_10",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_10.DistributionVectorConstant_18",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "SparksTwinkle",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_13",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_13.ParticleLODLevel_0",
+     "enabled": false,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_11",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_11.DistributionVectorConstant_19",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "SparksCoarse",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_14",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_14.ParticleLODLevel_0",
+     "enabled": false,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_12",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_12.DistributionVectorConstant_20",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "Embers",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_15",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_15.ParticleLODLevel_0",
+     "enabled": false,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_13",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_13.DistributionVectorConstant_21",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "HeadGlow",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_16",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_16.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": false,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_14",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_14.DistributionVectorConstant_24",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": false,
+      "keys": null
+     }
+    },
+    {
+     "name": "SparkPops",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_17",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_17.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_15",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_15.DistributionVectorConstant_25",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "LaunchGlow",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_18",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_18.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": false,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_16",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_16.DistributionVectorConstant_28",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": false,
+      "keys": null
+     }
+    },
+    {
+     "name": "LaunchSparks",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_19",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleSpriteEmitter_19.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_17",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD:ParticleModuleColorScaleOverLife_17.DistributionVectorConstant_31",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": true,
+      "keys": null
+     }
+    }
+   ]
+  },
+  "RiseTrail_L_HD": {
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
+   "soloTracking": [
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    },
+    {
+     "_struct": "LODSoloTrack",
+     "SoloEnableSetting": [
+      1
+     ]
+    }
+   ],
+   "emitters": [
+    {
+     "name": "RiseLoop",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_10",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_10.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": false,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_0",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_0.DistributionVectorConstant_13",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": false,
+      "keys": null
+     }
+    },
+    {
+     "name": "TrailFar",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_11",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_11.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": false,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_1",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_1.DistributionVectorConstant_17",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": false,
+      "keys": null
+     }
+    },
+    {
+     "name": "SparksFine",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_12",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_12.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_2",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_2.DistributionVectorConstant_18",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "SparksTwinkle",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_13",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_13.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_3",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_3.DistributionVectorConstant_19",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "SparksCoarse",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_14",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_14.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_4",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_4.DistributionVectorConstant_20",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "Embers",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_15",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_15.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_5",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_5.DistributionVectorConstant_21",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "HeadGlow",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_16",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_16.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": false,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_6",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_6.DistributionVectorConstant_24",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": false,
+      "keys": null
+     }
+    },
+    {
+     "name": "SparkPops",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_17",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_17.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_7",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_7.DistributionVectorConstant_25",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": true,
+      "keys": null
+     }
+    },
+    {
+     "name": "LaunchGlow",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_18",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_18.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": false,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_8",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_8.DistributionVectorConstant_28",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": false,
+      "keys": null
+     }
+    },
+    {
+     "name": "LaunchSparks",
+     "emitter": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_19",
+     "lod": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleSpriteEmitter_19.ParticleLODLevel_0",
+     "enabled": true,
+     "gpu": true,
+     "colorScale": {
+      "module": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_9",
+      "distribution": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD:ParticleModuleColorScaleOverLife_9.DistributionVectorConstant_31",
+      "class": "DistributionVectorConstant",
+      "constant": {
+       "_struct": "Vector",
+       "X": 1,
+       "Y": 1,
+       "Z": 1
+      },
+      "canBake": true,
+      "keys": null
+     }
+    }
+   ]
+  }
+ }
+}

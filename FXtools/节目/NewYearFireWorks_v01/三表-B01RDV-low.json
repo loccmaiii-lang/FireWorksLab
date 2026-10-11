@@ -802,8 +802,8 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -589.27694,
-            "Z": 18830.648802
+            "Y": -465.234144,
+            "Z": 14831.327095
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -875,8 +875,8 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -589.27694,
-            "Z": 18830.648802
+            "Y": -465.234144,
+            "Z": 14831.327095
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -948,8 +948,8 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -589.27694,
-            "Z": 18830.648802
+            "Y": -465.234144,
+            "Z": 14831.327095
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -1196,8 +1196,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": -281.722345,
-            "Z": 26442.755163
+            "Y": -223.264958,
+            "Z": 20941.726219
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -1269,8 +1269,8 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": 180.866006,
-            "Z": 18908.6273
+            "Y": 142.793712,
+            "Z": 14907.563538
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -1342,8 +1342,8 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": 622.736877,
-            "Z": 19197.165917
+            "Y": 491.650764,
+            "Z": 15198.068874
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -1415,8 +1415,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": 640.080887,
-            "Z": 26748.756757
+            "Y": 507.264103,
+            "Z": 21249.020726
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -1488,8 +1488,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": -272.4701,
-            "Z": 26239.939969
+            "Y": -215.932554,
+            "Z": 20738.890958
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -1561,8 +1561,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": -149.018193,
-            "Z": 26357.678005
+            "Y": -118.096918,
+            "Z": 20856.425367
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -1634,8 +1634,8 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -563.497,
-            "Z": 19167.749085
+            "Y": -444.880881,
+            "Z": 15168.26275
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -1707,8 +1707,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": 839.486136,
-            "Z": 26451.418102
+            "Y": 665.292763,
+            "Z": 20952.837069
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -1780,8 +1780,8 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": -291.426695,
-            "Z": 18930.406756
+            "Y": -230.081376,
+            "Z": 14929.632146
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -1853,8 +1853,8 @@
           "LocalTimeOffset": 7.3651,
           "PositionOffset": {
             "X": 0,
-            "Y": 460.985277,
-            "Z": 40916.630504
+            "Y": 371.047049,
+            "Z": 32913.897234
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -1926,8 +1926,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": -281.722345,
-            "Z": 26442.755163
+            "Y": -223.264958,
+            "Z": 20941.726219
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -2174,8 +2174,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": -149.018193,
-            "Z": 26357.678005
+            "Y": -118.096918,
+            "Z": 20856.425367
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -2247,8 +2247,8 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": 93.380328,
-            "Z": 18762.645328
+            "Y": 73.723769,
+            "Z": 14761.448713
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -2320,8 +2320,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": 667.146531,
-            "Z": 26322.452903
+            "Y": 528.713626,
+            "Z": 20822.855369
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -2393,8 +2393,8 @@
           "LocalTimeOffset": 7.3651,
           "PositionOffset": {
             "X": 0,
-            "Y": 460.985277,
-            "Z": 40916.630504
+            "Y": 371.047049,
+            "Z": 32913.897234
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -2466,8 +2466,8 @@
           "LocalTimeOffset": 7.3651,
           "PositionOffset": {
             "X": 0,
-            "Y": -421.577087,
-            "Z": 40747.906958
+            "Y": -339.327397,
+            "Z": 32745.090975
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -2539,8 +2539,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": -212.020655,
-            "Z": 26747.45282
+            "Y": -168.026369,
+            "Z": 21246.289197
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -2612,8 +2612,8 @@
           "LocalTimeOffset": 7.3651,
           "PositionOffset": {
             "X": 0,
-            "Y": 1032.2369,
-            "Z": 40826.591902
+            "Y": 830.847481,
+            "Z": 32825.887497
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -2685,8 +2685,8 @@
           "LocalTimeOffset": 7.3651,
           "PositionOffset": {
             "X": 0,
-            "Y": -435.892546,
-            "Z": 40950.669231
+            "Y": -350.84991,
+            "Z": 32947.88244
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -3205,8 +3205,8 @@
           "LocalTimeOffset": 7.3651,
           "PositionOffset": {
             "X": 0,
-            "Y": 274.11717,
-            "Z": 40792.080719
+            "Y": 220.63691,
+            "Z": 32789.020771
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -3278,8 +3278,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": 667.146531,
-            "Z": 26322.452903
+            "Y": 528.713626,
+            "Z": 20822.855369
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -3351,8 +3351,8 @@
           "LocalTimeOffset": 7.3651,
           "PositionOffset": {
             "X": 0,
-            "Y": 1032.2369,
-            "Z": 40826.591902
+            "Y": 830.847481,
+            "Z": 32825.887497
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -3424,8 +3424,8 @@
           "LocalTimeOffset": 7.3651,
           "PositionOffset": {
             "X": 0,
-            "Y": 460.985277,
-            "Z": 40916.630504
+            "Y": 371.047049,
+            "Z": 32913.897234
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -3497,8 +3497,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": 640.080887,
-            "Z": 26748.756757
+            "Y": 507.264103,
+            "Z": 21249.020726
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -3570,8 +3570,8 @@
           "LocalTimeOffset": 7.3651,
           "PositionOffset": {
             "X": 0,
-            "Y": -435.892546,
-            "Z": 40950.669231
+            "Y": -350.84991,
+            "Z": 32947.88244
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -3643,8 +3643,8 @@
           "LocalTimeOffset": 2.9544,
           "PositionOffset": {
             "X": 0,
-            "Y": 180.866006,
-            "Z": 18908.6273
+            "Y": 142.793712,
+            "Z": 14907.563538
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -3716,8 +3716,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": -212.020655,
-            "Z": 26747.45282
+            "Y": -168.026369,
+            "Z": 21246.289197
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -3789,8 +3789,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": 839.486136,
-            "Z": 26451.418102
+            "Y": 665.292763,
+            "Z": 20952.837069
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -3862,8 +3862,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": 839.486136,
-            "Z": 26451.418102
+            "Y": 665.292763,
+            "Z": 20952.837069
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -3935,8 +3935,8 @@
           "LocalTimeOffset": 7.3651,
           "PositionOffset": {
             "X": 0,
-            "Y": -421.577087,
-            "Z": 40747.906958
+            "Y": -339.327397,
+            "Z": 32745.090975
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -4008,8 +4008,8 @@
           "LocalTimeOffset": 4.3772,
           "PositionOffset": {
             "X": 0,
-            "Y": 640.080887,
-            "Z": 26748.756757
+            "Y": 507.264103,
+            "Z": 21249.020726
           },
           "RotationOffset": {
             "Pitch": 0,
@@ -4081,8 +4081,8 @@
           "LocalTimeOffset": 7.3651,
           "PositionOffset": {
             "X": 0,
-            "Y": -421.577087,
-            "Z": 40747.906958
+            "Y": -339.327397,
+            "Z": 32745.090975
           },
           "RotationOffset": {
             "Pitch": 0,

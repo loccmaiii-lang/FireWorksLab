@@ -1,0 +1,63 @@
+{
+ "readAt": "2026-10-11T16:55:39.771Z",
+ "systems": [
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_S_HD",
+   "platform": "pc",
+   "emitters": 10,
+   "expected": 10,
+   "diffs": []
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_S_Mobile_HD",
+   "platform": "mobile",
+   "emitters": 10,
+   "expected": 10,
+   "diffs": []
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_M_HD",
+   "platform": "pc",
+   "emitters": 10,
+   "expected": 10,
+   "diffs": []
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_M_Mobile_HD",
+   "platform": "mobile",
+   "emitters": 10,
+   "expected": 10,
+   "diffs": []
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_L_HD",
+   "platform": "pc",
+   "emitters": 10,
+   "expected": 10,
+   "diffs": []
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_L_Mobile_HD",
+   "platform": "mobile",
+   "emitters": 10,
+   "expected": 10,
+   "diffs": []
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_Hero_L_HD",
+   "platform": "pc",
+   "emitters": 10,
+   "expected": 10,
+   "diffs": []
+  },
+  {
+   "name": "P_EFX_FireWorks_RiseTrail_Hero_L_Mobile_HD",
+   "platform": "mobile",
+   "emitters": 10,
+   "expected": 10,
+   "diffs": []
+  }
+ ],
+ "checkedValues": 440,
+ "mismatch": 0
+}

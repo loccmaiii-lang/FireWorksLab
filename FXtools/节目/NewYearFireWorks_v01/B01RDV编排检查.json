@@ -9,6 +9,26 @@
     "R03_GoldKamuro_H280"
   ],
   "generatedBy": "analysis/scripts/编排B01_编译.mjs",
+  "trailV2": {
+    "revision": "v2-20261012",
+    "hero": false,
+    "subTemplates": 43,
+    "skipped": 0,
+    "heroOnLarge": [
+      "NYR03_GoldKamuro_H280@1"
+    ],
+    "heroSwitched": [],
+    "templates": 43,
+    "baseResources": 3,
+    "samples": [
+      "R03 · 金裂星 · 90m：开花 189.1 → 149.1 m",
+      "R03 · 小银菊 · 90m：开花 188.3 → 148.3 m",
+      "R03 · 爆裂星 · 90m：开花 187.6 → 147.6 m",
+      "R03 · 小青柠 · 90m：开花 189.3 → 149.3 m",
+      "R03 · 橙辉星 · 90m：开花 191.7 → 151.7 m",
+      "R03 · 点灭星 · 90m：开花 192.0 → 152.0 m"
+    ]
+  },
   "tiers": {
     "high": {
       "events": 900,

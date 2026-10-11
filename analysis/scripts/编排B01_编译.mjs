@@ -11,6 +11,7 @@ import {fileURLToPath} from 'node:url';
 import {normalize, validateDoc, validateProfiles, qualityEvents} from '../../tool/workbench/src/editing-model.mjs';
 import {compileDirector} from '../../tool/workbench/src/director-model.mjs';
 import {preflightProject} from '../../tool/workbench/src/program-project.mjs';
+import {applyTrailV2} from './尾缀v2开花点.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(here, '../..');
@@ -28,7 +29,8 @@ const LOGIC = path.join(ROOT, `协作/编排B01/逻辑方案${SFX}.json`);
 const TAG = 'B01长冈式' + (RHYTHM ? `-节奏${RHYTHM}${VARY ? '-高低大小' : ''}` : DENSITY === 2 ? '' : `-D${DENSITY}`);
 const TABLE = RHYTHM ? `B01R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? 'B01' : `B01D${DENSITY}`;
 const MAIN = !RHYTHM && DENSITY === 2;   // 只有 D2 主版带完整音乐
-const FILE_VERSION = 10;   // 修订1：档位从两端收 + 金垂柳只当主角；修订2：大号花型 + 主角 280 + 密度 D1 / D3；修订3：节奏留白版 A–D
+const FILE_VERSION = 11;   // 修订1：档位从两端收 + 金垂柳只当主角；修订2：大号花型 + 主角 280 + 密度 D1 / D3；修订3：节奏留白版 A–D；修订4（手游编排 10-12）：尾缀 v2 开花点
+const TRAIL_V1 = args.includes('--trail-v1');   // 旧尾缀高度（190 / 265 / 410 m），只做对比；默认跟引擎里已重导的尾缀 v2（150 / 210 / 330 m）
 const clone = x => structuredClone(x);
 const round = x => Math.round(x * 1e6) / 1e6;
 const sec = (x) => round(x);
@@ -137,6 +139,9 @@ Object.assign(doc.meta, {version: 'nagaoka-logic-v1', duration, savedAt: '2026-1
   programFileVersion: FILE_VERSION, sectionsMode: 'user', timeRule: '完整花型调用 / 点间隔 / 开花时刻取 0.1 秒整数倍；固定子模板内部时间原值；B01 无随机错开（点间用固定 0.1–0.3 s 涟漪）。',
   editingRule: '原固定子模板与 20 个基础资源不改；大号 / 主角是同一资源放大升高另存的新固定子模板（协作/编排B01/大号花型.json）；高度偏移只在编排条目里 ±25 m；球花尾缀 scale=1；三档点集从两端往里收，低 ⊂ 中 ⊂ 高。', arrangementTimeGridS: 0.1});
 delete doc.meta.defaultStaggerEnabled;
+// —— 修订4：尾缀 v2 开花点（手游编排 10-12，analysis/scripts/尾缀v2开花点.mjs）：引擎尾缀已按尺寸档重导（长度 × k、时间不变），
+//   固定子模板的开花点跟着降到新尾缀终点；编排条目（点位、时刻、dz、档位）不动。主角尾缀等 ResourceFX 加行后再换（hero=true）。 ——
+const trailV2 = TRAIL_V1 ? null : applyTrailV2(doc, {hero: args.includes('--hero-trail')});
 doc.choreographyLibrary = [];
 doc.notices = [];
 const finalDoc = normalize(doc);
@@ -160,7 +165,7 @@ if (errors.length) throw Error('校验失败：' + errors.slice(0, 5).join('；'
 
 // —— 三档三表 ——
 const occ = {};   // 每档展开成 (组, 时刻, 槽位, 子模板) 计数，用来查低 ⊂ 中 ⊂ 高
-const report = {revision: logic.revision, density: DENSITY, rhythm: RHYTHM, derivedFlowers: DERIVED.map(f => f.id), generatedBy: 'analysis/scripts/编排B01_编译.mjs', tiers: {}, preflight: 'preflightProject 通过（同 8025 打开 .dfshow）', file: `NewYearFireWorks_v01-${TAG}.dfshow`};
+const report = {revision: logic.revision, density: DENSITY, rhythm: RHYTHM, derivedFlowers: DERIVED.map(f => f.id), generatedBy: 'analysis/scripts/编排B01_编译.mjs', trailV2, tiers: {}, preflight: 'preflightProject 通过（同 8025 打开 .dfshow）', file: `NewYearFireWorks_v01-${TAG}.dfshow`};
 fs.mkdirSync(outDir, {recursive: true});
 for (const tier of ['high', 'medium', 'low']) {
   const ev = qualityEvents(state.doc, state.profiles, tier);
