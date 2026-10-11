@@ -1,0 +1,68 @@
+[
+ {
+  "entry": "dev",
+  "show": "D2(刷新自动)",
+  "footer": "本机编排台 导演编排 16.0.12 · B01长冈式-修订2-D2 · 高配 · 328 片段 / 2162 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 3.03,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ },
+ {
+  "entry": "dev",
+  "show": "D1疏",
+  "footer": "本机编排台 导演编排 16.0.12 · 高配 · 250 片段 / 1715 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 3,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ },
+ {
+  "entry": "dev",
+  "show": "D3密",
+  "footer": "本机编排台 导演编排 16.0.12 · 高配 · 379 片段 / 2552 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 3,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ },
+ {
+  "entry": "file",
+  "show": "D2(刷新自动)",
+  "footer": "本机编排台 导演编排 16.0.12 · B01长冈式-修订2-D2 · 高配 · 328 片段 / 2162 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 2.94,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ },
+ {
+  "entry": "file",
+  "show": "D1疏",
+  "footer": "本机编排台 导演编排 16.0.12 · 高配 · 250 片段 / 1715 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 2.97,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ },
+ {
+  "entry": "file",
+  "show": "D3密",
+  "footer": "本机编排台 导演编排 16.0.12 · 高配 · 379 片段 / 2552 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 3.03,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ }
+]

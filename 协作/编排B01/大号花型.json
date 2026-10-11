@@ -1,0 +1,11 @@
+{
+ "format": "df.b01-derived-flowers/1",
+ "note": "用户 10-11 19:54「你编排先按照同一资源放大升高给我看，补全大花份额先」：同一个 ResourceFX，球花条目 EffectScale 放大，换大号尾缀、开花升到大号高度；不新增资源、不改原花型。由 编排B01.py（花种表）和 编排B01_编译.mjs（建固定子模板与花型）共用。EffectScale 在 UE 里是否等比放大花径没实测（手游编排 UE-14）。",
+ "by": "本机同步（8）2026-10-11",
+ "flowers": [
+  {"code": "GRL", "id": "R03_GoldRayChry_L230", "engineId": "NYR03_GoldRayChry_L230", "source": "R03_GoldRayChry", "frame": "R03_SilverStrobeChry", "diameter": 230, "name": "R03 · 金芒菊 · 230m（大号）", "zh": "金芒菊·大", "color": "#f7d26b"},
+  {"code": "CLL", "id": "R03_GoldCoreLime_L230", "engineId": "NYR03_GoldCoreLime_L230", "source": "R03_GoldCoreLime", "frame": "R03_SilverStrobeChry", "diameter": 230, "name": "R03 · 金芯柠 · 230m（大号）", "zh": "金蕊青柠星·大", "color": "#c9d94a"},
+  {"code": "MLL", "id": "R03_MultiLayerChry_L230", "engineId": "NYR03_MultiLayerChry_L230", "source": "R03_MultiLayerChry", "frame": "R03_SilverStrobeChry", "diameter": 230, "name": "R03 · 多重菊 · 230m（大号）", "zh": "多重菊·大", "color": "#e28a5b"},
+  {"code": "GKH", "id": "R03_GoldKamuro_H280", "engineId": "NYR03_GoldKamuro_H280", "source": "R03_GoldKamuro", "frame": "R03_GoldKamuro", "diameter": 280, "name": "R03 · 金垂柳 · 280m（主角）", "zh": "金垂柳·主角", "color": "#e8b94a"}
+ ]
+}

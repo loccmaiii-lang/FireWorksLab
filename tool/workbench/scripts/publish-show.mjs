@@ -1,5 +1,6 @@
 // 发布「云端最新编排」（用户 2026-10-11：每更新一次就是一个版本，拉取后刷新即最新编排）。
-// 用法（tool/workbench 下）：npm run publish-show -- --programme <节目.dfshow> --name <编排名> [--note 一句说明] [--version 16.0.9]
+// 用法（tool/workbench 下）：npm run publish-show -- --programme <节目.dfshow> --name <编排名> [--note 一句说明] [--version 16.0.9] [--also <节目.dfshow>::<编排名> ...]
+// --also：同一版本里一起存的对比版本（如 D1 / D3 密度），只存进 FXtools/节目/云端最新/ 和版本记录，刷新不自动载入，要在「节目 → 打开节目」里选。
 // 不给 --version 就在当前 WORKBENCH_VERSION 上末位 +1。之后照常 npm run release（云端加 -- --no-deploy），源码、成品与编排一起提交。
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -11,6 +12,7 @@ import {CLOUD_FORMAT,nextVersion,validateCloudLatest} from '../src/cloud-latest.
 
 const here=path.dirname(fileURLToPath(import.meta.url)),source=path.resolve(here,'..'),root=path.resolve(source,'../..');
 const args=process.argv.slice(2),flag=name=>{const i=args.indexOf('--'+name);return i<0?undefined:args[i+1]};
+const also=args.flatMap((a,i)=>a==='--also'?[args[i+1]]:[]).map(v=>{const [file,label]=String(v).split('::');if(!file||!label?.trim()||/[\\/:*?"<>|]/.test(label))throw Error('--also 写成 <节目.dfshow>::<编排名>');return {file:path.resolve(file),label:label.trim()}});
 const programmeArg=flag('programme'),name=flag('name')?.trim(),note=flag('note')?.trim()||'';
 if(!programmeArg||!name)throw Error('需要 --programme <节目.dfshow> --name <编排名>');
 if(/[\\/:*?"<>|]/.test(name))throw Error('编排名不能含文件名非法字符');
@@ -36,8 +38,16 @@ const archiveDir=path.join(root,'FXtools/节目/云端最新'),archive=`${versio
 await fs.mkdir(archiveDir,{recursive:true});
 try{await fs.access(path.join(archiveDir,archive));throw Error(`版本 ${version} 已发布过，版本号不能复用`)}catch(e){if(e.code!=='ENOENT')throw e}
 await fs.writeFile(path.join(archiveDir,archive),text);
+const extras=[];
+for(const x of also){
+ const raw=await fs.readFile(x.file,'utf8'),p=JSON.parse(raw);if(p.format!=='df.workbench-project/1')throw Error('需要完整节目文件：'+x.file);
+ if(p.payload.audioRef&&p.payload.audioRef.kind!=='bundled')p.payload.audioRef={kind:'bundled'};
+ const st=preflightProject(JSON.stringify(p),seed),name2=`${version}-${x.label}.dfshow`;
+ await fs.writeFile(path.join(archiveDir,name2),JSON.stringify(p));
+ extras.push({label:x.label,archive:name2,cues:st.doc.cues.length,events:st.doc.events.length,source:path.relative(root,x.file).split(path.sep).join('/')});
+}
 await fs.writeFile(path.join(source,'public/data/cloud-latest.json'),JSON.stringify(latest));
 await fs.writeFile(connectionFile,connection.replace(`export const WORKBENCH_VERSION='${current}';`,`export const WORKBENCH_VERSION='${version}';`));
 const index=path.join(archiveDir,'版本记录.md');let log;try{log=await fs.readFile(index,'utf8')}catch{log='# 云端最新编排 · 版本记录\n\n拉取后刷新编排工作台会自动载入最新一行（载入前备份当前节目）。这里的文件不带音乐，音乐按 sha256 对应《汪洋与浩渺》。\n\n| 版本 | 编排 | 片段 / 播放 | 来源 | 说明 |\n| --- | --- | --- | --- | --- |\n'}
-await fs.writeFile(index,log+`| ${version} | ${name} | ${latest.cues} / ${latest.events} | \`${latest.source}\` | ${note.replaceAll('|','｜')} |\n`);
-console.log(JSON.stringify({version,name,archive:'FXtools/节目/云端最新/'+archive,cues:latest.cues,events:latest.events,programmeSha256,bytes:Buffer.byteLength(text),next:'npm run release'+(process.env.CI?' -- --no-deploy':'')}));
+await fs.writeFile(index,log+`| ${version} | ${name} | ${latest.cues} / ${latest.events} | \`${latest.source}\` | ${note.replaceAll('|','｜')} |\n`+extras.map(x=>`| ${version} | ${x.label}（对比版，手动打开） | ${x.cues} / ${x.events} | \`${x.source}\` | 刷新不自动载入；节目 → 打开节目 → 选 \`${x.archive}\` |\n`).join(''));
+console.log(JSON.stringify({version,name,archive:'FXtools/节目/云端最新/'+archive,extras,cues:latest.cues,events:latest.events,programmeSha256,bytes:Buffer.byteLength(text),next:'npm run release'+(process.env.CI?' -- --no-deploy':'')}));

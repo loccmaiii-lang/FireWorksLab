@@ -94,6 +94,20 @@ SPECIES = {
     'S9': ('R03_Silver9', '银星·九束展开', 'F', '#aab8d8', 0),
     'S13': ('R03_Silver13', '银星·十三束宽扇', 'F', '#aab8d8', 0),
 }
+# 修订2（本机同步 8，用户 10-11 19:54「你编排先按照同一资源放大升高给我看，补全大花份额先」）：
+# 同一 ResourceFX 的大号 / 主角版本，定义在 协作/编排B01/大号花型.json，和 编排B01_编译.mjs 共用
+DERIVED = json.loads((OUTDIR / '大号花型.json').read_text(encoding='utf-8'))['flowers']
+for _f in DERIVED:
+    _src, _frm = TPL[_f['source']], TPL[_f['frame']]
+    TPL[_f['id']] = dict(_src, id=_f['id'], name=_f['name'], kind='large', diameter=_f['diameter'], burstZ=_frm['burstZ'], flightHeight=_frm['flightHeight'],
+                         rise=_frm['rise'], life=_src['life'], recipeDuration=round((_frm['rise'] or 0) + (_src['life'] or 0), 6), subTemplateRef=_f['engineId'] + '@1')
+    _code = next(k for k, v in SPECIES.items() if v[0] == _f['source'])
+    SPECIES[_f['code']] = (_f['id'], _f['zh'], 'L', _f['color'], SPECIES[_code][4])
+FAMILY = {f['code']: next(k for k, v in SPECIES.items() if v[0] == f['source']) for f in DERIVED}   # 大号 → 原花（领奏、连波按同一种算）
+PROMOTE = {'GR': 'GRL', 'CL': 'CLL', 'ML': 'MLL'}
+PROMOTE_SECTIONS = {'B01_S5', 'B01_S7', 'B01_S8', 'B01_S9', 'B01_S11', 'B01_S12'}   # 第一次抬升、第二次递进、蓄势收窄、高潮 II、转场铺色 B（终章前小峰）、终章
+HERO_BARS = (66, 105, 125)                                    # 主角前后 1 小节不放 L（宪章）
+fam = lambda sp: FAMILY.get(sp, sp)
 TID2SP = {v[0]: k for k, v in SPECIES.items()}
 FAN_PTS = {'S9': ['B1', 'B3', 'B4', 'B6'], 'S13': ['B3', 'B4']}   # 银扇 9 / 13 束太重：限点位；S5（每点 15）可整排 8 点，由预算逐波裁
 TAIL_GPU = {'S': 6, 'M': 2, 'L': 6}
@@ -175,8 +189,11 @@ class Show:
         self.sections = []
         self.density = density
         self.cur = None
+        self.nid = 0
 
     def section(self, sid, name, bar0, bar1, lead, relay, accent, note=''):
+        if sid in PROMOTE_SECTIONS:
+            lead, relay, accent = (PROMOTE.get(x, x) for x in (lead, relay, accent))
         s = dict(id=sid, name=name, bar0=bar0, bar1=bar1, start=round(T(bar0), 3), end=round(T(bar1), 3), lead=lead, relay=relay, accent=accent, note=note)
         self.sections.append(s)
         self.cur = s
@@ -186,6 +203,9 @@ class Show:
         """一个 cue = 一种花型 + 一组点 + 每点开花时刻 H = H0 + rank*gap。
         layer: main 主排 / extra 叠层（低档先去掉）；tier: all 三档都全点 / trim 中档去外两点、低档隔点
         at: {点: 起飞时刻} 逐点给定（托底扇跟着球花尾缀起飞用），给了就不用 H0 + rank*gap，次序标 source"""
+        if (sp in PROMOTE and self.cur['id'] in PROMOTE_SECTIONS and layer == 'main' and at is None and pts and pts[0][0] == 'P'
+                and wave not in ('城垛M', 'A/B间隔17') and all(abs((H0 - BAR0) / BAR - b) > 1.05 for b in HERO_BARS)):
+            sp = PROMOTE[sp]                                   # 修订2：释放段的金芒菊 / 金蕊青柠星 / 多重菊主排用 230 m 大号
         tid, cn, size, col, gpu_body = SPECIES[sp]
         pts = [p for p in pts]
         if sp in FAN_PTS:   # 银扇每束 3 个 GPU 发射器，整排 8 把会爆预算：限制点位（24 实测 234 干净 / 312 截断）
@@ -205,7 +225,8 @@ class Show:
                 launch = 0.0
             burst = round(launch + rise, 6)
             events.append(dict(point=p, launch=launch, burst=burst, end=round(burst + life_of(sp), 6), dz=dzm.get(p, 0.0), H=round(H, 4)))
-        cid = f'B01_C{len(self.cues) + 1:03d}'
+        self.nid += 1
+        cid = f'B01_C{self.nid:03d}'
         c = dict(id=cid, section=self.cur['id'], sp=sp, templateId=tid, size=size, group=pts[0][0], points=[e['point'] for e in events],
                  order='source' if at is not None else (WB_ORDER[order] if order in WB_ORDER else 'source'), gap=gap, layer=layer, tier='all' if keep_all else tier,
                  label=label or cn, name=f"{self.cur['name']} · {label or cn}", wave=wave, events=events, H0=round(min(at.values()) if at is not None else H0, 4))
@@ -300,7 +321,7 @@ def build(density=2):
     S.stack('GR', 'SC', h(3), 'out', 0.1, 'arch', 0.4, keep_all=True)
     S.row9('SC', h(4), 'L', 0.2, 'wave')
     S.chase(h(5))
-    if d >= 2:
+    if d >= 1:   # 修订2：半小节波由 apply_density 统一按密度去留（D1 去、但保住每种花一次整排）
         S.row9('GC', h(5, 2), 'out', 0.1, 'flat')
     S.row9('GR', h(6), 'out', 0.1, 'arch')
     S.zig17('SC', 'ST', h(7), 'out', 0.1)
@@ -311,7 +332,7 @@ def build(density=2):
     S.row9('GY', h(9), 'out', 0.1, 'arch')
     S.low8('LM', h(10), 'L', 0.2)
     S.row9('GY', h(11), 'in', 0.1, 'arch')
-    if d >= 2:
+    if d >= 1:   # 修订2：半小节波由 apply_density 统一按密度去留（D1 去、但保住每种花一次整排）
         S.row9('SC', h(11, 2), 'out', 0.1, 'flat')
     S.zig17('LM', 'SC', h(12), 'out', 0.1)
     # ③ 环形排
@@ -364,7 +385,7 @@ def build(density=2):
     S.zig17('ML', 'ST', h(35), 'out', 0.1)
     S.row9('GS', h(36), 'out', 0.1, 'arch')
     S.ripple(h(36))
-    if d >= 2:
+    if d >= 1:   # 修订2：半小节波由 apply_density 统一按密度去留（D1 去、但保住每种花一次整排）
         S.low8('CR', h(36, 2), 'out', 0.1)
     S.castle('SS', 'ML', h(37), 'out', 0.1, 'flat')
     S.row9('GR', h(38), 'L', 0.2, 'arch')
@@ -378,7 +399,7 @@ def build(density=2):
     S.low8('ST', h(42), 'out', 0.1)
     S.low8('GC', h(43), 'L', 0.2)
     S.row9('SC', h(44), 'out', 0.1, 'flat')
-    if d >= 2:
+    if d >= 1:   # 修订2：半小节波由 apply_density 统一按密度去留（D1 去、但保住每种花一次整排）
         S.low8('CR', h(44, 2), 'out', 0.1)
     S.zig17('ST', 'GC', h(45), 'out', 0.1)
     S.low8('ST', h(46), 'R', 0.2)
@@ -396,7 +417,7 @@ def build(density=2):
     S.stack('CL', 'SC', h(54), 'out', 0.1, 'arch', 0.4)
     S.castle('SS', 'CL', h(55), 'out', 0.1, 'flat')
     S.fans('R9R', B8, h(56), 'R', 0.2)
-    if d >= 2:
+    if d >= 1:   # 修订2：半小节波由 apply_density 统一按密度去留（D1 去、但保住每种花一次整排）
         S.row9('SC', h(56, 2), 'out', 0.1, 'flat')
 
     # —— 8 蓄势 b57–b64（收窄 9→7→5→3→1；第 65 小节静默，只留尾缀在升） ——
@@ -413,7 +434,7 @@ def build(density=2):
 
     # —— 9 高潮 II b66–b81（⑥ 入口：城垛 + 主角金垂柳；其后每小节两波） ——
     S.section('B01_S9', '高潮 II', 66, 82, 'ML', 'CL', 'PW', '112.2 s（用户 1:47）静默一小节后回归：⑥ 城垛 + 主角金垂柳（P4）+ 银彩菊压两翼 + 多重菊嵌谷 + 小银菊铺低；多重菊领，金蕊青柠星接，彩千轮插；72 / 80 / 81 小节为鼓点重击')
-    S.cue('GK', ['P4'], h(66), 'together', 0.0, 'flat', wave='主角', label='主角 金垂柳（P4）', keep_all=True)
+    S.cue('GKH', ['P4'], h(66), 'together', 0.0, 'flat', wave='主角', label='主角 金垂柳 280（P4）', keep_all=True)
     S.cue('SS', ['P0', 'P2', 'P6', 'P8'], h(66), 'out', 0.1, 'flat', wave='城垛L', keep_all=True)
     S.cue('ML', ['P1', 'P3', 'P5', 'P7'], h(66), 'out', 0.1, 'flat', wave='城垛M', keep_all=True)
     S.cue('SC', B8, h(66) + 0.4, 'out', 0.1, 'flat', wave='叠层二排', layer='extra')
@@ -484,11 +505,11 @@ def build(density=2):
     S.stack('CL', 'ST', h(103), 'out', 0.1, 'arch', 0.4)
     S.row9('GR', h(104), 'L', 0.3, 'flat')   # 修订1：主角前 1 小节不放 L（宪章），金垂柳 L 排 → 金芒菊 M 排
     # ⑧ 三主角垂柳墙
-    S.cue('GK', ['P2', 'P4', 'P6'], h(105), 'out', 0.1, 'flat', wave='三主角', label='三主角 金垂柳（P2 P4 P6）', keep_all=True)
+    S.cue('GKH', ['P2', 'P4', 'P6'], h(105), 'out', 0.1, 'flat', wave='三主角', label='三主角 金垂柳 280（P2 P4 P6）', keep_all=True)
     S.cue('SS', ['P0', 'P8'], h(105), 'together', 0.0, 'flat', wave='三主角收边', label='银彩菊收边（P0 P8）', keep_all=True)
     S.low8('SC', h(105) + 0.4, 'out', 0.1, layer='extra')
     S.row9('PW', h(106), 'out', 0.1, 'wave')
-    if d >= 2:
+    if d >= 1:   # 修订2：半小节波由 apply_density 统一按密度去留（D1 去、但保住每种花一次整排）
         S.low8('OG', h(106, 2), 'out', 0.1)
     S.zig17('GS', 'LM', h(107), 'out', 0.1)
     S.castle('SS', 'ML', h(108), 'out', 0.1, 'flat')
@@ -512,14 +533,109 @@ def build(density=2):
     S.fans('S13', ['B1', 'B2', 'B3', 'B4', 'B5', 'B6'], h(118), 'out', 0.1)
 
     # —— 13 白色收束 b119–b125 + 余韵 ——
-    S.section('B01_S13', '白色收束', 119, 128, 'SS', 'SC', 'GK', '银彩菊白墙每小节一波 9→9→7→7→5→5→3 逐波收窄，对应音乐渐弱；最后一发金垂柳悬着熄灭')
+    S.section('B01_S13', '白色收束', 119, 128, 'SS', 'SC', 'GKH', '银彩菊白墙每小节一波 9→9→7→7→5→5→3 逐波收窄，对应音乐渐弱；最后一发金垂柳悬着熄灭')
     for k, pts in zip(range(119, 126), [9, 9, 7, 7, 5, 5, 3]):
         sel = [f'P{i}' for i in range(4 - pts // 2, 5 + pts // 2)]
         S.cue('SS', sel, h(k), 'out', 0.1, 'flat', wave=f'白墙{pts}', tier='all', label=f'白墙 {pts} 点')
-    S.cue('GK', ['P4'], h(125, 2) + 0.2, 'together', 0.0, 'flat', wave='主角', label='余韵 金垂柳（P4）', keep_all=True)
+    S.cue('GKH', ['P4'], h(125, 2) + 0.2, 'together', 0.0, 'flat', wave='主角', label='余韵 金垂柳 280（P4）', keep_all=True)
 
+    apply_density(S, d)
     attach_base_fans(S)
     return S
+
+
+RELEASE = {'B01_S1', 'B01_S5', 'B01_S9', 'B01_S12', 'B01_S13'}   # 释放段（开场高潮、第一次抬升、高潮 II、终章、白色收束）；其余为推进段
+
+
+def bar_of(t):
+    return (t - BAR0) / BAR
+
+
+def on_bar(c):
+    x = bar_of(c['H0'])
+    return abs(x - round(x)) < 0.02
+
+
+def apply_density(S, d):
+    """宪章 §6 的 D1 / D2 / D3：构图、主角、入口、墙、倒计时不变，只改每小节放几波（用户 10-11 00:52「都试试不同的密度感受一下」）。
+    D1 疏：去掉叠层二排 / 扇组（layer extra）和推进段的半小节波，释放段只去叠层；
+    D3 密：每条主排下面补一排 B 点二排小花（晚 0.4 s），推进段只有一波的小节在第 3 拍补一波 B 点回应；逐条按 GPU 软线 200 / 秒裁，空小节和主角前后不补。"""
+    S.densityLog = dict(density=d, removed=0, added=0, addSkippedGpu=0, addSkippedRule=0)
+    if d == 2:
+        return
+    keep = lambda c: c['tier'] == 'all' or c['wave'] in ('倒计时', '主角', '三主角', '三主角收边') or '墙' in (c['wave'] or '')
+    if d == 1:
+        full = lambda c: c['size'] != 'F' and len(c['points']) >= 7 and c['layer'] == 'main' and c['wave'] != '倒计时'
+        left = defaultdict(int)
+        for c in S.cues:
+            if full(c):
+                left[fam(c['sp'])] += 1
+        out = []
+        for c in S.cues:
+            drop = not keep(c) and (c['layer'] == 'extra' or not on_bar(c))
+            if drop and full(c) and left[fam(c['sp'])] <= 1:
+                drop = False                                    # 这种花只剩这一次整排：留着，保证每种都领过
+            if drop:
+                S.densityLog['removed'] += 1
+                if full(c):
+                    left[fam(c['sp'])] -= 1
+            else:
+                out.append(c)
+        S.cues = out
+        return
+    quiet = [(T(k) - 0.2, T(k + 1)) for k in (41, 65, 96)]
+    def allowed(t):
+        return not any(a <= t <= b for a, b in quiet) and all(abs(bar_of(t) - b) > 1.05 for b in HERO_BARS)
+    gold = {'B01_S1', 'B01_S4', 'B01_S5', 'B01_S8', 'B01_S12'}
+    def add(sp, H0, label, wave, layer='extra', order='out'):
+        cur = S.cur
+        S.cur = next(x for x in S.sections if x['start'] - 0.01 <= H0 < x['end'] + 0.01)
+        c = S.cue(sp, B8, H0, order, 0.1, 'flat', layer=layer, wave=wave, label=label)
+        S.cur = cur
+        launch = min(e['launch'] for e in c['events'])
+        if local_gpu_peak(S, launch, launch + 1.0) > GPU_BUDGET:
+            S.cues.remove(c)
+            S.densityLog['addSkippedGpu'] += 1
+            return None
+        S.densityLog['added'] += 1
+        return c
+    mains = [c for c in S.cues if c['size'] in 'ML' and c['layer'] == 'main' and c['group'] == 'P' and len(c['points']) >= 7]
+    for c in sorted(mains, key=lambda c: c['H0']):
+        t = c['H0'] + 0.4
+        has_under = any(x['group'] == 'B' and x['size'] != 'F' and abs(x['H0'] - t) < 0.9 for x in S.cues)
+        if has_under or not allowed(t):
+            S.densityLog['addSkippedRule'] += 1
+            continue
+        add('GC' if c['section'] in gold else 'SC', t, 'D3 二排', 'D3二排')
+    bars = defaultdict(list)
+    for c in S.cues:
+        if c['size'] != 'F' and c['layer'] == 'main' and c['section'] != 'B01_S0':
+            bars[int(round(bar_of(c['H0']) - 0.49))].append(c)
+    for k, cs in sorted(bars.items()):
+        if len(cs) != 1:
+            continue
+        t = T(k, 2)
+        if not allowed(t) or any(abs(x['H0'] - t) < 0.5 for x in S.cues if x['size'] != 'F'):
+            S.densityLog['addSkippedRule'] += 1
+            continue
+        sec = next(x for x in S.sections if x['start'] - 0.01 <= t < x['end'] + 0.01)
+        near = {fam(x['sp']) for x in S.cues if x['size'] != 'F' and abs(x['H0'] - t) < BAR * 1.6}
+        if sec['id'] in RELEASE:          # 释放段：P 点补一排中花，种类避开前后两小节已有的
+            pool = [x for x in (sec['relay'], sec['accent'], 'GS', 'GY', 'GP') if SPECIES.get(x, ('', '', ''))[2] == 'M' and fam(x) not in near]
+            if pool:
+                cur = S.cur
+                S.cur = sec
+                c = S.cue(pool[0], P9, t, 'R' if k % 2 else 'L', 0.1, 'arch', wave='D3补排', label='D3 补排')
+                S.cur = cur
+                launch = min(e['launch'] for e in c['events'])
+                if local_gpu_peak(S, launch, launch + 1.0) > GPU_BUDGET:
+                    S.cues.remove(c)
+                    S.densityLog['addSkippedGpu'] += 1
+                else:
+                    S.densityLog['added'] += 1
+                continue
+        pool = [x for x in (sec['relay'], sec['accent'], 'SC', 'GC', 'OG') if SPECIES.get(x, ('', '', ''))[2] == 'S' and fam(x) not in near] or ['SC']
+        add(pool[0], t, 'D3 回应', 'D3回应', layer='main', order='R' if k % 2 else 'L')
 
 
 # ═══════════════════════════ 托底扇（R8） ═══════════════════════════
@@ -815,7 +931,7 @@ def checks(S):
     # 5 接力：同种主排整排连续出现不超过 2 次（墙除外）
     seq = []
     for c in sorted(full, key=lambda c: min(e['burst'] for e in c['events'])):
-        seq.append((round(min(e['burst'] for e in c['events']), 1), c['sp'], c['section'], c.get('wave') or ''))
+        seq.append((round(min(e['burst'] for e in c['events']), 1), fam(c['sp']), c['section'], c.get('wave') or ''))
     runs = []
     run = 1
     for i in range(1, len(seq)):
@@ -829,15 +945,27 @@ def checks(S):
     # 6 领奏：每种球花有没有一次整排
     lead = {}
     for sp, v in SPECIES.items():
-        if SPECIES[sp][2] == 'F':
+        if SPECIES[sp][2] == 'F' or sp in FAMILY:
             continue
-        ts = sorted({round(min(e['burst'] for e in c['events']), 1) for c in full if c['sp'] == sp})
+        ts = sorted({round(min(e['burst'] for e in c['events']), 1) for c in full if fam(c['sp']) == sp})
         lead[sp] = dict(name=SPECIES[sp][1], fullWaves=len(ts), firstAt=ts[0] if ts else None)
     res['lead'] = lead
     # 金垂柳是主角，不按整排领奏算；另查主角次数（宪章：全场 5 次，很少出现）
     res['leadMissing'] = [sp for sp, v in lead.items() if v['fullWaves'] == 0 and sp != 'GK']
-    gk = [e for c in S.cues if c['sp'] == 'GK' for e in c['events']]
-    res['heroes'] = dict(goldKamuroEvents=len(gk), heroCues=sum(1 for c in S.cues if c['sp'] == 'GK'), nonHero=[c['label'] or c['wave'] for c in S.cues if c['sp'] == 'GK' and c.get('wave') not in ('主角', '三主角')])
+    gk = [e for c in S.cues if fam(c['sp']) == 'GK' for e in c['events']]
+    res['heroes'] = dict(goldKamuroEvents=len(gk), heroCues=sum(1 for c in S.cues if fam(c['sp']) == 'GK'), hero280=sum(len(c['events']) for c in S.cues if c['sp'] == 'GKH'),
+                         nonHero=[c['label'] or c['wave'] for c in S.cues if fam(c['sp']) == 'GK' and c.get('wave') not in ('主角', '三主角')])
+    nb = len(balls)
+    res['share'] = {k: round(sum(1 for e in balls if e['size'] == k) / nb, 3) for k in 'SML'}
+    res['largeBySpecies'] = {SPECIES[sp][1]: sum(1 for e in balls if e['sp'] == sp) for sp in sorted({e['sp'] for e in balls if e['size'] == 'L'})}
+    res['density'] = getattr(S, 'densityLog', None)
+    wb = defaultdict(int)
+    for c in S.cues:
+        if c['size'] != 'F' and c['layer'] == 'main' and len(c['points']) >= 4:
+            wb[(c['section'] in RELEASE, int(round(bar_of(c['H0']) - 0.49)))] += 1
+    rel = [v for (r, _), v in wb.items() if r]
+    push = [v for (r, _), v in wb.items() if not r]
+    res['wavesPerBar'] = dict(release=round(sum(rel) / max(1, len(rel)), 2), push=round(sum(push) / max(1, len(push)), 2))
     # 档位嵌套：低 ⊂ 中 ⊂ 高（一张表按画质嵌套的前提）
     bad = [c['id'] for c in S.cues if not (set(c['profiles']['low']) <= set(c['profiles']['medium']) <= set(c['points']))]
     res['tierNesting'] = dict(ok=not bad, violations=bad[:20])
@@ -912,7 +1040,7 @@ def make_figs(S, ck):
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     from matplotlib.patches import Circle, Rectangle
-    plt.rcParams['font.sans-serif'] = ['Noto Sans CJK SC', 'WenQuanYi Zen Hei', 'DejaVu Sans']
+    plt.rcParams['font.sans-serif'] = ['Noto Sans CJK SC', 'WenQuanYi Zen Hei', 'Microsoft YaHei', 'SimHei', 'DejaVu Sans']   # 本机 Windows 用雅黑 / 黑体
     plt.rcParams['axes.unicode_minus'] = False
     OUTDIR.mkdir(parents=True, exist_ok=True)
     mus = json.loads(MUSIC.read_text(encoding='utf-8'))
@@ -1020,11 +1148,12 @@ def snapshot(ax, S, t, title):
 def export(S, ck):
     OUTDIR.mkdir(parents=True, exist_ok=True)
     dur = max(math.ceil((OFFSET + 210.8108125) * 10) / 10, math.ceil(ck['grid']['lastEnd'] * 10) / 10)
-    out = dict(format='df.choreography-proposal/2', revision='B01_NAGAOKA_LOGIC_r1', status='logic_compiled_by_编排B01_编译.mjs_UE_unverified',
+    sfx = '' if S.density == 2 else f'_D{S.density}'
+    out = dict(format='df.choreography-proposal/2', revision=f'B01_NAGAOKA_LOGIC_r2_D{S.density}', status='logic_compiled_by_编排B01_编译.mjs_UE_unverified',
                generator='analysis/scripts/编排B01.py', density=S.density, musicOffsetS=OFFSET, barS=BAR, bar0S=BAR0, duration=dur,
                sections=S.sections, cues=S.cues)
-    (OUTDIR / '逻辑方案.json').write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding='utf-8')
-    (OUTDIR / '体检.json').write_text(json.dumps(ck, ensure_ascii=False, indent=1), encoding='utf-8')
+    (OUTDIR / f'逻辑方案{sfx}.json').write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding='utf-8')
+    (OUTDIR / f'体检{sfx}.json').write_text(json.dumps(ck, ensure_ascii=False, indent=1), encoding='utf-8')
 
 
 if __name__ == '__main__':
@@ -1035,6 +1164,6 @@ if __name__ == '__main__':
     S = build(a.density)
     ck = checks(S)
     export(S, ck)
-    if not a.no_figs:
+    if not a.no_figs and a.density == 2:
         make_figs(S, ck)
-    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'baseFans', 'fanSummary', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'heroes', 'tierNesting', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies')}, ensure_ascii=False, indent=1))
+    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'baseFans', 'fanSummary', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'heroes', 'share', 'largeBySpecies', 'density', 'wavesPerBar', 'tierNesting', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies')}, ensure_ascii=False, indent=1))

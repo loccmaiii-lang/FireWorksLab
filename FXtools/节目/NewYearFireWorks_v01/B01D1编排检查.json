@@ -1,0 +1,67 @@
+{
+  "revision": "B01_NAGAOKA_LOGIC_r2_D1",
+  "density": 1,
+  "derivedFlowers": [
+    "R03_GoldRayChry_L230",
+    "R03_GoldCoreLime_L230",
+    "R03_MultiLayerChry_L230",
+    "R03_GoldKamuro_H280"
+  ],
+  "generatedBy": "analysis/scripts/编排B01_编译.mjs",
+  "tiers": {
+    "high": {
+      "events": 1715,
+      "subTemplates": 25,
+      "templates": 119,
+      "scheduleSlots": 250,
+      "groups": {
+        "P": 128,
+        "B": 122
+      },
+      "lastSlot": 201.5,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "medium": {
+      "events": 1409,
+      "subTemplates": 25,
+      "templates": 119,
+      "scheduleSlots": 250,
+      "groups": {
+        "P": 128,
+        "B": 122
+      },
+      "lastSlot": 201.5,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "low": {
+      "events": 750,
+      "subTemplates": 22,
+      "templates": 90,
+      "scheduleSlots": 168,
+      "groups": {
+        "P": 128,
+        "B": 40
+      },
+      "lastSlot": 201.5,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    }
+  },
+  "preflight": "preflightProject 通过（同 8025 打开 .dfshow）",
+  "file": "NewYearFireWorks_v01-B01长冈式-D1.dfshow",
+  "tierNesting": {
+    "lowNotInMedium": 0,
+    "mediumNotInHigh": 0
+  },
+  "doc": {
+    "cues": 250,
+    "events": 1715,
+    "sections": 14,
+    "duration": 218.6,
+    "musicOffset": 5,
+    "balls": 1134,
+    "fans": 581
+  }
+}

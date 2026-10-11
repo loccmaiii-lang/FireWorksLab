@@ -1,6 +1,6 @@
 {
  "format": "df.choreography-proposal/2",
- "revision": "B01_NAGAOKA_LOGIC_r1",
+ "revision": "B01_NAGAOKA_LOGIC_r2_D2",
  "status": "logic_compiled_by_编排B01_编译.mjs_UE_unverified",
  "generator": "analysis/scripts/编排B01.py",
  "density": 2,
@@ -78,7 +78,7 @@
    "end": 71.666,
    "lead": "SS",
    "relay": "GS",
-   "accent": "ML",
+   "accent": "MLL",
    "note": "银彩菊领：⑤ 58.7 s 城垛 L×5 + M×4；高潮 I（60.3–71.7）每小节叠层、墙、扫交替"
   },
   {
@@ -100,7 +100,7 @@
    "bar1": 57,
    "start": 84.638,
    "end": 97.611,
-   "lead": "CL",
+   "lead": "CLL",
    "relay": "SC",
    "accent": "PW",
    "note": "金蕊青柠星领，小银菊 / 橙辉星接，彩千轮插"
@@ -114,7 +114,7 @@
    "end": 110.584,
    "lead": "GS",
    "relay": "GC",
-   "accent": "ML",
+   "accent": "MLL",
    "note": "17 点→9→7→5→3→1 逐小节收窄，64 小节鼓点进红彗星五束；65 小节（110.6 s）无爆点，高潮 II 入口的 L / M / S 尾缀在黑里升"
   },
   {
@@ -124,8 +124,8 @@
    "bar1": 82,
    "start": 112.206,
    "end": 138.151,
-   "lead": "ML",
-   "relay": "CL",
+   "lead": "MLL",
+   "relay": "CLL",
    "accent": "PW",
    "note": "112.2 s（用户 1:47）静默一小节后回归：⑥ 城垛 + 主角金垂柳（P4）+ 银彩菊压两翼 + 多重菊嵌谷 + 小银菊铺低；多重菊领，金蕊青柠星接，彩千轮插；72 / 80 / 81 小节为鼓点重击"
   },
@@ -160,7 +160,7 @@
    "bar1": 119,
    "start": 162.475,
    "end": 198.15,
-   "lead": "GR",
+   "lead": "GRL",
    "relay": "GY",
    "accent": "SS",
    "note": "97 小节（162.5 s，全曲最响的一小节）起前奏；102 小节（170.6 s）起整段最亮；⑧ 175.4 s 三主角垂柳墙；186.8–194.9 s 金芒菊金墙三波（修订1：原金垂柳 L，暂用 150 m 金芒菊，230 m 大号做出后换）；196.5 s 白墙"
@@ -174,7 +174,7 @@
    "end": 212.745,
    "lead": "SS",
    "relay": "SC",
-   "accent": "GK",
+   "accent": "GKH",
    "note": "银彩菊白墙每小节一波 9→9→7→7→5→5→3 逐波收窄，对应音乐渐弱；最后一发金垂柳悬着熄灭"
   }
  ],
@@ -8793,47 +8793,17 @@
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
-    "B1",
-    "B2",
     "B3",
-    "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B4"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·五束",
-   "name": "第一次抬升 · 托底 · 左→右 · 红彗星·五束",
+   "label": "托底 · 左→右 · 红彗星·五束（2 点）",
+   "name": "第一次抬升 · 托底 · 左→右 · 红彗星·五束（2 点）",
    "wave": "托底扇",
    "events": [
-    {
-     "point": "B0",
-     "launch": 57.6,
-     "burst": 57.6,
-     "end": 60.7,
-     "dz": 0.0,
-     "H": 57.6
-    },
-    {
-     "point": "B1",
-     "launch": 57.7,
-     "burst": 57.7,
-     "end": 60.8,
-     "dz": 0.0,
-     "H": 57.7
-    },
-    {
-     "point": "B2",
-     "launch": 57.8,
-     "burst": 57.8,
-     "end": 60.9,
-     "dz": 0.0,
-     "H": 57.8
-    },
     {
      "point": "B3",
      "launch": 57.9,
@@ -8849,43 +8819,18 @@
      "end": 61.1,
      "dz": 0.0,
      "H": 58.0
-    },
-    {
-     "point": "B5",
-     "launch": 58.1,
-     "burst": 58.1,
-     "end": 61.2,
-     "dz": 0.0,
-     "H": 58.1
-    },
-    {
-     "point": "B6",
-     "launch": 58.2,
-     "burst": 58.2,
-     "end": 61.3,
-     "dz": 0.0,
-     "H": 58.2
-    },
-    {
-     "point": "B7",
-     "launch": 58.3,
-     "burst": 58.3,
-     "end": 61.4,
-     "dz": 0.0,
-     "H": 58.3
     }
    ],
-   "H0": 57.6,
+   "H0": 57.9,
    "profiles": {
     "medium": [
-     "B1",
-     "B2",
      "B3",
-     "B4",
-     "B5",
-     "B6"
+     "B4"
     ],
-    "low": []
+    "low": [
+     "B3",
+     "B4"
+    ]
    },
    "baseOf": [
     "B01_C092"
@@ -9490,37 +9435,57 @@
   {
    "id": "B01_C101",
    "section": "B01_S5",
-   "sp": "R9R",
-   "templateId": "R03_Red9R",
+   "sp": "R5",
+   "templateId": "R03_Red5",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
     "B1",
+    "B2",
     "B3",
     "B4",
-    "B6"
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 右→左 · 红彗星·九束右扫（4 点）",
-   "name": "第一次抬升 · 托底 · 右→左 · 红彗星·九束右扫（4 点）",
+   "label": "托底 · 右→左 · 红彗星·五束",
+   "name": "第一次抬升 · 托底 · 右→左 · 红彗星·五束",
    "wave": "托底扇",
    "events": [
+    {
+     "point": "B0",
+     "launch": 58.5,
+     "burst": 58.5,
+     "end": 61.6,
+     "dz": 0.0,
+     "H": 58.5
+    },
     {
      "point": "B1",
      "launch": 58.4,
      "burst": 58.4,
-     "end": 62.14,
+     "end": 61.5,
      "dz": 0.0,
      "H": 58.4
+    },
+    {
+     "point": "B2",
+     "launch": 58.3,
+     "burst": 58.3,
+     "end": 61.4,
+     "dz": 0.0,
+     "H": 58.3
     },
     {
      "point": "B3",
      "launch": 58.2,
      "burst": 58.2,
-     "end": 61.94,
+     "end": 61.3,
      "dz": 0.0,
      "H": 58.2
     },
@@ -9528,25 +9493,43 @@
      "point": "B4",
      "launch": 58.1,
      "burst": 58.1,
-     "end": 61.84,
+     "end": 61.2,
      "dz": 0.0,
      "H": 58.1
+    },
+    {
+     "point": "B5",
+     "launch": 58.0,
+     "burst": 58.0,
+     "end": 61.1,
+     "dz": 0.0,
+     "H": 58.0
     },
     {
      "point": "B6",
      "launch": 57.9,
      "burst": 57.9,
-     "end": 61.64,
+     "end": 61.0,
      "dz": 0.0,
      "H": 57.9
+    },
+    {
+     "point": "B7",
+     "launch": 57.8,
+     "burst": 57.8,
+     "end": 60.9,
+     "dz": 0.0,
+     "H": 57.8
     }
    ],
-   "H0": 57.9,
+   "H0": 57.8,
    "profiles": {
     "medium": [
      "B1",
+     "B2",
      "B3",
      "B4",
+     "B5",
      "B6"
     ],
     "low": []
@@ -9560,9 +9543,9 @@
   {
    "id": "B01_C102",
    "section": "B01_S5",
-   "sp": "GR",
-   "templateId": "R03_GoldRayChry",
-   "size": "M",
+   "sp": "GRL",
+   "templateId": "R03_GoldRayChry_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -9579,79 +9562,79 @@
    "gap": 0.2,
    "layer": "main",
    "tier": "trim",
-   "label": "金芒菊",
-   "name": "第一次抬升 · 金芒菊",
+   "label": "金芒菊·大",
+   "name": "第一次抬升 · 金芒菊·大",
    "wave": "整排9",
    "events": [
     {
      "point": "P0",
-     "launch": 62.4,
-     "burst": 66.7772,
-     "end": 71.3372,
+     "launch": 59.4,
+     "burst": 66.7651,
+     "end": 71.3251,
      "dz": -8.7,
      "H": 66.8008
     },
     {
      "point": "P1",
-     "launch": 62.6,
-     "burst": 66.9772,
-     "end": 71.5372,
+     "launch": 59.6,
+     "burst": 66.9651,
+     "end": 71.5251,
      "dz": 0.1,
      "H": 67.0008
     },
     {
      "point": "P2",
-     "launch": 62.8,
-     "burst": 67.1772,
-     "end": 71.7372,
+     "launch": 59.8,
+     "burst": 67.1651,
+     "end": 71.7251,
      "dz": 8.2,
      "H": 67.2008
     },
     {
      "point": "P3",
-     "launch": 63.0,
-     "burst": 67.3772,
-     "end": 71.9372,
+     "launch": 60.0,
+     "burst": 67.3651,
+     "end": 71.9251,
      "dz": 14.1,
      "H": 67.4008
     },
     {
      "point": "P4",
-     "launch": 63.2,
-     "burst": 67.5772,
-     "end": 72.1372,
+     "launch": 60.2,
+     "burst": 67.5651,
+     "end": 72.1251,
      "dz": 16.2,
      "H": 67.6008
     },
     {
      "point": "P5",
-     "launch": 63.4,
-     "burst": 67.7772,
-     "end": 72.3372,
+     "launch": 60.4,
+     "burst": 67.7651,
+     "end": 72.3251,
      "dz": 14.1,
      "H": 67.8008
     },
     {
      "point": "P6",
-     "launch": 63.6,
-     "burst": 67.9772,
-     "end": 72.5372,
+     "launch": 60.6,
+     "burst": 67.9651,
+     "end": 72.5251,
      "dz": 8.2,
      "H": 68.0008
     },
     {
      "point": "P7",
-     "launch": 63.8,
-     "burst": 68.1772,
-     "end": 72.7372,
+     "launch": 60.8,
+     "burst": 68.1651,
+     "end": 72.7251,
      "dz": 0.1,
      "H": 68.2008
     },
     {
      "point": "P8",
-     "launch": 64.0,
-     "burst": 68.3772,
-     "end": 72.9372,
+     "launch": 61.0,
+     "burst": 68.3651,
+     "end": 72.9251,
      "dz": -8.7,
      "H": 68.4008
     }
@@ -9679,49 +9662,104 @@
   {
    "id": "B01_C103",
    "section": "B01_S5",
-   "sp": "R5",
-   "templateId": "R03_Red5",
+   "sp": "R9",
+   "templateId": "R03_Red9",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
+    "B1",
+    "B2",
     "B3",
-    "B4"
+    "B4",
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·五束（2 点）",
-   "name": "第一次抬升 · 托底 · 左→右 · 红彗星·五束（2 点）",
+   "label": "托底 · 左→右 · 红彗星·九束左扫",
+   "name": "第一次抬升 · 托底 · 左→右 · 红彗星·九束左扫",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B3",
-     "launch": 63.1,
-     "burst": 63.1,
-     "end": 66.2,
+     "point": "B0",
+     "launch": 59.5,
+     "burst": 59.5,
+     "end": 63.24,
      "dz": 0.0,
-     "H": 63.1
+     "H": 59.5
+    },
+    {
+     "point": "B1",
+     "launch": 59.7,
+     "burst": 59.7,
+     "end": 63.44,
+     "dz": 0.0,
+     "H": 59.7
+    },
+    {
+     "point": "B2",
+     "launch": 59.9,
+     "burst": 59.9,
+     "end": 63.64,
+     "dz": 0.0,
+     "H": 59.9
+    },
+    {
+     "point": "B3",
+     "launch": 60.1,
+     "burst": 60.1,
+     "end": 63.84,
+     "dz": 0.0,
+     "H": 60.1
     },
     {
      "point": "B4",
-     "launch": 63.3,
-     "burst": 63.3,
-     "end": 66.4,
+     "launch": 60.3,
+     "burst": 60.3,
+     "end": 64.04,
      "dz": 0.0,
-     "H": 63.3
+     "H": 60.3
+    },
+    {
+     "point": "B5",
+     "launch": 60.5,
+     "burst": 60.5,
+     "end": 64.24,
+     "dz": 0.0,
+     "H": 60.5
+    },
+    {
+     "point": "B6",
+     "launch": 60.7,
+     "burst": 60.7,
+     "end": 64.44,
+     "dz": 0.0,
+     "H": 60.7
+    },
+    {
+     "point": "B7",
+     "launch": 60.9,
+     "burst": 60.9,
+     "end": 64.64,
+     "dz": 0.0,
+     "H": 60.9
     }
    ],
-   "H0": 63.1,
+   "H0": 59.5,
    "profiles": {
     "medium": [
+     "B1",
+     "B2",
      "B3",
-     "B4"
+     "B4",
+     "B5",
+     "B6"
     ],
-    "low": [
-     "B3",
-     "B4"
-    ]
+    "low": []
    },
    "baseOf": [
     "B01_C102"
@@ -9856,8 +9894,8 @@
   {
    "id": "B01_C105",
    "section": "B01_S5",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
+   "sp": "R5",
+   "templateId": "R03_Red5",
    "size": "F",
    "group": "B",
    "points": [
@@ -9870,15 +9908,15 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 里→外 · 银星·五束窄扇（4 点）",
-   "name": "第一次抬升 · 托底 · 里→外 · 银星·五束窄扇（4 点）",
+   "label": "托底 · 里→外 · 红彗星·五束（4 点）",
+   "name": "第一次抬升 · 托底 · 里→外 · 红彗星·五束（4 点）",
    "wave": "托底扇",
    "events": [
     {
      "point": "B1",
      "launch": 61.3,
      "burst": 61.3,
-     "end": 63.75,
+     "end": 64.4,
      "dz": 0.0,
      "H": 61.3
     },
@@ -9886,7 +9924,7 @@
      "point": "B3",
      "launch": 61.2,
      "burst": 61.2,
-     "end": 63.65,
+     "end": 64.3,
      "dz": 0.0,
      "H": 61.2
     },
@@ -9894,7 +9932,7 @@
      "point": "B4",
      "launch": 61.2,
      "burst": 61.2,
-     "end": 63.65,
+     "end": 64.3,
      "dz": 0.0,
      "H": 61.2
     },
@@ -9902,7 +9940,7 @@
      "point": "B6",
      "launch": 61.3,
      "burst": 61.3,
-     "end": 63.75,
+     "end": 64.4,
      "dz": 0.0,
      "H": 61.3
     }
@@ -10081,31 +10119,19 @@
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·九束左扫",
-   "name": "第一次抬升 · 托底 · 左→右 · 红彗星·九束左扫",
+   "label": "托底 · 左→右 · 红彗星·九束左扫（4 点）",
+   "name": "第一次抬升 · 托底 · 左→右 · 红彗星·九束左扫（4 点）",
    "wave": "托底扇",
    "events": [
-    {
-     "point": "B0",
-     "launch": 62.7,
-     "burst": 62.7,
-     "end": 66.44,
-     "dz": 0.0,
-     "H": 62.7
-    },
     {
      "point": "B1",
      "launch": 62.8,
@@ -10113,14 +10139,6 @@
      "end": 66.54,
      "dz": 0.0,
      "H": 62.8
-    },
-    {
-     "point": "B2",
-     "launch": 62.9,
-     "burst": 62.9,
-     "end": 66.64,
-     "dz": 0.0,
-     "H": 62.9
     },
     {
      "point": "B3",
@@ -10139,38 +10157,20 @@
      "H": 63.1
     },
     {
-     "point": "B5",
-     "launch": 63.2,
-     "burst": 63.2,
-     "end": 66.94,
-     "dz": 0.0,
-     "H": 63.2
-    },
-    {
      "point": "B6",
      "launch": 63.3,
      "burst": 63.3,
      "end": 67.04,
      "dz": 0.0,
      "H": 63.3
-    },
-    {
-     "point": "B7",
-     "launch": 63.4,
-     "burst": 63.4,
-     "end": 67.14,
-     "dz": 0.0,
-     "H": 63.4
     }
    ],
-   "H0": 62.7,
+   "H0": 62.8,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
@@ -11418,47 +11418,17 @@
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
-    "B1",
-    "B2",
     "B3",
-    "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B4"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 红彗星·五束",
-   "name": "低位密奏 · 托底 · 外→里 · 红彗星·五束",
+   "label": "托底 · 外→里 · 红彗星·五束（2 点）",
+   "name": "低位密奏 · 托底 · 外→里 · 红彗星·五束（2 点）",
    "wave": "托底扇",
    "events": [
-    {
-     "point": "B0",
-     "launch": 78.6,
-     "burst": 78.6,
-     "end": 81.7,
-     "dz": 0.0,
-     "H": 78.6
-    },
-    {
-     "point": "B1",
-     "launch": 78.7,
-     "burst": 78.7,
-     "end": 81.8,
-     "dz": 0.0,
-     "H": 78.7
-    },
-    {
-     "point": "B2",
-     "launch": 78.8,
-     "burst": 78.8,
-     "end": 81.9,
-     "dz": 0.0,
-     "H": 78.8
-    },
     {
      "point": "B3",
      "launch": 78.9,
@@ -11474,43 +11444,18 @@
      "end": 82.0,
      "dz": 0.0,
      "H": 78.9
-    },
-    {
-     "point": "B5",
-     "launch": 78.8,
-     "burst": 78.8,
-     "end": 81.9,
-     "dz": 0.0,
-     "H": 78.8
-    },
-    {
-     "point": "B6",
-     "launch": 78.7,
-     "burst": 78.7,
-     "end": 81.8,
-     "dz": 0.0,
-     "H": 78.7
-    },
-    {
-     "point": "B7",
-     "launch": 78.6,
-     "burst": 78.6,
-     "end": 81.7,
-     "dz": 0.0,
-     "H": 78.6
     }
    ],
-   "H0": 78.6,
+   "H0": 78.9,
    "profiles": {
     "medium": [
-     "B1",
-     "B2",
      "B3",
-     "B4",
-     "B5",
-     "B6"
+     "B4"
     ],
-    "low": []
+    "low": [
+     "B3",
+     "B4"
+    ]
    },
    "baseOf": [
     "B01_C120"
@@ -11623,9 +11568,9 @@
   {
    "id": "B01_C123",
    "section": "B01_S7",
-   "sp": "CL",
-   "templateId": "R03_GoldCoreLime",
-   "size": "M",
+   "sp": "CLL",
+   "templateId": "R03_GoldCoreLime_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -11642,79 +11587,79 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "trim",
-   "label": "金蕊青柠星",
-   "name": "第二次递进 A · 金蕊青柠星",
+   "label": "金蕊青柠星·大",
+   "name": "第二次递进 A · 金蕊青柠星·大",
    "wave": "整排9",
    "events": [
     {
      "point": "P0",
-     "launch": 80.7,
-     "burst": 85.0772,
-     "end": 89.4772,
+     "launch": 77.7,
+     "burst": 85.0651,
+     "end": 89.4651,
      "dz": -8.7,
      "H": 85.0384
     },
     {
      "point": "P1",
-     "launch": 80.6,
-     "burst": 84.9772,
-     "end": 89.3772,
+     "launch": 77.6,
+     "burst": 84.9651,
+     "end": 89.3651,
      "dz": 0.1,
      "H": 84.9384
     },
     {
      "point": "P2",
-     "launch": 80.5,
-     "burst": 84.8772,
-     "end": 89.2772,
+     "launch": 77.5,
+     "burst": 84.8651,
+     "end": 89.2651,
      "dz": 8.2,
      "H": 84.8384
     },
     {
      "point": "P3",
-     "launch": 80.4,
-     "burst": 84.7772,
-     "end": 89.1772,
+     "launch": 77.4,
+     "burst": 84.7651,
+     "end": 89.1651,
      "dz": 14.1,
      "H": 84.7384
     },
     {
      "point": "P4",
-     "launch": 80.3,
-     "burst": 84.6772,
-     "end": 89.0772,
+     "launch": 77.3,
+     "burst": 84.6651,
+     "end": 89.0651,
      "dz": 16.2,
      "H": 84.6384
     },
     {
      "point": "P5",
-     "launch": 80.4,
-     "burst": 84.7772,
-     "end": 89.1772,
+     "launch": 77.4,
+     "burst": 84.7651,
+     "end": 89.1651,
      "dz": 14.1,
      "H": 84.7384
     },
     {
      "point": "P6",
-     "launch": 80.5,
-     "burst": 84.8772,
-     "end": 89.2772,
+     "launch": 77.5,
+     "burst": 84.8651,
+     "end": 89.2651,
      "dz": 8.2,
      "H": 84.8384
     },
     {
      "point": "P7",
-     "launch": 80.6,
-     "burst": 84.9772,
-     "end": 89.3772,
+     "launch": 77.6,
+     "burst": 84.9651,
+     "end": 89.3651,
      "dz": 0.1,
      "H": 84.9384
     },
     {
      "point": "P8",
-     "launch": 80.7,
-     "burst": 85.0772,
-     "end": 89.4772,
+     "launch": 77.7,
+     "burst": 85.0651,
+     "end": 89.4651,
      "dz": -8.7,
      "H": 85.0384
     }
@@ -11766,70 +11711,70 @@
    "events": [
     {
      "point": "B0",
-     "launch": 81.0,
-     "burst": 81.0,
-     "end": 84.74,
+     "launch": 78.0,
+     "burst": 78.0,
+     "end": 81.74,
      "dz": 0.0,
-     "H": 81.0
+     "H": 78.0
     },
     {
      "point": "B1",
-     "launch": 80.9,
-     "burst": 80.9,
-     "end": 84.64,
+     "launch": 77.9,
+     "burst": 77.9,
+     "end": 81.64,
      "dz": 0.0,
-     "H": 80.9
+     "H": 77.9
     },
     {
      "point": "B2",
-     "launch": 80.8,
-     "burst": 80.8,
-     "end": 84.54,
+     "launch": 77.8,
+     "burst": 77.8,
+     "end": 81.54,
      "dz": 0.0,
-     "H": 80.8
+     "H": 77.8
     },
     {
      "point": "B3",
-     "launch": 80.7,
-     "burst": 80.7,
-     "end": 84.44,
+     "launch": 77.7,
+     "burst": 77.7,
+     "end": 81.44,
      "dz": 0.0,
-     "H": 80.7
+     "H": 77.7
     },
     {
      "point": "B4",
-     "launch": 80.6,
-     "burst": 80.6,
-     "end": 84.34,
+     "launch": 77.6,
+     "burst": 77.6,
+     "end": 81.34,
      "dz": 0.0,
-     "H": 80.6
+     "H": 77.6
     },
     {
      "point": "B5",
-     "launch": 80.5,
-     "burst": 80.5,
-     "end": 84.24,
+     "launch": 77.5,
+     "burst": 77.5,
+     "end": 81.24,
      "dz": 0.0,
-     "H": 80.5
+     "H": 77.5
     },
     {
      "point": "B6",
-     "launch": 80.4,
-     "burst": 80.4,
-     "end": 84.14,
+     "launch": 77.4,
+     "burst": 77.4,
+     "end": 81.14,
      "dz": 0.0,
-     "H": 80.4
+     "H": 77.4
     },
     {
      "point": "B7",
-     "launch": 80.3,
-     "burst": 80.3,
-     "end": 84.04,
+     "launch": 77.3,
+     "burst": 77.3,
+     "end": 81.04,
      "dz": 0.0,
-     "H": 80.3
+     "H": 77.3
     }
    ],
-   "H0": 80.3,
+   "H0": 77.3,
    "profiles": {
     "medium": [
      "B1",
@@ -12076,9 +12021,9 @@
   {
    "id": "B01_C127",
    "section": "B01_S7",
-   "sp": "CL",
-   "templateId": "R03_GoldCoreLime",
-   "size": "M",
+   "sp": "CLL",
+   "templateId": "R03_GoldCoreLime_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -12095,79 +12040,79 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "trim",
-   "label": "金蕊青柠星",
-   "name": "第二次递进 A · 金蕊青柠星",
+   "label": "金蕊青柠星·大",
+   "name": "第二次递进 A · 金蕊青柠星·大",
    "wave": "整排9",
    "events": [
     {
      "point": "P0",
-     "launch": 83.5,
-     "burst": 87.8772,
-     "end": 92.2772,
+     "launch": 80.5,
+     "burst": 87.8651,
+     "end": 92.2651,
      "dz": -8.7,
      "H": 87.8816
     },
     {
      "point": "P1",
-     "launch": 83.6,
-     "burst": 87.9772,
-     "end": 92.3772,
+     "launch": 80.6,
+     "burst": 87.9651,
+     "end": 92.3651,
      "dz": 0.1,
      "H": 87.9816
     },
     {
      "point": "P2",
-     "launch": 83.7,
-     "burst": 88.0772,
-     "end": 92.4772,
+     "launch": 80.7,
+     "burst": 88.0651,
+     "end": 92.4651,
      "dz": 8.2,
      "H": 88.0816
     },
     {
      "point": "P3",
-     "launch": 83.8,
-     "burst": 88.1772,
-     "end": 92.5772,
+     "launch": 80.8,
+     "burst": 88.1651,
+     "end": 92.5651,
      "dz": 14.1,
      "H": 88.1816
     },
     {
      "point": "P4",
-     "launch": 83.9,
-     "burst": 88.2772,
-     "end": 92.6772,
+     "launch": 80.9,
+     "burst": 88.2651,
+     "end": 92.6651,
      "dz": 16.2,
      "H": 88.2816
     },
     {
      "point": "P5",
-     "launch": 83.8,
-     "burst": 88.1772,
-     "end": 92.5772,
+     "launch": 80.8,
+     "burst": 88.1651,
+     "end": 92.5651,
      "dz": 14.1,
      "H": 88.1816
     },
     {
      "point": "P6",
-     "launch": 83.7,
-     "burst": 88.0772,
-     "end": 92.4772,
+     "launch": 80.7,
+     "burst": 88.0651,
+     "end": 92.4651,
      "dz": 8.2,
      "H": 88.0816
     },
     {
      "point": "P7",
-     "launch": 83.6,
-     "burst": 87.9772,
-     "end": 92.3772,
+     "launch": 80.6,
+     "burst": 87.9651,
+     "end": 92.3651,
      "dz": 0.1,
      "H": 87.9816
     },
     {
      "point": "P8",
-     "launch": 83.5,
-     "burst": 87.8772,
-     "end": 92.2772,
+     "launch": 80.5,
+     "burst": 87.8651,
+     "end": 92.2651,
      "dz": -8.7,
      "H": 87.8816
     }
@@ -12195,101 +12140,63 @@
   {
    "id": "B01_C128",
    "section": "B01_S7",
-   "sp": "R5",
-   "templateId": "R03_Red5",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 红彗星·五束",
-   "name": "第二次递进 A · 托底 · 外→里 · 红彗星·五束",
+   "label": "托底 · 外→里 · 银星·五束窄扇（4 点）",
+   "name": "第二次递进 A · 托底 · 外→里 · 银星·五束窄扇（4 点）",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B0",
-     "launch": 83.5,
-     "burst": 83.5,
-     "end": 86.6,
-     "dz": 0.0,
-     "H": 83.5
-    },
-    {
      "point": "B1",
-     "launch": 83.6,
-     "burst": 83.6,
-     "end": 86.7,
+     "launch": 80.6,
+     "burst": 80.6,
+     "end": 83.05,
      "dz": 0.0,
-     "H": 83.6
-    },
-    {
-     "point": "B2",
-     "launch": 83.8,
-     "burst": 83.8,
-     "end": 86.9,
-     "dz": 0.0,
-     "H": 83.8
+     "H": 80.6
     },
     {
      "point": "B3",
-     "launch": 83.8,
-     "burst": 83.8,
-     "end": 86.9,
+     "launch": 80.8,
+     "burst": 80.8,
+     "end": 83.25,
      "dz": 0.0,
-     "H": 83.8
+     "H": 80.8
     },
     {
      "point": "B4",
-     "launch": 83.8,
-     "burst": 83.8,
-     "end": 86.9,
+     "launch": 80.8,
+     "burst": 80.8,
+     "end": 83.25,
      "dz": 0.0,
-     "H": 83.8
-    },
-    {
-     "point": "B5",
-     "launch": 83.8,
-     "burst": 83.8,
-     "end": 86.9,
-     "dz": 0.0,
-     "H": 83.8
+     "H": 80.8
     },
     {
      "point": "B6",
-     "launch": 83.6,
-     "burst": 83.6,
-     "end": 86.7,
+     "launch": 80.6,
+     "burst": 80.6,
+     "end": 83.05,
      "dz": 0.0,
-     "H": 83.6
-    },
-    {
-     "point": "B7",
-     "launch": 83.5,
-     "burst": 83.5,
-     "end": 86.6,
-     "dz": 0.0,
-     "H": 83.5
+     "H": 80.6
     }
    ],
-   "H0": 83.5,
+   "H0": 80.6,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
@@ -12637,31 +12544,19 @@
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 里→外 · 红彗星·五束",
-   "name": "第二次递进 A · 托底 · 里→外 · 红彗星·五束",
+   "label": "托底 · 里→外 · 红彗星·五束（4 点）",
+   "name": "第二次递进 A · 托底 · 里→外 · 红彗星·五束（4 点）",
    "wave": "托底扇",
    "events": [
-    {
-     "point": "B0",
-     "launch": 87.0,
-     "burst": 87.0,
-     "end": 90.1,
-     "dz": 0.0,
-     "H": 87.0
-    },
     {
      "point": "B1",
      "launch": 86.9,
@@ -12669,14 +12564,6 @@
      "end": 90.0,
      "dz": 0.0,
      "H": 86.9
-    },
-    {
-     "point": "B2",
-     "launch": 86.8,
-     "burst": 86.8,
-     "end": 89.9,
-     "dz": 0.0,
-     "H": 86.8
     },
     {
      "point": "B3",
@@ -12695,38 +12582,20 @@
      "H": 86.7
     },
     {
-     "point": "B5",
-     "launch": 86.8,
-     "burst": 86.8,
-     "end": 89.9,
-     "dz": 0.0,
-     "H": 86.8
-    },
-    {
      "point": "B6",
      "launch": 86.9,
      "burst": 86.9,
      "end": 90.0,
      "dz": 0.0,
      "H": 86.9
-    },
-    {
-     "point": "B7",
-     "launch": 87.0,
-     "burst": 87.0,
-     "end": 90.1,
-     "dz": 0.0,
-     "H": 87.0
     }
    ],
    "H0": 86.7,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
@@ -12739,9 +12608,9 @@
   {
    "id": "B01_C133",
    "section": "B01_S7",
-   "sp": "CL",
-   "templateId": "R03_GoldCoreLime",
-   "size": "M",
+   "sp": "CLL",
+   "templateId": "R03_GoldCoreLime_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -12758,79 +12627,79 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "trim",
-   "label": "金蕊青柠星",
-   "name": "第二次递进 A · 金蕊青柠星",
+   "label": "金蕊青柠星·大",
+   "name": "第二次递进 A · 金蕊青柠星·大",
    "wave": "叠层",
    "events": [
     {
      "point": "P0",
-     "launch": 88.8,
-     "burst": 93.1772,
-     "end": 97.5772,
+     "launch": 85.8,
+     "burst": 93.1651,
+     "end": 97.5651,
      "dz": -8.7,
      "H": 93.1464
     },
     {
      "point": "P1",
-     "launch": 88.7,
-     "burst": 93.0772,
-     "end": 97.4772,
+     "launch": 85.7,
+     "burst": 93.0651,
+     "end": 97.4651,
      "dz": 0.1,
      "H": 93.0464
     },
     {
      "point": "P2",
-     "launch": 88.6,
-     "burst": 92.9772,
-     "end": 97.3772,
+     "launch": 85.6,
+     "burst": 92.9651,
+     "end": 97.3651,
      "dz": 8.2,
      "H": 92.9464
     },
     {
      "point": "P3",
-     "launch": 88.5,
-     "burst": 92.8772,
-     "end": 97.2772,
+     "launch": 85.5,
+     "burst": 92.8651,
+     "end": 97.2651,
      "dz": 14.1,
      "H": 92.8464
     },
     {
      "point": "P4",
-     "launch": 88.4,
-     "burst": 92.7772,
-     "end": 97.1772,
+     "launch": 85.4,
+     "burst": 92.7651,
+     "end": 97.1651,
      "dz": 16.2,
      "H": 92.7464
     },
     {
      "point": "P5",
-     "launch": 88.5,
-     "burst": 92.8772,
-     "end": 97.2772,
+     "launch": 85.5,
+     "burst": 92.8651,
+     "end": 97.2651,
      "dz": 14.1,
      "H": 92.8464
     },
     {
      "point": "P6",
-     "launch": 88.6,
-     "burst": 92.9772,
-     "end": 97.3772,
+     "launch": 85.6,
+     "burst": 92.9651,
+     "end": 97.3651,
      "dz": 8.2,
      "H": 92.9464
     },
     {
      "point": "P7",
-     "launch": 88.7,
-     "burst": 93.0772,
-     "end": 97.4772,
+     "launch": 85.7,
+     "burst": 93.0651,
+     "end": 97.4651,
      "dz": 0.1,
      "H": 93.0464
     },
     {
      "point": "P8",
-     "launch": 88.8,
-     "burst": 93.1772,
-     "end": 97.5772,
+     "launch": 85.8,
+     "burst": 93.1651,
+     "end": 97.5651,
      "dz": -8.7,
      "H": 93.1464
     }
@@ -12882,70 +12751,70 @@
    "events": [
     {
      "point": "B0",
-     "launch": 88.4,
-     "burst": 88.4,
-     "end": 92.14,
+     "launch": 85.4,
+     "burst": 85.4,
+     "end": 89.14,
      "dz": 0.0,
-     "H": 88.4
+     "H": 85.4
     },
     {
      "point": "B1",
-     "launch": 88.5,
-     "burst": 88.5,
-     "end": 92.24,
+     "launch": 85.5,
+     "burst": 85.5,
+     "end": 89.24,
      "dz": 0.0,
-     "H": 88.5
+     "H": 85.5
     },
     {
      "point": "B2",
-     "launch": 88.6,
-     "burst": 88.6,
-     "end": 92.34,
+     "launch": 85.6,
+     "burst": 85.6,
+     "end": 89.34,
      "dz": 0.0,
-     "H": 88.6
+     "H": 85.6
     },
     {
      "point": "B3",
-     "launch": 88.7,
-     "burst": 88.7,
-     "end": 92.44,
+     "launch": 85.7,
+     "burst": 85.7,
+     "end": 89.44,
      "dz": 0.0,
-     "H": 88.7
+     "H": 85.7
     },
     {
      "point": "B4",
-     "launch": 88.8,
-     "burst": 88.8,
-     "end": 92.54,
+     "launch": 85.8,
+     "burst": 85.8,
+     "end": 89.54,
      "dz": 0.0,
-     "H": 88.8
+     "H": 85.8
     },
     {
      "point": "B5",
-     "launch": 88.9,
-     "burst": 88.9,
-     "end": 92.64,
+     "launch": 85.9,
+     "burst": 85.9,
+     "end": 89.64,
      "dz": 0.0,
-     "H": 88.9
+     "H": 85.9
     },
     {
      "point": "B6",
-     "launch": 89.0,
-     "burst": 89.0,
-     "end": 92.74,
+     "launch": 86.0,
+     "burst": 86.0,
+     "end": 89.74,
      "dz": 0.0,
-     "H": 89.0
+     "H": 86.0
     },
     {
      "point": "B7",
-     "launch": 89.1,
-     "burst": 89.1,
-     "end": 92.84,
+     "launch": 86.1,
+     "burst": 86.1,
+     "end": 89.84,
      "dz": 0.0,
-     "H": 89.1
+     "H": 86.1
     }
    ],
-   "H0": 88.4,
+   "H0": 85.4,
    "profiles": {
     "medium": [
      "B1",
@@ -13803,9 +13672,9 @@
   {
    "id": "B01_C144",
    "section": "B01_S8",
-   "sp": "ML",
-   "templateId": "R03_MultiLayerChry",
-   "size": "M",
+   "sp": "MLL",
+   "templateId": "R03_MultiLayerChry_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -13822,79 +13691,79 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "trim",
-   "label": "多重菊",
-   "name": "蓄势收窄 · 多重菊",
+   "label": "多重菊·大",
+   "name": "蓄势收窄 · 多重菊·大",
    "wave": "整排9",
    "events": [
     {
      "point": "P0",
-     "launch": 95.3,
-     "burst": 99.6772,
-     "end": 103.9105,
+     "launch": 92.3,
+     "burst": 99.6651,
+     "end": 103.8984,
      "dz": -8.7,
      "H": 99.6328
     },
     {
      "point": "P1",
-     "launch": 95.2,
-     "burst": 99.5772,
-     "end": 103.8105,
+     "launch": 92.2,
+     "burst": 99.5651,
+     "end": 103.7984,
      "dz": 0.1,
      "H": 99.5328
     },
     {
      "point": "P2",
-     "launch": 95.1,
-     "burst": 99.4772,
-     "end": 103.7105,
+     "launch": 92.1,
+     "burst": 99.4651,
+     "end": 103.6984,
      "dz": 8.2,
      "H": 99.4328
     },
     {
      "point": "P3",
-     "launch": 95.0,
-     "burst": 99.3772,
-     "end": 103.6105,
+     "launch": 92.0,
+     "burst": 99.3651,
+     "end": 103.5984,
      "dz": 14.1,
      "H": 99.3328
     },
     {
      "point": "P4",
-     "launch": 94.9,
-     "burst": 99.2772,
-     "end": 103.5105,
+     "launch": 91.9,
+     "burst": 99.2651,
+     "end": 103.4984,
      "dz": 16.2,
      "H": 99.2328
     },
     {
      "point": "P5",
-     "launch": 95.0,
-     "burst": 99.3772,
-     "end": 103.6105,
+     "launch": 92.0,
+     "burst": 99.3651,
+     "end": 103.5984,
      "dz": 14.1,
      "H": 99.3328
     },
     {
      "point": "P6",
-     "launch": 95.1,
-     "burst": 99.4772,
-     "end": 103.7105,
+     "launch": 92.1,
+     "burst": 99.4651,
+     "end": 103.6984,
      "dz": 8.2,
      "H": 99.4328
     },
     {
      "point": "P7",
-     "launch": 95.2,
-     "burst": 99.5772,
-     "end": 103.8105,
+     "launch": 92.2,
+     "burst": 99.5651,
+     "end": 103.7984,
      "dz": 0.1,
      "H": 99.5328
     },
     {
      "point": "P8",
-     "launch": 95.3,
-     "burst": 99.6772,
-     "end": 103.9105,
+     "launch": 92.3,
+     "burst": 99.6651,
+     "end": 103.8984,
      "dz": -8.7,
      "H": 99.6328
     }
@@ -13922,101 +13791,63 @@
   {
    "id": "B01_C145",
    "section": "B01_S8",
-   "sp": "R5",
-   "templateId": "R03_Red5",
+   "sp": "S9",
+   "templateId": "R03_Silver9",
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 里→外 · 红彗星·五束",
-   "name": "蓄势收窄 · 托底 · 里→外 · 红彗星·五束",
+   "label": "托底 · 里→外 · 银星·九束展开",
+   "name": "蓄势收窄 · 托底 · 里→外 · 银星·九束展开",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B0",
-     "launch": 95.2,
-     "burst": 95.2,
-     "end": 98.3,
-     "dz": 0.0,
-     "H": 95.2
-    },
-    {
      "point": "B1",
-     "launch": 95.2,
-     "burst": 95.2,
-     "end": 98.3,
+     "launch": 92.2,
+     "burst": 92.2,
+     "end": 94.97,
      "dz": 0.0,
-     "H": 95.2
-    },
-    {
-     "point": "B2",
-     "launch": 95.0,
-     "burst": 95.0,
-     "end": 98.1,
-     "dz": 0.0,
-     "H": 95.0
+     "H": 92.2
     },
     {
      "point": "B3",
-     "launch": 95.0,
-     "burst": 95.0,
-     "end": 98.1,
+     "launch": 92.0,
+     "burst": 92.0,
+     "end": 94.77,
      "dz": 0.0,
-     "H": 95.0
+     "H": 92.0
     },
     {
      "point": "B4",
-     "launch": 95.0,
-     "burst": 95.0,
-     "end": 98.1,
+     "launch": 92.0,
+     "burst": 92.0,
+     "end": 94.77,
      "dz": 0.0,
-     "H": 95.0
-    },
-    {
-     "point": "B5",
-     "launch": 95.0,
-     "burst": 95.0,
-     "end": 98.1,
-     "dz": 0.0,
-     "H": 95.0
+     "H": 92.0
     },
     {
      "point": "B6",
-     "launch": 95.2,
-     "burst": 95.2,
-     "end": 98.3,
+     "launch": 92.2,
+     "burst": 92.2,
+     "end": 94.97,
      "dz": 0.0,
-     "H": 95.2
-    },
-    {
-     "point": "B7",
-     "launch": 95.2,
-     "burst": 95.2,
-     "end": 98.3,
-     "dz": 0.0,
-     "H": 95.2
+     "H": 92.2
     }
    ],
-   "H0": 95.0,
+   "H0": 92.0,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
@@ -14284,9 +14115,9 @@
   {
    "id": "B01_C149",
    "section": "B01_S8",
-   "sp": "GR",
-   "templateId": "R03_GoldRayChry",
-   "size": "M",
+   "sp": "GRL",
+   "templateId": "R03_GoldRayChry_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P1",
@@ -14301,63 +14132,63 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "all",
-   "label": "金芒菊",
-   "name": "蓄势收窄 · 金芒菊",
+   "label": "金芒菊·大",
+   "name": "蓄势收窄 · 金芒菊·大",
    "wave": "收窄7",
    "events": [
     {
      "point": "P1",
-     "launch": 98.4,
-     "burst": 102.7772,
-     "end": 107.3372,
+     "launch": 95.4,
+     "burst": 102.7651,
+     "end": 107.3251,
      "dz": 0.1,
      "H": 102.776
     },
     {
      "point": "P2",
-     "launch": 98.3,
-     "burst": 102.6772,
-     "end": 107.2372,
+     "launch": 95.3,
+     "burst": 102.6651,
+     "end": 107.2251,
      "dz": 8.2,
      "H": 102.676
     },
     {
      "point": "P3",
-     "launch": 98.2,
-     "burst": 102.5772,
-     "end": 107.1372,
+     "launch": 95.2,
+     "burst": 102.5651,
+     "end": 107.1251,
      "dz": 14.1,
      "H": 102.576
     },
     {
      "point": "P4",
-     "launch": 98.1,
-     "burst": 102.4772,
-     "end": 107.0372,
+     "launch": 95.1,
+     "burst": 102.4651,
+     "end": 107.0251,
      "dz": 16.2,
      "H": 102.476
     },
     {
      "point": "P5",
-     "launch": 98.2,
-     "burst": 102.5772,
-     "end": 107.1372,
+     "launch": 95.2,
+     "burst": 102.5651,
+     "end": 107.1251,
      "dz": 14.1,
      "H": 102.576
     },
     {
      "point": "P6",
-     "launch": 98.3,
-     "burst": 102.6772,
-     "end": 107.2372,
+     "launch": 95.3,
+     "burst": 102.6651,
+     "end": 107.2251,
      "dz": 8.2,
      "H": 102.676
     },
     {
      "point": "P7",
-     "launch": 98.4,
-     "burst": 102.7772,
-     "end": 107.3372,
+     "launch": 95.4,
+     "burst": 102.7651,
+     "end": 107.3251,
      "dz": 0.1,
      "H": 102.776
     }
@@ -14392,96 +14223,58 @@
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 银星·五束窄扇",
-   "name": "蓄势收窄 · 托底 · 外→里 · 银星·五束窄扇",
+   "label": "托底 · 外→里 · 银星·五束窄扇（4 点）",
+   "name": "蓄势收窄 · 托底 · 外→里 · 银星·五束窄扇（4 点）",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B0",
-     "launch": 98.2,
-     "burst": 98.2,
-     "end": 100.65,
-     "dz": 0.0,
-     "H": 98.2
-    },
-    {
      "point": "B1",
-     "launch": 98.3,
-     "burst": 98.3,
-     "end": 100.75,
+     "launch": 95.3,
+     "burst": 95.3,
+     "end": 97.75,
      "dz": 0.0,
-     "H": 98.3
-    },
-    {
-     "point": "B2",
-     "launch": 98.4,
-     "burst": 98.4,
-     "end": 100.85,
-     "dz": 0.0,
-     "H": 98.4
+     "H": 95.3
     },
     {
      "point": "B3",
-     "launch": 98.5,
-     "burst": 98.5,
-     "end": 100.95,
+     "launch": 95.5,
+     "burst": 95.5,
+     "end": 97.95,
      "dz": 0.0,
-     "H": 98.5
+     "H": 95.5
     },
     {
      "point": "B4",
-     "launch": 98.5,
-     "burst": 98.5,
-     "end": 100.95,
+     "launch": 95.5,
+     "burst": 95.5,
+     "end": 97.95,
      "dz": 0.0,
-     "H": 98.5
-    },
-    {
-     "point": "B5",
-     "launch": 98.4,
-     "burst": 98.4,
-     "end": 100.85,
-     "dz": 0.0,
-     "H": 98.4
+     "H": 95.5
     },
     {
      "point": "B6",
-     "launch": 98.3,
-     "burst": 98.3,
-     "end": 100.75,
+     "launch": 95.3,
+     "burst": 95.3,
+     "end": 97.75,
      "dz": 0.0,
-     "H": 98.3
-    },
-    {
-     "point": "B7",
-     "launch": 98.2,
-     "burst": 98.2,
-     "end": 100.65,
-     "dz": 0.0,
-     "H": 98.2
+     "H": 95.3
     }
    ],
-   "H0": 98.2,
+   "H0": 95.3,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
@@ -14727,9 +14520,9 @@
   {
    "id": "B01_C154",
    "section": "B01_S8",
-   "sp": "GR",
-   "templateId": "R03_GoldRayChry",
-   "size": "M",
+   "sp": "GRL",
+   "templateId": "R03_GoldRayChry_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P3",
@@ -14740,31 +14533,31 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "all",
-   "label": "金芒菊",
-   "name": "蓄势收窄 · 金芒菊",
+   "label": "金芒菊·大",
+   "name": "蓄势收窄 · 金芒菊·大",
    "wave": "收窄3",
    "events": [
     {
      "point": "P3",
-     "launch": 101.4,
-     "burst": 105.7772,
-     "end": 110.3372,
+     "launch": 98.5,
+     "burst": 105.8651,
+     "end": 110.4251,
      "dz": 0.0,
      "H": 105.8192
     },
     {
      "point": "P4",
-     "launch": 101.3,
-     "burst": 105.6772,
-     "end": 110.2372,
+     "launch": 98.4,
+     "burst": 105.7651,
+     "end": 110.3251,
      "dz": 0.0,
      "H": 105.7192
     },
     {
      "point": "P5",
-     "launch": 101.4,
-     "burst": 105.7772,
-     "end": 110.3372,
+     "launch": 98.5,
+     "burst": 105.8651,
+     "end": 110.4251,
      "dz": 0.0,
      "H": 105.8192
     }
@@ -14786,8 +14579,8 @@
   {
    "id": "B01_C155",
    "section": "B01_S8",
-   "sp": "S9",
-   "templateId": "R03_Silver9",
+   "sp": "S13",
+   "templateId": "R03_Silver13",
    "size": "F",
    "group": "B",
    "points": [
@@ -14798,28 +14591,28 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 里→外 · 银星·九束展开",
-   "name": "蓄势收窄 · 托底 · 里→外 · 银星·九束展开",
+   "label": "托底 · 齐发 · 银星·十三束宽扇",
+   "name": "蓄势收窄 · 托底 · 齐发 · 银星·十三束宽扇",
    "wave": "托底扇",
    "events": [
     {
      "point": "B3",
-     "launch": 101.3,
-     "burst": 101.3,
-     "end": 104.07,
+     "launch": 98.4,
+     "burst": 98.4,
+     "end": 100.85,
      "dz": 0.0,
-     "H": 101.3
+     "H": 98.4
     },
     {
      "point": "B4",
-     "launch": 101.3,
-     "burst": 101.3,
-     "end": 104.07,
+     "launch": 98.4,
+     "burst": 98.4,
+     "end": 100.85,
      "dz": 0.0,
-     "H": 101.3
+     "H": 98.4
     }
    ],
-   "H0": 101.3,
+   "H0": 98.4,
    "profiles": {
     "medium": [
      "B3",
@@ -14833,14 +14626,14 @@
    "baseOf": [
     "B01_C154"
    ],
-   "dir": "center-out"
+   "dir": "together"
   },
   {
    "id": "B01_C156",
    "section": "B01_S8",
-   "sp": "GR",
-   "templateId": "R03_GoldRayChry",
-   "size": "M",
+   "sp": "GRL",
+   "templateId": "R03_GoldRayChry_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P4"
@@ -14849,15 +14642,15 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "金芒菊",
-   "name": "蓄势收窄 · 金芒菊",
+   "label": "金芒菊·大",
+   "name": "蓄势收窄 · 金芒菊·大",
    "wave": "收窄1",
    "events": [
     {
      "point": "P4",
-     "launch": 103.0,
-     "burst": 107.3772,
-     "end": 111.9372,
+     "launch": 100.0,
+     "burst": 107.3651,
+     "end": 111.9251,
      "dz": 0.0,
      "H": 107.3408
     }
@@ -14874,6 +14667,58 @@
   },
   {
    "id": "B01_C157",
+   "section": "B01_S8",
+   "sp": "S13",
+   "templateId": "R03_Silver13",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B3",
+    "B4"
+   ],
+   "order": "source",
+   "gap": 0.0,
+   "layer": "extra",
+   "tier": "trim",
+   "label": "托底 · 齐发 · 银星·十三束宽扇",
+   "name": "蓄势收窄 · 托底 · 齐发 · 银星·十三束宽扇",
+   "wave": "托底扇",
+   "events": [
+    {
+     "point": "B3",
+     "launch": 100.0,
+     "burst": 100.0,
+     "end": 102.45,
+     "dz": 0.0,
+     "H": 100.0
+    },
+    {
+     "point": "B4",
+     "launch": 100.0,
+     "burst": 100.0,
+     "end": 102.45,
+     "dz": 0.0,
+     "H": 100.0
+    }
+   ],
+   "H0": 100.0,
+   "profiles": {
+    "medium": [
+     "B3",
+     "B4"
+    ],
+    "low": [
+     "B3",
+     "B4"
+    ]
+   },
+   "baseOf": [
+    "B01_C156"
+   ],
+   "dir": "together"
+  },
+  {
+   "id": "B01_C158",
    "section": "B01_S8",
    "sp": "R5",
    "templateId": "R03_Red5",
@@ -14965,10 +14810,10 @@
    }
   },
   {
-   "id": "B01_C158",
+   "id": "B01_C159",
    "section": "B01_S9",
-   "sp": "GK",
-   "templateId": "R03_GoldKamuro",
+   "sp": "GKH",
+   "templateId": "R03_GoldKamuro_H280",
    "size": "L",
    "group": "P",
    "points": [
@@ -14978,8 +14823,8 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "主角 金垂柳（P4）",
-   "name": "高潮 II · 主角 金垂柳（P4）",
+   "label": "主角 金垂柳 280（P4）",
+   "name": "高潮 II · 主角 金垂柳 280（P4）",
    "wave": "主角",
    "events": [
     {
@@ -15002,7 +14847,7 @@
    }
   },
   {
-   "id": "B01_C159",
+   "id": "B01_C160",
    "section": "B01_S9",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -15072,7 +14917,7 @@
    }
   },
   {
-   "id": "B01_C160",
+   "id": "B01_C161",
    "section": "B01_S9",
    "sp": "ML",
    "templateId": "R03_MultiLayerChry",
@@ -15142,116 +14987,78 @@
    }
   },
   {
-   "id": "B01_C161",
+   "id": "B01_C162",
    "section": "B01_S9",
-   "sp": "R9",
-   "templateId": "R03_Red9",
+   "sp": "S9",
+   "templateId": "R03_Silver9",
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·九束左扫",
-   "name": "高潮 II · 托底 · 左→右 · 红彗星·九束左扫",
+   "label": "托底 · 里→外 · 银星·九束展开",
+   "name": "高潮 II · 托底 · 里→外 · 银星·九束展开",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B0",
+     "point": "B1",
      "launch": 104.8,
      "burst": 104.8,
-     "end": 108.54,
+     "end": 107.57,
      "dz": 0.0,
      "H": 104.8
     },
     {
-     "point": "B1",
-     "launch": 104.9,
-     "burst": 104.9,
-     "end": 108.64,
-     "dz": 0.0,
-     "H": 104.9
-    },
-    {
-     "point": "B2",
-     "launch": 105.0,
-     "burst": 105.0,
-     "end": 108.74,
-     "dz": 0.0,
-     "H": 105.0
-    },
-    {
      "point": "B3",
-     "launch": 105.1,
-     "burst": 105.1,
-     "end": 108.84,
+     "launch": 104.8,
+     "burst": 104.8,
+     "end": 107.57,
      "dz": 0.0,
-     "H": 105.1
+     "H": 104.8
     },
     {
      "point": "B4",
-     "launch": 105.2,
-     "burst": 105.2,
-     "end": 108.94,
+     "launch": 104.8,
+     "burst": 104.8,
+     "end": 107.57,
      "dz": 0.0,
-     "H": 105.2
-    },
-    {
-     "point": "B5",
-     "launch": 105.3,
-     "burst": 105.3,
-     "end": 109.04,
-     "dz": 0.0,
-     "H": 105.3
+     "H": 104.8
     },
     {
      "point": "B6",
-     "launch": 105.4,
-     "burst": 105.4,
-     "end": 109.14,
+     "launch": 104.8,
+     "burst": 104.8,
+     "end": 107.57,
      "dz": 0.0,
-     "H": 105.4
-    },
-    {
-     "point": "B7",
-     "launch": 105.5,
-     "burst": 105.5,
-     "end": 109.24,
-     "dz": 0.0,
-     "H": 105.5
+     "H": 104.8
     }
    ],
    "H0": 104.8,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
    },
    "baseOf": [
-    "B01_C158",
     "B01_C159",
-    "B01_C160"
+    "B01_C160",
+    "B01_C161"
    ],
-   "dir": "left"
+   "dir": "center-out"
   },
   {
-   "id": "B01_C162",
+   "id": "B01_C163",
    "section": "B01_S9",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -15354,7 +15161,7 @@
    }
   },
   {
-   "id": "B01_C163",
+   "id": "B01_C164",
    "section": "B01_S9",
    "sp": "S9",
    "templateId": "R03_Silver9",
@@ -15419,7 +15226,7 @@
    }
   },
   {
-   "id": "B01_C164",
+   "id": "B01_C165",
    "section": "B01_S9",
    "sp": "R5",
    "templateId": "R03_Red5",
@@ -15467,7 +15274,7 @@
    }
   },
   {
-   "id": "B01_C165",
+   "id": "B01_C166",
    "section": "B01_S9",
    "sp": "CL",
    "templateId": "R03_GoldCoreLime",
@@ -15586,7 +15393,7 @@
    }
   },
   {
-   "id": "B01_C166",
+   "id": "B01_C167",
    "section": "B01_S9",
    "sp": "R5",
    "templateId": "R03_Red5",
@@ -15602,8 +15409,8 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 红彗星·五束（4 点）",
-   "name": "高潮 II · 托底 · 外→里 · 红彗星·五束（4 点）",
+   "label": "托底 · 左→右 · 红彗星·五束（4 点）",
+   "name": "高潮 II · 托底 · 左→右 · 红彗星·五束（4 点）",
    "wave": "托底扇",
    "events": [
     {
@@ -15624,19 +15431,19 @@
     },
     {
      "point": "B4",
-     "launch": 109.8,
-     "burst": 109.8,
-     "end": 112.9,
+     "launch": 109.9,
+     "burst": 109.9,
+     "end": 113.0,
      "dz": 0.0,
-     "H": 109.8
+     "H": 109.9
     },
     {
      "point": "B6",
-     "launch": 109.6,
-     "burst": 109.6,
-     "end": 112.7,
+     "launch": 110.1,
+     "burst": 110.1,
+     "end": 113.2,
      "dz": 0.0,
-     "H": 109.6
+     "H": 110.1
     }
    ],
    "H0": 109.6,
@@ -15650,12 +15457,12 @@
     "low": []
    },
    "baseOf": [
-    "B01_C165"
+    "B01_C166"
    ],
-   "dir": "outside-in"
+   "dir": "left"
   },
   {
-   "id": "B01_C167",
+   "id": "B01_C168",
    "section": "B01_S9",
    "sp": "ST",
    "templateId": "R03_Strobe",
@@ -15758,11 +15565,11 @@
    }
   },
   {
-   "id": "B01_C168",
+   "id": "B01_C169",
    "section": "B01_S9",
-   "sp": "ML",
-   "templateId": "R03_MultiLayerChry",
-   "size": "M",
+   "sp": "MLL",
+   "templateId": "R03_MultiLayerChry_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -15779,79 +15586,79 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "trim",
-   "label": "多重菊",
-   "name": "高潮 II · 多重菊",
+   "label": "多重菊·大",
+   "name": "高潮 II · 多重菊·大",
    "wave": "整排9",
    "events": [
     {
      "point": "P0",
-     "launch": 111.5,
-     "burst": 115.8772,
-     "end": 120.1105,
+     "launch": 108.5,
+     "burst": 115.8651,
+     "end": 120.0984,
      "dz": -8.7,
      "H": 115.8488
     },
     {
      "point": "P1",
-     "launch": 111.4,
-     "burst": 115.7772,
-     "end": 120.0105,
+     "launch": 108.4,
+     "burst": 115.7651,
+     "end": 119.9984,
      "dz": 0.1,
      "H": 115.7488
     },
     {
      "point": "P2",
-     "launch": 111.3,
-     "burst": 115.6772,
-     "end": 119.9105,
+     "launch": 108.3,
+     "burst": 115.6651,
+     "end": 119.8984,
      "dz": 8.2,
      "H": 115.6488
     },
     {
      "point": "P3",
-     "launch": 111.2,
-     "burst": 115.5772,
-     "end": 119.8105,
+     "launch": 108.2,
+     "burst": 115.5651,
+     "end": 119.7984,
      "dz": 14.1,
      "H": 115.5488
     },
     {
      "point": "P4",
-     "launch": 111.1,
-     "burst": 115.4772,
-     "end": 119.7105,
+     "launch": 108.1,
+     "burst": 115.4651,
+     "end": 119.6984,
      "dz": 16.2,
      "H": 115.4488
     },
     {
      "point": "P5",
-     "launch": 111.2,
-     "burst": 115.5772,
-     "end": 119.8105,
+     "launch": 108.2,
+     "burst": 115.5651,
+     "end": 119.7984,
      "dz": 14.1,
      "H": 115.5488
     },
     {
      "point": "P6",
-     "launch": 111.3,
-     "burst": 115.6772,
-     "end": 119.9105,
+     "launch": 108.3,
+     "burst": 115.6651,
+     "end": 119.8984,
      "dz": 8.2,
      "H": 115.6488
     },
     {
      "point": "P7",
-     "launch": 111.4,
-     "burst": 115.7772,
-     "end": 120.0105,
+     "launch": 108.4,
+     "burst": 115.7651,
+     "end": 119.9984,
      "dz": 0.1,
      "H": 115.7488
     },
     {
      "point": "P8",
-     "launch": 111.5,
-     "burst": 115.8772,
-     "end": 120.1105,
+     "launch": 108.5,
+     "burst": 115.8651,
+     "end": 120.0984,
      "dz": -8.7,
      "H": 115.8488
     }
@@ -15877,7 +15684,114 @@
    }
   },
   {
-   "id": "B01_C169",
+   "id": "B01_C170",
+   "section": "B01_S9",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B0",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "B7"
+   ],
+   "order": "source",
+   "gap": 0.0,
+   "layer": "extra",
+   "tier": "trim",
+   "label": "托底 · 外→里 · 银星·五束窄扇",
+   "name": "高潮 II · 托底 · 外→里 · 银星·五束窄扇",
+   "wave": "托底扇",
+   "events": [
+    {
+     "point": "B0",
+     "launch": 108.2,
+     "burst": 108.2,
+     "end": 110.65,
+     "dz": 0.0,
+     "H": 108.2
+    },
+    {
+     "point": "B1",
+     "launch": 108.3,
+     "burst": 108.3,
+     "end": 110.75,
+     "dz": 0.0,
+     "H": 108.3
+    },
+    {
+     "point": "B2",
+     "launch": 108.4,
+     "burst": 108.4,
+     "end": 110.85,
+     "dz": 0.0,
+     "H": 108.4
+    },
+    {
+     "point": "B3",
+     "launch": 108.5,
+     "burst": 108.5,
+     "end": 110.95,
+     "dz": 0.0,
+     "H": 108.5
+    },
+    {
+     "point": "B4",
+     "launch": 108.5,
+     "burst": 108.5,
+     "end": 110.95,
+     "dz": 0.0,
+     "H": 108.5
+    },
+    {
+     "point": "B5",
+     "launch": 108.4,
+     "burst": 108.4,
+     "end": 110.85,
+     "dz": 0.0,
+     "H": 108.4
+    },
+    {
+     "point": "B6",
+     "launch": 108.3,
+     "burst": 108.3,
+     "end": 110.75,
+     "dz": 0.0,
+     "H": 108.3
+    },
+    {
+     "point": "B7",
+     "launch": 108.2,
+     "burst": 108.2,
+     "end": 110.65,
+     "dz": 0.0,
+     "H": 108.2
+    }
+   ],
+   "H0": 108.2,
+   "profiles": {
+    "medium": [
+     "B1",
+     "B2",
+     "B3",
+     "B4",
+     "B5",
+     "B6"
+    ],
+    "low": []
+   },
+   "baseOf": [
+    "B01_C169"
+   ],
+   "dir": "outside-in"
+  },
+  {
+   "id": "B01_C171",
    "section": "B01_S9",
    "sp": "GC",
    "templateId": "R03_GoldCrackle",
@@ -15985,7 +15899,7 @@
    }
   },
   {
-   "id": "B01_C170",
+   "id": "B01_C172",
    "section": "B01_S9",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -16064,7 +15978,7 @@
    }
   },
   {
-   "id": "B01_C171",
+   "id": "B01_C173",
    "section": "B01_S9",
    "sp": "CL",
    "templateId": "R03_GoldCoreLime",
@@ -16132,77 +16046,115 @@
    }
   },
   {
-   "id": "B01_C172",
+   "id": "B01_C174",
    "section": "B01_S9",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
+   "sp": "R9R",
+   "templateId": "R03_Red9R",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
     "B1",
+    "B2",
     "B3",
     "B4",
-    "B6"
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 里→外 · 银星·五束窄扇（4 点）",
-   "name": "高潮 II · 托底 · 里→外 · 银星·五束窄扇（4 点）",
+   "label": "托底 · 右→左 · 红彗星·九束右扫",
+   "name": "高潮 II · 托底 · 右→左 · 红彗星·九束右扫",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B1",
-     "launch": 109.8,
-     "burst": 109.8,
-     "end": 112.25,
+     "point": "B0",
+     "launch": 110.4,
+     "burst": 110.4,
+     "end": 114.14,
      "dz": 0.0,
-     "H": 109.8
+     "H": 110.4
+    },
+    {
+     "point": "B1",
+     "launch": 110.3,
+     "burst": 110.3,
+     "end": 114.04,
+     "dz": 0.0,
+     "H": 110.3
+    },
+    {
+     "point": "B2",
+     "launch": 110.2,
+     "burst": 110.2,
+     "end": 113.94,
+     "dz": 0.0,
+     "H": 110.2
     },
     {
      "point": "B3",
-     "launch": 109.7,
-     "burst": 109.7,
-     "end": 112.15,
+     "launch": 110.1,
+     "burst": 110.1,
+     "end": 113.84,
      "dz": 0.0,
-     "H": 109.7
+     "H": 110.1
     },
     {
      "point": "B4",
-     "launch": 109.7,
-     "burst": 109.7,
-     "end": 112.15,
+     "launch": 110.0,
+     "burst": 110.0,
+     "end": 113.74,
      "dz": 0.0,
-     "H": 109.7
+     "H": 110.0
+    },
+    {
+     "point": "B5",
+     "launch": 109.9,
+     "burst": 109.9,
+     "end": 113.64,
+     "dz": 0.0,
+     "H": 109.9
     },
     {
      "point": "B6",
      "launch": 109.8,
      "burst": 109.8,
-     "end": 112.25,
+     "end": 113.54,
      "dz": 0.0,
      "H": 109.8
+    },
+    {
+     "point": "B7",
+     "launch": 109.7,
+     "burst": 109.7,
+     "end": 113.44,
+     "dz": 0.0,
+     "H": 109.7
     }
    ],
    "H0": 109.7,
    "profiles": {
     "medium": [
      "B1",
+     "B2",
      "B3",
      "B4",
+     "B5",
      "B6"
     ],
     "low": []
    },
    "baseOf": [
-    "B01_C170",
-    "B01_C171"
+    "B01_C172",
+    "B01_C173"
    ],
-   "dir": "center-out"
+   "dir": "right"
   },
   {
-   "id": "B01_C173",
+   "id": "B01_C175",
    "section": "B01_S9",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -16310,7 +16262,7 @@
    }
   },
   {
-   "id": "B01_C174",
+   "id": "B01_C176",
    "section": "B01_S9",
    "sp": "GY",
    "templateId": "R03_GoldChry",
@@ -16429,59 +16381,7 @@
    }
   },
   {
-   "id": "B01_C175",
-   "section": "B01_S9",
-   "sp": "R1",
-   "templateId": "R03_Red1",
-   "size": "F",
-   "group": "B",
-   "points": [
-    "B3",
-    "B4"
-   ],
-   "order": "source",
-   "gap": 0.0,
-   "layer": "extra",
-   "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·单束（2 点）",
-   "name": "高潮 II · 托底 · 左→右 · 红彗星·单束（2 点）",
-   "wave": "托底扇",
-   "events": [
-    {
-     "point": "B3",
-     "launch": 114.6,
-     "burst": 114.6,
-     "end": 117.7,
-     "dz": 0.0,
-     "H": 114.6
-    },
-    {
-     "point": "B4",
-     "launch": 114.7,
-     "burst": 114.7,
-     "end": 117.8,
-     "dz": 0.0,
-     "H": 114.7
-    }
-   ],
-   "H0": 114.6,
-   "profiles": {
-    "medium": [
-     "B3",
-     "B4"
-    ],
-    "low": [
-     "B3",
-     "B4"
-    ]
-   },
-   "baseOf": [
-    "B01_C174"
-   ],
-   "dir": "left"
-  },
-  {
-   "id": "B01_C176",
+   "id": "B01_C177",
    "section": "B01_S9",
    "sp": "R9",
    "templateId": "R03_Red9",
@@ -16546,7 +16446,7 @@
    }
   },
   {
-   "id": "B01_C177",
+   "id": "B01_C178",
    "section": "B01_S9",
    "sp": "R9R",
    "templateId": "R03_Red9R",
@@ -16611,7 +16511,7 @@
    }
   },
   {
-   "id": "B01_C178",
+   "id": "B01_C179",
    "section": "B01_S9",
    "sp": "LM",
    "templateId": "R03_Lime",
@@ -16719,7 +16619,7 @@
    }
   },
   {
-   "id": "B01_C179",
+   "id": "B01_C180",
    "section": "B01_S9",
    "sp": "PW",
    "templateId": "R03_PrismWheels",
@@ -16838,76 +16738,114 @@
    }
   },
   {
-   "id": "B01_C180",
+   "id": "B01_C181",
    "section": "B01_S9",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
+   "sp": "R9",
+   "templateId": "R03_Red9",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
     "B1",
+    "B2",
     "B3",
     "B4",
-    "B6"
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 银星·五束窄扇（4 点）",
-   "name": "高潮 II · 托底 · 外→里 · 银星·五束窄扇（4 点）",
+   "label": "托底 · 左→右 · 红彗星·九束左扫",
+   "name": "高潮 II · 托底 · 左→右 · 红彗星·九束左扫",
    "wave": "托底扇",
    "events": [
+    {
+     "point": "B0",
+     "launch": 116.0,
+     "burst": 116.0,
+     "end": 119.74,
+     "dz": 0.0,
+     "H": 116.0
+    },
     {
      "point": "B1",
      "launch": 116.1,
      "burst": 116.1,
-     "end": 118.55,
+     "end": 119.84,
      "dz": 0.0,
      "H": 116.1
+    },
+    {
+     "point": "B2",
+     "launch": 116.2,
+     "burst": 116.2,
+     "end": 119.94,
+     "dz": 0.0,
+     "H": 116.2
     },
     {
      "point": "B3",
      "launch": 116.3,
      "burst": 116.3,
-     "end": 118.75,
+     "end": 120.04,
      "dz": 0.0,
      "H": 116.3
     },
     {
      "point": "B4",
-     "launch": 116.3,
-     "burst": 116.3,
-     "end": 118.75,
+     "launch": 116.4,
+     "burst": 116.4,
+     "end": 120.14,
      "dz": 0.0,
-     "H": 116.3
+     "H": 116.4
+    },
+    {
+     "point": "B5",
+     "launch": 116.5,
+     "burst": 116.5,
+     "end": 120.24,
+     "dz": 0.0,
+     "H": 116.5
     },
     {
      "point": "B6",
-     "launch": 116.1,
-     "burst": 116.1,
-     "end": 118.55,
+     "launch": 116.6,
+     "burst": 116.6,
+     "end": 120.34,
      "dz": 0.0,
-     "H": 116.1
+     "H": 116.6
+    },
+    {
+     "point": "B7",
+     "launch": 116.7,
+     "burst": 116.7,
+     "end": 120.44,
+     "dz": 0.0,
+     "H": 116.7
     }
    ],
-   "H0": 116.1,
+   "H0": 116.0,
    "profiles": {
     "medium": [
      "B1",
+     "B2",
      "B3",
      "B4",
+     "B5",
      "B6"
     ],
     "low": []
    },
    "baseOf": [
-    "B01_C179"
+    "B01_C180"
    ],
-   "dir": "outside-in"
+   "dir": "left"
   },
   {
-   "id": "B01_C181",
+   "id": "B01_C182",
    "section": "B01_S9",
    "sp": "OG",
    "templateId": "R03_OrangeGlitter",
@@ -17015,7 +16953,7 @@
    }
   },
   {
-   "id": "B01_C182",
+   "id": "B01_C183",
    "section": "B01_S9",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -17140,10 +17078,10 @@
    }
   },
   {
-   "id": "B01_C183",
+   "id": "B01_C184",
    "section": "B01_S9",
-   "sp": "R9R",
-   "templateId": "R03_Red9R",
+   "sp": "R5",
+   "templateId": "R03_Red5",
    "size": "F",
    "group": "B",
    "points": [
@@ -17160,47 +17098,47 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 右→左 · 红彗星·九束右扫",
-   "name": "高潮 II · 托底 · 右→左 · 红彗星·九束右扫",
+   "label": "托底 · 外→里 · 红彗星·五束",
+   "name": "高潮 II · 托底 · 外→里 · 红彗星·五束",
    "wave": "托底扇",
    "events": [
     {
      "point": "B0",
-     "launch": 115.3,
-     "burst": 115.3,
-     "end": 119.04,
+     "launch": 114.6,
+     "burst": 114.6,
+     "end": 117.7,
      "dz": 0.0,
-     "H": 115.3
+     "H": 114.6
     },
     {
      "point": "B1",
-     "launch": 115.2,
-     "burst": 115.2,
-     "end": 118.94,
+     "launch": 114.7,
+     "burst": 114.7,
+     "end": 117.8,
      "dz": 0.0,
-     "H": 115.2
+     "H": 114.7
     },
     {
      "point": "B2",
-     "launch": 115.1,
-     "burst": 115.1,
-     "end": 118.84,
+     "launch": 114.8,
+     "burst": 114.8,
+     "end": 117.9,
      "dz": 0.0,
-     "H": 115.1
+     "H": 114.8
     },
     {
      "point": "B3",
-     "launch": 115.0,
-     "burst": 115.0,
-     "end": 118.74,
+     "launch": 114.9,
+     "burst": 114.9,
+     "end": 118.0,
      "dz": 0.0,
-     "H": 115.0
+     "H": 114.9
     },
     {
      "point": "B4",
      "launch": 114.9,
      "burst": 114.9,
-     "end": 118.64,
+     "end": 118.0,
      "dz": 0.0,
      "H": 114.9
     },
@@ -17208,7 +17146,7 @@
      "point": "B5",
      "launch": 114.8,
      "burst": 114.8,
-     "end": 118.54,
+     "end": 117.9,
      "dz": 0.0,
      "H": 114.8
     },
@@ -17216,7 +17154,7 @@
      "point": "B6",
      "launch": 114.7,
      "burst": 114.7,
-     "end": 118.44,
+     "end": 117.8,
      "dz": 0.0,
      "H": 114.7
     },
@@ -17224,7 +17162,7 @@
      "point": "B7",
      "launch": 114.6,
      "burst": 114.6,
-     "end": 118.34,
+     "end": 117.7,
      "dz": 0.0,
      "H": 114.6
     }
@@ -17242,12 +17180,12 @@
     "low": []
    },
    "baseOf": [
-    "B01_C182"
+    "B01_C183"
    ],
-   "dir": "right"
+   "dir": "outside-in"
   },
   {
-   "id": "B01_C184",
+   "id": "B01_C185",
    "section": "B01_S9",
    "sp": "S9",
    "templateId": "R03_Silver9",
@@ -17312,7 +17250,7 @@
    }
   },
   {
-   "id": "B01_C185",
+   "id": "B01_C186",
    "section": "B01_S9",
    "sp": "R5",
    "templateId": "R03_Red5",
@@ -17360,7 +17298,7 @@
    }
   },
   {
-   "id": "B01_C186",
+   "id": "B01_C187",
    "section": "B01_S9",
    "sp": "GS",
    "templateId": "R03_GoldSpark",
@@ -17479,7 +17417,7 @@
    }
   },
   {
-   "id": "B01_C187",
+   "id": "B01_C188",
    "section": "B01_S9",
    "sp": "R1",
    "templateId": "R03_Red1",
@@ -17526,12 +17464,12 @@
     ]
    },
    "baseOf": [
-    "B01_C186"
+    "B01_C187"
    ],
    "dir": "left"
   },
   {
-   "id": "B01_C188",
+   "id": "B01_C189",
    "section": "B01_S9",
    "sp": "GC",
    "templateId": "R03_GoldCrackle",
@@ -17639,11 +17577,11 @@
    }
   },
   {
-   "id": "B01_C189",
+   "id": "B01_C190",
    "section": "B01_S9",
-   "sp": "ML",
-   "templateId": "R03_MultiLayerChry",
-   "size": "M",
+   "sp": "MLL",
+   "templateId": "R03_MultiLayerChry_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -17660,79 +17598,79 @@
    "gap": 0.2,
    "layer": "main",
    "tier": "trim",
-   "label": "多重菊",
-   "name": "高潮 II · 多重菊",
+   "label": "多重菊·大",
+   "name": "高潮 II · 多重菊·大",
    "wave": "整排9",
    "events": [
     {
      "point": "P0",
-     "launch": 122.4,
-     "burst": 126.7772,
-     "end": 131.0105,
+     "launch": 119.4,
+     "burst": 126.7651,
+     "end": 130.9984,
      "dz": -8.7,
      "H": 126.7784
     },
     {
      "point": "P1",
-     "launch": 122.2,
-     "burst": 126.5772,
-     "end": 130.8105,
+     "launch": 119.2,
+     "burst": 126.5651,
+     "end": 130.7984,
      "dz": 0.1,
      "H": 126.5784
     },
     {
      "point": "P2",
-     "launch": 122.0,
-     "burst": 126.3772,
-     "end": 130.6105,
+     "launch": 119.0,
+     "burst": 126.3651,
+     "end": 130.5984,
      "dz": 8.2,
      "H": 126.3784
     },
     {
      "point": "P3",
-     "launch": 121.8,
-     "burst": 126.1772,
-     "end": 130.4105,
+     "launch": 118.8,
+     "burst": 126.1651,
+     "end": 130.3984,
      "dz": 14.1,
      "H": 126.1784
     },
     {
      "point": "P4",
-     "launch": 121.6,
-     "burst": 125.9772,
-     "end": 130.2105,
+     "launch": 118.6,
+     "burst": 125.9651,
+     "end": 130.1984,
      "dz": 16.2,
      "H": 125.9784
     },
     {
      "point": "P5",
-     "launch": 121.4,
-     "burst": 125.7772,
-     "end": 130.0105,
+     "launch": 118.4,
+     "burst": 125.7651,
+     "end": 129.9984,
      "dz": 14.1,
      "H": 125.7784
     },
     {
      "point": "P6",
-     "launch": 121.2,
-     "burst": 125.5772,
-     "end": 129.8105,
+     "launch": 118.2,
+     "burst": 125.5651,
+     "end": 129.7984,
      "dz": 8.2,
      "H": 125.5784
     },
     {
      "point": "P7",
-     "launch": 121.0,
-     "burst": 125.3772,
-     "end": 129.6105,
+     "launch": 118.0,
+     "burst": 125.3651,
+     "end": 129.5984,
      "dz": 0.1,
      "H": 125.3784
     },
     {
      "point": "P8",
-     "launch": 120.8,
-     "burst": 125.1772,
-     "end": 129.4105,
+     "launch": 117.8,
+     "burst": 125.1651,
+     "end": 129.3984,
      "dz": -8.7,
      "H": 125.1784
     }
@@ -17758,63 +17696,118 @@
    }
   },
   {
-   "id": "B01_C190",
+   "id": "B01_C191",
    "section": "B01_S9",
-   "sp": "R1",
-   "templateId": "R03_Red1",
+   "sp": "R9R",
+   "templateId": "R03_Red9R",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
+    "B1",
+    "B2",
     "B3",
-    "B4"
+    "B4",
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 右→左 · 红彗星·单束（2 点）",
-   "name": "高潮 II · 托底 · 右→左 · 红彗星·单束（2 点）",
+   "label": "托底 · 右→左 · 红彗星·九束右扫",
+   "name": "高潮 II · 托底 · 右→左 · 红彗星·九束右扫",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B3",
-     "launch": 121.7,
-     "burst": 121.7,
-     "end": 124.8,
+     "point": "B0",
+     "launch": 119.3,
+     "burst": 119.3,
+     "end": 123.04,
      "dz": 0.0,
-     "H": 121.7
+     "H": 119.3
+    },
+    {
+     "point": "B1",
+     "launch": 119.1,
+     "burst": 119.1,
+     "end": 122.84,
+     "dz": 0.0,
+     "H": 119.1
+    },
+    {
+     "point": "B2",
+     "launch": 118.9,
+     "burst": 118.9,
+     "end": 122.64,
+     "dz": 0.0,
+     "H": 118.9
+    },
+    {
+     "point": "B3",
+     "launch": 118.7,
+     "burst": 118.7,
+     "end": 122.44,
+     "dz": 0.0,
+     "H": 118.7
     },
     {
      "point": "B4",
-     "launch": 121.5,
-     "burst": 121.5,
-     "end": 124.6,
+     "launch": 118.5,
+     "burst": 118.5,
+     "end": 122.24,
      "dz": 0.0,
-     "H": 121.5
+     "H": 118.5
+    },
+    {
+     "point": "B5",
+     "launch": 118.3,
+     "burst": 118.3,
+     "end": 122.04,
+     "dz": 0.0,
+     "H": 118.3
+    },
+    {
+     "point": "B6",
+     "launch": 118.1,
+     "burst": 118.1,
+     "end": 121.84,
+     "dz": 0.0,
+     "H": 118.1
+    },
+    {
+     "point": "B7",
+     "launch": 117.9,
+     "burst": 117.9,
+     "end": 121.64,
+     "dz": 0.0,
+     "H": 117.9
     }
    ],
-   "H0": 121.5,
+   "H0": 117.9,
    "profiles": {
     "medium": [
+     "B1",
+     "B2",
      "B3",
-     "B4"
+     "B4",
+     "B5",
+     "B6"
     ],
-    "low": [
-     "B3",
-     "B4"
-    ]
+    "low": []
    },
    "baseOf": [
-    "B01_C189"
+    "B01_C190"
    ],
    "dir": "right"
   },
   {
-   "id": "B01_C191",
+   "id": "B01_C192",
    "section": "B01_S9",
-   "sp": "CL",
-   "templateId": "R03_GoldCoreLime",
-   "size": "M",
+   "sp": "CLL",
+   "templateId": "R03_GoldCoreLime_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -17831,79 +17824,79 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "trim",
-   "label": "金蕊青柠星",
-   "name": "高潮 II · 金蕊青柠星",
+   "label": "金蕊青柠星·大",
+   "name": "高潮 II · 金蕊青柠星·大",
    "wave": "整排9",
    "events": [
     {
      "point": "P0",
-     "launch": 122.8,
-     "burst": 127.1772,
-     "end": 131.5772,
+     "launch": 119.8,
+     "burst": 127.1651,
+     "end": 131.5651,
      "dz": 8.7,
      "H": 127.2
     },
     {
      "point": "P1",
-     "launch": 122.7,
-     "burst": 127.0772,
-     "end": 131.4772,
+     "launch": 119.7,
+     "burst": 127.0651,
+     "end": 131.4651,
      "dz": -0.1,
      "H": 127.1
     },
     {
      "point": "P2",
-     "launch": 122.6,
-     "burst": 126.9772,
-     "end": 131.3772,
+     "launch": 119.6,
+     "burst": 126.9651,
+     "end": 131.3651,
      "dz": -8.2,
      "H": 127.0
     },
     {
      "point": "P3",
-     "launch": 122.5,
-     "burst": 126.8772,
-     "end": 131.2772,
+     "launch": 119.5,
+     "burst": 126.8651,
+     "end": 131.2651,
      "dz": -14.1,
      "H": 126.9
     },
     {
      "point": "P4",
-     "launch": 122.4,
-     "burst": 126.7772,
-     "end": 131.1772,
+     "launch": 119.4,
+     "burst": 126.7651,
+     "end": 131.1651,
      "dz": -16.2,
      "H": 126.8
     },
     {
      "point": "P5",
-     "launch": 122.5,
-     "burst": 126.8772,
-     "end": 131.2772,
+     "launch": 119.5,
+     "burst": 126.8651,
+     "end": 131.2651,
      "dz": -14.1,
      "H": 126.9
     },
     {
      "point": "P6",
-     "launch": 122.6,
-     "burst": 126.9772,
-     "end": 131.3772,
+     "launch": 119.6,
+     "burst": 126.9651,
+     "end": 131.3651,
      "dz": -8.2,
      "H": 127.0
     },
     {
      "point": "P7",
-     "launch": 122.7,
-     "burst": 127.0772,
-     "end": 131.4772,
+     "launch": 119.7,
+     "burst": 127.0651,
+     "end": 131.4651,
      "dz": -0.1,
      "H": 127.1
     },
     {
      "point": "P8",
-     "launch": 122.8,
-     "burst": 127.1772,
-     "end": 131.5772,
+     "launch": 119.8,
+     "burst": 127.1651,
+     "end": 131.5651,
      "dz": 8.7,
      "H": 127.2
     }
@@ -17929,7 +17922,59 @@
    }
   },
   {
-   "id": "B01_C192",
+   "id": "B01_C193",
+   "section": "B01_S9",
+   "sp": "R1",
+   "templateId": "R03_Red1",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B3",
+    "B4"
+   ],
+   "order": "source",
+   "gap": 0.0,
+   "layer": "extra",
+   "tier": "trim",
+   "label": "托底 · 右→左 · 红彗星·单束（2 点）",
+   "name": "高潮 II · 托底 · 右→左 · 红彗星·单束（2 点）",
+   "wave": "托底扇",
+   "events": [
+    {
+     "point": "B3",
+     "launch": 119.8,
+     "burst": 119.8,
+     "end": 122.9,
+     "dz": 0.0,
+     "H": 119.8
+    },
+    {
+     "point": "B4",
+     "launch": 119.7,
+     "burst": 119.7,
+     "end": 122.8,
+     "dz": 0.0,
+     "H": 119.7
+    }
+   ],
+   "H0": 119.7,
+   "profiles": {
+    "medium": [
+     "B3",
+     "B4"
+    ],
+    "low": [
+     "B3",
+     "B4"
+    ]
+   },
+   "baseOf": [
+    "B01_C192"
+   ],
+   "dir": "right"
+  },
+  {
+   "id": "B01_C194",
    "section": "B01_S9",
    "sp": "ST",
    "templateId": "R03_Strobe",
@@ -18037,7 +18082,7 @@
    }
   },
   {
-   "id": "B01_C193",
+   "id": "B01_C195",
    "section": "B01_S9",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -18116,32 +18161,26 @@
    }
   },
   {
-   "id": "B01_C194",
+   "id": "B01_C196",
    "section": "B01_S9",
-   "sp": "R5",
-   "templateId": "R03_Red5",
+   "sp": "R1",
+   "templateId": "R03_Red1",
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
-    "B1",
-    "B2",
     "B3",
-    "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B4"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·五束",
-   "name": "高潮 II · 托底 · 左→右 · 红彗星·五束",
+   "label": "托底 · 里→外 · 红彗星·单束（2 点）",
+   "name": "高潮 II · 托底 · 里→外 · 红彗星·单束（2 点）",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B0",
+     "point": "B3",
      "launch": 121.1,
      "burst": 121.1,
      "end": 124.2,
@@ -18149,82 +18188,33 @@
      "H": 121.1
     },
     {
-     "point": "B1",
-     "launch": 121.2,
-     "burst": 121.2,
-     "end": 124.3,
-     "dz": 0.0,
-     "H": 121.2
-    },
-    {
-     "point": "B2",
-     "launch": 121.3,
-     "burst": 121.3,
-     "end": 124.4,
-     "dz": 0.0,
-     "H": 121.3
-    },
-    {
-     "point": "B3",
-     "launch": 121.4,
-     "burst": 121.4,
-     "end": 124.5,
-     "dz": 0.0,
-     "H": 121.4
-    },
-    {
      "point": "B4",
-     "launch": 121.5,
-     "burst": 121.5,
-     "end": 124.6,
+     "launch": 121.1,
+     "burst": 121.1,
+     "end": 124.2,
      "dz": 0.0,
-     "H": 121.5
-    },
-    {
-     "point": "B5",
-     "launch": 121.6,
-     "burst": 121.6,
-     "end": 124.7,
-     "dz": 0.0,
-     "H": 121.6
-    },
-    {
-     "point": "B6",
-     "launch": 121.7,
-     "burst": 121.7,
-     "end": 124.8,
-     "dz": 0.0,
-     "H": 121.7
-    },
-    {
-     "point": "B7",
-     "launch": 121.8,
-     "burst": 121.8,
-     "end": 124.9,
-     "dz": 0.0,
-     "H": 121.8
+     "H": 121.1
     }
    ],
    "H0": 121.1,
    "profiles": {
     "medium": [
-     "B1",
-     "B2",
      "B3",
-     "B4",
-     "B5",
-     "B6"
+     "B4"
     ],
-    "low": []
+    "low": [
+     "B3",
+     "B4"
+    ]
    },
    "baseOf": [
-    "B01_C195",
-    "B01_C193"
+    "B01_C197",
+    "B01_C195"
    ],
-   "dir": "left"
+   "dir": "center-out"
   },
   {
-   "id": "B01_C195",
+   "id": "B01_C197",
    "section": "B01_S9",
    "sp": "ML",
    "templateId": "R03_MultiLayerChry",
@@ -18292,7 +18282,7 @@
    }
   },
   {
-   "id": "B01_C196",
+   "id": "B01_C198",
    "section": "B01_S9",
    "sp": "GY",
    "templateId": "R03_GoldChry",
@@ -18411,10 +18401,10 @@
    }
   },
   {
-   "id": "B01_C197",
+   "id": "B01_C199",
    "section": "B01_S9",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
+   "sp": "R5",
+   "templateId": "R03_Red5",
    "size": "F",
    "group": "B",
    "points": [
@@ -18431,15 +18421,15 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 银星·五束窄扇",
-   "name": "高潮 II · 托底 · 外→里 · 银星·五束窄扇",
+   "label": "托底 · 左→右 · 红彗星·五束",
+   "name": "高潮 II · 托底 · 左→右 · 红彗星·五束",
    "wave": "托底扇",
    "events": [
     {
      "point": "B0",
      "launch": 125.8,
      "burst": 125.8,
-     "end": 128.25,
+     "end": 128.9,
      "dz": 0.0,
      "H": 125.8
     },
@@ -18447,7 +18437,7 @@
      "point": "B1",
      "launch": 125.9,
      "burst": 125.9,
-     "end": 128.35,
+     "end": 129.0,
      "dz": 0.0,
      "H": 125.9
     },
@@ -18455,7 +18445,7 @@
      "point": "B2",
      "launch": 126.0,
      "burst": 126.0,
-     "end": 128.45,
+     "end": 129.1,
      "dz": 0.0,
      "H": 126.0
     },
@@ -18463,41 +18453,41 @@
      "point": "B3",
      "launch": 126.1,
      "burst": 126.1,
-     "end": 128.55,
+     "end": 129.2,
      "dz": 0.0,
      "H": 126.1
     },
     {
      "point": "B4",
-     "launch": 126.1,
-     "burst": 126.1,
-     "end": 128.55,
+     "launch": 126.2,
+     "burst": 126.2,
+     "end": 129.3,
      "dz": 0.0,
-     "H": 126.1
+     "H": 126.2
     },
     {
      "point": "B5",
-     "launch": 126.0,
-     "burst": 126.0,
-     "end": 128.45,
+     "launch": 126.3,
+     "burst": 126.3,
+     "end": 129.4,
      "dz": 0.0,
-     "H": 126.0
+     "H": 126.3
     },
     {
      "point": "B6",
-     "launch": 125.9,
-     "burst": 125.9,
-     "end": 128.35,
+     "launch": 126.4,
+     "burst": 126.4,
+     "end": 129.5,
      "dz": 0.0,
-     "H": 125.9
+     "H": 126.4
     },
     {
      "point": "B7",
-     "launch": 125.8,
-     "burst": 125.8,
-     "end": 128.25,
+     "launch": 126.5,
+     "burst": 126.5,
+     "end": 129.6,
      "dz": 0.0,
-     "H": 125.8
+     "H": 126.5
     }
    ],
    "H0": 125.8,
@@ -18513,12 +18503,12 @@
     "low": []
    },
    "baseOf": [
-    "B01_C196"
+    "B01_C198"
    ],
-   "dir": "outside-in"
+   "dir": "left"
   },
   {
-   "id": "B01_C198",
+   "id": "B01_C200",
    "section": "B01_S9",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -18621,7 +18611,7 @@
    }
   },
   {
-   "id": "B01_C199",
+   "id": "B01_C201",
    "section": "B01_S9",
    "sp": "PW",
    "templateId": "R03_PrismWheels",
@@ -18740,114 +18730,7 @@
    }
   },
   {
-   "id": "B01_C200",
-   "section": "B01_S9",
-   "sp": "R9R",
-   "templateId": "R03_Red9R",
-   "size": "F",
-   "group": "B",
-   "points": [
-    "B0",
-    "B1",
-    "B2",
-    "B3",
-    "B4",
-    "B5",
-    "B6",
-    "B7"
-   ],
-   "order": "source",
-   "gap": 0.0,
-   "layer": "extra",
-   "tier": "trim",
-   "label": "托底 · 右→左 · 红彗星·九束右扫",
-   "name": "高潮 II · 托底 · 右→左 · 红彗星·九束右扫",
-   "wave": "托底扇",
-   "events": [
-    {
-     "point": "B0",
-     "launch": 128.0,
-     "burst": 128.0,
-     "end": 131.74,
-     "dz": 0.0,
-     "H": 128.0
-    },
-    {
-     "point": "B1",
-     "launch": 127.9,
-     "burst": 127.9,
-     "end": 131.64,
-     "dz": 0.0,
-     "H": 127.9
-    },
-    {
-     "point": "B2",
-     "launch": 127.8,
-     "burst": 127.8,
-     "end": 131.54,
-     "dz": 0.0,
-     "H": 127.8
-    },
-    {
-     "point": "B3",
-     "launch": 127.7,
-     "burst": 127.7,
-     "end": 131.44,
-     "dz": 0.0,
-     "H": 127.7
-    },
-    {
-     "point": "B4",
-     "launch": 127.6,
-     "burst": 127.6,
-     "end": 131.34,
-     "dz": 0.0,
-     "H": 127.6
-    },
-    {
-     "point": "B5",
-     "launch": 127.5,
-     "burst": 127.5,
-     "end": 131.24,
-     "dz": 0.0,
-     "H": 127.5
-    },
-    {
-     "point": "B6",
-     "launch": 127.4,
-     "burst": 127.4,
-     "end": 131.14,
-     "dz": 0.0,
-     "H": 127.4
-    },
-    {
-     "point": "B7",
-     "launch": 127.3,
-     "burst": 127.3,
-     "end": 131.04,
-     "dz": 0.0,
-     "H": 127.3
-    }
-   ],
-   "H0": 127.3,
-   "profiles": {
-    "medium": [
-     "B1",
-     "B2",
-     "B3",
-     "B4",
-     "B5",
-     "B6"
-    ],
-    "low": []
-   },
-   "baseOf": [
-    "B01_C199"
-   ],
-   "dir": "right"
-  },
-  {
-   "id": "B01_C201",
+   "id": "B01_C202",
    "section": "B01_S9",
    "sp": "LM",
    "templateId": "R03_Lime",
@@ -18955,7 +18838,7 @@
    }
   },
   {
-   "id": "B01_C202",
+   "id": "B01_C203",
    "section": "B01_S9",
    "sp": "GS",
    "templateId": "R03_GoldSpark",
@@ -19074,114 +18957,76 @@
    }
   },
   {
-   "id": "B01_C203",
+   "id": "B01_C204",
    "section": "B01_S9",
-   "sp": "R5",
-   "templateId": "R03_Red5",
+   "sp": "R9R",
+   "templateId": "R03_Red9R",
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 里→外 · 红彗星·五束",
-   "name": "高潮 II · 托底 · 里→外 · 红彗星·五束",
+   "label": "托底 · 右→左 · 红彗星·九束右扫（4 点）",
+   "name": "高潮 II · 托底 · 右→左 · 红彗星·九束右扫（4 点）",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B0",
-     "launch": 129.2,
-     "burst": 129.2,
-     "end": 132.3,
-     "dz": 0.0,
-     "H": 129.2
-    },
-    {
      "point": "B1",
-     "launch": 129.1,
-     "burst": 129.1,
-     "end": 132.2,
+     "launch": 129.5,
+     "burst": 129.5,
+     "end": 133.24,
      "dz": 0.0,
-     "H": 129.1
-    },
-    {
-     "point": "B2",
-     "launch": 129.0,
-     "burst": 129.0,
-     "end": 132.1,
-     "dz": 0.0,
-     "H": 129.0
+     "H": 129.5
     },
     {
      "point": "B3",
-     "launch": 128.9,
-     "burst": 128.9,
-     "end": 132.0,
+     "launch": 129.3,
+     "burst": 129.3,
+     "end": 133.04,
      "dz": 0.0,
-     "H": 128.9
+     "H": 129.3
     },
     {
      "point": "B4",
-     "launch": 128.9,
-     "burst": 128.9,
-     "end": 132.0,
+     "launch": 129.2,
+     "burst": 129.2,
+     "end": 132.94,
      "dz": 0.0,
-     "H": 128.9
-    },
-    {
-     "point": "B5",
-     "launch": 129.0,
-     "burst": 129.0,
-     "end": 132.1,
-     "dz": 0.0,
-     "H": 129.0
+     "H": 129.2
     },
     {
      "point": "B6",
-     "launch": 129.1,
-     "burst": 129.1,
-     "end": 132.2,
+     "launch": 129.0,
+     "burst": 129.0,
+     "end": 132.74,
      "dz": 0.0,
-     "H": 129.1
-    },
-    {
-     "point": "B7",
-     "launch": 129.2,
-     "burst": 129.2,
-     "end": 132.3,
-     "dz": 0.0,
-     "H": 129.2
+     "H": 129.0
     }
    ],
-   "H0": 128.9,
+   "H0": 129.0,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
    },
    "baseOf": [
-    "B01_C202"
+    "B01_C203"
    ],
-   "dir": "center-out"
+   "dir": "right"
   },
   {
-   "id": "B01_C204",
+   "id": "B01_C205",
    "section": "B01_S9",
    "sp": "ST",
    "templateId": "R03_Strobe",
@@ -19289,11 +19134,11 @@
    }
   },
   {
-   "id": "B01_C205",
+   "id": "B01_C206",
    "section": "B01_S9",
-   "sp": "GR",
-   "templateId": "R03_GoldRayChry",
-   "size": "M",
+   "sp": "GRL",
+   "templateId": "R03_GoldRayChry_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -19310,79 +19155,79 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "trim",
-   "label": "金芒菊",
-   "name": "高潮 II · 金芒菊",
+   "label": "金芒菊·大",
+   "name": "高潮 II · 金芒菊·大",
    "wave": "整排9",
    "events": [
     {
      "point": "P0",
-     "launch": 130.9,
-     "burst": 135.2772,
-     "end": 139.8372,
+     "launch": 127.9,
+     "burst": 135.2651,
+     "end": 139.8251,
      "dz": -8.7,
      "H": 135.308
     },
     {
      "point": "P1",
-     "launch": 130.8,
-     "burst": 135.1772,
-     "end": 139.7372,
+     "launch": 127.8,
+     "burst": 135.1651,
+     "end": 139.7251,
      "dz": 0.1,
      "H": 135.208
     },
     {
      "point": "P2",
-     "launch": 130.7,
-     "burst": 135.0772,
-     "end": 139.6372,
+     "launch": 127.7,
+     "burst": 135.0651,
+     "end": 139.6251,
      "dz": 8.2,
      "H": 135.108
     },
     {
      "point": "P3",
-     "launch": 130.6,
-     "burst": 134.9772,
-     "end": 139.5372,
+     "launch": 127.6,
+     "burst": 134.9651,
+     "end": 139.5251,
      "dz": 14.1,
      "H": 135.008
     },
     {
      "point": "P4",
-     "launch": 130.5,
-     "burst": 134.8772,
-     "end": 139.4372,
+     "launch": 127.5,
+     "burst": 134.8651,
+     "end": 139.4251,
      "dz": 16.2,
      "H": 134.908
     },
     {
      "point": "P5",
-     "launch": 130.6,
-     "burst": 134.9772,
-     "end": 139.5372,
+     "launch": 127.6,
+     "burst": 134.9651,
+     "end": 139.5251,
      "dz": 14.1,
      "H": 135.008
     },
     {
      "point": "P6",
-     "launch": 130.7,
-     "burst": 135.0772,
-     "end": 139.6372,
+     "launch": 127.7,
+     "burst": 135.0651,
+     "end": 139.6251,
      "dz": 8.2,
      "H": 135.108
     },
     {
      "point": "P7",
-     "launch": 130.8,
-     "burst": 135.1772,
-     "end": 139.7372,
+     "launch": 127.8,
+     "burst": 135.1651,
+     "end": 139.7251,
      "dz": 0.1,
      "H": 135.208
     },
     {
      "point": "P8",
-     "launch": 130.9,
-     "burst": 135.2772,
-     "end": 139.8372,
+     "launch": 127.9,
+     "burst": 135.2651,
+     "end": 139.8251,
      "dz": -8.7,
      "H": 135.308
     }
@@ -19408,10 +19253,10 @@
    }
   },
   {
-   "id": "B01_C206",
+   "id": "B01_C207",
    "section": "B01_S9",
-   "sp": "R9",
-   "templateId": "R03_Red9",
+   "sp": "R5",
+   "templateId": "R03_Red5",
    "size": "F",
    "group": "B",
    "points": [
@@ -19428,76 +19273,76 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·九束左扫",
-   "name": "高潮 II · 托底 · 左→右 · 红彗星·九束左扫",
+   "label": "托底 · 里→外 · 红彗星·五束",
+   "name": "高潮 II · 托底 · 里→外 · 红彗星·五束",
    "wave": "托底扇",
    "events": [
     {
      "point": "B0",
-     "launch": 130.6,
-     "burst": 130.6,
-     "end": 134.34,
+     "launch": 127.8,
+     "burst": 127.8,
+     "end": 130.9,
      "dz": 0.0,
-     "H": 130.6
+     "H": 127.8
     },
     {
      "point": "B1",
-     "launch": 130.7,
-     "burst": 130.7,
-     "end": 134.44,
+     "launch": 127.8,
+     "burst": 127.8,
+     "end": 130.9,
      "dz": 0.0,
-     "H": 130.7
+     "H": 127.8
     },
     {
      "point": "B2",
-     "launch": 130.8,
-     "burst": 130.8,
-     "end": 134.54,
+     "launch": 127.6,
+     "burst": 127.6,
+     "end": 130.7,
      "dz": 0.0,
-     "H": 130.8
+     "H": 127.6
     },
     {
      "point": "B3",
-     "launch": 130.9,
-     "burst": 130.9,
-     "end": 134.64,
+     "launch": 127.6,
+     "burst": 127.6,
+     "end": 130.7,
      "dz": 0.0,
-     "H": 130.9
+     "H": 127.6
     },
     {
      "point": "B4",
-     "launch": 131.0,
-     "burst": 131.0,
-     "end": 134.74,
+     "launch": 127.6,
+     "burst": 127.6,
+     "end": 130.7,
      "dz": 0.0,
-     "H": 131.0
+     "H": 127.6
     },
     {
      "point": "B5",
-     "launch": 131.1,
-     "burst": 131.1,
-     "end": 134.84,
+     "launch": 127.6,
+     "burst": 127.6,
+     "end": 130.7,
      "dz": 0.0,
-     "H": 131.1
+     "H": 127.6
     },
     {
      "point": "B6",
-     "launch": 131.2,
-     "burst": 131.2,
-     "end": 134.94,
+     "launch": 127.8,
+     "burst": 127.8,
+     "end": 130.9,
      "dz": 0.0,
-     "H": 131.2
+     "H": 127.8
     },
     {
      "point": "B7",
-     "launch": 131.3,
-     "burst": 131.3,
-     "end": 135.04,
+     "launch": 127.8,
+     "burst": 127.8,
+     "end": 130.9,
      "dz": 0.0,
-     "H": 131.3
+     "H": 127.8
     }
    ],
-   "H0": 130.6,
+   "H0": 127.6,
    "profiles": {
     "medium": [
      "B1",
@@ -19510,12 +19355,12 @@
     "low": []
    },
    "baseOf": [
-    "B01_C205"
+    "B01_C206"
    ],
-   "dir": "left"
+   "dir": "center-out"
   },
   {
-   "id": "B01_C207",
+   "id": "B01_C208",
    "section": "B01_S9",
    "sp": "GC",
    "templateId": "R03_GoldCrackle",
@@ -19623,7 +19468,7 @@
    }
   },
   {
-   "id": "B01_C208",
+   "id": "B01_C209",
    "section": "B01_S9",
    "sp": "R9",
    "templateId": "R03_Red9",
@@ -19678,7 +19523,7 @@
    }
   },
   {
-   "id": "B01_C209",
+   "id": "B01_C210",
    "section": "B01_S9",
    "sp": "R9R",
    "templateId": "R03_Red9R",
@@ -19733,7 +19578,7 @@
    }
   },
   {
-   "id": "B01_C210",
+   "id": "B01_C211",
    "section": "B01_S9",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -19814,7 +19659,7 @@
    }
   },
   {
-   "id": "B01_C211",
+   "id": "B01_C212",
    "section": "B01_S9",
    "sp": "GR",
    "templateId": "R03_GoldRayChry",
@@ -19884,77 +19729,115 @@
    }
   },
   {
-   "id": "B01_C212",
+   "id": "B01_C213",
    "section": "B01_S9",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
+   "sp": "R9",
+   "templateId": "R03_Red9",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
     "B1",
+    "B2",
     "B3",
     "B4",
-    "B6"
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 银星·五束窄扇（4 点）",
-   "name": "高潮 II · 托底 · 外→里 · 银星·五束窄扇（4 点）",
+   "label": "托底 · 左→右 · 红彗星·九束左扫",
+   "name": "高潮 II · 托底 · 左→右 · 红彗星·九束左扫",
    "wave": "托底扇",
    "events": [
+    {
+     "point": "B0",
+     "launch": 129.2,
+     "burst": 129.2,
+     "end": 132.94,
+     "dz": 0.0,
+     "H": 129.2
+    },
     {
      "point": "B1",
      "launch": 129.3,
      "burst": 129.3,
-     "end": 131.75,
+     "end": 133.04,
      "dz": 0.0,
      "H": 129.3
+    },
+    {
+     "point": "B2",
+     "launch": 129.4,
+     "burst": 129.4,
+     "end": 133.14,
+     "dz": 0.0,
+     "H": 129.4
     },
     {
      "point": "B3",
      "launch": 129.5,
      "burst": 129.5,
-     "end": 131.95,
+     "end": 133.24,
      "dz": 0.0,
      "H": 129.5
     },
     {
      "point": "B4",
-     "launch": 129.5,
-     "burst": 129.5,
-     "end": 131.95,
+     "launch": 129.6,
+     "burst": 129.6,
+     "end": 133.34,
      "dz": 0.0,
-     "H": 129.5
+     "H": 129.6
+    },
+    {
+     "point": "B5",
+     "launch": 129.7,
+     "burst": 129.7,
+     "end": 133.44,
+     "dz": 0.0,
+     "H": 129.7
     },
     {
      "point": "B6",
-     "launch": 129.3,
-     "burst": 129.3,
-     "end": 131.75,
+     "launch": 129.8,
+     "burst": 129.8,
+     "end": 133.54,
      "dz": 0.0,
-     "H": 129.3
+     "H": 129.8
+    },
+    {
+     "point": "B7",
+     "launch": 129.9,
+     "burst": 129.9,
+     "end": 133.64,
+     "dz": 0.0,
+     "H": 129.9
     }
    ],
-   "H0": 129.3,
+   "H0": 129.2,
    "profiles": {
     "medium": [
      "B1",
+     "B2",
      "B3",
      "B4",
+     "B5",
      "B6"
     ],
     "low": []
    },
    "baseOf": [
-    "B01_C210",
-    "B01_C211"
+    "B01_C211",
+    "B01_C212"
    ],
-   "dir": "outside-in"
+   "dir": "left"
   },
   {
-   "id": "B01_C213",
+   "id": "B01_C214",
    "section": "B01_S9",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -20057,7 +19940,7 @@
    }
   },
   {
-   "id": "B01_C214",
+   "id": "B01_C215",
    "section": "B01_S9",
    "sp": "S13",
    "templateId": "R03_Silver13",
@@ -20105,7 +19988,7 @@
    }
   },
   {
-   "id": "B01_C215",
+   "id": "B01_C216",
    "section": "B01_S10",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -20224,7 +20107,7 @@
    }
   },
   {
-   "id": "B01_C216",
+   "id": "B01_C217",
    "section": "B01_S10",
    "sp": "LM",
    "templateId": "R03_Lime",
@@ -20332,7 +20215,7 @@
    }
   },
   {
-   "id": "B01_C217",
+   "id": "B01_C218",
    "section": "B01_S10",
    "sp": "ST",
    "templateId": "R03_Strobe",
@@ -20440,7 +20323,7 @@
    }
   },
   {
-   "id": "B01_C218",
+   "id": "B01_C219",
    "section": "B01_S10",
    "sp": "OG",
    "templateId": "R03_OrangeGlitter",
@@ -20559,7 +20442,7 @@
    }
   },
   {
-   "id": "B01_C219",
+   "id": "B01_C220",
    "section": "B01_S10",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -20667,7 +20550,7 @@
    }
   },
   {
-   "id": "B01_C220",
+   "id": "B01_C221",
    "section": "B01_S10",
    "sp": "PW",
    "templateId": "R03_PrismWheels",
@@ -20786,114 +20669,76 @@
    }
   },
   {
-   "id": "B01_C221",
+   "id": "B01_C222",
    "section": "B01_S10",
-   "sp": "R9R",
-   "templateId": "R03_Red9R",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 右→左 · 红彗星·九束右扫",
-   "name": "转场铺色 A · 托底 · 右→左 · 红彗星·九束右扫",
+   "label": "托底 · 外→里 · 银星·五束窄扇（4 点）",
+   "name": "转场铺色 A · 托底 · 外→里 · 银星·五束窄扇（4 点）",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B0",
-     "launch": 141.1,
-     "burst": 141.1,
-     "end": 144.84,
-     "dz": 0.0,
-     "H": 141.1
-    },
-    {
      "point": "B1",
-     "launch": 141.0,
-     "burst": 141.0,
-     "end": 144.74,
+     "launch": 140.5,
+     "burst": 140.5,
+     "end": 142.95,
      "dz": 0.0,
-     "H": 141.0
-    },
-    {
-     "point": "B2",
-     "launch": 140.9,
-     "burst": 140.9,
-     "end": 144.64,
-     "dz": 0.0,
-     "H": 140.9
+     "H": 140.5
     },
     {
      "point": "B3",
-     "launch": 140.8,
-     "burst": 140.8,
-     "end": 144.54,
+     "launch": 140.7,
+     "burst": 140.7,
+     "end": 143.15,
      "dz": 0.0,
-     "H": 140.8
+     "H": 140.7
     },
     {
      "point": "B4",
      "launch": 140.7,
      "burst": 140.7,
-     "end": 144.44,
+     "end": 143.15,
      "dz": 0.0,
      "H": 140.7
-    },
-    {
-     "point": "B5",
-     "launch": 140.6,
-     "burst": 140.6,
-     "end": 144.34,
-     "dz": 0.0,
-     "H": 140.6
     },
     {
      "point": "B6",
      "launch": 140.5,
      "burst": 140.5,
-     "end": 144.24,
+     "end": 142.95,
      "dz": 0.0,
      "H": 140.5
-    },
-    {
-     "point": "B7",
-     "launch": 140.4,
-     "burst": 140.4,
-     "end": 144.14,
-     "dz": 0.0,
-     "H": 140.4
     }
    ],
-   "H0": 140.4,
+   "H0": 140.5,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
    },
    "baseOf": [
-    "B01_C220"
+    "B01_C221"
    ],
-   "dir": "right"
+   "dir": "outside-in"
   },
   {
-   "id": "B01_C222",
+   "id": "B01_C223",
    "section": "B01_S10",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -20996,7 +20841,7 @@
    }
   },
   {
-   "id": "B01_C223",
+   "id": "B01_C224",
    "section": "B01_S10",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -21115,7 +20960,7 @@
    }
   },
   {
-   "id": "B01_C224",
+   "id": "B01_C225",
    "section": "B01_S10",
    "sp": "ST",
    "templateId": "R03_Strobe",
@@ -21223,7 +21068,7 @@
    }
   },
   {
-   "id": "B01_C225",
+   "id": "B01_C226",
    "section": "B01_S10",
    "sp": "GP",
    "templateId": "R03_GreenPeony",
@@ -21342,10 +21187,10 @@
    }
   },
   {
-   "id": "B01_C226",
+   "id": "B01_C227",
    "section": "B01_S10",
-   "sp": "R5",
-   "templateId": "R03_Red5",
+   "sp": "R9R",
+   "templateId": "R03_Red9R",
    "size": "F",
    "group": "B",
    "points": [
@@ -21362,73 +21207,73 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 里→外 · 红彗星·五束",
-   "name": "转场铺色 A · 托底 · 里→外 · 红彗星·五束",
+   "label": "托底 · 右→左 · 红彗星·九束右扫",
+   "name": "转场铺色 A · 托底 · 右→左 · 红彗星·九束右扫",
    "wave": "托底扇",
    "events": [
     {
      "point": "B0",
-     "launch": 143.9,
-     "burst": 143.9,
-     "end": 147.0,
+     "launch": 144.3,
+     "burst": 144.3,
+     "end": 148.04,
      "dz": 0.0,
-     "H": 143.9
+     "H": 144.3
     },
     {
      "point": "B1",
-     "launch": 143.8,
-     "burst": 143.8,
-     "end": 146.9,
+     "launch": 144.2,
+     "burst": 144.2,
+     "end": 147.94,
      "dz": 0.0,
-     "H": 143.8
+     "H": 144.2
     },
     {
      "point": "B2",
-     "launch": 143.6,
-     "burst": 143.6,
-     "end": 146.7,
+     "launch": 144.1,
+     "burst": 144.1,
+     "end": 147.84,
      "dz": 0.0,
-     "H": 143.6
+     "H": 144.1
     },
     {
      "point": "B3",
-     "launch": 143.6,
-     "burst": 143.6,
-     "end": 146.7,
+     "launch": 144.0,
+     "burst": 144.0,
+     "end": 147.74,
      "dz": 0.0,
-     "H": 143.6
+     "H": 144.0
     },
     {
      "point": "B4",
-     "launch": 143.6,
-     "burst": 143.6,
-     "end": 146.7,
+     "launch": 143.9,
+     "burst": 143.9,
+     "end": 147.64,
      "dz": 0.0,
-     "H": 143.6
+     "H": 143.9
     },
     {
      "point": "B5",
-     "launch": 143.6,
-     "burst": 143.6,
-     "end": 146.7,
-     "dz": 0.0,
-     "H": 143.6
-    },
-    {
-     "point": "B6",
      "launch": 143.8,
      "burst": 143.8,
-     "end": 146.9,
+     "end": 147.54,
      "dz": 0.0,
      "H": 143.8
     },
     {
-     "point": "B7",
-     "launch": 143.9,
-     "burst": 143.9,
-     "end": 147.0,
+     "point": "B6",
+     "launch": 143.7,
+     "burst": 143.7,
+     "end": 147.44,
      "dz": 0.0,
-     "H": 143.9
+     "H": 143.7
+    },
+    {
+     "point": "B7",
+     "launch": 143.6,
+     "burst": 143.6,
+     "end": 147.34,
+     "dz": 0.0,
+     "H": 143.6
     }
    ],
    "H0": 143.6,
@@ -21444,12 +21289,12 @@
     "low": []
    },
    "baseOf": [
-    "B01_C225"
+    "B01_C226"
    ],
-   "dir": "center-out"
+   "dir": "right"
   },
   {
-   "id": "B01_C227",
+   "id": "B01_C228",
    "section": "B01_S11",
    "sp": "GP",
    "templateId": "R03_GreenPeony",
@@ -21568,10 +21413,10 @@
    }
   },
   {
-   "id": "B01_C228",
+   "id": "B01_C229",
    "section": "B01_S11",
-   "sp": "R9",
-   "templateId": "R03_Red9",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
    "size": "F",
    "group": "B",
    "points": [
@@ -21588,73 +21433,73 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·九束左扫",
-   "name": "转场铺色 B · 托底 · 左→右 · 红彗星·九束左扫",
+   "label": "托底 · 里→外 · 银星·五束窄扇",
+   "name": "转场铺色 B · 托底 · 里→外 · 银星·五束窄扇",
    "wave": "托底扇",
    "events": [
     {
      "point": "B0",
-     "launch": 145.1,
-     "burst": 145.1,
-     "end": 148.84,
-     "dz": 0.0,
-     "H": 145.1
-    },
-    {
-     "point": "B1",
-     "launch": 145.2,
-     "burst": 145.2,
-     "end": 148.94,
-     "dz": 0.0,
-     "H": 145.2
-    },
-    {
-     "point": "B2",
-     "launch": 145.3,
-     "burst": 145.3,
-     "end": 149.04,
-     "dz": 0.0,
-     "H": 145.3
-    },
-    {
-     "point": "B3",
      "launch": 145.4,
      "burst": 145.4,
-     "end": 149.14,
+     "end": 147.85,
      "dz": 0.0,
      "H": 145.4
     },
     {
-     "point": "B4",
-     "launch": 145.5,
-     "burst": 145.5,
-     "end": 149.24,
+     "point": "B1",
+     "launch": 145.4,
+     "burst": 145.4,
+     "end": 147.85,
      "dz": 0.0,
-     "H": 145.5
+     "H": 145.4
+    },
+    {
+     "point": "B2",
+     "launch": 145.2,
+     "burst": 145.2,
+     "end": 147.65,
+     "dz": 0.0,
+     "H": 145.2
+    },
+    {
+     "point": "B3",
+     "launch": 145.1,
+     "burst": 145.1,
+     "end": 147.55,
+     "dz": 0.0,
+     "H": 145.1
+    },
+    {
+     "point": "B4",
+     "launch": 145.1,
+     "burst": 145.1,
+     "end": 147.55,
+     "dz": 0.0,
+     "H": 145.1
     },
     {
      "point": "B5",
-     "launch": 145.6,
-     "burst": 145.6,
-     "end": 149.34,
+     "launch": 145.2,
+     "burst": 145.2,
+     "end": 147.65,
      "dz": 0.0,
-     "H": 145.6
+     "H": 145.2
     },
     {
      "point": "B6",
-     "launch": 145.7,
-     "burst": 145.7,
-     "end": 149.44,
+     "launch": 145.4,
+     "burst": 145.4,
+     "end": 147.85,
      "dz": 0.0,
-     "H": 145.7
+     "H": 145.4
     },
     {
      "point": "B7",
-     "launch": 145.8,
-     "burst": 145.8,
-     "end": 149.54,
+     "launch": 145.4,
+     "burst": 145.4,
+     "end": 147.85,
      "dz": 0.0,
-     "H": 145.8
+     "H": 145.4
     }
    ],
    "H0": 145.1,
@@ -21670,12 +21515,12 @@
     "low": []
    },
    "baseOf": [
-    "B01_C227"
+    "B01_C228"
    ],
-   "dir": "left"
+   "dir": "center-out"
   },
   {
-   "id": "B01_C229",
+   "id": "B01_C230",
    "section": "B01_S11",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -21778,7 +21623,7 @@
    }
   },
   {
-   "id": "B01_C230",
+   "id": "B01_C231",
    "section": "B01_S11",
    "sp": "GS",
    "templateId": "R03_GoldSpark",
@@ -21897,76 +21742,114 @@
    }
   },
   {
-   "id": "B01_C231",
+   "id": "B01_C232",
    "section": "B01_S11",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
+   "sp": "R9",
+   "templateId": "R03_Red9",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
     "B1",
+    "B2",
     "B3",
     "B4",
-    "B6"
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 银星·五束窄扇（4 点）",
-   "name": "转场铺色 B · 托底 · 外→里 · 银星·五束窄扇（4 点）",
+   "label": "托底 · 左→右 · 红彗星·九束左扫",
+   "name": "转场铺色 B · 托底 · 左→右 · 红彗星·九束左扫",
    "wave": "托底扇",
    "events": [
+    {
+     "point": "B0",
+     "launch": 146.8,
+     "burst": 146.8,
+     "end": 150.54,
+     "dz": 0.0,
+     "H": 146.8
+    },
     {
      "point": "B1",
      "launch": 146.9,
      "burst": 146.9,
-     "end": 149.35,
+     "end": 150.64,
      "dz": 0.0,
      "H": 146.9
+    },
+    {
+     "point": "B2",
+     "launch": 147.0,
+     "burst": 147.0,
+     "end": 150.74,
+     "dz": 0.0,
+     "H": 147.0
     },
     {
      "point": "B3",
      "launch": 147.1,
      "burst": 147.1,
-     "end": 149.55,
+     "end": 150.84,
      "dz": 0.0,
      "H": 147.1
     },
     {
      "point": "B4",
-     "launch": 147.1,
-     "burst": 147.1,
-     "end": 149.55,
+     "launch": 147.2,
+     "burst": 147.2,
+     "end": 150.94,
      "dz": 0.0,
-     "H": 147.1
+     "H": 147.2
+    },
+    {
+     "point": "B5",
+     "launch": 147.3,
+     "burst": 147.3,
+     "end": 151.04,
+     "dz": 0.0,
+     "H": 147.3
     },
     {
      "point": "B6",
-     "launch": 146.9,
-     "burst": 146.9,
-     "end": 149.35,
+     "launch": 147.4,
+     "burst": 147.4,
+     "end": 151.14,
      "dz": 0.0,
-     "H": 146.9
+     "H": 147.4
+    },
+    {
+     "point": "B7",
+     "launch": 147.5,
+     "burst": 147.5,
+     "end": 151.24,
+     "dz": 0.0,
+     "H": 147.5
     }
    ],
-   "H0": 146.9,
+   "H0": 146.8,
    "profiles": {
     "medium": [
      "B1",
+     "B2",
      "B3",
      "B4",
+     "B5",
      "B6"
     ],
     "low": []
    },
    "baseOf": [
-    "B01_C230"
+    "B01_C231"
    ],
-   "dir": "outside-in"
+   "dir": "left"
   },
   {
-   "id": "B01_C232",
+   "id": "B01_C233",
    "section": "B01_S11",
    "sp": "OG",
    "templateId": "R03_OrangeGlitter",
@@ -22074,7 +21957,7 @@
    }
   },
   {
-   "id": "B01_C233",
+   "id": "B01_C234",
    "section": "B01_S11",
    "sp": "PW",
    "templateId": "R03_PrismWheels",
@@ -22193,28 +22076,48 @@
    }
   },
   {
-   "id": "B01_C234",
+   "id": "B01_C235",
    "section": "B01_S11",
    "sp": "R5",
    "templateId": "R03_Red5",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
     "B1",
+    "B2",
     "B3",
     "B4",
-    "B6"
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 红彗星·五束（4 点）",
-   "name": "转场铺色 B · 托底 · 外→里 · 红彗星·五束（4 点）",
+   "label": "托底 · 外→里 · 红彗星·五束",
+   "name": "转场铺色 B · 托底 · 外→里 · 红彗星·五束",
    "wave": "托底扇",
    "events": [
     {
+     "point": "B0",
+     "launch": 148.4,
+     "burst": 148.4,
+     "end": 151.5,
+     "dz": 0.0,
+     "H": 148.4
+    },
+    {
      "point": "B1",
+     "launch": 148.6,
+     "burst": 148.6,
+     "end": 151.7,
+     "dz": 0.0,
+     "H": 148.6
+    },
+    {
+     "point": "B2",
      "launch": 148.6,
      "burst": 148.6,
      "end": 151.7,
@@ -22238,31 +22141,49 @@
      "H": 148.8
     },
     {
+     "point": "B5",
+     "launch": 148.6,
+     "burst": 148.6,
+     "end": 151.7,
+     "dz": 0.0,
+     "H": 148.6
+    },
+    {
      "point": "B6",
      "launch": 148.6,
      "burst": 148.6,
      "end": 151.7,
      "dz": 0.0,
      "H": 148.6
+    },
+    {
+     "point": "B7",
+     "launch": 148.4,
+     "burst": 148.4,
+     "end": 151.5,
+     "dz": 0.0,
+     "H": 148.4
     }
    ],
-   "H0": 148.6,
+   "H0": 148.4,
    "profiles": {
     "medium": [
      "B1",
+     "B2",
      "B3",
      "B4",
+     "B5",
      "B6"
     ],
     "low": []
    },
    "baseOf": [
-    "B01_C233"
+    "B01_C234"
    ],
    "dir": "outside-in"
   },
   {
-   "id": "B01_C235",
+   "id": "B01_C236",
    "section": "B01_S11",
    "sp": "R5",
    "templateId": "R03_Red5",
@@ -22365,7 +22286,7 @@
    }
   },
   {
-   "id": "B01_C236",
+   "id": "B01_C237",
    "section": "B01_S11",
    "sp": "GP",
    "templateId": "R03_GreenPeony",
@@ -22484,10 +22405,10 @@
    }
   },
   {
-   "id": "B01_C237",
+   "id": "B01_C238",
    "section": "B01_S11",
-   "sp": "R9R",
-   "templateId": "R03_Red9R",
+   "sp": "R5",
+   "templateId": "R03_Red5",
    "size": "F",
    "group": "B",
    "points": [
@@ -22504,47 +22425,47 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 右→左 · 红彗星·九束右扫",
-   "name": "转场铺色 B · 托底 · 右→左 · 红彗星·九束右扫",
+   "label": "托底 · 外→里 · 红彗星·五束",
+   "name": "转场铺色 B · 托底 · 外→里 · 红彗星·五束",
    "wave": "托底扇",
    "events": [
     {
      "point": "B0",
-     "launch": 150.7,
-     "burst": 150.7,
-     "end": 154.44,
+     "launch": 150.0,
+     "burst": 150.0,
+     "end": 153.1,
      "dz": 0.0,
-     "H": 150.7
+     "H": 150.0
     },
     {
      "point": "B1",
-     "launch": 150.6,
-     "burst": 150.6,
-     "end": 154.34,
+     "launch": 150.1,
+     "burst": 150.1,
+     "end": 153.2,
      "dz": 0.0,
-     "H": 150.6
+     "H": 150.1
     },
     {
      "point": "B2",
-     "launch": 150.5,
-     "burst": 150.5,
-     "end": 154.24,
+     "launch": 150.2,
+     "burst": 150.2,
+     "end": 153.3,
      "dz": 0.0,
-     "H": 150.5
+     "H": 150.2
     },
     {
      "point": "B3",
-     "launch": 150.4,
-     "burst": 150.4,
-     "end": 154.14,
+     "launch": 150.3,
+     "burst": 150.3,
+     "end": 153.4,
      "dz": 0.0,
-     "H": 150.4
+     "H": 150.3
     },
     {
      "point": "B4",
      "launch": 150.3,
      "burst": 150.3,
-     "end": 154.04,
+     "end": 153.4,
      "dz": 0.0,
      "H": 150.3
     },
@@ -22552,7 +22473,7 @@
      "point": "B5",
      "launch": 150.2,
      "burst": 150.2,
-     "end": 153.94,
+     "end": 153.3,
      "dz": 0.0,
      "H": 150.2
     },
@@ -22560,7 +22481,7 @@
      "point": "B6",
      "launch": 150.1,
      "burst": 150.1,
-     "end": 153.84,
+     "end": 153.2,
      "dz": 0.0,
      "H": 150.1
     },
@@ -22568,7 +22489,7 @@
      "point": "B7",
      "launch": 150.0,
      "burst": 150.0,
-     "end": 153.74,
+     "end": 153.1,
      "dz": 0.0,
      "H": 150.0
     }
@@ -22586,12 +22507,12 @@
     "low": []
    },
    "baseOf": [
-    "B01_C236"
+    "B01_C237"
    ],
-   "dir": "right"
+   "dir": "outside-in"
   },
   {
-   "id": "B01_C238",
+   "id": "B01_C239",
    "section": "B01_S11",
    "sp": "LM",
    "templateId": "R03_Lime",
@@ -22694,7 +22615,7 @@
    }
   },
   {
-   "id": "B01_C239",
+   "id": "B01_C240",
    "section": "B01_S11",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -22773,7 +22694,7 @@
    }
   },
   {
-   "id": "B01_C240",
+   "id": "B01_C241",
    "section": "B01_S11",
    "sp": "GP",
    "templateId": "R03_GreenPeony",
@@ -22841,81 +22762,119 @@
    }
   },
   {
-   "id": "B01_C241",
+   "id": "B01_C242",
    "section": "B01_S11",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
+   "sp": "R9R",
+   "templateId": "R03_Red9R",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
     "B1",
+    "B2",
     "B3",
     "B4",
-    "B6"
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 里→外 · 银星·五束窄扇（4 点）",
-   "name": "转场铺色 B · 托底 · 里→外 · 银星·五束窄扇（4 点）",
+   "label": "托底 · 右→左 · 红彗星·九束右扫",
+   "name": "转场铺色 B · 托底 · 右→左 · 红彗星·九束右扫",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B1",
-     "launch": 148.7,
-     "burst": 148.7,
-     "end": 151.15,
+     "point": "B0",
+     "launch": 149.3,
+     "burst": 149.3,
+     "end": 153.04,
      "dz": 0.0,
-     "H": 148.7
+     "H": 149.3
+    },
+    {
+     "point": "B1",
+     "launch": 149.2,
+     "burst": 149.2,
+     "end": 152.94,
+     "dz": 0.0,
+     "H": 149.2
+    },
+    {
+     "point": "B2",
+     "launch": 149.1,
+     "burst": 149.1,
+     "end": 152.84,
+     "dz": 0.0,
+     "H": 149.1
     },
     {
      "point": "B3",
-     "launch": 148.6,
-     "burst": 148.6,
-     "end": 151.05,
+     "launch": 149.0,
+     "burst": 149.0,
+     "end": 152.74,
      "dz": 0.0,
-     "H": 148.6
+     "H": 149.0
     },
     {
      "point": "B4",
-     "launch": 148.6,
-     "burst": 148.6,
-     "end": 151.05,
+     "launch": 148.9,
+     "burst": 148.9,
+     "end": 152.64,
      "dz": 0.0,
-     "H": 148.6
+     "H": 148.9
+    },
+    {
+     "point": "B5",
+     "launch": 148.8,
+     "burst": 148.8,
+     "end": 152.54,
+     "dz": 0.0,
+     "H": 148.8
     },
     {
      "point": "B6",
      "launch": 148.7,
      "burst": 148.7,
-     "end": 151.15,
+     "end": 152.44,
      "dz": 0.0,
      "H": 148.7
+    },
+    {
+     "point": "B7",
+     "launch": 148.6,
+     "burst": 148.6,
+     "end": 152.34,
+     "dz": 0.0,
+     "H": 148.6
     }
    ],
    "H0": 148.6,
    "profiles": {
     "medium": [
      "B1",
+     "B2",
      "B3",
      "B4",
+     "B5",
      "B6"
     ],
     "low": []
    },
    "baseOf": [
-    "B01_C239",
-    "B01_C240"
+    "B01_C240",
+    "B01_C241"
    ],
-   "dir": "center-out"
+   "dir": "right"
   },
   {
-   "id": "B01_C242",
+   "id": "B01_C243",
    "section": "B01_S11",
-   "sp": "CL",
-   "templateId": "R03_GoldCoreLime",
-   "size": "M",
+   "sp": "CLL",
+   "templateId": "R03_GoldCoreLime_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -22932,79 +22891,79 @@
    "gap": 0.2,
    "layer": "main",
    "tier": "trim",
-   "label": "金蕊青柠星",
-   "name": "转场铺色 B · 金蕊青柠星",
+   "label": "金蕊青柠星·大",
+   "name": "转场铺色 B · 金蕊青柠星·大",
    "wave": "整排9",
    "events": [
     {
      "point": "P0",
-     "launch": 154.8,
-     "burst": 159.1772,
-     "end": 163.5772,
+     "launch": 151.8,
+     "burst": 159.1651,
+     "end": 163.5651,
      "dz": -8.7,
      "H": 159.2104
     },
     {
      "point": "P1",
-     "launch": 154.6,
-     "burst": 158.9772,
-     "end": 163.3772,
+     "launch": 151.6,
+     "burst": 158.9651,
+     "end": 163.3651,
      "dz": 0.1,
      "H": 159.0104
     },
     {
      "point": "P2",
-     "launch": 154.4,
-     "burst": 158.7772,
-     "end": 163.1772,
+     "launch": 151.4,
+     "burst": 158.7651,
+     "end": 163.1651,
      "dz": 8.2,
      "H": 158.8104
     },
     {
      "point": "P3",
-     "launch": 154.2,
-     "burst": 158.5772,
-     "end": 162.9772,
+     "launch": 151.2,
+     "burst": 158.5651,
+     "end": 162.9651,
      "dz": 14.1,
      "H": 158.6104
     },
     {
      "point": "P4",
-     "launch": 154.0,
-     "burst": 158.3772,
-     "end": 162.7772,
+     "launch": 151.0,
+     "burst": 158.3651,
+     "end": 162.7651,
      "dz": 16.2,
      "H": 158.4104
     },
     {
      "point": "P5",
-     "launch": 153.8,
-     "burst": 158.1772,
-     "end": 162.5772,
+     "launch": 150.8,
+     "burst": 158.1651,
+     "end": 162.5651,
      "dz": 14.1,
      "H": 158.2104
     },
     {
      "point": "P6",
-     "launch": 153.6,
-     "burst": 157.9772,
-     "end": 162.3772,
+     "launch": 150.6,
+     "burst": 157.9651,
+     "end": 162.3651,
      "dz": 8.2,
      "H": 158.0104
     },
     {
      "point": "P7",
-     "launch": 153.4,
-     "burst": 157.7772,
-     "end": 162.1772,
+     "launch": 150.4,
+     "burst": 157.7651,
+     "end": 162.1651,
      "dz": 0.1,
      "H": 157.8104
     },
     {
      "point": "P8",
-     "launch": 153.2,
-     "burst": 157.5772,
-     "end": 161.9772,
+     "launch": 150.2,
+     "burst": 157.5651,
+     "end": 161.9651,
      "dz": -8.7,
      "H": 157.6104
     }
@@ -23030,76 +22989,114 @@
    }
   },
   {
-   "id": "B01_C243",
+   "id": "B01_C244",
    "section": "B01_S11",
    "sp": "R9R",
    "templateId": "R03_Red9R",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
     "B1",
+    "B2",
     "B3",
     "B4",
-    "B6"
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 右→左 · 红彗星·九束右扫（4 点）",
-   "name": "转场铺色 B · 托底 · 右→左 · 红彗星·九束右扫（4 点）",
+   "label": "托底 · 右→左 · 红彗星·九束右扫",
+   "name": "转场铺色 B · 托底 · 右→左 · 红彗星·九束右扫",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B1",
-     "launch": 154.5,
-     "burst": 154.5,
-     "end": 158.24,
+     "point": "B0",
+     "launch": 151.7,
+     "burst": 151.7,
+     "end": 155.44,
      "dz": 0.0,
-     "H": 154.5
+     "H": 151.7
+    },
+    {
+     "point": "B1",
+     "launch": 151.5,
+     "burst": 151.5,
+     "end": 155.24,
+     "dz": 0.0,
+     "H": 151.5
+    },
+    {
+     "point": "B2",
+     "launch": 151.3,
+     "burst": 151.3,
+     "end": 155.04,
+     "dz": 0.0,
+     "H": 151.3
     },
     {
      "point": "B3",
-     "launch": 154.1,
-     "burst": 154.1,
-     "end": 157.84,
+     "launch": 151.1,
+     "burst": 151.1,
+     "end": 154.84,
      "dz": 0.0,
-     "H": 154.1
+     "H": 151.1
     },
     {
      "point": "B4",
-     "launch": 153.9,
-     "burst": 153.9,
-     "end": 157.64,
+     "launch": 150.9,
+     "burst": 150.9,
+     "end": 154.64,
      "dz": 0.0,
-     "H": 153.9
+     "H": 150.9
+    },
+    {
+     "point": "B5",
+     "launch": 150.7,
+     "burst": 150.7,
+     "end": 154.44,
+     "dz": 0.0,
+     "H": 150.7
     },
     {
      "point": "B6",
-     "launch": 153.5,
-     "burst": 153.5,
-     "end": 157.24,
+     "launch": 150.5,
+     "burst": 150.5,
+     "end": 154.24,
      "dz": 0.0,
-     "H": 153.5
+     "H": 150.5
+    },
+    {
+     "point": "B7",
+     "launch": 150.3,
+     "burst": 150.3,
+     "end": 154.04,
+     "dz": 0.0,
+     "H": 150.3
     }
    ],
-   "H0": 153.5,
+   "H0": 150.3,
    "profiles": {
     "medium": [
      "B1",
+     "B2",
      "B3",
      "B4",
+     "B5",
      "B6"
     ],
     "low": []
    },
    "baseOf": [
-    "B01_C242"
+    "B01_C243"
    ],
    "dir": "right"
   },
   {
-   "id": "B01_C244",
+   "id": "B01_C245",
    "section": "B01_S11",
    "sp": "GY",
    "templateId": "R03_GoldChry",
@@ -23218,26 +23215,32 @@
    }
   },
   {
-   "id": "B01_C245",
+   "id": "B01_C246",
    "section": "B01_S11",
-   "sp": "R1",
-   "templateId": "R03_Red1",
+   "sp": "R5",
+   "templateId": "R03_Red5",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
+    "B1",
+    "B2",
     "B3",
-    "B4"
+    "B4",
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·单束（2 点）",
-   "name": "转场铺色 B · 托底 · 左→右 · 红彗星·单束（2 点）",
+   "label": "托底 · 里→外 · 红彗星·五束",
+   "name": "转场铺色 B · 托底 · 里→外 · 红彗星·五束",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B3",
+     "point": "B0",
      "launch": 155.2,
      "burst": 155.2,
      "end": 158.3,
@@ -23245,32 +23248,81 @@
      "H": 155.2
     },
     {
-     "point": "B4",
-     "launch": 155.3,
-     "burst": 155.3,
-     "end": 158.4,
+     "point": "B1",
+     "launch": 155.1,
+     "burst": 155.1,
+     "end": 158.2,
      "dz": 0.0,
-     "H": 155.3
+     "H": 155.1
+    },
+    {
+     "point": "B2",
+     "launch": 155.0,
+     "burst": 155.0,
+     "end": 158.1,
+     "dz": 0.0,
+     "H": 155.0
+    },
+    {
+     "point": "B3",
+     "launch": 154.9,
+     "burst": 154.9,
+     "end": 158.0,
+     "dz": 0.0,
+     "H": 154.9
+    },
+    {
+     "point": "B4",
+     "launch": 154.9,
+     "burst": 154.9,
+     "end": 158.0,
+     "dz": 0.0,
+     "H": 154.9
+    },
+    {
+     "point": "B5",
+     "launch": 155.0,
+     "burst": 155.0,
+     "end": 158.1,
+     "dz": 0.0,
+     "H": 155.0
+    },
+    {
+     "point": "B6",
+     "launch": 155.1,
+     "burst": 155.1,
+     "end": 158.2,
+     "dz": 0.0,
+     "H": 155.1
+    },
+    {
+     "point": "B7",
+     "launch": 155.2,
+     "burst": 155.2,
+     "end": 158.3,
+     "dz": 0.0,
+     "H": 155.2
     }
    ],
-   "H0": 155.2,
+   "H0": 154.9,
    "profiles": {
     "medium": [
+     "B1",
+     "B2",
      "B3",
-     "B4"
+     "B4",
+     "B5",
+     "B6"
     ],
-    "low": [
-     "B3",
-     "B4"
-    ]
+    "low": []
    },
    "baseOf": [
-    "B01_C244"
+    "B01_C245"
    ],
-   "dir": "left"
+   "dir": "center-out"
   },
   {
-   "id": "B01_C246",
+   "id": "B01_C247",
    "section": "B01_S11",
    "sp": "ST",
    "templateId": "R03_Strobe",
@@ -23373,7 +23425,7 @@
    }
   },
   {
-   "id": "B01_C247",
+   "id": "B01_C248",
    "section": "B01_S12",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -23454,7 +23506,7 @@
    }
   },
   {
-   "id": "B01_C248",
+   "id": "B01_C249",
    "section": "B01_S12",
    "sp": "CL",
    "templateId": "R03_GoldCoreLime",
@@ -23524,10 +23576,10 @@
    }
   },
   {
-   "id": "B01_C249",
+   "id": "B01_C250",
    "section": "B01_S12",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
+   "sp": "R9",
+   "templateId": "R03_Red9",
    "size": "F",
    "group": "B",
    "points": [
@@ -23544,15 +23596,15 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 银星·五束窄扇",
-   "name": "终章 · 托底 · 外→里 · 银星·五束窄扇",
+   "label": "托底 · 左→右 · 红彗星·九束左扫",
+   "name": "终章 · 托底 · 左→右 · 红彗星·九束左扫",
    "wave": "托底扇",
    "events": [
     {
      "point": "B0",
      "launch": 155.1,
      "burst": 155.1,
-     "end": 157.55,
+     "end": 158.84,
      "dz": 0.0,
      "H": 155.1
     },
@@ -23560,7 +23612,7 @@
      "point": "B1",
      "launch": 155.2,
      "burst": 155.2,
-     "end": 157.65,
+     "end": 158.94,
      "dz": 0.0,
      "H": 155.2
     },
@@ -23568,7 +23620,7 @@
      "point": "B2",
      "launch": 155.3,
      "burst": 155.3,
-     "end": 157.75,
+     "end": 159.04,
      "dz": 0.0,
      "H": 155.3
     },
@@ -23576,41 +23628,41 @@
      "point": "B3",
      "launch": 155.4,
      "burst": 155.4,
-     "end": 157.85,
+     "end": 159.14,
      "dz": 0.0,
      "H": 155.4
     },
     {
      "point": "B4",
-     "launch": 155.4,
-     "burst": 155.4,
-     "end": 157.85,
+     "launch": 155.5,
+     "burst": 155.5,
+     "end": 159.24,
      "dz": 0.0,
-     "H": 155.4
+     "H": 155.5
     },
     {
      "point": "B5",
-     "launch": 155.3,
-     "burst": 155.3,
-     "end": 157.75,
+     "launch": 155.6,
+     "burst": 155.6,
+     "end": 159.34,
      "dz": 0.0,
-     "H": 155.3
+     "H": 155.6
     },
     {
      "point": "B6",
-     "launch": 155.2,
-     "burst": 155.2,
-     "end": 157.65,
+     "launch": 155.7,
+     "burst": 155.7,
+     "end": 159.44,
      "dz": 0.0,
-     "H": 155.2
+     "H": 155.7
     },
     {
      "point": "B7",
-     "launch": 155.1,
-     "burst": 155.1,
-     "end": 157.55,
+     "launch": 155.8,
+     "burst": 155.8,
+     "end": 159.54,
      "dz": 0.0,
-     "H": 155.1
+     "H": 155.8
     }
    ],
    "H0": 155.1,
@@ -23626,13 +23678,13 @@
     "low": []
    },
    "baseOf": [
-    "B01_C247",
-    "B01_C248"
+    "B01_C248",
+    "B01_C249"
    ],
-   "dir": "outside-in"
+   "dir": "left"
   },
   {
-   "id": "B01_C250",
+   "id": "B01_C251",
    "section": "B01_S12",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -23735,7 +23787,7 @@
    }
   },
   {
-   "id": "B01_C251",
+   "id": "B01_C252",
    "section": "B01_S12",
    "sp": "R5",
    "templateId": "R03_Red5",
@@ -23838,7 +23890,7 @@
    }
   },
   {
-   "id": "B01_C252",
+   "id": "B01_C253",
    "section": "B01_S12",
    "sp": "GY",
    "templateId": "R03_GoldChry",
@@ -23957,10 +24009,10 @@
    }
   },
   {
-   "id": "B01_C253",
+   "id": "B01_C254",
    "section": "B01_S12",
-   "sp": "R9R",
-   "templateId": "R03_Red9R",
+   "sp": "R5",
+   "templateId": "R03_Red5",
    "size": "F",
    "group": "B",
    "points": [
@@ -23977,47 +24029,47 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 右→左 · 红彗星·九束右扫",
-   "name": "终章 · 托底 · 右→左 · 红彗星·九束右扫",
+   "label": "托底 · 外→里 · 红彗星·五束",
+   "name": "终章 · 托底 · 外→里 · 红彗星·五束",
    "wave": "托底扇",
    "events": [
     {
      "point": "B0",
-     "launch": 160.5,
-     "burst": 160.5,
-     "end": 164.24,
+     "launch": 159.8,
+     "burst": 159.8,
+     "end": 162.9,
      "dz": 0.0,
-     "H": 160.5
+     "H": 159.8
     },
     {
      "point": "B1",
-     "launch": 160.4,
-     "burst": 160.4,
-     "end": 164.14,
+     "launch": 159.9,
+     "burst": 159.9,
+     "end": 163.0,
      "dz": 0.0,
-     "H": 160.4
+     "H": 159.9
     },
     {
      "point": "B2",
-     "launch": 160.3,
-     "burst": 160.3,
-     "end": 164.04,
+     "launch": 160.0,
+     "burst": 160.0,
+     "end": 163.1,
      "dz": 0.0,
-     "H": 160.3
+     "H": 160.0
     },
     {
      "point": "B3",
-     "launch": 160.2,
-     "burst": 160.2,
-     "end": 163.94,
+     "launch": 160.1,
+     "burst": 160.1,
+     "end": 163.2,
      "dz": 0.0,
-     "H": 160.2
+     "H": 160.1
     },
     {
      "point": "B4",
      "launch": 160.1,
      "burst": 160.1,
-     "end": 163.84,
+     "end": 163.2,
      "dz": 0.0,
      "H": 160.1
     },
@@ -24025,7 +24077,7 @@
      "point": "B5",
      "launch": 160.0,
      "burst": 160.0,
-     "end": 163.74,
+     "end": 163.1,
      "dz": 0.0,
      "H": 160.0
     },
@@ -24033,7 +24085,7 @@
      "point": "B6",
      "launch": 159.9,
      "burst": 159.9,
-     "end": 163.64,
+     "end": 163.0,
      "dz": 0.0,
      "H": 159.9
     },
@@ -24041,7 +24093,7 @@
      "point": "B7",
      "launch": 159.8,
      "burst": 159.8,
-     "end": 163.54,
+     "end": 162.9,
      "dz": 0.0,
      "H": 159.8
     }
@@ -24059,12 +24111,12 @@
     "low": []
    },
    "baseOf": [
-    "B01_C252"
+    "B01_C253"
    ],
-   "dir": "right"
+   "dir": "outside-in"
   },
   {
-   "id": "B01_C254",
+   "id": "B01_C255",
    "section": "B01_S12",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -24183,7 +24235,7 @@
    }
   },
   {
-   "id": "B01_C255",
+   "id": "B01_C256",
    "section": "B01_S12",
    "sp": "ST",
    "templateId": "R03_Strobe",
@@ -24291,11 +24343,11 @@
    }
   },
   {
-   "id": "B01_C256",
+   "id": "B01_C257",
    "section": "B01_S12",
-   "sp": "ML",
-   "templateId": "R03_MultiLayerChry",
-   "size": "M",
+   "sp": "MLL",
+   "templateId": "R03_MultiLayerChry_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -24312,79 +24364,79 @@
    "gap": 0.2,
    "layer": "main",
    "tier": "trim",
-   "label": "多重菊",
-   "name": "终章 · 多重菊",
+   "label": "多重菊·大",
+   "name": "终章 · 多重菊·大",
    "wave": "整排9",
    "events": [
     {
      "point": "P0",
-     "launch": 163.0,
-     "burst": 167.3772,
-     "end": 171.6105,
+     "launch": 160.0,
+     "burst": 167.3651,
+     "end": 171.5984,
      "dz": -8.7,
      "H": 167.34
     },
     {
      "point": "P1",
-     "launch": 163.2,
-     "burst": 167.5772,
-     "end": 171.8105,
+     "launch": 160.2,
+     "burst": 167.5651,
+     "end": 171.7984,
      "dz": 0.1,
      "H": 167.54
     },
     {
      "point": "P2",
-     "launch": 163.4,
-     "burst": 167.7772,
-     "end": 172.0105,
+     "launch": 160.4,
+     "burst": 167.7651,
+     "end": 171.9984,
      "dz": 8.2,
      "H": 167.74
     },
     {
      "point": "P3",
-     "launch": 163.6,
-     "burst": 167.9772,
-     "end": 172.2105,
+     "launch": 160.6,
+     "burst": 167.9651,
+     "end": 172.1984,
      "dz": 14.1,
      "H": 167.94
     },
     {
      "point": "P4",
-     "launch": 163.8,
-     "burst": 168.1772,
-     "end": 172.4105,
+     "launch": 160.8,
+     "burst": 168.1651,
+     "end": 172.3984,
      "dz": 16.2,
      "H": 168.14
     },
     {
      "point": "P5",
-     "launch": 164.0,
-     "burst": 168.3772,
-     "end": 172.6105,
+     "launch": 161.0,
+     "burst": 168.3651,
+     "end": 172.5984,
      "dz": 14.1,
      "H": 168.34
     },
     {
      "point": "P6",
-     "launch": 164.2,
-     "burst": 168.5772,
-     "end": 172.8105,
+     "launch": 161.2,
+     "burst": 168.5651,
+     "end": 172.7984,
      "dz": 8.2,
      "H": 168.54
     },
     {
      "point": "P7",
-     "launch": 164.4,
-     "burst": 168.7772,
-     "end": 173.0105,
+     "launch": 161.4,
+     "burst": 168.7651,
+     "end": 172.9984,
      "dz": 0.1,
      "H": 168.74
     },
     {
      "point": "P8",
-     "launch": 164.6,
-     "burst": 168.9772,
-     "end": 173.2105,
+     "launch": 161.6,
+     "burst": 168.9651,
+     "end": 173.1984,
      "dz": -8.7,
      "H": 168.94
     }
@@ -24410,63 +24462,118 @@
    }
   },
   {
-   "id": "B01_C257",
+   "id": "B01_C258",
    "section": "B01_S12",
-   "sp": "R1",
-   "templateId": "R03_Red1",
+   "sp": "R9",
+   "templateId": "R03_Red9",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
+    "B1",
+    "B2",
     "B3",
-    "B4"
+    "B4",
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·单束（2 点）",
-   "name": "终章 · 托底 · 左→右 · 红彗星·单束（2 点）",
+   "label": "托底 · 左→右 · 红彗星·九束左扫",
+   "name": "终章 · 托底 · 左→右 · 红彗星·九束左扫",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B3",
-     "launch": 163.7,
-     "burst": 163.7,
-     "end": 166.8,
+     "point": "B0",
+     "launch": 160.1,
+     "burst": 160.1,
+     "end": 163.84,
      "dz": 0.0,
-     "H": 163.7
+     "H": 160.1
+    },
+    {
+     "point": "B1",
+     "launch": 160.3,
+     "burst": 160.3,
+     "end": 164.04,
+     "dz": 0.0,
+     "H": 160.3
+    },
+    {
+     "point": "B2",
+     "launch": 160.5,
+     "burst": 160.5,
+     "end": 164.24,
+     "dz": 0.0,
+     "H": 160.5
+    },
+    {
+     "point": "B3",
+     "launch": 160.7,
+     "burst": 160.7,
+     "end": 164.44,
+     "dz": 0.0,
+     "H": 160.7
     },
     {
      "point": "B4",
-     "launch": 163.9,
-     "burst": 163.9,
-     "end": 167.0,
+     "launch": 160.9,
+     "burst": 160.9,
+     "end": 164.64,
      "dz": 0.0,
-     "H": 163.9
+     "H": 160.9
+    },
+    {
+     "point": "B5",
+     "launch": 161.1,
+     "burst": 161.1,
+     "end": 164.84,
+     "dz": 0.0,
+     "H": 161.1
+    },
+    {
+     "point": "B6",
+     "launch": 161.3,
+     "burst": 161.3,
+     "end": 165.04,
+     "dz": 0.0,
+     "H": 161.3
+    },
+    {
+     "point": "B7",
+     "launch": 161.5,
+     "burst": 161.5,
+     "end": 165.24,
+     "dz": 0.0,
+     "H": 161.5
     }
    ],
-   "H0": 163.7,
+   "H0": 160.1,
    "profiles": {
     "medium": [
+     "B1",
+     "B2",
      "B3",
-     "B4"
+     "B4",
+     "B5",
+     "B6"
     ],
-    "low": [
-     "B3",
-     "B4"
-    ]
+    "low": []
    },
    "baseOf": [
-    "B01_C256"
+    "B01_C257"
    ],
    "dir": "left"
   },
   {
-   "id": "B01_C258",
+   "id": "B01_C259",
    "section": "B01_S12",
-   "sp": "GR",
-   "templateId": "R03_GoldRayChry",
-   "size": "M",
+   "sp": "GRL",
+   "templateId": "R03_GoldRayChry_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -24483,79 +24590,79 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "trim",
-   "label": "金芒菊",
-   "name": "终章 · 金芒菊",
+   "label": "金芒菊·大",
+   "name": "终章 · 金芒菊·大",
    "wave": "叠层",
    "events": [
     {
      "point": "P0",
-     "launch": 165.0,
-     "burst": 169.3772,
-     "end": 173.9372,
+     "launch": 162.0,
+     "burst": 169.3651,
+     "end": 173.9251,
      "dz": -8.7,
      "H": 169.3616
     },
     {
      "point": "P1",
-     "launch": 164.9,
-     "burst": 169.2772,
-     "end": 173.8372,
+     "launch": 161.9,
+     "burst": 169.2651,
+     "end": 173.8251,
      "dz": 0.1,
      "H": 169.2616
     },
     {
      "point": "P2",
-     "launch": 164.8,
-     "burst": 169.1772,
-     "end": 173.7372,
+     "launch": 161.8,
+     "burst": 169.1651,
+     "end": 173.7251,
      "dz": 8.2,
      "H": 169.1616
     },
     {
      "point": "P3",
-     "launch": 164.7,
-     "burst": 169.0772,
-     "end": 173.6372,
+     "launch": 161.7,
+     "burst": 169.0651,
+     "end": 173.6251,
      "dz": 14.1,
      "H": 169.0616
     },
     {
      "point": "P4",
-     "launch": 164.6,
-     "burst": 168.9772,
-     "end": 173.5372,
+     "launch": 161.6,
+     "burst": 168.9651,
+     "end": 173.5251,
      "dz": 16.2,
      "H": 168.9616
     },
     {
      "point": "P5",
-     "launch": 164.7,
-     "burst": 169.0772,
-     "end": 173.6372,
+     "launch": 161.7,
+     "burst": 169.0651,
+     "end": 173.6251,
      "dz": 14.1,
      "H": 169.0616
     },
     {
      "point": "P6",
-     "launch": 164.8,
-     "burst": 169.1772,
-     "end": 173.7372,
+     "launch": 161.8,
+     "burst": 169.1651,
+     "end": 173.7251,
      "dz": 8.2,
      "H": 169.1616
     },
     {
      "point": "P7",
-     "launch": 164.9,
-     "burst": 169.2772,
-     "end": 173.8372,
+     "launch": 161.9,
+     "burst": 169.2651,
+     "end": 173.8251,
      "dz": 0.1,
      "H": 169.2616
     },
     {
      "point": "P8",
-     "launch": 165.0,
-     "burst": 169.3772,
-     "end": 173.9372,
+     "launch": 162.0,
+     "burst": 169.3651,
+     "end": 173.9251,
      "dz": -8.7,
      "H": 169.3616
     }
@@ -24579,113 +24686,6 @@
      "P6"
     ]
    }
-  },
-  {
-   "id": "B01_C259",
-   "section": "B01_S12",
-   "sp": "R5",
-   "templateId": "R03_Red5",
-   "size": "F",
-   "group": "B",
-   "points": [
-    "B0",
-    "B1",
-    "B2",
-    "B3",
-    "B4",
-    "B5",
-    "B6",
-    "B7"
-   ],
-   "order": "source",
-   "gap": 0.0,
-   "layer": "extra",
-   "tier": "trim",
-   "label": "托底 · 里→外 · 红彗星·五束",
-   "name": "终章 · 托底 · 里→外 · 红彗星·五束",
-   "wave": "托底扇",
-   "events": [
-    {
-     "point": "B0",
-     "launch": 164.9,
-     "burst": 164.9,
-     "end": 168.0,
-     "dz": 0.0,
-     "H": 164.9
-    },
-    {
-     "point": "B1",
-     "launch": 164.9,
-     "burst": 164.9,
-     "end": 168.0,
-     "dz": 0.0,
-     "H": 164.9
-    },
-    {
-     "point": "B2",
-     "launch": 164.8,
-     "burst": 164.8,
-     "end": 167.9,
-     "dz": 0.0,
-     "H": 164.8
-    },
-    {
-     "point": "B3",
-     "launch": 164.6,
-     "burst": 164.6,
-     "end": 167.7,
-     "dz": 0.0,
-     "H": 164.6
-    },
-    {
-     "point": "B4",
-     "launch": 164.6,
-     "burst": 164.6,
-     "end": 167.7,
-     "dz": 0.0,
-     "H": 164.6
-    },
-    {
-     "point": "B5",
-     "launch": 164.8,
-     "burst": 164.8,
-     "end": 167.9,
-     "dz": 0.0,
-     "H": 164.8
-    },
-    {
-     "point": "B6",
-     "launch": 164.9,
-     "burst": 164.9,
-     "end": 168.0,
-     "dz": 0.0,
-     "H": 164.9
-    },
-    {
-     "point": "B7",
-     "launch": 164.9,
-     "burst": 164.9,
-     "end": 168.0,
-     "dz": 0.0,
-     "H": 164.9
-    }
-   ],
-   "H0": 164.6,
-   "profiles": {
-    "medium": [
-     "B1",
-     "B2",
-     "B3",
-     "B4",
-     "B5",
-     "B6"
-    ],
-    "low": []
-   },
-   "baseOf": [
-    "B01_C258"
-   ],
-   "dir": "center-out"
   },
   {
    "id": "B01_C260",
@@ -24918,8 +24918,8 @@
   {
    "id": "B01_C262",
    "section": "B01_S12",
-   "sp": "R9",
-   "templateId": "R03_Red9",
+   "sp": "R5",
+   "templateId": "R03_Red5",
    "size": "F",
    "group": "B",
    "points": [
@@ -24932,44 +24932,44 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·九束左扫（4 点）",
-   "name": "终章 · 托底 · 左→右 · 红彗星·九束左扫（4 点）",
+   "label": "托底 · 里→外 · 红彗星·五束（4 点）",
+   "name": "终章 · 托底 · 里→外 · 红彗星·五束（4 点）",
    "wave": "托底扇",
    "events": [
     {
      "point": "B1",
-     "launch": 163.3,
-     "burst": 163.3,
-     "end": 167.04,
+     "launch": 163.4,
+     "burst": 163.4,
+     "end": 166.5,
      "dz": 0.0,
-     "H": 163.3
+     "H": 163.4
     },
     {
      "point": "B3",
-     "launch": 163.5,
-     "burst": 163.5,
-     "end": 167.24,
+     "launch": 163.2,
+     "burst": 163.2,
+     "end": 166.3,
      "dz": 0.0,
-     "H": 163.5
+     "H": 163.2
     },
     {
      "point": "B4",
-     "launch": 163.6,
-     "burst": 163.6,
-     "end": 167.34,
+     "launch": 163.2,
+     "burst": 163.2,
+     "end": 166.3,
      "dz": 0.0,
-     "H": 163.6
+     "H": 163.2
     },
     {
      "point": "B6",
-     "launch": 163.8,
-     "burst": 163.8,
-     "end": 167.54,
+     "launch": 163.4,
+     "burst": 163.4,
+     "end": 166.5,
      "dz": 0.0,
-     "H": 163.8
+     "H": 163.4
     }
    ],
-   "H0": 163.3,
+   "H0": 163.2,
    "profiles": {
     "medium": [
      "B1",
@@ -24982,7 +24982,7 @@
    "baseOf": [
     "B01_C261"
    ],
-   "dir": "left"
+   "dir": "center-out"
   },
   {
    "id": "B01_C263",
@@ -25203,9 +25203,9 @@
   {
    "id": "B01_C266",
    "section": "B01_S12",
-   "sp": "CL",
-   "templateId": "R03_GoldCoreLime",
-   "size": "M",
+   "sp": "CLL",
+   "templateId": "R03_GoldCoreLime_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -25222,79 +25222,79 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "trim",
-   "label": "金蕊青柠星",
-   "name": "终章 · 金蕊青柠星",
+   "label": "金蕊青柠星·大",
+   "name": "终章 · 金蕊青柠星·大",
    "wave": "叠层",
    "events": [
     {
      "point": "P0",
-     "launch": 168.2,
-     "burst": 172.5772,
-     "end": 176.9772,
+     "launch": 165.2,
+     "burst": 172.5651,
+     "end": 176.9651,
      "dz": -8.7,
      "H": 172.6048
     },
     {
      "point": "P1",
-     "launch": 168.1,
-     "burst": 172.4772,
-     "end": 176.8772,
+     "launch": 165.1,
+     "burst": 172.4651,
+     "end": 176.8651,
      "dz": 0.1,
      "H": 172.5048
     },
     {
      "point": "P2",
-     "launch": 168.0,
-     "burst": 172.3772,
-     "end": 176.7772,
+     "launch": 165.0,
+     "burst": 172.3651,
+     "end": 176.7651,
      "dz": 8.2,
      "H": 172.4048
     },
     {
      "point": "P3",
-     "launch": 167.9,
-     "burst": 172.2772,
-     "end": 176.6772,
+     "launch": 164.9,
+     "burst": 172.2651,
+     "end": 176.6651,
      "dz": 14.1,
      "H": 172.3048
     },
     {
      "point": "P4",
-     "launch": 167.8,
-     "burst": 172.1772,
-     "end": 176.5772,
+     "launch": 164.8,
+     "burst": 172.1651,
+     "end": 176.5651,
      "dz": 16.2,
      "H": 172.2048
     },
     {
      "point": "P5",
-     "launch": 167.9,
-     "burst": 172.2772,
-     "end": 176.6772,
+     "launch": 164.9,
+     "burst": 172.2651,
+     "end": 176.6651,
      "dz": 14.1,
      "H": 172.3048
     },
     {
      "point": "P6",
-     "launch": 168.0,
-     "burst": 172.3772,
-     "end": 176.7772,
+     "launch": 165.0,
+     "burst": 172.3651,
+     "end": 176.7651,
      "dz": 8.2,
      "H": 172.4048
     },
     {
      "point": "P7",
-     "launch": 168.1,
-     "burst": 172.4772,
-     "end": 176.8772,
+     "launch": 165.1,
+     "burst": 172.4651,
+     "end": 176.8651,
      "dz": 0.1,
      "H": 172.5048
     },
     {
      "point": "P8",
-     "launch": 168.2,
-     "burst": 172.5772,
-     "end": 176.9772,
+     "launch": 165.2,
+     "burst": 172.5651,
+     "end": 176.9651,
      "dz": -8.7,
      "H": 172.6048
     }
@@ -25322,8 +25322,8 @@
   {
    "id": "B01_C267",
    "section": "B01_S12",
-   "sp": "R5",
-   "templateId": "R03_Red5",
+   "sp": "R9",
+   "templateId": "R03_Red9",
    "size": "F",
    "group": "B",
    "points": [
@@ -25340,76 +25340,76 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 红彗星·五束",
-   "name": "终章 · 托底 · 外→里 · 红彗星·五束",
+   "label": "托底 · 左→右 · 红彗星·九束左扫",
+   "name": "终章 · 托底 · 左→右 · 红彗星·九束左扫",
    "wave": "托底扇",
    "events": [
     {
      "point": "B0",
-     "launch": 167.9,
-     "burst": 167.9,
-     "end": 171.0,
+     "launch": 164.9,
+     "burst": 164.9,
+     "end": 168.64,
      "dz": 0.0,
-     "H": 167.9
+     "H": 164.9
     },
     {
      "point": "B1",
-     "launch": 168.0,
-     "burst": 168.0,
-     "end": 171.1,
+     "launch": 165.0,
+     "burst": 165.0,
+     "end": 168.74,
      "dz": 0.0,
-     "H": 168.0
+     "H": 165.0
     },
     {
      "point": "B2",
-     "launch": 168.1,
-     "burst": 168.1,
-     "end": 171.2,
+     "launch": 165.1,
+     "burst": 165.1,
+     "end": 168.84,
      "dz": 0.0,
-     "H": 168.1
+     "H": 165.1
     },
     {
      "point": "B3",
-     "launch": 168.2,
-     "burst": 168.2,
-     "end": 171.3,
+     "launch": 165.2,
+     "burst": 165.2,
+     "end": 168.94,
      "dz": 0.0,
-     "H": 168.2
+     "H": 165.2
     },
     {
      "point": "B4",
-     "launch": 168.2,
-     "burst": 168.2,
-     "end": 171.3,
+     "launch": 165.3,
+     "burst": 165.3,
+     "end": 169.04,
      "dz": 0.0,
-     "H": 168.2
+     "H": 165.3
     },
     {
      "point": "B5",
-     "launch": 168.1,
-     "burst": 168.1,
-     "end": 171.2,
+     "launch": 165.4,
+     "burst": 165.4,
+     "end": 169.14,
      "dz": 0.0,
-     "H": 168.1
+     "H": 165.4
     },
     {
      "point": "B6",
-     "launch": 168.0,
-     "burst": 168.0,
-     "end": 171.1,
+     "launch": 165.5,
+     "burst": 165.5,
+     "end": 169.24,
      "dz": 0.0,
-     "H": 168.0
+     "H": 165.5
     },
     {
      "point": "B7",
-     "launch": 167.9,
-     "burst": 167.9,
-     "end": 171.0,
+     "launch": 165.6,
+     "burst": 165.6,
+     "end": 169.34,
      "dz": 0.0,
-     "H": 167.9
+     "H": 165.6
     }
    ],
-   "H0": 167.9,
+   "H0": 164.9,
    "profiles": {
     "medium": [
      "B1",
@@ -25424,7 +25424,7 @@
    "baseOf": [
     "B01_C266"
    ],
-   "dir": "outside-in"
+   "dir": "left"
   },
   {
    "id": "B01_C268",
@@ -25651,27 +25651,57 @@
   {
    "id": "B01_C270",
    "section": "B01_S12",
-   "sp": "R5",
-   "templateId": "R03_Red5",
+   "sp": "R9",
+   "templateId": "R03_Red9",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
+    "B1",
+    "B2",
     "B3",
-    "B4"
+    "B4",
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·五束（2 点）",
-   "name": "终章 · 托底 · 左→右 · 红彗星·五束（2 点）",
+   "label": "托底 · 左→右 · 红彗星·九束左扫",
+   "name": "终章 · 托底 · 左→右 · 红彗星·九束左扫",
    "wave": "托底扇",
    "events": [
+    {
+     "point": "B0",
+     "launch": 169.6,
+     "burst": 169.6,
+     "end": 173.34,
+     "dz": 0.0,
+     "H": 169.6
+    },
+    {
+     "point": "B1",
+     "launch": 169.8,
+     "burst": 169.8,
+     "end": 173.54,
+     "dz": 0.0,
+     "H": 169.8
+    },
+    {
+     "point": "B2",
+     "launch": 170.2,
+     "burst": 170.2,
+     "end": 173.94,
+     "dz": 0.0,
+     "H": 170.2
+    },
     {
      "point": "B3",
      "launch": 170.4,
      "burst": 170.4,
-     "end": 173.5,
+     "end": 174.14,
      "dz": 0.0,
      "H": 170.4
     },
@@ -25679,21 +25709,46 @@
      "point": "B4",
      "launch": 170.8,
      "burst": 170.8,
-     "end": 173.9,
+     "end": 174.54,
      "dz": 0.0,
      "H": 170.8
+    },
+    {
+     "point": "B5",
+     "launch": 171.0,
+     "burst": 171.0,
+     "end": 174.74,
+     "dz": 0.0,
+     "H": 171.0
+    },
+    {
+     "point": "B6",
+     "launch": 171.3,
+     "burst": 171.3,
+     "end": 175.04,
+     "dz": 0.0,
+     "H": 171.3
+    },
+    {
+     "point": "B7",
+     "launch": 171.6,
+     "burst": 171.6,
+     "end": 175.34,
+     "dz": 0.0,
+     "H": 171.6
     }
    ],
-   "H0": 170.4,
+   "H0": 169.6,
    "profiles": {
     "medium": [
+     "B1",
+     "B2",
      "B3",
-     "B4"
+     "B4",
+     "B5",
+     "B6"
     ],
-    "low": [
-     "B3",
-     "B4"
-    ]
+    "low": []
    },
    "baseOf": [
     "B01_C269"
@@ -25703,8 +25758,8 @@
   {
    "id": "B01_C271",
    "section": "B01_S12",
-   "sp": "GK",
-   "templateId": "R03_GoldKamuro",
+   "sp": "GKH",
+   "templateId": "R03_GoldKamuro_H280",
    "size": "L",
    "group": "P",
    "points": [
@@ -25716,8 +25771,8 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "all",
-   "label": "三主角 金垂柳（P2 P4 P6）",
-   "name": "终章 · 三主角 金垂柳（P2 P4 P6）",
+   "label": "三主角 金垂柳 280（P2 P4 P6）",
+   "name": "终章 · 三主角 金垂柳 280（P2 P4 P6）",
    "wave": "三主角",
    "events": [
     {
@@ -25810,101 +25865,63 @@
   {
    "id": "B01_C273",
    "section": "B01_S12",
-   "sp": "R9R",
-   "templateId": "R03_Red9R",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 右→左 · 红彗星·九束右扫",
-   "name": "终章 · 托底 · 右→左 · 红彗星·九束右扫",
+   "label": "托底 · 外→里 · 银星·五束窄扇（4 点）",
+   "name": "终章 · 托底 · 外→里 · 银星·五束窄扇（4 点）",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B0",
-     "launch": 168.8,
-     "burst": 168.8,
-     "end": 172.54,
-     "dz": 0.0,
-     "H": 168.8
-    },
-    {
      "point": "B1",
-     "launch": 168.7,
-     "burst": 168.7,
-     "end": 172.44,
+     "launch": 168.2,
+     "burst": 168.2,
+     "end": 170.65,
      "dz": 0.0,
-     "H": 168.7
-    },
-    {
-     "point": "B2",
-     "launch": 168.6,
-     "burst": 168.6,
-     "end": 172.34,
-     "dz": 0.0,
-     "H": 168.6
+     "H": 168.2
     },
     {
      "point": "B3",
-     "launch": 168.5,
-     "burst": 168.5,
-     "end": 172.24,
+     "launch": 168.4,
+     "burst": 168.4,
+     "end": 170.85,
      "dz": 0.0,
-     "H": 168.5
+     "H": 168.4
     },
     {
      "point": "B4",
      "launch": 168.4,
      "burst": 168.4,
-     "end": 172.14,
+     "end": 170.85,
      "dz": 0.0,
      "H": 168.4
-    },
-    {
-     "point": "B5",
-     "launch": 168.3,
-     "burst": 168.3,
-     "end": 172.04,
-     "dz": 0.0,
-     "H": 168.3
     },
     {
      "point": "B6",
      "launch": 168.2,
      "burst": 168.2,
-     "end": 171.94,
+     "end": 170.65,
      "dz": 0.0,
      "H": 168.2
-    },
-    {
-     "point": "B7",
-     "launch": 168.1,
-     "burst": 168.1,
-     "end": 171.84,
-     "dz": 0.0,
-     "H": 168.1
     }
    ],
-   "H0": 168.1,
+   "H0": 168.2,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
@@ -25913,7 +25930,7 @@
     "B01_C271",
     "B01_C272"
    ],
-   "dir": "right"
+   "dir": "outside-in"
   },
   {
    "id": "B01_C274",
@@ -26140,54 +26157,71 @@
   {
    "id": "B01_C276",
    "section": "B01_S12",
-   "sp": "R1",
-   "templateId": "R03_Red1",
+   "sp": "R5",
+   "templateId": "R03_Red5",
    "size": "F",
    "group": "B",
    "points": [
+    "B1",
     "B3",
-    "B4"
+    "B4",
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 里→外 · 红彗星·单束（2 点）",
-   "name": "终章 · 托底 · 里→外 · 红彗星·单束（2 点）",
+   "label": "托底 · 右→左 · 红彗星·五束（4 点）",
+   "name": "终章 · 托底 · 右→左 · 红彗星·五束（4 点）",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B3",
-     "launch": 172.8,
-     "burst": 172.8,
-     "end": 175.9,
+     "point": "B1",
+     "launch": 173.4,
+     "burst": 173.4,
+     "end": 176.5,
      "dz": 0.0,
-     "H": 172.8
+     "H": 173.4
+    },
+    {
+     "point": "B3",
+     "launch": 173.2,
+     "burst": 173.2,
+     "end": 176.3,
+     "dz": 0.0,
+     "H": 173.2
     },
     {
      "point": "B4",
-     "launch": 172.8,
-     "burst": 172.8,
-     "end": 175.9,
+     "launch": 173.1,
+     "burst": 173.1,
+     "end": 176.2,
      "dz": 0.0,
-     "H": 172.8
+     "H": 173.1
+    },
+    {
+     "point": "B6",
+     "launch": 172.9,
+     "burst": 172.9,
+     "end": 176.0,
+     "dz": 0.0,
+     "H": 172.9
     }
    ],
-   "H0": 172.8,
+   "H0": 172.9,
    "profiles": {
     "medium": [
+     "B1",
      "B3",
-     "B4"
+     "B4",
+     "B6"
     ],
-    "low": [
-     "B3",
-     "B4"
-    ]
+    "low": []
    },
    "baseOf": [
     "B01_C275"
    ],
-   "dir": "center-out"
+   "dir": "right"
   },
   {
    "id": "B01_C277",
@@ -26419,101 +26453,63 @@
   {
    "id": "B01_C279",
    "section": "B01_S12",
-   "sp": "R9",
-   "templateId": "R03_Red9",
+   "sp": "S9",
+   "templateId": "R03_Silver9",
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·九束左扫",
-   "name": "终章 · 托底 · 左→右 · 红彗星·九束左扫",
+   "label": "托底 · 里→外 · 银星·九束展开",
+   "name": "终章 · 托底 · 里→外 · 银星·九束展开",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B0",
-     "launch": 174.4,
-     "burst": 174.4,
-     "end": 178.14,
-     "dz": 0.0,
-     "H": 174.4
-    },
-    {
      "point": "B1",
-     "launch": 174.5,
-     "burst": 174.5,
-     "end": 178.24,
-     "dz": 0.0,
-     "H": 174.5
-    },
-    {
-     "point": "B2",
      "launch": 174.6,
      "burst": 174.6,
-     "end": 178.34,
+     "end": 177.37,
      "dz": 0.0,
      "H": 174.6
     },
     {
      "point": "B3",
-     "launch": 174.7,
-     "burst": 174.7,
-     "end": 178.44,
+     "launch": 174.4,
+     "burst": 174.4,
+     "end": 177.17,
      "dz": 0.0,
-     "H": 174.7
+     "H": 174.4
     },
     {
      "point": "B4",
-     "launch": 174.8,
-     "burst": 174.8,
-     "end": 178.54,
+     "launch": 174.4,
+     "burst": 174.4,
+     "end": 177.17,
      "dz": 0.0,
-     "H": 174.8
-    },
-    {
-     "point": "B5",
-     "launch": 174.9,
-     "burst": 174.9,
-     "end": 178.64,
-     "dz": 0.0,
-     "H": 174.9
+     "H": 174.4
     },
     {
      "point": "B6",
-     "launch": 175.0,
-     "burst": 175.0,
-     "end": 178.74,
+     "launch": 174.6,
+     "burst": 174.6,
+     "end": 177.37,
      "dz": 0.0,
-     "H": 175.0
-    },
-    {
-     "point": "B7",
-     "launch": 175.1,
-     "burst": 175.1,
-     "end": 178.84,
-     "dz": 0.0,
-     "H": 175.1
+     "H": 174.6
     }
    ],
    "H0": 174.4,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
@@ -26521,7 +26517,7 @@
    "baseOf": [
     "B01_C278"
    ],
-   "dir": "left"
+   "dir": "center-out"
   },
   {
    "id": "B01_C280",
@@ -26781,63 +26777,101 @@
   {
    "id": "B01_C283",
    "section": "B01_S12",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
+   "sp": "R9",
+   "templateId": "R03_Red9",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
     "B1",
+    "B2",
     "B3",
     "B4",
-    "B6"
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 银星·五束窄扇（4 点）",
-   "name": "终章 · 托底 · 外→里 · 银星·五束窄扇（4 点）",
+   "label": "托底 · 左→右 · 红彗星·九束左扫",
+   "name": "终章 · 托底 · 左→右 · 红彗星·九束左扫",
    "wave": "托底扇",
    "events": [
+    {
+     "point": "B0",
+     "launch": 172.9,
+     "burst": 172.9,
+     "end": 176.64,
+     "dz": 0.0,
+     "H": 172.9
+    },
     {
      "point": "B1",
      "launch": 173.0,
      "burst": 173.0,
-     "end": 175.45,
+     "end": 176.74,
      "dz": 0.0,
      "H": 173.0
+    },
+    {
+     "point": "B2",
+     "launch": 173.1,
+     "burst": 173.1,
+     "end": 176.84,
+     "dz": 0.0,
+     "H": 173.1
     },
     {
      "point": "B3",
      "launch": 173.2,
      "burst": 173.2,
-     "end": 175.65,
+     "end": 176.94,
      "dz": 0.0,
      "H": 173.2
     },
     {
      "point": "B4",
-     "launch": 173.2,
-     "burst": 173.2,
-     "end": 175.65,
+     "launch": 173.3,
+     "burst": 173.3,
+     "end": 177.04,
      "dz": 0.0,
-     "H": 173.2
+     "H": 173.3
+    },
+    {
+     "point": "B5",
+     "launch": 173.4,
+     "burst": 173.4,
+     "end": 177.14,
+     "dz": 0.0,
+     "H": 173.4
     },
     {
      "point": "B6",
-     "launch": 173.0,
-     "burst": 173.0,
-     "end": 175.45,
+     "launch": 173.5,
+     "burst": 173.5,
+     "end": 177.24,
      "dz": 0.0,
-     "H": 173.0
+     "H": 173.5
+    },
+    {
+     "point": "B7",
+     "launch": 173.6,
+     "burst": 173.6,
+     "end": 177.34,
+     "dz": 0.0,
+     "H": 173.6
     }
    ],
-   "H0": 173.0,
+   "H0": 172.9,
    "profiles": {
     "medium": [
      "B1",
+     "B2",
      "B3",
      "B4",
+     "B5",
      "B6"
     ],
     "low": []
@@ -26846,7 +26880,7 @@
     "B01_C281",
     "B01_C282"
    ],
-   "dir": "outside-in"
+   "dir": "left"
   },
   {
    "id": "B01_C284",
@@ -27100,101 +27134,63 @@
   {
    "id": "B01_C287",
    "section": "B01_S12",
-   "sp": "R9R",
-   "templateId": "R03_Red9R",
+   "sp": "R5",
+   "templateId": "R03_Red5",
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 右→左 · 红彗星·九束右扫",
-   "name": "终章 · 托底 · 右→左 · 红彗星·九束右扫",
+   "label": "托底 · 外→里 · 红彗星·五束（4 点）",
+   "name": "终章 · 托底 · 外→里 · 红彗星·五束（4 点）",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B0",
-     "launch": 178.3,
-     "burst": 178.3,
-     "end": 182.04,
-     "dz": 0.0,
-     "H": 178.3
-    },
-    {
      "point": "B1",
-     "launch": 178.2,
-     "burst": 178.2,
-     "end": 181.94,
+     "launch": 177.7,
+     "burst": 177.7,
+     "end": 180.8,
      "dz": 0.0,
-     "H": 178.2
-    },
-    {
-     "point": "B2",
-     "launch": 178.1,
-     "burst": 178.1,
-     "end": 181.84,
-     "dz": 0.0,
-     "H": 178.1
+     "H": 177.7
     },
     {
      "point": "B3",
-     "launch": 178.0,
-     "burst": 178.0,
-     "end": 181.74,
+     "launch": 177.9,
+     "burst": 177.9,
+     "end": 181.0,
      "dz": 0.0,
-     "H": 178.0
+     "H": 177.9
     },
     {
      "point": "B4",
      "launch": 177.9,
      "burst": 177.9,
-     "end": 181.64,
+     "end": 181.0,
      "dz": 0.0,
      "H": 177.9
-    },
-    {
-     "point": "B5",
-     "launch": 177.8,
-     "burst": 177.8,
-     "end": 181.54,
-     "dz": 0.0,
-     "H": 177.8
     },
     {
      "point": "B6",
      "launch": 177.7,
      "burst": 177.7,
-     "end": 181.44,
+     "end": 180.8,
      "dz": 0.0,
      "H": 177.7
-    },
-    {
-     "point": "B7",
-     "launch": 177.6,
-     "burst": 177.6,
-     "end": 181.34,
-     "dz": 0.0,
-     "H": 177.6
     }
    ],
-   "H0": 177.6,
+   "H0": 177.7,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
@@ -27202,7 +27198,7 @@
    "baseOf": [
     "B01_C286"
    ],
-   "dir": "right"
+   "dir": "outside-in"
   },
   {
    "id": "B01_C288",
@@ -27536,9 +27532,9 @@
   {
    "id": "B01_C291",
    "section": "B01_S12",
-   "sp": "CL",
-   "templateId": "R03_GoldCoreLime",
-   "size": "M",
+   "sp": "CLL",
+   "templateId": "R03_GoldCoreLime_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -27555,79 +27551,79 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "trim",
-   "label": "金蕊青柠星",
-   "name": "终章 · 金蕊青柠星",
+   "label": "金蕊青柠星·大",
+   "name": "终章 · 金蕊青柠星·大",
    "wave": "整排9",
    "events": [
     {
      "point": "P0",
-     "launch": 180.8,
-     "burst": 185.1772,
-     "end": 189.5772,
+     "launch": 177.8,
+     "burst": 185.1651,
+     "end": 189.5651,
      "dz": 0.0,
      "H": 185.1776
     },
     {
      "point": "P1",
-     "launch": 180.8,
-     "burst": 185.1772,
-     "end": 189.5772,
+     "launch": 177.8,
+     "burst": 185.1651,
+     "end": 189.5651,
      "dz": 20.8,
      "H": 185.1776
     },
     {
      "point": "P2",
-     "launch": 180.8,
-     "burst": 185.1772,
-     "end": 189.5772,
+     "launch": 177.8,
+     "burst": 185.1651,
+     "end": 189.5651,
      "dz": 23.1,
      "H": 185.1776
     },
     {
      "point": "P3",
-     "launch": 180.8,
-     "burst": 185.1772,
-     "end": 189.5772,
+     "launch": 177.8,
+     "burst": 185.1651,
+     "end": 189.5651,
      "dz": 4.9,
      "H": 185.1776
     },
     {
      "point": "P4",
-     "launch": 180.8,
-     "burst": 185.1772,
-     "end": 189.5772,
+     "launch": 177.8,
+     "burst": 185.1651,
+     "end": 189.5651,
      "dz": -17.7,
      "H": 185.1776
     },
     {
      "point": "P5",
-     "launch": 180.8,
-     "burst": 185.1772,
-     "end": 189.5772,
+     "launch": 177.8,
+     "burst": 185.1651,
+     "end": 189.5651,
      "dz": -24.5,
      "H": 185.1776
     },
     {
      "point": "P6",
-     "launch": 180.8,
-     "burst": 185.1772,
-     "end": 189.5772,
+     "launch": 177.8,
+     "burst": 185.1651,
+     "end": 189.5651,
      "dz": -9.6,
      "H": 185.1776
     },
     {
      "point": "P7",
-     "launch": 180.8,
-     "burst": 185.1772,
-     "end": 189.5772,
+     "launch": 177.8,
+     "burst": 185.1651,
+     "end": 189.5651,
      "dz": 13.9,
      "H": 185.1776
     },
     {
      "point": "P8",
-     "launch": 180.8,
-     "burst": 185.1772,
-     "end": 189.5772,
+     "launch": 177.8,
+     "burst": 185.1651,
+     "end": 189.5651,
      "dz": 25.0,
      "H": 185.1776
     }
@@ -27655,63 +27651,101 @@
   {
    "id": "B01_C292",
    "section": "B01_S12",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
+   "sp": "R9R",
+   "templateId": "R03_Red9R",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
     "B1",
+    "B2",
     "B3",
     "B4",
-    "B6"
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 里→外 · 银星·五束窄扇（4 点）",
-   "name": "终章 · 托底 · 里→外 · 银星·五束窄扇（4 点）",
+   "label": "托底 · 右→左 · 红彗星·九束右扫",
+   "name": "终章 · 托底 · 右→左 · 红彗星·九束右扫",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B1",
-     "launch": 181.0,
-     "burst": 181.0,
-     "end": 183.45,
+     "point": "B0",
+     "launch": 178.5,
+     "burst": 178.5,
+     "end": 182.24,
      "dz": 0.0,
-     "H": 181.0
+     "H": 178.5
+    },
+    {
+     "point": "B1",
+     "launch": 178.4,
+     "burst": 178.4,
+     "end": 182.14,
+     "dz": 0.0,
+     "H": 178.4
+    },
+    {
+     "point": "B2",
+     "launch": 178.3,
+     "burst": 178.3,
+     "end": 182.04,
+     "dz": 0.0,
+     "H": 178.3
     },
     {
      "point": "B3",
-     "launch": 180.8,
-     "burst": 180.8,
-     "end": 183.25,
+     "launch": 178.2,
+     "burst": 178.2,
+     "end": 181.94,
      "dz": 0.0,
-     "H": 180.8
+     "H": 178.2
     },
     {
      "point": "B4",
-     "launch": 180.8,
-     "burst": 180.8,
-     "end": 183.25,
+     "launch": 178.1,
+     "burst": 178.1,
+     "end": 181.84,
      "dz": 0.0,
-     "H": 180.8
+     "H": 178.1
+    },
+    {
+     "point": "B5",
+     "launch": 178.0,
+     "burst": 178.0,
+     "end": 181.74,
+     "dz": 0.0,
+     "H": 178.0
     },
     {
      "point": "B6",
-     "launch": 181.0,
-     "burst": 181.0,
-     "end": 183.45,
+     "launch": 177.9,
+     "burst": 177.9,
+     "end": 181.64,
      "dz": 0.0,
-     "H": 181.0
+     "H": 177.9
+    },
+    {
+     "point": "B7",
+     "launch": 177.8,
+     "burst": 177.8,
+     "end": 181.54,
+     "dz": 0.0,
+     "H": 177.8
     }
    ],
-   "H0": 180.8,
+   "H0": 177.8,
    "profiles": {
     "medium": [
      "B1",
+     "B2",
      "B3",
      "B4",
+     "B5",
      "B6"
     ],
     "low": []
@@ -27719,7 +27753,7 @@
    "baseOf": [
     "B01_C291"
    ],
-   "dir": "center-out"
+   "dir": "right"
   },
   {
    "id": "B01_C293",
@@ -27827,9 +27861,9 @@
   {
    "id": "B01_C294",
    "section": "B01_S12",
-   "sp": "GR",
-   "templateId": "R03_GoldRayChry",
-   "size": "M",
+   "sp": "GRL",
+   "templateId": "R03_GoldRayChry_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -27846,79 +27880,79 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "all",
-   "label": "金芒菊",
-   "name": "终章 · 金芒菊",
+   "label": "金芒菊·大",
+   "name": "终章 · 金芒菊·大",
    "wave": "金墙",
    "events": [
     {
      "point": "P0",
-     "launch": 182.8,
-     "burst": 187.1772,
-     "end": 191.7372,
+     "launch": 179.8,
+     "burst": 187.1651,
+     "end": 191.7251,
      "dz": 0.0,
      "H": 187.1992
     },
     {
      "point": "P1",
-     "launch": 182.7,
-     "burst": 187.0772,
-     "end": 191.6372,
+     "launch": 179.7,
+     "burst": 187.0651,
+     "end": 191.6251,
      "dz": 0.0,
      "H": 187.0992
     },
     {
      "point": "P2",
-     "launch": 182.6,
-     "burst": 186.9772,
-     "end": 191.5372,
+     "launch": 179.6,
+     "burst": 186.9651,
+     "end": 191.5251,
      "dz": 0.0,
      "H": 186.9992
     },
     {
      "point": "P3",
-     "launch": 182.5,
-     "burst": 186.8772,
-     "end": 191.4372,
+     "launch": 179.5,
+     "burst": 186.8651,
+     "end": 191.4251,
      "dz": 0.0,
      "H": 186.8992
     },
     {
      "point": "P4",
-     "launch": 182.4,
-     "burst": 186.7772,
-     "end": 191.3372,
+     "launch": 179.4,
+     "burst": 186.7651,
+     "end": 191.3251,
      "dz": 0.0,
      "H": 186.7992
     },
     {
      "point": "P5",
-     "launch": 182.5,
-     "burst": 186.8772,
-     "end": 191.4372,
+     "launch": 179.5,
+     "burst": 186.8651,
+     "end": 191.4251,
      "dz": 0.0,
      "H": 186.8992
     },
     {
      "point": "P6",
-     "launch": 182.6,
-     "burst": 186.9772,
-     "end": 191.5372,
+     "launch": 179.6,
+     "burst": 186.9651,
+     "end": 191.5251,
      "dz": 0.0,
      "H": 186.9992
     },
     {
      "point": "P7",
-     "launch": 182.7,
-     "burst": 187.0772,
-     "end": 191.6372,
+     "launch": 179.7,
+     "burst": 187.0651,
+     "end": 191.6251,
      "dz": 0.0,
      "H": 187.0992
     },
     {
      "point": "P8",
-     "launch": 182.8,
-     "burst": 187.1772,
-     "end": 191.7372,
+     "launch": 179.8,
+     "burst": 187.1651,
+     "end": 191.7251,
      "dz": 0.0,
      "H": 187.1992
     }
@@ -27952,101 +27986,63 @@
   {
    "id": "B01_C295",
    "section": "B01_S12",
-   "sp": "R9",
-   "templateId": "R03_Red9",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·九束左扫",
-   "name": "终章 · 托底 · 左→右 · 红彗星·九束左扫",
+   "label": "托底 · 里→外 · 银星·五束窄扇（4 点）",
+   "name": "终章 · 托底 · 里→外 · 银星·五束窄扇（4 点）",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B0",
-     "launch": 182.4,
-     "burst": 182.4,
-     "end": 186.14,
-     "dz": 0.0,
-     "H": 182.4
-    },
-    {
      "point": "B1",
-     "launch": 182.5,
-     "burst": 182.5,
-     "end": 186.24,
+     "launch": 179.6,
+     "burst": 179.6,
+     "end": 182.05,
      "dz": 0.0,
-     "H": 182.5
-    },
-    {
-     "point": "B2",
-     "launch": 182.6,
-     "burst": 182.6,
-     "end": 186.34,
-     "dz": 0.0,
-     "H": 182.6
+     "H": 179.6
     },
     {
      "point": "B3",
-     "launch": 182.7,
-     "burst": 182.7,
-     "end": 186.44,
+     "launch": 179.4,
+     "burst": 179.4,
+     "end": 181.85,
      "dz": 0.0,
-     "H": 182.7
+     "H": 179.4
     },
     {
      "point": "B4",
-     "launch": 182.8,
-     "burst": 182.8,
-     "end": 186.54,
+     "launch": 179.4,
+     "burst": 179.4,
+     "end": 181.85,
      "dz": 0.0,
-     "H": 182.8
-    },
-    {
-     "point": "B5",
-     "launch": 182.9,
-     "burst": 182.9,
-     "end": 186.64,
-     "dz": 0.0,
-     "H": 182.9
+     "H": 179.4
     },
     {
      "point": "B6",
-     "launch": 183.0,
-     "burst": 183.0,
-     "end": 186.74,
+     "launch": 179.6,
+     "burst": 179.6,
+     "end": 182.05,
      "dz": 0.0,
-     "H": 183.0
-    },
-    {
-     "point": "B7",
-     "launch": 183.1,
-     "burst": 183.1,
-     "end": 186.84,
-     "dz": 0.0,
-     "H": 183.1
+     "H": 179.6
     }
    ],
-   "H0": 182.4,
+   "H0": 179.4,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
@@ -28054,7 +28050,7 @@
    "baseOf": [
     "B01_C294"
    ],
-   "dir": "left"
+   "dir": "center-out"
   },
   {
    "id": "B01_C296",
@@ -28178,63 +28174,101 @@
   {
    "id": "B01_C297",
    "section": "B01_S12",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
+   "sp": "R9",
+   "templateId": "R03_Red9",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
     "B1",
+    "B2",
     "B3",
     "B4",
-    "B6"
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 银星·五束窄扇（4 点）",
-   "name": "终章 · 托底 · 外→里 · 银星·五束窄扇（4 点）",
+   "label": "托底 · 左→右 · 红彗星·九束左扫",
+   "name": "终章 · 托底 · 左→右 · 红彗星·九束左扫",
    "wave": "托底扇",
    "events": [
+    {
+     "point": "B0",
+     "launch": 184.0,
+     "burst": 184.0,
+     "end": 187.74,
+     "dz": 0.0,
+     "H": 184.0
+    },
     {
      "point": "B1",
      "launch": 184.1,
      "burst": 184.1,
-     "end": 186.55,
+     "end": 187.84,
      "dz": 0.0,
      "H": 184.1
+    },
+    {
+     "point": "B2",
+     "launch": 184.2,
+     "burst": 184.2,
+     "end": 187.94,
+     "dz": 0.0,
+     "H": 184.2
     },
     {
      "point": "B3",
      "launch": 184.3,
      "burst": 184.3,
-     "end": 186.75,
+     "end": 188.04,
      "dz": 0.0,
      "H": 184.3
     },
     {
      "point": "B4",
-     "launch": 184.3,
-     "burst": 184.3,
-     "end": 186.75,
+     "launch": 184.4,
+     "burst": 184.4,
+     "end": 188.14,
      "dz": 0.0,
-     "H": 184.3
+     "H": 184.4
+    },
+    {
+     "point": "B5",
+     "launch": 184.5,
+     "burst": 184.5,
+     "end": 188.24,
+     "dz": 0.0,
+     "H": 184.5
     },
     {
      "point": "B6",
-     "launch": 184.1,
-     "burst": 184.1,
-     "end": 186.55,
+     "launch": 184.6,
+     "burst": 184.6,
+     "end": 188.34,
      "dz": 0.0,
-     "H": 184.1
+     "H": 184.6
+    },
+    {
+     "point": "B7",
+     "launch": 184.7,
+     "burst": 184.7,
+     "end": 188.44,
+     "dz": 0.0,
+     "H": 184.7
     }
    ],
-   "H0": 184.1,
+   "H0": 184.0,
    "profiles": {
     "medium": [
      "B1",
+     "B2",
      "B3",
      "B4",
+     "B5",
      "B6"
     ],
     "low": []
@@ -28242,7 +28276,7 @@
    "baseOf": [
     "B01_C296"
    ],
-   "dir": "outside-in"
+   "dir": "left"
   },
   {
    "id": "B01_C298",
@@ -28355,9 +28389,9 @@
   {
    "id": "B01_C299",
    "section": "B01_S12",
-   "sp": "GR",
-   "templateId": "R03_GoldRayChry",
-   "size": "M",
+   "sp": "GRL",
+   "templateId": "R03_GoldRayChry_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -28374,79 +28408,79 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "all",
-   "label": "金芒菊",
-   "name": "终章 · 金芒菊",
+   "label": "金芒菊·大",
+   "name": "终章 · 金芒菊·大",
    "wave": "金墙",
    "events": [
     {
      "point": "P0",
-     "launch": 185.7,
-     "burst": 190.0772,
-     "end": 194.6372,
+     "launch": 182.7,
+     "burst": 190.0651,
+     "end": 194.6251,
      "dz": 0.0,
      "H": 190.0424
     },
     {
      "point": "P1",
-     "launch": 185.8,
-     "burst": 190.1772,
-     "end": 194.7372,
+     "launch": 182.8,
+     "burst": 190.1651,
+     "end": 194.7251,
      "dz": 0.0,
      "H": 190.1424
     },
     {
      "point": "P2",
-     "launch": 185.9,
-     "burst": 190.2772,
-     "end": 194.8372,
+     "launch": 182.9,
+     "burst": 190.2651,
+     "end": 194.8251,
      "dz": 0.0,
      "H": 190.2424
     },
     {
      "point": "P3",
-     "launch": 186.0,
-     "burst": 190.3772,
-     "end": 194.9372,
+     "launch": 183.0,
+     "burst": 190.3651,
+     "end": 194.9251,
      "dz": 0.0,
      "H": 190.3424
     },
     {
      "point": "P4",
-     "launch": 186.1,
-     "burst": 190.4772,
-     "end": 195.0372,
+     "launch": 183.1,
+     "burst": 190.4651,
+     "end": 195.0251,
      "dz": 0.0,
      "H": 190.4424
     },
     {
      "point": "P5",
-     "launch": 186.0,
-     "burst": 190.3772,
-     "end": 194.9372,
+     "launch": 183.0,
+     "burst": 190.3651,
+     "end": 194.9251,
      "dz": 0.0,
      "H": 190.3424
     },
     {
      "point": "P6",
-     "launch": 185.9,
-     "burst": 190.2772,
-     "end": 194.8372,
+     "launch": 182.9,
+     "burst": 190.2651,
+     "end": 194.8251,
      "dz": 0.0,
      "H": 190.2424
     },
     {
      "point": "P7",
-     "launch": 185.8,
-     "burst": 190.1772,
-     "end": 194.7372,
+     "launch": 182.8,
+     "burst": 190.1651,
+     "end": 194.7251,
      "dz": 0.0,
      "H": 190.1424
     },
     {
      "point": "P8",
-     "launch": 185.7,
-     "burst": 190.0772,
-     "end": 194.6372,
+     "launch": 182.7,
+     "burst": 190.0651,
+     "end": 194.6251,
      "dz": 0.0,
      "H": 190.0424
     }
@@ -28500,38 +28534,38 @@
    "events": [
     {
      "point": "B1",
-     "launch": 185.9,
-     "burst": 185.9,
-     "end": 188.35,
+     "launch": 182.9,
+     "burst": 182.9,
+     "end": 185.35,
      "dz": 0.0,
-     "H": 185.9
+     "H": 182.9
     },
     {
      "point": "B3",
-     "launch": 186.0,
-     "burst": 186.0,
-     "end": 188.45,
+     "launch": 183.0,
+     "burst": 183.0,
+     "end": 185.45,
      "dz": 0.0,
-     "H": 186.0
+     "H": 183.0
     },
     {
      "point": "B4",
-     "launch": 186.0,
-     "burst": 186.0,
-     "end": 188.45,
+     "launch": 183.0,
+     "burst": 183.0,
+     "end": 185.45,
      "dz": 0.0,
-     "H": 186.0
+     "H": 183.0
     },
     {
      "point": "B6",
-     "launch": 185.9,
-     "burst": 185.9,
-     "end": 188.35,
+     "launch": 182.9,
+     "burst": 182.9,
+     "end": 185.35,
      "dz": 0.0,
-     "H": 185.9
+     "H": 182.9
     }
    ],
-   "H0": 185.9,
+   "H0": 182.9,
    "profiles": {
     "medium": [
      "B1",
@@ -28668,113 +28702,6 @@
   {
    "id": "B01_C302",
    "section": "B01_S12",
-   "sp": "R9R",
-   "templateId": "R03_Red9R",
-   "size": "F",
-   "group": "B",
-   "points": [
-    "B0",
-    "B1",
-    "B2",
-    "B3",
-    "B4",
-    "B5",
-    "B6",
-    "B7"
-   ],
-   "order": "source",
-   "gap": 0.0,
-   "layer": "extra",
-   "tier": "trim",
-   "label": "托底 · 右→左 · 红彗星·九束右扫",
-   "name": "终章 · 托底 · 右→左 · 红彗星·九束右扫",
-   "wave": "托底扇",
-   "events": [
-    {
-     "point": "B0",
-     "launch": 188.1,
-     "burst": 188.1,
-     "end": 191.84,
-     "dz": 0.0,
-     "H": 188.1
-    },
-    {
-     "point": "B1",
-     "launch": 188.0,
-     "burst": 188.0,
-     "end": 191.74,
-     "dz": 0.0,
-     "H": 188.0
-    },
-    {
-     "point": "B2",
-     "launch": 187.9,
-     "burst": 187.9,
-     "end": 191.64,
-     "dz": 0.0,
-     "H": 187.9
-    },
-    {
-     "point": "B3",
-     "launch": 187.8,
-     "burst": 187.8,
-     "end": 191.54,
-     "dz": 0.0,
-     "H": 187.8
-    },
-    {
-     "point": "B4",
-     "launch": 187.7,
-     "burst": 187.7,
-     "end": 191.44,
-     "dz": 0.0,
-     "H": 187.7
-    },
-    {
-     "point": "B5",
-     "launch": 187.6,
-     "burst": 187.6,
-     "end": 191.34,
-     "dz": 0.0,
-     "H": 187.6
-    },
-    {
-     "point": "B6",
-     "launch": 187.5,
-     "burst": 187.5,
-     "end": 191.24,
-     "dz": 0.0,
-     "H": 187.5
-    },
-    {
-     "point": "B7",
-     "launch": 187.4,
-     "burst": 187.4,
-     "end": 191.14,
-     "dz": 0.0,
-     "H": 187.4
-    }
-   ],
-   "H0": 187.4,
-   "profiles": {
-    "medium": [
-     "B1",
-     "B2",
-     "B3",
-     "B4",
-     "B5",
-     "B6"
-    ],
-    "low": []
-   },
-   "baseOf": [
-    "B01_C301"
-   ],
-   "dir": "right"
-  },
-  {
-   "id": "B01_C303",
-   "section": "B01_S12",
    "sp": "GC",
    "templateId": "R03_GoldCrackle",
    "size": "S",
@@ -28876,11 +28803,11 @@
    }
   },
   {
-   "id": "B01_C304",
+   "id": "B01_C303",
    "section": "B01_S12",
-   "sp": "GR",
-   "templateId": "R03_GoldRayChry",
-   "size": "M",
+   "sp": "GRL",
+   "templateId": "R03_GoldRayChry_L230",
+   "size": "L",
    "group": "P",
    "points": [
     "P0",
@@ -28897,79 +28824,79 @@
    "gap": 0.1,
    "layer": "main",
    "tier": "all",
-   "label": "金芒菊",
-   "name": "终章 · 金芒菊",
+   "label": "金芒菊·大",
+   "name": "终章 · 金芒菊·大",
    "wave": "金墙",
    "events": [
     {
      "point": "P0",
-     "launch": 189.3,
-     "burst": 193.6772,
-     "end": 198.2372,
+     "launch": 186.3,
+     "burst": 193.6651,
+     "end": 198.2251,
      "dz": 0.0,
      "H": 193.6856
     },
     {
      "point": "P1",
-     "launch": 189.2,
-     "burst": 193.5772,
-     "end": 198.1372,
+     "launch": 186.2,
+     "burst": 193.5651,
+     "end": 198.1251,
      "dz": 0.0,
      "H": 193.5856
     },
     {
      "point": "P2",
-     "launch": 189.1,
-     "burst": 193.4772,
-     "end": 198.0372,
+     "launch": 186.1,
+     "burst": 193.4651,
+     "end": 198.0251,
      "dz": 0.0,
      "H": 193.4856
     },
     {
      "point": "P3",
-     "launch": 189.0,
-     "burst": 193.3772,
-     "end": 197.9372,
+     "launch": 186.0,
+     "burst": 193.3651,
+     "end": 197.9251,
      "dz": 0.0,
      "H": 193.3856
     },
     {
      "point": "P4",
-     "launch": 188.9,
-     "burst": 193.2772,
-     "end": 197.8372,
+     "launch": 185.9,
+     "burst": 193.2651,
+     "end": 197.8251,
      "dz": 0.0,
      "H": 193.2856
     },
     {
      "point": "P5",
-     "launch": 189.0,
-     "burst": 193.3772,
-     "end": 197.9372,
+     "launch": 186.0,
+     "burst": 193.3651,
+     "end": 197.9251,
      "dz": 0.0,
      "H": 193.3856
     },
     {
      "point": "P6",
-     "launch": 189.1,
-     "burst": 193.4772,
-     "end": 198.0372,
+     "launch": 186.1,
+     "burst": 193.4651,
+     "end": 198.0251,
      "dz": 0.0,
      "H": 193.4856
     },
     {
      "point": "P7",
-     "launch": 189.2,
-     "burst": 193.5772,
-     "end": 198.1372,
+     "launch": 186.2,
+     "burst": 193.5651,
+     "end": 198.1251,
      "dz": 0.0,
      "H": 193.5856
     },
     {
      "point": "P8",
-     "launch": 189.3,
-     "burst": 193.6772,
-     "end": 198.2372,
+     "launch": 186.3,
+     "burst": 193.6651,
+     "end": 198.2251,
      "dz": 0.0,
      "H": 193.6856
     }
@@ -29001,59 +28928,114 @@
    }
   },
   {
-   "id": "B01_C305",
+   "id": "B01_C304",
    "section": "B01_S12",
-   "sp": "R5",
-   "templateId": "R03_Red5",
+   "sp": "R9R",
+   "templateId": "R03_Red9R",
    "size": "F",
    "group": "B",
    "points": [
+    "B0",
+    "B1",
+    "B2",
     "B3",
-    "B4"
+    "B4",
+    "B5",
+    "B6",
+    "B7"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 里→外 · 红彗星·五束（2 点）",
-   "name": "终章 · 托底 · 里→外 · 红彗星·五束（2 点）",
+   "label": "托底 · 右→左 · 红彗星·九束右扫",
+   "name": "终章 · 托底 · 右→左 · 红彗星·九束右扫",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B3",
-     "launch": 188.9,
-     "burst": 188.9,
-     "end": 192.0,
+     "point": "B0",
+     "launch": 186.6,
+     "burst": 186.6,
+     "end": 190.34,
      "dz": 0.0,
-     "H": 188.9
+     "H": 186.6
+    },
+    {
+     "point": "B1",
+     "launch": 186.5,
+     "burst": 186.5,
+     "end": 190.24,
+     "dz": 0.0,
+     "H": 186.5
+    },
+    {
+     "point": "B2",
+     "launch": 186.4,
+     "burst": 186.4,
+     "end": 190.14,
+     "dz": 0.0,
+     "H": 186.4
+    },
+    {
+     "point": "B3",
+     "launch": 186.3,
+     "burst": 186.3,
+     "end": 190.04,
+     "dz": 0.0,
+     "H": 186.3
     },
     {
      "point": "B4",
-     "launch": 188.9,
-     "burst": 188.9,
-     "end": 192.0,
+     "launch": 186.2,
+     "burst": 186.2,
+     "end": 189.94,
      "dz": 0.0,
-     "H": 188.9
+     "H": 186.2
+    },
+    {
+     "point": "B5",
+     "launch": 186.1,
+     "burst": 186.1,
+     "end": 189.84,
+     "dz": 0.0,
+     "H": 186.1
+    },
+    {
+     "point": "B6",
+     "launch": 186.0,
+     "burst": 186.0,
+     "end": 189.74,
+     "dz": 0.0,
+     "H": 186.0
+    },
+    {
+     "point": "B7",
+     "launch": 185.9,
+     "burst": 185.9,
+     "end": 189.64,
+     "dz": 0.0,
+     "H": 185.9
     }
    ],
-   "H0": 188.9,
+   "H0": 185.9,
    "profiles": {
     "medium": [
+     "B1",
+     "B2",
      "B3",
-     "B4"
+     "B4",
+     "B5",
+     "B6"
     ],
-    "low": [
-     "B3",
-     "B4"
-    ]
+    "low": []
    },
    "baseOf": [
-    "B01_C304"
+    "B01_C303"
    ],
-   "dir": "center-out"
+   "dir": "right"
   },
   {
-   "id": "B01_C306",
+   "id": "B01_C305",
    "section": "B01_S12",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -29134,7 +29116,7 @@
    }
   },
   {
-   "id": "B01_C307",
+   "id": "B01_C306",
    "section": "B01_S12",
    "sp": "GR",
    "templateId": "R03_GoldRayChry",
@@ -29204,115 +29186,77 @@
    }
   },
   {
-   "id": "B01_C308",
+   "id": "B01_C307",
    "section": "B01_S12",
-   "sp": "R9",
-   "templateId": "R03_Red9",
+   "sp": "S9",
+   "templateId": "R03_Silver9",
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·九束左扫",
-   "name": "终章 · 托底 · 左→右 · 红彗星·九束左扫",
+   "label": "托底 · 里→外 · 银星·九束展开",
+   "name": "终章 · 托底 · 里→外 · 银星·九束展开",
    "wave": "托底扇",
    "events": [
-    {
-     "point": "B0",
-     "launch": 187.5,
-     "burst": 187.5,
-     "end": 191.24,
-     "dz": 0.0,
-     "H": 187.5
-    },
     {
      "point": "B1",
      "launch": 187.6,
      "burst": 187.6,
-     "end": 191.34,
+     "end": 190.37,
      "dz": 0.0,
      "H": 187.6
     },
     {
-     "point": "B2",
-     "launch": 187.7,
-     "burst": 187.7,
-     "end": 191.44,
-     "dz": 0.0,
-     "H": 187.7
-    },
-    {
      "point": "B3",
-     "launch": 187.8,
-     "burst": 187.8,
-     "end": 191.54,
+     "launch": 187.5,
+     "burst": 187.5,
+     "end": 190.27,
      "dz": 0.0,
-     "H": 187.8
+     "H": 187.5
     },
     {
      "point": "B4",
-     "launch": 187.9,
-     "burst": 187.9,
-     "end": 191.64,
+     "launch": 187.5,
+     "burst": 187.5,
+     "end": 190.27,
      "dz": 0.0,
-     "H": 187.9
-    },
-    {
-     "point": "B5",
-     "launch": 188.0,
-     "burst": 188.0,
-     "end": 191.74,
-     "dz": 0.0,
-     "H": 188.0
+     "H": 187.5
     },
     {
      "point": "B6",
-     "launch": 188.1,
-     "burst": 188.1,
-     "end": 191.84,
+     "launch": 187.6,
+     "burst": 187.6,
+     "end": 190.37,
      "dz": 0.0,
-     "H": 188.1
-    },
-    {
-     "point": "B7",
-     "launch": 188.2,
-     "burst": 188.2,
-     "end": 191.94,
-     "dz": 0.0,
-     "H": 188.2
+     "H": 187.6
     }
    ],
    "H0": 187.5,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
    },
    "baseOf": [
-    "B01_C306",
-    "B01_C307"
+    "B01_C305",
+    "B01_C306"
    ],
-   "dir": "left"
+   "dir": "center-out"
   },
   {
-   "id": "B01_C309",
+   "id": "B01_C308",
    "section": "B01_S12",
    "sp": "S13",
    "templateId": "R03_Silver13",
@@ -29360,7 +29304,7 @@
    }
   },
   {
-   "id": "B01_C310",
+   "id": "B01_C309",
    "section": "B01_S12",
    "sp": "GC",
    "templateId": "R03_GoldCrackle",
@@ -29463,7 +29407,7 @@
    }
   },
   {
-   "id": "B01_C311",
+   "id": "B01_C310",
    "section": "B01_S12",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -29588,10 +29532,10 @@
    }
   },
   {
-   "id": "B01_C312",
+   "id": "B01_C311",
    "section": "B01_S12",
-   "sp": "R5",
-   "templateId": "R03_Red5",
+   "sp": "R9",
+   "templateId": "R03_Red9",
    "size": "F",
    "group": "B",
    "points": [
@@ -29608,15 +29552,15 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 红彗星·五束",
-   "name": "终章 · 托底 · 外→里 · 红彗星·五束",
+   "label": "托底 · 左→右 · 红彗星·九束左扫",
+   "name": "终章 · 托底 · 左→右 · 红彗星·九束左扫",
    "wave": "托底扇",
    "events": [
     {
      "point": "B0",
      "launch": 189.2,
      "burst": 189.2,
-     "end": 192.3,
+     "end": 192.94,
      "dz": 0.0,
      "H": 189.2
     },
@@ -29624,7 +29568,7 @@
      "point": "B1",
      "launch": 189.3,
      "burst": 189.3,
-     "end": 192.4,
+     "end": 193.04,
      "dz": 0.0,
      "H": 189.3
     },
@@ -29632,7 +29576,7 @@
      "point": "B2",
      "launch": 189.4,
      "burst": 189.4,
-     "end": 192.5,
+     "end": 193.14,
      "dz": 0.0,
      "H": 189.4
     },
@@ -29640,41 +29584,41 @@
      "point": "B3",
      "launch": 189.5,
      "burst": 189.5,
-     "end": 192.6,
+     "end": 193.24,
      "dz": 0.0,
      "H": 189.5
     },
     {
      "point": "B4",
-     "launch": 189.5,
-     "burst": 189.5,
-     "end": 192.6,
+     "launch": 189.6,
+     "burst": 189.6,
+     "end": 193.34,
      "dz": 0.0,
-     "H": 189.5
+     "H": 189.6
     },
     {
      "point": "B5",
-     "launch": 189.4,
-     "burst": 189.4,
-     "end": 192.5,
+     "launch": 189.7,
+     "burst": 189.7,
+     "end": 193.44,
      "dz": 0.0,
-     "H": 189.4
+     "H": 189.7
     },
     {
      "point": "B6",
-     "launch": 189.3,
-     "burst": 189.3,
-     "end": 192.4,
+     "launch": 189.8,
+     "burst": 189.8,
+     "end": 193.54,
      "dz": 0.0,
-     "H": 189.3
+     "H": 189.8
     },
     {
      "point": "B7",
-     "launch": 189.2,
-     "burst": 189.2,
-     "end": 192.3,
+     "launch": 189.9,
+     "burst": 189.9,
+     "end": 193.64,
      "dz": 0.0,
-     "H": 189.2
+     "H": 189.9
     }
    ],
    "H0": 189.2,
@@ -29690,12 +29634,12 @@
     "low": []
    },
    "baseOf": [
-    "B01_C311"
+    "B01_C310"
    ],
-   "dir": "outside-in"
+   "dir": "left"
   },
   {
-   "id": "B01_C313",
+   "id": "B01_C312",
    "section": "B01_S12",
    "sp": "S13",
    "templateId": "R03_Silver13",
@@ -29743,7 +29687,7 @@
    }
   },
   {
-   "id": "B01_C314",
+   "id": "B01_C313",
    "section": "B01_S13",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -29868,10 +29812,10 @@
    }
   },
   {
-   "id": "B01_C315",
+   "id": "B01_C314",
    "section": "B01_S13",
-   "sp": "R9R",
-   "templateId": "R03_Red9R",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
    "size": "F",
    "group": "B",
    "points": [
@@ -29888,47 +29832,47 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 右→左 · 红彗星·九束右扫",
-   "name": "白色收束 · 托底 · 右→左 · 红彗星·九束右扫",
+   "label": "托底 · 外→里 · 银星·五束窄扇",
+   "name": "白色收束 · 托底 · 外→里 · 银星·五束窄扇",
    "wave": "托底扇",
    "events": [
     {
      "point": "B0",
-     "launch": 191.6,
-     "burst": 191.6,
-     "end": 195.34,
+     "launch": 190.9,
+     "burst": 190.9,
+     "end": 193.35,
      "dz": 0.0,
-     "H": 191.6
+     "H": 190.9
     },
     {
      "point": "B1",
-     "launch": 191.5,
-     "burst": 191.5,
-     "end": 195.24,
+     "launch": 191.0,
+     "burst": 191.0,
+     "end": 193.45,
      "dz": 0.0,
-     "H": 191.5
+     "H": 191.0
     },
     {
      "point": "B2",
-     "launch": 191.4,
-     "burst": 191.4,
-     "end": 195.14,
+     "launch": 191.1,
+     "burst": 191.1,
+     "end": 193.55,
      "dz": 0.0,
-     "H": 191.4
+     "H": 191.1
     },
     {
      "point": "B3",
-     "launch": 191.3,
-     "burst": 191.3,
-     "end": 195.04,
+     "launch": 191.2,
+     "burst": 191.2,
+     "end": 193.65,
      "dz": 0.0,
-     "H": 191.3
+     "H": 191.2
     },
     {
      "point": "B4",
      "launch": 191.2,
      "burst": 191.2,
-     "end": 194.94,
+     "end": 193.65,
      "dz": 0.0,
      "H": 191.2
     },
@@ -29936,7 +29880,7 @@
      "point": "B5",
      "launch": 191.1,
      "burst": 191.1,
-     "end": 194.84,
+     "end": 193.55,
      "dz": 0.0,
      "H": 191.1
     },
@@ -29944,7 +29888,7 @@
      "point": "B6",
      "launch": 191.0,
      "burst": 191.0,
-     "end": 194.74,
+     "end": 193.45,
      "dz": 0.0,
      "H": 191.0
     },
@@ -29952,7 +29896,7 @@
      "point": "B7",
      "launch": 190.9,
      "burst": 190.9,
-     "end": 194.64,
+     "end": 193.35,
      "dz": 0.0,
      "H": 190.9
     }
@@ -29970,12 +29914,12 @@
     "low": []
    },
    "baseOf": [
-    "B01_C314"
+    "B01_C313"
    ],
-   "dir": "right"
+   "dir": "outside-in"
   },
   {
-   "id": "B01_C316",
+   "id": "B01_C315",
    "section": "B01_S13",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -30100,10 +30044,10 @@
    }
   },
   {
-   "id": "B01_C317",
+   "id": "B01_C316",
    "section": "B01_S13",
-   "sp": "R5",
-   "templateId": "R03_Red5",
+   "sp": "R9R",
+   "templateId": "R03_Red9R",
    "size": "F",
    "group": "B",
    "points": [
@@ -30120,73 +30064,73 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 里→外 · 红彗星·五束",
-   "name": "白色收束 · 托底 · 里→外 · 红彗星·五束",
+   "label": "托底 · 右→左 · 红彗星·九束右扫",
+   "name": "白色收束 · 托底 · 右→左 · 红彗星·九束右扫",
    "wave": "托底扇",
    "events": [
     {
      "point": "B0",
+     "launch": 193.1,
+     "burst": 193.1,
+     "end": 196.84,
+     "dz": 0.0,
+     "H": 193.1
+    },
+    {
+     "point": "B1",
+     "launch": 193.0,
+     "burst": 193.0,
+     "end": 196.74,
+     "dz": 0.0,
+     "H": 193.0
+    },
+    {
+     "point": "B2",
+     "launch": 192.9,
+     "burst": 192.9,
+     "end": 196.64,
+     "dz": 0.0,
+     "H": 192.9
+    },
+    {
+     "point": "B3",
      "launch": 192.8,
      "burst": 192.8,
-     "end": 195.9,
+     "end": 196.54,
      "dz": 0.0,
      "H": 192.8
     },
     {
-     "point": "B1",
-     "launch": 192.6,
-     "burst": 192.6,
-     "end": 195.7,
-     "dz": 0.0,
-     "H": 192.6
-    },
-    {
-     "point": "B2",
-     "launch": 192.6,
-     "burst": 192.6,
-     "end": 195.7,
-     "dz": 0.0,
-     "H": 192.6
-    },
-    {
-     "point": "B3",
-     "launch": 192.4,
-     "burst": 192.4,
-     "end": 195.5,
-     "dz": 0.0,
-     "H": 192.4
-    },
-    {
      "point": "B4",
-     "launch": 192.4,
-     "burst": 192.4,
-     "end": 195.5,
+     "launch": 192.7,
+     "burst": 192.7,
+     "end": 196.44,
      "dz": 0.0,
-     "H": 192.4
+     "H": 192.7
     },
     {
      "point": "B5",
      "launch": 192.6,
      "burst": 192.6,
-     "end": 195.7,
+     "end": 196.34,
      "dz": 0.0,
      "H": 192.6
     },
     {
      "point": "B6",
-     "launch": 192.6,
-     "burst": 192.6,
-     "end": 195.7,
+     "launch": 192.5,
+     "burst": 192.5,
+     "end": 196.24,
      "dz": 0.0,
-     "H": 192.6
+     "H": 192.5
     },
     {
      "point": "B7",
-     "launch": 192.8,
-     "burst": 192.8,
-     "end": 195.9,
+     "launch": 192.4,
+     "burst": 192.4,
+     "end": 196.14,
      "dz": 0.0,
-     "H": 192.8
+     "H": 192.4
     }
    ],
    "H0": 192.4,
@@ -30202,12 +30146,12 @@
     "low": []
    },
    "baseOf": [
-    "B01_C316"
+    "B01_C315"
    ],
-   "dir": "center-out"
+   "dir": "right"
   },
   {
-   "id": "B01_C318",
+   "id": "B01_C317",
    "section": "B01_S13",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -30310,114 +30254,76 @@
    }
   },
   {
-   "id": "B01_C319",
+   "id": "B01_C318",
    "section": "B01_S13",
-   "sp": "R9",
-   "templateId": "R03_Red9",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
    "size": "F",
    "group": "B",
    "points": [
-    "B0",
     "B1",
-    "B2",
     "B3",
     "B4",
-    "B5",
-    "B6",
-    "B7"
+    "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 左→右 · 红彗星·九束左扫",
-   "name": "白色收束 · 托底 · 左→右 · 红彗星·九束左扫",
+   "label": "托底 · 里→外 · 银星·五束窄扇（4 点）",
+   "name": "白色收束 · 托底 · 里→外 · 银星·五束窄扇（4 点）",
    "wave": "托底扇",
    "events": [
     {
-     "point": "B0",
-     "launch": 194.0,
-     "burst": 194.0,
-     "end": 197.74,
-     "dz": 0.0,
-     "H": 194.0
-    },
-    {
      "point": "B1",
-     "launch": 194.1,
-     "burst": 194.1,
-     "end": 197.84,
-     "dz": 0.0,
-     "H": 194.1
-    },
-    {
-     "point": "B2",
      "launch": 194.2,
      "burst": 194.2,
-     "end": 197.94,
+     "end": 196.65,
      "dz": 0.0,
      "H": 194.2
     },
     {
      "point": "B3",
-     "launch": 194.3,
-     "burst": 194.3,
-     "end": 198.04,
+     "launch": 194.0,
+     "burst": 194.0,
+     "end": 196.45,
      "dz": 0.0,
-     "H": 194.3
+     "H": 194.0
     },
     {
      "point": "B4",
-     "launch": 194.4,
-     "burst": 194.4,
-     "end": 198.14,
+     "launch": 194.0,
+     "burst": 194.0,
+     "end": 196.45,
      "dz": 0.0,
-     "H": 194.4
-    },
-    {
-     "point": "B5",
-     "launch": 194.5,
-     "burst": 194.5,
-     "end": 198.24,
-     "dz": 0.0,
-     "H": 194.5
+     "H": 194.0
     },
     {
      "point": "B6",
-     "launch": 194.6,
-     "burst": 194.6,
-     "end": 198.34,
+     "launch": 194.2,
+     "burst": 194.2,
+     "end": 196.65,
      "dz": 0.0,
-     "H": 194.6
-    },
-    {
-     "point": "B7",
-     "launch": 194.7,
-     "burst": 194.7,
-     "end": 198.44,
-     "dz": 0.0,
-     "H": 194.7
+     "H": 194.2
     }
    ],
    "H0": 194.0,
    "profiles": {
     "medium": [
      "B1",
-     "B2",
      "B3",
      "B4",
-     "B5",
      "B6"
     ],
     "low": []
    },
    "baseOf": [
-    "B01_C318"
+    "B01_C317"
    ],
-   "dir": "left"
+   "dir": "center-out"
   },
   {
-   "id": "B01_C320",
+   "id": "B01_C319",
    "section": "B01_S13",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -30520,10 +30426,10 @@
    }
   },
   {
-   "id": "B01_C321",
+   "id": "B01_C320",
    "section": "B01_S13",
-   "sp": "R1",
-   "templateId": "R03_Red1",
+   "sp": "R5",
+   "templateId": "R03_Red5",
    "size": "F",
    "group": "B",
    "points": [
@@ -30534,8 +30440,8 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 外→里 · 红彗星·单束（2 点）",
-   "name": "白色收束 · 托底 · 外→里 · 红彗星·单束（2 点）",
+   "label": "托底 · 左→右 · 红彗星·五束（2 点）",
+   "name": "白色收束 · 托底 · 左→右 · 红彗星·五束（2 点）",
    "wave": "托底扇",
    "events": [
     {
@@ -30548,11 +30454,11 @@
     },
     {
      "point": "B4",
-     "launch": 196.1,
-     "burst": 196.1,
-     "end": 199.2,
+     "launch": 196.2,
+     "burst": 196.2,
+     "end": 199.3,
      "dz": 0.0,
-     "H": 196.1
+     "H": 196.2
     }
    ],
    "H0": 196.1,
@@ -30567,12 +30473,12 @@
     ]
    },
    "baseOf": [
-    "B01_C320"
+    "B01_C319"
    ],
-   "dir": "outside-in"
+   "dir": "left"
   },
   {
-   "id": "B01_C322",
+   "id": "B01_C321",
    "section": "B01_S13",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -30653,10 +30559,10 @@
    }
   },
   {
-   "id": "B01_C323",
+   "id": "B01_C322",
    "section": "B01_S13",
-   "sp": "R9R",
-   "templateId": "R03_Red9R",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
    "size": "F",
    "group": "B",
    "points": [
@@ -30671,39 +30577,39 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 右→左 · 红彗星·九束右扫",
-   "name": "白色收束 · 托底 · 右→左 · 红彗星·九束右扫",
+   "label": "托底 · 外→里 · 银星·五束窄扇",
+   "name": "白色收束 · 托底 · 外→里 · 银星·五束窄扇",
    "wave": "托底扇",
    "events": [
     {
      "point": "B1",
-     "launch": 197.9,
-     "burst": 197.9,
-     "end": 201.64,
+     "launch": 197.4,
+     "burst": 197.4,
+     "end": 199.85,
      "dz": 0.0,
-     "H": 197.9
+     "H": 197.4
     },
     {
      "point": "B2",
-     "launch": 197.8,
-     "burst": 197.8,
-     "end": 201.54,
+     "launch": 197.5,
+     "burst": 197.5,
+     "end": 199.95,
      "dz": 0.0,
-     "H": 197.8
+     "H": 197.5
     },
     {
      "point": "B3",
-     "launch": 197.7,
-     "burst": 197.7,
-     "end": 201.44,
+     "launch": 197.6,
+     "burst": 197.6,
+     "end": 200.05,
      "dz": 0.0,
-     "H": 197.7
+     "H": 197.6
     },
     {
      "point": "B4",
      "launch": 197.6,
      "burst": 197.6,
-     "end": 201.34,
+     "end": 200.05,
      "dz": 0.0,
      "H": 197.6
     },
@@ -30711,7 +30617,7 @@
      "point": "B5",
      "launch": 197.5,
      "burst": 197.5,
-     "end": 201.24,
+     "end": 199.95,
      "dz": 0.0,
      "H": 197.5
     },
@@ -30719,7 +30625,7 @@
      "point": "B6",
      "launch": 197.4,
      "burst": 197.4,
-     "end": 201.14,
+     "end": 199.85,
      "dz": 0.0,
      "H": 197.4
     }
@@ -30735,12 +30641,12 @@
     "low": []
    },
    "baseOf": [
-    "B01_C322"
+    "B01_C321"
    ],
-   "dir": "right"
+   "dir": "outside-in"
   },
   {
-   "id": "B01_C324",
+   "id": "B01_C323",
    "section": "B01_S13",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -30821,76 +30727,94 @@
    }
   },
   {
-   "id": "B01_C325",
+   "id": "B01_C324",
    "section": "B01_S13",
-   "sp": "S9",
-   "templateId": "R03_Silver9",
+   "sp": "R9R",
+   "templateId": "R03_Red9R",
    "size": "F",
    "group": "B",
    "points": [
     "B1",
+    "B2",
     "B3",
     "B4",
+    "B5",
     "B6"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 里→外 · 银星·九束展开",
-   "name": "白色收束 · 托底 · 里→外 · 银星·九束展开",
+   "label": "托底 · 右→左 · 红彗星·九束右扫",
+   "name": "白色收束 · 托底 · 右→左 · 红彗星·九束右扫",
    "wave": "托底扇",
    "events": [
     {
      "point": "B1",
-     "launch": 199.1,
-     "burst": 199.1,
-     "end": 201.87,
+     "launch": 199.4,
+     "burst": 199.4,
+     "end": 203.14,
      "dz": 0.0,
-     "H": 199.1
+     "H": 199.4
+    },
+    {
+     "point": "B2",
+     "launch": 199.3,
+     "burst": 199.3,
+     "end": 203.04,
+     "dz": 0.0,
+     "H": 199.3
     },
     {
      "point": "B3",
-     "launch": 198.9,
-     "burst": 198.9,
-     "end": 201.67,
+     "launch": 199.2,
+     "burst": 199.2,
+     "end": 202.94,
      "dz": 0.0,
-     "H": 198.9
+     "H": 199.2
     },
     {
      "point": "B4",
-     "launch": 198.9,
-     "burst": 198.9,
-     "end": 201.67,
+     "launch": 199.1,
+     "burst": 199.1,
+     "end": 202.84,
      "dz": 0.0,
-     "H": 198.9
+     "H": 199.1
+    },
+    {
+     "point": "B5",
+     "launch": 199.0,
+     "burst": 199.0,
+     "end": 202.74,
+     "dz": 0.0,
+     "H": 199.0
     },
     {
      "point": "B6",
-     "launch": 199.1,
-     "burst": 199.1,
-     "end": 201.87,
+     "launch": 198.9,
+     "burst": 198.9,
+     "end": 202.64,
      "dz": 0.0,
-     "H": 199.1
+     "H": 198.9
     }
    ],
    "H0": 198.9,
    "profiles": {
     "medium": [
-     "B1",
+     "B2",
      "B3",
      "B4",
-     "B6"
+     "B5"
     ],
     "low": []
    },
    "baseOf": [
-    "B01_C324"
+    "B01_C323"
    ],
-   "dir": "center-out"
+   "dir": "right"
   },
   {
-   "id": "B01_C326",
+   "id": "B01_C325",
    "section": "B01_S13",
    "sp": "SS",
    "templateId": "R03_SilverStrobeChry",
@@ -30949,34 +30873,24 @@
    }
   },
   {
-   "id": "B01_C327",
+   "id": "B01_C326",
    "section": "B01_S13",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
+   "sp": "S13",
+   "templateId": "R03_Silver13",
    "size": "F",
    "group": "B",
    "points": [
-    "B2",
     "B3",
-    "B4",
-    "B5"
+    "B4"
    ],
    "order": "source",
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 齐发 · 银星·五束窄扇",
-   "name": "白色收束 · 托底 · 齐发 · 银星·五束窄扇",
+   "label": "托底 · 齐发 · 银星·十三束宽扇",
+   "name": "白色收束 · 托底 · 齐发 · 银星·十三束宽扇",
    "wave": "托底扇",
    "events": [
-    {
-     "point": "B2",
-     "launch": 200.6,
-     "burst": 200.6,
-     "end": 203.05,
-     "dz": 0.0,
-     "H": 200.6
-    },
     {
      "point": "B3",
      "launch": 200.6,
@@ -30992,36 +30906,29 @@
      "end": 203.05,
      "dz": 0.0,
      "H": 200.6
-    },
-    {
-     "point": "B5",
-     "launch": 200.6,
-     "burst": 200.6,
-     "end": 203.05,
-     "dz": 0.0,
-     "H": 200.6
     }
    ],
    "H0": 200.6,
    "profiles": {
     "medium": [
-     "B2",
      "B3",
-     "B4",
-     "B5"
+     "B4"
     ],
-    "low": []
+    "low": [
+     "B3",
+     "B4"
+    ]
    },
    "baseOf": [
-    "B01_C326"
+    "B01_C325"
    ],
    "dir": "together"
   },
   {
-   "id": "B01_C328",
+   "id": "B01_C327",
    "section": "B01_S13",
-   "sp": "GK",
-   "templateId": "R03_GoldKamuro",
+   "sp": "GKH",
+   "templateId": "R03_GoldKamuro_H280",
    "size": "L",
    "group": "P",
    "points": [
@@ -31031,8 +30938,8 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "余韵 金垂柳（P4）",
-   "name": "白色收束 · 余韵 金垂柳（P4）",
+   "label": "余韵 金垂柳 280（P4）",
+   "name": "白色收束 · 余韵 金垂柳 280（P4）",
    "wave": "主角",
    "events": [
     {
@@ -31055,10 +30962,10 @@
    }
   },
   {
-   "id": "B01_C329",
+   "id": "B01_C328",
    "section": "B01_S13",
-   "sp": "S5",
-   "templateId": "R03_Silver5",
+   "sp": "S13",
+   "templateId": "R03_Silver13",
    "size": "F",
    "group": "B",
    "points": [
@@ -31069,8 +30976,8 @@
    "gap": 0.0,
    "layer": "extra",
    "tier": "trim",
-   "label": "托底 · 齐发 · 银星·五束窄扇",
-   "name": "白色收束 · 托底 · 齐发 · 银星·五束窄扇",
+   "label": "托底 · 齐发 · 银星·十三束宽扇",
+   "name": "白色收束 · 托底 · 齐发 · 银星·十三束宽扇",
    "wave": "托底扇",
    "events": [
     {
@@ -31102,7 +31009,7 @@
     ]
    },
    "baseOf": [
-    "B01_C328"
+    "B01_C327"
    ],
    "dir": "together"
   }

@@ -1,0 +1,837 @@
+{
+ "events": {
+  "total": 2552,
+  "balls": 1857,
+  "fans": 695,
+  "cues": 379,
+  "bySize": {
+   "S": 1052,
+   "M": 480,
+   "L": 325
+  }
+ },
+ "tiers": {
+  "high": {
+   "events": 2552,
+   "balls": 1857,
+   "fans": 695,
+   "gpuPeakPerS": 200
+  },
+  "medium": {
+   "events": 2074,
+   "balls": 1487,
+   "fans": 587,
+   "gpuPeakPerS": 186
+  },
+  "low": {
+   "events": 921,
+   "balls": 865,
+   "fans": 56,
+   "gpuPeakPerS": 132
+  }
+ },
+ "gpu": {
+  "soft": 200,
+  "hard": 234,
+  "peak": 200,
+  "peakAt": 114.25,
+  "softOver": 0,
+  "hardOver": 0,
+  "softList": [],
+  "hardList": [],
+  "nearBudget": 22,
+  "nearBudgetList": [
+   {
+    "t": 13.5,
+    "gpu": 195
+   },
+   {
+    "t": 49.0,
+    "gpu": 193
+   },
+   {
+    "t": 51.1,
+    "gpu": 197
+   },
+   {
+    "t": 58.7,
+    "gpu": 199
+   },
+   {
+    "t": 77.6,
+    "gpu": 196
+   },
+   {
+    "t": 79.9,
+    "gpu": 193
+   },
+   {
+    "t": 99.7,
+    "gpu": 190
+   },
+   {
+    "t": 104.1,
+    "gpu": 192
+   },
+   {
+    "t": 114.3,
+    "gpu": 200
+   },
+   {
+    "t": 118.7,
+    "gpu": 196
+   },
+   {
+    "t": 127.3,
+    "gpu": 200
+   },
+   {
+    "t": 139.8,
+    "gpu": 192
+   },
+   {
+    "t": 154.9,
+    "gpu": 199
+   },
+   {
+    "t": 162.5,
+    "gpu": 192
+   },
+   {
+    "t": 172.7,
+    "gpu": 199
+   },
+   {
+    "t": 177.7,
+    "gpu": 199
+   },
+   {
+    "t": 182.1,
+    "gpu": 196
+   },
+   {
+    "t": 186.7,
+    "gpu": 197
+   },
+   {
+    "t": 190.2,
+    "gpu": 198
+   },
+   {
+    "t": 194.0,
+    "gpu": 192
+   },
+   {
+    "t": 196.4,
+    "gpu": 199
+   },
+   {
+    "t": 200.6,
+    "gpu": 190
+   }
+  ]
+ },
+ "beatLock": {
+  "within0_1": 0.976,
+  "within0_15": 0.983,
+  "cues": 287
+ },
+ "strongBeat": 0.638,
+ "generations": {
+  "fullWaves": 129,
+  "meanTailsInFlightCues": 4.87,
+  "fullWavesWithNextTails": 129,
+  "share": 1.0
+ },
+ "relayViolations": [],
+ "lead": {
+  "SC": {
+   "name": "小银菊",
+   "fullWaves": 22,
+   "firstAt": 11.7
+  },
+  "GC": {
+   "name": "金裂星",
+   "fullWaves": 15,
+   "firstAt": 14.1
+  },
+  "CR": {
+   "name": "爆裂星",
+   "fullWaves": 4,
+   "firstAt": 64.4
+  },
+  "LM": {
+   "name": "小青柠",
+   "fullWaves": 11,
+   "firstAt": 21.4
+  },
+  "OG": {
+   "name": "橙辉星",
+   "fullWaves": 10,
+   "firstAt": 27.9
+  },
+  "ST": {
+   "name": "点灭星",
+   "fullWaves": 11,
+   "firstAt": 16.6
+  },
+  "GP": {
+   "name": "绿牡丹",
+   "fullWaves": 4,
+   "firstAt": 40.9
+  },
+  "GS": {
+   "name": "金锦菊",
+   "fullWaves": 15,
+   "firstAt": 12.5
+  },
+  "PW": {
+   "name": "彩千轮",
+   "fullWaves": 6,
+   "firstAt": 91.1
+  },
+  "GY": {
+   "name": "金曜菊",
+   "fullWaves": 12,
+   "firstAt": 19.8
+  },
+  "CL": {
+   "name": "金蕊青柠星",
+   "fullWaves": 9,
+   "firstAt": 29.5
+  },
+  "GR": {
+   "name": "金芒菊",
+   "fullWaves": 12,
+   "firstAt": 10.1
+  },
+  "ML": {
+   "name": "多重菊",
+   "fullWaves": 5,
+   "firstAt": 62.0
+  },
+  "GK": {
+   "name": "金垂柳",
+   "fullWaves": 0,
+   "firstAt": null
+  },
+  "SS": {
+   "name": "银彩菊",
+   "fullWaves": 9,
+   "firstAt": 68.5
+  }
+ },
+ "leadMissing": [],
+ "heroes": {
+  "goldKamuroEvents": 5,
+  "heroCues": 3,
+  "hero280": 5,
+  "nonHero": []
+ },
+ "share": {
+  "S": 0.567,
+  "M": 0.258,
+  "L": 0.175
+ },
+ "largeBySpecies": {
+  "金蕊青柠星·大": 63,
+  "金垂柳·主角": 5,
+  "金芒菊·大": 65,
+  "多重菊·大": 36,
+  "银彩菊": 156
+ },
+ "density": {
+  "density": 3,
+  "removed": 0,
+  "added": 46,
+  "addSkippedGpu": 2,
+  "addSkippedRule": 86
+ },
+ "wavesPerBar": {
+  "release": 1.53,
+  "push": 1.62
+ },
+ "tierNesting": {
+  "ok": true,
+  "violations": []
+ },
+ "sectionShare": {
+  "B01_S0": {
+   "name": "倒计时",
+   "lead": "SC",
+   "leadShare": 1.0,
+   "top": [
+    [
+     "SC",
+     9
+    ]
+   ]
+  },
+  "B01_S1": {
+   "name": "开场高潮",
+   "lead": "GR",
+   "leadShare": 0.25,
+   "top": [
+    [
+     "GR",
+     18
+    ],
+    [
+     "SC",
+     18
+    ],
+    [
+     "GS",
+     18
+    ]
+   ]
+  },
+  "B01_S2": {
+   "name": "连续展开",
+   "lead": "GY",
+   "leadShare": 0.31,
+   "top": [
+    [
+     "GY",
+     32
+    ],
+    [
+     "LM",
+     25
+    ],
+    [
+     "SC",
+     17
+    ]
+   ]
+  },
+  "B01_S3": {
+   "name": "密集问答",
+   "lead": "SC",
+   "leadShare": 0.32,
+   "top": [
+    [
+     "SC",
+     36
+    ],
+    [
+     "GS",
+     27
+    ],
+    [
+     "OG",
+     24
+    ]
+   ]
+  },
+  "B01_S4": {
+   "name": "往返扫射",
+   "lead": "GR",
+   "leadShare": 0.23,
+   "top": [
+    [
+     "GR",
+     18
+    ],
+    [
+     "GS",
+     18
+    ],
+    [
+     "SC",
+     17
+    ]
+   ]
+  },
+  "B01_S5": {
+   "name": "第一次抬升",
+   "lead": "SS",
+   "leadShare": 0.27,
+   "top": [
+    [
+     "SS",
+     24
+    ],
+    [
+     "GS",
+     18
+    ],
+    [
+     "ML",
+     13
+    ]
+   ]
+  },
+  "B01_S6": {
+   "name": "低位密奏",
+   "lead": "ST",
+   "leadShare": 0.23,
+   "top": [
+    [
+     "ST",
+     25
+    ],
+    [
+     "GC",
+     25
+    ],
+    [
+     "CR",
+     24
+    ]
+   ]
+  },
+  "B01_S7": {
+   "name": "第二次递进 A",
+   "lead": "CLL",
+   "leadShare": 0.31,
+   "top": [
+    [
+     "CLL",
+     27
+    ],
+    [
+     "SC",
+     18
+    ],
+    [
+     "PW",
+     9
+    ]
+   ]
+  },
+  "B01_S8": {
+   "name": "蓄势收窄",
+   "lead": "GS",
+   "leadShare": 0.24,
+   "top": [
+    [
+     "SC",
+     24
+    ],
+    [
+     "GS",
+     18
+    ],
+    [
+     "GRL",
+     11
+    ]
+   ]
+  },
+  "B01_S9": {
+   "name": "高潮 II",
+   "lead": "MLL",
+   "leadShare": 0.08,
+   "top": [
+    [
+     "SS",
+     28
+    ],
+    [
+     "GY",
+     27
+    ],
+    [
+     "GC",
+     24
+    ]
+   ]
+  },
+  "B01_S10": {
+   "name": "转场铺色 A",
+   "lead": "SC",
+   "leadShare": 0.28,
+   "top": [
+    [
+     "SC",
+     26
+    ],
+    [
+     "LM",
+     16
+    ],
+    [
+     "ST",
+     16
+    ]
+   ]
+  },
+  "B01_S11": {
+   "name": "转场铺色 B",
+   "lead": "GP",
+   "leadShare": 0.28,
+   "top": [
+    [
+     "GP",
+     22
+    ],
+    [
+     "GS",
+     9
+    ],
+    [
+     "PW",
+     9
+    ]
+   ]
+  },
+  "B01_S12": {
+   "name": "终章",
+   "lead": "GRL",
+   "leadShare": 0.15,
+   "top": [
+    [
+     "SS",
+     44
+    ],
+    [
+     "GY",
+     36
+    ],
+    [
+     "GRL",
+     36
+    ]
+   ]
+  },
+  "B01_S13": {
+   "name": "白色收束",
+   "lead": "SS",
+   "leadShare": 0.82,
+   "top": [
+    [
+     "SS",
+     45
+    ],
+    [
+     "GS",
+     9
+    ],
+    [
+     "GKH",
+     1
+    ]
+   ]
+  }
+ },
+ "quietBars": {
+  "bar41": {
+   "span": [
+    71.67,
+    73.19
+   ],
+   "bursts": 0,
+   "fanStarts": 0,
+   "tailsRising": 26
+  },
+  "bar65": {
+   "span": [
+    110.58,
+    112.11
+   ],
+   "bursts": 0,
+   "fanStarts": 0,
+   "tailsRising": 48
+  },
+  "bar96": {
+   "span": [
+    160.85,
+    162.38
+   ],
+   "bursts": 0,
+   "fanStarts": 4,
+   "tailsRising": 52
+  }
+ },
+ "baseFans": {
+  "groups": 96,
+  "cues": 92,
+  "events": 537,
+  "coverage": 0.958,
+  "skipped": [
+   {
+    "t": 168.97,
+    "section": "B01_S12",
+    "dir": "right",
+    "detail": "空小节"
+   },
+   {
+    "t": 63.58,
+    "section": "B01_S5",
+    "dir": "outside-in",
+    "detail": [
+     [
+      "S5",
+      8,
+      319,
+      350
+     ],
+     [
+      "S5",
+      4,
+      259,
+      290
+     ],
+     [
+      "R5",
+      8,
+      239,
+      270
+     ],
+     [
+      "R5",
+      4,
+      219,
+      250
+     ],
+     [
+      "R5",
+      2,
+      209,
+      240
+     ],
+     [
+      "R1",
+      2,
+      201,
+      232
+     ]
+    ]
+   },
+   {
+    "t": 118.68,
+    "section": "B01_S9",
+    "dir": "center-out",
+    "detail": [
+     [
+      "S9",
+      8,
+      308,
+      266
+     ],
+     [
+      "S5",
+      8,
+      320,
+      278
+     ],
+     [
+      "S5",
+      4,
+      260,
+      218
+     ],
+     [
+      "R5",
+      8,
+      240,
+      198
+     ],
+     [
+      "R5",
+      4,
+      220,
+      178
+     ],
+     [
+      "R5",
+      2,
+      210,
+      168
+     ],
+     [
+      "R1",
+      2,
+      202,
+      160
+     ]
+    ]
+   },
+   {
+    "t": 131.68,
+    "section": "B01_S9",
+    "dir": "outside-in",
+    "detail": [
+     [
+      "S5",
+      8,
+      320,
+      200
+     ],
+     [
+      "S5",
+      4,
+      260,
+      140
+     ],
+     [
+      "R5",
+      8,
+      240,
+      149
+     ],
+     [
+      "R5",
+      4,
+      220,
+      131
+     ],
+     [
+      "R5",
+      2,
+      210,
+      122
+     ],
+     [
+      "R1",
+      2,
+      202,
+      114
+     ]
+    ]
+   }
+  ],
+  "bySpecies": {
+   "R1": 8,
+   "R5": 156,
+   "R9": 161,
+   "R9R": 126,
+   "S13": 6,
+   "S5": 68,
+   "S9": 12
+  },
+  "byDirection": {
+   "center-out": 17,
+   "left": 28,
+   "outside-in": 20,
+   "right": 23,
+   "together": 4
+  },
+  "launchOffsetMax": 0.7,
+  "beams": 3897
+ },
+ "fanSummary": {
+  "cues": 134,
+  "events": 695,
+  "bySpecies": {
+   "R1": 16,
+   "R5": 204,
+   "R9": 190,
+   "R9R": 163,
+   "S13": 12,
+   "S5": 74,
+   "S9": 36
+  },
+  "aliveGpuPeak": 234
+ },
+ "grid": {
+  "offGridLaunch": 0,
+  "maxAbsDz": 25.0,
+  "minLaunch": 0.0,
+  "lastEnd": 218.57
+ },
+ "aliveBodies": {
+  "peak": 68,
+  "peakAt": 25.0,
+  "mean": 37.1
+ },
+ "aliveBySpecies": {
+  "SC": {
+   "name": "小银菊",
+   "peak": 27,
+   "peakAt": 25.0
+  },
+  "GC": {
+   "name": "金裂星",
+   "peak": 18,
+   "peakAt": 192.5
+  },
+  "CR": {
+   "name": "爆裂星",
+   "peak": 8,
+   "peakAt": 65.0
+  },
+  "LM": {
+   "name": "小青柠",
+   "peak": 17,
+   "peakAt": 25.5
+  },
+  "OG": {
+   "name": "橙辉星",
+   "peak": 9,
+   "peakAt": 143.5
+  },
+  "ST": {
+   "name": "点灭星",
+   "peak": 16,
+   "peakAt": 81.0
+  },
+  "GP": {
+   "name": "绿牡丹",
+   "peak": 18,
+   "peakAt": 150.0
+  },
+  "GS": {
+   "name": "金锦菊",
+   "peak": 18,
+   "peakAt": 38.0
+  },
+  "PW": {
+   "name": "彩千轮",
+   "peak": 9,
+   "peakAt": 91.5
+  },
+  "GY": {
+   "name": "金曜菊",
+   "peak": 18,
+   "peakAt": 23.5
+  },
+  "CL": {
+   "name": "金蕊青柠星",
+   "peak": 13,
+   "peakAt": 30.0
+  },
+  "GR": {
+   "name": "金芒菊",
+   "peak": 14,
+   "peakAt": 52.5
+  },
+  "ML": {
+   "name": "多重菊",
+   "peak": 13,
+   "peakAt": 65.5
+  },
+  "GK": {
+   "name": "金垂柳",
+   "peak": 0,
+   "peakAt": null
+  },
+  "SS": {
+   "name": "银彩菊",
+   "peak": 27,
+   "peakAt": 200.5
+  },
+  "GRL": {
+   "name": "金芒菊·大",
+   "peak": 18,
+   "peakAt": 190.5
+  },
+  "CLL": {
+   "name": "金蕊青柠星·大",
+   "peak": 18,
+   "peakAt": 88.5
+  },
+  "MLL": {
+   "name": "多重菊·大",
+   "peak": 9,
+   "peakAt": 100.0
+  },
+  "GKH": {
+   "name": "金垂柳·主角",
+   "peak": 3,
+   "peakAt": 176.0
+  }
+ },
+ "barsWithWave": 104
+}

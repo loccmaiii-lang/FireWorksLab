@@ -18,7 +18,7 @@ npm run dev
 - `npm run release`（或 `npm run build`）：Python覆盖保护检查 → 核心检查 → Vite构建 → 一次HTML打包 → 包装检查 → 固定ZIP → 覆盖固定产物。
 - `npm run release -- --no-deploy`：云端只更新仓库产物，不处理本机交付目录。
 - `npm run build:app`：仅编译开发源码，不发布；不能把这一步称为完整离线交付。
-- `npm run publish-show -- --programme <节目.dfshow> --name <编排名> [--note 说明] [--version 16.0.x]`（16.0.9 起）：把一版编排发布成「云端最新编排」。版本号末位 +1；去掉内嵌音乐、只留 sha256；写 `public/data/cloud-latest.json` 和 `FXtools/节目/云端最新/<版本>-<编排名>.dfshow`，并在 `版本记录.md` 追加一行。之后照常 release。工作台启动时，这份编排在当前浏览器没载入过就自动载入：载入前把原节目放进「恢复切换前节目」，同一份只载入一次。逻辑在 `src/cloud-latest.mjs`，检查在 `tests/cloud-latest.test.mjs`。
+- `npm run publish-show -- --programme <节目.dfshow> --name <编排名> [--note 说明] [--version 16.0.x]`（16.0.9 起）：把一版编排发布成「云端最新编排」。版本号末位 +1；去掉内嵌音乐、只留 sha256；写 `public/data/cloud-latest.json` 和 `FXtools/节目/云端最新/<版本>-<编排名>.dfshow`，并在 `版本记录.md` 追加一行。之后照常 release。工作台启动时，这份编排在当前浏览器没载入过就自动载入：载入前把原节目放进「恢复切换前节目」，同一份只载入一次。逻辑在 `src/cloud-latest.mjs`，检查在 `tests/cloud-latest.test.mjs`。同一版本要附对比版（如密度 D1 / D3）时加 `--also <节目.dfshow>::<编排名>`（可重复），对比版只存进 `FXtools/节目/云端最新/` 和版本记录，刷新不自动载入，要在「节目 → 打开节目」里选。
 
 不需要 Sites、公开服务器、UE在线或私有D盘目录。没有UE时连接状态显示未连接，网页编排仍可用。旧8017 Actor只读代理是历史辅助接口，主要导演读写使用已有17780/gpcli；本次不新增或自动执行UE写操作。
 

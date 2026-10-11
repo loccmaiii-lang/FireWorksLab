@@ -1,41 +1,48 @@
 {
-  "revision": "B01_NAGAOKA_LOGIC_r1",
+  "revision": "B01_NAGAOKA_LOGIC_r2_D2",
+  "density": 2,
+  "derivedFlowers": [
+    "R03_GoldRayChry_L230",
+    "R03_GoldCoreLime_L230",
+    "R03_MultiLayerChry_L230",
+    "R03_GoldKamuro_H280"
+  ],
   "generatedBy": "analysis/scripts/编排B01_编译.mjs",
   "tiers": {
     "high": {
-      "events": 2168,
-      "subTemplates": 22,
-      "templates": 144,
-      "scheduleSlots": 329,
+      "events": 2162,
+      "subTemplates": 25,
+      "templates": 147,
+      "scheduleSlots": 328,
       "groups": {
         "P": 132,
-        "B": 197
+        "B": 196
       },
       "lastSlot": 201.5,
       "expansionProblems": [],
       "status": "property_text_ready_UE_unverified"
     },
     "medium": {
-      "events": 1778,
-      "subTemplates": 22,
-      "templates": 143,
-      "scheduleSlots": 329,
+      "events": 1774,
+      "subTemplates": 25,
+      "templates": 147,
+      "scheduleSlots": 328,
       "groups": {
         "P": 132,
-        "B": 197
+        "B": 196
       },
       "lastSlot": 201.5,
       "expansionProblems": [],
       "status": "property_text_ready_UE_unverified"
     },
     "low": {
-      "events": 845,
-      "subTemplates": 20,
-      "templates": 104,
-      "scheduleSlots": 199,
+      "events": 841,
+      "subTemplates": 22,
+      "templates": 103,
+      "scheduleSlots": 197,
       "groups": {
         "P": 132,
-        "B": 67
+        "B": 65
       },
       "lastSlot": 201.5,
       "expansionProblems": [],
@@ -49,12 +56,12 @@
     "mediumNotInHigh": 0
   },
   "doc": {
-    "cues": 329,
-    "events": 2168,
+    "cues": 328,
+    "events": 2162,
     "sections": 14,
     "duration": 218.6,
     "musicOffset": 5,
     "balls": 1485,
-    "fans": 683
+    "fans": 677
   }
 }
