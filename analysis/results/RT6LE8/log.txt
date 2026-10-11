@@ -1,0 +1,8 @@
+22:30:43 开始：RiseTrailPhys_Hero_H400（导出素材）
+22:31:12 RiseTrailPhys_Hero_H400 导出 29 秒：RiseTrailPhys_Hero_H400.json、RiseTrailPhys_Hero_H400_Cascade参数.txt、RiseTrailPhys_Hero_H400_Mobile.json、RiseTrailPhys_Hero_H400_曲线.csv、T_EFX_FireWorks_RiseTrailPhys_L_Far_16x4_01.png、T_EFX_FireWorks_RiseTrailPhys_L_Far_16x4_01_C.png、T_EFX_FireWorks_RiseTrailPhys_L_Far_16x4_01_HD.png、T_EFX_FireWorks_RiseTrailPhys_L_Loop_16x1_01.png、T_EFX_FireWorks_RiseTrailPhys_L_Loop_16x1_01_C.png、T_EFX_FireWorks_RiseTrailPhys_L_Loop_16x1_01_HD.png、T_EFX_FireWorks_RiseTrailPhys_L_R.png、cascade.json、cascade_mobile.json、命名对照.txt
+22:31:13 回放检查：F:\FireWorksLab\analysis\results\RT6LE8\回放检查.jpg（❌ RiseTrailPhys_Hero_H400 · TrailFar：1 帧碰到格子内圈）
+22:31:45 烘焙回放对照：F:\FireWorksLab\analysis\results\RT6LE8\烘焙回放.jpg
+22:31:46 烘焙回放（原尺寸）：F:\FireWorksLab\analysis\results\RT6LE8\烘焙回放_原尺寸.jpg
+22:31:46 烘焙器预览没做成（不影响导出）：'texture'
+22:31:46 大文件（贴图）在 F:\FireWorksLab\analysis\local\输出\素材包，不上传
+22:31:46 完成，用时 1.1 分钟

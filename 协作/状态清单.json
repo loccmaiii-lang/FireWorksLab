@@ -372,9 +372,10 @@
       "② 开花高度：B01 固定子模板仍是 188 / 264 / 408 m（尾缀没按尺寸档重导）。用户周一按尺寸档重导尾缀 150 / 210 / 330（旧大尾缀 ≈ 416 m 留给主角 +400），D 不变；手游编排随后更新固定子模板开花点。B02 构图按宪章高度设计即可。",
       "③ B01 全部条目 PlatformFlags = 14：手机白名单（宪章 §8）还没落到条目上。B02 请给每个片段标是否上手机（或给出规则），一张表导出时由手游编排写成 PlatformFlags（PC-only 写 12，PC+手机写 14）。",
       "④ GPU 预算 200 是估的；手游编排压测后把实测值写到这里，B02 按实测值收。",
-      "⑤ B01 修订1 三表已核对：中 ⊂ 高、低 ⊂ 中 0 违规，可合成一张表。"
+      "⑤ B01 修订1 三表已核对：中 ⊂ 高、低 ⊂ 中 0 违规，可合成一张表。",
+      "【10-11 23:20 更新】① 用户定音乐第 5 秒：导演音乐事件已改 5 s（实例 + 蓝图，蓝图已存）；宪章 +5 照用。② UE-14 实测 EffectScale 整朵等比（修订2 的 ×1.533 / ×1.217 成立）；尾缀 ×0.8 同一时刻高度 ×0.8。尾缀高度可直接在固定子模板里给尾缀条目 EffectScale 0.79 / 0.79 / 0.80（主角 0.976）并把开花点改 150 / 210 / 330 / 400；或等用户导入重导的尾缀包（二选一，不能叠加）。③ GPU 实测：银扇 91 束 / 秒 0 截断、104 束截断；同一秒新起 GPU 发射器按 ≤ 250 收。④ 工作台 16.0.13 默认导出一张表（MinQualityLevel 嵌套）；要让某片段不上手机，在片段上写 mobile:false（编译成 PlatformFlags 12）。证据 analysis/results/MOBILE_TEST_20261011/看法.md 末节。"
     ],
-    "手游编排 · tool/workbench 一张表导出（认领中）": "认领：手游编排对话，2026-10-11 22:40（用户 22:15「同意，一张表的导出是什么意思？…08没有改好？」，周三落地计划 §2/§3）。只改 tool/workbench：editing-model 加 nestedQualityEvents（低⊂中⊂高校验，不嵌套就报错）、director-model 的父模板条目 Filter 按档位写 MinQualityLevel（低 VeryLow / 中追加 Medium / 高追加 High）、片段 mobile:false 写 PlatformFlags 12；交付档位下拉加「一张表」并作为默认，三档单独导出保留。加回归，npm test + release。不动布局/节目/音频。完成后释放。"
+    "手游编排 · 工作台 16.0.13 一张表导出（已完成）": "完成并释放：2026-10-11 23:20。tool/workbench：editing-model 加 nestedQualityEvents（低⊂中⊂高校验，不嵌套报错）；director-model 父模板条目 Filter 按档位写 MinQualityLevel（VeryLow / Medium / High），片段 mobile:false 写 PlatformFlags 12；交付档位下拉默认「一张表（高中低合一，按画质自动取）」，三档单独导出保留（只导高 / 中 / 低）。新增 tests/nested-quality.test.mjs（先失败后通过），155 核心 + 38 包装通过，release 更新 F/D 离线入口。B01 修订1 / 修订2-D2 合表展开与单档编译逐条一致。WORKBENCH_VERSION 16.0.12 → 16.0.13（只改工具，编排沿用 16.0.12）。实页浏览器走查未做（本机 Playwright 缺浏览器），用户打开交付页确认。"
   },
   "effects": [
     {

@@ -1,0 +1,29 @@
+{
+ "effect": "trail_phys",
+ "entry": "RT6M",
+ "ver": "9f19f997·emitset4.9.31·size2-T_M-undefined-210",
+ "time": "2026-10-11 22:32",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "RiseTrailPhys_M_H210",
+   "replica": "RT6M",
+   "files": [
+    "RiseTrailPhys_M_H210.json",
+    "RiseTrailPhys_M_H210_Cascade参数.txt",
+    "RiseTrailPhys_M_H210_Mobile.json",
+    "RiseTrailPhys_M_H210_曲线.csv",
+    "T_EFX_FireWorks_RiseTrailPhys_M_Far_16x2_01.png",
+    "T_EFX_FireWorks_RiseTrailPhys_M_Far_16x2_01_C.png",
+    "T_EFX_FireWorks_RiseTrailPhys_M_Far_16x2_01_HD.png",
+    "T_EFX_FireWorks_RiseTrailPhys_M_Loop_16x1_01.png",
+    "T_EFX_FireWorks_RiseTrailPhys_M_Loop_16x1_01_C.png",
+    "T_EFX_FireWorks_RiseTrailPhys_M_Loop_16x1_01_HD.png",
+    "T_EFX_FireWorks_RiseTrailPhys_M_R.png",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

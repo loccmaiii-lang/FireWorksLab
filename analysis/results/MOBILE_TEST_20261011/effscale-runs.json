@@ -1,0 +1,218 @@
+[
+ {
+  "res": "GoldRayChry",
+  "scale": 1,
+  "freeze": 2.5,
+  "zM": 300,
+  "cam": {
+   "X": 352801.2548147185,
+   "Y": -696838.5897720121,
+   "Z": -15117.78125,
+   "yaw": -79.95098554506514,
+   "pitch": 20.768921599108484
+  },
+  "file": "shots/scale/GoldRayChry_x1_t2.5.png",
+  "component": {
+   "scale": {
+    "_struct": "Vector",
+    "X": 1,
+    "Y": 1,
+    "Z": 1
+   },
+   "loc": {
+    "_struct": "EncVector",
+    "X": 371995.21875,
+    "Y": -805151.0625,
+    "Z": 26599.037109375,
+    "EncHandler": {
+     "_struct": "EncHandler",
+     "Index": 65535,
+     "bEncrypted": 0,
+     "bDynamic": false,
+     "bShareKey": false
+    }
+   }
+  },
+  "restored": true
+ },
+ {
+  "res": "GoldRayChry",
+  "scale": 1.533333,
+  "freeze": 2.5,
+  "zM": 300,
+  "cam": {
+   "X": 352801.2548147185,
+   "Y": -696838.5897720121,
+   "Z": -15117.78125,
+   "yaw": -79.95098554506514,
+   "pitch": 20.768921599108484
+  },
+  "file": "shots/scale/GoldRayChry_x1.533333_t2.5.png",
+  "component": {
+   "scale": {
+    "_struct": "Vector",
+    "X": 1,
+    "Y": 1,
+    "Z": 1
+   },
+   "loc": {
+    "_struct": "EncVector",
+    "X": 371995.21875,
+    "Y": -805151.0625,
+    "Z": 26599.037109375,
+    "EncHandler": {
+     "_struct": "EncHandler",
+     "Index": 65535,
+     "bEncrypted": 0,
+     "bDynamic": false,
+     "bShareKey": false
+    }
+   }
+  },
+  "restored": true
+ },
+ {
+  "res": "NY_Trail_Large",
+  "scale": 0.8,
+  "freeze": 6.8,
+  "zM": 0,
+  "cam": {
+   "X": 352801.2548147185,
+   "Y": -696838.5897720121,
+   "Z": -15117.78125,
+   "yaw": -79.95098554506514,
+   "pitch": 16.0841077277459
+  },
+  "file": "shots/scale/NY_Trail_Large_x0.8_t6.8.png",
+  "component": {
+   "scale": {
+    "_struct": "Vector",
+    "X": 0.800000011920929,
+    "Y": 0.800000011920929,
+    "Z": 0.800000011920929
+   },
+   "loc": {
+    "_struct": "EncVector",
+    "X": 371995.21875,
+    "Y": -805151.0625,
+    "Z": -3400.962890625,
+    "EncHandler": {
+     "_struct": "EncHandler",
+     "Index": 65535,
+     "bEncrypted": 0,
+     "bDynamic": false,
+     "bShareKey": false
+    }
+   }
+  },
+  "restored": true
+ },
+ {
+  "res": "GoldKamuro",
+  "scale": 1,
+  "freeze": 4.5,
+  "zM": 400,
+  "cam": {
+   "X": 352801.2548147185,
+   "Y": -696838.5897720121,
+   "Z": -15117.78125,
+   "yaw": -79.95098554506514,
+   "pitch": 25.18069929345322
+  },
+  "file": "shots/scale/GoldKamuro_x1_t4.5.png",
+  "component": {
+   "scale": {
+    "_struct": "Vector",
+    "X": 1,
+    "Y": 1,
+    "Z": 1
+   },
+   "loc": {
+    "_struct": "EncVector",
+    "X": 371995.21875,
+    "Y": -805151.0625,
+    "Z": 36599.0390625,
+    "EncHandler": {
+     "_struct": "EncHandler",
+     "Index": 65535,
+     "bEncrypted": 0,
+     "bDynamic": false,
+     "bShareKey": false
+    }
+   }
+  },
+  "restored": true
+ },
+ {
+  "res": "GoldKamuro",
+  "scale": 1.217391,
+  "freeze": 4.5,
+  "zM": 400,
+  "cam": {
+   "X": 352801.2548147185,
+   "Y": -696838.5897720121,
+   "Z": -15117.78125,
+   "yaw": -79.95098554506514,
+   "pitch": 25.18069929345322
+  },
+  "file": "shots/scale/GoldKamuro_x1.217391_t4.5.png",
+  "component": {
+   "scale": {
+    "_struct": "Vector",
+    "X": 1,
+    "Y": 1,
+    "Z": 1
+   },
+   "loc": {
+    "_struct": "EncVector",
+    "X": 371995.21875,
+    "Y": -805151.0625,
+    "Z": 36599.0390625,
+    "EncHandler": {
+     "_struct": "EncHandler",
+     "Index": 65535,
+     "bEncrypted": 0,
+     "bDynamic": false,
+     "bShareKey": false
+    }
+   }
+  },
+  "restored": true
+ },
+ {
+  "res": "NY_Trail_Large",
+  "scale": 1,
+  "freeze": 6.8,
+  "zM": 0,
+  "cam": {
+   "X": 352801.2548147185,
+   "Y": -696838.5897720121,
+   "Z": -15117.78125,
+   "yaw": -79.95098554506514,
+   "pitch": 16.0841077277459
+  },
+  "file": "shots/scale/NY_Trail_Large_x1_t6.8.png",
+  "component": {
+   "scale": {
+    "_struct": "Vector",
+    "X": 1,
+    "Y": 1,
+    "Z": 1
+   },
+   "loc": {
+    "_struct": "EncVector",
+    "X": 371995.21875,
+    "Y": -805151.0625,
+    "Z": -3400.962890625,
+    "EncHandler": {
+     "_struct": "EncHandler",
+     "Index": 65535,
+     "bEncrypted": 0,
+     "bDynamic": false,
+     "bShareKey": false
+    }
+   }
+  },
+  "restored": true
+ }
+]

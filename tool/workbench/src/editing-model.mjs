@@ -346,6 +346,17 @@ export function qualityEvents(doc,profiles,tier){
  const keep=new Map(doc.cues.map(c=>[c.id,new Set(qualityPoints(doc,profiles,tier,c.id))]));
  return doc.events.filter(e=>keep.get(e.cueId)?.has(e.pointId));
 }
+// 一张导演表（手游编排 2026-10-11，UE 实测「当前画质 ≥ MinQualityLevel 就播」）：高配全部事件，
+// 低配也有的写 VeryLow、中配追加的写 Medium、只有高配的写 High；片段 mobile:false 写 PC + 手柄（12）。
+// 低配点必须都在中配里，否则合不成一张表，返回 issues。
+export function nestedQualityEvents(doc,profiles){
+ const issues=[],med=new Set(qualityEvents(doc,profiles,'medium').map(e=>e.id)),low=new Set(qualityEvents(doc,profiles,'low').map(e=>e.id));
+ const bad=new Set(doc.events.filter(e=>low.has(e.id)&&!med.has(e.id)).map(e=>e.cueId));
+ if(bad.size)issues.push(`${bad.size} 个片段的低配点不在中配里，合不成一张表：${[...bad].slice(0,5).join('、')}${bad.size>5?' …':''}`);
+ const mobile=new Map(doc.cues.map(c=>[c.id,c.mobile!==false]));
+ const events=qualityEvents(doc,profiles,'high').map(e=>({...e,minQuality:low.has(e.id)?'EQuality_VeryLow':med.has(e.id)?'EQuality_Medium':'EQuality_High',platformFlags:mobile.get(e.cueId)?14:12}));
+ return {events,issues};
+}
 export function setQualityPoints(doc,profiles,tier,cueId,ids){
  if(!['medium','low'].includes(tier))throw new Error('高配点位请在共同编排中修改');
  const c=doc.cues.find(c=>c.id===cueId);

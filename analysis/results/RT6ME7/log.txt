@@ -1,0 +1,8 @@
+22:31:46 开始：RiseTrailPhys_M_H210（导出素材）
+22:32:00 RiseTrailPhys_M_H210 导出 14 秒：RiseTrailPhys_M_H210.json、RiseTrailPhys_M_H210_Cascade参数.txt、RiseTrailPhys_M_H210_Mobile.json、RiseTrailPhys_M_H210_曲线.csv、T_EFX_FireWorks_RiseTrailPhys_M_Far_16x2_01.png、T_EFX_FireWorks_RiseTrailPhys_M_Far_16x2_01_C.png、T_EFX_FireWorks_RiseTrailPhys_M_Far_16x2_01_HD.png、T_EFX_FireWorks_RiseTrailPhys_M_Loop_16x1_01.png、T_EFX_FireWorks_RiseTrailPhys_M_Loop_16x1_01_C.png、T_EFX_FireWorks_RiseTrailPhys_M_Loop_16x1_01_HD.png、T_EFX_FireWorks_RiseTrailPhys_M_R.png、cascade.json、cascade_mobile.json、命名对照.txt
+22:32:01 回放检查：F:\FireWorksLab\analysis\results\RT6ME7\回放检查.jpg（✅ 通过）
+22:32:25 烘焙回放对照：F:\FireWorksLab\analysis\results\RT6ME7\烘焙回放.jpg
+22:32:25 烘焙回放（原尺寸）：F:\FireWorksLab\analysis\results\RT6ME7\烘焙回放_原尺寸.jpg
+22:32:25 烘焙器预览没做成（不影响导出）：'texture'
+22:32:25 大文件（贴图）在 F:\FireWorksLab\analysis\local\输出\素材包，不上传
+22:32:25 完成，用时 0.6 分钟

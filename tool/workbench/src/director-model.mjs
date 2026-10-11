@@ -3,7 +3,7 @@ import {compactDirectorArrays} from './director-compact.mjs';
 import {nameDirectorArrays} from './director-naming.mjs';
 const clone=v=>structuredClone(v),round=v=>{if(!Number.isFinite(v))throw Error('时序包含无效数值');return Math.round(v*1e6)/1e6};
 const vec=(x=0,y=x,z=x)=>({X:x,Y:y,Z:z}),rot=()=>({Pitch:0,Yaw:0,Roll:0});
-const filter=()=>({PlatformFlags:14,MinQualityLevel:'EQuality_VeryLow'});
+const filter=(e)=>({PlatformFlags:e?.platformFlags??14,MinQualityLevel:e?.minQuality??'EQuality_VeryLow'});
 const clean=v=>Array.isArray(v)?v.map(clean):v&&typeof v==='object'?Object.fromEntries(Object.entries(v).filter(([k])=>k!=='_struct').map(([k,x])=>[k,clean(x)])):v;
 function compileLegacy(doc,events,target,mapping={}){
  const issues=[],arrays={EffectSubTemplates:[],EffectTemplates:[],EffectScheduleGroups:[]},groups={P:9,B:8,F:7};
@@ -34,7 +34,7 @@ function compileLegacy(doc,events,target,mapping={}){
     }
     const signature=JSON.stringify(entries);subName=target?.sourceLibrary&&m.mode==='whole'?source.exportName:subCache.get(signature);if(!subName){subName=`WB_SUB_${String(subCache.size).padStart(3,'0')}`;subCache.set(signature,subName);arrays.EffectSubTemplates.push({TemplateName:subName,Entries:entries});}
    }
-   parent.Entries.push({EntryType:'SubTemplate',FXResourceId:'None',SubTemplateName:subName,LocalTimeOffset:round(e.effectiveLaunch-start),SlotIndex:Number(e.pointId.slice(1)),PositionOffset:vec(0,0,round((e.dz||0)*100)),RotationOffset:rot(),RandomPositionRange:vec(),RandomRotationRange:rot(),EffectScale:vec(round(e.scale??1)),RandomScaleRatio:0,Filter:filter()});
+   parent.Entries.push({EntryType:'SubTemplate',FXResourceId:'None',SubTemplateName:subName,LocalTimeOffset:round(e.effectiveLaunch-start),SlotIndex:Number(e.pointId.slice(1)),PositionOffset:vec(0,0,round((e.dz||0)*100)),RotationOffset:rot(),RandomPositionRange:vec(),RandomRotationRange:rot(),EffectScale:vec(round(e.scale??1)),RandomScaleRatio:0,Filter:filter(e)});
   }
   arrays.EffectTemplates.push(parent);byGroup[group].push({StartTime:start,TemplateName:parent.TemplateName,Filter:filter()});
  }
@@ -43,7 +43,8 @@ function compileLegacy(doc,events,target,mapping={}){
  const named=issues.length?null:nameDirectorArrays(arrays);if(named)Object.assign(arrays,named.arrays);
  const exportNames=new Map(named?.audit.subTemplates.map(x=>[x.from,x.to])||[]);
  const summary={...compact.stats,eventCount:events.length,subTemplates:arrays.EffectSubTemplates.length,templates:arrays.EffectTemplates.length,groups:arrays.EffectScheduleGroups.length,scheduleSlots:arrays.EffectScheduleGroups.reduce((n,g)=>n+g.Slots.length,0)};
- return {arrays,issues:[...new Set(issues)],summary,manifest:{format:'df.director-delivery/1',status:issues.length?'blocked_missing_mapping':'property_text_ready_UE_unverified',replaceEffectArrays:true,target:target?.target?.path,sourceLibrary:target?.sourceLibrary,templateNaming:named?.audit,mappingAudit:used.map(id=>({templateId:id,sourceIndex:mapping[id]?.sourceIndex,sourceName:catalog.get(mapping[id]?.source)?.sub.TemplateName,exportName:exportNames.get(catalog.get(mapping[id]?.source)?.exportName)||catalog.get(mapping[id]?.source)?.exportName,note:mapping[id]?.note})),pointNumbering:0,duration:doc.meta.duration,musicOffset:doc.meta.musicOffset||0,summary,issues:[...new Set(issues)],...arrays}};
+ const qualityMode=events.some(e=>e.minQuality)?'nested':'tier';
+ return {arrays,issues:[...new Set(issues)],summary,manifest:{format:'df.director-delivery/1',qualityMode,status:issues.length?'blocked_missing_mapping':'property_text_ready_UE_unverified',replaceEffectArrays:true,target:target?.target?.path,sourceLibrary:target?.sourceLibrary,templateNaming:named?.audit,mappingAudit:used.map(id=>({templateId:id,sourceIndex:mapping[id]?.sourceIndex,sourceName:catalog.get(mapping[id]?.source)?.sub.TemplateName,exportName:exportNames.get(catalog.get(mapping[id]?.source)?.exportName)||catalog.get(mapping[id]?.source)?.exportName,note:mapping[id]?.note})),pointNumbering:0,duration:doc.meta.duration,musicOffset:doc.meta.musicOffset||0,summary,issues:[...new Set(issues)],...arrays}};
 }
 
 export function compileDirector(doc,events,target,mapping={}){

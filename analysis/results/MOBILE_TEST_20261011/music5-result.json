@@ -1,0 +1,44 @@
+{
+ "time": "2026-10-11T14:22:22.783Z",
+ "instance_7": {
+  "ok": true,
+  "changedKeys": [
+   "AudioTemplates"
+  ],
+  "audio": [
+   [
+    [
+     "Ma5_Fireworks_Music_Start",
+     5
+    ],
+    [
+     "Voice_SOL_Fireworks_Show_Taj_19",
+     0
+    ]
+   ]
+  ]
+ },
+ "CDO_2": {
+  "ok": true,
+  "changedKeys": [
+   "AudioTemplates"
+  ],
+  "audio": [
+   [
+    [
+     "Ma5_Fireworks_Music_Start",
+     5
+    ],
+    [
+     "Voice_SOL_Fireworks_Show_Taj_19",
+     0
+    ]
+   ]
+  ]
+ },
+ "blueprintSave": {
+  "function": "SaveAsset",
+  "called": true,
+  "return_value": "True"
+ }
+}

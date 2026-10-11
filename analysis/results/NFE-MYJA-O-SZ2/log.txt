@@ -1,0 +1,7 @@
+22:25:41 开始：GoldRay_D150（导出素材）
+22:29:15 GoldRay_D150 组合素材包 213 秒：T_EFX_FireWorks_GoldRay_A_4x4_01.png、T_EFX_FireWorks_GoldRay_A_4x4_01_C.png、T_EFX_FireWorks_GoldRay_A_4x4_01_HD.png、T_EFX_FireWorks_GoldRay_A_R.png、T_EFX_FireWorks_GoldRay_B_4x4_01.png、T_EFX_FireWorks_GoldRay_B_4x4_01_C.png、T_EFX_FireWorks_GoldRay_B_4x4_01_HD.png、T_EFX_FireWorks_GoldRay_B_R.png、_检查、cascade.json、cascade_mobile.json、命名对照.txt
+22:29:16 回放检查：✅ 通过
+22:29:39 烘焙回放对照：F:\FireWorksLab\analysis\results\NFE-MYJA-O-SZ2\烘焙回放.jpg
+22:29:39 烘焙回放（原尺寸）：F:\FireWorksLab\analysis\results\NFE-MYJA-O-SZ2\烘焙回放_原尺寸.jpg
+22:29:39 大文件（贴图）在 F:\FireWorksLab\analysis\local\输出\素材包，不上传
+22:29:39 完成，用时 4.0 分钟

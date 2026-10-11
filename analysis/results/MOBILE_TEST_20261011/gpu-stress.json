@@ -1,0 +1,98 @@
+[
+ {
+  "name": "银扇13束×2把=26束",
+  "group": "B",
+  "calls": 2,
+  "entries": 26,
+  "activations": 26,
+  "truncWarnings": 0,
+  "truncated": {}
+ },
+ {
+  "name": "银扇×3把=39束",
+  "group": "B",
+  "calls": 3,
+  "entries": 39,
+  "activations": 39,
+  "truncWarnings": 0,
+  "truncated": {}
+ },
+ {
+  "name": "银扇×4把=52束",
+  "group": "B",
+  "calls": 4,
+  "entries": 52,
+  "activations": 52,
+  "truncWarnings": 0,
+  "truncated": {}
+ },
+ {
+  "name": "银扇×5把=65束",
+  "group": "B",
+  "calls": 5,
+  "entries": 65,
+  "activations": 65,
+  "truncWarnings": 0,
+  "truncated": {}
+ },
+ {
+  "name": "银扇×6把=78束",
+  "group": "B",
+  "calls": 6,
+  "entries": 78,
+  "activations": 78,
+  "truncWarnings": 0,
+  "truncated": {}
+ },
+ {
+  "name": "银扇×7把=91束",
+  "group": "B",
+  "calls": 7,
+  "entries": 91,
+  "activations": 91,
+  "truncWarnings": 0,
+  "truncated": {}
+ },
+ {
+  "name": "银扇×8把=104束",
+  "group": "B",
+  "calls": 8,
+  "entries": 104,
+  "activations": 104,
+  "truncWarnings": 226,
+  "truncated": {
+   "P_EFX_FireWorks_FanSilver_01_HD": {
+    "requested": 1125,
+    "kept": 153,
+    "keptPct": 14
+   }
+  }
+ },
+ {
+  "name": "大号花9点（银彩菊+大尾缀）",
+  "group": "P",
+  "calls": 9,
+  "entries": 18,
+  "activations": 18,
+  "truncWarnings": 0,
+  "truncated": {}
+ },
+ {
+  "name": "中号花9点（金曜菊+中尾缀）",
+  "group": "P",
+  "calls": 9,
+  "entries": 18,
+  "activations": 18,
+  "truncWarnings": 0,
+  "truncated": {}
+ },
+ {
+  "name": "小号花9点（小青柠+小尾缀）",
+  "group": "P",
+  "calls": 9,
+  "entries": 18,
+  "activations": 18,
+  "truncWarnings": 0,
+  "truncated": {}
+ }
+]
