@@ -1,0 +1,75 @@
+[
+ {
+  "start": "2026.10.11-10.11.48:463",
+  "stop": "2026.10.11-10.11.55:863",
+  "settings": [
+   "模拟平台已设置: 2",
+   "模拟画质已设置: 3"
+  ],
+  "activations": {
+   "Crackle": 1,
+   "GoldSpark": 1,
+   "SilverChry": 1,
+   "GoldCoreLime": 1,
+   "MultiLayerChry": 1,
+   "FanComet_01": 3,
+   "GoldCrackle": 1,
+   "GoldRayChry": 1,
+   "PrismWheels": 1
+  }
+ },
+ {
+  "start": "2026.10.11-10.12.04:964",
+  "stop": "2026.10.11-10.12.12:555",
+  "settings": [
+   "模拟平台已设置: 1",
+   "模拟画质已设置: 2"
+  ],
+  "activations": {
+   "Lime": 1,
+   "GoldSpark": 1,
+   "GoldCoreLime": 1,
+   "MultiLayerChry": 1,
+   "FanComet_01": 2,
+   "GoldCrackle": 1,
+   "GoldRayChry": 1,
+   "PrismWheels": 1
+  }
+ },
+ {
+  "start": "2026.10.11-10.12.21:160",
+  "stop": "2026.10.11-10.12.29:043",
+  "settings": [
+   "模拟平台已设置: 3",
+   "模拟画质已设置: 4"
+  ],
+  "activations": {
+   "OrangeGlitter": 1,
+   "GoldSpark": 1,
+   "SilverChry": 1,
+   "GreenPeony": 1,
+   "GoldCoreLime": 1,
+   "MultiLayerChry": 1,
+   "FanComet_01": 3,
+   "GoldCrackle": 1,
+   "GoldRayChry": 1,
+   "PrismWheels": 1
+  }
+ },
+ {
+  "start": "2026.10.11-10.13.03:837",
+  "stop": "2026.10.11-10.13.12:544",
+  "settings": [
+   "模拟画质已设置: 1"
+  ],
+  "activations": {
+   "OrangeGlitter": 1,
+   "GoldCoreLime": 1,
+   "MultiLayerChry": 1,
+   "FanComet_01": 1,
+   "GoldCrackle": 1,
+   "GoldRayChry": 1,
+   "PrismWheels": 1
+  }
+ }
+]

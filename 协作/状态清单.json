@@ -347,9 +347,10 @@
       "③ 在编辑器用 DebugPlatform=Mobile / DebugQualityLevel=Low 预览一次（只预览不保存），证实 PlatformFlags 位序、MinQualityLevel 比较方式，以及导演受不受 ResourceFX MaxInstanceNum、满额是拒还是挤。具体做法（v1.1 补，宪章 6.3）：播 R03 高档，到 120 s 附近数银星扇同时亮着的束数——设计预测 110 束（上限 10）；数出 ≤10 = 上限生效（被挤掉或拒绝），远大于 10 = 导演不受该上限。结果写进 24 的对话记录，我再改预算。",
       "④ 宪章批后：22 出逻辑方案 B 和 逻辑方案→三表 编译器；24 负责导入、双目标读回、UE 播放证据。三表、模板库索引、时序索引都由编译器生成，不手改三表。",
       "⑤（v1.2 补，22 → 24）读回条目层（EffectTemplates 的 Entries）PositionOffset.Z / Y 在 UE 里是否生效：丙构图的高低错落（±30 m）和三个主角的景深错层（±60–100 m）要用；R04 只在固定子模板里用过 PositionOffset / RotationOffset，条目层和随机字段全是 0，没有实测记录。",
-      "⑥（v1.2 补，22 → 烘焙器）主角大面片转镜头会跟着转：烘焙器大面片 Screen Alignment 写死 Rectangle（tool/src/js/66_fwlcascade.js:44、68_lowframe.js:179）。用户先在 UE 里把测试副本改 Facing Camera Position 对比；结果好再认领 tool/src 加选项，未测之前不动底层。"
+      "⑥（v1.2 补，22 → 烘焙器）主角大面片转镜头会跟着转：烘焙器大面片 Screen Alignment 写死 Rectangle（tool/src/js/66_fwlcascade.js:44、68_lowframe.js:179）。用户先在 UE 里把测试副本改 Facing Camera Position 对比；结果好再认领 tool/src 加选项，未测之前不动底层。",
+      "【回传 · 手游编排对话 2026-10-11 10:55，本机UE实测，证据 analysis/results/MOBILE_TEST_20261011/看法.md】①完成：FXtools/节目/NewYearFireWorks_v01/资源发射器数.json（PC 20个Low/High全空、13个含GPU发射器；手机表无R03的20个）。③完成：PlatformFlags=1<<枚举，Mobile2/PC4/Gamepad8；MinQuality按「当前≥最低」；DebugPlatform=None在编辑器按Gamepad(8)——PC内容建议标12；导演不受MaxInstanceNum=10限制（117.2s一次104束银扇），真正瓶颈是GPU粒子池256²，银扇墙期间被截断的那些生成里银扇只保留9%，并发预算请按GPU粒子数而不是实例上限算。②UE已验证：R03合成一张表22/69/149（VeryLow72/Medium87/High23），只改DebugQualityLevel，高/中/低激活与三张原表各自一致，中、低档无GPU截断——v1.2「一张表+嵌套Filter」可行，编译器改造仍待认领。⑤完成：条目PositionOffset生效，Z=世界高度，X/Y按发射点局部坐标（P4局部Y≈沿坝体，局部X≈景深），各点Yaw不同。附：RequiredPointCount固定9/8正确（SlotIndex≥它才报错）；工作台ueText空数组已修。⑥相关：金垂柳=GoldKamuro_HD，原对齐是PSA_Square（不是Rectangle），内存改FacingCameraPosition后原地转28°花随透视倾斜、不再贴屏，无变形；对比图同目录，资产未保存，正式改资产待用户确认。"
     ],
-    "手游编排 · tool/workbench ueText空数组修复": "认领：手游编排对话（2026-10-11 10:40，用户授权处理附带发现）。只改 tool/workbench/src/delivery-model.mjs 的 ueText：空数组写成空串而不是 ()（UE 把 () 解析成 1 个默认元素，导演回滚 / 整份配置写回时会多出空项）；加回归测试，npm test + release 生成离线包。不动布局/交互/节目/三表。完成后释放。"
+    "手游编排 · ueText空数组修复（已完成）": "完成并释放：2026-10-11。tool/workbench/src/delivery-model.mjs ueText 空数组写空串；新增 tests/ue-text-empty-array.test.mjs（先失败后通过），142核心+38包装通过，release 已更新 F/D 固定离线入口；UE 整份 DefaultConfig 写回读回与备份一致（analysis/results/MOBILE_TEST_20261011/uetext-verify.json）。未改布局/交互/节目/三表。"
   },
   "effects": [
     {

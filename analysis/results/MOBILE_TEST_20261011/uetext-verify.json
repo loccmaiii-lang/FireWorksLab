@@ -1,0 +1,41 @@
+{
+ "fixedUeTextFullWrite": true,
+ "lengths": {
+  "EffectSubTemplates": [
+   22,
+   22
+  ],
+  "EffectTemplates": [
+   62,
+   62
+  ],
+  "EffectScheduleGroups": [
+   2,
+   2
+  ],
+  "LightTemplates": [
+   0,
+   0
+  ],
+  "LightScheduleGroups": [
+   0,
+   0
+  ],
+  "AudioTemplates": [
+   1,
+   1
+  ],
+  "AudioScheduleGroups": [
+   1,
+   1
+  ],
+  "SequenceTemplates": [
+   0,
+   0
+  ],
+  "SequenceScheduleGroups": [
+   0,
+   0
+  ]
+ }
+}

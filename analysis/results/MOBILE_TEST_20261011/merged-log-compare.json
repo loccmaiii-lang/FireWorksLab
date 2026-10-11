@@ -1,0 +1,95 @@
+[
+ {
+  "start": "2026.10.11-10.36.25:803",
+  "settings": [
+   "模拟平台已设置: 2",
+   "模拟画质已设置: 3"
+  ],
+  "durationS": 6.021,
+  "actual": {
+   "P_EFX_FireWorks_NY_Trail_Large": 2,
+   "P_EFX_FireWorks_GoldKamuro": 3,
+   "P_EFX_FireWorks_GoldChry": 4,
+   "P_EFX_FireWorks_PrismWheels": 2,
+   "P_EFX_FireWorks_FanSilver_01": 104
+  },
+  "expected": {
+   "high": {
+    "P_EFX_FireWorks_NY_Trail_Large": 2,
+    "P_EFX_FireWorks_FanSilver_01": 104
+   },
+   "medium": {
+    "P_EFX_FireWorks_NY_Trail_Large": 2,
+    "P_EFX_FireWorks_FanSilver_01": 78
+   },
+   "low": {
+    "P_EFX_FireWorks_NY_Trail_Large": 1,
+    "P_EFX_FireWorks_FanSilver_01": 26
+   }
+  },
+  "closest": "high",
+  "gpuTruncWarnings": 1190
+ },
+ {
+  "start": "2026.10.11-10.36.39:915",
+  "settings": [
+   "模拟平台已设置: 2",
+   "模拟画质已设置: 2"
+  ],
+  "durationS": 6.042,
+  "actual": {
+   "P_EFX_FireWorks_NY_Trail_Large": 2,
+   "P_EFX_FireWorks_GoldKamuro": 3,
+   "P_EFX_FireWorks_GoldChry": 3,
+   "P_EFX_FireWorks_PrismWheels": 2,
+   "P_EFX_FireWorks_FanSilver_01": 78
+  },
+  "expected": {
+   "high": {
+    "P_EFX_FireWorks_NY_Trail_Large": 2,
+    "P_EFX_FireWorks_FanSilver_01": 104
+   },
+   "medium": {
+    "P_EFX_FireWorks_NY_Trail_Large": 2,
+    "P_EFX_FireWorks_FanSilver_01": 78
+   },
+   "low": {
+    "P_EFX_FireWorks_NY_Trail_Large": 1,
+    "P_EFX_FireWorks_FanSilver_01": 26
+   }
+  },
+  "closest": "medium",
+  "gpuTruncWarnings": 0
+ },
+ {
+  "start": "2026.10.11-10.36.54:542",
+  "settings": [
+   "模拟平台已设置: 2",
+   "模拟画质已设置: 1"
+  ],
+  "durationS": 6.031,
+  "actual": {
+   "P_EFX_FireWorks_NY_Trail_Large": 1,
+   "P_EFX_FireWorks_GoldKamuro": 1,
+   "P_EFX_FireWorks_GoldChry": 1,
+   "P_EFX_FireWorks_PrismWheels": 1,
+   "P_EFX_FireWorks_FanSilver_01": 26
+  },
+  "expected": {
+   "high": {
+    "P_EFX_FireWorks_NY_Trail_Large": 2,
+    "P_EFX_FireWorks_FanSilver_01": 104
+   },
+   "medium": {
+    "P_EFX_FireWorks_NY_Trail_Large": 2,
+    "P_EFX_FireWorks_FanSilver_01": 78
+   },
+   "low": {
+    "P_EFX_FireWorks_NY_Trail_Large": 1,
+    "P_EFX_FireWorks_FanSilver_01": 26
+   }
+  },
+  "closest": "low",
+  "gpuTruncWarnings": 0
+ }
+]
