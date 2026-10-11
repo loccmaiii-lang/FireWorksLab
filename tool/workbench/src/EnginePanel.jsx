@@ -2,7 +2,7 @@ import React,{useState,useMemo,useRef,useEffect} from 'react';
 import {readDirector,prepareImport,executeImport,DEFAULT_ENGINE,EFFECT_KEYS,same} from './engine.mjs';
 import {compileDirector} from './director-model.mjs';
 import {ueText} from './delivery-model.mjs';
-import {downloadText} from './workbench-data.mjs';
+import {downloadText,tiers} from './workbench-data.mjs';
 import {useEngineConnection} from './ConnectionProvider.jsx';
 import {DirectorTargetPicker} from './DirectorTargetPicker.jsx';
 export function EnginePanel({doc,events,tier,notify,extraIssues=[]}){
@@ -22,13 +22,14 @@ export function EnginePanel({doc,events,tier,notify,extraIssues=[]}){
   // Preserve the exact prior configuration before the one user-authorized write.
   downloadText('导演导入前备份-'+Date.now()+'.json',JSON.stringify({format:'df.director-before-import/1',path:plan.path,assetPath:plan.assetPath,config:plan.before,relatedTargets:(plan.relatedPlans||[]).map(p=>({path:p.path,assetPath:p.assetPath,config:p.before}))},null,2));
   const r=await executeImport(plan,{base,serialize:ueText});setReceipt(r);downloadText('导演导入回执-'+Date.now()+'.json',JSON.stringify(r,null,2));
-  const message=r.paired?(r.saved?'导演蓝图与场景实例三表读回一致；蓝图已保存，请在UE保存该实例所属子关卡。':'两端已读回一致，蓝图保存失败：'+r.saveError):r.saved?'UE 已写入、读回一致并保存所选 Blueprint；未找到可关联场景实例。':r.needsLevelSave?'UE 已写入并读回一致；关卡 Actor 修改尚未保存，请在 UE 保存关卡。':'UE 已写入并读回一致，但保存失败：'+r.saveError;
+  const message=r.paired?(r.saved?'导演蓝图与场景实例的导演表读回一致；蓝图已保存，请在UE保存该实例所属子关卡。':'两端已读回一致，蓝图保存失败：'+r.saveError):r.saved?'UE 已写入、读回一致并保存所选 Blueprint；未找到可关联场景实例。':r.needsLevelSave?'UE 已写入并读回一致；关卡 Actor 修改尚未保存，请在 UE 保存关卡。':'UE 已写入并读回一致，但保存失败：'+r.saveError;
   setStatus(message);notify(message,r.saved?'success':'info');setPlan(null);setChecked(false);
  }catch(e){setStatus('导入未完成：'+e.message+(e.rollbackVerified?'；已读回确认恢复导入前配置。':'；请核对 UE 和导入前备份。'));notify('导入未完成：'+e.message,'error');setPlan(null);setChecked(false)}finally{globalThis.__DF_ENGINE_BUSY__=false;setWriting(false);setBusy(false)}}
  return <section className="inspector-section offline-engine-panel" aria-label="本机UE导入"><h3>自动导入 UE</h3>
  <DirectorTargetPicker onEditing={setTargetEditing}/>
+ <p className="field-hint">导入内容：{tier==='nested'?`一张导演表（高中低合一，UE 按玩家画质自动取）· ${events.length} 次点位播放`:`只导${tiers[tier]||tier}（导演里只有这一档）· ${events.length} 次点位播放`}；在下方「交付档位」切换。</p>
  <button className="full primary-action" aria-busy={writing} disabled={!plan||!checked||busy||writing} onClick={execute}>{writing?'正在导入并核对…':'自动导入 UE'}</button>
- <label className="panel-check"><input type="checkbox" aria-label="确认替换导演三表" disabled={!plan||busy} checked={checked} onChange={e=>setChecked(e.target.checked)}/>{plan?.relatedPlans?.length?'确认替换导演蓝图与此场景实例的三表及节目时长':'确认替换当前档位三表与节目时长'}</label>
+ <label className="panel-check"><input type="checkbox" aria-label="确认替换导演表" disabled={!plan||busy} checked={checked} onChange={e=>setChecked(e.target.checked)}/>{(plan?.relatedPlans?.length?'确认替换导演蓝图与此场景实例的':'确认替换')+(tier==='nested'?'导演表（高中低合一）':`导演表（只有${tiers[tier]||tier}）`)+'及节目时长'}</label>
  <p role="status" className="field-hint" style={{overflowWrap:'anywhere'}}>{status}</p>
  <button className="quiet-btn full" disabled={!path||busy||writing} onClick={check}>{busy&&!writing?'正在检查…':'重新检查导演与发射点'}</button>
  {plan&&<p className="field-hint">{plan.summary.subTemplates} 个子模板 · {plan.summary.templates} 个模板 · {plan.summary.scheduleSlots} 个时序项。导入前自动备份{plan.relatedPlans?.length?'两个对象':'所选对象'}，其他导演设置保留。</p>}
