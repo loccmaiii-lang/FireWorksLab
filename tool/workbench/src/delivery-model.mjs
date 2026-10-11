@@ -1,6 +1,6 @@
 import {clone} from './editing-model.mjs';
 const number=v=>{v=Number(v);if(!Number.isFinite(v))throw Error('交付中存在无效数值');return Math.round(v*1e6)/1e6};
-export function ueText(v){if(Array.isArray(v))return '('+v.map(ueText).join(',')+')';if(v&&typeof v==='object')return '('+Object.entries(v).filter(([k])=>k!=='_struct').map(([k,x])=>k+'='+ueText(x)).join(',')+')';if(typeof v==='number')return String(number(v));if(typeof v==='boolean')return v?'True':'False';if(v===null)return 'None';return '"'+String(v).replaceAll('\\','\\\\').replaceAll('"','\\"')+'"'}
+export function ueText(v){if(Array.isArray(v))return v.length?'('+v.map(ueText).join(',')+')':'';if(v&&typeof v==='object')return '('+Object.entries(v).filter(([k])=>k!=='_struct').map(([k,x])=>k+'='+ueText(x)).join(',')+')';if(typeof v==='number')return String(number(v));if(typeof v==='boolean')return v?'True':'False';if(v===null)return 'None';return '"'+String(v).replaceAll('\\','\\\\').replaceAll('"','\\"')+'"'}
 export function initialMapping(doc,actor){const subs=actor.properties.EffectSubTemplates;return Object.fromEntries(doc.templateLibrary.map(t=>{const ids=subs.flatMap((s,i)=>t.legacyMapping?.candidateNames?.includes(s.TemplateName)?[i]:[]);return [t.id,ids.length===1?ids[0]:-1]}))}
 export function buildDelivery(doc,events,pointId,actor,mapping={}){
  const rows=events.filter(e=>e.pointId===pointId).sort((a,b)=>a.effectiveLaunch-b.effectiveLaunch),used=[...new Set(rows.map(e=>e.templateId))];
