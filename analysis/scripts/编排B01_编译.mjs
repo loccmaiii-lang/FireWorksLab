@@ -19,12 +19,14 @@ const outDir = path.resolve(ROOT, args.includes('--out') ? args[args.indexOf('--
 const BASE = path.join(ROOT, 'FXtools/节目/NewYearFireWorks_v01/NewYearFireWorks_v01-R04时间规范修正.dfshow');
 const DENSITY = args.includes('--density') ? Number(args[args.indexOf('--density') + 1]) : 2;
 if (![1, 2, 3].includes(DENSITY)) throw Error('--density 只能是 1 / 2 / 3');
-const RHYTHM = args.includes('--rhythm') ? args[args.indexOf('--rhythm') + 1] : null;   // 节奏留白版 A / B / C / D（以 D2 为底，用户 10-11 23:07）
+const RHYTHM = args.includes('--rhythm') ? args[args.indexOf('--rhythm') + 1] : null;
+const VARY = args.includes('--vary');   // 高低 / 大小随机分布（用户 10-11 23:40 / 23:41），只配合 --rhythm   // 节奏留白版 A / B / C / D（以 D2 为底，用户 10-11 23:07）
 if (RHYTHM && !['A', 'B', 'C', 'D'].includes(RHYTHM)) throw Error('--rhythm 只能是 A / B / C / D');
-const SFX = RHYTHM ? `_R${RHYTHM}` : DENSITY === 2 ? '' : `_D${DENSITY}`;
+if (VARY && !RHYTHM) throw Error('--vary 要和 --rhythm 一起用');
+const SFX = RHYTHM ? `_R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? '' : `_D${DENSITY}`;
 const LOGIC = path.join(ROOT, `协作/编排B01/逻辑方案${SFX}.json`);
-const TAG = 'B01长冈式' + (RHYTHM ? `-节奏${RHYTHM}` : DENSITY === 2 ? '' : `-D${DENSITY}`);
-const TABLE = RHYTHM ? `B01R${RHYTHM}` : DENSITY === 2 ? 'B01' : `B01D${DENSITY}`;
+const TAG = 'B01长冈式' + (RHYTHM ? `-节奏${RHYTHM}${VARY ? '-高低大小' : ''}` : DENSITY === 2 ? '' : `-D${DENSITY}`);
+const TABLE = RHYTHM ? `B01R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? 'B01' : `B01D${DENSITY}`;
 const MAIN = !RHYTHM && DENSITY === 2;   // 只有 D2 主版带完整音乐
 const FILE_VERSION = 10;   // 修订1：档位从两端收 + 金垂柳只当主角；修订2：大号花型 + 主角 280 + 密度 D1 / D3；修订3：节奏留白版 A–D
 const clone = x => structuredClone(x);
@@ -64,6 +66,26 @@ const DERIVED = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/大
   }
 }
 const DER_SRC = new Map(DERIVED.map(f => [f.id, f.source]));
+
+// —— 大小随机版本（用户 10-11 23:41「球花的大小也相应略作随机」）：<花型>__K92 / __K108 = 同一花型只把球花条目放大 / 缩小，尾缀和开花点不动 ——
+{
+  const tmap = new Map(doc.templateLibrary.map(t => [t.id, t])), smap = new Map(doc.subTemplateLibrary.map(s => [s.key, s]));
+  for (const id of [...new Set(logic.cues.map(c => c.templateId).filter(x => x.includes('__K')))]) {
+    const [baseId, kTxt] = id.split('__K'), k = Number(kTxt) / 100, bt = tmap.get(baseId);
+    if (!bt || !(k > 0.5 && k < 1.5)) throw Error('大小版本的原花型不存在或倍数不对：' + id);
+    const bs = smap.get(bt.subTemplateRef), engine = (bs.engineId || bs.id) + '_K' + String(kTxt).padStart(3, '0');
+    const sub = clone(bs);
+    for (const e of sub.entries) if (e.role === 'burst') {
+      e.native.EffectScale = {X: round(e.native.EffectScale.X * k), Y: round(e.native.EffectScale.Y * k), Z: round(e.native.EffectScale.Z * k)};
+      e.preview = {...e.preview, diameterM: round(e.preview.diameterM * k)};
+    }
+    Object.assign(sub, {name: `${bt.name}·${k < 1 ? '略小' : '略大'}×${k}`, id: engine, engineId: engine, key: engine + '@1', version: 1,
+      derivedFrom: {...(bs.derivedFrom || {}), sizeOf: bs.key, burstScaleExtra: k, rule: '同一花型，只缩放球花条目（尾缀与开花点不动）', by: '本机同步（8）2026-10-11，用户 23:41', engineScaleVerified: true}});
+    doc.subTemplateLibrary.push(sub);
+    doc.templateLibrary.push({...clone(bt), id, name: sub.name, diameter: round(bt.diameter * k), width: round(bt.diameter * k), subTemplateRef: sub.key});
+    DER_SRC.set(id, DER_SRC.get(baseId) || baseId);
+  }
+}
 
 // —— 原型：每种花型取一条 R04 的 cue / event 当字段模板（只改时间 / 点位 / 编号） ——
 const eventProto = new Map(), cueProto = new Map();
@@ -158,9 +180,9 @@ for (const tier of ['high', 'medium', 'low']) {
   report.tiers[tier] = {events: ev.length, subTemplates: m.EffectSubTemplates.length, templates: m.EffectTemplates.length, scheduleSlots: m.EffectScheduleGroups.reduce((n, g) => n + g.Slots.length, 0),
     groups: Object.fromEntries(m.EffectScheduleGroups.map(g => [g.GroupName, g.Slots.length])), lastSlot: Math.max(...m.EffectScheduleGroups.flatMap(g => g.Slots.map(s => s.StartTime))), expansionProblems: [...new Set(bad)].slice(0, 10), status: m.status};
   if (bad.length) throw Error(`${tier} 展开检查失败：${bad[0]}`);
-  const o = new Map();
+  const o = new Map(), stable = new Map((m.templateNaming?.subTemplates || []).map(x => [x.to, x.from]));   // 各档单独命名时同名可能对应不同子模板，按原键比
   for (const g of m.EffectScheduleGroups) for (const s of g.Slots) for (const e of tpls.get(s.TemplateName).Entries) {
-    const k = [g.GroupName, Math.round((s.StartTime + e.LocalTimeOffset) * 1000), e.SlotIndex, e.SubTemplateName].join('|'); o.set(k, (o.get(k) || 0) + 1);
+    const k = [g.GroupName, Math.round((s.StartTime + e.LocalTimeOffset) * 1000), e.SlotIndex, stable.get(e.SubTemplateName) || e.SubTemplateName].join('|'); o.set(k, (o.get(k) || 0) + 1);
   }
   occ[tier] = o;
 }

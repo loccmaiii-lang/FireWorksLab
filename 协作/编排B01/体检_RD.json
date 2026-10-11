@@ -177,6 +177,7 @@
   "shifted": 18,
   "maxShiftS": 4.9
  },
+ "vary": null,
  "wavesPerBar": {
   "release": 1.46,
   "push": 1.31

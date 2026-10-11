@@ -19,6 +19,7 @@
 import argparse
 import json
 import math
+import statistics
 from collections import defaultdict
 from pathlib import Path
 
@@ -303,9 +304,10 @@ def tier_points(c):
 
 
 # ═══════════════════════════ 曲谱：按我们这首歌的小节排 ═══════════════════════════
-def build(density=2, rhythm=None):
+def build(density=2, rhythm=None, vary=False):
     S = Show(density)
     S.rhythm = rhythm
+    S.vary = vary
     d = density
     h = lambda bar, beat=0: T(bar, beat)
 
@@ -544,6 +546,8 @@ def build(density=2, rhythm=None):
     if rhythm:
         apply_rhythm(S, rhythm)
     attach_base_fans(S)
+    if vary:
+        best_vary(S)
     return S
 
 
@@ -642,6 +646,170 @@ def apply_rhythm(S, mode):
     S.cues = sorted(keep, key=cue_t)
     S.rhythmLog = dict(mode=mode, name=R['name'], rule=R['rule'], groupsBefore=len(groups), groupsKept=len(chosen), mustKept=len(musts),
                        shifted=sum(1 for g in chosen if abs(g.get('shift', 0)) > 1e-6), maxShiftS=round(max([abs(g.get('shift', 0)) for g in chosen] or [0]), 3))
+
+
+# ———— 高低 / 大小随机分布（本机同步 8，用户 10-11 23:40 / 23:41）————
+# 用户：所有片段和种类的高度基本一致、几个主角在同一水平线；要纵向高低随机、主角拉开高度差且醒目、密度不变、
+# 不明显重叠遮挡、范围合理有层次；球花大小也略作随机。
+# 做法（只动高度偏移 dz 和每个片段用哪个大小版本，时间 / 点位 / 层 / 档位不动）：
+#   ① 组高度：每组（0.9 s 内一起开花的片段）整组上下移，相邻两组至少差 20 m、隔一组至少差 10 m；
+#      高潮段 −50…+20 m，铺垫段 −40…+15 m，按 5 m 取整；组内各层一起移，层次关系不变（二排再低 10 m）；
+#   ② 单点抖动：每个点再加均匀随机，小花 ±12、中花 ±18、大花 ±22 m；墙（金墙 / 白墙）只 ±8 m 加一条 ±12 m 的缓波，保持成排；
+#   ③ 原来的拱形 / 谷形 / 波形 / 锯齿高低（±25 m）保留叠加；合计软夹紧在 −60…+25 m（−40…+15 原样，超出部分指数压缩，不会挤成一条线；
+#      往下多、往上少：负的尾缀起点藏在坝体里，正的超过 25 m 尾缀会从半空出现）；
+#   ④ 主角按设计不随机：第 66 小节 P4 +20；第 105 小节三主角 P4 +20 / P2 −20 / P6 −45（中高两边低、左右不对称）；余韵 P4 +5；
+#      同一组里的陪衬（收边银彩菊、城垛、二排）整组压低 55 m、只抖 ±6 m，让主角高出一头；主角大小不随机（280 m）；
+#   ⑤ 大小：每个片段（一排）选 0.92 / 1.00 / 1.08 三个大小版本之一（30 / 40 / 30%），一排内同大小，
+#      只放大 / 缩小球花条目（同一资源，尾缀不动，开花点不动）；
+#   ⑥ 组高度不是纯随机：在允许范围里，挑和天上还亮着的花「深度重叠」最少的那个高度（同样少就按种子随机挑），主角的重叠按 3 倍算；
+#      种子 1–8 各算一遍，挑主角被压住最少、其次深度重叠最少的一个（同一排相邻点的设计重叠不算）。
+VARY_SIZES = ((0.92, 0.3), (1.0, 0.4), (1.08, 0.3))
+HERO_DZ = {66: {'P4': 20}, 105: {'P4': 20, 'P2': -20, 'P6': -45}, 125: {'P4': 5}}
+
+
+def _rnd(seed, *key):
+    import hashlib
+    h = hashlib.sha256(('|'.join(map(str, (seed,) + key))).encode()).digest()
+    return int.from_bytes(h[:8], 'big') / 2 ** 64
+
+
+def _soft(v, lo=-60.0, hi=25.0):
+    """软夹紧：-40…+15 m 之间原样，超出部分按指数压进 -60 / +25，越界的点不会全挤在同一高度成一条线。"""
+    if v < lo + 20:
+        return lo + 20 - 20 * (1 - math.exp((v - (lo + 20)) / 20))
+    if v > hi - 10:
+        return hi - 10 + 10 * (1 - math.exp(-(v - (hi - 10)) / 10))
+    return v
+
+
+def _groups_for_vary(S):
+    balls = sorted((c for c in S.cues if c['size'] != 'F'), key=lambda c: min(e['burst'] for e in c['events']))
+    out = []
+    for c in balls:
+        t = min(e['burst'] for e in c['events'])
+        if out and out[-1]['sec'] == c['section'] and t - out[-1]['t'] <= 0.9:
+            out[-1]['cues'].append(c)
+        else:
+            out.append(dict(t=t, sec=c['section'], cues=[c]))
+    return out
+
+
+def _flower_geom(c, e):
+    t = TPL[c['templateId'].split('__K')[0]]
+    k = c.get('sizeK', 1.0)
+    return PT[e['point']]['x'], 150 + (t['flightHeight'] or REL_H[c['size']]) + e['dz'], (t['diameter'] or DIA[c['size']]) * k
+
+
+def overlap_stats(S):
+    """每 0.25 s 取样：不同片段的两朵花圆心距离 < 0.6 ×（半径和）算一次深度重叠；同一片段相邻点（设计重叠）不算。另数主角被别的花深度压住的次数。"""
+    alive_all = [(c, e) for c in S.cues if c['size'] != 'F' for e in c['events']]
+    heavy = hero = 0
+    t, end = 10.0, max(e['end'] for _, e in alive_all)
+    while t < end:
+        now = [(c, e) for c, e in alive_all if e['burst'] + 0.4 <= t < e['end']]
+        geo = [(c, _flower_geom(c, e)) for c, e in now]
+        for i in range(len(geo)):
+            ci, (xi, zi, di) = geo[i]
+            for j in range(i + 1, len(geo)):
+                cj, (xj, zj, dj) = geo[j]
+                if ci is cj:
+                    continue
+                if ((xi - xj) ** 2 + (zi - zj) ** 2) ** 0.5 < 0.6 * (di + dj) / 2:
+                    heavy += 1
+                    if (fam(ci['sp']) == 'GK') != (fam(cj['sp']) == 'GK'):
+                        hero += 1
+        t += 0.25
+    return dict(heavyOverlapSamples=heavy, heroOverlapSamples=hero)
+
+
+def apply_vary(S, seed):
+    """组高度在允许范围里挑「和天上还亮着的花深度重叠最少」的那个（同样少就按种子随机挑），单点抖动和大小按种子定。"""
+    groups = _groups_for_vary(S)
+    prev = []
+    placed = []                                    # 已定高度的花：(亮起, 熄灭, x, z, 直径, 是否主角)
+    for c in S.cues:                               # 先给每个片段定大小（一排同大小），主角不变
+        if c['size'] == 'F' or fam(c['sp']) == 'GK':
+            c['sizeK'] = 1.0
+            continue
+        r, acc = _rnd(seed, 'K', c['id']), 0.0
+        for k, wgt in VARY_SIZES:
+            acc += wgt
+            if r < acc:
+                c['sizeK'] = k
+                break
+    base_dz = {(c['id'], e['point']): e['dz'] for c in S.cues if c['size'] != 'F' for e in c['events']}
+    for gi, g in enumerate(groups):
+        hero = any(fam(c['sp']) == 'GK' for c in g['cues'])
+        flowers = []                               # (片段, 事件, 不含组高度的 dz)
+        for c in g['cues']:
+            wall = '墙' in (c['wave'] or '')
+            if fam(c['sp']) == 'GK':
+                b = int(round((min(e['burst'] for e in c['events']) - BAR0) / BAR))
+                plan = HERO_DZ.get(b) or HERO_DZ[min(HERO_DZ, key=lambda k: abs(k - b))]
+                for e in c['events']:
+                    flowers.append((c, e, None, float(plan.get(e['point'], 0))))
+                continue
+            amp = 6 if hero else 8 if wall else {'S': 12, 'M': 18, 'L': 22}[c['size']]   # 主角组里的陪衬只小抖，免得顶到主角
+            phase = _rnd(seed, 'phase', c['id']) * 6.283
+            for e in c['events']:
+                j = (2 * _rnd(seed, 'J', c['id'], e['point']) - 1) * amp
+                w = 12 * math.sin(PT[e['point']]['x'] / 140 + phase) if wall else 0.0
+                rel = base_dz[(c['id'], e['point'])] + j + w - (10 if c['layer'] == 'extra' else 0)
+                flowers.append((c, e, rel, None))
+        if hero:
+            cands = [-55]                                  # 主角组：陪衬（收边银彩菊、城垛、二排）整组压低 55 m，主角高出一头
+        else:
+            lo, hi = (-50, 20) if g['sec'] in RELEASE else (-40, 15)
+            cands = [v for v in range(lo, hi + 1, 5) if (not prev or abs(v - prev[-1]) >= 20) and (len(prev) < 2 or abs(v - prev[-2]) >= 10)]
+            cands.sort(key=lambda v: _rnd(seed, 'order', gi, v))
+        t0 = min(e['burst'] for _, e, _, _ in flowers)
+        t1 = max(e['end'] for _, e, _, _ in flowers)
+        near = [p for p in placed if p[1] > t0 + 0.4 and p[0] < t1]
+        def cost(G):
+            tot = 0.0
+            for c, e, rel, fixed in flowers:
+                dz = fixed if fixed is not None else round(_soft(G + rel))
+                tpl = TPL[c['templateId'].split('__K')[0]]
+                x, z, d = PT[e['point']]['x'], 150 + (tpl['flightHeight'] or REL_H[c['size']]) + dz, (tpl['diameter'] or DIA[c['size']]) * c['sizeK']
+                a0, a1 = e['burst'] + 0.4, e['end']
+                for b0, b1, xx, zz, dd, hh in near:
+                    co = min(a1, b1) - max(a0, b0)
+                    if co > 0 and ((x - xx) ** 2 + (z - zz) ** 2) ** 0.5 < 0.6 * (d + dd) / 2:
+                        tot += co * (3 if hh or fam(c['sp']) == 'GK' else 1)
+            return tot
+        G = min(cands, key=cost)
+        if not hero:
+            prev.append(G)
+        for c, e, rel, fixed in flowers:
+            e['dz'] = float(fixed if fixed is not None else round(_soft(G + rel)))
+            tpl = TPL[c['templateId'].split('__K')[0]]
+            placed.append((e['burst'] + 0.4, e['end'], PT[e['point']]['x'], 150 + (tpl['flightHeight'] or REL_H[c['size']]) + e['dz'],
+                           (tpl['diameter'] or DIA[c['size']]) * c['sizeK'], fam(c['sp']) == 'GK'))
+    for c in S.cues:
+        if c['size'] != 'F' and c.get('sizeK', 1.0) != 1.0:
+            c['templateId'] = f"{c['templateId']}__K{round(c['sizeK'] * 100)}"
+
+
+def best_vary(S):
+    import copy
+    base = overlap_stats(S)
+    best = None
+    for seed in range(1, 9):
+        T2 = copy.deepcopy(S)
+        apply_vary(T2, seed)
+        st = overlap_stats(T2)
+        key = (st['heroOverlapSamples'], st['heavyOverlapSamples'])
+        if best is None or key < best[0]:
+            best = (key, seed, st)
+    apply_vary(S, best[1])
+    dz = [e['dz'] for c in S.cues if c['size'] != 'F' and fam(c['sp']) != 'GK' for e in c['events']]
+    sizes = defaultdict(int)
+    for c in S.cues:
+        if c['size'] != 'F' and fam(c['sp']) != 'GK':
+            sizes[c.get('sizeK', 1.0)] += 1
+    S.varyLog = dict(seed=best[1], before=base, after=best[2], dzMin=min(dz), dzMax=max(dz), dzMean=round(sum(dz) / len(dz), 1),
+                     dzStd=round(statistics.pstdev(dz), 1), sizeCues={str(k): v for k, v in sorted(sizes.items())},
+                     heroes=[(round(min(e['burst'] for e in c['events']), 1), {e['point']: e['dz'] for e in c['events']}) for c in S.cues if fam(c['sp']) == 'GK'])
 
 
 RELEASE = {'B01_S1', 'B01_S5', 'B01_S9', 'B01_S12', 'B01_S13'}   # 释放段（开场高潮、第一次抬升、高潮 II、终章、白色收束）；其余为推进段
@@ -1060,6 +1228,7 @@ def checks(S):
     res['largeBySpecies'] = {SPECIES[sp][1]: sum(1 for e in balls if e['sp'] == sp) for sp in sorted({e['sp'] for e in balls if e['size'] == 'L'})}
     res['density'] = getattr(S, 'densityLog', None)
     res['rhythm'] = getattr(S, 'rhythmLog', None)
+    res['vary'] = getattr(S, 'varyLog', None)
     wb = defaultdict(int)
     for c in S.cues:
         if c['size'] != 'F' and c['layer'] == 'main' and len(c['points']) >= 4:
@@ -1185,13 +1354,19 @@ def make_figs(S, ck):
     ax[3].axhline(GPU_BUDGET, color='r', ls='--', lw=1); ax[3].text(1, GPU_BUDGET + 5, f'暂定预算 {GPU_BUDGET}', color='r', fontsize=8)
     ax[3].set_ylabel('1 s 内新起 GPU 发射器'); ax[3].set_xlabel('演出秒（音乐 + 5）'); ax[3].set_xlim(0, dur + 2)
     plt.tight_layout()
-    sfx = f"_R{S.rhythm}" if getattr(S, 'rhythm', None) else ''
+    sfx = (f"_R{S.rhythm}" + ('V' if getattr(S, 'vary', False) else '')) if getattr(S, 'rhythm', None) else ''
     plt.savefig(OUTDIR / f'总览{sfx}.png', dpi=110); plt.close()
 
     # —— 关键时刻 ——
     moments = [(10.9, '② 开场高潮 10.0 s'), (26.9, '③ 环形排 26.0 s'), (51.6, '④ 回扫 50.6 s'), (60.0, '⑤ 城垛 58.7 s'),
                (66.2, '高潮 I 中段 65 s'), (76.0, '低位密奏 76 s'), (100.0, '蓄势 99 s'), (114.5, '⑥ 入口 112.2 s'),
                (140.9, '转场 A/B 间隔 139.8 s'), (176.6, '⑧ 三主角 175.4 s'), (188.2, '金墙 186.8 s'), (198.2, '白墙 196.5 s')]
+    if getattr(S, 'rhythm', None):                       # 节奏版：时刻取这一版自己的组（3 个主角时刻 + 均匀挑 9 组），开花后 1.2 s
+        gs = _groups_for_vary(S)
+        hero = [g for g in gs if any(fam(c['sp']) == 'GK' for c in g['cues'])]
+        rest = [g for g in gs if g not in hero and g['t'] > 10]
+        pick = sorted(hero + [rest[int(i * (len(rest) - 1) / 8)] for i in range(9)], key=lambda g: g['t'])
+        moments = [(round(g['t'] + 1.2, 1), next(x['name'] for x in S.sections if x['id'] == g['sec']) + (' · 主角' if g in hero else '')) for g in pick]
     fig, axs = plt.subplots(4, 3, figsize=(21, 20))
     for a, (t, title) in zip(axs.flat, moments):
         snapshot(a, S, t, title)
@@ -1223,7 +1398,8 @@ def snapshot(ax, S, t, title):
                         ax.plot([x, x + L * math.sin(ang)], [2, 2 + L * math.cos(ang)], color=col, lw=1.1, alpha=max(.15, 1 - a_ / life))
                 continue
             rise = rise_of(c['sp'])
-            Hb = REL_H[c['size']] + e['dz']
+            _tp = TPL[c['templateId'].split('__K')[0]]
+            Hb = (_tp['flightHeight'] or REL_H[c['size']]) + e['dz']   # 修订：大号 / 主角用自己的尾缀高度
             if e['launch'] <= t < e['burst']:
                 p_ = (t - e['launch']) / rise
                 h_ = Hb * (1 - (1 - p_) ** 2)
@@ -1233,11 +1409,11 @@ def snapshot(ax, S, t, title):
             elif e['burst'] <= t < e['end']:
                 age = t - e['burst']
                 life = life_of(c['sp'])
-                d_ = DIA[c['size']] * (1 - math.exp(-age / 0.45))
+                d_ = (_tp['diameter'] or DIA[c['size']]) * c.get('sizeK', 1.0) * (1 - math.exp(-age / 0.45))   # 修订：按实际直径和大小版本画
                 al = max(.07, 1 - (age / life) ** 1.4) * .85
                 ax.add_patch(Circle((x, Hb), d_ / 2, fc=col, ec=col, lw=1.0, alpha=al * .35))
                 ax.add_patch(Circle((x, Hb), d_ / 2, fc='none', ec=col, lw=1.3, alpha=al))
-                if c['sp'] == 'GK':
+                if fam(c['sp']) == 'GK':
                     ax.add_patch(Polygon([(x - d_ * .45, Hb - d_ * .1), (x + d_ * .45, Hb - d_ * .1), (x + d_ * .34, Hb - d_ * (.55 + .35 * min(1, age / 3))), (x - d_ * .34, Hb - d_ * (.55 + .35 * min(1, age / 3)))], fc=col, ec='none', alpha=al * .4))
                 n['body'] += 1
     ax.set_facecolor('#0d1020')
@@ -1251,8 +1427,9 @@ def export(S, ck):
     OUTDIR.mkdir(parents=True, exist_ok=True)
     dur = max(math.ceil((OFFSET + 210.8108125) * 10) / 10, math.ceil(ck['grid']['lastEnd'] * 10) / 10)
     rh = getattr(S, 'rhythm', None)
-    sfx = f'_R{rh}' if rh else ('' if S.density == 2 else f'_D{S.density}')
-    out = dict(format='df.choreography-proposal/2', revision=f'B01_NAGAOKA_LOGIC_r3_R{rh}' if rh else f'B01_NAGAOKA_LOGIC_r2_D{S.density}', rhythm=rh, status='logic_compiled_by_编排B01_编译.mjs_UE_unverified',
+    vy = 'V' if getattr(S, 'vary', False) else ''
+    sfx = f'_R{rh}{vy}' if rh else ('' if S.density == 2 else f'_D{S.density}')
+    out = dict(format='df.choreography-proposal/2', revision=(f'B01_NAGAOKA_LOGIC_r4_R{rh}V' if vy else f'B01_NAGAOKA_LOGIC_r3_R{rh}') if rh else f'B01_NAGAOKA_LOGIC_r2_D{S.density}', rhythm=rh, status='logic_compiled_by_编排B01_编译.mjs_UE_unverified',
                generator='analysis/scripts/编排B01.py', density=S.density, musicOffsetS=OFFSET, barS=BAR, bar0S=BAR0, duration=dur,
                sections=S.sections, cues=S.cues)
     (OUTDIR / f'逻辑方案{sfx}.json').write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding='utf-8')
@@ -1263,11 +1440,12 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--density', type=int, default=2)
     ap.add_argument('--no-figs', action='store_true')
+    ap.add_argument('--vary', action='store_true', help='高低 / 大小随机分布（用户 10-11 23:40），只配合 --rhythm')
     ap.add_argument('--rhythm', choices=sorted(RHYTHMS), default=None, help='节奏留白版：A 每 2 小节 / B 每 4 小节 / C 两放两歇 / D 段落强弱（以 D2 为底）')
     a = ap.parse_args()
-    S = build(2 if a.rhythm else a.density, a.rhythm)
+    S = build(2 if a.rhythm else a.density, a.rhythm, bool(a.vary and a.rhythm))
     ck = checks(S)
     export(S, ck)
     if not a.no_figs and a.density == 2:
         make_figs(S, ck)
-    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'baseFans', 'fanSummary', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'heroes', 'share', 'largeBySpecies', 'density', 'rhythm', 'wavesPerBar', 'tierNesting', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies')}, ensure_ascii=False, indent=1))
+    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'baseFans', 'fanSummary', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'heroes', 'share', 'largeBySpecies', 'density', 'rhythm', 'vary', 'wavesPerBar', 'tierNesting', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies')}, ensure_ascii=False, indent=1))
