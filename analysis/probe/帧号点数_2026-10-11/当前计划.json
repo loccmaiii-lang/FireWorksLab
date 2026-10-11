@@ -1,0 +1,9602 @@
+{
+ "version": "4.9.68",
+ "rows": [
+  {
+   "group": "花型模板",
+   "id": "type:blank",
+   "name": "空白发射器",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.63,
+    "game1000_max": 0.86,
+    "fit_p50": 7.9,
+    "fit_max": 10.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 11,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 12,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 96,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 40,
+    "2": 19,
+    "3": 2,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111111222222222222222222233444",
+   "over": 10,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:kiku",
+   "name": "菊",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.77,
+    "game1000_max": 1.07,
+    "fit_p50": 9.5,
+    "fit_max": 13.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 113,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 113,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 132,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 28,
+    "2": 15,
+    "3": 10,
+    "4": 10
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111222222222222222333333333344444444444",
+   "over": 26,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:botan",
+   "name": "牡丹（芯）",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.63,
+    "game1000_max": 0.83,
+    "fit_p50": 8,
+    "fit_max": 10.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 11,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 11,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 95,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 39,
+    "2": 21,
+    "3": 2,
+    "4": 1
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111112222222222222222222223344",
+   "over": 10,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.2,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:kamuro",
+   "name": "锦冠",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.65,
+    "game1000_max": 0.79,
+    "fit_p50": 4.5,
+    "fit_max": 5.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 127,
+     "pages": 2,
+     "over": 26,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 36,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 127,
+   "pages": 2,
+   "ticks": 204,
+   "framePts": [
+    3,
+    5
+   ],
+   "sizePts": [
+    2,
+    2
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 74,
+    "2": 27,
+    "3": 25
+   },
+   "minFps": 10,
+   "seq": "1111111111111111111111111111111111111111111111111111111111111111111111111122222222222222222222222222233333333333333333333333331",
+   "over": 26,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:yanagi",
+   "name": "柳",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.32,
+    "game1000_max": 0.49,
+    "fit_p50": 7.3,
+    "fit_max": 11.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 174,
+     "pages": 3,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 256,
+     "pages": 4,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 389,
+   "framePts": [
+    5,
+    4
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 17,
+    "2": 13,
+    "3": 46,
+    "4": 51
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111111222222222222233333333333333333333333333333333333333333333334444444444444444444444444444444444444444444444444444",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:senrin",
+   "name": "千轮",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 1.13,
+    "fit_p50": 0,
+    "fit_max": 15
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 7,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 14,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 96,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 51,
+    "2": 3,
+    "3": 1,
+    "4": 8
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111111111111111112223444444444",
+   "over": 4,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:hachi",
+   "name": "蜂",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0.77,
+    "fit_p50": 0,
+    "fit_max": 20
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 2,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 5,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 63,
+   "pages": 1,
+   "ticks": 81,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 55,
+    "2": 2,
+    "3": 1,
+    "4": 4
+   },
+   "minFps": 7.5,
+   "seq": "111111111111111111111111111111111111111111111111111111122344443",
+   "over": 1,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:palm",
+   "name": "椰子",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 1.19,
+    "fit_p50": 0,
+    "fit_max": 9.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 32,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 192,
+     "pages": 3,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 273,
+   "framePts": [
+    3,
+    6
+   ],
+   "sizePts": [
+    2,
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 68,
+    "2": 17,
+    "3": 1,
+    "4": 41
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111111111111111111111111111111111111111111111111111111111222222222222222223444444444444444444444444444444444444444444",
+   "over": 19,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:henka",
+   "name": "变色菊（5 段）",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.88,
+    "game1000_max": 1.12,
+    "fit_p50": 10.4,
+    "fit_max": 13.1
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 152,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 22,
+    "2": 9,
+    "3": 20,
+    "4": 12
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111222222222333333333333333333334444444444444",
+   "over": 33,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:strobe",
+   "name": "点灭星",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.58,
+    "game1000_max": 1.74,
+    "fit_p50": 18,
+    "fit_max": 19.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 134,
+     "pages": 3,
+     "over": 0,
+     "pts": 3
+    },
+    "b15f15": {
+     "F": 134,
+     "pages": 3,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 134,
+   "framePts": [
+    6,
+    3
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 1,
+   "hist": {
+    "1": 123,
+    "2": 2,
+    "3": 2
+   },
+   "minFps": 10,
+   "seq": "11111111111111122331111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+   "over": 4,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.1,
+   "strobeHz": 11,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:glitter",
+   "name": "辉星",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.89,
+    "game1000_max": 1.34,
+    "fit_p50": 10.5,
+    "fit_max": 15.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 123,
+     "pages": 2,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 173,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 17,
+    "2": 6,
+    "3": 20,
+    "4": 20
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111122222233333333333333333333444444444444444444444",
+   "over": 31,
+   "glitter": 1,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:crackle",
+   "name": "爆裂星",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0.93,
+    "fit_p50": 0,
+    "fit_max": 12.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 7,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 14,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 61,
+   "pages": 1,
+   "ticks": 102,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 43,
+    "2": 5,
+    "3": 2,
+    "4": 10
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111111111222223344444444443",
+   "over": 7,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:matsuba",
+   "name": "松叶",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.64,
+    "game1000_max": 0.95,
+    "fit_p50": 7.9,
+    "fit_max": 11.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 19,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 117,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 117,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 32,
+    "2": 20,
+    "3": 2,
+    "4": 9
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111122222222222222222222334444444443",
+   "over": 15,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:crossette",
+   "name": "分裂（十字）",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.63,
+    "game1000_max": 0.92,
+    "fit_p50": 11.1,
+    "fit_max": 16.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 12,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 16,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 104,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 43,
+    "2": 11,
+    "3": 1,
+    "4": 8
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111111111222222222223444444444",
+   "over": 9,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:ochiba",
+   "name": "落叶",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.2,
+    "game1000_max": 0.2,
+    "fit_p50": 7.4,
+    "fit_max": 7.4
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 10
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 10
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 191,
+   "framePts": [
+    5,
+    10
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 9,
+   "holdFlips": 8,
+   "hist": {
+    "1": 65,
+    "2": 62
+   },
+   "minFps": 15,
+   "seq": "11111111111111111111111111111111111122222222222222222211111111111111111111222122222222222222222222221112222111112222222222222222",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.4,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:jisa",
+   "name": "时差（延时点火）",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.62,
+    "game1000_max": 1.12,
+    "fit_p50": 7.8,
+    "fit_max": 14
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 12,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 13,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 99,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 37,
+    "2": 22,
+    "3": 1,
+    "4": 3
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111222222222222222222222234443",
+   "over": 11,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:ring",
+   "name": "环",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.63,
+    "game1000_max": 0.85,
+    "fit_p50": 7.9,
+    "fit_max": 10.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 6,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 6,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 84,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 47,
+    "2": 14,
+    "3": 2
+   },
+   "minFps": 10,
+   "seq": "1111111111111111111111111111111111111111111111122222222222222333",
+   "over": 6,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:saturn",
+   "name": "土星",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.57,
+    "game1000_max": 0.71,
+    "fit_p50": 6.7,
+    "fit_max": 8.4
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 4,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 4,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 90,
+   "framePts": [
+    4
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 1,
+   "holdFlips": 0,
+   "hist": {
+    "1": 38,
+    "2": 25
+   },
+   "minFps": 15,
+   "seq": "1111111111111111111111111111111111111122222222222222222222222222",
+   "over": 4,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:kata",
+   "name": "型物",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.63,
+    "game1000_max": 0.79,
+    "fit_p50": 9.7,
+    "fit_max": 12.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 4,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 5,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 81,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 52,
+    "2": 9,
+    "3": 1,
+    "4": 1
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111111111111111111222222222344",
+   "over": 3,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:water",
+   "name": "水中花火",
+   "layer": 0,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.38,
+    "game1000_max": 0.59,
+    "fit_p50": 7.4,
+    "fit_max": 11.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 5,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 113,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 37,
+    "2": 15,
+    "3": 2,
+    "4": 9
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111222222222222222334444444444",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "花型模板",
+   "id": "type:trailM",
+   "name": "升空尾缀（V5）",
+   "layer": 0,
+   "out": "seq",
+   "skip": "不是大面片序列（trail）"
+  },
+  {
+   "group": "花型模板",
+   "id": "type:fountain",
+   "name": "喷泉",
+   "layer": 0,
+   "out": "seq",
+   "skip": "不是大面片序列（loop）"
+  },
+  {
+   "group": "花型模板",
+   "id": "type:falls",
+   "name": "瀑布",
+   "layer": 0,
+   "out": "seq",
+   "skip": "不是大面片序列（loop）"
+  },
+  {
+   "group": "花型模板",
+   "id": "type:wheel",
+   "name": "转轮",
+   "layer": 0,
+   "out": "seq",
+   "skip": "不是大面片序列（loop）"
+  },
+  {
+   "group": "花型模板",
+   "id": "type:fan",
+   "name": "扇形",
+   "layer": 0,
+   "out": "seq",
+   "skip": "不是大面片序列（loop）"
+  },
+  {
+   "group": "花型模板",
+   "id": "type:barrage",
+   "name": "连发",
+   "layer": 0,
+   "out": "seq",
+   "skip": "不是大面片序列（loop）"
+  },
+  {
+   "group": "花型模板",
+   "id": "type:shikake",
+   "name": "仕掛け（文字/图案）",
+   "layer": 0,
+   "out": "seq",
+   "skip": "不是大面片序列（loop）"
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:shinKiku",
+   "name": "芯入菊 · 亲星 · 金菊",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.71,
+    "game1000_max": 1.2,
+    "fit_p50": 9.1,
+    "fit_max": 15.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 28,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 32,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 111,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 32,
+    "2": 24,
+    "3": 1,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111122222222222222222222222234444444",
+   "over": 26,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:shinKiku",
+   "name": "芯入菊 · 芯 1 · 青",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.54,
+    "game1000_max": 0.74,
+    "fit_p50": 12.5,
+    "fit_max": 17.1
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 2,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 94,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 39,
+    "2": 22,
+    "3": 1,
+    "4": 1
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111112222222222222222222222344",
+   "over": 1,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:shinBotan",
+   "name": "芯入牡丹 · 亲星 · 红牡丹",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.64,
+    "game1000_max": 0.86,
+    "fit_p50": 10.6,
+    "fit_max": 14.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 5,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 6,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 82,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 50,
+    "2": 11,
+    "3": 1,
+    "4": 1
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111111111111111122222222222343",
+   "over": 5,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:shinBotan",
+   "name": "芯入牡丹 · 芯 1 · 绿",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.51,
+    "game1000_max": 0.69,
+    "fit_p50": 14.9,
+    "fit_max": 20.1
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 82,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 50,
+    "2": 11,
+    "3": 2
+   },
+   "minFps": 10,
+   "seq": "1111111111111111111111111111111111111111111111111122222222222334",
+   "over": 1,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yaeshin",
+   "name": "八重芯 · 银菊洋红绿 · 亲星 · 银菊（钛火花）",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.06,
+    "game1000_max": 1.4,
+    "fit_p50": 10.4,
+    "fit_max": 13.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 120,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 120,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 132,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 26,
+    "2": 16,
+    "3": 14,
+    "4": 7
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111122222222222222223333333333333344444444",
+   "over": 32,
+   "glitter": 0,
+   "twinkle": 0.9,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yaeshin",
+   "name": "八重芯 · 银菊洋红绿 · 芯 1 · 洋红",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.63,
+    "game1000_max": 1.11,
+    "fit_p50": 9.9,
+    "fit_max": 17.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 19,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 114,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 114,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 22,
+    "2": 37,
+    "3": 2,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111222222222222222222222222222222222222233444",
+   "over": 18,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yaeshin",
+   "name": "八重芯 · 银菊洋红绿 · 芯 2 · 绿",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.52,
+    "game1000_max": 0.75,
+    "fit_p50": 14.2,
+    "fit_max": 20.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 1,
+     "pts": 7
+    },
+    "b15f15": {
+     "F": 114,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 114,
+   "framePts": [
+    8
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 5,
+   "holdFlips": 2,
+   "hist": {
+    "1": 18,
+    "2": 42,
+    "3": 1,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112222222222222222222222222222222222222111222223441",
+   "over": 1,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yaeBlueBotan",
+   "name": "八重芯青牡丹 · 金银芯 · 亲星 · 青牡丹",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.77,
+    "game1000_max": 1.34,
+    "fit_p50": 8.5,
+    "fit_max": 14.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 32,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 36,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 104,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 32,
+    "2": 27,
+    "3": 2,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111122222222222222222222222222233444",
+   "over": 30,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yaeBlueBotan",
+   "name": "八重芯青牡丹 · 金银芯 · 金线 · 金菊（分簇）",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.85,
+    "game1000_max": 1.48,
+    "fit_p50": 10.6,
+    "fit_max": 18.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 122,
+     "pages": 2,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 183,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 4,
+    "3": 20,
+    "4": 24
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112222333333333333333333334444444444444444444444444",
+   "over": 27,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yaeBlueBotan",
+   "name": "八重芯青牡丹 · 金银芯 · 芯 1 · 橙菊（毛圈）",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.54,
+    "game1000_max": 0.95,
+    "fit_p50": 10.2,
+    "fit_max": 17.9
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 10,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 119,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 119,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 24,
+    "2": 32,
+    "3": 1,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111112222222222222222222222222222222234444444",
+   "over": 7,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yaeBlueBotan",
+   "name": "八重芯青牡丹 · 金银芯 · 芯 2 · 银白菊",
+   "layer": 4,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.49,
+    "game1000_max": 0.71,
+    "fit_p50": 12.7,
+    "fit_max": 18.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 2,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 122,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 122,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 21,
+    "2": 35,
+    "3": 1,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111112222222222222222222222222222222222234444444",
+   "over": 1,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yaeHenka",
+   "name": "八重芯变化菊 · 亲星 · 引 → 红 → 绿 → 黄",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.12,
+    "game1000_max": 1.46,
+    "fit_p50": 10.1,
+    "fit_max": 13.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 127,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    },
+    "b15f15": {
+     "F": 127,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 127,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 27,
+    "2": 15,
+    "3": 18,
+    "4": 3
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111112222222222222223333333333333333334444",
+   "over": 35,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yaeHenka",
+   "name": "八重芯变化菊 · 芯 1 · 青 → 银白 → 红",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.77,
+    "game1000_max": 1.17,
+    "fit_p50": 10.8,
+    "fit_max": 16.4
+   },
+   "alt": {
+    "b15f10": {
+     "F": 127,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    },
+    "b15f15": {
+     "F": 127,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 127,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 20,
+    "2": 28,
+    "3": 13,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111122222222222222222222222222223333333333333444",
+   "over": 38,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yaeHenka",
+   "name": "八重芯变化菊 · 芯 2 · 黄 → 红 → 绿",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.55,
+    "game1000_max": 1.06,
+    "fit_p50": 13.1,
+    "fit_max": 25.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 11,
+     "pts": 7
+    },
+    "b15f15": {
+     "F": 127,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 127,
+   "framePts": [
+    8
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 5,
+   "holdFlips": 2,
+   "hist": {
+    "1": 15,
+    "2": 38,
+    "3": 8,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112222233333322222222222222222222222222222222233444",
+   "over": 9,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mieshin",
+   "name": "三重芯 · 银红青 · 亲星 · 錦菊（木炭 + 钛）",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.8,
+    "game1000_max": 1.16,
+    "fit_p50": 5.6,
+    "fit_max": 8.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 21,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 29,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 180,
+   "framePts": [
+    3,
+    6
+   ],
+   "sizePts": [
+    2,
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 100,
+    "2": 15,
+    "3": 1,
+    "4": 11
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111112222222222222223444444444443",
+   "over": 17,
+   "glitter": 0,
+   "twinkle": 0.35,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mieshin",
+   "name": "三重芯 · 银红青 · 芯 1 · 银白",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.05,
+    "game1000_max": 1.34,
+    "fit_p50": 10.4,
+    "fit_max": 13.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 6,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 7,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 21,
+    "2": 12,
+    "3": 26,
+    "4": 4
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111112222222222223333333333333333333333333344443",
+   "over": 41,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mieshin",
+   "name": "三重芯 · 银红青 · 芯 2 · 红",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.92,
+    "game1000_max": 1.16,
+    "fit_p50": 12.5,
+    "fit_max": 15.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 16,
+    "2": 21,
+    "3": 23,
+    "4": 3
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111222222222222222222222333333333333333333333334443",
+   "over": 46,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mieshin",
+   "name": "三重芯 · 银红青 · 芯 3 · 青",
+   "layer": 4,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.57,
+    "game1000_max": 1.12,
+    "fit_p50": 12.2,
+    "fit_max": 24
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 5
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    8
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 5,
+   "holdFlips": 2,
+   "hist": {
+    "1": 15,
+    "2": 23,
+    "3": 22,
+    "4": 3
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112333333333333333333333222222222222222222222234443",
+   "over": 24,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yoeshin",
+   "name": "四重芯 · 红绿紫桃 · 亲星 · 银白（铝）",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.35,
+    "game1000_max": 1.72,
+    "fit_p50": 9.5,
+    "fit_max": 12.1
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 8,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 10,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 22,
+    "2": 11,
+    "3": 25,
+    "4": 5
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111222222222223333333333333333333333333444443",
+   "over": 40,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.45,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yoeshin",
+   "name": "四重芯 · 红绿紫桃 · 芯 1 · 红",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.07,
+    "game1000_max": 1.34,
+    "fit_p50": 10,
+    "fit_max": 12.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 6,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 7,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 22,
+    "2": 11,
+    "3": 26,
+    "4": 4
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111222222222223333333333333333333333333344444",
+   "over": 40,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yoeshin",
+   "name": "四重芯 · 红绿紫桃 · 芯 2 · 绿",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.93,
+    "game1000_max": 1.16,
+    "fit_p50": 11.2,
+    "fit_max": 14.1
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 19,
+    "2": 15,
+    "3": 26,
+    "4": 3
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111222222222222222333333333333333333333333334443",
+   "over": 43,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yoeshin",
+   "name": "四重芯 · 红绿紫桃 · 芯 3 · 紫",
+   "layer": 4,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.77,
+    "game1000_max": 1.12,
+    "fit_p50": 12.7,
+    "fit_max": 18.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 7
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 6
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 23,
+    "3": 22,
+    "4": 3
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112222222222222222222222233333333333333333333334443",
+   "over": 34,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yoeshin",
+   "name": "四重芯 · 红绿紫桃 · 芯 4 · 桃",
+   "layer": 5,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.53,
+    "game1000_max": 1.07,
+    "fit_p50": 12.8,
+    "fit_max": 25.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 5
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    8
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 5,
+   "holdFlips": 2,
+   "hist": {
+    "1": 15,
+    "2": 23,
+    "3": 22,
+    "4": 3
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112333333333333333333333222222222222222222222234443",
+   "over": 23,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:itsueHenka",
+   "name": "五重芯变化菊 · 亲星 · 引 → 红 → 绿",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.33,
+    "game1000_max": 1.79,
+    "fit_p50": 9.5,
+    "fit_max": 12.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 7,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 11,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 147,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 20,
+    "2": 10,
+    "3": 27,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111122222222223333333333333333333333333334444442",
+   "over": 40,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:itsueHenka",
+   "name": "五重芯变化菊 · 芯 1 · 黄 → 青",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.08,
+    "game1000_max": 1.4,
+    "fit_p50": 9.8,
+    "fit_max": 12.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 7,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 10,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 147,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 21,
+    "2": 10,
+    "3": 26,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111112222222222333333333333333333333333334444444",
+   "over": 39,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:itsueHenka",
+   "name": "五重芯变化菊 · 芯 2 · 银白 → 红",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.95,
+    "game1000_max": 1.22,
+    "fit_p50": 10.5,
+    "fit_max": 13.4
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 147,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 20,
+    "2": 11,
+    "3": 27,
+    "4": 5
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111122222222222333333333333333333333333333444444",
+   "over": 40,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:itsueHenka",
+   "name": "五重芯变化菊 · 芯 3 · 紫 → 黄",
+   "layer": 4,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.86,
+    "game1000_max": 1.15,
+    "fit_p50": 12.2,
+    "fit_max": 16.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 147,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 17,
+    "2": 16,
+    "3": 25,
+    "4": 5
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111122222222222222223333333333333333333333333444443",
+   "over": 43,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:itsueHenka",
+   "name": "五重芯变化菊 · 芯 4 · 绿 → 桃",
+   "layer": 5,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.67,
+    "game1000_max": 1.07,
+    "fit_p50": 12.8,
+    "fit_max": 20.4
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 7
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 6
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 147,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 20,
+    "3": 23,
+    "4": 5
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112222222222222222222233333333333333333333333444443",
+   "over": 26,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:itsueHenka",
+   "name": "五重芯变化菊 · 芯 5 · 红 → 银白",
+   "layer": 6,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.62,
+    "game1000_max": 0.93,
+    "fit_p50": 16.1,
+    "fit_max": 24
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 5
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 147,
+   "framePts": [
+    8
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 5,
+   "holdFlips": 2,
+   "hist": {
+    "1": 15,
+    "2": 20,
+    "3": 24,
+    "4": 4
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112333333333333333333333322222222222222222223344444",
+   "over": 22,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yaeStrobe",
+   "name": "八重芯 · 银点灭 · 亲星 · 银点灭",
+   "layer": 1,
+   "out": "dots",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0,
+    "fit_p50": 0,
+    "fit_max": 0
+   },
+   "alt": {
+    "b15f10": {
+     "F": 113,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    },
+    "b15f15": {
+     "F": 113,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 113,
+   "pages": 2,
+   "ticks": 113,
+   "framePts": [
+    3,
+    3
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 0,
+   "holdFlips": 0,
+   "hist": {
+    "1": 112
+   },
+   "minFps": 30,
+   "seq": "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.1,
+   "strobeHz": 9,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yaeStrobe",
+   "name": "八重芯 · 银点灭 · 芯 1 · 红",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.59,
+    "game1000_max": 1.05,
+    "fit_p50": 10.5,
+    "fit_max": 18.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 13,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 13,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 113,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 22,
+    "2": 38,
+    "3": 1,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111222222222222222222222222222222222222223444",
+   "over": 11,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yaeStrobe",
+   "name": "八重芯 · 银点灭 · 芯 2 · 青",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.49,
+    "game1000_max": 0.72,
+    "fit_p50": 14.5,
+    "fit_max": 21.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 1,
+     "pts": 7
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 113,
+   "framePts": [
+    7
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 4,
+   "holdFlips": 2,
+   "hist": {
+    "1": 19,
+    "2": 42,
+    "3": 2
+   },
+   "minFps": 10,
+   "seq": "1111111111111112222222222222222222222222222222222222111122222334",
+   "over": 1,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:jisaShinBotan",
+   "name": "芯入变化牡丹 · 时差 · 亲星 · 时差 银 → 金 → 橙",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.12,
+    "game1000_max": 1.88,
+    "fit_p50": 10.8,
+    "fit_max": 18.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 25,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 25,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 168,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 3,
+    "3": 37,
+    "4": 8
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112223333333333333333333333333333333333333444444444",
+   "over": 48,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:jisaShinBotan",
+   "name": "芯入变化牡丹 · 时差 · 芯 · 橙红 → 白 → 青柠",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.57,
+    "game1000_max": 0.75,
+    "fit_p50": 13.7,
+    "fit_max": 18
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 77,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 57,
+    "2": 3,
+    "3": 1,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111111111111111111111112223443",
+   "over": 1,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:henkaKikuShin",
+   "name": "芯入变化菊 · 四段 · 亲星 · 金 → 柠黄 → 绿 → 银白",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1,
+    "game1000_max": 1.29,
+    "fit_p50": 11.1,
+    "fit_max": 14.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 11,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 11,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 143,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 18,
+    "2": 14,
+    "3": 29,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111112222222222222233333333333333333333333333333442",
+   "over": 45,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:henkaKikuShin",
+   "name": "芯入变化菊 · 四段 · 芯 · 橙金",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0.07,
+    "fit_p50": 0,
+    "fit_max": 1.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 71,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 60,
+    "2": 1,
+    "3": 2
+   },
+   "minFps": 10,
+   "seq": "1111111111111111111111111111111111111111111111111111111111112333",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:kinzuiLime",
+   "name": "金蕊柠 · 橙引尾",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0,
+    "fit_p50": 0,
+    "fit_max": 0
+   },
+   "alt": {
+    "b15f10": {
+     "F": 47,
+     "pages": 1,
+     "over": 0,
+     "pts": 3
+    },
+    "b15f15": {
+     "F": 47,
+     "pages": 1,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 47,
+   "pages": 1,
+   "ticks": 47,
+   "framePts": [
+    3
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 0,
+   "holdFlips": 0,
+   "hist": {
+    "1": 46
+   },
+   "minFps": 30,
+   "seq": "11111111111111111111111111111111111111111111111",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.2,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:kinzuiLime",
+   "name": "金蕊柠 · 柠点星",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.62,
+    "game1000_max": 0.89,
+    "fit_p50": 6.7,
+    "fit_max": 9.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 108,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 108,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 135,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 27,
+    "2": 9,
+    "3": 22,
+    "4": 5
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111112222222223333333333333333333333444444",
+   "over": 15,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.5,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:kinzuiLime",
+   "name": "金蕊柠 · 金菊蕊",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.32,
+    "game1000_max": 0.47,
+    "fit_p50": 7.2,
+    "fit_max": 10.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 3,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 103,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 132,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 35,
+    "2": 7,
+    "3": 5,
+    "4": 16
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111122222223333344444444444444444",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.15,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:kinzuiLime",
+   "name": "金蕊柠 · 红点蕊",
+   "layer": 4,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.25,
+    "game1000_max": 0.28,
+    "fit_p50": 5.6,
+    "fit_max": 6.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 78,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 54,
+    "2": 6,
+    "3": 3
+   },
+   "minFps": 10,
+   "seq": "1111111111111111111111111111111111111111111111111111112222223333",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mieStrobeKiku",
+   "name": "三重芯点灭菊 · 亲星 · 金菊 → 银点灭",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.97,
+    "game1000_max": 2.26,
+    "fit_p50": 13.9,
+    "fit_max": 16
+   },
+   "alt": {
+    "b15f10": {
+     "F": 142,
+     "pages": 3,
+     "over": 0,
+     "pts": 3
+    },
+    "b15f15": {
+     "F": 142,
+     "pages": 3,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 142,
+   "framePts": [
+    6,
+    3
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 1,
+   "hist": {
+    "1": 117,
+    "2": 6,
+    "3": 4
+   },
+   "minFps": 10,
+   "seq": "11111111111111122222233331111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+   "over": 10,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 9,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mieStrobeKiku",
+   "name": "三重芯点灭菊 · 芯 1 · 红",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.05,
+    "game1000_max": 1.34,
+    "fit_p50": 10.4,
+    "fit_max": 13.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 6,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 7,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 21,
+    "2": 12,
+    "3": 26,
+    "4": 4
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111112222222222223333333333333333333333333344443",
+   "over": 41,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mieStrobeKiku",
+   "name": "三重芯点灭菊 · 芯 2 · 绿",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.92,
+    "game1000_max": 1.16,
+    "fit_p50": 12.5,
+    "fit_max": 15.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 16,
+    "2": 21,
+    "3": 23,
+    "4": 3
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111222222222222222222222333333333333333333333334443",
+   "over": 46,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mieStrobeKiku",
+   "name": "三重芯点灭菊 · 芯 3 · 青",
+   "layer": 4,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.57,
+    "game1000_max": 1.12,
+    "fit_p50": 12.2,
+    "fit_max": 24
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 5
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    8
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 5,
+   "holdFlips": 2,
+   "hist": {
+    "1": 15,
+    "2": 23,
+    "3": 22,
+    "4": 3
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112333333333333333333333222222222222222222222234443",
+   "over": 24,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mieKamuroSaki",
+   "name": "三重芯锦冠先变化菊 · 亲星 · 金锦冠（尾）",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.98,
+    "game1000_max": 1.62,
+    "fit_p50": 5.9,
+    "fit_max": 9.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 192,
+     "pages": 3,
+     "over": 20,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 192,
+     "pages": 3,
+     "over": 43,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 302,
+   "framePts": [
+    4,
+    5
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 39,
+    "2": 39,
+    "3": 15,
+    "4": 34
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111111111111111111111111111122222222222222222222222222222222222222233333333333333344444444444444444444444444444444444",
+   "over": 56,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mieKamuroSaki",
+   "name": "三重芯锦冠先变化菊 · 亲星 · 星头 金 → 红 → 绿（同一批星）",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.98,
+    "game1000_max": 1.62,
+    "fit_p50": 6.1,
+    "fit_max": 10.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 192,
+     "pages": 3,
+     "over": 20,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 192,
+     "pages": 3,
+     "over": 43,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 302,
+   "framePts": [
+    4,
+    5
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 39,
+    "2": 39,
+    "3": 15,
+    "4": 34
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111111111111111111111111111122222222222222222222222222222222222222233333333333333344444444444444444444444444444444444",
+   "over": 56,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mieKamuroSaki",
+   "name": "三重芯锦冠先变化菊 · 芯 1 · 银白",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.67,
+    "game1000_max": 0.96,
+    "fit_p50": 5.7,
+    "fit_max": 8.1
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 42,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 43,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 175,
+   "framePts": [
+    3,
+    5
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 85,
+    "2": 40,
+    "3": 2
+   },
+   "minFps": 10,
+   "seq": "11111111111111111111111111111111111111111111111111111111111111111111111111111111111112222222222222222222222222222222222222222334",
+   "over": 41,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mieKamuroSaki",
+   "name": "三重芯锦冠先变化菊 · 芯 2 · 青",
+   "layer": 4,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.04,
+    "game1000_max": 1.31,
+    "fit_p50": 12.2,
+    "fit_max": 15.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 175,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 4,
+    "3": 28,
+    "4": 16
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112222333333333333333333333333333344444444444444444",
+   "over": 47,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mieKamuroSaki",
+   "name": "三重芯锦冠先变化菊 · 芯 3 · 绿",
+   "layer": 5,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.85,
+    "game1000_max": 1.16,
+    "fit_p50": 14.8,
+    "fit_max": 20.1
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 5
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 175,
+   "framePts": [
+    8
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 5,
+   "holdFlips": 2,
+   "hist": {
+    "1": 15,
+    "2": 1,
+    "3": 34,
+    "4": 13
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112333333333333333333333333333333444444444333344444",
+   "over": 46,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yoeshinKoro",
+   "name": "四重芯菊先紫光露 · 亲星 · 金菊（尾）",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.33,
+    "game1000_max": 1.72,
+    "fit_p50": 9.5,
+    "fit_max": 12.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 4,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 7,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 22,
+    "2": 11,
+    "3": 24,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111222222222223333333333333333333333334444442",
+   "over": 38,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yoeshinKoro",
+   "name": "四重芯菊先紫光露 · 亲星 · 星头 金 → 紫 → 光露（同一批星）",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.33,
+    "game1000_max": 1.72,
+    "fit_p50": 9.4,
+    "fit_max": 12.1
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 4,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 7,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 22,
+    "2": 11,
+    "3": 24,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111222222222223333333333333333333333334444442",
+   "over": 38,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yoeshinKoro",
+   "name": "四重芯菊先紫光露 · 芯 1 · 青",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.98,
+    "game1000_max": 1.25,
+    "fit_p50": 9.1,
+    "fit_max": 11.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 22,
+    "2": 10,
+    "3": 27,
+    "4": 4
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111222222222233333333333333333333333333344443",
+   "over": 40,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yoeshinKoro",
+   "name": "四重芯菊先紫光露 · 芯 2 · 红",
+   "layer": 4,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.88,
+    "game1000_max": 1.15,
+    "fit_p50": 10.6,
+    "fit_max": 13.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 21,
+    "2": 12,
+    "3": 27,
+    "4": 3
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111112222222222223333333333333333333333333334444",
+   "over": 41,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yoeshinKoro",
+   "name": "四重芯菊先紫光露 · 芯 3 · 绿",
+   "layer": 5,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.78,
+    "game1000_max": 1.07,
+    "fit_p50": 13,
+    "fit_max": 18
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 1,
+     "pts": 7
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 6
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 23,
+    "3": 22,
+    "4": 3
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112222222222222222222222233333333333333333333334443",
+   "over": 31,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yoeshinKoro",
+   "name": "四重芯菊先紫光露 · 芯 4 · 银白",
+   "layer": 6,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.5,
+    "game1000_max": 0.99,
+    "fit_p50": 11.8,
+    "fit_max": 23.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 5
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 142,
+   "framePts": [
+    8
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 5,
+   "holdFlips": 2,
+   "hist": {
+    "1": 15,
+    "2": 23,
+    "3": 22,
+    "4": 3
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112333333333333333333333222222222222222222222234443",
+   "over": 23,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:kamuroShin",
+   "name": "芯入锦冠菊 · 绿芯 · 亲星 · 金锦冠",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.91,
+    "game1000_max": 1.74,
+    "fit_p50": 4.6,
+    "fit_max": 8.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 256,
+     "pages": 4,
+     "over": 36,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 256,
+     "pages": 4,
+     "over": 81,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 192,
+   "pages": 3,
+   "ticks": 467,
+   "framePts": [
+    4,
+    5,
+    3
+   ],
+   "sizePts": [
+    2,
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 51,
+    "2": 73,
+    "3": 2,
+    "4": 65
+   },
+   "minFps": 7.5,
+   "seq": "111111111111111111111111111111111111111111111111111222222222222222222222222222222222222222222222222222222222222222222222222233444444444444444444444444444444444444444444444444444444444444444444",
+   "over": 76,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:kamuroShin",
+   "name": "芯入锦冠菊 · 绿芯 · 芯 · 绿",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.09,
+    "game1000_max": 1.37,
+    "fit_p50": 12.6,
+    "fit_max": 15.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 5,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 9,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 144,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 23,
+    "3": 21,
+    "4": 4
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112222222222222222222222233333333333333333333344444",
+   "over": 46,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:crackleShin",
+   "name": "霹雳蕊牡丹 · 亲星 · 洋红牡丹",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.71,
+    "game1000_max": 0.98,
+    "fit_p50": 9,
+    "fit_max": 12.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 21,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 22,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 91,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 42,
+    "2": 18,
+    "3": 2,
+    "4": 1
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111111112222222222222222223343",
+   "over": 20,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:crackleShin",
+   "name": "霹雳蕊牡丹 · 蕊 · 金霹雳",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.53,
+    "game1000_max": 0.71,
+    "fit_p50": 14.2,
+    "fit_max": 19.1
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 117,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 117,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 28,
+    "2": 26,
+    "3": 3,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111222222222222222222222222223334444444",
+   "over": 1,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:strobeShin",
+   "name": "点灭芯牡丹 · 亲星 · 紫牡丹",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.79,
+    "game1000_max": 1.26,
+    "fit_p50": 8.7,
+    "fit_max": 13.9
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 35,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 38,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 107,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 31,
+    "2": 26,
+    "3": 4,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111222222222222222222222222223333444",
+   "over": 31,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:strobeShin",
+   "name": "点灭芯牡丹 · 芯 · 白点灭",
+   "layer": 2,
+   "out": "dots",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0,
+    "fit_p50": 0,
+    "fit_max": 0
+   },
+   "alt": {
+    "b15f10": {
+     "F": 107,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    },
+    "b15f15": {
+     "F": 107,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 107,
+   "pages": 2,
+   "ticks": 107,
+   "framePts": [
+    3,
+    3
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 0,
+   "holdFlips": 0,
+   "hist": {
+    "1": 106
+   },
+   "minFps": 30,
+   "seq": "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.1,
+   "strobeHz": 9,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:kiraShin",
+   "name": "キラ芯牡丹 · 红 · 亲星 · 红牡丹",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.78,
+    "game1000_max": 1.19,
+    "fit_p50": 8.5,
+    "fit_max": 13
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 29,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 32,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 101,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 34,
+    "2": 25,
+    "3": 2,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111222222222222222222222222233443",
+   "over": 28,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:kiraShin",
+   "name": "キラ芯牡丹 · 红 · 芯 · 金辉星",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.63,
+    "game1000_max": 0.88,
+    "fit_p50": 12.9,
+    "fit_max": 18
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 159,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 18,
+    "3": 15,
+    "4": 15
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112222222222222222223333333333333334444444444444443",
+   "over": 23,
+   "glitter": 1,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:shiyuShin",
+   "name": "雌雄芯菊 · 亲星 · 白菊（铝火花）",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.07,
+    "game1000_max": 1.42,
+    "fit_p50": 11,
+    "fit_max": 14.4
+   },
+   "alt": {
+    "b15f10": {
+     "F": 125,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 125,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 141,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 24,
+    "2": 13,
+    "3": 16,
+    "4": 10
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111112222222222222333333333333333344444444443",
+   "over": 31,
+   "glitter": 0,
+   "twinkle": 0.45,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:shiyuShin",
+   "name": "雌雄芯菊 · 芯 · 雄（粗星）· 红",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.63,
+    "game1000_max": 0.93,
+    "fit_p50": 11.9,
+    "fit_max": 17.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 16,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 114,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 114,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 21,
+    "2": 39,
+    "3": 1,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111112222222222222222222222222222222222222223444",
+   "over": 15,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:shiyuShin",
+   "name": "雌雄芯菊 · 芯 · 雌（细星）· 黄",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.47,
+    "game1000_max": 0.83,
+    "fit_p50": 8.9,
+    "fit_max": 15.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 4,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 114,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 114,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 24,
+    "2": 33,
+    "3": 4,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111112222222222222222222222222222222223333444",
+   "over": 4,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:palmShin",
+   "name": "椰子芯入 · 红芯 · 亲星 · 金椰子",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 1.2,
+    "fit_p50": 0,
+    "fit_max": 13.4
+   },
+   "alt": {
+    "b15f10": {
+     "F": 192,
+     "pages": 3,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 192,
+     "pages": 3,
+     "over": 19,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 302,
+   "framePts": [
+    4,
+    5
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 37,
+    "2": 38,
+    "3": 23,
+    "4": 29
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111111111111111111111111112222222222222222222222222222222222222233333333333333333333333444444444444444444444444444444",
+   "over": 41,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:palmShin",
+   "name": "椰子芯入 · 红芯 · 芯 · 红",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.59,
+    "game1000_max": 0.83,
+    "fit_p50": 13.3,
+    "fit_max": 18.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 1,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 97,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 37,
+    "2": 23,
+    "3": 1,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111222222222222222222222223443",
+   "over": 1,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:fourColorCrackle",
+   "name": "四色牡丹霹雳蕊 · 亲星 · 粉组",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.32,
+    "game1000_max": 1.63,
+    "fit_p50": 9.5,
+    "fit_max": 11.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 135,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 26,
+    "2": 12,
+    "3": 19,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111122222222222233333333333333333334444444",
+   "over": 35,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:fourColorCrackle",
+   "name": "四色牡丹霹雳蕊 · 亲星 · 绿组",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.33,
+    "game1000_max": 1.63,
+    "fit_p50": 9.3,
+    "fit_max": 11.4
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 135,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 25,
+    "2": 12,
+    "3": 20,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111222222222222333333333333333333334444442",
+   "over": 35,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:fourColorCrackle",
+   "name": "四色牡丹霹雳蕊 · 亲星 · 蓝组",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.32,
+    "game1000_max": 1.63,
+    "fit_p50": 9.5,
+    "fit_max": 11.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 135,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 25,
+    "2": 12,
+    "3": 20,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111222222222222333333333333333333334444442",
+   "over": 36,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:fourColorCrackle",
+   "name": "四色牡丹霹雳蕊 · 亲星 · 金组",
+   "layer": 4,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.34,
+    "game1000_max": 1.62,
+    "fit_p50": 9.6,
+    "fit_max": 11.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 135,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 26,
+    "2": 12,
+    "3": 19,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111122222222222233333333333333333334444444",
+   "over": 36,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:fourColorCrackle",
+   "name": "四色牡丹霹雳蕊 · 蕊 · 金霹雳",
+   "layer": 5,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1,
+    "game1000_max": 1.24,
+    "fit_p50": 15.1,
+    "fit_max": 18.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 12,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 16,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 168,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 1,
+    "3": 41,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112333333333333333333333333333333333333333334444444",
+   "over": 36,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:colorSenrin",
+   "name": "彩色千轮 · 小花 · 红",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.01,
+    "game1000_max": 1.69,
+    "fit_p50": 8.1,
+    "fit_max": 13.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 24,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 115,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 115,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 34,
+    "2": 19,
+    "3": 1,
+    "4": 9
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111222222222222222222234444444444",
+   "over": 21,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:colorSenrin",
+   "name": "彩色千轮 · 小花 · 绿",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1,
+    "game1000_max": 1.93,
+    "fit_p50": 8.5,
+    "fit_max": 16.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 26,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 115,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 115,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 32,
+    "2": 22,
+    "3": 1,
+    "4": 8
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111122222222222222222222223444444444",
+   "over": 24,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:colorSenrin",
+   "name": "彩色千轮 · 小花 · 青",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.03,
+    "game1000_max": 1.47,
+    "fit_p50": 8.6,
+    "fit_max": 12.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 22,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 115,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 115,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 35,
+    "2": 17,
+    "3": 1,
+    "4": 10
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111122222222222222222344444444443",
+   "over": 19,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:colorSenrin",
+   "name": "彩色千轮 · 小花 · 黄",
+   "layer": 4,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.01,
+    "game1000_max": 1.75,
+    "fit_p50": 8.3,
+    "fit_max": 14.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 24,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 115,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 115,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 35,
+    "2": 17,
+    "3": 2,
+    "4": 9
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111122222222222222222334444444444",
+   "over": 21,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:kowariUkimoyo",
+   "name": "锦冠菊小割浮模様 · 亲星 · 金锦冠菊",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.91,
+    "game1000_max": 1.33,
+    "fit_p50": 4.7,
+    "fit_max": 6.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 192,
+     "pages": 3,
+     "over": 82,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 256,
+     "pages": 4,
+     "over": 62,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 192,
+   "pages": 3,
+   "ticks": 429,
+   "framePts": [
+    3,
+    4,
+    5
+   ],
+   "sizePts": [
+    2,
+    2,
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 69,
+    "2": 65,
+    "3": 2,
+    "4": 55
+   },
+   "minFps": 7.5,
+   "seq": "111111111111111111111111111111111111111111111111111111111111111111111222222222222222222222222222222222222222222222222222222222222222223344444444444444444444444444444444444444444444444444444444",
+   "over": 68,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:kowariUkimoyo",
+   "name": "锦冠菊小割浮模様 · 小割 · 红",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.09,
+    "game1000_max": 1.71,
+    "fit_p50": 8.3,
+    "fit_max": 13
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 40,
+     "pts": 7
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 47,
+     "pts": 6
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 195,
+   "framePts": [
+    3,
+    12
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 9,
+   "holdFlips": 6,
+   "hist": {
+    "1": 82,
+    "2": 35,
+    "3": 1,
+    "4": 9
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111111111111111111111111111111111111111111111111111111111222222222222222222222222222221112122111111111122234444444444",
+   "over": 36,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:kowariUkimoyo",
+   "name": "锦冠菊小割浮模様 · 小割 · 绿",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.11,
+    "game1000_max": 1.7,
+    "fit_p50": 7.8,
+    "fit_max": 11.9
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 49,
+     "pts": 6
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 55,
+     "pts": 6
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 195,
+   "framePts": [
+    6,
+    7
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 7,
+   "holdFlips": 4,
+   "hist": {
+    "1": 74,
+    "2": 46,
+    "3": 1,
+    "4": 6
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111122222211111111111111111111111111111111111111222222222222222222222222222222222222211111111111111111111122234444442",
+   "over": 47,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:kowariUkimoyo",
+   "name": "锦冠菊小割浮模様 · 小割 · 青",
+   "layer": 4,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.1,
+    "game1000_max": 1.66,
+    "fit_p50": 7.4,
+    "fit_max": 11.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 52,
+     "pts": 6
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 56,
+     "pts": 6
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 195,
+   "framePts": [
+    6,
+    7
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 7,
+   "holdFlips": 4,
+   "hist": {
+    "1": 73,
+    "2": 48,
+    "3": 1,
+    "4": 5
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111122111111111111111111111111111111111112222222222222222222222222222222222222222221111111111111111111111122223444443",
+   "over": 49,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:ginKamuro",
+   "name": "银冠 · 银冠（钛）",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.61,
+    "game1000_max": 2.29,
+    "fit_p50": 7.5,
+    "fit_max": 10.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 192,
+     "pages": 3,
+     "over": 91,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 256,
+     "pages": 4,
+     "over": 52,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 379,
+   "framePts": [
+    5,
+    4
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 12,
+    "3": 63,
+    "4": 37
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111122222222222233333333333333333333333333333333333333333333333333333333333333344444444444444444444444444444444444443",
+   "over": 78,
+   "glitter": 0,
+   "twinkle": 0.9,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:ginYanagi",
+   "name": "银柳 · 银柳（铝）",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.47,
+    "game1000_max": 0.63,
+    "fit_p50": 7.3,
+    "fit_max": 9.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 183,
+     "pages": 3,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 256,
+     "pages": 4,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 390,
+   "framePts": [
+    5,
+    4
+   ],
+   "sizePts": [
+    2,
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 7,
+    "3": 62,
+    "4": 43
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111122222223333333333333333333333333333333333333333333333333333333333333344444444444444444444444444444444444444444443",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.75,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yanagiTips",
+   "name": "金柳 · 红先 · 金柳（柳丝）",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.31,
+    "game1000_max": 0.45,
+    "fit_p50": 4.8,
+    "fit_max": 6.9
+   },
+   "alt": {
+    "b15f10": {
+     "F": 192,
+     "pages": 3,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 256,
+     "pages": 4,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 192,
+   "pages": 3,
+   "ticks": 438,
+   "framePts": [
+    4,
+    4,
+    3
+   ],
+   "sizePts": [
+    2,
+    2,
+    2
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 27,
+    "2": 84,
+    "3": 80
+   },
+   "minFps": 10,
+   "seq": "111111111111111111111111111222222222222222222222222222222222222222222222222222222222222222222222222222222222222333333333333333333333333333333333333333333333333333333333333333333333333333333333",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:yanagiTips",
+   "name": "金柳 · 红先 · 星头 → 红先（同一批星）",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.33,
+    "game1000_max": 0.44,
+    "fit_p50": 5.1,
+    "fit_max": 6.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 231,
+   "framePts": [
+    4,
+    4
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 29,
+    "2": 95,
+    "3": 3
+   },
+   "minFps": 10,
+   "seq": "11111111111111111111111111111222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222223333",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:hikiSakiKiku",
+   "name": "引先变化菊 · 引 → 红 → 绿",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.99,
+    "game1000_max": 1.38,
+    "fit_p50": 10,
+    "fit_max": 14
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 44,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 117,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 117,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 29,
+    "2": 20,
+    "3": 12,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111122222222222222222222333333333333444",
+   "over": 33,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:henkaBotan",
+   "name": "变化牡丹 · 红绿黄 · 红 → 绿 → 黄",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.71,
+    "game1000_max": 0.98,
+    "fit_p50": 9,
+    "fit_max": 12.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 21,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 22,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 91,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 42,
+    "2": 18,
+    "3": 2,
+    "4": 1
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111111112222222222222222223343",
+   "over": 20,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mangekyo",
+   "name": "万華鏡 · 红绿金 · 外圈 · 红束（4 簇）",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.16,
+    "game1000_max": 1.53,
+    "fit_p50": 9.4,
+    "fit_max": 12.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 45,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 120,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 120,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 29,
+    "2": 17,
+    "3": 13,
+    "4": 4
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111122222222222222222333333333333344442",
+   "over": 32,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mangekyo",
+   "name": "万華鏡 · 红绿金 · 外圈 · 绿束（4 簇，错开 45°）",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.14,
+    "game1000_max": 1.49,
+    "fit_p50": 11.3,
+    "fit_max": 14.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 120,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    },
+    "b15f15": {
+     "F": 120,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 120,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 30,
+    "2": 16,
+    "3": 14,
+    "4": 3
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111112222222222222222333333333333334444",
+   "over": 32,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mangekyo",
+   "name": "万華鏡 · 红绿金 · 里圈 · 金菊（8 簇，错开 22.5°）",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.8,
+    "game1000_max": 1.14,
+    "fit_p50": 12.9,
+    "fit_max": 18.4
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 140,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 21,
+    "2": 19,
+    "3": 15,
+    "4": 8
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111112222222222222222222333333333333333444444444",
+   "over": 33,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:mangekyo",
+   "name": "万華鏡 · 红绿金 · 芯 · 银白",
+   "layer": 4,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.5,
+    "game1000_max": 0.79,
+    "fit_p50": 14.8,
+    "fit_max": 23.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 4,
+     "pts": 7
+    },
+    "b15f15": {
+     "F": 120,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 120,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 45,
+    "3": 1,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112222222222222222222222222222222222222222222223444",
+   "over": 2,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:somewakeBotan",
+   "name": "染分牡丹 · 红绿 · 左半 · 红",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.76,
+    "game1000_max": 1.03,
+    "fit_p50": 8.4,
+    "fit_max": 11.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 29,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 32,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 101,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 35,
+    "2": 24,
+    "3": 2,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111122222222222222222222222233444",
+   "over": 27,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "多层花型模板",
+   "id": "mt:somewakeBotan",
+   "name": "染分牡丹 · 红绿 · 右半 · 绿",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.77,
+    "game1000_max": 1.06,
+    "fit_p50": 8.4,
+    "fit_max": 11.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 28,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 32,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 101,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 34,
+    "2": 25,
+    "3": 2,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111222222222222222222222222233443",
+   "over": 28,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "JM4-40",
+   "name": "金芒菊 · JM4-40",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.57,
+    "game1000_max": 0.74,
+    "fit_p50": 6.2,
+    "fit_max": 8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 127,
+     "pages": 2,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 165,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 15,
+    "3": 16,
+    "4": 17
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112222222222222223333333333333333444444444444444444",
+   "over": 7,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "RT6M",
+   "name": "升空尾缀 · 循环层 + 粒子 小 / 中 / 大 · RT6M",
+   "error": "没有参数"
+  },
+  {
+   "group": "待我验收",
+   "id": "QA20",
+   "name": "金樱菊（球形A） · QA20-1",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.36,
+    "game1000_max": 0.6,
+    "fit_p50": 6.4,
+    "fit_max": 10.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 120,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 120,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 35,
+    "2": 14,
+    "3": 3,
+    "4": 11
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111122222222222222333444444444444",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.2,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "QA20",
+   "name": "金樱菊（球形A） · QA20-2",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.48,
+    "game1000_max": 0.68,
+    "fit_p50": 7.5,
+    "fit_max": 10.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 145,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 24,
+    "2": 8,
+    "3": 22,
+    "4": 9
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111112222222233333333333333333333334444444443",
+   "over": 2,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "QC12",
+   "name": "翠芯银辉（球形C） · QC12-1",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.33,
+    "game1000_max": 0.42,
+    "fit_p50": 6.8,
+    "fit_max": 8.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 95,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 40,
+    "2": 17,
+    "3": 6
+   },
+   "minFps": 10,
+   "seq": "1111111111111111111111111111111111111111222222222222222223333333",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.2,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "QC12",
+   "name": "翠芯银辉（球形C） · QC12-2",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.85,
+    "game1000_max": 1.19,
+    "fit_p50": 6.5,
+    "fit_max": 9.1
+   },
+   "alt": {
+    "b15f10": {
+     "F": 90,
+     "pages": 2,
+     "over": 6,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 90,
+     "pages": 2,
+     "over": 6,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 129,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 27,
+    "2": 9,
+    "3": 27
+   },
+   "minFps": 10,
+   "seq": "1111111111111111111111111112222222223333333333333333333333333333",
+   "over": 37,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.2,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "QC12",
+   "name": "翠芯银辉（球形C） · QC12-3",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.85,
+    "game1000_max": 1.81,
+    "fit_p50": 6.3,
+    "fit_max": 13.4
+   },
+   "alt": {
+    "b15f10": {
+     "F": 103,
+     "pages": 2,
+     "over": 6,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 103,
+     "pages": 2,
+     "over": 6,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 156,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 16,
+    "2": 5,
+    "3": 40,
+    "4": 2
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111222223333333333333333333333333333333333333333442",
+   "over": 47,
+   "glitter": 1,
+   "twinkle": 0.6,
+   "flicker": 0.2,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "QD14",
+   "name": "橙芯四变菊（球形D） · QD14-1",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 2.11,
+    "fit_p50": 0,
+    "fit_max": 22.9
+   },
+   "alt": {
+    "b15f10": {
+     "F": 105,
+     "pages": 2,
+     "over": 8,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 105,
+     "pages": 2,
+     "over": 8,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 60,
+   "pages": 1,
+   "ticks": 186,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 1,
+    "3": 6,
+    "4": 37
+   },
+   "minFps": 7.5,
+   "seq": "111111111111111233333344444444444444444444444444444444444443",
+   "over": 9,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.2,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "QD14",
+   "name": "橙芯四变菊（球形D） · QD14-2",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.67,
+    "game1000_max": 1.12,
+    "fit_p50": 5,
+    "fit_max": 8.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 125,
+     "pages": 2,
+     "over": 80,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 125,
+     "pages": 2,
+     "over": 80,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 125,
+   "pages": 2,
+   "ticks": 225,
+   "framePts": [
+    4,
+    3
+   ],
+   "sizePts": [
+    2,
+    2
+   ],
+   "holdChanges": 1,
+   "holdFlips": 0,
+   "hist": {
+    "1": 24,
+    "2": 100
+   },
+   "minFps": 15,
+   "seq": "11111111111111111111111122222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222221",
+   "over": 80,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.2,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "QD14",
+   "name": "橙芯四变菊（球形D） · QD14-3",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 1.01,
+    "fit_p50": 0,
+    "fit_max": 20.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 104,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 104,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 62,
+   "pages": 1,
+   "ticks": 186,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 1,
+    "3": 12,
+    "4": 33
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111123333333333334444444444444444444444444444444441",
+   "over": 15,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.2,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "QN12",
+   "name": "萤柠星（青柠星） · QN12-1",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.8,
+    "game1000_max": 1.01,
+    "fit_p50": 9.3,
+    "fit_max": 11.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 124,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    },
+    "b15f15": {
+     "F": 124,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 124,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 30,
+    "2": 14,
+    "3": 14,
+    "4": 5
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111112222222222222233333333333333444444",
+   "over": 28,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "QN12",
+   "name": "萤柠星（青柠星） · QN12-2",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.85,
+    "game1000_max": 1.11,
+    "fit_p50": 9.8,
+    "fit_max": 12.9
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 154,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 22,
+    "2": 9,
+    "3": 18,
+    "4": 14
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111222222222333333333333333333444444444444444",
+   "over": 30,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "HK10",
+   "name": "鸿巢四尺玉 · HK10-1",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.44,
+    "game1000_max": 2.09,
+    "fit_p50": 4.1,
+    "fit_max": 5.9
+   },
+   "alt": {
+    "b15f10": {
+     "F": 256,
+     "pages": 4,
+     "over": 94,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 320,
+     "pages": 5,
+     "over": 87,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 192,
+   "pages": 3,
+   "ticks": 554,
+   "framePts": [
+    5,
+    4,
+    3
+   ],
+   "sizePts": [
+    2,
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 42,
+    "2": 18,
+    "3": 52,
+    "4": 79
+   },
+   "minFps": 7.5,
+   "seq": "111111111111111111111111111111111111111111222222222222222222333333333333333333333333333333333333333333333333333344444444444444444444444444444444444444444444444444444444444444444444444444444444",
+   "over": 77,
+   "glitter": 0,
+   "twinkle": 0.2,
+   "flicker": 0.1,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "HK10",
+   "name": "鸿巢四尺玉 · HK10-2",
+   "layer": 2,
+   "out": "dots",
+   "jump": {
+    "game1000_p50": 1.35,
+    "game1000_max": 1.49,
+    "fit_p50": 3.3,
+    "fit_max": 3.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 192,
+     "pages": 3,
+     "over": 168,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 192,
+     "pages": 3,
+     "over": 176,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 192,
+   "pages": 3,
+   "ticks": 368,
+   "framePts": [
+    3,
+    4,
+    4
+   ],
+   "sizePts": [
+    2,
+    2,
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 70,
+    "2": 68,
+    "3": 53
+   },
+   "minFps": 10,
+   "seq": "111111111111111111111111111111111111111111111111111111111111111111111122222222222222222222222222222222222222222222222222222222222222222222333333333333333333333333333333333333333333333333333333",
+   "over": 122,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.1,
+   "strobeHz": 3.3,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "HN2",
+   "name": "引菊 → 锦（橙色直线菊转金锦，尾缀3.0_A 主层） · HN2-O",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0.98,
+    "fit_p50": 0,
+    "fit_max": 10.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 61,
+     "pages": 1,
+     "over": 5,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 12,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 61,
+   "pages": 1,
+   "ticks": 107,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 35,
+    "2": 4,
+    "3": 21
+   },
+   "minFps": 10,
+   "seq": "1111111111111111111111111111111111122223333333333333333333331",
+   "over": 5,
+   "glitter": 0,
+   "twinkle": 0,
+   "flicker": 0,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "HN2",
+   "name": "引菊 → 锦（橙色直线菊转金锦，尾缀3.0_A 主层） · HN2-G",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.33,
+    "game1000_max": 1.19,
+    "fit_p50": 2.3,
+    "fit_max": 8.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 190,
+     "pages": 3,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 190,
+     "pages": 3,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 323,
+   "framePts": [
+    5,
+    3
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 27,
+    "2": 7,
+    "3": 93
+   },
+   "minFps": 10,
+   "seq": "11111111111111111111111111122222223333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
+   "over": 22,
+   "glitter": 0,
+   "twinkle": 0.4,
+   "flicker": 0,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "JMG10",
+   "name": "金芒菊 · 规格（3 号–4 尺） · JMG10",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.45,
+    "game1000_max": 0.67,
+    "fit_p50": 2.9,
+    "fit_max": 4.4
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 6,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 225,
+   "framePts": [
+    3,
+    6
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 73,
+    "2": 33,
+    "3": 1,
+    "4": 20
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111111111111111111111111111111111111111111111111111111111111112222222222222222222222222222222223444444444444444444443",
+   "over": 1,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "MYFL-O",
+   "name": "分裂星 · 大小与造型 · MYFL-O",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.73,
+    "game1000_max": 1.4,
+    "fit_p50": 10.9,
+    "fit_max": 21
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 13,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 19,
+     "pts": 6
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 96,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 2,
+   "hist": {
+    "1": 31,
+    "2": 32
+   },
+   "minFps": 15,
+   "seq": "1111111111111112111111111111111122222222222222222222222222222221",
+   "over": 19,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "MYCR-O",
+   "name": "Crackle · 大小与造型 · MYCR-O",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0.37,
+    "fit_p50": 0,
+    "fit_max": 4.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 3,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 170,
+     "pages": 3,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 170,
+   "pages": 3,
+   "ticks": 288,
+   "framePts": [
+    4,
+    3,
+    3
+   ],
+   "sizePts": [
+    2,
+    2,
+    2
+   ],
+   "holdChanges": 1,
+   "holdFlips": 0,
+   "hist": {
+    "1": 51,
+    "2": 118
+   },
+   "minFps": 15,
+   "seq": "11111111111111111111111111111111111111111111111111122222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222221",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "MYJA-O",
+   "name": "金曜菊-A · 大小与造型 · MYJA-O-1",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.56,
+    "game1000_max": 0.61,
+    "fit_p50": 4.3,
+    "fit_max": 4.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 63,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 63,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": true,
+   "F": 63,
+   "pages": 1,
+   "ticks": 70,
+   "framePts": [
+    4
+   ],
+   "sizePts": [
+    24
+   ],
+   "holdChanges": 1,
+   "holdFlips": 0,
+   "hist": {
+    "1": 56,
+    "2": 6
+   },
+   "minFps": 15,
+   "seq": "111111111111111111111111111111111111111111111111111111112222222",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0,
+   "flicker": 0,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "MYJA-O",
+   "name": "金曜菊-A · 大小与造型 · MYJA-O-2",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.81,
+    "game1000_max": 1.27,
+    "fit_p50": 6.8,
+    "fit_max": 10.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 108,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 108,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": true,
+   "F": 64,
+   "pages": 1,
+   "ticks": 159,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    24
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 24,
+    "2": 7,
+    "3": 11,
+    "4": 21
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111112222222333333333334444444444444444444444",
+   "over": 22,
+   "glitter": 0,
+   "twinkle": 0.4,
+   "flicker": 0,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "MYJM-O",
+   "name": "金芒菊 · 我的 · 大小与造型 · MYJM-O",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.51,
+    "game1000_max": 0.62,
+    "fit_p50": 5.5,
+    "fit_max": 6.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 124,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 124,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 137,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 22,
+    "2": 21,
+    "3": 11,
+    "4": 9
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111222222222222222222222333333333334444444444",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "MYJC-O",
+   "name": "金曜菊-窜天猴 · 大小与造型 · MYJC-O-1",
+   "layer": 1,
+   "out": "unit",
+   "jump": {
+    "game1000_p50": 0.47,
+    "game1000_max": 1.83,
+    "fit_p50": 4.2,
+    "fit_max": 16.4
+   },
+   "alt": {},
+   "budget": "count",
+   "zoom": false,
+   "F": 59,
+   "pages": 1,
+   "ticks": 144,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 3,
+    "3": 40
+   },
+   "minFps": 10,
+   "seq": "11111111111111122233333333333333333333333333333333333333333",
+   "over": 18,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "MYJC-O",
+   "name": "金曜菊-窜天猴 · 大小与造型 · MYJC-O-2",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.69,
+    "game1000_max": 14.75,
+    "fit_p50": 5.4,
+    "fit_max": 116
+   },
+   "alt": {},
+   "budget": "fixed",
+   "zoom": false,
+   "F": 45,
+   "pages": 1,
+   "ticks": 133,
+   "framePts": [
+    3
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 0,
+   "holdFlips": 0,
+   "hist": {
+    "3": 44
+   },
+   "minFps": 10,
+   "seq": "333333333333333333333333333333333333333333331",
+   "over": 23,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.1,
+   "strobeHz": 22.1,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "MYHK-O",
+   "name": "鸿巢四尺玉 · 我的 · 大小与造型 · MYHK-O-1",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.44,
+    "game1000_max": 2.09,
+    "fit_p50": 4.1,
+    "fit_max": 5.9
+   },
+   "alt": {
+    "b15f10": {
+     "F": 256,
+     "pages": 4,
+     "over": 94,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 320,
+     "pages": 5,
+     "over": 87,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 192,
+   "pages": 3,
+   "ticks": 554,
+   "framePts": [
+    5,
+    4,
+    3
+   ],
+   "sizePts": [
+    2,
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 42,
+    "2": 18,
+    "3": 52,
+    "4": 79
+   },
+   "minFps": 7.5,
+   "seq": "111111111111111111111111111111111111111111222222222222222222333333333333333333333333333333333333333333333333333344444444444444444444444444444444444444444444444444444444444444444444444444444444",
+   "over": 77,
+   "glitter": 0,
+   "twinkle": 0.2,
+   "flicker": 0.1,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "MYHK-O",
+   "name": "鸿巢四尺玉 · 我的 · 大小与造型 · MYHK-O-2",
+   "layer": 2,
+   "out": "dots",
+   "jump": {
+    "game1000_p50": 1.35,
+    "game1000_max": 1.49,
+    "fit_p50": 3.3,
+    "fit_max": 3.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 192,
+     "pages": 3,
+     "over": 168,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 192,
+     "pages": 3,
+     "over": 176,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 192,
+   "pages": 3,
+   "ticks": 368,
+   "framePts": [
+    3,
+    4,
+    4
+   ],
+   "sizePts": [
+    2,
+    2,
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 70,
+    "2": 68,
+    "3": 53
+   },
+   "minFps": 10,
+   "seq": "111111111111111111111111111111111111111111111111111111111111111111111122222222222222222222222222222222222222222222222222222222222222222222333333333333333333333333333333333333333333333333333333",
+   "over": 122,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.1,
+   "strobeHz": 3.3,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "TP-JMG10-T75",
+   "name": "金芒菊 · 尺玉 · 节奏快版（样包） · TP-JMG10-T75",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.93,
+    "game1000_max": 1.2,
+    "fit_p50": 6,
+    "fit_max": 7.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 169,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 12,
+    "3": 17,
+    "4": 19
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111112222222222223333333333333333344444444444444444443",
+   "over": 34,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.0225
+  },
+  {
+   "group": "待我验收",
+   "id": "TP-MYJA-O-T75",
+   "name": "金曜菊-A · 节奏快版（样包） · TP-MYJA-O-T75-1",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0,
+    "fit_p50": 0,
+    "fit_max": 0
+   },
+   "alt": {
+    "b15f10": {
+     "F": 53,
+     "pages": 1,
+     "over": 0,
+     "pts": 3
+    },
+    "b15f15": {
+     "F": 53,
+     "pages": 1,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": true,
+   "F": 53,
+   "pages": 1,
+   "ticks": 53,
+   "framePts": [
+    3
+   ],
+   "sizePts": [
+    24
+   ],
+   "holdChanges": 0,
+   "holdFlips": 0,
+   "hist": {
+    "1": 52
+   },
+   "minFps": 30,
+   "seq": "11111111111111111111111111111111111111111111111111111",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0,
+   "flicker": 0,
+   "strobeHz": 0,
+   "glitterW": 0.0225
+  },
+  {
+   "group": "待我验收",
+   "id": "TP-MYJA-O-T75",
+   "name": "金曜菊-A · 节奏快版（样包） · TP-MYJA-O-T75-2",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.11,
+    "game1000_max": 1.19,
+    "fit_p50": 0.9,
+    "fit_max": 10
+   },
+   "alt": {
+    "b15f10": {
+     "F": 63,
+     "pages": 1,
+     "over": 17,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 120,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": true,
+   "F": 61,
+   "pages": 1,
+   "ticks": 120,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    24
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 27,
+    "2": 8,
+    "3": 25
+   },
+   "minFps": 10,
+   "seq": "1111111111111111111111111112222222233333333333333333333333332",
+   "over": 15,
+   "glitter": 0,
+   "twinkle": 0.4,
+   "flicker": 0,
+   "strobeHz": 0,
+   "glitterW": 0.0225
+  },
+  {
+   "group": "待我验收",
+   "id": "TP-MYHK-O-T75",
+   "name": "鸿巢四尺玉 · 我的 · 节奏快版（样包） · TP-MYHK-O-T75-1",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.98,
+    "game1000_max": 5.61,
+    "fit_p50": 5.6,
+    "fit_max": 15.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 192,
+     "pages": 3,
+     "over": 70,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 256,
+     "pages": 4,
+     "over": 49,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 416,
+   "framePts": [
+    5,
+    4
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 12,
+    "2": 4,
+    "3": 52,
+    "4": 59
+   },
+   "minFps": 7.5,
+   "seq": "11111111111122223333333333333333333333333333333333333333333333333333444444444444444444444444444444444444444444444444444444444444",
+   "over": 61,
+   "glitter": 0,
+   "twinkle": 0.2,
+   "flicker": 0.1,
+   "strobeHz": 0,
+   "glitterW": 0.0225
+  },
+  {
+   "group": "待我验收",
+   "id": "TP-MYHK-O-T75",
+   "name": "鸿巢四尺玉 · 我的 · 节奏快版（样包） · TP-MYHK-O-T75-2",
+   "layer": 2,
+   "out": "dots",
+   "jump": {
+    "game1000_p50": 1.32,
+    "game1000_max": 4.46,
+    "fit_p50": 3.3,
+    "fit_max": 11
+   },
+   "alt": {
+    "b15f10": {
+     "F": 192,
+     "pages": 3,
+     "over": 84,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 192,
+     "pages": 3,
+     "over": 84,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 276,
+   "framePts": [
+    6,
+    3
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 1,
+   "hist": {
+    "1": 16,
+    "2": 75,
+    "3": 36
+   },
+   "minFps": 10,
+   "seq": "11111111111111112222223333333333333333333333333333333333332222222222222222222222222222222222222222222222222222222222222222222222",
+   "over": 112,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.1,
+   "strobeHz": 4.4,
+   "glitterW": 0.0225
+  },
+  {
+   "group": "待我验收",
+   "id": "FG7",
+   "name": "金锦冠扇形 FanGold · FG7",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0.61,
+    "fit_p50": 0,
+    "fit_max": 20.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 105,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 105,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 168,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 24,
+    "2": 3,
+    "3": 8,
+    "4": 28
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111112223333333344444444444444444444444444442",
+   "over": 0,
+   "glitter": 0.5,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "FC10R",
+   "name": "扇形彗星 · 红彗星扇 / 橙扇 · FC10R-1",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.93,
+    "game1000_max": 1.53,
+    "fit_p50": 17.3,
+    "fit_max": 28.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 23,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 120,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 120,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 36,
+    "2": 13,
+    "3": 2,
+    "4": 12
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111112222222222222334444444444444",
+   "over": 16,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "待我验收",
+   "id": "FC10R",
+   "name": "扇形彗星 · 红彗星扇 / 橙扇 · FC10R-2",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.93,
+    "game1000_max": 1.53,
+    "fit_p50": 15.6,
+    "fit_max": 25.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 23,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 120,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 120,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 36,
+    "2": 13,
+    "3": 2,
+    "4": 12
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111112222222222222334444444444444",
+   "over": 16,
+   "glitter": 0,
+   "twinkle": 0.4,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuux2arh",
+   "name": "分裂星 · 分裂",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.73,
+    "game1000_max": 1.4,
+    "fit_p50": 10.9,
+    "fit_max": 21
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 13,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 19,
+     "pts": 6
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 96,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 2,
+   "hist": {
+    "1": 31,
+    "2": 32
+   },
+   "minFps": 15,
+   "seq": "1111111111111112111111111111111122222222222222222222222222222221",
+   "over": 19,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuuzfeg7",
+   "name": "Crackle · 爆裂星",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0.37,
+    "fit_p50": 0,
+    "fit_max": 4.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 3,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 170,
+     "pages": 3,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 170,
+   "pages": 3,
+   "ticks": 288,
+   "framePts": [
+    4,
+    3,
+    3
+   ],
+   "sizePts": [
+    2,
+    2,
+    2
+   ],
+   "holdChanges": 1,
+   "holdFlips": 0,
+   "hist": {
+    "1": 51,
+    "2": 118
+   },
+   "minFps": 15,
+   "seq": "11111111111111111111111111111111111111111111111111122222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222221",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuv6vhrq",
+   "name": "金曜菊-A · 引菊 → 锦 · 橙引线层",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.56,
+    "game1000_max": 0.61,
+    "fit_p50": 4.3,
+    "fit_max": 4.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 63,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 63,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": true,
+   "F": 63,
+   "pages": 1,
+   "ticks": 70,
+   "framePts": [
+    4
+   ],
+   "sizePts": [
+    24
+   ],
+   "holdChanges": 1,
+   "holdFlips": 0,
+   "hist": {
+    "1": 56,
+    "2": 6
+   },
+   "minFps": 15,
+   "seq": "111111111111111111111111111111111111111111111111111111112222222",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0,
+   "flicker": 0,
+   "strobeHz": 0,
+   "glitterW": 0
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuv6vhrq",
+   "name": "金曜菊-A · 引菊 → 锦 · 金锦层",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.81,
+    "game1000_max": 1.27,
+    "fit_p50": 6.8,
+    "fit_max": 10.6
+   },
+   "alt": {
+    "b15f10": {
+     "F": 108,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 108,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": true,
+   "F": 64,
+   "pages": 1,
+   "ticks": 159,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    24
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 24,
+    "2": 7,
+    "3": 11,
+    "4": 21
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111112222222333333333334444444444444444444444",
+   "over": 22,
+   "glitter": 0,
+   "twinkle": 0.4,
+   "flicker": 0,
+   "strobeHz": 0,
+   "glitterW": 0
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuv7n3ih",
+   "name": "金芒菊 · 我的 · 金芒菊",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.51,
+    "game1000_max": 0.62,
+    "fit_p50": 5.5,
+    "fit_max": 6.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 124,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 124,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 137,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 22,
+    "2": 21,
+    "3": 11,
+    "4": 9
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111222222222222222222222333333333334444444444",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuw5v7bh",
+   "name": "金曜菊-窜天猴 · 金芒菊",
+   "layer": 1,
+   "out": "unit",
+   "jump": {
+    "game1000_p50": 0.15,
+    "game1000_max": 2.27,
+    "fit_p50": 1.2,
+    "fit_max": 18.3
+   },
+   "alt": {},
+   "budget": "count",
+   "zoom": false,
+   "F": 59,
+   "pages": 1,
+   "ticks": 144,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 1,
+    "3": 42
+   },
+   "minFps": 10,
+   "seq": "11111111111111123333333333333333333333333333333333333333331",
+   "over": 18,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuw5v7bh",
+   "name": "金曜菊-窜天猴 · 点灭星",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.6,
+    "game1000_max": 15.36,
+    "fit_p50": 4.4,
+    "fit_max": 113.7
+   },
+   "alt": {},
+   "budget": "fixed",
+   "zoom": false,
+   "F": 49,
+   "pages": 1,
+   "ticks": 98,
+   "framePts": [
+    3
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 0,
+   "holdFlips": 0,
+   "hist": {
+    "2": 48
+   },
+   "minFps": 15,
+   "seq": "2222222222222222222222222222222222222222222222222",
+   "over": 23,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.1,
+   "strobeHz": 22.1,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuwols5x",
+   "name": "鸿巢四尺玉 · 我的 · 返工 ① 锦冠主层（白热段 + 余烬长尾）",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.44,
+    "game1000_max": 2.09,
+    "fit_p50": 4.1,
+    "fit_max": 5.9
+   },
+   "alt": {
+    "b15f10": {
+     "F": 256,
+     "pages": 4,
+     "over": 94,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 320,
+     "pages": 5,
+     "over": 87,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 192,
+   "pages": 3,
+   "ticks": 554,
+   "framePts": [
+    5,
+    4,
+    3
+   ],
+   "sizePts": [
+    2,
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 42,
+    "2": 18,
+    "3": 52,
+    "4": 79
+   },
+   "minFps": 7.5,
+   "seq": "111111111111111111111111111111111111111111222222222222222222333333333333333333333333333333333333333333333333333344444444444444444444444444444444444444444444444444444444444444444444444444444444",
+   "over": 77,
+   "glitter": 0,
+   "twinkle": 0.2,
+   "flicker": 0.1,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuwols5x",
+   "name": "鸿巢四尺玉 · 我的 · 返工 ② 红点灭（主层同轨迹第二段）",
+   "layer": 2,
+   "out": "dots",
+   "jump": {
+    "game1000_p50": 1.35,
+    "game1000_max": 1.49,
+    "fit_p50": 3.3,
+    "fit_max": 3.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 192,
+     "pages": 3,
+     "over": 168,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 192,
+     "pages": 3,
+     "over": 176,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 192,
+   "pages": 3,
+   "ticks": 368,
+   "framePts": [
+    3,
+    4,
+    4
+   ],
+   "sizePts": [
+    2,
+    2,
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 70,
+    "2": 68,
+    "3": 53
+   },
+   "minFps": 10,
+   "seq": "111111111111111111111111111111111111111111111111111111111111111111111122222222222222222222222222222222222222222222222222222222222222222222333333333333333333333333333333333333333333333333333333",
+   "over": 122,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.1,
+   "strobeHz": 3.3,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuxsrd36",
+   "name": "鸿巢四尺玉 · 我的 · 大小与造型 · 我的 · 返工 ① 锦冠主层（白热段 + 余烬长尾）",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 3.01,
+    "game1000_max": 5.05,
+    "fit_p50": 5.6,
+    "fit_max": 9.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 180,
+     "pages": 3,
+     "over": 123,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 192,
+     "pages": 3,
+     "over": 138,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 128,
+   "pages": 2,
+   "ticks": 375,
+   "framePts": [
+    5,
+    4
+   ],
+   "sizePts": [
+    2,
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 17,
+    "2": 6,
+    "3": 74,
+    "4": 30
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111111222222333333333333333333333333333333333333333333333333333333333333333333333333334444444444444444444444444444444",
+   "over": 89,
+   "glitter": 0,
+   "twinkle": 0.52,
+   "flicker": 0.1,
+   "strobeHz": 0,
+   "glitterW": 0.015
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuxsrd36",
+   "name": "鸿巢四尺玉 · 我的 · 大小与造型 · 我的 · 返工 ② 红点灭（主层同轨迹第二段）",
+   "layer": 2,
+   "out": "dots",
+   "jump": {
+    "game1000_p50": 3.1,
+    "game1000_max": 6.32,
+    "fit_p50": 5.5,
+    "fit_max": 11.1
+   },
+   "alt": {
+    "b15f10": {
+     "F": 242,
+     "pages": 4,
+     "over": 73,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 242,
+     "pages": 4,
+     "over": 73,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 191,
+   "pages": 3,
+   "ticks": 315,
+   "framePts": [
+    5,
+    4,
+    3
+   ],
+   "sizePts": [
+    2,
+    2,
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 1,
+   "hist": {
+    "1": 126,
+    "2": 4,
+    "3": 60
+   },
+   "minFps": 10,
+   "seq": "11111111111112222333333333333333333333333333333333333333333333333333333333333111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+   "over": 64,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.1,
+   "strobeHz": 6.6,
+   "glitterW": 0.015
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuxulo1x",
+   "name": "金曜菊-A · 窜天猴B · 引菊 → 锦 · 橙引线层",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 2.44,
+    "game1000_max": 2.97,
+    "fit_p50": 6.2,
+    "fit_max": 7.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 28,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 34,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": true,
+   "F": 62,
+   "pages": 1,
+   "ticks": 102,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    24
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 36,
+    "2": 12,
+    "3": 13
+   },
+   "minFps": 10,
+   "seq": "11111111111111111111111111111111111122222222222233333333333333",
+   "over": 23,
+   "glitter": 0,
+   "twinkle": 0,
+   "flicker": 0,
+   "strobeHz": 0,
+   "glitterW": 0.01224601
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuxulo1x",
+   "name": "金曜菊-A · 窜天猴B · 引菊 → 锦 · 金锦层",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 2.73,
+    "game1000_max": 3.91,
+    "fit_p50": 7.6,
+    "fit_max": 10.9
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 26,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 97,
+     "pages": 2,
+     "over": 8,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": true,
+   "F": 59,
+   "pages": 1,
+   "ticks": 135,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    24
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 26,
+    "2": 8,
+    "3": 6,
+    "4": 18
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111111111111111222222223333334444444444444444443",
+   "over": 18,
+   "glitter": 0,
+   "twinkle": 0.4,
+   "flicker": 0,
+   "strobeHz": 0,
+   "glitterW": 0.01224601
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuxvrom6",
+   "name": "金曜菊-A · 节奏快版（样包） · 引菊 → 锦 · 橙引线层",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0,
+    "fit_p50": 0,
+    "fit_max": 0
+   },
+   "alt": {
+    "b15f10": {
+     "F": 53,
+     "pages": 1,
+     "over": 0,
+     "pts": 3
+    },
+    "b15f15": {
+     "F": 53,
+     "pages": 1,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": true,
+   "F": 53,
+   "pages": 1,
+   "ticks": 53,
+   "framePts": [
+    3
+   ],
+   "sizePts": [
+    24
+   ],
+   "holdChanges": 0,
+   "holdFlips": 0,
+   "hist": {
+    "1": 52
+   },
+   "minFps": 30,
+   "seq": "11111111111111111111111111111111111111111111111111111",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0,
+   "flicker": 0,
+   "strobeHz": 0,
+   "glitterW": 0.0225
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuxvrom6",
+   "name": "金曜菊-A · 节奏快版（样包） · 引菊 → 锦 · 金锦层",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 1.19,
+    "fit_p50": 0,
+    "fit_max": 10
+   },
+   "alt": {
+    "b15f10": {
+     "F": 63,
+     "pages": 1,
+     "over": 15,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 120,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": true,
+   "F": 61,
+   "pages": 1,
+   "ticks": 120,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    24
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 27,
+    "2": 8,
+    "3": 25
+   },
+   "minFps": 10,
+   "seq": "1111111111111111111111111112222222233333333333333333333333332",
+   "over": 14,
+   "glitter": 0,
+   "twinkle": 0.4,
+   "flicker": 0,
+   "strobeHz": 0,
+   "glitterW": 0.0225
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuy0hqtu",
+   "name": "金锦冠扇形 FanGold（4 簇） · 我的 · 金锦冠扇形 FanGold（4 簇）",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 1.44,
+    "fit_p50": 0,
+    "fit_max": 32.9
+   },
+   "alt": {
+    "b15f10": {
+     "F": 80,
+     "pages": 2,
+     "over": 4,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 80,
+     "pages": 2,
+     "over": 4,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 60,
+   "pages": 1,
+   "ticks": 140,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 19,
+    "2": 1,
+    "3": 39
+   },
+   "minFps": 10,
+   "seq": "111111111111111111123333333333333333333333333333333333333332",
+   "over": 6,
+   "glitter": 0.5,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuy2yho7",
+   "name": "QA · 菊芯",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0.22,
+    "fit_p50": 0,
+    "fit_max": 4.9
+   },
+   "alt": {
+    "b15f10": {
+     "F": 119,
+     "pages": 2,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 128,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 119,
+   "pages": 2,
+   "ticks": 213,
+   "framePts": [
+    3,
+    5
+   ],
+   "sizePts": [
+    2,
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 70,
+    "2": 2,
+    "3": 46
+   },
+   "minFps": 10,
+   "seq": "11111111111111111111111111111111111111111111111111111111111111111111112233333333333333333333333333333333333333333333331",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 500,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuy2yho7",
+   "name": "QA · 星头",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.35,
+    "game1000_max": 0.39,
+    "fit_p50": 6.6,
+    "fit_max": 7.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 108,
+   "framePts": [
+    4
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 1,
+   "holdFlips": 0,
+   "hist": {
+    "1": 20,
+    "2": 43
+   },
+   "minFps": 15,
+   "seq": "1111111111111111111122222222222222222222222222222222222222222222",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.16,
+   "strobeHz": 4.9,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuy5jrv4",
+   "name": "萤柠星 · 外层尾巴",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 2.06,
+    "fit_p50": 0,
+    "fit_max": 22.2
+   },
+   "alt": {
+    "b15f10": {
+     "F": 105,
+     "pages": 2,
+     "over": 8,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 105,
+     "pages": 2,
+     "over": 8,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 60,
+   "pages": 1,
+   "ticks": 186,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 1,
+    "3": 6,
+    "4": 37
+   },
+   "minFps": 7.5,
+   "seq": "111111111111111233333344444444444444444444444444444444444443",
+   "over": 8,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.2,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuy5jrv4",
+   "name": "萤柠星 · 外层星头",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.4,
+    "game1000_max": 1.09,
+    "fit_p50": 2.9,
+    "fit_max": 8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 124,
+     "pages": 2,
+     "over": 11,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 124,
+     "pages": 2,
+     "over": 11,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 124,
+   "pages": 2,
+   "ticks": 225,
+   "framePts": [
+    4,
+    3
+   ],
+   "sizePts": [
+    2,
+    2
+   ],
+   "holdChanges": 1,
+   "holdFlips": 0,
+   "hist": {
+    "1": 23,
+    "2": 100
+   },
+   "minFps": 15,
+   "seq": "1111111111111111111111122222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222",
+   "over": 11,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.2,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuy5jrv4",
+   "name": "萤柠星 · 芯",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0.93,
+    "fit_p50": 0,
+    "fit_max": 19
+   },
+   "alt": {
+    "b15f10": {
+     "F": 103,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 103,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 62,
+   "pages": 1,
+   "ticks": 186,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 15,
+    "2": 1,
+    "3": 12,
+    "4": 33
+   },
+   "minFps": 7.5,
+   "seq": "11111111111111123333333333334444444444444444444444444444444441",
+   "over": 5,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.2,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuy8ub1e",
+   "name": "银辉芯 · 芯（绿）",
+   "layer": 1,
+   "out": "dots",
+   "jump": {
+    "game1000_p50": 0.33,
+    "game1000_max": 0.42,
+    "fit_p50": 6.8,
+    "fit_max": 8.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 95,
+   "framePts": [
+    5
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 2,
+   "holdFlips": 0,
+   "hist": {
+    "1": 40,
+    "2": 17,
+    "3": 6
+   },
+   "minFps": 10,
+   "seq": "1111111111111111111111111111111111111111222222222222222223333333",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.2,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuy8ub1e",
+   "name": "银辉芯 · 外层 · 橙引",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0,
+    "fit_p50": 0,
+    "fit_max": 0
+   },
+   "alt": {
+    "b15f10": {
+     "F": 15,
+     "pages": 1,
+     "over": 0,
+     "pts": 3
+    },
+    "b15f15": {
+     "F": 15,
+     "pages": 1,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": true,
+   "F": 15,
+   "pages": 1,
+   "ticks": 15,
+   "framePts": [
+    3
+   ],
+   "sizePts": [
+    16
+   ],
+   "holdChanges": 0,
+   "holdFlips": 0,
+   "hist": {
+    "1": 14
+   },
+   "minFps": 30,
+   "seq": "111111111111111",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.2,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuy8ub1e",
+   "name": "银辉芯 · 外层 · 银辉星",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0,
+    "fit_p50": 0,
+    "fit_max": 0
+   },
+   "alt": {
+    "b15f10": {
+     "F": 127,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    },
+    "b15f15": {
+     "F": 127,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 127,
+   "pages": 2,
+   "ticks": 127,
+   "framePts": [
+    3,
+    3
+   ],
+   "sizePts": [
+    2,
+    2
+   ],
+   "holdChanges": 0,
+   "holdFlips": 0,
+   "hist": {
+    "1": 126
+   },
+   "minFps": 30,
+   "seq": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+   "over": 0,
+   "glitter": 1,
+   "twinkle": 0.6,
+   "flicker": 0.2,
+   "strobeHz": 6.1,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuzi6vue",
+   "name": "金蕊青柠星 · 橙引尾",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0.98,
+    "fit_p50": 0,
+    "fit_max": 13.9
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 6,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 126,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 58,
+   "pages": 1,
+   "ticks": 126,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 32,
+    "2": 4,
+    "3": 1,
+    "4": 20
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111122223444444444444444444443",
+   "over": 5,
+   "glitter": 0,
+   "twinkle": 0.2,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuzi6vue",
+   "name": "金蕊青柠星 · 柠点星",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.62,
+    "game1000_max": 1.05,
+    "fit_p50": 6.7,
+    "fit_max": 11.3
+   },
+   "alt": {
+    "b15f10": {
+     "F": 114,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 114,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 150,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 22,
+    "2": 7,
+    "3": 25,
+    "4": 9
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111222222233333333333333333333333334444444443",
+   "over": 18,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.5,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuzi6vue",
+   "name": "金蕊青柠星 · 金菊蕊",
+   "layer": 3,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.32,
+    "game1000_max": 0.47,
+    "fit_p50": 7.2,
+    "fit_max": 10.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 3,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 103,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 132,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 35,
+    "2": 7,
+    "3": 5,
+    "4": 16
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111122222223333344444444444444444",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.15,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmuzi6vue",
+   "name": "金蕊青柠星 · 红点蕊",
+   "layer": 4,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.25,
+    "game1000_max": 0.34,
+    "fit_p50": 5.8,
+    "fit_max": 7.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 64,
+     "pages": 1,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 90,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    3
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 50,
+    "2": 7,
+    "3": 2,
+    "4": 4
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111111111111111111122222223344444",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.15,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmv0y9wh0",
+   "name": "扇形彗星 · 红彗星扇 / 橙扇 · 我的 · 正红星头",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0.93,
+    "game1000_max": 1.53,
+    "fit_p50": 17.3,
+    "fit_max": 28.5
+   },
+   "alt": {
+    "b15f10": {
+     "F": 64,
+     "pages": 1,
+     "over": 23,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 120,
+     "pages": 2,
+     "over": 0,
+     "pts": 3
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 120,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 36,
+    "2": 13,
+    "3": 2,
+    "4": 12
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111111111111111112222222222222334444444444444",
+   "over": 16,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmv0y9wh0",
+   "name": "扇形彗星 · 红彗星扇 / 橙扇 · 我的 · 炭金尾",
+   "layer": 2,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 1.08,
+    "game1000_max": 1.57,
+    "fit_p50": 19.7,
+    "fit_max": 28.7
+   },
+   "alt": {
+    "b15f10": {
+     "F": 115,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    },
+    "b15f15": {
+     "F": 115,
+     "pages": 2,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 64,
+   "pages": 1,
+   "ticks": 153,
+   "framePts": [
+    6
+   ],
+   "sizePts": [
+    2
+   ],
+   "holdChanges": 3,
+   "holdFlips": 0,
+   "hist": {
+    "1": 24,
+    "2": 12,
+    "3": 7,
+    "4": 20
+   },
+   "minFps": 7.5,
+   "seq": "1111111111111111111111112222222222223333333444444444444444444444",
+   "over": 20,
+   "glitter": 0,
+   "twinkle": 0.4,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  },
+  {
+   "group": "我的效果",
+   "id": "my:fxmv11wwei",
+   "name": "Crackle ·05 · Crackle · 大小与造型",
+   "layer": 1,
+   "out": "seq",
+   "jump": {
+    "game1000_p50": 0,
+    "game1000_max": 0.63,
+    "fit_p50": 0,
+    "fit_max": 6.8
+   },
+   "alt": {
+    "b15f10": {
+     "F": 128,
+     "pages": 2,
+     "over": 13,
+     "pts": 5
+    },
+    "b15f15": {
+     "F": 182,
+     "pages": 3,
+     "over": 0,
+     "pts": 4
+    }
+   },
+   "budget": "motion",
+   "zoom": false,
+   "F": 182,
+   "pages": 3,
+   "ticks": 311,
+   "framePts": [
+    4,
+    3,
+    3
+   ],
+   "sizePts": [
+    2,
+    2,
+    3
+   ],
+   "holdChanges": 1,
+   "holdFlips": 0,
+   "hist": {
+    "1": 52,
+    "2": 129
+   },
+   "minFps": 15,
+   "seq": "11111111111111111111111111111111111111111111111111112222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222221",
+   "over": 0,
+   "glitter": 0,
+   "twinkle": 0.6,
+   "flicker": 0.25,
+   "strobeHz": 0,
+   "glitterW": 0.03
+  }
+ ]
+}

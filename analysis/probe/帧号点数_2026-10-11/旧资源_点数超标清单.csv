@@ -1,0 +1,35 @@
+﻿包,烘焙器,超标项,帧号点数,帧号最多的发射器,SizeByLife点数,其它曲线最多点数,其它曲线发射器,节奏来回切,跳帧
+交付根目录/RiseTrail_M,4.3.2,SparksFine 曲线 121 点,4,RiseLoop,17,121,SparksFine,8,0
+交付根目录/HN2,4.3.7,Size By Life 96 点,4,L1_Main,96,2,L1_Main,0,0
+交付根目录/YonshakuKamuro,4.5.0,L2_Dots 曲线 47 点,5,L1_MainA,0,47,L2_Dots,0,0
+交付根目录/RiseTrail_L,4.5.1,帧号 65 点；SparksFine 曲线 231 点,65,TrailFar,13,231,SparksFine,18,0
+交付根目录/GoldRay,4.9.19,Size By Life 126 点,5,L2_Main,126,2,L1_Main,0,0
+本机输出/HikiNishikiUnit,4.2.13,Size By Life 104 点,8,L2_Unit,104,2,L1_Main,0,0
+本机输出/Hongchao40,4.9.14,L2_Dots 曲线 47 点,5,L1_MainA,0,47,L2_Dots,0,0
+本机输出/GoldRay,4.9.31,Size By Life 126 点,5,L2_Main,126,2,L1_Main,0,0
+本机输出/GoldRay_03,4.9.31,Size By Life 88 点,4,L2_Main,88,2,L1_Main,0,0
+本机输出/GoldRay_05,4.9.31,Size By Life 108 点,5,L2_Main,108,2,L1_Main,0,0
+本机输出/GoldRay_10,4.9.31,Size By Life 128 点,5,L2_Main,128,2,L1_Main,0,0
+本机输出/GoldRay_20,4.9.31,Size By Life 128 点,5,L1_Main,128,2,L1_Main,0,0
+本机输出/GoldRay_30,4.9.31,Size By Life 128 点,5,L1_Main,128,2,L1_Main,0,0
+本机输出/GoldRay_40,4.9.31,Size By Life 128 点,5,L2_MainA,128,2,L1_MainA,0,0
+本机输出/GoldRay_Core,4.9.31,Size By Life 126 点,5,L2_Main,126,2,L1_Main,0,0
+本机输出/GoldRay_Crown,4.9.31,Size By Life 128 点,5,L1_Main,128,2,L1_Main,0,0
+本机输出/GoldRay_Heart,4.9.31,Size By Life 126 点,5,L2_Main,126,2,L1_Main,0,0
+本机输出/GoldRay_Kaleido,4.9.31,Size By Life 122 点,5,L2_Main,122,2,L1_Main,0,0
+本机输出/GoldRay_Ring,4.9.31,Size By Life 128 点,5,L2_Main,128,2,L1_Main,0,0
+本机输出/GoldRay_Saturn,4.9.31,Size By Life 116 点,5,L2_Main,116,2,L1_Main,0,0
+本机输出/GoldRay_T60,4.9.31,Size By Life 84 点,4,L2_Main,84,2,L1_Main,0,0
+本机输出/GoldRay_T75,4.9.31,Size By Life 106 点,4,L2_Main,106,2,L1_Main,0,0
+本机输出/GoldRay_Willow,4.9.31,Size By Life 120 点,5,L2_MainA,120,2,L1_Main,0,0
+本机输出/YonshakuKamuro,4.9.31,L2_Dots 曲线 47 点,5,L1_MainA,0,47,L2_Dots,0,0
+本机输出/YonshakuKamuro_Core,4.9.31,L2_Dots 曲线 47 点,5,L1_MainA,0,47,L2_Dots,0,0
+本机输出/YonshakuKamuro_Heart,4.9.31,L2_Dots 曲线 47 点,5,L1_MainA,0,47,L2_Dots,0,0
+本机输出/YonshakuKamuro_Jisa,4.9.31,L2_Dots 曲线 45 点,5,L1_MainA,0,45,L2_Dots,0,0
+本机输出/YonshakuKamuro_Kaleido,4.9.31,L2_Dots 曲线 47 点,5,L1_MainA,0,47,L2_Dots,0,0
+本机输出/YonshakuKamuro_Ring,4.9.31,L2_Dots 曲线 47 点,5,L1_MainA,0,47,L2_Dots,0,0
+本机输出/YonshakuKamuro_Saturn,4.9.31,L2_Dots 曲线 47 点,6,L1_MainB,0,47,L2_Dots,2,0
+本机输出/YonshakuKamuro_T60,4.9.31,L2_Dots 曲线 45 点,6,L1_Main,0,45,L2_Dots,0,0
+本机输出/YonshakuKamuro_T75,4.9.31,L2_Dots 曲线 45 点,4,L1_MainA,0,45,L2_Dots,0,0
+本机输出/YonshakuKamuro_T75C,4.9.31,L2_Dots 曲线 42 点,4,L1_MainA,0,42,L2_Dots,0,0
+本机输出/YonshakuKamuro_Willow,4.9.31,L2_Dots 曲线 43 点,5,L1_MainA,0,43,L2_Dots,0,0
