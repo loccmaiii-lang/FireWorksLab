@@ -348,7 +348,8 @@
       "④ 宪章批后：22 出逻辑方案 B 和 逻辑方案→三表 编译器；24 负责导入、双目标读回、UE 播放证据。三表、模板库索引、时序索引都由编译器生成，不手改三表。",
       "⑤（v1.2 补，22 → 24）读回条目层（EffectTemplates 的 Entries）PositionOffset.Z / Y 在 UE 里是否生效：丙构图的高低错落（±30 m）和三个主角的景深错层（±60–100 m）要用；R04 只在固定子模板里用过 PositionOffset / RotationOffset，条目层和随机字段全是 0，没有实测记录。",
       "⑥（v1.2 补，22 → 烘焙器）主角大面片转镜头会跟着转：烘焙器大面片 Screen Alignment 写死 Rectangle（tool/src/js/66_fwlcascade.js:44、68_lowframe.js:179）。用户先在 UE 里把测试副本改 Facing Camera Position 对比；结果好再认领 tool/src 加选项，未测之前不动底层。"
-    ]
+    ],
+    "手游编排 · tool/workbench ueText空数组修复": "认领：手游编排对话（2026-10-11 10:40，用户授权处理附带发现）。只改 tool/workbench/src/delivery-model.mjs 的 ueText：空数组写成空串而不是 ()（UE 把 () 解析成 1 个默认元素，导演回滚 / 整份配置写回时会多出空项）；加回归测试，npm test + release 生成离线包。不动布局/交互/节目/三表。完成后释放。"
   },
   "effects": [
     {
