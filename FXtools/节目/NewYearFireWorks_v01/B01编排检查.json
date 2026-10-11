@@ -1,0 +1,56 @@
+{
+  "revision": "B01_NAGAOKA_LOGIC",
+  "generatedBy": "analysis/scripts/编排B01_编译.mjs",
+  "tiers": {
+    "high": {
+      "events": 1661,
+      "subTemplates": 22,
+      "templates": 102,
+      "scheduleSlots": 238,
+      "groups": {
+        "P": 132,
+        "B": 106
+      },
+      "lastSlot": 201.5,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "medium": {
+      "events": 1365,
+      "subTemplates": 22,
+      "templates": 102,
+      "scheduleSlots": 238,
+      "groups": {
+        "P": 132,
+        "B": 106
+      },
+      "lastSlot": 201.5,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "low": {
+      "events": 809,
+      "subTemplates": 19,
+      "templates": 98,
+      "scheduleSlots": 181,
+      "groups": {
+        "P": 132,
+        "B": 49
+      },
+      "lastSlot": 201.5,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    }
+  },
+  "preflight": "preflightProject 通过（同 8025 打开 .dfshow）",
+  "file": "NewYearFireWorks_v01-B01长冈式.dfshow",
+  "doc": {
+    "cues": 238,
+    "events": 1661,
+    "sections": 14,
+    "duration": 218.6,
+    "musicOffset": 5,
+    "balls": 1485,
+    "fans": 176
+  }
+}
