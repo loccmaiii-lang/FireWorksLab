@@ -22,7 +22,7 @@ FILL = {'S': '#eaf8f2', 'M': '#eaf1fb', 'L': '#fdeee8', 'H': '#fbf0c8', 'H280': 
 NAME = {'S': '小', 'M': '中', 'L': '大', 'H': '主角', 'H280': '主角', 'H300': '主角'}
 
 
-def panel(ax, title, items, fan=True, note=''):
+def panel(ax, title, items, fan=True, note='', caps=True, fs=1.0, wrap=0):
     ax.set_facecolor('white')
     ax.add_patch(Rectangle((-450, -150), 900, 150, fc='#ececea', ec='#bdbdb0', lw=1))
     for i in range(9):
@@ -46,10 +46,12 @@ def panel(ax, title, items, fan=True, note=''):
     n = {k: sum(1 for t in items if t[1] == k) for k in 'SML'}
     n['H'] = sum(1 for t in items if t[1].startswith('H'))
     tails = {'小': n['S'], '中': n['M'], '大': n['L'] + n['H']}
-    ax.set_title(title, fontsize=10.5, loc='left', fontweight='bold', x=0.0)
-    s = f"球花 {sum(n.values())}：小{n['S']} 中{n['M']} 大{n['L']} 主角{n['H']}　尾缀同时 小{tails['小']} 中{tails['中']} 大{tails['大']}（每级上限 20）"
-    ax.text(-525, -158, s + ('\n' + note if note else ''), fontsize=7.6, va='top', color='#333')
-    ax.plot([400, 500], [560, 560], color='k', lw=1); ax.text(450, 570, '100 m', ha='center', fontsize=7)
+    ax.set_title(title, fontsize=10.5 * fs, loc='left', fontweight='bold', x=0.0)
+    s = f"球花 {sum(n.values())}：小{n['S']} 中{n['M']} 大{n['L']} 主角{n['H']}　尾缀同时 小{tails['小']} 中{tails['中']} 大{tails['大']}" + ('（每级上限 20）' if caps else '')
+    if wrap and note:
+        note = '\n'.join(note[i:i + wrap] for i in range(0, len(note), wrap))
+    ax.text(-525, -158, s + ('\n' + note if note else ''), fontsize=7.6 * fs, va='top', color='#333')
+    ax.plot([400, 500], [560, 560], color='k', lw=1); ax.text(450, 570, '100 m', ha='center', fontsize=7 * fs)
 
 
 def row(c, h, idx=range(9), alt=0):
@@ -98,17 +100,59 @@ C = [
 def hero_options():
     base = row('M', 210) + [(i, 'S', 80) for i in (0, 2, 4, 6, 8)]
     P = [
-     ('① 一个主角 300 m · P4 +420（M 九点 + S 低层）', base + [(4, 'H300', 420)], True, '最稳妥：一个面片，位置居中；300 m = 3 格间距，两侧各留 1 个 L 位'),
+     ('① 一个主角 280 m · P4 +420（M 九点 + S 低层）', base + [(4, 'H280', 420)], True, '最稳妥：一个面片，位置居中；280 m ≈ 2.8 格间距'),
      ('② 三个主角 280 m · P1 / P4 / P7 相切 +400 / +430 / +400', base + [(1, 'H280', 400), (4, 'H280', 430), (7, 'H280', 400)], True, '间距 300 m = 1.07×，刚好相切，三个互不压；中间高 30 m 成「品」字'),
      ('③ 三个主角 280 m · P2 / P4 / P6 重叠 +380 / +440 / +380', base + [(2, 'H280', 380), (4, 'H280', 440), (6, 'H280', 380)], True, '间距 200 m = 1.4×，叠 30%；半透明大面片 3 层叠，PC 可以，手机只留中间 1 个'),
-     ('④ 主角 + L 压两翼 · 主角 280 m P4 +420，L 230 P0 / P2 / P6 / P8 +330', base + [(4, 'H280', 420)] + [(i, 'L', 330) for i in (0, 2, 6, 8)], True, '一个主角 + 四个 L：主角靠高度和位置，不靠孤零零一个大面片'),
+     ('④ 主角 + L 压两翼 · 主角 280 m P4 +420，L 230 P1 / P7 +330', base + [(4, 'H280', 420)] + [(i, 'L', 330) for i in (1, 7)], True, '一个主角 + 两个 L：主角靠高度和位置，L 与主角不相压（间距 300 m ≥ 半径和 255 m）'),
     ]
     fig, axs = plt.subplots(2, 2, figsize=(12.6, 10.4))
-    fig.suptitle('主角方案 · 280–300 m、1 个或 3 个（示意，正面正投影，100 m 比例尺）', fontsize=14, fontweight='bold', x=0.04, ha='left')
+    fig.suptitle('主角方案 · 280 m、1 个或 3 个（示意，正面正投影，100 m 比例尺）', fontsize=14, fontweight='bold', x=0.04, ha='left')
     for ax, (t, it, fan, note) in zip(axs.flat, P):
         panel(ax, t, it, fan, note)
     plt.tight_layout(rect=(0, 0, 1, .96))
     fig.savefig(OUT / '主角方案.png', dpi=100, facecolor='white'); plt.close(fig)
+
+
+# —— 分镜：丙（用户 10-11 批注：「丙方案」= 选丙方案），按演出顺序排，六个时刻 + 能量条 ——
+def storyboard():
+    import json
+    import numpy as np
+    from matplotlib.gridspec import GridSpec
+    ana = json.load(open(OUT.parents[1] / 'analysis/music/汪洋与浩渺_高潮分析.json', encoding='utf-8'))
+    bars = ana['bars']
+    tx = np.array([b['startShowS'] for b in bars]); r = np.array([b['rmsDb'] for b in bars])
+    base_m = [(i, 'M', 210) for i in (0, 2, 6, 8)]
+    S = [
+     ('① 0:10 开场（倒计时 0）', [(i, 'M', 230) for i in (0, 2, 4, 6, 8)] + [(i, 'S', 150) for i in (1, 3, 5, 7)], True,
+      'M 五点 +230，S 四点 +150 嵌在中间；全宽扇形铺底'),
+     ('② 0:22–0:58 推进', [(i, 'M', 250 if i % 2 == 0 else 190) for i in range(9)], True,
+      'M 九点 +250 / +190 锯齿；扇形铺底；每波换金 / 银'),
+     ('③ 0:58.7 高潮 I（第一次抬升）', [(i, 'L', 330) for i in (0, 2, 4, 6, 8)] + [(i, 'M', 210) for i in (1, 3, 5, 7)], True,
+      'L 五点 +330 一朵朵排开，M 四点 +210 嵌在谷里'),
+     ('④ 1:52.2 高潮 II 入口（你的 1:47）· 1 个主角', [(1, 'L', 330), (7, 'L', 330), (4, 'H280', 400)] + base_m + [(i, 'S', 100) for i in (1, 3, 5, 7)], True,
+      '回归前有 1 小节静默，大号尾缀在静默里升；主角 280 m 居中 +400，L 两翼，M 中层，S 低层'),
+     ('⑤ 2:50 终章入口（主高潮）· 3 个主角', [(1, 'H280', 400), (4, 'H280', 430), (7, 'H280', 400)] + base_m + [(i, 'S', 100) for i in (1, 3, 4, 5, 7)], True,
+      '3 个主角 280 m，P1 / P4 / P7 间距 300 m 刚好相切，中间高 30 m；M 在两翼与缝里'),
+     ('⑥ 3:16–3:28 白色收束（计划书 8 波）', [(i, 'L', 340) for i in (0, 2, 4, 6, 8)] + [(i, 'L', 280) for i in (1, 3, 5, 7)], False,
+      '每波 9 个 L（银彩菊）：偶数点 +340、奇数点 +280；下一波反相（偶低奇高），每 1.5 s 一波，8 波'),
+    ]
+    fig = plt.figure(figsize=(18, 14.2))
+    gs = GridSpec(3, 3, height_ratios=[.42, 1, 1], hspace=.62, wspace=.08)
+    hx = fig.add_subplot(gs[0, :])
+    hx.plot(tx, np.convolve(r, np.ones(5) / 5, mode='same'), color='#2a5db0', lw=2)
+    hx.set_xlim(0, 216); hx.set_ylim(-20, -5); hx.set_yticks([]); hx.set_xlabel('演出时间（s）= 音乐时间 + 5', fontsize=9)
+    for (b0, b1, t, c) in ((60.3, 71.7, '高潮 I', '#f6ddcc'), (112.2, 138.2, '高潮 II', '#dbe8f7'), (170.6, 198.1, '终章 · 主高潮', '#fbe9a6')):
+        hx.axvspan(b0, b1, color=c, alpha=.85, lw=0); hx.text((b0 + b1) / 2, -5.6, t, ha='center', va='top', fontsize=9)
+    hx.axvspan(110.6, 112.2, color='#999', alpha=.5, lw=0)
+    for k, t in enumerate((10, 40, 58.7, 112.2, 170.6, 202)):
+        hx.plot([t, t], [-20, -17.2], color='#c0392b', lw=1.2)
+        hx.text(t, -16.6, '①②③④⑤⑥'[k], ha='center', fontsize=12, color='#c0392b', fontweight='bold')
+    hx.set_title('《汪洋与浩渺》能量（响度）与六个构图时刻　灰条 = 1:47 前的 1 小节静默', fontsize=11, loc='left', fontweight='bold')
+    for k, (t, it, fan, note) in enumerate(S):
+        ax = fig.add_subplot(gs[1 + k // 3, k % 3])
+        panel(ax, t, it, fan, note, caps=False, fs=1.3, wrap=34)
+    fig.suptitle('构图 丙 · 按演出顺序的分镜（主角 280 m；④ 1 个、⑤ 3 个；示意，正面正投影，100 m 比例尺）', fontsize=15, fontweight='bold', x=0.02, ha='left')
+    fig.savefig(OUT / '分镜_丙.png', dpi=100, facecolor='white', bbox_inches='tight'); plt.close(fig)
 
 
 if __name__ == '__main__':
@@ -117,4 +161,5 @@ if __name__ == '__main__':
     version('乙', '山形：中心大、两翼递减（新）', B)
     version('丙', '锯齿：一高一低交替（新）', C)
     hero_options()
+    storyboard()
     print('ok')
