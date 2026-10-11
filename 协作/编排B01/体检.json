@@ -1,20 +1,20 @@
 {
  "events": {
-  "total": 2166,
+  "total": 2168,
   "balls": 1485,
-  "fans": 681,
+  "fans": 683,
   "cues": 329,
   "bySize": {
    "S": 716,
-   "M": 572,
-   "L": 197
+   "M": 608,
+   "L": 161
   }
  },
  "tiers": {
   "high": {
-   "events": 2166,
+   "events": 2168,
    "balls": 1485,
-   "fans": 681,
+   "fans": 683,
    "gpuPeakPerS": 199
   },
   "medium": {
@@ -24,9 +24,9 @@
    "gpuPeakPerS": 190
   },
   "low": {
-   "events": 843,
+   "events": 845,
    "balls": 785,
-   "fans": 58,
+   "fans": 60,
    "gpuPeakPerS": 132
   }
  },
@@ -39,7 +39,7 @@
   "hardOver": 0,
   "softList": [],
   "hardList": [],
-  "nearBudget": 13,
+  "nearBudget": 12,
   "nearBudgetList": [
    {
     "t": 13.5,
@@ -82,16 +82,12 @@
     "gpu": 199
    },
    {
-    "t": 167.9,
-    "gpu": 191
-   },
-   {
     "t": 172.7,
     "gpu": 198
    },
    {
-    "t": 182.2,
-    "gpu": 190
+    "t": 188.6,
+    "gpu": 195
    }
   ]
  },
@@ -103,7 +99,7 @@
  "strongBeat": 0.759,
  "generations": {
   "fullWaves": 110,
-  "meanTailsInFlightCues": 3.71,
+  "meanTailsInFlightCues": 3.65,
   "fullWavesWithNextTails": 110,
   "share": 1.0
  },
@@ -146,7 +142,7 @@
   },
   "GS": {
    "name": "金锦菊",
-   "fullWaves": 12,
+   "fullWaves": 13,
    "firstAt": 18.2
   },
   "PW": {
@@ -166,7 +162,7 @@
   },
   "GR": {
    "name": "金芒菊",
-   "fullWaves": 9,
+   "fullWaves": 12,
    "firstAt": 10.1
   },
   "ML": {
@@ -176,8 +172,8 @@
   },
   "GK": {
    "name": "金垂柳",
-   "fullWaves": 4,
-   "firstAt": 173.9
+   "fullWaves": 0,
+   "firstAt": null
   },
   "SS": {
    "name": "银彩菊",
@@ -186,6 +182,15 @@
   }
  },
  "leadMissing": [],
+ "heroes": {
+  "goldKamuroEvents": 5,
+  "heroCues": 3,
+  "nonHero": []
+ },
+ "tierNesting": {
+  "ok": true,
+  "violations": []
+ },
  "sectionShare": {
   "B01_S0": {
    "name": "倒计时",
@@ -356,16 +361,16 @@
    "leadShare": 0.12,
    "top": [
     [
+     "SS",
+     28
+    ],
+    [
      "ML",
      26
     ],
     [
      "GC",
      24
-    ],
-    [
-     "SS",
-     23
     ]
    ]
   },
@@ -409,16 +414,16 @@
   },
   "B01_S12": {
    "name": "终章",
-   "lead": "GK",
+   "lead": "GR",
    "leadShare": 0.22,
    "top": [
     [
-     "GK",
+     "GR",
      49
     ],
     [
      "SS",
-     34
+     44
     ],
     [
      "GY",
@@ -474,7 +479,7 @@
  "baseFans": {
   "groups": 91,
   "cues": 88,
-  "events": 523,
+  "events": 525,
   "coverage": 0.967,
   "skipped": [
    {
@@ -571,11 +576,11 @@
    }
   ],
   "bySpecies": {
-   "R1": 20,
-   "R5": 118,
-   "R9": 137,
-   "R9R": 140,
-   "S5": 102,
+   "R1": 18,
+   "R5": 134,
+   "R9": 129,
+   "R9R": 144,
+   "S5": 94,
    "S9": 6
   },
   "byDirection": {
@@ -586,18 +591,18 @@
    "together": 2
   },
   "launchOffsetMax": 0.7,
-  "beams": 3667
+  "beams": 3669
  },
  "fanSummary": {
   "cues": 130,
-  "events": 681,
+  "events": 683,
   "bySpecies": {
-   "R1": 28,
-   "R5": 166,
-   "R9": 166,
-   "R9R": 177,
+   "R1": 26,
+   "R5": 182,
+   "R9": 158,
+   "R9R": 181,
    "S13": 6,
-   "S5": 108,
+   "S5": 100,
    "S9": 30
   },
   "aliveGpuPeak": 234
@@ -609,9 +614,9 @@
   "lastEnd": 218.57
  },
  "aliveBodies": {
-  "peak": 61,
-  "peakAt": 180.5,
-  "mean": 31.5
+  "peak": 56,
+  "peakAt": 40.0,
+  "mean": 30.4
  },
  "aliveBySpecies": {
   "SC": {
@@ -671,8 +676,8 @@
   },
   "GR": {
    "name": "金芒菊",
-   "peak": 14,
-   "peakAt": 52.5
+   "peak": 18,
+   "peakAt": 190.5
   },
   "ML": {
    "name": "多重菊",
@@ -681,8 +686,8 @@
   },
   "GK": {
    "name": "金垂柳",
-   "peak": 32,
-   "peakAt": 195.5
+   "peak": 3,
+   "peakAt": 176.0
   },
   "SS": {
    "name": "银彩菊",

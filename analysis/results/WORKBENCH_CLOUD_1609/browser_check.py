@@ -1,7 +1,14 @@
-# 16.0.9 刷新自动载入云端最新编排：真实浏览器走查（全新临时浏览器配置，不碰用户自己的浏览器数据）
 import json, sys, time
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+# 刷新自动载入云端最新编排：真实浏览器走查（全新临时浏览器配置，不碰用户自己的浏览器数据）
+# 版本和编排名从仓库读，不写死（16.0.11 起）
+import re as _re
+_ROOT = Path(__file__).resolve().parents[3] / 'tool' / 'workbench'
+_CL = json.loads((_ROOT / 'public' / 'data' / 'cloud-latest.json').read_text(encoding='utf-8'))
+CV, CN, CUES = _CL['version'], _CL['name'], _CL['cues']
+WV = _re.search(r"WORKBENCH_VERSION='([^']+)'", (_ROOT / 'src' / 'connection.mjs').read_text(encoding='utf-8')).group(1)
+FOOT = '导演编排 ' + WV + ' · ' + ('' if CV == WV else '云端 ' + CV + ' ') + CN
 
 OUT = Path(__file__).parent
 BASE = 'http://127.0.0.1:8025'
@@ -51,17 +58,17 @@ with sync_playwright() as p:
     page.goto(BASE + '/')
     wait_ready(page)
     h, s, f = header(page), snackbar(page), footer(page)
-    check('A1 8025 全新打开（1366 宽，顶栏版本按原设计隐藏）：底栏写 16.0.10 · 云端 16.0.9 B01长冈式', '导演编排 16.0.10 · 云端 16.0.9 B01长冈式' in f, f.replace(chr(10),' ')[:90])
-    check('A2 常驻提示写明载入了哪一版', '已载入云端编排 16.0.9 · B01长冈式' in s and '329 片段' in s, s)
-    check('A3 底栏 329 片段', '329 片段' in f)
+    check('A1 8025 全新打开（1366 宽，顶栏版本按原设计隐藏）：底栏写 ' + FOOT, FOOT in f, f.replace(chr(10),' ')[:90])
+    check('A2 常驻提示写明载入了哪一版', ('已载入云端编排 ' + CV + ' · ' + CN) in s and f'{CUES} 片段' in s, s)
+    check(f'A3 底栏 {CUES} 片段', f'{CUES} 片段' in f)
     page.screenshot(path=str(OUT / 'A_8025_首次打开_1366.png'))
     page.wait_for_timeout(10000)
     check('A4 提示不自动消失（要点关闭）', '已载入云端编排' in snackbar(page))
     mark = page.evaluate(IDB, ['df-director-workbench', 'get', 'df-timeline-design-v2-draft-cloud-latest', None])
-    check('A5 记下已载入的版本', mark and json.loads(mark)['version'] == '16.0.9', str(mark)[:120])
+    check('A5 记下已载入的版本', mark and json.loads(mark)['version'] == CV, str(mark)[:120])
     page.reload()
     wait_ready(page)
-    check('A6 再刷新：仍是 B01，不再重复载入/提示', 'B01长冈式' in footer(page) and '已载入云端编排' not in snackbar(page))
+    check('A6 再刷新：仍是 B01，不再重复载入/提示', CN in footer(page) and '已载入云端编排' not in snackbar(page))
 
     # B. 已有自己的节目（模拟：改名为「我的节目」且没有载入记录）→ 刷新载入 B01，原节目可恢复
     draft = page.evaluate(IDB, ['df-director-workbench', 'get', 'df-timeline-design-v2-draft', None])
@@ -73,10 +80,10 @@ with sync_playwright() as p:
     page.evaluate(IDB, ['df-director-workbench', 'del', 'df-timeline-design-v2-draft-cloud-latest', None])
     page.reload()
     wait_ready(page)
-    check('B1 自己的节目在，云端出新版：刷新后换成 B01', 'B01长冈式' in footer(page) and '我的节目' not in header(page), header(page))
+    check('B1 自己的节目在，云端出新版：刷新后换成 B01', CN in footer(page) and '我的节目' not in header(page), header(page))
     check('B2 提示说明原节目已备份、在哪找回', '恢复切换前节目' in snackbar(page), snackbar(page))
     rec = page.evaluate(IDB, ['df-director-workbench', 'get', 'df-timeline-design-v2-draft-recovery', None])
-    ver = page.evaluate(IDB, ['df-director-workbench', 'get', 'df-timeline-design-v2-draft-before-cloud-16.0.9', None])
+    ver = page.evaluate(IDB, ['df-director-workbench', 'get', 'df-timeline-design-v2-draft-before-cloud-' + CV, None])
     check('B3 备份里是「我的节目」（恢复槽 + 按版本的槽）', rec and '我的节目' in rec and ver and '我的节目' in ver)
     page.screenshot(path=str(OUT / 'B_8025_已有节目_刷新载入.png'))
     page.locator('button[data-panel="programme"]').click()
@@ -88,7 +95,7 @@ with sync_playwright() as p:
     page.wait_for_timeout(1500)
     page.reload()
     wait_ready(page)
-    check('B5 恢复后再刷新：不会又被换回 B01（同一版只载入一次）', '我的节目' in header(page) and 'B01长冈式' not in footer(page), header(page))
+    check('B5 恢复后再刷新：不会又被换回 B01（同一版只载入一次）', '我的节目' in header(page) and CN not in footer(page), header(page))
     ctx.close()
 
     # C. 8025/release/ 最终离线 HTML（HTTP）与 D. file 页：全新浏览器打开就是 B01
@@ -99,8 +106,8 @@ with sync_playwright() as p:
         page.goto(url)
         wait_ready(page)
         h, s = header(page), snackbar(page)
-        check(tag + '（1920 宽）：顶栏与底栏都写 16.0.9 · B01长冈式', '云端编排 16.0.9 · B01长冈式' in h and '导演编排 16.0.10 · 云端 16.0.9 B01长冈式' in footer(page), h.replace(chr(10),' '))
-        check(tag + '：提示写明音乐要在节目里导入', '导入《汪洋与浩渺》' in s, s)
+        check(tag + '（1920 宽）：顶栏与底栏都写 ' + CV + ' · ' + CN, ('云端编排 ' + CV + ' · ' + CN) in h and FOOT in footer(page), h.replace(chr(10),' '))
+        check(tag + '：提示写明没声音时去节目里导入', '导入《汪洋与浩渺》' in s, s)
         page.screenshot(path=str(OUT / (tag.split(' ')[0] + '_离线_1920.png')))
         ctx.close()
     check('页面脚本无报错', not errors, '; '.join(errors)[:300])

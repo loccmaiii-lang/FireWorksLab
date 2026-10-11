@@ -1,9 +1,9 @@
 {
-  "revision": "B01_NAGAOKA_LOGIC",
+  "revision": "B01_NAGAOKA_LOGIC_r1",
   "generatedBy": "analysis/scripts/编排B01_编译.mjs",
   "tiers": {
     "high": {
-      "events": 2166,
+      "events": 2168,
       "subTemplates": 22,
       "templates": 144,
       "scheduleSlots": 329,
@@ -29,13 +29,13 @@
       "status": "property_text_ready_UE_unverified"
     },
     "low": {
-      "events": 843,
+      "events": 845,
       "subTemplates": 20,
       "templates": 104,
-      "scheduleSlots": 198,
+      "scheduleSlots": 199,
       "groups": {
         "P": 132,
-        "B": 66
+        "B": 67
       },
       "lastSlot": 201.5,
       "expansionProblems": [],
@@ -44,13 +44,17 @@
   },
   "preflight": "preflightProject 通过（同 8025 打开 .dfshow）",
   "file": "NewYearFireWorks_v01-B01长冈式.dfshow",
+  "tierNesting": {
+    "lowNotInMedium": 0,
+    "mediumNotInHigh": 0
+  },
   "doc": {
     "cues": 329,
-    "events": 2166,
+    "events": 2168,
     "sections": 14,
     "duration": 218.6,
     "musicOffset": 5,
     "balls": 1485,
-    "fans": 681
+    "fans": 683
   }
 }

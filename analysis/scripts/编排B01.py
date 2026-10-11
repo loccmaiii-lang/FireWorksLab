@@ -214,8 +214,8 @@ class Show:
         return c
 
     # —— 几种波（词汇） ——
-    def row9(self, sp, H0, order='out', gap=0.1, dz='flat', **kw):
-        return [self.cue(sp, P9, H0, order, gap, dz, wave='整排9', **kw)]
+    def row9(self, sp, H0, order='out', gap=0.1, dz='flat', wave='整排9', **kw):
+        return [self.cue(sp, P9, H0, order, gap, dz, wave=wave, **kw)]
 
     def zig17(self, spP, spB, H0, order='out', gap=0.1, amp=25.0, **kw):
         """P 点一种、点间 B 点另一种，一点一发；P 点略高、B 点略低（B 点用 S 90 暂代 ⌀50 小花）"""
@@ -263,14 +263,19 @@ class Show:
 
 
 def tier_points(c):
-    """三档点集：高 = 全部；中 = 去最外两点；低 = 以中心点为准隔点留；叠层（extra）低档不出。
-    all = 入口 / 主角 / 倒计时，三档全点。"""
+    """三档点集（宪章 §5：收窄不收比例，从两端往里收，不减间距；低 ⊂ 中 ⊂ 高）。
+    ≥ 6 点：中 = 去最外两点，低 = 再去最外两点（P 9→7→5、B 8→6→4）；3–5 点：中 = 全部，低 = 去两端；≤ 2 点三档全点。
+    叠层（extra）低档不出。all = 入口 / 主角 / 倒计时 / 墙，三档全点。
+    修订1（本机同步 8，10-11）：原来低档「以中心点为准隔点留」会把中档已去掉的 P0 / P8 又留回来（低 ⊄ 中，183 次），合不成一张嵌套表，且隔点把 1.5× / 2.3× 拉成一半。"""
     xs = sorted(c['points'], key=px)
     if c['tier'] == 'all' or len(xs) <= 2:
         return {'medium': xs[:], 'low': xs[:]}
-    med = xs[1:-1] if len(xs) >= 6 else xs[:]
-    ci = min(range(len(xs)), key=lambda i: abs(px(xs[i])))
-    low = [p for i, p in enumerate(xs) if (i - ci) % 2 == 0]
+    if len(xs) >= 6:
+        med = xs[1:-1]
+        low = med[1:-1] if len(med) >= 5 else med[:]
+    else:
+        med = xs[:]
+        low = xs[1:-1]
     if c['layer'] == 'extra':
         low = []
     return {'medium': med, 'low': low}
@@ -429,7 +434,7 @@ def build(density=2):
     S.row9('ML', h(74), 'R', 0.2, 'arch')
     S.row9('CL', h(75), 'out', 0.1, 'valley')
     S.low8('ST', h(75, 2), 'out', 0.1)
-    S.castle('GK', 'ML', h(76), 'out', 0.1, 'flat')
+    S.castle('SS', 'ML', h(76), 'out', 0.1, 'flat')   # 修订1：城垛 L 金垂柳 → 银彩菊（金垂柳只当主角）
     S.stack('GY', 'SC', h(77), 'out', 0.1, 'arch', 0.4)
     S.row9('PW', h(78), 'together', 0.0, 'wave')
     S.low8('LM', h(78, 2), 'out', 0.1)
@@ -464,8 +469,8 @@ def build(density=2):
     S.stack('GY', 'ST', h(95), 'out', 0.1, 'arch', 0.4)
 
     # —— 12 终章 b97–b118（长冈 5:22–5:32：金墙 → 垂柳墙 → 白墙） ——
-    S.section('B01_S12', '终章', 97, 119, 'GK', 'GY', 'SS', '97 小节（162.5 s，全曲最响的一小节）起前奏；102 小节（170.6 s）起整段最亮；⑧ 175.4 s 三主角垂柳墙；186.8–194.9 s 金墙三波；196.5 s 白墙')
-    S.castle('GK', 'CL', h(97), 'out', 0.1, 'flat', keep_all=True)
+    S.section('B01_S12', '终章', 97, 119, 'GR', 'GY', 'SS', '97 小节（162.5 s，全曲最响的一小节）起前奏；102 小节（170.6 s）起整段最亮；⑧ 175.4 s 三主角垂柳墙；186.8–194.9 s 金芒菊金墙三波（修订1：原金垂柳 L，暂用 150 m 金芒菊，230 m 大号做出后换）；196.5 s 白墙')
+    S.castle('SS', 'CL', h(97), 'out', 0.1, 'flat', keep_all=True)   # 修订1
     S.low8('SC', h(97), 'out', 0.1, layer='extra')
     S.outin(h(97))
     S.row9('GY', h(98), 'out', 0.1, 'arch')
@@ -477,7 +482,7 @@ def build(density=2):
     S.low8('GC', h(102) + 0.4, 'out', 0.1, layer='extra')
     S.ripple(h(102))
     S.stack('CL', 'ST', h(103), 'out', 0.1, 'arch', 0.4)
-    S.row9('GK', h(104), 'L', 0.3, 'flat')
+    S.row9('GR', h(104), 'L', 0.3, 'flat')   # 修订1：主角前 1 小节不放 L（宪章），金垂柳 L 排 → 金芒菊 M 排
     # ⑧ 三主角垂柳墙
     S.cue('GK', ['P2', 'P4', 'P6'], h(105), 'out', 0.1, 'flat', wave='三主角', label='三主角 金垂柳（P2 P4 P6）', keep_all=True)
     S.cue('SS', ['P0', 'P8'], h(105), 'together', 0.0, 'flat', wave='三主角收边', label='银彩菊收边（P0 P8）', keep_all=True)
@@ -493,13 +498,13 @@ def build(density=2):
     S.row9('CL', h(111), 'together', 0.0, 'wave')
     S.low8('SC', h(111), 'out', 0.1, layer='extra')
     # 186.8–194.9 金墙
-    S.row9('GK', h(112), 'out', 0.1, 'flat', keep_all=True)
-    S.row9('GR', h(113), 'out', 0.1, 'arch')
+    S.row9('GR', h(112), 'out', 0.1, 'flat', wave='金墙', keep_all=True)   # 修订1：金墙 金垂柳 → 金芒菊
+    S.row9('GS', h(113), 'out', 0.1, 'arch')   # 修订1：夹在两波金芒菊墙之间，换金锦菊免得同种连三波
     S.low8('GC', h(113, 2), 'out', 0.1)
-    S.row9('GK', h(114), 'in', 0.1, 'flat', keep_all=True)
+    S.row9('GR', h(114), 'in', 0.1, 'flat', wave='金墙', keep_all=True)
     S.stack('GY', 'GC', h(115), 'out', 0.1, 'arch', 0.4)
-    S.row9('GK', h(116), 'out', 0.1, 'flat', keep_all=True)
-    S.castle('GK', 'GR', h(117), 'out', 0.1, 'flat', keep_all=True)
+    S.row9('GR', h(116), 'out', 0.1, 'flat', wave='金墙', keep_all=True)
+    S.castle('SS', 'GR', h(117), 'out', 0.1, 'flat', keep_all=True)   # 修订1
     S.fans('S13', ['B2', 'B3', 'B4', 'B5'], h(117), 'out', 0.1)
     S.low8('GC', h(117), 'out', 0.1, layer='extra')
     # 118 终和弦：白墙
@@ -810,13 +815,13 @@ def checks(S):
     # 5 接力：同种主排整排连续出现不超过 2 次（墙除外）
     seq = []
     for c in sorted(full, key=lambda c: min(e['burst'] for e in c['events'])):
-        seq.append((round(min(e['burst'] for e in c['events']), 1), c['sp'], c['section']))
+        seq.append((round(min(e['burst'] for e in c['events']), 1), c['sp'], c['section'], c.get('wave') or ''))
     runs = []
     run = 1
     for i in range(1, len(seq)):
         if seq[i][1] == seq[i - 1][1] and seq[i][2] == seq[i - 1][2]:
             run += 1
-            if run > 2 and seq[i][1] not in ('SS', 'GK'):
+            if run > 2 and seq[i][1] not in ('SS', 'GK') and '墙' not in seq[i][3]:
                 runs.append(dict(t=seq[i][0], sp=seq[i][1], run=run))
         else:
             run = 1
@@ -829,7 +834,13 @@ def checks(S):
         ts = sorted({round(min(e['burst'] for e in c['events']), 1) for c in full if c['sp'] == sp})
         lead[sp] = dict(name=SPECIES[sp][1], fullWaves=len(ts), firstAt=ts[0] if ts else None)
     res['lead'] = lead
-    res['leadMissing'] = [sp for sp, v in lead.items() if v['fullWaves'] == 0]
+    # 金垂柳是主角，不按整排领奏算；另查主角次数（宪章：全场 5 次，很少出现）
+    res['leadMissing'] = [sp for sp, v in lead.items() if v['fullWaves'] == 0 and sp != 'GK']
+    gk = [e for c in S.cues if c['sp'] == 'GK' for e in c['events']]
+    res['heroes'] = dict(goldKamuroEvents=len(gk), heroCues=sum(1 for c in S.cues if c['sp'] == 'GK'), nonHero=[c['label'] or c['wave'] for c in S.cues if c['sp'] == 'GK' and c.get('wave') not in ('主角', '三主角')])
+    # 档位嵌套：低 ⊂ 中 ⊂ 高（一张表按画质嵌套的前提）
+    bad = [c['id'] for c in S.cues if not (set(c['profiles']['low']) <= set(c['profiles']['medium']) <= set(c['points']))]
+    res['tierNesting'] = dict(ok=not bad, violations=bad[:20])
     # 7 段内领奏占比
     share = {}
     for s in S.sections:
@@ -1009,7 +1020,7 @@ def snapshot(ax, S, t, title):
 def export(S, ck):
     OUTDIR.mkdir(parents=True, exist_ok=True)
     dur = max(math.ceil((OFFSET + 210.8108125) * 10) / 10, math.ceil(ck['grid']['lastEnd'] * 10) / 10)
-    out = dict(format='df.choreography-proposal/2', revision='B01_NAGAOKA_LOGIC', status='logic_compiled_by_编排B01_编译.mjs_UE_unverified',
+    out = dict(format='df.choreography-proposal/2', revision='B01_NAGAOKA_LOGIC_r1', status='logic_compiled_by_编排B01_编译.mjs_UE_unverified',
                generator='analysis/scripts/编排B01.py', density=S.density, musicOffsetS=OFFSET, barS=BAR, bar0S=BAR0, duration=dur,
                sections=S.sections, cues=S.cues)
     (OUTDIR / '逻辑方案.json').write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding='utf-8')
@@ -1026,4 +1037,4 @@ if __name__ == '__main__':
     export(S, ck)
     if not a.no_figs:
         make_figs(S, ck)
-    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'baseFans', 'fanSummary', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies')}, ensure_ascii=False, indent=1))
+    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'baseFans', 'fanSummary', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'heroes', 'tierNesting', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies')}, ensure_ascii=False, indent=1))

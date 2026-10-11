@@ -28,7 +28,7 @@ export function applyCloudProgramme(state,previous,cloud){
 export function cloudNoticeText(cloud,state,{backedUp,musicReused,offline}){
  return `已载入云端编排 ${cloud.version} · ${cloud.name}（${state.doc.cues.length} 片段 / ${state.doc.events.length} 次播放）。`
   +(backedUp?'原节目已备份，可在「节目 → 备份与恢复 → 恢复切换前节目」找回。':'')
-  +(!musicReused&&offline?'离线页没有带音乐，请在「节目」里导入《'+(cloud.musicTitle||'原音乐')+'》。':'');
+  +(!musicReused&&offline?'离线页用同目录的 music.wav 放原曲；没有声音时，请在「节目」里导入《'+(cloud.musicTitle||'原音乐')+'》。':'');
 }
 // read / writeBatch / fetcher 由调用方注入，便于在 Node 里检查。
 export async function loadCloudLatest({seed,state,raw,draftKey,read,writeBatch,fetcher,offline=false,now=()=>new Date().toISOString()}){

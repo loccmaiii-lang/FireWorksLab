@@ -18,7 +18,7 @@ const outDir = path.resolve(ROOT, args.includes('--out') ? args[args.indexOf('--
 const BASE = path.join(ROOT, 'FXtools/节目/NewYearFireWorks_v01/NewYearFireWorks_v01-R04时间规范修正.dfshow');
 const LOGIC = path.join(ROOT, '协作/编排B01/逻辑方案.json');
 const TAG = 'B01长冈式';
-const FILE_VERSION = 7;
+const FILE_VERSION = 8;   // 修订1（本机同步 8，10-11）：档位从两端收 + 金垂柳只当主角
 const clone = x => structuredClone(x);
 const round = x => Math.round(x * 1e6) / 1e6;
 const sec = (x) => round(x);
@@ -99,7 +99,8 @@ const errors = [...validateDoc(state.doc), ...validateProfiles(state.doc, state.
 if (errors.length) throw Error('校验失败：' + errors.slice(0, 5).join('；'));
 
 // —— 三档三表 ——
-const report = {revision: 'B01_NAGAOKA_LOGIC', generatedBy: 'analysis/scripts/编排B01_编译.mjs', tiers: {}, preflight: 'preflightProject 通过（同 8025 打开 .dfshow）', file: `NewYearFireWorks_v01-${TAG}.dfshow`};
+const occ = {};   // 每档展开成 (组, 时刻, 槽位, 子模板) 计数，用来查低 ⊂ 中 ⊂ 高
+const report = {revision: 'B01_NAGAOKA_LOGIC_r1', generatedBy: 'analysis/scripts/编排B01_编译.mjs', tiers: {}, preflight: 'preflightProject 通过（同 8025 打开 .dfshow）', file: `NewYearFireWorks_v01-${TAG}.dfshow`};
 fs.mkdirSync(outDir, {recursive: true});
 for (const tier of ['high', 'medium', 'low']) {
   const ev = qualityEvents(state.doc, state.profiles, tier);
@@ -119,7 +120,16 @@ for (const tier of ['high', 'medium', 'low']) {
   report.tiers[tier] = {events: ev.length, subTemplates: m.EffectSubTemplates.length, templates: m.EffectTemplates.length, scheduleSlots: m.EffectScheduleGroups.reduce((n, g) => n + g.Slots.length, 0),
     groups: Object.fromEntries(m.EffectScheduleGroups.map(g => [g.GroupName, g.Slots.length])), lastSlot: Math.max(...m.EffectScheduleGroups.flatMap(g => g.Slots.map(s => s.StartTime))), expansionProblems: [...new Set(bad)].slice(0, 10), status: m.status};
   if (bad.length) throw Error(`${tier} 展开检查失败：${bad[0]}`);
+  const o = new Map();
+  for (const g of m.EffectScheduleGroups) for (const s of g.Slots) for (const e of tpls.get(s.TemplateName).Entries) {
+    const k = [g.GroupName, Math.round((s.StartTime + e.LocalTimeOffset) * 1000), e.SlotIndex, e.SubTemplateName].join('|'); o.set(k, (o.get(k) || 0) + 1);
+  }
+  occ[tier] = o;
 }
+// —— 档位嵌套：一张表按 MinQualityLevel 嵌套的前提（宪章 §5；修订1 加） ——
+const notIn = (a, b) => [...a].reduce((n, [k, v]) => n + Math.max(0, v - (b.get(k) || 0)), 0);
+report.tierNesting = {lowNotInMedium: notIn(occ.low, occ.medium), mediumNotInHigh: notIn(occ.medium, occ.high)};
+if (report.tierNesting.lowNotInMedium || report.tierNesting.mediumNotInHigh) throw Error('档位不嵌套：' + JSON.stringify(report.tierNesting));
 report.doc = {cues: finalDoc.cues.length, events: finalDoc.events.length, sections: finalDoc.sections.length, duration: finalDoc.meta.duration, musicOffset: finalDoc.meta.musicOffset, balls: finalDoc.statistics.ballCount, fans: finalDoc.statistics.fanCount};
 fs.writeFileSync(path.join(outDir, 'B01编排检查.json'), JSON.stringify(report, null, 2));
 fs.writeFileSync(path.join(outDir, `NewYearFireWorks_v01-${TAG}.dfshow`), raw);

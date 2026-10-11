@@ -551,10 +551,6 @@
         "to": "FanComet_B_C190_01"
       },
       {
-        "from": "WB_B01_C193_P",
-        "to": "GoldKamuro_P_C193_01"
-      },
-      {
         "from": "WB_B01_C207_B",
         "to": "GoldCrackle_B_C207_01"
       },
@@ -608,11 +604,11 @@
       },
       {
         "from": "WB_B01_C269_P",
-        "to": "GoldKamuro_P_C269_01"
+        "to": "GoldRayChry_P_C269_01"
       },
       {
         "from": "WB_B01_C270_B",
-        "to": "FanComet9Left_B_C270_01"
+        "to": "FanComet5_B_C270_01"
       },
       {
         "from": "WB_B01_C271_P",
@@ -635,12 +631,16 @@
         "to": "GoldCoreLime_P_C291_01"
       },
       {
+        "from": "WB_B01_C292_B",
+        "to": "FanSilver5_B_C292_01"
+      },
+      {
         "from": "WB_B01_C294_P",
-        "to": "GoldKamuro_P_C294_01"
+        "to": "GoldRayChry_P_C294_01"
       },
       {
         "from": "WB_B01_C299_P",
-        "to": "GoldKamuro_P_C299_01"
+        "to": "GoldRayChry_P_C299_01"
       },
       {
         "from": "WB_B01_C300_B",
@@ -648,7 +648,7 @@
       },
       {
         "from": "WB_B01_C305_B",
-        "to": "FanSilver5_B_C305_01"
+        "to": "FanComet5_B_C305_01"
       },
       {
         "from": "WB_B01_C317_B",
@@ -813,7 +813,7 @@
     "originalTemplates": 329,
     "uniqueTemplates": 143,
     "originalEntries": 1778,
-    "uniqueEntries": 755,
+    "uniqueEntries": 748,
     "eventCount": 1778,
     "subTemplates": 22,
     "templates": 143,
@@ -26538,201 +26538,6 @@
       }
     },
     {
-      "TemplateName": "GoldKamuro_P_C193_01",
-      "RequiredPointCount": 9,
-      "Entries": [
-        {
-          "EntryType": "SubTemplate",
-          "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
-          "LocalTimeOffset": 0,
-          "SlotIndex": 4,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
-          "EntryType": "SubTemplate",
-          "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
-          "LocalTimeOffset": 0.1,
-          "SlotIndex": 2,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
-          "EntryType": "SubTemplate",
-          "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
-          "LocalTimeOffset": 0.1,
-          "SlotIndex": 6,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
-          "EntryType": "SubTemplate",
-          "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
-          "LocalTimeOffset": 0.2,
-          "SlotIndex": 0,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
-          "EntryType": "SubTemplate",
-          "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
-          "LocalTimeOffset": 0.2,
-          "SlotIndex": 8,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        }
-      ],
-      "Filter": {
-        "PlatformFlags": 14,
-        "MinQualityLevel": "EQuality_VeryLow"
-      }
-    },
-    {
       "TemplateName": "GoldCrackle_B_C207_01",
       "RequiredPointCount": 8,
       "Entries": [
@@ -29601,13 +29406,13 @@
       }
     },
     {
-      "TemplateName": "GoldKamuro_P_C269_01",
+      "TemplateName": "GoldRayChry_P_C269_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -29644,7 +29449,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -29681,7 +29486,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.6,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -29718,7 +29523,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.9,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -29755,7 +29560,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 1.2,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -29792,7 +29597,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 1.5,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -29829,7 +29634,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 1.8,
           "SlotIndex": 7,
           "PositionOffset": {
@@ -29870,88 +29675,14 @@
       }
     },
     {
-      "TemplateName": "FanComet9Left_B_C270_01",
+      "TemplateName": "FanComet5_B_C270_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "FanComet9Left",
+          "SubTemplateName": "FanComet5",
           "LocalTimeOffset": 0,
-          "SlotIndex": 1,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
-          "EntryType": "SubTemplate",
-          "FXResourceId": "None",
-          "SubTemplateName": "FanComet9Left",
-          "LocalTimeOffset": 0.3,
-          "SlotIndex": 2,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
-          "EntryType": "SubTemplate",
-          "FXResourceId": "None",
-          "SubTemplateName": "FanComet9Left",
-          "LocalTimeOffset": 0.7,
           "SlotIndex": 3,
           "PositionOffset": {
             "X": 0,
@@ -29987,83 +29718,9 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "FanComet9Left",
-          "LocalTimeOffset": 0.9,
+          "SubTemplateName": "FanComet5",
+          "LocalTimeOffset": 0.4,
           "SlotIndex": 4,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
-          "EntryType": "SubTemplate",
-          "FXResourceId": "None",
-          "SubTemplateName": "FanComet9Left",
-          "LocalTimeOffset": 1.3,
-          "SlotIndex": 5,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
-          "EntryType": "SubTemplate",
-          "FXResourceId": "None",
-          "SubTemplateName": "FanComet9Left",
-          "LocalTimeOffset": 1.5,
-          "SlotIndex": 6,
           "PositionOffset": {
             "X": 0,
             "Y": 0,
@@ -31077,13 +30734,50 @@
       }
     },
     {
-      "TemplateName": "GoldKamuro_P_C294_01",
-      "RequiredPointCount": 9,
+      "TemplateName": "FanSilver5_B_C292_01",
+      "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "FanSilver5",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 3,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "FanSilver5",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -31120,7 +30814,128 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "FanSilver5",
+          "LocalTimeOffset": 0.2,
+          "SlotIndex": 1,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "FanSilver5",
+          "LocalTimeOffset": 0.2,
+          "SlotIndex": 6,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        }
+      ],
+      "Filter": {
+        "PlatformFlags": 14,
+        "MinQualityLevel": "EQuality_VeryLow"
+      }
+    },
+    {
+      "TemplateName": "GoldRayChry_P_C294_01",
+      "RequiredPointCount": 9,
+      "Entries": [
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "GoldRayChry",
+          "LocalTimeOffset": 0,
+          "SlotIndex": 4,
+          "PositionOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "RandomPositionRange": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "RandomRotationRange": {
+            "Pitch": 0,
+            "Yaw": 0,
+            "Roll": 0
+          },
+          "EffectScale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "RandomScaleRatio": 0,
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "EntryType": "SubTemplate",
+          "FXResourceId": "None",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -31157,7 +30972,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -31194,7 +31009,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -31231,7 +31046,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -31268,7 +31083,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -31305,7 +31120,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 7,
           "PositionOffset": {
@@ -31342,7 +31157,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.4,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -31379,7 +31194,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.4,
           "SlotIndex": 8,
           "PositionOffset": {
@@ -31420,13 +31235,13 @@
       }
     },
     {
-      "TemplateName": "GoldKamuro_P_C299_01",
+      "TemplateName": "GoldRayChry_P_C299_01",
       "RequiredPointCount": 9,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 0,
           "PositionOffset": {
@@ -31463,7 +31278,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0,
           "SlotIndex": 8,
           "PositionOffset": {
@@ -31500,7 +31315,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 1,
           "PositionOffset": {
@@ -31537,7 +31352,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.1,
           "SlotIndex": 7,
           "PositionOffset": {
@@ -31574,7 +31389,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 2,
           "PositionOffset": {
@@ -31611,7 +31426,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.2,
           "SlotIndex": 6,
           "PositionOffset": {
@@ -31648,7 +31463,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -31685,7 +31500,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.3,
           "SlotIndex": 5,
           "PositionOffset": {
@@ -31722,7 +31537,7 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "GoldKamuro",
+          "SubTemplateName": "GoldRayChry",
           "LocalTimeOffset": 0.4,
           "SlotIndex": 4,
           "PositionOffset": {
@@ -31921,13 +31736,13 @@
       }
     },
     {
-      "TemplateName": "FanSilver5_B_C305_01",
+      "TemplateName": "FanComet5_B_C305_01",
       "RequiredPointCount": 8,
       "Entries": [
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "FanSilver5",
+          "SubTemplateName": "FanComet5",
           "LocalTimeOffset": 0,
           "SlotIndex": 3,
           "PositionOffset": {
@@ -31964,83 +31779,9 @@
         {
           "EntryType": "SubTemplate",
           "FXResourceId": "None",
-          "SubTemplateName": "FanSilver5",
+          "SubTemplateName": "FanComet5",
           "LocalTimeOffset": 0,
           "SlotIndex": 4,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
-          "EntryType": "SubTemplate",
-          "FXResourceId": "None",
-          "SubTemplateName": "FanSilver5",
-          "LocalTimeOffset": 0.2,
-          "SlotIndex": 1,
-          "PositionOffset": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RotationOffset": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "RandomPositionRange": {
-            "X": 0,
-            "Y": 0,
-            "Z": 0
-          },
-          "RandomRotationRange": {
-            "Pitch": 0,
-            "Yaw": 0,
-            "Roll": 0
-          },
-          "EffectScale": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "RandomScaleRatio": 0,
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
-          "EntryType": "SubTemplate",
-          "FXResourceId": "None",
-          "SubTemplateName": "FanSilver5",
-          "LocalTimeOffset": 0.2,
-          "SlotIndex": 6,
           "PositionOffset": {
             "X": 0,
             "Y": 0,
@@ -33668,7 +33409,7 @@
         },
         {
           "StartTime": 121.1,
-          "TemplateName": "GoldKamuro_P_C193_01",
+          "TemplateName": "SilverStrobeChry_P_C084_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -33844,7 +33585,7 @@
         },
         {
           "StartTime": 155.1,
-          "TemplateName": "GoldKamuro_P_C193_01",
+          "TemplateName": "SilverStrobeChry_P_C084_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -33899,14 +33640,6 @@
           }
         },
         {
-          "StartTime": 166.8,
-          "TemplateName": "GoldKamuro_P_C269_01",
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
           "StartTime": 167.8,
           "TemplateName": "GoldCoreLime_P_C123_01",
           "Filter": {
@@ -33925,6 +33658,14 @@
         {
           "StartTime": 168.1,
           "TemplateName": "SilverStrobeChry_P_C272_01",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 169.7,
+          "TemplateName": "GoldRayChry_P_C269_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -33979,14 +33720,6 @@
           }
         },
         {
-          "StartTime": 179.4,
-          "TemplateName": "GoldKamuro_P_C294_01",
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
           "StartTime": 180.8,
           "TemplateName": "GoldCoreLime_P_C291_01",
           "Filter": {
@@ -33995,8 +33728,8 @@
           }
         },
         {
-          "StartTime": 182.7,
-          "TemplateName": "GoldKamuro_P_C299_01",
+          "StartTime": 182.4,
+          "TemplateName": "GoldRayChry_P_C294_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -34004,15 +33737,15 @@
         },
         {
           "StartTime": 184,
-          "TemplateName": "GoldRayChry_P_C018_01",
+          "TemplateName": "GoldSpark_P_C022_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
           }
         },
         {
-          "StartTime": 185.9,
-          "TemplateName": "GoldKamuro_P_C294_01",
+          "StartTime": 185.7,
+          "TemplateName": "GoldRayChry_P_C299_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -34028,7 +33761,15 @@
         },
         {
           "StartTime": 187.5,
-          "TemplateName": "GoldKamuro_P_C193_01",
+          "TemplateName": "SilverStrobeChry_P_C084_01",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 188.9,
+          "TemplateName": "GoldRayChry_P_C294_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -35376,14 +35117,6 @@
           }
         },
         {
-          "StartTime": 166.9,
-          "TemplateName": "FanComet9Left_B_C270_01",
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
           "StartTime": 168,
           "TemplateName": "GoldCrackle_B_C207_01",
           "Filter": {
@@ -35393,7 +35126,7 @@
         },
         {
           "StartTime": 168,
-          "TemplateName": "FanComet5_B_C166_01",
+          "TemplateName": "FanComet5_B_C121_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -35401,7 +35134,7 @@
         },
         {
           "StartTime": 168.2,
-          "TemplateName": "FanComet9Right_B_C101_01",
+          "TemplateName": "FanComet9Right_B_C026_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -35410,6 +35143,14 @@
         {
           "StartTime": 169.7,
           "TemplateName": "Strobe_B_C112_01",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
+          "StartTime": 170.4,
+          "TemplateName": "FanComet5_B_C270_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -35504,14 +35245,6 @@
           }
         },
         {
-          "StartTime": 179.5,
-          "TemplateName": "FanComet9Left_B_C019_01",
-          "Filter": {
-            "PlatformFlags": 14,
-            "MinQualityLevel": "EQuality_VeryLow"
-          }
-        },
-        {
           "StartTime": 180.3,
           "TemplateName": "FanComet9Left_B_C015_01",
           "Filter": {
@@ -35529,7 +35262,7 @@
         },
         {
           "StartTime": 180.8,
-          "TemplateName": "FanComet_B_C004_01",
+          "TemplateName": "FanSilver5_B_C292_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -35544,8 +35277,8 @@
           }
         },
         {
-          "StartTime": 182.9,
-          "TemplateName": "FanSilver5_B_C300_01",
+          "StartTime": 182.5,
+          "TemplateName": "FanComet9Left_B_C019_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -35553,7 +35286,7 @@
         },
         {
           "StartTime": 184.1,
-          "TemplateName": "FanSilver5_B_C150_01",
+          "TemplateName": "FanSilver5_B_C042_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -35561,7 +35294,7 @@
         },
         {
           "StartTime": 185.9,
-          "TemplateName": "FanSilver5_B_C305_01",
+          "TemplateName": "FanSilver5_B_C300_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
@@ -35592,6 +35325,14 @@
           }
         },
         {
+          "StartTime": 188.9,
+          "TemplateName": "FanComet5_B_C305_01",
+          "Filter": {
+            "PlatformFlags": 14,
+            "MinQualityLevel": "EQuality_VeryLow"
+          }
+        },
+        {
           "StartTime": 189.1,
           "TemplateName": "GoldCrackle_B_C207_01",
           "Filter": {
@@ -35601,7 +35342,7 @@
         },
         {
           "StartTime": 189.3,
-          "TemplateName": "FanSilver5_B_C042_01",
+          "TemplateName": "FanComet5_B_C121_01",
           "Filter": {
             "PlatformFlags": 14,
             "MinQualityLevel": "EQuality_VeryLow"
