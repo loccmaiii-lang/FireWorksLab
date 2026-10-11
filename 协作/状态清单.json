@@ -373,7 +373,8 @@
       "③ B01 全部条目 PlatformFlags = 14：手机白名单（宪章 §8）还没落到条目上。B02 请给每个片段标是否上手机（或给出规则），一张表导出时由手游编排写成 PlatformFlags（PC-only 写 12，PC+手机写 14）。",
       "④ GPU 预算 200 是估的；手游编排压测后把实测值写到这里，B02 按实测值收。",
       "⑤ B01 修订1 三表已核对：中 ⊂ 高、低 ⊂ 中 0 违规，可合成一张表。"
-    ]
+    ],
+    "手游编排 · tool/workbench 一张表导出（认领中）": "认领：手游编排对话，2026-10-11 22:40（用户 22:15「同意，一张表的导出是什么意思？…08没有改好？」，周三落地计划 §2/§3）。只改 tool/workbench：editing-model 加 nestedQualityEvents（低⊂中⊂高校验，不嵌套就报错）、director-model 的父模板条目 Filter 按档位写 MinQualityLevel（低 VeryLow / 中追加 Medium / 高追加 High）、片段 mobile:false 写 PlatformFlags 12；交付档位下拉加「一张表」并作为默认，三档单独导出保留。加回归，npm test + release。不动布局/节目/音频。完成后释放。"
   },
   "effects": [
     {
