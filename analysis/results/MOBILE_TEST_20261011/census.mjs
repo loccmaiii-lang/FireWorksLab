@@ -20,7 +20,7 @@ async function ps(full){
    ems.push({name:b.properties.EmitterName,class:e.class,enabledLOD0:c.properties.bEnabled,typeData:c.properties.TypeDataModule?.class||'CPU',screenAlignment:r.properties.ScreenAlignment,material:String(r.properties.Material?.path||'').split('/').pop(),subImages:[r.properties.SubImages_Horizontal,r.properties.SubImages_Vertical],peakActiveLOD0:c.properties.PeakActiveParticles,modules:(c.properties.Modules||[]).length,detailMode:b.properties.DetailMode,detailBitmask:b.properties.DetailModeBitmask,qualitySpawnScale:b.properties.QualityLevelSpawnRateScale,significance:b.properties.SignificanceLevel,lodLevels:b.properties.LODLevels.length});
   }
   const en=ems.filter(e=>e.enabledLOD0);
-  out={path:full,emitters:ems.length,enabledLOD0:en.length,gpu:en.filter(e=>/GPU/.test(e.typeData)).length,mesh:en.filter(e=>/Mesh/.test(e.typeData)).length,cpu:en.filter(e=>e.typeData==='CPU').length,peakActiveLOD0Sum:en.reduce((n,e)=>n+(e.peakActiveLOD0||0),0),lodDistances:a.properties.LODDistances,detail:ems};
+  out={path:full,emitters:ems.length,enabledLOD0:en.length,gpu:en.filter(e=>/gpu/i.test(e.typeData)).length,mesh:en.filter(e=>/Mesh/.test(e.typeData)).length,cpu:en.filter(e=>e.typeData==='CPU').length,peakActiveLOD0Sum:en.reduce((n,e)=>n+(e.peakActiveLOD0||0),0),lodDistances:a.properties.LODDistances,detail:ems};
  }catch(e){out={path:full,error:e.message}}
  cache.set(full,out);process.stderr.write('.');return out;
 }

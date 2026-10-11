@@ -1,0 +1,9 @@
+console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+after open: {"audio": {"t": 0, "paused": true, "ready": 4, "err": null, "src": "blob:http://127.0.0.1:8025/a445eeba-1d02"}, "snack": "", "play": false}
+draft length: 82720936
+after reload: {"audio": {"t": 0, "paused": true, "ready": 4, "err": null, "src": "blob:http://127.0.0.1:8025/c715092a-9299"}, "snack": "已载入云端编排 16.0.9 · B01长冈式（329 片段 / 2166 次播放）。原节目已备份，可在「节目 → 备份与恢复 → 恢复切换前节目」找回。", "play": false}
+play: {"audio": {"t": 0, "paused": true, "ready": 4, "err": null, "src": "blob:http://127.0.0.1:8025/c715092a-9299"}, "snack": "", "play": false}
+play: {"audio": {"t": 0, "paused": true, "ready": 4, "err": null, "src": "blob:http://127.0.0.1:8025/c715092a-9299"}, "snack": "", "play": false}
+console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+play: {"audio": {"t": 1.06, "paused": false, "ready": 4, "err": null, "src": "blob:http://127.0.0.1:8025/c715092a-9299"}, "snack": "", "play": false}
+play: {"audio": {"t": 3.09, "paused": false, "ready": 4, "err": null, "src": "blob:http://127.0.0.1:8025/c715092a-9299"}, "snack": "", "play": false}

@@ -1,7 +1,7 @@
 import fs from 'node:fs';
-// 开发入口复用已上传的原测试曲；离线包仍不包含音乐。
+// 开发入口复用已上传的原测试曲；/release/ 走查最终 HTML 时同样能播（16.0.10）。离线包仍不包含音乐。
 export function demoMusicPlugin(){return {name:'df-demo-music',configureServer(server){server.middlewares.use((req,res,next)=>{
- if(new URL(req.url,'http://127.0.0.1').pathname!=='/music.wav')return next();
+ if(!['/music.wav','/release/music.wav'].includes(new URL(req.url,'http://127.0.0.1').pathname))return next();
  if(!['GET','HEAD'].includes(req.method)){res.statusCode=405;res.end();return}
  const actual=new URL('../../../协作/编排工作台资料/2026-10-10/music/music.wav',import.meta.url);
  fs.stat(actual,(error,stat)=>{

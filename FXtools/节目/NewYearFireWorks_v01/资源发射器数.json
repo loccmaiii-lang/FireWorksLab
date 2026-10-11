@@ -13,7 +13,7 @@
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanComet_01_HD.P_EFX_FireWorks_FanComet_01_HD",
     "emitters": 8,
     "enabledLOD0": 7,
-    "gpu": 0,
+    "gpu": 1,
     "mesh": 0,
     "cpu": 6,
     "peakActiveLOD0Sum": 53,
@@ -190,7 +190,7 @@
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD.P_EFX_FireWorks_FanSilver_01_HD",
     "emitters": 6,
     "enabledLOD0": 5,
-    "gpu": 0,
+    "gpu": 3,
     "mesh": 0,
     "cpu": 2,
     "peakActiveLOD0Sum": 141,
@@ -326,7 +326,7 @@
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_NY_Small_B_HD.P_EFX_FireWork_NY_Small_B_HD",
     "emitters": 4,
     "enabledLOD0": 4,
-    "gpu": 0,
+    "gpu": 2,
     "mesh": 0,
     "cpu": 1,
     "peakActiveLOD0Sum": 709,
@@ -566,7 +566,7 @@
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD.P_EFX_FireWorks_LimeStar_HD",
     "emitters": 4,
     "enabledLOD0": 4,
-    "gpu": 0,
+    "gpu": 1,
     "mesh": 0,
     "cpu": 3,
     "peakActiveLOD0Sum": 510,
@@ -705,7 +705,7 @@
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GreenPeony_HD.P_EFX_FireWorks_GreenPeony_HD",
     "emitters": 5,
     "enabledLOD0": 5,
-    "gpu": 0,
+    "gpu": 5,
     "mesh": 0,
     "cpu": 0,
     "peakActiveLOD0Sum": 2155,
@@ -822,7 +822,7 @@
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
     "emitters": 4,
     "enabledLOD0": 4,
-    "gpu": 0,
+    "gpu": 1,
     "mesh": 0,
     "cpu": 3,
     "peakActiveLOD0Sum": 430,
@@ -980,7 +980,7 @@
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD.P_EFX_FireWork_PrismWheels_HD",
     "emitters": 8,
     "enabledLOD0": 6,
-    "gpu": 0,
+    "gpu": 1,
     "mesh": 0,
     "cpu": 5,
     "peakActiveLOD0Sum": 204,
@@ -1157,7 +1157,7 @@
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldChry_HD.P_EFX_FireWorks_GoldChry_HD",
     "emitters": 9,
     "enabledLOD0": 7,
-    "gpu": 0,
+    "gpu": 2,
     "mesh": 0,
     "cpu": 5,
     "peakActiveLOD0Sum": 2518,
@@ -1546,7 +1546,7 @@
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD.P_EFX_FireWorks_LimeCoreDelay_HD",
     "emitters": 4,
     "enabledLOD0": 4,
-    "gpu": 0,
+    "gpu": 1,
     "mesh": 0,
     "cpu": 3,
     "peakActiveLOD0Sum": 430,
@@ -1878,7 +1878,7 @@
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD.P_EFX_FireWorks_RiseTrail_L_HD",
     "emitters": 10,
     "enabledLOD0": 10,
-    "gpu": 0,
+    "gpu": 6,
     "mesh": 0,
     "cpu": 4,
     "peakActiveLOD0Sum": 1250,
@@ -2090,7 +2090,7 @@
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD.P_EFX_FireWorks_RiseTrail_M_HD",
     "emitters": 10,
     "enabledLOD0": 6,
-    "gpu": 0,
+    "gpu": 2,
     "mesh": 0,
     "cpu": 4,
     "peakActiveLOD0Sum": 201,
@@ -2302,7 +2302,7 @@
     "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD.P_EFX_FireWorks_RiseTrail_S_HD",
     "emitters": 10,
     "enabledLOD0": 10,
-    "gpu": 0,
+    "gpu": 6,
     "mesh": 0,
     "cpu": 4,
     "peakActiveLOD0Sum": 953,
@@ -6308,5 +6308,88 @@
   "P_EFX_FireWorks_NY_Trail_Large",
   "P_EFX_FireWorks_NY_Trail_Medium",
   "P_EFX_FireWorks_NY_Trail_Small"
- ]
+ ],
+ "gpuFix": "2026-10-11 本机同步（8）：原 census.mjs 用 /GPU/ 区分大小写，typeData 实际是 ParticleModuleTypeDataGpu，gpu 字段全被记成 0；已按明细不分大小写重数（只数 LOD0 启用的）。PC 20 个资源里含 GPU 发射器的是 12 个（跨年秀 22 云端数的 12 对，之前回传的 13 不对）。",
+ "fanGold": {
+  "readAt": "2026-10-11T07:16:15.216Z",
+  "note": "⑨ 金扇 4 件（中心 / 中档 / 左 / 右）：每件 1 个 CPU 发射器、0 个 GPU，不占 GPU 粒子池。脚本 analysis/results/MOBILE_TEST_20261011/fangold-census.mjs（本机同步 8，只读）。",
+  "rows": [
+   {
+    "id": "P_EFX_FireWorks_FanGold_Central_01",
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "cpu": 1,
+    "beam": 0,
+    "detail": [
+     {
+      "name": "Central_L",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_FanGold_Central_01_HD.MI_EFX_FireWorks_FanGold_Central_01_HD",
+      "peakActiveLOD0": 3
+     }
+    ]
+   },
+   {
+    "id": "P_EFX_FireWorks_FanGold_Middle_01",
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "cpu": 1,
+    "beam": 0,
+    "detail": [
+     {
+      "name": "Medium_L",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_FanGold_Middle_01_HD.MI_EFX_FireWorks_FanGold_Middle_01_HD",
+      "peakActiveLOD0": 3
+     }
+    ]
+   },
+   {
+    "id": "P_EFX_FireWorks_FanGold_OuterLeft",
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "cpu": 1,
+    "beam": 0,
+    "detail": [
+     {
+      "name": "Out_L",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_FanGold_OuterLeft_01_HD.MI_EFX_FireWorks_FanGold_OuterLeft_01_HD",
+      "peakActiveLOD0": 3
+     }
+    ]
+   },
+   {
+    "id": "P_EFX_FireWorks_FanGold_OuterRight",
+    "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+    "emitters": 1,
+    "enabledLOD0": 1,
+    "gpu": 0,
+    "cpu": 1,
+    "beam": 0,
+    "detail": [
+     {
+      "name": "Out_R",
+      "enabledLOD0": true,
+      "typeData": "CPU",
+      "screenAlignment": "PSA_Rectangle",
+      "material": "MI_EFX_FireWorks_FanGold_OuterRight_01_HD.MI_EFX_FireWorks_FanGold_OuterRight_01_HD",
+      "peakActiveLOD0": 3
+     }
+    ]
+   }
+  ]
+ }
 }

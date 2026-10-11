@@ -1,0 +1,7 @@
+console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+requestfailed: http://127.0.0.1:8025/release/music.wav net::ERR_ABORTED
+audio before play: {"src": "http://127.0.0.1:8025/release/music.wav", "ready": 4, "err": null}
+during play: {"clock": "片段结束00:03.10", "audio": {"t": 0, "paused": true, "ready": 4, "err": null, "src": "http://127.0.0.1:8025/release/music.wav"}, "snack": ""}
+console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+during play: {"clock": "片段结束00:03.10", "audio": {"t": 0.944095, "paused": false, "ready": 4, "err": null, "src": "http://127.0.0.1:8025/release/music.wav"}, "snack": ""}
+during play: {"clock": "片段结束00:03.10", "audio": {"t": 3.962021, "paused": false, "ready": 4, "err": null, "src": "http://127.0.0.1:8025/release/music.wav"}, "snack": ""}

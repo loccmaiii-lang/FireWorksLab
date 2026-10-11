@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {migrateNumbering} from '../src/point-numbering.mjs';
+import {preflightProject} from '../src/program-project.mjs';
+import {qualityEvents} from '../src/editing-model.mjs';
+import {compileDirector} from '../src/director-model.mjs';
+const seed=migrateNumbering(JSON.parse(fs.readFileSync(new URL('../public/data/score24-v05.json',import.meta.url))));
+const file=new URL('../public/data/cloud-latest.json',import.meta.url);
+test('UE connected but no emission points read: one clear sub-level hint instead of one error per point',()=>{
+ if(!fs.existsSync(file))return;
+ const cloud=JSON.parse(fs.readFileSync(file,'utf8')),state=preflightProject(JSON.stringify(cloud.project),seed);
+ const events=qualityEvents(state.doc,state.profiles,'high');
+ const none=compileDirector(state.doc,events,{target:{path:'BP'},points:[]});
+ assert.deepEqual(none.issues.filter(i=>/发射点|现场绑定/.test(i)),['UE 里没读到任何发射点：请先在 UE 打开大坝地图 Dam_Iris_Long3 并加载放烟花的子关卡 MA5_FailedFireworkOnDam_，再点「重新检查导演与发射点」']);
+ const offline=compileDirector(state.doc,events,undefined);
+ assert.equal(offline.issues.filter(i=>/发射点|现场绑定/.test(i)).length,0,'没连 UE 时按节目自带点位检查');
+ const partial=compileDirector(state.doc,events,{target:{path:'BP'},points:[{pointId:'P0',bindings:[{GroupName:'P',SlotIndex:0}]}]});
+ assert(partial.issues.includes('P1：现场绑定缺失'),'读到部分发射点时仍逐点报缺');
+});

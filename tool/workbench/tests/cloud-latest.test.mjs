@@ -76,5 +76,6 @@ test('the published cloud-latest data, when present, is valid and opens like a p
  assert.equal(cloud.project.payload.audioRef?.dataUrl,undefined,'云端编排不内嵌音乐');
  const state=preflightProject(text,seed);assert.equal(state.doc.cues.length,cloud.cues);assert.equal(state.doc.events.length,cloud.events);
  const version=fs.readFileSync(new URL('../src/connection.mjs',import.meta.url),'utf8').match(/WORKBENCH_VERSION='([^']+)'/)[1];
- assert.equal(cloud.version,version,'工作台版本号与云端编排版本号一致');
+ const n=v=>v.split('.').map(Number),[a,b]=[n(cloud.version),n(version)];
+ assert(a[0]<b[0]||a[0]===b[0]&&(a[1]<b[1]||a[1]===b[1]&&a[2]<=b[2]),'云端编排版本号不能比工作台新（只改工具时工作台先 +1，编排沿用上一版）');
 });

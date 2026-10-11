@@ -1,0 +1,12 @@
+console.debug: [vite] connecting...
+console.debug: [vite] connected.
+console.info: %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+requestfailed: http://127.0.0.1:17780/gpcli/object/get net::ERR_ABORTED
+console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+requestfailed: http://127.0.0.1:8025/music.wav net::ERR_ABORTED
+audio before play: {"src": "http://127.0.0.1:8025/music.wav", "ready": 4, "err": null}
+during play: {"clock": "片段结束00:03.10", "audio": {"t": 0, "paused": true, "ready": 4, "err": null, "src": "http://127.0.0.1:8025/music.wav"}, "snack": ""}
+console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+during play: {"clock": "片段结束00:03.10", "audio": {"t": 1.000005, "paused": false, "ready": 4, "err": null, "src": "http://127.0.0.1:8025/music.wav"}, "snack": ""}
+during play: {"clock": "片段结束00:03.10", "audio": {"t": 4.027957, "paused": false, "ready": 4, "err": null, "src": "http://127.0.0.1:8025/music.wav"}, "snack": ""}
+requestfailed: http://127.0.0.1:17780/gpcli/object/get net::ERR_ABORTED

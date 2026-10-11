@@ -31,6 +31,22 @@ class ReleaseTests(unittest.TestCase):
             self.assertEqual((target / 'my.dfshow').read_bytes(), b'personal programme')
             self.assertEqual((target / 'music.wav').read_bytes(), b'personal audio')
 
+    def test_original_music_is_placed_beside_the_offline_page_but_never_overwrites(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            music, fresh, mine = root / 'repo.wav', root / 'fresh', root / 'mine'
+            music.write_bytes(b'RIFF original')
+            fresh.mkdir()
+            mine.mkdir()
+            (mine / 'music.wav').write_bytes(b'personal audio')
+            self.assertTrue(release.publish_music(fresh, music))
+            self.assertEqual((fresh / 'music.wav').read_bytes(), b'RIFF original')
+            self.assertFalse(release.publish_music(fresh, music))
+            self.assertFalse(release.publish_music(mine, music))
+            self.assertEqual((mine / 'music.wav').read_bytes(), b'personal audio')
+            self.assertFalse(release.publish_music(fresh, root / 'missing.wav'))
+            self.assertEqual(sorted(p.name for p in fresh.iterdir()), ['music.wav'])
+
     def test_failure_rolls_back_already_published_files(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

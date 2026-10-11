@@ -1,0 +1,83 @@
+{
+ "format": "df.resource-emitter-census/1",
+ "readAt": "2026-10-11T07:16:15.216Z",
+ "source": "UE 4.24 GPUECli 17780 只读：LoadAsset + object/get；未保存",
+ "fanGold": [
+  {
+   "id": "P_EFX_FireWorks_FanGold_Central_01",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD.P_EFX_FireWorks_FanGold_Central_01_HD",
+   "emitters": 1,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "cpu": 1,
+   "beam": 0,
+   "detail": [
+    {
+     "name": "Central_L",
+     "enabledLOD0": true,
+     "typeData": "CPU",
+     "screenAlignment": "PSA_Rectangle",
+     "material": "MI_EFX_FireWorks_FanGold_Central_01_HD.MI_EFX_FireWorks_FanGold_Central_01_HD",
+     "peakActiveLOD0": 3
+    }
+   ]
+  },
+  {
+   "id": "P_EFX_FireWorks_FanGold_Middle_01",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD.P_EFX_FireWorks_FanGold_Middle_01_HD",
+   "emitters": 1,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "cpu": 1,
+   "beam": 0,
+   "detail": [
+    {
+     "name": "Medium_L",
+     "enabledLOD0": true,
+     "typeData": "CPU",
+     "screenAlignment": "PSA_Rectangle",
+     "material": "MI_EFX_FireWorks_FanGold_Middle_01_HD.MI_EFX_FireWorks_FanGold_Middle_01_HD",
+     "peakActiveLOD0": 3
+    }
+   ]
+  },
+  {
+   "id": "P_EFX_FireWorks_FanGold_OuterLeft",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD.P_EFX_FireWorks_FanGold_OuterLeft_HD",
+   "emitters": 1,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "cpu": 1,
+   "beam": 0,
+   "detail": [
+    {
+     "name": "Out_L",
+     "enabledLOD0": true,
+     "typeData": "CPU",
+     "screenAlignment": "PSA_Rectangle",
+     "material": "MI_EFX_FireWorks_FanGold_OuterLeft_01_HD.MI_EFX_FireWorks_FanGold_OuterLeft_01_HD",
+     "peakActiveLOD0": 3
+    }
+   ]
+  },
+  {
+   "id": "P_EFX_FireWorks_FanGold_OuterRight",
+   "path": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD.P_EFX_FireWorks_FanGold_OuterRight_HD",
+   "emitters": 1,
+   "enabledLOD0": 1,
+   "gpu": 0,
+   "cpu": 1,
+   "beam": 0,
+   "detail": [
+    {
+     "name": "Out_R",
+     "enabledLOD0": true,
+     "typeData": "CPU",
+     "screenAlignment": "PSA_Rectangle",
+     "material": "MI_EFX_FireWorks_FanGold_OuterRight_01_HD.MI_EFX_FireWorks_FanGold_OuterRight_01_HD",
+     "peakActiveLOD0": 3
+    }
+   ]
+  }
+ ]
+}

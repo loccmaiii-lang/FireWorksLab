@@ -16,7 +16,9 @@ function compileLegacy(doc,events,target,mapping={}){
   if(t?.kind==='fan'&&!['whole','beams'].includes(m?.mode))issues.push(`${t.name}：确认整排素材或单束组合`);
  }
  const bindings=new Map();for(const p of target?.points||[])for(const b of p.bindings||[]){const k=b.GroupName+':'+b.SlotIndex;bindings.set(k,[...(bindings.get(k)||[]),p.pointId]);}
- for(const group of new Set(events.map(e=>e.pointId[0])))for(let i=0;i<groups[group];i++){const hits=bindings.get(group+':'+i)||[];if(hits.length!==1)issues.push(`${group}${i}：现场绑定${hits.length?'重复':'缺失'}`);}
+ // 16.0.10：连上 UE 却一个发射点都没读到，多半是放烟花的子关卡没加载；只报一条，不逐点刷屏。
+ if(Array.isArray(target?.points)&&!target.points.length&&events.length)issues.push('UE 里没读到任何发射点：请先在 UE 打开大坝地图 Dam_Iris_Long3 并加载放烟花的子关卡 MA5_FailedFireworkOnDam_，再点「重新检查导演与发射点」');
+ else for(const group of new Set(events.map(e=>e.pointId[0])))for(let i=0;i<groups[group];i++){const hits=bindings.get(group+':'+i)||[];if(hits.length!==1)issues.push(`${group}${i}：现场绑定${hits.length?'重复':'缺失'}`);}
  const byGroup={P:[],B:[],F:[]},subCache=new Map();
  if(target?.sourceLibrary)for(const source of catalog.values()){arrays.EffectSubTemplates.push({TemplateName:source.exportName,Entries:clean(clone(source.sub.Entries))});}
  for(const cue of doc.cues)for(const [group,count] of Object.entries(groups)){
