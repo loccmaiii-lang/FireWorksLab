@@ -1,0 +1,110 @@
+{
+ "① 0:07.4 预告（长冈 0:22）": {
+  "flowers": 0,
+  "nS": 0,
+  "nM": 0,
+  "nL": 0,
+  "nH": 0,
+  "nF": 0,
+  "tails": 9,
+  "gpuTail": 18,
+  "gpuFlower": 85,
+  "gpuWave": 103
+ },
+ "② 0:10.0 开场高潮（长冈 0:25）": {
+  "flowers": 18,
+  "nS": 9,
+  "nM": 9,
+  "nL": 0,
+  "nH": 0,
+  "nF": 0,
+  "tails": 18,
+  "gpuTail": 72,
+  "gpuFlower": 0,
+  "gpuWave": 72
+ },
+ "③ 0:26 环形排（长冈 1:20）": {
+  "flowers": 9,
+  "nS": 0,
+  "nM": 9,
+  "nL": 0,
+  "nH": 0,
+  "nF": 0,
+  "tails": 9,
+  "gpuTail": 18,
+  "gpuFlower": 18,
+  "gpuWave": 36
+ },
+ "④ 0:50 往返扫波（长冈 4:11）": {
+  "flowers": 6,
+  "nS": 0,
+  "nM": 6,
+  "nL": 0,
+  "nH": 0,
+  "nF": 0,
+  "tails": 8,
+  "gpuTail": 16,
+  "gpuFlower": 0,
+  "gpuWave": 16
+ },
+ "⑤ 0:59 第一次抬升（高潮 I）": {
+  "flowers": 9,
+  "nS": 0,
+  "nM": 4,
+  "nL": 5,
+  "nH": 0,
+  "nF": 0,
+  "tails": 9,
+  "gpuTail": 38,
+  "gpuFlower": 0,
+  "gpuWave": 38
+ },
+ "⑥ 1:52.2 高潮 II 入口（你的 1:47）": {
+  "flowers": 17,
+  "nS": 8,
+  "nM": 4,
+  "nL": 4,
+  "nH": 1,
+  "nF": 0,
+  "tails": 17,
+  "gpuTail": 86,
+  "gpuFlower": 0,
+  "gpuWave": 86
+ },
+ "⑦ 2:20 转场 · A/B 间隔（长冈 2:14）": {
+  "flowers": 17,
+  "nS": 17,
+  "nM": 0,
+  "nL": 0,
+  "nH": 0,
+  "nF": 0,
+  "tails": 17,
+  "gpuTail": 102,
+  "gpuFlower": 0,
+  "gpuWave": 102
+ },
+ "⑧ 2:55 垂柳墙（长冈 5:27）": {
+  "flowers": 5,
+  "nS": 0,
+  "nM": 0,
+  "nL": 2,
+  "nH": 3,
+  "nF": 0,
+  "tails": 22,
+  "gpuTail": 64,
+  "gpuFlower": 0,
+  "gpuWave": 64
+ },
+ "⑨ 3:16 满墙：金（终章）→ 白（收束 8 波）": {
+  "flowers": 9,
+  "nS": 0,
+  "nM": 0,
+  "nL": 9,
+  "nH": 0,
+  "nF": 0,
+  "tails": 9,
+  "gpuTail": 54,
+  "gpuFlower": 0,
+  "gpuWave": 54
+ }
+}
