@@ -1,0 +1,90 @@
+[
+ {
+  "entry": "dev",
+  "show": "节奏D(刷新自动)",
+  "footer": "本机编排台 导演编排 16.0.14 · B01节奏D-段落强弱 · 高配 · 150 片段 / 900 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 3.01,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ },
+ {
+  "entry": "dev",
+  "show": "B01节奏A-每2小节",
+  "footer": "本机编排台 导演编排 16.0.14 · 高配 · 189 片段 / 1166 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 3.02,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ },
+ {
+  "entry": "dev",
+  "show": "B01节奏C-两放两歇",
+  "footer": "本机编排台 导演编排 16.0.14 · 高配 · 173 片段 / 1112 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 3,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ },
+ {
+  "entry": "dev",
+  "show": "B01节奏B-乐句每4小节",
+  "footer": "本机编排台 导演编排 16.0.14 · 高配 · 111 片段 / 658 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 3.03,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ },
+ {
+  "entry": "file",
+  "show": "节奏D(刷新自动)",
+  "footer": "本机编排台 导演编排 16.0.14 · B01节奏D-段落强弱 · 高配 · 150 片段 / 900 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 2.93,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ },
+ {
+  "entry": "file",
+  "show": "B01节奏A-每2小节",
+  "footer": "本机编排台 导演编排 16.0.14 · 高配 · 189 片段 / 1166 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 2.96,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ },
+ {
+  "entry": "file",
+  "show": "B01节奏C-两放两歇",
+  "footer": "本机编排台 导演编排 16.0.14 · 高配 · 173 片段 / 1112 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 2.97,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ },
+ {
+  "entry": "file",
+  "show": "B01节奏B-乐句每4小节",
+  "footer": "本机编排台 导演编排 16.0.14 · 高配 · 111 片段 / 658 次播放 舞台比例示意 · UE 外观待标定",
+  "audio": {
+   "t": 2.96,
+   "paused": false,
+   "err": null
+  },
+  "errors": []
+ }
+]

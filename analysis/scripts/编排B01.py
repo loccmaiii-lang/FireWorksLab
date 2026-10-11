@@ -303,8 +303,9 @@ def tier_points(c):
 
 
 # ═══════════════════════════ 曲谱：按我们这首歌的小节排 ═══════════════════════════
-def build(density=2):
+def build(density=2, rhythm=None):
     S = Show(density)
+    S.rhythm = rhythm
     d = density
     h = lambda bar, beat=0: T(bar, beat)
 
@@ -540,8 +541,107 @@ def build(density=2):
     S.cue('GKH', ['P4'], h(125, 2) + 0.2, 'together', 0.0, 'flat', wave='主角', label='余韵 金垂柳 280（P4）', keep_all=True)
 
     apply_density(S, d)
+    if rhythm:
+        apply_rhythm(S, rhythm)
     attach_base_fans(S)
     return S
+
+
+# ———— 节奏留白版（本机同步 8，用户 10-11 23:07）————
+# 用户：D1 / D2 球花一直连续播、没有喘息；要拉开「组与组之间」的间隔、不改单组内发射点密度，出 3–4 个疏密不同的版本。
+# 现状（编排节奏统计.py）：一小节一组（1.62 s），组内常叠半小节第二波 / 二排；球花 7.4 次 / 秒，天上没有球花的时间 0.1%。
+# 做法：同一份 D2 曲谱，先把 0.9 s 内的片段并成「组」（叠层、二排、城垛 L + M、扇组都跟着组走），再按节奏格子每格只留一组、
+# 移到这一格的小节第一拍；格子里没有组就空着（留白）。倒计时、段首、主角、终和弦白墙必留，主角前后 1 小节不放别的组；
+# 空小节（41 / 65 / 96）仍然空。组内的点位、次序、层、间隔、档位一律不动。
+RHYTHMS = {
+    'A': dict(name='节奏A每2小节', rule='每 2 小节一组，落在第 1、3、5…小节的第一拍', every={'*': 2}),
+    'B': dict(name='节奏B乐句每4小节', rule='只在乐句起点（每 4 小节，小节号 1、5、9…）放一组', every={'*': 4}),
+    'C': dict(name='节奏C两放两歇', rule='每个 4 小节乐句：前 2 小节各放一组，后 2 小节留空', every={'*': 4}, pattern=(0, 1)),
+    'D': dict(name='节奏D段落强弱', rule='高潮段（开场高潮、第一次抬升、高潮 II、终章、白色收束）每 2 小节一组；铺垫段每 4 小节一组', every={'release': 2, 'push': 4}),
+}
+MUST_SECTIONS = {'B01_S1', 'B01_S5', 'B01_S9', 'B01_S12', 'B01_S13'}   # 段首必留（音乐台阶）
+FINAL_CHORD_BAR = 118
+
+
+def cue_t(c):
+    return min(e['launch'] if c['size'] == 'F' else e['burst'] for e in c['events'])
+
+
+def shift_cue(c, dt):
+    if abs(dt) < 1e-9:
+        return
+    for e in c['events']:
+        e['launch'] = q1(e['launch'] + dt)
+        e['burst'] = round(e['burst'] + dt, 6)
+        e['end'] = round(e['end'] + dt, 6)
+        e['H'] = round(e['H'] + dt, 4)
+    c['H0'] = round(c['H0'] + dt, 4)
+
+
+def apply_rhythm(S, mode):
+    R = RHYTHMS[mode]
+    secs = {x['id']: x for x in S.sections}
+    cues = [c for c in S.cues if c['section'] != 'B01_S0']
+    keep = [c for c in S.cues if c['section'] == 'B01_S0']           # 倒计时整段不动
+    cues.sort(key=cue_t)
+    groups = []
+    for c in cues:                                                     # 0.9 s 内的片段并成一组（同一段内）
+        t = cue_t(c)
+        if groups and groups[-1]['sec'] == c['section'] and t - groups[-1]['t'] <= 0.9:
+            groups[-1]['cues'].append(c)
+        else:
+            groups.append(dict(t=t, sec=c['section'], cues=[c]))
+    for g in groups:
+        g['bar'] = (g['t'] - BAR0) / BAR
+        g['hero'] = any(fam(c['sp']) == 'GK' for c in g['cues'])
+        g['must'] = g['hero'] or any(abs(g['t'] - secs[sid]['start']) < 0.3 for sid in MUST_SECTIONS if sid == g['sec']) or abs(g['bar'] - FINAL_CHORD_BAR) < 0.3
+        size = {c['size'] for c in g['cues']}
+        g['score'] = (50 if 'L' in size else 0) + (30 if 'M' in size else 0) + 10 * len([c for c in g['cues'] if c['size'] != 'F']) + sum(len(c['events']) for c in g['cues']) * 0.2
+        g['fam'] = fam(max((c for c in g['cues'] if c['size'] != 'F'), key=lambda c: len(c['events']), default=g['cues'][0])['sp'])
+        g['leadFams'] = {fam(c['sp']) for c in g['cues'] if c['size'] != 'F' and c['layer'] == 'main' and len(c['points']) >= 7}
+    musts = [g for g in groups if g['must']]
+    seen = set().union(*[g['leadFams'] for g in musts]) if musts else set()   # 每种花至少整排出场一次：没出过的加分
+    chosen = list(musts)
+    quiet = {41, 65, 96}
+    hero_bars = [g['bar'] for g in musts if g['hero']]
+    def every_for(sec):
+        e = R['every']
+        return e.get('*') or (e['release'] if sec in RELEASE else e['push'])
+    recent = []
+    first_bar, last_bar = 3, 127
+    k = first_bar
+    while k <= last_bar:
+        sec = next((x for x in S.sections if x['bar0'] <= k < x['bar1']), None)
+        if sec is None or sec['id'] == 'B01_S0':
+            k += 1
+            continue
+        n = every_for(sec['id'])
+        if (k - 1) % n != 0:                                            # 格子对齐乐句：小节号 1、1+n、1+2n…
+            k += 1
+            continue
+        slots = [k + p for p in R.get('pattern', (0,))]
+        for b in slots:
+            win = 1 if 'pattern' in R else n
+            if b in quiet or any(abs(b - h) < 1.5 for h in hero_bars) or any(abs(b - m['bar']) < min(win, 2) - 0.05 for m in musts):
+                continue
+            cand = [g for g in groups if not g['must'] and 'slot' not in g and g['sec'] == sec['id'] and
+                    (b - 0.05 <= g['bar'] < b + win - 0.05 or (b - 1.05 <= g['bar'] < b and g['leadFams'] - seen))]   # 前一小节里还没出过场的花也可以挪过来
+            if not cand:
+                continue                                               # 这一格本来就没有组：留白
+            best = max(cand, key=lambda g: g['score'] + (25 if g['fam'] not in recent[-2:] else 0) + 60 * len(g['leadFams'] - seen))
+            seen |= best['leadFams']
+            best['shift'] = q1(T(b) - best['t'])                     # 整组按 0.1 s 网格平移：组内层次不变，开花离第一拍 ≤ 0.05 s
+            best['slot'] = b
+            chosen.append(best)
+            recent.append(best['fam'])
+        k += 1
+    for g in chosen:
+        for c in g['cues']:
+            shift_cue(c, g.get('shift', 0.0))
+            keep.append(c)
+    S.cues = sorted(keep, key=cue_t)
+    S.rhythmLog = dict(mode=mode, name=R['name'], rule=R['rule'], groupsBefore=len(groups), groupsKept=len(chosen), mustKept=len(musts),
+                       shifted=sum(1 for g in chosen if abs(g.get('shift', 0)) > 1e-6), maxShiftS=round(max([abs(g.get('shift', 0)) for g in chosen] or [0]), 3))
 
 
 RELEASE = {'B01_S1', 'B01_S5', 'B01_S9', 'B01_S12', 'B01_S13'}   # 释放段（开场高潮、第一次抬升、高潮 II、终章、白色收束）；其余为推进段
@@ -959,6 +1059,7 @@ def checks(S):
     res['share'] = {k: round(sum(1 for e in balls if e['size'] == k) / nb, 3) for k in 'SML'}
     res['largeBySpecies'] = {SPECIES[sp][1]: sum(1 for e in balls if e['sp'] == sp) for sp in sorted({e['sp'] for e in balls if e['size'] == 'L'})}
     res['density'] = getattr(S, 'densityLog', None)
+    res['rhythm'] = getattr(S, 'rhythmLog', None)
     wb = defaultdict(int)
     for c in S.cues:
         if c['size'] != 'F' and c['layer'] == 'main' and len(c['points']) >= 4:
@@ -1084,7 +1185,8 @@ def make_figs(S, ck):
     ax[3].axhline(GPU_BUDGET, color='r', ls='--', lw=1); ax[3].text(1, GPU_BUDGET + 5, f'暂定预算 {GPU_BUDGET}', color='r', fontsize=8)
     ax[3].set_ylabel('1 s 内新起 GPU 发射器'); ax[3].set_xlabel('演出秒（音乐 + 5）'); ax[3].set_xlim(0, dur + 2)
     plt.tight_layout()
-    plt.savefig(OUTDIR / '总览.png', dpi=110); plt.close()
+    sfx = f"_R{S.rhythm}" if getattr(S, 'rhythm', None) else ''
+    plt.savefig(OUTDIR / f'总览{sfx}.png', dpi=110); plt.close()
 
     # —— 关键时刻 ——
     moments = [(10.9, '② 开场高潮 10.0 s'), (26.9, '③ 环形排 26.0 s'), (51.6, '④ 回扫 50.6 s'), (60.0, '⑤ 城垛 58.7 s'),
@@ -1094,7 +1196,7 @@ def make_figs(S, ck):
     for a, (t, title) in zip(axs.flat, moments):
         snapshot(a, S, t, title)
     plt.tight_layout()
-    plt.savefig(OUTDIR / '关键时刻.png', dpi=100); plt.close()
+    plt.savefig(OUTDIR / f'关键时刻{sfx}.png', dpi=100); plt.close()
 
 
 def snapshot(ax, S, t, title):
@@ -1148,8 +1250,9 @@ def snapshot(ax, S, t, title):
 def export(S, ck):
     OUTDIR.mkdir(parents=True, exist_ok=True)
     dur = max(math.ceil((OFFSET + 210.8108125) * 10) / 10, math.ceil(ck['grid']['lastEnd'] * 10) / 10)
-    sfx = '' if S.density == 2 else f'_D{S.density}'
-    out = dict(format='df.choreography-proposal/2', revision=f'B01_NAGAOKA_LOGIC_r2_D{S.density}', status='logic_compiled_by_编排B01_编译.mjs_UE_unverified',
+    rh = getattr(S, 'rhythm', None)
+    sfx = f'_R{rh}' if rh else ('' if S.density == 2 else f'_D{S.density}')
+    out = dict(format='df.choreography-proposal/2', revision=f'B01_NAGAOKA_LOGIC_r3_R{rh}' if rh else f'B01_NAGAOKA_LOGIC_r2_D{S.density}', rhythm=rh, status='logic_compiled_by_编排B01_编译.mjs_UE_unverified',
                generator='analysis/scripts/编排B01.py', density=S.density, musicOffsetS=OFFSET, barS=BAR, bar0S=BAR0, duration=dur,
                sections=S.sections, cues=S.cues)
     (OUTDIR / f'逻辑方案{sfx}.json').write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding='utf-8')
@@ -1160,10 +1263,11 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--density', type=int, default=2)
     ap.add_argument('--no-figs', action='store_true')
+    ap.add_argument('--rhythm', choices=sorted(RHYTHMS), default=None, help='节奏留白版：A 每 2 小节 / B 每 4 小节 / C 两放两歇 / D 段落强弱（以 D2 为底）')
     a = ap.parse_args()
-    S = build(a.density)
+    S = build(2 if a.rhythm else a.density, a.rhythm)
     ck = checks(S)
     export(S, ck)
     if not a.no_figs and a.density == 2:
         make_figs(S, ck)
-    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'baseFans', 'fanSummary', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'heroes', 'share', 'largeBySpecies', 'density', 'wavesPerBar', 'tierNesting', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies')}, ensure_ascii=False, indent=1))
+    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'baseFans', 'fanSummary', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'heroes', 'share', 'largeBySpecies', 'density', 'rhythm', 'wavesPerBar', 'tierNesting', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies')}, ensure_ascii=False, indent=1))

@@ -19,11 +19,14 @@ const outDir = path.resolve(ROOT, args.includes('--out') ? args[args.indexOf('--
 const BASE = path.join(ROOT, 'FXtools/节目/NewYearFireWorks_v01/NewYearFireWorks_v01-R04时间规范修正.dfshow');
 const DENSITY = args.includes('--density') ? Number(args[args.indexOf('--density') + 1]) : 2;
 if (![1, 2, 3].includes(DENSITY)) throw Error('--density 只能是 1 / 2 / 3');
-const SFX = DENSITY === 2 ? '' : `_D${DENSITY}`;
+const RHYTHM = args.includes('--rhythm') ? args[args.indexOf('--rhythm') + 1] : null;   // 节奏留白版 A / B / C / D（以 D2 为底，用户 10-11 23:07）
+if (RHYTHM && !['A', 'B', 'C', 'D'].includes(RHYTHM)) throw Error('--rhythm 只能是 A / B / C / D');
+const SFX = RHYTHM ? `_R${RHYTHM}` : DENSITY === 2 ? '' : `_D${DENSITY}`;
 const LOGIC = path.join(ROOT, `协作/编排B01/逻辑方案${SFX}.json`);
-const TAG = 'B01长冈式' + (DENSITY === 2 ? '' : `-D${DENSITY}`);
-const TABLE = DENSITY === 2 ? 'B01' : `B01D${DENSITY}`;
-const FILE_VERSION = 9;   // 修订1：档位从两端收 + 金垂柳只当主角；修订2：大号花型 + 主角 280 + 密度 D1 / D3
+const TAG = 'B01长冈式' + (RHYTHM ? `-节奏${RHYTHM}` : DENSITY === 2 ? '' : `-D${DENSITY}`);
+const TABLE = RHYTHM ? `B01R${RHYTHM}` : DENSITY === 2 ? 'B01' : `B01D${DENSITY}`;
+const MAIN = !RHYTHM && DENSITY === 2;   // 只有 D2 主版带完整音乐
+const FILE_VERSION = 10;   // 修订1：档位从两端收 + 金垂柳只当主角；修订2：大号花型 + 主角 280 + 密度 D1 / D3；修订3：节奏留白版 A–D
 const clone = x => structuredClone(x);
 const round = x => Math.round(x * 1e6) / 1e6;
 const sec = (x) => round(x);
@@ -108,7 +111,7 @@ for (const c of logic.cues) {
 }
 
 // —— meta ——
-Object.assign(doc.meta, {version: 'nagaoka-logic-v1', duration, savedAt: '2026-10-11', musicOffset: logic.musicOffsetS, compositionRevision: `B01_NAGAOKA_LOGIC_r2_D${DENSITY}`, compositionSource: 'score_from_nagaoka_logic_by_bar',
+Object.assign(doc.meta, {version: 'nagaoka-logic-v1', duration, savedAt: '2026-10-11', musicOffset: logic.musicOffsetS, compositionRevision: logic.revision, compositionSource: 'score_from_nagaoka_logic_by_bar',
   programFileVersion: FILE_VERSION, sectionsMode: 'user', timeRule: '完整花型调用 / 点间隔 / 开花时刻取 0.1 秒整数倍；固定子模板内部时间原值；B01 无随机错开（点间用固定 0.1–0.3 s 涟漪）。',
   editingRule: '原固定子模板与 20 个基础资源不改；大号 / 主角是同一资源放大升高另存的新固定子模板（协作/编排B01/大号花型.json）；高度偏移只在编排条目里 ±25 m；球花尾缀 scale=1；三档点集从两端往里收，低 ⊂ 中 ⊂ 高。', arrangementTimeGridS: 0.1});
 delete doc.meta.defaultStaggerEnabled;
@@ -135,7 +138,7 @@ if (errors.length) throw Error('校验失败：' + errors.slice(0, 5).join('；'
 
 // —— 三档三表 ——
 const occ = {};   // 每档展开成 (组, 时刻, 槽位, 子模板) 计数，用来查低 ⊂ 中 ⊂ 高
-const report = {revision: `B01_NAGAOKA_LOGIC_r2_D${DENSITY}`, density: DENSITY, derivedFlowers: DERIVED.map(f => f.id), generatedBy: 'analysis/scripts/编排B01_编译.mjs', tiers: {}, preflight: 'preflightProject 通过（同 8025 打开 .dfshow）', file: `NewYearFireWorks_v01-${TAG}.dfshow`};
+const report = {revision: logic.revision, density: DENSITY, rhythm: RHYTHM, derivedFlowers: DERIVED.map(f => f.id), generatedBy: 'analysis/scripts/编排B01_编译.mjs', tiers: {}, preflight: 'preflightProject 通过（同 8025 打开 .dfshow）', file: `NewYearFireWorks_v01-${TAG}.dfshow`};
 fs.mkdirSync(outDir, {recursive: true});
 for (const tier of ['high', 'medium', 'low']) {
   const ev = qualityEvents(state.doc, state.profiles, tier);
@@ -168,7 +171,7 @@ if (report.tierNesting.lowNotInMedium || report.tierNesting.mediumNotInHigh) thr
 report.doc = {cues: finalDoc.cues.length, events: finalDoc.events.length, sections: finalDoc.sections.length, duration: finalDoc.meta.duration, musicOffset: finalDoc.meta.musicOffset, balls: finalDoc.statistics.ballCount, fans: finalDoc.statistics.fanCount};
 fs.writeFileSync(path.join(outDir, `${TABLE}编排检查.json`), JSON.stringify(report, null, 2));
 // D1 / D3 是对比版：不再各带一份 81 MB 音乐（按 sha256 用同一首《汪洋与浩渺》），D2 沿用 22 原来的完整文件
-const outRaw = DENSITY === 2 ? raw : JSON.stringify({...dfshow, payload: {...dfshow.payload, audioRef: {kind: 'bundled'}}});
-if (DENSITY !== 2) preflightProject(outRaw, seed);
+const outRaw = MAIN ? raw : JSON.stringify({...dfshow, payload: {...dfshow.payload, audioRef: {kind: 'bundled'}}});
+if (!MAIN) preflightProject(outRaw, seed);
 fs.writeFileSync(path.join(outDir, `NewYearFireWorks_v01-${TAG}.dfshow`), outRaw);
 console.log(JSON.stringify(report, null, 1));

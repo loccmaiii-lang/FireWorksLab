@@ -1,0 +1,68 @@
+{
+  "revision": "B01_NAGAOKA_LOGIC_r3_RB",
+  "density": 2,
+  "rhythm": "B",
+  "derivedFlowers": [
+    "R03_GoldRayChry_L230",
+    "R03_GoldCoreLime_L230",
+    "R03_MultiLayerChry_L230",
+    "R03_GoldKamuro_H280"
+  ],
+  "generatedBy": "analysis/scripts/编排B01_编译.mjs",
+  "tiers": {
+    "high": {
+      "events": 658,
+      "subTemplates": 25,
+      "templates": 59,
+      "scheduleSlots": 111,
+      "groups": {
+        "P": 47,
+        "B": 64
+      },
+      "lastSlot": 201.5,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "medium": {
+      "events": 550,
+      "subTemplates": 25,
+      "templates": 59,
+      "scheduleSlots": 111,
+      "groups": {
+        "P": 47,
+        "B": 64
+      },
+      "lastSlot": 201.5,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "low": {
+      "events": 258,
+      "subTemplates": 22,
+      "templates": 50,
+      "scheduleSlots": 67,
+      "groups": {
+        "P": 47,
+        "B": 20
+      },
+      "lastSlot": 201.5,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    }
+  },
+  "preflight": "preflightProject 通过（同 8025 打开 .dfshow）",
+  "file": "NewYearFireWorks_v01-B01长冈式-节奏B.dfshow",
+  "tierNesting": {
+    "lowNotInMedium": 0,
+    "mediumNotInHigh": 0
+  },
+  "doc": {
+    "cues": 111,
+    "events": 658,
+    "sections": 14,
+    "duration": 218.6,
+    "musicOffset": 5,
+    "balls": 430,
+    "fans": 228
+  }
+}
