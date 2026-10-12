@@ -55,7 +55,8 @@ function fwTexName(base, layer, L, sheet, kind, mobile) {
 const namingApplies = b => b && (b.form === 'master' || b.form === 'segments' || b.form === 'emitset');
 // 一个烘焙在包里的每张序列：[内部段名, 格子, 名字里加的部分, 序号]。emitset 的循环 / 消散两张按「层」Loop / Fade 命名
 function namingSheets(b) {
-  if (b.form === 'emitset') return [['Loop', b.meta.L, 'Loop', 1], ...(b.fades[0] ? [['Fade', b.fades[0].meta.L, 'Fade', 1]] : []), ...(b.far ? [['Far', b.far.meta.L, 'Far', 1]] : [])];     // 4.5.1 远段 Far
+  if (b.form === 'emitset' && b.esFull) return [['Full', b.meta.L, 'Full', 1]];     // 4.9.73 手机合成一张（T_EFX_FireWorks_<名称>_Full_32x2_01）
+  if (b.form === 'emitset') return [['Loop', b.meta.L, 'Loop', 1],...(b.fades[0] ? [['Fade', b.fades[0].meta.L, 'Fade', 1]] : []), ...(b.far ? [['Far', b.far.meta.L, 'Far', 1]] : [])];     // 4.5.1 远段 Far
   if (b.vars) return [b, ...b.vars].map((s, k) => ['', s.meta.L, '', k + 1, k + 1]);     // 4.9.28 单束变体：序号 01…04（内部名第 2 张起带 _V2…）
   return bakeParts(b).map((s, k) => [bakeSegmentName(b, k), s.meta.L, '', k + 1]);
 }
@@ -87,12 +88,12 @@ function applyPackNaming(files, base, entries, o = {}) {
       map.set(TN(ln, joinPart(seg, 'Cutout'), null, vi) + '.png', c);
       map.set(TN(ln, joinPart(seg, 'FrameTest'), null, vi) + '.png', fwTexName(base, ly, L, n, 'FrameTest') + '.png');
     }
-    for (const [seg, L, sub, n, vi = 1] of namingSheets(mb || b)) {
+    for (const [seg, L, sub, n, vi = 1] of namingSheets(mb || (b && b.mobNaming) || b)) {     // 4.9.73 b.mobNaming：尾缀手机合成一张（platformFiles 记的）
       const ly = joinPart(layer, sub), c = fwTexName(base, ly, L, n, 'C') + '.png';
       map.set(TN(mn, seg, null, vi) + '.png', fwTexName(base, ly, L, n, 'tex', true) + '.png');     // 4.9.35 手机单束的变体也换名（vi）
       if (vi > 1) map.set(TN(mn, joinPart(seg, 'Cutout'), null, vi) + '.png', c);
       for (const ht of ['Head', 'Tail']) map.set(TN(mn, joinPart(seg, ht)) + '.png', fwTexName(base, ly, L, n, ht, true) + '.png');
-      map.set(TN(mn, joinPart(seg, 'Cutout')) + '.png', c); if (pcTex !== false) drop.add(TN(mn, joinPart(seg, 'Cutout')) + '.png');
+      map.set(TN(mn, joinPart(seg, 'Cutout')) + '.png', c); if (pcTex !== false && seg !== 'Full') drop.add(TN(mn, joinPart(seg, 'Cutout')) + '.png');     // 合成一张的 Cut 是手机自己的，不和 PC 共用
       drop.add(TN(mn, joinPart(seg, 'FrameTest')) + '.png');     // 帧号测试图只留 PC 的（_检查/，不导入）
     }
     const r = fwTexName(base, layer, null, 0, 'R') + '.png';

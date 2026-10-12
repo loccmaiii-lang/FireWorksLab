@@ -858,9 +858,14 @@ function renderDeliv() {
       for (const [, L, sub, n] of namingSheets(x.b)) {
         const fa = sub === 'Far' ? x.b.far.meta.far : null, d0 = fa ? fa.t0 : sub === 'Fade' ? m.T : 0, life = fa ? fa.Dtot : sub === 'Fade' ? m.fadeSeconds : m.T;
         rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', false)}.png</td><td>PC · ${sub === 'Loop' ? '循环层（近段）' : sub === 'Far' ? '远段（全程）' : '消散'} · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
-        rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', true)}.png</td><td>手机</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
-        rows.push(`<tr class="dim"><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'C')}.png</td><td>Cut（PC / 手机共用，512）</td><td></td><td></td></tr>`);
+        const mobLoop = sub === 'Loop' && (combo ? layerOut(x.L).mobile !== 'off' : state.P.outMobile !== 'off' && !rtMobFull(state.P));     // 4.9.69 起手机 _M 只有近段那张；4.9.73 合成一张时没有
+        if (mobLoop) rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', true)}.png</td><td>手机</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        rows.push(`<tr class="dim"><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'C')}.png</td><td>Cut（${mobLoop ? 'PC / 手机共用' : 'PC'}，512）</td><td></td><td></td></tr>`);
       }
+      if (!combo && rtMobFull(state.P)) { const mf = x.b.mobile && x.b.mobile.esFull ? x.b.mobile : null, Lm = mf ? mf.meta.L : null, g = Lm ? `${Lm.cols}x${Lm.rows}` : '<列>x<行>';     // 4.9.73 手机合成一张（格子烘了才知道）
+        const stem = FW_TEX_PREFIX + nm.base + '_Full_' + g + '_01', life = mf ? mf.meta.full.Dtot.toFixed(2) + ' s' : '—';
+        rows.push(`<tr><td>${stem}.png</td><td>手机 · 近段 + 远段合成一张${Lm ? ` · 单格 ${Math.round(Lm.cellW)}×${Math.round(Lm.cellH)} px · ${Lm.F} 帧` : '（格子导出时按内容定）'}</td><td>0.00 s</td><td>${life}</td></tr>`);
+        rows.push(`<tr class="dim"><td>${stem}_C.png</td><td>Cut（手机自己的，512）</td><td></td><td></td></tr>`); }
       rows.push(`<tr class="dim"><td>${fwTexName(nm.base, ly, null, 0, 'R')}.png</td><td>颜色 Ramp（PC / 手机共用）</td><td></td><td></td></tr>`);
       rows.push(`<tr class="dim"><td colspan="4">粒子发射器（火花、落火）没有贴图：用软圆点材质，数值在 cascade.json</td></tr>`);
       continue;
@@ -973,8 +978,9 @@ function prodTableHTML(xs, combo) {
   const rows = xs.map(x => {
     const P = layerPOf(x), seqOK = P && familyOf(P.type) === 'aerial' && (!x.b || ['master', 'segments'].includes(x.b.form)) && (combo || singleSchemeOn(P));
     // 4.9.69 升空尾缀（循环层 + 粒子）：PC 照旧全套；手机能选 _M / 不出（用户 10-10 16:51「升空尾缀无法选择手机导出什么格式，无法创建手机粒子文件」）
-    if (!seqOK && !combo && x.b && x.b.form === 'emitset') { const mo = state.P.outMobile === 'off' ? 'off' : 'seq';
-      return `<tr><td>${x.name}</td><td class="dim">循环层 + 粒子（PC 全套：近段 + 远段 + 粒子；远段 Rectangle + 锁 Z）</td><td><select data-prod="mobile" data-i="${x.i}" aria-label="手机出什么">${OUT_MOBILE_TAIL.map(([k, t]) => `<option value="${k}"${k === mo ? ' selected' : ''}>${t}</option>`).join('')}</select><small>${mo === 'off' ? '<span class="dim">不出</span>' : '手游 _M：只有近段循环一张大面片（不出远段、火花、星头光晕；用户 10-12 21:34）'}</small></td></tr>`; }
+    if (!seqOK && !combo && x.b && x.b.form === 'emitset') { const far = rtIsFar(state.P), mo = state.P.outMobile === 'off' ? 'off' : state.P.outMobile === 'full' && far ? 'full' : 'seq';     // 4.9.73 合成一张只给有远段的（RT6）
+      const fullTxt = '手游 _M：星头 + 全部火花合成一张世界坐标全程序列，1 个发射器、1 层（Rectangle + 锁 Z + Local Space）；星头一帧帧走、一个曝光，在引擎回放切手机看（用户 10-12 23:49）';
+      return `<tr><td>${x.name}</td><td class="dim">循环层 + 粒子（PC 全套：近段 + 远段 + 粒子；远段 Rectangle + 锁 Z）</td><td><select data-prod="mobile" data-i="${x.i}" aria-label="手机出什么">${OUT_MOBILE_TAIL.filter(([k]) => k !== 'full' || far).map(([k, t]) => `<option value="${k}"${k === mo ? ' selected' : ''}>${t}</option>`).join('')}</select><small>${mo === 'off' ? '<span class="dim">不出</span>' : mo === 'full' ? fullTxt : '手游 _M：只有近段循环一张大面片（不出远段、火花、星头光晕；用户 10-12 21:34）'}</small></td></tr>`; }
     if (!seqOK) return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}</td><td colspan="2" class="dim">${x.b ? FORM_NAMES[x.b.form] || x.b.form : '还没烘好'}：按这种产物自己的规则出（PC + 手机）</td></tr>`;
     const o = combo ? layerOut(x.L) : singleOut(state.P), uOK = unitAllowed(P), uf = uOK ? unitFit(P) : null;     // 4.9.27 下拉里也写这层适不适合单束
     const uAttr = !uOK ? ' disabled title="千轮、分裂、蜂、非球形图案不能出单束"' : uf && uf.level !== 'ok' ? ` title="${uf.why.join('；')}"` : '';
@@ -995,7 +1001,10 @@ function setProduct(i, pf, v) {
   if (pf === 'pc' && v === 'frame') setTimeout(() => flash('PC 选了单帧：引擎回放直接按单帧画（表里「在引擎回放里看」）'), 0);
   if (state.tab === 'combo') { const L = state.layers[i]; if (!L) return; L.out = { ...layerOut(L), [pf]: v }; if (L.out.pc === 'seq' && L.out.mobile === 'seq') delete L.out;
     if (typeof undoNote === 'function') undoNote(); if (state.comboSel === i && typeof buildLayerHead === 'function') buildLayerHead(i); renderDeliv(); wbSync(); return; }
-  state.P[pf === 'pc' ? 'outPC' : 'outMobile'] = v; onExportScheme();
+  state.P[pf === 'pc' ? 'outPC' : 'outMobile'] = v;
+  // 4.9.73 尾缀手机换了「只有近段 / 合成一张」：缓存的手机烘焙作废；正在看手机就按新选的重烘
+  const b = state.bake; if (pf === 'mobile' && b && b.form === 'emitset' && b.mobile && !!b.mobile.esFull !== rtMobFull(state.P)) { disposeBake(b.mobile); b.mobile = null; if (state.platform === 'mobile') setPreviewPlatform('mobile'); }
+  onExportScheme();
 }
 function toggleDeliv(on) {
   stage2.deliv = on == null ? !stage2.deliv : on;

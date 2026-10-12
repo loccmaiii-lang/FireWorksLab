@@ -40,7 +40,10 @@ function mobileParams(P) {
 async function bakeMobileFor(b,onProg=null) {
   if(b.form==='trail')return await bake(mobileParams(b.P),1,onProg);
   // 循环层 + 粒子（4.2.2）：手机贴图边长 × rtMobileTex（默认 0.5 → 单格像素数 = PC 的 1/4，512² → 256²，正好是手机下限）；格子、取景和 PC 一样
-  if(b.form==='emitset'){const f=clamp(b.P.rtMobileTex==null?0.5:+b.P.rtMobileTex,0.25,1);const m=await bake({...b.P,texW:Math.round(b.P.texW*f),texH:Math.round(b.P.texH*f)},1,onProg);m.esMobile=true;return m;}
+  // 4.9.73 手机选「近段 + 远段合成一张」：只烘那一张（bakeRiseTailFull），不再把近段 / 远段按手机尺寸全烘一遍
+  if(b.form==='emitset'){const f=clamp(b.P.rtMobileTex==null?0.5:+b.P.rtMobileTex,0.25,1),Pm={...b.P,texW:Math.round(b.P.texW*f),texH:Math.round(b.P.texH*f)};
+    if(rtMobFull(b.P))return await bakeRiseTailFull(Pm,1,onProg);
+    const m=await bake(Pm,1,onProg);m.esMobile=true;return m;}
   let first=null,last=null;
   try {
     for(let source=b;source;source=source.next){

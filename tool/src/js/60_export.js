@@ -310,8 +310,11 @@ function masterJSON(b, name, M) {
 }
 async function platformFiles(name,b,M,onProg=null) {
   // 4.9.69 升空尾缀（循环层 + 粒子）在交付清单选「手机：不出」→ 只出 PC（以前尾缀没有手机这一格，用户 10-10 16:51「升空尾缀无法选择手机导出什么格式」）
-  if(b.form==='emitset'&&b.P.outMobile==='off')return fwlFiles(name,b,M).filter(([f])=>f!=='cascade_mobile.json');
-  const mobile=b.mobile||await bakeMobileFor(b,onProg);
+  if(b.form==='emitset'&&b.P.outMobile==='off'){b.mobNaming=null;return fwlFiles(name,b,M).filter(([f])=>f!=='cascade_mobile.json');}
+  // 4.9.73 尾缀手机「近段 + 远段合成一张」：预览时缓存的手机烘焙要和现在选的一致（只有近段 / 合成一张），不一致就按现在选的重烘
+  const keep=b.mobile&&(b.form!=='emitset'||!!b.mobile.esFull===rtMobFull(b.P))?b.mobile:null;
+  const mobile=keep||await bakeMobileFor(b,onProg);
+  if(b.form==='emitset')b.mobNaming=mobile.esFull?{form:'emitset',esFull:true,meta:{L:mobile.meta.L}}:null;     // 打包换名用（合成一张是手机独有的贴图，PC 没有）
   try {
     const cfg=fwlFiles(name,b,M,mobile);
     let tex=await texFiles(mobile,name+'_Mobile');
@@ -323,7 +326,7 @@ async function platformFiles(name,b,M,onProg=null) {
     files.push([`${name}_Mobile.json`,utf8(JSON.stringify(masterJSON(mobile,name+'_Mobile',M),null,2))]);
     files.push(...cfg);
     return files;
-  }finally{if(!b.mobile)disposeBake(mobile);}
+  }finally{if(mobile!==b.mobile)disposeBake(mobile);}
 }
 // 4.4.2 单层效果按「导出方案」出包（文件名规则、版本记录和普通单层导出一样）
 async function exportSingleScheme(name, b, destination) {
@@ -367,6 +370,7 @@ async function exportMaster() {
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, state.M))]);
     files.push([`${name}_声音节点.json`, utf8(JSON.stringify({ note: '时间为相对开花（上升类为相对发射）的秒数；游戏里按「距离 ÷ 343 m/s」再延迟', events: soundEvents(b) }, null, 2))]);
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, state.M), null, 2))]);
+    if (b.form === 'emitset') b.P.outMobile = state.P.outMobile;     // 4.9.73 产物表改「手机」不重烘：按现在选的出（烘焙时存的那份是旧的）
     files.push(...await platformFiles(name, b, state.M,p=>busy(true,'手机独立烘焙…',p)));
     busy(true, '打包 ZIP…', 1);
     let zipName = name, out = files;

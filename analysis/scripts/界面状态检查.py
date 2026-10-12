@@ -40,6 +40,7 @@
   N3 排查第 1 步：SCHEMA ↔ 默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS 对得上
   W2 4.5.3：左栏没有「我的版本」「已通过」（通过的进「我的效果」最上面）、我的效果每项没有删除；出点提示 + 一键清除；没烘时时间轴按新时长；远段面片上移
   R6 4.5.1 升空尾缀 RT6 近段 + 远段：缺省关 = RT5；开了贴图有粗 / 中 / 细、GPU 按档预算（上限一起降、降掉的回贴图）、贴图 + GPU = 出生率；交接权重相加 = 1；闪烁层；远看直径光量不变；
+  R7 4.9.73 尾缀手机「近段 + 远段合成一张」：1 个发射器 TrailFull、32 列细高格、过导出拦截、打包换名、PC 不变
      TrailFar 导出、没有 RiseFade、命名 Loop + Far；近段贴图曝光 k → RiseLoop Color Over Life × 1 / k²；面板；4.5.2 分层看（近段 / 远段 / 每个 GPU 层开关、双击只看、全部恢复）
   R5 4.4.5 升空尾缀 RT5 选项：缺省旧做法；物理弹道到设定高度、第 1 秒减速够猛、星头光晕跟弹道（Velocity Over Life）；GPU 兼容（无 Acceleration、≤ 2 个 Initial Velocity）、
      GPU 粒子上限、细 / 中火花进贴图、H4 新口径和温度偏移无关；循环层长度起步不伸到发射点以下；面板「弹道」在星头 › 弹道、选物理后升空时间藏起
@@ -1251,6 +1252,53 @@ async def r6(pg):
     """4.5.1 RT6：近段 + 远段（rtFar）缺省关 = RT5；开了：粗 / 中 / 细都进贴图、GPU 按档预算（含上限一起降）、贴图 + GPU = 出生率；交接权重相加 = 1；
     闪烁层带闪烁；远看直径光量不变；cascade.json 多 TrailFar、命名多 Far；面板「贴图怎么分」"""
     r = await pg.evaluate(R6_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
+
+
+R7_JS = r"""async () => {
+  // 4.9.73 尾缀手机「近段 + 远段合成一张」（用户 10-12 21:34「把近段+远段一起导出一份」、23:49「这样手游只需要一层就能保留所有尾缀的效果」）
+  const out = {}, bad = [], dec = new TextDecoder();
+  const e = entryById('RT6S') || entryById('RT6M'), d = defaultsFor(e.base), Z = derive({ ...d.P, ...e.p, rtFar: 1 }), M = defaultsFor(e.base).M;
+  // 只给有远段的尾缀；缺省仍「只有近段」
+  out.mf = [rtMobFull({ outMobile: 'full', rtFar: 1 }), rtMobFull({ outMobile: 'full', rtFar: 0 }), rtMobFull({ outMobile: 'seq', rtFar: 1 }), BASE.outMobile];
+  if (out.mf.join() !== 'true,false,false,seq') bad.push('合成一张的开关不对：' + out.mf);
+  if (!OUT_MOBILE_TAIL.some(([k]) => k === 'full')) bad.push('产物表手机格没有「合成一张」');
+  // 格子：细高的面片挑 32 列（横竖每米像素小的那个最大），宽的照旧 16 列
+  out.grid = [rtFullGrid({ texW: 1024, texH: 1024 }, 14.6, 268, 145), rtFullGrid({ texW: 1024, texH: 1024 }, 6.55, 190, 98), rtFullGrid({ texW: 1024, texH: 1024 }, 60, 100, 64)].map(x => x.join('x'));
+  if (out.grid.join() !== '32x1,32x1,16x1') bad.push('合成一张的格子不对：' + out.grid);
+  // cascade_mobile.json：1 个发射器 TrailFull（Rectangle + 锁 Z + Local Space、0 s 出现、max_alive 1、没有 GPU），贴图 = 合成那张 + 它的 Cut + Ramp；导出拦截过得去
+  const ball = rtBallistic(Z), L = layoutOf({ ...Z, texW: 1024, texH: 1024, cols: 32, rows: 2, chans: 1 }), F = L.F;
+  const fa = { t0: 0, Dtot: +(ball.T + 1.2).toFixed(3), Df: 1.2, Fr: 48, Fd: 16, cols: 32, rows: 2, chans: 1, F, cx: 0.4, cz: 98, vz: 0.5, HX: 3.3, HY: 96, Ww: 6.6, Wh: 192, keys: [[0, 0], [0.6, 48], [1, F - 0.01]], pxMax: 3.1 };
+  const mb = { form: 'emitset', esMobile: true, esFull: true, P: { ...Z, outMobile: 'full' }, N: 1024, NH: 1024, meta: { L, full: fa, T: ball.T, ball: { ...ball, pos: undefined, vel: undefined } }, fades: [], far: null };
+  const jm = fwlCascade('T_Mobile', mb, M, true), em = jm.emitters[0] || {}; jm.name = 'T_M';     // 名字由 fwlFiles 换成 <名>_M
+  const mods = Object.fromEntries((em.modules || []).map(x => [x.m, x]));
+  out.mob = { n: jm.emitters.length, name: em.name, gpu: em.gpu, alive: em.max_alive, align: em.required && em.required.screen_alignment, local: em.required && em.required.local_space, delay: em.required && em.required.delay_s,
+    lock: (mods.OrientationAxisLock || {}).flags, tex: Object.keys(jm.textures), tier: jm.tier, keys: mods.DynamicParameter && mods.DynamicParameter.params.frame.curve.length, size: mods.InitialSize && mods.InitialSize.StartSize.const, note: !!(jm.notes || []).find(x => /合成一张/.test(x)) };
+  if (out.mob.n !== 1 || out.mob.name !== 'TrailFull' || out.mob.gpu || out.mob.alive !== 1 || out.mob.align !== 'Rectangle' || out.mob.local !== true || out.mob.delay !== 0 || out.mob.lock !== 'EPAL_ROTATE_Z'
+    || out.mob.tex.join() !== 'full,cutoutFull,ramp' || out.mob.tier !== 'M' || !out.mob.keys || !out.mob.note || out.mob.size[1] !== 19200) bad.push('手机合成一张的 cascade_mobile 不对：' + JSON.stringify(out.mob));
+  const g = packGateConfig('cascade_mobile.json', jm, '', { [jm.textures.full.file]: { size: [1024, 1024] }, [jm.textures.cutoutFull.file]: { size: [512, 512] }, [jm.textures.ramp.file]: { size: [256, 8] } });
+  out.gate = g; if (g.length) bad.push('合成一张被导出拦截拦了：' + g.join('；'));
+  out.sheets = namingSheets(mb).map(x => x[0]).join(); if (out.sheets !== 'Full') bad.push('合成一张的命名段不对：' + out.sheets);
+  // 打包换名：手机那张叫 …_Full_32x2_01、Cut 是手机自己的（不当成 PC 共用丢掉）、Ramp 和 PC 共用一张；手机粒子名 <名>_M
+  { const u8 = new Uint8Array([1, 2, 3]), pcb = { form: 'emitset', P: Z, meta: { L: layoutOf(Z) }, fades: [], far: null, mobNaming: { form: 'emitset', esFull: true, meta: { L } } };
+    const files = [['T_T_Loop.png', u8], ['T_T_Ramp.png', u8], ['cascade.json', utf8(JSON.stringify({ name: 'T', textures: { loop: { file: 'T_T_Loop.png' } }, emitters: [] }))],
+      ['T_T_Mobile_Full.png', u8], ['T_T_Mobile_Full_Cutout.png', u8], ['T_T_Mobile_Ramp.png', u8], ['cascade_mobile.json', utf8(JSON.stringify(jm))]];
+    const o = applyPackNaming(files, 'RiseTrail_S', [{ ln: 'T', mn: 'T_Mobile', b: pcb, layer: '' }], {}), names = o.map(([f]) => f), j2 = JSON.parse(dec.decode(o.find(([f]) => f === 'cascade_mobile.json')[1]));
+    out.names = names.filter(f => /\.png$/.test(f)); out.asset = [j2.name, j2.textures.full.asset, j2.textures.cutoutFull.asset];
+    if (!names.includes('T_EFX_FireWorks_RiseTrail_S_Full_32x2_01.png') || !names.includes('T_EFX_FireWorks_RiseTrail_S_Full_32x2_01_C.png') || names.filter(f => f === 'T_EFX_FireWorks_RiseTrail_S_R.png').length !== 1
+      || j2.name !== 'RiseTrail_S_M' || j2.textures.full.asset !== 'T_EFX_FireWorks_RiseTrail_S_Full_32x2_01' || j2.textures.cutoutFull.asset !== 'T_EFX_FireWorks_RiseTrail_S_Full_32x2_01_C') bad.push('合成一张打包换名不对：' + JSON.stringify([out.names, out.asset])); }
+  // PC 不受影响：选了合成一张，PC 的 cascade.json 还是全套（TrailFar 在、没有 TrailFull）
+  { const pj = fwlEmitSet('T', { form: 'emitset', P: { ...Z, outMobile: 'full' }, es: rtBuildES(Z), meta: { L: layoutOf(Z), T: ball.T, Tl: 2, nRev: 1, Ww: 5, Wh: 150, hb: 0.9, sizeKeysRise: [[0, 1], [1, 1]], grow: false, ball: { ...ball, pos: undefined, vel: undefined }, nearA: rtNearA(Z), gpuSplit: rtGpuSplit(Z), nearExpo: 1 }, fades: [],
+      far: { meta: { L: layoutOf({ ...Z, cols: 16, rows: 1, chans: 4 }), far: { ...fa, t0: 0.6 } }, P: Z } }, M, false);
+    out.pc = pj.emitters.map(x => x.name).slice(0, 3); if (!out.pc.includes('TrailFar') || out.pc.includes('TrailFull')) bad.push('PC 被合成一张改了：' + out.pc); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def r7(pg):
+    """4.9.73 尾缀手机「近段 + 远段合成一张」：只给有远段的尾缀、缺省不变；32 列细高格；cascade_mobile 1 个发射器 TrailFull（Rectangle + 锁 Z + Local Space、max_alive 1）过导出拦截；
+    打包换名 …_Full_32x2_01 + 手机自己的 Cut、Ramp 共用；PC 不变"""
+    r = await pg.evaluate(R7_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
@@ -3455,7 +3503,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:
