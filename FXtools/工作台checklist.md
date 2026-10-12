@@ -18,6 +18,7 @@
 - [x] 16.0.18 顶栏预览平台 PC / 手游（本机同步8，2026-10-12）：Material 图标分段按钮在高中低左边，手游去掉 mobile:false 片段（同一张表 PlatformFlags 12 规则），只改预览不改交付；B01 目前无不上手机片段，手游 = PC。走查 `analysis/results/WORKBENCH_PLATFORM_1618/`。
 
 - [x] 16.0.19 云端「只换编排」（跨年秀22，2026-10-12）：`publish-show --data-only` + `release.py --data-only`，云端不装 npm 依赖也能出新编排（只换成品内嵌 cloud-latest，界面源码改过就拒）；指纹按 LF 归一（`fingerprint: sha256-lf`）。B02 发成云端编排 16.0.19（工具 16.0.18）；10 Python / 39 打包检查，file 页无头走查通过（[证据](../analysis/results/WORKBENCH_DATAONLY_1619/看法.md)）。本机 Windows「更新离线工作台」实跑、用户验收另记。
+- [x] 16.0.21 高低错落进 UE（本机同步8，2026-10-13）：UE 实测父模板里子模板条目的高度偏移不生效 → 导出时烘成子模板高度版本（`<花>_D24/_U20`），内存实测同排 160–232 m 与表一致。[ ] 用户在交付页正式导入一次、S / M 尾缀 v003 导入后整场看。
 
 ## 下一步需要验证的闭环
 

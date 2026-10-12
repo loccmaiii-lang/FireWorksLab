@@ -32,7 +32,7 @@ export function EnginePanel({doc,events,tier,notify,extraIssues=[]}){
  <label className="panel-check"><input type="checkbox" aria-label="确认替换导演表" disabled={!plan||busy} checked={checked} onChange={e=>setChecked(e.target.checked)}/>{(plan?.relatedPlans?.length?'确认替换导演蓝图与此场景实例的':'确认替换')+(tier==='nested'?'导演表（高中低合一）':`导演表（只有${tiers[tier]||tier}）`)+'及节目时长'}</label>
  <p role="status" className="field-hint" style={{overflowWrap:'anywhere'}}>{status}</p>
  <button className="quiet-btn full" disabled={!path||busy||writing} onClick={check}>{busy&&!writing?'正在检查…':'重新检查导演与发射点'}</button>
- {plan&&<p className="field-hint">{plan.summary.subTemplates} 个子模板 · {plan.summary.templates} 个模板 · {plan.summary.scheduleSlots} 个时序项。导入前自动备份{plan.relatedPlans?.length?'两个对象':'所选对象'}，其他导演设置保留。</p>}
+ {plan&&<p className="field-hint">{plan.summary.subTemplates} 个子模板{plan.summary.heightVariants?`（其中 ${plan.summary.heightVariants} 个是高低错落的高度版本）`:''} · {plan.summary.templates} 个模板 · {plan.summary.scheduleSlots} 个时序项。导入前自动备份{plan.relatedPlans?.length?'两个对象':'所选对象'}，其他导演设置保留。</p>}
  {receipt&&<p className="field-hint">实际写入/读回：{receipt.verified?'通过':'未通过'} · 保存：{receipt.saved?'通过':'未完成'} · UE 实播：未验证</p>}
  <details><summary>连接与目标详情</summary><p className="field-hint" style={{overflowWrap:'anywhere'}}>固定本机接口：{DEFAULT_ENGINE}<br/>导演：{path||'未识别'}<br/>接收方需打开对应UE工程及已有GPUECli服务。检查不写入；导入范围以检查结果为准；关联只来自精确所属蓝图类。</p></details></section>;
 }

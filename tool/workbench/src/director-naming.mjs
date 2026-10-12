@@ -32,8 +32,11 @@ export function nameDirectorArrays(input){
  const arrays=structuredClone(input),children=indexed(arrays.EffectSubTemplates,'子模板'),parents=indexed(arrays.EffectTemplates,'父模板');
  const childNames=new Map(),parentNames=new Map(),used=new Set(),areas=new Map();
  const audit={scheme:'effect_group_cue_variant/1',subTemplates:[],templates:[]};
- for(const sub of arrays.EffectSubTemplates){
-  const root=subRoot(sub);let name=root,index=2;
+ // 16.0.21：高度版本（原名__DZU25 / __DZD24）跟着原子模板的新名字，后缀写 _U25 / _D24（米，往上 / 往下），一眼看得出是同一朵花的高低版本。
+ const variantOf=n=>String(n).match(/^(.*)__DZ([UD])([0-9p]+)$/);
+ for(const sub of [...arrays.EffectSubTemplates.filter(s=>!variantOf(s.TemplateName)),...arrays.EffectSubTemplates.filter(s=>variantOf(s.TemplateName))]){
+  const v=variantOf(sub.TemplateName),base=v&&childNames.get(v[1].toLowerCase());
+  const root=base?base+'_'+v[2]+String(+v[3].replace('p','.')/100).replace('.','p'):subRoot(sub);let name=root,index=2;
   while(used.has(name.toLowerCase()))name=root+'V'+String(index++).padStart(2,'0');
   used.add(name.toLowerCase());childNames.set(sub.TemplateName.toLowerCase(),name);
   audit.subTemplates.push({from:sub.TemplateName,to:name});sub.TemplateName=name;

@@ -1,0 +1,50 @@
+{
+ "date": "2026-10-13",
+ "by": "本机同步（8）",
+ "directors": {
+  "night": {
+   "path": "MA5_FireworkOnDam_Night: BP_NewYearFireworks_ShowDirector_Night_2",
+   "programme": "16.0.20 B02修订1（188 行，182 与 16.0.20 逐行一致，6 行不同）",
+   "burstZ": "S 148–152 / M 207–212 / L 327–329 m"
+  },
+  "failed": {
+   "path": "MA5_FailedFireworkOnDam_: BP_Failed_NewYearFireworks_ShowDirector_7",
+   "programme": "B01 16.0.15（150 行）",
+   "burstZ": "S 188–192 / M 262–267 / L 407–410 m"
+  }
+ },
+ "finding": "父模板里 SubTemplate 条目的 PositionOffset 导演不认；子模板条目的偏移生效",
+ "before86": {
+  "row": "PrismWheels_P 86.7 s，表里 dz P0..P8 = −31 6 5 −26 −38 −52 −22 −11 20 m",
+  "actual": "9 根 RiseTrail_M 都在 +2.4 m，9 朵 PrismWheels 都在 +212.5 m"
+ },
+ "fixed86": {
+  "compile": {
+   "originalTemplates": 188,
+   "uniqueTemplates": 147,
+   "originalEntries": 978,
+   "uniqueEntries": 780,
+   "eventCount": 978,
+   "subTemplates": 398,
+   "heightVariants": 346,
+   "templates": 147,
+   "groups": 3,
+   "scheduleSlots": 188
+  },
+  "readback": {
+   "subs": 398,
+   "tpls": 147,
+   "slots": 188,
+   "parentZnonzero": 0,
+   "sameArrays": true
+  },
+  "actual": "P0..P8 花 181.5 218.5 217.5 186.5 174.5 160.5 190.5 201.5 232.5 m，和表里子模板高度逐点一致（±0.1 m）",
+  "restored": "Night 原表已写回并逐字段核对一致（测试脚本整表写回时 SequenceTemplates 的 LevelSequencePath 曾被写成 None，已按软引用路径格式补回；工作台正式导入只写特效 4 个字段，不受影响）"
+ },
+ "trails": {
+  "S": "RiseLoop vZ 16515.4 / sizeY 15446.4 = 旧 4.9.19 包，190 m @2.95 s",
+  "M": "vZ 17275.6 / sizeY 16027.5 = 旧 4.9.19，265 m @4.38 s",
+  "L": "vZ 12626.79 / sizeY 11971.6 = v003（k 0.8049），330 m @7.37 s，10-12 23:42 导入",
+  "Hero": "UE 里没有 RiseTrail_Hero_L"
+ }
+}

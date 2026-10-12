@@ -1,6 +1,7 @@
 import {compileSubTemplate,validateSubTemplates} from './subtemplate-model.mjs';
 import {compactDirectorArrays} from './director-compact.mjs';
 import {nameDirectorArrays} from './director-naming.mjs';
+export const HEIGHT_TAG='__DZ';
 const clone=v=>structuredClone(v),round=v=>{if(!Number.isFinite(v))throw Error('时序包含无效数值');return Math.round(v*1e6)/1e6};
 const vec=(x=0,y=x,z=x)=>({X:x,Y:y,Z:z}),rot=()=>({Pitch:0,Yaw:0,Roll:0});
 const filter=(e)=>({PlatformFlags:e?.platformFlags??14,MinQualityLevel:e?.minQuality??'EQuality_VeryLow'});
@@ -19,7 +20,10 @@ function compileLegacy(doc,events,target,mapping={}){
  // 16.0.10：连上 UE 却一个发射点都没读到，多半是放烟花的子关卡没加载；只报一条，不逐点刷屏。
  if(Array.isArray(target?.points)&&!target.points.length&&events.length)issues.push('UE 里没读到任何发射点：请先在 UE 打开大坝地图 Dam_Iris_Long3 并加载放烟花的子关卡 MA5_FailedFireworkOnDam_，再点「重新检查导演与发射点」');
  else for(const group of new Set(events.map(e=>e.pointId[0])))for(let i=0;i<groups[group];i++){const hits=bindings.get(group+':'+i)||[];if(hits.length!==1)issues.push(`${group}${i}：现场绑定${hits.length?'重复':'缺失'}`);}
- const byGroup={P:[],B:[],F:[]},subCache=new Map();
+ const byGroup={P:[],B:[],F:[]},subCache=new Map(),variants=new Map();
+ const heightVariant=(base,dzCm)=>{const name=base+HEIGHT_TAG+(dzCm>0?'U':'D')+String(Math.abs(dzCm)).replace('.','p');if(variants.has(name))return name;
+  const src=arrays.EffectSubTemplates.find(s=>s.TemplateName===base);if(!src)throw Error('高度版本找不到子模板 '+base);
+  arrays.EffectSubTemplates.push({TemplateName:name,Entries:clone(src.Entries).map(x=>({...x,PositionOffset:{...x.PositionOffset,Z:round((x.PositionOffset?.Z||0)+dzCm)}}))});variants.set(name,{base,dzCm});return name};
  if(target?.sourceLibrary)for(const source of catalog.values()){arrays.EffectSubTemplates.push({TemplateName:source.exportName,Entries:clean(clone(source.sub.Entries))});}
  for(const cue of doc.cues)for(const [group,count] of Object.entries(groups)){
   const rows=events.filter(e=>e.cueId===cue.id&&e.pointId[0]===group).sort((a,b)=>a.effectiveLaunch-b.effectiveLaunch||a.id.localeCompare(b.id));if(!rows.length)continue;
@@ -34,7 +38,10 @@ function compileLegacy(doc,events,target,mapping={}){
     }
     const signature=JSON.stringify(entries);subName=target?.sourceLibrary&&m.mode==='whole'?source.exportName:subCache.get(signature);if(!subName){subName=`WB_SUB_${String(subCache.size).padStart(3,'0')}`;subCache.set(signature,subName);arrays.EffectSubTemplates.push({TemplateName:subName,Entries:entries});}
    }
-   parent.Entries.push({EntryType:'SubTemplate',FXResourceId:'None',SubTemplateName:subName,LocalTimeOffset:round(e.effectiveLaunch-start),SlotIndex:Number(e.pointId.slice(1)),PositionOffset:vec(0,0,round((e.dz||0)*100)),RotationOffset:rot(),RandomPositionRange:vec(),RandomRotationRange:rot(),EffectScale:vec(round(e.scale??1)),RandomScaleRatio:0,Filter:filter(e)});
+   // 16.0.21（本机同步8，UE 实测 10-13）：导演不认父模板里 SubTemplate 条目的 PositionOffset（子模板条目的偏移才生效），
+   // 所以高度偏移 dz 烘进子模板的高度版本（整组尾缀 + 花一起平移，和工作台预览一致），父条目 Z 写 0。
+   const dzCm=round((e.dz||0)*100);if(entries&&dzCm)subName=heightVariant(subName,dzCm);
+   parent.Entries.push({EntryType:'SubTemplate',FXResourceId:'None',SubTemplateName:subName,LocalTimeOffset:round(e.effectiveLaunch-start),SlotIndex:Number(e.pointId.slice(1)),PositionOffset:vec(0,0,0),RotationOffset:rot(),RandomPositionRange:vec(),RandomRotationRange:rot(),EffectScale:vec(round(e.scale??1)),RandomScaleRatio:0,Filter:filter(e)});
   }
   arrays.EffectTemplates.push(parent);byGroup[group].push({StartTime:start,TemplateName:parent.TemplateName,Filter:filter()});
  }
@@ -42,7 +49,7 @@ function compileLegacy(doc,events,target,mapping={}){
  const compact=compactDirectorArrays(arrays);Object.assign(arrays,compact.arrays);
  const named=issues.length?null:nameDirectorArrays(arrays);if(named)Object.assign(arrays,named.arrays);
  const exportNames=new Map(named?.audit.subTemplates.map(x=>[x.from,x.to])||[]);
- const summary={...compact.stats,eventCount:events.length,subTemplates:arrays.EffectSubTemplates.length,templates:arrays.EffectTemplates.length,groups:arrays.EffectScheduleGroups.length,scheduleSlots:arrays.EffectScheduleGroups.reduce((n,g)=>n+g.Slots.length,0)};
+ const summary={...compact.stats,eventCount:events.length,subTemplates:arrays.EffectSubTemplates.length,heightVariants:variants.size,templates:arrays.EffectTemplates.length,groups:arrays.EffectScheduleGroups.length,scheduleSlots:arrays.EffectScheduleGroups.reduce((n,g)=>n+g.Slots.length,0)};
  const qualityMode=events.some(e=>e.minQuality)?'nested':'tier';
  return {arrays,issues:[...new Set(issues)],summary,manifest:{format:'df.director-delivery/1',qualityMode,status:issues.length?'blocked_missing_mapping':'property_text_ready_UE_unverified',replaceEffectArrays:true,target:target?.target?.path,sourceLibrary:target?.sourceLibrary,templateNaming:named?.audit,mappingAudit:used.map(id=>({templateId:id,sourceIndex:mapping[id]?.sourceIndex,sourceName:catalog.get(mapping[id]?.source)?.sub.TemplateName,exportName:exportNames.get(catalog.get(mapping[id]?.source)?.exportName)||catalog.get(mapping[id]?.source)?.exportName,note:mapping[id]?.note})),pointNumbering:0,duration:doc.meta.duration,musicOffset:doc.meta.musicOffset||0,summary,issues:[...new Set(issues)],...arrays}};
 }
