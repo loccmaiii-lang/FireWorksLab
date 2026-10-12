@@ -1,0 +1,701 @@
+[
+ {
+  "ps": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Large_Yellow_H",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Glow_B",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_013",
+     "parent": [],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Flower_07",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Flower_07",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Initial Igniton",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_01_Depth_03",
+     "parent": [],
+     "textures": []
+    }
+   },
+   {
+    "name": "Second_Explode_01",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_024",
+     "parent": [],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_Main_04",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x1024"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_Main_04",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x1024"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Sparks_Sphere",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_Sphere_03",
+     "parent": [],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Noise/T_EFX_Noise_11",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sphere_002",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sphere_002",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "FireWorks_Groud_B",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "2x2",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_Sparks_01",
+     "parent": [],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Noise/T_EFX_Noise_11",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sparks_2x2_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sparks_2x2_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Large_Yellow_M",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Glow_B",
+    "lods": 1,
+    "enabled": false,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_013",
+     "parent": [],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Flower_07",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Flower_07",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Initial Igniton",
+    "lods": 1,
+    "enabled": false,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_01_Depth_03",
+     "parent": [],
+     "textures": []
+    }
+   },
+   {
+    "name": "Second_Explode_01",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_024",
+     "parent": [],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_Main_04",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x1024"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_Main_04",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x1024"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Sparks_Sphere",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_Sphere_03",
+     "parent": [],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Noise/T_EFX_Noise_11",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sphere_002",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sphere_002",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "FireWorks_Groud_B",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "2x2",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_Sparks_01",
+     "parent": [],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Noise/T_EFX_Noise_11",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sparks_2x2_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sparks_2x2_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Large_Yellow_L",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Second_Explode_01",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_024",
+     "parent": [],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_Main_04",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x1024"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_Main_04",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x1024"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Sparks_Sphere",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_Sphere_03",
+     "parent": [],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Noise/T_EFX_Noise_11",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sphere_002",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sphere_002",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "FireWorks_Groud_B",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "2x2",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_Sparks_01",
+     "parent": [],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Noise/T_EFX_Noise_11",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sparks_2x2_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sparks_2x2_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Hero_H",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Initial Igniton",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_01_Depth_03",
+     "parent": [],
+     "textures": []
+    }
+   },
+   {
+    "name": "Second_Explode_01",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_017",
+     "parent": [],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_Main_03",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x1024"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_Main_03",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x1024"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": true,
+    "type": "Mesh",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWork_Trail_01",
+     "parent": [],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Mask/T_EFX_Mask_62",
+       "max": 512,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Trail/T_EFX_ShellTrail_02",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "64x512"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Glow_End",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_01_Depth_03",
+     "parent": [],
+     "textures": []
+    }
+   },
+   {
+    "name": "FireWorks_Groud_A",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "4x4",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_019",
+     "parent": [],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_013",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_013",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "FireWorks_Groud_B",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "4x4",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_08",
+     "parent": [],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_09",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Hero_M",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Initial Igniton",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_01_Depth_03",
+     "parent": [],
+     "textures": []
+    }
+   },
+   {
+    "name": "Second_Explode_01",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_017",
+     "parent": [],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_Main_03",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x1024"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_Main_03",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x1024"
+      }
+     ]
+    }
+   },
+   {
+    "name": "FireWorks_Groud_A",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "4x4",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_019",
+     "parent": [],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_013",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_013",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Hero_L",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Initial Igniton",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_01_Depth_03",
+     "parent": [],
+     "textures": []
+    }
+   },
+   {
+    "name": "Second_Explode_01",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_017",
+     "parent": [],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_Main_03",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x1024"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_Main_03",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x1024"
+      }
+     ]
+    }
+   },
+   {
+    "name": "FireWorks_Groud_A",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "4x4",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_019",
+     "parent": [],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_013",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_Fireworks_013",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ }
+]

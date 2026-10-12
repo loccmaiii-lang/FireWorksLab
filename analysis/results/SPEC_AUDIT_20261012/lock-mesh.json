@@ -1,0 +1,915 @@
+{
+ "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanComet_01_HD": [
+  {
+   "name": "Trail",
+   "enabled": false,
+   "align": "PSA_Square",
+   "mods": [],
+   "type": "Ribbon",
+   "MaxTessellationBetweenParticles": 25,
+   "SheetsPerTrail": 1,
+   "MaxTrailCount": 5,
+   "MaxParticleInTrailCount": 5000,
+   "TilingDistance": 0,
+   "bRenderTessellation": false
+  },
+  {
+   "name": "Trail_Sparks",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [],
+   "type": "Gpu"
+  },
+  {
+   "name": "Trail_Main",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": [
+    "OrientationAxisLock:EPAL_ROTATE_Z"
+   ]
+  },
+  {
+   "name": "Main",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "OrientationAxisLock:EPAL_ROTATE_Z"
+   ]
+  },
+  {
+   "name": "Dot_A",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Dot_B",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Dot_C",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Particle Emitter",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": [
+    "OrientationAxisLock:EPAL_ROTATE_Z"
+   ]
+  }
+ ],
+ "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD": [
+  {
+   "name": "Central_L",
+   "enabled": false,
+   "align": "PSA_Velocity",
+   "mods": [
+    "OrientationAxisLock:EPAL_ROTATE_Z"
+   ]
+  },
+  {
+   "name": "Sparks Cloud",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [],
+   "type": "Gpu"
+  },
+  {
+   "name": "Central_L",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": [
+    "OrientationAxisLock:EPAL_ROTATE_Z"
+   ]
+  },
+  {
+   "name": "Main",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "OrientationAxisLock:EPAL_ROTATE_Z"
+   ]
+  },
+  {
+   "name": "Dot_A",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [],
+   "type": "Gpu"
+  },
+  {
+   "name": "Dot_A",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [],
+   "type": "Gpu"
+  }
+ ],
+ "/Game/Effects/Props/FireWorks/P_EFX_FireWork_AI_RPG_H": [
+  {
+   "name": "Sparks_A",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "Ground Explosion",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Particle Emitter",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "MeshRotation:DistributionVectorConstant"
+   ],
+   "type": "Mesh",
+   "mesh": "/Game/Effects/Common/Mesh/Plane/SM_EFX_Plane_17",
+   "verts": "8",
+   "meshAlign": "PSMA_MeshFaceCameraWithRoll",
+   "cameraFacing": false
+  },
+  {
+   "name": "Event_Main",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "BrushSparks",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "Second_Explode_H",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "FireWork_Explode_B",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Sparks Cloud",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  }
+ ],
+ "/Game/Effects/Props/FireWorks/P_EFX_FireWork_Explosion_Big_02_H": [
+  {
+   "name": "Initial Igniton",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "SparksTou_A",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "Sparks Cloud",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "Second_Explode",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": []
+  },
+  {
+   "name": "Second_Explode_A",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": []
+  },
+  {
+   "name": "Particle Emitter",
+   "enabled": false,
+   "align": "PSA_Square",
+   "mods": [
+    "MeshRotation:DistributionVectorUniform"
+   ],
+   "type": "Mesh",
+   "mesh": "/Game/Effects/Common/Mesh/Cylinder/SM_Shell_Trail_03",
+   "verts": "258",
+   "meshAlign": "PSMA_MeshFaceCameraWithRoll",
+   "cameraFacing": false
+  },
+  {
+   "name": "Particle Emitter",
+   "enabled": false,
+   "align": "PSA_Square",
+   "mods": [
+    "MeshRotation:DistributionVectorUniform"
+   ],
+   "type": "Mesh",
+   "mesh": "/Game/Effects/Common/Mesh/Cylinder/SM_Shell_Trail",
+   "verts": "258",
+   "meshAlign": "PSMA_MeshFaceCameraWithRoll",
+   "cameraFacing": false
+  }
+ ],
+ "/Game/Effects/Props/FireWorks/P_EFX_FireWork_Ignition_Loop_S_H": [
+  {
+   "name": "Particle Emitter",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "huoxing02",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Particle Emitter",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "MeshRotation:DistributionVectorUniform"
+   ],
+   "type": "Mesh",
+   "mesh": "/Game/Effects/Common/Mesh/Plane/SM_EFX_Plane_17",
+   "verts": "8",
+   "meshAlign": "PSMA_MeshFaceCameraWithRoll",
+   "cameraFacing": false
+  }
+ ],
+ "/Game/Effects/Props/FireWorks/P_EFX_FireWork_LuckyRain_Long_H": [
+  {
+   "name": "LuckyRain",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "MeshRotation:DistributionVectorUniform",
+    "MeshRotationRate"
+   ],
+   "type": "Mesh",
+   "mesh": "/Game/Effects/Common/Mesh/Plane/SM_EFX_Envelope_01",
+   "verts": "257",
+   "meshAlign": "PSMA_MeshFaceCameraWithRoll",
+   "cameraFacing": false
+  }
+ ],
+ "/Game/Effects/Props/FireWorks/P_EFX_FireWork_LuckyRain_Short_H": [
+  {
+   "name": "LuckyRain",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "MeshRotation:DistributionVectorUniform",
+    "MeshRotationRate"
+   ],
+   "type": "Mesh",
+   "mesh": "/Game/Effects/Common/Mesh/Plane/SM_EFX_Envelope_01",
+   "verts": "257",
+   "meshAlign": "PSMA_MeshFaceCameraWithRoll",
+   "cameraFacing": false
+  }
+ ],
+ "/Game/Effects/Props/FireWorks/P_EFX_FireWork_LuckyTips_H": [
+  {
+   "name": "Sparks_A",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "Ground Explosion",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Particle Emitter",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "MeshRotation:DistributionVectorConstant"
+   ],
+   "type": "Mesh",
+   "mesh": "/Game/Effects/Common/Mesh/Plane/SM_EFX_GunFire_02",
+   "verts": "24",
+   "meshAlign": "PSMA_MeshFaceCameraWithRoll",
+   "cameraFacing": false
+  },
+  {
+   "name": "Event_Main",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "BrushSparks",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "Sparks Cloud",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Second_Explode_H",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "FireWork_Explode_A",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  }
+ ],
+ "/Game/Effects/Props/FireWorks/P_EFX_FireWork_Merge_Hero_H": [
+  {
+   "name": "Particle Emitter",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Smoke Ring",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform",
+    "RotationRate"
+   ]
+  },
+  {
+   "name": "Smoke_UP",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Bust_Ground_Smoke",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation_Seeded:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Sparks Cloud",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "huoxing02",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "huoxing02",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Event_Main",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "Dot_B",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Trail_A",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [],
+   "type": "Ribbon",
+   "MaxTessellationBetweenParticles": 25,
+   "SheetsPerTrail": 1,
+   "MaxTrailCount": 1,
+   "MaxParticleInTrailCount": 40,
+   "TilingDistance": 1200,
+   "bRenderTessellation": true
+  },
+  {
+   "name": "Initial Igniton",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Second_Explode_01",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Particle Emitter",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "MeshRotation:DistributionVectorUniform"
+   ],
+   "type": "Mesh",
+   "mesh": "/Game/Effects/Common/Mesh/Plane/SM_EFX_Plane_FireWork_Hero",
+   "verts": "1180",
+   "meshAlign": "PSMA_MeshFaceCameraWithRoll",
+   "cameraFacing": false
+  },
+  {
+   "name": "Glow_End",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": []
+  },
+  {
+   "name": "FireWorks_Groud_A",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "FireWorks_Groud_B",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  }
+ ],
+ "/Game/Effects/Props/FireWorks/P_EFX_FireWork_Merge_Large_H": [
+  {
+   "name": "Particle Emitter",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Smoke Ring",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform",
+    "RotationRate"
+   ]
+  },
+  {
+   "name": "Smoke_UP",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Bust_Ground_Smoke",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation_Seeded:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Sparks Cloud",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "huoxing02",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "huoxing02",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Event_Main",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "Dot_B",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Trail_A",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [],
+   "type": "Ribbon",
+   "MaxTessellationBetweenParticles": 25,
+   "SheetsPerTrail": 1,
+   "MaxTrailCount": 1,
+   "MaxParticleInTrailCount": 40,
+   "TilingDistance": 1200,
+   "bRenderTessellation": true
+  },
+  {
+   "name": "Initial Igniton",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Second_Explode_01",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Sparks_Sphere",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "FireWorks_Groud_B",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  }
+ ],
+ "/Game/Effects/Props/FireWorks/P_EFX_FireWork_Merge_Medium_H": [
+  {
+   "name": "Particle Emitter",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Smoke Ring",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform",
+    "RotationRate"
+   ]
+  },
+  {
+   "name": "Smoke_UP",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Bust_Ground_Smoke",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation_Seeded:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Sparks Cloud",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "huoxing02",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "huoxing02",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Event_Main",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "Dot_B",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Trail_A",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [],
+   "type": "Ribbon",
+   "MaxTessellationBetweenParticles": 25,
+   "SheetsPerTrail": 1,
+   "MaxTrailCount": 1,
+   "MaxParticleInTrailCount": 40,
+   "TilingDistance": 1200,
+   "bRenderTessellation": true
+  },
+  {
+   "name": "Initial Igniton",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "FireWork_Explode_A",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Sparks_Sphere",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Second_Explode_01",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Sparks_Sphere",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  }
+ ],
+ "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Hero_H": [
+  {
+   "name": "Initial Igniton",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Second_Explode_01",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Particle Emitter",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "MeshRotation:DistributionVectorUniform"
+   ],
+   "type": "Mesh",
+   "mesh": "/Game/Effects/Common/Mesh/Plane/SM_EFX_Plane_FireWork_Hero",
+   "verts": "1180",
+   "meshAlign": "PSMA_MeshFaceCameraWithRoll",
+   "cameraFacing": false
+  },
+  {
+   "name": "Glow_End",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": []
+  },
+  {
+   "name": "FireWorks_Groud_A",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "FireWorks_Groud_B",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  }
+ ],
+ "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Props_Hero_H": [
+  {
+   "name": "Initial Igniton",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Second_Explode_01",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": []
+  },
+  {
+   "name": "Particle Emitter",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "MeshRotation:DistributionVectorUniform"
+   ],
+   "type": "Mesh",
+   "mesh": "/Game/Effects/Common/Mesh/Plane/SM_EFX_Plane_FireWork_Hero",
+   "verts": "1180",
+   "meshAlign": "PSMA_MeshFaceCameraWithRoll",
+   "cameraFacing": false
+  },
+  {
+   "name": "Glow_End",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": []
+  },
+  {
+   "name": "FireWorks_Groud_A",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "FireWorks_Groud_B",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  }
+ ],
+ "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Trail_01_H": [
+  {
+   "name": "Trail2",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [],
+   "type": "Ribbon",
+   "MaxTessellationBetweenParticles": 25,
+   "SheetsPerTrail": 1,
+   "MaxTrailCount": 1,
+   "MaxParticleInTrailCount": 40,
+   "TilingDistance": 1200,
+   "bRenderTessellation": false
+  },
+  {
+   "name": "Dot_A",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Event_Main",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": []
+  },
+  {
+   "name": "Particle Emitter",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": []
+  }
+ ],
+ "/Game/Effects/Props/FireWorks/P_EFX_MusicFest_FireWork_Sparkler_Loop_H": [
+  {
+   "name": "Fog_Once",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "MeshRotation_Seeded:DistributionVectorUniform"
+   ],
+   "type": "Mesh",
+   "mesh": "/Game/Effects/Common/Mesh/Plane/SM_EFX_Plane_10",
+   "verts": "8",
+   "meshAlign": "PSMA_MeshFaceCameraWithRoll",
+   "cameraFacing": false
+  },
+  {
+   "name": "Fog_Loop",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "MeshRotation_Seeded:DistributionVectorUniform"
+   ],
+   "type": "Mesh",
+   "mesh": "/Game/Effects/Common/Mesh/Plane/SM_EFX_Plane_10",
+   "verts": "8",
+   "meshAlign": "PSMA_MeshFaceCameraWithRoll",
+   "cameraFacing": false
+  },
+  {
+   "name": "Fog_Loop",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "MeshRotation_Seeded:DistributionVectorUniform"
+   ],
+   "type": "Mesh",
+   "mesh": "/Game/Effects/Common/Mesh/Plane/SM_EFX_Plane_10",
+   "verts": "8",
+   "meshAlign": "PSMA_MeshFaceCameraWithRoll",
+   "cameraFacing": false
+  },
+  {
+   "name": "huoxing02",
+   "enabled": true,
+   "align": "PSA_Square",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ],
+   "type": "Gpu"
+  },
+  {
+   "name": "Sparks_loop",
+   "enabled": true,
+   "align": "PSA_Velocity",
+   "mods": [],
+   "type": "Gpu"
+  },
+  {
+   "name": "Spark_Star_B",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  },
+  {
+   "name": "Spark_Star_A",
+   "enabled": true,
+   "align": "PSA_Rectangle",
+   "mods": [
+    "Rotation:DistributionFloatUniform"
+   ]
+  }
+ ]
+}

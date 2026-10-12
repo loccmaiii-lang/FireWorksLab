@@ -1,0 +1,3279 @@
+[
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Central_01_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Central_L",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_Central_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/Noise_HD/T_EFX_Noise_SandSmoke_01_HD",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_RGBAFireRamp_08",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_Middle_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_Middle_01_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Medium_L",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_Middle_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/Noise_HD/T_EFX_Noise_SandSmoke_01_HD",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_RGBAFireRamp_08",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_Middle_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterLeft_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Out_L",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_OuterLeft_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/Noise_HD/T_EFX_Noise_SandSmoke_01_HD",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_RGBAFireRamp_08",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_OuterLeft_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanGold_OuterRight_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Out_R",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanGold_OuterRight_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/Noise_HD/T_EFX_Noise_SandSmoke_01_HD",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_RGBAFireRamp_08",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanGold_OuterRight_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanComet_01_HD",
+  "lodDistances": 4,
+  "emitters": [
+   {
+    "name": "Trail",
+    "lods": 4,
+    "enabled": false,
+    "type": "Ribbon",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/Trail_HD/MI_EFX_Throw_Trail_33_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Mask/T_EFX_Mask_24",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Trail/T_EFX_SmokeTrail_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x256"
+      },
+      {
+       "param": "DistortUVTex",
+       "path": "/Game/Effects/Common/Texture/Noise/T_EFX_Noise_07",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Trail_Sparks",
+    "lods": 4,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Trail_Main",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanComet_Central_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/Noise_HD/T_EFX_Noise_SandSmoke_01_HD",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_RGBAFireRamp_08",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanComet_16x1_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Main",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Dot_A",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Dot_B",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Dot_C",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Particle Emitter",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_03_dissolve1",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_DissolveOutline_Soft"
+     ],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_03",
+       "max": 512,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_03",
+       "max": 512,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanSilver_01_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Central_L",
+    "lods": 1,
+    "enabled": false,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanSilver_Central_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/Noise_HD/T_EFX_Noise_SandSmoke_01_HD",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_ColorRamp_02",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanSilver_12x2_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Sparks Cloud",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Central_L",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_FanSilver_Central_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/Noise_HD/T_EFX_Noise_SandSmoke_01_HD",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_ColorRamp_02",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_FanSilver_12x2_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Main",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Dot_A",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Dot_A",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_NY_Small_B_HD",
+  "lodDistances": 4,
+  "emitters": [
+   {
+    "name": "Trail",
+    "lods": 4,
+    "enabled": true,
+    "type": "Ribbon",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Trail/MI_EFX_Throw_Trail_6",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_Master"
+     ],
+     "textures": [
+      {
+       "param": "AlphaMask _A",
+       "path": "/Game/Effects/Common/Texture/Mask/T_EFX_Mask_19",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Mask/T_EFX_Mask_14",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "128x128"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Glow_B",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_26",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_02",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Dot_Cloud_B",
+    "lods": 4,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_Sparks_03",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_DissolveOutline_Soft"
+     ],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sparks_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sparks_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Sparks_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Dot_B",
+    "lods": 4,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "8x8",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Sparks_Flicker_8x8_03",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Sparks_Flicker_8x8_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x1024"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Comet_HD",
+  "lodDistances": 4,
+  "emitters": [
+   {
+    "name": "Trail",
+    "lods": 4,
+    "enabled": true,
+    "type": "Ribbon",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/Trail_HD/MI_EFX_Throw_Trail_33_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Mask/T_EFX_Mask_24",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Trail/T_EFX_SmokeTrail_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x256"
+      },
+      {
+       "param": "DistortUVTex",
+       "path": "/Game/Effects/Common/Texture/Noise/T_EFX_Noise_07",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Trail",
+    "lods": 4,
+    "enabled": true,
+    "type": "Ribbon",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/Trail_HD/MI_EFX_Throw_Trail_33_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Mask/T_EFX_Mask_24",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Trail/T_EFX_SmokeTrail_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x256"
+      },
+      {
+       "param": "DistortUVTex",
+       "path": "/Game/Effects/Common/Texture/Noise/T_EFX_Noise_07",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Glow_B",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_26",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_02",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Glow_C",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_26",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_02",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LittleChry_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": false,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_GoldSpark_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01D",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRamp_01",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_GoldSpark_02_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01D",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_ColorRamp_04",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_4x4_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Glow_B",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_01_Depth_03",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Special/M_EFX_RadialGradient_Additive"
+     ],
+     "textures": []
+    }
+   },
+   {
+    "name": "Flash",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_16",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_22",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Crackle_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "L1_Main",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Crackle_Main_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Crackle_Main_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_Crackle_Main_4x4_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeStar_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "L1_Main",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Tail_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeStar_Tail_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Tail_4x4_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "L2_MainA",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Head_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeStar_Head_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Head_4x4_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "L2_MainB",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeStar_Head_02_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeStar_Head_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeStar_Head_4x4_02_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "L3_Dots",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_Combo_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "L1_Main",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_Combo_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Combo_R",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Combo_4x4_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GreenPeony_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Sphere_Particle",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_21_Add",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Special/M_EFX_RadialGradient_Additive"
+     ],
+     "textures": []
+    }
+   },
+   {
+    "name": "Sphere_Particle",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_21_Add",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Special/M_EFX_RadialGradient_Additive"
+     ],
+     "textures": []
+    }
+   },
+   {
+    "name": "dOt",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_02_Depth_ADD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_58",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "line",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_21_Add",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Special/M_EFX_RadialGradient_Additive"
+     ],
+     "textures": []
+    }
+   },
+   {
+    "name": "dot_a",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_02_Depth_ADD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_58",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_LimeCoreDelay_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "L1_Dots",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "L2_Main",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Lead_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeCoreDelay_Lead_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Lead_2x2_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "L3_MainA",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Glitter_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeCoreDelay_Glitter_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "L3_MainB",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_LimeCoreDelay_Glitter_02_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_LimeCoreDelay_Glitter_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_LimeCoreDelay_Glitter_4x4_02_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldRay_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "L1_Main",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRay_A_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldRay_A_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRay_A_4x4_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "L2_Main",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldRay_B_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldRay_B_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldRay_B_4x4_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWork_PrismWheels_HD",
+  "lodDistances": 4,
+  "emitters": [
+   {
+    "name": "Dark_Groud",
+    "lods": 4,
+    "enabled": false,
+    "type": "CPU",
+    "grid": "2x2",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_PrismWheels_02_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_DissolveOutline_Soft"
+     ],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01M",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_02D",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_02",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Dark_Groud",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "2x2",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_PrismWheels_02_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_DissolveOutline_Soft"
+     ],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01M",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_02D",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_02",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Light_Groud",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "2x2",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_PrismWheels_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_DissolveOutline_Soft"
+     ],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01M",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01D",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Main",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_01_Depth_03",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Special/M_EFX_RadialGradient_Additive"
+     ],
+     "textures": []
+    }
+   },
+   {
+    "name": "Dark",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_01_Depth_03",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Special/M_EFX_RadialGradient_Additive"
+     ],
+     "textures": []
+    }
+   },
+   {
+    "name": "Light_Groud",
+    "lods": 4,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "2x2",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_PrismWheels_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_DissolveOutline_Soft"
+     ],
+     "textures": [
+      {
+       "param": "AlphaMaskTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01M",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01D",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_PrismWheels_2x2_01",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Sparks Cloud",
+    "lods": 4,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Initial Igniton",
+    "lods": 4,
+    "enabled": false,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_01_Depth_03",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Special/M_EFX_RadialGradient_Additive"
+     ],
+     "textures": []
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldChry_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Glow_B",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_01_Depth_03",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Special/M_EFX_RadialGradient_Additive"
+     ],
+     "textures": []
+    }
+   },
+   {
+    "name": "Second_Explode_01",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_10",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_DissolveOutline_Soft"
+     ],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Main_05D",
+       "max": 512,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Main_05",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Sphere_Particle",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_21_Add",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Special/M_EFX_RadialGradient_Additive"
+     ],
+     "textures": []
+    }
+   },
+   {
+    "name": "Head",
+    "lods": 1,
+    "enabled": false,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_05_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05D",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_Head_05Ramp",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_World",
+       "size": "256x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05F",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Head",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_Fireworks_11",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_DissolveOutline_Soft"
+     ],
+     "textures": [
+      {
+       "param": "NoiseMap",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05D",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": false,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_02_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/Noise_HD/T_EFX_Noise_SandSmoke_01_HD",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRamp_09",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RGBA_4x4_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Flash",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_16",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_22",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Sparks Cloud",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "SparksTou_A",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_09",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_09",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "32x256"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldCoreLime_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "L1_Main",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_LeadTail_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_LeadTail_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_LeadTail_4x4_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "L2_Main",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_LimeStar_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_LimeStar_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_LimeStar_4x4_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "L3_Main",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_GoldCore_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_GoldCore_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_GoldCore_4x4_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "L4_Main",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_GoldCoreLime_RedCore_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_GoldCoreLime_RedCore_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_GoldCoreLime_RedCore_4x4_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldSpark_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": false,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_GoldSpark_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01D",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRamp_01",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_GoldSpark_02_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01D",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_ColorRamp_04",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_4x4_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Glow_B",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_01_Depth_03",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Special/M_EFX_RadialGradient_Additive"
+     ],
+     "textures": []
+    }
+   },
+   {
+    "name": "Flash",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_16",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_22",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05D",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRamp_02",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RGBA_2x2_Kamuro_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_02_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05D",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRamp_02",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RGBA_2x2_Kamuro_02",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_03_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05D",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRamp_02",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RGBA_2x2_Kamuro_03",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_04_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05D",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRamp_02",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RGBA_2x2_Kamuro_04",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_05_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Head_05D",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRamp_02",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RGBA_2x2_Kamuro_05",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_Kamuro_06_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_Kamuro_D",
+       "max": 512,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "512x512"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRamp_02",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_RGBA_2x2_Kamuro_06",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_SilverChry_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": false,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_GoldSpark_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01D",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_6DLight_EmissiveRamp_01",
+       "max": 0,
+       "comp": "TC_Default",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "1024x16"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Particle Emitter",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RGBA_2x2_GoldSpark_02_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "Dissolve",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_2x2_01D",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      },
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_ColorRamp_04",
+       "max": 0,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects/Common/Texture/Fireworks/T_EFX_FireWorks_GoldSpark_4x4_01",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Glow_B",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_01_Depth_03",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Special/M_EFX_RadialGradient_Additive"
+     ],
+     "textures": []
+    }
+   },
+   {
+    "name": "Flash",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Glow/MI_EFX_Glow_16",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Glow/T_EFX_Glow_22",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "RiseLoop",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Loop_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RiseTrail_L_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Loop_16x1_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "TrailFar",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_L_Far_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RiseTrail_L_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_L_Far_16x4_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "SparksFine",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "SparksTwinkle",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "SparksCoarse",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Embers",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "HeadGlow",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "SparkPops",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "LaunchGlow",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "LaunchSparks",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "RiseLoop",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Loop_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RiseTrail_L_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Loop_16x1_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "TrailFar",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_M_Far_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RiseTrail_L_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_M_Far_16x2_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "SparksFine",
+    "lods": 1,
+    "enabled": false,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "SparksTwinkle",
+    "lods": 1,
+    "enabled": false,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "SparksCoarse",
+    "lods": 1,
+    "enabled": false,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Embers",
+    "lods": 1,
+    "enabled": false,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "HeadGlow",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "SparkPops",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "LaunchGlow",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "LaunchSparks",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ {
+  "ps": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD",
+  "lodDistances": 1,
+  "emitters": [
+   {
+    "name": "RiseLoop",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Loop_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RiseTrail_L_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "TrailFar",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects_HD/Common_HD/MaterialInstance_HD/FireWorks_HD/MI_EFX_FireWorks_RiseTrail_S_Far_01_HD",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/Fire/M_EFX_FlipBookSuperPack_FireBase_Unlit"
+     ],
+     "textures": [
+      {
+       "param": "EmissiveRampTex",
+       "path": "/Game/Effects/Common/Texture/Ramp/T_EFX_FireWorks_RiseTrail_L_R",
+       "max": 1024,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x8"
+      },
+      {
+       "param": "MainTex",
+       "path": "/Game/Effects_HD/Common_HD/Texture_HD/FireWorks_HD/T_EFX_FireWorks_RiseTrail_S_Far_16x2_01_HD",
+       "max": 2048,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "2048x2048"
+      }
+     ]
+    }
+   },
+   {
+    "name": "SparksFine",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "SparksTwinkle",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "SparksCoarse",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "Embers",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "HeadGlow",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "SparkPops",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "LaunchGlow",
+    "lods": 1,
+    "enabled": true,
+    "type": "CPU",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   },
+   {
+    "name": "LaunchSparks",
+    "lods": 1,
+    "enabled": true,
+    "type": "Gpu",
+    "grid": "1x1",
+    "mat": {
+     "mi": "/Game/Effects/Common/MaterialInstance/Spark/MI_EFX_Spark_16_NoCameraDepthFade",
+     "parent": [
+      "/Game/MaterialLib/Materials/FX/Parent/M_EFX_MainTex"
+     ],
+     "textures": [
+      {
+       "param": "BaseTex",
+       "path": "/Game/Effects/Common/Texture/Spark/T_EFX_Spark_16",
+       "max": 256,
+       "comp": "TC_BC7",
+       "lodGroup": "TEXTUREGROUP_Effects",
+       "size": "256x256"
+      }
+     ]
+    }
+   }
+  ]
+ }
+]
