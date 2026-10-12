@@ -19,6 +19,7 @@ npm run dev
 - `npm run release -- --no-deploy`：云端只更新仓库产物，不处理本机交付目录。
 - `npm run build:app`：仅编译开发源码，不发布；不能把这一步称为完整离线交付。
 - `npm run publish-show -- --programme <节目.dfshow> --name <编排名> [--note 说明] [--version 16.0.x]`（16.0.9 起）：把一版编排发布成「云端最新编排」。版本号末位 +1；去掉内嵌音乐、只留 sha256；写 `public/data/cloud-latest.json` 和 `FXtools/节目/云端最新/<版本>-<编排名>.dfshow`，并在 `版本记录.md` 追加一行。之后照常 release。工作台启动时，这份编排在当前浏览器没载入过就自动载入：载入前把原节目放进「恢复切换前节目」，同一份只载入一次。逻辑在 `src/cloud-latest.mjs`，检查在 `tests/cloud-latest.test.mjs`。同一版本要附对比版（如密度 D1 / D3）时加 `--also <节目.dfshow>::<编排名>`（可重复），对比版只存进 `FXtools/节目/云端最新/` 和版本记录，刷新不自动载入，要在「节目 → 打开节目」里选。
+- 只换编排（16.0.19 起，云端装不了 npm 依赖时用）：`node scripts/publish-show.mjs --data-only --programme <节目.dfshow> --name <编排名>`，再 `python3 release.py --data-only --no-deploy`。不重编界面：先用 Git 确认界面源码（`src/`、`package*.json`、`public/data/`、`fixtures/`、离线壳 `bootstrap.js` 等）自上一次成品提交后没改，再把成品 HTML 内嵌数据块里的 `cloud-latest` 换掉（`../offline-workbench/patch-data.mjs`，数据块以外字节不动），更新构建清单（`dataPatches` 记一笔）、跑打包检查、重打 ZIP。工具版本号 `WORKBENCH_VERSION` 不变，编排版本号接着最大的号末位 +1，顶栏写「云端编排 16.0.19」、底栏写「导演编排 16.0.18 · 云端 16.0.19」。界面源码改过就会拒绝，要本机 `npm run release`；之后完整构建时工具版本必须比只换编排用过的号新（release.py 会拦）。
 
 不需要 Sites、公开服务器、UE在线或私有D盘目录。没有UE时连接状态显示未连接，网页编排仍可用。旧8017 Actor只读代理是历史辅助接口，主要导演读写使用已有17780/gpcli；本次不新增或自动执行UE写操作。
 
@@ -65,4 +66,4 @@ python tool/workbench/release.py --deploy-only
 - `server/`：只读开发辅助接口和原字节产物预览。
 - `../offline-workbench/`：单文件打包、校验；原业务导出路径转发到这里的 `src/`，不用再改两套代码。其 `model/` 是旧检查快照，正式构建不使用。
 
-源码统一LF换行，构建指纹不依赖盘符。云端有桌面可以打开HTML；没有桌面则运行本地HTTP检查。云端网页测试不等于本机UE实播或真实file协议验证。
+源码统一LF换行，构建指纹不依赖盘符。16.0.19 起指纹也不依赖换行：构建清单写 `fingerprint: sha256-lf`，按 LF 归一后算，Windows 工作区里是 CRLF 或混合换行也和云端 LF 检出对得上（以前的清单按原字节算，Windows 上有 11 个文件是 CRLF / 混合换行，云端核对必失败）。云端有桌面可以打开HTML；没有桌面则运行本地HTTP检查。云端网页测试不等于本机UE实播或真实file协议验证。

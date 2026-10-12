@@ -26,7 +26,10 @@ test('updates preserve v1 local storage identity and prefer saved programmes ove
  assert.equal(records.get('df-offline-workbench-v1-draft-program-OLD'),old);assert.equal(JSON.parse(records.get('df-offline-workbench-v1-draft')).doc.meta.programName,'接收者自己的节目');
 });
 test('built HTML checksum and original source fingerprints match',async()=>{
- assert.equal(crypto.createHash('sha256').update(html).digest('hex'),report.sha256);for(const [f,hash] of Object.entries(report.sourceFiles))assert.equal(crypto.createHash('sha256').update(await fs.readFile(path.join(sourceRoot,f),'utf8')).digest('hex'),hash,f);
+ // 16.0.19：新清单按 LF 归一（fingerprint: sha256-lf），Windows CRLF 与云端 LF 检出都能核对；旧清单按原字节，或原字节整篇 CRLF。
+ const sha=text=>crypto.createHash('sha256').update(text).digest('hex'),lf=text=>text.replaceAll('\r\n','\n');
+ assert.equal(sha(html),report.sha256);for(const [f,hash] of Object.entries(report.sourceFiles)){const text=await fs.readFile(path.join(sourceRoot,f),'utf8');
+  const accepted=report.fingerprint==='sha256-lf'?[sha(lf(text))]:[sha(text),sha(lf(text).replaceAll('\n','\r\n'))];assert(accepted.includes(hash),f);}
 });
 test('inline JavaScript parses without browser module loading',()=>{const marker='<script id="df-offline-runtime">',from=html.indexOf(marker)+marker.length,js=html.slice(from,html.lastIndexOf('</script>'));new vm.Script(js);assert(js.includes('text/plain'));});
 test('bootstrap retrieves local JSON and embedded audio without file:// network calls',async()=>{
@@ -45,3 +48,9 @@ test('embedded programme survives real version-file round trip; new programme is
 });
 
 test('build manifest identifies its runtime',()=>{assert(['linux','win32','darwin'].includes(report.buildEnvironment.platform));assert.match(report.buildEnvironment.node,/^v\d+\.\d+\.\d+$/);assert.match(report.buildEnvironment.arch,/^[a-z0-9_]+$/);});
+test('data-only patches swap only the cloud programme and keep the app build they sit on',()=>{
+ if(!report.dataPatches?.length)return;
+ const last=report.dataPatches.at(-1);assert.equal(last.key,'cloud-latest');assert.equal(last.version,report.cloudLatest.version);
+ assert.equal(last.programmeSha256,report.cloudLatest.programmeSha256);assert.equal(data['cloud-latest'].programmeSha256,report.cloudLatest.programmeSha256);
+ assert.match(last.previousHtmlSha256,/^[a-f0-9]{64}$/);assert.equal(data['cloud-latest'].publishMode,'data-only');
+});
