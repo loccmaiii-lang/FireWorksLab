@@ -12,7 +12,7 @@
 
 ## 你的范围（只做这些）
 
-1. **只读审计**：用户导完一项就查一项。工具：`analysis/local/SPEC_AUDIT_20261012/pc-trail-verify.mjs`、`walk.mjs`，或 23 的 `tool/local_delivery/fx_gate.py --ue`。查这几项：LOD、发射器数、GPU、引用越界（手游资产链上不能出现 `Effects_HD` / `_HD`）、Ramp 是否复用。查完写 `FXtools/节目/NewYearFireWorks_v01/资源发射器数.json`。
+1. **只读审计**：用户导完一项就查一项。工具：`analysis/local/SPEC_AUDIT_20261012/pc-trail-verify.mjs`、`walk.mjs`（23 注 10-13：`tool/local_delivery/fx_gate.py` 只查交付包，没有 `--ue` 模式；UE 读回用这两个脚本）。查这几项：LOD、发射器数、GPU、引用越界（手游资产链上不能出现 `Effects_HD` / `_HD`）、Ramp 是否复用。查完写 `FXtools/节目/NewYearFireWorks_v01/资源发射器数.json`。
 2. **22 排给手游编排的实测**（状态清单「跨年秀（22） → 手游编排 · Hero 行、小花束尾实测、B02 实播」）：
    - ② 小花束尾：银扇 / 红彗星单束在 EffectScale 0.4 / 0.6 / 0.8 下的束长、星头到最高点的时刻、Roll 正时偏向哪一边，量完写回那一条；
    - 尾缀倾斜 1 / 3 / 5 根（需要 4.9.69 之后、用户已导入的尾缀）；
