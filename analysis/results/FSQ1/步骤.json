@@ -1,0 +1,37 @@
+[
+ {
+  "name": "基准回归 4.9.70 → 4.9.71 花型模板 6 个",
+  "script": "基准回归.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ },
+ {
+  "name": "多层模板定帧回归 4.9.70 → 4.9.71",
+  "script": "多层模板回归.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ },
+ {
+  "name": "火花平方阻力检查",
+  "script": "火花平方阻力检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "火花发射器检查（4.9.54 / 4.9.58 不受影响）",
+  "script": "火花发射器检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "金曜菊金锦层末段演示",
+  "script": "火花平方阻力演示.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ }
+]
