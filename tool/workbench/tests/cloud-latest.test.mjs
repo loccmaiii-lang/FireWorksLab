@@ -77,5 +77,7 @@ test('the published cloud-latest data, when present, is valid and opens like a p
  const state=preflightProject(text,seed);assert.equal(state.doc.cues.length,cloud.cues);assert.equal(state.doc.events.length,cloud.events);
  const version=fs.readFileSync(new URL('../src/connection.mjs',import.meta.url),'utf8').match(/WORKBENCH_VERSION='([^']+)'/)[1];
  const n=v=>v.split('.').map(Number),[a,b]=[n(cloud.version),n(version)];
+ // 16.0.19 起云端可以「只换编排」（release.py --data-only）：编排号比工具号新，但必须记明它挂在哪个工具版本上，而且就是现在这个
+ if(cloud.publishMode==='data-only'){assert.equal(cloud.appVersion,version,'只换编排的云端编排要挂在当前工具版本上');return}
  assert(a[0]<b[0]||a[0]===b[0]&&(a[1]<b[1]||a[1]===b[1]&&a[2]<=b[2]),'云端编排版本号不能比工作台新（只改工具时工作台先 +1，编排沿用上一版）');
 });

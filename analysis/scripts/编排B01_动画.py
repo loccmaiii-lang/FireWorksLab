@@ -26,8 +26,9 @@ b01 = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(b01)
 
 OUT = ROOT / '协作/编排B01'
-B02 = '--b02' in sys.argv
-SFX, TABLE, NAME = ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
+R1M = '--b02r1m' in sys.argv          # B02 修订1（22，10-12 23:13）：错层 + 主角让位 + 手游替身；仍输出到 B02动画.html（同一个网页链接）
+B02 = R1M or '--b02' in sys.argv
+SFX, TABLE, NAME = ('_B02r1m', 'B02r1m', 'B02') if R1M else ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
 if B02:
     b01.HEIGHTS = 'v2'
 LOGIC = json.loads((OUT / f'逻辑方案{SFX}.json').read_text(encoding='utf-8'))
@@ -57,6 +58,23 @@ def risks_b02():
         '小平台用的是银扇 / 红彗星（手游白名单外），只上 PC；19 个片段放在节奏 D 的空小节里，高潮段不放。',
         f"GPU 预算仍按暂定 ≤ 200 / 秒排（实测上限 250），高档峰值 {g['peak']}；小平台加的每秒最多十来个。",
         '工作台版本号没升：云端会话装不了工作台依赖，16.0.19 的自动载入由本机同步（8）发布；现在请手动打开 B02 节目文件。',
+        '像不像、乱不乱要你看；体检只能证明规则被遵守。',
+    ]
+
+
+def risks_r1():
+    g, ob, r = CHECK['gpu'], COMPILE.get('oneTable', {}), CHECK['r1']
+    st = r.get('standins') or []
+    return [
+        '没在 UE 里放过；体检是正面投影算的圆，没算景深，花的真实大小也要 UE 量（宪章 §3）。',
+        f"错层后 PC「混成一团」35 → 11 处（编排重叠体检.py）：剩下 10 处是后一排开在前一排快熄的余烬上（重叠 0.3–1.3 s），1 处是终章白墙（墙按设计连成一片，没拆）。",
+        f"大号整排拆成城垛（偶数点大号、奇数点回中号）{len(r['castle'])} 排：大花份额 31.6% → 25.1%（宪章目标 25–30%，刚好在下沿），中花 29.3% → 35.6%；想保留更多大花，可以改成大号整排只做高低错开（但还会挤，圆心距约 0.5 倍直径）。",
+        '收窄3 现在是「P4 大号在上、P3 P5 中号在下」（发射点没挪，靠高低拉开）；如果你更想把三朵大号拉开发射点（P2 / P4 / P6），收窄的感觉会变成「一样宽、变稀」，说一声我改。',
+        f"主角让位：主角亮着时，城垛大号在主角点上的那朵去掉（{'、'.join(f'{a} {b} {"/".join(c)}' for a, b, c in r['heroRoom'])}）；三主角本身仍在 P2 / P4 / P6（主角之间圆心距约 0.72 倍直径，设计成垂柳墙）。",
+        f"逐排高低在原来的 −60…+25 m 里挪（平均挪 {r['heights']['meanMoveM']} m，最多 {r['heights']['maxMoveM']} m），超过 +25 m 尾缀会从半空出现，所以没放宽。",
+        f"手游替身 {len(st)} 排（{ob.get('flags2', 0)} 发）是「只上手游」片段（PlatformFlags 2）：这个网页能看，编排工作台 16.0.18 还不支持，会被当成 PC + 手游；工作台加「只上手游」后（排给本机同步 8）再发到工作台。替身花型手机资源还没有。",
+        f"手游三档 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')} 发；剩一段 73–78 s（低位密奏，PC 那里只有 B 点低排和小平台）手游空 5 s，B01 起就有。",
+        f"GPU 预算仍按暂定 ≤ 200 / 秒排，PC 高档峰值 {g['peak']}（B02 是 200；城垛把一部分大号换回中号，尾缀 GPU 变少）。",
         '像不像、乱不乱要你看；体检只能证明规则被遵守。',
     ]
 
@@ -137,7 +155,8 @@ def b02_data(species):
     span = lambda a, b: sec(a + 0.5) if sec(a + 0.5) == sec(b - 0.5) else f'{sec(a + 0.5)} → {sec(b - 0.5)}'
     gtxt = '；'.join(f"{a:.0f}–{b:.0f} s（{b - a:.0f} s，{span(a, b)}）" for a, b in gaps) or '无'
     b02 = dict(pc=ob.get('pc'), mobile=ob.get('mobile'), mobileSpecies=sp,
-               mobileRule='只用 P 点；只放执行方案 §2.1 周三白名单（小银菊、橙辉星、金芒菊含大号、银彩菊、主角，可选爆裂星、金锦菊）的主排；M / L 一排只放偶数点 P0 / 2 / 4 / 6 / 8（奇数点只上 PC，免得花叠花）；二排、托底扇、扇组、小平台都不上手游。PC 三档一个不变。',
+               mobileRule='只用 P 点；只放执行方案 §2.1 周三白名单（小银菊、橙辉星、金芒菊含大号、银彩菊、主角，可选爆裂星、金锦菊）的主排；M / L 一排只放偶数点 P0 / 2 / 4 / 6 / 8（奇数点只上 PC，免得花叠花）；二排、托底扇、扇组、小平台都不上手游。'
+               + ('修订1 加「手游替身」（只上手游，PlatformFlags 2，PC 不放）：PC 放白名单外的花、手游又空着的那一拍，手游放白名单里同色系的花，高配偶数点、中低配 P0 / P4 / P8；挤着还亮的手游花就挪高度或大号退中号。' if R1M else 'PC 三档一个不变。'),
                mobileGaps=gtxt, combos=rows,
                comboNote='现成银扇 / 红彗星单束缩小当尾缀（每个变体一组固化随机角，甲 / 乙两组），现成小银菊 / 金锦菊 / 爆裂星缩到 22–28 m 挂在束顶；V 形细束不开花、每次放随机 ±6°。束长和挂花时刻是估的，见纰漏。')
     return combos, b02
@@ -151,7 +170,7 @@ def main():
     for c in LOGIC['cues']:
         med, low = set(c['profiles']['medium']), set(c['profiles']['low'])
         kind = 'fan' if c['size'] == 'F' else 'combo' if c['size'] == 'X' else 'ball'
-        mb = 0 if c.get('mobile') is False else 1
+        mb = 0 if c.get('mobile') is False else 2 if c.get('mobile') == 'only' else 1
         if B02 and kind == 'ball':
             tpl = b01.TPL[c['templateId'].split('__K')[0]]
             bh, bd = round(b01.bloom_h(c), 1), round((tpl['diameter'] or b01.DIA[c['size']]) * c.get('sizeK', 1.0), 1)
@@ -175,7 +194,7 @@ def main():
         bursts = [e['burst'] for e in c['events']]
         cues.append(dict(id=c['id'], t=round(min(bursts), 3), span=round(max(bursts) - min(bursts), 3), sp=c['sp'], sz=c['size'], k=kind,
                          label=c['label'], wave=c['wave'], layer=c['layer'], sec=sec_ix[c['section']], dir=DIR_CN.get(c.get('dir'), ''),
-                         pts=[e['point'] for e in c['events']], tm=tm, mb=0 if c.get('mobile') is False else 1))
+                         pts=[e['point'] for e in c['events']], tm=tm, mb=mb))
     events.sort(key=lambda e: (e['l'], e['b']))
     cues.sort(key=lambda c: (c['t'], c['id']))
 
@@ -219,14 +238,14 @@ def main():
     pts = {'P': [dict(id=f'P{i}', x=b01.PT[f'P{i}']['x']) for i in range(9)], 'B': [dict(id=f'B{i}', x=b01.PT[f'B{i}']['x']) for i in range(8)]}
     native = b01.REL_H
     data = dict(version=NAME, offsetS=OFFSET, showDurationS=DUR, native=native, points=pts, sections=secs, anchors=anchors, energy=energy,
-                species=species, cues=cues, events=events, risks=risks_b02() if B02 else risks(), fanStats=fan_stats())
+                species=species, cues=cues, events=events, risks=risks_r1() if R1M else risks_b02() if B02 else risks(), fanStats=fan_stats())
     if B02:
         data['native'] = {k: round(v * b01.TRAIL_K[k]) for k, v in b01.REL_H.items()}
         pts['F'] = [dict(id=f'F{i}', x=b01.PT[f'F{i}']['x']) for i in range(7)]
         data['combos'], data['b02'] = b02_data(species)
     html = TEMPLATE.read_text(encoding='utf-8').replace('__PREVIEW_DATA__', json.dumps(data, ensure_ascii=False, separators=(',', ':')))
     if B02:
-        html = html.replace('<title>汪洋与浩渺编排B01</title>', '<title>汪洋与浩渺编排B02</title>', 1).replace('跨年烟花秀 B01 正面比例动画', '跨年烟花秀 B02 正面比例动画', 1)
+        html = html.replace('<title>汪洋与浩渺编排B01</title>', '<title>汪洋与浩渺编排B02</title>', 1).replace('跨年烟花秀 B01 正面比例动画', '跨年烟花秀 B02 正面比例动画' + (' 修订1' if R1M else ''), 1)
     assert '</script>' not in json.dumps(data, ensure_ascii=False)
     (OUT / f'{NAME}动画.html').write_text(html, encoding='utf-8')
     print(f'{NAME}动画.html  {len(html) / 1024:.0f} KB · {len(cues)} cue · {len(events)} 事件 · {len(secs)} 段 · {len(anchors)} 锚点')

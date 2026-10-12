@@ -24,11 +24,14 @@ const RHYTHM = args.includes('--rhythm') ? args[args.indexOf('--rhythm') + 1] : 
 const VARY = args.includes('--vary');   // 高低 / 大小随机分布（用户 10-11 23:40 / 23:41），只配合 --rhythm   // 节奏留白版 A / B / C / D（以 D2 为底，用户 10-11 23:07）
 if (RHYTHM && !['A', 'B', 'C', 'D'].includes(RHYTHM)) throw Error('--rhythm 只能是 A / B / C / D');
 if (VARY && !RHYTHM) throw Error('--vary 要和 --rhythm 一起用');
-const B02 = args.includes('--b02');   // B02（22，10-12）：节奏 D + 高低大小 + 尾缀 v2 高度 + 手机三档 + 小平台小花束尾（逻辑方案_B02.json）
-const SFX = B02 ? '_B02' : RHYTHM ? `_R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? '' : `_D${DENSITY}`;
+// B02 修订1（22，用户 10-12 23:13）：--b02r1 = 错层 + 主角让位（逻辑方案_B02r1.json）；--b02r1m = 再加手游替身（只上手游片段，mobile:'only' → PlatformFlags 2，
+//   要工作台支持「只上手游」才能打开预览，旧工作台会把替身当成 PC + 手游）
+const R1M = args.includes('--b02r1m'), R1 = R1M || args.includes('--b02r1');
+const B02 = R1 || args.includes('--b02');   // B02（22，10-12）：节奏 D + 高低大小 + 尾缀 v2 高度 + 手机三档 + 小平台小花束尾（逻辑方案_B02.json）
+const SFX = R1M ? '_B02r1m' : R1 ? '_B02r1' : B02 ? '_B02' : RHYTHM ? `_R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? '' : `_D${DENSITY}`;
 const LOGIC = path.join(ROOT, `协作/编排B01/逻辑方案${SFX}.json`);
-const TAG = B02 ? 'B02长冈式-节奏D-高低大小-尾缀v2-手机三档-小花束尾' : 'B01长冈式' + (RHYTHM ? `-节奏${RHYTHM}${VARY ? '-高低大小' : ''}` : DENSITY === 2 ? '' : `-D${DENSITY}`);
-const TABLE = B02 ? 'B02' : RHYTHM ? `B01R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? 'B01' : `B01D${DENSITY}`;
+const TAG = R1M ? 'B02修订1-错层主角让位-手游替身' : R1 ? 'B02修订1-错层主角让位' : B02 ? 'B02长冈式-节奏D-高低大小-尾缀v2-手机三档-小花束尾' : 'B01长冈式' + (RHYTHM ? `-节奏${RHYTHM}${VARY ? '-高低大小' : ''}` : DENSITY === 2 ? '' : `-D${DENSITY}`);
+const TABLE = R1M ? 'B02r1m' : R1 ? 'B02r1' : B02 ? 'B02' : RHYTHM ? `B01R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? 'B01' : `B01D${DENSITY}`;
 const MAIN = !B02 && !RHYTHM && DENSITY === 2;   // 只有 D2 主版带完整音乐
 const FILE_VERSION = 12;   // 修订5（22，10-12）：B02 手机开关（片段 mobile:false）+ 小平台小花束尾
 const HERO_ID = (args.find(a => a.startsWith('--hero-trail=')) || '').split('=')[1] || 'Hero';   // 用户 10-12 20:18：主角尾缀 ResourceFX 行叫 Hero（行加好、资源同步进基础库后再带 --hero-trail）   // 修订1：档位从两端收 + 金垂柳只当主角；修订2：大号花型 + 主角 280 + 密度 D1 / D3；修订3：节奏留白版 A–D；修订4（手游编排 10-12）：尾缀 v2 开花点
@@ -176,6 +179,7 @@ for (const c of logic.cues) {
     preserveRepeatedEvents: true, edited: true, warnings: [], pattern: `${c.wave ?? ''}｜${c.label}`, programSectionId: c.section, musicBinding: null};
   if (cue.order === 'source' || !['left', 'right', 'center-out', 'outside-in', 'together', 'source'].includes(cue.order)) cue.order = 'source';
   if (c.mobile === false) cue.mobile = false;   // B02：不上手机的片段（一张表里写 PlatformFlags 12）
+  if (c.mobile === 'only') cue.mobile = 'only';  // 修订1 手游替身：只上手游（一张表里写 PlatformFlags 2）
   doc.cues.push(cue);
   profiles.medium[c.id] = c.profiles.medium;
   profiles.low[c.id] = c.profiles.low;
@@ -214,8 +218,9 @@ if (errors.length) throw Error('校验失败：' + errors.slice(0, 5).join('；'
 const occ = {};   // 每档展开成 (组, 时刻, 槽位, 子模板) 计数，用来查低 ⊂ 中 ⊂ 高
 const report = {revision: logic.revision, density: DENSITY, rhythm: RHYTHM, derivedFlowers: DERIVED.map(f => f.id), generatedBy: 'analysis/scripts/编排B01_编译.mjs', trailV2, tiers: {}, preflight: 'preflightProject 通过（同 8025 打开 .dfshow）', file: `NewYearFireWorks_v01-${TAG}.dfshow`};
 fs.mkdirSync(outDir, {recursive: true});
+const onlyMobile = new Set(state.doc.cues.filter(c => c.mobile === 'only').map(c => c.id));
 for (const tier of ['high', 'medium', 'low']) {
-  const ev = qualityEvents(state.doc, state.profiles, tier);
+  const ev = qualityEvents(state.doc, state.profiles, tier).filter(e => !onlyMobile.has(e.cueId));   // 三档三表是 PC 表：只上手游的替身不进
   const r = compileDirector(state.doc, ev, undefined, {});
   if (r.issues.length) throw Error(`${tier} 编译问题：${r.issues.slice(0, 5).join('；')}`);
   const file = path.join(outDir, `三表-${TABLE}-${tier}.json`);
@@ -246,12 +251,15 @@ if (report.tierNesting.lowNotInMedium || report.tierNesting.mediumNotInHigh) thr
 if (B02) {
   const nested = nestedQualityEvents(state.doc, state.profiles);
   if (nested.issues.length) throw Error('一张表：' + nested.issues[0]);
+  // 只上手游写 PlatformFlags 2（工作台支持前在这里补上，和分支 22/mobile-only-cues 的 nestedQualityEvents 同一规则）
+  for (const e of nested.events) if (onlyMobile.has(e.cueId)) e.platformFlags = 2;
   const r1 = compileDirector(state.doc, nested.events, undefined, {});
   if (r1.issues.length) throw Error('一张表编译问题：' + r1.issues.slice(0, 3).join('；'));
   fs.writeFileSync(path.join(outDir, `导演表-${TABLE}-一张表.json`), JSON.stringify(r1.manifest, null, 2));
   const rank = {EQuality_VeryLow: 0, EQuality_Medium: 1, EQuality_High: 2};
-  const cnt = (flags, maxQ) => nested.events.filter(e => (flags === 'mobile' ? e.platformFlags === 14 : true) && rank[e.minQuality] <= maxQ).length;
+  const cnt = (flags, maxQ) => nested.events.filter(e => (flags === 'mobile' ? (e.platformFlags & 2) : (e.platformFlags & 4)) && rank[e.minQuality] <= maxQ).length;
   report.oneTable = {events: nested.events.length, flags14: nested.events.filter(e => e.platformFlags === 14).length, flags12: nested.events.filter(e => e.platformFlags === 12).length,
+    flags2: nested.events.filter(e => e.platformFlags === 2).length,
     subTemplates: r1.manifest.EffectSubTemplates.length, templates: r1.manifest.EffectTemplates.length, scheduleSlots: r1.manifest.EffectScheduleGroups.reduce((n, g) => n + g.Slots.length, 0),
     pc: {high: cnt('pc', 2), medium: cnt('pc', 1), low: cnt('pc', 0)}, mobile: {high: cnt('mobile', 2), medium: cnt('mobile', 1), low: cnt('mobile', 0)}};
   report.beamFlowers = beamReport;

@@ -222,7 +222,7 @@ function draw(){
   // 烟花
   let nUp=0,nS=0,nM=0,nL=0,nFan=0,nGK=0,nBase=0,nX=0;
   for(let i=0;i<EV.length;i++){
-    const e=EV[i];if(e.l>t)break;if(t>e.e)continue;if(!(e.tier&tier))continue;if(plat==='mobile'&&e.mb===0)continue;
+    const e=EV[i];if(e.l>t)break;if(t>e.e)continue;if(!(e.tier&tier))continue;if(plat==='mobile'&&e.mb===0)continue;if(plat==='pc'&&e.mb===2)continue;
     const x0=PX[e.g][e.p],z0=PZ[e.g]??dam;
     if(e.k==='combo'){nX+=combo(e,t-e.l,X,Z,sc,x0,z0);continue;}
     if(e.k==='fan'){if(e.bs&&!showBase)continue;const age=t-e.b;if(age<0)continue;nFan++;if(e.bs)nBase++;fan(e,age,X,Z,sc,x0,z0);continue;}
@@ -290,6 +290,7 @@ function drawStrip(){
   CU.forEach(c=>{const y=ROWS[c.wave==='托底扇'?'T':c.sz],x=X(c.t);
     if(!c.tm.some(m=>m&tier))return;
     if(plat==='mobile'&&c.mb===0)return;
+    if(plat==='pc'&&c.mb===2)return;
     if(c.wave==='托底扇'&&!showBase)return;
     const col=colorBy==='sp'?SP[c.sp].rgb:(c.sz==='F'?'170,184,216':c.sz==='X'?'143,211,193':SZC[c.sz]);
     sx.fillStyle=rgba(col,.95);sx.fillRect(Math.round(x),y-4,2,8);

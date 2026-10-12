@@ -1,0 +1,162 @@
+{
+  "revision": "B02r1_declutter_mobileStandins",
+  "density": 2,
+  "rhythm": null,
+  "derivedFlowers": [
+    "R03_GoldRayChry_L230",
+    "R03_GoldCoreLime_L230",
+    "R03_MultiLayerChry_L230",
+    "R03_GoldKamuro_H280"
+  ],
+  "generatedBy": "analysis/scripts/编排B01_编译.mjs",
+  "trailV2": {
+    "revision": "v2-20261012",
+    "hero": false,
+    "heroId": "Hero",
+    "subTemplates": 41,
+    "skipped": 0,
+    "heroOnLarge": [
+      "NYR03_GoldKamuro_H280@1"
+    ],
+    "heroSwitched": [],
+    "templates": 41,
+    "baseResources": 3,
+    "samples": [
+      "R03 · 金裂星 · 90m：开花 189.1 → 149.1 m",
+      "R03 · 小银菊 · 90m：开花 188.3 → 148.3 m",
+      "R03 · 爆裂星 · 90m：开花 187.6 → 147.6 m",
+      "R03 · 小青柠 · 90m：开花 189.3 → 149.3 m",
+      "R03 · 橙辉星 · 90m：开花 191.7 → 151.7 m",
+      "R03 · 点灭星 · 90m：开花 192.0 → 152.0 m"
+    ]
+  },
+  "tiers": {
+    "high": {
+      "events": 978,
+      "subTemplates": 52,
+      "templates": 146,
+      "scheduleSlots": 188,
+      "groups": {
+        "P": 81,
+        "B": 88,
+        "F": 19
+      },
+      "lastSlot": 201.5,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "medium": {
+      "events": 822,
+      "subTemplates": 52,
+      "templates": 146,
+      "scheduleSlots": 188,
+      "groups": {
+        "P": 81,
+        "B": 88,
+        "F": 19
+      },
+      "lastSlot": 201.5,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "low": {
+      "events": 320,
+      "subTemplates": 39,
+      "templates": 90,
+      "scheduleSlots": 99,
+      "groups": {
+        "P": 80,
+        "B": 19
+      },
+      "lastSlot": 201.5,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    }
+  },
+  "preflight": "preflightProject 通过（同 8025 打开 .dfshow）",
+  "file": "NewYearFireWorks_v01-B02修订1-错层主角让位-手游替身.dfshow",
+  "tierNesting": {
+    "lowNotInMedium": 0,
+    "mediumNotInHigh": 0
+  },
+  "oneTable": {
+    "events": 1058,
+    "flags14": 145,
+    "flags12": 833,
+    "flags2": 80,
+    "subTemplates": 53,
+    "templates": 163,
+    "scheduleSlots": 204,
+    "pc": {
+      "high": 978,
+      "medium": 822,
+      "low": 320
+    },
+    "mobile": {
+      "high": 225,
+      "medium": 179,
+      "low": 163
+    }
+  },
+  "beamFlowers": [
+    {
+      "id": "B02_BeamS1_SC_a",
+      "engineId": "NYB02_BeamS1_SC_a",
+      "beams": 1,
+      "flowers": 1,
+      "flightM": 38.550423
+    },
+    {
+      "id": "B02_BeamS1_SC_b",
+      "engineId": "NYB02_BeamS1_SC_b",
+      "beams": 1,
+      "flowers": 1,
+      "flightM": 35.178982
+    },
+    {
+      "id": "B02_BeamS3_GS_a",
+      "engineId": "NYB02_BeamS3_GS_a",
+      "beams": 3,
+      "flowers": 3,
+      "flightM": 41.971519
+    },
+    {
+      "id": "B02_BeamS3_GS_b",
+      "engineId": "NYB02_BeamS3_GS_b",
+      "beams": 3,
+      "flowers": 3,
+      "flightM": 41.956383
+    },
+    {
+      "id": "B02_BeamC2_CR_a",
+      "engineId": "NYB02_BeamC2_CR_a",
+      "beams": 2,
+      "flowers": 2,
+      "flightM": 36.758732
+    },
+    {
+      "id": "B02_BeamC2_CR_b",
+      "engineId": "NYB02_BeamC2_CR_b",
+      "beams": 2,
+      "flowers": 2,
+      "flightM": 35.625588
+    },
+    {
+      "id": "B02_BeamV4",
+      "engineId": "NYB02_BeamV4",
+      "beams": 4,
+      "flowers": 0,
+      "flightM": 29.9
+    }
+  ],
+  "heroTrailId": "Hero",
+  "doc": {
+    "cues": 204,
+    "events": 1058,
+    "sections": 14,
+    "duration": 218.6,
+    "musicOffset": 5,
+    "balls": 724,
+    "fans": 334
+  }
+}

@@ -210,6 +210,9 @@ def data_only_release(stage, node):
         'environment': {'platform': sys.platform, 'python': sys.version.split()[0]},
     })
     (stage / (HTML + '.build.json')).write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    # 核心检查（不需要 npm 依赖的那部分就是全部：tests/*.test.mjs 只读源码和数据），和完整构建同一套
+    core = sorted(str(p.relative_to(SOURCE)) for p in (SOURCE / 'tests').glob('*.test.mjs') if p.name != 'sites-worker.test.mjs')
+    subprocess.run([node, '--test', *core], cwd=SOURCE, check=True)
     checks = sorted(str(p) for p in (TOOL / 'offline-workbench/tests').glob('*.test.mjs'))
     env = {**os.environ, 'DF_HTML_TEST_PATH': str(candidate), 'DF_SOURCE_TEST_PATH': str(SOURCE),
            'DF_PROGRAMME_TEST_PATH': str(SOURCE / 'fixtures/demo.dfshow')}

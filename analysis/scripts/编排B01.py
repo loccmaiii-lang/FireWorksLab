@@ -340,7 +340,7 @@ def tier_points(c):
 
 
 # ═══════════════════════════ 曲谱：按我们这首歌的小节排 ═══════════════════════════
-def build(density=2, rhythm=None, vary=False, b02=False):
+def build(density=2, rhythm=None, vary=False, b02=False, r1=False, standins=False):
     S = Show(density)
     S.rhythm = rhythm
     S.vary = vary
@@ -587,6 +587,8 @@ def build(density=2, rhythm=None, vary=False, b02=False):
         best_vary(S)
     if b02:
         apply_b02(S)
+    if r1:
+        apply_r1(S, standins)
     return S
 
 
@@ -1192,6 +1194,274 @@ def apply_b02(S):
         c['name'] = c['name'].replace('B01', 'B02')
 
 
+# ═══════════════ B02 修订1（跨年秀 22，用户 10-12 23:13）：错层 + 主角让位 + 手游替身 ═══════════════
+# 用户：「重叠的太厉害了……图1和图2可以错开一下高低吗？图3主角的发射点离得太近了，还有其它类似的问题可以找到的吗？」
+#      「手游有些中间空的太多了……有没有与之前约束不变的情形下，让手游中低配中间不要断开那么多的办法？也不要重叠的太多」
+# 体检（编排重叠体检.py，正面投影）：B01（16.0.18）和 B02 各 35 处「混成一团」，构图来自 B01，B02 没新增——
+#   同排太挤 15：修订2 升成 230 m 大号的整排，点距 87–100 m 只有直径的 0.4 倍（图 3 收窄3 P3 P4 P5 就是这个）；
+#   两排同高 8：P 排和 B 排 / 叠层被同一个组高度带着走（图 1）；后压前 12：后一排开在前一排还亮着的花上（图 2），其中 3 处压在主角上。
+# 修订1（时间、花种家族、档位规则、GPU 规则不动）：
+#   ① 大号整排拆城垛：奇数点回原来的中号（150 m，210 m 尾缀），偶数点留大号（230 m，330 m 尾缀）——大花在上、中花在下，差 ≈ 120 m；
+#      收窄3 因此成了「P4 大号在上、P3 P5 中号在下」。墙（金墙、白墙）按设计是连成一片的，保留。
+#   ② 主角让位：主角亮着（开花后 0.3 s 到寿命 75%）时，别的花压到最低仍挤在主角身上的那个点去掉（城垛 L 在主角点上的那朵）。
+#   ③ 逐排定高度：每一排（含拆开的偶 / 奇半排）整排上下移，最终 dz 在 −60…+25 m（原规则）里，挑和别的还亮着的花挤得最少的位置；
+#      主角相关 × 4，越挤罚得越重（< 0.55 × 平均直径 × 3），挪得越远代价略高；前后来回算 3 遍。
+#   ④ 手游替身（只上手游，PlatformFlags 2）：PC 放白名单外的花、手游上又空着的那一拍，手游放白名单里同色系的花
+#      （金曜菊→金芒菊、金蕊青柠星→金锦菊、大号→金芒菊大号……），高配偶数点、中低配 P0 / P4 / P8（宪章 §8）；PC 一朵不变。
+#      工作台 16.0.18 只有「PC + 手游」「只 PC」，要「只上手游」得先升级工作台（本机同步 8），所以替身单独出一份节目。
+R1_LO, R1_HI = -60.0, 25.0
+LIT_A, LIT_B = 0.3, 0.75
+BASE_OF = {v: k for k, v in PROMOTE.items()}          # GRL→GR、CLL→CL、MLL→ML
+HERO_SP = ('GK', 'GKH')
+
+
+def _dia(c):
+    tpl = TPL[c['templateId'].split('__K')[0]]
+    return (tpl['diameter'] or DIA[c['size']]) * c.get('sizeK', 1.0)
+
+
+def _lit(c, e):
+    life = e['end'] - e['burst']
+    return e['burst'] + LIT_A, e['burst'] + LIT_B * life
+
+
+def _respecies(c, sp):
+    """同一排换成同家族另一尺寸：开花拍不动（H），起飞按新尾缀上升时间重算，大小版本跟着走"""
+    tid, _, size, _, _ = SPECIES[sp]
+    k = c.get('sizeK', 1.0)
+    c['sp'], c['size'] = sp, size
+    c['templateId'] = tid if abs(k - 1.0) < 1e-9 else f'{tid}__K{round(k * 100)}'
+    rise, life = rise_of(sp), life_of(sp)
+    for e in c['events']:
+        e['launch'] = max(0.0, q1(e['H'] - rise))
+        e['burst'] = round(e['launch'] + rise, 6)
+        e['end'] = round(e['burst'] + life, 6)
+
+
+def _keep_points(c, keep):
+    keep = set(keep)
+    c['events'] = [e for e in c['events'] if e['point'] in keep]
+    c['points'] = [e['point'] for e in c['events']]
+    c['profiles'] = {t: [p for p in c['profiles'][t] if p in keep] for t in ('medium', 'low')}
+
+
+def r1_castle(S):
+    """① 修订2 的大号整排（相邻 P 点都是 230 m）拆城垛：奇数点回中号。B02 已拆成偶 / 奇两半的，奇数半排直接回中号；没拆的先拆。"""
+    import copy
+    out, log = [], []
+    for c in S.cues:
+        idx = sorted(int(p[1:]) for p in c['points']) if c['group'] == 'P' else []
+        adjacent = any(b - a == 1 for a, b in zip(idx, idx[1:]))
+        if c['sp'] not in BASE_OF or c['layer'] != 'main' or '墙' in (c['wave'] or ''):
+            out.append(c)
+            continue
+        odd = [p for p in c['points'] if int(p[1:]) % 2]
+        even = [p for p in c['points'] if not int(p[1:]) % 2]
+        if c.get('splitOf') and not even:                  # B02 拆出的奇数半排
+            _respecies(c, BASE_OF[c['sp']])
+            c['label'] = c['label'].replace('（奇数点·只上 PC）', '') + '（奇数点中号·只上 PC）'
+            log.append((c['id'], c['wave'], 'odd→M'))
+            out.append(c)
+            continue
+        if not (adjacent and odd and even):
+            out.append(c)
+            continue
+        o = copy.deepcopy(c)
+        _keep_points(c, even)
+        _keep_points(o, odd)
+        _respecies(o, BASE_OF[o['sp']])
+        o['id'], o['splitOf'], o['mobile'] = c['id'] + 'o', c['id'], False
+        o['label'] = (c['label'] or '') + '（奇数点中号·只上 PC）'
+        c['label'] = (c['label'] or '') + '（偶数点大号）'
+        out += [c, o]
+        log.append((c['id'], c['wave'], 'split, odd→M'))
+    S.cues = out
+    return log
+
+
+def _flowers_of(cues):
+    fl = []
+    for ci, c in enumerate(cues):
+        if c['size'] not in 'SML':
+            continue
+        d = _dia(c)
+        zb = bloom_h(c)
+        for ei, e in enumerate(c['events']):
+            l0, l1 = _lit(c, e)
+            fl.append(dict(ci=ci, ei=ei, row=c.get('splitOf') or c['id'], x=PT[e['point']]['x'], zb=PT[e['point']]['z'] + zb,
+                           d=d, l0=l0, l1=l1, hero=fam(c['sp']) == 'GK', point=e['point']))
+    return fl
+
+
+def _pen(s, same_row):
+    soft, hard = (0.6, 0.5) if same_row else (0.75, 0.55)
+    if s >= soft:
+        return 0.0
+    p = (soft - s) / soft
+    return p * 3 if s < hard else p
+
+
+def r1_hero_room(S):
+    """② 主角亮着时，别的花压到 dz 最低仍挤在主角身上（< 0.55）的那个点去掉。"""
+    heroes = [(c, e) for c in S.cues if fam(c['sp']) == 'GK' for e in c['events']]
+    dropped = []
+    for c in S.cues:
+        if c['size'] not in 'SML' or fam(c['sp']) == 'GK':
+            continue
+        bad = set()
+        for e in c['events']:
+            a0, a1 = _lit(c, e)
+            x, d = PT[e['point']]['x'], _dia(c)
+            for h, he in heroes:
+                b0, b1 = _lit(h, he)
+                if min(a1, b1) - max(a0, b0) < 0.5:
+                    continue
+                hx, hz, hd = PT[he['point']]['x'], PT[he['point']]['z'] + bloom_h(h) + he['dz'], _dia(h)
+                best = max(math.hypot(x - hx, PT[e['point']]['z'] + bloom_h(c) + dz - hz) for dz in (R1_LO, R1_HI)) / ((d + hd) / 2)
+                if best < 0.55:
+                    bad.add(e['point'])
+        if bad:
+            _keep_points(c, [p for p in c['points'] if p not in bad])
+            dropped.append((c['id'], c['wave'], sorted(bad)))
+    S.cues = [c for c in S.cues if c['events']]
+    return dropped
+
+
+def r1_heights(S, sweeps=3, cues=None, step=5, movable=None):
+    """③ 逐排定高低和大小（坐标下降）：每排整排上下移 Δ（最终 dz 夹在 −60…+25），大小在 0.92 / 1.00 / 1.08 三个版本里挑；
+    代价 = Σ 挤的程度 × 一起亮着的秒数（主角 × 4）+ 挪动 0.004 / m / 点 + 换大小版本 0.15 / 点。主角不动。"""
+    cues = S.cues if cues is None else cues
+    fl = _flowers_of(cues)
+    dz0 = {(f['ci'], f['ei']): cues[f['ci']]['events'][f['ei']]['dz'] for f in fl}
+    k0 = {ci: cues[ci].get('sizeK', 1.0) for ci in {f['ci'] for f in fl}}
+    for f in fl:
+        f['d0'] = f['d'] / k0[f['ci']]
+    cur, curk = dict(dz0), dict(k0)
+    by_cue = defaultdict(list)
+    for f in fl:
+        by_cue[f['ci']].append(f)
+    order = sorted(by_cue, key=lambda ci: min(f['l0'] for f in by_cue[ci]))
+    nbr = {}
+    srt = sorted(fl, key=lambda f: f['l0'])
+    for ci in order:
+        mine = by_cue[ci]
+        t0, t1 = min(f['l0'] for f in mine), max(f['l1'] for f in mine)
+        nbr[ci] = [g for g in srt if g['ci'] != ci and g['l1'] > t0 and g['l0'] < t1]
+
+    def cost(ci, delta, k):
+        tot = 0.0
+        for f in by_cue[ci]:
+            dz = min(R1_HI, max(R1_LO, dz0[(ci, f['ei'])] + delta))
+            z, d = f['zb'] + dz, f['d0'] * k
+            tot += 0.004 * abs(dz - dz0[(ci, f['ei'])]) + (0.15 if abs(k - k0[ci]) > 1e-9 else 0.0)
+            for g in nbr[ci]:
+                co = min(f['l1'], g['l1']) - max(f['l0'], g['l0'])
+                if co < 0.1:
+                    continue
+                s = math.hypot(f['x'] - g['x'], z - (g['zb'] + cur[(g['ci'], g['ei'])])) / ((d + g['d0'] * curk[g['ci']]) / 2)
+                p = _pen(s, f['row'] == g['row'])
+                if p:
+                    tot += p * co * (4 if f['hero'] or g['hero'] else 1)
+        return tot
+
+    before = sum(cost(ci, 0, k0[ci]) for ci in order) / 2
+    for _ in range(sweeps):
+        for ci in order:
+            if any(f['hero'] for f in by_cue[ci]) or (movable is not None and cues[ci]['id'] not in movable):
+                continue                                   # 主角高度按设计不动；手游替身那一轮只动替身
+            ks = [k0[ci]] if cues[ci].get('mobile') == 'only' else [k for k, _ in VARY_SIZES]
+            best = min(((dl, k) for dl in range(-90, 91, step) for k in ks), key=lambda x: (round(cost(ci, *x), 6), abs(x[0]), abs(x[1] - k0[ci])))
+            curk[ci] = best[1]
+            for f in by_cue[ci]:
+                cur[(ci, f['ei'])] = min(R1_HI, max(R1_LO, dz0[(ci, f['ei'])] + best[0]))
+    after = sum(cost(ci, 0, curk[ci]) for ci in order) / 2 if False else None
+    for ci in order:
+        c = cues[ci]
+        for f in by_cue[ci]:
+            c['events'][f['ei']]['dz'] = float(round(cur[(ci, f['ei'])]))
+        if abs(curk[ci] - k0[ci]) > 1e-9:
+            c['sizeK'] = curk[ci]
+            base = c['templateId'].split('__K')[0]
+            c['templateId'] = base if abs(curk[ci] - 1.0) < 1e-9 else f'{base}__K{round(curk[ci] * 100)}'
+    moved = [abs(cur[k] - dz0[k]) for k in cur]
+    return dict(costBefore=round(before, 1), moved=sum(1 for m in moved if m >= 1), meanMoveM=round(sum(moved) / max(1, len(moved)), 1),
+                maxMoveM=round(max(moved or [0]), 1), resized=sum(1 for ci in curk if abs(curk[ci] - k0[ci]) > 1e-9))
+
+
+# ④ 手游替身：PC 放白名单外的花、手游又空着时，同一拍手游放白名单里同色系的花（只上手游）
+STANDIN = {'GY': 'GR', 'CL': 'GS', 'CLL': 'GRL', 'MLL': 'GRL', 'ML': 'GS', 'GP': 'SC', 'PW': 'OG', 'LM': 'SC', 'GC': 'CR', 'ST': 'CR'}
+MOBILE_MID = ['P0', 'P4', 'P8']                       # 宪章 §8：手机中低配 P0 / P4 / P8
+
+
+def _mobile_lit(cues):
+    return sorted((e['burst'], e['end']) for c in cues if c['size'] in 'SML' and c.get('mobile', True) is not False for e in c['events'])
+
+
+def r1_standins(S):
+    import copy
+    added = []
+    for c in sorted([c for c in S.cues if c['size'] in 'SML' and c['layer'] == 'main' and c['group'] == 'P' and c.get('mobile') is False
+                     and c['sp'] in STANDIN and not c.get('splitOf')], key=lambda c: min(e['H'] for e in c['events'])):
+        even = [p for p in c['points'] if not int(p[1:]) % 2]
+        if not even:
+            continue
+        H = min(e['H'] for e in c['events'])
+        # 这一拍前后手游天上有没有花：开花时 + 1 s 还有别的手游花亮着（不算快熄的余烬），就不用替身
+        busy = any(b <= H + 1.0 and H + 1.0 < b + LIT_B * (e - b) for b, e in _mobile_lit(S.cues))
+        if busy:
+            continue
+        # 同色系先挑；手游上和还亮着的手游花挤（< 0.55）就挪高度，挪不开大号退中号，再不行这一拍不放替身
+        lit = [(cc, e) for cc in S.cues if cc['size'] in 'SML' and cc.get('mobile', True) is not False for e in cc['events']]
+        m = None
+        for sp in [STANDIN[c['sp']]] + ([BASE_OF[STANDIN[c['sp']]]] if STANDIN[c['sp']] in BASE_OF else []):
+            cand = copy.deepcopy(c)
+            _keep_points(cand, even)
+            cand['sizeK'] = 1.0
+            _respecies(cand, sp)
+            base = {e['point']: e['dz'] for e in cand['events']}
+            def worst(delta):
+                w = 9.0
+                for e in cand['events']:
+                    a0, a1 = _lit(cand, e)
+                    z = PT[e['point']]['z'] + bloom_h(cand) + min(R1_HI, max(R1_LO, base[e['point']] + delta))
+                    for cc, f in lit:
+                        b0, b1 = _lit(cc, f)
+                        if min(a1, b1) - max(a0, b0) < 0.3:
+                            continue
+                        s = math.hypot(PT[e['point']]['x'] - PT[f['point']]['x'], z - (PT[f['point']]['z'] + bloom_h(cc) + f['dz'])) / ((_dia(cand) + _dia(cc)) / 2)
+                        w = min(w, s)
+                return w
+            ok = [dl for dl in sorted(range(-85, 86, 5), key=abs) if worst(dl) >= 0.55]
+            if ok:
+                for e in cand['events']:
+                    e['dz'] = float(min(R1_HI, max(R1_LO, base[e['point']] + ok[0])))
+                m = cand
+                break
+        if m is None:
+            continue
+        m['id'], m['mobile'], m['standinOf'] = c['id'] + 'm', 'only', c['id']
+        m['tier'] = 'all'
+        mid = [p for p in m['points'] if p in MOBILE_MID] or m['points'][len(m['points']) // 2:len(m['points']) // 2 + 1]
+        m['profiles'] = {'medium': mid, 'low': mid}
+        m['label'] = f"{SPECIES[sp][1]}（手游替身·{SPECIES[c['sp']][1]}）"
+        m['name'] = f"{m['name'].split(' · ')[0]} · {m['label']}"
+        m['wave'] = (c['wave'] or '') + '·手游替身'
+        S.cues.append(m)
+        added.append((m['id'], round(H, 2), SPECIES[c['sp']][1], SPECIES[m['sp']][1], m['points'], mid))
+    S.cues.sort(key=lambda c: (min(e['launch'] for e in c['events']), c['id']))
+    return added
+
+
+def apply_r1(S, standins=False):
+    S.r1 = dict(castle=r1_castle(S), heroRoom=r1_hero_room(S))
+    pc = [c for c in S.cues if c.get('mobile') != 'only']
+    S.r1['heights'] = r1_heights(S, cues=pc)
+    if standins:
+        S.r1['standins'] = r1_standins(S)
+
+    S.cues.sort(key=lambda c: (min(e['launch'] for e in c['events']), c['id']))
+
+
 # ═══════════════════════════ 体检 ═══════════════════════════
 DIA = {'S': 90, 'M': 150, 'L': 230}
 
@@ -1209,6 +1479,8 @@ def gpu_points(S, tier='high', platform='pc'):
     pts = []
     for c in S.cues:
         if platform == 'mobile' and c.get('mobile') is False:
+            continue
+        if platform == 'pc' and c.get('mobile') == 'only':     # 修订1 手游替身只上手游
             continue
         keep = set(c['points']) if tier == 'high' else set(c['profiles'][tier])
         for e in c['events']:
@@ -1268,6 +1540,11 @@ def merged_cues(S):
 
 
 def checks(S):
+    whole = S
+    if any(c.get('mobile') == 'only' for c in S.cues):     # 修订1 手游替身：PC 体检不算它们，手机那一节另算
+        import copy
+        S = copy.copy(whole)
+        S.cues = [c for c in whole.cues if c.get('mobile') != 'only']
     MC = merged_cues(S)
     ev = all_events(S)
     res = {}
@@ -1453,7 +1730,7 @@ def checks(S):
         for tier in ('high', 'medium', 'low'):
             n = 0
             sp = defaultdict(int)
-            for c in S.cues:
+            for c in whole.cues:
                 if c.get('mobile') is False:
                     continue
                 keep = set(c['points']) if tier == 'high' else set(c['profiles'][tier])
@@ -1461,16 +1738,19 @@ def checks(S):
                 n += k
                 if k:
                     sp[SPECIES[c['sp']][1]] += k
-            gp = gpu_points(S, tier, 'mobile')
+            gp = gpu_points(whole, tier, 'mobile')
             mob[tier] = dict(events=n, gpuPeakPerS=window_max(gp)[0] if gp else 0, bySpecies=dict(sorted(sp.items(), key=lambda kv: -kv[1])))
         xs = [c for c in S.cues if c['size'] == 'X']
         bt = defaultdict(int)
         for c in xs:
             bt[c['sp']] += len(c['events'])
-        res['b02'] = dict(S.b02, mobileTiers=mob, mobileCues=sum(1 for c in S.cues if c.get('mobile') is not False), pcOnlyCues=sum(1 for c in S.cues if c.get('mobile') is False),
+        res['b02'] = dict(S.b02, mobileTiers=mob, mobileCues=sum(1 for c in whole.cues if c.get('mobile') is not False), pcOnlyCues=sum(1 for c in S.cues if c.get('mobile') is False),
+                          mobileOnlyCues=sum(1 for c in whole.cues if c.get('mobile') == 'only'),
                           beamFlowers=dict(cues=len(xs), events=sum(len(c['events']) for c in xs), byType=dict(sorted(bt.items())),
                                            medium=sum(len(c['profiles']['medium']) for c in xs), low=sum(len(c['profiles']['low']) for c in xs)),
                           heights=HEIGHTS, overlap=overlap_stats(S))
+    if getattr(whole, 'r1', None):
+        res['r1'] = whole.r1
     return res
 
 
@@ -1609,6 +1889,9 @@ def export(S, ck):
     rev = (f'B01_NAGAOKA_LOGIC_r4_R{rh}V' if vy else f'B01_NAGAOKA_LOGIC_r3_R{rh}') if rh else f'B01_NAGAOKA_LOGIC_r2_D{S.density}'
     if getattr(S, 'b02flag', False):
         sfx, rev = '_B02', 'B02_r1_RDV_trailV2_mobile_beamflowers'
+    if getattr(S, 'r1', None):
+        sfx = '_B02r1m' if S.r1.get('standins') is not None else '_B02r1'
+        rev = 'B02r1_declutter' + ('_mobileStandins' if S.r1.get('standins') is not None else '')
     out = dict(format='df.choreography-proposal/2', revision=rev, rhythm=rh, status='logic_compiled_by_编排B01_编译.mjs_UE_unverified',
                generator='analysis/scripts/编排B01.py', density=S.density, musicOffsetS=OFFSET, barS=BAR, bar0S=BAR0, duration=dur,
                sections=S.sections, cues=S.cues)
@@ -1623,13 +1906,17 @@ if __name__ == '__main__':
     ap.add_argument('--vary', action='store_true', help='高低 / 大小随机分布（用户 10-11 23:40），只配合 --rhythm')
     ap.add_argument('--b02', action='store_true', help='B02（22，10-12）：节奏 D + 高低大小 + 尾缀 v2 高度 + 手机三档 + 小平台小花束尾')
     ap.add_argument('--rhythm', choices=sorted(RHYTHMS), default=None, help='节奏留白版：A 每 2 小节 / B 每 4 小节 / C 两放两歇 / D 段落强弱（以 D2 为底）')
+    ap.add_argument('--b02r1', action='store_true', help='B02 修订1（22，10-12 23:13）：大号整排拆城垛、主角让位、逐排错层')
+    ap.add_argument('--standins', action='store_true', help='配合 --b02r1：手游替身（只上手游片段，要工作台支持 PlatformFlags 2）')
     a = ap.parse_args()
+    if a.b02r1:
+        a.b02 = True
     if a.b02:
         HEIGHTS = 'v2'
         a.rhythm, a.vary = 'D', True
-    S = build(2 if a.rhythm else a.density, a.rhythm, bool(a.vary and a.rhythm), a.b02)
+    S = build(2 if a.rhythm else a.density, a.rhythm, bool(a.vary and a.rhythm), a.b02, a.b02r1, a.standins)
     ck = checks(S)
     export(S, ck)
     if not a.no_figs and a.density == 2:
         make_figs(S, ck)
-    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'baseFans', 'fanSummary', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'heroes', 'share', 'largeBySpecies', 'density', 'rhythm', 'vary', 'wavesPerBar', 'tierNesting', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies', 'b02') if k in ck}, ensure_ascii=False, indent=1))
+    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'baseFans', 'fanSummary', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'heroes', 'share', 'largeBySpecies', 'density', 'rhythm', 'vary', 'wavesPerBar', 'tierNesting', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies', 'b02', 'r1') if k in ck}, ensure_ascii=False, indent=1))
