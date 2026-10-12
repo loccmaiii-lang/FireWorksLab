@@ -6,7 +6,7 @@
   手机配置（cascade_mobile*.json）
     1. 名字不带 _HD / _Mobile；tier 是 H / M；名字以 _<tier> 结尾（规范 §2，不做 _L）
     2. 发射器 ≤ 3（_M）/ ≤ 6（_H，用户待定）；没有 GPU；每个发射器写 max_alive 且 ≤ 50；同一时刻最多 1 张大序列（§6）
-    3. 引用的贴图名不带 _HD；序列 ≤ 1024（§3）
+    3. 引用的贴图名不带 _HD；所有贴图 ≤ 1024（§3，用户 10-12 22:01：严格拦，不留「警告沿用」）
   所有配置
     4. 派生资源（derived）贴图名沿用原效果（§2）
     5. 贴图内容和配置里记的 sha256 一致（包没被改过）
@@ -134,10 +134,10 @@ def check_config(name, j, png):
     big = []
     for _, t in texs:
         s = (png.get(d + t['file']) or {}).get('size')
-        if t.get('class') == 'flipbook' and s and max(s) > MOBILE_TEX:
+        if s and max(s) > MOBILE_TEX:     # 用户 10-12 22:01：手游所有贴图都不超 1024，严格拦
             big.append(f'{asset_of(t)}（{s[0]}×{s[1]}）')
     if big:
-        bad.append(f'{tag}：手机序列超过 {MOBILE_TEX}：{"、".join(big)}')
+        bad.append(f'{tag}：手机贴图超过 {MOBILE_TEX}：{"、".join(big)}（新出一张 1024，或复制 PC 那张到手游目录、最大尺寸设 1024）')
     return bad
 
 

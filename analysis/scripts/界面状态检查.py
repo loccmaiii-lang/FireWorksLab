@@ -3357,6 +3357,7 @@ W36_JS = r"""async () => {
   // ③ 手机引用 _HD 贴图 / 序列超过 1024
   { const j = good(); j.textures.main.file = 'T_EFX_FireWorks_GoldSpark_4x4_01_HD.png'; j.textures.main.asset = 'T_EFX_FireWorks_GoldSpark_4x4_01_HD';
     const r = G(j, { ...png, 'T_EFX_FireWorks_GoldSpark_4x4_01_HD.png': { size: [2048, 2048] } }); out.c3 = r; if (!r.some(x => /引用了 _HD 贴图/.test(x)) || !r.some(x => /超过 1024/.test(x))) bad.push('③ _HD / 2048 没拦：' + r.join('；')); }
+  { const r = G(good(), { ...png, 'T_EFX_FireWorks_GoldSpark_R.png': { size: [2048, 8] } }); out.c3b = r; if (!r.some(x => /手机贴图超过 1024/.test(x))) bad.push('③ 非序列贴图 2048 没拦（用户 10-12 22:01 严格不超 1024）'); }
   // ④ 派生资源开了新贴图名（主角尾缀那种）
   { const j = good(); j.name = 'RiseTrail_Hero_M'; j.derived = { from: 'RiseTrail_L', system: 'RiseTrail_Hero' }; j.textures.main.asset = 'T_EFX_FireWorks_RiseTrail_Hero_L_Loop_16x1_01'; j.textures.main.file = j.textures.main.asset + '.png';
     const r = packGateConfig('cascade.json', j, '', {}); out.c4 = r; if (!r.some(x => /派生资源开了新贴图名/.test(x))) bad.push('④ 派生资源新贴图名没拦'); }

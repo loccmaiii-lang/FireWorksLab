@@ -108,6 +108,11 @@ class Gate(unittest.TestCase):
         self.assertIn('引用了 _HD 贴图', txt)
         self.assertIn('超过 1024', txt)
 
+    def test_3_any_texture_over_1024(self):     # 用户 10-12 22:01：旧 2048 共用图也不行（Ramp / 轮廓图一样）
+        pngs = {'T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01.png': png(1024, 1024, 1), 'T_EFX_FireWorks_RiseTrail_S_Loop_16x1_01_HD.png': png(2048, 2048, 2),
+                'T_EFX_FireWorks_RiseTrail_S_R.png': png(2048, 8, 3)}
+        self.bad(None, '手机贴图超过 1024', pngs=pngs)
+
     def test_4_derived_new_textures(self):     # 10-12：主角尾缀开了 RiseTrail_Hero_L_* 一套新图
         pc = copy.deepcopy(GOOD_PC); pc['derived'] = {'from': 'RiseTrail_L', 'system': 'RiseTrail_Hero'}
         self.bad(None, '派生资源开了新贴图名', pc=pc)

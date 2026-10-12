@@ -3,7 +3,7 @@
 //  所有导出都经过 makeZip → 这里：① 每张 textures[k] 写 "sha256"（PNG 文件内容），导入拦截靠它跨会话去重；② 按规范查，任何一条不满足就抛错，不出包。
 //  手机配置（cascade_mobile*.json）：
 //    名字不带 _HD / _Mobile，档位 tier ∈ H / M、名字以 _<档位> 结尾；发射器 ≤ 3（_M）/ ≤ 6（_H，用户待定）；没有 GPU；每个发射器写 max_alive 且 ≤ 50；
-//    同一时刻最多 1 张大序列（烟花中低配 1 张大序列帧、尾缀 1 层 overdraw）；引用的贴图名不带 _HD；序列 ≤ 1024。
+//    同一时刻最多 1 张大序列（烟花中低配 1 张大序列帧、尾缀 1 层 overdraw）；引用的贴图名不带 _HD；所有贴图 ≤ 1024（用户 10-12 22:01「严格遵守，直接拦下」）。
 //  所有配置：派生资源（j.derived）贴图名必须沿用原效果；和交付目录里已有资源撞名但内容不同、又不是同一个效果 → 拦。
 //  手机配置一个发射器都没有（全部选「不出」）→ 去掉这份配置（交付服务不收空配置），不算违规。
 // =====================================================================
@@ -43,8 +43,8 @@ function packGateConfig(f, j, dir, png) {
   if (most > 1) bad.push(`${tag}：同一时刻有 ${most} 张大序列（${who.join(' + ')}）；手游中低配只能 1 张（规范 §6）`);
   const hd = texs.filter(([, t]) => t && t.file && /_HD(_|$)/i.test(assetOf(t))).map(([, t]) => assetOf(t));
   if (hd.length) bad.push(`${tag}：手机材质引用了 _HD 贴图 ${hd.join('、')}（规范 §3）`);
-  const big = texs.filter(([, t]) => t && t.file && t.class === 'flipbook').map(([, t]) => [assetOf(t), (png[dir + t.file] || {}).size]).filter(([, s]) => s && Math.max(s[0], s[1]) > GATE_MOBILE_TEX).map(([a, s]) => `${a}（${s[0]}×${s[1]}）`);
-  if (big.length) bad.push(`${tag}：手机序列超过 ${GATE_MOBILE_TEX}：${big.join('、')}`);
+  const big = texs.filter(([, t]) => t && t.file).map(([, t]) => [assetOf(t), (png[dir + t.file] || {}).size]).filter(([, s]) => s && Math.max(s[0], s[1]) > GATE_MOBILE_TEX).map(([a, s]) => `${a}（${s[0]}×${s[1]}）`);
+  if (big.length) bad.push(`${tag}：手机贴图超过 ${GATE_MOBILE_TEX}：${big.join('、')}（手游严格不超 1024，用户 10-12 22:01：新出一张 1024，或复制 PC 那张到手游目录、最大尺寸设 1024）`);
   return bad;
 }
 // 撞名：交付目录里已有同名贴图、内容不同、来自别的效果（同一个效果重导 = 更新，照常）

@@ -3,7 +3,7 @@ const DeliveryWorkspace = (() => {
   const localUI=location.protocol==='file:', frameOrigin=localUI?'null':location.origin;
   const frameTarget=localUI?'*':frameOrigin;
   let session=null,resources=[],last=null,active=false,busyDelivery=false,importerBusy=false,importerCurrent=null;
-  let connecting=null,preparing=null,prepared=false,viewAnimation=null,desiredDeliveryId='',hostReady=false,readyWait=null,exportHome=null;
+  let connecting=null,preparing=null,prepared=false,viewAnimation=null,desiredDeliveryId='',hostReady=false,readyWait=null,exportHome=null,queuedDelivery=null;     // 4.9.69 queuedDelivery：导出了、但导入器还在处理别的（排队中）
   const channel=crypto.randomUUID(),requests=new Map();
   const hostOrigin=location.protocol==='file:'?'http://127.0.0.1:8034':location.origin;
   const node=id=>document.getElementById(id);
@@ -62,7 +62,7 @@ const DeliveryWorkspace = (() => {
   async function beginExport(target){
     if(target==='zip')return;
     const progress=node('busy');exportHome={parent:progress.parentNode,next:progress.nextSibling};
-    show(true);placeExportProgress();message('正在准备交付资源…');
+    show(true);placeExportProgress();message('正在准备交付资源…（导出完成前，下方导入区还是上一份素材）');
     updateRootControls();
     // Paint the destination and the existing cancellable progress before CPU/GPU work.
     await new Promise(resolve=>window.requestAnimationFrame?window.requestAnimationFrame(()=>window.requestAnimationFrame(resolve)):setTimeout(resolve,0));
@@ -100,7 +100,7 @@ const DeliveryWorkspace = (() => {
       const button = document.createElement('button'); button.type = 'button'; button.className = 'delivery-resource fw-button';
       const title = document.createElement('b'); title.textContent = r.name;
       const detail = document.createElement('small'); detail.textContent = r.revisionId.slice(0,8) + ' · ' + r.packages.map(p=>p.platform==='mobile'?'手机':p.platform.toUpperCase()).join(' / ') + (r.latestExport?' · ZIP v'+String(r.latestExport.sequence).padStart(3,'0'):'');
-      const result = document.createElement('small'); result.textContent = r.importReceipt ? '导入记录：' + [...new Set(r.importReceipt.rows.map(x=>importLabel(x.state)))].join(' / ') : '资源已交付 · 待导入检查';
+      const result = document.createElement('small'); result.textContent = queuedDelivery?.deliveryId === r.deliveryId ? `排队中：等导入器处理完「${queuedDelivery.behind}」` : r.importReceipt ? '导入记录：' + [...new Set(r.importReceipt.rows.map(x=>importLabel(x.state)))].join(' / ') : '资源已交付 · 待导入检查';     // 4.9.69 排队的那份写明
       button.append(title, detail, result); button.setAttribute('aria-pressed', String(last?.deliveryId === r.deliveryId));
       button.disabled=importerBusy; button.addEventListener('click', ()=>{if(!importerBusy)select(r).then(()=>node('deliveryOptions').open=false).catch(e=>message(e.message,true));}); list.append(button);
     }
@@ -127,6 +127,7 @@ const DeliveryWorkspace = (() => {
     const current=importerCurrent,receipt=current&&resources.find(r=>r.deliveryId===current.deliveryId);
     if(desiredDeliveryId&&current?.deliveryId!==desiredDeliveryId)return;
     if(current?.deliveryId===desiredDeliveryId)desiredDeliveryId='';
+    if(queuedDelivery&&current?.deliveryId===queuedDelivery.deliveryId){queuedDelivery=null;message('已接入导入清单。核对名称与处理方式后确认导入。');}     // 4.9.69 导入器接手了排队的那份
     if(receipt){presentReceipt(receipt);}
     else if(current){last=null;node('deliveryTitle').textContent=current.name||'其他素材';node('deliveryContext').textContent=`手动素材 · 当前 ${current.platform==='mobile'?'手机':'PC'} 包`;node('deliveryReceipt').textContent=`手动素材\n${current.dir||''}\n请使用下方原导入工作区检查此素材包。`;node('deliveryThumbnail').hidden=true;node('deliveryThumbnailMissing').hidden=true;node('deliveryCheck').disabled=true;}
   }
@@ -134,9 +135,13 @@ const DeliveryWorkspace = (() => {
     if(!last||!session?.importerAvailable)return;
     try{
       const result=await rpc('accept',{deliveryId:last.deliveryId},30000);
-      message(result.queued?'资源已保存；当前任务结束后自动接收新修订。':'已接入导入清单。核对名称与处理方式后确认导入。');
+      // 4.9.69（用户 10-12 22:01「我做好了分裂星，但是我点导出跳转到导入，默认还是goldray」）：排队时写清楚新的是谁、卡在谁后面、怎么解
+      const running=importerCurrent?.name||'上一份素材';
+      if(result.queued){queuedDelivery={deliveryId:last.deliveryId,name:last.name,behind:running};
+        message(`「${last.name}」已保存（修订 ${last.revisionId.slice(0,8)}），但导入器还在处理「${running}」，新的排在它后面，下方导入区和标题暂时还是「${running}」。「${running}」这一批导入完成或在下方导入区清掉后，会自动换成「${last.name}」。`,true);}
+      else{queuedDelivery=null;message('已接入导入清单。核对名称与处理方式后确认导入。');}
       return result;
-    }catch(e){desiredDeliveryId='';message('资源已保存；导入检查未完成：'+e.message,true);return{failed:true};}
+    }catch(e){desiredDeliveryId='';message(`「${last?.name||'资源'}」已保存，但导入检查未完成（没接进导入器）：${e.message}。下方导入区还是「${importerCurrent?.name||'上一份素材'}」；点左侧资源列表里的「${last?.name||'新资源'}」重试。`,true);return{failed:true};}
   }
   async function publish(blob,name,metadata){
     if(busyDelivery)throw Error('正在交付另一份资源，请等待完成');busyDelivery=true;

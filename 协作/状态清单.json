@@ -17,7 +17,7 @@
     "对话框17": "2026-10-04 18:01",
     "对话框新花型": "2026-10-07 00:55",
     "对话框21": "2026-10-07 09:58",
-    "对话框23": "2026-10-12 21:52",
+    "对话框23": "2026-10-12 22:06",
     "对话框FanGold": "2026-10-10 01:05",
     "点位架构": "2026-10-09",
     "对话框相机渲染": "2026-10-10 11:20",
@@ -392,7 +392,8 @@
     "手游编排 · 工作台 16.0.13 一张表导出（已完成）": "完成并释放：2026-10-11 23:20。tool/workbench：editing-model 加 nestedQualityEvents（低⊂中⊂高校验，不嵌套报错）；director-model 父模板条目 Filter 按档位写 MinQualityLevel（VeryLow / Medium / High），片段 mobile:false 写 PlatformFlags 12；交付档位下拉默认「一张表（高中低合一，按画质自动取）」，三档单独导出保留（只导高 / 中 / 低）。新增 tests/nested-quality.test.mjs（先失败后通过），155 核心 + 38 包装通过，release 更新 F/D 离线入口。B01 修订1 / 修订2-D2 合表展开与单档编译逐条一致。WORKBENCH_VERSION 16.0.12 → 16.0.13（只改工具，编排沿用 16.0.12）。实页浏览器走查未做（本机 Playwright 缺浏览器），用户打开交付页确认。",
     "导出（23） · 烘焙器 4.9.69（手游 _M、尾缀远段锁轴、导出拦截）认领": [
       "负责：对话框23（2026-10-12 20:48 认领）。用户 10-12 20:42：手游编排掉线，23 接手云端能做的部分。范围：tool/src/**（导出、交付清单、产物表）、tool/build.py、spec/尺寸标定.json（加小平台尾缀档）、analysis/scripts/界面状态检查.py、tool/local_delivery 里新增的导入前拦截（只读交付包、不碰 UE、不改私有导入器）。格式约定按 对话记录/新对话提示词_对话框23_4.9.69.md。别的对话框这段时间请别改 tool/src；要改先在这里留言。",
-      "对话框23（2026-10-12 21:52）：4.9.69 已推，格式见 对话记录/新对话提示词_对话框23_4.9.69.md + spec/cascade_params_v1.md §1.2。按用户 21:34 两处改动：远段 TrailFar 加 local_space: true；手机 _M 只留近段 RiseLoop（没有火花 / 星头光晕 / 远段）。导入前拦截 tool/local_delivery/fx_gate.py（只读包 + .workspace/texture-fingerprints.json）。尾缀英文名改 RiseTrail。本机那一半（私有写入层：手游目录 / _M 命名 / LockAxisFlags / bUseLocalSpace、导入、UE 读回、倾斜实测）交 Codex：对话记录/新对话提示词_CodeX_本机尾缀导入_4.9.69.md。23 仍认领 tool/src，接着试 RT6-M（近段 + 远段合成一张手机序列）。"
+      "对话框23（2026-10-12 21:52）：4.9.69 已推，格式见 对话记录/新对话提示词_对话框23_4.9.69.md + spec/cascade_params_v1.md §1.2。按用户 21:34 两处改动：远段 TrailFar 加 local_space: true；手机 _M 只留近段 RiseLoop（没有火花 / 星头光晕 / 远段）。导入前拦截 tool/local_delivery/fx_gate.py（只读包 + .workspace/texture-fingerprints.json）。尾缀英文名改 RiseTrail。本机那一半（私有写入层：手游目录 / _M 命名 / LockAxisFlags / bUseLocalSpace、导入、UE 读回、倾斜实测）交 Codex：对话记录/新对话提示词_CodeX_本机尾缀导入_4.9.69.md。23 仍认领 tool/src，接着试 RT6-M（近段 + 远段合成一张手机序列）。",
+      "对话框23（2026-10-12 22:06）：4.9.70 已推：手游贴图一律 ≤ 1024 严格拦（用户 22:01）；导出后导入器排队时交付页写清楚新的是谁、卡在谁后面（用户：分裂星导出后还是 GoldRay）。导入器为什么一直忙（推断 GoldRay 那批被 10-11 脚本切到待确认后没结束）要本机查，已写进 Codex 提示词。"
     ]
   },
   "effects": [
