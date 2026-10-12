@@ -127,7 +127,7 @@ function spkStretchVS40(vs) {
   let v = vs.replace('void emitPt(vec2 q,float I,float size){emitCore40(q,I,size);}', 'void emitPt(vec2 q,float I,float size){emitCore40(q,I,size);}' + SPKS40_FN)
     .replace('uniform sampler2D uPos, uVel, uInfo;', 'uniform sampler2D uPos, uVel, uInfo; uniform float uSpkStr, uSpkStrJ;');
   const at = v.lastIndexOf(tail); if (at < 0) throw new Error('火花拉长：找不到火花着色器的输出行');
-  const add = `  if(c==0 && uSpkStr>0.){ vec3 vv=motv(vel,U,g,uK,age); vec2 w2=vv.xy; if(uUseXf>.5) w2=vec2(w2.x*uXf.z-w2.y*uXf.w,w2.x*uXf.w+w2.y*uXf.z);
+  const add = `  if(c==0 && uSpkStr>0.){ vec3 vv=spkVel(vel,U,g,age); vec2 w2=vv.xy; if(uUseXf>.5) w2=vec2(w2.x*uXf.z-w2.y*uXf.w,w2.x*uXf.w+w2.y*uXf.z);
     float sp=length(w2), L=uSpkStr*sp/30.*(uSpkStrJ>0.?exp(.6*uSpkStrJ*gss(uid,93u)-.18*uSpkStrJ*uSpkStrJ):1.);
     if(L>1e-4 && sp>1e-4){ emitCore40Rot(q,I,size,w2/sp,L); return; } }
 `;

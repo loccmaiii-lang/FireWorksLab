@@ -143,6 +143,7 @@ uniform float uEmb, uEmbL, uEmbB, uEmbF, uEmbS, uHotStop, uEmbE, uTailJit, uShou
 uniform float uRamp, uRampJ;     // 4.2.17 火花起势：开始出火花后几秒到满密度、每颗星 ± 随机
 uniform sampler2D uLen; uniform float uPerM, uSpR, uSpH, uJet, uJetC;     // 火花发射器补全（对话框FanGold，用户 10-09 21:48）：每米生成、起始半径 + 跟星头、向后喷 + 锥角；全 0 时不进分支
 uniform vec2 uCvHsS[6], uCvHsU[6]; uniform int uCvHsSN, uCvHsUN;     // 跟星头大小时的星头 / 子星大小随寿命
+uniform float uCq;     // 4.9.71 火花平方阻力系数 c = G / 火花终端速度²（1/m，对话框FanGold，用户 10-12 22:59）；0 = 只有线性阻力（以前，不进分支）
 uniform vec2 uCvSpS[6], uCvSpB[6], uCvEmB[6], uCvBrB[6], uCvEmS[6], uCvBrS[6]; uniform int uCvSpSN, uCvSpBN, uCvEmBN, uCvBrBN, uCvEmSN, uCvBrSN;     // 4.8.0 按寿命曲线（几行 时刻:倍数，N = 0 不乘）；4.9.4 余烬 / 分叉火花大小
 ${GLSL_CV}
 uniform float uInhA, uInhB, uT0J, uEmbLJ, uEmbDk, uEmbFa, uBrL, uBrLA, uBrLB, uBrV, uBrVA, uBrVB, uBrInh, uBrKd, uBrT, uBrB, uBrFd, uBrS, uGlA, uGlB, uGlW, uGlPk, uGlDim;     // 4.6.0（5.0 第 1 步）：以前写死的随机范围、余烬衰减、分叉火花、辉星闪光，默认 = 以前的常数
@@ -165,6 +166,20 @@ vec3 starAt(int s, float t){ float fi=t/uDT; int i0=clamp(int(floor(fi)),0,uNs-2
 float lenAt(int s, float t){ float fi=clamp(t/uDT,0.,float(uNs-1)); int i0=min(int(floor(fi)),uNs-2); float f=fi-float(i0); return mix(texelFetch(uLen,ivec2(i0,s),0).x,texelFetch(uLen,ivec2(i0+1,s),0).x,f); }
 float timeAtLen(int s, float L){ int lo=0, hi=uNs-1; for(int k=0;k<20;k++){ if(hi-lo<=1) break; int m=(lo+hi)/2; if(texelFetch(uLen,ivec2(m,s),0).x<=L) lo=m; else hi=m; }
   float a=texelFetch(uLen,ivec2(lo,s),0).x, b=texelFetch(uLen,ivec2(hi,s),0).x; return (float(lo)+clamp((L-a)/max(1e-6,b-a),0.,1.))*uDT; }
+// 4.9.71 火花平方阻力：dv/dt = −k(v−U) − c|v−U|(v−U) + g。出生到现在分 24 段（前密后疏：t_i = a·(i/24)^1.5），每段 Strang 拆开：
+//   半段线性阻力 + 重力（速度的精确解）→ 整段平方阻力（相对空气方向不变，|w| → |w|/(1+c|w|h)、位移 ln(1+c|w|h)/c，精确解）→ 半段线性阻力 + 重力。
+//   开头速度最大、刹得最狠的那一下也稳（两个子步都是精确解）。c = 0 时不用它（照旧 mot / motv 的解析解）。
+vec3 linV(vec3 v, vec3 U, vec3 g, float k, float h){ if(k>1e-4){ vec3 vi=U+g/k; return vi+(v-vi)*exp(-k*h); } return v+g*h; }
+void motQ(vec3 p0, vec3 v0, vec3 U, vec3 g, float k, float c, float a, out vec3 p, out vec3 v){
+  p=p0; v=v0; float t0=0.;
+  for(int i=1;i<=24;i++){ float x=float(i)/24., t1=a*x*sqrt(x), h=t1-t0; t0=t1;
+    v=linV(v,U,g,k,.5*h);
+    vec3 w=v-U; float sw=length(w);
+    if(sw>1e-6){ float e=1.+c*sw*h; p+=U*h+w/sw*log(e)/c; v=U+w/e; } else p+=v*h;
+    v=linV(v,U,g,k,.5*h); }
+}
+// 火花此刻的速度（火花拉长用）：平方阻力开着时按 motQ，否则照旧 motv
+vec3 spkVel(vec3 v0, vec3 U, vec3 g, float a){ if(uCq>0.){ vec3 pq, vq; motQ(vec3(0.),v0,U,g,uK,uCq,a,pq,vq); return vq; } return motv(v0,U,g,uK,a); }
 void main(){
   int nb=1+uBr; int id=gl_VertexID; int pid=id/nb; int c=id-pid*nb;
   int s=pid/uM; int j=pid-s*uM; uint uid=uint(pid);
@@ -216,11 +231,20 @@ void main(){
   // uWShape = 0（默认值）时不进分支，结果不变。
   float W=1., wq=1.; bool wtail=false;
   if(c==0){
+    if(uCq>0.){     // 4.9.71 平方阻力：收尖的粗细倍数直接乘在散开速度上再积分（线性阻力时两种写法相等）
+      vec3 vq=vel;
+      if(uWShape>.5 && !emb){ float th=min(uT,inf.y), t0=min(th,max(inf.x,uT-uLife*max(1.,uLifeEnd))); vec3 ph=starAt(s,th);
+        float a=clamp(length(ph-sp)/max(1e-3,length(ph-starAt(s,t0))),0.,1.);
+        wtail=a>uBelly; wq=!wtail ? 1.-uPinH*(1.-smoothstep(0.,uBelly,a)) : 1.-uPinT*smoothstep(uBelly,1.,a); W=uWidth*wq;
+        vq+=(W-1.)*vec3(gss(uid,5u),gss(uid,7u),gss(uid,9u))*uSpread; }
+      vec3 vEnd; motQ(sp,vq,U,g,uK,uCq,age,p,vEnd);
+    } else {
     p=mot(sp,vel,U,g,uK,age);
     if(uWShape>.5 && !emb){ float th=min(uT,inf.y), t0=min(th,max(inf.x,uT-uLife*max(1.,uLifeEnd))); vec3 ph=starAt(s,th);
       float a=clamp(length(ph-sp)/max(1e-3,length(ph-starAt(s,t0))),0.,1.);
       wtail=a>uBelly; wq=!wtail ? 1.-uPinH*(1.-smoothstep(0.,uBelly,a)) : 1.-uPinT*smoothstep(uBelly,1.,a); W=uWidth*wq;
       p+=(W-1.)*(uK>1e-4 ? (1.-exp(-uK*age))/uK : age)*vec3(gss(uid,5u),gss(uid,7u),gss(uid,9u))*uSpread; }
+    }
     float gl=emb ? glowOf(T0)*uEmbB*exp(-uEmbDk*age/life)*(1.-smoothstep(uEmbFa,1.,age/life))*(uEmbF>0. ? 1.-smoothstep(inf.y-.15,inf.y+uEmbF,uT) : 1.)*(uEmbE>0. ? 1.-smoothstep(uEmbE-.6,uEmbE+.3,uT) : 1.) : glowOf(T0*(1.-uCool*age/lifeC))*(uCoolAbs>.5 ? 1.-smoothstep(.7,1.,age/life) : 1.);
     if(emb) size=uSize*uEmbS;
     if(emb){ if(uCvEmBN>0) gl*=max(0.,CV(uCvEmB,uCvEmBN,clamp(age/life,0.,1.))); if(uCvEmSN>0) size*=max(0.,CV(uCvEmS,uCvEmSN,clamp(age/life,0.,1.))); }
@@ -228,10 +252,10 @@ void main(){
     if(uGlit>0.){ float tf=uGlitD*(uGlA+uGlB*hsh(uid,17u)); float e=(age-tf)/uGlW; gl=gl*(1.-uGlDim*uGlit)+uGlit*uGlPk*exp(-e*e); }
     I=gl;
   } else {
-    vec3 pc=mot(sp,vel,U,g,uK,ts), vc=motv(vel,U,g,uK,ts);
+    vec3 pc, vc; if(uCq>0.) motQ(sp,vel,U,g,uK,uCq,ts,pc,vc); else { pc=mot(sp,vel,U,g,uK,ts); vc=motv(vel,U,g,uK,ts); }
     vec3 dv=normalize(vec3(gss(u2,31u),gss(u2,33u),gss(u2,35u))+1e-4)*(uBrV+uSpread*1.5)*(uBrVA+uBrVB*hsh(u2,37u));
     float a2=age-ts, x=a2/life2;
-    p=mot(pc,vc*uBrInh+dv,U,g,uK*uBrKd,a2);
+    if(uCq>0.){ vec3 vb; motQ(pc,vc*uBrInh+dv,U,g,uK*uBrKd,uCq,a2,p,vb); } else p=mot(pc,vc*uBrInh+dv,U,g,uK*uBrKd,a2);
     I=glowOf(T0*(1.-uCool*ts/lifeC)*uBrT)*uBrB*(uBrFd==2. ? (1.-x)*(1.-x) : pow(max(0.,1.-x),uBrFd)); size=uSize*uBrS; if(uCvBrBN>0) I*=max(0.,CV(uCvBrB,uCvBrBN,clamp(x,0.,1.))); if(uCvBrSN>0) size*=max(0.,CV(uCvBrS,uCvBrSN,clamp(x,0.,1.)));
   }
   // 尾迹扩散（4.2.0，tailDiffuse / tailDiffuseScale，用户 2026-10-02 16:22）：火花被阻力停下来以后仍被空气扰流带着走，越老离原位越远。
@@ -508,7 +532,9 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   gl.uniform1f(pr.u.uInh, P.sparkInherit); gl.uniform1f(pr.u.uSpread, P.sparkSpread); gl.uniform1f(pr.u.uLife, se.life);
   gl.uniform1f(pr.u.uLifeEnd, familyOf(P.type) === 'rise' || P.sparkLifeEnd == null ? 1 : P.sparkLifeEnd);
   gl.uniform1f(pr.u.uLifeJit, familyOf(P.type) === 'rise' || P.sparkLifeJit == null ? 0.45 : P.sparkLifeJit / 100);
-  gl.uniform1f(pr.u.uK, P.sparkDrag); gl.uniform1f(pr.u.uG, G * P.sparkGrav); gl.uniform1f(pr.u.uT0, se.T0); gl.uniform1f(pr.u.uCool, P.cooling); if (pr.u.uCoolAbs) gl.uniform1f(pr.u.uCoolAbs, familyOf(P.type) === 'aerial' ? 1 : 0);     // 5.0（4.7.0）：空中类只有「按实际年龄冷却」一种
+  gl.uniform1f(pr.u.uK, P.sparkDrag); gl.uniform1f(pr.u.uG, G * P.sparkGrav); gl.uniform1f(pr.u.uT0, se.T0); gl.uniform1f(pr.u.uCool, P.cooling);
+  if (pr.u.uCq) gl.uniform1f(pr.u.uCq, sparkCqOf(P));     // 4.9.71 火花平方阻力（缺省 0）
+  if (pr.u.uCoolAbs) gl.uniform1f(pr.u.uCoolAbs, familyOf(P.type) === 'aerial' ? 1 : 0);     // 5.0（4.7.0）：空中类只有「按实际年龄冷却」一种
   gl.uniform1f(pr.u.uTwk, P.twinkle); if (pr.u.uTwHz) gl.uniform1f(pr.u.uTwHz, +P.twinkleHz > 0 ? +P.twinkleHz : 0); gl.uniform1f(pr.u.uBright, P.sparkBright); gl.uniform1f(pr.u.uSize, P.sparkSize);
   gl.uniform1f(pr.u.uGlit, P.glitter || 0); gl.uniform1f(pr.u.uGlitD, P.glitterDelay || 0.25);
   gl.uniform1f(pr.u.uEmb, P.emberFrac || 0); gl.uniform1f(pr.u.uEmbL, P.emberLife || 3); gl.uniform1f(pr.u.uEmbB, P.emberBright || 0.1); gl.uniform1f(pr.u.uEmbF, P.emberFollow || 0); gl.uniform1f(pr.u.uEmbS, P.emberSize || 1);

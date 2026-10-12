@@ -1,0 +1,69 @@
+{
+ "id": "FSQ1",
+ "type": "script",
+ "priority": 2,
+ "name": "对话框FanGold 4.9.71：火花平方阻力（缺省关）回归 + 检查 + 金曜菊末段演示",
+ "note": "用户 10-12 22:59 批。缺省 0 应逐像素相同。",
+ "steps": [
+  {
+   "name": "基准回归 4.9.70 → 4.9.71 花型模板 6 个",
+   "script": "基准回归.py",
+   "args": [
+    "--old",
+    "{git:a97c8dec:tool/FireworkBaker.html}",
+    "--new",
+    "tool/FireworkBaker.html",
+    "--out",
+    "{out}/基准回归",
+    "--only",
+    "kiku,botan,kamuro,senrin,strobe,crackle"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "多层模板定帧回归 4.9.70 → 4.9.71",
+   "script": "多层模板回归.py",
+   "args": [
+    "--old",
+    "{git:a97c8dec:tool/FireworkBaker.html}",
+    "--out",
+    "{out}/多层模板回归",
+    "--ids",
+    "shinKiku,yaeHenka,yaeBlueBotan,colorSenrin,mieKamuroSaki,mangekyo,somewakeBotan,kinzuiLime"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "火花平方阻力检查",
+   "script": "火花平方阻力检查.py",
+   "args": [
+    "--out",
+    "{out}/火花平方阻力检查"
+   ],
+   "must": false,
+   "timeout": 900
+  },
+  {
+   "name": "火花发射器检查（4.9.54 / 4.9.58 不受影响）",
+   "script": "火花发射器检查.py",
+   "args": [
+    "--out",
+    "{out}/火花发射器检查"
+   ],
+   "must": false,
+   "timeout": 900
+  },
+  {
+   "name": "金曜菊金锦层末段演示",
+   "script": "火花平方阻力演示.py",
+   "args": [
+    "--out",
+    "{out}/演示"
+   ],
+   "must": false,
+   "timeout": 1200
+  }
+ ]
+}

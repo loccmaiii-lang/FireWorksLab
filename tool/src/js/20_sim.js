@@ -116,6 +116,8 @@ function jetDir(a, cone, u1, u2) {
   const b2 = [a[1] * b1[2] - a[2] * b1[1], a[2] * b1[0] - a[0] * b1[2], a[0] * b1[1] - a[1] * b1[0]], th = cone * Math.sqrt(u1), ph = 6.2831853 * u2, c = Math.cos(th), sn = Math.sin(th);
   return [0, 1, 2].map(k => a[k] * c + (b1[k] * Math.cos(ph) + b2[k] * Math.sin(ph)) * sn);
 }
+// 4.9.71 火花平方阻力系数（对话框FanGold，用户 10-12 22:59）：c = G / 火花终端速度²（1/m），只在空中花型、终端速度 > 0 时；0 = 只有线性阻力（以前）
+const sparkCqOf = P => familyOf(P.type) === 'aerial' && +P.sparkVt > 0 ? G / (+P.sparkVt * +P.sparkVt) : 0;
 const sparkPerMOf = (P, s) => Math.max(0, +P.sparkPerM || 0) * (+P.sparkRate > 0 ? s.rate / P.sparkRate : 1);
 // 一颗星头的光点：先拼「形状」（主核 + 双核 + 边上的小鼓包，偏移按米），再沿运动反方向复制成拖影（相机快门拖在后面，星头前沿就在星的位置）
 function headShapePush(push, buf, nh, cap, s, I, sz, hs, t, seed) {
@@ -541,11 +543,13 @@ class Sim {
     }
     if (dead > 64 && dead > st.length / 2) this.stars = st.filter(s => s.alive);
     const d = P.sparkDrag, g2 = -G * P.sparkGrav, p = sp.p, vv = sp.v, age = sp.age, life = sp.life, air = sp.air;
+    const cq = sparkCqOf(P);     // 4.9.71 火花平方阻力（缺省 0，不进下面那一行）
     for (let i = sp.n - 1; i >= 0; i--) {
       age[i] += h;
       if (age[i] >= life[i]) { sp.kill(i); continue; }
       const k = i * 3;
       vv[k] -= d * (vv[k] - air[i * 2]) * h; vv[k + 1] += (-d * (vv[k + 1] - air[i * 2 + 1]) + g2) * h; vv[k + 2] -= d * vv[k + 2] * h;
+      if (cq > 0) { const wx = vv[k] - air[i * 2], wy = vv[k + 1] - air[i * 2 + 1], wz = vv[k + 2], e = 1 + cq * Math.hypot(wx, wy, wz) * h; vv[k] = air[i * 2] + wx / e; vv[k + 1] = air[i * 2 + 1] + wy / e; vv[k + 2] = wz / e; }
       p[k] += vv[k] * h; p[k + 1] += vv[k + 1] * h; p[k + 2] += vv[k + 2] * h;
     }
     this.t += h;

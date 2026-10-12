@@ -57,7 +57,10 @@ function measureRun(P) {
     // 火花不在 CPU 上模拟：按散布、下坠和气流的解析解估计火花超出星体的范围（偏保守）
     // 4.3（渲染基础问题 E7 / H11）：余烬比火花活得久（锦冠木炭余烬 3 s 左右），下坠和随风漂移按余烬的寿命算；
     // 余烬在母星烧完后 emberFollow 秒内、或 emberEnd 时刻淡掉，就按那个截。横向散开被阻力很快刹住，仍按火花寿命算。没有余烬时和以前完全一样。
-    const L = P.sparkLife * 1.6, k = Math.max(P.sparkDrag, 1e-3), g = G * P.sparkGrav;
+    const L = P.sparkLife * 1.6, g = G * P.sparkGrav;
+    let k = Math.max(P.sparkDrag, 1e-3);
+    // 4.9.71 火花平方阻力：下落最快到终端速度 × √下坠倍数，按这个速度折成线性阻力估下坠 / 被风带走的距离（缺省 0 不进来）
+    if (sparkCqOf(P) > 0) k = Math.max(k, g / Math.max(0.1, +P.sparkVt * Math.sqrt(Math.max(1e-6, +P.sparkGrav || 0))));
     let Le = L;
     if (+P.emberFrac > 0 && !(+P.branch > 0)) {
       let e = (+P.emberLife || 3) * Math.exp(0.3) * 0.85;
