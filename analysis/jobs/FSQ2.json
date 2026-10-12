@@ -1,0 +1,19 @@
+{
+ "id": "FSQ2",
+ "type": "script",
+ "priority": 1,
+ "name": "对话框FanGold：金曜菊金锦层末段演示（时刻改到燃尽前后）",
+ "note": "FSQ1 的演示时刻取早了（金锦层点火晚 0.33 s，约 1.7–1.95 s 才燃尽）。",
+ "steps": [
+  {
+   "name": "金曜菊金锦层末段演示",
+   "script": "火花平方阻力演示.py",
+   "args": [
+    "--out",
+    "{out}/演示"
+   ],
+   "must": false,
+   "timeout": 1200
+  }
+ ]
+}
