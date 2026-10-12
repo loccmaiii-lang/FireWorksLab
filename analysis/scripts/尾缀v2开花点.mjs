@@ -20,10 +20,10 @@ export const HERO_TRAIL = {id: 'P_EFX_FireWorks_NY_Trail_Hero', k: 0.9756, fromM
 const r6 = x => Math.round(x * 1e6) / 1e6;
 const isHero = s => /主角/.test(s.name || '') || /_H280/.test(s.key || s.id || '');
 
-export function applyTrailV2(doc, {hero = false} = {}) {
-  const report = {revision: TRAIL_REVISION, hero, subTemplates: 0, skipped: 0, heroOnLarge: [], heroSwitched: [], templates: 0, baseResources: 0, samples: []};
-  const heroRow = hero && (doc.baseResourceLibrary || []).find(r => r.id === HERO_TRAIL.id);
-  if (hero && !heroRow) throw Error('hero=true 但基础资源库里没有 ' + HERO_TRAIL.id + '（先在 ResourceFX 表加行并同步资源）');
+export function applyTrailV2(doc, {hero = false, heroId = HERO_TRAIL.id} = {}) {   // heroId：ResourceFX 主角尾缀行的 ResourceId（22，10-12：用户定名 Hero）
+  const report = {revision: TRAIL_REVISION, hero, heroId, subTemplates: 0, skipped: 0, heroOnLarge: [], heroSwitched: [], templates: 0, baseResources: 0, samples: []};
+  const heroRow = hero && (doc.baseResourceLibrary || []).find(r => r.id === heroId);
+  if (hero && !heroRow) throw Error('hero=true 但基础资源库里没有 ' + heroId + '（先在 ResourceFX 表加行并同步资源）');
   const moved = new Map();   // 子模板 key → 开花点 Z 的变化（m），用来改父模板 burstZ / z
   for (const s of doc.subTemplateLibrary || []) {
     const trail = (s.entries || []).filter(e => e.role === 'trail');
@@ -39,7 +39,7 @@ export function applyTrailV2(doc, {hero = false} = {}) {
       if (report.samples.length < 6) report.samples.push(`${s.name}：开花 ${(before / 100).toFixed(1)} → ${(b.native.PositionOffset.Z / 100).toFixed(1)} m`);
     }
     t.preview = {...t.preview, heightM: r6((t.preview?.heightM || spec.fromM) * k)};
-    if (toHero) { t.native.FXResourceId = HERO_TRAIL.id; t.baseTemplateRef = HERO_TRAIL.id + '|trail'; t.resourceSource = {...(heroRow.resourceSource || {}), particle: HERO_TRAIL.particle}; report.heroSwitched.push(s.key); }
+    if (toHero) { t.native.FXResourceId = heroId; t.baseTemplateRef = heroId + '|trail'; t.resourceSource = {...(heroRow.resourceSource || {}), particle: HERO_TRAIL.particle}; report.heroSwitched.push(s.key); }
     else if (isHero(s)) report.heroOnLarge.push(s.key);
     s.trailRevision = TRAIL_REVISION; s.trailV2 = {k, trail: t.native.FXResourceId, particle: toHero ? HERO_TRAIL.particle : spec.particle, delivery: toHero ? HERO_TRAIL.delivery : spec.delivery};
     moved.set(s.key, {dz, k});

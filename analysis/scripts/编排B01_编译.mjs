@@ -8,7 +8,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {normalize, validateDoc, validateProfiles, qualityEvents} from '../../tool/workbench/src/editing-model.mjs';
+import {normalize, validateDoc, validateProfiles, qualityEvents, nestedQualityEvents} from '../../tool/workbench/src/editing-model.mjs';
 import {compileDirector} from '../../tool/workbench/src/director-model.mjs';
 import {preflightProject} from '../../tool/workbench/src/program-project.mjs';
 import {applyTrailV2} from './尾缀v2开花点.mjs';
@@ -24,12 +24,14 @@ const RHYTHM = args.includes('--rhythm') ? args[args.indexOf('--rhythm') + 1] : 
 const VARY = args.includes('--vary');   // 高低 / 大小随机分布（用户 10-11 23:40 / 23:41），只配合 --rhythm   // 节奏留白版 A / B / C / D（以 D2 为底，用户 10-11 23:07）
 if (RHYTHM && !['A', 'B', 'C', 'D'].includes(RHYTHM)) throw Error('--rhythm 只能是 A / B / C / D');
 if (VARY && !RHYTHM) throw Error('--vary 要和 --rhythm 一起用');
-const SFX = RHYTHM ? `_R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? '' : `_D${DENSITY}`;
+const B02 = args.includes('--b02');   // B02（22，10-12）：节奏 D + 高低大小 + 尾缀 v2 高度 + 手机三档 + 小平台小花束尾（逻辑方案_B02.json）
+const SFX = B02 ? '_B02' : RHYTHM ? `_R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? '' : `_D${DENSITY}`;
 const LOGIC = path.join(ROOT, `协作/编排B01/逻辑方案${SFX}.json`);
-const TAG = 'B01长冈式' + (RHYTHM ? `-节奏${RHYTHM}${VARY ? '-高低大小' : ''}` : DENSITY === 2 ? '' : `-D${DENSITY}`);
-const TABLE = RHYTHM ? `B01R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? 'B01' : `B01D${DENSITY}`;
-const MAIN = !RHYTHM && DENSITY === 2;   // 只有 D2 主版带完整音乐
-const FILE_VERSION = 11;   // 修订1：档位从两端收 + 金垂柳只当主角；修订2：大号花型 + 主角 280 + 密度 D1 / D3；修订3：节奏留白版 A–D；修订4（手游编排 10-12）：尾缀 v2 开花点
+const TAG = B02 ? 'B02长冈式-节奏D-高低大小-尾缀v2-手机三档-小花束尾' : 'B01长冈式' + (RHYTHM ? `-节奏${RHYTHM}${VARY ? '-高低大小' : ''}` : DENSITY === 2 ? '' : `-D${DENSITY}`);
+const TABLE = B02 ? 'B02' : RHYTHM ? `B01R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? 'B01' : `B01D${DENSITY}`;
+const MAIN = !B02 && !RHYTHM && DENSITY === 2;   // 只有 D2 主版带完整音乐
+const FILE_VERSION = 12;   // 修订5（22，10-12）：B02 手机开关（片段 mobile:false）+ 小平台小花束尾
+const HERO_ID = (args.find(a => a.startsWith('--hero-trail=')) || '').split('=')[1] || 'Hero';   // 用户 10-12 20:18：主角尾缀 ResourceFX 行叫 Hero（行加好、资源同步进基础库后再带 --hero-trail）   // 修订1：档位从两端收 + 金垂柳只当主角；修订2：大号花型 + 主角 280 + 密度 D1 / D3；修订3：节奏留白版 A–D；修订4（手游编排 10-12）：尾缀 v2 开花点
 const TRAIL_V1 = args.includes('--trail-v1');   // 旧尾缀高度（190 / 265 / 410 m），只做对比；默认跟引擎里已重导的尾缀 v2（150 / 210 / 330 m）
 const clone = x => structuredClone(x);
 const round = x => Math.round(x * 1e6) / 1e6;
@@ -89,6 +91,50 @@ const DER_SRC = new Map(DERIVED.map(f => [f.id, f.source]));
   }
 }
 
+// —— B02（22，10-12，用户 20:18）：小平台小花束尾——现成银扇 / 红彗星单束缩小当尾缀（固化随机角），现成小花缩小挂在束顶；
+//    定义在 协作/编排B01/小花束尾.json（编排B01.py 共用）。束长和挂花时刻是估的（estimate），UE 量到后改那三个数重编。 ——
+const BEAMF = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/小花束尾.json'), 'utf8'));
+const beamReport = [];
+if (B02) {
+  const tmap = new Map(doc.templateLibrary.map(t => [t.id, t])), smap = new Map(doc.subTemplateLibrary.map(s => [s.key, s])), est = BEAMF.estimate;
+  for (const x of BEAMF.flowers) {
+    const entries = [], tips = [];
+    x.beams.forEach((b, i) => {
+      const ss = smap.get(tmap.get(BEAMF.beamSources[b.res].template).subTemplateRef);
+      const proto = ss.entries.find(e => e.native.FXResourceId === b.res);
+      if (!proto) throw Error('小花束尾的束资源找不到原型：' + b.res);
+      const e = clone(proto);
+      e.id = `beam-${i}`; e.role = 'trail';
+      Object.assign(e.native, {LocalTimeOffset: round(b.off), PositionOffset: {X: 0, Y: 0, Z: 0}, RotationOffset: {Pitch: 0, Yaw: 0, Roll: round(b.roll)},
+        RandomRotationRange: {Pitch: 0, Yaw: 0, Roll: round(b.randomRoll || 0)}, EffectScale: {X: round(b.scale), Y: round(b.scale), Z: round(b.scale)}});
+      e.preview = {...e.preview, heightM: round(est.beamReachM[b.res] * b.scale)};
+      entries.push(e);
+    });
+    x.flowers.forEach((f, i) => {
+      const src = BEAMF.flowerSources[f.src], st = tmap.get(src.template), sb = smap.get(st.subTemplateRef).entries.find(e => e.role === 'burst'), b = x.beams[f.beam];
+      const R = est.beamReachM[b.res] * b.scale * est.tipFrac, a = b.roll * Math.PI / 180, k = f.diameter / st.diameter;
+      const e = clone(sb);
+      e.id = `flower-${i}`;
+      Object.assign(e.native, {LocalTimeOffset: round(b.off + est.tipTimeS), PositionOffset: {X: 0, Y: round(-Math.sin(a) * R * 100), Z: round(Math.cos(a) * R * 100)},
+        RotationOffset: {Pitch: 0, Yaw: 0, Roll: 0}, EffectScale: {X: round(sb.native.EffectScale.X * k), Y: round(sb.native.EffectScale.Y * k), Z: round(sb.native.EffectScale.Z * k)}});
+      e.preview = {...e.preview, diameterM: f.diameter};
+      entries.push(e); tips.push({z: Math.cos(a) * R, t: b.off + est.tipTimeS});
+    });
+    const sub = {name: x.name, category: x.flowers.length ? 'ball' : 'trail', seed: 1, randomMode: 'materialized', entries, id: x.engineId, engineId: x.engineId, key: x.engineId + '@1', version: 1,
+      sizeEvidence: {beamReachM: est.beamReachM, tipFrac: est.tipFrac, tipTimeS: est.tipTimeS, source: '估算：束长取基础资源预览值，挂花点与时刻未在 UE 量', enginePlaybackVerified: false},
+      derivedFrom: {rule: '现成单束缩小当尾缀（固化随机角）+ 现成小花缩小挂束顶；不新增资源', by: '跨年秀（22）2026-10-12，用户 20:18', ref: x.ref, engineScaleVerified: false}};
+    doc.subTemplateLibrary.push(sub);
+    const flight = tips.length ? Math.max(...tips.map(t => t.z)) : Math.max(...x.beams.map(b => est.beamReachM[b.res] * b.scale));
+    const proto = tmap.get(BEAMF.flowerSources[x.flowers[0]?.src || 'SC'].template), dia = Math.max(0, ...x.flowers.map(f => f.diameter));
+    const rise = tips.length ? Math.min(...tips.map(t => t.t)) : 0, end = Math.max(...entries.map(e => e.native.LocalTimeOffset + e.preview.durationS));
+    doc.templateLibrary.push({...clone(proto), id: x.id, name: x.name, zone: 'front', kind: x.kind || 'small', shape: x.kind === 'comet' ? 'comet' : 'sphere', diameter: dia, width: dia,
+      flightHeight: round(flight), z: round(50 + flight), burstZ: round(50 + flight), rise: round(rise), life: round(end - rise), recipeDuration: round(end), subTemplateRef: sub.key, numericSource: 'beam_flower_composite_20261012', engineSizeVerified: false,
+      color: x.flowers.length ? BEAMF.flowerSources[x.flowers[0].src].color : BEAMF.beamSources[x.beams[0].res].color});
+    DER_SRC.set(x.id, proto.id);
+    beamReport.push({id: x.id, engineId: x.engineId, beams: x.beams.length, flowers: x.flowers.length, flightM: round(flight)});
+  }
+}
+
 // —— 原型：每种花型取一条 R04 的 cue / event 当字段模板（只改时间 / 点位 / 编号） ——
 const eventProto = new Map(), cueProto = new Map();
 for (const e of doc.events) if (!eventProto.has(e.templateId)) eventProto.set(e.templateId, e);
@@ -118,7 +164,7 @@ for (const c of logic.cues) {
     const ev = clone(ep);
     for (const k of ['choreographyInstance', 'effectiveLaunch', 'effectiveBurst', 'effectiveEnd', 'launchJitterS', 'jitterKey', 'sectionId', 'phase', 'groupId']) delete ev[k];
     Object.assign(ev, {id: `${c.id}_E${String(i + 1).padStart(2, '0')}`, pointId: e.point, point: e.point, templateId: c.templateId, template: c.templateId, cueId: c.id,
-      launch: round(e.launch), dt: 0, dz: e.dz, scale: 1, zone: 'dam', burst: round(e.burst), end: round(e.end), recipeRef: tpl.subTemplateRef});
+      launch: round(e.launch), dt: 0, dz: e.dz, scale: 1, zone: tpl.zone ?? 'dam', burst: round(e.burst), end: round(e.end), recipeRef: tpl.subTemplateRef});
     if (tpl.shape === 'fan' || c.size === 'F') { ev.beams = ev.beams ?? 1; ev.beamGap = ev.beamGap ?? 0; ev.dir = ev.dir ?? 'L'; ev.tilt = ev.tilt ?? 0; }
     else { delete ev.beams; delete ev.beamGap; delete ev.dir; delete ev.tilt; }
     return ev;
@@ -129,6 +175,7 @@ for (const c of logic.cues) {
     eventIds: evs.map(e => e.id), start: Math.min(...evs.map(e => e.launch)), order: c.order, gap: c.gap, sizeScale: 1, designScale: Object.fromEntries(evs.map(e => [e.id, 1])),
     preserveRepeatedEvents: true, edited: true, warnings: [], pattern: `${c.wave ?? ''}｜${c.label}`, programSectionId: c.section, musicBinding: null};
   if (cue.order === 'source' || !['left', 'right', 'center-out', 'outside-in', 'together', 'source'].includes(cue.order)) cue.order = 'source';
+  if (c.mobile === false) cue.mobile = false;   // B02：不上手机的片段（一张表里写 PlatformFlags 12）
   doc.cues.push(cue);
   profiles.medium[c.id] = c.profiles.medium;
   profiles.low[c.id] = c.profiles.low;
@@ -141,7 +188,7 @@ Object.assign(doc.meta, {version: 'nagaoka-logic-v1', duration, savedAt: '2026-1
 delete doc.meta.defaultStaggerEnabled;
 // —— 修订4：尾缀 v2 开花点（手游编排 10-12，analysis/scripts/尾缀v2开花点.mjs）：引擎尾缀已按尺寸档重导（长度 × k、时间不变），
 //   固定子模板的开花点跟着降到新尾缀终点；编排条目（点位、时刻、dz、档位）不动。主角尾缀等 ResourceFX 加行后再换（hero=true）。 ——
-const trailV2 = TRAIL_V1 ? null : applyTrailV2(doc, {hero: args.includes('--hero-trail')});
+const trailV2 = TRAIL_V1 ? null : applyTrailV2(doc, {hero: args.some(a => a.startsWith('--hero-trail')), heroId: HERO_ID});
 doc.choreographyLibrary = [];
 doc.notices = [];
 const finalDoc = normalize(doc);
@@ -195,6 +242,21 @@ for (const tier of ['high', 'medium', 'low']) {
 const notIn = (a, b) => [...a].reduce((n, [k, v]) => n + Math.max(0, v - (b.get(k) || 0)), 0);
 report.tierNesting = {lowNotInMedium: notIn(occ.low, occ.medium), mediumNotInHigh: notIn(occ.medium, occ.high)};
 if (report.tierNesting.lowNotInMedium || report.tierNesting.mediumNotInHigh) throw Error('档位不嵌套：' + JSON.stringify(report.tierNesting));
+// —— B02：一张导演表（MinQualityLevel 嵌套 + 片段级 PlatformFlags 14 / 12）编一遍；手机三档 = 一张表里 PlatformFlags 含手机（14）的事件按画质切 ——
+if (B02) {
+  const nested = nestedQualityEvents(state.doc, state.profiles);
+  if (nested.issues.length) throw Error('一张表：' + nested.issues[0]);
+  const r1 = compileDirector(state.doc, nested.events, undefined, {});
+  if (r1.issues.length) throw Error('一张表编译问题：' + r1.issues.slice(0, 3).join('；'));
+  fs.writeFileSync(path.join(outDir, `导演表-${TABLE}-一张表.json`), JSON.stringify(r1.manifest, null, 2));
+  const rank = {EQuality_VeryLow: 0, EQuality_Medium: 1, EQuality_High: 2};
+  const cnt = (flags, maxQ) => nested.events.filter(e => (flags === 'mobile' ? e.platformFlags === 14 : true) && rank[e.minQuality] <= maxQ).length;
+  report.oneTable = {events: nested.events.length, flags14: nested.events.filter(e => e.platformFlags === 14).length, flags12: nested.events.filter(e => e.platformFlags === 12).length,
+    subTemplates: r1.manifest.EffectSubTemplates.length, templates: r1.manifest.EffectTemplates.length, scheduleSlots: r1.manifest.EffectScheduleGroups.reduce((n, g) => n + g.Slots.length, 0),
+    pc: {high: cnt('pc', 2), medium: cnt('pc', 1), low: cnt('pc', 0)}, mobile: {high: cnt('mobile', 2), medium: cnt('mobile', 1), low: cnt('mobile', 0)}};
+  report.beamFlowers = beamReport;
+  report.heroTrailId = HERO_ID;
+}
 report.doc = {cues: finalDoc.cues.length, events: finalDoc.events.length, sections: finalDoc.sections.length, duration: finalDoc.meta.duration, musicOffset: finalDoc.meta.musicOffset, balls: finalDoc.statistics.ballCount, fans: finalDoc.statistics.fanCount};
 fs.writeFileSync(path.join(outDir, `${TABLE}编排检查.json`), JSON.stringify(report, null, 2));
 // D1 / D3 是对比版：不再各带一份 81 MB 音乐（按 sha256 用同一首《汪洋与浩渺》），D2 沿用 22 原来的完整文件

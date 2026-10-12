@@ -108,12 +108,48 @@ FAMILY = {f['code']: next(k for k, v in SPECIES.items() if v[0] == f['source']) 
 PROMOTE = {'GR': 'GRL', 'CL': 'CLL', 'ML': 'MLL'}
 PROMOTE_SECTIONS = {'B01_S5', 'B01_S7', 'B01_S8', 'B01_S9', 'B01_S11', 'B01_S12'}   # 第一次抬升、第二次递进、蓄势收窄、高潮 II、转场铺色 B（终章前小峰）、终章
 HERO_BARS = (66, 105, 125)                                    # 主角前后 1 小节不放 L（宪章）
+# ———— B02 小花束尾（22，用户 10-12 20:18）：银扇 / 红彗星单束缩小当尾缀 + 小花缩小挂在束顶，定义在 协作/编排B01/小花束尾.json ————
+BEAMF = json.loads((OUTDIR / '小花束尾.json').read_text(encoding='utf-8'))
+BEAM_EST = BEAMF['estimate']
+BEAM_DUR = {'P_EFX_FireWorks_FanSilver_01': 2.45, 'P_EFX_FireWorks_FanComet_01': 3.1}
+
+
+def beam_tip(b):
+    """束顶（挂花处）相对发射点：(横向 m, 高 m, 出束后秒)。Roll 正 → 局部 Y 负（与 编排B01_编译.mjs 的大号花型同一约定）"""
+    R = BEAM_EST['beamReachM'][b['res']] * b['scale'] * BEAM_EST['tipFrac']
+    a = math.radians(b['roll'])
+    return -math.sin(a) * R, math.cos(a) * R, b['off'] + BEAM_EST['tipTimeS']
+
+
+for _x in BEAMF['flowers']:
+    _tips = [beam_tip(_x['beams'][f['beam']]) for f in _x['flowers']]
+    _rise = min(t for _, _, t in _tips) if _tips else 0.0
+    _ends = [b['off'] + BEAM_DUR[b['res']] for b in _x['beams']] + [t + TPL[BEAMF['flowerSources'][f['src']]['template']]['life'] for f, (_, _, t) in zip(_x['flowers'], _tips)]
+    _reach = max([z for _, z, _ in _tips] or [BEAM_EST['beamReachM'][b['res']] * b['scale'] for b in _x['beams']])
+    TPL[_x['id']] = dict(id=_x['id'], name=_x['name'], kind=_x.get('kind', 'small'), zone='front', diameter=max([f['diameter'] for f in _x['flowers']] or [0]),
+                         flightHeight=round(_reach, 3), rise=round(_rise, 4), life=round(max(_ends) - _rise, 4), recipeDuration=round(max(_ends), 4),
+                         subTemplateRef=_x['engineId'] + '@1', beamFlower=_x)
+    _col = BEAMF['flowerSources'][_x['flowers'][0]['src']]['color'] if _x['flowers'] else BEAMF['beamSources'][_x['beams'][0]['res']]['color']
+    SPECIES[_x['code']] = (_x['id'], _x['zh'], 'X', _col, 0)
 fam = lambda sp: FAMILY.get(sp, sp)
 TID2SP = {v[0]: k for k, v in SPECIES.items()}
 FAN_PTS = {'S9': ['B1', 'B3', 'B4', 'B6'], 'S13': ['B3', 'B4']}   # 银扇 9 / 13 束太重：限点位；S5（每点 15）可整排 8 点，由预算逐波裁
 TAIL_GPU = {'S': 6, 'M': 2, 'L': 6}
 BEAM_GPU = {'R': 1, 'S': 3}          # 红彗星 FanComet 1 / 束，银扇 FanSilver 3 / 束
 REL_H = {'S': 190.08, 'M': 265.12, 'L': 410.21}   # 资源自带的开花高度（相对发射点）；目标 150 / 210 / 330，见说明
+# B02（22，10-12）：引擎尾缀按尺寸档重导（手游编排 尾缀v2开花点.mjs，用户 10-12 晚重导 PC 尾缀 S / M / L）后，开花点 ≈ 原高度 × k；
+# 重叠评分和动画都按这个高度算（HEIGHTS='v2'）。v1 = 原资产高度 190 / 265 / 410，只做对比。
+TRAIL_K = {'S': 0.7895, 'M': 0.7925, 'L': 0.8049}
+HEIGHTS = 'v1'
+
+
+def bloom_h(c):
+    """这一片段的开花高度（相对发射点，m）：花型自带 flightHeight（大号 / 主角挂大尾缀）× 尾缀 v2 系数"""
+    t = TPL[c['templateId'].split('__K')[0]]
+    h = t.get('flightHeight') or REL_H[c['size']]
+    if HEIGHTS == 'v2' and c['size'] in TRAIL_K:
+        h *= TRAIL_K[c['size']]
+    return h
 
 
 def rise_of(sp):
@@ -304,10 +340,11 @@ def tier_points(c):
 
 
 # ═══════════════════════════ 曲谱：按我们这首歌的小节排 ═══════════════════════════
-def build(density=2, rhythm=None, vary=False):
+def build(density=2, rhythm=None, vary=False, b02=False):
     S = Show(density)
     S.rhythm = rhythm
     S.vary = vary
+    S.b02flag = b02
     d = density
     h = lambda bar, beat=0: T(bar, beat)
 
@@ -548,6 +585,8 @@ def build(density=2, rhythm=None, vary=False):
     attach_base_fans(S)
     if vary:
         best_vary(S)
+    if b02:
+        apply_b02(S)
     return S
 
 
@@ -697,12 +736,12 @@ def _groups_for_vary(S):
 def _flower_geom(c, e):
     t = TPL[c['templateId'].split('__K')[0]]
     k = c.get('sizeK', 1.0)
-    return PT[e['point']]['x'], 150 + (t['flightHeight'] or REL_H[c['size']]) + e['dz'], (t['diameter'] or DIA[c['size']]) * k
+    return PT[e['point']]['x'], PT[e['point']]['z'] + bloom_h(c) + e['dz'], (t['diameter'] or DIA[c['size']]) * k
 
 
 def overlap_stats(S):
     """每 0.25 s 取样：不同片段的两朵花圆心距离 < 0.6 ×（半径和）算一次深度重叠；同一片段相邻点（设计重叠）不算。另数主角被别的花深度压住的次数。"""
-    alive_all = [(c, e) for c in S.cues if c['size'] != 'F' for e in c['events']]
+    alive_all = [(c, e) for c in S.cues if c['size'] in 'SML' for e in c['events']]
     heavy = hero = 0
     t, end = 10.0, max(e['end'] for _, e in alive_all)
     while t < end:
@@ -712,7 +751,7 @@ def overlap_stats(S):
             ci, (xi, zi, di) = geo[i]
             for j in range(i + 1, len(geo)):
                 cj, (xj, zj, dj) = geo[j]
-                if ci is cj:
+                if ci is cj or (ci.get('splitOf') or ci['id']) == (cj.get('splitOf') or cj['id']):   # B02 手机拆开的偶 / 奇两半仍是同一排
                     continue
                 if ((xi - xj) ** 2 + (zi - zj) ** 2) ** 0.5 < 0.6 * (di + dj) / 2:
                     heavy += 1
@@ -770,7 +809,7 @@ def apply_vary(S, seed):
             for c, e, rel, fixed in flowers:
                 dz = fixed if fixed is not None else round(_soft(G + rel))
                 tpl = TPL[c['templateId'].split('__K')[0]]
-                x, z, d = PT[e['point']]['x'], 150 + (tpl['flightHeight'] or REL_H[c['size']]) + dz, (tpl['diameter'] or DIA[c['size']]) * c['sizeK']
+                x, z, d = PT[e['point']]['x'], PT[e['point']]['z'] + bloom_h(c) + dz, (tpl['diameter'] or DIA[c['size']]) * c['sizeK']
                 a0, a1 = e['burst'] + 0.4, e['end']
                 for b0, b1, xx, zz, dd, hh in near:
                     co = min(a1, b1) - max(a0, b0)
@@ -783,7 +822,7 @@ def apply_vary(S, seed):
         for c, e, rel, fixed in flowers:
             e['dz'] = float(fixed if fixed is not None else round(_soft(G + rel)))
             tpl = TPL[c['templateId'].split('__K')[0]]
-            placed.append((e['burst'] + 0.4, e['end'], PT[e['point']]['x'], 150 + (tpl['flightHeight'] or REL_H[c['size']]) + e['dz'],
+            placed.append((e['burst'] + 0.4, e['end'], PT[e['point']]['x'], PT[e['point']]['z'] + bloom_h(c) + e['dz'],
                            (tpl['diameter'] or DIA[c['size']]) * c['sizeK'], fam(c['sp']) == 'GK'))
     for c in S.cues:
         if c['size'] != 'F' and c.get('sizeK', 1.0) != 1.0:
@@ -1071,6 +1110,88 @@ def attach_base_fans(S):
     S.baseGroups = len(plans)
 
 
+# ═══════════════════════════ B02（22，用户 10-12 20:18） ═══════════════════════════
+# 底稿 = 16.0.18 的「B01节奏D-高低大小-尾缀v2」（--rhythm D --vary），在它上面只加三件，时间、点位、密度、PC 三档不动：
+#   ① 高度按尾缀 v2（150 / 210 / 330 m）重挑组高度（规则同 --vary，只是几何换成新高度）；
+#   ② 手机三档：执行方案（手游编排 10-12）§2.1 的周三白名单 + 宪章 §8「手机隔点、花与花不重叠、花下不放扇」；
+#   ③ 小平台 F0–F6 放小花束尾（银扇 / 红彗星单束缩小当尾缀 + 小花挂束顶，只上 PC）。
+MOBILE_OK = {'SC', 'OG', 'GR', 'GRL', 'SS', 'GKH', 'CR', 'GS'}   # 周三手游白名单（执行方案 §2.1：小银菊、橙辉星、金芒菊（含大号）、银彩菊、主角、可选爆裂星 / 金锦菊）
+B02_PHRASES = [   # (小节, 花型, 点, 次序, 间隔 s)：小平台在节奏 D 的空小节里出声，高潮段不放（那里天上已满）
+    (11, 'XS3A', ['F1', 'F3', 'F5'], 'out', 0.2), (15, 'XS1A', [f'F{i}' for i in range(7)], 'L', 0.15),
+    (19, 'XC2A', ['F0', 'F2', 'F4', 'F6'], 'R', 0.2), (23, 'XV4', ['F0', 'F3', 'F6'], 'out', 0.1),
+    (27, 'XS1A', [f'F{i}' for i in range(7)], 'L', 0.12), (31, 'XS1B', [f'F{i}' for i in range(7)], 'R', 0.12),
+    (42, 'XS3A', ['F1', 'F3', 'F5'], 'out', 0.2), (43, 'XC2B', ['F0', 'F2', 'F4', 'F6'], 'in', 0.15), (44, 'XV4', [f'F{i}' for i in range(7)], 'L', 0.1),
+    (46, 'XS3B', ['F0', 'F3', 'F6'], 'out', 0.2), (47, 'XS1A', [f'F{i}' for i in range(7)], 'out', 0.1), (48, 'XC2A', ['F1', 'F3', 'F5'], 'together', 0.0),
+    (54, 'XS3B', ['F1', 'F3', 'F5'], 'in', 0.15), (58, 'XV4', ['F2', 'F3', 'F4'], 'together', 0.0), (62, 'XS1B', ['F3'], 'together', 0.0),
+    (83, 'XS3A', ['F1', 'F3', 'F5'], 'out', 0.2), (87, 'XC2B', ['F0', 'F2', 'F4', 'F6'], 'L', 0.15),
+    (91, 'XS1A', [f'F{i}' for i in range(7)], 'in', 0.12), (95, 'XS3B', ['F0', 'F3', 'F6'], 'out', 0.2),
+]
+
+
+def split_mobile(S):
+    """手机：只用 P 点、只放白名单里的球花主排；M / L 一排隔点（P0 / 2 / 4 / 6 / 8）上手机、奇数点只上 PC，免得手机上花叠花。
+    一张表里画质按事件嵌套、手机与 PC 共用同一条事件的 MinQualityLevel，所以拆开后 PC 的高 / 中 / 低点集一个不变，手机的中 / 低 = PC 中 / 低 ∩ 偶数点。"""
+    out, n_split = [], 0
+    for c in S.cues:
+        ok = c['size'] in 'SML' and c['layer'] == 'main' and c['group'] == 'P' and c['sp'] in MOBILE_OK
+        if not ok:
+            c['mobile'] = False
+            out.append(c)
+            continue
+        if c['size'] == 'S':
+            c['mobile'] = True
+            out.append(c)
+            continue
+        ev = [p for p in c['points'] if int(p[1:]) % 2 == 0]
+        od = [p for p in c['points'] if int(p[1:]) % 2 == 1]
+        if not ev or not od:
+            c['mobile'] = bool(ev)
+            out.append(c)
+            continue
+        import copy
+        pc = copy.deepcopy(c)
+        for part, pts, mob in ((c, ev, True), (pc, od, False)):
+            keep = set(pts)
+            part['events'] = [e for e in part['events'] if e['point'] in keep]
+            part['points'] = [e['point'] for e in part['events']]
+            part['profiles'] = {t: [p for p in part['profiles'][t] if p in keep] for t in ('medium', 'low')}
+            part['mobile'] = mob
+        pc['label'] = (c['label'] or '') + '（奇数点·只上 PC）'
+        c['label'] = (c['label'] or '') + '（偶数点·PC + 手机）'
+        pc['splitOf'] = c['id']
+        pc['id'] = c['id'] + 'o'
+        out += [c, pc]
+        n_split += 1
+    S.cues = out
+    return n_split
+
+
+def add_beam_flowers(S):
+    secs = sorted(S.sections, key=lambda x: x['bar0'])
+    n = 0
+    for bar, code, pts, order, gap in B02_PHRASES:
+        S.cur = next(x for x in secs if x['bar0'] <= bar < x['bar1'])
+        c = S.cue(code, pts, T(bar), order, gap, None, layer='extra', tier='trim', label=SPECIES[code][1], wave='小平台·小花束尾')
+        c['mobile'] = False
+        c['profiles']['low'] = []          # 叠层：低配不出（单点片段也不出）
+        n += 1
+    return n
+
+
+def apply_b02(S):
+    S.b02 = dict(split=split_mobile(S), beamFlowerCues=add_beam_flowers(S))
+    S.cues.sort(key=lambda c: (min(e['launch'] for e in c['events']), c['id']))
+    idmap = {c['id']: f'B02_C{i:03d}' for i, c in enumerate(S.cues, 1)}
+    for c in S.cues:
+        if 'baseOf' in c:
+            c['baseOf'] = [idmap.get(x, x) for x in c['baseOf']]
+        if 'splitOf' in c:
+            c['splitOf'] = idmap.get(c['splitOf'], c['splitOf'])
+    for c in S.cues:
+        c['id'] = idmap[c['id']]
+        c['name'] = c['name'].replace('B01', 'B02')
+
+
 # ═══════════════════════════ 体检 ═══════════════════════════
 DIA = {'S': 90, 'M': 150, 'L': 230}
 
@@ -1083,10 +1204,12 @@ def all_events(S):
     return out
 
 
-def gpu_points(S, tier='high'):
-    """(时刻, GPU 发射器数)：尾缀在 launch，花本体在 burst，扇形每束在 launch + 束偏移"""
+def gpu_points(S, tier='high', platform='pc'):
+    """(时刻, GPU 发射器数)：尾缀在 launch，花本体在 burst，扇形每束在 launch + 束偏移；platform='mobile' 只算上手机的片段"""
     pts = []
     for c in S.cues:
+        if platform == 'mobile' and c.get('mobile') is False:
+            continue
         keep = set(c['points']) if tier == 'high' else set(c['profiles'][tier])
         for e in c['events']:
             if e['point'] not in keep:
@@ -1095,6 +1218,9 @@ def gpu_points(S, tier='high'):
                 gpu = BEAM_GPU['R' if c['sp'].startswith('R') else 'S']
                 for b in fan_beams(c['sp']):
                     pts.append((e['launch'] + b['off'], gpu))
+            elif c['size'] == 'X':
+                for b in TPL[SPECIES[c['sp']][0]]['beamFlower']['beams']:
+                    pts.append((e['launch'] + b['off'], BEAMF['beamSources'][b['res']]['gpuPerBeam']))
             else:
                 pts.append((e['launch'], TAIL_GPU[c['size']]))
                 if SPECIES[c['sp']][4]:
@@ -1121,11 +1247,32 @@ def window_max(pts, width=1.0):
     return best, arg, series
 
 
+def merged_cues(S):
+    """B02 手机拆开的偶 / 奇两半合回一排（整排、波数、接力这些体检按「一排」算）"""
+    import copy
+    out, by = [], {}
+    for c in S.cues:
+        if c.get('splitOf'):
+            continue
+        m = copy.copy(c)
+        m['events'] = list(c['events'])
+        m['points'] = list(c['points'])
+        by[c['id']] = m
+        out.append(m)
+    for c in S.cues:
+        if c.get('splitOf') and c['splitOf'] in by:
+            m = by[c['splitOf']]
+            m['events'] = sorted(m['events'] + c['events'], key=lambda e: px(e['point']))
+            m['points'] = [e['point'] for e in m['events']]
+    return out
+
+
 def checks(S):
+    MC = merged_cues(S)
     ev = all_events(S)
     res = {}
     # 1 数量
-    balls = [e for e in ev if e['size'] != 'F']
+    balls = [e for e in ev if e['size'] in 'SML']
     fans = [e for e in ev if e['size'] == 'F']
     res['events'] = dict(total=len(ev), balls=len(balls), fans=len(fans), cues=len(S.cues), bySize={k: sum(1 for e in balls if e['size'] == k) for k in 'SML'})
     tiers = {}
@@ -1164,7 +1311,7 @@ def checks(S):
     # 3 对拍：每个 cue 第一发开花对最近 1/4 小节拍线
     beat = BAR / 4
     dev = []
-    timed = [c for c in S.cues if c.get('wave') != '托底扇']      # 托底扇跟尾缀起飞走，不对拍；单独在 baseFans 里查对位
+    timed = [c for c in S.cues if c.get('wave') != '托底扇' and not c.get('splitOf')]   # B02 手机拆出的奇数点半排跟着原排走，不单算      # 托底扇跟尾缀起飞走，不对拍；单独在 baseFans 里查对位
     for c in timed:
         if c['size'] == 'F':
             t0 = min(e['launch'] for e in c['events'])
@@ -1176,18 +1323,18 @@ def checks(S):
     # 强拍：每小节第一拍 (beat%4==0)
     strong = 0
     for c in timed:
-        t0 = min(e['burst'] if c['size'] != 'F' else e['launch'] for e in c['events'])
+        t0 = min(e['burst'] if c['size'] != 'F' else e['launch'] for e in c['events'])   # 小花束尾（X）按第一朵花开花对拍
         k = round((t0 - BAR0) / BAR)
         if abs(t0 - (BAR0 + k * BAR)) <= 0.1:
             strong += 1
     res['strongBeat'] = round(strong / len(timed), 3)
     # 4 整排 / 同屏代数
-    full = [c for c in S.cues if c['size'] != 'F' and len(c['points']) >= 7 and c['layer'] == 'main' and c['wave'] not in ('倒计时',)]
+    full = [c for c in MC if c['size'] in 'SML' and len(c['points']) >= 7 and c['layer'] == 'main' and c['wave'] not in ('倒计时',)]
     waves = defaultdict(list)
     for c in full:
         waves[round(min(e['burst'] for e in c['events']), 1)].append(c)
     gens = []
-    allball = [c for c in S.cues if c['size'] != 'F']
+    allball = [c for c in MC if c['size'] in 'SML']
     for t0, cs in sorted(waves.items()):
         inflight = set()
         for c in allball:
@@ -1213,7 +1360,7 @@ def checks(S):
     # 6 领奏：每种球花有没有一次整排
     lead = {}
     for sp, v in SPECIES.items():
-        if SPECIES[sp][2] == 'F' or sp in FAMILY:
+        if SPECIES[sp][2] not in 'SML' or sp in FAMILY:
             continue
         ts = sorted({round(min(e['burst'] for e in c['events']), 1) for c in full if fam(c['sp']) == sp})
         lead[sp] = dict(name=SPECIES[sp][1], fullWaves=len(ts), firstAt=ts[0] if ts else None)
@@ -1230,8 +1377,8 @@ def checks(S):
     res['rhythm'] = getattr(S, 'rhythmLog', None)
     res['vary'] = getattr(S, 'varyLog', None)
     wb = defaultdict(int)
-    for c in S.cues:
-        if c['size'] != 'F' and c['layer'] == 'main' and len(c['points']) >= 4:
+    for c in MC:
+        if c['size'] in 'SML' and c['layer'] == 'main' and len(c['points']) >= 4:
             wb[(c['section'] in RELEASE, int(round(bar_of(c['H0']) - 0.49)))] += 1
     rel = [v for (r, _), v in wb.items() if r]
     push = [v for (r, _), v in wb.items() if not r]
@@ -1242,7 +1389,7 @@ def checks(S):
     # 7 段内领奏占比
     share = {}
     for s in S.sections:
-        cs = [c for c in S.cues if c['section'] == s['id'] and c['size'] != 'F' and c['layer'] == 'main']
+        cs = [c for c in S.cues if c['section'] == s['id'] and c['size'] in 'SML' and c['layer'] == 'main']
         tot = sum(len(c['events']) for c in cs)
         cnt = defaultdict(int)
         for c in cs:
@@ -1253,9 +1400,9 @@ def checks(S):
     quiet = {}
     for k in (41, 65, 96):
         a, b = T(k), T(k + 1) - 0.1
-        quiet[f'bar{k}'] = dict(span=[round(a, 2), round(b, 2)], bursts=sum(1 for e in ev if a <= e['burst'] < b and e['size'] != 'F'),
+        quiet[f'bar{k}'] = dict(span=[round(a, 2), round(b, 2)], bursts=sum(1 for e in ev if a <= e['burst'] < b and e['size'] in 'SML'),
                                 fanStarts=sum(1 for e in ev if e['size'] == 'F' and a <= e['launch'] < b),
-                                tailsRising=sum(1 for e in ev if e['size'] != 'F' and e['launch'] < b and e['burst'] > a))
+                                tailsRising=sum(1 for e in ev if e['size'] in 'SML' and e['launch'] < b and e['burst'] > a))
     res['quietBars'] = quiet
     # 8b 托底扇：覆盖、束型、方向、与球花起飞对位、同时在场扇束 GPU
     base = [c for c in S.cues if c.get('wave') == '托底扇']
@@ -1289,17 +1436,41 @@ def checks(S):
     res['aliveBodies'] = dict(peak=max(alive), peakAt=ts[alive.index(max(alive))], mean=round(sum(alive) / len(alive), 1))
     bysp = {}
     for sp in SPECIES:
-        if SPECIES[sp][2] == 'F':
+        if SPECIES[sp][2] not in 'SML':
             continue
         al = [sum(1 for e in balls if e['sp'] == sp and e['burst'] <= t < e['end']) for t in ts]
         bysp[sp] = dict(name=SPECIES[sp][1], peak=max(al), peakAt=ts[al.index(max(al))] if max(al) else None)
     res['aliveBySpecies'] = bysp
     # 11 每小节波数（密度）
     perbar = defaultdict(int)
-    for c in S.cues:
-        if c['size'] != 'F' and c['layer'] == 'main' and len(c['points']) >= 4:
+    for c in MC:
+        if c['size'] in 'SML' and c['layer'] == 'main' and len(c['points']) >= 4:
             perbar[int((min(e['burst'] for e in c['events']) - BAR0) // BAR)] += 1
     res['barsWithWave'] = len(perbar)
+    # 12 B02：手机三档（只算 mobile 不为 False 的片段；与一张表 PlatformFlags 14 / 12 同一规则）与小平台小花束尾
+    if getattr(S, 'b02', None):
+        mob = {}
+        for tier in ('high', 'medium', 'low'):
+            n = 0
+            sp = defaultdict(int)
+            for c in S.cues:
+                if c.get('mobile') is False:
+                    continue
+                keep = set(c['points']) if tier == 'high' else set(c['profiles'][tier])
+                k = sum(1 for e in c['events'] if e['point'] in keep)
+                n += k
+                if k:
+                    sp[SPECIES[c['sp']][1]] += k
+            gp = gpu_points(S, tier, 'mobile')
+            mob[tier] = dict(events=n, gpuPeakPerS=window_max(gp)[0] if gp else 0, bySpecies=dict(sorted(sp.items(), key=lambda kv: -kv[1])))
+        xs = [c for c in S.cues if c['size'] == 'X']
+        bt = defaultdict(int)
+        for c in xs:
+            bt[c['sp']] += len(c['events'])
+        res['b02'] = dict(S.b02, mobileTiers=mob, mobileCues=sum(1 for c in S.cues if c.get('mobile') is not False), pcOnlyCues=sum(1 for c in S.cues if c.get('mobile') is False),
+                          beamFlowers=dict(cues=len(xs), events=sum(len(c['events']) for c in xs), byType=dict(sorted(bt.items())),
+                                           medium=sum(len(c['profiles']['medium']) for c in xs), low=sum(len(c['profiles']['low']) for c in xs)),
+                          heights=HEIGHTS, overlap=overlap_stats(S))
     return res
 
 
@@ -1329,7 +1500,7 @@ def make_figs(S, ck):
         ax[0].text((s['start'] + s['end']) / 2, -5.6, s['name'], ha='center', va='top', fontsize=8.5, color='#600')
     ax[0].set_title('B01 总览：音乐响度（上）· 每小节开花数（中上）· 同屏花数（中下）· GPU 发射器 / 秒（下）；红线 = 段落', loc='left', fontsize=11)
     nb = int(dur // BAR) + 3
-    cnt = {k: np.zeros(nb) for k in 'SML'}
+    cnt = {k: np.zeros(nb) for k in 'SMLX'}
     fan = np.zeros(nb)
     for e in ev:
         if e['size'] == 'F':
@@ -1340,13 +1511,15 @@ def make_figs(S, ck):
             if 0 <= k < nb: cnt[e['size']][k] += 1
     xs = [BAR0 + BAR * k for k in range(nb)]
     bot = np.zeros(nb)
-    for k, col in (('S', '#9db7e8'), ('M', '#f0c24a'), ('L', '#e07a5f')):
-        ax[1].bar(xs, cnt[k], bottom=bot, width=BAR * .9, color=col, align='edge', label=f'{k} 球花')
+    for k, col in (('S', '#9db7e8'), ('M', '#f0c24a'), ('L', '#e07a5f'), ('X', '#8fd3c1')):
+        if k == 'X' and not cnt['X'].any():
+            continue
+        ax[1].bar(xs, cnt[k], bottom=bot, width=BAR * .9, color=col, align='edge', label='小平台小花束尾' if k == 'X' else f'{k} 球花')
         bot += cnt[k]
     ax[1].step(xs, fan, where='post', color='#2a9d8f', lw=1.2, label='扇形')
     ax[1].set_ylim(0, 30); ax[1].legend(loc='upper left', ncol=4, fontsize=8); ax[1].set_ylabel('每小节开花数')
     tsx = np.arange(0, dur, 0.5)
-    alive = [sum(1 for e in ev if e['size'] != 'F' and e['burst'] <= t < e['end']) for t in tsx]
+    alive = [sum(1 for e in ev if e['size'] in 'SML' and e['burst'] <= t < e['end']) for t in tsx]
     ax[2].fill_between(tsx, alive, color='#f4a261', alpha=.7); ax[2].set_ylabel('同屏花本体数')
     gp = gpu_points(S, 'high')
     _, _, series = window_max(gp)
@@ -1355,6 +1528,8 @@ def make_figs(S, ck):
     ax[3].set_ylabel('1 s 内新起 GPU 发射器'); ax[3].set_xlabel('演出秒（音乐 + 5）'); ax[3].set_xlim(0, dur + 2)
     plt.tight_layout()
     sfx = (f"_R{S.rhythm}" + ('V' if getattr(S, 'vary', False) else '')) if getattr(S, 'rhythm', None) else ''
+    if getattr(S, 'b02flag', False):
+        sfx = '_B02'
     plt.savefig(OUTDIR / f'总览{sfx}.png', dpi=110); plt.close()
 
     # —— 关键时刻 ——
@@ -1397,9 +1572,11 @@ def snapshot(ax, S, t, title):
                         L = min(80, 140 * a_) * (1 - a_ / life * .6)
                         ax.plot([x, x + L * math.sin(ang)], [2, 2 + L * math.cos(ang)], color=col, lw=1.1, alpha=max(.15, 1 - a_ / life))
                 continue
+            if c['size'] == 'X':   # 小平台小花束尾：示意图只画在动画页，这里跳过
+                continue
             rise = rise_of(c['sp'])
             _tp = TPL[c['templateId'].split('__K')[0]]
-            Hb = (_tp['flightHeight'] or REL_H[c['size']]) + e['dz']   # 修订：大号 / 主角用自己的尾缀高度
+            Hb = bloom_h(c) + e['dz']   # 修订：大号 / 主角用自己的尾缀高度；B02 起按尾缀 v2
             if e['launch'] <= t < e['burst']:
                 p_ = (t - e['launch']) / rise
                 h_ = Hb * (1 - (1 - p_) ** 2)
@@ -1429,7 +1606,10 @@ def export(S, ck):
     rh = getattr(S, 'rhythm', None)
     vy = 'V' if getattr(S, 'vary', False) else ''
     sfx = f'_R{rh}{vy}' if rh else ('' if S.density == 2 else f'_D{S.density}')
-    out = dict(format='df.choreography-proposal/2', revision=(f'B01_NAGAOKA_LOGIC_r4_R{rh}V' if vy else f'B01_NAGAOKA_LOGIC_r3_R{rh}') if rh else f'B01_NAGAOKA_LOGIC_r2_D{S.density}', rhythm=rh, status='logic_compiled_by_编排B01_编译.mjs_UE_unverified',
+    rev = (f'B01_NAGAOKA_LOGIC_r4_R{rh}V' if vy else f'B01_NAGAOKA_LOGIC_r3_R{rh}') if rh else f'B01_NAGAOKA_LOGIC_r2_D{S.density}'
+    if getattr(S, 'b02flag', False):
+        sfx, rev = '_B02', 'B02_r1_RDV_trailV2_mobile_beamflowers'
+    out = dict(format='df.choreography-proposal/2', revision=rev, rhythm=rh, status='logic_compiled_by_编排B01_编译.mjs_UE_unverified',
                generator='analysis/scripts/编排B01.py', density=S.density, musicOffsetS=OFFSET, barS=BAR, bar0S=BAR0, duration=dur,
                sections=S.sections, cues=S.cues)
     (OUTDIR / f'逻辑方案{sfx}.json').write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding='utf-8')
@@ -1441,11 +1621,15 @@ if __name__ == '__main__':
     ap.add_argument('--density', type=int, default=2)
     ap.add_argument('--no-figs', action='store_true')
     ap.add_argument('--vary', action='store_true', help='高低 / 大小随机分布（用户 10-11 23:40），只配合 --rhythm')
+    ap.add_argument('--b02', action='store_true', help='B02（22，10-12）：节奏 D + 高低大小 + 尾缀 v2 高度 + 手机三档 + 小平台小花束尾')
     ap.add_argument('--rhythm', choices=sorted(RHYTHMS), default=None, help='节奏留白版：A 每 2 小节 / B 每 4 小节 / C 两放两歇 / D 段落强弱（以 D2 为底）')
     a = ap.parse_args()
-    S = build(2 if a.rhythm else a.density, a.rhythm, bool(a.vary and a.rhythm))
+    if a.b02:
+        HEIGHTS = 'v2'
+        a.rhythm, a.vary = 'D', True
+    S = build(2 if a.rhythm else a.density, a.rhythm, bool(a.vary and a.rhythm), a.b02)
     ck = checks(S)
     export(S, ck)
     if not a.no_figs and a.density == 2:
         make_figs(S, ck)
-    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'baseFans', 'fanSummary', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'heroes', 'share', 'largeBySpecies', 'density', 'rhythm', 'vary', 'wavesPerBar', 'tierNesting', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies')}, ensure_ascii=False, indent=1))
+    print(json.dumps({k: ck[k] for k in ('events', 'tiers', 'gpu', 'baseFans', 'fanSummary', 'beatLock', 'strongBeat', 'generations', 'relayViolations', 'leadMissing', 'heroes', 'share', 'largeBySpecies', 'density', 'rhythm', 'vary', 'wavesPerBar', 'tierNesting', 'quietBars', 'grid', 'aliveBodies', 'barsWithWave', 'aliveBySpecies', 'b02') if k in ck}, ensure_ascii=False, indent=1))

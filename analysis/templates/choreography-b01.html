@@ -24,6 +24,7 @@ body{margin:0;font-family:var(--sans);font-size:13px;line-height:1.5;}
 .legend{margin-left:auto;display:flex;gap:4px 14px;flex-wrap:wrap;color:var(--muted);font-size:12px;}
 .legend i{display:inline-flex;align-items:center;gap:5px;font-style:normal;}
 .legend i::before{content:"";width:10px;height:10px;border-radius:50%;border:1.5px solid var(--c);box-sizing:border-box;}
+.legend i.combo::before{border:0;border-radius:0;width:10px;height:12px;background:linear-gradient(80deg,transparent 44%,#d7e7f6 44% 56%,transparent 56%),radial-gradient(circle at 70% 18%,#f0cb87 0 3px,transparent 3.5px);}
 .legend i.tail::before{border:0;border-radius:2px;width:3px;height:13px;background:linear-gradient(to top,transparent,#ffd68c 80%,#fff);}
 .legend i.fan::before{border:0;border-radius:0;width:12px;height:10px;background:linear-gradient(60deg,transparent 46%,var(--c) 46% 54%,transparent 54%),linear-gradient(-60deg,transparent 46%,var(--c) 46% 54%,transparent 54%),linear-gradient(90deg,transparent 46%,var(--c) 46% 54%,transparent 54%);}
 canvas{display:block;width:100%;}
@@ -65,7 +66,7 @@ td.wrapcell{white-space:normal;min-width:220px;}
     <div class="clock"><b id="show">00:00.0</b><small id="music">音乐 —</small></div>
     <div class="where"><strong id="sec"></strong><em id="role"></em><span id="range"></span></div>
     <div class="legend">
-      <i style="--c:#d9e2f2">小 ⌀90</i><i style="--c:#f3c540">中 ⌀150</i><i style="--c:#e8b94a">大 ⌀230</i><i class="fan" style="--c:var(--red)">红彗星扇</i><i class="fan" style="--c:var(--silver)">银星扇</i><i class="tail" style="--c:#ffd68c">升空尾缀</i>
+      <i style="--c:#d9e2f2">小 ⌀90</i><i style="--c:#f3c540">中 ⌀150</i><i style="--c:#e8b94a">大 ⌀230</i><i class="fan" style="--c:var(--red)">红彗星扇</i><i class="fan" style="--c:var(--silver)">银星扇</i><i class="tail" style="--c:#ffd68c">升空尾缀</i><i class="combo" id="lg-combo" hidden>小平台小花束尾</i>
     </div>
   </div>
   <canvas id="cv" role="img" aria-label="跨年烟花秀 B01 正面比例动画"></canvas>
@@ -75,6 +76,7 @@ td.wrapcell{white-space:normal;min-width:220px;}
     <button type="button" id="prev" aria-label="上一波">◀ 上一波</button>
     <button type="button" id="next" aria-label="下一波">下一波 ▶</button>
     <div class="seg" id="speed" role="group" aria-label="播放速度"><button type="button" data-v="1" aria-pressed="true">1×</button><button type="button" data-v="2" aria-pressed="false">2×</button><button type="button" data-v="4" aria-pressed="false">4×</button></div>
+    <div class="seg" id="plat" role="group" aria-label="平台" hidden><button type="button" data-v="pc" aria-pressed="true">PC</button><button type="button" data-v="mobile" aria-pressed="false">手游</button></div>
     <div class="seg" id="tier" role="group" aria-label="质量档位"><button type="button" data-v="1" aria-pressed="true">高配</button><button type="button" data-v="2" aria-pressed="false">中配</button><button type="button" data-v="4" aria-pressed="false">低配</button></div>
     <div class="seg" id="view" role="group" aria-label="视野"><button type="button" data-v="full" aria-pressed="true">全场</button><button type="button" data-v="near" aria-pressed="false">中心近看</button></div>
     <div class="seg" id="colorby" role="group" aria-label="着色"><button type="button" data-v="sp" aria-pressed="true">按花色</button><button type="button" data-v="sz" aria-pressed="false">按大小</button></div>
@@ -87,6 +89,7 @@ td.wrapcell{white-space:normal;min-width:220px;}
   <div class="info"><b id="cue"></b><span id="comp"></span><span id="detail"></span><span id="counts"></span><span class="sw" id="sw"></span></div>
   <details><summary>14 段：领 / 接 / 插、条目数</summary><div class="tbl"><table id="secs"></table></div></details>
   <details><summary>花型：大小、升空、炸点高、同屏峰值</summary><div class="tbl"><table id="slots"></table></div></details>
+  <details id="b02box" hidden><summary>B02：手机三档 · 小平台小花束尾</summary><div class="tbl"><table id="b02tbl"></table></div></details>
   <details><summary>扇形编排：托底扇 + 扇组（方向 × 束型）</summary><div class="tbl"><table id="fanstat"></table></div></details>
   <details><summary>音乐锚点（用户给定 / 小节网格 + 响度，待试听）</summary><div class="tbl"><table id="anchors"></table></div></details>
   <details><summary>我自己找的纰漏（B01 说明第 4 节）</summary><ol class="risk" id="risks"></ol></details>
@@ -107,11 +110,13 @@ const TAILC=sp=>SP[sp].rgb;
 const fmt=s=>{const m=Math.floor(s/60);return `${String(m).padStart(2,'0')}:${(s-m*60).toFixed(1).padStart(4,'0')}`;};
 const mm=s=>{if(s<0)return '−'+mm(-s);const m=Math.floor(s/60);return `${m}:${(s-m*60).toFixed(1).padStart(4,'0')}`;};
 const mmss=s=>`${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}`;
-let t=11.0,playing=false,last=0,view='full',tier=1,speed=1,labels=innerWidth>=640,secIdx=-1,showTail=true,colorBy='sp',showBase=true;
+let t=11.0,playing=false,last=0,view='full',tier=1,speed=1,labels=innerWidth>=640,secIdx=-1,showTail=true,colorBy='sp',showBase=true,plat='pc';
 $('lab').setAttribute('aria-pressed',labels);
 const rgba=(c,a)=>`rgba(${c},${a})`;
 const dam=150;
-const PX={P:D.points.P.map(p=>p.x),B:D.points.B.map(p=>p.x)};
+const PX={P:D.points.P.map(p=>p.x),B:D.points.B.map(p=>p.x),F:(D.points.F||[]).map(p=>p.x)};
+const PZ={P:dam,B:dam,F:50};
+const CB=D.combos||{};
 const colOf=e=>colorBy==='sp'?SP[e.sp].rgb:SZC[e.sz];
 
 // 段落按钮
@@ -143,6 +148,21 @@ function fan(e,age,X,Z,sc,x0,z0){
   }
 }
 
+// 小平台小花束尾：几根缩小的单束（银 / 红）按固化角度出束，花挂在束顶（示意；束长与挂花时刻是估的）
+function combo(e,age,X,Z,sc,x0,z0){
+  const g=CB[e.sp];if(!g)return 0;let n=0;
+  for(const b of g.beams){const s=age-b.off;if(s<0||s>b.dur)continue;
+    const th=b.roll*Math.PI/180,r=b.reach*Math.min(1,1-Math.exp(-2.6*s)),fade=s<b.dur*.6?1:Math.max(0,(b.dur-s)/(b.dur*.4));
+    const r0=Math.max(0,r-b.reach*.55),hx=X(x0+Math.sin(th)*r),hy=Z(z0+Math.cos(th)*r);
+    seg(X(x0+Math.sin(th)*r0),Z(z0+Math.cos(th)*r0),hx,hy,rgba(b.rgb,fade*.85),Math.max(.9,sc*.9));
+    ctx.fillStyle=rgba('255,250,235',fade);ctx.beginPath();ctx.arc(hx,hy,Math.max(1.2,sc*1.4),0,7);ctx.fill();}
+  for(const f of g.flowers){const a=age-f.t;if(a<0||a>f.life)continue;n++;
+    const b=g.beams[f.beam],th=b.roll*Math.PI/180,fx=x0+Math.sin(th)*f.r,fz=z0+Math.cos(th)*f.r+(e.dz||0);
+    const u=a/f.life,al=u<.55?1:Math.max(0,(1-u)/.45),R=f.dia/2*(1-Math.exp(-6*Math.min(1,a/.6)))*sc,col=colorBy==='sp'?f.rgb:'143,211,193';
+    ctx.beginPath();ctx.arc(X(fx),Z(fz),Math.max(.5,R),0,7);ctx.fillStyle=rgba(col,.15*al);ctx.fill();ctx.strokeStyle=rgba(col,.9*al);ctx.lineWidth=1.2;ctx.stroke();}
+  return n;
+}
+
 function countdown(W,H){
   if(t>=10.5)return;
   const fs=Math.min(150,H*.34);ctx.textAlign='center';ctx.textBaseline='middle';
@@ -159,7 +179,7 @@ function countdown(W,H){
 function draw(){
   const near=view==='near';
   const W=Math.max(300,cv.parentElement.clientWidth);
-  const zmin=near?100:0,wx=near?700:1060,wz=700-zmin;
+  const zmin=near?(D.points.F?20:100):0,wx=near?700:1060,wz=700-zmin;
   const H=Math.round(Math.min(near?660:620,Math.max(280,W*wz/wx)));
   const dpr=Math.min(2,devicePixelRatio||1);
   if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+'px';}
@@ -176,7 +196,7 @@ function draw(){
   for(let i=1;i<5;i++)seg(X(xs[i])+.5,Z(dam),X(xs[i])+.5,Z(0),'#2c2d34',1);
   ctx.fillStyle='#1b1c21';ctx.fillRect(X(-100),Z(50),200*sc,50*sc);
   ctx.strokeStyle='#33343b';ctx.strokeRect(X(-100)+.5,Z(50)+.5,200*sc,50*sc);
-  ctx.textAlign='center';ctx.fillStyle='#6a6c73';ctx.fillText('前台 50 m（B01 未用）',X(0),Z(22));
+  ctx.textAlign='center';ctx.fillStyle='#6a6c73';ctx.fillText(D.points.F?'小平台 50 m · F0–F6':'前台 50 m（B01 未用）',X(0),Z(22));
   if(!near){ctx.fillStyle='#8c8f98';for(let i=0;i<5;i++)ctx.fillText(lens[i]+' m',X((xs[i]+xs[i+1])/2),Z(0)+14);}
   seg(padL,Z(dam),W-padR,Z(dam),'rgba(236,236,238,.35)',1,[5,5]);
   ctx.textAlign='left';ctx.fillStyle='#b9bbc2';ctx.fillText('坝顶 150 m',padL+4,Z(dam)-9);
@@ -196,14 +216,17 @@ function draw(){
     if(labels){ctx.fillStyle='#6a6c73';ctx.textAlign='center';ctx.fillText('P'+i,X(p.x),Z(dam)+11);}});
   D.points.B.forEach((p,i)=>{ctx.strokeStyle='#8c8f98';ctx.lineWidth=1;ctx.beginPath();ctx.arc(X(p.x),Z(dam)-2,2.2,0,7);ctx.stroke();
     if(labels){ctx.fillStyle='#6a6c73';ctx.textAlign='center';ctx.fillText('B'+i,X(p.x),Z(dam)+23);}});
+  (D.points.F||[]).forEach((p,i)=>{const x=X(p.x),y=Z(50)-1;ctx.fillStyle='#b9bbc2';ctx.beginPath();ctx.moveTo(x,y-3);ctx.lineTo(x+2.6,y);ctx.lineTo(x,y+3);ctx.lineTo(x-2.6,y);ctx.closePath();ctx.fill();
+    if(labels&&near){ctx.fillStyle='#6a6c73';ctx.textAlign='center';ctx.fillText('F'+i,X(p.x),Z(50)+11);}});
   ctx.font='11px '+mono;
   // 烟花
-  let nUp=0,nS=0,nM=0,nL=0,nFan=0,nGK=0,nBase=0;
+  let nUp=0,nS=0,nM=0,nL=0,nFan=0,nGK=0,nBase=0,nX=0;
   for(let i=0;i<EV.length;i++){
-    const e=EV[i];if(e.l>t)break;if(t>e.e)continue;if(!(e.tier&tier))continue;
-    const x0=PX[e.g][e.p],z0=dam;
+    const e=EV[i];if(e.l>t)break;if(t>e.e)continue;if(!(e.tier&tier))continue;if(plat==='mobile'&&e.mb===0)continue;
+    const x0=PX[e.g][e.p],z0=PZ[e.g]??dam;
+    if(e.k==='combo'){nX+=combo(e,t-e.l,X,Z,sc,x0,z0);continue;}
     if(e.k==='fan'){if(e.bs&&!showBase)continue;const age=t-e.b;if(age<0)continue;nFan++;if(e.bs)nBase++;fan(e,age,X,Z,sc,x0,z0);continue;}
-    const d=SZ[e.sz].d,H0=D.native[e.sz]+e.dz,top=z0+H0,col=colOf(e);
+    const d=e.d??SZ[e.sz].d,H0=(e.h??D.native[e.sz])+e.dz,top=z0+H0,col=colOf(e);
     if(t<e.b){ // 升空尾缀
       nUp++;if(!showTail)continue;
       const u=(t-e.l)/(e.b-e.l),pr=1-(1-u)*(1-u),zh=z0+H0*pr,trail=Math.min(zh-z0,Math.max(16,H0*.3));
@@ -236,16 +259,16 @@ function draw(){
   let cc=null;for(const c of CU){if(c.t<=t+1e-6)cc=c;else break;}
   if(cc&&t-cc.t<5){
     const np=cc.pts.filter((p,i)=>cc.tm[i]&tier).length;
-    $('cue').textContent=`${cc.id} · ${SP[cc.sp].name}${cc.sz==='F'?'（扇）':'（'+SZ[cc.sz].n+'）'} · ${cc.label} · ${np}/${cc.pts.length} 点`;
+    $('cue').textContent=`${cc.id} · ${SP[cc.sp].name}${cc.sz==='F'?'（扇）':cc.sz==='X'?'（小平台）':'（'+SZ[cc.sz].n+'）'}${D.b02?(cc.mb?' · PC + 手游':' · 只上 PC'):''} · ${cc.label} · ${np}/${cc.pts.length} 点`;
     $('comp').textContent=`${cc.wave}${cc.dir?' · '+cc.dir:''}${cc.layer==='extra'?' · 叠层（低配不出）':''}`;
   } else {$('cue').textContent='此刻没有新的 cue';$('comp').textContent='';}
-  $('counts').textContent=`此刻：升空中 ${nUp} · 球花 ${nS+nM+nL}（小 ${nS} · 中 ${nM} · 大 ${nL}${nGK?' · 金垂柳 '+nGK:''}） · 扇形 ${nFan} 点（托底 ${nBase}，${['','高配','','中配','','','','低配'][tier===1?1:tier===2?3:7]}点集）`;
+  $('counts').textContent=`此刻：升空中 ${nUp} · 球花 ${nS+nM+nL}（小 ${nS} · 中 ${nM} · 大 ${nL}${nGK?' · 金垂柳 '+nGK:''}） · 扇形 ${nFan} 点（托底 ${nBase}）${nX?' · 小平台小花 '+nX:''} · ${plat==='mobile'?'手游':'PC'}${['','高配','','中配','','','','低配'][tier===1?1:tier===2?3:7]}`;
   cv.setAttribute('aria-label',`演出 ${fmt(t)} ${S.name}：升空中 ${nUp}，球花 ${nS+nM+nL}，扇形 ${nFan} 点`);
   drawStrip();
 }
 
 // 音乐能量 + cue 条：横轴 = 演出时间；上半能量(rms)，下半 大 / 中 / 小 / 扇 四行 cue 刻度
-const ROWS={L:56,M:65,S:74,F:83,T:92};
+const ROWS={L:54,M:62,S:70,F:78,T:86,X:94};
 function drawStrip(){
   const W=Math.max(300,st.parentElement.clientWidth),H=124,dpr=Math.min(2,devicePixelRatio||1);
   if(st.width!==Math.round(W*dpr)||st.height!==Math.round(H*dpr)){st.width=Math.round(W*dpr);st.height=Math.round(H*dpr);st.style.height=H+'px';}
@@ -263,11 +286,12 @@ function drawStrip(){
   sx.fillStyle='rgba(140,143,152,.9)';sx.font='10px '+mono;sx.textAlign='left';sx.textBaseline='middle';
   sx.fillText('倒计时',X(0)+4,12);
   sx.textAlign='left';sx.fillStyle='#6a6c73';
-  for(const k of ['L','M','S','F','T'])sx.fillText(k==='F'?'扇':k==='T'?'托':SZ[k].n,3,ROWS[k]);
+  for(const k of ['L','M','S','F','T','X'])sx.fillText(k==='F'?'扇':k==='T'?'托':k==='X'?'台':SZ[k].n,3,ROWS[k]);
   CU.forEach(c=>{const y=ROWS[c.wave==='托底扇'?'T':c.sz],x=X(c.t);
     if(!c.tm.some(m=>m&tier))return;
+    if(plat==='mobile'&&c.mb===0)return;
     if(c.wave==='托底扇'&&!showBase)return;
-    const col=colorBy==='sp'?SP[c.sp].rgb:(c.sz==='F'?'170,184,216':SZC[c.sz]);
+    const col=colorBy==='sp'?SP[c.sp].rgb:(c.sz==='F'?'170,184,216':c.sz==='X'?'143,211,193':SZC[c.sz]);
     sx.fillStyle=rgba(col,.95);sx.fillRect(Math.round(x),y-4,2,8);
     if(c.span>=.4){sx.fillStyle=rgba(col,.35);sx.fillRect(Math.round(x),y-1,Math.max(1,X(c.span)),2);}
   });
@@ -285,7 +309,7 @@ function tick(now){if(!playing)return;t=Math.min(DUR,t+(now-last)/1000*speed);la
 play.addEventListener('click',()=>{if(playing){stop();return;}if(t>=DUR)t=0;playing=true;play.textContent='暂停';last=performance.now();requestAnimationFrame(tick);});
 seek.addEventListener('input',()=>{stop();t=+seek.value;draw();});
 // 上一波 / 下一波：在整排波（≥5 点的球花 cue 与扇组 cue 的起点，不含托底扇）之间跳
-const WAVES=[...new Set(CU.filter(c=>c.wave!=='托底扇'&&(c.pts.length>=5||c.wave==='主角')).map(c=>+c.t.toFixed(2)))].sort((a,b)=>a-b);
+const WAVES=[...new Set(CU.filter(c=>c.wave!=='托底扇'&&c.sz!=='X'&&(c.pts.length>=5||c.wave==='主角')).map(c=>+c.t.toFixed(2)))].sort((a,b)=>a-b);
 $('prev').addEventListener('click',()=>{stop();let v=0;for(const w of WAVES){if(w<t-.25)v=w;else break;}t=v;sync();});
 $('next').addEventListener('click',()=>{stop();let v=DUR;for(const w of WAVES){if(w>t+.25){v=w;break;}}t=Math.min(DUR,v);sync();});
 function stripSeek(ev){const r=st.getBoundingClientRect();t=Math.max(0,Math.min(DUR,(ev.clientX-r.left)/r.width*DUR));stop();sync();}
@@ -293,7 +317,7 @@ let drag=false;st.addEventListener('pointerdown',e=>{drag=true;st.setPointerCapt
 st.addEventListener('pointermove',e=>{if(drag)stripSeek(e);});
 st.addEventListener('pointerup',()=>{drag=false;});st.addEventListener('pointercancel',()=>{drag=false;});
 function group(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn(b.dataset.v);draw();}));}
-group('speed',v=>{speed=+v;});group('tier',v=>{tier=+v;});group('view',v=>{view=v;});group('colorby',v=>{colorBy=v;});
+group('plat',v=>{plat=v;});group('speed',v=>{speed=+v;});group('tier',v=>{tier=+v;});group('view',v=>{view=v;});group('colorby',v=>{colorBy=v;});
 $('lab').addEventListener('click',()=>{labels=!labels;$('lab').setAttribute('aria-pressed',labels);draw();});
 $('tails').addEventListener('click',()=>{showTail=!showTail;$('tails').setAttribute('aria-pressed',showTail);draw();});
 $('basefan').addEventListener('click',()=>{showBase=!showBase;$('basefan').setAttribute('aria-pressed',showBase);draw();});
@@ -303,13 +327,13 @@ new ResizeObserver(()=>draw()).observe(cv.parentElement);
 
 // 花色图例 + 表格
 (function tables(){
-  $('sw').innerHTML=Object.entries(SP).filter(([k,s])=>s.sz!=='F').map(([k,s])=>`<i style="--c:rgb(${s.rgb})">${s.name}</i>`).join('');
+  $('sw').innerHTML=Object.entries(SP).filter(([k,s])=>s.sz!=='F'&&s.sz!=='X'&&s.events).map(([k,s])=>`<i style="--c:rgb(${s.rgb})">${s.name}</i>`).join('');
   let s='<tr><th>段</th><th>演出</th><th>小节</th><th>领</th><th>接</th><th>插</th><th>条目</th><th>发射</th></tr>';
   SEC.forEach(x=>{s+=`<tr><td>${x.name}</td><td>${mmss(x.showStartS)}–${mmss(x.showEndS)}</td><td>${x.bar0+1}–${x.bar1}</td><td>${SP[x.lead].name}</td><td>${SP[x.relay].name}</td><td>${SP[x.accent].name}</td><td>${x.cues}</td><td>${x.events}</td></tr>`;});
   $('secs').innerHTML=s;
   let h='<tr><th>花型</th><th>大小</th><th>升空 s</th><th>炸点高 m</th><th>尾缀 / 本体 GPU</th><th>条目</th><th>发射</th><th>同屏峰值（本体）</th></tr>';
-  Object.entries(SP).forEach(([k,x])=>{const sz=x.sz==='F'?`${x.beams} 束`:`⌀${SZ[x.sz].d} m`;
-    h+=`<tr><td>${x.name}</td><td>${sz}</td><td>${x.sz==='F'?'即发':x.rise}</td><td>${x.sz==='F'?'—':'+'+D.native[x.sz]}</td><td>${x.gpu}</td><td>${x.cues}</td><td>${x.events}</td><td>${x.peak!=null?x.peak+'（'+mmss(x.peakAt)+'）':'—'}</td></tr>`;});
+  Object.entries(SP).forEach(([k,x])=>{if(!x.events)return;const sz=x.sz==='F'?`${x.beams} 束`:x.sz==='X'?'小平台':`⌀${x.dia??SZ[x.sz].d} m`;
+    h+=`<tr><td>${x.name}</td><td>${sz}</td><td>${x.sz==='F'?'即发':x.rise}</td><td>${x.sz==='F'?'—':'+'+(x.h??D.native[x.sz])}</td><td>${x.gpu}</td><td>${x.cues}</td><td>${x.events}</td><td>${x.peak!=null?x.peak+'（'+mmss(x.peakAt)+'）':'—'}</td></tr>`;});
   $('slots').innerHTML=h;
   let a='<tr><th>音乐</th><th>演出</th><th>来源</th><th>说明</th></tr>';
   D.anchors.forEach(x=>{a+=`<tr><td>${mm(x.musicS)}</td><td>${mm(x.showS)}</td><td>${x.source}</td><td class="wrapcell">${x.label}${x.note?'。'+x.note:''}</td></tr>`;});
@@ -322,6 +346,16 @@ new ResizeObserver(()=>draw()).observe(cv.parentElement);
   F.phrases.forEach(p=>{f+=`<tr><td>${p.name}（${p.events} 个）</td><td colspan="6" class="wrapcell">${p.times.map(mmss).join('　')}</td></tr>`;});
   f+=`<tr><td>同时在场的扇束 GPU 发射器峰值</td><td colspan="6">${F.aliveGpuPeak}（24 实测 234 一次放干净，312 截断）</td></tr>`;
   $('fanstat').innerHTML=f;
+  if(D.b02){$('plat').hidden=false;$('b02box').hidden=false;$('lg-combo').hidden=false;const M=D.b02.mobile,P=D.b02.pc;
+    let b='<tr><th>一张表（同一份事件）</th><th>高配</th><th>中配</th><th>低配</th></tr>';
+    b+=`<tr><td>PC</td><td>${P.high}</td><td>${P.medium}</td><td>${P.low}</td></tr><tr><td>手游（PlatformFlags 14）</td><td>${M.high}</td><td>${M.medium}</td><td>${M.low}</td></tr>`;
+    b+=`<tr><td class="wrapcell">手游放的花</td><td colspan="3" class="wrapcell">${D.b02.mobileSpecies}</td></tr>`;
+    b+=`<tr><td class="wrapcell">手游规则</td><td colspan="3" class="wrapcell">${D.b02.mobileRule}</td></tr>`;
+    b+=`<tr><td class="wrapcell">手游空档（> 8 s 没有花）</td><td colspan="3" class="wrapcell">${D.b02.mobileGaps}</td></tr>`;
+    b+='<tr><th>小平台小花束尾</th><th>束 / 花</th><th>挂花高</th><th>次数</th></tr>';
+    D.b02.combos.forEach(x=>{b+=`<tr><td>${x.name}</td><td>${x.beams} 束 / ${x.flowers} 朵</td><td>+${x.h} m</td><td>${x.n}</td></tr>`;});
+    b+=`<tr><td class="wrapcell">说明</td><td colspan="3" class="wrapcell">${D.b02.comboNote}</td></tr>`;
+    $('b02tbl').innerHTML=b;}
   $('risks').innerHTML=D.risks.map(r=>`<li>${r}</li>`).join('');
 })();
 sync();

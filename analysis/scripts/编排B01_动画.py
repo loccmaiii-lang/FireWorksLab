@@ -5,7 +5,8 @@
       analysis/music/汪洋与浩渺_分析.json（逐秒响度，只用来画能量条）
       analysis/templates/choreography-b01.html（页面模板；由原「候选A动画」页改来，布局和画法沿用）
 输出  协作/编排B01/B01动画.html（单文件，数据内嵌；可直接用浏览器打开，也可发布成 Artifact）
-用法  python3 -I analysis/scripts/编排B01_动画.py
+用法  python3 -I analysis/scripts/编排B01_动画.py [--b02]
+      --b02（22，10-12）：读 逻辑方案_B02 / 体检_B02，按尾缀 v2 高度画，加 PC / 手游切换和小平台小花束尾，输出 协作/编排B01/B02动画.html
 
 画法：圆画在每条的开花时刻，径 = 大小（S 90 / M 150 / L 230）；开花前的竖线 = 升空尾缀，按这条在 B01 里的
 起飞 → 开花时刻画；炸点高 = 固定子模板原生 +190 / +265 / +410 m 再加这条的高低错落 dz；扇形的扇角与出筒节奏是示意。
@@ -13,6 +14,8 @@
 """
 import importlib.util
 import json
+import math
+import sys
 import statistics
 from collections import defaultdict
 from pathlib import Path
@@ -23,10 +26,15 @@ b01 = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(b01)
 
 OUT = ROOT / '协作/编排B01'
-LOGIC = json.loads((OUT / '逻辑方案.json').read_text(encoding='utf-8'))
-CHECK = json.loads((OUT / '体检.json').read_text(encoding='utf-8'))
+B02 = '--b02' in sys.argv
+SFX, TABLE, NAME = ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
+if B02:
+    b01.HEIGHTS = 'v2'
+LOGIC = json.loads((OUT / f'逻辑方案{SFX}.json').read_text(encoding='utf-8'))
+CHECK = json.loads((OUT / f'体检{SFX}.json').read_text(encoding='utf-8'))
 MUSIC = json.loads((ROOT / 'analysis/music/汪洋与浩渺_分析.json').read_text(encoding='utf-8'))
-CHECK['_compile'] = json.loads((ROOT / 'FXtools/节目/NewYearFireWorks_v01/B01编排检查.json').read_text(encoding='utf-8'))['tiers']
+COMPILE = json.loads((ROOT / f'FXtools/节目/NewYearFireWorks_v01/{TABLE}编排检查.json').read_text(encoding='utf-8'))
+CHECK['_compile'] = COMPILE['tiers']
 TEMPLATE = ROOT / 'analysis/templates/choreography-b01.html'
 
 OFFSET = LOGIC['musicOffsetS']
@@ -35,6 +43,23 @@ BEAMS = {'R1': 1, 'R5': 5, 'R9': 9, 'R9R': 9, 'S5': 5, 'S9': 9, 'S13': 13}
 TAIL_GPU = {'S': 6, 'M': 2, 'L': 6}
 DIR_CN = b01.DIR_CN
 ROLE = {'倒计时': '铺垫', '开场高潮': '释放', '第一次抬升': '释放', '高潮 II': '释放', '终章': '释放', '低位密奏': '留白', '白色收束': '收束'}
+
+def risks_b02():
+    g, ob, b2 = CHECK['gpu'], COMPILE.get('oneTable', {}), CHECK['b02']
+    v = CHECK['vary']
+    return [
+        '没在 UE 里放过：UE 里的导演还是修订1（旧高度）；PC 尾缀今晚由你重导（150 / 210 / 330 m），B02 的开花点按这个高度算。',
+        f"高度按尾缀 v2 重挑：同一套高低规则，几何换成新高度后重新挑组高度（种子 {v['seed']}）。层间距变小，深度重叠 {v['after']['heavyOverlapSamples']} 次取样（旧高度时 1465），主角被压 {v['after']['heroOverlapSamples']} 次；主角尾缀 Hero 行加上后主角升到 400 m 会再少。",
+        '主角现在挂大尾缀，开花约 330 m，和大号花一样高；Hero 行加好、资源同步进基础库后编译带 --hero-trail 即换 400 m。',
+        f"手游只是「放哪几发」：手游表里还没有这些花的手游资源（执行方案周二周三出），白名单是执行方案 §2.1 的周三清单；手游高 / 中 / 低 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')} 发，中间有几段长空档（见 B02 表）。",
+        '手游中低配只能是 P2 / P4 / P6（宪章写 P0 / P4 / P8）：一张表里手游和 PC 共用同一条事件的画质，P0 / P8 在 PC 中配就被去掉了；要 P0 / P4 / P8 得加「只上手游」的片段（PlatformFlags 2），工作台现在只有片段级 14 / 12。',
+        '小平台小花束尾的束长（银扇 65 m、红彗星 75 m 的预览值）和挂花时刻（出束 1.0 s、0.85 倍长）都是估的，UE 里花可能不在束顶；量到后改 小花束尾.json 三个数重编。左右方向按 Roll 正 → 局部 Y 负推的。',
+        '小平台用的是银扇 / 红彗星（手游白名单外），只上 PC；19 个片段放在节奏 D 的空小节里，高潮段不放。',
+        f"GPU 预算仍按暂定 ≤ 200 / 秒排（实测上限 250），高档峰值 {g['peak']}；小平台加的每秒最多十来个。",
+        '工作台版本号没升：云端会话装不了工作台依赖，16.0.19 的自动载入由本机同步（8）发布；现在请手动打开 B02 节目文件。',
+        '像不像、乱不乱要你看；体检只能证明规则被遵守。',
+    ]
+
 
 def risks():
     bf, fs, g = CHECK['baseFans'], CHECK['fanSummary'], CHECK['gpu']
@@ -87,6 +112,37 @@ def fan_stats():
                 baseCovered=bf['groups'] - len(bf['skipped']), baseSkipped=len(bf['skipped']), phrases=phrases, aliveGpuPeak=CHECK['fanSummary']['aliveGpuPeak'])
 
 
+
+def b02_data(species):
+    est = b01.BEAM_EST
+    combos, rows = {}, []
+    for x in b01.BEAMF['flowers']:
+        beams = [dict(roll=b['roll'], reach=round(est['beamReachM'][b['res']] * b['scale'], 1), off=b['off'], dur=b01.BEAM_DUR[b['res']],
+                      rgb=fmt_rgb(rgb(b01.BEAMF['beamSources'][b['res']]['color']))) for b in x['beams']]
+        fl = []
+        for f in x['flowers']:
+            b = x['beams'][f['beam']]
+            src = b01.BEAMF['flowerSources'][f['src']]
+            fl.append(dict(beam=f['beam'], t=round(b['off'] + est['tipTimeS'], 2), dia=f['diameter'], r=round(est['beamReachM'][b['res']] * b['scale'] * est['tipFrac'], 1),
+                           life=b01.TPL[src['template']]['life'], rgb=fmt_rgb(rgb(src['color']))))
+        combos[x['code']] = dict(beams=beams, flowers=fl)
+        n = sum(len(c['events']) for c in LOGIC['cues'] if c['sp'] == x['code'])
+        rows.append(dict(name=x['name'].replace('小平台 · ', ''), beams=len(x['beams']), flowers=len(x['flowers']), h=round(b01.TPL[x['id']]['flightHeight']), n=n))
+    ob = COMPILE.get('oneTable', {})
+    mob = CHECK['b02']['mobileTiers']
+    sp = '；'.join(f"{t}：" + '、'.join(f'{k} {v}' for k, v in mob[t]['bySpecies'].items()) for t in ('high', 'medium', 'low')).replace('high', '高').replace('medium', '中').replace('low', '低')
+    mb = sorted(e['burst'] for c in LOGIC['cues'] if c.get('mobile') is not False for e in c['events'])
+    gaps = [(a, b) for a, b in zip(mb, mb[1:]) if b - a > 8]
+    sec = lambda t: [s['name'] for s in LOGIC['sections'] if s['start'] <= t][-1]   # 空小节（不属于任何段）算前一段
+    span = lambda a, b: sec(a + 0.5) if sec(a + 0.5) == sec(b - 0.5) else f'{sec(a + 0.5)} → {sec(b - 0.5)}'
+    gtxt = '；'.join(f"{a:.0f}–{b:.0f} s（{b - a:.0f} s，{span(a, b)}）" for a, b in gaps) or '无'
+    b02 = dict(pc=ob.get('pc'), mobile=ob.get('mobile'), mobileSpecies=sp,
+               mobileRule='只用 P 点；只放执行方案 §2.1 周三白名单（小银菊、橙辉星、金芒菊含大号、银彩菊、主角，可选爆裂星、金锦菊）的主排；M / L 一排只放偶数点 P0 / 2 / 4 / 6 / 8（奇数点只上 PC，免得花叠花）；二排、托底扇、扇组、小平台都不上手游。PC 三档一个不变。',
+               mobileGaps=gtxt, combos=rows,
+               comboNote='现成银扇 / 红彗星单束缩小当尾缀（每个变体一组固化随机角，甲 / 乙两组），现成小银菊 / 金锦菊 / 爆裂星缩到 22–28 m 挂在束顶；V 形细束不开花、每次放随机 ±6°。束长和挂花时刻是估的，见纰漏。')
+    return combos, b02
+
+
 def main():
     cues, events = [], []
     per_sp = defaultdict(lambda: {'cues': 0, 'events': 0, 'rise': []})
@@ -94,13 +150,22 @@ def main():
     sec_cnt = defaultdict(lambda: {'cues': 0, 'events': 0})
     for c in LOGIC['cues']:
         med, low = set(c['profiles']['medium']), set(c['profiles']['low'])
-        kind = 'fan' if c['size'] == 'F' else 'ball'
+        kind = 'fan' if c['size'] == 'F' else 'combo' if c['size'] == 'X' else 'ball'
+        mb = 0 if c.get('mobile') is False else 1
+        if B02 and kind == 'ball':
+            tpl = b01.TPL[c['templateId'].split('__K')[0]]
+            bh, bd = round(b01.bloom_h(c), 1), round((tpl['diameter'] or b01.DIA[c['size']]) * c.get('sizeK', 1.0), 1)
         tm = []
         for e in c['events']:
             m = 1 | (2 if e['point'] in med else 0) | (4 if e['point'] in low else 0)
             tm.append(m)
-            events.append(dict(l=e['launch'], b=e['burst'], e=e['end'], g=e['point'][0], p=int(e['point'][1:]), sp=c['sp'], k=kind,
-                               sz=c['size'], n=BEAMS.get(c['sp'], 0) if kind == 'fan' else 0, dz=e['dz'], tier=m, cue=c['id'], bs=1 if c['wave'] == '托底扇' else 0))
+            ev = dict(l=e['launch'], b=e['burst'], e=e['end'], g=e['point'][0], p=int(e['point'][1:]), sp=c['sp'], k=kind,
+                      sz=c['size'], n=BEAMS.get(c['sp'], 0) if kind == 'fan' else 0, dz=e['dz'], tier=m, cue=c['id'], bs=1 if c['wave'] == '托底扇' else 0)
+            if B02:
+                ev['mb'] = mb
+                if kind == 'ball':
+                    ev['h'], ev['d'] = bh, bd
+            events.append(ev)
             per_sp[c['sp']]['events'] += 1
             if kind == 'ball':
                 per_sp[c['sp']]['rise'].append(e['burst'] - e['launch'])
@@ -110,7 +175,7 @@ def main():
         bursts = [e['burst'] for e in c['events']]
         cues.append(dict(id=c['id'], t=round(min(bursts), 3), span=round(max(bursts) - min(bursts), 3), sp=c['sp'], sz=c['size'], k=kind,
                          label=c['label'], wave=c['wave'], layer=c['layer'], sec=sec_ix[c['section']], dir=DIR_CN.get(c.get('dir'), ''),
-                         pts=[e['point'] for e in c['events']], tm=tm))
+                         pts=[e['point'] for e in c['events']], tm=tm, mb=0 if c.get('mobile') is False else 1))
     events.sort(key=lambda e: (e['l'], e['b']))
     cues.sort(key=lambda c: (c['t'], c['id']))
 
@@ -122,8 +187,13 @@ def main():
         species[k] = dict(name=name, sz=size, rgb=fmt_rgb(c), tail=fmt_rgb(tail_rgb(c)), cues=d['cues'], events=d['events'],
                           rise=round(statistics.median(d['rise']), 2) if d['rise'] else 0,
                           beams=BEAMS.get(k, 0),
-                          gpu=(f"尾缀 {TAIL_GPU[size]} + 本体 {body_gpu}" if size != 'F' else ('银星 3 / 束' if k[0] == 'S' else '红彗星 1 / 束')),
+                          gpu=(f"尾缀 {TAIL_GPU[size]} + 本体 {body_gpu}" if size in TAIL_GPU else ('银星 3 / 束' if k[0] == 'S' else '红彗星 1 / 束')),
                           peak=alive.get('peak'), peakAt=alive.get('peakAt'))
+        if B02 and size in 'SML':
+            species[k]['dia'] = b01.TPL[tid]['diameter'] or b01.DIA[size]
+            species[k]['h'] = round(b01.bloom_h(dict(templateId=tid, size=size)))
+        if size == 'X':
+            species[k]['gpu'] = '束 ' + ' + '.join(f"{b01.BEAMF['beamSources'][b['res']]['gpuPerBeam']}" for b in b01.TPL[tid]['beamFlower']['beams'])
 
     secs = []
     for i, s in enumerate(LOGIC['sections']):
@@ -147,12 +217,19 @@ def main():
 
     energy = [dict(m=p['musicS'], db=p['rmsDb']) for p in MUSIC['perSecond']]
     pts = {'P': [dict(id=f'P{i}', x=b01.PT[f'P{i}']['x']) for i in range(9)], 'B': [dict(id=f'B{i}', x=b01.PT[f'B{i}']['x']) for i in range(8)]}
-    data = dict(version='B01', offsetS=OFFSET, showDurationS=DUR, native=b01.REL_H, points=pts, sections=secs, anchors=anchors, energy=energy,
-                species=species, cues=cues, events=events, risks=risks(), fanStats=fan_stats())
+    native = b01.REL_H
+    data = dict(version=NAME, offsetS=OFFSET, showDurationS=DUR, native=native, points=pts, sections=secs, anchors=anchors, energy=energy,
+                species=species, cues=cues, events=events, risks=risks_b02() if B02 else risks(), fanStats=fan_stats())
+    if B02:
+        data['native'] = {k: round(v * b01.TRAIL_K[k]) for k, v in b01.REL_H.items()}
+        pts['F'] = [dict(id=f'F{i}', x=b01.PT[f'F{i}']['x']) for i in range(7)]
+        data['combos'], data['b02'] = b02_data(species)
     html = TEMPLATE.read_text(encoding='utf-8').replace('__PREVIEW_DATA__', json.dumps(data, ensure_ascii=False, separators=(',', ':')))
+    if B02:
+        html = html.replace('<title>汪洋与浩渺编排B01</title>', '<title>汪洋与浩渺编排B02</title>', 1).replace('跨年烟花秀 B01 正面比例动画', '跨年烟花秀 B02 正面比例动画', 1)
     assert '</script>' not in json.dumps(data, ensure_ascii=False)
-    (OUT / 'B01动画.html').write_text(html, encoding='utf-8')
-    print(f'B01动画.html  {len(html) / 1024:.0f} KB · {len(cues)} cue · {len(events)} 事件 · {len(secs)} 段 · {len(anchors)} 锚点')
+    (OUT / f'{NAME}动画.html').write_text(html, encoding='utf-8')
+    print(f'{NAME}动画.html  {len(html) / 1024:.0f} KB · {len(cues)} cue · {len(events)} 事件 · {len(secs)} 段 · {len(anchors)} 锚点')
 
 
 if __name__ == '__main__':
