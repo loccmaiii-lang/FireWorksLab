@@ -20,16 +20,33 @@ let hdrT = null, rgT = null;
 const busyJob = { on: false, req: false };
 function busyCan(on) {
   if (on && busyJob.on) { flash('正在导出：等它做完，或点进度条旁边的「取消」', true); return false; }
-  busyJob.on = on; busyJob.req = false;
+  busyJob.on = on; busyJob.req = false; if (on) exportClockStart();
   const b = $('#busy'); let c = b && b.querySelector('.busy-cancel');
   if (b && !c) { c = document.createElement('button'); c.type = 'button'; c.className = 'btn mini busy-cancel'; c.textContent = '取消'; c.addEventListener('click', () => { busyJob.req = true; c.disabled = true; c.textContent = '正在取消…'; }); b.appendChild(c); }
   if (c) { c.hidden = !on; c.disabled = false; c.textContent = '取消'; }
   return true;
 }
+// 4.9.71 导出分段计时（用户 10-12 23:15「现在导出每次都要打包zip有点慢……有什么办法可以更加快的输出导入吗」）：先量出慢在哪一段再砍。
+//   导出开始（busyCan(true)）起表；进度条每换一段文字记一次；交付页写入目录、导入器接收、打包内部各记一次；导出结束（busy(false)）汇总，
+//   写在交付页状态行和控制台（window.__exportTiming）。只计时，不改任何导出内容
+const exportClock = { on: false, t0: 0, marks: [], last: '' };
+function exportClockStart() { exportClock.on = true; exportClock.t0 = performance.now(); exportClock.marks = []; exportClock.last = ''; }
+function exportClockMark(label) {
+  if (!exportClock.on) return; const k = String(label || '').split('…')[0].replace(/\s*\d+%$/, '').replace(/\s+\d+×\d+$/, '').trim(); if (!k || k === exportClock.last) return;
+  exportClock.last = k; exportClock.marks.push([k, performance.now()]);
+}
+function exportClockReport() {
+  if (!exportClock.on) return null; exportClock.on = false; const end = performance.now(), m = exportClock.marks, seg = new Map();
+  for (let i = 0; i < m.length; i++) { const dt = ((i + 1 < m.length ? m[i + 1][1] : end) - m[i][1]) / 1000; seg.set(m[i][0], (seg.get(m[i][0]) || 0) + dt); }
+  const total = (end - exportClock.t0) / 1000, parts = [...seg].filter(([, t]) => t >= 0.05).sort((a, b) => b[1] - a[1]);
+  const text = `导出用时 ${total.toFixed(1)} s：` + parts.map(([k, t]) => `${k} ${t.toFixed(1)} s`).join(' · ');
+  window.__exportTiming = { total: +total.toFixed(2), parts: parts.map(([k, t]) => [k, +t.toFixed(2)]) }; console.log('[导出计时]', text);
+  return text;
+}
 function busy(on, text, p) {
   $('#busy').hidden = !on;
-  if (!on) { if (busyJob.on) busyCan(false); DeliveryWorkspace.finishExport(); return; }
-  if (text) $('#busyText').textContent = text; if (p != null) $('#busyBar').style.width = Math.round(p * 100) + '%';
+  if (!on) { const rep = exportClockReport(); if (busyJob.on) busyCan(false); DeliveryWorkspace.finishExport(); if (rep && typeof DeliveryWorkspace.note === 'function') DeliveryWorkspace.note(rep); return; }
+  if (text) { $('#busyText').textContent = text; exportClockMark(text); } if (p != null) $('#busyBar').style.width = Math.round(p * 100) + '%';
   if (busyJob.on && busyJob.req && p != null) { busyJob.req = false; throw new Error('已取消（你点了取消；上次的结果、参数都还在）'); }
 }
 let flashTimer = 0;

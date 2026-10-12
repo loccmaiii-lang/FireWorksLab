@@ -25,8 +25,11 @@ async function encodePNG(rgba, w, h) {
 }
 const utf8 = s => new TextEncoder().encode(s);
 async function makeZip(files) {
+  if (typeof exportClockMark === 'function') exportClockMark('整理 Ramp / Cutout');
   { const r = await packTidy(files); files = r.files; packTidyLast = r.report; }     // 4.9.38 Ramp / Cutout 去重、几乎不省的 Cutout 不出
+  if (typeof exportClockMark === 'function') exportClockMark('拦截 + sha256');
   if (files.some(([f]) => FWL_CFG_RE.test(f))) files = await packFinalize(files);     // 4.9.69 贴图写 SHA256 + 导出拦截（不合规范 v1 就抛错，不出包）
+  if (typeof exportClockMark === 'function') exportClockMark('ZIP 打包');
   const parts = [], central = []; let offset = 0;
   const d = new Date(), time = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), date = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
   for (const [name, content] of files) {
