@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
 import {migrateSubTemplates} from '../src/subtemplate-model.mjs';
-import {compileDirector} from '../src/director-model.mjs';import {migrateNumbering} from '../src/point-numbering.mjs';import {qualityEvents,nestedQualityEvents} from '../src/editing-model.mjs';
+import {compileDirector} from '../src/director-model.mjs';import {migrateNumbering} from '../src/point-numbering.mjs';import {qualityEvents,nestedQualityEvents,markMobileOnly,cuePlatformFlags} from '../src/editing-model.mjs';
 
 // 一张导演表：低配条目 VeryLow、中配追加 Medium、高配追加 High；UE 按「当前画质 ≥ 最低画质」播放（手游编排 2026-10-11 UE 实测）。
 const seed=migrateNumbering(JSON.parse(fs.readFileSync(new URL('../public/data/score24-v05.json',import.meta.url))));
@@ -37,4 +37,17 @@ test('cues marked mobile:false are written PC + Gamepad only (12); others stay 1
 test('separate tier export is unchanged: every entry stays 14 / VeryLow',()=>{
  const r=compileDirector(doc,qualityEvents(doc,profiles,'medium'));assert.equal(r.manifest.qualityMode,'tier');
  for(const p of r.arrays.EffectTemplates)for(const e of p.Entries)assert.deepEqual({PlatformFlags:e.Filter.PlatformFlags,MinQualityLevel:e.Filter.MinQualityLevel},{PlatformFlags:14,MinQualityLevel:'EQuality_VeryLow'});
+});
+
+test('mobile-only cues (mobile:\'only\', 手游替身) are written Mobile only (2) in the single table and in a tier export',()=>{
+ assert.deepEqual([cuePlatformFlags({}),cuePlatformFlags({mobile:true}),cuePlatformFlags({mobile:false}),cuePlatformFlags({mobile:'only'})],[14,14,12,2]);
+ const d=structuredClone(doc),[a,b]=d.cues;a.mobile='only';b.mobile=false;
+ const nested=nestedQualityEvents(d,profiles);assert.deepEqual(nested.issues,[]);
+ const byCue=new Map(nested.events.map(e=>[e.cueId,e.platformFlags]));assert.equal(byCue.get(a.id),2);assert.equal(byCue.get(b.id),12);
+ const one=compileDirector(d,nested.events);assert.deepEqual(one.issues,[]);
+ const flags=new Set(one.arrays.EffectTemplates.flatMap(p=>p.Entries.map(e=>e.Filter.PlatformFlags)));assert(flags.has(2)&&flags.has(12)&&flags.has(14));
+ const tier=markMobileOnly(d,qualityEvents(d,profiles,'medium'));assert(tier.filter(e=>e.cueId===a.id).every(e=>e.platformFlags===2));assert(tier.filter(e=>e.cueId!==a.id).every(e=>e.platformFlags===undefined));
+ const sep=compileDirector(d,tier);assert.deepEqual(sep.issues,[]);
+ const sf=new Set(sep.arrays.EffectTemplates.flatMap(p=>p.Entries.map(e=>e.Filter.PlatformFlags)));assert(sf.has(2)&&sf.has(14)&&!sf.has(12));
+ const plain=qualityEvents(doc,profiles,'low');assert.equal(markMobileOnly(doc,plain),plain);
 });
