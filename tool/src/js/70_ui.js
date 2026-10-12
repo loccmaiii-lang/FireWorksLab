@@ -1241,7 +1241,7 @@ async function exportCombo() {
     const files = await comboPackFiles(name, state.layers, p => busy(true, '组合素材包…', p));
     files.push([`${name}_组合说明.json`, utf8(JSON.stringify(comboJson(), null, 2))]);
     busy(true, '打包 ZIP…', 1);
-    const pk = files.some(([f]) => f.startsWith(FW_TEX_PREFIX)) ? packNamesFor(wbKey(), lib.effect, state.layers.length, name).base : name;
+    const pk = files.some(([f]) => f.startsWith(FW_TEX_PREFIX)) ? packSysName(packNamesFor(wbKey(), lib.effect, state.layers.length, name).base, '', typeof sizeSpecCombo === 'function' ? sizeSpecCombo(state.layers) : null) : name;     // 4.9.69 派生资源用系统名
     await deliverResource(await makeZip(files.map(([f, d]) => [`${pk}/${f}`, d])), `${pk}.zip`, deliveryMetadata(), destination);
     if (typeof wbAutoExport === 'function') wbAutoExport(pk);     // 4.2.10：存进这个效果的「版本」（导出时）
     flash('已导出组合素材包 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);

@@ -68,6 +68,7 @@ const DeliveryWorkspace = (() => {
     await new Promise(resolve=>window.requestAnimationFrame?window.requestAnimationFrame(()=>window.requestAnimationFrame(resolve)):setTimeout(resolve,0));
     await connect();if(session.directoryError)throw Error(session.directoryError);
     if(!session.outputRoot)throw Error('请先在资源目录与版本中指定导出目录');
+    try{await refresh();}catch(e){}     // 4.9.69 导出拦截要按最新的已有资源查撞名
   }
   function exportFailed(error){if(exportHome)message('导出未完成：'+error.message,true);}
   function finishExport(){
@@ -186,7 +187,9 @@ const DeliveryWorkspace = (() => {
     connect().catch(()=>{});
     if(['#delivery','#delivery-from-file','#delivery-export-from-file'].includes(location.hash))open();
   }
-  return{init,open,publish,destination,beginExport,finishExport,exportFailed,get active(){return active;}};
+  // 4.9.69 导出拦截用：交付目录里已有资源的贴图（文件名 → 内容 SHA256、来自哪个效果），按名字查撞名
+  function knownTextures(){const m=new Map();for(const r of resources||[])for(const f of r.files||[]){if(!/\.png$/i.test(f.path||''))continue;const k=f.path.replace(/^.*\//,'');if(!m.has(k))m.set(k,{sha256:f.sha256,resource:r.name,sourceKey:(r.metadata||{}).sourceKey||''});}return m;}
+  return{init,open,publish,destination,beginExport,finishExport,exportFailed,knownTextures,get active(){return active;}};
 })();
 
 function deliveryClassification(recipe, plan, spec) {

@@ -104,6 +104,19 @@
 | Initial Rotation | **圈**（1 = 360°） |
 | 颜色 | 线性 RGB，可以大于 1（HDR）；Alpha 0–1 |
 
+### 1.2 手游档位、派生资源、贴图指纹（烘焙器 4.9.69 起，规范 `spec/烟花特效资产规范.md` v1）⚪ 导入器待本机实现
+
+| 字段 | 在哪 | 含义 |
+| --- | --- | --- |
+| `tier` | 顶层，只在手机配置 | `"M"`（文件 `cascade_mobile.json`）；以后 `"H"`（文件 `cascade_mobile_h.json`，格式留好、先不出）。不做 `_L` |
+| `name` | 顶层 | 手机配置 = `<系统名>_<tier>`（例 `RiseTrail_S_M`），不带 `_HD` / `_Mobile`；手游粒子 `P_EFX_FireWorks_<name>`。PC 配置的 `name` 不变 |
+| `max_alive` | 每个发射器，只在手机配置 | 同时活着的粒子估算（≤ 50）；Spawn Rate = 0 的发射器 = Burst 总数 |
+| `derived` | 顶层 | 派生资源（同一效果按非默认尺寸档导出，例主角尾缀、小平台尾缀）：`{ from: <原效果名>, system: <系统名>, spec: <尺寸档> }`。贴图沿用原效果那一套（名字以 `T_EFX_FireWorks_<from>_` 开头），只有粒子 / 系统名用 `system` |
+| `naming.system` | 顶层 | 派生时的系统名（和 `naming.base` 不同才写） |
+| `textures[k].sha256` | 每张贴图 | PNG 文件内容的 SHA256；导入拦截按它跨会话去重、核对包没被改过 |
+
+导出拦截（烘焙器）和导入前拦截（`tool/local_delivery/fx_gate.py`）都按规范查这些字段，不合规范不出包 / 不导入。
+
 ## 4. 发射器字段
 
 | 字段 | Cascade 对应 | 状态 |
@@ -165,6 +178,7 @@ JSON里的局部配置：
 | `DynamicParameter` | Dynamic Parameter | `params`：按**角色**写，见第 6 节 | ✅ 写入 🟡 播放 |
 | `VelocityOverLife` | Velocity/Life（`ParticleModuleVelocityOverLifetime`） | `VelOverLife`（向量分布，按相对寿命，cm/s）；`Absolute`（布尔，true = 速度直接取曲线值，不累加） | ✅ 私有导入器 v2.13 创建/挂接，独立 CPU 原生写入及读回通过；🟡 实际烟花播放未验（烘焙器 4.4.5 起的 RiseLoop / HeadGlow 使用） |
 
+| `OrientationAxisLock` | Orientation Axis Lock（`ParticleModuleOrientationAxisLock`） | `flags`：`EPAL_ROTATE_Z` 等（**枚举名字符串，不是分布**） | ⚪ 烘焙器 4.9.69 起写（尾缀远段 `TrailFar`，配 `screen_alignment: "Rectangle"`）；导入器写入待本机实现；参考 UE 里 `FanComet_01_HD` 的 `Trail_Main`（手游编排 10-12 实读）。不开 `local_space` 时锁的是世界 Z（推断，未经 UE 实测） |
 模块可以新增、删除、开关，分布类型可以互换。导入器是从空的粒子系统开始逐个建出来的，不依赖模板。✅
 
 ### Scale Color/Life（2026-10-07）

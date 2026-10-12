@@ -126,17 +126,26 @@ function fwlFinish(emitters) {
 function fwlCascade(name, b, M, mobile = false) {
   const body = b.form === 'emitset' ? fwlEmitSet(name, b, M, mobile) : b.form === 'trail' ? fwlTrail(name, b, M, mobile) : (b.form === 'master' || b.form === 'segments') ? fwlMaster(name, b, M, mobile) : null;
   if (!body) return null;
+  if (mobile) fwlMaxAlive(body.emitters);
   return {
-    format: FWL_FORMAT, name, platform: mobile ? 'mobile' : 'pc',
+    format: FWL_FORMAT, name, platform: mobile ? 'mobile' : 'pc', ...(mobile ? { tier: 'M' } : {}),     // 4.9.69 手游档位（规范 v1 §2：_H / _M，不做 _L）；_H 以后另出 cascade_mobile_h.json
     source: { tool: '烟花母版烘焙器 ' + VERSION, type: b.P.type, form: b.form, quality: b.meta.quality ? { ss: b.meta.quality.ss, hz: b.meta.quality.hz } : undefined, plan_sig: fwlPlanSig(body.emitters) },
     textures: body.textures, materials: body.materials, system: body.system, emitters: fwlFinish(body.emitters),
     notes: body.notes
   };
 }
+// 4.9.69 手机配置每个发射器写 max_alive（同时活着的粒子估算，规范 v1 §6 ≤ 50）：没写的按「Spawn Rate = 0 → Burst 总数」补；
+//   有 Spawn Rate 曲线的（循环层 + 粒子）由写它的地方按出生表算好（rtMobileEmitters），这里不猜——没写的导出拦截会拦
+function fwlMaxAlive(emitters) {
+  for (const e of emitters || []) { if (e.max_alive != null) continue; const r = e.spawn && e.spawn.rate;
+    if (!r || (!r.curve && !(+r.const > 0))) e.max_alive = Math.max(1, ((e.spawn && e.spawn.bursts) || []).reduce((n, [, c]) => n + (+c || 0), 0)); }
+  return emitters;
+}
 // 素材包里 cascade.json / cascade_mobile.json 两个文件（目录前缀由调用方加）
 function fwlFiles(name, b, M, mobileBake=null) {
   const pc = fwlCascade(name, b, M, false); if (!pc) return [];
   const mob = fwlCascade(mobileBake?name+'_Mobile':name, mobileBake||b, M, true);
+  if (mob) mob.name = name + '_' + (mob.tier || 'M');     // 4.9.69 手机粒子名 <名>_M（规范 v1 §2，不带 _Mobile）；有命名规范的产物打包时再换成英文名
   return [['cascade.json', utf8(JSON.stringify(pc, null, 1))], ['cascade_mobile.json', utf8(JSON.stringify(mob, null, 1))]];
 }
 
@@ -179,7 +188,8 @@ function fwlScaleJSON(j, k, keep, spec) {
     if (j.source && j.emitters) j.source.plan_sig = fwlPlanSig(j.emitters);
     return j;
   }
-  j.name = (j.name || '') + exportScaleSfx(k, keep); j.export_scale = k; if (keep) j.export_scale_mode = 'keep_height';
+  { const t = j.tier && String(j.name || '').endsWith('_' + j.tier) ? '_' + j.tier : '';     // 4.9.69 手机名 <名>_M：缩放后缀放在档位前（RiseTrail_S_S80_M）
+    j.name = String(j.name || '').slice(0, t ? -t.length : undefined) + exportScaleSfx(k, keep) + t; } j.export_scale = k; if (keep) j.export_scale_mode = 'keep_height';
   (j.notes = j.notes || []).push(keep
     ? `导出缩放 × ${k} · 升空高度不变（用户 10-07 16:15 / 16:2x）：只缩粗细——序列面片（循环层 / 远段 / 消散）Initial Size 只 X × ${k}、软圆点 / 线状火花 Initial Size × ${k}、随机散开的初速和球面半径 × ${k}；出生位置、弹道、加速度、时间、帧号不变 → 升空时间、高度、尾长和原样一样。粒子系统名加 ${exportScaleSfx(k, keep)}，贴图名不变、几档共用`
     : `导出缩放 × ${k}（用户 10-07 14:56）：所有长度（面片大小、位置、球面半径、速度、加速度）× ${k}，时间 / 帧号 / 贴图不变；粒子系统名加 ${exportScaleSfx(k)}，贴图名不变、几档共用${j.emitters && j.emitters.some(e => e.name === 'RiseLoop') ? `；升空尾缀的升空高度也 × ${k}` : ''}`);
@@ -230,7 +240,7 @@ function sizeSpecFor(key, entry, pick, wk) {
   if (pick === 'none') return ids.length ? { off: true, ids, version: T.version } : null;
   const c = sizeClassById(pick); if (c) return { ...c, ids, picked: true };
   if (!ids.length) return null;
-  const id = ids.includes(pick) ? pick : ids[0]; return { id, ids, version: T.version, ...T.specs[id], picked: id === pick };
+  const id = ids.includes(pick) ? pick : ids[0]; return { id, ids, version: T.version, ...T.specs[id], picked: id !== ids[0] };     // 4.9.69 picked = 不是表里的默认档（派生资源，系统名要区分）
 }
 const _sizeOf = new Map();
 // 这个效果现在多大：空中花型 = 花径（metricsOf：开花最大时的水平直径），升空尾缀 = 开花高度（弹道 H）
@@ -254,7 +264,7 @@ function sizeSpecScale(sp, sz) {
   if (!sp || sp.off || !sz) return null;
   const target = sz.what === 'height' ? +sp.burst_m : +sp.diameter_m; if (!(target > 0) || !(sz.m > 0)) return null;
   const k = +(target / sz.m).toFixed(4);
-  return { id: sp.id, name: sp.name, version: sp.version, what: sz.what, target, measured: +sz.m.toFixed(1), k, warn: k > 1.3 ? `放大 × ${k.toFixed(2)}：贴图会被拉糊，建议「输出」里加大单格重烘` : '' };
+  return { id: sp.id, name: sp.name, version: sp.version, what: sz.what, target, measured: +sz.m.toFixed(1), k, picked: !!sp.picked, system_tag: sp.system_tag || '', warn: k > 1.3 ? `放大 × ${k.toFixed(2)}：贴图会被拉糊，建议「输出」里加大单格重烘` : '' };
 }
 const sizeSpecOf = o => { const { key, entry, wk, pick } = o || sizeSpecKeyNow(); return sizeSpecFor(key, entry, pick, wk); };
 function sizeSpecNow(P, keyObj) { const sp = sizeSpecOf(keyObj); const r = sp && sizeSpecScale(sp, effectSizeOf(P)); return r && !r.skip ? r : null; }

@@ -2,6 +2,18 @@
 
 直接发布烘焙器整理后的完整资源包：设置一次本机根目录，后续导出写入展开目录并自动接给既有导入器检查。目录发布不需要浏览器下载、手动解压或复制路径。原生 `fwl.cascade/1` 和文件命名保持；另外生成不可变修订、索引及回放缩略图。
 
+## 导入前拦截 fx_gate.py（4.9.69）
+
+不合规范 `spec/烟花特效资产规范.md` v1 的包不要交给导入器。只读交付包和交付根目录里的共享贴图登记，不连 UE：
+
+```powershell
+python tool/local_delivery/fx_gate.py D:\ProjectTextures\FireWorksLab\尾缀\小\RiseTrail_S\revisions\<修订> --root D:\ProjectTextures\FireWorksLab
+# 导入成功后登记贴图（换浏览器 / 会话也能去重）：
+python tool/local_delivery/fx_gate.py <同一修订> --root D:\ProjectTextures\FireWorksLab --register
+```
+
+退出码 0 通过、1 拦下、2 读包错误；`--json` 给脚本用。规则和烘焙器导出拦截（`tool/src/js/63_gate.js`）同一套，外加 sha256 核对和共享登记（撞名、内容相同的序列图换名）。导入后读回 UE（LOD、发射器数、GPU、引用越界、两表一致、资源发射器数.json）要连 UE，在本机写，不在这里。检查：`python -m unittest test_fx_gate`。
+
 ## 启动与使用
 
 需要 Python 3.10+；选择目录按钮需要 Python 的 tkinter。服务只监听 `127.0.0.1:8034`，没有额外 Python 包依赖。

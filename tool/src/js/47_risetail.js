@@ -738,6 +738,8 @@ function rtTables(b, mobile, kw = 1) {
   if (!b[k]) b[k] = esSpawn(esKeepScale(b.es || rtBuildES(b.P), kw), mobile ? (b.P.rtMobile == null ? BASE.rtMobile : b.P.rtMobile) : 1);
   return b[k];
 }
+// 4.9.69 倾斜预览角度（引擎回放上方「倾斜」，只给升空尾缀；不存档、不进导出）
+function rtTiltNow(b) { const v = +(state.rtTilt || 0); return b && b.form === 'emitset' && state.view === 'export' ? v : 0; }
 // 引擎回放里循环层在时刻 t 的状态：上升 = 循环贴图沿弹道、帧号锯齿、面片长按速度缩放；开花后 = 消散贴图停在开花点
 function rtLoopStateAt(b, t) {
   const m = b.meta, ball = rtBallistic(b.P);
@@ -845,24 +847,31 @@ function fwlEmitSet(name, b, M, mobile) {
   if (ba) emitters.push({
     name: 'TrailFar', material: 'far', gpu: false,
     // 竖直面片：速度朝向 + 向上的初速（4.5.3：UE 里 1 cm/s 定不住朝向，改成 rtFarVz，默认 50 cm/s；烘焙时内容按面片上移补回，不漂）；Pivot 居中，Initial Location = 开始时的面片中心（相对发射点）
-    required: { screen_alignment: 'Velocity', duration_s: r4(fa.Dtot), loops: 1, delay_s: r4(fa.t0), cutout: 'cutoutFar', max_draw_count: 1, pivot_offset: [-0.5, -0.5] },
+    // 4.9.69（用户 10-12 19:44「远段的效果，可以参考comet和silver的方式，用PSA Rectanglie+Lock Axis 锁Rotate Z实现……现在的情况是，尾缀用的是纯速度，给了Z轴velocity,如果给了随机角度，就会抽搐」）：
+    //   朝向不再靠速度：Rectangle + Orientation Axis Lock（锁 Z），和 UE 里 FanComet_01_HD 的 Trail_Main 一样（手游编排 10-12 实读）。初速照留——它只把面片往上平移、贴图内容是按这个平移补过的，不能删
+    required: { screen_alignment: 'Rectangle', duration_s: r4(fa.Dtot), loops: 1, delay_s: r4(fa.t0), cutout: 'cutoutFar', max_draw_count: 1, pivot_offset: [-0.5, -0.5], local_space: true },     // 4.9.69 用户 21:34「开local space才跟组件转，我认为可以开；我的comet开了都没问题」
     spawn: { rate: { const: 0 }, bursts: [[0, 1]] },
     modules: [
       { m: 'Lifetime', Lifetime: { const: r4(fa.Dtot) } },
       { m: 'InitialLocation', StartLocation: { const: [r1(fa.cx * 100), 0, r1(fa.cz * 100)] } },
       { m: 'InitialVelocity', StartVelocity: { const: [0, 0, r1(Math.max(1, (fa.vz || 0) * 100))] } },
       { m: 'InitialSize', StartSize: { const: [r1(fa.Ww * 100), r1(fa.Wh * 100), 1] } },
+      { m: 'OrientationAxisLock', flags: 'EPAL_ROTATE_Z', note: '远段面片绕组件 Z 轴转向镜头；Screen Alignment = Rectangle、Required 勾 Local Space（锁轴跟组件转，整根尾缀转组件倾斜时远段一起倾，用户 10-12 21:34 定）' },
       { m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(fa.keys, La.F) } } },
       { m: 'ColorOverLife', ColorOverLife: { curve: [[0, col[col.length - 1][1]], [1, col[col.length - 1][1]]] }, AlphaOverLife: { const: 1 } }
     ]
   });
   const ES = b.es || rtBuildES(P);
   const fracM = P.rtMobile == null ? BASE.rtMobile : P.rtMobile;
-  // 手机比例 0：不写粒子发射器（一颗的 Burst，例如星头光晕，照留）
-  for (const e of ES.emitters) { if (mobile && !(fracM > 0) && !(e.bursts || []).some(([, n]) => n === 1)) continue; emitters.push(esFwlEmitter(e, mobile, fracM)); }
-  const tab = rtTables(b, mobile), peak = esPeakAlive(tab, m.T + 4);
+  let mob = null;
+  if (!mobile) for (const e of ES.emitters) emitters.push(esFwlEmitter(e, false, 1));
+  else { mob = rtMobileEmitters(emitters, ES, fracM, m.T); emitters.length = 0; emitters.push(...mob.emitters);
+    for (const k of Object.keys(textures)) if (!mob.textures.has(k)) delete textures[k];
+    for (const k of Object.keys(materials)) if (!mob.materials.has(k)) delete materials[k]; }
+  const peak = mob ? { peak: mob.peak, at: mob.at } : esPeakAlive(rtTables(b, false), m.T + 4);
   return { textures, materials, emitters, system: { preview_distance_cm: Math.round(Math.max(30000, bl.H * 100 * 2)), preview_warmup_s: 0 },
     notes: [
+      ...(mob ? [mob.note] : []),
       `循环层 RiseLoop：速度朝向单粒子，星头在面片上端（Pivot Offset ${pivotY}，和 V5 尾缀同一写法；导入器若还不支持这个字段，手动在 Required 里填）；弹道 = ${bl.quad ? 'Initial Velocity + Velocity Over Life（Absolute，物理弹道：平方阻力、终端速度 ' + r1(bl.vt) + ' m/s；这个模块要导入器支持，未经 UE 验证）' : 'Initial Velocity + Drag + Const Acceleration（线性阻力'}，和粒子层的出生曲线同一条）。帧号锯齿：${m.nRev} 圈自转 / ${r2(m.Tl)} s 一个循环。${(m.texSparks || []).length ? (rtTexFrac(P, 'M') > 0 ? '贴图里有星头、白热段火花和 ' + rtTexWhat(P) + '（真循环；其余在 GPU 发射器）。' : '贴图里有星头、白热段火花和 ' + Math.round(rtTexFrac(P, 'F') * 100) + '% 的细火花（真循环；其余细火花在 SparksFine）。') : ''}${m.grow ? '面片长度跟真实尾迹（Size By Life 只改 Y，起步从短长出来、减速变短，最短 × ' + r2(+P.rtLoopMin || 0.25) + '）。' : ''}`,
       ...(!fd ? [] : [`消散 RiseFade：开花时刻（${r2(m.T)} s）在开花点出生，贴图里每颗火花按自己的寿命熄灭；${Lf.F} 帧 / ${r2(m.fadeSeconds)} s。${m.grow ? '按循环层最后的等效速度 ' + r1(fm.Vf) + ' m/s 单独取景烘焙，面片 ' + r1(fm.Ww * 100) + ' × ' + r1(fm.Wh * 100) + ' cm 是真实大小（不压扁），和循环层最后一帧一样长；Pivot Offset ' + pivotF + '。' : ''}${P.rtDissolve > 0 ? 'dissolve 动态参数在后 60% 从 0 升到 ' + r2(P.rtDissolve) + '（材质里溶解怎么表现未经 UE 验证）。' : '不写 dissolve。'}`]),
       ...(ba ? [`远段 TrailFar（4.5.1 近段 + 远段）：开花后所有火花都在远段里演完熄灭，没有 RiseFade 消散层。${kN !== 1 ? '循环层贴图按曝光 × ' + r2(kN) + ' 烘（白热段不顶到 255），RiseLoop 的 Color Over Life × ' + r2(1 / (kN * kN)) + ' 补回（暗处和远段一样亮）。' : ''}年龄 ≥ ${r2(m.nearA[0])}–${r2(m.nearA[1])} s 的火花（已停在空气里）用世界坐标烘成全程序列，一个竖直面片 ${r1(fa.Ww)} × ${r1(fa.Wh)} m 立在发射点上（中心在发射点上方 ${r1(fa.cz)} m${Math.abs(fa.cx) > 0.05 ? '、横向 ' + r1(fa.cx) + ' m' : ''}），${r2(fa.t0)} s 出现、${r2(fa.Dtot)} s 播完：上升段 ${fa.Fr} 帧按弹体走过的路平均分、开花后 ${fa.Fd} 帧自己演完熄灭（帧号曲线不是匀速）。RiseLoop / RiseFade 只剩年轻火花，两段按年龄交叉淡化、相加 = 实时模拟。速度朝向 + ${r1((fa.vz || 0) * 100)} cm/s 向上初速 = 竖直、只绕竖轴转向相机；面片寿命里往上走 ${r1((fa.vz || 0) * fa.Dtot)} m，贴图里的内容已按这个上移补回（世界位置不变）。`,
@@ -877,6 +886,49 @@ function fwlEmitSet(name, b, M, mobile) {
       ...(P.rtPopRate > 0 ? [`SparkPops 末段爆亮：和粗火花同一套运动（同一条出生 / 初速曲线、阻力、乱流），Color Over Life 在寿命 ${r2(P.rtPopAt)} 之前全黑、之后闪一下再灭。`] : []),
       ...(P.rtLaunch > 0 ? ['LaunchGlow / LaunchSparks 发射口：0 s 一次性 Burst（Spawn Rate = 0），发射药的闪光 + 向上喷的一把火花；离地 0.5–1 m 出生。'] : [])
     ] };
+}
+// 4.9.69 手机 _M（spec/烟花特效资产规范.md v1 §6：尾缀中低配只能 1 层大面片 overdraw、2–3 个发射器、不能有 GPU、每个发射器同时活着 ≤ 50；
+//   用户 10-12 19:44「尾缀中低配只能用1层overdraw，可以有2~3个发射器」）。以前手机是 PC 的全部发射器（GPU 转 CPU、粒子数 × 手机比例），10 个。
+//   留：RiseLoop（星头 + 跟着走的一段尾迹，唯一的大面片）+ 星头光晕 HeadGlow + 1 组 CPU 火花（粗火花优先，数目压到同时活着 ≤ 50）；
+//   远段 TrailFar 和 RiseLoop 同时在（开花前一直重叠）→ 两层 overdraw，手机不出（代价：开花后手机上没有留在空中的长尾迹）。
+//   没有远段的老尾缀（循环 + 消散）：消散在循环层结束后才出生、不重叠，照留，火花让位
+const RT_MOBILE_MAX_ALIVE = 50, RT_MOBILE_MAX_EMITTERS = 3;
+// 手机留哪个光晕 / 哪组火花、火花数目比例（同时活着 ≤ 50）。nBig = 已经占用的大面片发射器数
+// 4.9.69 用户 10-12 21:34「手机尾缀不要cpu火花粒子了……不行就只用一个近段循环就可以了，星光头也不要了」→ 手机只留大面片（RT_MOBILE_PARTICLES = false）
+const RT_MOBILE_PARTICLES = false;
+function rtMobilePick(ES, frac, T, nBig) {
+  if (!RT_MOBILE_PARTICLES) return { glow: null, spark: null, f: 0, peak: 0, at: 0 };
+  const glow = nBig < RT_MOBILE_MAX_EMITTERS ? ES.emitters.find(e => e.name === 'HeadGlow') || null : null, used = nBig + (glow ? 1 : 0);
+  const cand = ['SparksCoarse', 'SparksTwinkle', 'SparksFine', 'Embers'].map(n => ES.emitters.find(e => e.name === n)).find(Boolean);
+  let spark = null, f = frac, peak = 0, at = 0;
+  if (cand && frac > 0 && used < RT_MOBILE_MAX_EMITTERS) {
+    let pk = null;
+    for (let i = 0; i < 6; i++) { pk = esPeakAlive(esSpawn({ ...ES, emitters: [cand] }, f), T + 4); if (pk.peak <= RT_MOBILE_MAX_ALIVE) break; f *= RT_MOBILE_MAX_ALIVE / pk.peak * 0.97; }
+    spark = cand; peak = pk.peak; at = pk.at;
+  }
+  return { glow, spark, f, peak, at };
+}
+function rtMobileEmitters(seqEmitters, ES, frac, T) {
+  const big = seqEmitters.filter(e => e.name !== 'TrailFar').map(e => ({ ...e, max_alive: 1 }));
+  const out = big.slice(), dropped = seqEmitters.filter(e => e.name === 'TrailFar').map(e => e.name), pk = rtMobilePick(ES, frac, T, big.length);
+  if (pk.glow) { const j = esFwlEmitter(pk.glow, true, 1); j.max_alive = (j.spawn.bursts || []).reduce((n, [, c]) => n + c, 0) || 1; out.push(j); }
+  if (pk.spark) { const j = esFwlEmitter(pk.spark, true, pk.f); j.max_alive = pk.peak; out.push(j); }
+  for (const e of ES.emitters) if (!out.some(x => x.name === e.name)) dropped.push(e.name);
+  const textures = new Set(), materials = new Set(), MAT_TEX = { loop: ['loop', 'ramp'], fade: ['fade', 'ramp'], far: ['far', 'ramp'], dot: [] };
+  for (const e of out) { materials.add(e.material); (MAT_TEX[e.material] || []).forEach(t => textures.add(t)); if (e.required && e.required.cutout) textures.add(e.required.cutout); }
+  const note = `手机 _M（4.9.69，规范 v1 §6：尾缀中低配 1 层大面片、≤ ${RT_MOBILE_MAX_EMITTERS} 个发射器、没有 GPU、每个发射器同时活着 ≤ ${RT_MOBILE_MAX_ALIVE}）：留 ${out.map(e => e.name).join(' + ')}；`
+    + `不出 ${dropped.join('、') || '—'}。理由：${big.map(e => e.name).join(' / ')} 是唯一的大面片（星头和跟着走的一段尾迹）；远段 TrailFar 开花前一直和 RiseLoop 重叠（两层 overdraw），手机上不出，开花后没有留在空中的长尾迹；`
+    + (pk.spark ? `火花只留一组 ${pk.spark.name}（CPU，数目 × ${pk.f.toFixed(3)}，同时活着最多 ${pk.peak} 颗，第 ${pk.at} s）。` : '不出火花粒子和星头光晕（用户 10-12 21:34「手机尾缀不要cpu火花粒子了……星光头也不要了」）：手机只有近段循环这一张。');
+  return { emitters: out, textures, materials, peak: Math.max(pk.peak, 1), at: pk.at, note };
+}
+// 引擎回放 / 参数表里手机那份粒子（和 cascade_mobile.json 同一套：光晕 + 一组火花）
+function rtMobileTables(b, kw = 1) {
+  const k = '_tabM69' + (kw === 1 ? '' : '_W' + kw); if (b[k]) return b[k];
+  const ES = esKeepScale(b.es || rtBuildES(b.P), kw), frac = b.P.rtMobile == null ? BASE.rtMobile : b.P.rtMobile, nBig = 1 + (b.fades && b.fades[0] && !b.far ? 1 : 0);
+  const pk = rtMobilePick(ES, frac, b.meta.T, nBig), out = [];
+  if (pk.glow) out.push(...esSpawn({ ...ES, emitters: [pk.glow] }, 1));
+  if (pk.spark) out.push(...esSpawn({ ...ES, emitters: [pk.spark] }, pk.f));
+  return (b[k] = out);
 }
 function rtTexFiles(b, name, sfx = '', idx = 1) {
   return (async () => {
@@ -894,7 +946,7 @@ function rtTexFiles(b, name, sfx = '', idx = 1) {
 }
 function rtCascadeText(name, b, M) {
   const m = b.meta, P = b.P, bl = m.ball, fd = b.fades[0];
-  const tabP = rtTables(b, false), tabM = rtTables(b, true), pkP = esPeakAlive(tabP, m.T + 4), pkM = esPeakAlive(tabM, m.T + 4);
+  const tabP = rtTables(b, false), tabM = rtMobileTables(b), pkP = esPeakAlive(tabP, m.T + 4), pkM = esPeakAlive(tabM, m.T + 4);     // 4.9.69 手机 = _M 那几组
   return `烟花效果：${name}（${TYPE_NAMES[P.type]}）
 工具：烟花母版烘焙器 ${VERSION}（产物：${FORM_NAMES.emitset}）
 完整数值在 cascade.json（PC）/ cascade_mobile.json（手机）；下面按 Cascade 里的发射器、模块顺序列出，单位 cm、cm/s、秒。
@@ -944,12 +996,12 @@ function rtJSON(b, name, M) {
       centerM: [+cx.toFixed(2), +cz.toFixed(2)], spriteSizeCm: [+(Ww * 100).toFixed(1), +(Wh * 100).toFixed(1)], frameKeys: keys, texture: [b.far.P.texW, b.far.P.texH], fill: b.far.meta.fill ? { x: +b.far.meta.fill.x.toFixed(3), y: +b.far.meta.fill.y.toFixed(3) } : null }))(b.far.meta.far),
       nearAge: m.nearA, gpuSplit: m.gpuSplit } : {}),
     emitters: ES.emitters.map(e => ({ name: e.name, gpuPC: !!e.gpu, life: e.life, size: e.size, drag: e.drag, spawnKeys: e.spawn.length })),
-    peakAlive: { pc: esPeakAlive(rtTables(b, false), m.T + 4), mobile: esPeakAlive(rtTables(b, true), m.T + 4) },
+    peakAlive: { pc: esPeakAlive(rtTables(b, false), m.T + 4), mobile: esPeakAlive(rtMobileTables(b), m.T + 4) },
     colorOverLife: colorKeys(M, m.T, 0), selfCheck: m.check, params: P, materialDefaults: M };
 }
 function rtStatsHTML(b) {
   const m = b.meta, P = b.P, bl = m.ball, fd = b.fades[0], c = m.check || {}, cls = ok => ok ? 'ok' : 'warn';
-  const pk = esPeakAlive(rtTables(b, false), m.T + 4), pkM = esPeakAlive(rtTables(b, true), m.T + 4);
+  const pk = esPeakAlive(rtTables(b, false), m.T + 4), pkM = esPeakAlive(rtMobileTables(b), m.T + 4);
   const rows = [];
   const fl = q => q && q.fill ? `${Math.round(q.fill.x * 100)}% × ${Math.round(q.fill.y * 100)}%` : '—';
   rows.push(`循环层 + 粒子发射器 · 循环 <b>${m.L.F}</b> 帧（${m.L.cols}×${m.L.rows}×${m.L.chans}，${P.texW}×${P.texH}）· 单格 <b>${m.L.cellW}×${m.L.cellH}</b>${fd ? ` · 消散 <b>${fd.meta.L.F}</b> 帧（${fd.meta.L.cols}×${fd.meta.L.rows}×${fd.meta.L.chans}，${fd.P ? fd.P.texW + '×' + fd.P.texH : ''}）` : ' · 没有消散层（开花后归远段）'}`);
@@ -1034,27 +1086,34 @@ function renderEmitExport(b) {
   const P = b.P, M = state.M, m = b.meta, t = engineTick(state.t), view = rtView(P, b, t), ppm = hdrT.w / (2 * view[2]), ppmY = hdrT.h / (2 * view[3]);
   const kw = typeof exportWidthNow === 'function' ? exportWidthNow() : 1;     // 4.9.32 升空高度不变：面片宽 × kw、粒子大小 / 散开 × kw（和导出同一套）
   hdrT.clear(); hdrT.bind(); additive(true);
-  const s = rtOn('near') ? rtLoopStateAt(b, t) : null, sa = rtOn('far') ? rtFarStateAt(b, t) : null;     // 4.5.1 分层看
-  if (sa) {     // 4.5.1 远段：面片中心在 (cx, cz)，速度朝向竖直（Pivot 居中）
+  const s = rtOn('near') ? rtLoopStateAt(b, t) : null, sa = rtOn('far') && !b.esMobile ? rtFarStateAt(b, t) : null;     // 4.5.1 分层看；4.9.69 手机 _M 没有远段
+  // 4.9.69 倾斜预览（整根尾缀绕发射点转 tilt°，像编排里转组件）：近段 RiseLoop 是速度朝向 → 跟着倾；远段 Rectangle + 锁 Z + Local Space → 锁组件 Z，也跟着倾。粒子层这里不转，倾斜时不画（HUD 写明）
+  const tilt = rtTiltNow(b), th = -tilt * Math.PI / 180;
+  if (sa) {     // 4.5.1 远段：面片中心在 (cx, cz)，竖直（4.9.69 起 Rectangle + 锁 Z；以前速度朝向），Pivot 居中
     const pr = PR.mat; gl.useProgram(pr.p);
+    if (tilt && pr.u.uRot) gl.uniform3fv(pr.u.uRot, [th, 0, 0]);     // Local Space + 锁 Z：锁的是组件 Z，整张跟组件一起倾
     gl.uniform4fv(pr.u.uRect, [sa.x - sa.w * kw / 2, sa.z - sa.h / 2, sa.x + sa.w * kw / 2, sa.z + sa.h / 2]); gl.uniform4fv(pr.u.uView, view);
     bindSeqTextures(pr, sa.bb); gl.uniform1f(pr.u.uFrame, sa.f); gl.uniform1f(pr.u.uMirror, 0);
     setMatUniforms(pr, { ...M, headInt: intOr1(M.headInt) * (P.rtBright || 1) }, t);
     gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
+    if (tilt && pr.u.uRot) gl.uniform3fv(pr.u.uRot, [0, 0, 0]);
   }
   if (s) {
     const w = (s.w || m.Ww) * kw, h = (s.h || m.Wh) * s.sy, hb = s.hb != null ? s.hb : m.hb == null ? 0.5 : m.hb, pr = PR.mat; gl.useProgram(pr.p);
     gl.uniform4fv(pr.u.uRect, [s.x - w / 2, s.z - h * hb, s.x + w / 2, s.z + h * (1 - hb)]); gl.uniform4fv(pr.u.uView, view);   // 星头 = 粒子位置（Pivot Offset）
+    if (tilt && pr.u.uRot) gl.uniform3fv(pr.u.uRot, [th, 0, 0]);     // 4.9.69 近段跟着倾（绕发射点）
     bindSeqTextures(pr, s.bb); gl.uniform1f(pr.u.uFrame, s.f); gl.uniform1f(pr.u.uMirror, 0);
     const kin = (s.phase === 'rise' && !m.grow ? rtLoopInAt(P, t) : 1) / (s.phase === 'rise' && m.nearExpo ? m.nearExpo * m.nearExpo : 1);     // 4.5.1 近段贴图曝光补回（和导出的 Color Over Life 一样）     // 4.4：出场淡入（和导出的 Color Over Life 一样）；4.4.5 跟尾迹长度时不淡入
     setMatUniforms(pr, { ...M, headInt: intOr1(M.headInt) * (P.rtBright || 1) * kin, tailInt: (M.tailInt == null ? 1 : M.tailInt) * kin }, t);
     gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
+    if (tilt && pr.u.uRot) gl.uniform3fv(pr.u.uRot, [0, 0, 0]);
   }
-  const tabs = rtTables(b, !!b.esMobile, kw), nd = esDraw(tabs, t, view, ppm, ppmY, 1, tabs.map(x => rtOn(x.e.name)));
+  const tabs = b.esMobile ? rtMobileTables(b, kw) : rtTables(b, false, kw), nd = esDraw(tabs, t, view, ppm, ppmY, 1, tabs.map(x => !tilt && rtOn(x.e.name)));     // 4.9.69 手机 = _M 那几组；倾斜预览不画粒子
   additive(false); post();
   const cnt = rtAliveCounts(tabs, t);
   rtLayerBarSync([['near', null, false], ...(b.far ? [['far', null, false]] : []), ...tabs.map((x, i) => [x.e.name, cnt[i], !!x.e.gpu])]);
   const dist = state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m` : '';
   hudText = `引擎回放 · ${b.esMobile ? '手机' : 'PC'} · 循环层 ${!rtOn('near') ? '（分层看关了）' : !s ? '已结束' : s.phase === 'rise' ? '上升循环第 ' + (s.f + 1) + '/' + m.L.F + ' 帧' : '贴图动态消散第 ' + (s.f + 1) + '/' + s.bb.meta.L.F + ' 帧'}（面片 ${((s && s.w) || m.Ww).toFixed(1)} × ${(((s && s.h) || m.Wh) * (s ? s.sy : 1)).toFixed(1)} m）${b.far ? ' + 远段 ' + (sa ? '第 ' + (sa.f + 1) + '/' + sa.bb.meta.far.F + ' 帧' : '—') : ''} + 粒子层 ${nd.toLocaleString()} 颗${dist} · 溶解另由材质处理（未经 UE 验证）${rtShowNote()}`;
+  if (tilt) hudText += ` · 倾斜预览 ${tilt}°：近段（速度朝向）和远段（Rectangle + 锁 Z + Local Space）一起倾，看接缝；粒子层倾斜时不画；以 UE 实测为准`;
   hudB = '';
 }

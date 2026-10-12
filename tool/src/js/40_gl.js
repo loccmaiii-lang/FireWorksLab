@@ -35,8 +35,9 @@ function compileNow(vs, fs) {
 }
 const HDR = '#version 300 es\nprecision highp float;\n';
 const VS_QUAD = HDR + `layout(location=0) in vec2 a; out vec2 v_uv; void main(){ v_uv=a; gl_Position=vec4(a*2.-1.,0.,1.); }`;
-const VS_RECT = HDR + `layout(location=0) in vec2 a; uniform vec4 uRect; uniform vec4 uView; out vec2 v_uv;
-void main(){ v_uv=a; vec2 w=mix(uRect.xy,uRect.zw,a); gl_Position=vec4((w-uView.xy)/uView.zw,0.,1.); }`;
+// 4.9.69 uRot = (角度 rad, 转轴 x, z)：升空尾缀引擎回放的倾斜预览（整根绕发射点转）；不设 = 0，和以前逐位相同
+const VS_RECT = HDR + `layout(location=0) in vec2 a; uniform vec4 uRect; uniform vec4 uView; uniform vec3 uRot; out vec2 v_uv;
+void main(){ v_uv=a; vec2 w=mix(uRect.xy,uRect.zw,a); if(uRot.x!=0.){ vec2 d=w-uRot.yz; float c=cos(uRot.x), s=sin(uRot.x); w=uRot.yz+vec2(c*d.x-s*d.y,s*d.x+c*d.y); } gl_Position=vec4((w-uView.xy)/uView.zw,0.,1.); }`;
 // 打包进格子：uPad = 格子边缘留空的像素数（防止 mip/压缩时串到相邻格子）
 const FS_PACK = HDR + `in vec2 v_uv; uniform sampler2D uS; uniform vec4 uM; uniform float uFade, uPad; uniform int uSS; uniform vec2 uCell; out vec4 o;
 void main(){ float m=1.; if(uPad>0.){ vec2 d=min(v_uv,1.-v_uv)*uCell; m=clamp((min(d.x,d.y)-uPad)/uPad,0.,1.); }

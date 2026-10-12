@@ -26,6 +26,7 @@ async function encodePNG(rgba, w, h) {
 const utf8 = s => new TextEncoder().encode(s);
 async function makeZip(files) {
   { const r = await packTidy(files); files = r.files; packTidyLast = r.report; }     // 4.9.38 Ramp / Cutout 去重、几乎不省的 Cutout 不出
+  if (files.some(([f]) => FWL_CFG_RE.test(f))) files = await packFinalize(files);     // 4.9.69 贴图写 SHA256 + 导出拦截（不合规范 v1 就抛错，不出包）
   const parts = [], central = []; let offset = 0;
   const d = new Date(), time = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), date = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
   for (const [name, content] of files) {
@@ -305,12 +306,19 @@ function masterJSON(b, name, M) {
   };
 }
 async function platformFiles(name,b,M,onProg=null) {
+  // 4.9.69 升空尾缀（循环层 + 粒子）在交付清单选「手机：不出」→ 只出 PC（以前尾缀没有手机这一格，用户 10-10 16:51「升空尾缀无法选择手机导出什么格式」）
+  if(b.form==='emitset'&&b.P.outMobile==='off')return fwlFiles(name,b,M).filter(([f])=>f!=='cascade_mobile.json');
   const mobile=b.mobile||await bakeMobileFor(b,onProg);
   try {
-    const files=await texFiles(mobile,name+'_Mobile');
+    const cfg=fwlFiles(name,b,M,mobile);
+    let tex=await texFiles(mobile,name+'_Mobile');
+    // 4.9.69 手机 _M 的尾缀只留循环层（远段 / 消散不出）：手机配置没引用的手机贴图不放进包（不然导入时会多建贴图）
+    if(b.form==='emitset'){const mj=cfg.find(([f])=>f==='cascade_mobile.json'),refs=mj?new Set(Object.values(JSON.parse(new TextDecoder().decode(mj[1])).textures||{}).map(t=>t.file)):null;
+      if(refs)tex=tex.filter(([f])=>refs.has(f));}
+    const files=tex;
     files.push([`${TN(name+'_Mobile','Ramp')}.png`,await encodePNG(rampPixels(M),256,8)]);
     files.push([`${name}_Mobile.json`,utf8(JSON.stringify(masterJSON(mobile,name+'_Mobile',M),null,2))]);
-    files.push(...fwlFiles(name,b,M,mobile));
+    files.push(...cfg);
     return files;
   }finally{if(!b.mobile)disposeBake(mobile);}
 }
@@ -322,8 +330,9 @@ async function exportSingleScheme(name, b, destination) {
   files.push([`${name}.json`, utf8(JSON.stringify({ ...masterJSON(b, name, state.M), exportScheme: so }, null, 2))]);
   busy(true, '打包 ZIP…', 1);
   let zipName = name, out = files;
-  if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: r.ln, mn: r.mn, b: r.ub || b, mb: r.mb || b, layer: '', pcTex: r.pcTex, frame: r.frame }]); zipName = nm.base; }
-  { const sp = exportScalePlan(state.P); out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放
+  const sp = exportScalePlan(state.P);
+  if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec); out = applyPackNaming(files, nm.base, [{ ln: r.ln, mn: r.mn, b: r.ub || b, mb: r.mb || b, layer: '', pcTex: r.pcTex, frame: r.frame }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }
+  { out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放；4.9.69 派生资源 zipName = 系统名
   await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b), destination);
   wbAutoExport(zipName);
   flash(`已导出 ${name}（PC ${kindCN(so.pc)} · 手机 ${kindCN(so.mobile)}）${packTidyNote()}`, false, packTidyNote() ? 8000 : 0);
@@ -358,8 +367,9 @@ async function exportMaster() {
     files.push(...await platformFiles(name, b, state.M,p=>busy(true,'手机独立烘焙…',p)));
     busy(true, '打包 ZIP…', 1);
     let zipName = name, out = files;
-    if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); zipName = nm.base; }
-    { const sp = exportScalePlan(state.P); out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放
+    const sp = exportScalePlan(state.P);
+    if (namingApplies(b)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }
+    { out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx; }     // 4.9.31 导出缩放；4.9.69 派生资源 zipName = 系统名
     await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b), destination);
     wbAutoExport(zipName);     // 4.2.10：存进这个效果的「版本」（导出时），不再进工具页的全局版本列表
     flash('已导出 ' + name + packTidyNote(), false, packTidyNote() ? 8000 : 0);

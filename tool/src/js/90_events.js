@@ -33,6 +33,7 @@ const segBtns = (id, fn) => $(id).addEventListener('click', e => {
 });
 segBtns('#dispSeg', b => state.disp = b.dataset.disp);
 segBtns('#platformSeg', b => setPreviewPlatform(b.dataset.platform));
+{ const rt = $('#rtTilt'); if (rt) rt.addEventListener('change', () => { state.rtTilt = +rt.value || 0; }); }     // 4.9.69 升空尾缀倾斜预览
 $('#lowDissolve').addEventListener('change', e => { state.lowDissolve = e.target.checked; });     // 4.9.29 单帧：溶解预览 / 并排
 $('#lowSide').addEventListener('change', e => { state.lowSide = e.target.checked; });
 $('#viewSeg').addEventListener('click', e => { const b = e.target.closest('button[data-view]'); if (b) selectStageView(b.dataset.view); });
@@ -130,9 +131,10 @@ window.__fw = {
     files.push([`${name}_曲线.csv`, utf8(curvesCSV(b, M))]);
     files.push([`${name}.json`, utf8(JSON.stringify(masterJSON(b, name, M), null, 2))]);
     files.push(...await platformFiles(name, b, M));
-    // 命名规范：本机导出任务传 opt.entry（条目号）→ 找到效果的英文名
-    if (namingApplies(b) && opt.naming !== false) { const ef = opt.entry ? effectOfEntry({ id: opt.entry }) : null, nm = packNamesFor(ef ? 'ef:' + ef.key : 'rv:' + (opt.entry || name), ef, 1, name, P.type, opt.entry || null); files = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }]); }
-    { const ef = opt.entry && typeof effectOfEntry === 'function' ? effectOfEntry({ id: opt.entry }) : null, sp = exportScalePlan(P, { key: ef ? ef.key : '', entry: opt.entry || '', pick: opt.size || '' }); files = scaleCascadeFiles(files, sp.k, sp.keep, sp.spec); }     // 4.9.31 导出缩放（本机任务的参数改动里写 exportScale）；4.9.51 配了尺寸标定按标定     // 4.9.52 本机任务：任务里写 size（档 id / 规格 id / none），不写 = 表里配的
+    const efJ = opt.entry && typeof effectOfEntry === 'function' ? effectOfEntry({ id: opt.entry }) : null, spJ = exportScalePlan(P, { key: efJ ? efJ.key : '', entry: opt.entry || '', pick: opt.size || '' });     // 4.9.52 本机任务：任务里写 size（档 id / 规格 id / none），不写 = 表里配的
+    // 命名规范：本机导出任务传 opt.entry（条目号）→ 找到效果的英文名；4.9.69 派生资源（非默认尺寸档）系统名区分、贴图沿用原效果
+    if (namingApplies(b) && opt.naming !== false) { const nm = packNamesFor(efJ ? 'ef:' + efJ.key : 'rv:' + (opt.entry || name), efJ, 1, name, P.type, opt.entry || null); files = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b, layer: '' }], { sys: packSysName(nm.base, P.type, spJ.spec), spec: spJ.spec && spJ.spec.id }); }
+    files = scaleCascadeFiles(files, spJ.k, spJ.keep, spJ.spec);     // 4.9.31 导出缩放（本机任务的参数改动里写 exportScale）；4.9.51 配了尺寸标定按标定
     const zip = await makeZip(files); disposeBake(b);
     return new Uint8Array(await zip.arrayBuffer());
   },

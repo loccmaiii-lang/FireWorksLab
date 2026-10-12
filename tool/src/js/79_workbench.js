@@ -972,6 +972,9 @@ function prodCellHTML(x, pf, combo) {
 function prodTableHTML(xs, combo) {
   const rows = xs.map(x => {
     const P = layerPOf(x), seqOK = P && familyOf(P.type) === 'aerial' && (!x.b || ['master', 'segments'].includes(x.b.form)) && (combo || singleSchemeOn(P));
+    // 4.9.69 升空尾缀（循环层 + 粒子）：PC 照旧全套；手机能选 _M / 不出（用户 10-10 16:51「升空尾缀无法选择手机导出什么格式，无法创建手机粒子文件」）
+    if (!seqOK && !combo && x.b && x.b.form === 'emitset') { const mo = state.P.outMobile === 'off' ? 'off' : 'seq';
+      return `<tr><td>${x.name}</td><td class="dim">循环层 + 粒子（PC 全套：近段 + 远段 + 粒子；远段 Rectangle + 锁 Z）</td><td><select data-prod="mobile" data-i="${x.i}" aria-label="手机出什么">${OUT_MOBILE_TAIL.map(([k, t]) => `<option value="${k}"${k === mo ? ' selected' : ''}>${t}</option>`).join('')}</select><small>${mo === 'off' ? '<span class="dim">不出</span>' : '手游 _M：只有近段循环一张大面片（不出远段、火花、星头光晕；用户 10-12 21:34）'}</small></td></tr>`; }
     if (!seqOK) return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}</td><td colspan="2" class="dim">${x.b ? FORM_NAMES[x.b.form] || x.b.form : '还没烘好'}：按这种产物自己的规则出（PC + 手机）</td></tr>`;
     const o = combo ? layerOut(x.L) : singleOut(state.P), uOK = unitAllowed(P), uf = uOK ? unitFit(P) : null;     // 4.9.27 下拉里也写这层适不适合单束
     const uAttr = !uOK ? ' disabled title="千轮、分裂、蜂、非球形图案不能出单束"' : uf && uf.level !== 'ok' ? ` title="${uf.why.join('；')}"` : '';

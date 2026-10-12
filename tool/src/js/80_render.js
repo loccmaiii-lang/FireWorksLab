@@ -586,6 +586,7 @@ function loop(now) {
   // 4.9.35（用户 10-07 18:50「也不用分手机与PC/低端/三个种类，引擎回放就只是引擎回放」）：平台切换只在展示模式里留着（PC / 手机），平时一律按 PC 列画
   $('#platformSeg').hidden = !state.showcase;
   if (!state.showcase && state.platform !== 'pc') { state.platform = 'pc'; for (const x of $('#platformSeg').children) x.setAttribute('aria-pressed', String(x.dataset.platform === 'pc')); }
+  { const to = $('#rtTiltOpts'); if (to) to.hidden = state.view !== 'export' || state.tab === 'combo' || !(state.bake && state.bake.form === 'emitset'); }     // 4.9.69 升空尾缀倾斜预览
   { const lo = $('#lowOpts'); if (lo) lo.hidden = state.view !== 'export' || !(state.tab === 'combo' ? state.layers.some(L => layerOut(L).pc === 'frame') : typeof singleOut === 'function' && singleOut(state.P).pc === 'frame'); }     // 4.9.29 单帧的溶解预览 / 并排（4.9.35 有 PC 单帧层才出现）
   $('#resolutionBox').hidden = !mv || state.view!=='live' || isTrail(state.P) || isPhys(state.P) || isEmit(state.P);
   refSync();

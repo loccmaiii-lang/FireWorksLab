@@ -1192,13 +1192,23 @@ R6_JS = r"""async () => {
   const j = fwlEmitSet('T', b, defaultsFor('tailL').M, false), tf = j.emitters.find(x => x.name === 'TrailFar'), rl = j.emitters.find(x => x.name === 'RiseLoop');
   const j1 = fwlEmitSet('T', { ...b, meta: { ...lay, nearExpo: 1 } }, defaultsFor('tailL').M, false), rl1 = j1.emitters.find(x => x.name === 'RiseLoop');
   const cl = x => x.modules.find(q => q.m === 'ColorOverLife').ColorOverLife.curve[0][1][0];
+  // 4.9.69 手机 _M：只留 RiseLoop + 星头光 + 1 组 CPU 火花，没有远段、没有 GPU，每个发射器 max_alive ≤ 50，配置里不引用远段贴图；包里写了理由；导出拦截过得去
+  { const jm = fwlCascade('T_Mobile', b, defaultsFor('tailL').M, true); jm.name = 'T_M';
+    out.mob = { em: jm.emitters.map(x => x.name), gpu: jm.emitters.filter(x => x.gpu).length, alive: jm.emitters.map(x => x.max_alive), tex: Object.keys(jm.textures), tier: jm.tier, note: !!(jm.notes || []).find(x => /手机 _M/.test(x)) };
+    const g = packGateConfig('cascade_mobile.json', jm, '', {});
+    if (jm.emitters.length !== 1 || jm.emitters[0].name !== 'RiseLoop' || out.mob.em.includes('TrailFar') || out.mob.gpu || jm.emitters.some(x => !(x.max_alive >= 1 && x.max_alive <= 50)) || jm.textures.far || jm.tier !== 'M' || !out.mob.note || g.length)
+      bad.push('手机 _M 尾缀不对：' + JSON.stringify(out.mob) + ' ' + g.join('；'));
+    const jp = fwlCascade('T', b, defaultsFor('tailL').M, false); out.pcEm = jp.emitters.length;
+    if (jp.tier || jp.emitters.length < 4 || !jp.emitters.some(x => x.name === 'TrailFar')) bad.push('PC 尾缀不该变（全套、没有 tier）：' + jp.emitters.length); }
   out.exp = { em: j.emitters.map(x => x.name).slice(0, 4), tex: Object.keys(j.textures), sheets: namingSheets(b).map(x => x[0]), nearComp: +(cl(rl) / cl(rl1)).toFixed(3) };
   if (j.emitters.some(x => x.name === 'RiseFade') || j.textures.fade) bad.push('近段 + 远段时不该有 RiseFade：' + out.exp.em);
   if (Math.abs(out.exp.nearComp - 1 / 0.64) > 0.01) bad.push('近段贴图曝光 0.8 时 RiseLoop 的 Color Over Life 应该 × 1 / 0.64：' + out.exp.nearComp);
   if (!tf) bad.push('cascade.json 没有 TrailFar'); else {
     const mods = Object.fromEntries(tf.modules.map(x => [x.m, x])); out.exp.far = { align: tf.required.screen_alignment, delay: tf.required.delay_s, life: mods.Lifetime.Lifetime.const, size: mods.InitialSize.StartSize.const, loc: mods.InitialLocation.StartLocation.const, vel: mods.InitialVelocity.StartVelocity.const, keys: mods.DynamicParameter.params.frame.curve.length };
     if (out.exp.far.vel[2] !== 50) bad.push('TrailFar 向上初速应该 = 远段上移速度 0.5 m/s = 50 cm/s（UE 里 1 cm/s 定不住朝向）：' + out.exp.far.vel);
-    if (tf.required.screen_alignment !== 'Velocity' || Math.abs(tf.required.delay_s - 0.8) > 1e-6 || mods.InitialSize.StartSize.const[1] !== 43000 || mods.InitialLocation.StartLocation.const[2] !== 20000 || mods.DynamicParameter.params.frame.curve.length !== F + 1 || j.textures[j.materials[tf.material].textures.main].file.indexOf('_Far') < 0)
+    // 4.9.69 远段改 Rectangle + 锁 Z（用户 10-12 19:44）
+    out.exp.farLock = (mods.OrientationAxisLock || {}).flags || null; if (out.exp.farLock !== 'EPAL_ROTATE_Z') bad.push('TrailFar 没有 Orientation Axis Lock（锁 Z）'); if (tf.required.local_space !== true) bad.push('TrailFar 没勾 Local Space（用户 10-12 21:34）');
+    if (tf.required.screen_alignment !== 'Rectangle' || Math.abs(tf.required.delay_s - 0.8) > 1e-6 || mods.InitialSize.StartSize.const[1] !== 43000 || mods.InitialLocation.StartLocation.const[2] !== 20000 || mods.DynamicParameter.params.frame.curve.length !== F + 1 || j.textures[j.materials[tf.material].textures.main].file.indexOf('_Far') < 0)
       bad.push('TrailFar 导出不对：' + JSON.stringify(out.exp.far)); }
   if (out.exp.sheets.join() !== 'Loop,Far') bad.push('命名应该是循环层 + 远段：' + out.exp.sheets);
   // 4.5.4 曲线点数（用户 10-05 19:31「没变化就 2 个点，有变化的加几个变化的点」）：GPU / 软圆点发射器出生率 2 个点、出生位置 / 初速十几个点、星头光晕颜色几个点；远段帧号曲线几个拐点
@@ -3258,7 +3268,7 @@ W34_JS = r"""async () => {
   toggleDeliv(false); state.P.exportScale = es0;
   // ⑤ 指纹：配了的条目带 size，没配的不带
   const vJ = entryVer(entryById('JM4-40')) || '', other = FW_REVIEW_LIST.find(e => e.ver && !sizeSpecFor(effectOfEntry(e)?.key, e.id, false)); out.ver = [vJ.slice(-40), other && (entryVer(other) || '').slice(-30)];
-  if (!/size1-P_MG-150-210$/.test(vJ) || (other && /size/.test(entryVer(other)))) bad.push('版本指纹没带尺寸标定 / 没配的也带了：' + JSON.stringify(out.ver));
+  if (!/size\d+-P_MG-150-210$/.test(vJ) || (other && /size/.test(entryVer(other)))) bad.push('版本指纹没带尺寸标定 / 没配的也带了：' + JSON.stringify(out.ver));
   // ⑥ 没配的花型：默认原大（手动 0.8 → _S80）；4.9.52 也能选一档（用户 10-09 12:56「我选四尺玉，我也可以选大号」）
   { const prev = state.bake; await openType('kiku'); await idleBake(prev); }
   const pk = exportScalePlan(state.P), pk8 = exportScalePlan({ ...state.P, exportScale: 0.8 }); out.kiku = [pk.k, pk.spec, pk8.k, pk8.sfx, sizeSpecLine(false).slice(0, 40), inertWhy('exportScale', state.P) || ''];
@@ -3323,6 +3333,88 @@ async def w35(pg):
     r = await pg.evaluate(W35_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1500]
 
+W36_JS = r"""async () => {
+  // 4.9.69 手游 _M 导出 + 导出拦截 + 派生资源 + sha256（用户 10-12 19:44 / 20:42；规范 spec/烟花特效资产规范.md v1）
+  const out = {}, bad = [], dec = new TextDecoder(), wait = ms => new Promise(r => setTimeout(r, ms));
+  const unzipFiles = u8 => { const dv = new DataView(u8.buffer, u8.byteOffset, u8.byteLength), o2 = []; let o = 0;     // makeZip 是不压缩的 ZIP
+    while (o + 30 <= u8.length && dv.getUint32(o, true) === 0x04034b50) { const n = dv.getUint16(o + 26, true), x = dv.getUint16(o + 28, true), sz = dv.getUint32(o + 18, true), st = o + 30 + n + x; o2.push([dec.decode(u8.subarray(o + 30, o + 30 + n)), u8.subarray(st, st + sz)]); o = st + sz; }
+    return o2; };
+  const good = () => ({ format: 'fwl.cascade/1', name: 'GoldSpark_M', platform: 'mobile', tier: 'M',
+    textures: { main: { file: 'T_EFX_FireWorks_GoldSpark_4x4_01.png', asset: 'T_EFX_FireWorks_GoldSpark_4x4_01', class: 'flipbook' }, ramp: { file: 'T_EFX_FireWorks_GoldSpark_R.png', asset: 'T_EFX_FireWorks_GoldSpark_R', class: 'ramp' } },
+    materials: { m: { textures: { main: 'main', ramp: 'ramp' } }, dot: { role: 'soft_dot' } },
+    emitters: [{ name: 'Main', material: 'm', gpu: false, max_alive: 1, required: { delay_s: 0, duration_s: 3 } }, { name: 'Glow', material: 'dot', gpu: false, max_alive: 1, required: { delay_s: 0, duration_s: 3 } }] });
+  const png = { 'T_EFX_FireWorks_GoldSpark_4x4_01.png': { sha256: 'a', size: [1024, 1024] }, 'T_EFX_FireWorks_GoldSpark_R.png': { sha256: 'b', size: [256, 8] } };
+  const G = (j, p = png) => packGateConfig('cascade_mobile.json', j, '', p);
+  out.good = G(good()); if (out.good.length) bad.push('合规的手机包被拦了：' + out.good.join('；'));
+  // ① 名字 / 档位
+  { const j = good(); j.name = 'GoldSpark_Mobile_HD'; const r = G(j); out.c1 = r; if (!r.some(x => /带 _HD \/ _Mobile/.test(x))) bad.push('① 名字带 _Mobile_HD 没拦'); }
+  { const j = good(); j.tier = 'L'; j.name = 'GoldSpark_L'; const r = G(j); out.c1b = r; if (!r.some(x => /不是 H \/ M/.test(x))) bad.push('① 档位 L 没拦'); }
+  // ② 发射器超预算 / GPU / max_alive
+  { const j = good(); j.emitters.push({ name: 'A', material: 'dot', gpu: true, max_alive: 80, required: {} }, { name: 'B', material: 'dot', gpu: false, required: {} });
+    const r = G(j); out.c2 = r; if (!r.some(x => /发射器 4 个，超过 _M 上限 3/.test(x)) || !r.some(x => /GPU 发射器 A/.test(x)) || !r.some(x => /超过 50：A 80/.test(x)) || !r.some(x => /没写 max_alive：B/.test(x))) bad.push('② 预算 / GPU / max_alive 没拦全：' + r.join('；')); }
+  { const j = good(); j.textures.tail = { file: 'T.png', class: 'flipbook' }; j.materials.t = { textures: { main: 'tail' } }; j.emitters[1] = { name: 'Tail', material: 't', gpu: false, max_alive: 1, required: { delay_s: 0.5, duration_s: 3 } };
+    const r = G(j, { ...png, 'T.png': { size: [512, 512] } }); out.c2b = r; if (!r.some(x => /同一时刻有 2 张大序列/.test(x))) bad.push('② 两张大序列重叠没拦'); }
+  // ③ 手机引用 _HD 贴图 / 序列超过 1024
+  { const j = good(); j.textures.main.file = 'T_EFX_FireWorks_GoldSpark_4x4_01_HD.png'; j.textures.main.asset = 'T_EFX_FireWorks_GoldSpark_4x4_01_HD';
+    const r = G(j, { ...png, 'T_EFX_FireWorks_GoldSpark_4x4_01_HD.png': { size: [2048, 2048] } }); out.c3 = r; if (!r.some(x => /引用了 _HD 贴图/.test(x)) || !r.some(x => /超过 1024/.test(x))) bad.push('③ _HD / 2048 没拦：' + r.join('；')); }
+  // ④ 派生资源开了新贴图名（主角尾缀那种）
+  { const j = good(); j.name = 'RiseTrail_Hero_M'; j.derived = { from: 'RiseTrail_L', system: 'RiseTrail_Hero' }; j.textures.main.asset = 'T_EFX_FireWorks_RiseTrail_Hero_L_Loop_16x1_01'; j.textures.main.file = j.textures.main.asset + '.png';
+    const r = packGateConfig('cascade.json', j, '', {}); out.c4 = r; if (!r.some(x => /派生资源开了新贴图名/.test(x))) bad.push('④ 派生资源新贴图名没拦'); }
+  // ⑤ 和已有资源撞名但内容不同（别的效果）；同一个效果重导 = 更新，不拦
+  { const known = new Map([['T_EFX_FireWorks_GoldSpark_R.png', { sha256: 'zzz', resource: 'GoldSpark', sourceKey: 'ef:other' }]]);
+    const r1 = packGateClash(png, known, 'ef:me'), r2 = packGateClash(png, known, 'ef:other'); out.c5 = [r1, r2];
+    if (!r1.some(x => /撞名但内容不同/.test(x)) || r2.length) bad.push('⑤ 撞名判断不对：' + JSON.stringify(out.c5)); }
+  // packFinalize：写 sha256（= 文件内容）、坏包抛错、手机全「不出」去掉空配置
+  { const pngBytes = Uint8Array.from([0x89, 0x50, 0x4E, 0x47, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 4, 0, 0, 0, 4, 0, 8, 6, 0, 0, 0]);
+    const gj = good(); delete gj.textures.ramp; gj.materials.m.textures = { main: 'main' };
+    const fs = [['T_EFX_FireWorks_GoldSpark_4x4_01.png', pngBytes], ['cascade_mobile.json', utf8(JSON.stringify(gj))], ['cascade.json', utf8(JSON.stringify({ ...gj, name: 'X', platform: 'pc', tier: undefined }))]];
+    const r = await packFinalize(fs, { known: null, sourceKey: '' }), mj = JSON.parse(dec.decode(r.find(([f]) => f === 'cascade_mobile.json')[1])), want = await sha256Hex(pngBytes);
+    out.sha = [mj.textures.main.sha256 === want, pngSize(pngBytes)];
+    if (mj.textures.main.sha256 !== want || JSON.stringify(pngSize(pngBytes)) !== '[1024,1024]') bad.push('sha256 / PNG 尺寸不对：' + JSON.stringify(out.sha));
+    let threw = null; try { const bj = good(); bj.name = 'X_Mobile'; await packFinalize([['cascade_mobile.json', utf8(JSON.stringify(bj))]], { known: null, sourceKey: '' }); } catch (e) { threw = e.message; }
+    out.threw = threw && threw.slice(0, 80); if (!threw || !/导出拦截/.test(threw) || !/_Mobile/.test(threw)) bad.push('坏包没抛错 / 原因没写：' + threw);
+    const r3 = await packFinalize([['cascade_mobile.json', utf8(JSON.stringify({ ...good(), emitters: [] }))], ['cascade.json', utf8(JSON.stringify({ ...good(), platform: 'pc' }))]], { known: null, sourceKey: '' });
+    out.empty = r3.map(([f]) => f); if (out.empty.includes('cascade_mobile.json')) bad.push('手机全「不出」还留着空配置'); }
+  // 派生资源命名：系统名区分、贴图沿用
+  out.sys = [packSysName('RiseTrail_S', 'tailS', { system_tag: 'XS' }), packSysName('RiseTrail_L', 'tailL', { system_tag: 'Hero', picked: true }), packSysName('GoldX', 'kiku', { id: 'cls:d:dam:230', picked: true }),
+    packSysName('GoldX', 'kiku', { id: 'P_MG', picked: false }), packSysName('GoldX', 'kiku', { id: 'cls:h:front:62', picked: true })];
+  if (JSON.stringify(out.sys) !== '["RiseTrail_XS","RiseTrail_Hero","GoldX_D230","GoldX","GoldX_H62"]') bad.push('系统名不对：' + JSON.stringify(out.sys));
+  { const T = sizeSpecTable(); out.tf = T && T.specs.T_F && [T.specs.T_F.burst_m, T.specs.T_F.system_tag, T.map.RT6S, T.specs.T_HERO.system_tag];
+    if (!out.tf || out.tf[0] !== 62 || out.tf[1] !== 'XS' || JSON.stringify(out.tf[2]) !== '["T_S","T_F"]' || out.tf[3] !== 'Hero') bad.push('尺寸表 T_F / Hero 不对：' + JSON.stringify(out.tf)); }
+  // 缩放后缀放在档位前
+  { const j = fwlScaleJSON({ name: 'RiseTrail_S_M', tier: 'M', emitters: [], system: {} }, 0.8, false, null); out.scaleName = j.name; if (j.name !== 'RiseTrail_S_S80_M') bad.push('缩放后手机名：' + j.name); }
+  // 大面片（菊，假烘焙不能编码贴图）：配置 → 命名 → packFinalize 同一条路。手机配置 <名>_M、tier M、每个发射器 max_alive、贴图 sha256 = 包里 PNG；PC 没有 tier
+  { const P = defaultsFor('kiku').P, M = defaultsFor('kiku').M, b = await bakeFinal(P, 1);
+    let files = fwlFiles('GT', b, M, b); const refs = new Set();
+    for (const [, d] of files) { const j = JSON.parse(dec.decode(d)); Object.values(j.textures || {}).forEach(t => t.file && refs.add(t.file)); }
+    let n = 0; for (const f of refs) { const u = Uint8Array.from([0x89, 0x50, 0x4E, 0x47, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 4, 0, 0, 0, 4, 0, 8, 6, 0, 0, n++]); files.push([f, u]); }
+    files = applyPackNaming(files, 'GoldX', [{ ln: 'GT', mn: 'GT_Mobile', b, layer: '' }], { sys: 'GoldX' });
+    files = await packFinalize(files, { known: null, sourceKey: '' }); const byName = Object.fromEntries(files);
+    const mj = JSON.parse(dec.decode(byName['cascade_mobile.json'])), pj = JSON.parse(dec.decode(byName['cascade.json']));
+    out.master = { name: mj.name, tier: mj.tier, alive: mj.emitters.map(e => e.max_alive), tex: Object.values(mj.textures).map(t => t.asset), pcName: pj.name, pcTier: pj.tier || null, derived: !!(mj.derived || pj.derived) };
+    if (mj.name !== 'GoldX_M' || mj.tier !== 'M' || mj.emitters.some(e => e.max_alive == null) || pj.tier || out.master.derived) bad.push('大面片手机配置不对：' + JSON.stringify(out.master));
+    let shaOK = true; for (const j of [mj, pj]) for (const t of Object.values(j.textures)) { const d = byName[t.file]; if (!d || t.sha256 !== await sha256Hex(d)) shaOK = false; }
+    out.masterSha = shaOK; if (!shaOK) bad.push('包里贴图的 sha256 和文件对不上');
+    // 派生：同一份烘焙按 Hero 档导出 → 贴图名和原效果一样、只有系统名不同
+    let f2 = fwlFiles('GT', b, M, b);
+    for (const f of refs) f2.push([f, Uint8Array.from([0x89, 0x50, 0x4E, 0x47, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 4, 0, 0, 0, 4, 0, 8, 6, 0, 0, 1])]);
+    f2 = applyPackNaming(f2, 'GoldX', [{ ln: 'GT', mn: 'GT_Mobile', b, layer: '' }], { sys: 'GoldX_Hero', spec: 'T_HERO' });
+    const d2 = Object.fromEntries(f2), mj2 = JSON.parse(dec.decode(d2['cascade_mobile.json'])), pj2 = JSON.parse(dec.decode(d2['cascade.json']));
+    out.derived = { name: mj2.name, from: pj2.derived && pj2.derived.from, sameTex: JSON.stringify(Object.values(pj2.textures).map(t => t.asset)) === JSON.stringify(Object.values(pj.textures).map(t => t.asset)) };
+    if (mj2.name !== 'GoldX_Hero_M' || out.derived.from !== 'GoldX' || !out.derived.sameTex || packGateConfig('cascade.json', pj2, '', {}).length) bad.push('派生资源命名不对：' + JSON.stringify(out.derived)); }
+  // 交付清单：升空尾缀那一行有手机下拉（_M / 不出）
+  { const P0 = state.P, tab0 = state.tab; state.tab = 'params'; state.P = { ...defaultsFor('tailS').P, outMobile: 'seq' };
+    const h = prodTableHTML([{ i: 0, name: '小号尾缀', b: { form: 'emitset' } }], false); state.P = P0; state.tab = tab0;
+    out.tailRow = /data-prod="mobile"/.test(h) && /value="off"/.test(h) && /_M/.test(h); if (!out.tailRow) bad.push('交付清单尾缀行没有手机下拉'); }
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def w36(pg):
+    """4.9.69 手游 _M + 导出拦截（5 种坏包）+ 派生资源命名 + sha256 + 尾缀行手机下拉（用户 10-12 19:44 / 20:42）"""
+    r = await pg.evaluate(W36_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)[:1800]
+
 N3_JS = r"""(() => {
   // 排查计划第 1 步：SCHEMA ↔ BASE / 花型默认值 ↔ 参数名称表 ↔ 发射器表 ↔ INERT / RAND_OF / SPARK_KEYS / PHASE_KEY / TIMING_KEYS / BLANK_MODS，缺一边就报
   const bad = [], keys = new Set(), items = [];
@@ -3362,7 +3454,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

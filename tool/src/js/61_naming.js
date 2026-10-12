@@ -59,8 +59,24 @@ function namingSheets(b) {
   if (b.vars) return [b, ...b.vars].map((s, k) => ['', s.meta.L, '', k + 1, k + 1]);     // 4.9.28 单束变体：序号 01…04（内部名第 2 张起带 _V2…）
   return bakeParts(b).map((s, k) => [bakeSegmentName(b, k), s.meta.L, '', k + 1]);
 }
+// 4.9.69 派生资源（规范 v1 §2「派生资源不新开贴图」，用户 10-12：主角尾缀和 L 尾缀 10 张 PNG 逐字节相同却起了 RiseTrail_Hero_L_* 一套新名）：
+//   同一个效果按非默认尺寸档导出 = 派生。贴图名沿用原效果（base），只有粒子 / 系统名（sys）区分：尺寸表规格写了 system_tag 用它（T_HERO → Hero、T_F → XS），
+//   别的非默认档按档位起（cls:d:dam:230 → D230、cls:h:front:62 → H62）。尾缀的 _S / _M / _L 换成标签（RiseTrail_S + XS → RiseTrail_XS）
+function sizeSysTag(spec) {
+  if (!spec) return '';
+  if (spec.system_tag) return asciiName(spec.system_tag);
+  if (!spec.picked) return '';
+  const m = /^cls:(h|d|df):[^:]+:([\d.]+)$/.exec(spec.id || '');
+  return m ? { h: 'H', d: 'D', df: 'Fan' }[m[1]] + m[2].replace('.', '_') : asciiName(spec.id);
+}
+function packSysName(base, type, spec) {
+  const tag = sizeSysTag(spec); if (!tag) return base;
+  return (FW_SIZE_SFX[type] ? base.replace(/_[SML]$/, '') : base) + '_' + tag;
+}
 // entries：[{ ln, mn, b, layer }]：内部 PC 名、内部手机名、这一层的烘焙、层英文名
-function applyPackNaming(files, base, entries) {
+// o.sys：粒子 / 系统名（派生资源和 base 不同）；o.spec：派生用的尺寸档 id
+function applyPackNaming(files, base, entries, o = {}) {
+  const sys = o.sys || base;
   const map = new Map(), drop = new Set();
   // pcTex === false（4.2.12：这一层 PC 出光点 / 单束 / 不出）→ 手机的 Cutout / Ramp 不能当成和 PC 共用丢掉；mb = 手机那次烘焙（PC 是单束时格子和 PC 不一样，手机名按它自己的格子起）
   for (const { ln, mn, b, mb, layer, pcTex, frame } of entries) {
@@ -96,7 +112,10 @@ function applyPackNaming(files, base, entries) {
       const j = JSON.parse(dec.decode(d));
       for (const t of [...Object.values(j.textures || {}), ...Object.values(j.extras || {})]) if (t && t.file) { if (map.has(t.file)) t.file = map.get(t.file); t.asset = t.file.replace(/^.*\//, '').replace(/\.png$/i, ''); }     // 4.9.29 extras（彩色单帧）
       // 导入器直接用 textures[].asset 当 UE 资产名（已含 T_EFX_FireWorks_ 前缀、_HD 等后缀），不要再加前缀（spec/cascade_params_v1.md 第 1.1 节）
-      j.naming = { rule: 'T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用', base, layers: entries.map(x => x.layer || ''), asset_names: 'textures[].asset', prefix_included: true };
+      j.naming = { rule: 'T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用', base, layers: entries.map(x => x.layer || ''), asset_names: 'textures[].asset', prefix_included: true, ...(sys !== base ? { system: sys } : {}) };
+      // 4.9.69 手机：粒子名 = <系统名>_<档位>（规范 v1 §2：P_EFX_FireWorks_<名>_H / _M，不带 _HD / _Mobile），档位在 tier
+      if (/_mobile/.test(f)) { j.tier = j.tier || 'M'; j.name = sys + '_' + j.tier; }
+      if (sys !== base) j.derived = { from: base, system: sys, spec: o.spec || null, note: '派生资源：贴图沿用原效果那一套（规范 v1 §2），只有粒子 / 系统名不同' };
       out.push([f, utf8(JSON.stringify(j, null, 1))]); continue;
     }
     const nf = map.get(f) || f; if (seen.has(nf)) continue; seen.add(nf); out.push([nf, d]);
