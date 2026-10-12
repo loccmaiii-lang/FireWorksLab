@@ -26,7 +26,7 @@ function busyCan(on) {
   if (c) { c.hidden = !on; c.disabled = false; c.textContent = '取消'; }
   return true;
 }
-// 4.9.71 导出分段计时（用户 10-12 23:15「现在导出每次都要打包zip有点慢……有什么办法可以更加快的输出导入吗」）：先量出慢在哪一段再砍。
+// 4.9.72 导出分段计时（用户 10-12 23:15「现在导出每次都要打包zip有点慢……有什么办法可以更加快的输出导入吗」）：先量出慢在哪一段再砍。
 //   导出开始（busyCan(true)）起表；进度条每换一段文字记一次；交付页写入目录、导入器接收、打包内部各记一次；导出结束（busy(false)）汇总，
 //   写在交付页状态行和控制台（window.__exportTiming）。只计时，不改任何导出内容
 const exportClock = { on: false, t0: 0, marks: [], last: '' };

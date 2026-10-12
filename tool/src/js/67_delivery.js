@@ -148,7 +148,7 @@ const DeliveryWorkspace = (() => {
     updateRootControls();
     try{
       show(true);await connect();message('正在写入并校验完整资源…');
-      if(typeof exportClockMark==='function')exportClockMark('写入交付目录（本机服务）');     // 4.9.71 计时
+      if(typeof exportClockMark==='function')exportClockMark('写入交付目录（本机服务）');     // 4.9.72 计时
       const receipt=await rpc('publish',{blob,name,metadata},120000);
       if(typeof exportClockMark==='function')exportClockMark('导入器接收 + 检查');
       await select(receipt);prepared=true;return receipt;
@@ -195,7 +195,7 @@ const DeliveryWorkspace = (() => {
     if(['#delivery','#delivery-from-file','#delivery-export-from-file'].includes(location.hash))open();
   }
   // 4.9.69 导出拦截用：交付目录里已有资源的贴图（文件名 → 内容 SHA256、来自哪个效果），按名字查撞名
-  // 4.9.71 导出计时等附加说明：接在状态行后面（不盖掉排队 / 检查的提示）
+  // 4.9.72 导出计时等附加说明：接在状态行后面（不盖掉排队 / 检查的提示）
   function note(text){const n=node('deliveryStatus');if(!n||!text)return;n.textContent=(n.textContent?n.textContent+'\n':'')+text;}
   function knownTextures(){const m=new Map();for(const r of resources||[])for(const f of r.files||[]){if(!/\.png$/i.test(f.path||''))continue;const k=f.path.replace(/^.*\//,'');if(!m.has(k))m.set(k,{sha256:f.sha256,resource:r.name,sourceKey:(r.metadata||{}).sourceKey||''});}return m;}
   return{init,open,publish,destination,beginExport,finishExport,exportFailed,knownTextures,note,get active(){return active;}};
@@ -210,7 +210,7 @@ function deliveryClassification(recipe, plan, spec) {
   return {category:tail?'tail':'firework',size};
 }
 function deliveryMetadata(b = null) {
-  if (typeof exportClockMark === 'function') exportClockMark('缩略图（引擎回放截一帧）');     // 4.9.71 计时
+  if (typeof exportClockMark === 'function') exportClockMark('缩略图（引擎回放截一帧）');     // 4.9.72 计时
   const result = {bakerVersion:VERSION, sourceKey:wbKey(), recipe:wbSnap(), duration:curDuration(), sizePlan:typeof exportScalePlan==='function'?exportScalePlan(state.P):null};
   result.classification=deliveryClassification(result.recipe,result.sizePlan,typeof sizeSpecOf==='function'?sizeSpecOf():null);
   result.artifactDuration = b ? bakeTotal(b) : comboContentEnd();
