@@ -47,6 +47,10 @@ h2 {font-size:24px;line-height:32px;font-weight:600} h3 {font-size:14px;line-hei
 .stage-actions {gap:12px;font-size:12px}.segmented {border-radius:8px;border-color:var(--md-outline-variant)}.segmented button {min-height:34px;padding:5px 13px;font-size:13px;border-radius:0}
 .segmented button[aria-pressed=true],.quality-switch button[aria-pressed=true] {background:var(--md-secondary-container);color:var(--md-on-secondary-container)}
 .quality-switch button[aria-pressed=true] {font-weight:650}.quality-switch .selected-check {width:15px;height:15px}
+/* 16.0.18 预览平台（M3 分段按钮：18px 图标 + 8px 间距 + 文字，选中段图标换成 check，secondary-container 底） */
+.material-symbol {flex:none;display:block}
+.platform-switch button {gap:8px;padding:5px 14px 5px 11px}.platform-switch button[aria-pressed=true] {font-weight:650}
+@media(max-width:1150px) {.platform-switch button {gap:5px;padding:5px 9px 5px 7px}}
 .tabs {padding:0 16px}.tabs button {min-height:44px;font-size:14px;background:transparent;border-radius:0;overflow:hidden}.tabs button.selected {font-weight:600;color:var(--md-primary);border-bottom-color:var(--md-primary)}
 .search {margin:12px 16px 8px;border-radius:8px;padding:0 10px}.search:focus-within {outline:2px solid var(--md-primary);outline-offset:0}.search input {height:38px;min-height:38px;font-size:13px;outline:none!important;box-shadow:none}
 .library-filter {padding:0 16px 8px;font-size:12px}.library-filter select {height:32px;font-size:12px}.library-list {padding:0 8px 8px}.flower {gap:10px;padding:8px;min-height:76px;margin:4px 0;border-radius:8px}.flower b {font-size:14px;font-weight:600;line-height:20px}.flower small {font-size:12px;line-height:18px;margin-top:3px}.thumb {width:58px;height:58px;border-radius:6px}.flower.chosen {background:var(--md-primary-container);border-color:transparent}
