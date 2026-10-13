@@ -1,0 +1,239 @@
+[
+  {
+    "key": "comet3_rt6",
+    "version": "4.9.77",
+    "ready": {
+      "ok": true,
+      "why": [],
+      "exc": [],
+      "ver": "f0bdd82c·emitset4.9.69",
+      "ex": {
+        "job": "CS3C_RT6E1",
+        "entry": "CS3C",
+        "ver": "f0bdd82c·emitset4.9.69",
+        "time": "2026-10-13 17:51",
+        "packages": [
+          {
+            "name": "Comet3_RT6",
+            "replica": "CS3C",
+            "files": [
+              "T_EFX_FireWorks_Comet3_RT6_GoldTail_Full_16x1_01_HD.png",
+              "T_EFX_FireWorks_Comet3_RT6_GoldTail_Full_16x1_01_C.png",
+              "T_EFX_FireWorks_Comet3_RT6_GoldTail_R.png",
+              "T_EFX_FireWorks_Comet3_RT6_GoldTail_Full_16x1_01.png",
+              "T_EFX_FireWorks_Comet3_RT6_RedHead_Full_1x1_01_HD.png",
+              "T_EFX_FireWorks_Comet3_RT6_RedHead_Full_1x1_01_C.png",
+              "T_EFX_FireWorks_Comet3_RT6_RedHead_R.png",
+              "T_EFX_FireWorks_Comet3_RT6_RedHead_Full_1x1_01.png",
+              "cascade.json",
+              "cascade_mobile.json",
+              "命名对照.txt",
+              "Comet3_RT6_完整配方.json"
+            ],
+            "sha256": "00522edff3c50498c7109957ba0ae2ed48ae788d2a4929e4707c8b26faf8a450"
+          }
+        ],
+        "check": {
+          "passed": true,
+          "fails": []
+        },
+        "stale": false
+      },
+      "sr": {
+        "id": "CS3C",
+        "name": "Comet 3.0 · 红头金尾",
+        "kind": "combo",
+        "renderVer": null,
+        "ver": "f0bdd82c·emitset4.9.69",
+        "checks": [
+          [
+            "实时模拟",
+            true,
+            ""
+          ],
+          [
+            "引擎回放 + 游戏内大小",
+            true,
+            ""
+          ],
+          [
+            "贴图 + 流转动画",
+            true,
+            "多层：每层在层条目里看"
+          ],
+          [
+            "完整参数",
+            true,
+            "多层：在层条目里调，回到整体会用调过的参数"
+          ],
+          [
+            "导出素材包（cascade.json PC + 手机）",
+            true,
+            ""
+          ],
+          [
+            "实拍对照",
+            true,
+            "无参考（不适用）"
+          ],
+          [
+            "单格 ≥ PC 下限",
+            true,
+            "2/2 层通过"
+          ],
+          [
+            "手机单格 ≥ 下限",
+            true,
+            "2/2 层通过"
+          ],
+          [
+            "屏幕放大 ≤ 1",
+            true,
+            "2/2 层通过"
+          ],
+          [
+            "30fps 显示帧 ≥ 90%",
+            true,
+            "2/2 层通过"
+          ],
+          [
+            "燃烧段有效帧率 ≥ 下限",
+            true,
+            "2/2 层通过"
+          ],
+          [
+            "淡出段有效帧率 ≥ 下限",
+            true,
+            "2/2 层通过"
+          ],
+          [
+            "尺寸参数有效",
+            true,
+            "2/2 层通过"
+          ]
+        ],
+        "pass": true,
+        "seconds": 0.3
+      }
+    },
+    "ver": "f0bdd82c·emitset4.9.69"
+  },
+  {
+    "key": "silver3_rt6",
+    "version": "4.9.77",
+    "ready": {
+      "ok": true,
+      "why": [],
+      "exc": [],
+      "ver": "87a67097·emitset4.9.69",
+      "ex": {
+        "job": "CS3S_RT6E1",
+        "entry": "CS3S",
+        "ver": "87a67097·emitset4.9.69",
+        "time": "2026-10-13 17:51",
+        "packages": [
+          {
+            "name": "Silver3_RT6",
+            "replica": "CS3S",
+            "files": [
+              "T_EFX_FireWorks_Silver3_RT6_S_Full_16x1_01_HD.png",
+              "T_EFX_FireWorks_Silver3_RT6_S_Full_16x1_01_C.png",
+              "T_EFX_FireWorks_Silver3_RT6_S_R.png",
+              "Silver3_RT6_Cascade参数.txt",
+              "Silver3_RT6_曲线.csv",
+              "Silver3_RT6.json",
+              "T_EFX_FireWorks_Silver3_RT6_S_Full_16x1_01.png",
+              "Silver3_RT6_Mobile.json",
+              "cascade.json",
+              "cascade_mobile.json",
+              "命名对照.txt"
+            ],
+            "sha256": "28e371665c9c0d29f2403e28020755577803dfdfe6943be8bef305738031a4f1"
+          }
+        ],
+        "check": {
+          "passed": true,
+          "fails": []
+        },
+        "stale": false
+      },
+      "sr": {
+        "id": "CS3S",
+        "name": "Silver 3.0 · 银白长尾",
+        "kind": "preset",
+        "renderVer": 40,
+        "ver": "87a67097·emitset4.9.69",
+        "checks": [
+          [
+            "实时模拟",
+            true,
+            ""
+          ],
+          [
+            "引擎回放 + 游戏内大小",
+            true,
+            ""
+          ],
+          [
+            "贴图 + 流转动画",
+            true,
+            ""
+          ],
+          [
+            "完整参数",
+            true,
+            ""
+          ],
+          [
+            "导出素材包（cascade.json PC + 手机）",
+            true,
+            ""
+          ],
+          [
+            "实拍对照",
+            true,
+            "无参考（不适用）"
+          ],
+          [
+            "单格 ≥ PC 下限",
+            true,
+            "细长格 128×2048 px（像素数 1.00 × 512²）"
+          ],
+          [
+            "手机单格 ≥ 下限",
+            true,
+            ""
+          ],
+          [
+            "屏幕放大 ≤ 1",
+            true,
+            "放大 0.37"
+          ],
+          [
+            "30fps 显示帧 ≥ 90%",
+            true,
+            "64/64"
+          ],
+          [
+            "燃烧段有效帧率 ≥ 下限",
+            true,
+            "10 fps"
+          ],
+          [
+            "淡出段有效帧率 ≥ 下限",
+            true,
+            "7.5 fps"
+          ],
+          [
+            "尺寸参数有效",
+            true,
+            ""
+          ]
+        ],
+        "pass": true,
+        "seconds": 0.4
+      }
+    },
+    "ver": "87a67097·emitset4.9.69"
+  }
+]
