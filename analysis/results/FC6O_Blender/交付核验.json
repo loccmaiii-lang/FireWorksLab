@@ -1,0 +1,86 @@
+{
+ "version": "4.9.79",
+ "entryVer": "31fb0001·master4.3.8-core1",
+ "sourceUnchanged": true,
+ "otherFCEntriesUnchanged": [
+  "FC2R",
+  "FC3O",
+  "FC10R-1",
+  "FC10R-2",
+  "FC10S-1",
+  "FC10S-2",
+  "FC10R",
+  "FC10S"
+ ],
+ "packageGate": {
+  "ok": true,
+  "problems": [],
+  "info": [],
+  "configs": [
+   "cascade.json",
+   "cascade_mobile.json"
+  ],
+  "textures": {
+   "T_EFX_FireWorks_FanComet_Gold_4x4_01_HD": {
+    "sha256": "cb266b9be596f7101f7b669ba002ff19c38014f4e5c15700fd634415a8ba5e11",
+    "size": [
+     2048,
+     2048
+    ],
+    "class": "flipbook"
+   },
+   "T_EFX_FireWorks_FanComet_Gold_4x4_01_C": {
+    "sha256": "4065e52d6607a47a01e0203b3064ba04ccdafdeea63157ce8c7ecbb2ecb71240",
+    "size": [
+     512,
+     512
+    ],
+    "class": "cutout"
+   },
+   "T_EFX_FireWorks_FanComet_Gold_R": {
+    "sha256": "15d97cdd0bd8e19862cf50646b78b1e2352c7d4e51dd7088d5802a1d6d596d83",
+    "size": [
+     256,
+     8
+    ],
+    "class": "ramp"
+   },
+   "T_EFX_FireWorks_FanComet_Gold_4x4_01": {
+    "sha256": "59a78ed66503020532898b029c5cc22263a0fc04b9641cab2cdb9efd4ab2e1f0",
+    "size": [
+     1024,
+     1024
+    ],
+    "class": "flipbook"
+   }
+  },
+  "source": ""
+ },
+ "zipSHA256": "b37159bd61891c750684bf77218305458a4f209f60d125a34f321f3b172fa9e4",
+ "UE实测": false,
+ "用户验收": false,
+ "PC": {
+  "emitters": 1,
+  "life_s": 4.8667,
+  "frames": 64,
+  "segmentFPS": [
+   29.997,
+   14.998,
+   10.001,
+   7.499
+  ],
+  "说明": "末段63→63.99是结束护栏，保持最后帧；实际30fps回放全部64帧可见"
+ },
+ "Mobile": {
+  "emitters": 1,
+  "life_s": 4.8667,
+  "frames": 64,
+  "segmentFPS": [
+   29.997,
+   14.998,
+   10.001,
+   7.499
+  ],
+  "说明": "末段63→63.99是结束护栏，保持最后帧；实际30fps回放全部64帧可见"
+ }
+}

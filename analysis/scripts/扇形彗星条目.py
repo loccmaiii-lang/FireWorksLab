@@ -266,6 +266,18 @@ FAN_ENTS = FAN_ENTS10 + FAN_ENTS10S + [e for e in FAN_ENTS6 if e['id'] == 'FC6O'
 FAN_COMBOS = FAN_COMBOS10 + FAN_COMBOS10S
 next(e for e in FAN_ENTS if e['id'] == 'FC6O')['replaces'] = ['FC4O', 'FC5O']
 
+# 2026-10-13：用户指定 FC6O 原位迭代为 Blender FanGold，整面扇，暂不按簇拆开导出。
+# 只覆盖这一条，红彗星和 RT6 单条仍由上面的原配方生成。
+_fg_path = OUT.parent / 'FC6O_FanGold参数.json'
+if _fg_path.exists():
+    _fg = json.loads(_fg_path.read_text(encoding='utf-8'))
+    _fc = next(e for e in FAN_ENTS if e['id'] == 'FC6O')
+    _fc['p'].update(_fg['p']); _fc['m'].update(_fg['m'])
+    _fc.update(date='2026-10-13', name='金锦冠扇形 FanGold · 整面金细尾',
+               tags='FanGold 金锦冠 整面扇形 合并导出 Blender FC6O',
+               note='用户指定直接迭代FC6O。参考Blender Fan_Gold_Comets V04 A：整面扇形、成束的长短不同金细尾、弱星头、轻微尾流和错落消散；不按簇拆开导出、不加云端FG7的爆裂冠带。原条目快照 analysis/results/FC6O_Blender/原FC6O.json。',
+               look=['保留Blender成束扇面，整面合成一张序列、一个发射器', '金色细尾密集但有独立明暗和长短，星头不形成一排大光球', '约2秒开始退亮，余烬逐条冷却消散，不整齐擦掉'])
+
 if __name__ == '__main__':
     OUT.write_text(json.dumps({'说明': '扇形彗星（红彗星 / 橙扇），由 analysis/scripts/扇形彗星条目.py 生成，别手改。第 1 套 FC2R / FC3O = RT6 单条（用户 07:43「先保留这一版」）；第 2 套 FC4 = 烘焙器分簇拼好的整排扇。',
                                'entries': ENTRIES + FAN_ENTS, 'combos': FAN_COMBOS}, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')

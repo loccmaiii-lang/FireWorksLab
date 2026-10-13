@@ -1,0 +1,30 @@
+{
+  "pass": true,
+  "results": [
+    {
+      "id": "FC6O",
+      "views": [
+        "live",
+        "export",
+        "atlas"
+      ],
+      "errorsBefore": 0,
+      "playback": 1.5166999999999986,
+      "mobileRenderer": true,
+      "edit": {
+        "old": 97,
+        "now": 98
+      },
+      "reload": [
+        {
+          "full": false,
+          "form": "master",
+          "rate": 98
+        }
+      ],
+      "export": "FanComet_Gold.zip",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

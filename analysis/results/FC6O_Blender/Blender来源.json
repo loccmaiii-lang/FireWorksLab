@@ -1,0 +1,939 @@
+{
+  "source": "D:\\Blender\\Firework_FX_Lab\\assets\\Fan_Gold_Comets\\V04_Draft",
+  "user_reference": "本轮用户指定此前Blender已通过效果",
+  "historical_limit": "源记录当时为试机/未最终批准；以本轮用户认可作为参考授权，不改写历史。",
+  "sha256": {
+    "parameters.json": "254fb7a862c744520a6a18510a1209d90353040dd3c25af164ae8d647100b2b7",
+    "native_detail_parameters.json": "115cb37a206e94c9e149ad297a0213c598be37136ce34611910d2de278aa17d1",
+    "recipe.json": "6a9daf623921c29b13541455d9365a21fcfbb8b086f647ad47b5408013fcfc6e"
+  },
+  "recipe": {
+    "name": "a_subtle",
+    "amplitude": 0.11,
+    "speed": 1.0,
+    "flutter": 0.13,
+    "inherit": 0.07,
+    "short_count": 32
+  },
+  "emitters": [
+    {
+      "uid": "40dfd44c-ec3c-4d70-b36e-ad033cdfda62",
+      "parent_uid": "",
+      "parameters": {
+        "name": "01｜明亮燃烧短头",
+        "seed": 83703,
+        "production_enabled": true,
+        "preview_hidden": false,
+        "solo": false,
+        "locked": false,
+        "visible_diameter": 0.006000000052154064,
+        "emission_gain": 22.0,
+        "diagnostic_age": 0.5,
+        "position": [
+          -0.04749999940395355,
+          0.0,
+          0.0
+        ],
+        "backend": "ANALYTIC",
+        "timing_mode": "ONESHOT",
+        "spawn_mode": "burst",
+        "spawn_count": 42,
+        "spawn_capacity": 42,
+        "spawn_rate": 64.0,
+        "spawn_delay": 0.1120000034570694,
+        "direction_mode": "CONE",
+        "direction": [
+          -0.08715574443340302,
+          0.0,
+          0.9961947202682495
+        ],
+        "cone_angle": 4.679999828338623,
+        "spawn_extent": 0.0,
+        "gravity": [
+          0.0,
+          0.0,
+          -0.699999988079071
+        ],
+        "wind": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "linear_drag": 0.949999988079071,
+        "noise_amplitude": 0.013000000268220901,
+        "noise_frequency": 12.0,
+        "shape_mode": "POINT",
+        "shape_aspect": 1.0,
+        "trail_mode": "ARTISTIC_PATH",
+        "trail_history": 0.4000000059604645,
+        "trail_samples": 64,
+        "density_multiplier": 1.0,
+        "cluster_size": 1,
+        "cluster_time_width": 0.0,
+        "cluster_direction_blend": 0.0,
+        "layer_kind": "SPARK",
+        "solver_substeps": 4,
+        "physical_diameter": 0.0010000000474974513,
+        "physical_density": 2000.0,
+        "drag_cd": 0.5,
+        "air_density": 1.225000023841858,
+        "temperature_initial": 1800.0,
+        "air_temperature": 293.1499938964844,
+        "thermal_model": "NEWTON",
+        "cooling_rate": 1.0,
+        "heat_capacity": 900.0,
+        "emissivity": 0.800000011920929,
+        "heat_transfer": 25.0,
+        "reaction_energy_per_kg": 0.0,
+        "reaction_power_per_kg": 0.0,
+        "reaction_duration_s": 0.10000000149011612,
+        "curl_strength": 0.0,
+        "curl_scale": 1.0,
+        "child_count": 1,
+        "inherit_velocity": 1.0,
+        "parent_event_delay_s": 0.0,
+        "child_mass_fraction": 1.0,
+        "child_probability": 1.0,
+        "parent_event_time_mode": "SECONDS",
+        "parent_event_life_fraction": 0.5,
+        "temperature_inherit": 1.0,
+        "appearance_mode": "ARTISTIC",
+        "cooling_time_s": 1.0,
+        "spawn_shape": "POINT",
+        "cluster_probability": 0.0,
+        "cluster_position_blend": 0.0,
+        "fade_in": 0.0,
+        "fade_out": 0.0,
+        "burn_frequency": 0.0,
+        "burn_duty": 1.0,
+        "flash_probability": 0.0,
+        "flash_width": 0.05000000074505806,
+        "flash_gain": 0.0,
+        "shape_roundness": 0.6499999761581421,
+        "shape_sharpness": 1.0,
+        "shape_spin": 0.0,
+        "shape_twist": 0.0,
+        "trail_taper": 0.75,
+        "link_visual_size": false,
+        "carrier_mode": "OFF",
+        "carrier_reference": "WORLD",
+        "carrier_origin": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "carrier_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "carrier_acceleration": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "trail_geometry": "CONTINUOUS",
+        "spawn_bursts": [],
+        "speed_distribution_spec": {
+          "hero_component": null,
+          "kind": "TRUNCATED_NORMAL",
+          "optional_link": null,
+          "range": [
+            17.16,
+            24.96
+          ],
+          "shape_parameters": {
+            "mean": 21.215999999999998,
+            "sigma": 1.768
+          },
+          "stream_tag": "fan_speed"
+        },
+        "life_distribution_spec": {
+          "hero_component": null,
+          "kind": "UNIFORM",
+          "optional_link": null,
+          "range": [
+            2.35,
+            3.4
+          ],
+          "shape_parameters": {},
+          "stream_tag": "fan_life"
+        },
+        "size_distribution_spec": {
+          "hero_component": null,
+          "kind": "POWER_BIAS",
+          "optional_link": null,
+          "range": [
+            0.25,
+            1.25
+          ],
+          "shape_parameters": {
+            "power": 1.5
+          },
+          "stream_tag": "fan_size"
+        },
+        "intensity_distribution_spec": {
+          "hero_component": null,
+          "kind": "POWER_BIAS",
+          "optional_link": null,
+          "range": [
+            0.12,
+            1.3
+          ],
+          "shape_parameters": {
+            "power": 1.3
+          },
+          "stream_tag": "fan_gain"
+        }
+      },
+      "curves": {
+        "size": {
+          "use_clip": true,
+          "clip_min_x": 0.0,
+          "clip_max_x": 1.0,
+          "clip_min_y": 0.0,
+          "clip_max_y": 1.0,
+          "extend": "EXTRAPOLATED",
+          "points": [
+            {
+              "location": [
+                0.0,
+                0.20000000298023224
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.14000000059604645,
+                0.800000011920929
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.4000000059604645,
+                1.0
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.800000011920929,
+                0.75
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                1.0,
+                0.11999999731779099
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            }
+          ]
+        },
+        "intensity": {
+          "use_clip": true,
+          "clip_min_x": 0.0,
+          "clip_max_x": 1.0,
+          "clip_min_y": 0.0,
+          "clip_max_y": 1.0,
+          "extend": "EXTRAPOLATED",
+          "points": [
+            {
+              "location": [
+                0.0,
+                0.0
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.10000000149011612,
+                0.30000001192092896
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.23999999463558197,
+                1.0
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.6000000238418579,
+                0.949999988079071
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.7799999713897705,
+                0.6000000238418579
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.8999999761581421,
+                0.20000000298023224
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                1.0,
+                0.0
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            }
+          ]
+        },
+        "color": {
+          "interpolation": "EASE",
+          "color_mode": "RGB",
+          "hue_interpolation": "NEAR",
+          "elements": [
+            {
+              "position": 0.0,
+              "color": [
+                1.0,
+                0.8600000143051147,
+                0.5899999737739563,
+                1.0
+              ]
+            },
+            {
+              "position": 0.699999988079071,
+              "color": [
+                1.0,
+                0.800000011920929,
+                0.47999998927116394,
+                1.0
+              ]
+            },
+            {
+              "position": 1.0,
+              "color": [
+                1.0,
+                0.41999998688697815,
+                0.06499999761581421,
+                1.0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "uid": "6cb6f1fb-b54c-4e62-a170-cba8b81fb689",
+      "parent_uid": "",
+      "parameters": {
+        "name": "02｜前段细亮尾迹",
+        "seed": 83703,
+        "production_enabled": true,
+        "preview_hidden": false,
+        "solo": false,
+        "locked": false,
+        "visible_diameter": 0.0026000000070780516,
+        "emission_gain": 4.0,
+        "diagnostic_age": 0.5,
+        "position": [
+          -0.04749999940395355,
+          0.0,
+          0.0
+        ],
+        "backend": "ANALYTIC",
+        "timing_mode": "ONESHOT",
+        "spawn_mode": "burst",
+        "spawn_count": 42,
+        "spawn_capacity": 42,
+        "spawn_rate": 64.0,
+        "spawn_delay": 0.1120000034570694,
+        "direction_mode": "CONE",
+        "direction": [
+          -0.08715574443340302,
+          0.0,
+          0.9961947202682495
+        ],
+        "cone_angle": 4.679999828338623,
+        "spawn_extent": 0.0,
+        "gravity": [
+          0.0,
+          0.0,
+          -0.699999988079071
+        ],
+        "wind": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "linear_drag": 0.949999988079071,
+        "noise_amplitude": 0.013000000268220901,
+        "noise_frequency": 12.0,
+        "shape_mode": "POINT",
+        "shape_aspect": 1.0,
+        "trail_mode": "ARTISTIC_PATH",
+        "trail_history": 2.0,
+        "trail_samples": 64,
+        "density_multiplier": 1.0,
+        "cluster_size": 1,
+        "cluster_time_width": 0.0,
+        "cluster_direction_blend": 0.0,
+        "layer_kind": "SPARK",
+        "solver_substeps": 4,
+        "physical_diameter": 0.0010000000474974513,
+        "physical_density": 2000.0,
+        "drag_cd": 0.5,
+        "air_density": 1.225000023841858,
+        "temperature_initial": 1800.0,
+        "air_temperature": 293.1499938964844,
+        "thermal_model": "NEWTON",
+        "cooling_rate": 1.0,
+        "heat_capacity": 900.0,
+        "emissivity": 0.800000011920929,
+        "heat_transfer": 25.0,
+        "reaction_energy_per_kg": 0.0,
+        "reaction_power_per_kg": 0.0,
+        "reaction_duration_s": 0.10000000149011612,
+        "curl_strength": 0.0,
+        "curl_scale": 1.0,
+        "child_count": 1,
+        "inherit_velocity": 1.0,
+        "parent_event_delay_s": 0.0,
+        "child_mass_fraction": 1.0,
+        "child_probability": 1.0,
+        "parent_event_time_mode": "SECONDS",
+        "parent_event_life_fraction": 0.5,
+        "temperature_inherit": 1.0,
+        "appearance_mode": "ARTISTIC",
+        "cooling_time_s": 1.0,
+        "spawn_shape": "POINT",
+        "cluster_probability": 0.0,
+        "cluster_position_blend": 0.0,
+        "fade_in": 0.0,
+        "fade_out": 0.0,
+        "burn_frequency": 0.0,
+        "burn_duty": 1.0,
+        "flash_probability": 0.0,
+        "flash_width": 0.05000000074505806,
+        "flash_gain": 0.0,
+        "shape_roundness": 0.6499999761581421,
+        "shape_sharpness": 1.0,
+        "shape_spin": 0.0,
+        "shape_twist": 0.0,
+        "trail_taper": 0.6000000238418579,
+        "link_visual_size": false,
+        "carrier_mode": "OFF",
+        "carrier_reference": "WORLD",
+        "carrier_origin": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "carrier_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "carrier_acceleration": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "trail_geometry": "CONTINUOUS",
+        "spawn_bursts": [],
+        "speed_distribution_spec": {
+          "hero_component": null,
+          "kind": "TRUNCATED_NORMAL",
+          "optional_link": null,
+          "range": [
+            17.16,
+            24.96
+          ],
+          "shape_parameters": {
+            "mean": 21.215999999999998,
+            "sigma": 1.768
+          },
+          "stream_tag": "fan_speed"
+        },
+        "life_distribution_spec": {
+          "hero_component": null,
+          "kind": "UNIFORM",
+          "optional_link": null,
+          "range": [
+            2.35,
+            3.4
+          ],
+          "shape_parameters": {},
+          "stream_tag": "fan_life"
+        },
+        "size_distribution_spec": {
+          "hero_component": null,
+          "kind": "POWER_BIAS",
+          "optional_link": null,
+          "range": [
+            0.25,
+            1.25
+          ],
+          "shape_parameters": {
+            "power": 1.5
+          },
+          "stream_tag": "fan_size"
+        },
+        "intensity_distribution_spec": {
+          "hero_component": null,
+          "kind": "POWER_BIAS",
+          "optional_link": null,
+          "range": [
+            0.12,
+            1.3
+          ],
+          "shape_parameters": {
+            "power": 1.3
+          },
+          "stream_tag": "fan_gain"
+        }
+      },
+      "curves": {
+        "size": {
+          "use_clip": true,
+          "clip_min_x": 0.0,
+          "clip_max_x": 1.0,
+          "clip_min_y": 0.0,
+          "clip_max_y": 1.0,
+          "extend": "EXTRAPOLATED",
+          "points": [
+            {
+              "location": [
+                0.0,
+                0.20000000298023224
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.14000000059604645,
+                0.800000011920929
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.4000000059604645,
+                1.0
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.800000011920929,
+                0.75
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                1.0,
+                0.11999999731779099
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            }
+          ]
+        },
+        "intensity": {
+          "use_clip": true,
+          "clip_min_x": 0.0,
+          "clip_max_x": 1.0,
+          "clip_min_y": 0.0,
+          "clip_max_y": 1.0,
+          "extend": "EXTRAPOLATED",
+          "points": [
+            {
+              "location": [
+                0.0,
+                0.0
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.11999999731779099,
+                0.15000000596046448
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.3199999928474426,
+                1.0
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.6200000047683716,
+                0.800000011920929
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.8399999737739563,
+                0.4000000059604645
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                1.0,
+                0.0
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            }
+          ]
+        },
+        "color": {
+          "interpolation": "EASE",
+          "color_mode": "RGB",
+          "hue_interpolation": "NEAR",
+          "elements": [
+            {
+              "position": 0.0,
+              "color": [
+                1.0,
+                0.5099999904632568,
+                0.09000000357627869,
+                1.0
+              ]
+            },
+            {
+              "position": 0.550000011920929,
+              "color": [
+                1.0,
+                0.3499999940395355,
+                0.029999999329447746,
+                1.0
+              ]
+            },
+            {
+              "position": 1.0,
+              "color": [
+                0.550000011920929,
+                0.08500000089406967,
+                0.0020000000949949026,
+                1.0
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "uid": "8c40c0b7-35b1-4479-966a-6c71969763f0",
+      "parent_uid": "",
+      "parameters": {
+        "name": "03｜后段疏散微火星",
+        "seed": 83703,
+        "production_enabled": true,
+        "preview_hidden": false,
+        "solo": false,
+        "locked": false,
+        "visible_diameter": 0.012000000104308128,
+        "emission_gain": 2000.0,
+        "diagnostic_age": 0.5,
+        "position": [
+          -0.04749999940395355,
+          0.0,
+          0.0
+        ],
+        "backend": "ANALYTIC",
+        "timing_mode": "ONESHOT",
+        "spawn_mode": "burst",
+        "spawn_count": 42,
+        "spawn_capacity": 42,
+        "spawn_rate": 64.0,
+        "spawn_delay": 0.1120000034570694,
+        "direction_mode": "CONE",
+        "direction": [
+          -0.08715574443340302,
+          0.0,
+          0.9961947202682495
+        ],
+        "cone_angle": 4.679999828338623,
+        "spawn_extent": 0.0,
+        "gravity": [
+          0.0,
+          0.0,
+          -0.699999988079071
+        ],
+        "wind": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "linear_drag": 0.949999988079071,
+        "noise_amplitude": 0.013000000268220901,
+        "noise_frequency": 12.0,
+        "shape_mode": "POINT",
+        "shape_aspect": 1.0,
+        "trail_mode": "ARTISTIC_PATH",
+        "trail_history": 2.0,
+        "trail_samples": 64,
+        "density_multiplier": 1.0,
+        "cluster_size": 1,
+        "cluster_time_width": 0.0,
+        "cluster_direction_blend": 0.0,
+        "layer_kind": "SPARK",
+        "solver_substeps": 4,
+        "physical_diameter": 0.0010000000474974513,
+        "physical_density": 2000.0,
+        "drag_cd": 0.5,
+        "air_density": 1.225000023841858,
+        "temperature_initial": 1800.0,
+        "air_temperature": 293.1499938964844,
+        "thermal_model": "NEWTON",
+        "cooling_rate": 1.0,
+        "heat_capacity": 900.0,
+        "emissivity": 0.800000011920929,
+        "heat_transfer": 25.0,
+        "reaction_energy_per_kg": 0.0,
+        "reaction_power_per_kg": 0.0,
+        "reaction_duration_s": 0.10000000149011612,
+        "curl_strength": 0.0,
+        "curl_scale": 1.0,
+        "child_count": 1,
+        "inherit_velocity": 1.0,
+        "parent_event_delay_s": 0.0,
+        "child_mass_fraction": 1.0,
+        "child_probability": 1.0,
+        "parent_event_time_mode": "SECONDS",
+        "parent_event_life_fraction": 0.5,
+        "temperature_inherit": 1.0,
+        "appearance_mode": "ARTISTIC",
+        "cooling_time_s": 1.0,
+        "spawn_shape": "POINT",
+        "cluster_probability": 0.0,
+        "cluster_position_blend": 0.0,
+        "fade_in": 0.0,
+        "fade_out": 0.0,
+        "burn_frequency": 0.0,
+        "burn_duty": 1.0,
+        "flash_probability": 0.0,
+        "flash_width": 0.05000000074505806,
+        "flash_gain": 0.0,
+        "shape_roundness": 0.6499999761581421,
+        "shape_sharpness": 1.0,
+        "shape_spin": 0.0,
+        "shape_twist": 0.0,
+        "trail_taper": 0.25,
+        "link_visual_size": false,
+        "carrier_mode": "OFF",
+        "carrier_reference": "WORLD",
+        "carrier_origin": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "carrier_velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "carrier_acceleration": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "trail_geometry": "CONTINUOUS",
+        "spawn_bursts": [],
+        "speed_distribution_spec": {
+          "hero_component": null,
+          "kind": "TRUNCATED_NORMAL",
+          "optional_link": null,
+          "range": [
+            17.16,
+            24.96
+          ],
+          "shape_parameters": {
+            "mean": 21.215999999999998,
+            "sigma": 1.768
+          },
+          "stream_tag": "fan_speed"
+        },
+        "life_distribution_spec": {
+          "hero_component": null,
+          "kind": "UNIFORM",
+          "optional_link": null,
+          "range": [
+            2.35,
+            3.4
+          ],
+          "shape_parameters": {},
+          "stream_tag": "fan_life"
+        },
+        "size_distribution_spec": {
+          "hero_component": null,
+          "kind": "POWER_BIAS",
+          "optional_link": null,
+          "range": [
+            0.25,
+            1.25
+          ],
+          "shape_parameters": {
+            "power": 1.5
+          },
+          "stream_tag": "fan_size"
+        },
+        "intensity_distribution_spec": {
+          "hero_component": null,
+          "kind": "POWER_BIAS",
+          "optional_link": null,
+          "range": [
+            0.12,
+            1.3
+          ],
+          "shape_parameters": {
+            "power": 1.3
+          },
+          "stream_tag": "fan_gain"
+        }
+      },
+      "curves": {
+        "size": {
+          "use_clip": true,
+          "clip_min_x": 0.0,
+          "clip_max_x": 1.0,
+          "clip_min_y": 0.0,
+          "clip_max_y": 1.0,
+          "extend": "EXTRAPOLATED",
+          "points": [
+            {
+              "location": [
+                0.0,
+                0.20000000298023224
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.14000000059604645,
+                0.800000011920929
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.4000000059604645,
+                1.0
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.800000011920929,
+                0.75
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                1.0,
+                0.11999999731779099
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            }
+          ]
+        },
+        "intensity": {
+          "use_clip": true,
+          "clip_min_x": 0.0,
+          "clip_max_x": 1.0,
+          "clip_min_y": 0.0,
+          "clip_max_y": 1.0,
+          "extend": "EXTRAPOLATED",
+          "points": [
+            {
+              "location": [
+                0.0,
+                0.0
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.11999999731779099,
+                0.15000000596046448
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.3199999928474426,
+                1.0
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.6200000047683716,
+                0.800000011920929
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                0.8399999737739563,
+                0.4000000059604645
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            },
+            {
+              "location": [
+                1.0,
+                0.0
+              ],
+              "handle_type": "AUTO_CLAMPED"
+            }
+          ]
+        },
+        "color": {
+          "interpolation": "EASE",
+          "color_mode": "RGB",
+          "hue_interpolation": "NEAR",
+          "elements": [
+            {
+              "position": 0.0,
+              "color": [
+                1.0,
+                0.5099999904632568,
+                0.09000000357627869,
+                1.0
+              ]
+            },
+            {
+              "position": 0.550000011920929,
+              "color": [
+                1.0,
+                0.3499999940395355,
+                0.029999999329447746,
+                1.0
+              ]
+            },
+            {
+              "position": 1.0,
+              "color": [
+                0.550000011920929,
+                0.08500000089406967,
+                0.0020000000949949026,
+                1.0
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-13 17:44",
+ "generated": "2026-10-13 19:39",
  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "std": {
   "pcCell": 512,
@@ -14752,10 +14752,10 @@
   },
   "FC6O": {
    "id": "FC6O",
-   "name": "扇形彗星 · 橙扇（13 筒，第 2 套）",
+   "name": "金锦冠扇形 FanGold · 整面金细尾",
    "kind": "preset",
    "renderVer": 40,
-   "ver": "63244abc·master4.9.31",
+   "ver": "31fb0001·master4.3.8-core1",
    "checks": [
     [
      "实时模拟",
@@ -14800,22 +14800,22 @@
     [
      "屏幕放大 ≤ 1",
      true,
-     "放大 0.56"
+     "放大 0.71"
     ],
     [
      "30fps 显示帧 ≥ 90%",
      true,
-     "64/64"
+     "123/123"
     ],
     [
      "燃烧段有效帧率 ≥ 下限",
      true,
-     "12.5 fps"
+     "30 fps"
     ],
     [
      "淡出段有效帧率 ≥ 下限",
      true,
-     "7.5 fps"
+     "10 fps"
     ],
     [
      "尺寸参数有效",
@@ -14824,7 +14824,7 @@
     ]
    ],
    "pass": true,
-   "seconds": 0.0
+   "seconds": 0.1
   },
   "FC7R": {
    "id": "FC7R",
