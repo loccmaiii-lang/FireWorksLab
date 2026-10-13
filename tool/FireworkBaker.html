@@ -2348,7 +2348,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.9.78';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23
+const VERSION = '4.9.79';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23；4.9.79 合成一张（升空尾缀 / 彗星）用烟花序列同一组导出选项：入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花分开（PC 两张；手机仍一张），用户 10-13 18:47，对话框23
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -2649,6 +2649,8 @@ function defaultsFor(type, _unused, stored = false) {
   return { P, M };
 }
 function usesTickPlan40(P) { return familyOf(P.type)==='aerial' && ['master','segments'].includes(P.form); }
+// 4.9.79（用户 10-13 18:47「我也没办法选择出入点，帧数这些也不让选」）：升空尾缀 / 彗星选了「合成一张」（PC 或手机）= 一张固定取景的序列，用烟花序列同一组导出选项
+const emitFullOut = P => !!P && P.form === 'emitset' && familyOf(P.type) === 'rise' && +P.rtFar === 1 && (P.outPC === 'full' || P.outMobile === 'full');
 // 旧存档 → 现在的画法。3.7 的贴图曝光是每次烘焙按画面自动定的（存档里的 exposure 没起作用），这里换成固定曝光：
 // 空中花型用模板的曝光（EXPOSURE40），格子按 4×4、固定取景（和 JM4 → JM4-40 同一套迁法）；升空尾缀 / 地面 / 上升用 CAL40
 // （按 3.7 自动曝光的口径在新画法下量出来的：曝光 + 星头亮度倍数）。迁过的存档带 _mig37，界面提示「亮度请看一眼」。
@@ -3328,36 +3330,37 @@ const SCHEMA = [
     ['unitRandom', '单束随机感（几张之间粗细 / 长短拉开、每颗星大小随机）', '', 0, 1, 0.05, P => P.outPC === 'unit' || P.outMobile === 'unit'],
     { info: 'schemeNote' }
   ] },
-  { sec: '入点与出点（导出）', show: usesTickPlan40, hint: '时间轴下面的时段条上有「设为入点 / 设为出点」：先看整段（全黑帧已剔掉），在想开始、结束的那一刻点一下。0 = 自动（第一次 / 最后一次看得见）。', items: [
+  { sec: '入点与出点（导出）', show: P => usesTickPlan40(P) || emitFullOut(P), hint: '时间轴下面的时段条上有「设为入点 / 设为出点」：先看整段（全黑帧已剔掉），在想开始、结束的那一刻点一下。0 = 自动（第一次 / 最后一次看得见）。', items: [
     ['cutIn', '入点（帧从这里开始分配；0 = 第一次看得见）', 's', 0, 30, 0.0333],
     ['cutOut', '出点（0 = 最后一次看得见）', 's', 0, 30, 0.0333],
-    { sel: 'preRoll', label: '入点之前', show: P => +P.cutIn > 0, options: [[1, '用入点那一帧从小放大（Size By Life）'], [0, '不显示（发射器延迟到入点）']] },
-    ['preScale0', '开始放大时的大小（0 = 按花径自动）', '×', 0, 1, 0.01, P => +P.cutIn > 0 && +P.preRoll !== 0]
+    { sel: 'preRoll', label: '入点之前', show: P => +P.cutIn > 0 && !isEmit(P), options: [[1, '用入点那一帧从小放大（Size By Life）'], [0, '不显示（发射器延迟到入点）']] },
+    ['preScale0', '开始放大时的大小（0 = 按花径自动）', '×', 0, 1, 0.01, P => +P.cutIn > 0 && +P.preRoll !== 0 && !isEmit(P)]
   ] },
   // 4.2.0（用户 2026-10-02 16:22「单层输出成多少总帧数我也无法控制……能不能梳理一下」）：一节里定「多少帧 → 怎么装进贴图」，顶上一行实时显示结果
-  { sec: '输出：帧数 · 格子 · 贴图（导出）', show: isSeq, hint: '帧号由 Dynamic Parameter 的帧号通道给出（通道按本机导入配置，实测第 0 通道）、不做帧间混合。顺序：入点 → 出点之间有多少 tick → 按下面的「帧数」挑出要烘的帧 → 按「格子」装进贴图（RGBA 接力，先填满 R）。改了入出点、寿命，帧数和格子会自动重算；时间轴每层轨道上的小刻度就是每一帧从哪个 tick 开始。', items: [
+  { sec: '输出：帧数 · 格子 · 贴图（导出）', show: P => isSeq(P) || emitFullOut(P), hint: '帧号由 Dynamic Parameter 的帧号通道给出（通道按本机导入配置，实测第 0 通道）、不做帧间混合。顺序：入点 → 出点之间有多少 tick → 按下面的「帧数」挑出要烘的帧 → 按「格子」装进贴图（RGBA 接力，先填满 R）。改了入出点、寿命，帧数和格子会自动重算；时间轴每层轨道上的小刻度就是每一帧从哪个 tick 开始。', items: [
     { info: 'outSummary', show: usesTickPlan40 },
-    { info: 'specBox' },
-    { info: 'specMore' },
-    ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P) && !usesTickPlan40(P)],
-    { sel: 'frameBudget', label: '帧数', show: usesTickPlan40, options: [['motion','按运动分（默认）：开花段每 tick 一帧（30 fps），慢下来每帧多停几个 tick，先放进一张，放不下自动加张'],['fixed','固定机位 + 匀速帧：整段每帧停一样多 tick，帧号一条直线（一张贴图时开花段常常只有 10 fps）'],['lean','旧（待删）· 最省：只用到最慢帧率需要的帧'],['count','旧（待删）· 手动：自己定总帧数（按运动分配）'],['tiers','旧（待删）· 分段帧率（开花 / 燃烧 / 淡出各定帧率）'],['full','旧（待删）· 全程 30 fps（每个 tick 一帧，最费贴图）']] },
+    { info: 'specBox', show: P => !isEmit(P) },
+    { info: 'specMore', show: P => !isEmit(P) },
+    { sel: 'outMode', label: '星头火花输出', show: emitFullOut, options: [['combined', '星头与火花合并'], ['split', '星头、火花分开（PC 两张、两个发射器；手机仍合一张）']] },     // 4.9.79 和烟花规格框里的「星头火花输出」同一个参数
+    ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P) && !usesTickPlan40(P) && !isEmit(P)],
+    { sel: 'frameBudget', label: '帧数', show: P => usesTickPlan40(P) || emitFullOut(P), options: [['motion','按运动分（默认）：开花段每 tick 一帧（30 fps），慢下来每帧多停几个 tick，先放进一张，放不下自动加张'],['fixed','固定机位 + 匀速帧：整段每帧停一样多 tick，帧号一条直线（一张贴图时开花段常常只有 10 fps）'],['lean','旧（待删）· 最省：只用到最慢帧率需要的帧'],['count','旧（待删）· 手动：自己定总帧数（按运动分配）'],['tiers','旧（待删）· 分段帧率（开花 / 燃烧 / 淡出各定帧率）'],['full','旧（待删）· 全程 30 fps（每个 tick 一帧，最费贴图）']] },
     ['frameCount', '总帧数（手动）', '帧', 4, 256, 1, P => usesTickPlan40(P) && P.frameBudget === 'count'],
     { sel: 'outPack', label: '格子', show: usesTickPlan40, options: [['grid','固定：按贴图尺寸和列 × 行（帧少时空格子留着）'],['fit','按帧数选最小贴图：单格不变，格子 1×1 / 2×1 / 2×2 / 4×2 / 4×4 里挑最小的放得下的']] },
     { sel: 'outCell', label: '单格', show: usesTickPlan40, options: [[0,'跟贴图尺寸 ÷ 列数'],[512,'512 px（PC 下限）'],[1024,'1024 px'],[2048,'2048 px']] },
     ['pageTarget', '贴图张数（至少几张；放不下自动加）', '张', 1, 8, 1, P => usesTickPlan40(P) && ['motion', 'fixed'].includes(P.frameBudget || 'motion')],
-    ['holdTicks', '每帧停几个 tick（0 = 自动：放得下的最快）', 'tick', 0, 3, 1, P => usesTickPlan40(P) && (P.frameBudget || 'motion') === 'fixed'],     // 4.9.5 输出栏收口：固定机位的帧率可以手动定
-    { sel: 'maxHoldBurn', label: '燃烧段最慢帧率', show: P => usesTickPlan40(P) && ['motion', 'lean', 'count'].includes(P.frameBudget || 'motion'), options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick，默认）'],[4,'7.5 fps（停 4 tick）']] },
-    { sel: 'maxHold', label: '淡出段最慢帧率', show: P => usesTickPlan40(P) && ['motion', 'lean', 'count'].includes(P.frameBudget || 'motion'), options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick）'],[4,'7.5 fps（停 4 tick）'],[5,'6 fps（停 5 tick）']] },
+    ['holdTicks', '每帧停几个 tick（0 = 自动：放得下的最快）', 'tick', 0, 3, 1, P => (usesTickPlan40(P) || emitFullOut(P)) && (P.frameBudget || 'motion') === 'fixed'],     // 4.9.5 输出栏收口：固定机位的帧率可以手动定
+    { sel: 'maxHoldBurn', label: '燃烧段最慢帧率', show: P => (usesTickPlan40(P) && ['motion', 'lean', 'count'].includes(P.frameBudget || 'motion')) || (emitFullOut(P) && (P.frameBudget || 'motion') !== 'fixed'), options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick，默认）'],[4,'7.5 fps（停 4 tick）']] },
+    { sel: 'maxHold', label: '淡出段最慢帧率', show: P => (usesTickPlan40(P) && ['motion', 'lean', 'count'].includes(P.frameBudget || 'motion')) || (emitFullOut(P) && (P.frameBudget || 'motion') !== 'fixed'), options: [[2,'15 fps（停 2 tick）'],[3,'10 fps（停 3 tick）'],[4,'7.5 fps（停 4 tick）'],[5,'6 fps（停 5 tick）']] },
     { sel: 'fpsBurst', label: '开花段帧率', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps']] },
     ['burstSec', '开花段时长（这段每 tick 一帧）', 's', 0, 2, 0.05, P => usesTickPlan40(P) && !['fixed', 'full'].includes(P.frameBudget || 'motion')],     // 4.9.13：匀速帧 / 全程 30 fps 不读，不显示
     { sel: 'fpsActive', label: '燃烧段帧率', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps']] },
     { sel: 'fpsFade', label: '淡出段帧率', show: P => usesTickPlan40(P) && P.frameBudget === 'tiers', options: [[30,'30 fps'],[15,'15 fps'],[10,'10 fps'],[7.5,'7.5 fps']] },
     ['fadeAt', '淡出段从第几秒开始（0 = 自动：花径到头且速度降下来）', 's', 0, 20, 0.05, P => usesTickPlan40(P) && !['fixed', 'full'].includes(P.frameBudget || 'motion')],
     ['maxPages', '贴图张数上限（0 = 不限；超了自动降帧率）', '张', 0, 12, 1, P => usesTickPlan40(P) && P.frameBudget === 'tiers'],
-    ['shutter', '运动模糊（占每帧显示时间的比例）', '', 0, 1, 0.01],
+    ['shutter', '运动模糊（占每帧显示时间的比例）', '', 0, 1, 0.01, P => !isEmit(P)],     // 4.9.79 尾缀在「尾缀 · 引擎与导出」里已有一行
     ['trimLead', '开头空白不烘（1 = 贴图从第一次看得见开始，引擎用发射器延迟补上；0 = 从开花起烘）', '', 0, 1, 1, P => P.form === 'master' || usesTickPlan40(P)],
     ['unitElev', '代表星仰角', '°', -60, 60, 1, P => P.form === 'unit' && isAir(P)],
-    ['cellPad', '格子留边', 'px', 0, 8, 1]
+    ['cellPad', '格子留边', 'px', 0, 8, 1, P => !isEmit(P)]
   ] },
   { sec: '光点与曝光（4.0）', show: () => true, hint: '尺寸表示亮核直径。曝光固定，不随亮度和尺寸自动改变；光晕与亮核分开调。', items: [
     { sel: 'coreProfile', label: '亮核分布', options: [[0,'均匀亮核（兼容）'],[1,'渐变亮核']] },
@@ -7887,6 +7890,53 @@ function rtFullGrid(P, W0, H0, need) {
   for (const c of [32, 16]) { let r = 1; while (c * r * 4 < need && r < 4) r *= 2; const sc = Math.min(P.texW / c / W0, P.texH / r / H0); if (!best || sc > best.sc + 1e-9) best = { c, sc }; }
   return [best.c, 1];
 }
+// 4.9.79 合成一张的取帧（用户 10-13 18:47「comet&silver3.0做好了，但是我也没办法选择出入点，帧数这些也不让选」）：和烟花序列同一组选项（交互宪章「输出」直接调）——
+//   入点 cutIn（0 = 发射那一刻；入点之前不显示，发射器延迟到入点）、出点 cutOut（0 = 最后一颗火花看不见）；
+//   帧数 frameBudget：按运动分（默认，和 4.9.73 起一样：上升段 800 m 外每帧挪不超过标定线，最慢停 maxHoldBurn tick；开花后最慢停 maxHold tick；格子用满）/
+//   固定机位 + 匀速帧（每帧停 holdTicks 个 tick；0 = 一张放得下的最快）。别的帧数模式（旧，待删）按「按运动分」。
+//   缺省（入点 / 出点 0、按运动分、3 / 4 tick）逐帧和 4.9.78 相同（已通过的 RT6 手机合成一张不变）
+function rtFullSchedule(P, ball, T, Df, W0, H0) {
+  const tA0 = Math.max(0, Math.floor((+P.cutIn || 0) * 30 + 1e-6) / 30), tNat = T + Df;
+  const tEnd = +P.cutOut > tA0 + 1 / 30 ? Math.min(tNat, +P.cutOut) : tNat;
+  const cut = (+P.cutIn || 0) > 0 || +P.cutOut > 0;
+  const Nr = cut ? Math.max(0, Math.round((Math.min(T, tEnd) - tA0) * 30)) : Math.max(1, Math.round((T - tA0) * 30));
+  const Nf = cut ? Math.max(0, Math.round((tEnd - Math.max(T, tA0)) * 30)) : Math.max(1, Math.round(Df * 30)), Nt = Math.max(1, Nr + Nf);
+  const ppmG = gamePixelsPerMeter(P, 0, STEP_REF_H, STEP_REF_DIST), refPx = STEP_REF_PX > 0 ? STEP_REF_PX : 0.77;
+  const hp = Array.from({ length: Nr + 1 }, (_, k) => ball.pos(Math.min(T, tA0 + k / 30))), stepPx = (k0, k1) => Math.hypot(hp[k1][0] - hp[k0][0], hp[k1][2] - hp[k0][2]) * ppmG;
+  const hR = clamp(Math.round(+P.maxHoldBurn || 3), 1, 6), hF = clamp(Math.round(+P.maxHold || 4), 1, 8), fixed = P.frameBudget === 'fixed';
+  const riseSched = r => { const ks = []; let k = 0; while (k < Nr) { let h = 1; while (h < hR && k + h < Nr && stepPx(k, k + h + 1) <= r) h++; ks.push(k); k += h; } return ks; };
+  const manual = P.rtGrid < 0 || P.rtGrid > 0;
+  const gridFor = need => { let [c, r0] = P.rtGrid < 0 ? [P.cols, P.rows] : P.rtGrid > 0 ? RT_GRIDS[P.rtGrid - 1] : rtFullGrid(P, W0, H0, need), r = r0;
+    while (!manual && c * r * 4 < need && r < r0 * 4) r *= 2; return [c, r, r0]; };
+  let cols, rows, rows0, chans = 4, ks, need;
+  if (fixed) {     // 固定机位 + 匀速帧：每帧停 h 个 tick（0 = 一张放得下的最快）
+    [cols, rows, rows0] = gridFor(+P.holdTicks > 0 ? Math.ceil(Nt / Math.round(+P.holdTicks)) : Nt);
+    let h = +P.holdTicks > 0 ? Math.round(+P.holdTicks) : 1; while (Math.ceil(Nt / h) > cols * rows * 4) h++;
+    ks = []; for (let k = 0; k < Nt; k += h) ks.push(k);
+    chans = clamp(Math.ceil(ks.length / (cols * rows)), 1, 4); need = ks.length;
+  } else {     // 按运动分（和远段同一套，缺省逐帧不变）
+    need = Math.min(Nt, riseSched(refPx).length + Math.ceil(Nf / hF));
+    [cols, rows, rows0] = gridFor(need);
+    const fitCh = () => { chans = 4; while (chans > 1 && cols * rows * chans > Nt) chans--; };
+    fitCh(); while (cols * rows * chans > Nt && rows > rows0) { rows /= 2; fitCh(); }
+    const F = Math.min(Nt, cols * rows * chans);
+    const riseFit = budget => { let best = null, lo = 0, hi = Math.max(refPx, stepPx(0, Math.min(Nr, 3)) + 1);
+      for (let it = 0; it < 40; it++) { const mid = (lo + hi) / 2, q = riseSched(mid); if (q.length <= budget) { best = q; hi = mid; } else lo = mid; }
+      return best || riseSched(1e9); };
+    const FdMin = Math.min(Nf, Math.ceil(Nf / hF)), fd = n => Nf > 0 ? Math.max(1, Math.min(Nf, n)) : 0;
+    let rk = riseFit(F - FdMin), Fd0 = fd(F - rk.length);
+    if (rk.length + Fd0 < F) { rk = riseFit(F - Fd0); Fd0 = fd(F - rk.length); }
+    while (rk.length + Fd0 < F) {     // 还差几格：拆上升段里最后一个停 ≥ 2 tick 的帧
+      let bi = -1; for (let f = rk.length - 1; f >= 0; f--) { const h = (f + 1 < rk.length ? rk[f + 1] : Nr) - rk[f]; if (h > 1) { bi = f; break; } }
+      if (bi < 0) break; rk.splice(bi + 1, 0, rk[bi] + 1);
+    }
+    const fq = Fd0 ? Math.floor(Nf / Fd0) : 0, frem = Fd0 ? Nf % Fd0 : 0; ks = [...rk];
+    for (let f = 0, k = Nr; f < Fd0 && k < Nt; f++) { ks.push(k); k += fq + (f >= Fd0 - frem ? 1 : 0); }
+    while (ks.length > F) ks.pop();
+  }
+  if (!ks.length) ks = [0];
+  return { cols, rows, chans, ks, Nr, Nf, Nt, tA0, need, stepPx, refPx };
+}
 function rtLayoutFar(P, ball, LI, full = false) {
   const key = JSON.stringify(P) + (full ? '|full' : ''); if (rtFarCache.has(key)) return rtFarCache.get(key);
   // 4.9.31（用户 10-07 14:56「远段刚出现那一下会卡顿闪一次」）：远段以前在交接中点 (a0 + a1) / 2 才出现，可远段的权重 1 − 近段权重 从 a0 就开始 > 0——
@@ -7919,6 +7969,8 @@ function rtLayoutFar(P, ball, LI, full = false) {
   //   RT6L 上升段 36 帧摊 6.6 s（最慢 1.9 fps，800 m 外每帧跳 5–6 像素），帧也不对齐 tick。现在和大面片同一套口径（帧账本，31_plan40.js）：
   //   每帧从 tick 开始、停整数个 tick；上升段弹体在 800 m 外的游戏画面上每帧挪不超过标定线（金芒菊）就停久一点，最慢 10 fps；开花后最慢 7.5 fps；
   //   一张 16×1×RGBA 放不下就加行（16×2、16×4，格子变矮——远段面片很细很高，800 m 外一格的高度远大于屏幕上的像素，看不出差别），格子用满（多的格子让慢的地方变快）
+  // 4.9.79 合成一张（full）另走 rtFullSchedule（入点 / 出点、帧数和烟花序列同一组选项）；远段（PC 全套）照旧，下面这段一字没改
+  const { cols, rows, chans, ks, Nr, Nf, Nt, tA0, need, stepPx, refPx } = full ? rtFullSchedule(P, ball, T, Df, W0, H0) : (() => {
   let [cols, rows0] = rtGridFor(P, W0, H0); const tA0 = Math.max(0, Math.floor(tA * 30 + 1e-6) / 30), Nr = Math.max(1, Math.round((T - tA0) * 30)), Nf = Math.max(1, Math.round(Df * 30)), Nt = Nr + Nf;
   const ppmG = gamePixelsPerMeter(P, 0, STEP_REF_H, STEP_REF_DIST), refPx = STEP_REF_PX > 0 ? STEP_REF_PX : 0.77;
   const hp = Array.from({ length: Nr + 1 }, (_, k) => ball.pos(Math.min(T, tA0 + k / 30))), stepPx = (k0, k1) => Math.hypot(hp[k1][0] - hp[k0][0], hp[k1][2] - hp[k0][2]) * ppmG;
@@ -7950,6 +8002,8 @@ function rtLayoutFar(P, ball, LI, full = false) {
   const fq = Math.floor(Nf / Fd0), frem = Nf % Fd0, ks = [...rk];     // 开花后：先短后长（刚开花时还在动）
   for (let f = 0, k = Nr; f < Fd0 && k < Nt; f++) { ks.push(k); k += fq + (f >= Fd0 - frem ? 1 : 0); }
   while (ks.length > F) ks.pop();     // 放不下（上升段已经最慢、格子上限 16×4 都不够）：尾巴上合并
+  return { cols, rows, chans, ks, Nr, Nf, Nt, tA0, need, stepPx, refPx };
+  })();
   const Fn = ks.length, Fr = ks.filter(k => k < Nr).length, Fd = Fn - Fr, Dtot = Nt / 30, times = [], dur = [];
   // 4.5.3 面片上移 vz（m/s）：寿命里一共走 vz · Dtot，面片加高这么多、开始时中心放低一半，内容始终在面片里
   const vz = rtFarVzOf(P), drift = vz * Dtot, HY = (H0 + drift) / 2 * (full && P.rtGrid < 0 ? 1.06 : 1.02), cz = (zb + zt) / 2 - drift / 2;
@@ -8052,9 +8106,10 @@ function fwlRiseHead(name, b, M) {
 }
 async function bakeRiseTailFull(P0, scale, onProg, mobile = true) {
   if (rtHeadOnly(P0)) return bakeRiseHead(P0, scale, onProg, mobile);
-  const P = { ...P0, form: 'emitset', outMode: 'combined', frameMode: 'uniform', zoom: 'off', autoGrid: 0, rtGpuF: 0, rtGpuM: 0, rtGpuC: 0 };
+  // 4.9.79「星头火花输出」= 分开（outMode split，和烟花序列同一个选项）：PC 出星头 / 火花两张（两个发射器、各自的颜色）；手机仍合一张（规范 v1 §6 同一时刻 1 张大序列）
+  const P = { ...P0, form: 'emitset', outMode: !mobile && P0.outMode === 'split' ? 'split' : 'combined', frameMode: 'uniform', zoom: 'off', autoGrid: 0, rtGpuF: 0, rtGpuM: 0, rtGpuC: 0 };
   const ball = rtBallistic(P), LI = rtLoopInfo(P), E0 = fixedExposure(P);
-  const fa = rtLayoutFar(P, ball, LI, true), Pa = { ...P, cols: fa.cols, rows: fa.rows, chans: fa.chans || 4 };
+  const fa = rtLayoutFar({ ...P, outMode: 'combined' }, ball, LI, true), Pa = { ...P, cols: fa.cols, rows: fa.rows, chans: fa.chans || 4 };
   const pa = rtPlan(Pa, { HX: fa.HX, HY: fa.HY, cy: fa.cz, hb: 0.5 }, fa.times, fa.dur, { loop: false, t0: fa.t0, duration: fa.Dtot, keys: fa.keys });
   const b = await bakeFrames(Pa, scale, onProg, pa, makeRiseTailFullRenderer(P, LI, ball, fa.cx, fa.vz || 0, fa.t0), { expo: [E0, E0], noFade: true });
   Object.assign(b.meta, { es: true, full: fa, T: ball.T, ball: { k: ball.k, v0: ball.v0, vz0: ball.vz0, vx0: ball.vx0, T: ball.T, H: ball.H, Hwant: ball.Hwant, vb: ball.vb, ok: ball.ok, lean: P.rtLean || 0, ...(ball.quad ? { quad: true, vt: ball.vt } : {}) } });
@@ -8140,15 +8195,26 @@ function fwlEmitSetFull(name, b, M, mobile = b.esMobile) {
       { m: 'InitialSize', StartSize: { const: [r1(fa.Ww * 100), r1(fa.Wh * 100), 1] } },
       { m: 'OrientationAxisLock', flags: 'EPAL_ROTATE_Z', note: '和 PC 远段一样：面片绕组件 Z 轴转向镜头；Screen Alignment = Rectangle、Required 勾 Local Space（整根尾缀转组件倾斜时一起倾）' },
       { m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(fa.keys, L.F) } } },
-      { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, fa.Dtot, fa.t0, P.rtBright || 1) }, AlphaOverLife: { const: 1 } }
+      { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, fa.Dtot, fa.t0, (P.rtBright || 1) * (b.tail ? intOr1(M.headInt) : 1)) }, AlphaOverLife: { const: 1 } }
     ]
   }];
+  // 4.9.79 星头、火花分开（和烟花序列同一条规矩：…_Head / …_Tail 两张贴图、两个发射器，除贴图和颜色外相同；共用一张 Cut）
+  const split = !!b.tail;
+  if (split) { textures.full.file = TN(name, 'Full_Head') + '.png'; textures.fullTail = { ...textures.full, file: TN(name, 'Full_Tail') + '.png' };
+    materials.fullTail = { role: 'beam_flipbook', textures: { main: 'fullTail', ramp: 'ramp' }, scalars: { rows: L.rows, cols: L.cols } };
+    const e0 = emitters[0];
+    emitters.push({ ...e0, name: 'TrailFullTail', material: 'fullTail', required: { ...e0.required },
+      modules: e0.modules.map(q => q.m === 'ColorOverLife' ? { ...q, ColorOverLife: { curve: fwlColor(M, fa.Dtot, fa.t0, (P.rtBright || 1) * (M.tailInt == null ? 1 : +M.tailInt)) } } : q),
+      notes: ['星头、火花分开输出：这是火花层（…_Full_Tail 贴图），除贴图和颜色外和星头层 TrailFull 相同'] }); }
   return { textures, materials, emitters, system: { preview_distance_cm: Math.round(Math.max(30000, bl.H * 100 * 2)), preview_warmup_s: 0 },
     notes: [`${mobile ? '手机 _M' : 'PC'}「近段 + 远段合成一张」（4.9.73，用户 10-12 21:34 / 23:49）：1 个发射器 TrailFull = 星头 + 全部火花（不分近段 / 远段）烘成一张世界坐标全程序列，`
       + `${L.cols}×${L.rows} 格 × ${L.chans} 通道 = ${L.F} 帧（上升 ${fa.Fr} 帧、开花后 ${fa.Fd} 帧，帧号曲线不匀速），面片 ${r1(fa.Ww)} × ${r1(fa.Wh)} m 立在发射点上（中心在上方 ${r1(fa.cz)} m），0 s 出现、播 ${r2(fa.Dtot)} s；`
       + `规范 v1 §6：1 层大面片、1 个发射器、没有 GPU。PC 放在 GPU 的那份火花烘进了贴图；落火 / 末段爆亮只在 GPU 里，手机没有。`
       + `星头在贴图里一帧帧往上走（快门拖影），上升快的段每个 tick 一帧；800 m 外每帧最多挪 ${fa.pxMax} 像素。${kN !== 1 ? '一个曝光（远段的）：PC 近段单独压的白热段曝光 × ' + r2(kN) + ' 这里没有，星头和白热段比 PC 白一点。' : ''}`
-      + `Initial Velocity 向上 ${r1((fa.vz || 0) * 100)} cm/s 和 PC 远段一样（面片往上平移、贴图内容已补回，不能删）。未经 UE 验证。`] };
+      + `Initial Velocity 向上 ${r1((fa.vz || 0) * 100)} cm/s 和 PC 远段一样（面片往上平移、贴图内容已补回，不能删）。未经 UE 验证。`
+      + (fa.t0 > 0 || P.cutOut > 0 ? ` 入点 ${r2(fa.t0)} s（之前不显示，发射器延迟到入点）、出点 ${P.cutOut > 0 ? r2(fa.t0 + fa.Dtot) + ' s' : '最后一颗火花看不见'}（4.9.79）。` : '')
+      + (P.frameBudget === 'fixed' ? ` 帧数：固定机位 + 匀速帧（4.9.79）。` : '')
+      + (split ? ` 星头、火花分开：TrailFull = 星头层（…_Full_Head，Color Over Life × 星头亮度），TrailFullTail = 火花层（…_Full_Tail，× 火花亮度）；只有 PC，手机仍合一张。` : '')] };
 }
 function fwlEmitSet(name, b, M, mobile) {
   if (b.esFull) return fwlEmitSetFull(name, b, M, mobile);
@@ -8292,8 +8358,10 @@ function rtMobileTables(b, kw = 1) {
 function rtTexFiles(b, name, sfx = '', idx = 1) {
   return (async () => {
     const files = [], k4 = sfx ? sfx.replace(/^_/, '') : '', L = b.meta.L;
-    if (b.esFull) { const ap = readRGBA8(b.head); files.push([`${TN(name, joinPart('Full', k4), L, idx)}.png`, await encodePNG(ap, b.N, b.NH)]);     // 4.9.73 手机合成一张：只有这一张 + 它的 Cut
-      if (!sfx) files.push(...await cutoutFiles([ap], b.N, b.NH, L, TN(name, 'Full_Cutout', null, idx), b.meta)); return files; }
+    if (b.esFull) { const ap = readRGBA8(b.head), tp = b.tail ? readRGBA8(b.tail) : null;     // 4.9.73 合成一张：只有这一张 + 它的 Cut；4.9.79 星头 / 火花分开时两张（…_Head / …_Tail）共用一张 Cut
+      if (tp) { files.push([`${TN(name, joinPart('Full_Head', k4), L, idx)}.png`, await encodePNG(ap, b.N, b.NH)]); files.push([`${TN(name, joinPart('Full_Tail', k4), L, idx)}.png`, await encodePNG(tp, b.N, b.NH)]); }
+      else files.push([`${TN(name, joinPart('Full', k4), L, idx)}.png`, await encodePNG(ap, b.N, b.NH)]);
+      if (!sfx) files.push(...await cutoutFiles(tp ? [ap, tp] : [ap], b.N, b.NH, L, TN(name, 'Full_Cutout', null, idx), b.meta)); return files; }
     const lp = readRGBA8(b.head); files.push([`${TN(name, joinPart('Loop', k4), L, idx)}.png`, await encodePNG(lp, b.N, b.NH)]);
     if (!sfx) files.push(...await cutoutFiles([lp], b.N, b.NH, L, TN(name, 'Loop_Cutout', null, idx), b.meta));
     const f = b.fades[0];
@@ -8341,7 +8409,8 @@ function rtCurvesCSV(b, M) {
   const m = b.meta, rows = ['段,曲线,相对时间,值1,值2,值3'];
   if (b.esFull) {
     for (const [u, v] of fwlFrameKeys(m.full.keys, m.L.F)) rows.push(`TrailFull,DynamicParameter_帧号,${u},${v},,`);
-    for (const [u, c] of fwlColor(M, m.full.Dtot, m.full.t0, b.P.rtBright || 1)) rows.push(`TrailFull,ColorOverLife_线性RGB,${u},${c[0]},${c[1]},${c[2]}`);
+    for (const [u, c] of fwlColor(M, m.full.Dtot, m.full.t0, (b.P.rtBright || 1) * (b.tail ? intOr1(M.headInt) : 1))) rows.push(`TrailFull,ColorOverLife_线性RGB,${u},${c[0]},${c[1]},${c[2]}`);
+    if (b.tail) for (const [u, c] of fwlColor(M, m.full.Dtot, m.full.t0, (b.P.rtBright || 1) * (M.tailInt == null ? 1 : +M.tailInt))) rows.push(`TrailFullTail,ColorOverLife_线性RGB,${u},${c[0]},${c[1]},${c[2]}`);     // 4.9.79 星头 / 火花分开
     return '\ufeff' + rows.join('\n') + '\n';
   }
   for (const [u, v] of rtSawKeys(m)) rows.push(`RiseLoop,DynamicParameter_帧号,${u},${v},,`);
@@ -8473,14 +8542,14 @@ function renderEmitExportFull(b) {
     if (tilt && pr.u.uRot) gl.uniform3fv(pr.u.uRot, [th, 0, 0]);
     gl.uniform4fv(pr.u.uRect, [s.x - s.w * kw / 2, s.z - s.h / 2, s.x + s.w * kw / 2, s.z + s.h / 2]); gl.uniform4fv(pr.u.uView, view);
     bindSeqTextures(pr, b); gl.uniform1f(pr.u.uFrame, s.f); gl.uniform1f(pr.u.uMirror, 0);
-    setMatUniforms(pr, { ...M, headInt: intOr1(M.headInt) * (P.rtBright || 1) }, t);
+    setMatUniforms(pr, { ...M, headInt: intOr1(M.headInt) * (P.rtBright || 1), ...(b.tail ? { tailInt: (M.tailInt == null ? 1 : +M.tailInt) * (P.rtBright || 1) } : {}) }, t);     // 4.9.79 星头 / 火花分开时两张各乘各的亮度（和导出一样）
     gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
     if (tilt && pr.u.uRot) gl.uniform3fv(pr.u.uRot, [0, 0, 0]);
   }
   additive(false); post();
   rtLayerBarSync([['full', null, false]]);
   const fa = b.meta.full, dist = (state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m` : '') + (tkN !== 1 ? ` · 按尺寸档时间 × ${tkN}` : '');
-  hudText = `引擎回放 · ${b.esMobile ? '手机 _M' : 'PC'}（近段 + 远段合成一张）· ${!rtOn('full') ? '（分层看关了）' : s ? '第 ' + (s.f + 1) + '/' + b.meta.L.F + ' 帧' : '已结束'} · 面片 ${fa.Ww.toFixed(1)} × ${fa.Wh.toFixed(1)} m · 1 个发射器、没有粒子${dist}${rtShowNote()}`;
+  hudText = `引擎回放 · ${b.esMobile ? '手机 _M' : 'PC'}（近段 + 远段合成一张）· ${!rtOn('full') ? '（分层看关了）' : s ? '第 ' + (s.f + 1) + '/' + b.meta.L.F + ' 帧' : '已结束'} · 面片 ${fa.Ww.toFixed(1)} × ${fa.Wh.toFixed(1)} m · ${b.tail ? '2 个发射器（星头 / 火花分开）' : '1 个发射器'}、没有粒子${fa.t0 > 0 ? ' · 入点 ' + fa.t0.toFixed(2) + ' s' : ''}${dist}${rtShowNote()}`;
   if (tilt) hudText += ` · 倾斜预览 ${tilt}°（Rectangle + 锁 Z + Local Space，整张跟组件倾；以 UE 实测为准）`;
   hudB = '';
 }
@@ -16051,7 +16120,7 @@ function renderDeliv() {
       const m = x.b.meta, ly = combo ? nm.layers[x.i] : '';
       for (const [, L, sub, n] of namingSheets(x.b)) {
         const fa = sub === 'Full' ? m.full : sub === 'Far' ? x.b.far.meta.far : null, d0 = fa ? fa.t0 : sub === 'Fade' ? m.T : 0, life = fa ? fa.Dtot : sub === 'Fade' ? m.fadeSeconds : m.T;
-        rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', false)}.png</td><td>PC · ${sub === 'Full' ? '近段 + 远段合成一张' : sub === 'Loop' ? '循环层（近段）' : sub === 'Far' ? '远段（全程）' : '消散'} · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        for (const ht of sub === 'Full' && x.b.tail ? ['Head', 'Tail'] : ['tex']) rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, ht, false)}.png</td><td>PC · ${sub === 'Full' ? '近段 + 远段合成一张' + (ht === 'Head' ? '（星头层）' : ht === 'Tail' ? '（火花层）' : '') : sub === 'Loop' ? '循环层（近段）' : sub === 'Far' ? '远段（全程）' : '消散'} · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
         const mobLoop = sub === 'Loop' && (combo ? layerOut(x.L).mobile !== 'off' : state.P.outMobile !== 'off' && !rtMobFull(state.P));     // 4.9.69 起手机 _M 只有近段那张；4.9.73 合成一张时没有
         if (mobLoop) rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', true)}.png</td><td>手机</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
         rows.push(`<tr class="dim"><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'C')}.png</td><td>Cut（${mobLoop ? 'PC / 手机共用' : 'PC'}，512）</td><td></td><td></td></tr>`);

@@ -637,6 +637,53 @@ function rtFullGrid(P, W0, H0, need) {
   for (const c of [32, 16]) { let r = 1; while (c * r * 4 < need && r < 4) r *= 2; const sc = Math.min(P.texW / c / W0, P.texH / r / H0); if (!best || sc > best.sc + 1e-9) best = { c, sc }; }
   return [best.c, 1];
 }
+// 4.9.79 合成一张的取帧（用户 10-13 18:47「comet&silver3.0做好了，但是我也没办法选择出入点，帧数这些也不让选」）：和烟花序列同一组选项（交互宪章「输出」直接调）——
+//   入点 cutIn（0 = 发射那一刻；入点之前不显示，发射器延迟到入点）、出点 cutOut（0 = 最后一颗火花看不见）；
+//   帧数 frameBudget：按运动分（默认，和 4.9.73 起一样：上升段 800 m 外每帧挪不超过标定线，最慢停 maxHoldBurn tick；开花后最慢停 maxHold tick；格子用满）/
+//   固定机位 + 匀速帧（每帧停 holdTicks 个 tick；0 = 一张放得下的最快）。别的帧数模式（旧，待删）按「按运动分」。
+//   缺省（入点 / 出点 0、按运动分、3 / 4 tick）逐帧和 4.9.78 相同（已通过的 RT6 手机合成一张不变）
+function rtFullSchedule(P, ball, T, Df, W0, H0) {
+  const tA0 = Math.max(0, Math.floor((+P.cutIn || 0) * 30 + 1e-6) / 30), tNat = T + Df;
+  const tEnd = +P.cutOut > tA0 + 1 / 30 ? Math.min(tNat, +P.cutOut) : tNat;
+  const cut = (+P.cutIn || 0) > 0 || +P.cutOut > 0;
+  const Nr = cut ? Math.max(0, Math.round((Math.min(T, tEnd) - tA0) * 30)) : Math.max(1, Math.round((T - tA0) * 30));
+  const Nf = cut ? Math.max(0, Math.round((tEnd - Math.max(T, tA0)) * 30)) : Math.max(1, Math.round(Df * 30)), Nt = Math.max(1, Nr + Nf);
+  const ppmG = gamePixelsPerMeter(P, 0, STEP_REF_H, STEP_REF_DIST), refPx = STEP_REF_PX > 0 ? STEP_REF_PX : 0.77;
+  const hp = Array.from({ length: Nr + 1 }, (_, k) => ball.pos(Math.min(T, tA0 + k / 30))), stepPx = (k0, k1) => Math.hypot(hp[k1][0] - hp[k0][0], hp[k1][2] - hp[k0][2]) * ppmG;
+  const hR = clamp(Math.round(+P.maxHoldBurn || 3), 1, 6), hF = clamp(Math.round(+P.maxHold || 4), 1, 8), fixed = P.frameBudget === 'fixed';
+  const riseSched = r => { const ks = []; let k = 0; while (k < Nr) { let h = 1; while (h < hR && k + h < Nr && stepPx(k, k + h + 1) <= r) h++; ks.push(k); k += h; } return ks; };
+  const manual = P.rtGrid < 0 || P.rtGrid > 0;
+  const gridFor = need => { let [c, r0] = P.rtGrid < 0 ? [P.cols, P.rows] : P.rtGrid > 0 ? RT_GRIDS[P.rtGrid - 1] : rtFullGrid(P, W0, H0, need), r = r0;
+    while (!manual && c * r * 4 < need && r < r0 * 4) r *= 2; return [c, r, r0]; };
+  let cols, rows, rows0, chans = 4, ks, need;
+  if (fixed) {     // 固定机位 + 匀速帧：每帧停 h 个 tick（0 = 一张放得下的最快）
+    [cols, rows, rows0] = gridFor(+P.holdTicks > 0 ? Math.ceil(Nt / Math.round(+P.holdTicks)) : Nt);
+    let h = +P.holdTicks > 0 ? Math.round(+P.holdTicks) : 1; while (Math.ceil(Nt / h) > cols * rows * 4) h++;
+    ks = []; for (let k = 0; k < Nt; k += h) ks.push(k);
+    chans = clamp(Math.ceil(ks.length / (cols * rows)), 1, 4); need = ks.length;
+  } else {     // 按运动分（和远段同一套，缺省逐帧不变）
+    need = Math.min(Nt, riseSched(refPx).length + Math.ceil(Nf / hF));
+    [cols, rows, rows0] = gridFor(need);
+    const fitCh = () => { chans = 4; while (chans > 1 && cols * rows * chans > Nt) chans--; };
+    fitCh(); while (cols * rows * chans > Nt && rows > rows0) { rows /= 2; fitCh(); }
+    const F = Math.min(Nt, cols * rows * chans);
+    const riseFit = budget => { let best = null, lo = 0, hi = Math.max(refPx, stepPx(0, Math.min(Nr, 3)) + 1);
+      for (let it = 0; it < 40; it++) { const mid = (lo + hi) / 2, q = riseSched(mid); if (q.length <= budget) { best = q; hi = mid; } else lo = mid; }
+      return best || riseSched(1e9); };
+    const FdMin = Math.min(Nf, Math.ceil(Nf / hF)), fd = n => Nf > 0 ? Math.max(1, Math.min(Nf, n)) : 0;
+    let rk = riseFit(F - FdMin), Fd0 = fd(F - rk.length);
+    if (rk.length + Fd0 < F) { rk = riseFit(F - Fd0); Fd0 = fd(F - rk.length); }
+    while (rk.length + Fd0 < F) {     // 还差几格：拆上升段里最后一个停 ≥ 2 tick 的帧
+      let bi = -1; for (let f = rk.length - 1; f >= 0; f--) { const h = (f + 1 < rk.length ? rk[f + 1] : Nr) - rk[f]; if (h > 1) { bi = f; break; } }
+      if (bi < 0) break; rk.splice(bi + 1, 0, rk[bi] + 1);
+    }
+    const fq = Fd0 ? Math.floor(Nf / Fd0) : 0, frem = Fd0 ? Nf % Fd0 : 0; ks = [...rk];
+    for (let f = 0, k = Nr; f < Fd0 && k < Nt; f++) { ks.push(k); k += fq + (f >= Fd0 - frem ? 1 : 0); }
+    while (ks.length > F) ks.pop();
+  }
+  if (!ks.length) ks = [0];
+  return { cols, rows, chans, ks, Nr, Nf, Nt, tA0, need, stepPx, refPx };
+}
 function rtLayoutFar(P, ball, LI, full = false) {
   const key = JSON.stringify(P) + (full ? '|full' : ''); if (rtFarCache.has(key)) return rtFarCache.get(key);
   // 4.9.31（用户 10-07 14:56「远段刚出现那一下会卡顿闪一次」）：远段以前在交接中点 (a0 + a1) / 2 才出现，可远段的权重 1 − 近段权重 从 a0 就开始 > 0——
@@ -669,6 +716,8 @@ function rtLayoutFar(P, ball, LI, full = false) {
   //   RT6L 上升段 36 帧摊 6.6 s（最慢 1.9 fps，800 m 外每帧跳 5–6 像素），帧也不对齐 tick。现在和大面片同一套口径（帧账本，31_plan40.js）：
   //   每帧从 tick 开始、停整数个 tick；上升段弹体在 800 m 外的游戏画面上每帧挪不超过标定线（金芒菊）就停久一点，最慢 10 fps；开花后最慢 7.5 fps；
   //   一张 16×1×RGBA 放不下就加行（16×2、16×4，格子变矮——远段面片很细很高，800 m 外一格的高度远大于屏幕上的像素，看不出差别），格子用满（多的格子让慢的地方变快）
+  // 4.9.79 合成一张（full）另走 rtFullSchedule（入点 / 出点、帧数和烟花序列同一组选项）；远段（PC 全套）照旧，下面这段一字没改
+  const { cols, rows, chans, ks, Nr, Nf, Nt, tA0, need, stepPx, refPx } = full ? rtFullSchedule(P, ball, T, Df, W0, H0) : (() => {
   let [cols, rows0] = rtGridFor(P, W0, H0); const tA0 = Math.max(0, Math.floor(tA * 30 + 1e-6) / 30), Nr = Math.max(1, Math.round((T - tA0) * 30)), Nf = Math.max(1, Math.round(Df * 30)), Nt = Nr + Nf;
   const ppmG = gamePixelsPerMeter(P, 0, STEP_REF_H, STEP_REF_DIST), refPx = STEP_REF_PX > 0 ? STEP_REF_PX : 0.77;
   const hp = Array.from({ length: Nr + 1 }, (_, k) => ball.pos(Math.min(T, tA0 + k / 30))), stepPx = (k0, k1) => Math.hypot(hp[k1][0] - hp[k0][0], hp[k1][2] - hp[k0][2]) * ppmG;
@@ -700,6 +749,8 @@ function rtLayoutFar(P, ball, LI, full = false) {
   const fq = Math.floor(Nf / Fd0), frem = Nf % Fd0, ks = [...rk];     // 开花后：先短后长（刚开花时还在动）
   for (let f = 0, k = Nr; f < Fd0 && k < Nt; f++) { ks.push(k); k += fq + (f >= Fd0 - frem ? 1 : 0); }
   while (ks.length > F) ks.pop();     // 放不下（上升段已经最慢、格子上限 16×4 都不够）：尾巴上合并
+  return { cols, rows, chans, ks, Nr, Nf, Nt, tA0, need, stepPx, refPx };
+  })();
   const Fn = ks.length, Fr = ks.filter(k => k < Nr).length, Fd = Fn - Fr, Dtot = Nt / 30, times = [], dur = [];
   // 4.5.3 面片上移 vz（m/s）：寿命里一共走 vz · Dtot，面片加高这么多、开始时中心放低一半，内容始终在面片里
   const vz = rtFarVzOf(P), drift = vz * Dtot, HY = (H0 + drift) / 2 * (full && P.rtGrid < 0 ? 1.06 : 1.02), cz = (zb + zt) / 2 - drift / 2;
@@ -802,9 +853,10 @@ function fwlRiseHead(name, b, M) {
 }
 async function bakeRiseTailFull(P0, scale, onProg, mobile = true) {
   if (rtHeadOnly(P0)) return bakeRiseHead(P0, scale, onProg, mobile);
-  const P = { ...P0, form: 'emitset', outMode: 'combined', frameMode: 'uniform', zoom: 'off', autoGrid: 0, rtGpuF: 0, rtGpuM: 0, rtGpuC: 0 };
+  // 4.9.79「星头火花输出」= 分开（outMode split，和烟花序列同一个选项）：PC 出星头 / 火花两张（两个发射器、各自的颜色）；手机仍合一张（规范 v1 §6 同一时刻 1 张大序列）
+  const P = { ...P0, form: 'emitset', outMode: !mobile && P0.outMode === 'split' ? 'split' : 'combined', frameMode: 'uniform', zoom: 'off', autoGrid: 0, rtGpuF: 0, rtGpuM: 0, rtGpuC: 0 };
   const ball = rtBallistic(P), LI = rtLoopInfo(P), E0 = fixedExposure(P);
-  const fa = rtLayoutFar(P, ball, LI, true), Pa = { ...P, cols: fa.cols, rows: fa.rows, chans: fa.chans || 4 };
+  const fa = rtLayoutFar({ ...P, outMode: 'combined' }, ball, LI, true), Pa = { ...P, cols: fa.cols, rows: fa.rows, chans: fa.chans || 4 };
   const pa = rtPlan(Pa, { HX: fa.HX, HY: fa.HY, cy: fa.cz, hb: 0.5 }, fa.times, fa.dur, { loop: false, t0: fa.t0, duration: fa.Dtot, keys: fa.keys });
   const b = await bakeFrames(Pa, scale, onProg, pa, makeRiseTailFullRenderer(P, LI, ball, fa.cx, fa.vz || 0, fa.t0), { expo: [E0, E0], noFade: true });
   Object.assign(b.meta, { es: true, full: fa, T: ball.T, ball: { k: ball.k, v0: ball.v0, vz0: ball.vz0, vx0: ball.vx0, T: ball.T, H: ball.H, Hwant: ball.Hwant, vb: ball.vb, ok: ball.ok, lean: P.rtLean || 0, ...(ball.quad ? { quad: true, vt: ball.vt } : {}) } });
@@ -890,15 +942,26 @@ function fwlEmitSetFull(name, b, M, mobile = b.esMobile) {
       { m: 'InitialSize', StartSize: { const: [r1(fa.Ww * 100), r1(fa.Wh * 100), 1] } },
       { m: 'OrientationAxisLock', flags: 'EPAL_ROTATE_Z', note: '和 PC 远段一样：面片绕组件 Z 轴转向镜头；Screen Alignment = Rectangle、Required 勾 Local Space（整根尾缀转组件倾斜时一起倾）' },
       { m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(fa.keys, L.F) } } },
-      { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, fa.Dtot, fa.t0, P.rtBright || 1) }, AlphaOverLife: { const: 1 } }
+      { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, fa.Dtot, fa.t0, (P.rtBright || 1) * (b.tail ? intOr1(M.headInt) : 1)) }, AlphaOverLife: { const: 1 } }
     ]
   }];
+  // 4.9.79 星头、火花分开（和烟花序列同一条规矩：…_Head / …_Tail 两张贴图、两个发射器，除贴图和颜色外相同；共用一张 Cut）
+  const split = !!b.tail;
+  if (split) { textures.full.file = TN(name, 'Full_Head') + '.png'; textures.fullTail = { ...textures.full, file: TN(name, 'Full_Tail') + '.png' };
+    materials.fullTail = { role: 'beam_flipbook', textures: { main: 'fullTail', ramp: 'ramp' }, scalars: { rows: L.rows, cols: L.cols } };
+    const e0 = emitters[0];
+    emitters.push({ ...e0, name: 'TrailFullTail', material: 'fullTail', required: { ...e0.required },
+      modules: e0.modules.map(q => q.m === 'ColorOverLife' ? { ...q, ColorOverLife: { curve: fwlColor(M, fa.Dtot, fa.t0, (P.rtBright || 1) * (M.tailInt == null ? 1 : +M.tailInt)) } } : q),
+      notes: ['星头、火花分开输出：这是火花层（…_Full_Tail 贴图），除贴图和颜色外和星头层 TrailFull 相同'] }); }
   return { textures, materials, emitters, system: { preview_distance_cm: Math.round(Math.max(30000, bl.H * 100 * 2)), preview_warmup_s: 0 },
     notes: [`${mobile ? '手机 _M' : 'PC'}「近段 + 远段合成一张」（4.9.73，用户 10-12 21:34 / 23:49）：1 个发射器 TrailFull = 星头 + 全部火花（不分近段 / 远段）烘成一张世界坐标全程序列，`
       + `${L.cols}×${L.rows} 格 × ${L.chans} 通道 = ${L.F} 帧（上升 ${fa.Fr} 帧、开花后 ${fa.Fd} 帧，帧号曲线不匀速），面片 ${r1(fa.Ww)} × ${r1(fa.Wh)} m 立在发射点上（中心在上方 ${r1(fa.cz)} m），0 s 出现、播 ${r2(fa.Dtot)} s；`
       + `规范 v1 §6：1 层大面片、1 个发射器、没有 GPU。PC 放在 GPU 的那份火花烘进了贴图；落火 / 末段爆亮只在 GPU 里，手机没有。`
       + `星头在贴图里一帧帧往上走（快门拖影），上升快的段每个 tick 一帧；800 m 外每帧最多挪 ${fa.pxMax} 像素。${kN !== 1 ? '一个曝光（远段的）：PC 近段单独压的白热段曝光 × ' + r2(kN) + ' 这里没有，星头和白热段比 PC 白一点。' : ''}`
-      + `Initial Velocity 向上 ${r1((fa.vz || 0) * 100)} cm/s 和 PC 远段一样（面片往上平移、贴图内容已补回，不能删）。未经 UE 验证。`] };
+      + `Initial Velocity 向上 ${r1((fa.vz || 0) * 100)} cm/s 和 PC 远段一样（面片往上平移、贴图内容已补回，不能删）。未经 UE 验证。`
+      + (fa.t0 > 0 || P.cutOut > 0 ? ` 入点 ${r2(fa.t0)} s（之前不显示，发射器延迟到入点）、出点 ${P.cutOut > 0 ? r2(fa.t0 + fa.Dtot) + ' s' : '最后一颗火花看不见'}（4.9.79）。` : '')
+      + (P.frameBudget === 'fixed' ? ` 帧数：固定机位 + 匀速帧（4.9.79）。` : '')
+      + (split ? ` 星头、火花分开：TrailFull = 星头层（…_Full_Head，Color Over Life × 星头亮度），TrailFullTail = 火花层（…_Full_Tail，× 火花亮度）；只有 PC，手机仍合一张。` : '')] };
 }
 function fwlEmitSet(name, b, M, mobile) {
   if (b.esFull) return fwlEmitSetFull(name, b, M, mobile);
@@ -1042,8 +1105,10 @@ function rtMobileTables(b, kw = 1) {
 function rtTexFiles(b, name, sfx = '', idx = 1) {
   return (async () => {
     const files = [], k4 = sfx ? sfx.replace(/^_/, '') : '', L = b.meta.L;
-    if (b.esFull) { const ap = readRGBA8(b.head); files.push([`${TN(name, joinPart('Full', k4), L, idx)}.png`, await encodePNG(ap, b.N, b.NH)]);     // 4.9.73 手机合成一张：只有这一张 + 它的 Cut
-      if (!sfx) files.push(...await cutoutFiles([ap], b.N, b.NH, L, TN(name, 'Full_Cutout', null, idx), b.meta)); return files; }
+    if (b.esFull) { const ap = readRGBA8(b.head), tp = b.tail ? readRGBA8(b.tail) : null;     // 4.9.73 合成一张：只有这一张 + 它的 Cut；4.9.79 星头 / 火花分开时两张（…_Head / …_Tail）共用一张 Cut
+      if (tp) { files.push([`${TN(name, joinPart('Full_Head', k4), L, idx)}.png`, await encodePNG(ap, b.N, b.NH)]); files.push([`${TN(name, joinPart('Full_Tail', k4), L, idx)}.png`, await encodePNG(tp, b.N, b.NH)]); }
+      else files.push([`${TN(name, joinPart('Full', k4), L, idx)}.png`, await encodePNG(ap, b.N, b.NH)]);
+      if (!sfx) files.push(...await cutoutFiles(tp ? [ap, tp] : [ap], b.N, b.NH, L, TN(name, 'Full_Cutout', null, idx), b.meta)); return files; }
     const lp = readRGBA8(b.head); files.push([`${TN(name, joinPart('Loop', k4), L, idx)}.png`, await encodePNG(lp, b.N, b.NH)]);
     if (!sfx) files.push(...await cutoutFiles([lp], b.N, b.NH, L, TN(name, 'Loop_Cutout', null, idx), b.meta));
     const f = b.fades[0];
@@ -1091,7 +1156,8 @@ function rtCurvesCSV(b, M) {
   const m = b.meta, rows = ['段,曲线,相对时间,值1,值2,值3'];
   if (b.esFull) {
     for (const [u, v] of fwlFrameKeys(m.full.keys, m.L.F)) rows.push(`TrailFull,DynamicParameter_帧号,${u},${v},,`);
-    for (const [u, c] of fwlColor(M, m.full.Dtot, m.full.t0, b.P.rtBright || 1)) rows.push(`TrailFull,ColorOverLife_线性RGB,${u},${c[0]},${c[1]},${c[2]}`);
+    for (const [u, c] of fwlColor(M, m.full.Dtot, m.full.t0, (b.P.rtBright || 1) * (b.tail ? intOr1(M.headInt) : 1))) rows.push(`TrailFull,ColorOverLife_线性RGB,${u},${c[0]},${c[1]},${c[2]}`);
+    if (b.tail) for (const [u, c] of fwlColor(M, m.full.Dtot, m.full.t0, (b.P.rtBright || 1) * (M.tailInt == null ? 1 : +M.tailInt))) rows.push(`TrailFullTail,ColorOverLife_线性RGB,${u},${c[0]},${c[1]},${c[2]}`);     // 4.9.79 星头 / 火花分开
     return '\ufeff' + rows.join('\n') + '\n';
   }
   for (const [u, v] of rtSawKeys(m)) rows.push(`RiseLoop,DynamicParameter_帧号,${u},${v},,`);
@@ -1223,14 +1289,14 @@ function renderEmitExportFull(b) {
     if (tilt && pr.u.uRot) gl.uniform3fv(pr.u.uRot, [th, 0, 0]);
     gl.uniform4fv(pr.u.uRect, [s.x - s.w * kw / 2, s.z - s.h / 2, s.x + s.w * kw / 2, s.z + s.h / 2]); gl.uniform4fv(pr.u.uView, view);
     bindSeqTextures(pr, b); gl.uniform1f(pr.u.uFrame, s.f); gl.uniform1f(pr.u.uMirror, 0);
-    setMatUniforms(pr, { ...M, headInt: intOr1(M.headInt) * (P.rtBright || 1) }, t);
+    setMatUniforms(pr, { ...M, headInt: intOr1(M.headInt) * (P.rtBright || 1), ...(b.tail ? { tailInt: (M.tailInt == null ? 1 : +M.tailInt) * (P.rtBright || 1) } : {}) }, t);     // 4.9.79 星头 / 火花分开时两张各乘各的亮度（和导出一样）
     gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.activeTexture(gl.TEXTURE0);
     if (tilt && pr.u.uRot) gl.uniform3fv(pr.u.uRot, [0, 0, 0]);
   }
   additive(false); post();
   rtLayerBarSync([['full', null, false]]);
   const fa = b.meta.full, dist = (state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m` : '') + (tkN !== 1 ? ` · 按尺寸档时间 × ${tkN}` : '');
-  hudText = `引擎回放 · ${b.esMobile ? '手机 _M' : 'PC'}（近段 + 远段合成一张）· ${!rtOn('full') ? '（分层看关了）' : s ? '第 ' + (s.f + 1) + '/' + b.meta.L.F + ' 帧' : '已结束'} · 面片 ${fa.Ww.toFixed(1)} × ${fa.Wh.toFixed(1)} m · 1 个发射器、没有粒子${dist}${rtShowNote()}`;
+  hudText = `引擎回放 · ${b.esMobile ? '手机 _M' : 'PC'}（近段 + 远段合成一张）· ${!rtOn('full') ? '（分层看关了）' : s ? '第 ' + (s.f + 1) + '/' + b.meta.L.F + ' 帧' : '已结束'} · 面片 ${fa.Ww.toFixed(1)} × ${fa.Wh.toFixed(1)} m · ${b.tail ? '2 个发射器（星头 / 火花分开）' : '1 个发射器'}、没有粒子${fa.t0 > 0 ? ' · 入点 ' + fa.t0.toFixed(2) + ' s' : ''}${dist}${rtShowNote()}`;
   if (tilt) hudText += ` · 倾斜预览 ${tilt}°（Rectangle + 锁 Z + Local Space，整张跟组件倾；以 UE 实测为准）`;
   hudB = '';
 }

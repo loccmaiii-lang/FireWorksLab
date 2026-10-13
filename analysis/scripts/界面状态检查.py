@@ -42,6 +42,7 @@
   R6 4.5.1 升空尾缀 RT6 近段 + 远段：缺省关 = RT5；开了贴图有粗 / 中 / 细、GPU 按档预算（上限一起降、降掉的回贴图）、贴图 + GPU = 出生率；交接权重相加 = 1；闪烁层；远看直径光量不变；
   R7 4.9.73 尾缀手机「近段 + 远段合成一张」：1 个发射器 TrailFull、32 列细高格、过导出拦截、打包换名、PC 不变
   R8 4.9.78 已通过的 RT6 左栏分档、尺寸档按时间缩（XS 1.69 s、坝顶低层 80 m）
+  R9 4.9.79 合成一张用烟花同一组导出选项（入点 / 出点、帧数、星头火花分开）
      TrailFar 导出、没有 RiseFade、命名 Loop + Far；近段贴图曝光 k → RiseLoop Color Over Life × 1 / k²；面板；4.5.2 分层看（近段 / 远段 / 每个 GPU 层开关、双击只看、全部恢复）
   R5 4.4.5 升空尾缀 RT5 选项：缺省旧做法；物理弹道到设定高度、第 1 秒减速够猛、星头光晕跟弹道（Velocity Over Life）；GPU 兼容（无 Acceleration、≤ 2 个 Initial Velocity）、
      GPU 粒子上限、细 / 中火花进贴图、H4 新口径和温度偏移无关；循环层长度起步不伸到发射点以下；面板「弹道」在星头 › 弹道、选物理后升空时间藏起
@@ -1344,6 +1345,54 @@ R8_JS = r"""async () => {
 async def r8(pg):
     """4.9.78：已通过但没进正式库的 RT6 左栏照样有小 / 中 / 大；尺寸档 XS 1.69 s / 坝顶低层 80 m 1.92 s（Froude，只缩合成一张），S / Hero 不缩时间；系统名 RiseTrail_XS / S80"""
     r = await pg.evaluate(R8_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
+
+
+R9_JS = r"""async () => {
+  // 4.9.79（用户 10-13 18:47「comet&silver3.0做好了，但是我也没办法选择出入点，帧数这些也不让选，comet的头部与尾缀我也无法分开两层导出」）：
+  //   合成一张用烟花序列同一组导出选项——入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花输出（分开 = PC 两张两个发射器，手机仍一张）
+  const out = {}, bad = [];
+  const e = entryById('RT6S'), d = defaultsFor(e.base), Z = derive({ ...d.P, ...e.p, rtFar: 1 }), M = defaultsFor(e.base).M, ball = rtBallistic(Z), T = ball.T;
+  const sch = over => rtFullSchedule({ ...Z, texW: 1024, texH: 1024, ...over }, ball, T, 1.2, 10, 198);
+  // 缺省 = 按运动分、从发射到最后
+  const s0 = sch({}); out.def = { t0: s0.tA0, Nt: s0.Nt, F: s0.ks.length, grid: [s0.cols, s0.rows, s0.chans] };
+  if (s0.tA0 !== 0 || s0.Nt !== Math.round(T * 30) + 36) bad.push('缺省窗口不对：' + JSON.stringify(out.def));
+  // 入点 0.5 s、出点 2.5 s（开花前）：窗口 = 2 s、没有开花后
+  const s1 = sch({ cutIn: 0.5, cutOut: 2.5 }); out.cut = { t0: s1.tA0, Nt: s1.Nt, Nr: s1.Nr, Nf: s1.Nf, F: s1.ks.length };
+  if (Math.abs(s1.tA0 - 0.5) > 1e-6 || s1.Nt !== 60 || s1.Nf !== 0) bad.push('入点 / 出点不对：' + JSON.stringify(out.cut));
+  // 固定机位 + 匀速帧：每帧停 2 tick
+  const s2 = sch({ frameBudget: 'fixed', holdTicks: 2 }), gaps = s2.ks.slice(1).map((k, i) => k - s2.ks[i]); out.fixed = { F: s2.ks.length, gaps: [...new Set(gaps)], grid: [s2.cols, s2.rows, s2.chans] };
+  if (out.fixed.gaps.join() !== '2' || s2.ks.length !== Math.ceil(s2.Nt / 2) || s2.cols * s2.rows * s2.chans < s2.ks.length) bad.push('匀速帧不对：' + JSON.stringify(out.fixed));
+  const s3 = sch({ frameBudget: 'fixed', holdTicks: 0 }); out.fixedAuto = { F: s3.ks.length, Nt: s3.Nt }; if (s3.ks.length !== s3.Nt) bad.push('匀速帧自动（放得下）应该每 tick 一帧：' + JSON.stringify(out.fixedAuto));
+  // 星头、火花分开：两个发射器、两张贴图（…_Full_Head / …_Full_Tail），共用 Cut；颜色各乘各的亮度
+  const L = layoutOf({ ...Z, texW: 2048, texH: 2048, cols: 32, rows: 1, chans: 4 });
+  const fa = { t0: 0, Dtot: 4.8, Df: 1.2, Fr: 89, Fd: 39, cols: 32, rows: 1, chans: 4, F: L.F, cx: 0, cz: 94, vz: 0.5, HX: 5.1, HY: 99, Ww: 10.2, Wh: 198, keys: [[0, 0], [1, L.F - 0.01]], pxMax: 3 };
+  const pb = { form: 'emitset', esMobile: false, esFull: true, P: { ...Z, outPC: 'full', outMode: 'split' }, N: 2048, NH: 2048, head: {}, tail: {}, meta: { L, full: fa, T, ball: { ...ball, pos: undefined, vel: undefined } }, fades: [], far: null };
+  const jp = fwlCascade('T', pb, { ...M, headInt: 2, tailInt: 0.5 }, false);
+  out.split = { em: jp.emitters.map(x => x.name), tex: Object.keys(jp.textures), files: [jp.textures.full.file, jp.textures.fullTail && jp.textures.fullTail.file], cut: jp.emitters.map(x => x.required.cutout),
+    col: jp.emitters.map(x => +x.modules.find(q => q.m === 'ColorOverLife').ColorOverLife.curve[0][1][0].toFixed(4)) };
+  if (out.split.em.join() !== 'TrailFull,TrailFullTail' || out.split.files.join() !== 'T_T_Full_Head.png,T_T_Full_Tail.png' || out.split.cut.join() !== 'cutoutFull,cutoutFull' || !(out.split.col[0] > out.split.col[1] * 3.5))
+    bad.push('星头 / 火花分开不对：' + JSON.stringify(out.split));
+  { const u8 = new Uint8Array([1]), files = [['T_T_Full_Head.png', u8], ['T_T_Full_Tail.png', u8], ['T_T_Full_Cutout.png', u8], ['cascade.json', utf8(JSON.stringify(jp))]];
+    const o = applyPackNaming(files, 'RiseTrail_S', [{ ln: 'T', mn: 'T_Mobile', b: pb, layer: '' }], {}); out.names = o.map(([f]) => f).filter(f => /png$/.test(f));
+    if (!out.names.includes('T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_Head_HD.png') || !out.names.includes('T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_Tail_HD.png') || !out.names.includes('T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_C.png')) bad.push('分开的命名不对：' + out.names); }
+  // 面板：选了合成一张才出「入点与出点」「输出：帧数」；入点之前的放大、规格框、重复的运动模糊 / 留边不出；星头火花输出出
+  const sec = t => SCHEMA.find(x => x.sec === t), find = (sc, k) => sc.items.find(it => (Array.isArray(it) ? it[0] : it.sel || it.info) === k);
+  const io = sec('入点与出点（导出）'), op = sec('输出：帧数 · 格子 · 贴图（导出）');
+  const vis = (P, sc, k) => sc.show(P) && (!k || itemVisible(find(sc, k), P));
+  const Pseq = { ...Z, outPC: 'seq', outMobile: 'seq' }, Pf = { ...Z, outPC: 'full', outMobile: 'seq', cutIn: 0.5 }, Pm = { ...Z, outPC: 'seq', outMobile: 'full', frameBudget: 'fixed' };
+  out.panel = { seq: [io.show(Pseq), op.show(Pseq)], pc: ['cutIn', 'cutOut', 'preRoll', 'frameBudget', 'maxHoldBurn', 'outMode', 'specBox', 'shutter', 'cellPad'].map(k => vis(Pf, k.startsWith('cut') || k === 'preRoll' ? io : op, k)), mob: ['holdTicks', 'maxHold'].map(k => vis(Pm, op, k)) };
+  if (out.panel.seq.join() !== 'false,false' || out.panel.pc.join() !== 'true,true,false,true,true,true,false,false,false' || out.panel.mob.join() !== 'true,false') bad.push('面板不对：' + JSON.stringify(out.panel));
+  // 空中花型不受影响：规格框、入点之前照旧
+  const Pa = derive({ ...defaultsFor('kiku').P, cutIn: 0.4 }); out.aerial = [vis(Pa, io, 'preRoll'), vis(Pa, op, 'specBox'), vis(Pa, op, 'outMode'), vis(Pa, op, 'shutter')];
+  if (out.aerial.join() !== 'true,true,false,true') bad.push('空中花型的面板被改了：' + out.aerial);
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def r9(pg):
+    """4.9.79 合成一张用烟花同一组导出选项：入点 / 出点、帧数（按运动分 / 匀速帧）、星头火花分开（PC 两张两发射器、命名 _Head / _Tail、共用 Cut）；面板只在选了合成一张时出现，空中花型不变"""
+    r = await pg.evaluate(R9_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
@@ -3548,7 +3597,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

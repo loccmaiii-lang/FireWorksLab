@@ -857,7 +857,7 @@ function renderDeliv() {
       const m = x.b.meta, ly = combo ? nm.layers[x.i] : '';
       for (const [, L, sub, n] of namingSheets(x.b)) {
         const fa = sub === 'Full' ? m.full : sub === 'Far' ? x.b.far.meta.far : null, d0 = fa ? fa.t0 : sub === 'Fade' ? m.T : 0, life = fa ? fa.Dtot : sub === 'Fade' ? m.fadeSeconds : m.T;
-        rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', false)}.png</td><td>PC · ${sub === 'Full' ? '近段 + 远段合成一张' : sub === 'Loop' ? '循环层（近段）' : sub === 'Far' ? '远段（全程）' : '消散'} · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
+        for (const ht of sub === 'Full' && x.b.tail ? ['Head', 'Tail'] : ['tex']) rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, ht, false)}.png</td><td>PC · ${sub === 'Full' ? '近段 + 远段合成一张' + (ht === 'Head' ? '（星头层）' : ht === 'Tail' ? '（火花层）' : '') : sub === 'Loop' ? '循环层（近段）' : sub === 'Far' ? '远段（全程）' : '消散'} · 单格 ${Math.round(L.cellW)} px · ${L.F} 帧</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
         const mobLoop = sub === 'Loop' && (combo ? layerOut(x.L).mobile !== 'off' : state.P.outMobile !== 'off' && !rtMobFull(state.P));     // 4.9.69 起手机 _M 只有近段那张；4.9.73 合成一张时没有
         if (mobLoop) rows.push(`<tr><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'tex', true)}.png</td><td>手机</td><td>${d0.toFixed(2)} s</td><td>${life.toFixed(2)} s</td></tr>`);
         rows.push(`<tr class="dim"><td>${fwTexName(nm.base, joinPart(ly, sub), L, n, 'C')}.png</td><td>Cut（${mobLoop ? 'PC / 手机共用' : 'PC'}，512）</td><td></td><td></td></tr>`);
