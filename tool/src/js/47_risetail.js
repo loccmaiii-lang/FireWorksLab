@@ -761,6 +761,55 @@ function rtLayoutFar(P, ball, LI, full = false) {
   rtFarCache.set(key, out); if (rtFarCache.size > 8) rtFarCache.delete(rtFarCache.keys().next().value);
   return out;
 }
+// ---- 4.9.81 合成一张「随内容放大 · 锚在发射点」（用户 10-13 20:00「comet这种取景也不够满」→ 21:36 同意带锚点的 Zoom）----
+// 固定取景的整张面片要装下整条升空路径，前几帧星头只占面片底部一小段（单帧填充中位 0.6–0.7、最差 10 % 只有 0.15）。
+// 锚点 = 发射点（跟着面片上移 vz 一起走）：每帧在低分辨率下量内容相对锚点的左右 / 上 / 下范围（这一帧停留的开头、结尾各量一次），
+// 面片形状 = 各方向的最大值（不再加面片上移那一截）。尾缀又细又高、早段星头宽 2 m 却只有 3 m 高：横、竖分开放大（Size By Life 的 X、Y 两条），
+// 竖向 = 上 / 下里最紧的那个、横向 = 左右，每个最小 0.05；竖向分级（zoomLevels40，最多 12 级），横向在同一段里取最大，换帧的同一刻一起换（stepKeysXY40）。
+const rtAnchorCache = new Map(), RT_ANCHOR_MIN = 0.05;
+function stepKeysXY40(sx, sy, ticks, N) {
+  const F = sy.length, eps = 1.5e-4, kx = [], ky = [];
+  for (let f = 0; f < F; f++) {
+    const a = f ? ticks[f] / N : 0;
+    if (f && Math.abs(sx[f] - sx[f - 1]) < 1e-6 && Math.abs(sy[f] - sy[f - 1]) < 1e-6) continue;
+    if (f) { const u = Math.max(kx[kx.length - 1][0], a - eps); kx.push([u, sx[f - 1]]); ky.push([u, sy[f - 1]]); }
+    kx.push([a, sx[f]]); ky.push([a, sy[f]]);
+  }
+  kx.push([1, sx[F - 1]]); ky.push([1, sy[F - 1]]);
+  const keep = kx.map((k, i) => i === 0 || k[0] > kx[i - 1][0] + 1e-9 || k[1] !== kx[i - 1][1] || ky[i][1] !== ky[i - 1][1]);
+  return [kx.filter((_, i) => keep[i]), ky.filter((_, i) => keep[i])];
+}
+function rtFullAnchor(P, ball, LI, fa) {
+  const key = JSON.stringify(P) + '|anchor'; if (rtAnchorCache.has(key)) return rtAnchorCache.get(key);
+  const T = ball.T, pT = ball.pos(T), pad = 30 + 2 * (+P.rtCone || 0) + 15 * (+P.rtTurb || 0);
+  const xlo = Math.min(0, pT[0]) - pad, xhi = Math.max(0, pT[0]) + pad, zlo = -25, zhi = ball.H + 25, view = [(xlo + xhi) / 2, (zlo + zhi) / 2, (xhi - xlo) / 2, (zhi - zlo) / 2];
+  const N = 96, NH = 768, ppm = N / (2 * view[2]), ppmY = NH / (2 * view[3]), thr = -Math.log(1 - 3 / 255) / fixedExposure(P), pxX = 2 * view[2] / N, pxY = 2 * view[3] / NH;
+  const t = new Target(N, NH, gl.RGBA16F), buf = new Float32Array(N * NH * 4), R = makeRiseTailFullRenderer(P, LI, ball, 0), vz = fa.vz || 0;
+  const boxAt = ts => { t.clear(); t.bind(); additive(true); PPMY = ppmY; R.subW = 0; R.draw(ts, view, ppm, 1); additive(false); PPMY = 0;
+    gl.readPixels(0, 0, N, NH, gl.RGBA, gl.FLOAT, buf); let x0 = N, x1 = -1, y0 = NH, y1 = -1;
+    for (let y = 0; y < NH; y++) for (let x = 0; x < N; x++) { const i = y * N + x; if (buf[i * 4] + buf[i * 4 + 1] > thr) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; } }
+    if (x1 < 0) return null; const d = vz * (ts - fa.t0), X = i => view[0] - view[2] + i * pxX, Y = j => view[1] - view[3] + j * pxY;
+    return { X: Math.max(Math.abs(X(x0) - fa.cx), Math.abs(X(x1 + 1) - fa.cx)) + pxX, U: Math.max(0, Y(y1 + 1) - d) + pxY, D: Math.max(0, d - Y(y0)) + pxY }; };
+  const need = [];
+  try {
+    for (let f = 0; f < fa.times.length; f++) { const a = fa.t0 + fa.times[f] - fa.dur[f] / 2, b = fa.t0 + fa.times[f] + fa.dur[f] / 2 - 1e-4, p = boxAt(a), q = boxAt(Math.max(a, b));
+      need.push(p || q ? { X: Math.max(p ? p.X : 0, q ? q.X : 0), U: Math.max(p ? p.U : 0, q ? q.U : 0), D: Math.max(p ? p.D : 0, q ? q.D : 0) } : null); }
+  } finally { PPMY = 0; t.dispose(); }
+  let Xn = 1, Un = 0.5, Dn = 0.5; for (const n of need) if (n) { Xn = Math.max(Xn, n.X); Un = Math.max(Un, n.U); Dn = Math.max(Dn, n.D); }
+  // 锚点下面（或上面）几乎没内容时，那一边至少留另一边的 4 %：否则那一点点内容会把整段的竖向放大卡住（CS3C 金尾：发射点下 0.2 m → 每帧竖向至少 0.4）
+  Dn = Math.max(Dn, 0.04 * Un); Un = Math.max(Un, 0.04 * Dn);
+  const fill = a => { for (let i = 0; i < a.length; i++) if (a[i] == null) a[i] = i ? a[i - 1] : (a.find(v => v != null) || 1); return a; };     // 没内容的帧跟前一帧
+  const sxF = fill(need.map(n => n ? clamp(n.X / Xn, RT_ANCHOR_MIN, 1) : null)), syF = fill(need.map(n => n ? clamp(Math.max(n.U / Un, n.D / Dn), RT_ANCHOR_MIN, 1) : null));
+  const HX = Xn * 1.04, Ua = Un * 1.03, Da = Dn * 1.03, HY = (Ua + Da) / 2, cz = (Ua - Da) / 2;
+  const Nt = Math.round(fa.Dtot * 30), ks = fa.times.map((tc, f) => Math.round((tc - fa.dur[f] / 2) * 30)), frameScale = zoomLevels40(syF), frameScaleX = frameScale.slice();
+  for (let i = 0; i < frameScale.length;) { let j = i; while (j + 1 < frameScale.length && frameScale[j + 1] === frameScale[i]) j++; let m = 0; for (let q = i; q <= j; q++) m = Math.max(m, sxF[q]); for (let q = i; q <= j; q++) frameScaleX[q] = m; i = j + 1; }
+  const [sizeKeysX, sizeKeysY] = stepKeysXY40(frameScaleX, frameScale, ks, Nt);
+  let area = 0; for (let i = 0; i < 200; i++) { const u = (i + 0.5) / 200; area += evalKeys(sizeKeysX, u) * evalKeys(sizeKeysY, u) / 200; }
+  const out = { anchor: true, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cz, frameScale, frameScaleX, sizeKeys: sizeKeysY, sizeKeysX, sizeKeysY, area: +area.toFixed(4), fixedArea: +((2 * HX * 2 * HY) / (fa.Ww * fa.Wh)).toFixed(4),
+    need: need.map(n => n && [+n.X.toFixed(1), +n.U.toFixed(1), +n.D.toFixed(1)]), ext: [+Xn.toFixed(1), +Un.toFixed(1), +Dn.toFixed(1)] };     // 每帧左右 / 上 / 下（米，给检查和看法用）
+  rtAnchorCache.set(key, out); if (rtAnchorCache.size > 8) rtAnchorCache.delete(rtAnchorCache.keys().next().value);
+  return out;
+}
 function rtPlan(P, lay, times, dur, extra = {}) {
   const L = layoutOf(P);
   return { L, HX: lay.HX, HY: lay.HY, Ww: 2 * lay.HX, Wh: 2 * lay.HY, cy: lay.cy, ppm: L.cellW / (2 * lay.HX), zoom: false, aniso: true,
@@ -856,8 +905,11 @@ async function bakeRiseTailFull(P0, scale, onProg, mobile = true) {
   // 4.9.79「星头火花输出」= 分开（outMode split，和烟花序列同一个选项）：PC 出星头 / 火花两张（两个发射器、各自的颜色）；手机仍合一张（规范 v1 §6 同一时刻 1 张大序列）
   const P = { ...P0, form: 'emitset', outMode: !mobile && P0.outMode === 'split' ? 'split' : 'combined', frameMode: 'uniform', zoom: 'off', autoGrid: 0, rtGpuF: 0, rtGpuM: 0, rtGpuC: 0 };
   const ball = rtBallistic(P), LI = rtLoopInfo(P), E0 = fixedExposure(P);
-  const fa = rtLayoutFar({ ...P, outMode: 'combined' }, ball, LI, true), Pa = { ...P, cols: fa.cols, rows: fa.rows, chans: fa.chans || 4 };
-  const pa = rtPlan(Pa, { HX: fa.HX, HY: fa.HY, cy: fa.cz, hb: 0.5 }, fa.times, fa.dur, { loop: false, t0: fa.t0, duration: fa.Dtot, keys: fa.keys });
+  const fa0 = rtLayoutFar({ ...P, outMode: 'combined' }, ball, LI, true), Pa = { ...P, cols: fa0.cols, rows: fa0.rows, chans: fa0.chans || 4 };
+  // 4.9.81 面片取景「随内容放大 · 锚在发射点」：形状 / 每帧大小另量（rtFullAnchor），面片锚在发射点、Size By Life 绕它放大；缺省（固定）一字不变
+  const an = P0.zoom === 'anchor' ? rtFullAnchor({ ...P, outMode: 'combined' }, ball, LI, fa0) : null, fa = an ? { ...fa0, ...an } : fa0;
+  const pa = rtPlan(Pa, { HX: fa.HX, HY: fa.HY, cy: fa.cz, hb: 0.5 }, fa.times, fa.dur, { loop: false, t0: fa.t0, duration: fa.Dtot, keys: fa.keys,
+    ...(an ? { zoom: true, anchor: true, sizeKeys: an.sizeKeysY, sizeKeysX: an.sizeKeysX, sizeKeysY: an.sizeKeysY, frameScale: an.frameScale, area: an.area } : {}) });
   const b = await bakeFrames(Pa, scale, onProg, pa, makeRiseTailFullRenderer(P, LI, ball, fa.cx, fa.vz || 0, fa.t0), { expo: [E0, E0], noFade: true });
   Object.assign(b.meta, { es: true, full: fa, T: ball.T, ball: { k: ball.k, v0: ball.v0, vz0: ball.vz0, vx0: ball.vx0, T: ball.T, H: ball.H, Hwant: ball.Hwant, vb: ball.vb, ok: ball.ok, lean: P.rtLean || 0, ...(ball.quad ? { quad: true, vt: ball.vt } : {}) } });
   b.form = 'emitset'; b.esMobile = mobile; b.esFull = true; b.P = { ...P0 }; b.fades = []; b.far = null;
@@ -933,13 +985,15 @@ function fwlEmitSetFull(name, b, M, mobile = b.esMobile) {
   const materials = { full: { role: 'beam_flipbook', textures: { main: 'full', ramp: 'ramp' }, scalars: { rows: L.rows, cols: L.cols } } };
   const emitters = [{
     name: 'TrailFull', material: 'full', gpu: false, max_alive: 1,
-    required: { screen_alignment: 'Rectangle', duration_s: r4(fa.Dtot), loops: 1, delay_s: r4(fa.t0), cutout: 'cutoutFull', max_draw_count: 1, pivot_offset: [-0.5, -0.5], local_space: true },
+    required: { screen_alignment: 'Rectangle', duration_s: r4(fa.Dtot), loops: 1, delay_s: r4(fa.t0), cutout: 'cutoutFull', max_draw_count: 1, pivot_offset: [-0.5, fa.anchor ? r4(-0.5 - fa.cz / fa.Wh) : -0.5], local_space: true },
     spawn: { rate: { const: 0 }, bursts: [[0, 1]] },
     modules: [
       { m: 'Lifetime', Lifetime: { const: r4(fa.Dtot) } },
-      { m: 'InitialLocation', StartLocation: { const: [r1(fa.cx * 100), 0, r1(fa.cz * 100)] } },
+      { m: 'InitialLocation', StartLocation: { const: [r1(fa.cx * 100), 0, fa.anchor ? 0 : r1(fa.cz * 100)] } },     // 4.9.81 锚在发射点：粒子在发射点，Pivot Offset 把面片中心放到上方 cz × 大小
       { m: 'InitialVelocity', StartVelocity: { const: [0, 0, r1(Math.max(1, (fa.vz || 0) * 100))] } },
       { m: 'InitialSize', StartSize: { const: [r1(fa.Ww * 100), r1(fa.Wh * 100), 1] } },
+      ...(fa.anchor ? [{ m: 'SizeByLife', LifeMultiplier: { curve: fa.sizeKeysX.map(([u, x], i) => [r4(u), [r4(x), r4(fa.sizeKeysY[i][1]), 1]]) }, MultiplyX: true, MultiplyY: true, MultiplyZ: false,
+        note: '随内容放大 · 锚在发射点（4.9.81）：横（X）竖（Y）各自放大，和换帧同一刻换大小，绕 Pivot（发射点）' }] : []),
       { m: 'OrientationAxisLock', flags: 'EPAL_ROTATE_Z', note: '和 PC 远段一样：面片绕组件 Z 轴转向镜头；Screen Alignment = Rectangle、Required 勾 Local Space（整根尾缀转组件倾斜时一起倾）' },
       { m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(fa.keys, L.F) } } },
       { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, fa.Dtot, fa.t0, (P.rtBright || 1) * (b.tail ? intOr1(M.headInt) : 1)) }, AlphaOverLife: { const: 1 } }
@@ -961,6 +1015,7 @@ function fwlEmitSetFull(name, b, M, mobile = b.esMobile) {
       + `Initial Velocity 向上 ${r1((fa.vz || 0) * 100)} cm/s 和 PC 远段一样（面片往上平移、贴图内容已补回，不能删）。未经 UE 验证。`
       + (fa.t0 > 0 || P.cutOut > 0 ? ` 入点 ${r2(fa.t0)} s（之前不显示，发射器延迟到入点）、出点 ${P.cutOut > 0 ? r2(fa.t0 + fa.Dtot) + ' s' : '最后一颗火花看不见'}（4.9.79）。` : '')
       + (P.frameBudget === 'fixed' ? ` 帧数：固定机位 + 匀速帧（4.9.79）。` : '')
+      + (fa.anchor ? ` 面片取景「随内容放大 · 锚在发射点」（4.9.81）：面片最大 ${r1(fa.Ww)} × ${r1(fa.Wh)} m、中心在发射点上方 ${r1(fa.cz)} m（Pivot Offset），Size By Life 竖向 ${r2(Math.min(...fa.frameScale))}–1、横向 ${r2(Math.min(...fa.frameScaleX))}–1（${fa.sizeKeysX.length} 个点），平均面积是固定取景的 ${Math.round(fa.area * fa.fixedArea * 100)} %；未经 UE 验证。` : '')
       + (split ? ` 星头、火花分开：TrailFull = 星头层（…_Full_Head，Color Over Life × 星头亮度），TrailFullTail = 火花层（…_Full_Tail，× 火花亮度）；只有 PC，手机仍合一张。` : '')] };
 }
 function fwlEmitSet(name, b, M, mobile) {
@@ -1277,7 +1332,8 @@ function renderEmitLive() {
 function rtFullStateAt(b, t) {
   const fa = b.meta.full, u = (t - fa.t0) / fa.Dtot; if (u < 0 || u >= 1) return null;
   if (b.esHead) { const p=rtBallistic(b.P).pos(t); return {f:0,x:p[0],z:p[2]+fa.cz,w:fa.Ww,h:fa.Wh}; }
-  return { f: clamp(Math.floor(evalKeys(fa.keys, u)), 0, b.meta.L.F - 1), x: fa.cx, z: fa.cz + (fa.vz || 0) * (t - fa.t0), w: fa.Ww, h: fa.Wh };
+  const sx = fa.anchor ? evalKeys(fa.sizeKeysX, u) : 1, sy = fa.anchor ? evalKeys(fa.sizeKeysY, u) : 1;     // 4.9.81 锚在发射点：面片绕锚点（发射点 + 上移）按 Size By Life 横竖各自放大
+  return { f: clamp(Math.floor(evalKeys(fa.keys, u)), 0, b.meta.L.F - 1), x: fa.cx, z: fa.cz * sy + (fa.vz || 0) * (t - fa.t0), w: fa.Ww * sx, h: fa.Wh * sy };
 }
 function renderEmitExportFull(b) {
   const tkN = typeof exportTimeNow === 'function' && !b.esHead ? exportTimeNow() : 1;     // 4.9.78 尺寸档按时间缩：回放按导出的时间放
@@ -1297,6 +1353,7 @@ function renderEmitExportFull(b) {
   rtLayerBarSync([['full', null, false]]);
   const fa = b.meta.full, dist = (state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m` : '') + (tkN !== 1 ? ` · 按尺寸档时间 × ${tkN}` : '');
   hudText = `引擎回放 · ${b.esMobile ? '手机 _M' : 'PC'}（近段 + 远段合成一张）· ${!rtOn('full') ? '（分层看关了）' : s ? '第 ' + (s.f + 1) + '/' + b.meta.L.F + ' 帧' : '已结束'} · 面片 ${fa.Ww.toFixed(1)} × ${fa.Wh.toFixed(1)} m · ${b.tail ? '2 个发射器（星头 / 火花分开）' : '1 个发射器'}、没有粒子${fa.t0 > 0 ? ' · 入点 ' + fa.t0.toFixed(2) + ' s' : ''}${dist}${rtShowNote()}`;
+  if (fa.anchor && s) hudText += ` · 随内容放大 · 锚在发射点：这一帧 ${(s.w / fa.Ww).toFixed(2)} × ${(s.h / fa.Wh).toFixed(2)}`;     // 4.9.81
   if (tilt) hudText += ` · 倾斜预览 ${tilt}°（Rectangle + 锁 Z + Local Space，整张跟组件倾；以 UE 实测为准）`;
   hudB = '';
 }

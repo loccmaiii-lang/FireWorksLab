@@ -208,7 +208,7 @@ function wbSync() {
 // 4.9.1（5.0 第 3 步，交互宪章 5「身份条」）：顶栏一眼看到——打开的是什么、从哪来、哪个版本、改了没保存、素材包和现在一不一样。
 // 以前名字只在左栏「版本记录」里，左栏收起就不知道开的是谁。贴图新旧在旁边的 #abState（烘焙中 / 旧 / 失败）。
 // 4.9.33：OUTPUT_VER.zoom 只算进用 Zoom 取景的效果（别的效果的签名和 4.9.32 一样，不会因为它变成「素材包要重导」）
-const OUT_SIG = () => { try { const { zoom, ...rest } = OUTPUT_VER, s = wbSnap(), z = s.kind === 'combo' ? (s.layers || []).some(l => l.P && l.P.zoom === 'on') : !!(s.P && s.P.zoom === 'on'); let ss = ''; try { const sp = sizeSpecOf(); if (sp) ss = sp.off ? '|size-off' : `|size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (e) { }   // 4.9.51
+const OUT_SIG = () => { try { const { zoom, ...rest } = OUTPUT_VER, s = wbSnap(), zz = q => !!q && (q.zoom === 'on' || q.zoom === 'anchor'), z = s.kind === 'combo' ? (s.layers || []).some(l => zz(l.P)) : zz(s.P); let ss = ''; try { const sp = sizeSpecOf(); if (sp) ss = sp.off ? '|size-off' : `|size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (e) { }   // 4.9.51
     return JSON.stringify(rest) + (z && zoom ? '|zoom' + zoom : '') + ss; } catch (e) { return ''; } };
 function idBarInfo(list, changed) {
   // 每个标签 [短字, 样式, 悬停的完整说明]；顺序 = 要紧的在前（窄的时候后面的先被挤掉）
@@ -804,7 +804,7 @@ function migNotify() {
   const nm = k => NM[k] || ((typeof PNAMES !== 'undefined' ? PNAMES : []).find(r => r.key === k) || {}).cn || k;
   // 4.9.7（对话框23 参数栏交互第 9 条）：值也写中文（以前写「存的是 fade」「存的是 0」这种内部值）
   const VAL = { outLow: { frame: '单帧', seq: '序列（和手机同一张）' }, endMode: { fade: '最后 0.3 s 整体淡出', natural: '等火花自然灭完', cut: '到序列时长直接切' }, coolMode: { 0: '按各自寿命', 1: '按实际年龄' }, engine: { cpu: 'CPU', gpu: 'GPU' },
-    zoom: { off: '固定大小', on: 'Zoom（随开花放大）', tight: '紧凑取景' }, frameMode: { content: '按画面变化', auto: '自动（按运动快慢）', uniform: '均匀', tick30: '30 fps（自动分段）' }, prePivot: { 0: '面片中心', 1: '爆点' }, form: { unit: '单元序列（单束）', master: '大面片母版', segments: '分段母版' } };
+    zoom: { off: '固定大小', on: 'Zoom（随开花放大）', anchor: 'Zoom · 锚在爆点 / 发射点', tight: '紧凑取景' }, frameMode: { content: '按画面变化', auto: '自动（按运动快慢）', uniform: '均匀', tick30: '30 fps（自动分段）' }, prePivot: { 0: '面片中心', 1: '爆点' }, form: { unit: '单元序列（单束）', master: '大面片母版', segments: '分段母版' } };
   const selLabel = (k, v) => { for (const sec of (typeof SCHEMA !== 'undefined' ? SCHEMA : [])) for (const it of sec.items) if (it.sel === k && it.options) { const o = it.options.find(o => String(o[0]) === String(v)); if (o) return splitLab(o[1])[0]; } return null; };
   const unitOf = k => { for (const sec of (typeof SCHEMA !== 'undefined' ? SCHEMA : [])) for (const it of sec.items) if (Array.isArray(it) && it[0] === k) return it[2] || ''; return ''; };
   const f = (k, v) => { if (v == null || v === '') return '空'; const t = VAL[k] && VAL[k][String(v)] != null ? VAL[k][String(v)] : selLabel(k, v); if (t != null) return `「${t}」`; if (typeof v === 'number' || isFinite(+v)) { const u = unitOf(k); return +(+v).toFixed(4) + (u && u !== '1' ? ' ' + u : ''); } return `「${String(v)}」`; };

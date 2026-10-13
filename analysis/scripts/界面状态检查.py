@@ -626,7 +626,9 @@ async def x1(pg):
     # 4.2.15 光点个数 = 模拟里会亮的星数（引菊 → 锦两层炭头亮度都是 0 → 0 颗，层页头要提示）；另拿第 1 层把炭头亮度临时设成 1 查画得出来
     dr = await pg.evaluate("(() => { selectComboLayer(-1); const pc = state.layers.map(comboLayerDraw); state.platform = 'mobile'; const mb = state.layers.map(comboLayerDraw); state.platform = 'pc'; const n = (i, o) => { const L = { ...state.layers[i], out: { pc: 'dots', mobile: 'seq' } }, e0 = layerEntryOf(state.layers[i]), e = o ? { P: { ...e0.P, ...o } } : e0, v = dotVis(e.P); return [dotsTables(e, L)[0].list.length, v ? v.n : 0, e.P.stars]; }; return { pc, mb, l2: n(1), l1: n(0, { headBright: 1 }) }; })()")
     info['引擎回放'] = dr
-    if dr['pc'][1] != 'dots' or dr['mb'][1] != 'seq': bad.append(f"引擎回放第 2 层：PC {dr['pc'][1]}、手机 {dr['mb'][1]}（应为光点 / 序列）")
+    # 4.9.80 手机格缺省「自动」：第 2 层和第 1 层同时播 → 手机自动不出（以前缺省序列，手游规范一律拦）；手机列按 comboMobileNow 算出来的画
+    mb_want = await pg.evaluate("(() => { const p = comboMobileNow(1); return p ? p.kind : 'seq'; })()")
+    if dr['pc'][1] != 'dots' or dr['mb'][1] != mb_want: bad.append(f"引擎回放第 2 层：PC {dr['pc'][1]}、手机 {dr['mb'][1]}（应为光点 / {mb_want}）")
     for k in ('l1', 'l2'):
         if dr[k][0] != dr[k][1]: bad.append(f"引擎回放光点数 {dr[k][0]}（模拟里会亮的星 {dr[k][1]}）")
     if not dr['l1'][1]: bad.append(f"第 1 层（炭头亮度设 1）模拟里没有亮的星：{dr['l1']}")
@@ -1458,6 +1460,60 @@ async def r10(pg):
     """4.9.80 导出排查九处（用户 10-13 20:00）：多层手机自动、分开时手机合一张、手机 ≤ 1024、手机单束 / 单帧另出、种子变体、组合尺寸、组合筛贴图、星头阻力字段、组合尾缀层"""
     await open_effect(pg, 'hiki_nishiki'); await idle(pg)
     r = await pg.evaluate(R10_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
+
+
+R11_JS = r"""async () => {
+  // 4.9.81 带锚点的 Zoom（用户 10-13 21:36「同意增加带锚点的Zoom」）：空中花型「随开花放大 · 锚在爆点」、合成一张「随内容放大 · 锚在发射点」
+  const out = {}, bad = [];
+  const P0 = derive({ ...defaultsFor('fan').P }), plOf = z => { const P = { ...P0, zoom: z }; return plan(P, measure(P)); };
+  const pf = plOf('off'), po = plOf('on'), pa = plOf('anchor');
+  out.plan = { off: [+pf.Ww.toFixed(1), +pf.cy.toFixed(1)], on: [+po.Ww.toFixed(1), +po.cy.toFixed(1)], anchor: [+pa.Ww.toFixed(1), +pa.cy.toFixed(1), +pa.area.toFixed(3), pa.sizeKeys.length] };
+  // 面片和固定取景一样大、一样偏（爆点不在中心），Size By Life 阶梯（< 1 起、最多 12 级）；现在的 Zoom 不变（绕中心、cy = 0）
+  if (!pa.anchor || !pa.zoom || Math.abs(pa.Ww - pf.Ww) > 1e-6 || Math.abs(pa.cy - pf.cy) > 1e-6 || !(pa.area < 0.9) || Math.min(...(pa.frameScale || pa.sizeKeys.map(k => k[1]))) >= 1) bad.push('锚在爆点的取景不对：' + JSON.stringify(out.plan));
+  if (po.anchor || po.cy !== 0 || pf.anchor || pf.zoom) bad.push('固定 / 现在的 Zoom 被改了：' + JSON.stringify(out.plan));
+  // 烘焙取景 = 绕爆点缩放（中心 = cy × 大小）
+  const tc = pa.times[2], sc = sizeXY(pa, tc)[0], c = centerAt(pa, tc); out.center = [+sc.toFixed(3), +c[1].toFixed(3), +(pa.cy * sc).toFixed(3)];
+  if (Math.abs(c[1] - pa.cy * sc) > 1e-9) bad.push('烘焙中心不是 cy × 大小：' + JSON.stringify(out.center));
+  // 导出：Pivot Offset（爆点在粒子位置）+ Size By Life，Initial Location 0
+  const fb = { form: 'master', P: { ...P0, zoom: 'anchor' }, meta: pa, next: null }, j = fwlMaster('A', fb, defaultsFor('fan').M, false), e = j.emitters[0];
+  const sbl = e.modules.find(m => m.m === 'SizeByLife'), loc = e.modules.find(m => m.m === 'InitialLocation');
+  out.exp = { pivot: e.required.pivot_offset, sbl: sbl ? sbl.LifeMultiplier.curve.length : 0, loc: loc.StartLocation.const };
+  if (!e.required.pivot_offset || Math.abs(e.required.pivot_offset[1] - (-0.5 - pa.cy / pa.Wh)) > 1e-3 || !sbl || loc.StartLocation.const[2] !== 0) bad.push('导出不是 Pivot + Size By Life：' + JSON.stringify(out.exp));
+  // 烘焙后收紧（fitPlan40 锚点分支，只有 tick 帧计划的效果会收，用菊）：拿 measure 的每刻范围当「烘出来的内容」，造一张假的烘焙；收紧后每帧内容仍在面片里、爆点仍在原点
+  { const P = { ...derive({ ...defaultsFor('kiku').P }), zoom: 'anchor' }, fm = measure(P), pl = plan(P, fm), L = pl.L, cw = L.cellW, chh = L.cellH, boxes = [], t0 = pl.t0 || 0;
+    pl.times.forEach((tc, f) => { const t = t0 + tc; let q = fm.box[0]; for (const b of fm.box) { if (b[0] <= t) q = b; else break; }
+      const sx = sizeXY(pl, tc)[0], c = centerAt(pl, tc), hx = pl.HX * sx, hy = pl.HY * sx, px = x => clamp(Math.floor((x - (c[0] - hx)) / (2 * hx) * cw), 0, cw - 1), py = y => clamp(Math.floor((y - (c[1] - hy)) / (2 * hy) * chh), 0, chh - 1);
+      boxes.push([px(q[1] * 0.9), px(q[2] * 0.9), py(q[3] * 0.9), py(q[4] * 0.9)]); });     // 内容比估的小 10 %（模拟实测比估计紧）
+    const part = { meta: { ...pl, boxes }, cw, chh, scale: 1 }, fp = fitPlan40(P, pl, [part]);
+    out.fit = fp ? { mode: fp.fitted.mode, gain: fp.fitted.gain, Ww: +fp.Ww.toFixed(1), cy: +fp.cy.toFixed(2), sMin: +Math.min(...fp.frameScale).toFixed(3) } : null;
+    let worst = 0; if (fp) pl.times.forEach((tc, f) => { const b = boxes[f], s0 = sizeXY(pl, tc)[0], c0 = centerAt(pl, tc), hx0 = pl.HX * s0, hy0 = pl.HY * s0;
+      const X = x => c0[0] - hx0 + x / cw * 2 * hx0, Y = y => c0[1] - hy0 + y / chh * 2 * hy0, s1 = sizeXY(fp, tc)[0], c1 = centerAt(fp, tc), hx1 = fp.HX * s1, hy1 = fp.HY * s1;
+      worst = Math.max(worst, X(b[0]) < c1[0] - hx1 - 1e-6 || X(b[1] + 1) > c1[0] + hx1 + 1e-6 || Y(b[2]) < c1[1] - hy1 - 1e-6 || Y(b[3] + 1) > c1[1] + hy1 + 1e-6 ? 1 : 0); });
+    if (!fp || fp.fitted.mode !== 'anchor' || !fp.anchor || worst) bad.push('锚点收紧不对（内容出了面片 / 没按锚点收）：' + JSON.stringify(out.fit)); }
+  // 碰边放大 8 %：绕爆点（cy 跟着放大）
+  const g = growPlan40({ ...P0, zoom: 'anchor' }, { ...pa, grown: 0 }, []); out.grow = g ? +g.cy.toFixed(3) : 'null（没碰边，不放大）';
+  // 合成一张：回放 = 锚点（发射点 + 上移）+ cz × 大小、宽高 × 大小；导出 Initial Location Z = 0、Pivot、Size By Life
+  const sk = [[0, 0.3], [0.5, 0.3], [0.5001, 1], [1, 1]], skx = [[0, 0.6], [0.5, 0.6], [0.5001, 1], [1, 1]], fa = { t0: 0, Dtot: 4, keys: [[0, 0.01], [1, 15.99]], cx: 0, cz: 40, vz: 2, Ww: 20, Wh: 100, anchor: true, sizeKeys: sk, sizeKeysY: sk, sizeKeysX: skx, frameScale: [0.3, 1], frameScaleX: [0.6, 1], area: 0.5, fixedArea: 0.8, times: [1, 3], dur: [2, 2], Fr: 8, Fd: 8 };
+  const tb = { form: 'emitset', esFull: true, P: derive({ ...defaultsFor('tailS').P }), meta: { full: fa, L: { cols: 16, rows: 1, chans: 1, F: 16, cellW: 64, cellH: 1024 }, ball: { H: 150 } }, tail: null, esMobile: false };
+  const st = rtFullStateAt(tb, 1); out.tail = { z: +st.z.toFixed(3), w: +st.w.toFixed(3), h: +st.h.toFixed(3) };     // 横竖各自放大
+  if (Math.abs(st.z - (40 * 0.3 + 2 * 1)) > 1e-6 || Math.abs(st.h - 30) > 1e-6 || Math.abs(st.w - 12) > 1e-6) bad.push('合成一张锚点回放不对：' + JSON.stringify(out.tail));
+  const tj = fwlEmitSetFull('T', tb, defaultsFor('tailS').M, false), te = tj.emitters[0], tl = te.modules.find(m => m.m === 'InitialLocation'), ts = te.modules.find(m => m.m === 'SizeByLife');
+  out.tailExp = { pivot: te.required.pivot_offset, z: tl.StartLocation.const[2], sbl: ts ? ts.LifeMultiplier.curve.slice(0, 2) : 0 };
+  if (tl.StartLocation.const[2] !== 0 || !ts || Math.abs(te.required.pivot_offset[1] - (-0.5 - 40 / 100)) > 1e-3 || JSON.stringify(ts.LifeMultiplier.curve[0]) !== '[0,[0.6,0.3,1]]') bad.push('合成一张锚点导出不对：' + JSON.stringify(out.tailExp));
+  const fb0 = { ...tb, meta: { ...tb.meta, full: { ...fa, anchor: false, cz: 40 } } }, t0 = fwlEmitSetFull('T', fb0, defaultsFor('tailS').M, false).emitters[0];
+  if (t0.required.pivot_offset[1] !== -0.5 || t0.modules.some(m => m.m === 'SizeByLife')) bad.push('合成一张固定取景被改了');
+  // 选项：空中花型 #x-zoom 有锚点；合成一张的右栏下拉；入点前放大标不起作用
+  const xz = [...document.querySelectorAll('#x-zoom option')].map(o => o.value), it = SCHEMA.flatMap(x => x.items || []).find(x => x && x.sel === 'zoom');
+  out.ui = { xz, tailSel: it ? it.options.map(o => o[0]) : null, inert: !!inertWhy('preRoll', { ...P0, zoom: 'anchor', cutIn: 1 }) };
+  if (!xz.includes('anchor') || !it || !it.options.some(o => o[0] === 'anchor') || !out.ui.inert) bad.push('选项不全：' + JSON.stringify(out.ui));
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def r11(pg):
+    """4.9.81 带锚点的 Zoom（用户 10-13 21:36）：空中花型锚在爆点（面片同固定、Size By Life 绕爆点）、合成一张锚在发射点；固定和现在的 Zoom 不变"""
+    r = await pg.evaluate(R11_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
@@ -3662,7 +3718,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('R11', r11, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

@@ -20,13 +20,15 @@ function measure(P) {
 function measureRun(P) {
   const s = new Sim(P), n = Math.ceil(P.duration / H_STEP);
   let x0 = -5, x1 = 5, y0 = -5, y1 = 5; const prof = [], stat = [], vs = [], ds = [];
+  // 4.9.81 带锚点的 Zoom：每个时刻（和 prof 同一批）可见内容相对爆点的范围 [t, x0, x1, y0, y1]（含爆点本身），取景按上 / 下 / 左右分别算放大倍数
+  const box = []; let bx0 = 0, bx1 = 0, by0 = 0, by1 = 0;
   // 4.3（渲染基础问题 H9）：点灭从哪一刻开始 = 每颗星「点火（或第二段）+ 点灭开始 × 燃烧」里最早的那颗（和 Sim.headI 同一个口径），帧计划按它提高帧率
   let strobeOn = Infinity; const strobing = +P.strobeHz > 0;
-  const ext = (x, y) => { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; };
+  const ext = (x, y) => { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; if (x < bx0) bx0 = x; if (x > bx1) bx1 = x; if (y < by0) by0 = y; if (y > by1) by1 = y; };
   for (let i = 0; i < n; i++) {
     s.step(H_STEP);
     if (i % 6) continue;
-    vs.length = 0; ds.length = 0; let sy = 0, vis = 0; const ys = [];
+    vs.length = 0; ds.length = 0; let sy = 0, vis = 0; const ys = []; bx0 = bx1 = by0 = by1 = 0;
     for (const st of s.stars) if (st.alive) {
       if (strobing && !st.dark && st.kind !== 1 && st.kind !== 5) { const off = st.st1 != null ? st.st1 : st.ign, end = st.vis != null ? st.vis : st.burn, on = (st.birth || 0) + off + P.strobeStart * Math.max(0.05, end - off); if (on < strobeOn) strobeOn = on; }
       ext(st.x, st.y); vs.push(Math.hypot(st.vx, st.vy));
@@ -49,7 +51,7 @@ function measureRun(P) {
       r = Math.max(r, Math.hypot(sp.p[j * 3], sp.p[j * 3 + 1]));
     }
     if (s.t < 0.25 && s.fam === 'aerial') r = Math.max(r, 3 * (+P.flashR > 0 ? +P.flashR : Math.max(2, P.v0 * 0.045)) * (+P.flashSize > 0 ? +P.flashSize : 1));
-    prof.push([s.t, v, r]);
+    prof.push([s.t, v, r]); box.push([s.t, bx0, bx1, by0, by1]);
     ds.sort((a, b) => a - b); ys.sort((a, b) => a - b);
     stat.push({ t: s.t, r95: ds.length ? ds[Math.floor(ds.length * 0.95)] : 0, cy: vis ? sy / vis : 0, top: vis ? ys[Math.floor(ys.length * 0.97)] : 0, bot: vis ? ys[Math.floor(ys.length * 0.03)] : 0, vis });
   }
@@ -76,9 +78,10 @@ function measureRun(P) {
     const drop = g / k * drift, air = (Math.abs(P.wind) + P.turb) * drift;
     x0 -= spread + air; x1 += spread + air; y1 += spread + P.turb * drift; y0 -= drop + spread + P.turb * drift;
     for (const q of prof) q[2] += spread + drop + air;
+    for (const q of box) { q[1] -= spread + air; q[2] += spread + air; q[3] -= drop + spread + P.turb * drift; q[4] += spread + P.turb * drift; }
   }
-  if (P.waterRefl > 0) { y0 = Math.min(y0, -y1 * 1.05 - 2); for (const q of prof) q[2] *= 1.05; }
-  return { x0, x1, y0, y1, prof, stat, events: s.events, strobeOn: strobing && isFinite(strobeOn) ? +strobeOn.toFixed(4) : null };
+  if (P.waterRefl > 0) { y0 = Math.min(y0, -y1 * 1.05 - 2); for (const q of prof) q[2] *= 1.05; for (const q of box) q[3] = Math.min(q[3], -q[4] * 1.05 - 2); }
+  return { x0, x1, y0, y1, prof, box, stat, events: s.events, strobeOn: strobing && isFinite(strobeOn) ? +strobeOn.toFixed(4) : null };
 }
 // 与实拍可比的无量纲指标：t50 / t80 = 花径到最终值 50% / 80% 的时刻占燃烧的比例，下坠/半径，下/上半径之比
 function metricsOf(P, fm) {
@@ -125,15 +128,14 @@ function plan(P, fm0, ta = 0, tb = P.duration) {
 }
 function planLegacy(P, fm0, ta = 0, tb = P.duration) {
   const win = ta > 0 || tb < P.duration - 1e-9;
-  const fm = win ? { ...fm0, prof: fm0.prof.filter(q => q[0] >= ta - 1e-9 && q[0] <= tb + 1e-9).map(q => [q[0] - ta, q[1], q[2]]) } : fm0;
-  const L = layoutOf(P), a = L.cellW / L.cellH, D = tb - ta, STEP = 1.5, zoom = P.zoom === 'on';
+  const inWin = q => q[0] >= ta - 1e-9 && q[0] <= tb + 1e-9;
+  const fm = win ? { ...fm0, prof: fm0.prof.filter(inWin).map(q => [q[0] - ta, q[1], q[2]]), ...(fm0.box ? { box: fm0.box.filter(inWin).map(q => [q[0] - ta, q[1], q[2], q[3], q[4]]) } : {}) } : fm0;
+  // 4.9.81 带锚点的 Zoom（anchor，用户 10-13 21:36 同意）：面片和固定取景一样大（爆点不在中心，Pivot Offset 放在爆点），Size By Life 绕爆点放大
+  const anchor = P.zoom === 'anchor' && !!(fm.box && fm.box.length);
+  const L = layoutOf(P), a = L.cellW / L.cellH, D = tb - ta, STEP = 1.5, zoom = P.zoom === 'on' || anchor;
   let HX, HY, cy, sizeKeys = [[0, 1], [1, 1]];
-  if (zoom) {
-    // 以爆点为中心取景，面片按 Size By Life 曲线随开花放大
-    let R = 1; for (const q of fm.prof) if (q[0] <= D) R = Math.max(R, q[2]);
-    R = R * 1.06 + 3; HX = R * Math.max(1, a); HY = HX / a; cy = 0;
-    let run = 0; const sp = [];
-    for (const [t, , r] of fm.prof) { if (t > D) break; run = Math.max(run, Math.min(1, (r * 1.06 + 3) / R)); sp.push([t / D, run]); }
+  // 随开花放大的曲线：sp = [[u, 这一刻要的大小（只增不减）]] → Size By Life 关键点（最多 8 个，直线不低于真实大小）
+  const zoomKeys = (sp, run) => {
     sp.unshift([0, sp.length ? sp[0][1] : 1]); sp.push([1, run || 1]);
     const ks = simplify(sp, 8, 0.01).map(k => [...k]);
     // 关键帧之间是直线：把直线抬到不低于真实半径，保证内容不被裁掉
@@ -143,8 +145,26 @@ function planLegacy(P, fm0, ta = 0, tb = P.duration) {
       for (let i = idx[k] + 1; i < idx[k + 1]; i++) { const [u, v] = sp[i]; e = Math.max(e, v - (v0 + (v1 - v0) * (u - u0) / ((u1 - u0) || 1))); }
       ks[k].push(e); ks[k + 1].push(e);
     }
-    sizeKeys = ks.map(k => [+k[0].toFixed(4), +Math.min(1, k[1] + Math.max(0, ...k.slice(2)) + 0.02).toFixed(3)]);
-    sizeKeys[0][0] = 0; sizeKeys[sizeKeys.length - 1][0] = 1;
+    const sk = ks.map(k => [+k[0].toFixed(4), +Math.min(1, k[1] + Math.max(0, ...k.slice(2)) + 0.02).toFixed(3)]);
+    sk[0][0] = 0; sk[sk.length - 1][0] = 1; return sk;
+  };
+  if (anchor) {
+    // 形状和固定取景一样（横向以爆点对称、竖向按内容偏 cy）；每个时刻的大小 = 左右、爆点以上、爆点以下三个方向里最紧的那个（各留 6 % + 1.5 m）
+    const W0 = 2 * Math.max(-fm.x0, fm.x1), H0 = fm.y1 - fm.y0;
+    HX = (Math.max(W0, H0 * a) * 1.06 + 3) / 2; HY = HX / a; cy = (fm.y0 + fm.y1) / 2;
+    const up = cy + HY, dn = HY - cy;     // 爆点到面片上 / 下边（取景一定包含爆点：measure 的范围从 ±5 m 起）
+    let run = 0; const sp = [];
+    for (const [t, bx0, bx1, by0, by1] of fm.box) { if (t > D) break;
+      const need = Math.max((Math.max(-bx0, bx1) * 1.06 + 1.5) / HX, (Math.max(0, by1) * 1.06 + 1.5) / up, (Math.max(0, -by0) * 1.06 + 1.5) / dn);
+      run = Math.max(run, Math.min(1, need)); sp.push([t / D, run]); }
+    sizeKeys = zoomKeys(sp, run);
+  } else if (zoom) {
+    // 以爆点为中心取景，面片按 Size By Life 曲线随开花放大
+    let R = 1; for (const q of fm.prof) if (q[0] <= D) R = Math.max(R, q[2]);
+    R = R * 1.06 + 3; HX = R * Math.max(1, a); HY = HX / a; cy = 0;
+    let run = 0; const sp = [];
+    for (const [t, , r] of fm.prof) { if (t > D) break; run = Math.max(run, Math.min(1, (r * 1.06 + 3) / R)); sp.push([t / D, run]); }
+    sizeKeys = zoomKeys(sp, run);
   } else {
     const W0 = 2 * Math.max(-fm.x0, fm.x1), H0 = fm.y1 - fm.y0;
     HX = (Math.max(W0, H0 * a) * 1.06 + 3) / 2; HY = HX / a; cy = (fm.y0 + fm.y1) / 2;
@@ -171,5 +191,5 @@ function planLegacy(P, fm0, ta = 0, tb = P.duration) {
     maxDur = Math.max(maxDur, t1 - t0); maxDisp = Math.max(maxDisp, vAt(tc) * ppmAt(tc) * (t1 - t0));
   }
   let area = 0; for (let i = 0; i < 200; i++) { const q = sAt((i + 0.5) / 200 * D); area += q * q / 200; }
-  return { L, HX, HY, Ww, Wh, cy, ppm, zoom, sizeKeys, area, px: 0.5, py: (cy + HY) / Wh, keys, times, dur, avgFps: L.F / D, minFps: 1 / maxDur, maxDisp, t0: ta, duration: D };
+  return { L, HX, HY, Ww, Wh, cy, ppm, zoom, ...(anchor ? { anchor: true } : {}), sizeKeys, area, px: 0.5, py: (cy + HY) / Wh, keys, times, dur, avgFps: L.F / D, minFps: 1 / maxDur, maxDisp, t0: ta, duration: D };
 }

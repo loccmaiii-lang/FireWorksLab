@@ -99,7 +99,7 @@ ${CURVE_NOTE}
 Spawn：Rate = 0；Burst：Count = 1，Time = 0
 Lifetime：${fx(m.duration)} s（常量）
 Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm（${m.tight ? '最大尺寸，横竖分开' : m.zoom ? '开花最大时的尺寸' : '常量'}）
-${m.tight ? tightLines(m) : m.zoom ? `Initial Location：0（爆点就是精灵中心）
+${m.tight ? tightLines(m) : m.zoom ? `${m.anchor && Math.abs(+m.cy || 0) > 1e-4 ? `Initial Location：0；Required → Pivot Offset = (−0.5, ${fx(-0.5 - m.cy / m.Wh, 4)})（随开花放大 · 锚在爆点：面片最大时中心比爆点高 ${cm(m.cy)} cm，Size By Life 绕爆点放大；未经 UE 验证）` : 'Initial Location：0（爆点就是精灵中心）'}
 Size By Life（X、Y 相同；线性插值）：面片随开花放大，每帧贴图按同一条曲线烘焙
   相对时间    倍数
 ${keyLines(m.sizeKeys)}` : Math.abs(+m.cy || 0) > 1e-4 ? `Initial Location：0；Required → Pivot Offset = (−0.5, ${fx(-0.5 - m.cy / m.Wh, 4)})（爆点在贴图里的位置：面片中心比爆点高 ${cm(m.cy)} cm；面片总是面向相机，用 Pivot 对齐仰视时也不错位；未经 UE 验证）` : `Initial Location：0（爆点就是精灵中心）`}
@@ -373,7 +373,7 @@ ${lodSection(b)}
 ${bigShellSection(b)}
 
 【说明】
-${b.form === 'master' || b.form === 'segments' ? (b.meta.zoom ? 'Size By Life 以精灵中心缩放，爆点就在中心，所以面片放大时爆点位置不变。' : '面向相机的精灵用 Initial Location 的 Z 偏移对齐爆点；从很陡的仰角看时会有轻微偏差。') + '\n' : ''}${name}.json 保存了全部参数，用烘焙器「导入参数 JSON」即可继续修改。
+${b.form === 'master' || b.form === 'segments' ? (b.meta.zoom ? (b.meta.anchor ? 'Size By Life 绕 Pivot（爆点）缩放：爆点不在面片中心，面片放大时爆点位置不变（4.9.81 锚在爆点）。' : 'Size By Life 以精灵中心缩放，爆点就在中心，所以面片放大时爆点位置不变。') : '面向相机的精灵用 Initial Location 的 Z 偏移对齐爆点；从很陡的仰角看时会有轻微偏差。') + '\n' : ''}${name}.json 保存了全部参数，用烘焙器「导入参数 JSON」即可继续修改。
 `;
 }
 const FORM_NAMES = { emitset: '循环层 + 粒子发射器', trail: '升空尾缀序列（循环 + 消散）', master: '大面片母版', segments: '分段母版（开花段 + 下垂段）', unit: '单元序列', riseLoop: '上升星头循环', loop: '地面循环' };

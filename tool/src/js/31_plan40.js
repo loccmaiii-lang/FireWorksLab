@@ -118,6 +118,32 @@ function fitPlan40(P, pl, parts, extra, opt = {}) {
   if (fr.length !== pl.L.F || fr.every(q => q.empty)) return null;
   const a = pl.L.cellW / pl.L.cellH, ePx = Math.max(2 * pad, +opt.edgePx || 0), k = 1.02 / Math.max(.5, 1 - 2 * ePx / Math.min(pl.L.cellW, pl.L.cellH));   // 内容放进去后离格子边：留边那一圈（被压暗）+ 2%
   const area = q => { let ar = 0; for (let i = 0; i < 200; i++) { const v = evalKeys(q.sizeKeys, (i + .5) / 200); ar += v * v / 200; } return ar; };
+  // 4.9.81 带锚点的 Zoom：每帧内容相对爆点的左右 / 上 / 下范围 ÷ 这一帧的大小 → 新的整体形状（横向对称、竖向偏，爆点仍在原点）；
+  //   再按新形状算每帧要多大（三个方向最紧的那个），碰边的方向按原来那么大、几乎全黑 / 空的帧照 Zoom 的规矩跟前一帧，最后整体归一（最大那帧 = 1）
+  if (pl.zoom && pl.anchor) {
+    const up0 = pl.cy + pl.HY, dn0 = pl.HY - pl.cy, s0 = fr.map(q => q.hx / pl.HX), M1 = 0.5;     // 爆点上下至少各留 0.5 m
+    const own = (q, i, kk) => ({ X: (q.tl || q.tr ? q.hx : Math.max(-q.x0, q.x1, 1e-3)) * (q.tl || q.tr ? 1 : kk), U: q.tt ? s0[i] * up0 : Math.max(q.y1, 0) * kk, D: q.tb ? s0[i] * dn0 : Math.max(-q.y0, 0) * kk });
+    const need = fr.map((q, i) => q.empty || q.faint ? null : own(q, i, k));
+    let Xn = 0, Un = M1, Dn = M1;
+    need.forEach((n, i) => { if (!n) return; Xn = Math.max(Xn, n.X / s0[i]); Un = Math.max(Un, n.U / s0[i]); Dn = Math.max(Dn, n.D / s0[i]); });
+    if (!(Xn > 0)) return null;
+    Dn = Math.max(Dn, 0.04 * Un); Un = Math.max(Un, 0.04 * Dn);     // 爆点一边几乎没内容：那一边至少留另一边的 4 %（不然那一点点内容卡住整段的放大）
+    let HX = Math.max(Xn, (Un + Dn) / 2 * a), HY = HX / a, cy = clamp((Un - Dn) / 2, Un - HY, HY - Dn);
+    const sOf = n => Math.max(n.X / HX, n.U / (cy + HY), n.D / (HY - cy), 1e-3);
+    const sN = need.map((n, i) => { if (!n) return null; const h = sOf(n), g = pl.HX * s0[i] / (HX * h); return g > 1 ? pl.HX * s0[i] / (HX * fitGainCap(fr[i].q, g, P)) : h; });
+    const kF = 1.02 / Math.max(.5, 1 - 2 * Math.max(ePx, 12) / Math.min(pl.L.cellW, pl.L.cellH)), s1 = sN.find(v => v != null);
+    for (let i = 0; i < sN.length; i++) if (sN[i] == null) {
+      const q = fr[i], base = i > 0 ? sN[i - 1] : s1, touch = q.tl || q.tr || q.tb || q.tt;
+      sN[i] = base == null || touch ? pl.HX * s0[i] / HX : q.empty ? Math.min(pl.HX * s0[i] / HX, base) : Math.max(base, sOf(own(q, i, kF)));
+    }
+    const mx = Math.max(...sN); HX *= mx; HY *= mx; cy *= mx; for (let i = 0; i < sN.length; i++) sN[i] = Math.min(1, sN[i] / mx);
+    const ratio = sN.map((v, i) => pl.HX * s0[i] / (HX * v)), gain = ratio.slice().sort((x, y) => x - y)[Math.floor(ratio.length / 2)];
+    if (!(gain >= 1.03)) return null;
+    const frameScale = zoomLevels40(sN);
+    const out = { ...pl, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cy, ppm: pl.L.cellW / (2 * HX), py: (cy + HY) / (2 * HY), frameScale, sizeKeys: stepKeys40(frameScale, pl.ticks, pl.nTicks),
+      maxDisp: pl.maxDisp * Math.max(...ratio), fitted: { mode: 'anchor', gain: +gain.toFixed(3), from: +pl.HX.toFixed(2), to: +HX.toFixed(2), cy: +cy.toFixed(2) } };
+    out.area = area(out); return out;
+  }
   if (pl.zoom) {
     const own = q => Math.max(-q.x0, q.x1, -q.y0, q.y1, 1e-3), touch = q => q.tl || q.tr || q.tb || q.tt;
     const hNew = fr.map(q => { if (q.empty || q.faint) return null; if (touch(q)) return q.hx;
@@ -160,8 +186,8 @@ function growPlan40(P, pl, parts) {
   const ring = replayEdge40(parts), fr = fitFrames40(P, parts) || [];
   const hit = ring.map((v, i) => v >= FIT_RING && !(fr[i] && (fr[i].empty || fr[i].faint)) ? i : -1).filter(i => i >= 0);
   if (!hit.length) return null;
-  const HX = pl.HX * GROW40, HY = pl.HY * GROW40, cy = pl.zoom ? 0 : pl.cy;
-  return { ...pl, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cy, ppm: pl.L.cellW / (2 * HX), py: pl.zoom ? .5 : (cy + HY) / (2 * HY), maxDisp: pl.maxDisp / GROW40, grown: (pl.grown || 0) + 1,
+  const HX = pl.HX * GROW40, HY = pl.HY * GROW40, cy = pl.anchor ? pl.cy * GROW40 : pl.zoom ? 0 : pl.cy;     // 4.9.81 带锚点：绕爆点放大
+  return { ...pl, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cy, ppm: pl.L.cellW / (2 * HX), py: pl.zoom && !pl.anchor ? .5 : (cy + HY) / (2 * HY), maxDisp: pl.maxDisp / GROW40, grown: (pl.grown || 0) + 1,
     fitted: { mode: 'grow', gain: +(1 / GROW40).toFixed(3), from: +pl.HX.toFixed(2), to: +HX.toFixed(2), frames: hit.length } };
 }
 function tickFrameKeys40(F) {

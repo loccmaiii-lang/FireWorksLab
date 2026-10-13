@@ -669,7 +669,8 @@ async function bakeMasterLead(P, scale, onProg) {
 // 种子变体：三个种子共用一套取景和帧号曲线（引擎里只换贴图）
 async function bakeVariants(P, scale, onProg, n = 3) {
   const Ps = []; for (let i = 0; i < n; i++) Ps.push({ ...P, seed: P.seed + i * 101 });
-  const fms = Ps.map(measure), fm = { ...fms[0], prof: fms[0].prof.map((q, i) => [q[0], Math.max(...fms.map(f => (f.prof[i] || q)[1])), Math.max(...fms.map(f => (f.prof[i] || q)[2]))]) };
+  const fms = Ps.map(measure), fm = { ...fms[0], prof: fms[0].prof.map((q, i) => [q[0], Math.max(...fms.map(f => (f.prof[i] || q)[1])), Math.max(...fms.map(f => (f.prof[i] || q)[2]))]) ,
+    ...(fms[0].box ? { box: fms[0].box.map((q, i) => [q[0], ...[1, 2, 3, 4].map(j => (j % 2 ? Math.min : Math.max)(...fms.map(f => ((f.box || [])[i] || q)[j])))]) } : {}) };     // 4.9.81 带锚点的 Zoom：三张的每刻范围取并集
   for (const f of fms) { fm.x0 = Math.min(fm.x0, f.x0); fm.x1 = Math.max(fm.x1, f.x1); fm.y0 = Math.min(fm.y0, f.y0); fm.y1 = Math.max(fm.y1, f.y1); }
   const pl = plan(P, fm), out = [];
   for (let i = 0; i < n; i++) {

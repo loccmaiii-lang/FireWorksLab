@@ -1,0 +1,15 @@
+{
+ "id": "ZA2",
+ "type": "export",
+ "effect": "comet3_rt6",
+ "entry": "CS3C-T",
+ "name": "Comet3_GoldTail_ZA",
+ "exports": {
+  "Comet3_GoldTail_ZA": {
+   "_replica": "CS3C-T",
+   "zoom": "anchor"
+  }
+ },
+ "priority": 2,
+ "note": "导出（23）· 烘焙器 4.9.81 带锚点的 Zoom 验证（用户 10-13 20:00「comet这种取景也不够满」/ 21:36 同意）：Comet 3.0 金尾（合成一张）参数不动，只把面片取景改成「随内容放大 · 锚在发射点」导出 + 回放检查，和已通过的 CS3C 固定取景比单帧填充、碰边、过曝。已通过的条目不改、不进待我验收、不导入 UE。"
+}

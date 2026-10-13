@@ -222,6 +222,15 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
         first_tick = {}
         for i, fr in enumerate(tk): first_tick.setdefault(fr, i)
         cpos = {c[0]: (c[1], c[2]) for c in cens}     # 已经是 512 格像素
+        # 4.9.81（带锚点的 Zoom，用户 10-13 21:36）：Zoom 取景每帧面片大小不同，格子像素里的中心换一级大小就跳（内容按新比例放大），引擎里却是连续的。
+        #   Zoom 的中心抖动改在世界坐标里量：格子像素 → 这一帧面片（Size By Life + Pivot / 偏移）上的位置，再按最大面片换回 512 格像素
+        jit_pos = cpos
+        if zoom and cens:
+            us = np.linspace(0, 1, 41); Wm = max(p.size(u)[0] for u in us); Hm = max(p.size(u)[1] for u in us)
+            def world512(f, x, y):
+                i = first_tick.get(f, 0); u = min(1.0, (i + 0.5) / fps / max(1e-6, p.life)); w, h = p.size(u); ox, oz = p.offset(u)
+                return ((ox + (x / 512 - 0.5) * w) / Wm * 512, -(oz + (0.5 - y / 512) * h) / Hm * 512)
+            jit_pos = {f: world512(f, x, y) for f, (x, y) in cpos.items()}
         jit, jitf = [], []
         for c0, c1, c2 in zip(cens, cens[1:], cens[2:]):
             a, b, d = c0[0], c1[0], c2[0]
@@ -230,8 +239,8 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
             if max(n0, n1, n2) > 1.3 * min(n0, n1, n2): continue    # 亮部面积一下变了 30% 以上 = 内容本身在变（子花开、星熄灭），不算画面抖
             ta, tb, td = first_tick[a], first_tick[b], first_tick[d]
             u = (tb - ta) / max(1e-9, td - ta)
-            qx = cpos[a][0] + (cpos[d][0] - cpos[a][0]) * u; qy = cpos[a][1] + (cpos[d][1] - cpos[a][1]) * u
-            jit.append(float(np.hypot(cpos[b][0] - qx, cpos[b][1] - qy))); jitf.append(b)
+            qx = jit_pos[a][0] + (jit_pos[d][0] - jit_pos[a][0]) * u; qy = jit_pos[a][1] + (jit_pos[d][1] - jit_pos[a][1]) * u
+            jit.append(float(np.hypot(jit_pos[b][0] - qx, jit_pos[b][1] - qy))); jitf.append(b)
         # 真循环（帧号锯齿曲线）：从最后几帧回到开头几帧是循环接缝，不算回跳（对话框11，2026-10-02：升空尾缀循环层）
         tka = np.asarray(tk); wrap = (steps < 0) & (tka[:-1] >= p.frames - 3) & (tka[1:] <= 2) if len(tk) > 1 else np.array([False])
         shown = len(set(tk)); back = int(((steps < 0) & ~wrap).sum()); loop_wraps = int(wrap.sum())

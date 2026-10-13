@@ -41,7 +41,7 @@ const INERT = [
   [['emberAll'], P => !(+P.sparkStop > 0), '「火花停止时刻」是 0 时不起作用（火花本来就全程都有，余烬也一样）'],
   // 4.3（H13 / 渲染基础问题清单审计 4.4）：
   [['headDimUntil'], P => !(+P.headDim < 1), '「前段亮度」是 1（不压暗）时不起作用：先把前段亮度调到 1 以下'],
-  [['preRoll', 'preScale0'], P => P.zoom === 'on', '「面片取景」是「随开花放大」时不起作用（Zoom 本来就从小放大）'],
+  [['preRoll', 'preScale0'], P => P.zoom === 'on' || P.zoom === 'anchor', '「面片取景」是「随开花放大」时不起作用（Zoom 本来就从小放大）'],
   [['emberFrac', 'emberLife', 'emberBright', 'emberFollow', 'emberSize', 'emberEnd', 'emberAll'], P => +P.branch > 0, '「松叶分叉数」> 0 时不出余烬（分叉的火花占了余烬那一路）'],
   [['chaos'], P => !(+P.spin > 0), '「旋转速度」是 0 时不起作用'],
   // 地面：只有 1 个喷口时，喷口之间的间距、彗星扇面没有意义（喷泉的扇面角度是喷射张角，照样起作用）

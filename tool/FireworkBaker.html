@@ -2146,7 +2146,7 @@ header.top .gpu::before{content:none}
           <label class="field">星头火花输出<select id="x-out"><option value="combined">星头与火花合并</option><option value="split">星头、火花分开</option></select></label>
           <label class="field">灰度编码<select id="x-enc"><option value="1">线性灰度</option><option value="2.2">Gamma 2.2（暗部更细；UE 材质不还原，没在 UE 验证前别用）</option></select></label>
           <label class="field">取帧方式<select id="x-frame"><option value="tick30" hidden>30 fps（自动分段）</option><option value="auto">自动（按运动快慢）</option><option value="uniform">均匀</option></select></label>
-          <label class="field">面片取景<select id="x-zoom"><option value="off">固定大小（5.0 默认：面片不缩放，整段一个取景）</option><option value="on">随开花放大（Zoom：省贴图；最多 12 级大小，靠 Size By Life 补）</option></select></label>
+          <label class="field">面片取景<select id="x-zoom"><option value="off">固定大小（5.0 默认：面片不缩放，整段一个取景）</option><option value="on">随开花放大（Zoom：省贴图；最多 12 级大小，靠 Size By Life 补）</option><option value="anchor">随开花放大 · 锚在爆点（面片和固定一样贴着内容，绕爆点按每刻上 / 下 / 左右范围放大；扇形、偏一边的花更满）</option></select></label>
         </div>
         <label class="check" id="flipBox" hidden><input type="checkbox" id="x-flip"> 星头朝下（引擎里速度对齐方向相反时勾选）</label>
         <label class="check" id="gridBox" hidden><input type="checkbox" id="x-autogrid"> 自动选格子（帧数不变，按内容长宽比挑列 × 行，少浪费像素）</label>
@@ -2348,7 +2348,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.9.80';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23；4.9.79 合成一张（升空尾缀 / 彗星）用烟花序列同一组导出选项：入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花分开（PC 两张；手机仍一张），用户 10-13 18:47，对话框23；4.9.80 导出排查九处（用户 10-13 20:00「最近导出功能的Bug有点多」）：多层手机格「自动」按手游规范取舍、手机一律合成一张 / ≤ 1024、手机单束 / 单帧另出一套、种子变体走单层导出、组合尺寸档 / 多余 PNG / 尾缀层配置、星头阻力字段，对话框23
+const VERSION = '4.9.81';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23；4.9.79 合成一张（升空尾缀 / 彗星）用烟花序列同一组导出选项：入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花分开（PC 两张；手机仍一张），用户 10-13 18:47，对话框23；4.9.80 导出排查九处（用户 10-13 20:00「最近导出功能的Bug有点多」）：多层手机格「自动」按手游规范取舍、手机一律合成一张 / ≤ 1024、手机单束 / 单帧另出一套、种子变体走单层导出、组合尺寸档 / 多余 PNG / 尾缀层配置、星头阻力字段，对话框23；4.9.81 带锚点的 Zoom：面片取景「随开花放大 · 锚在爆点」（空中花型：面片和固定一样贴着内容，Size By Life 绕爆点按每刻上 / 下 / 左右范围放大）、合成一张「随内容放大 · 锚在发射点」，用户 10-13 21:36，对话框23
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -3342,6 +3342,7 @@ const SCHEMA = [
     { info: 'specBox', show: P => !isEmit(P) },
     { info: 'specMore', show: P => !isEmit(P) },
     { sel: 'outMode', label: '星头火花输出', show: emitFullOut, options: [['combined', '星头与火花合并'], ['split', '星头、火花分开（PC 两张、两个发射器；手机仍合一张）']] },     // 4.9.79 和烟花规格框里的「星头火花输出」同一个参数
+    { sel: 'zoom', label: '面片取景', show: emitFullOut, options: [['off', '固定（整段一个面片，装下整条升空路径）'], ['anchor', '随内容放大 · 锚在发射点（早段星头不再缩在面片底部；Size By Life 绕发射点放大）']] },     // 4.9.81 带锚点的 Zoom（用户 10-13 21:36 同意）
     ['fpsFloor', '最低帧率', 'fps', 8, 60, 1, P => !isGround(P) && !usesTickPlan40(P) && !isEmit(P)],
     { sel: 'frameBudget', label: '帧数', show: P => usesTickPlan40(P) || emitFullOut(P), options: [['motion','按运动分（默认）：开花段每 tick 一帧（30 fps），慢下来每帧多停几个 tick，先放进一张，放不下自动加张'],['fixed','固定机位 + 匀速帧：整段每帧停一样多 tick，帧号一条直线（一张贴图时开花段常常只有 10 fps）'],['lean','旧（待删）· 最省：只用到最慢帧率需要的帧'],['count','旧（待删）· 手动：自己定总帧数（按运动分配）'],['tiers','旧（待删）· 分段帧率（开花 / 燃烧 / 淡出各定帧率）'],['full','旧（待删）· 全程 30 fps（每个 tick 一帧，最费贴图）']] },
     ['frameCount', '总帧数（手动）', '帧', 4, 256, 1, P => usesTickPlan40(P) && P.frameBudget === 'count'],
@@ -5047,13 +5048,15 @@ function measure(P) {
 function measureRun(P) {
   const s = new Sim(P), n = Math.ceil(P.duration / H_STEP);
   let x0 = -5, x1 = 5, y0 = -5, y1 = 5; const prof = [], stat = [], vs = [], ds = [];
+  // 4.9.81 带锚点的 Zoom：每个时刻（和 prof 同一批）可见内容相对爆点的范围 [t, x0, x1, y0, y1]（含爆点本身），取景按上 / 下 / 左右分别算放大倍数
+  const box = []; let bx0 = 0, bx1 = 0, by0 = 0, by1 = 0;
   // 4.3（渲染基础问题 H9）：点灭从哪一刻开始 = 每颗星「点火（或第二段）+ 点灭开始 × 燃烧」里最早的那颗（和 Sim.headI 同一个口径），帧计划按它提高帧率
   let strobeOn = Infinity; const strobing = +P.strobeHz > 0;
-  const ext = (x, y) => { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; };
+  const ext = (x, y) => { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; if (x < bx0) bx0 = x; if (x > bx1) bx1 = x; if (y < by0) by0 = y; if (y > by1) by1 = y; };
   for (let i = 0; i < n; i++) {
     s.step(H_STEP);
     if (i % 6) continue;
-    vs.length = 0; ds.length = 0; let sy = 0, vis = 0; const ys = [];
+    vs.length = 0; ds.length = 0; let sy = 0, vis = 0; const ys = []; bx0 = bx1 = by0 = by1 = 0;
     for (const st of s.stars) if (st.alive) {
       if (strobing && !st.dark && st.kind !== 1 && st.kind !== 5) { const off = st.st1 != null ? st.st1 : st.ign, end = st.vis != null ? st.vis : st.burn, on = (st.birth || 0) + off + P.strobeStart * Math.max(0.05, end - off); if (on < strobeOn) strobeOn = on; }
       ext(st.x, st.y); vs.push(Math.hypot(st.vx, st.vy));
@@ -5076,7 +5079,7 @@ function measureRun(P) {
       r = Math.max(r, Math.hypot(sp.p[j * 3], sp.p[j * 3 + 1]));
     }
     if (s.t < 0.25 && s.fam === 'aerial') r = Math.max(r, 3 * (+P.flashR > 0 ? +P.flashR : Math.max(2, P.v0 * 0.045)) * (+P.flashSize > 0 ? +P.flashSize : 1));
-    prof.push([s.t, v, r]);
+    prof.push([s.t, v, r]); box.push([s.t, bx0, bx1, by0, by1]);
     ds.sort((a, b) => a - b); ys.sort((a, b) => a - b);
     stat.push({ t: s.t, r95: ds.length ? ds[Math.floor(ds.length * 0.95)] : 0, cy: vis ? sy / vis : 0, top: vis ? ys[Math.floor(ys.length * 0.97)] : 0, bot: vis ? ys[Math.floor(ys.length * 0.03)] : 0, vis });
   }
@@ -5103,9 +5106,10 @@ function measureRun(P) {
     const drop = g / k * drift, air = (Math.abs(P.wind) + P.turb) * drift;
     x0 -= spread + air; x1 += spread + air; y1 += spread + P.turb * drift; y0 -= drop + spread + P.turb * drift;
     for (const q of prof) q[2] += spread + drop + air;
+    for (const q of box) { q[1] -= spread + air; q[2] += spread + air; q[3] -= drop + spread + P.turb * drift; q[4] += spread + P.turb * drift; }
   }
-  if (P.waterRefl > 0) { y0 = Math.min(y0, -y1 * 1.05 - 2); for (const q of prof) q[2] *= 1.05; }
-  return { x0, x1, y0, y1, prof, stat, events: s.events, strobeOn: strobing && isFinite(strobeOn) ? +strobeOn.toFixed(4) : null };
+  if (P.waterRefl > 0) { y0 = Math.min(y0, -y1 * 1.05 - 2); for (const q of prof) q[2] *= 1.05; for (const q of box) q[3] = Math.min(q[3], -q[4] * 1.05 - 2); }
+  return { x0, x1, y0, y1, prof, box, stat, events: s.events, strobeOn: strobing && isFinite(strobeOn) ? +strobeOn.toFixed(4) : null };
 }
 // 与实拍可比的无量纲指标：t50 / t80 = 花径到最终值 50% / 80% 的时刻占燃烧的比例，下坠/半径，下/上半径之比
 function metricsOf(P, fm) {
@@ -5152,15 +5156,14 @@ function plan(P, fm0, ta = 0, tb = P.duration) {
 }
 function planLegacy(P, fm0, ta = 0, tb = P.duration) {
   const win = ta > 0 || tb < P.duration - 1e-9;
-  const fm = win ? { ...fm0, prof: fm0.prof.filter(q => q[0] >= ta - 1e-9 && q[0] <= tb + 1e-9).map(q => [q[0] - ta, q[1], q[2]]) } : fm0;
-  const L = layoutOf(P), a = L.cellW / L.cellH, D = tb - ta, STEP = 1.5, zoom = P.zoom === 'on';
+  const inWin = q => q[0] >= ta - 1e-9 && q[0] <= tb + 1e-9;
+  const fm = win ? { ...fm0, prof: fm0.prof.filter(inWin).map(q => [q[0] - ta, q[1], q[2]]), ...(fm0.box ? { box: fm0.box.filter(inWin).map(q => [q[0] - ta, q[1], q[2], q[3], q[4]]) } : {}) } : fm0;
+  // 4.9.81 带锚点的 Zoom（anchor，用户 10-13 21:36 同意）：面片和固定取景一样大（爆点不在中心，Pivot Offset 放在爆点），Size By Life 绕爆点放大
+  const anchor = P.zoom === 'anchor' && !!(fm.box && fm.box.length);
+  const L = layoutOf(P), a = L.cellW / L.cellH, D = tb - ta, STEP = 1.5, zoom = P.zoom === 'on' || anchor;
   let HX, HY, cy, sizeKeys = [[0, 1], [1, 1]];
-  if (zoom) {
-    // 以爆点为中心取景，面片按 Size By Life 曲线随开花放大
-    let R = 1; for (const q of fm.prof) if (q[0] <= D) R = Math.max(R, q[2]);
-    R = R * 1.06 + 3; HX = R * Math.max(1, a); HY = HX / a; cy = 0;
-    let run = 0; const sp = [];
-    for (const [t, , r] of fm.prof) { if (t > D) break; run = Math.max(run, Math.min(1, (r * 1.06 + 3) / R)); sp.push([t / D, run]); }
+  // 随开花放大的曲线：sp = [[u, 这一刻要的大小（只增不减）]] → Size By Life 关键点（最多 8 个，直线不低于真实大小）
+  const zoomKeys = (sp, run) => {
     sp.unshift([0, sp.length ? sp[0][1] : 1]); sp.push([1, run || 1]);
     const ks = simplify(sp, 8, 0.01).map(k => [...k]);
     // 关键帧之间是直线：把直线抬到不低于真实半径，保证内容不被裁掉
@@ -5170,8 +5173,26 @@ function planLegacy(P, fm0, ta = 0, tb = P.duration) {
       for (let i = idx[k] + 1; i < idx[k + 1]; i++) { const [u, v] = sp[i]; e = Math.max(e, v - (v0 + (v1 - v0) * (u - u0) / ((u1 - u0) || 1))); }
       ks[k].push(e); ks[k + 1].push(e);
     }
-    sizeKeys = ks.map(k => [+k[0].toFixed(4), +Math.min(1, k[1] + Math.max(0, ...k.slice(2)) + 0.02).toFixed(3)]);
-    sizeKeys[0][0] = 0; sizeKeys[sizeKeys.length - 1][0] = 1;
+    const sk = ks.map(k => [+k[0].toFixed(4), +Math.min(1, k[1] + Math.max(0, ...k.slice(2)) + 0.02).toFixed(3)]);
+    sk[0][0] = 0; sk[sk.length - 1][0] = 1; return sk;
+  };
+  if (anchor) {
+    // 形状和固定取景一样（横向以爆点对称、竖向按内容偏 cy）；每个时刻的大小 = 左右、爆点以上、爆点以下三个方向里最紧的那个（各留 6 % + 1.5 m）
+    const W0 = 2 * Math.max(-fm.x0, fm.x1), H0 = fm.y1 - fm.y0;
+    HX = (Math.max(W0, H0 * a) * 1.06 + 3) / 2; HY = HX / a; cy = (fm.y0 + fm.y1) / 2;
+    const up = cy + HY, dn = HY - cy;     // 爆点到面片上 / 下边（取景一定包含爆点：measure 的范围从 ±5 m 起）
+    let run = 0; const sp = [];
+    for (const [t, bx0, bx1, by0, by1] of fm.box) { if (t > D) break;
+      const need = Math.max((Math.max(-bx0, bx1) * 1.06 + 1.5) / HX, (Math.max(0, by1) * 1.06 + 1.5) / up, (Math.max(0, -by0) * 1.06 + 1.5) / dn);
+      run = Math.max(run, Math.min(1, need)); sp.push([t / D, run]); }
+    sizeKeys = zoomKeys(sp, run);
+  } else if (zoom) {
+    // 以爆点为中心取景，面片按 Size By Life 曲线随开花放大
+    let R = 1; for (const q of fm.prof) if (q[0] <= D) R = Math.max(R, q[2]);
+    R = R * 1.06 + 3; HX = R * Math.max(1, a); HY = HX / a; cy = 0;
+    let run = 0; const sp = [];
+    for (const [t, , r] of fm.prof) { if (t > D) break; run = Math.max(run, Math.min(1, (r * 1.06 + 3) / R)); sp.push([t / D, run]); }
+    sizeKeys = zoomKeys(sp, run);
   } else {
     const W0 = 2 * Math.max(-fm.x0, fm.x1), H0 = fm.y1 - fm.y0;
     HX = (Math.max(W0, H0 * a) * 1.06 + 3) / 2; HY = HX / a; cy = (fm.y0 + fm.y1) / 2;
@@ -5198,7 +5219,7 @@ function planLegacy(P, fm0, ta = 0, tb = P.duration) {
     maxDur = Math.max(maxDur, t1 - t0); maxDisp = Math.max(maxDisp, vAt(tc) * ppmAt(tc) * (t1 - t0));
   }
   let area = 0; for (let i = 0; i < 200; i++) { const q = sAt((i + 0.5) / 200 * D); area += q * q / 200; }
-  return { L, HX, HY, Ww, Wh, cy, ppm, zoom, sizeKeys, area, px: 0.5, py: (cy + HY) / Wh, keys, times, dur, avgFps: L.F / D, minFps: 1 / maxDur, maxDisp, t0: ta, duration: D };
+  return { L, HX, HY, Ww, Wh, cy, ppm, zoom, ...(anchor ? { anchor: true } : {}), sizeKeys, area, px: 0.5, py: (cy + HY) / Wh, keys, times, dur, avgFps: L.F / D, minFps: 1 / maxDur, maxDisp, t0: ta, duration: D };
 }
 // 新大面片：先安排引擎能显示的时刻，再按页容量分段。旧计划保留在 planLegacy。
 // 帧预算：默认按运动分配（motionSchedule40，先放进一张）；可选三档帧率（budget40）或全程 30 fps。都按整数 tick 持帧。
@@ -5320,6 +5341,32 @@ function fitPlan40(P, pl, parts, extra, opt = {}) {
   if (fr.length !== pl.L.F || fr.every(q => q.empty)) return null;
   const a = pl.L.cellW / pl.L.cellH, ePx = Math.max(2 * pad, +opt.edgePx || 0), k = 1.02 / Math.max(.5, 1 - 2 * ePx / Math.min(pl.L.cellW, pl.L.cellH));   // 内容放进去后离格子边：留边那一圈（被压暗）+ 2%
   const area = q => { let ar = 0; for (let i = 0; i < 200; i++) { const v = evalKeys(q.sizeKeys, (i + .5) / 200); ar += v * v / 200; } return ar; };
+  // 4.9.81 带锚点的 Zoom：每帧内容相对爆点的左右 / 上 / 下范围 ÷ 这一帧的大小 → 新的整体形状（横向对称、竖向偏，爆点仍在原点）；
+  //   再按新形状算每帧要多大（三个方向最紧的那个），碰边的方向按原来那么大、几乎全黑 / 空的帧照 Zoom 的规矩跟前一帧，最后整体归一（最大那帧 = 1）
+  if (pl.zoom && pl.anchor) {
+    const up0 = pl.cy + pl.HY, dn0 = pl.HY - pl.cy, s0 = fr.map(q => q.hx / pl.HX), M1 = 0.5;     // 爆点上下至少各留 0.5 m
+    const own = (q, i, kk) => ({ X: (q.tl || q.tr ? q.hx : Math.max(-q.x0, q.x1, 1e-3)) * (q.tl || q.tr ? 1 : kk), U: q.tt ? s0[i] * up0 : Math.max(q.y1, 0) * kk, D: q.tb ? s0[i] * dn0 : Math.max(-q.y0, 0) * kk });
+    const need = fr.map((q, i) => q.empty || q.faint ? null : own(q, i, k));
+    let Xn = 0, Un = M1, Dn = M1;
+    need.forEach((n, i) => { if (!n) return; Xn = Math.max(Xn, n.X / s0[i]); Un = Math.max(Un, n.U / s0[i]); Dn = Math.max(Dn, n.D / s0[i]); });
+    if (!(Xn > 0)) return null;
+    Dn = Math.max(Dn, 0.04 * Un); Un = Math.max(Un, 0.04 * Dn);     // 爆点一边几乎没内容：那一边至少留另一边的 4 %（不然那一点点内容卡住整段的放大）
+    let HX = Math.max(Xn, (Un + Dn) / 2 * a), HY = HX / a, cy = clamp((Un - Dn) / 2, Un - HY, HY - Dn);
+    const sOf = n => Math.max(n.X / HX, n.U / (cy + HY), n.D / (HY - cy), 1e-3);
+    const sN = need.map((n, i) => { if (!n) return null; const h = sOf(n), g = pl.HX * s0[i] / (HX * h); return g > 1 ? pl.HX * s0[i] / (HX * fitGainCap(fr[i].q, g, P)) : h; });
+    const kF = 1.02 / Math.max(.5, 1 - 2 * Math.max(ePx, 12) / Math.min(pl.L.cellW, pl.L.cellH)), s1 = sN.find(v => v != null);
+    for (let i = 0; i < sN.length; i++) if (sN[i] == null) {
+      const q = fr[i], base = i > 0 ? sN[i - 1] : s1, touch = q.tl || q.tr || q.tb || q.tt;
+      sN[i] = base == null || touch ? pl.HX * s0[i] / HX : q.empty ? Math.min(pl.HX * s0[i] / HX, base) : Math.max(base, sOf(own(q, i, kF)));
+    }
+    const mx = Math.max(...sN); HX *= mx; HY *= mx; cy *= mx; for (let i = 0; i < sN.length; i++) sN[i] = Math.min(1, sN[i] / mx);
+    const ratio = sN.map((v, i) => pl.HX * s0[i] / (HX * v)), gain = ratio.slice().sort((x, y) => x - y)[Math.floor(ratio.length / 2)];
+    if (!(gain >= 1.03)) return null;
+    const frameScale = zoomLevels40(sN);
+    const out = { ...pl, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cy, ppm: pl.L.cellW / (2 * HX), py: (cy + HY) / (2 * HY), frameScale, sizeKeys: stepKeys40(frameScale, pl.ticks, pl.nTicks),
+      maxDisp: pl.maxDisp * Math.max(...ratio), fitted: { mode: 'anchor', gain: +gain.toFixed(3), from: +pl.HX.toFixed(2), to: +HX.toFixed(2), cy: +cy.toFixed(2) } };
+    out.area = area(out); return out;
+  }
   if (pl.zoom) {
     const own = q => Math.max(-q.x0, q.x1, -q.y0, q.y1, 1e-3), touch = q => q.tl || q.tr || q.tb || q.tt;
     const hNew = fr.map(q => { if (q.empty || q.faint) return null; if (touch(q)) return q.hx;
@@ -5362,8 +5409,8 @@ function growPlan40(P, pl, parts) {
   const ring = replayEdge40(parts), fr = fitFrames40(P, parts) || [];
   const hit = ring.map((v, i) => v >= FIT_RING && !(fr[i] && (fr[i].empty || fr[i].faint)) ? i : -1).filter(i => i >= 0);
   if (!hit.length) return null;
-  const HX = pl.HX * GROW40, HY = pl.HY * GROW40, cy = pl.zoom ? 0 : pl.cy;
-  return { ...pl, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cy, ppm: pl.L.cellW / (2 * HX), py: pl.zoom ? .5 : (cy + HY) / (2 * HY), maxDisp: pl.maxDisp / GROW40, grown: (pl.grown || 0) + 1,
+  const HX = pl.HX * GROW40, HY = pl.HY * GROW40, cy = pl.anchor ? pl.cy * GROW40 : pl.zoom ? 0 : pl.cy;     // 4.9.81 带锚点：绕爆点放大
+  return { ...pl, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cy, ppm: pl.L.cellW / (2 * HX), py: pl.zoom && !pl.anchor ? .5 : (cy + HY) / (2 * HY), maxDisp: pl.maxDisp / GROW40, grown: (pl.grown || 0) + 1,
     fitted: { mode: 'grow', gain: +(1 / GROW40).toFixed(3), from: +pl.HX.toFixed(2), to: +HX.toFixed(2), frames: hit.length } };
 }
 function tickFrameKeys40(F) {
@@ -8014,6 +8061,55 @@ function rtLayoutFar(P, ball, LI, full = false) {
   rtFarCache.set(key, out); if (rtFarCache.size > 8) rtFarCache.delete(rtFarCache.keys().next().value);
   return out;
 }
+// ---- 4.9.81 合成一张「随内容放大 · 锚在发射点」（用户 10-13 20:00「comet这种取景也不够满」→ 21:36 同意带锚点的 Zoom）----
+// 固定取景的整张面片要装下整条升空路径，前几帧星头只占面片底部一小段（单帧填充中位 0.6–0.7、最差 10 % 只有 0.15）。
+// 锚点 = 发射点（跟着面片上移 vz 一起走）：每帧在低分辨率下量内容相对锚点的左右 / 上 / 下范围（这一帧停留的开头、结尾各量一次），
+// 面片形状 = 各方向的最大值（不再加面片上移那一截）。尾缀又细又高、早段星头宽 2 m 却只有 3 m 高：横、竖分开放大（Size By Life 的 X、Y 两条），
+// 竖向 = 上 / 下里最紧的那个、横向 = 左右，每个最小 0.05；竖向分级（zoomLevels40，最多 12 级），横向在同一段里取最大，换帧的同一刻一起换（stepKeysXY40）。
+const rtAnchorCache = new Map(), RT_ANCHOR_MIN = 0.05;
+function stepKeysXY40(sx, sy, ticks, N) {
+  const F = sy.length, eps = 1.5e-4, kx = [], ky = [];
+  for (let f = 0; f < F; f++) {
+    const a = f ? ticks[f] / N : 0;
+    if (f && Math.abs(sx[f] - sx[f - 1]) < 1e-6 && Math.abs(sy[f] - sy[f - 1]) < 1e-6) continue;
+    if (f) { const u = Math.max(kx[kx.length - 1][0], a - eps); kx.push([u, sx[f - 1]]); ky.push([u, sy[f - 1]]); }
+    kx.push([a, sx[f]]); ky.push([a, sy[f]]);
+  }
+  kx.push([1, sx[F - 1]]); ky.push([1, sy[F - 1]]);
+  const keep = kx.map((k, i) => i === 0 || k[0] > kx[i - 1][0] + 1e-9 || k[1] !== kx[i - 1][1] || ky[i][1] !== ky[i - 1][1]);
+  return [kx.filter((_, i) => keep[i]), ky.filter((_, i) => keep[i])];
+}
+function rtFullAnchor(P, ball, LI, fa) {
+  const key = JSON.stringify(P) + '|anchor'; if (rtAnchorCache.has(key)) return rtAnchorCache.get(key);
+  const T = ball.T, pT = ball.pos(T), pad = 30 + 2 * (+P.rtCone || 0) + 15 * (+P.rtTurb || 0);
+  const xlo = Math.min(0, pT[0]) - pad, xhi = Math.max(0, pT[0]) + pad, zlo = -25, zhi = ball.H + 25, view = [(xlo + xhi) / 2, (zlo + zhi) / 2, (xhi - xlo) / 2, (zhi - zlo) / 2];
+  const N = 96, NH = 768, ppm = N / (2 * view[2]), ppmY = NH / (2 * view[3]), thr = -Math.log(1 - 3 / 255) / fixedExposure(P), pxX = 2 * view[2] / N, pxY = 2 * view[3] / NH;
+  const t = new Target(N, NH, gl.RGBA16F), buf = new Float32Array(N * NH * 4), R = makeRiseTailFullRenderer(P, LI, ball, 0), vz = fa.vz || 0;
+  const boxAt = ts => { t.clear(); t.bind(); additive(true); PPMY = ppmY; R.subW = 0; R.draw(ts, view, ppm, 1); additive(false); PPMY = 0;
+    gl.readPixels(0, 0, N, NH, gl.RGBA, gl.FLOAT, buf); let x0 = N, x1 = -1, y0 = NH, y1 = -1;
+    for (let y = 0; y < NH; y++) for (let x = 0; x < N; x++) { const i = y * N + x; if (buf[i * 4] + buf[i * 4 + 1] > thr) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; } }
+    if (x1 < 0) return null; const d = vz * (ts - fa.t0), X = i => view[0] - view[2] + i * pxX, Y = j => view[1] - view[3] + j * pxY;
+    return { X: Math.max(Math.abs(X(x0) - fa.cx), Math.abs(X(x1 + 1) - fa.cx)) + pxX, U: Math.max(0, Y(y1 + 1) - d) + pxY, D: Math.max(0, d - Y(y0)) + pxY }; };
+  const need = [];
+  try {
+    for (let f = 0; f < fa.times.length; f++) { const a = fa.t0 + fa.times[f] - fa.dur[f] / 2, b = fa.t0 + fa.times[f] + fa.dur[f] / 2 - 1e-4, p = boxAt(a), q = boxAt(Math.max(a, b));
+      need.push(p || q ? { X: Math.max(p ? p.X : 0, q ? q.X : 0), U: Math.max(p ? p.U : 0, q ? q.U : 0), D: Math.max(p ? p.D : 0, q ? q.D : 0) } : null); }
+  } finally { PPMY = 0; t.dispose(); }
+  let Xn = 1, Un = 0.5, Dn = 0.5; for (const n of need) if (n) { Xn = Math.max(Xn, n.X); Un = Math.max(Un, n.U); Dn = Math.max(Dn, n.D); }
+  // 锚点下面（或上面）几乎没内容时，那一边至少留另一边的 4 %：否则那一点点内容会把整段的竖向放大卡住（CS3C 金尾：发射点下 0.2 m → 每帧竖向至少 0.4）
+  Dn = Math.max(Dn, 0.04 * Un); Un = Math.max(Un, 0.04 * Dn);
+  const fill = a => { for (let i = 0; i < a.length; i++) if (a[i] == null) a[i] = i ? a[i - 1] : (a.find(v => v != null) || 1); return a; };     // 没内容的帧跟前一帧
+  const sxF = fill(need.map(n => n ? clamp(n.X / Xn, RT_ANCHOR_MIN, 1) : null)), syF = fill(need.map(n => n ? clamp(Math.max(n.U / Un, n.D / Dn), RT_ANCHOR_MIN, 1) : null));
+  const HX = Xn * 1.04, Ua = Un * 1.03, Da = Dn * 1.03, HY = (Ua + Da) / 2, cz = (Ua - Da) / 2;
+  const Nt = Math.round(fa.Dtot * 30), ks = fa.times.map((tc, f) => Math.round((tc - fa.dur[f] / 2) * 30)), frameScale = zoomLevels40(syF), frameScaleX = frameScale.slice();
+  for (let i = 0; i < frameScale.length;) { let j = i; while (j + 1 < frameScale.length && frameScale[j + 1] === frameScale[i]) j++; let m = 0; for (let q = i; q <= j; q++) m = Math.max(m, sxF[q]); for (let q = i; q <= j; q++) frameScaleX[q] = m; i = j + 1; }
+  const [sizeKeysX, sizeKeysY] = stepKeysXY40(frameScaleX, frameScale, ks, Nt);
+  let area = 0; for (let i = 0; i < 200; i++) { const u = (i + 0.5) / 200; area += evalKeys(sizeKeysX, u) * evalKeys(sizeKeysY, u) / 200; }
+  const out = { anchor: true, HX, HY, Ww: 2 * HX, Wh: 2 * HY, cz, frameScale, frameScaleX, sizeKeys: sizeKeysY, sizeKeysX, sizeKeysY, area: +area.toFixed(4), fixedArea: +((2 * HX * 2 * HY) / (fa.Ww * fa.Wh)).toFixed(4),
+    need: need.map(n => n && [+n.X.toFixed(1), +n.U.toFixed(1), +n.D.toFixed(1)]), ext: [+Xn.toFixed(1), +Un.toFixed(1), +Dn.toFixed(1)] };     // 每帧左右 / 上 / 下（米，给检查和看法用）
+  rtAnchorCache.set(key, out); if (rtAnchorCache.size > 8) rtAnchorCache.delete(rtAnchorCache.keys().next().value);
+  return out;
+}
 function rtPlan(P, lay, times, dur, extra = {}) {
   const L = layoutOf(P);
   return { L, HX: lay.HX, HY: lay.HY, Ww: 2 * lay.HX, Wh: 2 * lay.HY, cy: lay.cy, ppm: L.cellW / (2 * lay.HX), zoom: false, aniso: true,
@@ -8109,8 +8205,11 @@ async function bakeRiseTailFull(P0, scale, onProg, mobile = true) {
   // 4.9.79「星头火花输出」= 分开（outMode split，和烟花序列同一个选项）：PC 出星头 / 火花两张（两个发射器、各自的颜色）；手机仍合一张（规范 v1 §6 同一时刻 1 张大序列）
   const P = { ...P0, form: 'emitset', outMode: !mobile && P0.outMode === 'split' ? 'split' : 'combined', frameMode: 'uniform', zoom: 'off', autoGrid: 0, rtGpuF: 0, rtGpuM: 0, rtGpuC: 0 };
   const ball = rtBallistic(P), LI = rtLoopInfo(P), E0 = fixedExposure(P);
-  const fa = rtLayoutFar({ ...P, outMode: 'combined' }, ball, LI, true), Pa = { ...P, cols: fa.cols, rows: fa.rows, chans: fa.chans || 4 };
-  const pa = rtPlan(Pa, { HX: fa.HX, HY: fa.HY, cy: fa.cz, hb: 0.5 }, fa.times, fa.dur, { loop: false, t0: fa.t0, duration: fa.Dtot, keys: fa.keys });
+  const fa0 = rtLayoutFar({ ...P, outMode: 'combined' }, ball, LI, true), Pa = { ...P, cols: fa0.cols, rows: fa0.rows, chans: fa0.chans || 4 };
+  // 4.9.81 面片取景「随内容放大 · 锚在发射点」：形状 / 每帧大小另量（rtFullAnchor），面片锚在发射点、Size By Life 绕它放大；缺省（固定）一字不变
+  const an = P0.zoom === 'anchor' ? rtFullAnchor({ ...P, outMode: 'combined' }, ball, LI, fa0) : null, fa = an ? { ...fa0, ...an } : fa0;
+  const pa = rtPlan(Pa, { HX: fa.HX, HY: fa.HY, cy: fa.cz, hb: 0.5 }, fa.times, fa.dur, { loop: false, t0: fa.t0, duration: fa.Dtot, keys: fa.keys,
+    ...(an ? { zoom: true, anchor: true, sizeKeys: an.sizeKeysY, sizeKeysX: an.sizeKeysX, sizeKeysY: an.sizeKeysY, frameScale: an.frameScale, area: an.area } : {}) });
   const b = await bakeFrames(Pa, scale, onProg, pa, makeRiseTailFullRenderer(P, LI, ball, fa.cx, fa.vz || 0, fa.t0), { expo: [E0, E0], noFade: true });
   Object.assign(b.meta, { es: true, full: fa, T: ball.T, ball: { k: ball.k, v0: ball.v0, vz0: ball.vz0, vx0: ball.vx0, T: ball.T, H: ball.H, Hwant: ball.Hwant, vb: ball.vb, ok: ball.ok, lean: P.rtLean || 0, ...(ball.quad ? { quad: true, vt: ball.vt } : {}) } });
   b.form = 'emitset'; b.esMobile = mobile; b.esFull = true; b.P = { ...P0 }; b.fades = []; b.far = null;
@@ -8186,13 +8285,15 @@ function fwlEmitSetFull(name, b, M, mobile = b.esMobile) {
   const materials = { full: { role: 'beam_flipbook', textures: { main: 'full', ramp: 'ramp' }, scalars: { rows: L.rows, cols: L.cols } } };
   const emitters = [{
     name: 'TrailFull', material: 'full', gpu: false, max_alive: 1,
-    required: { screen_alignment: 'Rectangle', duration_s: r4(fa.Dtot), loops: 1, delay_s: r4(fa.t0), cutout: 'cutoutFull', max_draw_count: 1, pivot_offset: [-0.5, -0.5], local_space: true },
+    required: { screen_alignment: 'Rectangle', duration_s: r4(fa.Dtot), loops: 1, delay_s: r4(fa.t0), cutout: 'cutoutFull', max_draw_count: 1, pivot_offset: [-0.5, fa.anchor ? r4(-0.5 - fa.cz / fa.Wh) : -0.5], local_space: true },
     spawn: { rate: { const: 0 }, bursts: [[0, 1]] },
     modules: [
       { m: 'Lifetime', Lifetime: { const: r4(fa.Dtot) } },
-      { m: 'InitialLocation', StartLocation: { const: [r1(fa.cx * 100), 0, r1(fa.cz * 100)] } },
+      { m: 'InitialLocation', StartLocation: { const: [r1(fa.cx * 100), 0, fa.anchor ? 0 : r1(fa.cz * 100)] } },     // 4.9.81 锚在发射点：粒子在发射点，Pivot Offset 把面片中心放到上方 cz × 大小
       { m: 'InitialVelocity', StartVelocity: { const: [0, 0, r1(Math.max(1, (fa.vz || 0) * 100))] } },
       { m: 'InitialSize', StartSize: { const: [r1(fa.Ww * 100), r1(fa.Wh * 100), 1] } },
+      ...(fa.anchor ? [{ m: 'SizeByLife', LifeMultiplier: { curve: fa.sizeKeysX.map(([u, x], i) => [r4(u), [r4(x), r4(fa.sizeKeysY[i][1]), 1]]) }, MultiplyX: true, MultiplyY: true, MultiplyZ: false,
+        note: '随内容放大 · 锚在发射点（4.9.81）：横（X）竖（Y）各自放大，和换帧同一刻换大小，绕 Pivot（发射点）' }] : []),
       { m: 'OrientationAxisLock', flags: 'EPAL_ROTATE_Z', note: '和 PC 远段一样：面片绕组件 Z 轴转向镜头；Screen Alignment = Rectangle、Required 勾 Local Space（整根尾缀转组件倾斜时一起倾）' },
       { m: 'DynamicParameter', params: { frame: { curve: fwlFrameKeys(fa.keys, L.F) } } },
       { m: 'ColorOverLife', ColorOverLife: { curve: fwlColor(M, fa.Dtot, fa.t0, (P.rtBright || 1) * (b.tail ? intOr1(M.headInt) : 1)) }, AlphaOverLife: { const: 1 } }
@@ -8214,6 +8315,7 @@ function fwlEmitSetFull(name, b, M, mobile = b.esMobile) {
       + `Initial Velocity 向上 ${r1((fa.vz || 0) * 100)} cm/s 和 PC 远段一样（面片往上平移、贴图内容已补回，不能删）。未经 UE 验证。`
       + (fa.t0 > 0 || P.cutOut > 0 ? ` 入点 ${r2(fa.t0)} s（之前不显示，发射器延迟到入点）、出点 ${P.cutOut > 0 ? r2(fa.t0 + fa.Dtot) + ' s' : '最后一颗火花看不见'}（4.9.79）。` : '')
       + (P.frameBudget === 'fixed' ? ` 帧数：固定机位 + 匀速帧（4.9.79）。` : '')
+      + (fa.anchor ? ` 面片取景「随内容放大 · 锚在发射点」（4.9.81）：面片最大 ${r1(fa.Ww)} × ${r1(fa.Wh)} m、中心在发射点上方 ${r1(fa.cz)} m（Pivot Offset），Size By Life 竖向 ${r2(Math.min(...fa.frameScale))}–1、横向 ${r2(Math.min(...fa.frameScaleX))}–1（${fa.sizeKeysX.length} 个点），平均面积是固定取景的 ${Math.round(fa.area * fa.fixedArea * 100)} %；未经 UE 验证。` : '')
       + (split ? ` 星头、火花分开：TrailFull = 星头层（…_Full_Head，Color Over Life × 星头亮度），TrailFullTail = 火花层（…_Full_Tail，× 火花亮度）；只有 PC，手机仍合一张。` : '')] };
 }
 function fwlEmitSet(name, b, M, mobile) {
@@ -8530,7 +8632,8 @@ function renderEmitLive() {
 function rtFullStateAt(b, t) {
   const fa = b.meta.full, u = (t - fa.t0) / fa.Dtot; if (u < 0 || u >= 1) return null;
   if (b.esHead) { const p=rtBallistic(b.P).pos(t); return {f:0,x:p[0],z:p[2]+fa.cz,w:fa.Ww,h:fa.Wh}; }
-  return { f: clamp(Math.floor(evalKeys(fa.keys, u)), 0, b.meta.L.F - 1), x: fa.cx, z: fa.cz + (fa.vz || 0) * (t - fa.t0), w: fa.Ww, h: fa.Wh };
+  const sx = fa.anchor ? evalKeys(fa.sizeKeysX, u) : 1, sy = fa.anchor ? evalKeys(fa.sizeKeysY, u) : 1;     // 4.9.81 锚在发射点：面片绕锚点（发射点 + 上移）按 Size By Life 横竖各自放大
+  return { f: clamp(Math.floor(evalKeys(fa.keys, u)), 0, b.meta.L.F - 1), x: fa.cx, z: fa.cz * sy + (fa.vz || 0) * (t - fa.t0), w: fa.Ww * sx, h: fa.Wh * sy };
 }
 function renderEmitExportFull(b) {
   const tkN = typeof exportTimeNow === 'function' && !b.esHead ? exportTimeNow() : 1;     // 4.9.78 尺寸档按时间缩：回放按导出的时间放
@@ -8550,6 +8653,7 @@ function renderEmitExportFull(b) {
   rtLayerBarSync([['full', null, false]]);
   const fa = b.meta.full, dist = (state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m` : '') + (tkN !== 1 ? ` · 按尺寸档时间 × ${tkN}` : '');
   hudText = `引擎回放 · ${b.esMobile ? '手机 _M' : 'PC'}（近段 + 远段合成一张）· ${!rtOn('full') ? '（分层看关了）' : s ? '第 ' + (s.f + 1) + '/' + b.meta.L.F + ' 帧' : '已结束'} · 面片 ${fa.Ww.toFixed(1)} × ${fa.Wh.toFixed(1)} m · ${b.tail ? '2 个发射器（星头 / 火花分开）' : '1 个发射器'}、没有粒子${fa.t0 > 0 ? ' · 入点 ' + fa.t0.toFixed(2) + ' s' : ''}${dist}${rtShowNote()}`;
+  if (fa.anchor && s) hudText += ` · 随内容放大 · 锚在发射点：这一帧 ${(s.w / fa.Ww).toFixed(2)} × ${(s.h / fa.Wh).toFixed(2)}`;     // 4.9.81
   if (tilt) hudText += ` · 倾斜预览 ${tilt}°（Rectangle + 锁 Z + Local Space，整张跟组件倾；以 UE 实测为准）`;
   hudB = '';
 }
@@ -9559,7 +9663,8 @@ async function bakeMasterLead(P, scale, onProg) {
 // 种子变体：三个种子共用一套取景和帧号曲线（引擎里只换贴图）
 async function bakeVariants(P, scale, onProg, n = 3) {
   const Ps = []; for (let i = 0; i < n; i++) Ps.push({ ...P, seed: P.seed + i * 101 });
-  const fms = Ps.map(measure), fm = { ...fms[0], prof: fms[0].prof.map((q, i) => [q[0], Math.max(...fms.map(f => (f.prof[i] || q)[1])), Math.max(...fms.map(f => (f.prof[i] || q)[2]))]) };
+  const fms = Ps.map(measure), fm = { ...fms[0], prof: fms[0].prof.map((q, i) => [q[0], Math.max(...fms.map(f => (f.prof[i] || q)[1])), Math.max(...fms.map(f => (f.prof[i] || q)[2]))]) ,
+    ...(fms[0].box ? { box: fms[0].box.map((q, i) => [q[0], ...[1, 2, 3, 4].map(j => (j % 2 ? Math.min : Math.max)(...fms.map(f => ((f.box || [])[i] || q)[j])))]) } : {}) };     // 4.9.81 带锚点的 Zoom：三张的每刻范围取并集
   for (const f of fms) { fm.x0 = Math.min(fm.x0, f.x0); fm.x1 = Math.max(fm.x1, f.x1); fm.y0 = Math.min(fm.y0, f.y0); fm.y1 = Math.max(fm.y1, f.y1); }
   const pl = plan(P, fm), out = [];
   for (let i = 0; i < n; i++) {
@@ -10293,7 +10398,7 @@ ${CURVE_NOTE}
 Spawn：Rate = 0；Burst：Count = 1，Time = 0
 Lifetime：${fx(m.duration)} s（常量）
 Initial Size：X = ${cm(m.Ww)} cm，Y = ${cm(m.Wh)} cm（${m.tight ? '最大尺寸，横竖分开' : m.zoom ? '开花最大时的尺寸' : '常量'}）
-${m.tight ? tightLines(m) : m.zoom ? `Initial Location：0（爆点就是精灵中心）
+${m.tight ? tightLines(m) : m.zoom ? `${m.anchor && Math.abs(+m.cy || 0) > 1e-4 ? `Initial Location：0；Required → Pivot Offset = (−0.5, ${fx(-0.5 - m.cy / m.Wh, 4)})（随开花放大 · 锚在爆点：面片最大时中心比爆点高 ${cm(m.cy)} cm，Size By Life 绕爆点放大；未经 UE 验证）` : 'Initial Location：0（爆点就是精灵中心）'}
 Size By Life（X、Y 相同；线性插值）：面片随开花放大，每帧贴图按同一条曲线烘焙
   相对时间    倍数
 ${keyLines(m.sizeKeys)}` : Math.abs(+m.cy || 0) > 1e-4 ? `Initial Location：0；Required → Pivot Offset = (−0.5, ${fx(-0.5 - m.cy / m.Wh, 4)})（爆点在贴图里的位置：面片中心比爆点高 ${cm(m.cy)} cm；面片总是面向相机，用 Pivot 对齐仰视时也不错位；未经 UE 验证）` : `Initial Location：0（爆点就是精灵中心）`}
@@ -10567,7 +10672,7 @@ ${lodSection(b)}
 ${bigShellSection(b)}
 
 【说明】
-${b.form === 'master' || b.form === 'segments' ? (b.meta.zoom ? 'Size By Life 以精灵中心缩放，爆点就在中心，所以面片放大时爆点位置不变。' : '面向相机的精灵用 Initial Location 的 Z 偏移对齐爆点；从很陡的仰角看时会有轻微偏差。') + '\n' : ''}${name}.json 保存了全部参数，用烘焙器「导入参数 JSON」即可继续修改。
+${b.form === 'master' || b.form === 'segments' ? (b.meta.zoom ? (b.meta.anchor ? 'Size By Life 绕 Pivot（爆点）缩放：爆点不在面片中心，面片放大时爆点位置不变（4.9.81 锚在爆点）。' : 'Size By Life 以精灵中心缩放，爆点就在中心，所以面片放大时爆点位置不变。') : '面向相机的精灵用 Initial Location 的 Z 偏移对齐爆点；从很陡的仰角看时会有轻微偏差。') + '\n' : ''}${name}.json 保存了全部参数，用烘焙器「导入参数 JSON」即可继续修改。
 `;
 }
 const FORM_NAMES = { emitset: '循环层 + 粒子发射器', trail: '升空尾缀序列（循环 + 消散）', master: '大面片母版', segments: '分段母版（开花段 + 下垂段）', unit: '单元序列', riseLoop: '上升星头循环', loop: '地面循环' };
@@ -10600,7 +10705,8 @@ function fwlMaster(name, b, M, mobile) {
     // 4.3（渲染基础问题 D8）：固定取景的爆点对齐改用 Pivot Offset（爆点在贴图里的位置），不再把面片往上挪 cy：
     // 面片总是面向相机，挪 InitialLocation Z 在仰视时爆点会偏 cy(1 − cosθ)，多层 cy 不同就错位。
     // 4.9.21（用户 10-06 21:51）：入点前放大也一律绕爆点（以前缺省绕面片中心：面片中心在爆点下面，花小时整朵偏下、放大时往上走）
-    const pivot = !m.zoom && Math.abs(+m.cy || 0) > 1e-4;
+    // 4.9.81 带锚点的 Zoom（m.anchor）：Pivot Offset 同固定取景（爆点在粒子位置），Size By Life 绕它放大——面片中心在爆点上方 cy × 大小，和烘焙每帧的取景一样
+    const pivot = (!m.zoom || m.anchor) && Math.abs(+m.cy || 0) > 1e-4;
     const mods = [
       { m: 'Lifetime', Lifetime: { const: r4(life) } },
       { m: 'InitialSize', StartSize: { const: [r1(m.Ww * 100), r1(m.Wh * 100), 1] } },
@@ -10618,6 +10724,7 @@ function fwlMaster(name, b, M, mobile) {
         ...(pivot ? { pivot_offset: [-0.5, r4(-0.5 - m.cy / m.Wh)] } : {}) },
       spawn: { rate: { const: 0 }, bursts: [[0, 1]] }, modules: mods,
       ...(pre ? { notes: [`入点前放大：出生后 ${r4(pre.dur)} s 停在第 0 帧、Size By Life 从 ${r4(pre.keys[0][1])} 放大到 1（绕爆点${pivot ? '：Pivot Offset 和没设入点时同一个，烟花实播对齐未经 UE 验证' : '：爆点就在面片中心'}），之后从入点 ${r4(m.t0)} s 照常播`] }
+        : m.anchor ? { notes: [`随开花放大 · 锚在爆点（4.9.81）：Pivot Offset 把爆点放在粒子位置（面片最大时中心比爆点高 ${r1(m.cy)} m），Size By Life 绕爆点放大（${m.sizeKeys.length} 个点、和换帧同一刻换大小），爆点在面片里的位置不变；未经 UE 验证`] }
         : pivot ? { notes: ['固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 ' + r1(m.cy) + ' m），仰视时也对得上；未经 UE 验证'] } : {})
     });
     if (s.tail) { const e0 = emitters[emitters.length - 1];
@@ -12284,7 +12391,7 @@ function showStats(b) {
   else if (m.budget) rows.push((m.budget.fps ? `帧预算 · 开花段 <b>${m.budget.fps[0]}</b> / 燃烧段 <b>${m.budget.fps[1]}</b> / 淡出段 <b>${m.budget.fps[2]}</b> fps（淡出从 ${m.budget.fadeAt.toFixed(2)} s）` : `帧预算 · ${m.budget.mode === 'full' ? '全程 30 fps' : '按运动分配'} · 每帧停 <b>${m.budget.holdMin}–${m.budget.holdMax}</b> 个 tick（${(30 / m.budget.holdMin).toFixed(0)}–${(30 / m.budget.holdMax).toFixed(1)} fps）· 共 <b>${m.budget.pages}</b> 张`) + `${isFinite(m.budget.strobeFrom)?` · 点灭期间 ${m.budget.strobeFps} fps`:''} · 燃烧段最低 <span class="${cls(m.minFps >= 12)}">${m.minFps.toFixed(1)} fps</span> · 每帧最大位移 <span class="${cls(m.maxDisp <= 6)}">${m.maxDisp.toFixed(1)} px</span>`);
   else rows.push(`平均 <b>${m.avgFps.toFixed(1)}</b> fps · 最低 <span class="${cls(m.minFps >= 24)}">${m.minFps.toFixed(1)} fps</span> · 每帧最大位移 <span class="${cls(m.maxDisp <= 3)}">${m.maxDisp.toFixed(1)} px</span>`);
   rows.push(`精灵 ${m.Ww.toFixed(1)}×${m.Wh.toFixed(1)} m · 贴图 ${nTex} 张 · BC7 约 ${mb} MB`);
-  if (b.form === 'master' || b.form === 'segments') rows.push(`平均面片面积 <b>${Math.round(m.area * 100)}%</b>${m.tight ? '（紧凑取景）' : m.zoom ? '（随开花放大）' : '（固定大小）'}${b.next ? ` · 分段时刻 ${parts.slice(1).map(s=>s.meta.t0.toFixed(2)).join(' / ')} s` : ''}`);
+  if (b.form === 'master' || b.form === 'segments') rows.push(`平均面片面积 <b>${Math.round(m.area * 100)}%</b>${m.tight ? '（紧凑取景）' : m.anchor ? '（随开花放大 · 锚在爆点）' : m.zoom ? '（随开花放大）' : '（固定大小）'}${b.next ? ` · 分段时刻 ${parts.slice(1).map(s=>s.meta.t0.toFixed(2)).join(' / ')} s` : ''}`);
   const fl = []; for (let s = b; s; s = s.next) if (s.meta.fill) fl.push(s.meta.fill);
   if (fl.length) { const avg = fl.reduce((a, q) => a + q.avg, 0) / fl.length, p10 = Math.min(...fl.map(q => q.p10)), mn = Math.min(...fl.map(q => q.min));
     rows.push(`画面占比${m.unit ? '（单元序列星头固定在锚点，以 overdraw 为准）' : ''} 平均 <span class="${cls(avg >= 0.9 || m.unit)}">${Math.round(avg * 100)}%</span> · 最差 10% 的帧 ≥ <span class="${cls(p10 >= 0.85)}">${Math.round(p10 * 100)}%</span> · 最低 ${Math.round(mn * 100)}%`); }
@@ -13217,7 +13324,7 @@ const INERT = [
   [['emberAll'], P => !(+P.sparkStop > 0), '「火花停止时刻」是 0 时不起作用（火花本来就全程都有，余烬也一样）'],
   // 4.3（H13 / 渲染基础问题清单审计 4.4）：
   [['headDimUntil'], P => !(+P.headDim < 1), '「前段亮度」是 1（不压暗）时不起作用：先把前段亮度调到 1 以下'],
-  [['preRoll', 'preScale0'], P => P.zoom === 'on', '「面片取景」是「随开花放大」时不起作用（Zoom 本来就从小放大）'],
+  [['preRoll', 'preScale0'], P => P.zoom === 'on' || P.zoom === 'anchor', '「面片取景」是「随开花放大」时不起作用（Zoom 本来就从小放大）'],
   [['emberFrac', 'emberLife', 'emberBright', 'emberFollow', 'emberSize', 'emberEnd', 'emberAll'], P => +P.branch > 0, '「松叶分叉数」> 0 时不出余烬（分叉的火花占了余烬那一路）'],
   [['chaos'], P => !(+P.spin > 0), '「旋转速度」是 0 时不起作用'],
   // 地面：只有 1 个喷口时，喷口之间的间距、彗星扇面没有意义（喷泉的扇面角度是喷射张角，照样起作用）
@@ -15589,7 +15696,7 @@ function wbSync() {
 // 4.9.1（5.0 第 3 步，交互宪章 5「身份条」）：顶栏一眼看到——打开的是什么、从哪来、哪个版本、改了没保存、素材包和现在一不一样。
 // 以前名字只在左栏「版本记录」里，左栏收起就不知道开的是谁。贴图新旧在旁边的 #abState（烘焙中 / 旧 / 失败）。
 // 4.9.33：OUTPUT_VER.zoom 只算进用 Zoom 取景的效果（别的效果的签名和 4.9.32 一样，不会因为它变成「素材包要重导」）
-const OUT_SIG = () => { try { const { zoom, ...rest } = OUTPUT_VER, s = wbSnap(), z = s.kind === 'combo' ? (s.layers || []).some(l => l.P && l.P.zoom === 'on') : !!(s.P && s.P.zoom === 'on'); let ss = ''; try { const sp = sizeSpecOf(); if (sp) ss = sp.off ? '|size-off' : `|size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (e) { }   // 4.9.51
+const OUT_SIG = () => { try { const { zoom, ...rest } = OUTPUT_VER, s = wbSnap(), zz = q => !!q && (q.zoom === 'on' || q.zoom === 'anchor'), z = s.kind === 'combo' ? (s.layers || []).some(l => zz(l.P)) : zz(s.P); let ss = ''; try { const sp = sizeSpecOf(); if (sp) ss = sp.off ? '|size-off' : `|size${sp.version}-${sp.id}-${sp.diameter_m}-${sp.burst_m}`; } catch (e) { }   // 4.9.51
     return JSON.stringify(rest) + (z && zoom ? '|zoom' + zoom : '') + ss; } catch (e) { return ''; } };
 function idBarInfo(list, changed) {
   // 每个标签 [短字, 样式, 悬停的完整说明]；顺序 = 要紧的在前（窄的时候后面的先被挤掉）
@@ -16185,7 +16292,7 @@ function migNotify() {
   const nm = k => NM[k] || ((typeof PNAMES !== 'undefined' ? PNAMES : []).find(r => r.key === k) || {}).cn || k;
   // 4.9.7（对话框23 参数栏交互第 9 条）：值也写中文（以前写「存的是 fade」「存的是 0」这种内部值）
   const VAL = { outLow: { frame: '单帧', seq: '序列（和手机同一张）' }, endMode: { fade: '最后 0.3 s 整体淡出', natural: '等火花自然灭完', cut: '到序列时长直接切' }, coolMode: { 0: '按各自寿命', 1: '按实际年龄' }, engine: { cpu: 'CPU', gpu: 'GPU' },
-    zoom: { off: '固定大小', on: 'Zoom（随开花放大）', tight: '紧凑取景' }, frameMode: { content: '按画面变化', auto: '自动（按运动快慢）', uniform: '均匀', tick30: '30 fps（自动分段）' }, prePivot: { 0: '面片中心', 1: '爆点' }, form: { unit: '单元序列（单束）', master: '大面片母版', segments: '分段母版' } };
+    zoom: { off: '固定大小', on: 'Zoom（随开花放大）', anchor: 'Zoom · 锚在爆点 / 发射点', tight: '紧凑取景' }, frameMode: { content: '按画面变化', auto: '自动（按运动快慢）', uniform: '均匀', tick30: '30 fps（自动分段）' }, prePivot: { 0: '面片中心', 1: '爆点' }, form: { unit: '单元序列（单束）', master: '大面片母版', segments: '分段母版' } };
   const selLabel = (k, v) => { for (const sec of (typeof SCHEMA !== 'undefined' ? SCHEMA : [])) for (const it of sec.items) if (it.sel === k && it.options) { const o = it.options.find(o => String(o[0]) === String(v)); if (o) return splitLab(o[1])[0]; } return null; };
   const unitOf = k => { for (const sec of (typeof SCHEMA !== 'undefined' ? SCHEMA : [])) for (const it of sec.items) if (Array.isArray(it) && it[0] === k) return it[2] || ''; return ''; };
   const f = (k, v) => { if (v == null || v === '') return '空'; const t = VAL[k] && VAL[k][String(v)] != null ? VAL[k][String(v)] : selLabel(k, v); if (t != null) return `「${t}」`; if (typeof v === 'number' || isFinite(+v)) { const u = unitOf(k); return +(+v).toFixed(4) + (u && u !== '1' ? ' ' + u : ''); } return `「${String(v)}」`; };
