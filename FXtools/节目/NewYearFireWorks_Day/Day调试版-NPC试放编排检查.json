@@ -1,5 +1,5 @@
 {
-  "revision": "Day_npc_test_fire_v2_tidy_then_messy",
+  "revision": "Day_npc_test_fire_v3_fill5to35_highlight_once",
   "density": 2,
   "rhythm": null,
   "derivedFlowers": [
@@ -13,13 +13,13 @@
     "revision": "v2-20261012",
     "hero": false,
     "heroId": "Hero",
-    "subTemplates": 20,
+    "subTemplates": 21,
     "skipped": 0,
     "heroOnLarge": [
       "NYR03_GoldKamuro_H280@1"
     ],
     "heroSwitched": [],
-    "templates": 20,
+    "templates": 21,
     "baseResources": 3,
     "samples": [
       "R03 · 金裂星 · 90m：开花 189.1 → 149.1 m",
@@ -32,44 +32,44 @@
   },
   "tiers": {
     "high": {
-      "events": 24,
-      "subTemplates": 14,
-      "templates": 20,
-      "scheduleSlots": 21,
+      "events": 54,
+      "subTemplates": 17,
+      "templates": 34,
+      "scheduleSlots": 36,
       "groups": {
-        "P": 17,
-        "B": 3,
-        "F": 1
+        "P": 24,
+        "B": 9,
+        "F": 3
       },
-      "lastSlot": 22.2,
+      "lastSlot": 32.3,
       "expansionProblems": [],
       "status": "property_text_ready_UE_unverified"
     },
     "medium": {
-      "events": 24,
-      "subTemplates": 14,
-      "templates": 20,
-      "scheduleSlots": 21,
+      "events": 52,
+      "subTemplates": 17,
+      "templates": 34,
+      "scheduleSlots": 36,
       "groups": {
-        "P": 17,
-        "B": 3,
-        "F": 1
+        "P": 24,
+        "B": 9,
+        "F": 3
       },
-      "lastSlot": 22.2,
+      "lastSlot": 32.3,
       "expansionProblems": [],
       "status": "property_text_ready_UE_unverified"
     },
     "low": {
-      "events": 24,
-      "subTemplates": 14,
-      "templates": 20,
-      "scheduleSlots": 21,
+      "events": 46,
+      "subTemplates": 17,
+      "templates": 33,
+      "scheduleSlots": 36,
       "groups": {
-        "P": 17,
-        "B": 3,
-        "F": 1
+        "P": 24,
+        "B": 9,
+        "F": 3
       },
-      "lastSlot": 22.2,
+      "lastSlot": 32.3,
       "expansionProblems": [],
       "status": "property_text_ready_UE_unverified"
     }
@@ -81,22 +81,22 @@
     "mediumNotInHigh": 0
   },
   "oneTable": {
-    "events": 24,
-    "flags14": 18,
-    "flags12": 6,
+    "events": 54,
+    "flags14": 32,
+    "flags12": 22,
     "flags2": 0,
-    "subTemplates": 14,
-    "templates": 20,
-    "scheduleSlots": 21,
+    "subTemplates": 17,
+    "templates": 34,
+    "scheduleSlots": 36,
     "pc": {
-      "high": 24,
-      "medium": 24,
-      "low": 24
+      "high": 54,
+      "medium": 52,
+      "low": 46
     },
     "mobile": {
-      "high": 18,
-      "medium": 18,
-      "low": 18
+      "high": 32,
+      "medium": 30,
+      "low": 28
     }
   },
   "beamFlowers": [
@@ -152,12 +152,12 @@
   ],
   "heroTrailId": "Hero",
   "doc": {
-    "cues": 21,
-    "events": 24,
+    "cues": 36,
+    "events": 54,
     "sections": 2,
-    "duration": 30,
+    "duration": 39,
     "musicOffset": 0,
-    "balls": 20,
-    "fans": 4
+    "balls": 38,
+    "fans": 16
   }
 }

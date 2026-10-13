@@ -93,12 +93,11 @@ def risks_day():
     ck, ob = CHECK, COMPILE.get('oneTable', {})
     iv = ck.get('intervals', {})
     return [
-        f"v2（用户 22:07）：0–5 s 闲聊 VO，天上全空，第一发 {ck.get('firstLaunchS', 5):.1f} s 才起飞；先整齐（小银菊同高、每 1.2 s 一发从左到右，再一对 + 两端银扇同时），15.3 s 起变乱。",
-        f"「乱」乱在次序和时间，不在多：间隔从整齐的 1.2 s 变成 {min(iv.get('messy', [0]) or [0]):.1f}–{max(iv.get('messy', [0]) or [0]):.1f} s 不等；一对差半拍、扇一边晚 1 s、突然一发中号、连发、一小排断一个点、最后一发晚了，高度也不一样。同时最多 {ck['maxAliveBalls']} 朵、分散在全宽上，重叠体检 PC / 手游六档都是 0。",
-        f"最后一发 {ck.get('lastHitS', 0):.1f} s，之后不再开花，给最后那句 VO（「还需要调整」）留空；{ck['lastEndS']:.1f} s 余烬灭完。没拿到 Day 的 VO 音频，最后一句的位置是推断（约 24.5 s 起），拿到后按实际时间挪。",
-        f"PC 高 / 中 / 低 {ob.get('pc', {}).get('high')} / {ob.get('pc', {}).get('medium')} / {ob.get('pc', {}).get('low')} 发，手游 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')} 发（手游没有扇和小平台，乱靠球花的次序和时间）；GPU 同秒峰值 {ck['gpu']['peak']}。",
-        "单独的节目（NewYearFireWorks_Day），导进 UE 的 Day 导演；花型、大小、高度都是 Night 里已有的版本。不剧透：没有主角、大号整排、白墙和倒计时构图。",
-        "推断（没确认）：会循环；Day 什么时候开始和停（要在 Night 倒计时前停）归引擎排期。没在 UE 里放过。",
+        f"v3（用户 22:24）：进图 3 分钟放一次、不循环。0–5 s 闲聊 VO，天上全空，第一发 {ck.get('firstLaunchS', 5):.1f} s 起飞；5–35 s 做满（尾缀也算，PC / 手游都没有空着的时刻），最后一发 {ck.get('lastHitS', 0):.1f} s。",
+        "整齐（5–22 s）：银扇从中间往外 → 银菊左到右 → 橙辉星右到左，每 1.2 s 一发；停一口气，21 s 高光「试一次齐放」：九点小银菊从中间往外 + 四把银扇 + 小平台三朵（PC）。",
+        f"变乱（22–35 s）：高光还亮着时先只出低处的扇和小平台，26 s 起球花乱——一对差半拍、突然一发中号、连发、一小排断点、扇扫错方向——一直乱到结尾。间隔 {min(iv.get('messy', [0]) or [0]):.1f}–{max(iv.get('messy', [0]) or [0]):.1f} s 不等。",
+        f"不挤：除了高光那一下 {ck['maxAliveBalls']} 朵并排，其余时刻都很稀；重叠体检 PC / 手游六档都是 0。GPU 同秒峰值 {ck['gpu']['peak']}。",
+        f"PC 高 / 中 / 低 {ob.get('pc', {}).get('high')} / {ob.get('pc', {}).get('medium')} / {ob.get('pc', {}).get('low')} 发，手游 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')} 发；花型、大小、高度都是 Night 里已有的版本。单独节目（NewYearFireWorks_Day），交付选 Day 导演。没在 UE 里放过。",
     ]
 
 
@@ -301,11 +300,12 @@ def main():
         data['vo'] = dict(chat=[mix['voChat'][0]['start'], mix['voChat'][-1]['end']], nums=[[t, 10 - i] for i, t in enumerate(au['countdownOnsetsS'])],
                           fire=dict(start=au['voFire']['start'], end=au['voFire']['end']), zero=au['zeroShowS'])
     if DAY:
-        data.update(countdown=False, loop=True, noMusic=True, energy=[dict(m=0, db=-4), dict(m=DUR, db=-4)],
-                    captions=[[0, 5.0, 'VO 闲聊 · 天上全空'], [24.5, 28.5, 'VO：还需要调整（位置是推断）']],
+        data.update(countdown=False, noMusic=True, energy=[dict(m=0, db=-4), dict(m=DUR, db=-4)],
+                    captions=[[0, 5.0, 'VO 闲聊 · 天上全空']],
                     anchors=[dict(showS=0.0, musicS=0.0, label='VO 闲聊（前 5 s 全空）', source='用户给定', note=''),
-                             dict(showS=15.3, musicS=15.3, label='整齐 → 变乱', source='编排', note=''),
-                             dict(showS=24.5, musicS=24.5, label='最后一句 VO「还需要调整」（推断）', source='推断', note='')])
+                             dict(showS=21.0, musicS=21.0, label='高光 · 试一次齐放', source='编排', note=''),
+                             dict(showS=22.0, musicS=22.0, label='整齐 → 变乱', source='编排', note=''),
+                             dict(showS=35.0, musicS=35.0, label='做满到 35 s', source='用户给定', note='')])
     b64 = ''
     if B03:                           # 10-13 17:06「这个动画能同步让我听到音乐vo吗」：合并音频原字节内嵌，0 s 起播
         mix = ROOT / '协作/编排工作台资料/2026-10-13/music/VO倒计时+汪洋与浩渺.mp3'
@@ -316,7 +316,7 @@ def main():
         b64 = base64.b64encode(raw).decode('ascii')
     html = TEMPLATE.read_text(encoding='utf-8').replace('__PREVIEW_DATA__', json.dumps(data, ensure_ascii=False, separators=(',', ':'))).replace('__AUDIO_B64__', b64, 1)
     if DAY:
-        html = html.replace('<title>汪洋与浩渺编排B01</title>', '<title>跨年秀 Day 试放</title>', 1).replace('跨年烟花秀 B01 正面比例动画', '零点前 NPC 试放 30 秒 正面比例动画', 1)
+        html = html.replace('<title>汪洋与浩渺编排B01</title>', '<title>跨年秀 Day 试放</title>', 1).replace('跨年烟花秀 B01 正面比例动画', '零点前 NPC 试放（进图 3 分钟放一次）正面比例动画', 1)
     elif B02:
         html = html.replace('<title>汪洋与浩渺编排B01</title>', f'<title>汪洋与浩渺编排{NAME}</title>', 1).replace('跨年烟花秀 B01 正面比例动画', f'跨年烟花秀 {NAME} 正面比例动画' + (' 修订1' if R1M else ''), 1)
     assert '</script>' not in json.dumps(data, ensure_ascii=False)

@@ -1,49 +1,49 @@
 {
  "tiers": {
   "high": {
-   "events": 24
+   "events": 54
   },
   "medium": {
-   "events": 24
+   "events": 52
   },
   "low": {
-   "events": 24
+   "events": 46
   }
  },
  "b02": {
   "mobileTiers": {
    "high": {
-    "events": 18,
+    "events": 32,
     "bySpecies": {
-     "小银菊": 10,
-     "橙辉星": 4,
-     "爆裂星": 3,
+     "小银菊": 20,
+     "橙辉星": 7,
+     "爆裂星": 4,
      "金芒菊": 1
     }
    },
    "medium": {
-    "events": 18,
+    "events": 30,
     "bySpecies": {
-     "小银菊": 10,
-     "橙辉星": 4,
-     "爆裂星": 3,
+     "小银菊": 18,
+     "橙辉星": 7,
+     "爆裂星": 4,
      "金芒菊": 1
     }
    },
    "low": {
-    "events": 18,
+    "events": 28,
     "bySpecies": {
-     "小银菊": 10,
-     "橙辉星": 4,
-     "爆裂星": 3,
+     "小银菊": 16,
+     "橙辉星": 7,
+     "爆裂星": 4,
      "金芒菊": 1
     }
    }
   }
  },
  "gpu": {
-  "peak": 38,
-  "peakAt": 14.2,
+  "peak": 60,
+  "peakAt": 21.0,
   "soft": 200
  },
  "overlap": {
@@ -72,36 +72,59 @@
    "gaps": []
   }
  },
- "maxAliveBalls": 6,
+ "maxAliveBalls": 9,
  "firstLaunchS": 5.0,
- "lastHitS": 23.55,
+ "lastHitS": 34.85,
  "intervals": {
   "tidy": [
    1.2,
    1.2,
+   0.55,
    1.2,
    1.2,
-   1.4,
-   0.05
-  ],
-  "messy": [
+   1.2,
+   1.2,
+   1.2,
+   1.2,
+   1.2,
+   1.2,
+   1.95,
    0.5,
    0.95,
-   0.65,
-   0.45,
-   0.58,
-   0.77,
-   0.3,
+   0.05,
+   0.05,
+   0.1,
+   0.1,
+   0.1
+  ],
+  "messy": [
+   1.1,
    0.8,
-   0.9,
+   0.8,
+   0.95,
+   0.5,
+   0.7,
+   0.63,
+   0.67,
+   0.3,
+   0.7,
+   0.8,
    0.2,
    0.65,
    0.35,
-   1.0
+   0.75,
+   0.45,
+   0.7,
+   0.7,
+   0.7
   ]
  },
- "lastEndS": 27.11,
- "quietTailS": 2.89,
+ "fillHoles": {
+  "pc": [],
+  "mobile": []
+ },
+ "lastEndS": 38.71,
+ "quietTailS": 0.29,
  "newVersions": [],
  "mobileRuleBreaks": [],
  "noSpoiler": [],
@@ -111,6 +134,6 @@
   "skipped": []
  },
  "fanSummary": {
-  "aliveGpuPeak": 38
+  "aliveGpuPeak": 60
  }
 }

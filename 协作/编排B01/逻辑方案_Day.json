@@ -1,6 +1,6 @@
 {
  "format": "df.nagaoka-logic/1",
- "revision": "Day_npc_test_fire_v2_tidy_then_messy",
+ "revision": "Day_npc_test_fire_v3_fill5to35_highlight_once",
  "rhythm": null,
  "status": "draft",
  "generator": "analysis/scripts/编排Day调试版.py",
@@ -8,7 +8,7 @@
  "musicOffsetS": 0.0,
  "barS": null,
  "bar0S": null,
- "duration": 30.0,
+ "duration": 39.0,
  "sections": [
   {
    "id": "D_S0",
@@ -16,29 +16,176 @@
    "bar0": 0,
    "bar1": 1,
    "start": 0.0,
-   "end": 15.3,
-   "lead": "SC",
-   "relay": "OG",
-   "accent": "S5",
-   "note": "0–5 s 闲聊 VO，天上全空；5 s 起飞，小银菊同高、每 1.2 s 一发从左到右，再一对 + 两端银扇同时出"
+   "end": 22.0,
+   "lead": "S5",
+   "relay": "SC",
+   "accent": "OG",
+   "note": "0–5 s 闲聊 VO，天上全空；5 s 起：银扇从中间往外 → 银菊左到右 → 橙辉星右到左 → 21 s 高光「试一次齐放」（九点小银菊 + 四把银扇 + 小平台三朵）"
   },
   {
    "id": "D_S1",
    "name": "变乱",
    "bar0": 0,
    "bar1": 1,
-   "start": 15.3,
-   "end": 30.0,
+   "start": 22.0,
+   "end": 39.0,
    "lead": "OG",
    "relay": "SC",
    "accent": "CR",
-   "note": "次序、时间、大小、高度都乱了，但不挤：一对差半拍、扇一边晚 1 s、突然一发中号、连发、一小排断点、最后一发晚了；24.5 s 后不再开花，给最后那句 VO 留空"
+   "note": "次序、时间、大小、高度都乱了，但不挤：先低处的扇和小平台（高光还亮着），26 s 起球花乱——一对差半拍、突然一发中号、连发、一小排断点、扫错方向——一直乱到 35 s"
   }
  ],
  "musicMarkers": [],
  "cues": [
   {
    "id": "DAY_C001",
+   "section": "D_S0",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B3",
+    "B4"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "整齐 · 中间两把银扇",
+   "name": "整齐 · 整齐 · 中间两把银扇",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "B3",
+     "launch": 5.0,
+     "burst": 5.0,
+     "end": 7.45,
+     "dz": 0.0,
+     "H": 5.0
+    },
+    {
+     "point": "B4",
+     "launch": 5.0,
+     "burst": 5.0,
+     "end": 7.45,
+     "dz": 0.0,
+     "H": 5.0
+    }
+   ],
+   "H0": 5.0,
+   "profiles": {
+    "medium": [
+     "B3",
+     "B4"
+    ],
+    "low": [
+     "B3",
+     "B4"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C002",
+   "section": "D_S0",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B1",
+    "B6"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "整齐 · 银扇往外",
+   "name": "整齐 · 整齐 · 银扇往外",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "B1",
+     "launch": 6.2,
+     "burst": 6.2,
+     "end": 8.65,
+     "dz": 0.0,
+     "H": 6.2
+    },
+    {
+     "point": "B6",
+     "launch": 6.2,
+     "burst": 6.2,
+     "end": 8.65,
+     "dz": 0.0,
+     "H": 6.2
+    }
+   ],
+   "H0": 6.2,
+   "profiles": {
+    "medium": [
+     "B1",
+     "B6"
+    ],
+    "low": [
+     "B1",
+     "B6"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C003",
+   "section": "D_S0",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B0",
+    "B7"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "整齐 · 银扇到两端",
+   "name": "整齐 · 整齐 · 银扇到两端",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "B0",
+     "launch": 7.4,
+     "burst": 7.4,
+     "end": 9.85,
+     "dz": 0.0,
+     "H": 7.4
+    },
+    {
+     "point": "B7",
+     "launch": 7.4,
+     "burst": 7.4,
+     "end": 9.85,
+     "dz": 0.0,
+     "H": 7.4
+    }
+   ],
+   "H0": 7.4,
+   "profiles": {
+    "medium": [
+     "B0",
+     "B7"
+    ],
+    "low": [
+     "B0",
+     "B7"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C004",
    "section": "D_S0",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -51,8 +198,8 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "整齐 · 左到右 1",
-   "name": "整齐 · 整齐 · 左到右 1",
+   "label": "整齐 · 银菊左到右 1",
+   "name": "整齐 · 整齐 · 银菊左到右 1",
    "wave": "试放·整齐",
    "events": [
     {
@@ -76,7 +223,7 @@
    "mobile": true
   },
   {
-   "id": "DAY_C002",
+   "id": "DAY_C005",
    "section": "D_S0",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -89,8 +236,8 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "整齐 · 左到右 2",
-   "name": "整齐 · 整齐 · 左到右 2",
+   "label": "整齐 · 银菊左到右 2",
+   "name": "整齐 · 整齐 · 银菊左到右 2",
    "wave": "试放·整齐",
    "events": [
     {
@@ -114,7 +261,7 @@
    "mobile": true
   },
   {
-   "id": "DAY_C003",
+   "id": "DAY_C006",
    "section": "D_S0",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -127,8 +274,8 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "整齐 · 左到右 3",
-   "name": "整齐 · 整齐 · 左到右 3",
+   "label": "整齐 · 银菊左到右 3",
+   "name": "整齐 · 整齐 · 银菊左到右 3",
    "wave": "试放·整齐",
    "events": [
     {
@@ -152,7 +299,7 @@
    "mobile": true
   },
   {
-   "id": "DAY_C004",
+   "id": "DAY_C007",
    "section": "D_S0",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -165,8 +312,8 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "整齐 · 左到右 4",
-   "name": "整齐 · 整齐 · 左到右 4",
+   "label": "整齐 · 银菊左到右 4",
+   "name": "整齐 · 整齐 · 银菊左到右 4",
    "wave": "试放·整齐",
    "events": [
     {
@@ -190,7 +337,7 @@
    "mobile": true
   },
   {
-   "id": "DAY_C005",
+   "id": "DAY_C008",
    "section": "D_S0",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -203,8 +350,8 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "整齐 · 左到右 5",
-   "name": "整齐 · 整齐 · 左到右 5",
+   "label": "整齐 · 银菊左到右 5",
+   "name": "整齐 · 整齐 · 银菊左到右 5",
    "wave": "试放·整齐",
    "events": [
     {
@@ -228,56 +375,159 @@
    "mobile": true
   },
   {
-   "id": "DAY_C006",
+   "id": "DAY_C009",
    "section": "D_S0",
    "sp": "OG",
    "templateId": "R03_OrangeGlitter",
    "size": "S",
    "group": "P",
    "points": [
-    "P1",
     "P7"
    ],
    "order": "together",
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "整齐 · 两边一对",
-   "name": "整齐 · 整齐 · 两边一对",
+   "label": "整齐 · 橙辉星右到左 1",
+   "name": "整齐 · 整齐 · 橙辉星右到左 1",
    "wave": "试放·整齐",
    "events": [
     {
-     "point": "P1",
-     "launch": 11.2,
-     "burst": 14.1544,
-     "end": 17.3544,
-     "dz": 10.0,
-     "H": 14.2
-    },
-    {
      "point": "P7",
-     "launch": 11.2,
-     "burst": 14.1544,
-     "end": 17.3544,
+     "launch": 11.0,
+     "burst": 13.9544,
+     "end": 17.1544,
      "dz": 10.0,
-     "H": 14.2
+     "H": 13.95
     }
    ],
-   "H0": 14.2,
+   "H0": 13.95,
    "profiles": {
     "medium": [
-     "P1",
      "P7"
     ],
     "low": [
-     "P1",
      "P7"
     ]
    },
    "mobile": true
   },
   {
-   "id": "DAY_C007",
+   "id": "DAY_C010",
+   "section": "D_S0",
+   "sp": "OG",
+   "templateId": "R03_OrangeGlitter",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P5"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "整齐 · 橙辉星右到左 2",
+   "name": "整齐 · 整齐 · 橙辉星右到左 2",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P5",
+     "launch": 12.2,
+     "burst": 15.1544,
+     "end": 18.3544,
+     "dz": 10.0,
+     "H": 15.15
+    }
+   ],
+   "H0": 15.15,
+   "profiles": {
+    "medium": [
+     "P5"
+    ],
+    "low": [
+     "P5"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C011",
+   "section": "D_S0",
+   "sp": "OG",
+   "templateId": "R03_OrangeGlitter",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P3"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "整齐 · 橙辉星右到左 3",
+   "name": "整齐 · 整齐 · 橙辉星右到左 3",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P3",
+     "launch": 13.4,
+     "burst": 16.3544,
+     "end": 19.5544,
+     "dz": 10.0,
+     "H": 16.35
+    }
+   ],
+   "H0": 16.35,
+   "profiles": {
+    "medium": [
+     "P3"
+    ],
+    "low": [
+     "P3"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C012",
+   "section": "D_S0",
+   "sp": "OG",
+   "templateId": "R03_OrangeGlitter",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P1"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "整齐 · 橙辉星右到左 4",
+   "name": "整齐 · 整齐 · 橙辉星右到左 4",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "P1",
+     "launch": 14.6,
+     "burst": 17.5544,
+     "end": 20.7544,
+     "dz": 10.0,
+     "H": 17.55
+    }
+   ],
+   "H0": 17.55,
+   "profiles": {
+    "medium": [
+     "P1"
+    ],
+    "low": [
+     "P1"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C013",
    "section": "D_S0",
    "sp": "S5",
    "templateId": "R03_Silver5",
@@ -291,28 +541,28 @@
    "gap": 0.0,
    "layer": "main",
    "tier": "all",
-   "label": "整齐 · 两端银扇同时",
-   "name": "整齐 · 整齐 · 两端银扇同时",
+   "label": "整齐 · 两端银扇（预备）",
+   "name": "整齐 · 整齐 · 两端银扇（预备）",
    "wave": "试放·整齐",
    "events": [
     {
      "point": "B0",
-     "launch": 14.2,
-     "burst": 14.2,
-     "end": 16.65,
+     "launch": 19.5,
+     "burst": 19.5,
+     "end": 21.95,
      "dz": 0.0,
-     "H": 14.2
+     "H": 19.5
     },
     {
      "point": "B7",
-     "launch": 14.2,
-     "burst": 14.2,
-     "end": 16.65,
+     "launch": 19.5,
+     "burst": 19.5,
+     "end": 21.95,
      "dz": 0.0,
-     "H": 14.2
+     "H": 19.5
     }
    ],
-   "H0": 14.2,
+   "H0": 19.5,
    "profiles": {
     "medium": [
      "B0",
@@ -326,83 +576,255 @@
    "mobile": false
   },
   {
-   "id": "DAY_C008",
-   "section": "D_S1",
-   "sp": "OG",
-   "templateId": "R03_OrangeGlitter",
+   "id": "DAY_C014",
+   "section": "D_S0",
+   "sp": "SC",
+   "templateId": "R03_SilverChry__K92",
    "size": "S",
    "group": "P",
    "points": [
-    "P5"
+    "P0",
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "P6",
+    "P7",
+    "P8"
    ],
-   "order": "together",
-   "gap": 0.0,
+   "order": "center-out",
+   "gap": 0.1,
    "layer": "main",
-   "tier": "all",
-   "label": "乱 · 一对先出了右边",
-   "name": "变乱 · 乱 · 一对先出了右边",
-   "wave": "试放·变乱",
+   "tier": "trim",
+   "label": "高光 · 九点齐放（中间往外）",
+   "name": "整齐 · 高光 · 九点齐放（中间往外）",
+   "wave": "试放·整齐",
    "events": [
     {
-     "point": "P5",
-     "launch": 12.5,
-     "burst": 15.4544,
-     "end": 18.6544,
+     "point": "P0",
+     "launch": 18.4,
+     "burst": 21.3544,
+     "end": 25.9144,
      "dz": 20.0,
-     "H": 15.5
-    }
-   ],
-   "H0": 15.5,
-   "profiles": {
-    "medium": [
-     "P5"
-    ],
-    "low": [
-     "P5"
-    ]
-   },
-   "mobile": true
-  },
-  {
-   "id": "DAY_C009",
-   "section": "D_S1",
-   "sp": "OG",
-   "templateId": "R03_OrangeGlitter",
-   "size": "S",
-   "group": "P",
-   "points": [
-    "P3"
-   ],
-   "order": "together",
-   "gap": 0.0,
-   "layer": "main",
-   "tier": "all",
-   "label": "乱 · 左边晚了半拍、还低",
-   "name": "变乱 · 乱 · 左边晚了半拍、还低",
-   "wave": "试放·变乱",
-   "events": [
+     "H": 21.4
+    },
+    {
+     "point": "P1",
+     "launch": 18.3,
+     "burst": 21.2544,
+     "end": 25.8144,
+     "dz": 20.0,
+     "H": 21.3
+    },
+    {
+     "point": "P2",
+     "launch": 18.2,
+     "burst": 21.1544,
+     "end": 25.7144,
+     "dz": 20.0,
+     "H": 21.2
+    },
     {
      "point": "P3",
-     "launch": 13.0,
-     "burst": 15.9544,
-     "end": 19.1544,
-     "dz": 0.0,
-     "H": 16.0
+     "launch": 18.1,
+     "burst": 21.0544,
+     "end": 25.6144,
+     "dz": 20.0,
+     "H": 21.1
+    },
+    {
+     "point": "P4",
+     "launch": 18.0,
+     "burst": 20.9544,
+     "end": 25.5144,
+     "dz": 20.0,
+     "H": 21.0
+    },
+    {
+     "point": "P5",
+     "launch": 18.1,
+     "burst": 21.0544,
+     "end": 25.6144,
+     "dz": 20.0,
+     "H": 21.1
+    },
+    {
+     "point": "P6",
+     "launch": 18.2,
+     "burst": 21.1544,
+     "end": 25.7144,
+     "dz": 20.0,
+     "H": 21.2
+    },
+    {
+     "point": "P7",
+     "launch": 18.3,
+     "burst": 21.2544,
+     "end": 25.8144,
+     "dz": 20.0,
+     "H": 21.3
+    },
+    {
+     "point": "P8",
+     "launch": 18.4,
+     "burst": 21.3544,
+     "end": 25.9144,
+     "dz": 20.0,
+     "H": 21.4
     }
    ],
-   "H0": 16.0,
+   "H0": 21.0,
    "profiles": {
     "medium": [
-     "P3"
+     "P1",
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6",
+     "P7"
     ],
     "low": [
-     "P3"
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6"
     ]
    },
+   "sizeK": 0.92,
    "mobile": true
   },
   {
-   "id": "DAY_C010",
+   "id": "DAY_C015",
+   "section": "D_S0",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B1",
+    "B3",
+    "B4",
+    "B6"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "trim",
+   "label": "高光 · 四把银扇",
+   "name": "整齐 · 高光 · 四把银扇",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "B1",
+     "launch": 21.0,
+     "burst": 21.0,
+     "end": 23.45,
+     "dz": 0.0,
+     "H": 21.0
+    },
+    {
+     "point": "B3",
+     "launch": 21.0,
+     "burst": 21.0,
+     "end": 23.45,
+     "dz": 0.0,
+     "H": 21.0
+    },
+    {
+     "point": "B4",
+     "launch": 21.0,
+     "burst": 21.0,
+     "end": 23.45,
+     "dz": 0.0,
+     "H": 21.0
+    },
+    {
+     "point": "B6",
+     "launch": 21.0,
+     "burst": 21.0,
+     "end": 23.45,
+     "dz": 0.0,
+     "H": 21.0
+    }
+   ],
+   "H0": 21.0,
+   "profiles": {
+    "medium": [
+     "B1",
+     "B3",
+     "B4",
+     "B6"
+    ],
+    "low": [
+     "B3",
+     "B4"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C016",
+   "section": "D_S0",
+   "sp": "XS1A",
+   "templateId": "B02_BeamS1_SC_a",
+   "size": "X",
+   "group": "F",
+   "points": [
+    "F1",
+    "F3",
+    "F5"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "trim",
+   "label": "高光 · 小平台三朵",
+   "name": "整齐 · 高光 · 小平台三朵",
+   "wave": "试放·整齐",
+   "events": [
+    {
+     "point": "F1",
+     "launch": 20.0,
+     "burst": 21.0,
+     "end": 25.56,
+     "dz": 0.0,
+     "H": 21.0
+    },
+    {
+     "point": "F3",
+     "launch": 20.0,
+     "burst": 21.0,
+     "end": 25.56,
+     "dz": 0.0,
+     "H": 21.0
+    },
+    {
+     "point": "F5",
+     "launch": 20.0,
+     "burst": 21.0,
+     "end": 25.56,
+     "dz": 0.0,
+     "H": 21.0
+    }
+   ],
+   "H0": 21.0,
+   "profiles": {
+    "medium": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "low": [
+     "F3"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C017",
    "section": "D_S1",
    "sp": "R5",
    "templateId": "R03_Red5",
@@ -421,14 +843,14 @@
    "events": [
     {
      "point": "B6",
-     "launch": 16.9,
-     "burst": 16.9,
-     "end": 20.0,
+     "launch": 22.4,
+     "burst": 22.4,
+     "end": 25.5,
      "dz": 0.0,
-     "H": 16.9
+     "H": 22.4
     }
    ],
-   "H0": 16.9,
+   "H0": 22.4,
    "profiles": {
     "medium": [
      "B6"
@@ -440,7 +862,197 @@
    "mobile": false
   },
   {
-   "id": "DAY_C011",
+   "id": "DAY_C018",
+   "section": "D_S1",
+   "sp": "R5",
+   "templateId": "R03_Red5",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B1"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "乱 · 另一边晚了 1 s",
+   "name": "变乱 · 乱 · 另一边晚了 1 s",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "B1",
+     "launch": 23.5,
+     "burst": 23.5,
+     "end": 26.6,
+     "dz": 0.0,
+     "H": 23.5
+    }
+   ],
+   "H0": 23.5,
+   "profiles": {
+    "medium": [
+     "B1"
+    ],
+    "low": [
+     "B1"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C019",
+   "section": "D_S1",
+   "sp": "XV4",
+   "templateId": "B02_BeamV4",
+   "size": "X",
+   "group": "F",
+   "points": [
+    "F2"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "乱 · 小平台乱入",
+   "name": "变乱 · 乱 · 小平台乱入",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "F2",
+     "launch": 24.3,
+     "burst": 24.3,
+     "end": 26.8,
+     "dz": 0.0,
+     "H": 24.3
+    }
+   ],
+   "H0": 24.3,
+   "profiles": {
+    "medium": [
+     "F2"
+    ],
+    "low": [
+     "F2"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C020",
+   "section": "D_S1",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B5"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "乱 · 银扇单出一把",
+   "name": "变乱 · 乱 · 银扇单出一把",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "B5",
+     "launch": 25.1,
+     "burst": 25.1,
+     "end": 27.55,
+     "dz": 0.0,
+     "H": 25.1
+    }
+   ],
+   "H0": 25.1,
+   "profiles": {
+    "medium": [
+     "B5"
+    ],
+    "low": [
+     "B5"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C021",
+   "section": "D_S1",
+   "sp": "OG",
+   "templateId": "R03_OrangeGlitter",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P5"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "乱 · 一对先出了右边",
+   "name": "变乱 · 乱 · 一对先出了右边",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P5",
+     "launch": 23.1,
+     "burst": 26.0544,
+     "end": 29.2544,
+     "dz": 20.0,
+     "H": 26.1
+    }
+   ],
+   "H0": 26.1,
+   "profiles": {
+    "medium": [
+     "P5"
+    ],
+    "low": [
+     "P5"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C022",
+   "section": "D_S1",
+   "sp": "OG",
+   "templateId": "R03_OrangeGlitter",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P3"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "乱 · 左边晚了半拍、还低",
+   "name": "变乱 · 乱 · 左边晚了半拍、还低",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P3",
+     "launch": 23.6,
+     "burst": 26.5544,
+     "end": 29.7544,
+     "dz": 0.0,
+     "H": 26.6
+    }
+   ],
+   "H0": 26.6,
+   "profiles": {
+    "medium": [
+     "P3"
+    ],
+    "low": [
+     "P3"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C023",
    "section": "D_S1",
    "sp": "CR",
    "templateId": "R03_Crackle",
@@ -459,14 +1071,14 @@
    "events": [
     {
      "point": "P8",
-     "launch": 14.6,
-     "burst": 17.5544,
-     "end": 19.0544,
+     "launch": 24.3,
+     "burst": 27.2544,
+     "end": 28.7544,
      "dz": 30.0,
-     "H": 17.6
+     "H": 27.3
     }
    ],
-   "H0": 17.6,
+   "H0": 27.3,
    "profiles": {
     "medium": [
      "P8"
@@ -478,45 +1090,7 @@
    "mobile": true
   },
   {
-   "id": "DAY_C012",
-   "section": "D_S1",
-   "sp": "R5",
-   "templateId": "R03_Red5",
-   "size": "F",
-   "group": "B",
-   "points": [
-    "B1"
-   ],
-   "order": "together",
-   "gap": 0.0,
-   "layer": "main",
-   "tier": "all",
-   "label": "乱 · 另一边的扇晚了 1 s",
-   "name": "变乱 · 乱 · 另一边的扇晚了 1 s",
-   "wave": "试放·变乱",
-   "events": [
-    {
-     "point": "B1",
-     "launch": 18.0,
-     "burst": 18.0,
-     "end": 21.1,
-     "dz": 0.0,
-     "H": 18.0
-    }
-   ],
-   "H0": 18.0,
-   "profiles": {
-    "medium": [
-     "B1"
-    ],
-    "low": [
-     "B1"
-    ]
-   },
-   "mobile": false
-  },
-  {
-   "id": "DAY_C013",
+   "id": "DAY_C024",
    "section": "D_S1",
    "sp": "GR",
    "templateId": "R03_GoldRayChry",
@@ -535,14 +1109,14 @@
    "events": [
     {
      "point": "P0",
-     "launch": 14.2,
-     "burst": 18.5772,
-     "end": 23.1372,
+     "launch": 23.5,
+     "burst": 27.8772,
+     "end": 32.4372,
      "dz": 0.0,
-     "H": 18.6
+     "H": 27.9
     }
    ],
-   "H0": 18.6,
+   "H0": 27.9,
    "profiles": {
     "medium": [
      "P0"
@@ -554,7 +1128,7 @@
    "mobile": true
   },
   {
-   "id": "DAY_C014",
+   "id": "DAY_C025",
    "section": "D_S1",
    "sp": "SC",
    "templateId": "R03_SilverChry__K92",
@@ -573,14 +1147,14 @@
    "events": [
     {
      "point": "P6",
-     "launch": 16.4,
-     "burst": 19.3544,
-     "end": 23.9144,
+     "launch": 25.6,
+     "burst": 28.5544,
+     "end": 33.1144,
      "dz": 20.0,
-     "H": 19.4
+     "H": 28.6
     }
    ],
-   "H0": 19.4,
+   "H0": 28.6,
    "profiles": {
     "medium": [
      "P6"
@@ -593,7 +1167,7 @@
    "mobile": true
   },
   {
-   "id": "DAY_C015",
+   "id": "DAY_C026",
    "section": "D_S1",
    "sp": "SC",
    "templateId": "R03_SilverChry__K92",
@@ -612,14 +1186,14 @@
    "events": [
     {
      "point": "P7",
-     "launch": 16.7,
-     "burst": 19.6544,
-     "end": 24.2144,
+     "launch": 25.9,
+     "burst": 28.8544,
+     "end": 33.4144,
      "dz": 0.0,
-     "H": 19.7
+     "H": 28.9
     }
    ],
-   "H0": 19.7,
+   "H0": 28.9,
    "profiles": {
     "medium": [
      "P7"
@@ -632,7 +1206,7 @@
    "mobile": true
   },
   {
-   "id": "DAY_C016",
+   "id": "DAY_C027",
    "section": "D_S1",
    "sp": "CR",
    "templateId": "R03_Crackle",
@@ -651,14 +1225,14 @@
    "events": [
     {
      "point": "P4",
-     "launch": 17.5,
-     "burst": 20.4544,
-     "end": 21.9544,
+     "launch": 26.6,
+     "burst": 29.5544,
+     "end": 31.0544,
      "dz": 10.0,
-     "H": 20.5
+     "H": 29.6
     }
    ],
-   "H0": 20.5,
+   "H0": 29.6,
    "profiles": {
     "medium": [
      "P4"
@@ -670,7 +1244,7 @@
    "mobile": true
   },
   {
-   "id": "DAY_C017",
+   "id": "DAY_C028",
    "section": "D_S1",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -689,14 +1263,14 @@
    "events": [
     {
      "point": "P2",
-     "launch": 18.4,
-     "burst": 21.3544,
-     "end": 25.9144,
+     "launch": 27.4,
+     "burst": 30.3544,
+     "end": 34.9144,
      "dz": 0.0,
-     "H": 21.4
+     "H": 30.4
     }
    ],
-   "H0": 21.4,
+   "H0": 30.4,
    "profiles": {
     "medium": [
      "P2"
@@ -708,7 +1282,7 @@
    "mobile": true
   },
   {
-   "id": "DAY_C018",
+   "id": "DAY_C029",
    "section": "D_S1",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -727,14 +1301,14 @@
    "events": [
     {
      "point": "P3",
-     "launch": 18.6,
-     "burst": 21.5544,
-     "end": 26.1144,
+     "launch": 27.6,
+     "burst": 30.5544,
+     "end": 35.1144,
      "dz": 10.0,
-     "H": 21.55
+     "H": 30.55
     }
    ],
-   "H0": 21.55,
+   "H0": 30.55,
    "profiles": {
     "medium": [
      "P3"
@@ -746,7 +1320,7 @@
    "mobile": true
   },
   {
-   "id": "DAY_C019",
+   "id": "DAY_C030",
    "section": "D_S1",
    "sp": "XV4",
    "templateId": "B02_BeamV4",
@@ -766,22 +1340,22 @@
    "events": [
     {
      "point": "F0",
-     "launch": 22.2,
-     "burst": 22.2,
-     "end": 24.7,
+     "launch": 31.2,
+     "burst": 31.2,
+     "end": 33.7,
      "dz": 0.0,
-     "H": 22.2
+     "H": 31.2
     },
     {
      "point": "F6",
-     "launch": 22.2,
-     "burst": 22.2,
-     "end": 24.7,
+     "launch": 31.2,
+     "burst": 31.2,
+     "end": 33.7,
      "dz": 0.0,
-     "H": 22.2
+     "H": 31.2
     }
    ],
-   "H0": 22.2,
+   "H0": 31.2,
    "profiles": {
     "medium": [
      "F0",
@@ -795,7 +1369,7 @@
    "mobile": false
   },
   {
-   "id": "DAY_C020",
+   "id": "DAY_C031",
    "section": "D_S1",
    "sp": "SC",
    "templateId": "R03_SilverChry",
@@ -814,14 +1388,14 @@
    "events": [
     {
      "point": "P5",
-     "launch": 19.6,
-     "burst": 22.5544,
-     "end": 27.1144,
+     "launch": 28.6,
+     "burst": 31.5544,
+     "end": 36.1144,
      "dz": 0.0,
-     "H": 22.6
+     "H": 31.6
     }
    ],
-   "H0": 22.6,
+   "H0": 31.6,
    "profiles": {
     "medium": [
      "P5"
@@ -833,14 +1407,167 @@
    "mobile": true
   },
   {
-   "id": "DAY_C021",
+   "id": "DAY_C032",
+   "section": "D_S1",
+   "sp": "R9R",
+   "templateId": "R03_Red9R",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B4"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "乱 · 扇扫错了方向",
+   "name": "变乱 · 乱 · 扇扫错了方向",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "B4",
+     "launch": 32.3,
+     "burst": 32.3,
+     "end": 36.04,
+     "dz": 0.0,
+     "H": 32.3
+    }
+   ],
+   "H0": 32.3,
+   "profiles": {
+    "medium": [
+     "B4"
+    ],
+    "low": [
+     "B4"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C033",
+   "section": "D_S1",
+   "sp": "OG",
+   "templateId": "R03_OrangeGlitter",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P8"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "乱 · 右端补一发",
+   "name": "变乱 · 乱 · 右端补一发",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P8",
+     "launch": 29.8,
+     "burst": 32.7544,
+     "end": 35.9544,
+     "dz": 0.0,
+     "H": 32.8
+    }
+   ],
+   "H0": 32.8,
+   "profiles": {
+    "medium": [
+     "P8"
+    ],
+    "low": [
+     "P8"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C034",
    "section": "D_S1",
    "sp": "CR",
    "templateId": "R03_Crackle",
    "size": "S",
    "group": "P",
    "points": [
-    "P8"
+    "P1"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "乱 · 左边又一声",
+   "name": "变乱 · 乱 · 左边又一声",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P1",
+     "launch": 30.5,
+     "burst": 33.4544,
+     "end": 34.9544,
+     "dz": 20.0,
+     "H": 33.5
+    }
+   ],
+   "H0": 33.5,
+   "profiles": {
+    "medium": [
+     "P1"
+    ],
+    "low": [
+     "P1"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C035",
+   "section": "D_S1",
+   "sp": "SC",
+   "templateId": "R03_SilverChry__K108",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P4"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "乱 · 中间一发偏大偏高",
+   "name": "变乱 · 乱 · 中间一发偏大偏高",
+   "wave": "试放·变乱",
+   "events": [
+    {
+     "point": "P4",
+     "launch": 31.2,
+     "burst": 34.1544,
+     "end": 38.7144,
+     "dz": 30.0,
+     "H": 34.2
+    }
+   ],
+   "H0": 34.2,
+   "profiles": {
+    "medium": [
+     "P4"
+    ],
+    "low": [
+     "P4"
+    ]
+   },
+   "sizeK": 1.08,
+   "mobile": true
+  },
+  {
+   "id": "DAY_C036",
+   "section": "D_S1",
+   "sp": "CR",
+   "templateId": "R03_Crackle",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P7"
    ],
    "order": "together",
    "gap": 0.0,
@@ -851,28 +1578,28 @@
    "wave": "试放·变乱",
    "events": [
     {
-     "point": "P8",
-     "launch": 20.6,
-     "burst": 23.5544,
-     "end": 25.0544,
-     "dz": 0.0,
-     "H": 23.6
+     "point": "P7",
+     "launch": 31.9,
+     "burst": 34.8544,
+     "end": 36.3544,
+     "dz": 10.0,
+     "H": 34.9
     }
    ],
-   "H0": 23.6,
+   "H0": 34.9,
    "profiles": {
     "medium": [
-     "P8"
+     "P7"
     ],
     "low": [
-     "P8"
+     "P7"
     ]
    },
    "mobile": true
   }
  ],
  "noMusic": true,
- "loop": true,
- "note": "零点前 NPC 试放（Day 导演）；不放音乐，有 VO：前 5 s 闲聊（全空），最后一句「还需要调整」前留空；先整齐后变乱；可循环",
+ "loop": false,
+ "note": "零点前 NPC 试放（Day 导演）；进图 3 分钟放一次、不循环；不放音乐，有 VO：前 5 s 闲聊（全空）；5–35 s 做满：先整齐（中间一次高光），后变乱到底",
  "base": "协作/编排B01/逻辑方案_B03r2m.json"
 }
