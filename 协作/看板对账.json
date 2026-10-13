@@ -1,7 +1,7 @@
 {
  "说明": "看板对账表：项目里每条「要做 / 要定 / 欠用户」的来源，对到在线全局看板哪一行（已在看板 / 已补进看板），或为什么不用上看板（已做完 / 被取代，必须写依据）。总管（21）维护；跑 analysis/scripts/看板对账.py 检查。",
  "看板": "https://claude.ai/artifact/BWDYBCixRrt5NgtcaigHkv",
- "更新": "2026-10-13 23:15 对话框21",
+ "更新": "2026-10-13 23:35 对话框21",
  "来源范围": "对话记录/*.md 全部未打勾项；5.0 与筛查文档；计划书与烘焙器文档；跨年秀 / 手游 / UE 文档与规范；状态清单、更新记录、交接、results 看法、Project 文档；规范互相冲突的审计（10-13 全量对账，734 条）",
  "字段": {
   "g": "对账分组",
@@ -7517,6 +7517,58 @@
    "checkbox": {
     "file": "对话记录/对话框21.md",
     "hash": "8474a2396432"
+   }
+  },
+  {
+   "g": "增量 10-13 23:35",
+   "src": "对话记录/对话框21.md:351",
+   "quote": "改定时任务（名字、三个时间、提示词）并手动试跑一班，看它能不能读写看板、推仓库",
+   "kind": "AI 欠你",
+   "result": "已在看板",
+   "board": "n50",
+   "evidence": "用户 23:05 批准云端夜班；定时任务改好并试跑后打勾。",
+   "checkbox": {
+    "file": "对话记录/对话框21.md",
+    "hash": "21d62a903dc8"
+   }
+  },
+  {
+   "g": "增量 10-13 23:35",
+   "src": "对话记录/对话框comet&silver3.0.md:98",
+   "quote": "核对源码认领并复制两份完整原参数；保留已认可原件。",
+   "kind": "AI 欠你",
+   "result": "已在看板",
+   "board": "n48",
+   "evidence": "comet&silver3.0 23:30 起用户让它复制 Comet / Silver 做燃尽后扰动测试（commit 359a8df2），和 n48 FanGold1.0 扰动试验同一件事。",
+   "checkbox": {
+    "file": "对话记录/对话框comet&silver3.0.md",
+    "hash": "5d1d70a2e7cb"
+   }
+  },
+  {
+   "g": "增量 10-13 23:35",
+   "src": "对话记录/对话框comet&silver3.0.md:99",
+   "quote": "沿用前段和头不动、只在燃尽后扰动的条件，独立RT6实验页及真实PC/手机导出。",
+   "kind": "AI 欠你",
+   "result": "已在看板",
+   "board": "n48",
+   "evidence": "comet&silver3.0 23:30 起用户让它复制 Comet / Silver 做燃尽后扰动测试（commit 359a8df2），和 n48 FanGold1.0 扰动试验同一件事。",
+   "checkbox": {
+    "file": "对话记录/对话框comet&silver3.0.md",
+    "hash": "34cb5ac444e7"
+   }
+  },
+  {
+   "g": "增量 10-13 23:35",
+   "src": "对话记录/对话框comet&silver3.0.md:100",
+   "quote": "看实际回放，简短说明收益和限制；不把测试授权扩大为正式通用能力。",
+   "kind": "AI 欠你",
+   "result": "已在看板",
+   "board": "n48",
+   "evidence": "comet&silver3.0 23:30 起用户让它复制 Comet / Silver 做燃尽后扰动测试（commit 359a8df2），和 n48 FanGold1.0 扰动试验同一件事。",
+   "checkbox": {
+    "file": "对话记录/对话框comet&silver3.0.md",
+    "hash": "fb3bc87cf3dd"
    }
   }
  ]
