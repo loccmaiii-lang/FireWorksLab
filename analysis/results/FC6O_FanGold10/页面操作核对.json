@@ -1,0 +1,19 @@
+{
+  "original": {
+    "id": "FC6O",
+    "burn": 1.2,
+    "spread": 0.25
+  },
+  "reopened": {
+    "spread": 0.26,
+    "burn": 1.2
+  },
+  "saveRefresh": true,
+  "export": "baseline/perstar 已通过真实 __fw.exportFiles 生成 PC/手机 ZIP；标准未通过，非正式交付",
+  "viewer": {
+    "before": "1.50 s",
+    "play": true,
+    "mobile": true
+  },
+  "errors": []
+}

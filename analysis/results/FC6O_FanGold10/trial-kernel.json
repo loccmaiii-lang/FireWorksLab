@@ -1,0 +1,13 @@
+{
+  "prototype": true,
+  "name": "trial",
+  "amp_mps": 0.6,
+  "scale_m": 1.5,
+  "fade_s": 0.4,
+  "onset": 2.0180792915154897,
+  "steps": 64,
+  "sha256": "1653b63d63958a79f61b95cb211ee5295b5f4adc33f7fa843a430df9bb1c08c1",
+  "source_sha256": "6cc2670bfcfe2f6d86bb329ee2e8b915499734fd304effe1181de63e1f778c07",
+  "gate": "全扇最后主星燃尽",
+  "recipe_sha256": "b88f24f30a1d012b64ca97c528a0a2a2fe5e3cffde655fdabbf8cca28b0416f7"
+}

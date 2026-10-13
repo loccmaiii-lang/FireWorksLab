@@ -1,0 +1,13 @@
+{
+  "prototype": true,
+  "name": "perstar",
+  "amp_mps": 0.6,
+  "scale_m": 1.5,
+  "fade_s": 0.4,
+  "onset": 2.0180792915154897,
+  "steps": 64,
+  "sha256": "2efe7f3862b51007374ec52cc1a9f73aa90acb5ae62a7a9b226b4a2e732bcb3c",
+  "source_sha256": "6cc2670bfcfe2f6d86bb329ee2e8b915499734fd304effe1181de63e1f778c07",
+  "gate": "各自主星燃尽 inf.y",
+  "recipe_sha256": "b88f24f30a1d012b64ca97c528a0a2a2fe5e3cffde655fdabbf8cca28b0416f7"
+}

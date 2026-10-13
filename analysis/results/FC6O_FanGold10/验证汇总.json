@@ -1,0 +1,242 @@
+{
+  "parameter_diff": {
+    "P": {},
+    "M": {}
+  },
+  "source_sha256": "0b2db90621eca631ce1386bc2f009a73319b4e69619561cf2ec7a57ad855b889",
+  "images": {
+    "0.5": {
+      "zero_exact": true,
+      "global_exact": true,
+      "perstar_exact": true,
+      "step_halving_rgb_mae": 0.0,
+      "step_halving_max": 0.0,
+      "trial_rgb_mae": 0.0
+    },
+    "1": {
+      "zero_exact": true,
+      "global_exact": true,
+      "perstar_exact": false,
+      "step_halving_rgb_mae": 1.6276041666666666e-05,
+      "step_halving_max": 1.0,
+      "trial_rgb_mae": 0.0005712890625
+    },
+    "1.5": {
+      "zero_exact": true,
+      "global_exact": true,
+      "perstar_exact": false,
+      "step_halving_rgb_mae": 0.00023111979166666666,
+      "step_halving_max": 1.0,
+      "trial_rgb_mae": 0.061736653645833334
+    },
+    "2": {
+      "zero_exact": true,
+      "global_exact": false,
+      "perstar_exact": false,
+      "step_halving_rgb_mae": 7.975260416666667e-05,
+      "step_halving_max": 1.0,
+      "trial_rgb_mae": 0.15800374348958332
+    },
+    "2.3": {
+      "zero_exact": true,
+      "global_exact": false,
+      "perstar_exact": false,
+      "step_halving_rgb_mae": 6.34765625e-05,
+      "step_halving_max": 1.0,
+      "trial_rgb_mae": 0.1192333984375
+    },
+    "2.6": {
+      "zero_exact": true,
+      "global_exact": false,
+      "perstar_exact": false,
+      "step_halving_rgb_mae": 3.4993489583333335e-05,
+      "step_halving_max": 1.0,
+      "trial_rgb_mae": 0.06370930989583333
+    },
+    "2.9": {
+      "zero_exact": true,
+      "global_exact": false,
+      "perstar_exact": false,
+      "step_halving_rgb_mae": 9.765625e-06,
+      "step_halving_max": 1.0,
+      "trial_rgb_mae": 0.01072998046875
+    },
+    "3.1": {
+      "zero_exact": true,
+      "global_exact": false,
+      "perstar_exact": false,
+      "step_halving_rgb_mae": 1.6276041666666668e-06,
+      "step_halving_max": 1.0,
+      "trial_rgb_mae": 0.0009342447916666667
+    }
+  },
+  "replay": {
+    "baseline-PC": {
+      "pass": false,
+      "fails": [
+        [
+          "中心抖动 3.17 px（512 格）"
+        ]
+      ],
+      "emitters": 1,
+      "cell": [
+        512,
+        512
+      ],
+      "frames": 64,
+      "duration": 3.1667
+    },
+    "baseline-Mobile": {
+      "pass": false,
+      "fails": [
+        [
+          "末尾空帧 1",
+          "中心抖动 3.44 px（512 格）"
+        ]
+      ],
+      "emitters": 1,
+      "cell": [
+        256,
+        256
+      ],
+      "frames": 64,
+      "duration": 3.1667
+    },
+    "trial-PC": {
+      "pass": false,
+      "fails": [
+        [
+          "中心抖动 3.17 px（512 格）"
+        ]
+      ],
+      "emitters": 1,
+      "cell": [
+        512,
+        512
+      ],
+      "frames": 64,
+      "duration": 3.1667
+    },
+    "trial-Mobile": {
+      "pass": false,
+      "fails": [
+        [
+          "中心抖动 3.44 px（512 格）"
+        ]
+      ],
+      "emitters": 1,
+      "cell": [
+        256,
+        256
+      ],
+      "frames": 64,
+      "duration": 3.1667
+    },
+    "perstar-PC": {
+      "pass": false,
+      "fails": [
+        [
+          "中心抖动 3.17 px（512 格）"
+        ]
+      ],
+      "emitters": 1,
+      "cell": [
+        512,
+        512
+      ],
+      "frames": 64,
+      "duration": 3.1667
+    },
+    "perstar-Mobile": {
+      "pass": false,
+      "fails": [
+        [
+          "中心抖动 3.44 px（512 格）"
+        ]
+      ],
+      "emitters": 1,
+      "cell": [
+        256,
+        256
+      ],
+      "frames": 64,
+      "duration": 3.1667
+    }
+  },
+  "standard": {
+    "id": "FC6O",
+    "name": "金锦冠扇形 FanGold1.0 · 用户参数基线",
+    "kind": "preset",
+    "renderVer": 40,
+    "ver": "6ea2f5ff·master4.3.8-core1-zoom4.9.33",
+    "checks": [
+      [
+        "实时模拟",
+        true,
+        ""
+      ],
+      [
+        "引擎回放 + 游戏内大小",
+        true,
+        ""
+      ],
+      [
+        "贴图 + 流转动画",
+        true,
+        ""
+      ],
+      [
+        "完整参数",
+        true,
+        ""
+      ],
+      [
+        "导出素材包（cascade.json PC + 手机）",
+        true,
+        ""
+      ],
+      [
+        "实拍对照",
+        true,
+        "无参考（不适用）"
+      ],
+      [
+        "单格 ≥ PC 下限",
+        true,
+        "单格 512 px"
+      ],
+      [
+        "手机单格 ≥ 下限",
+        true,
+        ""
+      ],
+      [
+        "屏幕放大 ≤ 1",
+        false,
+        "放大 1.07"
+      ],
+      [
+        "30fps 显示帧 ≥ 90%",
+        true,
+        "64/64"
+      ],
+      [
+        "燃烧段有效帧率 ≥ 下限",
+        true,
+        "21.7 fps"
+      ],
+      [
+        "淡出段有效帧率 ≥ 下限",
+        true,
+        "7.5 fps"
+      ],
+      [
+        "尺寸参数有效",
+        true,
+        ""
+      ]
+    ],
+    "pass": false,
+    "seconds": 0.1
+  }
+}

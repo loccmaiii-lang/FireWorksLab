@@ -273,10 +273,11 @@ if _fg_path.exists():
     _fg = json.loads(_fg_path.read_text(encoding='utf-8'))
     _fc = next(e for e in FAN_ENTS if e['id'] == 'FC6O')
     _fc['p'].update(_fg['p']); _fc['m'].update(_fg['m'])
-    _fc.update(date='2026-10-13', name='金锦冠扇形 FanGold · 整面金细尾',
-               tags='FanGold 金锦冠 整面扇形 合并导出 Blender FC6O',
-               note='用户指定直接迭代FC6O。参考Blender Fan_Gold_Comets V04 A：整面扇形、成束的长短不同金细尾、弱星头、轻微尾流和错落消散；不按簇拆开导出、不加云端FG7的爆裂冠带。原条目快照 analysis/results/FC6O_Blender/原FC6O.json。',
-               look=['保留Blender成束扇面，整面合成一张序列、一个发射器', '金色细尾密集但有独立明暗和长短，星头不形成一排大光球', '约2秒开始退亮，余烬逐条冷却消散，不整齐擦掉'])
+    _fc.update(date='2026-10-13', name='金锦冠扇形 FanGold1.0 · 用户参数基线',
+               tags='FanGold 金锦冠 整面扇形 合并导出 Blender FC6O FanGold1.0',
+               note='完整复制用户2026-10-13 20:46保存的FanGold-1.0 · 我的。整面合并导出，不按簇拆开。此条是原参数基线；燃尽后扰动目前是隔离试验，未加入生产烘焙器。原件及测试见analysis/results/FC6O_FanGold10。',
+               look=['整面扇形、扫射和颜色均按用户FanGold1.0保存参数', '燃烧1.2秒、余烬比例0.4；不擅自延长寿命或调亮末段', '与隔离试验对照时，重点看燃尽后的尾部；此基线未添加新气流'])
+
 
 if __name__ == '__main__':
     OUT.write_text(json.dumps({'说明': '扇形彗星（红彗星 / 橙扇），由 analysis/scripts/扇形彗星条目.py 生成，别手改。第 1 套 FC2R / FC3O = RT6 单条（用户 07:43「先保留这一版」）；第 2 套 FC4 = 烘焙器分簇拼好的整排扇。',
