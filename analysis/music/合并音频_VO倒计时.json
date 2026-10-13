@@ -1,0 +1,150 @@
+{
+ "format": "df.merged-audio-analysis/1",
+ "by": "跨年秀（22）2026-10-13，用户 16:28 发来的合并音频",
+ "mix": {
+  "file": "VO倒计时+汪洋与浩渺.mp3",
+  "sha256": "b357bc5b8028dba95c96aabb4016e4c76c764a710004c6aacfcc106294c48613",
+  "durationS": 211.644
+ },
+ "music": {
+  "file": "协作/编排工作台资料/2026-10-10/music/music.wav",
+  "sha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3",
+  "durationS": 210.811,
+  "title": "汪洋与浩渺"
+ },
+ "musicStartS": 0.79172,
+ "musicGain": {
+  "median": 0.968,
+  "min": 0.683,
+  "max": 0.987
+ },
+ "userSaid": {
+  "voTotalS": 16,
+  "musicStartS": 1,
+  "bellS": 16,
+  "chatS": [
+   0,
+   6
+  ],
+  "countdownS": [
+   6,
+   16
+  ]
+ },
+ "voChat": [
+  {
+   "start": 0.56,
+   "end": 0.7,
+   "peakDb": -15.2
+  },
+  {
+   "start": 1.07,
+   "end": 1.15,
+   "peakDb": -17.0
+  },
+  {
+   "start": 1.33,
+   "end": 1.51,
+   "peakDb": -14.0
+  },
+  {
+   "start": 2.1,
+   "end": 2.22,
+   "peakDb": -19.2
+  },
+  {
+   "start": 2.5,
+   "end": 2.65,
+   "peakDb": -11.4
+  },
+  {
+   "start": 2.76,
+   "end": 2.9,
+   "peakDb": -20.2
+  },
+  {
+   "start": 4.26,
+   "end": 4.36,
+   "peakDb": -23.0
+  },
+  {
+   "start": 5.55,
+   "end": 5.69,
+   "peakDb": -21.7
+  }
+ ],
+ "voCountdown": [
+  {
+   "start": 6.48,
+   "end": 6.79,
+   "peakDb": -14.1
+  },
+  {
+   "start": 7.69,
+   "end": 7.97,
+   "peakDb": -19.0
+  },
+  {
+   "start": 8.66,
+   "end": 9.18,
+   "peakDb": -14.4
+  },
+  {
+   "start": 9.88,
+   "end": 10.53,
+   "peakDb": -23.8
+  },
+  {
+   "start": 11.5,
+   "end": 11.84,
+   "peakDb": -23.4
+  },
+  {
+   "start": 12.69,
+   "end": 13.13,
+   "peakDb": -12.1
+  },
+  {
+   "start": 13.87,
+   "end": 14.38,
+   "peakDb": -14.3
+  },
+  {
+   "start": 15.15,
+   "end": 15.59,
+   "peakDb": -16.3
+  },
+  {
+   "start": 16.2,
+   "end": 16.39,
+   "peakDb": -15.9
+  },
+  {
+   "start": 16.44,
+   "end": 16.85,
+   "peakDb": -13.5
+  }
+ ],
+ "countdownOnsetsS": [
+  6.48,
+  7.69,
+  8.66,
+  9.88,
+  11.5,
+  12.69,
+  13.87,
+  15.15,
+  16.2,
+  16.44
+ ],
+ "bar0ShowS": 0.9717,
+ "barS": 1.6216,
+ "zeroShowS": 17.188,
+ "zeroBar": 10.0,
+ "zeroRule": "VO 最后一声之后的第一个小节重拍（--zero 可改）",
+ "notes": [
+  "原曲起点用互相关测，44.1 kHz 精度约 0.02 ms；合并文件是 MP3，解码器延迟已由 ffmpeg 补偿，按播放器听到的为准。",
+  "VO 段是把原曲减掉后剩下的部分，阈值 −32 dB（300–3500 Hz），≥ 80 ms 才算一声；喊的是哪个数没有转写，按次序对应 10→1。",
+  "合并文件里没有单独的钟声：16.0 s 前后 VO 和原曲都没有钟一样的起音；原曲第 10 小节重拍（17.19 s）有明显的整体抬升。"
+ ]
+}
