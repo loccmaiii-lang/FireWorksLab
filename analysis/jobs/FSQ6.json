@@ -1,0 +1,40 @@
+{
+ "id": "FSQ6",
+ "type": "script",
+ "priority": 1,
+ "name": "对话框FanGold：参数生效审查 FSQ5 里 21 个「没看到效果」逐个复核（大图 + 放大 + 存图）",
+ "steps": [
+  {
+   "name": "复核：384 px 全景 + 存图",
+   "script": "参数生效审查.py",
+   "args": [
+    "--out",
+    "{out}/全景",
+    "--px",
+    "384",
+    "--save",
+    "--only",
+    "flashR,flashLife,headHexRot,sparkShape,sparkShapeIrr,sparkShapeSpin,emberFadeAt,x1DelayJit,x2DelayJit,wobbleHz,strobeStart,tempo"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "复核：384 px 放大到星那一圈 + 存图",
+   "script": "参数生效审查.py",
+   "args": [
+    "--out",
+    "{out}/放大",
+    "--px",
+    "384",
+    "--zoom",
+    "0.12",
+    "--save",
+    "--only",
+    "headHexRot,sparkShape,sparkShapeIrr,sparkShapeSpin,emberFadeAt,sparkBrightJit"
+   ],
+   "must": false,
+   "timeout": 2400
+  }
+ ]
+}

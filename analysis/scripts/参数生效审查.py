@@ -22,12 +22,12 @@ JS_LIST = r"""() => {
       lastFlare: 0.5, sparkShape: 1, sparkBrightJit: 0.4, strobeHz: 8, emberDecay: 1, shellSpin: 20, shellNo: 10 }],
     ['kamuro', { branch: 2 }],
     ['kiku', { pattern: 'cluster', clusterLayout: 'fan', clusterSweep: 0.2, clusterGap: 1, clusterDirJit: 2, clusterStarsJit: 20 }],
-    ['kiku', { x1On: 1, x1Event: 'time', x1Kind: 'star', x1Spark: 40, x2On: 1, x2Event: 'birth', x2Kind: 'dot', x1DelayJit: 20, x2DelayJit: 20 }],
+    ['kiku', { x1On: 1, x1Event: 'time', x1Kind: 'star', x1Spark: 40, x2On: 1, x2Event: 'birth', x2Kind: 'dot', x1Delay: 0.3, x2Delay: 0.3, x1DelayJit: 20, x2DelayJit: 20 }],
     ['kiku', { sparkRateBy: 'm' }],
     ['senrin', {}], ['senrin', { subKeep: 0.5, subSpeedJit: 20, subGrav: 0.6, subFlash: 1, subSize: 1.5, subBright: 1.5, subFlashR: 3, subVt: 10 }],
     ['crossette', {}], ['strobe', {}], ['hachi', {}], ['yanagi', {}], ['ochiba', {}], ['palm', {}], ['henka', {}], ['glitter', {}], ['jisa', {}], ['ring', {}], ['saturn', {}], ['kata', {}], ['water', {}], ['matsuba', {}], ['botan', {}],
     ['fountain', {}], ['falls', {}], ['wheel', {}], ['fan', {}], ['barrage', {}], ['shikake', {}],
-    ['rise', {}], ['tailM', {}], ['trailM', {}], ['physM', {}]
+    ['rise', {}], ['rise', { wobble: 4 }], ['tailM', {}], ['trailM', {}], ['physM', {}]
   ];
   const mk = ([t, o]) => { const d = defaultsFor(t); return { P: derive({ ...structuredClone(d.P), type: t, ...o }), M: structuredClone(d.M) }; };
   const items = []; const seen = new Set();
@@ -48,10 +48,10 @@ JS_RUN = r"""async (a) => {
   const planSig = P => { try { const fm = measure(P), pl = plan(P, fm); return JSON.stringify({ F: pl.L.F, c: pl.L.cols, r: pl.L.rows, t: pl.times.map(x => +x.toFixed(4)), HX: +pl.HX.toFixed(3), HY: +pl.HY.toFixed(3), fm: [fm.x0, fm.x1, fm.y0, fm.y1].map(x => +x.toFixed(3)) }); } catch (e) { return 'ERR ' + e.message; } };
   const shot = async (P, M, v) => (await renderStills40(P, M, { times: v.times, px: a.px, cx: v.cx, cy: v.cy, half: v.half })).map(s => s.png).join('|');
   const getBase = async ci => { if (base[ci]) return base[ci]; const { P, M } = mk(ctxDefs[ci]); const fm = measure(P), T = P.duration, w = Math.max(fm.x1 - fm.x0, fm.y1 - fm.y0) / 2 * 1.05;
-    const ts = [0.12, 0.3 * T, 0.7 * T]; if (+P.burn > 0) ts.push(Math.min(T * 0.98, 0.95 * P.burn));
-    const v = { times: [...new Set(ts.map(x => +x.toFixed(3)))], cx: (fm.x0 + fm.x1) / 2, cy: (fm.y0 + fm.y1) / 2, half: Math.max(5, w) };
+    const ts = [0.12, 0.3, 0.3 * T, 0.7 * T]; if (+P.burn > 0) ts.push(Math.min(T * 0.98, 0.95 * P.burn));
+    const z = a.zoom || 1, v = { times: [...new Set(ts.map(x => +x.toFixed(3)))], cx: (fm.x0 + fm.x1) / 2 + (z < 1 ? 0.55 * w : 0), cy: (fm.y0 + fm.y1) / 2, half: Math.max(z < 1 ? 1 : 5, w * z) };
     const img = await shot(P, M, v); return base[ci] = { v, img, plan: planSig(P), P, noisy: (await shot(P, M, v)) !== img }; };
-  const pick = (it, cur) => { if (it.kind === 'num') { const lo = it.min, hi = it.max, d = +cur; let nv; if (!isFinite(d)) nv = (lo + hi) / 2; else { nv = d === 0 ? lo + (hi - lo) * 0.3 : d * 1.5; if (nv > hi || nv < lo) nv = d * 0.6; if (nv < lo || nv > hi || nv === d) nv = (lo + hi) / 2 === d ? lo + (hi - lo) * 0.8 : (lo + hi) / 2; } return nv; }
+  const pick = (it, cur) => { if (it.kind === 'num') { const lo = it.min, hi = it.max, d = +cur; let nv; if (!isFinite(d)) nv = (lo + hi) / 2; else if (d < 0 && hi > 0) nv = hi * 0.3; else { nv = d === 0 ? lo + (hi - lo) * 0.3 : d * 1.5; if (nv > hi || nv < lo) nv = d * 0.6; if (nv < lo || nv > hi || nv === d) nv = (lo + hi) / 2 === d ? lo + (hi - lo) * 0.8 : (lo + hi) / 2; } return nv; }
     if (it.kind === 'sel') return (it.opts || []).find(o => String(o) !== String(cur)); return '0:1, 0.5:0.3, 1:0'; };
   for (const it of a.items) {
     const r = { key: it.key, sec: it.sec, label: it.label, kind: it.kind, fam: it.fam, ctx: it.vis[0], tried: [] };
@@ -64,6 +64,7 @@ JS_RUN = r"""async (a) => {
         r.tried.push(ci); if (B.noisy) r.noisy = true;
         const { P, M } = mk(ctxDefs[ci], P => { P[it.key] = nv; });
         const img = (await shot(P, M, B.v)) !== B.img, pl = planSig(P) !== B.plan;
+        if (a.save && !r.shots) r.shots = { base: B.img, mod: await shot(P, M, B.v), ctx: ci, to: nv };
         if (img || pl) { r.ctx = ci; r.from = cur === undefined ? '(缺)' : cur; r.to = nv; r.img = img; r.plan = pl; break; }
       }
       if (!r.tried.length) r.skip = '没有别的选项';
@@ -96,7 +97,14 @@ async def main(a):
         print('参数', len(items), '场景', L['ctxs'], flush=True)
         res = []
         for k in range(0, len(items), 10):
-            part = await pg.evaluate(JS_RUN, {'items': items[k:k + 10], 'ctxDefs': ctx_defs, 'px': a.px})
+            part = await pg.evaluate(JS_RUN, {'items': items[k:k + 10], 'ctxDefs': ctx_defs, 'px': a.px, 'save': a.save, 'zoom': a.zoom})
+            if a.save:
+                import base64
+                for r in part:
+                    sh = r.pop('shots', None)
+                    if not sh: continue
+                    for nm in ('base', 'mod'):
+                        for i, u in enumerate(sh[nm].split('|')): (out / f"{r['key']}_{nm}_{i}.png").write_bytes(base64.b64decode(u.split(',', 1)[1]))
             res += part; print(f'{min(k + 10, len(items))}/{len(items)}', flush=True)
         await b.close()
     names = {r['key']: r for r in json.loads((ROOT / 'analysis' / '命名' / '发射器表.json').read_text(encoding='utf-8'))['参数']}
@@ -122,5 +130,5 @@ async def main(a):
 
 
 if __name__ == '__main__':
-    ap = argparse.ArgumentParser(); ap.add_argument('--out', required=True); ap.add_argument('--px', type=int, default=96); ap.add_argument('--only', default='')
+    ap = argparse.ArgumentParser(); ap.add_argument('--out', required=True); ap.add_argument('--px', type=int, default=96); ap.add_argument('--only', default=''); ap.add_argument('--zoom', type=float, default=1, help='< 1：取景缩小到这个比例、往右挪到星和火花那一圈（看细小形状）'); ap.add_argument('--save', action='store_true', help='每个参数存第一个场景的改前 / 改后 PNG')
     asyncio.run(main(ap.parse_args()))
