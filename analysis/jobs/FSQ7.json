@@ -1,0 +1,58 @@
+{
+ "id": "FSQ7",
+ "type": "script",
+ "priority": 1,
+ "name": "对话框FanGold 4.9.76：回归（右栏缺参数显示缺省 + CPU 火花读参数，画面应逐像素不变）",
+ "steps": [
+  {
+   "name": "基准回归 4.9.75 → 4.9.76 花型模板 6 个",
+   "script": "基准回归.py",
+   "args": [
+    "--old",
+    "{git:ea108a8c:tool/FireworkBaker.html}",
+    "--new",
+    "tool/FireworkBaker.html",
+    "--out",
+    "{out}/基准回归",
+    "--only",
+    "kiku,botan,kamuro,senrin,strobe,crackle"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "多层模板定帧回归 4.9.75 → 4.9.76",
+   "script": "多层模板回归.py",
+   "args": [
+    "--old",
+    "{git:ea108a8c:tool/FireworkBaker.html}",
+    "--out",
+    "{out}/多层模板回归",
+    "--ids",
+    "yaeBlueBotan,mangekyo,somewakeBotan,colorSenrin,crackleShin,ginKamuro"
+   ],
+   "must": false,
+   "timeout": 2400
+  },
+  {
+   "name": "火花发射器检查",
+   "script": "火花发射器检查.py",
+   "args": [
+    "--out",
+    "{out}/火花发射器检查"
+   ],
+   "must": false,
+   "timeout": 900
+  },
+  {
+   "name": "火花平方阻力检查",
+   "script": "火花平方阻力检查.py",
+   "args": [
+    "--out",
+    "{out}/平方阻力检查"
+   ],
+   "must": false,
+   "timeout": 1500
+  }
+ ]
+}

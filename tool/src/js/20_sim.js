@@ -259,6 +259,9 @@ function riseInfo(P) {
 // 倍数 = a + b·u（u 均匀 0–1），j = ±百分比；j 等于原来的值时用原来的字面常数（逐位不变），改了才按 1 ± j 算
 function jitAB(j, jDef, aDef, bDef) { const x = j == null || j === '' || !isFinite(+j) ? jDef : +j; return x === jDef ? [aDef, bDef] : [Math.max(0, 1 - x / 100), 2 * x / 100]; }
 const pnum = (v, d) => v == null || v === '' || !isFinite(+v) ? d : +v;
+// 4.9.76（参数生效审查）：CPU 火花（旧版母版 engine ≠ gpu 才走）以前把这几个写死了，GPU 早就读参数（40_gl.js setSparkModUniforms）。缺省时和写死的数逐位一样
+function sparkCpuJit(P) { const [ia, ib] = jitAB(P.sparkInhJit, 70, 0.3, 1.4), efa = Math.min(0.99, pnum(P.emberFadeAt, 0.75));
+  return { ia, ib, t0j: pnum(P.T0Jit, 120), elj: pnum(P.emberLifeJit, 0.2), edk: pnum(P.emberDecay, 2), efa }; }
 // 4.6.0（5.0 第 1 步 · 用户 10-05 20:45「按寿命曲线先填几个数」）：曲线 = 几行「时刻:值」，时刻是寿命的比例 0–1，例 "0:1, 0.7:1, 1:0"；空 = 不变（全程 1）
 function parseCurve(txt) {
   if (Array.isArray(txt)) return txt.length ? txt : null;
@@ -450,6 +453,7 @@ class Sim {
     const P = this.P, rng0 = this.rng, gy = -G * P.grav, st = this.stars, sp = this.sp;
     const bee = P.type === 'hachi', sq = Math.sqrt(h), windy = P.wind !== 0 || !!this.tm, water = P.waterRefl > 0;
     const spawnOn = this.fam === 'aerial' && (+P.sparkSpawnR > 0 || +P.sparkSpawnHead > 0 || +P.sparkJet > 0), hsS = spawnOn ? headShapeOf(P) : null;     // 火花发射器补全（缺省 false）
+    const cpuJ = sparkCpuJit(P);
     let dead = 0;
     for (let i = 0; i < st.length; i++) {
       const s = st[i];
@@ -499,7 +503,7 @@ class Sim {
           * (+P.sparkRamp > 0 && s.kind !== 5 ? sparkRampAt(P, s.id, s.age - s.ign - (P.sparkStart > 0 ? P.sparkStart : 0)) : 1);     // 4.2.17 火花起势
         const perM = P.sparkRateBy === 'm' && this.fam === 'aerial' && s.kind !== 5, k = rng.poisson((perM ? sparkPerMOf(P, s) * Math.hypot(s.vx, s.vy, s.vz) * (+P.sparkRamp > 0 && s.kind !== 5 ? sparkRampAt(P, s.id, s.age - s.ign - (P.sparkStart > 0 ? P.sparkStart : 0)) : 1) : s.rate * fr) * h), spr = P.sparkSpread, T0 = s.kind === 5 && P.riseStyle === 'silver' ? P.T0 + 250 : P.T0, lf = s.kind === 5 && P.riseStyle === 'silver' ? 1.5 : 1;
         for (let j = 0; j < k; j++) {
-          const u = rng.u(), inh = P.sparkInherit * (0.3 + 1.4 * rng.u()), px = s.x - s.vx * h * u, py = s.y - s.vy * h * u;
+          const u = rng.u(), inh = P.sparkInherit * (cpuJ.ia + cpuJ.ib * rng.u()), px = s.x - s.vx * h * u, py = s.y - s.vy * h * u;
           const [aX, aY] = windy ? this.air(px, py, this.t) : [0, 0];
           // 普通空中星：随发射阶段改变新火花的寿命；已有火花仍按各自出生时确定的寿命冷却。
           const le = s.kind === 5 || P.sparkLifeEnd == null ? 1 : P.sparkLifeEnd;
@@ -518,7 +522,7 @@ class Sim {
             if (jt > 0 && vs > 1e-3) { const a = [-s.vx / vs, -s.vy / vs, -s.vz / vs], j = jetDir(a, (+P.sparkJetCone || 0) * Math.PI / 180, rng.u(), rng.u()); wx += jt * j[0]; wy += jt * j[1]; wz += jt * j[2]; }
           }
           sp.add(qx, qy, qz, wx, wy, wz,
-            u * h, emb ? P.emberLife * Math.exp(0.2 * rng.n()) : lfe, T0 + 120 * rng.n(), rd, aX, aY, s.birth + (s.vis != null ? s.vis : s.burn));
+            u * h, emb ? P.emberLife * Math.exp(cpuJ.elj * rng.n()) : lfe, T0 + cpuJ.t0j * rng.n(), rd, aX, aY, s.birth + (s.vis != null ? s.vis : s.burn));
         }
       }
       if (s.kind === 5) {
@@ -582,6 +586,7 @@ class Sim {
     const P = this.P, rr = this.rr, refl = P.waterRefl;
     let nh = 0; const capH = bufH.length >> 2, capT = bufT.length >> 2;
     const hs = headShapeOf(P);     // 4.9.50 星头形状（全 0 = null，每颗星走原来那一行）
+    const cj = sparkCpuJit(P);
     const push = (buf, n, x, y, I, sz) => { const k = n * 4; buf[k] = x; buf[k + 1] = y; buf[k + 2] = I; buf[k + 3] = sz; };
     for (const s of this.stars) {
       if (!s.alive) continue;
@@ -637,7 +642,7 @@ class Sim {
       const abs = this.fam === 'aerial' && !emb, lc = abs ? P.sparkLife : sp.life[i], T = emb ? sp.T0[i] : sp.T0[i] * (1 - P.cooling * sp.age[i] / lc);
       let g = (T - 900) / 1150; if (g <= 0 && gl <= 0) continue; g = g > 0 ? g * g * g : 0;
       if (abs) { const x = (sp.age[i] / sp.life[i] - 0.7) / 0.3; g *= x <= 0 ? 1 : x >= 1 ? 0 : 1 - x * x * (3 - 2 * x); }
-      if (emb) { const x = sp.age[i] / sp.life[i], ss = e => e <= 0 ? 0 : e >= 1 ? 1 : e * e * (3 - 2 * e); g *= P.emberBright * Math.exp(-2 * x) * (1 - ss((x - 0.75) / 0.25)) * (P.emberFollow > 0 ? 1 - ss((this.t - sp.pd[i] + 0.15) / (P.emberFollow + 0.15)) : 1) * (P.emberEnd > 0 ? 1 - ss((this.t - P.emberEnd + 0.6) / 0.9) : 1); }
+      if (emb) { const x = sp.age[i] / sp.life[i], ss = e => e <= 0 ? 0 : e >= 1 ? 1 : e * e * (3 - 2 * e); g *= P.emberBright * Math.exp(-cj.edk * x) * (1 - ss((x - cj.efa) / (1 - cj.efa))) * (P.emberFollow > 0 ? 1 - ss((this.t - sp.pd[i] + 0.15) / (P.emberFollow + 0.15)) : 1) * (P.emberEnd > 0 ? 1 - ss((this.t - P.emberEnd + 0.6) / 0.9) : 1); }
       if (gl > 0) { const tf = gd * (0.5 + sp.rnd[i]), e = (sp.age[i] - tf) / 0.03; g = g * (1 - 0.85 * gl) + gl * 6 * Math.exp(-e * e); }
       const j = i * 3, x = sp.p[j], y = sp.p[j + 1];
       if (refl > 0 && y < 0) continue;

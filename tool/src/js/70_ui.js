@@ -793,10 +793,10 @@ function buildMasterPanel() {
         det.appendChild(row);
       } else if (it.text) {
         row = document.createElement('label'); row.className = 'field'; row.innerHTML = `<span class="fk">${nm ? p43Label(nm, it.label) : it.label}</span><input type="text" maxlength="6"><span class="st"></span>`; row._lab = nm ? p43Label(nm, it.label) : it.label; row._detail = nm ? nm.desc : ''; row._nm = nm;
-        const inp = row.querySelector('input'); inp.value = P[it.text];
+        const inp = row.querySelector('input'); inp.value = P[it.text] ?? '';
         inp.addEventListener('change', () => { if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(it.text)) { state.P[it.text] = inp.value.replace(/[^A-Za-z0-9]/g, '').slice(0, 8); inp.value = state.P[it.text]; onExportScheme(); return; }     // 4.9.29 功能图后缀：导出方案，不重烘
           state.P[it.text] = inp.value || '祭'; onParam(); });
-        row._refresh = () => { inp.value = state.P[it.text]; };
+        row._refresh = () => { inp.value = state.P[it.text] ?? ''; };
         det.appendChild(row);
       }
       if (row._lab != null) {      // 4.9.8：点参数名才出说明（helpBind）
