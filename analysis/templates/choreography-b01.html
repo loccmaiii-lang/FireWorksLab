@@ -76,6 +76,7 @@ td.wrapcell{white-space:normal;min-width:220px;}
     <button type="button" id="prev" aria-label="上一波">◀ 上一波</button>
     <button type="button" id="next" aria-label="下一波">下一波 ▶</button>
     <div class="seg" id="speed" role="group" aria-label="播放速度"><button type="button" data-v="1" aria-pressed="true">1×</button><button type="button" data-v="2" aria-pressed="false">2×</button><button type="button" data-v="4" aria-pressed="false">4×</button></div>
+    <button type="button" id="snd" aria-pressed="true" hidden title="跟着播放 / 拖动 / 倍速同步；2× / 4× 声音会变快变调">声音 开</button>
     <div class="seg" id="plat" role="group" aria-label="平台" hidden><button type="button" data-v="pc" aria-pressed="true">PC</button><button type="button" data-v="mobile" aria-pressed="false">手游</button></div>
     <div class="seg" id="tier" role="group" aria-label="质量档位"><button type="button" data-v="1" aria-pressed="true">高配</button><button type="button" data-v="2" aria-pressed="false">中配</button><button type="button" data-v="4" aria-pressed="false">低配</button></div>
     <div class="seg" id="view" role="group" aria-label="视野"><button type="button" data-v="full" aria-pressed="true">全场</button><button type="button" data-v="near" aria-pressed="false">中心近看</button></div>
@@ -95,6 +96,7 @@ td.wrapcell{white-space:normal;min-width:220px;}
   <details><summary>我自己找的纰漏（B01 说明第 4 节）</summary><ol class="risk" id="risks"></ol></details>
   <div class="note">示意，不是 UE 回放：圆画在每条的开花时刻，径 = 大小；开花前的竖线是升空尾缀，按这条在 B01 里的起飞 → 开花时刻画（小 2.95 s / 中 4.38 s / 大 7.37 s，来自固定子模板）；炸点高 = 固定子模板原生 +190 / +265 / +410 m 加这条的高低错落（±25 m），比宪章目标 +150 / +210 / +330 m 高约 25%。扇画在它的起飞时刻：托底扇（随 M / L 花）与尾缀同一刻起，次序随这一波或按轮换的方向（左→右 / 右→左 / 里→外 / 外→里），「托底扇」按钮可单独关掉看对比；扇角与出筒节奏是示意。金垂柳的垂裙是示意线。空格键播放 / 暂停。</div>
 </div>
+<script type="text/plain" id="audio-b64">__AUDIO_B64__</script>
 <script>
 (()=>{
 const D=__PREVIEW_DATA__;
@@ -110,7 +112,7 @@ const TAILC=sp=>SP[sp].rgb;
 const fmt=s=>{const m=Math.floor(s/60);return `${String(m).padStart(2,'0')}:${(s-m*60).toFixed(1).padStart(4,'0')}`;};
 const mm=s=>{if(s<0)return '−'+mm(-s);const m=Math.floor(s/60);return `${m}:${(s-m*60).toFixed(1).padStart(4,'0')}`;};
 const mmss=s=>`${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}`;
-let t=11.0,playing=false,last=0,view='full',tier=1,speed=1,labels=innerWidth>=640,secIdx=-1,showTail=true,colorBy='sp',showBase=true,plat='pc';
+let t=D.startS??11.0,playing=false,last=0,view='full',tier=1,speed=1,labels=innerWidth>=640,secIdx=-1,showTail=true,colorBy='sp',showBase=true,plat='pc';
 $('lab').setAttribute('aria-pressed',labels);
 const rgba=(c,a)=>`rgba(${c},${a})`;
 const dam=150;
@@ -127,7 +129,26 @@ SEC.forEach(s=>{const b=document.createElement('button');b.type='button';b.textC
 const last_s=SEC[SEC.length-1];
 if(last_s.showEndS<DUR){const sp=document.createElement('span');sp.style.width=((DUR-last_s.showEndS)/DUR*100)+'%';sp.style.borderLeft='1px solid var(--line)';sp.style.fontSize='10px';sp.style.color='var(--muted)';sp.style.paddingLeft='3px';sp.style.whiteSpace='nowrap';sp.style.overflow='hidden';sp.style.lineHeight='18px';sp.textContent='余韵';tl.appendChild(sp);}
 
-function stop(){playing=false;play.textContent='播放';}
+function stop(){playing=false;play.textContent='播放';sndStop();}
+// 声音（B03 起：合并音频原字节内嵌，Web Audio 播放；演出秒 − 音乐偏移 = 音频秒；播放时动画时钟跟着音频走）
+const AU=(()=>{const el=$('audio-b64'),b64=el?el.textContent.trim():'';el&&el.remove();if(!D.audio||!b64||b64.startsWith('__'))return null;return {b64,off:D.audio.offsetS||0};})();
+let actx=null,abuf=null,asrc=null,aGain=null,aT0=0,aC0=0,sndOn=true,aLoading=null;
+function sndLoad(){if(!AU||aLoading)return aLoading;
+  try{actx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){$('snd').textContent='声音 不可用';return null;}
+  aGain=actx.createGain();aGain.connect(actx.destination);
+  const bin=atob(AU.b64),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+  $('snd').textContent='声音 载入中…';
+  aLoading=new Promise((ok,no)=>actx.decodeAudioData(u.buffer,ok,no)).then(b=>{abuf=b;$('snd').textContent=sndOn?'声音 开':'声音 关';if(playing)sndStart();})
+    .catch(()=>{$('snd').textContent='声音 解码失败';});
+  return aLoading;}
+function sndStop(){if(asrc){const s=asrc;asrc=null;try{s.stop();}catch(e){}}}
+function sndStart(){sndStop();if(!AU||!sndOn||!abuf||!playing)return;
+  if(actx.state==='suspended')actx.resume();
+  const at=t-AU.off;if(at>=abuf.duration)return;
+  const s=actx.createBufferSource();s.buffer=abuf;s.playbackRate.value=speed;s.connect(aGain);
+  const delay=at<0?-at/speed:0;s.start(actx.currentTime+delay,Math.max(0,at));
+  aT0=t;aC0=actx.currentTime;asrc=s;
+  s.onended=()=>{if(asrc===s){asrc=null;last=performance.now();}};}
 function tri(x,y,s,c){ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(x,y-s);ctx.lineTo(x-s*.9,y+s*.6);ctx.lineTo(x+s*.9,y+s*.6);ctx.closePath();ctx.fill();}
 function seg(x1,y1,x2,y2,c,w,dash){ctx.strokeStyle=c;ctx.lineWidth=w;ctx.setLineDash(dash||[]);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);}
 
@@ -305,9 +326,13 @@ function drawStrip(){
 }
 
 function sync(){seek.value=t;draw();}
-function tick(now){if(!playing)return;t=Math.min(DUR,t+(now-last)/1000*speed);last=now;seek.value=t;draw();
+function tick(now){if(!playing)return;t=Math.min(DUR,asrc?aT0+(actx.currentTime-aC0)*speed:t+(now-last)/1000*speed);last=now;seek.value=t;draw();
   if(t>=DUR)stop();else requestAnimationFrame(tick);}
-play.addEventListener('click',()=>{if(playing){stop();return;}if(t>=DUR)t=0;playing=true;play.textContent='暂停';last=performance.now();requestAnimationFrame(tick);});
+let waiting=false;
+function begin(){waiting=false;if(t>=DUR)t=0;playing=true;play.textContent='暂停';last=performance.now();sndStart();requestAnimationFrame(tick);}
+play.addEventListener('click',()=>{if(playing){stop();return;}if(waiting)return;
+  if(AU&&sndOn&&!abuf&&aLoading){waiting=true;play.textContent='载入声音…';if(actx.state==='suspended')actx.resume();aLoading.finally(begin);return;}begin();});
+if(AU)sndLoad();   // 打开就在后台解码（约 1 s），第一次点播放从当前秒起就有声音
 seek.addEventListener('input',()=>{stop();t=+seek.value;draw();});
 // 上一波 / 下一波：在整排波（≥5 点的球花 cue 与扇组 cue 的起点，不含托底扇）之间跳
 const WAVES=[...new Set(CU.filter(c=>c.wave!=='托底扇'&&c.sz!=='X'&&(c.pts.length>=5||c.wave==='主角')).map(c=>+c.t.toFixed(2)))].sort((a,b)=>a-b);
@@ -318,7 +343,9 @@ let drag=false;st.addEventListener('pointerdown',e=>{drag=true;st.setPointerCapt
 st.addEventListener('pointermove',e=>{if(drag)stripSeek(e);});
 st.addEventListener('pointerup',()=>{drag=false;});st.addEventListener('pointercancel',()=>{drag=false;});
 function group(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn(b.dataset.v);draw();}));}
-group('plat',v=>{plat=v;});group('speed',v=>{speed=+v;});group('tier',v=>{tier=+v;});group('view',v=>{view=v;});group('colorby',v=>{colorBy=v;});
+group('plat',v=>{plat=v;});group('speed',v=>{if(asrc)t=aT0+(actx.currentTime-aC0)*speed;speed=+v;last=performance.now();if(playing)sndStart();});group('tier',v=>{tier=+v;});group('view',v=>{view=v;});group('colorby',v=>{colorBy=v;});
+if(AU){const b=$('snd');b.hidden=false;b.addEventListener('click',()=>{if(asrc)t=aT0+(actx.currentTime-aC0)*speed;last=performance.now();sndOn=!sndOn;b.setAttribute('aria-pressed',sndOn);b.textContent=sndOn?'声音 开':'声音 关';
+  if(!sndOn)sndStop();else if(playing){if(abuf)sndStart();else sndLoad();}});}
 $('lab').addEventListener('click',()=>{labels=!labels;$('lab').setAttribute('aria-pressed',labels);draw();});
 $('tails').addEventListener('click',()=>{showTail=!showTail;$('tails').setAttribute('aria-pressed',showTail);draw();});
 $('basefan').addEventListener('click',()=>{showBase=!showBase;$('basefan').setAttribute('aria-pressed',showBase);draw();});

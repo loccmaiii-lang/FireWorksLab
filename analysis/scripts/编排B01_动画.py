@@ -12,6 +12,8 @@
 起飞 → 开花时刻画；炸点高 = 固定子模板原生 +190 / +265 / +410 m 再加这条的高低错落 dz；扇形的扇角与出筒节奏是示意。
 不是 UE 回放。
 """
+import base64
+import hashlib
 import importlib.util
 import json
 import math
@@ -36,6 +38,8 @@ LOGIC = json.loads((OUT / f'逻辑方案{SFX}.json').read_text(encoding='utf-8')
 CHECK = json.loads((OUT / f'体检{SFX}.json').read_text(encoding='utf-8'))
 MUSIC = json.loads((ROOT / 'analysis/music/汪洋与浩渺_分析.json').read_text(encoding='utf-8'))
 _cp = ROOT / f'FXtools/节目/NewYearFireWorks_v01/{TABLE}编排检查.json'
+if B03:                               # 10-13 17:06 编译成 B03-VO倒计时合并音频-手游补位（工作台 16.0.25）
+    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B03-VO倒计时合并音频-手游补位编排检查.json'
 if _cp.exists():
     COMPILE = json.loads(_cp.read_text(encoding='utf-8'))
 else:                                 # 还没编译（B03 先出动画）：用体检里的数凑
@@ -80,8 +84,8 @@ def risks_b03():
         f"第 17 小节以后的片段照原曲小节整体提前 {abs(r['musicShiftS']):.1f} s（0.1 s 网格，离小节线差 8 ms），高度和大小都是修订3 的（已导入 UE 的子模板照用）。",
         '原「连续展开」和新的开场叠在一起：金曜菊、小银菊、金蕊青柠星整排和一组小平台去掉了，第 16 小节留空喘口气（补金曜菊会和第 17 小节金锦菊整排同点同高压满 3 s）。',
         f"PC 挤成一团 10 处：9 处是修订3 原有的余烬重叠，1 处新的很轻（倒计时最后一对小银菊和零点二排小银菊，0.7 s）。主角相关 0。",
-        f"手游三档 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')} 发（含只上手游的替身 {ob.get('flags2', 0)} 发）；剩一段 5 s 断档在低位密奏。替身要工作台支持「只上手游」（本机同步 8 · Codex 正在合并）。",
-        '工作台按仓库原曲播放、音乐偏移 0.79 s，听不到 VO；要听完整的，用合并音频（协作/编排工作台资料/2026-10-13/music/）。UE 里 Night 的音乐触发也要改成这条时间线（原来 +8 / +0 / +195），由本机改。',
+        f"手游三档 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')} 发（含只上手游的替身 {ob.get('flags2', 0)} 发）；剩一段 5 s 断档在低位密奏。",
+        '声音：这个网页和工作台 16.0.25 都放合并音频（VO + 汪洋与浩渺，0 s 起播），跟着播放 / 拖动 / 倍速走；2× / 4× 会变快变调。浏览器回放不等于 UE 实播。',
         f"GPU 仍按暂定 ≤ 200 / 秒，PC 高档峰值 {g['peak']}。没在 UE 里放过。",
     ]
 
@@ -270,7 +274,15 @@ def main():
         data['native'] = {k: round(v * b01.TRAIL_K[k]) for k, v in b01.REL_H.items()}
         pts['F'] = [dict(id=f'F{i}', x=b01.PT[f'F{i}']['x']) for i in range(7)]
         data['combos'], data['b02'] = b02_data(species)
-    html = TEMPLATE.read_text(encoding='utf-8').replace('__PREVIEW_DATA__', json.dumps(data, ensure_ascii=False, separators=(',', ':')))
+    b64 = ''
+    if B03:                           # 10-13 17:06「这个动画能同步让我听到音乐vo吗」：合并音频原字节内嵌，0 s 起播
+        mix = ROOT / '协作/编排工作台资料/2026-10-13/music/VO倒计时+汪洋与浩渺.mp3'
+        raw = mix.read_bytes()
+        assert hashlib.sha256(raw).hexdigest() == LOGIC['audio']['mix']['sha256'], '合并音频和逻辑方案的指纹对不上'
+        data['audio'] = dict(name=mix.name, sha256=LOGIC['audio']['mix']['sha256'], offsetS=0, durationS=LOGIC['audio']['mix']['durationS'])
+        data['startS'] = 0.0
+        b64 = base64.b64encode(raw).decode('ascii')
+    html = TEMPLATE.read_text(encoding='utf-8').replace('__PREVIEW_DATA__', json.dumps(data, ensure_ascii=False, separators=(',', ':'))).replace('__AUDIO_B64__', b64, 1)
     if B02:
         html = html.replace('<title>汪洋与浩渺编排B01</title>', f'<title>汪洋与浩渺编排{NAME}</title>', 1).replace('跨年烟花秀 B01 正面比例动画', f'跨年烟花秀 {NAME} 正面比例动画' + (' 修订1' if R1M else ''), 1)
     assert '</script>' not in json.dumps(data, ensure_ascii=False)
