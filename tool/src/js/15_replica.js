@@ -41,6 +41,7 @@ function replicaPM(id) {
   const r = REPLICA_BY_ID[id], d = defaultsFor(r.base, null, true), P = { ...d.P };
   if (r.shell) applyShellNo(P, r.shell);
   Object.assign(P, r.p || {}, { type: r.base }); migrate37(P, (r.p || {}).renderVer);
+  if(P.sparkGraph)P.sparkGraph=structuredClone(P.sparkGraph);
   if (familyOf(r.base) === 'aerial' && P.duration < P.burn * 1.15 + 0.4) P.duration = +(P.burn * 1.15 + 0.5).toFixed(2);
   const M = normalizeM({ ...d.M, ...NEUTRAL_RAMP, ...r.m }, r.base);
   return { P: derive(P), M };

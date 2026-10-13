@@ -716,6 +716,7 @@ function panelHelp(row) {
   h.innerHTML = `<b>${row._lab}</b>${unit}<span class="ph-meta">${rng}${base}</span>${row._inert ? `<span class="ph-inert">现在不起作用：${row._inert}</span>` : ''}${legacyHelp(row, k)}${row._detail ? `<span class="ph-d">${row._detail}</span>` : ''}`;
 }
 function buildMasterPanel() {
+  if(state.P.sparkGraph)return buildGraphPanel();
   pviewInit();
   const P = state.P, D = defaultsFor(P.type).P;
   for (const id of ['specBox', 'specMore']) { const box = $('#' + id); if (box && $('#params').contains(box)) $('#specHome').appendChild(box); }   // 规格框先放回原处，别跟着旧的面板一起被清掉

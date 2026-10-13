@@ -1,0 +1,7 @@
+{
+  "source": "D:\\Blender\\Firework_FX_Lab\\assets\\Sparkler\\V05\\parameters.json",
+  "sha256": "a2cf07d21faaabc9a0565fc5462009967ba2df326669a1af08a96702fa20535c",
+  "base_commit": "714e94b2",
+  "shape_count": 13,
+  "note": "参数来源V05；亮度口径与光学不同，需视觉校对，非逐像素继承。周期候选64/30秒；用户不要求严格无缝，爆发节奏优先。"
+}

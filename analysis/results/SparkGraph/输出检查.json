@@ -1,0 +1,86 @@
+{
+  "rocket-PC": {
+    "pass": true,
+    "fails": [
+      []
+    ],
+    "cell": [
+      512,
+      512
+    ],
+    "package_sha256": "8347a7928558b5cd838053bf8e529349fb97bb5eb68de9b7442cfa0d8e2632fd",
+    "source": {
+      "tool": "烟花母版烘焙器 4.9.83",
+      "type": "sparkgraph",
+      "form": "loop",
+      "quality": {
+        "ss": 2,
+        "hz": 300
+      },
+      "plan_sig": "d79d855d"
+    }
+  },
+  "rocket-Mobile": {
+    "pass": true,
+    "fails": [
+      []
+    ],
+    "cell": [
+      256,
+      256
+    ],
+    "package_sha256": "8347a7928558b5cd838053bf8e529349fb97bb5eb68de9b7442cfa0d8e2632fd",
+    "source": {
+      "tool": "烟花母版烘焙器 4.9.83",
+      "type": "sparkgraph",
+      "form": "loop",
+      "quality": {
+        "ss": 2,
+        "hz": 300
+      },
+      "plan_sig": "d79d855d"
+    }
+  },
+  "sparkler-PC": {
+    "pass": true,
+    "fails": [
+      []
+    ],
+    "cell": [
+      512,
+      512
+    ],
+    "package_sha256": "0dd7bee73ce2ad5591968c6e90c7523a6a1e64441d535aa728a4b277a434245d",
+    "source": {
+      "tool": "烟花母版烘焙器 4.9.83",
+      "type": "sparkgraph",
+      "form": "loop",
+      "quality": {
+        "ss": 2,
+        "hz": 300
+      },
+      "plan_sig": "d79d855d"
+    }
+  },
+  "sparkler-Mobile": {
+    "pass": true,
+    "fails": [
+      []
+    ],
+    "cell": [
+      256,
+      256
+    ],
+    "package_sha256": "0dd7bee73ce2ad5591968c6e90c7523a6a1e64441d535aa728a4b277a434245d",
+    "source": {
+      "tool": "烟花母版烘焙器 4.9.83",
+      "type": "sparkgraph",
+      "form": "loop",
+      "quality": {
+        "ss": 2,
+        "hz": 300
+      },
+      "plan_sig": "d79d855d"
+    }
+  }
+}

@@ -95,6 +95,7 @@ initUpdates();
 buildMasterPanel();
 initIter();
 initLibrary();
+initGraphLibrary();
 if (!/[?&]fast/.test(location.search)) runPreviewBake(); else state.dirty = false;
 // 4.2.16 按需烘焙：工具栏「烘焙」按钮 / 「自动」开关、画面上的「贴图是旧的」横条
 $('#bakeNow').addEventListener('click', () => { if (!bakeCancel()) bakeNow(); });     // 4.9.4：烘焙中点它 = 取消

@@ -42,7 +42,7 @@ JS_ENTRY = r"""
 def features(info):
     """条目 6 样东西：按类型判断（这些能力是代码统一提供的，不按效果手做）"""
     k, form = info['kind'], info.get('form')
-    seq = form in ('master', 'segments', 'trail', 'emitset')
+    seq = form in ('master', 'segments', 'trail', 'emitset', 'loop')
     f = {}
     f['实时模拟'] = (k != 'asset', '素材条目只有贴图播放' if k == 'asset' else '')
     f['引擎回放 + 游戏内大小'] = (k == 'combo' or seq or form in ('unit', 'loop'), '')

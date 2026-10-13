@@ -397,6 +397,15 @@
     "消散",
     "镜头"
    ]
+  },
+  {
+   "名": "分层粒子图",
+   "en": "Particle Graph",
+   "级": "通用父子图",
+   "说明": "固定随机流的层、事件与多形态；同一模型用于实时与烘焙",
+   "模块": [
+    "生成与运动"
+   ]
   }
  ],
  "参数": [
@@ -6669,6 +6678,468 @@
    "名": "落火进入合并贴图",
    "类别": "物理量",
    "单位": "1"
+  },
+  {
+   "id": "graph-00-sparkGraph.period",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.period",
+   "全名": "周期",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "周期",
+   "类别": "物理量",
+   "单位": "s"
+  },
+  {
+   "id": "graph-01-sparkGraph.bounds",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.bounds",
+   "全名": "固定取景",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "固定取景",
+   "类别": "物理量",
+   "单位": "m"
+  },
+  {
+   "id": "graph-02-sparkGraph.bursts",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.bursts",
+   "全名": "爆发时刻与宽度",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "爆发时刻与宽度",
+   "类别": "物理量",
+   "单位": "s"
+  },
+  {
+   "id": "graph-03-sparkGraph.followAxis",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.followAxis",
+   "全名": "跟随喷口轴",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "跟随喷口轴",
+   "类别": "引擎字段",
+   "单位": "开关"
+  },
+  {
+   "id": "graph-04-sparkGraph.emitters[].id",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].id",
+   "全名": "层标识",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "层标识",
+   "类别": "引擎字段",
+   "单位": "1"
+  },
+  {
+   "id": "graph-05-sparkGraph.emitters[].name",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].name",
+   "全名": "层名称",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "层名称",
+   "类别": "引擎字段",
+   "单位": "1"
+  },
+  {
+   "id": "graph-06-sparkGraph.emitters[].parent",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].parent",
+   "全名": "母粒",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "母粒",
+   "类别": "引擎字段",
+   "单位": "1"
+  },
+  {
+   "id": "graph-07-sparkGraph.emitters[].enabled",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].enabled",
+   "全名": "显示这层",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "显示这层",
+   "类别": "引擎字段",
+   "单位": "1"
+  },
+  {
+   "id": "graph-08-sparkGraph.emitters[].count",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].count",
+   "全名": "每周期粒子数",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "每周期粒子数",
+   "类别": "物理量",
+   "单位": "粒"
+  },
+  {
+   "id": "graph-09-sparkGraph.emitters[].seed",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].seed",
+   "全名": "随机种子",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "随机种子",
+   "类别": "引擎字段",
+   "单位": "1"
+  },
+  {
+   "id": "graph-10-sparkGraph.emitters[].speed",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].speed",
+   "全名": "速度分布",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "速度分布",
+   "类别": "物理量",
+   "单位": "m/s"
+  },
+  {
+   "id": "graph-11-sparkGraph.emitters[].life",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].life",
+   "全名": "寿命分布",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "寿命分布",
+   "类别": "物理量",
+   "单位": "s"
+  },
+  {
+   "id": "graph-12-sparkGraph.emitters[].size",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].size",
+   "全名": "大小倍率分布",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "大小倍率分布",
+   "类别": "物理量",
+   "单位": "×"
+  },
+  {
+   "id": "graph-13-sparkGraph.emitters[].power",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].power",
+   "全名": "亮度倍率分布",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "亮度倍率分布",
+   "类别": "物理量",
+   "单位": "×"
+  },
+  {
+   "id": "graph-14-sparkGraph.emitters[].width",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].width",
+   "全名": "粒子直径",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "粒子直径",
+   "类别": "物理量",
+   "单位": "m"
+  },
+  {
+   "id": "graph-15-sparkGraph.emitters[].gain",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].gain",
+   "全名": "亮度",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "亮度",
+   "类别": "物理量",
+   "单位": "×"
+  },
+  {
+   "id": "graph-16-sparkGraph.emitters[].drag",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].drag",
+   "全名": "线性阻力",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "线性阻力",
+   "类别": "物理量",
+   "单位": "1/s"
+  },
+  {
+   "id": "graph-17-sparkGraph.emitters[].gravity",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].gravity",
+   "全名": "三轴加速度",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "三轴加速度",
+   "类别": "物理量",
+   "单位": "m/s²"
+  },
+  {
+   "id": "graph-18-sparkGraph.emitters[].directionMode",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].directionMode",
+   "全名": "喷射方向",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "喷射方向",
+   "类别": "引擎字段",
+   "单位": "1"
+  },
+  {
+   "id": "graph-19-sparkGraph.emitters[].direction",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].direction",
+   "全名": "喷射轴",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "喷射轴",
+   "类别": "物理量",
+   "单位": "1"
+  },
+  {
+   "id": "graph-20-sparkGraph.emitters[].cone",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].cone",
+   "全名": "喷射半锥角",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "喷射半锥角",
+   "类别": "物理量",
+   "单位": "°"
+  },
+  {
+   "id": "graph-21-sparkGraph.emitters[].shape",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].shape",
+   "全名": "粒子形态",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "粒子形态",
+   "类别": "引擎字段",
+   "单位": "1"
+  },
+  {
+   "id": "graph-22-sparkGraph.emitters[].history",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].history",
+   "全名": "历史线长时间",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "历史线长时间",
+   "类别": "物理量",
+   "单位": "s"
+  },
+  {
+   "id": "graph-23-sparkGraph.emitters[].taper",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].taper",
+   "全名": "尾端粗细比例",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "尾端粗细比例",
+   "类别": "物理量",
+   "单位": "×"
+  },
+  {
+   "id": "graph-24-sparkGraph.emitters[].aspect",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].aspect",
+   "全名": "长宽比",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "长宽比",
+   "类别": "物理量",
+   "单位": "×"
+  },
+  {
+   "id": "graph-25-sparkGraph.emitters[].spin",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].spin",
+   "全名": "自转",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "自转",
+   "类别": "物理量",
+   "单位": "°/s"
+  },
+  {
+   "id": "graph-26-sparkGraph.emitters[].twist",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].twist",
+   "全名": "翻转",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "翻转",
+   "类别": "物理量",
+   "单位": "°/s"
+  },
+  {
+   "id": "graph-27-sparkGraph.emitters[].extent",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].extent",
+   "全名": "出生半径",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "出生半径",
+   "类别": "物理量",
+   "单位": "m"
+  },
+  {
+   "id": "graph-28-sparkGraph.emitters[].clusterSize",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].clusterSize",
+   "全名": "每簇候选数量",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "每簇候选数量",
+   "类别": "物理量",
+   "单位": "粒"
+  },
+  {
+   "id": "graph-29-sparkGraph.emitters[].clusterProbability",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].clusterProbability",
+   "全名": "成簇概率",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "成簇概率",
+   "类别": "物理量",
+   "单位": "1"
+  },
+  {
+   "id": "graph-30-sparkGraph.emitters[].clusterWidth",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].clusterWidth",
+   "全名": "簇内出生半宽",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "簇内出生半宽",
+   "类别": "物理量",
+   "单位": "s"
+  },
+  {
+   "id": "graph-31-sparkGraph.emitters[].clusterDirection",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].clusterDirection",
+   "全名": "簇内方向关联",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "簇内方向关联",
+   "类别": "物理量",
+   "单位": "1"
+  },
+  {
+   "id": "graph-32-sparkGraph.emitters[].burstShare",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].burstShare",
+   "全名": "爆发段粒子比例",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "爆发段粒子比例",
+   "类别": "物理量",
+   "单位": "1"
+  },
+  {
+   "id": "graph-33-sparkGraph.emitters[].children",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].children",
+   "全名": "每母粒子粒数",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "每母粒子粒数",
+   "类别": "物理量",
+   "单位": "粒"
+  },
+  {
+   "id": "graph-34-sparkGraph.emitters[].event",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].event",
+   "全名": "分叉时刻",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "分叉时刻",
+   "类别": "物理量",
+   "单位": "×母粒寿命"
+  },
+  {
+   "id": "graph-35-sparkGraph.emitters[].delay",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].delay",
+   "全名": "额外延迟",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "额外延迟",
+   "类别": "物理量",
+   "单位": "s"
+  },
+  {
+   "id": "graph-36-sparkGraph.emitters[].inherit",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].inherit",
+   "全名": "速度继承",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "速度继承",
+   "类别": "物理量",
+   "单位": "×"
+  },
+  {
+   "id": "graph-37-sparkGraph.emitters[].probability",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].probability",
+   "全名": "子粒发生概率",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "子粒发生概率",
+   "类别": "物理量",
+   "单位": "1"
+  },
+  {
+   "id": "graph-38-sparkGraph.emitters[].noise",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].noise",
+   "全名": "位移扰动",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "位移扰动",
+   "类别": "物理量",
+   "单位": "m/s"
+  },
+  {
+   "id": "graph-39-sparkGraph.emitters[].noiseHz",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].noiseHz",
+   "全名": "扰动频率",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "扰动频率",
+   "类别": "物理量",
+   "单位": "Hz"
+  },
+  {
+   "id": "graph-40-sparkGraph.emitters[].sizeCurve",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].sizeCurve",
+   "全名": "大小曲线",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "大小曲线",
+   "类别": "物理量",
+   "单位": "×"
+  },
+  {
+   "id": "graph-41-sparkGraph.emitters[].brightCurve",
+   "sec": "分层粒子图",
+   "key": "sparkGraph.emitters[].brightCurve",
+   "全名": "亮度曲线",
+   "发射器": "分层粒子图",
+   "模块": "生成与运动",
+   "名": "亮度曲线",
+   "类别": "物理量",
+   "单位": "×"
   }
  ]
 }

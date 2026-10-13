@@ -1,0 +1,30 @@
+{
+  "effect": "rocket_graph",
+  "entry": "SGR1",
+  "ver": "4399ce22·loop4.9.83",
+  "time": "2026-10-14 01:39",
+  "dir": "analysis/local/SparkGraph/",
+  "packages": [
+    {
+      "name": "rocket",
+      "replica": "SGR1",
+      "files": [
+        "cascade.json",
+        "cascade_mobile.json",
+        "RocketTail_Graph.json",
+        "RocketTail_Graph_Cascade参数.txt",
+        "RocketTail_Graph_Mobile.json",
+        "RocketTail_Graph_曲线.csv",
+        "T_RocketTail_Graph.png",
+        "T_RocketTail_Graph_Cutout.png",
+        "T_RocketTail_Graph_FrameTest.png",
+        "T_RocketTail_Graph_Mobile.png",
+        "T_RocketTail_Graph_Mobile_Cutout.png",
+        "T_RocketTail_Graph_Mobile_FrameTest.png",
+        "T_RocketTail_Graph_Mobile_Ramp.png",
+        "T_RocketTail_Graph_Ramp.png"
+      ],
+      "sha256": "8347a7928558b5cd838053bf8e529349fb97bb5eb68de9b7442cfa0d8e2632fd"
+    }
+  ]
+}

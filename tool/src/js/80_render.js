@@ -19,7 +19,7 @@ function setMatUniforms(pr, c, age) {
   gl.uniform1f(pr.u.uHI, c.headInt); gl.uniform1f(pr.u.uTI, c.tailInt); gl.uniform1f(pr.u.uK, 4.0);
 }
 function frameIdx(m, age) {
-  if (m.loop) { const D = m.duration, a = ((age % D) + D) % D; return clamp(Math.floor(a / D * m.L.F), 0, m.L.F - 1); }
+  if (m.loop) { const D = m.duration, a = ((age % D) + D) % D; return clamp(Math.floor(m.frameTiming==='loop-tick-start'?evalKeys(m.keys,a/D):a / D * m.L.F), 0, m.L.F - 1); }
   if (age < 0 || age >= m.duration) return -1;
   return clamp(Math.floor(evalKeys(m.keys, age / m.duration)+(m.frameTiming==='tick-start'?1e-8:0)), 0, m.L.F - 1);
 }

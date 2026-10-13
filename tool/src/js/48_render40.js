@@ -79,6 +79,7 @@ function renderCell40(P, pl, R, t, samples, cell, view = frameView40(pl,t)) {
   return window;
 }
 function displayPlan40(P) {
+  if(P.sparkGraph)return graphPlan(P);
   P=fxP(P);
   if (familyOf(P.type)!=='ground') return plan(P,measure(P));
   const R=makeRenderer(P,'loop');
@@ -147,6 +148,7 @@ function renderLive40() {
   hudText=`实时模拟 · ${state.disp==='game'&&camera?'游戏内大小 · '+state.dist+' m · ':''}${state.exportResolution?'导出单格 '+w+'×'+h:'画布分辨率'} · 固定曝光 ×${fixedExposure(P).toFixed(2)} · 居中快门${liveCapNote()}`;
   const headPx=(+P.headSize||0)*Math.min(L.cellW/(2*view[2]),L.cellH/(2*view[3]));
   hudB=+P.headBright>0 ? `星头标称直径约 ${headPx.toFixed(2)} 纹素（当前取景）${headPx<3?' · 小光点易受采样影响，可增大单格；超采样不能替代单格分辨率':''}` : '';
+  if(P.sparkGraph)hudB=`${P.sparkGraph.emitters.length} 层 · 历史轨迹拉伸 · 当前${graphSolo?'单层观察（导出仍含全部启用层）':'显示全部启用层'}`;
 }
 // 4.0 自动固定曝光：在燃烧段几个时刻渲染线性亮度，取最亮的那一刻，让它 99.8% 分位的像素显示到 0.96。
 // 一个配方只有一个固定曝光（不随帧变）；目标默认.96，可降低以保留亮部。采样和分位值不保证所有像素不饱和。

@@ -39,6 +39,23 @@ JS_METRICS = r"""
   else { if (!REPLICA_BY_ID[id]) return { id, error: '没有这个条目：' + id }; const r = __fw.replicaPM(id); P = r.P; M = r.M; name = REPLICA_BY_ID[id].name; }
   const out = { id, name, type: P.type, form: P.form, duration: P.duration, zoom: P.zoom, frameMode: P.frameMode, autoGrid: P.autoGrid,
                 renderVer:40, qSS: P.qSS || 2, headSize: P.headSize, sparkSize: P.sparkSize, emberSize: P.emberSize, texW: P.texW, texH: P.texH };
+  if(P.sparkGraph){
+    const pl=graphPlan(P),L=pl.L,mp=mobileParams(P),D=pl.duration;
+    out.grid={cols:L.cols,rows:L.rows,chans:L.chans,frames:L.F,cellW:L.cellW,cellH:L.cellH};
+    out.mobileCell={cellW:mp.texW/L.cols,cellH:mp.texH/L.rows};
+    const seen=new Set();let previous=0,maxJump=0;for(let i=0;i<Math.ceil(D*fps);i++){const f=frameIdx(pl,i/fps);seen.add(f);maxJump=Math.max(maxJump,f-previous);previous=f;}
+    out.frames30={shown:seen.size,total:L.F,ratio:seen.size/L.F,maxJump};out.minFpsActive=L.F/D;out.minFpsFade=null;out.avgFps=L.F/D;
+    // 分辨率仍按标准最严的1/3屏高；实际游戏内大小另由物理米数显示。
+    out.spriteM=pl.Wh;out.flowerM=pl.Wh;out.screen={frac,spritePx:screenH*frac,mag:screenH*frac/L.cellH};
+    out.game=dists.map(dist=>({dist,spritePx:pl.Wh*gamePixelsPerMeter(P,pl.Wh)*1000/dist}));
+    const ss=Math.max(1,P.qSS||2),w=L.cellW*ss,h=L.cellH*ss,target=new Target(w,h,gl.RGBA16F),oldPPMY=PPMY;
+    const a=makeGraphRenderer(P),P2=structuredClone(P);P2.sparkGraph.emitters.forEach(e=>e.width*=1.1);const b=makeGraphRenderer(P2),view=[0,pl.cy,pl.HX,pl.HY];out.sizeResponse={};
+    const energy=(R,t)=>{target.clear();target.bind();PPMY=h/(2*pl.HY);additive(true);R.draw(t,view,w/(2*pl.HX),1);additive(false);const pixels=new Float32Array(w*h*4);gl.readPixels(0,0,w,h,gl.RGBA,gl.FLOAT,pixels);let sum=0;for(let i=0;i<pixels.length;i+=4)sum+=pixels[i];return sum;};
+    try{for(const e of P.sparkGraph.emitters){if(e.enabled===false)continue;const q=a.graph.byId.get(e.id)?.[0];if(!q)continue;const t=SparkGraph.mod(q.birth+q.life*.5,D);a.solo=b.solo=e.id;const x=energy(a,t),y=energy(b,t);out.sizeResponse[e.id]={energy:x,enlarged:y,ratio:x?y/x:0};}}
+    finally{a.dispose();b.dispose();target.dispose();PPMY=oldPPMY;additive(false);}
+    const bad=Object.values(out.sizeResponse).some(x=>!(x.energy>0&&x.ratio>1.03));out.sizeDead={head:bad,spark:bad};out.deadSize={atFull:0,atStart:0};
+    out.note='分层粒子图：逐层实测GPU尺寸增大10%的能量响应；PC/手机量化、空帧、切边由真实素材包回放检查';return out;
+  }
   if (P.form === 'emitset' && rtPcFull(P)) {
     const ball=rtBallistic(P), head=rtHeadOnly(P), mobileP={...P,texW:Math.round(P.texW*(P.rtMobileTex||0.5)),texH:Math.round(P.texH*(P.rtMobileTex||0.5))};
     const fa=head?{cols:1,rows:1,chans:1,F:1,Fr:1,Fd:0,Dtot:ball.T,Df:0,dur:[ball.T],times:[ball.T/2],keys:[[0,0],[1,0]],Ww:Math.max(P.rtHeadSize*3,P.rtHeadFl*1.5)*2,Wh:Math.max(P.rtHeadSize*3,P.rtHeadFl*1.5)*2}:rtLayoutFar(P,ball,rtLoopInfo(P),true);

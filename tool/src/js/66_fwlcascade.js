@@ -124,9 +124,16 @@ function fwlFinish(emitters) {
     if (!ms.some(q => q.m === 'ColorScaleOverLife')) ms.push({ m: 'ColorScaleOverLife', ColorScaleOverLife: { const: [1, 1, 1] }, AlphaScaleOverLife: { const: 1 }, note: FWL_SCALE_NOTE }); }
   return emitters;
 }
-// 返回 null 表示这种产物还没有 cascade.json（单元序列、地面循环、上升星头循环：参数表照旧）
+// 循环面片沿用序列材质与帧号曲线，每周期只生成一颗。
+function fwlLoop(name,b,M,mobile) {
+  const body=fwlMaster(name,b,M,mobile);
+  for(const e of body.emitters){e.required.loops=0;e.required.local_space=true;e.max_alive=1;
+    e.notes=[...(e.notes||[]),'周期喷射：每周期一颗序列面片，Local Space跟随喷口；不含弹体升空弹道。未经UE实播。'];
+    if(b.P.sparkGraph&&b.P.sparkGraph.followAxis)e.modules.push({m:'OrientationAxisLock',flags:'EPAL_ROTATE_Z'});
+  }return body;
+}
 function fwlCascade(name, b, M, mobile = false) {
-  const body = b.form === 'emitset' ? fwlEmitSet(name, b, M, mobile) : b.form === 'trail' ? fwlTrail(name, b, M, mobile) : (b.form === 'master' || b.form === 'segments') ? fwlMaster(name, b, M, mobile) : null;
+  const body = b.form === 'loop' ? fwlLoop(name,b,M,mobile) : b.form === 'emitset' ? fwlEmitSet(name, b, M, mobile) : b.form === 'trail' ? fwlTrail(name, b, M, mobile) : (b.form === 'master' || b.form === 'segments') ? fwlMaster(name, b, M, mobile) : null;
   if (!body) return null;
   if (mobile) fwlMaxAlive(body.emitters);
   return {

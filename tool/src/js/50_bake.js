@@ -5,6 +5,7 @@
 
 // 渲染器：draw(ts, view, ppm, w, tw) 把星头画进 R、火花画进 G；ts 为绝对时间
 function makeRenderer(P, kind) {
+  if(P.sparkGraph)return makeGraphRenderer(P);
   P = fxP(P);     // 4.9.21 效果 › 整体调整（全是 1 时原样）
   const gpu = P.engine === 'gpu';
   if (kind === 'loop' || kind === 'riseLoop') {
@@ -574,6 +575,7 @@ function fitRise(path) {
 }
 // 地面循环
 async function bakeLoop(P, scale, onProg) {
+  if(P.sparkGraph)return bakeGraph(P,scale,onProg);
   const R = makeRenderer(P, 'loop'), Tp = R.Tp;
   try {
     const times = []; for (let i = 0; i < 10; i++) times.push(i / 10 * Tp);
