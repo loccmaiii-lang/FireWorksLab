@@ -116,8 +116,11 @@ function jetDir(a, cone, u1, u2) {
   const b2 = [a[1] * b1[2] - a[2] * b1[1], a[2] * b1[0] - a[0] * b1[2], a[0] * b1[1] - a[1] * b1[0]], th = cone * Math.sqrt(u1), ph = 6.2831853 * u2, c = Math.cos(th), sn = Math.sin(th);
   return [0, 1, 2].map(k => a[k] * c + (b1[k] * Math.cos(ph) + b2[k] * Math.sin(ph)) * sn);
 }
-// 4.9.71 火花平方阻力系数（对话框FanGold，用户 10-12 22:59）：c = G / 火花终端速度²（1/m），只在空中花型、终端速度 > 0 时；0 = 只有线性阻力（以前）
-const sparkCqOf = P => familyOf(P.type) === 'aerial' && +P.sparkVt > 0 ? G / (+P.sparkVt * +P.sparkVt) : 0;
+// 4.9.71 火花平方阻力系数（对话框FanGold，用户 10-12 22:59；4.9.75 用户 10-13 12:55 改成直接填系数 sparkQ，1/m）：只在空中花型、> 0 时；0 = 只有线性阻力（以前）
+const sparkCqOf = P => familyOf(P.type) === 'aerial' && +P.sparkQ > 0 ? +P.sparkQ : 0;     // 4.9.75 直接是系数（以前按终端速度换算）
+// 4.9.75 右栏「平方阻力」下面那行灰字：相当于终端速度多少（只有平方阻力、正常重力时火花下落的极限速度）
+function sparkQInfoHTML(P) { const c = sparkCqOf(P); if (!(c > 0)) return ''; const vt = Math.sqrt(G / c), gm = Math.max(0, +P.sparkGrav || 0);
+  return `<p class="hint endinfo">相当于终端速度 ${vt.toFixed(1)} m/s${Math.abs(gm - 1) > 1e-6 ? `（下坠 × ${gm.toFixed(2)} 时下落最快 ${(vt * Math.sqrt(gm)).toFixed(1)} m/s）` : ''}。配「跟随星体」接近 1、「火花阻力」0.3–0.6：开花时尾巴不往前抹，燃尽时往前冲一小段再散。</p>`; }
 const sparkPerMOf = (P, s) => Math.max(0, +P.sparkPerM || 0) * (+P.sparkRate > 0 ? s.rate / P.sparkRate : 1);
 // 一颗星头的光点：先拼「形状」（主核 + 双核 + 边上的小鼓包，偏移按米），再沿运动反方向复制成拖影（相机快门拖在后面，星头前沿就在星的位置）
 function headShapePush(push, buf, nh, cap, s, I, sz, hs, t, seed) {

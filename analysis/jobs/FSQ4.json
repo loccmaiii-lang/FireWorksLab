@@ -1,0 +1,13 @@
+{
+ "id": "FSQ4",
+ "type": "script",
+ "priority": 1,
+ "name": "对话框FanGold 4.9.75：参数生效审查（全部参数）+ 平方阻力检查 + 回归",
+ "note": "用户 10-13 12:55「帮我看看参数代码是有没有生效的」；4.9.75 sparkVt → sparkQ（模板画面应不变）。",
+ "steps": [
+  {"name": "参数生效审查（每个参数改值 / 删键各出两帧）", "script": "参数生效审查.py", "args": ["--out", "{out}/参数生效审查", "--px", "96"], "must": true, "timeout": 5400},
+  {"name": "火花平方阻力检查（含 GPU）", "script": "火花平方阻力检查.py", "args": ["--out", "{out}/平方阻力检查"], "must": false, "timeout": 1500},
+  {"name": "基准回归 4.9.74 → 4.9.75 花型模板 6 个", "script": "基准回归.py", "args": ["--old", "{git:4bba01f8:tool/FireworkBaker.html}", "--new", "tool/FireworkBaker.html", "--out", "{out}/基准回归", "--only", "kiku,botan,kamuro,senrin,strobe,crackle"], "must": false, "timeout": 2400},
+  {"name": "多层模板定帧回归 4.9.74 → 4.9.75", "script": "多层模板回归.py", "args": ["--old", "{git:4bba01f8:tool/FireworkBaker.html}", "--out", "{out}/多层模板回归", "--ids", "yaeBlueBotan,mangekyo,somewakeBotan,colorSenrin,crackleShin,ginKamuro"], "must": false, "timeout": 2400}
+ ]
+}

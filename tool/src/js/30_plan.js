@@ -60,7 +60,7 @@ function measureRun(P) {
     const L = P.sparkLife * 1.6, g = G * P.sparkGrav;
     let k = Math.max(P.sparkDrag, 1e-3);
     // 4.9.71 火花平方阻力：下落最快到终端速度 × √下坠倍数，按这个速度折成线性阻力估下坠 / 被风带走的距离（缺省 0 不进来）
-    if (sparkCqOf(P) > 0) k = Math.max(k, g / Math.max(0.1, +P.sparkVt * Math.sqrt(Math.max(1e-6, +P.sparkGrav || 0))));
+    if (sparkCqOf(P) > 0) k = Math.max(k, Math.sqrt(Math.max(0, g) * sparkCqOf(P)));     // 下落极限 √(g / c) → 折成线性阻力 g / 极限 = √(g·c)
     let Le = L;
     if (+P.emberFrac > 0 && !(+P.branch > 0)) {
       let e = (+P.emberLife || 3) * Math.exp(0.3) * 0.85;

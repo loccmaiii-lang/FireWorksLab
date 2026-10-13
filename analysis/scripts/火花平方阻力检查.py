@@ -60,10 +60,10 @@ JS_GPU = r"""async () => {
       const p = c > 0 ? motQ(p0, v0, g, P.sparkDrag, c, a) : mot(p0, v0, g, P.sparkDrag, a); ys.push(p[1]); }
     return [Math.min(...ys), Math.max(...ys)]; };
   const CY = 45, HALF = 55, PX = 256;
-  for (const [nm, o] of [['quad', { sparkVt: 5 }], ['lin', { sparkVt: 0 }]]) for (const t of [0.6, 0.95]) {
+  for (const [nm, o] of [['quad', { sparkQ: G / 25 }], ['lin', { sparkQ: 0 }]]) for (const t of [0.6, 0.95]) {
     const P = derive({ ...base, ...o }); const st = await renderStills40(P, M, { times: [t], px: PX, cx: 0, cy: CY, half: HALF });
     out.imgs[nm + '_' + t] = st[0].png; const [y0, y1] = predict(P, t); out.pred[nm + '_' + t] = { 下: +y0.toFixed(2), 上: +y1.toFixed(2), 行上: +((CY + HALF - y1) / (2 * HALF) * PX).toFixed(1), 行下: +((CY + HALF - y0) / (2 * HALF) * PX).toFixed(1) }; }
-  try { await renderStills40(derive({ ...base, sparkVt: 5, sparkStretch: 1 }), M, { times: [0.6], px: 128 }); await renderStills40(derive({ ...base, sparkVt: 5, coreProfile: 1 }), M, { times: [0.6], px: 128 }); } catch (e) { F('G1 变体：' + e.message); }
+  try { await renderStills40(derive({ ...base, sparkQ: G / 25, sparkStretch: 1 }), M, { times: [0.6], px: 128 }); await renderStills40(derive({ ...base, sparkQ: G / 25, coreProfile: 1 }), M, { times: [0.6], px: 128 }); } catch (e) { F('G1 变体：' + e.message); }
   return out;
 }"""
 

@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 rec = json.load(open(glob.glob(str(ROOT/'analysis/我的配方/my_fxmuxvrom6/*.json'))[0], encoding='utf-8'))
 L = rec['snap']['layers'][1]
 TIMES=[0.5,1.0,1.8,2.1,2.4]     # 金锦层点火晚 0.33 s（±11 %）、烧 1.5 s（±5 %）→ 约 1.7–1.95 s 陆续燃尽
-VARS={'① 原样（继承 0.03、线性阻力 1.6）':{}, '② 继承 1、线性阻力 0.5、不开平方阻力（火花跟着星往前冲）':{'sparkInherit':1,'sparkInhJit':0,'sparkDrag':0.5}, '③ 同 ②，再开平方阻力 终端速度 4 m/s':{'sparkInherit':1,'sparkInhJit':0,'sparkDrag':0.5,'sparkVt':4}}
+VARS={'① 原样（继承 0.03、线性阻力 1.6）':{}, '② 继承 1、线性阻力 0.5、不开平方阻力（火花跟着星往前冲）':{'sparkInherit':1,'sparkInhJit':0,'sparkDrag':0.5}, '③ 同 ②，再开平方阻力 0.61（≈ 终端速度 4 m/s）':{'sparkInherit':1,'sparkInhJit':0,'sparkDrag':0.5,'sparkQ':round(9.81/16,4)}}
 async def main():
     async with async_playwright() as p:
         b = await launch_async(p); pg = await b.new_page()
