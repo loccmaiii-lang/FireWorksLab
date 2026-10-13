@@ -1,0 +1,15 @@
+{
+  "frozen": "4.9.79",
+  "production": "4.9.80",
+  "png_identical": {
+    "T_EFX_FireWorks_FanComet_Gold_4x4_01_HD.png": true,
+    "_检查/T_EFX_FireWorks_FanComet_Gold_4x4_01_FrameTest.png": true,
+    "T_EFX_FireWorks_FanComet_Gold_4x4_01_C.png": true,
+    "T_EFX_FireWorks_FanComet_Gold_R.png": true,
+    "T_EFX_FireWorks_FanComet_Gold_4x4_01.png": true
+  },
+  "parameter_diff": {
+    "P": [],
+    "M": []
+  }
+}
