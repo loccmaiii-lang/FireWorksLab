@@ -1,5 +1,5 @@
 {
-  "revision": "Day_npc_test_fire_v1",
+  "revision": "Day_npc_test_fire_v2_tidy_then_messy",
   "density": 2,
   "rhythm": null,
   "derivedFlowers": [
@@ -32,44 +32,44 @@
   },
   "tiers": {
     "high": {
-      "events": 20,
-      "subTemplates": 9,
-      "templates": 14,
-      "scheduleSlots": 14,
+      "events": 24,
+      "subTemplates": 14,
+      "templates": 20,
+      "scheduleSlots": 21,
       "groups": {
-        "P": 10,
-        "B": 2,
-        "F": 2
+        "P": 17,
+        "B": 3,
+        "F": 1
       },
-      "lastSlot": 22.6,
+      "lastSlot": 22.2,
       "expansionProblems": [],
       "status": "property_text_ready_UE_unverified"
     },
     "medium": {
-      "events": 20,
-      "subTemplates": 9,
-      "templates": 14,
-      "scheduleSlots": 14,
+      "events": 24,
+      "subTemplates": 14,
+      "templates": 20,
+      "scheduleSlots": 21,
       "groups": {
-        "P": 10,
-        "B": 2,
-        "F": 2
+        "P": 17,
+        "B": 3,
+        "F": 1
       },
-      "lastSlot": 22.6,
+      "lastSlot": 22.2,
       "expansionProblems": [],
       "status": "property_text_ready_UE_unverified"
     },
     "low": {
-      "events": 18,
-      "subTemplates": 9,
-      "templates": 14,
-      "scheduleSlots": 14,
+      "events": 24,
+      "subTemplates": 14,
+      "templates": 20,
+      "scheduleSlots": 21,
       "groups": {
-        "P": 10,
-        "B": 2,
-        "F": 2
+        "P": 17,
+        "B": 3,
+        "F": 1
       },
-      "lastSlot": 22.6,
+      "lastSlot": 22.2,
       "expansionProblems": [],
       "status": "property_text_ready_UE_unverified"
     }
@@ -81,22 +81,22 @@
     "mediumNotInHigh": 0
   },
   "oneTable": {
-    "events": 20,
-    "flags14": 15,
-    "flags12": 5,
+    "events": 24,
+    "flags14": 18,
+    "flags12": 6,
     "flags2": 0,
-    "subTemplates": 9,
-    "templates": 14,
-    "scheduleSlots": 14,
+    "subTemplates": 14,
+    "templates": 20,
+    "scheduleSlots": 21,
     "pc": {
-      "high": 20,
-      "medium": 20,
-      "low": 18
+      "high": 24,
+      "medium": 24,
+      "low": 24
     },
     "mobile": {
-      "high": 15,
-      "medium": 15,
-      "low": 13
+      "high": 18,
+      "medium": 18,
+      "low": 18
     }
   },
   "beamFlowers": [
@@ -152,12 +152,12 @@
   ],
   "heroTrailId": "Hero",
   "doc": {
-    "cues": 14,
-    "events": 20,
-    "sections": 1,
+    "cues": 21,
+    "events": 24,
+    "sections": 2,
     "duration": 30,
     "musicOffset": 0,
-    "balls": 18,
-    "fans": 2
+    "balls": 20,
+    "fans": 4
   }
 }

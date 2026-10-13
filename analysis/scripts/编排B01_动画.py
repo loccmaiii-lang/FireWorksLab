@@ -91,13 +91,14 @@ def risks_b03():
 
 def risks_day():
     ck, ob = CHECK, COMPILE.get('oneTable', {})
+    iv = ck.get('intervals', {})
     return [
-        "零点前 NPC 试放，30 s，不放音乐，可循环（右下「循环」看接缝）：一发一发试——先中间、再两端、左右一对；穿插试扇、试小平台、试中号；最后试一小排、中间补一发。",
-        f"不剧透：没有主角金垂柳、大号整排、白墙和倒计时那套构图。少重叠：同一时刻天上最多 {ck['maxAliveBalls']} 朵（试一小排那 4 s），重叠体检 PC / 手游六档都是 0。",
-        f"PC 高 / 中 / 低 {ob.get('pc', {}).get('high')} / {ob.get('pc', {}).get('medium')} / {ob.get('pc', {}).get('low')} 发，手游 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')} 发；手游没有扇和小平台，也没有超过 4 s 的空。GPU 同秒峰值 {ck['gpu']['peak']}（Night 190）。",
-        f"最后一朵 {ck['lastEndS']:.1f} s 灭，留 {ck['quietTailS']:.1f} s 空；循环时接缝处只有第一发的上升尾缀。",
-        "单独的节目（NewYearFireWorks_Day），导进 UE 的 Day 导演；花型、大小、高度都是 Night 里已有的版本，UE 不用新导资源。",
-        "推断（没确认）：不放音乐、可循环、不剧透；Day 什么时候开始和停（要在 Night 倒计时前停）归引擎排期，不归编排。没在 UE 里放过。",
+        f"v2（用户 22:07）：0–5 s 闲聊 VO，天上全空，第一发 {ck.get('firstLaunchS', 5):.1f} s 才起飞；先整齐（小银菊同高、每 1.2 s 一发从左到右，再一对 + 两端银扇同时），15.3 s 起变乱。",
+        f"「乱」乱在次序和时间，不在多：间隔从整齐的 1.2 s 变成 {min(iv.get('messy', [0]) or [0]):.1f}–{max(iv.get('messy', [0]) or [0]):.1f} s 不等；一对差半拍、扇一边晚 1 s、突然一发中号、连发、一小排断一个点、最后一发晚了，高度也不一样。同时最多 {ck['maxAliveBalls']} 朵、分散在全宽上，重叠体检 PC / 手游六档都是 0。",
+        f"最后一发 {ck.get('lastHitS', 0):.1f} s，之后不再开花，给最后那句 VO（「还需要调整」）留空；{ck['lastEndS']:.1f} s 余烬灭完。没拿到 Day 的 VO 音频，最后一句的位置是推断（约 24.5 s 起），拿到后按实际时间挪。",
+        f"PC 高 / 中 / 低 {ob.get('pc', {}).get('high')} / {ob.get('pc', {}).get('medium')} / {ob.get('pc', {}).get('low')} 发，手游 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')} 发（手游没有扇和小平台，乱靠球花的次序和时间）；GPU 同秒峰值 {ck['gpu']['peak']}。",
+        "单独的节目（NewYearFireWorks_Day），导进 UE 的 Day 导演；花型、大小、高度都是 Night 里已有的版本。不剧透：没有主角、大号整排、白墙和倒计时构图。",
+        "推断（没确认）：会循环；Day 什么时候开始和停（要在 Night 倒计时前停）归引擎排期。没在 UE 里放过。",
     ]
 
 
@@ -300,7 +301,11 @@ def main():
         data['vo'] = dict(chat=[mix['voChat'][0]['start'], mix['voChat'][-1]['end']], nums=[[t, 10 - i] for i, t in enumerate(au['countdownOnsetsS'])],
                           fire=dict(start=au['voFire']['start'], end=au['voFire']['end']), zero=au['zeroShowS'])
     if DAY:
-        data.update(countdown=False, loop=True, noMusic=True, energy=[dict(m=0, db=-4), dict(m=DUR, db=-4)])
+        data.update(countdown=False, loop=True, noMusic=True, energy=[dict(m=0, db=-4), dict(m=DUR, db=-4)],
+                    captions=[[0, 5.0, 'VO 闲聊 · 天上全空'], [24.5, 28.5, 'VO：还需要调整（位置是推断）']],
+                    anchors=[dict(showS=0.0, musicS=0.0, label='VO 闲聊（前 5 s 全空）', source='用户给定', note=''),
+                             dict(showS=15.3, musicS=15.3, label='整齐 → 变乱', source='编排', note=''),
+                             dict(showS=24.5, musicS=24.5, label='最后一句 VO「还需要调整」（推断）', source='推断', note='')])
     b64 = ''
     if B03:                           # 10-13 17:06「这个动画能同步让我听到音乐vo吗」：合并音频原字节内嵌，0 s 起播
         mix = ROOT / '协作/编排工作台资料/2026-10-13/music/VO倒计时+汪洋与浩渺.mp3'

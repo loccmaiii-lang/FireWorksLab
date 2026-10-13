@@ -190,6 +190,7 @@ function combo(e,age,X,Z,sc,x0,z0){
 
 function countdown(W,H){
   if(D.vo){voCountdown(W,H);return;}
+  if(D.captions){const c=D.captions.find(x=>t>=x[0]&&t<x[1]);if(c){ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`15px ${getComputedStyle(document.body).getPropertyValue('--sans')}`;ctx.fillStyle='rgba(200,203,210,.9)';ctx.fillText(c[2],W/2,H*.3);}}
   if(D.countdown===false)return;
   if(t>=10.5)return;
   const fs=Math.min(150,H*.34);ctx.textAlign='center';ctx.textBaseline='middle';
