@@ -1,6 +1,6 @@
 {
   "format": "df.merged-audio-audit/1",
-  "file": "协作/编排工作台资料/2026-10-13/VO融合版.mp3",
+  "file": "协作/编排工作台资料/2026-10-13/music/VO倒计时+汪洋与浩渺.mp3",
   "sha256": "b357bc5b8028dba95c96aabb4016e4c76c764a710004c6aacfcc106294c48613",
   "bytes": 5079508,
   "durationS": 211.64408163265307,
@@ -32,5 +32,14 @@
     "audioReplacement": "其他同事",
     "newAudioChoreography": "用户已通知云端处理",
     "local": "编排底稿、音频文件、时间约定与核对证据同步"
+  },
+  "cloudVerification": {
+    "source": "analysis/music/合并音频_VO倒计时.json",
+    "sourceCommit": "23120b8e",
+    "choreographyCommit": "cbf0b5ed",
+    "lastVoEndsS": 16.85,
+    "provisionalOpeningS": 17.19,
+    "status": "22已向用户确认零点；用户指定16秒仍有效，17.19不是认可正式值",
+    "note": "未逐字转写VO；云端波形分析未检出独立钟声。本机测量与云端原曲起点一致，文件SHA相同。"
   }
 }
