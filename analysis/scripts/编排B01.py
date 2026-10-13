@@ -340,7 +340,7 @@ def tier_points(c):
 
 
 # ═══════════════════════════ 曲谱：按我们这首歌的小节排 ═══════════════════════════
-def build(density=2, rhythm=None, vary=False, b02=False, r1=False, standins=False):
+def build(density=2, rhythm=None, vary=False, b02=False, r1=False, standins=False, r2=False):
     S = Show(density)
     S.rhythm = rhythm
     S.vary = vary
@@ -587,6 +587,11 @@ def build(density=2, rhythm=None, vary=False, b02=False, r1=False, standins=Fals
         best_vary(S)
     if b02:
         apply_b02(S)
+    if r2:                                  # 修订2：高差只许往上，整体按比例搬进新窗口后再逐排错层
+        global R1_LO, R1_HI, DZ_SIZE_WINDOW
+        DZ_SIZE_WINDOW = size_windows(*DZ_WINDOW)
+        S.lift = lift_dz(S, *DZ_WINDOW, windows=DZ_SIZE_WINDOW)
+        R1_LO, R1_HI = DZ_WINDOW
     if r1:
         apply_r1(S, standins)
     return S
@@ -1210,6 +1215,54 @@ def apply_b02(S):
 #      （金曜菊→金芒菊、金蕊青柠星→金锦菊、大号→金芒菊大号……），高配偶数点、中低配 P0 / P4 / P8（宪章 §8）；PC 一朵不变。
 #      工作台 16.0.18 只有「PC + 手游」「只 PC」，要「只上手游」得先升级工作台（本机同步 8），所以替身单独出一份节目。
 R1_LO, R1_HI = -60.0, 25.0
+# 修订2（本机同步 8，用户 10-13 10:10：「会和坝体穿插，我同意在高一些的地方起飞」）：高差只许往上。
+# dz < 0 时尾缀出生点在坝顶下面，会穿进坝体。修订2 先照修订1 的设计在旧窗口 −60…+25 里排，
+# 再按比例整体搬进新窗口（相对高低、主角和陪衬的上下关系不变），最后逐排错层也只在新窗口里挪。
+DZ_LEGACY = (-60.0, 25.0)
+DZ_WINDOW = (0.0, 70.0)        # 大号（L，330 m 尾缀）的窗口；中 / 小号按尾缀高度等比例缩（都约是尾缀的 21%：S 0…+32、M 0…+45、L 0…+70）
+# 试过（analysis/local/DZ_UP_20261013，重叠体检 PC「挤在一起」，修订1 = 7）：一个窗口 0…+50 → 14（同排太挤 5），0…+60 → 13，
+# 0…+70 → 9；按大小 L 0…+60 → 13、0…+70 → 9、0…+85 → 9。取按大小 0…+70：重叠和 85 一样、小号最多只抬 32 m。
+TRAIL_H = {'S': 150.0, 'M': 210.0, 'L': 330.0}
+DZ_SIZE_WINDOW = None          # 修订2 时 = {'S': (0, 39), 'M': (0, 54), 'L': (0, 85)}；None = 修订1 的一个窗口 R1_LO…R1_HI
+
+
+def size_windows(lo, hi):
+    return {k: (lo, float(round(lo + (hi - lo) * TRAIL_H[k] / TRAIL_H['L']))) for k in TRAIL_H}
+
+
+def _winc(c):
+    return (DZ_SIZE_WINDOW or {}).get(c['size']) or (R1_LO, R1_HI)
+
+
+def _clampc(c, v):
+    lo, hi = _winc(c)
+    return min(hi, max(lo, v))
+EXPORT_DIR = None      # --out-dir：逻辑方案 / 体检另存的目录（试参数时不覆盖 协作/编排B01 里的正式文件）
+EXPORT_TAG = ''        # --tag：修订2 文件名后缀，例如 _up60
+
+
+def lift_dz(S, lo, hi, windows=None):
+    """把球花（S / M / L）的 dz 从旧窗口搬进 [lo, hi]；扇形、小花束尾本来就是 0，不动。
+    只压「排与排之间」的高度（每排平均高度按比例映射），排内起伏（拱形、波浪、单点抖动）原样保留——
+    整体按比例压会把同一排相邻点的高低差也压小，逐排错层又只能整排挪，相邻点会挤到一起（0…+50 试过：同排太挤 0 → 5）。
+    一排放不进窗口就整排平移进去；主角那几排（金垂柳，按 HERO_DZ 定的点）整体按比例映射，保住主角之间的上下次序。"""
+    a, b = DZ_LEGACY
+    for c in S.cues:
+        if c['size'] not in 'SML' or not c['events']:
+            continue
+        lo, hi = (windows or {}).get(c['size'], (lo, hi))
+        k = (hi - lo) / (b - a)
+        m = lambda v: lo + (min(b, max(a, v)) - a) * k
+        if fam(c['sp']) == 'GK':
+            for e in c['events']:
+                e['dz'] = float(round(m(e['dz'])))
+            continue
+        mean = sum(e['dz'] for e in c['events']) / len(c['events'])
+        new = [m(mean) + (e['dz'] - mean) for e in c['events']]
+        shift = max(0.0, lo - min(new)) - max(0.0, max(new) - hi)
+        for e, v in zip(c['events'], new):
+            e['dz'] = float(round(min(hi, max(lo, v + shift))))
+    return dict(windows=windows or {'all': [lo, hi]}, rule='rows scaled into the window, in-row shape kept')
 LIT_A, LIT_B = 0.3, 0.75
 BASE_OF = {v: k for k, v in PROMOTE.items()}          # GRL→GR、CLL→CL、MLL→ML
 HERO_SP = ('GK', 'GKH')
@@ -1317,7 +1370,7 @@ def r1_hero_room(S):
                 if min(a1, b1) - max(a0, b0) < 0.5:
                     continue
                 hx, hz, hd = PT[he['point']]['x'], PT[he['point']]['z'] + bloom_h(h) + he['dz'], _dia(h)
-                best = max(math.hypot(x - hx, PT[e['point']]['z'] + bloom_h(c) + dz - hz) for dz in (R1_LO, R1_HI)) / ((d + hd) / 2)
+                best = max(math.hypot(x - hx, PT[e['point']]['z'] + bloom_h(c) + dz - hz) for dz in _winc(c)) / ((d + hd) / 2)
                 if best < 0.55:
                     bad.add(e['point'])
         if bad:
@@ -1351,7 +1404,7 @@ def r1_heights(S, sweeps=3, cues=None, step=5, movable=None):
     def cost(ci, delta, k):
         tot = 0.0
         for f in by_cue[ci]:
-            dz = min(R1_HI, max(R1_LO, dz0[(ci, f['ei'])] + delta))
+            dz = _clampc(cues[ci], dz0[(ci, f['ei'])] + delta)
             z, d = f['zb'] + dz, f['d0'] * k
             tot += 0.004 * abs(dz - dz0[(ci, f['ei'])]) + (0.15 if abs(k - k0[ci]) > 1e-9 else 0.0)
             for g in nbr[ci]:
@@ -1373,7 +1426,7 @@ def r1_heights(S, sweeps=3, cues=None, step=5, movable=None):
             best = min(((dl, k) for dl in range(-90, 91, step) for k in ks), key=lambda x: (round(cost(ci, *x), 6), abs(x[0]), abs(x[1] - k0[ci])))
             curk[ci] = best[1]
             for f in by_cue[ci]:
-                cur[(ci, f['ei'])] = min(R1_HI, max(R1_LO, dz0[(ci, f['ei'])] + best[0]))
+                cur[(ci, f['ei'])] = _clampc(cues[ci], dz0[(ci, f['ei'])] + best[0])
     after = sum(cost(ci, 0, curk[ci]) for ci in order) / 2 if False else None
     for ci in order:
         c = cues[ci]
@@ -1423,7 +1476,7 @@ def r1_standins(S):
                 w = 9.0
                 for e in cand['events']:
                     a0, a1 = _lit(cand, e)
-                    z = PT[e['point']]['z'] + bloom_h(cand) + min(R1_HI, max(R1_LO, base[e['point']] + delta))
+                    z = PT[e['point']]['z'] + bloom_h(cand) + _clampc(cand, base[e['point']] + delta)
                     for cc, f in lit:
                         b0, b1 = _lit(cc, f)
                         if min(a1, b1) - max(a0, b0) < 0.3:
@@ -1434,7 +1487,7 @@ def r1_standins(S):
             ok = [dl for dl in sorted(range(-85, 86, 5), key=abs) if worst(dl) >= 0.55]
             if ok:
                 for e in cand['events']:
-                    e['dz'] = float(min(R1_HI, max(R1_LO, base[e['point']] + ok[0])))
+                    e['dz'] = float(_clampc(cand, base[e['point']] + ok[0]))
                 m = cand
                 break
         if m is None:
@@ -1892,11 +1945,16 @@ def export(S, ck):
     if getattr(S, 'r1', None):
         sfx = '_B02r1m' if S.r1.get('standins') is not None else '_B02r1'
         rev = 'B02r1_declutter' + ('_mobileStandins' if S.r1.get('standins') is not None else '')
+        if getattr(S, 'lift', None):
+            sfx = sfx.replace('r1', 'r2') + EXPORT_TAG
+            rev = rev.replace('B02r1', 'B02r2_upOnly') + EXPORT_TAG
+    out_dir = EXPORT_DIR or OUTDIR
+    out_dir.mkdir(parents=True, exist_ok=True)
     out = dict(format='df.choreography-proposal/2', revision=rev, rhythm=rh, status='logic_compiled_by_编排B01_编译.mjs_UE_unverified',
                generator='analysis/scripts/编排B01.py', density=S.density, musicOffsetS=OFFSET, barS=BAR, bar0S=BAR0, duration=dur,
                sections=S.sections, cues=S.cues)
-    (OUTDIR / f'逻辑方案{sfx}.json').write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding='utf-8')
-    (OUTDIR / f'体检{sfx}.json').write_text(json.dumps(ck, ensure_ascii=False, indent=1), encoding='utf-8')
+    (out_dir / f'逻辑方案{sfx}.json').write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding='utf-8')
+    (out_dir / f'体检{sfx}.json').write_text(json.dumps(ck, ensure_ascii=False, indent=1), encoding='utf-8')
 
 
 if __name__ == '__main__':
@@ -1908,13 +1966,24 @@ if __name__ == '__main__':
     ap.add_argument('--rhythm', choices=sorted(RHYTHMS), default=None, help='节奏留白版：A 每 2 小节 / B 每 4 小节 / C 两放两歇 / D 段落强弱（以 D2 为底）')
     ap.add_argument('--b02r1', action='store_true', help='B02 修订1（22，10-12 23:13）：大号整排拆城垛、主角让位、逐排错层')
     ap.add_argument('--standins', action='store_true', help='配合 --b02r1：手游替身（只上手游片段，要工作台支持 PlatformFlags 2）')
+    ap.add_argument('--b02r2', action='store_true', help='B02 修订2（本机同步 8，用户 10-13 10:10）：修订1 + 高差只许往上（大号 0…+70、中 0…+45、小 0…+32，尾缀不进坝体）')
+    ap.add_argument('--dz-up', type=float, default=None, help='配合 --b02r2：往上的最大高差（m），默认 DZ_WINDOW[1]')
+    ap.add_argument('--out-dir', default=None, help='逻辑方案 / 体检写到这个目录（默认 协作/编排B01）')
+    ap.add_argument('--tag', default='', help='配合 --b02r2：文件名后缀')
     a = ap.parse_args()
+    if a.b02r2:
+        a.b02r1 = True
+        if a.dz_up is not None:
+            DZ_WINDOW = (0.0, a.dz_up)
+        EXPORT_TAG = a.tag or '_up' + str(int(DZ_WINDOW[1]))
+    if a.out_dir:
+        EXPORT_DIR = Path(a.out_dir).resolve()
     if a.b02r1:
         a.b02 = True
     if a.b02:
         HEIGHTS = 'v2'
         a.rhythm, a.vary = 'D', True
-    S = build(2 if a.rhythm else a.density, a.rhythm, bool(a.vary and a.rhythm), a.b02, a.b02r1, a.standins)
+    S = build(2 if a.rhythm else a.density, a.rhythm, bool(a.vary and a.rhythm), a.b02, a.b02r1, a.standins, a.b02r2)
     ck = checks(S)
     export(S, ck)
     if not a.no_figs and a.density == 2:

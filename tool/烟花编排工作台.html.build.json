@@ -2,8 +2,8 @@
   "format": "df.offline-build/1",
   "time": "2026-10-12T16:52:48.054Z",
   "html": "烟花编排工作台.html",
-  "bytes": 3501641,
-  "sha256": "c46ca870b2eb261519270bab15408181abe6e506743c6e392a371ab761e81f9e",
+  "bytes": 3508675,
+  "sha256": "6436ebd9db6eae70709779c7d36268519ec8b33ae5302897070b70927451c884",
   "programmeSha256": "68f1837b3f0b4256b8940d1a18056a57e334b665e61940e816d4054a7310f9e2",
   "originalProgrammeSha256": "68f1837b3f0b4256b8940d1a18056a57e334b665e61940e816d4054a7310f9e2",
   "musicIncluded": false,
@@ -12,9 +12,9 @@
   "embeddedMusicSha256": null,
   "referenceMusicSha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3",
   "cloudLatest": {
-    "version": "16.0.21",
-    "name": "B02修订1-错层主角让位",
-    "programmeSha256": "a21e7a189367bfa7bbeae597666120a64bfcd313e4c0d6ac2ab0790c67a684d3",
+    "version": "16.0.22",
+    "name": "B02修订2-高差只往上",
+    "programmeSha256": "f33445d130ea3af481250980f033a52c933a3931b6d37dc0310dc8064c40c1e3",
     "cues": 188,
     "events": 978
   },
@@ -29,7 +29,7 @@
     "public/data/subtemplate-source.json": "63e41141c8c1686a13597728586398bd3fcc8ed32be1e87409f2189d249be718",
     "public/data/size-spec.json": "68da8838657b79247c7662d8a1ce830ee9aade22ae6e915e6f25f658137d22dc",
     "public/data/resource-catalogue.json": "d70182642319e8f95affa6b537a1db61cf3ceeb51bf7e593504c1d76867686ae",
-    "public/data/cloud-latest.json": "5b97b4f4020be0b44a9f82e047dcb574da0cdb66a328f2e22386c37bf7661c05",
+    "public/data/cloud-latest.json": "c67a392f22c7c5d0e24d2c5f279e04c3ff7223651e623857a664f07b05250563",
     "src/main.jsx": "ac98440422a6bbc69386674f0cc5e03de3f589c6631982552c3b8fc425b050c8",
     "src/df-theme.css": "c363352bc9380bb42292b900546babd2b9ec4f2a3d47763209a5befc73e1c8d6",
     "src/App.jsx": "6fd4d593dbbf45c444fa6936a37d1a592100f496dd09018dd1935459c59617bf",
@@ -115,5 +115,26 @@
     "platform": "win32",
     "node": "v22.22.2",
     "arch": "x64"
-  }
+  },
+  "dataPatches": [
+    {
+      "time": "2026-10-13T03:08:25Z",
+      "key": "cloud-latest",
+      "version": "16.0.22",
+      "name": "B02修订2-高差只往上",
+      "programmeSha256": "f33445d130ea3af481250980f033a52c933a3931b6d37dc0310dc8064c40c1e3",
+      "appVersion": "16.0.21",
+      "previousVersion": "16.0.21",
+      "previousHtmlSha256": "c46ca870b2eb261519270bab15408181abe6e506743c6e392a371ab761e81f9e",
+      "productCommit": "a19545c16f84765392b45ed863fba5b08a251529",
+      "sourceCheck": {
+        "byHash": 86,
+        "byGitOnly": []
+      },
+      "environment": {
+        "platform": "win32",
+        "python": "3.12.10"
+      }
+    }
+  ]
 }
