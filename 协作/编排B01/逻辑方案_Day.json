@@ -1,0 +1,630 @@
+{
+ "format": "df.nagaoka-logic/1",
+ "revision": "Day_npc_test_fire_v1",
+ "rhythm": null,
+ "status": "draft",
+ "generator": "analysis/scripts/编排Day调试版.py",
+ "density": 1,
+ "musicOffsetS": 0.0,
+ "barS": null,
+ "bar0S": null,
+ "duration": 30.0,
+ "sections": [
+  {
+   "id": "D_S0",
+   "name": "NPC 试放",
+   "bar0": 0,
+   "bar1": 1,
+   "start": 0.0,
+   "end": 30.0,
+   "lead": "SC",
+   "relay": "GR",
+   "accent": "CR",
+   "note": "零点前 NPC 在调试：一发一发试，先中间、再两端、左右一对；穿插试扇、试小平台、试中号；最后试一小排，中间补一发。不放音乐，可循环。"
+  }
+ ],
+ "musicMarkers": [],
+ "cues": [
+  {
+   "id": "DAY_C001",
+   "section": "D_S0",
+   "sp": "SC",
+   "templateId": "R03_SilverChry",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P4"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "先试中间一发",
+   "name": "NPC 试放 · 先试中间一发",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "P4",
+     "launch": 0.0,
+     "burst": 2.9544,
+     "end": 7.5144,
+     "dz": 0.0,
+     "H": 2.95
+    }
+   ],
+   "H0": 2.95,
+   "profiles": {
+    "medium": [
+     "P4"
+    ],
+    "low": [
+     "P4"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C002",
+   "section": "D_S0",
+   "sp": "SC",
+   "templateId": "R03_SilverChry",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P0"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "试左端",
+   "name": "NPC 试放 · 试左端",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "P0",
+     "launch": 1.8,
+     "burst": 4.7544,
+     "end": 9.3144,
+     "dz": 0.0,
+     "H": 4.8
+    }
+   ],
+   "H0": 4.8,
+   "profiles": {
+    "medium": [
+     "P0"
+    ],
+    "low": [
+     "P0"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C003",
+   "section": "D_S0",
+   "sp": "SC",
+   "templateId": "R03_SilverChry",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P8"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "试右端",
+   "name": "NPC 试放 · 试右端",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "P8",
+     "launch": 3.6,
+     "burst": 6.5544,
+     "end": 11.1144,
+     "dz": 0.0,
+     "H": 6.6
+    }
+   ],
+   "H0": 6.6,
+   "profiles": {
+    "medium": [
+     "P8"
+    ],
+    "low": [
+     "P8"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C004",
+   "section": "D_S0",
+   "sp": "R5",
+   "templateId": "R03_Red5",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B3"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "试一把红彗星扇",
+   "name": "NPC 试放 · 试一把红彗星扇",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "B3",
+     "launch": 8.0,
+     "burst": 8.0,
+     "end": 11.1,
+     "dz": 0.0,
+     "H": 8.0
+    }
+   ],
+   "H0": 8.0,
+   "profiles": {
+    "medium": [
+     "B3"
+    ],
+    "low": [
+     "B3"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C005",
+   "section": "D_S0",
+   "sp": "OG",
+   "templateId": "R03_OrangeGlitter",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P2",
+    "P6"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "左右各一，看对不对称",
+   "name": "NPC 试放 · 左右各一，看对不对称",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "P2",
+     "launch": 6.6,
+     "burst": 9.5544,
+     "end": 12.7544,
+     "dz": 10.0,
+     "H": 9.6
+    },
+    {
+     "point": "P6",
+     "launch": 6.6,
+     "burst": 9.5544,
+     "end": 12.7544,
+     "dz": 10.0,
+     "H": 9.6
+    }
+   ],
+   "H0": 9.6,
+   "profiles": {
+    "medium": [
+     "P2",
+     "P6"
+    ],
+    "low": [
+     "P2",
+     "P6"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C006",
+   "section": "D_S0",
+   "sp": "XS1A",
+   "templateId": "B02_BeamS1_SC_a",
+   "size": "X",
+   "group": "F",
+   "points": [
+    "F3"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "试小平台",
+   "name": "NPC 试放 · 试小平台",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "F3",
+     "launch": 10.2,
+     "burst": 11.2,
+     "end": 15.76,
+     "dz": 0.0,
+     "H": 11.2
+    }
+   ],
+   "H0": 11.2,
+   "profiles": {
+    "medium": [
+     "F3"
+    ],
+    "low": [
+     "F3"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C007",
+   "section": "D_S0",
+   "sp": "GR",
+   "templateId": "R03_GoldRayChry",
+   "size": "M",
+   "group": "P",
+   "points": [
+    "P4"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "试一发中号",
+   "name": "NPC 试放 · 试一发中号",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "P4",
+     "launch": 8.4,
+     "burst": 12.7772,
+     "end": 17.3372,
+     "dz": 0.0,
+     "H": 12.8
+    }
+   ],
+   "H0": 12.8,
+   "profiles": {
+    "medium": [
+     "P4"
+    ],
+    "low": [
+     "P4"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C008",
+   "section": "D_S0",
+   "sp": "S5",
+   "templateId": "R03_Silver5",
+   "size": "F",
+   "group": "B",
+   "points": [
+    "B5"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "试银扇",
+   "name": "NPC 试放 · 试银扇",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "B5",
+     "launch": 14.4,
+     "burst": 14.4,
+     "end": 16.85,
+     "dz": 0.0,
+     "H": 14.4
+    }
+   ],
+   "H0": 14.4,
+   "profiles": {
+    "medium": [
+     "B5"
+    ],
+    "low": [
+     "B5"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C009",
+   "section": "D_S0",
+   "sp": "CR",
+   "templateId": "R03_Crackle",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P1"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "试爆裂星（左）",
+   "name": "NPC 试放 · 试爆裂星（左）",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "P1",
+     "launch": 12.8,
+     "burst": 15.7544,
+     "end": 17.2544,
+     "dz": 0.0,
+     "H": 15.8
+    }
+   ],
+   "H0": 15.8,
+   "profiles": {
+    "medium": [
+     "P1"
+    ],
+    "low": [
+     "P1"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C010",
+   "section": "D_S0",
+   "sp": "CR",
+   "templateId": "R03_Crackle",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P7"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "再试右边",
+   "name": "NPC 试放 · 再试右边",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "P7",
+     "launch": 14.2,
+     "burst": 17.1544,
+     "end": 18.6544,
+     "dz": 0.0,
+     "H": 17.2
+    }
+   ],
+   "H0": 17.2,
+   "profiles": {
+    "medium": [
+     "P7"
+    ],
+    "low": [
+     "P7"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C011",
+   "section": "D_S0",
+   "sp": "GS",
+   "templateId": "R03_GoldSpark__K92",
+   "size": "M",
+   "group": "P",
+   "points": [
+    "P0"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "试金锦菊",
+   "name": "NPC 试放 · 试金锦菊",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "P0",
+     "launch": 14.4,
+     "burst": 18.7772,
+     "end": 24.0772,
+     "dz": 40.0,
+     "H": 18.8
+    }
+   ],
+   "H0": 18.8,
+   "profiles": {
+    "medium": [
+     "P0"
+    ],
+    "low": [
+     "P0"
+    ]
+   },
+   "sizeK": 0.92,
+   "mobile": true
+  },
+  {
+   "id": "DAY_C012",
+   "section": "D_S0",
+   "sp": "SC",
+   "templateId": "R03_SilverChry",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "P6"
+   ],
+   "order": "center-out",
+   "gap": 0.15,
+   "layer": "main",
+   "tier": "trim",
+   "label": "试一小排（中间往两边）",
+   "name": "NPC 试放 · 试一小排（中间往两边）",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "P2",
+     "launch": 17.9,
+     "burst": 20.8544,
+     "end": 25.4144,
+     "dz": 0.0,
+     "H": 20.9
+    },
+    {
+     "point": "P3",
+     "launch": 17.8,
+     "burst": 20.7544,
+     "end": 25.3144,
+     "dz": 0.0,
+     "H": 20.75
+    },
+    {
+     "point": "P4",
+     "launch": 17.6,
+     "burst": 20.5544,
+     "end": 25.1144,
+     "dz": 0.0,
+     "H": 20.6
+    },
+    {
+     "point": "P5",
+     "launch": 17.8,
+     "burst": 20.7544,
+     "end": 25.3144,
+     "dz": 0.0,
+     "H": 20.75
+    },
+    {
+     "point": "P6",
+     "launch": 17.9,
+     "burst": 20.8544,
+     "end": 25.4144,
+     "dz": 0.0,
+     "H": 20.9
+    }
+   ],
+   "H0": 20.6,
+   "profiles": {
+    "medium": [
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6"
+    ],
+    "low": [
+     "P3",
+     "P4",
+     "P5"
+    ]
+   },
+   "mobile": true
+  },
+  {
+   "id": "DAY_C013",
+   "section": "D_S0",
+   "sp": "XV4",
+   "templateId": "B02_BeamV4",
+   "size": "X",
+   "group": "F",
+   "points": [
+    "F0",
+    "F6"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "试小平台两边",
+   "name": "NPC 试放 · 试小平台两边",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "F0",
+     "launch": 22.6,
+     "burst": 22.6,
+     "end": 25.1,
+     "dz": 0.0,
+     "H": 22.6
+    },
+    {
+     "point": "F6",
+     "launch": 22.6,
+     "burst": 22.6,
+     "end": 25.1,
+     "dz": 0.0,
+     "H": 22.6
+    }
+   ],
+   "H0": 22.6,
+   "profiles": {
+    "medium": [
+     "F0",
+     "F6"
+    ],
+    "low": [
+     "F0",
+     "F6"
+    ]
+   },
+   "mobile": false
+  },
+  {
+   "id": "DAY_C014",
+   "section": "D_S0",
+   "sp": "CR",
+   "templateId": "R03_Crackle",
+   "size": "S",
+   "group": "P",
+   "points": [
+    "P4"
+   ],
+   "order": "together",
+   "gap": 0.0,
+   "layer": "main",
+   "tier": "all",
+   "label": "中间补一发，收",
+   "name": "NPC 试放 · 中间补一发，收",
+   "wave": "试放",
+   "events": [
+    {
+     "point": "P4",
+     "launch": 22.2,
+     "burst": 25.1544,
+     "end": 26.6544,
+     "dz": 0.0,
+     "H": 25.2
+    }
+   ],
+   "H0": 25.2,
+   "profiles": {
+    "medium": [
+     "P4"
+    ],
+    "low": [
+     "P4"
+    ]
+   },
+   "mobile": true
+  }
+ ],
+ "noMusic": true,
+ "loop": true,
+ "note": "零点前 NPC 试放（Day 导演）；不放音乐；可循环",
+ "base": "协作/编排B01/逻辑方案_B03r2m.json"
+}

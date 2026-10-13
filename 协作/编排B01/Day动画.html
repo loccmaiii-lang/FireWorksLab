@@ -1,0 +1,421 @@
+<title>跨年秀 Day 试放</title>
+<style>
+/* 布局：标题行（演出时间 + 音乐时间 + 段落 + 图例）→ 正面比例舞台（倒计时叠在上面）→ 音乐能量与 cue 条（可点击跳转）→ 播放 / 档位 / 视野 → 段落按钮 → 本刻说明 → 折叠表格。
+   B01 版：圆画法同前，圆径 = 大小（S 90 / M 150 / L 230），颜色默认按花色，可切按大小；升空尾缀按逐条的起飞 / 开花时刻画，不再是示意值。 */
+:root{
+  --bg:#0b0c0e; --panel:#141519; --panel2:#1e1f25; --line:#2c2d34; --fg:#ececee; --muted:#8c8f98; --accent:#e9e9ec;
+  --front:#7f9fe0; --small:#27b585; --mid:#3b82f6; --large:#f26a2e;
+  --gold:#d6b25c; --red:#e26052; --silver:#aaaeb6;
+  --sans:system-ui,-apple-system,"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+html,body{background:var(--bg);color:var(--fg);}
+body{margin:0;font-family:var(--sans);font-size:13px;line-height:1.5;}
+.wrap{max-width:1080px;margin:0 auto;padding-block:16px;padding-inline:16px;display:flex;flex-direction:column;gap:12px;}
+.head{display:flex;align-items:flex-end;gap:8px 18px;flex-wrap:wrap;}
+.clock{display:flex;flex-direction:column;line-height:1.1;}
+.clock b{font:500 26px/1 var(--mono);font-variant-numeric:tabular-nums;}
+.clock small{color:var(--muted);font:11px/1.6 var(--mono);font-variant-numeric:tabular-nums;}
+.where{display:flex;align-items:baseline;gap:4px 10px;flex-wrap:wrap;min-width:0;}
+.where strong{font-size:15px;font-weight:600;}
+.where em{font-style:normal;font-size:11px;padding:1px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);}
+.where span{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums;}
+.legend{margin-left:auto;display:flex;gap:4px 14px;flex-wrap:wrap;color:var(--muted);font-size:12px;}
+.legend i{display:inline-flex;align-items:center;gap:5px;font-style:normal;}
+.legend i::before{content:"";width:10px;height:10px;border-radius:50%;border:1.5px solid var(--c);box-sizing:border-box;}
+.legend i.combo::before{border:0;border-radius:0;width:10px;height:12px;background:linear-gradient(80deg,transparent 44%,#d7e7f6 44% 56%,transparent 56%),radial-gradient(circle at 70% 18%,#f0cb87 0 3px,transparent 3.5px);}
+.legend i.tail::before{border:0;border-radius:2px;width:3px;height:13px;background:linear-gradient(to top,transparent,#ffd68c 80%,#fff);}
+.legend i.fan::before{border:0;border-radius:0;width:12px;height:10px;background:linear-gradient(60deg,transparent 46%,var(--c) 46% 54%,transparent 54%),linear-gradient(-60deg,transparent 46%,var(--c) 46% 54%,transparent 54%),linear-gradient(90deg,transparent 46%,var(--c) 46% 54%,transparent 54%);}
+canvas{display:block;width:100%;}
+#strip{cursor:pointer;touch-action:none;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.bar{display:flex;gap:8px 14px;align-items:center;flex-wrap:wrap;}
+.seg{display:inline-flex;gap:0;border:1px solid var(--line);border-radius:999px;overflow:hidden;}
+.seg button,.bar>button{all:unset;box-sizing:border-box;cursor:pointer;padding:5px 12px;color:var(--fg);font-size:12px;}
+.bar>button{border:1px solid var(--line);border-radius:999px;}
+.seg button+button{border-left:1px solid var(--line);}
+.seg button[aria-pressed="true"],.bar>button[aria-pressed="true"]{background:var(--panel2);}
+.bar>button.go{background:var(--fg);border-color:var(--fg);color:#0b0c0e;font-weight:600;min-width:58px;text-align:center;font-size:13px;}
+.bar label{color:var(--muted);font-size:12px;display:inline-flex;align-items:center;gap:6px;}
+.bar .tag{color:var(--muted);font-size:11px;}
+button:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.tl{display:flex;height:18px;}
+.tl button{all:unset;cursor:pointer;box-sizing:border-box;border-left:1px solid var(--line);padding-left:3px;color:var(--muted);font-size:10px;line-height:18px;white-space:nowrap;overflow:hidden;}
+.tl button[aria-current="true"]{color:var(--fg);}
+input[type=range]{width:100%;margin:0;accent-color:var(--fg);}
+.info{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.info b{font-weight:600;overflow-wrap:anywhere;}
+.info span{color:var(--muted);overflow-wrap:anywhere;}
+details{color:var(--muted);font-size:12px;}
+summary{cursor:pointer;width:max-content;max-width:100%;}
+.tbl{overflow-x:auto;margin-top:6px;}
+table{border-collapse:collapse;min-width:520px;width:100%;font-variant-numeric:tabular-nums;}
+th,td{text-align:left;padding:3px 14px 3px 0;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:top;}
+th{font-weight:500;color:var(--muted);}
+td:first-child{color:var(--fg);}
+td.wrapcell{white-space:normal;min-width:220px;}
+.note{color:var(--muted);font-size:11px;}
+.sw{display:inline-flex;gap:3px 12px;flex-wrap:wrap;margin-top:2px;}
+.sw i{display:inline-flex;align-items:center;gap:5px;font-style:normal;font-size:11px;color:var(--muted);}
+.sw i::before{content:"";width:9px;height:9px;border-radius:50%;border:1.5px solid var(--c);box-sizing:border-box;}
+.risk{margin:6px 0 0;padding-left:18px;color:var(--muted);font-size:12px;}
+.risk li{margin:2px 0;}
+</style>
+<div class="wrap">
+  <div class="head">
+    <div class="clock"><b id="show">00:00.0</b><small id="music">音乐 —</small></div>
+    <div class="where"><strong id="sec"></strong><em id="role"></em><span id="range"></span></div>
+    <div class="legend">
+      <i style="--c:#d9e2f2">小 ⌀90</i><i style="--c:#f3c540">中 ⌀150</i><i style="--c:#e8b94a">大 ⌀230</i><i class="fan" style="--c:var(--red)">红彗星扇</i><i class="fan" style="--c:var(--silver)">银星扇</i><i class="tail" style="--c:#ffd68c">升空尾缀</i><i class="combo" id="lg-combo" hidden>小平台小花束尾</i>
+    </div>
+  </div>
+  <canvas id="cv" role="img" aria-label="零点前 NPC 试放 30 秒 正面比例动画"></canvas>
+  <canvas id="strip" role="slider" aria-label="音乐能量与 cue，点击跳转" height="124"></canvas>
+  <div class="bar">
+    <button class="go" id="play" type="button">播放</button>
+    <button type="button" id="prev" aria-label="上一波">◀ 上一波</button>
+    <button type="button" id="next" aria-label="下一波">下一波 ▶</button>
+    <div class="seg" id="speed" role="group" aria-label="播放速度"><button type="button" data-v="1" aria-pressed="true">1×</button><button type="button" data-v="2" aria-pressed="false">2×</button><button type="button" data-v="4" aria-pressed="false">4×</button></div>
+    <button type="button" id="loopb" aria-pressed="false" hidden title="播到结尾接着从头播，看循环接缝">循环</button>
+    <button type="button" id="snd" aria-pressed="true" hidden title="跟着播放 / 拖动 / 倍速同步；2× / 4× 声音会变快变调">声音 开</button>
+    <div class="seg" id="var" role="group" aria-label="编排版本" hidden></div>
+    <div class="seg" id="plat" role="group" aria-label="平台" hidden><button type="button" data-v="pc" aria-pressed="true">PC</button><button type="button" data-v="mobile" aria-pressed="false">手游</button></div>
+    <div class="seg" id="tier" role="group" aria-label="质量档位"><button type="button" data-v="1" aria-pressed="true">高配</button><button type="button" data-v="2" aria-pressed="false">中配</button><button type="button" data-v="4" aria-pressed="false">低配</button></div>
+    <div class="seg" id="view" role="group" aria-label="视野"><button type="button" data-v="full" aria-pressed="true">全场</button><button type="button" data-v="near" aria-pressed="false">中心近看</button></div>
+    <div class="seg" id="colorby" role="group" aria-label="着色"><button type="button" data-v="sp" aria-pressed="true">按花色</button><button type="button" data-v="sz" aria-pressed="false">按大小</button></div>
+    <button type="button" id="lab" aria-pressed="false">点位标签</button>
+    <button type="button" id="tails" aria-pressed="true">升空尾缀</button>
+    <button type="button" id="basefan" aria-pressed="true">托底扇</button>
+  </div>
+  <div class="tl" id="tl"></div>
+  <input id="seek" type="range" min="0" step="0.1" value="0" aria-label="演出时间，秒">
+  <div class="info"><b id="cue"></b><span id="comp"></span><span id="detail"></span><span id="counts"></span><span class="sw" id="sw"></span></div>
+  <details><summary>14 段：领 / 接 / 插、条目数</summary><div class="tbl"><table id="secs"></table></div></details>
+  <details><summary>花型：大小、升空、炸点高、同屏峰值</summary><div class="tbl"><table id="slots"></table></div></details>
+  <details id="b02box" hidden><summary>B02：手机三档 · 小平台小花束尾</summary><div class="tbl"><table id="b02tbl"></table></div></details>
+  <details><summary>扇形编排：托底扇 + 扇组（方向 × 束型）</summary><div class="tbl"><table id="fanstat"></table></div></details>
+  <details><summary>音乐锚点（用户给定 / 小节网格 + 响度，待试听）</summary><div class="tbl"><table id="anchors"></table></div></details>
+  <details><summary>我自己找的纰漏（B01 说明第 4 节）</summary><ol class="risk" id="risks"></ol></details>
+  <div class="note">示意，不是 UE 回放：圆画在每条的开花时刻，径 = 大小；开花前的竖线是升空尾缀，按这条在 B01 里的起飞 → 开花时刻画（小 2.95 s / 中 4.38 s / 大 7.37 s，来自固定子模板）；炸点高 = 固定子模板原生 +190 / +265 / +410 m 加这条的高低错落（±25 m），比宪章目标 +150 / +210 / +330 m 高约 25%。扇画在它的起飞时刻：托底扇（随 M / L 花）与尾缀同一刻起，次序随这一波或按轮换的方向（左→右 / 右→左 / 里→外 / 外→里），「托底扇」按钮可单独关掉看对比；扇角与出筒节奏是示意。金垂柳的垂裙是示意线。空格键播放 / 暂停。</div>
+</div>
+<script type="text/plain" id="audio-b64"></script>
+<script>
+(()=>{
+const D={"version":"Day","offsetS":0.0,"showDurationS":30.0,"native":{"S":150,"M":210,"L":330},"points":{"P":[{"id":"P0","x":-374.79},{"id":"P1","x":-288.19},{"id":"P2","x":-196.59},{"id":"P3","x":-100},{"id":"P4","x":0},{"id":"P5","x":100},{"id":"P6","x":196.59},{"id":"P7","x":288.19},{"id":"P8","x":374.79}],"B":[{"id":"B0","x":-331.49},{"id":"B1","x":-244.89},{"id":"B2","x":-148.3},{"id":"B3","x":-50},{"id":"B4","x":50},{"id":"B5","x":148.3},{"id":"B6","x":244.89},{"id":"B7","x":331.49}],"F":[{"id":"F0","x":-69},{"id":"F1","x":-46},{"id":"F2","x":-23},{"id":"F3","x":0},{"id":"F4","x":23},{"id":"F5","x":46},{"id":"F6","x":69}]},"sections":[{"id":"D_S0","name":"NPC 试放","role":"推进","bar0":0,"bar1":1,"showStartS":0.0,"showEndS":30.0,"musicStartS":0.0,"musicEndS":30.0,"lead":"SC","relay":"GR","accent":"CR","note":"零点前 NPC 在调试：一发一发试，先中间、再两端、左右一对；穿插试扇、试小平台、试中号；最后试一小排，中间补一发。不放音乐，可循环。","cues":14,"events":20}],"anchors":[],"energy":[{"m":0,"db":-4},{"m":30.0,"db":-4}],"species":{"SC":{"name":"小银菊","sz":"S","rgb":"217,226,242","tail":"238,236,233","cues":4,"events":8,"rise":2.95,"beams":0,"gpu":"尾缀 6 + 本体 0","peak":null,"peakAt":null,"dia":90,"h":150},"GC":{"name":"金裂星","sz":"S","rgb":"240,194,74","tail":"248,222,157","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 6 + 本体 2","peak":null,"peakAt":null,"dia":90,"h":150},"CR":{"name":"爆裂星","sz":"S","rgb":"244,228,176","tail":"250,237,203","cues":3,"events":3,"rise":2.95,"beams":0,"gpu":"尾缀 6 + 本体 0","peak":null,"peakAt":null,"dia":90,"h":150},"LM":{"name":"小青柠","sz":"S","rgb":"127,209,106","tail":"197,228,171","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 6 + 本体 1","peak":null,"peakAt":null,"dia":90,"h":150},"OG":{"name":"橙辉星","sz":"S","rgb":"241,154,74","tail":"249,204,157","cues":1,"events":2,"rise":2.95,"beams":0,"gpu":"尾缀 6 + 本体 0","peak":null,"peakAt":null,"dia":90,"h":150},"ST":{"name":"点灭星","sz":"S","rgb":"255,255,255","tail":"255,249,238","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 6 + 本体 5","peak":null,"peakAt":null,"dia":90,"h":150},"GP":{"name":"绿牡丹","sz":"M","rgb":"89,196,110","tail":"180,222,173","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 2 + 本体 1","peak":null,"peakAt":null,"dia":150,"h":210},"GS":{"name":"金锦菊","sz":"M","rgb":"243,197,64","tail":"250,223,153","cues":1,"events":1,"rise":4.38,"beams":0,"gpu":"尾缀 2 + 本体 0","peak":null,"peakAt":null,"dia":150,"h":210},"PW":{"name":"彩千轮","sz":"M","rgb":"211,106,214","tail":"235,182,220","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 2 + 本体 1","peak":null,"peakAt":null,"dia":150,"h":210},"GY":{"name":"金曜菊","sz":"M","rgb":"240,180,41","tail":"248,215,142","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 2 + 本体 2","peak":null,"peakAt":null,"dia":150,"h":210},"CL":{"name":"金蕊青柠星","sz":"M","rgb":"201,217,74","tail":"231,232,157","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 2 + 本体 0","peak":null,"peakAt":null,"dia":150,"h":210},"GR":{"name":"金芒菊","sz":"M","rgb":"247,210,107","tail":"251,229,172","cues":1,"events":1,"rise":4.38,"beams":0,"gpu":"尾缀 2 + 本体 0","peak":null,"peakAt":null,"dia":150,"h":210},"ML":{"name":"多重菊","sz":"M","rgb":"226,138,91","tail":"242,196,165","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 2 + 本体 1","peak":null,"peakAt":null,"dia":150,"h":210},"GK":{"name":"金垂柳","sz":"L","rgb":"232,185,74","tail":"245,217,157","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 6 + 本体 0","peak":null,"peakAt":null,"dia":230,"h":330},"SS":{"name":"银彩菊","sz":"L","rgb":"232,238,252","tail":"245,241,237","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 6 + 本体 0","peak":null,"peakAt":null,"dia":230,"h":330},"R1":{"name":"红彗星·单束","sz":"F","rgb":"232,105,90","tail":"245,181,164","cues":0,"events":0,"rise":0,"beams":1,"gpu":"红彗星 1 / 束","peak":null,"peakAt":null},"R5":{"name":"红彗星·五束","sz":"F","rgb":"232,105,90","tail":"245,181,164","cues":1,"events":1,"rise":0,"beams":5,"gpu":"红彗星 1 / 束","peak":null,"peakAt":null},"R9":{"name":"红彗星·九束左扫","sz":"F","rgb":"232,105,90","tail":"245,181,164","cues":0,"events":0,"rise":0,"beams":9,"gpu":"红彗星 1 / 束","peak":null,"peakAt":null},"R9R":{"name":"红彗星·九束右扫","sz":"F","rgb":"232,105,90","tail":"245,181,164","cues":0,"events":0,"rise":0,"beams":9,"gpu":"红彗星 1 / 束","peak":null,"peakAt":null},"S5":{"name":"银星·五束窄扇","sz":"F","rgb":"170,184,216","tail":"217,217,221","cues":1,"events":1,"rise":0,"beams":5,"gpu":"银星 3 / 束","peak":null,"peakAt":null},"S9":{"name":"银星·九束展开","sz":"F","rgb":"170,184,216","tail":"217,217,221","cues":0,"events":0,"rise":0,"beams":9,"gpu":"银星 3 / 束","peak":null,"peakAt":null},"S13":{"name":"银星·十三束宽扇","sz":"F","rgb":"170,184,216","tail":"217,217,221","cues":0,"events":0,"rise":0,"beams":13,"gpu":"银星 3 / 束","peak":null,"peakAt":null},"GRL":{"name":"金芒菊·大","sz":"L","rgb":"247,210,107","tail":"251,229,172","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 6 + 本体 0","peak":null,"peakAt":null,"dia":230,"h":330},"CLL":{"name":"金蕊青柠星·大","sz":"L","rgb":"201,217,74","tail":"231,232,157","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 6 + 本体 0","peak":null,"peakAt":null,"dia":230,"h":330},"MLL":{"name":"多重菊·大","sz":"L","rgb":"226,138,91","tail":"242,196,165","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 6 + 本体 1","peak":null,"peakAt":null,"dia":230,"h":330},"GKH":{"name":"金垂柳·主角","sz":"L","rgb":"232,185,74","tail":"245,217,157","cues":0,"events":0,"rise":0,"beams":0,"gpu":"尾缀 6 + 本体 0","peak":null,"peakAt":null,"dia":280,"h":330},"XS1A":{"name":"单束银尾·小银菊","sz":"X","rgb":"229,239,255","tail":"243,242,238","cues":1,"events":1,"rise":0,"beams":0,"gpu":"束 3","peak":null,"peakAt":null},"XS1B":{"name":"单束银尾·小银菊","sz":"X","rgb":"229,239,255","tail":"243,242,238","cues":0,"events":0,"rise":0,"beams":0,"gpu":"束 3","peak":null,"peakAt":null},"XS3A":{"name":"三束银尾·小金花簇","sz":"X","rgb":"240,203,135","tail":"248,226,184","cues":0,"events":0,"rise":0,"beams":0,"gpu":"束 3 + 3 + 3","peak":null,"peakAt":null},"XS3B":{"name":"三束银尾·小金花簇","sz":"X","rgb":"240,203,135","tail":"248,226,184","cues":0,"events":0,"rise":0,"beams":0,"gpu":"束 3 + 3 + 3","peak":null,"peakAt":null},"XC2A":{"name":"双束红彗·短爆裂","sz":"X","rgb":"224,175,101","tail":"241,213,169","cues":0,"events":0,"rise":0,"beams":0,"gpu":"束 1 + 1","peak":null,"peakAt":null},"XC2B":{"name":"双束红彗·短爆裂","sz":"X","rgb":"224,175,101","tail":"241,213,169","cues":0,"events":0,"rise":0,"beams":0,"gpu":"束 1 + 1","peak":null,"peakAt":null},"XV4":{"name":"V 形细束","sz":"X","rgb":"215,231,246","tail":"237,238,234","cues":1,"events":2,"rise":0,"beams":0,"gpu":"束 3 + 3 + 3 + 3","peak":null,"peakAt":null}},"cues":[{"id":"DAY_C001","t":2.954,"span":0.0,"sp":"SC","sz":"S","k":"ball","label":"先试中间一发","wave":"试放","layer":"main","sec":0,"dir":"","pts":["P4"],"tm":[7],"mb":1},{"id":"DAY_C002","t":4.754,"span":0.0,"sp":"SC","sz":"S","k":"ball","label":"试左端","wave":"试放","layer":"main","sec":0,"dir":"","pts":["P0"],"tm":[7],"mb":1},{"id":"DAY_C003","t":6.554,"span":0.0,"sp":"SC","sz":"S","k":"ball","label":"试右端","wave":"试放","layer":"main","sec":0,"dir":"","pts":["P8"],"tm":[7],"mb":1},{"id":"DAY_C004","t":8.0,"span":0.0,"sp":"R5","sz":"F","k":"fan","label":"试一把红彗星扇","wave":"试放","layer":"main","sec":0,"dir":"","pts":["B3"],"tm":[7],"mb":0},{"id":"DAY_C005","t":9.554,"span":0.0,"sp":"OG","sz":"S","k":"ball","label":"左右各一，看对不对称","wave":"试放","layer":"main","sec":0,"dir":"","pts":["P2","P6"],"tm":[7,7],"mb":1},{"id":"DAY_C006","t":11.2,"span":0.0,"sp":"XS1A","sz":"X","k":"combo","label":"试小平台","wave":"试放","layer":"main","sec":0,"dir":"","pts":["F3"],"tm":[7],"mb":0},{"id":"DAY_C007","t":12.777,"span":0.0,"sp":"GR","sz":"M","k":"ball","label":"试一发中号","wave":"试放","layer":"main","sec":0,"dir":"","pts":["P4"],"tm":[7],"mb":1},{"id":"DAY_C008","t":14.4,"span":0.0,"sp":"S5","sz":"F","k":"fan","label":"试银扇","wave":"试放","layer":"main","sec":0,"dir":"","pts":["B5"],"tm":[7],"mb":0},{"id":"DAY_C009","t":15.754,"span":0.0,"sp":"CR","sz":"S","k":"ball","label":"试爆裂星（左）","wave":"试放","layer":"main","sec":0,"dir":"","pts":["P1"],"tm":[7],"mb":1},{"id":"DAY_C010","t":17.154,"span":0.0,"sp":"CR","sz":"S","k":"ball","label":"再试右边","wave":"试放","layer":"main","sec":0,"dir":"","pts":["P7"],"tm":[7],"mb":1},{"id":"DAY_C011","t":18.777,"span":0.0,"sp":"GS","sz":"M","k":"ball","label":"试金锦菊","wave":"试放","layer":"main","sec":0,"dir":"","pts":["P0"],"tm":[7],"mb":1},{"id":"DAY_C012","t":20.554,"span":0.3,"sp":"SC","sz":"S","k":"ball","label":"试一小排（中间往两边）","wave":"试放","layer":"main","sec":0,"dir":"","pts":["P2","P3","P4","P5","P6"],"tm":[3,7,7,7,3],"mb":1},{"id":"DAY_C013","t":22.6,"span":0.0,"sp":"XV4","sz":"X","k":"combo","label":"试小平台两边","wave":"试放","layer":"main","sec":0,"dir":"","pts":["F0","F6"],"tm":[7,7],"mb":0},{"id":"DAY_C014","t":25.154,"span":0.0,"sp":"CR","sz":"S","k":"ball","label":"中间补一发，收","wave":"试放","layer":"main","sec":0,"dir":"","pts":["P4"],"tm":[7],"mb":1}],"events":[{"l":0.0,"b":2.9544,"e":7.5144,"g":"P","p":4,"sp":"SC","k":"ball","sz":"S","n":0,"dz":0.0,"tier":7,"cue":"DAY_C001","bs":0,"mb":1,"h":150.1,"d":90.0},{"l":1.8,"b":4.7544,"e":9.3144,"g":"P","p":0,"sp":"SC","k":"ball","sz":"S","n":0,"dz":0.0,"tier":7,"cue":"DAY_C002","bs":0,"mb":1,"h":150.1,"d":90.0},{"l":3.6,"b":6.5544,"e":11.1144,"g":"P","p":8,"sp":"SC","k":"ball","sz":"S","n":0,"dz":0.0,"tier":7,"cue":"DAY_C003","bs":0,"mb":1,"h":150.1,"d":90.0},{"l":6.6,"b":9.5544,"e":12.7544,"g":"P","p":2,"sp":"OG","k":"ball","sz":"S","n":0,"dz":10.0,"tier":7,"cue":"DAY_C005","bs":0,"mb":1,"h":150.1,"d":90.0},{"l":6.6,"b":9.5544,"e":12.7544,"g":"P","p":6,"sp":"OG","k":"ball","sz":"S","n":0,"dz":10.0,"tier":7,"cue":"DAY_C005","bs":0,"mb":1,"h":150.1,"d":90.0},{"l":8.0,"b":8.0,"e":11.1,"g":"B","p":3,"sp":"R5","k":"fan","sz":"F","n":5,"dz":0.0,"tier":7,"cue":"DAY_C004","bs":0,"mb":0},{"l":8.4,"b":12.7772,"e":17.3372,"g":"P","p":4,"sp":"GR","k":"ball","sz":"M","n":0,"dz":0.0,"tier":7,"cue":"DAY_C007","bs":0,"mb":1,"h":210.1,"d":150.0},{"l":10.2,"b":11.2,"e":15.76,"g":"F","p":3,"sp":"XS1A","k":"combo","sz":"X","n":0,"dz":0.0,"tier":7,"cue":"DAY_C006","bs":0,"mb":0},{"l":12.8,"b":15.7544,"e":17.2544,"g":"P","p":1,"sp":"CR","k":"ball","sz":"S","n":0,"dz":0.0,"tier":7,"cue":"DAY_C009","bs":0,"mb":1,"h":150.1,"d":90.0},{"l":14.2,"b":17.1544,"e":18.6544,"g":"P","p":7,"sp":"CR","k":"ball","sz":"S","n":0,"dz":0.0,"tier":7,"cue":"DAY_C010","bs":0,"mb":1,"h":150.1,"d":90.0},{"l":14.4,"b":14.4,"e":16.85,"g":"B","p":5,"sp":"S5","k":"fan","sz":"F","n":5,"dz":0.0,"tier":7,"cue":"DAY_C008","bs":0,"mb":0},{"l":14.4,"b":18.7772,"e":24.0772,"g":"P","p":0,"sp":"GS","k":"ball","sz":"M","n":0,"dz":40.0,"tier":7,"cue":"DAY_C011","bs":0,"mb":1,"h":210.1,"d":138.0},{"l":17.6,"b":20.5544,"e":25.1144,"g":"P","p":4,"sp":"SC","k":"ball","sz":"S","n":0,"dz":0.0,"tier":7,"cue":"DAY_C012","bs":0,"mb":1,"h":150.1,"d":90.0},{"l":17.8,"b":20.7544,"e":25.3144,"g":"P","p":3,"sp":"SC","k":"ball","sz":"S","n":0,"dz":0.0,"tier":7,"cue":"DAY_C012","bs":0,"mb":1,"h":150.1,"d":90.0},{"l":17.8,"b":20.7544,"e":25.3144,"g":"P","p":5,"sp":"SC","k":"ball","sz":"S","n":0,"dz":0.0,"tier":7,"cue":"DAY_C012","bs":0,"mb":1,"h":150.1,"d":90.0},{"l":17.9,"b":20.8544,"e":25.4144,"g":"P","p":2,"sp":"SC","k":"ball","sz":"S","n":0,"dz":0.0,"tier":3,"cue":"DAY_C012","bs":0,"mb":1,"h":150.1,"d":90.0},{"l":17.9,"b":20.8544,"e":25.4144,"g":"P","p":6,"sp":"SC","k":"ball","sz":"S","n":0,"dz":0.0,"tier":3,"cue":"DAY_C012","bs":0,"mb":1,"h":150.1,"d":90.0},{"l":22.2,"b":25.1544,"e":26.6544,"g":"P","p":4,"sp":"CR","k":"ball","sz":"S","n":0,"dz":0.0,"tier":7,"cue":"DAY_C014","bs":0,"mb":1,"h":150.1,"d":90.0},{"l":22.6,"b":22.6,"e":25.1,"g":"F","p":0,"sp":"XV4","k":"combo","sz":"X","n":0,"dz":0.0,"tier":7,"cue":"DAY_C013","bs":0,"mb":0},{"l":22.6,"b":22.6,"e":25.1,"g":"F","p":6,"sp":"XV4","k":"combo","sz":"X","n":0,"dz":0.0,"tier":7,"cue":"DAY_C013","bs":0,"mb":0}],"risks":["零点前 NPC 试放，30 s，不放音乐，可循环（右下「循环」看接缝）：一发一发试——先中间、再两端、左右一对；穿插试扇、试小平台、试中号；最后试一小排、中间补一发。","不剧透：没有主角金垂柳、大号整排、白墙和倒计时那套构图。少重叠：同一时刻天上最多 6 朵（试一小排那 4 s），重叠体检 PC / 手游六档都是 0。","PC 高 / 中 / 低 20 / 20 / 18 发，手游 15 / 15 / 13 发；手游没有扇和小平台，也没有超过 4 s 的空。GPU 同秒峰值 30（Night 190）。","最后一朵 26.6 s 灭，留 3.4 s 空；循环时接缝处只有第一发的上升尾缀。","单独的节目（NewYearFireWorks_Day），导进 UE 的 Day 导演；花型、大小、高度都是 Night 里已有的版本，UE 不用新导资源。","推断（没确认）：不放音乐、可循环、不剧透；Day 什么时候开始和停（要在 Night 倒计时前停）归引擎排期，不归编排。没在 UE 里放过。"],"fanStats":{"baseGrid":{},"baseCues":0,"baseEvents":0,"groups":0,"baseCovered":0,"baseSkipped":0,"phrases":[{"name":"试放","events":2,"times":[8.0,14.4]}],"aliveGpuPeak":30},"combos":{"XS1A":{"beams":[{"roll":-4.6,"reach":45.5,"off":0,"dur":2.45,"rgb":"215,231,246"}],"flowers":[{"beam":0,"t":1.0,"dia":26,"r":38.7,"life":4.5600000000000005,"rgb":"229,239,255"}]},"XS1B":{"beams":[{"roll":5.8,"reach":41.6,"off":0,"dur":2.45,"rgb":"215,231,246"}],"flowers":[{"beam":0,"t":1.0,"dia":26,"r":35.4,"life":4.5600000000000005,"rgb":"229,239,255"}]},"XS3A":{"beams":[{"roll":-11.3,"reach":40.3,"off":0,"dur":2.45,"rgb":"215,231,246"},{"roll":1.7,"reach":49.4,"off":0.12,"dur":2.45,"rgb":"215,231,246"},{"roll":9.4,"reach":44.2,"off":0.24,"dur":2.45,"rgb":"215,231,246"}],"flowers":[{"beam":0,"t":1.0,"dia":28,"r":34.3,"life":5.299999999999999,"rgb":"240,203,135"},{"beam":1,"t":1.12,"dia":28,"r":42.0,"life":5.299999999999999,"rgb":"240,203,135"},{"beam":2,"t":1.24,"dia":28,"r":37.6,"life":5.299999999999999,"rgb":"240,203,135"}]},"XS3B":{"beams":[{"roll":-6.8,"reach":45.5,"off":0.12,"dur":2.45,"rgb":"215,231,246"},{"roll":3.9,"reach":39.0,"off":0,"dur":2.45,"rgb":"215,231,246"},{"roll":13.2,"reach":50.7,"off":0.24,"dur":2.45,"rgb":"215,231,246"}],"flowers":[{"beam":0,"t":1.12,"dia":28,"r":38.7,"life":5.299999999999999,"rgb":"240,203,135"},{"beam":1,"t":1.0,"dia":28,"r":33.1,"life":5.299999999999999,"rgb":"240,203,135"},{"beam":2,"t":1.24,"dia":28,"r":43.1,"life":5.299999999999999,"rgb":"240,203,135"}]},"XC2A":{"beams":[{"roll":-8.1,"reach":37.5,"off":0,"dur":3.1,"rgb":"238,140,114"},{"roll":6.2,"reach":43.5,"off":0.15,"dur":3.1,"rgb":"238,140,114"}],"flowers":[{"beam":0,"t":1.0,"dia":22,"r":31.9,"life":1.4999999999999996,"rgb":"224,175,101"},{"beam":1,"t":1.15,"dia":22,"r":37.0,"life":1.4999999999999996,"rgb":"224,175,101"}]},"XC2B":{"beams":[{"roll":-3.7,"reach":42.0,"off":0.15,"dur":3.1,"rgb":"238,140,114"},{"roll":10.5,"reach":36.0,"off":0,"dur":3.1,"rgb":"238,140,114"}],"flowers":[{"beam":0,"t":1.15,"dia":22,"r":35.7,"life":1.4999999999999996,"rgb":"224,175,101"},{"beam":1,"t":1.0,"dia":22,"r":30.6,"life":1.4999999999999996,"rgb":"224,175,101"}]},"XV4":{"beams":[{"roll":-16,"reach":26.0,"off":0,"dur":2.45,"rgb":"215,231,246"},{"roll":-5,"reach":29.9,"off":0.05,"dur":2.45,"rgb":"215,231,246"},{"roll":5,"reach":29.9,"off":0.05,"dur":2.45,"rgb":"215,231,246"},{"roll":16,"reach":26.0,"off":0,"dur":2.45,"rgb":"215,231,246"}],"flowers":[]}},"b02":{"pc":{"high":20,"medium":20,"low":18},"mobile":{"high":15,"medium":15,"low":13},"mobileSpecies":"高：小银菊 8、橙辉星 2、金芒菊 1、爆裂星 3、金锦菊 1；中：小银菊 8、橙辉星 2、金芒菊 1、爆裂星 3、金锦菊 1；低：小银菊 6、橙辉星 2、金芒菊 1、爆裂星 3、金锦菊 1","mobileRule":"只用 P 点；只放执行方案 §2.1 周三白名单（小银菊、橙辉星、金芒菊含大号、银彩菊、主角，可选爆裂星、金锦菊）的主排；M / L 一排只放偶数点 P0 / 2 / 4 / 6 / 8（奇数点只上 PC，免得花叠花）；二排、托底扇、扇组、小平台都不上手游。PC 三档一个不变。","mobileGaps":"无","combos":[{"name":"单束银尾 · 小银菊 26m（甲）","beams":1,"flowers":1,"h":39,"n":1},{"name":"单束银尾 · 小银菊 26m（乙）","beams":1,"flowers":1,"h":35,"n":0},{"name":"三束银尾 · 小金花簇 28m（甲）","beams":3,"flowers":3,"h":42,"n":0},{"name":"三束银尾 · 小金花簇 28m（乙）","beams":3,"flowers":3,"h":42,"n":0},{"name":"双束红彗 · 短爆裂 22m（甲）","beams":2,"flowers":2,"h":37,"n":0},{"name":"双束红彗 · 短爆裂 22m（乙）","beams":2,"flowers":2,"h":36,"n":0},{"name":"四束银尾 V 形（不开花）","beams":4,"flowers":0,"h":30,"n":2}],"comboNote":"现成银扇 / 红彗星单束缩小当尾缀（每个变体一组固化随机角，甲 / 乙两组），现成小银菊 / 金锦菊 / 爆裂星缩到 22–28 m 挂在束顶；V 形细束不开花、每次放随机 ±6°。束长和挂花时刻是估的，见纰漏。"},"countdown":false,"loop":true,"noMusic":true};
+const $=id=>document.getElementById(id);
+const cv=$('cv'),ctx=cv.getContext('2d'),st=$('strip'),sx=st.getContext('2d'),seek=$('seek'),play=$('play');
+const DUR=D.showDurationS,OFF=D.offsetS;seek.max=DUR;
+const SP=D.species;let EV=D.events,CU=D.cues,SEC=D.sections;
+const SZ={S:{d:90,c:'217,226,242',n:'小'},M:{d:150,c:'243,197,64',n:'中'},L:{d:230,c:'232,185,74',n:'大'}};
+const SZC={S:'39,181,133',M:'59,130,246',L:'242,106,46'};
+const FAN={R1:{half:0,len:78,gap:.06,hue:'226,96,82',red:1},R5:{half:30,len:78,gap:.06,hue:'226,96,82',red:1},R9:{half:46,len:78,gap:.05,hue:'226,96,82',red:1,lr:0},R9R:{half:46,len:78,gap:.05,hue:'226,96,82',red:1,lr:1},
+  S5:{half:24,len:66,gap:.03,hue:'170,184,216'},S9:{half:40,len:66,gap:.03,hue:'170,184,216'},S13:{half:50,len:66,gap:.03,hue:'170,184,216'}};
+const TAILC=sp=>SP[sp].rgb;
+const fmt=s=>{const m=Math.floor(s/60);return `${String(m).padStart(2,'0')}:${(s-m*60).toFixed(1).padStart(4,'0')}`;};
+const mm=s=>{if(s<0)return '−'+mm(-s);const m=Math.floor(s/60);return `${m}:${(s-m*60).toFixed(1).padStart(4,'0')}`;};
+const mmss=s=>`${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}`;
+let t=D.startS??11.0,playing=false,last=0,view='full',tier=1,speed=1,labels=innerWidth>=640,secIdx=-1,showTail=true,colorBy='sp',showBase=true,plat='pc';
+$('lab').setAttribute('aria-pressed',labels);
+const rgba=(c,a)=>`rgba(${c},${a})`;
+const dam=150;
+const PX={P:D.points.P.map(p=>p.x),B:D.points.B.map(p=>p.x),F:(D.points.F||[]).map(p=>p.x)};
+const PZ={P:dam,B:dam,F:50};
+const CB=D.combos||{};
+const colOf=e=>colorBy==='sp'?SP[e.sp].rgb:SZC[e.sz];
+
+// 段落按钮
+const tl=$('tl');
+function buildTl(){tl.textContent='';
+SEC.forEach(s=>{const b=document.createElement('button');b.type='button';b.textContent=s.name;
+  b.style.width=((s.showEndS-s.showStartS)/DUR*100)+'%';b.title=`${mmss(s.showStartS)} ${s.name}（${s.role}）`;
+  b.addEventListener('click',()=>{stop();t=Math.max(0,s.showStartS+.05);sync();});tl.appendChild(b);});
+const last_s=SEC[SEC.length-1];
+if(last_s.showEndS<DUR){const sp=document.createElement('span');sp.style.width=((DUR-last_s.showEndS)/DUR*100)+'%';sp.style.borderLeft='1px solid var(--line)';sp.style.fontSize='10px';sp.style.color='var(--muted)';sp.style.paddingLeft='3px';sp.style.whiteSpace='nowrap';sp.style.overflow='hidden';sp.style.lineHeight='18px';sp.textContent='余韵';tl.appendChild(sp);}}
+buildTl();
+
+function stop(){playing=false;play.textContent='播放';sndStop();}
+// 声音（B03 起：合并音频原字节内嵌，Web Audio 播放；演出秒 − 音乐偏移 = 音频秒；播放时动画时钟跟着音频走）
+const AU=(()=>{const el=$('audio-b64'),b64=el?el.textContent.trim():'';el&&el.remove();if(!D.audio||!b64||b64.startsWith('__'))return null;return {b64,off:D.audio.offsetS||0};})();
+let actx=null,abuf=null,asrc=null,aGain=null,aT0=0,aC0=0,sndOn=true,aLoading=null;
+function sndLoad(){if(!AU||aLoading)return aLoading;
+  try{actx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){$('snd').textContent='声音 不可用';return null;}
+  aGain=actx.createGain();aGain.connect(actx.destination);
+  const bin=atob(AU.b64),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+  $('snd').textContent='声音 载入中…';
+  aLoading=new Promise((ok,no)=>actx.decodeAudioData(u.buffer,ok,no)).then(b=>{abuf=b;$('snd').textContent=sndOn?'声音 开':'声音 关';if(playing)sndStart();})
+    .catch(()=>{$('snd').textContent='声音 解码失败';});
+  return aLoading;}
+function sndStop(){if(asrc){const s=asrc;asrc=null;try{s.stop();}catch(e){}}}
+function sndStart(){sndStop();if(!AU||!sndOn||!abuf||!playing)return;
+  if(actx.state==='suspended')actx.resume();
+  const at=t-AU.off;if(at>=abuf.duration)return;
+  const s=actx.createBufferSource();s.buffer=abuf;s.playbackRate.value=speed;s.connect(aGain);
+  const delay=at<0?-at/speed:0;s.start(actx.currentTime+delay,Math.max(0,at));
+  aT0=t;aC0=actx.currentTime;asrc=s;
+  s.onended=()=>{if(asrc===s){asrc=null;last=performance.now();}};}
+function tri(x,y,s,c){ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(x,y-s);ctx.lineTo(x-s*.9,y+s*.6);ctx.lineTo(x+s*.9,y+s*.6);ctx.closePath();ctx.fill();}
+function seg(x1,y1,x2,y2,c,w,dash){ctx.strokeStyle=c;ctx.lineWidth=w;ctx.setLineDash(dash||[]);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);}
+
+// 扇形：一个事件 = 一个点上的一排；筒按顺序出膛，星减速冲到顶
+function fan(e,age,X,Z,sc,x0,z0){
+  const g=FAN[e.sp],n=e.n,half=g.half*Math.PI/180,life=Math.max(1,e.e-e.b);
+  const dirLR=g.lr===undefined?true:!!g.lr,w=Math.max(.9,sc*.9);
+  for(let k=0;k<n;k++){
+    const s=age-k*g.gap;if(s<0||s>life)continue;
+    const bi=dirLR?k:n-1-k,c=n===1?0:bi/(n-1)*2-1,th=c*half;
+    const lf=.8+.2*Math.cos(c*1.4),r=g.len*lf*Math.min(1,1-Math.exp(-2.6*s));
+    const fade=s<life*.6?1:Math.max(0,(life-s)/(life*.4));
+    const hx=X(x0+Math.sin(th)*r),hy=Z(z0+Math.cos(th)*r);
+    if(g.red){const r0=Math.max(0,r-g.len*.3);
+      seg(X(x0+Math.sin(th)*r0),Z(z0+Math.cos(th)*r0),hx,hy,rgba(g.hue,fade),w*1.2);
+      ctx.fillStyle=rgba(g.hue,fade);ctx.beginPath();ctx.arc(hx,hy,Math.max(1.5,sc*2),0,7);ctx.fill();continue;}
+    seg(X(x0),Z(z0),hx,hy,rgba(g.hue,fade*.7),w);
+  }
+}
+
+// 小平台小花束尾：几根缩小的单束（银 / 红）按固化角度出束，花挂在束顶（示意；束长与挂花时刻是估的）
+function combo(e,age,X,Z,sc,x0,z0){
+  const g=CB[e.sp];if(!g)return 0;let n=0;
+  for(const b of g.beams){const s=age-b.off;if(s<0||s>b.dur)continue;
+    const th=b.roll*Math.PI/180,r=b.reach*Math.min(1,1-Math.exp(-2.6*s)),fade=s<b.dur*.6?1:Math.max(0,(b.dur-s)/(b.dur*.4));
+    const r0=Math.max(0,r-b.reach*.55),hx=X(x0+Math.sin(th)*r),hy=Z(z0+Math.cos(th)*r);
+    seg(X(x0+Math.sin(th)*r0),Z(z0+Math.cos(th)*r0),hx,hy,rgba(b.rgb,fade*.85),Math.max(.9,sc*.9));
+    ctx.fillStyle=rgba('255,250,235',fade);ctx.beginPath();ctx.arc(hx,hy,Math.max(1.2,sc*1.4),0,7);ctx.fill();}
+  for(const f of g.flowers){const a=age-f.t;if(a<0||a>f.life)continue;n++;
+    const b=g.beams[f.beam],th=b.roll*Math.PI/180,fx=x0+Math.sin(th)*f.r,fz=z0+Math.cos(th)*f.r+(e.dz||0);
+    const u=a/f.life,al=u<.55?1:Math.max(0,(1-u)/.45),R=f.dia/2*(1-Math.exp(-6*Math.min(1,a/.6)))*sc,col=colorBy==='sp'?f.rgb:'143,211,193';
+    ctx.beginPath();ctx.arc(X(fx),Z(fz),Math.max(.5,R),0,7);ctx.fillStyle=rgba(col,.15*al);ctx.fill();ctx.strokeStyle=rgba(col,.9*al);ctx.lineWidth=1.2;ctx.stroke();}
+  return n;
+}
+
+function countdown(W,H){
+  if(D.vo){voCountdown(W,H);return;}
+  if(D.countdown===false)return;
+  if(t>=10.5)return;
+  const fs=Math.min(150,H*.34);ctx.textAlign='center';ctx.textBaseline='middle';
+  let txt,al;
+  if(t<10){const fl=Math.floor(t);txt=String(10-fl);al=.55-.4*(t-fl);}
+  else{txt='0';al=Math.max(0,.6-(t-10)/.5*.6);}
+  ctx.font=`500 ${fs}px ${getComputedStyle(document.body).getPropertyValue('--mono')}`;
+  ctx.fillStyle=`rgba(236,236,238,${al})`;ctx.fillText(txt,W/2,H*.3);
+  ctx.font=`12px ${getComputedStyle(document.body).getPropertyValue('--sans')}`;ctx.fillStyle='rgba(140,143,152,.95)';
+  const sub=t<5?'倒计时 · 无音乐':t<10?'倒计时 · 音乐渐入':'';
+  if(sub)ctx.fillText(sub,W/2,H*.3+fs*.62);
+}
+
+// 大号数字跟 VO 走（B03 修订1：原来写死 B01 的 0–10 s，和 VO 对不上）
+function voCountdown(W,H){
+  const V=D.vo,mono=getComputedStyle(document.body).getPropertyValue('--mono'),sans=getComputedStyle(document.body).getPropertyValue('--sans');
+  if(t>=V.fire.end+.8)return;
+  const fs=Math.min(150,H*.34);ctx.textAlign='center';ctx.textBaseline='middle';
+  let txt='',al=0,sub='';
+  if(t<V.nums[0][0]){sub=t>=V.chat[0]&&t<V.chat[1]+.3?'VO 闲话':'';}
+  else if(t<V.fire.start){let k=0;while(k+1<V.nums.length&&V.nums[k+1][0]<=t)k++;const [t0,n]=V.nums[k],t1=k+1<V.nums.length?V.nums[k+1][0]:V.fire.start;
+    txt=String(n);al=.6-.42*Math.min(1,(t-t0)/Math.max(.3,t1-t0));sub=`VO 喊 ${n}`;}
+  else{txt='点火';al=Math.max(0,.65-.65*(t-V.fire.start)/(V.fire.end+.8-V.fire.start));sub=Math.abs(V.zero-V.fire.start)<.05?'VO「点火」= 零点':'VO「点火」';}
+  if(txt){ctx.font=`500 ${txt.length>2?fs*.7:fs}px ${txt.length>2?sans:mono}`;ctx.fillStyle=`rgba(236,236,238,${al})`;ctx.fillText(txt,W/2,H*.3);}
+  if(sub){ctx.font=`12px ${sans}`;ctx.fillStyle='rgba(140,143,152,.95)';ctx.fillText(sub,W/2,H*.3+fs*.62);}
+}
+
+function draw(){
+  const near=view==='near';
+  const W=Math.max(300,cv.parentElement.clientWidth);
+  const zmin=near?(D.points.F?20:100):0,wx=near?700:1060,wz=700-zmin;
+  const H=Math.round(Math.min(near?660:620,Math.max(280,W*wz/wx)));
+  const dpr=Math.min(2,devicePixelRatio||1);
+  if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+'px';}
+  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.globalAlpha=1;ctx.fillStyle='#0b0c0e';ctx.fillRect(0,0,W,H);
+  const padL=12,padR=12,padB=26,padT=10;
+  const sc=Math.min((W-padL-padR)/wx,(H-padB-padT)/wz);
+  const cx=padL+(W-padL-padR)/2,X=v=>cx+v*sc,Z=v=>H-padB-(v-zmin)*sc;
+  const mono=getComputedStyle(document.body).getPropertyValue('--mono');
+  ctx.font='11px '+mono;ctx.textBaseline='middle';
+  // 坝体（5 段弧形 150/150/200/150/150）+ 前台平台（B01 未用）
+  const xs=[-374.79,-244.89,-100,100,244.89,374.79],lens=[150,150,200,150,150];
+  ctx.fillStyle='#141519';ctx.fillRect(X(xs[0]),Z(dam),(xs[5]-xs[0])*sc,dam*sc);
+  ctx.strokeStyle='#2c2d34';ctx.lineWidth=1;ctx.strokeRect(X(xs[0])+.5,Z(dam)+.5,(xs[5]-xs[0])*sc,dam*sc);
+  for(let i=1;i<5;i++)seg(X(xs[i])+.5,Z(dam),X(xs[i])+.5,Z(0),'#2c2d34',1);
+  ctx.fillStyle='#1b1c21';ctx.fillRect(X(-100),Z(50),200*sc,50*sc);
+  ctx.strokeStyle='#33343b';ctx.strokeRect(X(-100)+.5,Z(50)+.5,200*sc,50*sc);
+  ctx.textAlign='center';ctx.fillStyle='#6a6c73';ctx.fillText(D.points.F?'小平台 50 m · F0–F6':'前台 50 m（B01 未用）',X(0),Z(22));
+  if(!near){ctx.fillStyle='#8c8f98';for(let i=0;i<5;i++)ctx.fillText(lens[i]+' m',X((xs[i]+xs[i+1])/2),Z(0)+14);}
+  seg(padL,Z(dam),W-padR,Z(dam),'rgba(236,236,238,.35)',1,[5,5]);
+  ctx.textAlign='left';ctx.fillStyle='#b9bbc2';ctx.fillText('坝顶 150 m',padL+4,Z(dam)-9);
+  ctx.fillStyle='#6a6c73';
+  for(const v of [300,450,600]){seg(padL,Z(v),W-padR,Z(v),'rgba(255,255,255,.06)',1);ctx.fillText(v+' m',padL+4,Z(v)-9);}
+  // 原生炸点高参考线（右侧小字）
+  ctx.textAlign='right';ctx.fillStyle='#55575e';
+  for(const k of ['S','M','L']){const zz=dam+D.native[k];seg(W-padR-34,Z(zz),W-padR,Z(zz),'rgba(255,255,255,.18)',1);ctx.fillText(k+' +'+Math.round(D.native[k]),W-padR-38,Z(zz));}
+  const bw=100*sc;ctx.strokeStyle='#8c8f98';ctx.lineWidth=1;
+  const sy=H-padB+11;
+  ctx.beginPath();ctx.moveTo(W-padR-bw,sy);ctx.lineTo(W-padR,sy);ctx.moveTo(W-padR-bw,sy-4);ctx.lineTo(W-padR-bw,sy+4);ctx.moveTo(W-padR,sy-4);ctx.lineTo(W-padR,sy+4);ctx.stroke();
+  ctx.textAlign='right';ctx.fillStyle='#8c8f98';ctx.fillText('100 m',W-padR-bw-6,sy);
+  countdown(W,H);
+  // 发射点：▲ P，○ B
+  ctx.font='10px '+mono;
+  D.points.P.forEach((p,i)=>{tri(X(p.x),Z(dam)-1,3.4,'#e6e6e9');
+    if(labels){ctx.fillStyle='#6a6c73';ctx.textAlign='center';ctx.fillText('P'+i,X(p.x),Z(dam)+11);}});
+  D.points.B.forEach((p,i)=>{ctx.strokeStyle='#8c8f98';ctx.lineWidth=1;ctx.beginPath();ctx.arc(X(p.x),Z(dam)-2,2.2,0,7);ctx.stroke();
+    if(labels){ctx.fillStyle='#6a6c73';ctx.textAlign='center';ctx.fillText('B'+i,X(p.x),Z(dam)+23);}});
+  (D.points.F||[]).forEach((p,i)=>{const x=X(p.x),y=Z(50)-1;ctx.fillStyle='#b9bbc2';ctx.beginPath();ctx.moveTo(x,y-3);ctx.lineTo(x+2.6,y);ctx.lineTo(x,y+3);ctx.lineTo(x-2.6,y);ctx.closePath();ctx.fill();
+    if(labels&&near){ctx.fillStyle='#6a6c73';ctx.textAlign='center';ctx.fillText('F'+i,X(p.x),Z(50)+11);}});
+  ctx.font='11px '+mono;
+  // 烟花
+  let nUp=0,nS=0,nM=0,nL=0,nFan=0,nGK=0,nBase=0,nX=0;
+  for(let i=0;i<EV.length;i++){
+    const e=EV[i];if(e.l>t)break;if(t>e.e)continue;if(!(e.tier&tier))continue;if(plat==='mobile'&&e.mb===0)continue;if(plat==='pc'&&e.mb===2)continue;
+    const x0=PX[e.g][e.p],z0=PZ[e.g]??dam;
+    if(e.k==='combo'){nX+=combo(e,t-e.l,X,Z,sc,x0,z0);continue;}
+    if(e.k==='fan'){if(e.bs&&!showBase)continue;const age=t-e.b;if(age<0)continue;nFan++;if(e.bs)nBase++;fan(e,age,X,Z,sc,x0,z0);continue;}
+    const d=e.d??SZ[e.sz].d,H0=(e.h??D.native[e.sz])+e.dz,top=z0+H0,col=colOf(e);
+    if(t<e.b){ // 升空尾缀
+      nUp++;if(!showTail)continue;
+      const u=(t-e.l)/(e.b-e.l),pr=1-(1-u)*(1-u),zh=z0+H0*pr,trail=Math.min(zh-z0,Math.max(16,H0*.3));
+      const big=e.sz==='L'?2.6:e.sz==='M'?2.1:1.6,tc=SP[e.sp].tail;
+      const gr=ctx.createLinearGradient(X(x0),Z(zh-trail),X(x0),Z(zh));gr.addColorStop(0,rgba(tc,0));gr.addColorStop(1,rgba(tc,.95));
+      ctx.strokeStyle=gr;ctx.lineWidth=Math.max(1.1,sc*big);ctx.beginPath();ctx.moveTo(X(x0),Z(zh-trail));ctx.lineTo(X(x0),Z(zh));ctx.stroke();
+      ctx.fillStyle='rgba(255,252,240,.98)';ctx.beginPath();ctx.arc(X(x0),Z(zh),Math.max(1.3,sc*big*.9),0,7);ctx.fill();
+      continue;}
+    const age=t-e.b,life=Math.max(1,e.e-e.b),u=age/life,al=u<.55?1:Math.max(0,(1-u)/.45);
+    if(e.sz==='S')nS++;else if(e.sz==='M')nM++;else nL++;
+    if(e.sp==='GK')nGK++;
+    const R=d/2*(1-Math.exp(-6*Math.min(1,age/.6)))*sc,cy=Z(top)+d*.04*u*sc;
+    if(e.sp==='GK'&&age>.6){ // 金垂柳垂裙（示意线）
+      const dr=Math.min(1,(age-.6)/4.5)*d*.62*sc;
+      ctx.strokeStyle=rgba(col,.5*al);ctx.lineWidth=1;ctx.beginPath();
+      for(let k=0;k<15;k++){const a=(k/14-.5)*2.7,px=X(x0)+Math.sin(a)*R*.98,py=cy+Math.cos(a)*R*.98;ctx.moveTo(px,py);ctx.lineTo(px,py+dr*(.55+.45*Math.cos(a)));}
+      ctx.stroke();}
+    ctx.beginPath();ctx.arc(X(x0),cy,Math.max(.5,R),0,7);
+    ctx.fillStyle=rgba(col,.15*al);ctx.fill();
+    ctx.strokeStyle=rgba(col,.9*al);ctx.lineWidth=1.5;ctx.stroke();
+  }
+  // 读数
+  $('show').textContent=fmt(t);
+  $('music').textContent=D.noMusic?'不放音乐':`音乐 ${mm(t-OFF)}`+(t<OFF?'（未开始）':'');
+  const si=SEC.findIndex(s=>t>=s.showStartS&&t<s.showEndS),cur=si<0?SEC.length-1:si,S=SEC[cur];
+  if(cur!==secIdx){secIdx=cur;$('sec').textContent=S.name;$('role').textContent=`领 ${SP[S.lead].name} · 接 ${SP[S.relay].name} · 插 ${SP[S.accent].name}`;
+    $('range').textContent=`演出 ${mmss(S.showStartS)}–${mmss(S.showEndS)} · 音乐 ${mmss(Math.max(0,S.musicStartS))}–${mmss(S.musicEndS)} · 小节 ${S.bar0+1}–${S.bar1}`;
+    $('detail').textContent=S.note;
+    [...tl.children].forEach((b,k)=>b.setAttribute('aria-current',k===cur?'true':'false'));}
+  let cc=null;for(const c of CU){if(c.t<=t+1e-6)cc=c;else break;}
+  if(cc&&t-cc.t<5){
+    const np=cc.pts.filter((p,i)=>cc.tm[i]&tier).length;
+    $('cue').textContent=`${cc.id} · ${SP[cc.sp].name}${cc.sz==='F'?'（扇）':cc.sz==='X'?'（小平台）':'（'+SZ[cc.sz].n+'）'}${D.b02?(cc.mb?' · PC + 手游':' · 只上 PC'):''} · ${cc.label} · ${np}/${cc.pts.length} 点`;
+    $('comp').textContent=`${cc.wave}${cc.dir?' · '+cc.dir:''}${cc.layer==='extra'?' · 叠层（低配不出）':''}`;
+  } else {$('cue').textContent='此刻没有新的 cue';$('comp').textContent='';}
+  $('counts').textContent=`此刻：升空中 ${nUp} · 球花 ${nS+nM+nL}（小 ${nS} · 中 ${nM} · 大 ${nL}${nGK?' · 金垂柳 '+nGK:''}） · 扇形 ${nFan} 点（托底 ${nBase}）${nX?' · 小平台小花 '+nX:''} · ${plat==='mobile'?'手游':'PC'}${['','高配','','中配','','','','低配'][tier===1?1:tier===2?3:7]}`;
+  cv.setAttribute('aria-label',`演出 ${fmt(t)} ${S.name}：升空中 ${nUp}，球花 ${nS+nM+nL}，扇形 ${nFan} 点`);
+  drawStrip();
+}
+
+// 音乐能量 + cue 条：横轴 = 演出时间；上半能量(rms)，下半 大 / 中 / 小 / 扇 四行 cue 刻度
+const ROWS={L:54,M:62,S:70,F:78,T:86,X:94};
+function drawStrip(){
+  const W=Math.max(300,st.parentElement.clientWidth),H=124,dpr=Math.min(2,devicePixelRatio||1);
+  if(st.width!==Math.round(W*dpr)||st.height!==Math.round(H*dpr)){st.width=Math.round(W*dpr);st.height=Math.round(H*dpr);st.style.height=H+'px';}
+  sx.setTransform(dpr,0,0,dpr,0,0);sx.fillStyle='#0b0c0e';sx.fillRect(0,0,W,H);
+  const X=s=>s/DUR*W,mono=getComputedStyle(document.body).getPropertyValue('--mono');
+  const roleA={'铺垫':.06,'推进':.10,'释放':.20,'留白':.0,'收束':.14};
+  SEC.forEach(s=>{sx.fillStyle=`rgba(255,255,255,${roleA[s.role]||0})`;sx.fillRect(X(s.showStartS),0,X(s.showEndS)-X(s.showStartS),H-16);
+    sx.fillStyle='rgba(255,255,255,.12)';sx.fillRect(X(s.showStartS),0,1,H-16);});
+  const E=D.energy,top=6,bot=50;
+  sx.beginPath();sx.moveTo(X(OFF),bot);
+  E.forEach(p=>{const v=Math.max(0,Math.min(1,(p.db+4)/18));sx.lineTo(X(p.m+OFF),bot-(bot-top)*v);});
+  sx.lineTo(X(E[E.length-1].m+OFF),bot);sx.closePath();sx.fillStyle='rgba(127,159,224,.28)';sx.fill();
+  sx.beginPath();E.forEach((p,i)=>{const v=Math.max(0,Math.min(1,(p.db+4)/18));const x=X(p.m+OFF),y=bot-(bot-top)*v;i?sx.lineTo(x,y):sx.moveTo(x,y);});
+  sx.strokeStyle='rgba(127,159,224,.9)';sx.lineWidth=1;sx.stroke();
+  sx.fillStyle='rgba(140,143,152,.9)';sx.font='10px '+mono;sx.textAlign='left';sx.textBaseline='middle';
+  if(D.countdown!==false)sx.fillText('倒计时',X(0)+4,12);
+  sx.textAlign='left';sx.fillStyle='#6a6c73';
+  for(const k of ['L','M','S','F','T','X'])sx.fillText(k==='F'?'扇':k==='T'?'托':k==='X'?'台':SZ[k].n,3,ROWS[k]);
+  CU.forEach(c=>{const y=ROWS[c.wave==='托底扇'?'T':c.sz],x=X(c.t);
+    if(!c.tm.some(m=>m&tier))return;
+    if(plat==='mobile'&&c.mb===0)return;
+    if(plat==='pc'&&c.mb===2)return;
+    if(c.wave==='托底扇'&&!showBase)return;
+    const col=colorBy==='sp'?SP[c.sp].rgb:(c.sz==='F'?'170,184,216':c.sz==='X'?'143,211,193':SZC[c.sz]);
+    sx.fillStyle=rgba(col,.95);sx.fillRect(Math.round(x),y-4,2,8);
+    if(c.span>=.4){sx.fillStyle=rgba(col,.35);sx.fillRect(Math.round(x),y-1,Math.max(1,X(c.span)),2);}
+  });
+  D.anchors.forEach(a=>{const x=Math.round(X(a.showS))+.5,u=a.source.indexOf('用户给定')===0;
+    sx.strokeStyle=u?'rgba(236,236,238,.7)':'rgba(236,236,238,.18)';sx.lineWidth=1;sx.setLineDash(u?[3,3]:[1,3]);
+    sx.beginPath();sx.moveTo(x,0);sx.lineTo(x,H-16);sx.stroke();sx.setLineDash([]);});
+  sx.fillStyle='#6a6c73';sx.textAlign='center';
+  for(let s=0;s<=DUR;s+=30){sx.fillRect(Math.round(X(s)),H-16,1,4);sx.fillText(mmss(s),Math.min(W-14,Math.max(14,X(s))),H-5);}
+  const px=Math.round(X(t))+.5;sx.strokeStyle='#ececee';sx.lineWidth=1.5;sx.beginPath();sx.moveTo(px,0);sx.lineTo(px,H-16);sx.stroke();
+}
+
+function sync(){seek.value=t;draw();}
+let looping=!!D.loop;
+function tick(now){if(!playing)return;t=Math.min(DUR,asrc?aT0+(actx.currentTime-aC0)*speed:t+(now-last)/1000*speed);last=now;
+  if(t>=DUR&&looping){t=0;if(asrc)sndStart();}
+  seek.value=t;draw();
+  if(t>=DUR)stop();else requestAnimationFrame(tick);}
+if(D.loop!==undefined){const lb=$('loopb');lb.hidden=false;lb.setAttribute('aria-pressed',looping);lb.addEventListener('click',()=>{looping=!looping;lb.setAttribute('aria-pressed',looping);});}
+let waiting=false;
+function begin(){waiting=false;if(t>=DUR)t=0;playing=true;play.textContent='暂停';last=performance.now();sndStart();requestAnimationFrame(tick);}
+play.addEventListener('click',()=>{if(playing){stop();return;}if(waiting)return;
+  if(AU&&sndOn&&!abuf&&aLoading){waiting=true;play.textContent='载入声音…';if(actx.state==='suspended')actx.resume();aLoading.finally(begin);return;}begin();});
+if(AU)sndLoad();   // 打开就在后台解码（约 1 s），第一次点播放从当前秒起就有声音
+seek.addEventListener('input',()=>{stop();t=+seek.value;draw();});
+// 上一波 / 下一波：在整排波（≥5 点的球花 cue 与扇组 cue 的起点，不含托底扇）之间跳
+const wavesOf=()=>[...new Set(CU.filter(c=>c.wave!=='托底扇'&&c.sz!=='X'&&(c.pts.length>=5||c.wave==='主角')).map(c=>+c.t.toFixed(2)))].sort((a,b)=>a-b);
+let WAVES=wavesOf();
+// 编排版本切换（B03 修订1 起：试版 / 现版对比，同一份声音）
+if(D.variants&&D.variants.length>1){const g=$('var');g.hidden=false;
+  D.variants.forEach((v,k)=>{const b=document.createElement('button');b.type='button';b.dataset.v=k;b.textContent=v.label;b.title=v.note||'';b.setAttribute('aria-pressed',k===0);g.appendChild(b);});
+  g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    const v=D.variants[+b.dataset.v];EV=v.events;CU=v.cues;SEC=v.sections;D.anchors=v.anchors;WAVES=wavesOf();secIdx=-1;buildTl();draw();}));}
+$('prev').addEventListener('click',()=>{stop();let v=0;for(const w of WAVES){if(w<t-.25)v=w;else break;}t=v;sync();});
+$('next').addEventListener('click',()=>{stop();let v=DUR;for(const w of WAVES){if(w>t+.25){v=w;break;}}t=Math.min(DUR,v);sync();});
+function stripSeek(ev){const r=st.getBoundingClientRect();t=Math.max(0,Math.min(DUR,(ev.clientX-r.left)/r.width*DUR));stop();sync();}
+let drag=false;st.addEventListener('pointerdown',e=>{drag=true;st.setPointerCapture(e.pointerId);stripSeek(e);});
+st.addEventListener('pointermove',e=>{if(drag)stripSeek(e);});
+st.addEventListener('pointerup',()=>{drag=false;});st.addEventListener('pointercancel',()=>{drag=false;});
+function group(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));fn(b.dataset.v);draw();}));}
+group('plat',v=>{plat=v;});group('speed',v=>{if(asrc)t=aT0+(actx.currentTime-aC0)*speed;speed=+v;last=performance.now();if(playing)sndStart();});group('tier',v=>{tier=+v;});group('view',v=>{view=v;});group('colorby',v=>{colorBy=v;});
+if(AU){const b=$('snd');b.hidden=false;b.addEventListener('click',()=>{if(asrc)t=aT0+(actx.currentTime-aC0)*speed;last=performance.now();sndOn=!sndOn;b.setAttribute('aria-pressed',sndOn);b.textContent=sndOn?'声音 开':'声音 关';
+  if(!sndOn)sndStop();else if(playing){if(abuf)sndStart();else sndLoad();}});}
+$('lab').addEventListener('click',()=>{labels=!labels;$('lab').setAttribute('aria-pressed',labels);draw();});
+$('tails').addEventListener('click',()=>{showTail=!showTail;$('tails').setAttribute('aria-pressed',showTail);draw();});
+$('basefan').addEventListener('click',()=>{showBase=!showBase;$('basefan').setAttribute('aria-pressed',showBase);draw();});
+addEventListener('keydown',e=>{if(e.code==='Space'&&!/INPUT|BUTTON|SUMMARY/.test(document.activeElement.tagName)){e.preventDefault();play.click();}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
+new ResizeObserver(()=>draw()).observe(cv.parentElement);
+
+// 花色图例 + 表格
+(function tables(){
+  $('sw').innerHTML=Object.entries(SP).filter(([k,s])=>s.sz!=='F'&&s.sz!=='X'&&s.events).map(([k,s])=>`<i style="--c:rgb(${s.rgb})">${s.name}</i>`).join('');
+  let s='<tr><th>段</th><th>演出</th><th>小节</th><th>领</th><th>接</th><th>插</th><th>条目</th><th>发射</th></tr>';
+  SEC.forEach(x=>{s+=`<tr><td>${x.name}</td><td>${mmss(x.showStartS)}–${mmss(x.showEndS)}</td><td>${x.bar0+1}–${x.bar1}</td><td>${SP[x.lead].name}</td><td>${SP[x.relay].name}</td><td>${SP[x.accent].name}</td><td>${x.cues}</td><td>${x.events}</td></tr>`;});
+  $('secs').innerHTML=s;
+  let h='<tr><th>花型</th><th>大小</th><th>升空 s</th><th>炸点高 m</th><th>尾缀 / 本体 GPU</th><th>条目</th><th>发射</th><th>同屏峰值（本体）</th></tr>';
+  Object.entries(SP).forEach(([k,x])=>{if(!x.events)return;const sz=x.sz==='F'?`${x.beams} 束`:x.sz==='X'?'小平台':`⌀${x.dia??SZ[x.sz].d} m`;
+    h+=`<tr><td>${x.name}</td><td>${sz}</td><td>${x.sz==='F'?'即发':x.rise}</td><td>${x.sz==='F'?'—':'+'+(x.h??D.native[x.sz])}</td><td>${x.gpu}</td><td>${x.cues}</td><td>${x.events}</td><td>${x.peak!=null?x.peak+'（'+mmss(x.peakAt)+'）':'—'}</td></tr>`;});
+  $('slots').innerHTML=h;
+  let a='<tr><th>音乐</th><th>演出</th><th>来源</th><th>说明</th></tr>';
+  D.anchors.forEach(x=>{a+=`<tr><td>${mm(x.musicS)}</td><td>${mm(x.showS)}</td><td>${x.source}</td><td class="wrapcell">${x.label}${x.note?'。'+x.note:''}</td></tr>`;});
+  $('anchors').innerHTML=a;
+  const F=D.fanStats,DIRS=['左→右','右→左','里→外','外→里','齐发'],SPS=Object.keys(SP).filter(k=>SP[k].sz==='F');
+  let f='<tr><th>托底扇（跟 M / L 尾缀同起）</th>'+DIRS.map(d=>`<th>${d}</th>`).join('')+'<th>合计</th></tr>';
+  SPS.forEach(k=>{const r=F.baseGrid[k]||{};const n=DIRS.reduce((a,d)=>a+(r[d]||0),0);if(!n)return;f+=`<tr><td>${SP[k].name}</td>`+DIRS.map(d=>`<td>${r[d]||'·'}</td>`).join('')+`<td>${n}</td></tr>`;});
+  f+=`<tr><td>托底 ${F.baseCues} 个 cue / ${F.baseEvents} 个扇（高配）；M / L 波 ${F.groups} 组，${F.baseCovered} 组有托底（${F.baseSkipped} 组没放：空小节 / 预算）</td><td colspan="6"></td></tr>`;
+  f+='<tr><th>扇组（单独放）</th><th colspan="6">时刻</th></tr>';
+  F.phrases.forEach(p=>{f+=`<tr><td>${p.name}（${p.events} 个）</td><td colspan="6" class="wrapcell">${p.times.map(mmss).join('　')}</td></tr>`;});
+  f+=`<tr><td>同时在场的扇束 GPU 发射器峰值</td><td colspan="6">${F.aliveGpuPeak}（24 实测 234 一次放干净，312 截断）</td></tr>`;
+  $('fanstat').innerHTML=f;
+  if(D.b02){$('plat').hidden=false;$('b02box').hidden=false;$('lg-combo').hidden=false;const M=D.b02.mobile,P=D.b02.pc;
+    let b='<tr><th>一张表（同一份事件）</th><th>高配</th><th>中配</th><th>低配</th></tr>';
+    b+=`<tr><td>PC</td><td>${P.high}</td><td>${P.medium}</td><td>${P.low}</td></tr><tr><td>手游（PlatformFlags 14）</td><td>${M.high}</td><td>${M.medium}</td><td>${M.low}</td></tr>`;
+    b+=`<tr><td class="wrapcell">手游放的花</td><td colspan="3" class="wrapcell">${D.b02.mobileSpecies}</td></tr>`;
+    b+=`<tr><td class="wrapcell">手游规则</td><td colspan="3" class="wrapcell">${D.b02.mobileRule}</td></tr>`;
+    b+=`<tr><td class="wrapcell">手游空档（> 8 s 没有花）</td><td colspan="3" class="wrapcell">${D.b02.mobileGaps}</td></tr>`;
+    b+='<tr><th>小平台小花束尾</th><th>束 / 花</th><th>挂花高</th><th>次数</th></tr>';
+    D.b02.combos.forEach(x=>{b+=`<tr><td>${x.name}</td><td>${x.beams} 束 / ${x.flowers} 朵</td><td>+${x.h} m</td><td>${x.n}</td></tr>`;});
+    b+=`<tr><td class="wrapcell">说明</td><td colspan="3" class="wrapcell">${D.b02.comboNote}</td></tr>`;
+    $('b02tbl').innerHTML=b;}
+  $('risks').innerHTML=D.risks.map(r=>`<li>${r}</li>`).join('');
+})();
+sync();
+})();
+</script>

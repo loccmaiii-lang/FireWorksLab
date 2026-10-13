@@ -174,14 +174,53 @@ def countdown_v2(cues, audio, zero_s=None):
         d = shift(c, q1(on[10 - n] - b.rise_of(c['sp'])) - min(e['launch'] for e in c['events']))
         cues.append(c)
         log.append(dict(n=n, pc=r['id'] + ' → R03_Red5', mobileStandin=c['id'], copyOf=src['id'], shift=d, burst=round(min(e['burst'] for e in c['events']), 2)))
-    # 零点组的托底扇原来跟尾缀同时起（零点前 4.4 s，正夹在 VO 4 和 3 之间，8 个点一齐出、像已经开场），挪到「点火」那一刻和开花一起出
-    zero = audio['zeroShowS'] if zero_s is None else zero_s
+    log += basefan_to_fire(cues, audio['zeroShowS'] if zero_s is None else zero_s)
+    cues.sort(key=lambda c: (min(e['launch'] for e in c['events']), c['id']))
+    return log
+
+
+def basefan_to_fire(cues, zero):
+    """零点组的托底扇原来跟尾缀同时起（零点前 4.4 s，正夹在 VO 4 和 3 之间，8 个点一齐出、像已经开场），挪到「点火」那一刻和开花一起出"""
+    log = []
     for c in cues:
         if c.get('wave') == '托底扇' and c['section'] == 'B01_S1':
             t0 = min(e['launch'] for e in c['events'])
             if zero - 5.0 < t0 < zero:
                 d = shift(c, q1(zero) - t0)
                 log.append(dict(baseFanToFire=c['id'], shift=d, launch=q1(zero)))
+    return log
+
+
+# 倒计时构图 v3（用户 10-13 21:29「前面的几个扇形构图不是很好看，你可以重新设置个倒计时构图」）：
+# 两遍「从两端往中间收」，每个数一发、PC 和手游同一套（全是白名单里的小号球花、只用 P 点，不要替身，不要扇）：
+#   10–6 小银菊略小、最低（K92 dz 0）：P0+P8 → P1+P7 → P2+P6 → P3+P5 → P4
+#   5–2 橙辉星（dz 10，寿命 3.2 s，比小银菊收得快，不压「点火」那排）：P0+P8 → … → P3+P5
+#   1   爆裂星 P4（寿命 1.5 s，一声脆响就收）→ 「点火」金芒菊从 P4 往外开
+# 颜色银 → 橙 → 金，一路往上抬；子模板（花型 + 大小 + 高度）全是 16.0.25 里已有的版本。
+CD_V3 = [(10, 'SC', 'R03_SilverChry__K92', 0.92, ['P0', 'P8'], 0.0), (9, 'SC', 'R03_SilverChry__K92', 0.92, ['P1', 'P7'], 0.0),
+         (8, 'SC', 'R03_SilverChry__K92', 0.92, ['P2', 'P6'], 0.0), (7, 'SC', 'R03_SilverChry__K92', 0.92, ['P3', 'P5'], 0.0),
+         (6, 'SC', 'R03_SilverChry__K92', 0.92, ['P4'], 0.0),
+         (5, 'OG', 'R03_OrangeGlitter', 1.0, ['P0', 'P8'], 10.0), (4, 'OG', 'R03_OrangeGlitter', 1.0, ['P1', 'P7'], 10.0),
+         (3, 'OG', 'R03_OrangeGlitter', 1.0, ['P2', 'P6'], 10.0), (2, 'OG', 'R03_OrangeGlitter', 1.0, ['P3', 'P5'], 10.0),
+         (1, 'CR', 'R03_Crackle', 1.0, ['P4'], 0.0)]
+
+
+def countdown_v3(cues, audio, zero):
+    on = audio['countdownOnsetsS']
+    old = [c['id'] for c in cues if c['section'] == 'B01_S0' and c.get('wave') == '倒计时']
+    cues[:] = [c for c in cues if c['id'] not in old]
+    log = [dict(removed=old)]
+    for n, sp, tid, k, pts, dz in CD_V3:
+        t, rise, life = on[10 - n], b.rise_of(sp), b.life_of(sp)
+        launch = q1(t - rise)
+        burst = round(launch + rise, 6)
+        ev = [dict(point=p, launch=launch, burst=burst, end=round(burst + life, 6), dz=dz, H=round(t, 4)) for p in pts]
+        name = b.SPECIES[sp][1]
+        cues.append(dict(id=f'B03_CD{n:02d}', section='B01_S0', sp=sp, templateId=tid, size='S', group='P', points=pts, order='together', gap=0.0,
+                         layer='main', tier='all', label=f'倒计时{name} {n}', name=f'倒计时 · 倒计时{name} {n}', wave='倒计时', events=ev, H0=round(t, 4),
+                         profiles={'medium': pts[:], 'low': pts[:]}, sizeK=k, mobile=True))
+        log.append(dict(n=n, sp=sp, tid=tid, pts=pts, dz=dz, burst=round(burst, 2), onset=t))
+    log += basefan_to_fire(cues, zero)
     cues.sort(key=lambda c: (min(e['launch'] for e in c['events']), c['id']))
     return log
 
@@ -211,12 +250,18 @@ def main():
     ap.add_argument('--out-dir', default=str(ROOT / '协作/编排B01'))
     ap.add_argument('--fill-opening', action='store_true', help='开场每 2 小节的空格用去掉的原「连续展开」主排补（默认不补）')
     ap.add_argument('--countdown-v2', action='store_true', help='10–7：PC 红彗星单束 → 五束；手游加小银菊替身（用户 10-13 20:38）')
+    ap.add_argument('--countdown-v3', action='store_true', help='倒计时重新构图：两遍从两端往中间收，银 → 橙 → 爆裂星，PC / 手游同一套（用户 10-13 21:29）')
     a = ap.parse_args()
     plan = json.loads(Path(a.base).read_text(encoding='utf-8'))
     audio = json.loads(Path(a.audio).read_text(encoding='utf-8'))
     zero = a.zero if a.zero is not None else audio['zeroShowS']
     cues, secs, log = retime(plan, audio, zero, a.fill_opening)
-    if a.countdown_v2:
+    if a.countdown_v3:
+        log['countdownV3'] = countdown_v3(cues, audio, zero)
+        on, ch = audio['countdownOnsetsS'], audio.get('voChat') or [{}]
+        secs[0]['note'] = (f"VO 闲话 {ch[0].get('start', 0):.1f}–{ch[-1].get('end', 0):.1f} s；VO 10→1 在 {on[0]:.2f}–{on[-1]:.2f} s，每个数一发，PC / 手游同一套："
+                           f"10–6 小银菊从两端往中间收到 P4，5–2 橙辉星再收一遍，1 爆裂星 P4；VO「点火」{audio.get('fireS', zero):.2f} s = 零点，金芒菊从 P4 往外开 + 银扇托底")
+    elif a.countdown_v2:
         log['countdownV2'] = countdown_v2(cues, audio, zero)
         on, ch = audio['countdownOnsetsS'], audio.get('voChat') or [{}]
         secs[0]['note'] = (f"VO 闲话 {ch[0].get('start', 0):.1f}–{ch[-1].get('end', 0):.1f} s；VO 10→1 在 {on[0]:.2f}–{on[-1]:.2f} s，每一声都有一发：PC 10–7 红彗星五束从两端往里（B0+B7 → B3+B4，起飞 = 喊数），"

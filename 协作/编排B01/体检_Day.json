@@ -1,0 +1,92 @@
+{
+ "tiers": {
+  "high": {
+   "events": 20
+  },
+  "medium": {
+   "events": 20
+  },
+  "low": {
+   "events": 18
+  }
+ },
+ "b02": {
+  "mobileTiers": {
+   "high": {
+    "events": 15,
+    "bySpecies": {
+     "小银菊": 8,
+     "橙辉星": 2,
+     "金芒菊": 1,
+     "爆裂星": 3,
+     "金锦菊": 1
+    }
+   },
+   "medium": {
+    "events": 15,
+    "bySpecies": {
+     "小银菊": 8,
+     "橙辉星": 2,
+     "金芒菊": 1,
+     "爆裂星": 3,
+     "金锦菊": 1
+    }
+   },
+   "low": {
+    "events": 13,
+    "bySpecies": {
+     "小银菊": 6,
+     "橙辉星": 2,
+     "金芒菊": 1,
+     "爆裂星": 3,
+     "金锦菊": 1
+    }
+   }
+  }
+ },
+ "gpu": {
+  "peak": 30,
+  "peakAt": 17.6,
+  "soft": 200
+ },
+ "overlap": {
+  "pc-high": {
+   "incidents": [],
+   "gaps": []
+  },
+  "pc-medium": {
+   "incidents": [],
+   "gaps": []
+  },
+  "pc-low": {
+   "incidents": [],
+   "gaps": []
+  },
+  "mobile-high": {
+   "incidents": [],
+   "gaps": []
+  },
+  "mobile-medium": {
+   "incidents": [],
+   "gaps": []
+  },
+  "mobile-low": {
+   "incidents": [],
+   "gaps": []
+  }
+ },
+ "maxAliveBalls": 6,
+ "lastEndS": 26.65,
+ "quietTailS": 3.35,
+ "newVersions": [],
+ "mobileRuleBreaks": [],
+ "noSpoiler": [],
+ "aliveBySpecies": {},
+ "baseFans": {
+  "groups": 0,
+  "skipped": []
+ },
+ "fanSummary": {
+  "aliveGpuPeak": 30
+ }
+}

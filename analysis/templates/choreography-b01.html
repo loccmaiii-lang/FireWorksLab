@@ -76,6 +76,7 @@ td.wrapcell{white-space:normal;min-width:220px;}
     <button type="button" id="prev" aria-label="上一波">◀ 上一波</button>
     <button type="button" id="next" aria-label="下一波">下一波 ▶</button>
     <div class="seg" id="speed" role="group" aria-label="播放速度"><button type="button" data-v="1" aria-pressed="true">1×</button><button type="button" data-v="2" aria-pressed="false">2×</button><button type="button" data-v="4" aria-pressed="false">4×</button></div>
+    <button type="button" id="loopb" aria-pressed="false" hidden title="播到结尾接着从头播，看循环接缝">循环</button>
     <button type="button" id="snd" aria-pressed="true" hidden title="跟着播放 / 拖动 / 倍速同步；2× / 4× 声音会变快变调">声音 开</button>
     <div class="seg" id="var" role="group" aria-label="编排版本" hidden></div>
     <div class="seg" id="plat" role="group" aria-label="平台" hidden><button type="button" data-v="pc" aria-pressed="true">PC</button><button type="button" data-v="mobile" aria-pressed="false">手游</button></div>
@@ -189,6 +190,7 @@ function combo(e,age,X,Z,sc,x0,z0){
 
 function countdown(W,H){
   if(D.vo){voCountdown(W,H);return;}
+  if(D.countdown===false)return;
   if(t>=10.5)return;
   const fs=Math.min(150,H*.34);ctx.textAlign='center';ctx.textBaseline='middle';
   let txt,al;
@@ -289,7 +291,7 @@ function draw(){
   }
   // 读数
   $('show').textContent=fmt(t);
-  $('music').textContent=`音乐 ${mm(t-OFF)}`+(t<OFF?'（未开始）':'');
+  $('music').textContent=D.noMusic?'不放音乐':`音乐 ${mm(t-OFF)}`+(t<OFF?'（未开始）':'');
   const si=SEC.findIndex(s=>t>=s.showStartS&&t<s.showEndS),cur=si<0?SEC.length-1:si,S=SEC[cur];
   if(cur!==secIdx){secIdx=cur;$('sec').textContent=S.name;$('role').textContent=`领 ${SP[S.lead].name} · 接 ${SP[S.relay].name} · 插 ${SP[S.accent].name}`;
     $('range').textContent=`演出 ${mmss(S.showStartS)}–${mmss(S.showEndS)} · 音乐 ${mmss(Math.max(0,S.musicStartS))}–${mmss(S.musicEndS)} · 小节 ${S.bar0+1}–${S.bar1}`;
@@ -323,7 +325,7 @@ function drawStrip(){
   sx.beginPath();E.forEach((p,i)=>{const v=Math.max(0,Math.min(1,(p.db+4)/18));const x=X(p.m+OFF),y=bot-(bot-top)*v;i?sx.lineTo(x,y):sx.moveTo(x,y);});
   sx.strokeStyle='rgba(127,159,224,.9)';sx.lineWidth=1;sx.stroke();
   sx.fillStyle='rgba(140,143,152,.9)';sx.font='10px '+mono;sx.textAlign='left';sx.textBaseline='middle';
-  sx.fillText('倒计时',X(0)+4,12);
+  if(D.countdown!==false)sx.fillText('倒计时',X(0)+4,12);
   sx.textAlign='left';sx.fillStyle='#6a6c73';
   for(const k of ['L','M','S','F','T','X'])sx.fillText(k==='F'?'扇':k==='T'?'托':k==='X'?'台':SZ[k].n,3,ROWS[k]);
   CU.forEach(c=>{const y=ROWS[c.wave==='托底扇'?'T':c.sz],x=X(c.t);
@@ -344,8 +346,12 @@ function drawStrip(){
 }
 
 function sync(){seek.value=t;draw();}
-function tick(now){if(!playing)return;t=Math.min(DUR,asrc?aT0+(actx.currentTime-aC0)*speed:t+(now-last)/1000*speed);last=now;seek.value=t;draw();
+let looping=!!D.loop;
+function tick(now){if(!playing)return;t=Math.min(DUR,asrc?aT0+(actx.currentTime-aC0)*speed:t+(now-last)/1000*speed);last=now;
+  if(t>=DUR&&looping){t=0;if(asrc)sndStart();}
+  seek.value=t;draw();
   if(t>=DUR)stop();else requestAnimationFrame(tick);}
+if(D.loop!==undefined){const lb=$('loopb');lb.hidden=false;lb.setAttribute('aria-pressed',looping);lb.addEventListener('click',()=>{looping=!looping;lb.setAttribute('aria-pressed',looping);});}
 let waiting=false;
 function begin(){waiting=false;if(t>=DUR)t=0;playing=true;play.textContent='暂停';last=performance.now();sndStart();requestAnimationFrame(tick);}
 play.addEventListener('click',()=>{if(playing){stop();return;}if(waiting)return;
