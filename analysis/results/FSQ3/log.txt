@@ -1,0 +1,24 @@
+12:11:51 第 1/2 步：金曜菊金锦层三档演示
+12:11:55   写好 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\FSQ3\演示
+12:11:55   ✅ 金曜菊金锦层三档演示（0.1 分钟）
+12:11:55 第 2/2 步：基准回归 4.9.73 → 4.9.74 花型模板 6 个
+12:12:09     FireworkBaker.html kiku 4.9.73
+12:12:09     FireworkBaker.html botan 4.9.73
+12:12:09     FireworkBaker.html kamuro 4.9.73
+12:12:09     FireworkBaker.html senrin 4.9.73
+12:12:09     FireworkBaker.html strobe 4.9.73
+12:12:09     FireworkBaker.html crackle 4.9.73
+12:12:09     FireworkBaker.html kiku 4.9.74
+12:12:09     FireworkBaker.html botan 4.9.74
+12:12:09     FireworkBaker.html kamuro 4.9.74
+12:12:09     FireworkBaker.html senrin 4.9.74
+12:12:09     FireworkBaker.html strobe 4.9.74
+12:12:09     FireworkBaker.html crackle 4.9.74
+12:12:09   ✅ kiku 帧计划相同 [{"t": 0.528, "max": 0, "frac": 0.0}, {"t": 1.54, "max": 0, "frac": 0.0}, {"t": 3.08, "max": 0, "frac": 0.0}]
+12:12:09   ✅ botan 帧计划相同 [{"t": 0.378, "max": 0, "frac": 0.0}, {"t": 1.102, "max": 0, "frac": 0.0}, {"t": 2.205, "max": 0, "frac": 0.0}]
+12:12:09   ✅ kamuro 帧计划相同 [{"t": 0.816, "max": 0, "frac": 0.0}, {"t": 2.38, "max": 0, "frac": 0.0}, {"t": 4.76, "max": 0, "frac": 0.0}]
+12:12:09   ✅ senrin 帧计划相同 [{"t": 0.384, "max": 0, "frac": 0.0}, {"t": 1.12, "max": 0, "frac": 0.0}, {"t": 2.24, "max": 0, "frac": 0.0}]
+12:12:09   ✅ strobe 帧计划相同 [{"t": 0.534, "max": 0, "frac": 0.0}, {"t": 1.557, "max": 0, "frac": 0.0}, {"t": 3.115, "max": 0, "frac": 0.0}]
+12:12:09   ✅ crackle 帧计划相同 [{"t": 0.408, "max": 0, "frac": 0.0}, {"t": 1.802, "max": 0, "frac": 0.0}, {"t": 2.04, "max": 0, "frac": 0.0}]
+12:12:09   ✅ 基准回归 4.9.73 → 4.9.74 花型模板 6 个（0.2 分钟）
+12:12:09 完成，用时 0.3 分钟
