@@ -7570,6 +7570,19 @@
     "file": "对话记录/对话框comet&silver3.0.md",
     "hash": "fb3bc87cf3dd"
    }
+  },
+  {
+   "g": "夜班 10-13 23:20",
+   "src": "对话记录/夜班.md:9",
+   "quote": "C01 跨年秀宪章过期几处：跳过、留「待派」",
+   "kind": "AI 欠你",
+   "result": "已在看板",
+   "board": "n08",
+   "evidence": "派活队列 C01 仍「待派」（22 在线跳过），看板 n08 未关",
+   "checkbox": {
+    "file": "对话记录/夜班.md",
+    "hash": "7ecde112ab6f"
+   }
   }
  ]
 }
