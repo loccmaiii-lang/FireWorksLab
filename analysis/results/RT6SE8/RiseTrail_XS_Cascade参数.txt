@@ -1,0 +1,130 @@
+烟花效果：RiseTrail_XS
+工具：烟花母版烘焙器 4.9.78
+完整序列 · PC/手机以各自 cascade 配置为准；单位 cm、cm/s、秒。
+PC「近段 + 远段合成一张」（4.9.73，用户 10-12 21:34 / 23:49）：1 个发射器 TrailFull = 星头 + 全部火花（不分近段 / 远段）烘成一张世界坐标全程序列，32×1 格 × 4 通道 = 128 帧（上升 89 帧、开花后 39 帧，帧号曲线不匀速），面片 10.2 × 198.5 m 立在发射点上（中心在上方 93.8 m），0 s 出现、播 4.8 s；规范 v1 §6：1 层大面片、1 个发射器、没有 GPU。PC 放在 GPU 的那份火花烘进了贴图；落火 / 末段爆亮只在 GPU 里，手机没有。星头在贴图里一帧帧往上走（快门拖影），上升快的段每个 tick 一帧；800 m 外每帧最多挪 3.11 像素。一个曝光（远段的）：PC 近段单独压的白热段曝光 × 0.8 这里没有，星头和白热段比 PC 白一点。Initial Velocity 向上 50 cm/s 和 PC 远段一样（面片往上平移、贴图内容已补回，不能删）。未经 UE 验证。
+[
+  {
+    "name": "TrailFull",
+    "material": "full",
+    "gpu": false,
+    "max_alive": 1,
+    "required": {
+      "screen_alignment": "Rectangle",
+      "duration_s": 4.8,
+      "loops": 1,
+      "delay_s": 0,
+      "cutout": "cutoutFull",
+      "max_draw_count": 1,
+      "pivot_offset": [
+        -0.5,
+        -0.5
+      ],
+      "local_space": true
+    },
+    "spawn": {
+      "rate": {
+        "const": 0
+      },
+      "bursts": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "modules": [
+      {
+        "m": "Lifetime",
+        "Lifetime": {
+          "const": 4.8
+        }
+      },
+      {
+        "m": "InitialLocation",
+        "StartLocation": {
+          "const": [
+            -35,
+            0,
+            9380
+          ]
+        }
+      },
+      {
+        "m": "InitialVelocity",
+        "StartVelocity": {
+          "const": [
+            0,
+            0,
+            50
+          ]
+        }
+      },
+      {
+        "m": "InitialSize",
+        "StartSize": {
+          "const": [
+            1019.2,
+            19847.9,
+            1
+          ]
+        }
+      },
+      {
+        "m": "OrientationAxisLock",
+        "flags": "EPAL_ROTATE_Z",
+        "note": "和 PC 远段一样：面片绕组件 Z 轴转向镜头；Screen Alignment = Rectangle、Required 勾 Local Space（整根尾缀转组件倾斜时一起倾）"
+      },
+      {
+        "m": "DynamicParameter",
+        "params": {
+          "frame": {
+            "curve": [
+              [
+                0,
+                0.01
+              ],
+              [
+                0.7778,
+                112.01
+              ],
+              [
+                0.9861,
+                127.01
+              ],
+              [
+                1,
+                127.99
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "m": "ColorOverLife",
+        "ColorOverLife": {
+          "curve": [
+            [
+              0,
+              [
+                4,
+                4,
+                4
+              ]
+            ],
+            [
+              1,
+              [
+                4,
+                4,
+                4
+              ]
+            ]
+          ]
+        },
+        "AlphaOverLife": {
+          "const": 1
+        }
+      }
+    ]
+  }
+]

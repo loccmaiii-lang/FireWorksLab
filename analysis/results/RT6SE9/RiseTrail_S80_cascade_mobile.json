@@ -1,0 +1,241 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "RiseTrail_S80_M",
+ "platform": "mobile",
+ "tier": "M",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.78",
+  "type": "tailS",
+  "form": "emitset",
+  "quality": {
+   "ss": 2,
+   "hz": 300
+  },
+  "plan_sig": "58cffb92"
+ },
+ "textures": {
+  "full": {
+   "file": "T_EFX_FireWorks_RiseTrail_S_Full_32x1_01.png",
+   "class": "flipbook",
+   "cols": 32,
+   "rows": 1,
+   "channels": 4,
+   "frames": 128,
+   "asset": "T_EFX_FireWorks_RiseTrail_S_Full_32x1_01",
+   "sha256": "967906c98e8e5adb88e22267e7dc7ec350c311c20e6be3ceac1ca8b85b8cda45"
+  },
+  "cutoutFull": {
+   "file": "T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_C.png",
+   "class": "cutout",
+   "asset": "T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_C",
+   "save_est": 0.261,
+   "hash": "1307a3ca50d131731ba4",
+   "sha256": "f372aada49381d306ad974831e6ad415dc082ab3daa450a96ed00d3a18c99a7d"
+  },
+  "ramp": {
+   "file": "T_EFX_FireWorks_RiseTrail_S_R.png",
+   "class": "ramp",
+   "asset": "T_EFX_FireWorks_RiseTrail_S_R",
+   "hash": "28abf8883776feb2134",
+   "sha256": "5795034fc84d5e400bffaabc3d83db67d7689a2cc71d6dcee2c3c495a0d011e9"
+  }
+ },
+ "materials": {
+  "full": {
+   "role": "beam_flipbook",
+   "textures": {
+    "main": "full",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 1,
+    "cols": 32
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 16002,
+  "preview_warmup_s": 0
+ },
+ "emitters": [
+  {
+   "name": "TrailFull",
+   "material": "full",
+   "gpu": false,
+   "max_alive": 1,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 3.1147,
+    "loops": 1,
+    "delay_s": 0,
+    "cutout": "cutoutFull",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.5
+    ],
+    "local_space": true
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 3.1147
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       -14.74,
+       0,
+       3949.92
+      ]
+     }
+    },
+    {
+     "m": "InitialVelocity",
+     "StartVelocity": {
+      "const": [
+       0,
+       0,
+       32.44
+      ]
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       429.19,
+       8357.95,
+       1
+      ]
+     }
+    },
+    {
+     "m": "OrientationAxisLock",
+     "flags": "EPAL_ROTATE_Z",
+     "note": "和 PC 远段一样：面片绕组件 Z 轴转向镜头；Screen Alignment = Rectangle、Required 勾 Local Space（整根尾缀转组件倾斜时一起倾）"
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.01
+        ],
+        [
+         0.7778,
+         112.01
+        ],
+        [
+         0.9861,
+         127.01
+        ],
+        [
+         1,
+         127.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         4,
+         4,
+         4
+        ]
+       ],
+       [
+        1,
+        [
+         4,
+         4,
+         4
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ]
+  }
+ ],
+ "notes": [
+  "手机 _M「近段 + 远段合成一张」（4.9.73，用户 10-12 21:34 / 23:49）：1 个发射器 TrailFull = 星头 + 全部火花（不分近段 / 远段）烘成一张世界坐标全程序列，32×1 格 × 4 通道 = 128 帧（上升 89 帧、开花后 39 帧，帧号曲线不匀速），面片 10.2 × 198.5 m 立在发射点上（中心在上方 93.8 m），0 s 出现、播 4.8 s；规范 v1 §6：1 层大面片、1 个发射器、没有 GPU。PC 放在 GPU 的那份火花烘进了贴图；落火 / 末段爆亮只在 GPU 里，手机没有。星头在贴图里一帧帧往上走（快门拖影），上升快的段每个 tick 一帧；800 m 外每帧最多挪 3.11 像素。一个曝光（远段的）：PC 近段单独压的白热段曝光 × 0.8 这里没有，星头和白热段比 PC 白一点。Initial Velocity 向上 50 cm/s 和 PC 远段一样（面片往上平移、贴图内容已补回，不能删）。未经 UE 验证。",
+  "按尺寸标定 v4「坝顶·低层小号尾缀」：开花高度 80 m（原样 190 m）→ 所有长度 × 0.4211，时间按下一条处理、帧号 / 贴图不变；spec/尺寸标定.json",
+  "尺寸档「坝顶·低层小号尾缀」按时间也缩（4.9.78，用户 10-13 18:47）：长度 × 0.4211、时间 × 0.6489（= √0.4211，重力看着对）→ 升空 1.9171 s（原 2.9544 s）。Lifetime / Duration / Delay × 0.6489，Initial Velocity ÷ 0.6489；帧号曲线、颜色按相对寿命不变；贴图沿用原效果。"
+ ],
+ "naming": {
+  "rule": "T_EFX_FireWorks_<名称>[_<层>]_<列>x<行>_<序号>[_HD]；Cut _C、Ramp _R PC 和手机共用",
+  "base": "RiseTrail_S",
+  "layers": [
+   ""
+  ],
+  "asset_names": "textures[].asset",
+  "prefix_included": true,
+  "system": "RiseTrail_S80"
+ },
+ "derived": {
+  "from": "RiseTrail_S",
+  "system": "RiseTrail_S80",
+  "spec": "T_SLOW",
+  "note": "派生资源：贴图沿用原效果那一套（规范 v1 §2），只有粒子 / 系统名不同"
+ },
+ "export_scale": 0.4211,
+ "size_spec": {
+  "id": "T_SLOW",
+  "name": "坝顶·低层小号尾缀",
+  "version": 4,
+  "what": "height",
+  "target_m": 80,
+  "measured_m": 190,
+  "k": 0.4211,
+  "tk": 0.6489,
+  "rise_s": 1.9171,
+  "rise_src_s": 2.9544
+ },
+ "texture_tidy": {
+  "rule": "Cutout 估省 < 10%（8 顶点多边形外的面积）不出、发射器不设 Cutout Texture；同一个包里内容一样的 Ramp / Cutout 只留一张；textures[].hash = 内容指纹，导入时已有同 hash 的资产可直接复用",
+  "cutout_min_save": 0.1,
+  "merged": [],
+  "cutout_dropped": [],
+  "baker": "4.9.78"
+ }
+}

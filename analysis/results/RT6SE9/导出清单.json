@@ -1,0 +1,26 @@
+{
+ "effect": "trail_phys",
+ "entry": "RT6S",
+ "ver": "00659261·emitset4.9.69·size4-T_S-undefined-150",
+ "time": "2026-10-13 19:02",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "RiseTrail_S80",
+   "replica": "RT6S",
+   "files": [
+    "RiseTrail_S80.json",
+    "RiseTrail_S80_Cascade参数.txt",
+    "RiseTrail_S80_Mobile.json",
+    "RiseTrail_S80_曲线.csv",
+    "T_EFX_FireWorks_RiseTrail_S_Full_32x1_01.png",
+    "T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_C.png",
+    "T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_HD.png",
+    "T_EFX_FireWorks_RiseTrail_S_R.png",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

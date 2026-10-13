@@ -1,0 +1,8 @@
+19:01:53 开始：RiseTrail_Hero（导出素材）
+19:02:18 RiseTrail_Hero 导出 25 秒：RiseTrail_Hero.json、RiseTrail_Hero_Cascade参数.txt、RiseTrail_Hero_Mobile.json、RiseTrail_Hero_曲线.csv、T_EFX_FireWorks_RiseTrail_L_Full_32x2_01.png、T_EFX_FireWorks_RiseTrail_L_Full_32x2_01_C.png、T_EFX_FireWorks_RiseTrail_L_Full_32x2_01_HD.png、T_EFX_FireWorks_RiseTrail_L_R.png、cascade.json、cascade_mobile.json、命名对照.txt
+19:02:19 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT6LE9\回放检查.jpg（❌ RiseTrail_Hero：12 帧碰到格子内圈）
+19:02:51 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT6LE9\烘焙回放.jpg
+19:02:51 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT6LE9\烘焙回放_原尺寸.jpg
+19:02:51 烘焙器预览没做成（不影响导出）：'texture'
+19:02:51 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+19:02:52 完成，用时 1.0 分钟

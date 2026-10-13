@@ -1,0 +1,8 @@
+﻿段,曲线,相对时间,值1,值2,值3
+TrailFull,DynamicParameter_帧号,0,0.01,,
+TrailFull,DynamicParameter_帧号,0.6519,221.01,,
+TrailFull,DynamicParameter_帧号,0.8466,243.01,,
+TrailFull,DynamicParameter_帧号,0.9882,255.01,,
+TrailFull,DynamicParameter_帧号,1,255.99,,
+TrailFull,ColorOverLife_线性RGB,0,6,6,6
+TrailFull,ColorOverLife_线性RGB,1,6,6,6

@@ -1,0 +1,8 @@
+19:01:59 开始：RiseTrail_XS（导出素材）
+19:02:04 RiseTrail_XS 导出 5 秒：RiseTrail_XS.json、RiseTrail_XS_Cascade参数.txt、RiseTrail_XS_Mobile.json、RiseTrail_XS_曲线.csv、T_EFX_FireWorks_RiseTrail_S_Full_32x1_01.png、T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_C.png、T_EFX_FireWorks_RiseTrail_S_Full_32x1_01_HD.png、T_EFX_FireWorks_RiseTrail_S_R.png、cascade.json、cascade_mobile.json、命名对照.txt
+19:02:05 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT6SE8\回放检查.jpg（❌ RiseTrail_XS：30.0 fps 只显示 80/128 帧、2 帧碰到格子内圈）
+19:02:24 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT6SE8\烘焙回放.jpg
+19:02:24 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\RT6SE8\烘焙回放_原尺寸.jpg
+19:02:24 烘焙器预览没做成（不影响导出）：'texture'
+19:02:24 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+19:02:24 完成，用时 0.4 分钟
