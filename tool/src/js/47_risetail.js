@@ -1214,7 +1214,8 @@ function rtFullStateAt(b, t) {
   return { f: clamp(Math.floor(evalKeys(fa.keys, u)), 0, b.meta.L.F - 1), x: fa.cx, z: fa.cz + (fa.vz || 0) * (t - fa.t0), w: fa.Ww, h: fa.Wh };
 }
 function renderEmitExportFull(b) {
-  const P = b.P, M = state.M, t = engineTick(state.t), view = rtView(P, b, t), kw = typeof exportWidthNow === 'function' ? exportWidthNow() : 1;
+  const tkN = typeof exportTimeNow === 'function' && !b.esHead ? exportTimeNow() : 1;     // 4.9.78 尺寸档按时间缩：回放按导出的时间放
+  const P = b.P, M = state.M, t = engineTick(state.t) / tkN, view = rtView(P, b, t), kw = typeof exportWidthNow === 'function' ? exportWidthNow() : 1;
   hdrT.clear(); hdrT.bind(); additive(true);
   const s = rtOn('full') ? rtFullStateAt(b, t) : null, tilt = rtTiltNow(b), th = -tilt * Math.PI / 180;
   if (s) {
@@ -1228,7 +1229,7 @@ function renderEmitExportFull(b) {
   }
   additive(false); post();
   rtLayerBarSync([['full', null, false]]);
-  const fa = b.meta.full, dist = state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m` : '';
+  const fa = b.meta.full, dist = (state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m` : '') + (tkN !== 1 ? ` · 按尺寸档时间 × ${tkN}` : '');
   hudText = `引擎回放 · ${b.esMobile ? '手机 _M' : 'PC'}（近段 + 远段合成一张）· ${!rtOn('full') ? '（分层看关了）' : s ? '第 ' + (s.f + 1) + '/' + b.meta.L.F + ' 帧' : '已结束'} · 面片 ${fa.Ww.toFixed(1)} × ${fa.Wh.toFixed(1)} m · 1 个发射器、没有粒子${dist}${rtShowNote()}`;
   if (tilt) hudText += ` · 倾斜预览 ${tilt}°（Rectangle + 锁 Z + Local Space，整张跟组件倾；以 UE 实测为准）`;
   hudB = '';

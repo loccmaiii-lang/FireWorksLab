@@ -184,7 +184,8 @@ function fwlScaleJSON(j, k, keep, spec) {
   if (!keep && j.system && j.system.preview_distance_cm) j.system.preview_distance_cm = Math.round(j.system.preview_distance_cm * k);
   if (spec) {     // 4.9.51 按尺寸标定：名字不加后缀（这就是这个效果的正式大小），写清用的哪一版、哪个规格、量出来多大
     j.export_scale = k; j.size_spec = { id: spec.id, name: spec.name, version: spec.version, what: spec.what, target_m: spec.target, measured_m: spec.measured, k };
-    (j.notes = j.notes || []).push(`按尺寸标定 v${spec.version}「${spec.name}」：${spec.what === 'height' ? '开花高度' : '花径'} ${spec.target} m（原样 ${spec.measured} m）→ 所有长度 × ${k}，时间 / 帧号 / 贴图不变（用户 10-09 00:27「只改大小，其他都不变」；spec/尺寸标定.json）`);
+    (j.notes = j.notes || []).push(`按尺寸标定 v${spec.version}「${spec.name}」：${spec.what === 'height' ? '开花高度' : '花径'} ${spec.target} m（原样 ${spec.measured} m）→ 所有长度 × ${k}，${spec.tk && spec.tk !== 1 && !keep ? '时间按下一条处理、帧号 / 贴图不变' : '时间 / 帧号 / 贴图不变（用户 10-09 00:27「只改大小，其他都不变」）'}；spec/尺寸标定.json`);
+    if (spec.tk && spec.tk !== 1 && !keep) fwlTimeScale(j, spec);     // 4.9.78 Froude：时间 × √k
     if (j.source && j.emitters) j.source.plan_sig = fwlPlanSig(j.emitters);
     return j;
   }
@@ -194,6 +195,31 @@ function fwlScaleJSON(j, k, keep, spec) {
     ? `导出缩放 × ${k} · 升空高度不变（用户 10-07 16:15 / 16:2x）：只缩粗细——序列面片（循环层 / 远段 / 消散）Initial Size 只 X × ${k}、软圆点 / 线状火花 Initial Size × ${k}、随机散开的初速和球面半径 × ${k}；出生位置、弹道、加速度、时间、帧号不变 → 升空时间、高度、尾长和原样一样。粒子系统名加 ${exportScaleSfx(k, keep)}，贴图名不变、几档共用`
     : `导出缩放 × ${k}（用户 10-07 14:56）：所有长度（面片大小、位置、球面半径、速度、加速度）× ${k}，时间 / 帧号 / 贴图不变；粒子系统名加 ${exportScaleSfx(k)}，贴图名不变、几档共用${j.emitters && j.emitters.some(e => e.name === 'RiseLoop') ? `；升空尾缀的升空高度也 × ${k}` : ''}`);
   if (j.source && j.emitters) j.source.plan_sig = fwlPlanSig(j.emitters);
+  return j;
+}
+// 4.9.78 尺寸档按时间缩（用户 10-13 18:47「XS用1.69秒」）：长度已 × k，这里时间 × tk（= √k，Froude：重力、下坠看着和原大一样对）。
+//   只对「合成一张」这种一个序列面片、没有粒子的配置做（Lifetime / Duration / Delay × tk、初速 ÷ tk；帧号、颜色按相对寿命，不用动）；
+//   配置里有别的模块（粒子、速度曲线、阻力、加速度）就不缩时间、写一条说明——那种只能按长度缩（时间和原效果一样）
+const FWL_TIME_OK = new Set(['Lifetime', 'InitialLocation', 'InitialVelocity', 'InitialSize', 'OrientationAxisLock', 'DynamicParameter', 'ColorOverLife', 'ColorScaleOverLife']);
+function fwlTimeScalable(j) {
+  return (j.emitters || []).length > 0 && j.emitters.every(e => !e.gpu && (e.modules || []).every(m => FWL_TIME_OK.has(m.m))
+    && !(e.spawn && e.spawn.rate && (e.spawn.rate.curve || +e.spawn.rate.const > 0)) && (e.modules || []).every(m => m.m !== 'DynamicParameter' || !m.params || Object.keys(m.params).every(q => q === 'frame')));
+}
+function fwlTimeScale(j, spec) {
+  const tk = spec.tk, T = x => +(x * tk).toFixed(4);
+  if (!fwlTimeScalable(j)) {
+    j.size_spec.tk = 1; j.size_spec.time_skipped = true;
+    (j.notes = j.notes || []).push(`尺寸档「${spec.name}」要按时间缩（× ${tk}，升空 ${spec.rise || '—'} s），但这份配置有粒子 / 速度曲线等模块，只能按长度缩：时间和原效果一样（${spec.riseSrc || '—'} s）。要按时间缩请在产物表选「合成一张」。`);
+    return j;
+  }
+  for (const e of j.emitters) {
+    const r = e.required || {}; if (r.duration_s != null) r.duration_s = T(r.duration_s); if (r.delay_s != null) r.delay_s = T(r.delay_s);
+    if (e.spawn && Array.isArray(e.spawn.bursts)) e.spawn.bursts = e.spawn.bursts.map(([t, n]) => [T(t), n]);
+    e.modules = e.modules.map(m => m.m === 'Lifetime' ? { ...m, Lifetime: m.Lifetime && 'const' in m.Lifetime ? { ...m.Lifetime, const: T(m.Lifetime.const) } : m.Lifetime }
+      : m.m === 'InitialVelocity' && m.StartVelocity && Array.isArray(m.StartVelocity.const) ? { ...m, StartVelocity: { ...m.StartVelocity, const: m.StartVelocity.const.map(v => +(v / tk).toFixed(2)) } } : m);
+  }
+  j.size_spec.tk = tk; if (spec.rise) { j.size_spec.rise_s = spec.rise; j.size_spec.rise_src_s = spec.riseSrc; }
+  (j.notes = j.notes || []).push(`尺寸档「${spec.name}」按时间也缩（4.9.78，用户 10-13 18:47）：长度 × ${spec.k}、时间 × ${tk}（= √${spec.k}，重力看着对）→ 升空 ${spec.rise || '—'} s（原 ${spec.riseSrc || '—'} s）。Lifetime / Duration / Delay × ${tk}，Initial Velocity ÷ ${tk}；帧号曲线、颜色按相对寿命不变；贴图沿用原效果。`);
   return j;
 }
 // 素材包文件里所有 cascade*.json 按缩放改；返回新的文件表
@@ -228,7 +254,7 @@ function sizeClasses(what) {
     const z = SIZE_ZONE[sp.zone] || sp.zone || '', cid = `cls:${what === 'height' ? 'h' : fan ? 'df' : 'd'}:${sp.zone}:${v}`;
     const name = what === 'height' ? `${z}开花高度 ${v} m` : fan ? `${z}扇形 ${v} m（两倍飞行长度）` : sp.kind === 'comet' ? `${z}彗星 ${v} m` : `${z}${sp.zone === 'dam' ? SIZE_KIND[sp.kind] || '' : ''} ${v} m`;
     const c = m.get(cid) || { id: cid, name, group: what === 'height' ? '开花高度' : fan ? '扇形' : z, kind: sp.kind, zone: sp.zone, version: T.version, diameter_m: what === 'height' ? 0 : v, burst_m: what === 'height' ? v : 0, members: [] };
-    c.members.push(sp.name || id); m.set(cid, c);
+    c.members.push(sp.name || id); if (what === 'height' && sp.kind === 'trail' && sp.time) c.time = sp.time; m.set(cid, c);     // 4.9.78 尾缀档按时间缩（按开花高度选档时也算）
   }
   return [...m.values()].sort((a, b) => (a.zone === b.zone ? 0 : a.zone === 'dam' ? -1 : 1) || (a.kind === 'fan') - (b.kind === 'fan') || (a.diameter_m || a.burst_m) - (b.diameter_m || b.burst_m));
 }
@@ -246,7 +272,7 @@ const _sizeOf = new Map();
 // 这个效果现在多大：空中花型 = 花径（metricsOf：开花最大时的水平直径），升空尾缀 = 开花高度（弹道 H）
 function effectSizeOf(P) {
   if (!P) return null;
-  if (isEmit(P) || isTrail(P)) { const b = typeof rtBallistic === 'function' ? rtBallistic(P) : null; return b && b.H > 0 ? { what: 'height', m: b.H } : null; }
+  if (isEmit(P) || isTrail(P)) { const b = typeof rtBallistic === 'function' ? rtBallistic(P) : null; return b && b.H > 0 ? { what: 'height', m: b.H, T: b.T } : null; }     // 4.9.78 T = 升空时间（尺寸档按时间缩时用）
   if (familyOf(P.type) !== 'aerial' && !(typeof hasComets === 'function' && hasComets(P))) return null;     // 4.9.52 地面扇形 / 连发：彗星飞行长度 × 2 = 花径
   let key = ''; try { const { exportScale, exportScaleRise, ...rest } = P; key = JSON.stringify(rest); } catch (e) { }     // 引擎回放每帧都问：按参数记一份（measure 每次返回拷贝，太贵）
   if (key && _sizeOf.has(key)) return _sizeOf.get(key);
@@ -264,7 +290,9 @@ function sizeSpecScale(sp, sz) {
   if (!sp || sp.off || !sz) return null;
   const target = sz.what === 'height' ? +sp.burst_m : +sp.diameter_m; if (!(target > 0) || !(sz.m > 0)) return null;
   const k = +(target / sz.m).toFixed(4);
-  return { id: sp.id, name: sp.name, version: sp.version, what: sz.what, target, measured: +sz.m.toFixed(1), k, picked: !!sp.picked, system_tag: sp.system_tag || '', warn: k > 1.3 ? `放大 × ${k.toFixed(2)}：贴图会被拉糊，建议「输出」里加大单格重烘` : '' };
+  // 4.9.78（用户 10-13 18:47「XS用1.69秒」）：time = 'froude' 的档长度 × k、时间 × √k（重力看着对：小平台 XS 62 m 1.69 s，坝顶低层 80 m 1.92 s）；别的档照旧只缩长度
+  const tk = sz.what === 'height' && sp.time === 'froude' ? +Math.sqrt(k).toFixed(4) : 1;
+  return { id: sp.id, name: sp.name, version: sp.version, what: sz.what, target, measured: +sz.m.toFixed(1), k, tk, ...(tk !== 1 && sz.T > 0 ? { rise: +(sz.T * tk).toFixed(4), riseSrc: +sz.T.toFixed(4) } : {}), picked: !!sp.picked, system_tag: sp.system_tag || '', warn: k > 1.3 ? `放大 × ${k.toFixed(2)}：贴图会被拉糊，建议「输出」里加大单格重烘` : '' };
 }
 const sizeSpecOf = o => { const { key, entry, wk, pick } = o || sizeSpecKeyNow(); return sizeSpecFor(key, entry, pick, wk); };
 function sizeSpecNow(P, keyObj) { const sp = sizeSpecOf(keyObj); const r = sp && sizeSpecScale(sp, effectSizeOf(P)); return r && !r.skip ? r : null; }
@@ -276,7 +304,7 @@ function sizeSpecLine(isCombo) {
   if (!sp) return `导出尺寸：原大${now ? '（' + now + '）' : ''}——要匹配编排的大小，在右边选一档`;
   if (sp.off) return `导出尺寸：这次不按标定（原大 / 手动导出缩放${now ? '；' + now : ''}）`;
   const r = sizeSpecScale(sp, sz); if (!r) return `导出尺寸「${sp.name}」：${sz ? (sz.what === 'height' ? '这一档没有开花高度' : '这一档没有花径') : '量不出这个效果的大小'}，照原大导出`;
-  return `导出尺寸「${r.name}」${sp.picked ? '' : '（表里配的）'}：${r.what === 'height' ? '开花高度' : '花径'} ${r.target} m（原样 ${r.measured} m）→ 导出 × ${r.k}${r.warn ? ' · ⚠ ' + r.warn : ''}`;
+  return `导出尺寸「${r.name}」${sp.picked ? '' : '（表里配的）'}：${r.what === 'height' ? '开花高度' : '花径'} ${r.target} m（原样 ${r.measured} m）→ 导出 × ${r.k}${r.tk && r.tk !== 1 ? `、时间 × ${r.tk}${r.rise ? '（升空 ' + r.rise + ' s，原 ' + r.riseSrc + ' s）' : ''}，只有「合成一张」按时间缩` : ''}${r.warn ? ' · ⚠ ' + r.warn : ''}`;
 }
 // 交付清单的下拉：自动（表里配的 / 原大）、同效果配的其他规格、按口径列的档、这次不按标定
 function sizeSpecSelectHTML(isCombo) {

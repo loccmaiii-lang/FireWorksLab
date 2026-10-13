@@ -296,7 +296,9 @@ function renderLib() {
   // 分档（小 / 中 / 大……）：每一档在左栏都有自己的缩略图，点哪档开哪档（用户 2026-10-02 19:25「只能看到一个，而不是三个」）。
   // 「已通过」组里只列通过的那套分档（rep:），「待我验收 / 制作中」列候选那套。
   const tierRow = (g, ef, k) => {
-    const vs = (ef.方案 || []).filter(v => (k === 'passed') === v.id.startsWith('rep:')).map(v => [v, entryById(v.id.replace(/@.*$/, ''))]).filter(([, x]) => x);
+    // 4.9.78（用户 10-13 18:47「为什么通过的大中小尾缀我现在无法选择大中小了呢？」）：通过了、还没收进正式库（方案里没有 rep: 的，例 RT6S / M / L）→ 列候选那套
+    const fm = (ef.方案 || []).some(v => v.id.startsWith('rep:')), wantRep = k === 'passed' && fm;
+    const vs = (ef.方案 || []).filter(v => wantRep === v.id.startsWith('rep:')).map(v => [v, entryById(v.id.replace(/@.*$/, ''))]).filter(([, x]) => x);
     if (vs.length < 2) return;
     const row = document.createElement('div'); row.className = 'tiers';
     for (const [v, x] of vs) {

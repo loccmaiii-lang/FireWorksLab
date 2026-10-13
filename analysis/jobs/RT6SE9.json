@@ -1,0 +1,17 @@
+{
+ "id": "RT6SE9",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT6S",
+ "name": "RiseTrail_S80",
+ "size": "T_SLOW",
+ "exports": {
+  "RiseTrail_S80": {
+   "_replica": "RT6S",
+   "outPC": "full",
+   "outMobile": "full"
+  }
+ },
+ "priority": 2,
+ "note": "导出（23）· 用户 10-13 18:47「坝顶低层的需要出」：坝顶低层小号尾缀 RiseTrail_S80（名字暂定），RT6S 按尺寸表 v4 T_SLOW 开花 80 m（长度 × 0.4211）、升空 1.92 s（时间 × 0.6489，Froude）；PC / 手机合成一张，贴图沿用 RiseTrail_S。导出 + 回放检查；不导入 UE。"
+}

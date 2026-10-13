@@ -41,6 +41,7 @@
   W2 4.5.3：左栏没有「我的版本」「已通过」（通过的进「我的效果」最上面）、我的效果每项没有删除；出点提示 + 一键清除；没烘时时间轴按新时长；远段面片上移
   R6 4.5.1 升空尾缀 RT6 近段 + 远段：缺省关 = RT5；开了贴图有粗 / 中 / 细、GPU 按档预算（上限一起降、降掉的回贴图）、贴图 + GPU = 出生率；交接权重相加 = 1；闪烁层；远看直径光量不变；
   R7 4.9.73 尾缀手机「近段 + 远段合成一张」：1 个发射器 TrailFull、32 列细高格、过导出拦截、打包换名、PC 不变
+  R8 4.9.78 已通过的 RT6 左栏分档、尺寸档按时间缩（XS 1.69 s、坝顶低层 80 m）
      TrailFar 导出、没有 RiseFade、命名 Loop + Far；近段贴图曝光 k → RiseLoop Color Over Life × 1 / k²；面板；4.5.2 分层看（近段 / 远段 / 每个 GPU 层开关、双击只看、全部恢复）
   R5 4.4.5 升空尾缀 RT5 选项：缺省旧做法；物理弹道到设定高度、第 1 秒减速够猛、星头光晕跟弹道（Velocity Over Life）；GPU 兼容（无 Acceleration、≤ 2 个 Initial Velocity）、
      GPU 粒子上限、细 / 中火花进贴图、H4 新口径和温度偏移无关；循环层长度起步不伸到发射点以下；面板「弹道」在星头 › 弹道、选物理后升空时间藏起
@@ -1299,6 +1300,50 @@ async def r7(pg):
     """4.9.73 尾缀手机「近段 + 远段合成一张」：只给有远段的尾缀、缺省不变；32 列细高格；cascade_mobile 1 个发射器 TrailFull（Rectangle + 锁 Z + Local Space、max_alive 1）过导出拦截；
     打包换名 …_Full_32x2_01 + 手机自己的 Cut、Ramp 共用；PC 不变"""
     r = await pg.evaluate(R7_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
+
+
+R8_JS = r"""async () => {
+  // 4.9.78（用户 10-13 18:47）：① 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大；② 尺寸档按时间缩（XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张）
+  const out = {}, bad = [];
+  // ① 左栏分档
+  { const ef = FW_EFFECTS.find(e => e.key === 'trail_phys'); out.stage = ef && ef.阶段;
+    lib.q = ''; lib.open = { ...(lib.open || {}), myfx: true }; renderLib();
+    const it = document.querySelector('#libBody .li[data-key="ef:trail_phys"]'), row = it && it.nextElementSibling && it.nextElementSibling.classList.contains('tiers') ? it.nextElementSibling : null;
+    out.tiers = row ? [...row.querySelectorAll('.tier small')].map(x => x.textContent) : null;
+    if (!ef || ef.阶段 !== '已通过') bad.push('状态清单里 RT6 不是已通过（这条检查要它）：' + out.stage);
+    else if (!out.tiers || out.tiers.join() !== 'RT6S,RT6M,RT6L') bad.push('已通过的 RT6 左栏没有小 / 中 / 大：' + JSON.stringify(out.tiers)); }
+  // ② 尺寸档：T_F / T_SLOW 是 froude，T_S / T_HERO 不按时间缩
+  const T = sizeSpecTable(), sz = { what: 'height', m: 190, T: 2.9544 };
+  const sp = id => sizeSpecScale({ id, ...T.specs[id] }, sz);
+  out.spec = Object.fromEntries(['T_S', 'T_F', 'T_SLOW', 'T_HERO'].map(id => { const r = sp(id); return [id, r && [r.k, r.tk, r.rise || null]]; }));
+  if (!(out.spec.T_F[1] > 0.57 && out.spec.T_F[1] < 0.572 && Math.abs(out.spec.T_F[2] - 1.6876) < 0.002)) bad.push('XS 不是 1.69 s：' + JSON.stringify(out.spec.T_F));
+  if (!(Math.abs(out.spec.T_SLOW[2] - 1.917) < 0.003)) bad.push('坝顶低层不是 1.92 s：' + JSON.stringify(out.spec.T_SLOW));
+  if (out.spec.T_S[1] !== 1 || out.spec.T_HERO[1] !== 1) bad.push('S / Hero 不该按时间缩：' + JSON.stringify(out.spec));
+  out.map = T.map.RT6S; if (JSON.stringify(out.map) !== '["T_S","T_F","T_SLOW"]') bad.push('RT6S 的档不对：' + out.map);
+  out.sys = [packSysName('RiseTrail_S', 'tailS', { ...T.specs.T_SLOW, picked: true }), packSysName('RiseTrail_S', 'tailS', { ...T.specs.T_F, picked: true })];
+  if (out.sys.join() !== 'RiseTrail_S80,RiseTrail_XS') bad.push('系统名不对：' + out.sys);
+  // 合成一张的配置：长度 × k、Lifetime / Duration × tk、初速 × k ÷ tk；全套配置：时间不缩、写说明
+  const e = entryById('RT6S'), d = defaultsFor(e.base), Z = derive({ ...d.P, ...e.p, rtFar: 1 }), M = defaultsFor(e.base).M, ball = rtBallistic(Z);
+  const L = layoutOf({ ...Z, texW: 1024, texH: 1024, cols: 32, rows: 1, chans: 4 });
+  const fa = { t0: 0, Dtot: 4.8, Df: 1.2, Fr: 89, Fd: 39, cols: 32, rows: 1, chans: 4, F: L.F, cx: 0, cz: 94, vz: 0.5, HX: 5.1, HY: 99, Ww: 10.2, Wh: 198, keys: [[0, 0], [1, L.F - 0.01]], pxMax: 3 };
+  const mb = { form: 'emitset', esMobile: true, esFull: true, P: { ...Z, outMobile: 'full' }, N: 1024, NH: 1024, meta: { L, full: fa, T: ball.T, ball: { ...ball, pos: undefined, vel: undefined } }, fades: [], far: null };
+  const r = sp('T_F'), j0 = fwlCascade('T_Mobile', mb, M, true), j = fwlScaleJSON(JSON.parse(JSON.stringify(j0)), r.k, false, r);
+  const em = j.emitters[0], mod = n => em.modules.find(x => x.m === n);
+  out.xs = { life: mod('Lifetime').Lifetime.const, dur: em.required.duration_s, vz: mod('InitialVelocity').StartVelocity.const[2], h: mod('InitialSize').StartSize.const[1], tk: j.size_spec.tk, rise: j.size_spec.rise_s, note: !!j.notes.find(x => /按时间也缩/.test(x)) };
+  const want = { life: +(4.8 * r.tk).toFixed(3), h: +(19800 * r.k).toFixed(0), vz: +(50 * r.k / r.tk).toFixed(1) };
+  if (Math.abs(out.xs.life - want.life) > 0.01 || Math.abs(out.xs.dur - want.life) > 0.01 || Math.abs(out.xs.h - want.h) > 2 || Math.abs(out.xs.vz - want.vz) > 0.2 || !out.xs.note || !(Math.abs(out.xs.rise - 1.6876) < 0.002))
+    bad.push('XS 合成一张没按时间缩对：' + JSON.stringify([out.xs, want]));
+  const gpu = { emitters: [{ name: 'RiseLoop', modules: [{ m: 'Lifetime', Lifetime: { const: 2.9 } }, { m: 'VelocityOverLife', VelOverLife: { curve: [[0, [0, 0, 100]]] } }], required: { duration_s: 2.9 } }] };
+  const jg = fwlScaleJSON(gpu, r.k, false, r); out.full = { skipped: jg.size_spec.time_skipped, life: jg.emitters[0].modules[0].Lifetime.const };
+  if (!out.full.skipped || out.full.life !== 2.9) bad.push('全套配置不该按时间缩：' + JSON.stringify(out.full));
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def r8(pg):
+    """4.9.78：已通过但没进正式库的 RT6 左栏照样有小 / 中 / 大；尺寸档 XS 1.69 s / 坝顶低层 80 m 1.92 s（Froude，只缩合成一张），S / Hero 不缩时间；系统名 RiseTrail_XS / S80"""
+    r = await pg.evaluate(R8_JS)
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
@@ -3429,7 +3474,7 @@ W36_JS = r"""async () => {
     packSysName('GoldX', 'kiku', { id: 'P_MG', picked: false }), packSysName('GoldX', 'kiku', { id: 'cls:h:front:62', picked: true })];
   if (JSON.stringify(out.sys) !== '["RiseTrail_XS","RiseTrail_Hero","GoldX_D230","GoldX","GoldX_H62"]') bad.push('系统名不对：' + JSON.stringify(out.sys));
   { const T = sizeSpecTable(); out.tf = T && T.specs.T_F && [T.specs.T_F.burst_m, T.specs.T_F.system_tag, T.map.RT6S, T.specs.T_HERO.system_tag];
-    if (!out.tf || out.tf[0] !== 62 || out.tf[1] !== 'XS' || JSON.stringify(out.tf[2]) !== '["T_S","T_F"]' || out.tf[3] !== 'Hero') bad.push('尺寸表 T_F / Hero 不对：' + JSON.stringify(out.tf)); }
+    if (!out.tf || out.tf[0] !== 62 || out.tf[1] !== 'XS' || JSON.stringify(out.tf[2].slice(0, 2)) !== '["T_S","T_F"]' || out.tf[3] !== 'Hero') bad.push('尺寸表 T_F / Hero 不对：' + JSON.stringify(out.tf)); }
   // 缩放后缀放在档位前
   { const j = fwlScaleJSON({ name: 'RiseTrail_S_M', tier: 'M', emitters: [], system: {} }, 0.8, false, null); out.scaleName = j.name; if (j.name !== 'RiseTrail_S_S80_M') bad.push('缩放后手机名：' + j.name); }
   // 大面片（菊，假烘焙不能编码贴图）：配置 → 命名 → packFinalize 同一条路。手机配置 <名>_M、tier M、每个发射器 max_alive、贴图 sha256 = 包里 PNG；PC 没有 tier
@@ -3503,7 +3548,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

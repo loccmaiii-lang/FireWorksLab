@@ -1,0 +1,17 @@
+{
+ "id": "RT6SE8",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT6S",
+ "name": "RiseTrail_XS",
+ "size": "T_F",
+ "exports": {
+  "RiseTrail_XS": {
+   "_replica": "RT6S",
+   "outPC": "full",
+   "outMobile": "full"
+  }
+ },
+ "priority": 2,
+ "note": "导出（23）· 用户 10-13 18:47「XS用1.69秒」+ 本机同步（8）转用户 9「xs就用近段远段合并的方案打出一份2K的」：小平台通用尾缀 RiseTrail_XS，RT6S 按尺寸表 v4 T_F 开花 62 m（长度 × 0.3263）、升空 1.69 s（时间 × 0.5712，Froude，4.9.78）；PC 2048 _HD、手机 1024 都是合成一张（1 个发射器 TrailFull，没有 GPU），贴图沿用 RiseTrail_S。导出 + 回放检查；不导入 UE（用户导入）。"
+}
