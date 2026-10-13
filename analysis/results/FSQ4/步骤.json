@@ -1,0 +1,30 @@
+[
+ {
+  "name": "参数生效审查（每个参数改值 / 删键各出两帧）",
+  "script": "参数生效审查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 1.6
+ },
+ {
+  "name": "火花平方阻力检查（含 GPU）",
+  "script": "火花平方阻力检查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ },
+ {
+  "name": "基准回归 4.9.74 → 4.9.75 花型模板 6 个",
+  "script": "基准回归.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ },
+ {
+  "name": "多层模板定帧回归 4.9.74 → 4.9.75",
+  "script": "多层模板回归.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.1
+ }
+]

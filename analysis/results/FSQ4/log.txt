@@ -1,0 +1,74 @@
+13:31:53 第 1/4 步：参数生效审查（每个参数改值 / 删键各出两帧）
+13:33:31   参数 484 场景 ['kamuro', 'kamuro+42项', 'kamuro+1项', 'kiku+6项', 'kiku+7项', 'kiku+1项', 'senrin', 'crossette', 'strobe', 'hachi', 'yanagi', 'ochiba', 'palm', 'henka', 'glitter', 'jisa', 'ring', 'saturn', 'kata', 'water', 'matsuba', 'botan', 'rise', 'tailM', 'trailM', 'fountain', 'falls', 'wheel', 'fan', 'barrage', 'shikake', 'physM']
+13:33:31   20/484
+13:33:31   40/484
+13:33:31   60/484
+13:33:31   80/484
+13:33:31   100/484
+13:33:31   120/484
+13:33:31   140/484
+13:33:31   160/484
+13:33:31   180/484
+13:33:31   200/484
+13:33:31   220/484
+13:33:31   240/484
+13:33:31   260/484
+13:33:31   280/484
+13:33:31   300/484
+13:33:31   320/484
+13:33:31   340/484
+13:33:31   360/484
+13:33:31   380/484
+13:33:31   400/484
+13:33:31   420/484
+13:33:31   440/484
+13:33:31   460/484
+13:33:31   480/484
+13:33:31   484/484
+13:33:31   参数 484：没看到效果 234、只改取景 1、缺了≠缺省 90、出错 0
+13:33:31   ✅ 参数生效审查（每个参数改值 / 删键各出两帧）（1.6 分钟）
+13:33:31 第 2/4 步：火花平方阻力检查（含 GPU）
+13:33:37   {"Q1": {"条目": 113}, "Q2": {"下落极限": 4.257, "应为": 4.243}, "Q3": {"平方_300": 13.2, "平方_20": 6.49, "线性_300": 170.49, "线性_20": 11.37}, "G1": {"quad_0.6": {"行上": 136, "行下": 215}, "quad_0.95": {"行上": 101, "行下": 214}, "lin_0.6": {"行上": 118, "行下": 139}, "lin_0.95": {"行上": 61, "行下": 104}}, "pred": {"quad_0.6": {"下": 7.66, "上": 40.61, "行上": 138.2, "行下": 214.9}, "quad_0.95": {"下": 8.38, "上": 55.94, "行上": 102.5, "行下": 213.2}, "lin_0.6": {"下": 40.61, "上": 48.84, "行上": 119.1, "行下": 138.2}, "lin_0.95": {"下": 55.94, "上": 73.07, "行上": 62.7, "行下": 102.5}}}
+13:33:37   全过 ✅
+13:33:37   ✅ 火花平方阻力检查（含 GPU）（0.1 分钟）
+13:33:37 第 3/4 步：基准回归 4.9.74 → 4.9.75 花型模板 6 个
+13:33:51     FireworkBaker.html kiku 4.9.74
+13:33:51     FireworkBaker.html botan 4.9.74
+13:33:51     FireworkBaker.html kamuro 4.9.74
+13:33:51     FireworkBaker.html senrin 4.9.74
+13:33:51     FireworkBaker.html strobe 4.9.74
+13:33:51     FireworkBaker.html crackle 4.9.74
+13:33:51     FireworkBaker.html kiku 4.9.75
+13:33:51     FireworkBaker.html botan 4.9.75
+13:33:51     FireworkBaker.html kamuro 4.9.75
+13:33:51     FireworkBaker.html senrin 4.9.75
+13:33:51     FireworkBaker.html strobe 4.9.75
+13:33:51     FireworkBaker.html crackle 4.9.75
+13:33:51   ✅ kiku 帧计划相同 [{"t": 0.528, "max": 0, "frac": 0.0}, {"t": 1.54, "max": 0, "frac": 0.0}, {"t": 3.08, "max": 0, "frac": 0.0}]
+13:33:51   ✅ botan 帧计划相同 [{"t": 0.378, "max": 0, "frac": 0.0}, {"t": 1.102, "max": 0, "frac": 0.0}, {"t": 2.205, "max": 0, "frac": 0.0}]
+13:33:51   ✅ kamuro 帧计划相同 [{"t": 0.816, "max": 0, "frac": 0.0}, {"t": 2.38, "max": 0, "frac": 0.0}, {"t": 4.76, "max": 0, "frac": 0.0}]
+13:33:51   ✅ senrin 帧计划相同 [{"t": 0.384, "max": 0, "frac": 0.0}, {"t": 1.12, "max": 0, "frac": 0.0}, {"t": 2.24, "max": 0, "frac": 0.0}]
+13:33:51   ✅ strobe 帧计划相同 [{"t": 0.534, "max": 0, "frac": 0.0}, {"t": 1.557, "max": 0, "frac": 0.0}, {"t": 3.115, "max": 0, "frac": 0.0}]
+13:33:51   ✅ crackle 帧计划相同 [{"t": 0.408, "max": 0, "frac": 0.0}, {"t": 1.802, "max": 0, "frac": 0.0}, {"t": 2.04, "max": 0, "frac": 0.0}]
+13:33:51   ✅ 基准回归 4.9.74 → 4.9.75 花型模板 6 个（0.2 分钟）
+13:33:51 第 4/4 步：多层模板定帧回归 4.9.74 → 4.9.75
+13:33:59     FireworkBaker.html yaeBlueBotan
+13:33:59     FireworkBaker.html mangekyo
+13:33:59     FireworkBaker.html somewakeBotan
+13:33:59     FireworkBaker.html colorSenrin
+13:33:59     FireworkBaker.html crackleShin
+13:33:59     FireworkBaker.html ginKamuro
+13:33:59     FireworkBaker.html yaeBlueBotan
+13:33:59     FireworkBaker.html mangekyo
+13:33:59     FireworkBaker.html somewakeBotan
+13:33:59     FireworkBaker.html colorSenrin
+13:33:59     FireworkBaker.html crackleShin
+13:33:59     FireworkBaker.html ginKamuro
+13:33:59   ✅ yaeBlueBotan [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+13:33:59   ✅ mangekyo [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+13:33:59   ✅ somewakeBotan [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+13:33:59   ✅ colorSenrin [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+13:33:59   ✅ crackleShin [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+13:33:59   ✅ ginKamuro [{"t": 0.4, "max": 0, "frac": 0.0}, {"t": 1.3, "max": 0, "frac": 0.0}, {"t": 2.6, "max": 0, "frac": 0.0}]
+13:33:59   ✅ 多层模板定帧回归 4.9.74 → 4.9.75（0.1 分钟）
+13:33:59 完成，用时 2.1 分钟
