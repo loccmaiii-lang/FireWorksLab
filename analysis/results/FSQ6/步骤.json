@@ -1,0 +1,16 @@
+[
+ {
+  "name": "复核：384 px 全景 + 存图",
+  "script": "参数生效审查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.4
+ },
+ {
+  "name": "复核：384 px 放大到星那一圈 + 存图",
+  "script": "参数生效审查.py",
+  "code": 0,
+  "ok": true,
+  "minutes": 0.2
+ }
+]

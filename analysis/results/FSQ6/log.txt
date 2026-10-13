@@ -1,0 +1,12 @@
+14:01:51 第 1/2 步：复核：384 px 全景 + 存图
+14:02:12   参数 12 场景 ['kamuro', 'kamuro+51项', 'kamuro+1项', 'kiku+6项', 'kiku+11项', 'kiku+1项', 'senrin', 'senrin+8项', 'crossette', 'strobe', 'hachi', 'yanagi', 'ochiba', 'palm', 'henka', 'glitter', 'jisa', 'ring', 'saturn', 'kata', 'water', 'matsuba', 'botan', 'fountain', 'falls', 'wheel', 'fan', 'barrage', 'shikake', 'rise', 'rise+1项', 'tailM', 'trailM', 'physM']
+14:02:12   10/12
+14:02:12   12/12
+14:02:12   参数 12：没看到效果 2、只改取景 1、缺了≠缺省 1、出错 0、没判 0
+14:02:12   ✅ 复核：384 px 全景 + 存图（0.4 分钟）
+14:02:12 第 2/2 步：复核：384 px 放大到星那一圈 + 存图
+14:02:25   参数 6 场景 ['kamuro', 'kamuro+51项', 'kamuro+1项', 'kiku+6项', 'kiku+11项', 'kiku+1项', 'senrin', 'senrin+8项', 'crossette', 'strobe', 'hachi', 'yanagi', 'ochiba', 'palm', 'henka', 'glitter', 'jisa', 'ring', 'saturn', 'kata', 'water', 'matsuba', 'botan', 'fountain', 'falls', 'wheel', 'fan', 'barrage', 'shikake', 'rise', 'rise+1项', 'tailM', 'trailM', 'physM']
+14:02:25   6/6
+14:02:25   参数 6：没看到效果 1、只改取景 0、缺了≠缺省 0、出错 0、没判 0
+14:02:25   ✅ 复核：384 px 放大到星那一圈 + 存图（0.2 分钟）
+14:02:25 完成，用时 0.6 分钟
