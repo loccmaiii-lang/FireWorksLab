@@ -8,7 +8,7 @@
 
 查什么（都在导出口径上量，不看实时模拟）：
   条目 6 样东西（标准第 1 节）：实时模拟 / 引擎回放 + 游戏内大小 / 贴图 + 流转 / 完整参数 / 导出素材包 / 实拍对照（有参考时）
-    —— 按条目类型和产物判断（大面片、分段、尾缀、多层组合有；素材条目没有参数、单元 / 循环产物还没有 cascade.json）
+    —— 按条目类型和产物判断（大面片、分段、尾缀、循环、多层组合有；素材条目没有参数、单元产物还没有 cascade.json）
   画质（标准第 2 节，探针 烘焙器探针.py 的同一套算法）：单格 ≥ 下限（PC 512、手机 256；贴图尺寸本身不限，4.2.6）、屏幕放大 ≤ 1、30 fps 显示帧 ≥ 90%、燃烧段帧率 ≥ 下限、尺寸参数有效
     多层组合：每一层都要过。
   版本：4.3 起只有一套画法；3.7 时代的记录（V5 正式库原始参数等）按迁移后的参数量。
@@ -128,7 +128,13 @@ if __name__ == '__main__':
     ap.add_argument('--ui-state-only', action='store_true', help='只跑离线界面状态回归，不启动浏览器')
     ap.add_argument('--startup-only', action='store_true', help='只跑显卡程序按需初始化回归，不启动浏览器')
     ap.add_argument('--point-profile-only', action='store_true', help='真实WebGL可选亮核与亮部保留回归')
+    ap.add_argument('--spark-graph-only', action='store_true', help='13层模型及真实循环PC/手机导出回归（需Node Playwright）')
     a = ap.parse_args()
+    if a.spark_graph_only:
+        for cmd in [['node', str(HERE / 'spark_graph_test.cjs')], ['node', str(HERE / 'spark_graph_bake.cjs')], [sys.executable, str(HERE / 'spark_graph_check.py')]]:
+            result = subprocess.run(cmd)
+            if result.returncode: raise SystemExit(result.returncode)
+        raise SystemExit(0)
     if a.startup_only:
         raise SystemExit(subprocess.run(['node', str(HERE / 'startup_check.mjs')]).returncode)
     if a.point_profile_only:

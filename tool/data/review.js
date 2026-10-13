@@ -48050,22 +48050,67 @@ var FW_EFFECTS = [
 "名": "窜天猴尾焰 · 分层喷射",
 "英文名": "RocketTail_Graph",
 "负责": "窜天猴与仙女棒（Codex）",
-"阶段": "制作中",
+"阶段": "待验收",
 "主条目": "SGR1",
 "工作版": "SGR1",
 "进度": {
 "计算": true,
 "素材导出": true,
-"AI自检": false,
+"AI自检": true,
 "用户验收": false
 },
 "缺": [
-"标准检查、基准回归与最终回放审看进行中；未经UE验证"
+"用户审美验收；UE跟随朝向、Bloom、压缩和实际米数未经实机验证"
 ],
-"下一步": "完成两套候选统一验收；本轮不改此前通过效果。",
+"下一步": "刷新正式烘焙器，在待我验收打开；原速看短促爆发，慢放看长丝与分叉，切PC/手机。",
+"待验收版": "SGR1",
+"导出任务": [
+"SGR1E1"
+],
+"交付说明": {
+"解决了什么": "13层父子火星、运动路径拉伸与不等间隔短爆发；每层可调并保存；PC/手机素材完整。",
+"素材在哪": "analysis/results/SparkGraph/（本机ZIP及实包回放），解包目录analysis/local/SparkGraph/",
+"仍有差异": "固定周期内非均匀节奏；尾焰跟随喷口，不包含弹体弹道；世界尺寸为候选。",
+"未经 UE 验证": "朝向锁、跟随喷口、Bloom、压缩和世界尺度。"
+},
 "ver": "4399ce22",
 "jobs": [],
-"exports": [],
+"exports": [
+{
+"job": "SGR1E1",
+"entry": "SGR1",
+"ver": "4399ce22·loop4.9.83",
+"time": "2026-10-14 01:39",
+"packages": [
+{
+"name": "rocket",
+"replica": "SGR1",
+"files": [
+"cascade.json",
+"cascade_mobile.json",
+"RocketTail_Graph.json",
+"RocketTail_Graph_Cascade参数.txt",
+"RocketTail_Graph_Mobile.json",
+"RocketTail_Graph_曲线.csv",
+"T_RocketTail_Graph.png",
+"T_RocketTail_Graph_Cutout.png",
+"T_RocketTail_Graph_FrameTest.png",
+"T_RocketTail_Graph_Mobile.png",
+"T_RocketTail_Graph_Mobile_Cutout.png",
+"T_RocketTail_Graph_Mobile_FrameTest.png",
+"T_RocketTail_Graph_Mobile_Ramp.png",
+"T_RocketTail_Graph_Ramp.png"
+],
+"sha256": "8347a7928558b5cd838053bf8e529349fb97bb5eb68de9b7442cfa0d8e2632fd"
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+}
+],
 "thumb": null,
 "thumbSim": null
 },
@@ -48074,22 +48119,66 @@ var FW_EFFECTS = [
 "名": "仙女棒 · 全形态",
 "英文名": "Sparkler_Graph",
 "负责": "窜天猴与仙女棒（Codex）",
-"阶段": "制作中",
+"阶段": "待验收",
 "主条目": "SGS1",
 "工作版": "SGS1",
 "进度": {
 "计算": true,
 "素材导出": true,
-"AI自检": false,
+"AI自检": true,
 "用户验收": false
 },
 "缺": [
-"标准检查、基准回归与最终回放审看进行中；未经UE验证"
+"用户审美验收；UE跟随朝向、Bloom、压缩和实际米数未经实机验证"
 ],
-"下一步": "完成两套候选统一验收；本轮不改此前通过效果。",
+"下一步": "刷新正式烘焙器，在待我验收打开；原速看短促爆发，慢放看长丝与分叉，切PC/手机。",
+"待验收版": "SGS1",
+"导出任务": [
+"SGS1E1"
+],
+"交付说明": {
+"解决了什么": "13层父子火星、运动路径拉伸与不等间隔短爆发；每层可调并保存；PC/手机素材完整。",
+"素材在哪": "analysis/results/SparkGraph/（本机ZIP及实包回放），解包目录analysis/local/SparkGraph/",
+"仍有差异": "固定周期内非均匀节奏；尾焰跟随喷口，不包含弹体弹道；世界尺寸为候选。",
+"未经 UE 验证": "朝向锁、跟随喷口、Bloom、压缩和世界尺度。"
+},
 "ver": "a7079bea",
 "jobs": [],
-"exports": [],
+"exports": [
+{
+"job": "SGS1E1",
+"entry": "SGS1",
+"ver": "a7079bea·loop4.9.83",
+"time": "2026-10-14 01:39",
+"packages": [
+{
+"name": "sparkler",
+"replica": "SGS1",
+"files": [
+"cascade.json",
+"cascade_mobile.json",
+"Sparkler_Graph.json",
+"Sparkler_Graph_Cascade参数.txt",
+"Sparkler_Graph_Mobile.json",
+"Sparkler_Graph_曲线.csv",
+"T_Sparkler_Graph.png",
+"T_Sparkler_Graph_Cutout.png",
+"T_Sparkler_Graph_FrameTest.png",
+"T_Sparkler_Graph_Mobile.png",
+"T_Sparkler_Graph_Mobile_Cutout.png",
+"T_Sparkler_Graph_Mobile_FrameTest.png",
+"T_Sparkler_Graph_Ramp.png"
+],
+"sha256": "0dd7bee73ce2ad5591968c6e90c7523a6a1e64441d535aa728a4b277a434245d"
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+}
+],
 "thumb": null,
 "thumbSim": null
 }

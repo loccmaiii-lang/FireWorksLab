@@ -86,4 +86,3 @@ const SparkGraph = (() => {
   }
   return {hash,mod,curve,dist,direction,sample,validate,build,geometry};
 })();
-

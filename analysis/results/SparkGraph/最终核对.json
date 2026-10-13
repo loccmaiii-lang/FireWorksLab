@@ -1,0 +1,22 @@
+{
+  "pass": true,
+  "states": [
+    {
+      "key": "rocket_graph",
+      "ready": true,
+      "why": [],
+      "version": "4399ce22·loop4.9.83",
+      "exportVersion": "4399ce22·loop4.9.83",
+      "standardVersion": "4399ce22·loop4.9.83"
+    },
+    {
+      "key": "sparkler_graph",
+      "ready": true,
+      "why": [],
+      "version": "a7079bea·loop4.9.83",
+      "exportVersion": "a7079bea·loop4.9.83",
+      "standardVersion": "a7079bea·loop4.9.83"
+    }
+  ],
+  "errors": []
+}

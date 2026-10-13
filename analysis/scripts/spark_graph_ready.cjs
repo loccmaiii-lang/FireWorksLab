@@ -1,0 +1,7 @@
+const fs=require('fs'),path=require('path'),assert=require('assert/strict'),{pathToFileURL}=require('url'),{chromium}=require('playwright');
+const root=path.resolve(__dirname,'../..'),out=path.join(root,'analysis/results/SparkGraph');
+(async()=>{const b=await chromium.launch({channel:'msedge',headless:true});try{const p=await b.newPage({viewport:{width:1366,height:900}}),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto(pathToFileURL(path.join(root,'tool/FireworkBaker.html')).href+'?fast');await p.waitForFunction(()=>window.__fw&&typeof effReady==='function');
+ const states=await p.evaluate(()=>['rocket_graph','sparkler_graph'].map(key=>{const e=EFFS().find(x=>x.key===key),s=effReady(e);return{key,ready:s.ok,why:s.why,version:s.ver,exportVersion:s.ex?.ver,standardVersion:s.sr?.ver};}));assert(states.every(x=>x.ready),JSON.stringify(states));
+ await p.goto(pathToFileURL(path.join(out,'实包回放.html')).href);await p.waitForFunction(()=>document.querySelector('#label').textContent.includes('/64'));await p.waitForTimeout(300);await p.screenshot({path:path.join(out,'实包回放入口.png')});await p.locator('#kind').selectOption('sparkler-Mobile');await p.waitForTimeout(300);assert(await p.locator('#label').textContent());assert.deepEqual(errors,[]);
+ fs.writeFileSync(path.join(out,'最终核对.json'),JSON.stringify({pass:true,states,errors},null,2));console.log(states);
+}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});
