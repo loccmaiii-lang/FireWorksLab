@@ -7,6 +7,8 @@
 读两份文件（都在 协作/）：
   看板对账.json  对账表：每条来源（对话框打勾项、计划、规范……）对到看板哪一行，或为什么不用上看板
   看板快照.json  在线看板数据库的快照（总管每次改完看板重导）
+--snapshot-from 同时把快照嵌进 协作/全局看板.html（在线看板同一页的离线副本，本机直接双击打开、只读）。
+另列「用户勾了我做好了、还没同步给负责对话框」的行（等同步），总管同步后在看板写 syncedAt / syncedTo。
 
 查四件事：
   1. 对话记录/*.md 里每个没打勾的「- [ ]」都在对账表里（按 文件 + 文字指纹 对）
@@ -27,6 +29,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 LEDGER = ROOT / "协作" / "看板对账.json"
 SNAPSHOT = ROOT / "协作" / "看板快照.json"
+PAGE = ROOT / "协作" / "全局看板.html"
+SNAP_RE = re.compile(r'(<script type="application/json" id="snap">)(.*?)(</script>)', re.S)
+COLLS = ("items", "resources", "dialogs", "reports")
 DIALOGS = ROOT / "对话记录"
 
 BOX = re.compile(r"^\s*[-*]\s*\[ \]\s*")
@@ -64,13 +69,18 @@ def main():
         old = json.loads(SNAPSHOT.read_text(encoding="utf-8")) if SNAPSHOT.exists() else {}
         snap = {k: old.get(k) for k in ("说明", "看板") if old.get(k)}
         snap["导出时间"] = a.time or old.get("导出时间", "")
-        for coll in ("items", "resources", "dialogs"):
+        for coll in COLLS:
             snap[coll] = {f.stem: json.loads(f.read_text(encoding="utf-8"))
                           for f in sorted((src / coll).glob("*.json"))}
-            if not snap[coll]:
+            if not snap[coll] and coll != "reports":
                 sys.exit(f"{src / coll} 是空的，快照没写")
         SNAPSHOT.write_text(json.dumps(snap, ensure_ascii=False, indent=1), encoding="utf-8")
-        print(f"快照已重写：items {len(snap['items'])}、resources {len(snap['resources'])}、dialogs {len(snap['dialogs'])}")
+        page = PAGE.read_text(encoding="utf-8")
+        if len(SNAP_RE.findall(page)) != 1:
+            sys.exit(f"{PAGE} 里找不到唯一的 snap 块，离线副本没写")
+        blob = json.dumps(snap, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+        PAGE.write_text(SNAP_RE.sub(lambda m: m.group(1) + blob + m.group(3), page), encoding="utf-8")
+        print("快照已重写（并嵌进 协作/全局看板.html）：" + "、".join(f"{c} {len(snap[c])}" for c in COLLS))
 
     ledger = json.loads(LEDGER.read_text(encoding="utf-8"))
     entries = ledger["条目"]
@@ -126,6 +136,11 @@ def main():
     for w in ("周三前必须", "周四以后", "暂不建议"):
         parts = [f"{k} {by.get((w, k), 0)}" for k in ("你要做", "你要定", "AI 欠你")]
         print(f"  {w}：" + "，".join(parts))
+    waiting = [(k, r) for k, r in sorted(items.items())
+               if r.get("kind") in ("你要做", "你要定") and r.get("status") == "已做" and r.get("doneAt") and not r.get("syncedAt")]
+    print(f"用户勾了「我做好了」、还没同步给负责对话框：{len(waiting)} 条" + ("（总管要同步）" if waiting else ""))
+    for k, r in waiting:
+        print(f"  [等同步] {k} {r.get('title', '')[:60]} → {r.get('owner', '')}｜反馈：{(r.get('feedback') or r.get('answer') or '')[:60]}")
     print(f"对账表里的打勾项已打勾或文字已改：{len(gone)} 条（可复核结果，不算问题）")
     print(f"对账表指向已关闭看板行：{len(closed_refs)} 条（不算问题）")
     if a.verbose:
