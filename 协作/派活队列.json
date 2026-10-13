@@ -1,0 +1,184 @@
+{
+  "格式": "df.dispatch-queue/1",
+  "说明": "本机 dot 读这份文件，把「待派」的任务发给本机的 Codex 对话框执行。总管（21）写任务、收结果、同步到在线看板；Codex 只改自己那条的状态和结果。用户 10-13 22:47：dot 能定时看仓库、有提交就知道、自己按任务分派给 Codex、人不在也能跑，任务要写详细。",
+  "更新": "2026-10-13 23:10 总管（21）",
+  "dot 怎么派": [
+    "只派「状态」=「待派」的任务；按「优先」从小到大；「前置」里列的编号都「完成」了才派（没写前置的不用等）。",
+    "同一个「交给」同时只派一条：它名下有「已派」或「在做」的，就先等。",
+    "派的时候把这条的「提示词」原样发给「交给」那个 Codex 对话框（接着它原来的上下文）。发不进原对话就新开一个 Codex 任务，同一个仓库目录，把「提示词」原样发过去——提示词第一步会让它先读那个对话框的记录。",
+    "派出后不用改这份文件；自己记住编号，同一编号只派一次。Codex 开工第一件事会把状态改成「在做」并推送。",
+    "「卡住」「完成」的不要再派。某条卡住了，不影响按顺序派下一条。",
+    "某条「在做」超过 3 小时仓库里没有它的新提交：问它一次进度，不要重派。",
+    "这份文件里只有「在哪」=「本机」的任务归 dot 派；云端对话框的活不在这里。"
+  ],
+  "Codex 共同规则": [
+    "开工前：完整读 AGENTS.md → CLAUDE.md、协作/标准.md；跑 python analysis/scripts/同步体检.py，有 ❌ 先处理；git fetch，有新提交就在保留本地改动的前提下 rebase。",
+    "认领：把这条的「状态」改成「在做」、「开始」写当前时间（香港时间），只提交这一个文件，推送成功后再干活。推送失败（有人先改了）就 fetch、rebase、重来。",
+    "UE 只读：只通过本机 GPUECli 服务（http://127.0.0.1:17780/gpcli）读，只用 /object/search、/object/get 和加载资产来读属性；写法照 analysis/scripts/workbench_engine_acceptance.mjs 的 request()（它只放行读取接口）。",
+    "绝对不做：保存任何资产或关卡、导入、替换、改属性、提交 P4、启动或关闭 UE、改 tool/src、改 tool/workbench、改在线看板。UE 没开或 GPUECli 连不上：不要自己开 UE，直接把状态改成「卡住」，原因写「UE 没开 / GPUECli 连不上」。",
+    "只改这条「只许改」里列出的文件，加上你自己的对话记录（对话记录/对话框<你的编号>.md）和这份派活队列里你这一条。git add 只加这些文件，不用 git add -A / commit -a。",
+    "对话记录：在你自己的对话记录里写一节「派活 T0x（dot 派，<时间>）」，原样贴本条「标题」，拆成勾选步骤，做完一步打勾。",
+    "做完：按「做完的标准」逐条自查；在这条写「状态」=「完成」、「完成」时间、「提交」（你的提交号）、「结果」（1–3 行：发现了什么、文件在哪、用户要不要做什么）；提交并推送。",
+    "卡住：写「状态」=「卡住」、「结果」写原因和已经试过什么、做到哪一步；已做的部分照样提交。不要猜、不要绕过规则。",
+    "每条最多 60 分钟。到时没做完：提交已有结果，状态写「卡住」，原因写「超时，做到第几步」。",
+    "提交信息开头写「派活 T0x：」，结尾按仓库惯例加署名行。rebase / 推送每一步看退出码，冲突保留对方内容再合并，绝不 force push。"
+  ],
+  "状态说明": {
+    "等前置": "条件还没满足，dot 不派；总管满足后改成「待派」",
+    "待派": "dot 可以派",
+    "在做": "Codex 已认领",
+    "完成": "做完了，等总管收口到看板",
+    "卡住": "做不下去，看「结果」里的原因",
+    "取消": "不做了"
+  },
+  "任务": [
+    {
+      "编号": "T01",
+      "看板": "n07",
+      "交给": "本机同步（8）",
+      "在哪": "本机",
+      "状态": "待派",
+      "优先": 1,
+      "前置": [],
+      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+      "标题": "导入前先读回：红彗星扇、银扇和 3 个要重导的资源在 UE 里的现值（含手调亮度）",
+      "为什么": "用户周三要导入 Comet / Silver 3.0 替换 FanComet_01 / FanSilver_01，导出（23）还要重导金锦菊、橙辉星、小青柠。UE 里这些粒子有人手调过（亮度 ×5–×100、寿命、面片尺寸，见 analysis/results/ENGINE_BAKER_SYNC_20261011/看法.md §1、§3），导入会把这些值冲掉。先读一份存档，导完才能对照写回。必须在用户导入之前做完。",
+      "只许改": [
+        "analysis/results/UE_READBACK_20261014/导入前现值.json",
+        "analysis/results/UE_READBACK_20261014/导入前现值.md",
+        "analysis/scripts/ue_readback_values.mjs（新建；只读脚本，可选，方便以后每次重导前复用）"
+      ],
+      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T01，按该文件「Codex 共同规则」执行，先读你自己的对话记录 对话记录/对话框8.md 最近两节了解上下文。\n\n任务：在用户导入新版之前，只读读回 5 个粒子系统在 UE 里的现值，存档备查。\n\n对象（资源表 ResourceFX 的 PC 行 → 粒子系统；名字以 FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 里的路径为准）：\n1. P_EFX_FireWorks_FanComet_01 → P_EFX_FireWorks_FanComet_01_HD（红彗星扇，将被 Comet 3.0 替换）\n2. P_EFX_FireWorks_FanSilver_01 → P_EFX_FireWorks_FanSilver_01_HD（银扇，将被 Silver 3.0 替换）\n3. 金锦菊 GoldSpark 那一行引用的粒子（注意：金锦菊用的粒子叫 GoldRay_HD，金芒菊用的叫 GoldSpark_HD，名字是对调的，按资源表那一行的引用路径读，别按名字猜）\n4. 橙辉星 OrangeGlitter 那一行引用的粒子（Combo_HD）\n5. 小青柠 Lime 那一行引用的粒子（LimeStar_HD）\n如果某一行在资源表里找不到，记下来，继续读其他的。\n\n每个粒子系统读：系统级（固定更新帧率 / FixedRelativeBoundingBox 与大小 / 剔除距离 / LOD 距离 / 预热时间）；每个发射器（名字、LOD0 是否启用、CPU/GPU、Required 模块的材质和 SubUV 横竖格数、Spawn 速率与 Burst、Lifetime、Initial Size 与 Size By Life、Color Over Life 和 Scale Color / Life 里的颜色与亮度倍数曲线（完整关键帧）、Initial Velocity、Drag、GPU 发射器的 Max Draw Count）。读不到的字段写 null 并注明原因，不要猜。\n\n输出：\n- analysis/results/UE_READBACK_20261014/导入前现值.json：{format:'df.ue-readback/1', readAt, source:'GPUECli 只读', assets:[{resourceId, particlePath, system:{...}, emitters:[...]}], missing:[...]}。\n- analysis/results/UE_READBACK_20261014/导入前现值.md：一张表，每个资源一行，列出「和导出缺省不一样」的值（亮度倍数不是 1、寿命、面片尺寸），最后写一句「用户导入新版后，照这份把手调值写回或交给导出（23）改烘焙器亮度口径」。\n- 可选：把读取逻辑写成 analysis/scripts/ue_readback_values.mjs（只允许 /object/get、/object/search，照 workbench_engine_acceptance.mjs 的写法），以后每次重导前都能跑。\n\n禁止：保存、改值、导入、替换、P4、开关 UE。UE 没开或 GPUECli 连不上 → 状态改「卡住」，原因写清楚，结束。",
+      "做完的标准": [
+        "5 个对象每个都有结果（读到，或写明在资源表里找不到）",
+        "JSON 能被 python -m json.tool 解析；每个发射器都有亮度倍数（或注明读不到）",
+        "md 里列出所有亮度倍数 ≠ 1 的发射器",
+        "UE 里没有任何资产被保存（git 之外没有可验证手段的话，在结果里写明「只用了 /object/get、/object/search」）",
+        "已提交推送，本条写了完成、提交号、结果"
+      ],
+      "派出": "",
+      "开始": "",
+      "完成": "",
+      "提交": "",
+      "结果": ""
+    },
+    {
+      "编号": "T02",
+      "看板": "i23",
+      "交给": "本机同步（8）",
+      "在哪": "本机",
+      "状态": "待派",
+      "优先": 2,
+      "前置": [],
+      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+      "标题": "周四测性能前：只读核对 Night 用到的每个粒子系统的导入设置",
+      "为什么": "导入器 v2.22 起才会写入固定 10 FPS、固定包围盒、120000 cm 剔除、GPU Max Draw Count 等设置（协作/备忘_导入器.md:46、对话记录/对话框5.md:105–109）。10-07 以前导入、之后没重导的资源可能没有这些设置，周四测出来的帧率和截断会不准。",
+      "只许改": [
+        "analysis/results/UE_READBACK_20261014/导入设置核对.json",
+        "analysis/results/UE_READBACK_20261014/导入设置核对.md"
+      ],
+      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T02，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n任务：只读核对周四性能测试要用到的每个粒子系统，导入设置是否符合导入器 v2.22 的标准。\n\n范围：FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 里 pc（20 行）和 mobile（15 行）每一行的 FxSP、FxSP_Low、FxSP_High 引用到的全部粒子系统（去重）。\n\n标准（出处 协作/备忘_导入器.md:46、对话记录/对话框5.md:105–109）：\n- 系统 Fixed-Time 更新：10 FPS（delta 0.1）\n- 预热 / 等待 = 0\n- 固定相对包围盒：开，各轴 ±100000 cm\n- 剔除距离 120000 cm（1200 m）\n- 每个 GPU 发射器都有 Max Draw Count（> 0）\n\n每个粒子系统一行，逐项写实际值和 ✅ / ❌；读不到写 null 和原因。\n\n输出：\n- analysis/results/UE_READBACK_20261014/导入设置核对.json：{format:'df.ue-import-settings-check/1', readAt, standard:{...}, rows:[{resourceId, side:'pc'|'mobile', slot:'FxSP'|'FxSP_Low'|'FxSP_High', path, fixedFps, warmup, fixedBounds, boundsExtent, cullDistance, gpuEmitters:[{name, maxDrawCount}], pass:true|false, fails:[...]}]}\n- analysis/results/UE_READBACK_20261014/导入设置核对.md：先写一句结论（几个全过、几个有 ❌），再列出所有有 ❌ 的资源和缺哪项，最后写「建议：这些资源周四前用导入器重新导入一次（由用户点导入），或在测试结论里注明」。不要替用户改。\n\n禁止：保存、改值、导入、P4、开关 UE。UE 没开 → 卡住。",
+      "做完的标准": [
+        "资源发射器数.json 里引用到的每个粒子系统都有一行",
+        "每行 5 项标准都有实际值或注明读不到的原因",
+        "md 的结论数字和 json 一致",
+        "已提交推送，本条写了完成、提交号、结果"
+      ],
+      "派出": "",
+      "开始": "",
+      "完成": "",
+      "提交": "",
+      "结果": ""
+    },
+    {
+      "编号": "T03",
+      "看板": "i22",
+      "交给": "本机同步（8）",
+      "在哪": "本机",
+      "状态": "待派",
+      "优先": 3,
+      "前置": [],
+      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+      "标题": "查 PC 资源表里金垂柳那一行 fxType 为什么是 (INVALID)，会不会影响播放",
+      "为什么": "FXtools/节目/NewYearFireWorks_v01/资源发射器数.json（10-11 读回）里 PC 表 20 行只有 P_EFX_FireWorks_GoldKamuro 的 fxType 是 (INVALID)，其余都是 SHOW。金垂柳是主角，Night 里 5 发都用它。手游编排 10-10 22:38 提过，之后没人跟。",
+      "只许改": [
+        "analysis/results/UE_READBACK_20261014/金垂柳fxType.md",
+        "analysis/results/UE_READBACK_20261014/金垂柳fxType.json"
+      ],
+      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T03，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n任务：只读查清 PC 资源表（ResourceFX）里 P_EFX_FireWorks_GoldKamuro 这一行 fxType 是 (INVALID) 的原因和影响，不改。\n\n步骤：\n1. 读这一行的全部字段原值，和同表一行正常的（比如 P_EFX_FireWorks_FanComet_01，fxType = SHOW）逐字段对比。\n2. 读 fxType 这个字段的枚举定义（有哪些合法值），判断 (INVALID) 是空值、越界值还是被删掉的枚举项。\n3. 找使用 fxType 的地方：导演或资源表的读取逻辑会不会因为 INVALID 跳过这一行、不播放或按别的类型处理。能在 UE 里只读查到就写证据（蓝图节点 / 代码路径）；查不到就写「推断」并说明依据，不要当成结论。\n4. 手游表里有没有金垂柳的行（10-13 读回时手游表缺 8 个 ID）。\n\n输出：\n- analysis/results/UE_READBACK_20261014/金垂柳fxType.json：两行原值对比和枚举定义。\n- analysis/results/UE_READBACK_20261014/金垂柳fxType.md：三段——现象、原因（证据 / 推断分开写）、建议改法（比如「在资源表里把 fxType 改成 SHOW，由用户在 UE 里改并保存」）。最后一行写清楚：用户要不要在周三导入 B04 前改它。\n\n禁止：改资源表、保存、P4、开关 UE。",
+      "做完的标准": [
+        "有两行原值对比",
+        "原因写清楚，证据和推断分开",
+        "给出用户要不要改、怎么改的一句话",
+        "已提交推送，本条写了完成、提交号、结果"
+      ],
+      "派出": "",
+      "开始": "",
+      "完成": "",
+      "提交": "",
+      "结果": ""
+    },
+    {
+      "编号": "T04",
+      "看板": "n03",
+      "交给": "本机同步（8）",
+      "在哪": "本机",
+      "状态": "待派",
+      "优先": 4,
+      "前置": [],
+      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读，用来试跑）",
+      "标题": "写「手游 _M 占位」导入后检查脚本，并用现有手游资产试跑",
+      "为什么": "用户周三要用 UE「特效资产复制」做小银菊、金芒菊、银彩菊、金垂柳的 _M 占位（看板 i03）。规范要求这类资产过导入后检查才能进手游表，但 tool/local_delivery/fx_gate.py 只查交付包，没有查 UE 里资产的模式（看板 n03；协作/手游与小平台资产_执行方案_2026-10-12.md:105）。读回脚本和证据现在只在本机，不在仓库。",
+      "只许改": [
+        "analysis/scripts/手游占位检查.mjs（新建）",
+        "analysis/scripts/README.md（加一行用法）",
+        "analysis/results/UE_READBACK_20261014/手游占位检查_试跑.json"
+      ],
+      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T04，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n任务：写一个只读检查脚本，用户导入手游 _M 占位后跑它，判断能不能进手游表。\n\n脚本：analysis/scripts/手游占位检查.mjs（Node，照 analysis/scripts/workbench_engine_acceptance.mjs 的 request() 写法，只允许 /object/get、/object/search）。\n用法：node analysis/scripts/手游占位检查.mjs <粒子系统路径或资源表 ID>... [--out <json>]\n逐个检查（依据 spec/烟花特效资产规范.md 手游部分、协作/手游与小平台资产_执行方案_2026-10-12.md）：\n1. LOD0 启用的发射器 ≤ 3\n2. GPU 发射器 = 0\n3. 每个发射器材质引用到的贴图尺寸 ≤ 1024（长边）\n4. 引用链（材质 → 材质实例 → 贴图）里没有名字带 _HD 的资产\n5. 资产名以 _M 结尾\n每项写实际值和 ✅ / ❌；有任何 ❌ 退出码 1；读不到的项算 ❌ 并写原因。脚本本身不能有任何写 UE 的调用。\n\n试跑：对现有手游资产跑一遍（至少 P_EFX_FireWorks_Trail_01_M 和 P_EFX_FireWorks_Hero_M，路径见 FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 的 mobile），结果存 analysis/results/UE_READBACK_20261014/手游占位检查_试跑.json。试跑结果不需要全过，只要能正确读出来。\n在 analysis/scripts/README.md 第 1 节表格加一行用法。\n\n禁止：保存、改值、导入、P4、开关 UE。",
+      "做完的标准": [
+        "node --check analysis/scripts/手游占位检查.mjs 通过",
+        "脚本里只有 /object/get、/object/search 两种请求",
+        "试跑至少 2 个现有 _M 资产，5 项都有实际值",
+        "README 有用法",
+        "已提交推送，本条写了完成、提交号、结果"
+      ],
+      "派出": "",
+      "开始": "",
+      "完成": "",
+      "提交": "",
+      "结果": ""
+    },
+    {
+      "编号": "T05",
+      "看板": "n06",
+      "交给": "本机同步（8）",
+      "在哪": "本机",
+      "状态": "等前置",
+      "优先": 5,
+      "前置": [
+        "T04"
+      ],
+      "等什么": "用户导入了 _M 占位（看板 i03 勾了「我做好了」）。满足后总管把状态改成「待派」。",
+      "要 UE": "要：UE 编辑器开着、GPUECli 服务在线（只读）",
+      "标题": "用户导入 _M 占位后：跑占位检查，并把资源发射器数表更新到现在",
+      "为什么": "规范 §8 要求导入后读回写进 资源发射器数.json；这张表停在 10-11，周四测性能要用它算 GPU 和发射器预算（看板 n06）。",
+      "只许改": [
+        "FXtools/节目/NewYearFireWorks_v01/资源发射器数.json",
+        "analysis/results/UE_READBACK_20261014/手游占位检查.json",
+        "analysis/results/UE_READBACK_20261014/资源发射器数_变化.md"
+      ],
+      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T05，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n前提：用户已在 UE 里用「特效资产复制」做好 _M 占位并加进手游资源表。\n\n1. 对用户新做的每个 _M 跑 node analysis/scripts/手游占位检查.mjs，结果存 analysis/results/UE_READBACK_20261014/手游占位检查.json。\n2. 按 10-11 那次的读法（format df.resource-emitter-census/1，字段同现有文件）重新只读读回 PC 和手游两张资源表，更新 FXtools/节目/NewYearFireWorks_v01/资源发射器数.json（readAt 改成这次）。\n3. analysis/results/UE_READBACK_20261014/资源发射器数_变化.md：和 10-11 版比，哪些行新增 / 变了；手游表还缺哪些 ID；占位检查有 ❌ 的列出来，写「这几个先别进手游表」。\n\n禁止：改资源表、保存、导入、P4、开关 UE。",
+      "做完的标准": [
+        "每个新 _M 都有检查结果",
+        "资源发射器数.json readAt 是这次，格式不变，能被跨年秀（22）的编排体检读取",
+        "变化说明列出新增 / 变化 / 仍缺",
+        "已提交推送，本条写了完成、提交号、结果"
+      ],
+      "派出": "",
+      "开始": "",
+      "完成": "",
+      "提交": "",
+      "结果": ""
+    }
+  ]
+}

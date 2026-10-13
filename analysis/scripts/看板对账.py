@@ -141,6 +141,32 @@ def main():
     print(f"用户勾了「我做好了」、还没同步给负责对话框：{len(waiting)} 条" + ("（总管要同步）" if waiting else ""))
     for k, r in waiting:
         print(f"  [等同步] {k} {r.get('title', '')[:60]} → {r.get('owner', '')}｜反馈：{(r.get('feedback') or r.get('answer') or '')[:60]}")
+    # 派活队列（本机 dot 派给 Codex）：编号对得上看板；做完 / 卡住的要总管收口
+    qfile = ROOT / "协作" / "派活队列.json"
+    if qfile.exists():
+        q = json.loads(qfile.read_text(encoding="utf-8"))
+        tasks = q.get("任务", [])
+        ok_status = set(q.get("状态说明", {}).keys())
+        done_ids = {t.get("编号") for t in tasks if t.get("状态") == "完成"}
+        for t in tasks:
+            tid = t.get("编号", "?")
+            if t.get("状态") not in ok_status:
+                problems.append(f"[派活状态不认识] {tid}：{t.get('状态')!r}")
+            if t.get("看板") and t["看板"] not in items:
+                problems.append(f"[派活单指向不存在的看板行] {tid} → {t['看板']}")
+            for k in ("提示词", "只许改", "做完的标准"):
+                if not t.get(k):
+                    problems.append(f"[派活单缺「{k}」] {tid}")
+        back = [t for t in tasks if t.get("状态") in ("完成", "卡住") and items.get(t.get("看板"), {}).get("status") in OPEN_STATUS]
+        ready = [t for t in tasks if t.get("状态") == "等前置" and all(p in done_ids for p in t.get("前置", []))]
+        counts = {}
+        for t in tasks:
+            counts[t.get("状态")] = counts.get(t.get("状态"), 0) + 1
+        print("派活队列：" + "，".join(f"{k} {v}" for k, v in counts.items()))
+        for t in back:
+            print(f"  [派活回来了] {t['编号']} {t.get('状态')} → 看板 {t.get('看板')}｜{(t.get('结果') or '')[:80]}（总管收口）")
+        for t in ready:
+            print(f"  [前置做完了] {t['编号']} 还在「等前置」，查「等什么」满足了没有，满足就改「待派」")
     print(f"对账表里的打勾项已打勾或文字已改：{len(gone)} 条（可复核结果，不算问题）")
     print(f"对账表指向已关闭看板行：{len(closed_refs)} 条（不算问题）")
     if a.verbose:
