@@ -347,14 +347,18 @@ export function qualityEvents(doc,profiles,tier){
  return doc.events.filter(e=>keep.get(e.cueId)?.has(e.pointId));
 }
 // 一张导演表（手游编排 2026-10-11，UE 实测「当前画质 ≥ MinQualityLevel 就播」）：高配全部事件，
-// 低配也有的写 VeryLow、中配追加的写 Medium、只有高配的写 High；片段 mobile:false 写 PC + 手柄（12）。
+// 低配也有的写 VeryLow、中配追加的写 Medium、只有高配的写 High；片段 mobile:false 写 PC + 手柄（12），mobile:'only' 写只上手游（2，宪章 §8 手游替身）。
 // 低配点必须都在中配里，否则合不成一张表，返回 issues。
+// 片段上不上手机：默认 PC + 手游 + 手柄（14）；mobile:false 只 PC + 手柄（12）；mobile:'only' 只上手游（2）。
+export function cuePlatformFlags(cue){return cue?.mobile==='only'?2:cue?.mobile===false?12:14}
+// 只导某一档（三档单独导出）时，只上手游的片段也写 2，免得在 PC 上播；其余条目保持原来的默认 14。
+export function markMobileOnly(doc,events){const only=new Set((doc.cues||[]).filter(c=>c.mobile==='only').map(c=>c.id));return only.size?events.map(e=>only.has(e.cueId)?{...e,platformFlags:2}:e):events}
 export function nestedQualityEvents(doc,profiles){
  const issues=[],med=new Set(qualityEvents(doc,profiles,'medium').map(e=>e.id)),low=new Set(qualityEvents(doc,profiles,'low').map(e=>e.id));
  const bad=new Set(doc.events.filter(e=>low.has(e.id)&&!med.has(e.id)).map(e=>e.cueId));
  if(bad.size)issues.push(`${bad.size} 个片段的低配点不在中配里，合不成一张表：${[...bad].slice(0,5).join('、')}${bad.size>5?' …':''}`);
- const mobile=new Map(doc.cues.map(c=>[c.id,c.mobile!==false]));
- const events=qualityEvents(doc,profiles,'high').map(e=>({...e,minQuality:low.has(e.id)?'EQuality_VeryLow':med.has(e.id)?'EQuality_Medium':'EQuality_High',platformFlags:mobile.get(e.cueId)?14:12}));
+ const flags=new Map(doc.cues.map(c=>[c.id,cuePlatformFlags(c)]));
+ const events=qualityEvents(doc,profiles,'high').map(e=>({...e,minQuality:low.has(e.id)?'EQuality_VeryLow':med.has(e.id)?'EQuality_Medium':'EQuality_High',platformFlags:flags.get(e.cueId)}));
  return {events,issues};
 }
 export function setQualityPoints(doc,profiles,tier,cueId,ids){

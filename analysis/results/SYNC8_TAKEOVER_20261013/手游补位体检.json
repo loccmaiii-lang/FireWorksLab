@@ -1,0 +1,506 @@
+[
+  {
+    "file": "协作/编排B01/逻辑方案_B02r2_up70_s10.json",
+    "pcIncidents": 9,
+    "byKind": {
+      "后压前": 9
+    },
+    "heroIncidents": 0,
+    "pc": [
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C048",
+          "B02_C056"
+        ],
+        "t": 65.48,
+        "until": 66.25,
+        "pairs": 4,
+        "minSep": 0.29,
+        "points": [
+          "P1",
+          "P3",
+          "P5",
+          "P7"
+        ],
+        "hero": false,
+        "section": "B01_S5",
+        "desc": "金锦菊（M·整排9）× 多重菊（M·城垛M）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C096",
+          "B02_C100"
+        ],
+        "t": 123.87,
+        "until": 124.19,
+        "pairs": 1,
+        "minSep": 0.18,
+        "points": [
+          "P8"
+        ],
+        "hero": false,
+        "section": "B01_S9",
+        "desc": "银彩菊（L·整排9）× 多重菊·大（L·整排9）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C100",
+          "B02_C106"
+        ],
+        "t": 127.08,
+        "until": 128.15,
+        "pairs": 2,
+        "minSep": 0.26,
+        "points": [
+          "P1",
+          "P3"
+        ],
+        "hero": false,
+        "section": "B01_S9",
+        "desc": "多重菊（M·整排9）× 多重菊（M·城垛M）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C100",
+          "B02_C102"
+        ],
+        "t": 127.17,
+        "until": 128.34,
+        "pairs": 3,
+        "minSep": 0.3,
+        "points": [
+          "P0",
+          "P2",
+          "P4"
+        ],
+        "hero": false,
+        "section": "B01_S9",
+        "desc": "多重菊·大（L·整排9）× 银彩菊（L·城垛L）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C107",
+          "B02_C109"
+        ],
+        "t": 133.68,
+        "until": 134.88,
+        "pairs": 4,
+        "minSep": 0.14,
+        "points": [
+          "P1",
+          "P3",
+          "P5",
+          "P7"
+        ],
+        "hero": false,
+        "section": "B01_S9",
+        "desc": "金曜菊（M·叠层）× 金芒菊（M·整排9）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C137",
+          "B02_C140"
+        ],
+        "t": 169.27,
+        "until": 170.54,
+        "pairs": 5,
+        "minSep": 0.17,
+        "points": [
+          "P4",
+          "P5",
+          "P6",
+          "P7",
+          "P8"
+        ],
+        "hero": false,
+        "section": "B01_S12",
+        "desc": "多重菊·大（L·整排9）× 金芒菊·大（L·叠层）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C154",
+          "B02_C156"
+        ],
+        "t": 185.48,
+        "until": 186.78,
+        "pairs": 4,
+        "minSep": 0.22,
+        "points": [
+          "P1",
+          "P3",
+          "P5",
+          "P7"
+        ],
+        "hero": false,
+        "section": "B01_S12",
+        "desc": "金曜菊（M·叠层）× 金蕊青柠星（M·整排9）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C161",
+          "B02_C165"
+        ],
+        "t": 191.98,
+        "until": 192.29,
+        "pairs": 1,
+        "minSep": 0.46,
+        "points": [
+          "P4"
+        ],
+        "hero": false,
+        "section": "B01_S12",
+        "desc": "金芒菊·大（L·金墙）× 金曜菊（M·叠层）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C168",
+          "B02_C171"
+        ],
+        "t": 198.47,
+        "until": 200.39,
+        "pairs": 25,
+        "minSep": 0.33,
+        "points": [
+          "P0",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "P6",
+          "P7",
+          "P8"
+        ],
+        "hero": false,
+        "section": "B01_S12",
+        "desc": "银彩菊（L·整排9）× 银彩菊（L·白墙9）"
+      }
+    ],
+    "mobile": {
+      "high": {
+        "gaps": [
+          {
+            "start": 25.6,
+            "end": 32.8,
+            "len": 7.2,
+            "section": "连续展开"
+          },
+          {
+            "start": 38.5,
+            "end": 45.7,
+            "len": 7.2,
+            "section": "密集问答"
+          },
+          {
+            "start": 73.2,
+            "end": 104.1,
+            "len": 30.9,
+            "section": "低位密奏"
+          },
+          {
+            "start": 141.3,
+            "end": 156.0,
+            "len": 14.7,
+            "section": "转场铺色 A"
+          }
+        ],
+        "totalGapS": 60.0,
+        "incidents": 1
+      },
+      "medium": {
+        "gaps": [
+          {
+            "start": 25.5,
+            "end": 32.8,
+            "len": 7.3,
+            "section": "连续展开"
+          },
+          {
+            "start": 38.3,
+            "end": 45.7,
+            "len": 7.4,
+            "section": "密集问答"
+          },
+          {
+            "start": 73.2,
+            "end": 104.1,
+            "len": 30.9,
+            "section": "低位密奏"
+          },
+          {
+            "start": 141.3,
+            "end": 156.0,
+            "len": 14.7,
+            "section": "转场铺色 A"
+          }
+        ],
+        "totalGapS": 60.3,
+        "incidents": 1
+      },
+      "low": {
+        "gaps": [
+          {
+            "start": 25.4,
+            "end": 32.8,
+            "len": 7.4,
+            "section": "连续展开"
+          },
+          {
+            "start": 38.3,
+            "end": 45.7,
+            "len": 7.4,
+            "section": "密集问答"
+          },
+          {
+            "start": 73.2,
+            "end": 104.1,
+            "len": 30.9,
+            "section": "低位密奏"
+          },
+          {
+            "start": 141.3,
+            "end": 156.0,
+            "len": 14.7,
+            "section": "转场铺色 A"
+          }
+        ],
+        "totalGapS": 60.4,
+        "incidents": 1
+      }
+    }
+  },
+  {
+    "file": "协作/编排B01/逻辑方案_B02r3m_up70_s10.json",
+    "pcIncidents": 9,
+    "byKind": {
+      "后压前": 9
+    },
+    "heroIncidents": 0,
+    "pc": [
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C048",
+          "B02_C056"
+        ],
+        "t": 65.48,
+        "until": 66.25,
+        "pairs": 4,
+        "minSep": 0.29,
+        "points": [
+          "P1",
+          "P3",
+          "P5",
+          "P7"
+        ],
+        "hero": false,
+        "section": "B01_S5",
+        "desc": "金锦菊（M·整排9）× 多重菊（M·城垛M）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C096",
+          "B02_C100"
+        ],
+        "t": 123.87,
+        "until": 124.19,
+        "pairs": 1,
+        "minSep": 0.18,
+        "points": [
+          "P8"
+        ],
+        "hero": false,
+        "section": "B01_S9",
+        "desc": "银彩菊（L·整排9）× 多重菊·大（L·整排9）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C100",
+          "B02_C106"
+        ],
+        "t": 127.08,
+        "until": 128.15,
+        "pairs": 2,
+        "minSep": 0.26,
+        "points": [
+          "P1",
+          "P3"
+        ],
+        "hero": false,
+        "section": "B01_S9",
+        "desc": "多重菊（M·整排9）× 多重菊（M·城垛M）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C100",
+          "B02_C102"
+        ],
+        "t": 127.17,
+        "until": 128.34,
+        "pairs": 3,
+        "minSep": 0.3,
+        "points": [
+          "P0",
+          "P2",
+          "P4"
+        ],
+        "hero": false,
+        "section": "B01_S9",
+        "desc": "多重菊·大（L·整排9）× 银彩菊（L·城垛L）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C107",
+          "B02_C109"
+        ],
+        "t": 133.68,
+        "until": 134.88,
+        "pairs": 4,
+        "minSep": 0.14,
+        "points": [
+          "P1",
+          "P3",
+          "P5",
+          "P7"
+        ],
+        "hero": false,
+        "section": "B01_S9",
+        "desc": "金曜菊（M·叠层）× 金芒菊（M·整排9）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C137",
+          "B02_C140"
+        ],
+        "t": 169.27,
+        "until": 170.54,
+        "pairs": 5,
+        "minSep": 0.17,
+        "points": [
+          "P4",
+          "P5",
+          "P6",
+          "P7",
+          "P8"
+        ],
+        "hero": false,
+        "section": "B01_S12",
+        "desc": "多重菊·大（L·整排9）× 金芒菊·大（L·叠层）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C154",
+          "B02_C156"
+        ],
+        "t": 185.48,
+        "until": 186.78,
+        "pairs": 4,
+        "minSep": 0.22,
+        "points": [
+          "P1",
+          "P3",
+          "P5",
+          "P7"
+        ],
+        "hero": false,
+        "section": "B01_S12",
+        "desc": "金曜菊（M·叠层）× 金蕊青柠星（M·整排9）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C161",
+          "B02_C165"
+        ],
+        "t": 191.98,
+        "until": 192.29,
+        "pairs": 1,
+        "minSep": 0.46,
+        "points": [
+          "P4"
+        ],
+        "hero": false,
+        "section": "B01_S12",
+        "desc": "金芒菊·大（L·金墙）× 金曜菊（M·叠层）"
+      },
+      {
+        "kind": "后压前",
+        "rows": [
+          "B02_C168",
+          "B02_C171"
+        ],
+        "t": 198.47,
+        "until": 200.39,
+        "pairs": 25,
+        "minSep": 0.33,
+        "points": [
+          "P0",
+          "P1",
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "P6",
+          "P7",
+          "P8"
+        ],
+        "hero": false,
+        "section": "B01_S12",
+        "desc": "银彩菊（L·整排9）× 银彩菊（L·白墙9）"
+      }
+    ],
+    "mobile": {
+      "high": {
+        "gaps": [
+          {
+            "start": 73.2,
+            "end": 78.2,
+            "len": 5.0,
+            "section": "低位密奏"
+          }
+        ],
+        "totalGapS": 5.0,
+        "incidents": 2
+      },
+      "medium": {
+        "gaps": [
+          {
+            "start": 73.2,
+            "end": 78.2,
+            "len": 5.0,
+            "section": "低位密奏"
+          }
+        ],
+        "totalGapS": 5.0,
+        "incidents": 2
+      },
+      "low": {
+        "gaps": [
+          {
+            "start": 73.2,
+            "end": 78.2,
+            "len": 5.0,
+            "section": "低位密奏"
+          }
+        ],
+        "totalGapS": 5.0,
+        "incidents": 2
+      }
+    }
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "checks": [
+    "PC high每发参数一致",
+    "PC high导演数组一致",
+    "PC medium每发参数一致",
+    "PC medium导演数组一致",
+    "PC low每发参数一致",
+    "PC low导演数组一致",
+    "单表预检通过",
+    "无无引用子模板",
+    "父条目高度为0",
+    "尾缀EffectScale=1",
+    "80次仅手游且包含高度版本",
+    "音乐基线保持待新音频"
+  ],
+  "tiers": {
+    "high": {
+      "pc": 978,
+      "mobile": 225
+    },
+    "medium": {
+      "pc": 822,
+      "mobile": 179
+    },
+    "low": {
+      "pc": 320,
+      "mobile": 163
+    }
+  },
+  "summary": {
+    "originalTemplates": 204,
+    "uniqueTemplates": 157,
+    "originalEntries": 1058,
+    "uniqueEntries": 814,
+    "eventCount": 1058,
+    "subTemplates": 153,
+    "heightVariants": 114,
+    "templates": 157,
+    "groups": 3,
+    "scheduleSlots": 204
+  }
+}

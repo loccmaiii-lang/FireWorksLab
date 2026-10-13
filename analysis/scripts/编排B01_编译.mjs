@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // 编排 B01 → 工作台节目文件（.dfshow）+ 三档三表（df.director-delivery/2）
 // 用法：node analysis/scripts/编排B01_编译.mjs [--density 1|2|3] [--out FXtools/节目/NewYearFireWorks_v01]
+// --logic <逻辑方案.json> / --name <编排名>：读取独立逻辑输出，避免重生成时覆盖已有云端版本；仍走同一校验与编译路径。
 // 修订2（本机同步 8，10-11）：按 协作/编排B01/大号花型.json 建「同一资源放大升高」的大号 / 主角固定子模板；D1 / D3 输出带后缀，D2 沿用原文件名
 // 输入：协作/编排B01/逻辑方案.json（analysis/scripts/编排B01.py 生成）、R04 节目（取点位、固定子模板、音乐）
 // 全程只用工作台自带代码：normalize / validateDoc / preflightProject（= 8025 打开 .dfshow 时跑的那条路径）/ compileDirector（= 交付页生成三表的编译器）
@@ -33,9 +34,12 @@ const R2 = R3 || args.includes('--b02r2');
 const R1M = args.includes('--b02r1m'), R1 = R2 || R1M || args.includes('--b02r1');
 const B02 = R1 || args.includes('--b02');   // B02（22，10-12）：节奏 D + 高低大小 + 尾缀 v2 高度 + 手机三档 + 小平台小花束尾（逻辑方案_B02.json）
 const SFX = R3 ? '_B02r2_up70_s10' : R2 ? '_B02r2_up70' : R1M ? '_B02r1m' : R1 ? '_B02r1' : B02 ? '_B02' : RHYTHM ? `_R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? '' : `_D${DENSITY}`;
-const LOGIC = path.join(ROOT, `协作/编排B01/逻辑方案${SFX}.json`);
-const TAG = R3 ? 'B02修订3-高差只往上-10m取整' : R2 ? 'B02修订2-高差只往上' : R1M ? 'B02修订1-错层主角让位-手游替身' : R1 ? 'B02修订1-错层主角让位' : B02 ? 'B02长冈式-节奏D-高低大小-尾缀v2-手机三档-小花束尾' : 'B01长冈式' + (RHYTHM ? `-节奏${RHYTHM}${VARY ? '-高低大小' : ''}` : DENSITY === 2 ? '' : `-D${DENSITY}`);
-const TABLE = R3 ? 'B02r3' : R2 ? 'B02r2' : R1M ? 'B02r1m' : R1 ? 'B02r1' : B02 ? 'B02' : RHYTHM ? `B01R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? 'B01' : `B01D${DENSITY}`;
+const option = key => { const i=args.indexOf('--'+key); if(i<0)return null; const value=args[i+1]; if(!value||value.startsWith('--'))throw Error('--'+key+' 需要一个值'); return value; };
+const logicInput=option('logic'),nameInput=option('name');
+if(nameInput&&/[\\/:*?"<>|]/.test(nameInput))throw Error('--name 不能含文件名非法字符');
+const LOGIC = logicInput ? path.resolve(ROOT,logicInput) : path.join(ROOT, `协作/编排B01/逻辑方案${SFX}.json`);
+const TAG = nameInput || (R3 ? 'B02修订3-高差只往上-10m取整' : R2 ? 'B02修订2-高差只往上' : R1M ? 'B02修订1-错层主角让位-手游替身' : R1 ? 'B02修订1-错层主角让位' : B02 ? 'B02长冈式-节奏D-高低大小-尾缀v2-手机三档-小花束尾' : 'B01长冈式' + (RHYTHM ? `-节奏${RHYTHM}${VARY ? '-高低大小' : ''}` : DENSITY === 2 ? '' : `-D${DENSITY}`));
+const TABLE = nameInput || (R3 ? 'B02r3' : R2 ? 'B02r2' : R1M ? 'B02r1m' : R1 ? 'B02r1' : B02 ? 'B02' : RHYTHM ? `B01R${RHYTHM}${VARY ? 'V' : ''}` : DENSITY === 2 ? 'B01' : `B01D${DENSITY}`);
 const MAIN = !B02 && !RHYTHM && DENSITY === 2;   // 只有 D2 主版带完整音乐
 const FILE_VERSION = 12;   // 修订5（22，10-12）：B02 手机开关（片段 mobile:false）+ 小平台小花束尾
 const HERO_ID = (args.find(a => a.startsWith('--hero-trail=')) || '').split('=')[1] || 'Hero';   // 用户 10-12 20:18：主角尾缀 ResourceFX 行叫 Hero（行加好、资源同步进基础库后再带 --hero-trail）   // 修订1：档位从两端收 + 金垂柳只当主角；修订2：大号花型 + 主角 280 + 密度 D1 / D3；修订3：节奏留白版 A–D；修订4（手游编排 10-12）：尾缀 v2 开花点

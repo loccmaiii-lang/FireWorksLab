@@ -1,0 +1,50 @@
+{
+  "format": "df.workbench-manual-qa/1",
+  "date": "2026-10-13",
+  "entry": "http://127.0.0.1:8025/release/?qa=sync8-1624",
+  "method": "通过cua_repl真实浏览器界面点击平台/档位、刷新、只读交付检查、播放及暂停",
+  "version": "16.0.24",
+  "programme": "B02修订3-高差只往上-10m取整-手游补位",
+  "platformFooterCounts": {
+    "pc": {
+      "high": 978,
+      "medium": 822,
+      "low": 320
+    },
+    "mobile": {
+      "high": 225,
+      "medium": 179,
+      "low": 163
+    }
+  },
+  "refresh": {
+    "platform": "mobile",
+    "quality": "high",
+    "count": 225,
+    "cloudProgrammeKept": true
+  },
+  "deliveryReadOnly": {
+    "target": "Night场景实例",
+    "points": 36,
+    "events": 1058,
+    "subTemplates": 153,
+    "heightVariants": 114,
+    "templates": 157,
+    "scheduleSlots": 204,
+    "existingBlueprintAndInstanceEffectsEqual": true,
+    "preflightPassed": true
+  },
+  "previewReachedS": 55.85,
+  "previewMusic": "旧原曲+5；16.0.24尚未接入新混音",
+  "browserConsoleErrors": [],
+  "releaseChecksPassed": {
+    "core": 168,
+    "offlinePackage": 39,
+    "python": 10
+  },
+  "limits": [
+    "未点击自动导入/确认/执行，未写入或保存UE",
+    "浏览器预览不等于UE整场/真机验证",
+    "未生成本地截图文件"
+  ]
+}

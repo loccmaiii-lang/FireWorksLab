@@ -1,0 +1,36 @@
+{
+  "format": "df.merged-audio-audit/1",
+  "file": "协作/编排工作台资料/2026-10-13/VO融合版.mp3",
+  "sha256": "b357bc5b8028dba95c96aabb4016e4c76c764a710004c6aacfcc106294c48613",
+  "bytes": 5079508,
+  "durationS": 211.64408163265307,
+  "sampleRate": 44100,
+  "channels": 2,
+  "sourceMusicFile": "协作/编排工作台资料/2026-10-10/music/music.wav",
+  "sourceMusicSha256": "ae4927bdedab249e5d0068a70d34419d820ce9cad506917ecf8bf360b6c5c9a3",
+  "sourceDurationS": 210.8108125,
+  "alignment": {
+    "method": "在混音20–80秒排除VO后，与原曲0–100秒做波形归一互相关；8kHz分析",
+    "sourceMusicStartInMixedS": 0.7917500000000004,
+    "correlation": 0.9955838412923768,
+    "sourceWindowStartS": 19.20825
+  },
+  "userTiming": {
+    "voStartS": 0,
+    "musicStartS": 1,
+    "chatEndS": 6,
+    "countdownStartS": 6,
+    "bellS": 16,
+    "openingBurstS": 16
+  },
+  "limitations": [
+    "16秒敲钟、0–6闲话/6–16倒计时来自用户明确指定；未做VO逐字识别",
+    "用户确认尚未替换UE/Wwise，由其他同事负责；本机只负责编排同步，云端已接新音频处理",
+    "16.0.24沿用旧曲+5，尚未发布新音频重排"
+  ],
+  "responsibility": {
+    "audioReplacement": "其他同事",
+    "newAudioChoreography": "用户已通知云端处理",
+    "local": "编排底稿、音频文件、时间约定与核对证据同步"
+  }
+}

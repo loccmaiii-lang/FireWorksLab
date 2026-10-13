@@ -1,7 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {resolveDirector} from '../src/connection.mjs';
+import {resolveDirector,probeConnection} from '../src/connection.mjs';
 const config={EffectSubTemplates:[],EffectTemplates:[],EffectScheduleGroups:[]};
+test('正式默认目标为Night；手动选择的调试导演仍被尊重',async()=>{
+ const night='/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night';
+ const request=async(_,p)=>({path:p.path,properties:{DirectorId:'NewYear_Night',DefaultConfig:config}});
+ assert.equal((await probeConnection({request})).target.path,night);
+ const day='/Game/Maps/Day.Day:PersistentLevel.DayDirector';
+ assert.equal((await probeConnection({request,preferred:day,explicit:true})).target.path,day);
+});
 test('导演实例使用场景显示名，保留内部路径与真实DirectorId',async()=>{
  const path='/Game/Maps/Test.Test:PersistentLevel.BP_Director_7';
  const r=await resolveDirector(path,{request:async()=>({path,name:'BP_Director_7',class:'BP_Director_2_C',properties:{ActorLabel:'BP_Director_2',DirectorId:'FailedNewYear',DefaultConfig:config}})});
