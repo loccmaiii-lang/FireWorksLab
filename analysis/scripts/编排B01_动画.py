@@ -27,14 +27,22 @@ spec.loader.exec_module(b01)
 
 OUT = ROOT / '协作/编排B01'
 R1M = '--b02r1m' in sys.argv          # B02 修订1（22，10-12 23:13）：错层 + 主角让位 + 手游替身；仍输出到 B02动画.html（同一个网页链接）
-B02 = R1M or '--b02' in sys.argv
-SFX, TABLE, NAME = ('_B02r1m', 'B02r1m', 'B02') if R1M else ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
+B03 = '--b03' in sys.argv             # B03（22，10-13 16:28）：合并音频（VO 闲话 + 倒计时 + 汪洋与浩渺），修订3 高度 + 手游替身，输出 B03动画.html
+B02 = B03 or R1M or '--b02' in sys.argv
+SFX, TABLE, NAME = ('_B03m', 'B03m', 'B03') if B03 else ('_B02r1m', 'B02r1m', 'B02') if R1M else ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
 if B02:
     b01.HEIGHTS = 'v2'
 LOGIC = json.loads((OUT / f'逻辑方案{SFX}.json').read_text(encoding='utf-8'))
 CHECK = json.loads((OUT / f'体检{SFX}.json').read_text(encoding='utf-8'))
 MUSIC = json.loads((ROOT / 'analysis/music/汪洋与浩渺_分析.json').read_text(encoding='utf-8'))
-COMPILE = json.loads((ROOT / f'FXtools/节目/NewYearFireWorks_v01/{TABLE}编排检查.json').read_text(encoding='utf-8'))
+_cp = ROOT / f'FXtools/节目/NewYearFireWorks_v01/{TABLE}编排检查.json'
+if _cp.exists():
+    COMPILE = json.loads(_cp.read_text(encoding='utf-8'))
+else:                                 # 还没编译（B03 先出动画）：用体检里的数凑
+    _t, _m = CHECK['tiers'], CHECK['b02']['mobileTiers']
+    COMPILE = dict(tiers={k: dict(events=v['events'], templates='—', scheduleSlots='—') for k, v in _t.items()},
+                   oneTable=dict(pc={k: v['events'] for k, v in _t.items()}, mobile={k: v['events'] for k, v in _m.items()},
+                                 flags2=sum(len(c['events']) for c in LOGIC['cues'] if c.get('mobile') == 'only')))
 CHECK['_compile'] = COMPILE['tiers']
 TEMPLATE = ROOT / 'analysis/templates/choreography-b01.html'
 
@@ -59,6 +67,22 @@ def risks_b02():
         f"GPU 预算仍按暂定 ≤ 200 / 秒排（实测上限 250），高档峰值 {g['peak']}；小平台加的每秒最多十来个。",
         '工作台版本号没升：云端会话装不了工作台依赖，16.0.19 的自动载入由本机同步（8）发布；现在请手动打开 B02 节目文件。',
         '像不像、乱不乱要你看；体检只能证明规则被遵守。',
+    ]
+
+
+def risks_b03():
+    g, ob, r = CHECK['gpu'], COMPILE.get('oneTable', {}), LOGIC['retime']
+    au = LOGIC['audio']
+    on = au['countdownOnsetsS']
+    return [
+        f"演出秒 = 合并音频的秒：原曲在 {au['musicStartS']:.2f} s 起（实测），VO 喊 10 声 {on[0]:.1f}–{on[-1]:.1f} s，零点 {au['zeroShowS']:.2f} s（最后一声之后的原曲第 10 小节重拍；你说的 16 s 那时 VO 还在喊最后两声）。零点要改，给一个数整场跟着平移。",
+        '0–6.5 s VO 闲话时天上不放；倒计时 10 发对上 VO 10 声（红彗星 4 发 → 小银菊 5 对 → 银扇 1 发），最后两声只隔 0.24 s，两发挨得很近。',
+        f"第 17 小节以后的片段照原曲小节整体提前 {abs(r['musicShiftS']):.1f} s（0.1 s 网格，离小节线差 8 ms），高度和大小都是修订3 的（已导入 UE 的子模板照用）。",
+        '原「连续展开」和新的开场叠在一起：金曜菊、小银菊、金蕊青柠星整排和一组小平台去掉了，第 16 小节留空喘口气（补金曜菊会和第 17 小节金锦菊整排同点同高压满 3 s）。',
+        f"PC 挤成一团 10 处：9 处是修订3 原有的余烬重叠，1 处新的很轻（倒计时最后一对小银菊和零点二排小银菊，0.7 s）。主角相关 0。",
+        f"手游三档 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')} 发（含只上手游的替身 {ob.get('flags2', 0)} 发）；剩一段 5 s 断档在低位密奏。替身要工作台支持「只上手游」（本机同步 8 · Codex 正在合并）。",
+        '工作台按仓库原曲播放、音乐偏移 0.79 s，听不到 VO；要听完整的，用合并音频（协作/编排工作台资料/2026-10-13/music/）。UE 里 Night 的音乐触发也要改成这条时间线（原来 +8 / +0 / +195），由本机改。',
+        f"GPU 仍按暂定 ≤ 200 / 秒，PC 高档峰值 {g['peak']}。没在 UE 里放过。",
     ]
 
 
@@ -223,10 +247,13 @@ def main():
                          cues=sec_cnt[s['id']]['cues'], events=sec_cnt[s['id']]['events']))
 
     anchors = {}
-    user = {10.0: ('0 点 · 开场高潮', '用户给定', '倒计时归零；音乐第 3 小节强拍'), 112.2: ('高潮 II 回归（用户 1:47）', '用户给定 + 检测', '静默一小节后回归的点，不是响度最高点')}
+    if LOGIC.get('musicMarkers'):        # B03：合并音频实测的 VO / 零点 + 换算过的用户时刻
+        for m in LOGIC['musicMarkers']:
+            anchors[m['time']] = dict(showS=m['time'], musicS=round(m['time'] - OFFSET, 3), label=m['name'].split('｜')[-1], source=m['confidence'], note='')
+    user = {} if LOGIC.get('musicMarkers') else {10.0: ('0 点 · 开场高潮', '用户给定', '倒计时归零；音乐第 3 小节强拍'), 112.2: ('高潮 II 回归（用户 1:47）', '用户给定 + 检测', '静默一小节后回归的点，不是响度最高点')}
     for t, (label, src, note) in user.items():
         anchors[t] = dict(showS=t, musicS=round(t - OFFSET, 3), label=label, source=src, note=note)
-    for t, label in ((110.6, '静默一小节'), (175.4, '⑧ 三主角垂柳墙'), (196.5, '终和弦 · 白墙')):
+    for t, label in (() if LOGIC.get('musicMarkers') else ((110.6, '静默一小节'), (175.4, '⑧ 三主角垂柳墙'), (196.5, '终和弦 · 白墙'))):
         anchors[t] = dict(showS=t, musicS=round(t - OFFSET, 3), label=label, source='小节网格 + 响度，待试听', note='')
     for s in secs[1:]:
         t = round(s['showStartS'], 1)
@@ -238,14 +265,14 @@ def main():
     pts = {'P': [dict(id=f'P{i}', x=b01.PT[f'P{i}']['x']) for i in range(9)], 'B': [dict(id=f'B{i}', x=b01.PT[f'B{i}']['x']) for i in range(8)]}
     native = b01.REL_H
     data = dict(version=NAME, offsetS=OFFSET, showDurationS=DUR, native=native, points=pts, sections=secs, anchors=anchors, energy=energy,
-                species=species, cues=cues, events=events, risks=risks_r1() if R1M else risks_b02() if B02 else risks(), fanStats=fan_stats())
+                species=species, cues=cues, events=events, risks=risks_b03() if B03 else risks_r1() if R1M else risks_b02() if B02 else risks(), fanStats=fan_stats())
     if B02:
         data['native'] = {k: round(v * b01.TRAIL_K[k]) for k, v in b01.REL_H.items()}
         pts['F'] = [dict(id=f'F{i}', x=b01.PT[f'F{i}']['x']) for i in range(7)]
         data['combos'], data['b02'] = b02_data(species)
     html = TEMPLATE.read_text(encoding='utf-8').replace('__PREVIEW_DATA__', json.dumps(data, ensure_ascii=False, separators=(',', ':')))
     if B02:
-        html = html.replace('<title>汪洋与浩渺编排B01</title>', '<title>汪洋与浩渺编排B02</title>', 1).replace('跨年烟花秀 B01 正面比例动画', '跨年烟花秀 B02 正面比例动画' + (' 修订1' if R1M else ''), 1)
+        html = html.replace('<title>汪洋与浩渺编排B01</title>', f'<title>汪洋与浩渺编排{NAME}</title>', 1).replace('跨年烟花秀 B01 正面比例动画', f'跨年烟花秀 {NAME} 正面比例动画' + (' 修订1' if R1M else ''), 1)
     assert '</script>' not in json.dumps(data, ensure_ascii=False)
     (OUT / f'{NAME}动画.html').write_text(html, encoding='utf-8')
     print(f'{NAME}动画.html  {len(html) / 1024:.0f} KB · {len(cues)} cue · {len(events)} 事件 · {len(secs)} 段 · {len(anchors)} 锚点')
