@@ -77,6 +77,7 @@ td.wrapcell{white-space:normal;min-width:220px;}
     <button type="button" id="next" aria-label="下一波">下一波 ▶</button>
     <div class="seg" id="speed" role="group" aria-label="播放速度"><button type="button" data-v="1" aria-pressed="true">1×</button><button type="button" data-v="2" aria-pressed="false">2×</button><button type="button" data-v="4" aria-pressed="false">4×</button></div>
     <button type="button" id="snd" aria-pressed="true" hidden title="跟着播放 / 拖动 / 倍速同步；2× / 4× 声音会变快变调">声音 开</button>
+    <div class="seg" id="var" role="group" aria-label="编排版本" hidden></div>
     <div class="seg" id="plat" role="group" aria-label="平台" hidden><button type="button" data-v="pc" aria-pressed="true">PC</button><button type="button" data-v="mobile" aria-pressed="false">手游</button></div>
     <div class="seg" id="tier" role="group" aria-label="质量档位"><button type="button" data-v="1" aria-pressed="true">高配</button><button type="button" data-v="2" aria-pressed="false">中配</button><button type="button" data-v="4" aria-pressed="false">低配</button></div>
     <div class="seg" id="view" role="group" aria-label="视野"><button type="button" data-v="full" aria-pressed="true">全场</button><button type="button" data-v="near" aria-pressed="false">中心近看</button></div>
@@ -103,7 +104,7 @@ const D=__PREVIEW_DATA__;
 const $=id=>document.getElementById(id);
 const cv=$('cv'),ctx=cv.getContext('2d'),st=$('strip'),sx=st.getContext('2d'),seek=$('seek'),play=$('play');
 const DUR=D.showDurationS,OFF=D.offsetS;seek.max=DUR;
-const SP=D.species,EV=D.events,CU=D.cues,SEC=D.sections;
+const SP=D.species;let EV=D.events,CU=D.cues,SEC=D.sections;
 const SZ={S:{d:90,c:'217,226,242',n:'小'},M:{d:150,c:'243,197,64',n:'中'},L:{d:230,c:'232,185,74',n:'大'}};
 const SZC={S:'39,181,133',M:'59,130,246',L:'242,106,46'};
 const FAN={R1:{half:0,len:78,gap:.06,hue:'226,96,82',red:1},R5:{half:30,len:78,gap:.06,hue:'226,96,82',red:1},R9:{half:46,len:78,gap:.05,hue:'226,96,82',red:1,lr:0},R9R:{half:46,len:78,gap:.05,hue:'226,96,82',red:1,lr:1},
@@ -123,11 +124,13 @@ const colOf=e=>colorBy==='sp'?SP[e.sp].rgb:SZC[e.sz];
 
 // 段落按钮
 const tl=$('tl');
+function buildTl(){tl.textContent='';
 SEC.forEach(s=>{const b=document.createElement('button');b.type='button';b.textContent=s.name;
   b.style.width=((s.showEndS-s.showStartS)/DUR*100)+'%';b.title=`${mmss(s.showStartS)} ${s.name}（${s.role}）`;
   b.addEventListener('click',()=>{stop();t=Math.max(0,s.showStartS+.05);sync();});tl.appendChild(b);});
 const last_s=SEC[SEC.length-1];
-if(last_s.showEndS<DUR){const sp=document.createElement('span');sp.style.width=((DUR-last_s.showEndS)/DUR*100)+'%';sp.style.borderLeft='1px solid var(--line)';sp.style.fontSize='10px';sp.style.color='var(--muted)';sp.style.paddingLeft='3px';sp.style.whiteSpace='nowrap';sp.style.overflow='hidden';sp.style.lineHeight='18px';sp.textContent='余韵';tl.appendChild(sp);}
+if(last_s.showEndS<DUR){const sp=document.createElement('span');sp.style.width=((DUR-last_s.showEndS)/DUR*100)+'%';sp.style.borderLeft='1px solid var(--line)';sp.style.fontSize='10px';sp.style.color='var(--muted)';sp.style.paddingLeft='3px';sp.style.whiteSpace='nowrap';sp.style.overflow='hidden';sp.style.lineHeight='18px';sp.textContent='余韵';tl.appendChild(sp);}}
+buildTl();
 
 function stop(){playing=false;play.textContent='播放';sndStop();}
 // 声音（B03 起：合并音频原字节内嵌，Web Audio 播放；演出秒 − 音乐偏移 = 音频秒；播放时动画时钟跟着音频走）
@@ -185,6 +188,7 @@ function combo(e,age,X,Z,sc,x0,z0){
 }
 
 function countdown(W,H){
+  if(D.vo){voCountdown(W,H);return;}
   if(t>=10.5)return;
   const fs=Math.min(150,H*.34);ctx.textAlign='center';ctx.textBaseline='middle';
   let txt,al;
@@ -195,6 +199,20 @@ function countdown(W,H){
   ctx.font=`12px ${getComputedStyle(document.body).getPropertyValue('--sans')}`;ctx.fillStyle='rgba(140,143,152,.95)';
   const sub=t<5?'倒计时 · 无音乐':t<10?'倒计时 · 音乐渐入':'';
   if(sub)ctx.fillText(sub,W/2,H*.3+fs*.62);
+}
+
+// 大号数字跟 VO 走（B03 修订1：原来写死 B01 的 0–10 s，和 VO 对不上）
+function voCountdown(W,H){
+  const V=D.vo,mono=getComputedStyle(document.body).getPropertyValue('--mono'),sans=getComputedStyle(document.body).getPropertyValue('--sans');
+  if(t>=V.fire.end+.8)return;
+  const fs=Math.min(150,H*.34);ctx.textAlign='center';ctx.textBaseline='middle';
+  let txt='',al=0,sub='';
+  if(t<V.nums[0][0]){sub=t>=V.chat[0]&&t<V.chat[1]+.3?'VO 闲话':'';}
+  else if(t<V.fire.start){let k=0;while(k+1<V.nums.length&&V.nums[k+1][0]<=t)k++;const [t0,n]=V.nums[k],t1=k+1<V.nums.length?V.nums[k+1][0]:V.fire.start;
+    txt=String(n);al=.6-.42*Math.min(1,(t-t0)/Math.max(.3,t1-t0));sub=`VO 喊 ${n}`;}
+  else{txt='点火';al=Math.max(0,.65-.65*(t-V.fire.start)/(V.fire.end+.8-V.fire.start));sub=Math.abs(V.zero-V.fire.start)<.05?'VO「点火」= 零点':'VO「点火」';}
+  if(txt){ctx.font=`500 ${txt.length>2?fs*.7:fs}px ${txt.length>2?sans:mono}`;ctx.fillStyle=`rgba(236,236,238,${al})`;ctx.fillText(txt,W/2,H*.3);}
+  if(sub){ctx.font=`12px ${sans}`;ctx.fillStyle='rgba(140,143,152,.95)';ctx.fillText(sub,W/2,H*.3+fs*.62);}
 }
 
 function draw(){
@@ -335,7 +353,13 @@ play.addEventListener('click',()=>{if(playing){stop();return;}if(waiting)return;
 if(AU)sndLoad();   // 打开就在后台解码（约 1 s），第一次点播放从当前秒起就有声音
 seek.addEventListener('input',()=>{stop();t=+seek.value;draw();});
 // 上一波 / 下一波：在整排波（≥5 点的球花 cue 与扇组 cue 的起点，不含托底扇）之间跳
-const WAVES=[...new Set(CU.filter(c=>c.wave!=='托底扇'&&c.sz!=='X'&&(c.pts.length>=5||c.wave==='主角')).map(c=>+c.t.toFixed(2)))].sort((a,b)=>a-b);
+const wavesOf=()=>[...new Set(CU.filter(c=>c.wave!=='托底扇'&&c.sz!=='X'&&(c.pts.length>=5||c.wave==='主角')).map(c=>+c.t.toFixed(2)))].sort((a,b)=>a-b);
+let WAVES=wavesOf();
+// 编排版本切换（B03 修订1 起：试版 / 现版对比，同一份声音）
+if(D.variants&&D.variants.length>1){const g=$('var');g.hidden=false;
+  D.variants.forEach((v,k)=>{const b=document.createElement('button');b.type='button';b.dataset.v=k;b.textContent=v.label;b.title=v.note||'';b.setAttribute('aria-pressed',k===0);g.appendChild(b);});
+  g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    const v=D.variants[+b.dataset.v];EV=v.events;CU=v.cues;SEC=v.sections;D.anchors=v.anchors;WAVES=wavesOf();secIdx=-1;buildTl();draw();}));}
 $('prev').addEventListener('click',()=>{stop();let v=0;for(const w of WAVES){if(w<t-.25)v=w;else break;}t=v;sync();});
 $('next').addEventListener('click',()=>{stop();let v=DUR;for(const w of WAVES){if(w>t+.25){v=w;break;}}t=Math.min(DUR,v);sync();});
 function stripSeek(ev){const r=st.getBoundingClientRect();t=Math.max(0,Math.min(DUR,(ev.clientX-r.left)/r.width*DUR));stop();sync();}

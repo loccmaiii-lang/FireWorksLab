@@ -74,7 +74,7 @@ def retime(plan, audio, zero, fill=False):
     s1 = [c for c in cues if c['section'] == 'B01_S1' and not parent(c) and c.get('wave') != '托底扇']
     zero_cue = min((c for c in s1 if c['size'] in 'SML'), key=cue_t)
     z0 = min(e['burst'] for e in zero_cue['events'])
-    zb_int = round(zb)
+    zb_int = math.ceil(zb - 0.05)                               # 零点之后的组从零点后的第一个整小节算起（零点在小节线上 = 原来的 round）
     groups = defaultdict(list)
     for c in s1:
         groups[round(bar_old(cue_t(c)) - 0.25)].append(c)        # 托底扇 / 扇组比球花早一点，按小节归组
@@ -141,8 +141,11 @@ def retime(plan, audio, zero, fill=False):
         if s['id'] == 'B01_S2':
             continue
         if s['id'] == 'B01_S0':
-            s.update(bar0=0, bar1=round(zb, 3), start=0.0, end=round(zero, 3),
-                     note=f'0–{on[0]:.1f} s VO 闲话不放；VO 喊 10 声：前 4 声红彗星单束从两端往里（B0+B7 → B3+B4），后 5 声小银菊一对对往里到 P4，最后一声银扇预告；零点 {zero:.2f} s 从 P4 向外开场')
+            fire = audio.get('fireS')
+            note = (f'0–{on[0]:.1f} s VO 闲话不放；VO 10→1：10–7 红彗星从两端往里（B0+B7 → B3+B4），6–2 小银菊一对对往里到 P4，1 银扇；VO「点火」{fire:.2f} s'
+                    + (' = 零点开场' if abs(zero - fire) < 0.05 else f'，零点 {zero:.2f} s 开场')) if fire is not None else \
+                   f'0–{on[0]:.1f} s VO 闲话不放；VO 喊 10 声：前 4 声红彗星单束从两端往里（B0+B7 → B3+B4），后 5 声小银菊一对对往里到 P4，最后一声银扇预告；零点 {zero:.2f} s 从 P4 向外开场'
+            s.update(bar0=0, bar1=round(zb, 3), start=0.0, end=round(zero, 3), note=note)
         elif s['id'] == 'B01_S1':
             s.update(bar0=round(zb, 3), bar1=17, start=round(zero, 3), end=round(Tn(17), 3),
                      note=f'{zero:.2f} s 零点整排叠层（金芒菊 + 二排小银菊 + 银扇托底）；之后金裂星 + 红彗星追逐、小银菊 / 点灭星 A/B 间隔；原「连续展开」并进来、只留后半的小平台小花；第 17 小节进「密集问答」')
@@ -152,12 +155,48 @@ def retime(plan, audio, zero, fill=False):
     return cues, secs, log
 
 
+def countdown_v2(cues, audio, zero_s=None):
+    """用户 10-13 20:38「从喊10的时候我希望就有效果…扇形或者别的都可以」：
+    PC 10–7 红彗星单束（75 m 一根细线）换同资源的五束齐开（R03_Red5，dz 0 的子模板 16.0.25 里就有）；
+    手游没有扇形（白名单外），10–7 加只上手游的小银菊替身：照抄 6–3 那四对（同点、同大小、同高度 → 同子模板），开花对上 10–7。"""
+    on = audio['countdownOnsetsS']
+    s0 = [c for c in cues if c['section'] == 'B01_S0']
+    num = lambda c: int(''.join(ch for ch in c['label'] if ch.isdigit()) or 0)
+    red = {num(c): c for c in s0 if c['templateId'] == 'R03_Red1'}
+    silver = {num(c): c for c in s0 if c['templateId'].startswith('R03_SilverChry')}
+    log = []
+    for n in (10, 9, 8, 7):
+        r = red[n]
+        r.update(templateId='R03_Red5', sp='R5', label=r['label'].replace('红彗星', '红彗星·五束'), name=r['name'].replace('红彗星', '红彗星·五束'))
+        src = silver[n - 4]
+        c = copy.deepcopy(src)
+        c.update(id=f'B03_CD{n:02d}', label=f'倒计时小银菊 {n}（手游替身）', name=f'倒计时 · 倒计时小银菊 {n}（手游替身）', mobile='only', standinOf=r['id'])
+        d = shift(c, q1(on[10 - n] - b.rise_of(c['sp'])) - min(e['launch'] for e in c['events']))
+        cues.append(c)
+        log.append(dict(n=n, pc=r['id'] + ' → R03_Red5', mobileStandin=c['id'], copyOf=src['id'], shift=d, burst=round(min(e['burst'] for e in c['events']), 2)))
+    # 零点组的托底扇原来跟尾缀同时起（零点前 4.4 s，正夹在 VO 4 和 3 之间，8 个点一齐出、像已经开场），挪到「点火」那一刻和开花一起出
+    zero = audio['zeroShowS'] if zero_s is None else zero_s
+    for c in cues:
+        if c.get('wave') == '托底扇' and c['section'] == 'B01_S1':
+            t0 = min(e['launch'] for e in c['events'])
+            if zero - 5.0 < t0 < zero:
+                d = shift(c, q1(zero) - t0)
+                log.append(dict(baseFanToFire=c['id'], shift=d, launch=q1(zero)))
+    cues.sort(key=lambda c: (min(e['launch'] for e in c['events']), c['id']))
+    return log
+
+
 def markers(audio, zero):
     old = audio['musicStartS'] - 5.0
     m = [dict(id='B03_VO_CHAT', name='B03｜VO 闲话（不放）', time=0.0, kind='hit', confidence='合并音频实测')]
     for i, t in enumerate(audio['countdownOnsetsS']):
         m.append(dict(id=f'B03_VO_{10 - i}', name=f'B03｜VO 喊 {10 - i}', time=round(t, 1), kind='hit', confidence='合并音频实测（VO 起音）'))
-    m.append(dict(id='B03_ZERO', name='B03｜零点 · 开场', time=round(zero, 1), kind='peak', confidence='VO 最后一声之后的第一个小节重拍' if abs(zero - audio['zeroShowS']) < 1e-6 else '用户指定'))
+    if audio.get('fireS') is not None:
+        m.append(dict(id='B03_VO_FIRE', name='B03｜VO 喊「点火」', time=round(audio['fireS'], 1), kind='hit', confidence='合并音频实测（VO 起音）'))
+        rule = '「点火」起音' if abs(zero - audio['fireS']) < 0.05 else '「点火」后的原曲重拍' if abs(zero - audio.get('downbeatAfterFireS', -1)) < 0.05 else '用户指定'
+    else:
+        rule = 'VO 最后一声之后的第一个小节重拍' if abs(zero - audio['zeroShowS']) < 1e-6 else '用户指定'
+    m.append(dict(id='B03_ZERO', name='B03｜零点 · 开场', time=round(zero, 1), kind='peak', confidence=rule))
     for t, name, kind in ((112.2, 'B03｜高潮 II 回归（用户 1:47）', 'peak'), (175.4, 'B03｜⑧ 三主角垂柳墙', 'peak'), (196.5, 'B03｜终和弦 白墙', 'peak'), (110.6, 'B03｜静默一小节', 'hit')):
         m.append(dict(id=f'B03_M{round((t + old) * 10)}', name=name, time=round(t + old, 1), kind=kind, confidence='原曲时刻（+5 s）换算到合并音频'))
     return sorted(m, key=lambda x: x['time'])
@@ -171,16 +210,23 @@ def main():
     ap.add_argument('--name', default='B03')
     ap.add_argument('--out-dir', default=str(ROOT / '协作/编排B01'))
     ap.add_argument('--fill-opening', action='store_true', help='开场每 2 小节的空格用去掉的原「连续展开」主排补（默认不补）')
+    ap.add_argument('--countdown-v2', action='store_true', help='10–7：PC 红彗星单束 → 五束；手游加小银菊替身（用户 10-13 20:38）')
     a = ap.parse_args()
     plan = json.loads(Path(a.base).read_text(encoding='utf-8'))
     audio = json.loads(Path(a.audio).read_text(encoding='utf-8'))
     zero = a.zero if a.zero is not None else audio['zeroShowS']
     cues, secs, log = retime(plan, audio, zero, a.fill_opening)
+    if a.countdown_v2:
+        log['countdownV2'] = countdown_v2(cues, audio, zero)
+        on, ch = audio['countdownOnsetsS'], audio.get('voChat') or [{}]
+        secs[0]['note'] = (f"VO 闲话 {ch[0].get('start', 0):.1f}–{ch[-1].get('end', 0):.1f} s；VO 10→1 在 {on[0]:.2f}–{on[-1]:.2f} s，每一声都有一发：PC 10–7 红彗星五束从两端往里（B0+B7 → B3+B4，起飞 = 喊数），"
+                           f"手游 10–7 小银菊替身（开花 = 喊数，尾缀 {on[0] - b.rise_of('SC'):.1f} s 起升空）；6–2 小银菊一对对往里到 P4；1 银扇；VO「点火」{audio.get('fireS', zero):.2f} s = 零点，金芒菊开花 + 银扇托底一齐出")
     dur = max(math.ceil((audio['musicStartS'] + audio['music']['durationS']) * 10) / 10,
               math.ceil(max(e['end'] for c in cues for e in c['events']) * 10) / 10)
     out = dict(plan, revision=f"{a.name}_vo_countdown_zero{zero:.2f}_from_{plan['revision']}", musicOffsetS=audio['musicStartS'],
                bar0S=round(audio['musicStartS'] + 0.18, 5), duration=dur, sections=secs, cues=cues, musicMarkers=markers(audio, zero),
                audio=dict(mix=audio['mix'], music=audio['music'], musicStartS=audio['musicStartS'], zeroShowS=zero, countdownOnsetsS=audio['countdownOnsetsS'],
+                          fireS=audio.get('fireS'), voFire=audio.get('voFire'), downbeatAfterFireS=audio.get('downbeatAfterFireS'),
                           note='演出秒 = 合并音频的秒；工作台用仓库原曲播放时音乐偏移 = musicStartS（听不到 VO）'),
                retime=log, base=str(Path(a.base).resolve().relative_to(ROOT)) if Path(a.base).resolve().is_relative_to(ROOT) else Path(a.base).name)
     od = Path(a.out_dir)

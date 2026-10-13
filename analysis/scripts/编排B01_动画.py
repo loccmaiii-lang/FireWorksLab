@@ -31,15 +31,15 @@ OUT = ROOT / '协作/编排B01'
 R1M = '--b02r1m' in sys.argv          # B02 修订1（22，10-12 23:13）：错层 + 主角让位 + 手游替身；仍输出到 B02动画.html（同一个网页链接）
 B03 = '--b03' in sys.argv             # B03（22，10-13 16:28）：合并音频（VO 闲话 + 倒计时 + 汪洋与浩渺），修订3 高度 + 手游替身，输出 B03动画.html
 B02 = B03 or R1M or '--b02' in sys.argv
-SFX, TABLE, NAME = ('_B03m', 'B03m', 'B03') if B03 else ('_B02r1m', 'B02r1m', 'B02') if R1M else ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
+SFX, TABLE, NAME = ('_B03r1m', 'B03r1m', 'B03') if B03 else ('_B02r1m', 'B02r1m', 'B02') if R1M else ('_B02', 'B02', 'B02') if B02 else ('', 'B01', 'B01')
 if B02:
     b01.HEIGHTS = 'v2'
 LOGIC = json.loads((OUT / f'逻辑方案{SFX}.json').read_text(encoding='utf-8'))
 CHECK = json.loads((OUT / f'体检{SFX}.json').read_text(encoding='utf-8'))
 MUSIC = json.loads((ROOT / 'analysis/music/汪洋与浩渺_分析.json').read_text(encoding='utf-8'))
 _cp = ROOT / f'FXtools/节目/NewYearFireWorks_v01/{TABLE}编排检查.json'
-if B03:                               # 10-13 17:06 编译成 B03-VO倒计时合并音频-手游补位（工作台 16.0.25）
-    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B03-VO倒计时合并音频-手游补位编排检查.json'
+if B03:                               # 10-13 20:38 B03 修订1（VO 对位 + 点火开场）；编译后读它的编排检查，没编译就用体检凑
+    _cp = ROOT / 'FXtools/节目/NewYearFireWorks_v01/B03修订1-VO对位-点火开场-手游补位编排检查.json'
 if _cp.exists():
     COMPILE = json.loads(_cp.read_text(encoding='utf-8'))
 else:                                 # 还没编译（B03 先出动画）：用体检里的数凑
@@ -75,18 +75,16 @@ def risks_b02():
 
 
 def risks_b03():
-    g, ob, r = CHECK['gpu'], COMPILE.get('oneTable', {}), LOGIC['retime']
-    au = LOGIC['audio']
+    g, ob, au = CHECK['gpu'], COMPILE.get('oneTable', {}), LOGIC['audio']
     on = au['countdownOnsetsS']
     return [
-        f"演出秒 = 合并音频的秒：原曲在 {au['musicStartS']:.2f} s 起（实测），VO 喊 10 声 {on[0]:.1f}–{on[-1]:.1f} s，零点 {au['zeroShowS']:.2f} s（最后一声之后的原曲第 10 小节重拍；你说的 16 s 那时 VO 还在喊最后两声）。零点要改，给一个数整场跟着平移。",
-        '0–6.5 s VO 闲话时天上不放；倒计时 10 发对上 VO 10 声（红彗星 4 发 → 小银菊 5 对 → 银扇 1 发），最后两声只隔 0.24 s，两发挨得很近。',
-        f"第 17 小节以后的片段照原曲小节整体提前 {abs(r['musicShiftS']):.1f} s（0.1 s 网格，离小节线差 8 ms），高度和大小都是修订3 的（已导入 UE 的子模板照用）。",
-        '原「连续展开」和新的开场叠在一起：金曜菊、小银菊、金蕊青柠星整排和一组小平台去掉了，第 16 小节留空喘口气（补金曜菊会和第 17 小节金锦菊整排同点同高压满 3 s）。',
-        f"PC 挤成一团 10 处：9 处是修订3 原有的余烬重叠，1 处新的很轻（倒计时最后一对小银菊和零点二排小银菊，0.7 s）。主角相关 0。",
-        f"手游三档 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')} 发（含只上手游的替身 {ob.get('flags2', 0)} 发）；剩一段 5 s 断档在低位密奏。",
-        '声音：这个网页和工作台 16.0.25 都放合并音频（VO + 汪洋与浩渺，0 s 起播），跟着播放 / 拖动 / 倍速走；2× / 4× 会变快变调。浏览器回放不等于 UE 实播。',
-        f"GPU 仍按暂定 ≤ 200 / 秒，PC 高档峰值 {g['peak']}。没在 UE 里放过。",
+        f"VO 对位改了：原来按「前 6 秒闲话」把 6.48 s 那声当 10，错了两个数。你听到的（网页大数字 6 时喊 10、5 时喊 9，「点火」时是 P4）和音频对得上：10 在 {on[0]:.2f} s、9 在 {on[1]:.2f} s … 1 在 {on[-1]:.2f} s，16.20–16.85 s 是两个字的「点火」。没有逐字转写，请再听一遍确认。",
+        f"零点 = VO「点火」{au['zeroShowS']:.2f} s（比 16.0.25 的 17.19 s 早 1 s）：金芒菊开花、银扇托底一齐出。代价：原曲第 10 小节重拍（17.19 s 那下整体抬升）晚 1 s 才到，零点组不再压在重拍上；第 12、14 小节两组和之后全场不动。",
+        "10–7 每一声都有一发：PC 红彗星单束（75 m 一根细线，网页里几乎看不见）换同资源的五束齐开（子模板 16.0.25 里就有）；手游没有扇形，加小银菊替身，开花对上喊数，尾缀从 1.3 s 起升空（闲话尾巴上就看得到上升的线）。",
+        "零点组的银扇托底原来跟尾缀一起在零点前 4.4 s 出（正夹在 VO 4 和 3 之间，8 个点一齐出，像已经开场），挪到「点火」。",
+        f"PC 挤成一团 9 处（都是修订3 原有的余烬，16.0.25 那 1 处倒计时 × 零点二排的没了），主角 0；手游三档 {ob.get('mobile', {}).get('high')} / {ob.get('mobile', {}).get('medium')} / {ob.get('mobile', {}).get('low')} 发，替身没加新的重叠，低位密奏仍有 5 s 断档。",
+        "页面上方可切「现版 16.0.25」对比；大号数字现在跟 VO 走（原来写死 B01 的 0–10 s，这就是网页数字和 VO 对不上的原因）。",
+        f"GPU 同秒峰值 {g['peak']}；子模板内容都在 16.0.25 里（没有新高度 / 大小）。没在 UE 里放过；还没发到工作台，你点头后再发。",
     ]
 
 
@@ -190,7 +188,8 @@ def b02_data(species):
     return combos, b02
 
 
-def main():
+def build(LOGIC):
+    """一份逻辑方案 → 动画用的 cue / 事件 / 段落 / 锚点（B03 修订1 起要同时给试版和现版）"""
     cues, events = [], []
     per_sp = defaultdict(lambda: {'cues': 0, 'events': 0, 'rise': []})
     sec_ix = {s['id']: i for i, s in enumerate(LOGIC['sections'])}
@@ -225,23 +224,6 @@ def main():
                          pts=[e['point'] for e in c['events']], tm=tm, mb=mb))
     events.sort(key=lambda e: (e['l'], e['b']))
     cues.sort(key=lambda c: (c['t'], c['id']))
-
-    species = {}
-    for k, (tid, name, size, hexc, body_gpu) in b01.SPECIES.items():
-        c = rgb(hexc)
-        d = per_sp[k]
-        alive = CHECK['aliveBySpecies'].get(k, {})
-        species[k] = dict(name=name, sz=size, rgb=fmt_rgb(c), tail=fmt_rgb(tail_rgb(c)), cues=d['cues'], events=d['events'],
-                          rise=round(statistics.median(d['rise']), 2) if d['rise'] else 0,
-                          beams=BEAMS.get(k, 0),
-                          gpu=(f"尾缀 {TAIL_GPU[size]} + 本体 {body_gpu}" if size in TAIL_GPU else ('银星 3 / 束' if k[0] == 'S' else '红彗星 1 / 束')),
-                          peak=alive.get('peak'), peakAt=alive.get('peakAt'))
-        if B02 and size in 'SML':
-            species[k]['dia'] = b01.TPL[tid]['diameter'] or b01.DIA[size]
-            species[k]['h'] = round(b01.bloom_h(dict(templateId=tid, size=size)))
-        if size == 'X':
-            species[k]['gpu'] = '束 ' + ' + '.join(f"{b01.BEAMF['beamSources'][b['res']]['gpuPerBeam']}" for b in b01.TPL[tid]['beamFlower']['beams'])
-
     secs = []
     for i, s in enumerate(LOGIC['sections']):
         start = 0.0 if i == 0 else s['start']
@@ -264,6 +246,28 @@ def main():
         if all(abs(t - k) > .35 for k in anchors):
             anchors[t] = dict(showS=t, musicS=round(t - OFFSET, 3), label=f"{s['name']}入口", source='小节网格 + 响度，待试听', note='')
     anchors = [anchors[k] for k in sorted(anchors)]
+    return cues, events, per_sp, secs, anchors
+
+
+def main():
+    cues, events, per_sp, secs, anchors = build(LOGIC)
+
+    species = {}
+    for k, (tid, name, size, hexc, body_gpu) in b01.SPECIES.items():
+        c = rgb(hexc)
+        d = per_sp[k]
+        alive = CHECK['aliveBySpecies'].get(k, {})
+        species[k] = dict(name=name, sz=size, rgb=fmt_rgb(c), tail=fmt_rgb(tail_rgb(c)), cues=d['cues'], events=d['events'],
+                          rise=round(statistics.median(d['rise']), 2) if d['rise'] else 0,
+                          beams=BEAMS.get(k, 0),
+                          gpu=(f"尾缀 {TAIL_GPU[size]} + 本体 {body_gpu}" if size in TAIL_GPU else ('银星 3 / 束' if k[0] == 'S' else '红彗星 1 / 束')),
+                          peak=alive.get('peak'), peakAt=alive.get('peakAt'))
+        if B02 and size in 'SML':
+            species[k]['dia'] = b01.TPL[tid]['diameter'] or b01.DIA[size]
+            species[k]['h'] = round(b01.bloom_h(dict(templateId=tid, size=size)))
+        if size == 'X':
+            species[k]['gpu'] = '束 ' + ' + '.join(f"{b01.BEAMF['beamSources'][b['res']]['gpuPerBeam']}" for b in b01.TPL[tid]['beamFlower']['beams'])
+
 
     energy = [dict(m=p['musicS'], db=p['rmsDb']) for p in MUSIC['perSecond']]
     pts = {'P': [dict(id=f'P{i}', x=b01.PT[f'P{i}']['x']) for i in range(9)], 'B': [dict(id=f'B{i}', x=b01.PT[f'B{i}']['x']) for i in range(8)]}
@@ -274,6 +278,14 @@ def main():
         data['native'] = {k: round(v * b01.TRAIL_K[k]) for k, v in b01.REL_H.items()}
         pts['F'] = [dict(id=f'F{i}', x=b01.PT[f'F{i}']['x']) for i in range(7)]
         data['combos'], data['b02'] = b02_data(species)
+    if B03:                           # 试版 / 现版一页对比；大号数字跟 VO
+        old = json.loads((OUT / '逻辑方案_B03m.json').read_text(encoding='utf-8'))
+        oc, oe, _, osecs, oanch = build(old)
+        au, mix = LOGIC['audio'], json.loads((ROOT / 'analysis/music/合并音频_VO倒计时.json').read_text(encoding='utf-8'))
+        data['variants'] = [dict(label='试版 · 修订1', note=f"VO 对位、零点 = 「点火」{au['zeroShowS']:.2f} s、10–7 每声一发", cues=cues, events=events, sections=secs, anchors=anchors),
+                            dict(label='现版 16.0.25', note='16.0.25：VO 错两个数、零点 17.19 s', cues=oc, events=oe, sections=osecs, anchors=oanch)]
+        data['vo'] = dict(chat=[mix['voChat'][0]['start'], mix['voChat'][-1]['end']], nums=[[t, 10 - i] for i, t in enumerate(au['countdownOnsetsS'])],
+                          fire=dict(start=au['voFire']['start'], end=au['voFire']['end']), zero=au['zeroShowS'])
     b64 = ''
     if B03:                           # 10-13 17:06「这个动画能同步让我听到音乐vo吗」：合并音频原字节内嵌，0 s 起播
         mix = ROOT / '协作/编排工作台资料/2026-10-13/music/VO倒计时+汪洋与浩渺.mp3'
