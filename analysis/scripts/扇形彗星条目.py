@@ -273,10 +273,10 @@ if _fg_path.exists():
     _fg = json.loads(_fg_path.read_text(encoding='utf-8'))
     _fc = next(e for e in FAN_ENTS if e['id'] == 'FC6O')
     _fc['p'].update(_fg['p']); _fc['m'].update(_fg['m'])
-    _fc.update(date='2026-10-13', name='金锦冠扇形 FanGold1.0 · 用户参数基线',
+    _fc.update(date='2026-10-14', name='金锦冠扇形 FanGold1.0 · 整面锚点Zoom',
                tags='FanGold 金锦冠 整面扇形 合并导出 Blender FC6O FanGold1.0',
-               note='完整复制用户2026-10-13 20:46保存的FanGold-1.0 · 我的。整面合并导出，不按簇拆开。此条是原参数基线；燃尽后扰动目前是隔离试验，未加入生产烘焙器。原件及测试见analysis/results/FC6O_FanGold10。',
-               look=['整面扇形、扫射和颜色均按用户FanGold1.0保存参数', '燃烧1.2秒、余烬比例0.4；不擅自延长寿命或调亮末段', '与隔离试验对照时，重点看燃尽后的尾部；此基线未添加新气流'])
+               note='使用用户2026-10-13 20:46保存的FanGold-1.0 · 我的，模拟与颜色不变，仅取景换成4.9.81已有的带锚点Zoom。主星、普通火花、余烬三组仍在同一图内；未增加粒群或末段气流。普通火花燃尽后曲线/扰动控制排队等共享源码释放；不是已完成的新分层版。比较与当前检查见analysis/results/FG_Layers。',
+               look=['整面扇形、扫射和颜色均按用户FanGold1.0保存参数', '燃烧1.2秒、余烬比例0.4；不擅自延长寿命或调亮末段', '带锚点Zoom提高有效采样；未添加新气流，不把已有三类粒群冒充新增功能'])
 
 
 if __name__ == '__main__':

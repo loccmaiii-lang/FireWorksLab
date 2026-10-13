@@ -381,7 +381,7 @@
     "outMode": "combined",
     "encGamma": 1,
     "frameMode": "auto",
-    "zoom": "on",
+    "zoom": "anchor",
     "engine": "gpu",
     "form": "master",
     "unitElev": 0,
