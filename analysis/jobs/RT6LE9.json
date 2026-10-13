@@ -1,0 +1,19 @@
+{
+ "id": "RT6LE9",
+ "type": "export",
+ "effect": "trail_phys",
+ "entry": "RT6L",
+ "name": "RiseTrail_Hero",
+ "size": "T_HERO",
+ "exports": {
+  "RiseTrail_Hero": {
+   "_replica": "RT6L",
+   "outPC": "full",
+   "outMobile": "full"
+  }
+ },
+ "priority": 2,
+ "ready": false,
+ "hold": "等 comet&silver3.0 推烘焙器 4.9.77（产物表 PC 格 outPC = full，合成一张）再放行；放行时去掉 ready / hold",
+ "note": "导出（23）· 用户 10-13 16:46「可以再帮我输出一份hero和xs尺寸的……PC我也想单独输出近段与远段融合的效果」+ 本机同步（8）转用户 9「用L重新修改导出一个吧」：主角尾缀 RiseTrail_Hero，RT6L 按尺寸表 T_HERO 开花 400 m（长度 × 0.975，时间不变 = L 的 7.3651 s，宪章 §4）；PC、手机都是「近段 + 远段合成一张」（1 个发射器 TrailFull；PC 2048 _HD、手机 1024），派生资源贴图沿用 RiseTrail_L。导出 + 回放检查；不导入 UE（用户导入）。"
+}
