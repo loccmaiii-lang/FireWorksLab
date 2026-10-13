@@ -3,6 +3,7 @@
 
     python3 analysis/scripts/看板对账.py            # 只报问题，有问题退出码 1
     python3 analysis/scripts/看板对账.py --verbose  # 另列已打勾、指向已关闭行的条目
+    python3 analysis/scripts/看板对账.py --daily    # 每日巡检另列：新反馈、待下一步、停了的 AI 欠你、问用户没上看板、名册外的对话记录
 
 读两份文件（都在 协作/）：
   看板对账.json  对账表：每条来源（对话框打勾项、计划、规范……）对到看板哪一行，或为什么不用上看板
@@ -61,6 +62,7 @@ def main():
     ap.add_argument("--snapshot-from", metavar="DIR",
                     help="先用这个目录重写 看板快照.json：DIR/items、DIR/resources、DIR/dialogs 下每行一个 <id>.json"
                          "（总管用 ArtifactData list 加 out_dir 导出的）")
+    ap.add_argument("--daily", action="store_true", help="每日巡检（夜班早班）：另列要跟进的，不算问题")
     ap.add_argument("--time", help="配合 --snapshot-from：导出时间，如 2026-10-13T21:50:00+08:00")
     a = ap.parse_args()
 
@@ -175,6 +177,9 @@ def main():
         for e in closed_refs:
             print(f"  [行已关] {e['src']} → {e['board']} {items[e['board']].get('status')}")
 
+    if a.daily:
+        daily_report(snap, entries, now, items)
+
     if problems:
         print(f"\n问题 {len(problems)} 个：")
         for p in problems:
@@ -182,6 +187,72 @@ def main():
         return 1
     print("\n没有问题：每个没打勾的都对过账，看板行号都在，关掉的都有依据。")
     return 0
+
+
+ASK = re.compile(r"问用户|等用户|等你|要你定|请你|你定|批不批")
+
+
+def _t(s):
+    from datetime import datetime
+    try:
+        return datetime.fromisoformat(str(s).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def daily_report(snap, entries, now, items):
+    """每日巡检：只列要跟进的，不算问题。参考时间 = 快照导出时间（先重导快照再跑）。"""
+    ref = _t(snap.get("导出时间"))
+    age_h = lambda s: (ref - _t(s)).total_seconds() / 3600 if ref and _t(s) else None
+    print("\n—— 每日巡检 ——")
+    allrows = {}
+    for coll in ("items", "resources", "dialogs"):
+        for k, r in snap.get(coll, {}).items():
+            allrows[k] = r
+    fb = [(k, r) for k, r in sorted(allrows.items()) if (r.get("feedback") or "").strip() and r.get("feedback") != r.get("feedbackSeen")]
+    print(f"新反馈（总管还没看）：{len(fb)}")
+    for k, r in fb:
+        print(f"  [新反馈] {k} {(r.get('title') or r.get('name') or '')[:40]}｜{r['feedback'].strip()[:60]}")
+    nxt = [(k, r) for k, r in sorted(items.items()) if (r.get("next") or "").strip() and not r.get("nextDoneAt")
+           and (r.get("syncedAt") or ((r.get("feedback") or "").strip() and r.get("feedback") == r.get("feedbackSeen")))]
+    print(f"待下一步（转出了、下一步还没做完）：{len(nxt)}——查负责对话框有没有做，做完写 nextDoneAt")
+    for k, r in nxt:
+        h = age_h(r.get("syncedAt") or r.get("updatedAt"))
+        print(f"  [待下一步{' · 超过 24 小时' if h and h > 24 else ''}] {k} {r.get('title', '')[:40]} → {r.get('syncedTo') or r.get('owner', '')}｜{r['next'][:60]}")
+    stale = [(k, r) for k, r in sorted(items.items()) if r.get("kind") == "AI 欠你" and r.get("status") in OPEN_STATUS
+             and r.get("when") != "暂不建议" and (age_h(r.get("updatedAt")) or 0) > 48]
+    print(f"AI 欠你、48 小时没动：{len(stale)}——查负责对话框记录；没人做就排队或派活")
+    for k, r in stale[:20]:
+        print(f"  [停了] {k} {r.get('title', '')[:50]} → {r.get('owner', '')}（{r.get('when')}）")
+    if len(stale) > 20:
+        print(f"  …另有 {len(stale) - 20} 条")
+    led = {(e["checkbox"]["file"], e["checkbox"]["hash"]): e for e in entries if e.get("checkbox")}
+    ask, tick = [], []
+    for (rel, h), (n, line) in sorted(now.items()):
+        if not ASK.search(line):
+            continue
+        e = led.get((rel, h))
+        b = e and e.get("board")
+        if not e:
+            ask.append((rel, n, line))            # 新问的、还没对过账：最要紧
+        elif e.get("result") in ON_BOARD and items.get(b, {}).get("status") not in OPEN_STATUS:
+            tick.append((rel, n, b))              # 看板那行已经关了（答过 / 不做了），记录里没打勾
+    print(f"对话记录里新问你 / 等你、还没上看板：{len(ask)}——逐条判断：真没答就补一行「你要定」（带推荐），已经过时就在对账表写依据")
+    for rel, n, line in ask:
+        print(f"  [问用户没上看板] {rel}:{n} {line[:80]}")
+    print(f"问你的、看板那行已关但记录没打勾：{len(tick)}——不急；排给那个对话框下次开工时打勾")
+    for rel, n, b in tick:
+        print(f"  [答过没打勾] {rel}:{n} → {b} {items.get(b, {}).get('status', '')}")
+    roster = " ".join(str(r.get("code", "")) + " " + str(r.get("name", "")) for r in snap.get("dialogs", {}).values())
+    extra = []
+    for f in sorted(DIALOGS.glob("对话框*.md")):
+        name = f.stem.replace("对话框", "")
+        toks = [t for t in re.split(r"[\s/、，,（）()·]+", roster) if len(t) >= 2 or t.isdigit()]
+        if not any(t == name or (not t.isdigit() and name.startswith(t)) for t in toks):
+            extra.append(f.name)
+    print(f"名册外的对话记录：{len(extra)}" + ("——新开的对话框，加进看板「对话框」页" if extra else ""))
+    for x in extra:
+        print(f"  [名册外] 对话记录/{x}")
 
 
 if __name__ == "__main__":

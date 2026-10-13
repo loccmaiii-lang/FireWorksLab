@@ -7421,8 +7421,8 @@
    "quote": "等用户：周三前「你要定」15 条（n01 B03 修订1 最急）；批不批 n09、n36",
    "kind": "你要定",
    "result": "已在看板",
-   "board": "n01",
-   "evidence": "周三前「你要定」15 条都在看板（n01、i07–i17、n04、n05、n09）；n36 在周四以后「你要定」。",
+   "board": "n36",
+   "evidence": "周三前「你要定」15 条都在看板（n01、i07–i17、n04、n05、n09）；n36 在周四以后「你要定」。；10-14 00:50 n01 已定，剩 n09 / n36 没批 → 改指 n36",
    "checkbox": {
     "file": "对话记录/对话框21.md",
     "hash": "c1014ecf9f56"
@@ -7582,6 +7582,71 @@
    "checkbox": {
     "file": "对话记录/夜班.md",
     "hash": "7ecde112ab6f"
+   }
+  },
+  {
+   "g": "总管 10-14 00:46",
+   "src": "对话记录/对话框23.md:416",
+   "quote": "本机 ZA1 / ZA2 回来：回放检查…写 analysis/results/ZA1|ZA2/看法.md、告诉用户",
+   "kind": "AI 欠你",
+   "result": "已补进看板",
+   "board": "n54",
+   "evidence": "ZA1 / ZA2 结果已回（fb1d9f67），看法未写 → 看板 n54",
+   "checkbox": {
+    "file": "对话记录/对话框23.md",
+    "hash": "75475317d6db"
+   }
+  },
+  {
+   "g": "总管 10-14 00:46",
+   "src": "对话记录/对话框comet&silver3.0.md:123",
+   "quote": "认领4.9.82共享源码，写入授权参数变更与实现计划",
+   "kind": "AI 欠你",
+   "result": "已补进看板",
+   "board": "n55",
+   "evidence": "5ea4762d 已认领；4.9.82 在做 → 看板 n55",
+   "checkbox": {
+    "file": "对话记录/对话框comet&silver3.0.md",
+    "hash": "9103e1fe3b81"
+   }
+  },
+  {
+   "g": "总管 10-14 00:46",
+   "src": "对话记录/对话框comet&silver3.0.md:124",
+   "quote": "修复合并路径曲线，接独立余烬与燃尽后气流",
+   "kind": "AI 欠你",
+   "result": "已补进看板",
+   "board": "n55",
+   "evidence": "4.9.82 在做 → 看板 n55",
+   "checkbox": {
+    "file": "对话记录/对话框comet&silver3.0.md",
+    "hash": "cf9ccbecd1e0"
+   }
+  },
+  {
+   "g": "总管 10-14 00:46",
+   "src": "对话记录/对话框comet&silver3.0.md:125",
+   "quote": "两款副本实际PC/手机输出、基线回归、正式入口保存刷新导出",
+   "kind": "AI 欠你",
+   "result": "已补进看板",
+   "board": "n55",
+   "evidence": "4.9.82 在做 → 看板 n55",
+   "checkbox": {
+    "file": "对话记录/对话框comet&silver3.0.md",
+    "hash": "8e4c80b7f73a"
+   }
+  },
+  {
+   "g": "总管 10-14 00:46",
+   "src": "对话记录/对话框comet&silver3.0.md:126",
+   "quote": "提交推送，同步本机，释放tool/src并向导出（23）交接",
+   "kind": "AI 欠你",
+   "result": "已补进看板",
+   "board": "n55",
+   "evidence": "4.9.82 在做 → 看板 n55",
+   "checkbox": {
+    "file": "对话记录/对话框comet&silver3.0.md",
+    "hash": "76ad00f3f06f"
    }
   }
  ]
