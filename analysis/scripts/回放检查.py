@@ -256,7 +256,11 @@ def check(packs, out, delays=None, times=(0.1, 0.3, 0.5, 0.7, 0.9), px=360, ref=
                  fill_med=round(float(np.median(fills)), 3) if fills else 0, fill_p10=round(float(np.percentile(fills, 10)), 3) if fills else 0,
                  fill_frames=[round(float(v), 2) for v in fills])
         fails = []
-        if L['shown_frac'] < lim['shown_frac']: fails.append(f"{fps} fps 只显示 {shown}/{p.frames} 帧")
+        # 4.9.78 尺寸档按时间缩（小平台 XS / 坝顶低层，Froude）：派生资源沿用原效果的贴图、按 √k 倍时间播，每 tick 跳过几帧是预期的，记一句不算失败
+        tkc = float(((p.c.get('size_spec') or {}).get('tk')) or 1)
+        if L['shown_frac'] < lim['shown_frac']:
+            if tkc < 1: L['note'] = f"按尺寸档时间 × {tkc} 播（派生资源沿用原贴图）：{fps} fps 只显示 {shown}/{p.frames} 帧是预期的"
+            else: fails.append(f"{fps} fps 只显示 {shown}/{p.frames} 帧")
         if back > lim['back_jumps']: fails.append(f'帧号回跳 {back} 次')
         if L['edge_frames'] > lim['edge_frames']: fails.append(f"{L['edge_frames']} 帧碰到格子内圈")
         if L['saturated_max'] > lim['saturated']: fails.append(f"过曝像素 {L['saturated_max'] * 100:.1f}%")
