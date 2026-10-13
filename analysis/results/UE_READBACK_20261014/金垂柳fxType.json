@@ -1,0 +1,1034 @@
+{
+  "format": "df.goldkamuro-fxtype-investigation/1",
+  "investigatedAt": "2026-10-14T00:49:23+08:00",
+  "status": "blocked",
+  "source": "GPUECli object/get + object/search 只读反射；行数据仅来自已存在历史快照",
+  "historical": {
+    "notLive": true,
+    "pcFile": "analysis/local/NEWYEAR_V01/resourcefx-latest-pc.json",
+    "pcFileModifiedAt": "2026-10-10T12:30:19.921Z",
+    "mobileFile": "analysis/local/NEWYEAR_V01/resourcefx-current-mobile.json",
+    "mobileFileModifiedAt": "2026-10-10T11:29:54.850Z",
+    "timestampNote": "文件mtime，不是可认证的UE读取时间；不冒称2026-10-14实时行值",
+    "targetRow": {
+      "ResourceId": "P_EFX_FireWorks_GoldKamuro",
+      "Desc": "",
+      "CommonSpawnDistance": "500.000000",
+      "CommonExistNum": "3",
+      "bEnterPhysShellDrop": "False",
+      "PhysShellDropConfig": "(InitUpAngle=20.000000,InitRightAngle=60.000000,InitOffsetTrans=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000)),AngularRotator=(Pitch=0.000000,Yaw=0.000000,Roll=0.000000),InitSpeed=400.000000,Gravity=980.000000,ReboundCount=2.000000,ReboundDecaySpeedFactor=0.500000,PlayLifeTime=2.000000,Mat_ShellDropPath=None)",
+      "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+      "FxSP_Low": "None",
+      "FxSP_High": "None",
+      "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+      "DistScaleCurves": "()",
+      "MaterialCurves": "()",
+      "PlayLifeTime": "0.000000",
+      "FadeInTime": "0.000000",
+      "FadeInAlphaParamName": "None",
+      "FadeOutTime": "0.000000",
+      "FadeOutAlphaParamName": "None",
+      "FadeOutAlphaMaterialParams": "",
+      "FadeAlphaParamName": "None",
+      "OtherFadeOutParamNameList": "",
+      "DelayPlayTime": "0.000000",
+      "RotationRate": "(Pitch=0.000000,Yaw=0.000000,Roll=0.000000)",
+      "RotationPivotTranslation": "(X=0.000000,Y=0.000000,Z=0.000000)",
+      "ParticleParams": "",
+      "AudioResourceId": "Fireworks_Explostion_Medium",
+      "bSOLAudioAlone": "False",
+      "AudioResourceId_SOL": "None",
+      "NoneLoopAudioStopType": "Normal",
+      "ParticleBenchmark": "0.000000",
+      "ParticleBenchmarkLow": "0.000000",
+      "ParticleBenchmarkHigh": "0.000000",
+      "GPUConsume": "0.000000",
+      "CPUActiveParticle": "0",
+      "GPUActiveParticle": "0",
+      "GameAttention": "0.500000",
+      "MaxInstanceNum": "10",
+      "bLimitByMaxInstanceNum": "True",
+      "bExceedCullBySignificance": "False",
+      "FXType": "(INVALID)",
+      "bLimitByMaxFXTypeNum": "True",
+      "bUpdateSignificance": "False",
+      "bReceivesDecal": "False",
+      "GameImportance": "100.000000",
+      "Path": "",
+      "DistanceForTranslucencySort": "-1.000000",
+      "RowDescription": "跨年烟花3.0_大型_A_金垂柳",
+      "_row_name": "跨年烟花3.0_大型_A_金垂柳"
+    },
+    "normalRow": {
+      "ResourceId": "P_EFX_FireWorks_FanComet_01",
+      "Desc": "",
+      "CommonSpawnDistance": "500.000000",
+      "CommonExistNum": "3",
+      "bEnterPhysShellDrop": "False",
+      "PhysShellDropConfig": "(InitUpAngle=20.000000,InitRightAngle=60.000000,InitOffsetTrans=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000)),AngularRotator=(Pitch=0.000000,Yaw=0.000000,Roll=0.000000),InitSpeed=400.000000,Gravity=980.000000,ReboundCount=2.000000,ReboundDecaySpeedFactor=0.500000,PlayLifeTime=2.000000,Mat_ShellDropPath=None)",
+      "FxSP": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanComet_01_HD.P_EFX_FireWorks_FanComet_01_HD",
+      "FxSP_Low": "None",
+      "FxSP_High": "None",
+      "EffectScale": "(X=1.000000,Y=1.000000,Z=1.000000)",
+      "DistScaleCurves": "()",
+      "MaterialCurves": "()",
+      "PlayLifeTime": "0.000000",
+      "FadeInTime": "0.000000",
+      "FadeInAlphaParamName": "None",
+      "FadeOutTime": "0.000000",
+      "FadeOutAlphaParamName": "None",
+      "FadeOutAlphaMaterialParams": "",
+      "FadeAlphaParamName": "None",
+      "OtherFadeOutParamNameList": "",
+      "DelayPlayTime": "0.000000",
+      "RotationRate": "(Pitch=0.000000,Yaw=0.000000,Roll=0.000000)",
+      "RotationPivotTranslation": "(X=0.000000,Y=0.000000,Z=0.000000)",
+      "ParticleParams": "",
+      "AudioResourceId": "Fireworks_Explostion_Medium",
+      "bSOLAudioAlone": "False",
+      "AudioResourceId_SOL": "None",
+      "NoneLoopAudioStopType": "Normal",
+      "ParticleBenchmark": "0.000000",
+      "ParticleBenchmarkLow": "0.000000",
+      "ParticleBenchmarkHigh": "0.000000",
+      "GPUConsume": "0.000000",
+      "CPUActiveParticle": "0",
+      "GPUActiveParticle": "0",
+      "GameAttention": "0.500000",
+      "MaxInstanceNum": "10",
+      "bLimitByMaxInstanceNum": "True",
+      "bExceedCullBySignificance": "False",
+      "FXType": "SHOW",
+      "bLimitByMaxFXTypeNum": "True",
+      "bUpdateSignificance": "False",
+      "bReceivesDecal": "False",
+      "GameImportance": "100.000000",
+      "Path": "",
+      "DistanceForTranslucencySort": "-1.000000",
+      "RowDescription": "跨年烟花3.0_小型_B_红彗星",
+      "_row_name": "跨年烟花3.0_小形_B_红彗星"
+    },
+    "comparison": [
+      {
+        "field": "ResourceId",
+        "target": "P_EFX_FireWorks_GoldKamuro",
+        "normal": "P_EFX_FireWorks_FanComet_01",
+        "equal": false
+      },
+      {
+        "field": "Desc",
+        "target": "",
+        "normal": "",
+        "equal": true
+      },
+      {
+        "field": "CommonSpawnDistance",
+        "target": "500.000000",
+        "normal": "500.000000",
+        "equal": true
+      },
+      {
+        "field": "CommonExistNum",
+        "target": "3",
+        "normal": "3",
+        "equal": true
+      },
+      {
+        "field": "bEnterPhysShellDrop",
+        "target": "False",
+        "normal": "False",
+        "equal": true
+      },
+      {
+        "field": "PhysShellDropConfig",
+        "target": "(InitUpAngle=20.000000,InitRightAngle=60.000000,InitOffsetTrans=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000)),AngularRotator=(Pitch=0.000000,Yaw=0.000000,Roll=0.000000),InitSpeed=400.000000,Gravity=980.000000,ReboundCount=2.000000,ReboundDecaySpeedFactor=0.500000,PlayLifeTime=2.000000,Mat_ShellDropPath=None)",
+        "normal": "(InitUpAngle=20.000000,InitRightAngle=60.000000,InitOffsetTrans=(Rotation=(X=0.000000,Y=0.000000,Z=0.000000,W=1.000000),Translation=(X=0.000000,Y=0.000000,Z=0.000000),Scale3D=(X=1.000000,Y=1.000000,Z=1.000000)),AngularRotator=(Pitch=0.000000,Yaw=0.000000,Roll=0.000000),InitSpeed=400.000000,Gravity=980.000000,ReboundCount=2.000000,ReboundDecaySpeedFactor=0.500000,PlayLifeTime=2.000000,Mat_ShellDropPath=None)",
+        "equal": true
+      },
+      {
+        "field": "FxSP",
+        "target": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_GoldKamuro_HD.P_EFX_FireWorks_GoldKamuro_HD",
+        "normal": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_FanComet_01_HD.P_EFX_FireWorks_FanComet_01_HD",
+        "equal": false
+      },
+      {
+        "field": "FxSP_Low",
+        "target": "None",
+        "normal": "None",
+        "equal": true
+      },
+      {
+        "field": "FxSP_High",
+        "target": "None",
+        "normal": "None",
+        "equal": true
+      },
+      {
+        "field": "EffectScale",
+        "target": "(X=1.000000,Y=1.000000,Z=1.000000)",
+        "normal": "(X=1.000000,Y=1.000000,Z=1.000000)",
+        "equal": true
+      },
+      {
+        "field": "DistScaleCurves",
+        "target": "()",
+        "normal": "()",
+        "equal": true
+      },
+      {
+        "field": "MaterialCurves",
+        "target": "()",
+        "normal": "()",
+        "equal": true
+      },
+      {
+        "field": "PlayLifeTime",
+        "target": "0.000000",
+        "normal": "0.000000",
+        "equal": true
+      },
+      {
+        "field": "FadeInTime",
+        "target": "0.000000",
+        "normal": "0.000000",
+        "equal": true
+      },
+      {
+        "field": "FadeInAlphaParamName",
+        "target": "None",
+        "normal": "None",
+        "equal": true
+      },
+      {
+        "field": "FadeOutTime",
+        "target": "0.000000",
+        "normal": "0.000000",
+        "equal": true
+      },
+      {
+        "field": "FadeOutAlphaParamName",
+        "target": "None",
+        "normal": "None",
+        "equal": true
+      },
+      {
+        "field": "FadeOutAlphaMaterialParams",
+        "target": "",
+        "normal": "",
+        "equal": true
+      },
+      {
+        "field": "FadeAlphaParamName",
+        "target": "None",
+        "normal": "None",
+        "equal": true
+      },
+      {
+        "field": "OtherFadeOutParamNameList",
+        "target": "",
+        "normal": "",
+        "equal": true
+      },
+      {
+        "field": "DelayPlayTime",
+        "target": "0.000000",
+        "normal": "0.000000",
+        "equal": true
+      },
+      {
+        "field": "RotationRate",
+        "target": "(Pitch=0.000000,Yaw=0.000000,Roll=0.000000)",
+        "normal": "(Pitch=0.000000,Yaw=0.000000,Roll=0.000000)",
+        "equal": true
+      },
+      {
+        "field": "RotationPivotTranslation",
+        "target": "(X=0.000000,Y=0.000000,Z=0.000000)",
+        "normal": "(X=0.000000,Y=0.000000,Z=0.000000)",
+        "equal": true
+      },
+      {
+        "field": "ParticleParams",
+        "target": "",
+        "normal": "",
+        "equal": true
+      },
+      {
+        "field": "AudioResourceId",
+        "target": "Fireworks_Explostion_Medium",
+        "normal": "Fireworks_Explostion_Medium",
+        "equal": true
+      },
+      {
+        "field": "bSOLAudioAlone",
+        "target": "False",
+        "normal": "False",
+        "equal": true
+      },
+      {
+        "field": "AudioResourceId_SOL",
+        "target": "None",
+        "normal": "None",
+        "equal": true
+      },
+      {
+        "field": "NoneLoopAudioStopType",
+        "target": "Normal",
+        "normal": "Normal",
+        "equal": true
+      },
+      {
+        "field": "ParticleBenchmark",
+        "target": "0.000000",
+        "normal": "0.000000",
+        "equal": true
+      },
+      {
+        "field": "ParticleBenchmarkLow",
+        "target": "0.000000",
+        "normal": "0.000000",
+        "equal": true
+      },
+      {
+        "field": "ParticleBenchmarkHigh",
+        "target": "0.000000",
+        "normal": "0.000000",
+        "equal": true
+      },
+      {
+        "field": "GPUConsume",
+        "target": "0.000000",
+        "normal": "0.000000",
+        "equal": true
+      },
+      {
+        "field": "CPUActiveParticle",
+        "target": "0",
+        "normal": "0",
+        "equal": true
+      },
+      {
+        "field": "GPUActiveParticle",
+        "target": "0",
+        "normal": "0",
+        "equal": true
+      },
+      {
+        "field": "GameAttention",
+        "target": "0.500000",
+        "normal": "0.500000",
+        "equal": true
+      },
+      {
+        "field": "MaxInstanceNum",
+        "target": "10",
+        "normal": "10",
+        "equal": true
+      },
+      {
+        "field": "bLimitByMaxInstanceNum",
+        "target": "True",
+        "normal": "True",
+        "equal": true
+      },
+      {
+        "field": "bExceedCullBySignificance",
+        "target": "False",
+        "normal": "False",
+        "equal": true
+      },
+      {
+        "field": "FXType",
+        "target": "(INVALID)",
+        "normal": "SHOW",
+        "equal": false
+      },
+      {
+        "field": "bLimitByMaxFXTypeNum",
+        "target": "True",
+        "normal": "True",
+        "equal": true
+      },
+      {
+        "field": "bUpdateSignificance",
+        "target": "False",
+        "normal": "False",
+        "equal": true
+      },
+      {
+        "field": "bReceivesDecal",
+        "target": "False",
+        "normal": "False",
+        "equal": true
+      },
+      {
+        "field": "GameImportance",
+        "target": "100.000000",
+        "normal": "100.000000",
+        "equal": true
+      },
+      {
+        "field": "Path",
+        "target": "",
+        "normal": "",
+        "equal": true
+      },
+      {
+        "field": "DistanceForTranslucencySort",
+        "target": "-1.000000",
+        "normal": "-1.000000",
+        "equal": true
+      },
+      {
+        "field": "RowDescription",
+        "target": "跨年烟花3.0_大型_A_金垂柳",
+        "normal": "跨年烟花3.0_小型_B_红彗星",
+        "equal": false
+      },
+      {
+        "field": "_row_name",
+        "target": "跨年烟花3.0_大型_A_金垂柳",
+        "normal": "跨年烟花3.0_小形_B_红彗星",
+        "equal": false
+      }
+    ],
+    "mobile": {
+      "rowCount": 15,
+      "targetRows": [],
+      "present": false,
+      "livePresent": null
+    }
+  },
+  "live": {
+    "pcRow": null,
+    "normalRow": null,
+    "mobileRow": null,
+    "enum": {
+      "candidatePath": "/Script/GPResource.EResourceFXType",
+      "fieldAssociationConfirmed": false,
+      "legalValues": null,
+      "rawNumericValue": null,
+      "classification": null,
+      "reason": "object/get 没有返回 DataTable 行内容、ScriptStruct字段描述或Enum名称/数值；无法确认字段绑定和区分空值/越界/删除项"
+    },
+    "effects": {
+      "runtimeBehavior": null,
+      "evidence": [
+        {
+          "nightNativeParent": "/Script/DFMShowDirector.DFMShowDirector",
+          "graphNames": [
+            "EventGraph",
+            "UserConstructionScript"
+          ],
+          "note": "可见图仅有3个Event节点和1个FunctionEntry；原生父类反射无执行函数体，未找到FXType消费节点。不能由此推出原生代码不用FXType。"
+        }
+      ],
+      "inference": "历史行 bLimitByMaxFXTypeNum=True，分类可能参与类型数量限制；未读到消费者实现，不能证明 INVALID 会跳过/不播或换类型。"
+    }
+  },
+  "attempts": [
+    {
+      "route": "/object/get",
+      "payload": {
+        "path": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable.ResourceFXTable",
+        "properties": [
+          "RowStruct",
+          "RowMap",
+          "Rows",
+          "P_EFX_FireWorks_GoldKamuro",
+          "P_EFX_FireWorks_FanComet_01"
+        ]
+      },
+      "returnedPath": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable.ResourceFXTable"
+    },
+    {
+      "route": "/object/get",
+      "payload": {
+        "path": "/Game/DataTables/Resource/ResourceFXTable.ResourceFXTable",
+        "properties": [
+          "RowStruct",
+          "RowMap",
+          "Rows",
+          "P_EFX_FireWorks_GoldKamuro",
+          "P_EFX_FireWorks_FanComet_01"
+        ]
+      },
+      "returnedPath": "/Game/DataTables/Resource/ResourceFXTable.ResourceFXTable"
+    },
+    {
+      "route": "/object/get",
+      "payload": {
+        "path": "/Script/GPResource.ResourceFXRow",
+        "properties": [
+          "FXType",
+          "Fields",
+          "Children"
+        ]
+      },
+      "returnedPath": "/Script/GPResource.ResourceFXRow"
+    },
+    {
+      "route": "/object/get",
+      "payload": {
+        "path": "/Script/GPResource.EResourceFXType",
+        "properties": [
+          "Names",
+          "EnumValues",
+          "CppType",
+          "CppForm"
+        ]
+      },
+      "returnedPath": "/Script/GPResource.EResourceFXType"
+    },
+    {
+      "route": "/object/search",
+      "payload": {
+        "class": "Enum",
+        "offset": 0,
+        "limit": 1000
+      },
+      "returnedPath": null
+    },
+    {
+      "route": "/object/search",
+      "payload": {
+        "class": "Enum",
+        "offset": 1000,
+        "limit": 1000
+      },
+      "returnedPath": null
+    },
+    {
+      "route": "/object/search",
+      "payload": {
+        "class": "Enum",
+        "offset": 2000,
+        "limit": 1000
+      },
+      "returnedPath": null
+    },
+    {
+      "route": "/object/search",
+      "payload": {
+        "class": "Enum",
+        "offset": 3000,
+        "limit": 1000
+      },
+      "returnedPath": null
+    },
+    {
+      "route": "/object/search",
+      "payload": {
+        "class": "Enum",
+        "offset": 4000,
+        "limit": 1000
+      },
+      "returnedPath": null
+    },
+    {
+      "route": "/object/get",
+      "payload": {
+        "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night",
+        "properties": [
+          "ParentClass",
+          "GeneratedClass",
+          "UbergraphPages",
+          "FunctionGraphs"
+        ]
+      },
+      "returnedPath": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night"
+    },
+    {
+      "route": "/object/get",
+      "payload": {
+        "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph",
+        "properties": [
+          "Nodes"
+        ]
+      },
+      "returnedPath": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph"
+    },
+    {
+      "route": "/object/get",
+      "payload": {
+        "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_0"
+      },
+      "returnedPath": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_0"
+    },
+    {
+      "route": "/object/get",
+      "payload": {
+        "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_1"
+      },
+      "returnedPath": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_1"
+    },
+    {
+      "route": "/object/get",
+      "payload": {
+        "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_2"
+      },
+      "returnedPath": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_2"
+    },
+    {
+      "route": "/object/get",
+      "payload": {
+        "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:UserConstructionScript",
+        "properties": [
+          "Nodes"
+        ]
+      },
+      "returnedPath": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:UserConstructionScript"
+    },
+    {
+      "route": "/object/get",
+      "payload": {
+        "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:UserConstructionScript.K2Node_FunctionEntry_0"
+      },
+      "returnedPath": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:UserConstructionScript.K2Node_FunctionEntry_0"
+    },
+    {
+      "route": "/object/get",
+      "payload": {
+        "path": "/Script/DFMShowDirector.DFMShowDirector",
+        "properties": [
+          "Functions",
+          "Children",
+          "FXType"
+        ]
+      },
+      "returnedPath": "/Script/DFMShowDirector.DFMShowDirector"
+    }
+  ],
+  "evidence": {
+    "pcTable": {
+      "path": "/Game/R13N/Common/PC/DataTables/Resource/ResourceFXTable.ResourceFXTable",
+      "class": "/Script/Engine.DataTable",
+      "name": "ResourceFXTable",
+      "properties": {
+        "RowStruct": {
+          "_type": "object_ref",
+          "path": "/Script/GPResource.ResourceFXRow",
+          "class": "ScriptStruct",
+          "name": "ResourceFXRow"
+        }
+      },
+      "object_references": {
+        "RowStruct": "/Script/GPResource.ResourceFXRow"
+      }
+    },
+    "mobileTable": {
+      "path": "/Game/DataTables/Resource/ResourceFXTable.ResourceFXTable",
+      "class": "/Script/Engine.DataTable",
+      "name": "ResourceFXTable",
+      "properties": {
+        "RowStruct": {
+          "_type": "object_ref",
+          "path": "/Script/GPResource.ResourceFXRow",
+          "class": "ScriptStruct",
+          "name": "ResourceFXRow"
+        }
+      },
+      "object_references": {
+        "RowStruct": "/Script/GPResource.ResourceFXRow"
+      }
+    },
+    "rowStruct": {
+      "path": "/Script/GPResource.ResourceFXRow",
+      "class": "/Script/CoreUObject.ScriptStruct",
+      "name": "ResourceFXRow",
+      "properties": {}
+    },
+    "enumObject": {
+      "path": "/Script/GPResource.EResourceFXType",
+      "class": "/Script/CoreUObject.Enum",
+      "name": "EResourceFXType",
+      "properties": {}
+    },
+    "enumSearch0": {
+      "total": 4456,
+      "offset": 0,
+      "limit": 1000,
+      "matchedObjects": []
+    },
+    "enumSearch1000": {
+      "total": 4456,
+      "offset": 1000,
+      "limit": 1000,
+      "matchedObjects": [
+        {
+          "name": "EResourceFXType",
+          "path": "/Script/GPResource.EResourceFXType",
+          "class": "Enum",
+          "outer": "/Script/GPResource"
+        }
+      ]
+    },
+    "enumSearch2000": {
+      "total": 4456,
+      "offset": 2000,
+      "limit": 1000,
+      "matchedObjects": []
+    },
+    "enumSearch3000": {
+      "total": 4456,
+      "offset": 3000,
+      "limit": 1000,
+      "matchedObjects": []
+    },
+    "enumSearch4000": {
+      "total": 4456,
+      "offset": 4000,
+      "limit": 1000,
+      "matchedObjects": []
+    },
+    "nightBlueprint": {
+      "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night",
+      "class": "/Script/Engine.Blueprint",
+      "name": "BP_NewYearFireworks_ShowDirector_Night",
+      "properties": {
+        "ParentClass": {
+          "_type": "object_ref",
+          "path": "/Script/DFMShowDirector.DFMShowDirector",
+          "class": "Class",
+          "name": "DFMShowDirector"
+        },
+        "GeneratedClass": {
+          "_type": "object_ref",
+          "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night_C",
+          "class": "BlueprintGeneratedClass",
+          "name": "BP_NewYearFireworks_ShowDirector_Night_C"
+        },
+        "UbergraphPages": [
+          {
+            "_type": "object_ref",
+            "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph",
+            "class": "EdGraph",
+            "name": "EventGraph"
+          }
+        ],
+        "FunctionGraphs": [
+          {
+            "_type": "object_ref",
+            "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:UserConstructionScript",
+            "class": "EdGraph",
+            "name": "UserConstructionScript"
+          }
+        ]
+      },
+      "object_references": {
+        "ParentClass": "/Script/DFMShowDirector.DFMShowDirector",
+        "GeneratedClass": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night_C"
+      }
+    },
+    "EventGraph": {
+      "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph",
+      "class": "/Script/Engine.EdGraph",
+      "name": "EventGraph",
+      "properties": {
+        "Nodes": [
+          {
+            "_type": "object_ref",
+            "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_0",
+            "class": "K2Node_Event",
+            "name": "K2Node_Event_0"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_1",
+            "class": "K2Node_Event",
+            "name": "K2Node_Event_1"
+          },
+          {
+            "_type": "object_ref",
+            "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_2",
+            "class": "K2Node_Event",
+            "name": "K2Node_Event_2"
+          }
+        ]
+      }
+    },
+    "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_0": {
+      "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_0",
+      "class": "/Script/BlueprintGraph.K2Node_Event",
+      "name": "K2Node_Event_0",
+      "properties": {
+        "EventSignatureName": "None",
+        "EventSignatureClass": null,
+        "EventReference": {
+          "_struct": "MemberReference",
+          "MemberParent": {
+            "_type": "object_ref",
+            "path": "/Script/Engine.Actor",
+            "class": "Class",
+            "name": "Actor"
+          },
+          "MemberScope": "",
+          "MemberName": "ReceiveBeginPlay",
+          "MemberGuid": {
+            "_struct": "Guid",
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0
+          },
+          "bSelfContext": false,
+          "bWasDeprecated": false
+        },
+        "bOverrideFunction": true,
+        "bInternalEvent": false,
+        "CustomFunctionName": "None",
+        "FunctionFlags": 0,
+        "bIsEditable": false,
+        "DeprecatedPins": [],
+        "NodePosX": 0,
+        "NodePosY": 0,
+        "NodeWidth": 0,
+        "NodeHeight": 0,
+        "AdvancedPinDisplay": "NoPins",
+        "EnabledState": "Disabled",
+        "bDisplayAsDisabled": false,
+        "bUserSetEnabledState": false,
+        "bIsNodeEnabled": true,
+        "bCanResizeNode": false,
+        "bHasCompilerMessage": false,
+        "bCommentBubblePinned": true,
+        "bCommentBubbleVisible": true,
+        "bCanRenameNode": false,
+        "NodeComment": "此节点被禁用，将不会被调用。\n从引脚连出引线来编译功能。",
+        "ErrorType": 0,
+        "ErrorMsg": "",
+        "NodeGuid": {
+          "_struct": "Guid",
+          "A": -1547071804,
+          "B": 1216443439,
+          "C": -1126574439,
+          "D": 1946231370
+        }
+      }
+    },
+    "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_1": {
+      "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_1",
+      "class": "/Script/BlueprintGraph.K2Node_Event",
+      "name": "K2Node_Event_1",
+      "properties": {
+        "EventSignatureName": "None",
+        "EventSignatureClass": null,
+        "EventReference": {
+          "_struct": "MemberReference",
+          "MemberParent": {
+            "_type": "object_ref",
+            "path": "/Script/Engine.Actor",
+            "class": "Class",
+            "name": "Actor"
+          },
+          "MemberScope": "",
+          "MemberName": "ReceiveActorBeginOverlap",
+          "MemberGuid": {
+            "_struct": "Guid",
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0
+          },
+          "bSelfContext": false,
+          "bWasDeprecated": false
+        },
+        "bOverrideFunction": true,
+        "bInternalEvent": false,
+        "CustomFunctionName": "None",
+        "FunctionFlags": 0,
+        "bIsEditable": false,
+        "DeprecatedPins": [],
+        "NodePosX": 0,
+        "NodePosY": 208,
+        "NodeWidth": 0,
+        "NodeHeight": 0,
+        "AdvancedPinDisplay": "NoPins",
+        "EnabledState": "Disabled",
+        "bDisplayAsDisabled": false,
+        "bUserSetEnabledState": false,
+        "bIsNodeEnabled": true,
+        "bCanResizeNode": false,
+        "bHasCompilerMessage": false,
+        "bCommentBubblePinned": true,
+        "bCommentBubbleVisible": true,
+        "bCanRenameNode": false,
+        "NodeComment": "此节点被禁用，将不会被调用。\n从引脚连出引线来编译功能。",
+        "ErrorType": 0,
+        "ErrorMsg": "",
+        "NodeGuid": {
+          "_struct": "Guid",
+          "A": -1139633,
+          "B": 1245100671,
+          "C": -436083836,
+          "D": 2016552877
+        }
+      }
+    },
+    "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_2": {
+      "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:EventGraph.K2Node_Event_2",
+      "class": "/Script/BlueprintGraph.K2Node_Event",
+      "name": "K2Node_Event_2",
+      "properties": {
+        "EventSignatureName": "None",
+        "EventSignatureClass": null,
+        "EventReference": {
+          "_struct": "MemberReference",
+          "MemberParent": {
+            "_type": "object_ref",
+            "path": "/Script/Engine.Actor",
+            "class": "Class",
+            "name": "Actor"
+          },
+          "MemberScope": "",
+          "MemberName": "ReceiveTick",
+          "MemberGuid": {
+            "_struct": "Guid",
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0
+          },
+          "bSelfContext": false,
+          "bWasDeprecated": false
+        },
+        "bOverrideFunction": true,
+        "bInternalEvent": false,
+        "CustomFunctionName": "None",
+        "FunctionFlags": 0,
+        "bIsEditable": false,
+        "DeprecatedPins": [],
+        "NodePosX": 0,
+        "NodePosY": 416,
+        "NodeWidth": 0,
+        "NodeHeight": 0,
+        "AdvancedPinDisplay": "NoPins",
+        "EnabledState": "Disabled",
+        "bDisplayAsDisabled": false,
+        "bUserSetEnabledState": false,
+        "bIsNodeEnabled": true,
+        "bCanResizeNode": false,
+        "bHasCompilerMessage": false,
+        "bCommentBubblePinned": true,
+        "bCommentBubbleVisible": true,
+        "bCanRenameNode": false,
+        "NodeComment": "此节点被禁用，将不会被调用。\n从引脚连出引线来编译功能。",
+        "ErrorType": 0,
+        "ErrorMsg": "",
+        "NodeGuid": {
+          "_struct": "Guid",
+          "A": 1852997990,
+          "B": 1231898091,
+          "C": -1622940261,
+          "D": -1514642266
+        }
+      }
+    },
+    "UserConstructionScript": {
+      "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:UserConstructionScript",
+      "class": "/Script/Engine.EdGraph",
+      "name": "UserConstructionScript",
+      "properties": {
+        "Nodes": [
+          {
+            "_type": "object_ref",
+            "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:UserConstructionScript.K2Node_FunctionEntry_0",
+            "class": "K2Node_FunctionEntry",
+            "name": "K2Node_FunctionEntry_0"
+          }
+        ]
+      }
+    },
+    "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:UserConstructionScript.K2Node_FunctionEntry_0": {
+      "path": "/Game/BluePrints/ShowDirector/Instance/Ma5_NewYearFireworks/BP_NewYearFireworks_ShowDirector_Night.BP_NewYearFireworks_ShowDirector_Night:UserConstructionScript.K2Node_FunctionEntry_0",
+      "class": "/Script/BlueprintGraph.K2Node_FunctionEntry",
+      "name": "K2Node_FunctionEntry_0",
+      "properties": {
+        "CustomGeneratedFunctionName": "None",
+        "MetaData": {
+          "_struct": "KismetUserDeclaredFunctionMetadata",
+          "ToolTip": "",
+          "Category": "",
+          "Keywords": "",
+          "CompactNodeTitle": "",
+          "InstanceTitleColor": {
+            "_struct": "LinearColor",
+            "R": 1,
+            "G": 1,
+            "B": 1,
+            "A": 1
+          },
+          "DeprecationMessage": "",
+          "bIsDeprecated": false,
+          "bCallInEditor": false,
+          "HasLatentFunctions": -1
+        },
+        "LocalVariables": [],
+        "bEnforceConstCorrectness": true,
+        "ExtraFlags": 0,
+        "FunctionReference": {
+          "_struct": "MemberReference",
+          "MemberParent": {
+            "_type": "object_ref",
+            "path": "/Script/Engine.Actor",
+            "class": "Class",
+            "name": "Actor"
+          },
+          "MemberScope": "",
+          "MemberName": "UserConstructionScript",
+          "MemberGuid": {
+            "_struct": "Guid",
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0
+          },
+          "bSelfContext": false,
+          "bWasDeprecated": false
+        },
+        "SignatureClass": null,
+        "SignatureName": "None",
+        "bIsEditable": false,
+        "DeprecatedPins": [],
+        "NodePosX": 0,
+        "NodePosY": 0,
+        "NodeWidth": 0,
+        "NodeHeight": 0,
+        "AdvancedPinDisplay": "NoPins",
+        "EnabledState": "Enabled",
+        "bDisplayAsDisabled": false,
+        "bUserSetEnabledState": false,
+        "bIsNodeEnabled": true,
+        "bCanResizeNode": false,
+        "bHasCompilerMessage": false,
+        "bCommentBubblePinned": false,
+        "bCommentBubbleVisible": false,
+        "bCanRenameNode": false,
+        "NodeComment": "",
+        "ErrorType": 0,
+        "ErrorMsg": "",
+        "NodeGuid": {
+          "_struct": "Guid",
+          "A": 1459332876,
+          "B": 1297881025,
+          "C": -920035171,
+          "D": 1171907750
+        }
+      }
+    },
+    "nativeDirectorClass": {
+      "path": "/Script/DFMShowDirector.DFMShowDirector",
+      "class": "/Script/CoreUObject.Class",
+      "name": "DFMShowDirector",
+      "properties": {}
+    }
+  },
+  "blockers": [
+    "共同规则只允许/object/get、/object/search及加载读取；已尝试的get不提供资源表行和枚举定义，未调用其它查询/执行端点。",
+    "当前PC FXType数值、枚举合法值、手游当前行与原生消费者行为未能确认；不得把历史快照或猜测写成实时结论。"
+  ],
+  "recommendation": {
+    "beforeB04": "周三导入B04前先由用户在PC资源表核对；若当前仍为INVALID，建议改为与其它烟花相同的SHOW并由用户保存；本轮不宣称不改一定不播。",
+    "nextEvidenceNeeded": "需允许专用只读表行/枚举反射查询，或用户提供当前表行与枚举定义以及资源播放原生代码证据。"
+  }
+}
