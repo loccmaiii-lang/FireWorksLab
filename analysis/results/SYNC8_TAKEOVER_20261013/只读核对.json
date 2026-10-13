@@ -1,0 +1,372 @@
+{
+  "readAt": "2026-10-13T08:03:47.659Z",
+  "sourceVersion": "16.0.23",
+  "sourceProgrammeSha256": "2acbb028637a2fd97d3548af46c1df29024afbecf6c05af22ef76ee21559bcc6",
+  "compiledIssues": [],
+  "night": {
+    "subTemplates": 138,
+    "templates": 141,
+    "scheduleSlots": 188,
+    "duration": 218.60000610351562,
+    "arraysMatchVersion": true,
+    "arrayDiffCount": 0,
+    "arrayDiffSamples": [],
+    "snapshotSha256": "bf50d8c5c2ae845b8e53274bce572d75120742d016461a0f4991474bb7f8f5b5",
+    "audio": [
+      {
+        "event": "/Game/WwiseAudio/GPEvents/Festivel/Ma5_Firewokr/Ma5_Fireworks_Music_Start.Ma5_Fireworks_Music_Start",
+        "offset": 8
+      },
+      {
+        "event": "/Game/WwiseAudio/GPEvents/SOL_LiveOps/Voice_System/Voice_System_Ma5/Taj_Fireworks_Show/Voice_SOL_Fireworks_Show_Taj_19.Voice_SOL_Fireworks_Show_Taj_19",
+        "offset": 0
+      },
+      {
+        "event": "/Game/WwiseAudio/GPEvents/SOL_LiveOps/Voice_System/Voice_System_Ma5/Taj_Fireworks_Show/Voice_SOL_Fireworks_Show_Taj_20.Voice_SOL_Fireworks_Show_Taj_20",
+        "offset": 195
+      }
+    ],
+    "cdoAudio": [
+      {
+        "event": "/Game/WwiseAudio/GPEvents/Festivel/Ma5_Firewokr/Ma5_Fireworks_Music_Start.Ma5_Fireworks_Music_Start",
+        "offset": 8
+      },
+      {
+        "event": "/Game/WwiseAudio/GPEvents/SOL_LiveOps/Voice_System/Voice_System_Ma5/Taj_Fireworks_Show/Voice_SOL_Fireworks_Show_Taj_19.Voice_SOL_Fireworks_Show_Taj_19",
+        "offset": 0
+      },
+      {
+        "event": "/Game/WwiseAudio/GPEvents/SOL_LiveOps/Voice_System/Voice_System_Ma5/Taj_Fireworks_Show/Voice_SOL_Fireworks_Show_Taj_20.Voice_SOL_Fireworks_Show_Taj_20",
+        "offset": 195
+      }
+    ],
+    "cdoError": null,
+    "cdoEffectDiffCount": 0
+  },
+  "flowerScaleHistogram": {
+    "1": 36,
+    "1.08": 25,
+    "0.92": 37,
+    "0.186667": 6,
+    "0.288889": 2,
+    "0.244444": 4,
+    "1.533333": 12,
+    "1.410666": 8,
+    "1.217391": 4,
+    "1.656": 2
+  },
+  "trails": [
+    {
+      "size": "S",
+      "id": "P_EFX_FireWorks_NY_Trail_Small",
+      "velocityCmS": 13038.91015625,
+      "absoluteVelocity": true,
+      "flightS": 2.954400062561035,
+      "endpointM": 150.07046299661835,
+      "count": 31,
+      "maxDistanceErrorM": 0.000028702159227123047,
+      "samples": [
+        {
+          "sub": "SilverChry",
+          "distanceM": 150.07044451293396,
+          "deltaM": -0.00001848368438572834,
+          "flowerDelay": 2.954400062561035,
+          "flightS": 2.954400062561035
+        },
+        {
+          "sub": "SilverChryV02",
+          "distanceM": 150.07044451293396,
+          "deltaM": -0.00001848368438572834,
+          "flowerDelay": 2.954400062561035,
+          "flightS": 2.954400062561035
+        },
+        {
+          "sub": "SilverChryV03",
+          "distanceM": 150.07044451293396,
+          "deltaM": -0.00001848368438572834,
+          "flowerDelay": 2.954400062561035,
+          "flightS": 2.954400062561035
+        }
+      ],
+      "velocityCurveSha256": "15446c5c1cc0507d4e22b36a62bd8861b918afba82458fefec59aa0d0440d481",
+      "curvePoints": 35
+    },
+    {
+      "size": "M",
+      "id": "P_EFX_FireWorks_NY_Trail_Medium",
+      "velocityCmS": 13690.91015625,
+      "absoluteVelocity": true,
+      "flightS": 4.377200126647949,
+      "endpointM": 210.11137590543436,
+      "count": 49,
+      "maxDistanceErrorM": 0.000033948018057117224,
+      "samples": [
+        {
+          "sub": "GoldRayChry",
+          "distanceM": 210.11140505017582,
+          "deltaM": 0.00002914474146109569,
+          "flowerDelay": 4.377200126647949,
+          "flightS": 4.377200126647949
+        },
+        {
+          "sub": "GreenPeony",
+          "distanceM": 210.11140985345241,
+          "deltaM": 0.000033948018057117224,
+          "flowerDelay": 4.377200126647949,
+          "flightS": 4.377200126647949
+        },
+        {
+          "sub": "GoldRayChryV03",
+          "distanceM": 210.11140505017582,
+          "deltaM": 0.00002914474146109569,
+          "flowerDelay": 4.377200126647949,
+          "flightS": 4.377200126647949
+        }
+      ],
+      "velocityCurveSha256": "246552099440c785be876b5141fe947549bdbc91195c54bd8af8a31c0a99cd39",
+      "curvePoints": 37
+    },
+    {
+      "size": "L",
+      "id": "P_EFX_FireWorks_NY_Trail_Large",
+      "velocityCmS": 12626.7900390625,
+      "absoluteVelocity": true,
+      "flightS": 7.365099906921387,
+      "endpointM": 330.1797860137695,
+      "count": 44,
+      "maxDistanceErrorM": 0.0000556920769554381,
+      "samples": [
+        {
+          "sub": "SilverStrobeChry",
+          "distanceM": 330.17975470032746,
+          "deltaM": -0.00003131344203666231,
+          "flowerDelay": 7.365099906921387,
+          "flightS": 7.365099906921387
+        },
+        {
+          "sub": "SilverStrobeChryV02",
+          "distanceM": 330.17975470032746,
+          "deltaM": -0.00003131344203666231,
+          "flowerDelay": 7.365099906921387,
+          "flightS": 7.365099906921387
+        },
+        {
+          "sub": "MultiLayerChryV02",
+          "distanceM": 330.1797349250901,
+          "deltaM": -0.0000510886794131693,
+          "flowerDelay": 7.365099906921387,
+          "flightS": 7.365099906921387
+        }
+      ],
+      "velocityCurveSha256": "4fe390cea6a7bda26ab6bc2aba744954f5c021dec9ca5d2b666505b92119d679",
+      "curvePoints": 30
+    }
+  ],
+  "mobileTails": [
+    {
+      "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+      "lods": 1,
+      "emitters": [
+        {
+          "name": "TrailFull",
+          "lods": 1,
+          "enabled": true,
+          "gpu": false,
+          "Material": {
+            "_type": "object_ref",
+            "path": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_L_Full_01.MI_EFX_FireWorks_RiseTrail_L_Full_01",
+            "class": "MaterialInstanceConstant",
+            "name": "MI_EFX_FireWorks_RiseTrail_L_Full_01"
+          },
+          "ScreenAlignment": "PSA_Rectangle"
+        }
+      ]
+    },
+    {
+      "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+      "lods": 1,
+      "emitters": [
+        {
+          "name": "TrailFull",
+          "lods": 1,
+          "enabled": true,
+          "gpu": false,
+          "Material": {
+            "_type": "object_ref",
+            "path": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_M_Full_01.MI_EFX_FireWorks_RiseTrail_M_Full_01",
+            "class": "MaterialInstanceConstant",
+            "name": "MI_EFX_FireWorks_RiseTrail_M_Full_01"
+          },
+          "ScreenAlignment": "PSA_Rectangle"
+        }
+      ]
+    },
+    {
+      "path": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+      "lods": 1,
+      "emitters": [
+        {
+          "name": "TrailFull",
+          "lods": 1,
+          "enabled": true,
+          "gpu": false,
+          "Material": {
+            "_type": "object_ref",
+            "path": "/Game/Effects/Common/MaterialInstance/Fireworks/MI_EFX_FireWorks_RiseTrail_S_Full_01.MI_EFX_FireWorks_RiseTrail_S_Full_01",
+            "class": "MaterialInstanceConstant",
+            "name": "MI_EFX_FireWorks_RiseTrail_S_Full_01"
+          },
+          "ScreenAlignment": "PSA_Rectangle"
+        }
+      ]
+    }
+  ],
+  "importReceipts": [
+    {
+      "name": "RiseTrail_S",
+      "revisionId": "1813ed9c36db7a1b34ab",
+      "createdAt": "2026-10-13T06:31:30.087941+00:00",
+      "reportedAt": "2026-10-13T06:51:58.112722+00:00",
+      "rows": [
+        {
+          "platform": "pc",
+          "state": "done",
+          "done": 8,
+          "total": 8,
+          "errs": [],
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_S_HD"
+        },
+        {
+          "platform": "mobile",
+          "state": "done",
+          "done": 5,
+          "total": 5,
+          "errs": [],
+          "particle": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M"
+        }
+      ],
+      "enginePlaybackVerified": false
+    },
+    {
+      "name": "RiseTrail_M",
+      "revisionId": "3719731a9545d2305650",
+      "createdAt": "2026-10-13T06:26:51.318818+00:00",
+      "reportedAt": "2026-10-13T06:51:58.087454+00:00",
+      "rows": [
+        {
+          "platform": "pc",
+          "state": "done",
+          "done": 8,
+          "total": 8,
+          "errs": [],
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_M_HD"
+        },
+        {
+          "platform": "mobile",
+          "state": "done",
+          "done": 5,
+          "total": 5,
+          "errs": [],
+          "particle": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M"
+        }
+      ],
+      "enginePlaybackVerified": false
+    },
+    {
+      "name": "RiseTrail_L",
+      "revisionId": "920e5697d7ccc647ee2f",
+      "createdAt": "2026-10-13T06:48:24.467478+00:00",
+      "reportedAt": "2026-10-13T06:51:58.135208+00:00",
+      "rows": [
+        {
+          "platform": "pc",
+          "state": "done",
+          "done": 8,
+          "total": 8,
+          "errs": [],
+          "particle": "/Game/Effects_HD/Props_HD/FireWorks_HD/P_EFX_FireWorks_RiseTrail_L_HD"
+        },
+        {
+          "platform": "mobile",
+          "state": "done",
+          "done": 5,
+          "total": 5,
+          "errs": [],
+          "particle": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M"
+        }
+      ],
+      "enginePlaybackVerified": false
+    }
+  ],
+  "mobileCoverage": {
+    "high": {
+      "plays": 145,
+      "flowers": {
+        "P_EFX_FireWorks_SilverChry": 36,
+        "P_EFX_FireWorks_GoldRayChry": 26,
+        "P_EFX_FireWorks_GoldSpark": 10,
+        "P_EFX_FireWorks_SilverStrobeChry": 68,
+        "P_EFX_FireWorks_GoldKamuro": 5
+      },
+      "top3": 130,
+      "top3Share": 0.896551724137931
+    },
+    "medium": {
+      "plays": 131,
+      "flowers": {
+        "P_EFX_FireWorks_SilverChry": 30,
+        "P_EFX_FireWorks_GoldRayChry": 22,
+        "P_EFX_FireWorks_GoldSpark": 6,
+        "P_EFX_FireWorks_SilverStrobeChry": 68,
+        "P_EFX_FireWorks_GoldKamuro": 5
+      },
+      "top3": 120,
+      "top3Share": 0.916030534351145
+    },
+    "low": {
+      "plays": 115,
+      "flowers": {
+        "P_EFX_FireWorks_SilverChry": 24,
+        "P_EFX_FireWorks_GoldRayChry": 22,
+        "P_EFX_FireWorks_GoldSpark": 6,
+        "P_EFX_FireWorks_SilverStrobeChry": 58,
+        "P_EFX_FireWorks_GoldKamuro": 5
+      },
+      "top3": 104,
+      "top3Share": 0.9043478260869565
+    }
+  },
+  "resourceTables": {
+    "pcFireworksRows": 60,
+    "mobileFireworksRows": 28,
+    "currentMobileRequired": [
+      "P_EFX_FireWorks_NY_Trail_Small",
+      "P_EFX_FireWorks_SilverChry",
+      "P_EFX_FireWorks_NY_Trail_Medium",
+      "P_EFX_FireWorks_GoldRayChry",
+      "P_EFX_FireWorks_GoldSpark",
+      "P_EFX_FireWorks_NY_Trail_Large",
+      "P_EFX_FireWorks_SilverStrobeChry",
+      "P_EFX_FireWorks_GoldKamuro"
+    ],
+    "currentMobileMissing": [
+      "P_EFX_FireWorks_NY_Trail_Small",
+      "P_EFX_FireWorks_SilverChry",
+      "P_EFX_FireWorks_NY_Trail_Medium",
+      "P_EFX_FireWorks_GoldRayChry",
+      "P_EFX_FireWorks_GoldSpark",
+      "P_EFX_FireWorks_NY_Trail_Large",
+      "P_EFX_FireWorks_SilverStrobeChry",
+      "P_EFX_FireWorks_GoldKamuro"
+    ],
+    "pcMissing": [],
+    "heroPCRow": null,
+    "heroMobileRow": null
+  },
+  "limitations": [
+    "只读核对；未从头到尾播放",
+    "曲线积分估算尾缀终点，未以镜头实测接头",
+    "未保存 UE、未核对磁盘与内存一致",
+    "新合并音频待用户提供，尚未核对内容起点"
+  ]
+}
