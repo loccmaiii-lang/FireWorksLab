@@ -1,0 +1,170 @@
+{
+  "revision": "B03m_vo_countdown_zero17.19_from_B02r2_upOnly_declutter_mobileStandins_up70_s10",
+  "density": 2,
+  "rhythm": null,
+  "derivedFlowers": [
+    "R03_GoldRayChry_L230",
+    "R03_GoldCoreLime_L230",
+    "R03_MultiLayerChry_L230",
+    "R03_GoldKamuro_H280"
+  ],
+  "generatedBy": "analysis/scripts/编排B01_编译.mjs",
+  "trailV2": {
+    "revision": "v2-20261012",
+    "hero": false,
+    "heroId": "Hero",
+    "subTemplates": 43,
+    "skipped": 0,
+    "heroOnLarge": [
+      "NYR03_GoldKamuro_H280@1"
+    ],
+    "heroSwitched": [],
+    "templates": 43,
+    "baseResources": 3,
+    "samples": [
+      "R03 · 金裂星 · 90m：开花 189.1 → 149.1 m",
+      "R03 · 小银菊 · 90m：开花 188.3 → 148.3 m",
+      "R03 · 爆裂星 · 90m：开花 187.6 → 147.6 m",
+      "R03 · 小青柠 · 90m：开花 189.3 → 149.3 m",
+      "R03 · 橙辉星 · 90m：开花 191.7 → 151.7 m",
+      "R03 · 点灭星 · 90m：开花 192.0 → 152.0 m"
+    ]
+  },
+  "tiers": {
+    "high": {
+      "events": 936,
+      "subTemplates": 137,
+      "templates": 138,
+      "scheduleSlots": 182,
+      "groups": {
+        "P": 78,
+        "B": 86,
+        "F": 18
+      },
+      "lastSlot": 197.3,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "medium": {
+      "events": 788,
+      "subTemplates": 130,
+      "templates": 138,
+      "scheduleSlots": 182,
+      "groups": {
+        "P": 78,
+        "B": 86,
+        "F": 18
+      },
+      "lastSlot": 197.3,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "low": {
+      "events": 305,
+      "subTemplates": 98,
+      "templates": 83,
+      "scheduleSlots": 96,
+      "groups": {
+        "P": 77,
+        "B": 19
+      },
+      "lastSlot": 197.3,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    }
+  },
+  "preflight": "preflightProject 通过（同 8025 打开 .dfshow）",
+  "file": "NewYearFireWorks_v01-B03-VO倒计时合并音频-手游补位.dfshow",
+  "tierNesting": {
+    "lowNotInMedium": 0,
+    "mediumNotInHigh": 0
+  },
+  "oneTable": {
+    "events": 1011,
+    "flags14": 136,
+    "flags12": 800,
+    "flags2": 75,
+    "subTemplates": 149,
+    "templates": 153,
+    "scheduleSlots": 197,
+    "pc": {
+      "high": 936,
+      "medium": 788,
+      "low": 305
+    },
+    "mobile": {
+      "high": 211,
+      "medium": 169,
+      "low": 155
+    }
+  },
+  "beamFlowers": [
+    {
+      "id": "B02_BeamS1_SC_a",
+      "engineId": "NYB02_BeamS1_SC_a",
+      "beams": 1,
+      "flowers": 1,
+      "flightM": 38.550423
+    },
+    {
+      "id": "B02_BeamS1_SC_b",
+      "engineId": "NYB02_BeamS1_SC_b",
+      "beams": 1,
+      "flowers": 1,
+      "flightM": 35.178982
+    },
+    {
+      "id": "B02_BeamS3_GS_a",
+      "engineId": "NYB02_BeamS3_GS_a",
+      "beams": 3,
+      "flowers": 3,
+      "flightM": 41.971519
+    },
+    {
+      "id": "B02_BeamS3_GS_b",
+      "engineId": "NYB02_BeamS3_GS_b",
+      "beams": 3,
+      "flowers": 3,
+      "flightM": 41.956383
+    },
+    {
+      "id": "B02_BeamC2_CR_a",
+      "engineId": "NYB02_BeamC2_CR_a",
+      "beams": 2,
+      "flowers": 2,
+      "flightM": 36.758732
+    },
+    {
+      "id": "B02_BeamC2_CR_b",
+      "engineId": "NYB02_BeamC2_CR_b",
+      "beams": 2,
+      "flowers": 2,
+      "flightM": 35.625588
+    },
+    {
+      "id": "B02_BeamV4",
+      "engineId": "NYB02_BeamV4",
+      "beams": 4,
+      "flowers": 0,
+      "flightM": 29.9
+    }
+  ],
+  "heroTrailId": "Hero",
+  "doc": {
+    "cues": 197,
+    "events": 1011,
+    "sections": 13,
+    "duration": 214.4,
+    "musicOffset": 0,
+    "balls": 689,
+    "fans": 322
+  },
+  "audio": {
+    "file": "VO倒计时+汪洋与浩渺.mp3",
+    "sha256": "b357bc5b8028dba95c96aabb4016e4c76c764a710004c6aacfcc106294c48613",
+    "duration": 211.644,
+    "musicOffset": 0,
+    "embeddedBytes": 6772703,
+    "markers": 29
+  }
+}

@@ -2,6 +2,8 @@
 // 用法（tool/workbench 下）：npm run publish-show -- --programme <节目.dfshow> --name <编排名> [--note 一句说明] [--version 16.0.9] [--also <节目.dfshow>::<编排名> ...]
 // --also：同一版本里一起存的对比版本（如 D1 / D3 密度），只存进 FXtools/节目/云端最新/ 和版本记录，刷新不自动载入，要在「节目 → 打开节目」里选。
 // 不给 --version 就在「工具版本 WORKBENCH_VERSION 与上一份云端编排版本」里较大的那个上末位 +1。之后照常 npm run release（云端加 -- --no-deploy），源码、成品与编排一起提交。
+// --keep-music（22，用户 10-13 17:06「b03默认音频请用最新带vo的」）：节目自带的音频不是仓库原曲（music.wav）时，原字节随这版编排一起发，
+//   刷新后默认就放这份音频（工具只认「仓库原曲」和「节目内嵌」两种来源）。是仓库原曲时拒绝，照旧去掉。会让成品 HTML 大一份音频。
 // --data-only（16.0.19 起）：只换编排、不动工具源码（不改 WORKBENCH_VERSION），之后 python release.py --data-only（云端加 --no-deploy）。
 //   云端装不了 npm 依赖时用；成品里只换内嵌的 cloud-latest，工具界面版本号不变，顶栏写「云端编排 <新号>」。
 import fs from 'node:fs/promises';
@@ -35,14 +37,22 @@ const programmeFile=path.resolve(programmeArg),original=await fs.readFile(progra
 if(project.format!=='df.workbench-project/1')throw Error('需要完整节目文件（df.workbench-project/1）');
 // 音乐不随每版编排上传：只留 sha256，播放时用仓库里的同一首或草稿里已导入的同一首。
 const music=project.payload.audioRef,musicSha256=music?.sha256||project.payload.doc?.meta?.musicSourceSha256||null;
-if(music&&music.kind!=='bundled')project.payload.audioRef={kind:'bundled'};
+const keepMusic=args.includes('--keep-music');
+if(keepMusic){
+ const bundledSha=JSON.parse(await fs.readFile(path.join(source,'public/data/music-data.json'),'utf8')).sourceSha256;
+ const m=/^data:audio\/[a-z0-9.+-]+;base64,([A-Za-z0-9+/]+=*)$/i.exec(music?.dataUrl||'');
+ if(music?.kind!=='embedded'||!m)throw Error('--keep-music 需要节目里内嵌音频');
+ if(sha(Buffer.from(m[1],'base64'))!==music.sha256)throw Error('--keep-music：内嵌音频字节和它记的 sha256 不一致');
+ if(music.sha256===bundledSha)throw Error('--keep-music：这就是仓库原曲，不用内嵌（去掉 --keep-music）');
+ if(project.payload.doc?.meta?.musicSourceSha256!==music.sha256)throw Error('--keep-music：节目 meta.musicSourceSha256 和内嵌音频不一致');
+}else if(music&&music.kind!=='bundled')project.payload.audioRef={kind:'bundled'};
 const seed=migrateNumbering(JSON.parse(await fs.readFile(path.join(source,'public/data/score24-v05.json'),'utf8')));
 const state=preflightProject(JSON.stringify(project),seed);
 const text=JSON.stringify(project),programmeSha256=sha(text);
 const latest={format:CLOUD_FORMAT,version,name,note,publishedAt:new Date().toISOString(),
  source:path.relative(root,programmeFile).split(path.sep).join('/'),sourceSha256:sha(original),programmeSha256,
  musicSha256,musicTitle:state.doc.meta.musicTitle||music?.name||'',cues:state.doc.cues.length,events:state.doc.events.length,
- publishMode:dataOnly?'data-only':'with-app',appVersion:dataOnly?current:version,project};
+ publishMode:dataOnly?'data-only':'with-app',appVersion:dataOnly?current:version,...(keepMusic?{musicEmbedded:true,musicName:music.name}:{}),project};
 validateCloudLatest(latest);
 const archiveDir=path.join(root,'FXtools/节目/云端最新'),archive=`${version}-${name}.dfshow`;
 await fs.mkdir(archiveDir,{recursive:true});
@@ -59,6 +69,6 @@ for(const x of also){
 await fs.writeFile(cloudFile,JSON.stringify(latest));
 if(!dataOnly)await fs.writeFile(connectionFile,connection.replace(`export const WORKBENCH_VERSION='${current}';`,`export const WORKBENCH_VERSION='${version}';`));
 const index=path.join(archiveDir,'版本记录.md');let log;try{log=await fs.readFile(index,'utf8')}catch{log='# 云端最新编排 · 版本记录\n\n拉取后刷新编排工作台会自动载入最新一行（载入前备份当前节目）。这里的文件不带音乐，音乐按 sha256 对应《汪洋与浩渺》。\n\n| 版本 | 编排 | 片段 / 播放 | 来源 | 说明 |\n| --- | --- | --- | --- | --- |\n'}
-const mode=dataOnly?`（只换编排，工具 ${current}）`:'';
+const mode=(keepMusic?`（带音频 ${music.name}）`:'')+(dataOnly?`（只换编排，工具 ${current}）`:'');
 if(!skipIndex)await fs.writeFile(index,log+`| ${version} | ${name} | ${latest.cues} / ${latest.events} | \`${latest.source}\` | ${(note+mode).replaceAll('|','｜')} |\n`+extras.map(x=>`| ${version} | ${x.label}（对比版，手动打开） | ${x.cues} / ${x.events} | \`${x.source}\` | 刷新不自动载入；节目 → 打开节目 → 选 \`${x.archive}\` |\n`).join(''));
 console.log(JSON.stringify({version,name,archive:'FXtools/节目/云端最新/'+archive,extras,cues:latest.cues,events:latest.events,programmeSha256,bytes:Buffer.byteLength(text),appVersion:latest.appVersion,next:dataOnly?'python release.py --data-only'+(process.env.CI?' --no-deploy':''):'npm run release'+(process.env.CI?' -- --no-deploy':'')}));

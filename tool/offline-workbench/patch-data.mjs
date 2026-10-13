@@ -30,5 +30,5 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
  const sha=text=>crypto.createHash('sha256').update(text).digest('hex');
  console.log(JSON.stringify({sha256:sha(result.html),bytes:Buffer.byteLength(result.html),previousHtmlSha256:sha(html),
   previous:result.previous&&{version:result.previous.version,name:result.previous.name,programmeSha256:result.previous.programmeSha256},
-  cloudLatest:{version:cloud.version,name:cloud.name,programmeSha256:cloud.programmeSha256,cues:cloud.cues,events:cloud.events}}));
+  cloudLatest:{version:cloud.version,name:cloud.name,programmeSha256:cloud.programmeSha256,cues:cloud.cues,events:cloud.events,...(cloud.musicEmbedded?{musicEmbedded:true,musicSha256:cloud.musicSha256}:{})}}));
 }

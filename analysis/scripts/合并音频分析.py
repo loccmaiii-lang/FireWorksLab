@@ -80,6 +80,14 @@ def main():
     k = int(np.ceil((last - bar0) / bar - 1e-6))
     zero = a.zero if a.zero is not None else round(bar0 + k * bar, 3)
     gl = [g for g in gains if g > 0.5]
+    # ⑤ 工作台时间线显示用（10-13 17:06 B03 默认音频换成合并音频）：波形 1500 段 RMS、能量 0.25 s 一格（dB 映射到 0–1），都按最大值归一
+    nb = 1500
+    rms = np.array([np.sqrt((mix[int(i * len(mix) / nb):int((i + 1) * len(mix) / nb)] ** 2).mean()) for i in range(nb)])
+    wave = [max(0.0001, round(float(v), 4)) for v in rms / rms.max()]
+    st = SR // 4
+    er = np.array([np.sqrt((mix[i:i + st] ** 2).mean()) for i in range(0, len(mix) - st + 1, st)])
+    er = np.convolve(er, np.ones(4) / 4, mode='same')
+    energy = [round(float(v), 4) for v in np.clip((20 * np.log10(er / er.max() + 1e-9) + 40) / 40, 0.0045, 1.0)]
     out = dict(format='df.merged-audio-analysis/1', by='跨年秀（22）2026-10-13，用户 16:28 发来的合并音频',
                mix=dict(file=Path(a.mix).name, sha256=sha(a.mix), durationS=round(len(mix) / SR, 3)),
                music=dict(file=str(Path(a.music).relative_to(ROOT)) if Path(a.music).resolve().is_relative_to(ROOT) else Path(a.music).name,
@@ -90,6 +98,8 @@ def main():
                countdownOnsetsS=[s['start'] for s in count],
                bar0ShowS=round(bar0, 4), barS=bar, zeroShowS=zero, zeroBar=round((zero - bar0) / bar, 3),
                zeroRule='VO 最后一声之后的第一个小节重拍（--zero 可改）' if a.zero is None else '用户指定',
+               display=dict(waveform=wave, waveformMethod='1500 段 RMS（单声道混合）÷ 最大值',
+                            energy=energy, energyStep=0.25, energyMethod='0.25 s RMS、1 s 平滑，dB −40…0 映射到 0–1'),
                notes=['原曲起点用互相关测，44.1 kHz 精度约 0.02 ms；合并文件是 MP3，解码器延迟已由 ffmpeg 补偿，按播放器听到的为准。',
                       'VO 段是把原曲减掉后剩下的部分，阈值 −32 dB（300–3500 Hz），≥ 80 ms 才算一声；喊的是哪个数没有转写，按次序对应 10→1。',
                       '合并文件里没有单独的钟声：16.0 s 前后 VO 和原曲都没有钟一样的起音；原曲第 10 小节重拍（17.19 s）有明显的整体抬升。'])
