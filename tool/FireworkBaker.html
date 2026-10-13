@@ -2348,7 +2348,7 @@ function setParticleUniforms(pr, chan) {
 // =====================================================================
 //  花型与参数
 // =====================================================================
-const VERSION = '4.9.79';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23；4.9.79 合成一张（升空尾缀 / 彗星）用烟花序列同一组导出选项：入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花分开（PC 两张；手机仍一张），用户 10-13 18:47，对话框23
+const VERSION = '4.9.80';     // 4.4.0 包含 4.3.8（对话框17）；4.4.2 单层导出方案；4.4.3 静态检查进构建、火花闪烁频率；4.4.4 点灭光点方波；4.4.5 升空尾缀 RT5 选项；4.5.0 工作台快改（不改画面）；4.5.1 升空尾缀 RT6 近段 + 远段 + GPU 预算；4.5.2 升空尾缀分层看；4.5.3 远段上移速度、出点提示、左栏精简；4.5.4 尾缀曲线精简、标准检查认远段；4.5.5 多层花型模板（对话框新花型，只加不改）；4.5.9 缩略图换成示意图、多层模板第 13 个（对话框新花型）；4.5.10 = 原定 4.5.8 的九处 bug + 五条小修（对话框15；4.5.9 已被对话框新花型先发）；4.6.0 = 5.0 第 1 步：子发射器参数补全 + ＋ 加发射器 + 9 个标准模块 + 游戏内大小真实米数（对话框15）；4.7.0 = 5.0 第 2 步：一套物理 + 固定机位匀速帧（对话框15）；4.8.0 = 5.0 第 3 步一部分：每个发射器大小 / 亮度按寿命曲线（对话框15）；4.8.1 导出可取消、不叠两个；4.9.0 = 5.0 第 3 步：联动用链条（Q1）、旧（待删）参数没用上就收起（对话框15）；4.9.1 顶栏身份条；4.9.2 时间约束提示、超出滑杆范围标出、单束说明；4.9.3 多层花型模板跟上 5.0 第 2 步；4.9.4 = 交互宪章第 5 节收尾：应用内对话框、快捷键登记表、预览烘焙可取消、所有发射器按寿命曲线、一个英文名（对话框15）（对话框新花型）；4.9.5 = 宪章遗漏 1–5：输出栏收口、参数类别进构建、旧存档改写提示（对话框15）；4.9.6 生成缩略图（截当前帧）、多层模板第二批 13 个（对话框新花型）；4.9.7 右栏切页不丢上下文、撤销一次操作一步、旧存档提示写中文（对话框23 参数栏交互）；4.9.8 参数栏布局：顶上固定「现在改的是」、参数行一种网格 + 状态用字、链条带字、常用 / 更多、空模块合一行、删发射器 ×、说明点了才出 + F1（对话框23）；4.9.9 多层模板第二批收尾（对话框新花型）；4.9.10「改过」按打开那一刻比（等烘焙时改的不被吞掉）、超出常用范围写一行、顶上发射器名不截断（对话框23）；4.9.11 空中花型 14 项不删了（尾迹粗细 / 两头收尖 / 星头前段亮度……用户 10-06 14:24）；4.9.12 右栏按参考稿上样式（对话框9）；4.9.13 帧数分配默认改回按运动分（用户 10-06 15:15，对话框23）；4.9.14 右栏参数页照 01_顺手调参_深化 重写（模块默认收起 + 摘要、行尾 ↺、底部「和打开时比」，对话框23）；4.9.15 分簇星分布 + 八重芯青牡丹重做（对话框新花型）；4.9.16 整套簇转角 + 光露 / 浮模様 / 万華鏡 / 染分模板 + 本机渲染缩略图（对话框新花型）；4.9.17 每簇星数随机、簇方向随机 + 模板按本机结果调（对话框新花型）；4.9.18 多层模板带尾层冷却按 4.6.0 的尾长调回（对话框新花型）；4.9.19 整套簇偏转（绕竖直轴）+ NF4 结果并进（对话框新花型）；4.9.20 贴图 / 流转能切这一层的每一张序列（分张、星头 / 尾迹、循环层 / 消散 / 远段，对话框23）；4.9.21 效果 › 整体调整（照 4.1.1 全局风格层，每层一份）、入点前放大一律绕爆点（对话框23）；4.9.22 多层模板配方系统：号数缩放 + 尾的药（金 / 錦 / 銀钛 / 白铝），27 个模板按真实规格重做（对话框新花型）；4.9.23 一个效果几档导出不重名（状态清单「方案」写 en → 贴图 / 资产名加 _<en>，对话框新花型）；4.9.24 GPU / 软圆点淡出、闪烁、冷却写在 Alpha（半透明材质不再发黑）+ 每个发射器加 Scale Color/Life（对话框23）；4.9.25 交付清单产物表（每层 PC / 手机出什么）= 唯一导出口径，贴图 / 流转 / 引擎回放按产物看，单束并进导出方案、回放和导出同参（对话框23）；4.9.26 帧账本（游戏里每帧最多跳几像素，标定线 0.77 = 金芒菊）+ 1 / 2 / 3 张试算、RT6 远段帧数按跳动分（用户 10-07 09:20 第 2 条，对话框23）；4.9.27 单束合不合适量出来（直尾在 800 m 外偏几像素、先后点亮），产物表 / 下拉 / 层页头写（用户 09:20 第 3 条，对话框23）；4.9.28 单束变体数 / 随机感（几张不同种子 / 粗细 / 长短的单束贴图 + 每颗星大小随机，用户 11:45 选，对话框23）；4.9.29 低端包 cascade_low.json：产物表低端列、单帧（某一帧 / 长曝光）+ 功能图（D 溶解 / C 轮廓 / A 出现顺序，后缀你填）、引擎回放看低端 + 溶解预览 + 并排（用户 09:41 / 09:54 / 12:40，对话框23）；4.9.30 效果 › 整体调整 › 节奏（同一朵花放快 / 放慢，整个效果一个值，用户 10-07 13:31，对话框新花型）；4.9.31 RT6 远段从交接开始出现（不再闪一下）、导出缩放 1 / 0.8 / 0.5、护栏 Ramp（末格黑）+ 序列编码封顶 253（用户 14:56 / 14:34，对话框23）；4.9.32 升空尾缀导出缩放可选「升空高度不变（只缩粗细，_W80 / _W50）」、引擎回放升空尾缀「游戏内大小」也按缩放画（用户 16:15 / 16:2x，对话框23）；4.9.33 Zoom 取景阶梯最多 12 级（Size By Life 100 多个点 → 二十几个）、几乎全黑的末帧不再跳回大取景、产物表单帧「在引擎回放里看」（用户 17:26，对话框23）；4.9.34 扇面 N 簇 + 簇依次出膛（对话框FanGold）；4.9.35 低端并进产物表（PC 加单帧、手机加单束 / 单帧、没有 cascade_low.json）、引擎回放不分平台、「贴图」「流转」合成「贴图流转」（用户 18:50，对话框23）；4.9.36 时间轴 = 序列时长（出点 / 结尾全黑不再把它压短，不导出那段画斜纹；用户 20:37，对话框23）；4.9.37 多层模板「金蕊柠」（金蕊青柠星逐帧拆、四层，对话框新花型）；4.9.38 素材包整理：重复的 Ramp / Cutout 只留一张、Cutout 估省 < 10% 不出、textures 写 hash（用户 23:23，对话框23）；4.9.39 金蕊柠按导出对照调完 + 每层曝光（对话框新花型）；4.9.40 金蕊柠按逐帧打点重做（对话框新花型）；4.9.41 金蕊柠收尾：芯后段用颜色压暗、粉点 / 星头亮、橙引细（对话框新花型）；4.9.42 金蕊柠芯曝光（回放检查过曝）+ 细线变细直（对话框新花型）；4.9.43 金蕊柠后段星头白一点、细线早点收（对话框新花型）；4.9.44 金蕊柠橙引尾出到 +0.85 s（对话框新花型）；4.9.45 金蕊柠橙引尾末段更少（对话框新花型）；4.9.46 金蕊柠橙引尾 +0.5 s 起变暗（对话框新花型）；4.9.47 金蕊柠芯不坠、淡紫点在金丝外面（对话框新花型）；4.9.50 星头 / 火花形状与随机（大小随机、拉长 + 亮结、边缘起伏、双核、六边形、火花拉长）+ 粗细按米（线条宽度 / 颗粒大小），用户 10-08 15:56 / 16:2x，对话框23；4.9.51 导出按尺寸标定（spec/尺寸标定.json，编排对话框维护；自动读、只改长度不改时间，用户 10-09 00:11 / 00:27，对话框23）；4.9.52 导出尺寸每个效果都能选一档（坝顶小 / 中 / 大号、前台、彗星、扇形 = 两倍飞行长度、开花高度），用户 10-09 12:56，对话框23；4.9.53 光点光晕形状可选幂律（haloShape / haloBeta，缺省高斯 = 以前逐像素不变），用户 10-09 18:29，对话框相机渲染；4.9.54 火花发射器补全：起始半径 / 跟星头大小、向后喷 + 锥角、每米生成、扇面筒距（缺省逐像素不变；用户 10-09 21:48，对话框FanGold）；4.9.55 光晕形状加「多层柔光」（近晕 + 远晕四个高斯，照 Blender 万彩千轮 / FanComet / 银彩菊），用户 10-09 20:34，对话框相机渲染；4.9.56 分簇联动补扇面张角 / 逐筒出膛 / 筒距（用户 10-09 23:04，对话框23）；4.9.57 火花形状「不规则多边形」+ 火花亮度随机（照 Blender FanComet / FanSilver R4 火花），用户 10-09 23:20，对话框相机渲染；4.9.58 星头单独光晕（星头光晕占比 / 半径，缺省跟这一层；对话框FanGold）；4.9.59 火花形状 / 亮度随机通用化：地面 / 上升循环火花也能用、不再只限礼花、开亮度随机不再丢掉渐变亮核；光点层导出提示（用户 10-10 01:37，对话框相机渲染）；4.9.69 手游 _M 导出（尾缀 3 个发射器、名字 <名>_M、tier、max_alive）、尾缀远段 Rectangle + 锁 Z、派生资源贴图沿用原效果（系统名区分）、小平台尾缀 XS、贴图 sha256、导出拦截（规范 v1），用户 10-12 19:44 / 20:42，对话框23；4.9.70 手游贴图一律 ≤ 1024 严格拦（用户 10-12 22:01）、导出后导入器排队时写清楚新的是谁 / 卡在谁后面（分裂星卡在 GoldRay 后面），对话框23；4.9.71 火花平方阻力（火花终端速度 sparkVt，缺省 0 = 关；对话框FanGold）；4.9.72 导出分段计时（用户 10-12 23:15「导出每次都要打包zip有点慢」：先量出慢在哪一段），对话框23；4.9.73 尾缀手机「近段 + 远段合成一张」（1 个发射器 TrailFull、世界坐标全程序列：星头 + 全部火花；手机只烘这一张，用户 10-12 21:34 / 23:49），对话框23；4.9.74 旧存档缺新参数时右栏显示缺省（生成方式下拉 / 起始半径等不再是空的；对话框FanGold）；4.9.75 火花终端速度改成单调的「平方阻力」sparkQ（0 = 关，越大越强，旁边一行灰字写相当于终端速度）、默认关的参数空着时显示 0 / 缺省、参数生效审查（用户 10-13 12:55，对话框FanGold）；4.9.76 存档缺哪个参数右栏都显示缺省（默认关的 = 0；按参数生效审查核对过，老参数 / 尾缀参数除外），对话框FanGold；4.9.78 已通过但没进正式库的尾缀左栏照样列小 / 中 / 大、尺寸档按时间缩（小平台 XS 1.69 s、坝顶低层 80 m，Froude，只对合成一张），用户 10-13 18:47，对话框23；4.9.79 合成一张（升空尾缀 / 彗星）用烟花序列同一组导出选项：入点 / 出点、帧数（按运动分 / 固定机位匀速帧）、星头火花分开（PC 两张；手机仍一张），用户 10-13 18:47，对话框23；4.9.80 导出排查九处（用户 10-13 20:00「最近导出功能的Bug有点多」）：多层手机格「自动」按手游规范取舍、手机一律合成一张 / ≤ 1024、手机单束 / 单帧另出一套、种子变体走单层导出、组合尺寸档 / 多余 PNG / 尾缀层配置、星头阻力字段，对话框23
 // 影响产物的烘焙器输出版本（按产物种类）：取景、格子、命名、编码规则改了就升这一种的号 → 旧导出、旧标准检查在「待我验收」里算过期（用户 2026-10-02 23:34「按证据把关」）
 // master = 大面片 / 分段（4.2.3 Zoom 逐帧阶梯、4.2.5 取景按实测收紧、4.2.7 收紧受过曝 / 空帧约束）；emitset = 循环层 + 粒子（4.2.2）
 // 4.3：尾缀 V5（trail）、地面循环（loop）、上升循环（riseLoop）从 3.7 画法换到现在的画法，贴图变了 → 升号
@@ -8099,7 +8099,7 @@ function fwlRiseHead(name, b, M) {
         {m:'InitialLocation',StartLocation:{const:[0,0,0]}},
         {m:'InitialVelocity',StartVelocity:{const:[r1(ball.vx0*100),0,r1(ball.vz0*100)]}},
         {m:'InitialSize',StartSize:{const:[r1(m.Ww*100),r1(m.Wh*100),1]}},
-        ...(ball.quad?[{m:'VelocityOverLife',VelOverLife:{curve:rtVelLife(ball).map(([u,v])=>[r4(u),v.map(x=>r1(x*100))])},Absolute:true}]:[{m:'Drag',DragCoefficient:{const:ball.k}},{m:'ConstAcceleration',Acceleration:[0,0,-981]}]),
+        ...(ball.quad?[{m:'VelocityOverLife',VelOverLife:{curve:rtVelLife(ball).map(([u,v])=>[r4(u),v.map(x=>r1(x*100))])},Absolute:true}]:[{m:'Drag',DragCoefficientRaw:{const:r4(ball.k)}},{m:'ConstAcceleration',Acceleration:[0,0,-981]}]),
         {m:'DynamicParameter',params:{frame:{const:0}}},
         {m:'ColorOverLife',ColorOverLife:{curve:fwlColor(M,T,0,P.rtBright||1)},AlphaOverLife:{const:1}}
       ]}],system:{preview_distance_cm:30000,preview_warmup_s:0},notes:['独立烘焙星头：单帧小面片 + Ramp，CPU 一个粒子，和金尾同一 RT6 弹道及燃尽时间；无 GPU、无新材质。Velocity Over Life 按 RT6 物理速度采样；未经 UE 验证。'] };
@@ -8361,7 +8361,7 @@ function rtTexFiles(b, name, sfx = '', idx = 1) {
     if (b.esFull) { const ap = readRGBA8(b.head), tp = b.tail ? readRGBA8(b.tail) : null;     // 4.9.73 合成一张：只有这一张 + 它的 Cut；4.9.79 星头 / 火花分开时两张（…_Head / …_Tail）共用一张 Cut
       if (tp) { files.push([`${TN(name, joinPart('Full_Head', k4), L, idx)}.png`, await encodePNG(ap, b.N, b.NH)]); files.push([`${TN(name, joinPart('Full_Tail', k4), L, idx)}.png`, await encodePNG(tp, b.N, b.NH)]); }
       else files.push([`${TN(name, joinPart('Full', k4), L, idx)}.png`, await encodePNG(ap, b.N, b.NH)]);
-      if (!sfx) files.push(...await cutoutFiles(tp ? [ap, tp] : [ap], b.N, b.NH, L, TN(name, 'Full_Cutout', null, idx), b.meta)); return files; }
+      if (!sfx && !b.esHead) files.push(...await cutoutFiles(tp ? [ap, tp] : [ap], b.N, b.NH, L, TN(name, 'Full_Cutout', null, idx), b.meta)); return files; }     // 4.9.80（导出排查 ⑦）：只出星头的那张没有 Cut（fwlRiseHead 不引用）
     const lp = readRGBA8(b.head); files.push([`${TN(name, joinPart('Loop', k4), L, idx)}.png`, await encodePNG(lp, b.N, b.NH)]);
     if (!sfx) files.push(...await cutoutFiles([lp], b.N, b.NH, L, TN(name, 'Loop_Cutout', null, idx), b.meta));
     const f = b.fades[0];
@@ -8829,19 +8829,26 @@ function mobileParams(P) {
   const factor=Math.min(1,requested/Math.min(L.cellW,L.cellH));
   // 保持列、行和帧数；窄长旧尾缀不再降采样。手机至少保留 256，细节多时可指定更大值。
   // 贴图下限：每格至少 256（4×4 时 = 原来的 1024；「按帧数」的小贴图不再被抬到 1024）
-  return {...P,texW:Math.min(P.texW,Math.max(256*L.cols,Math.round(P.texW*factor))),texH:Math.min(P.texH,Math.max(256*L.rows,Math.round(P.texH*factor)))};
+  let texW=Math.min(P.texW,Math.max(256*L.cols,Math.round(P.texW*factor))),texH=Math.min(P.texH,Math.max(256*L.rows,Math.round(P.texH*factor)));
+  // 4.9.80（用户 10-13 20:00 导出排查 ③）：手游贴图严格 ≤ 1024（规范 v1 §6，用户 10-12 22:01「严格遵守，直接拦下」）。上面「每格至少 256」在 PC 4096 或格子多（8 × 8）时给出 2048，
+  //   导出一律被拦（MYJC-S03-2 手机 2048）。封顶 1024：格子不变，单格按比例变小（可能低于 256）；本来 ≤ 1024 的逐字不变
+  const cap=typeof GATE_MOBILE_TEX!=='undefined'?GATE_MOBILE_TEX:1024,s=Math.max(texW,texH);
+  if(s>cap){texW=Math.max(L.cols,Math.floor(texW*cap/s/L.cols)*L.cols);texH=Math.max(L.rows,Math.floor(texH*cap/s/L.rows)*L.rows);}
+  return {...P,texW,texH};
 }
 async function bakeMobileFor(b,onProg=null) {
   if(b.form==='trail')return await bake(mobileParams(b.P),1,onProg);
   // 循环层 + 粒子（4.2.2）：手机贴图边长 × rtMobileTex（默认 0.5 → 单格像素数 = PC 的 1/4，512² → 256²，正好是手机下限）；格子、取景和 PC 一样
   // 4.9.73 手机选「近段 + 远段合成一张」：只烘那一张（bakeRiseTailFull），不再把近段 / 远段按手机尺寸全烘一遍
-  if(b.form==='emitset'){const f=clamp(b.P.rtMobileTex==null?0.5:+b.P.rtMobileTex,0.25,1),Pm={...b.P,texW:Math.round(b.P.texW*f),texH:Math.round(b.P.texH*f)};
+  // 4.9.80 同样封顶 1024（PC 4096 × 0.5 = 2048 以前会被拦）
+  if(b.form==='emitset'){const f=clamp(b.P.rtMobileTex==null?0.5:+b.P.rtMobileTex,0.25,1),cap=typeof GATE_MOBILE_TEX!=='undefined'?GATE_MOBILE_TEX:1024,fc=Math.min(f,cap/Math.max(b.P.texW,b.P.texH)),Pm={...b.P,texW:Math.round(b.P.texW*fc),texH:Math.round(b.P.texH*fc)};
     if(rtMobFull(b.P))return await bakeRiseTailFull(Pm,1,onProg);
     const m=await bake({...Pm,outPC:'seq'},1,onProg);m.esMobile=true;return m;}
   let first=null,last=null;
   try {
     for(let source=b;source;source=source.next){
-      const P=mobileParams({...source.P,cols:source.meta.L.cols,rows:source.meta.L.rows});
+      // 4.9.80（导出排查 ②）：大面片母版手机一律合成一张——「星头、火花分开」时手机以前也分开，两个发射器同时播两张大序列，规范 v1 §6 拦；尾缀 4.9.79 已经这样
+      const P=mobileParams({...source.P,cols:source.meta.L.cols,rows:source.meta.L.rows,...(['master','segments'].includes(b.form)?{outMode:'combined'}:{})});
       const pl={...source.meta,L:{...layoutOf(P),F:source.meta.L.F}};pl.ppm=pl.L.cellW/pl.Ww;
       let part;
       if(['master','segments'].includes(b.form)){
@@ -9948,27 +9955,37 @@ async function exportMaster() {
   busy(false);
 }
 // 种子变体：V1–V3 三张贴图，共用一套参数表
+// 4.9.80（用户 10-13 20:00 导出排查 ⑤）：以前手机配置直接引用 PC 第 1 张（_HD、2048，导出拦截一律拦），也没走命名规范、尺寸标定、「导出时」版本。
+//   现在和单层导出同一条路：手机按第 1 张独立烘一份（≤ 1024，platformFiles）；一张贴图的效果把 V2 / V3 挂成变体（命名规范序号 02 / 03）
 async function exportVariants() {
   const name = safeName();
   const destination = DeliveryWorkspace.destination();
   if (bakeKind(state.P) !== 'master') { flash('种子变体只用于大面片母版', true); return; }
   if (!busyCan(true)) return;
   busy(true, '烘焙种子变体…', 0);
-  let bs = [];
+  let bs = [], hung = false;
   try {
     await DeliveryWorkspace.beginExport(destination);
-    bs = await bakeVariants(state.P, 1, p => busy(true, `烘焙种子变体 ${Math.round(p * 100)}%`, p * 0.9));
-    const files = [];
-    for (let i = 0; i < bs.length; i++) files.push(...await texFiles(bs[i], name, '', i + 1));
+    bs = await bakeVariants(state.P, 1, p => busy(true, `烘焙种子变体 ${Math.round(p * 100)}%`, p * 0.85));
+    const b0 = bs[0], files = [];
+    hung = !bs.some(b => b.next); if (hung) b0.vars = bs.slice(1);     // 一张贴图：V2 / V3 挂在第 1 张上（texFiles / 命名规范按变体出）
+    if (hung) files.push(...await texFiles(b0, name)); else for (let i = 0; i < bs.length; i++) files.push(...await texFiles(bs[i], name, '', i + 1));
     files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(state.M), 256, 8)]);
-    files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, bs[0], state.M) + `\n【种子变体】\n第 1 张（不带后缀）/ _V2 / _V3 三套贴图共用上面的取景、帧号曲线和尺寸，只换贴图；同屏多发时轮换使用，避免一模一样。种子：${bs.map(b => b.P.seed).join('、')}\n`)]);
-    files.push([`${name}_曲线.csv`, utf8(curvesCSV(bs[0], state.M))]);
-    files.push([`${name}.json`, utf8(JSON.stringify({ ...masterJSON(bs[0], name, state.M), variants: bs.map((b, i) => ({ index: String(i + 1).padStart(2, '0'), seed: b.P.seed })) }, null, 2))]);
-    files.push(...fwlFiles(name, bs[0], state.M));
-    await deliverResource(await makeZip(files), `${name}_V1-V3.zip`, deliveryMetadata(bs[0]), destination);
-    flash('已导出三个种子变体');
+    files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b0, state.M) + `\n【种子变体】\n第 1 张 / 02 / 03 三套贴图共用上面的取景、帧号曲线和尺寸，只换贴图；同屏多发时轮换使用，避免一模一样（cascade.json 引用第 1 张；手机只出第 1 张）。种子：${bs.map(b => b.P.seed).join('、')}\n`)]);
+    files.push([`${name}_曲线.csv`, utf8(curvesCSV(b0, state.M))]);
+    files.push([`${name}.json`, utf8(JSON.stringify({ ...masterJSON(b0, name, state.M), variants: bs.map((b, i) => ({ index: String(i + 1).padStart(2, '0'), seed: b.P.seed })) }, null, 2))]);
+    files.push(...await platformFiles(name, b0, state.M, p => busy(true, '手机独立烘焙…', 0.85 + 0.1 * p)));
+    busy(true, '打包 ZIP…', 1);
+    let zipName = name, out = files;
+    const sp = exportScalePlan(state.P);
+    if (hung && namingApplies(b0)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b: b0, mb: { ...b0, vars: null }, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }     // 手机只有第 1 张（mb 不带变体，Cut 才对得上第 1 张）
+    out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx + '_V1-V3';
+    await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b0), destination);
+    wbAutoExport(zipName);
+    flash('已导出三个种子变体' + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('导出失败：' + e.message, true); }
-  bs.forEach(disposeBake); busy(false);
+  if (hung && bs[0]) disposeBake(bs[0]); else bs.forEach(disposeBake);
+  busy(false);
 }
 // =====================================================================
 //  素材包命名（用户 2026-10-02 13:26 / 13:35 定）：
@@ -10134,12 +10151,14 @@ function packGateConfig(f, j, dir, png) {
   const gpu = ems.filter(e => e.gpu).map(e => e.name); if (gpu.length) bad.push(`${tag}：有 GPU 发射器 ${gpu.join('、')}（手游不能有 GPU）`);
   const noAlive = ems.filter(e => e.max_alive == null).map(e => e.name), over = ems.filter(e => +e.max_alive > GATE_MAX_ALIVE).map(e => `${e.name} ${e.max_alive}`);
   if (noAlive.length) bad.push(`${tag}：发射器没写 max_alive：${noAlive.join('、')}`);
-  if (over.length) bad.push(`${tag}：同时活着的粒子超过 ${GATE_MAX_ALIVE}：${over.join('、')}`);
+  if (over.length) bad.push(`${tag}：同时活着的粒子超过 ${GATE_MAX_ALIVE}：${over.join('、')}${ems.some(e => +e.max_alive > GATE_MAX_ALIVE && /Unit/.test(e.name)) ? '（手机单束每颗星一个粒子：这一层手机改序列 / 单帧 / 不出）' : ''}`);
   // 同一时刻的大序列（flipbook 贴图的发射器）不超过 1 张
   const flip = k => { const t = (j.textures || {})[k]; return t && t.class === 'flipbook'; }, mat = e => (j.materials || {})[e.material] || {};
   const seq = ems.filter(e => { const m = mat(e).textures || {}; return Object.values(m).some(flip); }).map(e => { const r = e.required || {}, d0 = +r.delay_s || 0; return [e.name, d0, d0 + (+r.duration_s || 0)]; });
   let most = 0, who = []; for (const [, a] of seq) { const live = seq.filter(([, b0, b1]) => b0 <= a + 1e-6 && b1 > a + 1e-6); if (live.length > most) { most = live.length; who = live.map(x => x[0]); } }
-  if (most > 1) bad.push(`${tag}：同一时刻有 ${most} 张大序列（${who.join(' + ')}）；手游中低配只能 1 张（规范 §6）`);
+  // 4.9.80（导出排查 ①）：写清楚改哪一层（发射器名 L<n>_ 前缀 = 第 n 层）
+  const lys = [...new Set(who.map(n => (/^L(\d+)_/.exec(n) || [])[1]).filter(Boolean))], tip = lys.length > 1 ? `：交付清单产物表把第 ${lys.slice(1).join('、')} 层的手机改成「自动」或「不出」` : who.length > 1 && /Tail$/.test(who[1]) ? '：手机不能星头、火花分开（要合成一张）' : '';
+  if (most > 1) bad.push(`${tag}：同一时刻有 ${most} 张大序列（${who.join(' + ')}）；手游中低配只能 1 张（规范 §6）${tip}`);
   const hd = texs.filter(([, t]) => t && t.file && /_HD(_|$)/i.test(assetOf(t))).map(([, t]) => assetOf(t));
   if (hd.length) bad.push(`${tag}：手机材质引用了 _HD 贴图 ${hd.join('、')}（规范 §3）`);
   const big = texs.filter(([, t]) => t && t.file).map(([, t]) => [assetOf(t), (png[dir + t.file] || {}).size]).filter(([, s]) => s && Math.max(s[0], s[1]) > GATE_MOBILE_TEX).map(([a, s]) => `${a}（${s[0]}×${s[1]}）`);
@@ -10833,11 +10852,13 @@ function effectSizeOf(P) {
   const mt = metricsOf(P, measure(P)), r = mt && mt.diameter > 0 ? { what: 'diameter', m: mt.diameter } : null;
   if (key) { _sizeOf.set(key, r); while (_sizeOf.size > 16) _sizeOf.delete(_sizeOf.keys().next().value); } return r;
 }
-// 多层：取最大的那层（花径 × 层缩放）
+// 多层：取最大的那层（花径 × 层缩放）；4.9.80（导出排查 ⑥）没有花的组合（全是尾缀，如 CS3C）按最高那层的开花高度，以前拿不到尺寸档
 function comboSizeOf(layers) {
-  let best = null;
-  for (const L of layers || []) { const e = typeof layerEntryOf === 'function' ? layerEntryOf(L) : null, z = e && effectSizeOf(e.P); if (!z || z.what !== 'diameter') continue; const m = z.m * (+L.scale > 0 ? +L.scale : 1); if (!best || m > best.m) best = { what: 'diameter', m }; }
-  return best;
+  let best = null, hi = null;
+  for (const L of layers || []) { const e = typeof layerEntryOf === 'function' ? layerEntryOf(L) : null, z = e && effectSizeOf(e.P); if (!z) continue; const m = z.m * (+L.scale > 0 ? +L.scale : 1);
+    if (z.what === 'diameter') { if (!best || m > best.m) best = { what: 'diameter', m }; }
+    else if (z.what === 'height' && (!hi || m > hi.m)) hi = { what: 'height', m, ...(z.T > 0 ? { T: z.T } : {}) }; }
+  return best || hi;
 }
 // 规格 + 现在的大小 → 倍数（null = 不按标定）。扇形口径没定：返回 { skip } 说明原因
 function sizeSpecScale(sp, sz) {
@@ -10945,7 +10966,8 @@ const DeliveryWorkspace = (() => {
     show(true);placeExportProgress();message('正在准备交付资源…（导出完成前，下方导入区还是上一份素材）');
     updateRootControls();
     // Paint the destination and the existing cancellable progress before CPU/GPU work.
-    await new Promise(resolve=>window.requestAnimationFrame?window.requestAnimationFrame(()=>window.requestAnimationFrame(resolve)):setTimeout(resolve,0));
+    // 4.9.80（导出排查）：标签页在后台时浏览器不出帧，两帧 rAF 永远等不到 → 导出一直挂着；最多等 150 ms
+    await new Promise(resolve=>{setTimeout(resolve,150);if(window.requestAnimationFrame)window.requestAnimationFrame(()=>window.requestAnimationFrame(resolve));});
     await connect();if(session.directoryError)throw Error(session.directoryError);
     if(!session.outputRoot)throw Error('请先在资源目录与版本中指定导出目录');
     try{await refresh();}catch(e){}     // 4.9.69 导出拦截要按最新的已有资源查撞名
@@ -11086,12 +11108,16 @@ function deliveryClassification(recipe, plan, spec) {
   const tail=parameters.length>0&&parameters.every(p=>familyOf(p.type)==='rise');
   const sizes={tailS:'small',tailM:'medium',tailL:'large'};
   let size=plan?.spec&&['small','medium','large'].includes(spec?.kind)?spec.kind:'unclassified';
+  // 4.9.80（对话框手游编排 10-12 23:14 请 23 修）：尾缀档 kind = trail，按开花高度分大小（≤ 150 小、≤ 210 中、更高大；XS / S80 → 小、Hero → 大），以前全落「尾缀 / 未分类」
+  if(size==='unclassified'&&plan?.spec&&plan.spec.what==='height'&&+plan.spec.target>0){const h=+plan.spec.target;size=h<=150?'small':h<=210?'medium':'large';}
   if(size==='unclassified'&&tail&&!plan?.spec){const values=new Set(parameters.map(p=>sizes[p.type]||'unclassified'));if(values.size===1)size=[...values][0];}
   return {category:tail?'tail':'firework',size};
 }
 function deliveryMetadata(b = null) {
   if (typeof exportClockMark === 'function') exportClockMark('缩略图（引擎回放截一帧）');     // 4.9.72 计时
-  const result = {bakerVersion:VERSION, sourceKey:wbKey(), recipe:wbSnap(), duration:curDuration(), sizePlan:typeof exportScalePlan==='function'?exportScalePlan(state.P):null};
+  // 4.9.80（导出排查 ⑥）：多层的尺寸按整个组合（sizeSpecCombo），以前拿的是右栏选中那一层
+  const comboPlan=()=>{const sk=typeof sizeSpecCombo==='function'?sizeSpecCombo(state.layers):null;return {k:sk?sk.k:1,keep:false,spec:sk||null,sfx:''};};
+  const result = {bakerVersion:VERSION, sourceKey:wbKey(), recipe:wbSnap(), duration:curDuration(), sizePlan:!b&&state.tab==='combo'?comboPlan():typeof exportScalePlan==='function'?exportScalePlan(state.P):null};
   result.classification=deliveryClassification(result.recipe,result.sizePlan,typeof sizeSpecOf==='function'?sizeSpecOf():null);
   result.artifactDuration = b ? bakeTotal(b) : comboContentEnd();
   result.boundsM = b ? {width:b.meta.Ww*(result.sizePlan?.k||1),height:b.meta.Wh*(result.sizePlan?.k||1)} : null;
@@ -11137,6 +11163,61 @@ const OUT_PC = [['seq', '序列（大面片）'], ['unit', '单束（每颗星�
 const OUT_PC_KINDS = OUT_PC.map(x => x[0]), OUT_MOBILE_KINDS = OUT_MOBILE.map(x => x[0]);
 const OUT_MOBILE_TAIL = [['seq', '_M（只有近段循环）'], ['full', '_M（近段 + 远段合成一张）'], ['off', '不出']];     // 4.9.69 升空尾缀的手机格（交付清单产物表）；4.9.73 合成一张（只给有远段的 RT6）
 function layerOut(L) { const o = (L && L.out) || {}; return { pc: OUT_PC_KINDS.includes(o.pc) ? o.pc : 'seq', mobile: OUT_MOBILE_KINDS.includes(o.mobile) ? o.mobile : 'seq' }; }
+// ---- 4.9.80 多层的手机格「自动」（用户 10-13 20:00「最近导出功能的Bug有点多，可以排查一遍」→ 导出排查 ①）----
+// 以前手机格缺省每层都出「序列」：多层烟花同一时刻有两张大序列，规范 v1 §6（中低配同一时刻 1 张大序列、≤ 3 个发射器）一律被导出拦截拦下（4.9.69 起，引菊 → 锦就是）。
+// 现在手机格没手动选过的层 = 自动：按层号先后，这一层的大序列和前面已经出手机的层同一时刻都在播、或手机发射器会超过 3 个 → 这一层手机不出；不冲突照旧出序列。
+// 手动选过的照选的出（违规照样拦，拦截写清是哪一层）。以前改 PC 格会顺手把手机写成 seq（存档里 {pc:'dots', mobile:'seq'}），不带 mobileManual 的 seq 当自动
+const OUT_MOBILE_UI = [['auto', '自动（按手游规范）'], ...OUT_MOBILE], MOBILE_EMITTERS_MAX = 3;
+function layerMobileManual(L) { const o = L && L.out; return !!(o && OUT_MOBILE_KINDS.includes(o.mobile) && (o.mobileManual || o.mobile !== 'seq')); }
+function setLayerOut(L, pf, v) {
+  const o = { ...(L.out || {}) };
+  if (pf === 'mobile') { if (v === 'auto' || !OUT_MOBILE_KINDS.includes(v)) { delete o.mobile; delete o.mobileManual; } else { o.mobile = v; o.mobileManual = true; } }
+  else if (v === 'seq' || !OUT_PC_KINDS.includes(v)) delete o.pc; else o.pc = v;
+  if (o.mobile === 'seq' && !o.mobileManual) delete o.mobile;
+  if (Object.keys(o).length) L.out = o; else delete L.out;
+}
+// 这一层手机出 kind 时：大序列在组合里播的时段（秒，层的延迟 / 时间倍率算进去）和手机发射器个数。b = PC 那次烘焙（大面片母版的时段和手机烘焙一样）；
+// 别的产物按整段时长估（宁可多算）
+function layerMobileUse(L, b, kind) {
+  const r = +L.rate > 0 ? +L.rate : 1, d = +L.delay || 0;
+  if (!b || !b.meta || kind === 'off') return { wins: [], n: 0 };
+  const whole = n => ({ wins: [[d, d + (+b.meta.duration || +b.meta.Dtot || 1) / r]], n });
+  if (kind === 'unit') { const P = b.P || {}; return { wins: [[d, d + unitDuration(fxP(unitP(P))) * 1.2 / r]], n: unitVarOf(L.unitVariants ? L : P).K }; }
+  if (kind === 'frame') return whole(1);
+  if (b.form === 'master' || b.form === 'segments') {
+    const wins = []; for (let s = b, i = 0; s; s = s.next, i++) { const m = s.meta, pre = i === 0 && m.pre && !m.zoom ? m.pre : null, a = pre ? pre.from : (m.t0 || 0); wins.push([d + a / r, d + (a + m.duration + (pre ? pre.dur : 0)) / r]); }
+    return { wins, n: wins.length };
+  }
+  if (b.form === 'emitset') {
+    const P = b.P || {}; if (typeof rtHeadOnly === 'function' && rtHeadOnly(P)) return { wins: [], n: 1 };     // 只出星头：手机是软圆点，没有大序列
+    const T = typeof rtDuration === 'function' ? rtDuration(P) : +b.meta.T || 1;
+    return { wins: [[d, d + T / r]], n: typeof rtMobFull === 'function' && rtMobFull(P) ? 1 : 3 };
+  }
+  return whole(1);
+}
+// 组合每层手机实际出什么：xs = [{ L, b }]（层号顺序）→ [{ kind, auto, why }]
+function comboMobilePlan(xs) {
+  const used = [], out = []; let n = 0;
+  (xs || []).forEach((x, i) => {
+    const o = layerOut(x.L), manual = layerMobileManual(x.L) || !(x.b && ['master', 'segments'].includes(x.b.form)); let kind = o.mobile, why = '';     // 自动只管大面片母版层（产物表能选的那种）；尾缀等照旧
+    const u = layerMobileUse(x.L, x.b, kind);
+    if (!manual && kind !== 'off') {
+      const hit = used.find(q => q.wins.some(([a0, a1]) => u.wins.some(([b0, b1]) => a0 < b1 - 1e-6 && b0 < a1 - 1e-6)));
+      if (hit) { kind = 'off'; why = `和第 ${hit.i + 1} 层同时播，手游同一时刻只能 1 张大序列`; }
+      else if (n + u.n > MOBILE_EMITTERS_MAX) { kind = 'off'; why = `手机发射器会超过 ${MOBILE_EMITTERS_MAX} 个`; }
+    }
+    if (kind !== 'off') { used.push({ i, wins: u.wins }); n += u.n; }
+    out.push({ kind, auto: !manual, why });
+  });
+  return out;
+}
+// 现在这个组合（state.layers）第 i 层手机实际出什么（交付清单 / 层页头显示用）
+function comboMobileNow(i) {
+  if (typeof state === 'undefined' || !state.layers) return null;
+  const xs = state.layers.map(L => { const e = typeof layerEntryOf === 'function' ? layerEntryOf(L) : null; return { L, b: e && e.bake }; });
+  return comboMobilePlan(xs)[i] || null;
+}
+const mobileAutoText = p => p && p.auto ? (p.kind === 'off' ? `自动 → 不出（${p.why}）` : '自动 → 序列') : '';
 // 这个平台要出的层：[{ L, b, i（原层号）, dots, unit（PC 单束的那次烘焙，调用方给）}]
 // 4.9.35：单束 / 单帧手机也能出；x.unit / x.frame = 调用方给的那次单束烘焙 / 单帧，x.unitName / x.frameName = 贴图的内部名（PC、手机都选同一种时手机直接引用 PC 那几张）
 function comboEntries(layers, mobile) {
@@ -11305,15 +11386,17 @@ function fwlCombo(name, layers, mobile = false) {
       out.emitters.push({ ...d, name: pre + 'Dots', material: pre + 'dot', layer: i + 1 });
       return;
     }
-    const ln = comboLayerName(name, i), body = b.esFull ? fwlEmitSetFull(ln, b, comboLayerM(L), mobile) : fwlMaster(ln, b, comboLayerM(L), mobile);
+    // 4.9.80（导出排查 ⑨）：尾缀层（循环层 + 粒子）一律走 fwlEmitSet——以前只认「合成一张」，PC 合成一张、手机只有近段时手机配置被当成大面片母版写，引用一张不存在的贴图
+    const ln = comboLayerName(name, i), es = b.form === 'emitset', body = es ? fwlEmitSet(ln, b, comboLayerM(L), mobile) : fwlMaster(ln, b, comboLayerM(L), mobile);
+    if (es && mobile && !b.esFull) fwlMaxAlive(body.emitters);
     const rate = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1;
     for (const [k, v] of Object.entries(body.textures)) out.textures[pre + k] = v;
     for (const [k, v] of Object.entries(body.materials))
       out.materials[pre + k] = { ...v, textures: Object.fromEntries(Object.entries(v.textures || {}).map(([role, t]) => [role, pre + t])) };
     for (const e of body.emitters) {
       const modules = e.modules.map(m => {
-        if (b.esFull) {
-          const dist=(d,fn)=>d.const!==undefined?{...d,const:fn(d.const)}:d.uniform?{...d,uniform:d.uniform.map(fn)}:d.curve?{...d,curve:d.curve.map(([u,v])=>[u,fn(v)])}:d;
+        if (es) {
+          const dist=(d,fn)=>!d||typeof d!=='object'?d:d.const!==undefined?{...d,const:fn(d.const)}:d.uniform?{...d,uniform:d.uniform.map(fn)}:d.curve?{...d,curve:d.curve.map(([u,v])=>[u,fn(v)])}:d;
           if(m.m==='Lifetime')return {...m,Lifetime:dist(m.Lifetime,v=>r4(v/rate))};
           if(m.m==='InitialSize')return {...m,StartSize:dist(m.StartSize,v=>v.map((x,j)=>j<2?r1(x*sc):x))};
           if(m.m==='InitialLocation')return {...m,StartLocation:dist(m.StartLocation,v=>v.map(x=>r1(x*sc)))};
@@ -11403,35 +11486,68 @@ async function layerUnitBake(e, onProg, L) {
   if (e.unitBake) { disposeBake(e.unitBake.b); e.unitBake = null; }
   const b = await bakeUnitSet(unitP(e.P), unitVarOf(e.unitSrc || e.P), onProg); e.unitBake = { sig, b }; return b;
 }
+// ---- 4.9.80 手机单束 / 单帧另出一套（导出排查 ④）----
+// 手机配置不能引用 PC 的贴图：PC 名字带 _HD、常常 2048（规范 v1 §3 / §6，拦截一律拦）。以前 PC、手机都选单束 / 单帧时手机直接引用 PC 那几张 → 总被拦。
+// 现在手机单束 / 单帧一律另出一套手机名的贴图，边长 ≤ 1024：单束 PC 那套本来就 ≤ 1024 时用同一次烘焙另存一份，否则按 1024 另烘（缓存在 h.unitBakeM）；单帧 2048 的缩成 1024
+const MOBILE_TEX_MAX = () => typeof GATE_MOBILE_TEX !== 'undefined' ? GATE_MOBILE_TEX : 1024;
+function capMobileTex(P) { const s = Math.max(+P.texW || 0, +P.texH || 0), cap = MOBILE_TEX_MAX(); return s > cap ? { ...P, texW: Math.round(P.texW * cap / s), texH: Math.round(P.texH * cap / s) } : P; }
+async function layerUnitBakeMobile(h, ub, onProg, L) {
+  if (L) h.unitSrc = L;
+  const P0 = unitP(h.P), Pm = capMobileTex(P0);
+  if (Pm === P0) return ub || await layerUnitBake(h, onProg, L);
+  const sig = unitSigOf(h) + '|mobile';
+  if (h.unitBakeM && h.unitBakeM.sig === sig) return h.unitBakeM.b;
+  if (h.unitBakeM) { disposeBake(h.unitBakeM.b); h.unitBakeM = null; }
+  const b = await bakeUnitSet(Pm, unitVarOf(h.unitSrc || h.P), onProg); h.unitBakeM = { sig, b }; return b;
+}
+function lowMobile(lw) {
+  const cap = MOBILE_TEX_MAX(); if (!lw || lw.S <= cap) return lw;
+  let S = lw.S, g = lw.gray, c = lw.rgba;
+  while (S > cap) { const n = S >> 1, g2 = new Uint8Array(n * n), c2 = new Uint8Array(n * n * 4);
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) { const a = 2 * y * S + 2 * x, q = [a, a + 1, a + S, a + S + 1], o = y * n + x;
+      g2[o] = (g[q[0]] + g[q[1]] + g[q[2]] + g[q[3]] + 2) >> 2; for (let k = 0; k < 4; k++) c2[o * 4 + k] = (c[q[0] * 4 + k] + c[q[1] * 4 + k] + c[q[2] * 4 + k] + c[q[3] * 4 + k] + 2) >> 2; }
+    S = n; g = g2; c = c2; }
+  return { ...lw, S, gray: g, rgba: c, mobileOf: lw.S };
+}
+// 4.9.80（导出排查 ⑦）：包里只放配置引用到的贴图（帧号测试图除外）——以前组合不像单层那样筛，合成一张 + 独立星头（CS3C）多出 2 张没用的 PNG，导进 UE 是孤儿贴图
+function packKeepReferenced(files) {
+  const dec = new TextDecoder(), refd = new Set(); let cfg = 0;
+  for (const [f, d] of files) if (/^cascade(_mobile)?\.json$/.test(f)) { cfg++; const j = JSON.parse(dec.decode(d)); for (const t of [...Object.values(j.textures || {}), ...Object.values(j.extras || {})]) if (t && t.file) refd.add(t.file); }
+  return cfg ? files.filter(([f]) => !/\.png$/i.test(f) || refd.has(f) || /FrameTest/.test(f)) : files;
+}
 // 4.9.51 多层按尺寸标定（花径 = 最大那层 × 层缩放；和左栏导出、本机任务同一条路）
 function comboSpecScale(files, layers) { const sk = typeof sizeSpecCombo === 'function' ? sizeSpecCombo(layers) : null; return sk ? scaleCascadeFiles(files, sk.k, false, sk) : files; }
 async function comboPackFiles(name, layers, onProg) {
-  const files = [], { layers: lb, own } = await comboLayerBakes(layers, p => onProg && onProg(p * 0.4));
-  const ownMobile = [];
+  let files = [];
+  const { layers: lb, own } = await comboLayerBakes(layers, p => onProg && onProg(p * 0.4));
+  const ownMobile = [], mplan = comboMobilePlan(lb);     // 4.9.80 手机「自动」：按组合时的各层烘焙算（和交付清单同一个 comboMobilePlan）
   try {
     const pcE = [], mbE = [], nmE = [];
     for (let i = 0; i < lb.length; i++) {
       const { L, b, e } = lb[i], ln = comboLayerName(name, i), mn = comboLayerName(name + '_Mobile', i), M = comboLayerM(L), o = layerOut(L), uOK = unitAllowed(b.P);   // 4.2.12：每层的导出方案
-      const pcK = o.pc === 'unit' && !uOK ? 'seq' : o.pc, mbK = o.mobile === 'unit' && !uOK ? 'seq' : o.mobile;     // 单束不适用的花型（千轮、分裂、蜂、非球形图案）按序列出
+      const pcK = o.pc === 'unit' && !uOK ? 'seq' : o.pc, mk = mplan[i] ? mplan[i].kind : o.mobile, mbK = mk === 'unit' && !uOK ? 'seq' : mk;     // 单束不适用的花型（千轮、分裂、蜂、非球形图案）按序列出；4.9.80 手机「自动」按 comboMobilePlan
       const ramp = async n => files.push([`${TN(n, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]), pg = (a, w) => p => onProg && onProg(0.4 + (a + w * (i + p) / lb.length));
-      const ub = pcK === 'unit' || mbK === 'unit' ? await layerUnitBake(e, pg(0, 0.1), L) : null;
-      const lw = pcK === 'frame' || mbK === 'frame' ? await lowFor(b, lowOf(L), M, pg(0.1, 0.1)) : null;     // 4.9.35 单帧（PC / 手机同一张）
+      const ub = pcK === 'unit' ? await layerUnitBake(e, pg(0, 0.1), L) : null, um = mbK === 'unit' ? await layerUnitBakeMobile(e, ub, pg(0, 0.1), L) : null;     // 4.9.80 手机单束另出一套
+      const lw = pcK === 'frame' || mbK === 'frame' ? await lowFor(b, lowOf(L), M, pg(0.1, 0.1)) : null, lwM = mbK === 'frame' ? lowMobile(lw) : null;     // 4.9.35 单帧；4.9.80 手机另出一张（≤ 1024、不带 _HD）
       if (pcK === 'seq') { files.push(...await texFiles(b, ln)); await ramp(ln); }
       else if (pcK === 'unit') { files.push(...await texFiles(ub, ln)); await ramp(ln); }
       else if (pcK === 'frame') files.push(...await lowFiles(ln, lw, M));
       let mb = null;
-      if (mbK === 'seq') { mb = b.mobile || await bakeMobileFor(b, pg(0.2, 0.3)); if (!b.mobile) ownMobile.push(mb); files.push(...await texFiles(mb, mn)); await ramp(mn); }
-      else if (mbK === 'unit' && pcK !== 'unit') { files.push(...await texFiles(ub, mn)); await ramp(mn); }
-      else if (mbK === 'frame' && pcK !== 'frame') files.push(...await lowFiles(mn, lw, M));
+      // 4.9.80 缓存的手机烘焙要和尾缀现在选的（只有近段 / 合成一张）一致，不一致按现在选的重烘（和单层 platformFiles 同一条）
+      const keepM = b.mobile && (b.form !== 'emitset' || !!b.mobile.esFull === rtMobFull(b.P)) ? b.mobile : null;
+      if (mbK === 'seq') { mb = keepM || await bakeMobileFor(b, pg(0.2, 0.3)); if (mb !== b.mobile) ownMobile.push(mb); files.push(...await texFiles(mb, mn)); await ramp(mn); }
+      else if (mbK === 'unit') { files.push(...await texFiles(um, mn)); await ramp(mn); }
+      else if (mbK === 'frame') files.push(...await lowFiles(mn, lwM, M));
       pcE.push({ L, b, unit: pcK === 'unit' ? ub : undefined, unitName: ln, frame: pcK === 'frame' ? lw : undefined, frameName: ln, kind: pcK });
-      mbE.push({ L, b: mb || b, unit: mbK === 'unit' ? ub : undefined, unitName: pcK === 'unit' ? ln : mn, frame: mbK === 'frame' ? lw : undefined, frameName: pcK === 'frame' ? ln : mn, kind: mbK });
-      nmE.push({ ln, mn, b: pcK === 'unit' ? ub : b, mb: mbK === 'seq' ? mb : mbK === 'unit' && pcK !== 'unit' ? ub : null, pcTex: pcK === 'seq',
-        frame: lw ? { pc: pcK === 'frame', mob: mbK === 'frame' && pcK !== 'frame', suffix: lw.maps ? lw.suffix : '' } : null });
+      mbE.push({ L, b: mb || b, unit: mbK === 'unit' ? um : undefined, unitName: mn, frame: mbK === 'frame' ? lwM : undefined, frameName: mn, kind: mbK });
+      nmE.push({ ln, mn, b: pcK === 'unit' ? ub : b, mb: mbK === 'seq' ? mb : mbK === 'unit' ? um : null, pcTex: pcK === 'seq',
+        frame: lw ? { pc: pcK === 'frame', mob: mbK === 'frame', suffix: lw.maps ? lw.suffix : '' } : null });
     }
     // 产物表里每层选的那一种：L.out 按 kind 改写（单束不适用 → 序列），comboEntries 照它挑
     const sel = (E, mobile) => comboEntries(E.map(x => ({ ...x, L: { ...x.L, out: { pc: mobile ? 'seq' : x.kind, mobile: mobile ? x.kind : 'seq' } } })), mobile).map(x => ({ ...x, L: lb[x.i].L }));
     files.push(['cascade.json', utf8(JSON.stringify(fwlCombo(name, sel(pcE, false), false), null, 1))]);
     files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCombo(name + '_Mobile', sel(mbE, true), true), null, 1))]);
+    files = packKeepReferenced(files);
     // 命名规范（61_naming.js）：多层 = 礼花英文名 + 每层英文名
     if (lb.every(({ b }) => namingApplies(b))) {
       const ef = typeof lib !== 'undefined' ? lib.effect : null, key = typeof wbKey === 'function' ? wbKey() : name, nm = packNamesFor(key, ef, lb.length, name);
@@ -11460,12 +11576,12 @@ async function singleSchemeFiles(name, b, M, onProg) {
     const uOK = unitAllowed(P), pcK = o.pc === 'unit' && !uOK ? 'seq' : o.pc, mbK = o.mobile === 'unit' && !uOK ? 'seq' : o.mobile;
     const ramp = async n => files.push([`${TN(n, 'Ramp')}.png`, await encodePNG(rampPixels(M), 256, 8)]);
     // 4.9.25 单束：和贴图 / 引擎回放同一份（缓存，不在这里丢）；4.9.35 单帧（PC / 手机同一张，b.lowCache 缓存）
-    const ub = pcK === 'unit' || mbK === 'unit' ? await layerUnitBake(singleUnitHolder(), p => onProg && onProg(0.3 * p)) : null;
-    const lw = pcK === 'frame' || mbK === 'frame' ? await lowFor(b, lowOf(P), M, p => onProg && onProg(0.3 + 0.1 * p)) : null;
+    const ub = pcK === 'unit' ? await layerUnitBake(singleUnitHolder(), p => onProg && onProg(0.3 * p)) : null, um = mbK === 'unit' ? await layerUnitBakeMobile(singleUnitHolder(), ub, p => onProg && onProg(0.3 * p)) : null;     // 4.9.80 手机单束另出一套
+    const lw = pcK === 'frame' || mbK === 'frame' ? await lowFor(b, lowOf(P), M, p => onProg && onProg(0.3 + 0.1 * p)) : null, lwM = mbK === 'frame' ? lowMobile(lw) : null;
     if (pcK === 'seq') { files.push(...await texFiles(b, name)); await ramp(name); }
     else if (pcK === 'unit') { files.push(...await texFiles(ub, ln)); await ramp(ln); }
     else if (pcK === 'frame') files.push(...await lowFiles(ln, lw, M));
-    const one = (kind, mobile, bb, unitName, frameName) => kind === 'off' ? [] : [{ L, b: bb, i: 0, dots: !mobile && kind === 'dots', unit: kind === 'unit' ? ub : undefined, unitName, frame: kind === 'frame' ? lw : undefined, frameName }];
+    const one = (kind, mobile, bb, unitName, frameName) => kind === 'off' ? [] : [{ L, b: bb, i: 0, dots: !mobile && kind === 'dots', unit: kind === 'unit' ? (mobile ? um : ub) : undefined, unitName, frame: kind === 'frame' ? (mobile ? lwM : lw) : undefined, frameName }];
     files.push(['cascade.json', utf8(JSON.stringify(pcK === 'seq' ? fwlCascade(name, b, M, false) : fwlCombo(name, one(pcK, false, b, ln, ln), false), null, 1))]);
     let mb = null;
     if (mbK === 'seq') {
@@ -11474,12 +11590,12 @@ async function singleSchemeFiles(name, b, M, onProg) {
       files.push([`${name}_Mobile.json`, utf8(JSON.stringify(masterJSON(mb, mn, M), null, 2))]);
       files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCascade(mn, mb, M, true), null, 1))]);
     } else {
-      if (mbK === 'unit' && pcK !== 'unit') { files.push(...await texFiles(ub, mn)); await ramp(mn); }
-      else if (mbK === 'frame' && pcK !== 'frame') files.push(...await lowFiles(mn, lw, M));
-      files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCombo(mn, one(mbK, true, b, pcK === 'unit' ? ln : mn, pcK === 'frame' ? ln : mn), true), null, 1))]);
+      if (mbK === 'unit') { files.push(...await texFiles(um, mn)); await ramp(mn); }
+      else if (mbK === 'frame') files.push(...await lowFiles(mn, lwM, M));
+      files.push(['cascade_mobile.json', utf8(JSON.stringify(fwlCombo(mn, one(mbK, true, b, mn, mn), true), null, 1))]);
     }
-    const frame = lw ? { pc: pcK === 'frame', mob: mbK === 'frame' && pcK !== 'frame', suffix: lw.maps ? lw.suffix : '' } : null;
-    return { files, ub: pcK === 'unit' ? ub : null, mb: mbK === 'seq' ? mb : mbK === 'unit' && pcK !== 'unit' ? ub : null, frame, pcTex: pcK === 'seq', ln: pcK === 'unit' || pcK === 'frame' ? ln : name, mn };
+    const frame = lw ? { pc: pcK === 'frame', mob: mbK === 'frame', suffix: lw.maps ? lw.suffix : '' } : null;
+    return { files, ub: pcK === 'unit' ? ub : null, mb: mbK === 'seq' ? mb : mbK === 'unit' ? um : null, frame, pcTex: pcK === 'seq', ln: pcK === 'unit' || pcK === 'frame' ? ln : name, mn };
   } finally { own.forEach(x => { if (x !== b) disposeBake(x); }); }
 }
 // =====================================================================
@@ -13110,6 +13226,8 @@ const INERT = [
   [['fade', 'lastFlare', 'flicker', 'headSize', 'headTear', 'headDim', 'headDimUntil', 'strobeHz', 'strobeDuty', 'strobeStart', 'carrierHead'], P => !(+P.headBright > 0), '「星头亮度」是 0（星头不发光，只有尾迹 / 火花）时不起作用'],
   // 4.9.4：地面的喷口 / 灯芯亮点一直亮着、没有寿命；只有扇形 / 连发的彗星按「彗星燃烧」算寿命
   // 4.9.51：配了尺寸标定的效果导出按标定倍数，手动的导出缩放不管用（只看表，不量花径，面板刷新不卡）
+  // 4.9.80（导出排查 ⑥）：多层效果导出不看每层的导出缩放（大小按层页头「缩放」+ 交付清单顶上的「导出尺寸」），以前这一行照样能选、导出却没用
+  [['exportScale', 'exportScaleRise'], P => typeof state !== 'undefined' && state.tab === 'combo', '多层效果：大小按层页头「这一层在整朵里 › 缩放」和交付清单顶上的「导出尺寸」；这一行只管单层导出'],
   [['exportScale', 'exportScaleRise'], P => { if (typeof sizeSpecOf !== 'function') return false; const sp = sizeSpecOf(); return !!(sp && !sp.off); }, '这个效果按「导出尺寸」那一档导出（交付清单顶上选、写了倍数；选「原大」或「这次不按标定」这里才管用）'],
   [['starSizeCurve', 'starBrightCurve'], P => familyOf(P.type) === 'ground' && !(typeof hasComets === 'function' && hasComets(P)), '地面的喷口 / 灯芯亮点一直亮着，没有寿命；只有扇形、连发的彗星按「彗星燃烧」算寿命'],
 ];
@@ -15325,7 +15443,8 @@ function selectComboLayer(i) {
 }
 // 导出方案的说明：这个方案在这一层上会少什么
 function outNote(L, e) {
-  const o = layerOut(L), P = e && e.P, w = [];
+  const ix = typeof state !== 'undefined' && state.tab === 'combo' && state.layers ? state.layers.indexOf(L) : -1, mp = ix >= 0 ? comboMobileNow(ix) : null;     // 4.9.80 手机「自动」
+  const o = mp ? { ...layerOut(L), mobile: mp.kind } : layerOut(L), P = e && e.P, w = [];
   if (o.pc === 'off' && o.mobile === 'off') return 'PC、手机都不出这一层（画面里照样看得到，导出时跳过）';
   if ((o.pc === 'unit' || o.mobile === 'unit') && P && !unitAllowed(P)) w.push('这种花型 / 图案不能出单束（千轮、分裂、蜂、非球形图案），导出时按序列出');
   // XU1 试导（引菊 → 锦的锦层）：单束的尾巴是直的、沿速度方向；星下垂以后速度朝下，长尾巴都指向花心上方同一点（线性阻力的几何性质），后段像辐条。长尾、下垂多的层用序列
@@ -15343,7 +15462,7 @@ function outNote(L, e) {
   }
   // 4.9.35（用户 10-07 18:50）：单帧并进产物表，PC / 手机都能选；手机没有 GPU 光点
   const frameTxt = '单帧（一张图 + 功能图，Size By Life 长大、按亮度淡出）';
-  const s = `PC：${o.pc === 'seq' ? '这一层的序列' : o.pc === 'unit' ? `单束（每颗星一个面片，${Math.round(+(P && P.stars) || 0)} 个；贴图是一颗星的序列，引擎回放第一次要烘一会儿）` : o.pc === 'dots' ? `GPU 光点（约 ${P ? dotsCount(P) : 0} 颗，软圆点材质，没有贴图）` : o.pc === 'frame' ? frameTxt : '不出'} · 手机：${o.mobile === 'seq' ? '序列（纯图片）' : o.mobile === 'unit' ? '单束（CPU，贴图和 PC 单束同一套）' : o.mobile === 'frame' ? frameTxt : '不出'}`;
+  const s = `PC：${o.pc === 'seq' ? '这一层的序列' : o.pc === 'unit' ? `单束（每颗星一个面片，${Math.round(+(P && P.stars) || 0)} 个；贴图是一颗星的序列，引擎回放第一次要烘一会儿）` : o.pc === 'dots' ? `GPU 光点（约 ${P ? dotsCount(P) : 0} 颗，软圆点材质，没有贴图）` : o.pc === 'frame' ? frameTxt : '不出'} · 手机：${mp && mp.auto ? mobileAutoText(mp) + '：' : ''}${o.mobile === 'seq' ? '序列（纯图片）' : o.mobile === 'unit' ? '单束（CPU，手机自己的一套贴图 ≤ 1024；每颗星一个粒子，手游最多 50 颗）' : o.mobile === 'frame' ? frameTxt : '不出'}`;
   return s + (w.length ? '。注意：' + w.join('；') : '');
 }
 function buildLayerHead(i) {
@@ -15362,7 +15481,7 @@ function buildLayerHead(i) {
   const cb = mir.querySelector('input'); cb.checked = !!L.mirror; cb.addEventListener('change', () => L.mirror = cb.checked); pos.appendChild(mir);
   // 4.2.12 导出方案（用户 10-02 20:04：PC 序列 + 粒子、手机纯图片，导出前在图层上选）
   const ex = document.createElement('details'); ex.className = 'sec'; ex.open = true; ex.id = 'lhOut';
-  ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><div id="lhDots"></div><div id="lhUnitV"></div><div id="lhLow"></div><details class="lh-out-info"><summary>随整包导出 · 方案说明</summary><p class="note" id="lhOutNote"></p></details>`;
+  ex.innerHTML = `<summary>导出方案</summary><div class="lh-out"><label class="field">PC<select data-out="pc">${OUT_PC.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label><label class="field">手机<select data-out="mobile">${OUT_MOBILE_UI.map(([v, t]) => `<option value="${v}">${t}</option>`).join('')}</select></label></div><div id="lhDots"></div><div id="lhUnitV"></div><div id="lhLow"></div><details class="lh-out-info"><summary>随整包导出 · 方案说明</summary><p class="note" id="lhOutNote"></p></details>`;
   host.insertBefore(ex, host.querySelector('.lh-t').nextSibling);
   // 4.2.15 光点的大小 / 亮度（XD2：默认偏大偏亮）：只在 PC 选「光点」时出现；1 = 不写进层（没动过的层和以前逐字一样）
   const dh = ex.querySelector('#lhDots'), dset = k => v => { if (Math.abs(v - 1) < 1e-9) delete L[k]; else L[k] = v; };
@@ -15384,10 +15503,10 @@ function buildLayerHead(i) {
   lsel('lowMaps', '功能图', [['DCA', 'D + C + A'], ['DA', 'D + A'], ['DC', 'D + C'], ['D', '只要 D'], ['', '不要']], 'DCA');
   { const w = document.createElement('label'); w.className = 'field'; w.innerHTML = '<span class="fk">功能图后缀（空 = 按勾的）</span><input type="text" maxlength="8">'; const q = w.querySelector('input'); q.value = L.lowSuffix || '';
     q.addEventListener('change', () => { const v = q.value.replace(/[^A-Za-z0-9]/g, '').slice(0, 8); q.value = v; lset('lowSuffix', '')(v); }); lwh.appendChild(w); }
-  const syncOut = () => { const o = layerOut(L), le = layerEntryOf(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = o.mobile; lwh.hidden = o.pc !== 'frame' && o.mobile !== 'frame'; $('#lhOutNote').textContent = outNote(L, le); dh.hidden = o.pc !== 'dots'; uvh.hidden = o.pc !== 'unit' && o.mobile !== 'unit';
+  const syncOut = () => { const o = layerOut(L), le = layerEntryOf(L); ex.querySelector('[data-out=pc]').value = o.pc; ex.querySelector('[data-out=mobile]').value = layerMobileManual(L) ? o.mobile : 'auto'; lwh.hidden = o.pc !== 'frame' && o.mobile !== 'frame'; $('#lhOutNote').textContent = outNote(L, le); dh.hidden = o.pc !== 'dots'; uvh.hidden = o.pc !== 'unit' && o.mobile !== 'unit';
     const info = ex.querySelector('.lh-out-info'), warn = $('#lhOutNote').textContent.includes('注意：') || (o.pc === 'off' && o.mobile === 'off'); info.open = warn; info.classList.toggle('warn', warn);
-    for (const pf of ['pc', 'mobile']) { const uo = ex.querySelector(`[data-out=${pf}] option[value=unit]`); if (uo && le) { uo.disabled = !unitAllowed(le.P) && o[pf] !== 'unit'; uo.title = unitAllowed(le.P) ? '' : '千轮、分裂、蜂、非球形图案不能出单束'; } } };
-  ex.querySelectorAll('[data-out]').forEach(sel => sel.addEventListener('change', () => { L.out = { ...layerOut(L), [sel.dataset.out]: sel.value }; if (L.out.pc === 'seq' && L.out.mobile === 'seq') delete L.out; syncOut(); if (stage2.deliv) renderDeliv(); wbSync(); }));
+    for (const pf of ['pc', 'mobile']) { const uo = ex.querySelector(`[data-out=${pf}] option[value=unit]`); if (uo && le) { const many = pf === 'mobile' && mobileUnitTooMany(le.P); uo.disabled = (!unitAllowed(le.P) || many) && o[pf] !== 'unit'; uo.title = !unitAllowed(le.P) ? '千轮、分裂、蜂、非球形图案不能出单束' : many ? MOBILE_UNIT_MANY : ''; } } };
+  ex.querySelectorAll('[data-out]').forEach(sel => sel.addEventListener('change', () => { setLayerOut(L, sel.dataset.out, sel.value); syncOut(); if (stage2.deliv) renderDeliv(); wbSync(); }));     // 4.9.80 只改这一格（以前改 PC 会顺手把手机写死成序列）
   syncOut();
   host.querySelector('#lhHelp').addEventListener('click', () => { const p = $('#lhHelpText'); p.hidden = !p.hidden; });
   // 4.2.13：以前这里有「导出这一层的单束包」按钮（另出一个包）；单束现在是下面「导出方案」的一个选项，跟着整包导出（走查 B9）
@@ -16112,6 +16231,7 @@ function delivName() {
 }
 function renderDeliv() {
   const host = $('#delivView'), name = delivName(), rows = [], combo = state.tab === 'combo', xs = curLayerBakes();
+  if (combo) comboMobilePlan(xs).forEach((p, k) => { xs[k].mob = p; });     // 4.9.80 手机「自动」：每层实际出什么
   const nm = packNamesFor(wbKey(), lib.effect, xs.length, name, xs.length === 1 && xs[0].b ? xs[0].b.P.type : ''), useNew = xs.every(x => !x.b || namingApplies(x.b));
   for (const x of xs) {
     if (!x.b) { rows.push(`<tr><td colspan="4" class="dim">${x.name}：还没烘好</td></tr>`); continue; }
@@ -16136,19 +16256,22 @@ function renderDeliv() {
     const parts = bakeParts(x.b), delay = +x.L.delay || 0, rate = +x.L.rate || 1, ly = combo ? nm.layers[x.i] : '';
     const ln = combo ? comboLayerName(name, x.i) : name, mn = combo ? comboLayerName(name + '_Mobile', x.i) : name + '_Mobile';
     let mobCell = '—'; try { const mp = mobileParams({ ...x.b.P, cols: x.b.meta.L.cols, rows: x.b.meta.L.rows }); mobCell = Math.round(layoutOf(mp).cellW) + ' px'; } catch (e) { }
-    const o = combo ? layerOut(x.L) : singleOut(state.P);      // 4.2.12：每层的导出方案（4.9.25 单层也按自己的）
-    if (combo) rows.push(`<tr class="grp"><td colspan="4">第 ${x.i + 1} 层 · ${x.name} · PC ${OUT_PC.find(q => q[0] === o.pc)[1]} · 手机 ${OUT_MOBILE.find(q => q[0] === o.mobile)[1]}${layerShown(x.i) ? '' : '（观察里隐藏了，导出照旧包含）'}</td></tr>`);
+    const o = outOfX(x, combo);      // 4.2.12：每层的导出方案（4.9.25 单层也按自己的；4.9.80 手机「自动」按算出来的）
+    if (combo) rows.push(`<tr class="grp"><td colspan="4">第 ${x.i + 1} 层 · ${x.name} · PC ${OUT_PC.find(q => q[0] === o.pc)[1]} · 手机 ${x.mob && x.mob.auto ? mobileAutoText(x.mob) : OUT_MOBILE.find(q => q[0] === o.mobile)[1]}${layerShown(x.i) ? '' : '（观察里隐藏了，导出照旧包含）'}</td></tr>`);
     if (o.pc === 'dots') rows.push(`<tr><td class="dim">（没有贴图）</td><td>PC · GPU 光点约 ${dotsCount(layerPOf(x))} 颗 · 软圆点材质 · 只出星头</td><td>${delay.toFixed(2)} s</td><td>${((+layerPOf(x).ignDelay || 0) + (+layerPOf(x).burn || 0)).toFixed(2)} s</td></tr>`);
     const uOK = unitAllowed(layerPOf(x)), uPC = o.pc === 'unit' && uOK, uMob = o.mobile === 'unit' && uOK;     // 4.9.35 手机也能出单束（PC 也是单束时共用 PC 那几张）
     if (uPC || uMob) {     // 4.9.28 变体几张就几行（序号 01…）
-      const uv = unitVarOf(combo ? x.L : state.P), vs = unitVarPs(layerPOf(x), uv), um = !uPC, pfTxt = uPC && uMob ? 'PC / 手机共用' : uPC ? 'PC' : '手机';
-      vs.forEach((v, k) => rows.push(`<tr><td>${useNew ? fwTexName(nm.base, ly, { cols: 16, rows: 2 }, k + 1, 'tex', um) : TN(um ? mn : ln, '', null, k + 1) + '（单束）'}.png</td><td>${pfTxt} · 单束${uv.K > 1 ? ` 第 ${k + 1} / ${uv.K} 张（粗细 × ${v.t}、尾长 × ${v.l}）` : ''} · 每颗星一个面片 × ${v.n} · 16 × 2 格（列 × 行以导出为准）</td><td>${delay.toFixed(2)} s</td><td>${(unitDuration(fxP(unitP(v.P))) / rate).toFixed(2)} s</td></tr>`));
+      const uv = unitVarOf(combo ? x.L : state.P), vs = unitVarPs(layerPOf(x), uv);
+      for (const um of [uPC ? false : null, uMob ? true : null].filter(q => q !== null))     // 4.9.80 手机单束另出一套（以前 PC / 手机共用 PC 那套 _HD）
+        vs.forEach((v, k) => rows.push(`<tr><td>${useNew ? fwTexName(nm.base, ly, { cols: 16, rows: 2 }, k + 1, 'tex', um) : TN(um ? mn : ln, '', null, k + 1) + '（单束）'}.png</td><td>${um ? `手机（≤ ${MOBILE_TEX_MAX()}）` : 'PC'} · 单束${uv.K > 1 ? ` 第 ${k + 1} / ${uv.K} 张（粗细 × ${v.t}、尾长 × ${v.l}）` : ''} · 每颗星一个面片 × ${v.n} · 16 × 2 格（列 × 行以导出为准）</td><td>${delay.toFixed(2)} s</td><td>${(unitDuration(fxP(unitP(v.P))) / rate).toFixed(2)} s</td></tr>`));
     }
     // 4.9.35 单帧（并进产物表，用户 10-07 18:50）：灰度 …_1x1_01（PC 加 _HD）、彩色 _Color、轮廓 _C、功能图 _<后缀>；PC、手机都选单帧时共用一张
-    if (o.pc === 'frame' || o.mobile === 'frame') { const lo = lowOf(combo ? x.L : state.P), g = { cols: 1, rows: 1 }, hd = o.pc === 'frame', pfTxt = o.pc === 'frame' && o.mobile === 'frame' ? 'PC / 手机共用' : hd ? 'PC' : '手机';
-      const st = useNew ? fwTexName(nm.base, ly, g, 1, 'tex', true) : TN(hd ? ln : (combo ? mn : name + '_Mobile'), 'Frame'), sfx = useNew && hd ? '_HD' : '';
-      rows.push(`<tr><td>${st}${sfx}.png</td><td>${pfTxt} · 单帧 ${lo.size} × ${lo.size} 灰度（配 Ramp，现有序列材质）· ${lo.pick === 'expo' ? '长曝光' : lo.at > 0 ? `某一帧 ${lo.at.toFixed(2)} s` : '某一帧（自动）'}</td><td>${delay.toFixed(2)} s 起</td><td></td></tr>`);
-      rows.push(`<tr class="dim"><td>${st}_Color${sfx}.png</td><td>彩色单帧（sRGB；随包，溶解材质对上再接）</td><td></td><td></td></tr>`);
+    if (o.pc === 'frame' || o.mobile === 'frame') { const lo = lowOf(combo ? x.L : state.P), g = { cols: 1, rows: 1 }, st0 = useNew ? fwTexName(nm.base, ly, g, 1, 'tex', true) : '';
+      for (const hd of [o.pc === 'frame' ? true : null, o.mobile === 'frame' ? false : null].filter(q => q !== null)) {     // 4.9.80 手机单帧另出一张（≤ 1024、不带 _HD）
+        const st = useNew ? st0 : TN(hd ? ln : (combo ? mn : name + '_Mobile'), 'Frame'), sfx = useNew && hd ? '_HD' : '', sz = hd ? lo.size : Math.min(lo.size, MOBILE_TEX_MAX());
+        rows.push(`<tr><td>${st}${sfx}.png</td><td>${hd ? 'PC' : '手机'} · 单帧 ${sz} × ${sz} 灰度（配 Ramp，现有序列材质）· ${lo.pick === 'expo' ? '长曝光' : lo.at > 0 ? `某一帧 ${lo.at.toFixed(2)} s` : '某一帧（自动）'}</td><td>${delay.toFixed(2)} s 起</td><td></td></tr>`);
+        rows.push(`<tr class="dim"><td>${st}_Color${sfx}.png</td><td>彩色单帧（sRGB；随包，溶解材质对上再接）</td><td></td><td></td></tr>`); }
+      const st = st0 || TN(o.pc === 'frame' ? ln : (combo ? mn : name + '_Mobile'), 'Frame');
       rows.push(`<tr class="dim"><td>${useNew ? fwTexName(nm.base, ly, g, 1, 'C') : st + '_Cutout'}.png</td><td>单帧轮廓（Cut）</td><td></td><td></td></tr>`);
       if (lo.maps) rows.push(`<tr class="dim"><td>${st}_${useNew ? lo.suffix : 'Maps'}.png</td><td>功能图 ${[...lo.maps].map((c, k) => `${'RGB'[k]} = ${LOW_MAP_NAMES[c]}`).join('、')}（线性，最大 512）</td><td></td><td></td></tr>`); }
     if (o.pc === 'off' && o.mobile === 'off') { rows.push(`<tr><td colspan="4" class="dim">PC、手机都不出这一层</td></tr>`); continue; }
@@ -16214,17 +16337,21 @@ function frameTrialHTML(P) {
 // 4.9.25 产物表（用户 10-07 09:20「4.可以，我很着急使用」；讨论稿 协作/方案_导出器_2026-10-07.md 4.1）：交付清单顶上，每层 PC / 手机各出什么、
 // 多少张贴图 / 帧 / 发射器。这里的选择 = 层页头「导出方案」= 右栏「输出 › 直接调」的 PC / 手机怎么出（同一个值）；导出按钮导的就是这张表。
 // 以前单束另有三处入口（资产栏 ⌄ 菜单、交付页「导出单束包」、「把产物改成单束」），4.9.25 都并到这里
+// 4.9.80 每层导出方案：多层的手机格按 comboMobilePlan 算出来的（x.mob，renderDeliv 挂上）
+function outOfX(x, combo) { if (!combo) return singleOut(state.P); const o = layerOut(x.L); return x.mob ? { ...o, mobile: x.mob.kind } : o; }
+const MOBILE_UNIT_MANY = '星数超过 50：手机单束每颗星一个粒子，手游同时最多 50 个（规范 v1 §6），导出一定被拦；手机用序列 / 单帧';
+const mobileUnitTooMany = P => !!P && Math.round(+P.stars || 0) > (typeof GATE_MAX_ALIVE !== 'undefined' ? GATE_MAX_ALIVE : 50);
 function prodCellHTML(x, pf, combo) {
   const P = layerPOf(x); if (!P) return '—';
-  const o = combo ? layerOut(x.L) : singleOut(state.P), s = pf === 'pc' ? o.pc : o.mobile;
-  if (s === 'off') return '<span class="dim">不出</span>';
+  const o = outOfX(x, combo), s = pf === 'pc' ? o.pc : o.mobile;
+  if (s === 'off') return pf === 'mobile' && x.mob && x.mob.auto && x.mob.why ? `<span class="dim">${mobileAutoText(x.mob)}；要出就手动选一种（违规导出时会被拦）</span>` : '<span class="dim">不出</span>';
   if (s === 'frame') {     // 4.9.35 单帧（并进产物表；PC / 手机都选单帧时共用一张）
     const lo = lowOf(combo ? x.L : state.P), lw = x.b && lowCached(x.b, lo, combo ? comboLayerM(x.L) : state.M);
-    return `单帧 ${lo.size} × ${lo.size} · ${lo.pick === 'expo' ? '长曝光' : lw ? `某一帧 ${lw.tStar.toFixed(2)} s` : lo.at > 0 ? `某一帧 ${lo.at.toFixed(2)} s` : '某一帧（自动：花开得最大）'} · 灰度 + Ramp（现有序列材质）+ 彩色单帧${lo.maps ? ` · 功能图 ${[...lo.maps].join(' + ')} → _${lo.suffix}` : ''}${pf === 'mobile' && o.pc === 'frame' ? ' · 和 PC 同一张' : ''}${lw ? '' : '（贴图在引擎回放或导出时烘）'}${pf === 'pc' ? ' <button type="button" class="mini" data-lowview title="回到画面、切到引擎回放：按 cascade.json 播这张单帧（可勾溶解预览 / 并排）">在引擎回放里看</button>' : ''}`;
+    return `单帧 ${lo.size} × ${lo.size} · ${lo.pick === 'expo' ? '长曝光' : lw ? `某一帧 ${lw.tStar.toFixed(2)} s` : lo.at > 0 ? `某一帧 ${lo.at.toFixed(2)} s` : '某一帧（自动：花开得最大）'} · 灰度 + Ramp（现有序列材质）+ 彩色单帧${lo.maps ? ` · 功能图 ${[...lo.maps].join(' + ')} → _${lo.suffix}` : ''}${pf === 'mobile' ? ` · 手机自己的一张（≤ ${MOBILE_TEX_MAX()}、不带 _HD）` : ''}${lw ? '' : '（贴图在引擎回放或导出时烘）'}${pf === 'pc' ? ' <button type="button" class="mini" data-lowview title="回到画面、切到引擎回放：按 cascade.json 播这张单帧（可勾溶解预览 / 并排）">在引擎回放里看</button>' : ''}`;
   }
   if (s === 'dots') return `GPU 光点约 ${dotsCount(P)} 颗 · 没有贴图 · 1 个软圆点发射器`;
   if (s === 'unit' && unitAllowed(P)) {
-    if (pf === 'mobile' && o.pc === 'unit') return '单束 · 和 PC 同一套贴图（CPU 发射器）';     // 4.9.35 手机单束
+    if (pf === 'mobile') return `单束 · 手机自己的一套贴图（≤ ${MOBILE_TEX_MAX()}、不带 _HD）· ${Math.round(+P.stars || 0)} 颗星各一个 CPU 粒子${mobileUnitTooMany(P) ? ' · ⚠ ' + MOBILE_UNIT_MANY : ''}`;     // 4.9.35 手机单束；4.9.80 手机另出一套
     const h = combo ? x.e : singleUnitHolder(), ub = unitBakeOf(h, combo ? x.L : null), f = unitFit(P);
     const fit = f ? ` · <span class="${f.level === 'ok' ? '' : 'ow-i'}" data-unitfit="${f.level}">${unitFitText(f)}</span>` : '';
     const uv = unitVarOf(combo ? x.L : state.P), vtx = uv.K > 1 || uv.r > 0 ? ` · ${uv.K} 张变体${uv.r > 0 ? `、随机感 ${uv.r}` : ''}` : '';     // 4.9.28
@@ -16245,11 +16372,13 @@ function prodTableHTML(xs, combo) {
       const fullTxt = '手游 _M：星头 + 全部火花合成一张世界坐标全程序列，1 个发射器、1 层（Rectangle + 锁 Z + Local Space）；星头一帧帧走、一个曝光，在引擎回放切手机看（用户 10-12 23:49）';
       return `<tr><td>${x.name}</td><td>${far ? `<select data-prod="pc" data-i="${x.i}" aria-label="PC出什么"><option value="seq"${!rtPcFull(state.P) ? ' selected' : ''}>近段 + 远段 + 粒子</option><option value="full"${rtPcFull(state.P) ? ' selected' : ''}>近段 + 远段合成一张</option></select><small>${rtPcFull(state.P) ? '星头及粗中细火花合入全程序列，1 个发射器；按 PC 贴图尺寸烘焙' : 'PC 全套：近段 + 远段 + 粒子'}</small>` : '循环层 + 粒子（PC 全套）'}</td><td><select data-prod="mobile" data-i="${x.i}" aria-label="手机出什么">${OUT_MOBILE_TAIL.filter(([k]) => k !== 'full' || far).map(([k, t]) => `<option value="${k}"${k === mo ? ' selected' : ''}>${t}</option>`).join('')}</select><small>${mo === 'off' ? '<span class="dim">不出</span>' : mo === 'full' ? fullTxt : '手游 _M：只有近段循环一张大面片（不出远段、火花、星头光晕；用户 10-12 21:34）'}</small></td></tr>`; }
     if (!seqOK) return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}</td><td colspan="2" class="dim">${x.b ? FORM_NAMES[x.b.form] || x.b.form : '还没烘好'}：按这种产物自己的规则出（PC + 手机）</td></tr>`;
-    const o = combo ? layerOut(x.L) : singleOut(state.P), uOK = unitAllowed(P), uf = uOK ? unitFit(P) : null;     // 4.9.27 下拉里也写这层适不适合单束
+    const o = outOfX(x, combo), uOK = unitAllowed(P), uf = uOK ? unitFit(P) : null;     // 4.9.27 下拉里也写这层适不适合单束
     const uAttr = !uOK ? ' disabled title="千轮、分裂、蜂、非球形图案不能出单束"' : uf && uf.level !== 'ok' ? ` title="${uf.why.join('；')}"` : '';
-    const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么">${opts.map(([k, t]) => `<option value="${k}"${k === v ? ' selected' : ''}${k === 'unit' ? uAttr : ''}>${t}${k === 'unit' && uf && uf.level === 'bad' ? ' · 不适合' : k === 'unit' && uf && uf.level === 'soft' ? ' · 近看偏直' : ''}</option>`).join('')}</select>`;
+    const uMany = mobileUnitTooMany(P) ? ` disabled title="${MOBILE_UNIT_MANY}"` : '';     // 4.9.80 手机单束 > 50 颗：一定被拦，不让选
+    const sel = (pf, opts, v) => `<select data-prod="${pf}" data-i="${x.i}" aria-label="${pf === 'pc' ? 'PC' : '手机'}出什么">${opts.map(([k, t]) => `<option value="${k}"${k === v ? ' selected' : ''}${k === 'unit' ? (pf === 'mobile' && uMany && v !== 'unit' ? uMany : uAttr) : ''}>${t}${k === 'unit' && uf && uf.level === 'bad' ? ' · 不适合' : k === 'unit' && uf && uf.level === 'soft' ? ' · 近看偏直' : ''}</option>`).join('')}</select>`;
+    const mobV = combo && !layerMobileManual(x.L) ? 'auto' : o.mobile;
     return `<tr><td>${combo ? `第 ${x.i + 1} 层 · ` : ''}${x.name}${combo && !layerShown(x.i) ? '<small>（观察里隐藏了，导出照旧）</small>' : ''}</td>
-      <td>${sel('pc', OUT_PC, o.pc)}<small>${prodCellHTML(x, 'pc', combo)}</small></td><td>${sel('mobile', OUT_MOBILE, o.mobile)}<small>${prodCellHTML(x, 'mobile', combo)}</small></td></tr>`;     // 4.9.35 没有低端列了（单帧并进 PC / 手机）
+      <td>${sel('pc', OUT_PC, o.pc)}<small>${prodCellHTML(x, 'pc', combo)}</small></td><td>${sel('mobile', combo ? OUT_MOBILE_UI : OUT_MOBILE, mobV)}<small>${x.mob && x.mob.auto && x.mob.kind !== 'off' ? mobileAutoText(x.mob) + ' · ' : ''}${prodCellHTML(x, 'mobile', combo)}</small></td></tr>`;     // 4.9.35 没有低端列了（单帧并进 PC / 手机）
   });
   return `<table class="dv-t dv-prod"><thead><tr><th>产物表：每层导出什么</th><th title="引擎回放画的是这一列">PC</th><th title="手机只能纯图片：序列 / 单束 / 单帧（没有 GPU）">手机</th></tr></thead><tbody>${rows.join('')}</tbody></table>
     <p class="hint">改这里 = 改层页头「导出方案」/ 右栏「输出 › 直接调」（同一个值，进 Ctrl+Z）；「贴图流转」「引擎回放」按 PC 列看（PC 单束就看单束那张、单帧就看单帧）。单束只给短尾、快、几乎不下坠的星；长尾下垂、先后点亮的层建议序列（选了单束，格子里写这层合不合适：直尾在 800 m 外最多偏几像素，超过 1.5 px 近看偏直、超过 4 px 或前后点亮差 0.1 s 以上不适合）。单束贴图里的星按直线、不受力烘（重力、风、湍流、初速 / 燃烧随机都关了），弯曲和快慢不一由 Cascade 的发射器做。</p>`;
@@ -16262,7 +16391,7 @@ function showLowReplay() {
 }
 function setProduct(i, pf, v) {
   if (pf === 'pc' && v === 'frame') setTimeout(() => flash('PC 选了单帧：引擎回放直接按单帧画（表里「在引擎回放里看」）'), 0);
-  if (state.tab === 'combo') { const L = state.layers[i]; if (!L) return; L.out = { ...layerOut(L), [pf]: v }; if (L.out.pc === 'seq' && L.out.mobile === 'seq') delete L.out;
+  if (state.tab === 'combo') { const L = state.layers[i]; if (!L) return; setLayerOut(L, pf, v);     // 4.9.80 只改这一格；手机可选「自动」
     if (typeof undoNote === 'function') undoNote(); if (state.comboSel === i && typeof buildLayerHead === 'function') buildLayerHead(i); renderDeliv(); wbSync(); return; }
   state.P[pf === 'pc' ? 'outPC' : 'outMobile'] = v;
   // 4.9.73 尾缀手机换了「只有近段 / 合成一张」：缓存的手机烘焙作废；正在看手机就按新选的重烘
@@ -16606,7 +16735,7 @@ const flowTrail = [];
 function productNow(P, L, holder) {
   if (!P || familyOf(P.type) !== 'aerial') return { kind: 'seq' };
   // 4.9.35（用户 10-07 18:50「引擎回放就只是引擎回放」）：不分平台，按 PC 列（展示模式切到手机时按手机列）
-  const o = L ? layerOut(L) : singleOut(P), s = state.platform === 'mobile' ? o.mobile : o.pc;
+  const o = L ? layerOut(L) : singleOut(P), s = state.platform === 'mobile' ? (L ? comboLayerDraw(L) : o.mobile) : o.pc;     // 4.9.80 手机「自动」
   if (s === 'frame') {     // 单帧（4.9.29 起；4.9.35 并进产物表）：看单帧 + 功能图
     const b = holder && holder.bake ? holder.bake : state.bake, M = L ? comboLayerM(L) : state.M, lo = lowOf(L || P), lw = b ? lowCached(b, lo, M) : null;
     if (!lw && b) ensureLow(b, lo, M);
@@ -16798,7 +16927,7 @@ function ensureLayerUnit(e) {
   })();
 }
 // 引擎回放里这一层怎么画（按当前预览平台的导出方案）：'seq' 贴图 / 'unit' 单束 / 'dots' 光点 / 'off' 不画
-function comboLayerDraw(L) { const o = typeof layerOut === 'function' ? layerOut(L) : { pc: 'seq', mobile: 'seq' }; return state.platform === 'mobile' ? o.mobile : o.pc; }     // 4.9.35 引擎回放按 PC 列（展示模式切手机时按手机列）：seq / unit / dots / frame / off
+function comboLayerDraw(L) { const o = typeof layerOut === 'function' ? layerOut(L) : { pc: 'seq', mobile: 'seq' }; if (state.platform !== 'mobile') return o.pc; const i = state.layers ? state.layers.indexOf(L) : -1, p = i >= 0 && typeof comboMobileNow === 'function' ? comboMobileNow(i) : null; return p ? p.kind : o.mobile; }     // 4.9.80 手机「自动」按算出来的     // 4.9.35 引擎回放按 PC 列（展示模式切手机时按手机列）：seq / unit / dots / frame / off
 function renderCombo() {
   if (state.view === 'live') return renderComboLive();
   if (state.view === 'atlas') return renderComboAtlas();

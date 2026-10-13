@@ -846,7 +846,7 @@ function fwlRiseHead(name, b, M) {
         {m:'InitialLocation',StartLocation:{const:[0,0,0]}},
         {m:'InitialVelocity',StartVelocity:{const:[r1(ball.vx0*100),0,r1(ball.vz0*100)]}},
         {m:'InitialSize',StartSize:{const:[r1(m.Ww*100),r1(m.Wh*100),1]}},
-        ...(ball.quad?[{m:'VelocityOverLife',VelOverLife:{curve:rtVelLife(ball).map(([u,v])=>[r4(u),v.map(x=>r1(x*100))])},Absolute:true}]:[{m:'Drag',DragCoefficient:{const:ball.k}},{m:'ConstAcceleration',Acceleration:[0,0,-981]}]),
+        ...(ball.quad?[{m:'VelocityOverLife',VelOverLife:{curve:rtVelLife(ball).map(([u,v])=>[r4(u),v.map(x=>r1(x*100))])},Absolute:true}]:[{m:'Drag',DragCoefficientRaw:{const:r4(ball.k)}},{m:'ConstAcceleration',Acceleration:[0,0,-981]}]),
         {m:'DynamicParameter',params:{frame:{const:0}}},
         {m:'ColorOverLife',ColorOverLife:{curve:fwlColor(M,T,0,P.rtBright||1)},AlphaOverLife:{const:1}}
       ]}],system:{preview_distance_cm:30000,preview_warmup_s:0},notes:['独立烘焙星头：单帧小面片 + Ramp，CPU 一个粒子，和金尾同一 RT6 弹道及燃尽时间；无 GPU、无新材质。Velocity Over Life 按 RT6 物理速度采样；未经 UE 验证。'] };
@@ -1108,7 +1108,7 @@ function rtTexFiles(b, name, sfx = '', idx = 1) {
     if (b.esFull) { const ap = readRGBA8(b.head), tp = b.tail ? readRGBA8(b.tail) : null;     // 4.9.73 合成一张：只有这一张 + 它的 Cut；4.9.79 星头 / 火花分开时两张（…_Head / …_Tail）共用一张 Cut
       if (tp) { files.push([`${TN(name, joinPart('Full_Head', k4), L, idx)}.png`, await encodePNG(ap, b.N, b.NH)]); files.push([`${TN(name, joinPart('Full_Tail', k4), L, idx)}.png`, await encodePNG(tp, b.N, b.NH)]); }
       else files.push([`${TN(name, joinPart('Full', k4), L, idx)}.png`, await encodePNG(ap, b.N, b.NH)]);
-      if (!sfx) files.push(...await cutoutFiles(tp ? [ap, tp] : [ap], b.N, b.NH, L, TN(name, 'Full_Cutout', null, idx), b.meta)); return files; }
+      if (!sfx && !b.esHead) files.push(...await cutoutFiles(tp ? [ap, tp] : [ap], b.N, b.NH, L, TN(name, 'Full_Cutout', null, idx), b.meta)); return files; }     // 4.9.80（导出排查 ⑦）：只出星头的那张没有 Cut（fwlRiseHead 不引用）
     const lp = readRGBA8(b.head); files.push([`${TN(name, joinPart('Loop', k4), L, idx)}.png`, await encodePNG(lp, b.N, b.NH)]);
     if (!sfx) files.push(...await cutoutFiles([lp], b.N, b.NH, L, TN(name, 'Loop_Cutout', null, idx), b.meta));
     const f = b.fades[0];

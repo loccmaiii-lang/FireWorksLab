@@ -65,7 +65,8 @@ const DeliveryWorkspace = (() => {
     show(true);placeExportProgress();message('正在准备交付资源…（导出完成前，下方导入区还是上一份素材）');
     updateRootControls();
     // Paint the destination and the existing cancellable progress before CPU/GPU work.
-    await new Promise(resolve=>window.requestAnimationFrame?window.requestAnimationFrame(()=>window.requestAnimationFrame(resolve)):setTimeout(resolve,0));
+    // 4.9.80（导出排查）：标签页在后台时浏览器不出帧，两帧 rAF 永远等不到 → 导出一直挂着；最多等 150 ms
+    await new Promise(resolve=>{setTimeout(resolve,150);if(window.requestAnimationFrame)window.requestAnimationFrame(()=>window.requestAnimationFrame(resolve));});
     await connect();if(session.directoryError)throw Error(session.directoryError);
     if(!session.outputRoot)throw Error('请先在资源目录与版本中指定导出目录');
     try{await refresh();}catch(e){}     // 4.9.69 导出拦截要按最新的已有资源查撞名
@@ -206,12 +207,16 @@ function deliveryClassification(recipe, plan, spec) {
   const tail=parameters.length>0&&parameters.every(p=>familyOf(p.type)==='rise');
   const sizes={tailS:'small',tailM:'medium',tailL:'large'};
   let size=plan?.spec&&['small','medium','large'].includes(spec?.kind)?spec.kind:'unclassified';
+  // 4.9.80（对话框手游编排 10-12 23:14 请 23 修）：尾缀档 kind = trail，按开花高度分大小（≤ 150 小、≤ 210 中、更高大；XS / S80 → 小、Hero → 大），以前全落「尾缀 / 未分类」
+  if(size==='unclassified'&&plan?.spec&&plan.spec.what==='height'&&+plan.spec.target>0){const h=+plan.spec.target;size=h<=150?'small':h<=210?'medium':'large';}
   if(size==='unclassified'&&tail&&!plan?.spec){const values=new Set(parameters.map(p=>sizes[p.type]||'unclassified'));if(values.size===1)size=[...values][0];}
   return {category:tail?'tail':'firework',size};
 }
 function deliveryMetadata(b = null) {
   if (typeof exportClockMark === 'function') exportClockMark('缩略图（引擎回放截一帧）');     // 4.9.72 计时
-  const result = {bakerVersion:VERSION, sourceKey:wbKey(), recipe:wbSnap(), duration:curDuration(), sizePlan:typeof exportScalePlan==='function'?exportScalePlan(state.P):null};
+  // 4.9.80（导出排查 ⑥）：多层的尺寸按整个组合（sizeSpecCombo），以前拿的是右栏选中那一层
+  const comboPlan=()=>{const sk=typeof sizeSpecCombo==='function'?sizeSpecCombo(state.layers):null;return {k:sk?sk.k:1,keep:false,spec:sk||null,sfx:''};};
+  const result = {bakerVersion:VERSION, sourceKey:wbKey(), recipe:wbSnap(), duration:curDuration(), sizePlan:!b&&state.tab==='combo'?comboPlan():typeof exportScalePlan==='function'?exportScalePlan(state.P):null};
   result.classification=deliveryClassification(result.recipe,result.sizePlan,typeof sizeSpecOf==='function'?sizeSpecOf():null);
   result.artifactDuration = b ? bakeTotal(b) : comboContentEnd();
   result.boundsM = b ? {width:b.meta.Ww*(result.sizePlan?.k||1),height:b.meta.Wh*(result.sizePlan?.k||1)} : null;

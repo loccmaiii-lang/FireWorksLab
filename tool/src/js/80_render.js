@@ -310,7 +310,7 @@ const flowTrail = [];
 function productNow(P, L, holder) {
   if (!P || familyOf(P.type) !== 'aerial') return { kind: 'seq' };
   // 4.9.35（用户 10-07 18:50「引擎回放就只是引擎回放」）：不分平台，按 PC 列（展示模式切到手机时按手机列）
-  const o = L ? layerOut(L) : singleOut(P), s = state.platform === 'mobile' ? o.mobile : o.pc;
+  const o = L ? layerOut(L) : singleOut(P), s = state.platform === 'mobile' ? (L ? comboLayerDraw(L) : o.mobile) : o.pc;     // 4.9.80 手机「自动」
   if (s === 'frame') {     // 单帧（4.9.29 起；4.9.35 并进产物表）：看单帧 + 功能图
     const b = holder && holder.bake ? holder.bake : state.bake, M = L ? comboLayerM(L) : state.M, lo = lowOf(L || P), lw = b ? lowCached(b, lo, M) : null;
     if (!lw && b) ensureLow(b, lo, M);
@@ -502,7 +502,7 @@ function ensureLayerUnit(e) {
   })();
 }
 // 引擎回放里这一层怎么画（按当前预览平台的导出方案）：'seq' 贴图 / 'unit' 单束 / 'dots' 光点 / 'off' 不画
-function comboLayerDraw(L) { const o = typeof layerOut === 'function' ? layerOut(L) : { pc: 'seq', mobile: 'seq' }; return state.platform === 'mobile' ? o.mobile : o.pc; }     // 4.9.35 引擎回放按 PC 列（展示模式切手机时按手机列）：seq / unit / dots / frame / off
+function comboLayerDraw(L) { const o = typeof layerOut === 'function' ? layerOut(L) : { pc: 'seq', mobile: 'seq' }; if (state.platform !== 'mobile') return o.pc; const i = state.layers ? state.layers.indexOf(L) : -1, p = i >= 0 && typeof comboMobileNow === 'function' ? comboMobileNow(i) : null; return p ? p.kind : o.mobile; }     // 4.9.80 手机「自动」按算出来的     // 4.9.35 引擎回放按 PC 列（展示模式切手机时按手机列）：seq / unit / dots / frame / off
 function renderCombo() {
   if (state.view === 'live') return renderComboLive();
   if (state.view === 'atlas') return renderComboAtlas();

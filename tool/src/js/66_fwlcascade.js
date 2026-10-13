@@ -279,11 +279,13 @@ function effectSizeOf(P) {
   const mt = metricsOf(P, measure(P)), r = mt && mt.diameter > 0 ? { what: 'diameter', m: mt.diameter } : null;
   if (key) { _sizeOf.set(key, r); while (_sizeOf.size > 16) _sizeOf.delete(_sizeOf.keys().next().value); } return r;
 }
-// 多层：取最大的那层（花径 × 层缩放）
+// 多层：取最大的那层（花径 × 层缩放）；4.9.80（导出排查 ⑥）没有花的组合（全是尾缀，如 CS3C）按最高那层的开花高度，以前拿不到尺寸档
 function comboSizeOf(layers) {
-  let best = null;
-  for (const L of layers || []) { const e = typeof layerEntryOf === 'function' ? layerEntryOf(L) : null, z = e && effectSizeOf(e.P); if (!z || z.what !== 'diameter') continue; const m = z.m * (+L.scale > 0 ? +L.scale : 1); if (!best || m > best.m) best = { what: 'diameter', m }; }
-  return best;
+  let best = null, hi = null;
+  for (const L of layers || []) { const e = typeof layerEntryOf === 'function' ? layerEntryOf(L) : null, z = e && effectSizeOf(e.P); if (!z) continue; const m = z.m * (+L.scale > 0 ? +L.scale : 1);
+    if (z.what === 'diameter') { if (!best || m > best.m) best = { what: 'diameter', m }; }
+    else if (z.what === 'height' && (!hi || m > hi.m)) hi = { what: 'height', m, ...(z.T > 0 ? { T: z.T } : {}) }; }
+  return best || hi;
 }
 // 规格 + 现在的大小 → 倍数（null = 不按标定）。扇形口径没定：返回 { skip } 说明原因
 function sizeSpecScale(sp, sz) {

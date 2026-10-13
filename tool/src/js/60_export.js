@@ -385,25 +385,35 @@ async function exportMaster() {
   busy(false);
 }
 // 种子变体：V1–V3 三张贴图，共用一套参数表
+// 4.9.80（用户 10-13 20:00 导出排查 ⑤）：以前手机配置直接引用 PC 第 1 张（_HD、2048，导出拦截一律拦），也没走命名规范、尺寸标定、「导出时」版本。
+//   现在和单层导出同一条路：手机按第 1 张独立烘一份（≤ 1024，platformFiles）；一张贴图的效果把 V2 / V3 挂成变体（命名规范序号 02 / 03）
 async function exportVariants() {
   const name = safeName();
   const destination = DeliveryWorkspace.destination();
   if (bakeKind(state.P) !== 'master') { flash('种子变体只用于大面片母版', true); return; }
   if (!busyCan(true)) return;
   busy(true, '烘焙种子变体…', 0);
-  let bs = [];
+  let bs = [], hung = false;
   try {
     await DeliveryWorkspace.beginExport(destination);
-    bs = await bakeVariants(state.P, 1, p => busy(true, `烘焙种子变体 ${Math.round(p * 100)}%`, p * 0.9));
-    const files = [];
-    for (let i = 0; i < bs.length; i++) files.push(...await texFiles(bs[i], name, '', i + 1));
+    bs = await bakeVariants(state.P, 1, p => busy(true, `烘焙种子变体 ${Math.round(p * 100)}%`, p * 0.85));
+    const b0 = bs[0], files = [];
+    hung = !bs.some(b => b.next); if (hung) b0.vars = bs.slice(1);     // 一张贴图：V2 / V3 挂在第 1 张上（texFiles / 命名规范按变体出）
+    if (hung) files.push(...await texFiles(b0, name)); else for (let i = 0; i < bs.length; i++) files.push(...await texFiles(bs[i], name, '', i + 1));
     files.push([`${TN(name, 'Ramp')}.png`, await encodePNG(rampPixels(state.M), 256, 8)]);
-    files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, bs[0], state.M) + `\n【种子变体】\n第 1 张（不带后缀）/ _V2 / _V3 三套贴图共用上面的取景、帧号曲线和尺寸，只换贴图；同屏多发时轮换使用，避免一模一样。种子：${bs.map(b => b.P.seed).join('、')}\n`)]);
-    files.push([`${name}_曲线.csv`, utf8(curvesCSV(bs[0], state.M))]);
-    files.push([`${name}.json`, utf8(JSON.stringify({ ...masterJSON(bs[0], name, state.M), variants: bs.map((b, i) => ({ index: String(i + 1).padStart(2, '0'), seed: b.P.seed })) }, null, 2))]);
-    files.push(...fwlFiles(name, bs[0], state.M));
-    await deliverResource(await makeZip(files), `${name}_V1-V3.zip`, deliveryMetadata(bs[0]), destination);
-    flash('已导出三个种子变体');
+    files.push([`${name}_Cascade参数.txt`, utf8(cascadeText(name, b0, state.M) + `\n【种子变体】\n第 1 张 / 02 / 03 三套贴图共用上面的取景、帧号曲线和尺寸，只换贴图；同屏多发时轮换使用，避免一模一样（cascade.json 引用第 1 张；手机只出第 1 张）。种子：${bs.map(b => b.P.seed).join('、')}\n`)]);
+    files.push([`${name}_曲线.csv`, utf8(curvesCSV(b0, state.M))]);
+    files.push([`${name}.json`, utf8(JSON.stringify({ ...masterJSON(b0, name, state.M), variants: bs.map((b, i) => ({ index: String(i + 1).padStart(2, '0'), seed: b.P.seed })) }, null, 2))]);
+    files.push(...await platformFiles(name, b0, state.M, p => busy(true, '手机独立烘焙…', 0.85 + 0.1 * p)));
+    busy(true, '打包 ZIP…', 1);
+    let zipName = name, out = files;
+    const sp = exportScalePlan(state.P);
+    if (hung && namingApplies(b0)) { const nm = packNamesFor(wbKey(), lib.effect, 1, name, state.P.type), sys = packSysName(nm.base, state.P.type, sp.spec); out = applyPackNaming(files, nm.base, [{ ln: name, mn: name + '_Mobile', b: b0, mb: { ...b0, vars: null }, layer: '' }], { sys, spec: sp.spec && sp.spec.id }); zipName = sys; }     // 手机只有第 1 张（mb 不带变体，Cut 才对得上第 1 张）
+    out = scaleCascadeFiles(out, sp.k, sp.keep, sp.spec); zipName += sp.sfx + '_V1-V3';
+    await deliverResource(await makeZip(out), `${zipName}.zip`, deliveryMetadata(b0), destination);
+    wbAutoExport(zipName);
+    flash('已导出三个种子变体' + packTidyNote(), false, packTidyNote() ? 8000 : 0);
   } catch (e) { DeliveryWorkspace.exportFailed(e); console.error(e); flash('导出失败：' + e.message, true); }
-  bs.forEach(disposeBake); busy(false);
+  if (hung && bs[0]) disposeBake(bs[0]); else bs.forEach(disposeBake);
+  busy(false);
 }

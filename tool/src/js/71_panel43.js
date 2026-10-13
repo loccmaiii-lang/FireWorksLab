@@ -50,6 +50,8 @@ const INERT = [
   [['fade', 'lastFlare', 'flicker', 'headSize', 'headTear', 'headDim', 'headDimUntil', 'strobeHz', 'strobeDuty', 'strobeStart', 'carrierHead'], P => !(+P.headBright > 0), '「星头亮度」是 0（星头不发光，只有尾迹 / 火花）时不起作用'],
   // 4.9.4：地面的喷口 / 灯芯亮点一直亮着、没有寿命；只有扇形 / 连发的彗星按「彗星燃烧」算寿命
   // 4.9.51：配了尺寸标定的效果导出按标定倍数，手动的导出缩放不管用（只看表，不量花径，面板刷新不卡）
+  // 4.9.80（导出排查 ⑥）：多层效果导出不看每层的导出缩放（大小按层页头「缩放」+ 交付清单顶上的「导出尺寸」），以前这一行照样能选、导出却没用
+  [['exportScale', 'exportScaleRise'], P => typeof state !== 'undefined' && state.tab === 'combo', '多层效果：大小按层页头「这一层在整朵里 › 缩放」和交付清单顶上的「导出尺寸」；这一行只管单层导出'],
   [['exportScale', 'exportScaleRise'], P => { if (typeof sizeSpecOf !== 'function') return false; const sp = sizeSpecOf(); return !!(sp && !sp.off); }, '这个效果按「导出尺寸」那一档导出（交付清单顶上选、写了倍数；选「原大」或「这次不按标定」这里才管用）'],
   [['starSizeCurve', 'starBrightCurve'], P => familyOf(P.type) === 'ground' && !(typeof hasComets === 'function' && hasComets(P)), '地面的喷口 / 灯芯亮点一直亮着，没有寿命；只有扇形、连发的彗星按「彗星燃烧」算寿命'],
 ];

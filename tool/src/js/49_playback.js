@@ -35,19 +35,26 @@ function mobileParams(P) {
   const factor=Math.min(1,requested/Math.min(L.cellW,L.cellH));
   // 保持列、行和帧数；窄长旧尾缀不再降采样。手机至少保留 256，细节多时可指定更大值。
   // 贴图下限：每格至少 256（4×4 时 = 原来的 1024；「按帧数」的小贴图不再被抬到 1024）
-  return {...P,texW:Math.min(P.texW,Math.max(256*L.cols,Math.round(P.texW*factor))),texH:Math.min(P.texH,Math.max(256*L.rows,Math.round(P.texH*factor)))};
+  let texW=Math.min(P.texW,Math.max(256*L.cols,Math.round(P.texW*factor))),texH=Math.min(P.texH,Math.max(256*L.rows,Math.round(P.texH*factor)));
+  // 4.9.80（用户 10-13 20:00 导出排查 ③）：手游贴图严格 ≤ 1024（规范 v1 §6，用户 10-12 22:01「严格遵守，直接拦下」）。上面「每格至少 256」在 PC 4096 或格子多（8 × 8）时给出 2048，
+  //   导出一律被拦（MYJC-S03-2 手机 2048）。封顶 1024：格子不变，单格按比例变小（可能低于 256）；本来 ≤ 1024 的逐字不变
+  const cap=typeof GATE_MOBILE_TEX!=='undefined'?GATE_MOBILE_TEX:1024,s=Math.max(texW,texH);
+  if(s>cap){texW=Math.max(L.cols,Math.floor(texW*cap/s/L.cols)*L.cols);texH=Math.max(L.rows,Math.floor(texH*cap/s/L.rows)*L.rows);}
+  return {...P,texW,texH};
 }
 async function bakeMobileFor(b,onProg=null) {
   if(b.form==='trail')return await bake(mobileParams(b.P),1,onProg);
   // 循环层 + 粒子（4.2.2）：手机贴图边长 × rtMobileTex（默认 0.5 → 单格像素数 = PC 的 1/4，512² → 256²，正好是手机下限）；格子、取景和 PC 一样
   // 4.9.73 手机选「近段 + 远段合成一张」：只烘那一张（bakeRiseTailFull），不再把近段 / 远段按手机尺寸全烘一遍
-  if(b.form==='emitset'){const f=clamp(b.P.rtMobileTex==null?0.5:+b.P.rtMobileTex,0.25,1),Pm={...b.P,texW:Math.round(b.P.texW*f),texH:Math.round(b.P.texH*f)};
+  // 4.9.80 同样封顶 1024（PC 4096 × 0.5 = 2048 以前会被拦）
+  if(b.form==='emitset'){const f=clamp(b.P.rtMobileTex==null?0.5:+b.P.rtMobileTex,0.25,1),cap=typeof GATE_MOBILE_TEX!=='undefined'?GATE_MOBILE_TEX:1024,fc=Math.min(f,cap/Math.max(b.P.texW,b.P.texH)),Pm={...b.P,texW:Math.round(b.P.texW*fc),texH:Math.round(b.P.texH*fc)};
     if(rtMobFull(b.P))return await bakeRiseTailFull(Pm,1,onProg);
     const m=await bake({...Pm,outPC:'seq'},1,onProg);m.esMobile=true;return m;}
   let first=null,last=null;
   try {
     for(let source=b;source;source=source.next){
-      const P=mobileParams({...source.P,cols:source.meta.L.cols,rows:source.meta.L.rows});
+      // 4.9.80（导出排查 ②）：大面片母版手机一律合成一张——「星头、火花分开」时手机以前也分开，两个发射器同时播两张大序列，规范 v1 §6 拦；尾缀 4.9.79 已经这样
+      const P=mobileParams({...source.P,cols:source.meta.L.cols,rows:source.meta.L.rows,...(['master','segments'].includes(b.form)?{outMode:'combined'}:{})});
       const pl={...source.meta,L:{...layoutOf(P),F:source.meta.L.F}};pl.ppm=pl.L.cellW/pl.Ww;
       let part;
       if(['master','segments'].includes(b.form)){

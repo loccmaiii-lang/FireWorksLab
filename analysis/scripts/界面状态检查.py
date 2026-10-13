@@ -119,7 +119,10 @@ FAKE = r"""(() => {
     await new Promise(r => setTimeout(r, 40));
     return parts[0];
   };
+  if (!window.__realMobileFor) window.__realMobileFor = bakeMobileFor;     // 4.9.80 R10 要看真的手机重烘入口
   bakeMobileFor = async b => null;
+  // 4.9.80：导出缺省交到「指定目录」（4.9.66 起，要本机交付服务）；检查里没有交付服务 → 一律按 ZIP（以前 W3 / W6 / W16 卡在这里）
+  { const d = document.getElementById('deliveryDestination'); if (d) d.value = 'zip'; }
   return 0;
 })()"""
 
@@ -128,6 +131,7 @@ REC = r"""(() => {
   window.__bakes = [];
   const ob = bake;
   bake = async (P, scale, onProg) => { const Pc = structuredClone(typeof fxP === 'function' ? fxP(P) : P); const b = await ob(P, scale, onProg); window.__bakes.push({ P: Pc, at: performance.now() }); return b; };
+  { const d = document.getElementById('deliveryDestination'); if (d) d.value = 'zip'; }     // 4.9.80 同 FAKE
   return 0;
 })()"""
 
@@ -1396,6 +1400,67 @@ async def r9(pg):
     return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
 
 
+R10_JS = r"""async () => {
+  // 4.9.80（用户 10-13 20:00「最近导出功能的Bug有点多，可以排查一遍还有哪些我没提到的Bug吗？」）导出排查九处，每处一个能复现的小检查
+  const out = {}, bad = [];
+  // ① 多层手机「自动」：引菊 → 锦缺省 = 第 1 层序列、第 2 层自动不出（两层同时播）；产物表只改一格；旧存档 {pc:'dots', mobile:'seq'} 的 seq 当自动；拦截写清改哪一层
+  const pl = comboMobilePlan(curLayerBakes()); out.plan = pl.map(p => p.kind + (p.auto ? '·自动' : ''));
+  if (pl.length !== 2 || pl[0].kind !== 'seq' || pl[1].kind !== 'off' || !pl[1].auto || !/第 1 层/.test(pl[1].why)) bad.push('① 引菊 → 锦缺省手机不是「第 1 层序列、第 2 层自动不出」：' + JSON.stringify(pl));
+  const L = { lib: 'x' }; setLayerOut(L, 'pc', 'dots'); const a1 = JSON.stringify(L.out); setLayerOut(L, 'mobile', 'seq'); const a2 = layerMobileManual(L); setLayerOut(L, 'mobile', 'auto'); const a3 = JSON.stringify(L.out || null); setLayerOut(L, 'pc', 'seq'); const a4 = L.out === undefined;
+  out.setter = { a1, a2, a3, a4, legacy: layerMobileManual({ out: { pc: 'dots', mobile: 'seq' } }), legacyOff: layerMobileManual({ out: { pc: 'seq', mobile: 'off' } }) };
+  if (a1 !== '{"pc":"dots"}' || !a2 || a3 !== '{"pc":"dots"}' || !a4 || out.setter.legacy || !out.setter.legacyOff) bad.push('① 产物表改一格 / 旧存档：' + JSON.stringify(out.setter));
+  const cfg = { name: 'X_M', tier: 'M', platform: 'mobile', textures: { a: { file: 'a.png', class: 'flipbook' }, b: { file: 'b.png', class: 'flipbook' } }, materials: { ma: { textures: { main: 'a' } }, mb: { textures: { main: 'b' } } },
+    emitters: [{ name: 'L1_Main', material: 'ma', max_alive: 1, required: { delay_s: 0, duration_s: 3 } }, { name: 'L2_MainA', material: 'mb', max_alive: 1, required: { delay_s: 0, duration_s: 3 } }] };
+  const g = packGateConfig('cascade_mobile.json', cfg, '', {}).join('；'); out.gate = g.slice(0, 120);
+  if (!/第 2 层/.test(g)) bad.push('① 拦截没写改哪一层：' + g);
+  // ② 「星头、火花分开」时手机重烘一律合成一张
+  const b = layerEntryOf(state.layers[1]).bake, ob = bakeMaster, seen = [];
+  try { bakeMaster = async (P, sc, op, o) => { seen.push(P.outMode || ''); return { ...b, P, next: null, tail: null, meta: { ...b.meta, ...o.pl } }; }; await window.__realMobileFor({ ...b, P: { ...b.P, outMode: 'split' } }); }
+  finally { bakeMaster = ob; }
+  out.split = seen; if (!seen.length || seen.some(x => x !== 'combined')) bad.push('② 分开时手机没合成一张：' + JSON.stringify(seen));
+  // ③ 手机贴图 ≤ 1024（以前 8 × 8 @ 2048、4 × 4 @ 4096 给 2048）；本来 ≤ 1024 的不变
+  out.mp = [[2048, 8, 8], [4096, 4, 4], [2048, 4, 4], [1024, 4, 4], [1024, 2, 2]].map(([w, c, r]) => { const m = mobileParams({ ...b.P, texW: w, texH: w, cols: c, rows: r }); return [w, c, m.texW, m.texH]; });
+  if (out.mp.some(([w, c, mw, mh]) => mw > 1024 || mh > 1024 || mw % c)) bad.push('③ 手机贴图没封 1024：' + JSON.stringify(out.mp));
+  if (out.mp[3][2] !== 1024 || out.mp[4][2] !== 512) bad.push('③ 本来 ≤ 1024 的手机贴图变了（4.9.79：4 × 4 @ 1024 → 1024、2 × 2 @ 1024 → 512）：' + JSON.stringify(out.mp));
+  // ④ 手机单束 / 单帧另出一套（≤ 1024）；单束星数 > 50 不让选
+  const c1 = capMobileTex({ texW: 2048, texH: 1024 }), c0 = { texW: 1024, texH: 512 }, lw = { S: 2048, gray: new Uint8Array(2048 * 2048).fill(200), rgba: new Uint8Array(2048 * 2048 * 4).fill(100) }, lm = lowMobile(lw), l0 = { S: 1024 };
+  out.mob = { cap: [c1.texW, c1.texH], same: capMobileTex(c0) === c0, low: [lm.S, lm.gray[5], lm.rgba[7]], lowSame: lowMobile(l0) === l0, many: [mobileUnitTooMany({ stars: 51 }), mobileUnitTooMany({ stars: 50 })] };
+  if (c1.texW !== 1024 || c1.texH !== 512 || !out.mob.same || lm.S !== 1024 || lm.gray[5] !== 200 || lm.rgba[7] !== 100 || !out.mob.lowSame || !out.mob.many[0] || out.mob.many[1]) bad.push('④ 手机单束 / 单帧另出一套：' + JSON.stringify(out.mob));
+  // ⑤ 种子变体走单层导出（手机独立烘、命名、尺寸档、「导出时」版本）
+  const ev = exportVariants.toString(); out.var = ['platformFiles', 'applyPackNaming', 'scaleCascadeFiles', 'wbAutoExport'].filter(k => !ev.includes(k));
+  if (out.var.length) bad.push('⑤ 种子变体没走：' + out.var.join('、'));
+  // ⑥ 多层：每层导出缩放标「不起作用」；全是尾缀的组合按开花高度拿尺寸档；尾缀档按开花高度分目录
+  out.inert = !!inertWhy('exportScale', state.P);
+  const e6 = entryById('RT6S'), d6 = defaultsFor(e6.base), Zt = derive({ ...d6.P, ...e6.p }), M6 = d6.M, oe = layerEntryOf; let cz = null;
+  try { layerEntryOf = Lx => Lx && Lx._P ? { P: Lx._P } : oe(Lx); cz = comboSizeOf([{ _P: Zt, scale: 1 }]); } finally { layerEntryOf = oe; }
+  out.cz = cz && [cz.what, Math.round(cz.m)];
+  out.cls = deliveryClassification({ kind: 'single', P: Zt }, { spec: { what: 'height', target: 62 } }, { kind: 'trail' });
+  if (!out.inert || !cz || cz.what !== 'height' || out.cls.size !== 'small') bad.push('⑥ 组合尺寸：' + JSON.stringify({ inert: out.inert, cz: out.cz, cls: out.cls }));
+  // ⑦ 组合只放配置引用到的贴图（帧号测试图除外）
+  const u8 = x => new TextEncoder().encode(x);
+  out.keep = packKeepReferenced([['cascade.json', u8(JSON.stringify({ textures: { a: { file: 'A.png' } } }))], ['cascade_mobile.json', u8(JSON.stringify({ textures: {}, extras: { c: { file: 'C.png' } } }))], ['A.png', u8('a')], ['B.png', u8('b')], ['C.png', u8('c')], ['T_FrameTest.png', u8('f')], ['x.txt', u8('t')]]).map(f => f[0]);
+  if (out.keep.join() !== 'cascade.json,cascade_mobile.json,A.png,C.png,T_FrameTest.png,x.txt') bad.push('⑦ 没筛掉没引用的贴图：' + out.keep.join());
+  // ⑧ 只出星头、线性弹道：阻力字段 DragCoefficientRaw，组合里按时间倍率换算不报错
+  const Zh = { ...Zt, rtBall: 0 }, hb = { P: Zh, meta: { Ww: 2, Wh: 2, cy: 0 }, esHead: true, esFull: true, form: 'emitset', esMobile: false };
+  let dr = null, dc = null; try { const j = fwlRiseHead('H', hb, M6); dr = (j.emitters[0].modules.find(m => m.m === 'Drag') || {}).DragCoefficientRaw || null;
+    const cj = fwlCombo('C', [{ L: { ...M6, delay: 0, rate: 2, scale: 1 }, b: hb, i: 0 }], false); dc = (cj.emitters[0].modules.find(m => m.m === 'Drag') || {}).DragCoefficientRaw || null; } catch (err) { dc = 'EXC ' + err.message; }
+  out.drag = [dr, dc]; if (!dr || !dc || typeof dc === 'string' || Math.abs(dc.const - 2 * dr.const) > 1e-3) bad.push('⑧ 星头阻力：' + JSON.stringify(out.drag));
+  // ⑨ 组合里的尾缀层（不是合成一张）走 fwlEmitSet（以前当大面片母版写）
+  const oes = fwlEmitSet; let hit = 0;
+  try { fwlEmitSet = () => { hit++; return { textures: {}, materials: {}, emitters: [], system: { preview_distance_cm: 1 } }; }; fwlCombo('C', [{ L: { delay: 0, rate: 1, scale: 1 }, b: { form: 'emitset', esFull: false, P: {}, meta: {} }, i: 0 }], true); }
+  catch (err) { hit = 'EXC ' + err.message; } finally { fwlEmitSet = oes; }
+  out.es = hit; if (hit !== 1) bad.push('⑨ 组合尾缀层没走 fwlEmitSet：' + hit);
+  return { ok: !bad.length, bad, out };
+}"""
+
+
+async def r10(pg):
+    """4.9.80 导出排查九处（用户 10-13 20:00）：多层手机自动、分开时手机合一张、手机 ≤ 1024、手机单束 / 单帧另出、种子变体、组合尺寸、组合筛贴图、星头阻力字段、组合尾缀层"""
+    await open_effect(pg, 'hiki_nishiki'); await idle(pg)
+    r = await pg.evaluate(R10_JS)
+    return r['ok'], ('；'.join(r['bad']) + ' ｜ ' if r['bad'] else '') + json.dumps(r['out'], ensure_ascii=False)
+
+
 async def w1(pg):
     """4.5.0 工作台快改（用户 10-05 01:28 / 02:25）：时间轴没有发射器行和曲线、精简布局收起层轨道；AI 效果调了保存 = 存成我的效果（派生）、能加层；
     单层存模板 → 花型库「我的模板」、能打开；删除不弹框、8 秒内能撤销；AI 效果能从左栏隐藏；只还原一个发射器 / 回到模板默认；时长跟随 / 同一时刻粘连两个开关"""
@@ -2431,9 +2496,9 @@ async def w16(p, b):
         if not ok or s7['view'] != 'export': bad.append(f"第 7 步没切到引擎回放：{s7['view']}")
         if s7['stale'] or any(not x['baked'] or x['old'] for x in s7['layers']) or s7['life'] is None or abs(s7['life'] - s7['want']) > 1e-6: bad.append(f'第 7 步烘焙后贴图不是最新参数 / 还标着旧：{s7}')
         # 8 导出 PC / 手机：截下素材包（不真下载）
-        await pg.evaluate("""(() => { window.__zip = null; window.__mz = makeZip; window.__dl = download; makeZip = async files => { window.__zip = files.map(([n, d]) => [n, n.endsWith('.json') ? new TextDecoder().decode(d) : d.length || d.byteLength || 0]); return new Blob([]); }; download = () => 0; return 0; })()""")
+        await pg.evaluate("""(() => { window.__zip = null; window.__mz = makeZip; window.__dl = download; makeZip = async files => { window.__zip = files.map(([n, d]) => [n, n.endsWith('.json') ? new TextDecoder().decode(d) : d.length || d.byteLength || 0]); return window.__mz(files); }; download = () => 0; return 0; })()""")     # 4.9.80：截下文件后照样走真的 makeZip（整理 + 导出拦截），以前直接返回空包、拦截没跑过
         if not REAL:     # 云端假烘焙没有真贴图：只把「贴图编码成 PNG」「手机版重烘」换成占位，导出流程（每层是不是最新、PC / 手机 cascade、命名）照旧走
-            await pg.evaluate("(() => { window.__tf = texFiles; window.__bm = bakeMobileFor; texFiles = async (b, name) => [[TN(name, 'Seq', b.meta && b.meta.L, 1) + '.png', new Uint8Array(4)]]; bakeMobileFor = async b => b; return 0; })()")
+            await pg.evaluate("(() => { window.__tf = texFiles; window.__bm = bakeMobileFor; texFiles = async (b, name) => { const o = []; for (let s = b, i = 0; s; s = s.next, i++) { const seg = bakeSegmentName(b, i); o.push([TN(name, seg, s.meta && s.meta.L, 1) + '.png', new Uint8Array(4)], [TN(name, joinPart(seg, 'Cutout'), null, 1) + '.png', new Uint8Array([i, 1, 2, 3])]); } return o; }; bakeMobileFor = async b => b; return 0; })()")     # 4.9.80 占位贴图用真的内部名（组合只放配置引用到的贴图）
         ok = await click("$('#abExportPack')", 'export'); st8 = []
         for _ in range(240 if REAL else 60):
             if await pg.evaluate("!!window.__zip"): break
@@ -3597,7 +3662,7 @@ async def main():
     res = []
     async with async_playwright() as p:
         b = await launch_async(p)
-        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('L1', l1, True)]:
+        for name, fn, own in [('A1', a1, False), ('A2', a2_same, True), ('A3', a3, False), ('A4', a4, False), ('A5', a5, False), ('A6', a6, False), ('A7', a7, True), ('P1', p1, False), ('U1', u1, False), ('B1', b1, False), ('V1', v1, False), ('X1', x1, False), ('G1', g1, False), ('K1', k1, False), ('K2', k2, False), ('R1', r1, False), ('N1', n1, False), ('N2', n2, False), ('S1', s1, False), ('S2', s2, True), ('S3', s3, False), ('S4', s4, False), ('E1', e1, False), ('X2', x2, False), ('N3', n3, False), ('R5', r5, False), ('R6', r6, False), ('R7', r7, False), ('R8', r8, False), ('R9', r9, False), ('R10', r10, False), ('W1', w1, False), ('W2', w2, False), ('W3', w3, False), ('W4', w4, False), ('W5', w5, False), ('W6', w6, False), ('W7', w7, False), ('W8', w8, False), ('W9', w9, False), ('W10', w10, True), ('W11', w11, False), ('W12', w12, False), ('W13', w13, False), ('W14', w14, True), ('W15', w15, True), ('W16', w16, True), ('W17', w17, False), ('W18', w18, False), ('W19', w19, False), ('W20', w20, False), ('W21', w21, False), ('W22', w22, False), ('W23', w23, False), ('W24', w24, False), ('W25', w25, False), ('W26', w26, False), ('W27', w27, False), ('W28', w28, False), ('W29', w29, False), ('W30', w30, False), ('W31', w31, False), ('W32', w32, False), ('W33', w33, False), ('W34', w34, False), ('W35', w35, False), ('W36', w36, False), ('L1', l1, True)]:
             if only and name not in only: continue
             t0 = time.time()
             try:

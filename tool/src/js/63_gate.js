@@ -35,12 +35,14 @@ function packGateConfig(f, j, dir, png) {
   const gpu = ems.filter(e => e.gpu).map(e => e.name); if (gpu.length) bad.push(`${tag}：有 GPU 发射器 ${gpu.join('、')}（手游不能有 GPU）`);
   const noAlive = ems.filter(e => e.max_alive == null).map(e => e.name), over = ems.filter(e => +e.max_alive > GATE_MAX_ALIVE).map(e => `${e.name} ${e.max_alive}`);
   if (noAlive.length) bad.push(`${tag}：发射器没写 max_alive：${noAlive.join('、')}`);
-  if (over.length) bad.push(`${tag}：同时活着的粒子超过 ${GATE_MAX_ALIVE}：${over.join('、')}`);
+  if (over.length) bad.push(`${tag}：同时活着的粒子超过 ${GATE_MAX_ALIVE}：${over.join('、')}${ems.some(e => +e.max_alive > GATE_MAX_ALIVE && /Unit/.test(e.name)) ? '（手机单束每颗星一个粒子：这一层手机改序列 / 单帧 / 不出）' : ''}`);
   // 同一时刻的大序列（flipbook 贴图的发射器）不超过 1 张
   const flip = k => { const t = (j.textures || {})[k]; return t && t.class === 'flipbook'; }, mat = e => (j.materials || {})[e.material] || {};
   const seq = ems.filter(e => { const m = mat(e).textures || {}; return Object.values(m).some(flip); }).map(e => { const r = e.required || {}, d0 = +r.delay_s || 0; return [e.name, d0, d0 + (+r.duration_s || 0)]; });
   let most = 0, who = []; for (const [, a] of seq) { const live = seq.filter(([, b0, b1]) => b0 <= a + 1e-6 && b1 > a + 1e-6); if (live.length > most) { most = live.length; who = live.map(x => x[0]); } }
-  if (most > 1) bad.push(`${tag}：同一时刻有 ${most} 张大序列（${who.join(' + ')}）；手游中低配只能 1 张（规范 §6）`);
+  // 4.9.80（导出排查 ①）：写清楚改哪一层（发射器名 L<n>_ 前缀 = 第 n 层）
+  const lys = [...new Set(who.map(n => (/^L(\d+)_/.exec(n) || [])[1]).filter(Boolean))], tip = lys.length > 1 ? `：交付清单产物表把第 ${lys.slice(1).join('、')} 层的手机改成「自动」或「不出」` : who.length > 1 && /Tail$/.test(who[1]) ? '：手机不能星头、火花分开（要合成一张）' : '';
+  if (most > 1) bad.push(`${tag}：同一时刻有 ${most} 张大序列（${who.join(' + ')}）；手游中低配只能 1 张（规范 §6）${tip}`);
   const hd = texs.filter(([, t]) => t && t.file && /_HD(_|$)/i.test(assetOf(t))).map(([, t]) => assetOf(t));
   if (hd.length) bad.push(`${tag}：手机材质引用了 _HD 贴图 ${hd.join('、')}（规范 §3）`);
   const big = texs.filter(([, t]) => t && t.file).map(([, t]) => [assetOf(t), (png[dir + t.file] || {}).size]).filter(([, s]) => s && Math.max(s[0], s[1]) > GATE_MOBILE_TEX).map(([a, s]) => `${a}（${s[0]}×${s[1]}）`);
