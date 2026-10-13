@@ -1,0 +1,9 @@
+{
+  "format": "df.dispatch-receipt/1",
+  "task": "T00",
+  "receivedAt": "2026-10-14T00:09:09+08:00",
+  "by": "本机同步（8）",
+  "dispatcher": "dot",
+  "repoHeadBefore": "fc335fb9e1fccf20e3f640dcb3ec13e447d19b58",
+  "note": "我是从新开的 Codex 委派任务收到 T00，来源为原对话 01a1004f-889b-7212-9e00-ad07494c2007。"
+}
