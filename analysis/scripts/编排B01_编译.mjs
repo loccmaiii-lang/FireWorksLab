@@ -110,6 +110,85 @@ const DER_SRC = new Map(DERIVED.map(f => [f.id, f.source]));
   }
 }
 
+// —— B04（22，用户 10-14 01:27）：新尾缀 Tiny / XS（协作/编排B01/新尾缀.json；ResourceFX 行名是占位，用户加行后只改那里重编）——
+//   ① 片段带 trail='Tiny'：同一花型（含大小版本）只把小号尾缀换成 Tiny，另存 <花型>__TINY；球花开在 Tiny 终点（开花点按 k 沿尾缀方向收）、
+//      局部延迟 = Tiny 升空时间。applyTrailV2 只认 S / M / L 三根，不会再缩它。
+//   ② 前台小花（协作/编排B01/前台小花.json）：XS 尾缀（不缩放，固化倾角）+ 现成小花 EffectScale 缩小挂在 XS 终点，在 XS 到顶时开。
+//   旧方案没有 trail 字段、不用前台小花，不进这一段，产物逐字节不变。
+const NEWT = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/新尾缀.json'), 'utf8'));
+const FRONTF = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/前台小花.json'), 'utf8'));
+const tidOf = c => c.trail ? `${c.templateId}__${c.trail.toUpperCase()}` : c.templateId;
+const b04Report = {tiny: [], front: [], placeholders: Object.fromEntries(Object.entries(NEWT.trails).map(([k, v]) => [k, {resourceId: v.resourceId, confirmed: v.confirmed}]))};
+const newTrail = (e, tr) => {   // 把一条尾缀条目换成新尾缀（行名占位时 resourceSource 标出来）
+  e.native.FXResourceId = tr.resourceId; e.baseTemplateRef = tr.resourceId + '|trail';
+  e.preview = {...e.preview, heightM: tr.burstM, durationS: tr.riseS};
+  e.resourceSource = {table: e.resourceSource?.table, rowName: tr.confirmed ? tr.resourceId : `（待加行：${tr.resourceId}）`, particle: tr.particle, placeholder: !tr.confirmed};
+  return e;
+};
+{
+  const tmap = new Map(doc.templateLibrary.map(t => [t.id, t])), smap = new Map(doc.subTemplateLibrary.map(s => [s.key, s]));
+  for (const id of [...new Set(logic.cues.filter(c => c.trail).map(tidOf))]) {
+    const c0 = logic.cues.find(c => tidOf(c) === id), tr = NEWT.trails[c0.trail], bt = tmap.get(c0.templateId);
+    if (!tr || !bt) throw Error('新尾缀或原花型不存在：' + id);
+    const bs = smap.get(bt.subTemplateRef), sub = clone(bs), tails = sub.entries.filter(e => e.role === 'trail');
+    if (tails.length !== 1 || tails[0].native.FXResourceId !== 'P_EFX_FireWorks_NY_Trail_Small') throw Error(c0.trail + ' 只换小号尾缀：' + id);
+    const t = tails[0], p0 = t.native.PositionOffset, riseOld = t.preview.durationS;
+    let zOld = 0, zNew = 0;
+    for (const e of sub.entries.filter(e => e.role === 'burst')) {
+      const p = e.native.PositionOffset;
+      zOld = Math.max(zOld, p.Z / 100);
+      e.native.PositionOffset = {X: round(p0.X + (p.X - p0.X) * tr.k), Y: round(p0.Y + (p.Y - p0.Y) * tr.k), Z: round(p0.Z + (p.Z - p0.Z) * tr.k)};
+      e.native.LocalTimeOffset = round(e.native.LocalTimeOffset - riseOld + tr.riseS);
+      zNew = Math.max(zNew, e.native.PositionOffset.Z / 100);
+    }
+    newTrail(t, tr);
+    const engine = (bs.engineId || bs.id) + '_' + c0.trail;
+    Object.assign(sub, {name: `${bt.name}·${tr.zh.split(' ')[0]}`, id: engine, engineId: engine, key: engine + '@1', version: 1,
+      sizeEvidence: {...sub.sizeEvidence, tailScale: 1, endpointM: tr.burstM, source: `${tr.zh}：烘焙器导出值（${tr.export.split('（')[0]}），未在 UE 量`, enginePlaybackVerified: false},
+      newTrail: {trail: c0.trail, resourceId: tr.resourceId, confirmed: tr.confirmed, particle: tr.particle, k: tr.k, riseS: tr.riseS},
+      derivedFrom: {...(bs.derivedFrom || {}), trailOf: bs.key, rule: '同一花型，只把小号尾缀换成新尾缀，开花点沿尾缀方向按 k 收到新终点、局部延迟换成新升空时间', by: '跨年秀（22）2026-10-14，用户 01:27', engineScaleVerified: false}});
+    doc.subTemplateLibrary.push(sub);
+    doc.templateLibrary.push({...clone(bt), id, name: sub.name, z: round(bt.z - zOld + zNew), burstZ: round(bt.burstZ - zOld + zNew), flightHeight: tr.burstM,
+      rise: tr.riseS, recipeDuration: round(tr.riseS + bt.life), subTemplateRef: sub.key, numericSource: 'b04_new_trail_20261014', engineSizeVerified: false});
+    DER_SRC.set(id, DER_SRC.get(c0.templateId) || c0.templateId);
+    b04Report.tiny.push({id, engineId: engine, burstM: round(zNew - p0.Z / 100), riseS: tr.riseS});
+  }
+  const front = new Map(FRONTF.flowers.map(x => [x.id, x])), tr = NEWT.trails[FRONTF.trail];
+  const sTrail = smap.get(tmap.get('R03_SilverChry').subTemplateRef).entries.find(e => e.role === 'trail');
+  for (const id of [...new Set(logic.cues.map(c => c.templateId).filter(id => front.has(id)))]) {
+    const x = front.get(id), entries = [], tips = [];
+    x.trails.forEach((t, i) => {
+      const e = newTrail(clone(sTrail), tr);
+      e.id = `trail-${i}`;
+      Object.assign(e.native, {LocalTimeOffset: round(t.off), PositionOffset: {X: 0, Y: 0, Z: 0}, RotationOffset: {Pitch: 0, Yaw: 0, Roll: round(t.roll)},
+        RandomRotationRange: {Pitch: 0, Yaw: 0, Roll: round(t.randomRoll || 0)}, EffectScale: {X: 1, Y: 1, Z: 1}});
+      entries.push(e);
+    });
+    x.flowers.forEach((f, i) => {
+      const src = FRONTF.flowerSources[f.src], st = tmap.get(src.template), sb = smap.get(st.subTemplateRef).entries.find(e => e.role === 'burst'), t = x.trails[f.trail];
+      const a = t.roll * Math.PI / 180, k = f.diameter / st.diameter, e = clone(sb);
+      e.id = `flower-${i}`;
+      Object.assign(e.native, {LocalTimeOffset: round(t.off + tr.riseS), PositionOffset: {X: 0, Y: round(-Math.sin(a) * tr.burstM * 100), Z: round(Math.cos(a) * tr.burstM * 100)},
+        RotationOffset: {Pitch: 0, Yaw: 0, Roll: 0}, EffectScale: {X: round(sb.native.EffectScale.X * k), Y: round(sb.native.EffectScale.Y * k), Z: round(sb.native.EffectScale.Z * k)}});
+      e.preview = {...e.preview, diameterM: f.diameter};
+      entries.push(e); tips.push({z: Math.cos(a) * tr.burstM, t: t.off + tr.riseS, end: t.off + tr.riseS + st.life});
+    });
+    const sub = {name: x.name, category: x.flowers.length ? 'ball' : 'trail', seed: 1, randomMode: 'materialized', entries, id: x.engineId, engineId: x.engineId, key: x.engineId + '@1', version: 1,
+      sizeEvidence: {trailEndpointM: tr.burstM, trailRiseS: tr.riseS, source: `XS 尾缀烘焙器导出值（${tr.export.split('（')[0]}）；小花 EffectScale 缩小，未在 UE 量`, enginePlaybackVerified: false},
+      newTrail: {trail: FRONTF.trail, resourceId: tr.resourceId, confirmed: tr.confirmed, particle: tr.particle},
+      derivedFrom: {rule: '通用尾缀 XS（不缩放、固化倾角）+ 现成小花缩小挂在 XS 终点；不新增资源', by: '跨年秀（22）2026-10-14，用户 01:27（看板 i12）', from: x.from, engineScaleVerified: false}};
+    doc.subTemplateLibrary.push(sub);
+    const flight = tips.length ? Math.max(...tips.map(t => t.z)) : tr.burstM, rise = tips.length ? Math.min(...tips.map(t => t.t)) : 0;
+    const end = Math.max(...x.trails.map(t => t.off + tr.durationS), ...tips.map(t => t.end));
+    const proto = tmap.get(FRONTF.flowerSources[x.flowers[0]?.src || 'SC'].template), dia = Math.max(0, ...x.flowers.map(f => f.diameter));
+    doc.templateLibrary.push({...clone(proto), id: x.id, name: x.name, zone: 'front', kind: x.kind || 'small', shape: x.kind === 'comet' ? 'comet' : 'sphere', diameter: dia, width: dia,
+      flightHeight: round(flight), z: round(50 + flight), burstZ: round(50 + flight), rise: round(rise), life: round(end - rise), recipeDuration: round(end), subTemplateRef: sub.key,
+      numericSource: 'b04_front_flower_20261014', engineSizeVerified: false, color: x.flowers.length ? FRONTF.flowerSources[x.flowers[0].src].color : tr.color});
+    DER_SRC.set(x.id, proto.id);
+    b04Report.front.push({id: x.id, engineId: x.engineId, from: x.from, trails: x.trails.length, flowers: x.flowers.length, flightM: round(flight), rise: round(rise), end: round(end)});
+  }
+}
+
 // —— B02（22，10-12，用户 20:18）：小平台小花束尾——现成银扇 / 红彗星单束缩小当尾缀（固化随机角），现成小花缩小挂在束顶；
 //    定义在 协作/编排B01/小花束尾.json（编排B01.py 共用）。束长和挂花时刻是估的（estimate），UE 量到后改那三个数重编。 ——
 const BEAMF = JSON.parse(fs.readFileSync(path.join(ROOT, '协作/编排B01/小花束尾.json'), 'utf8'));
@@ -175,22 +254,23 @@ sections[sections.length - 1].end = duration;
 doc.cues = []; doc.events = [];
 const profiles = {medium: {}, low: {}};
 for (const c of logic.cues) {
-  const tpl = templates.get(c.templateId);
-  if (!tpl) throw Error('找不到花型 ' + c.templateId);
-  const ep = eventProto.get(c.templateId);
-  if (!ep) throw Error('R04 里没有 ' + c.templateId + ' 的事件原型');
+  const tid = tidOf(c);   // B04：带新尾缀的片段用 <花型>__TINY
+  const tpl = templates.get(tid);
+  if (!tpl) throw Error('找不到花型 ' + tid);
+  const ep = eventProto.get(tid);
+  if (!ep) throw Error('R04 里没有 ' + tid + ' 的事件原型');
   const evs = c.events.map((e, i) => {
     const ev = clone(ep);
     for (const k of ['choreographyInstance', 'effectiveLaunch', 'effectiveBurst', 'effectiveEnd', 'launchJitterS', 'jitterKey', 'sectionId', 'phase', 'groupId']) delete ev[k];
-    Object.assign(ev, {id: `${c.id}_E${String(i + 1).padStart(2, '0')}`, pointId: e.point, point: e.point, templateId: c.templateId, template: c.templateId, cueId: c.id,
+    Object.assign(ev, {id: `${c.id}_E${String(i + 1).padStart(2, '0')}`, pointId: e.point, point: e.point, templateId: tid, template: tid, cueId: c.id,
       launch: round(e.launch), dt: 0, dz: e.dz, scale: 1, zone: tpl.zone ?? 'dam', burst: round(e.burst), end: round(e.end), recipeRef: tpl.subTemplateRef});
     if (tpl.shape === 'fan' || c.size === 'F') { ev.beams = ev.beams ?? 1; ev.beamGap = ev.beamGap ?? 0; ev.dir = ev.dir ?? 'L'; ev.tilt = ev.tilt ?? 0; }
     else { delete ev.beams; delete ev.beamGap; delete ev.dir; delete ev.tilt; }
     return ev;
   });
   doc.events.push(...evs);
-  const cp = cueProto.get(c.templateId) ?? {};
-  const cue = {id: c.id, name: c.name, templateId: c.templateId, pointIds: c.points, enabled: true, sourceMethod: 'visual_editor', groupingSource: 'visual_editor',
+  const cp = cueProto.get(tid) ?? {};
+  const cue = {id: c.id, name: c.name, templateId: tid, pointIds: c.points, enabled: true, sourceMethod: 'visual_editor', groupingSource: 'visual_editor',
     eventIds: evs.map(e => e.id), start: Math.min(...evs.map(e => e.launch)), order: c.order, gap: c.gap, sizeScale: 1, designScale: Object.fromEntries(evs.map(e => [e.id, 1])),
     preserveRepeatedEvents: true, edited: true, warnings: [], pattern: `${c.wave ?? ''}｜${c.label}`, programSectionId: c.section, musicBinding: null};
   if (cue.order === 'source' || !['left', 'right', 'center-out', 'outside-in', 'together', 'source'].includes(cue.order)) cue.order = 'source';
@@ -305,6 +385,7 @@ if (B02) {
   report.beamFlowers = beamReport;
   report.heroTrailId = HERO_ID;
 }
+if (b04Report.tiny.length || b04Report.front.length) report.b04 = b04Report;   // B04：新尾缀片段 / 前台小花（旧方案不出这一项）
 report.doc = {cues: finalDoc.cues.length, events: finalDoc.events.length, sections: finalDoc.sections.length, duration: finalDoc.meta.duration, musicOffset: finalDoc.meta.musicOffset, balls: finalDoc.statistics.ballCount, fans: finalDoc.statistics.fanCount};
 if (mixAudio) report.audio = {file: mixAudio.audioRef.name, sha256: mixAudio.audioRef.sha256, duration: mixAudio.audioRef.duration, musicOffset: finalDoc.meta.musicOffset, embeddedBytes: Buffer.byteLength(mixAudio.audioRef.dataUrl), markers: musicMarkers.length};
 fs.writeFileSync(path.join(outDir, `${TABLE}编排检查.json`), JSON.stringify(report, null, 2));

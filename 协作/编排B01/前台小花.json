@@ -1,0 +1,29 @@
+{
+  "format": "df.b04-front-flowers/1",
+  "by": "跨年秀（22）2026-10-14",
+  "note": "B04 小平台「前台小花 + XS」（看板 i12 用户按推荐定：小花束尾换成前台小花 + XS，同位置同时刻；用户 10-14 01:27 开工）。和 小花束尾.json 一一对应：同样的变体、同样的固化倾角和先后（甲 / 乙两组），只把银扇 / 红彗星单束换成通用尾缀 XS（不缩放，开花 62 m、升空 1.6875 s），小花挂在 XS 终点、在 XS 到顶那一刻开；花还是现成小银菊 / 金锦菊 / 爆裂星按 EffectScale 缩到 22–28 m（同 B03）。编排里同一点位、第一朵花开花时刻不变（起飞提前 0.7 s）。V 形四根原来就不开花，换成四根 XS 不开花。不新增资源、不改原花型。由 编排B04.py（排片段、GPU）、编排B01_编译.mjs（建固定子模板与花型）、编排B01_动画.py 共用。",
+  "trail": "XS",
+  "flowerSources": {
+    "SC": {"template": "R03_SilverChry", "resource": "P_EFX_FireWorks_SilverChry", "zh": "小银菊", "color": "#e5efff"},
+    "GS": {"template": "R03_GoldSpark", "resource": "P_EFX_FireWorks_GoldSpark", "zh": "金锦菊", "color": "#f0cb87"},
+    "CR": {"template": "R03_Crackle", "resource": "P_EFX_FireWorks_Crackle", "zh": "爆裂星", "color": "#e0af65"}
+  },
+  "flowers": [
+    {"code": "FS1A", "from": "XS1A", "id": "B04_XS1_SC_a", "engineId": "NYB04_XS1_SC_a", "name": "小平台 · XS · 小银菊 26m（甲）", "zh": "XS·小银菊",
+     "trails": [{"roll": -4.6, "off": 0}], "flowers": [{"src": "SC", "diameter": 26, "trail": 0}]},
+    {"code": "FS1B", "from": "XS1B", "id": "B04_XS1_SC_b", "engineId": "NYB04_XS1_SC_b", "name": "小平台 · XS · 小银菊 26m（乙）", "zh": "XS·小银菊",
+     "trails": [{"roll": 5.8, "off": 0}], "flowers": [{"src": "SC", "diameter": 26, "trail": 0}]},
+    {"code": "FS3A", "from": "XS3A", "id": "B04_XS3_GS_a", "engineId": "NYB04_XS3_GS_a", "name": "小平台 · 三根 XS · 小金花簇 28m（甲）", "zh": "三根XS·小金花簇",
+     "trails": [{"roll": -11.3, "off": 0}, {"roll": 1.7, "off": 0.12}, {"roll": 9.4, "off": 0.24}],
+     "flowers": [{"src": "GS", "diameter": 28, "trail": 0}, {"src": "GS", "diameter": 28, "trail": 1}, {"src": "GS", "diameter": 28, "trail": 2}]},
+    {"code": "FS3B", "from": "XS3B", "id": "B04_XS3_GS_b", "engineId": "NYB04_XS3_GS_b", "name": "小平台 · 三根 XS · 小金花簇 28m（乙）", "zh": "三根XS·小金花簇",
+     "trails": [{"roll": -6.8, "off": 0.12}, {"roll": 3.9, "off": 0}, {"roll": 13.2, "off": 0.24}],
+     "flowers": [{"src": "GS", "diameter": 28, "trail": 0}, {"src": "GS", "diameter": 28, "trail": 1}, {"src": "GS", "diameter": 28, "trail": 2}]},
+    {"code": "FC2A", "from": "XC2A", "id": "B04_XS2_CR_a", "engineId": "NYB04_XS2_CR_a", "name": "小平台 · 两根 XS · 短爆裂 22m（甲）", "zh": "两根XS·短爆裂",
+     "trails": [{"roll": -8.1, "off": 0}, {"roll": 6.2, "off": 0.15}], "flowers": [{"src": "CR", "diameter": 22, "trail": 0}, {"src": "CR", "diameter": 22, "trail": 1}]},
+    {"code": "FC2B", "from": "XC2B", "id": "B04_XS2_CR_b", "engineId": "NYB04_XS2_CR_b", "name": "小平台 · 两根 XS · 短爆裂 22m（乙）", "zh": "两根XS·短爆裂",
+     "trails": [{"roll": -3.7, "off": 0.15}, {"roll": 10.5, "off": 0}], "flowers": [{"src": "CR", "diameter": 22, "trail": 0}, {"src": "CR", "diameter": 22, "trail": 1}]},
+    {"code": "FV4", "from": "XV4", "id": "B04_XSV4", "engineId": "NYB04_XSV4", "name": "小平台 · 四根 XS V 形（不开花）", "zh": "V形四根XS", "kind": "comet",
+     "trails": [{"roll": -16, "off": 0, "randomRoll": 6}, {"roll": -5, "off": 0.05, "randomRoll": 6}, {"roll": 5, "off": 0.05, "randomRoll": 6}, {"roll": 16, "off": 0, "randomRoll": 6}], "flowers": []}
+  ]
+}

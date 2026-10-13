@@ -1,0 +1,322 @@
+{
+  "revision": "B04_tiny_lowlayer_frontflowers_xs_fans30_from_B03r2m_vo_countdown_zero16.20_from_B02r2_upOnly_declutter_mobileStandins_up70_s10",
+  "density": 2,
+  "rhythm": null,
+  "derivedFlowers": [
+    "R03_GoldRayChry_L230",
+    "R03_GoldCoreLime_L230",
+    "R03_MultiLayerChry_L230",
+    "R03_GoldKamuro_H280"
+  ],
+  "generatedBy": "analysis/scripts/编排B01_编译.mjs",
+  "trailV2": {
+    "revision": "v2-20261012",
+    "hero": false,
+    "heroId": "Hero",
+    "subTemplates": 43,
+    "skipped": 0,
+    "heroOnLarge": [
+      "NYR03_GoldKamuro_H280@1"
+    ],
+    "heroSwitched": [],
+    "templates": 43,
+    "baseResources": 3,
+    "samples": [
+      "R03 · 金裂星 · 90m：开花 189.1 → 149.1 m",
+      "R03 · 小银菊 · 90m：开花 188.3 → 148.3 m",
+      "R03 · 爆裂星 · 90m：开花 187.6 → 147.6 m",
+      "R03 · 小青柠 · 90m：开花 189.3 → 149.3 m",
+      "R03 · 橙辉星 · 90m：开花 191.7 → 151.7 m",
+      "R03 · 点灭星 · 90m：开花 192.0 → 152.0 m"
+    ]
+  },
+  "tiers": {
+    "high": {
+      "events": 935,
+      "subTemplates": 138,
+      "templates": 138,
+      "scheduleSlots": 182,
+      "groups": {
+        "P": 83,
+        "B": 81,
+        "F": 18
+      },
+      "lastSlot": 197.3,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "medium": {
+      "events": 787,
+      "subTemplates": 130,
+      "templates": 138,
+      "scheduleSlots": 182,
+      "groups": {
+        "P": 83,
+        "B": 81,
+        "F": 18
+      },
+      "lastSlot": 197.3,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    },
+    "low": {
+      "events": 304,
+      "subTemplates": 93,
+      "templates": 83,
+      "scheduleSlots": 96,
+      "groups": {
+        "P": 82,
+        "B": 14
+      },
+      "lastSlot": 197.3,
+      "expansionProblems": [],
+      "status": "property_text_ready_UE_unverified"
+    }
+  },
+  "preflight": "preflightProject 通过（同 8025 打开 .dfshow）",
+  "file": "NewYearFireWorks_v01-B04-低层Tiny-小平台前台小花XS-扇3.0.dfshow",
+  "tierNesting": {
+    "lowNotInMedium": 0,
+    "mediumNotInHigh": 0
+  },
+  "oneTable": {
+    "events": 1010,
+    "flags14": 224,
+    "flags12": 711,
+    "flags2": 75,
+    "subTemplates": 154,
+    "templates": 153,
+    "scheduleSlots": 197,
+    "pc": {
+      "high": 935,
+      "medium": 787,
+      "low": 304
+    },
+    "mobile": {
+      "high": 299,
+      "medium": 245,
+      "low": 164
+    }
+  },
+  "beamFlowers": [
+    {
+      "id": "B02_BeamS1_SC_a",
+      "engineId": "NYB02_BeamS1_SC_a",
+      "beams": 1,
+      "flowers": 1,
+      "flightM": 38.550423
+    },
+    {
+      "id": "B02_BeamS1_SC_b",
+      "engineId": "NYB02_BeamS1_SC_b",
+      "beams": 1,
+      "flowers": 1,
+      "flightM": 35.178982
+    },
+    {
+      "id": "B02_BeamS3_GS_a",
+      "engineId": "NYB02_BeamS3_GS_a",
+      "beams": 3,
+      "flowers": 3,
+      "flightM": 41.971519
+    },
+    {
+      "id": "B02_BeamS3_GS_b",
+      "engineId": "NYB02_BeamS3_GS_b",
+      "beams": 3,
+      "flowers": 3,
+      "flightM": 41.956383
+    },
+    {
+      "id": "B02_BeamC2_CR_a",
+      "engineId": "NYB02_BeamC2_CR_a",
+      "beams": 2,
+      "flowers": 2,
+      "flightM": 36.758732
+    },
+    {
+      "id": "B02_BeamC2_CR_b",
+      "engineId": "NYB02_BeamC2_CR_b",
+      "beams": 2,
+      "flowers": 2,
+      "flightM": 35.625588
+    },
+    {
+      "id": "B02_BeamV4",
+      "engineId": "NYB02_BeamV4",
+      "beams": 4,
+      "flowers": 0,
+      "flightM": 29.9
+    }
+  ],
+  "heroTrailId": "Hero",
+  "b04": {
+    "tiny": [
+      {
+        "id": "R03_SilverChry__K108__TINY",
+        "engineId": "NYR03_SilverChry_K108_Tiny",
+        "burstM": 80.005433,
+        "riseS": 1.9171
+      },
+      {
+        "id": "R03_Strobe__K92__TINY",
+        "engineId": "NYR03_Strobe_K092_Tiny",
+        "burstM": 80.000939,
+        "riseS": 1.9171
+      },
+      {
+        "id": "R03_OrangeGlitter__TINY",
+        "engineId": "NYR03_OrangeGlitter_Tiny",
+        "burstM": 80.008727,
+        "riseS": 1.9171
+      },
+      {
+        "id": "R03_GoldCrackle__TINY",
+        "engineId": "NYR03_GoldCrackle_Tiny",
+        "burstM": 80.040283,
+        "riseS": 1.9171
+      },
+      {
+        "id": "R03_Lime__K92__TINY",
+        "engineId": "NYR03_Lime_K092_Tiny",
+        "burstM": 80.034498,
+        "riseS": 1.9171
+      },
+      {
+        "id": "R03_Crackle__TINY",
+        "engineId": "NYR03_Crackle_Tiny",
+        "burstM": 80.04294,
+        "riseS": 1.9171
+      },
+      {
+        "id": "R03_SilverChry__K92__TINY",
+        "engineId": "NYR03_SilverChry_K092_Tiny",
+        "burstM": 80.005433,
+        "riseS": 1.9171
+      },
+      {
+        "id": "R03_Crackle__K108__TINY",
+        "engineId": "NYR03_Crackle_K108_Tiny",
+        "burstM": 80.04294,
+        "riseS": 1.9171
+      },
+      {
+        "id": "R03_SilverChry__TINY",
+        "engineId": "NYR03_SilverChry_Tiny",
+        "burstM": 80.005433,
+        "riseS": 1.9171
+      },
+      {
+        "id": "R03_GoldCrackle__K108__TINY",
+        "engineId": "NYR03_GoldCrackle_K108_Tiny",
+        "burstM": 80.040283,
+        "riseS": 1.9171
+      },
+      {
+        "id": "R03_Strobe__K108__TINY",
+        "engineId": "NYR03_Strobe_K108_Tiny",
+        "burstM": 80.000939,
+        "riseS": 1.9171
+      }
+    ],
+    "front": [
+      {
+        "id": "B04_XS1_SC_a",
+        "engineId": "NYB04_XS1_SC_a",
+        "from": "XS1A",
+        "trails": 1,
+        "flowers": 1,
+        "flightM": 61.820226,
+        "rise": 1.6875,
+        "end": 6.2475
+      },
+      {
+        "id": "B04_XS2_CR_a",
+        "engineId": "NYB04_XS2_CR_a",
+        "from": "XC2A",
+        "trails": 2,
+        "flowers": 2,
+        "flightM": 61.657243,
+        "rise": 1.6875,
+        "end": 3.3375
+      },
+      {
+        "id": "B04_XSV4",
+        "engineId": "NYB04_XSV4",
+        "from": "XV4",
+        "trails": 4,
+        "flowers": 0,
+        "flightM": 62.02,
+        "rise": 0,
+        "end": 2.79
+      },
+      {
+        "id": "B04_XS1_SC_b",
+        "engineId": "NYB04_XS1_SC_b",
+        "from": "XS1B",
+        "trails": 1,
+        "flowers": 1,
+        "flightM": 61.702502,
+        "rise": 1.6875,
+        "end": 6.2475
+      },
+      {
+        "id": "B04_XS3_GS_a",
+        "engineId": "NYB04_XS3_GS_a",
+        "from": "XS3A",
+        "trails": 3,
+        "flowers": 3,
+        "flightM": 61.992703,
+        "rise": 1.6875,
+        "end": 7.2275
+      },
+      {
+        "id": "B04_XS2_CR_b",
+        "engineId": "NYB04_XS2_CR_b",
+        "from": "XC2B",
+        "trails": 2,
+        "flowers": 2,
+        "flightM": 61.890727,
+        "rise": 1.6875,
+        "end": 3.3375
+      },
+      {
+        "id": "B04_XS3_GS_b",
+        "engineId": "NYB04_XS3_GS_b",
+        "from": "XS3B",
+        "trails": 3,
+        "flowers": 3,
+        "flightM": 61.876379,
+        "rise": 1.6875,
+        "end": 7.2275
+      }
+    ],
+    "placeholders": {
+      "Tiny": {
+        "resourceId": "Tiny",
+        "confirmed": false
+      },
+      "XS": {
+        "resourceId": "XS",
+        "confirmed": false
+      }
+    }
+  },
+  "doc": {
+    "cues": 197,
+    "events": 1010,
+    "sections": 13,
+    "duration": 214.4,
+    "musicOffset": 0,
+    "balls": 698,
+    "fans": 312
+  },
+  "audio": {
+    "file": "VO倒计时+汪洋与浩渺.mp3",
+    "sha256": "b357bc5b8028dba95c96aabb4016e4c76c764a710004c6aacfcc106294c48613",
+    "duration": 211.644,
+    "musicOffset": 0,
+    "embeddedBytes": 6772703,
+    "markers": 30
+  }
+}

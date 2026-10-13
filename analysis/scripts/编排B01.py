@@ -131,6 +131,31 @@ for _x in BEAMF['flowers']:
                          subTemplateRef=_x['engineId'] + '@1', beamFlower=_x)
     _col = BEAMF['flowerSources'][_x['flowers'][0]['src']]['color'] if _x['flowers'] else BEAMF['beamSources'][_x['beams'][0]['res']]['color']
     SPECIES[_x['code']] = (_x['id'], _x['zh'], 'X', _col, 0)
+# ———— B04（22，用户 10-14 01:27）：新尾缀 Tiny（坝顶低层 80 m）/ XS（小平台 62 m）与 Comet / Silver 3.0 定义在 协作/编排B01/新尾缀.json；
+#      小平台「前台小花 + XS」定义在 协作/编排B01/前台小花.json。球花片段带 trail='Tiny' 时只换尾缀（花型、大小不变）。
+#      旧方案没有 trail 字段、不用 FS* / FC* 花型，结果不变。 ————
+NEWT = json.loads((OUTDIR / '新尾缀.json').read_text(encoding='utf-8'))
+FRONTF = json.loads((OUTDIR / '前台小花.json').read_text(encoding='utf-8'))
+
+
+def front_tip(x, f):
+    """前台小花挂在 XS 终点（相对发射点）：(横向 m, 高 m, 出尾缀后秒)。Roll 正 → 局部 Y 负（同 beam_tip）"""
+    tr, t = NEWT['trails'][FRONTF['trail']], x['trails'][f['trail']]
+    a = math.radians(t['roll'])
+    return -math.sin(a) * tr['burstM'], math.cos(a) * tr['burstM'], t['off'] + tr['riseS']
+
+
+for _x in FRONTF['flowers']:
+    _tr = NEWT['trails'][FRONTF['trail']]
+    _tips = [front_tip(_x, f) for f in _x['flowers']]
+    _rise = min(t for _, _, t in _tips) if _tips else 0.0
+    _ends = [t['off'] + _tr['durationS'] for t in _x['trails']] + [t + TPL[FRONTF['flowerSources'][f['src']]['template']]['life'] for f, (_, _, t) in zip(_x['flowers'], _tips)]
+    _reach = max([z for _, z, _ in _tips] or [_tr['burstM']])
+    TPL[_x['id']] = dict(id=_x['id'], name=_x['name'], kind=_x.get('kind', 'small'), zone='front', diameter=max([f['diameter'] for f in _x['flowers']] or [0]),
+                         flightHeight=round(_reach, 3), rise=round(_rise, 4), life=round(max(_ends) - _rise, 4), recipeDuration=round(max(_ends), 4),
+                         subTemplateRef=_x['engineId'] + '@1', frontFlower=_x)
+    _col = FRONTF['flowerSources'][_x['flowers'][0]['src']]['color'] if _x['flowers'] else _tr['color']
+    SPECIES[_x['code']] = (_x['id'], _x['zh'], 'X', _col, 0)
 fam = lambda sp: FAMILY.get(sp, sp)
 TID2SP = {v[0]: k for k, v in SPECIES.items()}
 FAN_PTS = {'S9': ['B1', 'B3', 'B4', 'B6'], 'S13': ['B3', 'B4']}   # 银扇 9 / 13 束太重：限点位；S5（每点 15）可整排 8 点，由预算逐波裁
@@ -145,6 +170,8 @@ HEIGHTS = 'v1'
 
 def bloom_h(c):
     """这一片段的开花高度（相对发射点，m）：花型自带 flightHeight（大号 / 主角挂大尾缀）× 尾缀 v2 系数"""
+    if c.get('trail') in NEWT['trails']:      # B04：Tiny 等新尾缀（开花高度 = 新尾缀终点，见 新尾缀.json）
+        return NEWT['trails'][c['trail']]['burstM']
     t = TPL[c['templateId'].split('__K')[0]]
     h = t.get('flightHeight') or REL_H[c['size']]
     if HEIGHTS == 'v2' and c['size'] in TRAIL_K:
@@ -1561,11 +1588,14 @@ def gpu_points(S, tier='high', platform='pc'):
                 gpu = BEAM_GPU['R' if c['sp'].startswith('R') else 'S']
                 for b in fan_beams(c['sp']):
                     pts.append((e['launch'] + b['off'], gpu))
+            elif c['size'] == 'X' and 'frontFlower' in TPL[SPECIES[c['sp']][0]]:   # B04 前台小花：每根 XS 尾缀 + 花本体（小银菊 / 金锦菊 / 爆裂星都是 0）
+                for t in TPL[SPECIES[c['sp']][0]]['frontFlower']['trails']:
+                    pts.append((e['launch'] + t['off'], NEWT['trails'][FRONTF['trail']]['gpu']))
             elif c['size'] == 'X':
                 for b in TPL[SPECIES[c['sp']][0]]['beamFlower']['beams']:
                     pts.append((e['launch'] + b['off'], BEAMF['beamSources'][b['res']]['gpuPerBeam']))
             else:
-                pts.append((e['launch'], TAIL_GPU[c['size']]))
+                pts.append((e['launch'], NEWT['trails'][c['trail']]['gpu'] if c.get('trail') in NEWT['trails'] else TAIL_GPU[c['size']]))
                 if SPECIES[c['sp']][4]:
                     pts.append((e['burst'], SPECIES[c['sp']][4]))
     return sorted(pts)

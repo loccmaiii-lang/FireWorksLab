@@ -1,0 +1,3595 @@
+{
+ "events": {
+  "total": 935,
+  "balls": 544,
+  "fans": 312,
+  "cues": 182,
+  "bySize": {
+   "S": 221,
+   "M": 182,
+   "L": 141
+  }
+ },
+ "tiers": {
+  "high": {
+   "events": 935,
+   "balls": 623,
+   "fans": 312,
+   "gpuPeakPerS": 72
+  },
+  "medium": {
+   "events": 787,
+   "balls": 525,
+   "fans": 262,
+   "gpuPeakPerS": 62
+  },
+  "low": {
+   "events": 304,
+   "balls": 288,
+   "fans": 16,
+   "gpuPeakPerS": 60
+  }
+ },
+ "gpu": {
+  "soft": 200,
+  "hard": 234,
+  "peak": 72,
+  "peakAt": 20.56,
+  "softOver": 0,
+  "hardOver": 0,
+  "softList": [],
+  "hardList": [],
+  "nearBudget": 0,
+  "nearBudgetList": []
+ },
+ "beatLock": {
+  "within0_1": 0.928,
+  "within0_15": 0.96,
+  "cues": 125
+ },
+ "strongBeat": 0.72,
+ "generations": {
+  "fullWaves": 34,
+  "meanTailsInFlightCues": 1.79,
+  "fullWavesWithNextTails": 31,
+  "share": 0.912
+ },
+ "relayViolations": [],
+ "lead": {
+  "SC": {
+   "name": "小银菊",
+   "fullWaves": 3,
+   "firstAt": 23.7
+  },
+  "GC": {
+   "name": "金裂星",
+   "fullWaves": 2,
+   "firstAt": 21.2
+  },
+  "CR": {
+   "name": "爆裂星",
+   "fullWaves": 1,
+   "firstAt": 58.6
+  },
+  "LM": {
+   "name": "小青柠",
+   "fullWaves": 1,
+   "firstAt": 48.8
+  },
+  "OG": {
+   "name": "橙辉星",
+   "fullWaves": 1,
+   "firstAt": 29.4
+  },
+  "ST": {
+   "name": "点灭星",
+   "fullWaves": 1,
+   "firstAt": 23.6
+  },
+  "GP": {
+   "name": "绿牡丹",
+   "fullWaves": 2,
+   "firstAt": 35.1
+  },
+  "GS": {
+   "name": "金锦菊",
+   "fullWaves": 2,
+   "firstAt": 28.6
+  },
+  "PW": {
+   "name": "彩千轮",
+   "fullWaves": 2,
+   "firstAt": 86.9
+  },
+  "GY": {
+   "name": "金曜菊",
+   "fullWaves": 4,
+   "firstAt": 74.0
+  },
+  "CL": {
+   "name": "金蕊青柠星",
+   "fullWaves": 3,
+   "firstAt": 80.5
+  },
+  "GR": {
+   "name": "金芒菊",
+   "fullWaves": 5,
+   "firstAt": 16.2
+  },
+  "ML": {
+   "name": "多重菊",
+   "fullWaves": 3,
+   "firstAt": 93.4
+  },
+  "GK": {
+   "name": "金垂柳",
+   "fullWaves": 0,
+   "firstAt": null
+  },
+  "SS": {
+   "name": "银彩菊",
+   "fullWaves": 4,
+   "firstAt": 116.2
+  }
+ },
+ "leadMissing": [],
+ "heroes": {
+  "goldKamuroEvents": 5,
+  "heroCues": 3,
+  "hero280": 5,
+  "nonHero": []
+ },
+ "share": {
+  "S": 0.406,
+  "M": 0.335,
+  "L": 0.259
+ },
+ "largeBySpecies": {
+  "金蕊青柠星·大": 15,
+  "金垂柳·主角": 5,
+  "金芒菊·大": 20,
+  "多重菊·大": 15,
+  "银彩菊": 86
+ },
+ "density": null,
+ "rhythm": null,
+ "vary": null,
+ "wavesPerBar": {
+  "release": 1.43,
+  "push": 1.27
+ },
+ "tierNesting": {
+  "ok": true,
+  "violations": []
+ },
+ "sectionShare": {
+  "B01_S0": {
+   "name": "倒计时",
+   "lead": "SC",
+   "leadShare": 0.5,
+   "top": [
+    [
+     "SC",
+     9
+    ],
+    [
+     "OG",
+     8
+    ],
+    [
+     "CR",
+     1
+    ]
+   ]
+  },
+  "B01_S1": {
+   "name": "开场高潮",
+   "lead": "GR",
+   "leadShare": 0.26,
+   "top": [
+    [
+     "GR",
+     9
+    ],
+    [
+     "GC",
+     9
+    ],
+    [
+     "SC",
+     9
+    ]
+   ]
+  },
+  "B01_S3": {
+   "name": "密集问答",
+   "lead": "SC",
+   "leadShare": 0.0,
+   "top": [
+    [
+     "GS",
+     9
+    ],
+    [
+     "GP",
+     9
+    ],
+    [
+     "OG",
+     8
+    ]
+   ]
+  },
+  "B01_S4": {
+   "name": "往返扫射",
+   "lead": "GR",
+   "leadShare": 0.35,
+   "top": [
+    [
+     "GR",
+     9
+    ],
+    [
+     "SC",
+     9
+    ],
+    [
+     "LM",
+     8
+    ]
+   ]
+  },
+  "B01_S5": {
+   "name": "第一次抬升",
+   "lead": "SS",
+   "leadShare": 0.34,
+   "top": [
+    [
+     "SS",
+     15
+    ],
+    [
+     "GS",
+     9
+    ],
+    [
+     "GR",
+     8
+    ]
+   ]
+  },
+  "B01_S6": {
+   "name": "低位密奏",
+   "lead": "ST",
+   "leadShare": 0.0,
+   "top": [
+    [
+     "GY",
+     9
+    ]
+   ]
+  },
+  "B01_S7": {
+   "name": "第二次递进 A",
+   "lead": "CLL",
+   "leadShare": 0.28,
+   "top": [
+    [
+     "PW",
+     9
+    ],
+    [
+     "CLL",
+     5
+    ],
+    [
+     "CL",
+     4
+    ]
+   ]
+  },
+  "B01_S8": {
+   "name": "蓄势收窄",
+   "lead": "GS",
+   "leadShare": 0.0,
+   "top": [
+    [
+     "MLL",
+     5
+    ],
+    [
+     "ML",
+     4
+    ],
+    [
+     "GR",
+     2
+    ]
+   ]
+  },
+  "B01_S9": {
+   "name": "高潮 II",
+   "lead": "MLL",
+   "leadShare": 0.06,
+   "top": [
+    [
+     "SS",
+     27
+    ],
+    [
+     "ML",
+     12
+    ],
+    [
+     "GY",
+     9
+    ]
+   ]
+  },
+  "B01_S10": {
+   "name": "转场铺色 A",
+   "lead": "SC",
+   "leadShare": 0.0,
+   "top": [
+    [
+     "PW",
+     9
+    ]
+   ]
+  },
+  "B01_S11": {
+   "name": "转场铺色 B",
+   "lead": "GP",
+   "leadShare": 0.72,
+   "top": [
+    [
+     "GP",
+     13
+    ],
+    [
+     "SS",
+     5
+    ]
+   ]
+  },
+  "B01_S12": {
+   "name": "终章",
+   "lead": "GRL",
+   "leadShare": 0.15,
+   "top": [
+    [
+     "SS",
+     18
+    ],
+    [
+     "GY",
+     18
+    ],
+    [
+     "GRL",
+     14
+    ]
+   ]
+  },
+  "B01_S13": {
+   "name": "白色收束",
+   "lead": "SS",
+   "leadShare": 0.95,
+   "top": [
+    [
+     "SS",
+     21
+    ],
+    [
+     "GKH",
+     1
+    ]
+   ]
+  }
+ },
+ "quietBars": {
+  "bar41": {
+   "span": [
+    67.46,
+    68.98
+   ],
+   "bursts": 0,
+   "fanStarts": 0,
+   "tailsRising": 0
+  },
+  "bar65": {
+   "span": [
+    106.38,
+    107.9
+   ],
+   "bursts": 0,
+   "fanStarts": 0,
+   "tailsRising": 21
+  },
+  "bar96": {
+   "span": [
+    156.65,
+    158.17
+   ],
+   "bursts": 0,
+   "fanStarts": 0,
+   "tailsRising": 29
+  }
+ },
+ "baseFans": {
+  "groups": 38,
+  "cues": 38,
+  "events": 242,
+  "coverage": 1.0,
+  "skipped": [],
+  "bySpecies": {
+   "R5": 12,
+   "R9": 66,
+   "R9R": 64,
+   "S13": 4,
+   "S5": 76,
+   "S9": 20
+  },
+  "byDirection": {
+   "center-out": 9,
+   "left": 9,
+   "outside-in": 9,
+   "right": 9,
+   "together": 2
+  },
+  "launchOffsetMax": 4.4,
+  "beams": 1842
+ },
+ "fanSummary": {
+  "cues": 59,
+  "events": 312,
+  "bySpecies": {
+   "R5": 28,
+   "R9": 83,
+   "R9R": 81,
+   "S13": 8,
+   "S5": 76,
+   "S9": 36
+  },
+  "aliveGpuPeak": 0
+ },
+ "grid": {
+  "offGridLaunch": 0,
+  "maxAbsDz": 70.0,
+  "minLaunch": 1.3,
+  "lastEnd": 214.37
+ },
+ "aliveBodies": {
+  "peak": 34,
+  "peakAt": 130.5,
+  "mean": 11.0
+ },
+ "aliveBySpecies": {
+  "SC": {
+   "name": "小银菊",
+   "peak": 9,
+   "peakAt": 24.5
+  },
+  "GC": {
+   "name": "金裂星",
+   "peak": 9,
+   "peakAt": 22.0
+  },
+  "CR": {
+   "name": "爆裂星",
+   "peak": 8,
+   "peakAt": 59.0
+  },
+  "LM": {
+   "name": "小青柠",
+   "peak": 8,
+   "peakAt": 49.5
+  },
+  "OG": {
+   "name": "橙辉星",
+   "peak": 8,
+   "peakAt": 30.0
+  },
+  "ST": {
+   "name": "点灭星",
+   "peak": 8,
+   "peakAt": 24.0
+  },
+  "GP": {
+   "name": "绿牡丹",
+   "peak": 9,
+   "peakAt": 35.5
+  },
+  "GS": {
+   "name": "金锦菊",
+   "peak": 9,
+   "peakAt": 29.0
+  },
+  "PW": {
+   "name": "彩千轮",
+   "peak": 9,
+   "peakAt": 87.0
+  },
+  "GY": {
+   "name": "金曜菊",
+   "peak": 9,
+   "peakAt": 74.5
+  },
+  "CL": {
+   "name": "金蕊青柠星",
+   "peak": 4,
+   "peakAt": 81.0
+  },
+  "GR": {
+   "name": "金芒菊",
+   "peak": 9,
+   "peakAt": 17.0
+  },
+  "ML": {
+   "name": "多重菊",
+   "peak": 8,
+   "peakAt": 123.0
+  },
+  "GK": {
+   "name": "金垂柳",
+   "peak": 0,
+   "peakAt": null
+  },
+  "SS": {
+   "name": "银彩菊",
+   "peak": 18,
+   "peakAt": 194.5
+  },
+  "GRL": {
+   "name": "金芒菊·大",
+   "peak": 9,
+   "peakAt": 185.0
+  },
+  "CLL": {
+   "name": "金蕊青柠星·大",
+   "peak": 5,
+   "peakAt": 81.0
+  },
+  "MLL": {
+   "name": "多重菊·大",
+   "peak": 5,
+   "peakAt": 94.0
+  },
+  "GKH": {
+   "name": "金垂柳·主角",
+   "peak": 3,
+   "peakAt": 171.5
+  }
+ },
+ "barsWithWave": 43,
+ "b02": {
+  "split": null,
+  "beamFlowerCues": 18,
+  "mobileTiers": {
+   "high": {
+    "events": 299,
+    "gpuPeakPerS": 54,
+    "bySpecies": {
+     "银彩菊": 68,
+     "金芒菊": 40,
+     "小银菊": 37,
+     "XS·小银菊": 36,
+     "金芒菊·大": 36,
+     "橙辉星": 18,
+     "两根XS·短爆裂": 15,
+     "三根XS·小金花簇": 15,
+     "V形四根XS": 13,
+     "金锦菊": 10,
+     "爆裂星": 6,
+     "金垂柳·主角": 5
+    }
+   },
+   "medium": {
+    "events": 245,
+    "gpuPeakPerS": 42,
+    "bySpecies": {
+     "银彩菊": 68,
+     "小银菊": 29,
+     "金芒菊": 28,
+     "XS·小银菊": 26,
+     "金芒菊·大": 24,
+     "两根XS·短爆裂": 15,
+     "三根XS·小金花簇": 15,
+     "橙辉星": 14,
+     "V形四根XS": 11,
+     "金锦菊": 6,
+     "金垂柳·主角": 5,
+     "爆裂星": 4
+    }
+   },
+   "low": {
+    "events": 164,
+    "gpuPeakPerS": 30,
+    "bySpecies": {
+     "银彩菊": 58,
+     "金芒菊": 28,
+     "小银菊": 25,
+     "金芒菊·大": 24,
+     "橙辉星": 14,
+     "金锦菊": 6,
+     "金垂柳·主角": 5,
+     "爆裂星": 4
+    }
+   }
+  },
+  "mobileCues": 72,
+  "pcOnlyCues": 125,
+  "mobileOnlyCues": 15,
+  "beamFlowers": {
+   "cues": 18,
+   "events": 79,
+   "byType": {
+    "FC2A": 7,
+    "FC2B": 8,
+    "FS1A": 28,
+    "FS1B": 8,
+    "FS3A": 6,
+    "FS3B": 9,
+    "FV4": 13
+   },
+   "medium": 67,
+   "low": 0
+  },
+  "heights": "v2",
+  "overlap": {
+   "heavyOverlapSamples": 935,
+   "heroOverlapSamples": 35
+  }
+ },
+ "gpuBefore30": {
+  "note": "Comet / Silver 3.0 还没在 UE 里换掉旧扇时（红彗星 1 / 束、银扇 3 / 束）",
+  "peak": 190,
+  "peakAt": 108.16,
+  "softOver": 0,
+  "hardOver": 0,
+  "tiers": {
+   "high": 190,
+   "medium": 180,
+   "low": 96
+  }
+ },
+ "b04": {
+  "lowLayerTiny": [
+   {
+    "cue": "B02_C013",
+    "label": "小银菊",
+    "wave": "叠层二排",
+    "t": 16.52,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     10.0,
+     20.0,
+     30.0
+    ]
+   },
+   {
+    "cue": "B02_C018",
+    "label": "点灭星",
+    "wave": "A/B间隔17",
+    "t": 23.62,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     30.0
+    ]
+   },
+   {
+    "cue": "B02_C030",
+    "label": "橙辉星",
+    "wave": "低位8",
+    "t": 29.42,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     20.0,
+     30.0
+    ]
+   },
+   {
+    "cue": "B02_C038",
+    "label": "金裂星",
+    "wave": "低位8",
+    "t": 41.82,
+    "points": 8,
+    "launchShiftS": [
+     1.1
+    ],
+    "dz": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "cue": "B02_C043",
+    "label": "小青柠",
+    "wave": "低位8",
+    "t": 48.82,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     30.0
+    ]
+   },
+   {
+    "cue": "B02_C055",
+    "label": "爆裂星",
+    "wave": "低位8",
+    "t": 58.62,
+    "points": 8,
+    "launchShiftS": [
+     1.1
+    ],
+    "dz": [
+     20.0,
+     30.0
+    ]
+   },
+   {
+    "cue": "B02_C062",
+    "label": "小银菊",
+    "wave": "低位8",
+    "t": 64.22,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     0.0
+    ]
+   },
+   {
+    "cue": "B02_C069",
+    "label": "爆裂星",
+    "wave": "叠层二排",
+    "t": 74.42,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     0.0,
+     10.0,
+     20.0
+    ]
+   },
+   {
+    "cue": "B02_C090",
+    "label": "小银菊",
+    "wave": "叠层二排",
+    "t": 108.42,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     0.0
+    ]
+   },
+   {
+    "cue": "B02_C099",
+    "label": "小银菊",
+    "wave": "低位8",
+    "t": 113.72,
+    "points": 8,
+    "launchShiftS": [
+     1.1
+    ],
+    "dz": [
+     0.0,
+     10.0,
+     20.0
+    ]
+   },
+   {
+    "cue": "B02_C112",
+    "label": "小银菊",
+    "wave": "叠层二排",
+    "t": 126.22,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     0.0,
+     10.0,
+     20.0
+    ]
+   },
+   {
+    "cue": "B02_C115",
+    "label": "金裂星",
+    "wave": "低位8",
+    "t": 129.92,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     0.0
+    ]
+   },
+   {
+    "cue": "B02_C119",
+    "label": "小银菊",
+    "wave": "低位8",
+    "t": 132.32,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     10.0,
+     20.0,
+     30.0
+    ]
+   },
+   {
+    "cue": "B02_C124",
+    "label": "小银菊",
+    "wave": "低位8",
+    "t": 138.82,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     0.0
+    ]
+   },
+   {
+    "cue": "B02_C128",
+    "label": "小银菊",
+    "wave": "叠层二排",
+    "t": 145.72,
+    "points": 8,
+    "launchShiftS": [
+     1.1
+    ],
+    "dz": [
+     0.0,
+     10.0,
+     20.0
+    ]
+   },
+   {
+    "cue": "B02_C139",
+    "label": "小银菊",
+    "wave": "低位8",
+    "t": 158.32,
+    "points": 8,
+    "launchShiftS": [
+     1.1
+    ],
+    "dz": [
+     0.0
+    ]
+   },
+   {
+    "cue": "B02_C145",
+    "label": "金裂星",
+    "wave": "叠层二排",
+    "t": 165.12,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     10.0,
+     20.0,
+     30.0
+    ]
+   },
+   {
+    "cue": "B02_C149",
+    "label": "点灭星",
+    "wave": "叠层二排",
+    "t": 168.42,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     0.0,
+     10.0
+    ]
+   },
+   {
+    "cue": "B02_C152",
+    "label": "小银菊",
+    "wave": "低位8",
+    "t": 171.62,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     0.0
+    ]
+   },
+   {
+    "cue": "B02_C160",
+    "label": "金裂星",
+    "wave": "叠层二排",
+    "t": 178.12,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     0.0
+    ]
+   },
+   {
+    "cue": "B02_C164",
+    "label": "小银菊",
+    "wave": "低位8",
+    "t": 181.02,
+    "points": 8,
+    "launchShiftS": [
+     1.1
+    ],
+    "dz": [
+     0.0
+    ]
+   },
+   {
+    "cue": "B02_C167",
+    "label": "金裂星",
+    "wave": "叠层二排",
+    "t": 187.82,
+    "points": 8,
+    "launchShiftS": [
+     1.0
+    ],
+    "dz": [
+     0.0,
+     10.0,
+     20.0
+    ]
+   }
+  ],
+  "platform": [
+   {
+    "cue": "B02_C029",
+    "fromSp": "XS1A",
+    "toSp": "FS1A",
+    "t": 25.29,
+    "points": [
+     "F0",
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5",
+     "F6"
+    ],
+    "medium": [
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C033",
+    "fromSp": "XC2A",
+    "toSp": "FC2A",
+    "t": 31.79,
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "medium": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C037",
+    "fromSp": "XV4",
+    "toSp": "FV4",
+    "t": 38.3,
+    "points": [
+     "F0",
+     "F3",
+     "F6"
+    ],
+    "medium": [
+     "F0",
+     "F3",
+     "F6"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C041",
+    "fromSp": "XS1A",
+    "toSp": "FS1A",
+    "t": 44.79,
+    "points": [
+     "F0",
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5",
+     "F6"
+    ],
+    "medium": [
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C047",
+    "fromSp": "XS1B",
+    "toSp": "FS1B",
+    "t": 51.29,
+    "points": [
+     "F0",
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5",
+     "F6"
+    ],
+    "medium": [
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C065",
+    "fromSp": "XS3A",
+    "toSp": "FS3A",
+    "t": 69.09,
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "medium": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C068",
+    "fromSp": "XC2B",
+    "toSp": "FC2B",
+    "t": 70.69,
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "medium": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C070",
+    "fromSp": "XV4",
+    "toSp": "FV4",
+    "t": 72.3,
+    "points": [
+     "F0",
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5",
+     "F6"
+    ],
+    "medium": [
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C073",
+    "fromSp": "XS3B",
+    "toSp": "FS3B",
+    "t": 75.59,
+    "points": [
+     "F0",
+     "F3",
+     "F6"
+    ],
+    "medium": [
+     "F0",
+     "F3",
+     "F6"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C074",
+    "fromSp": "XS1A",
+    "toSp": "FS1A",
+    "t": 77.19,
+    "points": [
+     "F0",
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5",
+     "F6"
+    ],
+    "medium": [
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C075",
+    "fromSp": "XC2A",
+    "toSp": "FC2A",
+    "t": 78.79,
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "medium": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C080",
+    "fromSp": "XS3B",
+    "toSp": "FS3B",
+    "t": 88.59,
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "medium": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C084",
+    "fromSp": "XV4",
+    "toSp": "FV4",
+    "t": 95.0,
+    "points": [
+     "F2",
+     "F3",
+     "F4"
+    ],
+    "medium": [
+     "F2",
+     "F3",
+     "F4"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C085",
+    "fromSp": "XS1B",
+    "toSp": "FS1B",
+    "t": 101.49,
+    "points": [
+     "F3"
+    ],
+    "medium": [
+     "F3"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C123",
+    "fromSp": "XS3A",
+    "toSp": "FS3A",
+    "t": 135.59,
+    "points": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "medium": [
+     "F1",
+     "F3",
+     "F5"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C127",
+    "fromSp": "XC2B",
+    "toSp": "FC2B",
+    "t": 142.09,
+    "points": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "medium": [
+     "F0",
+     "F2",
+     "F4",
+     "F6"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C132",
+    "fromSp": "XS1A",
+    "toSp": "FS1A",
+    "t": 148.59,
+    "points": [
+     "F0",
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5",
+     "F6"
+    ],
+    "medium": [
+     "F1",
+     "F2",
+     "F3",
+     "F4",
+     "F5"
+    ],
+    "low": [],
+    "mobile": true
+   },
+   {
+    "cue": "B02_C136",
+    "fromSp": "XS3B",
+    "toSp": "FS3B",
+    "t": 154.99,
+    "points": [
+     "F0",
+     "F3",
+     "F6"
+    ],
+    "medium": [
+     "F0",
+     "F3",
+     "F6"
+    ],
+    "low": [],
+    "mobile": true
+   }
+  ],
+  "mobile": {
+   "whitelist": [
+    "CR",
+    "FC2A",
+    "FC2B",
+    "FS1A",
+    "FS1B",
+    "FS3A",
+    "FS3B",
+    "FV4",
+    "GKH",
+    "GR",
+    "GRL",
+    "GS",
+    "OG",
+    "SC",
+    "SS"
+   ],
+   "notWhitelisted": [],
+   "eventsBySpecies": {
+    "银彩菊": 68,
+    "金芒菊": 40,
+    "小银菊": 37,
+    "XS·小银菊": 36,
+    "金芒菊·大": 36,
+    "橙辉星": 18,
+    "两根XS·短爆裂": 15,
+    "三根XS·小金花簇": 15,
+    "V形四根XS": 13,
+    "金锦菊": 10,
+    "爆裂星": 6,
+    "金垂柳·主角": 5
+   },
+   "trailsNeedingM": [
+    "L",
+    "M",
+    "S",
+    "XS"
+   ],
+   "cues": {
+    "shared": 57,
+    "pcOnly": 125,
+    "mobileOnly": 15
+   }
+  },
+  "fanUnderLowLayer": [
+   {
+    "t": 16.82,
+    "point": "B3",
+    "flower": "B02_C013",
+    "fan": "B02_C012",
+    "fanSp": "S5",
+    "overlapS": 1.83,
+    "intoFlowerM": 13.6
+   },
+   {
+    "t": 16.82,
+    "point": "B4",
+    "flower": "B02_C013",
+    "fan": "B02_C012",
+    "fanSp": "S5",
+    "overlapS": 1.83,
+    "intoFlowerM": 23.6
+   },
+   {
+    "t": 16.92,
+    "point": "B2",
+    "flower": "B02_C013",
+    "fan": "B02_C012",
+    "fanSp": "S5",
+    "overlapS": 1.73,
+    "intoFlowerM": 3.6
+   },
+   {
+    "t": 16.92,
+    "point": "B5",
+    "flower": "B02_C013",
+    "fan": "B02_C012",
+    "fanSp": "S5",
+    "overlapS": 1.73,
+    "intoFlowerM": 13.6
+   },
+   {
+    "t": 17.02,
+    "point": "B1",
+    "flower": "B02_C013",
+    "fan": "B02_C012",
+    "fanSp": "S5",
+    "overlapS": 1.83,
+    "intoFlowerM": 3.6
+   },
+   {
+    "t": 17.02,
+    "point": "B6",
+    "flower": "B02_C013",
+    "fan": "B02_C012",
+    "fanSp": "S5",
+    "overlapS": 1.83,
+    "intoFlowerM": 13.6
+   },
+   {
+    "t": 17.12,
+    "point": "B0",
+    "flower": "B02_C013",
+    "fan": "B02_C012",
+    "fanSp": "S5",
+    "overlapS": 1.73,
+    "intoFlowerM": 3.6
+   },
+   {
+    "t": 17.12,
+    "point": "B7",
+    "flower": "B02_C013",
+    "fan": "B02_C012",
+    "fanSp": "S5",
+    "overlapS": 1.73,
+    "intoFlowerM": 13.6
+   },
+   {
+    "t": 23.92,
+    "point": "B3",
+    "flower": "B02_C018",
+    "fan": "B02_C019",
+    "fanSp": "R9R",
+    "overlapS": 1.02,
+    "intoFlowerM": 6.4
+   },
+   {
+    "t": 23.92,
+    "point": "B4",
+    "flower": "B02_C018",
+    "fan": "B02_C016",
+    "fanSp": "R9",
+    "overlapS": 0.62,
+    "intoFlowerM": 6.4
+   },
+   {
+    "t": 24.02,
+    "point": "B2",
+    "flower": "B02_C018",
+    "fan": "B02_C016",
+    "fanSp": "R9",
+    "overlapS": 0.32,
+    "intoFlowerM": 6.4
+   },
+   {
+    "t": 24.02,
+    "point": "B5",
+    "flower": "B02_C018",
+    "fan": "B02_C019",
+    "fanSp": "R9R",
+    "overlapS": 0.72,
+    "intoFlowerM": 6.4
+   },
+   {
+    "t": 24.12,
+    "point": "B1",
+    "flower": "B02_C018",
+    "fan": "B02_C019",
+    "fanSp": "R9R",
+    "overlapS": 1.02,
+    "intoFlowerM": 6.4
+   },
+   {
+    "t": 24.12,
+    "point": "B6",
+    "flower": "B02_C018",
+    "fan": "B02_C016",
+    "fanSp": "R9",
+    "overlapS": 0.62,
+    "intoFlowerM": 6.4
+   },
+   {
+    "t": 24.22,
+    "point": "B7",
+    "flower": "B02_C018",
+    "fan": "B02_C019",
+    "fanSp": "R9R",
+    "overlapS": 0.32,
+    "intoFlowerM": 6.4
+   },
+   {
+    "t": 30.7,
+    "point": "B7",
+    "flower": "B02_C030",
+    "fan": "B02_C032",
+    "fanSp": "R9R",
+    "overlapS": 1.42,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 30.8,
+    "point": "B6",
+    "flower": "B02_C030",
+    "fan": "B02_C032",
+    "fanSp": "R9R",
+    "overlapS": 1.22,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 30.9,
+    "point": "B5",
+    "flower": "B02_C030",
+    "fan": "B02_C032",
+    "fanSp": "R9R",
+    "overlapS": 1.02,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 31.0,
+    "point": "B4",
+    "flower": "B02_C030",
+    "fan": "B02_C032",
+    "fanSp": "R9R",
+    "overlapS": 0.82,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 31.1,
+    "point": "B3",
+    "flower": "B02_C030",
+    "fan": "B02_C032",
+    "fanSp": "R9R",
+    "overlapS": 0.72,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 31.2,
+    "point": "B2",
+    "flower": "B02_C030",
+    "fan": "B02_C032",
+    "fanSp": "R9R",
+    "overlapS": 0.72,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 31.3,
+    "point": "B1",
+    "flower": "B02_C030",
+    "fan": "B02_C032",
+    "fanSp": "R9R",
+    "overlapS": 0.72,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 31.4,
+    "point": "B0",
+    "flower": "B02_C030",
+    "fan": "B02_C032",
+    "fanSp": "R9R",
+    "overlapS": 0.72,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 42.12,
+    "point": "B7",
+    "flower": "B02_C038",
+    "fan": "B02_C040",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 42.42,
+    "point": "B6",
+    "flower": "B02_C038",
+    "fan": "B02_C040",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 42.72,
+    "point": "B5",
+    "flower": "B02_C038",
+    "fan": "B02_C040",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 43.62,
+    "point": "B2",
+    "flower": "B02_C038",
+    "fan": "B02_C039",
+    "fanSp": "R9",
+    "overlapS": 1.95,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 43.92,
+    "point": "B1",
+    "flower": "B02_C038",
+    "fan": "B02_C039",
+    "fanSp": "R9",
+    "overlapS": 1.52,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 44.22,
+    "point": "B0",
+    "flower": "B02_C038",
+    "fan": "B02_C039",
+    "fanSp": "R9",
+    "overlapS": 1.02,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 53.5,
+    "point": "B1",
+    "flower": "B02_C043",
+    "fan": "B02_C050",
+    "fanSp": "R9",
+    "overlapS": 0.34,
+    "intoFlowerM": 6.4
+   },
+   {
+    "t": 53.7,
+    "point": "B3",
+    "flower": "B02_C043",
+    "fan": "B02_C050",
+    "fanSp": "R9",
+    "overlapS": 0.34,
+    "intoFlowerM": 6.4
+   },
+   {
+    "t": 58.92,
+    "point": "B3",
+    "flower": "B02_C055",
+    "fan": "B02_C058",
+    "fanSp": "R9R",
+    "overlapS": 0.83,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 58.92,
+    "point": "B3",
+    "flower": "B02_C055",
+    "fan": "B02_C059",
+    "fanSp": "S9",
+    "overlapS": 0.83,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 58.92,
+    "point": "B4",
+    "flower": "B02_C055",
+    "fan": "B02_C058",
+    "fanSp": "R9R",
+    "overlapS": 0.83,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 58.92,
+    "point": "B4",
+    "flower": "B02_C055",
+    "fan": "B02_C059",
+    "fanSp": "S9",
+    "overlapS": 0.83,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 59.02,
+    "point": "B2",
+    "flower": "B02_C055",
+    "fan": "B02_C058",
+    "fanSp": "R9R",
+    "overlapS": 0.83,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 59.02,
+    "point": "B5",
+    "flower": "B02_C055",
+    "fan": "B02_C058",
+    "fanSp": "R9R",
+    "overlapS": 0.83,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 59.12,
+    "point": "B1",
+    "flower": "B02_C055",
+    "fan": "B02_C058",
+    "fanSp": "R9R",
+    "overlapS": 0.83,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 59.12,
+    "point": "B1",
+    "flower": "B02_C055",
+    "fan": "B02_C059",
+    "fanSp": "S9",
+    "overlapS": 0.83,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 59.12,
+    "point": "B6",
+    "flower": "B02_C055",
+    "fan": "B02_C058",
+    "fanSp": "R9R",
+    "overlapS": 0.83,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 59.22,
+    "point": "B0",
+    "flower": "B02_C055",
+    "fan": "B02_C058",
+    "fanSp": "R9R",
+    "overlapS": 0.83,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 59.22,
+    "point": "B0",
+    "flower": "B02_C055",
+    "fan": "B02_C060",
+    "fanSp": "R5",
+    "overlapS": 0.83,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 59.22,
+    "point": "B7",
+    "flower": "B02_C055",
+    "fan": "B02_C058",
+    "fanSp": "R9R",
+    "overlapS": 0.83,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 59.22,
+    "point": "B7",
+    "flower": "B02_C055",
+    "fan": "B02_C060",
+    "fanSp": "R5",
+    "overlapS": 0.83,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 64.62,
+    "point": "B2",
+    "flower": "B02_C062",
+    "fan": "B02_C063",
+    "fanSp": "R9",
+    "overlapS": 3.12,
+    "intoFlowerM": 36.4
+   },
+   {
+    "t": 64.62,
+    "point": "B5",
+    "flower": "B02_C062",
+    "fan": "B02_C064",
+    "fanSp": "R9R",
+    "overlapS": 3.12,
+    "intoFlowerM": 36.4
+   },
+   {
+    "t": 64.72,
+    "point": "B1",
+    "flower": "B02_C062",
+    "fan": "B02_C063",
+    "fanSp": "R9",
+    "overlapS": 3.12,
+    "intoFlowerM": 36.4
+   },
+   {
+    "t": 64.72,
+    "point": "B6",
+    "flower": "B02_C062",
+    "fan": "B02_C064",
+    "fanSp": "R9R",
+    "overlapS": 3.12,
+    "intoFlowerM": 36.4
+   },
+   {
+    "t": 64.82,
+    "point": "B0",
+    "flower": "B02_C062",
+    "fan": "B02_C063",
+    "fanSp": "R9",
+    "overlapS": 3.12,
+    "intoFlowerM": 36.4
+   },
+   {
+    "t": 64.82,
+    "point": "B7",
+    "flower": "B02_C062",
+    "fan": "B02_C064",
+    "fanSp": "R9R",
+    "overlapS": 3.12,
+    "intoFlowerM": 36.4
+   },
+   {
+    "t": 74.72,
+    "point": "B3",
+    "flower": "B02_C069",
+    "fan": "B02_C072",
+    "fanSp": "R9",
+    "overlapS": 0.83,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 74.72,
+    "point": "B4",
+    "flower": "B02_C069",
+    "fan": "B02_C072",
+    "fanSp": "R9",
+    "overlapS": 0.83,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 74.82,
+    "point": "B2",
+    "flower": "B02_C069",
+    "fan": "B02_C072",
+    "fanSp": "R9",
+    "overlapS": 0.83,
+    "intoFlowerM": 23.6
+   },
+   {
+    "t": 74.82,
+    "point": "B5",
+    "flower": "B02_C069",
+    "fan": "B02_C072",
+    "fanSp": "R9",
+    "overlapS": 0.83,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 74.92,
+    "point": "B1",
+    "flower": "B02_C069",
+    "fan": "B02_C072",
+    "fanSp": "R9",
+    "overlapS": 0.83,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 74.92,
+    "point": "B6",
+    "flower": "B02_C069",
+    "fan": "B02_C072",
+    "fanSp": "R9",
+    "overlapS": 0.83,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 75.02,
+    "point": "B0",
+    "flower": "B02_C069",
+    "fan": "B02_C072",
+    "fanSp": "R9",
+    "overlapS": 0.83,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 75.02,
+    "point": "B7",
+    "flower": "B02_C069",
+    "fan": "B02_C072",
+    "fanSp": "R9",
+    "overlapS": 0.83,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 108.72,
+    "point": "B3",
+    "flower": "B02_C090",
+    "fan": "B02_C092",
+    "fanSp": "R9",
+    "overlapS": 0.82,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 108.72,
+    "point": "B3",
+    "flower": "B02_C090",
+    "fan": "B02_C093",
+    "fanSp": "S9",
+    "overlapS": 2.05,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 108.72,
+    "point": "B4",
+    "flower": "B02_C090",
+    "fan": "B02_C092",
+    "fanSp": "R9",
+    "overlapS": 0.92,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 108.72,
+    "point": "B4",
+    "flower": "B02_C090",
+    "fan": "B02_C093",
+    "fanSp": "S9",
+    "overlapS": 2.05,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 108.82,
+    "point": "B2",
+    "flower": "B02_C090",
+    "fan": "B02_C092",
+    "fanSp": "R9",
+    "overlapS": 0.62,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 108.82,
+    "point": "B5",
+    "flower": "B02_C090",
+    "fan": "B02_C092",
+    "fanSp": "R9",
+    "overlapS": 0.92,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 108.92,
+    "point": "B1",
+    "flower": "B02_C090",
+    "fan": "B02_C092",
+    "fanSp": "R9",
+    "overlapS": 0.42,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 108.92,
+    "point": "B1",
+    "flower": "B02_C090",
+    "fan": "B02_C093",
+    "fanSp": "S9",
+    "overlapS": 2.05,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 108.92,
+    "point": "B1",
+    "flower": "B02_C090",
+    "fan": "B02_C097",
+    "fanSp": "R5",
+    "overlapS": 3.08,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 108.92,
+    "point": "B6",
+    "flower": "B02_C090",
+    "fan": "B02_C092",
+    "fanSp": "R9",
+    "overlapS": 0.92,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 108.92,
+    "point": "B6",
+    "flower": "B02_C090",
+    "fan": "B02_C093",
+    "fanSp": "S9",
+    "overlapS": 2.05,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 108.92,
+    "point": "B6",
+    "flower": "B02_C090",
+    "fan": "B02_C097",
+    "fanSp": "R5",
+    "overlapS": 3.08,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 109.0,
+    "point": "B2",
+    "flower": "B02_C090",
+    "fan": "B02_C097",
+    "fanSp": "R5",
+    "overlapS": 2.94,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 109.0,
+    "point": "B5",
+    "flower": "B02_C090",
+    "fan": "B02_C097",
+    "fanSp": "R5",
+    "overlapS": 2.94,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 109.02,
+    "point": "B0",
+    "flower": "B02_C090",
+    "fan": "B02_C094",
+    "fanSp": "R5",
+    "overlapS": 2.58,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 109.02,
+    "point": "B0",
+    "flower": "B02_C090",
+    "fan": "B02_C097",
+    "fanSp": "R5",
+    "overlapS": 2.88,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 109.02,
+    "point": "B7",
+    "flower": "B02_C090",
+    "fan": "B02_C092",
+    "fanSp": "R9",
+    "overlapS": 0.92,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 109.02,
+    "point": "B7",
+    "flower": "B02_C090",
+    "fan": "B02_C094",
+    "fanSp": "R5",
+    "overlapS": 2.58,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 109.02,
+    "point": "B7",
+    "flower": "B02_C090",
+    "fan": "B02_C097",
+    "fanSp": "R5",
+    "overlapS": 2.88,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 109.1,
+    "point": "B3",
+    "flower": "B02_C090",
+    "fan": "B02_C097",
+    "fanSp": "R5",
+    "overlapS": 2.74,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 109.1,
+    "point": "B4",
+    "flower": "B02_C090",
+    "fan": "B02_C097",
+    "fanSp": "R5",
+    "overlapS": 2.74,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 114.02,
+    "point": "B3",
+    "flower": "B02_C099",
+    "fan": "B02_C101",
+    "fanSp": "R9R",
+    "overlapS": 2.62,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 114.02,
+    "point": "B4",
+    "flower": "B02_C099",
+    "fan": "B02_C101",
+    "fanSp": "R9R",
+    "overlapS": 2.42,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 114.12,
+    "point": "B2",
+    "flower": "B02_C099",
+    "fan": "B02_C101",
+    "fanSp": "R9R",
+    "overlapS": 2.72,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 114.12,
+    "point": "B5",
+    "flower": "B02_C099",
+    "fan": "B02_C101",
+    "fanSp": "R9R",
+    "overlapS": 2.12,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 114.22,
+    "point": "B1",
+    "flower": "B02_C099",
+    "fan": "B02_C101",
+    "fanSp": "R9R",
+    "overlapS": 2.82,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 114.22,
+    "point": "B6",
+    "flower": "B02_C099",
+    "fan": "B02_C101",
+    "fanSp": "R9R",
+    "overlapS": 1.82,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 114.32,
+    "point": "B0",
+    "flower": "B02_C099",
+    "fan": "B02_C101",
+    "fanSp": "R9R",
+    "overlapS": 2.92,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 114.32,
+    "point": "B7",
+    "flower": "B02_C099",
+    "fan": "B02_C101",
+    "fanSp": "R9R",
+    "overlapS": 1.52,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 115.3,
+    "point": "B7",
+    "flower": "B02_C099",
+    "fan": "B02_C103",
+    "fanSp": "R9R",
+    "overlapS": 2.14,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 115.4,
+    "point": "B6",
+    "flower": "B02_C099",
+    "fan": "B02_C103",
+    "fanSp": "R9R",
+    "overlapS": 1.94,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 115.5,
+    "point": "B5",
+    "flower": "B02_C099",
+    "fan": "B02_C103",
+    "fanSp": "R9R",
+    "overlapS": 1.74,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 115.6,
+    "point": "B4",
+    "flower": "B02_C099",
+    "fan": "B02_C103",
+    "fanSp": "R9R",
+    "overlapS": 1.54,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 115.7,
+    "point": "B3",
+    "flower": "B02_C099",
+    "fan": "B02_C103",
+    "fanSp": "R9R",
+    "overlapS": 1.44,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 115.8,
+    "point": "B2",
+    "flower": "B02_C099",
+    "fan": "B02_C103",
+    "fanSp": "R9R",
+    "overlapS": 1.44,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 115.9,
+    "point": "B1",
+    "flower": "B02_C099",
+    "fan": "B02_C103",
+    "fanSp": "R9R",
+    "overlapS": 1.44,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 116.0,
+    "point": "B0",
+    "flower": "B02_C099",
+    "fan": "B02_C103",
+    "fanSp": "R9R",
+    "overlapS": 1.44,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 116.1,
+    "point": "B3",
+    "flower": "B02_C099",
+    "fan": "B02_C104",
+    "fanSp": "S9",
+    "overlapS": 1.04,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 116.1,
+    "point": "B4",
+    "flower": "B02_C099",
+    "fan": "B02_C104",
+    "fanSp": "S9",
+    "overlapS": 1.04,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 116.3,
+    "point": "B1",
+    "flower": "B02_C099",
+    "fan": "B02_C104",
+    "fanSp": "S9",
+    "overlapS": 1.04,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 116.3,
+    "point": "B6",
+    "flower": "B02_C099",
+    "fan": "B02_C104",
+    "fanSp": "S9",
+    "overlapS": 1.04,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 116.6,
+    "point": "B0",
+    "flower": "B02_C099",
+    "fan": "B02_C105",
+    "fanSp": "R5",
+    "overlapS": 0.84,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 116.6,
+    "point": "B7",
+    "flower": "B02_C099",
+    "fan": "B02_C105",
+    "fanSp": "R5",
+    "overlapS": 0.84,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 126.52,
+    "point": "B3",
+    "flower": "B02_C112",
+    "fan": "B02_C114",
+    "fanSp": "S5",
+    "overlapS": 1.23,
+    "intoFlowerM": 16.4
+   },
+   {
+    "t": 126.52,
+    "point": "B4",
+    "flower": "B02_C112",
+    "fan": "B02_C114",
+    "fanSp": "S5",
+    "overlapS": 1.23,
+    "intoFlowerM": 26.4
+   },
+   {
+    "t": 126.62,
+    "point": "B2",
+    "flower": "B02_C112",
+    "fan": "B02_C114",
+    "fanSp": "S5",
+    "overlapS": 1.03,
+    "intoFlowerM": 16.4
+   },
+   {
+    "t": 126.62,
+    "point": "B5",
+    "flower": "B02_C112",
+    "fan": "B02_C114",
+    "fanSp": "S5",
+    "overlapS": 1.03,
+    "intoFlowerM": 26.4
+   },
+   {
+    "t": 126.72,
+    "point": "B1",
+    "flower": "B02_C112",
+    "fan": "B02_C114",
+    "fanSp": "S5",
+    "overlapS": 0.83,
+    "intoFlowerM": 16.4
+   },
+   {
+    "t": 126.72,
+    "point": "B6",
+    "flower": "B02_C112",
+    "fan": "B02_C114",
+    "fanSp": "S5",
+    "overlapS": 0.83,
+    "intoFlowerM": 16.4
+   },
+   {
+    "t": 126.82,
+    "point": "B0",
+    "flower": "B02_C112",
+    "fan": "B02_C114",
+    "fanSp": "S5",
+    "overlapS": 0.63,
+    "intoFlowerM": 26.4
+   },
+   {
+    "t": 126.82,
+    "point": "B7",
+    "flower": "B02_C112",
+    "fan": "B02_C114",
+    "fanSp": "S5",
+    "overlapS": 0.63,
+    "intoFlowerM": 6.4
+   },
+   {
+    "t": 129.1,
+    "point": "B0",
+    "flower": "B02_C112",
+    "fan": "B02_C117",
+    "fanSp": "R9",
+    "overlapS": 0.84,
+    "intoFlowerM": 36.4
+   },
+   {
+    "t": 129.1,
+    "point": "B7",
+    "flower": "B02_C112",
+    "fan": "B02_C118",
+    "fanSp": "R9R",
+    "overlapS": 0.84,
+    "intoFlowerM": 16.4
+   },
+   {
+    "t": 129.3,
+    "point": "B1",
+    "flower": "B02_C112",
+    "fan": "B02_C117",
+    "fanSp": "R9",
+    "overlapS": 0.54,
+    "intoFlowerM": 26.4
+   },
+   {
+    "t": 129.3,
+    "point": "B6",
+    "flower": "B02_C112",
+    "fan": "B02_C118",
+    "fanSp": "R9R",
+    "overlapS": 0.54,
+    "intoFlowerM": 26.4
+   },
+   {
+    "t": 130.32,
+    "point": "B2",
+    "flower": "B02_C115",
+    "fan": "B02_C117",
+    "fanSp": "R9",
+    "overlapS": 1.95,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 130.32,
+    "point": "B5",
+    "flower": "B02_C115",
+    "fan": "B02_C118",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 130.42,
+    "point": "B1",
+    "flower": "B02_C115",
+    "fan": "B02_C117",
+    "fanSp": "R9",
+    "overlapS": 1.95,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 130.42,
+    "point": "B6",
+    "flower": "B02_C115",
+    "fan": "B02_C118",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 130.52,
+    "point": "B0",
+    "flower": "B02_C115",
+    "fan": "B02_C117",
+    "fanSp": "R9",
+    "overlapS": 1.95,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 130.52,
+    "point": "B7",
+    "flower": "B02_C115",
+    "fan": "B02_C118",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 132.62,
+    "point": "B3",
+    "flower": "B02_C119",
+    "fan": "B02_C120",
+    "fanSp": "S13",
+    "overlapS": 2.13,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 132.72,
+    "point": "B2",
+    "flower": "B02_C119",
+    "fan": "B02_C117",
+    "fanSp": "R9",
+    "overlapS": 0.52,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 132.72,
+    "point": "B5",
+    "flower": "B02_C119",
+    "fan": "B02_C118",
+    "fanSp": "R9R",
+    "overlapS": 0.52,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 134.6,
+    "point": "B7",
+    "flower": "B02_C119",
+    "fan": "B02_C122",
+    "fanSp": "R9R",
+    "overlapS": 1.44,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 134.7,
+    "point": "B6",
+    "flower": "B02_C119",
+    "fan": "B02_C122",
+    "fanSp": "R9R",
+    "overlapS": 1.24,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 134.8,
+    "point": "B5",
+    "flower": "B02_C119",
+    "fan": "B02_C122",
+    "fanSp": "R9R",
+    "overlapS": 1.04,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 134.9,
+    "point": "B4",
+    "flower": "B02_C119",
+    "fan": "B02_C122",
+    "fanSp": "R9R",
+    "overlapS": 0.84,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 135.0,
+    "point": "B3",
+    "flower": "B02_C119",
+    "fan": "B02_C122",
+    "fanSp": "R9R",
+    "overlapS": 0.74,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 135.1,
+    "point": "B2",
+    "flower": "B02_C119",
+    "fan": "B02_C122",
+    "fanSp": "R9R",
+    "overlapS": 0.74,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 135.2,
+    "point": "B1",
+    "flower": "B02_C119",
+    "fan": "B02_C122",
+    "fanSp": "R9R",
+    "overlapS": 0.74,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 135.3,
+    "point": "B0",
+    "flower": "B02_C119",
+    "fan": "B02_C122",
+    "fanSp": "R9R",
+    "overlapS": 0.74,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 140.9,
+    "point": "B3",
+    "flower": "B02_C124",
+    "fan": "B02_C126",
+    "fanSp": "S5",
+    "overlapS": 1.34,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 140.9,
+    "point": "B4",
+    "flower": "B02_C124",
+    "fan": "B02_C126",
+    "fanSp": "S5",
+    "overlapS": 1.34,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 141.0,
+    "point": "B2",
+    "flower": "B02_C124",
+    "fan": "B02_C126",
+    "fanSp": "S5",
+    "overlapS": 1.34,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 141.0,
+    "point": "B5",
+    "flower": "B02_C124",
+    "fan": "B02_C126",
+    "fanSp": "S5",
+    "overlapS": 1.34,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 141.2,
+    "point": "B0",
+    "flower": "B02_C124",
+    "fan": "B02_C126",
+    "fanSp": "S5",
+    "overlapS": 1.34,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 141.2,
+    "point": "B1",
+    "flower": "B02_C124",
+    "fan": "B02_C126",
+    "fanSp": "S5",
+    "overlapS": 1.24,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 141.2,
+    "point": "B6",
+    "flower": "B02_C124",
+    "fan": "B02_C126",
+    "fanSp": "S5",
+    "overlapS": 1.24,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 141.2,
+    "point": "B7",
+    "flower": "B02_C124",
+    "fan": "B02_C126",
+    "fanSp": "S5",
+    "overlapS": 1.34,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 146.02,
+    "point": "B3",
+    "flower": "B02_C128",
+    "fan": "B02_C130",
+    "fanSp": "R9",
+    "overlapS": 2.42,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 146.02,
+    "point": "B4",
+    "flower": "B02_C128",
+    "fan": "B02_C130",
+    "fanSp": "R9",
+    "overlapS": 2.52,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 146.12,
+    "point": "B2",
+    "flower": "B02_C128",
+    "fan": "B02_C130",
+    "fanSp": "R9",
+    "overlapS": 2.22,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 146.12,
+    "point": "B5",
+    "flower": "B02_C128",
+    "fan": "B02_C130",
+    "fanSp": "R9",
+    "overlapS": 2.52,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 146.22,
+    "point": "B1",
+    "flower": "B02_C128",
+    "fan": "B02_C130",
+    "fanSp": "R9",
+    "overlapS": 2.02,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 146.22,
+    "point": "B6",
+    "flower": "B02_C128",
+    "fan": "B02_C130",
+    "fanSp": "R9",
+    "overlapS": 2.52,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 146.32,
+    "point": "B0",
+    "flower": "B02_C128",
+    "fan": "B02_C130",
+    "fanSp": "R9",
+    "overlapS": 1.82,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 146.32,
+    "point": "B7",
+    "flower": "B02_C128",
+    "fan": "B02_C130",
+    "fanSp": "R9",
+    "overlapS": 2.52,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 158.7,
+    "point": "B3",
+    "flower": "B02_C139",
+    "fan": "B02_C142",
+    "fanSp": "R5",
+    "overlapS": 3.04,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 158.7,
+    "point": "B4",
+    "flower": "B02_C139",
+    "fan": "B02_C142",
+    "fanSp": "R5",
+    "overlapS": 3.04,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 158.72,
+    "point": "B2",
+    "flower": "B02_C139",
+    "fan": "B02_C142",
+    "fanSp": "R5",
+    "overlapS": 2.98,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 158.72,
+    "point": "B5",
+    "flower": "B02_C139",
+    "fan": "B02_C138",
+    "fanSp": "R9",
+    "overlapS": 0.32,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 158.72,
+    "point": "B5",
+    "flower": "B02_C139",
+    "fan": "B02_C142",
+    "fanSp": "R5",
+    "overlapS": 2.98,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 158.82,
+    "point": "B1",
+    "flower": "B02_C139",
+    "fan": "B02_C142",
+    "fanSp": "R5",
+    "overlapS": 2.68,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 158.82,
+    "point": "B6",
+    "flower": "B02_C139",
+    "fan": "B02_C138",
+    "fanSp": "R9",
+    "overlapS": 0.42,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 158.82,
+    "point": "B6",
+    "flower": "B02_C139",
+    "fan": "B02_C142",
+    "fanSp": "R5",
+    "overlapS": 2.68,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 158.92,
+    "point": "B0",
+    "flower": "B02_C139",
+    "fan": "B02_C142",
+    "fanSp": "R5",
+    "overlapS": 2.48,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 158.92,
+    "point": "B7",
+    "flower": "B02_C139",
+    "fan": "B02_C138",
+    "fanSp": "R9",
+    "overlapS": 0.52,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 158.92,
+    "point": "B7",
+    "flower": "B02_C139",
+    "fan": "B02_C142",
+    "fanSp": "R5",
+    "overlapS": 2.48,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 160.7,
+    "point": "B3",
+    "flower": "B02_C139",
+    "fan": "B02_C144",
+    "fanSp": "S9",
+    "overlapS": 1.04,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 160.7,
+    "point": "B4",
+    "flower": "B02_C139",
+    "fan": "B02_C144",
+    "fanSp": "S9",
+    "overlapS": 1.04,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 160.8,
+    "point": "B1",
+    "flower": "B02_C139",
+    "fan": "B02_C144",
+    "fanSp": "S9",
+    "overlapS": 1.14,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 160.8,
+    "point": "B6",
+    "flower": "B02_C139",
+    "fan": "B02_C144",
+    "fanSp": "S9",
+    "overlapS": 1.14,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 165.42,
+    "point": "B3",
+    "flower": "B02_C145",
+    "fan": "B02_C148",
+    "fanSp": "R9",
+    "overlapS": 1.95,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 165.42,
+    "point": "B4",
+    "flower": "B02_C145",
+    "fan": "B02_C148",
+    "fanSp": "R9",
+    "overlapS": 1.95,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 165.52,
+    "point": "B2",
+    "flower": "B02_C145",
+    "fan": "B02_C148",
+    "fanSp": "R9",
+    "overlapS": 1.95,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 165.52,
+    "point": "B5",
+    "flower": "B02_C145",
+    "fan": "B02_C148",
+    "fanSp": "R9",
+    "overlapS": 1.95,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 165.62,
+    "point": "B1",
+    "flower": "B02_C145",
+    "fan": "B02_C148",
+    "fanSp": "R9",
+    "overlapS": 1.95,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 165.62,
+    "point": "B6",
+    "flower": "B02_C145",
+    "fan": "B02_C148",
+    "fanSp": "R9",
+    "overlapS": 1.95,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 165.72,
+    "point": "B0",
+    "flower": "B02_C145",
+    "fan": "B02_C148",
+    "fanSp": "R9",
+    "overlapS": 1.92,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 165.72,
+    "point": "B7",
+    "flower": "B02_C145",
+    "fan": "B02_C148",
+    "fanSp": "R9",
+    "overlapS": 1.95,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 167.1,
+    "point": "B7",
+    "flower": "B02_C145",
+    "fan": "B02_C151",
+    "fanSp": "S5",
+    "overlapS": 0.57,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 167.2,
+    "point": "B1",
+    "flower": "B02_C145",
+    "fan": "B02_C151",
+    "fanSp": "S5",
+    "overlapS": 0.37,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 167.2,
+    "point": "B6",
+    "flower": "B02_C145",
+    "fan": "B02_C151",
+    "fanSp": "S5",
+    "overlapS": 0.37,
+    "intoFlowerM": 10.0
+   },
+   {
+    "t": 168.72,
+    "point": "B3",
+    "flower": "B02_C149",
+    "fan": "B02_C151",
+    "fanSp": "S5",
+    "overlapS": 1.13,
+    "intoFlowerM": 23.6
+   },
+   {
+    "t": 168.72,
+    "point": "B4",
+    "flower": "B02_C149",
+    "fan": "B02_C151",
+    "fanSp": "S5",
+    "overlapS": 1.13,
+    "intoFlowerM": 23.6
+   },
+   {
+    "t": 168.82,
+    "point": "B2",
+    "flower": "B02_C149",
+    "fan": "B02_C151",
+    "fanSp": "S5",
+    "overlapS": 0.93,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 168.82,
+    "point": "B5",
+    "flower": "B02_C149",
+    "fan": "B02_C151",
+    "fanSp": "S5",
+    "overlapS": 0.93,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 168.92,
+    "point": "B1",
+    "flower": "B02_C149",
+    "fan": "B02_C151",
+    "fanSp": "S5",
+    "overlapS": 0.73,
+    "intoFlowerM": 23.6
+   },
+   {
+    "t": 168.92,
+    "point": "B6",
+    "flower": "B02_C149",
+    "fan": "B02_C151",
+    "fanSp": "S5",
+    "overlapS": 0.73,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 169.02,
+    "point": "B0",
+    "flower": "B02_C149",
+    "fan": "B02_C151",
+    "fanSp": "S5",
+    "overlapS": 0.53,
+    "intoFlowerM": 23.6
+   },
+   {
+    "t": 169.02,
+    "point": "B7",
+    "flower": "B02_C149",
+    "fan": "B02_C151",
+    "fanSp": "S5",
+    "overlapS": 0.53,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 173.5,
+    "point": "B6",
+    "flower": "B02_C152",
+    "fan": "B02_C155",
+    "fanSp": "R5",
+    "overlapS": 1.74,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 173.6,
+    "point": "B3",
+    "flower": "B02_C152",
+    "fan": "B02_C157",
+    "fanSp": "S9",
+    "overlapS": 1.44,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 173.6,
+    "point": "B4",
+    "flower": "B02_C152",
+    "fan": "B02_C157",
+    "fanSp": "S9",
+    "overlapS": 1.44,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 173.7,
+    "point": "B4",
+    "flower": "B02_C152",
+    "fan": "B02_C155",
+    "fanSp": "R5",
+    "overlapS": 1.34,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 173.8,
+    "point": "B1",
+    "flower": "B02_C152",
+    "fan": "B02_C157",
+    "fanSp": "S9",
+    "overlapS": 1.44,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 173.8,
+    "point": "B3",
+    "flower": "B02_C152",
+    "fan": "B02_C155",
+    "fanSp": "R5",
+    "overlapS": 1.24,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 173.8,
+    "point": "B6",
+    "flower": "B02_C152",
+    "fan": "B02_C157",
+    "fanSp": "S9",
+    "overlapS": 1.44,
+    "intoFlowerM": 33.6
+   },
+   {
+    "t": 174.0,
+    "point": "B1",
+    "flower": "B02_C152",
+    "fan": "B02_C155",
+    "fanSp": "R5",
+    "overlapS": 1.24,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 174.5,
+    "point": "B0",
+    "flower": "B02_C152",
+    "fan": "B02_C158",
+    "fanSp": "R9",
+    "overlapS": 0.84,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 174.7,
+    "point": "B2",
+    "flower": "B02_C152",
+    "fan": "B02_C158",
+    "fanSp": "R9",
+    "overlapS": 0.44,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 174.9,
+    "point": "B7",
+    "flower": "B02_C152",
+    "fan": "B02_C159",
+    "fanSp": "R9R",
+    "overlapS": 0.44,
+    "intoFlowerM": 43.6
+   },
+   {
+    "t": 178.42,
+    "point": "B3",
+    "flower": "B02_C160",
+    "fan": "B02_C159",
+    "fanSp": "R9R",
+    "overlapS": 0.62,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 178.42,
+    "point": "B3",
+    "flower": "B02_C160",
+    "fan": "B02_C162",
+    "fanSp": "S5",
+    "overlapS": 1.23,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 178.42,
+    "point": "B4",
+    "flower": "B02_C160",
+    "fan": "B02_C162",
+    "fanSp": "S5",
+    "overlapS": 1.23,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 178.52,
+    "point": "B2",
+    "flower": "B02_C160",
+    "fan": "B02_C162",
+    "fanSp": "S5",
+    "overlapS": 1.13,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 178.52,
+    "point": "B5",
+    "flower": "B02_C160",
+    "fan": "B02_C159",
+    "fanSp": "R9R",
+    "overlapS": 0.32,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 178.52,
+    "point": "B5",
+    "flower": "B02_C160",
+    "fan": "B02_C162",
+    "fanSp": "S5",
+    "overlapS": 1.13,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 178.62,
+    "point": "B1",
+    "flower": "B02_C160",
+    "fan": "B02_C159",
+    "fanSp": "R9R",
+    "overlapS": 0.62,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 178.62,
+    "point": "B1",
+    "flower": "B02_C160",
+    "fan": "B02_C162",
+    "fanSp": "S5",
+    "overlapS": 0.83,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 178.62,
+    "point": "B6",
+    "flower": "B02_C160",
+    "fan": "B02_C162",
+    "fanSp": "S5",
+    "overlapS": 0.83,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 178.72,
+    "point": "B0",
+    "flower": "B02_C160",
+    "fan": "B02_C162",
+    "fanSp": "S5",
+    "overlapS": 0.63,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 178.72,
+    "point": "B7",
+    "flower": "B02_C160",
+    "fan": "B02_C162",
+    "fanSp": "S5",
+    "overlapS": 0.63,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 183.2,
+    "point": "B0",
+    "flower": "B02_C164",
+    "fan": "B02_C166",
+    "fanSp": "R9",
+    "overlapS": 1.54,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 183.3,
+    "point": "B1",
+    "flower": "B02_C164",
+    "fan": "B02_C166",
+    "fanSp": "R9",
+    "overlapS": 1.34,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 183.4,
+    "point": "B2",
+    "flower": "B02_C164",
+    "fan": "B02_C166",
+    "fanSp": "R9",
+    "overlapS": 1.14,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 183.5,
+    "point": "B3",
+    "flower": "B02_C164",
+    "fan": "B02_C166",
+    "fanSp": "R9",
+    "overlapS": 0.94,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 183.6,
+    "point": "B4",
+    "flower": "B02_C164",
+    "fan": "B02_C166",
+    "fanSp": "R9",
+    "overlapS": 0.84,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 183.7,
+    "point": "B5",
+    "flower": "B02_C164",
+    "fan": "B02_C166",
+    "fanSp": "R9",
+    "overlapS": 0.84,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 183.8,
+    "point": "B6",
+    "flower": "B02_C164",
+    "fan": "B02_C166",
+    "fanSp": "R9",
+    "overlapS": 0.84,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 183.9,
+    "point": "B7",
+    "flower": "B02_C164",
+    "fan": "B02_C166",
+    "fanSp": "R9",
+    "overlapS": 0.84,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 188.12,
+    "point": "B3",
+    "flower": "B02_C167",
+    "fan": "B02_C173",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 188.12,
+    "point": "B4",
+    "flower": "B02_C167",
+    "fan": "B02_C173",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 188.22,
+    "point": "B2",
+    "flower": "B02_C167",
+    "fan": "B02_C173",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 40.0
+   },
+   {
+    "t": 188.22,
+    "point": "B5",
+    "flower": "B02_C167",
+    "fan": "B02_C173",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 188.32,
+    "point": "B1",
+    "flower": "B02_C167",
+    "fan": "B02_C173",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 188.32,
+    "point": "B6",
+    "flower": "B02_C167",
+    "fan": "B02_C173",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 30.0
+   },
+   {
+    "t": 188.42,
+    "point": "B0",
+    "flower": "B02_C167",
+    "fan": "B02_C173",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 20.0
+   },
+   {
+    "t": 188.42,
+    "point": "B7",
+    "flower": "B02_C167",
+    "fan": "B02_C173",
+    "fanSp": "R9R",
+    "overlapS": 1.95,
+    "intoFlowerM": 20.0
+   }
+  ],
+  "placeholders": {
+   "Tiny": {
+    "resourceId": "Tiny",
+    "confirmed": false
+   },
+   "XS": {
+    "resourceId": "XS",
+    "confirmed": false
+   }
+  }
+ },
+ "overlap": {
+  "file": "/home/claude/fireworkslab/协作/编排B01/逻辑方案_B04.json",
+  "pcIncidents": 9,
+  "byKind": {
+   "后压前": 9
+  },
+  "heroIncidents": 0,
+  "mobile": {
+   "high": {
+    "gaps": [
+     {
+      "start": 69.0,
+      "end": 74.0,
+      "len": 5.0,
+      "section": "低位密奏"
+     }
+    ],
+    "totalGapS": 5.0,
+    "incidents": 2
+   },
+   "medium": {
+    "gaps": [
+     {
+      "start": 69.0,
+      "end": 74.0,
+      "len": 5.0,
+      "section": "低位密奏"
+     }
+    ],
+    "totalGapS": 5.0,
+    "incidents": 2
+   },
+   "low": {
+    "gaps": [
+     {
+      "start": 69.0,
+      "end": 74.0,
+      "len": 5.0,
+      "section": "低位密奏"
+     }
+    ],
+    "totalGapS": 5.0,
+    "incidents": 2
+   }
+  },
+  "pcList": [
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C048",
+     "B02_C056"
+    ],
+    "t": 61.28,
+    "until": 62.05,
+    "pairs": 4,
+    "minSep": 0.29,
+    "points": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ],
+    "hero": false,
+    "section": "B01_S5",
+    "desc": "金锦菊（M·整排9）× 多重菊（M·城垛M）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C096",
+     "B02_C100"
+    ],
+    "t": 119.67,
+    "until": 119.99,
+    "pairs": 1,
+    "minSep": 0.18,
+    "points": [
+     "P8"
+    ],
+    "hero": false,
+    "section": "B01_S9",
+    "desc": "银彩菊（L·整排9）× 多重菊·大（L·整排9）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C100",
+     "B02_C106"
+    ],
+    "t": 122.88,
+    "until": 123.95,
+    "pairs": 2,
+    "minSep": 0.26,
+    "points": [
+     "P1",
+     "P3"
+    ],
+    "hero": false,
+    "section": "B01_S9",
+    "desc": "多重菊（M·整排9）× 多重菊（M·城垛M）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C100",
+     "B02_C102"
+    ],
+    "t": 122.97,
+    "until": 124.14,
+    "pairs": 3,
+    "minSep": 0.3,
+    "points": [
+     "P0",
+     "P2",
+     "P4"
+    ],
+    "hero": false,
+    "section": "B01_S9",
+    "desc": "多重菊·大（L·整排9）× 银彩菊（L·城垛L）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C107",
+     "B02_C109"
+    ],
+    "t": 129.48,
+    "until": 130.68,
+    "pairs": 4,
+    "minSep": 0.14,
+    "points": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ],
+    "hero": false,
+    "section": "B01_S9",
+    "desc": "金曜菊（M·叠层）× 金芒菊（M·整排9）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C137",
+     "B02_C140"
+    ],
+    "t": 165.07,
+    "until": 166.34,
+    "pairs": 5,
+    "minSep": 0.17,
+    "points": [
+     "P4",
+     "P5",
+     "P6",
+     "P7",
+     "P8"
+    ],
+    "hero": false,
+    "section": "B01_S12",
+    "desc": "多重菊·大（L·整排9）× 金芒菊·大（L·叠层）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C154",
+     "B02_C156"
+    ],
+    "t": 181.28,
+    "until": 182.58,
+    "pairs": 4,
+    "minSep": 0.22,
+    "points": [
+     "P1",
+     "P3",
+     "P5",
+     "P7"
+    ],
+    "hero": false,
+    "section": "B01_S12",
+    "desc": "金曜菊（M·叠层）× 金蕊青柠星（M·整排9）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C161",
+     "B02_C165"
+    ],
+    "t": 187.78,
+    "until": 188.09,
+    "pairs": 1,
+    "minSep": 0.46,
+    "points": [
+     "P4"
+    ],
+    "hero": false,
+    "section": "B01_S12",
+    "desc": "金芒菊·大（L·金墙）× 金曜菊（M·叠层）"
+   },
+   {
+    "kind": "后压前",
+    "rows": [
+     "B02_C168",
+     "B02_C171"
+    ],
+    "t": 194.27,
+    "until": 196.19,
+    "pairs": 25,
+    "minSep": 0.33,
+    "points": [
+     "P0",
+     "P1",
+     "P2",
+     "P3",
+     "P4",
+     "P5",
+     "P6",
+     "P7",
+     "P8"
+    ],
+    "hero": false,
+    "section": "B01_S12",
+    "desc": "银彩菊（L·整排9）× 银彩菊（L·白墙9）"
+   }
+  ]
+ },
+ "overlapBase": {
+  "file": "/home/claude/fireworkslab/协作/编排B01/逻辑方案_B03r2m.json",
+  "pcIncidents": 9,
+  "byKind": {
+   "后压前": 9
+  },
+  "mobile": {
+   "high": {
+    "incidents": 2,
+    "totalGapS": 5.0
+   },
+   "medium": {
+    "incidents": 2,
+    "totalGapS": 5.0
+   },
+   "low": {
+    "incidents": 2,
+    "totalGapS": 5.0
+   }
+  }
+ }
+}
