@@ -1,0 +1,171 @@
+{
+  "ue_verified": false,
+  "packages": {
+    "baseline-CSLRC-PC": {
+      "pass": true,
+      "fails": [
+        [],
+        []
+      ],
+      "emitters": 2,
+      "sequence_layers": 2,
+      "cell_sizes": [
+        [
+          128,
+          2048
+        ],
+        [
+          512,
+          512
+        ]
+      ]
+    },
+    "baseline-CSLRC-Mobile": {
+      "pass": true,
+      "fails": [
+        []
+      ],
+      "emitters": 2,
+      "sequence_layers": 1,
+      "cell_sizes": [
+        [
+          64,
+          1024
+        ]
+      ]
+    },
+    "baseline-CSLRS-PC": {
+      "pass": true,
+      "fails": [
+        []
+      ],
+      "emitters": 1,
+      "sequence_layers": 1,
+      "cell_sizes": [
+        [
+          128,
+          2048
+        ]
+      ]
+    },
+    "baseline-CSLRS-Mobile": {
+      "pass": true,
+      "fails": [
+        []
+      ],
+      "emitters": 1,
+      "sequence_layers": 1,
+      "cell_sizes": [
+        [
+          64,
+          1024
+        ]
+      ]
+    },
+    "trial-CSLRC-PC": {
+      "pass": true,
+      "fails": [
+        [],
+        []
+      ],
+      "emitters": 2,
+      "sequence_layers": 2,
+      "cell_sizes": [
+        [
+          128,
+          2048
+        ],
+        [
+          512,
+          512
+        ]
+      ]
+    },
+    "trial-CSLRC-Mobile": {
+      "pass": true,
+      "fails": [
+        []
+      ],
+      "emitters": 2,
+      "sequence_layers": 1,
+      "cell_sizes": [
+        [
+          64,
+          1024
+        ]
+      ]
+    },
+    "trial-CSLRS-PC": {
+      "pass": true,
+      "fails": [
+        []
+      ],
+      "emitters": 1,
+      "sequence_layers": 1,
+      "cell_sizes": [
+        [
+          128,
+          2048
+        ]
+      ]
+    },
+    "trial-CSLRS-Mobile": {
+      "pass": true,
+      "fails": [
+        []
+      ],
+      "emitters": 1,
+      "sequence_layers": 1,
+      "cell_sizes": [
+        [
+          64,
+          1024
+        ]
+      ]
+    }
+  },
+  "head": {
+    "PC": {
+      "emitter_equal": true,
+      "pixels_equal": true
+    },
+    "Mobile": {
+      "emitter_equal": true
+    }
+  },
+  "layout": {
+    "CSLRC-PC": {
+      "same_emitter": false,
+      "before_duration": 5.9333,
+      "after_duration": 6.1667,
+      "before_frames": 64,
+      "after_frames": 64,
+      "note": "自动测量包含新增内容，允许取景和帧表改变；前段物理另作渲染输入逐值检查。"
+    },
+    "CSLRS-PC": {
+      "same_emitter": false,
+      "before_duration": 6.9333,
+      "after_duration": 6.9333,
+      "before_frames": 64,
+      "after_frames": 64,
+      "note": "自动测量包含新增内容，允许取景和帧表改变；前段物理另作渲染输入逐值检查。"
+    },
+    "CSLRC-Mobile": {
+      "same_emitter": false,
+      "before_duration": 5.9333,
+      "after_duration": 6.1667,
+      "before_frames": 64,
+      "after_frames": 64,
+      "note": "自动测量包含新增内容，允许取景和帧表改变；前段物理另作渲染输入逐值检查。"
+    },
+    "CSLRS-Mobile": {
+      "same_emitter": false,
+      "before_duration": 6.9333,
+      "after_duration": 6.9333,
+      "before_frames": 64,
+      "after_frames": 64,
+      "note": "自动测量包含新增内容，允许取景和帧表改变；前段物理另作渲染输入逐值检查。"
+    }
+  },
+  "pass": true
+}

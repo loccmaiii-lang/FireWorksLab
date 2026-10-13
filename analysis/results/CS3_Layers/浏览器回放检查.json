@@ -1,0 +1,165 @@
+{
+  "errors": [],
+  "record": {
+    "baseline-CSLRC-PC-whole": {
+      "frames": 211,
+      "view": [
+        0,
+        45,
+        50,
+        50
+      ],
+      "exposure": 1
+    },
+    "baseline-CSLRC-PC-detail": {
+      "frames": 211,
+      "view": [
+        0,
+        78,
+        16,
+        16
+      ],
+      "exposure": 1
+    },
+    "baseline-CSLRC-Mobile-whole": {
+      "frames": 211,
+      "view": [
+        0,
+        45,
+        50,
+        50
+      ],
+      "exposure": 1
+    },
+    "baseline-CSLRC-Mobile-detail": {
+      "frames": 211,
+      "view": [
+        0,
+        78,
+        16,
+        16
+      ],
+      "exposure": 1
+    },
+    "baseline-CSLRS-PC-whole": {
+      "frames": 211,
+      "view": [
+        0,
+        45,
+        50,
+        50
+      ],
+      "exposure": 1
+    },
+    "baseline-CSLRS-PC-detail": {
+      "frames": 211,
+      "view": [
+        0,
+        78,
+        16,
+        16
+      ],
+      "exposure": 1
+    },
+    "baseline-CSLRS-Mobile-whole": {
+      "frames": 211,
+      "view": [
+        0,
+        45,
+        50,
+        50
+      ],
+      "exposure": 1
+    },
+    "baseline-CSLRS-Mobile-detail": {
+      "frames": 211,
+      "view": [
+        0,
+        78,
+        16,
+        16
+      ],
+      "exposure": 1
+    },
+    "trial-CSLRC-PC-whole": {
+      "frames": 211,
+      "view": [
+        0,
+        45,
+        50,
+        50
+      ],
+      "exposure": 1
+    },
+    "trial-CSLRC-PC-detail": {
+      "frames": 211,
+      "view": [
+        0,
+        78,
+        16,
+        16
+      ],
+      "exposure": 1
+    },
+    "trial-CSLRC-Mobile-whole": {
+      "frames": 211,
+      "view": [
+        0,
+        45,
+        50,
+        50
+      ],
+      "exposure": 1
+    },
+    "trial-CSLRC-Mobile-detail": {
+      "frames": 211,
+      "view": [
+        0,
+        78,
+        16,
+        16
+      ],
+      "exposure": 1
+    },
+    "trial-CSLRS-PC-whole": {
+      "frames": 211,
+      "view": [
+        0,
+        45,
+        50,
+        50
+      ],
+      "exposure": 1
+    },
+    "trial-CSLRS-PC-detail": {
+      "frames": 211,
+      "view": [
+        0,
+        78,
+        16,
+        16
+      ],
+      "exposure": 1
+    },
+    "trial-CSLRS-Mobile-whole": {
+      "frames": 211,
+      "view": [
+        0,
+        45,
+        50,
+        50
+      ],
+      "exposure": 1
+    },
+    "trial-CSLRS-Mobile-detail": {
+      "frames": 211,
+      "view": [
+        0,
+        78,
+        16,
+        16
+      ],
+      "exposure": 1
+    }
+  }
+}

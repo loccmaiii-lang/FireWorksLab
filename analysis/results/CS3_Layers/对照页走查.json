@@ -1,0 +1,13 @@
+{
+  "pass": true,
+  "play_advances": true,
+  "controls": [
+    "播放",
+    "暂停",
+    "拖动",
+    "Comet/Silver",
+    "PC/手机",
+    "整体/局部"
+  ],
+  "errors": []
+}

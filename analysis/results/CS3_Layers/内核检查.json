@@ -1,0 +1,24 @@
+{
+  "pass": true,
+  "tests": "曲线、余烬、气流、步长减半、重复求值和关闭解析解",
+  "results": [
+    {
+      "id": "CSLRC-T",
+      "preburn_samples": 65,
+      "preburn_points_exact": true,
+      "controls_change_tail": true
+    },
+    {
+      "id": "CSLRC-H",
+      "preburn_samples": 65,
+      "preburn_points_exact": true,
+      "controls_change_tail": false
+    },
+    {
+      "id": "CSLRS",
+      "preburn_samples": 67,
+      "preburn_points_exact": true,
+      "controls_change_tail": true
+    }
+  ]
+}

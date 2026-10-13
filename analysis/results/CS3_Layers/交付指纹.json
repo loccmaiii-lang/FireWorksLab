@@ -1,0 +1,14 @@
+{
+  "version": "4.9.82",
+  "reference_commit": "5ea4762d",
+  "ue_verified": false,
+  "files": {
+    "tool/src/js/10_types.js": "20d547188a4db57f7c8e4474885464cba1fac60680cf44c8403c26692029cbd5",
+    "tool/src/js/47_risetail.js": "4c09bebe9f419af3b2d66f50f3e93e30827640ede17f1061e0ff1492ab076d74",
+    "analysis/原理/条目_CometSilverLayers.json": "396e3791330ac11600076909c5d025b8917d05af55fa3c23f6fb452f32c6b181",
+    "analysis/results/CS3_Layers/trial-参数.json": "3c9331887306bc883e7f45ba9ae7cea3c0154ff17fa32f1603979de0f71c326e",
+    "analysis/results/CS3_Layers/trial-CSLRC.zip": "c06b834ad4d9563c59c6b1d6d73e6136debb0321be3a66f23e364bc48b1586ee",
+    "analysis/results/CS3_Layers/trial-CSLRS.zip": "6c3579bccb7087bb059726e86edc68ad410c7a688d5fbdb59c436e5e3c929298"
+  },
+  "hash_mode": "文本按UTF-8、LF归一；ZIP按原始字节"
+}

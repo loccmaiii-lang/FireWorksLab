@@ -1,0 +1,45 @@
+{
+  "pass": true,
+  "version": "4.9.82",
+  "rows": [
+    {
+      "id": "CSLRC",
+      "stage": "待验收",
+      "standardPass": true,
+      "sameVersion": true
+    },
+    {
+      "id": "CSLRS",
+      "stage": "待验收",
+      "standardPass": true,
+      "sameVersion": true
+    }
+  ],
+  "original": [
+    {
+      "id": "CS3C",
+      "stage": "已通过"
+    },
+    {
+      "id": "CS3S",
+      "stage": "已通过"
+    }
+  ],
+  "unsupported": [
+    {
+      "key": "rtLateWind",
+      "blocked": true,
+      "message": "落火入贴图、燃尽后曲线和末段气流需要 RT6「近段 + 远段合并全程」输出；请切换当前平台输出方式，或关闭这三项。"
+    },
+    {
+      "key": "rtETex",
+      "blocked": true,
+      "message": "落火入贴图、燃尽后曲线和末段气流需要 RT6「近段 + 远段合并全程」输出；请切换当前平台输出方式，或关闭这三项。"
+    },
+    {
+      "key": "rtTailAfterBurn",
+      "blocked": true,
+      "message": "落火入贴图、燃尽后曲线和末段气流需要 RT6「近段 + 远段合并全程」输出；请切换当前平台输出方式，或关闭这三项。"
+    }
+  ]
+}

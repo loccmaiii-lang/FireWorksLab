@@ -1,0 +1,57 @@
+{
+  "pass": true,
+  "results": [
+    {
+      "id": "CSLRC",
+      "views": [
+        "live",
+        "export",
+        "atlas"
+      ],
+      "errorsBefore": 0,
+      "mobileRenderer": true,
+      "edit": {
+        "old": 0.6,
+        "now": 0.65
+      },
+      "reload": [
+        {
+          "full": true,
+          "form": "emitset",
+          "rate": 0.65
+        },
+        {
+          "full": true,
+          "form": "emitset",
+          "rate": 0
+        }
+      ],
+      "export": "Comet3_Layers.zip",
+      "pass": true
+    },
+    {
+      "id": "CSLRS",
+      "views": [
+        "live",
+        "export",
+        "atlas"
+      ],
+      "errorsBefore": 0,
+      "mobileRenderer": true,
+      "edit": {
+        "old": 0.6,
+        "now": 0.65
+      },
+      "reload": [
+        {
+          "full": true,
+          "form": "emitset",
+          "rate": 0.65
+        }
+      ],
+      "export": "Silver3_Layers_S.zip",
+      "pass": true
+    }
+  ],
+  "errors": []
+}
