@@ -43135,6 +43135,12 @@ var FW_EFFECTS = [
 "type": "export",
 "state": "已回来",
 "seen": true
+},
+{
+"id": "ZA1",
+"type": "export",
+"state": "已回来",
+"seen": false
 }
 ],
 "exports": [
@@ -43296,6 +43302,37 @@ var FW_EFFECTS = [
 "fails": []
 },
 "stale": false
+},
+{
+"job": "ZA1",
+"entry": "FC6O",
+"ver": "6ea2f5ff·master4.3.8-core1-zoom4.9.33",
+"time": "2026-10-13 23:21",
+"packages": [
+{
+"name": "FanGold_FC6O_ZA",
+"replica": "FC6O",
+"files": [
+"FanGold_FC6O_ZA.json",
+"FanGold_FC6O_ZA_Cascade参数.txt",
+"FanGold_FC6O_ZA_Mobile.json",
+"FanGold_FC6O_ZA_曲线.csv",
+"T_EFX_FireWorks_FanComet_Gold_4x4_01.png",
+"T_EFX_FireWorks_FanComet_Gold_4x4_01_C.png",
+"T_EFX_FireWorks_FanComet_Gold_4x4_01_HD.png",
+"T_EFX_FireWorks_FanComet_Gold_R.png",
+"_检查",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
 }
 ],
 "thumb": null,
@@ -43339,7 +43376,14 @@ var FW_EFFECTS = [
 "已通过版": "CS3C",
 "通过烘焙器版本": "4.9.77",
 "ver": "f0bdd82c",
-"jobs": [],
+"jobs": [
+{
+"id": "ZA2",
+"type": "export",
+"state": "已回来",
+"seen": false
+}
+],
 "exports": [
 {
 "job": "CS3C_RT6E1",
@@ -43365,6 +43409,36 @@ var FW_EFFECTS = [
 "Comet3_RT6_完整配方.json"
 ],
 "sha256": "00522edff3c50498c7109957ba0ae2ed48ae788d2a4929e4707c8b26faf8a450"
+}
+],
+"check": {
+"passed": true,
+"fails": []
+},
+"stale": false
+},
+{
+"job": "ZA2",
+"entry": "CS3C-T",
+"ver": "e47d6247·emitset4.9.69",
+"time": "2026-10-13 23:22",
+"packages": [
+{
+"name": "Comet3_GoldTail_ZA",
+"replica": "CS3C-T",
+"files": [
+"Comet3_GoldTail_ZA.json",
+"Comet3_GoldTail_ZA_Cascade参数.txt",
+"Comet3_GoldTail_ZA_Mobile.json",
+"Comet3_GoldTail_ZA_曲线.csv",
+"T_EFX_FireWorks_Comet3_GoldTail_ZA_S_Full_16x1_01.png",
+"T_EFX_FireWorks_Comet3_GoldTail_ZA_S_Full_16x1_01_C.png",
+"T_EFX_FireWorks_Comet3_GoldTail_ZA_S_Full_16x1_01_HD.png",
+"T_EFX_FireWorks_Comet3_GoldTail_ZA_S_R.png",
+"cascade.json",
+"cascade_mobile.json",
+"命名对照.txt"
+]
 }
 ],
 "check": {
