@@ -1,0 +1,35 @@
+{
+ "id": "FSQ3",
+ "type": "script",
+ "priority": 1,
+ "name": "对话框FanGold 4.9.74：平方阻力作用演示（三档）+ 回归",
+ "note": "用户 10-13 11:57「调起来没什么效果」。",
+ "steps": [
+  {
+   "name": "金曜菊金锦层三档演示",
+   "script": "火花平方阻力演示.py",
+   "args": [
+    "--out",
+    "{out}/演示"
+   ],
+   "must": false,
+   "timeout": 1500
+  },
+  {
+   "name": "基准回归 4.9.73 → 4.9.74 花型模板 6 个",
+   "script": "基准回归.py",
+   "args": [
+    "--old",
+    "{git:1ae75e41:tool/FireworkBaker.html}",
+    "--new",
+    "tool/FireworkBaker.html",
+    "--out",
+    "{out}/基准回归",
+    "--only",
+    "kiku,botan,kamuro,senrin,strobe,crackle"
+   ],
+   "must": false,
+   "timeout": 2400
+  }
+ ]
+}

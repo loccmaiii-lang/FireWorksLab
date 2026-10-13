@@ -747,7 +747,7 @@ function buildMasterPanel() {
       if (Array.isArray(it)) {
         const [k, label, unit, min, max, step] = it, lab = typeof label === 'function' ? label(P) : label, [short0, detail0] = splitLab(lab), short = nm ? p43Label(nm, short0) : short0, detail = nm ? nm.desc : detail0;
         const vw = it[7];     // 4.9.50 显示换算（线条宽度：存散开速度、按米显示 / 输入）
-        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => vw ? vw.get(state.P, state.P[k]) : state.P[k], v => { if (vw) v = vw.set(state.P, v); if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); if (k === 'duration' && typeof seqNote === 'function') seqNote(state.P); } }, vw ? vw.get(D, D[k]) : D[k], k);     // 4.9.36 改序列时长、设了出点：说一句
+        row = slider(det, 'p-' + k + '-' + panelRows.length, short, unit, min, max, step, () => vw ? vw.get(state.P, shownParam(state.P, k, D)) : shownParam(state.P, k, D), v => { if (vw) v = vw.set(state.P, v); if (k === 'tempo' && typeof applyTempo === 'function') { applyTempo(v); return; } if (TIMING_KEYS.has(k)) setTimingParam(k, v); else if (typeof SCHEME_KEYS !== 'undefined' && SCHEME_KEYS.includes(k)) { state.P[k] = v; onExportScheme(); } else { state.P[k] = v; onParam(); if (k === 'duration' && typeof seqNote === 'function') seqNote(state.P); } }, vw ? vw.get(D, D[k]) : D[k], k);     // 4.9.36 改序列时长、设了出点：说一句
         autoDefRow(row, k, step);
         const kl = row.querySelector('.k'); kl.title = (nm ? `${nm.en} · ${nm.cn}` : short) + (unit ? `（${unit}）` : '') + '；双击恢复默认';
         row._lab = short; row._detail = detail; row._nm = nm;
@@ -757,7 +757,7 @@ function buildMasterPanel() {
         row.innerHTML = `<span class="fk" title="${(nm ? `${nm.en} · ${nm.cn}` : short).replace(/"/g, '&quot;')}">${short}</span><select></select><span class="st"></span><button type="button" class="rrst" hidden>↺</button>`;
         row._lab = short; row._detail = detail; row._nm = nm; rrstBind(row);
         const s = row.querySelector('select'); for (const [v, l] of it.options) s.add(new Option(l, v));
-        s.value = String(it.sel === '_trailTier' ? P.type : P[it.sel]);
+        s.value = String(it.sel === '_trailTier' ? P.type : shownParam(P, it.sel, D));     // 4.9.74 旧存档缺新键时显示缺省
         s.addEventListener('change', () => {
           if (it.sel === '_trailTier') { openType(s.value); return; }     // 4.3：升空尾缀一个入口，档位切换 = 打开那一档的模板
           const v = typeof D[it.sel] === 'number' ? +s.value : s.value;
