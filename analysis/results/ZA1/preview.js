@@ -1,0 +1,1 @@
+FW_ASSET_LOADED("ZA1", {"manifest": {"title": "FanGold_FC6O_ZA", "duration": 3.47, "view": 45.6, "variants": {"FanGold_FC6O_ZA": "ZA"}, "emitters": [], "note": "导出（23）· 烘焙器 4.9.81 带锚点的 Zoom 验证（用户 10-13 21:36「同意增加带锚点的Zoom」）：FC6O 原条目参数不动，只把面片取景改成「随开花放大 · 锚在爆点」导出 + 回放检查，和 FC6O 现有固定取景的包比单帧填充、碰边、过曝。不是新候选、不进待我验收、不导入 UE。"}, "images": {}});

@@ -1,0 +1,21 @@
+{
+ "entry": "CS3C-T",
+ "ver": "e47d6247·emitset4.9.69",
+ "times_s": [
+  0.71,
+  2.13,
+  3.56,
+  4.98,
+  6.4
+ ],
+ "square_px": 783,
+ "header_px": 22,
+ "label_px": 90,
+ "rows": [
+  "实时模拟",
+  "导出效果"
+ ],
+ "projection": null,
+ "reference": null,
+ "note": "每行整段固定取景；实时和导出各自的视野不同，比较几何时须记录整段统一换算，不能逐帧放大。"
+}

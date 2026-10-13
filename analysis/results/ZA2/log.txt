@@ -1,0 +1,8 @@
+23:21:59 开始：Comet3_GoldTail_ZA（导出素材）
+23:22:03 Comet3_GoldTail_ZA 导出 4 秒：Comet3_GoldTail_ZA.json、Comet3_GoldTail_ZA_Cascade参数.txt、Comet3_GoldTail_ZA_Mobile.json、Comet3_GoldTail_ZA_曲线.csv、T_EFX_FireWorks_Comet3_GoldTail_ZA_S_Full_16x1_01.png、T_EFX_FireWorks_Comet3_GoldTail_ZA_S_Full_16x1_01_C.png、T_EFX_FireWorks_Comet3_GoldTail_ZA_S_Full_16x1_01_HD.png、T_EFX_FireWorks_Comet3_GoldTail_ZA_S_R.png、cascade.json、cascade_mobile.json、命名对照.txt
+23:22:04 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZA2\回放检查.jpg（✅ 通过）
+23:22:19 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZA2\烘焙回放.jpg
+23:22:19 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\ZA2\烘焙回放_原尺寸.jpg
+23:22:19 烘焙器预览没做成（不影响导出）：'texture'
+23:22:19 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+23:22:20 完成，用时 0.3 分钟

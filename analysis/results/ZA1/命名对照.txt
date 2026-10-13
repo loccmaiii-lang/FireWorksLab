@@ -1,0 +1,6 @@
+烘焙器内部名 → 素材包里的名字（用户 2026-10-02 定的规范）
+T_FanGold_FC6O_ZA.png → T_EFX_FireWorks_FanComet_Gold_4x4_01_HD.png
+T_FanGold_FC6O_ZA_Cutout.png → T_EFX_FireWorks_FanComet_Gold_4x4_01_C.png
+T_FanGold_FC6O_ZA_FrameTest.png → _检查/T_EFX_FireWorks_FanComet_Gold_4x4_01_FrameTest.png
+T_FanGold_FC6O_ZA_Mobile.png → T_EFX_FireWorks_FanComet_Gold_4x4_01.png
+T_FanGold_FC6O_ZA_Ramp.png → T_EFX_FireWorks_FanComet_Gold_R.png

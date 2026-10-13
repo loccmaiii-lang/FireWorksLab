@@ -1,0 +1,26 @@
+{
+ "effect": "comet3_rt6",
+ "entry": "CS3C-T",
+ "ver": "e47d6247·emitset4.9.69",
+ "time": "2026-10-13 23:22",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "Comet3_GoldTail_ZA",
+   "replica": "CS3C-T",
+   "files": [
+    "Comet3_GoldTail_ZA.json",
+    "Comet3_GoldTail_ZA_Cascade参数.txt",
+    "Comet3_GoldTail_ZA_Mobile.json",
+    "Comet3_GoldTail_ZA_曲线.csv",
+    "T_EFX_FireWorks_Comet3_GoldTail_ZA_S_Full_16x1_01.png",
+    "T_EFX_FireWorks_Comet3_GoldTail_ZA_S_Full_16x1_01_C.png",
+    "T_EFX_FireWorks_Comet3_GoldTail_ZA_S_Full_16x1_01_HD.png",
+    "T_EFX_FireWorks_Comet3_GoldTail_ZA_S_R.png",
+    "cascade.json",
+    "cascade_mobile.json",
+    "命名对照.txt"
+   ]
+  }
+ ]
+}

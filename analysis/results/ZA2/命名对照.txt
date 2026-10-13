@@ -1,0 +1,6 @@
+烘焙器内部名 → 素材包里的名字（用户 2026-10-02 定的规范）
+T_Comet3_GoldTail_ZA_Full.png → T_EFX_FireWorks_Comet3_GoldTail_ZA_S_Full_16x1_01_HD.png
+T_Comet3_GoldTail_ZA_Full_Cutout.png → T_EFX_FireWorks_Comet3_GoldTail_ZA_S_Full_16x1_01_C.png
+T_Comet3_GoldTail_ZA_Mobile_Full.png → T_EFX_FireWorks_Comet3_GoldTail_ZA_S_Full_16x1_01.png
+T_Comet3_GoldTail_ZA_Mobile_Full_Cutout.png → T_EFX_FireWorks_Comet3_GoldTail_ZA_S_Full_16x1_01_C.png
+T_Comet3_GoldTail_ZA_Ramp.png → T_EFX_FireWorks_Comet3_GoldTail_ZA_S_R.png
