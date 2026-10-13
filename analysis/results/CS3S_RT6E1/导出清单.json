@@ -1,0 +1,28 @@
+{
+  "effect": "silver3_rt6",
+  "entry": "CS3S",
+  "ver": "87a67097·emitset4.9.69",
+  "baker": "4.9.77",
+  "time": "2026-10-13 17:51",
+  "dir": "analysis/local/输出/素材包/CometSilver3_RT6_20261013",
+  "packages": [
+    {
+      "name": "Silver3_RT6",
+      "replica": "CS3S",
+      "files": [
+        "T_EFX_FireWorks_Silver3_RT6_S_Full_16x1_01_HD.png",
+        "T_EFX_FireWorks_Silver3_RT6_S_Full_16x1_01_C.png",
+        "T_EFX_FireWorks_Silver3_RT6_S_R.png",
+        "Silver3_RT6_Cascade参数.txt",
+        "Silver3_RT6_曲线.csv",
+        "Silver3_RT6.json",
+        "T_EFX_FireWorks_Silver3_RT6_S_Full_16x1_01.png",
+        "Silver3_RT6_Mobile.json",
+        "cascade.json",
+        "cascade_mobile.json",
+        "命名对照.txt"
+      ],
+      "sha256": "28e371665c9c0d29f2403e28020755577803dfdfe6943be8bef305738031a4f1"
+    }
+  ]
+}

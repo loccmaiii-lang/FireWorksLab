@@ -27,7 +27,9 @@ function frameIdx(m, age) {
 function segAt(b, age) { let s = b; while (s.next && age >= s.next.meta.t0) s = s.next; return s; }
 // 某一时刻的面片矩形（相对爆点）：中心 = centerAt，尺寸 = 最大尺寸 × Size By Life
 function layerRectAt(m, L, age) {
-  const s = sizeXY(m, age), c = centerAt(m, age), w = m.Ww * L.scale * s[0], h = m.Wh * L.scale * s[1], cx = (L.mirror ? -c[0] : c[0]) * L.scale, cy = c[1] * L.scale;
+  const s = sizeXY(m, age), c = centerAt(m, age);
+  if (m.rtHeadBall) { const p = m.rtHeadBall.pos(clamp(age, 0, m.rtHeadBall.T)); c[0] += p[0]; c[1] += p[2]; }
+  const w = m.Ww * L.scale * s[0], h = m.Wh * L.scale * s[1], cx = (L.mirror ? -c[0] : c[0]) * L.scale, cy = c[1] * L.scale;
   return [cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2];
 }
 function bindSeqTextures(pr, b) {
@@ -41,6 +43,9 @@ function preScaleAt(b0, m, b, age0, age) { return b === b0 && m.pre && age < 0 &
 // 4.9.21（用户 10-06 21:51 选「一律绕爆点」）：绕爆点放大（面片坐标原点 = 爆点；导出用 Pivot Offset 把爆点放在粒子上）
 function preRect(r, s) { return [r[0] * s, r[1] * s, r[2] * s, r[3] * s]; }
 function drawLayer(b0, L, t, view, origin = [0, 0]) {
+  if (b0.esHead && b0.esMobile) { const age=(engineTick(t)-L.delay)*L.rate, sc=L.scale||1, v=view.map(x=>x/sc);
+    const sig=JSON.stringify([b0.P,L]), cache=b0._headDot; if (!cache || cache.sig!==sig) b0._headDot={sig,tab:esSpawn(rtHeadDotES(b0.P,comboLayerM(L)),1)};
+    esDraw(b0._headDot.tab,age,v,hdrT.w/(2*v[2]),hdrT.h/(2*v[3]),1); return 0; }
   t=engineTick(t);
   const age0 = (t - L.delay) * L.rate, b = segAt(b0, age0), m = b.meta, age = age0 - (m.t0 || 0), ps = preScaleAt(b0, m, b, age0, age);
   const f = ps > 0 ? 0 : frameIdx(m, age);
@@ -50,7 +55,7 @@ function drawLayer(b0, L, t, view, origin = [0, 0]) {
   gl.uniform4fv(pr.u.uRect, [r[0] + origin[0], r[1] + origin[1], r[2] + origin[0], r[3] + origin[1]]); gl.uniform4fv(pr.u.uView, view);
   bindSeqTextures(pr, b);
   gl.uniform1f(pr.u.uFrame, f); gl.uniform1f(pr.u.uMirror, L.mirror ? 1 : 0);
-  setMatUniforms(pr, L, age0);
+  setMatUniforms(pr, b.form === 'emitset' ? { ...L, headInt:L.headInt*(b.P.rtBright||1), tailInt:L.tailInt*(b.P.rtBright||1) } : L, age0);
   gl.bindVertexArray(quadVAO); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   gl.activeTexture(gl.TEXTURE0);
   return f;
@@ -147,13 +152,17 @@ function liveBox(P, slot) {
 function liveSlot(key) { return live[key] || (live[key] = { gen: -1 }); }
 function prepSlot(slot, P, gen) {
   if (slot.gen === gen && slot.P === P) return;
-  slot.trailR = null; slot.phys = null; slot.sim = null; disposeTrack(slot.track); slot.track = null; disposeEmitter(slot.E); slot.E = null;
+  slot.rtFull = null; slot.trailR = null; slot.phys = null; slot.sim = null; disposeTrack(slot.track); slot.track = null; disposeEmitter(slot.E); slot.E = null;
   slot.R40 && slot.R40.dispose(); slot.R40=null; slot.plan40=null;slot.camera40=null;
   slot.cell40 && slot.cell40.dispose(); slot.cell40=null; slot.samples40 && slot.samples40.dispose(); slot.samples40=null;
   slot.gen = gen; slot.P = P; slot.box = null;
 }
 function drawLiveScene(slot, P, t, view, ppm) {
   setParticleProfile(P);
+  if (rtPcFull(P)) {
+    if (!slot.rtFull) slot.rtFull = makeRiseTailFullRenderer(P, rtLoopInfo(P), rtBallistic(P), 0);
+    slot.rtFull.draw(t, view, ppm, 1); return { stars: 1, sparks: slot.rtFull.slots };
+  }
   if (isPhys(P)) return drawPhysTrail(slot, P, t, view, ppm);
   if (isTrail(P)) {
     // 随体坐标里实时模拟：上升段连续播放，到顶后按 20 fps 版本的消散时长熄灭
@@ -168,6 +177,7 @@ function drawLiveScene(slot, P, t, view, ppm) {
   return { stars: P.stars, sparks: R.slots || 0 };
 }
 function sceneView(P, m, slot) {
+  if (rtPcFull(P)) { const h = Math.max(m.Ww, m.Wh, m.ball.H) * 0.54; return [m.full ? m.full.cx : 0, m.rtHeadBall ? m.ball.H/2 : m.cy, h, h]; }
   if (isPhys(P)) {
     const v=physView(P,slot,Math.min(state.view==='export'?engineTick(state.t):state.t,P.duration));
     if(state.view==='export' && state.disp==='game')v[2]=v[3]=canvas.width/(2*gamePixelsPerMeter(P,P.phView));
@@ -320,7 +330,7 @@ function texSheets(b0) {
   const out = [], parts = bakeParts(b0), es = b0.form === 'emitset' || b0.form === 'trail';
   const add = (key, label, b, tail) => out.push({ key, label, b, show: tail ? b.tail : b.head });
   parts.forEach((s, i) => {
-    const base = es ? '循环层' : b0.form === 'unit' ? (b0.vars ? '单束 1' : '单束') : parts.length > 1 ? `第 ${i + 1} 张` : '序列';
+    const base = b0.esHead ? '独立星头 · 单帧' : b0.esFull ? '完整序列 · 近远段合并' : es ? '循环层' : b0.form === 'unit' ? (b0.vars ? '单束 1' : '单束') : parts.length > 1 ? `第 ${i + 1} 张` : '序列';
     if (s.tail) { add(`p${i}h`, base + ' · 星头', s, false); add(`p${i}t`, base + ' · 尾迹', s, true); } else add(`p${i}`, base, s, false);
   });
   // 消散：循环层 + 粒子的消散有自己的 meta；尾缀（V5）的几张消散和循环层同一格子、按自己的帧率整段播
@@ -457,7 +467,7 @@ function renderComboLive() {
   hdrT.bind(); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   let n = 0;
   // 4.2.20：几层一起算显卡负担，超预算时每层都少画几个快门子样本（见 48_render40.js liveCtl）
-  let work = 0; items.forEach(([L, e, i]) => { const age = (state.t - (L.delay || 0)) * (L.rate || 1); if (age < 0 || age > e.P.duration || !layerShown(i)) return; const P = fxP(e.P), R = !isTrail(P) && !isPhys(P) ? liveRenderer40(liveSlot('combo' + i), P) : null; work += R ? trackDraws(R.track, P) + (P.stars || 0) : 0; });
+  let work = 0; items.forEach(([L, e, i]) => { const age = (state.t - (L.delay || 0)) * (L.rate || 1); if (age < 0 || age > e.P.duration || !layerShown(i)) return; const P = fxP(e.P), R = !rtPcFull(P) && !isTrail(P) && !isPhys(P) ? liveRenderer40(liveSlot('combo' + i), P) : null; work += R ? trackDraws(R.track, P) + (P.stars || 0) : 0; });
   LIVE_CAP = liveCapFor(work); LIVE_VIEW = true;
   try {
   items.forEach(([L, e, i]) => {

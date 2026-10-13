@@ -39,6 +39,24 @@ JS_METRICS = r"""
   else { if (!REPLICA_BY_ID[id]) return { id, error: '没有这个条目：' + id }; const r = __fw.replicaPM(id); P = r.P; M = r.M; name = REPLICA_BY_ID[id].name; }
   const out = { id, name, type: P.type, form: P.form, duration: P.duration, zoom: P.zoom, frameMode: P.frameMode, autoGrid: P.autoGrid,
                 renderVer:40, qSS: P.qSS || 2, headSize: P.headSize, sparkSize: P.sparkSize, emberSize: P.emberSize, texW: P.texW, texH: P.texH };
+  if (P.form === 'emitset' && rtPcFull(P)) {
+    const ball=rtBallistic(P), head=rtHeadOnly(P), mobileP={...P,texW:Math.round(P.texW*(P.rtMobileTex||0.5)),texH:Math.round(P.texH*(P.rtMobileTex||0.5))};
+    const fa=head?{cols:1,rows:1,chans:1,F:1,Fr:1,Fd:0,Dtot:ball.T,Df:0,dur:[ball.T],times:[ball.T/2],keys:[[0,0],[1,0]],Ww:Math.max(P.rtHeadSize*3,P.rtHeadFl*1.5)*2,Wh:Math.max(P.rtHeadSize*3,P.rtHeadFl*1.5)*2}:rtLayoutFar(P,ball,rtLoopInfo(P),true);
+    const mf=head?fa:rtLayoutFar(mobileP,ball,rtLoopInfo(mobileP),true), L=layoutOf({...P,texW:head?512:P.texW,texH:head?512:P.texH,cols:fa.cols,rows:fa.rows,chans:fa.chans});
+    out.grid={cols:L.cols,rows:L.rows,chans:L.chans,frames:L.F,cellW:L.cellW,cellH:L.cellH,beam:!head};
+    const seen=new Set();let prev=0,maxJump=0;for(let k=0;k/30<fa.Dtot;k++){const f=clamp(Math.floor(evalKeys(fa.keys,k/30/fa.Dtot)),0,fa.F-1);seen.add(f);maxJump=Math.max(maxJump,f-prev);prev=f;}
+    out.frames30={shown:seen.size,total:fa.F,ratio:seen.size/fa.F,maxJump};
+    const minF=(f,n)=>n?1/Math.max(...fa.dur.slice(f,f+n)):30;
+    out.minFpsActive=head?30:+minF(0,fa.Fr).toFixed(2);out.minFpsFade=head?30:+minF(fa.Fr,fa.Fd).toFixed(2);out.avgFps=head?30:fa.F/fa.Dtot;
+    const ppm=(P.screenFrac||frac)*screenH/(P.rtBurstD||190),mag=Math.max(fa.Ww*ppm/L.cellW,fa.Wh*ppm/L.cellH);
+    out.flowerM=P.rtBurstD||190;out.spriteM=fa.Wh;out.screen={frac:frac,spritePx:Math.round(fa.Wh*ppm),mag:+mag.toFixed(2),magMobile256:head?mag*2:Math.max(mf.Ww*ppm/(mobileP.texW/mf.cols),mf.Wh*ppm/(mobileP.texH/mf.rows))};
+    out.mobileCell={cellW:head?256:mobileP.texW/mf.cols,cellH:head?256:mobileP.texH/mf.rows};
+    out.game=dists.map(dist=>({dist,spritePx:Math.round(fa.Wh*ppm*1000/dist),mag:mag*1000/dist}));
+    const dead=1.1/(L.cellW*Math.max(1,P.qSS||2)/fa.Ww);out.deadSize={atFull:+dead.toFixed(3),atStart:+dead.toFixed(3)};
+    out.sizeDead={head:P.rtHeadI>0&&P.rtHeadSize<dead,spark:P.rtARate>0&&P.rtASize<dead};
+    out.note=head?'独立星头：PC 单帧沿弹道连续移动；手机现有 CPU 红点，无序列帧率限制':'RT6 近远段完整序列；量真实完整布局及逐 tick 帧曲线，不再量近段循环';
+    return out;
+  }
   if (P.form === 'emitset') {
     // 循环层 + 粒子发射器（4.1；4.2.2 起取景 / 格子 / 消散贴图都由 rtLayout 定，和烘焙同一个函数）：量循环层面片（细长格：按单格像素数和 512² 比）；粒子层没有贴图，不参与
     const lay = rtLayout(P), ball = lay.ball, LI = lay.LI, box = { HX: lay.HX, HY: lay.HY }, L = layoutOf({ ...P, cols: lay.cols, rows: lay.rows }), T = ball.T, per = L.cols * L.rows;

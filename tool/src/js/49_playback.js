@@ -43,7 +43,7 @@ async function bakeMobileFor(b,onProg=null) {
   // 4.9.73 手机选「近段 + 远段合成一张」：只烘那一张（bakeRiseTailFull），不再把近段 / 远段按手机尺寸全烘一遍
   if(b.form==='emitset'){const f=clamp(b.P.rtMobileTex==null?0.5:+b.P.rtMobileTex,0.25,1),Pm={...b.P,texW:Math.round(b.P.texW*f),texH:Math.round(b.P.texH*f)};
     if(rtMobFull(b.P))return await bakeRiseTailFull(Pm,1,onProg);
-    const m=await bake(Pm,1,onProg);m.esMobile=true;return m;}
+    const m=await bake({...Pm,outPC:'seq'},1,onProg);m.esMobile=true;return m;}
   let first=null,last=null;
   try {
     for(let source=b;source;source=source.next){

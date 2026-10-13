@@ -1127,7 +1127,7 @@ function setForm(f) {
 // 组合用的母版：迭代 / 正式库条目（rep:）保持条目自己的输出方式（合并输出 = 引擎里的样子：灰度查 Ramp），这样组合页「导出效果」和导出的素材一致；
 // 花型库默认母版仍用分开输出（组合里星头 / 尾巴亮度可以分开调）。window.FW_LIB_TEX：云端软件渲染自检时临时改小贴图。
 // 4.2.6：多层里每层的贴图尺寸、格子也按这一层自己的（不再强制 2048 / 最多 4×4；单格 ≥ 512 由取帧计划保证）
-const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || P.texW || 2048, texH: window.FW_LIB_TEX || P.texH || 2048, cols: P.cols, rows: P.rows, chans: 4, outMode: keep && P.outMode ? P.outMode : 'combined', form: 'master', zoom: P.zoom === 'on' ? 'on' : 'off' });
+const libP = (P, keep) => ({ ...P, texW: window.FW_LIB_TEX || P.texW || 2048, texH: window.FW_LIB_TEX || P.texH || 2048, cols: P.cols, rows: P.rows, chans: 4, outMode: keep && P.outMode ? P.outMode : 'combined', form: rtPcFull(P) ? 'emitset' : 'master', zoom: P.zoom === 'on' ? 'on' : 'off' });
 const defaultLibName = t => TYPE_NAMES[t].replace(/（.*）/, '') + ' · 默认';
 function libByType(t) {
   if (t.startsWith('rep:')) return state.lib.find(e => e.rep === t.slice(4));

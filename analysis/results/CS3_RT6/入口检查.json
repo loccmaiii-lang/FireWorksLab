@@ -1,0 +1,36 @@
+{
+  "pass": true,
+  "version": "4.9.77",
+  "legacy": {
+    "route": "separate"
+  },
+  "pc": {
+    "route": "full",
+    "mobile": false
+  },
+  "mobileLoop": {
+    "route": "separate",
+    "esMobile": true
+  },
+  "mobileFull": {
+    "route": "full",
+    "mobile": true
+  },
+  "oldTail": false,
+  "real": {
+    "originalGpuPreserved": true,
+    "mobileLoopNamesValid": true,
+    "emitters": [
+      "RiseLoop"
+    ],
+    "mobileGrid": {
+      "cols": 16,
+      "rows": 1,
+      "chans": 4,
+      "per": 16,
+      "F": 64,
+      "cellW": 16,
+      "cellH": 256
+    }
+  }
+}

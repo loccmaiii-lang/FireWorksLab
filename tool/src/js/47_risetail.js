@@ -309,6 +309,7 @@ function makeRiseTailFarRenderer(P, LI, ball, cx, vz = 0, t0 = 0) {
 // 4.9.73 手机「近段 + 远段合成一张」（用户 10-12 21:34「把近段+远段一起导出一份……试试能不能行」、23:49「这样手游只需要一层就能保留所有尾缀的效果」）：
 //   和远段同一个世界坐标面片，但从发射那一刻起、全部火花（不分近段 / 远段）+ 星头 = 实时模拟画的全部。
 //   星头在世界里一帧帧往上走：每个快门子帧在自己的时间窗里取几个点（光量平分），拖成一段连续的亮线，不是一串点
+const rtPcFull = P => !!P && P.outPC === 'full' && rtIsFar(P);
 const rtMobFull = P => !!P && P.outMobile === 'full' && rtIsFar(P);
 function makeRiseTailFullRenderer(P, LI, ball, cx, vz = 0, t0 = 0) {
   const T = ball.T, hs = Math.max(0.05, +P.rtHeadSize || 0.5);
@@ -661,9 +662,9 @@ function rtLayoutFar(P, ball, LI, full = false) {
   let y0 = NH, y1 = -1; const colW = new Float64Array(N); let tot = 0;
   for (let y = 0; y < NH; y++) for (let x = 0; x < N; x++) { const v = acc[y * N + x]; if (v > thr) { if (y < y0) y0 = y; if (y > y1) y1 = y; colW[x] += v; tot += v; } }
   let xa = 0, xb = N - 1;
-  if (tot > 0) { let c = 0; while (xa < N - 1 && c + colW[xa] < 0.002 * tot) c += colW[xa++]; c = 0; while (xb > 0 && c + colW[xb] < 0.002 * tot) c += colW[xb--]; }
+  if (tot > 0) { const trim = full && P.rtGrid < 0 ? 0 : 0.002; let c = 0; while (xa < N - 1 && (trim === 0 ? colW[xa] === 0 : c + colW[xa] < trim * tot)) c += colW[xa++]; c = 0; while (xb > 0 && (trim === 0 ? colW[xb] === 0 : c + colW[xb] < trim * tot)) c += colW[xb--]; }
   const zb = y1 >= 0 ? Y(y0) - 2 * pxY : 0, zt = y1 >= 0 ? Y(y1) + 2 * pxY : ball.H, xl = X(xa) - 2 * pxX, xr = X(xb) + 2 * pxX;
-  const W0 = Math.max(4, xr - xl), H0 = Math.max(10, zt - zb), HX = W0 / 2 * 1.04, cx = (xl + xr) / 2;
+  const W0 = Math.max(4, xr - xl), H0 = Math.max(10, zt - zb), HX = W0 / 2 * (full && P.rtGrid < 0 ? 1.4 : 1.04), cx = (xl + xr) / 2;
   // 4.9.26 远段帧数（用户 10-07 09:20「现在的rt6远段就帧数不够（比较远看不太出来，近一些很明显）」）：以前上升段按弹体走过的路平均分一张 64 帧，
   //   RT6L 上升段 36 帧摊 6.6 s（最慢 1.9 fps，800 m 外每帧跳 5–6 像素），帧也不对齐 tick。现在和大面片同一套口径（帧账本，31_plan40.js）：
   //   每帧从 tick 开始、停整数个 tick；上升段弹体在 800 m 外的游戏画面上每帧挪不超过标定线（金芒菊）就停久一点，最慢 10 fps；开花后最慢 7.5 fps；
@@ -675,8 +676,8 @@ function rtLayoutFar(P, ball, LI, full = false) {
     while (k < Nr) { let h = 1; while (h < 3 && k + h < Nr && stepPx(k, k + h + 1) <= r) h++; ks.push(k); k += h; }
     while (k < Nt) { ks.push(k); k += Math.min(hf, Nt - k); } return ks; };
   const need = Math.min(Nt, sched(refPx, 4).length);     // 要多少帧上升段才每帧不超过标定线（开花后按 7.5 fps 算）
-  if (full) [cols, rows0] = rtFullGrid(P, W0, H0, need);
-  let rows = rows0; while (cols * rows * 4 < need && rows < rows0 * 4) rows *= 2;
+  if (full) [cols, rows0] = P.rtGrid < 0 ? [P.cols, P.rows] : P.rtGrid > 0 ? RT_GRIDS[P.rtGrid - 1] : rtFullGrid(P, W0, H0, need);
+  let rows = rows0; while (!(full && (P.rtGrid < 0 || P.rtGrid > 0)) && cols * rows * 4 < need && rows < rows0 * 4) rows *= 2;
   // 4.9.28（本机 RT6SE4 / ME4 / LE4 回放检查「末尾空帧 26 / 2 / 3」）：格子要正好用满——帧不能比 tick 多（S 一共才 102 个 tick，16×2×4 = 128 格空 26 格），
   //   放不满就少用通道（16×2×3 = 96），再不行少一行；排出来的帧比格子少就把停得最久的帧拆开，直到一格一帧
   let chans = 4; const fitCh = () => { chans = 4; while (chans > 1 && cols * rows * chans > Nt) chans--; };
@@ -701,7 +702,7 @@ function rtLayoutFar(P, ball, LI, full = false) {
   while (ks.length > F) ks.pop();     // 放不下（上升段已经最慢、格子上限 16×4 都不够）：尾巴上合并
   const Fn = ks.length, Fr = ks.filter(k => k < Nr).length, Fd = Fn - Fr, Dtot = Nt / 30, times = [], dur = [];
   // 4.5.3 面片上移 vz（m/s）：寿命里一共走 vz · Dtot，面片加高这么多、开始时中心放低一半，内容始终在面片里
-  const vz = rtFarVzOf(P), drift = vz * Dtot, HY = (H0 + drift) / 2 * 1.02, cz = (zb + zt) / 2 - drift / 2;
+  const vz = rtFarVzOf(P), drift = vz * Dtot, HY = (H0 + drift) / 2 * (full && P.rtGrid < 0 ? 1.06 : 1.02), cz = (zb + zt) / 2 - drift / 2;
   for (let f = 0; f < Fn; f++) { const h = (f + 1 < Fn ? ks[f + 1] : Nt) - ks[f]; times.push((ks[f] + h / 2) / 30); dur.push(h / 30); }
   const keys = keysFromTicks40(ks, Nt).map(([u, v]) => [+u.toFixed(5), +v.toFixed(3)]);
   const pxMax = Math.max(0, ...ks.filter(k => k < Nr).map((k, i, a) => stepPx(k, Math.min(Nr, i + 1 < a.length ? a[i + 1] : Nr))));
@@ -763,14 +764,51 @@ async function bakeEmitSet(P, scale, onProg) {
 // 4.9.73 手机「近段 + 远段合成一张」：手机只烘这一张（世界坐标全程序列，0 s 出现、星头 + 全部火花，取景 / 帧号和远段同一套 rtLayoutFar(full)）。
 //   P 是 PC 那次烘焙的参数（带循环层的格子 → 火花编号的周期和 PC 一样）× 手机贴图边长。PC 放在 GPU 的那份火花也烘进贴图（手机不出 GPU）；
 //   落火 / 末段爆亮只在 GPU 发射器里，手机没有。一个曝光（远段的）：PC 近段单独压的白热段曝光（rtNearExpo）这里没有，星头会更白一点
-async function bakeRiseTailFull(P0, scale, onProg) {
+// 纯星头没有尾迹可合并：烘一张小贴图，沿同一 RT6 弹道移动，避免整条航迹的大面片。
+const rtHeadOnly = P => P.rtHeadI > 0 && ['A','F','M','C'].every(k => !(+P['rt' + k + 'Rate'] > 0));
+async function bakeRiseHead(P0, scale, onProg, mobile) {
+  const P = { ...P0, form: 'emitset', outMode: 'combined', zoom: 'off' }, ball = rtBallistic(P);
+  const N = mobile ? 256 : 512, Pa = { ...P, texW: N, texH: N, cols: 1, rows: 1, chans: 1 };
+  const h = Math.max(P.rtHeadSize * 3, P.rtHeadFl * 1.5), cy = -P.rtHeadFl * 0.35;
+  const pa = rtPlan(Pa, { HX: h, HY: h, cy, hb: 0.5 }, [ball.T / 2], [ball.T], { loop: false, duration: ball.T, keys: [[0, 0], [1, 0]] });
+  const R = { slots: 0, draw(t, view, ppm, w) { setParticleProfile(P); drawPoints(bufH, rtHeadPts(P, 0, 0, 0, -1, P.rtHeadI, 0) / 4, view, ppm, [1,0,0,0], w); }, dispose() {} };
+  const E = fixedExposure(P), b = await bakeFrames(Pa, scale, onProg, pa, R, { expo:[E,E], noFade:true });
+  const fa = { t0:0, Dtot:ball.T, Df:0, Fr:1, Fd:0, F:1, cols:1, rows:1, chans:1, cx:0, cz:cy, vz:0, HX:h, HY:h, Ww:2*h, Wh:2*h, times:pa.times, dur:pa.dur, keys:pa.keys, pxMax:0, headOnly:true };
+  Object.assign(b.meta, { es:true, full:fa, rtHeadBall:ball, T:ball.T, ball:{ T:ball.T,H:ball.H,v0:ball.v0,vx0:ball.vx0,vz0:ball.vz0,k:ball.k,quad:ball.quad,vt:ball.vt } });
+  b.P=P; b.form='emitset'; b.esFull=true; b.esHead=true; b.esMobile=mobile; b.fades=[]; b.far=null; return b;
+}
+// 手机独立星头沿用现有 soft_dot CPU 粒子；不用第二张大序列或新材质。
+function rtHeadDotES(P, M) {
+  const ball=rtBallistic(P), T=ball.T, c=hexToLin(M.ramp2).map(x=>x*(P.rtBright||1)*P.rtHeadI*fixedExposure(P));
+  return {emitters:[{name:'RiseHead',gpu:false,delay:0,duration:T,seed:P.seed,spawn:[],bursts:[[0,1]],life:[T,T],size:[P.rtHeadSize,P.rtHeadSize],
+    ...(ball.quad?{velLife:rtVelLife(ball)}:{drag:[ball.k,ball.k],accel:[0,0,-G]}),loc:[[0,[0,0,0]]],vel:[[0,[ball.vx0,0,ball.vz0]]],col:[[0,c],[1,c]]}]};
+}
+function fwlRiseHead(name, b, M) {
+  if (b.esMobile) { const em=esFwlEmitter(rtHeadDotES(b.P,M).emitters[0],true,1); em.max_alive=1; return {textures:{},materials:{dot:{role:'soft_dot'}},emitters:[{...em,material:'dot'}],system:{preview_distance_cm:30000,preview_warmup_s:0},notes:['手机红头：现有 soft_dot 材质的单颗 CPU 粒子，RT6 同弹道、同燃尽时刻；PC 保留烘焙头型，手机是紧凑红点。未经 UE 验证。']}; }
+  const P=b.P, m=b.meta, ball=rtBallistic(P), T=ball.T;
+  return { textures:{ full:{file:TN(name,'Full')+'.png',class:'flipbook',cols:1,rows:1,channels:1,frames:1},ramp:{file:TN(name,'Ramp')+'.png',class:'ramp'} },
+    materials:{full:{role:'beam_flipbook',textures:{main:'full',ramp:'ramp'},scalars:{rows:1,cols:1}}},
+    emitters:[{name:'RiseHead',material:'full',gpu:false,max_alive:1,
+      required:{screen_alignment:'Velocity',duration_s:r4(T),loops:1,delay_s:0,max_draw_count:1,pivot_offset:[-0.5,r4(-0.5-m.cy/m.Wh)],local_space:true},
+      spawn:{rate:{const:0},bursts:[[0,1]]},modules:[
+        {m:'Lifetime',Lifetime:{const:r4(T)}},
+        {m:'InitialLocation',StartLocation:{const:[0,0,0]}},
+        {m:'InitialVelocity',StartVelocity:{const:[r1(ball.vx0*100),0,r1(ball.vz0*100)]}},
+        {m:'InitialSize',StartSize:{const:[r1(m.Ww*100),r1(m.Wh*100),1]}},
+        ...(ball.quad?[{m:'VelocityOverLife',VelOverLife:{curve:rtVelLife(ball).map(([u,v])=>[r4(u),v.map(x=>r1(x*100))])},Absolute:true}]:[{m:'Drag',DragCoefficient:{const:ball.k}},{m:'ConstAcceleration',Acceleration:[0,0,-981]}]),
+        {m:'DynamicParameter',params:{frame:{const:0}}},
+        {m:'ColorOverLife',ColorOverLife:{curve:fwlColor(M,T,0,P.rtBright||1)},AlphaOverLife:{const:1}}
+      ]}],system:{preview_distance_cm:30000,preview_warmup_s:0},notes:['独立烘焙星头：单帧小面片 + Ramp，CPU 一个粒子，和金尾同一 RT6 弹道及燃尽时间；无 GPU、无新材质。Velocity Over Life 按 RT6 物理速度采样；未经 UE 验证。'] };
+}
+async function bakeRiseTailFull(P0, scale, onProg, mobile = true) {
+  if (rtHeadOnly(P0)) return bakeRiseHead(P0, scale, onProg, mobile);
   const P = { ...P0, form: 'emitset', outMode: 'combined', frameMode: 'uniform', zoom: 'off', autoGrid: 0, rtGpuF: 0, rtGpuM: 0, rtGpuC: 0 };
   const ball = rtBallistic(P), LI = rtLoopInfo(P), E0 = fixedExposure(P);
   const fa = rtLayoutFar(P, ball, LI, true), Pa = { ...P, cols: fa.cols, rows: fa.rows, chans: fa.chans || 4 };
   const pa = rtPlan(Pa, { HX: fa.HX, HY: fa.HY, cy: fa.cz, hb: 0.5 }, fa.times, fa.dur, { loop: false, t0: fa.t0, duration: fa.Dtot, keys: fa.keys });
   const b = await bakeFrames(Pa, scale, onProg, pa, makeRiseTailFullRenderer(P, LI, ball, fa.cx, fa.vz || 0, fa.t0), { expo: [E0, E0], noFade: true });
   Object.assign(b.meta, { es: true, full: fa, T: ball.T, ball: { k: ball.k, v0: ball.v0, vz0: ball.vz0, vx0: ball.vx0, T: ball.T, H: ball.H, Hwant: ball.Hwant, vb: ball.vb, ok: ball.ok, lean: P.rtLean || 0, ...(ball.quad ? { quad: true, vt: ball.vt } : {}) } });
-  b.form = 'emitset'; b.esMobile = true; b.esFull = true; b.P = P; b.fades = []; b.far = null;
+  b.form = 'emitset'; b.esMobile = mobile; b.esFull = true; b.P = { ...P0 }; b.fades = []; b.far = null;
   return b;
 }
 // 粒子出生表（按平台缓存在烘焙结果上）
@@ -835,7 +873,8 @@ function rtTexWhat(P) { return RT_TEX_CLS.filter(([k]) => rtTexFrac(P, k) > 0).m
 function rtGpuCapNote(ES) { const g = ES.gpuEst; return g.f < 1 ? `GPU 粒子上限 ${g.cap}：按出生率 × 寿命估同时活着约 ${g.raw} 颗，持续生成的 GPU 发射器出生率一起 × ${g.f.toFixed(2)} → 约 ${g.est} 颗（发射口 Burst 不算）。` : `GPU 粒子上限 ${g.cap}：估同时活着约 ${g.est} 颗，没超。`; }
 // 4.9.73 手机「近段 + 远段合成一张」的 cascade_mobile.json：1 个发射器 TrailFull（和 PC 的 TrailFar 同一套写法：Rectangle + 锁 Z + Local Space、
 //   面片立在发射点上、帧号曲线不匀速），从 0 s 播到最后一颗火花灭。没有粒子、没有 GPU。Color Over Life 按它自己的寿命（发射起）取，和引擎回放同一口径
-function fwlEmitSetFull(name, b, M) {
+function fwlEmitSetFull(name, b, M, mobile = b.esMobile) {
+  if (b.esHead) return fwlRiseHead(name, b, M);
   const P = b.P, fa = b.meta.full, L = b.meta.L, bl = b.meta.ball, kN = rtNearExpoK(P);
   const textures = { full: { file: TN(name, 'Full') + '.png', class: 'flipbook', cols: L.cols, rows: L.rows, channels: L.chans, frames: L.F },
     cutoutFull: { file: TN(name, 'Full_Cutout') + '.png', class: 'cutout' }, ramp: { file: TN(name, 'Ramp') + '.png', class: 'ramp' } };
@@ -855,14 +894,14 @@ function fwlEmitSetFull(name, b, M) {
     ]
   }];
   return { textures, materials, emitters, system: { preview_distance_cm: Math.round(Math.max(30000, bl.H * 100 * 2)), preview_warmup_s: 0 },
-    notes: [`手机 _M「近段 + 远段合成一张」（4.9.73，用户 10-12 21:34 / 23:49）：1 个发射器 TrailFull = 星头 + 全部火花（不分近段 / 远段）烘成一张世界坐标全程序列，`
+    notes: [`${mobile ? '手机 _M' : 'PC'}「近段 + 远段合成一张」（4.9.73，用户 10-12 21:34 / 23:49）：1 个发射器 TrailFull = 星头 + 全部火花（不分近段 / 远段）烘成一张世界坐标全程序列，`
       + `${L.cols}×${L.rows} 格 × ${L.chans} 通道 = ${L.F} 帧（上升 ${fa.Fr} 帧、开花后 ${fa.Fd} 帧，帧号曲线不匀速），面片 ${r1(fa.Ww)} × ${r1(fa.Wh)} m 立在发射点上（中心在上方 ${r1(fa.cz)} m），0 s 出现、播 ${r2(fa.Dtot)} s；`
       + `规范 v1 §6：1 层大面片、1 个发射器、没有 GPU。PC 放在 GPU 的那份火花烘进了贴图；落火 / 末段爆亮只在 GPU 里，手机没有。`
       + `星头在贴图里一帧帧往上走（快门拖影），上升快的段每个 tick 一帧；800 m 外每帧最多挪 ${fa.pxMax} 像素。${kN !== 1 ? '一个曝光（远段的）：PC 近段单独压的白热段曝光 × ' + r2(kN) + ' 这里没有，星头和白热段比 PC 白一点。' : ''}`
       + `Initial Velocity 向上 ${r1((fa.vz || 0) * 100)} cm/s 和 PC 远段一样（面片往上平移、贴图内容已补回，不能删）。未经 UE 验证。`] };
 }
 function fwlEmitSet(name, b, M, mobile) {
-  if (b.esFull) return fwlEmitSetFull(name, b, M);
+  if (b.esFull) return fwlEmitSetFull(name, b, M, mobile);
   const m = b.meta, P = b.P, L = m.L, F = L.F, fd = b.fades[0] || null, Lf = fd ? fd.meta.L : null, bl = m.ball;     // 4.5.1 近段 + 远段时没有消散层（开花后归远段）
   const textures = {
     loop: { file: TN(name, 'Loop') + '.png', class: 'flipbook', cols: L.cols, rows: L.rows, channels: L.chans, frames: F },
@@ -1017,6 +1056,7 @@ function rtTexFiles(b, name, sfx = '', idx = 1) {
   })();
 }
 function rtCascadeText(name, b, M) {
+  if (b.esFull) { const f = fwlEmitSetFull(name, b, M); return `烟花效果：${name}\n工具：烟花母版烘焙器 ${VERSION}\n完整序列 · PC/手机以各自 cascade 配置为准；单位 cm、cm/s、秒。\n${f.notes.join("\n")}\n${JSON.stringify(f.emitters, null, 2)}`; }
   const m = b.meta, P = b.P, bl = m.ball, fd = b.fades[0];
   const tabP = rtTables(b, false), tabM = rtMobileTables(b), pkP = esPeakAlive(tabP, m.T + 4), pkM = esPeakAlive(tabM, m.T + 4);     // 4.9.69 手机 = _M 那几组
   return `烟花效果：${name}（${TYPE_NAMES[P.type]}）
@@ -1049,6 +1089,11 @@ ${esCascadeText(b.es || rtBuildES(P), false, 1)}
 }
 function rtCurvesCSV(b, M) {
   const m = b.meta, rows = ['段,曲线,相对时间,值1,值2,值3'];
+  if (b.esFull) {
+    for (const [u, v] of fwlFrameKeys(m.full.keys, m.L.F)) rows.push(`TrailFull,DynamicParameter_帧号,${u},${v},,`);
+    for (const [u, c] of fwlColor(M, m.full.Dtot, m.full.t0, b.P.rtBright || 1)) rows.push(`TrailFull,ColorOverLife_线性RGB,${u},${c[0]},${c[1]},${c[2]}`);
+    return '\ufeff' + rows.join('\n') + '\n';
+  }
   for (const [u, v] of rtSawKeys(m)) rows.push(`RiseLoop,DynamicParameter_帧号,${u},${v},,`);
   for (const [u, c] of (m.grow ? fwlColor(M, m.T, 0, 1) : rtLoopInKeys(b.P, fwlColor(M, m.T, 0, 1), m.T))) rows.push(`RiseLoop,ColorOverLife_线性RGB,${u},${c[0]},${c[1]},${c[2]}`);
   if (m.grow) for (const [u, v] of m.sizeKeysRise) rows.push(`RiseLoop,SizeByLife_Y倍数,${u},${v},,`);
@@ -1059,7 +1104,7 @@ function rtCurvesCSV(b, M) {
 }
 function rtJSON(b, name, M) {
   if (b.esFull) { const fa = b.meta.full, L = b.meta.L;     // 4.9.73 手机合成一张
-    return { name, type: b.P.type, typeName: TYPE_NAMES[b.P.type], form: b.form, mobile: 'full', tool: '烟花母版烘焙器 ' + VERSION, ballistic: b.meta.ball,
+    return { name, type: b.P.type, typeName: TYPE_NAMES[b.P.type], form: b.form, platform: b.esMobile ? 'mobile' : 'pc', ...(b.esMobile ? { mobile: 'full' } : {}), output: 'full', tool: '烟花母版烘焙器 ' + VERSION, ballistic: b.meta.ball,
       full: { seconds: +fa.Dtot.toFixed(3), riseFrames: fa.Fr, fadeFrames: fa.Fd, grid: [L.cols, L.rows, L.chans], frames: L.F, texture: [b.N, b.NH], cellPx: [L.cellW, L.cellH],
         centerM: [+fa.cx.toFixed(2), +fa.cz.toFixed(2)], spriteSizeCm: [+(fa.Ww * 100).toFixed(1), +(fa.Wh * 100).toFixed(1)], frameKeys: fa.keys, pxMax: fa.pxMax, fill: b.meta.fill ? { x: +b.meta.fill.x.toFixed(3), y: +b.meta.fill.y.toFixed(3) } : null },
       colorOverLife: colorKeys(M, fa.Dtot, 0), selfCheck: b.meta.check, params: b.P, materialDefaults: M }; }
@@ -1077,6 +1122,9 @@ function rtJSON(b, name, M) {
     colorOverLife: colorKeys(M, m.T, 0), selfCheck: m.check, params: P, materialDefaults: M };
 }
 function rtStatsHTML(b) {
+  if (b.esFull) { const m = b.meta, f = m.full, L = m.L;
+    return `近段 + 远段合成一张 · ${L.F} 帧（${L.cols}×${L.rows}×${L.chans}）· 单格 ${L.cellW}×${L.cellH} px<br>升空 ${m.T.toFixed(2)} s / ${m.ball.H.toFixed(1)} m · 全程 ${f.Dtot.toFixed(2)} s · 面片 ${f.Ww.toFixed(1)}×${f.Wh.toFixed(1)} m<br>1 个序列发射器，无 GPU 火花；检查以导出报告为准`; }
+
   const m = b.meta, P = b.P, bl = m.ball, fd = b.fades[0], c = m.check || {}, cls = ok => ok ? 'ok' : 'warn';
   const pk = esPeakAlive(rtTables(b, false), m.T + 4), pkM = esPeakAlive(rtMobileTables(b), m.T + 4);
   const rows = [];
@@ -1162,6 +1210,7 @@ function renderEmitLive() {
 // 4.9.73 手机合成一张：面片固定在世界里（和远段同一套），帧号按寿命曲线
 function rtFullStateAt(b, t) {
   const fa = b.meta.full, u = (t - fa.t0) / fa.Dtot; if (u < 0 || u >= 1) return null;
+  if (b.esHead) { const p=rtBallistic(b.P).pos(t); return {f:0,x:p[0],z:p[2]+fa.cz,w:fa.Ww,h:fa.Wh}; }
   return { f: clamp(Math.floor(evalKeys(fa.keys, u)), 0, b.meta.L.F - 1), x: fa.cx, z: fa.cz + (fa.vz || 0) * (t - fa.t0), w: fa.Ww, h: fa.Wh };
 }
 function renderEmitExportFull(b) {
@@ -1180,7 +1229,7 @@ function renderEmitExportFull(b) {
   additive(false); post();
   rtLayerBarSync([['full', null, false]]);
   const fa = b.meta.full, dist = state.disp === 'game' ? ` · 游戏内大小 ${state.dist} m` : '';
-  hudText = `引擎回放 · 手机 _M（近段 + 远段合成一张）· ${!rtOn('full') ? '（分层看关了）' : s ? '第 ' + (s.f + 1) + '/' + b.meta.L.F + ' 帧' : '已结束'} · 面片 ${fa.Ww.toFixed(1)} × ${fa.Wh.toFixed(1)} m · 1 个发射器、没有粒子${dist}${rtShowNote()}`;
+  hudText = `引擎回放 · ${b.esMobile ? '手机 _M' : 'PC'}（近段 + 远段合成一张）· ${!rtOn('full') ? '（分层看关了）' : s ? '第 ' + (s.f + 1) + '/' + b.meta.L.F + ' 帧' : '已结束'} · 面片 ${fa.Ww.toFixed(1)} × ${fa.Wh.toFixed(1)} m · 1 个发射器、没有粒子${dist}${rtShowNote()}`;
   if (tilt) hudText += ` · 倾斜预览 ${tilt}°（Rectangle + 锁 Z + Local Space，整张跟组件倾；以 UE 实测为准）`;
   hudB = '';
 }

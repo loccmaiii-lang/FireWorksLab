@@ -188,20 +188,31 @@ function fwlCombo(name, layers, mobile = false) {
       out.emitters.push({ ...d, name: pre + 'Dots', material: pre + 'dot', layer: i + 1 });
       return;
     }
-    const ln = comboLayerName(name, i), body = fwlMaster(ln, b, comboLayerM(L), mobile);
+    const ln = comboLayerName(name, i), body = b.esFull ? fwlEmitSetFull(ln, b, comboLayerM(L), mobile) : fwlMaster(ln, b, comboLayerM(L), mobile);
     const rate = +L.rate > 0 ? +L.rate : 1, sc = +L.scale > 0 ? +L.scale : 1;
     for (const [k, v] of Object.entries(body.textures)) out.textures[pre + k] = v;
     for (const [k, v] of Object.entries(body.materials))
-      out.materials[pre + k] = { ...v, textures: Object.fromEntries(Object.entries(v.textures).map(([role, t]) => [role, pre + t])) };
+      out.materials[pre + k] = { ...v, textures: Object.fromEntries(Object.entries(v.textures || {}).map(([role, t]) => [role, pre + t])) };
     for (const e of body.emitters) {
       const modules = e.modules.map(m => {
+        if (b.esFull) {
+          const dist=(d,fn)=>d.const!==undefined?{...d,const:fn(d.const)}:d.uniform?{...d,uniform:d.uniform.map(fn)}:d.curve?{...d,curve:d.curve.map(([u,v])=>[u,fn(v)])}:d;
+          if(m.m==='Lifetime')return {...m,Lifetime:dist(m.Lifetime,v=>r4(v/rate))};
+          if(m.m==='InitialSize')return {...m,StartSize:dist(m.StartSize,v=>v.map((x,j)=>j<2?r1(x*sc):x))};
+          if(m.m==='InitialLocation')return {...m,StartLocation:dist(m.StartLocation,v=>v.map(x=>r1(x*sc)))};
+          if(m.m==='InitialVelocity')return {...m,StartVelocity:dist(m.StartVelocity,v=>v.map(x=>r1(x*sc*rate)))};
+          if(m.m==='VelocityOverLife')return {...m,VelOverLife:dist(m.VelOverLife,v=>v.map(x=>r1(x*sc*rate)))};
+          if(m.m==='ConstAcceleration')return {...m,Acceleration:m.Acceleration.map(x=>r1(x*sc*rate*rate))};
+          if(m.m==='Drag')return {...m,DragCoefficientRaw:dist(m.DragCoefficientRaw,v=>r4(v*rate))};
+        }
+
         if (m.m === 'Lifetime') return { ...m, Lifetime: { const: r4(m.Lifetime.const / rate) } };
         if (m.m === 'InitialSize') return { ...m, StartSize: { const: m.StartSize.const.map((v, j) => j < 2 ? r1(v * sc) : v) } };
         if (m.m === 'InitialLocation') return { ...m, StartLocation: { const: m.StartLocation.const.map((v, j) => j === 2 ? r1(v * sc) : v) } };
         return m;
       });
       out.emitters.push({ ...e, name: pre + e.name, material: pre + e.material, layer: i + 1,
-        required: { ...e.required, duration_s: r4(e.required.duration_s / rate), delay_s: r4((+L.delay || 0) + e.required.delay_s / rate), cutout: pre + e.required.cutout },
+        required: { ...e.required, duration_s: r4(e.required.duration_s / rate), delay_s: r4((+L.delay || 0) + e.required.delay_s / rate), ...(e.required.cutout ? { cutout: pre + e.required.cutout } : {}) },
         modules, ...(L.mirror ? { notes: ['这一层在烘焙器里水平镜像；导出的贴图没有翻转，引擎里需要把面片 X 尺寸取负或换翻转贴图（未经 UE 验证）'] } : {}) });
     }
     out.system.preview_distance_cm = Math.max(out.system.preview_distance_cm, body.system.preview_distance_cm * sc);

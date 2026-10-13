@@ -1,0 +1,57 @@
+{
+  "pass": true,
+  "results": [
+    {
+      "id": "CS3C",
+      "views": [
+        "live",
+        "export",
+        "atlas"
+      ],
+      "errorsBefore": 0,
+      "mobileRenderer": true,
+      "edit": {
+        "old": 1800,
+        "now": 1801
+      },
+      "reload": [
+        {
+          "full": true,
+          "form": "emitset",
+          "rate": 1801
+        },
+        {
+          "full": true,
+          "form": "emitset",
+          "rate": 0
+        }
+      ],
+      "export": "Comet3_RT6.zip",
+      "pass": true
+    },
+    {
+      "id": "CS3S",
+      "views": [
+        "live",
+        "export",
+        "atlas"
+      ],
+      "errorsBefore": 0,
+      "mobileRenderer": true,
+      "edit": {
+        "old": 6500,
+        "now": 6501
+      },
+      "reload": [
+        {
+          "full": true,
+          "form": "emitset",
+          "rate": 6501
+        }
+      ],
+      "export": "Silver3_RT6_S.zip",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

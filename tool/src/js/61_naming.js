@@ -93,7 +93,7 @@ function applyPackNaming(files, base, entries, o = {}) {
       map.set(TN(mn, seg, null, vi) + '.png', fwTexName(base, ly, L, n, 'tex', true) + '.png');     // 4.9.35 手机单束的变体也换名（vi）
       if (vi > 1) map.set(TN(mn, joinPart(seg, 'Cutout'), null, vi) + '.png', c);
       for (const ht of ['Head', 'Tail']) map.set(TN(mn, joinPart(seg, ht)) + '.png', fwTexName(base, ly, L, n, ht, true) + '.png');
-      map.set(TN(mn, joinPart(seg, 'Cutout')) + '.png', c); if (pcTex !== false && seg !== 'Full') drop.add(TN(mn, joinPart(seg, 'Cutout')) + '.png');     // 合成一张的 Cut 是手机自己的，不和 PC 共用
+      map.set(TN(mn, joinPart(seg, 'Cutout')) + '.png', c); if (pcTex !== false && seg !== 'Full' && files.some(([f]) => f === TN(ln, joinPart(seg, 'Cutout')) + '.png' && map.get(f) === c)) drop.add(TN(mn, joinPart(seg, 'Cutout')) + '.png');     // 合成一张的 Cut 是手机自己的，不和 PC 共用
       drop.add(TN(mn, joinPart(seg, 'FrameTest')) + '.png');     // 帧号测试图只留 PC 的（_检查/，不导入）
     }
     const r = fwTexName(base, layer, null, 0, 'R') + '.png';

@@ -314,7 +314,7 @@ async function platformFiles(name,b,M,onProg=null) {
   // 4.9.73 尾缀手机「近段 + 远段合成一张」：预览时缓存的手机烘焙要和现在选的一致（只有近段 / 合成一张），不一致就按现在选的重烘
   const keep=b.mobile&&(b.form!=='emitset'||!!b.mobile.esFull===rtMobFull(b.P))?b.mobile:null;
   const mobile=keep||await bakeMobileFor(b,onProg);
-  if(b.form==='emitset')b.mobNaming=mobile.esFull?{form:'emitset',esFull:true,meta:{L:mobile.meta.L}}:null;     // 打包换名用（合成一张是手机独有的贴图，PC 没有）
+  if(b.form==='emitset')b.mobNaming={form:'emitset',esFull:!!mobile.esFull,meta:{L:mobile.meta.L},fades:(mobile.fades||[]).map(f=>({meta:{L:f.meta.L}})),far:mobile.far?{meta:{L:mobile.far.meta.L}}:null};     // 打包换名用（合成一张是手机独有的贴图，PC 没有）
   try {
     const cfg=fwlFiles(name,b,M,mobile);
     let tex=await texFiles(mobile,name+'_Mobile');

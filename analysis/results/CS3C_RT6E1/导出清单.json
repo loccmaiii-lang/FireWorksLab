@@ -1,0 +1,29 @@
+{
+  "effect": "comet3_rt6",
+  "entry": "CS3C",
+  "ver": "f0bdd82c·emitset4.9.69",
+  "baker": "4.9.77",
+  "time": "2026-10-13 17:51",
+  "dir": "analysis/local/输出/素材包/CometSilver3_RT6_20261013",
+  "packages": [
+    {
+      "name": "Comet3_RT6",
+      "replica": "CS3C",
+      "files": [
+        "T_EFX_FireWorks_Comet3_RT6_GoldTail_Full_16x1_01_HD.png",
+        "T_EFX_FireWorks_Comet3_RT6_GoldTail_Full_16x1_01_C.png",
+        "T_EFX_FireWorks_Comet3_RT6_GoldTail_R.png",
+        "T_EFX_FireWorks_Comet3_RT6_GoldTail_Full_16x1_01.png",
+        "T_EFX_FireWorks_Comet3_RT6_RedHead_Full_1x1_01_HD.png",
+        "T_EFX_FireWorks_Comet3_RT6_RedHead_Full_1x1_01_C.png",
+        "T_EFX_FireWorks_Comet3_RT6_RedHead_R.png",
+        "T_EFX_FireWorks_Comet3_RT6_RedHead_Full_1x1_01.png",
+        "cascade.json",
+        "cascade_mobile.json",
+        "命名对照.txt",
+        "Comet3_RT6_完整配方.json"
+      ],
+      "sha256": "00522edff3c50498c7109957ba0ae2ed48ae788d2a4929e4707c8b26faf8a450"
+    }
+  ]
+}

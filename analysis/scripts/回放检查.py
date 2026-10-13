@@ -123,12 +123,20 @@ class Pack:
     def offset(self, u):
         """面片中心相对爆点（发射器原点）的偏移（cm，x 右、y 上）：InitialLocation 的 X / Z + Pivot Offset（4.3 固定取景用 Pivot 对齐爆点）。
         只算面向相机的面片（Rectangle）；速度对齐的尾缀面片沿弹道走，这里不模拟运动，照旧摆在中心"""
-        if self.e['required'].get('screen_alignment', 'Rectangle') != 'Rectangle': return 0.0, 0.0
+        vo = self.mods.get('VelocityOverLife')
+        absolute = bool(vo and vo.get('Absolute'))
+        if self.e['required'].get('screen_alignment', 'Rectangle') != 'Rectangle' and not absolute: return 0.0, 0.0
         loc = self.mods.get('InitialLocation'); x, z = 0.0, 0.0
         if loc: c = np.asarray(curve(loc['StartLocation'], 0), float); x, z = float(c[0]), float(c[2])
         pv = self.e['required'].get('pivot_offset')
         if pv:
             w, h = self.size(u); x += (0.5 + float(pv[0])) * w; z += (-0.5 - float(pv[1])) * h
+        if absolute:
+            # RT6 独立星头：直接积分导出速度曲线，不能拿贴图中心当世界位置。
+            vel = vo['VelOverLife']; knots = [0.0] + [float(t) for t, _ in vel.get('curve', []) if 0 < t < u] + [float(u)]
+            for t0, t1 in zip(knots, knots[1:]):
+                dv = (np.asarray(curve(vel, t0)) + np.asarray(curve(vel, t1))) * (t1 - t0) * self.life / 2
+                x += float(dv[0]); z += float(dv[2])
         return x, z
 
     def rgb(self, v, u):
