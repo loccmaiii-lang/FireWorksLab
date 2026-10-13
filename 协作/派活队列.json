@@ -1,7 +1,7 @@
 {
   "格式": "df.dispatch-queue/1",
   "说明": "本机 dot 读这份文件，把「在哪」=「本机」、「待派」的任务发给本机的 Codex 对话框；云端夜班（claude.ai 定时会话，见 协作/接续.md）取「在哪」=「云端」的任务。总管（21）写任务、收结果、同步到在线看板；执行者只改自己那条的状态和结果。用户 10-13 22:47：dot 能定时看仓库、有提交就知道、人不在也能跑，任务要写详细；23:05 批准云端夜班。",
-  "更新": "2026-10-13 23:30 总管（21）",
+  "更新": "2026-10-13 23:13 总管（21）",
   "dot 怎么派": [
     "只派「状态」=「待派」的任务；按「优先」从小到大；「前置」里列的编号都「完成」了才派（没写前置的不用等）。",
     "同一个「交给」同时只派一条：它名下有「已派」或「在做」的，就先等。",
@@ -107,10 +107,10 @@
         "analysis/results/UE_READBACK_20261014/导入设置核对.json",
         "analysis/results/UE_READBACK_20261014/导入设置核对.md"
       ],
-      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T02，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n任务：只读核对周四性能测试要用到的每个粒子系统，导入设置是否符合导入器 v2.22 的标准。\n\n范围：FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 里 pc（20 行）和 mobile（15 行）每一行的 FxSP、FxSP_Low、FxSP_High 引用到的全部粒子系统（去重）。\n\n标准（出处 协作/备忘_导入器.md:46、对话记录/对话框5.md:105–109）：\n- 系统 Fixed-Time 更新：10 FPS（delta 0.1）\n- 预热 / 等待 = 0\n- 固定相对包围盒：开，各轴 ±100000 cm\n- 剔除距离 120000 cm（1200 m）\n- 每个 GPU 发射器都有 Max Draw Count（> 0）\n\n每个粒子系统一行，逐项写实际值和 ✅ / ❌；读不到写 null 和原因。\n\n输出：\n- analysis/results/UE_READBACK_20261014/导入设置核对.json：{format:'df.ue-import-settings-check/1', readAt, standard:{...}, rows:[{resourceId, side:'pc'|'mobile', slot:'FxSP'|'FxSP_Low'|'FxSP_High', path, fixedFps, warmup, fixedBounds, boundsExtent, cullDistance, gpuEmitters:[{name, maxDrawCount}], pass:true|false, fails:[...]}]}\n- analysis/results/UE_READBACK_20261014/导入设置核对.md：先写一句结论（几个全过、几个有 ❌），再列出所有有 ❌ 的资源和缺哪项，最后写「建议：这些资源周四前用导入器重新导入一次（由用户点导入），或在测试结论里注明」。不要替用户改。\n\n禁止：保存、改值、导入、P4、开关 UE。UE 没开 → 卡住。",
+      "提示词": "你是本机同步（8）。这是 dot 从 协作/派活队列.json 派来的任务 T02，按该文件「Codex 共同规则」执行，先读 对话记录/对话框8.md 最近两节。\n\n任务：只读核对周四性能测试要用到的每个粒子系统，导入设置是否符合导入器 v2.22 的标准。\n\n范围：FXtools/节目/NewYearFireWorks_v01/资源发射器数.json 里 pc（20 行）和 mobile（15 行）每一行的 FxSP、FxSP_Low、FxSP_High 引用到的全部粒子系统（去重）。\n\n标准（出处 协作/备忘_导入器.md:46、对话记录/对话框5.md:105–109；用户 10-13 23:11 问「CPU 粒子是不是不用勾包围盒、性能测试用不着的别做」，按下面收窄）：\n- 系统 Fixed-Time 更新：10 FPS（delta 0.1）——所有系统都查\n- 固定相对包围盒：只对含 GPU 发射器的系统要求（开，各轴 ±100000 cm）；纯 CPU 系统只记实际值，不算 ❌（CPU 发射器每帧自己算包围盒）\n- 剔除距离 120000 cm（1200 m）——所有系统都查\n- 每个 GPU 发射器都有 Max Draw Count（> 0）\n- 不查预热 / 等待（和周四性能测试无关）\n\n每个粒子系统一行，逐项写实际值和 ✅ / ❌；读不到写 null 和原因。\n\n输出：\n- analysis/results/UE_READBACK_20261014/导入设置核对.json：{format:'df.ue-import-settings-check/1', readAt, standard:{...}, rows:[{resourceId, side:'pc'|'mobile', slot:'FxSP'|'FxSP_Low'|'FxSP_High', path, hasGpu, fixedFps, fixedBounds, boundsExtent, cullDistance, gpuEmitters:[{name, maxDrawCount}], pass:true|false, fails:[...]}]}\n- analysis/results/UE_READBACK_20261014/导入设置核对.md：先写一句结论（几个全过、几个有 ❌），再列出所有有 ❌ 的资源和缺哪项，最后写「建议：这些资源周四前用导入器重新导入一次（由用户点导入），或在测试结论里注明」。不要替用户改。\n\n禁止：保存、改值、导入、P4、开关 UE。UE 没开 → 卡住。",
       "做完的标准": [
         "资源发射器数.json 里引用到的每个粒子系统都有一行",
-        "每行 5 项标准都有实际值或注明读不到的原因",
+        "每行 4 项标准都有实际值或注明读不到的原因（纯 CPU 系统的包围盒只记录不判）",
         "md 的结论数字和 json 一致",
         "已提交推送，本条写了完成、提交号、结果"
       ],
