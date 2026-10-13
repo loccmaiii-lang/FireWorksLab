@@ -49,6 +49,16 @@ test('every launch ends up at sub-template height + dz (what UE actually plays)'
  assert(moved>100);
 });
 
+test('16.0.23: every exported sub-template is referenced (no orphan base after all its launches moved to height versions)',()=>{
+ if(!fs.existsSync(file))return;
+ const state=load(),r=compileDirector(state.doc,qualityEvents(state.doc,state.profiles,'high'),undefined);
+ const used=new Set(r.arrays.EffectTemplates.flatMap(p=>p.Entries.map(e=>e.SubTemplateName)));
+ assert.deepEqual(r.arrays.EffectSubTemplates.filter(s=>!used.has(s.TemplateName)).map(s=>s.TemplateName),[]);
+ const flat=compileDirector(state.doc,qualityEvents(state.doc,state.profiles,'high').map(e=>({...e,dz:0})),undefined);
+ assert.equal(flat.summary.heightVariants,0);
+ assert.ok(flat.arrays.EffectSubTemplates.length>0,'没有高差的节目照旧全部写出');
+});
+
 test('same base + same dz shares one height version; schedule otherwise identical to the dz=0 compile',()=>{
  if(!fs.existsSync(file))return;
  const state=load(),events=qualityEvents(state.doc,state.profiles,'high');

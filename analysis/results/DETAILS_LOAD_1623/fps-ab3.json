@@ -1,0 +1,33 @@
+{
+ "sel0": [
+  "/Game/Maps/Dam_Iris_Long3/DynamicRequest/Event/MA5_FireworkOnDam/MA5_FireworkOnDam_Night.MA5_FireworkOnDam_Night:PersistentLevel.BP_NewYearFireworks_ShowDirector_Night_2"
+ ],
+ "steps": [
+  {
+   "label": "deselected",
+   "frames": 313,
+   "sec": 8.025,
+   "fps": 39,
+   "ms": 26
+  },
+  {
+   "label": "selected_1622",
+   "frames": 71,
+   "sec": 8.063,
+   "fps": 8.8,
+   "ms": 114
+  },
+  {
+   "label": "selected_1623",
+   "frames": 83,
+   "sec": 8.064,
+   "fps": 10.3,
+   "ms": 97
+  }
+ ],
+ "r3Readback": true,
+ "restored": {
+  "config": true,
+  "active": false
+ }
+}

@@ -22,6 +22,8 @@ const sha=text=>crypto.createHash('sha256').update(text).digest('hex');
 const connectionFile=path.join(source,'src/connection.mjs'),connection=await fs.readFile(connectionFile,'utf8');
 const current=connection.match(/export const WORKBENCH_VERSION='([^']+)';/)?.[1];
 if(!current)throw Error('找不到 WORKBENCH_VERSION');
+// --skip-index（本机同步8，10-13）：不写 FXtools/节目/云端最新/版本记录.md（本机安全规则拦了这个文件的写入时用；节目文件和 cloud-latest 照常写）
+const skipIndex=args.includes('--skip-index');
 const dataOnly=args.includes('--data-only'),cloudFile=path.join(source,'public/data/cloud-latest.json');
 let previousCloud=null;try{previousCloud=JSON.parse(await fs.readFile(cloudFile,'utf8')).version}catch(e){if(e.code!=='ENOENT')throw e}
 const key=v=>v.split('.').map(Number),cmp=(a,b)=>{const x=key(a),y=key(b);for(let i=0;i<3;i++)if(x[i]!==y[i])return x[i]-y[i];return 0};
@@ -58,5 +60,5 @@ await fs.writeFile(cloudFile,JSON.stringify(latest));
 if(!dataOnly)await fs.writeFile(connectionFile,connection.replace(`export const WORKBENCH_VERSION='${current}';`,`export const WORKBENCH_VERSION='${version}';`));
 const index=path.join(archiveDir,'版本记录.md');let log;try{log=await fs.readFile(index,'utf8')}catch{log='# 云端最新编排 · 版本记录\n\n拉取后刷新编排工作台会自动载入最新一行（载入前备份当前节目）。这里的文件不带音乐，音乐按 sha256 对应《汪洋与浩渺》。\n\n| 版本 | 编排 | 片段 / 播放 | 来源 | 说明 |\n| --- | --- | --- | --- | --- |\n'}
 const mode=dataOnly?`（只换编排，工具 ${current}）`:'';
-await fs.writeFile(index,log+`| ${version} | ${name} | ${latest.cues} / ${latest.events} | \`${latest.source}\` | ${(note+mode).replaceAll('|','｜')} |\n`+extras.map(x=>`| ${version} | ${x.label}（对比版，手动打开） | ${x.cues} / ${x.events} | \`${x.source}\` | 刷新不自动载入；节目 → 打开节目 → 选 \`${x.archive}\` |\n`).join(''));
+if(!skipIndex)await fs.writeFile(index,log+`| ${version} | ${name} | ${latest.cues} / ${latest.events} | \`${latest.source}\` | ${(note+mode).replaceAll('|','｜')} |\n`+extras.map(x=>`| ${version} | ${x.label}（对比版，手动打开） | ${x.cues} / ${x.events} | \`${x.source}\` | 刷新不自动载入；节目 → 打开节目 → 选 \`${x.archive}\` |\n`).join(''));
 console.log(JSON.stringify({version,name,archive:'FXtools/节目/云端最新/'+archive,extras,cues:latest.cues,events:latest.events,programmeSha256,bytes:Buffer.byteLength(text),appVersion:latest.appVersion,next:dataOnly?'python release.py --data-only'+(process.env.CI?' --no-deploy':''):'npm run release'+(process.env.CI?' -- --no-deploy':'')}));

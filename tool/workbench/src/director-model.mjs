@@ -48,6 +48,9 @@ function compileLegacy(doc,events,target,mapping={}){
  for(const group of Object.keys(groups))if(byGroup[group].length)arrays.EffectScheduleGroups.push({GroupName:group,Slots:byGroup[group].sort((a,b)=>a.StartTime-b.StartTime)});
  const compact=compactDirectorArrays(arrays);Object.assign(arrays,compact.arrays);
  const named=issues.length?null:nameDirectorArrays(arrays);if(named)Object.assign(arrays,named.arrays);
+ // 16.0.23（本机同步8，10-13 用户选中导演掉帧）：命名之后，没有父条目引用的底子模板（每一发都换成了高度版本）不再写进导演表；
+ // 先命名再剪，高度版本照旧按底子模板的名字叫 <花>_U20。选中导演时 Details 要为每个结构字段建一行，表越小越不卡（UE 实测约 2 ms / 千行）。
+ if(variants.size){const used=new Set(arrays.EffectTemplates.flatMap(p=>p.Entries.map(e=>e.SubTemplateName)));arrays.EffectSubTemplates=arrays.EffectSubTemplates.filter(s=>used.has(s.TemplateName));}
  const exportNames=new Map(named?.audit.subTemplates.map(x=>[x.from,x.to])||[]);
  const summary={...compact.stats,eventCount:events.length,subTemplates:arrays.EffectSubTemplates.length,heightVariants:variants.size,templates:arrays.EffectTemplates.length,groups:arrays.EffectScheduleGroups.length,scheduleSlots:arrays.EffectScheduleGroups.reduce((n,g)=>n+g.Slots.length,0)};
  const qualityMode=events.some(e=>e.minQuality)?'nested':'tier';

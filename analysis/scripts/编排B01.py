@@ -594,6 +594,8 @@ def build(density=2, rhythm=None, vary=False, b02=False, r1=False, standins=Fals
         R1_LO, R1_HI = DZ_WINDOW
     if r1:
         apply_r1(S, standins)
+    if r2 and DZ_STEP:
+        S.snap = snap_dz(S, DZ_STEP)
     return S
 
 
@@ -1239,6 +1241,22 @@ def _clampc(c, v):
     return min(hi, max(lo, v))
 EXPORT_DIR = None      # --out-dir：逻辑方案 / 体检另存的目录（试参数时不覆盖 协作/编排B01 里的正式文件）
 EXPORT_TAG = ''        # --tag：修订2 文件名后缀，例如 _up60
+DZ_STEP = 0           # 修订3（本机同步 8，10-13 11:37 用户：选中导演掉帧）：高差取整到 DZ_STEP m，同一朵花的高度版本少一半多、导演表属性行少约 20%
+
+
+def snap_dz(S, step):
+    """球花 dz 取整到 step 的整数倍并夹回各自大小的窗口；扇形 / 小平台不动。返回最大挪动（m）。"""
+    moved = 0.0
+    for c in S.cues:
+        if c['size'] not in 'SML':
+            continue
+        lo, hi = _winc(c)
+        top = math.floor(hi / step) * step
+        for e in c['events']:
+            v = float(min(top, max(lo, round(e['dz'] / step) * step)))
+            moved = max(moved, abs(v - e['dz']))
+            e['dz'] = v
+    return dict(step=step, maxMoveM=moved)
 
 
 def lift_dz(S, lo, hi, windows=None):
@@ -1970,12 +1988,14 @@ if __name__ == '__main__':
     ap.add_argument('--dz-up', type=float, default=None, help='配合 --b02r2：往上的最大高差（m），默认 DZ_WINDOW[1]')
     ap.add_argument('--out-dir', default=None, help='逻辑方案 / 体检写到这个目录（默认 协作/编排B01）')
     ap.add_argument('--tag', default='', help='配合 --b02r2：文件名后缀')
+    ap.add_argument('--dz-step', type=float, default=0, help='配合 --b02r2：高差取整步长（m），10 = 修订3')
     a = ap.parse_args()
     if a.b02r2:
         a.b02r1 = True
         if a.dz_up is not None:
             DZ_WINDOW = (0.0, a.dz_up)
-        EXPORT_TAG = a.tag or '_up' + str(int(DZ_WINDOW[1]))
+        DZ_STEP = a.dz_step
+        EXPORT_TAG = a.tag or '_up' + str(int(DZ_WINDOW[1])) + ('_s' + str(int(DZ_STEP)) if DZ_STEP else '')
     if a.out_dir:
         EXPORT_DIR = Path(a.out_dir).resolve()
     if a.b02r1:

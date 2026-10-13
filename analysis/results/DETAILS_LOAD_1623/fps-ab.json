@@ -1,0 +1,86 @@
+{
+ "sizes": {
+  "16.0.22（现在）": {
+   "subs": 309,
+   "subEntries": 669,
+   "tpls": 146,
+   "parentEntries": 771,
+   "slots": 188,
+   "sub": 18991,
+   "parent": 24153,
+   "schedule": 1138,
+   "effectNodes": 44282,
+   "allNodes": 44405
+  },
+  "selected_snap10": {
+   "subs": 168,
+   "subEntries": 387,
+   "tpls": 143,
+   "parentEntries": 747,
+   "slots": 188,
+   "sub": 10954,
+   "parent": 23412,
+   "schedule": 1138,
+   "effectNodes": 35504,
+   "allNodes": 35506
+  },
+  "selected_noheight": {
+   "subs": 52,
+   "subEntries": 155,
+   "tpls": 127,
+   "parentEntries": 650,
+   "slots": 188,
+   "sub": 4342,
+   "parent": 20390,
+   "schedule": 1138,
+   "effectNodes": 25870,
+   "allNodes": 25872
+  }
+ },
+ "steps": [
+  {
+   "label": "selected_1622",
+   "wallMs": 6021,
+   "frames": 769,
+   "sec": -67.967,
+   "fps": -11.3,
+   "msPerFrame": -88
+  },
+  {
+   "label": "deselected_1622",
+   "wallMs": 6037,
+   "frames": 53,
+   "sec": 6.036,
+   "fps": 8.8,
+   "msPerFrame": 114
+  },
+  {
+   "label": "selected_snap10",
+   "wallMs": 6026,
+   "frames": 33,
+   "sec": 6.025,
+   "fps": 5.5,
+   "msPerFrame": 183
+  },
+  {
+   "label": "selected_noheight",
+   "wallMs": 6036,
+   "frames": 35,
+   "sec": 6.036,
+   "fps": 5.8,
+   "msPerFrame": 172
+  },
+  {
+   "label": "selected_1622_again",
+   "wallMs": 6218,
+   "frames": 30,
+   "sec": 6.217,
+   "fps": 4.8,
+   "msPerFrame": 207
+  }
+ ],
+ "restored": {
+  "config": true,
+  "active": false
+ }
+}
