@@ -10,7 +10,7 @@
   ③ Comet / Silver 3.0 原位替换红彗星扇、银扇（ResourceFX 行名不变，编排不改调用）：GPU 按 0 算；体检另算一份「3.0 还没导入」的旧扇 GPU。
 XS / Tiny 的 ResourceFX 行名是占位（协作/编排B01/新尾缀.json），用户导入、加行后只改那一处重编。
 
-用法：python3 -I analysis/scripts/编排B04.py [--base 逻辑方案_B03r2m.json] [--name B04] [--out-dir 协作/编排B01] [--platform-pc-only]
+用法：python3 -I analysis/scripts/编排B04.py [--base 逻辑方案_B03r2m.json] [--name B04] [--out-dir 协作/编排B01] [--platform-pc-only] [--no-tiny]
 """
 import argparse
 import copy
@@ -129,10 +129,11 @@ def main():
     ap.add_argument('--name', default='B04')
     ap.add_argument('--out-dir', default=str(ROOT / '协作/编排B01'))
     ap.add_argument('--platform-pc-only', action='store_true', help='小平台前台小花只上 PC（默认也上手游）')
+    ap.add_argument('--no-tiny', action='store_true', help='坝顶低层不换 Tiny（留 B03 的 S 尾缀 150 m），只做小平台和扇 3.0')
     a = ap.parse_args()
     plan = json.loads(Path(a.base).read_text(encoding='utf-8'))
     cues = copy.deepcopy(plan['cues'])
-    log = dict(lowLayerTiny=low_layer(cues), platform=platform(cues, not a.platform_pc_only))
+    log = dict(lowLayerTiny=[] if a.no_tiny else low_layer(cues), platform=platform(cues, not a.platform_pc_only))
     cues.sort(key=lambda c: (min(e['launch'] for e in c['events']), c['id']))
     log['mobile'] = mobile_audit(cues)
     log['fanUnderLowLayer'] = fan_under_low(cues)
