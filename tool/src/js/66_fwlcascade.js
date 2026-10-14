@@ -253,6 +253,8 @@ const sizeSpecTable = () => { const T = typeof window !== 'undefined' ? window.S
 function sizeSpecKeyNow() {
   const ef = typeof lib !== 'undefined' && lib.effect ? lib.effect.key : ''; let rv = typeof lib !== 'undefined' && lib.review ? lib.review.id : '';
   let wk = ''; try { wk = typeof wbKey === 'function' ? wbKey() : ''; } catch (e) { }
+  // 4.9.101：打开的是我的效果 → 只按它记录的来源找尺寸表，别的入口留下的 lib.review / lib.effect 不算（用户的 Tiny 被记成 QA20 的尺寸来源）
+  if (typeof lib !== 'undefined' && lib.my) { const s = lib.my.sizeSource || {}; return { key: s.key || '', entry: s.entry || '', wk }; }
   let key = ef || (/^ef:/.test(wk) ? wk.slice(3) : '');
   if (!key && rv && typeof effectOfEntry === 'function') { try { const x = effectOfEntry(lib.review); key = x ? x.key : ''; } catch (e) { } }     // 本机导出任务只开条目（openReview 不带效果）
   const source = typeof lib !== 'undefined' && lib.my && lib.my.sizeSource;

@@ -154,6 +154,9 @@ function syncComboPanels() {
 // ---------------- 你的版本（保存 / 切换 / 文件） ----------------
 const wb = { key: '', entry: null, src: { kind: 'ai' }, sig: '', arm: 0 };
 function wbKey() {
+  // 4.9.101：打开的是我的效果 / 我的模板 → 就是它。以前先看 lib.review / lib.effect，旧打开晚回留下的条目会把名字、尺寸、缩略图、草稿的键带到别人名下
+  if (lib.my) return 'my:' + lib.my.id;
+  if (lib.tpl) return 'tpl:' + lib.tpl.id;
   if (lib.review && lib.review.layerOf) return 'rv:' + lib.review.id;
   if (lib.effect) return 'ef:' + lib.effect.key;
   if (lib.review) return 'rv:' + lib.review.id;
@@ -331,13 +334,14 @@ function wbAutoExport(label) {
 }
 // 回到 AI 版：丢掉这个效果里调过的层，重新打开条目
 async function wbLoadAI() {
-  if (lib.my) { await openMyEffect(lib.my.id, { keep: true }); wb.src = { kind: 'ai' }; wbArm(); wbSync(); return; }   // 我的效果：回到已保存的样子
+  if (lib.my) { if ((await openMyEffect(lib.my.id, { keep: true })) === false) return; wb.src = { kind: 'ai' }; wbArm(); wbSync(); return; }   // 我的效果：回到已保存的样子（4.9.101 中途换了对象就停）
   const e = lib.review;
   if (state.layerEdits) {
     const ids = e && e.kind === 'combo' ? e.layerIds || [] : e ? [e.id] : [];
     for (const id of ids) { delete state.layerEdits[id]; const le = state.lib.find(x => x.rep === id); if (le && le.editSig) { dropLibBake(le); state.lib.splice(state.lib.indexOf(le), 1); } }
   }
-  if (e) await openReview(e, lib.effect); else if (lib.formal) openFormal(lib.formal, lib.effect); else if ((lib.key || '').startsWith('type:')) openType(lib.key.slice(5)); else if (mtOpenId()) await openMultiType(mtOpenId());
+  let ok; if (e) ok = await openReview(e, lib.effect); else if (lib.formal) openFormal(lib.formal, lib.effect); else if ((lib.key || '').startsWith('type:')) openType(lib.key.slice(5)); else if (mtOpenId()) ok = await openMultiType(mtOpenId());
+  if (ok === false) return;     // 4.9.101 烘焙期间换了对象：不动新对象的版本选择和「没改过」基准
   wb.src = { kind: 'ai' }; wbArm(); wbSync();
 }
 async function wbLoad(id) {
@@ -347,21 +351,23 @@ async function wbLoad(id) {
   if (autoDraft() && old) { const list = wbList(); old.id = 'd' + Date.now().toString(36); old.draft = false; old.name = '草稿（更早，' + (old.at || '') + '）'; list.push(old); wbPut(list); id = old.id; }
   if (id === 'ai') return wbLoadAI();
   const s = wbList().find(x => x.id === id); if (!s) return;
-  migBegin(); await wbApply(s.snap); wb.src = { kind: 'mine', id }; wbArm(); wbSync(); flash(`正在看你的版本「${s.name}」`); migEnd();     // 4.9.5 不静默
+  const alive = (typeof libOpenAlive === 'function' ? libOpenAlive() : () => true);     // 4.9.101 换版本还在烘时切到别的对象：版本晚回不写进新对象
+  migBegin(); const ok = await wbApply(s.snap, alive); if (!alive()) return; if (!ok) { migEnd(); return; }
+  wb.src = { kind: 'mine', id }; wbArm(); wbSync(); flash(`正在看你的版本「${s.name}」`); migEnd();     // 4.9.5 不静默
 }
-async function wbApply(snap) {
+// alive：打开代次（默认 = 调用时这一代；撤销重放、恢复到打开时也按它停）。返回 false = 没套上（形态不符或中途换了对象）
+async function wbApply(snap, alive = (typeof libOpenAlive === 'function' ? libOpenAlive() : () => true)) {
   bakeMode.demand = true;          // 4.2.16：换版本 / 恢复 = 打开，照常烘（自动烘焙关也烘）
   if (snap.kind === 'combo') {
-    if (state.tab !== 'combo') { flash('这个版本是多层效果，当前打开的是单层', true); return; }
+    if (state.tab !== 'combo') { flash('这个版本是多层效果，当前打开的是单层', true); return false; }
     state.layerEdits = state.layerEdits || {};
     for (const x of snap.layers) if (x.id && x.P) state.layerEdits[x.id] = { P: structuredClone(x.P), M: structuredClone(x.M) };
     state.comboSel = -1; syncComboPanels();
-    await applyCombo({ name: snap.name || state.comboName, layers: snap.layers.map(x => ({ ...(x.id ? { m: 'rep:' + x.id } : x.P ? { src: { type: x.type, P: x.P, M: x.M } } : { m: x.type }), ...structuredClone(x.L) })) });
-  } else {
-    if (state.tab === 'combo') { flash('这个版本是单层，当前打开的是多层效果', true); return; }
-    state.P = migrate37(structuredClone(snap.P)); state.M = structuredClone(snap.M); state.repId = snap.repId || state.repId;
-    buildMasterPanel(); onParam();
+    return applyCombo({ name: snap.name || state.comboName, layers: snap.layers.map(x => ({ ...(x.id ? { m: 'rep:' + x.id } : x.P ? { src: { type: x.type, P: x.P, M: x.M } } : { m: x.type }), ...structuredClone(x.L) })) }, alive);
   }
+  if (state.tab === 'combo') { flash('这个版本是单层，当前打开的是多层效果', true); return false; }
+  state.P = migrate37(structuredClone(snap.P)); state.M = structuredClone(snap.M); state.repId = snap.repId || state.repId;
+  buildMasterPanel(); onParam(); return true;
 }
 // 和 AI 版比，列出改动（层 / 参数：旧 → 新），发给 AI 用
 function wbDiff() {
@@ -888,9 +894,21 @@ function saveDelivNames(host, subject) {
   if (!base) { delivNameFeedback(host, '名称未保存：请填写英文字母或数字', true); return false; }
   const dup = layers.filter(Boolean).find((v, i, a) => a.indexOf(v) !== i);
   if (dup) { delivNameFeedback(host, '名称未保存：层名重复 ' + dup, true); return false; }
-  if (!setPackNames(subject, base, layers, { system: base })) { delivNameFeedback(host, '名称没存上：浏览器存储写入失败，原名称和输入保留', true); return false; }
+  const entry = typeof packTierNow === 'function' ? packTierNow(lib.effect) : '';     // 4.9.101 分档效果：记下是在哪一档保存的，只作这一档的最终名
+  if (!setPackNames(subject, base, layers, { system: base, entry })) { delivNameFeedback(host, '名称没存上：浏览器存储写入失败，原名称和输入保留', true); return false; }
+  if (typeof myRecordNames === 'function' && !myRecordNames(subject, { base, layers, system: base })) { delivNameFeedback(host, '名称已用于本次导出，但没写进「我的效果」记录（浏览器存储写入失败）：重开前请再点一次保存名称', true); return true; }
   try { renderDeliv(); } catch (e) { delivNameFeedback(host, '名称已保存，但清单刷新失败：' + (e.message || e), true); return true; }
-  delivNameFeedback(host, `名称已保存：${base}（不自动追加尺寸后缀）`); return true;
+  const tiered = /^ef:/.test(subject) && entry && packNamesFor(subject, lib.effect, layers.length, base, state.tab === 'combo' ? '' : state.P.type).tiered;
+  delivNameFeedback(host, tiered ? `名称已保存：${base}（只作当前这一档 ${entry} 的最终名；同一效果的其它档仍按基础名加档位后缀）` : `名称已保存：${base}（不自动追加尺寸后缀）`); return true;
+}
+// 4.9.101：恢复默认 = 删掉手动名；我的效果连记录里的一起删（4.9.100 只删缓存，重开 / 保存时又从记录复活）
+function resetDelivNames(host, subject) {
+  if (subject !== wbKey()) { delivNameFeedback(host, '当前效果已切换，未修改任何名称', true); return false; }
+  const all = { ...store.get('packNames', {}) }; delete all[subject];
+  if (!store.set('packNames', all)) { delivNameFeedback(host, '恢复默认失败：原名称保留', true); return false; }
+  if (typeof myRecordNames === 'function' && !myRecordNames(subject, null)) { delivNameFeedback(host, '本次已按默认名称显示，但「我的效果」记录里的旧名没删掉（浏览器存储写入失败），重开会恢复旧名', true); return false; }
+  syncEnName(); try { renderDeliv(); } catch (e) { delivNameFeedback(host, '已恢复默认名称，但清单刷新失败：' + (e.message || e), true); return true; }
+  delivNameFeedback(host, '已恢复默认名称（尺寸派生按自动规则命名）'); return true;
 }
 function renderDeliv() {
   const host = $('#delivView'), subject = wbKey(), name = delivName(), rows = [], combo = state.tab === 'combo', xs = curLayerBakes();
@@ -968,7 +986,7 @@ function renderDeliv() {
   let ssHTML = ''; if (typeof sizeSpecLine === 'function') { const ln = sizeSpecLine(combo); if (ln) ssHTML = `<div class="dv-ss hint" id="dvSizeLine">${ln} ${sizeSpecSelectHTML(combo)}</div>`; }     // 4.9.52 每个效果都能选一档（用户 10-09 12:56）
   host.innerHTML = `<div class="dv-h"><div><b>一个效果 · 一个素材包</b><small>${useNew ? '命名：T_EFX_FireWorks_名称' + (combo ? '_层' : '') + '_列x行_序号（PC 加 _HD）；Cut _C、Ramp _R 两个平台共用' : '这种产物沿用原来的命名'}</small></div><span class="sp"></span>
     <button class="btn primary" type="button" id="dvExport">导出素材包（PC + 手机）</button><button class="btn" type="button" id="dvBack">返回画面</button></div>
-    <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>最终系统名：<b id="dvSystemName">${systemName}</b>（平台后缀由导入器添加）。手动保存后按填写的名称导出，不自动追加尺寸后缀。${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}名称只用英文字母、数字和下划线，按效果存在本浏览器；我的效果保存配方时会一起写入已连接的仓库。</small><small id="dvNameStatus" role="status" aria-live="polite"></small></div>
+    <div class="dv-names"><label>英文名（这个效果只有这一个）<input type="text" id="dvBase" value="${nm.base}"></label>${lyInputs}<button class="btn" type="button" id="dvSaveNames">保存名称</button>${nm.custom ? '<button class="btn ghost" type="button" id="dvResetNames">恢复默认</button>' : ''}<small>最终系统名：<b id="dvSystemName">${systemName}</b>（平台后缀由导入器添加）。${nm.tiered ? '这个效果分几档：在哪一档保存，名字就只作那一档的最终名；其它档按基础名加档位后缀（_S / _M / _L、方案后缀），不会几档同名。' : '手动保存后按填写的名称导出，不自动追加尺寸后缀。'}${useNew ? '' : '这种产物的文件名沿用原来的格式，名称部分用这个。'}名称只用英文字母、数字和下划线，按效果存在本浏览器；我的效果保存配方时会一起写入已连接的仓库。</small><small id="dvNameStatus" role="status" aria-live="polite"></small></div>
     ${ssHTML}${prod}
     <table class="dv-t"><thead><tr><th>包内文件</th><th>平台 · 规格</th><th>延迟</th><th>时长</th></tr></thead><tbody>${rows.join('')}</tbody></table>
     <p class="hint">按当前烘焙推算；导出时手机版按单格下限独立烘焙。独看 / 静音不影响导出。</p>`;
@@ -981,12 +999,7 @@ function renderDeliv() {
   const sv = host.querySelector('#dvSaveNames');
   if (sv) sv.addEventListener('click', () => saveDelivNames(host, subject));
   host.querySelector('#dvBase').addEventListener('input', e => { host.querySelector('#dvSystemName').textContent = asciiName(e.target.value) || '请填写名称'; host.querySelector('#dvNameStatus').textContent = '名称已修改，尚未保存'; });
-  const rs = host.querySelector('#dvResetNames'); if (rs) rs.addEventListener('click', () => {
-    if (subject !== wbKey()) { delivNameFeedback(host, '当前效果已切换，未修改任何名称', true); return; }
-    const all = { ...store.get('packNames', {}) }; delete all[subject];
-    if (!store.set('packNames', all)) { delivNameFeedback(host, '恢复默认失败：原名称保留', true); return; }
-    syncEnName(); renderDeliv(); delivNameFeedback(host, '已恢复默认名称（尺寸派生按自动规则命名）');
-  });
+  const rs = host.querySelector('#dvResetNames'); if (rs) rs.addEventListener('click', () => resetDelivNames(host, subject));
   stage2.delivSig = stage2.tlSig; stage2.delivKey = subject;
 }
 // 4.9.26 帧账本（用户 10-07 09:20「2.可以，你标定完，我可以多测试几个」）：一份烘焙每帧在游戏里跳多少像素（31_plan40.js frameLedger）；按 bake 记一份

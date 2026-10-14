@@ -17,14 +17,46 @@ function myCapturePrefs() {
   return { ue: !store.get('packNames', {})[wbKey()] && rec && rec.ue ? structuredClone(rec.ue) : packNamesFor(wbKey(), lib.effect, n, combo ? 'MyFx' : TYPE_EN[state.P.type], combo ? '' : state.P.type),
     sizeSource: { key: s.key || '', entry: s.entry || '' }, sizePick: Object.hasOwn(picks, pickKey) ? picks[pickKey] : (rec && rec.sizePick) || '' };
 }
-// 参数、命名与尺寸先一起写入记录；浏览器偏好是缓存，已有的手动修改优先，缺失时才恢复。
+// 参数、命名与尺寸先一起写入记录。4.9.101：英文名以效果记录为准（交付清单「保存名称 / 恢复默认」同时改记录），缓存只是镜像——
+//   4.9.100 是「缓存优先」，旧恢复写进缓存的 RiseTrail_M（最终名）一直盖着用户填的 RiseTrail_Tiny，导出会按同名迭代覆盖已通过的中号尾缀。
+//   尺寸选择仍是缓存优先（交付清单的尺寸下拉只写缓存，保存效果时才进记录）。
+const myNamesSame = (a, b) => !!a && !!b && JSON.stringify([a.base || '', a.layers || [], a.system === undefined ? a.base || '' : a.system || '']) === JSON.stringify([b.base || '', b.layers || [], b.system === undefined ? b.base || '' : b.system || '']);
 function myRestorePrefs(rec) {
   const key = 'my:' + rec.id;
-  if (rec.ue && !store.get('packNames', {})[key] && !setPackNames(key, rec.ue.base, rec.ue.layers || [], rec.ue)) throw new Error('英文名缓存未保存，记录中的名称仍保留');
+  if (rec.ue && !myNamesSame(store.get('packNames', {})[key], rec.ue) && !setPackNames(key, rec.ue.base, rec.ue.layers || [], rec.ue)) throw new Error('英文名缓存未保存，记录中的名称仍保留');
   if (typeof rec.sizePick === 'string') {
     const all = sizeSpecPicks();
     if (!Object.hasOwn(all, key)) { all[key] = rec.sizePick; if (!store.set('sizeSpecPick', all)) throw new Error('尺寸选择缓存未保存，记录中的选择仍保留'); }
   }
+}
+// 4.9.101 交付清单改我的效果的英文名：同时写进效果记录（ue = null 是「恢复默认」：记录里删掉，重开 / 保存不再复活）。不是我的效果 → 不用写，返回 true
+function myRecordNames(key, ue) {
+  const m = /^my:(.+)$/.exec(key || ''); if (!m) return true;
+  const all = myAll(), rec = all[m[1]]; if (!rec) return true;
+  if (ue) rec.ue = structuredClone(ue); else delete rec.ue;
+  if (!myPut(rec)) return false;
+  if (lib.my && lib.my.id === rec.id) { if (ue) lib.my.ue = structuredClone(ue); else delete lib.my.ue; }
+  return true;
+}
+// 4.9.101 启动时按记录对齐一次英文名缓存（左栏列表在打开前就显示对的名字）；只动记录里有名字、且和缓存不同的
+function mySyncNames() {
+  let failed = 0;
+  for (const rec of Object.values(myAll())) { if (!rec || !rec.ue) continue; try { myRestorePrefs({ id: rec.id, ue: rec.ue }); } catch (e) { failed++; } }
+  return failed;
+}
+// 4.9.101 尺寸来源只按派生来源（rec.from）认：4.9.100 保存时从界面现读，旧条目没关干净就记成了别的效果（用户的 Tiny 派生自 ef:trail_phys，记成 qiuxing_a / QA20）
+function mySizeSource(rec) {
+  const s = rec && rec.sizeSource, f = String((rec && rec.from && rec.from.key) || ''), keep = () => (s ? structuredClone(s) : undefined);
+  if (f.startsWith('ef:')) {
+    const key = f.slice(3); if (s && s.key === key) return keep();
+    const id = (rec.snap && rec.snap.kind === 'single' && rec.snap.repId) || (rec.from && rec.from.base) || '';
+    return { key, entry: typeof entryById === 'function' && entryById(id) ? id : '' };
+  }
+  if (/^(rv|rep):/.test(f)) {
+    const entry = f.slice(f.indexOf(':') + 1); if (s && s.entry === entry) return keep();
+    const ef = typeof effectOfEntry === 'function' ? effectOfEntry({ id: entry }) : null; return { key: ef ? ef.key : '', entry };
+  }
+  return keep();
 }
 function myRecoverSingle(key, sv) {
   const sn = sv && sv.snap, obj = x => x && typeof x === 'object' && !Array.isArray(x);
@@ -118,27 +150,29 @@ async function myCreate(key) {
 async function openMyEffect(id, o = {}) {
   const rec = myAll()[id]; if (!rec) { flash('找不到这个效果', true); return; }
   if (!o.keep) beforeOpen(null); else if (typeof migBegin === 'function') migBegin();
-  setQueuedView(false); lib.effect = null; lib.formal = null; lib.tpl = null; lib.my = { ...rec, linksLive: structuredClone(rec.links || []) }; wb.entry = undefined; lib.key = 'my:' + id; store.set('lastKey', lib.key);
+  const alive = (typeof libOpenBegin === 'function' ? libOpenBegin() : () => true);     // 4.9.101 打开代次：烘焙中又点了别的（或同一个再点一次）→ 这次停下，不装层、不换面包屑
+  setQueuedView(false); lib.effect = null; lib.formal = null; lib.tpl = null; lib.my = { ...rec, sizeSource: mySizeSource(rec), linksLive: structuredClone(rec.links || []) }; wb.entry = undefined; lib.key = 'my:' + id; store.set('lastKey', lib.key);
   setReview(null); state.comboSel = -1; state.layerView = { solo: -1, mute: [] };
   try {
-    await setTab(rec.snap.kind === 'single' ? 'master' : 'combo', { lazy: true }); syncComboPanels();
+    await setTab(rec.snap.kind === 'single' ? 'master' : 'combo', { lazy: true }); if (!alive()) return false; syncComboPanels();
     try { myRestorePrefs(rec); } catch (e) { flash(e.message || String(e), true, 12000, true); }
-    await myApplySnap(rec.snap);
+    if (!(await myApplySnap(rec.snap, alive)) || !alive()) return false;
     renderLib(); crumb('我的效果', rec.name); wbRefresh();
     // 4.3.3：多层打开即选第 1 层；原生单层的参数由 buildMasterPanel 直接显示。
     if (state.tab === 'combo' && state.layers.length && layerEntryOf(state.layers[0])) selectComboLayer(0);
-  } finally { if (typeof migEnd === 'function') migEnd(); }
+    return true;
+  } finally { if (alive() && typeof migEnd === 'function') migEnd(); }
 }
-// 按快照搭层：每层一份自己的参数（libOwn 烘焙），层上带名字、稳定编号
-async function myApplySnap(snap) {
+// 按快照搭层：每层一份自己的参数（libOwn 烘焙），层上带名字、稳定编号；alive = 打开代次（过期返回 false）
+async function myApplySnap(snap, alive = () => true) {
   if (snap.kind === 'single') {
-    await setTab('master', { lazy: true }); bakeMode.demand = true;
+    await setTab('master', { lazy: true }); if (!alive()) return false; bakeMode.demand = true;
     state.P = migrate37(structuredClone(snap.P)); state.M = structuredClone(snap.M); state.repId = snap.repId || null; state.activeStage = 0;
     const rep = REPLICA_BY_ID[state.repId];
     state.name = rep ? state.repId + '_' + rep.name.replace(/^V\d+b?r?f?\s*/, '').replace(/[（）·→ ]+/g, '_').replace(/_+$/, '') : (TYPE_EN[state.P.type] || 'Firework') + '_01';
-    buildMasterPanel(); onParam(); return;
+    buildMasterPanel(); onParam(); return true;
   }
-  await applyCombo({ name: snap.name, layers: snap.layers.map(x => ({ src: { type: x.type, P: x.P, M: x.M }, ...structuredClone(x.L), lid: (x.L && x.L.lid) || myLid() })) });
+  return applyCombo({ name: snap.name, layers: snap.layers.map(x => ({ src: { type: x.type, P: x.P, M: x.M }, ...structuredClone(x.L), lid: (x.L && x.L.lid) || myLid() })) }, alive);
 }
 function mySnap() { const s = wbSnap(); if (s.kind === 'combo') s.layers.forEach((x, i) => { x.id = null; const L = state.layers[i]; x.L.title = L.title || layerName(i); x.L.lid = L.lid || (L.lid = myLid()); }); return s; }
 // 保存 = 覆盖这个效果；另存为 = 复制成一个新效果

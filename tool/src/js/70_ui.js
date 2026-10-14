@@ -1228,12 +1228,17 @@ async function libOwn(src) {
   const b = await bake(libP(P, true), 1, p => busy(true, `烘焙你的层：${base} ${n}`, p)); busy(false);
   const e = { name: `${base} ${n}`, type: t, P, M, bake: b, own: true }; state.lib.push(e); return e;
 }
-async function applyCombo(c) {
+// 4.9.101 alive：打开代次（79_library.js libOpenBegin）。烘焙期间换了对象 → 不装层、不发布，这次自己烘的层释放（共用母版缓存留着）；返回 false
+async function applyCombo(c, alive = () => true) {
   await ensureLibEntries(c.layers.filter(l => !l.src).map(l => l.m));
-  const used = new Set(), layers = [];
+  const used = new Set(), layers = [], mine = [];
+  const drop = () => { for (const x of mine) { if (x.own) dropLibBake(x); const k = state.lib.indexOf(x); if (k >= 0) state.lib.splice(k, 1); } return false; };
+  if (!alive()) return false;
   for (const l of c.layers) {
     let e = l.src ? await libOwn(l.src) : libByType(l.m);
-    if (!l.src && used.has(e)) e = libFork(e);
+    if (l.src) mine.push(e);
+    if (!alive()) return drop();
+    if (!l.src && used.has(e)) { e = libFork(e); mine.push(e); }
     used.add(e);
     const { m, src, ...rest } = l; if (rest.stages) rest.stages = rest.stages.map(s => [...s]);
     layers.push(newLayer(e, rest));
@@ -1242,7 +1247,9 @@ async function applyCombo(c) {
   for (const e of used) if (e.bake && e.bake.meta && !e.bake.meta.fitted && e.bake.meta.plan && typeof queueLayerRefine === 'function') queueLayerRefine(e);   // 4.2.5：各层在后台收紧取景
   state.comboName = c.name; state.t = 0; computeLinks(); buildComboPanel();
   if(state.platform==='mobile')await ensureComboMobile();
+  if (!alive()) return false;
   if (typeof buildLayerCard === 'function') buildLayerCard();
+  return true;
 }
 // 4.9.36（用户 10-07 20:37「两层效果都设置了序列时长……模板默认是3.17秒，那它就一直显示3.17秒？不应该我改了7秒，时间轴也会延长到7秒吗」）：
 // 时间轴 = 各层「开始时间 + 序列时长 ÷ 时间倍率」取最长（以前按烘出来的长度：出点、结尾全黑不烘都会把它压短，改序列时长时间轴不动）。

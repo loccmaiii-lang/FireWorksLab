@@ -331,14 +331,16 @@ function mtCombo(id) {
 async function openMultiType(id) {
   const r = MULTI_BY_ID[id]; if (!r) { flash('没有这个多层模板', true); return; }
   beforeOpen(null); setQueuedView(false); wb.entry = undefined;
+  const alive = (typeof libOpenBegin === 'function' ? libOpenBegin() : () => true);     // 4.9.101 打开代次：烘焙中换了对象就停
   lib.effect = null; lib.formal = null; lib.key = 'mt:' + id;
   const pn = store.get('packNames', {})['mt:' + id]; if (!pn) setPackNames('mt:' + id, r.en, r.layers.map(l => l.en));     // UE 资产名默认用模板英文名（「查看交付」里能改）
   setReview(null); state.comboSel = -1; state.layerView = { solo: -1, mute: [] };
-  await setTab('combo', { lazy: true }); syncComboPanels();
-  await applyCombo(mtCombo(id));
+  await setTab('combo', { lazy: true }); if (!alive()) return false; syncComboPanels();
+  if (!(await applyCombo(mtCombo(id), alive)) || !alive()) return false;
   renderLib(); crumb('多层花型', r.name); wbRefresh();
   if (state.layers.length && layerEntryOf(state.layers[0])) selectComboLayer(0);
   flash(`${r.name}：${r.layers.length} 层。${r.note}`);
+  return true;
 }
 // 「＋ 新建效果」选了多层模板：直接存成一个我的效果（每层参数复制一份）
 async function mtCreateMine(id) {

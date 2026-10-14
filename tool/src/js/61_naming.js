@@ -23,17 +23,22 @@ function planSfx(ef, entryId) {
   const id = String(entryId).replace(/^rep:/, '').replace(/@.*$/, ''), v = (ef.方案 || []).find(x => x && x.id && x.id.replace(/^rep:/, '').replace(/@.*$/, '') === id);
   return v ? asciiName(v.en) : '';
 }
+// 4.9.101 分档效果现在打开的是哪一档（条目或正式库档），交付清单保存名字时记下，导出时按它认
+function packTierNow(ef) { if (typeof lib === 'undefined' || !ef || lib.effect !== ef) return ''; return lib.review ? lib.review.id : lib.formal ? lib.formal.id : ''; }
 // entryId：这一包是哪个条目（本机导出任务传条目号）；不传 = 烘焙器里现在打开的那个（左栏点的那一档）
 function packNamesFor(key, ef, nLayers, fallback, type, entryId) {
   const o = (store.get('packNames', {})[key]) || {};
+  const eid = entryId !== undefined ? entryId : (typeof lib !== 'undefined' && lib.review && ef && lib.effect === ef ? lib.review.id : null), ps = planSfx(ef, eid);
   // 用户10-14：手动保存名即最终名。旧记录已有base但未写system，按这一决定兼容；程序默认记录显式写空system。
-  const system = asciiName(o.system === undefined ? o.base : o.system);
+  // 4.9.101 分档效果（ef: 键 + 尾缀小 / 中 / 大或方案几档）几档共用这一条名字：只有在当前这一档保存的（o.entry）才是这一档的最终名，
+  //   其余（含没写 entry 的旧记录）当基础名、照旧加档位后缀 —— 否则 ef:trail_phys 存过的 RiseTrail_M 让小 / 大号也导出成 RiseTrail_M（同名迭代会覆盖中号）
+  const tiered = /^ef:/.test(key || '') && (!!FW_SIZE_SFX[type] || ((ef && ef.方案) || []).length > 1);
+  const system = tiered && !(o.entry && o.entry === (eid || packTierNow(ef))) ? '' : asciiName(o.system === undefined ? o.base : o.system);
   let base = asciiName(o.base) || asciiName(ef && ef.英文名) || asciiName(fallback) || 'Firework';
   const sz = FW_SIZE_SFX[type]; if (sz && !system) base = base.replace(/_[SML]$/, '') + '_' + sz;
-  const eid = entryId !== undefined ? entryId : (typeof lib !== 'undefined' && lib.review && ef && lib.effect === ef ? lib.review.id : null), ps = planSfx(ef, eid);
   if (ps && !system && !base.endsWith('_' + ps)) base += '_' + ps;
   const layers = Array.from({ length: nLayers }, (_, i) => asciiName((o.layers || [])[i]) || asciiName(((ef && ef.层英文名) || [])[i]) || (nLayers > 1 ? 'L' + (i + 1) : ''));
-  return { base, layers, system, custom: !!(o.base || (o.layers || []).some(Boolean)) };
+  return { base, layers, system, tiered, custom: !!(o.base || (o.layers || []).some(Boolean)) };
 }
 // 4.9.4（交互宪章 5「一个效果只留一个英文名，在交付清单里设」）：以前有三个名字——右栏「母版名称」、交付清单「名称（英文）」、左栏中文名。
 // 现在英文名只有一个：交付清单里设（存在 packNames），右栏只显示、点「在交付清单里改」过去。素材包、贴图、UE 资产名都用它；
@@ -45,7 +50,7 @@ function effEnName() {
 function effEnCustom() { try { return asciiName((store.get('packNames', {})[wbKey()] || {}).base); } catch (e) { return ''; } }
 function syncEnName() { const el = typeof document !== 'undefined' && document.getElementById('enName'); if (el) { const n = effEnName(); if (el.textContent !== n) el.textContent = n; } }
 function setPackNames(key, base, layers, names = { system: '' }) {
-  const all = { ...store.get('packNames', {}) }; all[key] = { base, layers: [...layers], system: asciiName(names.system === undefined ? base : names.system) };
+  const all = { ...store.get('packNames', {}) }; all[key] = { base, layers: [...layers], system: asciiName(names.system === undefined ? base : names.system), ...(names.entry ? { entry: String(names.entry) } : {}) };     // 4.9.101 entry：分档效果里是在哪一档保存的
   if (!store.set('packNames', all)) return false;
   if (typeof syncEnName === 'function') syncEnName(); return true;
 }

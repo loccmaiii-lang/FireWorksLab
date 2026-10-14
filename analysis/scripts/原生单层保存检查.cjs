@@ -46,7 +46,8 @@ vm.runInContext(fn('66_fwlcascade.js', 'sizeSpecKeyNow') + '\n' + fn('66_fwlcasc
 for (const name of ['wbSnap', 'wbPut', 'wbSave', 'wbSaveVersion']) if (new RegExp('function ' + name + '\\(').test(fs.readFileSync(root + '79_workbench.js', 'utf8'))) vm.runInContext(fn('79_workbench.js', name), ctx);
 for (const name of ['wbDeriveMine', 'addLayerAnywhere', 'syncAssetOps']) vm.runInContext(fn('79_assetops.js', name), ctx);
 ctx.repoWrite = async (key, rec) => { writes.push({ key, rec: structuredClone(rec) }); if (failRepo) throw Error('仓库写入测试失败'); return 'analysis/我的配方/' + key; };
-ctx.store.set('packNames', { 'ef:trail_phys': { base: 'Tiny', system: 'Tiny', layers: ['Trail'] } });
+// 4.9.101：ef:trail_phys 是分档效果（小 / 中 / 大共用这一条名字），手动名要记下保存时的档（entry）才是这一档的最终名；没记档的旧记录只当基础名（见 打开代次命名回归.cjs）
+ctx.store.set('packNames', { 'ef:trail_phys': { base: 'Tiny', system: 'Tiny', layers: ['Trail'], entry: 'RT6S' } });
 ctx.store.set('sizeSpecPick', { trail_phys: 'cls:h:front:62' });
 const checks = [], failures = [];
 async function check(name, f) { try { await f(); checks.push(name); } catch (e) { failures.push(name + '：' + e.message); } }

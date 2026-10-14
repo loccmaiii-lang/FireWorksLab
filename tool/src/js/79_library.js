@@ -178,7 +178,13 @@ function dropEffectEdits(ef) {
     const le = state.lib.find(x => x.rep === id); if (le && le.editSig) { dropLibBake(le); state.lib.splice(state.lib.indexOf(le), 1); }
   }
 }
+// 4.9.101 打开代次（用户 10-14「来来回回反复出现」的根因）：页面一打开会自动开「新」的待验收候选（组合，要烘好几秒），
+//   烘完前点别的，旧任务晚回还会 setReview(旧条目)、装层、换面包屑 —— wbKey 变成 rv:旧条目，名字 / 尺寸 / 缩略图都记到别人名下。
+//   每次打开 +1；异步打开每个 await 之后核对，过期就停，不再发布身份和画面。
+function libOpenBegin() { const g = lib.openGen = (lib.openGen || 0) + 1; return () => g === lib.openGen; }
+function libOpenAlive() { const g = lib.openGen || 0; return () => g === (lib.openGen || 0); }     // 不开新一代：同一个对象里换版本
 function beforeOpen(nextEf) {
+  if (typeof libOpenBegin === 'function') libOpenBegin();
   if (typeof migNoteHide === 'function') { migNoteHide(); migBegin(); }     // 4.9.5 换效果：上一个的「旧存档」提示关掉，开始记这次打开时的迁移
   autoDraft();
   if (lib.effect && (!nextEf || nextEf.key !== lib.effect.key)) dropEffectEdits(lib.effect);
@@ -387,13 +393,14 @@ function setViewSeg(v) {
 }
 function openReview(e, ef) {
   const nextEf = ef || effectOfEntry(e); if (!ef) beforeOpen(nextEf);   // openEffect 已经做过
+  const alive = (typeof libOpenBegin === 'function' ? libOpenBegin() : () => true);     // 4.9.101 分档 / 版本按钮直接调这里（不经 beforeOpen），也要开新一代
   rememberLayerEdit(); wb.entry = undefined;     // 重新打开 = 回到 AI 版（资产栏）
   lib.effect = ef || effectOfEntry(e); lib.formal = null; lib.my = null; lib.tpl = null;
   lib.key = ef ? 'ef:' + ef.key : 'rv:' + e.id; store.set('lastKey', lib.key);
   const where = (lib.effect ? lib.effect.阶段 + ' · ' + lib.effect.名 : '条目') + (e.superseded ? ' · 历史' : '');
   setQueuedView(e.kind === 'queued');
   if (e.kind === 'queued') { setReview(e); renderLib(); crumb(where, e.name); return; }
-  if (e.kind === 'combo') { setReview(e); renderLib(); crumb(where, e.name + ' · 整体'); return openComboEntry(e); }
+  if (e.kind === 'combo') { setReview(e); renderLib(); crumb(where, e.name + ' · 整体'); return openComboEntry(e, alive); }
   if (e.kind === 'asset') { setTab('asset'); loadAssetEntry(e); }
   else {
     setReplica(e.id); setTab('master');
@@ -406,14 +413,18 @@ function openReview(e, ef) {
   migEnd();     // 4.9.5 不静默
 }
 // 组合条目：整体效果（组合页实时模拟 + 实拍并排）；各层在审阅卡里单独打开
-async function openComboEntry(e) {
+async function openComboEntry(e, alive = (typeof libOpenBegin === 'function' ? libOpenBegin() : () => true)) {
   toggleDeliv(false); syncStageTabs();     // 4.5.0：不换视图
   state.comboSel = -1; state.layerView = { solo: -1, mute: [] };
-  await setTab('combo', { lazy: true }); await applyCombo(e.combo); lib.sig = curSig(); setReview(e); syncComboPanels();   // lazy：只烘这个组合用到的层，不先烘整套默认母版
+  await setTab('combo', { lazy: true }); if (!alive()) return false;
+  if (!(await applyCombo(e.combo, alive)) || !alive()) return false;     // 4.9.101 烘焙期间换了对象：不再 setReview / 记签名（lazy：只烘这个组合用到的层）
+  lib.sig = curSig(); setReview(e); syncComboPanels();
   migEnd();     // 4.9.5 不静默
+  return true;
 }
 function openFormal(r, ef) {
   if (!ef) beforeOpen(effectOfEntry({ id: r.id }));
+  if (typeof libOpenBegin === 'function') libOpenBegin();     // 4.9.101 分档按钮直接打开正式库档也作废还在烘的旧打开
   wb.entry = undefined; lib.effect = ef || effectOfEntry({ id: r.id }); lib.formal = r; lib.my = null; lib.tpl = null;
   setQueuedView(false); lib.key = ef ? 'ef:' + ef.key : 'rep:' + r.id; setReplica(r.id); setTab('master'); lib.sig = curSig(); setReview(null, r); renderLib(); crumb(lib.effect ? lib.effect.阶段 + ' · ' + lib.effect.名 : '正式库', r.name);
   migEnd();     // 4.9.5 不静默
@@ -639,6 +650,7 @@ function initLibrary() {
   initPanels();
   myMigrateComboSaves();
   myMigrateSingleSaves();
+  if (typeof mySyncNames === 'function' && mySyncNames()) setTimeout(() => flash('部分「我的效果」的英文名没能按效果记录对齐（浏览器存储写入失败），打开那个效果时会再试', true, 9000, true), 1600);     // 4.9.101 名字以记录为准
   if (typeof graphMigrateSaves === 'function') graphMigrateSaves();     // 4.9.87 旧粒子图面板的浏览器存档搬进「版本」
   // 打开时：有「新」的待验收候选就先打开它；否则回到上次看的
   const fresh = EFFS().find(effIsNew), lastKey = store.get('lastKey', '');
