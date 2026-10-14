@@ -3,15 +3,15 @@ let graphSelected=0,graphPreset='rocket',graphSolo=null;
 function graphOpen(key,restore=false){
  const entryId=key==='rocket'?'SGR1':'SGS1',entry=(typeof FW_REVIEW_LIST!=='undefined'?FW_REVIEW_LIST:[]).find(x=>x.id===entryId);
  if(entry&&typeof openReview==='function')openReview(entry);
- graphPreset=key;graphSolo=null;const d=defaultsFor('sparkgraph');state.tab='master';state.P=derive({...d.P,type:'sparkgraph',form:'loop',sparkGraph:structuredClone(GRAPH_PRESETS[key]),loopT:64/30,duration:64/30,
- cols:4,rows:4,chans:4,texW:2048,texH:2048,autoGrid:0,shutter:0,exposure:1,outMode:'combined',zoom:'off',cellPad:2,headBright:1,headSize:.001,spacing:0,nozzles:1,sparkSize:.001,graphSolo:null});
- if(entry){const v=replicaPM(entryId);state.P=v.P;state.M=v.M;}else state.M={...d.M,stages:[[0,'#ffffff']],headInt:1,tailInt:1,ramp0:'#120100',ramp1:'#b34104',ramp2:'#ffc064',ramp3:'#fff6dd'};
+ graphPreset=key;graphSolo=null;const d=defaultsFor('sparkgraph');state.tab='master';state.P=derive({...d.P,type:'sparkgraph',form:'loop',sparkGraph:structuredClone(GRAPH_PRESETS[key]),...GRAPH_TYPE_P,graphSolo:null});
+ if(entry){const v=replicaPM(entryId);state.P=v.P;state.M=v.M;}else state.M={...d.M,...structuredClone(GRAPH_TYPE_M)};
  if(restore){const saved=localStorage.getItem('fwl.sparkgraph.'+key);if(saved){try{const v=JSON.parse(saved);SparkGraph.validate(v.P.sparkGraph);state.P=v.P;state.P.type='sparkgraph';state.M=v.M;}catch(err){console.warn('候选存档无效，保留原存档并打开模板：',err.message);}}}
- state.name=key==='rocket'?'RocketTail_Graph':'Sparkler_Graph';state.repId=entry?entryId:null;state.t=0;state.view='live';state.playing=true;state.autoBake=false;clearTimeout(bakeTimer);graphSelected=0;buildGraphPanel();onParam();setAutoBake(false);clearTimeout(bakeTimer);if(typeof syncStageTabs==='function')syncStageTabs();
+ state.name=key==='rocket'?'RocketTail_Graph':'Sparkler_Graph';state.repId=entry?entryId:null;state.t=0;graphSelected=0;buildMasterPanel();onParam();if(typeof syncStageTabs==='function')syncStageTabs();
+ /* 4.9.86：不再关掉并记住「自动烘焙」、不再强切实时模拟、不再取消打开时的烘焙（那样「改过」、撤销、草稿都等不到烘焙稳定，一直不工作） */
 }
-function graphEdit(mut){const before=structuredClone({P:state.P,M:state.M});try{mut();SparkGraph.validate(state.P.sparkGraph);CameraImaging.validate(state.P);state.P.loopT=state.P.duration=state.P.sparkGraph.period;onParam();clearTimeout(bakeTimer);document.getElementById('graphStatus').textContent='参数已改；请保存，烘焙后检查引擎回放';return true;}catch(e){state.P=before.P;state.M=before.M;buildGraphPanel();document.getElementById('graphStatus').textContent=e.message;return false;} }
+function graphEdit(mut){const before=structuredClone({P:state.P,M:state.M});try{mut();SparkGraph.validate(state.P.sparkGraph);CameraImaging.validate(state.P);state.P.loopT=state.P.duration=state.P.sparkGraph.period;onParam();document.getElementById('graphStatus').textContent='参数已改；烘焙后检查引擎回放';return true;}catch(e){state.P=before.P;state.M=before.M;buildGraphPanel();document.getElementById('graphStatus').textContent=e.message;return false;} }
 function buildGraphPanel(){
- panelRows=[];const host=document.getElementById('params');host.replaceChildren();if(!state.P.sparkGraph)return;
+ panelSharedHome();panelRows=[];const host=document.getElementById('params');host.replaceChildren();if(!state.P.sparkGraph)return;
  const r=state.P.sparkGraph;graphSelected=Math.min(graphSelected,r.emitters.length-1);const e=r.emitters[graphSelected],wrap=document.createElement('div');wrap.style.cssText='padding:12px;display:grid;gap:9px';host.append(wrap);
  const title=document.createElement('b');title.textContent=r.name;wrap.append(title);
  const status=document.createElement('p');status.id='graphStatus';status.textContent='制作候选 · '+r.emitters.length+'层 · 未经UE验证';status.style.cssText='color:#afc5be;font-size:12px';wrap.append(status);

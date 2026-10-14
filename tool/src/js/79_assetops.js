@@ -166,6 +166,8 @@ const MAT_KEYS = ['stages', 'xw', 'ramp0', 'ramp1', 'ramp2', 'ramp3', 'headInt',
 function resetToDefaults() {
   if (state.tab === 'combo' && state.comboSel < 0) { flash('先选一层（「整体」没有模板默认）', true); return; }
   const P = state.P, d = defaultsFor(P.type), keep = { type: P.type, form: P.form };
+  // 4.9.86：分层火星的模板默认按它自己的预设（仙女棒回仙女棒）；以前一律换成窜天猴的粒子图
+  if (P.sparkGraph && typeof GRAPH_PRESETS !== 'undefined') { const g = GRAPH_PRESETS[P.sparkGraph.presetKey] || GRAPH_PRESETS.rocket; keep.sparkGraph = structuredClone(g); keep.loopT = keep.duration = g.period; }
   putObj(P, derive({ ...structuredClone(d.P), ...keep }));
   for (const k of MAT_KEYS) if (d.M[k] !== undefined) state.M[k] = structuredClone(d.M[k]);
   buildMasterPanel(); onParam(); if (state.tab === 'combo') buildLayerHead(state.comboSel);

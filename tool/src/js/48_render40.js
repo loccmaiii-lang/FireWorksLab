@@ -1,7 +1,7 @@
 // 4.0 采样与曝光：烘焙、实时、定帧共用这里的时间窗口和积分。
 // t 是绝对模拟秒数；plan.times/dur 是相对段起点的时间。
 function shutterWindow(P, pl, t) {
-  if(P.cameraMotion)return CameraImaging.window(P,t);
+  if(P.cameraMotion&&cameraApplies(P))return CameraImaging.window(P,t);     // 4.9.86：尾缀不认镜头快门（cameraApplies）
   const rel = t - (pl.t0 || 0), u = clamp(rel / pl.duration, 0, 1);
   const f = clamp(Math.floor(evalKeys(pl.keys, u)), 0, pl.L.F - 1);
   const width = Math.max(0, +P.shutter || 0) * Math.max(pl.dur[f] || 0, 1 / 30);

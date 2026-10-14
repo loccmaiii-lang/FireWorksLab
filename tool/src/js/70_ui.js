@@ -715,12 +715,17 @@ function panelHelp(row) {
   const base = B && B[k] != null ? ` · 打开时 ${Array.isArray(it) ? fmtV(B[k], it[5]) : B[k]}` : '';
   h.innerHTML = `<b>${row._lab}</b>${unit}<span class="ph-meta">${rng}${base}</span>${row._inert ? `<span class="ph-inert">现在不起作用：${row._inert}</span>` : ''}${legacyHelp(row, k)}${row._detail ? `<span class="ph-d">${row._detail}</span>` : ''}`;
 }
-function buildMasterPanel() {
-  if(state.P.sparkGraph)return buildGraphPanel();
-  pviewInit();
-  const P = state.P, D = {...CameraImaging.defaults,...defaultsFor(P.type).P};
+// 4.9.86（导出（23）审查 4.9.83，用户 10-14 10:29）：右栏里借住的共用块（规格框、花型 / 英文名、层页头的几块）清空 #params 前先搬回原处。
+//   4.9.83 分层火星的面板绕过了这一步，打开窜天猴 / 仙女棒后这些块跟着被删，再打开任何效果都在 $('#type') 报错
+function panelSharedHome() {
   for (const id of ['specBox', 'specMore']) { const box = $('#' + id); if (box && $('#params').contains(box)) $('#specHome').appendChild(box); }   // 规格框先放回原处，别跟着旧的面板一起被清掉
   pmIdentHome(); layerBitsHome();     // 4.9.8：花型 / 产物（效果标签里）、这一层的导出方案 / 位置与时间（输出 / 效果标签里）也先放回原处
+}
+function buildMasterPanel() {
+  panelSharedHome();
+  if (state.P.sparkGraph) { buildGraphPanel(); panelColorsAndIdent(state.P); return; }     // 4.9.86：颜色、花型名、导出规格也跟着这个效果（以前留着上一个效果的颜色编辑器，改了写进上一个效果）
+  pviewInit();
+  const P = state.P, D = {...CameraImaging.defaults,...defaultsFor(P.type).P};
   const host = $('#params'); host.innerHTML = ''; panelRows = [];
   // 4.9.14（对话框23，照 01_顺手调参_深化）：顶上固定一块 = 「金锦 › 火花」+ 独看 / 静音（多层）+ 一行发射器标签；
   // 下面一行搜索框 + 仅改动 + 英文名（总看得见，跟着内容滚；4.9.8 收在「搜索」按钮里，要多点一下）
@@ -819,6 +824,10 @@ function buildMasterPanel() {
     keyBind('help', helpKey); }     // 4.9.8：F1
   helpHide(true); panelHelp(null);
   refreshVisibility(); p43DefaultOpen(); modSummarySync(); footSync();
+  panelColorsAndIdent(P);
+}
+// 本层颜色、材质滑杆、花型按钮、导出规格：跟着当前效果重画（标准面板和分层火星面板共用）
+function panelColorsAndIdent(P) {
   const MD = defaultsFor(P.type).M;
   const redrawColors = () => { stageEditor($('#stages'), state.M, Math.max(1, Math.ceil(state.P.duration)), null); };
   redrawColors();
@@ -845,7 +854,7 @@ function refreshVisibility() {
     { const k = Array.isArray(it) ? it[0] : it.sel || it.text || it.curve; row._baseTxt = k && B && B[k] != null ? (Array.isArray(it) ? fmtV(it[7] ? it[7].get(B, B[k]) : B[k], it[5]) : String(B[k]) || '空') : null;
       if (Array.isArray(it) && it[7] && it[7].note) { let n = row.querySelector(':scope > .vwnote'); if (!n) { n = document.createElement('div'); n.className = 'vwnote'; row.appendChild(n); } n.textContent = it[7].note(P); } }
     // 4.3：不起作用的参数变灰、写原因（不藏：藏了反而找不到）；随机行收在本体参数的「随机」下面
-    const key = Array.isArray(it) ? it[0] : it.sel || '', iw = vis && key ? inertWhy(key, P) : '';
+    const key = Array.isArray(it) ? it[0] : it.sel || it.curve || '', iw = vis && key ? inertWhy(key, P) : '';     // 4.9.86：曲线行也认（以前 INERT 里写了曲线也不变灰）
     row._inert = iw; row.classList.toggle('inert', !!iw); if (iw) row.title = '现在不起作用：' + iw; else row.removeAttribute('title');
     const folded = row._randOf && !pview.ropen[row._randOf] && !q && !(pview.changed && chg);
     row._applies = vis; const lf = legacyFolded(row, det, P, q, chg);     // 4.9.0：没用上的旧（待删）参数收进模块底下的开关

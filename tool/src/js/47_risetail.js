@@ -341,6 +341,8 @@ function makeRiseTailFarRenderer(P, LI, ball, cx, vz = 0, t0 = 0) {
 //   星头在世界里一帧帧往上走：每个快门子帧在自己的时间窗里取几个点（光量平分），拖成一段连续的亮线，不是一串点
 const rtPcFull = P => !!P && P.outPC === 'full' && rtIsFar(P);
 const rtMobFull = P => !!P && P.outMobile === 'full' && rtIsFar(P);
+// 4.9.86：两个平台都「近段 + 远段合成一张」（或手机不出）——导出只有一张全程序列。燃尽后几项（rtFullTailFeatures）只有这时能烘（bakeEmitSet 会拦）；GPU 粒子、引擎里加的效果这时只剩实时模拟里画
+const rtFullOnly = P => rtPcFull(P) && (rtMobFull(P) || P.outMobile === 'off');
 function makeRiseTailFullRenderer(P, LI, ball, cx, vz = 0, t0 = 0) {
   const T = ball.T, hs = Math.max(0.05, +P.rtHeadSize || 0.5);
   const R = { slots: 0, subW: 0, draw(ts, view, ppm, w) {
@@ -1041,7 +1043,7 @@ function fwlEmitSetFull(name, b, M, mobile = b.esMobile) {
   return { textures, materials, emitters, system: { preview_distance_cm: Math.round(Math.max(30000, bl.H * 100 * 2)), preview_warmup_s: 0 },
     notes: [`${mobile ? '手机 _M' : 'PC'}「近段 + 远段合成一张」（4.9.73，用户 10-12 21:34 / 23:49）：1 个发射器 TrailFull = 星头 + 全部火花（不分近段 / 远段）烘成一张世界坐标全程序列，`
       + `${L.cols}×${L.rows} 格 × ${L.chans} 通道 = ${L.F} 帧（上升 ${fa.Fr} 帧、开花后 ${fa.Fd} 帧，帧号曲线不匀速），面片 ${r1(fa.Ww)} × ${r1(fa.Wh)} m 立在发射点上（中心在上方 ${r1(fa.cz)} m），0 s 出现、播 ${r2(fa.Dtot)} s；`
-      + `规范 v1 §6：1 层大面片、1 个发射器、没有 GPU。PC 放在 GPU 的那份火花烘进了贴图；落火 / 末段爆亮只在 GPU 里，手机没有。`
+      + `规范 v1 §6：1 层大面片、1 个发射器、没有 GPU。分档火花全部烘进这张贴图${+P.rtETex === 1 && P.rtERate > 0 ? '，落火也烘进了贴图' : '；落火只在实时模拟的 GPU 粒子里，这里没有'}；星头光晕、末段爆亮、发射口闪光、烟带不进这张图（这里没有）。`
       + `星头在贴图里一帧帧往上走（快门拖影），上升快的段每个 tick 一帧；800 m 外每帧最多挪 ${fa.pxMax} 像素。${kN !== 1 ? '一个曝光（远段的）：PC 近段单独压的白热段曝光 × ' + r2(kN) + ' 这里没有，星头和白热段比 PC 白一点。' : ''}`
       + `Initial Velocity 向上 ${r1((fa.vz || 0) * 100)} cm/s 和 PC 远段一样（面片往上平移、贴图内容已补回，不能删）。未经 UE 验证。`
       + (fa.t0 > 0 || P.cutOut > 0 ? ` 入点 ${r2(fa.t0)} s（之前不显示，发射器延迟到入点）、出点 ${P.cutOut > 0 ? r2(fa.t0 + fa.Dtot) + ' s' : '最后一颗火花看不见'}（4.9.79）。` : '')

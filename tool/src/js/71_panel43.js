@@ -28,6 +28,11 @@ const isCarrierType = P => P.type === 'senrin' || P.type === 'crossette';
 const SPARK_KEYS = ['sparkRateEnd', 'sparkStop', 'sparkStart', 'sparkRamp', 'sparkRampJit', 'sparkLife', 'sparkLifeEnd', 'sparkLifeJit', 'sparkSpread', 'sparkSize', 'sparkInherit', 'sparkDrag', 'sparkGrav',
   'T0', 'cooling', 'sparkBright', 'twinkle', 'twinkleHz', 'emberFrac', 'tailJit', 'tailShoulder', 'tailWidth', 'tailPinchHead', 'tailPinchTail', 'tailBellyAt', 'sparkRise', 'starBright', 'tailHaze', 'tailHazeR', 'branch', 'branchAt', 'tailDiffuse', 'tailDiffuseScale', 'sparkStretch', 'sparkStretchJit'];
 // 不起作用的条件（空中类）：[键, 条件, 原因]。依据：analysis/probe/参数有效性/（云端：拨了曲线 / 帧计划都不变）+ analysis/results/SMOKE15/参数有效性/（本机：再加 4 个时刻的定帧画面也不变）+ 代码（20_sim.js、40_gl.js）
+// 4.9.86：尾缀「合成一张」时只在实时模拟里画的行（GPU 粒子、引擎里加的效果、烟带、粒子层亮度）
+const RT_LIVE_KEYS = ['rtGpuC', 'rtGpuM', 'rtGpuF', 'rtGpuTw', 'rtGpuDisp', 'rtGpuGain', 'rtGpuMax', 'rtDotGain',
+  'rtGlow', 'rtGlowSize', 'rtGlowSizeCurve', 'rtGlowBrightCurve', 'rtPopRate', 'rtPopI', 'rtPopSize', 'rtPopAt', 'rtPopSizeCurve', 'rtPopBrightCurve',
+  'rtLaunch', 'rtLaunchSize', 'rtLaunchN', 'rtLaunchV', 'rtLaunchCone', 'rtLaunchI', 'rtLaunchSizeCurve', 'rtLaunchBrightCurve', 'rtLaunchSparkSizeCurve', 'rtLaunchSparkBrightCurve',
+  'rtSmoke', 'rtSmokeRate', 'rtSmokeLife', 'rtSmokeSize', 'rtSmokeGrow', 'rtSmokeSizeCurve', 'rtSmokeBrightCurve'];
 const INERT = [
   [['coreProfile'], P => isTrail(P), 'V5尾缀沿用已通过的高斯核；本选项不改变它和开花闪光'],
   [['exposureTarget'], P => isTrail(P) || isPhys(P) || isEmit(P), '这类产物目前不使用「建议曝光」；可直接调贴图曝光'],
@@ -54,6 +59,17 @@ const INERT = [
   [['exportScale', 'exportScaleRise'], P => typeof state !== 'undefined' && state.tab === 'combo', '多层效果：大小按层页头「这一层在整朵里 › 缩放」和交付清单顶上的「导出尺寸」；这一行只管单层导出'],
   [['exportScale', 'exportScaleRise'], P => { if (typeof sizeSpecOf !== 'function') return false; const sp = sizeSpecOf(); return !!(sp && !sp.off); }, '这个效果按「导出尺寸」那一档导出（交付清单顶上选、写了倍数；选「原大」或「这次不按标定」这里才管用）'],
   [['starSizeCurve', 'starBrightCurve'], P => familyOf(P.type) === 'ground' && !(typeof hasComets === 'function' && hasComets(P)), '地面的喷口 / 灯芯亮点一直亮着，没有寿命；只有扇形、连发的彗星按「彗星燃烧」算寿命'],
+  // 4.9.86（导出（23）审查 4.9.82–4.9.85，用户 10-14 10:29「有些效果加了我好像调了也没什么用」）：依据是代码（47_risetail.js bakeRiseTailFull 把 GPU 颗数清零、
+  //   fwlEmitSetFull 只写 1 个发射器、rtLayoutFar 合成时不按交接年龄、近段 + 远段时不烘消散序列）+ 审查时的拨参对照（同一帧贴图不变）
+  [RT_LIVE_KEYS, P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P), '两个平台都「近段 + 远段合成一张」：导出只有一张全程序列，不含这一项（GPU 粒子 / 引擎里加的效果）；只有单层「实时模拟」还画它，「引擎回放」和多层效果里都没有'],
+  [['rtERate', 'rtELife', 'rtESize', 'rtEI', 'rtEKd', 'rtESizeCurve', 'rtEBrightCurve'], P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P) && +P.rtETex !== 1, '合成一张时落火是 GPU 粒子，不进贴图：只有单层「实时模拟」还画它，「引擎回放」和多层效果里都没有；要进贴图先把「落火进入合并贴图」打开'],
+  [['rtNearA0', 'rtNearA1', 'rtNearExpo', 'rtMobile'], P => isEmit(P) && typeof rtFullOnly === 'function' && rtFullOnly(P), '两个平台都「近段 + 远段合成一张」时不起作用（没有近段 / 远段交接，也没有手机粒子）'],
+  [['rtFadeFps', 'rtDissolve'], P => isEmit(P) && +P.rtFar === 1, '「近段 + 远段」没有消散序列（开花后的火花都在远段里），这一项不起作用'],
+  [['rtTailAfterBurn'], P => isEmit(P) && !['F', 'M', 'C', 'E'].some(k => parseCurve(P['rt' + k + 'SizeCurve']) || parseCurve(P['rt' + k + 'BrightCurve'])) && !(+P.rtETex === 1 && P.rtERate > 0),
+    '火星的「大小 / 亮度随寿命」曲线都没填、落火也没进贴图时不起作用：燃尽后渐入的是这些曲线，先填曲线'],
+  [['sparkTailAfterBurn'], P => !['sparkSizeCurve', 'sparkBrightCurve', 'emberSizeCurve', 'emberBrightCurve'].some(k => parseCurve(P[k])) && !(+P.waterRefl > 0),
+    '火花 / 余烬的「大小 / 亮度随寿命」曲线都没填时不起作用：燃尽后按剩余寿命走的是这些曲线，先填曲线'],
+  [['shutter'], P => !!P.cameraMotion && typeof cameraApplies === 'function' && cameraApplies(P), '「镜头成像 › 快门运动模糊」开着：运动模糊按那里的曝光时间算，这一项不起作用'],
 ];
 // 4.9.0（5.0 第 3 步，参数宪章 + 参数表「删」「改成常量」，用户 19:40「全按推荐」）：代码先不删——你的配方、待验收效果里用着的照旧算，画面不变。面板上：
 // - 这个效果用着（值不等于「不用」时的值）→ 照常显示，名字后面一个「旧」标记，说明条写为什么要删、用什么代替；

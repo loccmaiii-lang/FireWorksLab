@@ -2764,4 +2764,7 @@ const GRAPH_PRESETS={
     "presetKey": "rocket"
   }
 };
-TYPES.sparkgraph={p:{...TYPES.fountain.p,sparkGraph:GRAPH_PRESETS.rocket},m:{...TYPES.fountain.m}};
+// 4.9.86：模板默认 = 窜天猴 / 仙女棒候选打开时的那套输出设置（以前只在 graphOpen 里补，「回到模板默认」会变回喷泉的格子和曝光）
+const GRAPH_TYPE_P={loopT:64/30,duration:64/30,cols:4,rows:4,chans:4,texW:2048,texH:2048,autoGrid:0,shutter:0,exposure:1,outMode:'combined',zoom:'off',cellPad:2,headBright:1,headSize:.001,spacing:0,nozzles:1,sparkSize:.001};
+const GRAPH_TYPE_M={stages:[[0,'#ffffff']],headInt:1,tailInt:1,ramp0:'#120100',ramp1:'#b34104',ramp2:'#ffc064',ramp3:'#fff6dd'};
+TYPES.sparkgraph={p:{...TYPES.fountain.p,sparkGraph:GRAPH_PRESETS.rocket,...GRAPH_TYPE_P},m:{...TYPES.fountain.m,...GRAPH_TYPE_M}};

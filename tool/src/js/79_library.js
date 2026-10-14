@@ -181,6 +181,7 @@ function beforeOpen(nextEf) {
   if (lib.effect && (!nextEf || nextEf.key !== lib.effect.key)) dropEffectEdits(lib.effect);
   lib.my = null;            // 离开「我的效果」（openMyEffect 打开后会再设）
   lib.tpl = null;           // 4.5.0 离开「我的模板」（openTemplate 打开后会再设）
+  if (typeof graphSolo !== 'undefined') { graphSolo = null; graphSelected = 0; }     // 4.9.86：分层火星的「只看这一层」、选中的层不带到下一个效果
 }
 function openEffect(ef) {
   beforeOpen(ef); dropEffectEdits(ef);
