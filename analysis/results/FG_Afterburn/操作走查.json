@@ -1,0 +1,60 @@
+{
+  "pass": true,
+  "results": [
+    {
+      "id": "FC6O",
+      "views": [
+        "live",
+        "export",
+        "atlas"
+      ],
+      "errorsBefore": 0,
+      "controls": [
+        {
+          "key": "sparkLateWind",
+          "exists": true,
+          "value": 0.6
+        },
+        {
+          "key": "sparkLateScale",
+          "exists": true,
+          "value": 1.5
+        },
+        {
+          "key": "sparkLateFade",
+          "exists": true,
+          "value": 0.4
+        },
+        {
+          "key": "sparkTailAfterBurn",
+          "exists": true,
+          "value": 1
+        }
+      ],
+      "mobileRenderer": true,
+      "playback": {
+        "start": 0.8,
+        "end": 2.5000999999999967,
+        "advanced": true
+      },
+      "edit": {
+        "old": 0.6,
+        "now": 0.8
+      },
+      "reload": [
+        {
+          "zoom": "anchor",
+          "rate": 0.8,
+          "burn": 1.2,
+          "stage": 1,
+          "scale": 1.5,
+          "fade": 0.4,
+          "emberCurve": "0:1, 0.6:1, 1:0.7"
+        }
+      ],
+      "export": "FanComet_Gold.zip",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

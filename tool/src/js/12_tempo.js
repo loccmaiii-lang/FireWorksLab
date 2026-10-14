@@ -10,10 +10,10 @@
 //  · 整个效果一个值：多层时所有空中层一起换算，层的开始时间从最早那一层算起 ÷k（升空等别的层不动）。
 //  · 多层「位置与时间」里的「时间倍率」（L.rate）是另一回事：只是播放快慢（不重烘、帧不重排、开始时间不跟着），这里不动它。
 // =====================================================================
-const TEMPO_T = ['duration', 'burn', 'flashTau', 'flashLife', 'ignDelay', 'afterBurn', 'headDimUntil', 'sparkLife', 'sparkStop', 'sparkStart', 'sparkRamp', 'sparkRise',
+const TEMPO_T = ['sparkLateFade', 'duration', 'burn', 'flashTau', 'flashLife', 'ignDelay', 'afterBurn', 'headDimUntil', 'sparkLife', 'sparkStop', 'sparkStart', 'sparkRamp', 'sparkRise',
   'emberLife', 'emberFollow', 'emberEnd', 'subDelay', 'subBurn', 'glitterDelay', 'glitterW', 'crackleDelay', 'crackleLife', 'crackleTau', 'branchLife',
   'x1T', 'x1Delay', 'x1Life', 'x2T', 'x2Delay', 'x2Life', 'cutIn', 'cutOut', 'visTo', 'preFrom', 'burstSec', 'fadeAt'];     // 秒：> 0 才换算（0 / −1 = 自动 / 关）
-const TEMPO_V = ['v0', 'wind', 'turb', 'tailDiffuse', 'shellVx', 'shellVy', 'sparkSpread', 'subSpeed', 'crackleV', 'branchV', 'flutter', 'x1V', 'x2V', 'beeSpeed'];     // 米 / 秒
+const TEMPO_V = ['sparkLateWind', 'v0', 'wind', 'turb', 'tailDiffuse', 'shellVx', 'shellVy', 'sparkSpread', 'subSpeed', 'crackleV', 'branchV', 'flutter', 'x1V', 'x2V', 'beeSpeed'];     // 米 / 秒
 const TEMPO_F = ['strobeHz', 'twinkleHz', 'flutterHz', 'x1FlickHz', 'x2FlickHz', 'sparkRate', 'subTail', 'carrierTail', 'x1Rate', 'x2Rate',
   'sparkDrag', 'x1Drag', 'x2Drag', 'spin', 'shellSpin'];     // 每秒：赫兹、个 / 秒、1 / 秒（线性阻力）、转速
 const TEMPO_G = ['grav', 'sparkGrav', 'subGrav', 'x1Grav', 'x2Grav'];     // × 重力 → ×k²

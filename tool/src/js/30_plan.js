@@ -75,10 +75,15 @@ function measureRun(P) {
     // 火花发射器补全（对话框FanGold）：起始半径（+ 跟星头：按星头大小随机 +2σ 估）、向后喷走得最远的距离也算进取景；缺省都是 0、不进来
     if (familyOf(P.type) === 'aerial' && (+P.sparkSpawnR > 0 || +P.sparkSpawnHead > 0 || +P.sparkJet > 0))
       spread += Math.max(0, +P.sparkSpawnR || 0) + Math.max(0, +P.sparkSpawnHead || 0) * (+P.headSize || 0) / 2 * Math.exp(1.2 * Math.max(0, +P.headSizeJit || 0)) + Math.max(0, +P.sparkJet || 0) * (1 - Math.exp(-k * L)) / k;
+    // 只在燃尽以后给相应时刻加气流余量；不能为了末段风把未燃尽的前段取景一起撑大。
+    const lateSpeed = familyOf(P.type) === 'aerial' ? Math.max(0, +P.sparkLateWind || 0) : 0;
+    const firstBurn = lateSpeed > 0 ? s.all.reduce((m, st) => Math.min(m, st.birth + (st.vis != null ? st.vis : st.burn)), Infinity) : Infinity;
+    const lateAt = t => lateSpeed * Math.min(Le, Math.max(0, t - firstBurn));
+    const lateMax = lateAt(P.duration);
     const drop = g / k * drift, air = (Math.abs(P.wind) + P.turb) * drift;
-    x0 -= spread + air; x1 += spread + air; y1 += spread + P.turb * drift; y0 -= drop + spread + P.turb * drift;
-    for (const q of prof) q[2] += spread + drop + air;
-    for (const q of box) { q[1] -= spread + air; q[2] += spread + air; q[3] -= drop + spread + P.turb * drift; q[4] += spread + P.turb * drift; }
+    x0 -= spread + air + lateMax; x1 += spread + air + lateMax; y1 += spread + P.turb * drift + lateMax; y0 -= drop + spread + P.turb * drift + lateMax;
+    for (const q of prof) q[2] += spread + drop + air + lateAt(q[0]);
+    for (const q of box) { const late = lateAt(q[0]); q[1] -= spread + air + late; q[2] += spread + air + late; q[3] -= drop + spread + P.turb * drift + late; q[4] += spread + P.turb * drift + late; }
   }
   if (P.waterRefl > 0) { y0 = Math.min(y0, -y1 * 1.05 - 2); for (const q of prof) q[2] *= 1.05; for (const q of box) q[3] = Math.min(q[3], -q[4] * 1.05 - 2); }
   return { x0, x1, y0, y1, prof, box, stat, events: s.events, strobeOn: strobing && isFinite(strobeOn) ? +strobeOn.toFixed(4) : null };

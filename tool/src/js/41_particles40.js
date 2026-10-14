@@ -127,7 +127,7 @@ function spkStretchVS40(vs) {
   let v = vs.replace('void emitPt(vec2 q,float I,float size){emitCore40(q,I,size);}', 'void emitPt(vec2 q,float I,float size){emitCore40(q,I,size);}' + SPKS40_FN)
     .replace('uniform sampler2D uPos, uVel, uInfo;', 'uniform sampler2D uPos, uVel, uInfo; uniform float uSpkStr, uSpkStrJ;');
   const at = v.lastIndexOf(tail); if (at < 0) throw new Error('火花拉长：找不到火花着色器的输出行');
-  const add = `  if(c==0 && uSpkStr>0.){ vec3 vv=spkVel(vel,U,g,age); vec2 w2=vv.xy; if(uUseXf>.5) w2=vec2(w2.x*uXf.z-w2.y*uXf.w,w2.x*uXf.w+w2.y*uXf.z);
+  const add = `  if(c==0 && uSpkStr>0.){ vec3 vv=${vs.includes('bool lateOn=') ? 'lateOn ? lateV : spkVel(vel,U,g,age)' : 'spkVel(vel,U,g,age)'}; vec2 w2=vv.xy; if(uUseXf>.5) w2=vec2(w2.x*uXf.z-w2.y*uXf.w,w2.x*uXf.w+w2.y*uXf.z);
     float sp=length(w2), L=uSpkStr*sp/30.*(uSpkStrJ>0.?exp(.6*uSpkStrJ*gss(uid,93u)-.18*uSpkStrJ*uSpkStrJ):1.);
     if(L>1e-4 && sp>1e-4){ emitCore40Rot(q,I,size,w2/sp,L); return; } }
 `;
@@ -257,4 +257,16 @@ function drawParticleBatch(n, modern) {
   PARTICLES_DRAWN += n;
   if (modern) gl.drawArraysInstanced(gl.TRIANGLE_STRIP,0,4,n);
   else gl.drawArrays(gl.POINTS,0,n);
+}
+
+// 普通火花末段功能变体；继续复用同一亮核/多边形/光晕/拉长组合，不新增渲染模型。
+const lateSparkPrograms40 = {};
+function lateSparkProgram40(stretch, poly) {
+  const g = particleQuality.coreProfile ? 1 : 0, hs = particleQuality.haloFrac > 0 ? particleQuality.haloShape : 0;
+  const key = [stretch, poly, g, hs].join('_'); if (lateSparkPrograms40[key]) return lateSparkPrograms40[key];
+  let vs = point40GpuSource(VS_SPK_LATE).replace('uint uid=uint(pid);', 'uint uid=uint(s)*65536u+uint(j);'), fs = POINT40_FS;
+  if (poly) vs = polyVS40(vs); if (stretch) vs = spkStretchVS40(vs);
+  if (g) { vs = gradientSource40(vs); fs = gradientSource40(fs); }
+  if (hs === 1) { vs = moffatVS40(vs); fs = moffatFS40(fs); } else if (hs === 2) { vs = multiVS40(vs); fs = multiFS40(fs); }
+  return lateSparkPrograms40[key] = compile(vs, poly ? polyFS40(fs) : fs);
 }

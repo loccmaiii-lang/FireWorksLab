@@ -1,0 +1,44 @@
+{
+ "ok": true,
+ "problems": [],
+ "info": [],
+ "configs": [
+  "cascade.json",
+  "cascade_mobile.json"
+ ],
+ "textures": {
+  "T_EFX_FireWorks_FanComet_Gold_4x4_01_HD": {
+   "sha256": "dbceaab9058da5f73d1c09afe7e631c05a1ab4d2e623b44de4294e09f7d85098",
+   "size": [
+    2048,
+    2048
+   ],
+   "class": "flipbook"
+  },
+  "T_EFX_FireWorks_FanComet_Gold_4x4_01_C": {
+   "sha256": "ebbb0c56491a77329ae6413d972d50852226f87da9450d60ddccd1df43d02e03",
+   "size": [
+    512,
+    512
+   ],
+   "class": "cutout"
+  },
+  "T_EFX_FireWorks_FanComet_Gold_R": {
+   "sha256": "15d97cdd0bd8e19862cf50646b78b1e2352c7d4e51dd7088d5802a1d6d596d83",
+   "size": [
+    256,
+    8
+   ],
+   "class": "ramp"
+  },
+  "T_EFX_FireWorks_FanComet_Gold_4x4_01": {
+   "sha256": "fbe8a6167c3d283cb6a25b54fa541e7a40bc333268b0a15d3d3142ffd1b4b420",
+   "size": [
+    1024,
+    1024
+   ],
+   "class": "flipbook"
+  }
+ },
+ "source": "rep:FC6O"
+}

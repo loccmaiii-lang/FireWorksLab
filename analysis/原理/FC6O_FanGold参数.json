@@ -1,5 +1,5 @@
 {
-  "说明": "用户 FanGold-1.0 · 我的原样参数基线；末段扰动是隔离试验，尚未加入生产烘焙器。来源及原件 SHA256 见 analysis/results/FC6O_FanGold10/测试基线.json。",
+  "说明": "用户FanGold1.0模板，整面锚点Zoom；4.9.85仅各自主星燃尽后渐入普通火花/余烬独立曲线和弱气流。原模板未覆盖；报告analysis/results/FG_Afterburn。",
   "p": {
     "renderVer": 40,
     "exposure": 1,
@@ -480,15 +480,15 @@
     "starSizeCurve": "",
     "starBrightCurve": "",
     "sparkSizeCurve": "",
-    "sparkBrightCurve": "",
-    "emberBrightCurve": "",
+    "sparkBrightCurve": "0:1, 0.6:0.9, 1:0.75",
+    "emberBrightCurve": "0:1, 0.6:1, 1:0.7",
     "branchBrightCurve": "",
     "crackleSizeCurve": "",
     "crackleBrightCurve": "",
     "flashBrightCurve": "",
     "subSizeCurve": "",
     "subBrightCurve": "",
-    "emberSizeCurve": "",
+    "emberSizeCurve": "0:1, 1:0.85",
     "branchSizeCurve": "",
     "flashSizeCurve": "",
     "rtFSizeCurve": "",
@@ -518,7 +518,11 @@
     "tempo": 1,
     "type": "kamuro",
     "sparkSizeJit": 75,
-    "fitFrame": 0
+    "fitFrame": 0,
+    "sparkLateWind": 0.6,
+    "sparkLateScale": 1.5,
+    "sparkLateFade": 0.4,
+    "sparkTailAfterBurn": 1
   },
   "m": {
     "stages": [

@@ -1,0 +1,34 @@
+{
+  "changes": {
+    "sparkBrightCurve": {
+      "before": "",
+      "after": "0:1, 0.6:0.9, 1:0.75"
+    },
+    "emberBrightCurve": {
+      "before": "",
+      "after": "0:1, 0.6:1, 1:0.7"
+    },
+    "emberSizeCurve": {
+      "before": "",
+      "after": "0:1, 1:0.85"
+    },
+    "sparkLateWind": {
+      "before": null,
+      "after": 0.6
+    },
+    "sparkLateScale": {
+      "before": null,
+      "after": 1.5
+    },
+    "sparkLateFade": {
+      "before": null,
+      "after": 0.4
+    },
+    "sparkTailAfterBurn": {
+      "before": null,
+      "after": 1
+    }
+  },
+  "color_same": true,
+  "baseline": "FG_Sync_4984/anchor-parameters.json"
+}

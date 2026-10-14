@@ -1,0 +1,11 @@
+{
+  "pass": true,
+  "reference": "FG_Sync_4984/anchor.zip（4.9.84）",
+  "pngs": {
+    "T_EFX_FireWorks_FanComet_Gold_4x4_01_HD.png": true,
+    "_检查/T_EFX_FireWorks_FanComet_Gold_4x4_01_FrameTest.png": true,
+    "T_EFX_FireWorks_FanComet_Gold_4x4_01_C.png": true,
+    "T_EFX_FireWorks_FanComet_Gold_R.png": true,
+    "T_EFX_FireWorks_FanComet_Gold_4x4_01.png": true
+  }
+}

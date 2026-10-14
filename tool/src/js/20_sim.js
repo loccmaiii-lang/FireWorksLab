@@ -300,7 +300,7 @@ class Sim {
     this.flashes = [];
     this.events = [];                    // 声音节点：[时刻, 类型]
     // 4.8.0（5.0 第 3 步一部分）：各发射器的大小 / 亮度按寿命曲线（空 = 不乘，画面不变）
-    this.cv = { ss: parseCurve(P.starSizeCurve), sb: parseCurve(P.starBrightCurve), us: parseCurve(P.subSizeCurve), ub: parseCurve(P.subBrightCurve), cs: parseCurve(P.crackleSizeCurve), cb: parseCurve(P.crackleBrightCurve), fb: parseCurve(P.flashBrightCurve), fs: parseCurve(P.flashSizeCurve) };     // 4.9.4 开花闪光大小随寿命
+    this.cv = { ps: parseCurve(P.sparkSizeCurve), pb: parseCurve(P.sparkBrightCurve), es: parseCurve(P.emberSizeCurve), eb: parseCurve(P.emberBrightCurve), ss: parseCurve(P.starSizeCurve), sb: parseCurve(P.starBrightCurve), us: parseCurve(P.subSizeCurve), ub: parseCurve(P.subBrightCurve), cs: parseCurve(P.crackleSizeCurve), cb: parseCurve(P.crackleBrightCurve), fb: parseCurve(P.flashBrightCurve), fs: parseCurve(P.flashSizeCurve) };     // 4.9.4 开花闪光大小随寿命
     this.ex = this.fam === 'aerial' ? exSlotsOf(P) : []; this.exDots = []; this.exRng = new RNG((P.seed | 0) + 7177); this.exDone = {};     // 4.6.0 自定义发射器（默认没有 → 不碰主随机序列）
     if (this.fam === 'rise') { this.initRise(); return; }
     // 4.3.3 开花闪光大小（默认 1 = 以前）；4.6.0 开花闪光自己的半径（-1 = 跟初速：max(2 m, 0.045 × 初速)）、衰减、可见时长
@@ -555,6 +555,17 @@ class Sim {
       age[i] += h;
       if (age[i] >= life[i]) { sp.kill(i); continue; }
       const k = i * 3;
+      if (this.fam === 'aerial' && +P.sparkLateWind > 0 && this.t + h > sp.pd[i]) {
+        const pre = Math.max(0, Math.min(h, sp.pd[i] - this.t));
+        let pp = Array.from(p.subarray(k, k + 3)), v = Array.from(vv.subarray(k, k + 3));
+        const U = [air[i * 2], air[i * 2 + 1], 0], g = [0, g2, 0];
+        if (pre > 0) { for (let j = 0; j < 3; j++) v[j] += (-d * (v[j] - U[j]) + g[j]) * pre;
+          if (cq > 0) { const w = v.map((x, j) => x - U[j]), e = 1 + cq * Math.hypot(...w) * pre; v = w.map((x, j) => U[j] + x / e); }
+          pp = pp.map((x, j) => x + v[j] * pre); }
+        const rem = h - pre, n = Math.max(1, Math.ceil(rem * 60));
+        for (let j = 0; j < n; j++) [pp, v] = sparkLateStep(P, pp, v, U, g, d, cq, this.t + pre + j * rem / n, rem / n, sp.pd[i]);
+        p.set(pp, k); vv.set(v, k); continue;
+      }
       vv[k] -= d * (vv[k] - air[i * 2]) * h; vv[k + 1] += (-d * (vv[k + 1] - air[i * 2 + 1]) + g2) * h; vv[k + 2] -= d * vv[k + 2] * h;
       if (cq > 0) { const wx = vv[k] - air[i * 2], wy = vv[k + 1] - air[i * 2 + 1], wz = vv[k + 2], e = 1 + cq * Math.hypot(wx, wy, wz) * h; vv[k] = air[i * 2] + wx / e; vv[k + 1] = air[i * 2 + 1] + wy / e; vv[k + 2] = wz / e; }
       p[k] += vv[k] * h; p[k + 1] += vv[k + 1] * h; p[k + 2] += vv[k + 2] * h;
@@ -643,13 +654,18 @@ class Sim {
       let g = (T - 900) / 1150; if (g <= 0 && gl <= 0) continue; g = g > 0 ? g * g * g : 0;
       if (abs) { const x = (sp.age[i] / sp.life[i] - 0.7) / 0.3; g *= x <= 0 ? 1 : x >= 1 ? 0 : 1 - x * x * (3 - 2 * x); }
       if (emb) { const x = sp.age[i] / sp.life[i], ss = e => e <= 0 ? 0 : e >= 1 ? 1 : e * e * (3 - 2 * e); g *= P.emberBright * Math.exp(-cj.edk * x) * (1 - ss((x - cj.efa) / (1 - cj.efa))) * (P.emberFollow > 0 ? 1 - ss((this.t - sp.pd[i] + 0.15) / (P.emberFollow + 0.15)) : 1) * (P.emberEnd > 0 ? 1 - ss((this.t - P.emberEnd + 0.6) / 0.9) : 1); }
+      let tailSize = P.sparkSize * (emb ? P.emberSize : 1);
+      if (this.fam === 'aerial' && +P.sparkTailAfterBurn === 1) {
+        const mul = curve => sparkLateCurve(P, curve ? x => lifeCurveAt(curve, x) : null, this.t, this.t - sp.age[i], sp.life[i], sp.pd[i]);
+        g *= mul(emb ? this.cv.eb : this.cv.pb); tailSize *= mul(emb ? this.cv.es : this.cv.ps);
+      }
       if (gl > 0) { const tf = gd * (0.5 + sp.rnd[i]), e = (sp.age[i] - tf) / 0.03; g = g * (1 - 0.85 * gl) + gl * 6 * Math.exp(-e * e); }
       const j = i * 3, x = sp.p[j], y = sp.p[j + 1];
       if (refl > 0 && y < 0) continue;
       const tw = +P.twinkleHz > 0 ? Math.sin(6.2831853 * (P.twinkleHz * this.t + sp.rnd[i] * 7.31 % 1)) : rr.u() * 2 - 1;     // 4.4.3 闪烁频率（和 GPU 核同一条）
       const I = g * (1 + P.twinkle * tw) * P.sparkBright * 0.6;
-      push(bufT, nt++, x, y, I, P.sparkSize * (emb ? P.emberSize : 1));
-      if (refl > 0 && nt < capT - 1) push(bufT, nt++, x + ripple(y, this.t), -y, I * refl * Math.exp(-y / 400), P.sparkSize * 1.3);
+      push(bufT, nt++, x, y, I, tailSize);
+      if (refl > 0 && nt < capT - 1) push(bufT, nt++, x + ripple(y, this.t), -y, I * refl * Math.exp(-y / 400), (+P.sparkTailAfterBurn === 1 ? tailSize : P.sparkSize) * 1.3);
     }
     return [nh, nt];
   }

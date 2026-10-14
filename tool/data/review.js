@@ -593,12 +593,12 @@ var FW_REVIEW = [
 "task": "FC6O",
 "kind": "preset",
 "date": "2026-10-14",
-"name": "金锦冠扇形 FanGold1.0 · 整面锚点Zoom",
-"note": "使用用户2026-10-13 20:46保存的FanGold-1.0 · 我的，模拟与颜色不变，仅取景换成4.9.81已有的带锚点Zoom。主星、普通火花、余烬三组仍在同一图内；未增加粒群或末段气流。普通火花燃尽后曲线/扰动控制排队等共享源码释放；不是已完成的新分层版。比较与当前检查见analysis/results/FG_Layers。",
+"name": "金锦冠扇形 FanGold1.0 · 燃尽后扰动",
+"note": "使用用户2026-10-13 20:46保存的FanGold1.0模板；保留亮头、燃尽前、粒子数、寿命、基础亮度与颜色。4.9.85普通火花/余烬从各自主星燃尽后渐入独立曲线和0.6m/s弱时空气流；整面同一张图，不拆簇、不增加UE发射器。真实检查见analysis/results/FG_Afterburn。",
 "look": [
 "整面扇形、扫射和颜色均按用户FanGold1.0保存参数",
-"燃烧1.2秒、余烬比例0.4；不擅自延长寿命或调亮末段",
-"带锚点Zoom提高有效采样；未添加新气流，不把已有三类粒群冒充新增功能"
+"前段和亮头保持；燃尽后已有火花与余烬分别收尾，弱气流逐渐弯散",
+"燃烧1.2秒、余烬比例0.4，未延寿/增亮；保留锚点Zoom，正常整面动态收益较轻"
 ],
 "opinion": null,
 "tags": "FanGold 金锦冠 整面扇形 合并导出 Blender FC6O FanGold1.0",
@@ -1086,15 +1086,15 @@ var FW_REVIEW = [
 "starSizeCurve": "",
 "starBrightCurve": "",
 "sparkSizeCurve": "",
-"sparkBrightCurve": "",
-"emberBrightCurve": "",
+"sparkBrightCurve": "0:1, 0.6:0.9, 1:0.75",
+"emberBrightCurve": "0:1, 0.6:1, 1:0.7",
 "branchBrightCurve": "",
 "crackleSizeCurve": "",
 "crackleBrightCurve": "",
 "flashBrightCurve": "",
 "subSizeCurve": "",
 "subBrightCurve": "",
-"emberSizeCurve": "",
+"emberSizeCurve": "0:1, 1:0.85",
 "branchSizeCurve": "",
 "flashSizeCurve": "",
 "rtFSizeCurve": "",
@@ -1124,7 +1124,11 @@ var FW_REVIEW = [
 "tempo": 1,
 "type": "kamuro",
 "sparkSizeJit": 75,
-"fitFrame": 0
+"fitFrame": 0,
+"sparkLateWind": 0.6,
+"sparkLateScale": 1.5,
+"sparkLateFade": 0.4,
+"sparkTailAfterBurn": 1
 },
 "m": {
 "stages": [
@@ -1141,7 +1145,7 @@ var FW_REVIEW = [
 "headInt": 1,
 "tailInt": 1
 },
-"ver": "09030814"
+"ver": "02482c6c"
 },
 {
 "id": "SGR1",

@@ -14,18 +14,18 @@
 
 ### Task 1: 核心和参数
 Files: tool/src/js/19_spark_late.js（阶段/气流/积分公共数学）、20_sim.js（CPU火花）、40_gl.js（GPU/母星终点）、41_particles40.js（使用新速度拉长）、30_plan.js（气流边界）、10_types.js、12_tempo.js、analysis/命名两表。
-- [ ] 先在analysis/scripts/fg_afterburn_test.cjs验证缺失功能失败：阶段在burn前为0、sparkStop不能提前启动、零风不改变旧渲染。
-- [ ] 新增sparkLateWind/Scale/Fade和sparkTailAfterBurn默认0；sparkLateAir(P,x,y,t,burn)返回二维附加风速；sparkLateStep(P,p,v,U,g,k,c,t,h,burn)返回一步位置速度。中点取场，Strang线性/平方阻力积分；步长≤1/60。
-- [ ] GPU第三格保存birth+(vis??burn)；原运动算到燃尽，再积分剩余时间；普通火花拉長使用同次积分的末速度。
-- [ ] 两类既有曲线：mix(1,curve((t-burn)/(tb+life-burn)),smoothstep(0,fade,t-burn))；空曲线倍率1；CPU只在新阶段启用时接入，保留旧输出。
-- [ ] 受力提示和参数表含单位、范围、关闭行为；节奏变换气流速度和渐入时间。保守取景补风速×寿命，不固定旧取景掩盖裁切。
+- [x] 先在analysis/scripts/fg_afterburn_test.cjs验证缺失功能失败：阶段在burn前为0、sparkStop不能提前启动、零风不改变旧渲染。
+- [x] 新增sparkLateWind/Scale/Fade和sparkTailAfterBurn默认0；sparkLateAir(P,x,y,t,burn)返回二维附加风速；sparkLateStep(P,p,v,U,g,k,c,t,h,burn)返回一步位置速度。中点取场，Strang线性/平方阻力积分；步长≤1/60。
+- [x] GPU第三格保存birth+(vis??burn)；原运动算到燃尽，再积分剩余时间；普通火花拉長使用同次积分的末速度。
+- [x] 两类既有曲线：mix(1,curve((t-burn)/(tb+life-burn)),smoothstep(0,fade,t-burn))；空曲线倍率1；CPU只在新阶段启用时接入，保留旧输出。
+- [x] 受力提示和参数表含单位、范围、关闭行为；节奏变换气流速度和渐入时间。保守取景补风速×寿命，不固定旧取景掩盖裁切。
 
 ### Task 2: 验证并设唯一候选
 Files: analysis/scripts/fg_afterburn_*、analysis/results/FG_Afterburn/、analysis/原理/FC6O_FanGold参数.json、扇形彗星条目.py、条目_扇形彗星.json、tool/data/review.js。
-- [ ] CPU阶段/中点积分收敛与GPU数学结果核对；同种子零强度/关闭逐像素回归、燃尽前采样/头部不变；早停发射测试不误当燃尽。
-- [ ] 原模板候选只加0.6m/s弱气流、1.5m尺度、0.4s渐入、末段火花与余烬独立曲线；实际看图后只调新增参数，不改原亮度/寿命。
-- [ ] 执行动态六模板+认可/待验收基准逐像素回归；实际PC/手机ZIP标准、回放、fx_gate；实际打开/调参/保存/刷新/导出，审看连续回放。
+- [x] CPU阶段/中点积分收敛与GPU数学结果核对；同种子零强度/关闭逐像素回归、燃尽前采样/头部不变；早停发射测试不误当燃尽。
+- [x] 原模板候选只加0.6m/s弱气流、1.5m尺度、0.4s渐入、末段火花与余烬独立曲线；实际看图后只调新增参数，不改原亮度/寿命。
+- [x] 执行动态六模板+认可/待验收基准逐像素回归；实际PC/手机ZIP标准、回放、fx_gate；实际打开/调参/保存/刷新/导出，审看连续回放。
 
 ### Task 3: 交付
-- [ ] 4.9.85版本/CHANGELOG/看法/状态/交接/更新记录一致，build静态检查通过。所有证据对应当前指纹。
-- [ ] 只提交任务白名单，fetch/安全rebase/推送，主目录安全快进；保留他方内容；tool/src交回23，未UE实测明确。
+- [x] 4.9.85版本/CHANGELOG/看法/状态/交接/更新记录一致，build静态检查通过。所有证据对应当前指纹。
+- [x] 只提交任务白名单，fetch/安全rebase/推送，主目录安全快进；保留他方内容；tool/src交回23，未UE实测明确。

@@ -278,6 +278,7 @@ void main(){
   vec2 q=p.xy; if(uUseXf>.5){ vec2 d=q-uXf.xy; q=vec2(d.x*uXf.z-d.y*uXf.w, d.x*uXf.w+d.y*uXf.z); }
   emitPt(q,I,size);
 }`;
+const VS_SPK_LATE = sparkLateSource(VS_SPK);
 // 循环发射器（地面类与上升星头循环）：火花按周期性编号生成，t 与 t+周期 的画面完全相同。
 // 模式 0 固定喷口（喷口位置、方向来自纹理）；1 转轮；2 彗星（扇形/连发，彗星自己也发火花）；3 随体坐标里的尾迹（上升星头）
 const VS_EMIT = `#version 300 es
@@ -448,7 +449,7 @@ function buildTrackRun(P) {
     for (let q = 0; q < k; q++) sim.step(H_STEP);
   }
   const nStars = Math.min(sim.all.length, MAX_TEX);
-  const pos = new Float32Array(Ns * nStars * 4), vel = new Float32Array(Ns * nStars * 4), info = new Float32Array(nStars * 8);     // 每颗星 2 格：第 1 格出生 / 熄灭 / 生成率 / 末段系数，第 2 格星头直径（跟星头的起始半径用）
+  const pos = new Float32Array(Ns * nStars * 4), vel = new Float32Array(Ns * nStars * 4), info = new Float32Array(nStars * 12);     // 每颗星3格；第3格是真实可见燃尽时刻，不受sparkStop/导出时长影响。前2格：第 1 格出生 / 熄灭 / 生成率 / 末段系数，第 2 格星头直径（跟星头的起始半径用）
   // 火花发射器补全：每米生成 → 每颗星走过的路程（每个轨迹采样一格）；跟星头大小 → 星头直径和大小曲线（缺省都不算，路程贴图 1×1）
   const fam = familyOf(P.type), perM = fam === 'aerial' && P.sparkRateBy === 'm', headOn = fam === 'aerial' && +P.sparkSpawnHead > 0, hsT = headOn ? headShapeOf(P) : null;
   const len = perM ? new Float32Array(Ns * nStars * 4) : null;
@@ -468,19 +469,20 @@ function buildTrackRun(P) {
     const deathAt = st.tDead != null ? Math.min(death, st.tDead) : death;
     // 末段火花密度：发射率从 rate 线性变到 rate × sparkRateEnd（按整段燃烧，不按截断后的时长）
     const e = st.kind === 5 ? 1 : (P.sparkRateEnd == null ? 1 : P.sparkRateEnd), B = Math.max(0.05, st.birth + (st.vis != null ? st.vis : st.burn) - born), a = st.rate * (e - 1) / (2 * B);
-    if (headOn) { const [w0, w1] = sparkHeadWin(st); info[q * 8 + 4] = sparkHeadBase(P, st, hsT); info[q * 8 + 5] = w0; info[q * 8 + 6] = w1; info[q * 8 + 7] = sparkHeadCurveSel(st); }
+    info[q * 12 + 8] = st.birth + (st.vis != null ? st.vis : st.burn);
+    if (headOn) { const [w0, w1] = sparkHeadWin(st); info[q * 12 + 4] = sparkHeadBase(P, st, hsT); info[q * 12 + 5] = w0; info[q * 12 + 6] = w1; info[q * 12 + 7] = sparkHeadCurveSel(st); }
     if (perM && st.kind !== 5) {     // 每米生成：第 3 位 = 这颗星的每米火花数，末段密度不用
       const Lt = t => { const fi = clamp(t / dt, 0, Ns - 1), i0 = Math.min(Math.floor(fi), Ns - 2), f = fi - i0, o = q * Ns * 4; return len[o + i0 * 4] + (len[o + (i0 + 1) * 4] - len[o + i0 * 4]) * f; };
       const pm = sparkPerMOf(P, st);
-      info[q * 8] = born; info[q * 8 + 1] = deathAt; info[q * 8 + 2] = deathAt > born && st.rate > 0 ? pm : 0; info[q * 8 + 3] = 0;
+      info[q * 12] = born; info[q * 12 + 1] = deathAt; info[q * 12 + 2] = deathAt > born && st.rate > 0 ? pm : 0; info[q * 12 + 3] = 0;
       if (st.rate > 0 && pm > 0 && deathAt > born) { const c = Math.ceil(Math.max(0, pm * (Lt(deathAt) - Lt(born)))) + 1; M = Math.max(M, c); total += c; }
       continue;
     }
-    info[q * 8] = born; info[q * 8 + 1] = deathAt; info[q * 8 + 2] = deathAt > born ? st.rate : 0; info[q * 8 + 3] = a;
+    info[q * 12] = born; info[q * 12 + 1] = deathAt; info[q * 12 + 2] = deathAt > born ? st.rate : 0; info[q * 12 + 3] = a;
     if (st.rate > 0 && deathAt > born) { const Bc = deathAt - born, c = Math.ceil(Math.max(0, st.rate * Bc + a * Bc * Bc)) + 1; M = Math.max(M, c); total += c; }
   }
   gl.activeTexture(gl.TEXTURE0);
-  return { pos: floatTex(Ns, nStars, pos), vel: floatTex(Ns, nStars, vel), info: floatTex(2, nStars, info), len: len ? floatTex(Ns, nStars, len) : floatTex(1, 1, new Float32Array(4)), nStars, M, Ns, dt, total, P, dropStars: Math.max(0, sim.all.length - nStars) };     // dropStars：超过显卡贴图边长没上传的星（E9）
+  return { pos: floatTex(Ns, nStars, pos), vel: floatTex(Ns, nStars, vel), info: floatTex(3, nStars, info), len: len ? floatTex(Ns, nStars, len) : floatTex(1, 1, new Float32Array(4)), nStars, M, Ns, dt, total, P, dropStars: Math.max(0, sim.all.length - nStars) };     // dropStars：超过显卡贴图边长没上传的星（E9）
 }
 function deleteTrackTex(tr) { gl.deleteTexture(tr.pos); gl.deleteTexture(tr.vel); gl.deleteTexture(tr.info); if (tr.len) gl.deleteTexture(tr.len); }
 function disposeTrack(tr) {
@@ -515,7 +517,7 @@ function setAirUniforms(pr, P) {
 // opt：xf = 随体坐标变换 [ox, oy, cos, sin]；mir = 0 无水面 / 1 只剔除水下 / 2 倒影
 function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   const P = tr.P, modern = true, str = familyOf(P.type) === 'aerial' && +P.sparkStretch > 0, se = sparkEff(P);     // 4.9.50 火花拉长
-  const poly = sparkPolyOn(P), pr = poly ? spkPolyProgram40(str ? 'spkS' : 'spk') : particleProgram40(str ? 'spkS' : 'spk'); gl.useProgram(pr.p);     // 4.9.57 火花多边形 / 亮度随机（缺省不进）；4.9.59 不再只限礼花
+  const poly = sparkPolyOn(P), pr = familyOf(P.type) === 'aerial' && (+P.sparkLateWind > 0 || +P.sparkTailAfterBurn === 1) ? lateSparkProgram40(str, poly) : poly ? spkPolyProgram40(str ? 'spkS' : 'spk') : particleProgram40(str ? 'spkS' : 'spk'); gl.useProgram(pr.p);     // 4.9.57 火花多边形 / 亮度随机（缺省不进）；4.9.59 不再只限礼花
   if (poly) setSparkPolyUniforms(pr, P);
   if (str) { gl.uniform1f(pr.u.uSpkStr, +P.sparkStretch); gl.uniform1f(pr.u.uSpkStrJ, Math.max(0, +P.sparkStretchJit || 0)); }
   gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tr.pos); gl.uniform1i(pr.u.uPos, 2);
@@ -533,6 +535,11 @@ function drawSparksGPU(tr, t, view, ppm, chan, w, tw, opt = {}) {
   gl.uniform1f(pr.u.uLifeEnd, familyOf(P.type) === 'rise' || P.sparkLifeEnd == null ? 1 : P.sparkLifeEnd);
   gl.uniform1f(pr.u.uLifeJit, familyOf(P.type) === 'rise' || P.sparkLifeJit == null ? 0.45 : P.sparkLifeJit / 100);
   gl.uniform1f(pr.u.uK, P.sparkDrag); gl.uniform1f(pr.u.uG, G * P.sparkGrav); gl.uniform1f(pr.u.uT0, se.T0); gl.uniform1f(pr.u.uCool, P.cooling);
+  { const air = familyOf(P.type) === 'aerial';
+    gl.uniform1f(pr.u.uLateWind, air ? Math.max(0, +P.sparkLateWind || 0) : 0);
+    gl.uniform1f(pr.u.uLateScale, Math.max(.2, +P.sparkLateScale || 1.5));
+    gl.uniform1f(pr.u.uLateFade, Math.max(.05, +P.sparkLateFade || .4));
+    gl.uniform1f(pr.u.uLateCurves, air && +P.sparkTailAfterBurn === 1 ? 1 : 0); }
   if (pr.u.uCq) gl.uniform1f(pr.u.uCq, sparkCqOf(P));     // 4.9.71 火花平方阻力（缺省 0）
   if (pr.u.uCoolAbs) gl.uniform1f(pr.u.uCoolAbs, familyOf(P.type) === 'aerial' ? 1 : 0);     // 5.0（4.7.0）：空中类只有「按实际年龄冷却」一种
   gl.uniform1f(pr.u.uTwk, P.twinkle); if (pr.u.uTwHz) gl.uniform1f(pr.u.uTwHz, +P.twinkleHz > 0 ? +P.twinkleHz : 0); gl.uniform1f(pr.u.uBright, P.sparkBright); gl.uniform1f(pr.u.uSize, P.sparkSize);

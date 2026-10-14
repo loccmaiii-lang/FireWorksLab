@@ -1,0 +1,32 @@
+{
+  "version": "4.9.85",
+  "entryVersion": "02482c6c·master4.3.8-core1",
+  "parameters": "anchor-parameters.json",
+  "zip": "F:\\FireWorksLab\\analysis\\local\\输出\\素材包\\FanGold_FC6O_Afterburn_20261014\\02482c6c_4.9.85\\FanComet_Gold.zip",
+  "zipSHA256": "4ff868ce743c5ac5833164ff88a916b320c203d09caf60a4426833bb04ee55d6",
+  "evidenceHashMode": "文本UTF-8且CRLF统一LF；图片原字节",
+  "evidence": {
+    "anchor-Mobile.jpg": "432eb00823c212252a60c62d51eec1707df69b301af71e7b7b44aa89974620cf",
+    "anchor-Mobile.json": "6248d27ab0d1831761029bcb7476b544551593c3c36b8d5b56e64188e06611bf",
+    "anchor-parameters.json": "19cbe52e1a97f43a8e3536e1483146f9606c7842e22259a49de6fbad986ec563",
+    "anchor-PC.jpg": "a8ebee3229ca1f4ac19fac792b37e6064a8dd061485587edeb8a28e2383de671",
+    "anchor-PC.json": "ddace27293b8b3d42f5245dfed18ff3b1d70b1ca3d6ee3e28c6320ce3c4a1081",
+    "baseline-parameters.json": "178b8e320dd624673416e9fda26869347b53eae426cf0f93ee2021469665249d",
+    "CPU检查.json": "f91136365de05337d0a70cc7220187041ee88916e76b5acaba47ac2ac68bc81a",
+    "export-check.json": "c2820bc57d0e0d71c2edd42c9b7c1a2cd504cf892308afd91bbd5dc80c9e7be5",
+    "FC6O_atlas.png": "b06dd791b09cf1f9392c65e84f13c9c4b237570b828b9fc57230801b44d36a8e",
+    "FC6O_export.png": "bf2fd3bb65ef4de5551e3eb12be9b7d5251baf9dc87c0ab86b0995f8f994aa1f",
+    "FC6O_live.png": "e0df5b58bee79ba6e39fb9c452eaa96dac4182c780648905c4d32aeab038e6da",
+    "FC6O_mobile_browser.png": "44a78eb398218204f9cea927748054b9f53817959ecd452b40bc28736bec0542",
+    "关闭回归.json": "b5a0475ed7bde0cbd914b9bb979812a1f2e91b42b37c7a0cfcb1aac9b1571503",
+    "内核检查.json": "48891ec33c8b52ac7a13c8cf706faf99758cefd5269e86d50d864b2d8802665c",
+    "参数变动.json": "552cb4b9f00692d6f4e1fa24cd4e1c90e5eb5e5d2168b7d2ff50c403a95c1ea0",
+    "实际贴图对照.jpg": "dd2acb0796bf508badd1f9243d301e6795e97ae028ef542277e631ce8d9d5a9e",
+    "对照回放.html": "c982ae2abfe16dbee8c579114099d7b1c3843cfaad96a3c9b2f1093e66dffdbc",
+    "操作走查.json": "5c3ff81f9265c5012ed8f9d56a526c4b1ceaee9bdf7f47039691b6549c2b4c43",
+    "标准检查.json": "d78180070ff5d6af2bd791dde6fae0958d6ccf4d0a8d3f9838d99ab460620e58",
+    "看法.md": "ab121757471a12c5efe8f57aed105fea1cd8957027513d4ae852bc6538dc15de",
+    "资产规范检查.json": "de13ea8e2915a97e960edeb8f7cae677f4a55e3a0d13f559eefb466d25fdc6cd",
+    "逐像素回归.json": "b2a0514a291586f91db5ca56aa30dc3be8d748054222566387122da1b67c2dd8"
+  }
+}
