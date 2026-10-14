@@ -53,20 +53,28 @@ function packGateConfig(f, j, dir, png) {
   return bad;
 }
 // 撞名：交付目录里已有同名贴图、内容不同、来自别的效果（同一个效果重导 = 更新，照常）
-function packGateClash(png, known, sourceKey) {
+function packGateClash(png, known, sourceKey, resourceName = '') {
   const bad = [];
   if (!known || !known.size) return bad;
-  for (const [p, v] of Object.entries(png)) { const k = known.get(p.replace(/^.*\//, '')); if (k && k.sha256 && k.sha256 !== v.sha256 && k.sourceKey && sourceKey && k.sourceKey !== sourceKey) bad.push(`${p.replace(/^.*\//, '')}：和已有资源「${k.resource}」撞名但内容不同（那份来自别的效果）`); }
+  for (const [p, v] of Object.entries(png)) {
+    const k = known.get(p.replace(/^.*\//, ''));
+    // 保存为个人配方会改变编辑器ID；同一交付资源的归属保持稳定。
+    const sameResource = resourceName && k?.resource && resourceName.toLowerCase() === k.resource.toLowerCase();
+    const sameSource = k?.sourceKey && sourceKey && k.sourceKey === sourceKey;
+    if (k && k.sha256 && k.sha256 !== v.sha256 && !sameSource && !sameResource) bad.push(`${p.replace(/^.*\//, '')}：和已有资源「${k.resource}」撞名但内容不同（归属不同或无法核验）`);
+  }
   return bad;
 }
 async function packFinalize(files, o = {}) {
   const dec = new TextDecoder(), png = {};
   for (const [f, d] of files) if (/\.png$/i.test(f)) { const u = await gateBytes(d); png[f] = { sha256: await sha256Hex(u), size: pngSize(u) }; }
-  const out = [], bad = [];
+  const out = [], bad = [], resourceNames = new Set();
   for (const [f, d] of files) {
     if (!FWL_CFG_RE.test(f)) { out.push([f, d]); continue; }
     const j = JSON.parse(dec.decode(await gateBytes(d))), dir = f.includes('/') ? f.slice(0, f.lastIndexOf('/') + 1) : '';
     if (/_mobile/.test(f) && !(j.emitters || []).length) continue;     // 手机全部「不出」
+    const resourceName = j.naming?.system || j.naming?.base || String(j.name || '').replace(/_(?:M|H)$/, '');
+    if (resourceName) resourceNames.add(resourceName);
     for (const t of [...Object.values(j.textures || {}), ...Object.values(j.extras || {})]) if (t && t.file && png[dir + t.file]) t.sha256 = png[dir + t.file].sha256;
     bad.push(...packGateConfig(f, j, dir, png));
     out.push([f, utf8(JSON.stringify(j, null, 1))]);
@@ -74,7 +82,7 @@ async function packFinalize(files, o = {}) {
   let known = o.known, sk = o.sourceKey;
   try { if (known === undefined && typeof DeliveryWorkspace !== 'undefined' && DeliveryWorkspace.knownTextures) known = DeliveryWorkspace.knownTextures(); } catch (e) { known = null; }
   try { if (sk === undefined && typeof wbKey === 'function') sk = wbKey(); } catch (e) { sk = ''; }
-  bad.push(...packGateClash(png, known, sk));
+  bad.push(...packGateClash(png, known, sk, o.resourceName || (resourceNames.size === 1 ? [...resourceNames][0] : '')));
   packGateLast = { at: Date.now(), bad };
   if (bad.length && !o.noThrow) { const e = new Error('导出拦截（不符合 spec/烟花特效资产规范.md v1，这次没有出包）：\n· ' + bad.join('\n· ')); e.gate = bad; throw e; }
   return out;

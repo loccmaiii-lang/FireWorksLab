@@ -53,6 +53,25 @@ def make(tmp, mobile=None, pc=None, pngs=None, name='pkg'):
 
 
 class Gate(unittest.TestCase):
+    def test_same_delivery_survives_editor_identity_change(self):
+        known = {'textures': {'T': {'sha256': 'old', 'source': 'rv:old', 'resourceName': 'Same'}}}
+        incoming = {'T': {'sha256': 'new'}}
+        self.assertEqual(fx_gate.check_registry({'T': 'flipbook'}, incoming, known, 'my:new', 'Same')[0], [])
+        self.assertTrue(fx_gate.check_registry({'T': 'flipbook'}, incoming, known, 'my:new', 'Other')[0])
+        self.assertTrue(fx_gate.check_registry({'T': 'flipbook'}, incoming, known, 'my:new')[0])
+        self.assertTrue(fx_gate.check_registry({'T': 'flipbook'}, incoming, known, '')[0])
+
+    def test_old_revision_registration_recovers_unique_delivery_name(self):
+        root = Path(self.tmp)
+        workspace = root / '.workspace'; workspace.mkdir(exist_ok=True)
+        (workspace / 'texture-fingerprints.json').write_text(json.dumps({'textures': {'T': {'resource': 'revision', 'source': 'old'}}}))
+        (root / 'workspace-resources.json').write_text(json.dumps({'resources': [{'revisionId': 'revision', 'name': 'Same'}]}))
+        self.assertEqual(fx_gate.load_registry(root)['textures']['T']['resourceName'], 'Same')
+        # 只读归属恢复不得偷偷修改共享登记。
+        self.assertNotIn('resourceName', json.loads((workspace / 'texture-fingerprints.json').read_text())['textures']['T'])
+        (root / 'workspace-resources.json').write_text(json.dumps({'resources': [{'revisionId': 'revision', 'name': 'Same'}, {'revisionId': 'revision', 'name': 'Other'}]}))
+        self.assertNotIn('resourceName', fx_gate.load_registry(root)['textures']['T'])
+
     def setUp(self):
         self.tmp = tempfile.mkdtemp()
 

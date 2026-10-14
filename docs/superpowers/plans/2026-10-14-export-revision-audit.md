@@ -1,6 +1,6 @@
 # 导出修订与同名迭代 Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** 同一交付资源另存为个人配方后可正常迭代；失败旧修订不可误执行，成功清单仅来自本次完整修订。
 **Architecture:** 保留编辑器sourceKey追踪，同时以交付资源名为稳定归属；只有同一交付资源可替换内容，其他资源碰撞仍拦。导入保存证明与显式更新配合；旧回执保留，不伪装当前产物。
@@ -14,13 +14,15 @@
 
 ### Task 1: 归属与同名更新
 
-- [ ] 用同一交付名、不同sourceKey复现误判：`packGateClash(png, known, 'my:new', 'Existing')`应无错误；资源名不同仍有错误。
-- [ ] `packFinalize`从配置`naming.system`识别交付名；`knownTextures`记录资源名且以最新修订优先。服务器门禁用资源名与旧登记对应的修订索引核准归属。
-- [ ] 私有派生更新仅显式`mode==='update'`且旧目标有有效保存证明时允许内容更新；缺失/脏/变化目标仍拦，执行前再核查。
+- [x] 用同一交付名、不同sourceKey复现误判：`packGateClash(png, known, 'my:new', 'Existing')`应无错误；资源名不同仍有错误。
+- [x] `packFinalize`从配置`naming.system`识别交付名；`knownTextures`记录资源名且以最新修订优先。服务器门禁用资源名与旧登记对应的修订索引核准归属。
+- [x] 私有派生更新仅显式`mode==='update'`且旧目标有有效保存证明时允许内容更新；缺失/脏/变化目标仍拦，执行前再核查。
 
 ### Task 2: 当前修订与删除结构
 
-- [ ] 失败显示`本次未导出；下方为旧修订`并屏蔽旧清单操作；重试成功后解除，保留旧历史。
-- [ ] 当前layers去掉对象时，`fwlCombo(name, currentLayers)`不能输出旧层；`namingSheets`从两页减一页后不能有02。
-- [ ] 分张02与图层序号说明根据来源字段呈现，不能声称用户当前草稿已核验。
-- [ ] Node/Python相关回归、受保护源码逐字节不变、构建4.9.94及现有入口部署；记录尚未实页/UE导入验收。
+- [x] 失败显示`本次未导出；下方为旧修订`并屏蔽旧清单操作；重试成功后解除，保留旧历史。
+- [x] 当前layers去掉对象时，`fwlCombo(name, currentLayers)`不能输出旧层；`namingSheets`从两页减一页后不能有02。
+- [x] 分张02与图层序号说明根据来源字段呈现，不能声称用户当前草稿已核验。
+- [x] Node/Python相关回归、受保护源码逐字节不变、构建4.9.94及现有入口部署；记录尚未实页/UE导入验收。
+
+限定执行完成：13归属/配置/删层/减分张+6失败恢复+17私有共享导入+6私有整页检查；38 Python与既有相关回归通过。静态0错误，模拟/渲染等源码相对4.9.89保持。file实页禁止读取，未绕行；当前未保存草稿、用户最新整包导出与完整UE导入/实播未验。

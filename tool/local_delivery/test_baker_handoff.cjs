@@ -2,13 +2,13 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const {randomUUID}=require('node:crypto');
 const source=fs.readFileSync(require('node:path').join(__dirname,'../src/js/67_delivery.js'),'utf8');
-function fixture({protocol='file:',motion=false,reduced=false,offline=false,directoryOffline=false,queued=false,acceptFailure=false}={}){
+function fixture({protocol='file:',motion=false,reduced=false,offline=false,directoryOffline=false,queued=false,acceptFailure=false,resourceReceipts=[]}={}){
   const nodes=new Map(),calls=[],listeners={};let channel='',failure=offline;
   const receipt={deliveryId:'known',name:'Test',revisionId:'12345678',directory:'trusted-root/Test',files:[],packages:[{platform:'pc'}],thumbnail:{status:'missing'}};
   const origin='http://127.0.0.1:8034';
   const emit=(data,source=frame,from=protocol==='file:'?'null':origin)=>listeners.message?.({data,source,origin:from});
   const frame={postMessage(request,target){calls.push({command:request.command,target,payload:request.payload});if(failure)return;
-    const value=({session:{outputRoot:'trusted-root',importerAvailable:true},resources:{resources:[]},publish:receipt,accept:{queued},'focus.restore':{}})[request.command]||{};
+    const value=({session:{outputRoot:'trusted-root',importerAvailable:true},resources:{resources:resourceReceipts},publish:receipt,accept:{queued},'focus.restore':{}})[request.command]||{};
     if(request.command==='publish')queueMicrotask(()=>emit({type:'workspace-host-resources',channel:request.channel,resources:[receipt]}));
     queueMicrotask(()=>emit({type:'workspace-host-response',channel:request.channel,id:request.id,ok:!((directoryOffline&&request.command==='resources')||(acceptFailure&&request.command==='accept')),error:'检查服务不可用',value}));}};
   function node(id){if(!nodes.has(id))nodes.set(id,{id,hidden:false,inert:false,disabled:false,value:'original-value',dataset:{},listeners:{},attrs:{},classList:{toggle(){}},

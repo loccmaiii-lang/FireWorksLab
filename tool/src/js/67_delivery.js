@@ -3,7 +3,7 @@ const DeliveryWorkspace = (() => {
   const localUI=location.protocol==='file:', frameOrigin=localUI?'null':location.origin;
   const frameTarget=localUI?'*':frameOrigin;
   let session=null,resources=[],last=null,active=false,busyDelivery=false,importerBusy=false,importerCurrent=null;
-  let connecting=null,preparing=null,prepared=false,viewAnimation=null,desiredDeliveryId='',hostReady=false,readyWait=null,exportHome=null,queuedDelivery=null;     // 4.9.69 queuedDelivery：导出了、但导入器还在处理别的（排队中）
+  let connecting=null,preparing=null,prepared=false,viewAnimation=null,desiredDeliveryId='',hostReady=false,readyWait=null,exportHome=null,queuedDelivery=null,exportFailedState=false;     // 4.9.69 queuedDelivery：导出了、但导入器还在处理别的（排队中）
   const channel=crypto.randomUUID(),requests=new Map();
   const hostOrigin=location.protocol==='file:'?'http://127.0.0.1:8034':location.origin;
   const node=id=>document.getElementById(id);
@@ -12,7 +12,9 @@ const DeliveryWorkspace = (() => {
   const importLabel=state=>({ready:'检查通过，待确认',conflict:'检查冲突，需处理',error:'检查失败',done:'导入已报告完成',partial:'部分完成',checking:'检查中',queued:'待检查',pending:'待检查',importing:'导入中',stopped:'已停止',saved:'UE 已报告保存'}[state]||'状态待核对');
   function updateRootControls(){
     for(const id of ['deliveryPick','deliverySaveRoot','deliveryDestination','deliveryRoot'])node(id).disabled=importerBusy||busyDelivery||!!exportHome;
-    node('deliveryCheck').disabled=importerBusy||!last||!session?.importerAvailable;
+    node('deliveryCheck').disabled=importerBusy||exportFailedState||!last||!session?.importerAvailable;
+    const blocked=exportFailedState&&!importerBusy;node('deliveryFrame').inert=blocked;
+    if(session)node('deliveryFrame').hidden=blocked||!session.importerAvailable;
   }
   function rpc(command,payload={},timeout=10000){
     return new Promise((resolve,reject)=>{
@@ -71,7 +73,10 @@ const DeliveryWorkspace = (() => {
     if(!session.outputRoot)throw Error('请先在资源目录与版本中指定导出目录');
     try{await refresh();}catch(e){}     // 4.9.69 导出拦截要按最新的已有资源查撞名
   }
-  function exportFailed(error){if(exportHome)message('导出未完成：'+error.message,true);}
+  function exportFailed(error){
+    if(!exportHome)return;exportFailedState=true;updateRootControls();
+    message('本次未导出；当前资源信息来自旧修订'+(last?' '+last.revisionId.slice(0,8):'')+'，旧清单已停止确认与执行。请修正后重新导出，或在历史中明确选择要查看的修订。\n'+error.message,true);
+  }
   function finishExport(){
     if(exportHome){exportHome.parent?.insertBefore(node('busy'),exportHome.next);exportHome=null;}
     updateRootControls();
@@ -116,13 +121,13 @@ const DeliveryWorkspace = (() => {
     const img = node('deliveryThumbnail'); img.hidden = receipt.thumbnail.status !== 'ready';
     if (!img.hidden) img.src = hostOrigin + '/api/deliveries/' + receipt.deliveryId + '/' + receipt.thumbnail.file;
     node('deliveryThumbnailMissing').hidden = !img.hidden;
-    node('deliveryCheck').disabled = importerBusy || !session?.importerAvailable;
+    node('deliveryCheck').disabled = importerBusy || exportFailedState || !session?.importerAvailable;
   }
   async function select(receipt) {
     const previous=last;desiredDeliveryId=receipt.deliveryId;last=receipt;
     const result=await sendToImporter();
     if(result?.queued||result?.failed){desiredDeliveryId='';last=previous;presentCurrent();render();}
-    else presentReceipt(receipt);
+    else {exportFailedState=false;updateRootControls();presentReceipt(receipt);}
   }
   function presentCurrent() {
     const current=importerCurrent,receipt=current&&resources.find(r=>r.deliveryId===current.deliveryId);
@@ -159,7 +164,7 @@ const DeliveryWorkspace = (() => {
   function init(){
     window.addEventListener('message',e=>{
       const data=e.data;if(e.source!==node('deliveryFrame').contentWindow||(localUI?!['null','file://'].includes(e.origin):e.origin!==frameOrigin)||data?.channel!==channel)return;
-      if(data.type==='workspace-host-ready'){hostReady=true;node('deliveryFrame').hidden=false;node('deliveryLoading').hidden=true;if(readyWait){clearTimeout(readyWait.timer);readyWait.resolve();readyWait=null;}return;}
+      if(data.type==='workspace-host-ready'){hostReady=true;node('deliveryFrame').hidden=false;node('deliveryLoading').hidden=true;updateRootControls();if(readyWait){clearTimeout(readyWait.timer);readyWait.resolve();readyWait=null;}return;}
       if(data.type==='workspace-host-response'){
         const pending=requests.get(data.id);if(!pending)return;requests.delete(data.id);clearTimeout(pending.timer);
         if(data.ok)pending.resolve(data.value);else pending.reject(Error(data.error||'本机交付请求失败'));return;
@@ -198,7 +203,7 @@ const DeliveryWorkspace = (() => {
   // 4.9.69 导出拦截用：交付目录里已有资源的贴图（文件名 → 内容 SHA256、来自哪个效果），按名字查撞名
   // 4.9.72 导出计时等附加说明：接在状态行后面（不盖掉排队 / 检查的提示）
   function note(text){const n=node('deliveryStatus');if(!n||!text)return;n.textContent=(n.textContent?n.textContent+'\n':'')+text;}
-  function knownTextures(){const m=new Map();for(const r of resources||[])for(const f of r.files||[]){if(!/\.png$/i.test(f.path||''))continue;const k=f.path.replace(/^.*\//,'');if(!m.has(k))m.set(k,{sha256:f.sha256,resource:r.name,sourceKey:(r.metadata||{}).sourceKey||''});}return m;}
+  function knownTextures(){const m=new Map();for(const r of [...(resources||[])].reverse())for(const f of r.files||[]){if(!/\.png$/i.test(f.path||''))continue;const k=f.path.replace(/^.*\//,'');if(!m.has(k))m.set(k,{sha256:f.sha256,resource:r.name,sourceKey:(r.metadata||{}).sourceKey||''});}return m;}
   return{init,open,publish,destination,beginExport,finishExport,exportFailed,knownTextures,note,get active(){return active;}};
 })();
 

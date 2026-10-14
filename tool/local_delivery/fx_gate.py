@@ -145,11 +145,24 @@ def load_registry(root):
     from pathlib import Path
     p = Path(root) / REGISTRY if root else None
     if p and p.is_file():
-        return json.loads(p.read_text(encoding='utf-8-sig'))
+        registry = json.loads(p.read_text(encoding='utf-8-sig'))
+        # 旧登记把资源写成修订号；只通过现有交付索引恢复归属，不按贴图名猜。
+        index = Path(root) / 'workspace-resources.json'
+        if index.is_file():
+            resources = json.loads(index.read_text(encoding='utf-8-sig')).get('resources', [])
+            choices = {}
+            for resource in resources:
+                if resource.get('revisionId') and resource.get('name'):
+                    choices.setdefault(resource['revisionId'], set()).add(resource['name'])
+            names = {revision: next(iter(values)) for revision, values in choices.items() if len(values) == 1}
+            for record in registry.get('textures', {}).values():
+                if not record.get('resourceName') and record.get('resource') in names:
+                    record['resourceName'] = names[record['resource']]
+        return registry
     return {'format': 'df.texture-fingerprints/1', 'textures': {}}
 
 
-def check_registry(classes, png_by_asset, registry, source):
+def check_registry(classes, png_by_asset, registry, source, resource_name=''):
     """撞名 / 内容重复。classes：资产名 → 类别；png_by_asset：资产名 → {sha256, size}。"""
     bad, info = [], []
     known = registry.get('textures') or {}
@@ -158,7 +171,9 @@ def check_registry(classes, png_by_asset, registry, source):
         by_sha.setdefault(v.get('sha256'), []).append(a)
     for a, v in png_by_asset.items():
         k = known.get(a)
-        if k and k.get('sha256') != v['sha256'] and k.get('source') and source and k['source'] != source:
+        same_resource = bool(resource_name and k and k.get('resourceName') and resource_name.casefold() == k['resourceName'].casefold())
+        same_source = bool(k and k.get('source') and source and k['source'] == source)
+        if k and k.get('sha256') != v['sha256'] and not same_source and not same_resource:
             bad.append(f'{a}：和已登记的贴图撞名但内容不同（那份来自 {k.get("resource") or k["source"]}）')
         same = [x for x in by_sha.get(v['sha256'], []) if x != a]
         if same and not k:
@@ -193,12 +208,14 @@ def check(path, root=None, source=None):
                 a = asset_of(t)
                 classes[a] = t.get('class')
                 by_asset[a] = png[d + t['file']]
+    meta = files.get('workspace-resource.json')
+    document = json.loads(meta.decode('utf-8-sig')) if meta else {}
+    resource_name = document.get('name', '')
     if source is None:
-        meta = files.get('workspace-resource.json')
-        source = (json.loads(meta.decode('utf-8-sig')).get('metadata') or {}).get('sourceKey', '') if meta else ''
-    reg_bad, info = check_registry(classes, by_asset, load_registry(root), source)
+        source = (document.get('metadata') or {}).get('sourceKey', '')
+    reg_bad, info = check_registry(classes, by_asset, load_registry(root), source, resource_name)
     return {'ok': not (bad or reg_bad), 'problems': bad + reg_bad, 'info': info, 'configs': [f for f, _ in cfgs],
-            'textures': {a: {**v, 'class': classes.get(a)} for a, v in by_asset.items()}, 'source': source}
+            'textures': {a: {**v, 'class': classes.get(a)} for a, v in by_asset.items()}, 'source': source, 'resourceName': resource_name}
 
 
 def register(result, root, resource=''):
@@ -207,8 +224,10 @@ def register(result, root, resource=''):
     reg = load_registry(root)
     now = datetime.now(timezone.utc).isoformat()
     for a, v in result['textures'].items():
-        if a not in reg['textures']:
-            reg['textures'][a] = {'sha256': v['sha256'], 'size': v['size'], 'class': v.get('class'), 'source': result.get('source', ''), 'resource': resource, 'first_seen': now}
+        old = reg['textures'].get(a)
+        same_resource = bool(old and result.get('resourceName') and old.get('resourceName') and old['resourceName'].casefold() == result['resourceName'].casefold())
+        if old is None or same_resource or (old.get('source') and old['source'] == result.get('source')):
+            reg['textures'][a] = {'sha256': v['sha256'], 'size': v['size'], 'class': v.get('class'), 'source': result.get('source', ''), 'resource': resource, 'resourceName': result.get('resourceName', ''), 'first_seen': old.get('first_seen', now) if old else now, 'updated_at': now}
     p = Path(root) / REGISTRY
     p.parent.mkdir(parents=True, exist_ok=True)
     tmp = p.with_suffix('.tmp')
