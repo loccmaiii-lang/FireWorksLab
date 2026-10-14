@@ -63,14 +63,24 @@ async function repoMenu() {
 function repoRecipe(doc) {
   const obj = x => x && typeof x === 'object' && !Array.isArray(x);
   if (!obj(doc) || doc.format !== 'fwl.myrecipe/1' || typeof doc.id !== 'string' || !/^fx[a-z0-9_]+$/i.test(doc.id) || doc.key !== 'my:' + doc.id || typeof doc.name !== 'string') throw new Error('配方标识不完整');
-  if (!obj(doc.snap) || doc.snap.kind !== 'combo' || !Array.isArray(doc.snap.layers) || !doc.snap.layers.length || doc.snap.layers.length > 100) throw new Error('图层数据不完整');
-  for (const l of doc.snap.layers) if (!obj(l) || !Object.hasOwn(TYPES, l.type) || !obj(l.P) || !obj(l.M) || !obj(l.L)) throw new Error('图层类型或参数不完整');
+  if (!obj(doc.snap)) throw new Error('图层数据不完整');
+  if (doc.snap.kind === 'single') {
+    if (!obj(doc.snap.P) || !Object.hasOwn(TYPES, doc.snap.P.type) || !obj(doc.snap.M)) throw new Error('单层类型或参数不完整');
+    if (doc.links && doc.links.length) throw new Error('单层不能含多层联动');
+  } else if (doc.snap.kind === 'combo') {
+    if (!Array.isArray(doc.snap.layers) || !doc.snap.layers.length || doc.snap.layers.length > 100) throw new Error('图层数据不完整');
+    for (const l of doc.snap.layers) if (!obj(l) || !Object.hasOwn(TYPES, l.type) || !obj(l.P) || !obj(l.M) || !obj(l.L)) throw new Error('图层类型或参数不完整');
+  } else throw new Error('配方形态不完整');
   if (doc.links != null && (!Array.isArray(doc.links) || doc.links.some(g => !Array.isArray(g) || g.some(x => typeof x !== 'string')))) throw new Error('图层联动数据不完整');
-  return { id: doc.id, name: doc.name, created: doc.at || '', updated: doc.at || '', snap: structuredClone(doc.snap), links: structuredClone(doc.links || []), ...(doc.from ? { from: structuredClone(doc.from) } : {}) };
+  if (doc.sizeSource != null && (!obj(doc.sizeSource) || typeof doc.sizeSource.key !== 'string' || typeof doc.sizeSource.entry !== 'string')) throw new Error('尺寸来源不完整');
+  if (doc.sizePick != null && typeof doc.sizePick !== 'string') throw new Error('尺寸选择不完整');
+  if (doc.ue != null && (!obj(doc.ue) || typeof doc.ue.base !== 'string' || !Array.isArray(doc.ue.layers))) throw new Error('英文名数据不完整');
+  return { id: doc.id, name: doc.name, created: doc.at || '', updated: doc.at || '', snap: structuredClone(doc.snap), links: structuredClone(doc.links || []), ...(doc.from ? { from: structuredClone(doc.from) } : {}),
+    ...(doc.ue ? { ue: structuredClone(doc.ue) } : {}), ...(doc.sizeSource ? { sizeSource: structuredClone(doc.sizeSource) } : {}), ...(doc.sizePick != null ? { sizePick: doc.sizePick } : {}) };
 }
 function repoRecipeSig(rec) {
   const stable = x => Array.isArray(x) ? x.map(stable) : x && typeof x === 'object' ? Object.fromEntries(Object.keys(x).sort().map(k => [k, stable(x[k])])) : x;
-  return JSON.stringify(stable({ name: rec.name, snap: rec.snap, links: rec.links || [] }));
+  return JSON.stringify(stable({ name: rec.name, snap: rec.snap, links: rec.links || [], ue: rec.ue, sizeSource: rec.sizeSource, sizePick: rec.sizePick }));
 }
 async function repoRead({ interactive = false } = {}) {
   if (repoDir.reading) return;
@@ -91,8 +101,11 @@ async function repoRead({ interactive = false } = {}) {
         try {
           const f = await e.getFile(); if (f.size > 4 * 1024 * 1024) throw new Error('配方过大');
           const doc = JSON.parse(await f.text());
-          if (typeof doc.key === 'string' && !doc.key.startsWith('my:')) continue; // 旧的单条目个人版本不混进效果库
-          const rec = repoRecipe(doc), stamp = String(doc.at || ''), old = latest.get(rec.id);
+          const legacy = typeof doc.key === 'string' && !doc.key.startsWith('my:');
+          const rec = legacy ? (doc.format === 'fwl.myrecipe/1' && typeof myRecoverSingle === 'function' ? myRecoverSingle(doc.key, doc) : null) : repoRecipe(doc);
+          if (!rec) continue; // 只恢复这次漏存的原生人工版本，草稿与自动导出仍是版本记录。
+          if (legacy && !interactive && store.get('nativeSaveRecovery', {})[rec.id] && !myAll()[rec.id]) continue; // 已主动删除的恢复副本不在启动时复活。
+          const stamp = String(doc.at || ''), old = latest.get(rec.id);
           if (!old || stamp > old.stamp || (stamp === old.stamp && (Number(pending) > Number(old.pending) || (pending === old.pending && f.lastModified > old.modified)))) latest.set(rec.id, { rec, doc, stamp, pending, modified: f.lastModified });
         } catch (e) { bad++; }
       }
@@ -117,7 +130,9 @@ async function repoRead({ interactive = false } = {}) {
       }
       myPut(rec);
       if (!myAll()[rec.id] || repoRecipeSig(myAll()[rec.id]) !== repoRecipeSig(rec)) throw new Error('浏览器保存空间不足，配方仍保留在仓库');
-      if (doc.ue && typeof doc.ue.base === 'string' && Array.isArray(doc.ue.layers)) setPackNames('my:' + rec.id, doc.ue.base, doc.ue.layers, doc.ue);
+      const names = rec.ue || doc.ue;
+      if (names && typeof names.base === 'string' && Array.isArray(names.layers) && setPackNames('my:' + rec.id, names.base, names.layers, names) === false) throw new Error('参数已恢复，英文名缓存写入失败');
+      if (typeof myRestorePrefs === 'function') myRestorePrefs(rec);
       added++;
     }
     store.set('repoReadCopies', seen); if (added) renderLib();

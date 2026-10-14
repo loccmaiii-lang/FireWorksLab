@@ -638,6 +638,7 @@ function initLibrary() {
   const ro = new ResizeObserver(() => document.documentElement.style.setProperty('--topH', $('#main').offsetTop + 'px')); ro.observe($('#viewbar')); ro.observe(document.querySelector('header.top'));
   initPanels();
   myMigrateComboSaves();
+  myMigrateSingleSaves();
   if (typeof graphMigrateSaves === 'function') graphMigrateSaves();     // 4.9.87 旧粒子图面板的浏览器存档搬进「版本」
   // 打开时：有「新」的待验收候选就先打开它；否则回到上次看的
   const fresh = EFFS().find(effIsNew), lastKey = store.get('lastKey', '');
@@ -645,5 +646,7 @@ function initLibrary() {
   if (fresh) { lib.seg = 'review'; }
   renderLib();
   if (/[?&]fast/.test(location.search)) return;     // 本地任务的自动化（compare.py）不自动打开条目
-  if (fresh) openEffect(fresh); else if (lastEf) openEffect(lastEf); else if (lastRv) openReview(lastRv); else crumb('花型', TYPE_NAMES[state.P.type]);
+  if (fresh) openEffect(fresh); else if (lastEf) openEffect(lastEf); else if (lastRv) openReview(lastRv);
+  else if (lastKey.startsWith('my:') && myAll()[lastKey.slice(3)]) openMyEffect(lastKey.slice(3));
+  else crumb('花型', TYPE_NAMES[state.P.type]);
 }

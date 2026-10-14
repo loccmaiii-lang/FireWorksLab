@@ -251,13 +251,15 @@ function scaleCascadeFiles(files, k, keep, spec) {
 //   不在 map 里 / 表缺了 = 照旧（手动的导出缩放还管用）。交付清单可以换成同一个效果的另一个规格，或这次不按标定（存在这台电脑，本机任务一律按表的第一个）
 const sizeSpecTable = () => { const T = typeof window !== 'undefined' ? window.SIZE_SPEC : null; return T && T.specs && T.map ? T : null; };
 function sizeSpecKeyNow() {
-  const ef = typeof lib !== 'undefined' && lib.effect ? lib.effect.key : '', rv = typeof lib !== 'undefined' && lib.review ? lib.review.id : '';
+  const ef = typeof lib !== 'undefined' && lib.effect ? lib.effect.key : ''; let rv = typeof lib !== 'undefined' && lib.review ? lib.review.id : '';
   let wk = ''; try { wk = typeof wbKey === 'function' ? wbKey() : ''; } catch (e) { }
   let key = ef || (/^ef:/.test(wk) ? wk.slice(3) : '');
   if (!key && rv && typeof effectOfEntry === 'function') { try { const x = effectOfEntry(lib.review); key = x ? x.key : ''; } catch (e) { } }     // 本机导出任务只开条目（openReview 不带效果）
+  const source = typeof lib !== 'undefined' && lib.my && lib.my.sizeSource;
+  if (!key && !rv && source) { key = source.key || ''; rv = source.entry || ''; }
   return { key, entry: rv, wk };
 }
-const sizePickKey = o => (o && (o.key || o.entry || o.wk)) || '';
+const sizePickKey = o => (o && (/^my:/.test(o.wk || '') ? o.wk : o.key || o.entry || o.wk)) || '';
 function sizeSpecIds(key, entry) { const T = sizeSpecTable(); if (!T) return []; for (const k of [key, entry].filter(Boolean)) { const v = T.map[k]; if (v) return (Array.isArray(v) ? v : [v]).filter(id => T.specs[id]); } return []; }
 const sizeSpecPicks = () => { try { return (typeof store !== 'undefined' && store.get('sizeSpecPick', {})) || {}; } catch (e) { return {}; } };
 // 4.9.52 尺寸档（用户 10-09 12:56「这个导出尺寸不是通用功能吗？譬如我选四尺玉，我也可以选大号，然后帮我匹配大小的把？」）：

@@ -74,7 +74,7 @@ function removeTemplate(id) {
 function assetSrc(key) {
   if (key.startsWith('tpl:')) { const r = tplAll()[key.slice(4)]; if (!r) throw new Error('找不到模板'); return { type: r.type, P: derive(structuredClone(r.P)), M: structuredClone(r.M), title: r.name }; }
   if (key.startsWith('myl:')) {
-    const [, fx, lid] = key.split(':'), rec = myAll()[fx], x = rec && rec.snap.layers.find(l => l.L && l.L.lid === lid); if (!x) throw new Error('找不到这一层');
+    const [, fx, lid] = key.split(':'), rec = myAll()[fx], x = rec && (rec.snap.layers || []).find(l => l.L && l.L.lid === lid); if (!x) throw new Error('找不到这一层');
     const M = {}; for (const k of ['stages', 'xw', 'ramp0', 'ramp1', 'ramp2', 'ramp3', 'headInt', 'tailInt']) if (x.L[k] !== undefined) M[k] = structuredClone(x.L[k]);
     return { type: x.type, P: derive(structuredClone(x.P)), M: { ...structuredClone(x.M || {}), ...M }, title: `${rec.name} · ${x.L.title || '层'}` };
   }
@@ -92,36 +92,34 @@ function pkMyItems(mode) {
 
 // ---- 我的效果：派生（AI 效果 / 模板 / 正式库调了保存）----
 async function wbDeriveMine(o = {}) {
-  if (state.tab !== 'combo' && typeof multiLayerBlock === 'function') { const why = multiLayerBlock(state.P); if (why) { flash(why, true, 10000); return null; } }     // 4.9.89 A12：我的效果是多层的一种
   if (repoDir.h && !repoDir.ok) await repoPerm(true);
+  const native = state.tab !== 'combo' && !!multiLayerBlock(state.P);
   const fromName = (lib.tpl && lib.tpl.name) || $('#abName').textContent || wbBaseId();
   const from = { key: wb.key, name: fromName, base: wbBaseId(), ver: (lib.review && lib.review.ver) || '' };
-  const nm = await askSaveName(o.title || '保存成我的效果', `存成你自己的效果（派生自「${fromName}」），原来的不动。之后能加层、删层、改名、删除，在左栏「我的效果」里。`, `${fromName} · 我的`, o.action || '保存');
+  const nm = await askSaveName(o.title || '保存成我的效果', `存成你自己的效果（派生自「${fromName}」），原来的不动。${native ? '保留原生单层形态和全部参数，可独立调整、另存和导出。' : '之后能加层、删层、改名、删除。'}保存后出现在左栏「我的效果」。`, `${fromName} · 我的`, o.action || '保存');
   if (nm == null) return null;
   const name = nm.trim() || `${fromName} · 我的`;
   let snap;
   if (state.tab === 'combo') {
     snap = wbSnap();
     snap.layers.forEach((x, i) => { const L = state.layers[i]; x.id = null; x.type = x.type || (x.P && x.P.type); x.L.title = L.title || layerName(i); x.L.lid = L.lid || (L.lid = myLid()); });
+  } else if (native) {
+    snap = wbSnap();
   } else {
     snap = { kind: 'combo', layers: [{ id: null, type: state.P.type, P: structuredClone(state.P), M: structuredClone(state.M), L: { title: fromName, lid: myLid(), scale: 1, delay: 0, rate: 1, mirror: false } }] };
   }
-  snap.name = name;
+  if (snap.kind === 'combo') snap.name = name;
   const links = state.tab === 'combo' ? (state.links || []).map(g => g.map(i => snap.layers[i] && snap.layers[i].L.lid).filter(Boolean)).filter(g => g.length > 1) : [];
-  const rec = { id: 'fx' + Date.now().toString(36), name, created: wbNow(), updated: wbNow(), links, from, snap };
-  if (!myPut(rec)) return null;
+  const rec = { id: myId(), name, created: wbNow(), updated: wbNow(), links, from, snap, ...myCapturePrefs() };
+  if (!myPut(rec)) { flash('未保存：浏览器里没存上，当前编辑和原效果仍保留', true, 12000, true); return null; }
   // 导出名（UE 资产名）跟着原来的走：派生自引菊 → 锦的，贴图照样叫 HikiNishiki_Hiki / _Nishiki（「查看交付」里能改）
-  const combo = state.tab === 'combo', pn = packNamesFor(wb.key, lib.effect, snap.layers.length, combo ? 'MyFx' : (TYPE_EN[state.P.type] || 'MyFx'), combo ? '' : state.P.type);
-  setPackNames('my:' + rec.id, pn.base, pn.layers, pn);
   const drafts = wbList().filter(x => x.draft); if (drafts.length) wbPut(wbList().filter(x => !x.draft));
   wb.sig = wbSig();     // 原来那个效果算「没改过」（不再存草稿）
-  try { await repoWrite('my:' + rec.id, { id: rec.id, name: rec.name, at: rec.updated, base: '我的效果', from, snap: rec.snap, links: rec.links, ue: packNamesFor('my:' + rec.id, null, snap.layers.length, 'MyFx') }); } catch (e) { flash('存进仓库文件夹失败：' + (e.message || e), true); }
-  await openMyEffect(rec.id, { keep: true });
-  flash(`已存成你的效果「${rec.name}」（派生自「${fromName}」，原来的不动）：现在能加层、删层、改名、删除`);
-  return rec;
+  return myFinishSave(rec, true);
 }
 async function addLayerAnywhere() {
-  if (!lib.my) { const r = await wbDeriveMine({ title: '先存成我的效果，再加层', action: '存好并加层' }); if (!r) return; }
+  if (state.tab !== 'combo') { const why = multiLayerBlock(state.P); if (why) { flash(why, true, 10000, true); return; } }
+  if (!lib.my || state.tab !== 'combo') { const r = await wbDeriveMine({ title: '先存成多层副本，再加层', action: '存好并加层' }); if (!r || state.tab !== 'combo') return; }
   myAddLayer();
 }
 
@@ -249,7 +247,9 @@ function initAssetOps() {
 function syncAssetOps() {
   const dl = deleteLabel(), combo = state.tab === 'combo';
   $('#abDel').hidden = !dl; $('#abDel').textContent = dl ? '删除' : ''; $('#abDel').title = dl ? dl + '（删了 8 秒内能撤销）' : '';
-  $('#abAddLayer').title = lib.my ? '加一层：花型模板、我的模板，或现有效果里的某一层（参数复制一份）' : '加一层：先把现在的样子存成你的效果（原来的不动），再加层';
+  const why = !combo ? multiLayerBlock(state.P) : '';
+  $('#abAddLayer').disabled = !!why || !!wb.saving;
+  $('#abAddLayer').title = why || (lib.my && combo ? '加一层：花型模板、我的模板，或现有效果里的某一层（参数复制一份）' : '加一层：先把现在的样子存成多层副本（原来的不动），再加层');
   $('#abSaveTpl').hidden = combo && state.comboSel < 0; $('#abSaveTpl').textContent = combo ? `把第 ${state.comboSel + 1} 层存为模板` : '把这一层存为模板';
   $('#abUpdTpl').hidden = !(lib.tpl && !combo); $('#abUpdTpl').textContent = lib.tpl ? `更新模板「${lib.tpl.name}」` : '';
   $('#abHide').hidden = !lib.effect;

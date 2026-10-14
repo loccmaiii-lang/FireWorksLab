@@ -166,7 +166,7 @@ function wbBaseId() { return lib.my ? lib.my.name : lib.review ? lib.review.id :
 function mtOpenId() { const m = /^mt:(.+)$/.exec(wbKey()); return m && MULTI_BY_ID[m[1]] ? m[1] : null; }
 const wbAll = () => store.get('mySaves', {});
 const wbList = () => (wbAll()[wb.key] || []);
-function wbPut(list) { const all = wbAll(); all[wb.key] = list; store.set('mySaves', all); }
+function wbPut(list) { const all = wbAll(); all[wb.key] = list; return store.set('mySaves', all); }
 function wbSnap() {
   if (state.tab === 'combo') return { kind: 'combo', name: state.comboName, layers: state.layers.map(L => { const e = layerEntryOf(L) || {}; const { lib: _l, ...Lr } = L; return { id: e.rep || null, type: e.type || null, L: structuredClone(Lr), P: e.P ? structuredClone(e.P) : null, M: e.M ? structuredClone(e.M) : null }; }) };
   return { kind: 'single', P: structuredClone(state.P), M: structuredClone(state.M), repId: state.repId || null };
@@ -190,7 +190,7 @@ function wbSync() {
   const ef = lib.effect, e = lib.review, combo = state.tab === 'combo';
   const mtId = mtOpenId();
   $('#abName').textContent = lib.my ? lib.my.name : lib.tpl ? lib.tpl.name : ef ? ef.名 : e ? e.name : lib.formal ? lib.formal.name : lib.key === 'combo' ? '组合编辑器' : mtId ? MULTI_BY_ID[mtId].name : TYPE_NAMES[state.P.type] || '';
-  $('#abSub').textContent = lib.my ? [packNamesFor(wb.key, null, state.layers.length, 'MyFx').base, state.layers.length + ' 层', '我的效果' + (lib.my.from ? ' · 派生自 ' + lib.my.from.name : '')].join(' · ')
+  $('#abSub').textContent = lib.my ? [packNamesFor(wb.key, null, combo ? state.layers.length : 1, combo ? 'MyFx' : TYPE_EN[state.P.type], combo ? '' : state.P.type).base, combo ? state.layers.length + ' 层' : '原生单层', '我的效果' + (lib.my.from ? ' · 派生自 ' + lib.my.from.name : '')].join(' · ')
     : lib.tpl ? [TYPE_NAMES[lib.tpl.type] || lib.tpl.type, '我的模板'].join(' · ')
     : mtId ? [state.layers.length + ' 层', '多层花型模板'].join(' · ')
     : [wbBaseId(), combo ? state.layers.length + ' 层' : '单层', ef ? ef.阶段 : lib.formal ? '正式库' : e ? '条目' : '花型模板'].join(' · ');
@@ -206,7 +206,8 @@ function wbSync() {
   sel.value = cur;
   const changed = !!wb.sig && wbSig() !== wb.sig;
   $('#abChg').hidden = !changed; $('#abChg').textContent = wb.src.kind === 'mine' ? '参数已变 · 未保存到「' + ((list.find(x => x.id === wb.src.id) || {}).name || '') + '」' : '参数已变 · 未保存'; wb.changed = changed;
-  $('#abSave').title = lib.my ? '保存当前效果' : '存成你的效果（原来的不动；之后能加层、删层、改名、删除）';
+  $('#abSave').disabled = $('#abSaveAs').disabled = !!wb.saving;
+  $('#abSave').title = lib.my ? '保存当前效果' : '存成你的效果，保留当前形态与参数，原来的不动';
   $('#abSaveAs').title = lib.my ? '另存为新效果，保留当前效果' : '存成你的效果（和「保存」一样）';
   if (typeof syncAssetOps === 'function') syncAssetOps();
   $('#versionSummary').textContent = changed ? '未保存' : wb.src.kind === 'mine' ? '我的版本' : lib.my ? '已保存' : '原始版本';
@@ -283,10 +284,24 @@ function askConfirm(title, note, yes = '确定', no = '取消') {
   return new Promise(resolve => { dlg.addEventListener('close', () => resolve(dlg.returnValue === 'ok'), { once: true }); dlg.showModal(); $('#confirmYes').focus(); });
 }
 async function wbSave(asNew) {
-  if (lib.my) return mySave(asNew);                         // 我的效果：保存 = 覆盖这个效果，另存为 = 复制成新效果（4.2.7）
-  // 4.5.0（用户 10-05 #7「你制作的效果，我重新调参保存后，我想再增加别的层数，无法增加」）：其它来源保存 = 存成「我的效果（派生自 ×）」
-  // 4.9.89（导出排查 A12）：放不进多层的尾缀（RT6 全套、V5、上升循环、物理尾缀）保存 = 存成这个效果的一个版本（资产栏「版本」），不派生成我的效果（我的效果是多层的一种）
-  if (typeof wbDeriveMine === 'function' && !(state.tab !== 'combo' && typeof multiLayerBlock === 'function' && multiLayerBlock(state.P))) return wbDeriveMine();
+  if (wb.saving) return null;
+  wb.saving = true;
+  const buttons = [$('#abSave'), $('#abSaveAs')], labels = buttons.map(b => b.textContent);
+  buttons.forEach(b => { b.disabled = true; }); buttons[asNew ? 1 : 0].textContent = '保存中…';
+  $('#abAddLayer').disabled = true;
+  try {
+    if (lib.my) return await mySave(asNew);
+    // 原生单层与多层都派生到我的效果，不再按尾缀形态退回旧版本入口。
+    if (typeof wbDeriveMine === 'function') return await wbDeriveMine();
+    return await wbSaveVersion(asNew);
+  } catch (e) { flash('保存未完成：' + (e.message || e) + '。当前参数仍保留，请查看左栏与原版本', true, 12000, true); return null; }
+  finally {
+    wb.saving = false; buttons.forEach((b, i) => { b.disabled = false; b.textContent = labels[i]; });
+    try { if (typeof syncAssetOps === 'function') syncAssetOps(); } catch (e) { console.warn('保存按钮状态刷新失败', e); }
+  }
+}
+// 旧的版本保存后备入口（只在独立效果控制器缺失时使用）。
+async function wbSaveVersion(asNew) {
   if (repoDir.h && !repoDir.ok) await repoPerm(true);      // 连过仓库文件夹：先趁这次点击问一下「允许」（浏览器重开后第一次）
   const list = wbList(), mine = wb.src.kind === 'mine' && list.find(s => s.id === wb.src.id);
   let it = !asNew && mine && !mine.draft && !mine.auto && mine;        // 草稿、导出时自动存的不覆盖：存成正式的一个版本（起名字）；草稿删掉
@@ -297,10 +312,12 @@ async function wbSave(asNew) {
     it = { id: Date.now().toString(36), name: name.trim() || `我的 ${list.length + 1}` }; list.push(it);
   }
   Object.assign(it, { at: wbNow(), base: wbBaseId(), baseVer: lib.review && lib.review.ver || '', snap: wbSnap() });
-  wbPut(list); wb.src = { kind: 'mine', id: it.id }; wb.sig = wbSig(); wbSync(); renderLib();
+  if (!wbPut(list)) { flash('未保存：浏览器里没存上，当前参数仍保留', true, 12000, true); return null; }
+  wb.src = { kind: 'mine', id: it.id }; wb.sig = wbSig(); wbSync(); renderLib();
   let path = null; try { path = await repoWrite(wb.key, it); } catch (e) { flash('存进仓库文件夹失败：' + (e.message || e), true); return; }
   flash(path ? `已保存「${it.name}」：浏览器里一份 + 仓库 ${path.replace(/^analysis\/我的配方\/_待上传\//, 'analysis/我的配方/')}（后台脚本推上去，AI 能直接读）`
     : `已保存「${it.name}」（这台电脑的浏览器里；资产栏 ⋯「连接仓库文件夹」后会顺便存进 git，AI 能直接读）`);
+  return it;
 }
 // 4.2.10 版本只留一套（走查 B8）：导出时在这个效果的「版本」里自动存一份（以前存在工具页「版本与回滚」，全局一个列表，回滚会把别的效果的参数塞进来）。
 // 每个效果只留最近 3 份；不进左栏「我的版本」；不写仓库文件夹（那是你主动保存的）。
