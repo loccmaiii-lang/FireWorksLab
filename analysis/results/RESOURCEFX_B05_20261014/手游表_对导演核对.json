@@ -1,0 +1,344 @@
+{
+ "format": "df.mobile-table-vs-director/1",
+ "at": "2026-10-14T16:50:26.438Z",
+ "director": {
+  "isB05": true,
+  "differencesVsB05OneTable": 0,
+  "mobileEvents": 714,
+  "pcEvents": 3786
+ },
+ "counts": {
+  "mobileTable30Rows": 18,
+  "mobileUsedIds": 10,
+  "filledAndUsed": 10,
+  "filledNotUsedOnMobile": [
+   "跨年烟花3.0_小号_A_小金花",
+   "跨年烟花3.0_小号_B_小银菊",
+   "跨年烟花3.0_小号_C_短爆裂",
+   "跨年烟花3.0_小型_B_红彗星",
+   "跨年烟花3.0_小型_C_银星扇",
+   "跨年烟花3.0_大型_A_金垂柳",
+   "跨年烟花3.0_超大_尾缀",
+   "跨年烟花3.0_低位_尾缀"
+  ],
+  "usedButNoRow": []
+ },
+ "tableRowsCheck": [
+  {
+   "id": "P_EFX_FireWorks_NY_Trail_Small",
+   "rows": 1,
+   "row": "跨年烟花3.0_小型_尾缀",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+   "allM": true,
+   "FXType": "SHOW",
+   "loads": true,
+   "ok": true
+  },
+  {
+   "id": "P_EFX_FireWorks_Strobe",
+   "rows": 1,
+   "row": "跨年烟花3.0_小型_J_点灭星",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "allM": true,
+   "FXType": "SHOW",
+   "loads": true,
+   "ok": true
+  },
+  {
+   "id": "P_EFX_FireWorks_NY_Trail_Medium",
+   "rows": 1,
+   "row": "跨年烟花3.0_中型_尾缀",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+   "allM": true,
+   "FXType": "SHOW",
+   "loads": true,
+   "ok": true
+  },
+  {
+   "id": "P_EFX_FireWorks_Glitter",
+   "rows": 1,
+   "row": "跨年烟花3.0_小型_I__橙辉星",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+   "allM": true,
+   "FXType": "SHOW",
+   "loads": true,
+   "ok": true
+  },
+  {
+   "id": "P_EFX_FireWorks_Crackle",
+   "rows": 1,
+   "row": "跨年烟花3.0_小型_G_爆裂星",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+   "allM": true,
+   "FXType": "SHOW",
+   "loads": true,
+   "ok": true
+  },
+  {
+   "id": "P_EFX_FireWorks_NY_Trail_Large",
+   "rows": 1,
+   "row": "跨年烟花3.0_大型_尾缀",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "allM": true,
+   "FXType": "SHOW",
+   "loads": true,
+   "ok": true
+  },
+  {
+   "id": "P_EFX_FireWorks_GoldRayChry",
+   "rows": 1,
+   "row": "跨年烟花3.0_中型_B_金芒菊",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+   "allM": true,
+   "FXType": "SHOW",
+   "loads": true,
+   "ok": true
+  },
+  {
+   "id": "P_EFX_FireWorks_SilverChry",
+   "rows": 1,
+   "row": "跨年烟花3.0_小型_F_银冠菊",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+   "allM": true,
+   "FXType": "SHOW",
+   "loads": true,
+   "ok": true
+  },
+  {
+   "id": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "rows": 1,
+   "row": "跨年烟花3.0_极小_尾缀",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "allM": true,
+   "FXType": "SHOW",
+   "loads": true,
+   "ok": true
+  },
+  {
+   "id": "P_EFX_FireWorks_LittleCombo",
+   "rows": 1,
+   "row": "跨年烟花3.0_小号_D_小分裂",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+   "allM": true,
+   "FXType": "SHOW",
+   "loads": true,
+   "ok": true
+  }
+ ],
+ "rows": [
+  {
+   "pos": 2744,
+   "row": "跨年烟花3.0_小号_A_小金花",
+   "ResourceId": "P_EFX_FireWorks_LittleGold",
+   "SP": "P_EFX_FireWorks_LittleGold_M",
+   "mobileEvents": 0,
+   "mobileByMinQuality": {},
+   "pcEvents": 45,
+   "match": "手游没用到（PC 在用）"
+  },
+  {
+   "pos": 2745,
+   "row": "跨年烟花3.0_小号_B_小银菊",
+   "ResourceId": "P_EFX_FireWorks_LittleSilver",
+   "SP": "P_EFX_FireWorks_LittleSilver_M",
+   "mobileEvents": 0,
+   "mobileByMinQuality": {},
+   "pcEvents": 36,
+   "match": "手游没用到（PC 在用）"
+  },
+  {
+   "pos": 2746,
+   "row": "跨年烟花3.0_小号_C_短爆裂",
+   "ResourceId": "P_EFX_FireWorks_LittleCrackle",
+   "SP": "P_EFX_FireWorks_LittleCrackle_M",
+   "mobileEvents": 0,
+   "mobileByMinQuality": {},
+   "pcEvents": 30,
+   "match": "手游没用到（PC 在用）"
+  },
+  {
+   "pos": 2747,
+   "row": "跨年烟花3.0_小号_D_小分裂",
+   "ResourceId": "P_EFX_FireWorks_LittleCombo",
+   "SP": "P_EFX_FireWorks_LittleCombo_M",
+   "mobileEvents": 111,
+   "mobileByMinQuality": {
+    "EQuality_High": 10,
+    "EQuality_Medium": 101
+   },
+   "pcEvents": 0,
+   "match": "手游在用、有行"
+  },
+  {
+   "pos": 2748,
+   "row": "跨年烟花3.0_小型_B_红彗星",
+   "ResourceId": "P_EFX_FireWorks_FanComet_01",
+   "SP": "P_EFX_FireWorks_Comet_Layers_M",
+   "mobileEvents": 0,
+   "mobileByMinQuality": {},
+   "pcEvents": 1616,
+   "match": "手游没用到（PC 在用）"
+  },
+  {
+   "pos": 2749,
+   "row": "跨年烟花3.0_小型_C_银星扇",
+   "ResourceId": "P_EFX_FireWorks_FanSilver_01",
+   "SP": "P_EFX_FireWorks_Silver3_Layers_S_M",
+   "mobileEvents": 0,
+   "mobileByMinQuality": {},
+   "pcEvents": 808,
+   "match": "手游没用到（PC 在用）"
+  },
+  {
+   "pos": 2750,
+   "row": "跨年烟花3.0_小型_F_银冠菊",
+   "ResourceId": "P_EFX_FireWorks_SilverChry",
+   "SP": "P_EFX_FireWorks_SilverChry_M",
+   "mobileEvents": 10,
+   "mobileByMinQuality": {
+    "EQuality_VeryLow": 6,
+    "EQuality_High": 4
+   },
+   "pcEvents": 115,
+   "match": "手游在用、有行"
+  },
+  {
+   "pos": 2751,
+   "row": "跨年烟花3.0_小型_G_爆裂星",
+   "ResourceId": "P_EFX_FireWorks_Crackle",
+   "SP": "P_EFX_FireWorks_Crackle_M",
+   "mobileEvents": 6,
+   "mobileByMinQuality": {
+    "EQuality_VeryLow": 4,
+    "EQuality_High": 2
+   },
+   "pcEvents": 17,
+   "match": "手游在用、有行"
+  },
+  {
+   "pos": 2752,
+   "row": "跨年烟花3.0_小型_I__橙辉星",
+   "ResourceId": "P_EFX_FireWorks_Glitter",
+   "SP": "P_EFX_FireWorks_Glitter_M",
+   "mobileEvents": 40,
+   "mobileByMinQuality": {
+    "EQuality_VeryLow": 28,
+    "EQuality_High": 12
+   },
+   "pcEvents": 16,
+   "match": "手游在用、有行"
+  },
+  {
+   "pos": 2753,
+   "row": "跨年烟花3.0_小型_J_点灭星",
+   "ResourceId": "P_EFX_FireWorks_Strobe",
+   "SP": "P_EFX_FireWorks_Strobe_M",
+   "mobileEvents": 55,
+   "mobileByMinQuality": {
+    "EQuality_VeryLow": 39,
+    "EQuality_Medium": 4,
+    "EQuality_High": 12
+   },
+   "pcEvents": 16,
+   "match": "手游在用、有行"
+  },
+  {
+   "pos": 2754,
+   "row": "跨年烟花3.0_中型_B_金芒菊",
+   "ResourceId": "P_EFX_FireWorks_GoldRayChry",
+   "SP": "P_EFX_FireWorks_GoldRayChry_M",
+   "mobileEvents": 109,
+   "mobileByMinQuality": {
+    "EQuality_VeryLow": 87,
+    "EQuality_Medium": 10,
+    "EQuality_High": 12
+   },
+   "pcEvents": 60,
+   "match": "手游在用、有行"
+  },
+  {
+   "pos": 2755,
+   "row": "跨年烟花3.0_大型_A_金垂柳",
+   "ResourceId": "P_EFX_FireWorks_GoldKamuro",
+   "SP": "P_EFX_FireWorks_YonshakuKamuro_M",
+   "mobileEvents": 0,
+   "mobileByMinQuality": {},
+   "pcEvents": 5,
+   "match": "手游没用到（PC 在用）"
+  },
+  {
+   "pos": 2756,
+   "row": "跨年烟花3.0_超大_尾缀",
+   "ResourceId": "P_EFX_FireWorks_RiseTrail_Hero",
+   "SP": "P_EFX_FireWorks_RiseTrail_L_M",
+   "mobileEvents": 0,
+   "mobileByMinQuality": {},
+   "pcEvents": 0,
+   "match": "两边都没用到"
+  },
+  {
+   "pos": 2757,
+   "row": "跨年烟花3.0_大型_尾缀",
+   "ResourceId": "P_EFX_FireWorks_NY_Trail_Large",
+   "SP": "P_EFX_FireWorks_RiseTrail_L_M",
+   "mobileEvents": 109,
+   "mobileByMinQuality": {
+    "EQuality_VeryLow": 87,
+    "EQuality_Medium": 10,
+    "EQuality_High": 12
+   },
+   "pcEvents": 141,
+   "match": "手游在用、有行"
+  },
+  {
+   "pos": 2758,
+   "row": "跨年烟花3.0_中型_尾缀",
+   "ResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+   "SP": "P_EFX_FireWorks_RiseTrail_M_M",
+   "mobileEvents": 50,
+   "mobileByMinQuality": {
+    "EQuality_VeryLow": 34,
+    "EQuality_High": 16
+   },
+   "pcEvents": 182,
+   "match": "手游在用、有行"
+  },
+  {
+   "pos": 2759,
+   "row": "跨年烟花3.0_小型_尾缀",
+   "ResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+   "SP": "P_EFX_FireWorks_RiseTrail_S_M",
+   "mobileEvents": 61,
+   "mobileByMinQuality": {
+    "EQuality_VeryLow": 43,
+    "EQuality_High": 14,
+    "EQuality_Medium": 4
+   },
+   "pcEvents": 45,
+   "match": "手游在用、有行"
+  },
+  {
+   "pos": 2760,
+   "row": "跨年烟花3.0_低位_尾缀",
+   "ResourceId": "P_EFX_FireWorks_RiseTrail_XS",
+   "SP": "P_EFX_FireWorks_RiseTrail_XS_M",
+   "mobileEvents": 0,
+   "mobileByMinQuality": {},
+   "pcEvents": 176,
+   "match": "手游没用到（PC 在用）"
+  },
+  {
+   "pos": 2761,
+   "row": "跨年烟花3.0_极小_尾缀",
+   "ResourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "SP": "P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "mobileEvents": 163,
+   "mobileByMinQuality": {
+    "EQuality_High": 18,
+    "EQuality_Medium": 145
+   },
+   "pcEvents": 163,
+   "match": "手游在用、有行"
+  }
+ ]
+}

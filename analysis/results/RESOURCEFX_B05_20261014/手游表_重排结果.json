@@ -1,0 +1,761 @@
+{
+ "format": "df.datatable-reorder-result/1",
+ "at": "2026-10-14T16:50:06.811Z",
+ "table": "/Game/DataTables/Resource/ResourceFXTable",
+ "before": 2761,
+ "after": 2761,
+ "otherRowsUnchangedAndSameOrder": true,
+ "positions": [
+  2744,
+  2745,
+  2746,
+  2747,
+  2748,
+  2749,
+  2750,
+  2751,
+  2752,
+  2753,
+  2754,
+  2755,
+  2756,
+  2757,
+  2758,
+  2759,
+  2760,
+  2761
+ ],
+ "inPcOrder": true,
+ "rows": [
+  {
+   "pos": 2744,
+   "row": "跨年烟花3.0_小号_A_小金花",
+   "RowDescription": "跨年烟花3.0_小号_A_小金花",
+   "ResourceId": "P_EFX_FireWorks_LittleGold",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleGold_M.P_EFX_FireWorks_LittleGold_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "Fireworks_Explostion_Medium",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2745,
+   "row": "跨年烟花3.0_小号_B_小银菊",
+   "RowDescription": "跨年烟花3.0_小号_B_小银菊",
+   "ResourceId": "P_EFX_FireWorks_LittleSilver",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleSilver_M.P_EFX_FireWorks_LittleSilver_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2746,
+   "row": "跨年烟花3.0_小号_C_短爆裂",
+   "RowDescription": "跨年烟花3.0_小号_C_短爆裂",
+   "ResourceId": "P_EFX_FireWorks_LittleCrackle",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCrackle_M.P_EFX_FireWorks_LittleCrackle_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2747,
+   "row": "跨年烟花3.0_小号_D_小分裂",
+   "RowDescription": "跨年烟花3.0_小号_D_小分裂",
+   "ResourceId": "P_EFX_FireWorks_LittleCombo",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_LittleCombo_M.P_EFX_FireWorks_LittleCombo_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2748,
+   "row": "跨年烟花3.0_小型_B_红彗星",
+   "RowDescription": "跨年烟花3.0_小型_B_红彗星",
+   "ResourceId": "P_EFX_FireWorks_FanComet_01",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Comet_Layers_M.P_EFX_FireWorks_Comet_Layers_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2749,
+   "row": "跨年烟花3.0_小型_C_银星扇",
+   "RowDescription": "跨年烟花3.0_小型_C_银星扇",
+   "ResourceId": "P_EFX_FireWorks_FanSilver_01",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Silver3_Layers_S_M.P_EFX_FireWorks_Silver3_Layers_S_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2750,
+   "row": "跨年烟花3.0_小型_F_银冠菊",
+   "RowDescription": "跨年烟花3.0_小型_F_银冠菊",
+   "ResourceId": "P_EFX_FireWorks_SilverChry",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_SilverChry_M.P_EFX_FireWorks_SilverChry_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2751,
+   "row": "跨年烟花3.0_小型_G_爆裂星",
+   "RowDescription": "跨年烟花3.0_小型_G_爆裂星",
+   "ResourceId": "P_EFX_FireWorks_Crackle",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Crackle_M.P_EFX_FireWorks_Crackle_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2752,
+   "row": "跨年烟花3.0_小型_I__橙辉星",
+   "RowDescription": "跨年烟花3.0_小型_I__橙辉星",
+   "ResourceId": "P_EFX_FireWorks_Glitter",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Glitter_M.P_EFX_FireWorks_Glitter_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2753,
+   "row": "跨年烟花3.0_小型_J_点灭星",
+   "RowDescription": "跨年烟花3.0_小型_J_点灭星",
+   "ResourceId": "P_EFX_FireWorks_Strobe",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_Strobe_M.P_EFX_FireWorks_Strobe_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2754,
+   "row": "跨年烟花3.0_中型_B_金芒菊",
+   "RowDescription": "跨年烟花3.0_中型_B_金芒菊",
+   "ResourceId": "P_EFX_FireWorks_GoldRayChry",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_GoldRayChry_M.P_EFX_FireWorks_GoldRayChry_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2755,
+   "row": "跨年烟花3.0_大型_A_金垂柳",
+   "RowDescription": "跨年烟花3.0_大型_A_金垂柳",
+   "ResourceId": "P_EFX_FireWorks_GoldKamuro",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_YonshakuKamuro_M.P_EFX_FireWorks_YonshakuKamuro_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "10",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2756,
+   "row": "跨年烟花3.0_超大_尾缀",
+   "RowDescription": "跨年烟花3.0_超大_尾缀",
+   "ResourceId": "P_EFX_FireWorks_RiseTrail_Hero",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2757,
+   "row": "跨年烟花3.0_大型_尾缀",
+   "RowDescription": "跨年烟花3.0_大型_尾缀",
+   "ResourceId": "P_EFX_FireWorks_NY_Trail_Large",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_L_M.P_EFX_FireWorks_RiseTrail_L_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2758,
+   "row": "跨年烟花3.0_中型_尾缀",
+   "RowDescription": "跨年烟花3.0_中型_尾缀",
+   "ResourceId": "P_EFX_FireWorks_NY_Trail_Medium",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_M_M.P_EFX_FireWorks_RiseTrail_M_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2759,
+   "row": "跨年烟花3.0_小型_尾缀",
+   "RowDescription": "跨年烟花3.0_小型_尾缀",
+   "ResourceId": "P_EFX_FireWorks_NY_Trail_Small",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_S_M.P_EFX_FireWorks_RiseTrail_S_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2760,
+   "row": "跨年烟花3.0_低位_尾缀",
+   "RowDescription": "跨年烟花3.0_低位_尾缀",
+   "ResourceId": "P_EFX_FireWorks_RiseTrail_XS",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_XS_M.P_EFX_FireWorks_RiseTrail_XS_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  },
+  {
+   "pos": 2761,
+   "row": "跨年烟花3.0_极小_尾缀",
+   "RowDescription": "跨年烟花3.0_极小_尾缀",
+   "ResourceId": "P_EFX_FireWorks_RiseTrail_Tiny",
+   "FxSP": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "FxSP_Low": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "FxSP_High": "/Game/Effects/Props/FireWorks/P_EFX_FireWorks_RiseTrail_Tiny_M.P_EFX_FireWorks_RiseTrail_Tiny_M",
+   "FXType": "SHOW",
+   "MaxInstanceNum": "20",
+   "AudioResourceId": "None",
+   "fieldsChanged": [],
+   "loads": true
+  }
+ ],
+ "writes": [
+  {
+   "at": "2026-10-14T16:47:45.671Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_极小_尾缀",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:47:48.427Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_小号_A_小金花",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:47:51.205Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_小号_B_小银菊",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:47:53.957Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_小号_C_短爆裂",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:47:56.715Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_小号_D_小分裂",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:47:59.451Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_小型_B_红彗星",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:02.177Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_小型_C_银星扇",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:04.893Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_小型_F_银冠菊",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:07.638Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_小型_G_爆裂星",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:10.312Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_小型_I__橙辉星",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:12.985Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_小型_J_点灭星",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:15.658Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_中型_B_金芒菊",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:18.328Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_大型_A_金垂柳",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:20.906Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_超大_尾缀",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:23.542Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_大型_尾缀",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:26.169Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_中型_尾缀",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:28.822Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_小型_尾缀",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:31.401Z",
+   "route": "/datatable/row/remove",
+   "row": "跨年烟花3.0_低位_尾缀",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:33.994Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_小号_A_小金花",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:36.608Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_小号_A_小金花",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "AudioResourceId",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:39.220Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_小号_B_小银菊",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:41.889Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_小号_B_小银菊",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:44.554Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_小号_C_短爆裂",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:47.188Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_小号_C_短爆裂",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:49.832Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_小号_D_小分裂",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:52.507Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_小号_D_小分裂",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:55.195Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_小型_B_红彗星",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:48:57.816Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_小型_B_红彗星",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:00.474Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_小型_C_银星扇",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:03.133Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_小型_C_银星扇",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:05.757Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_小型_F_银冠菊",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:08.385Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_小型_F_银冠菊",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:11.115Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_小型_G_爆裂星",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:13.721Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_小型_G_爆裂星",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:16.363Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_小型_I__橙辉星",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:19.005Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_小型_I__橙辉星",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:21.617Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_小型_J_点灭星",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:24.245Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_小型_J_点灭星",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:26.840Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_中型_B_金芒菊",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:29.474Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_中型_B_金芒菊",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:32.100Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_大型_A_金垂柳",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:34.781Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_大型_A_金垂柳",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:37.427Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_超大_尾缀",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:40.036Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_超大_尾缀",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "MaxInstanceNum",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:42.666Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_大型_尾缀",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:45.330Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_大型_尾缀",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "MaxInstanceNum",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:47.946Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_中型_尾缀",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:50.579Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_中型_尾缀",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "MaxInstanceNum",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:53.200Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_小型_尾缀",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:55.829Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_小型_尾缀",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "MaxInstanceNum",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:49:58.447Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_低位_尾缀",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:50:01.089Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_低位_尾缀",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "MaxInstanceNum",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:50:03.740Z",
+   "route": "/datatable/row/add",
+   "row": "跨年烟花3.0_极小_尾缀",
+   "success": true
+  },
+  {
+   "at": "2026-10-14T16:50:06.405Z",
+   "route": "/datatable/row/update",
+   "row": "跨年烟花3.0_极小_尾缀",
+   "fields": [
+    "ResourceId",
+    "FxSP",
+    "FxSP_Low",
+    "FxSP_High",
+    "MaxInstanceNum",
+    "FXType",
+    "RowDescription"
+   ],
+   "success": true
+  }
+ ],
+ "pass": true
+}
