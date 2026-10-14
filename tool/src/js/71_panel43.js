@@ -27,6 +27,22 @@ function randBaseOf(key, keys) { const b = RAND_OF[key] || (/Jit$/.test(key) ? k
 const isCarrierType = P => P.type === 'senrin' || P.type === 'crossette';
 const SPARK_KEYS = ['sparkRateEnd', 'sparkStop', 'sparkStart', 'sparkRamp', 'sparkRampJit', 'sparkLife', 'sparkLifeEnd', 'sparkLifeJit', 'sparkSpread', 'sparkSize', 'sparkInherit', 'sparkDrag', 'sparkGrav',
   'T0', 'cooling', 'sparkBright', 'twinkle', 'twinkleHz', 'emberFrac', 'tailJit', 'tailShoulder', 'tailWidth', 'tailPinchHead', 'tailPinchTail', 'tailBellyAt', 'sparkRise', 'starBright', 'tailHaze', 'tailHazeR', 'branch', 'branchAt', 'tailDiffuse', 'tailDiffuseScale', 'sparkStretch', 'sparkStretchJit'];
+// 4.9.88（对话框相机渲染，用户 10-14 13:09「我新创建的金曜菊-B调没有效果……旧的存好了的文件，都没有接入」）：
+// 4.9.50 以后加的星头 / 火花参数一直没进「这一层没有星头 / 没有火花」两条规则——没有火花的层（点灭星、星头层）上火花形状 / 亮度随机 / 燃尽后气流……
+// 照样亮着、拖了没反应；星头不亮的层上星头拉长 / 六边形 / 星头光晕也一样。实测：analysis/scripts/存档逐层体检.py（你的 20 个存档 35 层）。
+// 火花：「尾缀（炭火火花）」这一节里除了生成率本身，全部跟「火花生成率 = 0」走——按节取，以后这一节加的参数自动带上，不用再记得往名单里加。
+const sectionKeys43 = name => SCHEMA.filter(s => s.sec === name).flatMap(s => (s.items || []).map(it => Array.isArray(it) ? it[0] : it.sel || it.curve).filter(Boolean));
+const SPARK_KEYS_ALL = [...new Set([...SPARK_KEYS, ...sectionKeys43('尾缀（炭火火花）').filter(k => k !== 'sparkRate')])];
+// 星头：4.9.50 / 4.9.58 的星头形状、星头光晕，星头亮度 0 时不起作用——但自定义发射器放出来的「星」也是星头（20_sim.js gather [0, gHead)），
+// 六边形还画在爆裂小闪 / 落水闪光 / 自定义发射器的光点上（40_gl.js drawHeads 整批 PT_HEXON），这些开着时照样起作用（存档逐层体检：扇形彗星 · 我的 第 2 层开着自定义发射器 1，六边形改了画面变）。
+// 星头大小、大小随机：「火花 › 跟星头大小」开着时还管火花从多大的范围出生
+const exLit43 = P => +P.x1On > 0 || +P.x2On > 0;
+const HEAD_SHAPE_KEYS = ['headStretch', 'headStretchJit', 'headKnots', 'headLumpy', 'headDouble', 'headHaloOwn', 'headHaloFrac', 'headHaloR'];
+// 「光点与曝光」的光晕除了星头，还画在：火花（千轮 / 分裂是子弹尾、子星尾）、爆裂小闪、落水闪光、自定义发射器的光点（20_sim.js gather、40_gl.js drawHeads / drawSparksGPU）。
+// 星头设了「星头单独」、这些又都没有 → 这一层的光晕占比 / 半径管不到任何东西（金曜菊-B 第 3 层点灭星：星头单独、占比 0、没有火花 → 改光晕画面一个像素都不变）
+const headHaloFracOf = P => P.headHaloFrac == null ? .22 : +P.headHaloFrac;
+const headOwnHalo = P => +P.headHaloOwn === 1 && familyOf(P.type || 'kiku') === 'aerial';     // 和 05_quality.js qualityOf 的 headHalo 同一个条件
+const layerHaloOthers = P => (isCarrierType(P) ? +P.carrierTail > 0 || +P.subTail > 0 : +P.sparkRate > 0) || +P.crackle > 0 || +P.waterRefl > 0 || +P.x1On > 0 || +P.x2On > 0;
 // 不起作用的条件（空中类）：[键, 条件, 原因]。依据：analysis/probe/参数有效性/（云端：拨了曲线 / 帧计划都不变）+ analysis/results/SMOKE15/参数有效性/（本机：再加 4 个时刻的定帧画面也不变）+ 代码（20_sim.js、40_gl.js）
 // 4.9.86：尾缀「合成一张」时只在实时模拟里画的行（GPU 粒子、引擎里加的效果、烟带、粒子层亮度）
 const RT_LIVE_KEYS = ['rtGpuC', 'rtGpuM', 'rtGpuF', 'rtGpuTw', 'rtGpuDisp', 'rtGpuGain', 'rtGpuMax', 'rtDotGain',
@@ -41,8 +57,12 @@ const INERT = [
   [['turbScale'], P => !(+P.turb > 0), '「湍流强度」是 0 时不起作用'],
   [['burn', 'ignDelay', 'ignJit', 'ignSeed', 'afterBurn', 'afterJit'], P => isCarrierType(P), '千轮 / 分裂的星是子弹：子弹飞多久看「子花开花时刻」，子星看「子花 › 燃烧时间」；这一项对它们不起作用'],
   [['sparkRate'], P => isCarrierType(P), '千轮 / 分裂：子弹的火花看「子弹火花率」，子星的火花看「子星火花率」；这一项不起作用'],
-  [SPARK_KEYS, P => !isCarrierType(P) && !(+P.sparkRate > 0), '「火花生成率」是 0（这一层没有火花）时不起作用'],
-  [SPARK_KEYS, P => isCarrierType(P) && !(+P.carrierTail > 0) && !(+P.subTail > 0), '「子弹火花率」「子星火花率」都是 0（这一层没有火花）时不起作用'],
+  [SPARK_KEYS_ALL, P => !isCarrierType(P) && !(+P.sparkRate > 0), '「火花生成率」是 0（这一层没有火花）时不起作用'],
+  [SPARK_KEYS_ALL, P => isCarrierType(P) && !(+P.carrierTail > 0) && !(+P.subTail > 0), '「子弹火花率」「子星火花率」都是 0（这一层没有火花）时不起作用'],
+  // 4.9.88 光晕被「星头单独」盖住
+  [['haloFrac', 'haloR'], P => headOwnHalo(P) && !layerHaloOthers(P), '这一层的星头用自己的光晕（星 › 大小 › 星头光晕 = 星头单独设），这一行只管火花、爆裂小闪、落水闪光和自定义发射器的光点，这一层都没有。要星头跟这里走：把「星头光晕」改回「跟这一层」'],
+  [['haloShape', 'haloBeta'], P => headOwnHalo(P) && !(headHaloFracOf(P) > 0) && !layerHaloOthers(P), '星头单独设光晕、星头光晕占比又是 0（星 › 大小），这一层也没有火花 / 爆裂小闪 / 自定义发射器的光点：光晕形状没有东西可画'],
+  [['headHaloR'], P => headOwnHalo(P) && !(headHaloFracOf(P) > 0), '「星头光晕占比」是 0（星头没有光晕）时不起作用'],
   [['emberAll'], P => !(+P.sparkStop > 0), '「火花停止时刻」是 0 时不起作用（火花本来就全程都有，余烬也一样）'],
   // 4.3（H13 / 渲染基础问题清单审计 4.4）：
   [['headDimUntil'], P => !(+P.headDim < 1), '「前段亮度」是 1（不压暗）时不起作用：先把前段亮度调到 1 以下'],
@@ -52,7 +72,12 @@ const INERT = [
   // 地面：只有 1 个喷口时，喷口之间的间距、彗星扇面没有意义（喷泉的扇面角度是喷射张角，照样起作用）
   [['fanAngle'], P => typeof hasComets === 'function' && hasComets(P) && Math.round(+P.nozzles || 1) <= 1, '「喷口数」是 1 时不起作用（扇面角度是几个喷口之间张开的角度）'],
   [['spacing'], P => familyOf(P.type) === 'ground' && P.type !== 'shikake' && Math.round(+P.nozzles || 1) <= 1, '「喷口数」是 1 时不起作用'],
-  [['fade', 'lastFlare', 'flicker', 'headSize', 'headTear', 'headDim', 'headDimUntil', 'strobeHz', 'strobeDuty', 'strobeStart', 'carrierHead'], P => !(+P.headBright > 0), '「星头亮度」是 0（星头不发光，只有尾迹 / 火花）时不起作用'],
+  [['fade', 'lastFlare', 'flicker', 'headTear', 'headDim', 'headDimUntil', 'strobeHz', 'strobeDuty', 'strobeStart', 'carrierHead'], P => !(+P.headBright > 0), '「星头亮度」是 0（星头不发光，只有尾迹 / 火花）时不起作用'],
+  // 4.9.88：headSize 从上一条挪出来（跟星头大小开着时它管火花出生范围）；4.9.50 / 4.9.58 的星头参数补上
+  [['headSize'], P => !(+P.headBright > 0) && !(+P.sparkSpawnHead > 0), '「星头亮度」是 0（星头不发光）时不起作用；「火花 › 跟星头大小」开着时它还管火花出生的范围，那时照样起作用'],
+  [HEAD_SHAPE_KEYS, P => !(+P.headBright > 0) && !exLit43(P), '「星头亮度」是 0（星头不发光）、也没开自定义发射器时不起作用'],
+  [['headSizeJit'], P => !(+P.headBright > 0) && !exLit43(P) && !(+P.sparkSpawnHead > 0), '「星头亮度」是 0（星头不发光）、也没开自定义发射器时不起作用；「火花 › 跟星头大小」开着时它还管火花出生的范围'],
+  [['headHex', 'headHexRot'], P => !(+P.headBright > 0) && !exLit43(P) && !(+P.crackle > 0) && !(+P.waterRefl > 0), '「星头亮度」是 0，也没有爆裂小闪 / 落水闪光 / 自定义发射器（六边形画在这一层所有星头式的光点上）时不起作用'],
   // 4.9.4：地面的喷口 / 灯芯亮点一直亮着、没有寿命；只有扇形 / 连发的彗星按「彗星燃烧」算寿命
   // 4.9.51：配了尺寸标定的效果导出按标定倍数，手动的导出缩放不管用（只看表，不量花径，面板刷新不卡）
   // 4.9.80（导出排查 ⑥）：多层效果导出不看每层的导出缩放（大小按层页头「缩放」+ 交付清单顶上的「导出尺寸」），以前这一行照样能选、导出却没用
