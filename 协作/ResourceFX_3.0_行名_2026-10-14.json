@@ -1,0 +1,266 @@
+{
+ "format": "df.resourcefx-snapshot-from-screenshot/1",
+ "说明": "用户 2026-10-14 21:44 发给总管（21）的 ResourceFX（PC）截图转录，36 行。第 1 列 name = 编排（dfshow）引用的名字；第 2 列 name2 = 表里另一列文字（含义未核实）；第 3 列 id3 = 截图第三列，和工作台资源目录的 id（P_EFX_FireWorks_<ResourceId>）同一种写法，不是粒子资产路径。粒子路径截图里看不到，以派活 T05 只读读回为准。",
+ "截图": "analysis/results/RESOURCEFX_20261014/用户截图_2026-10-14_2144.png",
+ "用户原话": "命名我略微改了一些……S80叫XS,小平台的叫Tiny，主角400的导入了（看板 i01 10-14 19:04）",
+ "rows": [
+  {
+   "id": "2800",
+   "name": "跨年烟花3.0_小号_A_小金花",
+   "name2": "跨年烟花3.0_小号_A_小金花",
+   "id3": "P_EFX_FireWorks_LittleGold"
+  },
+  {
+   "id": "2801",
+   "name": "跨年烟花3.0_小号_B_小银菊",
+   "name2": "跨年烟花3.0_小号_B_小银菊",
+   "id3": "P_EFX_FireWorks_LittleSilver"
+  },
+  {
+   "id": "2802",
+   "name": "跨年烟花3.0_小号_C_短爆裂",
+   "name2": "跨年烟花3.0_小号_C_短爆裂",
+   "id3": "P_EFX_FireWorks_LittleCrackle"
+  },
+  {
+   "id": "2803",
+   "name": "跨年烟花3.0_小号_D_小分裂",
+   "name2": "跨年烟花3.0_小号_D_小分裂",
+   "id3": "P_EFX_FireWorks_LittleCombo"
+  },
+  {
+   "id": "2804",
+   "name": "跨年烟花3.0_小号_A_短彗星",
+   "name2": "跨年烟花3.0_小号_A_短彗星",
+   "id3": "P_EFX_FireWorks_Comet_Layers_S"
+  },
+  {
+   "id": "2805",
+   "name": "跨年烟花3.0_小号_B_短银尾",
+   "name2": "跨年烟花3.0_小号_B_短银星",
+   "id3": "P_EFX_FireWorks_Silver_Layers_S"
+  },
+  {
+   "id": "2806",
+   "name": "跨年烟花3.0_小型_A_金锦冠_中心",
+   "name2": "跨年烟花3.0_小型_A_金锦冠_中心",
+   "id3": "P_EFX_FireWorks_FanGold_Central_01"
+  },
+  {
+   "id": "2807",
+   "name": "跨年烟花3.0_小型_A_金锦冠_中间",
+   "name2": "跨年烟花3.0_小型_A_金锦冠_中间",
+   "id3": "P_EFX_FireWorks_FanGold_Middle_01"
+  },
+  {
+   "id": "2808",
+   "name": "跨年烟花3.0_小型_A_金锦冠_外左",
+   "name2": "跨年烟花3.0_小型_A_金锦冠_外左",
+   "id3": "P_EFX_FireWorks_FanGold_OuterLeft"
+  },
+  {
+   "id": "2809",
+   "name": "跨年烟花3.0_小形_A_金锦冠_外右",
+   "name2": "跨年烟花3.0_小型_A_金锦冠_外右",
+   "id3": "P_EFX_FireWorks_FanGold_OuterRight"
+  },
+  {
+   "id": "2810",
+   "name": "跨年烟花3.0_小形_B_红彗星",
+   "name2": "跨年烟花3.0_小型_B_红彗星",
+   "id3": "P_EFX_FireWorks_FanComet_01"
+  },
+  {
+   "id": "2811",
+   "name": "跨年烟花3.0_小型_C_银星扇",
+   "name2": "跨年烟花3.0_小型_C_银星扇",
+   "id3": "P_EFX_FireWorks_FanSilver_01"
+  },
+  {
+   "id": "2812",
+   "name": "跨年烟花3.0_小型_D_金裂星",
+   "name2": "跨年烟花3.0_小型_D_金裂星",
+   "id3": "P_EFX_FireWorks_GoldCrackle"
+  },
+  {
+   "id": "2813",
+   "name": "跨年烟花3.0_小型_E_小彗星",
+   "name2": "跨年烟花3.0_小型_E_小彗星",
+   "id3": "P_EFX_FireWorks_Comet"
+  },
+  {
+   "id": "2814",
+   "name": "跨年烟花3.0_小型_F_银冠菊",
+   "name2": "跨年烟花3.0_小型_F_银冠菊",
+   "id3": "P_EFX_FireWorks_SilverChry"
+  },
+  {
+   "id": "2815",
+   "name": "跨年烟花3.0_小型_G_爆裂星",
+   "name2": "跨年烟花3.0_小型_G_爆裂星",
+   "id3": "P_EFX_FireWorks_Crackle"
+  },
+  {
+   "id": "2816",
+   "name": "跨年烟花3.0_小型_H_小青柠",
+   "name2": "跨年烟花3.0_小型_H_小青柠",
+   "id3": "P_EFX_FireWorks_Lime"
+  },
+  {
+   "id": "2817",
+   "name": "跨年烟花3.0_小型_I__橙辉星",
+   "name2": "跨年烟花3.0_小型_I__橙辉星",
+   "id3": "P_EFX_FireWorks_Glitter"
+  },
+  {
+   "id": "2818",
+   "name": "跨年烟花3.0_小型_J_点灭星",
+   "name2": "跨年烟花3.0_小型_J_点灭星",
+   "id3": "P_EFX_FireWorks_Strobe"
+  },
+  {
+   "id": "2819",
+   "name": "跨年烟花3.0_中型_A_绿牡丹",
+   "name2": "跨年烟花3.0_中型_A_绿牡丹",
+   "id3": "P_EFX_FireWorks_GreenPeony"
+  },
+  {
+   "id": "2820",
+   "name": "跨年烟花3.0_中型_B_金锦菊",
+   "name2": "跨年烟花3.0_中型_B_金锦菊",
+   "id3": "P_EFX_FireWorks_GoldSpark"
+  },
+  {
+   "id": "2821",
+   "name": "跨年烟花3.0_中型_C_彩千轮",
+   "name2": "跨年烟花3.0_中型_C_彩千轮",
+   "id3": "P_EFX_FireWorks_PrismWheels"
+  },
+  {
+   "id": "2822",
+   "name": "跨年烟花3.0_中型_D_金曜菊",
+   "name2": "跨年烟花3.0_中型_D_金曜菊",
+   "id3": "P_EFX_FireWorks_GoldChry"
+  },
+  {
+   "id": "2823",
+   "name": "跨年烟花3.0_中型_E_金蕊柠",
+   "name2": "跨年烟花3.0_中型_E_金蕊柠",
+   "id3": "P_EFX_FireWorks_GoldCoreLime"
+  },
+  {
+   "id": "2824",
+   "name": "跨年烟花3.0_中型_B_金芒菊",
+   "name2": "跨年烟花3.0_中型_B_金芒菊",
+   "id3": "P_EFX_FireWorks_GoldRayChry"
+  },
+  {
+   "id": "2825",
+   "name": "跨年烟花3.0_中型_F_多重菊",
+   "name2": "跨年烟花3.0_中型_F_多重菊",
+   "id3": "P_EFX_FireWorks_MultiLayerChry"
+  },
+  {
+   "id": "2826",
+   "name": "跨年烟花3.0_大型_A_金垂柳",
+   "name2": "跨年烟花3.0_大型_A_金垂柳",
+   "id3": "P_EFX_FireWorks_GoldKamuro"
+  },
+  {
+   "id": "2827",
+   "name": "跨年烟花3.0_大型_B_银彩菊",
+   "name2": "跨年烟花3.0_大型_B_银彩菊",
+   "id3": "P_EFX_FireWorks_SilverStrobeChry"
+  },
+  {
+   "id": "2828",
+   "name": "跨年烟花3.0_大型_C_金蕊柠",
+   "name2": "跨年烟花3.0_大型_C_金蕊柠",
+   "id3": "P_EFX_FireWorks_GoldCoreLime_L"
+  },
+  {
+   "id": "2829",
+   "name": "跨年烟花3.0_大型_D_多重菊",
+   "name2": "跨年烟花3.0_大型_D_多重菊",
+   "id3": "P_EFX_FireWorks_MultiLayerChry_L"
+  },
+  {
+   "id": "2830",
+   "name": "跨年烟花3.0_超大_尾缀",
+   "name2": "跨年烟花3.0_超大_尾缀",
+   "id3": "P_EFX_FireWorks_RiseTrail_Hero"
+  },
+  {
+   "id": "2831",
+   "name": "跨年烟花3.0_大型_尾缀",
+   "name2": "跨年烟花3.0_大型_尾缀",
+   "id3": "P_EFX_FireWorks_NY_Trail_Large"
+  },
+  {
+   "id": "2832",
+   "name": "跨年烟花3.0_中型_尾缀",
+   "name2": "跨年烟花3.0_中型_尾缀",
+   "id3": "P_EFX_FireWorks_NY_Trail_Medium"
+  },
+  {
+   "id": "2833",
+   "name": "跨年烟花3.0_小型_尾缀",
+   "name2": "跨年烟花3.0_小型_尾缀",
+   "id3": "P_EFX_FireWorks_NY_Trail_Small"
+  },
+  {
+   "id": "2834",
+   "name": "跨年烟花3.0_低位_尾缀",
+   "name2": "跨年烟花3.0_低位_尾缀",
+   "id3": "P_EFX_FireWorks_RiseTrail_XS"
+  },
+  {
+   "id": "2835",
+   "name": "跨年烟花3.0_极小_尾缀",
+   "name2": "跨年烟花3.0_小型_尾缀",
+   "id3": "P_EFX_FireWorks_RiseTrail_Tiny"
+  }
+ ],
+ "对比": {
+  "B04用到但表里没有": [
+   {
+    "name": "跨年烟花3.0_小型_F_小银菊",
+    "次数": 12,
+    "说明": "第 1 列写的是「小型_F_银冠菊」（2814），用户改了名"
+   },
+   {
+    "name": "跨年烟花3.0_小型_B_红彗星",
+    "次数": 1,
+    "说明": "第 1 列是「小形_B_红彗星」；B04 另有 29 处写「小形」能对上，这 1 处对不上"
+   }
+  ],
+  "B04占位要换成": {
+   "（待加行：Tiny）/ Tiny（坝顶低层，原 S80）": "跨年烟花3.0_低位_尾缀（2834，P_EFX_FireWorks_RiseTrail_XS）——用户：S80 叫 XS",
+   "（待加行：XS）/ XS（小平台）": "跨年烟花3.0_极小_尾缀（2835，P_EFX_FireWorks_RiseTrail_Tiny）——用户：小平台的叫 Tiny"
+  },
+  "新行（10-09 目录里没有）": [
+   "2800 跨年烟花3.0_小号_A_小金花",
+   "2801 跨年烟花3.0_小号_B_小银菊",
+   "2802 跨年烟花3.0_小号_C_短爆裂",
+   "2803 跨年烟花3.0_小号_D_小分裂",
+   "2804 跨年烟花3.0_小号_A_短彗星",
+   "2805 跨年烟花3.0_小号_B_短银尾",
+   "2814 跨年烟花3.0_小型_F_银冠菊",
+   "2828 跨年烟花3.0_大型_C_金蕊柠",
+   "2829 跨年烟花3.0_大型_D_多重菊",
+   "2830 跨年烟花3.0_超大_尾缀",
+   "2834 跨年烟花3.0_低位_尾缀",
+   "2835 跨年烟花3.0_极小_尾缀"
+  ],
+  "表里写法不一致（提醒用户，不影响编排）": [
+   "2805 第 1 列「短银尾」、第 2 列「短银星」",
+   "2809 / 2810 第 1 列「小形」、第 2 列「小型」——编排按第 1 列引用（B04 里就是「小形_B_红彗星」），改第 1 列要同步编排",
+   "2835 第 2 列写成「跨年烟花3.0_小型_尾缀」，和 2833 第 2 列重名",
+   "字母重复：小号 A（2800 小金花 / 2804 短彗星）、小号 B（2801 / 2805）、中型 B（2820 金锦菊 / 2824 金芒菊）；大型 C 金蕊柠 / 中型 E 金蕊柠、大型 D 多重菊 / 中型 F 多重菊 是同名不同尺寸",
+   "2817「小型_I__橙辉星」两个下划线"
+  ],
+  "同名但 id 变了（和 10-09 工作台目录比；粒子路径要 T05 读回才知道）": [
+   "2817 跨年烟花3.0_小型_I__橙辉星：P_EFX_FireWorks_OrangeGlitter → P_EFX_FireWorks_Glitter"
+  ]
+ }
+}
