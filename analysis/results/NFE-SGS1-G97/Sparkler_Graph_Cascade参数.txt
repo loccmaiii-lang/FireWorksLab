@@ -1,0 +1,65 @@
+烟花母版：Sparkler_Graph（分层火星）
+工具：烟花母版烘焙器 4.9.100（模拟内核：GPU；产物：地面循环）
+
+【贴图】
+T_Sparkler_Graph.png（星头、闪光、拖尾合并）
+尺寸 2048×2048，灰度（线性），RGBA 接力：先填满 R 的 16 格（第 0–15 帧），再接 G（16–31）、B（32–47）、A（48–63）
+格子 4 列 × 4 行，行优先，左上为第 0 帧；单格 512×512 像素；共 64 帧；格子四周留空 2 像素
+导入：sRGB 关闭，压缩 BC7；1K 版本在引擎里复制一张，把最大尺寸设为 1024 即可
+T_Sparkler_Graph_FrameTest.png（帧号测试）：排查用。格子、接力、取景与正式贴图完全相同，内容是帧号 + 以爆点为中心的固定大小圆和网格。
+  把材质实例的贴图临时换成它播放：帧号应连续递增不倒退，圆应不动、不胀缩、不变扁。
+  帧号乱跳 / 倒退 → 帧号曲线或材质的接力解码不对；圆胀缩、晃动 → Size By Life / 位置曲线不对；圆变扁 → 对齐方式或 Initial Size 不对
+T_Sparkler_Graph_Ramp.png：渐变图 256×8（sRGB；最右一格黑 = 护栏，4.9.31），灰度从暗到亮依次取：拖尾冷却色 → 拖尾高温色 → 星头高温色
+
+【材质实例】
+项目现有的 RGBA 序列帧材质；列 = 4，行 = 4；Ramp = T_Sparkler_Graph_Ramp
+
+【Cutout：裁掉面片上的空白，减少 overdraw】
+Required → Cutout Texture = T_Sparkler_Graph_Cutout（512×512，所有帧叠在一起的轮廓）；
+  Sub Images Horizontal = 1，Vertical = 1；Bounding Mode = Eight Vertices；Opacity Source Mode = Alpha；Alpha Threshold = 0.1；不加 SubUV 模块。
+  面片剩下约 51%（引擎按轮廓外接八边形，会略大一点）。材质照旧用 Dynamic Parameter 帧号通道取帧。
+
+【Cascade 发射器（地面循环）】
+Required：Screen Alignment = Square；Emitter Duration = 2.133 s；Emitter Loops = 0（无限循环）
+Spawn：Rate = 0；Burst：Count = 1，Time = 0（每个循环一发，上一发结束时下一发正好接上）
+Lifetime：2.133 s（常量，必须等于循环周期）
+Initial Size：X = 73 cm，Y = 73 cm
+Initial Location：Z = 0 cm（精灵中心离地高度；发射器放在地面喷口处）
+Dynamic Parameter：帧号通道（按导入配置，实测第 0 通道）= 帧号；Linear
+  0.0000      0.020
+  0.9844      63.020
+  1.0000      63.990
+  64 帧均匀分布，第 64 帧就是下一循环的第 0 帧，所以首尾无缝。
+Color Over Life（线性 RGB；Alpha 恒为 1）
+  0.0000      1  1  1
+  1.0000      1  1  1
+  亮度倍数：星头 1（乘在颜色上，按项目曝光再调）
+Light（可选）：常量亮度，按项目曝光设
+接缝校验：首尾变化量是相邻帧平均变化量的 1.04 倍（≈1 表示无缝）
+
+【自检】
+  画面占比：平均 69%，最差 10% 的帧 ≥ 59%（紧凑取景已禁用：引擎里会抖；想更满可以减少留边或改随开花放大）
+  过曝：第 1、2、3、4、5、6、7、8… 帧超过 2% 像素顶到 255，可降低星头亮度或曝光（Gamma 2.2 编码 UE 材质里不还原，未经 UE 验证前别用）
+  边缘渗色：无（留边 2 像素）
+  通道布局：R 有内容，G 有内容，B 有内容，A 有内容
+  近似帧：0 对相邻帧几乎相同
+  循环接缝：1.04（≈1 无缝）
+
+【烟（用项目现有烟雾贴图）】
+Spawn Rate 6 /s；Lifetime 4–7 s；Initial Size 200 cm，Size By Life 1 → 3.5
+Initial Velocity Z 100–250 cm/s（热气上升）；Drag 0.4
+Alpha Over Life：0 → 0.35（0.1）→ 0；颜色取火光色乘 0.3，远处按场景雾色
+
+【声音节点（相对开花，秒）】
+  0.000  持续声（循环）
+  玩家听到的时刻 = 事件时刻 + 距离 ÷ 343 m/s（800 m 约晚 2.3 s）
+
+【LOD 建议（1080p、竖直视角 60°）】
+LOD 0：0–1 m，全部层，2K 贴图
+LOD 1：1–3 m，屏幕上已小于单格像素：1K 贴图即可；粒子数/火花发射率减半；关闭 Light
+LOD 2：3 m 以外：只留本层；去掉芯（小缩放的牡丹层）和烟
+（Cascade：粒子系统的 LOD Distances 依次填 0、100、300，单位 cm）
+
+
+【说明】
+Sparkler_Graph.json 保存了全部参数，用烘焙器「导入参数 JSON」即可继续修改。

@@ -1,0 +1,4 @@
+21:32:22 SGR1 ✅ 
+21:32:22 SGS1 ✅ 
+21:32:22 → C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\probe\标准检查
+21:32:22 完成，用时 0.1 分钟

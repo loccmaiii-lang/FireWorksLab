@@ -1,0 +1,8 @@
+21:32:09 开始：Sparkler_Graph（导出素材）
+21:32:14 Sparkler_Graph 导出 5 秒：Sparkler_Graph.json、Sparkler_Graph_Cascade参数.txt、Sparkler_Graph_Mobile.json、Sparkler_Graph_曲线.csv、T_Sparkler_Graph.png、T_Sparkler_Graph_Cutout.png、T_Sparkler_Graph_FrameTest.png、T_Sparkler_Graph_Mobile.png、T_Sparkler_Graph_Mobile_Cutout.png、T_Sparkler_Graph_Mobile_FrameTest.png、T_Sparkler_Graph_Ramp.png、cascade.json、cascade_mobile.json
+21:32:15 回放检查：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-SGS1-G97\回放检查.jpg（✅ 通过）
+21:32:35 烘焙回放对照：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-SGS1-G97\烘焙回放.jpg
+21:32:35 烘焙回放（原尺寸）：C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\results\NFE-SGS1-G97\烘焙回放_原尺寸.jpg
+21:32:35 烘焙器预览 preview.js：1862 KB
+21:32:35 大文件（贴图）在 C:\Users\locmai\.codex\worktrees\gpu-monitor\FireWorksLab\analysis\local\输出\素材包，不上传
+21:32:35 完成，用时 0.4 分钟

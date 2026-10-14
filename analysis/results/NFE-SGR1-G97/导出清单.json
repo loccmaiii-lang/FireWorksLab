@@ -1,0 +1,28 @@
+{
+ "effect": "rocket_graph",
+ "entry": "SGR1",
+ "ver": "c873b9ad·graph4.9.97+loop4.9.83",
+ "time": "2026-10-14 21:32",
+ "dir": "analysis/local/输出/素材包/",
+ "packages": [
+  {
+   "name": "RocketTail_Graph",
+   "replica": "SGR1",
+   "files": [
+    "RocketTail_Graph.json",
+    "RocketTail_Graph_Cascade参数.txt",
+    "RocketTail_Graph_Mobile.json",
+    "RocketTail_Graph_曲线.csv",
+    "T_RocketTail_Graph.png",
+    "T_RocketTail_Graph_Cutout.png",
+    "T_RocketTail_Graph_FrameTest.png",
+    "T_RocketTail_Graph_Mobile.png",
+    "T_RocketTail_Graph_Mobile_Cutout.png",
+    "T_RocketTail_Graph_Mobile_FrameTest.png",
+    "T_RocketTail_Graph_Ramp.png",
+    "cascade.json",
+    "cascade_mobile.json"
+   ]
+  }
+ ]
+}

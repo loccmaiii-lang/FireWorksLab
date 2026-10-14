@@ -1,0 +1,192 @@
+{
+ "format": "fwl.cascade/1",
+ "name": "RocketTail_Graph",
+ "platform": "pc",
+ "source": {
+  "tool": "烟花母版烘焙器 4.9.100",
+  "type": "sparkgraph",
+  "form": "loop",
+  "quality": {
+   "ss": 2,
+   "hz": 300
+  },
+  "plan_sig": "d79d855d"
+ },
+ "textures": {
+  "seq": {
+   "file": "T_RocketTail_Graph.png",
+   "class": "flipbook",
+   "cols": 4,
+   "rows": 4,
+   "channels": 4,
+   "frames": 64,
+   "sha256": "ee71a7ff26215b63044e903affcb808466d9ac4f6a1d5c0c333d906f24698175"
+  },
+  "cutout": {
+   "file": "T_RocketTail_Graph_Cutout.png",
+   "class": "cutout",
+   "save_est": 0.463,
+   "hash": "fb5bbcbe154250ae1998",
+   "sha256": "0be89a1822d9f2b096228a7424a4180640e8b45c5ed15a029c34d438a90db420"
+  },
+  "ramp": {
+   "file": "T_RocketTail_Graph_Ramp.png",
+   "class": "ramp",
+   "hash": "753efd61d5d40d4b133",
+   "sha256": "976afda77cd502761fb997a7c0c97e20846c0249b3a541298366785df32ad229"
+  }
+ },
+ "materials": {
+  "main": {
+   "role": "flipbook_rgba",
+   "textures": {
+    "main": "seq",
+    "ramp": "ramp"
+   },
+   "scalars": {
+    "rows": 4,
+    "cols": 4
+   }
+  }
+ },
+ "system": {
+  "preview_distance_cm": 30000,
+  "preview_warmup_s": 1.2
+ },
+ "emitters": [
+  {
+   "name": "Main",
+   "material": "main",
+   "gpu": false,
+   "required": {
+    "screen_alignment": "Rectangle",
+    "duration_s": 2.1333,
+    "loops": 0,
+    "delay_s": 0,
+    "cutout": "cutout",
+    "max_draw_count": 1,
+    "pivot_offset": [
+     -0.5,
+     -0.1078
+    ],
+    "local_space": true
+   },
+   "spawn": {
+    "rate": {
+     "const": 0
+    },
+    "bursts": [
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "modules": [
+    {
+     "m": "Lifetime",
+     "Lifetime": {
+      "const": 2.1333
+     }
+    },
+    {
+     "m": "InitialSize",
+     "StartSize": {
+      "const": [
+       1428,
+       2040,
+       1
+      ]
+     }
+    },
+    {
+     "m": "InitialLocation",
+     "StartLocation": {
+      "const": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    {
+     "m": "DynamicParameter",
+     "params": {
+      "frame": {
+       "curve": [
+        [
+         0,
+         0.02
+        ],
+        [
+         0.9844,
+         63.02
+        ],
+        [
+         1,
+         63.99
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "m": "ColorOverLife",
+     "ColorOverLife": {
+      "curve": [
+       [
+        0,
+        [
+         1,
+         1,
+         1
+        ]
+       ],
+       [
+        1,
+        [
+         1,
+         1,
+         1
+        ]
+       ]
+      ]
+     },
+     "AlphaOverLife": {
+      "const": 1
+     }
+    },
+    {
+     "m": "OrientationAxisLock",
+     "flags": "EPAL_ROTATE_Z"
+    },
+    {
+     "m": "ColorScaleOverLife",
+     "ColorScaleOverLife": {
+      "const": [
+       1,
+       1,
+       1
+      ]
+     },
+     "AlphaScaleOverLife": {
+      "const": 1
+     },
+     "note": "整体亮度 / 透明度倍增：在 UE 里改这里（1 = 烘焙器口径），不用动 Color Over Life"
+    }
+   ],
+   "notes": [
+    "固定取景：Pivot Offset 把爆点放在粒子位置（面片中心比爆点高 -8 m），仰视时也对得上；未经 UE 验证",
+    "周期喷射：每周期一颗序列面片，Local Space跟随喷口；不含弹体升空弹道。未经UE实播。"
+   ],
+   "max_alive": 1
+  }
+ ],
+ "texture_tidy": {
+  "rule": "Cutout 估省 < 10%（8 顶点多边形外的面积）不出、发射器不设 Cutout Texture；同一个包里内容一样的 Ramp / Cutout 只留一张；textures[].hash = 内容指纹，导入时已有同 hash 的资产可直接复用",
+  "cutout_min_save": 0.1,
+  "merged": [],
+  "cutout_dropped": [],
+  "baker": "4.9.100"
+ }
+}
